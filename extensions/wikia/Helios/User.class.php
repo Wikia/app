@@ -7,6 +7,7 @@ use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Service\Helios\ClientException;
 use Wikia\Service\Helios\HeliosClient;
+use Wikia\Service\User\Auth\CookieHelper;
 
 /**
  * A helper class for dealing with user-related objects.
@@ -54,6 +55,7 @@ class User {
 	 */
 	public static function getAccessToken( \WebRequest $request ) {
 		// A cookie takes precedence over an HTTP header.
+		// FIXME: replace with CookieHelper
 		$token = $request->getCookie( self::ACCESS_TOKEN_COOKIE_NAME, '' );
 
 		// No access token in the cookie, try the HTTP header.
@@ -223,12 +225,7 @@ class User {
 	 */
 	public static function setAccessTokenCookie( $accessToken ) {
 		$response = \RequestContext::getMain()->getRequest()->response();
-		$response->setcookie(
-			self::ACCESS_TOKEN_COOKIE_NAME,
-			$accessToken,
-			time() + self::ACCESS_TOKEN_COOKIE_TTL,
-			\WebResponse::NO_COOKIE_PREFIX
-		);
+		self::getCookieHelper()->setAuthenticationCookieWithToken( $accessToken, $response );
 	}
 
 	public static function onUserLogout() {
@@ -254,6 +251,7 @@ class User {
 	 * Clear the access token cookie by setting a time in the past
 	 */
 	public static function clearAccessTokenCookie() {
+		// FIXME: replace with CookieHelper::clearAuthenticationCookie
 		self::clearCookie( self::ACCESS_TOKEN_COOKIE_NAME );
 
 		/*
@@ -479,4 +477,12 @@ class User {
 	public static function getHeliosClient() {
 		return Injector::getInjector()->get(HeliosClient::class);
 	}
+
+	/**
+	 * @return \Wikia\Service\User\Auth\CookieHelper
+	 */
+	private static function getCookieHelper() {
+		return Injector::getInjector()->get(CookieHelper::class);
+	}
+
 }

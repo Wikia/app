@@ -7,8 +7,8 @@
  * handles type submit that is stored in hidden input in editform
  */
 define('TemplateClassificationInEdit',
-	['jquery', 'mw', 'TemplateClassificationModal'],
-	function ($, mw, templateClassificationModal) {
+	['jquery', 'mw', 'wikia.tracker', 'TemplateClassificationModal'],
+	function ($, mw, tracker, templateClassificationModal) {
 		'use strict';
 
 		var $editFormHiddenTypeField;
@@ -22,6 +22,15 @@ define('TemplateClassificationInEdit',
 			if (isNewArticle() && !getType()) {
 				templateClassificationModal.open('addTemplate');
 			}
+
+			$('.template-classification-edit').on('mousedown', function () {
+				tracker.track({
+					trackingMethod: 'analytics',
+					category: 'template-classification-entry-point',
+					action: tracker.ACTIONS.CLICK,
+					label: 'edit-page'
+				});
+			});
 		}
 
 		function isNewArticle() {
