@@ -7,6 +7,7 @@ use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Service\Helios\ClientException;
 use Wikia\Service\Helios\HeliosClient;
+use Wikia\Service\User\Auth\CookieHelper;
 
 /**
  * A helper class for dealing with user-related objects.
