@@ -41,7 +41,7 @@ class HeliosCookieHelperTest extends \PHPUnit_Framework_TestCase {
 			 	HeliosCookieHelper::ACCESS_TOKEN_COOKIE_NAME,
 				$tokenData->access_token,
 				$this->isType('int'),
-				HeliosCookieHelper::NO_COOKIE_PREFIX
+				HeliosCookieHelper::COOKIE_PREFIX
 		 	);
 
 		$this->cookieHelper->setAuthenticationCookieWithUserId( self::TEST_USER_ID, $this->response );
@@ -54,7 +54,7 @@ class HeliosCookieHelperTest extends \PHPUnit_Framework_TestCase {
 			 	HeliosCookieHelper::ACCESS_TOKEN_COOKIE_NAME,
 				"",
 				$this->isType('int'),
-				HeliosCookieHelper::NO_COOKIE_PREFIX
+				HeliosCookieHelper::COOKIE_PREFIX
 		 	);
 
 		$this->cookieHelper->clearAuthenticationCookie( $this->response );
