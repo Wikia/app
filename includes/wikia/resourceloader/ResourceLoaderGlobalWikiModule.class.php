@@ -85,13 +85,16 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	}
 
 	protected function getContent( $title, $titleText, $options = array() ) {
-		global $wgCityId, $wgEnableContentReviewExt;
+		global $wgCityId;
 		$content = null;
 		$revisionId = null;
 
 		wfProfileIn(__METHOD__);
 
-		if ( $wgEnableContentReviewExt && $options['type'] === 'script' && $title->inNamespace( NS_MEDIAWIKI ) ) {
+		if ( Wikia::isUsingSafeJs()
+			&& $options['type'] === 'script'
+			&& $title->inNamespace( NS_MEDIAWIKI )
+		) {
 			$revisionId = $this->getScriptReviewedRevisionId( $title );
 		}
 
