@@ -234,7 +234,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
 		// handlebars - uncomment this when introducing first client-side rendered handlebars template
 		// '//resources/wikia/libraries/handlebars/handlebars.js',
-		'//extensions/wikia/JSSnippets/js/JSSnippets.js'
+		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 	)
 );
 
@@ -288,6 +288,9 @@ $config['oasis_jquery'] = array(
 		'//resources/wikia/libraries/jquery/modal/jquery.wikia.modal.js',
 		'//resources/wikia/libraries/jquery/expirystorage/jquery.expirystorage.js',
 		'//resources/wikia/libraries/jquery/focusNoScroll/jquery.focusNoScroll.js',
+
+		// Facebook
+		'//resources/wikia/modules/facebookLocale.js',
 
 		// libraries loaders
 		'//resources/wikia/libraries/jquery/getResources/jquery.wikia.getResources.js',
@@ -468,6 +471,7 @@ $config['gameguides_js'] = array(
 		'//resources/wikia/modules/window.js',
 		'//resources/wikia/modules/location.js',
 		'//resources/wikia/modules/nirvana.js',
+		'//resources/wikia/modules/facebookLocale.js',
 		'//resources/wikia/modules/loader.js',
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/history.js',
@@ -602,6 +606,9 @@ $config['wikiamobile_js_body_minimal'] = array(
 
 		// performance
 		'#group_bucky_js',
+
+		// facebook
+		'//resources/wikia/modules/facebookLocale.js',
 
 		//modules
 		'//resources/wikia/modules/nirvana.js',
@@ -2662,5 +2669,21 @@ $config['special_broken_rename_fix'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => [
 		'//extensions/wikia/BrokenRenameFix/styles/SpecialBrokenRenameFix.scss',
+	],
+];
+
+$config['insights_module_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//skins/oasis/css/modules/InsightsModule.scss',
+	],
+];
+
+$config['insights_module_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//skins/oasis/js/modules/InsightsModule.js',
 	],
 ];

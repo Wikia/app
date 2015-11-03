@@ -27,5 +27,21 @@
 		}
 	};
 
+	var CollapsibleGroup = {
+		init: function() {
+			var $collapsibleGroups = $('.pi-collapse');
+
+			$collapsibleGroups.each( function( index, group ) {
+				var $group = $collapsibleGroups.eq(index),
+					$header = $group.find('.pi-header');
+
+				$header.click( function() {
+					$group.toggleClass('pi-collapse-closed');
+				});
+			});
+		}
+	}
+
 	ImageCollection.init();
+	CollapsibleGroup.init();
 })(window, jQuery);

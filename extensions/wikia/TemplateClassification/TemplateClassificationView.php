@@ -16,15 +16,28 @@ class View {
 	 * @return string
 	 */
 	public function renderTemplateType( $wikiId, \Title $title, $user, $fallbackMsg = '', $templateTypeLabel = null ) {
+		global $wgEnableTemplateDraftExt;
+
 		if ( !$user->isLoggedIn() ) {
 			return $fallbackMsg;
 		}
 
-		try {
-			$templateType = ( new \TemplateClassificationService() )->getType( $wikiId, $title->getArticleID() );
-		} catch ( ApiException $e ) {
-			( new Logger() )->exception( $e );
-			return $fallbackMsg;
+		$templateType = '';
+
+		// Fallback to infobox on template draft for not existent classification
+		if ( !empty( $wgEnableTemplateDraftExt )
+			&& \TemplateDraftHelper::isInfoboxDraftConversion( $title )
+		) {
+			$templateType = \TemplateClassificationService::TEMPLATE_INFOBOX;
+		}
+
+		if ( $templateType === '' ) {
+			try {
+				$templateType = ( new \TemplateClassificationService() )->getType( $wikiId, $title->getArticleID() );
+			} catch ( ApiException $e ) {
+				( new Logger() )->exception( $e );
+				return $fallbackMsg;
+			}
 		}
 
 		// Fallback to unknown for not existent classification

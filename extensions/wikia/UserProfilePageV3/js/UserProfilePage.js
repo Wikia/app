@@ -451,9 +451,8 @@ var UserProfilePage = {
 				userData[i] = userDataItem;
 			}
 		}
-		if (document.userData.hideEditsWikis.checked) {
-			userData.hideEditsWikis = 1;
-		}
+
+		userData.hideEditsWikis = document.userData.hideEditsWikis.checked ? 1 : 0;
 
 		return userData;
 	},

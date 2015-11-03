@@ -55,6 +55,7 @@ $wgHooks['ParserCacheGetETag']       [] = 'Wikia::onParserCacheGetETag';
 $wgHooks['BeforeSendCacheControl']    [] = 'Wikia::onBeforeSendCacheControl';
 $wgHooks['ResourceLoaderAfterRespond'][] = 'Wikia::onResourceLoaderAfterRespond';
 $wgHooks['NirvanaAfterRespond']       [] = 'Wikia::onNirvanaAfterRespond';
+$wgHooks['ApiMainBeforeSendCacheHeaders'][] = 'Wikia::onApiMainBeforeSendCacheHeaders';
 
 # don't purge all variants of articles in Chinese - BAC-1278
 $wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
@@ -81,6 +82,8 @@ class Wikia {
 	const NEWSLETTER_WIKI_ID = 223496; // wikianewsletter.wikia.com
 
 	const FAVICON_URL_CACHE_KEY = 'favicon-v1';
+
+	const CUSTOM_INTERFACE_PREFIX = 'custom-';
 
 	private static $vars = array();
 	private static $cachedLinker;
@@ -2272,6 +2275,18 @@ class Wikia {
 	}
 
 	/**
+	 * Add X-Served-By and X-Backend-Response-Time response headers to api.php
+	 *
+	 * @param WebResponse $response
+	 * @return bool
+	 * @author macbre
+	 */
+	static function onApiMainBeforeSendCacheHeaders( WebResponse $response ) {
+		self::addExtraHeaders( $response );
+		return true;
+	}
+
+	/**
 	 * Purge a limited set of language variants on Chinese wikis
 	 *
 	 * See BAC-1278 / BAC-698 for details
@@ -2317,7 +2332,7 @@ class Wikia {
 	 * return false stops permissions processing and we are totally decided (nothing later can override)
 	 */
 	static function canEditInterfaceWhitelist (&$title, &$wgUser, $action, &$result) {
-		global $wgEditInterfaceWhitelist, $wgEnableContentReviewExt;
+		global $wgEditInterfaceWhitelist;
 
 		// List the conditions we don't care about for early exit
 		if ( $action == "read" || $title->getNamespace() != NS_MEDIAWIKI || empty( $wgEditInterfaceWhitelist )) {
@@ -2332,7 +2347,8 @@ class Wikia {
 		// In this NS, editinterface applies only to white listed pages
 		if ( in_array( $title->getDBKey(), $wgEditInterfaceWhitelist )
 			|| $title->isCssPage()
-			|| ( !empty( $wgEnableContentReviewExt ) && $title->isJsPage() )
+			|| ( Wikia::isUsingSafeJs() && $title->isJsPage() )
+			|| startsWith( lcfirst( $title->getDBKey() ), self::CUSTOM_INTERFACE_PREFIX )
 		) {
 			return $wgUser->isAllowed('editinterface');
 		}
@@ -2410,5 +2426,15 @@ class Wikia {
 			'section' => 'under-the-hood/advanced-displayv2',
 		);
 		return true;
+	}
+
+	/**
+	 * Checks if a wikia is using safe mechanisms for using and editing custom JS pages.
+	 * @return bool
+	 */
+	public static function isUsingSafeJs() {
+		global $wgUseSiteJs, $wgEnableContentReviewExt;
+
+		return !empty( $wgUseSiteJs ) && !empty( $wgEnableContentReviewExt );
 	}
 }

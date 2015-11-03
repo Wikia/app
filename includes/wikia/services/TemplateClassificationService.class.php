@@ -64,6 +64,17 @@ class TemplateClassificationService {
 			$templateType = $type->getType();
 		}
 
+		/**
+		 * Quick fix begin
+		 * Permanent change will be needed from the Services team.
+		 */
+		if ( !in_array( $templateType, self::$templateTypes ) ) {
+			$templateType = self::TEMPLATE_UNKNOWN;
+		}
+		/**
+		 * Quick fix end
+		 */
+
 		return $templateType;
 	}
 
