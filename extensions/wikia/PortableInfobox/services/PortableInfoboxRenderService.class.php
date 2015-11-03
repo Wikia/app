@@ -192,7 +192,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		if ( $helper->isWikiaMobile() ) {
-			$data = $helper->sanitizeInfoboxTitle( $type, $data );
+			$data = $helper->sanitizeTitlesAndLabels( $type, $data );
 		}
 
 		return $this->templateEngine->clearData()
