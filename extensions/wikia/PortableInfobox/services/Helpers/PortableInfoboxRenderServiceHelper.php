@@ -69,20 +69,20 @@ class PortableInfoboxRenderServiceHelper {
 	/**
 	 * process single title or label
 	 *
-	 * @param $elementData
+	 * @param $elementText
 	 * @param string $allowedTags
 	 * @return string
 	 */
-	private function sanitizeElementData( $elementData, $allowedTags = '' ) {
-		if ( !empty( $elementData ) ) {
-			$strippedElementData = trim( strip_tags( $elementData, $allowedTags ) );
+	private function sanitizeElementData( $elementText, $allowedTags = null ) {
+		if ( !empty( $elementText ) ) {
+			$elementTextAfterTrim = trim( strip_tags( $elementText, $allowedTags ) );
 
-			if ( $strippedElementData !== $elementData ) {
-				\Wikia\Logger\WikiaLogger::instance()->info( 'Striping HTML tags from infobox element' );
-				$elementData = $strippedElementData;
+			if ( $elementTextAfterTrim !== $elementText ) {
+				WikiaLogger::instance()->info( 'Striping HTML tags from infobox element' );
+				$elementText = $elementTextAfterTrim;
 			}
 		}
-		return $elementData;
+		return $elementText;
 	}
 
 	/**

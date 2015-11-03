@@ -41,6 +41,8 @@ class PortableInfoboxRenderService extends WikiaService {
 	 *
 	 * @param array $infoboxdata
 	 *
+	 * @param $theme
+	 * @param $layout
 	 * @return string - infobox HTML
 	 */
 	public function renderInfobox( array $infoboxdata, $theme, $layout ) {

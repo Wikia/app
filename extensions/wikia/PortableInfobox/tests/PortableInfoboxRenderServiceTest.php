@@ -65,13 +65,14 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @param $input
 	 * @param $expectedOutput
 	 * @param $description
+	 * @param $mockParams
 	 * @dataProvider testRenderInfoboxDataProvider
 	 */
 	public function testRenderInfobox( $input, $expectedOutput, $description, $mockParams ) {
 		$this->mockInfoboxRenderServiceHelper( $mockParams );
 
 		$infoboxRenderService = new PortableInfoboxRenderService();
-		$actualOutput = $infoboxRenderService->renderInfobox( $input );
+		$actualOutput = $infoboxRenderService->renderInfobox( $input, null, null );
 
 		$expectedHtml = $this->normalizeHTML( $expectedOutput) ;
 		$actualHtml = $this->normalizeHTML( $actualOutput );
