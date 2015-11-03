@@ -24,3 +24,4 @@ $wgHooks['ParserAfterTidy'][] = 'ArticleAsJson::onParserAfterTidy';
 $wgHooks['Parser::showEditLink'][] = 'ArticleAsJson::onShowEditLink';
 $wgHooks['ParserLimitReport'][] = 'ArticleAsJson::reportLimits';
 $wgHooks['PortableInfoboxRenderServiceHelper::extendImageData'][] = 'ArticleAsJson::onExtendPortableInfoboxImageData';
+$wgHooks['Parser::FetchTemplateAndTitle'][] = 'ArticleAsJson::onFetchTemplateAndTitle';

@@ -1,11 +1,15 @@
 <?php
 
+use Swagger\Client\ApiException;
+
 class ArticleAsJson extends WikiaService {
 	static $media = [];
 	static $users = [];
 	static $mediaDetailConfig = [
 		'imageMaxWidth' => false
 	];
+
+	static $tcs = null;
 
 	const ICON_MAX_SIZE = 48;
 	const CACHE_VERSION = '0.0.3';
@@ -14,6 +18,8 @@ class ArticleAsJson extends WikiaService {
 	const MEDIA_CONTEXT_ARTICLE_VIDEO = 'article-video';
 	const MEDIA_CONTEXT_GALLERY_IMAGE = 'gallery-image';
 	const MEDIA_CONTEXT_ICON = 'icon';
+
+	const TEMPLATE_TYPE_NAVBOX = 'navbox';
 
 	private static function createMarker( $width = 0, $height = 0, $isGallery = false ){
 		$blankImgUrl = '//:0';
@@ -257,10 +263,11 @@ class ArticleAsJson extends WikiaService {
 	 * @param $report
 	 * @return bool
 	 */
-	public static function reportLimits( $parser, &$report ) {
+	public static function reportLimits( $parser, &$report )
+	{
 		global $wgArticleAsJson;
 
-		if ( $wgArticleAsJson ) {
+		if ($wgArticleAsJson) {
 			$report = '';
 
 			return false;
@@ -315,5 +322,55 @@ class ArticleAsJson extends WikiaService {
 	 */
 	private static function isIconSize( $sizeParam ) {
 		return isset( $sizeParam ) ? $sizeParam <= self::ICON_MAX_SIZE : false;
+	}
+
+	/**
+	 * @desc removes navbox template text from parser output
+	 *
+	 * @param string $text - template content
+	 * @param Title $finalTitle - template title object
+	 * @return bool
+	 */
+	public static function onFetchTemplateAndTitle( &$text, &$finalTitle ) {
+		global $wgArticleAsJson, $wgCityId, $wgSkipRenderingNonContentTemplatesOnMercury;
+
+		wfProfileIn( __METHOD__ );
+
+		$type = null;
+
+		// TODO: add global flag to limit the navbox removal to limited set of wikies
+		if ( $wgArticleAsJson && $wgSkipRenderingNonContentTemplatesOnMercury ) {
+			try {
+				$type = self::getTemplateType( $wgCityId, $finalTitle->getArticleID() );
+			} catch ( ApiException $exception ) {
+				\Wikia\Logger\WikiaLogger::instance()->error(
+						'TemplateClassificationService:ApiException',
+						[ 'apiException' => $exception ]
+				);
+			}
+
+			$text = $type === self::TEMPLATE_TYPE_NAVBOX ? '' : $text;
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return true;
+	}
+
+	/**
+	 * @desc gets template type from Template Classification Service
+	 *
+	 * @param int $wikiId
+	 * @param int $templateId
+	 *
+	 * @return string template type
+	 * @throws ApiException
+	 */
+	private static function getTemplateType( $wikiId, $templateId ) {
+		if ( self::$tcs === null ) {
+			self::$tcs = new \TemplateClassificationService();
+		}
+
+		return self::$tcs->getType( $wikiId, $templateId );
 	}
 }
