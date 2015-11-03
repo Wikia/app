@@ -7,7 +7,7 @@ define('InsightsModule', ['wikia.tracker'],
 		}
 
 		function setupTracking() {
-			$('.insights-module-list').on('mousedown', '.insights-module-item', function (e) {
+			$('.insights-module-list').on('mousedown', '.insights-module-link', function (e) {
 				tracker.track({
 					trackingMethod: 'analytics',
 					category: 'insights-module',
