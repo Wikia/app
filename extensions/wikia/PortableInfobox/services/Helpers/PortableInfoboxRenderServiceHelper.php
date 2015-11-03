@@ -47,26 +47,36 @@ class PortableInfoboxRenderServiceHelper {
 	}
 
 	/**
-	 * checks if infobox item is the title or title inside the hero module
-	 * and if so, removes from it all HTML tags.
+	 * check if infobox item is a title, title inside the hero module or a label
+	 * and if so, remove from it all HTML tags.
 	 *
 	 * @param string $type type of infobox item
 	 * @param array $data infobox item data
 	 * @return array infobox $data with sanitized title param if needed
 	 */
-	public function sanitizeInfoboxTitle( $type, $data ) {
-		if ( $type === 'title' && !empty( $data[ 'value' ] ) ) {
-			$data[ 'value' ] = trim( strip_tags( $data[ 'value' ] ) );
-
-			return $data;
-		}
-		if ( $type === 'hero-mobile' && !empty( $data[ 'title' ][ 'value' ] ) ) {
-			$data[ 'title' ][ 'value' ] = trim( strip_tags( $data[ 'title' ][ 'value' ] ) );
-
-			return $data;
+	public function sanitizeTitlesAndLabels( $type, $data ) {
+		if ( $type === 'title' ) {
+			$data[ 'value' ] = $this->sanitizeElementData( $data[ 'value' ] );
+		} else if ( $type === 'data' ) {
+			$data[ 'label' ] = $this->sanitizeElementData( $data[ 'label' ] );
+		} else if ( $type === 'hero-mobile' ) {
+			$data[ 'title' ][ 'value' ] = $this->sanitizeElementData( $data[ 'title' ][ 'value' ] );
 		}
 
 		return $data;
+	}
+
+	/**
+	 * process single title or label
+	 *
+	 * @param $elementData
+	 * @return string
+	 */
+	private function sanitizeElementData( $elementData ) {
+		if (!empty( $elementData )) {
+			$elementData = trim( strip_tags( $elementData ) );
+		}
+		return $elementData;
 	}
 
 	/**
