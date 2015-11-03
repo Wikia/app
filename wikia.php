@@ -63,6 +63,14 @@ if ( !empty( $wgEnableNirvanaAPI ) ){
 		] );
 	}
 
+	// PLATFORM-1633: decrease the noise in reported transactions
+	$ex = $response->getException();
+
+	if ( $ex instanceof ControllerNotFoundException|| $ex instanceof MethodNotFoundException ) {
+		Transaction::setAttribute( Transaction::PARAM_CONTROLLER, 'other' );
+		Transaction::setAttribute( Transaction::PARAM_METHOD, '' );
+	}
+
 	$response->sendHeaders();
 	wfRunHooks( 'NirvanaAfterRespond', [ $app, $response ] );
 
