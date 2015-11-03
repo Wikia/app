@@ -2,7 +2,8 @@
 	<h2><?= wfMessage( 'insights' )->escaped() ?></h2>
 	<ul class="insights-module-list">
 		<? foreach( $messageKeys as $key => $messages ) : ?>
-			<li class="insights-module-item insights-icon-<?= strtolower( $key ) ?>">
+			<?php $key = Sanitizer::encodeAttribute( $key ); ?>
+			<li class="insights-module-item insights-icon-<?= strtolower( $key ) ?>" data-type="<?= $key ?>">
 				<a href="<?= InsightsHelper::getSubpageLocalUrl( $key ) ?>" class="insights-module-link">
 					<?= wfMessage( $messages['subtitle'] )->escaped() ?>
 				</a>
