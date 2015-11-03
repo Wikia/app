@@ -70,11 +70,17 @@ class PortableInfoboxRenderServiceHelper {
 	 * process single title or label
 	 *
 	 * @param $elementData
+	 * @param string $allowedTags
 	 * @return string
 	 */
 	private function sanitizeElementData( $elementData, $allowedTags = '' ) {
-		if (!empty( $elementData )) {
-			$elementData = trim( strip_tags( $elementData, $allowedTags ) );
+		if ( !empty( $elementData ) ) {
+			$strippedElementData = trim( strip_tags( $elementData, $allowedTags ) );
+
+			if ( $strippedElementData !== $elementData ) {
+				\Wikia\Logger\WikiaLogger::instance()->info( 'Striping HTML tags from infobox element' );
+				$elementData = $strippedElementData;
+			}
 		}
 		return $elementData;
 	}
