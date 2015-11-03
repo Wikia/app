@@ -169,25 +169,52 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	 * @param string $input
 	 * @param array $data
 	 * @param string $expected
-	 * @dataProvider sanitizeInfoboxTitleSourceDataProvider
+	 * @dataProvider sanitizeTitlesAndLabelsDataProvider
 	 */
-	public function testSanitizeInfoboxTitle( $input, $data, $expected ) {
+	public function testSanitizeTitlesAndLabels( $input, $data, $expected ) {
 		$this->assertEquals(
 			$expected,
-			$this->helper->sanitizeInfoboxTitle( $input , $data )
+			$this->helper->sanitizeTitlesAndLabels( $input , $data )
 		);
 	}
 
-	public function sanitizeInfoboxTitleSourceDataProvider() {
+	public function sanitizeTitlesAndLabelsDataProvider() {
 		return [
-			['title', [ 'value' => 'Test Title' ], [ 'value' => 'Test Title' ] ],
+			['title', ['value' => 'Test Title' ], [ 'value' => 'Test Title' ] ],
 			['title', ['value' => '  Test Title    '] , [ 'value' => 'Test Title'] ],
 			['title', ['value' => 'Test Title <img src=\'data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D\' class=\'article-media\' data-ref=\'1\' width=\'400\' height=\'100\' /> ' ], [ 'value' =>  'Test Title']],
 			['title', ['value' => 'Test Title <a href="example.com">with link</a>'], [ 'value' =>  'Test Title with link'] ],
 			['title', ['value' => 'Real world <a href="http://vignette-poz.wikia-dev.com/mediawiki116/images/b/b6/DBGT_Logo.svg/revision/latest?cb=20150601155347" 	class="image image-thumbnail" 	 	 	><img src="http://vignette-poz.wikia-dev.com/mediawiki116/images/b/b6/DBGT_Logo.svg/revision/latest/scale-to-width-down/30?cb=20150601155347" 	 alt="DBGT Logo"  	class="" 	 	data-image-key="DBGT_Logo.svg" 	data-image-name="DBGT Logo.svg" 	 	 width="30"  	 height="18"  	 	 	 	></a>title example'] , [ 'value' =>  'Real world title example'] ],
-			['hero-mobile', ['title' => ['value' => 'Test Title'] ], ['title' => ['value' => 'Test Title'] ] ],
-			['hero-mobile', ['title' => ['value' => 'Real world <a href="http://vignette-poz.wikia-dev.com/mediawiki116/images/b/b6/DBGT_Logo.svg/revision/latest?cb=20150601155347" 	class="image image-thumbnail" 	 	 	><img src="http://vignette-poz.wikia-dev.com/mediawiki116/images/b/b6/DBGT_Logo.svg/revision/latest/scale-to-width-down/30?cb=20150601155347" 	 alt="DBGT Logo"  	class="" 	 	data-image-key="DBGT_Logo.svg" 	data-image-name="DBGT Logo.svg" 	 	 width="30"  	 height="18"  	 	 	 	></a>title example'] ] , ['title' => ['value' => 'Real world title example'] ] ],
-			['data', [ 'value' => 'Test <a>Group</a>' ], [ 'value' => 'Test <a>Group</a>' ] ],
+			['hero-mobile',
+				['title' => ['value' => 'Test Title'] ],
+				['title' => ['value' => 'Test Title'] ]
+			],
+			['hero-mobile',
+				['title' => ['value' => 'Real world <a href="http://vignette-poz.wikia-dev.com/mediawiki116/images/b/b6/DBGT_Logo.svg/revision/latest?cb=20150601155347" 	class="image image-thumbnail" 	 	 	><img src="http://vignette-poz.wikia-dev.com/mediawiki116/images/b/b6/DBGT_Logo.svg/revision/latest/scale-to-width-down/30?cb=20150601155347" 	 alt="DBGT Logo"  	class="" 	 	data-image-key="DBGT_Logo.svg" 	data-image-name="DBGT Logo.svg" 	 	 width="30"  	 height="18"  	 	 	 	></a>title example'] ] ,
+				['title' => ['value' => 'Real world title example'] ]
+			],
+			['data',
+				[
+					'label' => 'Data <a>Link</a>',
+					'value' => 'Data <a>Value</a>' ],
+				[
+					'label' => 'Data <a>Link</a>',
+					'value' => 'Data <a>Value</a>'
+				]
+			],
+			['data',
+				['label' => 'Test data label <img src=\'data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D\' class=\'article-media\' data-ref=\'1\' width=\'400\' height=\'100\' /> '],
+				['label' => 'Test data label']
+			],
+			['data',
+				[
+					'label' => 'Data <div class="some class">div with class</div>',
+					'value' => 'Data <a>Value</a>' ],
+				[
+					'label' => 'Data div with class',
+					'value' => 'Data <a>Value</a>'
+				]
+			],
 		];
 	}
 
