@@ -58,7 +58,7 @@ class PortableInfoboxRenderServiceHelper {
 		if ( $type === 'title' ) {
 			$data[ 'value' ] = $this->sanitizeElementData( $data[ 'value' ] );
 		} else if ( $type === 'data' ) {
-			$data[ 'label' ] = $this->sanitizeElementData( $data[ 'label' ] );
+			$data[ 'label' ] = $this->sanitizeElementData( $data[ 'label' ], '<a>' );
 		} else if ( $type === 'hero-mobile' ) {
 			$data[ 'title' ][ 'value' ] = $this->sanitizeElementData( $data[ 'title' ][ 'value' ] );
 		}
@@ -72,9 +72,9 @@ class PortableInfoboxRenderServiceHelper {
 	 * @param $elementData
 	 * @return string
 	 */
-	private function sanitizeElementData( $elementData ) {
+	private function sanitizeElementData( $elementData, $allowedTags = '' ) {
 		if (!empty( $elementData )) {
-			$elementData = trim( strip_tags( $elementData ) );
+			$elementData = trim( strip_tags( $elementData, $allowedTags ) );
 		}
 		return $elementData;
 	}
