@@ -67,8 +67,13 @@ if ( !empty( $wgEnableNirvanaAPI ) ){
 	$ex = $response->getException();
 
 	if ( $ex instanceof ControllerNotFoundException|| $ex instanceof MethodNotFoundException ) {
-		Transaction::setAttribute( Transaction::PARAM_CONTROLLER, 'other' );
+		Transaction::setAttribute( Transaction::PARAM_CONTROLLER, 'error' );
 		Transaction::setAttribute( Transaction::PARAM_METHOD, '' );
+
+		Wikia\Logger\WikiaLogger::instance()->info( 'wikia-php.not-found', [
+			'controller' => $response->getControllerName(),
+			'method' => $response->getMethodName()
+		] );
 	}
 
 	$response->sendHeaders();
