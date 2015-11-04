@@ -55,7 +55,7 @@ class AssetsManagerController extends WikiaController {
 				$params = !empty( $template['params'] ) ? $template['params'] : array();
 
 				if ( !empty( $template['controller'] ) && !empty( $template['method'] ) ) {
-					$res = $this->sendRequest( $template['controller'], $template['method'], $params );
+					$res = $this->sendExternalRequest( $template['controller'], $template['method'], $params );
 					$templatesOutput["{$template['controller']}_{$template['method']}"] = $res->__toString();
 				} else {
 					$templatesOutput[] = "Controller or method not given";

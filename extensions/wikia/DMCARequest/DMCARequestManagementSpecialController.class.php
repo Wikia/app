@@ -66,7 +66,7 @@ class DMCARequestManagementSpecialController extends WikiaSpecialPageController 
 		$request = $this->getRequest();
 		$user = $this->getUser();
 		// Sanity check in case a user tries to call this directly
-		if ( !$user->isAllowed( 'dmcarequestmanagement' ) || !$request->isInternal() ) {
+		if ( !$user->isAllowed( 'dmcarequestmanagement' ) ) {
 			$this->displayRestrictionError();
 			return false;
 		}
@@ -125,7 +125,7 @@ class DMCARequestManagementSpecialController extends WikiaSpecialPageController 
 	 * Page to display on successfully submitting a notice.
 	 */
 	public function success() {
-		if ( !$this->getUser()->isAllowed( 'dmcarequestmanagement' ) || !$this->getRequest()->isInternal() ) {
+		if ( !$this->getUser()->isAllowed( 'dmcarequestmanagement' ) ) {
 			$this->displayRestrictionError();
 			return false;
 		}
