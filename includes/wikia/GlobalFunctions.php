@@ -979,20 +979,6 @@ function wfMsgWithFallback( $key ) {
 }
 
 /**
- * @deprecated
- *
- * TODO: remove this
- *
- * @param $name module name
- * @param string $action method name
- * @param null $params
- * @return string rendered module's response
- */
-function wfRenderModule( $name, $action = 'Index', $params = null ) {
-	return F::app()->renderView( $name, $action, $params );
-}
-
-/**
  * wfAutomaticReadOnly
  *
  * @author tor
