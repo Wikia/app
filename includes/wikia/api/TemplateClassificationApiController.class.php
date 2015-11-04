@@ -26,7 +26,7 @@ class TemplateClassificationApiController extends WikiaApiController {
 			throw new BadRequestApiException( $e->getMessage() );
 		}
 
-		return $templateType;
+		$this->response->setVal( 'type', $templateType );
 	}
 
 	/**
@@ -74,6 +74,11 @@ class TemplateClassificationApiController extends WikiaApiController {
 				TemplateClassificationService::USER_PROVIDER,
 				$userId
 			);
+
+			$title = Title::newFromId( $pageId );
+			if ( $title instanceof Title ) {
+				$title->invalidateCache();
+			}
 		} catch ( InvalidArgumentException $e ) {
 			throw new BadRequestApiException( $e->getMessage() );
 		}

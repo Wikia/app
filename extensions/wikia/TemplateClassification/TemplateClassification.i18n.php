@@ -2,6 +2,7 @@
 $messages = [];
 
 $messages['en'] = [
+	'template-classification-description' => 'Interface for classifying templates to understand content better.',
 	'template-classification-type-unclassified' => 'Unclassified',
 	'template-classification-type-infobox' => 'Infobox',
 	'template-classification-description-infobox' => 'Displays the most essential snippets of information about an article in a box.',
@@ -37,14 +38,22 @@ $messages['en'] = [
 	'template-classification-description-unknown' => "I don't know.",
 
 	'template-classification-type-header' => 'Type of the template',
+	'template-classification-edit-modal-add-button-text' => 'Add',
 	'template-classification-edit-modal-save-button-text' => 'Save',
 	'template-classification-edit-modal-cancel-button-text' => 'Cancel',
-	'template-classification-edit-modal-title' => 'Edit template type',
+	'template-classification-edit-modal-title-add-template' => 'Add template',
+	'template-classification-edit-modal-title-edit-type' => 'Edit template type',
+	'template-classification-edit-modal-select-type-sub-title' => 'Choose template type',
+	'template-classification-edit-modal-success' => 'New classification of the template has been saved. Thank you!',
+	'template-classification-edit-modal-error' => 'Unfortunately, we were not able to classify this template. Would you mind trying it again?',
 
-	'template-classification-indicator' => 'Template type: $1',
+	'template-classification-indicator' => 'Template type:',
+
+	'template-classification-notification-error-retry' => 'Something went wrong and we could not classify this template. Could you retry it using the link under a title of the page?',
 ];
 
 $messages['qqq'] = [
+	'template-classification-description' => 'Description of extension viewed on Special:Version',
 	'template-classification-type-unclassified' => 'Name of an unclassified type',
 	'template-classification-type-infobox' => 'Name of an infobox type',
 	'template-classification-type-navbox' => 'Name of a navbox type',
@@ -71,14 +80,22 @@ $messages['qqq'] = [
 	'template-classification-description-reference'  => 'Description (additional label) for the reference template type. This is shown in dialog box under the type name to explain what each type is.',
 
 	'template-classification-type-header' => 'A header of all boxes that display a type of a template.',
+	'template-classification-edit-modal-add-button-text' => 'Text on add button on modal for proceeding to template adding after template type is choose',
 	'template-classification-edit-modal-save-button-text' => 'Text on save button on modal for editing template type',
 	'template-classification-edit-modal-cancel-button-text' => 'Text on cancel button for editing template type',
-	'template-classification-edit-modal-title' => 'Title of modal for editing template type',
+	'template-classification-edit-modal-title-edit-type' => 'Title of modal for editing template type',
+	'template-classification-edit-modal-title-add-template' => 'Title of modal for choosing template type while adding new template',
+	'template-classification-edit-modal-select-type-sub-title' => 'Subtitle of modal for choosing template type while adding new template',
+	'template-classification-edit-modal-success' => 'A message shown in a Banner Notification after a user chooses a type of a template in a modal and the classification is successfully saved.',
+	'template-classification-edit-modal-error' => 'A message shown in a Banner Notification after a user chooses a type of a template in a modal and the classification trial results with an error.',
 
-	'template-classification-indicator' => 'Shown in page subheader and near classification dialog entry points to indicate which type the template is currently classified as. Takes one of the template-classification-type-* messages as a parameter.',
+	'template-classification-indicator' => 'Shown in page subheader and near classification dialog entry points to indicate which type the template is currently classified as.',
+
+	'template-classification-notification-error-retry' => 'A message shown to a user in a Banner Notification if classifying of a template resulted with an error and we want a user to retry doing it.',
 ];
 
 $messages['pl'] = [
+	'template-classification-description' => 'Interfejs do klasyfikacji szablonów w celu lepszego zrozumienia treści.',
 	'template-classification-type-unclassified' => 'Niesklasyfikowany',
 	'template-classification-type-infobox' => 'Infobox',
 	'template-classification-type-navbox' => 'Navbox',
@@ -86,5 +103,5 @@ $messages['pl'] = [
 	'template-classification-type-header' => 'Typ tego szablonu',
 	'template-classification-edit-modal-save-button-text' => 'Zapisz',
 	'template-classification-edit-modal-cancel-button-text' => 'Anuluj',
-	'template-classification-edit-modal-title' => 'Zmień typ tego szablonu',
+	'template-classification-edit-modal-title-edit-type' => 'Zmień typ tego szablonu',
 ];

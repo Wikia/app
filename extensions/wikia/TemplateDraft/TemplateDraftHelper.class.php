@@ -27,13 +27,22 @@ class TemplateDraftHelper {
 	}
 
 	/**
+	 * Determines whether a title is a draft in infobox conversion mode
+	 * @param Title $title
+	 * @return bool
+	 */
+	public static function isInfoboxDraftConversion( Title $title ) {
+		return self::isTitleDraft( $title ) && \TemplateConverter::isConversion();
+	}
+
+	/**
 	 * Checks if the template (Title object) is marked by human as infobox
 	 * @param Title $title
 	 * @return bool
 	 */
 	public function isMarkedAsInfobox( Title $title ) {
 		$tc = new TemplateClassification( $title );
-		return $tc->isType( $tc::TEMPLATE_INFOBOX );
+		return $tc->isType( TemplateClassificationService::TEMPLATE_INFOBOX );
 	}
 
 	/**
@@ -100,7 +109,7 @@ class TemplateDraftHelper {
 	public function shouldDisplayCreateModule( Title $title ) {
 		$tc = new TemplateClassification( $title );
 		$type = $tc->getType();
-		return ( empty( $type ) || $type === $tc::TEMPLATE_INFOBOX )
+		return ( empty( $type ) || $type === TemplateClassificationService::TEMPLATE_INFOBOX )
 			&& !self::titleHasPortableInfobox( $title );
 	}
 

@@ -24,6 +24,8 @@ class TemplateClassificationService {
 	const TEMPLATE_NOT_ART = 'nonarticle';
 	const TEMPLATE_UNKNOWN = 'unknown';
 
+	const NOT_AVAILABLE = 'not-available';
+
 	/**
 	 * Allowed types of templates stored in an array to make a validation process easier.
 	 * @var array
@@ -62,6 +64,17 @@ class TemplateClassificationService {
 		if ( !is_null( $type ) ) {
 			$templateType = $type->getType();
 		}
+
+		/**
+		 * Quick fix begin
+		 * Permanent change will be needed from the Services team.
+		 */
+		if ( !in_array( $templateType, self::$templateTypes ) ) {
+			$templateType = self::TEMPLATE_UNKNOWN;
+		}
+		/**
+		 * Quick fix end
+		 */
 
 		return $templateType;
 	}

@@ -291,12 +291,14 @@ body >a >img[src$="noad.gif"] {
 			font-weight: bold;
 		}
 
-		strong {
-			font-weight: bold;
-		}
-
 		.action-accept {
+			color: #000;
 			cursor: pointer;
+			font-weight: bold;
+
+			&:hover {
+				text-decoration: underline;
+			}
 		}
 
 		.dialog-pointer {

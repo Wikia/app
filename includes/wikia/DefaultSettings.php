@@ -299,6 +299,7 @@ $wgAutoloadClasses['SwaggerModelProperty'] = "$IP/includes/wikia/swagger/Swagger
 $wgAutoloadClasses['SwaggerErrorResponse'] = "$IP/includes/wikia/swagger/SwaggerErrorResponse.php";
 $wgAutoloadClasses['TemplateClassification'] = "$IP/includes/wikia/TemplateClassification.class.php";
 $wgAutoloadClasses['TemplateDataExtractor'] = "$IP/includes/wikia/TemplateDataExtractor.class.php";
+$wgAutoloadClasses['WikiaHtmlTitle'] = "$IP/includes/wikia/WikiaHtmlTitle.class.php";
 
 /**
  * Resource Loader enhancements
@@ -965,12 +966,6 @@ $wgMaxCommentsToDelete = 100;
  * number of comment to be moved in one request
  */
 $wgMaxCommentsToMove = 50;
-
-/**
- * @name wgGoogleSiteVerificationAlwaysValid
- * @see extensions/wikia/Sitemap/SpecialSitemap_body.php
- */
-$wgGoogleSiteVerificationAlwaysValid = false;
 
 /**
  * is Semantic Mediawiki uses external database cluster
@@ -1819,70 +1814,6 @@ $wgPreferenceServiceWrite = true;
  */
 $wgEnableFliteTagExt = false;
 
-// SEO-related variables start (keep them sorted)
-
-/**
- * @name $wgEnableCustom404PageExt
- *
- * Enables custom 404 page for missing articles suggesting the closest matching article
- */
-$wgEnableCustom404PageExt = false;
-
-/**
- * @name $wgEnableLillyExt
- *
- * Enables collecting outgoing links to other languages in an external service (Lilly)
- */
-$wgEnableLillyExt = false;
-
-/**
- * @name $wgEnableRobotsTxtExt
- *
- * Enables extension that generates robots.txt
- */
-$wgEnableRobotsTxtExt = true;
-
-/**
- * @name $wgEnableSeoLinkHreflangExt
- *
- * Enables SEO Link Hreflang extension
- */
-$wgEnableSeoLinkHreflangExt = false;
-
-/**
- * @name $wgEnableSeoTestingExt
- *
- * Enables SEO Testing extension
- */
-$wgEnableSeoTestingExt = true;
-
-/**
- * @name $wgSeoTestingExperiments
- *
- * The configuration of SEO experiments.
- *
- * Format:
- *
- * [
- *   'Name_of_test' => [
- *     'dbNames' => ['list', 'of', 'dbnames'],
- *     'startDay' => '2015-10-01',
- *     'endDay' => '2015-12-31',
- *   ],
- *   'Another_test' => [
- *     'dbNames' => ['other', 'wikis'],
- *     'startDay' => '2015-11-01',
- *     'endDay' => '2015-11-30',
- *   ],
- * ]
- *
- * Only set this on community wiki (177).
- * The wikis affected are listed under dbNames key for each experiment.
- */
-$wgSeoTestingExperiments = [];
-
-// SEO-related variables end
-
 /**
  * @name $wgAdDriverAdsRecoveryMessageCountries
  * Enables module which displays a simple message to users with ad blockers
@@ -1898,4 +1829,4 @@ $wgLogRestrictions['piggyback'] = 'piggyback';
 /**
  * Reject attempts to fall back to the MediaWiki session for authentication.
  */
-$wgRejectAuthenticationFallback = false;
+$wgRejectAuthenticationFallback = true;

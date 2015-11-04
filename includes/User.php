@@ -3090,7 +3090,11 @@ class User {
 			$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
 
 			$this->invalidateCache();
+
+			return true;
 		}
+
+		return false;
 	}
 
 	/**
@@ -3115,12 +3119,16 @@ class User {
 				),
 				__METHOD__,
 				array( 'IGNORE' ) );
-		}
-		$this->loadGroups();
-		$this->mGroups = array_diff( $this->mGroups, array( $group ) );
-		$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
 
-		$this->invalidateCache();
+			$this->loadGroups();
+			$this->mGroups = array_diff( $this->mGroups, array( $group ) );
+			$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
+
+			$this->invalidateCache();
+
+			return true;
+		}
+		return false;
 	}
 
 	/**

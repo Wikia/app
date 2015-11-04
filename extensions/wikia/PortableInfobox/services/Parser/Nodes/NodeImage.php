@@ -53,16 +53,18 @@ class NodeImage extends Node {
 		global $wgArticleAsJson;
 		$data = array();
 		$doc = new \DOMDocument();
+		libxml_use_internal_errors( true );
 		$doc->loadHTML( $html );
+		libxml_use_internal_errors( false );
 		$sxml = simplexml_import_dom( $doc );
 		$divs = $sxml->xpath( '//div[@class=\'tabbertab\']' );
 		foreach ( $divs as $div ) {
 			if ( $wgArticleAsJson ) {
-				if ( preg_match( '/data-ref="([^"]+)"/', $div->p->asXML(), $out ) ) {
+				if ( preg_match( '/data-ref="([^"]+)"/', $div->asXML(), $out ) ) {
 					$data[] = array( 'label' => (string) $div['title'], 'title' => \ArticleAsJson::$media[$out[1]]['title'] );
 				}
 			} else {
-				if ( preg_match( '/data-(video|image)-key="([^"]+)"/', $div->p->asXML(), $out ) ) {
+				if ( preg_match( '/data-(video|image)-key="([^"]+)"/', $div->asXML(), $out ) ) {
 					$data[] = array( 'label' => (string) $div['title'], 'title' => $out[2] );
 				}
 			}

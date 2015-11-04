@@ -35,8 +35,24 @@
 	display: inline-block;
 	vertical-align: top;
 	width: 300px;
+
+	p {
+		line-height: 1.6em;
+		margin-bottom: 0.6em;
+	}
 }
 
-.template-classification-edit-form-label strong {
+.template-classification-edit-form-label .tc-type-name {
 	font-weight: bold;
+}
+
+@keyframes fadeBackground {
+	to {
+		background-color: transparent;
+	}
+}
+
+.template-classification-error {
+	background-color: #e1390b;
+	animation: fadeBackground 1s linear;
 }

@@ -1,9 +1,9 @@
 <form id="TemplateClassificationEditForm">
 	{{#templateTypes}}
-		<label for="template-classification-{{type}}" class="template-classification-edit-form-label">
+		<label for="template-classification-{{type}}" class="template-classification-edit-form-label modalEvent" data-event="option-select">
 			<input type="radio" id="template-classification-{{type}}" value="{{type}}" name="template-classification-types" class="template-classification-edit-form-input">
 			<div>
-				<strong>{{name}}</strong>
+				<span class="tc-type-name">{{name}}</span>
 				<p>{{description}}</p>
 			</div>
 		</label>

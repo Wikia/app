@@ -333,6 +333,11 @@ define('wikia.loader', [
 					options.sassParams = options.sassParams || window.wgSassParams;
 				}
 
+				if (typeof window.wgUserLanguage !== 'undefined' && typeof options.messages  !== 'undefined') {
+					// Add language to avoid cache pollution
+					options.uselang = window.wgUserLanguage;
+				}
+
 				nirvana.getJson(
 					'AssetsManager',
 					'getMultiTypePackage',
