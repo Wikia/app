@@ -61,7 +61,7 @@ class CuratedContentValidator {
 		if ( $item['type'] === CuratedContentHelper::STR_VIDEO ) {
 			if ( empty( $item['video_info'] ) ) {
 				$errors[] = self::ERR_VIDEO_WITHOUT_INFO;
-			} elseif ( !self::isSupportedProvider( $item['video_info']['provider'] ) ) {
+			} else if ( !self::isSupportedProvider( $item['video_info']['provider'] ) ) {
 				$errors[] = self::ERR_VIDEO_NOT_SUPPORTED;
 			}
 		}
