@@ -2,7 +2,7 @@
 
 use Swagger\Client\ApiException;
 
-class TemplateTypesParser {
+class ExternalTemplateTypesProvider {
 	const ERROR_MESSAGE = 'TemplateTypesParserError';
 
 	private $tcs;
