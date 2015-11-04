@@ -63,10 +63,10 @@ if ( !empty( $wgEnableNirvanaAPI ) ) {
 		] );
 	}
 
-	// PLATFORM-1633: decrease the noise in reported transactions when we return HTTP 404
+	// PLATFORM-1633: decrease the noise in reported transactions
 	$ex = $response->getException();
 
-	if ( $ex instanceof NotFoundException ) {
+	if ( $ex instanceof ControllerNotFoundException || $ex instanceof MethodNotFoundException ) {
 		Transaction::setAttribute( Transaction::PARAM_CONTROLLER, 'notFound' );
 		Transaction::setAttribute( Transaction::PARAM_METHOD, '' );
 
