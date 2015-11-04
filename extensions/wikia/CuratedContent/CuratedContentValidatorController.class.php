@@ -82,7 +82,7 @@ class CuratedContentValidatorController extends WikiaController {
 
 	private function respondWithErrors( Array $errors = null ) {
 		if ( !empty( $errors ) ) {
-			$this->response->setVal('error', $errors);
+			$this->response->setVal('errors', $errors);
 		}
 		$this->respondWithStatus( false );
 	}
