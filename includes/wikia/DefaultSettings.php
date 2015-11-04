@@ -1835,3 +1835,9 @@ $wgRejectAuthenticationFallback = true;
  * Return template type for given template from Template Classification Service
  */
 $wgAutoloadClasses['ExternalTemplateTypesProvider'] = "{$IP}/includes/wikia/parser/ExternalTemplateTypesProvider.class.php";
+
+/**
+ * Handles special parsing of templates classified by Template Classification Service
+ */
+$wgAutoloadClasses['TemplateTypesParser'] = "{$IP}/includes/wikia/parser/TemplateTypesParser.class.php";
+$wgHooks['Parser::FetchTemplateAndTitle'][] = 'TemplateTypesParser::onFetchTemplateAndTitle';
