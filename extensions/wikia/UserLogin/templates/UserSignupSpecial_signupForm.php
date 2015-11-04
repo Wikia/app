@@ -70,22 +70,21 @@ $form = [
 			'value' => '',
 		],
 		[
-			'type' => 'nirvanaview',
-			'controller' => 'UserSignupSpecial',
-			'view' => 'birthday',
+			'type' => 'custom',
 			'isRequired' => true,
 			'isInvalid' => ( !empty( $errParam ) && $errParam === 'birthyear' ) || ( !empty( $errParam ) && $errParam === 'birthmonth' ) || ( !empty( $errParam ) && $errParam === 'birthday' ),
 			'errorMsg' => ( !empty( $msg ) ? $msg : '' ),
-			'params' => ['birthyear' => $birthyear, 'birthmonth' => $birthmonth, 'birthday' => $birthday, 'isEn' => $isEn ],
+			'output' => F::app()->renderPartial( 'UserSignupSpecial', 'birthday', [
+				'birthyear' => $birthyear, 'birthmonth' => $birthmonth, 'birthday' => $birthday, 'isEn' => $isEn
+			])
 		],
 		[
-			'type' => 'nirvana',
-			'controller' => 'UserSignupSpecial',
-			'method' => 'captcha',
+			'type' => 'custom',
 			'isRequired' => true,
 			'class' => 'captcha',
 			'isInvalid' => ( !empty( $errParam ) && $errParam === 'wpCaptchaWord' ),
-			'errorMsg' => ( !empty( $msg ) ? $msg : '' )
+			'errorMsg' => ( !empty( $msg ) ? $msg : '' ),
+			'output' => F::app()->renderView( 'UserSignupSpecial', 'captcha' ),
 		],
 		[
 			'class' => 'opt-in-container hidden',
@@ -94,11 +93,11 @@ $form = [
 			'label' => wfMessage( 'userlogin-opt-in-label' )->escaped(),
 		],
 		[
-			'type' => 'nirvanaview',
-			'controller' => 'UserSignupSpecial',
-			'view' => 'submit',
+			'type' => 'custom',
 			'class' => 'submit-pane error',
-			'params' => [ 'createAccountButtonLabel' => $createAccountButtonLabel ]
+			'output' => F::app()->renderPartial( 'UserSignupSpecial', 'submit', [
+				'createAccountButtonLabel' => $createAccountButtonLabel
+			]),
 		]
 	]
 ];

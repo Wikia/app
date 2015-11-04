@@ -45,7 +45,7 @@ if ( !empty( $wgEnableNirvanaAPI ) ) {
 	// initialize skin if requested
 	$app->initSkin( (bool) $app->wg->Request->getVal( "skin", false ) );
 
-	$response = $app->sendRequest( null, null, null, false );
+	$response = $app->sendExternalRequest( null, null, null );
 
 	// commit any open transactions just in case the controller forgot to
 	$app->commit();

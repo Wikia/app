@@ -88,6 +88,9 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	private function processForm() {
 		$postedFormValues = $this->request->getParams();
 		$controllerName = $postedFormValues['emailController'];
+		if ( !preg_match( EmailController::EMAIL_CONTROLLER_REGEX, $controllerName ) ) {
+			throw new Fatal("Invalid email type: {$controllerName}");
+		}
 		return \F::app()->sendRequest( $controllerName, 'handle', $postedFormValues );
 	}
 
@@ -144,13 +147,23 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 		$emailControllerClasses = [];
 		foreach ( $allClasses as $className => $classPath ) {
 			if ( preg_match( EmailController::EMAIL_CONTROLLER_REGEX, $className, $matches ) ) {
-				if ( !$this->isClassAbstract( $className ) ) {
+				if ( !$this->isClassAbstract( $className ) && !$this->isControllerBlacklisted( $matches[1] ) ) {
 					$emailControllerClasses[] = $matches[0];
 				}
 			}
 		}
 
 		return $emailControllerClasses;
+	}
+
+	/**
+	 * Check if the controller is blacklisted
+	 *
+	 * @param $baseName string Base class name without namespace
+	 * @return bool
+	 */
+	private function isControllerBlacklisted( $baseName ) {
+		return in_array( $baseName, [ 'ForgotPassword', 'FacebookDisconnect' ] );
 	}
 
 	/**
