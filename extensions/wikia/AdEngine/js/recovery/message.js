@@ -118,7 +118,7 @@ define('ext.wikia.adEngine.recovery.message', [
 	}
 
 	function injectMessage() {
-		var group = window.Wikia.AbTest ? Wikia.AbTest.getGroup('ADBLOCK_MESSAGE') : false;
+		var group = win.Wikia.AbTest ? Wikia.AbTest.getGroup('ADBLOCK_MESSAGE') : false;
 
 		if (group && abTestGroups.top.hasOwnProperty(group)) {
 			injectTopMessage(abTestGroups.top[group]);
