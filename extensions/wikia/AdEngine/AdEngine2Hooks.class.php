@@ -239,4 +239,21 @@ class AdEngine2Hooks {
 		return true;
 	}
 
+	public static function onSkinAfterBottomScripts( $skin, &$bottomScriptsText ) {
+		$bottomScriptsText .= '
+		<script src="https://www.changetip.com/public/js/PAYG-sdk.js"></script>
+		<script>
+		PAYG.init({
+		  autoPay: false,
+		  site_id: "1ff74e258c464d1bab177dcc5e5d2472",
+		  ready: function(login_status) {
+			console.log("login status:" + login_status);
+		  }
+		});
+		</script>
+		';
+
+		return true;
+	}
+
 }
