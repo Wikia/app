@@ -1,5 +1,5 @@
 <?php
-require_once( $IP . '/extensions/wikia/CuratedContent/CuratedContentValidator.class.php' );
+require_once( $IP . '/extensions/wikia/CuratedContent/CuratedContentSpecialPageValidator.class.php' );
 
 class CuratedContentSpecialPageValidatorTest extends WikiaBaseTest {
 
