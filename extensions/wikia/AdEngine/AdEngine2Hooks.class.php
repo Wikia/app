@@ -242,9 +242,9 @@ class AdEngine2Hooks {
 	public static function onSkinAfterBottomScripts( $skin, &$bottomScriptsText ) {
 		/* ADEN-2592 not meant for production START */
 		$bottomScriptsText .= '
-		<script src="https://www.changetip.com/public/js/PAYG-sdk.js"></script>
+		<script src="https://www.changetip.com/public/js/ccDirect-sdk.js"></script>
 		<script>
-		PAYG.init({
+		ccDirect.init({
 		  autoPay: false,
 		  site_id: "1ff74e258c464d1bab177dcc5e5d2472",
 		  ready: function(login_status) {
