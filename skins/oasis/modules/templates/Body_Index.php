@@ -111,14 +111,6 @@
 					?>
 					</div>
 					<?php
-					if ( !WikiaPageType::isCorporatePage() && WikiaPageType::isMainPage() ) {
-						echo $app->renderView( 'AdEmptyContainer', 'Index', [
-							'slotName' => 'NATIVE_TABOOLA_RAIL',
-							'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']
-						] );
-					}
-					?>
-					<?php
 					if ( $runNjord ) {
 						echo $app->renderView( 'Njord', 'Summary' );
 						echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
