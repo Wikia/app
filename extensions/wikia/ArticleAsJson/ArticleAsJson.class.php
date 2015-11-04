@@ -328,12 +328,12 @@ class ArticleAsJson extends WikiaService {
 	 * @return bool
 	 */
 	public static function onFetchTemplateAndTitle( &$text, &$finalTitle ) {
-		global $wgArticleAsJson, $wgCityId;
+		global $wgArticleAsJson, $wgCityId, $wgEnableTemplateTypesParsing;
 
 		wfProfileIn( __METHOD__ );
 
-		if ( $wgArticleAsJson ) {
-			$type = ( new TemplateTypesParser( new \TemplateClassificationService ) )->getTemplateTypeFromTitle(
+		if ( $wgArticleAsJson && $wgEnableTemplateTypesParsing ) {
+			$type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )->getTemplateTypeFromTitle(
 					$wgCityId, $finalTitle );
 
 			$text = $type === TemplateClassificationService::TEMPLATE_NAVBOX ? '' : $text;
