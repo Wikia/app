@@ -118,16 +118,18 @@ require([
 require([
 	'ext.wikia.adEngine.slot.inContentPlayer',
 	'ext.wikia.adEngine.slot.skyScraper3',
+	'ext.wikia.adEngine.slot.taboola',
 	'wikia.document',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.slot.exitstitial'),
 	require.optional('ext.wikia.adEngine.slot.inContentDesktop')
-], function (inContentPlayer, skyScraper3, doc, win, exitstitial, inContentDesktop) {
+], function (inContentPlayer, skyScraper3, taboola, doc, win, exitstitial, inContentDesktop) {
 	'use strict';
 
 	function initDesktopSlots() {
 		inContentPlayer.init();
 		skyScraper3.init();
+		taboola.init();
 
 		if (inContentDesktop) {
 			inContentDesktop.init();
