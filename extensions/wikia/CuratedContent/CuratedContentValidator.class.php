@@ -15,124 +15,16 @@ class CuratedContentValidator {
 	const ERR_EMPTY_LABEL = 'emptyLabel';
 	const ERR_NO_CATEGORY_IN_TAG = 'noCategoryInTag';
 
-	private $errors;
-	private $existingSectionLabels;
-	private $existingItemLabels;
-	private $existingFeaturedItemLabels;
-	private $hasOptionalSection;
-
-	public function __construct() {
-		$this->reset();
-	}
-
-	public function reset() {
-		$this->errors = [ ];
-		$this->existingSectionLabels = [ ];
-		$this->existingItemLabels = [ ];
-		$this->existingFeaturedItemLabels = [ ];
-		$this->hasOptionalSection = false;
-	}
-
 	public function validateData( $data ) {
 
 		$errors = [];
 		// validate sections
 		foreach ( $data as $section ) {
-			if ( !empty( $section['featured'] ) ) {
-				$this->validateFeaturedItems( $section['items'] );
-			} else {
-				$this->validateSection( $section );
-				$this->validateItemsExist( $section );
-				$this->validateItems( $section );
-				$this->validateItemsTypes( $section );
-			}
+			// todo fix me
 		}
 		// also check for duplicate labels
-		$this->validateDuplicatedLabels();
 
-		return $this->errors;
-	}
-
-	public function validateDuplicatedLabels() {
-		foreach ( array_count_values( $this->existingFeaturedItemLabels ) as $label => $count ) {
-			if ( $count > 1 ) {
-				$this->error( $label, 'featured', self::ERR_DUPLICATED_LABEL );
-			}
-		}
-		foreach ( array_count_values( $this->existingSectionLabels ) as $label => $count ) {
-			if ( $count > 1 ) {
-				$this->error( $label, 'section', self::ERR_DUPLICATED_LABEL );
-			}
-		}
-		foreach ( array_count_values( $this->existingItemLabels ) as $label => $count ) {
-			if ( $count > 1 ) {
-				$this->error( $label, 'item', self::ERR_DUPLICATED_LABEL );
-			}
-		}
-	}
-
-	public function getErrors() {
-		return $this->errors;
-	}
-
-	private function error( $labelOrTitle, $type, $errorString ) {
-		if ( !empty( $errorString ) ) {
-			$this->errors[] = [ 'target' => $labelOrTitle, 'type' => $type, 'reason' => $errorString ];
-		}
-	}
-
-	public function validateFeaturedSectionItems( $section ) {
-		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
-			foreach ($section['items'] as $item) {
-				$this->validateItem( $item );
-			}
-		}
-	}
-
-	private function validateImage( $sectionOrItem, $isFeatured = false ) {
-		if ( empty( $sectionOrItem['image_id'] ) ) {
-			if ( $isFeatured ) {
-				// featured item has missing image
-				$this->error( $sectionOrItem['label'], 'featured', self::ERR_IMAGE_MISSING );
-			} elseif ( array_key_exists( 'label', $sectionOrItem ) ) {
-				// item has missing image
-				$this->error( $sectionOrItem['label'], 'item', self::ERR_IMAGE_MISSING );
-			} else {
-				// section has missing image
-				$this->error( $sectionOrItem['title'], 'section', self::ERR_IMAGE_MISSING );
-			}
-		}
-	}
-
-	public function validateItemsExist( $section ) {
-		// only non-optional, non-featured section has mandatory items
-		if ( ( empty( $section['featured'] ) && !empty( $section['title'] ) ) &&
-			( empty( $section['items'] ) || !is_array( $section['items'] ) ) )
-			{
-			$this->error( $section['title'], 'section', self::ERR_ITEMS_MISSING );
-		}
-	}
-
-	public function validateItems( $section, $isFeatured = false ) {
-		if ( !empty($section['items'] ) && is_array( $section['items'] ) ) {
-			foreach ($section['items'] as $item) {
-				$this->validateItem( $item, $isFeatured );
-			}
-		}
-	}
-
-	public function validateItemType( $item ) {
-		if ( $item['type'] !== CuratedContentHelper::STR_CATEGORY ) {
-			$this->error( $item['label'], 'item', self::ERR_NO_CATEGORY_IN_TAG );
-		}
-	}
-
-	public function validateItemsTypes( $section ) {
-		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
-			foreach ( $section['items'] as $item ) {
-				$this->validateItemType( $item );
-			}
-		}
+		return $errors;
 	}
 
 	private static function needsArticleId( $type ) {
