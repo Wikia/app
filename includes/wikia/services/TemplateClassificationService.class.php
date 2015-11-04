@@ -165,7 +165,12 @@ class TemplateClassificationService {
 		global $wgConsulUrl, $wgConsulServiceTag;
 		$urlProvider = new ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag );
 		$apiProvider = new ApiProvider( $urlProvider );
-		return $apiProvider->getApi( self::SERVICE_NAME, TCSApi::class );
+		$apiClient = $apiProvider->getApi( self::SERVICE_NAME, TCSApi::class );
+
+		// overwrite curl timeout
+		$apiClient->getConfig()->setCurlTimeout(1);
+
+		return $apiClient;
 	}
 
 }
