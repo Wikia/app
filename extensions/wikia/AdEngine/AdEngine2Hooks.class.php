@@ -240,6 +240,7 @@ class AdEngine2Hooks {
 	}
 
 	public static function onSkinAfterBottomScripts( $skin, &$bottomScriptsText ) {
+		/* ADEN-2592 not meant for production START */
 		$bottomScriptsText .= '
 		<script src="https://www.changetip.com/public/js/PAYG-sdk.js"></script>
 		<script>
@@ -252,7 +253,7 @@ class AdEngine2Hooks {
 		});
 		</script>
 		';
-
+		/* ADEN-2592 not meant for production END */
 		return true;
 	}
 
