@@ -1,7 +1,8 @@
 /*global define*/
-define('ext.wikia.adEngine.slot.inContentPlayer', [
+define('ext.wikia.adEngine.slot.taboola', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.recovery.helper',
+	'wikia.document',
 	'wikia.log',
 	'wikia.window'
 ], function (adContext, recoveryHelper, doc, log, win) {
