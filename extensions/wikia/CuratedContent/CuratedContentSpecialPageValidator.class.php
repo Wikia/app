@@ -1,6 +1,6 @@
 <?php
 
-class CuratedContentValidator {
+class CuratedContentSpecialPageValidator {
 	const LABEL_MAX_LENGTH = 48;
 
 	const ERR_DUPLICATED_LABEL = 'duplicatedLabel';
@@ -33,12 +33,12 @@ class CuratedContentValidator {
 	}
 
 	public function validateData( $data ) {
+		$this->reset();
 
-		$errors = [];
 		// validate sections
 		foreach ( $data as $section ) {
 			if ( !empty( $section['featured'] ) ) {
-				$this->validateFeaturedItems( $section['items'] );
+				$this->validateItems( $section, true );
 			} else {
 				$this->validateSection( $section );
 				$this->validateItemsExist( $section );
@@ -197,39 +197,5 @@ class CuratedContentValidator {
 
 	private static function isSupportedProvider( $provider ) {
 		return ( $provider === 'youtube' ) || ( startsWith( $provider, 'ooyala' ) );
-	}
-
-	public function validateFeaturedItem($item) {
-		$errors = [];
-
-		if(empty( $item['image_id'] )) {
-			$errors[] = self::ERR_IMAGE_MISSING;
-		};
-
-		if ( self::needsArticleId( $item['type'] ) && empty( $item['article_id'] ) ) {
-			$errors[] = self::ERR_ARTICLE_NOT_FOUND;
-		}
-
-		if ( empty( $item['label'] ) ) {
-			$errors[] = self::ERR_EMPTY_LABEL;
-		}
-
-		if ( strlen( $item['label'] ) > self::LABEL_MAX_LENGTH ) {
-			$errors[] = self::ERR_TOO_LONG_LABEL;
-		}
-
-		if ( empty( $item['type'] ) ) {
-			$errors[] = self::ERR_NOT_SUPPORTED_TYPE;
-		}
-
-		if ( $item['type'] === CuratedContentHelper::STR_VIDEO ) {
-			if ( empty( $item['video_info'] ) ) {
-				$errors[] = self::ERR_VIDEO_WITHOUT_INFO;
-			} elseif ( !self::isSupportedProvider( $item['video_info']['provider'] ) ) {
-				$errors[] = self::ERR_VIDEO_NOT_SUPPORTED;
-			}
-		}
-
-		return $errors;
 	}
 }

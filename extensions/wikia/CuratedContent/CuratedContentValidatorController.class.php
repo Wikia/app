@@ -104,4 +104,21 @@ class CuratedContentValidatorController extends WikiaController {
 		// TODO: CONCF-961 Set more restrictive header
 		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 	}
+
+	public function validateFeaturedItem() {
+		global $wgRequest;
+		if ( !$wgRequest->wasPosted() ) {
+			throw new CuratedContentValidatorMethodNotAllowedException();
+		}
+
+		$item = $this->request->getVal( 'item' );
+
+		if ( empty( $item ) ) {
+			$this->respondWithErrors();
+		} else {
+			$this->helper->fillItemInfo( $item );
+			$errors = $this->validator->validateFeaturedItem( $item );
+			$this->respond( $errors );
+		}
+	}
 }
