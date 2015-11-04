@@ -105,14 +105,12 @@ class CuratedContentValidator {
 
 		if ( empty( $item['type'] ) ) {
 			$errors[] = self::ERR_NOT_SUPPORTED_TYPE;
+		} elseif ( $item['type'] !== CuratedContentHelper::STR_CATEGORY ) {
+			$errors[] = self::ERR_NO_CATEGORY_IN_TAG;
 		}
 
 		if ( self::needsArticleId( $item['type'] ) && empty( $item['article_id'] ) ) {
 			$errors[] = self::ERR_ARTICLE_NOT_FOUND;
-		}
-
-		if ( $item['type'] !== CuratedContentHelper::STR_CATEGORY ) {
-			$errors[] = self::ERR_NO_CATEGORY_IN_TAG;
 		}
 
 		return $errors;

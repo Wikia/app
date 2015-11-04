@@ -7,7 +7,7 @@ class CuratedContentValidatorTest extends WikiaBaseTest
 	/**
 	 * @param $item
 	 * @param $expectedResult
-	 * @dataProvider validationDataProvider
+	 * @dataProvider validateFeaturedItemDataProvider
 	 */
 	public function testValidateFeaturedItem($item, $expectedResult) {
 		$validator = new CuratedContentValidator();
@@ -15,7 +15,7 @@ class CuratedContentValidatorTest extends WikiaBaseTest
 		$this->assertEquals($result, $expectedResult);
 	}
 
-	public function validationDataProvider() {
+	public function validateFeaturedItemDataProvider() {
 		return [
 			[
 				['article_id' => 9, 'image_id' => 9, 'label'=> 'foo', 'type' => 'category'],
@@ -70,8 +70,149 @@ class CuratedContentValidatorTest extends WikiaBaseTest
 					CuratedContentValidator::ERR_IMAGE_MISSING,
 					CuratedContentValidator::ERR_ARTICLE_NOT_FOUND,
 					CuratedContentValidator::ERR_EMPTY_LABEL,
-					CuratedContentValidator::ERR_NOT_SUPPORTED_TYPE
+					CuratedContentValidator::ERR_NOT_SUPPORTED_TYPE,
 				],
+			],
+		];
+	}
+
+	/**
+	 * @param $item
+	 * @param $expectedResult
+	 * @dataProvider validateSectionItemDataProvider
+	 */
+	public function testValidateSectionItem($item, $expectedResult) {
+		$validator = new CuratedContentValidator();
+		$result = $validator->validateSectionItem($item);
+		$this->assertEquals($result, $expectedResult);
+	}
+
+	public function validateSectionItemDataProvider() {
+		return [
+			[
+				['article_id' => 9, 'image_id' => 9, 'label'=> 'foo', 'type' => 'category'],
+				[]
+			], [
+				['article_id' => 9, 'image_id' => 9, 'label'=> 'foo', 'type' => 'file'],
+				[CuratedContentValidator::ERR_NO_CATEGORY_IN_TAG],
+			], [
+				['article_id' => null, 'image_id' => 9, 'label'=> 'foo', 'type' => 'category'],
+				[],
+			], [
+				['article_id' => 9, 'image_id' => 0, 'label'=> 'foo', 'type' => 'category'],
+				[CuratedContentValidator::ERR_IMAGE_MISSING],
+			], [
+				['article_id' => 9, 'image_id' => 9, 'label'=> '', 'type' => 'category'],
+				[CuratedContentValidator::ERR_EMPTY_LABEL],
+			], [
+				[
+					'article_id' => 9,
+					'image_id' => 9,
+					'label'=> 'thisisfartoolonglabelthisisfartoolonglabelthisisfartoolonglabelthisisfartoolonglabel',
+					'type' => 'category'
+				],
+				[CuratedContentValidator::ERR_TOO_LONG_LABEL],
+			], [
+				['article_id' => 9, 'image_id' => 9, 'label'=> 'foo', 'type' => 'video', 'video_info' => [
+					'provider' => 'youtube'
+				]
+				],
+				[CuratedContentValidator::ERR_NO_CATEGORY_IN_TAG],
+			], [
+				['article_id' => 9, 'image_id' => 9, 'label'=> 'foo', 'type' => ''],
+				[CuratedContentValidator::ERR_NOT_SUPPORTED_TYPE],
+			], [
+				['article_id' => null, 'image_id' => null, 'label'=> '', 'type' => ''],
+				[
+					CuratedContentValidator::ERR_IMAGE_MISSING,
+					CuratedContentValidator::ERR_EMPTY_LABEL,
+					CuratedContentValidator::ERR_NOT_SUPPORTED_TYPE,
+					CuratedContentValidator::ERR_ARTICLE_NOT_FOUND,
+				],
+			],
+		];
+	}
+
+	/**
+	 * @param $section
+	 * @param $expectedResult
+	 * @dataProvider validateSectionDataProvider
+	 */
+	public function testValidateSection($section, $expectedResult) {
+		$validator = new CuratedContentValidator();
+		$result = $validator->validateSection($section);
+		$this->assertEquals($result, $expectedResult);
+	}
+
+	public function validateSectionDataProvider() {
+		return [
+			[
+				['image_id' => 9, 'title'=> 'foo'],
+				[],
+			], [
+				['image_id' => 0, 'title'=> 'foo'],
+				[CuratedContentValidator::ERR_IMAGE_MISSING],
+			], [
+				['image_id' => 9, 'label'=> 'foo'],
+				[CuratedContentValidator::ERR_EMPTY_LABEL],
+			], [
+				['image_id' => 9, 'title'=> ''],
+				[CuratedContentValidator::ERR_EMPTY_LABEL],
+			], [
+				[
+					'image_id' => 9,
+					'title'=> 'thisisfartoolonglabelthisisfartoolonglabelthisisfartoolonglabelthisisfartoolonglabel',
+				],
+				[CuratedContentValidator::ERR_TOO_LONG_LABEL],
+			], [
+				['image_id' => null, 'title'=> ''],
+				[
+					CuratedContentValidator::ERR_EMPTY_LABEL,
+					CuratedContentValidator::ERR_IMAGE_MISSING,
+				],
+			],
+		];
+	}
+
+	/**
+	 * @param $section
+	 * @param $expectedResult
+	 * @dataProvider validateSectionWithItemsDataProvider
+	 */
+	public function testValidateSectionWithItems($section, $expectedResult) {
+		$validator = new CuratedContentValidator();
+		$result = $validator->validateSectionWithItems($section);
+		$this->assertEquals($result, $expectedResult);
+	}
+
+	public function validateSectionWithItemsDataProvider() {
+		return [
+			[
+				['image_id' => 9, 'title'=> 'foo', 'items' => [
+					['article_id' => 9, 'image_id' => 9, 'label'=> 'foo', 'type' => 'category'],
+					['article_id' => 9, 'image_id' => 9, 'label'=> 'bar', 'type' => 'category'],
+				]],
+				[],
+			], [
+				['image_id' => 9, 'title'=> 'foo'],
+				[CuratedContentValidator::ERR_ITEMS_MISSING],
+			], [
+				['image_id' => 9, 'title'=> 'foo', 'items' => []],
+				[CuratedContentValidator::ERR_ITEMS_MISSING],
+			], [
+				['image_id' => 0, 'title'=> '', 'items' => []],
+				[CuratedContentValidator::ERR_ITEMS_MISSING, CuratedContentValidator::ERR_OTHER_ERROR],
+			], [
+				['image_id' => 9, 'title'=> 'foo', 'items' => [
+					['article_id' => 9, 'image_id' => 9, 'label'=> 'foo', 'type' => 'category'],
+					['article_id' => 9, 'image_id' => 9, 'label'=> 'foo', 'type' => 'category'],
+				]],
+				[CuratedContentValidator::ERR_DUPLICATED_LABEL],
+			], [
+				['image_id' => 9, 'title'=> 'foo', 'items' => [
+					['article_id' => 9, 'image_id' => 0, 'label'=> 'foo', 'type' => 'category'],
+				]],
+				[CuratedContentValidator::ERR_OTHER_ERROR],
 			],
 		];
 	}
