@@ -26,7 +26,17 @@ define('ext.wikia.adEngine.recovery.message', [
 ) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.recovery.message',
+	var abTestGroups = {
+			'top': {
+				'TOP_A': 'a',
+				'TOP_B': 'b'
+			},
+			'rightRail': {
+				'MR_A': 'a',
+				'MR_B': 'b'
+			}
+		},
+		logGroup = 'ext.wikia.adEngine.recovery.message',
 		localStorageKey = 'rejectedRecoveredMessage';
 
 	function accept() {
@@ -68,10 +78,10 @@ define('ext.wikia.adEngine.recovery.message', [
 		});
 	}
 
-	function createMessage(uniqueClassName) {
+	function createMessage(uniqueClassName, messageVariant) {
 		return getAssets().then(function (assets) {
 			var template = assets.mustache[0],
-				text = mw.message('adengine-recovery-message-blocking-message-a').rawParams([
+				text = mw.message('adengine-recovery-message-blocking-message-'+messageVariant).rawParams([
 					'<a class="action-accept">' +
 						mw.message('adengine-recovery-message-blocking-click').escaped() +
 					'</a>'
@@ -93,23 +103,30 @@ define('ext.wikia.adEngine.recovery.message', [
 		});
 	}
 
-	function injectTopMessage() {
+	function injectTopMessage(messageVariant) {
 		log('recoveredAdsMessage.recover - injecting top message', 'debug', logGroup);
-		createMessage('top').done(function (messageContainer) {
+		createMessage('top', messageVariant).done(function (messageContainer) {
 			$('#WikiaTopAds').before(messageContainer);
 		});
 	}
 
-	function injectRightRailMessage() {
+	function injectRightRailMessage(messageVariant) {
 		log('recoveredAdsMessage.recover - injecting right rail message', 'debug', logGroup);
-		createMessage('right-rail').done(function (messageContainer) {
+		createMessage('right-rail', messageVariant).done(function (messageContainer) {
 			$('#WikiaRail').prepend(messageContainer);
 		});
 	}
 
 	function injectMessage() {
-		injectTopMessage();
-		injectRightRailMessage();
+		var group = window.Wikia.AbTest ? Wikia.AbTest.getGroup('ADBLOCK_MESSAGE') : false;
+
+		if (group && abTestGroups.top.hasOwnProperty(group)) {
+			injectTopMessage(abTestGroups.top[group]);
+		}
+
+		if (group && abTestGroups.rightRail.hasOwnProperty(group)) {
+			injectRightRailMessage(abTestGroups.rightRail[group]);
+		}
 	}
 
 	function recover() {
