@@ -104,7 +104,7 @@ class AvatarsMigrator extends Maintenance {
 		$avatar = $user->getGlobalAttribute( AVATAR_USER_OPTION_NAME );
 
 		// no avatar set, skip this account
-		if ( is_null( $avatar ) ) {
+		if ( is_null( $avatar ) || $avatar === '' ) {
 			$this->output( 'no avatar set - skipping' );
 			return;
 		}
@@ -139,6 +139,7 @@ class AvatarsMigrator extends Maintenance {
 
 			$avatarContent = Http::get( $avatarUrl, 'default', [ 'noProxy' => true ] );
 			if ( empty( $avatarContent ) ) {
+				$this->setAvatarUrl( $user, '' );
 				throw new AvatarsMigratorException( 'Avatar fetch failed' );
 			}
 
