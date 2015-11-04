@@ -1831,7 +1831,6 @@ $wgLogRestrictions['piggyback'] = 'piggyback';
  */
 $wgRejectAuthenticationFallback = true;
 
-
 /**
  * Return template type for given template from Template Classification Service
  */
