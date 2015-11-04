@@ -319,28 +319,4 @@ class ArticleAsJson extends WikiaService {
 	private static function isIconSize( $sizeParam ) {
 		return isset( $sizeParam ) ? $sizeParam <= self::ICON_MAX_SIZE : false;
 	}
-
-	/**
-	 * @desc removes navbox template text from parser output
-	 *
-	 * @param string $text - template content
-	 * @param Title $finalTitle - template title object
-	 * @return bool
-	 */
-	public static function onFetchTemplateAndTitle( &$text, &$finalTitle ) {
-		global $wgArticleAsJson, $wgCityId, $wgEnableTemplateTypesParsing;
-
-		wfProfileIn( __METHOD__ );
-
-		if ( $wgArticleAsJson && $wgEnableTemplateTypesParsing ) {
-			$type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )->getTemplateTypeFromTitle(
-					$wgCityId, $finalTitle );
-
-			$text = $type === TemplateClassificationService::TEMPLATE_NAVBOX ? '' : $text;
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return true;
-	}
 }
