@@ -2,7 +2,7 @@
 /**
  * Curated Content API setup file
  */
- 
+
 $wgExtensionCredits[ 'specialpage' ][ ] = array(
 	'name' => 'CuratedContent',
 	'author' => 'Wikia',
@@ -27,7 +27,7 @@ $wgAutoloadClasses['CuratedContentHooks'] =  __DIR__ . '/CuratedContentHooks.cla
 $wgExtensionMessagesFiles['CuratedContent'] = __DIR__ . '/CuratedContent.i18n.php';
 $wgExtensionMessagesFiles['CuratedContentAlias'] = __DIR__ . '/CuratedContent.alias.php';
 
-//Special Page for Content Managment Tool
+// Special Page for Content Managment Tool
 $wgAutoloadClasses[ 'CuratedContentSpecialController'] =  __DIR__ . '/CuratedContentSpecialController.class.php' ;
 $wgSpecialPages[ 'CuratedContent' ] =  'CuratedContentSpecialController';
 
@@ -54,12 +54,12 @@ JSMessages::registerPackage( 'CuratedContentMsg', [
 	'wikiacuratedcontent-content-imagemissing-error'
 ] );
 
-//hooks
+// hooks
 $wgHooks['CuratedContentSave'][] = 'CuratedContentHooks::onCuratedContentSave';
 $wgHooks['SkinAfterBottomScripts'][] = 'CuratedContentHooks::onSkinAfterBottomScripts';
 $wgHooks['OutputPageBeforeHTML'][] = 'CuratedContentHooks::onOutputPageBeforeHTML';
 
-//minimal package of messages in CuratedContent
+// minimal package of messages in CuratedContent
 JSMessages::registerPackage( 'CuratedContent', [
 	'wikiamobile-hide-section',
 	'wikiamobile-image-not-loaded',

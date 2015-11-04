@@ -82,7 +82,7 @@ class CuratedContentSpecialPageValidator {
 
 	public function validateFeaturedSectionItems( $section ) {
 		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
-			foreach ($section['items'] as $item) {
+			foreach ( $section['items'] as $item ) {
 				$this->validateItem( $item );
 			}
 		}
@@ -113,8 +113,8 @@ class CuratedContentSpecialPageValidator {
 	}
 
 	public function validateItems( $section, $isFeatured = false ) {
-		if ( !empty($section['items'] ) && is_array( $section['items'] ) ) {
-			foreach ($section['items'] as $item) {
+		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
+			foreach ( $section['items'] as $item ) {
 				$this->validateItem( $item, $isFeatured );
 			}
 		}

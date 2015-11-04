@@ -16,13 +16,43 @@ class CuratedContentValidator {
 	const ERR_NO_CATEGORY_IN_TAG = 'noCategoryInTag';
 
 	public function validateData( $data ) {
+		$errors = [ ];
+		$alreadyUsedSectionLabels = [ ];
 
-		$errors = [];
-		// validate sections
-		foreach ( $data as $section ) {
-			// todo fix me
+		if ( is_array( $data ) ) {
+			foreach ( $data as $section ) {
+
+				if ( is_array( $section['items'] ) ) {
+					if ( !empty( $section['featured'] ) ) {
+						foreach ( $section['items'] as $featuredItem ) {
+							if ( !empty( $this->validateFeaturedItem( $featuredItem ) ) ) {
+								$errors[] = self::ERR_OTHER_ERROR;
+							} ;
+						}
+					} else {
+						$alreadyUsedSectionLabels[] = $section['title'];
+
+						if ( empty( $section['title'] ) ) {
+							foreach ( $section['items'] as $item ) {
+								if ( !empty( $this->validateSectionItem( $item ) ) ) {
+									$errors[] = self::ERR_OTHER_ERROR;
+								} ;
+							}
+						} else {
+							if ( !empty( $this->validateSectionWithItems( $section ) ) ) {
+								$errors[] = self::ERR_OTHER_ERROR;
+							} ;
+						}
+					}
+				}
+			}
+
+			foreach ( array_count_values( $alreadyUsedSectionLabels ) as $label => $count ) {
+				if ( $count > 1 ) {
+					$errors[] = self::ERR_DUPLICATED_LABEL;
+				}
+			}
 		}
-		// also check for duplicate labels
 
 		return $errors;
 	}
@@ -35,12 +65,12 @@ class CuratedContentValidator {
 		return ( $provider === 'youtube' ) || ( startsWith( $provider, 'ooyala' ) );
 	}
 
-	public function validateFeaturedItem($item) {
+	public function validateFeaturedItem( $item ) {
 		$errors = [];
 
-		if ( empty( $item['image_id'] )) {
+		if ( empty( $item['image_id'] ) ) {
 			$errors[] = self::ERR_IMAGE_MISSING;
-		};
+		} ;
 
 		if ( self::needsArticleId( $item['type'] ) && empty( $item['article_id'] ) ) {
 			$errors[] = self::ERR_ARTICLE_NOT_FOUND;
@@ -81,7 +111,7 @@ class CuratedContentValidator {
 			$errors[] = self::ERR_TOO_LONG_LABEL;
 		}
 
-		if ( empty( $section['image_id'] )) {
+		if ( empty( $section['image_id'] ) ) {
 			$errors[] = self::ERR_IMAGE_MISSING;
 		}
 
@@ -91,7 +121,7 @@ class CuratedContentValidator {
 	public function validateSectionItem( $item ) {
 		$errors = [];
 
-		if ( empty( $item['image_id'] )) {
+		if ( empty( $item['image_id'] ) ) {
 			$errors[] = self::ERR_IMAGE_MISSING;
 		}
 

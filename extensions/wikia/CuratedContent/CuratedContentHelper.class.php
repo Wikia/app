@@ -139,7 +139,7 @@ class CuratedContentHelper {
 	}
 
 	public static function getImageUrl( $id, $imageSize = 50 ) {
-		$thumbnail = (new ImageServing( [ $id ], $imageSize, $imageSize ))->getImages( 1 );
+		$thumbnail = ( new ImageServing( [ $id ], $imageSize, $imageSize ) )->getImages( 1 );
 		return !empty( $thumbnail ) ? $thumbnail[$id][0]['url'] : null;
 	}
 
@@ -212,7 +212,7 @@ class CuratedContentHelper {
 				}
 			}
 		}
-		return ($imageTitle instanceof Title && $imageTitle->exists()) ? $imageTitle : null;
+		return ( $imageTitle instanceof Title && $imageTitle->exists() ) ? $imageTitle : null;
 	}
 
 	public static function getUrlFromImageTitle( $imageTitle ) {

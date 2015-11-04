@@ -547,7 +547,7 @@ class CuratedContentController extends WikiaController {
 
 	private function getItemsFromSections( $content, $sections ) {
 		$items = [ ];
-		if( is_array( $sections ) ) {
+		if ( is_array( $sections ) ) {
 			foreach ( $sections as $section ) {
 				$categoriesForSection = $this->getSectionItems( $content, $section['title'] );
 				foreach ( $categoriesForSection as $category ) {
