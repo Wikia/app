@@ -27,12 +27,12 @@ define('ext.wikia.adEngine.recovery.message', [
 	'use strict';
 
 	var abTestConfig = {
-			'groupName' : 'ADBLOCK_MESSAGE',
-			'top': {
+			'experimentName' : 'ADBLOCK_MESSAGE',
+			'topGroupNames': {
 				'TOP_A': 'a',
 				'TOP_B': 'b'
 			},
-			'rightRail': {
+			'rightRailGroupNames': {
 				'MR_A': 'a',
 				'MR_B': 'b'
 			}
@@ -119,14 +119,14 @@ define('ext.wikia.adEngine.recovery.message', [
 	}
 
 	function injectMessage() {
-		var group = win.Wikia.AbTest ? Wikia.AbTest.getGroup(abTestConfig.groupName) : false;
+		var group = win.Wikia.AbTest ? Wikia.AbTest.getGroup(abTestConfig.experimentName) : false;
 
-		if (group && abTestConfig.top.hasOwnProperty(group)) {
-			injectTopMessage(abTestConfig.top[group]);
+		if (group && abTestConfig.topGroupNames.hasOwnProperty(group)) {
+			injectTopMessage(abTestConfig.topGroupNames[group]);
 		}
 
-		if (group && abTestConfig.rightRail.hasOwnProperty(group)) {
-			injectRightRailMessage(abTestConfig.rightRail[group]);
+		if (group && abTestConfig.rightRailGroupNames.hasOwnProperty(group)) {
+			injectRightRailMessage(abTestConfig.rightRailGroupNames[group]);
 		}
 	}
 
