@@ -64,9 +64,8 @@ define('ext.wikia.adEngine.adContext', [
 				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
 		}
 
-		// @TODO ADEN-2578 - cleanup
 		// SourcePoint recovery integration
-		if (context.opts.sourcePointDetection && (context.opts.sourcePointRecoveryUrl || context.opts.sourcePointUrl)) {
+		if (context.opts.sourcePointDetection && context.opts.sourcePointRecoveryUrl) {
 			context.opts.sourcePointRecovery = isUrlParamSet('sourcepointrecovery') ||
 				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
 		}
