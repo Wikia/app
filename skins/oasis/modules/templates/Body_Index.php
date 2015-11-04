@@ -99,6 +99,14 @@
 					<? if( $displayAdminDashboardChromedArticle ) { ?>
 						<?= ( string )$app->sendRequest( 'AdminDashboardSpecialPage', 'chromedArticleHeader', array( 'headerText' => $wg->Title->getText() ) ) ?>
 					<? } ?>
+					<?php
+					if ( !WikiaPageType::isCorporatePage() && WikiaPageType::isMainPage() ) {
+						echo $app->renderView( 'Ad', 'Index', [
+							'slotName' => 'NATIVE_TABOOLA_RAIL',
+							'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']
+						] );
+					}
+					?>
 
 					<div class="home-top-right-ads">
 					<?php
