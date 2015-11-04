@@ -60,7 +60,10 @@ class AvatarsMigrator extends Maintenance {
 			'`user`',
 			'user_id AS id',
 			$where,
-			__METHOD__
+			__METHOD__,
+			[
+				'ORDER BY' => 'user_id'
+			]
 		);
 
 		$rows = $res->numRows();
