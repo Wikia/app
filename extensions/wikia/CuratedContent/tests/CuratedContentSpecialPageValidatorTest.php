@@ -1,7 +1,7 @@
 <?php
 require_once( $IP . '/extensions/wikia/CuratedContent/CuratedContentValidator.class.php' );
 
-class CuratedContentValidatorTest extends WikiaBaseTest {
+class CuratedContentSpecialPageValidatorTest extends WikiaBaseTest {
 
 	/**
 	 * @param array $data
@@ -10,7 +10,7 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 	 * @dataProvider testValidationDataProvider
 	 */
 	public function testValidation( $errorsExpected, $data, $brokenValidationMessage ) {
-		$this->assertEquals( $errorsExpected, ( new CuratedContentValidator )->validateData( $data ), $brokenValidationMessage );
+		$this->assertEquals( $errorsExpected, ( new CuratedContentSpecialPageValidator )->validateData( $data ), $brokenValidationMessage );
 	}
 
 	public function testValidationDataProvider() {
