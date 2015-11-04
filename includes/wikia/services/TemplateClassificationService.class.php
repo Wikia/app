@@ -22,6 +22,7 @@ class TemplateClassificationService {
 	const TEMPLATE_NAV = 'navigation';
 	const TEMPLATE_NOT_ART = 'nonarticle';
 	const TEMPLATE_UNKNOWN = 'unknown';
+	const TEMPLATE_UNCLASSIFIED = '' ;
 
 	const NOT_AVAILABLE = 'not-available';
 
@@ -57,7 +58,7 @@ class TemplateClassificationService {
 	 * @throws \Swagger\Client\ApiException
 	 */
 	public function getType( $wikiId, $pageId ) {
-		$templateType = '';
+		$templateType = self::TEMPLATE_UNCLASSIFIED;
 
 		$type = $this->getApiClient()->getTemplateType( $wikiId, $pageId );
 		if ( !is_null( $type ) ) {
