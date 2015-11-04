@@ -19,7 +19,7 @@
 			<?= !empty( $afterBodyContent ) ? $afterBodyContent : ''; ?>
 			<nav id="wkRltdCnt">
 				<div id="RelatedPagesModuleWrapper"></div>
-				<div id="NATIVE_TABOOLA"></div>
+				<div id="NATIVE_TABOOLA_ARTICLE"></div>
 				<?= !empty( $trendingArticles ) ? $trendingArticles : ''; ?>
 				<?= !empty( $categoryLinks ) ? $categoryLinks : ''; ?>
 			</nav>

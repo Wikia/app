@@ -39,7 +39,7 @@ require(
 			mobileTopLeaderBoard = 'MOBILE_TOP_LEADERBOARD',
 			mobileInContent = 'MOBILE_IN_CONTENT',
 			mobilePreFooter = 'MOBILE_PREFOOTER',
-			mobileTaboola = 'NATIVE_TABOOLA',
+			mobileTaboola = 'NATIVE_TABOOLA_ARTICLE',
 			showInContent = firstSectionTop > minZerothSectionLength,
 			showPreFooter = doc.body.offsetHeight > minPageLength || firstSectionTop < minZerothSectionLength;
 
