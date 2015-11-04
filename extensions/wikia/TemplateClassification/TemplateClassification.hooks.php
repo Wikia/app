@@ -91,17 +91,13 @@ class Hooks {
 	public function onEditPageShowEditFormFields( \EditPage $editPage, \OutputPage $out ) {
 		global $wgCityId;
 
-		if ( $out->getSkin() instanceof \SkinMonoBook ) {
-			return true;
+		$context = \RequestContext::getMain();
+
+		if ( ( new Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $context->getTitle() ) ) {
+			$templateType = $this->getTemplateTypeForEdit( $editPage->getTitle(), $wgCityId );
+
+			$out->addHTML( \Html::hidden( 'templateClassificationType', $templateType ) );
 		}
-
-		$templateType = $this->getTemplateTypeForEdit( $editPage->getTitle(), $wgCityId );
-
-		$editPage->addHiddenField([
-			'name' => 'templateClassificationType',
-			'value' => $templateType,
-			'type' => 'hidden',
-		]);
 
 		return true;
 	}
