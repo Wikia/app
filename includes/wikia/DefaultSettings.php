@@ -1830,3 +1830,9 @@ $wgLogRestrictions['piggyback'] = 'piggyback';
  * Reject attempts to fall back to the MediaWiki session for authentication.
  */
 $wgRejectAuthenticationFallback = true;
+
+
+/**
+ * Return template type for given template from Template Classification Service
+ */
+$wgAutoloadClasses['ExternalTemplateTypesProvider'] = "{$IP}/includes/wikia/parser/ExternalTemplateTypesProvider.class.php";
