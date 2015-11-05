@@ -96,13 +96,11 @@ define(
 
 			/* Allow TemplateClassification extension to break submit */
 			if (win.enableTemplateClassificationEditorPlugin) {
-				require(['TemplateClassificationModalForce'], function forceTemplateClassificationModal(tcForce) {
-					if (tcForce.forceType() === true) {
-						return;
-					} else {
-						finishSubmit($editForm, $hiddenInput);
-					}
-				});
+				if (require('TemplateClassificationModalForce').forceType() === true) {
+					return;
+				} else {
+					finishSubmit($editForm, $hiddenInput);
+				}
 			} else {
 				finishSubmit($editForm, $hiddenInput);
 			}
