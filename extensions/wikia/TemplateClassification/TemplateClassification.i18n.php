@@ -34,8 +34,8 @@ $messages['en'] = [
 	'template-classification-type-nonarticle' => 'Non-article',
 	'template-classification-description-nonarticle' => 'This template is not used on article pages.',
 
-	'template-classification-type-unknown' => 'Unknown',
-	'template-classification-description-unknown' => "I don't know.",
+	'template-classification-type-other' => 'Unknown',
+	'template-classification-description-other' => "I don't know.",
 
 	'template-classification-type-header' => 'Type of the template',
 	'template-classification-edit-modal-add-button-text' => 'Add',
@@ -65,7 +65,7 @@ $messages['qqq'] = [
 	'template-classification-type-nonarticle' => 'Name of a non-article type',
 	'template-classification-type-notice' => 'Name of a notice type',
 	'template-classification-type-reference' => 'Name of a reference type',
-	'template-classification-type-unknown' => 'Name of an unknown template type',
+	'template-classification-type-other' => 'Name of an unknown template type',
 
 	'template-classification-description-infobox' => 'Description (additional label) for the infobox type. This is shown in dialog box under the type name to explain what each type is.',
 	'template-classification-description-navbox' => 'Description (additional label) for the navbox type. This is shown in dialog box under the type name to explain what each type is.',
@@ -74,7 +74,7 @@ $messages['qqq'] = [
 	'template-classification-description-design' => 'Description (additional label) for the design type. This is shown in dialog box under the type name to explain what each type is.',
 	'template-classification-description-navigation' => 'Description (additional label) for the navigation type. This is shown in dialog box under the type name to explain what each type is.',
 	'template-classification-description-nonarticle' => 'Description (additional label) for the non-article type. This is shown in dialog box under the type name to explain what each type is.',
-	'template-classification-description-unknown' => 'Description (additional label) for the unknown template type. This is shown in dialog box under the type name to explain what each type is.',
+	'template-classification-description-other' => 'Description (additional label) for the unknown template type. This is shown in dialog box under the type name to explain what each type is.',
 	'template-classification-description-media' => 'Description (additional label) for the media template type. This is shown in dialog box under the type name to explain what each type is.',
 	'template-classification-description-notice' => 'Description (additional label) for the notice template type. This is shown in dialog box under the type name to explain what each type is.',
 	'template-classification-description-reference'  => 'Description (additional label) for the reference template type. This is shown in dialog box under the type name to explain what each type is.',
