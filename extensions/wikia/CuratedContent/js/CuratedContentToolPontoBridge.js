@@ -10,9 +10,7 @@ define(
 			this.exit = function (params) {
 				// TODO we can use params.saved boolean to display some notification
 
-				require(['curatedContentTool.modal'], function (modal) {
-					modal.close();
-				});
+				require('curatedContentTool.modal').close();
 			};
 
 			this.setFocus = function () {
