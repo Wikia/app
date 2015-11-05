@@ -170,7 +170,9 @@ class TemplateClassificationService {
 		// default CURLOPT_TIMEOUT for API client is set to 0 which means no timeout.
 		// Overwriting to minimal value which is 1.
 		// cURL function is allowed to execute not longer than 1 second
-		$apiClient->getConfig()->setCurlTimeout(1);
+		$apiClient->getApiClient()
+				->getConfig()
+				->setCurlTimeout(1);
 
 		return $apiClient;
 	}
