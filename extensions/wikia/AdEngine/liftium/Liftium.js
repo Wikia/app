@@ -1475,9 +1475,11 @@ Liftium.init = function () {
 		return false;
 	}
 
-	window.require && require(['ext.wikia.adEngine.adTracker'], function(tracker) {
+	if (window.require) {
+		var tracker = require('ext.wikia.adEngine.adTracker');
+
 		tracker.measureTime('adengine.init', 'liftium').track();
-	});
+	}
 
 	Liftium.pullGeo();
 	Liftium.pullConfig(Liftium.processQueue);
@@ -2195,9 +2197,11 @@ Liftium.sendBeacon = function (){
 
 	// Track the beacons with GA
 
-	window.require && require(['ext.wikia.adEngine.adTracker'], function(tracker) {
+	if (window.require) {
+		var tracker = require('ext.wikia.adEngine.adTracker');
+
 		tracker.measureTime('adengine.init', 'liftium.beacon').track();
-	});
+	}
 
 	// Call the unit tests
 	if (window.LiftiumTest && typeof window.LiftiumTest.afterBeacon == "function"){
