@@ -1096,6 +1096,15 @@ function &wfGetSolidCacheStorage( $bucket = false ) {
 
 /**
  * Set value of wikia article prop list of type is define in
+ *
+ * Note: The query below used to be done using a REPLACE, however
+ * at some point the primary key was removed from the page_wikia_props
+ * table. Without a primary key or unique index, a REPLACE becomes just
+ * an INSERT so this method was adding duplicate rows to the table.
+ *
+ * While the disappearance of that primary key is being investigated,
+ * we're implementing a manual REPLACE by explicitly issuing a DELETE
+ * query before an INSERT.
  */
 function wfSetWikiaPageProp( $type, $pageID, $value, $dbname = '' ) {
 	if ( empty( $dbname ) ) {
@@ -1104,15 +1113,21 @@ function wfSetWikiaPageProp( $type, $pageID, $value, $dbname = '' ) {
 		$db = wfGetDB( DB_MASTER, array(), $dbname );
 	}
 
-	$db->replace(
+	$db->delete(
 		'page_wikia_props',
-		'',
-		array(
+		[
+			'page_id' => $pageID,
+			'propname' => $type
+		]
+	);
+
+	$db->insert(
+		'page_wikia_props',
+		[
 			'page_id'  => $pageID,
 			'propname' => $type,
 			'props'    => wfSerializeProp( $type, $value )
-		),
-		__METHOD__
+		]
 	);
 
 	$db->commit( __METHOD__ );
