@@ -308,8 +308,7 @@
 
 					// General error. TODO: add caption
 				} else {
-					require(['wikia.ui.factory'], function (uiFactory) {
-						uiFactory.init(['modal']).then(function (uiModal) {
+					require('wikia.ui.factory').init(['modal']).then(function (uiModal) {
 							var moduleConfig = {
 								vars: {
 									id: 'general_error',
@@ -317,11 +316,11 @@
 									content: json.msg
 								}
 							};
+
 							uiModal.createComponent(moduleConfig, function (errorModal) {
 								errorModal.show();
 							});
 						});
-					});
 				}
 
 				$textfield = $('#article-comm-reply-textfield-' + json.id);
