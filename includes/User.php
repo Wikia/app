@@ -28,6 +28,7 @@ use Wikia\Service\User\Attributes\UserAttributes;
 use Wikia\Service\User\Preferences\Migration\PreferenceCorrectionService;
 use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Util\Statistics\BernoulliTrial;
+use Wikia\Service\Helios\HeliosClient;
 
 /**
  * Int Number of characters in user_token field.
@@ -39,7 +40,7 @@ define( 'USER_TOKEN_LENGTH', 32 );
  * Int Serialized record version.
  * @ingroup Constants
  */
-define( 'MW_USER_VERSION', 16 );
+define( 'MW_USER_VERSION', 17 );
 
 /**
  * String Some punctuation to prevent editing from broken text-mangling proxies.
@@ -220,8 +221,6 @@ class User {
 	 */
 	var $mFrom;
 
-	var $mTheme; # Wikia - Skin chooser related
-
 	/**
 	 * Lazy-initialized variables, invalidated with clearInstanceCache
 	 */
@@ -247,6 +246,11 @@ class User {
 	static $idCacheByName = array();
 
 	/**
+		* @var string the service auth token (currently helios); should NEVER be cached
+	 */
+	private $globalAuthToken = null;
+
+	/**
 	 * @var UserAttributes
 	 */
 	private $attributeService;
@@ -270,6 +274,14 @@ class User {
 	 */
 	function __toString(){
 		return $this->getName();
+	}
+
+
+	/**
+		* @return HeliosClient
+	 */
+	private function getAuthenticationService() {
+		return Injector::getInjector()->get(HeliosClient::class);
 	}
 
 	/**
@@ -1019,8 +1031,6 @@ class User {
 		$this->mEmailTokenExpires = null;
 		$this->mRegistration = wfTimestamp( TS_MW );
 		$this->mGroups = array();
-		$this->mMonacoData = null;
-		$this->mMonacoSidebar = null;
 
 		$this->mBirthDate = null; // Wikia. Added to reflect our user table layout.
 
@@ -1142,6 +1152,13 @@ class User {
 			return false;
 		}
 
+		if ( !$this->isUserAuthenticatedViaAuthenticationService() ) {
+			$this->logFallbackToMediaWikiSessionRejection( $from );
+			$this->logout();
+			$this->loadDefaults();
+			return false;
+		}
+
 		if ( ( $sName === $proposedUser->getName() ) && $passwordCorrect ) {
 			$this->loadFromUserObject( $proposedUser );
 			$request->setSessionData( 'wsToken', $this->mToken );
@@ -1205,8 +1222,6 @@ class User {
 			$this->loadFromRow( $s );
 			$this->mGroups = null; // deferred
 			$this->getEditCount(); // revalidation for nulls
-			$this->mMonacoData = null;
-			$this->mMonacoSidebar = null;
 			return true;
 		} else {
 			# Invalid user_id
@@ -1370,7 +1385,6 @@ class User {
 		$this->mDatePreference = null;
 		$this->mBlockedby = -1; # Unset
 		$this->mHash = false;
-		$this->mTheme = null; # Wikia - Skin chooser related
 		$this->mRights = null;
 		$this->mEffectiveGroups = null;
 		$this->mImplicitGroups = null;
@@ -2391,6 +2405,11 @@ class User {
 		if( $str == $this->mEmail ) {
 			return;
 		}
+
+		/* Wikia change */
+		/* add a new hook that sends both before/after emails @param User, new_email, old_email */
+		wfRunHooks( 'BeforeUserSetEmail', array( $this, $str, $this->mEmail ) );
+
 		$this->mEmail = $str;
 
 		/* Wikia change begin - @author: Macbre */
@@ -2475,16 +2494,6 @@ class User {
 		}
 
 		if ( array_key_exists( $oname, $this->mOptions ) ) {
-			# Wikia - Skin chooser related
-			if($oname == 'skin') {
-				if(strlen(trim($this->mOptions[$oname])) > 7 &&  substr(trim($this->mOptions[$oname]), 0, 6) == 'quartz') {
-					$this->mOptions[$oname] = 'quartz';
-					$this->setOptionHelper('theme', substr(trim($this->mOptions[$oname]), 6));
-				} else if(trim($this->mOptions[$oname]) == 'slate' || trim($this->mOptions[$oname]) == 'smoke') {
-					$this->mOptions[$oname] = 'quartz';
-					$this->setOptionHelper('theme', trim($this->mOptions[$oname]));
-				}
-			}
 
 			/* Wikia change begin - @author: Macbre */
 			/* allow extensions to modify value returned by User::getOption() */
@@ -2655,9 +2664,6 @@ class User {
 			$this->userPreferences()->setGlobalPreference( $this->getId(), $preference, $value );
 			if ( $preference == 'skin' ) {
 				unset( $this->mSkin );
-			}
-			if ( $preference == 'theme' ) {
-				unset( $this->mTheme );
 			}
 		} else {
 			$this->setOptionHelper( $preference, $value );
@@ -2869,11 +2875,6 @@ class User {
 			# Clear cached skin, so the new one displays immediately in Special:Preferences
 			unset( $this->mSkin );
 		}
-		# Wikia - Skin chooser related
-		if ( $oname == 'theme' ) {
-			# Clear cached skin, so the new one displays immediately in Special:Preferences
-			unset($this->mTheme);
-		}
 		// Filter out any newlines that may have passed through input validation.
 		// Newlines are used to separate items in the options blob.
 		$val = $this->replaceNewlineAndCRWithSpace($val);
@@ -3072,7 +3073,7 @@ class User {
 	 * @param $group String Name of the group to add
 	 */
 	public function addGroup( $group ) {
-		if( wfRunHooks( 'UserAddGroup', array( $this, &$group ) ) ) {
+		if( wfRunHooks( 'UserAddGroup', array( $this, &$group )) ) {
 			$dbw = wfGetDB( DB_MASTER );
 			if( $this->getId() ) {
 				$dbw->insert( 'user_groups',
@@ -3083,12 +3084,17 @@ class User {
 					__METHOD__,
 					array( 'IGNORE' ) );
 			}
-		}
-		$this->loadGroups();
-		$this->mGroups[] = $group;
-		$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
 
-		$this->invalidateCache();
+			$this->loadGroups();
+			$this->mGroups[] = $group;
+			$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
+
+			$this->invalidateCache();
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -3113,12 +3119,16 @@ class User {
 				),
 				__METHOD__,
 				array( 'IGNORE' ) );
-		}
-		$this->loadGroups();
-		$this->mGroups = array_diff( $this->mGroups, array( $group ) );
-		$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
 
-		$this->invalidateCache();
+			$this->loadGroups();
+			$this->mGroups = array_diff( $this->mGroups, array( $group ) );
+			$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
+
+			$this->invalidateCache();
+
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -3525,6 +3535,8 @@ class User {
 		if ( !$wgAuth->allowSetLocalPassword() ) {
 			$this->mPassword = '';
 		}
+
+		wfRunHooks( 'BeforeUserSaveSettings', array( $this ) );
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update( 'user',
@@ -5172,4 +5184,61 @@ class User {
 	public static function getUserTouchedKey( $user_id ) {
 		return wfSharedMemcKey( "user_touched", 'v1', $user_id );
 	}
+
+	/**
+	 * Get the global authentication token.
+	 * @return string
+	 */
+	public function getGlobalAuthToken() {
+		return $this->globalAuthToken;
+	}
+
+	/**
+	 * Set the global authentication token.
+	 * @param string
+	 */
+	public function setGlobalAuthToken( $token ) {
+		$this->globalAuthToken = $token;
+	}
+
+	/**
+	 * Is the user authenticated via the authentication service?
+	 * @return bool true if yes, false if no
+	 */
+	public function isUserAuthenticatedViaAuthenticationService() {
+		global $wgRejectAuthenticationFallback;
+
+		if ( !$wgRejectAuthenticationFallback ) {
+			return true;
+		}
+
+		$token = $this->getGlobalAuthToken();
+		if ( empty( $token ) ) {
+			return false;
+		}
+
+		$tokenInfo = $this->getAuthenticationService()->info( $token );
+		if ( !empty( $tokenInfo->user_id ) ) {
+			return ( $this->getId() > 0 ) && ( $tokenInfo->user_id == $this->getId() );
+		}
+
+		return false;
+	}
+
+	/**
+	 * Log an attempt to fallback to the MW session that was rejected.
+	 */
+	protected function logFallbackToMediaWikiSessionRejection( $from ) {
+		Wikia\Logger\WikiaLogger::instance()->error(
+			'AUTHENTICATION_FALLBACK_REJECTED',
+			[
+			'global_auth_token' => $this->getGlobalAuthToken(),
+			'from'              => $from,
+			'ip'                => $this->getRequest()->getIP(),
+			'session_id'        => session_id(),
+			'user_id'           => $this->getId(),
+			'user_name'         => $this->getName(),
+			]);
+	}
+
 }

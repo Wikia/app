@@ -160,6 +160,7 @@ $wgAutoloadClasses['UserApiController'] = "{$IP}/includes/wikia/api/UserApiContr
 $wgAutoloadClasses['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
 $wgAutoloadClasses['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiController.class.php";
 $wgAutoloadClasses['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
+$wgAutoloadClasses['TemplateClassificationApiController'] = "{$IP}/includes/wikia/api/TemplateClassificationApiController.class.php";
 $wgExtensionMessagesFiles['WikiaApi'] = "{$IP}/includes/wikia/api/WikiaApi.i18n.php";
 
 $wgWikiaApiControllers['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
@@ -185,14 +186,6 @@ $wgAutoloadClasses[ 'InvalidDataApiException' ] = "{$IP}/includes/wikia/api/ApiE
 $wgAutoloadClasses[ 'LimitExceededApiException'] = "{$IP}/includes/wikia/api/ApiExceptions.php";
 $wgAutoloadClasses[ 'NotFoundApiException'] = "{$IP}/includes/wikia/api/ApiExceptions.php";
 
-//Recommendations
-$wgAutoloadClasses['Wikia\\Api\\Recommendations\\Collector'] = "{$IP}/includes/wikia/api/Recommendations/Collector.class.php";
-$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\IDataProvider'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/IDataProvider.interface.php";
-$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\Category'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/Category.class.php";
-$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\Video'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/Video.class.php";
-$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\TopArticles'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/TopArticles.class.php";
-$wgAutoloadClasses['RecommendationsApiController'] = "{$IP}/includes/wikia/api/RecommendationsApiController.class.php";
-$wgWikiaApiControllers['RecommendationsApiController'] = "{$IP}/includes/wikia/api/RecommendationsApiController.class.php";
 /**
  * Wikia API end
  */
@@ -306,6 +299,7 @@ $wgAutoloadClasses['SwaggerModelProperty'] = "$IP/includes/wikia/swagger/Swagger
 $wgAutoloadClasses['SwaggerErrorResponse'] = "$IP/includes/wikia/swagger/SwaggerErrorResponse.php";
 $wgAutoloadClasses['TemplateClassification'] = "$IP/includes/wikia/TemplateClassification.class.php";
 $wgAutoloadClasses['TemplateDataExtractor'] = "$IP/includes/wikia/TemplateDataExtractor.class.php";
+$wgAutoloadClasses['WikiaHtmlTitle'] = "$IP/includes/wikia/WikiaHtmlTitle.class.php";
 
 /**
  * Resource Loader enhancements
@@ -360,6 +354,7 @@ $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormB
 $wgAutoloadClasses['LicensedWikisService']  =  $IP.'/includes/wikia/services/LicensedWikisService.class.php';
 $wgAutoloadClasses['ArticleQualityService'] = $IP.'/includes/wikia/services/ArticleQualityService.php';
 $wgAutoloadClasses['PortableInfoboxDataService'] = $IP . '/extensions/wikia/PortableInfobox/services/PortableInfoboxDataService.class.php';
+$wgAutoloadClasses['TemplateClassificationService'] = $IP . '/includes/wikia/services/TemplateClassificationService.class.php';
 
 // services hooks
 $wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
@@ -447,6 +442,7 @@ $wgHooks['WikiaSkinTopScripts'][] = 'WikiFactoryHubHooks::onWikiaSkinTopScripts'
 $wgHooks['Debug'][] = 'Wikia\\Logger\\Hooks::onDebug';
 $wgHooks['WikiFactory::execute'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecute';
 $wgHooks['WikiFactory::onExecuteComplete'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecuteComplete';
+$wgHooks['WebRequestInitialized'][] = 'Wikia\\Logger\\Hooks::onWebRequestInitialized';
 
 // memcache stats (PLATFORM-292)
 $wgAutoloadClasses['Wikia\\Memcached\\MemcachedStats'] = "$IP/includes/wikia/memcached/MemcachedStats.class.php";
@@ -687,7 +683,6 @@ $wgSkipSkins = array(
 		'efmonaco',
 		'answers',
 		'vector',
-		'venus',
 		'campfire',
 		'wikiamobile'
 );
@@ -973,12 +968,6 @@ $wgMaxCommentsToDelete = 100;
 $wgMaxCommentsToMove = 50;
 
 /**
- * @name wgGoogleSiteVerificationAlwaysValid
- * @see extensions/wikia/Sitemap/SpecialSitemap_body.php
- */
-$wgGoogleSiteVerificationAlwaysValid = false;
-
-/**
  * is Semantic Mediawiki uses external database cluster
  * @name $smwgUseExternalDB
  *
@@ -1139,7 +1128,6 @@ $wgPasswordSenderName = 'Wikia';
  */
 $wgResourceLoaderAssetsSkinMapping = [
 	'oasis' => 'wikia', // in Oasis we use Wikia.js (and Wikia.css) instead of Oasis.js (Oasis.css)
-	'venus' => 'wikia', // in Venus we use Wikia.js (and Wikia.css) instead of Venus.js (Venus.css) - CON-2113
 ];
 
 /**
@@ -1525,13 +1513,6 @@ $wgAdDriverTurtleCountries = null;
 $wgAdDriverOpenXCountries = null;
 
 /**
- * @name $wgAdDriverSourcePointCountries
- * List of countries to call ads through SourcePoint
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverSourcePointCountries = null;
-
-/**
  * @name $wgAdDriverSourcePointDetectionCountries
  * List of countries to call SourcePoint detection scripts
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1544,6 +1525,13 @@ $wgAdDriverSourcePointDetectionCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverSourcePointDetectionMobileCountries = null;
+
+/**
+ * @name $wgAdDriverSourcePointRecoveryCountries
+ * List of countries to call ads through SourcePoint
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverSourcePointRecoveryCountries = null;
 
 /**
  * trusted proxy service registry
@@ -1708,7 +1696,6 @@ $wgBuckySampling = 10;
 $wgBuckyEnabledSkins = [
 	'monobook',
 	'oasis',
-	'venus',
 	'uncyclopedia',
 	'wikiamobile',
 ];
@@ -1813,61 +1800,11 @@ $wgPreferenceServiceRead = false;
 $wgPreferenceServiceWrite = true;
 
 /**
- * @name $wgEnableRobotsTxtExt
- *
- * Enables extension that generates robots.txt
- */
-$wgEnableRobotsTxtExt = true;
-
-/**
  * @name $wgEnableFliteTagExt
  *
  * Enables FliteTag extension which makes it possible to use <flite> tag within an article content
  */
 $wgEnableFliteTagExt = false;
-
-// SEO-related variables start (keep them sorted)
-
-/**
- * @name $wgEnableSeoLinkHreflangExt
- *
- * Enables SEO Link Hreflang extension
- */
-$wgEnableSeoLinkHreflangExt = false;
-
-/**
- * @name $wgEnableSeoTestingExt
- *
- * Enables SEO Testing extension
- */
-$wgEnableSeoTestingExt = true;
-
-/**
- * @name $wgSeoTestingExperiments
- *
- * The configuration of SEO experiments.
- *
- * Format:
- *
- * [
- *   'Name_of_test' => [
- *     'dbNames' => ['list', 'of', 'dbnames'],
- *     'startDay' => '2015-10-01',
- *     'endDay' => '2015-12-31',
- *   ],
- *   'Another_test' => [
- *     'dbNames' => ['other', 'wikis'],
- *     'startDay' => '2015-11-01',
- *     'endDay' => '2015-11-30',
- *   ],
- * ]
- *
- * Only set this on community wiki (177).
- * The wikis affected are listed under dbNames key for each experiment.
- */
-$wgSeoTestingExperiments = [];
-
-// SEO-related variables end
 
 /**
  * @name $wgAdDriverAdsRecoveryMessageCountries
@@ -1875,3 +1812,13 @@ $wgSeoTestingExperiments = [];
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverAdsRecoveryMessageCountries = null;
+
+/**
+ * Protect Piggyback logs even if the extension is disabled
+ */
+$wgLogRestrictions['piggyback'] = 'piggyback';
+
+/**
+ * Reject attempts to fall back to the MediaWiki session for authentication.
+ */
+$wgRejectAuthenticationFallback = true;

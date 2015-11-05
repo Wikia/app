@@ -50,7 +50,8 @@
 					pagetitle: page.title,
 					pagenamespace: page.namespace,
 					convertToFormat: convertToFormat,
-					relatedTopics: relatedTopics
+					relatedTopics: relatedTopics,
+					token: window.mw.user.tokens.get('editToken')
 				},
 				callback: this.proxy(function (data) {
 					var newmsg = $(data.message);

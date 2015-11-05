@@ -194,11 +194,14 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 *                             a valid edit token.
 	 */
 	public function checkWriteRequest() {
-		if ( !$this->request->wasPosted()
-			|| !$this->wg->User->matchEditToken( $this->request->getVal( 'token' ) )
-		) {
-			throw new BadRequestException( 'Request must be POSTed and provide a valid edit token.' );
-		}
+		$this->request->isValidWriteRequest( $this->wg->User );
+	}
+
+	protected function setTokenMismatchError() {
+		$this->response->setValues( [
+			'status' => 'error',
+			'errormsg' => wfMessage( 'sessionfailure' )->escaped(),
+		] );
 	}
 
 	// Magic setting of template variables so we don't have to do $this->response->setVal

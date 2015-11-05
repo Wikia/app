@@ -2,6 +2,7 @@
 
 $dir = __DIR__ . "/../../../../";
 require_once( $dir . 'maintenance/Maintenance.php' );
+require_once( '../ContentReview.setup.php' );
 
 class ReviewedRevision extends Maintenance {
 

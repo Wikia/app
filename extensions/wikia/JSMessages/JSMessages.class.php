@@ -108,9 +108,6 @@ class JSMessages {
 
 		$ret = array();
 		foreach( $messageKeys as $msg ) {
-			if ( is_array( $msg ) ) {
-				var_dump( $msg );
-			}
 			if (substr($msg, 0, $patternLen) === $pattern) {
 				$ret[$msg] = wfmsgExt($msg, array('language' => $langCode));
 			}

@@ -208,6 +208,9 @@ class RequestContext implements IContextSource {
 		if ( $this->user === null && $wgEnableHeliosExt ) {
 			$this->user = \Wikia\Helios\User::newFromToken( $this->getRequest() );
 			$authPath['helios'] = ($this->user !== null ? 'OK' : 'FAIL');
+			if ( $this->user !== null && $this->user instanceof User ) {
+				wfRunHooks( 'UserLoadFromHeliosToken', array( $this->user ) );
+			}
 		}
 		// Wikia change - end
 		// Wikia change - begin - @author: wladek
@@ -235,13 +238,19 @@ class RequestContext implements IContextSource {
 	 * @param $authSource array
 	 */
 	private function logAuthenticationMethod($user, $authSource) {
-		if ( count( $authSource ) <= 1 || $user === null || !$user->isLoggedIn() ) {
+		if ( $user === null || !$user->isLoggedIn() ) {
 			return;
 		}
 
-		$sampler = new \Wikia\Util\Statistics\BernoulliTrial( 0.05 );
+		$sampler = new \Wikia\Util\Statistics\BernoulliTrial( 0.25 );
 
-		\Transaction::addEvent( \Transaction::EVENT_USER_AUTH, $authSource );
+		// send every 4-th request to InfluxDb
+		if ( $sampler->shouldSample() ) {
+			\Transaction::addEvent( \Transaction::EVENT_USER_AUTH, $authSource );
+		}
+
+		// now we sample logging at 5%
+		$sampler->setProbability( 0.05 );
 
 		if ( !$sampler->shouldSample() ) {
 			return;

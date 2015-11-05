@@ -589,23 +589,11 @@ class WikiStats {
 				if ( $startDate <= $oRow->date && $oRow->date <= $endDate ) {
 					foreach ( $oRow as $field => $value ) {
 						if ( $field == 'F' ) {
-							/*$value = intval($new_per_day);
-							if ( $value > 0 ) {
-								$value = sprintf("%0.1f", $new_per_day);
-							}*/
 							$year = substr($oRow->date, 0, 4);
 							$month = substr($oRow->date, 4, 2);
 							$nbr_days = date("t", strtotime($year . "-" . $month . "-01"));
 							$value = sprintf("%0.2f", $value/$nbr_days);
 						}
-						/*$excludedValues = isset( $this->mExcludedWikis[$oRow->date][$field] )
-							? intval( $this->mExcludedWikis[$oRow->date][$field] )
-							: 0;
-						if ( $field == 'date' ) {
-							$this->mMainStats[$oRow->date][$field] = $value;
-						} else {
-							$this->mMainStats[$oRow->date][$field] = $value - $excludedValues;
-						}*/
 						$this->mMainStats[$oRow->date][$field] = $value;
 					}
 				}
@@ -915,47 +903,6 @@ class WikiStats {
 		}
 
 		return $data;
-	}
-
-	/**
-	 * loadMonthlyDiffs
-	 *
-	 * generate montly differences for the last 6 months
-	 * @access public
-	 *
-	 */
-	private function excludedWikis($db_fields, $where) {
-		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
-
-		wfProfileIn( __METHOD__ );
-    	$memkey = __METHOD__ . "_" . $this->mCityId . '_v2';
-    	#---
-		$this->mExcludedWikis = $wgMemc->get($memkey);
-		if ( empty($this->mExcludedWikis) && !empty( $wgStatsDBEnabled ) ) {
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-			$where[] = "wikia_id in (" . $dbr->makeList( $this->getClosedWikis() ) . ")";
-			$options = array('GROUP BY' => 'stats_date');
-
-			$oRes = $dbr->select(
-				array( "wikia_monthly_stats" ),
-				array( implode(", ", array_values( $db_fields ) ) ),
-				$where,
-				__METHOD__,
-				$options
-			);
-			$this->mExcludedWikis = array();
-			while( $oRow = $dbr->fetchObject( $oRes ) ) {
-				if ( !isset($this->mMainStats[$oRow->date]) ) {
-					$this->mExcludedWikis[$oRow->date] = array();
-				}
-				foreach ( $oRow as $field => $value ) {
-					$this->mExcludedWikis[$oRow->date][$field] = $value;
-				}
-			}
-			$dbr->freeResult( $oRes );
-			$wgMemc->set( $memkey, $this->mExcludedWikis, 60*60*3 );
-		}
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
