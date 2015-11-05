@@ -1834,5 +1834,5 @@ $wgRejectAuthenticationFallback = true;
 /**
  * Use template types from Template Classification Service in MW context
  */
-include_once( "$IP/includes/wikia/parser/templatetypes/TemplateTypesSetup.class.php" );
+include_once("$IP/includes/wikia/parser/templatetypes/TemplateTypes.setup.php");
 
