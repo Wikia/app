@@ -1,13 +1,13 @@
 /*
  * This file is used for setting frontend data we want to track in Bucky
  */
-require([
-	'jquery',
-	'wikia.geo',
-	'wikia.window',
-	'bucky.resourceTiming'
-], function ($, geo, window, resourceTiming) {
+(function () {
 	'use strict';
+
+	var $ = require('jquery'),
+		window = require('wikia.window'),
+		geo = require('wikia.geo'),
+		resourceTiming = require('bucky.resourceTiming');
 
 	$(function () {
 		var wgTransactionContext = window.wgTransactionContext || {};
@@ -43,4 +43,4 @@ require([
 			resourceTiming.reportToBucky('AfterWindowLoad');
 		}, 5000);
 	});
-});
+})();
