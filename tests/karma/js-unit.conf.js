@@ -19,7 +19,7 @@ module.exports = function (config) {
 			'resources/wikia/ui_components/**/node_modules/**/*.js'
 		],
 		files: [
-			'resources/wikia/libraries/define.mock.js',
+			'resources/wikia/libraries/loader.js/loader.js',
 			'tests/lib/jasmine/helpers.js',
 			'resources/jquery/jquery-1.8.2.js',
 			'resources/wikia/polyfills/bind.js',
