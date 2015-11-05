@@ -79,7 +79,7 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 			// Mark selected type
 			$preselectedType = $classificationForm.find('input[value="' + templateType + '"]');
 
-			if ($preselectedType) {
+			if (!!$preselectedType) {
 				$classificationForm.find('input[checked="checked"]').removeAttr('checked');
 				$preselectedType.attr('checked', 'checked');
 			}
@@ -153,7 +153,7 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 		var newTemplateType = $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val(),
 			oldTemplateType = '';
 
-		if ($preselectedType) {
+		if (!!$preselectedType) {
 			oldTemplateType = $preselectedType.val();
 		}
 
