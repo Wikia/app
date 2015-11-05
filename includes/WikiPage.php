@@ -37,8 +37,6 @@ class WikiPage extends Page implements IDBAccessObject {
 	 */
 	const DELETE_NO_REVISIONS = 2;
 
-	// Constants for $mDataLoadedFrom and related
-
 	/**
 	 * @var Title
 	 */
