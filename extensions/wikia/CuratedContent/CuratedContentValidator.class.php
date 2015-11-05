@@ -167,6 +167,9 @@ class CuratedContentValidator {
 			$errors[] = self::ERR_NO_CATEGORY_IN_TAG;
 		}
 
+		// When category is passed as type we don't need article_id set.
+		// For instance categories without content on Category: page are valid categories.
+		// All remaining types require article_id. In case when article doesn't exist article_id is set to 0
 		if ( self::needsArticleId( $item['type'] ) && empty( $item['article_id'] ) ) {
 			$errors[] = self::ERR_ARTICLE_NOT_FOUND;
 		}
