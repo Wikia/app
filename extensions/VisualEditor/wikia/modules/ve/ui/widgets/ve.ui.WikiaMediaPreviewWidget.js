@@ -76,20 +76,19 @@ ve.ui.WikiaMediaPreviewWidget.prototype.verticallyAlign = function ( $element ) 
  * @param {string} embedCode Video embed code from ApiVideoPreview
  */
 ve.ui.WikiaMediaPreviewWidget.prototype.embedVideo = function ( embedCode ) {
+	var VideoBootstrap = require( 'wikia.videoBootstrap' );
+
 	this.$videoWrapper = this.$( '<div>' )
 		.addClass( 've-ui-wikiaMediaPreviewWidget-videoWrapper' )
 		.appendTo( this.$element.show() );
 
-	require( ['wikia.videoBootstrap'], function ( VideoBootstrap ) {
-		this.videoInstance = new VideoBootstrap(
-			this.$videoWrapper[0],
-			window.JSON.parse( embedCode ),
-			've-preview'
-		);
+	this.videoInstance = new VideoBootstrap(
+		this.$videoWrapper[0],
+		window.JSON.parse( embedCode ),
+		've-preview'
+	);
 
-		this.verticallyAlign( this.$videoWrapper );
-
-	}.bind( this ) );
+	this.verticallyAlign( this.$videoWrapper );
 };
 
 /**
