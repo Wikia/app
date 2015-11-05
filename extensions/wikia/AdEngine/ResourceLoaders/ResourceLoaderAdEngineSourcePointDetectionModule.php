@@ -1,8 +1,8 @@
 <?php
 
-class ResourceLoaderAdEngineSourcePointDetectionModule extends ResourceLoaderAdEngineSourcePointModule {
+class ResourceLoaderAdEngineSourcePointDetectionModule extends ResourceLoaderAdEngineSourcePointRecoveryModule {
 	const CACHE_BUSTER = 2;     // increase this any time the local files change
-	const SCRIPT_DETECTION_URL = 'https://api.getsentinel.com/script/detection?delivery=bundle';
+	const SCRIPT_DETECTION_URL = 'https://api.sourcepoint.com/script/detection?delivery=bundle';
 
 	/**
 	 * Configure scripts that should be loaded into one package

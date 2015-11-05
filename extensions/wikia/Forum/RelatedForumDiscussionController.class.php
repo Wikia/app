@@ -27,28 +27,21 @@ class RelatedForumDiscussionController extends WikiaController {
 		// common data
 		$this->sectionHeading = wfMessage( 'forum-related-discussion-heading', $title->getText() )->escaped();
 		$this->newPostButton = wfMessage( 'forum-related-discussion-new-post-button' )->escaped();
-		$this->newPostUrl = $topicTitle->getFullUrl('openEditor=1');
+		$this->newPostUrl = $topicTitle->getFullUrl( 'openEditor=1' );
 		$this->newPostTooltip = wfMessage( 'forum-related-discussion-new-post-tooltip', $title->getText() )->escaped();
 		$this->blankImgUrl = wfBlankImgUrl();
 
 		$this->seeMoreUrl = $topicTitle->getFullUrl();
 		$this->seeMoreText = wfMessage( 'forum-related-discussion-see-more' )->escaped();
-
-		// TODO: move classes to template when Venus will be live on all wikis
-		$this->venusBtnClasses = '';
-		if ($this->app->checkSkin( 'venus' ) ) {
-			$this->venusBtnClasses = 'wikia-button secondary';
-			Wikia::addAssetsToOutput( 'related_forum_discussion_css' );
-		}
 	}
 
 	/**
 	 * @deprecated legacy entry point for cached JS requests
 	 */
 	public function checkData() {
-		$articleId = $this->getVal('articleId');
-		$title = Title::newFromId($articleId);
-		if(empty($articleId) || empty($title)) {
+		$articleId = $this->getVal( 'articleId' );
+		$title = Title::newFromId( $articleId );
+		if ( empty( $articleId ) || empty( $title ) ) {
 			$this->replace = false;
 			$this->articleId = $articleId;
 			return;
@@ -61,18 +54,18 @@ class RelatedForumDiscussionController extends WikiaController {
 		$this->lastupdate = $messages['lastupdate'];
 		$this->timediff = $timediff;
 
-		unset($messages['lastupdate']);
+		unset( $messages['lastupdate'] );
 
-		if($timediff < 24*60*60) {
+		if ( $timediff < 24 * 60 * 60 ) {
 			$this->replace = true;
-			$this->html = $this->app->renderView( "RelatedForumDiscussion", "relatedForumDiscussion", array('messages' => $messages) );
+			$this->html = $this->app->renderView( "RelatedForumDiscussion", "relatedForumDiscussion", array( 'messages' => $messages ) );
 		} else {
 			$this->replace = false;
 			$this->html = '';
 		}
 
-		$this->response->setFormat(WikiaResponse::FORMAT_JSON);
-		$this->response->setCacheValidity( 6*60*60, WikiaResponse::CACHE_DISABLED /* no caching in browser */ );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( 6 * 60 * 60, WikiaResponse::CACHE_DISABLED /* no caching in browser */ );
 	}
 
 	/**
@@ -83,7 +76,7 @@ class RelatedForumDiscussionController extends WikiaController {
 		$relatedPages = new WallRelatedPages();
 		$ids = $relatedPages->getMessagesRelatedArticleIds( $threadId, 'order_index', DB_MASTER );
 
-		foreach( $ids as $id ) {
+		foreach ( $ids as $id ) {
 			$key = wfMemcKey( __CLASS__, 'getData', $id );
 			WikiaDataAccess::cachePurge( $key );
 			// VOLDEV-46: Update module by purging page, not via AJAX
@@ -107,7 +100,7 @@ class RelatedForumDiscussionController extends WikiaController {
 			$wlp = new WallRelatedPages();
 			$messages = $wlp->getArticlesRelatedMessgesSnippet( $articleId, 2, 2 );
 			return $messages;
-		});
+		} );
 	}
 
 	private static function logError( $message, array $param = [] ) {

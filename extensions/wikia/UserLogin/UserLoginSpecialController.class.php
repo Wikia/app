@@ -615,7 +615,9 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		if ( !empty( array_intersect( F::app()->wg->AccountAdminGroups, $user->getGroups() ) ) ) {
+		if ( !empty( array_intersect( $this->wg->AccountAdminGroups, $user->getGroups() ) )
+			|| in_array( $user->getName(), $this->wg->AccountAdmins )
+		) {
 			\Wikia\Logger\WikiaLogger::instance()->warning(
 				sprintf( "Junior helper cannot change account info - user: %s", $user->getName() )
 			);
@@ -624,7 +626,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		/// Get a temporary password
+		// / Get a temporary password
 		$userService = new \UserService();
 		$tempPass = $userService->resetPassword( $user );
 
@@ -684,7 +686,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	private function setResponseGeneric( $key, $params, $result = 'ok', $postProcess = 'escaped' ) {
 		$msg = wfMessage( $key, $params )->$postProcess();
 
-		$this->response->setData([
+		$this->response->setData( [
 			'result' => $result,
 			'msg' => $msg,
 		] );

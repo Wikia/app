@@ -38,7 +38,6 @@ $wgExtensionCredits['other'][] =
  * classes
  */
 $wgAutoloadClasses['AbTesting'] = "{$dir}/AbTesting.class.php";
-$wgAutoloadClasses['AbExperiment'] = "{$dir}/AbTesting.class.php";
 $wgAutoloadClasses['AbTestingData'] = "{$dir}/AbTestingData.class.php";
 $wgAutoloadClasses['ResourceLoaderAbTestingModule'] = "{$dir}/ResourceLoaderAbTestingModule.class.php";
 $wgAutoloadClasses['SpecialAbTestingController'] = "{$dir}/SpecialAbTestingController.class.php";
@@ -53,7 +52,6 @@ $wgExtensionMessagesFiles['AbTesting'] = "{$dir}/AbTesting.i18n.php";
 $wgHooks['WikiaSkinTopScripts'][] =  'AbTesting::onWikiaSkinTopScripts';
 $wgHooks['WikiaSkinTopShortTTLModules'][] =  'AbTesting::onWikiaSkinTopShortTTLModules';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'AbTesting::onWikiaMobileAssetsPackages';
-$wgHooks['VenusAssetsPackages'][] = 'AbTesting::onVenusAssetsPackages';
 // Add js code in Oasis
 $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AbTesting::onOasisSkinAssetGroupsBlocking';
 
