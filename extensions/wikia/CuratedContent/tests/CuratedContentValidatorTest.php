@@ -1,8 +1,7 @@
 <?php
 require_once( $IP . '/extensions/wikia/CuratedContent/CuratedContentValidator.class.php' );
 
-class CuratedContentValidatorTest extends WikiaBaseTest
-{
+class CuratedContentValidatorTest extends WikiaBaseTest {
 
 	/**
 	 * @param $item

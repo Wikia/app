@@ -27,13 +27,13 @@ class CuratedContentValidator {
 
 		foreach ( $data as $section ) {
 			if ( !empty( $section['featured'] ) ) {
-				if ( !empty( $this->validateItemsInFeatured( $section ) ) ) {
+				if ( !$this->validateItemsInFeatured( $section ) ) {
 					$errors[] = self::ERR_OTHER_ERROR;
-				} ;
+				}
 			} else {
 				$alreadyUsedSectionLabels[] = $section['title'];
 				if ( empty( $section['title'] ) ) {
-					if ( !empty( $this->validateItemsInSection( $section ) ) ) {
+					if ( !$this->validateItemsInSection( $section ) ) {
 						$errors[] = self::ERR_OTHER_ERROR;
 					} ;
 				} elseif ( !empty( $this->validateSectionWithItems( $section ) ) ) {
@@ -42,7 +42,7 @@ class CuratedContentValidator {
 			}
 		}
 
-		if ( $this->areLabelsUnique( $alreadyUsedSectionLabels ) ) {
+		if ( !$this->areLabelsUnique( $alreadyUsedSectionLabels ) ) {
 			$errors[] = self::ERR_DUPLICATED_LABEL;
 		}
 
@@ -57,7 +57,7 @@ class CuratedContentValidator {
 		foreach ( $section['items'] as $featuredItem ) {
 			if ( !empty( $this->validateFeaturedItem( $featuredItem ) ) ) {
 				return false;
-			} ;
+			}
 		}
 		return true;
 	}
@@ -70,7 +70,7 @@ class CuratedContentValidator {
 		foreach ( $section['items'] as $item ) {
 			if ( !empty( $this->validateSectionItem( $item ) ) ) {
 				return false;
-			} ;
+			}
 		}
 		return true;
 	}
@@ -202,7 +202,7 @@ class CuratedContentValidator {
 			}
 		}
 
-		if ( $this->areLabelsUnique( $usedLabels ) ) {
+		if ( !$this->areLabelsUnique( $usedLabels ) ) {
 			$errors[] = self::ERR_DUPLICATED_LABEL;
 		}
 
