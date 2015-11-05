@@ -1,7 +1,10 @@
 /*global require*/
-require(['wikia.window', 'wikia.tracker'], function (window, tracker) {
+(function () {
 	'use strict';
-	var wikia = window.Wikia = window.Wikia || {};
+
+	var window = require('wikia.window'),
+		tracker = require('wikia.tracker'),
+		wikia = window.Wikia = window.Wikia || {};
 
 	/**
 	 * Hack to add ability to track video views inside flite.
@@ -24,4 +27,4 @@ require(['wikia.window', 'wikia.tracker'], function (window, tracker) {
 			clickSource: 'ad'
 		});
 	};
-});
+})();
