@@ -29,33 +29,6 @@ class CuratedContentHelperTest extends WikiaBaseTest {
 		];
 	}
 
-	/**
-	 * @param array $section
-	 * @param array $resultExpected
-	 *
-	 * @dataProvider testProcessLogicForSectionDataProvider
-	 */
-	public function testProcessLogicForSection( $section, $resultExpected ) {
-		$this->getMock( 'CuratedContentHelper', [ 'processCrop', 'fillItemInfo' ] );
-
-		$this->assertEquals( $resultExpected, ( new CuratedContentHelper )->processLogicForSection( $section ) );
-	}
-
-	public function testProcessLogicForSectionDataProvider() {
-		return [
-			// bad data - empty items
-			[
-				[ 'items' => [ ] ],
-				null,
-			],
-			// good data, non-empty items
-			[
-				[ 'items' => [ [ ], [ ], [ ] ] ],
-				[ 'items' => [ [ ], [ ], [ ] ], 'image_id' => 0 ],
-			],
-		];
-	}
-
 	public function testFindImageIdAndUrlWhenImageAndArticleEmpty() {
 		$this->assertSame( CuratedContentHelper::findImageIdAndUrl( 0, 0 ), [ null, null] );
 	}
