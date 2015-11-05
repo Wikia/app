@@ -19,16 +19,6 @@ class ExternalTemplateTypesProviderTest extends WikiaBaseTest {
 		);
 	}
 
-	public function getTemplateTypeDataProvider() {
-		return [
-			[
-				12345,
-				12345,
-				self::TEST_TYPE
-			]
-		];
-	}
-
 	/**
 	 * @param $wikiId
 	 * @param $templateId
@@ -41,6 +31,16 @@ class ExternalTemplateTypesProviderTest extends WikiaBaseTest {
 			( new ExternalTemplateTypesProvider( new TCSMock( true ) ) )->getTemplateType( $wikiId, $templateId ),
 			$type
 		);
+	}
+
+	public function getTemplateTypeDataProvider() {
+		return [
+			[
+				12345,
+				12345,
+				self::TEST_TYPE
+			]
+		];
 	}
 
 	public function getTemplateTypeThrowExceptionDataProvider() {

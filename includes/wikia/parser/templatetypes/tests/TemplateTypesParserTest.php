@@ -30,24 +30,6 @@ class TemplateTypesParserTest extends WikiaBaseTest
 		$this->assertEquals( $text, self::TEST_TEMPLATE_TEXT );
 	}
 
-	public function shouldNotChangeTemplateParsingDataProvider()
-	{
-		return [
-			[
-				false,
-				false
-			],
-			[
-				true,
-				false
-			],
-			[
-				false,
-				true
-			]
-		];
-	}
-
 	public function testShouldRemoveNavboxTemplateText()
 	{
 		$text = self::TEST_TEMPLATE_TEXT;
@@ -65,5 +47,22 @@ class TemplateTypesParserTest extends WikiaBaseTest
 		TemplateTypesParser::onFetchTemplateAndTitle( $text, $title );
 
 		$this->assertEquals( $text, '' );
+	}
+
+	public function shouldNotChangeTemplateParsingDataProvider() {
+		return [
+			[
+				false,
+				false
+			],
+			[
+				true,
+				false
+			],
+			[
+				false,
+				true
+			]
+		];
 	}
 }
