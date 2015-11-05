@@ -104,30 +104,29 @@ ve.ce.WikiaGalleryNode.prototype.rebuild = function () {
  * @method
  */
 ve.ce.WikiaGalleryNode.prototype.setupGallery = function ( galleryData ) {
-	require([ 'mediaGallery.views.gallery' ], function ( Gallery ) {
-		var galleryOptions = {
-				$el: this.$( '<div></div>' ),
-				$wrapper: this.$element,
-				model: { media: galleryData },
-				index: -1,
-				// 100 and 8 are constant for MediaGallery extension. I could export them
-				// but I'm not going to because ultimetly "client" of Gallery should not have
-				// to know about it and just pass some boolean expand parameter to get desired
-				// effect.
-				origVisibleCount: this.model.getAttribute( 'expand' ) ? 100 : 8
-			},
-			gallery = new Gallery( galleryOptions ).init();
+	var Gallery = require( 'mediaGallery.views.gallery' ),
+		galleryOptions = {
+			$el: this.$( '<div></div>' ),
+			$wrapper: this.$element,
+			model: { media: galleryData },
+			index: -1,
+			// 100 and 8 are constant for MediaGallery extension. I could export them
+			// but I'm not going to because ultimetly "client" of Gallery should not have
+			// to know about it and just pass some boolean expand parameter to get desired
+			// effect.
+			origVisibleCount: this.model.getAttribute( 'expand' ) ? 100 : 8
+		},
+		gallery = new Gallery( galleryOptions ).init();
 
-		this.$element
-			.removeClass( function ( index, css ) {
-				return ( css.match ( /(^|\s)count-\S+/g ) || [] ).join( ' ' );
-			} )
-			.addClass( 'count-' + galleryData.length )
-			.append( gallery.render().$el );
+	this.$element
+		.removeClass( function ( index, css ) {
+			return ( css.match ( /(^|\s)count-\S+/g ) || [] ).join( ' ' );
+		} )
+		.addClass( 'count-' + galleryData.length )
+		.append( gallery.render().$el );
 
-		// TODO: Remove after https://wikia-inc.atlassian.net/browse/VID-2112 is done
-		gallery.$el.trigger('galleryInserted');
-	}.bind( this ) );
+	// TODO: Remove after https://wikia-inc.atlassian.net/browse/VID-2112 is done
+	gallery.$el.trigger('galleryInserted');
 };
 
 ve.ce.WikiaGalleryNode.static.getThumbUrl = function ( url ) {
