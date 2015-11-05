@@ -10,7 +10,7 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 	'use strict';
 
 	var $classificationForm,
-		$preselectedType,
+		$preselectedType = $(),
 		$typeLabel,
 		modalConfig,
 		messagesLoaded,

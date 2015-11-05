@@ -25,6 +25,7 @@ class TemplateClassificationService {
 	const TEMPLATE_UNKNOWN = 'unknown';
 
 	const NOT_AVAILABLE = 'not-available';
+	const UNCLASSIFIED = ''; // No record in service
 
 	/**
 	 * Allowed types of templates stored in an array to make a validation process easier.
@@ -70,7 +71,7 @@ class TemplateClassificationService {
 		 * Permanent change will be needed from the Services team.
 		 */
 		if ( !in_array( $templateType, self::$templateTypes ) ) {
-			$templateType = self::TEMPLATE_UNKNOWN;
+			$templateType = self::UNCLASSIFIED;
 		}
 		/**
 		 * Quick fix end
