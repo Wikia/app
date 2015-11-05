@@ -51,6 +51,7 @@ class TemplateTypeHolder implements ArrayAccess
       * @var string[]
       */
     static $swaggerTypes = array(
+        'page_id' => 'int',
         'type' => 'string'
     );
   
@@ -59,6 +60,7 @@ class TemplateTypeHolder implements ArrayAccess
       * @var string[] 
       */
     static $attributeMap = array(
+        'page_id' => 'pageId',
         'type' => 'type'
     );
   
@@ -67,6 +69,7 @@ class TemplateTypeHolder implements ArrayAccess
       * @var string[]
       */
     static $setters = array(
+        'page_id' => 'setPageId',
         'type' => 'setType'
     );
   
@@ -75,9 +78,16 @@ class TemplateTypeHolder implements ArrayAccess
       * @var string[]
       */
     static $getters = array(
+        'page_id' => 'getPageId',
         'type' => 'getType'
     );
   
+    
+    /**
+      * $page_id 
+      * @var int
+      */
+    protected $page_id;
     
     /**
       * $type 
@@ -93,8 +103,30 @@ class TemplateTypeHolder implements ArrayAccess
     public function __construct(array $data = null)
     {
         if ($data != null) {
+            $this->page_id = $data["page_id"];
             $this->type = $data["type"];
         }
+    }
+    
+    /**
+     * Gets page_id
+     * @return int
+     */
+    public function getPageId()
+    {
+        return $this->page_id;
+    }
+  
+    /**
+     * Sets page_id
+     * @param int $page_id 
+     * @return $this
+     */
+    public function setPageId($page_id)
+    {
+        
+        $this->page_id = $page_id;
+        return $this;
     }
     
     /**

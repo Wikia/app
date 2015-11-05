@@ -41,6 +41,8 @@ class PortableInfoboxRenderService extends WikiaService {
 	 *
 	 * @param array $infoboxdata
 	 *
+	 * @param $theme
+	 * @param $layout
 	 * @return string - infobox HTML
 	 */
 	public function renderInfobox( array $infoboxdata, $theme, $layout ) {
@@ -192,7 +194,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		if ( $helper->isWikiaMobile() ) {
-			$data = $helper->sanitizeInfoboxTitle( $type, $data );
+			$data = $helper->sanitizeInfoboxFields( $type, $data );
 		}
 
 		return $this->templateEngine->clearData()

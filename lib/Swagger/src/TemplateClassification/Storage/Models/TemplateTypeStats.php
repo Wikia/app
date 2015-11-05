@@ -1,6 +1,6 @@
 <?php
 /**
- * Preference
+ * TemplateTypeStats
  *
  * PHP version 5
  *
@@ -31,11 +31,11 @@
  * Do not edit the class manually.
  */
 
-namespace Swagger\Client\User\Preferences\Models;
+namespace Swagger\Client\TemplateClassification\Storage\Models;
 
 use \ArrayAccess;
 /**
- * Preference Class Doc Comment
+ * TemplateTypeStats Class Doc Comment
  *
  * @category    Class
  * @description 
@@ -44,16 +44,14 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class Preference implements ArrayAccess
+class TemplateTypeStats implements ArrayAccess
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
       * @var string[]
       */
     static $swaggerTypes = array(
-        'wiki_id' => 'int',
-        'name' => 'string',
-        'value' => 'string'
+        'count' => 'int'
     );
   
     /** 
@@ -61,9 +59,7 @@ class Preference implements ArrayAccess
       * @var string[] 
       */
     static $attributeMap = array(
-        'wiki_id' => 'wikiId',
-        'name' => 'name',
-        'value' => 'value'
+        'count' => 'count'
     );
   
     /**
@@ -71,9 +67,7 @@ class Preference implements ArrayAccess
       * @var string[]
       */
     static $setters = array(
-        'wiki_id' => 'setWikiId',
-        'name' => 'setName',
-        'value' => 'setValue'
+        'count' => 'setCount'
     );
   
     /**
@@ -81,29 +75,15 @@ class Preference implements ArrayAccess
       * @var string[]
       */
     static $getters = array(
-        'wiki_id' => 'getWikiId',
-        'name' => 'getName',
-        'value' => 'getValue'
+        'count' => 'getCount'
     );
   
     
     /**
-      * $wiki_id 
+      * $count 
       * @var int
       */
-    protected $wiki_id;
-    
-    /**
-      * $name 
-      * @var string
-      */
-    protected $name;
-    
-    /**
-      * $value 
-      * @var string
-      */
-    protected $value;
+    protected $count;
     
 
     /**
@@ -113,72 +93,28 @@ class Preference implements ArrayAccess
     public function __construct(array $data = null)
     {
         if ($data != null) {
-            $this->wiki_id = $data["wiki_id"];
-            $this->name = $data["name"];
-            $this->value = $data["value"];
+            $this->count = $data["count"];
         }
     }
     
     /**
-     * Gets wiki_id
+     * Gets count
      * @return int
      */
-    public function getWikiId()
+    public function getCount()
     {
-        return $this->wiki_id;
+        return $this->count;
     }
   
     /**
-     * Sets wiki_id
-     * @param int $wiki_id 
+     * Sets count
+     * @param int $count 
      * @return $this
      */
-    public function setWikiId($wiki_id)
+    public function setCount($count)
     {
         
-        $this->wiki_id = $wiki_id;
-        return $this;
-    }
-    
-    /**
-     * Gets name
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-  
-    /**
-     * Sets name
-     * @param string $name 
-     * @return $this
-     */
-    public function setName($name)
-    {
-        
-        $this->name = $name;
-        return $this;
-    }
-    
-    /**
-     * Gets value
-     * @return string
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-  
-    /**
-     * Sets value
-     * @param string $value 
-     * @return $this
-     */
-    public function setValue($value)
-    {
-        
-        $this->value = $value;
+        $this->count = $count;
         return $this;
     }
     

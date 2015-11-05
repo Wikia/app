@@ -2671,3 +2671,19 @@ $config['special_broken_rename_fix'] = [
 		'//extensions/wikia/BrokenRenameFix/styles/SpecialBrokenRenameFix.scss',
 	],
 ];
+
+$config['insights_module_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//skins/oasis/css/modules/InsightsModule.scss',
+	],
+];
+
+$config['insights_module_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//skins/oasis/js/modules/InsightsModule.js',
+	],
+];

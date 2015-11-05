@@ -1513,14 +1513,6 @@ $wgAdDriverTurtleCountries = null;
 $wgAdDriverOpenXCountries = null;
 
 /**
- * @name $wgAdDriverSourcePointCountries
- * @TODO ADEN-2578 - cleanup
- * List of countries to call ads through SourcePoint
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverSourcePointCountries = null;
-
-/**
  * @name $wgAdDriverSourcePointDetectionCountries
  * List of countries to call SourcePoint detection scripts
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1829,4 +1821,4 @@ $wgLogRestrictions['piggyback'] = 'piggyback';
 /**
  * Reject attempts to fall back to the MediaWiki session for authentication.
  */
-$wgRejectAuthenticationFallback = false;
+$wgRejectAuthenticationFallback = true;
