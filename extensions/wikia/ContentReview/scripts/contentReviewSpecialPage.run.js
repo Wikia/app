@@ -1,3 +1,1 @@
-require(['ext.wikia.contentReview.special.page'], function(contentReviewSpecialPage) {
-    contentReviewSpecialPage.init();
-});
+require('ext.wikia.contentReview.special.page').init();
