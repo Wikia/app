@@ -63,6 +63,13 @@ class PortableInfoboxRenderServiceHelper {
 			if ( !empty( $sanitizedLabel) ) {
 				$data[ 'label' ] = $sanitizedLabel;
 			}
+		} else if ( $type === 'horizontal-group-content' ) {
+			foreach ( $data[ 'labels' ] as $key => $label ) {
+				$sanitizedLabel = $this->sanitizeElementData( $label, '<a>' );
+				if ( !empty( $sanitizedLabel ) ) {
+					$data[ 'labels' ][ $key ] = $sanitizedLabel;
+				}
+			}
 		} else if ( $type === 'title' ) {
 			$data[ 'value' ] = $this->sanitizeElementData( $data[ 'value' ] );
 		} else if ( $type === 'hero-mobile' && !empty( $data[ 'title' ][ 'value' ] ) ) {
