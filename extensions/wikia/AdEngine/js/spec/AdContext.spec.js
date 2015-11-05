@@ -711,4 +711,28 @@ describe('AdContext', function () {
 
 		expect(getModule().getContext().opts.recoveredAdsMessage).toBeFalsy();
 	});
+
+	it('enables scroll handler when country in instantGlobals.wgAdDriverScrollHandlerCountries', function () {
+		var adContext;
+		mocks.win = {
+			ads: {
+				context: {
+					providers: {
+						taboola: true
+					},
+					targeting: {
+						pageType: 'article'
+					}
+				}
+			}
+		};
+
+		mocks.instantGlobals = {wgAdDriverTaboolaCountries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
+		adContext = getModule();
+		expect(adContext.getContext().providers.taboola).toBeTruthy();
+
+		mocks.instantGlobals = {wgAdDriverTaboolaCountries: ['YY']};
+		adContext = getModule();
+		expect(adContext.getContext().providers.taboola).toBeFalsy();
+	});
 });
