@@ -260,7 +260,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 *   - false to disable debugging
 	 *   - omitted or null to do nothing
 	 *
-	 * @return bool The previous value of the flag
+	 * @return The previous value of the flag
 	 */
 	function debug( $debug = null ) {
 		return wfSetBit( $this->mFlags, DBO_DEBUG, $debug );
@@ -284,9 +284,9 @@ abstract class DatabaseBase implements DatabaseType {
 	 * split up queries into batches using a LIMIT clause than to switch off
 	 * buffering.
 	 *
-	 * @param  null|bool $buffer
+	 * @param $buffer null|bool
 	 *
-	 * @return bool The previous value of the flag
+	 * @return The previous value of the flag
 	 */
 	function bufferResults( $buffer = null ) {
 		if ( is_null( $buffer ) ) {
@@ -317,8 +317,8 @@ abstract class DatabaseBase implements DatabaseType {
 	 * Historically, transactions were allowed to be "nested". This is no
 	 * longer supported, so this function really only returns a boolean.
 	 *
-	 * @param int $level An integer (0 or 1), or omitted to leave it unchanged.
-	 * @return int The previous value
+	 * @param $level An integer (0 or 1), or omitted to leave it unchanged.
+	 * @return The previous value
 	 */
 	function trxLevel( $level = null ) {
 		return wfSetVar( $this->mTrxLevel, $level );
@@ -326,8 +326,8 @@ abstract class DatabaseBase implements DatabaseType {
 
 	/**
 	 * Get/set the number of errors logged. Only useful when errors are ignored
-	 * @param int $count The count to set, or omitted to leave it unchanged.
-	 * @return int The error count
+	 * @param $count The count to set, or omitted to leave it unchanged.
+	 * @return The error count
 	 */
 	function errorCount( $count = null ) {
 		return wfSetVar( $this->mErrorCount, $count );
@@ -335,8 +335,8 @@ abstract class DatabaseBase implements DatabaseType {
 
 	/**
 	 * Get/set the table prefix.
-	 * @param string $prefix The table prefix to set, or omitted to leave it unchanged.
-	 * @return string The previous table prefix.
+	 * @param $prefix The table prefix to set, or omitted to leave it unchanged.
+	 * @return The previous table prefix.
 	 */
 	function tablePrefix( $prefix = null ) {
 		return wfSetVar( $this->mTablePrefix, $prefix );
@@ -809,8 +809,6 @@ abstract class DatabaseBase implements DatabaseType {
 
 	/**
 	 * @param $error String: fallback error message, used if none is given by DB
-	 *
-	 * @throws DBConnectionError
 	 */
 	function reportConnectionError( $error = 'Unknown error' ) {
 		$myError = $this->lastError();
@@ -855,17 +853,14 @@ abstract class DatabaseBase implements DatabaseType {
 	 *
 	 * However, the query wrappers themselves should call this function.
 	 *
-	 * @param string $sql : SQL query
-	 * @param string $fname : Name of the calling function, for profiling/SHOW PROCESSLIST
+	 * @param  $sql        String: SQL query
+	 * @param  $fname      String: Name of the calling function, for profiling/SHOW PROCESSLIST
 	 *     comment (you can use __METHOD__ or add some extra info)
-	 * @param bool $tempIgnore : Whether to avoid throwing an exception on errors...
+	 * @param  $tempIgnore Boolean:   Whether to avoid throwing an exception on errors...
 	 *     maybe best to catch the exception instead?
-	 *
-	 * @return bool|ResultWrapper true for a successful write query, ResultWrapper object
+	 * @return boolean|ResultWrapper. true for a successful write query, ResultWrapper object
 	 *     for a successful read query, or false on failure if $tempIgnore set
-	 *
-	 * @throws DBQueryError
-	 * @throws MWException
+	 * @throws DBQueryError Thrown when the database returns an error of any kind
 	 */
 	public function query( $sql, $fname = '', $tempIgnore = false ) {
 		$isMaster = !is_null( $this->getLBInfo( 'master' ) );
@@ -894,7 +889,7 @@ abstract class DatabaseBase implements DatabaseType {
 		}
 
 		# <Wikia>
-		global $wgDBReadOnly;
+		global $wgProfiler, $wgDBReadOnly;
 		if ( $is_writeable && $wgDBReadOnly ) {
 			if ( !Profiler::instance()->isStub() ) {
 				wfProfileOut( $queryProf );
@@ -1017,13 +1012,11 @@ abstract class DatabaseBase implements DatabaseType {
 	 * Report a query error. Log the error, and if neither the object ignore
 	 * flag nor the $tempIgnore flag is set, throw a DBQueryError.
 	 *
-	 * @param String $error
-	 * @param Integer $errno
-	 * @param String $sql
-	 * @param String $fname
-	 * @param Boolean $tempIgnore
-	 *
-	 * @throws DBQueryError
+	 * @param $error String
+	 * @param $errno Integer
+	 * @param $sql String
+	 * @param $fname String
+	 * @param $tempIgnore Boolean
 	 */
 	function reportQueryError( $error, $errno, $sql, $fname, $tempIgnore = false ) {
 		# Ignore errors during error handling to avoid infinite recursion
@@ -1141,10 +1134,8 @@ abstract class DatabaseBase implements DatabaseType {
 	 * The arguments should be in $this->preparedArgs and must not be touched
 	 * while we're doing this.
 	 *
-	 * @param array $matches
-	 *
+	 * @param $matches Array
 	 * @return String
-	 * @throws DBUnexpectedError
 	 */
 	function fillPreparedArg( $matches ) {
 		switch( $matches[1] ) {
@@ -1256,8 +1247,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param string $fname The function name of the caller.
 	 * @param string|array $options The query options. See DatabaseBase::select() for details.
 	 *
-	 * @return array|bool The values from the field, or false on failure
-	 * @throws DBUnexpectedError
+	 * @return bool|array The values from the field, or false on failure
 	 * @since 1.25
 	 */
 	public function selectFieldValues(
@@ -1529,14 +1519,14 @@ abstract class DatabaseBase implements DatabaseType {
 	 * The equivalent of DatabaseBase::select() except that the constructed SQL
 	 * is returned, instead of being immediately executed.
 	 *
-	 * @param string|array $table Table name
-	 * @param string|array $vars Field names
-	 * @param string|array $conds Conditions
-	 * @param string $fname Caller function name
-	 * @param string|array $options Query options
-	 * @param string|array $join_conds Join conditions
+	 * @param $table string|array Table name
+	 * @param $vars string|array Field names
+	 * @param $conds string|array Conditions
+	 * @param $fname string Caller function name
+	 * @param $options string|array Query options
+	 * @param $join_conds string|array Join conditions
 	 *
-	 * @return string SQL query string.
+	 * @return SQL query string.
 	 * @see DatabaseBase::select()
 	 */
 	function selectSQLText( $table, $vars, $conds = '', $fname = 'DatabaseBase::select', $options = array(), $join_conds = array() ) {
@@ -1927,8 +1917,6 @@ abstract class DatabaseBase implements DatabaseType {
 	 *      - LIST_NAMES:          comma separated field names
 	 *
 	 * @return string
-	 * @throws DBUnexpectedError
-	 * @throws MWException
 	 */
 	function makeList( $a, $mode = LIST_COMMA ) {
 		if ( !is_array( $a ) ) {
@@ -2609,9 +2597,6 @@ abstract class DatabaseBase implements DatabaseType {
 	 *                    ANDed together in the WHERE clause
 	 * @param $fname      String: Calling function name (use __METHOD__) for
 	 *                    logs/profiling
-	 *
-	 * @throws DBUnexpectedError
-	 * @throws MWException
 	 */
 	function deleteJoin( $delTable, $joinTable, $delVar, $joinVar, $conds,
 		$fname = 'DatabaseBase::deleteJoin' )
@@ -2678,8 +2663,6 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param $fname String name of the calling function
 	 *
 	 * @return bool
-	 * @throws DBUnexpectedError
-	 * @throws MWException
 	 */
 	function delete( $table, $conds, $fname = 'DatabaseBase::delete' ) {
 		if ( !$conds ) {
@@ -2792,10 +2775,9 @@ abstract class DatabaseBase implements DatabaseType {
 	 *
 	 * @param $sql String SQL query we will append the limit too
 	 * @param $limit Integer the SQL limit
-	 * @param bool|false|int $offset Integer|false the SQL offset (default false)
+	 * @param $offset Integer|false the SQL offset (default false)
 	 *
 	 * @return string
-	 * @throws DBUnexpectedError
 	 */
 	function limitResult( $sql, $limit, $offset = false ) {
 		if ( !is_numeric( $limit ) ) {
@@ -3098,13 +3080,11 @@ abstract class DatabaseBase implements DatabaseType {
 	 * The table names passed to this function shall not be quoted (this
 	 * function calls addIdentifierQuotes when needed).
 	 *
-	 * @param String $oldName : name of table whose structure should be copied
-	 * @param String $newName : name of table to be created
-	 * @param Boolean $temporary : whether the new table should be temporary
-	 * @param String $fname : calling function name
-	 *
-	 * @return bool : true if operation was successful
-	 * @throws MWException
+	 * @param $oldName String: name of table whose structure should be copied
+	 * @param $newName String: name of table to be created
+	 * @param $temporary Boolean: whether the new table should be temporary
+	 * @param $fname String: calling function name
+	 * @return Boolean: true if operation was successful
 	 */
 	function duplicateTableStructure( $oldName, $newName, $temporary = false,
 		$fname = 'DatabaseBase::duplicateTableStructure' )
@@ -3116,10 +3096,8 @@ abstract class DatabaseBase implements DatabaseType {
 	/**
 	 * List all tables on the database
 	 *
-	 * @param string $prefix : Only show tables with this prefix, e.g. mw_
-	 * @param string $fname : calling function name
-	 *
-	 * @throws MWException
+	 * @param $prefix Only show tables with this prefix, e.g. mw_
+	 * @param $fname String: calling function name
 	 */
 	function listTables( $prefix = null, $fname = 'DatabaseBase::listTables' ) {
 		throw new MWException( 'DatabaseBase::listTables is not implemented in descendant class' );
@@ -3286,15 +3264,12 @@ abstract class DatabaseBase implements DatabaseType {
 	 * Returns true on success, error string or exception on failure (depending
 	 * on object's error ignore settings).
 	 *
-	 * @param String $filename : File name to open
-	 * @param bool|callable $lineCallback : Optional function called before reading each line
-	 * @param bool|callable $resultCallback : Optional function called for each MySQL result
-	 * @param bool|String $fname : Calling function name or false if name should be
+	 * @param $filename String: File name to open
+	 * @param $lineCallback Callback: Optional function called before reading each line
+	 * @param $resultCallback Callback: Optional function called for each MySQL result
+	 * @param $fname String: Calling function name or false if name should be
 	 *      generated dynamically using $filename
-	 *
 	 * @return bool|string
-	 * @throws Exception
-	 * @throws MWException
 	 */
 	function sourceFile( $filename, $lineCallback = false, $resultCallback = false, $fname = false ) {
 		wfSuppressWarnings();

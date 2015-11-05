@@ -32,20 +32,15 @@ class Revision {
 	const FOR_THIS_USER = 2;
 	const RAW = 3;
 
-	// These constants are used with methods that accept a true/false 'useMaster' parameter
-	const USE_MASTER_DB = true;
-
 	/**
 	 * Load a page revision from a given revision ID number.
 	 * Returns null if no such revision can be found.
 	 *
-	 * @param int $id
-	 * @param bool $useMaster
-	 *
+	 * @param $id Integer
 	 * @return Revision or null
 	 */
-	public static function newFromId( $id, $useMaster = false ) {
-		return Revision::newFromConds( [ 'rev_id' => intval( $id ) ], $useMaster );
+	public static function newFromId( $id ) {
+		return Revision::newFromConds( array( 'rev_id' => intval( $id ) ) );
 	}
 
 	/**
@@ -258,15 +253,11 @@ class Revision {
 	/**
 	 * Given a set of conditions, fetch a revision.
 	 *
-	 * @param array $conditions
-	 * @param bool $useMaster
-	 *
-	 * @return Revision|null
+	 * @param $conditions Array
+	 * @return Revision or null
 	 */
-	public static function newFromConds( $conditions, $useMaster = false ) {
-		$dbType = $useMaster ? DB_MASTER : DB_SLAVE;
-
-		$db = wfGetDB( $dbType );
+	public static function newFromConds( $conditions ) {
+		$db = wfGetDB( DB_SLAVE );
 		$rev = Revision::loadFromConds( $db, $conditions );
 		if( is_null( $rev ) && wfGetLB()->getServerCount() > 1 ) {
 			$dbw = wfGetDB( DB_MASTER );
@@ -564,27 +555,24 @@ class Revision {
 	/**
 	 * Returns the title of the page associated with this entry.
 	 *
-	 * @param bool $useMaster
-	 *
 	 * @return Title
 	 */
+	/* Wikia changes start */
+	/* Wikia added possibility to use master */
 	public function getTitle( $useMaster = false ) {
-		if ( isset( $this->mTitle ) ) {
+	/* Wikia changes end */
+		if( isset( $this->mTitle ) ) {
 			return $this->mTitle;
 		}
-
-		$dbType = $useMaster ? DB_MASTER : DB_SLAVE;
-		$dbr = wfGetDB( $dbType );
-
+		/* Wikia changes start */
+		$dbr = ( !$useMaster ? wfGetDB( DB_SLAVE ) : wfGetDB( DB_MASTER ) );
+		/* Wikia changes end */
 		$row = $dbr->selectRow(
-			[ 'page', 'revision' ],
+			array( 'page', 'revision' ),
 			self::selectPageFields(),
-			[
-				'page_id=rev_page',
-				'rev_id' => $this->mId
-			],
-			__METHOD__
-		);
+			array( 'page_id=rev_page',
+				   'rev_id' => $this->mId ),
+			__METHOD__ );
 		if ( $row ) {
 			$this->mTitle = Title::newFromRow( $row );
 		}
