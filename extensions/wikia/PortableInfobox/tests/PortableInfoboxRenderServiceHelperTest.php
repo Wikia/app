@@ -223,14 +223,27 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 			['data',
 				[
 					'label' => 'Data <div class="some class">with <h2>div </h2>with <small>class</small></div> and other tags',
-					'value' => 'Data <small>Value</small>' ],
+					'value' => 'Data <small>Value</small>'
+				],
 				[
 					'label' => 'Data with div with class and other tags',
+					'value' => 'Data <small>Value</small>'
+				]
+			],
+			['data',
+				[
+					'label' => '<img src="money.jpg" class="test classes" width="20" />',
+					'value' => 'Data <small>Value</small>'
+				],
+				[
+					'label' => '<img src="money.jpg" class="test classes" width="20" />',
 					'value' => 'Data <small>Value</small>'
 				]
 			]
 		];
 	}
+
+
 
 	/**
 	 * @param array $item
