@@ -4,6 +4,7 @@ define('ext.wikia.adEngine.recovery.message', [
 	'ext.wikia.adEngine.recovery.helper',
 	'jquery',
 	'mw',
+	'wikia.abTest',
 	'wikia.document',
 	'wikia.loader',
 	'wikia.localStorage',
@@ -16,6 +17,7 @@ define('ext.wikia.adEngine.recovery.message', [
 	recoveryHelper,
 	$,
 	mw,
+	abTest,
 	doc,
 	loader,
 	localStorage,
@@ -119,7 +121,7 @@ define('ext.wikia.adEngine.recovery.message', [
 	}
 
 	function injectMessage() {
-		var group = win.Wikia.AbTest ? Wikia.AbTest.getGroup(abTestConfig.experimentName) : false;
+		var group = abTest.getGroup(abTestConfig.experimentName);
 
 		if (group && abTestConfig.topGroupNames.hasOwnProperty(group)) {
 			injectTopMessage(abTestConfig.topGroupNames[group]);
