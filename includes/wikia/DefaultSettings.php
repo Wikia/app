@@ -1309,6 +1309,13 @@ $wgAdDriverUseAdsAfterInfobox = false;
 $wgAdDriverUseTaboola = false;
 
 /**
+ * @name $wgAdDriverTaboolaCountries
+ * List of countries with enabled Taboola module.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverTaboolaCountries = null;
+
+/**
  * @name $wgAdDriverUseTopInContentBoxad
  * Whether to enable the in-content ads for Oasis (for narrow screens)
  */
