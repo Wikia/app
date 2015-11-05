@@ -7,7 +7,7 @@
 return [
 	// AMD library
 	'amd' => [
-		'scripts' => 'resources/wikia/libraries/modil/modil.js',
+		'scripts' => 'resources/wikia/libraries/loader.js/loader.js',
 	],
 
 	// shared AMD modules loaded on each page
