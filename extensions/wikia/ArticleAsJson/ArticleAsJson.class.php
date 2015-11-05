@@ -1,7 +1,5 @@
 <?php
 
-use Swagger\Client\ApiException;
-
 class ArticleAsJson extends WikiaService {
 	static $media = [];
 	static $users = [];
@@ -259,11 +257,10 @@ class ArticleAsJson extends WikiaService {
 	 * @param $report
 	 * @return bool
 	 */
-	public static function reportLimits( $parser, &$report )
-	{
+	public static function reportLimits( $parser, &$report ) {
 		global $wgArticleAsJson;
 
-		if ($wgArticleAsJson) {
+		if ( $wgArticleAsJson ) {
 			$report = '';
 
 			return false;
