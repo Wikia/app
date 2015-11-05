@@ -3,30 +3,28 @@ CKEDITOR.plugins.add('rte-tools', {});
 
 window.RTE.tools = {
 	// show modal version of alert()
-	'alert': function(title, content) {
+	'alert': function (title, content) {
 		'use strict';
-		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-			uiFactory.init( [ 'modal' ] ).then(function( modal ) {
+		require('wikia.ui.factory').init(['modal']).then(function (modal) {
 
-				// config for rendering modal
-				var modalConfig = {
-					vars: {
-						id: 'RTEAlertModal',
-						content: '<p>' + content + '</p>',
-						size: 'small',
-						title: title
-					}
-				};
+			// config for rendering modal
+			var modalConfig = {
+				vars: {
+					id: 'RTEAlertModal',
+					content: '<p>' + content + '</p>',
+					size: 'small',
+					title: title
+				}
+			};
 
-				modal.createComponent( modalConfig, function( RTEAlertModal ) {
-					RTEAlertModal.show();
-				});
+			modal.createComponent(modalConfig, function (RTEAlertModal) {
+				RTEAlertModal.show();
 			});
 		});
 	},
 
 	// call given function with special RTE event type and provide function with given element and extra data
-	callFunction: function(fn, element, data) {
+	callFunction: function (fn, element, data) {
 		// extra check
 		if (typeof fn != 'function') {
 			return;
@@ -46,7 +44,7 @@ window.RTE.tools = {
 	},
 
 	// checks whether given page name exists and sets appriopriate CSS classes / href of element
-	checkInternalLink: function(element, pageName) {
+	checkInternalLink: function (element, pageName) {
 		// check for anchor
 		var anchor = '';
 		if (/^#(.+)/.test(pageName)) {
@@ -55,7 +53,7 @@ window.RTE.tools = {
 			pageName = window.wgPageName;
 		}
 
-		RTE.ajax('checkInternalLink', {title: pageName}, function(data) {
+		RTE.ajax('checkInternalLink', {title: pageName}, function (data) {
 			if (!data.exists) {
 				element.addClass('new');
 			}
@@ -70,11 +68,11 @@ window.RTE.tools = {
 
 	// show modal version of confirm()
 	// call callback when Ok is pressed
-	"confirm": function(title, question, callback) {
+	"confirm": function (title, question, callback) {
 		var html = '<p>' + question + '</p>' +
 			'<div class="RTEConfirmButtons neutral">' +
-				'<a id="RTEConfirmCancel" class="wikia-button secondary"><span>' + RTE.getInstance().lang.common.cancel + '</span></a>' +
-				'<a id="RTEConfirmOk" class="wikia-button"><span>' + RTE.getInstance().lang.common.ok + '</span></a>' +
+			'<a id="RTEConfirmCancel" class="wikia-button secondary"><span>' + RTE.getInstance().lang.common.cancel + '</span></a>' +
+			'<a id="RTEConfirmOk" class="wikia-button"><span>' + RTE.getInstance().lang.common.ok + '</span></a>' +
 			'</div>';
 
 		function track(label) {
@@ -88,11 +86,11 @@ window.RTE.tools = {
 			id: 'RTEConfirm',
 			className: 'RTEModal',
 			width: 500,
-			onClose: function() {
+			onClose: function () {
 				track('rte-confirm-close');
 			},
-			callbackBefore: function() {
-				$('#RTEConfirmOk').click(function() {
+			callbackBefore: function () {
+				$('#RTEConfirmOk').click(function () {
 					track('button-rte-confirm-ok');
 
 					$('#RTEConfirm').closeModal();
@@ -103,7 +101,7 @@ window.RTE.tools = {
 					}
 				});
 
-				$('#RTEConfirmCancel').click(function() {
+				$('#RTEConfirmCancel').click(function () {
 					track('button-rte-confirm-cancel');
 
 					$('#RTEConfirm').closeModal();
@@ -115,7 +113,7 @@ window.RTE.tools = {
 	},
 
 	// creates new placeholder of given type and with given meta data
-	createPlaceholder: function(type, data) {
+	createPlaceholder: function (type, data) {
 		var placeholder = $('<img />', RTE.getInstance().document.$);
 
 		// CSS classes and attributes
@@ -136,19 +134,19 @@ window.RTE.tools = {
 	},
 
 	// RT #69635: prevent drag&drop for provided elements
-	disableDragDrop: function(nodes) {
-		nodes.bind('mousedown', function(ev) {
+	disableDragDrop: function (nodes) {
+		nodes.bind('mousedown', function (ev) {
 			ev.preventDefault();
 		});
 	},
 
 	// get height of editor's iframe
-	getEditorHeight: function() {
+	getEditorHeight: function () {
 		return $('#cke_contents_' + WikiaEditor.instanceId).height();
 	},
 
 	// get editor's document scroll offsets
-	getEditorScrollOffsets: function() {
+	getEditorScrollOffsets: function () {
 		var scrollLeft, scrollTop;
 
 		if (CKEDITOR.env.webkit) {
@@ -169,32 +167,33 @@ window.RTE.tools = {
 
 	// get theme colors from .color1 CSS class
 	// TODO: use SASS settings echo'ed by PHP to JS variable(s)
-	getThemeColors: function() {
+	getThemeColors: function () {
 		// create or use existing color picker div
 		var colorPicker = $('#RTEColorPicker');
-		if ( !colorPicker.exists() ) {
+		if (!colorPicker.exists()) {
 			colorPicker = $('<div id="RTEColorPicker">').addClass('color1').appendTo(RTE.overlayNode).hide();
 		}
 
 		// get colors and update CK config
 		RTE.config.baseBackgroundColor = colorPicker.css('backgroundColor');
 		RTE.config.baseColor = colorPicker.css('color');
-	},
+	}
+	,
 
 	// get list of images
-	getImages: function() {
+	getImages: function () {
 		var images = RTE.getEditor().find('img.image');
 		return images;
 	},
 
 	// get list of media (images / videos)
-	getMedia: function() {
+	getMedia: function () {
 		var media = RTE.getEditor().find('img.image,img.video');
 		return media;
 	},
 
 	// get position of given placeholder in coordinates of browser window
-	getPlaceholderPosition: function(placeholder) {
+	getPlaceholderPosition: function (placeholder) {
 		var position = placeholder.offset(),
 			scrollOffsets = this.getEditorScrollOffsets();
 
@@ -205,14 +204,14 @@ window.RTE.tools = {
 	},
 
 	// get list of placeholders of given type (or all if no type is provided)
-	getPlaceholders: function(type) {
+	getPlaceholders: function (type) {
 		var query = type ? ('img[type=' + type + ']') : 'img.placeholder';
 		var placeholders = RTE.getEditor().find(query);
 		return placeholders;
 	},
 
 	// get text content of current selection
-	getSelectionContent: function() {
+	getSelectionContent: function () {
 		var text;
 
 		if (CKEDITOR.env.ie) {
@@ -228,7 +227,7 @@ window.RTE.tools = {
 	},
 
 	// get list of videos
-	getVideos: function() {
+	getVideos: function () {
 		var videos = RTE.getEditor().find('img.video');
 		return videos;
 	},
@@ -236,7 +235,7 @@ window.RTE.tools = {
 	// inserts given DOMElement / jQuery element into CK
 	// TODO: throw an exception if jQuery element was not
 	// created inside CKeditor's document
-	insertElement: function(element, dontReinitialize) {
+	insertElement: function (element, dontReinitialize) {
 		var CKelement = new CKEDITOR.dom.element($(element).get(0));
 
 		RTE.getInstance().insertElement(CKelement);
@@ -248,7 +247,7 @@ window.RTE.tools = {
 	},
 
 	// check whether given URL is external
-	isExternalLink: function(href) {
+	isExternalLink: function (href) {
 		return this.isExternalLinkRegExp.test(href);
 	},
 
@@ -258,7 +257,7 @@ window.RTE.tools = {
 	parseCache: {},
 
 	// parse wikitext to HTML (try to use client-side JS "cache")
-	parse: function(wikitext, callback) {
+	parse: function (wikitext, callback) {
 		var cache = RTE.tools.parseCache;
 
 		// try to use cache
@@ -272,7 +271,7 @@ window.RTE.tools = {
 		}
 
 		// ok, send AJAX request
-		RTE.ajax('parse', {wikitext: wikitext, title: window.wgPageName}, function(json) {
+		RTE.ajax('parse', {wikitext: wikitext, title: window.wgPageName}, function (json) {
 			cache[wikitext] = json.html;
 
 			if (typeof callback == 'function') {
@@ -282,8 +281,8 @@ window.RTE.tools = {
 	},
 
 	// parse wikitext to HTML using RTE parser (try to use client-side JS "cache")
-	parseRTE: function(wikitext, callback) {
-		RTE.ajax('rteparse', {wikitext: wikitext, title: window.wgPageName}, function(json) {
+	parseRTE: function (wikitext, callback) {
+		RTE.ajax('rteparse', {wikitext: wikitext, title: window.wgPageName}, function (json) {
 			if (typeof callback == 'function') {
 				callback(json.html);
 			}
@@ -291,14 +290,14 @@ window.RTE.tools = {
 	},
 
 	// regenerate numbers for external "autonumbered" links
-	renumberExternalLinks: function() {
-		RTE.getEditor().find('a.autonumber').each(function(i) {
-			  $(this).text('[' + (i+1) + ']');
+	renumberExternalLinks: function () {
+		RTE.getEditor().find('a.autonumber').each(function (i) {
+			$(this).text('[' + (i + 1) + ']');
 		});
 	},
 
 	// remove given node and add undo step
-	removeElement: function(elem) {
+	removeElement: function (elem) {
 		// save undo step (RT #35914)
 		RTE.getInstance().fire('saveSnapshot');
 
@@ -310,8 +309,8 @@ window.RTE.tools = {
 	},
 
 	// remove resize box
-	removeResizeBox: function() {
-		setTimeout(function() {
+	removeResizeBox: function () {
+		setTimeout(function () {
 			// simply switch design mode off and on - this solves #RT #33853
 			if (CKEDITOR.env.gecko) {
 				var documentNode = RTE.getInstance().document.$;
@@ -326,7 +325,7 @@ window.RTE.tools = {
 	resolveDoubleBracketsCache: {},
 
 	// get information about given wikitext with double brackets syntax (templates / magic words / parser functions)
-	resolveDoubleBrackets: function(wikitext, callback) {
+	resolveDoubleBrackets: function (wikitext, callback) {
 		var cache = RTE.tools.resolveDoubleBracketsCache;
 
 		// try to use cache
@@ -340,7 +339,7 @@ window.RTE.tools = {
 		}
 
 		// ok, send AJAX request
-		RTE.ajax('resolveDoubleBrackets', {wikitext: wikitext, title: window.wgPageName}, function(json) {
+		RTE.ajax('resolveDoubleBrackets', {wikitext: wikitext, title: window.wgPageName}, function (json) {
 			cache[wikitext] = json;
 
 			if (typeof callback == 'function') {
@@ -352,18 +351,19 @@ window.RTE.tools = {
 	// makes the element and its children unselectable
 	// @see http://www.highdots.com/forums/javascript/making-image-unselectable-ff-292462.html
 	// TODO: remove as it's no longer needed
-	unselectable: function(elem) {}
-}
+	unselectable: function (elem) {
+	}
+};
 
 // helper class for highlighting given parts of editor's HTML
 // TODO: move to a separate file (plugin maybe?)
-CKEDITOR.nodeRunner = function() {
+CKEDITOR.nodeRunner = function () {
 	// "Beep, Beep"
 };
 
 CKEDITOR.nodeRunner.prototype = {
 	// recursively call provided function for child nodes (skip read only nodes)
-	walk: function(node, callback) {
+	walk: function (node, callback) {
 		if ((node.type != CKEDITOR.NODE_ELEMENT) || node.isReadOnly() || this.isSkipped(node)) {
 			return;
 		}
@@ -371,7 +371,7 @@ CKEDITOR.nodeRunner.prototype = {
 		var childNode,
 			childNodes = node.getChildren();
 
-		for (var n=0, len = childNodes.count(); n < len; n++) {
+		for (var n = 0, len = childNodes.count(); n < len; n++) {
 			childNode = childNodes.getItem(n);
 			callback(childNode);
 			this.walk(childNode, callback);
@@ -379,8 +379,8 @@ CKEDITOR.nodeRunner.prototype = {
 	},
 
 	// recursively call provided function for child text nodes
-	walkTextNodes: function(node, callback) {
-		this.walk(node, function(node) {
+	walkTextNodes: function (node, callback) {
+		this.walk(node, function (node) {
 			if (node.type == CKEDITOR.NODE_TEXT) {
 				callback(node);
 			}
@@ -388,7 +388,7 @@ CKEDITOR.nodeRunner.prototype = {
 	},
 
 	// override this function when you create an object of class CKEDITOR.nodeRunner
-	isSkipped: function(node) {
+	isSkipped: function (node) {
 		return false;
 	}
 };
