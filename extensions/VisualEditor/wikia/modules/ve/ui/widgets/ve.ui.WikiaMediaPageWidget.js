@@ -165,11 +165,9 @@ ve.ui.WikiaMediaPageWidget.prototype.setupImage = function () {
 	this.image = new Image();
 	this.$item = this.$( this.image );
 
-	require( ['wikia.thumbnailer'], function ( thumbnailer ) {
-		// TODO: (nice to have) be able to calculate the bounding box without hardcoded
-		// values but we would need to know bounding box size up front for that.
-		this.image.src = thumbnailer.getThumbURL( this.model.url, 'image', 365 );
-	}.bind( this ) );
+	// TODO: (nice to have) be able to calculate the bounding box without hardcoded
+	// values but we would need to know bounding box size up front for that.
+	this.image.src = require( 'wikia.thumbnailer' ).getThumbURL( this.model.url, 'image', 365 );
 
 	this.$item.load( this.onImageLoad.bind( this ) );
 	this.$itemWrapper
