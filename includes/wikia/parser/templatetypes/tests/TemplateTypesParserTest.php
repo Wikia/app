@@ -30,14 +30,20 @@ class TemplateTypesParserTest extends WikiaBaseTest
 		$this->assertEquals( $text, self::TEST_TEMPLATE_TEXT );
 	}
 
-	public function testShouldRemoveNavboxTemplateText()
+	/**
+	 * @param string $type
+	 * @param string $changedTemplateText
+	 *
+	 * @dataProvider shouldChangeTemplateParsingDataProvider
+	 */
+	public function testShouldChangeTemplateParsing( $type, $changedTemplateText )
 	{
 		$text = self::TEST_TEMPLATE_TEXT;
 		$title = $this->getMock( 'Title' );
 
 		$this->mockClassWithMethods(
 			'ExternalTemplateTypesProvider',
-			[ 'getTemplateTypeFromTitle' => 'navbox' ]
+			[ 'getTemplateTypeFromTitle' => $type ]
 		);
 
 		$this->mockGlobalVariable( 'wgCityId', '12345' );
@@ -46,7 +52,7 @@ class TemplateTypesParserTest extends WikiaBaseTest
 
 		TemplateTypesParser::onFetchTemplateAndTitle( $text, $title );
 
-		$this->assertEquals( $text, '' );
+		$this->assertEquals( $text, $changedTemplateText );
 	}
 
 	public function shouldNotChangeTemplateParsingDataProvider() {
@@ -62,6 +68,19 @@ class TemplateTypesParserTest extends WikiaBaseTest
 			[
 				false,
 				true
+			]
+		];
+	}
+
+	public function shouldChangeTemplateParsingDataProvider() {
+		return [
+			[
+				'navbox',
+				''
+			],
+			[
+				'reference',
+				'<references />'
 			]
 		];
 	}
