@@ -87,8 +87,7 @@ define('ext.wikia.adEngine.adContext', [
 
 		// Taboola integration
 		if (context.providers.taboola) {
-			context.providers.taboola = geo.isProperGeo(instantGlobals.wgAdDriverTaboolaCountries) &&
-				context.targeting.pageType === 'article';
+			context.providers.taboola = context.targeting.pageType === 'article';
 		}
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverTurtleCountries)) {
