@@ -1832,12 +1832,7 @@ $wgLogRestrictions['piggyback'] = 'piggyback';
 $wgRejectAuthenticationFallback = true;
 
 /**
- * Return template type for given template from Template Classification Service
+ * Use template types from Template Classification Service in MW context
  */
-$wgAutoloadClasses['ExternalTemplateTypesProvider'] = "{$IP}/includes/wikia/parser/ExternalTemplateTypesProvider.class.php";
+include_once( "$IP/includes/wikia/parser/templatetypes/TemplateTypesSetup.class.php" );
 
-/**
- * Handles special parsing of templates classified by Template Classification Service
- */
-$wgAutoloadClasses['TemplateTypesParser'] = "{$IP}/includes/wikia/parser/TemplateTypesParser.class.php";
-$wgHooks['Parser::FetchTemplateAndTitle'][] = 'TemplateTypesParser::onFetchTemplateAndTitle';
