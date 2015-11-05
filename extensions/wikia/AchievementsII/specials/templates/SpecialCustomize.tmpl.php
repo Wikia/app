@@ -25,7 +25,7 @@
 	<div class="errorbox"><strong><?= $errorMsg ?></strong></div>
 <?endif;?>
 <?
-global $wgCityId, $wgScriptPath, $wgExternalSharedDB, $wgJsMimeType, $wgAchievementsEditAddPhotoOnly;
+global $wgCityId, $wgScriptPath, $wgExternalSharedDB, $wgJsMimeType;
 
 $tracks = array();
 foreach($config->getInTrackStatic() as $badgeTypeId => $trackData){

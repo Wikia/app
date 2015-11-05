@@ -15,10 +15,10 @@ class AchUserProfileService {
 	protected $viewerUser;
 	protected $hasPersonalAnnotations;
 
-	public function __construct( $ownerUser = null ) {
+	public function __construct($ownerUser = null) {
 		global $wgUser, $wgTitle;
-		if ( !isset( $ownerUser ) ) {
-			$ownerUser = User::newFromName( UserPagesHeaderController::getUserName( $wgTitle, BodyController::getUserPagesNamespaces() ) );
+		if (!isset($ownerUser)) {
+			$ownerUser = User::newFromName(UserPagesHeaderController::getUserName($wgTitle, BodyController::getUserPagesNamespaces()));
 		}
 
 		$this->ownerUser = $ownerUser;
@@ -40,13 +40,13 @@ class AchUserProfileService {
 	 * This should be part of the controller, not the model
 	 */
 	public function isVisible() {
-		if ( !isset( $this->visible ) ) {
+		if (!isset($this->visible)) {
 			$this->visible =
 				// only on Oasis
-				in_array( strtolower( RequestContext::getMain()->getSkin()->getSkinName() ), array( 'oasis' ) )
+				in_array(strtolower(RequestContext::getMain()->getSkin()->getSkinName()), array('oasis'))
 				// the subject user is a registered user that can earn badges
 				&& $this->ownerUser && !$this->ownerUser->isAnon()
-				&& AchAwardingService::canEarnBadges( $this->ownerUser )
+				&& AchAwardingService::canEarnBadges($this->ownerUser)
 				// and the subject user didn't hide his achievements
 				//     by setting the option 'hidepersonalachievements'
 				&& !$this->ownerUser->getGlobalPreference('hidepersonalachievements');
@@ -55,14 +55,14 @@ class AchUserProfileService {
 	}
 
 	public function hasPersonalAnnotations() {
-		if ( !isset( $this->hasPersonalAnnotations ) ) {
+		if (!isset($this->hasPersonalAnnotations)) {
 			$this->hasPersonalAnnotations =
 				// viewer users is a registered user
 				!$this->viewerUser->isAnon()
 				// other than the owner user
 				&& $this->viewerUser->getId() == $this->ownerUser->getId()
 				// and can earn badges
-				&& AchAwardingService::canEarnBadges( $this->viewerUser )
+				&& AchAwardingService::canEarnBadges($this->viewerUser)
 				// and didn't hide his achievements
 				&& !$this->viewerUser->getGlobalPreference('hidepersonalachievements');
 		}
@@ -72,7 +72,7 @@ class AchUserProfileService {
     public function getHTML() {
 		wfProfileIn(__METHOD__);
 
-		if ( $this->isVisible() ) {
+		if ($this->isVisible()) {
 			$ownerName = $this->ownerUser->getName();
 
 			$tmplData = array();
@@ -83,12 +83,12 @@ class AchUserProfileService {
 			$tmplData['title_challenges'] = wfMsg('achievements-profile-title-challenges', $ownerName);
 			$tmplData['leaderboard_url'] = Skin::makeSpecialUrl("Leaderboard");
 
-			if($this->owner->getBadgesCount() > 0) {
+			if ($this->owner->getBadgesCount() > 0) {
 				$rankingService = new AchRankingService();
 				$tmplData['user_rank'] = $rankingService->getUserRankingPosition($this->ownerUser);
 			}
 
-			if($this->viewerUser->isAllowed('editinterface')) {
+			if ($this->viewerUser->isAllowed('editinterface')) {
 				$tmplData['customize_url'] = Skin::makeSpecialUrl("AchievementsCustomize");
 			}
 
@@ -103,17 +103,17 @@ class AchUserProfileService {
     	return $out;
     }
 
-	public function getBadgesAnnotated( $page = null ) {
+	public function getBadgesAnnotated($page = null) {
 		wfProfileIn(__METHOD__);
-		if ( is_null( $page ) ) {
+		if (is_null($page)) {
 			$badges = $this->owner->getAllBadges();
 		} else {
-			$badges = $this->owner->getBadges( $page * self::BADGES_PER_PAGE, self::BADGES_PER_PAGE );
+			$badges = $this->owner->getBadges($page * self::BADGES_PER_PAGE, self::BADGES_PER_PAGE);
 		}
 
 		$personalAnnotations = $this->hasPersonalAnnotations();
 		$viewerCounters = array();
-		if ( $personalAnnotations ) {
+		if ($personalAnnotations) {
 			$viewerByType = $this->viewer->getBadgesByType();
 			$viewerCounters = $this->viewer->getCounters();
 		}
@@ -121,17 +121,17 @@ class AchUserProfileService {
 		/** @var $badge AchBadge */
 		foreach ($badges as $badge) {
 			$toGet = '';
-			if ( $personalAnnotations ) {
+			if ($personalAnnotations) {
 				$typeId = $badge->getTypeId();
 				$lap = $badge->getLap();
-				if ( $badge->isInTrack() ) {
+				if ($badge->isInTrack()) {
 					// in track
-					if ( !isset($viewerByType[$typeId]) || $lap < $viewerByType[$typeId]['max_lap'] ) {
-						if( !isset($viewerByType[$typeId]) ) {
+					if (!isset($viewerByType[$typeId]) || $lap < $viewerByType[$typeId]['max_lap']) {
+						if (!isset($viewerByType[$typeId])) {
 							$eventsCounter = 0;
-						} else if ( $typeId == BADGE_LOVE ) {
+						} else if ($typeId == BADGE_LOVE) {
 							$eventsCounter = $viewerCounters[$typeId][COUNTERS_COUNTER];
-						} else if ( $typeId == BADGE_BLOGCOMMENT ) {
+						} else if ($typeId == BADGE_BLOGCOMMENT) {
 							$eventsCounter = count($viewerCounters[$typeId]);
 						} else {
 							$eventsCounter = $viewerCounters[$typeId];
@@ -141,7 +141,7 @@ class AchUserProfileService {
 					}
 				} else {
 					// not in track
-					if ( !isset($viewerByType[$typeId]) ) {
+					if (!isset($viewerByType[$typeId])) {
 						$toGet = $badge->getToGet();
 					}
 				}
@@ -173,8 +173,8 @@ class AchUserProfileService {
 
 		// PLATINUM BADGES
 		foreach($notInTrackCommunityPlatinum as $badge_type_id => $badge_config) {
-			if($badge_config['enabled']) {
-				if ( !isset( $ownerByType[$badge_type_id] ) ) {
+			if ($badge_config['enabled']) {
+				if (!isset($ownerByType[$badge_type_id])) {
 					$challenges[$badge_type_id] = null;
 				}
 			}
@@ -184,15 +184,15 @@ class AchUserProfileService {
 		foreach ($ownerByType as $badge_type_id => $typeData) {
 			$badgeType = $achConfig->getBadgeType($badge_type_id);
 
-			if ( $badgeType == BADGE_TYPE_INTRACKEDITPLUSCATEGORY ) {
-				if ( $achConfig->isEnabled( $badge_type_id ) ) {
+			if ($badgeType == BADGE_TYPE_INTRACKEDITPLUSCATEGORY) {
+				if ($achConfig->isEnabled($badge_type_id)) {
 					$challenges[$badge_type_id] = $typeData['count'];
 				}
-			} else if ( $badgeType == BADGE_TYPE_INTRACKSTATIC ) {
-				if ( $inTrackStatic[$badge_type_id]['infinite'] ) {
+			} else if ($badgeType == BADGE_TYPE_INTRACKSTATIC) {
+				if ($inTrackStatic[$badge_type_id]['infinite']) {
 					$challenges[$badge_type_id] = $typeData['count'];
 				} else {
-					if ( $typeData['count'] < count( $inTrackStatic[$badge_type_id]['laps'] ) ) {
+					if ($typeData['count'] < count($inTrackStatic[$badge_type_id]['laps'])) {
 						$challenges[$badge_type_id] = $typeData['count'];
 					}
 				}
@@ -200,37 +200,37 @@ class AchUserProfileService {
 		}
 
 		$challengesOrder = array(BADGE_WELCOME, BADGE_INTRODUCTION, BADGE_EDIT, 0, BADGE_PICTURE, BADGE_SAYHI, BADGE_BLOGCOMMENT, BADGE_CATEGORY, BADGE_BLOGPOST, BADGE_LOVE);
-		foreach($challengesOrder as $badge_type_id) {
-			if ( $badge_type_id == 0 ) {
-				foreach ( $inTrackEditPlusCategory as $badge_type_id_2 => $badge_config ) {
-					if ( $badge_config['enabled'] ) {
-						if ( !isset($ownerByType[$badge_type_id_2]) && !isset( $challenges[$badge_type_id_2] ) ) {
+		foreach ($challengesOrder as $badge_type_id) {
+			if ($badge_type_id == 0) {
+				foreach ($inTrackEditPlusCategory as $badge_type_id_2 => $badge_config) {
+					if ($badge_config['enabled']) {
+						if (!isset($ownerByType[$badge_type_id_2]) && !isset($challenges[$badge_type_id_2])) {
 							$challenges[$badge_type_id_2] = 0;
 						}
 					}
 				}
-			} else if ( !isset($ownerByType[$badge_type_id]) && !isset( $challenges[$badge_type_id] ) ) {
+			} else if (!isset($ownerByType[$badge_type_id]) && !isset($challenges[$badge_type_id])) {
 				$challenges[$badge_type_id] = $achConfig->isInTrack($badge_type_id) ? 0 : null;
 			}
 		}
 
-		global $wgEnableAchievementsForSharing, $wgAchievementsEditAddPhotoOnly;
+		global $wgEnableAchievementsForSharing;
 
 		$challengesAnnotated = array();
-		foreach($challenges as $badge_type_id => $badge_lap) {
-			if(!$achConfig->shouldShow($badge_type_id)) {
+		foreach ($challenges as $badge_type_id => $badge_lap) {
+			if (!$achConfig->shouldShow($badge_type_id)) {
 				continue;
 			}
 			$badge = new AchBadge($badge_type_id, $badge_lap);
 
-			if($badge_lap === null) {
+			if ($badge_lap === null) {
 				$toGet = $badge->getToGet();
 			} else {
-				if ( !isset( $ownerCounters[$badge_type_id] ) ) {
+				if (!isset($ownerCounters[$badge_type_id])) {
 					$eventsCounter = 0;
-				} else if ( $badge_type_id == BADGE_LOVE ) {
+				} else if ($badge_type_id == BADGE_LOVE) {
 					$eventsCounter = $ownerCounters[$badge_type_id][COUNTERS_COUNTER];
-				} else if ( $badge_type_id == BADGE_BLOGCOMMENT ) {
+				} else if ($badge_type_id == BADGE_BLOGCOMMENT) {
 					$eventsCounter = count($ownerCounters[$badge_type_id]);
 				} else {
 					$eventsCounter = $ownerCounters[$badge_type_id];
@@ -238,9 +238,9 @@ class AchUserProfileService {
 
 				$requiredEvents = $achConfig->getRequiredEvents($badge_type_id, $badge_lap);
 				$toGet = $badge->getToGet($requiredEvents);
-				if ( $badge_type_id != BADGE_SHARING ) {
+				if ($badge_type_id != BADGE_SHARING) {
 					$toGet .= " ({$eventsCounter}/{$requiredEvents})";
-				} else if(empty($wgEnableAchievementsForSharing)){
+				} else if (empty($wgEnableAchievementsForSharing)){
 					continue;
 				}
 			}
