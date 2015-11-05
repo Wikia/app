@@ -167,7 +167,8 @@ class TemplateClassificationService {
 		$apiProvider = new ApiProvider( $urlProvider );
 		$apiClient = $apiProvider->getApi( self::SERVICE_NAME, TCSApi::class );
 
-		// overwrite curl timeout
+		// default curl timeout for API client is set to 0 which = to no timeout.
+		// Overwriting to minimal value which is 1.
 		$apiClient->getConfig()->setCurlTimeout(1);
 
 		return $apiClient;
