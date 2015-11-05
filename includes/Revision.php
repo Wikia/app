@@ -3,7 +3,7 @@
 /**
  * @todo document
  */
-class Revision {
+class Revision implements IDBAccessObject {
 	protected $mId;
 	protected $mPage;
 	protected $mUserText;
@@ -27,7 +27,7 @@ class Revision {
 	const DELETED_RESTRICTED = 8;
 	// Convenience field
 	const SUPPRESSED_USER = 12;
-	// Audience options for Revision::getText()
+	// Audience options for accessors
 	const FOR_PUBLIC = 1;
 	const FOR_THIS_USER = 2;
 	const RAW = 3;
@@ -36,11 +36,16 @@ class Revision {
 	 * Load a page revision from a given revision ID number.
 	 * Returns null if no such revision can be found.
 	 *
+	 * $flags include:
+	 *      IDBAccessObject::LATEST_READ  : Select the data from the master
+	 *      IDBAccessObject::LOCKING_READ : Select & lock the data from the master
+	 *      IDBAccessObject::AVOID_MASTER : Avoid master queries; data may be stale
+	 *
 	 * @param $id Integer
 	 * @return Revision or null
 	 */
-	public static function newFromId( $id ) {
-		return Revision::newFromConds( array( 'rev_id' => intval( $id ) ) );
+	public static function newFromId( $id, $flags = 0 ) {
+		return self::newFromConds( array( 'rev_id' => intval( $id ) ), $flags );
 	}
 
 	/**
@@ -48,11 +53,17 @@ class Revision {
 	 * that's attached to a given title. If not attached
 	 * to that title, will return null.
 	 *
+	 * $flags include:
+	 *      IDBAccessObject::LATEST_READ  : Select the data from the master
+	 *      IDBAccessObject::LOCKING_READ : Select & lock the data from the master
+	 *      IDBAccessObject::AVOID_MASTER : Avoid master queries; data may be stale
+	 *
 	 * @param $title Title
 	 * @param $id Integer (optional)
+	 * @param $flags Integer Bitfield (optional)
 	 * @return Revision or null
 	 */
-	public static function newFromTitle( $title, $id = 0 ) {
+	public static function newFromTitle( $title, $id = 0, $flags = 0 ) {
 		$conds = array(
 			'page_namespace' => $title->getNamespace(),
 			'page_title' 	 => $title->getDBkey()
@@ -60,7 +71,7 @@ class Revision {
 		if ( $id ) {
 			// Use the specified ID
 			$conds['rev_id'] = $id;
-		} elseif ( wfGetLB()->getServerCount() > 1 ) {
+		} elseif ( !( $flags & self::AVOID_MASTER ) && wfGetLB()->getServerCount() > 1 ) {
 			// Get the latest revision ID from the master
 			$dbw = wfGetDB( DB_MASTER );
 			$latest = $dbw->selectField( 'page', 'page_latest', $conds, __METHOD__ );
@@ -72,7 +83,7 @@ class Revision {
 			// Use a join to get the latest revision
 			$conds[] = 'rev_id=page_latest';
 		}
-		return Revision::newFromConds( $conds );
+		return self::newFromConds( $conds, $flags );
 	}
 
 	/**
@@ -80,15 +91,21 @@ class Revision {
 	 * that's attached to a given page ID.
 	 * Returns null if no such revision can be found.
 	 *
+	 * $flags include:
+	 *      IDBAccessObject::LATEST_READ  : Select the data from the master
+	 *      IDBAccessObject::LOCKING_READ : Select & lock the data from the master
+	 *      IDBAccessObject::AVOID_MASTER : Avoid master queries; data may be stale
+	 *
 	 * @param $revId Integer
 	 * @param $pageId Integer (optional)
+	 * @param $flags Integer Bitfield (optional)
 	 * @return Revision or null
 	 */
-	public static function newFromPageId( $pageId, $revId = 0 ) {
+	public static function newFromPageId( $pageId, $revId = 0, $flags = 0 ) {
 		$conds = array( 'page_id' => $pageId );
 		if ( $revId ) {
 			$conds['rev_id'] = $revId;
-		} elseif ( wfGetLB()->getServerCount() > 1 ) {
+		} elseif ( !( $flags & self::AVOID_MASTER ) && wfGetLB()->getServerCount() > 1 ) {
 			// Get the latest revision ID from the master
 			$dbw = wfGetDB( DB_MASTER );
 			$latest = $dbw->selectField( 'page', 'page_latest', $conds, __METHOD__ );
@@ -99,7 +116,7 @@ class Revision {
 		} else {
 			$conds[] = 'rev_id = page_latest';
 		}
-		return Revision::newFromConds( $conds );
+		return self::newFromConds( $conds, $flags );
 	}
 
 	/**
@@ -183,10 +200,11 @@ class Revision {
 	 *
 	 * @param $db DatabaseBase
 	 * @param $id Integer
+	 * @param $flags Integer (optional)
 	 * @return Revision or null
 	 */
 	public static function loadFromId( $db, $id ) {
-		return Revision::loadFromConds( $db, array( 'rev_id' => intval( $id ) ) );
+		return self::loadFromConds( $db, array( 'rev_id' => intval( $id ) ) );
 	}
 
 	/**
@@ -206,7 +224,7 @@ class Revision {
 		} else {
 			$conds[] = 'rev_id=page_latest';
 		}
-		return Revision::loadFromConds( $db, $conds );
+		return self::loadFromConds( $db, $conds );
 	}
 
 	/**
@@ -225,7 +243,7 @@ class Revision {
 		} else {
 			$matchId = 'page_latest';
 		}
-		return Revision::loadFromConds( $db,
+		return self::loadFromConds( $db,
 			array( "rev_id=$matchId",
 				   'page_namespace' => $title->getNamespace(),
 				   'page_title'     => $title->getDBkey() )
@@ -243,7 +261,7 @@ class Revision {
 	 * @return Revision or null
 	 */
 	public static function loadFromTimestamp( $db, $title, $timestamp ) {
-		return Revision::loadFromConds( $db,
+		return self::loadFromConds( $db,
 			array( 'rev_timestamp'  => $db->timestamp( $timestamp ),
 				   'page_namespace' => $title->getNamespace(),
 				   'page_title'     => $title->getDBkey() )
@@ -254,14 +272,17 @@ class Revision {
 	 * Given a set of conditions, fetch a revision.
 	 *
 	 * @param $conditions Array
+	 * @param $flags integer (optional)
 	 * @return Revision or null
 	 */
-	public static function newFromConds( $conditions ) {
-		$db = wfGetDB( DB_SLAVE );
-		$rev = Revision::loadFromConds( $db, $conditions );
-		if( is_null( $rev ) && wfGetLB()->getServerCount() > 1 ) {
-			$dbw = wfGetDB( DB_MASTER );
-			$rev = Revision::loadFromConds( $dbw, $conditions );
+	private static function newFromConds( $conditions, $flags = 0 ) {
+		$db = wfGetDB( ( $flags & self::LATEST_READ ) ? DB_MASTER : DB_SLAVE );
+		$rev = self::loadFromConds( $db, $conditions, $flags );
+		if ( is_null( $rev ) && wfGetLB()->getServerCount() > 1 ) {
+			if ( !( $flags & self::LATEST_READ ) && !( $flags & self::AVOID_MASTER ) ) {
+				$dbw = wfGetDB( DB_MASTER );
+				$rev = self::loadFromConds( $dbw, $conditions, $flags );
+			}
 		}
 		return $rev;
 	}
@@ -272,10 +293,11 @@ class Revision {
 	 *
 	 * @param $db DatabaseBase
 	 * @param $conditions Array
+	 * @param $flags integer (optional)
 	 * @return Revision or null
 	 */
-	private static function loadFromConds( $db, $conditions ) {
-		$res = Revision::fetchFromConds( $db, $conditions );
+	private static function loadFromConds( $db, $conditions, $flags = 0 ) {
+		$res = self::fetchFromConds( $db, $conditions, $flags );
 		if( $res ) {
 			$row = $res->fetchObject();
 			if( $row ) {
@@ -296,7 +318,7 @@ class Revision {
 	 * @return ResultWrapper
 	 */
 	public static function fetchRevision( $title ) {
-		return Revision::fetchFromConds(
+		return self::fetchFromConds(
 			wfGetDB( DB_SLAVE ),
 			array( 'rev_id=page_latest',
 				   'page_namespace' => $title->getNamespace(),
@@ -311,20 +333,25 @@ class Revision {
 	 *
 	 * @param $db DatabaseBase
 	 * @param $conditions Array
+	 * @param $flags integer (optional)
 	 * @return ResultWrapper
 	 */
-	private static function fetchFromConds( $db, $conditions ) {
+	private static function fetchFromConds( $db, $conditions, $flags = 0 ) {
 		$fields = array_merge(
 			self::selectFields(),
 			self::selectPageFields(),
 			self::selectUserFields()
 		);
+		$options = array( 'LIMIT' => 1 );
+		if ( $flags & self::FOR_UPDATE ) {
+			$options[] = 'FOR UPDATE';
+		}
 		return $db->select(
 			array( 'revision', 'page', 'user' ),
 			$fields,
 			$conditions,
 			__METHOD__,
-			array( 'LIMIT' => 1 ),
+			$options,
 			array( 'page' => self::pageJoinCond(), 'user' => self::userJoinCond() )
 		);
 	}
@@ -826,7 +853,7 @@ class Revision {
 			);
 	/* Wikia changes end */
 			if( $prev ) {
-				return Revision::newFromTitle( $this->getTitle(), $prev );
+				return self::newFromTitle( $this->getTitle(), $prev );
 			}
 		}
 		return null;
@@ -841,7 +868,7 @@ class Revision {
 		if( $this->getTitle() ) {
 			$next = $this->getTitle()->getNextRevisionID( $this->getId() );
 			if ( $next ) {
-				return Revision::newFromTitle( $this->getTitle(), $next );
+				return self::newFromTitle( $this->getTitle(), $next );
 			}
 		}
 		return null;
@@ -972,7 +999,7 @@ class Revision {
 				$text = gzdeflate( $text );
 				$flags[] = 'gzip';
 			} else {
-				wfDebug( "Revision::compressRevisionText() -- no zlib support, not compressing\n" );
+				wfDebug( __METHOD__ . " -- no zlib support, not compressing\n" );
 			}
 		}
 		return implode( ',', $flags );
@@ -991,7 +1018,7 @@ class Revision {
 		wfProfileIn( __METHOD__ );
 
 		$data = $this->mText;
-		$flags = Revision::compressRevisionText( $data );
+		$flags = self::compressRevisionText( $data );
 
 		# Write to external storage if required
 		if( $wgDefaultExternalStore ) {
@@ -1041,7 +1068,7 @@ class Revision {
 					? $this->getPreviousRevisionId( $dbw )
 					: $this->mParentId,
 				'rev_sha1'       => is_null( $this->mSha1 )
-					? Revision::base36Sha1( $this->mText )
+					? self::base36Sha1( $this->mText )
 					: $this->mSha1
 			), __METHOD__
 		);
@@ -1263,7 +1290,7 @@ class Revision {
 	static function countByTitle( $db, $title ) {
 		$id = $title->getArticleId();
 		if( $id ) {
-			return Revision::countByPageId( $db, $id );
+			return self::countByPageId( $db, $id );
 		}
 		return 0;
 	}
