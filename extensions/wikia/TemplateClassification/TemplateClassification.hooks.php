@@ -102,17 +102,8 @@ class Hooks {
 
 		$templateType = $this->getTemplateTypeForEdit( $editPage->getTitle(), $wgCityId );
 
-		$editPage->addHiddenField([
-			'name' => 'templateClassificationTypeCurrent',
-			'value' => $templateType,
-			'type' => 'hidden',
-		]);
-
-		$editPage->addHiddenField([
-			'name' => 'templateClassificationTypeNew',
-			'value' => '',
-			'type' => 'hidden',
-		]);
+		$out->addHTML( \Html::hidden( 'templateClassificationTypeCurrent', $templateType ) );
+		$out->addHTML( \Html::hidden( 'templateClassificationTypeNew', '' ) );
 
 		return true;
 	}

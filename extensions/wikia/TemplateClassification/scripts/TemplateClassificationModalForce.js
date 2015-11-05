@@ -11,8 +11,8 @@ define('TemplateClassificationModalForce',
 				$typeFieldCurrent = $editform.find('input[name=templateClassificationTypeCurrent]'),
 				$typeFieldNew = $editform.find('input[name=templateClassificationTypeNew]');
 
-			if (($typeFieldCurrent.length > 0 && $typeFieldCurrent.val() !== '') ||
-				($typeFieldNew.length > 0 && $typeFieldNew.val() !== '')) {
+			if ((!!$typeFieldCurrent && $typeFieldCurrent.val() !== '') ||
+				(!!$typeFieldNew && $typeFieldNew.val() !== '')) {
 					// Type defined. Force is not required
 					return false;
 			}
