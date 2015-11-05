@@ -475,7 +475,7 @@ class CuratedContentController extends WikiaController {
 			$errors = ( new CuratedContentValidator )->validateData( $sections );
 
 			if ( !empty( $errors ) ) {
-				$this->response->setVal( 'error', $errors );
+				$this->response->setVal( 'errors', $errors );
 			} else {
 				$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $wgCityId, $sections );
 				wfWaitForSlaves();
