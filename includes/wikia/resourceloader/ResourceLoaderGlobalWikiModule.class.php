@@ -258,6 +258,10 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		$revisionId = null;
 		$wikiId = 0;
 
+		if ( empty( $title->getArticleID() ) ) {
+			return 0;
+		}
+
 		$contentReviewHelper = new Wikia\ContentReview\Helper();
 
 		if ( $title instanceof GlobalTitle ) {
