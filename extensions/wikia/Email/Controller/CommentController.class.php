@@ -11,6 +11,9 @@ abstract class CommentController extends EmailController {
 	/** @var \Title */
 	protected $pageTitle;
 
+	/** @var \Title */
+	protected $commentTitle;
+
 	public function initEmail() {
 		// This title is for the article being commented upon
 		$titleText = $this->request->getVal( 'pageTitle' );
@@ -21,10 +24,10 @@ abstract class CommentController extends EmailController {
 		// This revision ID is for the comment that was left
 		$commentRevID = $this->getVal( 'currentRevId', false );
 		if ( $commentRevID ) {
-			$rev = \Revision::newFromId( $commentRevID, \Revision::USE_MASTER_DB );
+			$rev = \Revision::newFromId( $commentRevID, \Revision::READ_LATEST );
 
 			if ( $rev ) {
-				$this->commentTitle = $rev->getTitle( \Revision::USE_MASTER_DB );
+				$this->commentTitle = $rev->getTitle( true /* $useMaster */ );
 			}
 		}
 
@@ -36,6 +39,7 @@ abstract class CommentController extends EmailController {
 	 */
 	private function assertValidParams() {
 		$this->assertValidTitle();
+		$this->assertValidCommentTitle();
 	}
 
 	/**
@@ -101,18 +105,11 @@ abstract class CommentController extends EmailController {
 	abstract protected function getSummaryKey();
 
 	protected function getDetails() {
-		$comment = $this->getLatestComment();
-		$articleID = $comment->getArticleID();
+		$article = \Article::newFromTitle( $this->commentTitle, \RequestContext::getMain() );
+		$service = new \ArticleService( $article );
+		$snippet = $service->getTextSnippet();
 
-		$res = $this->sendRequest( 'ArticleSummary', 'blurb', [
-			'ids' => $articleID,
-		] )->getData();
-
-		if ( empty( $res['summary'][$articleID] ) ) {
-			return '';
-		}
-
-		return $res['summary'][$articleID]['snippet'];
+		return $snippet;
 	}
 
 	protected function getCommentLabel() {
@@ -120,7 +117,7 @@ abstract class CommentController extends EmailController {
 	}
 
 	protected function getCommentLink() {
-		$comment = $this->getLatestComment();
+		$comment = $this->commentTitle;
 		return $comment->getCanonicalURL();
 	}
 
@@ -132,18 +129,6 @@ abstract class CommentController extends EmailController {
 			$this->getMessage( 'emailext-unfollow-text', $parentUrl, $parentTitleText )->parse()
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
-	}
-
-	protected function getLatestComment() {
-		if ( empty( $this->latestComment ) ) {
-			$articleComment = \ArticleComment::latestFromTitle( $this->title );
-			if ( empty( $articleComment ) ) {
-				throw new Fatal( 'Could not find latest comment' );
-			}
-			$this->latestComment = $articleComment->getTitle();
-		}
-
-		return $this->latestComment;
 	}
 
 	protected function getCommentSectionLink() {
