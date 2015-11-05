@@ -2,43 +2,43 @@
  * @see Lightbox extension
  * @author lizlux
  */
-define( 'wikia.touchstorm', [], function() {
+define('wikia.touchstorm', [], function () {
 	'use strict';
 
 	function TouchStorm() {
-		if( !window.wgEnableLightboxExt ) {
+		if (!window.wgEnableLightboxExt) {
 			throw 'Lightbox must be enabled for TouchStorm to work.';
 		}
-		this.wrapper = $( '#TouchStormModule' );
+		this.wrapper = $('#TouchStormModule');
 		this.lightboxInited = false;
 		this.init();
 	}
 
 	TouchStorm.prototype = {
-		init: function() {
+		init: function () {
 			this.bindEvents();
 		},
 
-		bindEvents: function() {
+		bindEvents: function () {
 			var that = this;
 
 			// bind click even to all touchstorm DOM elements that should open the lightbox
-			this.wrapper.on( 'click', 'img, p', function() {
-				that.handleClick( $( this ) );
+			this.wrapper.on('click', 'img, p', function () {
+				that.handleClick($(this));
 			});
 
 			// called from Lightbox.js, so we know the Lightbox code is fully loaded.
-			$( window ).on( 'lightboxOpened', $.proxy( this.setupLightbox, this ) );
+			$(window).on('lightboxOpened', $.proxy(this.setupLightbox, this));
 		},
 
 		/* @desc when a touchstorm video is clicked, load the lightbox
 		 * @return void
 		 */
-		handleClick: function( $elem ) {
+		handleClick: function ($elem) {
 			var that = this,
-				videoKey = this.getKeyFromUrl( $elem.attr( 'url' ) );
+				videoKey = this.getKeyFromUrl($elem.attr('url'));
 
-			window.LightboxLoader.loadLightbox( videoKey, {
+			window.LightboxLoader.loadLightbox(videoKey, {
 				parent: that.wrapper,
 				carouselType: 'touchStorm',
 				clickSource: 'touchStorm'
@@ -49,16 +49,16 @@ define( 'wikia.touchstorm', [], function() {
 		 * Lightbox code was fully loaded.
 		 * @return void
 		 */
-		setupLightbox: function() {
-			if( !this.lightboxInited ) {
+		setupLightbox: function () {
+			if (!this.lightboxInited) {
 				this.getVideoList();
 
 				// Add touchstorm to carousel types
-				window.Lightbox.carouselTypes.splice( 1, 0, 'touchStorm' );
+				window.Lightbox.carouselTypes.splice(1, 0, 'touchStorm');
 				window.LightboxLoader.cache.touchStorm = [];
 
 				// Add method for collecting touchstorm thumbs for carousel
-				window.Lightbox.getMediaThumbs.touchStorm = $.proxy( this.getCarouselThumbs, this );
+				window.Lightbox.getMediaThumbs.touchStorm = $.proxy(this.getCarouselThumbs, this);
 
 				// Make sure this code runs once
 				this.lightboxInited = true;
@@ -68,17 +68,17 @@ define( 'wikia.touchstorm', [], function() {
 		/* @desc Get data from touchstorm videos to be sent to getCarouselThumbs
 		 * @return void
 		 */
-		getVideoList: function() {
+		getVideoList: function () {
 			var that = this,
 				videos = [];
 
-			this.wrapper.find( '.veeseoRCWInlineVItem' ).each( function() {
-				var $this = $( this ),
-					p = $this.find( '.veeseoRCWInlineVItemContentLabel' );
+			this.wrapper.find('.veeseoRCWInlineVItem').each(function () {
+				var $this = $(this),
+					p = $this.find('.veeseoRCWInlineVItemContentLabel');
 
 				videos.push({
-					key: that.getKeyFromUrl( p.attr( 'url' ) ),
-					thumb: $this.find( '.veeseoRCWInlineVItemImg' ).attr( 'src' ),
+					key: that.getKeyFromUrl(p.attr('url')),
+					thumb: $this.find('.veeseoRCWInlineVItemImg').attr('src'),
 					title: p.text()
 				});
 			});
@@ -89,7 +89,7 @@ define( 'wikia.touchstorm', [], function() {
 		/* @desc Add another carousel thumb method to Lightbox in order to populate the lightboxcarousel
 		 * @return void
 		 */
-		getCarouselThumbs: function( backfill ) {
+		getCarouselThumbs: function (backfill) {
 			var cached = window.LightboxLoader.cache.touchStorm,
 				thumbArr = [],
 				playButton = window.Lightbox.thumbPlayButton,
@@ -99,16 +99,16 @@ define( 'wikia.touchstorm', [], function() {
 				key,
 				title;
 
-			if( cached.length ) {
+			if (cached.length) {
 				thumbArr = cached;
 			} else {
 
-				for( i = 0, arrLength = videoIds.length; i < arrLength; i++ ) {
+				for (i = 0, arrLength = videoIds.length; i < arrLength; i++) {
 					key = videoIds[i].key;
 					title = videoIds[i].title;
 
 					thumbArr.push({
-						thumbUrl: window.Lightbox.thumbParams( videoIds[ i ].thumb, 'video' ),
+						thumbUrl: window.Lightbox.thumbParams(videoIds[i].thumb, 'video'),
 						key: key,
 						title: title,
 						type: 'video',
@@ -120,16 +120,16 @@ define( 'wikia.touchstorm', [], function() {
 				window.LightboxLoader.cache.touchStorm = thumbArr;
 
 				// Count backfill items for progress bar
-				if( backfill ) {
+				if (backfill) {
 					window.Lightbox.backfillCount += thumbArr.length;
 				}
 
 			}
 
 			// Add thumbs to current lightbox cache
-			window.Lightbox.current.thumbs = window.Lightbox.current.thumbs.concat( thumbArr );
+			window.Lightbox.current.thumbs = window.Lightbox.current.thumbs.concat(thumbArr);
 
-			window.Lightbox.addThumbsToCarousel( thumbArr, backfill );
+			window.Lightbox.addThumbsToCarousel(thumbArr, backfill);
 
 		},
 
@@ -138,18 +138,17 @@ define( 'wikia.touchstorm', [], function() {
 		 * later date.
 		 * @return string Video key
 		 */
-		getKeyFromUrl: function( url ) {
-			return url.split( 'File:' )[ 1 ];
+		getKeyFromUrl: function (url) {
+			return url.split('File:')[1];
 		}
 	};
 
 	return TouchStorm;
 });
 
-require( [ 'wikia.touchstorm' ], function( TouchStorm ) {
+$(function () {
 	'use strict';
+	var TouchStorm = require('wikia.touchstorm');
 
-	$( function() {
-		return new TouchStorm();
-	});
+	return new TouchStorm();
 });
