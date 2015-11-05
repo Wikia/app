@@ -40,10 +40,10 @@ var ads = (function (window, document) {
 	}
 
 	function fillAd() {
-		require(['ext.wikia.adEngine.provider.directGptMaps'], function (gpt) {
-			var slotElement = document.getElementById('MAPS_BUTTON');
-			gpt.fillInSlot('MAPS_BUTTON', slotElement, noop, noop);
-		});
+		var gpt = require('ext.wikia.adEngine.provider.directGptMaps'),
+			slotElement = document.getElementById('MAPS_BUTTON');
+
+		gpt.fillInSlot('MAPS_BUTTON', slotElement, noop, noop);
 	}
 
 	function load() {
