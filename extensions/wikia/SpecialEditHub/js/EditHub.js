@@ -25,10 +25,8 @@
 
 				$this.addVideoButton({
 					callbackAfterSelect: function (url, VET) {
-						require( ['wikia.throbber'], function( throbber ) {
-							videoEmbedMain = $('#VideoEmbedMain');
-							throbber.show(videoEmbedMain);
-						});
+						videoEmbedMain = $('#VideoEmbedMain');
+						require('wikia.throbber').show(videoEmbedMain);
 
 						$.nirvana.sendRequest({
 							controller: 'EditHubController',
@@ -38,11 +36,10 @@
 								'url': url
 							},
 							callback: function (response) {
-								require( ['wikia.throbber'], function( throbber ) {
-									throbber.remove(videoEmbedMain);
-								});
 								var selectedModule = parseInt(window.wgEditHubModuleIdSelected),
 									box;
+
+								require('wikia.throbber').remove(videoEmbedMain);
 
 								if (response.error) {
 									new window.BannerNotification(response.error, 'error')
