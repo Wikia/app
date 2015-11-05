@@ -29,7 +29,7 @@ global $wgCityId, $wgScriptPath, $wgExternalSharedDB, $wgJsMimeType, $wgAchievem
 
 $tracks = array();
 foreach($config->getInTrackStatic() as $badgeTypeId => $trackData){
-	if (!empty($wgAchievementsEditAddPhotoOnly) && ($badgeTypeId != BADGE_EDIT && $badgeTypeId != BADGE_PICTURE)) {
+	if (!$config->shouldShow($badgeTypeId)) {
 		continue;
 	}
 	if($badgeTypeId != BADGE_EDIT) {

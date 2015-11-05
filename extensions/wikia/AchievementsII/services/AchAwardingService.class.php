@@ -46,7 +46,8 @@ class AchAwardingService {
 
 		global $wgExternalSharedDB, $wgAchievementsEditAddPhotoOnly;
 
-		if (!empty($wgAchievementsEditAddPhotoOnly) && ($badge_type_id != BADGE_EDIT && $badge_type_id != BADGE_PICTURE)) {
+		$achConfig = AchConfig::getInstance();
+		if (!$achConfig->shouldShow($badge_type_id)) {
 			wfProfileOut(__METHOD__);
 			return;
 		}
