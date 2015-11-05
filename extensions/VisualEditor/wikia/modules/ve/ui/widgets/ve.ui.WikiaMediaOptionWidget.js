@@ -99,20 +99,18 @@ ve.ui.WikiaMediaOptionWidget.newFromData = function ( config ) {
  * @method
  */
 ve.ui.WikiaMediaOptionWidget.prototype.loadThumbnail = function () {
-	require( ['wikia.thumbnailer'], function ( thumbnailer ) {
-		var src = thumbnailer.getThumbURL( this.data.url, 'image', this.size - 2, this.size - 2);
-		// FIXME: Using Thumbnailer should not require this trick of adding "thumb"
-		if ( src.indexOf( '/thumb/') === -1 && src.indexOf( 'vignette') === -1 ) {
-			src = src.split( '/' );
-			src.splice( src.length - 2, 0, 'thumb' );
-			src = src.join( '/' );
-		}
-		this.image.src = src;
-		this.$thumb.addClass(
-			've-ui-mwMediaResultWidget-thumbnail ve-ui-WikiaMediaOptionWidget-thumbnail'
-		);
-		this.$thumb.last().css( 'background-image', 'url(' + this.image.src + ')' );
-	}.bind( this ) );
+	var src = require( 'wikia.thumbnailer' ).getThumbURL( this.data.url, 'image', this.size - 2, this.size - 2);
+	// FIXME: Using Thumbnailer should not require this trick of adding "thumb"
+	if ( src.indexOf( '/thumb/' ) === -1 && src.indexOf( 'vignette' ) === -1 ) {
+		src = src.split( '/' );
+		src.splice( src.length - 2, 0, 'thumb' );
+		src = src.join( '/' );
+	}
+	this.image.src = src;
+	this.$thumb.addClass(
+		've-ui-mwMediaResultWidget-thumbnail ve-ui-WikiaMediaOptionWidget-thumbnail'
+	);
+	this.$thumb.last().css( 'background-image', 'url(' + this.image.src + ')' );
 };
 
 /**
