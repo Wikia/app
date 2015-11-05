@@ -22,6 +22,7 @@
  * @method exists
  * @method getID
  * @method getRedirectTarget
+ * @method loadPageData
  * //Wikia Change End
  */
 class Article extends Page {
