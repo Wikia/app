@@ -14,14 +14,39 @@ class TemplateTypesParser {
 		wfProfileIn( __METHOD__ );
 
 		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson ) {
-			$type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )->getTemplateTypeFromTitle(
-				$wgCityId, $finalTitle );
+			$type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )
+					->getTemplateTypeFromTitle( $wgCityId, $finalTitle );
 
-			$text = $type === TemplateClassificationService::TEMPLATE_NAVBOX ? '' : $text;
+			switch ( $type ) {
+				case TemplateClassificationService::TEMPLATE_NAVBOX:
+					$text = self::handleNavboxTemplate();
+					break;
+				case TemplateClassificationService::TEMPLATE_REF:
+					$text = self::handleReferencesTemplate();
+					break;
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
 
 		return true;
+	}
+
+	/**
+	 * @desc return skip rendering navbox template
+	 *
+	 * @return string
+	 */
+	private static function handleNavboxTemplate() {
+		return '';
+	}
+
+	/**
+	 * @desc return simple <references /> parser tag
+	 *
+	 * @return string
+	 */
+	private static function handleReferencesTemplate() {
+		return '<references />';
 	}
 }
