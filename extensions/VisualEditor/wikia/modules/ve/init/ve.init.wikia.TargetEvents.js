@@ -14,9 +14,9 @@
  * @constructor
  * @param {ve.init.mw.Target} target Target class to log events for
  */
-ve.init.mw.WikiaTargetEvents = function ( target ) {
+ve.init.wikia.TargetEvents = function ( target ) {
 	// Parent constructor
-	ve.init.mw.WikiaTargetEvents.super.call( this, target );
+	ve.init.wikia.TargetEvents.super.call( this, target );
 
 	// Events
 	this.target.connect( this, {
@@ -27,22 +27,22 @@ ve.init.mw.WikiaTargetEvents = function ( target ) {
 
 /* Inheritance */
 
-OO.inheritClass( ve.init.mw.WikiaTargetEvents, ve.init.mw.TargetEvents );
+OO.inheritClass( ve.init.wikia.TargetEvents, ve.init.mw.TargetEvents );
 
 /* Methods */
 
 /*
  * Store timestamp when the surface is ready
  */
-ve.init.mw.WikiaTargetEvents.prototype.onSurfaceReady = function () {
+ve.init.wikia.TargetEvents.prototype.onSurfaceReady = function () {
 	this.timings.surfaceReady = ve.now();
-	ve.init.mw.WikiaTargetEvents.super.prototype.onSurfaceReady.call( this );
+	ve.init.wikia.TargetEvents.super.prototype.onSurfaceReady.call( this );
 };
 
 /*
  * Track just before the window is unloaded
  */
-ve.init.mw.WikiaTargetEvents.prototype.onBeforeUnload = function () {
+ve.init.wikia.TargetEvents.prototype.onBeforeUnload = function () {
 	// Check whether this timing is set to prevent it being called more than once
 	if ( !this.timings.beforeUnload ) {
 		this.timings.beforeUnload = ve.now();
@@ -57,8 +57,8 @@ ve.init.mw.WikiaTargetEvents.prototype.onBeforeUnload = function () {
 /**
  * Track when document save is complete
  */
-ve.init.mw.WikiaTargetEvents.prototype.onSaveComplete = function () {
-	ve.init.mw.WikiaTargetEvents.super.prototype.onSaveComplete.call( this );
+ve.init.wikia.TargetEvents.prototype.onSaveComplete = function () {
+	ve.init.wikia.TargetEvents.super.prototype.onSaveComplete.call( this );
 	ve.track( 'wikia', {
 		action: ve.track.actions.CLICK,
 		label: 'dialog-save-publish',
@@ -69,7 +69,7 @@ ve.init.mw.WikiaTargetEvents.prototype.onSaveComplete = function () {
 /*
  * Track when user deactivates VE by clicking back button
  */
-ve.init.mw.WikiaTargetEvents.prototype.onPopStateDeactivated = function () {
+ve.init.wikia.TargetEvents.prototype.onPopStateDeactivated = function () {
 	ve.track( 'wikia', {
 		action: ve.track.actions.CLICK,
 		label: 'back',
