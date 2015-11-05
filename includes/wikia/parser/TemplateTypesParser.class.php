@@ -13,7 +13,7 @@ class TemplateTypesParser {
 
 		wfProfileIn( __METHOD__ );
 
-		if ( $wgArticleAsJson && $wgEnableTemplateTypesParsing ) {
+		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson ) {
 			$type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )->getTemplateTypeFromTitle(
 				$wgCityId, $finalTitle );
 
