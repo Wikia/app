@@ -1,12 +1,12 @@
-require([
-	'jquery',
-	'mw',
-	'wikia.window',
-	'wikia.cookies',
-	'wikia.geo',
-	'BannerNotification'
-], function ($, mw, window, cookies, geo, BannerNotification) {
+(function () {
 	'use strict';
+
+	var $ = require('jquery'),
+		mw = require('mw'),
+		window = require('wikia.window'),
+		cookies = require('wikia.cookies'),
+		geo = require('wikia.geo'),
+		BannerNotification = require('BannerNotification');
 
 	/**
 	 * Initialize JS for whether or not to show a banner notifying European Union users that we use cookies
@@ -71,4 +71,4 @@ require([
 	$(function () {
 		initCookieNotification();
 	});
-});
+})();
