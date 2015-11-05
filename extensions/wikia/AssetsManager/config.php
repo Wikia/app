@@ -463,7 +463,7 @@ $config['gameguides_js'] = array(
 		'//extensions/wikia/WikiaMobile/js/html_js_class.js',
 
 		//libraries/frameworks
-		'//resources/wikia/libraries/modil/modil.js',
+		'//resources/wikia/libraries/loader.js/loader.js',
 		'//resources/jquery/jquery-2.0.3.js',
 		'//resources/wikia/libraries/Ponto/ponto.js',
 
@@ -580,7 +580,7 @@ $config['wikiamobile_js_body_minimal'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		//libraries/frameworks
-		'//resources/wikia/libraries/modil/modil.js',
+		'//resources/wikia/libraries/loader.js/loader.js',
 		'//resources/jquery/jquery-2.0.3.js',
 
 		//core modules
@@ -777,7 +777,7 @@ $config['mercury_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		// Common modules
-		'//resources/wikia/libraries/modil/modil.js',
+		'//resources/wikia/libraries/loader.js/loader.js',
 		'#group_tracker_js',
 		'//resources/wikia/modules/log.js',
 		'//resources/wikia/modules/window.js',
@@ -815,7 +815,7 @@ $config['interactivemaps_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'interactivemaps',
 	'assets' => array(
-		'//resources/wikia/libraries/modil/modil.js',
+		'//resources/wikia/libraries/loader.js/loader.js',
 
 		// Modules
 		'//resources/wikia/modules/document.js',
