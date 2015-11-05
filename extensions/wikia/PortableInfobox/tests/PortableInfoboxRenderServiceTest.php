@@ -72,8 +72,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 		$this->mockInfoboxRenderServiceHelper( $mockParams );
 
 		$infoboxRenderService = new PortableInfoboxRenderService();
-		$actualOutput = $infoboxRenderService->renderInfobox( $input, null, null );
-
+		$actualOutput = $infoboxRenderService->renderInfobox( $input, '', '' );
 		$expectedHtml = $this->normalizeHTML( $expectedOutput) ;
 		$actualHtml = $this->normalizeHTML( $actualOutput );
 

@@ -48,18 +48,24 @@ class PortableInfoboxRenderServiceHelper {
 
 	/**
 	 * check if infobox item is a title, title inside the hero module or a label
-	 * and if so, remove from it all HTML tags.
+	 * and if so, remove from it HTML tags.
+	 * If label after sanitization is empty- contain only image- do not
+	 * sanitize it.
 	 *
 	 * @param string $type type of infobox item
 	 * @param array $data infobox item data
 	 * @return array infobox $data with sanitized title param if needed
 	 */
-	public function sanitizeTitlesAndLabels( $type, $data ) {
-		if ( $type === 'title' ) {
+	public function sanitizeInfoboxFields( $type, $data ) {
+		if ( $type === 'data' ) {
+			$sanitizedLabel = $this->sanitizeElementData( $data[ 'label' ], '<a>' );
+
+			if ( !empty( $sanitizedLabel) ) {
+				$data[ 'label' ] = $sanitizedLabel;
+			}
+		} else if ( $type === 'title' ) {
 			$data[ 'value' ] = $this->sanitizeElementData( $data[ 'value' ] );
-		} else if ( $type === 'data' ) {
-			$data[ 'label' ] = $this->sanitizeElementData( $data[ 'label' ], '<a>' );
-		} else if ( $type === 'hero-mobile' ) {
+		} else if ( $type === 'hero-mobile' && !empty( $data[ 'title' ][ 'value' ] ) ) {
 			$data[ 'title' ][ 'value' ] = $this->sanitizeElementData( $data[ 'title' ][ 'value' ] );
 		}
 
@@ -74,13 +80,11 @@ class PortableInfoboxRenderServiceHelper {
 	 * @return string
 	 */
 	private function sanitizeElementData( $elementText, $allowedTags = null ) {
-		if ( !empty( $elementText ) ) {
-			$elementTextAfterTrim = trim( strip_tags( $elementText, $allowedTags ) );
+		$elementTextAfterTrim = trim( strip_tags( $elementText, $allowedTags ) );
 
-			if ( $elementTextAfterTrim !== $elementText ) {
-				WikiaLogger::instance()->info( 'Striping HTML tags from infobox element' );
-				$elementText = $elementTextAfterTrim;
-			}
+		if ( $elementTextAfterTrim !== $elementText ) {
+			WikiaLogger::instance()->info( 'Striping HTML tags from infobox element' );
+			$elementText = $elementTextAfterTrim;
 		}
 		return $elementText;
 	}

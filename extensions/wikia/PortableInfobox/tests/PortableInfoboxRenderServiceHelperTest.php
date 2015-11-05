@@ -169,16 +169,16 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	 * @param string $input
 	 * @param array $data
 	 * @param string $expected
-	 * @dataProvider sanitizeTitlesAndLabelsDataProvider
+	 * @dataProvider sanitizeInfoboxFieldsDataProvider
 	 */
-	public function testSanitizeTitlesAndLabels( $input, $data, $expected ) {
+	public function testSanitizeInfoboxFields( $input, $data, $expected ) {
 		$this->assertEquals(
 			$expected,
-			$this->helper->sanitizeTitlesAndLabels( $input , $data )
+			$this->helper->sanitizeInfoboxFields( $input , $data )
 		);
 	}
 
-	public function sanitizeTitlesAndLabelsDataProvider() {
+	public function sanitizeInfoboxFieldsDataProvider() {
 		return [
 			['title',
 				['value' => 'Test Title' ],
