@@ -1,7 +1,5 @@
-define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.window'], function(helper, $, window){
+define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.window'], function (helper, $, window) {
 	'use strict';
-
-
 
 	// handle "Preview" button
 	function onPreview(ev, editor) {
@@ -33,86 +31,83 @@ define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.wind
 			isWidePage = !!window.wgEditPageIsWidePage,
 			isGridLayout = $('.WikiaGrid').length > 0,
 			extraPageWidth = (window.sassParams && window.sassParams.hd) ? 200 : 0,
-			scrollbarWidth = helper.getScrollbarWidth();
+			scrollbarWidth = helper.getScrollbarWidth(),
+			fluidlayout = require('wikia.fluidlayout'),
+			previewPadding = 22, // + 2px for borders
+			articleWidth = 660,
+			width = articleWidth + (isGridLayout ? 30 : 0),
+			railBreakPoint = fluidlayout.getBreakpointSmall();
 
-		require([ 'wikia.fluidlayout' ], function (fluidlayout) {
-			var previewPadding = 22, // + 2px for borders
-				articleWidth = 660, width = articleWidth + (isGridLayout ? 30 : 0
-					), railBreakPoint = fluidlayout.getBreakpointSmall();
+		if (isWidePage) {
+			// 980 px of content width on main pages / pages without right rail
+			width += 320 + (isGridLayout ? 20 : 0);
+		}
 
-			if (isWidePage) {
-				// 980 px of content width on main pages / pages without right rail
-				width += 320 + (isGridLayout ? 20 : 0);
+		if (extraPageWidth) {
+			// wide wikis
+			width += extraPageWidth;
+		}
+
+		if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
+			var pageWidth = $('#WikiaPage').width(), widthArticlePadding = fluidlayout.getWidthGutter(), railWidth = fluidlayout.getRightRailWidth() + fluidlayout.getWidthPadding(), minWidth = fluidlayout.getMinArticleWidth();
+
+			// don't go below minimum width
+			if (pageWidth <= minWidth) {
+				pageWidth = minWidth;
 			}
 
-			if (extraPageWidth) {
-				// wide wikis
-				width += extraPageWidth;
+			// subtract rail width only in certain criteria
+			width = (isWidePage || pageWidth <= railBreakPoint
+			) ? pageWidth : pageWidth - railWidth;
+
+			width -= widthArticlePadding;
+
+			// For Webkit browsers, when the responsive layout kicks in
+			// we have to subtract the width of the scrollbar. For more
+			// information, read: http://bit.ly/hhJpJg
+			// PS: this doesn't work between 1370-1384px because at that point
+			// the article page has a scrollbar and the edit page doesn't.
+			// Luckily, those screen resolutions are kind of an edge case.
+			// PSS: fuck scrollbars.
+			// TODO: we should have access to breakpoints and such in JavaScript
+			// as variables instead of hardcoded values.
+			if (isWebkit && pageWidth >= 1370 || pageWidth <= railBreakPoint) {
+				width -= scrollbarWidth;
 			}
+		}
 
-			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
-				var pageWidth = $('#WikiaPage').width(), widthArticlePadding = fluidlayout.getWidthGutter(), railWidth = fluidlayout.getRightRailWidth() + fluidlayout.getWidthPadding(), minWidth = fluidlayout.getMinArticleWidth();
+		// add article preview padding width
+		width += previewPadding;
 
-				// don't go below minimum width
-				if (pageWidth <= minWidth) {
-					pageWidth = minWidth;
-				}
+		// add width of scrollbar (BugId:35767)
+		width += scrollbarWidth;
 
-				// subtract rail width only in certain criteria
-				width = (isWidePage || pageWidth <= railBreakPoint
-					) ? pageWidth : pageWidth - railWidth;
-
-				width -= widthArticlePadding;
-
-				// For Webkit browsers, when the responsive layout kicks in
-				// we have to subtract the width of the scrollbar. For more
-				// information, read: http://bit.ly/hhJpJg
-				// PS: this doesn't work between 1370-1384px because at that point
-				// the article page has a scrollbar and the edit page doesn't.
-				// Luckily, those screen resolutions are kind of an edge case.
-				// PSS: fuck scrollbars.
-				// TODO: we should have access to breakpoints and such in JavaScript
-				// as variables instead of hardcoded values.
-				if (isWebkit && pageWidth >= 1370 || pageWidth <= railBreakPoint) {
-					width -= scrollbarWidth;
-				}
+		var previewOptions = {
+			width: width,
+			scrollbarWidth: scrollbarWidth,
+			onPublishButton: function () {
+				$('#wpSave').click();
+			},
+			getPreviewContent: function (callback, skin) {
+				$.when(
+					helper.getContent()
+				).done(function (content) {
+					preparePreviewContent(content, extraData, callback, skin);
+				});
 			}
+		};
 
-			// add article preview padding width
-			width += previewPadding;
+		// pass info about dropped rail to preview module
+		if (pageWidth <= railBreakPoint && (window.wgOasisResponsive || window.wgOasisBreakpoints)) {
+			// if it's a small screen or wide page pass to preview a flag to drop rail
+			previewOptions.isRailDropped = true;
+		}
 
-			// add width of scrollbar (BugId:35767)
-			width += scrollbarWidth;
+		// pass info about if it's a wide page (main page or page without right rail)
+		previewOptions.isWidePage = isWidePage;
+		previewOptions.currentTypeName = type;
 
-			var previewOptions = {
-				width: width,
-				scrollbarWidth: scrollbarWidth,
-				onPublishButton: function () {
-					$('#wpSave').click();
-				},
-				getPreviewContent: function (callback, skin) {
-					$.when(
-						helper.getContent()
-					).done(function(content){
-						preparePreviewContent(content, extraData, callback, skin);
-					});
-				}
-			};
-
-			// pass info about dropped rail to preview module
-			if (pageWidth <= railBreakPoint && (window.wgOasisResponsive || window.wgOasisBreakpoints)) {
-				// if it's a small screen or wide page pass to preview a flag to drop rail
-				previewOptions.isRailDropped = true;
-			}
-
-			// pass info about if it's a wide page (main page or page without right rail)
-			previewOptions.isWidePage = isWidePage;
-			previewOptions.currentTypeName = type;
-
-			require(['wikia.preview'], function (preview) {
-				preview.renderPreview(previewOptions);
-			});
-		});
+		require('wikia.preview').renderPreview(previewOptions);
 	}
 
 	// internal method, based on the editor content and some extraData, prepare a preview markup for the
