@@ -19,42 +19,68 @@ class CuratedContentValidator {
 		$errors = [ ];
 		$alreadyUsedSectionLabels = [ ];
 
-		if ( is_array( $data ) ) {
-			foreach ( $data as $section ) {
+		// If data is empty or not an array - return empty array.
+		// So users have ability to erase all data by sending empty value.
+		if ( !is_array( $data ) ) {
+			return [];
+		}
 
-				if ( is_array( $section['items'] ) ) {
-					if ( !empty( $section['featured'] ) ) {
-						foreach ( $section['items'] as $featuredItem ) {
-							if ( !empty( $this->validateFeaturedItem( $featuredItem ) ) ) {
-								$errors[] = self::ERR_OTHER_ERROR;
-							} ;
-						}
-					} else {
-						$alreadyUsedSectionLabels[] = $section['title'];
-
-						if ( empty( $section['title'] ) ) {
-							foreach ( $section['items'] as $item ) {
-								if ( !empty( $this->validateSectionItem( $item ) ) ) {
-									$errors[] = self::ERR_OTHER_ERROR;
-								} ;
-							}
-						} else {
-							if ( !empty( $this->validateSectionWithItems( $section ) ) ) {
-								$errors[] = self::ERR_OTHER_ERROR;
-							} ;
-						}
-					}
-				}
-			}
-
-			foreach ( array_count_values( $alreadyUsedSectionLabels ) as $label => $count ) {
-				if ( $count > 1 ) {
-					$errors[] = self::ERR_DUPLICATED_LABEL;
-				}
+		foreach ( $data as $section ) {
+			if ( !empty( $section['featured'] ) ) {
+				if ( !empty( $this->validateItemsInFeatured( $section ) ) ) {
+					$errors[] = self::ERR_OTHER_ERROR;
+				} ;
+			} else {
+				$alreadyUsedSectionLabels[] = $section['title'];
+				if ( empty( $section['title'] ) ) {
+					if ( !empty( $this->validateItemsInSection( $section ) ) ) {
+						$errors[] = self::ERR_OTHER_ERROR;
+					} ;
+				} elseif ( !empty( $this->validateSectionWithItems( $section ) ) ) {
+					$errors[] = self::ERR_OTHER_ERROR;
+				} ;
 			}
 		}
 
+		if ( $this->areLabelsUnique( $alreadyUsedSectionLabels ) ) {
+			$errors[] = self::ERR_DUPLICATED_LABEL;
+		}
+
 		return $errors;
+	}
+
+	private function validateItemsInFeatured( $section ) {
+		if ( !is_array( $section['items'] ) ) {
+			return false;
+		}
+
+		foreach ( $section['items'] as $featuredItem ) {
+			if ( !empty( $this->validateFeaturedItem( $featuredItem ) ) ) {
+				return false;
+			} ;
+		}
+		return true;
+	}
+
+	private function validateItemsInSection( $section ) {
+		if ( !is_array( $section['items'] ) ) {
+			return false;
+		}
+
+		foreach ( $section['items'] as $item ) {
+			if ( !empty( $this->validateSectionItem( $item ) ) ) {
+				return false;
+			} ;
+		}
+		return true;
+	}
+
+	public function areLabelsUnique( $labelsToCheck ) {
+		$areLabelsUnique = true;
+		foreach ( array_count_values( $labelsToCheck ) as $label => $count ) {
+			$areLabelsUnique = $areLabelsUnique && $count <= 1;
+		}
+		return $areLabelsUnique;
 	}
 
 	private static function needsArticleId( $type ) {
@@ -72,6 +98,9 @@ class CuratedContentValidator {
 			$errors[] = self::ERR_IMAGE_MISSING;
 		} ;
 
+		// When category is passed as type we don't need article_id set.
+		// For instance categories without content on Category: page are valid categories.
+		// All remaining types require article_id. In case when article doesn't exist article_id is set to 0
 		if ( self::needsArticleId( $item['type'] ) && empty( $item['article_id'] ) ) {
 			$errors[] = self::ERR_ARTICLE_NOT_FOUND;
 		}
@@ -102,9 +131,8 @@ class CuratedContentValidator {
 	public function validateSection( $section ) {
 		$errors = [];
 
-		// check for "optional" section - it has empty label, but there can be only ONE
 		if ( empty( $section['title'] ) ) {
-			$errors[] =  self::ERR_EMPTY_LABEL;
+			$errors[] = self::ERR_EMPTY_LABEL;
 		}
 
 		if ( strlen( $section['title'] ) > self::LABEL_MAX_LENGTH ) {
@@ -126,7 +154,7 @@ class CuratedContentValidator {
 		}
 
 		if ( empty( $item['label'] ) ) {
-			$errors[] =  self::ERR_EMPTY_LABEL;
+			$errors[] = self::ERR_EMPTY_LABEL;
 		}
 
 		if ( strlen( $item['label'] ) > self::LABEL_MAX_LENGTH ) {
@@ -151,7 +179,6 @@ class CuratedContentValidator {
 		$usedLabels = [ ];
 
 		// validate items exist
-
 		if ( empty( $section['items'] ) ) {
 			$errors[] = self::ERR_ITEMS_MISSING;
 		}
@@ -172,11 +199,8 @@ class CuratedContentValidator {
 			}
 		}
 
-		// validate duplicated labels
-		foreach ( array_count_values( $usedLabels ) as $label => $count ) {
-			if ( $count > 1 ) {
-				$errors[] = self::ERR_DUPLICATED_LABEL;
-			}
+		if ( $this->areLabelsUnique( $usedLabels ) ) {
+			$errors[] = self::ERR_DUPLICATED_LABEL;
 		}
 
 		return $errors;
