@@ -1,6 +1,8 @@
-require(['jquery', 'wikia.window'], function($, win) {
+(function () {
 	'use strict';
-	var $globalNav = $('#globalNavigation');
+	var $ = require('jquery'),
+		win = require('wikia.window'),
+		$globalNav = $('#globalNavigation');
 
 	function changeStateOnScroll() {
 		var scrollTop = win.pageYOffset,
@@ -14,4 +16,4 @@ require(['jquery', 'wikia.window'], function($, win) {
 	}
 
 	$(win).on('scroll', $.throttle(250, changeStateOnScroll));
-});
+})();
