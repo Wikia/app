@@ -47,26 +47,53 @@ class PortableInfoboxRenderServiceHelper {
 	}
 
 	/**
-	 * checks if infobox item is the title or title inside the hero module
-	 * and if so, removes from it all HTML tags.
+	 * check if infobox item is a title, title inside the hero module or a label
+	 * and if so, remove from it HTML tags.
+	 * If label after sanitization is empty- contain only image- do not
+	 * sanitize it.
 	 *
 	 * @param string $type type of infobox item
 	 * @param array $data infobox item data
 	 * @return array infobox $data with sanitized title param if needed
 	 */
-	public function sanitizeInfoboxTitle( $type, $data ) {
-		if ( $type === 'title' && !empty( $data[ 'value' ] ) ) {
-			$data[ 'value' ] = trim( strip_tags( $data[ 'value' ] ) );
+	public function sanitizeInfoboxFields( $type, $data ) {
+		if ( $type === 'data' ) {
+			$sanitizedLabel = $this->sanitizeElementData( $data[ 'label' ], '<a>' );
 
-			return $data;
-		}
-		if ( $type === 'hero-mobile' && !empty( $data[ 'title' ][ 'value' ] ) ) {
-			$data[ 'title' ][ 'value' ] = trim( strip_tags( $data[ 'title' ][ 'value' ] ) );
-
-			return $data;
+			if ( !empty( $sanitizedLabel) ) {
+				$data[ 'label' ] = $sanitizedLabel;
+			}
+		} else if ( $type === 'horizontal-group-content' ) {
+			foreach ( $data[ 'labels' ] as $key => $label ) {
+				$sanitizedLabel = $this->sanitizeElementData( $label, '<a>' );
+				if ( !empty( $sanitizedLabel ) ) {
+					$data[ 'labels' ][ $key ] = $sanitizedLabel;
+				}
+			}
+		} else if ( $type === 'title' ) {
+			$data[ 'value' ] = $this->sanitizeElementData( $data[ 'value' ] );
+		} else if ( $type === 'hero-mobile' && !empty( $data[ 'title' ][ 'value' ] ) ) {
+			$data[ 'title' ][ 'value' ] = $this->sanitizeElementData( $data[ 'title' ][ 'value' ] );
 		}
 
 		return $data;
+	}
+
+	/**
+	 * process single title or label
+	 *
+	 * @param $elementText
+	 * @param string $allowedTags
+	 * @return string
+	 */
+	private function sanitizeElementData( $elementText, $allowedTags = null ) {
+		$elementTextAfterTrim = trim( strip_tags( $elementText, $allowedTags ) );
+
+		if ( $elementTextAfterTrim !== $elementText ) {
+			WikiaLogger::instance()->info( 'Striping HTML tags from infobox element' );
+			$elementText = $elementTextAfterTrim;
+		}
+		return $elementText;
 	}
 
 	/**

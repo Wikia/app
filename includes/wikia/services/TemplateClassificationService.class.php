@@ -4,6 +4,7 @@ use Wikia\Service\Gateway\ConsulUrlProvider;
 use Wikia\Service\Swagger\ApiProvider;
 use Swagger\Client\TemplateClassification\Storage\Api\TCSApi;
 use Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider;
+use Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder;
 
 class TemplateClassificationService {
 
@@ -68,9 +69,10 @@ class TemplateClassificationService {
 		/**
 		 * Quick fix begin
 		 * Permanent change will be needed from the Services team.
+		 * Fallback to empty type that means no classification.
 		 */
 		if ( !in_array( $templateType, self::$templateTypes ) ) {
-			$templateType = self::TEMPLATE_UNKNOWN;
+			$templateType = '';
 		}
 		/**
 		 * Quick fix end
@@ -91,10 +93,9 @@ class TemplateClassificationService {
 	public function getDetails( $wikiId, $pageId ) {
 		$templateDetails = [];
 
-		$details = $this->getApiClient()->getTemplateDetails( $wikiId, $pageId );
+		$providers = $this->getApiClient()->getTemplateDetails( $wikiId, $pageId );
 
-		if ( !is_null( $details ) ) {
-			$providers = $details->getProviders();
+		if ( !is_null( $providers ) ) {
 			$templateDetails = $this->prepareTemplateDetails( $providers );
 		}
 
@@ -124,6 +125,26 @@ class TemplateClassificationService {
 	}
 
 	/**
+	 * Get all classified template types on given wiki with their page id as a key
+	 *
+	 * @param int $wikiId
+	 * @return array
+	 * @throws Exception
+	 * @throws \Swagger\Client\ApiException
+	 */
+	public function getTemplatesOnWiki( $wikiId ) {
+		$templateTypes = [];
+
+		$types = $this->getApiClient()->getTemplateTypesOnWiki( $wikiId );
+
+		if ( !is_null( $types ) ) {
+			$templateTypes = $this->prepareTypes( $types );
+		}
+
+		return $templateTypes;
+	}
+
+	/**
 	 * Prepare template details output
 	 *
 	 * @param TemplateTypeProvider[] $details
@@ -141,6 +162,20 @@ class TemplateClassificationService {
 		}
 
 		return $templateDetails;
+	}
+
+	/**
+	 * @param TemplateTypeHolder[] $types
+	 * @return array
+	 */
+	private function prepareTypes( $types ) {
+		$templateTypes = [];
+
+		foreach ( $types as $type ) {
+			$templateTypes[$type->getPageId()] = $type->getType();
+		}
+
+		return $templateTypes;
 	}
 
 	/**
