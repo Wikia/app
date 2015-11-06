@@ -233,20 +233,26 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				[],
 				[]
 			], [
-				[['items' => [], 'featured' => true, 'title' => 'foo', 'image_id' => 0]],
-				[]
-			], [
-				[['items' => [], 'title' => '', 'image_id' => 0]],
-				[]
-			], [
 				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'featured' => true, 'title' => 'foo', 'image_id' => 0]],
 				[]
 			], [
-				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'video']], 'featured' => true, 'title' => 'foo', 'image_id' => 0]],
-				[CuratedContentValidator::ERR_OTHER_ERROR]
-			], [
 				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => '', 'image_id' => 0]],
 				[]
+			], [
+				[['items' => [], 'featured' => true, 'title' => 'foo', 'image_id' => 0]],
+				[CuratedContentValidator::ERR_OTHER_ERROR]
+			], [
+				[['featured' => true, 'title' => 'foo', 'image_id' => 0]],
+				[CuratedContentValidator::ERR_OTHER_ERROR]
+			], [
+				[['items' => [], 'title' => '', 'image_id' => 0]],
+				[CuratedContentValidator::ERR_OTHER_ERROR]
+			], [
+				[['title' => '', 'image_id' => 0]],
+				[CuratedContentValidator::ERR_OTHER_ERROR]
+			], [
+				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'video']], 'featured' => true, 'title' => 'foo', 'image_id' => 0]],
+				[CuratedContentValidator::ERR_OTHER_ERROR]
 			], [
 				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'video']], 'title' => '', 'image_id' => 0]],
 				[CuratedContentValidator::ERR_OTHER_ERROR]
