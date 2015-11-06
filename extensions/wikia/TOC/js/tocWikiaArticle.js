@@ -76,30 +76,29 @@
 		var dfd = new $.Deferred(),
 			loader = require('wikia.loader'),
 			cache = require('wikia.cache'),
+			throbber = require('wikia.throbber'),
 			template = cache.getVersioned(cacheKey);
 
 		if (template) {
 			dfd.resolve(template);
 		} else {
-			require(['wikia.throbber'], function (throbber) {
-				var toc = $('#toc');
+			var toc = $('#toc');
 
-				throbber.show(toc);
+			throbber.show(toc);
 
-				loader({
-					type: loader.MULTI,
-					resources: {
-						mustache: 'extensions/wikia/TOC/templates/TOC_articleContent.mustache'
-					}
-				}).done(function (data) {
-					template = data.mustache[0];
+			loader({
+				type: loader.MULTI,
+				resources: {
+					mustache: 'extensions/wikia/TOC/templates/TOC_articleContent.mustache'
+				}
+			}).done(function (data) {
+				template = data.mustache[0];
 
-					dfd.resolve(template);
+				dfd.resolve(template);
 
-					cache.setVersioned(cacheKey, template, 604800); //7days
+				cache.setVersioned(cacheKey, template, 604800); //7days
 
-					throbber.remove(toc);
-				});
+				throbber.remove(toc);
 			});
 		}
 
