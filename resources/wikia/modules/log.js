@@ -6,7 +6,7 @@
  *
  * @example
  * //AMD
- * require(['wikia.log'], function (log) { log(123, log.levels.info, 'MyLogGroup'); });
+ * var require('wikia.log'); log(123, log.levels.info, 'MyLogGroup');
  *
  * //JS Namespace
  * Wikia.log(123, Wikia.log.levels.info, 'MyLogGroup');
@@ -24,24 +24,24 @@
 (function (context) {
 	'use strict';
 
-	var SYSLOG_CUTOFF = 8;
-
-	var levels = {
-		emergency: 0,
-		alert: 1,
-		critical: 2,
-		error: 3,
-		warning: 4,
-		notice: 5,
-		info: 6,
-		debug: 7,
-		user: 8,
-		feedback: 9,
-		system: 10,
-		trace: 11,
-		trace_l2: 12, // trace level 2
-		trace_l3: 13 // trace level 3
-	};
+	var cookie,
+		SYSLOG_CUTOFF = 8,
+		levels = {
+			emergency: 0,
+			alert: 1,
+			critical: 2,
+			error: 3,
+			warning: 4,
+			notice: 5,
+			info: 6,
+			debug: 7,
+			user: 8,
+			feedback: 9,
+			system: 10,
+			trace: 11,
+			trace_l2: 12, // trace level 2
+			trace_l3: 13 // trace level 3
+		};
 
 	function syslog(priority, message, context) {
 		// syslogReport defined in Oasis_Index
@@ -63,8 +63,7 @@
 			isIdevice,
 			levelsMap = [],
 			levelID,
-			p,
-			v;
+			p;
 
 		for (p in levels) {
 			if (levels.hasOwnProperty(p)) {
@@ -142,9 +141,9 @@
 			}
 
 			if (!enabled ||
-					(msg === undef) ||
-					(levelID > outputLevel) ||
-					(groupsCount > 0 && !(groups.hasOwnProperty(group)))) {
+				(msg === undef) ||
+				(levelID > outputLevel) ||
+				(groupsCount > 0 && !(groups.hasOwnProperty(group)))) {
 				return false;
 			}
 
@@ -194,8 +193,14 @@
 		}
 
 		//init
-		if (context.define && context.define.amd) {
-			context.require(['wikia.querystring', require.optional('wikia.cookies')], init);
+		if (context.define) {
+			try {
+				cookie = require('wikia.cookies');
+			} catch (exception) {
+				cookie = null;
+			}
+
+			init(require('wikia.querystring'), cookie);
 		} else {
 			init(context.Wikia.Querystring, context.Wikia.Cookies);
 		}
@@ -213,7 +218,7 @@
 	context.Wikia.log.levels = levels;
 	context.Wikia.syslog = syslog;
 
-	if (context.define && context.define.amd) {
+	if (context.define) {
 		//AMD
 		context.define('wikia.log', function () {
 			return context.Wikia.log;
