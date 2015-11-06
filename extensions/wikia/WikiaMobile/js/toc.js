@@ -1,19 +1,23 @@
-/* globals Features:true */
 //init toc
-require( [ 'sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc', 'track' ],
-function ( sections, window, $, mustache, toc, track ) {
+(function () {
 	'use strict';
 
 	//private
-	var open = 'open',
+	var sections = require('sections'),
+		window = require('wikia.window'),
+		$ = require('jquery'),
+		mustache = require('wikia.mustache'),
+		toc = require('wikia.toc'),
+		track = require('track'),
+		open = 'open',
 		active = 'active',
 		doc = window.document,
-		$document = $( doc ),
+		$document = $(doc),
 		$anchors,
-		sideMenuCapable = ( window.Features.positionfixed && window.Features.overflow ),
+		sideMenuCapable = (window.Features.positionfixed && window.Features.overflow),
 		sideMenuInited,
-		$toc = $( doc.getElementById( 'wkTOC' ) ),
-		$tocHandle = $( doc.getElementById( 'wkTOCHandle' ) ),
+		$toc = $(doc.getElementById('wkTOC')),
+		$tocHandle = $(doc.getElementById('wkTOCHandle')),
 		tocScroll,
 		inPageToc,
 		tocMarkup,
@@ -26,7 +30,7 @@ function ( sections, window, $, mustache, toc, track ) {
 	 * @param {Integer} level - The actual level on which the element will be rendered
 	 * @returns {Object} - returns TOC section object
 	 */
-	function createSection ( header, level ) {
+	function createSection(header, level) {
 		return {
 			id: header.id,
 			name: header.innerText.trim(),
@@ -41,7 +45,7 @@ function ( sections, window, $, mustache, toc, track ) {
 	 * @param {Object} header - DOM element of header
 	 * @returns {Object} or {Boolean} false if filtered
 	 */
-	function filter ( header ) {
+	function filter(header) {
 		return !header.innerText.trim() ? false : header;
 	}
 
@@ -49,7 +53,7 @@ function ( sections, window, $, mustache, toc, track ) {
 	 * @desc Renders toc for a given page
 	 * @returns HTML String
 	 */
-	function createTocMarkup () {
+	function createTocMarkup() {
 		var ol = '<ol class="toc-list level{{level}}">{{#sections}}{{> lis}}{{/sections}}</ol>',
 			lis = '{{#.}}<li{{#sections.length}} class="has-children{{#firstLevel}}' +
 				' first-children{{/firstLevel}}"{{/sections.length}}>' +
@@ -62,11 +66,11 @@ function ( sections, window, $, mustache, toc, track ) {
 				createSection,
 				filter
 			);
-		if ( tocData.sections.length ) {
-			return mustache.render( wrap, tocData, {
+		if (tocData.sections.length) {
+			return mustache.render(wrap, tocData, {
 				ol: ol,
 				lis: lis
-			} );
+			});
 		} else {
 			return '';
 		}
@@ -78,14 +82,14 @@ function ( sections, window, $, mustache, toc, track ) {
 	 * @param $li jQuery object for a sections
 	 * @param force whether to force a toggle
 	 */
-	function toggleLi ( $li, force ) {
-		var isTogglable = $li.is( '.first-children' );
+	function toggleLi($li, force) {
+		var isTogglable = $li.is('.first-children');
 
-		if ( isTogglable ) {
-			$li.toggleClass( open, force ).siblings().removeClass( open );
+		if (isTogglable) {
+			$li.toggleClass(open, force).siblings().removeClass(open);
 
 			tocScroll.refresh();
-			tocScroll.scrollToElement( $li[0] );
+			tocScroll.scrollToElement($li[0]);
 		}
 
 		return isTogglable;
@@ -100,25 +104,25 @@ function ( sections, window, $, mustache, toc, track ) {
 	 * @param scrollTo weather to scroll to the element used to force it on TOC open
 	 * @param time time in which to scroll to an element
 	 */
-	function onSectionChange ( event, data, scrollTo, time ) {
-		$anchors.removeClass( 'current' );
+	function onSectionChange(event, data, scrollTo, time) {
+		$anchors.removeClass('current');
 
-		if ( data && data.id ) {
+		if (data && data.id) {
 			var $current = $anchors
-					.filter( 'a[href="#' + data.id + '"]' )
-					.addClass( 'current' ),
+					.filter('a[href="#' + data.id + '"]')
+					.addClass('current'),
 				$currentLi = $current
-					.parents( 'li' )
+					.parents('li')
 					.last();
 
 			$currentLi
-				.find( 'a' )
+				.find('a')
 				.first()
-				.addClass( 'current' );
+				.addClass('current');
 
-			if ( scrollTo ) {
-				toggleLi( $currentLi, true );
-				tocScroll.scrollToElement( $current[0], time );
+			if (scrollTo) {
+				toggleLi($currentLi, true);
+				tocScroll.scrollToElement($current[0], time);
 			}
 		}
 	}
@@ -126,17 +130,17 @@ function ( sections, window, $, mustache, toc, track ) {
 	/**
 	 * @desc Handles rendering TOC
 	 */
-	function renderToc () {
-		$toc.find( '#tocWrapper' ).remove();
+	function renderToc() {
+		$toc.find('#tocWrapper').remove();
 
 		$anchors = $toc
-			.append( createTocMarkup() )
-			.find( 'li > a' );
+			.append(createTocMarkup())
+			.find('li > a');
 
-		var wrapper = doc.getElementById( 'tocWrapper' );
+		var wrapper = doc.getElementById('tocWrapper');
 
-		if ( wrapper ) {
-			tocScroll = new window.IScroll( wrapper, {
+		if (wrapper) {
+			tocScroll = new window.IScroll(wrapper, {
 				click: true,
 				scrollY: true,
 				scrollX: false
@@ -147,24 +151,24 @@ function ( sections, window, $, mustache, toc, track ) {
 	/**
 	 * @desc Handles appending TOC to a side menu
 	 */
-	function initSideMenu () {
-		$toc.on( 'click', 'header', function () {
-			onClose( 'header' );
-			window.scrollTo( 0, 0 );
-		} )
-		.on( 'click', 'li', function ( event ) {
-			var $li = $( this ),
-				$a = $li.find( 'a' ).first();
+	function initSideMenu() {
+		$toc.on('click', 'header', function () {
+			onClose('header');
+			window.scrollTo(0, 0);
+		})
+			.on('click', 'li', function (event) {
+				var $li = $(this),
+					$a = $li.find('a').first();
 
-			event.stopPropagation();
-			event.preventDefault();
+				event.stopPropagation();
+				event.preventDefault();
 
-			if ( !toggleLi( $li ) ) {
-				onClose( 'element' );
-			}
+				if (!toggleLi($li)) {
+					onClose('element');
+				}
 
-			sections.scrollTo( $a.attr( 'href' ) );
-		} );
+				sections.scrollTo($a.attr('href'));
+			});
 
 		renderToc();
 
@@ -174,23 +178,23 @@ function ( sections, window, $, mustache, toc, track ) {
 	/**
 	 * @desc Used in fallback mode
 	 */
-	function scrollToToc ( event ) {
+	function scrollToToc(event) {
 		event.stopPropagation();
 		inPageToc.scrollIntoView();
 
-		track.event( 'newtoc', track.CLICK, {
+		track.event('newtoc', track.CLICK, {
 			label: 'scroll'
-		} );
+		});
 	}
 
 	/**
 	 * @desc Opens / Closes side menu with TOC
 	 * @param event
 	 */
-	function toggleSideMenu ( event ) {
+	function toggleSideMenu(event) {
 		event.stopPropagation();
 
-		if ( $toc.hasClass( active ) ) {
+		if ($toc.hasClass(active)) {
 			onClose();
 		} else {
 			onOpen();
@@ -201,55 +205,55 @@ function ( sections, window, $, mustache, toc, track ) {
 	 * @desc Fires on opening of a Side menu toc
 	 * At first trigger it renders internal markup
 	 */
-	function onOpen () {
-		$toc.addClass( active );
-		$document.on( 'section:changed', onSectionChange );
-		$.event.trigger( 'curtain:show' );
-		if ( !sideMenuInited ) {
+	function onOpen() {
+		$toc.addClass(active);
+		$document.on('section:changed', onSectionChange);
+		$.event.trigger('curtain:show');
+		if (!sideMenuInited) {
 			initSideMenu();
 		}
 
-		onSectionChange( null, sections.current()[0], true );
+		onSectionChange(null, sections.current()[0], true);
 
-		track.event( 'newtoc', track.CLICK, {
+		track.event('newtoc', track.CLICK, {
 			label: 'open'
-		} );
+		});
 	}
 
 	/**
 	 * @desc Fires on closing of a Side menu toc
 	 */
-	function onClose ( event ) {
-		if ( $toc.hasClass( active ) ) {
-			$toc.removeClass( active );
-			$document.off( 'section:changed', onSectionChange );
+	function onClose(event) {
+		if ($toc.hasClass(active)) {
+			$toc.removeClass(active);
+			$document.off('section:changed', onSectionChange);
 
-			track.event( 'newtoc', track.CLICK, {
-				label: ( typeof event === 'string' ? event : 'close' )
-			} );
+			track.event('newtoc', track.CLICK, {
+				label: (typeof event === 'string' ? event : 'close')
+			});
 		}
 
-		$.event.trigger( 'curtain:hide' );
+		$.event.trigger('curtain:hide');
 	}
 
-	if ( show ) {
-		$document.on( 'curtain:hidden', onClose );
+	if (show) {
+		$document.on('curtain:hidden', onClose);
 		//If TOC as a section, create markup right away
-		if ( !sideMenuCapable ) {
+		if (!sideMenuCapable) {
 			tocMarkup = createTocMarkup();
-			$document.find( '#mw-content-text' )
+			$document.find('#mw-content-text')
 				.append(
-					'<div class="in-page-toc"><h2>' + $toc.find( 'header' ).text() + '</h2>' + tocMarkup + '</div>'
-				).find('.level');
+				'<div class="in-page-toc"><h2>' + $toc.find('header').text() + '</h2>' + tocMarkup + '</div>'
+			).find('.level');
 
-			inPageToc = doc.getElementsByClassName( 'in-page-toc' )[0];
-			$tocHandle.on( 'click', scrollToToc );
-		//If TOC as side-menu, render at first opening
+			inPageToc = doc.getElementsByClassName('in-page-toc')[0];
+			$tocHandle.on('click', scrollToToc);
+			//If TOC as side-menu, render at first opening
 		} else {
-			$tocHandle.on( 'click', toggleSideMenu );
+			$tocHandle.on('click', toggleSideMenu);
 		}
 
-		$toc.removeClass( 'hidden' );
+		$toc.removeClass('hidden');
 	}
 
-} );
+})();
