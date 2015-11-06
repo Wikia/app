@@ -1,67 +1,72 @@
-require(
-	['jquery', 'wikia.document', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'mw', 'wikia.tracker'],
-	function ($, document, loader, nirvana, mustache, mw, tracker)
-{
+(function () {
 	'use strict';
 
-	/* Modal buttons config for done and cancel buttons */
-	var buttonsForFlagsExistingState = [{
-		vars: {
-			value: mw.message('flags-edit-modal-done-button-text').escaped(),
-			classes: ['normal', 'primary'],
-			data: [
-				{
-					key: 'event',
-					value: 'done'
+
+	var $ = require('jquery'),
+		document = require('wikia.document'),
+		loader = require('wikia.loader'),
+		nirvana = require('wikia.nirvana'),
+		mustache = require('wikia.mustache'),
+		mw = require('mw'),
+		tracker = require('wikia.tracker'),
+		/* Modal buttons config for done and cancel buttons */
+		buttonsForFlagsExistingState = [{
+			vars: {
+				value: mw.message('flags-edit-modal-done-button-text').escaped(),
+				classes: ['normal', 'primary'],
+				data: [
+					{
+						key: 'event',
+						value: 'done'
+					}
+				]
+			}
+		},
+			{
+				vars: {
+					value: mw.message('flags-edit-modal-cancel-button-text').escaped(),
+					data: [
+						{
+							key: 'event',
+							value: 'close'
+						}
+					]
 				}
-			]
-		}
-	},
-	{
-		vars: {
-			value: mw.message('flags-edit-modal-cancel-button-text').escaped(),
-			data: [
-				{
-					key: 'event',
-					value: 'close'
-				}
-			]
-		}
-	}],
+			}],
 
 	/* Modal close button config */
-	buttonForEmptyState = [{
-		vars: {
-			value: mw.message('flags-edit-modal-close-button-text').escaped(),
-			data: [
-				{
-					key: 'event',
-					value: 'close'
-				}
-			]
-		}
-	}],
+		buttonForEmptyState = [{
+			vars: {
+				value: mw.message('flags-edit-modal-close-button-text').escaped(),
+				data: [
+					{
+						key: 'event',
+						value: 'close'
+					}
+				]
+			}
+		}],
 
 	/* Modal component configuration */
-	modalConfig = {
-		vars: {
-			id: 'FlagsModal',
-			classes: ['edit-flags'],
-			size: 'medium', // size of the modal
-			content: '', // content
-			title: mw.message('flags-edit-modal-title').escaped()
-		}
-	},
+		modalConfig = {
+			vars: {
+				id: 'FlagsModal',
+				classes: ['edit-flags'],
+				size: 'medium', // size of the modal
+				content: '', // content
+				title: mw.message('flags-edit-modal-title').escaped()
+			}
+		},
 
 	/* Tracking wrapper function */
-	track = Wikia.Tracker.buildTrackingFunction({
-		action: tracker.ACTIONS.CLICK,
-		category: 'flags-edit',
-		trackingMethod: 'analytics'
-	}),
+		track = Wikia.Tracker.buildTrackingFunction({
+			action: tracker.ACTIONS.CLICK,
+			category: 'flags-edit',
+			trackingMethod: 'analytics'
+		}),
 
 	/* Label for on submit tracking event */
-	labelForSubmitAction = 'submit-form-untouched';
+		labelForSubmitAction = 'submit-form-untouched';
 
 	function init() {
 		$('body').on('click', '#ca-flags, .bn-flags-entry-point', showModal);
@@ -76,42 +81,42 @@ require(
 	function showModal(event) {
 		event.preventDefault();
 		$.when(
-				nirvana.sendRequest({
-					controller: 'Flags',
-					method: 'editForm',
-					data: {
-						'page_id': window.wgArticleId
-					},
-					type: 'get'
-				}),
-				loader({
-					type: loader.MULTI,
-					resources: {
-						mustache: '/extensions/wikia/Flags/controllers/templates/FlagsController_editForm.mustache,/extensions/wikia/Flags/controllers/templates/FlagsController_editFormEmpty.mustache,/extensions/wikia/Flags/controllers/templates/FlagsController_editFormException.mustache',
-						styles: '/extensions/wikia/Flags/styles/EditFormModal.scss'
-					}
-				})
-			).done(function (flagsData, res) {
-				var template;
-
-				loader.processStyle(res.styles);
-
-				if (flagsData[0].flags) {
-					template = res.mustache[0];
-					flagsData[0].flags = prepareFlagsData(flagsData[0].flags);
-				} else if (flagsData[0].emptyMessage) {
-					template = res.mustache[1];
-				} else if (flagsData[0].exceptionMessage) {
-					template = res.mustache[2];
+			nirvana.sendRequest({
+				controller: 'Flags',
+				method: 'editForm',
+				data: {
+					'page_id': window.wgArticleId
+				},
+				type: 'get'
+			}),
+			loader({
+				type: loader.MULTI,
+				resources: {
+					mustache: '/extensions/wikia/Flags/controllers/templates/FlagsController_editForm.mustache,/extensions/wikia/Flags/controllers/templates/FlagsController_editFormEmpty.mustache,/extensions/wikia/Flags/controllers/templates/FlagsController_editFormException.mustache',
+					styles: '/extensions/wikia/Flags/styles/EditFormModal.scss'
 				}
+			})
+		).done(function (flagsData, res) {
+			var template;
 
-				modalConfig.vars.content = mustache.render(template, flagsData[0]);
+			loader.processStyle(res.styles);
 
-				require(['wikia.ui.factory'], function (uiFactory) {
-					/* Initialize the modal component */
-					uiFactory.init(['modal']).then(createComponent);
-				});
+			if (flagsData[0].flags) {
+				template = res.mustache[0];
+				flagsData[0].flags = prepareFlagsData(flagsData[0].flags);
+			} else if (flagsData[0].emptyMessage) {
+				template = res.mustache[1];
+			} else if (flagsData[0].exceptionMessage) {
+				template = res.mustache[2];
+			}
+
+			modalConfig.vars.content = mustache.render(template, flagsData[0]);
+
+			require(['wikia.ui.factory'], function (uiFactory) {
+				/* Initialize the modal component */
+				uiFactory.init(['modal']).then(createComponent);
 			});
+		});
 	}
 
 	/**
@@ -124,7 +129,7 @@ require(
 		for (flagTypeId in flagsData) {
 			params = [];
 			if (flagsData[flagTypeId]['flag_params_names']) {
-				paramsNames  = JSON.parse(flagsData[flagTypeId]['flag_params_names']);
+				paramsNames = JSON.parse(flagsData[flagTypeId]['flag_params_names']);
 				for (paramName in paramsNames) {
 					param = [];
 					param['param_name'] = paramName;
@@ -237,9 +242,9 @@ require(
 	 */
 	function addFlagsButton() {
 		var $a = $(document.createElement('a'))
-				.addClass('flags-icon')
-				.html(mw.message('flags-edit-flags-button-text').escaped())
-				.click(showModal),
+			.addClass('flags-icon')
+			.html(mw.message('flags-edit-flags-button-text').escaped())
+			.click(showModal),
 			$div = $(document.createElement('div'))
 				.addClass('flags-edit')
 				.html($a);
@@ -256,4 +261,4 @@ require(
 
 	// Run initialization method on DOM ready
 	$(init);
-});
+})();
