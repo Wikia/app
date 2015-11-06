@@ -1,12 +1,14 @@
-require(
-[
-	'jquery', 'wikia.window', 'wikia.globalnavigation.lazyload',
-	'wikia.menuaim', 'wikia.browserDetect', 'wikia.delayedhover', 'wikia.globalNavigationDropdowns'
-],
-function ($, w, GlobalNavLazyLoad, menuAim, browserDetect, delayedHover, dropdowns) {
+(function () {
 	'use strict';
 
-	var $entryPoint,
+	var $ = require('jquery'),
+		w = require('wikia.window'),
+		GlobalNavLazyLoad = require('wikia.globalnavigation.lazyload'),
+		menuAim = require('wikia.menuaim'),
+		browserDetect = require('wikia.browserDetect'),
+		delayedHover = require('wikia.delayedhover'),
+		dropdowns = require('wikia.globalNavigationDropdowns'),
+		$entryPoint,
 		$hubs,
 		$hubLinks,
 		$verticals;
@@ -85,4 +87,4 @@ function ($, w, GlobalNavLazyLoad, menuAim, browserDetect, delayedHover, dropdow
 			}
 		);
 	});
-});
+})();
