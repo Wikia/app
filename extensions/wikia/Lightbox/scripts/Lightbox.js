@@ -68,7 +68,7 @@
 
 			// Check screen height for future interactions
 			Lightbox.shortScreen = ($(window).height() <
-				LightboxLoader.lightboxSettings.height + LightboxLoader.lightboxSettings.topOffset + 20); // buffer by 20px
+			LightboxLoader.lightboxSettings.height + LightboxLoader.lightboxSettings.topOffset + 20); // buffer by 20px
 
 			// Add template to modal
 			Lightbox.openModal.find('.modalContent').html(LightboxLoader.templateHtml);
@@ -271,7 +271,7 @@
 					serviceUrl: window.wgServer + window.wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
 					onSelect: function (value, data, event) {
 						var valueEncoded = encodeURIComponent(value.replace(/ /g, '_')),
-							// slashes can't be urlencoded because they break routing
+						// slashes can't be urlencoded because they break routing
 							location = window.wgArticlePath
 								.replace(/\$1/, valueEncoded)
 								.replace(encodeURIComponent('/'), '/');
@@ -321,10 +321,10 @@
 					var css = {
 							height: dimensions.modalHeight
 						},
-						// extract mustache templates
+					// extract mustache templates
 						photoTemplate = Lightbox.openModal.find('#LightboxPhotoTemplate'),
 						renderedResult = photoTemplate.mustache(data),
-						// prevent race conditions from timeout
+					// prevent race conditions from timeout
 						trackingTitle = Lightbox.current.key;
 
 					// don't change top offset if the screen is shorter than the min modal height
@@ -459,18 +459,20 @@
 		video: {
 			trackingTimeout: false,
 			renderVideo: function (data) {
+				var VideoBootstrap = require('wikia.videoBootstrap');
+
 				Lightbox.openModal.media
 					.addClass('video-media')
 					.css('line-height', 'normal');
 
-				require(['wikia.videoBootstrap'], function (VideoBootstrap) {
-					LightboxLoader.videoInstance = new VideoBootstrap(
-						Lightbox.openModal.media[0],
-						data.videoEmbedCode,
-						Lightbox.openModal.vbClickSource
-					);
-					Lightbox.openModal.vbClickSource = LightboxTracker.clickSource.LB;
-				});
+				LightboxLoader.videoInstance = new VideoBootstrap(
+					Lightbox.openModal.media[0],
+					data.videoEmbedCode,
+					Lightbox.openModal.vbClickSource
+				);
+
+				Lightbox.openModal.vbClickSource = LightboxTracker.clickSource.LB;
+
 			},
 			destroyVideo: function () {
 				Lightbox.openModal.media.html('');
@@ -485,7 +487,7 @@
 				var css = {
 						height: height
 					},
-					// prevent race conditions from timeout
+				// prevent race conditions from timeout
 					trackingTitle = Lightbox.current.key;
 
 				// don't change top offset if the screen is shorter than the min modal height
@@ -854,7 +856,7 @@
 			// Load backfill content from DOM
 			var types = Lightbox.carouselTypes,
 				deferredList = [],
-				// show-ads class appears when there is going to be a MODAL_RECTANGLE ad
+			// show-ads class appears when there is going to be a MODAL_RECTANGLE ad
 				itemsShown = Lightbox.ads.adModalRectangleShown ? 6 : 9,
 				i,
 				type,
@@ -1070,7 +1072,7 @@
 					callback: function (data) {
 						var errorMsg = '',
 							successMsg = '',
-							// prevent race conditions from timeout
+						// prevent race conditions from timeout
 							trackingTitle = Lightbox.current.key;
 
 						wikiaForm.clearGenericError(inputGroups);
@@ -1116,16 +1118,14 @@
 				if (window.wgUserName) {
 					doShareEmail(addresses);
 				} else {
-					require(['AuthModal'], function (authModal) {
-						authModal.load({
-							url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-							origin: 'image-lightbox',
-							onAuthSuccess: function () {
-								doShareEmail(addresses);
-								// see VID-473 - Reload page on lightbox close
-								LightboxLoader.reloadOnClose = true;
-							}
-						});
+					require('AuthModal').load({
+						url: '/signin?redirect=' + encodeURIComponent(window.location.href),
+						origin: 'image-lightbox',
+						onAuthSuccess: function () {
+							doShareEmail(addresses);
+							// see VID-473 - Reload page on lightbox close
+							LightboxLoader.reloadOnClose = true;
+						}
 					});
 				}
 			});
@@ -1287,7 +1287,7 @@
 				var cached = LightboxLoader.cache.videosModule,
 					thumbArr = [],
 					videosModule,
-					// array to check for title dupes
+				// array to check for title dupes
 					keys = [],
 					thumbs;
 
@@ -1373,7 +1373,7 @@
 				id = parent.attr('id'),
 				VPS = LightboxTracker.clickSource,
 
-				// Two vars that basically mean the same thing but are here for legacy purposes
+			// Two vars that basically mean the same thing but are here for legacy purposes
 				carouselType = '',
 				trackingCarouselType = '';
 
