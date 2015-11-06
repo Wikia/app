@@ -1098,13 +1098,13 @@ function &wfGetSolidCacheStorage( $bucket = false ) {
  * Set value of wikia article prop list of type is define in
  *
  * Note: The query below used to be done using a REPLACE, however
- * at some point the primary key was removed from the page_wikia_props
- * table. Without a primary key or unique index, a REPLACE becomes just
- * an INSERT so this method was adding duplicate rows to the table.
+ * the primary key was removed from the page_wikia_props due to
+ * performance issues (see PLATFORM-1658). Without a primary key
+ * or unique index, a REPLACE becomes just an INSERT so this method
+ * was adding duplicate rows to the table.
  *
- * While the disappearance of that primary key is being investigated,
- * (See MAIN-5790) we're implementing a manual REPLACE by explicitly
- * issuing a DELETE query before an INSERT.
+ * Because of this, we're implementing a manual REPLACE by explicitly
+ * issuing a DELETE query followed by an INSERT.
  */
 function wfSetWikiaPageProp( $type, $pageID, $value, $dbname = '' ) {
 	if ( empty( $dbname ) ) {
