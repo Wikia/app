@@ -25,33 +25,34 @@
 	 * @returns {$.Deferred}
 	 */
 	function loadAssets(dependencies, cacheKey) {
-		var dfd = new $.Deferred();
+		var dfd = new $.Deferred(),
+			cache,
+			assetsFromCache;
 
 		// check if assets are already loaded and in DOM
 		if (assets) {
 			dfd.resolve(assets);
 		} else {
-			require(['wikia.cache'], function (cache) {
-				var assetsFromCache = cache.getVersioned(cacheKey);
+			cache = require('wikia.cache');
+			assetsFromCache = cache.getVersioned(cacheKey);
 
-				if (assetsFromCache) {
-					dfd.resolve(assetsFromCache);
-				} else {
-					loader({
-						type: loader.MULTI,
-						resources: {
-							mustache: dependencies.template,
-							scripts: dependencies.scripts
-						}
-					}).done(function (data) {
-						cache.setVersioned(cacheKey, data, 604800); //7days
+			if (assetsFromCache) {
+				dfd.resolve(assetsFromCache);
+			} else {
+				loader({
+					type: loader.MULTI,
+					resources: {
+						mustache: dependencies.template,
+						scripts: dependencies.scripts
+					}
+				}).done(function (data) {
+					cache.setVersioned(cacheKey, data, 604800); // 7 days
 
-						dfd.resolve(data);
-					}).fail(function () {
-						dfd.reject();
-					});
-				}
-			});
+					dfd.resolve(data);
+				}).fail(function () {
+					dfd.reject();
+				});
+			}
 		}
 
 		return dfd.promise();
