@@ -1,19 +1,20 @@
 /**
  * Extension provides a method to force TemplateClassification
- * if templateClassificationType hidden field in #editform is not filled
+ * if both New and Current templateClassificationType hidden fields in #editform are not filled
  */
 define('TemplateClassificationModalForce',
 	['jquery'],
 	function ($) {
 		'use strict';
 		function forceType() {
-			var $typeField = $('#editform').find('input[name=templateClassificationType]');
+			var $editform = $('#editform'),
+				$typeFieldCurrent = $editform.find('input[name=templateClassificationTypeCurrent]'),
+				$typeFieldNew = $editform.find('input[name=templateClassificationTypeNew]');
 
-			if ($typeField.length > 0) {
-				if ($typeField.val() !== '') {
+			if ((!!$typeFieldCurrent && $typeFieldCurrent.val() !== '') ||
+				(!!$typeFieldNew && $typeFieldNew.val() !== '')) {
 					// Type defined. Force is not required
 					return false;
-				}
 			}
 			// Type not defined force modal
 			require(['TemplateClassificationInEdit'], function forceTemplateClassificationModal(tc) {

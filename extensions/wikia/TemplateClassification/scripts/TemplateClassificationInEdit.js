@@ -11,10 +11,13 @@ define('TemplateClassificationInEdit',
 	function ($, mw, tracker, templateClassificationModal) {
 		'use strict';
 
-		var $editFormHiddenTypeField;
+		var $editFormHiddenTypeFieldCurrent,
+			$editFormHiddenTypeFieldNew;
 
 		function init() {
-			$editFormHiddenTypeField = $('#editform').find('[name=templateClassificationType]');
+			var $editform = $('#editform');
+			$editFormHiddenTypeFieldCurrent = $editform.find('[name=templateClassificationTypeCurrent]');
+			$editFormHiddenTypeFieldNew = $editform.find('[name=templateClassificationTypeNew]');
 
 			templateClassificationModal.init(getType, storeTypeForSend);
 
@@ -39,11 +42,12 @@ define('TemplateClassificationInEdit',
 
 		function getType() {
 			/* Return in format required by TemplateClassificationModal module */
-			return $editFormHiddenTypeField.val();
+			return $editFormHiddenTypeFieldNew.val() ?
+				$editFormHiddenTypeFieldNew.val() : $editFormHiddenTypeFieldCurrent.val();
 		}
 
 		function storeTypeForSend(templateType) {
-			$editFormHiddenTypeField.val(mw.html.escape(templateType));
+			$editFormHiddenTypeFieldNew.val(mw.html.escape(templateType));
 			templateClassificationModal.updateEntryPointLabel(templateType);
 		}
 
