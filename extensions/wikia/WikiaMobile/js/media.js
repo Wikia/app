@@ -12,10 +12,7 @@ define(
 		'throbber',
 		'wikia.querystring',
 		'wikia.history',
-		require.optional('popover'),
 		'track',
-		require.optional('share'),
-		require.optional('wikia.cache'),
 		'wikia.loader',
 		'wikia.nirvana',
 		'wikia.videoBootstrap',
@@ -28,10 +25,7 @@ define(
 		throbber,
 		querystring,
 		history,
-		popover,
 		track,
-		share,
-		cache,
 		loader,
 		nirvana,
 		VideoBootstrap,
@@ -61,14 +55,14 @@ define(
 			wkMdlImages,
 			qs = querystring(),
 			shrImg = encodeURIComponent(qs.getVal('file', '')) || null,
-		// index of shared file in array of videos/images on page
+			// index of shared file in array of videos/images on page
 			shrImgIdx = -1,
 			shareBtn,
 			clickEvent = 'click',
 			sharePopOver,
 			content = '<div id=wkMdlImages></div>',
 			toolbar = '<div class=wkShr id=wkShrImg></div>',
-		//zoom variables
+			//zoom variables
 			wrapper,
 			startX,
 			startY,
@@ -92,13 +86,34 @@ define(
 			startD,
 			galleryInited = false,
 			inited,
-		// Video view click source tracking.
-		// Default, before lightbox is opened, is 'embed'.
-		// Other possible values are 'share' and 'lightbox'.
+			// Video view click source tracking.
+			// Default, before lightbox is opened, is 'embed'.
+			// Other possible values are 'share' and 'lightbox'.
 			clickSource = 'embed',
 			videoInstance,
 			events = {},
-			skip = [];
+			skip = [],
+			popover,
+			cache,
+			share;
+
+		try {
+			popover = require('popover');
+		} catch (exception) {
+			popover = null;
+		}
+
+		try {
+			cache = require('wikia.cache');
+		} catch (exception) {
+			cache = null;
+		}
+
+		try {
+			share = require('share');
+		} catch (exception) {
+			share = null;
+		}
 
 		function trigger(event, data) {
 			if (events[event]) {
