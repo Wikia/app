@@ -442,6 +442,7 @@ class CuratedContentController extends WikiaController {
 
 	public function setData( ) {
 		global $wgCityId, $wgUser, $wgRequest;
+		
 		if ( !$wgRequest->wasPosted() ) {
 			throw new CuratedContentValidatorMethodNotAllowedException();
 		}
