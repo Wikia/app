@@ -280,14 +280,12 @@ SpecialPromote.prototype = {
 				},
 				that = this;
 
-			require(['wikia.ui.factory'], function (uiFactory) {
-				uiFactory.init('modal').then(function (uiModal) {
-					uiModal.createComponent(modalConfig, function (loginModal) {
-						SpecialPromote.$modal = loginModal;
+			require('wikia.ui.factory').init('modal').then(function (uiModal) {
+				uiModal.createComponent(modalConfig, function (loginModal) {
+					SpecialPromote.$modal = loginModal;
 
-						loginModal.bind('submit', $.proxy(that.saveAvatarAIM, that));
-						loginModal.show();
-					});
+					loginModal.bind('submit', $.proxy(that.saveAvatarAIM, that));
+					loginModal.show();
 				});
 			});
 		}
