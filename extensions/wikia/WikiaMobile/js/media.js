@@ -4,7 +4,9 @@
  *
  * @author Jakub "Student" Olek
  */
-define('media', [
+define(
+	'media',
+	[
 		'JSMessages',
 		'modal',
 		'throbber',
@@ -20,20 +22,22 @@ define('media', [
 		'wikia.media.class',
 		'toast'
 	],
-	function (msg,
-			  modal,
-			  throbber,
-			  querystring,
-			  history,
-			  popover,
-			  track,
-			  share,
-			  cache,
-			  loader,
-			  nirvana,
-			  VideoBootstrap,
-			  Media,
-			  toast) {
+	function (
+		msg,
+		modal,
+		throbber,
+		querystring,
+		history,
+		popover,
+		track,
+		share,
+		cache,
+		loader,
+		nirvana,
+		VideoBootstrap,
+		Media,
+		toast
+	) {
 		'use strict';
 		/** @private **/
 
@@ -390,8 +394,7 @@ define('media', [
 		function getCaption() {
 			var cap = currentMedia.caption,
 				number = currentMedia.number,
-				length = currentMedia.length,
-				figCap;
+				length = currentMedia.length;
 
 			if (typeof cap !== 'string') {
 				if (cap) {
@@ -642,18 +645,14 @@ define('media', [
 			if (images.length > 1 && !galleryInited) {
 				//in GG all assets are loaded upfront
 				if (Features.gameguides) {
-					require(['mediagallery'], function (mg) {
-						mg.init();
-					});
+					require('mediagallery').init();
 				} else {
 					galleryData = cache && cache.getVersioned(cacheKey);
 
 					if (galleryData) {
 						loader.processStyle(galleryData[0]);
 						loader.processScript(galleryData[1]);
-						require(['mediagallery'], function (mg) {
-							mg.init();
-						});
+						require('mediagallery').init();
 					} else {
 						loader({
 							type: loader.MULTI,
@@ -682,64 +681,62 @@ define('media', [
 			widthFll = wkMdlImages.offsetWidth;
 			heightFll = wkMdlImages.offsetHeight;
 
-			require(['pager'], function (pg) {
-				pager = pg({
-					wrapper: wrapper,
-					container: wkMdlImages,
-					pages: images,
-					pageNumber: currentNum,
-					setCancel: function () {
-						return (zoomed || zooming
-						);
-					},
-					onStart: function () {
-						zoomable = false;
-					},
-					onEnd: function (image, page, currentPageNum) {
-						zoomable = true;
+			pager = require('pager')({
+				wrapper: wrapper,
+				container: wkMdlImages,
+				pages: images,
+				pageNumber: currentNum,
+				setCancel: function () {
+					return (zoomed || zooming
+					);
+				},
+				onStart: function () {
+					zoomable = false;
+				},
+				onEnd: function (image, page, currentPageNum) {
+					zoomable = true;
 
-						currentMedia = image;
-						lastNum = currentNum;
-						currentNum = currentPageNum;
+					currentMedia = image;
+					lastNum = currentNum;
+					currentNum = currentPageNum;
 
-						//make sure user changed page
-						if (currentNum !== lastNum) {
-							track.event('modal', track.PAGINATE, {
-								label: currentNum > lastNum ? 'next' : 'previous'
-							});
+					//make sure user changed page
+					if (currentNum !== lastNum) {
+						track.event('modal', track.PAGINATE, {
+							label: currentNum > lastNum ? 'next' : 'previous'
+						});
 
-							currentWrapper = page;
+						currentWrapper = page;
 
-							sharePopOver && sharePopOver.close();
-							refresh();
-						}
-					},
-					circle: true,
-					disableSwipe: disableSwipe
-				});
-
-				function tap(ev) {
-					ev.stopPropagation();
-					resetZoom();
-					zoomed = false;
-					if (ev.target.id === 'nxtImg') {
-						pager.next();
-					} else {
-						pager.prev();
+						sharePopOver && sharePopOver.close();
+						refresh();
 					}
-				}
-
-				//handling next/previous image
-				if (images.length > 1) {
-					document.getElementById('nxtImg').addEventListener('click', tap);
-					document.getElementById('prvImg').addEventListener('click', tap);
-				}
-
-				addZoom();
-
-				//setupImage and get references to currentWrapper and it's style property
-				refresh(true);
+				},
+				circle: true,
+				disableSwipe: disableSwipe
 			});
+
+			function tap(ev) {
+				ev.stopPropagation();
+				resetZoom();
+				zoomed = false;
+				if (ev.target.id === 'nxtImg') {
+					pager.next();
+				} else {
+					pager.prev();
+				}
+			}
+
+			//handling next/previous image
+			if (images.length > 1) {
+				document.getElementById('nxtImg').addEventListener('click', tap);
+				document.getElementById('prvImg').addEventListener('click', tap);
+			}
+
+			addZoom();
+
+			//setupImage and get references to currentWrapper and it's style property
+			refresh(true);
 
 			shareBtn = document.getElementById('wkShrImg');
 			sharePopOver = popover && popover({
@@ -796,7 +793,7 @@ define('media', [
 				if (events.hasOwnProperty(event)) {
 					events[event] = events[event].filter(function (callback) {
 						return callback != func;
-					})
+					});
 				}
 
 			},
