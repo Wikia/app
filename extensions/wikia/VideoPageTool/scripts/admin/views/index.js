@@ -4,14 +4,13 @@
  * exercise, we'll just inspect window.location to decide which modules to instantiate.
  * Note that the default section is featured videos.
  */
-require([
-	'wikia.querystring',
-	'videopageadmin.views.featured',
-	'videopageadmin.views.category'
-], function (QueryString, FeaturedView, CategoryView) {
+(function () {
 	'use strict';
 
-	var qs = new QueryString(),
+	var QueryString = require('wikia.querystring'),
+		FeaturedView = require('videopageadmin.views.featured'),
+		CategoryView = require('videopageadmin.views.category'),
+		qs = new QueryString(),
 		section = qs.getVal('section'),
 		view;
 
@@ -27,4 +26,4 @@ require([
 			});
 		}
 	});
-});
+})();
