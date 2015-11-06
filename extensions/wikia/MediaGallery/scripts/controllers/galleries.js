@@ -1,20 +1,21 @@
-require(['mediaGallery.views.gallery'], function (Gallery) {
+(function () {
 	'use strict';
 
 	/**
 	 * Define primary gallery container element. Must be called after DOM ready
 	 * @constructor
 	 */
-	var GalleriesController = function (options) {
-		// cache DOM objects
-		this.$container = options.$container;
-		this.$galleries = this.$container.find('.media-gallery-wrapper');
+	var Gallery = require('mediaGallery.views.gallery'),
+		GalleriesController = function (options) {
+			// cache DOM objects
+			this.$container = options.$container;
+			this.$galleries = this.$container.find('.media-gallery-wrapper');
 
-		// cache instances
-		this.galleries = [];
+			// cache instances
+			this.galleries = [];
 
-		return this;
-	};
+			return this;
+		};
 
 	/**
 	 * Initialize galleries and add HTML to DOM.
@@ -27,7 +28,7 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 			galleryOptions = {
 				$el: $('<div></div>'),
 				$wrapper: $wrapper,
-				model: { media: model },
+				model: {media: model},
 				index: idx,
 				// if set, pass the value, otherwise, defaults will be used.
 				origVisibleCount: $wrapper.data('visible-count'),
@@ -62,4 +63,4 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 	mw.hook('wikipage.content').add(function ($content) {
 		new GalleriesController({$container: $content}).init();
 	});
-});
+})();
