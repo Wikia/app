@@ -143,8 +143,7 @@
 					isVideo = $this.children('.play-circle').length;
 					if (
 						isVideo &&
-						$thumb.width() >= self.videoThumbWidthThreshold &&
-						!$this.hasClass('force-lightbox')
+						$thumb.width() >= self.videoThumbWidthThreshold && !$this.hasClass('force-lightbox')
 					) {
 						clickSource = window.wgWikiaHubType ?
 							LightboxTracker.clickSource.HUBS :
@@ -266,13 +265,12 @@
 				}, function (json) {
 					var embedCode = json.videoEmbedCode,
 						inlineDiv = $('<div class="inline-video"></div>').insertAfter(target.hide()),
-						videoIndex;
+						videoIndex,
+						VideoBootstrap = require('wikia.videoBootstrap');
 
 					target.closest('.article-thumb').addClass('inline-video-playing');
 
-					require(['wikia.videoBootstrap'], function (VideoBootstrap) {
-						self.videoInstance = new VideoBootstrap(inlineDiv[0], embedCode, clickSource);
-					});
+					self.videoInstance = new VideoBootstrap(inlineDiv[0], embedCode, clickSource);
 
 					// save references for inline video removal later
 					LightboxLoader.inlineVideoLinks = target.add(LightboxLoader.inlineVideoLinks);
