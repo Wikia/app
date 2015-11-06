@@ -1,9 +1,16 @@
-require([
-	'jquery',
-	'sloth'
-	//require.optional('ext.wikia.adEngine.slot.interactiveMaps')
-], function ($, sloth, mapAds) {
+(function () {
 	'use strict';
+
+	var $ = require('jquery'),
+		sloth = require('sloth'),
+		mapAds;
+
+	try {
+		//FIXME: turning off ads on map because of JS errors - should be fixed in ADEN-1784
+		//mapAds = require('ext.wikia.adEngine.slot.interactiveMaps');
+	} catch (exception) {
+		mapAds = null;
+	}
 
 	/**
 	 * @desc Obtains a thumbnail for the map, with right dimensions
@@ -34,4 +41,4 @@ require([
 			mapAds.initSlot(this);
 		});
 	}
-});
+})();
