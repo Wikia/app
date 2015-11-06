@@ -15,6 +15,19 @@ class CuratedContentValidator {
 	const ERR_EMPTY_LABEL = 'emptyLabel';
 	const ERR_NO_CATEGORY_IN_TAG = 'noCategoryInTag';
 
+	/**
+	 * This method validates data.
+	 * Data are correct when:
+	 * 1. Empty data is send - we set it to empty array
+	 * 2. Section (including featured and optional) contains items which are not empty array
+	 * 3. Label has to be not empty and no longer than 48 characters
+	 * 4. Section titles can't duplicate
+	 * 5. Image has to be set for items and sections
+	 * 6. Items in sections and inside optional section contain only Categories
+	 *
+	 * @param array $data
+	 * @return array
+	 */
 	public function validateData( $data ) {
 		$errors = [ ];
 		$alreadyUsedSectionLabels = [ ];

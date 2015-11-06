@@ -462,7 +462,7 @@ class CuratedContentController extends WikiaController {
 				unset( $section['node_type'] );
 				unset( $section['image_url'] );
 
-				// fill label fro featured and rename section.title to section.label
+				// fill label for featured and rename section.title to section.label
 				if ( empty( $section['label'] ) && !empty( $section['featured'] ) ) {
 					$section['title'] = wfMessage( 'wikiacuratedcontent-featured-section-name' )->text();
 				} else {
