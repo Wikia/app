@@ -44,7 +44,7 @@ describe('wikia.scriptwriter', function () {
 	};
 
 	function getGwModule() {
-		return modules['wikia.scriptwriter'](
+		return require('wikia.scriptwriter')(
 			mocks.document,
 			mocks.lazyQueue,
 			mocks.log,
@@ -54,7 +54,7 @@ describe('wikia.scriptwriter', function () {
 	}
 
 	function getPsModule() {
-		return modules['wikia.scriptwriter'](
+		return require('wikia.scriptwriter')(
 			mocks.document,
 			mocks.lazyQueue,
 			mocks.log,

@@ -21,7 +21,7 @@ describe('ext.wikia.adEngine.adDecoratorLegacyParamFormat', function () {
 			spyOn(mocks, 'fillInSlot');
 			spyOn(mocks, 'log');
 
-			decorator = modules['ext.wikia.adEngine.adDecoratorLegacyParamFormat'](mocks.log);
+			decorator = require('ext.wikia.adEngine.adDecoratorLegacyParamFormat')(mocks.log);
 			decoratedFillInSlot = decorator(mocks.fillInSlot);
 
 			decoratedFillInSlot(paramIn);

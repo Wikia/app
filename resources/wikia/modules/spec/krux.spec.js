@@ -7,7 +7,7 @@ describe('Krux module', function () {
 		noop = function () {};
 
 	function getModule() {
-		return modules['wikia.krux'](
+		return require('wikia.krux')(
 			mocks.adContext, mocks.adTracker, mocks.document, mocks.window
 		);
 	}

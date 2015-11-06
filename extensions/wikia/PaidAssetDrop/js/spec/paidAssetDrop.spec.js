@@ -24,7 +24,7 @@ describe('ext.wikia.paidAssetDrop.paidAssetDrop', function () {
 		};
 
 	function getModule() {
-		return modules['ext.wikia.paidAssetDrop.paidAssetDrop'](mocks.getInstantGlobals(), mocks.log, mocks.querystring, mocks.win);
+		return require('ext.wikia.paidAssetDrop.paidAssetDrop')(mocks.getInstantGlobals(), mocks.log, mocks.querystring, mocks.win);
 	}
 
 	it('now is not valid when wgPaidAssetDropConfig is not set', function () {

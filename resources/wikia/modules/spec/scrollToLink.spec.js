@@ -57,7 +57,7 @@ describe("scrollToLink", function() {
 				}
 			}
 		},
-		scrollToLinkApi = modules['wikia.scrollToLink'](windowMock, querystringMock, historyMock, jQueryMock);
+		scrollToLinkApi = require('wikia.scrollToLink')(windowMock, querystringMock, historyMock, jQueryMock);
 
 	it('registers AMD module', function() {
 		expect(scrollToLinkApi).toBeDefined();

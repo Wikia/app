@@ -44,7 +44,7 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		spyOn(mocks.window, 'addEventListener');
 		spyOn(mocks, 'callback');
 
-		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
+		messageListener = require('ext.wikia.adEngine.messageListener')(mocks.log, mocks.window);
 		messageListener.init();
 		messageListener.register({ source: mocks.gptIframe, dataKey: 'status' }, mocks.callback);
 
@@ -60,7 +60,7 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		spyOn(mocks.window, 'addEventListener');
 		spyOn(mocks, 'callback');
 
-		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
+		messageListener = require('ext.wikia.adEngine.messageListener')(mocks.log, mocks.window);
 		messageListener.init();
 		messageListener.register({source: mocks.gptIframe, dataKey: 'status'}, mocks.callback);
 
@@ -84,7 +84,7 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		spyOn(mocks.window, 'addEventListener');
 		spyOn(mocks, 'callback');
 
-		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
+		messageListener = require('ext.wikia.adEngine.messageListener')(mocks.log, mocks.window);
 		messageListener.init();
 		messageListener.register({dataKey: 'slot_TOP_LEADERBOARD'}, mocks.callback);
 
@@ -104,7 +104,7 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		spyOn(mocks.window, 'addEventListener');
 		spyOn(mocks, 'callback');
 
-		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
+		messageListener = require('ext.wikia.adEngine.messageListener')(mocks.log, mocks.window);
 		messageListener.init();
 		messageListener.register({source: mocks.gptIframe, dataKey: 'status'}, mocks.callback);
 
@@ -125,7 +125,7 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		spyOn(mocks, 'callback5');
 		spyOn(mocks, 'callback6');
 
-		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
+		messageListener = require('ext.wikia.adEngine.messageListener')(mocks.log, mocks.window);
 		messageListener.init();
 		messageListener.register({source: mocks.gptIframe, dataKey: 'status'}, mocks.callback);
 		messageListener.register({source: mocks.otherIframe, dataKey: 'info'}, mocks.callback4);
@@ -157,7 +157,7 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		spyOn(mocks.window, 'addEventListener');
 		spyOn(mocks, 'callback');
 
-		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
+		messageListener = require('ext.wikia.adEngine.messageListener')(mocks.log, mocks.window);
 		messageListener.init();
 		messageListener.register({source: mocks.gptIframe, dataKey: 'status'}, mocks.callback);
 
@@ -178,7 +178,7 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		spyOn(mocks.window, 'addEventListener');
 		spyOn(mocks, 'callback');
 
-		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
+		messageListener = require('ext.wikia.adEngine.messageListener')(mocks.log, mocks.window);
 		messageListener.init();
 
 		checkAddEventListenerCall();
@@ -194,7 +194,7 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		spyOn(mocks.window, 'addEventListener');
 		spyOn(mocks, 'callback');
 
-		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
+		messageListener = require('ext.wikia.adEngine.messageListener')(mocks.log, mocks.window);
 		messageListener.init();
 
 		checkAddEventListenerCall();
@@ -212,7 +212,7 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		spyOn(mocks.window, 'addEventListener');
 		spyOn(mocks, 'callback');
 
-		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
+		messageListener = require('ext.wikia.adEngine.messageListener')(mocks.log, mocks.window);
 		messageListener.init();
 
 		checkAddEventListenerCall();

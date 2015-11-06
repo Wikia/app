@@ -29,7 +29,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
+		return require('ext.wikia.adEngine.provider.factory.wikiaGpt')(
 			mocks.log,
 			mocks.adLogicPageParams,
 			mocks.gptHelper,

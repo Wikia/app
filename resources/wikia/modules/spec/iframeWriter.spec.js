@@ -9,7 +9,7 @@ describe('iframeWriter module', function () {
 	}
 
 	function getModule() {
-		return modules['wikia.iframeWriter'](
+		return require('wikia.iframeWriter')(
 			mocks.document, mocks.log
 		);
 	}

@@ -6,7 +6,7 @@ describe('UIComponent', function () {
 				return componentHTMLMock;
 			}
 		},
-		UiComponent = modules['wikia.ui.component'](mustache),
+		UiComponent = require('wikia.ui.component')(mustache),
 		componentConfig = {
 			templates: {
 				link: '<a href="{{href}}" titile="{{title}}">{{value}}</a>'

@@ -3,7 +3,7 @@ describe('ext.wikia.adEngine.slot.adSlot', function () {
     'use strict';
 
     function getModule() {
-        return modules['ext.wikia.adEngine.slot.adSlot']();
+        return require('ext.wikia.adEngine.slot.adSlot')();
     }
 
     it('getShortSlotName - should return last part of slotPath', function () {

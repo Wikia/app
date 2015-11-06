@@ -60,7 +60,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	mocks.sourcePointTag = mocks.googleTag;
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.provider.gpt.helper'](
+		return require('ext.wikia.adEngine.provider.gpt.helper')(
 			mocks.log,
 			mocks.adContext,
 			mocks.adLogicPageParams,

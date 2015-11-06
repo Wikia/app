@@ -2,7 +2,7 @@
 describe('wikia.dom', function () {
 	'use strict';
 	var tree, docMock = {},
-		domModule = modules['wikia.dom'](docMock),
+		domModule = require('wikia.dom')(docMock),
 		tagNames = ['DIV', 'H1', 'A', 'SPAN', 'IMG'];
 
 	/**
@@ -104,7 +104,7 @@ describe('wikia.dom', function () {
 		},
 		domModule;
 
-	domModule = modules['wikia.dom'](docMock);
+	domModule = require('wikia.dom')(docMock);
 
 	it('Throw an error when wrong argument type is provided', function () {
 		//Check if Error is thrown when wrong type of argument is provided

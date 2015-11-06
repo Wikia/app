@@ -15,7 +15,7 @@ describe("Querystring", function () {
 				createElement: function() {}
 			}
 		},
-		querystring = modules['wikia.querystring'](locationMock, windowMock);
+		querystring = require('wikia.querystring')(locationMock, windowMock);
 
 	it('registers AMD module', function() {
 		expect(querystring).toBeDefined();

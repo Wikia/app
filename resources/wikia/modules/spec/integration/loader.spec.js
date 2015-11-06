@@ -12,11 +12,11 @@ describe('Loader Module', function () {
 		mwMock,
 		nirvanaMock = {},
 		logMock = function () {},
-		fbLocale = modules['wikia.fbLocale']();
+		fbLocale = require('wikia.fbLocale')();
 
 	logMock.levels = {};
 
-	var loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock, fbLocale);
+	var loader = require('wikia.loader')(windowMock, mwMock, nirvanaMock, jQuery, logMock, fbLocale);
 
 	it('registers itself', function () {
 		expect(typeof loader).toBe('function');
@@ -110,7 +110,7 @@ describe('Loader Module', function () {
 					}
 				}
 			},
-			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock, fbLocale);
+			loader = require('wikia.loader')(windowMock, mwMock, nirvanaMock, jQuery, logMock, fbLocale);
 
 		// check calls to this function
 		spyOn(mwMock.loader, 'use').and.callThrough();
@@ -131,7 +131,7 @@ describe('Loader Module', function () {
 				wgUserLanguage: 'ja',
 				onFBloaded: function () {}
 			},
-			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock, fbLocale);
+			loader = require('wikia.loader')(windowMock, mwMock, nirvanaMock, jQuery, logMock, fbLocale);
 
 		document.head.appendChild = function (script) {
 			script.onload();

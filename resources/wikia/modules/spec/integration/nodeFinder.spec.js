@@ -65,7 +65,7 @@ describe('nodeFinder', function () {
 	document.body.appendChild(articleNode);
 
 	// load the tested module
-	nodeFinder = modules['wikia.nodeFinder']();
+	nodeFinder = require('wikia.nodeFinder')();
 
 	// define the testing rules
 	it('getChildByOffsetTop should return a node', function () {

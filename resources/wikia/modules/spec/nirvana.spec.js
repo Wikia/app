@@ -9,7 +9,7 @@ describe('Nirvana', function () {
 				return string.join('&');
 			}
 		},
-		nirvana = modules['wikia.nirvana'](jQuery),
+		nirvana = require('wikia.nirvana')(jQuery),
 		controllerName = 'foo',
 		methodName = 'bar',
 		origwgScriptPath,
@@ -98,7 +98,7 @@ describe('Nirvana', function () {
 				},
 				param: jQueryParamMock
 			},
-			nirvana = modules['wikia.nirvana'](jQuery);
+			nirvana = require('wikia.nirvana')(jQuery);
 
 		nirvana.sendRequest({
 			controller: controllerName,
@@ -125,7 +125,7 @@ describe('Nirvana', function () {
 				},
 				param: jQueryParamMock
 			},
-			nirvana = modules['wikia.nirvana'](jQuery);
+			nirvana = require('wikia.nirvana')(jQuery);
 
 		nirvana.sendRequest({
 			controller: controllerName,
@@ -150,7 +150,7 @@ describe('Nirvana', function () {
 				},
 				param: jQueryParamMock
 			},
-			nirvana = modules['wikia.nirvana'](jQuery);
+			nirvana = require('wikia.nirvana')(jQuery);
 
 		nirvana.getJson(
 			controllerName,
@@ -182,7 +182,7 @@ describe('Nirvana', function () {
 				},
 				param: jQueryParamMock
 			},
-			nirvana = modules['wikia.nirvana'](jQuery);
+			nirvana = require('wikia.nirvana')(jQuery);
 
 		nirvana.postJson(
 			controllerName,
@@ -211,7 +211,7 @@ describe('Nirvana', function () {
 				},
 				param: jQueryParamMock
 			},
-			nirvana = modules['wikia.nirvana'](jQuery);
+			nirvana = require('wikia.nirvana')(jQuery);
 
 		nirvana.getJson(
 			controllerName,
@@ -238,7 +238,7 @@ describe('Nirvana', function () {
 				},
 				param: jQueryParamMock
 			},
-			nirvana = modules['wikia.nirvana'](jQuery);
+			nirvana = require('wikia.nirvana')(jQuery);
 
 		nirvana.getJson(
 			controllerName,

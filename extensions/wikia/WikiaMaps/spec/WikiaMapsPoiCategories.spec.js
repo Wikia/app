@@ -1,7 +1,7 @@
 describe('wikia.maps.poiCategories', function () {
 	'use strict';
 
-	var poiCategoriesModule = modules['wikia.maps.poiCategories'](jQuery);
+	var poiCategoriesModule = require('wikia.maps.poiCategories')(jQuery);
 
 	it('registers AMD module', function() {
 		expect(typeof poiCategoriesModule).toBe('object');

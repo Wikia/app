@@ -1,7 +1,7 @@
 describe('Image Serving', function () {
 	'use strict';
 
-	var imageServing = modules['wikia.imageServing']();
+	var imageServing = require('wikia.imageServing')();
 
 	it('registers AMD module', function () {
 		expect(imageServing).toBeDefined();

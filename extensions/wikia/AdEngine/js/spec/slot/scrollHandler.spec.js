@@ -51,7 +51,7 @@ describe('ext.wikia.adEngine.slot.scrollHandler', function () {
 	});
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.slot.scrollHandler'](
+		return require('ext.wikia.adEngine.slot.scrollHandler')(
 			mocks.context,
 			mocks.adHelper,
 			mocks.log,

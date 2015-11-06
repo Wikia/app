@@ -19,7 +19,7 @@ describe('OpenX Provider targeting', function () {
 		logMock = noop;
 
 	function getTargeting() {
-		return modules['ext.wikia.adEngine.provider.openX.targeting'](adContextMock, geoMock, logMock);
+		return require('ext.wikia.adEngine.provider.openX.targeting')(adContextMock, geoMock, logMock);
 	}
 
 	it('Should return falsy value when slot name is not supported', function () {

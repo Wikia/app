@@ -81,7 +81,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.config.desktop'](
+		return require('ext.wikia.adEngine.config.desktop')(
 			mocks.log,
 			{navigator: {userAgent: mocks.getUserAgent()}},
 			mocks.getInstantGlobals(),

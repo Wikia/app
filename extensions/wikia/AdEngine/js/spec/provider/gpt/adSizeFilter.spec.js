@@ -17,7 +17,7 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 		};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.provider.gpt.adSizeFilter'](mocks.getDocument(), mocks.log);
+		return require('ext.wikia.adEngine.provider.gpt.adSizeFilter')(mocks.getDocument(), mocks.log);
 	}
 
 	it('Returns sizes unmodified for non-specific slots', function () {

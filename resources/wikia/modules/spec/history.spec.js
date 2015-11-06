@@ -20,7 +20,7 @@ describe("History", function () {
 				}
 			}
 		},
-		historyApi = modules['wikia.history'](windowMock),
+		historyApi = require('wikia.history')(windowMock),
 		windowMockNotWorking = {
 			document: {
 				title: 'title'
@@ -31,7 +31,7 @@ describe("History", function () {
 				state: []
 			}
 		},
-		historyApiNotWorking = modules['wikia.history'](windowMockNotWorking);
+		historyApiNotWorking = require('wikia.history')(windowMockNotWorking);
 
 	it('registers AMD module', function() {
 		expect(historyApi).toBeDefined();

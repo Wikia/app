@@ -42,7 +42,7 @@ describe('ext.wikia.adEngine.adEngine decorators', function () {
 	};
 
 	function getAdEngine() {
-		return modules['ext.wikia.adEngine.adEngine'](
+		return require('ext.wikia.adEngine.adEngine')(
 			mocks.doc,
 			mocks.log,
 			mocks.lazyQueue,

@@ -12,7 +12,7 @@ describe('VideoPageTool: Admin AutocompleteView ( Backbone ):', function () {
 
 	beforeEach(function () {
 		$('body').append('<div id="autocompleteTest"><input data-autocomplete type="text" value="" /></div>');
-		AutocompleteView = modules['videopageadmin.views.autocomplete'](jQuery);
+		AutocompleteView = require('videopageadmin.views.autocomplete')(jQuery);
 		instance = new AutocompleteView({
 			collection: createMockCollection(),
 			el: $('#autocompleteTest')

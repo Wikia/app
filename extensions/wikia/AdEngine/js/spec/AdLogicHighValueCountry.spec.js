@@ -4,7 +4,7 @@ describe('AdLogicHighValueCountry', function () {
 
 	it('wgHighValueCountries present in InstantGlobals', function () {
 		var instantGlobalsMock = {wgHighValueCountries: {'XX': 5, 'YY': 7, 'ZZ': 0, 'aa': 7}},
-			adLogicHighValueCountry = modules['ext.wikia.adEngine.adLogicHighValueCountry'](instantGlobalsMock);
+			adLogicHighValueCountry = require('ext.wikia.adEngine.adLogicHighValueCountry')(instantGlobalsMock);
 
 		expect(adLogicHighValueCountry.isHighValueCountry('aa')).toBeFalsy('aa isHighValueCountry');
 
@@ -25,7 +25,7 @@ describe('AdLogicHighValueCountry', function () {
 	});
 
 	it('wgHighValueCountries not present in InstantGlobals', function () {
-		var adLogicHighValueCountry = modules['ext.wikia.adEngine.adLogicHighValueCountry']({});
+		var adLogicHighValueCountry = require('ext.wikia.adEngine.adLogicHighValueCountry')({});
 
 		expect(adLogicHighValueCountry.isHighValueCountry('CA')).toBeTruthy('CA isHighValueCountry');
 		expect(adLogicHighValueCountry.isHighValueCountry('ca')).toBeTruthy('ca isHighValueCountry');

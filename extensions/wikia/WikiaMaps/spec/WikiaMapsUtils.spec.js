@@ -1,7 +1,7 @@
 describe('wikia.maps.utils', function () {
 	'use strict';
 
-	var utilsModule = modules['wikia.maps.utils'](jQuery, {}, {}, {}, {}, {}, {});
+	var utilsModule = require('wikia.maps.utils')(jQuery, {}, {}, {}, {}, {}, {});
 
 	it('registers AMD module', function () {
 		expect(typeof utilsModule).toBe('object');

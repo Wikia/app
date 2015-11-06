@@ -64,7 +64,7 @@ describe('toc module', function () {
 
 		spyOn(jQuery.fn, 'on').and.callThrough();
 
-		modules['require,sections,wikia.window,jquery,wikia.mustache,wikia.toc,track'](sections, window, jQuery,
+		require('require,sections,wikia.window,jquery,wikia.mustache,wikia.toc,track')(sections, window, jQuery,
 			mustache, wikiaToc, track);
 
 		expect(jQuery.fn.on.calls.count()).toEqual(2);

@@ -9,7 +9,7 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeConverter', function () {
 		};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.provider.gpt.adSizeConverter'](mocks.log);
+		return require('ext.wikia.adEngine.provider.gpt.adSizeConverter')(mocks.log);
 	}
 
 	it('Converts two sizes to array with two elements', function () {

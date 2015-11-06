@@ -1,7 +1,7 @@
 describe('thumbnailer', function () {
 	'use strict';
 
-	var thumbnailer = modules['wikia.thumbnailer'](),
+	var thumbnailer = require('wikia.thumbnailer')(),
 		fullSizeImageUrl = 'http://img2.wikia.nocookie.net/__cb20140419225924/thelastofus/images/f/ff/Joel.png',
 		legacyThumbnailerUrl = 'http://images2.wikia.nocookie.net/__cb20111213221641/poznan/pl/images/thumb/0/06/Gzik.jpg/300px-Gzik.jpg',
 		thumbnailerUrl = 'http://vignette2.wikia.nocookie.net/arresteddevelopment/f/fb/1x08_My_Mother_the_Car_%2822%29.png/revision/latest/zoom-crop/width/240/height/240?cb=20120214071005',

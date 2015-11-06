@@ -48,32 +48,32 @@ describe('EvolveHelper', function () {
 		adContextMock.targeting.wikiDbName = null;
 		adContextMock.targeting.wikiCustomKeyValues = null;
 		adContextMock.targeting.wikiVertical = null;
-		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](adContextModuleMock, mockAdLogicPageParams(), mockDartUrl(), mockKrux(), logMock);
+		evolveHelper = require('ext.wikia.adEngine.evolveHelper')(adContextModuleMock, mockAdLogicPageParams(), mockDartUrl(), mockKrux(), logMock);
 
 		expect(evolveHelper.getSect()).toBe('ros', 'ros');
 
 		adContextMock.targeting.wikiCustomKeyValues = 'foo=bar;media=tv';
 		adContextMock.targeting.wikiVertical = 'Entertainment';
-		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](adContextModuleMock, mockAdLogicPageParams(), mockDartUrl(), mockKrux(), logMock);
+		evolveHelper = require('ext.wikia.adEngine.evolveHelper')(adContextModuleMock, mockAdLogicPageParams(), mockDartUrl(), mockKrux(), logMock);
 
 		expect(evolveHelper.getSect()).toBe('tv', 'tv entertainment');
 
 		adContextMock.targeting.wikiCustomKeyValues = 'foo=bar';
 		adContextMock.targeting.wikiVertical = 'Entertainment';
-		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](adContextModuleMock, mockAdLogicPageParams(), mockDartUrl(), mockKrux(), logMock);
+		evolveHelper = require('ext.wikia.adEngine.evolveHelper')(adContextModuleMock, mockAdLogicPageParams(), mockDartUrl(), mockKrux(), logMock);
 
 		expect(evolveHelper.getSect()).toBe('entertainment', 'foo entertainment');
 
 		adContextMock.targeting.wikiCustomKeyValues = 'foo=bar;media=movie';
 		adContextMock.targeting.wikiVertical = 'Entertainment';
-		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](adContextModuleMock, mockAdLogicPageParams(), mockDartUrl(), mockKrux(), logMock);
+		evolveHelper = require('ext.wikia.adEngine.evolveHelper')(adContextModuleMock, mockAdLogicPageParams(), mockDartUrl(), mockKrux(), logMock);
 
 		expect(evolveHelper.getSect()).toBe('movies', 'movie entertainment');
 	});
 
 	it('getTargeting returns nothing if nothing is set', function() {
 		var dartUrlMock = mockDartUrl(),
-			evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](
+			evolveHelper = require('ext.wikia.adEngine.evolveHelper')(
 				mockAdContext(),
 				mockAdLogicPageParams(),
 				dartUrlMock,
@@ -89,7 +89,7 @@ describe('EvolveHelper', function () {
 	it('getCustomKeyValues', function () {
 		var dartUrlMock = mockDartUrl(),
 			customKeyValuesMock = 'key1=value1;key2=value2',
-			evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](
+			evolveHelper = require('ext.wikia.adEngine.evolveHelper')(
 				mockAdContext({ targeting: { wikiCustomKeyValues: customKeyValuesMock }}),
 				mockAdLogicPageParams(),
 				dartUrlMock,
@@ -105,7 +105,7 @@ describe('EvolveHelper', function () {
 	it('getKruxKeyValues', function () {
 		var dartUrlMock = mockDartUrl(),
 			kruxMock = mockKrux(),
-			evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](
+			evolveHelper = require('ext.wikia.adEngine.evolveHelper')(
 				mockAdContext(),
 				mockAdLogicPageParams(),
 				dartUrlMock,
@@ -126,10 +126,10 @@ describe('EvolveHelper', function () {
 
 	it('getTargeting returns right targeting', function () {
 		var result,
-			evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](
+			evolveHelper = require('ext.wikia.adEngine.evolveHelper')(
 				mockAdContext(),
 				mockAdLogicPageParams({ hostpre: 'someprefix', rawDbName: 'mock' }),
-				modules['ext.wikia.adEngine.dartUrl'](),
+				require('ext.wikia.adEngine.dartUrl')(),
 				mockKrux(),
 				logMock
 			);

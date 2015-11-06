@@ -7,7 +7,7 @@ describe('ext.wikia.adEngine.adEngine', function () {
 
 	var eventDispatcher = { trigger: function () { return true; }},
 		noop = function () { return; },
-		originalLazyQueue = modules['wikia.lazyqueue'](),
+		originalLazyQueue = require('wikia.lazyqueue')(),
 		adDecoratorLegacyParamFormatMock = function (fillInSlot) { return fillInSlot; },
 		slotTrackerMock = function () { return { track: noop }; },
 		slotTweakerMock = { show: noop, hide: noop },
@@ -44,7 +44,7 @@ describe('ext.wikia.adEngine.adEngine', function () {
 	}
 
 	function getAdEngine(lazyQueueMock, adDecoratorMock) {
-		return modules['ext.wikia.adEngine.adEngine'](
+		return require('ext.wikia.adEngine.adEngine')(
 			docMock,
 			logMock,
 			lazyQueueMock,
@@ -114,7 +114,7 @@ describe('ext.wikia.adEngine.adEngine', function () {
 			spyOn(fakeProvider, 'fillInSlot');
 			spyOn(fakeProvider, 'canHandleSlot').and.returnValue(true);
 
-			adDecoratorLegacyParamFormatMockLocal = modules['ext.wikia.adEngine.adDecoratorLegacyParamFormat'](logMock);
+			adDecoratorLegacyParamFormatMockLocal = require('ext.wikia.adEngine.adDecoratorLegacyParamFormat')(logMock);
 			adEngine = getAdEngine(originalLazyQueue, adDecoratorLegacyParamFormatMockLocal);
 			adEngine.run(adConfigMock, ['slot1', 'slot2']);
 

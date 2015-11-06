@@ -30,7 +30,7 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 	};
 
 	it('extends slot targeting for Rubicon', function () {
-		var lookup = modules['ext.wikia.adEngine.lookup.services'](
+		var lookup = require('ext.wikia.adEngine.lookup.services')(
 				mocks.log,
 				undefined,
 				undefined,
@@ -48,7 +48,7 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 	});
 
 	it('extends slot targeting for Amazon', function () {
-		var lookup = modules['ext.wikia.adEngine.lookup.services'](
+		var lookup = require('ext.wikia.adEngine.lookup.services')(
 				mocks.log,
 				mocks.amazon
 			),
@@ -66,7 +66,7 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 	});
 
 	it('extends slot targeting for OpenX', function () {
-		var lookup = modules['ext.wikia.adEngine.lookup.services'](
+		var lookup = require('ext.wikia.adEngine.lookup.services')(
 		mocks.log,
 			undefined,
 			mocks.oxBidder

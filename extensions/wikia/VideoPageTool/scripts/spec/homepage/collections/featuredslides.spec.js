@@ -5,7 +5,7 @@ describe('VideoPageAdmin FeaturedSlidesCollection ( Backbone ):', function () {
 		instance;
 
 	beforeEach(function () {
-		FeaturedSlidesCollection = modules['videohomepage.collections.featuredslides']();
+		FeaturedSlidesCollection = require('videohomepage.collections.featuredslides')();
 		instance = new FeaturedSlidesCollection([{
 			embedData: 'foo'
 		}]);

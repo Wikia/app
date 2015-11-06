@@ -2,7 +2,7 @@
 describe('AIM', function () {
 	'use strict';
 
-	var aim = modules['wikia.aim'](window.jQuery);
+	var aim = require('wikia.aim')(window.jQuery);
 
 	it('should be defined', function () {
 		// jQuery "namespace" API

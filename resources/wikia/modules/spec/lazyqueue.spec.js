@@ -10,7 +10,7 @@ describe('LazyQueue', function () {
 
 		spyOn(c, 'callback').and.callThrough();
 
-		modules['wikia.lazyqueue']().makeQueue(queue, c.callback);
+		require('wikia.lazyqueue')().makeQueue(queue, c.callback);
 		queue.start();
 
 		expect(c.callback.calls.count()).toEqual(3);
@@ -27,7 +27,7 @@ describe('LazyQueue', function () {
 
 		spyOn(c, 'callback').and.callThrough();
 
-		modules['wikia.lazyqueue']().makeQueue(queue, c.callback);
+		require('wikia.lazyqueue')().makeQueue(queue, c.callback);
 		queue.start();
 		expect(c.callback).not.toHaveBeenCalled();
 	});
@@ -40,7 +40,7 @@ describe('LazyQueue', function () {
 
 		spyOn(c, 'callback').and.callThrough();
 
-		modules['wikia.lazyqueue']().makeQueue(queue, c.callback);
+		require('wikia.lazyqueue')().makeQueue(queue, c.callback);
 		queue.start();
 		expect(c.callback).not.toHaveBeenCalled();
 
@@ -57,7 +57,7 @@ describe('LazyQueue', function () {
 			undefinedQueue, stringQueue = 'some string',
 			intQueue = 7,
 			callback = function () {},
-			lazyQueue = modules['wikia.lazyqueue']();
+			lazyQueue = require('wikia.lazyqueue')();
 
 		expect(function () {
 			lazyQueue.makeQueue(nullQueue, callback);

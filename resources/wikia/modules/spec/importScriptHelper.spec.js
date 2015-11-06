@@ -1,7 +1,7 @@
 describe('ImportScriptHelper', function(){
 	'use strict';
 
-	var importScriptHelper = modules['wikia.importScriptHelper']();
+	var importScriptHelper = require('wikia.importScriptHelper')();
 
 	it('check if given resource is js page', function(){
 		// only js pages are acceptable

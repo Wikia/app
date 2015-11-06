@@ -51,7 +51,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		};
 
 	beforeEach(function () {
-		var GoogleTag = modules['ext.wikia.adEngine.provider.gpt.googleTag'](
+		var GoogleTag = require('ext.wikia.adEngine.provider.gpt.googleTag')(
 			document,
 			mocks.log,
 			mocks.window
