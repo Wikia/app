@@ -171,10 +171,7 @@
 					});
 				}
 
-				require(['wikia.ui.factory'], function (uiFactory) {
-					$.when(uiFactory.init('modal'))
-						.then(createModal);
-				});
+				require('wikia.ui.factory').init('modal').then(createModal);
 			});
 		}
 
