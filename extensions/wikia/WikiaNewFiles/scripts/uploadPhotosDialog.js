@@ -2,33 +2,30 @@ var UploadPhotos = {
 	d: false,
 	destfile: false,
 	filepath: false,
-	doptions: {persistent: false, width:600},
+	doptions: {persistent: false, width: 600},
 	status: false,
 	libinit: false,
-	init: function() {
+	init: function () {
 		$(".mw-special-Newimages").on('click', '.upphotos', $.proxy(this.loginBeforeShowDialog, this));
 	},
-	loginBeforeShowDialog: function(evt) {
+	loginBeforeShowDialog: function (evt) {
 		var UserLoginModal = window.UserLoginModal;
 		if (( wgUserName == null ) && ( !UserLogin.forceLoggedIn )) {
-			require(['AuthModal'], function (authModal) {
-				authModal.load({
-					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-					origin: 'latest-photos',
-					onAuthSuccess: $.proxy(function() {
-						UserLogin.forceLoggedIn = true;
-						this.showDialog(evt);
-					}, this)
-				});
-			}.bind(this));
-		}
-		else {
+			require('AuthModal').load({
+				url: '/signin?redirect=' + encodeURIComponent(window.location.href),
+				origin: 'latest-photos',
+				onAuthSuccess: $.proxy(function () {
+					UserLogin.forceLoggedIn = true;
+					this.showDialog(evt);
+				}, this)
+			});
+		} else {
 			this.showDialog(evt);
 		}
 		evt.preventDefault();
 	},
-	showDialog: function(evt) {
-		if(evt) {
+	showDialog: function (evt) {
+		if (evt) {
 			evt.preventDefault();
 		}
 
@@ -42,10 +39,12 @@ var UploadPhotos = {
 				uselang: wgUserLanguage
 			},
 			type: 'get',
-			callback: function(html) {
+			callback: function (html) {
 				// pre-cache dom elements
 				var extendedOptions = $.extend(UploadPhotos.doptions, {
-					onClose: function() {UserLogin.refreshIfAfterForceLogin()}
+					onClose: function () {
+						UserLogin.refreshIfAfterForceLogin();
+					}
 				});
 				UploadPhotos.d = $(html).makeModal(extendedOptions);
 				UploadPhotos.destfile = UploadPhotos.d.find("input[name=wpDestFile]");
@@ -70,10 +69,10 @@ var UploadPhotos = {
 				// event handlers
 				UploadPhotos.filepath.change(UploadPhotos.filePathSet);
 				UploadPhotos.destfile.blur(UploadPhotos.destFileSet);
-				UploadPhotos.d.find('form').submit(function() {
+				UploadPhotos.d.find('form').submit(function () {
 					$.AIM.submit(this, UploadPhotos.uploadCallback);
 				});
-				UploadPhotos.advancedA.click(function(evt) {
+				UploadPhotos.advancedA.click(function (evt) {
 					evt.preventDefault();
 
 					//set correct text for link and arrow direction
@@ -87,16 +86,16 @@ var UploadPhotos = {
 
 					UploadPhotos.options.slideToggle("fast");
 				});
-				UploadPhotos.destfile.keyup(function() {
-					if(UploadPhotos.dftimer) {
+				UploadPhotos.destfile.keyup(function () {
+					if (UploadPhotos.dftimer) {
 						clearTimeout(UploadPhotos.dftimer);
 					}
 					UploadPhotos.dftimer = setTimeout(UploadPhotos.destFileSet, 500);
 				});
-				UploadPhotos.wpLicense.change(function() {
+				UploadPhotos.wpLicense.change(function () {
 
 					var license = $(this).val();
-					if(license == ""){
+					if (license == "") {
 						// user selected first option or a disabled option
 						$(this).attr('selectedIndex', 0);
 						UploadPhotos.wpLicenseTarget.html("");
@@ -114,7 +113,7 @@ var UploadPhotos = {
 							prop: 'text',
 							format: 'json'
 						},
-						function(data) {
+						function (data) {
 							UploadPhotos.wpLicenseTarget.html(data.parse.text['*']);
 						},
 						"json"
@@ -129,17 +128,17 @@ var UploadPhotos = {
 		}
 	},
 	uploadCallback: {
-		onComplete: function(res) {
+		onComplete: function (res) {
 			res = $("<div/>").html(res).text();
 			var json = JSON.parse(res);
-			if(json) {
-				if(json['status'] == 0) {	// 0 is success...
+			if (json) {
+				if (json['status'] == 0) {	// 0 is success...
 					window.location = wgArticlePath.replace('$1', 'Special:NewFiles');
-				} else if(json['status'] == -2) {	// show conflict dialog
-					UploadPhotos.step1.hide(400, function() {
+				} else if (json['status'] == -2) {	// show conflict dialog
+					UploadPhotos.step1.hide(400, function () {
 						UploadPhotos.advanced.hide();
 						UploadPhotos.conflict.html(json['statusMessage']);
-						UploadPhotos.step2.show(400, function() {
+						UploadPhotos.step2.show(400, function () {
 							UploadPhotos.uploadbutton.removeAttr("disabled").show();
 							UploadPhotos.ajaxwait.hide();
 						});
@@ -152,22 +151,22 @@ var UploadPhotos = {
 				}
 			}
 		},
-		onStart: function() {
+		onStart: function () {
 			UploadPhotos.uploadbutton.attr("disabled", "true").hide();
 			UploadPhotos.ajaxwait.show();
-			UploadPhotos.status.hide("fast", function() {
+			UploadPhotos.status.hide("fast", function () {
 				$(this).removeClass("error");
 			});
 		}
 	},
-	filePathSet: function() {
+	filePathSet: function () {
 		if (UploadPhotos.filepath.val()) {
 			var filename = UploadPhotos.filepath.val().replace(/^.*\\/, '');
 			UploadPhotos.destfile.val(filename);
 			UploadPhotos.destFileSet();
 		}
 	},
-	destFileSet: function() {
+	destFileSet: function () {
 		if (UploadPhotos.destfile.val()) {
 			var df = UploadPhotos.destfile.val();
 			if (UploadPhotos.dfcache[df]) {
@@ -184,7 +183,7 @@ var UploadPhotos = {
 						uselang: wgUserLanguage,
 						wpDestFile: UploadPhotos.destfile.val()
 					},
-					callback: function(html) {
+					callback: function (html) {
 						UploadPhotos.dfcache[df] = html;
 						UploadPhotos.destFileInputSet(html);
 					}
@@ -192,8 +191,8 @@ var UploadPhotos = {
 			}
 		}
 	},
-	destFileInputSet: function(html) {
-		if(html && $.trim(html)) {
+	destFileInputSet: function (html) {
+		if (html && $.trim(html)) {
 			UploadPhotos.override.fadeIn(400);
 			UploadPhotos.status.removeClass("error").html(html).show(400);
 		} else {
