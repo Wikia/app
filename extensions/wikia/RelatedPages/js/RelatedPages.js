@@ -1,7 +1,10 @@
-require(['sloth', 'wikia.window', 'jquery'], function (sloth, w, $) {
+(function () {
 	'use strict';
 
-	var $placeholder,
+	var sloth = require('sloth'),
+		w = require('wikia.window'),
+		$ = require('jquery'),
+		$placeholder,
 		cacheKey = 'RelatedPagesAssets',
 		articleId = w.wgArticleId,
 		loaded,
@@ -20,93 +23,92 @@ require(['sloth', 'wikia.window', 'jquery'], function (sloth, w, $) {
 	 * @returns {$.Deferred}
 	 */
 	function loadTemplate() {
-		var dfd = new $.Deferred();
+		var dfd = new $.Deferred(),
+			loader = require('wikia.loader'),
+			cache = require('wikia.cache'),
+			template = cache.getVersioned(cacheKey);
 
-		require(['wikia.loader', 'wikia.cache'], function (loader, cache) {
-			var template = cache.getVersioned(cacheKey);
+		if (template) {
+			dfd.resolve(template);
+		} else {
+			loader({
+				type: loader.MULTI,
+				resources: {
+					mustache: 'extensions/wikia/RelatedPages/templates/RelatedPages_section.mustache'
+				}
+			}).done(function (data) {
+				template = data.mustache[0];
 
-			if (template) {
 				dfd.resolve(template);
-			} else {
-				loader({
-					type: loader.MULTI,
-					resources: {
-						mustache: 'extensions/wikia/RelatedPages/templates/RelatedPages_section.mustache'
-					}
-				}).done(function (data) {
-					template = data.mustache[0];
 
-					dfd.resolve(template);
-
-					cache.setVersioned(cacheKey, template, 604800); //7days
-				});
-			}
-
-		});
+				cache.setVersioned(cacheKey, template, 604800); //7days
+			});
+		}
 
 		return dfd.promise();
 	}
 
 	function load() {
+		var mustache,
+			msg,
+			nirvana,
+			tracker;
+
 		if (!loaded && articleId) {
-			require([
-					'wikia.mustache',
-					'JSMessages',
-					'wikia.nirvana',
-					'wikia.tracker'
-				],
-				function (mustache, msg, nirvana, tracker) {
-					$.when(
-						nirvana.getJson(
-							'RelatedPagesApi',
-							'getList', {
-								ids: [articleId]
+			mustache = require('wikia.mustache');
+			msg = require('JSMessages');
+			nirvana = require('wikia.nirvana');
+			tracker = require('wikia.tracker');
+
+			$.when(
+				nirvana.getJson(
+					'RelatedPagesApi',
+					'getList', {
+						ids: [articleId]
+					}
+				),
+				loadTemplate()
+			).done(function (data, template) {
+				var items = data[0] && data[0].items,
+					pages = items && items[articleId],
+					page,
+					relatedPages = [];
+
+				if (pages && pages.length) {
+					while ((page = pages.shift())) {
+						relatedPages.push({
+							url: page.url,
+							title: page.title,
+							imgUrl: page.imgUrl || null,
+							text: page.imgUrl ? undefined : page.text
+						});
+					}
+
+					$placeholder
+						.prepend(
+							mustache.render(template, {
+								relatedPagesHeading: msg('wikiarelatedpages-heading'),
+								imgWidth: 200,
+								imgHeight: 100,
+								pages: relatedPages
+							})
+						)
+						.on('mousedown', '.RelatedPagesModule a', function (event) {
+							// Primary mouse button only
+							if (event.type === 'mousedown' && event.which !== 1) {
+								return;
 							}
-						),
-						loadTemplate()
-					).done(function (data, template) {
-						var items = data[0] && data[0].items,
-							pages = items && items[articleId],
-							page,
-							relatedPages = [];
 
-						if (pages && pages.length) {
-							while ((page = pages.shift())) {
-								relatedPages.push({
-									url: page.url,
-									title: page.title,
-									imgUrl: page.imgUrl || null,
-									text: page.imgUrl ? undefined : page.text
-								} );
-							}
-
-							$placeholder
-								.prepend(
-									mustache.render(template, {
-										relatedPagesHeading: msg('wikiarelatedpages-heading'),
-										imgWidth: 200,
-										imgHeight: 100,
-										pages: relatedPages
-									})
-								)
-								.on('mousedown', '.RelatedPagesModule a', function (event) {
-									// Primary mouse button only
-									if (event.type === 'mousedown' && event.which !== 1) {
-										return;
-									}
-
-									tracker.track({
-										action: tracker.ACTIONS.CLICK,
-										trackingMethod: 'analytics',
-										category: 'article',
-										label: 'related-pages'
-									});
-								})
-								.trigger('afterLoad.relatedPages');
-						}
-					});
+							tracker.track({
+								action: tracker.ACTIONS.CLICK,
+								trackingMethod: 'analytics',
+								category: 'article',
+								label: 'related-pages'
+							});
+						})
+						.trigger('afterLoad.relatedPages');
 				}
-			);
+			});
 
 			loaded = true;
 		}
@@ -119,4 +121,4 @@ require(['sloth', 'wikia.window', 'jquery'], function (sloth, w, $) {
 			callback: load
 		});
 	}
-});
+})();
