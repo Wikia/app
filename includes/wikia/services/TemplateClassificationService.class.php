@@ -23,6 +23,7 @@ class TemplateClassificationService {
 	const TEMPLATE_NAV = 'navigation';
 	const TEMPLATE_NOT_ART = 'nonarticle';
 	const TEMPLATE_UNKNOWN = 'unknown';
+	const TEMPLATE_UNCLASSIFIED = '' ;
 
 	const NOT_AVAILABLE = 'not-available';
 
@@ -58,7 +59,7 @@ class TemplateClassificationService {
 	 * @throws \Swagger\Client\ApiException
 	 */
 	public function getType( $wikiId, $pageId ) {
-		$templateType = '';
+		$templateType = self::TEMPLATE_UNCLASSIFIED;
 
 		$type = $this->getApiClient()->getTemplateType( $wikiId, $pageId );
 		if ( !is_null( $type ) ) {
@@ -71,7 +72,7 @@ class TemplateClassificationService {
 		 * Fallback to empty type that means no classification.
 		 */
 		if ( !in_array( $templateType, self::$templateTypes ) ) {
-			$templateType = '';
+			$templateType = self::TEMPLATE_UNCLASSIFIED;
 		}
 		/**
 		 * Quick fix end
@@ -199,7 +200,16 @@ class TemplateClassificationService {
 		global $wgConsulUrl, $wgConsulServiceTag;
 		$urlProvider = new ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag );
 		$apiProvider = new ApiProvider( $urlProvider );
-		return $apiProvider->getApi( self::SERVICE_NAME, TCSApi::class );
+		$api = $apiProvider->getApi( self::SERVICE_NAME, TCSApi::class );
+
+		// default CURLOPT_TIMEOUT for API client is set to 0 which means no timeout.
+		// Overwriting to minimal value which is 1.
+		// cURL function is allowed to execute not longer than 1 second
+		$api->getApiClient()
+				->getConfig()
+				->setCurlTimeout(1);
+
+		return $api;
 	}
 
 }
