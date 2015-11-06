@@ -4,5 +4,6 @@ CREATE TABLE IF NOT EXISTS founder_emails_event (
  feev_timestamp VARCHAR(14) default NULL,
  feev_type VARCHAR(32),
  feev_data BLOB NOT NULL,
- PRIMARY KEY (`feev_id`)
+ PRIMARY KEY (`feev_id`),
+ KEY `feev_wiki_id` (`feev_wiki_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

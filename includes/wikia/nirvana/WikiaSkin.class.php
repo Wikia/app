@@ -10,8 +10,6 @@ abstract class WikiaSkin extends SkinTemplate {
 	const LINK_REGEX = '/(<!--\[\s*if[^>]+>\s*<link[^>]*rel=["\']?stylesheet["\']?[^>]*>\s*<!\[\s*endif[^>]+-->|<link[^>]*rel=["\']?stylesheet["\']?[^>]*>)/imsU';
 	const STYLE_REGEX = '/(<!--\[\s*if[^>]+>\s*<style[^>]*>.*<\/style>\s*<!\[\s*endif[^>]+-->|<style[^>]*>.*<\/style>)/imsU';
 
-	const SKIN_VENUS = 'venus';
-
 	const USER_LOGIN_STATUS_CLASS_LOGGED = ' user-logged';
 	const USER_LOGIN_STATUS_CLASS_ANON = ' user-anon';
 
@@ -22,10 +20,6 @@ abstract class WikiaSkin extends SkinTemplate {
 	//strict mode for checking if an asset's URL is registered for the current skin
 	//@see AssetsManager::checkAssetUrlForSkin
 	protected $strictAssetUrlCheck = true;
-
-	//load all ResourceLoader modules at the bottom of the page
-	//@see OutputPage::getModules
-	public $pushRLModulesToBottom = false;
 
 	private $assetsManager;
 

@@ -35,7 +35,7 @@ define('ext.wikia.adEngine.template.skin', [
 				pixelElement,
 				pixelUrl;
 
-			if (win.wgOasisResponsive || win.wgOasisBreakpoints || win.skin === 'venus') {
+			if (win.wgOasisResponsive || win.wgOasisBreakpoints) {
 				require(['wikia.backgroundchanger'], function (backgroundchanger) {
 					if (!params.middleColor) { // TODO: Revisit this hack after CONCF-842 is fixed
 						params.middleColor = params.backgroundColor;

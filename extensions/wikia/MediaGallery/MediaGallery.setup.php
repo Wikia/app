@@ -29,7 +29,6 @@ $wgAutoloadClasses['MediaGalleryModel'] =  $dir . 'MediaGalleryModel.class.php';
 $wgAutoloadClasses['MediaGalleryHooks'] =  $dir . 'MediaGalleryHooks.class.php';
 $wgHooks['OutputPageBeforeHTML'][] = 'MediaGalleryHooks::onOutputPageBeforeHTML';
 $wgHooks['OasisSkinAssetGroups'][] = 'MediaGalleryHooks::onOasisSkinAssetGroups';
-$wgHooks['VenusAssetsPackages'][] = 'MediaGalleryHooks::onVenusAssetsPackages';
 $wgHooks['MakeGlobalVariablesScript'][] = 'MediaGalleryHooks::onMakeGlobalVariablesScript';
 $wgHooks['WikiFeatures::afterToggleFeature'][] = 'MediaGalleryHooks::afterToggleFeature';
 

@@ -1,5 +1,7 @@
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/chevron';
 @import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/mixins/transform';
 @import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxVariables';
 
 .portable-infobox {
@@ -14,7 +16,7 @@
 	// (placing it within portable-infobox class makes it strong enough) //
 
 .portable-infobox {
-	
+
 	.pi-item-spacing {
 		padding: $infobox-item-margin $infobox-item-margin * 2;
 	}
@@ -158,6 +160,85 @@
 	.pi-data-value {
 		padding-left: $infobox-item-margin * 2;
 	}
+}
+
+// **********  Collapsible groups  ********** //
+
+.pi-collapse {
+	.pi-header {
+		@include right-chevron($infobox-chevron-size, 2px, 'up', $color-text);
+		padding-right: $infobox-item-margin * 3 + $infobox-chevron-size;
+		position: relative;
+
+		&:after {
+			display: block;
+			margin-top: -($infobox-chevron-size / 2) + 2;
+			position: absolute;
+			right: $infobox-item-margin * 2;
+			top: 50%;
+		}
+	}
+}
+
+.pi-collapse-closed {
+	border-bottom: none;
+
+	.pi-header::after {
+		@include transform-rotate(135deg);
+		margin-top: -($infobox-chevron-size / 2);
+	}
+
+	> *:nth-child(n+2) {
+		display: none;
+	}
+
+	.pi-horizontal-group {
+		thead,
+		tbody {
+			display: none;
+		}
+	}
+}
+
+// **********  Image Collection  ********** //
+
+ul.pi-image-collection-tabs {
+	list-style: none;
+	margin: 0 -1px -1px 0;
+	overflow: hidden;
+	padding: 0;
+	text-align: center;
+
+	li {
+		border: 1px solid $infobox-section-header-background;
+		box-sizing: border-box;
+		cursor: pointer;
+		display: inline-block;
+		margin: -1px -1px 0 0;
+		max-width: 50%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		vertical-align: bottom;
+		white-space: nowrap;
+
+		&.current {
+			background: $infobox-section-header-background;
+			font-weight: bold;
+		}
+	}
+}
+
+.pi-image-collection-tab-content {
+	background-color: $infobox-background;
+	display: none;
+
+	.video-thumbnail {
+		display: block;
+	}
+}
+
+.pi-image-collection-tab-content.current {
+	display: inherit;
 }
 
 // **********  Error handling styles  ********** //

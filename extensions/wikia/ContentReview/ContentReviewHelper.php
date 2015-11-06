@@ -241,25 +241,39 @@ class Helper extends \ContextSource {
 		global $wgCityId;
 
 		$title = $this->getTitle();
+		$contentReviewRequest = $this->getRequest()->getBool( self::CONTENT_REVIEW_PARAM );
 
 		if ( $title->inNamespace( NS_MEDIAWIKI )
+			&& $contentReviewRequest
 			&& $title->isJsPage()
 			&& $title->userCan( 'content-review' )
 		) {
+			$reviewModel = new ReviewModel();
+
 			$diffRevisionId = $this->getRequest()->getInt( 'diff' );
-			$diffRevisionInfo = ( new ReviewModel() )->getRevisionInfo(
+			$articleId = $title->getArticleID();
+			$diffRevisionInfo = $reviewModel->getRevisionInfo(
 				$wgCityId,
-				$title->getArticleID(),
+				$articleId,
 				$diffRevisionId
 			);
 
 			$status = (int)$diffRevisionInfo['status'];
-			return ( $status === ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW
-				/* Fallback to URL param if a master-slave replication has not finished */
-				|| ( $this->getRequest()->getInt( self::CONTENT_REVIEW_PARAM ) === 1
-					&& $status === ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
-				)
-			);
+
+			// Always make sure it's in review if this is a content review request
+			if ( $status === ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED ) {
+				$reviewerId = $this->getUser()->getId();
+				try {
+					$reviewModel->updateRevisionStatus( $wgCityId, $articleId, $status,
+						ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW, $reviewerId );
+				} catch ( \FluentSql\Exception\SqlException $e ) {
+					// Master-slave replication has not finished, ignore
+				}
+
+				return true;
+			}
+
+			return ( $status === ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
 		}
 
 		return false;

@@ -39,6 +39,7 @@ class ProtectSiteJS {
 	private static function isUserSkinJS( Title $title, User $user ) {
 		global $wgCityId;
 		$allowedJsSubpages = [
+			'chat',
 			'common',
 			'monobook',
 			'wikia',
@@ -71,9 +72,6 @@ class ProtectSiteJS {
 	 * @return boolean
 	 */
 	private static function isAllowedForContentReview( Title $title ) {
-		global $wgEnableContentReviewExt, $wgUseSiteJs;
-		return !empty( $wgEnableContentReviewExt ) &&
-			!empty( $wgUseSiteJs ) &&
-			$title->inNamespace( NS_MEDIAWIKI );
+		return Wikia::isUsingSafeJs() && $title->inNamespace( NS_MEDIAWIKI );
 	}
 }

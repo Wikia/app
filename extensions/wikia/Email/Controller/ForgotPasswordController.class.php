@@ -16,21 +16,6 @@ class ForgotPasswordController extends EmailController {
 	protected $tempPass;
 
 	/**
-	 * @see EmailController::assertCanAccessController
-	 * @throws \Email\Fatal
-	 */
-	public function assertCanAccessController() {
-		global $wgTheSchwartzSecretToken;
-
-		$token = $this->getVal('secret');
-		if( isset( $token ) && $token == $wgTheSchwartzSecretToken ) {
-			return;
-		}
-
-		parent::assertCanAccessController();
-	}
-
-	/**
 	 * A redefinition of our parent's assertCanEmail which removes assertions:
 	 *
 	 * - assertUserWantsEmail : Even if a user says they don't want email, they should get this

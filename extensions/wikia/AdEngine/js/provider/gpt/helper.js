@@ -27,14 +27,14 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.helper',
 		googleApi = new GoogleTag(),
-		sourcePointInitialized = false;
+		recoveryInitialized = false;
 
 	function loadRecovery() {
-		if (sourcePointInitialized) {
+		if (recoveryInitialized) {
 			return;
 		}
 		log('SourcePoint recovery enabled', 'debug', logGroup);
-		sourcePointInitialized = true;
+		recoveryInitialized = true;
 		googleApi = recoveryHelper.createSourcePointTag();
 		recoveryHelper.recoverSlots();
 	}

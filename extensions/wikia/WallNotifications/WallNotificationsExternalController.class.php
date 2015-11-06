@@ -10,7 +10,7 @@ class WallNotificationsExternalController extends WikiaController {
 	}
 
 	public function init() {
-		if ( ( $this->app->checkSkin( 'oasis' ) ) || $this->app->checkSkin( 'venus' ) ) {
+		if ( ( $this->app->checkSkin( [ 'oasis' ] ) ) ) {
 			$this->controllerName = 'GlobalNavigationWallNotifications';
 		} else {
 			$this->controllerName = 'WallNotifications';
