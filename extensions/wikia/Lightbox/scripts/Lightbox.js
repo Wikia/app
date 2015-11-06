@@ -816,17 +816,16 @@
 
 		// Handle history API
 		updateUrlState: function (clear) {
-			var self = this;
-			require(['wikia.history'], function (history) {
-				var queryString = window.Wikia.Querystring();
+			var self = this,
+				history = require('wikia.history'),
+				queryString = require('wikia.querystring')();
 
-				if (clear) {
-					queryString.removeVal('file');
-				} else {
-					queryString.setVal('file', self.current.key, true);
-				}
-				history.replaceState(null, null, queryString);
-			});
+			if (clear) {
+				queryString.removeVal('file');
+			} else {
+				queryString.setVal('file', self.current.key, true);
+			}
+			history.replaceState(null, null, queryString);
 		},
 
 		getShareCodes: function (mediaParams, callback) {
