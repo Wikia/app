@@ -1,7 +1,6 @@
 (function () {
 	'use strict';
 
-
 	var $ = require('jquery'),
 		document = require('wikia.document'),
 		loader = require('wikia.loader'),
@@ -112,10 +111,8 @@
 
 			modalConfig.vars.content = mustache.render(template, flagsData[0]);
 
-			require(['wikia.ui.factory'], function (uiFactory) {
-				/* Initialize the modal component */
-				uiFactory.init(['modal']).then(createComponent);
-			});
+			/* Initialize the modal component */
+			require('wikia.ui.factory').init(['modal']).then(createComponent);
 		});
 	}
 
