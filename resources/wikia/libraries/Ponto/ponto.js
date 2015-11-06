@@ -40,7 +40,7 @@
 			 * @see  protocol.request
 			 * @see  protocol.response
 			 */
-				PROTOCOL_NAME = 'ponto',
+			PROTOCOL_NAME = 'ponto',
 
 			/**
 			 * [Constant] Represents a completed request
@@ -51,7 +51,7 @@
 			 *
 			 * @see  Ponto.acceptResponse
 			 */
-				RESPONSE_COMPLETE = 0,
+			RESPONSE_COMPLETE = 0,
 
 			/**
 			 * [Constant] Represents a failed request with errors
@@ -62,49 +62,49 @@
 			 *
 			 * @see  Ponto.acceptResponse
 			 */
-				RESPONSE_ERROR = 1,
+			RESPONSE_ERROR = 1,
 
 			/**
 			 * [Constant] Indicates that the target is a native platform
 			 *
 			 * @type {Number}
 			 */
-				TARGET_NATIVE = 0,
+			TARGET_NATIVE = 0,
 
 			/**
 			 * [Constant] Indicates that the target is an iframe
 			 *
 			 * @type {Number}
 			 */
-				TARGET_IFRAME = 1,
+			TARGET_IFRAME = 1,
 
 			/**
 			 * [Constant] Indicates that the target is an iframe parent window
 			 *
 			 * @type {Number}
 			 */
-				TARGET_IFRAME_PARENT = 2,
+			TARGET_IFRAME_PARENT = 2,
 
 			/**
 			 * Window to communicate with (if iframe transport is overriden)
 			 *
 			 * @type {Window}
 			 */
-				targetWindow,
+			targetWindow,
 
 			/**
 			 * Origin url of the targeted window
 			 *
 			 * @type {String}
 			 */
-				targetOrigin,
+			targetOrigin,
 
 			/**
 			 * Request / Response dispatcher
 			 *
 			 * @type {PontoDispatcher}
 			 */
-				dispatcher  = new PontoDispatcher(context),
+			dispatcher = new PontoDispatcher(context),
 
 			/**
 			 * Registry for complete/error callbacks
@@ -113,7 +113,7 @@
 			 *
 			 * @type {Object}
 			 */
-				callbacks = {},
+			callbacks = {},
 
 			/**
 			 * Protocol helper
@@ -123,7 +123,7 @@
 			 *
 			 * @type {Object}
 			 */
-				protocol = nativeProtocol(),
+			protocol = nativeProtocol(),
 
 			targets = {},
 
@@ -134,29 +134,29 @@
 		 * @returns {*|{request: request, response: response}}
 		 * Communication protocol methods for the native layer in an object
 		 */
-		function nativeProtocol () {
+		function nativeProtocol() {
 			return context.PontoProtocol || {
-				//the only other chance is for the native layer to register
-				//a custom protocol for communicating with the webview (e.g. iOS)
-				request: function (execContext, target, method, params, callbackId) {
-					if (execContext.location && execContext.location.href) {
-						execContext.location.href = PROTOCOL_NAME + ':///request?target=' + encodeURIComponent(target) +
-							'&method=' + encodeURIComponent(method) +
-							((params) ? '&params=' + encodeURIComponent(params) : '') +
-							((callbackId) ? '&callbackId=' + encodeURIComponent(callbackId) : '');
-					} else {
-						throw new LocationException();
+					//the only other chance is for the native layer to register
+					//a custom protocol for communicating with the webview (e.g. iOS)
+					request: function (execContext, target, method, params, callbackId) {
+						if (execContext.location && execContext.location.href) {
+							execContext.location.href = PROTOCOL_NAME + ':///request?target=' + encodeURIComponent(target) +
+								'&method=' + encodeURIComponent(method) +
+								((params) ? '&params=' + encodeURIComponent(params) : '') +
+								((callbackId) ? '&callbackId=' + encodeURIComponent(callbackId) : '');
+						} else {
+							throw new LocationException();
+						}
+					},
+					response: function (execContext, callbackId, params) {
+						if (execContext.location && execContext.location.href) {
+							execContext.location.href = PROTOCOL_NAME + ':///response?callbackId=' + encodeURIComponent(callbackId) +
+								((params) ? '&params=' + encodeURIComponent(JSON.stringify(params)) : '');
+						} else {
+							throw new LocationException();
+						}
 					}
-				},
-				response: function (execContext, callbackId, params) {
-					if (execContext.location && execContext.location.href) {
-						execContext.location.href = PROTOCOL_NAME + ':///response?callbackId=' + encodeURIComponent(callbackId) +
-							((params) ? '&params=' + encodeURIComponent(JSON.stringify(params)) : '');
-					} else {
-						throw new LocationException();
-					}
-				}
-			};
+				};
 		}
 
 		/**
@@ -164,7 +164,7 @@
 		 * @returns {{request: request, response: response}}
 		 * Communication protocol methods for the iframe
 		 */
-		function iframeProtocol () {
+		function iframeProtocol() {
 			return {
 				request: function (execContext, target, method, params, callbackId, async) {
 					if (targetWindow.postMessage) {
@@ -228,7 +228,8 @@
 		 *
 		 * @public
 		 */
-		function PontoBaseHandler() {}
+		function PontoBaseHandler() {
+		}
 
 		/**
 		 * Request handler factory method, each subclass of
@@ -325,7 +326,7 @@
 		/**
 		 * Initialized iframe protocol to work
 		 */
-		function setIframeProtocol () {
+		function setIframeProtocol() {
 			protocol = iframeProtocol();
 			context.addEventListener('message', onMessage, false);
 
@@ -476,14 +477,15 @@
 		PontoDispatcher.prototype.request = function (data) {
 			var params = new RequestParams(data),
 				scope = this.context,
-				target = scope[params.target];
+				target = scope[params.target],
+				paramsTarget;
 
 			if (target) {
 				dispatchRequest(scope, target, params);
 			} else if (amd && params.target) {
-				require([params.target], function (target) {
-					dispatchRequest(scope, target, params);
-				});
+				paramsTarget = require(params.target);
+
+				dispatchRequest(scope, paramsTarget, params);
 			}
 		};
 
