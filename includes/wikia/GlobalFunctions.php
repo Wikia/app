@@ -1103,8 +1103,8 @@ function &wfGetSolidCacheStorage( $bucket = false ) {
  * an INSERT so this method was adding duplicate rows to the table.
  *
  * While the disappearance of that primary key is being investigated,
- * we're implementing a manual REPLACE by explicitly issuing a DELETE
- * query before an INSERT.
+ * (See MAIN-5790) we're implementing a manual REPLACE by explicitly
+ * issuing a DELETE query before an INSERT.
  */
 function wfSetWikiaPageProp( $type, $pageID, $value, $dbname = '' ) {
 	if ( empty( $dbname ) ) {
