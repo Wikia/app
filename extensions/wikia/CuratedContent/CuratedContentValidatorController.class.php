@@ -159,7 +159,7 @@ class CuratedContentValidatorController extends WikiaController {
 		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 	}
 
-	public function validateFeaturedItem() {
+	public function validateCuratedContentFeaturedItem() {
 		global $wgRequest;
 		if ( !$wgRequest->wasPosted() ) {
 			throw new CuratedContentValidatorMethodNotAllowedException();
