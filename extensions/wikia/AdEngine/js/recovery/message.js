@@ -4,27 +4,27 @@ define('ext.wikia.adEngine.recovery.message', [
 	'ext.wikia.adEngine.recovery.helper',
 	'jquery',
 	'mw',
-	'wikia.abTest',
 	'wikia.document',
 	'wikia.loader',
 	'wikia.localStorage',
 	'wikia.location',
 	'wikia.log',
 	'wikia.mustache',
-	'wikia.window'
+	'wikia.window',
+	require.optional('wikia.abTest')
 ], function (
 	adTracker,
 	recoveryHelper,
 	$,
 	mw,
-	abTest,
 	doc,
 	loader,
 	localStorage,
 	location,
 	log,
 	mustache,
-	win
+	win,
+	abTest
 ) {
 	'use strict';
 
@@ -121,14 +121,16 @@ define('ext.wikia.adEngine.recovery.message', [
 	}
 
 	function injectMessage() {
-		var group = abTest.getGroup(abTestConfig.experimentName);
+		if (abTest) {
+			var group = abTest.getGroup(abTestConfig.experimentName);
 
-		if (group && abTestConfig.topGroupNames.hasOwnProperty(group)) {
-			injectTopMessage(abTestConfig.topGroupNames[group]);
-		}
+			if (group && abTestConfig.topGroupNames.hasOwnProperty(group)) {
+				injectTopMessage(abTestConfig.topGroupNames[group]);
+			}
 
-		if (group && abTestConfig.rightRailGroupNames.hasOwnProperty(group)) {
-			injectRightRailMessage(abTestConfig.rightRailGroupNames[group]);
+			if (group && abTestConfig.rightRailGroupNames.hasOwnProperty(group)) {
+				injectRightRailMessage(abTestConfig.rightRailGroupNames[group]);
+			}
 		}
 	}
 
