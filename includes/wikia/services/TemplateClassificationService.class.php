@@ -72,7 +72,7 @@ class TemplateClassificationService {
 		 * Fallback to empty type that means no classification.
 		 */
 		if ( !in_array( $templateType, self::$templateTypes ) ) {
-			$templateType = '';
+			$templateType = self::TEMPLATE_UNCLASSIFIED;
 		}
 		/**
 		 * Quick fix end
