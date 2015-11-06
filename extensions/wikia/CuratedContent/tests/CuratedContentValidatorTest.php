@@ -289,7 +289,41 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => '', 'image_id' => 0]
 				],
 				[]
+			], [
+				[
+					//Section with title 0 is incorrect -> image_id can't be 0
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => 0, 'image_id' => 0],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => '', 'image_id' => 0]
+				],
+				[CuratedContentValidator::ERR_OTHER_ERROR]
 			],
+		];
+	}
+
+	/**
+	 * @param $labelsList
+	 * @param $expectedResult
+	 * @dataProvider areLabelsUniqueDataProvider
+	 */
+	public function testAreLabelsUnique( $labelsList, $expectedResult ) {
+		$validator = new CuratedContentValidator();
+		$result = $validator->areLabelsUnique( $labelsList );
+		$this->assertSame( $result, $expectedResult );
+	}
+
+	public function areLabelsUniqueDataProvider() {
+		return [
+			[
+				['foo', 'bar', 0, false, ''],
+				true
+			],
+			[
+				['foo', 'foo'],
+				false
+			], [
+				['', ''],
+				false
+			]
 		];
 	}
 }

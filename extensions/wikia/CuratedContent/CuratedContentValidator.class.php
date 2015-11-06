@@ -32,13 +32,15 @@ class CuratedContentValidator {
 				}
 			} else {
 				$alreadyUsedSectionLabels[] = $section['title'];
-				if ( empty( $section['title'] ) ) {
+				//in case of section without title (optional section) validate only items within it
+				if ( $section['title'] === '' ) {
 					if ( !$this->validateItemsInSection( $section ) ) {
 						$errors[] = self::ERR_OTHER_ERROR;
-					} ;
+					}
+				//in case of regular section section and items within it
 				} elseif ( !empty( $this->validateSectionWithItems( $section ) ) ) {
 					$errors[] = self::ERR_OTHER_ERROR;
-				} ;
+				}
 			}
 		}
 
@@ -76,11 +78,12 @@ class CuratedContentValidator {
 	}
 
 	public function areLabelsUnique( $labelsToCheck ) {
-		$areLabelsUnique = true;
 		foreach ( array_count_values( $labelsToCheck ) as $label => $count ) {
-			$areLabelsUnique = $areLabelsUnique && $count <= 1;
+			if ( $count > 1 ) {
+				return false;
+			}
 		}
-		return $areLabelsUnique;
+		return true;
 	}
 
 	private static function needsArticleId( $type ) {
