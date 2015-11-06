@@ -7,10 +7,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.log',
 	'wikia.document',
 	'wikia.location',
-	'wikia.window',
-	require.optional('wikia.abTest'),
-	require.optional('wikia.krux')
-], function (adContext, pvCounter, zoneParams, log, doc, loc, win, abTest, krux) {
+	'wikia.window'
+], function (adContext, pvCounter, zoneParams, log, doc, loc, win) {
 	'use strict';
 
 	var context = {},
@@ -22,14 +20,20 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	}
 
 	function getAb() {
-		var experiments, experimentsNumber, i, ab = [];
+		var experiments,
+			experimentsNumber,
+			i,
+			ab = [];
 
-		if (abTest) {
+		try {
+			abTest = require('wikia.abTest');
+
 			experiments = abTest.getExperiments();
 			experimentsNumber = experiments.length;
 			for (i = 0; i < experimentsNumber; i += 1) {
 				ab.push(experiments[i].id + '_' + experiments[i].group.id);
 			}
+		} catch (exception) {
 		}
 
 		return ab;
@@ -156,12 +160,13 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	 * @returns object
 	 */
 	function getPageLevelParams(options) {
-		// TODO: cache results (keep in mind some of them may change while executing page)
-		log('getPageLevelParams', 9, logGroup);
-
 		var params,
 			targeting = context.targeting,
-			pvs = pvCounter.get();
+			pvs = pvCounter.get(),
+			krux;
+
+		// TODO: cache results (keep in mind some of them may change while executing page)
+		log('getPageLevelParams', 9, logGroup);
 
 		options = options || {};
 
@@ -192,9 +197,14 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			params.rawDbName = zoneParams.getRawDbName();
 		}
 
-		if (krux && targeting.enableKruxTargeting) {
-			params.u = krux.getUser();
-			params.ksgmnt = krux.getSegments();
+		if (targeting.enableKruxTargeting) {
+			try {
+				krux = require('wikia.krux');
+
+				params.u = krux.getUser();
+				params.ksgmnt = krux.getSegments();
+			} catch (exception) {
+			}
 		}
 
 		if (targeting.wikiIsTop1000) {
