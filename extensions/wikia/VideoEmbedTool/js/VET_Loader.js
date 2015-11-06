@@ -84,16 +84,15 @@
 			return;
 		} else if (window.wgUserName === null && !window.UserLogin.forceLoggedIn) {
 			// handle login on article page
-			require(['AuthModal'], function (authModal) {
-				authModal.load({
-					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-					origin: 'vet',
-					onAuthSuccess: function () {
-						window.UserLogin.forceLoggedIn = true;
-						vetLoader.load(options);
-					}
-				});
+			require('AuthModal').load({
+				url: '/signin?redirect=' + encodeURIComponent(window.location.href),
+				origin: 'vet',
+				onAuthSuccess: function () {
+					window.UserLogin.forceLoggedIn = true;
+					vetLoader.load(options);
+				}
 			});
+
 			$elem.stopThrobbing();
 			return;
 		}
@@ -112,6 +111,8 @@
 		}
 
 		$.when.apply($, resourceList).done(function (templateResp) {
+			var vet = require('wikia.vet');
+
 			// If this is the first time resources are loaded, cache the template string
 			if (!resourcesLoaded) {
 				template = templateResp[0];
@@ -119,27 +120,22 @@
 
 			$elem.stopThrobbing();
 
-			// now that VET is loaded, require it.
-			require(['wikia.vet'], function (vet) {
-
-				vetLoader.modal = $(template).makeModal({
-					width: 939,
-					onClose: function () {
-						vet.close();
-					},
-					onAfterClose: function () {
-						// release modal lock
-						modalOnScreen = false;
-					}
-				});
-
-				vet.show(options);
-
-				// resources are now officially loaded
-				resourcesLoaded = true;
+			vetLoader.modal = $(template).makeModal({
+				width: 939,
+				onClose: function () {
+					vet.close();
+				},
+				onAfterClose: function () {
+					// release modal lock
+					modalOnScreen = false;
+				}
 			});
-		});
 
+			vet.show(options);
+
+			// resources are now officially loaded
+			resourcesLoaded = true;
+		});
 	};
 
 	/* Extends jQuery to make any element an add video button
