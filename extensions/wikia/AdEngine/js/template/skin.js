@@ -36,29 +36,29 @@ define('ext.wikia.adEngine.template.skin', [
 				pixelUrl;
 
 			if (win.wgOasisResponsive || win.wgOasisBreakpoints) {
-				require(['wikia.backgroundchanger'], function (backgroundchanger) {
-					if (!params.middleColor) { // TODO: Revisit this hack after CONCF-842 is fixed
-						params.middleColor = params.backgroundColor;
-					}
-					var bcParams = {
+				if (!params.middleColor) { // TODO: Revisit this hack after CONCF-842 is fixed
+					params.middleColor = params.backgroundColor;
+				}
+				var bcParams = {
 						skinImage: params.skinImage,
 						skinImageWidth: 1700,
 						skinImageHeight: 800,
 						backgroundTiled: false,
 						backgroundFixed: true,
 						backgroundDynamic: true
-					};
-					if (params.backgroundColor) {
-						bcParams.backgroundColor = '#' + params.backgroundColor;
-					}
-					if (params.middleColor) {
-						bcParams.backgroundMiddleColor = '#' + params.middleColor;
-					}
-					if (params.ten64) {
-						bcParams.ten64 = true;
-					}
-					backgroundchanger.load(bcParams);
-				});
+					},
+					backgroundchanger = require('wikia.backgroundchanger');
+
+				if (params.backgroundColor) {
+					bcParams.backgroundColor = '#' + params.backgroundColor;
+				}
+				if (params.middleColor) {
+					bcParams.backgroundMiddleColor = '#' + params.middleColor;
+				}
+				if (params.ten64) {
+					bcParams.ten64 = true;
+				}
+				backgroundchanger.load(bcParams);
 			} else {
 				adSkinStyle.background = 'url("' + params.skinImage + '") no-repeat top center #' + params.backgroundColor;
 			}
