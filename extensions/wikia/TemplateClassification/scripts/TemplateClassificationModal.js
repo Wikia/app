@@ -133,15 +133,11 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 			});
 		});
 
-		modalInstance.bind('option-select', function (e) {
-			var $input = $(e.currentTarget).find('input:radio');
-
-			$input.attr('checked', 'checked');
-
+		modalInstance.$element.find('input:radio').change(function trackRadioChange(e) {
 			// Track - click to change a template's type
 			track({
 				action: tracker.ACTIONS.CLICK_LINK_TEXT,
-				label: $input.val()
+				label: $(e.currentTarget).val()
 			});
 		});
 
