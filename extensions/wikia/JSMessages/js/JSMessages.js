@@ -7,15 +7,14 @@
 	 *
 	 * Examples:
 	 *
-	 *  require(['JSMessages'], function(msg){
+	 *  var msg = require('JSMessages');
 	 *
-	 *  	msg('foo');
-	 *  	msg('bar', 'test', 'foo');
+	 *  msg('foo');
+	 *  msg('bar', 'test', 'foo');
 	 *
-	 *		msg.get('foo');
+	 *	msg.get('foo');
 	 *
-	 *		msg.getForContent('foo');
-	 *  })
+	 *	msg.getForContent('foo');
 	 *
 	 * or as a compatibility support
 	 *
