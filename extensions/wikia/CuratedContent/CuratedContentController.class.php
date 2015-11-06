@@ -441,7 +441,10 @@ class CuratedContentController extends WikiaController {
 	}
 
 	public function setData( ) {
-		global $wgCityId, $wgUser;
+		global $wgCityId, $wgUser, $wgRequest;
+		if ( !$wgRequest->wasPosted() ) {
+			throw new CuratedContentValidatorMethodNotAllowedException();
+		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		// TODO: CONCF-961 Set more restrictive header
@@ -449,29 +452,38 @@ class CuratedContentController extends WikiaController {
 
 		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
 			$data = $this->request->getArray( 'data', [ ] );
+			$properData = [];
 			$status = false;
 
 			// strip excessive data used in mercury interface (added in self::getData method)
-			foreach ( $data as &$section ) {
+			foreach ( $data as $section ) {
+
+				// strip node_type and image_url from section
 				unset( $section['node_type'] );
 				unset( $section['image_url'] );
+
+				// fill label fro featured and rename section.title to section.label
 				if ( empty( $section['label'] ) && !empty( $section['featured'] ) ) {
 					$section['title'] = wfMessage( 'wikiacuratedcontent-featured-section-name' )->text();
 				} else {
 					$section['title'] = $section['label'];
+					unset( $section['label'] );
 				}
-				unset( $section['label'] );
 
-				if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
+				// strip node_type and image_url from items inside section and add it to new data
+				if ( is_array( $section['items'] ) && !empty( $section['items'] ) ) {
+					// strip node_type and image_url
 					foreach ( $section['items'] as &$item ) {
 						unset( $item['node_type'] );
 						unset( $item['image_url'] );
 					}
+
+					$properData[] = $section;
 				}
 			}
 
 			$helper = new CuratedContentHelper();
-			$sections = $helper->processSections( $data );
+			$sections = $helper->processSections( $properData );
 			$errors = ( new CuratedContentValidator )->validateData( $sections );
 
 			if ( !empty( $errors ) ) {

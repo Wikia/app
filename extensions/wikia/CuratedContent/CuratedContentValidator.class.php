@@ -52,6 +52,10 @@ class CuratedContentValidator {
 	}
 
 	private function validateItemsInFeatured( $section ) {
+		if ( is_array( $section['items'] ) && empty( $section['items'] ) ) {
+			return true;
+		}
+
 		foreach ( $section['items'] as $featuredItem ) {
 			if ( !empty( $this->validateFeaturedItem( $featuredItem ) ) ) {
 				return false;
@@ -61,8 +65,8 @@ class CuratedContentValidator {
 	}
 
 	private function validateItemsInSection( $section ) {
-		if ( !is_array( $section['items'] ) ) {
-			return false;
+		if ( is_array( $section['items'] ) && empty( $section['items'] ) ) {
+			return true;
 		}
 
 		foreach ( $section['items'] as $item ) {

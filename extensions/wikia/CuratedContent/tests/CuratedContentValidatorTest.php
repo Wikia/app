@@ -233,6 +233,12 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				[],
 				[]
 			], [
+				[['items' => [], 'featured' => true, 'title' => 'foo', 'image_id' => 0]],
+				[]
+			], [
+				[['items' => [], 'title' => '', 'image_id' => 0]],
+				[]
+			], [
 				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'featured' => true, 'title' => 'foo', 'image_id' => 0]],
 				[]
 			], [
