@@ -1,16 +1,15 @@
-require([
-	'videosmodule.views.index',
-	'videosmodule.models.videos',
-	'wikia.nodeFinder',
-	'wikia.mustache',
-	'videosmodule.templates.mustache',
-	'bucky',
-	'wikia.document',
-	'jquery'
-], function (InContentModule, VideoData, nodeFinderModule, Mustache, templates, buckyModule, doc, $) {
+(function () {
 	'use strict';
 
-	var infoboxWrapper = doc.getElementById('infoboxWrapper'),
+	var InContentModule = require('videosmodule.views.index'),
+		VideoData = require('videosmodule.models.videos'),
+		nodeFinderModule = require('wikia.nodeFinder'),
+		Mustache = require('wikia.mustache'),
+		templates = require('videosmodule.templates.mustache'),
+		buckyModule = require('bucky'),
+		doc = require('wikia.document'),
+		$ = require('jquery'),
+		infoboxWrapper = doc.getElementById('infoboxWrapper'),
 		bucky = buckyModule('videosmodule.controller.in-content');
 
 	function init() {
@@ -65,4 +64,4 @@ require([
 	} else {
 		$(doc).ready(init);
 	}
-});
+})();
