@@ -3,14 +3,13 @@
  * Note: There's some commented code that would instantiate the videos module at the bottom of that page. We're going
  * to leave this in there for now as we may at some point switch back to the bottom position.
  */
-require([
-	'videosmodule.views.index',
-	'videosmodule.models.videos',
-	'bucky'
-], function (RailModule, VideoData, bucky) {
+(function () {
 	'use strict';
 
-	var $rail = $('#WikiaRail');
+	var RailModule = require('videosmodule.views.index'),
+		VideoData = require('videosmodule.models.videos'),
+		bucky = require('bucky'),
+		$rail = $('#WikiaRail');
 
 	bucky = bucky('videosmodule.controller.index');
 
@@ -41,4 +40,4 @@ require([
 			$rail.on('afterLoad.rail', init);
 		}
 	});
-});
+})();
