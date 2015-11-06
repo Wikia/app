@@ -52,10 +52,6 @@ class CuratedContentValidator {
 	}
 
 	private function validateItemsInFeatured( $section ) {
-		if ( !is_array( $section['items'] ) ) {
-			return false;
-		}
-
 		foreach ( $section['items'] as $featuredItem ) {
 			if ( !empty( $this->validateFeaturedItem( $featuredItem ) ) ) {
 				return false;
