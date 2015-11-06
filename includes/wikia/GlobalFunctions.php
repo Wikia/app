@@ -1118,7 +1118,8 @@ function wfSetWikiaPageProp( $type, $pageID, $value, $dbname = '' ) {
 		[
 			'page_id' => $pageID,
 			'propname' => $type
-		]
+		],
+		__METHOD__
 	);
 
 	$db->insert(
@@ -1127,7 +1128,8 @@ function wfSetWikiaPageProp( $type, $pageID, $value, $dbname = '' ) {
 			'page_id'  => $pageID,
 			'propname' => $type,
 			'props'    => wfSerializeProp( $type, $value )
-		]
+		],
+		__METHOD__
 	);
 
 	$db->commit( __METHOD__ );
