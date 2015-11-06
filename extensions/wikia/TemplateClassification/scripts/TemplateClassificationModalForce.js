@@ -16,9 +16,8 @@ define('TemplateClassificationModalForce',
 				}
 			}
 			// Type not defined force modal
-			require(['TemplateClassificationInEdit'], function forceTemplateClassificationModal(tc) {
-				tc.open('addTypeBeforePublish');
-			});
+			require('TemplateClassificationInEdit').open('addTypeBeforePublish');
+
 			// Break article submit
 			return true;
 		}
