@@ -7,6 +7,7 @@ class CuratedContentValidatorMethodNotAllowedException extends MethodNotAllowedE
 class CuratedContentValidatorController extends WikiaController {
 
 	private $validator;
+	private $oldValidator;
 	private $helper;
 
 	public function __construct() {
