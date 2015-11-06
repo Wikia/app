@@ -22,16 +22,16 @@
 		assets,
 		lazyImages,
 		process = function (res) {
-			!assets && cache && cache.setVersioned(tablesKey, res, ttl);
+			if (!assets && cache) {
+				cache.setVersioned(tablesKey, res, ttl);
+			}
 
 			if (res) {
 				loader.processStyle(res.styles);
 				loader.processScript(res.scripts);
 			}
 
-			require(['tables'], function (tables) {
-				tables.process($(selector).not('table table, fake'));
-			});
+			require('tables').process($(selector).not('table table, fake'));
 		};
 
 	/**
