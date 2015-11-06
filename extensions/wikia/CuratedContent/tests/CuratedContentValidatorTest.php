@@ -4,8 +4,8 @@ require_once( $IP . '/extensions/wikia/CuratedContent/CuratedContentValidator.cl
 class CuratedContentValidatorTest extends WikiaBaseTest {
 
 	/**
-	 * @param $item
-	 * @param $expectedResult
+	 * @param array $item
+	 * @param array $expectedResult
 	 * @dataProvider validateFeaturedItemDataProvider
 	 */
 	public function testValidateFeaturedItem( $item, $expectedResult ) {
@@ -76,8 +76,8 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @param $item
-	 * @param $expectedResult
+	 * @param array $item
+	 * @param array $expectedResult
 	 * @dataProvider validateSectionItemDataProvider
 	 */
 	public function testValidateSectionItem( $item, $expectedResult ) {
@@ -133,8 +133,8 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @param $section
-	 * @param $expectedResult
+	 * @param array $section
+	 * @param array $expectedResult
 	 * @dataProvider validateSectionDataProvider
 	 */
 	public function testValidateSection( $section, $expectedResult ) {
@@ -174,8 +174,8 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @param $section
-	 * @param $expectedResult
+	 * @param array $section
+	 * @param array $expectedResult
 	 * @dataProvider validateSectionWithItemsDataProvider
 	 */
 	public function testValidateSectionWithItems( $section, $expectedResult ) {
@@ -217,8 +217,8 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @param $data
-	 * @param $expectedResult
+	 * @param array $data
+	 * @param array $expectedResult
 	 * @dataProvider validateDataDataProvider
 	 */
 	public function testValidateData( $data, $expectedResult ) {
@@ -301,8 +301,8 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @param $labelsList
-	 * @param $expectedResult
+	 * @param array $labelsList
+	 * @param boolean $expectedResult
 	 * @dataProvider areLabelsUniqueDataProvider
 	 */
 	public function testAreLabelsUnique( $labelsList, $expectedResult ) {

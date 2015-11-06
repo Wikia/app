@@ -99,7 +99,7 @@ class CuratedContentValidator {
 
 		if ( empty( $item['image_id'] ) ) {
 			$errors[] = self::ERR_IMAGE_MISSING;
-		} ;
+		}
 
 		// When category is passed as type we don't need article_id set.
 		// For instance categories without content on Category: page are valid categories.
@@ -123,7 +123,7 @@ class CuratedContentValidator {
 		if ( $item['type'] === CuratedContentHelper::STR_VIDEO ) {
 			if ( empty( $item['video_info'] ) ) {
 				$errors[] = self::ERR_VIDEO_WITHOUT_INFO;
-			} else if ( !self::isSupportedProvider( $item['video_info']['provider'] ) ) {
+			} elseif ( !self::isSupportedProvider( $item['video_info']['provider'] ) ) {
 				$errors[] = self::ERR_VIDEO_NOT_SUPPORTED;
 			}
 		}
