@@ -669,9 +669,7 @@ define('media', [
 							loader.processScript(script);
 
 							cache && cache.setVersioned(cacheKey, [style, script], ttl);
-							require(['mediagallery'], function (mg) {
-								mg.init();
-							});
+							require('mediagallery').init();
 						});
 					}
 				}
