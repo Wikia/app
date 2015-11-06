@@ -30,8 +30,33 @@ class CuratedContentHelper {
 		return $this->removeEmptySections( $processedSections );
 	}
 
+	public function processSectionsOld( $sections ) {
+		$processedSections = [ ];
+		if ( is_array( $sections ) ) {
+			foreach ( $sections as $section ) {
+				$processedSections[] = $this->processLogicForSectionOld( $section );
+			}
+		}
+		// remove null elements from array
+		return $this->removeEmptySections( $processedSections );
+	}
+
 	public function removeEmptySections( $sections ) {
 		return array_values( array_filter( $sections, function( $section ) { return !is_null( $section ); } ) );
+	}
+
+	public function processLogicForSectionOld( $section ) {
+		if ( empty ( $section['items'] ) || !is_array( $section['items'] ) ) {
+			// return null if we don't have any items inside section
+			return null;
+		}
+		$section['image_id'] = (int)$section['image_id']; // fallback to 0 if it's not set in request
+		$this->processCrop( $section );
+		foreach ( $section['items'] as &$item ) {
+			$this->fillItemInfo( $item );
+			$this->processCrop( $item );
+		}
+		return $section;
 	}
 
 	public function processLogicForSection( $section ) {
