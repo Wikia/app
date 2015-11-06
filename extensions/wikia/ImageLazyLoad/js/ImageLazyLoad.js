@@ -1,8 +1,12 @@
 /* Lazy loading for images inside articles (skips wikiamobile)
  * @author Piotr Bablok <pbablok@wikia-inc.com>
  */
-require(['jquery', 'wikia.ImgLzy', 'wikia.browserDetect', 'wikia.window'], function ($, ImgLzy, browserDetect, w) {
+(function () {
 	'use strict';
+	var $ = require('jquery'),
+		ImgLzy = require('wikia.ImgLzy'),
+		browserDetect = require('wikia.browserDetect'),
+		w = require('wikia.window');
 
 	// detect WebP support as early as possible
 	ImgLzy.checkWebPSupport();
@@ -23,4 +27,4 @@ require(['jquery', 'wikia.ImgLzy', 'wikia.browserDetect', 'wikia.window'], funct
 			});
 		}
 	});
-});
+})();
