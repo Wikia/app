@@ -4,12 +4,11 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'jquery',
-	require.optional('wikia.krux'),
 	'wikia.log',
 	'wikia.scriptwriter',
 	'wikia.tracker',
 	'wikia.window'
-], function (adContext, adLogicPageParams, $, krux, log, scriptWriter, tracker, window) {
+], function (adContext, adLogicPageParams, $, log, scriptWriter, tracker, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.sevenOneMediaHelper',
@@ -225,9 +224,17 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 	 * @returns {string}
 	 */
 	function generateSoiKeywords() {
-		log('generateSoiKeywords', 'debug', logGroup);
+		var i,
+			len,
+			param,
+			val,
+			valIndex,
+			valLen,
+			keywords = [],
+			kruxSegments,
+			krux;
 
-		var i, len, param, val, valIndex, valLen, keywords = [], kruxSegments;
+		log('generateSoiKeywords', 'debug', logGroup);
 
 		// Get all values for params defined in soiKeywordsParams
 		for (i = 0, len = soiKeywordsParams.length; i < len; i += 1) {
@@ -246,16 +253,19 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 			}
 		}
 
-		if (krux) {
-			kruxSegments = krux.getSegments();
-		}
+		try {
+			krux = require('wikia.krux');
 
-		if (kruxSegments && kruxSegments.length) {
-			for (i = 0, len = kruxSegments.length; i < len; i += 1) {
-				if (soiKeywordsSegments[kruxSegments[i]]) {
-					keywords.push(kruxSegments[i]);
+			kruxSegments = krux.getSegments();
+
+			if (kruxSegments && kruxSegments.length) {
+				for (i = 0, len = kruxSegments.length; i < len; i += 1) {
+					if (soiKeywordsSegments[kruxSegments[i]]) {
+						keywords.push(kruxSegments[i]);
+					}
 				}
 			}
+		} catch (exception) {
 		}
 
 		log(['generateSoiKeywords', keywords], 'debug', logGroup);
@@ -349,11 +359,13 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 	function trackEnd() {
 		log('trackEnd', 'info', logGroup);
 		if (initialized) {
-			insertAd({slotname: 'trackEnd', params: {
-				afterFinish: function () {
-					track('stage/ads');
+			insertAd({
+				slotname: 'trackEnd', params: {
+					afterFinish: function () {
+						track('stage/ads');
+					}
 				}
-			}});
+			});
 		}
 	}
 
