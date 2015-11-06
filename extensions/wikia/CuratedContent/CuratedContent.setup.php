@@ -15,6 +15,7 @@ $wgExtensionCredits[ 'specialpage' ][ ] = array(
  */
 $wgAutoloadClasses['CuratedContentHelper'] = __DIR__ . '/CuratedContentHelper.class.php';
 $wgAutoloadClasses['CuratedContentValidator'] = __DIR__ . '/CuratedContentValidator.class.php';
+$wgAutoloadClasses['CuratedContentSpecialPageValidator'] = __DIR__ . '/CuratedContentSpecialPageValidator.class.php';
 $wgAutoloadClasses['CuratedContentValidatorController'] = __DIR__ . '/CuratedContentValidatorController.class.php';
 $wgAutoloadClasses['CuratedContentController'] = __DIR__ . '/CuratedContentController.class.php';
 $wgAutoloadClasses['CuratedContentWrongAPIVersionException'] = __DIR__ . '/CuratedContentController.class.php';
