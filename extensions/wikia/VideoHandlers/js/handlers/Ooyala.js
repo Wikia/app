@@ -10,12 +10,25 @@
 define('wikia.videohandler.ooyala', [
 	'jquery',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.adContext'),
-	require.optional('ext.wikia.adEngine.dartVideoHelper'),
 	'wikia.loader',
 	'wikia.log'
-], function ($, window, adContext, dartVideoHelper, loader, log) {
+], function ($, window, loader, log) {
 	'use strict';
+
+	var adContext,
+		dartVideoHelper;
+
+	try {
+		adContext = require('ext.wikia.adEngine.adContext');
+	} catch (exception) {
+		adContext = null;
+	}
+
+	try {
+		dartVideoHelper = require('ext.wikia.adEngine.dartVideoHelper');
+	} catch (exception) {
+		dartVideoHelper = null;
+	}
 
 	/**
 	 * Set up Ooyala player and tracking events
@@ -65,7 +78,7 @@ define('wikia.videohandler.ooyala', [
 				var i;
 				if (player && player.modules && player.modules.length) {
 					for (i = 0; i < player.modules.length; i = i + 1) {
-						if (player.modules[i].name === "GoogleIma" && player.modules[i].instance) {
+						if (player.modules[i].name === 'GoogleIma' && player.modules[i].instance) {
 							player.modules[i].instance.adTagUrl = tagUrl;
 						}
 					}
@@ -74,9 +87,9 @@ define('wikia.videohandler.ooyala', [
 
 			// Log all events and values (for debugging)
 			/*messageBus.subscribe('*', 'tracking', function(eventName, payload) {
-				console.log(eventName);
-				console.log(payload);
-			});*/
+			 console.log(eventName);
+			 console.log(payload);
+			 });*/
 		}
 
 		createParams.onCreate = onCreate;
@@ -94,39 +107,39 @@ define('wikia.videohandler.ooyala', [
 		}
 
 		// log any errors from failed script loading (VID-976)
-		function loadFail( data ) {
+		function loadFail(data) {
 			var message = data.error + ':';
 
-			$.each( data.resources, function() {
+			$.each(data.resources, function () {
 				message += ' ' + this;
 			});
 
-			log( message, log.levels.error, 'VideoBootstrap' );
+			log(message, log.levels.error, 'VideoBootstrap');
 		}
 
 		// Only load the Ooyala player code once, Ooyala AgeGates will break if we load this asset more than once.
-		if ( window.OO === undefined ) {
+		if (window.OO === undefined) {
 			/* the second file depends on the first file */
 			loader({
 				type: loader.JS,
-				resources: params.jsFile[ 0 ]
-			}).done(function() {
-				log( 'First set of Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
+				resources: params.jsFile[0]
+			}).done(function () {
+				log('First set of Ooyala assets loaded', log.levels.info, 'VideoBootstrap');
 				loader({
 					type: loader.JS,
-					resources: params.jsFile[ 1 ]
-				}).done(function() {
-					log( 'All Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
+					resources: params.jsFile[1]
+				}).done(function () {
+					log('All Ooyala assets loaded', log.levels.info, 'VideoBootstrap');
 
 					window.OO.ready(function (OO) {
-						log( 'Ooyala OO.ready', log.levels.info, 'VideoBootstrap' );
-						OO.Player.create( containerId, params.videoId, createParams );
+						log('Ooyala OO.ready', log.levels.info, 'VideoBootstrap');
+						OO.Player.create(containerId, params.videoId, createParams);
 					});
 
-				}).fail( loadFail );
-			}).fail( loadFail );
+				}).fail(loadFail);
+			}).fail(loadFail);
 		} else {
-			window.OO.Player.create( containerId, params.videoId, createParams );
+			window.OO.Player.create(containerId, params.videoId, createParams);
 		}
 
 	};
