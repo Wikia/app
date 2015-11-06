@@ -101,10 +101,8 @@
 
 			toast.show(msg('wikiamobile-article-comments-login-post'), {error: true});
 
-			require(['topbar'], function (t) {
-				t.openProfile('comm-' + (prev ? (prev.id || 'wkComm') : elm.parentElement.id));
-				modal.close(true);
-			});
+			require('topbar').openProfile('comm-' + (prev ? (prev.id || 'wkComm') : elm.parentElement.id));
+			modal.close(true);
 
 			return true;
 		}
