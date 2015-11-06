@@ -2,10 +2,12 @@
  * JS file for Monetization Module.
  */
 
-require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
+(function () {
 	'use strict';
 
-	var track;
+	var Tracker = require('wikia.tracker'),
+		geo = require('wikia.geo'),
+		track;
 
 	track = Tracker.buildTrackingFunction({
 		trackingMethod: 'internal',
@@ -93,4 +95,4 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 	};
 
 	MonetizationModule.init();
-});
+})();
