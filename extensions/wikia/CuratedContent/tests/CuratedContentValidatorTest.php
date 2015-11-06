@@ -303,7 +303,7 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				[]
 			], [
 				[
-					//Section with title 0 is incorrect -> image_id can't be 0
+					// Section with title 0 is incorrect -> image_id can't be 0
 					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => 0, 'image_id' => 0],
 					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => '', 'image_id' => 0]
 				],
@@ -334,6 +334,36 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				false
 			], [
 				['', ''],
+				false
+			]
+		];
+	}
+
+	/**
+	 * @param array $items
+	 * @param boolean $expectedResult
+	 * @dataProvider areItemsCorrectDataProvider
+	 */
+	public function testAreItemsCorrect( $items, $expectedResult ) {
+		$validator = new CuratedContentValidator();
+		$result = $validator->areItemsCorrect( $items );
+		$this->assertSame( $result, $expectedResult );
+	}
+
+	public function areItemsCorrectDataProvider() {
+		return [
+			[
+				['foo', 'bar', 0, false, ''],
+				true
+			],
+			[
+				[],
+				false
+			], [
+				'',
+				false
+			], [
+				null,
 				false
 			]
 		];

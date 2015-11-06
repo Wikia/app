@@ -45,12 +45,12 @@ class CuratedContentValidator {
 				}
 			} else {
 				$alreadyUsedSectionLabels[] = $section['title'];
-				//in case of section without title (optional section) validate only items within it
+				// in case of section without title (optional section) validate only items within it
 				if ( $section['title'] === '' ) {
 					if ( !$this->validateItemsInSection( $section ) ) {
 						$errors[] = self::ERR_OTHER_ERROR;
 					}
-				//in case of regular section section and items within it
+				// in case of regular section validate section and items within it
 				} elseif ( !empty( $this->validateSectionWithItems( $section ) ) ) {
 					$errors[] = self::ERR_OTHER_ERROR;
 				}
@@ -65,7 +65,7 @@ class CuratedContentValidator {
 	}
 
 	private function validateItemsInFeatured( $section ) {
-		if ( empty( $section['items'] ) || !is_array( $section['items'] ) ) {
+		if ( !$this->areItemsCorrect( $section['items'] ) ) {
 			return false;
 		}
 
@@ -78,7 +78,7 @@ class CuratedContentValidator {
 	}
 
 	private function validateItemsInSection( $section ) {
-		if ( empty( $section['items'] ) || !is_array( $section['items'] ) ) {
+		if ( !$this->areItemsCorrect( $section['items'] ) ) {
 			return false;
 		}
 
@@ -101,6 +101,13 @@ class CuratedContentValidator {
 
 	private static function needsArticleId( $type ) {
 		return !in_array( $type, [ CuratedContentHelper::STR_CATEGORY ] );
+	}
+
+	public function areItemsCorrect( $items ) {
+		if ( empty( $items ) || !is_array( $items ) ) {
+			return false;
+		}
+		return true;
 	}
 
 	private static function isSupportedProvider( $provider ) {
@@ -198,7 +205,7 @@ class CuratedContentValidator {
 		$usedLabels = [ ];
 
 		// validate items exist
-		if ( empty( $section['items'] ) ) {
+		if ( !$this->areItemsCorrect( $section['items'] ) ) {
 			$errors[] = self::ERR_ITEMS_MISSING;
 		}
 
