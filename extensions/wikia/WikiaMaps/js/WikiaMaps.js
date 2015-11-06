@@ -1,17 +1,14 @@
-require(
-	[
-		'jquery',
-		'wikia.querystring',
-		'wikia.window',
-		'wikia.maps.config',
-		'wikia.maps.utils',
-		'wikia.maps.pontoBridge',
-	],
-	function ($, qs, w, config, utils, pontoBridge) {
+(function () {
 		'use strict';
 
-		var body = $('body'),
-			targetIframe =  w.document.getElementsByName('wikia-interactive-map')[0];
+		var $ = require('jquery'),
+			qs = require('wikia.querystring'),
+			w = require('wikia.window'),
+			config = require('wikia.maps.config'),
+			utils = require('wikia.maps.utils'),
+			pontoBridge = require('wikia.maps.pontoBridge'),
+			body = $('body'),
+			targetIframe = w.document.getElementsByName('wikia-interactive-map')[0];
 
 		// attach handlers
 		body
@@ -47,5 +44,4 @@ require(
 		if (w.location.hash === '#createMap') {
 			utils.triggerAction(utils.getActionConfig('createMap', config));
 		}
-	}
-);
+	})();
