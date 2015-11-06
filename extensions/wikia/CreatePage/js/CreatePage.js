@@ -154,80 +154,79 @@ var CreatePage = {
 	},
 
 	openDialog: function (data) {
-		require(['wikia.ui.factory'], function (uiFactory) {
-			uiFactory.init(['modal']).then(function (uiModal) {
-				var createPageModalConfig = {
-					vars: {
-						id: 'CreatePageModalDialog',
-						size: 'medium',
-						title: data.title,
-						content: data.html,
-						classes: ['modalContent'],
-						buttons: [
-							{
-								vars: {
-									value: data.addPageLabel,
-									classes: ['normal', 'primary'],
-									imageClass: 'new',
-									data: [
-										{
-											key: 'event',
-											value: 'create'
-										}
-									]
-								}
+		require('wikia.ui.factory').init(['modal']).then(function (uiModal) {
+			var createPageModalConfig = {
+				vars: {
+					id: 'CreatePageModalDialog',
+					size: 'medium',
+					title: data.title,
+					content: data.html,
+					classes: ['modalContent'],
+					buttons: [
+						{
+							vars: {
+								value: data.addPageLabel,
+								classes: ['normal', 'primary'],
+								imageClass: 'new',
+								data: [
+									{
+										key: 'event',
+										value: 'create'
+									}
+								]
 							}
-						]
-					}
-				};
-				uiModal.createComponent(createPageModalConfig, function (createPageModal) {
-					var idToken,
-						elm,
-						onElementClick,
-						name,
-						titleText;
+						}
+					]
+				}
+			};
+			uiModal.createComponent(createPageModalConfig, function (createPageModal) {
+				var idToken,
+					elm,
+					onElementClick,
+					name,
+					titleText;
 
-					createPageModal.bind('create', function (event) {
-						event.preventDefault();
-						CreatePage.submitDialog(false);
-					});
-
-					onElementClick = function () {
-						CreatePage.setPageLayout($(this).data('optionName'));
-					};
-
-					for (name in CreatePage.options) {
-						idToken = name.charAt(0).toUpperCase() + name.substring(1);
-						elm = $('#CreatePageDialog' + idToken + 'Container');
-
-						elm.data('optionName', name);
-						elm.click(onElementClick);
-					}
-
-					titleText = data.article;
-
-					// Titles can be numbers, let's just make them strings for simplicity
-					if (typeof titleText === 'number') {
-						titleText = titleText.toString();
-					}
-
-					if (titleText) {
-						$('#wpCreatePageDialogTitle').val(decodeURIComponent(titleText));
-					}
-
-					CreatePage.setPageLayout(data.defaultOption);
-
-					$('#wpCreatePageDialogTitle').focus();
-
-					// Hide formats if ve is available
-					if (CreatePage.canUseVisualEditor()) {
-						$('#CreatePageDialogChoose, #CreatePageDialogChoices').hide();
-					}
-					CreatePage.loading = false;
-					createPageModal.show();
+				createPageModal.bind('create', function (event) {
+					event.preventDefault();
+					CreatePage.submitDialog(false);
 				});
+
+				onElementClick = function () {
+					CreatePage.setPageLayout($(this).data('optionName'));
+				};
+
+				for (name in CreatePage.options) {
+					idToken = name.charAt(0).toUpperCase() + name.substring(1);
+					elm = $('#CreatePageDialog' + idToken + 'Container');
+
+					elm.data('optionName', name);
+					elm.click(onElementClick);
+				}
+
+				titleText = data.article;
+
+				// Titles can be numbers, let's just make them strings for simplicity
+				if (typeof titleText === 'number') {
+					titleText = titleText.toString();
+				}
+
+				if (titleText) {
+					$('#wpCreatePageDialogTitle').val(decodeURIComponent(titleText));
+				}
+
+				CreatePage.setPageLayout(data.defaultOption);
+
+				$('#wpCreatePageDialogTitle').focus();
+
+				// Hide formats if ve is available
+				if (CreatePage.canUseVisualEditor()) {
+					$('#CreatePageDialogChoose, #CreatePageDialogChoices').hide();
+				}
+				CreatePage.loading = false;
+				createPageModal.show();
 			});
 		});
+
 	},
 
 	submitDialog: function (enterWasHit) {
