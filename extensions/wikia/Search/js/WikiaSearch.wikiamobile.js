@@ -3,68 +3,72 @@
  *
  * @author Artur Klajnerok<arturk(at)wikia-inc.com>
  **/
-require(['throbber', 'topbar', 'track', 'wikia.nirvana', 'wikia.window'], function(throbber, topbar, track, nirvana, window){
+(function () {
+	var throbber = require('throbber'),
+		topbar = require('topbar'),
+		track = require('track'),
+		nirvana = require('wikia.nirvana'),
+		window = require('wikia.window'),
+		d = window.document,
+		wkSrhInp = d.getElementById('wkSrhInp'),
+		wkMainCnt = d.getElementById('wkMainCnt'),
+		wkResultCount = d.getElementById('wkResultCount'),
+		wkResultUl = d.getElementById('wkResultUl'),
+		wkResultNext = d.getElementById('wkResultNext'),
+		wkResultPrev = d.getElementById('wkResultPrev'),
+		clickEvent = 'click',
+		firstPage;
 
-    var d = window.document,
-        wkSrhInp = d.getElementById('wkSrhInp'),
-        wkMainCnt = d.getElementById('wkMainCnt'),
-        wkResultCount = d.getElementById('wkResultCount'),
-        wkResultUl = d.getElementById('wkResultUl'),
-        wkResultNext = d.getElementById('wkResultNext'),
-        wkResultPrev = d.getElementById('wkResultPrev'),
-        clickEvent = 'click',
-        firstPage;
-
-    if(wkResultUl){
-        var totalPages = ~~wkResultUl.getAttribute('data-total-pages'),
-            query = wkResultUl.getAttribute('data-query'),
-            currentPage = ~~wkResultUl.getAttribute('data-page'),
-            resultsPerPage = ~~wkResultUl.getAttribute('data-results-per-page'),
-            totalResults = ~~wkResultUl.getAttribute('data-total-results');
+	if (wkResultUl) {
+		var totalPages = ~~wkResultUl.getAttribute('data-total-pages'),
+			query = wkResultUl.getAttribute('data-query'),
+			currentPage = ~~wkResultUl.getAttribute('data-page'),
+			resultsPerPage = ~~wkResultUl.getAttribute('data-results-per-page'),
+			totalResults = ~~wkResultUl.getAttribute('data-total-results');
 
 		//lets add some tracking to global search
-		wkResultUl.addEventListener(clickEvent, function(ev){
+		wkResultUl.addEventListener(clickEvent, function (ev) {
 			var t = ev.target,
 				className = t.className,
 				label = (className.indexOf('url') > -1) ? 'label' :
 					(className.indexOf('groupTitle') > -1) ? 'wikiname' :
-					(className.indexOf('searchGroup') > -1) ? 'icon' : '';
+						(className.indexOf('searchGroup') > -1) ? 'icon' : '';
 
 			if (label) track.event('search', track.CLICK, {
-				label: label,
-				href: t.href
-			},
-			ev);
+					label: label,
+					href: t.href
+				},
+				ev);
 		});
-    }
+	}
 
-    if(wkSrhInp){
-        wkSrhInp.addEventListener(clickEvent, function(){
-            topbar.initAutocomplete();
-        });
-    }
+	if (wkSrhInp) {
+		wkSrhInp.addEventListener(clickEvent, function () {
+			topbar.initAutocomplete();
+		});
+	}
 
-    function clickHandler(event){
-        event.preventDefault();
+	function clickHandler(event) {
+		event.preventDefault();
 
-        var elm = this,
-            forward = (elm.getAttribute('id') == 'wkResultNext'),
-            pageIndex = (forward) ? currentPage + 1 : currentPage - 1,
-            canGetNextPage = (forward) ? (currentPage < totalPages) : (currentPage > 1);
+		var elm = this,
+			forward = (elm.getAttribute('id') == 'wkResultNext'),
+			pageIndex = (forward) ? currentPage + 1 : currentPage - 1,
+			canGetNextPage = (forward) ? (currentPage < totalPages) : (currentPage > 1);
 
-        if(currentPage === 1) {
-            firstPage = wkResultUl.innerHTML;
-        }
+		if (currentPage === 1) {
+			firstPage = wkResultUl.innerHTML;
+		}
 
-        if( canGetNextPage ){
-            elm.className += ' active';
-            throbber.show(elm, {size: '30px'});
+		if (canGetNextPage) {
+			elm.className += ' active';
+			throbber.show(elm, {size: '30px'});
 
 			track.event('search', track.PAGINATE, {
 				label: forward ? 'next' : 'previous'
 			});
 
-            nirvana.sendRequest({
+			nirvana.sendRequest({
 				controller: 'WikiaSearchAjaxController',
 				method: 'getNextResults',
 				format: 'json',
@@ -74,22 +78,22 @@ require(['throbber', 'topbar', 'track', 'wikia.nirvana', 'wikia.window'], functi
 					query: encodeURIComponent(query),
 					page: pageIndex
 				}
-            }).done(
-				function(result){
+			}).done(
+				function (result) {
 					var finished;
 
 					currentPage = pageIndex;
 					finished = (forward) ? (currentPage == totalPages) : (currentPage == 1);
 
 					wkResultUl.innerHTML = result.text;
-					wkResultUl.setAttribute( 'data-page', currentPage );
+					wkResultUl.setAttribute('data-page', currentPage);
 
 					wkResultCount.innerHTML = result.counter;
 
 					elm.className = elm.className.replace(' active', '');
 					throbber.hide(elm);
 
-					if(finished) {
+					if (finished) {
 						elm.style.display = 'none';
 					}
 
@@ -98,11 +102,11 @@ require(['throbber', 'topbar', 'track', 'wikia.nirvana', 'wikia.window'], functi
 					window.scrollTo(0, wkMainCnt.offsetTop);
 				}
 			);
-        }
-    }
+		}
+	}
 
-    if(totalPages > 1){
-        wkResultNext.addEventListener(clickEvent, clickHandler, true);
-        wkResultPrev.addEventListener(clickEvent, clickHandler, true);
-    }
-});
+	if (totalPages > 1) {
+		wkResultNext.addEventListener(clickEvent, clickHandler, true);
+		wkResultPrev.addEventListener(clickEvent, clickHandler, true);
+	}
+})();
