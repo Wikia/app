@@ -2,10 +2,17 @@
 define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	'wikia.log',
 	'ext.wikia.adEngine.adLogicPageParams',
-	'ext.wikia.adEngine.provider.gpt.helper',
-	require.optional('ext.wikia.adEngine.lookup.services')
-], function (log, adLogicPageParams, gptHelper, lookups) {
+	'ext.wikia.adEngine.provider.gpt.helper'
+], function (log, adLogicPageParams, gptHelper) {
 	'use strict';
+
+	var lookups;
+
+	try {
+		lookups = require('ext.wikia.adEngine.lookup.services');
+	} catch (exception) {
+		lookups = null;
+	}
 
 	/**
 	 * Creates GPT provider based on given params
