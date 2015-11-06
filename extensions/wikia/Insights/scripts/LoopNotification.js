@@ -4,17 +4,14 @@
  */
 
 /* global require */
-require(
-	[
-		'jquery',
-		'BannerNotification',
-		'wikia.querystring',
-		'wikia.window',
-		'ext.wikia.Insights.LoopNotificationTracking'
-	],
-	function ($, BannerNotification, Querystring, window, loopNotificationTracking)
-{
+(function () {
 	'use strict';
+
+	var $ = require('jquery'),
+		BannerNotification = require('BannerNotification'),
+		Querystring = require('wikia.querystring'),
+		window = require('wikia.window'),
+		loopNotificationTracking = require('ext.wikia.Insights.LoopNotificationTracking');
 
 	$(function () {
 		var qs = new Querystring(),
@@ -31,7 +28,7 @@ require(
 			getParent,
 			addInsightsFlowToEditButtons;
 
-		showNotification = function(response) {
+		showNotification = function (response) {
 			if (response) {
 				var msgType,
 					$parent = getParent();
@@ -66,7 +63,7 @@ require(
 			}
 		};
 
-		getMessageType = function() {
+		getMessageType = function () {
 			if (isEdit || !isFixed) {
 				return 'warn';
 			} else {
@@ -74,7 +71,7 @@ require(
 			}
 		};
 
-		getParent = function() {
+		getParent = function () {
 			if (window.wgIsEditPage) {
 				return $('#WikiaMainContent');
 			} else {
@@ -82,7 +79,7 @@ require(
 			}
 		};
 
-		initNotification = function() {
+		initNotification = function () {
 			$.nirvana.sendRequest({
 				controller: 'Insights',
 				method: 'loopNotification',
@@ -96,13 +93,13 @@ require(
 			});
 		};
 
-		addInsightsFlowToEditButtons = function() {
+		addInsightsFlowToEditButtons = function () {
 			var self,
 				href = '',
 				pathname = document.location.pathname,
 				param = '&insights=' + insights;
 
-			$('a[href*="action=edit"]').each(function(){
+			$('a[href*="action=edit"]').each(function () {
 				self = $(this);
 				href = self.attr('href');
 				if (href.indexOf(pathname) !== -1) {
@@ -113,14 +110,14 @@ require(
 
 		if (insights) {
 			if (isVE) {
-				window.mw.hook('ve.deactivationComplete').add(function(saved){
+				window.mw.hook('ve.deactivationComplete').add(function (saved) {
 					if (saved) {
 						isEdit = false;
 						initNotification();
 					}
 				});
 
-				window.mw.hook('ve.activationComplete').add(function(){
+				window.mw.hook('ve.activationComplete').add(function () {
 					isEdit = true;
 					initNotification();
 				});
@@ -133,4 +130,4 @@ require(
 			loopNotificationTracking.init();
 		}
 	});
-});
+})();
