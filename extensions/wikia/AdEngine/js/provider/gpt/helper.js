@@ -33,7 +33,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	}
 
 	try {
-		scrollHandler = require.optional('ext.wikia.adEngine.slot.scrollHandler');
+		scrollHandler = require('ext.wikia.adEngine.slot.scrollHandler');
 	} catch (exception) {
 		scrollHandler = null;
 	}
