@@ -42,10 +42,10 @@ describe('ext.wikia.adEngine.slot.taboola', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.slot.taboola'](
 			mocks.adContext,
+			mocks.abTest,
 			mocks.doc,
 			mocks.log,
-			mocks.win,
-			mocks.abTest
+			mocks.win
 		);
 	}
 

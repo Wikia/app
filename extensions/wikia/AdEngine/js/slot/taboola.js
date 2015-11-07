@@ -1,11 +1,11 @@
-/*global define, require*/
+/*global define*/
 define('ext.wikia.adEngine.slot.taboola', [
 	'ext.wikia.adEngine.adContext',
+	'wikia.abTest',
 	'wikia.document',
 	'wikia.log',
-	'wikia.window',
-	require.optional('wikia.abTest')
-], function (adContext, doc, log, win, abTest) {
+	'wikia.window'
+], function (adContext, abTest, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.taboola',
