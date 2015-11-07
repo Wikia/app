@@ -10,7 +10,7 @@ define('ext.wikia.adEngine.slot.taboola', [
 
 	var logGroup = 'ext.wikia.adEngine.slot.taboola',
 		context = adContext.getContext(),
-		experimentName = 'NATIVE_ADS_TABOOLA';
+		experimentName = 'TABOOLA_MODULES';
 
 	function getSlots() {
 		var slots = [],

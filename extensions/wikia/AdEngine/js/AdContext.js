@@ -87,7 +87,7 @@ define('ext.wikia.adEngine.adContext', [
 
 		// Taboola integration
 		if (context.providers.taboola) {
-			context.providers.taboola = !!abTest.getGroup('NATIVE_ADS_TABOOLA') &&
+			context.providers.taboola = !!abTest.getGroup('TABOOLA_MODULES') &&
 				geo.isProperGeo(instantGlobals.wgAdDriverTaboolaCountries) &&
 				context.targeting.pageType === 'article';
 		}
