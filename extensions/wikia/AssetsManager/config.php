@@ -137,7 +137,6 @@ $config['adengine2_taboola_js'] = array(
 	'skin' => [ 'oasis' ],
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/provider/taboola.js',
-		'//extensions/wikia/AdEngine/js/slot/taboola.js',
 	),
 );
 
