@@ -82,7 +82,7 @@ class TemplateClassificationService {
 	 * @throws Exception
 	 * @throws \Swagger\Client\ApiException
 	 */
-	public function getUserDefinedTypes( $wikiId, $pageId ) {
+	public function getUserDefinedType( $wikiId, $pageId ) {
 		$templateType = $this->getType( $wikiId, $pageId );
 
 		if ( !in_array( $templateType, self::$templateTypes ) ) {
