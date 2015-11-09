@@ -318,9 +318,9 @@ class MercuryApiController extends WikiaController {
 		// Get the button color from ThemeDesigner to act as the main "theme color".
 		// This may need to change later as we use more colors from ThemeDesigner.
 		$themeSettings = ( new ThemeSettings() )->getSettings();
-		$wikiVariables['theme'] = [
-			'colorButtons' => $themeSettings['color-buttons'],
-			'colorLinks' => $themeSettings['color-links'],
+		$wikiVariables['themeColors'] = [
+			'buttons' => $themeSettings['color-buttons'],
+			'links' => $themeSettings['color-links'],
 		];
 
 		// template for non-main pages (use $1 for article name)
