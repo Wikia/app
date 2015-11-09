@@ -193,22 +193,6 @@ class EditPageLayoutHelper {
 			&& !$wgUser->getGlobalPreference( 'disablesyntaxhighlighting' );
 	}
 
-	static public function isInfoboxTemplate( Title $title ) {
-		global $wgCityId;
-
-		if ( $title->inNamespace( NS_TEMPLATE ) ) {
-			if ( self::isTemplateDraft( $title ) ) {
-				return true;
-			} else {
-				$tc = new TemplateClassificationService();
-				$type = $tc->getUserDefinedType( $wgCityId, $title->getArticleID() );
-				return $type === TemplateClassificationService::TEMPLATE_INFOBOX;
-			}
-		}
-
-		return false;
-	}
-
 	static public function isTemplateDraft( $title ) {
 		global $wgEnableTemplateDraftExt;
 
