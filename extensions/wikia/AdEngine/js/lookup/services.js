@@ -8,34 +8,42 @@
  * This module also causes the lookup services to track their state when they are consulted
  * (but only once).
  */
-
 /*global define, require*/
-/*jshint camelcase:false*/
 define('ext.wikia.adEngine.lookup.services', [
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
 	require.optional('ext.wikia.adEngine.lookup.openXBidder')
 ], function (log, amazonMatch, oxBidder) {
 	'use strict';
-
 	var logGroup = 'ext.wikia.adEngine.lookup.services',
-		oxLookupTracked = false,
-		amazonLookupTracked = false;
+		bidders = [
+			{
+				module: amazonMatch,
+				tracked: false
+			},
+			{
+				module: oxBidder,
+				tracked: false
+			}
+		];
 
-	function trackState(module) {
-		if (module && module.wasCalled()) {
-			module.trackState();
-		}
+	function trackState() {
+		bidders.forEach(function (bidder) {
+			if (!bidder.tracked && bidder.module && bidder.module.wasCalled()) {
+				bidder.tracked = true;
+				bidder.module.trackState();
+			}
+		});
 	}
 
-	function addParameters(slotName, slotTargeting, modules) {
+	function addParameters(slotName, slotTargeting) {
 		var params;
 		if (!Object.keys) {
 			return;
 		}
-		modules.forEach(function (module) {
-			if (module && module.wasCalled()) {
-				params = module.getSlotParams(slotName);
+		bidders.forEach(function (bidder) {
+			if (bidder.module && bidder.module.wasCalled()) {
+				params = bidder.module.getSlotParams(slotName);
 				Object.keys(params).forEach(function (key) {
 					slotTargeting[key] = params[key];
 				});
@@ -45,18 +53,8 @@ define('ext.wikia.adEngine.lookup.services', [
 
 	function extendSlotTargeting(slotName, slotTargeting) {
 		log(['extendSlotTargeting', slotName, slotTargeting], 'debug', logGroup);
-
-		if (!amazonLookupTracked) {
-			amazonLookupTracked  = true;
-			trackState(amazonMatch);
-		}
-
-		if (!oxLookupTracked) {
-			oxLookupTracked  = true;
-			trackState(oxBidder);
-		}
-
-		addParameters(slotName, slotTargeting, [amazonMatch, oxBidder]);
+		trackState();
+		addParameters(slotName, slotTargeting);
 	}
 
 	return {
