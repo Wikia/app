@@ -1,5 +1,10 @@
-require(['jquery', 'wikia.window', 'wikia.loader', 'toast'], function ($, window, loader, toast) {
+(function () {
 	'use strict';
+
+	var $ = require('jquery'),
+		window = require('wikia.window'),
+		loader = require('wikia.loader'),
+		toast = require('toast');
 
 	function loadFacebookLoginScripts() {
 		loader({
@@ -31,4 +36,4 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'toast'], function ($, window
 	}
 
 	$(init);
-});
+})();

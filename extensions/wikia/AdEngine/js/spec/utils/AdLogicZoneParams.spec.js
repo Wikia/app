@@ -19,7 +19,7 @@ describe('ext.wikia.adEngine.utils.adLogicZoneParams', function () {
 		};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.utils.adLogicZoneParams'](
+		return require('ext.wikia.adEngine.utils.adLogicZoneParams')(
 			mocks.adContext,
 			mocks.log,
 			mocks.loc

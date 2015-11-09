@@ -24,11 +24,9 @@ $(function () {
 				this.resetFormFields
 			);
 
-			require( [ 'wikia.ui.factory' ], $.proxy( function ( uiFactory ) {
-				uiFactory.init( [ 'modal' ] ).then( $.proxy( function ( uiModal ) {
-					this.uiModal = uiModal;
-				}, this ));
-			}, this ));
+			require('wikia.ui.factory').init(['modal']).then($.proxy(function (uiModal) {
+				this.uiModal = uiModal;
+			}, this));
 
 			$('#wikisWithVisualizationList')
 				.on('click', '.wiki-list a', $.proxy(this.handleChangeFlag, this))
@@ -40,7 +38,7 @@ $(function () {
 
 			$('.hubs-slots')
 				.on('click', '.wmu-show', $.proxy(this.wmuInit, this))
-				.on( 'click', '.clear-marketing-slot', $.proxy(function(e){
+				.on('click', '.clear-marketing-slot', $.proxy(function (e) {
 					e.preventDefault();
 					this.clearMarketingSlot(e);
 				}, this));
@@ -66,7 +64,7 @@ $(function () {
 					lang: this.visualizationLang,
 					wikiId: wikiId
 				},
-				callback: function() {
+				callback: function () {
 					$('body').stopThrobbing();
 				}
 			});
@@ -114,10 +112,10 @@ $(function () {
 				},
 				callback: $.proxy(function (response) {
 					modal.trigger('close');
-					if ( !response.status ) {
-						this.showInformationModal( response.message );
+					if (!response.status) {
+						this.showInformationModal(response.message);
 					} else {
-						if ( changeDirection === window.CHANGE_FLAG_ADD ) {
+						if (changeDirection === window.CHANGE_FLAG_ADD) {
 							this.wikisPerCollection[collectionId]++;
 							eventTarget.prop('checked', true);
 						} else {
@@ -155,8 +153,8 @@ $(function () {
 					content: msg,
 					buttons: [{
 						vars: {
-							value: $.msg( 'manage-wikia-home-modal-button-okay' ),
-							classes: [ 'normal', 'primary' ],
+							value: $.msg('manage-wikia-home-modal-button-okay'),
+							classes: ['normal', 'primary'],
 							data: [
 								{
 									key: 'event',
@@ -166,44 +164,116 @@ $(function () {
 						}
 					}]
 				}
-			}, function(modal) {
+			}, function (modal) {
 				modal.show();
 			});
 		},
-		handleChangeFlag: function(event) {
+		handleChangeFlag: function (event) {
 			event.preventDefault();
-			var flagLink = $( event.target ),
-				wikiId = flagLink.data( 'id' ),
-				flagType = flagLink.data( 'flag-type' ),
+			var flagLink = $(event.target),
+				wikiId = flagLink.data('id'),
+				flagType = flagLink.data('flag-type'),
 				flagChangeDirection = '';
 
 			$.when(
-					this.isWikiInCollection(wikiId)
-				).done($.proxy(function (isInCollection) {
+				this.isWikiInCollection(wikiId)
+			).done($.proxy(function (isInCollection) {
+				var modalContent = '';
+
+				if (isInCollection.status && flagType === window.FLAG_BLOCKED) {
+					modalContent = $.msg('manage-wikia-home-modal-content-removed-blocked-in-collection');
+					this.showInformationModal(modalContent);
+				} else {
+					flagChangeDirection = flagLink.data('flags') === 1 ?
+						window.CHANGE_FLAG_REMOVE :
+						window.CHANGE_FLAG_ADD;
+
+					this.uiModal.createComponent({
+							vars: {
+								id: 'MWHchangeFlagModal',
+								size: 'small',
+								title: $.msg('manage-wikia-home-modal-title'),
+								content: $.msg(
+									'manage-wikia-home-modal-content-' + flagChangeDirection + '-' +
+									this.flags[flagType]
+								),
+								buttons: [
+									{
+										vars: {
+											value: $.msg('manage-wikia-home-modal-button-yes'),
+											classes: ['normal', 'primary'],
+											data: [
+												{
+													key: 'event',
+													value: 'submit'
+												}
+											]
+										}
+									},
+									{
+										vars: {
+											value: $.msg('manage-wikia-home-modal-button-no'),
+											data: [
+												{
+													key: 'event',
+													value: 'close'
+												}
+											]
+										}
+									}
+								]
+							}
+						},
+						$.proxy(function (modal) {
+							modal.show();
+							modal.bind('submit', $.proxy(function () {
+								this.editFlag(
+									flagLink,
+									wikiId,
+									flagType,
+									flagChangeDirection,
+									modal);
+							}, this));
+						}, this)
+					);
+				}
+			}, this));
+		},
+		handleCollectionChange: function (event) {
+			event.preventDefault();
+			var collectionCheckbox = $(event.target),
+				collectionId = collectionCheckbox.val(),
+				wikiId = collectionCheckbox.data('id'),
+				changeDirection = collectionCheckbox.is(':checked') ?
+					window.CHANGE_FLAG_ADD :
+					window.CHANGE_FLAG_REMOVE,
+				content = collectionCheckbox.is(':checked') ?
+					$.msg('manage-wikia-home-modal-content-add-collection') :
+					$.msg('manage-wikia-home-modal-content-remove-collection');
+
+			if (!this.isValidWikisAmount(collectionId, changeDirection)) {
+				this.showInformationModal($.msg('manage-wikia-home-modal-too-many-wikis-in-collection'));
+			} else {
+				$.when(
+					this.isWikiBlocked(wikiId)
+				).done($.proxy(function (isBlocked) {
 					var modalContent = '';
 
-					if (isInCollection.status && flagType === window.FLAG_BLOCKED) {
-						modalContent = $.msg('manage-wikia-home-modal-content-removed-blocked-in-collection');
+					if (isBlocked.status) {
+						modalContent = $.msg('manage-wikia-home-modal-content-add-blocked-wiki-warning');
 						this.showInformationModal(modalContent);
 					} else {
-						flagChangeDirection = flagLink.data( 'flags' ) === 1 ?
-							window.CHANGE_FLAG_REMOVE :
-							window.CHANGE_FLAG_ADD;
-
 						this.uiModal.createComponent({
 								vars: {
-									id: 'MWHchangeFlagModal',
+									id: 'MWHchangeCollectionModal',
 									size: 'small',
-									title: $.msg('manage-wikia-home-modal-title'),
-									content: $.msg(
-										'manage-wikia-home-modal-content-' + flagChangeDirection + '-' +
-											this.flags[flagType]
-									),
+									title: $.msg('manage-wikia-home-modal-title-collection'),
+									content: content,
 									buttons: [
 										{
 											vars: {
-												value: $.msg( 'manage-wikia-home-modal-button-yes' ),
-												classes: [ 'normal', 'primary' ],
+												value: $.msg('manage-wikia-home-modal-button-yes'),
+												classes: ['normal', 'primary'],
 												data: [
 													{
 														key: 'event',
@@ -214,7 +284,7 @@ $(function () {
 										},
 										{
 											vars: {
-												value: $.msg( 'manage-wikia-home-modal-button-no' ),
+												value: $.msg('manage-wikia-home-modal-button-no'),
 												data: [
 													{
 														key: 'event',
@@ -226,94 +296,22 @@ $(function () {
 									]
 								}
 							},
-							$.proxy( function( modal ) {
+							$.proxy(function (modal) {
 								modal.show();
-								modal.bind( 'submit', $.proxy( function () {
-									this.editFlag(
-										flagLink,
+
+								modal.bind('submit', $.proxy(function () {
+									this.editCollection(
+										collectionCheckbox,
+										collectionId,
 										wikiId,
-										flagType,
-										flagChangeDirection,
-										modal);
-								}, this ));
+										changeDirection,
+										modal
+									);
+								}, this));
 							}, this)
 						);
 					}
 				}, this));
-		},
-		handleCollectionChange: function (event) {
-			event.preventDefault();
-			var collectionCheckbox = $( event.target ),
-				collectionId = collectionCheckbox.val(),
-				wikiId = collectionCheckbox.data('id' ),
-				changeDirection = collectionCheckbox.is(':checked') ?
-					window.CHANGE_FLAG_ADD :
-					window.CHANGE_FLAG_REMOVE,
-				content = collectionCheckbox.is(':checked') ?
-					$.msg('manage-wikia-home-modal-content-add-collection') :
-					$.msg('manage-wikia-home-modal-content-remove-collection');
-
-			if ( !this.isValidWikisAmount( collectionId, changeDirection ) ) {
-				this.showInformationModal($.msg('manage-wikia-home-modal-too-many-wikis-in-collection'));
-			} else {
-				$.when(
-						this.isWikiBlocked(wikiId)
-					).done($.proxy(function (isBlocked) {
-						var modalContent = '';
-
-						if (isBlocked.status) {
-							modalContent = $.msg('manage-wikia-home-modal-content-add-blocked-wiki-warning');
-							this.showInformationModal(modalContent);
-						} else {
-							this.uiModal.createComponent({
-									vars: {
-										id: 'MWHchangeCollectionModal',
-										size: 'small',
-										title: $.msg('manage-wikia-home-modal-title-collection'),
-										content: content,
-										buttons: [
-											{
-												vars: {
-													value: $.msg( 'manage-wikia-home-modal-button-yes' ),
-													classes: [ 'normal', 'primary' ],
-													data: [
-														{
-															key: 'event',
-															value: 'submit'
-														}
-													]
-												}
-											},
-											{
-												vars: {
-													value: $.msg( 'manage-wikia-home-modal-button-no' ),
-													data: [
-														{
-															key: 'event',
-															value: 'close'
-														}
-													]
-												}
-											}
-										]
-									}
-								},
-								$.proxy( function( modal ) {
-									modal.show();
-
-									modal.bind( 'submit', $.proxy( function () {
-										this.editCollection(
-											collectionCheckbox,
-											collectionId,
-											wikiId,
-											changeDirection,
-											modal
-										);
-									}, this));
-								}, this)
-							);
-						}
-					}, this));
 			}
 		},
 		wmuInit: function (event) {
@@ -322,19 +320,19 @@ $(function () {
 			this.lastActiveWmuButton = $(event.target);
 			if (!this.wmuReady) {
 				this.wmuDeffered = $.when(
-						$.loadYUI(),
-						$.loadJQueryAIM(),
-						$.getResources([
-							window.wgExtensionsPath + '/wikia/WikiaMiniUpload/js/WMU.js',
-							$.getSassCommonURL('extensions/wikia/WikiaMiniUpload/css/WMU.scss')
-						]),
-						$.loadJQueryAIM()
-					).then($.proxy(function () {
-						window.WMU_skipDetails = true;
-						window.WMU_show();
-						window.WMU_openedInEditor = false;
-						this.wmuReady = true;
-					}, this));
+					$.loadYUI(),
+					$.loadJQueryAIM(),
+					$.getResources([
+						window.wgExtensionsPath + '/wikia/WikiaMiniUpload/js/WMU.js',
+						$.getSassCommonURL('extensions/wikia/WikiaMiniUpload/css/WMU.scss')
+					]),
+					$.loadJQueryAIM()
+				).then($.proxy(function () {
+					window.WMU_skipDetails = true;
+					window.WMU_show();
+					window.WMU_openedInEditor = false;
+					this.wmuReady = true;
+				}, this));
 				$(window).bind('WMU_addFromSpecialPage', $.proxy(function (event, wmuData) {
 					this.addImage(wmuData);
 				}, this));
@@ -345,41 +343,41 @@ $(function () {
 			}
 			/* jshint camelcase: true */
 		},
-		addImage: function(wmuData) {
+		addImage: function (wmuData) {
 			var fileName = this.getImageNameFromFileTilte(wmuData.imageTitle);
-				$.nirvana.sendRequest({
-					controller: 'ManageWikiaHome',
-					method: 'getImageDetails',
-					type: 'get',
-					data: {
-						'fileHandler': fileName
-					},
-					callback: $.proxy(function (response) {
-						var tempImg = new Image(),
-							box = this.lastActiveWmuButton.parents('.image-input:first'),
-							imagePlaceholder;
+			$.nirvana.sendRequest({
+				controller: 'ManageWikiaHome',
+				method: 'getImageDetails',
+				type: 'get',
+				data: {
+					'fileHandler': fileName
+				},
+				callback: $.proxy(function (response) {
+					var tempImg = new Image(),
+						box = this.lastActiveWmuButton.parents('.image-input:first'),
+						imagePlaceholder;
 
-						tempImg.src = response.fileUrl;
+					tempImg.src = response.fileUrl;
 
-						imagePlaceholder = box.find('.image-placeholder');
-						imagePlaceholder.find('img').remove();
-						imagePlaceholder.append(tempImg);
-						$('.error-msg', box).html('');
-						box.find('.wmu-file-name-input:first').val(fileName);
-					}, this)
-				});
+					imagePlaceholder = box.find('.image-placeholder');
+					imagePlaceholder.find('img').remove();
+					imagePlaceholder.append(tempImg);
+					$('.error-msg', box).html('');
+					box.find('.wmu-file-name-input:first').val(fileName);
+				}, this)
+			});
 
 
 		},
-		getImageNameFromFileTilte: function(title) {
+		getImageNameFromFileTilte: function (title) {
 			var elems = title.split(':');
 			elems.shift();
 			return elems.join(':');
 		},
-		clearMarketingSlot: function(e) {
+		clearMarketingSlot: function (e) {
 			var parent = $(e.target).parents('.marketing-slot');
-			$('input', parent).each(function(){
-				if($(this).attr('type') !== 'button') {
+			$('input', parent).each(function () {
+				if ($(this).attr('type') !== 'button') {
 					$(this).val('');
 				}
 			});

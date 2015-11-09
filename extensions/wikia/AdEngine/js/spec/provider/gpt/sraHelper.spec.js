@@ -9,7 +9,7 @@ describe('ext.wikia.adEngine.provider.gpt.sraHelper', function () {
 		};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.provider.gpt.sraHelper'](
+		return require('ext.wikia.adEngine.provider.gpt.sraHelper')(
 			mocks.log
 		);
 	}

@@ -4,7 +4,7 @@ describe('BuckyResourcesTiming', function () {
 	'use strict';
 
 	function getModule(windowMock) {
-		return modules['bucky.resourceTiming'](jQuery, windowMock || window, modules.bucky);
+		return require('bucky.resourceTiming')(jQuery, windowMock || window, modules.bucky);
 	}
 
 	it('exposes an API', function() {

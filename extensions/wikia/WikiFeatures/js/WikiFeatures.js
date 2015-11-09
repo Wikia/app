@@ -4,9 +4,7 @@
 	'use strict';
 
 	var lockedFeatures = {},
-	    fadingFeatures = [
-		'wgEnableNjordExt'
-	    ];
+		fadingFeatures = ['wgEnableNjordExt'];
 
 	function init() {
 		var $wikifeatures = $('#WikiFeatures'),
@@ -30,52 +28,50 @@
 
 				if (isEnabled) {
 					modalTitle = $.msg('wikifeatures-deactivate-heading', feature.find('h3')
-                        .contents(':first').text().trim());
+						.contents(':first').text().trim());
 
-					require(['wikia.ui.factory'], function (uiFactory) {
-						uiFactory.init(['modal']).then(function (uiModal) {
-							var deactivateModalConfig = {
-								vars: {
-									id: 'DeactivateDialog',
-									size: 'medium',
-									title: modalTitle,
-									content: [
-										'<p>',
-										$.msg('wikifeatures-deactivate-description'),
-										'</p><p>',
-										$.msg('wikifeatures-deactivate-notification'),
-										'</p>'
-									].join(''),
-									buttons: [{
-										vars: {
-											value: $.msg('wikifeatures-deactivate-confirm-button'),
-											classes: ['normal', 'primary'],
-											data: [{
-												key: 'event',
-												value: 'confirm'
-											}]
-										}
-									}, {
-										vars: {
-											value: $.msg('wikifeatures-deactivate-cancel-button'),
-											data: [{
-												key: 'event',
-												value: 'close'
-											}]
-										}
-									}]
-								}
-							};
+					require('wikia.ui.factory').init(['modal']).then(function (uiModal) {
+						var deactivateModalConfig = {
+							vars: {
+								id: 'DeactivateDialog',
+								size: 'medium',
+								title: modalTitle,
+								content: [
+									'<p>',
+									$.msg('wikifeatures-deactivate-description'),
+									'</p><p>',
+									$.msg('wikifeatures-deactivate-notification'),
+									'</p>'
+								].join(''),
+								buttons: [{
+									vars: {
+										value: $.msg('wikifeatures-deactivate-confirm-button'),
+										classes: ['normal', 'primary'],
+										data: [{
+											key: 'event',
+											value: 'confirm'
+										}]
+									}
+								}, {
+									vars: {
+										value: $.msg('wikifeatures-deactivate-cancel-button'),
+										data: [{
+											key: 'event',
+											value: 'close'
+										}]
+									}
+								}]
+							}
+						};
 
-							uiModal.createComponent(deactivateModalConfig, function (deactivateModal) {
-								deactivateModal.bind('confirm', function (event) {
-									event.preventDefault();
-									toggleFeature(featureName, false);
-									$el.toggleClass('on');
-									deactivateModal.trigger('close');
-								});
-								deactivateModal.show();
+						uiModal.createComponent(deactivateModalConfig, function (deactivateModal) {
+							deactivateModal.bind('confirm', function (event) {
+								event.preventDefault();
+								toggleFeature(featureName, false);
+								$el.toggleClass('on');
+								deactivateModal.trigger('close');
 							});
+							deactivateModal.show();
 						});
 					});
 				} else {
@@ -131,74 +127,72 @@
 	}
 
 	function openFeedbackModal(featureElem, data) {
-		require(['wikia.ui.factory'], function (uiFactory) {
-			uiFactory.init(['modal']).then(function (uiModal) {
-				var feedbackModalConfig = {
-					vars: {
-						id: 'feedbackDialogModal',
-						size: 'medium',
-						title: data.title,
-						content: data.html,
-						buttons: [{
-							vars: {
-								value: data.labelSubmit,
-								classes: ['normal', 'primary'],
-								data: [{
-									key: 'event',
-									value: 'submit'
-								}]
-							}
-						}, {
-							vars: {
-								value: data.labelCancel,
-								data: [{
-									key: 'event',
-									value: 'close'
-								}]
-							}
-						}]
-					}
-				};
+		require('wikia.ui.factory').init(['modal']).then(function (uiModal) {
+			var feedbackModalConfig = {
+				vars: {
+					id: 'feedbackDialogModal',
+					size: 'medium',
+					title: data.title,
+					content: data.html,
+					buttons: [{
+						vars: {
+							value: data.labelSubmit,
+							classes: ['normal', 'primary'],
+							data: [{
+								key: 'event',
+								value: 'submit'
+							}]
+						}
+					}, {
+						vars: {
+							value: data.labelCancel,
+							data: [{
+								key: 'event',
+								value: 'close'
+							}]
+						}
+					}]
+				}
+			};
 
-				uiModal.createComponent(feedbackModalConfig, function (feedbackModal) {
-					var modal = feedbackModal.$element,
-						comment = modal.find('textarea[name=comment]'),
-						submitButton = modal.find('[data-event=submit]'),
-						statusMsg = modal.find('.status-msg'),
-						msgHandle = 0;
+			uiModal.createComponent(feedbackModalConfig, function (feedbackModal) {
+				var modal = feedbackModal.$element,
+					comment = modal.find('textarea[name=comment]'),
+					submitButton = modal.find('[data-event=submit]'),
+					statusMsg = modal.find('.status-msg'),
+					msgHandle = 0;
 
-					feedbackModal.bind('submit', function (event) {
-						event.preventDefault();
-						submitButton.attr('disabled', 'true');
-						$.post(window.wgScriptPath + '/wikia.php', {
-							controller: 'WikiFeaturesSpecial',
-							method: 'saveFeedback',
-							format: 'json',
-							feature: featureElem.data('name'),
-							category: modal.find('select[name=feedback] option:selected').val(),
-							message: comment.val(),
-							token: mw.user.tokens.get('editToken')
-						}, function (res) {
-							if (res.result === 'ok') {
-								clearTimeout(msgHandle);
-								statusMsg.removeClass('invalid').text(res.msg).show();
-								setTimeout(function () {
-									feedbackModal.trigger('close');
-								}, 3000);
-							} else if (res.result === 'error') {
-								submitButton.removeAttr('disabled');
-								statusMsg.addClass('invalid').text(res.error).show();
-								msgHandle = setTimeout(function () {
-									statusMsg.fadeOut(1000);
-								}, 4000);
-							} else {
-								new window.BannerNotification('Something is wrong', 'error').show();
-							}
-						});
+				feedbackModal.bind('submit', function (event) {
+					event.preventDefault();
+					submitButton.attr('disabled', 'true');
+					$.post(window.wgScriptPath + '/wikia.php', {
+						controller: 'WikiFeaturesSpecial',
+						method: 'saveFeedback',
+						format: 'json',
+						feature: featureElem.data('name'),
+						category: modal.find('select[name=feedback] option:selected').val(),
+						message: comment.val(),
+						token: mw.user.tokens.get('editToken')
+					}, function (res) {
+						if (res.result === 'ok') {
+							clearTimeout(msgHandle);
+							statusMsg.removeClass('invalid').text(res.msg).show();
+							setTimeout(function () {
+								feedbackModal.trigger('close');
+							}, 3000);
+						} else if (res.result === 'error') {
+							submitButton.removeAttr('disabled');
+							statusMsg.addClass('invalid').text(res.error).show();
+							msgHandle = setTimeout(function () {
+								statusMsg.fadeOut(1000);
+							}, 4000);
+						} else {
+							new window.BannerNotification('Something is wrong', 'error').show();
+						}
 					});
-
-					feedbackModal.show();
 				});
+
+				feedbackModal.show();
 			});
 		});
 	}

@@ -1,8 +1,11 @@
-require(['wikia.window', 'wikia.nirvana', 'track', 'wikia.cache'],
-	function (window, nirvana, track, cache) {
+(function () {
 		'use strict';
 
-		var d = window.document,
+		var window = require('wikia.window'),
+			nirvana = require('wikia.nirvana'),
+			track = require('track'),
+			cache = require('wikia.cache'),
+			d = window.document,
 			$wkNavMenu,
 			$wikiNavHeader,
 			$wikiNavH1,
@@ -152,5 +155,4 @@ require(['wikia.window', 'wikia.nirvana', 'track', 'wikia.cache'],
 				}
 			}, 200); //do this on load but give browser some time to finish
 		});
-	}
-);
+	})();

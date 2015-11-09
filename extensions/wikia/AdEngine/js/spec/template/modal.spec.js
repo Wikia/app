@@ -70,7 +70,7 @@ describe('ext.wikia.adEngine.template.modal', function () {
 	});
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.template.modal'](
+		return require('ext.wikia.adEngine.template.modal')(
 			mocks.adHelper,
 			mocks.adDetect,
 			mocks.modalHandlerFactory,

@@ -48,12 +48,12 @@ describe('MediaGalleries gallery', function () {
 		};
 
 		spyOn(Mustache, 'render').and.returnValue('okay');
-		bucky = modules['bucky.mock'];
-		templates = modules['mediaGallery.templates.mustache'];
-		Toggler = modules['mediaGallery.views.toggler'](templates);
-		Caption = modules['mediaGallery.views.caption']();
-		Media = modules['mediaGallery.views.media'](Caption, templates);
-		Gallery = modules['mediaGallery.views.gallery'](Media, Toggler, tracker, bucky);
+		bucky = require('bucky.mock');
+		templates = require('mediaGallery.templates.mustache');
+		Toggler = require('mediaGallery.views.toggler')(templates);
+		Caption = require('mediaGallery.views.caption')();
+		Media = require('mediaGallery.views.media')(Caption, templates);
+		Gallery = require('mediaGallery.views.gallery')(Media, Toggler, tracker, bucky);
 
 		instance = new Gallery(options).init();
 	});

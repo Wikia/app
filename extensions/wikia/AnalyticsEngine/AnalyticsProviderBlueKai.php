@@ -39,8 +39,9 @@ class AnalyticsProviderBlueKai implements iAnalyticsProvider
 <iframe name="__bkframe" height="0" width="0" frameborder="0" "src="javascript:void(0)" class="hidden"></iframe>
 <script type="text/javascript">
 window.bk_async = function() {
-require(['ext.wikia.adEngine.adLogicPageParams'], function(adLogicPageParams){
-	var i,
+(function () {
+	var adLogicPageParams = require('ext.wikia.adEngine.adLogicPageParams'),
+		i,
 		paramName,
 		allowedParams = {$allowedParams},
 		pageParams = adLogicPageParams.getPageLevelParams();
@@ -57,7 +58,7 @@ require(['ext.wikia.adEngine.adLogicPageParams'], function(adLogicPageParams){
 		}
 	}
 	BKTAG.doTag({$siteId}, 1);
-});
+})();
 };
 (function() {
 var scripts = document.getElementsByTagName('script')[0];

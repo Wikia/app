@@ -19,12 +19,13 @@ var UserProfilePage = {
 	init: function () {
 		'use strict';
 
-		var $userIdentityBoxEdit = $('#userIdentityBoxEdit');
+		var $userIdentityBoxEdit = $('#userIdentityBoxEdit'),
+			BannerNotification = require('BannerNotification');
+
 		UserProfilePage.userId = $('#user').val();
 		UserProfilePage.reloadUrl = $('#reloadUrl').val();
-		require(['BannerNotification'], function (BannerNotification) {
-			UserProfilePage.bannerNotification = new BannerNotification().setType('error');
-		});
+
+		UserProfilePage.bannerNotification = new BannerNotification().setType('error');
 
 		if (UserProfilePage.reloadUrl === '' || UserProfilePage.reloadUrl === false) {
 			UserProfilePage.reloadUrl = window.wgScript + '?title=' + window.wgPageName;
@@ -79,79 +80,74 @@ var UserProfilePage = {
 			).done(function (getJSONResponse) {
 				var data = getJSONResponse[0];
 
-				require(['wikia.ui.factory'], function (uiFactory) {
-					uiFactory.init(['modal']).then(function (modal) {
+				require('wikia.ui.factory').init(['modal']).then(function (modal) {
+					// set reference to modal UI component for easy creation of confirmation modal
+					UserProfilePage.modalComponent = modal;
 
-						// set reference to modal UI component for easy creation of confirmation modal
-						UserProfilePage.modalComponent = modal;
-
-						var id = $(data.body).attr('id') + 'Wrapper',
-							modalConfig = {
-								vars: {
-									id: id,
-									content: data.body,
-									size: 'medium',
-									title: $.msg('userprofilepage-edit-modal-header'),
-									buttons: [{
-										vars: {
-											value: $.msg('user-identity-box-avatar-save'),
-											classes: ['normal', 'primary'],
-											data: [{
-												key: 'event',
-												value: 'save'
-											}]
-										}
-									}, {
-										vars: {
-											value: $.msg('user-identity-box-avatar-cancel'),
-											data: [{
-												key: 'event',
-												value: 'close'
-											}]
-										}
-									}]
-								}
-							};
-						modal.createComponent(modalConfig, function (editProfileModal) {
-							UserProfilePage.modal = editProfileModal;
-
-							var modal = editProfileModal.$element,
-								tab = modal.find('.tabs a');
-
-							UserProfilePage.registerAvatarHandlers(modal);
-							UserProfilePage.registerAboutMeHandlers(modal);
-
-							// attach handlers to modal events
-							editProfileModal.bind('beforeClose',
-								$.proxy(UserProfilePage.beforeClose, UserProfilePage));
-							editProfileModal.bind('save',
-								$.proxy(UserProfilePage.saveUserData, UserProfilePage));
-
-							// adding handler for tab switching
-							tab.click(function (event) {
-								event.preventDefault();
-								UserProfilePage.switchTab($(this).closest('li'));
-							});
-
-							// Synthesize a click on the tab to hide/show the right panels
-							$('[data-tab=' + tabName + '] a').click();
-
-							// show a message when avatars upload is disabled (BAC-1046)
-							if (data.avatarsDisabled === true) {
-								UserProfilePage.error(data.avatarsDisabledMsg);
+					var id = $(data.body).attr('id') + 'Wrapper',
+						modalConfig = {
+							vars: {
+								id: id,
+								content: data.body,
+								size: 'medium',
+								title: $.msg('userprofilepage-edit-modal-header'),
+								buttons: [{
+									vars: {
+										value: $.msg('user-identity-box-avatar-save'),
+										classes: ['normal', 'primary'],
+										data: [{
+											key: 'event',
+											value: 'save'
+										}]
+									}
+								}, {
+									vars: {
+										value: $.msg('user-identity-box-avatar-cancel'),
+										data: [{
+											key: 'event',
+											value: 'close'
+										}]
+									}
+								}]
 							}
+						};
 
-							UserProfilePage.isLightboxGenerating = false;
+					modal.createComponent(modalConfig, function (editProfileModal) {
+						UserProfilePage.modal = editProfileModal;
 
-							editProfileModal.show();
-							UserProfilePage.bucky.timer.stop('renderLightboxSuccess');
+						var modal = editProfileModal.$element,
+							tab = modal.find('.tabs a');
+
+						UserProfilePage.registerAvatarHandlers(modal);
+						UserProfilePage.registerAboutMeHandlers(modal);
+
+						// attach handlers to modal events
+						editProfileModal.bind('beforeClose',
+							$.proxy(UserProfilePage.beforeClose, UserProfilePage));
+						editProfileModal.bind('save',
+							$.proxy(UserProfilePage.saveUserData, UserProfilePage));
+
+						// adding handler for tab switching
+						tab.click(function (event) {
+							event.preventDefault();
+							UserProfilePage.switchTab($(this).closest('li'));
 						});
+
+						// Synthesize a click on the tab to hide/show the right panels
+						$('[data-tab=' + tabName + '] a').click();
+
+						// show a message when avatars upload is disabled (BAC-1046)
+						if (data.avatarsDisabled === true) {
+							UserProfilePage.error(data.avatarsDisabledMsg);
+						}
+
+						UserProfilePage.isLightboxGenerating = false;
+
+						editProfileModal.show();
+						UserProfilePage.bucky.timer.stop('renderLightboxSuccess');
 					});
 				});
 			}).fail(function (data) {
-
-				console.log(data);
-
 				var message = '',
 					response = '';
 
@@ -162,26 +158,24 @@ var UserProfilePage = {
 					message = data.error;
 				}
 
-				require(['wikia.ui.factory'], function (uiFactory) {
-					uiFactory.init(['modal']).then(function (modal) {
-						var modalConfig = {
-							vars: {
-								id: 'UPPModalError',
-								content: message,
-								size: 'small',
-								title: $.msg('userprofilepage-edit-modal-error')
-							}
-						};
+				require('wikia.ui.factory').init(['modal']).then(function (modal) {
+					var modalConfig = {
+						vars: {
+							id: 'UPPModalError',
+							content: message,
+							size: 'small',
+							title: $.msg('userprofilepage-edit-modal-error')
+						}
+					};
 
-						modal.createComponent(modalConfig, function (errorModal) {
-							errorModal.show();
-							UserProfilePage.bucky.timer.stop('renderLightboxFail');
-						});
+					modal.createComponent(modalConfig, function (errorModal) {
+						errorModal.show();
+						UserProfilePage.bucky.timer.stop('renderLightboxFail');
 					});
 				});
-
-				UserProfilePage.isLightboxGenerating = false;
 			});
+
+			UserProfilePage.isLightboxGenerating = false;
 		}
 	},
 
@@ -209,7 +203,8 @@ var UserProfilePage = {
 		}
 
 		return deferred.promise();
-	},
+	}
+	,
 
 	switchTab: function (tab) {
 		'use strict';
@@ -232,7 +227,8 @@ var UserProfilePage = {
 				currentItem.hide();
 			}
 		});
-	},
+	}
+	,
 
 	/**
 	 * Register handlers related to the Avatar tab of the user edit modal.
@@ -258,7 +254,8 @@ var UserProfilePage = {
 		$sampleAvatars.on('click', 'img', function (event) {
 			UserProfilePage.sampleAvatarChecked($(event.target));
 		});
-	},
+	}
+	,
 
 	sampleAvatarChecked: function (img) {
 		'use strict';
@@ -280,7 +277,8 @@ var UserProfilePage = {
 		avatarImg.attr('src', image.attr('src'));
 		$modal.stopThrobbing();
 		avatarImg.show();
-	},
+	}
+	,
 
 	saveAvatarAIM: function (form) {
 		'use strict';
@@ -329,7 +327,8 @@ var UserProfilePage = {
 		form.onsubmit = null;
 
 		$(form).submit();
-	},
+	}
+	,
 
 	/**
 	 * Register handlers related to the About Me tab of the user edit modal.
@@ -366,7 +365,8 @@ var UserProfilePage = {
 		$formFields.keypress(change);
 
 		UserProfilePage.toggleJoinMoreWikis();
-	},
+	}
+	,
 
 	saveUserData: function () {
 		'use strict';
@@ -411,7 +411,8 @@ var UserProfilePage = {
 				saveButton.prop('disabled', false);
 			}
 		});
-	},
+	}
+	,
 
 	/**
 	 * Hnadle error states after ajax requests
@@ -425,7 +426,8 @@ var UserProfilePage = {
 		}
 
 		UserProfilePage.bannerNotification.setContent(msg).show();
-	},
+	}
+	,
 
 	getFormData: function () {
 		'use strict';
@@ -455,7 +457,8 @@ var UserProfilePage = {
 		userData.hideEditsWikis = document.userData.hideEditsWikis.checked ? 1 : 0;
 
 		return userData;
-	},
+	}
+	,
 
 	refillBDayDaySelectbox: function (selectboxes) {
 		'use strict';
@@ -472,7 +475,8 @@ var UserProfilePage = {
 		options = '<option value="0">--</option>' + options;
 
 		selectboxes.day.html(options);
-	},
+	}
+	,
 
 	hideFavWiki: function (wikiId) {
 		'use strict';
@@ -509,7 +513,8 @@ var UserProfilePage = {
 			// basically it shouldn't happen but i imagine it can happen during development
 			$().log('Unexpected error wikiId <= 0');
 		}
-	},
+	}
+	,
 
 	refreshFavWikis: function () {
 		'use strict';
@@ -538,7 +543,8 @@ var UserProfilePage = {
 				UserProfilePage.toggleJoinMoreWikis();
 			}
 		});
-	},
+	}
+	,
 
 	toggleJoinMoreWikis: function () {
 		'use strict';
@@ -551,7 +557,8 @@ var UserProfilePage = {
 		} else {
 			joinMoreWikis.show();
 		}
-	},
+	}
+	,
 
 	/**
 	 * Display confirmation modal when trying to close edit profile modal with unsaved changes
@@ -618,7 +625,8 @@ var UserProfilePage = {
 
 			});
 		});
-	},
+	}
+	,
 
 	removeAvatar: function (name, question) {
 		'use strict';

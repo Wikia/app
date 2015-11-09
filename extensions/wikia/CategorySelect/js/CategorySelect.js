@@ -1,10 +1,10 @@
 /* global Mustache:true */
-(function( window, $, undefined ) {
+(function (window, $, undefined) {
 	'use strict';
 
 	var cached = {},
 		namespace = 'categorySelect',
-		properties = [ 'name', 'namespace', 'outertag', 'sortkey', 'type' ],
+		properties = ['name', 'namespace', 'outertag', 'sortkey', 'type'],
 		slice = Array.prototype.slice,
 		wgCategorySelect = window.wgCategorySelect,
 		Wikia = window.Wikia || {},
@@ -12,11 +12,11 @@
 
 	// Static message cache
 	cached.messages = {
-		buttonSave: $.msg( 'categoryselect-button-save' ),
-		categoryEdit: $.msg( 'categoryselect-category-edit' ),
-		errorCategoryNameLength: $.msg( 'categoryselect-error-category-name-length' ),
-		errorEmptyCategoryName: $.msg( 'categoryselect-error-empty-category-name' ),
-		tooltipAdd: $.msg( 'categoryselect-tooltip-add' )
+		buttonSave: $.msg('categoryselect-button-save'),
+		categoryEdit: $.msg('categoryselect-category-edit'),
+		errorCategoryNameLength: $.msg('categoryselect-error-category-name-length'),
+		errorEmptyCategoryName: $.msg('categoryselect-error-empty-category-name'),
+		tooltipAdd: $.msg('categoryselect-tooltip-add')
 	};
 
 	// Static template cache
@@ -26,14 +26,14 @@
 				blankImageUrl: window.wgBlankImgUrl,
 				messages: {
 					edit: cached.messages.categoryEdit,
-					remove: $.msg( 'categoryselect-category-remove' )
+					remove: $.msg('categoryselect-category-remove')
 				}
 			}
 		},
 		categoryEdit: {
 			data: {
 				messages: {
-					name: $.msg( 'categoryselect-modal-category-name' )
+					name: $.msg('categoryselect-modal-category-name')
 				}
 			}
 		}
@@ -41,8 +41,8 @@
 
 	// Safely decode HTML entities.
 	// TODO: move this somewhere else?
-	function decodeHtmlEntities( str ) {
-		var textarea = document.createElement( 'textarea' );
+	function decodeHtmlEntities(str) {
+		var textarea = document.createElement('textarea');
 		textarea.innerHTML = str;
 		return textarea.value;
 	}
@@ -57,141 +57,141 @@
 	 * @param { Object } options
 	 *        The settings to configure the instance with.
 	 */
-	CategorySelect = function( element, options ) {
+	CategorySelect = function (element, options) {
 		var limit,
 			elements = {},
 			self = this;
 
 		// Protect against calling without the 'new' operator
-		if ( !( self instanceof CategorySelect ) ) {
-			return new CategorySelect( element, options );
+		if (!( self instanceof CategorySelect )) {
+			return new CategorySelect(element, options);
 		}
 
-		self.options = options = $.extend( true, {}, CategorySelect.options, options );
+		self.options = options = $.extend(true, {}, CategorySelect.options, options);
 
 		// Store a reference to this class in the element
-		self.element = element = $( element )
-			.off( '.' + namespace )
-			.data( namespace, self );
+		self.element = element = $(element)
+			.off('.' + namespace)
+			.data(namespace, self);
 
 		self.elements = elements;
 
 		// Attach listeners
 		element
-			.on( 'click.' + namespace, options.selectors.editCategory, function( event ) {
+			.on('click.' + namespace, options.selectors.editCategory, function (event) {
 				CategorySelect.track({
 					label: 'button-edit'
 				});
 
-				self.editCategory( $( event.currentTarget ).closest( options.selectors.category ) );
+				self.editCategory($(event.currentTarget).closest(options.selectors.category));
 			})
-			.on( 'click.' + namespace, options.selectors.removeCategory, function( event ) {
+			.on('click.' + namespace, options.selectors.removeCategory, function (event) {
 				CategorySelect.track({
 					label: 'button-remove'
 				});
 
-				self.removeCategory( $( event.currentTarget ).closest( options.selectors.category ) );
+				self.removeCategory($(event.currentTarget).closest(options.selectors.category));
 			})
-			.on( 'reset.' + namespace, $.proxy( self.resetCategories, self ) );
+			.on('reset.' + namespace, $.proxy(self.resetCategories, self));
 
 		// Handle keypresses on the input element
-		elements.input = element.find( options.selectors.input )
-			.attr( 'maxlength', options.maxLength )
-			.on( 'keydown.' + namespace + ' paste.' + namespace, function( event ) {
+		elements.input = element.find(options.selectors.input)
+			.attr('maxlength', options.maxLength)
+			.on('keydown.' + namespace + ' paste.' + namespace, function (event) {
 				var value = elements.input.val();
 
 				// Enter or Return key
-				if ( event.which === 13 ) {
+				if (event.which === 13) {
 					event.preventDefault();
-					self.addCategory( value );
+					self.addCategory(value);
 
-				// Enforce maxLength
-				} else if ( options.maxLength ) {
+					// Enforce maxLength
+				} else if (options.maxLength) {
 
 					// Defer processing so we can catch pasted values
-					setTimeout(function() {
+					setTimeout(function () {
 						value = elements.input.val();
 
-						if ( value.length >= options.maxLength ) {
-							elements.input.val( value.substr( 0, options.maxLength ) );
+						if (value.length >= options.maxLength) {
+							elements.input.val(value.substr(0, options.maxLength));
 
-							if ( options.popover ) {
-								$.extend( self.popover.options, {
+							if (options.popover) {
+								$.extend(self.popover.options, {
 									content: cached.messages.errorCategoryNameLength,
 									placement: 'right',
 									type: 'error'
 								});
 
-								elements.input.popover( 'show' );
+								elements.input.popover('show');
 							}
 						}
-					}, 0 );
+					}, 0);
 				}
 			});
 
-		elements.list = element.find( options.selectors.categories );
-		elements.categories = elements.list.find( options.selectors.category );
+		elements.list = element.find(options.selectors.categories);
+		elements.categories = elements.list.find(options.selectors.category);
 
-		if ( typeof options.autocomplete === 'object' ) {
+		if (typeof options.autocomplete === 'object') {
 			limit = self.options.autocomplete.limit;
 
-			elements.input.autocomplete( $.extend( options.autocomplete, {
-				select: function( event, ui ) {
+			elements.input.autocomplete($.extend(options.autocomplete, {
+				select: function (event, ui) {
 					event.preventDefault();
-					self.addCategory( ui.item.value );
+					self.addCategory(ui.item.value);
 				},
-				source: function( request, response ) {
-					$.when( CategorySelect.getWikiCategories() ).done(function( categories ) {
-						response( $.ui.autocomplete.filter( categories, request.term ).slice( 0, limit ) );
+				source: function (request, response) {
+					$.when(CategorySelect.getWikiCategories()).done(function (categories) {
+						response($.ui.autocomplete.filter(categories, request.term).slice(0, limit));
 					});
 				}
 			}));
 
 			// If there is already a value present, search for it now
-			if ( elements.input.val() !== '' ) {
-				elements.input.autocomplete( 'search' );
+			if (elements.input.val() !== '') {
+				elements.input.autocomplete('search');
 			}
 		}
 
-		if ( typeof options.popover === 'object' ) {
+		if (typeof options.popover === 'object') {
 			self.popover = elements.input
-				.on( 'blur.' + namespace, function() {
-					elements.input.popover( 'hide' );
+				.on('blur.' + namespace, function () {
+					elements.input.popover('hide');
 				})
-				.popover( options.popover ).data( 'popover' );
+				.popover(options.popover).data('popover');
 
-			if ( options.popover.hint ) {
+			if (options.popover.hint) {
 				elements.input
-					.on( 'focus.' + namespace + ' keyup.' + namespace, function() {
-						if ( elements.input.val() === '' ) {
-							$.extend( self.popover.options, {
+					.on('focus.' + namespace + ' keyup.' + namespace, function () {
+						if (elements.input.val() === '') {
+							$.extend(self.popover.options, {
 								content: cached.messages.tooltipAdd,
 								placement: 'bottom',
 								type: 'add'
 							});
 
-							elements.input.popover( 'show' );
+							elements.input.popover('show');
 
-						// Only hide popovers of the same type
-						} else if ( self.popover.options.type === 'add' ) {
-							elements.input.popover( 'hide' );
+							// Only hide popovers of the same type
+						} else if (self.popover.options.type === 'add') {
+							elements.input.popover('hide');
 						}
 					})
-					.trigger( 'focus' );
+					.trigger('focus');
 			}
 		}
 
-		if ( typeof options.sortable === 'object' ) {
-			elements.sortable = $( options.selectors.sortable || elements.list )
-				.sortable( $.extend( options.sortable, {
-					update: function( event, ui ) {
+		if (typeof options.sortable === 'object') {
+			elements.sortable = $(options.selectors.sortable || elements.list)
+				.sortable($.extend(options.sortable, {
+					update: function (event, ui) {
 						self.dirty = true;
 
 						CategorySelect.track({
 							label: 'sort'
 						});
 
-						self.trigger( 'update' );
+						self.trigger('update');
 					}
 				}));
 		}
@@ -200,7 +200,7 @@
 	/**
 	 * Public instance
 	 */
-	$.extend( CategorySelect.prototype, {
+	$.extend(CategorySelect.prototype, {
 
 		/**
 		 * Adds a category.
@@ -209,47 +209,47 @@
 		 *        The index of a category relative to the list of categories, the
 		 *        name of a category or the jQuery or DOM Element for a category.
 		 *
-		 * @returns	{ Object }
+		 * @returns    { Object }
 		 *          The normalized category object, or undefined if the category is
 		 *          invalid.
 		 */
-		addCategory: function( category ) {
+		addCategory: function (category) {
 			var existing,
 				self = this,
 				input = self.elements.input,
 				options = self.options;
 
-			category = CategorySelect.normalize( category );
+			category = CategorySelect.normalize(category);
 
-			if ( category ) {
-				existing = self.getDatum( category.name );
+			if (category) {
+				existing = self.getDatum(category.name);
 
 				// Category already exists
-				if ( existing !== undefined ) {
-					input.val( existing.name );
+				if (existing !== undefined) {
+					input.val(existing.name);
 
-					if ( options.popover ) {
-						$.extend( self.popover.options, {
-							content: $.msg( 'categoryselect-error-duplicate-category-name', existing.name ),
+					if (options.popover) {
+						$.extend(self.popover.options, {
+							content: $.msg('categoryselect-error-duplicate-category-name', existing.name),
 							placement: 'top',
 							type: 'error'
 						});
 
-						input.popover( 'show' );
+						input.popover('show');
 					}
 
 				} else {
-					$.when( CategorySelect.getTemplate( 'category' ) ).done(function( template ) {
-						var data = $.extend( {}, template.data, category ),
-							element = $( Mustache.render( template.content, data ) );
+					$.when(CategorySelect.getTemplate('category')).done(function (template) {
+						var data = $.extend({}, template.data, category),
+							element = $(Mustache.render(template.content, data));
 
 						element
-							.addClass( 'new' )
-							.data( category );
+							.addClass('new')
+							.data(category);
 
 						self.dirty = true;
 
-						self.trigger( 'add', {
+						self.trigger('add', {
 							category: category,
 							element: element
 						});
@@ -259,18 +259,18 @@
 							label: 'new-category'
 						});
 
-						self.trigger( 'update' );
+						self.trigger('update');
 					});
 
-					if ( options.autocomplete ) {
-						input.autocomplete( 'close' );
+					if (options.autocomplete) {
+						input.autocomplete('close');
 					}
 
-					if ( options.popover ) {
-						input.popover( 'hide' );
+					if (options.popover) {
+						input.popover('hide');
 					}
 
-					input.val( '' );
+					input.val('');
 				}
 			}
 
@@ -284,101 +284,99 @@
 		 *        The index of a category relative to the list of categories, the
 		 *        name of a category or the jQuery or DOM Element for a category.
 		 */
-		editCategory: function( category ) {
+		editCategory: function (category) {
 			var self = this,
-				element = self.getCategory( category );
+				element = self.getCategory(category);
 
-			category = element && self.getDatum( element );
+			category = element && self.getDatum(element);
 
-			if ( category !== undefined ) {
-				$.when( CategorySelect.getTemplate( 'categoryEdit' ) ).done(function( template ) {
-					var data = $.extend( true, {}, template.data, category, {
+			if (category !== undefined) {
+				$.when(CategorySelect.getTemplate('categoryEdit')).done(function (template) {
+					var data = $.extend(true, {}, template.data, category, {
 						messages: {
-							sortKey: $.msg( 'categoryselect-modal-category-sortkey', category.name )
+							sortKey: $.msg('categoryselect-modal-category-sortkey', category.name)
 						}
 					});
 
-					require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-						uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
-							var categoryEditModalConfig = {
-								vars: {
-									id: 'categorySelectEditModal',
-									size: 'small',
-									content: Mustache.render( template.content, data ),
-									title: cached.messages.categoryEdit,
-									buttons: [
-										{
-											vars: {
-												value: cached.messages.buttonSave,
-												classes: [ 'normal', 'primary' ],
-												data: [
-													{
-														key: 'event',
-														value: 'save'
-													}
-												]
-											}
+					require('wikia.ui.factory').init(['modal']).then(function (uiModal) {
+						var categoryEditModalConfig = {
+							vars: {
+								id: 'categorySelectEditModal',
+								size: 'small',
+								content: Mustache.render(template.content, data),
+								title: cached.messages.categoryEdit,
+								buttons: [
+									{
+										vars: {
+											value: cached.messages.buttonSave,
+											classes: ['normal', 'primary'],
+											data: [
+												{
+													key: 'event',
+													value: 'save'
+												}
+											]
 										}
-									]
+									}
+								]
+							}
+						};
+
+						uiModal.createComponent(categoryEditModalConfig, function (categoryEditModal) {
+							categoryEditModal.bind('save', function () {
+
+								var error,
+									name = categoryEditModal.$content.find('[name="categoryName"]').val(),
+									sortKey = categoryEditModal.$content.find('[name="categorySortKey"]').val();
+
+								if (name === '') {
+									error = cached.messages.errorEmptyCategoryName;
+
+								} else if (name !== category.name && self.getDatum(name)) {
+									error = $.msg('categoryselect-error-duplicate-category-name', name);
 								}
-							};
 
-							uiModal.createComponent( categoryEditModalConfig, function( categoryEditModal ) {
-								categoryEditModal.bind( 'save', function() {
+								if (error) {
+									categoryEditModal.$content
+										.find('.categoryName').addClass('error')
+										.find('.error-msg').text(error);
 
-									var error,
-										name = categoryEditModal.$content.find( '[name="categoryName"]' ).val(),
-										sortKey = categoryEditModal.$content.find( '[name="categorySortKey"]' ).val();
-
-									if ( name === '' ) {
-										error = cached.messages.errorEmptyCategoryName;
-
-									} else if ( name !== category.name && self.getDatum( name ) ) {
-										error = $.msg( 'categoryselect-error-duplicate-category-name', name );
-									}
-
-									if ( error ) {
-										categoryEditModal.$content
-											.find( '.categoryName' ).addClass( 'error' )
-											.find( '.error-msg' ).text( error );
-
-									} else {
-										if ( name !== category.name || sortKey !== category.sortkey ) {
-											$.extend( category, {
-												name: name,
-												sortkey: sortKey
-											});
-
-											element
-												.data( category )
-												.find( '.name' )
-												.text( name );
-
-											self.trigger( 'edit', {
-												category: category,
-												element: element
-											});
-
-											CategorySelect.track({
-												label: 'button-edit-save'
-											});
-
-											self.trigger( 'update' );
-										}
-										categoryEditModal.trigger( 'close' );
-									}
-								});
-
-								categoryEditModal.bind( 'close', function( event ) {
-									if ( typeof event !== 'undefined' ) {
-										CategorySelect.track({
-											label: 'button-edit-close'
+								} else {
+									if (name !== category.name || sortKey !== category.sortkey) {
+										$.extend(category, {
+											name: name,
+											sortkey: sortKey
 										});
-									}
-								});
 
-								categoryEditModal.show();
+										element
+											.data(category)
+											.find('.name')
+											.text(name);
+
+										self.trigger('edit', {
+											category: category,
+											element: element
+										});
+
+										CategorySelect.track({
+											label: 'button-edit-save'
+										});
+
+										self.trigger('update');
+									}
+									categoryEditModal.trigger('close');
+								}
 							});
+
+							categoryEditModal.bind('close', function (event) {
+								if (typeof event !== 'undefined') {
+									CategorySelect.track({
+										label: 'button-edit-close'
+									});
+								}
+							});
+
+							categoryEditModal.show();
 						});
 					});
 				});
@@ -393,14 +391,14 @@
 		 *        name of a category, a selector string or the jQuery object or
 		 *        DOM Element for a category.
 		 *
-		 * @returns	{ Array }
+		 * @returns    { Array }
 		 *          An array of data associated with the categories.
 		 */
-		getData: function( filter ) {
+		getData: function (filter) {
 			var data = [];
 
-			this.getCategories( filter ).each(function() {
-				data.push( CategorySelect.normalize( $( this ).data() ) );
+			this.getCategories(filter).each(function () {
+				data.push(CategorySelect.normalize($(this).data()));
 			});
 
 			return data;
@@ -413,11 +411,11 @@
 		 *        The index of a category relative to the list of categories, a
 		 *        selector string or the jQuery object or DOM Element for a category.
 		 *
-		 * @returns	{ Object }
+		 * @returns    { Object }
 		 *          The data associated with the category or undefined if not found.
 		 */
-		getDatum: function( filter ) {
-			return this.getData( filter )[ 0 ];
+		getDatum: function (filter) {
+			return this.getData(filter)[0];
 		},
 
 		/**
@@ -428,40 +426,41 @@
 		 *        name of a category, a selector string or the jQuery object or
 		 *        DOM Element for a category.
 		 *
-		 * @returns	{ jQuery }
+		 * @returns    { jQuery }
 		 *          The categories, or an empty jQuery object if not found.
 		 */
-		getCategories: function( filter ) {
+		getCategories: function (filter) {
 			var categories = this.elements.categories;
 
 			// Rebuild categories cache if it has been modified
-			if ( this.dirty ) {
+			if (this.dirty) {
 				categories = this.elements.categories =
-					this.elements.list.find( this.options.selectors.category );
+					this.elements.list.find(this.options.selectors.category);
 			}
 
 			return filter !== undefined ?
 				( typeof filter === 'number' ?
-					// By category index (relative to other categories)
-					categories.eq( filter ) :
-					// By category name, selector string, jQuery object or DOM Element
-					categories.filter(function() {
-						var $category = $( this ),
-							category = CategorySelect.normalize( $category.data() ),
-							match = category.name === decodeHtmlEntities( filter );
+						// By category index (relative to other categories)
+						categories.eq(filter) :
+						// By category name, selector string, jQuery object or DOM Element
+						categories.filter(function () {
+							var $category = $(this),
+								category = CategorySelect.normalize($category.data()),
+								match = category.name === decodeHtmlEntities(filter);
 
-						// Try to match a selector string, jQuery object or DOM Element
-						if ( !match ) {
+							// Try to match a selector string, jQuery object or DOM Element
+							if (!match) {
 
-							// Sizzle can throw a syntax error here if filter is an invalid expression
-							try {
-								match = $category.is( filter );
+								// Sizzle can throw a syntax error here if filter is an invalid expression
+								try {
+									match = $category.is(filter);
 
-							} catch( e ) {}
-						}
+								} catch (e) {
+								}
+							}
 
-						return match;
-					})
+							return match;
+						})
 				) : categories;
 		},
 
@@ -472,11 +471,11 @@
 		 *        The index of a category relative to the list of categories, a
 		 *        selector string or the jQuery object or DOM Element for a category.
 		 *
-		 * @returns	{ jQuery }
+		 * @returns    { jQuery }
 		 *          The categories, or an empty jQuery object if not found.
 		 */
-		getCategory: function( filter ) {
-			return this.getCategories( filter ).eq( 0 );
+		getCategory: function (filter) {
+			return this.getCategories(filter).eq(0);
 		},
 
 		/**
@@ -490,25 +489,25 @@
 		 *          The promise that will be resolved when the categories are
 		 *          removed.
 		 */
-		removeCategory: function( category ) {
+		removeCategory: function (category) {
 			var dfd = $.Deferred(),
 				self = this,
 				animation = self.options.animations.remove,
-				element = self.getCategory( category );
+				element = self.getCategory(category);
 
 			element
-				.animate( animation.properties, animation.options )
+				.animate(animation.properties, animation.options)
 				.promise()
-				.done(function() {
-					dfd.resolve( element.detach() );
+				.done(function () {
+					dfd.resolve(element.detach());
 
 					self.dirty = true;
 
-					self.trigger( 'remove', {
+					self.trigger('remove', {
 						element: element
 					});
 
-					self.trigger( 'update' );
+					self.trigger('update');
 				});
 
 			return dfd.promise();
@@ -521,8 +520,8 @@
 		 *          The promise that will be resolved when the categories are
 		 *          removed.
 		 */
-		resetCategories: function() {
-			return this.removeCategory( this.getCategories( '.new' ) );
+		resetCategories: function () {
+			return this.removeCategory(this.getCategories('.new'));
 		},
 
 		/**
@@ -535,8 +534,8 @@
 		 * @param { Object } data
 		 *        The data associated with a category.
 		 */
-		setData: function( filter, data ) {
-			return this.getCategories( filter ).data( data );
+		setData: function (filter, data) {
+			return this.getCategories(filter).data(data);
 		},
 
 		/**
@@ -550,14 +549,14 @@
 		 * @returns { Mixed }
 		 *          The result returned from the last handler that was triggered.
 		 */
-		trigger: function( eventType ) {
-			var args = [ this ].concat( slice.call( arguments, 1 ) );
-			return this.element.triggerHandler( eventType, args );
+		trigger: function (eventType) {
+			var args = [this].concat(slice.call(arguments, 1));
+			return this.element.triggerHandler(eventType, args);
 		}
 	});
 
 	// Public static properties/methods
-	$.extend( CategorySelect, {
+	$.extend(CategorySelect, {
 
 		/**
 		 * Throws error messages.
@@ -568,7 +567,7 @@
 		 * @returns { Exception }
 		 *          The namespaced exception message.
 		 */
-		error: function( message ) {
+		error: function (message) {
 			throw namespace + ': ' + message;
 		},
 
@@ -583,24 +582,24 @@
 		 *          The promise that will be resolved with the template object once
 		 *          it is loaded.
 		 */
-		getTemplate: function( name ) {
-			var template = cached.templates[ name ];
+		getTemplate: function (name) {
+			var template = cached.templates[name];
 
-			if ( !template ) {
-				this.error( 'Template "' + name + '" is not defined' );
+			if (!template) {
+				this.error('Template "' + name + '" is not defined');
 			}
 
-			return template.content && template || $.Deferred(function( dfd ) {
-				Wikia.getMultiTypePackage({
-					mustache: 'extensions/wikia/CategorySelect/templates/CategorySelect_' + name + '.mustache',
-					callback: function( pkg ) {
-						template.content = pkg.mustache[ 0 ];
-						dfd.resolve( template );
-					}
-				});
+			return template.content && template || $.Deferred(function (dfd) {
+					Wikia.getMultiTypePackage({
+						mustache: 'extensions/wikia/CategorySelect/templates/CategorySelect_' + name + '.mustache',
+						callback: function (pkg) {
+							template.content = pkg.mustache[0];
+							dfd.resolve(template);
+						}
+					});
 
-				return dfd.promise();
-			});
+					return dfd.promise();
+				});
 		},
 
 		/**
@@ -610,15 +609,15 @@
 		 *          The promise that will be resolved with the categories array once
 		 *          it is loaded.
 		 */
-		getWikiCategories: function() {
+		getWikiCategories: function () {
 			return cached.wikiCategories || $.nirvana.sendRequest({
-				controller: 'CategorySelectController',
-				method: 'getWikiCategories',
-				type: 'GET',
-				callback: function( categories ) {
-					cached.wikiCategories = categories;
-				}
-			});
+					controller: 'CategorySelectController',
+					method: 'getWikiCategories',
+					type: 'GET',
+					callback: function (categories) {
+						cached.wikiCategories = categories;
+					}
+				});
 		},
 
 		/**
@@ -631,24 +630,24 @@
 		 *          The normalized category object or undefined if the category is
 		 *          invalid.
 		 */
-		normalize: (function() {
-			var rCategory = new RegExp( '\\[\\[' +
-				// Category namespace
+		normalize: (function () {
+			var rCategory = new RegExp('\\[\\[' +
+					// Category namespace
 				'(' + wgCategorySelect.defaultNamespaces + '):' +
-				// Category name
+					// Category name
 				'([^\\]|]+)' +
-				// Category sortKey (optional)
+					// Category sortKey (optional)
 				'\\|?([^\\]]+)?' +
-			']]', 'i' );
+				']]', 'i');
 
-			return function( category ) {
+			return function (category) {
 				var pieces, prop,
 					base = {
 						namespace: wgCategorySelect.defaultNamespace
 					};
 
-				if ( typeof category === 'object' ) {
-					category = $.extend( base, category );
+				if (typeof category === 'object') {
+					category = $.extend(base, category);
 
 				} else {
 					base.name = category;
@@ -656,32 +655,32 @@
 				}
 
 				// Must have a name to be valid
-				if ( !category.name ) {
+				if (!category.name) {
 					category = undefined;
 
 				} else {
-					category.name = $.trim( decodeHtmlEntities( category.name ) );
+					category.name = $.trim(decodeHtmlEntities(category.name));
 
 					// Get rid of unecessary properties
-					for ( prop in category ) {
-						if ( $.inArray( prop, properties ) < 0 ) {
-							delete category[ prop ];
+					for (prop in category) {
+						if ($.inArray(prop, properties) < 0) {
+							delete category[prop];
 						}
 					}
 
 					// Extract more information if name is a wikilink
-					if ( ( pieces = rCategory.exec( category.name ) ) ) {
-						category.namespace = pieces[ 1 ];
-						category.name = pieces[ 2 ];
+					if (( pieces = rCategory.exec(category.name) )) {
+						category.namespace = pieces[1];
+						category.name = pieces[2];
 
 						// SortKey is optional
-						if ( pieces[ 3 ] !== undefined ) {
-							category.sortkey = pieces[ 3 ];
+						if (pieces[3] !== undefined) {
+							category.sortkey = pieces[3];
 						}
 					}
 
 					// Uppercase the first letter in name to match MediaWiki article titles
-					category.name = category.name[ 0 ].toUpperCase() + category.name.slice( 1 );
+					category.name = category.name[0].toUpperCase() + category.name.slice(1);
 				}
 
 				return category;
@@ -739,7 +738,7 @@
 			}
 		},
 
-		track: Wikia.Tracker.buildTrackingFunction( Wikia.trackEditorComponent, {
+		track: Wikia.Tracker.buildTrackingFunction(Wikia.trackEditorComponent, {
 			action: Wikia.Tracker.ACTIONS.CLICK,
 			category: 'category-tool',
 			trackingMethod: 'analytics'
@@ -753,11 +752,11 @@
 	 * @param { Object } options
 	 *        The settings to configure the instances with.
 	 */
-	$.fn.categorySelect = function( options ) {
-		options = $.extend( true, {}, CategorySelect.options, options );
+	$.fn.categorySelect = function (options) {
+		options = $.extend(true, {}, CategorySelect.options, options);
 
-		return this.each(function() {
-			new CategorySelect( this, options );
+		return this.each(function () {
+			new CategorySelect(this, options);
 		});
 	};
 
@@ -765,4 +764,4 @@
 	Wikia.CategorySelect = CategorySelect;
 	window.Wikia = Wikia;
 
-})( window, window.jQuery );
+})(window, window.jQuery);

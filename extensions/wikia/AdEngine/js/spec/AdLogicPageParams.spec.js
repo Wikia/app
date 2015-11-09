@@ -106,7 +106,7 @@ describe('AdLogicPageParams', function () {
 			} : undefined,
 			windowMock = mockWindow(opts);
 
-		return modules['ext.wikia.adEngine.adLogicPageParams'](
+		return require('ext.wikia.adEngine.adLogicPageParams')(
 			mockAdContext(targeting),
 			mockPageViewCounter(opts.pvCount),
 			mockAdLogicZoneParams(),

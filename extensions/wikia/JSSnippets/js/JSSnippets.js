@@ -20,7 +20,9 @@ window.JSSnippets = (function () {
 		extensionRegex = new RegExp('\\.([^.]+)$'),
 		cacheBusterRegex = new RegExp('\\?cb=[0-9]+$', 'i'),
 		slashRegex = new RegExp('^\\/'),
-		debugMode = window.mw && mw.config ? mw.config.get('debug') : window.debug;
+		debugMode = window.mw && mw.config ? mw.config.get('debug') : window.debug,
+		loader = require('wikia.loader'),
+		log = require('wikia.log');
 
 	/**
 	 * Resolve dependencies, load them and initialize features
@@ -79,23 +81,19 @@ window.JSSnippets = (function () {
 		dependencies = unique(dependencies);
 
 		// load all dependencies in parallel and then fire all callbacks
-		require(['wikia.loader', 'wikia.log'], function (loader, log) {
-			loader.apply(
-					loader,
-					dependencies
-				).done(
-				function () {
-					try {
-						for (var id in callbacks) {
-							for (x = 0, len = options[id].length; x < len; x++) {
-								callbacks[id](options[id][x]);
-							}
-						}
-					} catch (e) {
-						log('Skipping running callback, cause: ' + e, log.levels.error);
+		loader.apply(
+			loader,
+			dependencies
+		).done(function () {
+			try {
+				for (var id in callbacks) {
+					for (x = 0, len = options[id].length; x < len; x++) {
+						callbacks[id](options[id][x]);
 					}
 				}
-			);
+			} catch (e) {
+				log('Skipping running callback, cause: ' + e, log.levels.error);
+			}
 		});
 
 		afterInit();

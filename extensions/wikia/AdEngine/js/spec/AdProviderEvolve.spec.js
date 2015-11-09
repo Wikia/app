@@ -14,10 +14,10 @@ describe('AdProviderEvolve', function(){
 			, documentMock
 			, evolveHelperMock = {}
 			, adProviderEvolve
-			, evolveSlotConfig = modules['ext.wikia.adEngine.evolveSlotConfig'](logMock)
+			, evolveSlotConfig = require('ext.wikia.adEngine.evolveSlotConfig')(logMock)
 			;
 
-		adProviderEvolve = modules['ext.wikia.adEngine.provider.evolve'](
+		adProviderEvolve = require('ext.wikia.adEngine.provider.evolve')(
 			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, evolveHelperMock, evolveSlotConfig
 		);
 
@@ -38,10 +38,10 @@ describe('AdProviderEvolve', function(){
 			, adProviderEvolve
 			, expected
 			, actual
-			, evolveSlotConfig = modules['ext.wikia.adEngine.evolveSlotConfig'](logMock)
+			, evolveSlotConfig = require('ext.wikia.adEngine.evolveSlotConfig')(logMock)
 			;
 
-		adProviderEvolve = modules['ext.wikia.adEngine.provider.evolve'](
+		adProviderEvolve = require('ext.wikia.adEngine.provider.evolve')(
 			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, evolveHelperMock, evolveSlotConfig
 		);
 
@@ -74,10 +74,10 @@ describe('AdProviderEvolve', function(){
 			, windowMock = {wgInsideUnitTest: true}
 			, evolveHelperMock = {}
 			, adProviderEvolve
-			, evolveSlotConfig = modules['ext.wikia.adEngine.evolveSlotConfig'](logMock)
+			, evolveSlotConfig = require('ext.wikia.adEngine.evolveSlotConfig')(logMock)
 			;
 
-		adProviderEvolve = modules['ext.wikia.adEngine.provider.evolve'](
+		adProviderEvolve = require('ext.wikia.adEngine.provider.evolve')(
 			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, evolveHelperMock, evolveSlotConfig
 		);
 

@@ -1,13 +1,13 @@
-require([
-	'jquery',
-	'GlobalNavigationiOSScrollFix',
-	'wikia.window',
-	'wikia.browserDetect',
-	'wikia.delayedhover',
-	'wikia.globalNavigationDropdowns'
-], function ($, scrollFix, win, browserDetect, delayedHover, dropdowns) {
+(function () {
 	'use strict';
-	var $globalNavigation = $('#globalNavigation'),
+
+	var $ = require('jquery'),
+		scrollFix = require('GlobalNavigationiOSScrollFix'),
+		win = require('wikia.window'),
+		browserDetect = require('wikia.browserDetect'),
+		delayedHover = require('wikia.delayedhover'),
+		dropdowns = require('wikia.globalNavigationDropdowns'),
+		$globalNavigation = $('#globalNavigation'),
 		loginAjaxForm = false;
 
 	/**
@@ -55,12 +55,10 @@ require([
 	}
 
 	function authModalOpen(url) {
-		require(['AuthModal'], function (authModal) {
-			authModal.load({
-				url: url,
-				origin: 'global-nav',
-				onAuthSuccess: onAuthSuccess.bind({url: url})
-			});
+		require('AuthModal').load({
+			url: url,
+			origin: 'global-nav',
+			onAuthSuccess: onAuthSuccess.bind({url: url})
 		});
 	}
 
@@ -82,7 +80,7 @@ require([
 		authModalOpen(event.currentTarget.href);
 	}
 
-	function oldAccountNav ($entryPoint) {
+	function oldAccountNav($entryPoint) {
 		var $userLoginDropdown = $('#UserLoginDropdown');
 
 		dropdowns.attachDropdown($entryPoint, {
@@ -123,9 +121,8 @@ require([
 			$authEntryPoints = $entryPoint.find('.auth-link.register, .auth-link.sign-in, a.sign-in');
 
 			$authEntryPoints.click(globalNavAuthButtonsClick);
-		}
-		else {
+		} else {
 			oldAccountNav($entryPoint);
 		}
 	});
-});
+})();

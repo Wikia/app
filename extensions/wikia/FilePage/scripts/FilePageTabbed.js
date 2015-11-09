@@ -146,22 +146,22 @@ $(function () {
 		 * Set cookies for logged in users to save which tab is active when they exit the page
 		 */
 		initTabCookies: function () {
-			require(['wikia.localStorage'], function (ls) {
-				if (window.wgUserName) {
-					var selected = ls.WikiaFilePageTab || 'about';
+			var localStorage = require('wikia.localStorage');
 
-					$('[data-tab="' + selected + '"] a')
-						.click();
+			if (window.wgUserName) {
+				var selected = localStorage.WikiaFilePageTab || 'about';
 
-					$(window)
-						.on('wikiaTabClicked', function (e, tab) {
-							ls.WikiaFilePageTab = tab;
-						});
-				} else {
-					$('[data-tab="about"] a')
-						.click();
-				}
-			});
+				$('[data-tab="' + selected + '"] a')
+					.click();
+
+				$(window)
+					.on('wikiaTabClicked', function (e, tab) {
+						localStorage.WikiaFilePageTab = tab;
+					});
+			} else {
+				$('[data-tab="about"] a')
+					.click();
+			}
 		},
 		/**
 		 * Initialize pagination for "Appears in these..." sections
@@ -173,7 +173,7 @@ $(function () {
 				});
 		},
 		/**
-		 *	Bind event when the "remove" button is clicked in the edit menu
+		 *    Bind event when the "remove" button is clicked in the edit menu
 		 */
 		initRemoveVideo: function () {
 			var self = this;

@@ -9,7 +9,7 @@ describe('AdProviderLiftium', function () {
 			slotTweakerMock = {},
 			adProviderLiftium;
 
-		adProviderLiftium = modules['ext.wikia.adEngine.provider.liftium'](
+		adProviderLiftium = require('ext.wikia.adEngine.provider.liftium')(
 			documentMock,
 			logMock,
 			scriptWriterMock,

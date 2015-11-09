@@ -1,13 +1,12 @@
 /**
  * This file is executed on view of a page in a template namespace
  */
-require(
-	[
-		'ext.wikia.templateDraft.rightRailModule',
-		'ext.wikia.templateDraft.tracking'
-	],
-	function (rightRailModule, templateDraftTracking) {
-		'use strict';
-		rightRailModule.init();
-		templateDraftTracking.init();
-});
+(function () {
+	'use strict';
+
+	var rightRailModule = require('ext.wikia.templateDraft.rightRailModule'),
+		templateDraftTracking = require('ext.wikia.templateDraft.tracking');
+
+	rightRailModule.init();
+	templateDraftTracking.init();
+})();

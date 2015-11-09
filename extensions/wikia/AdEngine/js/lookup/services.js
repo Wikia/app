@@ -11,18 +11,34 @@
 
 /*global define, require*/
 /*jshint camelcase:false*/
-define('ext.wikia.adEngine.lookup.services', [
-	'wikia.log',
-	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
-	require.optional('ext.wikia.adEngine.lookup.openXBidder'),
-	require.optional('ext.wikia.adEngine.lookup.rubiconRtp')
-], function (log, amazonMatch, oxBidder, rtp) {
+define('ext.wikia.adEngine.lookup.services', ['wikia.log'], function (log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.services',
 		rtpLookupTracked = false,
 		oxLookupTracked = false,
-		amazonLookupTracked = false;
+		amazonLookupTracked = false,
+		amazonMatch,
+		oxBidder,
+		rtp;
+
+	try {
+		amazonMatch = require('ext.wikia.adEngine.lookup.amazonMatch');
+	} catch (exception) {
+		amazonMatch = null;
+	}
+
+	try {
+		oxBidder = require('ext.wikia.adEngine.lookup.openXBidder');
+	} catch (exception) {
+		oxBidder = null;
+	}
+
+	try {
+		rtp = require('ext.wikia.adEngine.lookup.rubiconRtp')
+	} catch (exception) {
+		rtp = null;
+	}
 
 	function trackState(module) {
 		if (module && module.wasCalled()) {
@@ -56,12 +72,12 @@ define('ext.wikia.adEngine.lookup.services', [
 		}
 
 		if (!amazonLookupTracked) {
-			amazonLookupTracked  = true;
+			amazonLookupTracked = true;
 			trackState(amazonMatch);
 		}
 
 		if (!oxLookupTracked) {
-			oxLookupTracked  = true;
+			oxLookupTracked = true;
 			trackState(oxBidder);
 		}
 

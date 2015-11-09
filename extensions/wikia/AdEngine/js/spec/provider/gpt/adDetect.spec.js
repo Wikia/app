@@ -35,7 +35,7 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 				}
 			};
 
-			gptHop = modules['ext.wikia.adEngine.provider.gpt.adDetect'](
+			gptHop = require('ext.wikia.adEngine.provider.gpt.adDetect')(
 				mocks.log,
 				mocks.window,
 				mocks.adContext,
@@ -99,7 +99,7 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 			mocks.iframeDoc.querySelector = specialAd ? returnObj : noop;
 			mocks.iframeDoc.querySelectorAll = function () { return []; };
 
-			gptHop = modules['ext.wikia.adEngine.provider.gpt.adDetect'](
+			gptHop = require('ext.wikia.adEngine.provider.gpt.adDetect')(
 				mocks.log,
 				mocks.window,
 				mocks.adContext,

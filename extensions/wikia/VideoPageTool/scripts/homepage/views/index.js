@@ -1,13 +1,12 @@
 /**
  * view for video home page
  */
-require([
-	'videohomepage.views.featured',
-	'videohomepage.views.search',
-	'videohomepage.views.carousels'
-], function (FeaturedVideoView, SearchView, CarouselsView) {
-
+(function () {
 	'use strict';
+
+	var FeaturedVideoView = require('videohomepage.views.feature'),
+		SearchView = require('videohomepage.views.search'),
+		CarouselsView = require('videohomepage.views.carousels');
 
 	// mock a global object in lieu of having one already
 	window.Wikia.modules = window.Wikia.modules || {};
@@ -29,5 +28,4 @@ require([
 	}
 
 	$(init);
-
-});
+})();

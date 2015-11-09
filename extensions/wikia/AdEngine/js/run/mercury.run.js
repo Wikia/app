@@ -1,27 +1,16 @@
 /*global require*/
-require([
-	'ext.wikia.adEngine.lookup.amazonMatch',
-	'ext.wikia.adEngine.lookup.openXBidder',
-	'ext.wikia.adEngine.customAdsLoader',
-	'ext.wikia.adEngine.messageListener',
-	'ext.wikia.adEngine.mobile.mercuryListener',
-	'ext.wikia.adEngine.slot.scrollHandler',
-	'wikia.geo',
-	'wikia.instantGlobals',
-	'wikia.window'
-], function (
-	amazon,
-	oxBidder,
-	customAdsLoader,
-	messageListener,
-	mercuryListener,
-	scrollHandler,
-	geo,
-	instantGlobals,
-	win
-) {
+(function () {
 	'use strict';
-	var skin = 'mercury';
+	var amazon = require('ext.wikia.adEngine.lookup.amazonMatch'),
+		oxBidder = require('ext.wikia.adEngine.lookup.openXBidder'),
+		customAdsLoader = require('ext.wikia.adEngine.customAdsLoader'),
+		messageListener = require('ext.wikia.adEngine.messageListener'),
+		mercuryListener	= require('ext.wikia.adEngine.mobile.mercuryListener'),
+		scrollHandler = require('ext.wikia.adEngine.slot.scrollHandler'),
+		geo = require('wikia.geo'),
+		instantGlobals = require('wikia.instantGlobals'),
+		win = require('wikia.window'),
+		skin = 'mercury';
 
 	messageListener.init();
 	scrollHandler.init(skin);
@@ -38,4 +27,4 @@ require([
 			oxBidder.call(skin);
 		}
 	});
-});
+})();

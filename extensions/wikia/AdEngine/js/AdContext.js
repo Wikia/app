@@ -7,9 +7,8 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
-	'wikia.querystring',
-	require.optional('wikia.abTest')
-], function (w, doc, geo, instantGlobals, Querystring, abTest) {
+	'wikia.querystring'
+], function (w, doc, geo, instantGlobals, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -27,7 +26,9 @@ define('ext.wikia.adEngine.adContext', [
 			return;
 		}
 
-		return context.targeting.mercuryPageCategories.map(function (item) { return item.title; });
+		return context.targeting.mercuryPageCategories.map(function (item) {
+			return item.title;
+		});
 	}
 
 	function isUrlParamSet(param) {
@@ -37,7 +38,8 @@ define('ext.wikia.adEngine.adContext', [
 	function setContext(newContext) {
 		var i,
 			len,
-			noExternals = w.wgNoExternals || isUrlParamSet('noexternals');
+			noExternals = w.wgNoExternals || isUrlParamSet('noexternals'),
+			abTest;
 
 		// Note: consider copying the value, not the reference
 		context = newContext;
@@ -87,8 +89,14 @@ define('ext.wikia.adEngine.adContext', [
 
 		// Taboola integration
 		if (context.providers.taboola) {
-			context.providers.taboola = abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES') &&
-				(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
+			try {
+				abTest = require('wikia.abTest');
+
+				context.providers.taboola = abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES') &&
+					(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
+			} catch (exception) {
+				context.providers.taboola = undefined;
+			}
 		}
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverTurtleCountries)) {
@@ -101,9 +109,9 @@ define('ext.wikia.adEngine.adContext', [
 
 		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
-			context.slots.invisibleHighImpact &&
-			geo.isProperGeo(instantGlobals.wgAdDriverHighImpactSlotCountries)
-		) || isUrlParamSet('highimpactslot');
+				context.slots.invisibleHighImpact &&
+				geo.isProperGeo(instantGlobals.wgAdDriverHighImpactSlotCountries)
+			) || isUrlParamSet('highimpactslot');
 
 		// INCONTENT_PLAYER slot
 		context.slots.incontentPlayer = geo.isProperGeo(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
@@ -116,10 +124,7 @@ define('ext.wikia.adEngine.adContext', [
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
 			context.targeting.enableKruxTargeting &&
-			geo.isProperGeo(instantGlobals.wgAdDriverKruxCountries) &&
-			!instantGlobals.wgSitewideDisableKrux &&
-			!context.targeting.wikiDirectedAtChildren &&
-			!noExternals
+			geo.isProperGeo(instantGlobals.wgAdDriverKruxCountries) && !instantGlobals.wgSitewideDisableKrux && !context.targeting.wikiDirectedAtChildren && !noExternals
 		);
 
 		// Export the context back to ads.context

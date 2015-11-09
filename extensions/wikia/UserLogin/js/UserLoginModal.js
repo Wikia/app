@@ -10,16 +10,15 @@
 		bucky: window.Bucky('UserLoginModal'),
 
 		initModal: function (options) {
-			var self = this;
+			var self = this,
+				tracker = require('wikia.tracker');
 
 			this.bucky.timer.start('initModal');
 
-			require(['wikia.tracker'], function (tracker) {
-				self.trackerActions = tracker.ACTIONS;
-				self.track = tracker.buildTrackingFunction({
-					category: 'force-login-modal',
-					trackingMethod: 'analytics'
-				});
+			self.trackerActions = tracker.ACTIONS;
+			self.track = tracker.buildTrackingFunction({
+				category: 'force-login-modal',
+				trackingMethod: 'analytics'
 			});
 
 			$.when(
@@ -35,15 +34,16 @@
 					messages: 'UserLogin'
 				})
 			).done(function (packagesData) {
-				require(['wikia.ui.factory', 'wikia.loader'], function (uiFactory, loader) {
-					loader.processStyle(packagesData.styles);
+				var uiFactory = require('wikia.ui.factory'),
+					loader = require('wikia.loader');
 
-					self.uiFactory = uiFactory;
-					self.packagesData = packagesData;
+				loader.processStyle(packagesData.styles);
 
-					self.buildModal(options);
-					self.bucky.timer.stop('initModal');
-				});
+				self.uiFactory = uiFactory;
+				self.packagesData = packagesData;
+
+				self.buildModal(options);
+				self.bucky.timer.stop('initModal');
 			});
 		},
 
@@ -160,8 +160,7 @@
 			return true;
 		},
 		isPreventingForceLogin: function (element) {
-			if (!(element.closest('span').hasClass('drop')) &&
-				!(element.closest('ul').hasClass('WikiaMenuElement'))) {
+			if (!(element.closest('span').hasClass('drop')) && !(element.closest('ul').hasClass('WikiaMenuElement'))) {
 				return false;
 			}
 			return true;

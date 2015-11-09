@@ -17,19 +17,24 @@ class AnalyticsProviderOpenXBidder implements iAnalyticsProvider {
 		$instantGlobalName = json_encode( $instantGlobalName );
 
 		$code = <<< CODE
-	require([
-		"wikia.geo",
-		"wikia.querystring",
-		"wikia.instantGlobals",
-		require.optional($moduleName)
-	], function (geo, Querystring, globals, oxBidder) {
-		var ac = globals[$instantGlobalName],
+	(function () {
+		var geo = require('wikia.geo'),
+			Querystring = require('wikia.querystring'),
+			globals = require('wikia.instantGlobals'),
+			oxBidder,
+			ac = globals[$instantGlobalName],
 			qs = new Querystring();
+
+		try {
+			oxBidder = require($moduleName);
+		} catch (exception) {
+			oxBidder = null;
+		}
 
 		if (geo.isProperGeo(ac) || qs.getVal('oxbidder', '0') === '1') {
 			oxBidder.call('oasis');
 		};
-	});
+	})();
 CODE;
 
 		return $code;

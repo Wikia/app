@@ -1,9 +1,9 @@
 describe('titleThumbnail module', function () {
 	'use strict';
 
-	var templates = modules['thumbnails.templates.mustache'](),
-		Mustache = modules['wikia.mustache'],
-		TitleThumbnail = modules['thumbnails.views.titleThumbnail'](templates, Mustache),
+	var templates = require('thumbnails.templates.mustache')(),
+		Mustache = require('wikia.mustache'),
+		TitleThumbnail = require('thumbnails.views.titleThumbnail')(templates, Mustache),
 		instance,
 		thumbnailHtml,
 		title = 'Best funny and cute cat videos compilation 2014',

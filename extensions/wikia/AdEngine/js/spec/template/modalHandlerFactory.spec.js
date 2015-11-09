@@ -29,7 +29,7 @@ describe('ext.wikia.adEngine.template.modalHandlerFactory', function () {
 	});
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.template.modalHandlerFactory'](
+		return require('ext.wikia.adEngine.template.modalHandlerFactory')(
 			mocks.adContext,
 			mocks.log,
 			mocks.mercuryHandler,

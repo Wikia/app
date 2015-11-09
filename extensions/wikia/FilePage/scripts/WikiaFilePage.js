@@ -1,7 +1,10 @@
-require(['wikia.videoBootstrap', 'jquery', 'wikia.window', 'wikia.geo'], function (VideoBootstrap, jquery, window, geo) {
-
+(function () {
 	'use strict';
 
+	var VideoBootstrap = require('wikia.videoBootstrap'),
+		$ = require('jquery'),
+		window = require('wikia.window'),
+		geo = require('wikia.geo');
 	/*
 	 * Use VideoBootstrap to create a video instance
 	 */
@@ -39,5 +42,4 @@ require(['wikia.videoBootstrap', 'jquery', 'wikia.window', 'wikia.geo'], functio
 
 	$(initVideo);
 	$(initRestrictions);
-
-});
+})();

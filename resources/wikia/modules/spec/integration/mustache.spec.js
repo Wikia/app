@@ -2,7 +2,7 @@
 describe('Mustache', function () {
 	'use strict';
 
-	var mustache = modules['wikia.mustache'],
+	var mustache = require('wikia.mustache'),
 		template = '{{foo}} is {{{bar}}}!',
 		data = {
 			foo: 'User',

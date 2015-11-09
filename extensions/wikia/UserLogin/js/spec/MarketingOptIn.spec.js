@@ -6,7 +6,7 @@ describe('UserLogin Marketing Opt In', function () {
 		wikiaFormMock;
 
 	beforeEach(function () {
-		geo = modules['wikia.geo']();
+		geo = require('wikia.geo')();
 		spyOn(geo, 'getContinentCode').and.returnValue('');
 		spyOn(geo, 'getCountryCode').and.returnValue('');
 
@@ -19,7 +19,7 @@ describe('UserLogin Marketing Opt In', function () {
 			}
 		};
 
-		optIn = modules['usersignup.marketingOptIn'](geo);
+		optIn = require('usersignup.marketingOptIn')(geo);
 	});
 
 	it('should throw an exception', function () {

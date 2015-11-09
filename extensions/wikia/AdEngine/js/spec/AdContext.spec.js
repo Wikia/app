@@ -64,7 +64,7 @@ describe('AdContext', function () {
 		];
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.adContext'](
+		return require('ext.wikia.adEngine.adContext')(
 			mocks.win,
 			mocks.doc,
 			mocks.geo,

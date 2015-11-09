@@ -31,9 +31,7 @@ ve.ui.WikiaCartItemWidget = function VeUiWikiaCartItemWidget( config ) {
 				.removeClass( 've-ui-texture-pending' );
 		}.bind( this ) );
 
-	require( ['wikia.thumbnailer'], function ( thumbnailer ) {
-		$image.attr( 'src', thumbnailer.getThumbURL( this.model.url, 'image', size, size ) );
-	}.bind( this ) );
+	$image.attr( 'src', require( 'wikia.thumbnailer' ).getThumbURL( this.model.url, 'image', size, size ) );
 };
 
 OO.inheritClass( ve.ui.WikiaCartItemWidget, OO.ui.OptionWidget );

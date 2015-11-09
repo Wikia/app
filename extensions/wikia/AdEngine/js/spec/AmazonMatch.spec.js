@@ -9,7 +9,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 	}
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.lookup.amazonMatch'](
+		return require('ext.wikia.adEngine.lookup.amazonMatch')(
 			mocks.adTracker,
 			mocks.document,
 			mocks.log,

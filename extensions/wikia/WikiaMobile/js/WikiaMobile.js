@@ -1,63 +1,74 @@
-require( ['wikia.querystring', require.optional( 'wikia.cookies' ), 'track', 'wikia.window', 'jquery' ], function ( qs, cookies, track, window, $ ) {
+(function () {
 	'use strict';
 
-	var d = window.document;
+	var qs = require('wikia.querystring'),
+		cookies,
+		track = require('track'),
+		window = require('wikia.window'),
+		$ = require('jquery'),
+		d = window.document;
+
+	try {
+		cookies = require('wikia.cookies');
+	} catch (exception) {
+		cookies = null;
+	}
 
 	//used to handle close tracking on Read More section
-	$( d.getElementById( 'wkRelPag' ) ).on( 'click', '.open',function () {
-		if ( this.children[0].className.indexOf( 'open' ) > -1 ) {
-			track.event( 'read-more', track.CLICK, {label: 'close'} );
+	$(d.getElementById('wkRelPag')).on('click', '.open', function () {
+		if (this.children[0].className.indexOf('open') > -1) {
+			track.event('read-more', track.CLICK, {label: 'close'});
 		}
-	} ).on( 'click', 'a', function ( ev ) {
-		track.event( 'read-more', track.IMAGE_LINK, {
+	}).on('click', 'a', function (ev) {
+		track.event('read-more', track.IMAGE_LINK, {
 			href: this.href
-		}, ev );
-	} );
+		}, ev);
+	});
 
-	$( d.getElementById( 'wkFllSite' ) ).on( 'click', function ( event ) {
-		var skin = this.getAttribute( 'data-skin' ) || 'oasis';
+	$(d.getElementById('wkFllSite')).on('click', function (event) {
+		var skin = this.getAttribute('data-skin') || 'oasis';
 
 		event.preventDefault();
 		event.stopPropagation();
 
-		cookies.set( 'useskin', skin, {
+		cookies.set('useskin', skin, {
 			domain: window.wgCookieDomain,
 			path: window.wgCookiePath
-		} );
-		qs().setVal( 'useskin', skin ).addCb().goTo();
-	} );
+		});
+		qs().setVal('useskin', skin).addCb().goTo();
+	});
 
-	$( d.getElementById( 'wkFtr' ) ).on( 'click', 'a', function ( event ) {
-		track.event( 'footer', track.TEXT_LINK, {
+	$(d.getElementById('wkFtr')).on('click', 'a', function (event) {
+		track.event('footer', track.TEXT_LINK, {
 			label: 'link',
 			href: this.href
-		}, event );
-	} );
+		}, event);
+	});
 
-	$( d.getElementById( 'wkTopBar' ) ).find( 'a:first-child' ).on( 'click', function ( event ) {
-		track.event( 'wordmark', track.CLICK, {
+	$(d.getElementById('wkTopBar')).find('a:first-child').on('click', function (event) {
+		track.event('wordmark', track.CLICK, {
 			href: this.href
-		}, event );
-	} );
+		}, event);
+	});
 
-	$( d.getElementById( 'catlinks' ) ).on( 'click', 'a', function ( event ) {
-		track.event( 'category', track.TEXT_LINK, {
+	$(d.getElementById('catlinks')).on('click', 'a', function (event) {
+		track.event('category', track.TEXT_LINK, {
 			label: 'article',
 			href: this.href
-		}, event );
-	} );
+		}, event);
+	});
 
 	//track edit button clicks
-	$( '#wkPage' ).on( 'click', '.editsection', function ( event ) {
-		track.event( 'editor', track.CLICK, {
+	$('#wkPage').on('click', '.editsection', function (event) {
+		track.event('editor', track.CLICK, {
 			label: 'editsection-' + this.parentElement.tagName.toLowerCase(),
 			href: this.href
-		}, event );
-	} );
+		}, event);
+	});
 
-	$( '.userpage-link' ).on( 'click', function ( event ) {
-		track.event( 'byline', track.CLICK, {
+	$('.userpage-link').on('click', function (event) {
+		track.event('byline', track.CLICK, {
 			href: this.href
-		}, event );
-	} );
-} );
+		}, event);
+	});
+})();

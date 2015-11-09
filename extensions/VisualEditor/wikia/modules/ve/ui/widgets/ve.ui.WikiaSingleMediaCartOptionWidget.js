@@ -33,9 +33,7 @@ ve.ui.WikiaSingleMediaCartOptionWidget = function VeUiWikiaSingleMediaCartOption
 				.removeClass( 've-ui-texture-pending' );
 		}.bind( this ) );
 
-	require( ['wikia.thumbnailer'], function ( thumbnailer ) {
-		$image.attr( 'src', thumbnailer.getThumbURL( this.model.url, 'image', size, size ) );
-	}.bind( this ) );
+	$image.attr( 'src', require( 'wikia.thumbnailer' ).getThumbURL( this.model.url, 'image', size, size ) );
 };
 
 OO.inheritClass( ve.ui.WikiaSingleMediaCartOptionWidget, OO.ui.OptionWidget );

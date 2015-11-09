@@ -549,9 +549,7 @@
 
 		mw.loader.use('wikia.stringhelper')
 			.done(function () {
-				require(['wikia.stringhelper'], function (stringHelper) {
-					WikiBuilder.init(stringHelper);
-				});
+				WikiBuilder.init(require('wikia.stringhelper'));
 			});
 
 		if (window.wgOasisResponsive || window.wgOasisBreakpoints) {

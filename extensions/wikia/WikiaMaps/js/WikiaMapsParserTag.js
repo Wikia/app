@@ -1,14 +1,19 @@
-require([
-	'jquery',
-	'wikia.mustache',
-	'wikia.tracker',
-	'wikia.loader',
-	//FIXME: turning off ads on map because of JS errors - should be fixed in ADEN-1784
-	//require.optional('ext.wikia.adEngine.slot.interactiveMaps')
-], function ($, mustache, tracker, loader, mapAds) {
+(function () {
 	'use strict';
 
-	var assets;
+	var $ = require('jquery'),
+		mustache = require('wikia.mustache'),
+		tracker = require('wikia.tracker'),
+		loader = require('wikia.loader'),
+		mapAds,
+		assets;
+
+	try {
+		//FIXME: turning off ads on map because of JS errors - should be fixed in ADEN-1784
+		//mapAds = require('ext.wikia.adEngine.slot.interactiveMaps');
+	} catch (exception) {
+		mapAds = null;
+	}
 
 	/**
 	 * @desc Checks if template is cached in LocalStorage and if not loads it by using loader
@@ -20,33 +25,34 @@ require([
 	 * @returns {$.Deferred}
 	 */
 	function loadAssets(dependencies, cacheKey) {
-		var dfd = new $.Deferred();
+		var dfd = new $.Deferred(),
+			cache,
+			assetsFromCache;
 
 		// check if assets are already loaded and in DOM
 		if (assets) {
 			dfd.resolve(assets);
 		} else {
-			require (['wikia.cache'], function (cache) {
-				var assetsFromCache = cache.getVersioned(cacheKey);
+			cache = require('wikia.cache');
+			assetsFromCache = cache.getVersioned(cacheKey);
 
-				if (assetsFromCache) {
-					dfd.resolve(assetsFromCache);
-				} else {
-					loader({
-						type: loader.MULTI,
-						resources: {
-							mustache: dependencies.template,
-							scripts: dependencies.scripts
-						}
-					}).done(function (data) {
-						cache.setVersioned(cacheKey, data, 604800); //7days
+			if (assetsFromCache) {
+				dfd.resolve(assetsFromCache);
+			} else {
+				loader({
+					type: loader.MULTI,
+					resources: {
+						mustache: dependencies.template,
+						scripts: dependencies.scripts
+					}
+				}).done(function (data) {
+					cache.setVersioned(cacheKey, data, 604800); // 7 days
 
-						dfd.resolve(data);
-					}).fail(function () {
-						dfd.reject();
-					});
-				}
-			});
+					dfd.resolve(data);
+				}).fail(function () {
+					dfd.reject();
+				});
+			}
 		}
 
 		return dfd.promise();
@@ -80,35 +86,33 @@ require([
 					assets = loadedAssets;
 				}
 
-				require(['wikia.ui.factory'], function (uiFactory) {
-					uiFactory.init(['modal']).then(function (uiModal) {
-						var modalConfig = {
-							vars: {
-								id: 'interactiveMap-' + mapId,
-								size: 'large',
-								title: mapTitle,
-								content: iframe
-							}
-						};
+				require('wikia.ui.factory').init(['modal']).then(function (uiModal) {
+					var modalConfig = {
+						vars: {
+							id: 'interactiveMap-' + mapId,
+							size: 'large',
+							title: mapTitle,
+							content: iframe
+						}
+					};
 
-						uiModal.createComponent(modalConfig, function (mapModal) {
-							mapModal.show();
+					uiModal.createComponent(modalConfig, function (mapModal) {
+						mapModal.show();
 
-							if (mapAds) {
-								mapAds.initSlot(mapModal.$element.find('.wikia-ad-interactive-map').get(0));
-							}
+						if (mapAds) {
+							mapAds.initSlot(mapModal.$element.find('.wikia-ad-interactive-map').get(0));
+						}
 
-							require(['wikia.maps.pontoBridge'], function (pontoBridge) {
-								pontoBridge.init(mapModal.$content.find('#wikiaInteractiveMapIframe')[0]);
-							});
+						require('wikia.maps.pontoBridge').init(
+							mapModal.$content.find('#wikiaInteractiveMapIframe')[0]
+						);
 
-							tracker.track({
-								trackingMethod: 'analytics',
-								category: 'map',
-								action: tracker.ACTIONS.IMPRESSION,
-								label: 'map-in-modal-shown',
-								value: mapId
-							});
+						tracker.track({
+							trackingMethod: 'analytics',
+							category: 'map',
+							action: tracker.ACTIONS.IMPRESSION,
+							label: 'map-in-modal-shown',
+							value: mapId
 						});
 					});
 				});
@@ -124,19 +128,17 @@ require([
 	 * @see loadTemplate()
 	 */
 	function showUnexpectedErrorModal() {
-		require(['wikia.ui.factory'], function (uiFactory) {
-			uiFactory.init(['modal']).then(function (uiModal) {
-				var modalConfig = {
-					vars: {
-						id: 'interactiveMapError',
-						size: 'small',
-						content: $.msg('wikia-interactive-maps-map-placeholder-error')
-					}
-				};
+		require('wikia.ui.factory').init(['modal']).then(function (uiModal) {
+			var modalConfig = {
+				vars: {
+					id: 'interactiveMapError',
+					size: 'small',
+					content: $.msg('wikia-interactive-maps-map-placeholder-error')
+				}
+			};
 
-				uiModal.createComponent(modalConfig, function (errorModal) {
-					errorModal.show();
-				});
+			uiModal.createComponent(modalConfig, function (errorModal) {
+				errorModal.show();
 			});
 		});
 	}
@@ -152,4 +154,4 @@ require([
 			mapAds.initSlot(this);
 		});
 	}
-});
+})();

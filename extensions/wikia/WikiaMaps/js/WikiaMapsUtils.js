@@ -103,9 +103,7 @@ define(
 		 * @param {function=} trigger - trigger function which returns data to ponto bridge
 		 */
 		function initModule(amdModule, templates, params, trigger) {
-			require([amdModule], function (module) {
-				module.init(templates, params, trigger);
-			});
+			require(amdModule).init(templates, params, trigger);
 		}
 
 		/**
@@ -280,15 +278,13 @@ define(
 		 * @param {function} onLoggedIn - callback function to be called after login
 		 */
 		function showForceLoginModal(origin, onLoggedIn) {
-			require(['AuthModal'], function (authModal) {
-				authModal.load({
-					origin: origin,
-					url: '/signin?redirect=' + encodeURIComponent(w.location.href),
-					onAuthSuccess: function () {
-						w.UserLogin.forceLoggedIn = true;
-						onLoggedIn();
-					}
-				});
+			require('AuthModal').load({
+				origin: origin,
+				url: '/signin?redirect=' + encodeURIComponent(w.location.href),
+				onAuthSuccess: function () {
+					w.UserLogin.forceLoggedIn = true;
+					onLoggedIn();
+				}
 			});
 		}
 

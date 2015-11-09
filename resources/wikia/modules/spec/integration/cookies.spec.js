@@ -8,7 +8,7 @@ describe("Cookies", function () {
 	var windowMock = {
 		document: document
 	},
-		cookies = modules['wikia.cookies'](windowMock);
+		cookies = require('wikia.cookies')(windowMock);
 
 	it('registers AMD module', function() {
 		expect(typeof cookies).toBe('object');

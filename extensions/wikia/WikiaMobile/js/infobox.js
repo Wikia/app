@@ -1,23 +1,25 @@
-require(['jquery', 'wikia.window'], function($, window){
+(function () {
 	'use strict';
 
-	var SHORT_CLASS = 'short',
+	var $ = require('jquery'),
+		window = require('wikia.window'),
+		SHORT_CLASS = 'short',
 		$infoboxes = $('table[class*="infobox"] tbody'),
 		body = window.document.body,
 		scrollTo = body.scrollIntoViewIfNeeded || body.scrollIntoView;
 
-	if($infoboxes.length) {
+	if ($infoboxes.length) {
 		$infoboxes
-			.filter(function(){
+			.filter(function () {
 				return this.rows.length > 10;
 			})
 			.addClass(SHORT_CLASS)
 			.append('<tr class=infobox-expand><td colspan=2><span class=chevron></span></td></tr>')
-			.on('click', function(event){
+			.on('click', function (event) {
 				var $target = $(event.target),
 					$this = $(this);
 
-				if(!$target.is('a') && $this.toggleClass(SHORT_CLASS).hasClass(SHORT_CLASS)) {
+				if (!$target.is('a') && $this.toggleClass(SHORT_CLASS).hasClass(SHORT_CLASS)) {
 					scrollTo.apply($this.find('.infobox-expand')[0]);
 				}
 			});
@@ -34,12 +36,12 @@ require(['jquery', 'wikia.window'], function($, window){
 			$infoboxes = $('#wkMainCnt .portable-infobox'),
 			body = window.document.body,
 			scrollTo = body.scrollIntoViewIfNeeded || body.scrollIntoView,
-			expandButton = '<div class="' + expandButtonClass + '"><span class=chevron></span></div>'
+			expandButton = '<div class="' + expandButtonClass + '"><span class=chevron></span></div>';
 
 		if ($infoboxes.length) {
-			$infoboxes.filter( function (index, element) {
-					return $(element).outerHeight() > minimumHeight;
-				})
+			$infoboxes.filter(function (index, element) {
+				return $(element).outerHeight() > minimumHeight;
+			})
 				.addClass(collapsedClass)
 				.append(expandButton)
 				.on('click', function (event) {
@@ -54,4 +56,4 @@ require(['jquery', 'wikia.window'], function($, window){
 	}
 
 	handlePortableInfoboxes();
-});
+})();

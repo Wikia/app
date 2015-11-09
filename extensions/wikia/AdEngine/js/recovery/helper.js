@@ -4,22 +4,27 @@ define('ext.wikia.adEngine.recovery.helper', [
 	'wikia.document',
 	'wikia.lazyqueue',
 	'wikia.log',
-	'wikia.window',
-	require.optional('ext.wikia.adEngine.provider.gpt.sourcePointTag')
+	'wikia.window'
 ], function (
 	adContext,
 	doc,
 	lazyQueue,
 	log,
-	win,
-	SourcePointTag
+	win
 ) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.recovery.helper',
 		context = adContext.getContext(),
 		slotsToRecover = [],
-		onBlockingEventsQueue = [];
+		onBlockingEventsQueue = [],
+		SourcePointTag;
+
+	try {
+		SourcePointTag = require('ext.wikia.adEngine.provider.gpt.sourcePointTag');
+	} catch (exception) {
+		SourcePointTag = null;
+	}
 
 	function initEventQueue() {
 		lazyQueue.makeQueue(onBlockingEventsQueue, function (callback) {

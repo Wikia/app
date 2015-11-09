@@ -9,13 +9,12 @@
  */
 define('wikia.loader', [
 		'wikia.window',
-		require.optional('mw'),
 		'wikia.nirvana',
 		'jquery',
 		'wikia.log',
 		'wikia.fbLocale'
 	],
-	function loader (window, mw, nirvana, $, log, fbLocale) {
+	function loader (window, nirvana, $, log, fbLocale) {
 	'use strict';
 
 	var loader,
@@ -355,7 +354,14 @@ define('wikia.loader', [
 			} else {
 				failure();
 			}
-		};
+		},
+		mw;
+
+	try {
+		mw = require('mw');
+	} catch (exception) {
+		mw = null;
+	}
 
 	return (function () {
 		/**

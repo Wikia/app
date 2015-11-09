@@ -1,7 +1,10 @@
-require(['jquery', 'wikia.window', 'wikia.tracker'], function($, win, tracker) {
+(function () {
 	'use strict';
 
-	var ARTICLE_LENGTH_THRESHOLD = 800,
+	var $ = require('jquery'),
+		win = require('wikia.window'),
+		tracker = require('wikia.tracker'),
+		ARTICLE_LENGTH_THRESHOLD = 800,
 		SCALE = 100,
 		WIDTH_SAMPLING_RATIO = 1,
 		$article,
@@ -9,7 +12,7 @@ require(['jquery', 'wikia.window', 'wikia.tracker'], function($, win, tracker) {
 		trackFunction,
 		windowWidth;
 
-	if (Math.random() * 100 < WIDTH_SAMPLING_RATIO && win.wgIsArticle)  {
+	if (Math.random() * 100 < WIDTH_SAMPLING_RATIO && win.wgIsArticle) {
 		$article = $('.WikiaArticle');
 		trackFunction = tracker.buildTrackingFunction({
 			action: tracker.ACTIONS.IMPRESSION,

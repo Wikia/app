@@ -1,4 +1,4 @@
-define ('ext.wikia.Flags.FlagEditForm',
+define('ext.wikia.Flags.FlagEditForm',
 	['jquery', 'mw', 'wikia.loader', 'wikia.cache', 'wikia.nirvana', 'wikia.mustache', 'BannerNotification'],
 	function ($, mw, loader, cache, nirvana, mustache, BannerNotification) {
 		'use strict';
@@ -142,11 +142,9 @@ define ('ext.wikia.Flags.FlagEditForm',
 		}
 
 		function displayModal() {
-			require(['wikia.ui.factory'], function (uiFactory) {
-				/* Initialize the modal component */
-				uiFactory.init(['modal']).then(function (uiModal) {
-					uiModal.createComponent(modalConfig, processInstance);
-				});
+			/* Initialize the modal component */
+			require('wikia.ui.factory').init(['modal']).then(function (uiModal) {
+				uiModal.createComponent(modalConfig, processInstance);
 			});
 		}
 
@@ -202,7 +200,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 			var param,
 				template = $('#flags-special-form-template').val();
 
-			if ( !template.length ) {
+			if (!template.length) {
 				showErrorNotification('flags-special-create-form-invalid-template');
 				return false;
 			}
@@ -217,7 +215,7 @@ define ('ext.wikia.Flags.FlagEditForm',
 					if (json.status === true) {
 						$('.flags-special-form-params-tbody').empty();
 
-						for(var name in json.data) {
+						for (var name in json.data) {
 							param = {};
 							param.name = name;
 							param.description = '';

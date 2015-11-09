@@ -1,18 +1,18 @@
-(function($, window) {
+(function ($, window) {
 
 	/**
 	 * Wikia Editor loader for Edit pages
 	 */
-	var EditPageEditorLoader = $.createClass(Object,{
+	var EditPageEditorLoader = $.createClass(Object, {
 
 		element: false,
 
-		constructor: function() {
+		constructor: function () {
 			this.element = $('#EditPage');
 			this.body = $('#wpTextbox1');
 		},
 
-		getToolbarsConfig: function() {
+		getToolbarsConfig: function () {
 			var data = {
 				main: !!window.wgEditPageIsWidePage,
 				rte: typeof window.RTE != 'undefined',
@@ -22,7 +22,7 @@
 
 			data.wide = data.rte && data.main;
 
-			window.WikiaEditor.fire('wikiaeditorspacesbeforelayout',this.element,data);
+			window.WikiaEditor.fire('wikiaeditorspacesbeforelayout', this.element, data);
 
 			var layout = {
 				tabs: [],
@@ -31,7 +31,9 @@
 			};
 
 			// mode switcher
-			if (data.rte){ layout.tabs.push('ModeSwitch'); }
+			if (data.rte) {
+				layout.tabs.push('ModeSwitch');
+			}
 			// source toolbar
 			layout.toolbar.push('ToolbarMediawiki');
 			// format toolbars
@@ -43,34 +45,34 @@
 			// standard modules
 			if (data.wide) {
 				layout.toolbar.push('ToolbarWidescreen');
-			} else if(data.readOnly) {
+			} else if (data.readOnly) {
 				layout.rail.push('RailLicense');
 			} else {
-				layout.rail.push('RailInsert','RailCategories','RailTemplates','RailLicense');
+				layout.rail.push('RailInsert', 'RailCategories', 'RailTemplates', 'RailLicense');
 			}
 
-			window.WikiaEditor.fire('wikiaeditorspaceslayout',this.element,layout,data);
+			window.WikiaEditor.fire('wikiaeditorspaceslayout', this.element, layout, data);
 
 			// Wraps all modules in right rail for the plugin "railminimumheight"
 			if (layout.rail.length > 0) {
-				layout.rail = [{cls:'rail-auto-height',items:layout.rail}];
+				layout.rail = [{cls: 'rail-auto-height', items: layout.rail}];
 			}
 
 			return layout;
 		},
 
-		isFormatExpanded: function() {
+		isFormatExpanded: function () {
 			var ns = window.wgNamespaceNumber;
 			return (ns % 2 == 1 /* talk pages */) || (ns == 110/* NS_FORUM */);
 		},
 
-		getData: function() {
+		getData: function () {
 			var rte = typeof window.RTE != 'undefined', mode = 'source';
 			if (rte) {
 				mode = window.RTEInitMode || 'wysiwyg';
 			}
 
-			var plugins = [ 'wikiacore', rte ? 'ckeditorsuite' : 'mweditorsuite' ];
+			var plugins = ['wikiacore', rte ? 'ckeditorsuite' : 'mweditorsuite'];
 			var config = {
 				// the element being replaced, where text will be entered
 				body: this.body,
@@ -108,10 +110,10 @@
 				mode: mode
 			};
 
-			return { plugins: plugins, config: config };
+			return {plugins: plugins, config: config};
 		},
 
-		initWikiaEditor: function() {
+		initWikiaEditor: function () {
 			var data = this.getData();
 
 			window.WikiaEditor.create(data.plugins, data.config);
@@ -119,14 +121,11 @@
 			$(window).bind('UserLoginSubmit', window.WikiaEditor.storeContent);
 		},
 
-		initAceEditor: function() {
-			require(['wikia.editpage.ace.editor'], function(aceEditor){
-				aceEditor.init();
-			});
-
+		initAceEditor: function () {
+			require('wikia.editpage.ace.editor').init();
 		},
 
-		init: function() {
+		init: function () {
 			if (window.wgEnableCodePageEditor) {
 				this.initAceEditor();
 			} else {
@@ -135,7 +134,7 @@
 		}
 	});
 
-	$(function(){
+	$(function () {
 		if (!window.WikiaAutostartDisabled) {
 			var editor = new EditPageEditorLoader();
 			editor.init();

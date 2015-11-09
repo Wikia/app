@@ -5,16 +5,25 @@
  * there is currently AB Test running with 4 groups
  * After tests this will be much simplified file
  */
-require( [ 'wikia.window', 'wikia.nirvana', 'jquery', 'wikia.thumbnailer', 'lazyload', 'sloth', 'JSMessages', 'wikia.mustache', 'sections', 'track' ],
-function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache, sections, track ) {
+(function () {
 	'use strict';
 
-	var sectionsList,
+	var window = require('wikia.window'),
+		nirvana = require('wikia.nirvana'),
+		$ = require('jquery'),
+		thumbnailer = require('wikia.thumbnailer'),
+		lazyload = require('lazyload'),
+		sloth = require('sloth'),
+		msg = require('JSMessages'),
+		mustache = require('wikia.mustache'),
+		sections = require('sections'),
+		track = require('track'),
+		sectionsList,
 		sectionsLength,
 		articleId = window.wgArticleId,
-		testGroup = Wikia.AbTest.getGroup( 'WIKIAMOBILE_RELATEDPAGES' ),
+		testGroup = Wikia.AbTest.getGroup('WIKIAMOBILE_RELATEDPAGES'),
 		minSectionLength = 1000,
-		$placeholder = $( '#RelatedPagesModuleWrapper' ),
+		$placeholder = $('#RelatedPagesModuleWrapper'),
 		cacheKey = 'RelatedPagesAssets',
 		loaded,
 		shouldLoad = $placeholder.length && articleId;
@@ -23,135 +32,133 @@ function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache, secti
 	 * Checks if template is cached in LocalStorage and if not loads it by using loader
 	 * @returns {$.Deferred}
 	 */
-	function loadTemplate () {
-		var dfd = new $.Deferred();
+	function loadTemplate() {
+		var dfd = new $.Deferred(),
+			loader = require('wikia.loader'),
+			cache = require('wikia.cache'),
+			template = cache.getVersioned(cacheKey);
 
-		require( ['wikia.loader', 'wikia.cache'], function ( loader, cache ) {
-			var template = cache.getVersioned( cacheKey );
+		if (template) {
+			dfd.resolve(template);
+		} else {
+			loader({
+				type: loader.MULTI,
+				resources: {
+					mustache: 'extensions/wikia/RelatedPages/templates/RelatedPages_section.mustache'
+				}
+			}).done(function (data) {
+				template = data.mustache[0];
 
-			if ( template ) {
-				dfd.resolve( template );
-			} else {
-				loader( {
-					type: loader.MULTI,
-					resources: {
-						mustache: 'extensions/wikia/RelatedPages/templates/RelatedPages_section.mustache'
-					}
-				} ).done( function ( data ) {
-					template = data.mustache[0];
+				dfd.resolve(template);
 
-					dfd.resolve( template );
-
-					cache.setVersioned( cacheKey, template, 604800 ); //7days
-				} );
-			}
-
-		} );
+				cache.setVersioned(cacheKey, template, 604800); //7days
+			});
+		}
 
 		return dfd.promise();
 	}
 
-	function load () {
-		if ( !loaded && articleId ) {
-			require( [
-				'wikia.mustache',
-				'wikia.nirvana',
-				'wikia.tracker'
-			],
-			function ( mustache, nirvana, tracker ) {
-				$.when(
-					nirvana.getJson(
-						'RelatedPagesApi',
-						'getList',
-						{ ids: [articleId] }
-					),
-					loadTemplate()
-				).done( function ( data, template ) {
-					var items = data[0] && data[0].items,
-						pages = items && items[articleId],
-						page,
-						relatedPages = [];
+	function load() {
+		var mustache,
+			nirvana,
+			tracker;
 
-					if ( pages && pages.length ) {
-						while( ( page = pages.shift() ) ) {
-							relatedPages.push( {
-								url: page.url,
-								title: page.title,
-								imgUrl: page.imgUrl || window.wgExtensionsPath +
-									'/wikia/WikiaMobile/images/read_placeholder.png',
-								text: page.text
-							} );
-						}
+		if (!loaded && articleId) {
+			mustache = require('wikia.mustache');
+			nirvana = require('wikia.nirvana');
+			tracker = require('wikia.tracker');
 
-						$placeholder.prepend(
-								mustache.render( template, {
-									relatedPagesHeading: msg( 'wikiarelatedpages-heading' ),
-									imgWidth: 100,
-									imgHeight: 50,
-									pages: relatedPages,
-									mobileSkin: true
-								} )
-							)
-							.on( 'mousedown', '.RelatedPagesModule a', function ( event ) {
-								// Primary mouse button only
-								if ( event.type === 'mousedown' && event.which !== 1 ) {
-									return;
-								}
+			$.when(
+				nirvana.getJson(
+					'RelatedPagesApi',
+					'getList',
+					{ids: [articleId]}
+				),
+				loadTemplate()
+			).done(function (data, template) {
+				var items = data[0] && data[0].items,
+					pages = items && items[articleId],
+					page,
+					relatedPages = [];
 
-								tracker.track( {
-									action: tracker.ACTIONS.CLICK,
-									trackingMethod: 'analytics',
-									category: 'article',
-									label: 'related-pages'
-								} );
-							} );
-						}
-					} );
+				if (pages && pages.length) {
+					while (page = pages.shift()) {
+						relatedPages.push({
+							url: page.url,
+							title: page.title,
+							imgUrl: page.imgUrl || window.wgExtensionsPath +
+							'/wikia/WikiaMobile/images/read_placeholder.png',
+							text: page.text
+						});
+					}
+
+					$placeholder.prepend(
+						mustache.render(template, {
+							relatedPagesHeading: msg('wikiarelatedpages-heading'),
+							imgWidth: 100,
+							imgHeight: 50,
+							pages: relatedPages,
+							mobileSkin: true
+						})
+						)
+						.on('mousedown', '.RelatedPagesModule a', function (event) {
+							// Primary mouse button only
+							if (event.type === 'mousedown' && event.which !== 1) {
+								return;
+							}
+
+							tracker.track({
+								action: tracker.ACTIONS.CLICK,
+								trackingMethod: 'analytics',
+								category: 'article',
+								label: 'related-pages'
+							});
+						});
 				}
-			);
+			});
 
 			loaded = true;
 		}
 	}
 
-	if ( articleId ) {
-		if ( testGroup ) {
+	if (articleId) {
+		if (testGroup) {
 			sectionsList = $.makeArray(
-				window.document.querySelectorAll('#mw-content-text h2[id]:not(:last-of-type)' )
-			).filter( function( section ){
-				return sections.isSectionLongerThan( section, minSectionLength );
-			} );
+				window.document.querySelectorAll('#mw-content-text h2[id]:not(:last-of-type)')
+			).filter(function (section) {
+				return sections.isSectionLongerThan(section, minSectionLength);
+			});
 			sectionsLength = sectionsList.length;
 
-			$( '.trending-articles' )
-				.removeClass( 'hidden' )
-				.find( 'h2' )
-				.attr( 'id', 'trendingArticles' );
+			$('.trending-articles')
+				.removeClass('hidden')
+				.find('h2')
+				.attr('id', 'trendingArticles');
 
-			if ( sectionsLength ) {
-				$( window ).on(' load', function(){
+			if (sectionsLength) {
+				$(window).on(' load', function () {
 					$.when(
 						nirvana.getJson(
 							'RelatedPagesApi',
 							'getList',
 							{
-								ids: [ articleId ],
+								ids: [articleId],
 								limit: sectionsLength
 							}
 						),
-						msg.get( 'RelatedPagesInContent' )
-					).done( function( data ){
+						msg.get('RelatedPagesInContent')
+					).done(function (data) {
 						var items = data[0].items[articleId],
-							l = Math.min( sectionsLength, items.length ),
+							l = Math.min(sectionsLength, items.length),
 							i = 0,
-							styleClass = (['C', 'D'].indexOf( testGroup ) > -1) ? 'small' : 'large',
+							styleClass = (['C', 'D'].indexOf(testGroup) > -1) ? 'small' : 'large',
 							isSmall = ( styleClass === 'small' ),
-							width = isSmall ?  136 : 280,
+							width = isSmall ? 136 : 280,
 							height = isSmall ? 76 : 158,
 							emptyGif = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
-							header = (['B', 'D'].indexOf( testGroup ) > -1) ?
-								msg( 'wikiamobile-people-also-read' ) :
-								msg( 'wikiamobile-related-article' ),
+							header = (['B', 'D'].indexOf(testGroup) > -1) ?
+								msg('wikiamobile-people-also-read') :
+								msg('wikiamobile-related-article'),
 							template = '<a href="{{url}}" class="related-article ' +
 								styleClass +
 								'"><div class="header">' +
@@ -166,52 +173,52 @@ function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache, secti
 							imgUrl,
 							next;
 
-						for(; i < l; i++) {
+						for (; i < l; i++) {
 							item = items[i];
 							imgUrl = item.imgUrl ?
-								thumbnailer.getThumbURL( item.imgUrl, 'image', width, height ) :
+								thumbnailer.getThumbURL(item.imgUrl, 'image', width, height) :
 								false;
 
-							next = sections.getNext( sectionsList[i] );
+							next = sections.getNext(sectionsList[i]);
 
-							if ( next ) {
-								next.insertAdjacentHTML( 'beforebegin', mustache.render( template, {
+							if (next) {
+								next.insertAdjacentHTML('beforebegin', mustache.render(template, {
 									url: item.url,
 									title: item.title,
 									img: imgUrl
-								} ) );
+								}));
 							}
 						}
 
-						sloth( {
-							on: document.querySelectorAll( '.related-article .lazy:not(.placeholder)' ),
+						sloth({
+							on: document.querySelectorAll('.related-article .lazy:not(.placeholder)'),
 							threshold: 400,
 							callback: lazyload
-						} );
+						});
 
-						$( '#mw-content-text' ).on( 'click', '.related-article', function( event ){
+						$('#mw-content-text').on('click', '.related-article', function (event) {
 							track.event(
 								'related-article',
 								track.IMAGE_LINK,
 								{
 									method: 'analytics',
 									href: this.href,
-									label: 'section_' + ( sections.getId( this.nextSibling ) )
+									label: 'section_' + ( sections.getId(this.nextSibling) )
 								},
 								event
 							);
-						} );
+						});
 					});
 				});
 			}
 		} else {
-			if ( shouldLoad ) {
-				sloth( {
+			if (shouldLoad) {
+				sloth({
 					on: $placeholder,
 					threshold: 400,
 					callback: load
-				} );
+				});
 			}
 		}
 	}
-});
+})();

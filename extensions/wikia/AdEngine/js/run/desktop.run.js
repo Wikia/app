@@ -1,45 +1,26 @@
 /*global require*/
 /*jshint camelcase:false*/
-require([
-	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adEngine',
-	'ext.wikia.adEngine.adLogicHighValueCountry',
-	'ext.wikia.adEngine.adTracker',
-	'ext.wikia.adEngine.config.desktop',
-	'ext.wikia.adEngine.customAdsLoader',
-	'ext.wikia.adEngine.dartHelper',
-	'ext.wikia.adEngine.messageListener',
-	'ext.wikia.adEngine.provider.evolve',
-	'ext.wikia.adEngine.recovery.helper',
-	'ext.wikia.adEngine.slot.scrollHandler',
-	'ext.wikia.adEngine.slotTracker',
-	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.sourcePointDetection',
-	'wikia.krux',
-	'wikia.window',
-	'wikia.loader'
-], function (
-	adContext,
-	adEngine,
-	adLogicHighValueCountry,
-	adTracker,
-	adConfigDesktop,
-	customAdsLoader,
-	dartHelper,
-	messageListener,
-	providerEvolve,
-	recoveryHelper,
-	scrollHandler,
-	slotTracker,
-	slotTweaker,
-	sourcePoint,
-	krux,
-	win,
-	loader
-) {
+(function () {
 	'use strict';
 
-	var kruxSiteId = 'JU3_GW1b',
+	var adContext = require('ext.wikia.adEngine.adContext'),
+		adEngine = require('ext.wikia.adEngine.adEngine'),
+		adLogicHighValueCountry = require('ext.wikia.adEngine.adLogicHighValueCountry'),
+		adTracker = require('ext.wikia.adEngine.adTracker'),
+		adConfigDesktop = require('ext.wikia.adEngine.config.desktop'),
+		customAdsLoader = require('ext.wikia.adEngine.customAdsLoader'),
+		dartHelper = require('ext.wikia.adEngine.dartHelper'),
+		messageListener = require('ext.wikia.adEngine.messageListener'),
+		providerEvolve = require('ext.wikia.adEngine.provider.evolve'),
+		recoveryHelper = require('ext.wikia.adEngine.recovery.helper'),
+		scrollHandler = require('ext.wikia.adEngine.slot.scrollHandler'),
+		slotTracker = require('ext.wikia.adEngine.slotTracker'),
+		slotTweaker = require('ext.wikia.adEngine.slotTweaker'),
+		sourcePoint = require('ext.wikia.adEngine.sourcePointDetection'),
+		krux = require('wikia.krux'),
+		win = require('wikia.window'),
+		loader = require('wikia.loader'),
+		kruxSiteId = 'JU3_GW1b',
 		context = adContext.getContext(),
 		skin = 'oasis';
 
@@ -103,39 +84,38 @@ require([
 				type: loader.AM_GROUPS,
 				resources: ['adengine2_ads_recovery_message_js']
 			}).done(function () {
-				require(['ext.wikia.adEngine.recovery.message'], function (recoveredAdMessage) {
-					recoveredAdMessage.addRecoveryCallback();
-				});
+				require('ext.wikia.adEngine.recovery.message').addRecoveryCallback();
 			});
 		}
 
 		// Krux
 		krux.load(kruxSiteId);
 	});
-});
+})();
 
 // Inject extra slots
-require([
-	'ext.wikia.adEngine.slot.inContentPlayer',
-	'ext.wikia.adEngine.slot.skyScraper3',
-	'wikia.document',
-	'wikia.window',
-	require.optional('ext.wikia.adEngine.slot.exitstitial'),
-	require.optional('ext.wikia.adEngine.slot.inContentDesktop')
-], function (inContentPlayer, skyScraper3, doc, win, exitstitial, inContentDesktop) {
+(function () {
 	'use strict';
+
+	var inContentPlayer = require('ext.wikia.adEngine.slot.inContentPlayer'),
+		skyScraper3 = require('ext.wikia.adEngine.slot.skyScraper3'),
+		doc = require('wikia.document'),
+		win = require('wikia.window');
 
 	function initDesktopSlots() {
 		inContentPlayer.init();
 		skyScraper3.init();
 
-		if (inContentDesktop) {
-			inContentDesktop.init();
-		}
+		/**
+		 * those two below are optional and won't be available always
+		 */
+		try {
+			require('ext.wikia.adEngine.slot.exitstitial').init();
+		} catch (exception) {}
 
-		if (exitstitial) {
-			exitstitial.init();
-		}
+		try {
+			require('ext.wikia.adEngine.slot.inContentDesktop').init();
+		} catch (exception) {}
 	}
 
 	if (doc.readyState === 'complete') {
@@ -143,14 +123,18 @@ require([
 	} else {
 		win.addEventListener('load', initDesktopSlots);
 	}
-});
+})();
 
 // FPS meter
-require(['wikia.querystring', 'wikia.document'], function (qs, doc) {
+(function () {
 	'use strict';
+
+	var qs = require('wikia.querystring'),
+		doc = require('wikia.document');
+
 	if (qs().getVal('fps')) {
 		var s = doc.createElement('script');
 		s.src = 'https://raw.githubusercontent.com/Wikia/fps-meter/master/fps-meter.js';
 		doc.body.appendChild(s);
 	}
-});
+})();

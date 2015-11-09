@@ -18,19 +18,32 @@ class AnalyticsProviderAmazonMatch implements iAnalyticsProvider {
 		$instantGlobalName = json_encode( $instantGlobalName );
 
 		$code = <<< CODE
-	require([
-		"wikia.geo",
-		"wikia.instantGlobals",
-		require.optional($moduleName1), // new name
-		require.optional($moduleName2)  // old name
-	], function (geo, globals, amazon1, amazon2) {
-		var ac = globals[$instantGlobalName],
+	(function () {
+		var geo = require('wikia.geo'),
+			globals = require('wikia.instantGlobals'),
+			amazon,
+			ac = globals[$instantGlobalName];
+
+			try {
+				// new name
+				amazon1 = require($moduleName1);
+			} catch (exception) {
+				amazon1 = null;
+			}
+
+			try {
+				// old name
+				amazon2 = require($moduleName2);
+			} catch (exception) {
+				amazon2 = null;
+			}
+
 			amazon = amazon1 || amazon2;
 
 		if (geo.isProperGeo(ac)) {
 			amazon.call();
 		}
-	});
+	})();
 CODE;
 
 		return $code;

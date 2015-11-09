@@ -11,7 +11,7 @@ describe('WikiaDartVideoHelper', function () {
 				return {};
 			}
 		},
-		wikiaDartVideoHelper = modules['ext.wikia.adEngine.dartVideoHelper'](logMock, locationMock, adLogicPageLevelParamsMock);
+		wikiaDartVideoHelper = require('ext.wikia.adEngine.dartVideoHelper')(logMock, locationMock, adLogicPageLevelParamsMock);
 
 		resultUrl = wikiaDartVideoHelper.getUrl();
 
@@ -35,7 +35,7 @@ describe('WikiaDartVideoHelper', function () {
 				return {};
 			}
 		},
-		wikiaDartVideoHelper = modules['ext.wikia.adEngine.dartVideoHelper'](logMock, locationMock, adLogicPageLevelParamsMock);
+		wikiaDartVideoHelper = require('ext.wikia.adEngine.dartVideoHelper')(logMock, locationMock, adLogicPageLevelParamsMock);
 
 		resultUrl = wikiaDartVideoHelper.getUrl();
 
@@ -53,7 +53,7 @@ describe('WikiaDartVideoHelper', function () {
 				};
 			}
 		},
-		wikiaDartVideoHelper = modules['ext.wikia.adEngine.dartVideoHelper'](logMock, locationMock, adLogicPageLevelParamsMock);
+		wikiaDartVideoHelper = require('ext.wikia.adEngine.dartVideoHelper')(logMock, locationMock, adLogicPageLevelParamsMock);
 
 		resultUrl = wikiaDartVideoHelper.getUrl();
 

@@ -58,7 +58,8 @@ define('TemplateClassificationInEdit',
 	}
 );
 
-require(['TemplateClassificationInEdit'], function (tc) {
+(function () {
 	'use strict';
-	$(tc.init);
-});
+
+	$(require('TemplateClassificationInEdit').init);
+})();

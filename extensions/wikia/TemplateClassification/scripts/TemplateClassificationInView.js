@@ -77,7 +77,8 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'wikia.
 	}
 );
 
-require(['TemplateClassificationInView'], function (tc) {
+(function () {
 	'use strict';
-	$(tc.init);
-});
+
+	$(require('TemplateClassificationInView').init);
+})();

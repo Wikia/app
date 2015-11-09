@@ -1,6 +1,10 @@
-require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], function ($, browserDetect, scrollFix) {
+(function () {
 	'use strict';
-	var $selectElement = $('#searchSelect'),
+
+	var $ = require('jquery'),
+		browserDetect = require('wikia.browserDetect'),
+		scrollFix = require('GlobalNavigationiOSScrollFix'),
+		$selectElement = $('#searchSelect'),
 		$searchInput = $('#searchInput'),
 		$autocompleteObj;
 
@@ -66,4 +70,4 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 				});
 		}
 	});
-});
+})();

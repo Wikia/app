@@ -60,6 +60,8 @@
 		},
 
 		humanTrackingCallback: function (event) {
+			var tracker = require('wikia.tracker');
+
 			// Don't track first mousemove events because of Chrome on Windows triggers this event without moving mouse
 			if (event.type === 'mousemove' && this.humanEvents++ < 10) {
 				return false;
@@ -67,13 +69,11 @@
 
 			$(document).off('.humanTracking');
 
-			require(['wikia.tracker'], function (tracker) {
-				tracker.track({
-					category: 'user-sign-up',
-					trackingMethod: 'analytics',
-					action: tracker.ACTIONS.VIEW,
-					label: 'human-pageview-' + event.type
-				});
+			tracker.track({
+				category: 'user-sign-up',
+				trackingMethod: 'analytics',
+				action: tracker.ACTIONS.VIEW,
+				label: 'human-pageview-' + event.type
 			});
 		}
 	};

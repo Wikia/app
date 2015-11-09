@@ -21,7 +21,8 @@ $(function () {
 	var rail = $('#WikiaRail'),
 		LAZY_LOADING_SAMPLING_RATIO = 10, // integer (0-100): 0 - no tracking, 100 - track everything */
 		params = {},
-		lazyLoadingTime;
+		lazyLoadingTime,
+		loader = require('wikia.loader');
 
 	// Add lifecycle event for beginning lazy load
 	rail.trigger('beginLoad.rail');
@@ -97,14 +98,12 @@ $(function () {
 					// TODO: This seems like an unnessary use of require, this whole module should
 					// be converted into an AMD module and loader should just be added as a dependency
 					// to the define() deps array
-					require(['wikia.loader'], function (loader) {
-						loader({
-							type: loader.CSS,
-							resources: data.css
-						})
-							.done(function () {
-								loadRailContents(data);
-							});
+
+					loader({
+						type: loader.CSS,
+						resources: data.css
+					}).done(function () {
+						loadRailContents(data);
 					});
 				}
 			}

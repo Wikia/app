@@ -101,9 +101,7 @@
 						// update existing video
 						RTE.mediaEditor.update(element, wikitext, embedData);
 
-						require(['wikia.vet'], function (vet) {
-							vet.close();
-						});
+						require('wikia.vet').close();
 					} else {
 						// add new video
 						RTE.mediaEditor.addVideo(wikitext, embedData);

@@ -1,9 +1,12 @@
-require(
-	['jquery', 'wikia.window', 'wikia.nirvana', 'wikia.delayedhover', 'wikia.globalNavigationDropdowns'],
-	function($, window, nirvana, delayedHover, dropdowns) {
-		'use strict';
+(function () {
+	'use strict';
 
-		var WallNotifications = {
+	var $ = require('jquery'),
+		window = require('wikia.window'),
+		nirvana = require('wikia.nirvana'),
+		delayedHover = require('wikia.delayedhover'),
+		dropdowns = require('wikia.globalNavigationDropdowns'),
+		WallNotifications = {
 			init: function () {
 				this.bucky = window.Bucky('WallNotifications');
 				this.updateInProgress = false; // we only want 1 update simultaneously
@@ -367,25 +370,24 @@ require(
 			}
 		};
 
-		$(function () {
-			WallNotifications.init();
+	$(function () {
+		WallNotifications.init();
 
-			dropdowns.attachDropdown(
-				WallNotifications.$notificationsEntryPoint, {
-					onOpen: WallNotifications.onNotificationsOpen
-				}
-			);
+		dropdowns.attachDropdown(
+			WallNotifications.$notificationsEntryPoint, {
+				onOpen: WallNotifications.onNotificationsOpen
+			}
+		);
 
-			delayedHover.attach(
-				document.getElementById('notificationsEntryPoint'),
-				{
-					checkInterval: 200,
-					maxActivationDistance: 20,
-					onActivate: dropdowns.openDropdown,
-					onDeactivate: dropdowns.closeDropdown,
-					activateOnClick: false
-				}
-			);
-		});
-	}
-);
+		delayedHover.attach(
+			document.getElementById('notificationsEntryPoint'),
+			{
+				checkInterval: 200,
+				maxActivationDistance: 20,
+				onActivate: dropdowns.openDropdown,
+				onDeactivate: dropdowns.closeDropdown,
+				activateOnClick: false
+			}
+		);
+	});
+})();

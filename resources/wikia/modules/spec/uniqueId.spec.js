@@ -2,7 +2,7 @@
 describe("uniqueId", function () {
 	'use strict';
 
-	var uniqueId = modules['wikia.uniqueId']();
+	var uniqueId = require('wikia.uniqueId')();
 
 	it('returns a string', function() {
 		expect(typeof uniqueId()).toBe('string');

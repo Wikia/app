@@ -1,7 +1,7 @@
 describe("Stringhelper", function () {
 	'use strict';
 
-	var stringHelper = modules['wikia.stringhelper']();
+	var stringHelper = require('wikia.stringhelper')();
 
 	it('returns string with replaced diacritic characters into normal equivalent', function() {
 		expect(stringHelper.latinise('ąśćndhfdjgremęęęęóóalfdsirtgjergóż')).toBe('ascndhfdjgremeeeeooalfdsirtgjergoz');

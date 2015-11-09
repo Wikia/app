@@ -19,7 +19,7 @@ describe("Geo", function () {
 				return cookieData;
 			}
 		},
-		geo = modules['wikia.geo'](cookiesMock);
+		geo = require('wikia.geo')(cookiesMock);
 
 	it('registers AMD module', function() {
 		expect(typeof geo).toBe('object');

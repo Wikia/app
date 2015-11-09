@@ -16,28 +16,23 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.provider.openX',
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
-	'ext.wikia.adEngine.provider.turtle',
-	require.optional('ext.wikia.adEngine.provider.taboola')
-], function (
-	// regular dependencies
-	log,
-	window,
-	instantGlobals,
-	geo,
-	adContext,
-	adDecoratorPageDimensions,
-
-	// AdProviders
-	adProviderEvolve,
-	adProviderDirectGpt,
-	adProviderLiftium,
-	adProviderMonetizationService,
-	adProviderOpenX,
-	adProviderRemnantGpt,
-	adProviderSevenOneMedia,
-	adProviderTurtle,
-	adProviderTaboola
-) {
+	'ext.wikia.adEngine.provider.turtle'
+], function (// regular dependencies
+			 log,
+			 window,
+			 instantGlobals,
+			 geo,
+			 adContext,
+			 adDecoratorPageDimensions,
+			 // AdProviders
+			 adProviderEvolve,
+			 adProviderDirectGpt,
+			 adProviderLiftium,
+			 adProviderMonetizationService,
+			 adProviderOpenX,
+			 adProviderRemnantGpt,
+			 adProviderSevenOneMedia,
+			 adProviderTurtle) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adConfigLate',
@@ -57,7 +52,8 @@ define('ext.wikia.adEngine.config.desktop', [
 	}
 
 	function getProviderList(slotName) {
-		var providerList = [];
+		var providerList = [],
+			adProviderTaboola;
 
 		log('getProvider', 5, logGroup);
 		log(slotName, 5, logGroup);
@@ -103,8 +99,15 @@ define('ext.wikia.adEngine.config.desktop', [
 		}
 
 		// Taboola
-		if (context.providers.taboola && adProviderTaboola && adProviderTaboola.canHandleSlot(slotName)) {
-			return [adProviderTaboola];
+		if (context.providers.taboola) {
+			try {
+				adProviderTaboola = require('ext.wikia.adEngine.provider.taboola');
+
+				if (adProviderTaboola.canHandleSlot(slotName)) {
+					return [adProviderTaboola];
+				}
+			} catch (exception) {
+			}
 		}
 
 		// MonetizationService

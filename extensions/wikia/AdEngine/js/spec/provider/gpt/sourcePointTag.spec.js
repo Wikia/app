@@ -71,7 +71,7 @@ describe('ext.wikia.adEngine.provider.gpt.sourcePointTag', function () {
 		GoogleTag;
 
 	function getApi() {
-		var SourcePointTag = modules['ext.wikia.adEngine.provider.gpt.sourcePointTag'](
+		var SourcePointTag = require('ext.wikia.adEngine.provider.gpt.sourcePointTag')(
 			mocks.adContext,
 			GoogleTag,
 			mocks.adSlot,
@@ -85,7 +85,7 @@ describe('ext.wikia.adEngine.provider.gpt.sourcePointTag', function () {
 	}
 
 	beforeEach(function () {
-		GoogleTag = modules['ext.wikia.adEngine.provider.gpt.googleTag'](
+		GoogleTag = require('ext.wikia.adEngine.provider.gpt.googleTag')(
 			document,
 			mocks.log,
 			mocks.window

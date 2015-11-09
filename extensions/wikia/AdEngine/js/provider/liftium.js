@@ -4,15 +4,21 @@ define('ext.wikia.adEngine.provider.liftium', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
-	'ext.wikia.adEngine.slotTweaker',
-	require.optional('wikia.instantGlobals')
-], function (doc, log, win, slotTweaker, instantGlobals) {
+	'ext.wikia.adEngine.slotTweaker'
+], function (doc, log, win, slotTweaker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.liftium',
 		slotMap,
 		canHandleSlot,
-		fillInSlot;
+		fillInSlot,
+		instantGlobals;
+
+	try {
+		instantGlobals = require('wikia.instantGlobals');
+	} catch (exception) {
+		instantGlobals = null;
+	}
 
 	slotMap = {
 		'HOME_TOP_LEADERBOARD': {'size': '728x90'},

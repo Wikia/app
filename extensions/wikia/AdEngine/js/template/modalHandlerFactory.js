@@ -1,14 +1,26 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.modalHandlerFactory', [
 	'ext.wikia.adEngine.adContext',
-	'wikia.log',
-	require.optional('ext.wikia.adEngine.template.modalMercuryHandler'),
-	require.optional('ext.wikia.adEngine.template.modalOasisHandler')
-], function (adContext, log, MercuryHandler, OasisHandler) {
+	'wikia.log'
+], function (adContext, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.modalHandlerFactory',
-		skin = adContext.getContext().targeting.skin;
+		skin = adContext.getContext().targeting.skin,
+		MercuryHandler,
+		OasisHandler;
+
+	try {
+		MercuryHandler = require('ext.wikia.adEngine.template.modalMercuryHandler');
+	} catch (exception) {
+		MercuryHandler = null;
+	}
+
+	try {
+		OasisHandler = require('ext.wikia.adEngine.template.modalOasisHandler');
+	} catch (exception) {
+		OasisHandler = null;
+	}
 
 	function create() {
 		log(['create', skin], 'debug', logGroup);

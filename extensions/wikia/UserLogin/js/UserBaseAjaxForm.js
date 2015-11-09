@@ -181,10 +181,10 @@
 	 * Reload the current page with an added "cb" (cachebuster) value, usually after a login.
 	 */
 	UserBaseAjaxForm.prototype.reloadPage = function () {
-		require(['wikia.querystring'], function (QuerySring) {
-			var qs = new QuerySring();
-			qs.addCb().goTo();
-		});
+		var QueryString = require('wikia.querystring'),
+			qs = new QueryString();
+
+		qs.addCb().goTo();
 	};
 
 	window.UserBaseAjaxForm = UserBaseAjaxForm;

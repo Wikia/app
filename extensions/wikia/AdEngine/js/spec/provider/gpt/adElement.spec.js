@@ -26,7 +26,7 @@ describe('ext.wikia.adEngine.provider.gpt.adElement', function () {
 		slotTargeting;
 
 	beforeEach(function () {
-		AdElement = modules['ext.wikia.adEngine.provider.gpt.adElement'](
+		AdElement = require('ext.wikia.adEngine.provider.gpt.adElement')(
 			document,
 			mocks.log,
 			mocks.adSizeConverter,

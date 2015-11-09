@@ -18,7 +18,7 @@ module.exports = function (config) {
 			'tests/lib/jasmine/helpers.js',
 
 			'resources/jquery/jquery-1.8.2.js',
-			'resources/wikia/libraries/define.mock.js',
+			'resources/wikia/libraries/loader.js/loader.js',
 
 			// JSMessages
 			'extensions/wikia/JSMessages/js/JSMessages.js',

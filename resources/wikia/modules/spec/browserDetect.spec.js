@@ -13,7 +13,7 @@ describe('browserDetect', function () {
 		winMock.navigator.userAgent =
 			'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0';
 
-		browserDetectModule = modules['wikia.browserDetect'](winMock);
+		browserDetectModule = require('wikia.browserDetect')(winMock);
 		expect(browserDetectModule.isFirefox()).toBe(true);
 	});
 
@@ -21,7 +21,7 @@ describe('browserDetect', function () {
 		winMock.navigator.userAgent =
 			'Mozilla/5.0 (iPad; CPU OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53';
 
-		browserDetectModule = modules['wikia.browserDetect'](winMock);
+		browserDetectModule = require('wikia.browserDetect')(winMock);
 		expect(browserDetectModule.isIOS7orLower()).toBe(true);
 	});
 
@@ -29,7 +29,7 @@ describe('browserDetect', function () {
 		winMock.navigator.userAgent =
 			'Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53';
 
-		browserDetectModule = modules['wikia.browserDetect'](winMock);
+		browserDetectModule = require('wikia.browserDetect')(winMock);
 		expect(browserDetectModule.isIOS7orLower()).toBe(true);
 	});
 
@@ -37,14 +37,14 @@ describe('browserDetect', function () {
 		winMock.navigator.userAgent =
 			'Mozilla/5.0 (iPad; CPU OS 8_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53';
 
-		browserDetectModule = modules['wikia.browserDetect'](winMock);
+		browserDetectModule = require('wikia.browserDetect')(winMock);
 		expect(browserDetectModule.isIOS7orLower()).toBe(false);
 	});
 
 	it('Check if position fixed is supported for Android device', function () {
 		winMock.navigator.userAgent =
 			'Mozilla/5.0 (Linux; Android 4.3; Nexus 7 Build/JSS15Q) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.72 Safari/537.36';
-		browserDetectModule = modules['wikia.browserDetect'](winMock);
+		browserDetectModule = require('wikia.browserDetect')(winMock);
 		expect(browserDetectModule.isIOS7orLower()).toBe(false);
 	});
 });

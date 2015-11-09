@@ -14,7 +14,7 @@ describe('CSSPropsHelper', function () {
 		},
 		cssProperty = 'transform-origin',
 		error = 'Requested CSS property - ' + cssProperty + ' is not supported by your browser!',
-		cssPropsHelper = modules['wikia.csspropshelper'](document);
+		cssPropsHelper = require('wikia.csspropshelper')(document);
 
 	it('registers AMD module', function () {
 		expect(typeof cssPropsHelper).toBe('object');
@@ -47,7 +47,7 @@ describe('CSSPropsHelper', function () {
 				}
 			}
 		},
-			cssPropsHelper = modules['wikia.csspropshelper'](document);
+			cssPropsHelper = require('wikia.csspropshelper')(document);
 
 		expect(function () {
 			cssPropsHelper.getSupportedProp(cssProperty);

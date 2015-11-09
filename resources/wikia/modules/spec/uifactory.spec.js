@@ -37,7 +37,7 @@ describe('UIFactory', function () {
 		},
 		error = 'NotFoundApiException: File not found ' +
 		'(/usr/wikia/source/wiki/resources/wikia/ui_components/xxx/xxx_config.json).',
-		uifactory = modules['wikia.ui.factory'](nirvana, window, loader, uiComponent, jQuery);
+		uifactory = require('wikia.ui.factory')(nirvana, window, loader, uiComponent, jQuery);
 
 	window.wgStyleVersion = 12345;
 
@@ -62,7 +62,7 @@ describe('UIFactory', function () {
 			return nirvana;
 		}
 		var nirvana = nirvanaMock(componentConfig),
-			uifactory = modules['wikia.ui.factory'](nirvana, window, loader, uiComponent, jQuery);
+			uifactory = require('wikia.ui.factory')(nirvana, window, loader, uiComponent, jQuery);
 
 		uifactory.init(requestedComponent).done(function () {
 			done();
@@ -83,7 +83,7 @@ describe('UIFactory', function () {
 		}
 
 		var nirvana = nirvanaMock(componentConfig),
-			uifactory = modules['wikia.ui.factory'](nirvana, window, loader, uiComponent, jQuery);
+			uifactory = require('wikia.ui.factory')(nirvana, window, loader, uiComponent, jQuery);
 
 		uifactory.init(requestedComponent).done(function () {
 			done();
@@ -104,7 +104,7 @@ describe('UIFactory', function () {
 		}
 
 		var nirvana = nirvanaMock(componentConfig),
-			uifactory = modules['wikia.ui.factory'](nirvana, window, loader, uiComponent, jQuery);
+			uifactory = require('wikia.ui.factory')(nirvana, window, loader, uiComponent, jQuery);
 
 		uifactory.init(requestedComponent).done(function (component) {
 			expect(component instanceof uiComponent).toBe(true);
@@ -155,7 +155,7 @@ describe('UIFactory', function () {
 				}]
 			},
 			nirvana = nirvanaMock(componentConfig),
-			uifactory = modules['wikia.ui.factory'](nirvana, window, loader, uiComponent, jQuery);
+			uifactory = require('wikia.ui.factory')(nirvana, window, loader, uiComponent, jQuery);
 
 		uifactory.init(requestedComponent).done(function (component1, component2) {
 			expect(arguments.length).toBe(2);
@@ -183,7 +183,7 @@ describe('UIFactory', function () {
 			},
 			nirvana = nirvanaMock(xhrObject),
 			requestedComponent = 'xxx',
-			uifactory = modules['wikia.ui.factory'](nirvana, window, loader, uiComponent, jQuery);
+			uifactory = require('wikia.ui.factory')(nirvana, window, loader, uiComponent, jQuery);
 
 		expect(function () {
 			uifactory.init(requestedComponent);
@@ -238,7 +238,7 @@ describe('UIFactory', function () {
 				}]
 			},
 			nirvana = nirvanaMock(componentConfig),
-			uifactory = modules['wikia.ui.factory'](nirvana, window, loader, uiComponent, jQuery);
+			uifactory = require('wikia.ui.factory')(nirvana, window, loader, uiComponent, jQuery);
 
 		uifactory.init(requestedComponent).done(function (component1) {
 			expect(arguments.length).toBe(1);

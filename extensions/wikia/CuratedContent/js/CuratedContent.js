@@ -121,9 +121,7 @@
 			size = Math.max(Math.min(~~size, 200), 50);
 			$html.css('font-size', size + '%');
 
-			require(['tables'], function(t){
-				t.check();
-			});
+			require('tables').check();
 
 			return size;
 		};
@@ -171,67 +169,67 @@
 
 	window.Skin = Skin;
 
-	require(['modal', 'sections'], function(modal, sections){
-		function Modal(){
-			this.close = function(){
-				var open = modal.isOpen();
+	function Modal(){
+		var modal = require('modal');
 
-				modal.close();
+		this.close = function () {
+			var open = modal.isOpen();
 
-				return !!open;
-			};
-		}
+			modal.close();
 
-		Ponto.PontoBaseHandler.derive(Modal);
-
-		Modal.getInstance = function(){
-			return new Modal();
+			return !!open;
 		};
+	}
 
-		window.Modal = Modal;
+	Ponto.PontoBaseHandler.derive(Modal);
 
-		function Sections(){
-			this.open = function(id){
-				sections.open(id, true);
-			};
-			this.close = sections.close;
-			this.toggle = function(id) {
-				sections.toggle(id, true);
-			};
-		}
+	Modal.getInstance = function(){
+		return new Modal();
+	};
 
-		Ponto.PontoBaseHandler.derive(Sections);
+	window.Modal = Modal;
 
-		Sections.getInstance = function(){
-			return new Sections();
+	function Sections(){
+		var sections = require('sections');
+
+		this.open = function (id) {
+			sections.open(id, true);
 		};
+		this.close = sections.close;
+		this.toggle = function(id) {
+			sections.toggle(id, true);
+		};
+	}
 
-		window.Sections = Sections;
+	Ponto.PontoBaseHandler.derive(Sections);
 
-		$(window).on({
-			'sections:open': function(){
-				$html.css('min-height', $html.height());
-			},
-			'sections:close': function(){
-				$html.css('min-height', 0);
-			}
-		});
+	Sections.getInstance = function(){
+		return new Sections();
+	};
+
+	window.Sections = Sections;
+
+	$(window).on({
+		'sections:open': function(){
+			$html.css('min-height', $html.height());
+		},
+		'sections:close': function(){
+			$html.css('min-height', 0);
+		}
 	});
 
-	$(function(){
-		require(['toc'], function(toc){
-			Ponto.invoke(
-				'Article',
-				'data',
-				{
-					data: {
-						title: window.wgTitle,
-						articleId: window.wgArticleId,
-						cityId: window.wgCityId
-					},
-					toc: toc.get()
-				}
-			);
-		});
+	$(function () {
+		Ponto.invoke(
+			'Article',
+			'data',
+			{
+				data: {
+					title: window.wgTitle,
+					articleId: window.wgArticleId,
+					cityId: window.wgCityId
+				},
+				toc: require('toc').get()
+			}
+		);
 	});
 })($(document.documentElement), window);

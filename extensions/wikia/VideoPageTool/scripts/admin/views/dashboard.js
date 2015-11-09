@@ -52,10 +52,12 @@ define('videopageadmin.views.dashboard', [
 	return VPTDashboard;
 });
 
-require(['videopageadmin.views.dashboard'], function (DashboardView) {
+
+$(function () {
 	'use strict';
 
-	$(function () {
-		new DashboardView();
-	});
+	var DashboardView = require('videopageadmin.views.dashboard');
+
+	new DashboardView();
 });
+

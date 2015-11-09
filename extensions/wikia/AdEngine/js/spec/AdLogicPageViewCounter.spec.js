@@ -26,7 +26,7 @@ describe('AdLogicPageViewCounter', function () {
 				windowMock = { wgNow: dateNow},
 				pvCounter;
 
-			pvCounter = modules['ext.wikia.adEngine.adLogicPageViewCounter'](cacheMock, windowMock);
+			pvCounter = require('ext.wikia.adEngine.adLogicPageViewCounter')(cacheMock, windowMock);
 
 			spyOn(cacheMock, 'set');
 			pvCounter.increment();

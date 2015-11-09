@@ -5,7 +5,7 @@ describe('VideoPageTool: Admin Category Collection ( Backbone ):', function () {
 		instance;
 
 	beforeEach(function () {
-		CategoryCollection = modules['videopageadmin.collections.category']();
+		CategoryCollection = require('videopageadmin.collections.category')();
 		// suppresses xhr
 		spyOn(CategoryCollection.prototype, 'fetch');
 		instance = new CategoryCollection();

@@ -1,18 +1,19 @@
-define('editpage.event.helper', ['wikia.window'], function(window, ace){
+define('editpage.event.helper', ['wikia.window'], function (window, ace) {
 	'use strict';
 
 	// get editor's content (either wikitext or HTML)
 	// and call provided callback with wikitext as its parameter
 	function getContent() {
 		var dfd = new $.Deferred(),
-			editor = typeof RTE == 'object' ? RTE.getInstance() : false, mode = editor ? editor.mode : 'mw',
-			content = '';
+			editor = typeof RTE == 'object' ? RTE.getInstance() : false,
+			mode = editor ? editor.mode : 'mw',
+			content = '',
+			ace;
 
 		if (window.wgEnableCodePageEditor) {
-			require(['wikia.ace.editor'], function(ace){
-				content = ace.getContent();
-				dfd.resolve(content);
-			});
+			ace = require('wikia.ace.editor');
+			content = ace.getContent();
+			dfd.resolve(content);
 		} else {
 			switch (mode) {
 				case 'mw':

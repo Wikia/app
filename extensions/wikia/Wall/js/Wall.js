@@ -60,8 +60,8 @@
 				.on('click', '.load-more a', this.proxy(this.loadMore))
 				.on('click', '.related-topics .edit-topic-link', this.proxy(this.handleEditTopics))
 				.on('click', '.move-thread', this.proxy(this.moveThread))
-			// Fix FireFox bug where textareas remain disabled on page reload
-			.find('textarea').removeAttr('disabled');
+				// Fix FireFox bug where textareas remain disabled on page reload
+				.find('textarea').removeAttr('disabled');
 
 			$('#WikiaArticle')
 				.bind('afterWatching', this.proxy(this.onWallWatch))
@@ -301,17 +301,15 @@
 		vote: function (e) {
 			e.preventDefault();
 			if (!window.wgUserName) {
-				require(['AuthModal'], function (authModal) {
-					authModal.load({
-						url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-						origin: 'wall-and-forum',
-						onAuthSuccess: this.proxy(function () {
-							this.voteBase(e, function () {
-								window.location.reload();
-							});
-						})
-					});
-				}.bind(this));
+				require('AuthModal').load({
+					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
+					origin: 'wall-and-forum',
+					onAuthSuccess: this.proxy(function () {
+						this.voteBase(e, function () {
+							window.location.reload();
+						});
+					})
+				});
 			} else {
 				this.voteBase(e, this.proxy(function (target, data, dir) {
 					var votes = target.closest('li.message').find('.votes:first'),
@@ -371,20 +369,18 @@
 						id: id
 					},
 					callback: function (data) {
-						require(['wikia.ui.factory'], function (uiFactory) {
-							uiFactory.init(['modal']).then(function (uiModal) {
-								var votersModalConfig = {
-									vars: {
-										id: 'WallVotersModalWrapper',
-										size: 'small',
-										content: data,
-										title: $.msg('wall-votes-modal-title')
-									}
-								};
+						require('wikia.ui.factory').init(['modal']).then(function (uiModal) {
+							var votersModalConfig = {
+								vars: {
+									id: 'WallVotersModalWrapper',
+									size: 'small',
+									content: data,
+									title: $.msg('wall-votes-modal-title')
+								}
+							};
 
-								uiModal.createComponent(votersModalConfig, function (votersModal) {
-									votersModal.show();
-								});
+							uiModal.createComponent(votersModalConfig, function (votersModal) {
+								votersModal.show();
 							});
 						});
 					}
@@ -491,57 +487,55 @@
 				}
 			}
 
-			require(['wikia.ui.factory'], function (uiFactory) {
-				uiFactory.init(['modal']).then(function (uiModal) {
-					var modalPrimaryBtnId = 'WikiaConfirmOk',
-						confirmModalConfig = {
-							vars: {
-								id: 'WikiaConfirm',
-								size: 'medium',
-								content: msg,
-								title: title,
-								buttons: [{
-									vars: {
-										id: modalPrimaryBtnId,
-										value: okmsg,
-										classes: ['normal', 'primary'],
-										disabled: (mode !== 'rev'),
-										data: [{
-											key: 'event',
-											value: modalPrimaryBtnId
-										}]
-									}
-								}, {
-									vars: {
-										value: cancelmsg,
-										data: [{
-											key: 'event',
-											value: 'close'
-										}]
-									}
-								}]
-							}
-						};
+			require('wikia.ui.factory').init(['modal']).then(function (uiModal) {
+				var modalPrimaryBtnId = 'WikiaConfirmOk',
+					confirmModalConfig = {
+						vars: {
+							id: 'WikiaConfirm',
+							size: 'medium',
+							content: msg,
+							title: title,
+							buttons: [{
+								vars: {
+									id: modalPrimaryBtnId,
+									value: okmsg,
+									classes: ['normal', 'primary'],
+									disabled: (mode !== 'rev'),
+									data: [{
+										key: 'event',
+										value: modalPrimaryBtnId
+									}]
+								}
+							}, {
+								vars: {
+									value: cancelmsg,
+									data: [{
+										key: 'event',
+										value: 'close'
+									}]
+								}
+							}]
+						}
+					};
 
-					uiModal.createComponent(confirmModalConfig, function (confirmModal) {
-						confirmModal.bind('WikiaConfirmOk', function () {
-							var formdata = confirmModal.$element.find('form').serializeArray();
-							confirmModal.deactivate();
-							self.doAction(id, mode, wallMsg, $target, formdata, confirmModal);
+				uiModal.createComponent(confirmModalConfig, function (confirmModal) {
+					confirmModal.bind('WikiaConfirmOk', function () {
+						var formdata = confirmModal.$element.find('form').serializeArray();
+						confirmModal.deactivate();
+						self.doAction(id, mode, wallMsg, $target, formdata, confirmModal);
+					});
+
+					confirmModal.$element.find('textarea.wall-action-reason')
+						.bind('keydown keyup change', function (e) {
+							var $target = $(e.target);
+							if ($target.val().length > 0) {
+								confirmModal.$element.find('#' + modalPrimaryBtnId).removeAttr('disabled');
+							} else {
+								confirmModal.$element.find('#' + modalPrimaryBtnId).attr('disabled', 'disabled');
+							}
 						});
 
-						confirmModal.$element.find('textarea.wall-action-reason')
-							.bind('keydown keyup change', function (e) {
-								var $target = $(e.target);
-								if ($target.val().length > 0) {
-									confirmModal.$element.find('#' + modalPrimaryBtnId).removeAttr('disabled');
-								} else {
-									confirmModal.$element.find('#' + modalPrimaryBtnId).attr('disabled', 'disabled');
-								}
-							});
-
-						confirmModal.show();
-					});
+					confirmModal.show();
 				});
 			});
 		},
@@ -555,15 +549,15 @@
 
 		doAction: function (id, mode, msg, target, formdata, modal) {
 			switch (mode) {
-			case 'close':
-				this.doThreadChangeSendRequest(id, 'close', formdata);
-				break;
-			case 'restore':
-				this.doRestore(id, target, formdata);
-				break;
-			default:
-				this.doDelete(id, mode, msg, formdata, modal);
-				break;
+				case 'close':
+					this.doThreadChangeSendRequest(id, 'close', formdata);
+					break;
+				case 'restore':
+					this.doRestore(id, target, formdata);
+					break;
+				default:
+					this.doDelete(id, mode, msg, formdata, modal);
+					break;
 			}
 		},
 
@@ -732,15 +726,13 @@
 			e.preventDefault();
 			var rootMessageId = $(e.target).closest('.message').data('id');
 			if (window.wgDisableAnonymousEditing && !window.wgUserName) {
-				require(['AuthModal'], function (authModal) {
-					authModal.load({
-						url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-						origin: 'wall-and-forum',
-						onAuthSuccess: this.proxy(function () {
-							this.editTopics(rootMessageId);
-						})
-					});
-				}.bind(this));
+				require('AuthModal').load({
+					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
+					origin: 'wall-and-forum',
+					onAuthSuccess: this.proxy(function () {
+						this.editTopics(rootMessageId);
+					})
+				});
 			} else {
 				this.editTopics(rootMessageId);
 			}
@@ -806,69 +798,67 @@
 					id: id
 				},
 				callback: function (html) {
-					require(['wikia.ui.factory'], function (uiFactory) {
-						uiFactory.init(['modal']).then(function (uiModal) {
-							var moveThreadModalConfig = {
-								vars: {
-									id: 'WallMoveModalWrapper',
-									size: 'small',
-									content: html,
-									title: $.msg('wall-action-move-thread-heading'),
-									buttons: [{
-										vars: {
-											classes: ['normal', 'primary'],
-											value: $.msg('wall-action-move-thread-ok'),
-											data: [{
-												key: 'event',
-												value: 'submit'
-											}]
-										}
-									}, {
-										vars: {
-											value: $.msg('cancel'),
-											data: [{
-												key: 'event',
-												value: 'close'
-											}]
-										}
-									}]
-								}
-							};
+					require('wikia.ui.factory').init(['modal']).then(function (uiModal) {
+						var moveThreadModalConfig = {
+							vars: {
+								id: 'WallMoveModalWrapper',
+								size: 'small',
+								content: html,
+								title: $.msg('wall-action-move-thread-heading'),
+								buttons: [{
+									vars: {
+										classes: ['normal', 'primary'],
+										value: $.msg('wall-action-move-thread-ok'),
+										data: [{
+											key: 'event',
+											value: 'submit'
+										}]
+									}
+								}, {
+									vars: {
+										value: $.msg('cancel'),
+										data: [{
+											key: 'event',
+											value: 'close'
+										}]
+									}
+								}]
+							}
+						};
 
-							uiModal.createComponent(moveThreadModalConfig, function (moveThreadModal) {
-								var form = new window.WikiaForm(moveThreadModal.$content.find('.WikiaForm'));
+						uiModal.createComponent(moveThreadModalConfig, function (moveThreadModal) {
+							var form = new window.WikiaForm(moveThreadModal.$content.find('.WikiaForm'));
 
-								moveThreadModal.bind('submit', function (event) {
-									event.preventDefault();
+							moveThreadModal.bind('submit', function (event) {
+								event.preventDefault();
 
-									moveThreadModal.deactivate();
-									$.nirvana.sendRequest({
-										controller: 'WallExternalController',
-										method: 'moveThread',
-										format: 'json',
-										data: {
-											destinationBoardId: moveThreadModal.$content
-												.find('.destinationBoardId option:selected').val(),
-											rootMessageId: id
-										},
-										callback: function (json) {
-											if (json.status === 'ok') {
-												Wikia.Querystring().addCb().goTo();
-											} else if (json.status === 'error') {
-												form.clearAllInputErrors();
-												if (json.errorfield) {
-													form.showInputError(json.errorfield, json.errormsg);
-												} else {
-													form.showGenericError(json.errormsg);
-												}
-												moveThreadModal.activate();
+								moveThreadModal.deactivate();
+								$.nirvana.sendRequest({
+									controller: 'WallExternalController',
+									method: 'moveThread',
+									format: 'json',
+									data: {
+										destinationBoardId: moveThreadModal.$content
+											.find('.destinationBoardId option:selected').val(),
+										rootMessageId: id
+									},
+									callback: function (json) {
+										if (json.status === 'ok') {
+											Wikia.Querystring().addCb().goTo();
+										} else if (json.status === 'error') {
+											form.clearAllInputErrors();
+											if (json.errorfield) {
+												form.showInputError(json.errorfield, json.errormsg);
+											} else {
+												form.showGenericError(json.errormsg);
 											}
+											moveThreadModal.activate();
 										}
-									});
+									}
 								});
-
-								moveThreadModal.show();
 							});
+
+							moveThreadModal.show();
 						});
 					});
 				}

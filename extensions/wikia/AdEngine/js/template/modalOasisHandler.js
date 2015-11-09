@@ -1,12 +1,17 @@
 /*global define, require*/
-define('ext.wikia.adEngine.template.modalOasisHandler', [
-	require.optional('wikia.ui.factory')
-], function (uiFactory) {
+define('ext.wikia.adEngine.template.modalOasisHandler', function () {
 	'use strict';
 
-	var oasisHandler = function () {
+	var uiFactory,
+		oasisHandler = function () {
 			this.modalId = 'ext-wikia-adEngine-template-modal';
 		};
+
+	try {
+		uiFactory = require('wikia.ui.factory');
+	} catch (exception) {
+		uiFactory = null;
+	}
 
 	oasisHandler.prototype.create = function (adContainer, modalVisible) {
 		var modalConfig = {

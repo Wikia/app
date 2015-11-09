@@ -56,7 +56,4 @@ define('wikia.onScroll', ['jquery', 'wikia.window'], function ($, window) {
 	};
 });
 
-require(['wikia.onScroll'], function (onScroll) {
-	'use strict';
-	onScroll.init();
-});
+require('wikia.onScroll').init();

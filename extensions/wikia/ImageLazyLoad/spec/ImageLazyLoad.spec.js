@@ -16,7 +16,7 @@ describe('ImgLzy', function () {
 
 		logMock.levels = {};
 
-		ImgLzy = modules['wikia.ImgLzy'](jQuery, logMock, windowMock, modules['wikia.thumbnailer']());
+		ImgLzy = require('wikia.ImgLzy'](jQuery, logMock, windowMock, modules['wikia.thumbnailer')());
 		ImgLzy.browserSupportsWebP = (supportsWebP === true);
 
 		return ImgLzy;

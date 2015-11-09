@@ -24,7 +24,8 @@
 		// init page controls widget
 		init: function () {
 			var $pageControls = $('#EditPageRail .module_page_controls'),
-				self = this;
+				self = this,
+				editpageEvents = require('editpage.events');
 
 			this.categories = $('#categories');
 			this.textarea = $pageControls.find('textarea');
@@ -38,18 +39,16 @@
 			this.minorEditCheck = $pageControls.find('#wpMinoredit');
 
 			// pressing enter on minor edit checkbox should not save the edition
-			this.minorEditCheck.on( 'keypress', this.proxy( this.onMinorEditKeypress ) );
+			this.minorEditCheck.on('keypress', this.proxy(this.onMinorEditKeypress));
 
 			this.minorEditCheck.on('change', this.proxy(function () {
 				this.editor.track('minor-edit');
 			}));
 
 			// attach events
-			require(['editpage.events'], function (editpageEvents) {
-				editpageEvents.attachDesktopPreview('wpPreview', self.editor);
-				editpageEvents.attachMobilePreview('wpPreviewMobile', self.editor);
-				editpageEvents.attachDiff('wpDiff', self.editor);
-			});
+			editpageEvents.attachDesktopPreview('wpPreview', self.editor);
+			editpageEvents.attachMobilePreview('wpPreviewMobile', self.editor);
+			editpageEvents.attachDiff('wpDiff', self.editor);
 
 			// remove placeholder text when user submits the form without providing the summary
 			this.editform = $('#editform').on('submit', this.proxy(this.onSave));
@@ -277,7 +276,7 @@
 			var self = this, dialogTitle = document.title;
 
 			// update modal's title when showing a captcha
-			if ( $('#wpCaptchaWord').exists() ) {
+			if ($('#wpCaptchaWord').exists()) {
 				dialogTitle = $.htmlentities($.msg('editpagelayout-captcha-title'));
 			}
 
@@ -344,114 +343,111 @@
 		// of any widthType/gridLayout settings when the responsive layout goes out
 		// for a global release.
 		renderPreview: function (extraData, type) {
-			var self = this;
+			var self = this,
+				breakpointsLayout = require('wikia.breakpointsLayout'),
+				previewPadding = 22, // + 2px for borders
+				articleWidth = 660,
+				width = articleWidth + (self.isGridLayout ? 30 : 0),
+				config = self.editor.config;
 
-			require([ 'wikia.breakpointsLayout' ], function (breakpointsLayout) {
-				var previewPadding = 22, // + 2px for borders
-					articleWidth = 660,
-					width = articleWidth + (self.isGridLayout ? 30 : 0),
-					config = self.editor.config;
+			//See logic: \EditPageLayoutHelper::isWidePage
+			if (config.isWidePage) {
+				width += breakpointsLayout.getRailWidthWithSpacing() + (self.isGridLayout ? 20 : 0);
+			}
 
-				//See logic: \EditPageLayoutHelper::isWidePage
-				if (config.isWidePage) {
-					width += breakpointsLayout.getRailWidthWithSpacing() + (self.isGridLayout ? 20 : 0);
+			if (config.extraPageWidth) {
+				// wide wikis
+				width += config.extraPageWidth;
+			}
+
+			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
+				var pageWidth = $('#WikiaPage').width(),
+					minWidth = breakpointsLayout.getArticleMinWidth();
+
+				// don't go below minimum width
+				if (pageWidth <= minWidth) {
+					pageWidth = minWidth;
 				}
 
-				if (config.extraPageWidth) {
-					// wide wikis
-					width += config.extraPageWidth;
+				width = pageWidth - breakpointsLayout.getArticlePadding();
+			}
+
+			// add article preview padding width
+			width += previewPadding;
+
+			var previewOptions = {
+				width: width,
+				//Most browsers have 17px wide scrollbars, 20px here is for safty net and round number
+				//ie: http://www.textfixer.com/tutorials/browser-scrollbar-width.php
+				//No need to run extra fancy JS to return value between 17 and 20
+				scrollbarWidth: 20,
+				onPublishButton: function () {
+					$('#wpSave').click();
+				},
+				getPreviewContent: function (callback, skin) {
+					self.getContent(function (content) {
+						self.getPreviewContent(content, extraData, callback, skin);
+					});
 				}
+			};
 
-				if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
-					var pageWidth = $('#WikiaPage').width(),
-						minWidth = breakpointsLayout.getArticleMinWidth();
+			// pass info about if it's a wide page (main page or page without right rail)
+			previewOptions.isWidePage = config.isWidePage;
+			previewOptions.currentTypeName = type;
 
-					// don't go below minimum width
-					if (pageWidth <= minWidth) {
-						pageWidth = minWidth;
-					}
-
-					width = pageWidth - breakpointsLayout.getArticlePadding();
-				}
-
-				// add article preview padding width
-				width += previewPadding;
-
-				var previewOptions = {
-					width: width,
-					//Most browsers have 17px wide scrollbars, 20px here is for safty net and round number
-					//ie: http://www.textfixer.com/tutorials/browser-scrollbar-width.php
-					//No need to run extra fancy JS to return value between 17 and 20
-					scrollbarWidth: 20,
-					onPublishButton: function () {
-						$('#wpSave').click();
-					},
-					getPreviewContent: function (callback, skin) {
-						self.getContent(function (content) {
-							self.getPreviewContent(content, extraData, callback, skin);
-						});
-					}
-				};
-
-				// pass info about if it's a wide page (main page or page without right rail)
-				previewOptions.isWidePage = config.isWidePage;
-				previewOptions.currentTypeName = type;
-
-				require(['wikia.preview'], function (preview) {
-					preview.renderPreview(previewOptions);
-				});
-			});
+			require('wikia.preview').renderPreview(previewOptions);
 		},
 
 		// render "show diff" modal
 		renderChanges: function () {
 			var self = this;
-			require([ 'wikia.ui.factory' ], function(uiFactory){
-				uiFactory.init([ 'modal' ]).then(function(uiModal) {
-					var previewModalConfig = {
-						vars: {
-							id: 'EditPageDialog',
-							title: $.htmlentities($.msg('editpagelayout-pageControls-changes')),
-							content: '<div class="ArticlePreview modalContent"><div class="ArticlePreviewInner">' +
-								'</div></div>',
-							size: 'large'
+
+			require('wikia.ui.factory').init(['modal']).then(function (uiModal) {
+				var previewModalConfig = {
+					vars: {
+						id: 'EditPageDialog',
+						title: $.htmlentities($.msg('editpagelayout-pageControls-changes')),
+						content: '<div class="ArticlePreview modalContent"><div class="ArticlePreviewInner">' +
+						'</div></div>',
+						size: 'large'
+					}
+				};
+
+				uiModal.createComponent(previewModalConfig, function (previewModal) {
+					previewModal.deactivate();
+
+					previewModal.$content.on('click', function (event) {
+						var target = $(event.target);
+						target.closest('a').not('[href^="#"]').attr('target', '_blank');
+					});
+
+					self.getContent(function (content) {
+						var section = $.getUrlVar('section') || 0,
+							extraData = {
+								content: content,
+								section: parseInt(section, 10)
+							};
+
+						if (self.categories.length) {
+							extraData.categories = self.categories.val();
 						}
-					};
-					uiModal.createComponent(previewModalConfig, function(previewModal) {
-						previewModal.deactivate();
 
-						previewModal.$content.on('click', function(event) {
-							var target = $(event.target);
-							target.closest('a').not('[href^="#"]').attr('target', '_blank');
-						});
+						$.when(
+							// get wikitext diff
+							self.ajax('diff', extraData),
 
-						self.getContent(function(content) {
-							var section = $.getUrlVar('section') || 0,
-								extraData = {
-									content: content,
-									section: parseInt(section, 10)
-								};
-
-							if (self.categories.length) {
-								extraData.categories = self.categories.val();
-							}
-
-							$.when(
-								// get wikitext diff
-								self.ajax('diff' , extraData),
-
-								// load CSS for diff
-								mw.loader.use('mediawiki.action.history.diff')
-							).done(function(ajaxData) {
-								var data = ajaxData[ 0 ],
+							// load CSS for diff
+							mw.loader.use('mediawiki.action.history.diff')
+						).done(function (ajaxData) {
+								var data = ajaxData[0],
 									html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;
+
 								previewModal.$content.find('.ArticlePreview .ArticlePreviewInner').html(html);
 								previewModal.activate();
 							});
-						});
-
-						previewModal.show();
 					});
+
+					previewModal.show();
 				});
 			});
 		},
@@ -474,7 +470,8 @@
 		getContent: function (callback) {
 			var editor = typeof RTE == 'object' ? RTE.getInstance() : false, mode = editor ? editor.mode : 'mw';
 
-			callback = callback || function () {};
+			callback = callback || function () {
+				};
 
 			switch (mode) {
 				case 'mw':

@@ -1,5 +1,8 @@
-require(['jquery', 'wikia.loader'], function ($, loader) {
+(function () {
 	'use strict';
+
+	var $ = require('jquery'),
+		loader = require('wikia.loader');
 
 	loader({
 		type: loader.LIBRARY,
@@ -14,4 +17,4 @@ require(['jquery', 'wikia.loader'], function ($, loader) {
 			VK.Widgets.Group(elementId, options, groupId);
 		});
 	});
-});
+})();

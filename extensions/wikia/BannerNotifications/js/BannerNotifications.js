@@ -173,9 +173,7 @@
 		} else {
 			$pageContainer = $('.WikiaPageContentWrapper');
 			headerHeight = $('#globalNavigation').height();
-			require(['wikia.onScroll'], function (onScroll) {
-				onScroll.bind(handleScrolling);
-			});
+			require('wikia.onScroll').bind(handleScrolling);
 		}
 		createBackendNotifications();
 	}

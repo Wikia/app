@@ -7,17 +7,21 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  **/
 
-require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana', 'sloth'],
-	function(throbber, qs, loader, nirvana, sloth){
+(function () {
 	'use strict';
 
-	var hash = qs().getHash(),
-		wkArtCom = document.getElementById('wkArtCom' ),
+	var throbber = require('throbber'),
+		qs = require('wikia.querystring'),
+		loader = require('wikia.loader'),
+		nirvana = require('wikia.nirvana'),
+		sloth = require('sloth'),
+		hash = qs().getHash(),
+		wkArtCom = document.getElementById('wkArtCom'),
 		open,
-		wkComm = document.getElementById('wkComm' ),
+		wkComm = document.getElementById('wkComm'),
 		clickEvent = 'click';
 
-	if(hash.indexOf('comm-') > -1){
+	if (hash.indexOf('comm-') > -1){
 		open = hash.slice(5);
 	}
 
@@ -28,16 +32,16 @@ require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana', 'slot
 		wkComm.insertAdjacentHTML('beforeend', commentsHTML[0]);
 		loader.processScript(assets.scripts.join(''));
 
-		if(open){
+		if (open){
 			var elm = document.getElementById(open);
 
-			if(elm){
+			if (elm){
 				setTimeout(function(){
 					elm.scrollIntoView();
 				}, 500);
 
-				if(elm.nodeName == 'LI'){
-					setTimeout(function(){
+				if (elm.nodeName == 'LI'){
+					setTimeout(function () {
 						var evObj = document.createEvent('MouseEvents');
 						evObj.initMouseEvent(clickEvent, true, true, window);
 						elm.getElementsByClassName('cmnRpl')[0].dispatchEvent(evObj);
@@ -55,7 +59,7 @@ require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana', 'slot
 				controller: 'ArticleComments',
 				method: 'WikiaMobileCommentsPage',
 				data: {
-					articleID: wgArticleId,
+					articleID: window.wgArticleId,
 					page: 1
 				},
 				format: 'html',
@@ -68,7 +72,7 @@ require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana', 'slot
 					messages: 'WikiaMobileComments',
 					scripts: 'articlecomments_js_wikiamobile',
 					params: {
-						uselang: wgUserLanguage//ensure per-language Varnish cache
+						uselang: window.wgUserLanguage//ensure per-language Varnish cache
 					}
 				}
 			})
@@ -79,4 +83,4 @@ require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana', 'slot
 		on: wkArtCom,
 		callback: init
 	});
-});
+})();

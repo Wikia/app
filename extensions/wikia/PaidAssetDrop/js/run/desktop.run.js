@@ -1,20 +1,13 @@
 /*global require*/
-require([
-	'ext.wikia.paidAssetDrop.paidAssetDrop',
-	'jquery',
-	'wikia.log',
-	'wikia.querystring',
-	'wikia.window'
-], function (
-	pad,
-	$,
-	log,
-	Querystring,
-	win
-) {
+(function () {
 	'use strict';
 
-	var action = new Querystring().getVal('action', 'view'),
+	var pad = require('ext.wikia.paidAssetDrop.paidAssetDrop'),
+		$ = require('jquery'),
+		log = require('wikia.log'),
+		Querystring = require('wikia.querystring'),
+		win = require('wikia.window'),
+		action = new Querystring().getVal('action', 'view'),
 		articleTarget = '#mw-content-text',
 		mainPageTarget = '#mw-content-text .lcs-container',
 		pageType,
@@ -44,4 +37,4 @@ require([
 			pad.injectPAD(target, 'desktop', pageType);
 		}
 	});
-});
+})();

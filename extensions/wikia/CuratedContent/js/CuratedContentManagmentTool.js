@@ -4,10 +4,13 @@
 /* jshint camelcase: false */
 'use strict';
 
-require(
-	['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages'],
-	function (window, $, nirvana, tracker, msg)
-{
+(function () {
+	var window = require('wikia.window'),
+		$ = require('jquery'),
+		nirvana = require('wikia.nirvana'),
+		tracker = require('wikia.tracker'),
+		msg = require('JSMessages');
+
 	// usefull shortcuts
 	$.fn.removeError = function () {
 		return this.removeClass('error').popover('destroy');
@@ -18,7 +21,7 @@ require(
 			.popover('destroy')
 			.popover({content: message});
 	};
-	$.fn.findSelectorFromList = function(list, reason) {
+	$.fn.findSelectorFromList = function (list, reason) {
 		return this.find(list[reason] || list.default);
 	};
 
@@ -229,8 +232,8 @@ require(
 							}
 						}
 					).fail(function () {
-							onImageLoadFail($image);
-						});
+						onImageLoadFail($image);
+					});
 				};
 
 			$form
@@ -274,8 +277,8 @@ require(
 						$(this).next().focus();
 					}
 				}).keyup(function () {
-					setTimeout(checkForm, 0);
-				});
+				setTimeout(checkForm, 0);
+			});
 
 			$(addItem).on('click', function () {
 				addNew(item);
@@ -349,28 +352,32 @@ require(
 				}
 				return errReason;
 			}
+
 			function addErrorToItem($selector, reason, message) {
 				$selector.findSelectorFromList({
-						imageMissing: '.image',
-						emptyLabel: '.name',
-						duplicatedLabel: '.name',
-						tooLongLabel: '.name',
-						default: '.item-input'
-					}, reason).addError(message);
+					imageMissing: '.image',
+					emptyLabel: '.name',
+					duplicatedLabel: '.name',
+					tooLongLabel: '.name',
+					default: '.item-input'
+				}, reason).addError(message);
 			}
+
 			function addErrorToSection($selector, reason, message) {
 				$selector.findSelectorFromList({
 					imageMissing: '.image',
 					default: '.section-input'
 				}, reason).addError(message);
 			}
+
 			function isFeaturedItem($node) {
 				return $node.closest('li').prevUntil('.section').prev().last().hasClass('featured');
 			}
+
 			function iterateItemsForErrors($nodes, err, message) {
 				var errLabel = err.target;
 
-				if (err.type === 'item' ) {
+				if (err.type === 'item') {
 					$nodes.each(function () {
 						var $this = $(this);
 						// label for items is held in .name
@@ -388,6 +395,7 @@ require(
 					});
 				}
 			}
+
 			function iterateSectionsForErrors($nodes, err, message) {
 				var errLabel = err.target;
 
@@ -507,4 +515,8 @@ require(
 			setup();
 		});
 	});
-});
+})();
+
+
+
+

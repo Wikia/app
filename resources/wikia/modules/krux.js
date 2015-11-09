@@ -44,28 +44,24 @@ define('wikia.krux', [
 	}
 
 	function load(confid) {
-		require([
-			'ext.wikia.adEngine.adContext',
-			'ext.wikia.adEngine.adLogicPageParams'
-		], function (
-			adContext,
-			adLogicPageParams
-		) {
-			var script;
-			if (adContext.getContext().targeting.enableKruxTargeting) {
-				// Export page level params, so Krux can read them
-				exportPageParams(adLogicPageParams);
 
-				script = doc.getElementById(kruxScriptId);
-				if (script) {
-					script.parentNode.removeChild(script);
-				}
+		var script,
+			adContext = require('ext.wikia.adEngine.adContext'),
+			adLogicPageParams = require('ext.wikia.adEngine.adLogicPageParams');
 
-				// Add Krux pixel
-				addConfigScript(confid);
-				kruxLoaded = true;
+		if (adContext.getContext().targeting.enableKruxTargeting) {
+			// Export page level params, so Krux can read them
+			exportPageParams(adLogicPageParams);
+
+			script = doc.getElementById(kruxScriptId);
+			if (script) {
+				script.parentNode.removeChild(script);
 			}
-		});
+
+			// Add Krux pixel
+			addConfigScript(confid);
+			kruxLoaded = true;
+		}
 	}
 
 	function getParams(n) {

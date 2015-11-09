@@ -90,13 +90,10 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 			labeling.prepareContent($classificationForm[0].outerHTML)
 		);
 
-		require(['wikia.ui.factory'], function (uiFactory) {
-			/* Initialize the modal component */
-			uiFactory.init(['modal']).then(createComponent);
+		require('wikia.ui.factory').init(['modal']).then(createComponent);
 
-			// Track - open TC modal
-			track({action: tracker.ACTIONS.OPEN});
-		});
+		// Track - open TC modal
+		track({action: tracker.ACTIONS.OPEN});
 	}
 
 	/**

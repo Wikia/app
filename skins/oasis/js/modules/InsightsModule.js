@@ -1,5 +1,5 @@
 define('InsightsModule', ['wikia.tracker'],
-	function(tracker) {
+	function (tracker) {
 		'use strict';
 
 		function init() {
@@ -23,7 +23,8 @@ define('InsightsModule', ['wikia.tracker'],
 	}
 );
 
-require(['InsightsModule'], function (InsightsModule) {
+$(function () {
 	'use strict';
-	$(InsightsModule.init);
+
+	require('InsightsModule').init();
 });

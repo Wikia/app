@@ -1,17 +1,16 @@
-/*global WikiaMobile: true */
-
-$(function(){
+$(function () {
 	var sliders = document.getElementsByClassName('wkSlider'),
-		i = sliders.length;
+		i = sliders.length,
+		track = require('track'),
+		click = function (ev) {
+			if (ev.target.tagName === 'IMG') {
+				track.event('slider', track.CLICK);
+			}
+		};
 
 	if (i) {
-		require(['track'], function(track){
-			var click = function(ev){
-				if(ev.target.tagName == 'IMG') {
-					track.event('slider', track.CLICK);
-				}
-			};
-			while (i--) sliders[i].addEventListener('tap', click, true);
-		});
+		while (i--) {
+			sliders[i].addEventListener('tap', click, true);
+		}
 	}
 });

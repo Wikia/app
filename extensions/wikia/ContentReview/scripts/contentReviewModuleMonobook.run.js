@@ -1,11 +1,13 @@
-require(
-	['jquery', 'wikia.document', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'mw', 'wikia.tracker'],
-	function ($, document, loader, nirvana, mustache, mw, tracker)
-{
+(function () {
 	'use strict';
 
 	/* Modal component configuration */
-	var modalConfig = {
+	var $ = require('jquery'),
+		loader = require('wikia.loader'),
+		nirvana = require('wikia.nirvana'),
+		mustache = require('wikia.mustache'),
+		mw = require('mw'),
+		modalConfig = {
 		vars: {
 			id: 'ContentReviewModal',
 			classes: ['content-review-status-modal'],
@@ -13,16 +15,6 @@ require(
 			content: '' // content
 		}
 	};
-
-	/* Tracking wrapper function */
-	//track = Wikia.Tracker.buildTrackingFunction({
-	//	action: tracker.ACTIONS.CLICK,
-	//	category: 'flags-edit',
-	//	trackingMethod: 'analytics'
-	//}),
-
-	/* Label for on submit tracking event */
-	//labelForSubmitAction = 'submit-form-untouched';
 
 	function init() {
 		$('body').on('click', '#ca-content-review', showModal);
@@ -35,10 +27,7 @@ require(
 	 */
 	function showModal(event) {
 		event.preventDefault();
-		//require(['wikia.ui.factory'], function (uiFactory) {
-		//	/* Initialize the modal component */
-		//	uiFactory.init(['modal']).then(createComponent);
-		//});
+
 		$.when(
 			nirvana.sendRequest({
 				controller: 'ContentReviewApi',
@@ -92,10 +81,8 @@ require(
 		/* Render content */
 		modalConfig.vars.content = mustache.render(statusBoxTemplate, contentReviewStatusData);
 
-		require(['wikia.ui.factory'], function (uiFactory) {
-			/* Initialize the modal component */
-			uiFactory.init(['modal']).then(createModalComponent);
-		});
+		/* Initialize the modal component */
+		require('wikia.ui.factory').init(['modal']).then(createModalComponent);
 	}
 
 	/**
@@ -108,9 +95,7 @@ require(
 	}
 
 	function initReviewSubmitButton() {
-		require(['ext.wikia.contentReview.module'], function (contentReviewModule) {
-			contentReviewModule.init();
-		});
+		require('ext.wikia.contentReview.module').init();
 	}
 
 	/**
@@ -119,79 +104,12 @@ require(
 	 * One of sub-tasks for getting modal shown
 	 */
 	function processInstance(modalInstance) {
-		//var $flagsEditForm = modalInstance.$element.find('#flagsEditForm');
-		//if ($flagsEditForm.length > 0) {
-		//	/* Submit flags edit form on Done button click */
-		//	modalInstance.bind('done', function () {
-		//		track({
-		//			action: tracker.ACTIONS.CLICK_LINK_BUTTON,
-		//			label: labelForSubmitAction
-		//		});
-		//		$flagsEditForm.trigger('submit');
-		//	});
-		//	/* Track clicks on modal form */
-		//	$flagsEditForm.bind('click', trackModalFormClicks);
-		//	/* Detect form change */
-		//	$flagsEditForm.on('change', function () {
-		//		labelForSubmitAction = 'submit-form-touched';
-		//		$flagsEditForm.off('change');
-		//	});
-		//}
-
-		/* Track all ways of closing modal */
-		//modalInstance.bind('close', function () {
-		//	track({
-		//		label: 'modal-close'
-		//	});
-		//});
-
 		/* Show the modal */
 		modalInstance.show();
 
 		initReviewSubmitButton();
-
-		//track({
-		//	action: tracker.ACTIONS.IMPRESSION,
-		//	label: 'modal-shown'
-		//});
 	}
-
-	/**
-	 * Track clicks within modal form
-	 * (links and checkboxes)
-	 */
-	//function trackModalFormClicks(e) {
-	//	var $target = $(e.target),
-	//		$targetLinkDataId;
-	//
-	//	/* Track checkbox toggling */
-	//	if ($target.is('input[type=checkbox]')) {
-	//		if ($target[0].checked) {
-	//			track({
-	//				action: tracker.ACTIONS.CLICK,
-	//				label: 'checkbox-checked'
-	//			});
-	//		} else {
-	//			track({
-	//				action: tracker.ACTIONS.CLICK,
-	//				label: 'checkbox-unchecked'
-	//			});
-	//		}
-	//		return;
-	//	}
-	//
-	//	/* Track links clicks */
-	//	if ($target.is('a')) {
-	//		$targetLinkDataId = $target.data('id');
-	//		if ($targetLinkDataId) {
-	//			track({
-	//				action: tracker.ACTIONS.CLICK_LINK_TEXT,
-	//				label: $targetLinkDataId
-	//			});
-	//		}
-	//	}
-	//}
 
 	// Run initialization method on DOM ready
 	$(init);
-});
+})();

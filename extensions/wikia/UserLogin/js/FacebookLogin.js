@@ -36,7 +36,11 @@
 		 * @param {Object} origin Possible values are from FacebookLogin.origins. For tracking how a user got here.
 		 */
 		init: function (origin) {
-			var self = this;
+			var self = this,
+				tracker = require('wikia.tracker'),
+				QueryString = require('wikia.querystring'),
+				uiFactory = require('wikia.ui.factory'),
+				BannerNotification = require('BannerNotification');
 
 			if (this.initialized || window.wgUserName) {
 				return;
@@ -44,34 +48,22 @@
 
 			this.bucky.timer.start('init');
 
-			// requiring these variables here instead of at the top of the page to avoid race conditions
-			require([
-				'wikia.tracker',
-				'wikia.querystring',
-				'wikia.ui.factory',
-				'BannerNotification'
-			], function (t, qs, uf, BannerNotification) {
-
-				tracker = t;
-				QueryString = qs;
-				uiFactory = uf;
-				bannerNotification = new BannerNotification().setType('error');
-				self.actions = tracker.ACTIONS;
-				self.track = tracker.buildTrackingFunction({
-					category: 'user-sign-up',
-					value: origin || 0,
-					trackingMethod: 'analytics'
-				});
-
-				self.initialized = true;
-				self.bindEvents();
-
-				// load when the login dropdown is shown or specific page is loaded
-				$.loadFacebookSDK();
-
-				self.log('init');
-				self.bucky.timer.stop('init');
+			bannerNotification = new BannerNotification().setType('error');
+			self.actions = tracker.ACTIONS;
+			self.track = tracker.buildTrackingFunction({
+				category: 'user-sign-up',
+				value: origin || 0,
+				trackingMethod: 'analytics'
 			});
+
+			self.initialized = true;
+			self.bindEvents();
+
+			// load when the login dropdown is shown or specific page is loaded
+			$.loadFacebookSDK();
+
+			self.log('init');
+			self.bucky.timer.stop('init');
 		},
 
 		/**
@@ -115,7 +107,7 @@
 					label: 'facebook-login'
 				});
 
-			// User successfully logged in with FB and granted permissions
+				// User successfully logged in with FB and granted permissions
 			} else if (response.authResponse) {
 				this.log('FB.login successful');
 
@@ -144,7 +136,7 @@
 					$.proxy(this.checkAccountCallback, this)
 				);
 
-			// The user didn't grant permissions
+				// The user didn't grant permissions
 			} else {
 				this.track({
 					action: this.actions.SUCCESS,
@@ -172,7 +164,7 @@
 				} else {
 					window.location = response.returnUrl;
 				}
-			// some error occurred
+				// some error occurred
 			} else if (response.loginAborted) {
 				bannerNotification.setContent(response.errorMsg).show();
 			} else if (response.unconfirmed) {
@@ -184,7 +176,7 @@
 				}, function (json) {
 					window.location = json.redirectUrl;
 				});
-			// user not logged in, show the login/signup modal
+				// user not logged in, show the login/signup modal
 			} else {
 				this.setupModal(response);
 			}
@@ -207,7 +199,7 @@
 				$.getResources(
 					[$.getSassCommonURL('extensions/wikia/UserLogin/css/UserLoginFacebook.scss')]
 				)
-			// response argument will be prepended to arguments otherwise passed to buildModal
+				// response argument will be prepended to arguments otherwise passed to buildModal
 			).then(this.buildModal.bind(this, response));
 		},
 

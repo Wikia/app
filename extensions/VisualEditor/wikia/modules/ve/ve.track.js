@@ -4,8 +4,9 @@
 
 /* global mw, require */
 
-require( ['wikia.tracker'], function ( tracker ) {
-	var actions = tracker.ACTIONS,
+( function () {
+	var tracker = require( 'wikia.tracker' ),
+		actions = tracker.ACTIONS,
 		// These are topics used by MediaWiki, consider them reserved. Each topic should be
 		// assigned to a function which will map the data associated with a topic to a format
 		// understood by Wikia.Tracker. Keep them alphabetized.
@@ -230,4 +231,4 @@ require( ['wikia.tracker'], function ( tracker ) {
 	ve.track.nameToLabel = nameToLabel;
 	ve.track.normalizeDuration = normalizeDuration;
 	ve.trackSubscribeAll( track );
-} );
+} )();

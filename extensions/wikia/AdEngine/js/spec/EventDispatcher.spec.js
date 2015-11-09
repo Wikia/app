@@ -19,7 +19,7 @@ describe('EventDispatcher', function () {
 	});
 
 	it('successfuly binds callback to event', function () {
-		var dispatcher = modules['ext.wikia.adEngine.eventDispatcher']();
+		var dispatcher = require('ext.wikia.adEngine.eventDispatcher')();
 
 		dispatcher.bind('event', callbacks.defaultCallback);
 
@@ -28,7 +28,7 @@ describe('EventDispatcher', function () {
 	});
 
 	it('successfuly unbinds callback to from event', function () {
-		var dispatcher = modules['ext.wikia.adEngine.eventDispatcher']();
+		var dispatcher = require('ext.wikia.adEngine.eventDispatcher')();
 
 		dispatcher.bind('event', callbacks.defaultCallback);
 		dispatcher.unbind('event', callbacks.defaultCallback);
@@ -37,7 +37,7 @@ describe('EventDispatcher', function () {
 	});
 
 	it('trigger should return true when callback result undefined', function () {
-		var dispatcher = modules['ext.wikia.adEngine.eventDispatcher']();
+		var dispatcher = require('ext.wikia.adEngine.eventDispatcher')();
 
 		dispatcher.bind('event', callbacks.defaultCallback);
 		dispatcher.bind('event', callbacks.defaultCallback);
@@ -49,7 +49,7 @@ describe('EventDispatcher', function () {
 	});
 
 	it('trigger should return true when all callbacks result !== false', function () {
-		var dispatcher = modules['ext.wikia.adEngine.eventDispatcher']();
+		var dispatcher = require('ext.wikia.adEngine.eventDispatcher')();
 
 		dispatcher.bind('event', callbacks.stringCallback);
 		dispatcher.bind('event', callbacks.trueCallback);
@@ -61,7 +61,7 @@ describe('EventDispatcher', function () {
 	});
 
 	it('trigger should return false when on of callbacks result === false', function () {
-		var dispatcher = modules['ext.wikia.adEngine.eventDispatcher']();
+		var dispatcher = require('ext.wikia.adEngine.eventDispatcher')();
 
 		dispatcher.bind('event', callbacks.defaultCallback);
 		dispatcher.bind('event', callbacks.falseCallback);
@@ -74,7 +74,7 @@ describe('EventDispatcher', function () {
 	});
 
 	it('bind should do callbacks in lazyBind scenario', function () {
-		var dispatcher = modules['ext.wikia.adEngine.eventDispatcher']();
+		var dispatcher = require('ext.wikia.adEngine.eventDispatcher')();
 
 		expect(dispatcher.trigger('event', 'data')).toBe(true);
 		expect(dispatcher.trigger('event', 'anotherData')).toBe(true);

@@ -16,8 +16,8 @@ class AnalyticsProviderDatonics implements iAnalyticsProvider
 				$script = <<<SCRIPT
 <!-- Begin Datonics Tag -->
 <script>
-require(['wikia.geo'], function (geo) {
-	if (geo.getCountryCode() === 'US') {
+(function () {
+	if (require('wikia.geo').getCountryCode() === 'US') {
 
 // --- Datonics pixel code start ---
 
@@ -31,7 +31,7 @@ escape(b(document.referrer.substring(0,1E3))));var w=document.createElement("ifr
 
 		document.querySelector('iframe[name=d_ifrm]').className = 'hidden';
 	}
-});
+})();
 </script>
 <!-- End Datonics Tag -->
 SCRIPT;

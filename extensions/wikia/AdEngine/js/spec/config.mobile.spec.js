@@ -38,7 +38,7 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 	}
 
 	it('getProviderList returns DirectGPT, RemnantGPT in the regular case', function () {
-		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
+		var adConfigMobile = require('ext.wikia.adEngine.config.mobile')(
 			mockAdContext(true),
 			adProviderDirectMock,
 			adProviderOpenXMock,
@@ -50,7 +50,7 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 	});
 
 	it('getProviderLists returns [] when showAds is false', function () {
-		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
+		var adConfigMobile = require('ext.wikia.adEngine.config.mobile')(
 			mockAdContext(false),
 			adProviderDirectMock,
 			adProviderOpenXMock,
@@ -62,7 +62,7 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 	});
 
 	it('getProviderList returns DirectGPT, RemnantGPT for high impact slot', function () {
-		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
+		var adConfigMobile = require('ext.wikia.adEngine.config.mobile')(
 			mockAdContext(true, true),
 			adProviderDirectMock,
 			adProviderOpenXMock,
@@ -74,7 +74,7 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 	});
 
 	it('getProviderLists returns [] for high impact slot when high impact slot is turned off', function () {
-		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
+		var adConfigMobile = require('ext.wikia.adEngine.config.mobile')(
 			mockAdContext(true, false),
 			adProviderDirectMock,
 			adProviderOpenXMock,
@@ -86,7 +86,7 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 	});
 
 	it('getProviderLists returns DirectGPT, RemnantGPT, OpenX when OpenX provider is turned on', function () {
-		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
+		var adConfigMobile = require('ext.wikia.adEngine.config.mobile')(
 			mockAdContext(true, false, {
 				openX: true
 			}),
@@ -101,7 +101,7 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 
 	it('getProviderLists returns DirectGPT, RemnantGPT when OpenX provider is turned on but cannot handle slot', function () {
 		spyOn(adProviderOpenXMock, 'canHandleSlot').and.returnValue(false);
-		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
+		var adConfigMobile = require('ext.wikia.adEngine.config.mobile')(
 			mockAdContext(true, false, {
 				openX: true
 			}),

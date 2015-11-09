@@ -2,20 +2,20 @@
  * AJAX interrupter for Licensed Video Swap undo workflow
  * @author Kenneth Kouot <kenneth@wikia-inc.com>
  */
-require([
-	'jquery',
-	'lvs.commonajax',
-	'BannerNotification'
-], function ($, commonAjax, BannerNotification) {
+(function () {
 	'use strict';
 
+	var $ = require('jquery'),
+		commonAjax = require('lvs.commonajax'),
+		BannerNotification = require('BannerNotification');
+
 	function LVSHistoryPage(opts) {
-		var that = this;
+		var self = this;
 
 		// wait for DOM ready
 		$(function () {
-			that.$el = $(opts.el);
-			that.init();
+			self.$el = $(opts.el);
+			self.init();
 		});
 
 	}
@@ -30,24 +30,24 @@ require([
 			return $.get(url);
 		},
 		handleUndoClick: function (evt) {
-			evt.preventDefault();
-
 			var target = evt.target,
 				url = target.href,
-				that = this;
+				self = this;
+
+			evt.preventDefault();
 
 			commonAjax.startLoadingGraphic();
 
 			this.undoSwap(url)
 				.success(function (data) {
 					if (data.result === 'error') {
-						that.handleUndoFail(data.msg);
+						self.handleUndoFail(data.msg);
 					} else {
-						that.handleUndoSuccess(data.msg, target);
+						self.handleUndoSuccess(data.msg, target);
 					}
 				})
 				.error(function () {
-					that.handleUndoFail($.msg('oasis-generic-error'));
+					self.handleUndoFail($.msg('oasis-generic-error'));
 				});
 		},
 		handleUndoFail: function (msg) {
@@ -66,4 +66,4 @@ require([
 	return new LVSHistoryPage({
 		el: '.lvs-undo-list'
 	});
-});
+})();
