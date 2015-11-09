@@ -68,17 +68,26 @@ class TemplateClassificationService {
 			$templateType = $type->getType();
 		}
 
-		/**
-		 * Quick fix begin
-		 * Permanent change will be needed from the Services team.
-		 * Fallback to empty type that means no classification.
-		 */
+		return $templateType;
+	}
+
+	/**
+	 * Quick fix
+	 * Permanent change will be needed from the Services team.
+	 * Fallback to empty type that means no classification.
+	 *
+	 * @param $wikiId
+	 * @param $pageId
+	 * @return string template type
+	 * @throws Exception
+	 * @throws \Swagger\Client\ApiException
+	 */
+	public function getUserDefinedTypes( $wikiId, $pageId ) {
+		$templateType = $this->getType( $wikiId, $pageId );
+
 		if ( !in_array( $templateType, self::$templateTypes ) ) {
 			$templateType = self::TEMPLATE_UNCLASSIFIED;
 		}
-		/**
-		 * Quick fix end
-		 */
 
 		return $templateType;
 	}

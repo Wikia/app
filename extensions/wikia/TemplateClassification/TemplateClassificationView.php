@@ -33,7 +33,7 @@ class View {
 
 		if ( $templateType === '' ) {
 			try {
-				$templateType = ( new \TemplateClassificationService() )->getType( $wikiId, $title->getArticleID() );
+				$templateType = ( new \TemplateClassificationService() )->getUserDefinedTypes( $wikiId, $title->getArticleID() );
 			} catch ( ApiException $e ) {
 				( new Logger() )->exception( $e );
 				return $fallbackMsg;
