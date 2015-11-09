@@ -36,19 +36,6 @@ class TemplateDraftHelper {
 	}
 
 	/**
-	 * Checks if the template (Title object) is marked by human as infobox
-	 * @param Title $title
-	 * @return bool
-	 */
-	public function isMarkedAsInfobox( Title $title ) {
-		global $wgCityId;
-
-		$tc = new TemplateClassificationService();
-		$type = $tc->getUserDefinedType( $wgCityId, $title->getArticleID() );
-		return $type === TemplateClassificationService::TEMPLATE_INFOBOX;
-	}
-
-	/**
 	 * Check if the basic conditions for displaying a right rail module are met by the given Title.
 	 * @param Title $title
 	 * @return bool
