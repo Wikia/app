@@ -30,11 +30,11 @@ class CuratedContentHelper {
 		return $this->removeEmptySections( $processedSections );
 	}
 
-	public function processSectionsOld( $sections ) {
+	public function processSectionsFromSpecialPage( $sections ) {
 		$processedSections = [ ];
 		if ( is_array( $sections ) ) {
 			foreach ( $sections as $section ) {
-				$processedSections[] = $this->processLogicForSectionOld( $section );
+				$processedSections[] = $this->processLogicForSectionSpecialPage( $section );
 			}
 		}
 		// remove null elements from array
@@ -45,7 +45,7 @@ class CuratedContentHelper {
 		return array_values( array_filter( $sections, function( $section ) { return !is_null( $section ); } ) );
 	}
 
-	public function processLogicForSectionOld( $section ) {
+	public function processLogicForSectionSpecialPage( $section ) {
 		if ( empty ( $section['items'] ) || !is_array( $section['items'] ) ) {
 			// return null if we don't have any items inside section
 			return null;

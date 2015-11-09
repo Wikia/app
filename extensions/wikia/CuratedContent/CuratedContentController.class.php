@@ -467,7 +467,7 @@ class CuratedContentController extends WikiaController {
 				}
 			}
 			$helper = new CuratedContentHelper();
-			$sections = $helper->processSectionsOld( $data );
+			$sections = $helper->processSectionsFromSpecialPage( $data );
 			$errors = ( new CuratedContentSpecialPageValidator() )->validateData( $sections );
 			if ( !empty( $errors ) ) {
 				$this->response->setVal( 'error', $errors );

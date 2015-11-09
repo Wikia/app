@@ -7,12 +7,12 @@ class CuratedContentValidatorMethodNotAllowedException extends MethodNotAllowedE
 class CuratedContentValidatorController extends WikiaController {
 
 	private $validator;
-	private $oldValidator;
+	private $specialPageDataValidator;
 	private $helper;
 
 	public function __construct() {
 		parent::__construct();
-		$this->oldValidator = new CuratedContentSpecialPageValidator();
+		$this->specialPageDataValidator = new CuratedContentSpecialPageValidator();
 		$this->validator = new CuratedContentValidator();
 		$this->helper = new CuratedContentHelper();
 	}
@@ -29,8 +29,8 @@ class CuratedContentValidatorController extends WikiaController {
 		} else {
 			$section['title'] = $section['label'];
 			unset( $section['label'] );
-			$this->oldValidator->validateSection( $section );
-			$this->respond( $this->oldValidator->getErrors() );
+			$this->specialPageDataValidator->validateSection( $section );
+			$this->respond( $this->specialPageDataValidator->getErrors() );
 		}
 	}
 
@@ -65,17 +65,17 @@ class CuratedContentValidatorController extends WikiaController {
 		} else {
 			$section['title'] = $section['label'];
 			unset( $section['label'] );
-			$section = $this->helper->processLogicForSectionOld( $section );
+			$section = $this->helper->processLogicForSectionSpecialPage( $section );
 			if ( !empty( $section['featured'] ) ) {
-				$this->oldValidator->validateItems( $section, true );
+				$this->specialPageDataValidator->validateItems( $section, true );
 			} else {
-				$this->oldValidator->validateSection( $section );
-				$this->oldValidator->validateItemsExist( $section );
-				$this->oldValidator->validateItems( $section );
-				$this->oldValidator->validateItemsTypes( $section );
+				$this->specialPageDataValidator->validateSection( $section );
+				$this->specialPageDataValidator->validateItemsExist( $section );
+				$this->specialPageDataValidator->validateItems( $section );
+				$this->specialPageDataValidator->validateItemsTypes( $section );
 			}
-			$this->oldValidator->validateDuplicatedLabels();
-			$this->respond( $this->oldValidator->getErrors() );
+			$this->specialPageDataValidator->validateDuplicatedLabels();
+			$this->respond( $this->specialPageDataValidator->getErrors() );
 		}
 	}
 
@@ -112,11 +112,11 @@ class CuratedContentValidatorController extends WikiaController {
 			$this->respondWithErrors();
 		} else {
 			$this->helper->fillItemInfo( $item );
-			$this->oldValidator->validateItem( $item, $isFeatured );
+			$this->specialPageDataValidator->validateItem( $item, $isFeatured );
 			if ( !$isFeatured ) {
-				$this->oldValidator->validateItemType( $item );
+				$this->specialPageDataValidator->validateItemType( $item );
 			}
-			$this->respond( $this->oldValidator->getErrors() );
+			$this->respond( $this->specialPageDataValidator->getErrors() );
 		}
 	}
 
