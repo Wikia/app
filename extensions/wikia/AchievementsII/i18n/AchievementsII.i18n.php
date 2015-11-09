@@ -4884,7 +4884,7 @@ nella pagina di discussione di un altro utente!',
 	'achievements-prev-oasis' => 'Precedente',
 );
 
-/** Japanese (日本語) 
+/** Japanese (日本語)
  * @author Shirayuki
  * @author Tommy6
  */
