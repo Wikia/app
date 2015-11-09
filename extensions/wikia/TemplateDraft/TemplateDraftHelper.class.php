@@ -98,8 +98,9 @@ class TemplateDraftHelper {
 		global $wgCityId;
 		$tc = new TemplateClassificationService();
 
-		$type = $tc->getUserDefinedType( $wgCityId, $title->getArticleID() );
+		$type = $tc->getType( $wgCityId, $title->getArticleID() );
 		return empty( $type )
+			|| $type === TemplateClassificationService::TEMPLATE_CUSTOM_INFOBOX
 			|| ( $type === TemplateClassificationService::TEMPLATE_INFOBOX
 				&& !self::titleHasPortableInfobox( $title ) );
 	}
