@@ -8989,7 +8989,7 @@ $messages['roa-tara'] = array(
  * @author Сrower
  */
 $messages['ru'] = array(
-	'achievementsii-desc' => 'Система достижений для участников вики',
+	'achievementsii-desc' => 'Система достижений пользователей вики-сайта',
 	'achievements-upload-error' => 'Простите!
 Это изображение не подходит.
 Убедитесь в том, что это файл формата .JPG или .PNG.
