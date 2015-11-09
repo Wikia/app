@@ -4,6 +4,7 @@ use Wikia\Service\Gateway\ConsulUrlProvider;
 use Wikia\Service\Swagger\ApiProvider;
 use Swagger\Client\TemplateClassification\Storage\Api\TCSApi;
 use Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider;
+use Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder;
 
 class TemplateClassificationService {
 
@@ -11,6 +12,8 @@ class TemplateClassificationService {
 	const USER_PROVIDER = 'user';
 	const AUTO_PROVIDER = 'auto';
 
+	// TODO: Move types used for manual classification outside of Template Classification Service
+	// TODO: https://wikia-inc.atlassian.net/browse/CE-3017
 	const TEMPLATE_INFOBOX = 'infobox';
 	const TEMPLATE_QUOTE = 'quote';
 	const TEMPLATE_NAVBOX = 'navbox';
@@ -22,6 +25,7 @@ class TemplateClassificationService {
 	const TEMPLATE_NAV = 'navigation';
 	const TEMPLATE_NOT_ART = 'nonarticle';
 	const TEMPLATE_UNKNOWN = 'unknown';
+	const TEMPLATE_UNCLASSIFIED = '' ;
 
 	const NOT_AVAILABLE = 'not-available';
 
@@ -57,7 +61,7 @@ class TemplateClassificationService {
 	 * @throws \Swagger\Client\ApiException
 	 */
 	public function getType( $wikiId, $pageId ) {
-		$templateType = '';
+		$templateType = self::TEMPLATE_UNCLASSIFIED;
 
 		$type = $this->getApiClient()->getTemplateType( $wikiId, $pageId );
 		if ( !is_null( $type ) ) {
@@ -67,9 +71,10 @@ class TemplateClassificationService {
 		/**
 		 * Quick fix begin
 		 * Permanent change will be needed from the Services team.
+		 * Fallback to empty type that means no classification.
 		 */
 		if ( !in_array( $templateType, self::$templateTypes ) ) {
-			$templateType = self::TEMPLATE_UNKNOWN;
+			$templateType = self::TEMPLATE_UNCLASSIFIED;
 		}
 		/**
 		 * Quick fix end
@@ -90,10 +95,9 @@ class TemplateClassificationService {
 	public function getDetails( $wikiId, $pageId ) {
 		$templateDetails = [];
 
-		$details = $this->getApiClient()->getTemplateDetails( $wikiId, $pageId );
+		$providers = $this->getApiClient()->getTemplateDetails( $wikiId, $pageId );
 
-		if ( !is_null( $details ) ) {
-			$providers = $details->getProviders();
+		if ( !is_null( $providers ) ) {
 			$templateDetails = $this->prepareTemplateDetails( $providers );
 		}
 
@@ -123,6 +127,26 @@ class TemplateClassificationService {
 	}
 
 	/**
+	 * Get all classified template types on given wiki with their page id as a key
+	 *
+	 * @param int $wikiId
+	 * @return array
+	 * @throws Exception
+	 * @throws \Swagger\Client\ApiException
+	 */
+	public function getTemplatesOnWiki( $wikiId ) {
+		$templateTypes = [];
+
+		$types = $this->getApiClient()->getTemplateTypesOnWiki( $wikiId );
+
+		if ( !is_null( $types ) ) {
+			$templateTypes = $this->prepareTypes( $types );
+		}
+
+		return $templateTypes;
+	}
+
+	/**
 	 * Prepare template details output
 	 *
 	 * @param TemplateTypeProvider[] $details
@@ -140,6 +164,20 @@ class TemplateClassificationService {
 		}
 
 		return $templateDetails;
+	}
+
+	/**
+	 * @param TemplateTypeHolder[] $types
+	 * @return array
+	 */
+	private function prepareTypes( $types ) {
+		$templateTypes = [];
+
+		foreach ( $types as $type ) {
+			$templateTypes[$type->getPageId()] = $type->getType();
+		}
+
+		return $templateTypes;
 	}
 
 	/**
@@ -164,7 +202,16 @@ class TemplateClassificationService {
 		global $wgConsulUrl, $wgConsulServiceTag;
 		$urlProvider = new ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag );
 		$apiProvider = new ApiProvider( $urlProvider );
-		return $apiProvider->getApi( self::SERVICE_NAME, TCSApi::class );
+		$api = $apiProvider->getApi( self::SERVICE_NAME, TCSApi::class );
+
+		// default CURLOPT_TIMEOUT for API client is set to 0 which means no timeout.
+		// Overwriting to minimal value which is 1.
+		// cURL function is allowed to execute not longer than 1 second
+		$api->getApiClient()
+				->getConfig()
+				->setCurlTimeout(1);
+
+		return $api;
 	}
 
 }

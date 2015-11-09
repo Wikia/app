@@ -26,7 +26,8 @@ class Hooks {
 
 	/**
 	 * Save template type passed from article creation
-	 * template type is stored in templateClassificationType hidden field
+	 * changed template type is stored in templateClassificationTypeNew hidden field.
+	 * Previous type is stored in templateClassificationTypeCurrent.
 	 *
 	 * @param \WikiPage $wikiPage
 	 * @param \User $user
@@ -38,13 +39,17 @@ class Hooks {
 		global $wgCityId;
 
 		$request = \RequestContext::getMain()->getRequest();
-		$type = $request->getVal( 'templateClassificationType' );
+		$typeNew = $request->getVal( 'templateClassificationTypeNew' );
+		$typeCurrent = $request->getVal( 'templateClassificationTypeCurrent' );
 
 		/**
 		 * The service was not available when the field's value was set
 		 * so we exit early to prevent polluting of the results.
 		 */
-		if ( !isset( $type ) || $type === \TemplateClassificationService::NOT_AVAILABLE ) {
+		if ( empty( $typeNew )
+			|| $typeNew === \TemplateClassificationService::NOT_AVAILABLE
+			|| $typeNew === $typeCurrent
+		) {
 			return true;
 		}
 
@@ -52,7 +57,7 @@ class Hooks {
 			( new \TemplateClassificationService() )->classifyTemplate(
 				$wgCityId,
 				$article->getId(),
-				$type,
+				$typeNew,
 				\TemplateClassificationService::USER_PROVIDER,
 				$user->getId()
 			);
@@ -91,17 +96,14 @@ class Hooks {
 	public function onEditPageShowEditFormFields( \EditPage $editPage, \OutputPage $out ) {
 		global $wgCityId;
 
-		if ( $out->getSkin() instanceof \SkinMonoBook ) {
-			return true;
+		$context = \RequestContext::getMain();
+
+		if ( ( new Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $context->getTitle() ) ) {
+			$templateType = $this->getTemplateTypeForEdit( $editPage->getTitle(), $wgCityId );
+
+			$out->addHTML( \Html::hidden( 'templateClassificationTypeCurrent', $templateType ) );
+			$out->addHTML( \Html::hidden( 'templateClassificationTypeNew', '' ) );
 		}
-
-		$templateType = $this->getTemplateTypeForEdit( $editPage->getTitle(), $wgCityId );
-
-		$editPage->addHiddenField([
-			'name' => 'templateClassificationType',
-			'value' => $templateType,
-			'type' => 'hidden',
-		]);
 
 		return true;
 	}

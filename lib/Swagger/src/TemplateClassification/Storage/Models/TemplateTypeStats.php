@@ -1,6 +1,6 @@
 <?php
 /**
- * TemplateTypeHolder
+ * TemplateTypeStats
  *
  * PHP version 5
  *
@@ -35,7 +35,7 @@ namespace Swagger\Client\TemplateClassification\Storage\Models;
 
 use \ArrayAccess;
 /**
- * TemplateTypeHolder Class Doc Comment
+ * TemplateTypeStats Class Doc Comment
  *
  * @category    Class
  * @description 
@@ -44,15 +44,14 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class TemplateTypeHolder implements ArrayAccess
+class TemplateTypeStats implements ArrayAccess
 {
     /**
       * Array of property to type mappings. Used for (de)serialization 
       * @var string[]
       */
     static $swaggerTypes = array(
-        'page_id' => 'int',
-        'type' => 'string'
+        'count' => 'int'
     );
   
     /** 
@@ -60,8 +59,7 @@ class TemplateTypeHolder implements ArrayAccess
       * @var string[] 
       */
     static $attributeMap = array(
-        'page_id' => 'pageId',
-        'type' => 'type'
+        'count' => 'count'
     );
   
     /**
@@ -69,8 +67,7 @@ class TemplateTypeHolder implements ArrayAccess
       * @var string[]
       */
     static $setters = array(
-        'page_id' => 'setPageId',
-        'type' => 'setType'
+        'count' => 'setCount'
     );
   
     /**
@@ -78,22 +75,15 @@ class TemplateTypeHolder implements ArrayAccess
       * @var string[]
       */
     static $getters = array(
-        'page_id' => 'getPageId',
-        'type' => 'getType'
+        'count' => 'getCount'
     );
   
     
     /**
-      * $page_id 
+      * $count 
       * @var int
       */
-    protected $page_id;
-    
-    /**
-      * $type 
-      * @var string
-      */
-    protected $type;
+    protected $count;
     
 
     /**
@@ -103,50 +93,28 @@ class TemplateTypeHolder implements ArrayAccess
     public function __construct(array $data = null)
     {
         if ($data != null) {
-            $this->page_id = $data["page_id"];
-            $this->type = $data["type"];
+            $this->count = $data["count"];
         }
     }
     
     /**
-     * Gets page_id
+     * Gets count
      * @return int
      */
-    public function getPageId()
+    public function getCount()
     {
-        return $this->page_id;
+        return $this->count;
     }
   
     /**
-     * Sets page_id
-     * @param int $page_id 
+     * Sets count
+     * @param int $count 
      * @return $this
      */
-    public function setPageId($page_id)
+    public function setCount($count)
     {
         
-        $this->page_id = $page_id;
-        return $this;
-    }
-    
-    /**
-     * Gets type
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-  
-    /**
-     * Sets type
-     * @param string $type 
-     * @return $this
-     */
-    public function setType($type)
-    {
-        
-        $this->type = $type;
+        $this->count = $count;
         return $this;
     }
     
