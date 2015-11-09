@@ -831,10 +831,10 @@ class Revision implements IDBAccessObject {
 	/* Wikia changes end */
 		$title = $this->getTitle( $useMaster );
 		if( $title ) {
-			$prev = ( 
-				$useMaster === false ? 
-					$title->getPreviousRevisionID( $this->getId() ) : 
-					$title->getPreviousRevisionID( $this->getId(), Title::GAID_FOR_UPDATE ) 
+			$prev = (
+				$useMaster === false ?
+					$title->getPreviousRevisionID( $this->getId() ) :
+					$title->getPreviousRevisionID( $this->getId(), Title::GAID_FOR_UPDATE )
 			);
 	/* Wikia changes end */
 			if( $prev ) {
@@ -921,7 +921,9 @@ class Revision implements IDBAccessObject {
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
-			wfDebug( sprintf( "%s: for '%s'\n", __METHOD__, $row->page_title ) ); // Wikia change - PLATFORM-1381
+			if ( property_exists($row, 'page_title') ) {
+				wfDebug( sprintf( "%s: for '%s'\n", __METHOD__, $row->page_title ) ); // Wikia change - PLATFORM-1381
+			}
 			$text = ExternalStore::fetchFromURL( $url );
 		}
 

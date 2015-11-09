@@ -153,11 +153,12 @@ class Hooks {
 	 * @param $results
 	 * @return bool
 	 */
-	public function onQueryPageUseResultsBeforeRecache( \QueryPage $queryPage, $results ) {
+	public function onQueryPageUseResultsBeforeRecache( \QueryPage $queryPage, \DatabaseBase $db, $results ) {
 		if ( $queryPage->getName() === \UnusedtemplatesPage::UNUSED_TEMPLATES_PAGE_NAME ) {
 			$handler = $this->getUnusedTemplatesHandler();
 			if ( $results instanceof \ResultWrapper ) {
 				$handler->markAsUnusedFromResults( $results );
+				$db->dataSeek( $results, 0 );	// CE-3024: reset cursor because hook caller needs the results also
 			} else {
 				$handler->markAllAsUsed();
 			}
