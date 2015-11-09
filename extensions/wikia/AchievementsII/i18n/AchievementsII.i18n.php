@@ -4949,7 +4949,7 @@ $messages['ja'] = array(
 	'achievements-leaderboard-member-label' => 'メンバー',
 	'achievements-leaderboard-points-label' => 'ポイント',
 	'achievements-leaderboard-points' => '{{PLURAL:$1|ポイント}}',
-	'achievements-leaderboard-most-recently-earned-label' => '最近に獲得したバッジ',
+	'achievements-leaderboard-most-recently-earned-label' => '最近獲得したバッジ',
 	'achievements-send' => '画像を保存',
 	'achievements-save' => '変更を保存',
 	'achievements-reverted' => 'バッジをデフォルトに戻しました',
@@ -4968,12 +4968,12 @@ $messages['ja'] = array(
 
 長方形の画像を使うこともできますが、画像が切れて一部が枠から外れてしまうかもしれません。
 画像編集ソフトをお持ちの場合は、画像をクロップして、重要な部分が中央になるようにしましょう。
-選択した画像が気に入らないときは、"{{int:achievements-revert}}" をクリックするともとの画像に戻すことができます。
+選択した画像が思い通りにならなかったときは、「{{int:achievements-revert}}」 をクリックするともとの画像に戻すことができます。
 
-各コミュニティで扱っている話題に合わせて、バッジに新しい名称を設定できます。
-バッジの名称を変更したときは、"{{int:achievements-save}}" をクリックして変更を保存してください。',
+各コミュニティで扱っている話題に合わせて、バッジの名称を設定することができます。
+バッジの名称を変更したいときには、「{{int:achievements-save}}」 をクリックして変更を保存してください。',
 	'achievements-edit-plus-category-track-name' => '"$1" 編集トラッキング',
-	'achievements-create-edit-plus-category-title' => '編集トラックの新規作成',
+	'achievements-create-edit-plus-category-title' => '編集トラッキングの作成',
 	'achievements-create-edit-plus-category' => 'トラッキングを作成',
 	'platinum' => 'プラチナ',
 	'achievements-community-platinum-awarded-for' => '何をした時に獲得できるか:',
@@ -4999,13 +4999,13 @@ $messages['ja'] = array(
 	'achievements-badge-name-picture-6' => 'デザイナー',
 	'achievements-badge-name-category-3' => 'ツアー ガイド',
 	'achievements-badge-name-blogpost-2' => 'トークショー',
-	'achievements-badge-to-get-edit' => '$1 件の記事を $1 回編集',
+	'achievements-badge-to-get-edit' => '$1 ページで $1 回編集',
 	'achievements-badge-to-get-edit-plus-category' => '「$2」 のカテゴリのページで $1 回編集',
 	'achievements-badge-to-get-picture' => '$1 ページに $1 枚の画像を追加',
 	'achievements-badge-to-get-category' => '$1 件のページにカテゴリを追加する',
 	'achievements-badge-to-get-blogpost' => 'ブログ記事を $1 件投稿',
 	'achievements-badge-to-get-blogcomment' => '$1 件のブログ記事にコメントを投稿',
-	'achievements-badge-to-get-love' => '$1 日間連続でこのコミュニティに投稿',
+	'achievements-badge-to-get-love' => '$1 日間連続このコミュニティで投稿',
 	'achievements-badge-to-get-welcome' => 'このコミュニティに参加',
 	'achievements-badge-to-get-introduction' => 'ユーザーページを作成する',
 	'achievements-badge-to-get-sayhi' => '他のユーザーのページにメッセージを残す',
@@ -5014,49 +5014,49 @@ $messages['ja'] = array(
 	'achievements-badge-to-get-luckyedit' => 'ラッキー',
 	'achievements-badge-to-get-community-platinum-details' => 'このバッジは、期間限定で獲得可能な特別プラチナバッジです。',
 	'achievements-badge-hover-desc-edit' => '$1 回の編集を達成',
-	'achievements-badge-hover-desc-edit-plus-category' => '$2 のカテゴリのページで $1 回の編集を達成',
+	'achievements-badge-hover-desc-edit-plus-category' => '$2 件のカテゴリのページで $1 回の編集を達成',
 	'achievements-badge-hover-desc-picture' => '$1 ページに <br />
 $1 枚の画像の追加を達成',
 	'achievements-badge-hover-desc-category' => '$1 件のページに<br />
 カテゴリ追加を達成',
 	'achievements-badge-hover-desc-blogpost' => '$1 件のブログ記事の投稿を達成',
 	'achievements-badge-hover-desc-blogcomment' => '$1 件のブログ記事にコメント投稿を達成',
-	'achievements-badge-hover-desc-love' => '$1 日間連続でこのコミュニティに投稿',
-	'achievements-badge-hover-desc-welcome' => 'このコミュニティへの参加の達成',
+	'achievements-badge-hover-desc-love' => '$1 日間連続このコミュニティで投稿を達成',
+	'achievements-badge-hover-desc-welcome' => 'このコミュニティへの参加達成',
 	'achievements-badge-hover-desc-introduction' => 'ユーザーページの<br />
 作成の達成',
-	'achievements-badge-hover-desc-sayhi' => '他のユーザーのページへのメッセージ投稿を達成',
-	'achievements-badge-hover-desc-creator' => 'このコミュニティの作成の達成',
-	'achievements-badge-hover-desc-pounce' => 'ページ作成から1時間以内に 100 件のページの編集を達成',
+	'achievements-badge-hover-desc-sayhi' => '他のユーザーのページに<br />メッセージ投稿を達成',
+	'achievements-badge-hover-desc-creator' => 'このコミュニティの作成を達成',
+	'achievements-badge-hover-desc-pounce' => 'ページ作成から1時間以内に 100 ページで編集を達成',
 	'achievements-badge-hover-desc-caffeinated' => '1日で 100 回の編集を達成',
 	'achievements-badge-hover-desc-luckyedit' => 'このコミュニティで $1 番目の編集を達成',
 	'achievements-badge-hover-desc-community-platinum' => 'このバッジは、期間限定で獲得可能な特別プラチナバッジです。',
 	'achievements-badge-your-desc-edit' => '$1 回の編集を達成',
 	'achievements-badge-your-desc-edit-plus-category' => '「$2 」 カテゴリのページで $1 回の編集を達成',
-	'achievements-badge-your-desc-picture' => '$1 ページに $1 枚の画像の追加を達成',
+	'achievements-badge-your-desc-picture' => '$1 ページに画像を $1 枚追加達成',
 	'achievements-badge-your-desc-category' => '$1 ページにカテゴリの追加を達成',
 	'achievements-badge-your-desc-blogpost' => '$1 件のブログ記事投稿を達成',
 	'achievements-badge-your-desc-blogcomment' => '$1 件のブログ記事にコメント投稿を達成',
-	'achievements-badge-your-desc-love' => '$1 日間連続でこのコミュニティに投稿を達成',
-	'achievements-badge-your-desc-welcome' => 'このコミュニティへの参加の達成',
+	'achievements-badge-your-desc-love' => '$1 日間連続このコミュニティで投稿を達成',
+	'achievements-badge-your-desc-welcome' => 'このコミュニティへの参加達成',
 	'achievements-badge-your-desc-introduction' => 'ユーザーページの作成の達成',
-	'achievements-badge-your-desc-sayhi' => '他のユーザーのページへのメッセージ投稿を達成',
+	'achievements-badge-your-desc-sayhi' => '他のユーザーのページにメッセージ投稿を達成',
 	'achievements-badge-your-desc-creator' => 'このコミュニティの作成を達成',
-	'achievements-badge-your-desc-pounce' => 'ページ作成から1時間以内に 100 件のページの編集を達成',
+	'achievements-badge-your-desc-pounce' => 'ページ作成から1時間以内に 100 ページで編集を達成',
 	'achievements-badge-your-desc-caffeinated' => '1日で 100 回の編集を達成',
 	'achievements-badge-your-desc-luckyedit' => 'このコミュニティで $1 番目の編集を達成',
-	'achievements-badge-desc-edit' => '$1 の記事で $1 回編集を達成',
-	'achievements-badge-desc-edit-plus-category' => '$2 のカテゴリのページで $1 回の編集を達成',
-	'achievements-badge-desc-picture' => '$1 ページに $1 枚の画像の追加を達成',
+	'achievements-badge-desc-edit' => '$1 ページで $1 回編集達成',
+	'achievements-badge-desc-edit-plus-category' => '$2 件のカテゴリのページで $1 回の編集を達成',
+	'achievements-badge-desc-picture' => '$1 ページに画像を $1 枚追加達成',
 	'achievements-badge-desc-category' => '$1 ページに $1 件のカテゴリの追加を達成',
 	'achievements-badge-desc-blogpost' => '$1 件のブログ記事の投稿を達成',
 	'achievements-badge-desc-blogcomment' => '$1 件のブログ記事にコメント投稿を達成',
-	'achievements-badge-desc-love' => '$1 日間連続でこのコミュニティで投稿を達成',
-	'achievements-badge-desc-welcome' => 'このコミュニティへの参加の達成',
+	'achievements-badge-desc-love' => '$1 日間連続このコミュニティで投稿を達成',
+	'achievements-badge-desc-welcome' => 'このコミュニティへの参加達成',
 	'achievements-badge-desc-introduction' => 'ユーザーページの作成の達成',
-	'achievements-badge-desc-sayhi' => '他のユーザーのページへのメッセージ投稿を達成',
+	'achievements-badge-desc-sayhi' => '他のユーザーのページにメッセージ投稿を達成',
 	'achievements-badge-desc-creator' => 'このコミュニティの作成を達成',
-	'achievements-badge-desc-pounce' => 'ページ作成から1時間以内に 100 件のページの編集を達成',
+	'achievements-badge-desc-pounce' => 'ページ作成から1時間以内に 100 ページで編集を達成',
 	'achievements-badge-desc-caffeinated' => '1日で 100 回の編集を達成',
 	'achievements-badge-desc-luckyedit' => 'このコミュニティで $1 番目の編集を達成',
 	'achievements-userprofile-title-no' => '$1 が獲得したバッジ',
@@ -5064,7 +5064,7 @@ $1 枚の画像の追加を達成',
 	'achievements-userprofile-no-badges-owner' => '以下の一覧で、このコミュニティであなたが獲得できるバッジをチェックしてみよう！',
 	'achievements-userprofile-no-badges-visitor' => 'このユーザーはまだバッジを獲得していません。',
 	'achievements-userprofile-profile-score' => '<em>$1</em> アチーブメント<br />ポイント',
-	'achievements-userprofile-ranked' => 'このコミュニティでの順位<br />[[Special:Leaderboard|#$1]]',
+	'achievements-userprofile-ranked' => 'このコミュニティでの順位<br />[[Special:Leaderboard|$1 位]]',
 	'right-sponsored-achievements' => 'スポンサー付きアチーブメントの管理',
 	'action-platinum' => 'プラチナバッジを作成・編集',
 	'achievements-track-name-sharing' => '共有トラック',
@@ -5073,23 +5073,23 @@ $1 枚の画像の追加を達成',
 	'achievements-prev-oasis' => '前へ',
 	'achievements-customize-new-category-track' => 'カテゴリのトラッキングを新規作成：',
 	'achievements-create-edit-plus-category-content' => '特定のカテゴリのページを編集してくれたユーザーがバッジをもらえるようにして、コミュニティ内でよく編集されている人気の部分をハイライトすることができます。
-複数のカテゴリトラックを設定できるので、ファンなら知識を共有したくなるようなカテゴリを2つ選んでみましょう。
+複数のカテゴリトラッキングを設定できるので、ファンなら知識を共有したくなるようなカテゴリを2つ選んでみましょう。
 吸血鬼、オオカミ人間、魔法族とマグル、オートボッツとディセプティコンズなど、それぞれのページを編集するユーザー同士の競争心を刺激してみましょう。
 
 「カテゴリの編集」のトラッキングを新たに作成するには、下の欄にカテゴリ名を入力します。
-通常の編集トラックはそのまま残っているため、
-別のトラックを作成して個別にカスタマイズすることができます。
+通常の編集トラッキングはそのまま残っているため、
+別のトラッキングを作成して個別にカスタマイズすることができます。
 
-トラックを作成すると、左側にある通常の編集トラックの下の一覧に新しいバッジが表示されます。
-新しいトラックの名前や画像をカスタマイズして、ユーザーが見分けられるようにしましょう！
+トラッキングを作成すると、左側にある通常の編集トラッキングの下の一覧に新しいバッジが表示されます。
+新しいトラッキングの名前や画像をカスタマイズして、ユーザーが見分けられるようにしましょう！
 
-カスタマイズが完了したら、「{{int:achievements-enable-track}}」チェックボックスをクリックして新しいトラックをオンにし、「{{int:achievements-save}}」をクリックしましょう。
-新しいトラックがユーザーのプロフィールに表示され、そのカテゴリでページを編集したユーザーはバッジを獲得できるようになります。
-カテゴリのハイライトをやめたい場合には、トラックを無効にすることができます。
-トラックが無効になっても、そのトラックでユーザーが獲得したバッジはそのまま残ります。
+カスタマイズが完了したら、「{{int:achievements-enable-track}}」チェックボックスをクリックして新しいトラッキングをオンにし、「{{int:achievements-save}}」をクリックしましょう。
+新しいトラッキングがユーザーのプロフィールに表示され、そのカテゴリでページを編集したユーザーはバッジを獲得できるようになります。
+カテゴリのハイライトをやめたい場合には、トラッキングを無効にすることができます。
+トラッキングが無効になっても、そのトラッキングでユーザーが獲得したバッジはそのまま残ります。
 
-新しいトラック機能で、アチーブメントがより一層楽しくなりました。
-ぜひお試しください！',
+新しいトラッキング機能で、アチーブメントがより一層楽しくなりました。
+早速試してみよう！',
 	'achievements-community-platinum-awarded-email-subject' => '新しいプラチナバッジを獲得しました！',
 	'achievements-community-platinum-awarded-email-body-text' => "$1さん、おめでとうございます！
 
@@ -5168,7 +5168,7 @@ $5",
 最近のブログ投稿のいずれかを読んで、コメント欄から意見や感想を投稿してみましょう。',
 	'achievements-badge-to-get-love-details' => 'コミュニティにアクセスしない日があると、カウンターがリセットされてしまいます。毎日このコミュニティにアクセスしよう！',
 	'achievements-badge-to-get-welcome-details' => '右上の「{{int:oasis-signup}}」ボタンをクリックすると、コミュニティに参加できます。
-バッジの獲得を目指して頑張りましょう！',
+バッジ獲得を目指して頑張ろう！',
 	'achievements-badge-to-get-introduction-details' => 'ユーザーページに何も追加されていないようです。
 画面上部のユーザー名をクリックすると、ユーザーページを表示できます。
 「{{int:edit}}」をクリックして自己紹介をしてみよう！',
@@ -8989,7 +8989,7 @@ $messages['roa-tara'] = array(
  * @author Сrower
  */
 $messages['ru'] = array(
-	'achievementsii-desc' => 'Система достижений пользователей вики-сайта',
+	'achievementsii-desc' => 'Система достижений для участников вики',
 	'achievements-upload-error' => 'Простите!
 Это изображение не подходит.
 Убедитесь в том, что это файл формата .JPG или .PNG.
