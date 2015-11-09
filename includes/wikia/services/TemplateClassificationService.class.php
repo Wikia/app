@@ -12,7 +12,7 @@ class TemplateClassificationService {
 	const USER_PROVIDER = 'user';
 	const AUTO_PROVIDER = 'auto';
 
-	// TODO: Move types used for manual classification to Template Classification extension
+	// TODO: Move types used for manual classification outside of Template Classification Service
 	// TODO: https://wikia-inc.atlassian.net/browse/CE-3017
 	const TEMPLATE_INFOBOX = 'infobox';
 	const TEMPLATE_QUOTE = 'quote';
