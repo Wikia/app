@@ -3,12 +3,13 @@
  * The AMD module to hold all the context needed for the client-side scripts to run.
  */
 define('ext.wikia.adEngine.adContext', [
-	'wikia.window',
+	'wikia.abTest',
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
+	'wikia.window',
 	'wikia.querystring'
-], function (w, doc, geo, instantGlobals, Querystring) {
+], function (abTest, doc, geo, instantGlobals, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -86,7 +87,8 @@ define('ext.wikia.adEngine.adContext', [
 
 		// Taboola integration
 		if (context.providers.taboola) {
-			context.providers.taboola = geo.isProperGeo(instantGlobals.wgAdDriverTaboolaCountries) &&
+			context.providers.taboola = !!abTest.getGroup('TABOOLA_MODULES') &&
+				geo.isProperGeo(instantGlobals.wgAdDriverTaboolaCountries) &&
 				context.targeting.pageType === 'article';
 		}
 

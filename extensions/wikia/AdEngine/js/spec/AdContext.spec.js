@@ -8,7 +8,11 @@ describe('AdContext', function () {
 	}
 
 	var mocks = {
-			abTesting: {},
+			abTesting: {
+				getGroup: function () {
+					return 'group';
+				}
+			},
 			geo: {
 				getCountryCode: function () {
 					return 'CURRENT_COUNTRY';
@@ -65,12 +69,12 @@ describe('AdContext', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.adContext'](
-			mocks.win,
+			mocks.abTesting,
 			mocks.doc,
 			mocks.geo,
 			mocks.instantGlobals,
-			mocks.Querystring,
-			mocks.abTesting
+			mocks.win,
+			mocks.Querystring
 		);
 	}
 
