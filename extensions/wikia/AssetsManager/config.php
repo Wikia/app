@@ -134,7 +134,7 @@ $config['spotlights_js'] = array(
 
 $config['adengine2_taboola_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'wikiamobile' ],
+	'skin' => [ 'oasis' ],
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/provider/taboola.js',
 	),
