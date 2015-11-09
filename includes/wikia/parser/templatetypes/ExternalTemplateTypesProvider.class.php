@@ -21,7 +21,7 @@ class ExternalTemplateTypesProvider {
 	 */
 	public function getTemplateTypeFromTitle( $wikiId, $title ) {
 		return $title ? $this->getTemplateType( $wikiId, $title->getArticleID() ) :
-			TemplateClassificationService::TEMPLATE_UNCLASSIFIED;
+			AutomaticTemplateTypes::TEMPLATE_UNCLASSIFIED;
 	}
 
 	/**
@@ -33,7 +33,7 @@ class ExternalTemplateTypesProvider {
 	 * @return string - template type
 	 */
 	public function getTemplateType( $wikiId, $templateId ) {
-		$type = TemplateClassificationService::TEMPLATE_UNCLASSIFIED;
+		$type = AutomaticTemplateTypes::TEMPLATE_UNCLASSIFIED;
 
 		try {
 			$type = $this->tcs->getType( $wikiId, $templateId );

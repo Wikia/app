@@ -18,9 +18,11 @@ class TemplateTypesParser {
 					->getTemplateTypeFromTitle( $wgCityId, $finalTitle );
 
 			switch ( $type ) {
+				case AutomaticTemplateTypes::TEMPLATE_NAVBOX:
 				case TemplateClassificationService::TEMPLATE_NAVBOX:
 					$text = self::handleNavboxTemplate();
 					break;
+				case AutomaticTemplateTypes::TEMPLATE_REFERENCES:
 				case TemplateClassificationService::TEMPLATE_REF:
 					$text = self::handleReferencesTemplate();
 					break;
