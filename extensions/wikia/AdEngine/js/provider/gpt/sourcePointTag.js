@@ -28,7 +28,7 @@ define('ext.wikia.adEngine.provider.gpt.sourcePointTag', [
 
 		gads.async = true;
 		gads.type = 'text/javascript';
-		gads.src = context.opts.sourcePointRecoveryUrl || context.opts.sourcePointUrl; // @TODO ADEN-2578 - cleanup
+		gads.src = context.opts.sourcePointRecoveryUrl;
 		gads.setAttribute('data-client-id', sourcePoint.getClientId());
 
 		gads.addEventListener('load', function () {

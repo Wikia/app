@@ -104,7 +104,7 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function getWikiVariables() {
-		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin, $wgDisableAnonymousEditing,
+		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin, $wgDisableAnonymousEditing, $wgIsDarkTheme,
 			   $wgLanguageCode, $wgContLang, $wgCityId, $wgEnableNewAuth, $wgDisableAnonymousUploadForMercury,
 			   $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff, $wgDisableMobileSectionEditor;
 
@@ -118,6 +118,7 @@ class MercuryApi {
 			'homepage' => $this->getHomepageUrl(),
 			'id' => (int) $wgCityId,
 			'isCoppaWiki' => ( $wgWikiDirectedAtChildrenByFounder || $wgWikiDirectedAtChildrenByStaff ),
+			'isDarkTheme' => $wgIsDarkTheme,
 			'disableMobileSectionEditor' => $wgDisableMobileSectionEditor,
 			'language' => [
 				'content' => $wgLanguageCode,

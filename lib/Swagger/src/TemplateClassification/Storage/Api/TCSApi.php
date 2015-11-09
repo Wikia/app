@@ -97,7 +97,7 @@ class TCSApi
      * Provides template types on wiki
      *
      * @param int $wiki_id Wikia ID (required)
-     * @return \Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder
+     * @return \Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder[]
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getTemplateTypesOnWiki($wiki_id)
@@ -148,19 +148,19 @@ class TCSApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
-                $headerParams, '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder'
+                $headerParams, '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder[]'
             );
             
             if (!$response) {
                 return null;
             }
 
-            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder', $httpHeader);
+            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder[]', $httpHeader);
             
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder', $e->getResponseHeaders());
+                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder[]', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
@@ -358,7 +358,7 @@ class TCSApi
      *
      * @param int $wiki_id Wikia ID (required)
      * @param int $page_id Article ID (required)
-     * @return \Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider
+     * @return \Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider[]
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getTemplateDetails($wiki_id, $page_id)
@@ -420,19 +420,19 @@ class TCSApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
-                $headerParams, '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider'
+                $headerParams, '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider[]'
             );
             
             if (!$response) {
                 return null;
             }
 
-            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider', $httpHeader);
+            return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider[]', $httpHeader);
             
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider', $e->getResponseHeaders());
+                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider[]', $e->getResponseHeaders());
                 $e->setResponseObject($data);
                 break;
             }
