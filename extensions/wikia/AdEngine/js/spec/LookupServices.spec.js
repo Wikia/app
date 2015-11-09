@@ -20,32 +20,8 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 			wasCalled: noop,
 			getSlotParams: noop
 		},
-		rtp: {
-			trackState: noop,
-			wasCalled: noop,
-			getConfig: noop,
-			getTier: noop
-		},
 		window: {}
 	};
-
-	it('extends slot targeting for Rubicon', function () {
-		var lookup = modules['ext.wikia.adEngine.lookup.services'](
-				mocks.log,
-				undefined,
-				undefined,
-				mocks.rtp
-			),
-			slotTargetingMock = {},
-			expectedSlotTargeting = { 'rp_tier': 6 };
-
-		spyOn(mocks.rtp, 'wasCalled').and.returnValue(true);
-		spyOn(mocks.rtp, 'getConfig').and.returnValue({slotname: ['TOP_LEADERBOARD']});
-		spyOn(mocks.rtp, 'getTier').and.returnValue(6);
-
-		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock);
-		expect(slotTargetingMock).toEqual(expectedSlotTargeting);
-	});
 
 	it('extends slot targeting for Amazon', function () {
 		var lookup = modules['ext.wikia.adEngine.lookup.services'](
@@ -67,7 +43,7 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 
 	it('extends slot targeting for OpenX', function () {
 		var lookup = modules['ext.wikia.adEngine.lookup.services'](
-		mocks.log,
+			mocks.log,
 			undefined,
 			mocks.oxBidder
 		),
