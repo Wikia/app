@@ -34,11 +34,13 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 				amznslots: ['a1x6p5', 'a3x2p9', 'a7x9p5']
 			};
 
+		spyOn(mocks.amazon, 'trackState');
 		spyOn(mocks.amazon, 'wasCalled').and.returnValue(true);
 		spyOn(mocks.amazon, 'getSlotParams').and.returnValue({amznslots: ['a1x6p5', 'a3x2p9', 'a7x9p5']});
 
 		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock);
 		expect(slotTargetingMock).toEqual(expectedSlotTargeting);
+		expect(mocks.amazon.trackState).toHaveBeenCalled();
 	});
 
 	it('extends slot targeting for OpenX', function () {
@@ -53,10 +55,12 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 				oxslots: ['ox1x6p5', 'ox3x2p9', 'ox7x9p5']
 			};
 
+		spyOn(mocks.oxBidder, 'trackState');
 		spyOn(mocks.oxBidder, 'wasCalled').and.returnValue(true);
 		spyOn(mocks.oxBidder, 'getSlotParams').and.returnValue({oxslots: ['ox1x6p5', 'ox3x2p9', 'ox7x9p5']});
 
 		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock);
 		expect(slotTargetingMock).toEqual(expectedSlotTargeting);
+		expect(mocks.oxBidder.trackState).toHaveBeenCalled();
 	});
 });
