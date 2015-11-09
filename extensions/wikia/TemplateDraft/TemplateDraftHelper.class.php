@@ -41,8 +41,11 @@ class TemplateDraftHelper {
 	 * @return bool
 	 */
 	public function isMarkedAsInfobox( Title $title ) {
-		$tc = new TemplateClassification( $title );
-		return $tc->isType( TemplateClassificationService::TEMPLATE_INFOBOX );
+		global $wgCityId;
+
+		$tc = new TemplateClassificationService();
+		$type = $tc->getUserDefinedType( $wgCityId, $title->getArticleID() );
+		return $type === TemplateClassificationService::TEMPLATE_INFOBOX;
 	}
 
 	/**
@@ -88,14 +91,12 @@ class TemplateDraftHelper {
 			 * Add rail module for draft approval
 			 */
 			$railModuleList[1502] = [ 'TemplateDraftModule', 'Approve', null ];
-		} else {
+		} elseif ( $this->shouldDisplayCreateModule( $title ) ) {
 			/**
 			 * $title is a parent page
 			 * Check if the template has not been classified before
 			 */
-			if ( $this->shouldDisplayCreateModule( $title ) ) {
-				$railModuleList[1502] = [ 'TemplateDraftModule', 'Create', null ];
-			}
+			$railModuleList[1502] = [ 'TemplateDraftModule', 'Create', null ];
 		}
 	}
 
@@ -107,10 +108,13 @@ class TemplateDraftHelper {
 	 * @return bool
 	 */
 	public function shouldDisplayCreateModule( Title $title ) {
-		$tc = new TemplateClassification( $title );
-		$type = $tc->getType();
-		return ( empty( $type ) || $type === TemplateClassificationService::TEMPLATE_INFOBOX )
-			&& !self::titleHasPortableInfobox( $title );
+		global $wgCityId;
+		$tc = new TemplateClassificationService();
+
+		$type = $tc->getUserDefinedType( $wgCityId, $title->getArticleID() );
+		return empty( $type )
+			|| ( $type === TemplateClassificationService::TEMPLATE_INFOBOX
+				&& !self::titleHasPortableInfobox( $title ) );
 	}
 
 	public static function titleHasPortableInfobox( Title $title ) {

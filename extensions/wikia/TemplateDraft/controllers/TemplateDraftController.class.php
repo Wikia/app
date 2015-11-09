@@ -11,6 +11,8 @@ class TemplateDraftController extends WikiaController {
 	 * @throws MWException
 	 */
 	public function createDraftContent( Title $title, $content, $type ) {
+		global $wgCityId, $wgUser;
+
 		$newContent = '';
 
 		if ( $type === TemplateClassificationService::TEMPLATE_INFOBOX ) {
@@ -19,8 +21,14 @@ class TemplateDraftController extends WikiaController {
 			 */
 			$parentTitle = Title::newFromText( $title->getBaseText(), $title->getNamespace() );
 
-			$tc = new TemplateClassification( $parentTitle );
-			$tc->classifyTemplate( \TemplateClassificationService::TEMPLATE_INFOBOX, true );
+			$tc = new TemplateClassificationService();
+			$tc->classifyTemplate(
+				$wgCityId,
+				$parentTitle->getArticleID(),
+				TemplateClassificationService::TEMPLATE_INFOBOX,
+				TemplateClassificationService::USER_PROVIDER,
+				$wgUser->getId()
+			);
 
 			$templateConverter = new TemplateConverter( $title );
 			$newContent = $templateConverter->convertAsInfobox( $content );
@@ -28,31 +36,6 @@ class TemplateDraftController extends WikiaController {
 		}
 
 		return $newContent;
-	}
-
-	/**
-	 * Makes a negative recognition marking the template as a not-infobox one.
-	 * @return bool
-	 */
-	public function markTemplateAsNotInfobox() {
-		/**
-		 * First, validate the request.
-		 */
-		$pageId = $this->getRequest()->getInt( 'pageId' );
-		if ( !$this->isValidPostRequest() || $pageId === 0 ) {
-			$this->response->setVal( 'status', false );
-			return false;
-		}
-
-		/**
-		 * Then classify the template as not-infobox
-		 * (primary: unclassified, secondary: with logged data)
-		 */
-		$tc = new TemplateClassification( Title::newFromID( $pageId ) );
-		$this->response->setVal(
-			'status',
-			$tc->classifyTemplate( TemplateClassificationService::TEMPLATE_INFOBOX, false )
-		);
 	}
 
 	/**
@@ -84,11 +67,5 @@ class TemplateDraftController extends WikiaController {
 			'variables' => $infoboxVariables,
 			'content' => $infoboxContent,
 		] );
-	}
-
-	private function isValidPostRequest() {
-		$editToken = $this->getRequest()->getParams()[ 'editToken' ];
-		return $this->getRequest()->wasPosted()
-			&& $this->wg->User->matchEditToken( $editToken );
 	}
 }

@@ -194,14 +194,16 @@ class EditPageLayoutHelper {
 	}
 
 	static public function isInfoboxTemplate( Title $title ) {
-		$namespace = $title->getNamespace();
-		$portableInfobox = PortableInfoboxDataService::newFromTitle( $title )->getData();
+		global $wgCityId;
 
-		if ( $namespace === NS_TEMPLATE ) {
-			$tc = new TemplateClassification( $title );
-			return $tc->isType( TemplateClassificationService::TEMPLATE_INFOBOX )
-					|| self::isTemplateDraft( $title )
-					|| !empty( $portableInfobox );
+		if ( $title->inNamespace( NS_TEMPLATE ) ) {
+			if ( self::isTemplateDraft( $title ) ) {
+				return true;
+			} else {
+				$tc = new TemplateClassificationService();
+				$type = $tc->getUserDefinedType( $wgCityId, $title->getArticleID() );
+				return $type === TemplateClassificationService::TEMPLATE_INFOBOX;
+			}
 		}
 
 		return false;
