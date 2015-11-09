@@ -59,7 +59,10 @@ class AdEngine2Controller extends WikiaController {
 	}
 
 	/**
-	 * Action to display an ad (or not)
+	 * Action to display a recoverable ad product (or not)
+	 *
+	 * It differs with AdEngine2Controller::ad():
+	 * - no .wikia-ad class added to the element
 	 */
 	public function adEmptyContainer() {
 		$this->pageTypes = $this->request->getVal('pageTypes');
