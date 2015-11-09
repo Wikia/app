@@ -2,12 +2,13 @@
 /*jslint nomen: true*/
 /*jshint camelcase: false*/
 define('ext.wikia.adEngine.provider.taboola', [
+	'wikia.abTest',
 	'wikia.log',
 	'wikia.window',
 	'wikia.document',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.slotTweaker'
-], function (log, window, document, adContext, slotTweaker) {
+], function (abTest, log, window, document, adContext, slotTweaker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.taboola',
@@ -47,15 +48,29 @@ define('ext.wikia.adEngine.provider.taboola', [
 		return verticalName;
 	}
 
+	function getSupportedSlots() {
+		var supportedSlots = [],
+			abGroup = abTest.getGroup('TABOOLA_MODULES');
+
+		if (abGroup === 'GROUP_1' || abGroup === 'GROUP_3') {
+			supportedSlots.push('NATIVE_TABOOLA_RAIL');
+		}
+		if (abGroup === 'GROUP_2' || abGroup === 'GROUP_3') {
+			supportedSlots.push('NATIVE_TABOOLA_ARTICLE');
+		}
+
+		log(['getSlots', supportedSlots], 'debug', logGroup);
+		return supportedSlots;
+	}
+
 	function canHandleSlot(slotName) {
 		log(['canHandleSlot', slotName], 'debug', logGroup);
-
 		if (!readMoreDiv && slotName === 'NATIVE_TABOOLA_ARTICLE') {
 			log(['canHandleSlot', slotName, 'No "read more" section, disabling'], 'error', logGroup);
 			return false;
 		}
 
-		return !!slots[slotName];
+		return getSupportedSlots().indexOf(slotName) !== -1;
 	}
 
 	function loadTaboola() {

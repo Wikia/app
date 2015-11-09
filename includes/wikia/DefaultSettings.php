@@ -1306,7 +1306,7 @@ $wgAdDriverUseAdsAfterInfobox = false;
  * @name $wgAdDriverUseTaboola
  * Whether to enable AdProviderTaboola (true) or not (false)
  */
-$wgAdDriverUseTaboola = false;
+$wgAdDriverUseTaboola = true;
 
 /**
  * @name $wgAdDriverTaboolaCountries
