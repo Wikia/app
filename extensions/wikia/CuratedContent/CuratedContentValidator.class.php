@@ -217,16 +217,10 @@ class CuratedContentValidator {
 		// validate each item
 		if ( is_array( $section['items'] ) ) {
 			foreach ( $section['items'] as $item ) {
-				$usedLabels[] = $item['label'];
-
 				if ( !empty( $this->validateSectionItem( $item ) ) ) {
 					$errors[] = self::ERR_OTHER_ERROR;
 				}
 			}
-		}
-
-		if ( !$this->areLabelsUnique( $usedLabels ) ) {
-			$errors[] = self::ERR_DUPLICATED_LABEL;
 		}
 
 		return $errors;

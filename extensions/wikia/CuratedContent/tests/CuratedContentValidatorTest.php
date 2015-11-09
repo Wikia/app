@@ -206,7 +206,7 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 					['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category'],
 					['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category'],
 				]],
-				[CuratedContentValidator::ERR_DUPLICATED_LABEL],
+				[],
 			], [
 				['image_id' => 9, 'title' => 'foo', 'items' => [
 					['article_id' => 9, 'image_id' => 0, 'label' => 'foo', 'type' => 'category'],
@@ -293,7 +293,7 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category'], ['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => 'section', 'image_id' => 9],
 					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => '', 'image_id' => 0]
 				],
-				[CuratedContentValidator::ERR_OTHER_ERROR]
+				[]
 			], [
 				[
 					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'featured' => true, 'title' => 'foo', 'image_id' => 0],
