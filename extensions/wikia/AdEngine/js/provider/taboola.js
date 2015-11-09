@@ -66,7 +66,6 @@ define('ext.wikia.adEngine.provider.taboola', [
 		if (libraryLoaded) {
 			return;
 		}
-		readMoreDiv.parentNode.removeChild(readMoreDiv);
 
 		taboolaInit[pageType] = 'auto';
 		window._taboola = window._taboola || [];
@@ -87,6 +86,9 @@ define('ext.wikia.adEngine.provider.taboola', [
 			slot = slots[slotName];
 		log(['fillInSlot', slotName, slotElement], 'debug', logGroup);
 
+		if (readMoreDiv && slotName === 'NATIVE_TABOOLA_ARTICLE') {
+			readMoreDiv.parentNode.removeChild(readMoreDiv);
+		}
 		loadTaboola();
 		container.id = slot.id;
 		slotElement.appendChild(container);
