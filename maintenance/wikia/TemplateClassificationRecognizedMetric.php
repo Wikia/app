@@ -1,6 +1,6 @@
 <?php
 
-require_once( __DIR__ . '/../Maintenance.php' );
+require_once __DIR__ . '/../Maintenance.php';
 
 /**
  * Maintenance script counts current number of recognized templates in content namespaces
@@ -32,19 +32,19 @@ class TemplateClassificationRecognizedMetricMaintenance extends Maintenance {
 		$top500CNAllCount = 0;
 
 		foreach ( $wamTop500 as $wikia ) {
-			$wikiaDBName = WikiFactory::IDtoDB($wikia->wiki_id);
+			$wikiaDBName = WikiFactory::IDtoDB( $wikia->wiki_id );
 			$wikiaDBRead = wfGetDB( DB_SLAVE, [], $wikiaDBName );
 
-			$CNTemplatesOnWikia = $this->getContentNamespacesTemplates( $wikiaDBRead, $wgContentNamespaces );
+			$cnTemplatesOnWikia = $this->getContentNamespacesTemplates( $wikiaDBRead, $wgContentNamespaces );
 			$recognizedTemplates  = $this->getRecognizedTemplatesOnWikia(
 				( new TemplateClassificationService() ),
 				$wikia->wiki_id
 			);
 
-			$CNRecognizedTemplates = $this->intersectSets( $CNTemplatesOnWikia, $recognizedTemplates );
+			$cnRecognizedTemplates = $this->intersectSets( $cnTemplatesOnWikia, $recognizedTemplates );
 
-			$top500CNRecognizedCount += count( $CNRecognizedTemplates );
-			$top500CNAllCount += count( $CNTemplatesOnWikia );
+			$top500CNRecognizedCount += count( $cnRecognizedTemplates );
+			$top500CNAllCount += count( $cnTemplatesOnWikia );
 		}
 
 		/*
@@ -68,35 +68,35 @@ class TemplateClassificationRecognizedMetricMaintenance extends Maintenance {
 		return $templates;
 	}
 
-	private function isRecognized($type) {
+	private function isRecognized( $type ) {
 		return $type !== TemplateClassificationService::TEMPLATE_UNKNOWN
 			&& $type !== ''
 			&& $type !== 'other';
 	}
 
-	private function getWamTop500($db, \WikiaSQL $sql) {
+	private function getWamTop500( $db, \WikiaSQL $sql ) {
 		return $sql->SELECT( 'wiki_id' )
 			->FROM( 'fact_wam_scores' )
 			->WHERE( 'time_id' )->EQUAL_TO( date( 'Y-m-d', time() - 60 * 60 * 24 ) )
 			->ORDER_BY( 'wam_rank' )
 			->LIMIT( 500 )
-			->run($db);
+			->run( $db );
 	}
 
 	/**
 	 * Remove non content templates from list of recognized templates
 	 */
-	private function intersectSets( $CNTemplatesOnWikia, $recognizedTemplates ) {
-		$CNRecognizedTemplates = [];
-		foreach( $recognizedTemplates as $pageId => $type ) {
-			if ( in_array( $pageId, $CNTemplatesOnWikia ) ) {
-				$CNRecognizedTemplates[] = $pageId;
+	private function intersectSets( $cnTemplatesOnWikia, $recognizedTemplates ) {
+		$cnRecognizedTemplates = [];
+		foreach ( $recognizedTemplates as $pageId => $type ) {
+			if ( in_array( $pageId, $cnTemplatesOnWikia ) ) {
+				$cnRecognizedTemplates[] = $pageId;
 			}
 		}
-		return $CNRecognizedTemplates;
+		return $cnRecognizedTemplates;
 	}
 
-	private function getContentNamespacesTemplates($db, $contentNamespaces) {
+	private function getContentNamespacesTemplates( $db, $contentNamespaces ) {
 		$sql = ( new \WikiaSQL() )
 			->SELECT()->DISTINCT( 'p2.page_id as temp_id' )
 			->FROM( 'page' )->AS_( 'p' )
@@ -110,7 +110,7 @@ class TemplateClassificationRecognizedMetricMaintenance extends Maintenance {
 
 		$pages = $sql->runLoop( $db, function ( &$pages, $row ) {
 			$pages[] = $row->temp_id;
-		});
+		} );
 
 		return $pages;
 	}
@@ -127,14 +127,14 @@ class TemplateClassificationRecognizedMetricMaintenance extends Maintenance {
 		global $wgGeckoboardApiKey, $wgGeckoboardPushUrl, $wgTemplateClassificationGeckometerWidgetKey;
 
 		$metric = 0;
-		if( $top500CNAllCount > 0 ) {
+		if ( $top500CNAllCount > 0 ) {
 			$metric = $top500CNRecognizedCount / $top500CNAllCount * 100;
 		}
 		$data = [
-				"item" => strval($metric),
-				"min" => ["value" => 0],
-				"max" => ["value" => 100]
-			];
+			'item' => strval( $metric ),
+			'min' => [ 'value' => 0 ],
+			'max' => [ 'value' => 100 ]
+		];
 
 		$params = [
 			'api_key' => $wgGeckoboardApiKey,
@@ -148,5 +148,5 @@ class TemplateClassificationRecognizedMetricMaintenance extends Maintenance {
 	}
 }
 
-$maintClass = "TemplateClassificationRecognizedMetricMaintenance";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+$maintClass = 'TemplateClassificationRecognizedMetricMaintenance';
+require_once RUN_MAINTENANCE_IF_MAIN;
