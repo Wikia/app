@@ -109,6 +109,13 @@ define('ext.wikia.adEngine.template.floor', [
 		}
 	}
 
+	adContext.addCallback(function () {
+		var floor = doc.getElementById(floorId);
+		if (floor) {
+			floor.parentElement.removeChild(floor);
+		}
+	});
+
 	return {
 		show: show
 	};
