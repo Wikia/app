@@ -169,11 +169,7 @@ class WikiPage extends Page implements IDBAccessObject {
 		case 'fromdbmaster':
 			return self::READ_LATEST;
 		case 'forupdate':
-			// @macbre - you have no idea how sorry I am
-			// SELECT ... FOR UPDATE is killing us...
-			// https://wikia-inc.atlassian.net/browse/MAIN-5810
-			return self::READ_LATEST;
-			// return self::READ_LOCKING;
+			return self::READ_LOCKING;
 		default:
 			// It may already be an integer or whatever else
 			return $type;
