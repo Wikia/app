@@ -8,7 +8,6 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
 	const ASSET_GROUP_ADENGINE_OPENX_BIDDER = 'adengine2_ox_bidder_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
-	const ASSET_GROUP_ADENGINE_RUBICON_RTP = 'adengine2_rubicon_rtp_js';
 	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
 	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
@@ -69,7 +68,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgSitewideDisableKrux';
 		$vars[] = 'wgSitewideDisableLiftium';
 		$vars[] = 'wgSitewideDisableMonetizationService';
-		$vars[] = 'wgSitewideDisableRubiconRTP';
 		$vars[] = 'wgSitewideDisableSevenOneMedia';
 
 		return true;
@@ -143,7 +141,7 @@ class AdEngine2Hooks {
 	}
 
 	/**
-	 * Modify assets appended to the top of the page: add RubiconRtp and AmazonMatch lookup services
+	 * Modify assets appended to the top of the page: add lookup services
 	 *
 	 * @param array $jsAssets
 	 *
@@ -151,12 +149,8 @@ class AdEngine2Hooks {
 	 */
 	public static function onOasisSkinAssetGroupsBlocking( &$jsAssets ) {
 
-		// Tracking should be available very early, so we can track how lookup calls (Amazon, Rubicon) perform
+		// Tracking should be available very early, so we can track how lookup calls perform
 		$jsAssets[] = self::ASSET_GROUP_ADENGINE_TRACKING;
-
-		if ( AnalyticsProviderRubiconRTP::isEnabled() ) {
-			$jsAssets[] = self::ASSET_GROUP_ADENGINE_RUBICON_RTP;
-		}
 
 		if ( AnalyticsProviderAmazonMatch::isEnabled() ) {
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE_AMAZON_MATCH;
