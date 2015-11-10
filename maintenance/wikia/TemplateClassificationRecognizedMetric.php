@@ -70,8 +70,8 @@ class TemplateClassificationRecognizedMetricMaintenance extends Maintenance {
 
 	private function isRecognized( $type ) {
 		return $type !== TemplateClassificationService::TEMPLATE_UNKNOWN
-			&& $type !== ''
-			&& $type !== 'other';
+			&& $type !== AutomaticTemplateTypes::TEMPLATE_UNCLASSIFIED
+			&& $type !== AutomaticTemplateTypes::TEMPLATE_OTHER;
 	}
 
 	private function getWamTop500( $db, \WikiaSQL $sql ) {
