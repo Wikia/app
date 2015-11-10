@@ -236,8 +236,25 @@ body >a >img[src$="noad.gif"] {
 	}
 }
 
-#NATIVE_TABOOLA {
+#NATIVE_TABOOLA_ARTICLE {
 	max-width: 700px;
+}
+
+#NATIVE_TABOOLA_ARTICLE, #NATIVE_TABOOLA_RAIL {
+	.trc_rbox_header .trc_rbox_header_span {
+		color: $color-page-opposite;
+	}
+	.trc_header_ext, .trc-widget-footer {
+		.logoDiv a span {
+			color: $color-links;
+		}
+	}
+	.trc_rbox_div .video-label-box .video-title {
+		color: $color-text;
+	}
+	.trc_rbox_div .video-label-box .branding {
+		color: $color-alternate-text;
+	}
 }
 
 .wikia-ad-interactive-map {
