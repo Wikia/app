@@ -18,8 +18,8 @@ class Hooks {
 		\Hooks::register( 'PageHeaderPageTypePrepared', [ $hooks, 'onPageHeaderPageTypePrepared' ] );
 		\Hooks::register( 'QueryPageUseResultsBeforeRecache', [ $hooks, 'onQueryPageUseResultsBeforeRecache' ] );
 		/* Edit page hooks */
-		\Hooks::register( 'EditPage::showEditForm:fields', [ $hooks, 'onEditPageShowEditFormFields' ] );
 		\Hooks::register( 'ArticleSaveComplete', [ $hooks, 'onArticleSaveComplete' ] );
+		\Hooks::register( 'EditPage::showEditForm:fields', [ $hooks, 'onEditPageShowEditFormFields' ] );
 		\Hooks::register( 'EditPageLayoutExecute', [ $hooks, 'onEditPageLayoutExecute' ] );
 		\Hooks::register( 'EditPageMakeGlobalVariablesScript', [ $hooks, 'onEditPageMakeGlobalVariablesScript' ] );
 	}
@@ -175,8 +175,8 @@ class Hooks {
 		$user = $editPage->getContext()->getUser();
 		$title = $editPage->getContext()->getTitle();
 		if ( ( new Permissions() )->shouldDisplayEntryPoint( $user, $title ) ) {
-			$editPage->addExtraPageControlsHtml(
-				( new View )->renderEditPageEntryPoint( $wgCityId, $title, $user )
+			$editPage->addExtraHeaderHtml(
+				( new View )->renderTemplateType( $wgCityId, $title, $user )
 			);
 		}
 		return true;

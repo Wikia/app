@@ -12,11 +12,10 @@
 
 	> h1 {
 		display: inline-block;
-		float: left;
 		font-size: 19px;
 		line-height: 17px;
 		overflow: hidden;
-		padding: 0;
+		padding: 0 0 3px;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		width: 300px;
@@ -31,7 +30,7 @@
 	> h2 {
 		color: $color-epl-header-text;
 		font-size: 14px;
-		line-height: 21px;
+		line-height: 22px;
 		// BugId:7024 - override per-wiki custom CSS
 		margin: 0;
 		padding: 0;
