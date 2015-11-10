@@ -51,9 +51,10 @@ class DPL {
 		$this->mReplaceInTitle = $replaceInTitle;
 		$this->mTableRow = $aTableRow;
 
-		// instead use global parser, create it's new instance for DPL purposes
-		// preserving some of it's already existing options
-		// TODO:explain more
+		// DPL can mess in some of already existing main parser
+		// markers and context, that's why,
+		// instead using global parser, create it's new instance for DPL purposes
+		// and reuse only necessary options.
 		$this->mParser = ParserPool::create();
 		$this->mParser->mOptions = $parser->mOptions;
 		$this->mParser->mOutput = $parser->mOutput;
