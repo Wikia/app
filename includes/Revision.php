@@ -329,7 +329,7 @@ class Revision implements IDBAccessObject {
 		);
 		$options = array( 'LIMIT' => 1 );
 		if ( ( $flags & self::READ_LOCKING ) == self::READ_LOCKING ) {
-			$options[] = 'FOR UPDATE';
+			$options[] = 'LOCK IN SHARE MODE';
 		}
 		return $db->select(
 			array( 'revision', 'page', 'user' ),
