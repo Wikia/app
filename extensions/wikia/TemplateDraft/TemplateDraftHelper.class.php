@@ -98,11 +98,16 @@ class TemplateDraftHelper {
 		global $wgCityId;
 		$tc = new TemplateClassificationService();
 
-		$type = $tc->getType( $wgCityId, $title->getArticleID() );
-		return empty( $type )
-			|| $type === TemplateClassificationService::TEMPLATE_CUSTOM_INFOBOX
-			|| ( $type === TemplateClassificationService::TEMPLATE_INFOBOX
-				&& !self::titleHasPortableInfobox( $title ) );
+		try {
+			$type = $tc->getType( $wgCityId, $title->getArticleID() );
+			return empty( $type )
+				|| $type === TemplateClassificationService::TEMPLATE_CUSTOM_INFOBOX
+				|| ( $type === TemplateClassificationService::TEMPLATE_INFOBOX
+					&& !self::titleHasPortableInfobox( $title ) );
+		} catch ( Swagger\Client\ApiException $e ) {
+			// If we cannot reach the service assume false to avoid overwriting data
+			return false;
+		}
 	}
 
 	public static function titleHasPortableInfobox( Title $title ) {
