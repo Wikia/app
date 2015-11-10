@@ -31,7 +31,6 @@ class DPL {
 				 $includeseclabelsnotmatch, $includematchparsed, &$parser, $logger, $replaceInTitle, $iTitleMaxLen,
 				 $defaultTemplateSuffix, $aTableRow, $bIncludeTrim, $iTableSortCol, $updateRules, $deleteRules ) {
 
-
 	   	global $wgContLang;
 		$this->nameSpaces = $wgContLang->getNamespaces();
 		$this->mArticles = $articles;
@@ -52,6 +51,9 @@ class DPL {
 		$this->mReplaceInTitle = $replaceInTitle;
 		$this->mTableRow = $aTableRow;
 
+		// instead use global parser, create it's new instance for DPL purposes
+		// preserving some of it's already existing options
+		// TODO:explain more
 		$this->mParser = ParserPool::create();
 		$this->mParser->mOptions = $parser->mOptions;
 		$this->mParser->mOutput = $parser->mOutput;
