@@ -347,9 +347,9 @@ body >a >img[src$="noad.gif"] {
 	}
 
 	.icon {
-		width: 98px;
-		height: 90px;
-		margin: 0 auto 5px auto;
+		width: 140px;
+		height: 100px;
+		margin: 0 auto -5px auto;
 		cursor: pointer;
 		background: url(/skins/oasis/images/recovered_message_icon.png) no-repeat; /* $wgCdnStylePath */
 	}
@@ -360,8 +360,12 @@ body >a >img[src$="noad.gif"] {
 		max-width: 728px;
 		z-index: $wikia-top-ads-index;
 
+		.icon {
+			margin: 0;
+		}
+
 		.message {
-			max-width: 580px;
+			max-width: 550px;
 			display: inline-block;
 
 			.dialog-pointer {
