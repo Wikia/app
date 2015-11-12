@@ -112,28 +112,25 @@ class PagesWithoutInfobox extends PageQueryPage {
 				->FROM( 'templatelinks' )
 				->WHERE( 'tl_title' )->IN( $infoboxTemplates )
 				->runLoop( $dbr, function ( &$pagesWithInfobox, $row ) {
-					$pagesWithInfobox[] = $row->tl_from;
+					$pagesWithInfobox[$row->tl_from] = true;
 				} );
 		}
 
-		$sql = ( new WikiaSQL() )
+		$contentPages = ( new WikiaSQL() )
 			->SELECT( 'page_id', 'page_title', 'page_namespace' )
 			->FROM( 'page' )
-			->WHERE( 'page_namespace' )->IN( $wgContentNamespaces );
-
-		if ( !empty( $pagesWithInfobox ) ) {
-			$sql->AND_( 'page_id' )->NOT_IN( $pagesWithInfobox );
-		}
-
-		$pagesWithoutInfobox = $sql->LIMIT( self::LIMIT )
-			->runLoop( $dbr, function ( &$pagesWithoutInfobox, $row ) {
-				$pagesWithoutInfobox[] = [
+			->WHERE( 'page_namespace' )->IN( $wgContentNamespaces )
+			->ORDER_BY( 'page_id' )->DESC()
+			->runLoop( $dbr, function ( &$contentPages, $row ) {
+				$contentPages[$row->page_id] = [
 					$this->getName(),
 					$row->page_id,
 					$row->page_namespace,
 					$row->page_title,
 				];
 			} );
+
+		$pagesWithoutInfobox = array_slice( array_diff_key( $contentPages, $pagesWithInfobox ), 0, self::LIMIT );
 
 		return $pagesWithoutInfobox;
 	}
