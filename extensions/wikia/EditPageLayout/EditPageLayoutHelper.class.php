@@ -193,20 +193,6 @@ class EditPageLayoutHelper {
 			&& !$wgUser->getGlobalPreference( 'disablesyntaxhighlighting' );
 	}
 
-	static public function isInfoboxTemplate( Title $title ) {
-		$namespace = $title->getNamespace();
-		$portableInfobox = PortableInfoboxDataService::newFromTitle( $title )->getData();
-
-		if ( $namespace === NS_TEMPLATE ) {
-			$tc = new TemplateClassification( $title );
-			return $tc->isType( TemplateClassificationService::TEMPLATE_INFOBOX )
-					|| self::isTemplateDraft( $title )
-					|| !empty( $portableInfobox );
-		}
-
-		return false;
-	}
-
 	static public function isTemplateDraft( $title ) {
 		global $wgEnableTemplateDraftExt;
 
