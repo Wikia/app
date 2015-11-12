@@ -51,46 +51,14 @@ class DPL {
 		$this->mReplaceInTitle = $replaceInTitle;
 		$this->mTableRow = $aTableRow;
 
-		// cloning the parser in the following statement leads in some cases to a php error in MW 1.15
-		// 	You must apply the following patch to avoid this:
-		// add in LinkHoldersArray.php at the beginning of function 'merge' the following code lines:
-		//		if (!isset($this->interwikis)) {
-		//			$this->internals = array();
-		//			$this->interwikis = array();
-		//			$this->size = 0;
-		//			$this->parent  = $other->parent;
-		//		}
-		$this->mParser = clone $parser;
-		// clear state of cloned parser; if the above patch of LinkHoldersArray is not made this
-		// can lead to links not being shown in the original document (probably the UIQ_QINU-tags no longer
-		// get replaced properly; in combination with the patch however, it does not do any harm.
-
-		// The CITE extension registers a hook on parser->clearState
-		// We must UNDO the effect of that call (Cite->clearState) because otherwise all Cititations would be lost
-		// that were made before a DPL call; we borrow a handle to the cite object from the parser´s tag hooks
-
-		$citeObject = null;
-		// store current state of Cite Object
-		if (isset($parser->mTagHooks['references'])) {
-			$citeObject	=	$parser->mTagHooks['references'][0];
-			$tmpCiteGroupCnt			= $citeObject->mGroupCnt;
-			$tmpCiteOutCnt				= $citeObject->mOutCnt;
-			$tmpCiteCallCnt				= $citeObject->mCallCnt;
-			$tmpCiteRefs				= $citeObject->mRefs;
-			$tmpCiteReferencesErrors	= $citeObject->mReferencesErrors;
-			$tmpCiteRefCallStack		= $citeObject->mRefCallStack;
-		}
-		// now clear the state
-		$this->mParser->clearState();  // eliminated to avoid conflicht with CITE extension
-		// restore Cite Object
-		if ($citeObject != null) {
-			$citeObject->mGroupCnt			= $tmpCiteGroupCnt;
-			$citeObject->mOutCnt			= $tmpCiteOutCnt;
-			$citeObject->mCallCnt			= $tmpCiteCallCnt;
-			$citeObject->mRefs				= $tmpCiteRefs;
-			$citeObject->mReferencesErrors	= $tmpCiteReferencesErrors;
-			$citeObject->mRefCallStack		= $tmpCiteRefCallStack;
-		}
+		// DPL can mess in some of already existing main parser
+		// markers and context, that's why,
+		// instead using global parser, create it's new instance for DPL purposes
+		// and reuse only necessary options.
+		$this->mParser = ParserPool::create();
+		$this->mParser->mOptions = $parser->mOptions;
+		$this->mParser->mOutput = $parser->mOutput;
+		$this->mParser->mTitle = $parser->mTitle;
 
 		$this->mParserOptions = $parser->mOptions;
 		$this->mParserTitle = $parser->mTitle;

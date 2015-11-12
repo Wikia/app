@@ -1488,7 +1488,7 @@ class LocalFile extends File {
 	 */
 	function getDescriptionText() {
 		global $wgParser;
-		$revision = Revision::newFromTitle( $this->title );
+		$revision = Revision::newFromTitle( $this->title, false, Revision::READ_NORMAL );
 		if ( !$revision ) return false;
 		$text = $revision->getText();
 		if ( !$text ) return false;

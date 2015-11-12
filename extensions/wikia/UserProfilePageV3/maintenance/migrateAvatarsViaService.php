@@ -33,6 +33,7 @@ class AvatarsMigrator extends Maintenance {
 
 		$this->addOption( 'from', 'User ID to start the migration from' );
 		$this->addOption( 'to', 'User ID to stop the migration at' );
+		$this->addOption( 'ids', 'Comma-separated list of user IDs to perform the migration for' );
 
 		$this->mDescription = 'This script migrates the user avatars from DFS to user avatars service';
 	}
@@ -52,6 +53,7 @@ class AvatarsMigrator extends Maintenance {
 
 		if ($this->hasOption('from')) $where[] = sprintf( 'user_id >= %d', $this->getOption( 'from' ) );
 		if ($this->hasOption('to'))   $where[] = sprintf( 'user_id <= %d', $this->getOption( 'to' ) );
+		if ($this->hasOption('ids'))  $where[] = sprintf( 'user_id IN (%s)', $this->getOption( 'ids' ) );
 
 		// get all accounts
 		$db = $this->getDB( DB_SLAVE );

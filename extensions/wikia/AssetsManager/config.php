@@ -134,7 +134,7 @@ $config['spotlights_js'] = array(
 
 $config['adengine2_taboola_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'wikiamobile' ],
+	'skin' => [ 'oasis' ],
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/provider/taboola.js',
 	),
@@ -172,14 +172,6 @@ $config['adengine2_tracking_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdContext.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
-	),
-);
-
-$config['adengine2_rubicon_rtp_js'] = array(
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/AdEngine/js/lookup/rubiconRtp.js',
 	),
 );
 

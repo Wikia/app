@@ -440,17 +440,15 @@ class CuratedContentController extends WikiaController {
 		}
 	}
 
+	//@TODO Remove this method in XW-700
 	public function setData( ) {
 		global $wgCityId, $wgUser;
-
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		// TODO: CONCF-961 Set more restrictive header
 		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
-
 		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
 			$data = $this->request->getArray( 'data', [ ] );
 			$status = false;
-
 			// strip excessive data used in mercury interface (added in self::getData method)
 			foreach ( $data as &$section ) {
 				unset( $section['node_type'] );
@@ -461,7 +459,6 @@ class CuratedContentController extends WikiaController {
 					$section['title'] = $section['label'];
 				}
 				unset( $section['label'] );
-
 				if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
 					foreach ( $section['items'] as &$item ) {
 						unset( $item['node_type'] );
@@ -469,13 +466,74 @@ class CuratedContentController extends WikiaController {
 					}
 				}
 			}
+			$helper = new CuratedContentHelper();
+			$sections = $helper->processSectionsFromSpecialPage( $data );
+			$errors = ( new CuratedContentSpecialPageValidator() )->validateData( $sections );
+			if ( !empty( $errors ) ) {
+				$this->response->setVal( 'error', $errors );
+			} else {
+				$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $wgCityId, $sections );
+				wfWaitForSlaves();
+				if ( !empty( $status ) ) {
+					wfRunHooks( 'CuratedContentSave', [ $sections ] );
+				}
+			}
+			$this->response->setVal( 'status', $status );
+		} else {
+			$this->response->setCode( \Wikia\Service\ForbiddenException::CODE );
+			$this->response->setVal( 'message', 'No permissions to save curated content' );
+		}
+	}
+
+	public function setCuratedContentData( ) {
+		global $wgCityId, $wgUser, $wgRequest;
+		
+		if ( !$wgRequest->wasPosted() ) {
+			throw new CuratedContentValidatorMethodNotAllowedException();
+		}
+
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		// TODO: CONCF-961 Set more restrictive header
+		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
+
+		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
+			$data = $this->request->getArray( 'data', [ ] );
+			$properData = [];
+			$status = false;
+
+			// strip excessive data used in mercury interface (added in self::getData method)
+			foreach ( $data as $section ) {
+
+				// strip node_type and image_url from section
+				unset( $section['node_type'] );
+				unset( $section['image_url'] );
+
+				// fill label for featured and rename section.title to section.label
+				if ( empty( $section['label'] ) && !empty( $section['featured'] ) ) {
+					$section['title'] = wfMessage( 'wikiacuratedcontent-featured-section-name' )->text();
+				} else {
+					$section['title'] = $section['label'];
+					unset( $section['label'] );
+				}
+
+				// strip node_type and image_url from items inside section and add it to new data
+				if ( is_array( $section['items'] ) && !empty( $section['items'] ) ) {
+					// strip node_type and image_url
+					foreach ( $section['items'] as &$item ) {
+						unset( $item['node_type'] );
+						unset( $item['image_url'] );
+					}
+
+					$properData[] = $section;
+				}
+			}
 
 			$helper = new CuratedContentHelper();
-			$sections = $helper->processSections( $data );
+			$sections = $helper->processSections( $properData );
 			$errors = ( new CuratedContentValidator )->validateData( $sections );
 
 			if ( !empty( $errors ) ) {
-				$this->response->setVal( 'error', $errors );
+				$this->response->setVal( 'errors', $errors );
 			} else {
 				$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $wgCityId, $sections );
 				wfWaitForSlaves();
@@ -547,7 +605,7 @@ class CuratedContentController extends WikiaController {
 
 	private function getItemsFromSections( $content, $sections ) {
 		$items = [ ];
-		if( is_array( $sections ) ) {
+		if ( is_array( $sections ) ) {
 			foreach ( $sections as $section ) {
 				$categoriesForSection = $this->getSectionItems( $content, $section['title'] );
 				foreach ( $categoriesForSection as $category ) {

@@ -79,7 +79,7 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 			// Mark selected type
 			$preselectedType = $classificationForm.find('input[value="' + templateType + '"]');
 
-			if ($preselectedType.length > 0) {
+			if (!!$preselectedType) {
 				$classificationForm.find('input[checked="checked"]').removeAttr('checked');
 				$preselectedType.attr('checked', 'checked');
 			}
@@ -133,15 +133,11 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 			});
 		});
 
-		modalInstance.bind('option-select', function (e) {
-			var $input = $(e.currentTarget).find('input:radio');
-
-			$input.attr('checked', 'checked');
-
+		modalInstance.$element.find('input:radio').change(function trackRadioChange(e) {
 			// Track - click to change a template's type
 			track({
 				action: tracker.ACTIONS.CLICK_LINK_TEXT,
-				label: $input.val()
+				label: $(e.currentTarget).val()
 			});
 		});
 
@@ -153,7 +149,7 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 		var newTemplateType = $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val(),
 			oldTemplateType = '';
 
-		if ($preselectedType.length > 0) {
+		if (!!$preselectedType) {
 			oldTemplateType = $preselectedType.val();
 		}
 
