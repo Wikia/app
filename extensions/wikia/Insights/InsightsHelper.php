@@ -59,7 +59,7 @@ class InsightsHelper {
 	 * @return array
 	 */
 	public static function getInsightsPages() {
-		global $wgEnableInsightsInfoboxes, $wgEnableFlagsExt;
+		global $wgEnableInsightsInfoboxes, $wgEnableFlagsExt, $wgEnableTemplateClassificationExt;
 
 		/* Add infoboxes insight */
 		if ( !empty( $wgEnableInsightsInfoboxes )
@@ -77,6 +77,13 @@ class InsightsHelper {
 		) {
 			self::$insightsPages = array_merge(
 				[ InsightsFlagsModel::INSIGHT_TYPE => 'InsightsFlagsModel' ],
+				self::$insightsPages
+			);
+		}
+
+		if ( !empty( $wgEnableTemplateClassificationExt ) ) {
+			self::$insightsPages = array_merge(
+				[ InsightsPagesWithoutInfoboxModel::INSIGHT_TYPE => 'InsightsPagesWithoutInfoboxModel' ],
 				self::$insightsPages
 			);
 		}

@@ -40,7 +40,7 @@ class PagesWithoutInfobox extends PageQueryPage {
 		/**
 		 * 1. Get the new data first
 		 */
-		$nonportableTemplates = $this->reallyDoQuery();
+		$pagesWithoutInfobox = $this->reallyDoQuery();
 		$dbw->begin();
 
 		/**
@@ -52,10 +52,10 @@ class PagesWithoutInfobox extends PageQueryPage {
 			->run( $dbw );
 
 		/**
-		 * 3. Insert the new records if the $nonportableTemplates array is not empty
+		 * 3. Insert the new records if the $pagesWithoutInfobox array is not empty
 		 */
 		$num = 0;
-		if ( !empty( $nonportableTemplates ) ) {
+		if ( !empty( $pagesWithoutInfobox ) ) {
 
 			( new WikiaSQL() )
 				->INSERT()->INTO( 'querycache', [
@@ -64,7 +64,7 @@ class PagesWithoutInfobox extends PageQueryPage {
 					'qc_namespace',
 					'qc_title'
 				] )
-				->VALUES( $nonportableTemplates )
+				->VALUES( $pagesWithoutInfobox )
 				->run( $dbw );
 
 			$num = $dbw->affectedRows();
@@ -83,34 +83,58 @@ class PagesWithoutInfobox extends PageQueryPage {
 
 	/**
 	 * Returns an array with data on pages that do not have an infobox.
-	 * First, it fetches all pages with a 
 	 *
 	 * @param bool $limit Only for consistency
 	 * @param bool $offset Only for consistency
 	 * @return bool|mixed
 	 */
 	public function reallyDoQuery( $limit = false, $offset = false ) {
+		global $wgCityId, $wgContentNamespaces;
+
+		$tc = new TemplateClassificationService();
+
+		$infoboxTemplates = [];
+		foreach( $tc->getTemplatesOnWiki( $wgCityId ) as $pageId => $templateType ) {
+			if ( $templateType === TemplateClassificationService::TEMPLATE_INFOBOX ) {
+				$templateTitle = Title::newFromID( $pageId );
+				if ( $templateTitle instanceof Title ) {
+					$infoboxTemplates[] = $templateTitle->getDBkey();
+				}
+			}
+		}
+
 		$dbr = wfGetDB( DB_SLAVE, [ $this->getName(), __METHOD__, 'vslow' ] );
 
-		$nonportableTemplates = ( new WikiaSQL() )
-			->SELECT( 'page_title' )->AS_( 'title' )
+		$pagesWithInfobox = [];
+		if ( !empty( $infoboxTemplates ) ) {
+			$pagesWithInfobox = ( new WikiaSQL() )
+				->SELECT( 'tl_from' )
+				->FROM( 'templatelinks' )
+				->WHERE( 'tl_title' )->IN( $infoboxTemplates )
+				->runLoop( $dbr, function ( &$pagesWithInfobox, $row ) {
+					$pagesWithInfobox[] = $row->tl_from;
+				} );
+		}
+
+		$sql = ( new WikiaSQL() )
+			->SELECT( 'page_id', 'page_title', 'page_namespace' )
 			->FROM( 'page' )
-			->WHERE( 'page_namespace' )->EQUAL_TO( NS_TEMPLATE )
-			->AND_( 'page_is_redirect' )->EQUAL_TO( 0 )
-			->runLoop( $dbr, function( &$nonportableTemplates, $row ) {
-				$title = Title::newFromText( $row->title, NS_TEMPLATE );
-				$contentText = ( new WikiPage( $title ) )->getText();
-				if ( $title !== null && PortableInfoboxClassification::isTitleWithNonportableInfobox( $title->getText(), $contentText ) ) {
-					$links = $title->getIndirectLinks();
-					$nonportableTemplates[] = [
-						$this->getName(),
-						count( $links ),
-						NS_TEMPLATE,
-						$row->title,
-					];
-				}
+			->WHERE( 'page_namespace' )->IN( $wgContentNamespaces );
+
+		if ( !empty( $pagesWithInfobox ) ) {
+			$sql->AND_( 'page_id' )->NOT_IN( $pagesWithInfobox );
+		}
+
+		$pagesWithoutInfobox = $sql->LIMIT( self::LIMIT )
+			->runLoop( $dbr, function ( &$pagesWithoutInfobox, $row ) {
+				$pagesWithoutInfobox[] = [
+					$this->getName(),
+					0,
+					$row->page_namespace,
+					$row->page_title,
+				];
 			} );
 
-		return $nonportableTemplates;
+		return $pagesWithoutInfobox;
 	}
 }

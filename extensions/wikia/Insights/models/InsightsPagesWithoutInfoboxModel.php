@@ -5,7 +5,7 @@
  * A class specific to a subpage with a list of pages
  * without an infobox on them, sorted by page views.
  */
-class InsightsUnconvertedInfoboxesModel extends InsightsQueryPageModel {
+class InsightsPagesWithoutInfoboxModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'pageswithoutinfobox';
 
 	public $loopNotificationConfig = [
