@@ -38,6 +38,14 @@ class BannerNotificationsController extends WikiaController {
 				$_SESSION[self::SESSION_KEY] = [];
 			}
 
+			// Making sure if the message is not already set in the session.
+			// We're checking only the message text and not other message parameters,
+			// because the text is the most important here.
+			if ( array_search( $message, array_column( $_SESSION[self::SESSION_KEY], 'message' ) ) !== false ) {
+				wfDebug( __METHOD__ . " - {$message}\n - already in the _SESSION array" );
+				return;
+			}
+
 			$_SESSION[self::SESSION_KEY][] = [
 				'message' => $message,
 				'type' => $type,
