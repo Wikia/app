@@ -9,11 +9,11 @@
 
 class SEOTweaksHooksHelper {
 	const DELETED_PAGES_STATUS_CODE = 410;
-	
+
 	/**
 	 * List of hosts associated with external sharing services
 	 */
-	const SHARING_HOSTS_REGEX = '/\.(facebook)|(twitter)|(google)\./is';
+	const SHARING_HOSTS_REGEX = '/\.(facebook|twitter|google)\./is';
 
 	/**
 	 * @author mech
@@ -21,10 +21,7 @@ class SEOTweaksHooksHelper {
 	 * @return bool true
 	 */
 	static function onBeforePageDisplay( $out ) {
-		global $wgSEOGoogleSiteVerification, $wgSEOGooglePlusLink;
-		if ( !empty( $wgSEOGoogleSiteVerification ) ) {
-			$out->addMeta( 'google-site-verification', $wgSEOGoogleSiteVerification );
-		}
+		global $wgSEOGooglePlusLink;
 		if ( !empty( $wgSEOGooglePlusLink ) ) {
 			$out->addLink( array( 'href' => $wgSEOGooglePlusLink, 'rel' => 'publisher' ) );
 		}
@@ -98,7 +95,7 @@ class SEOTweaksHooksHelper {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Prepends alt text for an image if that image does not have that option set
 	 * @param  Parser $parser
@@ -114,11 +111,11 @@ class SEOTweaksHooksHelper {
 			$alt = implode( '.', array_slice( explode( '.', $text ), 0, -1 ) ); // lop off text after the ultimate dot (e.g. JPG)
 			$parts[] = "alt={$alt}";
 		}
-		
+
 		return true;
-		
+
 	}
-	
+
 	/**
 	 * Attempts to recover a URL that was truncated by an external service (e.g. /wiki/Wanted! --> /wiki/Wanted)
 	 * @param Article $article
@@ -126,17 +123,31 @@ class SEOTweaksHooksHelper {
 	 * @param bool $pcache
 	 */
 	static public function onArticleViewHeader( &$article, &$outputDone, &$pcache ) {
+		global $wgEnableCustom404PageExt;
+
+		if ( !empty( $wgEnableCustom404PageExt ) ) {
+			// Custom404Page does the same, just better
+			return true;
+		}
+
 		$title = $article->getTitle();
-		if ( ( ! $title->exists() ) 
-			&& ( isset( $_SERVER['HTTP_REFERER'] ) ) 
-			&& preg_match( self::SHARING_HOSTS_REGEX, parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_HOST ) ) 
-		    ) {
+		if ( !$title->exists()
+				&& $title->isContentPage()
+				&& isset( $_SERVER['HTTP_REFERER'] )
+				&& preg_match( self::SHARING_HOSTS_REGEX, parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_HOST ) )
+		) {
+			$namespace = $title->getNamespace();
 			$dbr = wfGetDB( DB_SLAVE );
-			$result = $dbr->query( sprintf( 'SELECT page_title FROM page WHERE page_title %s LIMIT 1', $dbr->buildLike( $title->getDBKey(), $dbr->anyString() ) ), __METHOD__ );
+			$query = sprintf(
+				'SELECT page_title FROM page WHERE page_title %s AND page_namespace = %d LIMIT 1',
+				$dbr->buildLike( $title->getDBKey(), $dbr->anyString() ),
+				$namespace
+			);
+			$result = $dbr->query( $query, __METHOD__ );
 			if ( $row = $dbr->fetchObject( $result ) ) {
-				$title = Title::newFromText( $row->page_title );
+				$title = Title::newFromText( $row->page_title, $namespace );
 				F::app()->wg->Out->redirect( $title->getFullUrl() );
-			    $outputDone = true;
+				$outputDone = true;
 			}
 		}
 		return true;

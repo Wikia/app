@@ -177,7 +177,7 @@
 				onScroll.bind(handleScrolling);
 			});
 		}
-		createBackendNotification();
+		createBackendNotifications();
 	}
 
 	/**
@@ -185,12 +185,11 @@
 	 * passed from the server on page load.
 	 * (if such one exists)
 	 */
-	function createBackendNotification() {
-		var $backendNotification = $('.banner-notification');
-		if ($backendNotification.length) {
-			backendNotification = new BannerNotification($backendNotification);
+	function createBackendNotifications() {
+		$('.banner-notification').each(function () {
+			var backendNotification = new BannerNotification($(this));
 			setUpClose(backendNotification);
-		}
+		});
 	}
 
 	/**

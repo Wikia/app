@@ -495,8 +495,9 @@ Kod binon: ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Esenunädol oli.'''
 
-Kanol laigebön {{SITENAME}} nennemiko, u kanol [[Special:UserLogin|nunädön oli dönu]] me gebananem ot u gebenanem votik.
+Kanol laigebön {{SITENAME}} nennemiko, u kanol $1 me gebananem ot u gebenanem votik.
 Küpälolös, das pads anik ba nog pojenons äsva no esenunädol oli, jüs uklinükol memi no laidüpik bevüresodanaföma olik.",
+'logouttext-link-text'       => 'nunädön oli dönu',
 'welcomecreation'            => '== Benokömö, o $1! ==
 Kal olik pejafon.
 No glömolöd ad votükön [[Special:Preferences|buükamis olik in {{SITENAME}}]].',

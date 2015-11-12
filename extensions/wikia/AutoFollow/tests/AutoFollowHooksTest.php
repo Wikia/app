@@ -45,10 +45,17 @@ class AutoFollowHooksTest extends \WikiaBaseTest {
 		 * Mocked User object with necessary options set
 		 * @var object User
 		 */
-		$newUser = new \User();
-		$newUser->setGlobalPreference( 'language', $sLanguage );
-		$newUser->setGlobalPreference( 'marketingallowed', 1 );
-		$newUser->setGlobalFlag( $wgAutoFollowFlag, 0 );
+		$newUser = $this->getMock( \User::class, ['getGlobalPreference', 'getGlobalFlag'] );
+		$newUser->expects( $this->exactly( 2 ) )
+			->method( 'getGlobalPreference' )
+			->will( $this->returnValueMap( [
+				['language', null, false, $sLanguage],
+				['marketingallowed', null, false, 1]
+			] ) );
+		$newUser->expects( $this->once() )
+			->method( 'getGlobalFlag', null )
+			->with( $wgAutoFollowFlag )
+			->willReturn( 0 );
 
 		/**
 		 * For the given set of data a task should be queued once

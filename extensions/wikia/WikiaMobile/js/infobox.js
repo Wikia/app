@@ -29,7 +29,7 @@ require(['jquery', 'wikia.window'], function($, window){
 	 */
 	function handlePortableInfoboxes() {
 		var collapsedClass = 'collapsed',
-			expandButtonClass = 'portable-infobox-expand-button',
+			expandButtonClass = 'pi-expand-button',
 			minimumHeight = 450,
 			$infoboxes = $('#wkMainCnt .portable-infobox'),
 			body = window.document.body,

@@ -80,13 +80,7 @@ class BodyController extends WikiaController {
 	 * @return Boolean
 	 */
 	public static function isOasisBreakpoints() {
-		global $wgOasisBreakpoints, $wgRequest, $wgLanguageCode, $wgOasisBreakpointsDE;
-
-		//For now we want to disable breakpoints for German wikis if not turn on explicitly.
-		//@TODO remove when 71Media fixes their styles and $wgOasisBreakpointsDE will retire
-		if ( strtolower( $wgLanguageCode ) == 'de' && empty( $wgOasisBreakpointsDE ) ) {
-			$wgOasisBreakpoints = false;
-		}
+		global $wgOasisBreakpoints, $wgRequest;
 
 		$wgOasisBreakpoints = $wgRequest->getBool( 'oasisbreakpoints', $wgOasisBreakpoints ) !== false;
 		return !empty( $wgOasisBreakpoints );
@@ -296,6 +290,7 @@ class BodyController extends WikiaController {
 		}
 
 		$railModuleList[1440] = array('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']);
+		$railModuleList[1435] = array('AdEmptyContainer', 'Index', ['slotName' => 'NATIVE_TABOOLA_RAIL']);
 		$railModuleList[1100] = array('Ad', 'Index', ['slotName' => 'LEFT_SKYSCRAPER_2']);
 
 		unset($railModuleList[1450]);
@@ -505,6 +500,10 @@ class BodyController extends WikiaController {
 
 		// bugid-70243: optionally hide navigation h1s for SEO
 		$this->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
+
+		if ( $this->wg->EnableSeoTestingExt ) {
+			$this->setVal( 'seoTestOneH1', SeoTesting::getGroup('One_H1') === 2 );
+		}
 
 		wfProfileOut(__METHOD__);
 	}

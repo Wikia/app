@@ -138,6 +138,7 @@ class GadgetHooks {
 		 */
 		foreach ( $gadgets as $g ) {
 			$module = $g->getModule();
+
 			if ( $module ) {
 				$resourceLoader->register( $g->getModuleName(), $module );
 			}
@@ -222,7 +223,21 @@ class GadgetHooks {
 			return;
 		}
 
-		$u = $t->getLocalURL( 'action=raw&ctype=' . $wgJsMimeType );
+		// Wikia change begin; author: lukaszk
+		$extraQuery = '';
+
+		if ( Wikia::isUsingSafeJs() ) {
+			$contentReviewHelper = new Wikia\ContentReview\Helper();
+
+			if ( $contentReviewHelper->isContentReviewTestModeEnabled() ) {
+				$extraQuery = '&current=' . $contentReviewHelper->getJsPagesTimestamp();
+			} else {
+				$extraQuery = '&reviewed=' . $contentReviewHelper->getReviewedJsPagesTimestamp();
+			}
+		}
+
+		$u = $t->getLocalURL( 'action=raw&ctype=' . $wgJsMimeType . $extraQuery );
+		// Wikia change end
 		$out->addScriptFile( $u, $t->getLatestRevID() );
 	}
 
@@ -620,7 +635,7 @@ class Gadget {
 /**
  * Class representing a list of resources for one gadget
  */
-class GadgetResourceLoaderModule extends ResourceLoaderWikiModule {
+class GadgetResourceLoaderModule extends ResourceLoaderGlobalWikiModule {
 	private $pages, $dependencies;
 
 	/**
@@ -654,4 +669,26 @@ class GadgetResourceLoaderModule extends ResourceLoaderWikiModule {
 	public function getDependencies() {
 		return $this->dependencies;
 	}
+
+	// Wikia change begin; author: lukaszk
+	public function getModifiedTime( ResourceLoaderContext $context ) {
+		if ( Wikia::isUsingSafeJs() ) {
+			$pages = $this->getPages( $context );
+
+			foreach ( $pages as $page ) {
+				if ( $page['type'] === 'script' ) {
+					$contentReviewHelper = new Wikia\ContentReview\Helper();
+
+					if ( $contentReviewHelper->isContentReviewTestModeEnabled() ) {
+						return $contentReviewHelper->getJsPagesTimestamp();
+					} else {
+						return $contentReviewHelper->getReviewedJsPagesTimestamp();
+					}
+				}
+			}
+		}
+
+		return parent::getModifiedTime( $context );
+	}
+	// Wikia change end
 }

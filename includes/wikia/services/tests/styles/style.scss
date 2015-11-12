@@ -1,0 +1,15 @@
+// keep these @import statements
+@import '/skins/common/shared.css';
+@import '/skins/wikia/shared.css';
+
+@import 'skins/shared/color';
+
+// mixins
+@import 'skins/shared/mixins/bodytext';
+
+header {
+	.foo {
+		@include bodytext;
+		color: $color-body;
+	}
+}

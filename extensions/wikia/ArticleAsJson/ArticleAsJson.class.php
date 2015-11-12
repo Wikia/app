@@ -14,10 +14,9 @@ class ArticleAsJson extends WikiaService {
 	const MEDIA_CONTEXT_ARTICLE_VIDEO = 'article-video';
 	const MEDIA_CONTEXT_GALLERY_IMAGE = 'gallery-image';
 	const MEDIA_CONTEXT_ICON = 'icon';
-	const MEDIA_CONTEXT_INFOBOX = 'infobox';
 
 	private static function createMarker( $width = 0, $height = 0, $isGallery = false ){
-		$blankImgUrl = F::app()->wg->blankImgUrl;
+		$blankImgUrl = '//:0';
 		$id = count( self::$media ) - 1;
 		$classes = 'article-media' . ($isGallery ? ' gallery' : '');
 		$width = !empty( $width ) ? " width='{$width}'" : '';
@@ -134,13 +133,14 @@ class ArticleAsJson extends WikiaService {
 		return true;
 	}
 
-	public static function onPortableInfoboxNodeImageGetData( $title, &$ref, $alt ) {
-
+	public static function onExtendPortableInfoboxImageData( $data, &$ref ) {
 		wfProfileIn( __METHOD__ );
+
+		$title = Title::newFromText( $data['name'] );
 		if ( $title ) {
 			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
-			$details['context'] = self::MEDIA_CONTEXT_INFOBOX;
-			self::$media[] = self::createMediaObject( $details, $title->getText(), $alt );
+			$details['context'] = $data['context'];
+			self::$media[] = self::createMediaObject( $details, $title->getText(), $data['caption'] );
 			$ref = count( self::$media ) - 1;
 		}
 
@@ -165,7 +165,7 @@ class ArticleAsJson extends WikiaService {
 			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
 
 			//information for mobile skins how they should display small icons
-			$details['context'] = self::isIconImage($handlerParams) ? self::MEDIA_CONTEXT_ICON : self::MEDIA_CONTEXT_ARTICLE_IMAGE;
+			$details['context'] = self::isIconImage( $details, $handlerParams ) ? self::MEDIA_CONTEXT_ICON : self::MEDIA_CONTEXT_ARTICLE_IMAGE;
 
 			self::$media[] = self::createMediaObject( $details, $title->getText(), $frameParams['caption'], $linkHref );
 
@@ -291,16 +291,29 @@ class ArticleAsJson extends WikiaService {
 
 	/**
 	 * @desc Determines if image is a small image used by users on desktop
-	 * as an icon. They to it by explicitly adding
-	 * '{width}px' or 'x{height}px' to image wikitext
+	 * as an icon. Users to it by explicitly adding
+	 * '{width}px' or 'x{height}px' to image wikitext or uploading a small image.
 	 *
+	 * @param $details - media details
 	 * @param $handlerParams
-	 *
 	 * @return bool true if one of the image sizes is smaller than ICON_MAX_SIZE
-	*/
-	private static function isIconImage( $handlerParams ) {
-		$fixedWidth = isset($handlerParams['width']) ? $handlerParams['width'] < self::ICON_MAX_SIZE : false;
-		$fixedHeight = isset($handlerParams['height']) ? $handlerParams['height'] < self::ICON_MAX_SIZE : false;
-		return $fixedWidth || $fixedHeight;
+	 */
+	private static function isIconImage( $details, $handlerParams ) {
+		$smallFixedWidth = self::isIconSize( $handlerParams['width'] );
+		$smallFixedHeight = self::isIconSize( $handlerParams['height'] );
+		$smallWidth = self::isIconSize( $details['width'] );
+		$smallHeight = self::isIconSize( $details['height'] );
+
+		return $smallFixedWidth || $smallFixedHeight || $smallWidth || $smallHeight;
+	}
+
+	/**
+	 * @desc Checks if passed property is set and if it's value is smaller than ICON_MAX_SIZE
+	 *
+	 * @param $sizeParam - width or height property
+	 * @return bool true if size is smaller than ICON_MAX_SIZE
+	 */
+	private static function isIconSize( $sizeParam ) {
+		return isset( $sizeParam ) ? $sizeParam <= self::ICON_MAX_SIZE : false;
 	}
 }

@@ -165,7 +165,7 @@ class UserStatsService extends WikiaModel {
 			$dbName = ( $wikiId == 0 ) ? false : WikiFactory::IDtoDB( $wikiId );
 			$dbw = wfGetDB( DB_MASTER, array(), $dbName );
 
-			//write to wikicities (acting 'user' will redirect result to wikicites)
+			// write to wikicities (acting 'user' will redirect result to wikicities)
 			$dbw->update(
 				'user',
 				array( 'user_editcount' => $editCount ),
@@ -177,7 +177,7 @@ class UserStatsService extends WikiaModel {
 			$editCount = $field;
 		}
 
-		$this->wg->Memc->set( $key,$editCount, 86400 );
+		$this->wg->Memc->set( $key, $editCount, 86400 );
 
 		wfProfileOut( __METHOD__ );
 		return $editCount;

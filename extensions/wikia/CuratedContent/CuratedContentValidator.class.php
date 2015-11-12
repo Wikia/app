@@ -3,6 +3,7 @@
 class CuratedContentValidator {
 	const LABEL_MAX_LENGTH = 48;
 
+	const ERR_OTHER_ERROR = 'otherError';
 	const ERR_DUPLICATED_LABEL = 'duplicatedLabel';
 	const ERR_IMAGE_MISSING = 'imageMissing';
 	const ERR_TOO_LONG_LABEL = 'tooLongLabel';
@@ -14,134 +15,214 @@ class CuratedContentValidator {
 	const ERR_EMPTY_LABEL = 'emptyLabel';
 	const ERR_NO_CATEGORY_IN_TAG = 'noCategoryInTag';
 
-	private $errors;
-	private $titles;
-	private $hasOptionalSection;
+	/**
+	 * This method validates data.
+	 * Data are correct when:
+	 * 1. Empty data is send - we set it to empty array
+	 * 2. Section (including featured and optional) contains items which are not empty array
+	 * 3. Label has to be not empty and no longer than 48 characters
+	 * 4. Section titles can't duplicate
+	 * 5. Image has to be set for items and sections
+	 * 6. Items in sections and inside optional section contain only Categories
+	 *
+	 * @param array $data
+	 * @return array
+	 */
+	public function validateData( $data ) {
+		$errors = [ ];
+		$alreadyUsedSectionLabels = [ ];
 
-	public function __construct( $data ) {
-		$this->errors = [ ];
-		$this->titles = [ ];
-		$this->hasOptionalSection = false;
+		// If data is empty or not an array - return empty array.
+		// So users have ability to erase all data by sending empty value.
+		if ( !is_array( $data ) ) {
+			return [];
+		}
 
-		// validate sections
 		foreach ( $data as $section ) {
 			if ( !empty( $section['featured'] ) ) {
-				$this->validateFeaturedSection( $section );
+				if ( !$this->validateItemsInFeatured( $section ) ) {
+					$errors[] = self::ERR_OTHER_ERROR;
+				}
 			} else {
-				$this->validateSection( $section );
+				$alreadyUsedSectionLabels[] = $section['title'];
+				// in case of section without title (optional section) validate only items within it
+				if ( $section['title'] === '' ) {
+					if ( !$this->validateItemsInSection( $section ) ) {
+						$errors[] = self::ERR_OTHER_ERROR;
+					}
+				// in case of regular section validate section and items within it
+				} elseif ( !empty( $this->validateSectionWithItems( $section ) ) ) {
+					$errors[] = self::ERR_OTHER_ERROR;
+				}
 			}
 		}
-		// also check section for duplicate title
-		foreach ( array_count_values( $this->titles ) as $title => $count ) {
+
+		if ( !$this->areLabelsUnique( $alreadyUsedSectionLabels ) ) {
+			$errors[] = self::ERR_DUPLICATED_LABEL;
+		}
+
+		return $errors;
+	}
+
+	private function validateItemsInFeatured( $section ) {
+		if ( !$this->areItemsCorrect( $section['items'] ) ) {
+			return false;
+		}
+
+		foreach ( $section['items'] as $featuredItem ) {
+			if ( !empty( $this->validateFeaturedItem( $featuredItem ) ) ) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private function validateItemsInSection( $section ) {
+		if ( !$this->areItemsCorrect( $section['items'] ) ) {
+			return false;
+		}
+
+		foreach ( $section['items'] as $item ) {
+			if ( !empty( $this->validateSectionItem( $item ) ) ) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public function areLabelsUnique( $labelsToCheck ) {
+		foreach ( array_count_values( $labelsToCheck ) as $label => $count ) {
 			if ( $count > 1 ) {
-				$this->error( [ 'title' => $title ], self::ERR_DUPLICATED_LABEL );
+				return false;
 			}
 		}
+		return true;
 	}
 
-	private function error( $itemWithTitle, $errorString ) {
-		if ( array_key_exists( 'title', $itemWithTitle ) && !empty( $errorString ) ) {
-			$this->errors[] = [ 'title' => $itemWithTitle['title'], 'reason' => $errorString ];
-		}
+	private static function needsArticleId( $type ) {
+		return !in_array( $type, [ CuratedContentHelper::STR_CATEGORY ] );
 	}
 
-	public function getErrors() {
-		return $this->errors;
+	public function areItemsCorrect( $items ) {
+		if ( empty( $items ) || !is_array( $items ) ) {
+			return false;
+		}
+		return true;
 	}
 
-	private function validateFeaturedSection( $section ) {
-		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
-			foreach ($section['items'] as $item) {
-				$this->validateItem($item);
-			}
-		}
+	private static function isSupportedProvider( $provider ) {
+		return ( $provider === 'youtube' ) || ( startsWith( $provider, 'ooyala' ) );
 	}
 
-	private function validateImage( $sectionOrItem ) {
-		if ( empty( $sectionOrItem['image_id'] ) ) {
-			$this->error( $sectionOrItem, self::ERR_IMAGE_MISSING );
-		}
-	}
+	public function validateFeaturedItem( $item ) {
+		$errors = [];
 
-	private function validateSection( $section ) {
-		// check for "optional" section - it has empty label, but there can be only ONE
-		if ( empty( $section['title'] ) ) {
-			if ( $this->hasOptionalSection ) {
-				$this->error( $section, self::ERR_DUPLICATED_LABEL );
-			} else {
-				$this->hasOptionalSection = true;
-			}
+		if ( empty( $item['image_id'] ) ) {
+			$errors[] = self::ERR_IMAGE_MISSING;
 		}
 
-		if ( strlen( $section['title'] ) > self::LABEL_MAX_LENGTH ) {
-			$this->error( $section, self::ERR_TOO_LONG_LABEL );
+		// When category is passed as type we don't need article_id set.
+		// For instance categories without content on Category: page are valid categories.
+		// All remaining types require article_id. In case when article doesn't exist article_id is set to 0
+		if ( self::needsArticleId( $item['type'] ) && empty( $item['article_id'] ) ) {
+			$errors[] = self::ERR_ARTICLE_NOT_FOUND;
 		}
-
-		if ( empty( $section['featured'] ) && !empty( $section['title'] ) ) {
-			$this->validateImage( $section );
-		}
-
-		if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
-			// if section has items - validate them
-			foreach ($section['items'] as $item) {
-				$this->validateCategoryItem($item);
-				$this->validateImage($item);
-			}
-		} else {
-			// if section doesn't have any items and it's not Featured Section, it's an error
-			if ( empty( $section['featured'] ) ) {
-				$this->error( $section, self::ERR_ITEMS_MISSING );
-			}
-		}
-
-		if ( strlen( $section['title'] ) ) {
-			$this->titles[] = $section['title'];
-		}
-	}
-
-	private function validateCategoryItem( $item ) {
-		$this->validateItem( $item );
-
-		if ( $item['type'] !== CuratedContentHelper::STR_CATEGORY ) {
-			$this->error( $item, self::ERR_NO_CATEGORY_IN_TAG );
-		}
-	}
-
-	private function validateItem( $item ) {
-		$this->validateImage( $item );
 
 		if ( empty( $item['label'] ) ) {
-			$this->error( $item, self::ERR_EMPTY_LABEL );
+			$errors[] = self::ERR_EMPTY_LABEL;
 		}
 
 		if ( strlen( $item['label'] ) > self::LABEL_MAX_LENGTH ) {
-			$this->error( $item, self::ERR_TOO_LONG_LABEL );
+			$errors[] = self::ERR_TOO_LONG_LABEL;
 		}
 
 		if ( empty( $item['type'] ) ) {
-			$this->error( $item, self::ERR_NOT_SUPPORTED_TYPE );
+			$errors[] = self::ERR_NOT_SUPPORTED_TYPE;
 		}
 
 		if ( $item['type'] === CuratedContentHelper::STR_VIDEO ) {
 			if ( empty( $item['video_info'] ) ) {
-				$this->error( $item, self::ERR_VIDEO_WITHOUT_INFO );
+				$errors[] = self::ERR_VIDEO_WITHOUT_INFO;
 			} elseif ( !self::isSupportedProvider( $item['video_info']['provider'] ) ) {
-				$this->error( $item, self::ERR_VIDEO_NOT_SUPPORTED );
+				$errors[] = self::ERR_VIDEO_NOT_SUPPORTED;
 			}
 		}
 
-		if ( self::needsArticleId( $item['type'] ) && empty( $item['article_id'] ) ) {
-			$this->error( $item, self::ERR_ARTICLE_NOT_FOUND );
+		return $errors;
+	}
+
+	public function validateSection( $section ) {
+		$errors = [];
+
+		if ( empty( $section['title'] ) ) {
+			$errors[] = self::ERR_EMPTY_LABEL;
 		}
 
-		$this->titles[] = $item['title'];
+		if ( strlen( $section['title'] ) > self::LABEL_MAX_LENGTH ) {
+			$errors[] = self::ERR_TOO_LONG_LABEL;
+		}
+
+		if ( empty( $section['image_id'] ) ) {
+			$errors[] = self::ERR_IMAGE_MISSING;
+		}
+
+		return $errors;
 	}
 
-	private static function needsArticleId( $type ) {
-		return $type !== CuratedContentHelper::STR_CATEGORY;
+	public function validateSectionItem( $item ) {
+		$errors = [];
+
+		if ( empty( $item['image_id'] ) ) {
+			$errors[] = self::ERR_IMAGE_MISSING;
+		}
+
+		if ( empty( $item['label'] ) ) {
+			$errors[] = self::ERR_EMPTY_LABEL;
+		}
+
+		if ( strlen( $item['label'] ) > self::LABEL_MAX_LENGTH ) {
+			$errors[] = self::ERR_TOO_LONG_LABEL;
+		}
+
+		if ( empty( $item['type'] ) ) {
+			$errors[] = self::ERR_NOT_SUPPORTED_TYPE;
+		} elseif ( $item['type'] !== CuratedContentHelper::STR_CATEGORY ) {
+			$errors[] = self::ERR_NO_CATEGORY_IN_TAG;
+		}
+
+		// When category is passed as type we don't need article_id set.
+		// For instance categories without content on Category: page are valid categories.
+		// All remaining types require article_id. In case when article doesn't exist article_id is set to 0
+		if ( self::needsArticleId( $item['type'] ) && empty( $item['article_id'] ) ) {
+			$errors[] = self::ERR_ARTICLE_NOT_FOUND;
+		}
+
+		return $errors;
 	}
 
-	private static function isSupportedProvider( $provider ) {
-		return ($provider === 'youtube') || (startsWith( $provider, 'ooyala' ));
+	public function validateSectionWithItems( $section ) {
+		$errors = [ ];
+		$usedLabels = [ ];
+
+		// validate items exist
+		if ( !$this->areItemsCorrect( $section['items'] ) ) {
+			$errors[] = self::ERR_ITEMS_MISSING;
+		}
+
+		// validate section
+		if ( !empty( $this->validateSection( $section ) ) ) {
+			$errors[] = self::ERR_OTHER_ERROR;
+		}
+
+		// validate each item
+		if ( is_array( $section['items'] ) ) {
+			foreach ( $section['items'] as $item ) {
+				if ( !empty( $this->validateSectionItem( $item ) ) ) {
+					$errors[] = self::ERR_OTHER_ERROR;
+				}
+			}
+		}
+
+		return $errors;
 	}
 }

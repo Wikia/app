@@ -43,6 +43,16 @@ class InsightsController extends WikiaSpecialPageController {
 	}
 
 	/**
+	 * Entry point for rendering UI for filtering flags
+	 */
+	public function flagsFiltering() {
+		$selectedFlagTypeId = $this->request->getVal( 'selectedFlagTypeId' );
+		$flagTypes = $this->request->getVal( 'flagTypes' );
+		$this->setVal( 'flagTypes', $flagTypes );
+		$this->setVal( 'selectedFlagTypeId', $selectedFlagTypeId );
+	}
+
+	/**
 	 * Collects all necessary data used for rendering a subpage
 	 * @throws MWException
 	 */
@@ -54,15 +64,36 @@ class InsightsController extends WikiaSpecialPageController {
 		 * - getData() - returning all the helping data
 		 * - getTemplate() - returning an overriding template
 		 */
-		if ( $this->model instanceof InsightsQuerypageModel ) {
+		if ( $this->model instanceof InsightsPageModel ) {
 			$params = $this->request->getParams();
-			$this->content = $this->model->getContent( $params );
+			$this->model->initModel( $params );
+			$this->setVal( 'content', $this->model->getContent( $params ) );
 			$this->preparePagination();
 			$this->prepareSortingData();
-			$this->data = $this->model->getViewData();
+			$this->renderFlagsFiltering();
+			$this->setVal( 'data', $this->model->getViewData() );
 			$this->overrideTemplate( $this->model->getTemplate() );
 		} else {
-			throw new MWException( 'An Insights subpage should implement the InsightsQuerypageModel interface.' );
+			throw new MWException( 'An Insights subpage should implement the InsightsQueryPageModel interface.' );
+		}
+	}
+
+	/**
+	 * Add flags filter to layout
+	 */
+	private function renderFlagsFiltering() {
+		global $wgEnableFlagsExt;
+		if ( !$wgEnableFlagsExt ) {
+			return;
+		}
+		if ( $this->model instanceof InsightsFlagsModel ) {
+			$flagTypeId = $this->request->getVal( 'flagTypeId' );
+
+			$params = [ 'flag_targeting' => \Flags\Models\FlagType::FLAG_TARGETING_CONTRIBUTORS ];
+			$flagTypes = $this->app->sendRequest( 'FlagsApiController', 'getFlagTypes', $params )->getData()['data'];
+			
+			$this->setVal( 'selectedFlagTypeId', $flagTypeId );
+			$this->setVal( 'flagTypes', $flagTypes );
 		}
 	}
 
@@ -70,11 +101,11 @@ class InsightsController extends WikiaSpecialPageController {
 	 * Setup method for Insights_loopNotification.mustache template
 	 */
 	public function loopNotification() {
-		$subpage = $this->request->getVal( 'insight', null );
 
+		$subpage = $this->request->getVal( 'insight', null );
 		if ( InsightsHelper::isInsightPage( $subpage ) ) {
 			$model = InsightsHelper::getInsightModel( $subpage );
-			if ( $model instanceof InsightsQuerypageModel ) {
+			if ( $model instanceof InsightsQueryPageModel ) {
 				$params = [];
 				$type = '';
 				$isFixed = false;
@@ -105,28 +136,52 @@ class InsightsController extends WikiaSpecialPageController {
 					$type = self::FLOW_STATUS_FIXED;
 				}
 
-				$html = \MustacheService::getInstance()->render(
-					'extensions/wikia/Insights/templates/Insights_loopNotification.mustache',
-					$params
-				);
+				$this->setMustacheParams( $params, $isFixed, $type );
 
-				$this->response->setData([
-					'html' => $html,
-					'isFixed' => $isFixed,
-					'notificationType' => $type
-				]);
+			} elseif ( $model instanceof InsightsPageModel ) {
+				$isFixed = false;
+				$isEdit = $this->request->getBool( 'isEdit', false );
+				/* Show in progress notification when in view mode of article */
+				if ( !$isEdit ) {
+					$params = $model->getInProgressNotificationParams();
+					if ( is_array( $params ) ) {
+						$type = self::FLOW_STATUS_NOTFIXED;
+						$this->setMustacheParams( $params, $isFixed, $type );
+					}
+				}
+
 			}
 		}
 	}
 
 	/**
+	 *  Set mustache template
+	 * @param Array $params
+	 * @param bool $isFixed
+	 * @param String $type
+	 */
+	private function setMustacheParams( $params, $isFixed, $type ) {
+		$html = MustacheService::getInstance()->render(
+			'extensions/wikia/Insights/templates/Insights_loopNotification.mustache',
+			$params
+		);
+
+		$this->response->setData([
+			'html' => $html,
+			'isFixed' => $isFixed,
+			'notificationType' => $type
+		]);
+	}
+
+
+	/**
 	 * Get params for notification template shown in edit mode
 	 *
 	 * @param string $subpage Insights subpage
-	 * @param InsightsQuerypageModel $model
+	 * @param InsightsQueryPageModel $model
 	 * @return array
 	 */
-	private function getInProgressNotificationParams( $subpage, InsightsQuerypageModel $model ) {
+	private function getInProgressNotificationParams( $subpage, InsightsQueryPageModel $model ) {
 		$params = $this->getInsightListLinkParams( $subpage );
 		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . $subpage )->plain();
 
@@ -142,10 +197,10 @@ class InsightsController extends WikiaSpecialPageController {
 	 *
 	 * @param string $subpage Insights subpage
 	 * @param Title $title
-	 * @param InsightsQuerypageModel $model
+	 * @param InsightsQueryPageModel $model
 	 * @return array
 	 */
-	private function getNotFixedNotificationParams( $subpage, Title $title, InsightsQuerypageModel $model ) {
+	private function getNotFixedNotificationParams( $subpage, Title $title, InsightsQueryPageModel $model ) {
 		$params = $this->getInsightListLinkParams( $subpage );
 
 		if ( $model->getLoopNotificationConfig( 'displayFixItMessage' ) ) {
@@ -201,10 +256,10 @@ class InsightsController extends WikiaSpecialPageController {
 	 * Get params to generate link back to edit mode
 	 *
 	 * @param Title $title
-	 * @param InsightsQuerypageModel $model
+	 * @param InsightsQueryPageModel $model
 	 * @return array
 	 */
-	private function getInsightFixItParams( Title $title, InsightsQuerypageModel $model ) {
+	private function getInsightFixItParams( Title $title, InsightsQueryPageModel $model ) {
 		$link = InsightsHelper::getTitleLink( $title, $model->getUrlParams() );
 
 		return [
@@ -219,7 +274,7 @@ class InsightsController extends WikiaSpecialPageController {
 	 * @param String $subpage Insights subpage
 	 * @return array
 	 */
-	private function getInsightListLinkParams( $subpage ) {
+	public function getInsightListLinkParams( $subpage ) {
 		return [
 			'insightsPageText' => wfMessage( 'insights-notification-list-button' )->plain(),
 			'insightsPageLink' => $this->getSpecialInsightsUrl( $subpage )
@@ -242,7 +297,7 @@ class InsightsController extends WikiaSpecialPageController {
 	private function preparePagination() {
 		$total = $this->model->getTotalResultsNum();
 		$itemsPerPage = $this->model->getLimitResultsNum();
-		$params['page'] = '%s';
+		$params = array_merge( $this->model->getPaginationUrlParams(), [ 'page' => '%s' ] );
 
 		$sorting = $this->request->getVal( 'sort', null );
 		if ( $sorting ) {
@@ -250,7 +305,7 @@ class InsightsController extends WikiaSpecialPageController {
 		}
 
 		if( $total > $itemsPerPage ) {
-			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage );
+			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage, 3, false, '',  InsightsPageModel::INSIGHTS_LIST_MAX_LIMIT );
 			$paginator->setActivePage( $this->model->getPage() );
 			$url = urldecode( $this->getSpecialInsightsUrl( $this->subpage, $params ) );
 			$this->paginatorBar = $paginator->getBarHTML( $url );

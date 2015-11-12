@@ -9,7 +9,7 @@
  * @author Owen Davis <owen(at)wikia-inc.com>
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
  */
-class WikiaRequest {
+class WikiaRequest implements Wikia\Interfaces\IRequest {
 
 	const EXCEPTION_MODE_RETURN = 0;
 	const EXCEPTION_MODE_WRAP_AND_THROW = 1;
@@ -186,6 +186,8 @@ class WikiaRequest {
 	 * @return bool
 	 */
 	public function wasPosted() {
+		wfRunHooks( 'WikiaRequestWasPosted' );
+
 		return isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] == 'POST';
 	}
 
@@ -264,5 +266,19 @@ class WikiaRequest {
 	public function getScriptUrl() {
 		$scriptUrl = isset( $_SERVER['SCRIPT_URL'] ) ? $_SERVER['SCRIPT_URL'] : null;
 		return $scriptUrl;
+	}
+
+	/**
+	 * Verify if write request is a valid, non-CSRF request
+	 * (uses POST and contains a valid edit token)
+	 *
+	 * @param \User $user
+	 * @return mixed
+	 * @throws BadRequestException
+	 */
+	public function isValidWriteRequest( \User $user ) {
+		if ( !$this->wasPosted() || !$user->matchEditToken( $this->getVal( 'token' ) ) ) {
+			throw new BadRequestException( 'Request must be POSTed and provide a valid edit token.' );
+		}
 	}
 }

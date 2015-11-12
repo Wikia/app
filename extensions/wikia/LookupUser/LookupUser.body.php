@@ -44,7 +44,7 @@ class LookupUserPage extends SpecialPage {
 		$id = '';
 		$byIdInvalidUser = false;
 		if ( $wgRequest->getText( 'mode' ) == 'by_id' ) {
-			$id = $target;
+			$id = (int)$target;
 			if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
 				$u = ExternalUser::newFromId( $id );
 				if ( is_object( $u ) && ( $u->getId() != 0 ) ) {
@@ -89,9 +89,10 @@ class LookupUserPage extends SpecialPage {
 	 */
 	function showForm( $target, $id = '', $invalidUser = false ) {
 		global $wgScript, $wgOut;
-		$title = htmlspecialchars( $this->getTitle()->getPrefixedText() );
-		$action = htmlspecialchars( $wgScript );
-		$target = htmlspecialchars( $target );
+		$title = Sanitizer::encodeAttribute( $this->getTitle()->getPrefixedText() );
+		$action = Sanitizer::encodeAttribute( $wgScript );
+		$target = Sanitizer::encodeAttribute( $target );
+		$id = Sanitizer::encodeAttribute( $id );
 		$ok = wfMessage( 'go' )->escaped();
 		$username_label = wfMessage( 'username' )->escaped();
 		$email_label = wfMessage( 'email' )->escaped();
@@ -296,7 +297,7 @@ EOT
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-birthdate', $birthDate )->text() );
 
 
-		$newEmail = $user->getGlobalAttribute( 'new_email' );
+		$newEmail = $user->getNewEmail();
 		if ( !empty( $newEmail ) ) {
 			$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-email-change-requested', $newEmail )->plain() );
 		}

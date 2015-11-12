@@ -1,6 +1,7 @@
 /*global require*/
 /*jshint camelcase:false*/
 require([
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngine',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
 	'ext.wikia.adEngine.adTracker',
@@ -9,11 +10,16 @@ require([
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.provider.evolve',
+	'ext.wikia.adEngine.recovery.helper',
+	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.sourcePointDetection',
 	'wikia.krux',
-	'wikia.window'
+	'wikia.window',
+	'wikia.loader'
 ], function (
+	adContext,
 	adEngine,
 	adLogicHighValueCountry,
 	adTracker,
@@ -22,14 +28,20 @@ require([
 	dartHelper,
 	messageListener,
 	providerEvolve,
+	recoveryHelper,
+	scrollHandler,
 	slotTracker,
 	slotTweaker,
+	sourcePoint,
 	krux,
-	win
+	win,
+	loader
 ) {
 	'use strict';
 
-	var kruxSiteId = 'JU3_GW1b';
+	var kruxSiteId = 'JU3_GW1b',
+		context = adContext.getContext(),
+		skin = 'oasis';
 
 	win.AdEngine_getTrackerStats = slotTracker.getStats;
 
@@ -70,8 +82,32 @@ require([
 	win.wgAfterContentAndJS.push(function () {
 		// Ads
 		adTracker.measureTime('adengine.init', 'queue.desktop').track();
+		scrollHandler.init(skin);
 		win.adslots2 = win.adslots2 || [];
 		adEngine.run(adConfigDesktop, win.adslots2, 'queue.desktop');
+
+		// Recovery
+		recoveryHelper.initEventQueue();
+		sourcePoint.initDetection();
+
+		if (context.opts.sourcePointRecovery && win.ads) {
+			win.ads.runtime.sp.slots = win.ads.runtime.sp.slots || [];
+			recoveryHelper.addOnBlockingCallback(function () {
+				adTracker.measureTime('adengine.init', 'queue.sp').track();
+				adEngine.run(adConfigDesktop, win.ads.runtime.sp.slots, 'queue.sp');
+			});
+		}
+
+		if (context.opts.recoveredAdsMessage) {
+			loader({
+				type: loader.AM_GROUPS,
+				resources: ['adengine2_ads_recovery_message_js']
+			}).done(function () {
+				require(['ext.wikia.adEngine.recovery.message'], function (recoveredAdMessage) {
+					recoveredAdMessage.addRecoveryCallback();
+				});
+			});
+		}
 
 		// Krux
 		krux.load(kruxSiteId);

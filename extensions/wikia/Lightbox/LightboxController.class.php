@@ -58,11 +58,12 @@ class LightboxController extends WikiaController {
 
 		$thumbs = array();
 		$minTimestamp = 0;
+		$toTimestamp = wfTimestamp( TS_MW, $to );
 		if ( !empty( $to ) ) {
 			// get image list - exclude Latest Photos
 			$images = array();
 			$helper = $this->getLightboxHelper();
-			$imageList = $helper->getImageList( $count, $to );
+			$imageList = $helper->getImageList( $count, $toTimestamp );
 			extract( $imageList );
 
 			// add Latest Photos if not exist
@@ -199,6 +200,7 @@ class LightboxController extends WikiaController {
 		list( $smallerArticleList, $articleListIsSmaller ) = WikiaFileHelper::truncateArticleList( $articles, self::POSTED_IN_ARTICLES );
 
 		// file details
+		// FIXME: view count isn't shown to users b/c it's buggy (CONSF-51)
 		$this->views = wfMessage( 'lightbox-video-views', $this->wg->Lang->formatNum( $data['videoViews'] ) )->parse();
 		$this->title = $title->getDBKey();
 		$this->fileTitle = $title->getText();

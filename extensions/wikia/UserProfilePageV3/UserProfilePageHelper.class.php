@@ -21,66 +21,66 @@ class UserProfilePageHelper {
 	 * @author ADi
 	 * @author nAndy
 	 */
-	static public function getUserFromTitle($title = null) {
+	static public function getUserFromTitle( $title = null ) {
 		global $UPPNamespaces;
 
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 		$wg = F::app()->wg;
-		if( is_null($title) ) {
+		if ( is_null( $title ) ) {
 			$title = $wg->Title;
 		}
 
 		$user = null;
-		if ($title instanceof Title && in_array($title->getNamespace(), $UPPNamespaces)) {
+		if ( $title instanceof Title && in_array( $title->getNamespace(), $UPPNamespaces ) ) {
 			// get "owner" of this user / user talk / blog page
-			$parts = explode('/', $title->getText());
+			$parts = explode( '/', $title->getText() );
 		} else {
-			if ($title instanceof Title && $title->getNamespace() == NS_SPECIAL && ($title->isSpecial('Following') || $title->isSpecial('Contributions'))) {
-				$target = $wg->Request->getVal('target');
+			if ( $title instanceof Title && $title->getNamespace() == NS_SPECIAL && ( $title->isSpecial( 'Following' ) || $title->isSpecial( 'Contributions' ) ) ) {
+				$target = $wg->Request->getVal( 'target' );
 
-				if (!empty($target)) {
+				if ( !empty( $target ) ) {
 					// Special:Contributions?target=FooBar (RT #68323)
-					$parts = array($target);
+					$parts = array( $target );
 				} else {
 					// get user this special page referrs to
-					$titleVal = $wg->Request->getVal('title', false);
-					$parts = explode('/', $titleVal);
+					$titleVal = $wg->Request->getVal( 'title', false );
+					$parts = explode( '/', $titleVal );
 
 					// remove special page name
-					array_shift($parts);
+					array_shift( $parts );
 				}
 
-				if ($title->isSpecial('Following') && !isset($parts[0])) {
-					//following pages are rendered only for profile owners
+				if ( $title->isSpecial( 'Following' ) && !isset( $parts[0] ) ) {
+					// following pages are rendered only for profile owners
 					$user = $wg->User;
-					wfProfileOut(__METHOD__);
+					wfProfileOut( __METHOD__ );
 					return $user;
 				}
 			}
 		}
 
 
-		if (!empty($parts[0])) {
-			$userName = str_replace('_', ' ', $parts[0]);
-			$user = User::newFromName($userName);
+		if ( !empty( $parts[0] ) ) {
+			$userName = str_replace( '_', ' ', $parts[0] );
+			$user = User::newFromName( $userName );
 		}
 
-		if (!($user instanceof User) && !empty($userName)) {
-			//it should work only for title=User:AAA.BBB.CCC.DDD where AAA.BBB.CCC.DDD is an IP address
-			//in previous user profile pages when IP was passed it returned false which leads to load
-			//"default" oasis data to Masthead; here it couldn't be done because of new User Identity Box
+		if ( !( $user instanceof User ) && !empty( $userName ) ) {
+			// it should work only for title=User:AAA.BBB.CCC.DDD where AAA.BBB.CCC.DDD is an IP address
+			// in previous user profile pages when IP was passed it returned false which leads to load
+			// "default" oasis data to Masthead; here it couldn't be done because of new User Identity Box
 			$user = new User();
 			$user->mName = $userName;
 			$user->mFrom = 'name';
 		}
 
-		if (!($user instanceof User) && empty($userName)) {
-			//this is in case Blog:Recent_posts or Special:Contribution will be called
-			//then in title there is no username and "default" user instance is $wgUser
+		if ( !( $user instanceof User ) && empty( $userName ) ) {
+			// this is in case Blog:Recent_posts or Special:Contribution will be called
+			// then in title there is no username and "default" user instance is $wgUser
 			$user = $wg->User;
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $user;
 	}
 
@@ -90,7 +90,7 @@ class UserProfilePageHelper {
 	 * @return string
 	 */
 	private static function getRestrictedWikisKey() {
-		return  wfSharedMemcKey( __CLASS__, __METHOD__);
+		return  wfSharedMemcKey( __CLASS__, __METHOD__ );
 	}
 
 	/**
@@ -113,7 +113,7 @@ class UserProfilePageHelper {
 		wfProfileIn( __METHOD__ );
 		$db = self::getDb( false );
 		if ( !$db->tableExists( self::GLOBAL_REGISTRY_TABLE, __METHOD__ ) ) {
-			Wikia::log( __METHOD__, sprintf('Table %s does not exist on Dataware DB', self::GLOBAL_REGISTRY_TABLE ));
+			Wikia::log( __METHOD__, sprintf( 'Table %s does not exist on Dataware DB', self::GLOBAL_REGISTRY_TABLE ) );
 			wfProfileOut( __METHOD__ );
 			return array();
 		}
@@ -127,7 +127,7 @@ class UserProfilePageHelper {
 			__METHOD__
 		);
 		$restrictedWikis = unserialize( $value );
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return is_array( $restrictedWikis ) ? $restrictedWikis : array();
 	}
 
@@ -141,7 +141,7 @@ class UserProfilePageHelper {
 		}
 		$db = self::getDb( true );
 		if ( !$db->tableExists( self::GLOBAL_REGISTRY_TABLE, __METHOD__ ) ) {
-			Wikia::log( __METHOD__, sprintf('Table %s does not exist on Dataware DB', self::GLOBAL_REGISTRY_TABLE ));
+			Wikia::log( __METHOD__, sprintf( 'Table %s does not exist on Dataware DB', self::GLOBAL_REGISTRY_TABLE ) );
 			return;
 		}
 		$db->replace(
@@ -185,7 +185,7 @@ class UserProfilePageHelper {
 				$changed = true;
 			}
 		} else {
-			if ( ( $index = array_search($city_id, $restrictedWikis ) ) !== false ) {
+			if ( ( $index = array_search( $city_id, $restrictedWikis ) ) !== false ) {
 				unset( $restrictedWikis[$index] );
 				$changed = true;
 			}

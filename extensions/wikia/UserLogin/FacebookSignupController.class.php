@@ -39,7 +39,12 @@ class FacebookSignupController extends WikiaController {
 		if ( ( $user instanceof User ) && ( $fbUserId !== 0 ) ) {
 			$errorMsg = '';
 
-			if ( $this->isAccountDisabled( $user ) ) {
+			if ( $user->isAllowed( 'login-restrict-facebook' ) ) {
+				$this->response->setData([
+					'loginAborted' => true,
+					'errorMsg' => $errorMsg,
+				]);
+			} elseif ( $this->isAccountDisabled( $user ) ) {
 				// User account was disabled, abort the login
 				$errorMsg = wfMessage( 'userlogin-error-edit-account-closed-flag' )->escaped();
 
@@ -66,7 +71,7 @@ class FacebookSignupController extends WikiaController {
 				] );
 			} else {
 				// account is connected - log the user in
-				$user->setCookies();
+				UserLoginHelper::setCookiesForFacebookUser( $user, \RequestContext::getMain()->getRequest()->response() );
 
 				$this->response->setData( [
 					'loggedIn' => true,
@@ -102,13 +107,14 @@ class FacebookSignupController extends WikiaController {
 	}
 
 	/**
-	 * Kick off an asynch job to update user's email to be what's reported by Facebook
+	 * Kick off an async job to update user's email to be what's reported by Facebook
+	 *
 	 * @param integer $userId
 	 * @param boolean $sendWelcomeEmail
 	 */
 	protected function saveEmailAsynchronously( $userId, $sendWelcomeEmail = false ) {
 		$task = new \Wikia\Tasks\Tasks\FacebookTask();
-		$taskList = new AsyncTaskList();
+		$taskList = new \Wikia\Tasks\AsyncTaskList();
 		$taskList->dupCheck()
 			->add( $task->call( 'updateEmailFromFacebook', $userId ) );
 
@@ -137,7 +143,7 @@ class FacebookSignupController extends WikiaController {
 	 * @return boolean true if the account is unconfirmed, false otherwise
 	 */
 	private function isAccountUnconfirmed( User $user ) {
-		return $user->getGlobalAttribute( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME );
+		return $user->getGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME );
 	}
 
 	/**
@@ -178,8 +184,10 @@ class FacebookSignupController extends WikiaController {
 	public function modalHeader() {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
-		$this->signupMsg = wfMessage( 'usersignup-facebook-signup-header' )->escaped();
-		$this->loginMsg = wfMessage( 'usersignup-facebook-login-header' )->escaped();
+		$this->response->setData( [
+			'signupMsg' => wfMessage( 'usersignup-facebook-signup-header' )->escaped(),
+			'loginMsg' => wfMessage( 'usersignup-facebook-login-header' )->escaped(),
+		] );
 	}
 
 	/**
@@ -200,10 +208,10 @@ class FacebookSignupController extends WikiaController {
 
 		switch ( $signupResponse['result'] ) {
 			case 'ok':
-				$this->result = 'ok';
+				$this->response->setVal( 'result', 'ok' );
 				break;
 			case 'unconfirm':
-				$this->result = 'unconfirm';
+				$this->response->setVal( 'result', 'unconfirm' );
 				break;
 			case 'error':
 			default:
@@ -344,7 +352,7 @@ class FacebookSignupController extends WikiaController {
 			wfSetupSession();
 		}
 
-		$user->setCookies();
+		UserLoginHelper::setCookiesForFacebookUser( $user, \RequestContext::getMain()->getRequest()->response() );
 
 		// Store the user in the global user object
 		$wg->User = $user;

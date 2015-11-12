@@ -72,6 +72,9 @@ class Wall extends WikiaModel {
 		return $this->mTitle->getArticleId();
 	}
 
+	/**
+	 * @return \Title
+	 */
 	public function getTitle() {
 		return $this->mTitle;
 	}
@@ -316,7 +319,7 @@ class Wall extends WikiaModel {
 				LIMIT $offset, {$this->mMaxPerPage}
 			";
 
-			$res = $db->query( $query );
+			$res = $db->query( $query, __METHOD__ );
 
 
 

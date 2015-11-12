@@ -28,7 +28,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			INCONTENT_1C:               {size: '300x250,160x600,300x600', loc: 'middle', pos: 'incontent_1'},
 			INCONTENT_BOXAD_1:          {size: '300x250', loc: 'middle'},
 			INCONTENT_LEADERBOARD_1:    {size: '728x90,468x90', loc: 'middle'},
-			INCONTENT_PLAYER:           {size: '640x400', 'loc': 'middle', 'pos': 'incontent_player'},
+			INCONTENT_PLAYER:           {size: '1x1', 'loc': 'middle', 'pos': 'incontent_player'},
 			INVISIBLE_SKIN:             {size: '1000x1000,1x1', loc: 'top'},
 			LEFT_SKYSCRAPER_2:          {size: '160x600', loc: 'middle'},
 			LEFT_SKYSCRAPER_3:          {size: '160x600', loc: 'footer'},
@@ -44,6 +44,10 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			TOP_LEADERBOARD:            {size: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150', loc: 'top'},
 			TOP_RIGHT_BOXAD:            {size: '300x250,300x600,300x1050', loc: 'top'}
 		},
+		recoverableSlots = [
+			'TOP_LEADERBOARD',
+			'TOP_RIGHT_BOXAD'
+		],
 		atfSlots = [
 			'CORP_TOP_LEADERBOARD',
 			'CORP_TOP_RIGHT_BOXAD',
@@ -138,7 +142,8 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				log(['beforeHop', slotName], 'debug', logGroup);
 				onSlotResponse(slotName);
 			},
-			sraEnabled: true
+			sraEnabled: true,
+			recoverableSlots: recoverableSlots
 		}
 	);
 

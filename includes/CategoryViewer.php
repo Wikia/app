@@ -230,7 +230,7 @@ class CategoryViewer extends ContextSource {
 	 * @param $pageLength
 	 * @param $isRedirect bool
 	 */
-	function addPage( $title, $sortkey, $pageLength, $isRedirect = false ) {
+	function addPage( Title $title, $sortkey, $pageLength, $isRedirect = false ) {
 		global $wgContLang;
 
 		$link = Linker::link( $title );

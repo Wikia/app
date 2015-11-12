@@ -191,7 +191,7 @@
 
 		<!-- options tabs -->
 		<div id="WikiaPhotoGalleryOptionsTabs">
-			<div class="<?= ( F::app()->checkSkin( ['oasis', 'venus'] ) ) ? 'tabs' : 'wikia-tabs' ?>">
+			<div class="<?= ( F::app()->checkSkin( [ 'oasis' ] ) ) ? 'tabs' : 'wikia-tabs' ?>">
 				<ul>
 					<li class="accent"><a href="#"><?= wfMsg('wikiaPhotoGallery-preview-tab-layout') ?></a><img class="chevron" src="<?= wfBlankImgUrl() ?>" /></li>
 					<li class="accent"><a href="#"><?= wfMsg('wikiaPhotoGallery-preview-tab-theme') ?></a><img class="chevron" src="<?= wfBlankImgUrl() ?>" /></li>

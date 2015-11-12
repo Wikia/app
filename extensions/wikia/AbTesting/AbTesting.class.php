@@ -45,19 +45,6 @@ class AbTesting extends WikiaObject {
 		return true;
 	}
 
-	/**
-	 * Load AB Testing AssetsManager "blocking" group (i.e. in head section) on Venus
-	 *
-	 * @param array $jsHeadGroups
-	 * @param array $jsBodyGroups
-	 * @param array $cssGroups
-	 * @return bool true
-	 */
-	static public function onVenusAssetsPackages( Array &$jsHeadGroups, Array &$jsBodyGroups, Array &$cssGroups ) {
-		array_unshift( $jsHeadGroups, 'abtesting' );
-		return true;
-	}
-
 	static public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
 		$app = F::app();
 
@@ -73,7 +60,7 @@ class AbTesting extends WikiaObject {
 	static public function onWikiaSkinTopShortTTLModules( Array &$modules, $skin) {
 		$app = F::app();
 
-		if ( $app->checkSkin( ['oasis', 'wikiamobile', 'venus'], $skin ) ) {
+		if ( $app->checkSkin( [ 'oasis', 'wikiamobile' ], $skin ) ) {
 			$modules[] = 'wikia.ext.abtesting';
 		}
 

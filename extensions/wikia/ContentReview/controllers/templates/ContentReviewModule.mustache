@@ -1,0 +1,39 @@
+<section class="content-review-module module">
+	{{#title}}
+	<h2>{{title}}</h2>
+	{{/title}}
+
+	<h4 class="content-review-module-header">{{headerLatest}}</h4>
+	{{{latestStatus}}}
+	<h4 class="content-review-module-header">{{headerLast}}</h4>
+	{{{lastStatus}}}
+	<h4 class="content-review-module-header">{{headerLive}}</h4>
+	{{{liveStatus}}}
+
+	{{#displaySubmit}}
+	<div class="content-review-module-submit-container">
+		<button class="content-review-module-submit primary" data-page-name="{{pageName}}">
+			{{submit}}
+		</button>
+	</div>
+	{{/displaySubmit}}
+
+	<div class="content-review-module-test-mode">
+		{{#isTestModeEnabled}}
+		<button class="content-review-module-test-mode-disable secondary">
+			{{disableTestMode}}
+		</button>
+		{{/isTestModeEnabled}}
+		{{^isTestModeEnabled}}
+		<button class="content-review-module-test-mode-enable secondary">
+			{{enableTestMode}}
+		</button>
+		{{/isTestModeEnabled}}
+	</div>
+
+	{{#help}}
+	<div class="content-review-module-help">
+		{{{help}}}
+	</div>
+	{{/help}}
+</section>

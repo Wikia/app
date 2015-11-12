@@ -191,7 +191,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return array|bool
 	 */
 	protected function mysqlFetchArray( $res ) {
-		Assert::true( $res instanceof mysqli_result, __METHOD__ );
+		Assert::true( $res instanceof mysqli_result, __METHOD__, [ 'sql' => $this->lastQuery() ] );
 		$array = $res->fetch_array();
 		if ( $array === null ) {
 			return false;
@@ -204,7 +204,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return int
 	 */
 	protected function mysqlNumRows( $res ) {
-		Assert::true( $res instanceof mysqli_result, __METHOD__ );
+		Assert::true( $res instanceof mysqli_result, __METHOD__, [ 'sql' => $this->lastQuery() ] );
 		return $res->num_rows;
 	}
 
@@ -213,7 +213,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return int
 	 */
 	protected function mysqlNumFields( $res ) {
-		Assert::true( $res instanceof mysqli_result, __METHOD__ );
+		Assert::true( $res instanceof mysqli_result, __METHOD__, [ 'sql' => $this->lastQuery() ] );
 		return $res->field_count;
 	}
 
@@ -223,7 +223,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return stdClass
 	 */
 	protected function mysqlFetchField( $res, $n ) {
-		Assert::true( $res instanceof mysqli_result, __METHOD__ );
+		Assert::true( $res instanceof mysqli_result, __METHOD__, [ 'sql' => $this->lastQuery() ] );
 		$field = $res->fetch_field_direct( $n );
 		$field->not_null = $field->flags & MYSQLI_NOT_NULL_FLAG;
 		$field->primary_key = $field->flags & MYSQLI_PRI_KEY_FLAG;
@@ -239,7 +239,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return string
 	 */
 	protected function mysqlFieldName( $res, $n ) {
-		Assert::true( $res instanceof mysqli_result, __METHOD__ );
+		Assert::true( $res instanceof mysqli_result, __METHOD__, [ 'sql' => $this->lastQuery() ] );
 		$field = $res->fetch_field_direct( $n );
 		return $field->name;
 	}

@@ -1371,7 +1371,7 @@ abstract class ApiBase extends ContextSource {
 				$this->dieUsage( 'Specified user does not exist', 'bad_wlowner' );
 			}
 			$token = $user->getGlobalAttribute( 'watchlisttoken' );
-			if ( $token == '' || $token != $params['token'] ) {
+			if ( $token == '' || !hash_equals( $token, $params['token'] ) ) {
 				$this->dieUsage( 'Incorrect watchlist token provided -- please set a correct token in Special:Preferences', 'bad_wltoken' );
 			}
 		} else {

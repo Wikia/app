@@ -1,0 +1,58 @@
+.template-classification-edit {
+	display: inline-block;
+	margin: 0 4px;
+	cursor: pointer;
+}
+
+.tc-edit-rail-box {
+	margin: 10px 0;
+
+	.tc-edit-rail-header {
+		font-size: 14px;
+	}
+}
+
+.editpage-sourcewidemode-on {
+	.tc-edit-rail-box {
+		display: none;
+	}
+}
+
+.template-classification-edit-modal {
+	line-height: 2.5em;
+
+	.template-classification-edit-form-input {
+		vertical-align: text-bottom;
+	}
+
+	.template-classification-edit-form-label::after {
+		content: "\A";
+		white-space: pre;
+	}
+}
+
+.template-classification-edit-form-label div {
+	display: inline-block;
+	vertical-align: top;
+	width: 300px;
+
+	p {
+		line-height: 1.6em;
+		margin-bottom: 0.6em;
+	}
+}
+
+.template-classification-edit-form-label .tc-type-name {
+	font-weight: bold;
+}
+
+@keyframes fadeBackground {
+	to {
+		background-color: transparent;
+	}
+}
+
+.template-classification-error {
+	background-color: #e1390b;
+	animation: fadeBackground 1s linear;
+}

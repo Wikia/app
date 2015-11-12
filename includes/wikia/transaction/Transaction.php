@@ -52,6 +52,9 @@ class Transaction {
 	const EVENT_MEMCACHE_STATS_COUNTERS = 'memcache_stats_counters';
 	const EVENT_MEMCACHE_STATS_KEYS = 'memcache_stats_keys';
 	const EVENT_USER_PREFERENCES = 'user_preferences';
+	const EVENT_USER_PREFERENCES_COUNTERS = "user_preferences_counters";
+	const EVENT_USER_ATTRIBUTES = 'user_attributes';
+	const EVENT_USER_AUTH = 'user_auth';
 
 	/**
 	 * Returns TransactionTrace singleton instance

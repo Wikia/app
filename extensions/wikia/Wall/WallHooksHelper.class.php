@@ -1477,18 +1477,31 @@ class WallHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @param User $user
+	 * @param Article $article
+	 *
+	 * @return bool
+	 */
 	static public function onUnwatchArticle( &$user, &$article ) {
-		$app = F::app();
 		$title = $article->getTitle();
 
-		if ( !empty( $app->wg->EnableWallExt ) && static::isWallMainPage( $title ) ) {
-			static::processActionOnWatchlist( $user, $title->getText(), 'remove' );
+		// Wall code makes up fake Title objects to trick MW into handling its "Thread:1234" style
+		// title text.  It also reuses the same namespaces for Forums, user walls, replies, etc.
+		// Since we need a real Title backed by a DB row, we need to reconstruct a title object
+		// if the current one looks fake.  If this already is a real Title the normal unwatch handling
+		// that called this hook will take care of this for us.
+		if ( ( $article->getId()  == 0 ) && preg_match( '/^(\d+)$/', $title->getText(), $matches ) ) {
+			$id = $matches[1];
+			$title = Title::newFromID( $id );
+
+			static::processActionOnWatchlist( $user, $title, 'remove' );
 		}
 
 		return true;
 	}
 
-	static private function isWallMainPage( $title ) {
+	static private function isWallMainPage( Title $title ) {
 		if ( $title->getNamespace() == NS_USER_WALL && strpos( $title->getText(), '/' ) === false ) {
 			return true;
 		}
@@ -1496,29 +1509,21 @@ class WallHooksHelper {
 		return false;
 	}
 
-	static private function processActionOnWatchlist( $user, $followedUserName, $action ) {
-		wfProfileIn( __METHOD__ );
+	/**
+	 * @param User $user
+	 * @param Title $title
+	 * @param string $action
+	 *
+	 * @throws MWException
+	 */
+	static private function processActionOnWatchlist( $user, $title, $action ) {
+		$wallMessage = WallMessage::newFromTitle( $title );
 
-		$watchTitle = Title::newFromText( $followedUserName, NS_USER );
-
-		if ( $watchTitle instanceof Title ) {
-			$wl = new WatchedItem;
-			$wl->mTitle = $watchTitle;
-			$wl->userID = $user->getId();
-			$wl->nameSpace = $watchTitle->getNamespace();
-			$wl->databaseKey = $watchTitle->getDBkey();
-
-			if ( $action === 'add' ) {
-				$wl->addWatch();
-			} elseif ( $action === 'remove' ) {
-				$wl->removeWatch();
-			}
-		} else {
-			// just-in-case -- it shouldn't happen but if it does we want to know about it
-			Wikia::log( __METHOD__, false, 'WALL_HOOK_ERROR: No title instance while syncing follows. User name: ' . $followedUserName );
+		if ( $action == 'remove' ) {
+			$wallMessage->removeWatch( $user );
+		} elseif ( $action == 'add' ) {
+			$wallMessage->addWatch( $user );
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	static public function onGetPreferences( $user, &$preferences ) {
@@ -1671,7 +1676,7 @@ class WallHooksHelper {
 			$threadLink = Linker::link( $titleObj, htmlspecialchars( $titleData['articleTitleTxt'] ),
 				[ 'title' => $titleData['articleTitleTxt'] ] );
 
-			$link = wfMessage( static::getMessagePrefix( $namespace ) . '-thread-group' )
+			$link = wfMessage( static::getMessagePrefix( NS_USER_WALL_MESSAGE ) . '-thread-group' )
 				->rawParams( $threadLink )
 				->params( $titleData['wallTitleTxt'], $titleData['wallPageName'] )
 				->parse();
@@ -1706,7 +1711,11 @@ class WallHooksHelper {
 						->params( $titleData['wallTitleTxt'], $titleData['wallPageName'] )
 						->parse() .
 					' (' .
-					Linker::linkKnown( $wlhTitle, wfMessage( 'whatlinkshere-links' )->escaped(), [],  [ 'target' => $wfMsgOptsBase['articleTitle'] ]
+					Linker::linkKnown(
+						$wlhTitle,
+						wfMessage( 'whatlinkshere-links' )->escaped(),
+						[],
+						[ 'target' => $titleData['articleTitle'] ]
 					) .
 					')' .
 					Xml::closeElement( 'li' )

@@ -175,8 +175,7 @@ class EditPageLayoutHelper {
 
 		return ( $articleTitle->isCssOrJsPage()
 			|| $articleTitle->isCssJsSubpage()
-			|| $namespace === NS_MODULE
-			|| self::isInfoboxTemplate( $articleTitle )
+			|| in_array( $namespace, [ NS_MODULE, NS_TEMPLATE ] )
 		);
 	}
 
@@ -187,28 +186,17 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	static public function isCodeSyntaxHighlightingEnabled( Title $articleTitle ) {
-		global $wgEnableEditorSyntaxHighlighting;
+		global $wgEnableEditorSyntaxHighlighting, $wgUser;
 
-		return self::isCodePage( $articleTitle ) && $wgEnableEditorSyntaxHighlighting;
+		return self::isCodePage( $articleTitle )
+			&& $wgEnableEditorSyntaxHighlighting
+			&& !$wgUser->getGlobalPreference( 'disablesyntaxhighlighting' );
 	}
 
-	static public function isInfoboxTemplate( Title $title ) {
-		$namespace = $title->getNamespace();
+	static public function isTemplateDraft( $title ) {
+		global $wgEnableTemplateDraftExt;
 
-		if ( $namespace === NS_TEMPLATE ) {
-			$tc = new TemplateClassification( $title );
-			return $tc->isType( $tc::TEMPLATE_INFOBOX ) || self::isTemplateDraft( $title );
-		}
-
-		return false;
-	}
-
-	static function isTemplateDraft( $title ) {
-		global $wgEnableTemplateDraftExt, $wgEnableInsightsInfoboxes;
-
-		return !empty( $wgEnableTemplateDraftExt )
-				&& !empty( $wgEnableInsightsInfoboxes )
-				&& TemplateDraftHelper::isTitleDraft( $title );
+		return !empty( $wgEnableTemplateDraftExt ) && TemplateDraftHelper::isTitleDraft( $title );
 	}
 
 	/**
@@ -252,7 +240,7 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	public static function isCodePageWithPreview( Title $title ) {
-		return self::isInfoboxTemplate( $title );
+		return $title->inNamespace( NS_TEMPLATE );
 	}
 
 	/**
@@ -264,7 +252,7 @@ class EditPageLayoutHelper {
 		$namespace = $title->getNamespace();
 		$type = '';
 
-		$aceUrl = AssetsManager::getInstance()->getOneCommonURL( '/resources/Ace' );
+		$aceUrl = AssetsManager::getInstance()->getOneCommonURL( 'resources/Ace' );
 		$aceUrlParts = parse_url( $aceUrl );
 		$this->addJsVariable( 'aceScriptsPath', $aceUrlParts['path'] );
 
@@ -277,7 +265,8 @@ class EditPageLayoutHelper {
 			$type = 'css';
 		} elseif ( $title->isJsPage() || $title->isJsSubpage() ) {
 			$type = 'javascript';
-		} elseif ( self::isInfoboxTemplate( $title ) ) {
+		} else {
+			// default to XML since most templates use HTML tags or infobox markup
 			$type = 'xml';
 		}
 
@@ -336,6 +325,7 @@ class EditPageLayoutHelper {
 			'extensions/wikia/EditPageLayout/js/plugins/Noticearea.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Railminimumheight.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Sizechangedevent.js',
+			'extensions/wikia/EditPageLayout/js/plugins/TemplateClassificationEditorPlugin.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Wikiacore.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Widescreen.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Preloads.js',

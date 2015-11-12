@@ -590,7 +590,8 @@ Pertanyaan: $2',
 # Login and logout pages
 'logouttext'                 => "'''Anda telah log keluar.'''
 
-Anda boleh terus menggunakan {{SITENAME}} sebagai pengguna tanpa nama, atau anda boleh [[Special:UserLogin|log masuk sekali lagi]] sebagai pengguna lain. Anda boleh membersihkan cache pelayar web anda sekiranya terdapat laman yang memaparkan seolah-olah anda masih log masuk.",
+Anda boleh terus menggunakan {{SITENAME}} sebagai pengguna tanpa nama, atau anda boleh $1 sebagai pengguna lain. Anda boleh membersihkan cache pelayar web anda sekiranya terdapat laman yang memaparkan seolah-olah anda masih log masuk.",
+'logouttext-link-text'       => 'log masuk sekali lagi',
 'welcomecreation'            => '== Selamat datang, $1! ==
 
 Akaun anda telah dibuka. Jangan lupa untuk mengubah [[Special:Preferences|keutamaan {{SITENAME}}]] anda.',
@@ -1707,7 +1708,7 @@ Sila hubungi [[Special:ListUsers/sysop|pentadbir sistem]].',
 'zip-wrong-format'    => 'Fail yang dinyatakan bukan fail ZIP.',
 'zip-bad'             => 'Fail ini adalah fail ZIP rosak atau tidak dapat dibaca.
 Ia tidak dapat diperiksa dengan betul demi keselamatan.',
-'zip-unsupported'     => 'Fail ini adalah fail ZIP yang menggunakan ciri-ciri ZIP tidak disokong oleh MediaWiki. 
+'zip-unsupported'     => 'Fail ini adalah fail ZIP yang menggunakan ciri-ciri ZIP tidak disokong oleh MediaWiki.
 Ia tidak dapat diperiksa dengan betul demi keselamatan.',
 
 # Special:UploadStash
@@ -3735,7 +3736,7 @@ Imej ditunjuk dalam leraian penuh, jenis fail yang lain dibuka dengan atur cara 
 'newuserlog-byemail'                  => 'kata laluan dihantar melalui e-mel',
 
 # Feedback
-'feedback-bugornote' => 'Jika anda bersedia untuk menerangkan masalah teknikal secara terperinci, sila [$1 laporkan pepijat]. 
+'feedback-bugornote' => 'Jika anda bersedia untuk menerangkan masalah teknikal secara terperinci, sila [$1 laporkan pepijat].
 Ataupun, anda boleh menggunakan borang yang mudah di bawah. Ulasan anda akan dicatatkan pada laman "[$3 $2]", beserta nama pengguna anda dan pelayar yang anda gunakan.',
 'feedback-subject'   => 'Perkara:',
 'feedback-message'   => 'Pesanan:',

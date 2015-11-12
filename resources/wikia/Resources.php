@@ -18,6 +18,7 @@ return [
 			'wikia.cookies',
 			'wikia.document',
 			'wikia.geo',
+			'wikia.fbLocale',
 			'wikia.loader',
 			'wikia.localStorage',
 			'wikia.location',
@@ -82,6 +83,12 @@ return [
 			'wikia.window',
 		],
 	],
+	'wikia.fbLocale' => [
+		'scripts' => 'resources/wikia/modules/facebookLocale.js',
+		'dependencies' => [
+			'wikia.geo',
+		],
+	],
 	'wikia.loader' => [
 		'scripts' => 'resources/wikia/modules/loader.js',
 		'dependencies' => [
@@ -89,6 +96,7 @@ return [
 			'wikia.window',
 			'wikia.mw',
 			'wikia.nirvana',
+			'wikia.fbLocale',
 		],
 	],
 	'wikia.querystring' => [
@@ -285,5 +293,12 @@ return [
 			'resources/wikia/libraries/yui/tabview/assets/tabview.css',
 			'extensions/wikia/RelatedPages/RelatedPages.monobook.css',
 		],
+	],
+
+	'wikia.importScript' => [
+		'scripts' => [
+			'resources/wikia/modules/importScript.js',
+			'resources/wikia/modules/importScriptHelper.js'
+		]
 	],
 ];

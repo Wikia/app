@@ -609,8 +609,9 @@ Ny antony napetraka dia : « ''$2'' ».",
 # Login and logout pages
 'logouttext'                 => "'''Tafavoaka ianao ankehitriny.'''
 
-Mbola afaka mampiasa ny {{SITENAME}} ianao na dia ef anivoaka aza, na afaka [[Special:UserLogin|miverina mihiditra]] ianao ambanin'ny anaranao na anaram-pikambana hafa.
+Mbola afaka mampiasa ny {{SITENAME}} ianao na dia ef anivoaka aza, na afaka $1 ianao ambanin'ny anaranao na anaram-pikambana hafa.
 Fantaro fa ny endriky ny pejy sasany dia mety mitovy amin'ny endrika nahitanao azy tamin' ianao mbola niditra tato, ho toy izany ny endri-pejy raha tsy nofafanao ny cache.",
+'logouttext-link-text'       => 'miverina mihiditra',
 'welcomecreation'            => '== Tonga soa, $1! ==
 
 Voaforona soa aman-tsara ny kaontinao.
@@ -1052,7 +1053,7 @@ Azonao jerena ilay diff ; ao amin'ny [{{fullurl:{{#Special:Log}}/suppress|page={
 'rev-showdeleted'             => 'aseho',
 'revisiondelete'              => 'Hamafa na hamerina santiôna',
 'revdelete-nooldid-title'     => 'Santiôna tanjona tsy mameno fetra.',
-'revdelete-nooldid-text'      => 'Tsy voalazanao ny santiôna tanjona hanaovana ity tao ity, 
+'revdelete-nooldid-text'      => 'Tsy voalazanao ny santiôna tanjona hanaovana ity tao ity,
 tsy misy ilay izy, na ny santiôna ankehitriny no andramana asitrika.',
 'revdelete-nologtype-title'   => 'Tsy nilaza karazana tatitra',
 'revdelete-nologtype-text'    => 'Tsy natsofokao ny karazana tatitra/laogy hanatanterahana ilay asa.',
@@ -2182,7 +2183,7 @@ miverina any amin'ny santiôna farany nataon'i $2.",
 
 # Protect
 'protectlogpage'              => 'Tatitr’asa momban’ny fiarovana',
-'protectlogtext'              => "Eto ambany ny lisitry ny fiarovana/fanalana hidy ny pejy. 
+'protectlogtext'              => "Eto ambany ny lisitry ny fiarovana/fanalana hidy ny pejy.
 Ho ann'y fanazavana fanampiny, jereo [[Special:ProtectedPages|ny lisitry ny pejy voaaro]] ho an'ny pejy fiarovana amin'izao fotoana izao.",
 'protectedarticle'            => 'voaaro ny pejy "[[$1]]"',
 'modifiedarticleprotection'   => "nanova ny haabo ny fiarovana ho an'ny « [[$1]] »",

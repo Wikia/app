@@ -7,22 +7,33 @@ describe('ext.wikia.adEngine.template.modal', function () {
 	}
 
 	var adsModule = {
-			openLightbox: noop
+			createLightbox: noop,
+			showLightbox: noop
 		},
 		mocks = {
-			log: noop,
-			adContext: {
-				getContext: function () {
+			adHelper: {
+				throttle: noop
+			},
+			adDetect: {},
+			modalHandlerFactory: {
+				create: function () {
 					return {
-						targeting: {
-							skin: 'mercury'
+						create: noop,
+						show: noop,
+						getExpansionModel: function () {
+							return {
+								availableHeightRatio: 1,
+								availableWidthRatio: 1,
+								heightSubtract: 80,
+								minWidth: 100,
+								minHeight: 100,
+								maximumRatio: 3
+							};
 						}
 					};
 				}
 			},
-			adHelper: {
-				throttle: noop
-			},
+			log: noop,
 			iframeWriter: {
 				getIframe: noop
 			},
@@ -60,8 +71,9 @@ describe('ext.wikia.adEngine.template.modal', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.template.modal'](
-			mocks.adContext,
 			mocks.adHelper,
+			mocks.adDetect,
+			mocks.modalHandlerFactory,
 			mocks.doc,
 			mocks.log,
 			mocks.iframeWriter,

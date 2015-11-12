@@ -59,7 +59,7 @@ ve.init.wikia.ViewPageTarget.static.toolbarGroups = [
 		type: 'list',
 		label: OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
 		indicator: 'down',
-		include: [ 'wikiaMediaInsert', 'wikiaSingleMedia', 'wikiaMapInsert', 'number', 'bullet', 'wikiaTemplateInsert', 'reference', 'referencesList', 'insertTable' ]
+		include: [ 'wikiaMediaInsert', 'wikiaSingleMedia', 'wikiaInfoboxInsert', 'number', 'bullet', 'wikiaMapInsert', 'wikiaTemplateInsert', 'reference', 'referencesList', 'insertTable' ]
 	},
 	// Table
 	{

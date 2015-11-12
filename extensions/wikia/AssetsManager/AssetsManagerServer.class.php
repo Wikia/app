@@ -40,6 +40,7 @@ class AssetsManagerServer {
 
 		} catch (Exception $e) {
 			header('HTTP/1.1 404 Not Found');
+			header('Content-Type: text/plain;  charset=UTF-8');
 			echo $e->getMessage();
 			return;
 		}
@@ -68,6 +69,7 @@ class AssetsManagerServer {
 			// return HTTP 503 in case of SASS processing error (BAC-592)
 			// Varnish will cache such response for 5 seconds
 			header('HTTP/1.1 503');
+			header('Content-Type: text/plain;  charset=UTF-8');
 
 			// log exception messages
 			\Wikia\Logger\WikiaLogger::instance()->error( 'AssetsManagerServer::serve failed', [

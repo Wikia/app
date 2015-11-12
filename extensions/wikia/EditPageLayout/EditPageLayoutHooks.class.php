@@ -88,7 +88,6 @@ class EditPageLayoutHooks {
 		// modify sections for the following user options
 		$prefs = array(
 			// General
-			'enablerichtext' => 'general',
 			'disablespellchecker' => 'general',
 
 			// Starting an edit

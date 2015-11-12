@@ -627,7 +627,7 @@ $1 is a filename, I think.',
 
 # Login and logout pages
 'logouttext'                 => 'Log out message',
-'welcomecreation'            => 'The welcome message users see after registering a user account. $1 is the username of the new user.',
+'welcomecreation'            => 'The welcome message users see after registering a user account.$1is the username of the new user.',
 'yourname'                   => "In user preferences
 
 <nowiki>{{</nowiki>[[Gender|GENDER]]<nowiki>}}</nowiki> is '''NOT''' supported.

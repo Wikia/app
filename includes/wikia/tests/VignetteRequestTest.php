@@ -3,6 +3,9 @@
 use Wikia\Vignette\UrlConfig;
 use Wikia\Vignette\UrlGenerator;
 
+/**
+ * @group Vignette
+ */
 class VignetteRequestTest extends WikiaBaseTest {
 	private $vignetteUrl = 'http://vignette.wikia-dev.com';
 
@@ -29,6 +32,12 @@ class VignetteRequestTest extends WikiaBaseTest {
 		$this->assertEquals(
 			VignetteRequest::getImageFilename("{$this->vignetteUrl}/tests/images/a/ab/SomeFile.jpg/revision/latest?cb=12345"),
 			"SomeFile.jpg"
+		);
+
+		# the old thumb URL format
+		$this->assertEquals(
+			VignetteRequest::getImageFilename("{$this->vignetteUrl}/civilization/images/4/4a/Foo.png"),
+			null
 		);
 	}
 
@@ -93,6 +102,42 @@ class VignetteRequestTest extends WikiaBaseTest {
 			[
 				'window-crop/width/50/x-offset/-10/y-offset/-20/window-width/60/window-height/100?cb=123&format=jpg',
 				'50px--10,50,-20,80-filename.jpg'
+			],
+		];
+	}
+
+	/**
+	 * @param string $url
+	 * @param bool $expected
+	 * @dataProvider isVignetteUrlDataProvider
+	 */
+	public function testIsVignetteUrl($url, $expected) {
+		$this->mockGlobalVariable('wgVignetteUrl', $this->vignetteUrl);
+
+		$this->assertEquals($expected, VignetteRequest::isVignetteUrl($url));
+	}
+
+	public function isVignetteUrlDataProvider() {
+		return [
+			[
+				# thumb
+				$this->vignetteUrl . '/nordycka/images/f/f2/Saksunardalur.jpg/revision/latest/scale-to-width-down/300?cb=20150113215859&path-prefix=pl',
+				true
+			],
+			[
+				# original
+				$this->vignetteUrl . '/nordycka/images/f/f2/Saksunardalur.jpg/revision/latest?cb=20150113215859&path-prefix=pl',
+				true
+			],
+			[
+				# the old thumb URL format will still be treated as a Vignette URL
+				$this->vignetteUrl . '/civilization/images/4/4a/Dromon_%28Civ5%29.png',
+				true
+			],
+			[
+				# not an URL at all
+				"<img src=\"{$this->vignetteUrl}/nordycka/images/f/f2/Saksunardalur.jpg/revision/latest?cb=20150113215859&path-prefix=pl\" />",
+				false
 			],
 		];
 	}

@@ -25,6 +25,10 @@
  * over to the tryUISubmit static method of this class.
  */
 
+use Wikia\Logger\WikiaLogger;
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Preferences\Migration\PreferenceScopeService;
+
 class Preferences {
 	static $defaultPreferences = null;
 	static $saveFilters = array(
@@ -35,6 +39,13 @@ class Preferences {
 		'wllimit' => array( 'Preferences', 'filterIntval' ),
 		'searchlimit' => array( 'Preferences', 'filterIntval' ),
 	);
+
+	/**
+	 * @return PreferenceScopeService
+	 */
+	static function preferenceScope() {
+		return Injector::getInjector()->get( PreferenceScopeService::class );
+	}
 
 	/**
 	 * @throws MWException
@@ -72,7 +83,7 @@ class Preferences {
 
 		## Prod in defaults from the user
 		foreach ( $defaultPreferences as $name => &$info ) {
-			$prefFromUser = self::getUserPreference( $name, $info, $user );
+			$prefFromUser = self::getUserProperty( $name, $info, $user );
 			$field = HTMLForm::loadInputFromParameters( $name, $info ); // For validation
 			$defaultOptions = User::getDefaultOptions();
 			$globalDefault = isset( $defaultOptions[$name] )
@@ -108,8 +119,8 @@ class Preferences {
 	 * @param $user User
 	 * @return array|String
 	 */
-	static function getUserPreference( $name, $info, $user ) {
-		$val = $user->getGlobalPreference( $name );
+	static function getUserProperty( $name, $info, $user ) {
+		$val = self::getUserPropertyHelper( $user, $name );
 
 		// Handling for array-type preferences
 		if ( ( isset( $info['type'] ) && $info['type'] == 'multiselect' ) ||
@@ -119,13 +130,28 @@ class Preferences {
 			$val = array();
 
 			foreach ( $options as $value ) {
-				if ( $user->getGlobalPreference( "$prefix$value" ) ) {
+				if ( self::getUserPropertyHelper( $user, "$prefix$value" ) ) {
 					$val[] = $value;
 				}
 			}
 		}
 
 		return $val;
+	}
+
+	private static function getUserPropertyHelper( User $user, $property ) {
+		$scopeService = self::preferenceScope();
+
+		if ( in_array( $property, self::getAttributes() ) ) {
+			return $user->getGlobalAttribute( $property );
+		} elseif ( $scopeService->isGlobalPreference( $property ) ) {
+			return $user->getGlobalPreference( $property );
+		} elseif ( $scopeService->isLocalPreference( $property ) ) {
+			list( $prefName, $wikiId ) = $scopeService->splitLocalPreference( $property );
+			return $user->getLocalPreference( $prefName, $wikiId );
+		}
+
+		return null;
 	}
 
 	/**
@@ -1451,14 +1477,34 @@ class Preferences {
 			$formData[$pref] = $user->getGlobalPreference( $pref, null, true );
 		}
 
-		//  Keeps old preferences from interfering due to back-compat
-		//  code, etc.
-		// <Wikia> RT#144314
-		//$user->resetOptions();
-		// </Wikia>
+		$attributes = self::getAttributes();
+		$preferences = [];
+		foreach ($formData as $key => $val) {
+			if (in_array($key, $attributes)) {
+				$user->setGlobalAttribute($key, $val);
+			} else {
+				$preferences[$key] = $val;
+			}
+		}
 
-		$user->setGlobalPreferences($formData);
+		foreach ($preferences as $key => $val) {
+			if ( self::preferenceScope()->isGlobalPreference($key) ) {
+				$user->setGlobalPreference($key, $val);
+				continue;
+			}
 
+			if ( self::preferenceScope()->isLocalPreference($key) ) {
+				$splitedKey = self::preferenceScope()->splitLocalPreference($key);
+				if ( isset( $splitedKey[0] ) && isset( $splitedKey[1] ) ) {
+					$user->setLocalPreference($splitedKey[0], $val , $splitedKey[1]);
+				} else {
+					WikiaLogger::instance()->error(
+						__METHOD__ . '::localPreferenceNotSplitted',
+						[ 'preference'  => $key ]
+					);
+				}
+			}
+		}
 		$user->saveSettings();
 
 		return $result;
@@ -1566,6 +1612,12 @@ class Preferences {
 		}
 
 		return $arr;
+	}
+
+	// attributes that show up on the preferences page. TODO: separate somehow?
+	private static function getAttributes() {
+		global $wgUserAttributeWhitelist;
+		return $wgUserAttributeWhitelist;
 	}
 }
 

@@ -28,8 +28,20 @@ class AdEngine2ContextService {
 				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
 			}
 
+			$sourcePointRecoveryUrl = null;
+			$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sp.detection'], 'scripts' );
+			if ( $skinName === 'oasis' ) {
+				$sourcePointRecoveryUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sp.recovery'], 'scripts' );
+			}
+
 			$langCode = $title->getPageLanguage()->getCode();
 
+			// 1 of 3 verticals
+			$oldWikiVertical = $hubService->getCategoryInfoForCity( $wg->CityId )->cat_name;
+
+			// 1 of 7 verticals
+			$newWikiVertical = $wikiFactoryHub->getWikiVertical( $wg->CityId );
+			$newWikiVertical = !empty($newWikiVertical['short']) ? $newWikiVertical['short'] : 'error';
 			return [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
@@ -40,10 +52,13 @@ class AdEngine2ContextService {
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
 					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
+					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
+					'sourcePointRecoveryUrl' => $sourcePointRecoveryUrl,
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => $wg->EnableKruxTargeting,
 					'enablePageCategories' => array_search( $langCode, $wg->AdPageLevelCategoryLangs ) !== false,
+					'mappedVerticalName' => $this->getMappedVerticalName( $oldWikiVertical, $newWikiVertical ), //wikiCategory replacement for AdLogicPageParams.js::getPageLevelParams
 					'pageArticleId' => $title->getArticleId(),
 					'pageIsArticle' => !!$title->getArticleId(),
 					'pageIsHub' => $wikiaPageType->isWikiaHub(),
@@ -58,7 +73,8 @@ class AdEngine2ContextService {
 					'wikiIsCorporate' => $wikiaPageType->isCorporatePage(),
 					'wikiIsTop1000' => $wg->AdDriverWikiIsTop1000,
 					'wikiLanguage' => $langCode,
-					'wikiVertical' => $hubService->getCategoryInfoForCity( $wg->CityId )->cat_name,
+					'wikiVertical' => $newWikiVertical,
+					'newWikiCategories' => $this->getNewWikiCategories($wikiFactoryHub, $wg->CityId),
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'monetizationService' => $wg->AdDriverUseMonetizationService,
@@ -75,6 +91,47 @@ class AdEngine2ContextService {
 				'forcedProvider' => $wg->AdDriverForcedProvider
 			];
 		} );
+	}
+
+	private function getMappedVerticalName( $oldWikiVertical, $newWikiVertical ) {
+		if ($oldWikiVertical === 'Wikia') {
+			return 'wikia';
+		}
+
+		$mapping = [
+			'other' => 'life',
+			'tv' => 'ent',
+			'games' => 'gaming',
+			'books' => 'ent',
+			'comics' => 'ent',
+			'lifestyle' => 'life',
+			'music' => 'ent',
+			'movies' => 'ent'
+		];
+
+		$newVerticalName = strtolower( $newWikiVertical );
+		if ( !empty( $mapping[$newVerticalName] ) ) {
+			return $mapping[$newVerticalName];
+		}
+
+		return 'error';
+	}
+
+	private function getNewWikiCategories(WikiFactoryHub $wikiFactoryHub, $cityId) {
+		$oldWikiCategories = $wikiFactoryHub->getWikiCategoryNames( $cityId, false );
+		$newWikiCategories = $wikiFactoryHub->getWikiCategoryNames( $cityId, true );
+
+		if( is_array($oldWikiCategories) && is_array($newWikiCategories) ) {
+			$wikiCategories = array_merge($oldWikiCategories, $newWikiCategories);
+		} else if ( is_array($oldWikiCategories) ) {
+			$wikiCategories = $oldWikiCategories;
+		} else if ( is_array($newWikiCategories) ) {
+			$wikiCategories = $newWikiCategories;
+		} else {
+			$wikiCategories = [];
+		}
+
+		return array_unique($wikiCategories);
 	}
 
 	private function filterOutEmptyItems( $input ) {

@@ -3336,8 +3336,7 @@ $messages['zh-hans'] = array(
 	'user-identity-box-my-fb-page' => '我的Facebook',
 	'user-identity-box-fav-wikis' => '我最喜欢的wiki',
 	'user-identity-box-edits-since-joining' => '次编辑<br/>于$1加入Wikia',
-	'user-identity-box-edits' => '<em>$1</em><span>次编辑</span>
-',
+	'user-identity-box-edits' => '<em>$1</em><span>次编辑</span>',
 	'user-identity-box-group-authenticated' => '官方认证',
 	'user-identity-box-group-council' => '委员',
 	'user-identity-box-group-adminmentor' => '管理员导师',

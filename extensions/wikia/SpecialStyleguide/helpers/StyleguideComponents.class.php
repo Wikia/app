@@ -36,7 +36,7 @@ class StyleguideComponents {
 	 */
 	const MESSAGES_FILE_SUFFIX = 'i18n.php';
 
-	const MEMCACHE_VERSION_KEY = '0.1';
+	const MEMCACHE_VERSION_KEY = '0.2';
 
 	/**
 	 * @var Array|null
