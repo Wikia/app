@@ -91,9 +91,14 @@ class InsightsHooks {
 	 * @return bool
 	 */
 	public static function onwgQueryPages( Array &$wgQueryPages ) {
+	global $wgEnableInsightsInfoboxes;
+
+	if ( $wgEnableInsightsInfoboxes ) {
 		$wgQueryPages[] = [ 'UnconvertedInfoboxesPage', 'Nonportableinfoboxes' ];
-		return true;
 	}
+
+	return true;
+}
 
 	/**
 	 * Purge memcache with insights articles after updating special pages task is done
