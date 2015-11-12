@@ -25,6 +25,7 @@ class Hooks {
 		\Hooks::register( 'BeforeUserAddGlobalGroup', [ $hooks, 'onUserAddGroup' ] );
 		\Hooks::register( 'SkinAfterBottomScripts', [ $hooks, 'onSkinAfterBottomScripts' ] );
 		\Hooks::register( 'ArticleAfterFetchContent', [ $hooks, 'onArticleAfterFetchContent' ] );
+		\Hooks::register( 'ArticleNonExistentPage', [ $hooks, 'onArticleNonExistentPage' ] );
 	}
 
 	/**
@@ -35,14 +36,22 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onArticleAfterFetchContent( \Article $article, &$content ) {
-		$title = $article->getTitle();
-		$isViewPage = empty( \RequestContext::getMain()->getRequest()->getVal( 'action' ) );
+		$text = $this->getImportJSDescription( $article );
+		$content = $text . $content;
 
-		if ( \Wikia\ContentReview\ImportJS::isImportJSPage( $title ) && $isViewPage ) {
-			$text = \Wikia\ContentReview\ImportJS::getImportJSDescription();
+		return true;
+	}
 
-			$content = $text . $content;
-		}
+	/**
+	 * Add description how to import scripts
+	 *
+	 * @param \Article $article
+	 * @param String $content
+	 * @return bool
+	 */
+	public function onArticleNonExistentPage( \Article $article, \OutputPage $out, &$content ) {
+		$text = $this->getImportJSDescription( $article );
+		$content = $text . $content;
 
 		return true;
 	}
@@ -101,7 +110,7 @@ class Hooks {
 	 * @throws \MWException
 	 */
 	public function onSkinAfterBottomScripts( $skin, &$bottomScripts ) {
-		$bottomScripts .= ( new \Wikia\ContentReview\ImportJS() )->getImportScripts();
+		$bottomScripts .= ( new ImportJS() )->getImportScripts();
 
 		return true;
 	}
@@ -217,8 +226,8 @@ class Hooks {
 				}
 			}
 
-			if ( \Wikia\ContentReview\ImportJS::isImportJSPage( $title ) ) {
-				\Wikia\ContentReview\ImportJS::purgeImportScripts();
+			if ( ImportJS::isImportJSPage( $title ) ) {
+				ImportJS::purgeImportScripts();
 			}
 		}
 
@@ -241,8 +250,8 @@ class Hooks {
 				$this->purgeContentReviewData();
 			}
 
-			if ( \Wikia\ContentReview\ImportJS::isImportJSPage( $title ) ) {
-				\Wikia\ContentReview\ImportJS::purgeImportScripts();
+			if ( ImportJS::isImportJSPage( $title ) ) {
+				ImportJS::purgeImportScripts();
 			}
 		}
 
@@ -263,8 +272,8 @@ class Hooks {
 				$this->purgeContentReviewData();
 			}
 
-			if ( \Wikia\ContentReview\ImportJS::isImportJSPage( $title ) ) {
-				\Wikia\ContentReview\ImportJS::purgeImportScripts();
+			if ( ImportJS::isImportJSPage( $title ) ) {
+				ImportJS::purgeImportScripts();
 			}
 		}
 
@@ -326,5 +335,20 @@ class Hooks {
 		$helper->purgeCurrentJsPagesTimestamp();
 
 		ContentReviewStatusesService::purgeJsPagesCache();
+	}
+
+	private function getImportJSDescription( \Article $article ) {
+		$text = '';
+		$title = $article->getTitle();
+
+		if ( ImportJS::isImportJSPage( $title ) ) {
+			$isViewPage = empty( \RequestContext::getMain()->getRequest()->getVal( 'action' ) );
+
+			if ( $isViewPage ) {
+				$text = ImportJS::getImportJSDescription();
+			}
+		}
+
+		return $text;
 	}
 }

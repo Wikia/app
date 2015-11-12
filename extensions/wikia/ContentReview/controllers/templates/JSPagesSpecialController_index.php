@@ -16,11 +16,11 @@
 <table class="article-table">
 	<thead>
 	<tr class="content-review-special-list-headers">
-		<th><?= wfMessage( 'content-review-special-list-header-page-name' )->escaped() ?></th>
+		<th><?= wfMessage( 'content-review-module-header-pagename' )->escaped() ?></th>
 		<th><?= wfMessage( 'content-review-module-header-latest' )->escaped() ?></th>
 		<th><?= wfMessage( 'content-review-module-header-last' )->escaped() ?></th>
 		<th><?= wfMessage( 'content-review-module-header-live' )->escaped() ?></th>
-		<th><?= wfMessage( 'content-review-special-list-header-actions' )->escaped() ?></th>
+		<th><?= wfMessage( 'content-review-module-header-actions' )->escaped() ?></th>
 	</tr>
 	</thead>
 	<tbody>

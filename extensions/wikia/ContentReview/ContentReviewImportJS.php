@@ -3,7 +3,7 @@
 namespace Wikia\ContentReview;
 
 class ImportJS {
-	const IMPORT_SCRIPTS = 'ImportJS';
+	const IMPORT_SCRIPTS_ENTRYPOINT = 'ImportJS';
 	const IMPORT_SCRIPTS_FUNCTION = 'importWikiaScriptPages';
 	const IMPORT_SCRIPTS_KEY = 'content-review-importjs';
 	const IMPORT_SCRIPTS_VERSION = '1.0';
@@ -14,26 +14,26 @@ class ImportJS {
 	 * @return String
 	 */
 	public function getImportScripts() {
-		$importScript = \WikiaDataAccess::cache(
+		$importScripts = \WikiaDataAccess::cache(
 			$this->getImportJSMemcKey(),
 			2592000, // 30 days,
 			function() {
-				$importScript = '';
-				$title = \Title::newFromText( self::IMPORT_SCRIPTS, NS_MEDIAWIKI );
+				$importScripts = '';
+				$title = \Title::newFromText( self::IMPORT_SCRIPTS_ENTRYPOINT, NS_MEDIAWIKI );
 
-				if ( $title instanceof \Title && $title->getArticleID() != 0 ) {
+				if ( $title instanceof \Title && $title->exists() ) {
 					$revision = \Revision::newFromTitle( $title );
 					$scripts = explode( PHP_EOL, $revision->getRawText() );
 
 					$imports = $this->prepareImports( $scripts );
-					$importScript = $this->createInlineScript( $imports );
+					$importScripts = $this->createInlineScript( $imports );
 				}
 
-				return $importScript;
+				return $importScripts;
 			}
 		);
 
-		return $importScript;
+		return $importScripts;
 	}
 
 	/**
@@ -51,7 +51,9 @@ class ImportJS {
 		foreach( $scripts as $key => $script ) {
 			$script = trim( $script );
 
-			if ( strtoupper( substr( $script, -3 ) ) === '.JS' ) {
+			if ( strtolower( substr( $script, -3 ) ) === Helper::JS_FILE_EXTENSION
+					&& !preg_match( \Title::getTitleInvalidRegex(), $script )
+			) {
 				$scriptParts = explode( ':', $script );
 				$count = count( $scriptParts );
 				// Local script
@@ -77,10 +79,13 @@ class ImportJS {
 		$importScript = '';
 
 		if ( !empty( $imports ) ) {
-			$code = '(function(){'
-				. self::IMPORT_SCRIPTS_FUNCTION . '(["' . implode( '", "', $imports ) . '"]);'
-				. '})();';
-			$importScript = \Html::inlineScript( $code );
+			$code = sprintf(
+				'(function(){%s(["%s"]);})();',
+				self::IMPORT_SCRIPTS_FUNCTION,
+				implode( '", "', $imports )
+			);
+
+			$importScript = \Html::inlineScript( \Xml::escapeJsString( $code ) );
 		}
 
 		return $importScript;
@@ -93,7 +98,7 @@ class ImportJS {
 	 * @return bool
 	 */
 	static public function isImportJSPage( \Title $title ) {
-		return $title->inNamespace( NS_MEDIAWIKI ) && $title->getText() === self::IMPORT_SCRIPTS;
+		return $title->inNamespace( NS_MEDIAWIKI ) && $title->getText() === self::IMPORT_SCRIPTS_ENTRYPOINT;
 	}
 
 	/**
