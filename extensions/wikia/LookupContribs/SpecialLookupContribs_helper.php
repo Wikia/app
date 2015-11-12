@@ -135,8 +135,10 @@ class LookupContribsCore {
 	 * with user's edits on a wiki plus will sort whole array by this value
 	 * @param string $order
 	 *
-	 * @return array
+	 * @param int $limit
+	 * @param int $offset
 	 *
+	 * @return array
 	 * @throws DBUnexpectedError
 	 * @throws MWException
 	 */
@@ -203,6 +205,8 @@ class LookupContribsCore {
 					$userActivity['data'][] = $aItem;
 				}
 
+//				// Commented out because its slow if the user has a lot of edits.  Leaving in as
+//				// a starting point if we want to make this performant and add this in
 //				if ( $addEditCount ) {
 //					$this->addEditCounts( $wikiaIds, $userActivity );
 //				}

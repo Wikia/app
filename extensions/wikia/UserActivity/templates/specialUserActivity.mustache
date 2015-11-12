@@ -6,31 +6,11 @@
 	</thead>
 	{{#items}}
 	<tr>
-		<td>{{#wordmarkData}}{{> wordmark}}{{/wordmarkData}}{{^wordmarkData}}{{/wordmarkData}}
-			<strong><a href="{{url}}">{{title}}</a></strong></td>
+		<td><strong><a href="{{url}}">{{title}}</a></strong></td>
 		<td><a href="{{url}}wiki/Special:Contributions/{{username}}">{{editString}}</a></td>
 		<td>{{lastEdit}}</td>
 		<td>{{groups}}</td>
 	</tr>
-	{{#hasArticles}}
-	<tr>
-		<td colspan="4">
-			<div class="row page-listings">
-			{{#articles}}
-					<div class="two columns">
-						<a id="wtf" class="page-listing-image" href="{{url}}">
-							<img src="{{imageUrl}}"{{#noImage}}class="no-image "{{/noImage}} />
-						</a>
-					</div>
-					<div class="two columns">
-						<p class="page-listing-title"><a href="{{url}}">{{titleText}}</a></p>
-						<p class="page-listing-snippet">{{snippet}}</p>
-					</div>
-			{{/articles}}
-			</div>
-		</td>
-	</tr>
-	{{/hasArticles}}
 	{{/items}}
 </table>
 {{{pagination}}}

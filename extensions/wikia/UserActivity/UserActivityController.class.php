@@ -2,8 +2,6 @@
 
 namespace UserActivity;
 
-use Wikia\Logger\WikiaLogger;
-
 class Controller extends \WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const NUM_ARTICLES_SHOWN = 3;
@@ -72,45 +70,12 @@ class Controller extends \WikiaController {
 			unset($contribItem['editcount']);
 
 			$dbName = $contribItem['dbname'];
-			$contribItem['wordmarkData'] = $this->getWordmark( $dbName );
 			$contribItem['groups'] = implode(', ', $this->getGroups( $dbName ) );
-
-			$articles = $this->getArticleBlurbs( $dbName );
-			$contribItem['articles'] = $articles;
-			$contribItem['hasArticles'] = count($articles) > 0;
 
 			$flattened[] = $contribItem;
 		}
 
 		return $flattened;
-	}
-
-	private function getWordmark( $dbName ) {
-		$params = [
-			'controller' => 'WikiHeader',
-			'method' => 'Wordmark',
-		];
-
-		$resp = \ApiService::foreignCall( $dbName, $params, \ApiService::WIKIA );
-
-		if ( $resp === false ) {
-			return [];
-		} else {
-			$host = \WikiFactory::getHostByDbName( $dbName );
-
-			$wm = [
-				'isText' => $resp['wordmarkType'] == 'text',
-				'isGraphic' => $resp['wordmarkType'] != 'text',
-				'text' => $resp['wordmarkText'],
-				'textSize' => $resp['wordmarkSize'],
-				'textFont' => $resp['wordmarkFontClass'],
-				'wikiaUrl' => 'http://'.$host.$resp['mainPageURL'],
-				'imageUrl' => $resp['wordmarkUrl'],
-				'imageStyle' => $resp['wordmarkStyle'],
-			];
-
-			return $wm;
-		}
 	}
 
 	private function getGroups( $dbName ) {
