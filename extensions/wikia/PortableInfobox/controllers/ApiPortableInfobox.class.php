@@ -15,6 +15,12 @@ class ApiPortableInfobox extends ApiBase {
 		}
 
 		/*
+		This commented block is an another/alternative approach to the same problem. Potentially
+		it is better because it parses wikitext in a way identical to how it is parser for article
+		view - however it is not able to throw exception if the passed text is not a valid infobox.
+		I'm keeping it here because I think it is a great approach and in the future I'm planning
+		to create an separated API that uses this approach. - Inez Korczyński
+
 		$fakeTemplate = 'FakeTemplate' . wfRandomString( 4 );
 		$fakeTemplateTitle = Title::newFromText( $fakeTemplate, NS_TEMPLATE );
 
