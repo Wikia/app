@@ -25,9 +25,9 @@ define('ext.wikia.adEngine.recovery.gcs', [
 
 	function getGcsUrl() {
 		return '//survey.g.doubleclick.net/survey?site=_grm5podgin6cup4wmqjqct4h5e' +
-			'&amp;url=' + encodeURIComponent(articleUrl) +
-			(contentId ? '&amp;cid=' + encodeURIComponent(contentId) : '') +
-			'&amp;random=' + (new Date()).getTime();
+			'&url=' + encodeURIComponent(articleUrl) +
+			(contentId ? '&cid=' + encodeURIComponent(contentId) : '') +
+			'&random=' + (new Date()).getTime();
 	}
 
 	function addClasses() {
