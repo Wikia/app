@@ -34,11 +34,16 @@ $messages['en'] = array(
 	'insights-notification-message-inprogress-wantedpages' => 'This page needs to be created. ',
 	'insights-notification-message-fixed-wantedpages' => 'Thanks for making this page!',
 	'insights-notification-next-item-wantedpages' => 'Create another article.',
+
 	'insights-list-subtitle-nonportableinfoboxes' => 'Non-portable infoboxes',
 	'insights-list-description-nonportableinfoboxes' => "The following infoboxes are built with tables or divs, and should be converted to use the new [[Help:PortableInfoboxes|infobox markup]] so they render appropriately to all visitors. If you're stuck you can also [[w:c:community:Thread:841717|visit our forum thread and ask questions there]].",
 	'insights-notification-message-inprogress-nonportableinfoboxes' => 'This infobox needs to be updated with the new infobox markup.',
 	'insights-notification-message-fixed-nonportableinfoboxes' => 'Awesome! The infobox on this page has been converted.',
 	'insights-notification-next-item-nonportableinfoboxes' => 'Convert the next infobox.',
+
+	'insights-list-subtitle-templateswithouttype' => 'Templates without type',
+	'insights-list-description-templateswithouttype' => "The purpose of these templates is unknown, as they have not been organized by type. See [[Help:Template types]] to learn more!",
+
 	'insights-sort-label' => 'Sort by',
 	'insights-sort-pv7' => 'Page views, last week',
 	'insights-sort-pv28' => 'Page views, last 4 weeks',
@@ -69,6 +74,7 @@ $messages['qqq'] = array(
 	'insights-list-header-altaction' => 'A header of an Insights list table for a column with a link to a semi- or fully automatic action taken on the corresponding page',
 	'insights-list-header-pageviews' => 'A header of an Insights list table for a column with a number of views of an article',
 	'insights-last-edit' => 'Information who and when made last edit for chosen article on the list',
+
 	'insights-list-subtitle-flags' => 'A title of a subpage with a list of pages marked with flags',
 	'insights-list-description-flags' => 'A description for a subpage with a list of pages marked with flags',
 	'insights-list-subtitle-uncategorizedpages' => 'A title of a subpage with a list of uncategorized pages',
@@ -76,26 +82,34 @@ $messages['qqq'] = array(
 	'insights-notification-message-inprogress-uncategorizedpages' => 'Message displayed on notification banner informing user that category should be added to the page',
 	'insights-notification-message-fixed-uncategorizedpages' => 'Message displayed on notification banner informing user that category was added to the page',
 	'insights-notification-next-item-uncategorizedpages' => 'Link text to redirect to next uncategorized page',
+
 	'insights-list-subtitle-withoutimages' => 'A title of a subpage with a list of pages without images',
 	'insights-list-description-withoutimages' => 'A description for a subpage with a list of pages without images',
 	'insights-notification-message-inprogress-withoutimages' => 'Message displayed on notification banner informing user that image should be added to the page',
 	'insights-notification-message-fixed-withoutimages' => 'Message displayed on notification banner informing user that image was added to the page',
 	'insights-notification-next-item-withoutimages' => ' Link text to redirect to next page without image',
+
 	'insights-list-subtitle-deadendpages' => 'A title of a subpage with a list of pages with no links',
 	'insights-list-description-deadendpages' => 'A description for a subpage with a list of pages with no links',
 	'insights-notification-message-inprogress-deadendpages' => 'Message displayed on notification banner informing user that the page needs links',
 	'insights-notification-message-fixed-deadendpages' => 'Message displayed on notification banner informing user that links were added to the page',
 	'insights-notification-next-item-deadendpages' => 'Link text to redirect to next page without links',
+
 	'insights-list-subtitle-wantedpages' => 'A title of a subpage with a list of wanted pages',
 	'insights-list-description-wantedpages' => 'A description for a subpage with a list of wanted pages',
 	'insights-notification-message-inprogress-wantedpages' => 'Message displayed on notification banner informing user that page should be created',
 	'insights-notification-message-fixed-wantedpages' => 'Message displayed on notification banner informing user that page was created',
 	'insights-notification-next-item-wantedpages' => 'Link text to redirect to next not existing page',
-	'insights-list-subtitle-unconvertedinfoboxes' => 'A title of list of pages with old (unconverted, non-portable) infoboxes',
-	'insights-list-description-unconvertedinfoboxes' => 'The description of what the list of old infoboxes is.',
-	'insights-notification-message-inprogress-unconvertedinfoboxes' => 'A hint that is displayed if a currently visited page needs conversion of an infobox.',
-	'insights-notification-message-fixed-unconvertedinfoboxes' => 'A message shown if an old infobox has been converted to the new syntax.',
-	'insights-notification-next-item-unconvertedinfoboxes' => 'A text of a link that leads to the next article that need infobox conversion.',
+
+	'insights-list-subtitle-nonportableinfoboxes' => 'A title of list of pages with old (unconverted, non-portable) infoboxes',
+	'insights-list-description-nonportableinfoboxes' => 'The description of what the list of old infoboxes is.',
+	'insights-notification-message-inprogress-nonportableinfoboxes' => 'A hint that is displayed if a currently visited page needs conversion of an infobox.',
+	'insights-notification-message-fixed-nonportableinfoboxes' => 'A message shown if an old infobox has been converted to the new syntax.',
+	'insights-notification-next-item-nonportableinfoboxes' => 'A text of a link that leads to the next article that need infobox conversion.',
+
+	'insights-list-subtitle-templateswithouttype' => 'A title of list of templates without type coming from template classification',
+	'insights-list-description-templateswithouttype' => 'The description of what the list of templates without type is',
+
 	'insights-sort-pv7' => 'Sorting option by page views in last week',
 	'insights-sort-pv28' => 'Sorting option by page views in last 4 weeks',
 	'insights-sort-pvDiff' => 'Sorting option by recent increase in page views',
