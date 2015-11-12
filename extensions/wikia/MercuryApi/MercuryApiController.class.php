@@ -315,6 +315,14 @@ class MercuryApiController extends WikiaController {
 			$wikiVariables['specialRobotPolicy'] = $robotPolicy;
 		}
 
+		// Get the button color from ThemeDesigner to act as the main "theme color".
+		// This may need to change later as we use more colors from ThemeDesigner.
+		$themeSettings = ( new ThemeSettings() )->getSettings();
+		$wikiVariables['themeColors'] = [
+			'buttons' => $themeSettings['color-buttons'],
+			'links' => $themeSettings['color-links'],
+		];
+
 		// template for non-main pages (use $1 for article name)
 		$wikiVariables['htmlTitleTemplate'] = WikiaHtmlTitle::getPageTitle( '$1', false );
 
