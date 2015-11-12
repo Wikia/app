@@ -22,9 +22,18 @@ define('ext.wikia.adEngine.template.modalOasisHandler', [
 
 		uiFactory.init('modal').then((function (uiModal) {
 			uiModal.createComponent(modalConfig, (function (modal) {
+				var closeBtnDelay = parseInt(closeButtonDelay, 10) * 1000 || 0;
 				this.modal = modal;
 				modal.$content.append(adContainer);
 				modal.$element.width('auto');
+
+				if (closeBtnDelay > 0) {
+					modal.$close.hide();
+					setTimeout(function(){
+						modal.$close.show();
+					}, closeBtnDelay);
+				}
+
 				if (modalVisible) {
 					this.show();
 				}
