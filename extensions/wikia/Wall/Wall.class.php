@@ -72,6 +72,9 @@ class Wall extends WikiaModel {
 		return $this->mTitle->getArticleId();
 	}
 
+	/**
+	 * @return \Title
+	 */
 	public function getTitle() {
 		return $this->mTitle;
 	}
