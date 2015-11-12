@@ -37,7 +37,7 @@ class Hooks {
 	 */
 	public function onArticleAfterFetchContent( \Article $article, &$content ) {
 		$text = $this->getImportJSDescription( $article );
-		$content = $text . $content;
+		$content = $text . '<pre>' . $content . '</pre>';
 
 		return true;
 	}
