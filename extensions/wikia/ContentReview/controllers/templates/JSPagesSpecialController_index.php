@@ -1,4 +1,8 @@
 <p>
+	<?= wfMessage( 'content-review-special-js-description' )->parse() ?>
+	<?= wfMessage( 'content-review-special-js-importjs-description' )->parse() ?>
+</p>
+<p>
 	<?php if ( $isTestModeEnabled ): ?>
 		<button class="content-review-module-test-mode-disable secondary">
 			<?= wfMessage( 'content-review-module-test-mode-disable' )->escaped() ?>

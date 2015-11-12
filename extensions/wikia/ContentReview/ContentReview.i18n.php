@@ -17,6 +17,7 @@ $messages['en'] = [
 	'content-review-module-help' => '[[Help:CSS and JS customization|Help]]',
 	'content-review-module-help-article' => 'Help:CSS and JS customization',
 	'content-review-module-help-text' => 'Help',
+	'content-review-module-jspages' => 'All JS pages',
 	'content-review-module-submit' => 'Submit for review',
 	'content-review-module-submit-success' => 'The changes have been successfully submitted for a review.',
 	'content-review-module-submit-exception' => 'Unfortunately, we could not submit the changes for a review due to the following error: $1.',
@@ -38,6 +39,14 @@ $messages['en'] = [
 The recently submitted change to this JavaScript page (revision [$2 $3]) was rejected by the Wikia review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]]. --~~~~',
 	'content-review-status-link-text' => 'Review status',
 	'content-review-special-js-pages-title' => 'JavaScript pages',
+	'content-review-special-js-description' => 'This page lists the current [[Help:JavaScript review process review status]] of MediaWiki namespace scripts on this community.',
+	'content-review-special-js-importjs-description' => 'Note: you can add and remove local and dev.wikia.com script imports without the review process via [[MediaWiki:ImportJS]].',
+	'content-review-importjs-description' => 'Here, you can easily import scripts:
+* from your local wikia by article name - e.g. MyScript.js
+* from dev.wikia.com by article name, preceded by "dev:" - e.g. dev:Code.js
+Names should not contain the MediaWiki namespace prefix. Write each script on a new line. See [[Help:Including additional CSS and JS]] for more information.
+----
+'
 ];
 
 $messages['qqq'] = [
@@ -56,6 +65,7 @@ $messages['qqq'] = [
 	'content-review-module-help' => 'A link to a Help page explaining how the review system works.',
 	'content-review-module-help-article' => 'Article name to a Help page explaining how the review system works.',
 	'content-review-module-help-text' => 'Text shown on a link a Help page explaining how the review system works.',
+	'content-review-module-jspages' => 'Text shown on a link to page with all javascript pages.',
 	'content-review-module-submit' => 'A text of a button that sends a given page for a review.',
 	'content-review-module-submit-success' => 'A message shown to a user in a Banner Notification if a page has been added to review.',
 	'content-review-module-submit-exception' => 'A message shown to a user in a Banner Notification if a known error happened. $1 is the error message.',
@@ -76,6 +86,9 @@ $messages['qqq'] = [
 	'content-review-rejection-explanation' => 'Standard explanation response when script changes were rejected. This text is a prefill to script talk page when reviewer is redirected there to provide feedback on rejection. $1 is the title message, $2 is a URL to a view of a revision and $3 is the number of a revision that becomes a text of the link.',
 	'content-review-status-link-text' => 'Text on entrypoint link to show content review module with review status info and submit for review buttons',
 	'content-review-special-js-pages-title' => 'Title of special page which contains all JavaScript pages on given wiki',
+	'content-review-special-js-description' => 'Text with description of this special page that contains lists with all scripts in MediaWiki namespace on that community with their review statuses and linking to help page.',
+	'content-review-special-js-importjs-description' => 'Information that user can manage script imports from community or dev.wikia.com by editing  MediaWiki:ImportJS page.',
+	'content-review-importjs-description' => 'Information for user how to add scripts. For scripts from local wikia, user should only add article name and from dev.wikia.com should preceded them by "dev:". Also user should add MediaWiki namespace and should add each script in separate line.'
 ];
 
 $messages['de'] = [

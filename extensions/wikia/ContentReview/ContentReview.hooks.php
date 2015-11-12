@@ -23,6 +23,28 @@ class Hooks {
 		\Hooks::register( 'UserRights::groupCheckboxes', [ $hooks, 'onUserRightsGroupCheckboxes' ] );
 		\Hooks::register( 'UserAddGroup', [ $hooks, 'onUserAddGroup' ] );
 		\Hooks::register( 'BeforeUserAddGlobalGroup', [ $hooks, 'onUserAddGroup' ] );
+		\Hooks::register( 'SkinAfterBottomScripts', [ $hooks, 'onSkinAfterBottomScripts' ] );
+		\Hooks::register( 'ArticleAfterFetchContent', [ $hooks, 'onArticleAfterFetchContent' ] );
+	}
+
+	/**
+	 * Add description how to import scripts
+	 *
+	 * @param \Article $article
+	 * @param String $content
+	 * @return bool
+	 */
+	public function onArticleAfterFetchContent( \Article $article, &$content ) {
+		$title = $article->getTitle();
+		$isViewPage = empty( \RequestContext::getMain()->getRequest()->getVal( 'action' ) );
+
+		if ( \Wikia\ContentReview\ImportJS::isImportJSPage( $title ) && $isViewPage ) {
+			$text = \Wikia\ContentReview\ImportJS::getImportJSDescription();
+
+			$content = $text . $content;
+		}
+
+		return true;
 	}
 
 	public function onGetRailModuleList( Array &$railModuleList ) {
@@ -66,6 +88,20 @@ class Hooks {
 			\Wikia::addAssetsToOutput('content_review_module_monobook_js');
 			\Wikia::addAssetsToOutput('content_review_module_monobook_scss');
 		}
+
+		return true;
+	}
+
+	/**
+	 * Add script to load safe imports
+	 *
+	 * @param $skin
+	 * @param String $bottomScripts
+	 * @return bool
+	 * @throws \MWException
+	 */
+	public function onSkinAfterBottomScripts( $skin, &$bottomScripts ) {
+		$bottomScripts .= ( new \Wikia\ContentReview\ImportJS() )->getImportScripts();
 
 		return true;
 	}
@@ -171,12 +207,18 @@ class Hooks {
 
 		$title = $article->getTitle();
 
-		if ( !is_null( $title )	&&  $title->isJsPage() ) {
-			$this->purgeContentReviewData();
+		if ( !is_null( $title ) ) {
+			if ( $title->isJsPage() ) {
+				$this->purgeContentReviewData();
 
-			if ( ( new Helper() )->userCanAutomaticallyApprove( $user ) ) {
-				( new ContentReviewService() )
-					->automaticallyApproveRevision( $user, $wgCityId, $title->getArticleID(), $revision->getId() );
+				if ( ( new Helper() )->userCanAutomaticallyApprove( $user ) ) {
+					( new ContentReviewService() )
+						->automaticallyApproveRevision( $user, $wgCityId, $title->getArticleID(), $revision->getId() );
+				}
+			}
+
+			if ( \Wikia\ContentReview\ImportJS::isImportJSPage( $title ) ) {
+				\Wikia\ContentReview\ImportJS::purgeImportScripts();
 			}
 		}
 
@@ -194,8 +236,14 @@ class Hooks {
 	public function onArticleDeleteComplete( \WikiPage &$article, \User &$user, $reason, $id ) {
 		$title = $article->getTitle();
 
-		if ( !is_null( $title )	&&  $title->isJsPage() ) {
-			$this->purgeContentReviewData();
+		if ( !is_null( $title )	) {
+			if( $title->isJsPage() ) {
+				$this->purgeContentReviewData();
+			}
+
+			if ( \Wikia\ContentReview\ImportJS::isImportJSPage( $title ) ) {
+				\Wikia\ContentReview\ImportJS::purgeImportScripts();
+			}
 		}
 
 		return true;
@@ -210,8 +258,14 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onArticleUndelete( \Title $title, $created, $comment ) {
-		if ( !is_null( $title )	&&  $title->isJsPage() ) {
-			$this->purgeContentReviewData();
+		if ( !is_null( $title )	) {
+			if ( $title->isJsPage() ) {
+				$this->purgeContentReviewData();
+			}
+
+			if ( \Wikia\ContentReview\ImportJS::isImportJSPage( $title ) ) {
+				\Wikia\ContentReview\ImportJS::purgeImportScripts();
+			}
 		}
 
 		return true;
