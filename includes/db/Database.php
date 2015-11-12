@@ -839,7 +839,8 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @return bool
 	 */
 	function isWriteQuery( $sql ) {
-		return !preg_match( '/^(?:SELECT|BEGIN|COMMIT|SET|SHOW|\(SELECT)\b/i', ltrim( $sql ) ); // PLATFORM-1417 (ltrim)
+		return !preg_match( '/^(?:SELECT|BEGIN|COMMIT|SET|SHOW|\(SELECT)\b/i', ltrim( $sql ) ) && // PLATFORM-1417 (ltrim)
+			!preg_match('/(FOR UPDATE|LOCK IN SHARE MODE)$/i', rtrim( $sql ) ); // MAIN-5810 (rtrim)
 	}
 
 	/**
@@ -952,7 +953,7 @@ abstract class DatabaseBase implements DatabaseType {
 		# Wikia change - end
 
 		# If DBO_TRX is set, start a transaction
-		if ( ( $this->mFlags & DBO_TRX ) && !$this->trxLevel() &&
+		if ( $isMaster && ( $this->mFlags & DBO_TRX ) && !$this->trxLevel() &&
 			$sql != 'BEGIN' && $sql != 'COMMIT' && $sql != 'ROLLBACK' ) {
 			# avoid establishing transactions for SHOW and SET statements too -
 			# that would delay transaction initializations to once connection

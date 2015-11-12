@@ -54,20 +54,18 @@
 				'value' => '',
 			],
 			[
-				'type' => 'nirvanaview',
-				'controller' => 'UserSignupSpecial',
-				'view' => 'birthday',
+				'type' => 'custom',
 				'isRequired' => true,
 				'class' => 'birthday-group',
 				'isInvalid' => ( !empty( $errParam )  ) &&
 					( $errParam === 'birthyear' || $errParam === 'birthmonth' || $errParam === 'birthday' ),
 				'errorMsg' => ( !empty( $msg ) ? $msg : '' ),
-				'params' => [
+				'output' => F::app()->renderPartial( 'UserSignupSpecial', 'birthday', [
 					'birthyear' => $birthyear,
 					'birthmonth' => $birthmonth,
 					'birthday' => $birthday,
 					'isEn' => $isEn
-				],
+				]),
 			],
 			[
 				'class' => 'opt-in-container hidden',
@@ -76,11 +74,11 @@
 				'label' => wfMessage( 'userlogin-opt-in-label' )->escaped(),
 			],
 			[
-				'type' => 'nirvanaview',
-				'controller' => 'UserSignupSpecial',
-				'view' => 'WikiaMobileSubmit',
+				'type' => 'custom',
 				'class' => 'submit-pane',
-				'params' => ['createAccountButtonLabel' => $createAccountButtonLabel]
+				'output' => F::app()->renderPartial( 'UserSignupSpecial', 'WikiaMobileSubmit', [
+					'createAccountButtonLabel' => $createAccountButtonLabel
+				]),
 			]
 		]
 	];

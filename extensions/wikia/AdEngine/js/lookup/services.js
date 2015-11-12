@@ -1,43 +1,49 @@
 /**
- * Module for getting information from "lookup" services such as Rubicon RTP or Amazon Match
+ * Module for getting information from "lookup" services such as Amazon Match
  *
  * It exposes only a single method called extendSlotTargeting that given a slot name and
  * slot targeting object will consult the lookup services and update the slot targeting object
- * with the targeting information from them (rp_tier from RTP and amznslots from Amazon).
+ * with the targeting information from them (e.g. amznslots from Amazon).
  *
  * This module also causes the lookup services to track their state when they are consulted
  * (but only once).
  */
-
 /*global define, require*/
-/*jshint camelcase:false*/
 define('ext.wikia.adEngine.lookup.services', [
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
-	require.optional('ext.wikia.adEngine.lookup.openXBidder'),
-	require.optional('ext.wikia.adEngine.lookup.rubiconRtp')
-], function (log, amazonMatch, oxBidder, rtp) {
+	require.optional('ext.wikia.adEngine.lookup.openXBidder')
+], function (log, amazonMatch, oxBidder) {
 	'use strict';
-
 	var logGroup = 'ext.wikia.adEngine.lookup.services',
-		rtpLookupTracked = false,
-		oxLookupTracked = false,
-		amazonLookupTracked = false;
+		bidders = [
+			{
+				module: amazonMatch,
+				tracked: false
+			},
+			{
+				module: oxBidder,
+				tracked: false
+			}
+		];
 
-	function trackState(module) {
-		if (module && module.wasCalled()) {
-			module.trackState();
-		}
+	function trackState() {
+		bidders.forEach(function (bidder) {
+			if (!bidder.tracked && bidder.module && bidder.module.wasCalled()) {
+				bidder.tracked = true;
+				bidder.module.trackState();
+			}
+		});
 	}
 
-	function addParameters(slotName, slotTargeting, modules) {
+	function addParameters(slotName, slotTargeting) {
 		var params;
 		if (!Object.keys) {
 			return;
 		}
-		modules.forEach(function (module) {
-			if (module && module.wasCalled()) {
-				params = module.getSlotParams(slotName);
+		bidders.forEach(function (bidder) {
+			if (bidder.module && bidder.module.wasCalled()) {
+				params = bidder.module.getSlotParams(slotName);
 				Object.keys(params).forEach(function (key) {
 					slotTargeting[key] = params[key];
 				});
@@ -47,35 +53,8 @@ define('ext.wikia.adEngine.lookup.services', [
 
 	function extendSlotTargeting(slotName, slotTargeting) {
 		log(['extendSlotTargeting', slotName, slotTargeting], 'debug', logGroup);
-
-		var rtpSlots, rtpTier;
-
-		if (!rtpLookupTracked) {
-			rtpLookupTracked = true;
-			trackState(rtp);
-		}
-
-		if (!amazonLookupTracked) {
-			amazonLookupTracked  = true;
-			trackState(amazonMatch);
-		}
-
-		if (!oxLookupTracked) {
-			oxLookupTracked  = true;
-			trackState(oxBidder);
-		}
-
-		if (rtp && rtp.wasCalled()) {
-			rtpSlots = rtp.getConfig().slotname;
-			if (rtpSlots.length && rtpSlots.indexOf(slotName) !== -1) {
-				rtpTier = rtp.getTier();
-				if (rtpTier) {
-					slotTargeting.rp_tier = rtpTier;
-				}
-			}
-		}
-
-		addParameters(slotName, slotTargeting, [amazonMatch, oxBidder]);
+		trackState();
+		addParameters(slotName, slotTargeting);
 	}
 
 	return {

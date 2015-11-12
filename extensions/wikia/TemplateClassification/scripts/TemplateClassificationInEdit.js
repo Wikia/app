@@ -7,14 +7,17 @@
  * handles type submit that is stored in hidden input in editform
  */
 define('TemplateClassificationInEdit',
-	['jquery', 'mw', 'TemplateClassificationModal'],
-	function ($, mw, templateClassificationModal) {
+	['jquery', 'mw', 'wikia.tracker', 'TemplateClassificationModal'],
+	function ($, mw, tracker, templateClassificationModal) {
 		'use strict';
 
-		var $editFormHiddenTypeField;
+		var $editFormHiddenTypeFieldCurrent,
+			$editFormHiddenTypeFieldNew;
 
 		function init() {
-			$editFormHiddenTypeField = $('#editform').find('[name=templateClassificationType]');
+			var $editform = $('#editform');
+			$editFormHiddenTypeFieldCurrent = $editform.find('[name=templateClassificationTypeCurrent]');
+			$editFormHiddenTypeFieldNew = $editform.find('[name=templateClassificationTypeNew]');
 
 			templateClassificationModal.init(getType, storeTypeForSend);
 
@@ -22,6 +25,15 @@ define('TemplateClassificationInEdit',
 			if (isNewArticle() && !getType()) {
 				templateClassificationModal.open('addTemplate');
 			}
+
+			$('.template-classification-edit').on('mousedown', function () {
+				tracker.track({
+					trackingMethod: 'analytics',
+					category: 'template-classification-entry-point',
+					action: tracker.ACTIONS.CLICK,
+					label: 'edit-page'
+				});
+			});
 		}
 
 		function isNewArticle() {
@@ -30,11 +42,12 @@ define('TemplateClassificationInEdit',
 
 		function getType() {
 			/* Return in format required by TemplateClassificationModal module */
-			return $editFormHiddenTypeField.val();
+			return $editFormHiddenTypeFieldNew.val() ?
+				$editFormHiddenTypeFieldNew.val() : $editFormHiddenTypeFieldCurrent.val();
 		}
 
 		function storeTypeForSend(templateType) {
-			$editFormHiddenTypeField.val(mw.html.escape(templateType));
+			$editFormHiddenTypeFieldNew.val(mw.html.escape(templateType));
 			templateClassificationModal.updateEntryPointLabel(templateType);
 		}
 

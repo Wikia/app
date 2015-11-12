@@ -302,7 +302,7 @@ class UserProfilePageController extends WikiaController {
 
 		wfRunHooks( 'UserProfilePageAfterGetActionButtonData', array( &$actionButtonArray, $namespace, $canRename, $canProtect, $canDelete, $isUserPageOwner ) );
 
-		$actionButton = wfRenderModule( 'MenuButton', 'Index', $actionButtonArray );
+		$actionButton = F::app()->renderView( 'MenuButton', 'Index', $actionButtonArray );
 		$this->setVal( 'actionButton', $actionButton );
 
 		wfProfileOut( __METHOD__ );
@@ -487,7 +487,6 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	private function saveUsersAvatar( $userId = null, $data = null ) {
-		global $wgAvatarsUseService;
 		wfProfileIn( __METHOD__ );
 
 		if ( is_null( $userId ) ) {
@@ -511,33 +510,15 @@ class UserProfilePageController extends WikiaController {
 					// remove old avatar file
 					Masthead::newFromUser( $user )->removeFile( false );
 
-					// user avatars service updates user preferences on its own
-					if ( empty( $wgAvatarsUseService ) ) {
-						$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, $data->file );
-					}
-					else {
-						// store the full URL of the predefined avatar and skip an upload via service (PLATFORM-1494)
-						$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, Masthead::getDefaultAvatarUrl( $data->file ) );
-						$user->saveSettings();
-					}
+					// store the full URL of the predefined avatar and skip an upload via service (PLATFORM-1494)
+					$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, Masthead::getDefaultAvatarUrl( $data->file ) );
+					$user->saveSettings();
 					break;
 				case 'uploaded':
 					$avatar = $this->saveAvatarFromUrl( $user, $data->file );
-
-					// user avatars service updates user preferences on its own
-					if ( empty( $wgAvatarsUseService ) ) {
-						$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, $avatar );
-					}
 					break;
 				default:
 					break;
-			}
-
-			// user avatars service updates user preferences on its own
-			if ( empty( $wgAvatarsUseService ) ) {
-				// TODO: $user->getTouched() get be used to invalidate avatar URLs instead
-				$user->setGlobalAttribute( 'avatar_rev', date( 'U' ) );
-				$user->saveSettings();
 			}
 
 			$this->clearAttributeCache( $userId );
@@ -805,18 +786,6 @@ class UserProfilePageController extends WikiaController {
 			$oAvatarObj = Masthead::newFromUser( $user );
 			$localPath = $this->getLocalPath( $user );
 			$errorNo = $oAvatarObj->uploadByUrl( $url );
-
-			// user avatars service updates user preferences on its own
-			global $wgAvatarsUseService;
-			if ( empty( $wgAvatarsUseService ) ) {
-				/**
-				 * @var $userIdentityBox UserIdentityBox
-				 */
-				$userIdentityBox = new UserIdentityBox( $user );
-				$userData = $userIdentityBox->getFullData();
-				$userData['avatar'] = $localPath;
-				$userIdentityBox->saveUserData( $userData );
-			}
 		} else {
 			$errorNo = UPLOAD_ERR_EXTENSION;
 		}

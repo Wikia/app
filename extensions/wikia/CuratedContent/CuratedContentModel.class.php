@@ -10,9 +10,9 @@ class CuratedContentModel {
 	 */
 	const WF_WIKI_RECOMMEND_VAR = 'wgWikiaCuratedContentRecommend';
 	const MEMCHACHE_KEY_PREFIX = 'CuratedContent';
-	const CACHE_DURATION = 86400; //24h
+	const CACHE_DURATION = 86400; // 24h
 	const SEARCH_RESULTS_LIMIT = 100;
-	const ITEM_RESULTS_LIMIT = 0; //no limits for now
+	const ITEM_RESULTS_LIMIT = 0; // no limits for now
 
 	private $app;
 
@@ -55,7 +55,7 @@ class CuratedContentModel {
 					$wikiThemeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId );
 					$wordmarkUrl = $wikiThemeSettings['wordmark-image-url'];
 					$wordmarkType = $wikiThemeSettings['wordmark-type'];
-					//$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
+					// $wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
 
 					$games[] = Array(
 						'name' => ( !empty( $wikiThemeSettings['wordmark-text'] ) ) ? $wikiThemeSettings['wordmark-text'] : $wikiName,

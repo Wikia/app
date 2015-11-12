@@ -20,4 +20,7 @@ class Attribute {
 		return $this->value;
 	}
 
+	public function setValue( $newVal ) {
+		$this->value = $newVal;
+	}
 }

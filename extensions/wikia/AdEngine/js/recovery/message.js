@@ -1,9 +1,9 @@
-/*global define*/
 define('ext.wikia.adEngine.recovery.message', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.recovery.helper',
 	'jquery',
 	'mw',
+	'wikia.abTest',
 	'wikia.document',
 	'wikia.loader',
 	'wikia.localStorage',
@@ -16,6 +16,7 @@ define('ext.wikia.adEngine.recovery.message', [
 	recoveryHelper,
 	$,
 	mw,
+	abTest,
 	doc,
 	loader,
 	localStorage,
@@ -26,7 +27,18 @@ define('ext.wikia.adEngine.recovery.message', [
 ) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.recovery.message',
+	var abTestConfig = {
+			'experimentName' : 'ADBLOCK_MESSAGE',
+			'topGroupNames': {
+				'TOP_A': 'a',
+				'TOP_B': 'b'
+			},
+			'rightRailGroupNames': {
+				'MR_A': 'a',
+				'MR_B': 'b'
+			}
+		},
+		logGroup = 'ext.wikia.adEngine.recovery.message',
 		localStorageKey = 'rejectedRecoveredMessage';
 
 	function accept() {
@@ -57,23 +69,25 @@ define('ext.wikia.adEngine.recovery.message', [
 				}
 			})
 		).then(function (assets) {
-			mw.messages.set(assets.messages);
-			return assets;
-		}).fail(function () {
-			log([
-				'recoveredAdsMessage.getAssets', 'Unable to load template or messages',
-				templatePath,
-				messagePackage
-			], 'debug', logGroup);
-		});
+				mw.messages.set(assets.messages);
+				return assets;
+			}).fail(function () {
+				log([
+					'recoveredAdsMessage.getAssets', 'Unable to load template or messages',
+					templatePath,
+					messagePackage
+				], 'debug', logGroup);
+			});
 	}
 
-	function createMessage(uniqueClassName) {
+	function createMessage(uniqueClassName, messageVariant) {
 		return getAssets().then(function (assets) {
 			var template = assets.mustache[0],
-				text = mw.message('adengine-recovery-message-blocking-message-a').rawParams([
+				//adengine-recovery-message-blocking-message-a
+				//adengine-recovery-message-blocking-message-b
+				text = mw.message('adengine-recovery-message-blocking-message-'+messageVariant).rawParams([
 					'<a class="action-accept">' +
-						mw.message('adengine-recovery-message-blocking-click').escaped() +
+					mw.message('adengine-recovery-message-blocking-click').escaped() +
 					'</a>'
 				]).escaped(),
 				params = {
@@ -93,23 +107,31 @@ define('ext.wikia.adEngine.recovery.message', [
 		});
 	}
 
-	function injectTopMessage() {
+	function injectTopMessage(messageVariant) {
 		log('recoveredAdsMessage.recover - injecting top message', 'debug', logGroup);
-		createMessage('top').done(function (messageContainer) {
+		createMessage('top', messageVariant).done(function (messageContainer) {
 			$('#WikiaTopAds').before(messageContainer);
 		});
 	}
 
-	function injectRightRailMessage() {
+	function injectRightRailMessage(messageVariant) {
 		log('recoveredAdsMessage.recover - injecting right rail message', 'debug', logGroup);
-		createMessage('right-rail').done(function (messageContainer) {
+		createMessage('right-rail', messageVariant).done(function (messageContainer) {
 			$('#WikiaRail').prepend(messageContainer);
 		});
 	}
 
 	function injectMessage() {
-		injectTopMessage();
-		injectRightRailMessage();
+		var group = abTest.getGroup(abTestConfig.experimentName);
+
+		if (group && abTestConfig.topGroupNames.hasOwnProperty(group)) {
+			injectTopMessage(abTestConfig.topGroupNames[group]);
+		}
+
+		if (group && abTestConfig.rightRailGroupNames.hasOwnProperty(group)) {
+			injectRightRailMessage(abTestConfig.rightRailGroupNames[group]);
+		}
+
 	}
 
 	function recover() {
@@ -139,3 +161,4 @@ define('ext.wikia.adEngine.recovery.message', [
 		addRecoveryCallback: addRecoveryCallback
 	};
 });
+/*global define*/

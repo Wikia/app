@@ -7,7 +7,7 @@ class CuratedContentSpecialPreviewController extends WikiaSpecialPageController 
 
 	public function index() {
 		global $wgStyleVersion, $wgUser;
-		if (!$wgUser->isAllowed( 'curatedcontentpreview' )) {
+		if ( !$wgUser->isAllowed( 'curatedcontentpreview' ) ) {
 			$this->displayRestrictionError();
 			return false;  // skip rendering
 		}
@@ -19,8 +19,8 @@ class CuratedContentSpecialPreviewController extends WikiaSpecialPageController 
 		$urls = [];
 
 		foreach ( $titles as $title ) {
-			//Simple fallback to main page if Title does not exist or none specified
-			if( $title == '' ) {
+			// Simple fallback to main page if Title does not exist or none specified
+			if ( $title == '' ) {
 				$title = Title::newMainPage()->getFullText();
 			} else {
 				$title = Title::newFromText( $title );

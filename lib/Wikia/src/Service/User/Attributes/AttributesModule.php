@@ -20,7 +20,10 @@ class AttributesModule implements Module {
 				$provider = new BagOStuffCacheProvider( $wgMemc );
 				$provider->setNamespace( UserAttributes::class . ":" . self::ATTRIBUTES_CACHE_VERSION );
 
-			return $provider;
-		} );
+				return $provider;
+			} )
+			->bind( UserAttributes::DEFAULT_ATTRIBUTES )->to( function() {
+				return \User::getDefaultOptions();
+			} );
 	}
 }

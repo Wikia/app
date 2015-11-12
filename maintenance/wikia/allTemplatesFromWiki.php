@@ -26,7 +26,6 @@ class allTemplatesFromWiki extends Maintenance {
 
 		$this->pushDataToRabbit( $data );
 		$this->output( "\nPushing events done! \nBye\n" );
-		$this->output($data);
 	}
 
 	/**

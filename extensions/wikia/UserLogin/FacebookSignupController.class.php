@@ -71,7 +71,7 @@ class FacebookSignupController extends WikiaController {
 				] );
 			} else {
 				// account is connected - log the user in
-				$user->setCookies();
+				UserLoginHelper::setCookiesForFacebookUser( $user, \RequestContext::getMain()->getRequest()->response() );
 
 				$this->response->setData( [
 					'loggedIn' => true,
@@ -352,7 +352,7 @@ class FacebookSignupController extends WikiaController {
 			wfSetupSession();
 		}
 
-		$user->setCookies();
+		UserLoginHelper::setCookiesForFacebookUser( $user, \RequestContext::getMain()->getRequest()->response() );
 
 		// Store the user in the global user object
 		$wg->User = $user;
