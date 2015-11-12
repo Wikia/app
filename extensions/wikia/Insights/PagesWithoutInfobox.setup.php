@@ -28,23 +28,3 @@ $wgSpecialPageGroups['PagesWithoutInfobox'] = 'wikia';
  * Models
  */
 $wgAutoloadClasses['InsightsPagesWithoutInfoboxModel'] = $dir . 'models/InsightsPagesWithoutInfoboxModel.php';
-
-/**
- * Api Query Page
- */
-$wgAutoloadClasses[ 'ApiQueryPagesWithoutInfobox' ] = $dir . 'ApiQueryPagesWithoutInfobox.class.php';
-
-/**
- * MW API
- */
-$wgAPIListModules[ 'pageswithoutinfobox' ] = 'ApiQueryPagesWithoutInfobox';
-
-/**
- * Controllers
- */
-$wgAutoloadClasses[ 'InsightsPagesWithoutInfoboxHooks' ] = $dir . 'InsightsPagesWithoutInfoboxHooks.class.php';
-
-/**
- * Hooks
- */
-$wgHooks[ 'PagesWithoutInfoboxQueryRecached' ][] = 'InsightsPagesWithoutInfoboxHooks::onPagesWithoutInfoboxQueryRecached';

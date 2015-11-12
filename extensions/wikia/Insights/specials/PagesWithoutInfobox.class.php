@@ -129,7 +129,7 @@ class PagesWithoutInfobox extends PageQueryPage {
 			->runLoop( $dbr, function ( &$pagesWithoutInfobox, $row ) {
 				$pagesWithoutInfobox[] = [
 					$this->getName(),
-					0,
+					$row->page_id,
 					$row->page_namespace,
 					$row->page_title,
 				];
