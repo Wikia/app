@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.template.modalOasisHandler', [
 			this.modalId = 'ext-wikia-adEngine-template-modal';
 		};
 
-	oasisHandler.prototype.create = function (adContainer, modalVisible) {
+	oasisHandler.prototype.create = function (adContainer, modalVisible, closeButtonDelay) {
 		var modalConfig = {
 			vars: {
 				id: this.modalId,

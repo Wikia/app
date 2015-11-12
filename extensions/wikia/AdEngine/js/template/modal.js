@@ -98,7 +98,10 @@ define('ext.wikia.adEngine.template.modal', [
 		}
 
 		scaleAdIfNeeded();
-		modalHandler.create(adContainer, !async);
+		if (!params.hasOwnProperty('closeDelay')) {
+			params.closeDelay = 0;
+		}
+		modalHandler.create(adContainer, !async, params.closeDelay);
 	}
 
 	return {
