@@ -110,15 +110,16 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 
 		foreach( $cnNotRecognizedTemplates as $notRecognizedTemplate ) {
 			$title = Title::newFromID( $notRecognizedTemplate );
-			$links = $title->getIndirectLinks();
+			if ( $title instanceof Title ) {
+				$links = $title->getIndirectLinks();
 				$templatesWithoutType[] =
-				[
-					$this->getName(),
-					count( $links ),
-					NS_TEMPLATE,
-					$title->getDBkey()
-				];
-
+					[
+						$this->getName(),
+						count( $links ),
+						NS_TEMPLATE,
+						$title->getDBkey()
+					];
+			}
 		}
 
 		return $templatesWithoutType;
