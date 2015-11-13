@@ -175,14 +175,6 @@ $config['adengine2_tracking_js'] = array(
 	),
 );
 
-$config['adengine2_rubicon_rtp_js'] = array(
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/AdEngine/js/lookup/rubiconRtp.js',
-	),
-);
-
 $config['adengine2_amazon_match_js'] = array(
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,

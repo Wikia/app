@@ -30,24 +30,22 @@ class Forum extends Walls {
 		$titlesBatch = new TitleBatch( $boardTitles );
 		$orderIndexes = $titlesBatch->getWikiaProperties( WPP_WALL_ORDER_INDEX, $db );
 
-		$boards = array();
-		/** @var $title Title */
-		foreach ( $boardTitles as $title ) {
+		$boards = [];
+		arsort( $orderIndexes );
+		foreach ( array_keys( $orderIndexes ) as $pageId ) {
+			$title = $boardTitles[$pageId];
+
 			/** @var $board ForumBoard */
 			$board = ForumBoard::newFromTitle( $title );
 			$title = $board->getTitle();
-			$id = $title->getArticleID();
 
 			$boardInfo = $board->getBoardInfo();
 			$boardInfo['id'] = $title->getArticleID();
 			$boardInfo['name'] = $title->getText();
 			$boardInfo['description'] = $board->getDescriptionWithoutTemplates();
 			$boardInfo['url'] = $title->getFullURL();
-			$orderIndex = $orderIndexes[$id];
-			$boards[$orderIndex] = $boardInfo;
+			$boards[] = $boardInfo;
 		}
-
-		krsort( $boards );
 
 		return $boards;
 	}

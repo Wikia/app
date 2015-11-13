@@ -18,8 +18,8 @@ class Hooks {
 		\Hooks::register( 'PageHeaderPageTypePrepared', [ $hooks, 'onPageHeaderPageTypePrepared' ] );
 		\Hooks::register( 'QueryPageUseResultsBeforeRecache', [ $hooks, 'onQueryPageUseResultsBeforeRecache' ] );
 		/* Edit page hooks */
-		\Hooks::register( 'EditPage::showEditForm:fields', [ $hooks, 'onEditPageShowEditFormFields' ] );
 		\Hooks::register( 'ArticleSaveComplete', [ $hooks, 'onArticleSaveComplete' ] );
+		\Hooks::register( 'EditPage::showEditForm:fields', [ $hooks, 'onEditPageShowEditFormFields' ] );
 		\Hooks::register( 'EditPageLayoutExecute', [ $hooks, 'onEditPageLayoutExecute' ] );
 		\Hooks::register( 'EditPageMakeGlobalVariablesScript', [ $hooks, 'onEditPageMakeGlobalVariablesScript' ] );
 	}
@@ -153,11 +153,12 @@ class Hooks {
 	 * @param $results
 	 * @return bool
 	 */
-	public function onQueryPageUseResultsBeforeRecache( \QueryPage $queryPage, $results ) {
+	public function onQueryPageUseResultsBeforeRecache( \QueryPage $queryPage, \DatabaseBase $db, $results ) {
 		if ( $queryPage->getName() === \UnusedtemplatesPage::UNUSED_TEMPLATES_PAGE_NAME ) {
 			$handler = $this->getUnusedTemplatesHandler();
 			if ( $results instanceof \ResultWrapper ) {
 				$handler->markAsUnusedFromResults( $results );
+				$db->dataSeek( $results, 0 );	// CE-3024: reset cursor because hook caller needs the results also
 			} else {
 				$handler->markAllAsUsed();
 			}
@@ -175,8 +176,8 @@ class Hooks {
 		$user = $editPage->getContext()->getUser();
 		$title = $editPage->getContext()->getTitle();
 		if ( ( new Permissions() )->shouldDisplayEntryPoint( $user, $title ) ) {
-			$editPage->addExtraPageControlsHtml(
-				( new View )->renderEditPageEntryPoint( $wgCityId, $title, $user )
+			$editPage->addExtraHeaderHtml(
+				( new View )->renderTemplateType( $wgCityId, $title, $user )
 			);
 		}
 		return true;
