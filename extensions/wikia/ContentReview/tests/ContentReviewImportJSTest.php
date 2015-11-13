@@ -84,19 +84,27 @@ class ContentReviewImportJSTest extends WikiaBaseTest {
 		return [
 			[
 				['Script.js'],
-				'<script>(function(){importWikiaScriptPages([\"Script.js\"]);})();</script>'
+				'<script>(function(){importWikiaScriptPages(["Script.js"]);})();</script>'
 			],
 			[
 				[],
 				''
 			],
 			[
+				['Scri"pt.js'],
+				'<script>(function(){importWikiaScriptPages(["Scri\"pt.js"]);})();</script>'
+			],
+			[
+				['Script"]);alert(0);//.js'],
+				'<script>(function(){importWikiaScriptPages(["Script\"]);alert(0);//.js"]);})();</script>'
+			],
+			[
 				['external:dev:Script.js'],
-				'<script>(function(){importWikiaScriptPages([\"external:dev:Script.js\"]);})();</script>'
+				'<script>(function(){importWikiaScriptPages(["external:dev:Script.js"]);})();</script>'
 			],
 			[
 				['Script.js', 'MyScript.js', 'external:dev:Code.js'],
-				'<script>(function(){importWikiaScriptPages([\"Script.js\", \"MyScript.js\", \"external:dev:Code.js\"]);})();</script>'
+				'<script>(function(){importWikiaScriptPages(["Script.js", "MyScript.js", "external:dev:Code.js"]);})();</script>'
 			]
 		];
 	}

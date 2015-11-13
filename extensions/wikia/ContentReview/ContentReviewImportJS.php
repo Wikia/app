@@ -79,13 +79,15 @@ class ImportJS {
 		$importScript = '';
 
 		if ( !empty( $imports ) ) {
+			$imports = array_map( 'Xml::escapeJsString', $imports );
+
 			$code = sprintf(
 				'(function(){%s(["%s"]);})();',
 				self::IMPORT_SCRIPTS_FUNCTION,
 				implode( '", "', $imports )
 			);
 
-			$importScript = \Html::inlineScript( \Xml::escapeJsString( $code ) );
+			$importScript = \Html::inlineScript( $code );
 		}
 
 		return $importScript;
