@@ -1,7 +1,7 @@
 <?php
-$messages = [];
+$messages = array();
 
-$messages['en'] = [
+$messages['en'] = array(
 	'content-review-desc' => 'This extension creates a process by which community JavaScript is manually reviewed before it goes live for visitors.',
 	'content-review-module-title' => 'Custom JavaScript status',
 	'content-review-module-header-latest' => 'Latest revision:',
@@ -48,10 +48,10 @@ The recently submitted change to this JavaScript page (revision [$2 $3]) was rej
 * from dev.wikia.com by article name, preceded by "dev:" - e.g. dev:Code.js
 Names should not contain the MediaWiki namespace prefix. Write each script on a new line. See [[Help:Including additional CSS and JS]] for more information.
 ----
-'
-];
+',
+);
 
-$messages['qqq'] = [
+$messages['qqq'] = array(
 	'content-review-desc' => '{{desc}}',
 	'content-review-module-title' => 'Title of a the right rail module with information on a page status.',
 	'content-review-module-header-latest' => 'Header of a section of the right rail module with information on the latest revision submitted for a review.',
@@ -92,10 +92,10 @@ $messages['qqq'] = [
 	'content-review-special-js-pages-title' => 'Title of special page which contains all JavaScript pages on given wiki',
 	'content-review-special-js-description' => 'Text with description of this special page that contains lists with all scripts in MediaWiki namespace on that community with their review statuses and linking to help page.',
 	'content-review-special-js-importjs-description' => 'Information that user can manage script imports from community or dev.wikia.com by editing  MediaWiki:ImportJS page.',
-	'content-review-importjs-description' => 'Information for user how to add scripts. For scripts from local wikia, user should only add article name and from dev.wikia.com should preceded them by "dev:". Also user should add MediaWiki namespace and should add each script in separate line.'
-];
+	'content-review-importjs-description' => 'Information for user how to add scripts. For scripts from local wikia, user should only add article name and from dev.wikia.com should preceded them by "dev:". Also user should add MediaWiki namespace and should add each script in separate line.',
+);
 
-$messages['de'] = [
+$messages['de'] = array(
 	'content-review-desc' => 'Diese Erweiterung erzeugt einen Prozess, in dem das Community-JavaScript manuell überprüft wird, bevor Besucher es live sehen können.',
 	'content-review-module-title' => 'Status des angepassten JavaScripts',
 	'content-review-module-header-latest' => 'Letzte Überprüfung:',
@@ -132,9 +132,9 @@ Die kürzlich eingereichte Änderung dieser JavaScript-Seite (Überprüfung [$2 
 	'content-review-status-link-text' => 'Stand der Überprüfung',
 	'content-review-rejection-explanation-title' => 'Die eingereichte Skript-Änderung $1 wurde abgelehnt',
 	'content-review-special-js-pages-title' => 'JavaScript-Seiten',
-];
+);
 
-$messages['es'] = [
+$messages['es'] = array(
 	'content-review-desc' => 'Esta extensión crea un proceso en el que el JavaScript comunitario es revisado manualmente antes de que sea activo para los visitantes.',
 	'content-review-module-title' => 'Estado del JavaScript personalizado',
 	'content-review-module-header-latest' => 'Última revisión:',
@@ -172,9 +172,9 @@ El cambio recientemente presentado a esta página de JavaScript (revisión [$2 $
 	'content-review-status-link-text' => 'Estado de revisión',
 	'content-review-rejection-explanation-title' => 'El cambio de script $1 presentado ha sido rechazado',
 	'content-review-special-js-pages-title' => 'Páginas de JavaScript',
-];
+);
 
-$messages['fr'] = [
+$messages['fr'] = array(
 	'content-review-desc' => 'Cette extension permet de lancer un processus de vérification manuelle du JavaScript de la communauté avant sa publication.',
 	'content-review-module-title' => 'État du JavaScript personnel',
 	'content-review-module-header-latest' => 'Dernière version :',
@@ -211,9 +211,9 @@ Le processus de vérification Wikia a rejeté la modification soumise pour cette
 	'content-review-status-link-text' => 'État de la vérification',
 	'content-review-rejection-explanation-title' => 'Modification $1 soumise pour le script rejetée',
 	'content-review-special-js-pages-title' => 'Pages JavaScript',
-];
+);
 
-$messages['it'] = [
+$messages['it'] = array(
 	'content-review-desc' => 'Questa estensione crea un processo attraverso il quale il JavaScript della community è controllato manualmente prima che diventi visibile ai visitatori.',
 	'content-review-module-title' => 'Stato del JavaScript personalizzato',
 	'content-review-module-header-latest' => 'Ultima revisione:',
@@ -250,9 +250,9 @@ La modifica inviata di recente per questa pagina in JavaScript (revisione [$2 $3
 	'content-review-status-link-text' => 'Stato della revisione',
 	'content-review-rejection-explanation-title' => 'La modifica $1 inviata per lo script è stata respinta',
 	'content-review-special-js-pages-title' => 'Pagine in JavaScript',
-];
+);
 
-$messages['ja'] = [
+$messages['ja'] = array(
 	'content-review-desc' => 'この拡張機能により、コミュニティのJavaScriptが公開前に手動で審査されるようになります。',
 	'content-review-module-title' => 'カスタムJavaScriptの状況',
 	'content-review-module-header-latest' => '最新版：',
@@ -289,9 +289,9 @@ $messages['ja'] = [
 	'content-review-status-link-text' => '審査状況',
 	'content-review-rejection-explanation-title' => '申請したスクリプトの変更「$1」が拒否されました',
 	'content-review-special-js-pages-title' => 'JavaScriptページ',
-];
+);
 
-$messages['nl'] = [
+$messages['nl'] = array(
 	'content-review-desc' => 'This extension creates a process by which community JavaScript is manually reviewed before it goes live for visitors.',
 	'content-review-module-title' => 'Custom JavaScript status',
 	'content-review-module-header-latest' => 'Latest revision:',
@@ -328,16 +328,16 @@ The recently submitted change to this JavaScript page (revision [$2 $3]) was rej
 	'content-review-status-link-text' => 'Review status',
 	'content-review-rejection-explanation-title' => 'Submitted script change $1 rejected',
 	'content-review-special-js-pages-title' => 'JavaScript pages',
-];
+);
 
-$messages['pl'] = [
+$messages['pl'] = array(
 	'content-review-desc' => 'To rozszerzenie tworzy proces, dzięki któremu kod JavaScript tworzony przez społeczność jest sprawdzany ręcznie zanim zobaczą go odwiedzający.',
 	'content-review-module-title' => 'Status dostosowanego kodu JavaScript',
 	'content-review-module-header-latest' => 'Ostatnia wersja:',
 	'content-review-module-header-last' => 'Ostatnia sprawdzona wersja:',
 	'content-review-module-header-live' => 'Aktywna wersja:',
 	'content-review-module-status-none' => 'Brak',
-	'content-review-module-status-unsubmitted' => 'wymaga przesłania do sprawdzenia',
+	'content-review-module-status-unsubmitted' => 'wymaga sprawdzenia',
 	'content-review-module-status-live' => 'jest aktywna!',
 	'content-review-module-status-awaiting' => 'oczekuje na sprawdzenie',
 	'content-review-module-status-approved' => 'została zaakceptowana',
@@ -363,13 +363,13 @@ $messages['pl'] = [
 	'content-review-status-live' => 'Aktywna',
 	'content-review-status-autoapproved' => 'Zatwierdzona automatycznie',
 	'content-review-rejection-explanation' => '==$1==
-Niedawno przesłana zmiana w tej stronie JavaScript (rewizja [$2 $3]) została odrzucona w procesie przeglądu kodu. Proszę upewnij się, że kod spełnia wytyczne dotyczące [[Pomoc:Dostosowywanie CSS i JS|dostosowywania własnego kodu CSS i JS]]. --~~~~',
+Niedawno przesłana zmiana tej strony JavaScript (wersja [$2 $3]) została odrzucona przez Wikię w sprawdzania kodu. Proszę upewnij się, że spełniasz [[Help:JavaScript review process|wytyczne własnego kodu JavaScript]]. --~~~~',
 	'content-review-status-link-text' => 'Status przeglądu',
 	'content-review-rejection-explanation-title' => 'Przesłana zmiana skryptu $1 została odrzucona',
 	'content-review-special-js-pages-title' => 'Strony JavaScript',
-];
+);
 
-$messages['pt'] = [
+$messages['pt'] = array(
 	'content-review-desc' => 'Esta extensão cria um processo que é revisado manualmente pela comunidade JavaScript antes do lançamento para os visitantes.',
 	'content-review-module-title' => 'Status do JavaScript personalizado',
 	'content-review-module-header-latest' => 'Revisão mais recente:',
@@ -406,9 +406,9 @@ A recente alteração enviada para esta página JavaScript (revisão [$2 $3]) fo
 	'content-review-status-link-text' => 'Status da revisão',
 	'content-review-rejection-explanation-title' => 'A alteração do script $1 enviado foi rejeitada',
 	'content-review-special-js-pages-title' => 'Páginas JavaScript',
-];
+);
 
-$messages['ru'] = [
+$messages['ru'] = array(
 	'content-review-desc' => 'Это расширение позволяет проверять пользовательский JavaScript википроекта перед тем, как он будет применён для посетителей вики.',
 	'content-review-module-title' => 'Статус пользовательского JavaScript',
 	'content-review-module-header-latest' => 'Последняя версия:',
@@ -445,9 +445,9 @@ $messages['ru'] = [
 	'content-review-status-link-text' => 'Прогресс проверки',
 	'content-review-rejection-explanation-title' => 'Отправленная версия $1 была отклонена',
 	'content-review-special-js-pages-title' => 'Страницы JavaScript',
-];
+);
 
-$messages['zh-hans'] = [
+$messages['zh-hans'] = array(
 	'content-review-desc' => '这个扩展功能让社区的JavaScript在完全开放给用户之前需要通过人工审核。',
 	'content-review-module-title' => '自定义JavaScript状态',
 	'content-review-module-header-latest' => '最新版本:',
@@ -484,9 +484,9 @@ JavaScript页面最近提交的变更请求(版本[$2 $3]) 未通过Wikia审核�
 	'content-review-status-link-text' => '审核状态',
 	'content-review-rejection-explanation-title' => '提交的脚本更改$1被拒绝',
 	'content-review-special-js-pages-title' => 'JavaScript页面',
-];
+);
 
-$messages['zh-hant'] = [
+$messages['zh-hant'] = array(
 	'content-review-desc' => '此擴展功能讓社區的JavaScript在完全開放給使用者之前需要通過人工審核。',
 	'content-review-module-title' => '自訂JavaScript狀態',
 	'content-review-module-header-latest' => '最新版本:',
@@ -523,5 +523,5 @@ JavaScript頁最近提交的變更請求(版本[$2 $3]) 未通過Wikia審核。 
 	'content-review-status-link-text' => '審核狀態',
 	'content-review-rejection-explanation-title' => '提交的腳本更改$1被拒絕',
 	'content-review-special-js-pages-title' => 'JavaScript頁',
-];
+);
 
