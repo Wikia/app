@@ -10,7 +10,7 @@ class TemplateTypesParser {
 	 */
 	public static function onFetchTemplateAndTitle( &$text, &$finalTitle ) {
 		global $wgEnableTemplateTypesParsing, $wgArticleAsJson, $wgCityId;
-
+        var_dump($text, $finalTitle);
 		wfProfileIn( __METHOD__ );
 
 		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson ) {
@@ -26,6 +26,9 @@ class TemplateTypesParser {
 				case TemplateClassificationService::TEMPLATE_REF:
 					$text = self::handleReferencesTemplate();
 					break;
+//                case AutomaticTemplateTypes::TEMPLATE_SCROLBOX:
+//
+//                    break;
 			}
 		}
 
