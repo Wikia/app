@@ -5,20 +5,26 @@ define('ext.wikia.adRecoveryEngine.recovery.gcs', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.recovery.helper',
 	'jquery',
-	'wikia.cookies',
+	'wikia.document',
+	'wikia.location',
 	'wikia.log',
+	'wikia.scriptwriter',
 	'wikia.window'
 ], function (
 	adContext,
 	adTracker,
 	recoveryHelper,
 	$,
-	cookies,
+	doc,
+	loc,
 	log,
+	scriptWriter,
 	win
 ) {
 	'use strict';
-	var context = adContext.getContext(),
+	var articleUrl = loc.href,
+		contentId = 'everything',
+		context = adContext.getContext(),
 		logGroup = 'ext.wikia.adRecoveryEngine.recovery.gcs';
 
 	function addClasses() {
@@ -45,22 +51,27 @@ define('ext.wikia.adRecoveryEngine.recovery.gcs', [
 		adTracker.track('recovery/gcs', bucket + '-' + (bucket + 99));
 	}
 
+	function getGcsUrl() {
+		return '//survey.g.doubleclick.net/survey?site=_grm5podgin6cup4wmqjqct4h5e' +
+				'&url=' + encodeURIComponent(articleUrl) +
+				(contentId ? '&cid=' + encodeURIComponent(contentId) : '') +
+				'&random=' + (new Date()).getTime();
+	}
+
 	function init() {
 		log('init', 'info', logGroup);
-		addClasses();
-		try {
-			win._402_Show();
-		} catch (ignore) {}
-		trackPosition();
+		scriptWriter.injectScriptByUrl(doc.body, getGcsUrl(), function () {
+			addClasses();
+			try {
+				win._402_Show();
+			} catch (ignore) {}
+			trackPosition();
+		});
 	}
 
 	function addRecoveryCallback() {
 		if (context.targeting.pageType !== 'article') {
 			log(['addRecoveryCallback', 'This page is not an article'], 'debug', logGroup);
-			return;
-		}
-		if (cookies.get('sp.blocking') !== 'yes') {
-			log(['addRecoveryCallback', 'Blocking not detected yet'], 'debug', logGroup);
 			return;
 		}
 
