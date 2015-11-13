@@ -38,7 +38,6 @@ class OasisController extends WikiaController {
 		$this->skinNameClass = $skinVars['skinnameclass'];
 		$this->bottomScripts = $skinVars['bottomscripts'];
 		// initialize variables
-		$this->adRecoveryGCS = null;
 		$this->comScore = null;
 		$this->quantServe = null;
 		$this->amazonMatch = null;
@@ -218,7 +217,6 @@ class OasisController extends WikiaController {
 			$this->openXBidder = AnalyticsEngine::track('OpenXBidder', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->adRecoveryGCS = AdRecoveryEngine::getInlineCode('GCS');
 		}
 
 		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
