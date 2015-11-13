@@ -32,7 +32,9 @@ define('TemplateClassificationLabeling',
 		}
 
 		function prepareContent(content) {
-			return prepareContentStrategy[mode](content);
+			var helpText = $('<p></p>').addClass('instructions')
+				.html(mw.message('template-classification-edit-modal-help').parse())[0].outerHTML;
+			return prepareContentStrategy[mode](helpText + content);
 		}
 
 		prepareConfirmButtonStrategy = (function prepareConfirmButtonStrategy() {

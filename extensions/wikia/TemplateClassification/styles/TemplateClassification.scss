@@ -19,9 +19,39 @@
 }
 
 .template-classification-edit-modal {
-	line-height: 2.5em;
+	/* Override modal defaults to new design */
+	font-size: 14px;
+	line-height: 20px;
+	color: #656e78;
+
+	&.modal>section {
+		padding: 25px 27px;
+	}
+
+	h2 {
+		margin-bottom: 27px;
+	}
+
+	.instructions {
+		font-size: 16px;
+		margin-bottom: 37px;
+	}
+
+	.tc-type-name {
+		color: #39424d;
+		font-size: 16px;
+		font-weight: bold;
+		padding-bottom: 4px;
+	}
+
+	:checked+div .tc-type-name,
+	a {
+		color: #1a5eb8;
+	}
 
 	.template-classification-edit-form-input {
+		flex: 0 0 14px;
+		margin: 0 13px 0 0 ;
 		vertical-align: text-bottom;
 	}
 
@@ -31,14 +61,23 @@
 	}
 }
 
-.template-classification-edit-form-label div {
-	display: inline-block;
-	vertical-align: top;
-	width: 300px;
+.template-classification-edit-form-label {
+	align-items: baseline;
+	display: flex;
+	justify-content: flex-start;
 
-	p {
-		line-height: 1.6em;
-		margin-bottom: 0.6em;
+	&:last-child div p {
+		margin-bottom: 0;
+	}
+
+	div {
+		display: inline-block;
+		vertical-align: top;
+
+		p {
+			line-height: 20px;
+			margin-bottom: 30px;
+		}
 	}
 }
 
