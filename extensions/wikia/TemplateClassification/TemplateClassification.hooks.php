@@ -18,8 +18,8 @@ class Hooks {
 		\Hooks::register( 'PageHeaderPageTypePrepared', [ $hooks, 'onPageHeaderPageTypePrepared' ] );
 		\Hooks::register( 'QueryPageUseResultsBeforeRecache', [ $hooks, 'onQueryPageUseResultsBeforeRecache' ] );
 		/* Edit page hooks */
-		\Hooks::register( 'EditPage::showEditForm:fields', [ $hooks, 'onEditPageShowEditFormFields' ] );
 		\Hooks::register( 'ArticleSaveComplete', [ $hooks, 'onArticleSaveComplete' ] );
+		\Hooks::register( 'EditPage::showEditForm:fields', [ $hooks, 'onEditPageShowEditFormFields' ] );
 		\Hooks::register( 'EditPageLayoutExecute', [ $hooks, 'onEditPageLayoutExecute' ] );
 		\Hooks::register( 'EditPageMakeGlobalVariablesScript', [ $hooks, 'onEditPageMakeGlobalVariablesScript' ] );
 	}
@@ -96,14 +96,14 @@ class Hooks {
 	public function onEditPageShowEditFormFields( \EditPage $editPage, \OutputPage $out ) {
 		global $wgCityId;
 
-		if ( $out->getSkin() instanceof \SkinMonoBook ) {
-			return true;
+		$context = \RequestContext::getMain();
+
+		if ( ( new Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $context->getTitle() ) ) {
+			$templateType = $this->getTemplateTypeForEdit( $editPage->getTitle(), $wgCityId );
+
+			$out->addHTML( \Html::hidden( 'templateClassificationTypeCurrent', $templateType ) );
+			$out->addHTML( \Html::hidden( 'templateClassificationTypeNew', '' ) );
 		}
-
-		$templateType = $this->getTemplateTypeForEdit( $editPage->getTitle(), $wgCityId );
-
-		$out->addHTML( \Html::hidden( 'templateClassificationTypeCurrent', $templateType ) );
-		$out->addHTML( \Html::hidden( 'templateClassificationTypeNew', '' ) );
 
 		return true;
 	}
@@ -153,11 +153,12 @@ class Hooks {
 	 * @param $results
 	 * @return bool
 	 */
-	public function onQueryPageUseResultsBeforeRecache( \QueryPage $queryPage, $results ) {
+	public function onQueryPageUseResultsBeforeRecache( \QueryPage $queryPage, \DatabaseBase $db, $results ) {
 		if ( $queryPage->getName() === \UnusedtemplatesPage::UNUSED_TEMPLATES_PAGE_NAME ) {
 			$handler = $this->getUnusedTemplatesHandler();
 			if ( $results instanceof \ResultWrapper ) {
 				$handler->markAsUnusedFromResults( $results );
+				$db->dataSeek( $results, 0 );	// CE-3024: reset cursor because hook caller needs the results also
 			} else {
 				$handler->markAllAsUsed();
 			}
@@ -175,8 +176,8 @@ class Hooks {
 		$user = $editPage->getContext()->getUser();
 		$title = $editPage->getContext()->getTitle();
 		if ( ( new Permissions() )->shouldDisplayEntryPoint( $user, $title ) ) {
-			$editPage->addExtraPageControlsHtml(
-				( new View )->renderEditPageEntryPoint( $wgCityId, $title, $user )
+			$editPage->addExtraHeaderHtml(
+				( new View )->renderTemplateType( $wgCityId, $title, $user )
 			);
 		}
 		return true;
@@ -210,7 +211,7 @@ class Hooks {
 		}
 
 		try {
-			$templateType = ( new \TemplateClassificationService() )->getType( $wikiaId, $title->getArticleID() );
+			$templateType = ( new \TemplateClassificationService() )->getUserDefinedType( $wikiaId, $title->getArticleID() );
 		} catch ( ApiException $e ) {
 			( new Logger() )->exception( $e );
 			/**

@@ -297,7 +297,6 @@ $wgAutoloadClasses['SwaggerParameter'] = "$IP/includes/wikia/swagger/SwaggerPara
 $wgAutoloadClasses['SwaggerModel'] = "$IP/includes/wikia/swagger/SwaggerModel.php";
 $wgAutoloadClasses['SwaggerModelProperty'] = "$IP/includes/wikia/swagger/SwaggerModelProperty.php";
 $wgAutoloadClasses['SwaggerErrorResponse'] = "$IP/includes/wikia/swagger/SwaggerErrorResponse.php";
-$wgAutoloadClasses['TemplateClassification'] = "$IP/includes/wikia/TemplateClassification.class.php";
 $wgAutoloadClasses['TemplateDataExtractor'] = "$IP/includes/wikia/TemplateDataExtractor.class.php";
 $wgAutoloadClasses['WikiaHtmlTitle'] = "$IP/includes/wikia/WikiaHtmlTitle.class.php";
 
@@ -384,6 +383,7 @@ $wgAutoloadClasses['ArticleCategoriesController'] = $IP.'/skins/oasis/modules/Ar
 $wgAutoloadClasses['AchievementsController'] = $IP.'/skins/oasis/modules/AchievementsController.class.php';
 $wgAutoloadClasses['AccountNavigationController'] = $IP.'/skins/oasis/modules/AccountNavigationController.class.php';
 $wgAutoloadClasses['AdController'] = $IP.'/skins/oasis/modules/AdController.class.php';
+$wgAutoloadClasses['AdEmptyContainerController'] = $IP.'/skins/oasis/modules/AdEmptyContainerController.class.php';
 $wgAutoloadClasses['FollowedPagesController'] = $IP.'/skins/oasis/modules/FollowedPagesController.class.php';
 $wgAutoloadClasses['MyToolsController'] = $IP.'/skins/oasis/modules/MyToolsController.class.php';
 $wgAutoloadClasses['UserPagesHeaderController'] = $IP.'/skins/oasis/modules/UserPagesHeaderController.class.php';
@@ -1305,7 +1305,14 @@ $wgAdDriverUseAdsAfterInfobox = false;
  * @name $wgAdDriverUseTaboola
  * Whether to enable AdProviderTaboola (true) or not (false)
  */
-$wgAdDriverUseTaboola = false;
+$wgAdDriverUseTaboola = true;
+
+/**
+ * @name $wgAdDriverTaboolaCountries
+ * List of countries with enabled Taboola module.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverTaboolaCountries = null;
 
 /**
  * @name $wgAdDriverUseTopInContentBoxad
@@ -1362,17 +1369,6 @@ $wgSitewideDisableLiftium = false;
  * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  */
 $wgSitewideDisablePaidAssetDrop = false;
-
-/**
- * @name $wgSitewideDisableRubiconRTP
- * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableRubiconRTP
- *
- * Disable Rubicon RTP Analytics pixel sitewide in case a disaster happens.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- */
-$wgSitewideDisableRubiconRTP = false;
 
 /**
  * @name $wgSitewideDisableSevenOneMedia
@@ -1446,29 +1442,6 @@ $wgAdDriverForcedProvider = null;
  * Whether to display ads within interactive maps
  */
 $wgAdDriverEnableAdsInMaps = true;
-
-/**
- * @name $wgAdDriverRubiconRTPConfig
- * @example [[
- *  'disabled' => true/false
- *  'oz_site' => 'XX/XXX',
- *  'oz_zone' => 'XXXXX'
- *  'oz_ad_slot_size' => 'NNNxNNN',
- *  'slotname' : [ 'top_leaderboard' ],
- *  'skin' : ['oasis']
- *  ]]
- *
- * Rubicon RTP configuration variable.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverRubiconRTPConfig = null;
-
-/**
- * @name $wgAdDriverRubiconRTPCountries
- * List of countries RTP call will be issued.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverRubiconRTPCountries = null;
 
 /**
  * @name $wgAdDriverKruxCountries
@@ -1822,3 +1795,9 @@ $wgLogRestrictions['piggyback'] = 'piggyback';
  * Reject attempts to fall back to the MediaWiki session for authentication.
  */
 $wgRejectAuthenticationFallback = true;
+
+/**
+ * Use template types from Template Classification Service in MW context
+ */
+include_once("$IP/includes/wikia/parser/templatetypes/TemplateTypes.setup.php");
+

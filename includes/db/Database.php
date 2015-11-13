@@ -839,7 +839,8 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @return bool
 	 */
 	function isWriteQuery( $sql ) {
-		return !preg_match( '/^(?:SELECT|BEGIN|COMMIT|SET|SHOW|\(SELECT)\b/i', ltrim( $sql ) ); // PLATFORM-1417 (ltrim)
+		return !preg_match( '/^(?:SELECT|BEGIN|COMMIT|SET|SHOW|\(SELECT)\b/i', ltrim( $sql ) ) && // PLATFORM-1417 (ltrim)
+			!preg_match('/(FOR UPDATE|LOCK IN SHARE MODE)$/i', rtrim( $sql ) ); // MAIN-5810 (rtrim)
 	}
 
 	/**

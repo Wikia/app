@@ -363,6 +363,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'mappedVerticalName' => $verticals['expectedMappedVertical']
 			],
 			'providers' => [
+				'taboola' => true
 			],
 			'slots' => [
 			],

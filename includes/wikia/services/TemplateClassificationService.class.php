@@ -12,7 +12,10 @@ class TemplateClassificationService {
 	const USER_PROVIDER = 'user';
 	const AUTO_PROVIDER = 'auto';
 
+	// TODO: Move types used for manual classification outside of Template Classification Service
+	// TODO: https://wikia-inc.atlassian.net/browse/CE-3017
 	const TEMPLATE_INFOBOX = 'infobox';
+	const TEMPLATE_CUSTOM_INFOBOX = 'custom-infobox';
 	const TEMPLATE_QUOTE = 'quote';
 	const TEMPLATE_NAVBOX = 'navbox';
 	const TEMPLATE_FLAG = 'notice';
@@ -23,6 +26,7 @@ class TemplateClassificationService {
 	const TEMPLATE_NAV = 'navigation';
 	const TEMPLATE_NOT_ART = 'nonarticle';
 	const TEMPLATE_UNKNOWN = 'unknown';
+	const TEMPLATE_UNCLASSIFIED = '' ;
 
 	const NOT_AVAILABLE = 'not-available';
 
@@ -58,24 +62,33 @@ class TemplateClassificationService {
 	 * @throws \Swagger\Client\ApiException
 	 */
 	public function getType( $wikiId, $pageId ) {
-		$templateType = '';
+		$templateType = self::TEMPLATE_UNCLASSIFIED;
 
 		$type = $this->getApiClient()->getTemplateType( $wikiId, $pageId );
 		if ( !is_null( $type ) ) {
 			$templateType = $type->getType();
 		}
 
-		/**
-		 * Quick fix begin
-		 * Permanent change will be needed from the Services team.
-		 * Fallback to empty type that means no classification.
-		 */
+		return $templateType;
+	}
+
+	/**
+	 * Quick fix
+	 * Permanent change will be needed from the Services team.
+	 * Fallback to empty type that means no classification.
+	 *
+	 * @param $wikiId
+	 * @param $pageId
+	 * @return string template type
+	 * @throws Exception
+	 * @throws \Swagger\Client\ApiException
+	 */
+	public function getUserDefinedType( $wikiId, $pageId ) {
+		$templateType = $this->getType( $wikiId, $pageId );
+
 		if ( !in_array( $templateType, self::$templateTypes ) ) {
-			$templateType = '';
+			$templateType = self::TEMPLATE_UNCLASSIFIED;
 		}
-		/**
-		 * Quick fix end
-		 */
 
 		return $templateType;
 	}
@@ -199,7 +212,16 @@ class TemplateClassificationService {
 		global $wgConsulUrl, $wgConsulServiceTag;
 		$urlProvider = new ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag );
 		$apiProvider = new ApiProvider( $urlProvider );
-		return $apiProvider->getApi( self::SERVICE_NAME, TCSApi::class );
+		$api = $apiProvider->getApi( self::SERVICE_NAME, TCSApi::class );
+
+		// default CURLOPT_TIMEOUT for API client is set to 0 which means no timeout.
+		// Overwriting to minimal value which is 1.
+		// cURL function is allowed to execute not longer than 1 second
+		$api->getApiClient()
+				->getConfig()
+				->setCurlTimeout(1);
+
+		return $api;
 	}
 
 }

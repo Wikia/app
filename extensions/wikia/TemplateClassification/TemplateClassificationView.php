@@ -33,7 +33,7 @@ class View {
 
 		if ( $templateType === '' ) {
 			try {
-				$templateType = ( new \TemplateClassificationService() )->getType( $wikiId, $title->getArticleID() );
+				$templateType = ( new \TemplateClassificationService() )->getUserDefinedType( $wikiId, $title->getArticleID() );
 			} catch ( ApiException $e ) {
 				( new Logger() )->exception( $e );
 				return $fallbackMsg;
@@ -74,28 +74,6 @@ class View {
 				'templateType' => $templateType,
 				'templateTypeName' => $templateTypeMessage,
 				'editButton' => $editButton,
-			]
-		);
-	}
-
-	/**
-	 * Renders an entry point on a template's edit page.
-	 * @param \Title $title
-	 * @param \User $user
-	 * @return string
-	 */
-	public function renderEditPageEntryPoint( $wikiId, \Title $title, \User $user ) {
-		$templateType = $this->renderTemplateType( $wikiId, $title, $user, '', '' );
-
-		if ( !$templateType ) {
-			return '';
-		}
-
-		return \MustacheService::getInstance()->render(
-			__DIR__ . '/templates/TemplateClassificationEditPageEntryPoint.mustache',
-			[
-				'header' => wfMessage( 'template-classification-type-header' ),
-				'templateType' => $templateType,
 			]
 		);
 	}

@@ -264,7 +264,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	public function getUnconfirmedUserRedirectUrl() {
 		$title = Title::newFromText( 'UserSignup', NS_SPECIAL );
 		$params = [
-			'method' => 'sendConfirmationEmail',
+			'sendConfirmationEmail' => true,
 			'username' => $this->getVal( 'username' ),
 			'uselang' => $this->getVal( 'uselang' ),
 		];
