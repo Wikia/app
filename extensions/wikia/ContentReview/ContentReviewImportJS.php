@@ -48,11 +48,11 @@ class ImportJS {
 	public function prepareImports( Array $scripts ) {
 		$imports = [];
 
-		foreach( $scripts as $key => $script ) {
+		foreach ( $scripts as $key => $script ) {
 			$script = trim( $script );
 
 			if ( strtolower( substr( $script, -3 ) ) === Helper::JS_FILE_EXTENSION
-					&& !preg_match( \Title::getTitleInvalidRegex(), $script )
+				&& !preg_match( \Title::getTitleInvalidRegex(), $script )
 			) {
 				$scriptParts = explode( ':', $script );
 				$count = count( $scriptParts );

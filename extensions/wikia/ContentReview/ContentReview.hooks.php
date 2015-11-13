@@ -244,7 +244,7 @@ class Hooks {
 		$title = $article->getTitle();
 
 		if ( !is_null( $title )	) {
-			if( $title->isJsPage() ) {
+			if ( $title->isJsPage() ) {
 				$this->purgeContentReviewData();
 			}
 
