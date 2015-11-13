@@ -97,16 +97,15 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 	 */
 	public function reallyDoQuery( $limit = false, $offset = false ) {
 		global $wgCityId, $wgContentNamespaces;
-		$dbr = wfGetDB( DB_SLAVE, [ $this->getName(), __METHOD__, 'vslow' ] );
 		$templatesWithoutType = [];
 
-		$cnTemplatesOnWikia = $this->getContentNamespacesTemplates( $dbr, $wgContentNamespaces );
-		$notRecognizedTemplates  = $this->getNotRecognizedTemplatesOnWikia(
+		$recognizedProvider = new RecognizedTemplatesProvider(
 			( new TemplateClassificationService() ),
 			$wgCityId
 		);
 
-		$cnNotRecognizedTemplates = $this->intersectSets( $cnTemplatesOnWikia, $notRecognizedTemplates );
+		$cnNotRecognizedTemplates =
+			$recognizedProvider->getNotRecognizedTemplatesUsedOnNamespaces( $wgContentNamespaces );
 
 		foreach( $cnNotRecognizedTemplates as $notRecognizedTemplate ) {
 			$title = Title::newFromID( $notRecognizedTemplate );
@@ -123,54 +122,5 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 		}
 
 		return $templatesWithoutType;
-	}
-
-	private function getContentNamespacesTemplates($db, $contentNamespaces) {
-		$sql = ( new \WikiaSQL() )
-			->SELECT()->DISTINCT( 'p2.page_id as temp_id' )
-			->FROM( 'page' )->AS_( 'p' )
-			->INNER_JOIN( 'templatelinks' )->AS_( 't' )
-			->ON( 't.tl_from', 'p.page_id' )
-			->INNER_JOIN( 'page' )->AS_( 'p2' )
-			->ON( 'p2.page_title', 't.tl_title' )
-			->WHERE( 'p.page_namespace' )->IN( $contentNamespaces )
-			->AND_( 'p2.page_namespace' )->EQUAL_TO( NS_TEMPLATE )
-			->AND_( 'p.page_id' )->NOT_EQUAL_TO( Title::newMainPage()->getArticleID() );
-
-		$pages = $sql->runLoop( $db, function ( &$pages, $row ) {
-			$pages[] = $row->temp_id;
-		});
-
-		return $pages;
-	}
-
-	private function getNotRecognizedTemplatesOnWikia( TemplateClassificationService $tcService, $wikiaId ) {
-		$templates = $tcService->getTemplatesOnWiki( $wikiaId );
-		foreach ( $templates as $pageId => $type ) {
-			if ( $this->isRecognized( $type ) ) {
-				unset( $templates[$pageId] );
-			}
-		}
-		return $templates;
-	}
-
-
-	/**
-	 * Remove non content templates from list of not recognized templates
-	 */
-	public function intersectSets( $cnTemplatesOnWikia, $notRecognizedTemplates ) {
-		$cnNotRecognizedTemplates = [];
-		foreach ( $notRecognizedTemplates as $pageId => $type ) {
-			if ( in_array( $pageId, $cnTemplatesOnWikia ) ) {
-				$cnNotRecognizedTemplates[] = $pageId;
-			}
-		}
-		return $cnNotRecognizedTemplates;
-	}
-
-	private function isRecognized( $type ) {
-		return $type !== TemplateClassificationService::TEMPLATE_UNKNOWN
-			&& $type !== AutomaticTemplateTypes::TEMPLATE_UNCLASSIFIED
-			&& $type !== AutomaticTemplateTypes::TEMPLATE_OTHER;
 	}
 }
