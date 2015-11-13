@@ -32,9 +32,7 @@ define('TemplateClassificationLabeling',
 		}
 
 		function prepareContent(content) {
-			var helpText = $('<p></p>').addClass('instructions')
-				.html(mw.message('template-classification-edit-modal-help').parse())[0].outerHTML;
-			return prepareContentStrategy[mode](helpText + content);
+			return prepareContentStrategy[mode](content);
 		}
 
 		prepareConfirmButtonStrategy = (function prepareConfirmButtonStrategy() {
@@ -54,39 +52,30 @@ define('TemplateClassificationLabeling',
 		})();
 
 		getTitleStrategy = (function getTitleStrategy() {
-			function addTemplate() {
-				return mw.message('template-classification-edit-modal-title-add-template').escaped();
-			}
-
 			function editType() {
 				return mw.message('template-classification-edit-modal-title-edit-type').escaped();
 			}
 
-			function addTypeBeforePublish() {
-				return mw.message('template-classification-edit-modal-select-type-sub-title').escaped();
+			function chooseType() {
+				return mw.message('template-classification-edit-modal-title-select-type').escaped();
 			}
 
 			return {
-				addTemplate: addTemplate,
+				addTemplate: chooseType,
 				editType: editType,
-				addTypeBeforePublish: addTypeBeforePublish
+				addTypeBeforePublish: chooseType
 			};
 		})();
 
 		prepareContentStrategy = (function prepareContentStrategy() {
-			function addTemplate(content) {
-				var $subtitle = $('<h2>').html(
-					mw.message('template-classification-edit-modal-select-type-sub-title').escaped()
-				);
-				return $subtitle[0].outerHTML + content;
-			}
-
 			function editType(content) {
-				return content;
+				var helpText = $('<p></p>').addClass('instructions')
+					.html(mw.message('template-classification-edit-modal-help').parse())[0].outerHTML;
+				return helpText + content;
 			}
 
 			return {
-				addTemplate: addTemplate,
+				addTemplate: editType,
 				editType: editType,
 				addTypeBeforePublish: editType
 			};
