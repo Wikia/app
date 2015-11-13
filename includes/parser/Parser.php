@@ -3212,6 +3212,7 @@ class Parser {
 	 */
 	function preprocessToDom( $text, $flags = 0 ) {
 		$dom = $this->getPreprocessor()->preprocessToObj( $text, $flags );
+
 		return $dom;
 	}
 
@@ -3273,6 +3274,7 @@ class Parser {
 		$text = $frame->expand( $dom, $flags );
 
 		wfProfileOut( __METHOD__ );
+
 		return $text;
 	}
 
@@ -3339,7 +3341,8 @@ class Parser {
 	 *  $piece['parts']: the parameter array
 	 *  $piece['lineStart']: whether the brace was at the start of a line
 	 * @param $frame PPFrame The current frame, contains template arguments
-	 * @return String: the text of the template
+	 * @return String : the text of the template
+	 * @throws \MWException
 	 * @private
 	 */
 	function braceSubstitution( $piece, $frame ) {
@@ -3749,6 +3752,17 @@ class Parser {
 		} else {
 			$ret = array( 'text' => $text );
 		}
+
+		var_dump("BraceSubstitution");
+		var_dump($ret);
+
+
+		# wikia start
+		wfRunHooks( 'Parser::BraceSubstitution', array( $ret, $originalTitle ) );
+		# wikia end
+
+		var_dump("**originalTitle");
+		var_dump($originalTitle);
 
 		wfProfileOut( __METHOD__ );
 		return $ret;

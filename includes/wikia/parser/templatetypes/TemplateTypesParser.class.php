@@ -34,6 +34,30 @@ class TemplateTypesParser {
 		return true;
 	}
 
+	public static function onBraceSubstitution( $title, $templateWikitext) {
+		var_dump("templateWikitext");
+		var_dump($templateWikitext);
+
+		global $wgEnableTemplateTypesParsing, $wgArticleAsJson, $wgCityId;
+
+		wfProfileIn( __METHOD__ );
+
+		//if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson ) {
+		if (true) {
+			//$type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )
+			//	->getTemplateTypeFromTitle( $wgCityId, $title );
+
+			//if ( $type == AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK ) {
+			if (true) {
+				var_dump("JESTEM");
+				//przeparsuj wikitext
+				//zestripuj style
+			}
+		}
+
+		return true;
+	}
+
 	/**
 	 * @desc return skip rendering navbox template
 	 *
