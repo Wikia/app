@@ -111,6 +111,7 @@ class PagesWithoutInfobox extends PageQueryPage {
 				->SELECT( 'tl_from' )
 				->FROM( 'templatelinks' )
 				->WHERE( 'tl_title' )->IN( $infoboxTemplates )
+					->AND_( 'tl_namespace' )->EQUAL_TO( NS_TEMPLATE )
 				->runLoop( $dbr, function ( &$pagesWithInfobox, $row ) {
 					$pagesWithInfobox[$row->tl_from] = true;
 				} );
