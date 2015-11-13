@@ -5,6 +5,7 @@ define('ext.wikia.adRecoveryEngine.recovery.gcs', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.recovery.helper',
 	'jquery',
+	'wikia.cookies',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
@@ -13,6 +14,7 @@ define('ext.wikia.adRecoveryEngine.recovery.gcs', [
 	adTracker,
 	recoveryHelper,
 	$,
+	cookies,
 	doc,
 	log,
 	win
@@ -54,6 +56,10 @@ define('ext.wikia.adRecoveryEngine.recovery.gcs', [
 	function addRecoveryCallback() {
 		if (context.targeting.pageType !== 'article') {
 			log(['addRecoveryCallback', 'This page is not an article'], 'debug', logGroup);
+			return;
+		}
+		if (cookies.get('sp.blocking') !== 'yes') {
+			log(['addRecoveryCallback', 'Blocking not detected yet'], 'debug', logGroup);
 			return;
 		}
 
