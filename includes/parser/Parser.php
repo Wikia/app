@@ -4042,6 +4042,12 @@ class Parser {
 		$argName = trim( $nameWithSpaces );
 		$object = false;
 		$text = $frame->getArgument( $argName );
+
+        # wikia start
+        wfRunHooks( 'Parser::ArgSubstitution', array(&$text, $frame->getTitle()->mArticleID,
+            $frame->getNumberedArguments(), $frame->getNamedArguments() ) );
+        # wikia end
+
 		if (  $text === false && $parts->getLength() > 0
 		  && (
 			$this->ot['html']

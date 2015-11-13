@@ -10,7 +10,6 @@ class TemplateTypesParser {
 	 */
 	public static function onFetchTemplateAndTitle( &$text, &$finalTitle ) {
 		global $wgEnableTemplateTypesParsing, $wgArticleAsJson, $wgCityId;
-        var_dump($text, $finalTitle);
 		wfProfileIn( __METHOD__ );
 
 		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson ) {
@@ -26,9 +25,6 @@ class TemplateTypesParser {
 				case TemplateClassificationService::TEMPLATE_REF:
 					$text = self::handleReferencesTemplate();
 					break;
-//                case AutomaticTemplateTypes::TEMPLATE_SCROLBOX:
-//
-//                    break;
 			}
 		}
 
@@ -36,6 +32,23 @@ class TemplateTypesParser {
 
 		return true;
 	}
+
+    public static function onArgSubstitution( &$text, $templateId, $numArgs, $namedArgs) {
+        global $wgEnableTemplateTypesParsing, $wgArticleAsJson, $wgCityId;
+        wfProfileIn( __METHOD__ );
+
+        if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson ) {
+            $type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )
+                ->getTemplateType( $wgCityId, $templateId );
+            switch ( $type ) {
+                case 'scrollbox':
+                    $text = self::handleScrollboxTemplate(array_merge($numArgs, $namedArgs));
+                    break;
+            }
+        }
+        wfProfileOut( __METHOD__ );
+        return true;
+    }
 
 	/**
 	 * @desc return skip rendering navbox template
@@ -54,4 +67,12 @@ class TemplateTypesParser {
 	private static function handleReferencesTemplate() {
 		return '<references />';
 	}
+
+    private static function handleScrollboxTemplate($templateArgs) {
+        $lengths = array_map('strlen', $templateArgs);
+        $maxLength = max($lengths);
+        $index = array_search($maxLength, $lengths);
+        return $templateArgs[$index];
+    }
+
 }
