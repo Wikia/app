@@ -36,8 +36,7 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onArticleAfterFetchContent( \Article $article, &$content ) {
-		$text = $this->getImportJSDescription( $article );
-		$content = $text . '<pre>' . $content . '</pre>';
+		$content = $this->getImportJSContent( $article, $content );
 
 		return true;
 	}
@@ -50,8 +49,7 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onArticleNonExistentPage( \Article $article, \OutputPage $out, &$content ) {
-		$text = $this->getImportJSDescription( $article );
-		$content = $text . $content;
+		$content = $this->getImportJSContent( $article, $content );
 
 		return true;
 	}
@@ -337,8 +335,7 @@ class Hooks {
 		ContentReviewStatusesService::purgeJsPagesCache();
 	}
 
-	private function getImportJSDescription( \Article $article ) {
-		$text = '';
+	private function getImportJSContent( \Article $article, $content ) {
 		$title = $article->getTitle();
 
 		if ( ImportJS::isImportJSPage( $title ) ) {
@@ -346,9 +343,10 @@ class Hooks {
 
 			if ( $isViewPage ) {
 				$text = ImportJS::getImportJSDescription();
+				$content = $text . '<pre>' . $content . '</pre>';
 			}
 		}
 
-		return $text;
+		return $content;
 	}
 }
