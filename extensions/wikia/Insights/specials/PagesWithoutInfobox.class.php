@@ -131,9 +131,9 @@ class PagesWithoutInfobox extends PageQueryPage {
 			} );
 
 		if ( empty( $contentPages ) ) {
-			return [];
+			$pagesWithoutInfobox = [];
 		} elseif ( empty( $pagesWithInfobox ) ) {
-			return $contentPages;
+			$pagesWithoutInfobox = $contentPages;
 		} else {
 			$pagesWithoutInfobox = array_slice( array_diff_key( $contentPages, $pagesWithInfobox ), 0, self::LIMIT );
 		}
