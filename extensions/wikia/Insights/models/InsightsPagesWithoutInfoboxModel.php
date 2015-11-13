@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class InsightsNonportableInfoboxesModel
+ * Class InsightsPagesWithoutInfoboxModel
  * A class specific to a subpage with a list of pages
  * without an infobox on them, sorted by page views.
  */

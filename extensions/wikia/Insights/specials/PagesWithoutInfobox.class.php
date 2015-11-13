@@ -86,7 +86,7 @@ class PagesWithoutInfobox extends PageQueryPage {
 	 *
 	 * @param bool $limit Only for consistency
 	 * @param bool $offset Only for consistency
-	 * @return bool|mixed
+	 * @return array
 	 */
 	public function reallyDoQuery( $limit = false, $offset = false ) {
 		global $wgCityId, $wgContentNamespaces;
@@ -130,7 +130,13 @@ class PagesWithoutInfobox extends PageQueryPage {
 				];
 			} );
 
-		$pagesWithoutInfobox = array_slice( array_diff_key( $contentPages, $pagesWithInfobox ), 0, self::LIMIT );
+		if ( empty( $contentPages ) ) {
+			return [];
+		} elseif ( empty( $pagesWithInfobox ) ) {
+			return $contentPages;
+		} else {
+			$pagesWithoutInfobox = array_slice( array_diff_key( $contentPages, $pagesWithInfobox ), 0, self::LIMIT );
+		}
 
 		return $pagesWithoutInfobox;
 	}
