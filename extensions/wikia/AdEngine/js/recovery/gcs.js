@@ -1,6 +1,6 @@
 /*global define*/
 /*jshint camelcase:false*/
-define('ext.wikia.adRecoveryEngine.recovery.gcs', [
+define('ext.wikia.adEngine.recovery.gcs', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.recovery.helper',
@@ -25,7 +25,7 @@ define('ext.wikia.adRecoveryEngine.recovery.gcs', [
 	var articleUrl = loc.href,
 		contentId = 'everything',
 		context = adContext.getContext(),
-		logGroup = 'ext.wikia.adRecoveryEngine.recovery.gcs';
+		logGroup = 'ext.wikia.adEngine.recovery.gcs';
 
 	function addClasses() {
 		var article = $('#WikiaArticle');

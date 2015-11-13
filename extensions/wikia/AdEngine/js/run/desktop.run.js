@@ -18,7 +18,7 @@ require([
 	'wikia.krux',
 	'wikia.window',
 	'wikia.loader',
-	require.optional('ext.wikia.adRecoveryEngine.recovery.gcs')
+	require.optional('ext.wikia.adEngine.recovery.gcs')
 ], function (
 	adContext,
 	adEngine,
