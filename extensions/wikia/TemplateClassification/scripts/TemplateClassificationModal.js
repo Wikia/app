@@ -75,14 +75,16 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 			$classificationForm = $(classificationForm[0]);
 		}
 
-		if (templateType) {
-			// Mark selected type
-			$preselectedType = $classificationForm.find('input[value="' + templateType + '"]');
+		if (!templateType) {
+			templateType = 'unknown';
+		}
 
-			if (!!$preselectedType) {
-				$classificationForm.find('input[checked="checked"]').removeAttr('checked');
-				$preselectedType.attr('checked', 'checked');
-			}
+		// Mark selected type
+		$preselectedType = $classificationForm.find('input#template-classification-' + templateType);
+
+		if (!!$preselectedType) {
+			$classificationForm.find('input[checked="checked"]').removeAttr('checked');
+			$preselectedType.attr('checked', 'checked').prop('autofocus', true);
 		}
 
 		// Set modal content
