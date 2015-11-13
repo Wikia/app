@@ -6,7 +6,6 @@ define('ext.wikia.adRecoveryEngine.recovery.gcs', [
 	'ext.wikia.adEngine.recovery.helper',
 	'jquery',
 	'wikia.cookies',
-	'wikia.document',
 	'wikia.log',
 	'wikia.window'
 ], function (
@@ -15,7 +14,6 @@ define('ext.wikia.adRecoveryEngine.recovery.gcs', [
 	recoveryHelper,
 	$,
 	cookies,
-	doc,
 	log,
 	win
 ) {
@@ -24,7 +22,11 @@ define('ext.wikia.adRecoveryEngine.recovery.gcs', [
 		logGroup = 'ext.wikia.adRecoveryEngine.recovery.gcs';
 
 	function addClasses() {
-		doc.getElementById('WikiaArticle').classList.add('p402_premium');
+		var article = $('#WikiaArticle');
+		article.addClass('p402_premium');
+		article.find('table,figure,.portable-infobox').each(function () {
+			$(this).addClass('p402_hide');
+		});
 	}
 
 	function trackPosition() {
@@ -44,11 +46,10 @@ define('ext.wikia.adRecoveryEngine.recovery.gcs', [
 	}
 
 	function init() {
-		var GCS = win._402;
 		log('init', 'info', logGroup);
 		addClasses();
 		try {
-			GCS.show();
+			win._402_Show();
 		} catch (ignore) {}
 		trackPosition();
 	}
