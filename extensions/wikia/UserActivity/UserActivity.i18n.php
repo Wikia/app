@@ -15,6 +15,10 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'user-activity-desc' => "A description of this extension",
 	'user-activity-page-description' => 'Description of the special page shown to the user',
-	'user-activity-tab' => "Label for the tab on the user's page that shows user activity",
+        'user-activity-table-title' => "A column header of a table showing wiki activity.  'Title' refers to the title of a wiki, e.g. 'The Hunger Games Wiki'",
+        'user-activity-table-edits' => "A column header of a table showing wiki activity.  This column gives the number of times a user has made edits to the wiki listed for the row",
+        'user-activity-table-lastedit' => "A column header of a table showing wiki activity. This column shows the date the user last edited the wiki for the row",
+        'user-activity-table-rights' => "A column header of a table showing wiki activity. This column lists all the groups the user belongs to on the wiki",
+	'user-activity-tab' => "Label for the tab on the user's profile page to show user activity",
 	'user-activity-edit-count' => 'A string giving the number of edits made on a wikia',
 );
