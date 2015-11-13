@@ -2,13 +2,17 @@
 /*jshint camelcase:false*/
 define('ext.wikia.adRecoveryEngine.recovery.gcs', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.recovery.helper',
+	'jquery',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
 ], function (
 	adContext,
+	adTracker,
 	recoveryHelper,
+	$,
 	doc,
 	log,
 	win
@@ -21,6 +25,22 @@ define('ext.wikia.adRecoveryEngine.recovery.gcs', [
 		doc.getElementById('WikiaArticle').classList.add('p402_premium');
 	}
 
+	function trackPosition() {
+		var survey = $('.t402-prompt-iframe-container'),
+			position,
+			bucket;
+
+		if (!survey.length) {
+			log(['trackPosition', 'Survey not visible yet'], 'debug', logGroup);
+			return;
+		}
+
+		position = survey.offset().top -  $('#WikiaArticle').offset().top;
+		bucket = position - (position % 100);
+		log(['trackPosition', position], 'debug', logGroup);
+		adTracker.track('recovery/gcs', bucket + '-' + (bucket + 100));
+	}
+
 	function init() {
 		var GCS = win._402;
 		log('init', 'info', logGroup);
@@ -28,6 +48,7 @@ define('ext.wikia.adRecoveryEngine.recovery.gcs', [
 		try {
 			GCS.show();
 		} catch (ignore) {}
+		trackPosition();
 	}
 
 	function addRecoveryCallback() {
