@@ -3,12 +3,10 @@
 define('ext.wikia.adEngine.sourcePointDetection', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
-	'wikia.cookies',
 	'wikia.document',
 	'wikia.krux',
-	'wikia.location',
 	'wikia.log'
-], function (adContext, adTracker, cookies, doc, krux, loc, log) {
+], function (adContext, adTracker, doc, krux, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.sourcePointDetection',
@@ -19,16 +17,6 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 	function getClientId() {
 		log('getClientId', 'info', logGroup);
 		return 'rMbenHBwnMyAMhR';
-	}
-
-	function setBlockingCookie() {
-		var options = {
-				expires: 'never'
-			};
-		if (loc.hostname.indexOf('wikia.com') !== -1) {
-			options.domain = '.wikia.com';
-		}
-		cookies.set('sp.blocking', 'yes', options);
 	}
 
 	function sendKruxEvent(value) {
@@ -74,7 +62,6 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 
 		doc.addEventListener('sp.blocking', function () {
 			trackStatusOnce('yes');
-			setBlockingCookie();
 		});
 		doc.addEventListener('sp.not_blocking', function () {
 			trackStatusOnce('no');
