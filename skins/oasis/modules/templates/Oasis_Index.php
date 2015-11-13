@@ -73,6 +73,7 @@
 <?= $openXBidder ?>
 <?= $dynamicYield ?>
 <?= $ivw2 ?>
+<?= $adRecoveryGCS ?>
 <div class="WikiaSiteWrapper">
 	<?= $body ?>
 
