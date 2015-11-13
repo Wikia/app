@@ -8,9 +8,9 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
 	const ASSET_GROUP_ADENGINE_OPENX_BIDDER = 'adengine2_ox_bidder_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
-	const ASSET_GROUP_ADENGINE_GCS = 'adengine2_gcs_js';
 	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
 	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
+	const ASSET_GROUP_ADRECOVERYENGINE_GCS = 'adrecoveryengine_gcs_js';
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
 	const ASSET_GROUP_LIFTIUM_EXTRA = 'liftium_ads_extra_js';
 
@@ -129,7 +129,7 @@ class AdEngine2Hooks {
 		}
 
 		if ( $wgAdDriverUseGCS === true ) {
-			$jsAssets[] = self::ASSET_GROUP_ADENGINE_GCS;
+			$jsAssets[] = self::ASSET_GROUP_ADRECOVERYENGINE_GCS;
 		}
 
 		if ( $wgAdDriverUseTopInContentBoxad ) {

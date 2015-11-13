@@ -6,7 +6,6 @@ class GCSRecoveryProvider {
 		if ( !$this->isEnabled() ) {
 			return '<!-- GCS disabled -->';
 		}
-
 		$template = file_get_contents(__DIR__ . '/../template/inline/gcs.html');
 
 		return $template;
