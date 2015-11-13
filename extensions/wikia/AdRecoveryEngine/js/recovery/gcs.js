@@ -38,7 +38,7 @@ define('ext.wikia.adRecoveryEngine.recovery.gcs', [
 		position = survey.offset().top -  $('#WikiaArticle').offset().top;
 		bucket = position - (position % 100);
 		log(['trackPosition', position], 'debug', logGroup);
-		adTracker.track('recovery/gcs', bucket + '-' + (bucket + 100));
+		adTracker.track('recovery/gcs', bucket + '-' + (bucket + 99));
 	}
 
 	function init() {
