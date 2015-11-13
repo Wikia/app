@@ -103,6 +103,15 @@ class TransactionClassifierTest extends WikiaBaseTest {
 				],
 				'expectedName' => 'api/nirvana/ImageServing'
 			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => NS_MAIN,
+					Transaction::PARAM_ACTION => 'diff',
+					Transaction::PARAM_SKIN => 'foo-skin',
+				],
+				'expectedName' => 'page/main/diff'
+			],
 		];
 	}
 }

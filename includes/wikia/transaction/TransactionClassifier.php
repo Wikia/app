@@ -19,6 +19,7 @@ class TransactionClassifier {
 		'view',
 		'edit',
 		'submit',
+		'diff',
 	);
 
 	protected static $FILTER_SPECIAL_PAGES = array(
