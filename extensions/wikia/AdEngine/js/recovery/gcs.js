@@ -4,7 +4,6 @@ define('ext.wikia.adEngine.recovery.gcs', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.recovery.helper',
-	'jquery',
 	'wikia.document',
 	'wikia.location',
 	'wikia.log',
@@ -14,7 +13,6 @@ define('ext.wikia.adEngine.recovery.gcs', [
 	adContext,
 	adTracker,
 	recoveryHelper,
-	$,
 	doc,
 	loc,
 	log,
@@ -22,21 +20,34 @@ define('ext.wikia.adEngine.recovery.gcs', [
 	win
 ) {
 	'use strict';
-	var articleUrl = loc.href,
+	var article = doc.getElementById('WikiaArticle'),
+		articleUrl = loc.href,
 		contentId = 'everything',
 		context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.recovery.gcs';
 
+	function getTopPos(el) {
+		var pos;
+		for (pos = 0; el !== null; el = el.offsetParent) {
+			pos += el.offsetTop;
+		}
+		return pos;
+	}
+
 	function addClasses() {
-		var article = $('#WikiaArticle');
-		article.addClass('p402_premium');
-		article.find('table,figure,.portable-infobox').each(function () {
-			$(this).addClass('p402_hide');
+		var elementsToHide;
+		if (!article) {
+			return;
+		}
+		elementsToHide = article.querySelectorAll('table,figure,.portable-infobox');
+		article.className += ' p402_premium';
+		Array.prototype.forEach.call(elementsToHide, function (element) {
+			element.className += ' p402_hide';
 		});
 	}
 
 	function trackPosition() {
-		var survey = $('.t402-prompt-iframe-container'),
+		var survey = doc.getElementsByClassName('.t402-prompt-iframe-container'),
 			position,
 			bucket;
 
@@ -45,7 +56,7 @@ define('ext.wikia.adEngine.recovery.gcs', [
 			return;
 		}
 
-		position = survey.offset().top -  $('#WikiaArticle').offset().top;
+		position = getTopPos(survey) -  getTopPos(article);
 		bucket = position - (position % 100);
 		log(['trackPosition', position], 'debug', logGroup);
 		adTracker.track('recovery/gcs', bucket + '-' + (bucket + 99));
