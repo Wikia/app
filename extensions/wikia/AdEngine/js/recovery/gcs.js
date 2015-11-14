@@ -44,11 +44,11 @@ define('ext.wikia.adEngine.recovery.gcs', [
 	}
 
 	function trackPosition() {
-		var survey = doc.getElementsByClassName('.t402-prompt-iframe-container'),
+		var survey = doc.getElementsByClassName('t402-prompt-iframe-container')[0],
 			position,
 			bucket;
 
-		if (!survey.length) {
+		if (!survey) {
 			log(['trackPosition', 'Survey not visible yet'], 'debug', logGroup);
 			return;
 		}
