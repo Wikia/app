@@ -40,9 +40,9 @@ define('ext.wikia.adEngine.recovery.gcs', [
 			return;
 		}
 		elementsToHide = article.querySelectorAll('table,figure,.portable-infobox');
-		article.className += ' p402_premium';
+		article.classList.add('p402_premium');
 		Array.prototype.forEach.call(elementsToHide, function (element) {
-			element.className += ' p402_hide';
+			element.classList.add('p402_hide');
 		});
 	}
 
