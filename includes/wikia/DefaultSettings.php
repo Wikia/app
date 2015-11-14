@@ -1302,10 +1302,10 @@ $wgAdDriverEnableInvisibleHighImpactSlot = true;
 $wgAdDriverUseAdsAfterInfobox = false;
 
 /**
- * @name $wgAdDriverUseGCS
+ * @name $wgAdDriverUseGoogleConsumerSurveys
  * Whether to enable Google Consumer Surveys
  */
-$wgAdDriverUseGCS = false;
+$wgAdDriverUseGoogleConsumerSurveys = false;
 
 /**
  * @name $wgAdDriverUseTaboola

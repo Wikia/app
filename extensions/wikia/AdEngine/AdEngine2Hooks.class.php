@@ -119,7 +119,7 @@ class AdEngine2Hooks {
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 
-		global $wgAdDriverUseGCS, $wgAdDriverUseTopInContentBoxad, $wgAdDriverUseTaboola;
+		global $wgAdDriverUseGoogleConsumerSurveys, $wgAdDriverUseTopInContentBoxad, $wgAdDriverUseTaboola;
 
 		$jsAssets[] = self::ASSET_GROUP_ADENGINE_DESKTOP;
 
@@ -128,7 +128,7 @@ class AdEngine2Hooks {
 			$jsAssets[] = self::ASSET_GROUP_LIFTIUM_EXTRA;
 		}
 
-		if ( $wgAdDriverUseGCS === true ) {
+		if ( $wgAdDriverUseGoogleConsumerSurveys === true ) {
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE_GCS;
 		}
 
