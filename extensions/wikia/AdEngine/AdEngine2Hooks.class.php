@@ -128,7 +128,7 @@ class AdEngine2Hooks {
 			$jsAssets[] = self::ASSET_GROUP_LIFTIUM_EXTRA;
 		}
 
-		if ( $wgAdDriverUseGoogleConsumerSurveys === true ) {
+		if ( $wgAdDriverUseGoogleConsumerSurveys && WikiaPageType::getPageType() === 'article' ) {
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE_GCS;
 		}
 

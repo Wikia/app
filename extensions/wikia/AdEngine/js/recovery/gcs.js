@@ -1,7 +1,6 @@
 /*global define*/
 /*jshint camelcase:false*/
 define('ext.wikia.adEngine.recovery.gcs', [
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.recovery.helper',
 	'wikia.document',
@@ -10,7 +9,6 @@ define('ext.wikia.adEngine.recovery.gcs', [
 	'wikia.scriptwriter',
 	'wikia.window'
 ], function (
-	adContext,
 	adTracker,
 	recoveryHelper,
 	doc,
@@ -23,7 +21,6 @@ define('ext.wikia.adEngine.recovery.gcs', [
 	var article = doc.getElementById('WikiaArticle'),
 		articleUrl = loc.href,
 		contentId = 'everything',
-		context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.recovery.gcs';
 
 	function getTopPos(el) {
@@ -81,11 +78,6 @@ define('ext.wikia.adEngine.recovery.gcs', [
 	}
 
 	function addRecoveryCallback() {
-		if (context.targeting.pageType !== 'article') {
-			log(['addRecoveryCallback', 'This page is not an article'], 'debug', logGroup);
-			return;
-		}
-
 		recoveryHelper.addOnBlockingCallback(function () {
 			init();
 		});
