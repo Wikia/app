@@ -3212,7 +3212,6 @@ class Parser {
 	 */
 	function preprocessToDom( $text, $flags = 0 ) {
 		$dom = $this->getPreprocessor()->preprocessToObj( $text, $flags );
-
 		return $dom;
 	}
 
@@ -3274,7 +3273,6 @@ class Parser {
 		$text = $frame->expand( $dom, $flags );
 
 		wfProfileOut( __METHOD__ );
-
 		return $text;
 	}
 
@@ -3753,16 +3751,9 @@ class Parser {
 			$ret = array( 'text' => $text );
 		}
 
-		var_dump("BraceSubstitution");
-		var_dump($ret);
-
-
 		# wikia start
-		wfRunHooks( 'Parser::BraceSubstitution', array( $ret, $originalTitle ) );
+		wfRunHooks( 'Parser::BraceSubstitution', array( $originalTitle, &$ret['text']) );
 		# wikia end
-
-		var_dump("**originalTitle");
-		var_dump($originalTitle);
 
 		wfProfileOut( __METHOD__ );
 		return $ret;

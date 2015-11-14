@@ -34,10 +34,7 @@ class TemplateTypesParser {
 		return true;
 	}
 
-	public static function onBraceSubstitution( $title, $templateWikitext) {
-		var_dump("templateWikitext");
-		var_dump($templateWikitext);
-
+	public static function onBraceSubstitution( $title, &$templateWikitext ) {
 		global $wgEnableTemplateTypesParsing, $wgArticleAsJson, $wgCityId;
 
 		wfProfileIn( __METHOD__ );
@@ -46,12 +43,15 @@ class TemplateTypesParser {
 		if (true) {
 			//$type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )
 			//	->getTemplateTypeFromTitle( $wgCityId, $title );
+			$type = AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK;
 
-			//if ( $type == AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK ) {
-			if (true) {
-				var_dump("JESTEM");
-				//przeparsuj wikitext
-				//zestripuj style
+			if ( $type == AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK && !empty( $templateWikitext ) ) {
+				$templateWikitext = strip_tags($templateWikitext);
+
+				//always indent and make content of context-links italics
+//				if ($templateWikitext[0] !== ':') {
+//					$templateWikitext = ':' . $templateWikitext;
+//				}
 			}
 		}
 
