@@ -56,7 +56,7 @@ define('ext.wikia.adEngine.recovery.gcs', [
 		position = getTopPos(survey) -  getTopPos(article);
 		bucket = position - (position % 100);
 		log(['trackPosition', position], 'debug', logGroup);
-		adTracker.track('recovery/gcs', bucket + '-' + (bucket + 99));
+		adTracker.track('recovery/gcs', 'position', bucket + '-' + (bucket + 99));
 	}
 
 	function getGcsUrl() {
