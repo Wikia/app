@@ -5,8 +5,8 @@
  * Provides two params in init method for handling save and providing selected type
  */
 define('TemplateClassificationModal',
-	['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.tracker', 'TemplateClassificationLabeling'],
-function ($, mw, loader, nirvana, tracker, labeling) {
+	['jquery', 'wikia.window', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.tracker', 'TemplateClassificationLabeling'],
+function ($, w, mw, loader, nirvana, tracker, labeling) {
 	'use strict';
 
 	var $classificationForm,
@@ -32,6 +32,8 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 		saveHandler = saveHandlerProvided;
 		typeGetter = typeGetterProvided;
 		$typeLabel = $('.template-classification-type-text');
+
+		$(w).bind('keydown', openModalKeyboardShortcut);
 
 		$('.template-classification-edit').click(function (e) {
 			e.preventDefault();
@@ -120,14 +122,17 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 		modalInstance.bind('done', function runSave(e) {
 			processSave(modalInstance);
 
-			// Track - primary-button click
+			// Track - primary-button click or save by pressing Enter key
+			var label = e ? $(e.currentTarget).text() : 'keypress';
 			track({
 				action: tracker.ACTIONS.CLICK_LINK_BUTTON,
-				label: $(e.currentTarget).text()
+				label: label
 			});
 		});
 
 		modalInstance.bind('close', function () {
+			$(w).unbind('keypress');
+
 			// Track - close TC modal
 			track({
 				action: tracker.ACTIONS.CLOSE,
@@ -141,6 +146,14 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 				action: tracker.ACTIONS.CLICK_LINK_TEXT,
 				label: $(e.currentTarget).val()
 			});
+		});
+
+		$(w).bind('keypress', function (e) {
+			var keyCode = e.keyCode ? e.keyCode : e.which;
+			if (keyCode === 13) {
+				e.preventDefault();
+				modalInstance.trigger('done');
+			}
 		});
 
 		/* Show the modal */
@@ -243,6 +256,16 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 
 	function falseFunction() {
 		return false;
+	}
+
+	function openModalKeyboardShortcut(e) {
+		if (e.shiftKey && (e.ctrlKey || e.metaKey)) {
+			var keyCode = e.keyCode ? e.keyCode : e.which;
+			if (keyCode === 75) {
+				e.preventDefault();
+				openEditModal('editType');
+			}
+		}
 	}
 
 	return {
