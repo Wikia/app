@@ -50,7 +50,7 @@ class TemplateTypesParser {
 		if ( $wgEnableTemplateTypesParsing
 			&& $wgArticleAsJson
 			&& !empty( $templateWikitext )
-			&& self::isValidTemplateTitle($title) ) {
+			&& self::isValidTemplateTitle( $title ) ) {
 			$type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )
 				->getTemplateTypeFromTitle( $wgCityId, $title );
 
@@ -71,7 +71,7 @@ class TemplateTypesParser {
 	 * @param $templateWikitext
 	 * @return string
 	 */
-	private static function handleContextLinksTemplate( $templateWikitext ) {
+	public static function handleContextLinksTemplate( $templateWikitext ) {
 		//remove any custom HTML tags
 		$templateWikitext = strip_tags( $templateWikitext );
 		//remove list and indent elements from the beginning of line
