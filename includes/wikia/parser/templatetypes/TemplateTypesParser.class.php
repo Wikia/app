@@ -47,7 +47,10 @@ class TemplateTypesParser {
 
 		wfProfileIn( __METHOD__ );
 
-		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson && !empty( $templateWikitext ) ) {
+		if ( $wgEnableTemplateTypesParsing
+			&& $wgArticleAsJson
+			&& !empty( $templateWikitext )
+			&& self::isValidTemplateTitle($title) ) {
 			$type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )
 				->getTemplateTypeFromTitle( $wgCityId, $title );
 
@@ -81,6 +84,19 @@ class TemplateTypesParser {
 		$templateWikitext = '<div class="' . self::CLASS_CONTEXT_LINK . '">' . $templateWikitext . '</div>';
 
 		return $templateWikitext;
+	}
+
+	/**
+	 * @desc Check if title got from Parser is a valid template title
+	 *
+	 * @param $title
+	 * @return bool
+	 * @throws \MWException
+	 */
+	private static function isValidTemplateTitle( $title ) {
+		$title = Title::newFromText( $title, NS_TEMPLATE );
+
+		return $title && $title->exists();
 	}
 
 	/**
