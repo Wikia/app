@@ -1,8 +1,9 @@
 <?php
 
 class TemplateTypesParser {
+	const CLASS_CONTEXT_LINK = 'portable-context-link';
 	/**
-	 * @desc removes navbox template text from parser output
+	 * @desc changes parser output according to template type
 	 *
 	 * @param string $text - template content
 	 * @param Title $finalTitle - template title object
@@ -34,24 +35,30 @@ class TemplateTypesParser {
 		return true;
 	}
 
+	/**
+	 * @desc sanitizes context-link template content - removes all non-link and non-text
+	 * elements from context-link template output and wraps it in div with special class
+	 *
+	 * @param $title
+	 * @param $templateWikitext
+	 * @return bool
+	 */
 	public static function onBraceSubstitution( $title, &$templateWikitext ) {
 		global $wgEnableTemplateTypesParsing, $wgArticleAsJson, $wgCityId;
 
 		wfProfileIn( __METHOD__ );
 
-		//if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson ) {
-		if (true) {
-			//$type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )
-			//	->getTemplateTypeFromTitle( $wgCityId, $title );
-			$type = AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK;
+		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson ) {
+			$type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )
+				->getTemplateTypeFromTitle( $wgCityId, $title );
 
 			if ( $type == AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK && !empty( $templateWikitext ) ) {
+				//remove any custom HTML
 				$templateWikitext = strip_tags($templateWikitext);
-
-				//always indent and make content of context-links italics
-//				if ($templateWikitext[0] !== ':') {
-//					$templateWikitext = ':' . $templateWikitext;
-//				}
+				//remove any non-text or non-link elements from the beginning of line
+				$templateWikitext = preg_replace("/^[^a-zA-Z0-9[]+/", "", $templateWikitext);
+				//wrap text of context-link in specified class
+				$templateWikitext = '<div class="' . self::CLASS_CONTEXT_LINK . '">' . $templateWikitext . '</div>';
 			}
 		}
 
