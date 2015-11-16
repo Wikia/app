@@ -66,15 +66,15 @@ class TemplateTypesParser {
 	 * elements from context-link template output and wrap it in div with special class
 	 *
 	 * @param $templateWikitext
-	 * @return mixed|string
+	 * @return string
 	 */
-	public static function handleContextLinksTemplate( $templateWikitext ) {
-		//remove any custom HTML
-		$templateWikitext = strip_tags($templateWikitext);
-		//remove any non-text or non-link elements from the beginning of line
-		$templateWikitext = preg_replace('/^[:#* ]+/', '', $templateWikitext);
+	private static function handleContextLinksTemplate( $templateWikitext ) {
+		//remove any custom HTML tags
+		$templateWikitext = strip_tags( $templateWikitext ) ;
+		//remove list and indent elements from the beginning of line
+		$templateWikitext = preg_replace( '/^[:#* ]+/', '', $templateWikitext );
 		//remove all bold and italics from all of template content
-		$templateWikitext = preg_replace('/\'{2,}/', '', $templateWikitext);
+		$templateWikitext = preg_replace( '/\'{2,}/', '', $templateWikitext );
 		//wrap text of context-link in specified class
 		$templateWikitext = '<div class="' . self::CLASS_CONTEXT_LINK . '">' . $templateWikitext . '</div>';
 
