@@ -75,6 +75,8 @@ class TemplateTypesParser {
 		$templateWikitext = preg_replace( '/^[:#* ]+/', '', $templateWikitext );
 		//remove all bold and italics from all of template content
 		$templateWikitext = preg_replace( '/\'{2,}/', '', $templateWikitext );
+		//remove all newlines
+		$templateWikitext = preg_replace( '/\n/', ' ', $templateWikitext );
 		//wrap text of context-link in specified class
 		$templateWikitext = '<div class="' . self::CLASS_CONTEXT_LINK . '">' . $templateWikitext . '</div>';
 

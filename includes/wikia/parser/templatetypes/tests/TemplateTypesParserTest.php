@@ -138,7 +138,8 @@ class TemplateTypesParserTest extends WikiaBaseTest
 			],
 			[
 				'context-link',
-				'* [[Let\'s see powerrangers]] - \'\'[[Super Sentai]]\'\' counterpart in \'\'[[and some more creazy stuff!]]\'\'.\'\'',
+				'* [[Let\'s see powerrangers]] - \'\'[[Super Sentai]]\'\' counterpart
+in \'\'[[and some more creazy stuff!]]\'\'.\'\'',
 				'<div class="' . TemplateTypesParser::CLASS_CONTEXT_LINK . '">[[Let\'s see powerrangers]] - [[Super Sentai]] counterpart in [[and some more creazy stuff!]].</div>'
 			],
 			[
