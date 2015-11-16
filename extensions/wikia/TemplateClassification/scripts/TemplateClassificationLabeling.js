@@ -69,7 +69,7 @@ define('TemplateClassificationLabeling',
 
 		prepareContentStrategy = (function prepareContentStrategy() {
 			function editType(content) {
-				var helpText = $('<p></p>').addClass('instructions')
+				var helpText = $('<p></p>').addClass('tc-instructions')
 					.html(mw.message('template-classification-edit-modal-help').parse())[0].outerHTML;
 				return helpText + content;
 			}

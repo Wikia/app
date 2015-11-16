@@ -1,3 +1,8 @@
+$tc-error-bg-color: #e1390b;
+$tc-modal-text-color: #656e78;
+$tc-name-color-checked: #1a5eb8;
+$tc-name-color: #39424d;
+
 .template-classification-edit {
 	display: inline-block;
 	margin: 0 4px;
@@ -22,7 +27,7 @@
 	/* Override modal defaults to new design */
 	font-size: 14px;
 	line-height: 20px;
-	color: #656e78;
+	color: $tc-modal-text-color;
 
 	&.modal>section {
 		padding: 25px 27px;
@@ -32,13 +37,13 @@
 		margin-bottom: 27px;
 	}
 
-	.instructions {
+	.tc-instructions {
 		font-size: 16px;
 		margin-bottom: 37px;
 	}
 
 	.tc-type-name {
-		color: #39424d;
+		color: $tc-name-color;
 		font-size: 16px;
 		font-weight: bold;
 		padding-bottom: 4px;
@@ -46,7 +51,7 @@
 
 	:checked+div .tc-type-name,
 	a {
-		color: #1a5eb8;
+		color: $tc-name-color-checked;
 	}
 
 	.template-classification-edit-form-input {
@@ -92,6 +97,6 @@
 }
 
 .template-classification-error {
-	background-color: #e1390b;
+	background-color: $tc-error-bg-color;
 	animation: fadeBackground 1s linear;
 }
