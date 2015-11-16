@@ -70,12 +70,12 @@ class TemplateTypesParser {
 	 */
 	private static function handleContextLinksTemplate( $templateWikitext ) {
 		//remove any custom HTML tags
-		$templateWikitext = strip_tags( $templateWikitext ) ;
+		$templateWikitext = strip_tags( $templateWikitext );
 		//remove list and indent elements from the beginning of line
-		$templateWikitext = preg_replace( '/^[:#* ]+/', '', $templateWikitext );
+		$templateWikitext = preg_replace( '/^[:#* \n]+/', '', $templateWikitext );
 		//remove all bold and italics from all of template content
 		$templateWikitext = preg_replace( '/\'{2,}/', '', $templateWikitext );
-		//remove all newlines
+		//remove all newlines from the middle of the template text.
 		$templateWikitext = preg_replace( '/\n/', ' ', $templateWikitext );
 		//wrap text of context-link in specified class
 		$templateWikitext = '<div class="' . self::CLASS_CONTEXT_LINK . '">' . $templateWikitext . '</div>';
