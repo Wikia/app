@@ -51,7 +51,7 @@ class ImportJS {
 		foreach ( $scripts as $key => $script ) {
 			$script = trim( $script );
 
-			if ( strtolower( substr( $script, -3 ) ) === Helper::JS_FILE_EXTENSION
+			if ( substr( $script, -3 ) === Helper::JS_FILE_EXTENSION
 				&& !preg_match( \Title::getTitleInvalidRegex(), $script )
 			) {
 				$scriptParts = explode( ':', $script );
