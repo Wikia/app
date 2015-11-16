@@ -28,3 +28,8 @@ $specialPageAliases['ko'] = array(
 $specialPageAliases['vi'] = array(
 	'Chat' => array( 'Tán_gẫu' ),
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'Chat' => array( 'チャット' ),
+);

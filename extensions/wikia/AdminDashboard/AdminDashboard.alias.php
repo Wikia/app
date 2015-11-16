@@ -35,3 +35,8 @@ $specialPageAliases['pl'] = array(
 $specialPageAliases['vi'] = array(
 	'AdminDashboard' => array( 'Bảng_điều_khiển' ),
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'AdminDashboard' => array( '管理者ダッシュボード' ),
+);
