@@ -38,11 +38,11 @@ class TemplateTypesParser {
 	/**
 	 * @desc change template wikitext according to template type
 	 *
-	 * @param $title
+	 * @param $templateTitle
 	 * @param $templateWikitext
 	 * @return bool
 	 */
-	public static function onBraceSubstitution( $title, &$templateWikitext ) {
+	public static function onBraceSubstitution( $templateTitle, &$templateWikitext ) {
 		global $wgEnableTemplateTypesParsing, $wgArticleAsJson, $wgCityId;
 
 		wfProfileIn( __METHOD__ );
@@ -50,7 +50,7 @@ class TemplateTypesParser {
 		if ( $wgEnableTemplateTypesParsing
 			&& $wgArticleAsJson
 			&& !empty( $templateWikitext )
-			&& self::isValidTemplateTitle( $title ) ) {
+			&& $title = self::getValidTitle( $templateTitle ) ) {
 			$type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )
 				->getTemplateTypeFromTitle( $wgCityId, $title );
 
@@ -87,16 +87,17 @@ class TemplateTypesParser {
 	}
 
 	/**
-	 * @desc Check if title got from Parser is a valid template title
+	 * @desc return a valid title from template title got from Parser
+	 * or false if invalid
 	 *
 	 * @param $title
-	 * @return bool
+	 * @return bool|\Title
 	 * @throws \MWException
 	 */
-	private static function isValidTemplateTitle( $title ) {
+	private static function getValidTitle( $title ) {
 		$title = Title::newFromText( $title, NS_TEMPLATE );
 
-		return $title && $title->exists();
+		return $title && $title->exists() ? $title : false;
 	}
 
 	/**
