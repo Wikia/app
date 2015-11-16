@@ -112,6 +112,19 @@ class TransactionClassifierTest extends WikiaBaseTest {
 				],
 				'expectedName' => 'page/main/diff'
 			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_MAINTENANCE,
+				],
+				'expectedName' => 'maintenance'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_MAINTENANCE,
+					Transaction::PARAM_MAINTENANCE_SCRIPT => 'EventsCleanup',
+				],
+				'expectedName' => 'maintenance/EventsCleanup'
+			],
 		];
 	}
 }
