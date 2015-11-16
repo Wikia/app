@@ -56,7 +56,8 @@ class TemplateTypesParser {
 				//remove any custom HTML
 				$templateWikitext = strip_tags($templateWikitext);
 				//remove any non-text or non-link elements from the beginning of line
-				$templateWikitext = preg_replace("/^[^a-zA-Z0-9[]+/", "", $templateWikitext);
+				$templateWikitext = preg_replace('/^[:#* ]+/', '', $templateWikitext);
+				$templateWikitext = preg_replace('/\'{2,}/', '', $templateWikitext);
 				//wrap text of context-link in specified class
 				$templateWikitext = '<div class="' . self::CLASS_CONTEXT_LINK . '">' . $templateWikitext . '</div>';
 			}
