@@ -12,31 +12,32 @@ class RecognizedTemplatesProvider {
 
 	private $tcs;
 	private $wikiaId;
+	private $namespaces;
+	private $namespacesTemplates;
 
-	function __construct( TemplateClassificationService $tcs, $wikiaId ) {
+	public function __construct( TemplateClassificationService $tcs, $wikiaId, $namespaces = [] ) {
 		$this->tcs = $tcs;
 		$this->wikiaId = $wikiaId;
+		$this->namespaces = $namespaces;
 	}
 
-	public function getRecognizedTemplatesUsedOnNamespaces( $namespaces ) {
+	public function getRecognizedTemplates() {
 		$recognizedTemplates = $this->getTemplates( true );
-		if ( !$namespaces ) {
+		if ( empty( $this->namespaces ) ) {
 			return $recognizedTemplates;
 		}
-		$namespacesTemplates = $this->getNamespacesTemplates( $this->getDB(), $namespaces );
-		return $this->intersectSets( $namespacesTemplates, $recognizedTemplates );
+		return $this->intersectSets( $this->getNamespacesTemplates(), $recognizedTemplates );
 	}
 
-	public function getNotRecognizedTemplatesUsedOnNamespaces( $namespaces ) {
+	public function getNotRecognizedTemplates() {
 		$notRecognizedTemplates = $this->getTemplates( false );
-		if ( !$namespaces ) {
+		if ( empty( $this->namespaces ) ) {
 			return $notRecognizedTemplates;
 		}
-		$namespacesTemplates = $this->getNamespacesTemplates( $this->getDB(), $namespaces );
-		return $this->intersectSets( $namespacesTemplates, $notRecognizedTemplates );
+		return $this->intersectSets( $this->getNamespacesTemplates(), $notRecognizedTemplates );
 	}
 
-	public function isRecognized( $type ) {
+	public static function isRecognized( $type ) {
 		return $type !== TemplateClassificationService::TEMPLATE_UNKNOWN
 		&& $type !== AutomaticTemplateTypes::TEMPLATE_UNCLASSIFIED
 		&& $type !== AutomaticTemplateTypes::TEMPLATE_OTHER;
@@ -51,7 +52,7 @@ class RecognizedTemplatesProvider {
 			return [];
 		}
 		foreach ( $templates as $pageId => $type ) {
-			$isRecognized = $this->isRecognized( $type );
+			$isRecognized = self::isRecognized( $type );
 			$shouldRemove = $getRecognized ? !$isRecognized : $isRecognized;
 			if ( $shouldRemove ) {
 				unset( $templates[$pageId] );
@@ -60,23 +61,30 @@ class RecognizedTemplatesProvider {
 		return $templates;
 	}
 
-	private function getNamespacesTemplates( $db, $namespaces ) {
-		$sql = ( new \WikiaSQL() )
+	public function getNamespacesTemplates() {
+		if ( isset( $this->namespacesTemplates ) ) {
+			return $this->namespacesTemplates;
+		}
+
+		if ( empty( $this->namespaces ) ) {
+			return [];
+		}
+
+		$this->namespacesTemplates = ( new \WikiaSQL() )
 			->SELECT()->DISTINCT( 'p2.page_id as temp_id' )
 			->FROM( 'page' )->AS_( 'p' )
 			->INNER_JOIN( 'templatelinks' )->AS_( 't' )
 			->ON( 't.tl_from', 'p.page_id' )
 			->INNER_JOIN( 'page' )->AS_( 'p2' )
 			->ON( 'p2.page_title', 't.tl_title' )
-			->WHERE( 'p.page_namespace' )->IN( $namespaces )
+			->WHERE( 'p.page_namespace' )->IN( $this->namespaces )
 			->AND_( 'p2.page_namespace' )->EQUAL_TO( NS_TEMPLATE )
-			->AND_( 'p.page_id' )->NOT_EQUAL_TO( Title::newMainPage()->getArticleID() );
+			->AND_( 'p.page_id' )->NOT_EQUAL_TO( Title::newMainPage()->getArticleID() )
+			->runLoop( $this->getDB(), function ( &$pages, $row ) {
+				$pages[] = $row->temp_id;
+			} );
 
-		$pages = $sql->runLoop( $db, function ( &$pages, $row ) {
-			$pages[] = $row->temp_id;
-		} );
-
-		return $pages;
+		return $this->namespacesTemplates;
 	}
 
 	/**

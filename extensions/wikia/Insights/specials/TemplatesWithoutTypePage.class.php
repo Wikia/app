@@ -101,11 +101,12 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 
 		$recognizedProvider = new RecognizedTemplatesProvider(
 			( new TemplateClassificationService() ),
-			$wgCityId
+			$wgCityId,
+			$wgContentNamespaces
 		);
 
 		$cnNotRecognizedTemplates =
-			$recognizedProvider->getNotRecognizedTemplatesUsedOnNamespaces( $wgContentNamespaces );
+			$recognizedProvider->getNotRecognizedTemplates();
 
 		foreach( $cnNotRecognizedTemplates as $notRecognizedTemplate ) {
 			$title = Title::newFromID( $notRecognizedTemplate );
