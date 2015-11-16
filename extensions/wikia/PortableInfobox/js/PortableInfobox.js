@@ -29,18 +29,14 @@
 
 	var CollapsibleGroup = {
 		init: function() {
-			var $collapsibleGroups = $('.pi-collapse');
-
-			$collapsibleGroups.each( function( index, group ) {
-				var $group = $collapsibleGroups.eq(index),
-					$header = $group.find('.pi-header');
-
-				$header.click( function() {
-					$group.toggleClass('pi-collapse-closed');
-				});
-			});
+			$('.pi-header').click( function( e ) {
+				$(this)
+					.closest('.pi-collapse')
+					.toggleClass('pi-collapse-closed')
+					.toggleClass('pi-collapse-open');
+			} );
 		}
-	}
+	};
 
 	ImageCollection.init();
 	CollapsibleGroup.init();
