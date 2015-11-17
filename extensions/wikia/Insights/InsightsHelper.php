@@ -93,6 +93,13 @@ class InsightsHelper {
 			);
 		}
 
+		if ( !empty( $wgEnableTemplateClassificationExt ) ) {
+			self::$insightsPages = array_merge(
+				[ InsightsPagesWithoutInfoboxModel::INSIGHT_TYPE => 'InsightsPagesWithoutInfoboxModel' ],
+				self::$insightsPages
+			);
+		}
+
 		return self::$insightsPages;
 	}
 

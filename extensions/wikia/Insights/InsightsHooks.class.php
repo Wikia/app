@@ -98,9 +98,12 @@ class InsightsHooks {
 		}
 
 		if ( $wgEnableTemplateClassificationExt ) {
-			$wgQueryPages[] = [ 'TemplatesWithoutTypePage', 'Templateswithouttype' ];
+			$wgQueryPages = array_merge( $wgQueryPages, [
+				[ 'PagesWithoutInfobox', 'Pageswithoutinfobox' ],
+				[ 'TemplatesWithoutTypePage', 'Templateswithouttype' ]
+			] );
 		}
-
+		
 		return true;
 	}
 
