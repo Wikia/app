@@ -1305,7 +1305,7 @@ $wgAdDriverUseAdsAfterInfobox = false;
  * @name $wgAdDriverUseGoogleConsumerSurveys
  * Whether to enable Google Consumer Surveys
  */
-$wgAdDriverUseGoogleConsumerSurveys = false;
+$wgAdDriverUseGoogleConsumerSurveys = true;
 
 /**
  * @name $wgAdDriverGoogleConsumerSurveysCountries
