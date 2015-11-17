@@ -109,6 +109,7 @@ if ( $wgProfiler instanceof Profiler ) {
 	}
 }
 Transaction::setEntryPoint(Transaction::ENTRY_POINT_MAINTENANCE);
+Transaction::setAttribute(Transaction::PARAM_MAINTENANCE_SCRIPT, $maintClass);
 // Wikia change - end
 
 if ( $maintenance->getDbType() === Maintenance::DB_ADMIN &&

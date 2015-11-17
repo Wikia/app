@@ -57,6 +57,7 @@ define(
 	 */
 	function initOptions() {
 		var options = {
+			wrap: true,
 			showPrintMargin: false,
 			fontFamily: 'Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace'
 		};

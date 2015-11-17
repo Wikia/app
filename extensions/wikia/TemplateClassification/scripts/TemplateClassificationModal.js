@@ -186,7 +186,7 @@ function ($, mw, loader, nirvana, tracker, labeling) {
 			vars: {
 				id: 'TemplateClassificationEditModal',
 				classes: ['template-classification-edit-modal'],
-				size: 'small', // size of the modal
+				size: 'medium', // size of the modal
 				content: content, // content
 				title: labeling.getTitle()
 			}
