@@ -107,8 +107,8 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 
 		$cnNotRecognizedTemplates = $recognizedProvider->getNotRecognizedTemplates();
 
-		foreach( $cnNotRecognizedTemplates as $notRecognizedTemplate ) {
-			$title = Title::newFromID( $notRecognizedTemplate );
+		foreach( $cnNotRecognizedTemplates as $pageId => $notRecognizedTemplate ) {
+			$title = Title::newFromID( $pageId );
 			if ( $title instanceof Title ) {
 				$links = $title->getIndirectLinks();
 				$templatesWithoutType[] =
