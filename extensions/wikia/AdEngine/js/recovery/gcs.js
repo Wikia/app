@@ -22,7 +22,7 @@ define('ext.wikia.adEngine.recovery.gcs', [
 		articleUrl = loc.href,
 		contentId = 'everything',
 		logGroup = 'ext.wikia.adEngine.recovery.gcs',
-		publisherId = win.wgStagingEnvironment ? 'grm5podgin6cup4wmqjqct4h5e' : 'ltvovxgnp5p3wkkemdja6sd2wm';
+		publisherId = win.wgDevelEnvironment ? 'grm5podgin6cup4wmqjqct4h5e' : 'ltvovxgnp5p3wkkemdja6sd2wm';
 
 	function getTopPos(el) {
 		var pos;
