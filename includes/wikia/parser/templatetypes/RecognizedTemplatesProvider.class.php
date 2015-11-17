@@ -11,13 +11,13 @@ class RecognizedTemplatesProvider {
 	const ERROR_MESSAGE = 'ExternalTemplatesProviderError';
 
 	private $tcs;
-	private $wikiaId;
+	private $wikiId;
 	private $namespaces;
 	private $namespacesTemplates;
 
-	public function __construct( TemplateClassificationService $tcs, $wikiaId, $namespaces = [] ) {
+	public function __construct( TemplateClassificationService $tcs, $wikiId, $namespaces = [] ) {
 		$this->tcs = $tcs;
-		$this->wikiaId = $wikiaId;
+		$this->wikiId = $wikiId;
 		$this->namespaces = $namespaces;
 	}
 
@@ -26,7 +26,7 @@ class RecognizedTemplatesProvider {
 		if ( empty( $this->namespaces ) ) {
 			return $recognizedTemplates;
 		}
-		return $this->intersectSets( $this->getNamespacesTemplates(), $recognizedTemplates );
+		return $this->intersectSets( $recognizedTemplates, $this->getNamespacesTemplates() );
 	}
 
 	public function getNotRecognizedTemplates() {
@@ -34,27 +34,27 @@ class RecognizedTemplatesProvider {
 		if ( empty( $this->namespaces ) ) {
 			return $notRecognizedTemplates;
 		}
-		return $this->intersectSets( $this->getNamespacesTemplates(), $notRecognizedTemplates );
+		return $this->intersectSets( $notRecognizedTemplates, $this->getNamespacesTemplates() );
 	}
 
-	public static function isRecognized( $type ) {
-		return $type !== TemplateClassificationService::TEMPLATE_UNKNOWN
-		&& $type !== AutomaticTemplateTypes::TEMPLATE_UNCLASSIFIED
-		&& $type !== AutomaticTemplateTypes::TEMPLATE_OTHER;
+	public static function isUnrecognized( $type ) {
+		return in_array( $type, [
+			TemplateClassificationService::TEMPLATE_UNKNOWN,
+			AutomaticTemplateTypes::TEMPLATE_UNCLASSIFIED,
+			AutomaticTemplateTypes::TEMPLATE_OTHER
+		] );
 	}
 
 	private function getTemplates( $getRecognized = true ) {
 		try {
-			$templates = $this->tcs->getTemplatesOnWiki( $this->wikiaId );
+			$templates = $this->tcs->getTemplatesOnWiki( $this->wikiId );
 		} catch ( \Swagger\Client\ApiException $exception ) {
 			$context = [ 'TCSApiException' => $exception ];
 			$this->handleException( $context );
 			return [];
 		}
 		foreach ( $templates as $pageId => $type ) {
-			$isRecognized = self::isRecognized( $type );
-			$shouldRemove = $getRecognized ? !$isRecognized : $isRecognized;
-			if ( $shouldRemove ) {
+			if ( !( $getRecognized xor self::isUnrecognized( $type ) ) ) {
 				unset( $templates[$pageId] );
 			}
 		}
@@ -81,7 +81,7 @@ class RecognizedTemplatesProvider {
 			->AND_( 'p2.page_namespace' )->EQUAL_TO( NS_TEMPLATE )
 			->AND_( 'p.page_id' )->NOT_EQUAL_TO( Title::newMainPage()->getArticleID() )
 			->runLoop( $this->getDB(), function ( &$pages, $row ) {
-				$pages[] = $row->temp_id;
+				$pages[$row->temp_id] = $row->temp_id;
 			} );
 
 		return $this->namespacesTemplates;
@@ -90,18 +90,12 @@ class RecognizedTemplatesProvider {
 	/**
 	 * Remove templates from second set that doesn't exist in first set
 	 */
-	private function intersectSets( $namespacesTemplates, $recognizedTemplates ) {
-		$namespacesRecognizedTemplates = [];
-		foreach ( $recognizedTemplates as $pageId => $type ) {
-			if ( in_array( $pageId, $namespacesTemplates ) ) {
-				$namespacesRecognizedTemplates[] = $pageId;
-			}
-		}
-		return $namespacesRecognizedTemplates;
+	private function intersectSets( $templates, $namespacesTemplates ) {
+		return array_intersect_key( $templates, $namespacesTemplates );
 	}
 
 	private function getDB() {
-		$wikiaDBName = WikiFactory::IDtoDB( $this->wikiaId );
+		$wikiaDBName = WikiFactory::IDtoDB( $this->wikiId );
 		return wfGetDB( DB_SLAVE, [], $wikiaDBName );
 	}
 
