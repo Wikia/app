@@ -91,7 +91,6 @@ class PipelineEventProducer {
 	public static function onArticleUndelete( Title &$oTitle, $isNew = false ) {
 		$ns = self::preparePageNamespaceName( $oTitle );
 		$data = [
-			'isNew' => $isNew,
 			'revisionId' => $oTitle->getLatestRevID()
 		];
 
@@ -110,7 +109,6 @@ class PipelineEventProducer {
 	public static function onTitleMoveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $pageId, $redirectId = 0 ) {
 		$ns = self::preparePageNamespaceName( $oNewTitle );
 		$data = [
-			'redirectId' => $redirectId,
 			'revisionId' => $oNewTitle->getLatestRevID()
 		];
 
