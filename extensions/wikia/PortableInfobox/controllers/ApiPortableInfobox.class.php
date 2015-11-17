@@ -47,8 +47,10 @@ class ApiPortableInfobox extends ApiBase {
 		$wgParser->firstCallInit();
 		$wgParser->startExternalParse( Title::newFromText( $title ), ParserOptions::newFromContext( $this->getContext() ), Parser::OT_HTML, true );
 
-		foreach( $arguments as $key => &$value ) {
-			$value =  $wgParser->replaceVariables( $value );
+		if ( is_array( $arguments ) ) {
+			foreach( $arguments as $key => &$value ) {
+				$value =  $wgParser->replaceVariables( $value );
+			}
 		}
 
 		$frame = $wgParser->getPreprocessor()->newCustomFrame( $arguments );

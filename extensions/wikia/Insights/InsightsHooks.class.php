@@ -91,12 +91,19 @@ class InsightsHooks {
 	 * @return bool
 	 */
 	public static function onwgQueryPages( Array &$wgQueryPages ) {
-		global $wgEnableInsightsInfoboxes;
+		global $wgEnableInsightsInfoboxes, $wgEnableTemplateClassificationExt;
 
 		if ( $wgEnableInsightsInfoboxes ) {
 			$wgQueryPages[] = [ 'UnconvertedInfoboxesPage', 'Nonportableinfoboxes' ];
 		}
 
+		if ( $wgEnableTemplateClassificationExt ) {
+			$wgQueryPages = array_merge( $wgQueryPages, [
+				[ 'PagesWithoutInfobox', 'Pageswithoutinfobox' ],
+				[ 'TemplatesWithoutTypePage', 'Templateswithouttype' ]
+			] );
+		}
+		
 		return true;
 	}
 

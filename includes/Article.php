@@ -735,6 +735,8 @@ class Article extends Page {
 	public function showDiffPage() {
 		global $wgRequest, $wgUser;
 
+		Transaction::setAttribute( Transaction::PARAM_ACTION, 'diff' ); # Wikia change
+
 		$diff = $wgRequest->getVal( 'diff' );
 		$rcid = $wgRequest->getVal( 'rcid' );
 		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getGlobalPreference( 'diffonly' ) );
