@@ -204,6 +204,9 @@ abstract class DatabaseBase implements DatabaseType {
 	// @const log 1% of queries
 	const QUERY_SAMPLE_RATE = 0.01;
 
+	// @const log queries that took more than 15 seconds
+	const SLOW_QUERY_LOG_THRESHOLD = 15;
+
 	protected $sampler = null;
 
 # ------------------------------------------------------------------------------
@@ -3731,17 +3734,25 @@ abstract class DatabaseBase implements DatabaseType {
 			$num_rows = false;
 		}
 
+		$context = [
+			'method'      => $fname,
+			'elapsed'     => $elapsedTime,
+			'num_rows'    => $num_rows,
+			'cluster'     => $wgDBcluster,
+			'server'      => $this->mServer,
+			'server_role' => $isMaster ? 'master' : 'slave',
+			'db_name'     => $this->mDBname,
+			'exception'   => new Exception(), // log the backtrace
+		];
+
 		if ( $this->getSampler()->shouldSample() ) {
-			$this->getWikiaLogger()->info( "SQL $sql", [
-				'method'      => $fname,
-				'elapsed'     => $elapsedTime,
-				'num_rows'    => $num_rows,
-				'cluster'     => $wgDBcluster,
-				'server'      => $this->mServer,
-				'server_role' => $isMaster ? 'master' : 'slave',
-				'db_name'     => $this->mDBname,
-				'exception'   => new Exception(), // log the backtrace
-			] );
+			$this->getWikiaLogger()->info( "SQL {$sql}", $context );
+		}
+
+		# PLATFORM-1648: 1% sampling does not really catch spikes of slow DB queries
+		# e.g. queries on events_local_users via DataProvider::GetTopFiveUsers
+		if ( $elapsedTime > self::SLOW_QUERY_LOG_THRESHOLD ) {
+			$this->getWikiaLogger()->info( "Slow query {$sql}", $context );
 		}
 	}
 
