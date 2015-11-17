@@ -118,6 +118,8 @@ class TemplateTypesParser {
 		$wikitext = preg_replace( '/^[:#* \n]+/', '', $wikitext );
 		//remove all bold and italics from all of template content
 		$wikitext = preg_replace( '/\'{2,}/', '', $wikitext );
+		//remove all headings from all of template content
+		$wikitext = str_replace( '=', '', $wikitext );
 		//remove all newlines from the middle of the template text.
 		$wikitext = preg_replace( '/\n/', ' ', $wikitext );
 
@@ -130,7 +132,7 @@ class TemplateTypesParser {
 	 * @return string
 	 */
 	private static function wrapContextLink( $wikitext ) {
-		return sprintf('<div class="%s">%s</div>', self::CLASS_CONTEXT_LINK, $wikitext);
+		return sprintf( '<div class="%s">%s</div>', self::CLASS_CONTEXT_LINK, $wikitext );
 	}
 
 	/**

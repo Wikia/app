@@ -118,6 +118,10 @@ in \'\'[[and some more crazy stuff!]]\'\'.\'\'',
 			[
 				'   \'\'\'Bold [[Foo Bar]] - [[foo|here]] with spaces\'\'\'.',
 				'Bold [[Foo Bar]] - [[foo|here]] with spaces.',
+			],
+			[
+				'===Headers [[Foo Bar]]=== - [[foo|here]] in context-links*!.',
+				'Headers [[Foo Bar]] - [[foo|here]] in context-links*!.'
 			]
 		];
 	}
