@@ -62,18 +62,6 @@ return array(
 		'remoteBasePath' => $GLOBALS['wgStylePath'],
 		'localBasePath' => $GLOBALS['wgStyleDirectory'],
 	),
-	'skins.vector' => array(
-		// Keep in sync with WebInstallerOutput::getCSS()
-		'styles' => array(
-			'common/commonElements.css' => array( 'media' => 'screen' ),
-			'common/commonContent.css' => array( 'media' => 'screen' ),
-			'common/commonInterface.css' => array( 'media' => 'screen' ),
-			'vector/screen.css' => array( 'media' => 'screen' ),
-		),
-		'scripts' => 'vector/vector.js',
-		'remoteBasePath' => $GLOBALS['wgStylePath'],
-		'localBasePath' => $GLOBALS['wgStyleDirectory'],
-	),
 
 	/* jQuery */
 
@@ -237,10 +225,6 @@ return array(
 				'resources/jquery.ui/themes/default/jquery.ui.core.css',
 				'resources/jquery.ui/themes/default/jquery.ui.theme.css',
 			),
-			'vector' => array(
-				'resources/jquery.ui/themes/vector/jquery.ui.core.css',
-				'resources/jquery.ui/themes/vector/jquery.ui.theme.css',
-			),
 			// wikia change - begin
 			// @author macbre
 			'oasis' => array(
@@ -282,7 +266,6 @@ return array(
 		'scripts' => 'resources/jquery.ui/jquery.ui.resizable.js',
 		'skinStyles' => array(
 			'default' => 'resources/jquery.ui/themes/default/jquery.ui.resizable.css',
-			'vector' => 'resources/jquery.ui/themes/vector/jquery.ui.resizable.css',
 		),
 		'dependencies' => array( 'jquery.ui.core', 'jquery.ui.widget', 'jquery.ui.mouse' ),
 		'group' => 'jquery.ui',
@@ -291,7 +274,6 @@ return array(
 		'scripts' => 'resources/jquery.ui/jquery.ui.selectable.js',
 		'skinStyles' => array(
 			'default' => 'resources/jquery.ui/themes/default/jquery.ui.selectable.css',
-			'vector' => 'resources/jquery.ui/themes/vector/jquery.ui.selectable.css',
 		),
 		'dependencies' => array( 'jquery.ui.core', 'jquery.ui.widget', 'jquery.ui.mouse' ),
 		'group' => 'jquery.ui',
@@ -307,7 +289,6 @@ return array(
 		'dependencies' => array( 'jquery.ui.core', 'jquery.ui.widget' ),
 		'skinStyles' => array(
 			'default' => 'resources/jquery.ui/themes/default/jquery.ui.accordion.css',
-			'vector' => 'resources/jquery.ui/themes/vector/jquery.ui.accordion.css',
 		),
 		'group' => 'jquery.ui',
 	),
@@ -316,7 +297,6 @@ return array(
 		'dependencies' => array( 'jquery.ui.core', 'jquery.ui.widget', 'jquery.ui.position' ),
 		'skinStyles' => array(
 			'default' => 'resources/jquery.ui/themes/default/jquery.ui.autocomplete.css',
-			'vector' => 'resources/jquery.ui/themes/vector/jquery.ui.autocomplete.css',
 		),
 		'group' => 'jquery.ui',
 	),
@@ -325,7 +305,6 @@ return array(
 		'dependencies' => array( 'jquery.ui.core', 'jquery.ui.widget' ),
 		'skinStyles' => array(
 			'default' => 'resources/jquery.ui/themes/default/jquery.ui.button.css',
-			'vector' => 'resources/jquery.ui/themes/vector/jquery.ui.button.css',
 		),
 		'group' => 'jquery.ui',
 	),
@@ -334,7 +313,6 @@ return array(
 		'dependencies' => 'jquery.ui.core',
 		'skinStyles' => array(
 			'default' => 'resources/jquery.ui/themes/default/jquery.ui.datepicker.css',
-			'vector' => 'resources/jquery.ui/themes/vector/jquery.ui.datepicker.css',
 		),
 		'languageScripts' => array(
 			'af' => 'resources/jquery.ui/i18n/jquery.ui.datepicker-af.js',
@@ -412,7 +390,6 @@ return array(
 		),
 		'skinStyles' => array(
 			'default' => 'resources/jquery.ui/themes/default/jquery.ui.dialog.css',
-			'vector' => 'resources/jquery.ui/themes/vector/jquery.ui.dialog.css',
 		),
 		'group' => 'jquery.ui',
 	),
@@ -421,7 +398,6 @@ return array(
 		'dependencies' => array( 'jquery.ui.core', 'jquery.ui.widget' ),
 		'skinStyles' => array(
 			'default' => 'resources/jquery.ui/themes/default/jquery.ui.progressbar.css',
-			'vector' => 'resources/jquery.ui/themes/vector/jquery.ui.progressbar.css',
 		),
 		'group' => 'jquery.ui',
 	),
@@ -430,7 +406,6 @@ return array(
 		'dependencies' => array( 'jquery.ui.core', 'jquery.ui.widget', 'jquery.ui.mouse' ),
 		'skinStyles' => array(
 			'default' => 'resources/jquery.ui/themes/default/jquery.ui.slider.css',
-			'vector' => 'resources/jquery.ui/themes/vector/jquery.ui.slider.css',
 		),
 		'group' => 'jquery.ui',
 	),
@@ -439,7 +414,6 @@ return array(
 		'dependencies' => array( 'jquery.ui.core', 'jquery.ui.widget' ),
 		'skinStyles' => array(
 			'default' => 'resources/jquery.ui/themes/default/jquery.ui.tabs.css',
-			'vector' => 'resources/jquery.ui/themes/vector/jquery.ui.tabs.css',
 		),
 		'group' => 'jquery.ui',
 	),

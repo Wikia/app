@@ -134,7 +134,7 @@ abstract class Skin extends ContextSource {
 		} elseif ( isset( $skinNames[$wgDefaultSkin] ) ) {
 			return $wgDefaultSkin;
 		} else {
-			return 'vector';
+			return 'oasis';
 		}
 	}
 
@@ -171,9 +171,9 @@ abstract class Skin extends ContextSource {
 				# except by SQL manipulation if a previously valid skin name
 				# is no longer valid.
 				wfDebug( "Skin class does not exist: $className\n" );
-				$className = 'SkinVector';
+				$className = 'SkinOasis';
 				if ( !defined( 'MW_COMPILED' ) ) {
-					require_once( "{$wgStyleDirectory}/Vector.php" );
+					require_once( "{$wgStyleDirectory}/Oasis.php" );
 				}
 			}
 		}
