@@ -95,9 +95,9 @@ class TemplateTypesParserTest extends WikiaBaseTest
 	 * @dataProvider testSanitizeContextLinkWikitextDataProvider
 	 */
 	public function testSanitizeContextLinkWikitext( $contextLinkWikitext, $expectedTemplateWikiext ) {
-		$changedTemplateWikiext = TemplateTypesParser::sanitizeContextLinkWikitext( $contextLinkWikitext );
+		$sanitizedTemplateWikiext = TemplateTypesParser::sanitizeContextLinkWikitext( $contextLinkWikitext );
 
-		$this->assertEquals( $changedTemplateWikiext, $expectedTemplateWikiext );
+		$this->assertEquals( $sanitizedTemplateWikiext, $expectedTemplateWikiext );
 	}
 
 	public function testSanitizeContextLinkWikitextDataProvider() {
@@ -122,6 +122,10 @@ in \'\'[[and some more crazy stuff!]]\'\'.\'\'',
 			[
 				'===Headers [[Foo Bar]]=== - [[foo|here]] in context-links*!.',
 				'Headers [[Foo Bar]] - [[foo|here]] in context-links*!.'
+			],
+			[
+				'===Headers [[Foo Bar]]====>[[foo|here]] in context-links*!.',
+				'Headers [[Foo Bar]]=>[[foo|here]] in context-links*!.'
 			]
 		];
 	}

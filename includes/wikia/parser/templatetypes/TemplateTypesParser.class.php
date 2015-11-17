@@ -26,7 +26,6 @@ class TemplateTypesParser {
 				case TemplateClassificationService::TEMPLATE_REF:
 					$text = self::handleReferencesTemplate();
 					break;
-				default:
 			}
 		}
 
@@ -46,7 +45,7 @@ class TemplateTypesParser {
 		wfProfileIn( __METHOD__ );
 		$title = Title::newFromText( $templateTitle, NS_TEMPLATE );
 
-		if ( self::templateReadyToProcess( $templateWikitext ) && self::isValidTitle( $title ) ) {
+		if ( self::templateShouldBeProcessed( $templateWikitext ) && self::isValidTitle( $title ) ) {
 			$type = self::getTemplateType( $title );
 			if ( $type == AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK ) {
 				$templateWikitext = self::handleContextLinksTemplate( $templateWikitext );
@@ -72,7 +71,12 @@ class TemplateTypesParser {
 		return $type;
 	}
 
-	private static function templateReadyToProcess( $templateWikitext ) {
+	/**
+	 * @desc check if template should be processed
+	 * @param $templateWikitext
+	 * @return bool
+	 */
+	private static function templateShouldBeProcessed( $templateWikitext ) {
 		global $wgEnableTemplateTypesParsing, $wgArticleAsJson;
 
 		return $wgEnableTemplateTypesParsing
@@ -107,9 +111,18 @@ class TemplateTypesParser {
 		//remove all bold and italics from all of template content
 		$wikitext = preg_replace( '/\'{2,}/', '', $wikitext );
 		//remove all headings from all of template content
-		$wikitext = str_replace( '=', '', $wikitext );
+		$wikitext = self::removeHeadings($wikitext);
 		//remove all newlines from the middle of the template text.
 		$wikitext = preg_replace( '/\n/', ' ', $wikitext );
+
+		return $wikitext;
+	}
+
+	private static function removeHeadings( $wikitext ) {
+		for ( $i = 6; $i >= 1; --$i ) {
+			$h = str_repeat( '=', $i );
+			$wikitext = preg_replace( "/$h(.+)$h/m", "\\1", $wikitext );
+		}
 
 		return $wikitext;
 	}
