@@ -436,6 +436,14 @@ class DataProvider {
 	 * @return array
 	 */
 	final public static function GetTopFiveUsers($limit = 7) {
+		global $wgDBReadOnly;
+
+		# PLATFORM-1648: running queries on events_local_users in Reston takes ages
+		if ( !empty( $wgDBReadOnly ) ) {
+			wfDebug( __METHOD__ . " disabled\n" );
+			return [];
+		}
+
 		wfProfileIn(__METHOD__);
 
 		$fname = __METHOD__;
