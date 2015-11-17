@@ -44,7 +44,7 @@ class TemplateTypesParser {
 	}
 
 	/**
-	 * @desc fir given template title process it's content accordingly
+	 * @desc for given template title process it's content accordingly
 	 *
 	 * @param $title
 	 * @param string $text
@@ -98,7 +98,7 @@ class TemplateTypesParser {
 	 * @param $wikitext
 	 * @return string
 	 */
-	public static function handleContextLinksTemplate( $wikitext ) {
+	private static function handleContextLinksTemplate( $wikitext ) {
 		$wikitext = self::sanitizeContextLinkWikitext( $wikitext );
 		$wikitext = self::wrapContextLink( $wikitext );
 

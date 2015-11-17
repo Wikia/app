@@ -89,35 +89,35 @@ class TemplateTypesParserTest extends WikiaBaseTest
 	}
 
 	/**
-	 * @param $templateWikitext
+	 * @param $contextLinkWikitext
 	 * @param $expectedTemplateWikiext
 	 *
-	 * @dataProvider testHandleContextLinksTemplateDataProvider
+	 * @dataProvider testSanitizeContextLinkWikitextDataProvider
 	 */
-	public function testHandleContextLinksTemplate( $templateWikitext, $expectedTemplateWikiext ) {
-		$changedTemplateWikiext = TemplateTypesParser::handleContextLinksTemplate( $templateWikitext );
+	public function testSanitizeContextLinkWikitext( $contextLinkWikitext, $expectedTemplateWikiext ) {
+		$changedTemplateWikiext = TemplateTypesParser::sanitizeContextLinkWikitext( $contextLinkWikitext );
 
 		$this->assertEquals( $changedTemplateWikiext, $expectedTemplateWikiext );
 	}
 
-	public function testHandleContextLinksTemplateDataProvider() {
+	public function testSanitizeContextLinkWikitextDataProvider() {
 		return [
 			[
 				'[[:Disciplinary hearing of Harry Potter|Disciplinary hearing of Harry Potter]]',
-				'<div class="' . TemplateTypesParser::CLASS_CONTEXT_LINK . '">[[:Disciplinary hearing of Harry Potter|Disciplinary hearing of Harry Potter]]</div>'
+				'[[:Disciplinary hearing of Harry Potter|Disciplinary hearing of Harry Potter]]'
 			],
 			[
 				'* [[Let\'s see powerrangers]] - \'\'[[Super Sentai]]\'\' counterpart
 in \'\'[[and some more crazy stuff!]]\'\'.\'\'',
-				'<div class="' . TemplateTypesParser::CLASS_CONTEXT_LINK . '">[[Let\'s see powerrangers]] - [[Super Sentai]] counterpart in [[and some more crazy stuff!]].</div>'
+				'[[Let\'s see powerrangers]] - [[Super Sentai]] counterpart in [[and some more crazy stuff!]].'
 			],
 			[
 				':\'\'Italics [[Foo Bar]] - [[foo|here]]\'\'.',
-				'<div class="' . TemplateTypesParser::CLASS_CONTEXT_LINK . '">Italics [[Foo Bar]] - [[foo|here]].</div>',
+				'Italics [[Foo Bar]] - [[foo|here]].',
 			],
 			[
 				'   \'\'\'Bold [[Foo Bar]] - [[foo|here]] with spaces\'\'\'.',
-				'<div class="' . TemplateTypesParser::CLASS_CONTEXT_LINK . '">Bold [[Foo Bar]] - [[foo|here]] with spaces.</div>',
+				'Bold [[Foo Bar]] - [[foo|here]] with spaces.',
 			]
 		];
 	}
