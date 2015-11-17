@@ -23,8 +23,12 @@ describe('ext.wikia.adEngine.template.modalOasisHandler', function () {
 			}
 		},
 		modalMock: {
-			$content: {},
-			$element: {},
+			$content: {
+				append: noop
+			},
+			$element: {
+				width: noop
+			},
 			$close: {
 				hide: noop,
 				show: noop
@@ -47,11 +51,17 @@ describe('ext.wikia.adEngine.template.modalOasisHandler', function () {
 		};
 	});
 
-	it('Creates Wikia UI modal', function () {
-		spyOn(mocks.wikiaUiModalMock, 'createComponent');
-		getModule().prototype.create(mocks.params);
+	it('Default case: creates Wikia UI modal which is immediately shown', function () {
+		spyOn(mocks.wikiaUiModalMock, 'createComponent').and.callThrough();
+		spyOn(mocks.modalMock, 'show');
+		getModule().prototype.create(
+			mocks.params.adContainer,
+			mocks.params.modalVisible,
+			mocks.params.closeButtonDelay
+		);
 
 		expect(mocks.wikiaUiModalMock.createComponent.calls.count()).toEqual(1);
+		expect(mocks.modalMock.show.calls.count()).toEqual(1);
 	});
 
 });
