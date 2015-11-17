@@ -1,13 +1,13 @@
 <div>
-	<form method="GET">
-		<input type="text" value="<?= $template ?>">
-		<select>
+	<form method="GET" action="">
+		<input name="template" type="text" value="<?= Sanitizer::encodeAttribute( $template ) ?>">
+		<select name="type">
 			<option value="">All types</option>
 			<?php foreach( $groups as $group ): ?>
-				<option value="<?= $group ?>" <?php if( $group == $type ): ?>selected<?php endif ?>><?= wfMessage( 'template-classification-type-' . $group )->escaped() ?></option>
+				<option value="<?= Sanitizer::encodeAttribute( $group ) ?>" <?php if( $group == $type ): ?>selected<?php endif ?>><?= wfMessage( 'template-classification-type-' . $group )->escaped() ?></option>
 			<?php endforeach ?>
 		</select>
-		<input type="submit">
+		<input type="submit" value="<?= wfMessage( 'template-classification-special-search' )->escaped() ?>">
 	</form>
 </div>
 <table class="templates-hq">
@@ -24,13 +24,28 @@
 		<?php foreach( $templates as $template ): ?>
 			<tr>
 				<td>
-					<a href="<?= $template['url'] ?>"><?= $template['title']; ?></a><br/>
-					Last edited by <a href="<?= $template['revision']['userpage'] ?>"><?= $template['revision']['username'] ?></a>,
-					<?= date( 'F j, Y', $template['revision']['timestamp'] ) ?>
+					<a href="<?= Sanitizer::cleanUrl( $template['url'] ) ?>">
+						<?= Sanitizer::escapeHtmlAllowEntities( $template['title'] ); ?>
+					</a>
+					<br/>
+					<?php if ( isset( $template['revision'] ) ) : ?>
+						<?= wfMessage( 'template-classification-special-last-edit' )->rawParams(
+							Xml::element( 'a', [
+								'href' => $template['revision']['userpage']
+							],
+								$template['revision']['username']
+							),
+							date( 'F j, Y', $template['revision']['timestamp'] )
+						)->escaped() ?>
+					<?php endif; ?>
 				</td>
-				<td><a href="<?= $template['wlh'] ?>"><?= $template['count']; ?></a></td>
+				<td><a href="<?= Sanitizer::cleanUrl( $template['wlh'] ) ?>"><?= Sanitizer::escapeHtmlAllowEntities( $template['count'] ); ?></a></td>
 				<td><?= $groupName ?></td>
 			</tr>
 		<?php endforeach ?>
 	<?php endforeach ?>
 </table>
+
+<?php if ( $paginatorBar ) : ?>
+	<p><?= $paginatorBar ?></p>
+<?php endif ?>

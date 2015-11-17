@@ -50,6 +50,8 @@ $messages['en'] = [
 	'template-classification-indicator' => 'Template type:',
 
 	'template-classification-notification-error-retry' => 'Something went wrong and we could not classify this template. Could you retry it using the link under a title of the page?',
+	'template-classification-special-last-edit' => 'Last edited by $1, $2',
+	'template-classification-special-search' => 'Search'
 ];
 
 $messages['qqq'] = [
