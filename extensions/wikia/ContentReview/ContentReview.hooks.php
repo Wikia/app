@@ -226,7 +226,7 @@ class Hooks {
 
 			if ( ImportJS::isImportJSPage( $title ) ) {
 				ImportJS::purgeImportScripts();
-				$title->invalidateCache();
+				\WikiPage::factory( $title )->doPurge();
 			}
 		}
 
