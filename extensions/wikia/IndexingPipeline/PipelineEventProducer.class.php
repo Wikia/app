@@ -55,9 +55,12 @@ class PipelineEventProducer {
 		$ns = self::preparePageNamespaceName( $article->getTitle() );
 		$action = $rev->getPrevious() === null ? self::ACTION_CREATE : self::ACTION_UPDATE;
 		$id = $article->getId();
+		$data = [
+			'revisionId' => $rev->getId()
+		];
 
-		self::send( 'onNewRevisionFromEditComplete', $id );
-		self::sendFlaggedSyntax( $action, $id, $ns );
+		self::send( 'onNewRevisionFromEditComplete', $id, $data  );
+		self::sendFlaggedSyntax( $action, $id, $ns, $data );
 
 		return true;
 	}
@@ -69,9 +72,12 @@ class PipelineEventProducer {
 	 */
 	public static function onArticleDeleteComplete( &$oPage, &$oUser, $reason, $pageId ) {
 		$ns = self::preparePageNamespaceName( $oPage->getTitle() );
+		$data = [
+			'revisionId' => $oPage->getTitle()->getLatestRevID()
+		];
 
-		self::send( 'onArticleDeleteComplete', $pageId );
-		self::sendFlaggedSyntax( self::ACTION_DELETE, $pageId, $ns );
+		self::send( 'onArticleDeleteComplete', $pageId, $data );
+		self::sendFlaggedSyntax( self::ACTION_DELETE, $pageId, $ns, $data );
 
 		return true;
 	}
@@ -85,7 +91,8 @@ class PipelineEventProducer {
 	public static function onArticleUndelete( Title &$oTitle, $isNew = false ) {
 		$ns = self::preparePageNamespaceName( $oTitle );
 		$data = [
-			'isNew' => $isNew
+			'isNew' => $isNew,
+			'revisionId' => $oTitle->getLatestRevID()
 		];
 
 		self::send( 'onArticleUndelete', $oTitle->getArticleId(), $data );
@@ -103,7 +110,8 @@ class PipelineEventProducer {
 	public static function onTitleMoveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $pageId, $redirectId = 0 ) {
 		$ns = self::preparePageNamespaceName( $oNewTitle );
 		$data = [
-			'redirectId' => $redirectId
+			'redirectId' => $redirectId,
+			'revisionId' => $oNewTitle->getLatestRevID()
 		];
 
 		self::send( 'onTitleMoveComplete', $pageId, $data );
@@ -128,25 +136,12 @@ class PipelineEventProducer {
 		$msg = new stdClass();
 		$msg->cityId = $wgCityId;
 		$msg->pageId = $pageId;
-		$msg->revisionId = self::getLatestRevision( $pageId );
 
 		foreach ( $params as $param => $value ) {
 			$msg->{$param} = $value;
 		}
 
 		return $msg;
-	}
-
-	/**
-	 * Fetch latest revision of a given article based on its Id
-	 * Unfortunately, we cannot rely on title cache, thus Title::GAID_FOR_UPDATE
-	 *
-	 * @param $pageId
-	 * @return int
-	 */
-	protected static function getLatestRevision( $pageId ) {
-		$title = Title::newFromID( $pageId );
-		return $title ? $title->getLatestRevID(Title::GAID_FOR_UPDATE) : null;
 	}
 
 	/**
