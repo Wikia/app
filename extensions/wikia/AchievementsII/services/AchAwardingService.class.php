@@ -90,16 +90,16 @@ class AchAwardingService {
 			return;
 		}
 
-		wfProfileIn(__METHOD__ );
+		wfProfileIn( __METHOD__ );
 
-		$this->mUser = User::newFromID($sharerID );
+		$this->mUser = User::newFromID( $sharerID );
 
-		if (!$this->mUser->isLoggedIn() ) {
+		if ( !$this->mUser->isLoggedIn() ) {
 			wfProfileOut( __METHOD__ );
 			return;
 		}
 
-		$this->mUserCountersService = new AchUserCountersService($this->mUser->getID() );
+		$this->mUserCountersService = new AchUserCountersService( $this->mUser->getID() );
 		$this->mCounters = $this->mUserCountersService->getCounters();
 		$this->loadUserBadges();
 
@@ -152,7 +152,7 @@ class AchAwardingService {
 			$this->calculateAndSaveScore();
 		}
 
-		wfProfileOut(__METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function processSaveComplete($article, $user, $revision, $status ) {
