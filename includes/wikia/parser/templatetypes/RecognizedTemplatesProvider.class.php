@@ -15,12 +15,22 @@ class RecognizedTemplatesProvider {
 	private $namespaces;
 	private $namespacesTemplates;
 
+	/**
+	 * @param TemplateClassificationService $tcs
+	 * @param int $wikiId
+	 * @param array $namespaces - allowed namespaces
+	 */
 	public function __construct( TemplateClassificationService $tcs, $wikiId, $namespaces = [] ) {
 		$this->tcs = $tcs;
 		$this->wikiId = $wikiId;
 		$this->namespaces = $namespaces;
 	}
 
+	/**
+	 * Get recognized templates on wiki from given namespaces (if set)
+	 *
+	 * @return array
+	 */
 	public function getRecognizedTemplates() {
 		$recognizedTemplates = $this->getTemplates( true );
 		if ( empty( $this->namespaces ) ) {
@@ -29,6 +39,11 @@ class RecognizedTemplatesProvider {
 		return $this->intersectSets( $recognizedTemplates, $this->getNamespacesTemplates() );
 	}
 
+	/**
+	 * Get unrecognized templates on wiki from given namespaces (if set)
+	 *
+	 * @return array
+	 */
 	public function getNotRecognizedTemplates() {
 		$notRecognizedTemplates = $this->getTemplates( false );
 		if ( empty( $this->namespaces ) ) {
@@ -37,6 +52,12 @@ class RecognizedTemplatesProvider {
 		return $this->intersectSets( $notRecognizedTemplates, $this->getNamespacesTemplates() );
 	}
 
+	/**
+	 * Check if given type is unrecognized
+	 *
+	 * @param String $type
+	 * @return bool
+	 */
 	public static function isUnrecognized( $type ) {
 		return in_array( $type, [
 			TemplateClassificationService::TEMPLATE_UNKNOWN,
@@ -45,6 +66,12 @@ class RecognizedTemplatesProvider {
 		] );
 	}
 
+	/**
+	 * Get all recognoized or all unrecognized classified tempaltes (depending on parameter)
+	 *
+	 * @param bool|true $getRecognized determine should get only recognized or unrecognized templates
+	 * @return array
+	 */
 	private function getTemplates( $getRecognized = true ) {
 		try {
 			$templates = $this->tcs->getTemplatesOnWiki( $this->wikiId );
@@ -61,6 +88,13 @@ class RecognizedTemplatesProvider {
 		return $templates;
 	}
 
+	/**
+	 * Get all templates from given namespaces
+	 *
+	 * @return array|bool|mixed
+	 * @throws Exception
+	 * @throws \FluentSql\Exception\SqlException
+	 */
 	public function getNamespacesTemplates() {
 		if ( isset( $this->namespacesTemplates ) ) {
 			return $this->namespacesTemplates;
