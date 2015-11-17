@@ -1,7 +1,7 @@
 <?php
 
 class TemplateTypesParser {
-	const CLASS_CONTEXT_LINK = 'portable-context-link';
+	const CLASS_CONTEXT_LINK = 'context-link';
 	/**
 	 * @desc change parser output according to template type
 	 *
@@ -10,24 +10,12 @@ class TemplateTypesParser {
 	 * @return bool
 	 */
 	public static function onFetchTemplateAndTitle( &$text, &$finalTitle ) {
-		global $wgEnableTemplateTypesParsing, $wgArticleAsJson, $wgCityId;
+		global $wgEnableTemplateTypesParsing, $wgArticleAsJson;
 
 		wfProfileIn( __METHOD__ );
 
 		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson ) {
-			$type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )
-					->getTemplateTypeFromTitle( $wgCityId, $finalTitle );
-
-			switch ( $type ) {
-				case AutomaticTemplateTypes::TEMPLATE_NAVBOX:
-				case TemplateClassificationService::TEMPLATE_NAVBOX:
-					$text = self::handleNavboxTemplate();
-					break;
-				case AutomaticTemplateTypes::TEMPLATE_REFERENCES:
-				case TemplateClassificationService::TEMPLATE_REF:
-					$text = self::handleReferencesTemplate();
-					break;
-			}
+			$text = self::handleTemplateType( $finalTitle );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -43,20 +31,11 @@ class TemplateTypesParser {
 	 * @return bool
 	 */
 	public static function onBraceSubstitution( $templateTitle, &$templateWikitext ) {
-		global $wgEnableTemplateTypesParsing, $wgArticleAsJson, $wgCityId;
-
 		wfProfileIn( __METHOD__ );
+		$title = Title::newFromText( $templateTitle, NS_TEMPLATE );
 
-		if ( $wgEnableTemplateTypesParsing
-			&& $wgArticleAsJson
-			&& !empty( $templateWikitext )
-			&& $title = self::getValidTitle( $templateTitle ) ) {
-			$type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )
-				->getTemplateTypeFromTitle( $wgCityId, $title );
-
-			if ( $type == AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK ) {
-				$templateWikitext = self::handleContextLinksTemplate( $templateWikitext );
-			}
+		if ( self::templateReadyToProcess( $templateWikitext ) && self::isValidTitle( $title ) ) {
+			$templateWikitext = self::handleTemplateType( $title, $templateWikitext );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -65,39 +44,103 @@ class TemplateTypesParser {
 	}
 
 	/**
-	 * @desc sanitize context-link template content - remove all non-link and non-text
-	 * elements from context-link template output and wrap it in div with special class
+	 * @desc fir given template title process it's content accordingly
 	 *
-	 * @param $templateWikitext
+	 * @param $title
+	 * @param string $text
 	 * @return string
 	 */
-	public static function handleContextLinksTemplate( $templateWikitext ) {
-		//remove any custom HTML tags
-		$templateWikitext = strip_tags( $templateWikitext );
-		//remove list and indent elements from the beginning of line
-		$templateWikitext = preg_replace( '/^[:#* \n]+/', '', $templateWikitext );
-		//remove all bold and italics from all of template content
-		$templateWikitext = preg_replace( '/\'{2,}/', '', $templateWikitext );
-		//remove all newlines from the middle of the template text.
-		$templateWikitext = preg_replace( '/\n/', ' ', $templateWikitext );
-		//wrap text of context-link in specified class
-		$templateWikitext = '<div class="' . self::CLASS_CONTEXT_LINK . '">' . $templateWikitext . '</div>';
+	private static function handleTemplateType( $title, $text = '' ) {
+		$type = self::getTemplateType( $title );
 
-		return $templateWikitext;
+		switch ( $type ) {
+			case AutomaticTemplateTypes::TEMPLATE_NAVBOX:
+			case TemplateClassificationService::TEMPLATE_NAVBOX:
+				$text = self::handleNavboxTemplate();
+				break;
+			case AutomaticTemplateTypes::TEMPLATE_REFERENCES:
+			case TemplateClassificationService::TEMPLATE_REF:
+				$text = self::handleReferencesTemplate();
+				break;
+			case AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK:
+				$text = self::handleContextLinksTemplate( $text );
+				break;
+		}
+
+		return $text;
 	}
 
 	/**
-	 * @desc return a valid title from template title got from Parser
-	 * or false if invalid
+	 * @desc return template type for a given template title object
 	 *
 	 * @param $title
-	 * @return bool|\Title
-	 * @throws \MWException
+	 * @return string
 	 */
-	private static function getValidTitle( $title ) {
-		$title = Title::newFromText( $title, NS_TEMPLATE );
+	private static function getTemplateType( $title ) {
+		global $wgCityId;
+		$type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )
+			->getTemplateTypeFromTitle( $wgCityId, $title );
 
-		return $title && $title->exists() ? $title : false;
+		return $type;
+	}
+
+	private static function templateReadyToProcess( $templateWikitext ) {
+		global $wgEnableTemplateTypesParsing, $wgArticleAsJson;
+
+		return $wgEnableTemplateTypesParsing
+			&& $wgArticleAsJson
+			&& !empty( $templateWikitext );
+	}
+
+	/**
+	 * @desc sanitize context-link template content
+	 *
+	 * @param $wikitext
+	 * @return string
+	 */
+	public static function handleContextLinksTemplate( $wikitext ) {
+		$wikitext = self::sanitizeContextLinkWikitext( $wikitext );
+		$wikitext = self::wrapContextLink( $wikitext );
+
+		return $wikitext;
+	}
+
+	/**
+	 * @desc remove all non-link and non-text elements of context-link wikitext
+	 *
+	 * @param $wikitext string context-link template wikitext
+	 * @return string
+	 */
+	public static function sanitizeContextLinkWikitext( $wikitext ) {
+		//remove any custom HTML tags
+		$wikitext = strip_tags( $wikitext );
+		//remove list and indent elements from the beginning of line
+		$wikitext = preg_replace( '/^[:#* \n]+/', '', $wikitext );
+		//remove all bold and italics from all of template content
+		$wikitext = preg_replace( '/\'{2,}/', '', $wikitext );
+		//remove all newlines from the middle of the template text.
+		$wikitext = preg_replace( '/\n/', ' ', $wikitext );
+
+		return $wikitext;
+	}
+
+	/**
+	 * @desc wrap text of context-link in div with CLASS_CONTEXT_LINK class
+	 * @param $wikitext string context-link template wikitext
+	 * @return string
+	 */
+	private static function wrapContextLink( $wikitext ) {
+		return sprintf('<div class="%s">%s</div>', self::CLASS_CONTEXT_LINK, $wikitext);
+	}
+
+	/**
+	 * @desc check if template title got from Parser is valid
+	 *
+	 * @param $title Title
+	 * @return bool
+	 */
+	private static function isValidTitle( $title ) {
+		return $title && $title->exists();
 	}
 
 	/**
