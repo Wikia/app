@@ -17,7 +17,8 @@ require([
 	'ext.wikia.adEngine.sourcePointDetection',
 	'wikia.krux',
 	'wikia.window',
-	'wikia.loader'
+	'wikia.loader',
+	require.optional('ext.wikia.adEngine.recovery.gcs')
 ], function (
 	adContext,
 	adEngine,
@@ -35,7 +36,8 @@ require([
 	sourcePoint,
 	krux,
 	win,
-	loader
+	loader,
+	gcs
 ) {
 	'use strict';
 
@@ -96,6 +98,10 @@ require([
 				adTracker.measureTime('adengine.init', 'queue.sp').track();
 				adEngine.run(adConfigDesktop, win.ads.runtime.sp.slots, 'queue.sp');
 			});
+		}
+
+		if (gcs) {
+			gcs.addRecoveryCallback();
 		}
 
 		if (context.opts.recoveredAdsMessage) {
