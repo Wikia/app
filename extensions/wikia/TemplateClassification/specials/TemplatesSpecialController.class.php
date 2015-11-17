@@ -34,54 +34,42 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 */
-
 		$template = $this->getVal( 'template' );
 		$type = $this->getVal( 'type' );
 		$page = $this->request->getInt( 'page', 1 ) - 1;
 
-
 		$groupedTemplates = $this->getTemplates();
 		$groups = $this->getTemplateGroups( $groupedTemplates );
 
-
+		$groupedTemplates = $this->filterTemplates( $groupedTemplates, $type, $template );
 
 		$total = $this->getTotalTemplatesNum( $groupedTemplates );
 
+		if ( $total > self::ITEMS_PER_PAGE ) {
+			$groupedTemplates = $this->sliceTemplates( $groupedTemplates, $page );
+			$this->paginatiorBar = $this->preparePagination( $total, $page, $type, $template );
+		}
+
 		$this->type = $type;
 		$this->template = $template;
-
 		$this->groups = $groups;
 
-		if ( $total > self::ITEMS_PER_PAGE ) {
-			$this->groupedTemplates = $this->sliceTemplates( $groupedTemplates, $page );
-			$this->paginatiorBar = $this->preparePagination( $total, $page, $type, $template );
-		} else {
-			$this->groupedTemplates = $groupedTemplates;
-		}
+		$this->groupedTemplates = $groupedTemplates;
 	}
 
 	private function getTemplates() {
-		$templates = WikiaDataAccess::cache(
-			$this->getMemcKey(),
-			60 * 60 * 6,
-			function() {
-				$classifiedTemplates = [];
-				$allTemplates = $this->getAllTempaltes();
+		$classifiedTemplates = [];
+		$allTemplates = $this->getAllTempaltes();
 
-				try {
-					$classifiedTemplates = ( new \TemplateClassificationService() )->getTemplatesOnWiki( $this->wg->CityId );
-				} catch( \Exception $e ) {
+		try {
+			$classifiedTemplates = ( new \TemplateClassificationService() )->getTemplatesOnWiki( $this->wg->CityId );
+		} catch( \Exception $e ) {
+		}
 
-				}
-
-				return $this->groupTemplates( $allTemplates, $classifiedTemplates );
-			}
-		);
-
-		return $templates;
+		return $this->groupTemplates( $allTemplates, $classifiedTemplates );
 	}
 
-	private function filterTemplates( $groupedTemplates ) {
+	private function filterTemplates( $groupedTemplates, $type, $template ) {
 		if ( !empty( $type ) ) {
 			$groupedTemplates = isset( $groupedTemplates[$type] ) ? [ $type => $groupedTemplates[$type] ] : [];
 		}
