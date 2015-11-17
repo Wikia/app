@@ -5,13 +5,13 @@ $messages['en'] = [
 	'template-classification-description' => 'Interface for classifying templates to understand content better.',
 	'template-classification-type-unclassified' => 'Unclassified',
 	'template-classification-type-infobox' => 'Infobox',
-	'template-classification-description-infobox' => 'Displays the most essential snippets of information about an article in a box.',
+	'template-classification-description-infobox' => 'Displays the most essential information about an article in a box at the top of the page, usually to the right side.',
 
 	'template-classification-type-navbox' => 'Navbox',
-	'template-classification-description-navbox' => 'Provides a list of organized links for readers to navigate to similar articles.',
+	'template-classification-description-navbox' => 'Displays a list of organized links in a box for readers to navigate to related articles, usually at the bottom of the page.',
 
 	'template-classification-type-quote' => 'Quote',
-	'template-classification-description-quote' => 'Highlights notable snippets of text such as lyrics, book passages, or quotes.',
+	'template-classification-description-quote' => 'Highlights notable snippets of text such as lyrics, book passages, or spoken dialog. Can contain dialog between one person or multiple people.',
 
 	'template-classification-type-notice' => 'Notice',
 	'template-classification-description-notice' => 'Also known as tophats or alerts, these templates notify the reader about the status of the article itself, such as stub, disambiguation, or spoiler.',
@@ -37,19 +37,19 @@ $messages['en'] = [
 	'template-classification-type-unknown' => 'Unknown',
 	'template-classification-description-unknown' => "I don't know.",
 
-	'template-classification-type-header' => 'Type of the template',
+	'template-classification-type-header' => 'Template type',
 	'template-classification-edit-modal-add-button-text' => 'Add',
 	'template-classification-edit-modal-save-button-text' => 'Save',
 	'template-classification-edit-modal-cancel-button-text' => 'Cancel',
 	'template-classification-edit-modal-title-add-template' => 'Add template',
 	'template-classification-edit-modal-title-edit-type' => 'Edit template type',
 	'template-classification-edit-modal-select-type-sub-title' => 'Choose template type',
-	'template-classification-edit-modal-success' => 'New classification of the template has been saved. Thank you!',
-	'template-classification-edit-modal-error' => 'Unfortunately, we were not able to classify this template. Would you mind trying it again?',
+	'template-classification-edit-modal-success' => 'New template type has been saved. Thank you!',
+	'template-classification-edit-modal-error' => 'Unfortunately we were not able to save this template type. Would you mind trying again?',
 
 	'template-classification-indicator' => 'Template type:',
 
-	'template-classification-notification-error-retry' => 'Something went wrong and we could not classify this template. Could you retry it using the link under a title of the page?',
+	'template-classification-notification-error-retry' => 'Something went wrong and we could not save the template type. Could you retry it using the link under the page title?',
 	'template-classification-special-last-edit' => 'Last edited by $1, $2',
 	'template-classification-special-search' => 'Search'
 ];

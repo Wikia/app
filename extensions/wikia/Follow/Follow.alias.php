@@ -56,3 +56,8 @@ $specialPageAliases['pl'] = array(
 $specialPageAliases['vi'] = array(
 	'Following' => array( 'Theo_dõi' ),
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'Following' => array( 'フォロー' ),
+);

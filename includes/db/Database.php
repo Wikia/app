@@ -920,6 +920,18 @@ abstract class DatabaseBase implements DatabaseType {
 			$userName = str_replace( '/', '', $userName );
 		} else {
 			$userName = '';
+
+			# Wikia change - if the user object is not ready yet, show the client IP (see PLATFORM-1671 for examples)
+			global $wgRequest;
+			if ( $wgRequest instanceof WebRequest ) {
+				$userName = $wgRequest->getIP();
+			}
+		}
+
+		# Wikia change - log the name of the maintenance class that run this query (instead of 127.0.0.1)
+		global $maintClass;
+		if ( !empty( $maintClass ) ) {
+			$userName = str_replace( '/', '', $maintClass );
 		}
 
 		# Wikia change - begin

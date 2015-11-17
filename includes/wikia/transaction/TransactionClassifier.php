@@ -19,6 +19,7 @@ class TransactionClassifier {
 		'view',
 		'edit',
 		'submit',
+		'diff',
 	);
 
 	protected static $FILTER_SPECIAL_PAGES = array(
@@ -134,6 +135,10 @@ class TransactionClassifier {
 			// api call - api.php
 			case Transaction::ENTRY_POINT_API:
 				$this->addByList( Transaction::PARAM_API_ACTION, self::$FILTER_API_CALLS );
+				break;
+			// MediaWiki maintenance scripts
+			case Transaction::ENTRY_POINT_MAINTENANCE:
+				$this->add( Transaction::PARAM_MAINTENANCE_SCRIPT );
 				break;
 		}
 	}

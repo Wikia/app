@@ -1,3 +1,4 @@
+/*global define*/
 define('ext.wikia.adEngine.recovery.message', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.recovery.helper',
@@ -28,14 +29,14 @@ define('ext.wikia.adEngine.recovery.message', [
 	'use strict';
 
 	var abTestConfig = {
-			'experimentName' : 'ADBLOCK_MESSAGE',
+			'experimentName': 'PROJECT_43',
 			'topGroupNames': {
-				'TOP_A': 'a',
-				'TOP_B': 'b'
+				'GROUP_1': 'a',
+				'GROUP_2': 'b'
 			},
 			'rightRailGroupNames': {
-				'MR_A': 'a',
-				'MR_B': 'b'
+				'GROUP_3': 'a',
+				'GROUP_4': 'b'
 			}
 		},
 		logGroup = 'ext.wikia.adEngine.recovery.message',
@@ -85,7 +86,7 @@ define('ext.wikia.adEngine.recovery.message', [
 			var template = assets.mustache[0],
 				//adengine-recovery-message-blocking-message-a
 				//adengine-recovery-message-blocking-message-b
-				text = mw.message('adengine-recovery-message-blocking-message-'+messageVariant).rawParams([
+				text = mw.message('adengine-recovery-message-blocking-message-' + messageVariant).rawParams([
 					'<a class="action-accept">' +
 					mw.message('adengine-recovery-message-blocking-click').escaped() +
 					'</a>'
@@ -110,6 +111,7 @@ define('ext.wikia.adEngine.recovery.message', [
 	function injectTopMessage(messageVariant) {
 		log('recoveredAdsMessage.recover - injecting top message', 'debug', logGroup);
 		createMessage('top', messageVariant).done(function (messageContainer) {
+			adTracker.track('recovery/message', 'impression');
 			$('#WikiaTopAds').before(messageContainer);
 		});
 	}
@@ -117,6 +119,7 @@ define('ext.wikia.adEngine.recovery.message', [
 	function injectRightRailMessage(messageVariant) {
 		log('recoveredAdsMessage.recover - injecting right rail message', 'debug', logGroup);
 		createMessage('right-rail', messageVariant).done(function (messageContainer) {
+			adTracker.track('recovery/message', 'impression');
 			$('#WikiaRail').prepend(messageContainer);
 		});
 	}
