@@ -589,7 +589,6 @@ $messages = array(
 'vector-action-protect'          => 'محافظت',
 'vector-action-undelete'         => 'احیا',
 'vector-action-unprotect'        => 'تغییر سطح حفاظت',
-'vector-simplesearch-preference' => 'فعال کردن پیشنهادهای جستجوی پیشرفته (فقط در پوسته برداری)',
 'vector-view-create'             => 'ایجاد',
 'vector-view-edit'               => 'ویرایش',
 'vector-view-history'            => 'نمایش تاریخچه',

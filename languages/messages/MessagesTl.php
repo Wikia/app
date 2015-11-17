@@ -292,7 +292,6 @@ $messages = array(
 'vector-action-protect'          => 'Ipagsanggalang',
 'vector-action-undelete'         => 'Alisin ang pagbubura',
 'vector-action-unprotect'        => 'Baguhin ang pagsasanggalang',
-'vector-simplesearch-preference' => 'Paganahin ang pinainam na mga mungkahi sa paghahanap (pabalat na Vector lang)',
 'vector-view-create'             => 'Likhain',
 'vector-view-edit'               => 'Baguhin',
 'vector-view-history'            => 'Tingnan ang kasaysayan',

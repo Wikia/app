@@ -300,7 +300,6 @@ $messages = array(
 'vector-action-protect'          => 'సంరక్షించు',
 'vector-action-undelete'         => 'తిరిగి చేర్చు',
 'vector-action-unprotect'        => 'సంరక్షణను మార్చు',
-'vector-simplesearch-preference' => 'మెరుగైన అన్వేషణ సలహాలని చేతనంచేయి (వెక్టర్ అలంకారానికి మాత్రమే)',
 'vector-view-create'             => 'సృష్టించు',
 'vector-view-edit'               => 'సవరించు',
 'vector-view-history'            => 'చరిత్రని చూడండి',

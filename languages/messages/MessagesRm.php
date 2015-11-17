@@ -200,7 +200,6 @@ $messages = array(
 'vector-action-protect'          => 'Bloccar',
 'vector-action-undelete'         => 'Restituir',
 'vector-action-unprotect'        => 'Midar la protecziun',
-'vector-simplesearch-preference' => 'Activar las propostas per tschertgar extendidas (be per il skin Vector)',
 'vector-view-create'             => 'Crear',
 'vector-view-edit'               => 'Modifitgar',
 'vector-view-history'            => 'Cronologia',

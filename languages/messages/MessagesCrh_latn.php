@@ -262,7 +262,6 @@ $messages = array(
 'vector-action-protect'          => 'Qorçala',
 'vector-action-undelete'         => 'Yañıdan yarat',
 'vector-action-unprotect'        => 'Qorçalavnı deñiştir',
-'vector-simplesearch-preference' => 'Tafsilâtlı qıdıruv tekliflerini işlet (tek Vektor resimlemesi içün)',
 'vector-view-create'             => 'Yarat',
 'vector-view-edit'               => 'Deñiştir',
 'vector-view-history'            => 'Keçmişini köster',

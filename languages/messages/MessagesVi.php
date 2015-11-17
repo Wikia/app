@@ -454,7 +454,6 @@ $messages = array(
 'vector-action-protect'          => 'Khóa',
 'vector-action-undelete'         => 'Phục hồi',
 'vector-action-unprotect'        => 'Đổi mức khóa',
-'vector-simplesearch-preference' => 'Gợi ý tìm kiếm nâng cao (cần bề ngoài Vectơ)',
 'vector-view-create'             => 'Tạo',
 'vector-view-edit'               => 'Sửa',
 'vector-view-history'            => 'Xem lịch sử',

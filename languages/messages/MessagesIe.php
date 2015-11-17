@@ -277,7 +277,6 @@ $messages = array(
 'vector-action-protect'          => 'Gardar',
 'vector-action-undelete'         => 'Restituer',
 'vector-action-unprotect'        => 'Desgardar',
-'vector-simplesearch-preference' => 'Premisser suggestiones de sercha argumentat (pelle Vector solmen)',
 'vector-view-create'             => 'Crear',
 'vector-view-edit'               => 'Redacter',
 'vector-view-history'            => 'Vider historie',

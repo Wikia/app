@@ -413,7 +413,6 @@ $messages = array(
 'vector-action-protect'          => 'Абараніць',
 'vector-action-undelete'         => 'Аднавіць',
 'vector-action-unprotect'        => 'Зьмяніць абарону',
-'vector-simplesearch-preference' => 'Уключыць палепшаныя пошукавыя падказкі (толькі для афармленьня «Вэктар»)',
 'vector-view-create'             => 'Стварыць',
 'vector-view-edit'               => 'Рэдагаваць',
 'vector-view-history'            => 'Паказаць гісторыю',

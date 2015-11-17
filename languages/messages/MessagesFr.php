@@ -519,7 +519,6 @@ $messages = array(
 'vector-action-protect'          => 'Protéger',
 'vector-action-undelete'         => 'Rétablir',
 'vector-action-unprotect'        => 'Changer la protection',
-'vector-simplesearch-preference' => 'Activer les suggestions de recherche améliorées (seulement pour Vector)',
 'vector-view-create'             => 'Créer',
 'vector-view-edit'               => 'Modifier',
 'vector-view-history'            => 'Afficher l’historique',

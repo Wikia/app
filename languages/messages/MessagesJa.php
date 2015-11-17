@@ -526,7 +526,6 @@ $messages = array(
 'vector-action-protect'          => '保護',
 'vector-action-undelete'         => '復帰',
 'vector-action-unprotect'        => '保護再設定',
-'vector-simplesearch-preference' => '検索語の提案機能を拡張する（ベクター外装のみ）',
 'vector-view-create'             => '作成',
 'vector-view-edit'               => '編集',
 'vector-view-history'            => '履歴表示',

@@ -477,7 +477,6 @@ $messages = array(
 'vector-action-protect' => 'सुरक्षित करा',
 'vector-action-undelete' => 'पुनर्स्थापित करा',
 'vector-action-unprotect' => 'असुरक्षित करा',
-'vector-simplesearch-preference' => 'प्रगत शोधविकल्प सक्रिय करा (फक्त व्हेक्टर त्वचेसाठी)',
 'vector-view-create' => 'तयार करा',
 'vector-view-edit' => 'संपादन',
 'vector-view-history' => 'इतिहास पहा',

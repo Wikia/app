@@ -370,7 +370,6 @@ $messages = array(
 'vector-action-protect'          => 'Яклау',
 'vector-action-undelete'         => 'Кайтару',
 'vector-action-unprotect'        => 'Яклауны үзгәртү',
-'vector-simplesearch-preference' => 'Эзләү өчен киңәйтелгән ярдәм хәбәрләрен күрсәтү («Векторлы» бизәлеше өчен генә кулланылыа)',
 'vector-view-create'             => 'Төзү',
 'vector-view-edit'               => 'Үзгәртү',
 'vector-view-history'            => 'Тарихын карау',

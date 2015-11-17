@@ -317,7 +317,6 @@ $messages = array(
 'vector-action-protect' => 'Šćitaś',
 'vector-action-undelete' => 'Wótnowiś',
 'vector-action-unprotect' => 'Šćit změniś',
-'vector-simplesearch-preference' => 'Pólěpšone pytańske naraźenja zmóžniś (jano suknja Vector)',
 'vector-view-create' => 'Napóraś',
 'vector-view-edit' => 'Wobźěłaś',
 'vector-view-history' => 'Wersije a awtory',

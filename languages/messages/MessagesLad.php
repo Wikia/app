@@ -336,7 +336,6 @@ $messages = array(
 'vector-action-protect'          => 'Guardar',
 'vector-action-undelete'         => 'Traer atrás',
 'vector-action-unprotect'        => 'No guardar',
-'vector-simplesearch-preference' => 'Aktivar consejos de búsqueda adelantada (sólo pelejo Vector)',
 'vector-view-create'             => 'Crîar',
 'vector-view-edit'               => 'Trocar',
 'vector-view-history'            => 'Ver la storia',

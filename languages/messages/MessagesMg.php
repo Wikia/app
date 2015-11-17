@@ -375,7 +375,6 @@ $messages = array(
 'vector-action-protect'          => 'Arovy',
 'vector-action-undelete'         => 'Avereno',
 'vector-action-unprotect'        => 'Hanala ny fiarovana',
-'vector-simplesearch-preference' => "Alefa ny soso-kevitra mikasika ny fikarohana (ho an'ny Vector ihany)",
 'vector-view-create'             => 'Foronona',
 'vector-view-edit'               => 'Hanova',
 'vector-view-history'            => 'Hijery ny tantara',

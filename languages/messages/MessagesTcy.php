@@ -165,7 +165,6 @@ $messages = array(
 'vector-action-protect'          => 'ಸ೦ರಕ್ಷಿಸಾಲೆ',
 'vector-action-undelete'         => 'ಮಾಜಾವಡೆ',
 'vector-action-unprotect'        => 'ಬದಲಾವಣೆನ್ ರಕ್ಷಿಸಾಲೆ',
-'vector-simplesearch-preference' => 'ಬಲಗೊಳಿಸಾನ ಹುಡುಕು ಸಲಹೆಲೆನ್ ಸಕ್ರಿಯಗೊಳಿಸಾಲೆ',
 'vector-view-create'             => ' ಸುರು ಮಲ್ಪುಲೆ',
 'vector-view-edit'               => 'ಸಂಪಾದನೆ ಮಲ್ಪುಲೆ',
 'vector-view-history'            => 'ಇತಿಹಾಸೊನು ತೂಲೆ',

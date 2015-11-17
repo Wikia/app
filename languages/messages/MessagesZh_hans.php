@@ -416,7 +416,6 @@ $messages = array(
 'vector-action-protect'          => '保护',
 'vector-action-undelete'         => '恢复',
 'vector-action-unprotect'        => '更改保护',
-'vector-simplesearch-preference' => '启用增强搜索建议（仅限Vector皮肤）',
 'vector-view-create'             => '创建',
 'vector-view-edit'               => '编辑',
 'vector-view-history'            => '查看历史',

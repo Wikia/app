@@ -180,7 +180,6 @@ $messages = array(
 'vector-action-protect'          => 'Schytzen',
 'vector-action-undelete'         => 'Wiederherstön',
 'vector-action-unprotect'        => 'freigeem',
-'vector-simplesearch-preference' => 'Daweiterte Suachvurschläg aktivirn (netter Vector)',
 'vector-view-create'             => 'Erstön',
 'vector-view-edit'               => 'Werkeln',
 'vector-view-history'            => 'Versiónsgschicht',

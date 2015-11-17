@@ -187,7 +187,6 @@ $messages = array(
 'vector-action-protect'          => 'Protegge',
 'vector-action-undelete'         => 'Repristine',
 'vector-action-unprotect'        => "Cange 'a protezione",
-'vector-simplesearch-preference' => "Abbilete le suggereminde d'a ricerche avanzate (Sulamende pe le scheme a vettore)",
 'vector-view-create'             => 'Ccreje',
 'vector-view-edit'               => 'Cange',
 'vector-view-history'            => "Vide 'u cunde",

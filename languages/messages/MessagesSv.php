@@ -474,7 +474,6 @@ $messages = array(
 'vector-action-protect'          => 'Skrivskydda',
 'vector-action-undelete'         => 'Återställ',
 'vector-action-unprotect'        => 'Ändra skydd',
-'vector-simplesearch-preference' => 'Aktivera utökade sökförslag (endast Vector-utseendet)',
 'vector-view-create'             => 'Skapa',
 'vector-view-edit'               => 'Redigera',
 'vector-view-history'            => 'Visa historik',

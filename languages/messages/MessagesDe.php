@@ -537,7 +537,6 @@ $messages = array(
 'vector-action-protect'          => 'Schützen',
 'vector-action-undelete'         => 'Wiederherstellen',
 'vector-action-unprotect'        => 'Seitenschutz ändern',
-'vector-simplesearch-preference' => 'Erweiterte Suchvorschläge aktivieren (nur Vector)',
 'vector-view-create'             => 'Erstellen',
 'vector-view-edit'               => 'Bearbeiten',
 'vector-view-history'            => 'Versionsgeschichte',

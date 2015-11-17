@@ -306,7 +306,6 @@ $messages = array(
 'vector-action-protect'          => 'Protezi',
 'vector-action-undelete'         => 'Recupera',
 'vector-action-unprotect'        => 'Sbloca',
-'vector-simplesearch-preference' => "Intaca i sugerimenti di ricerca avansadi (solo par l'interfacia Vector)",
 'vector-view-create'             => 'Crea',
 'vector-view-edit'               => 'Canbia',
 'vector-view-history'            => 'Varda la storia',

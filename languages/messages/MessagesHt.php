@@ -299,7 +299,6 @@ $messages = array(
 'vector-action-protect'          => 'Pwoteje',
 'vector-action-undelete'         => 'Retabli',
 'vector-action-unprotect'        => 'Pa pwoteje',
-'vector-simplesearch-preference' => 'Aktive sijèsyon rechèch ranfòse yo (pou estil Vector sèlman)',
 'vector-view-create'             => 'Kreye',
 'vector-view-edit'               => 'Modifye',
 'vector-view-history'            => 'Gade istorik',

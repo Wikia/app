@@ -454,7 +454,6 @@ $messages = array(
 'vector-action-protect'          => 'Защитить',
 'vector-action-undelete'         => 'Восстановить',
 'vector-action-unprotect'        => 'Изменить защиту',
-'vector-simplesearch-preference' => 'Включить расширенные поисковые подсказки (только для оформления «Векторное»)',
 'vector-view-create'             => 'Создание',
 'vector-view-edit'               => 'Правка',
 'vector-view-history'            => 'История',

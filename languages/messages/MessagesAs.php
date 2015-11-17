@@ -269,7 +269,6 @@ $messages = array(
 'vector-action-protect'          => 'সুৰক্ষিত কৰক',
 'vector-action-undelete'         => 'পুনৰুদ্ধাৰ কৰক',
 'vector-action-unprotect'        => 'সুৰক্ষা সলনি কৰক',
-'vector-simplesearch-preference' => 'উৎকৃষ্ট সন্ধানৰ পৰামৰ্শ সক্ৰিয় কৰক (ভেক্টৰ স্কিনৰ বাবেহে)',
 'vector-view-create'             => 'সৃষ্টি কৰক',
 'vector-view-edit'               => 'সম্পাদনা',
 'vector-view-history'            => 'ইতিহাস চাওক',

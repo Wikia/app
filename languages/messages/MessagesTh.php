@@ -341,7 +341,6 @@ $messages = array(
 'vector-action-protect'          => 'ป้องกัน',
 'vector-action-undelete'         => 'ยกเลิกการลบ',
 'vector-action-unprotect'        => 'เปลี่ยนค่าการปกป้องข้อมูล',
-'vector-simplesearch-preference' => 'เปิดใช้งานคำแนะนำการค้นหาขั้นสูง (สำหรับสกิน Vector เท่านั้น)',
 'vector-view-create'             => 'สร้าง',
 'vector-view-edit'               => 'แก้ไข',
 'vector-view-history'            => 'ดูประวัติ',

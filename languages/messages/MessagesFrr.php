@@ -177,7 +177,6 @@ $messages = array(
 'vector-action-protect'          => 'Sääkere',
 'vector-action-undelete'         => 'Wi mååge',
 'vector-action-unprotect'        => 'Frijeewe unti späre',
-'vector-simplesearch-preference' => 'Ütwidede säkforsliike aktiwiire (bloot vector)',
 'vector-view-create'             => 'Mååge',
 'vector-view-edit'               => 'Beårbe',
 'vector-view-history'            => 'Dootäifärsjoone',

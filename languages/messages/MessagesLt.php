@@ -335,7 +335,6 @@ $messages = array(
 'vector-action-protect'          => 'Užrakinti',
 'vector-action-undelete'         => 'Atkurti',
 'vector-action-unprotect'        => 'Keisti apsaugą',
-'vector-simplesearch-preference' => 'Įjungti išplėstinius paieškos pasiūlymus (tik „Vector“ išvaizda)',
 'vector-view-create'             => 'Kurti',
 'vector-view-edit'               => 'Redaguoti',
 'vector-view-history'            => 'Istorija',

@@ -312,7 +312,6 @@ $messages = array(
 'vector-action-protect'          => 'škitać',
 'vector-action-undelete'         => 'Wobnowić',
 'vector-action-unprotect'        => 'Škit wotstronić',
-'vector-simplesearch-preference' => 'Polěpšene pytanske namjety zmóžnić (jenož šat Vector)',
 'vector-view-create'             => 'Wutworić',
 'vector-view-edit'               => 'Wobdźěłać',
 'vector-view-history'            => 'Stawizny',

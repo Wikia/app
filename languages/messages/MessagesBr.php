@@ -338,7 +338,6 @@ $messages = array(
 'vector-action-protect'          => 'Gwareziñ',
 'vector-action-undelete'         => 'Diziverkañ',
 'vector-action-unprotect'        => 'Cheñch gwarez',
-'vector-simplesearch-preference' => "Aotren ar c'hinnigoù klask gwellaet (gant Vektor nemetken)",
 'vector-view-create'             => 'Krouiñ',
 'vector-view-edit'               => 'Kemmañ',
 'vector-view-history'            => 'Gwelet an istor',

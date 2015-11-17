@@ -269,7 +269,6 @@ $messages = array(
 'vector-action-protect' => 'Friða',
 'vector-action-undelete' => 'Endurstovna',
 'vector-action-unprotect' => 'Broyt friðing',
-'vector-simplesearch-preference' => 'Ger virkið betraði leiti uppskot (bert Vector útsjónd)',
 'vector-view-create' => 'Stovna',
 'vector-view-edit' => 'Rætta',
 'vector-view-history' => 'Søga',

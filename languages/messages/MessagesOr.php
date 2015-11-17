@@ -411,7 +411,6 @@ $messages = array(
 'vector-action-protect'          => 'କିଳିବେ',
 'vector-action-undelete'         => 'ଲିଭାଇବେ ନାହିଁ',
 'vector-action-unprotect'        => 'କିଳିବେ ନାହିଁ',
-'vector-simplesearch-preference' => 'ଆହୁରି ଅଧିକ ଖୋଜା ମତାମତ ଗୁଡ଼ିକ ସଚଳ କରିବେ (କେବଳ ଭେକ୍ଟର ସ୍କିନ)',
 'vector-view-create'             => 'ତିଆରି',
 'vector-view-edit'               => 'ବଦଳାଇବେ',
 'vector-view-history'            => 'ଇତିହାସ ଦେଖିବେ',

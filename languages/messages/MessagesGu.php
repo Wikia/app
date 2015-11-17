@@ -310,7 +310,6 @@ $messages = array(
 'vector-action-protect'          => 'સુરક્ષિત કરો',
 'vector-action-undelete'         => 'રદ કરેલું પાછું વાળો',
 'vector-action-unprotect'        => 'સુરક્ષા બદલો',
-'vector-simplesearch-preference' => 'શોધ સંબંધી વિશિષ્ઠ સુઝાવના પર્યાયને સક્રીય  કરો (Vector skin only)',
 'vector-view-create'             => 'બનાવો',
 'vector-view-edit'               => 'ફેરફાર કરો',
 'vector-view-history'            => 'ઈતિહાસ જુઓ',

@@ -107,7 +107,6 @@ $messages = array(
 'vector-action-protect'          => 'Kobátela',
 'vector-action-undelete'         => 'Kolímwisa tɛ̂',
 'vector-action-unprotect'        => ' Kobátela tɛ̂',
-'vector-simplesearch-preference' => 'Kolamusa bokáni bwa boluki bobakísámí (káka na Vector)',
 'vector-view-create'             => 'Kokela',
 'vector-view-edit'               => 'Kobɔngisa',
 'vector-view-history'            => 'Komɔ́nisa mokóló',

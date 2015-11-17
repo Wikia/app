@@ -227,7 +227,6 @@ $messages = array(
 'vector-action-protect'          => 'সুরক্ষা',
 'vector-action-undelete'         => 'পুনরুদ্ধার',
 'vector-action-unprotect'        => 'সুরক্ষা পরিবর্তন',
-'vector-simplesearch-preference' => 'আরও সমৃদ্ধ অনুসন্ধান পরামর্শ সক্রিয় করুন (শুধুমাত্র ভেক্টর স্কিনের জন্য)',
 'vector-view-create'             => 'তৈরি করুন',
 'vector-view-edit'               => 'সম্পাদনা',
 'vector-view-history'            => 'ইতিহাস',

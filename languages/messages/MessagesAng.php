@@ -185,7 +185,6 @@ $messages = array(
 'vector-action-protect'          => 'Beorȝa',
 'vector-action-undelete'         => 'Sciepe tramet eft',
 'vector-action-unprotect'        => 'Unbeorȝa',
-'vector-simplesearch-preference' => 'Lǣt forðoda sēcunge tōtyhtinga (synderlīce for Vector scinne)',
 'vector-view-create'             => 'Sciepe',
 'vector-view-edit'               => 'Ādihte',
 'vector-view-history'            => 'Stǣr',

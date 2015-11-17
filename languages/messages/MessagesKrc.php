@@ -197,7 +197,6 @@ $messages = array(
 'vector-action-protect'          => 'Джакъла',
 'vector-action-undelete'         => 'Къайтар',
 'vector-action-unprotect'        => 'Джакълауну кетер',
-'vector-simplesearch-preference' => 'Кенглешген излеуде болушлукъланы джандыр (къуру Вектор мотив ючюн)',
 'vector-view-create'             => 'Къура',
 'vector-view-edit'               => 'Тюрлендир',
 'vector-view-history'            => 'Тарихин кёргюз',

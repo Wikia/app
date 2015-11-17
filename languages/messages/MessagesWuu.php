@@ -173,7 +173,6 @@ $messages = array(
 'vector-action-protect'          => '保护',
 'vector-action-undelete'         => '反删除',
 'vector-action-unprotect'        => '反保护',
-'vector-simplesearch-preference' => '打开高级搜索建议（仅适用于Vector皮肤）',
 'vector-view-create'             => '创建',
 'vector-view-edit'               => '编辑',
 'vector-view-history'            => '望历史',

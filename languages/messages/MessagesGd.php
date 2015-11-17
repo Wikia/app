@@ -174,7 +174,6 @@ $messages = array(
 'vector-action-protect'          => 'Dìon',
 'vector-action-undelete'         => 'Neo-dhèan an sguabadh às',
 'vector-action-unprotect'        => 'Atharraich an dìon',
-'vector-simplesearch-preference' => 'Cuir an comas molaidhean luirg adhartach (craiceann vector a-mhàin)',
 'vector-view-create'             => 'Cruthaich',
 'vector-view-edit'               => 'Deasaich',
 'vector-view-history'            => 'Seall an eachdraidh',

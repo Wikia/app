@@ -207,7 +207,6 @@ $messages = array(
 'vector-action-protect'          => 'Aizsargāt',
 'vector-action-undelete'         => 'Atjaunot',
 'vector-action-unprotect'        => 'Mainīt aizsardzību',
-'vector-simplesearch-preference' => 'Ieslēgt uzlabotās meklēšanas piedāvājumus (tikai Vector apdarē)',
 'vector-view-create'             => 'Izveidot',
 'vector-view-edit'               => 'Rediģēt',
 'vector-view-history'            => 'Hronoloģija',

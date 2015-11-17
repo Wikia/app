@@ -178,7 +178,6 @@ $messages = array(
 'vector-action-protect'          => 'Bıpawe',
 'vector-action-undelete'         => 'Esterıtışi peyser bıgê',
 'vector-action-unprotect'        => 'Ake',
-'vector-simplesearch-preference' => 'Tewsiyanê cıgeyrayışiê raverberdeyan ake (Tenya vector skin de)',
 'vector-view-create'             => 'Vıraze',
 'vector-view-edit'               => 'Bıvurne',
 'vector-view-history'            => 'Tarixi bımocne',

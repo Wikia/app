@@ -425,7 +425,6 @@ $messages = array(
 'vector-action-protect' => 'Amachay',
 'vector-action-undelete' => 'Qullusqata paqarichiy',
 'vector-action-unprotect' => 'Amachayta wakinchay',
-'vector-simplesearch-preference' => 'Maskanapaq kallpachasqa sakumanakunata atichiy (Vector qarallapi)',
 'vector-view-create' => 'Kamariy',
 'vector-view-edit' => "Llamk'apuy",
 'vector-view-history' => 'Wiñay kawsayta qhaway',

@@ -175,7 +175,6 @@ $messages = array(
 'vector-action-protect'          => 'Lindungi',
 'vector-action-undelete'         => 'Pambatalan panghapusan',
 'vector-action-unprotect'        => 'Palinduangan',
-'vector-simplesearch-preference' => 'Aktifkan pancarian saran nan disampurnokan (hanyo kulik Vector)',
 'vector-view-create'             => 'Buek',
 'vector-view-edit'               => 'Suntiang',
 'vector-view-history'            => 'Caliak riwayat nan lalu',

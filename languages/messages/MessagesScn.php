@@ -295,7 +295,6 @@ $messages = array(
 'vector-action-protect'          => 'Pruteggi',
 'vector-action-undelete'         => 'Riprìstina',
 'vector-action-unprotect'        => 'Cancia la prutizzioni',
-'vector-simplesearch-preference' => 'Abbilita li suggirimenti pâ ricerca avanzata',
 'vector-view-create'             => 'Crea',
 'vector-view-edit'               => 'Cancia',
 'vector-view-history'            => 'Talìa a storia',

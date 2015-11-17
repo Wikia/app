@@ -370,7 +370,6 @@ $messages = array(
 'vector-action-protect'          => 'Гlаролла дé',
 'vector-action-undelete'         => 'Меттахlоттадé',
 'vector-action-unprotect'        => 'Гlароллех къаста',
-'vector-simplesearch-preference' => 'Шуьйра лахаран хьехар лата де (декъа «Хьушйерг» кечйарца)',
 'vector-view-create'             => 'Кхоллар',
 'vector-view-edit'               => 'Нисйé',
 'vector-view-history'            => 'Хьажа исторе',

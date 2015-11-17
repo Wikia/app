@@ -508,7 +508,6 @@ $messages = array(
 'vector-action-protect'          => 'Προστασία',
 'vector-action-undelete'         => 'Επαναφορά',
 'vector-action-unprotect'        => 'Αλλάξτε την προστασία',
-'vector-simplesearch-preference' => 'Ενεργοποίηση ενισχυμένων προτάσεων αναζήτησης',
 'vector-view-create'             => 'Δημιουργία',
 'vector-view-edit'               => 'Επεξεργασία',
 'vector-view-history'            => 'Προβολή ιστορικού',

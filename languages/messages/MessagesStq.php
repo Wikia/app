@@ -204,7 +204,6 @@ $messages = array(
 'vector-action-protect'          => 'Skutsje',
 'vector-action-undelete'         => 'Wierhäärstaale',
 'vector-action-unprotect'        => 'Fräireeke',
-'vector-simplesearch-preference' => 'Uutwiedede Säikfoarsleeke aktivierje (bloot Vector)',
 'vector-view-create'             => 'Moakje',
 'vector-view-edit'               => 'Beoarbaidje',
 'vector-view-history'            => 'Versionsgeskichte',

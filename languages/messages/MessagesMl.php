@@ -480,7 +480,6 @@ $messages = array(
 'vector-action-protect'          => 'സം‌രക്ഷിക്കുക',
 'vector-action-undelete'         => 'മായ്ക്കപ്പെട്ടത് പുനഃസ്ഥാപിക്കുക',
 'vector-action-unprotect'        => 'സംരക്ഷണത്തിൽ മാറ്റംവരുത്തുക',
-'vector-simplesearch-preference' => 'മെച്ചപ്പെട്ട തിരച്ചിൽ നിർദ്ദേശങ്ങൾ തരിക (വെക്റ്റർ ദൃശ്യരൂപത്തിൽ മാത്രം)',
 'vector-view-create'             => 'സൃഷ്ടിക്കുക',
 'vector-view-edit'               => 'തിരുത്തുക',
 'vector-view-history'            => 'നാൾവഴി കാണുക',

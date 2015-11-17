@@ -337,7 +337,6 @@ $messages = array(
 'vector-action-protect'          => 'שיצן',
 'vector-action-undelete'         => 'מבטל זיין אויסמעקן',
 'vector-action-unprotect'        => 'ענדערונג באַשיצונג',
-'vector-simplesearch-preference' => 'אַקטיווירן פֿאַרברייטערטע זוך פֿארשלאָגן (נאר וועקטאר)',
 'vector-view-create'             => 'שאַפֿן',
 'vector-view-edit'               => 'רעדאַקטירן',
 'vector-view-history'            => 'ווײַזן היסטאָריע',

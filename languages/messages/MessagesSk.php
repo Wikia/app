@@ -440,7 +440,6 @@ $messages = array(
 'vector-action-protect' => 'Zamknúť',
 'vector-action-undelete' => 'Obnoviť',
 'vector-action-unprotect' => 'Zmeniť stav ochrany',
-'vector-simplesearch-preference' => 'Povoliť rozšírené návrhy hľadania (iba pre tému Vector)',
 'vector-view-create' => 'Vytvoriť',
 'vector-view-edit' => 'Upraviť',
 'vector-view-history' => 'Zobraziť históriu',

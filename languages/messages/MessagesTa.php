@@ -235,7 +235,6 @@ $messages = array(
 'vector-action-protect'          => 'காக்கவும்',
 'vector-action-undelete'         => 'நீக்கத்தை நிறுத்து',
 'vector-action-unprotect'        => 'காப்பை மாற்று',
-'vector-simplesearch-preference' => 'மேம்பட்ட தேடுதல் முடிவுகளைச் செயல்படுத்தவும் (Vector தோல் மட்டும்)',
 'vector-view-create'             => 'உருவாக்கவும்',
 'vector-view-edit'               => 'தொகு',
 'vector-view-history'            => 'வரலாற்றைக் காட்டவும்',

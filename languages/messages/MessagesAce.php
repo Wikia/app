@@ -293,7 +293,6 @@ $messages = array(
 'vector-action-protect'          => 'Peulindông',
 'vector-action-undelete'         => 'Bateuë sampôh',
 'vector-action-unprotect'        => 'Bateuë peulindông',
-'vector-simplesearch-preference' => 'Peuudep mita saran nyang geupeusamporeuna (keu kulet Vector khong)',
 'vector-view-create'             => 'Peugöt',
 'vector-view-edit'               => 'Andam',
 'vector-view-history'            => 'Atra u likôt',

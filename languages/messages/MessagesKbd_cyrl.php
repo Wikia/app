@@ -174,7 +174,6 @@ $messages = array(
 'vector-action-protect'          => 'Хъумэн',
 'vector-action-undelete'         => 'ЗыфӀэгъэувэжын',
 'vector-action-unprotect'        => 'Хъумэныр техыжын',
-'vector-simplesearch-preference' => 'Лъыхъуэгъуэ нэхъ зэхэхауэ дэӀэпыкъуэгъухэр хэгъэнэн (Векторым шъхьэкӀэ къуэдей)',
 'vector-view-create'             => 'ЩӀын',
 'vector-view-edit'               => 'Гъэтэрэзын',
 'vector-view-history'            => 'Тхыдэм еплъын',

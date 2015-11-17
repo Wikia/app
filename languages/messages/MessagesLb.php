@@ -328,7 +328,6 @@ $messages = array(
 'vector-action-protect'          => 'Spären',
 'vector-action-undelete'         => 'Restauréieren',
 'vector-action-unprotect'        => 'Spär änneren',
-'vector-simplesearch-preference' => 'Verbessert Sichvirschléi aktiviéieren (nëmme beim Ausgesinn Vector)',
 'vector-view-create'             => 'Uleeën',
 'vector-view-edit'               => 'Änneren',
 'vector-view-history'            => 'Versioune weisen',

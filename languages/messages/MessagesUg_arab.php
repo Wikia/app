@@ -193,7 +193,6 @@ $messages = array(
 'vector-action-protect'          => 'قوغدا',
 'vector-action-undelete'         => 'ئەسلىگە قايتۇر',
 'vector-action-unprotect'        => 'قوغداشنى ئۆزگەرت',
-'vector-simplesearch-preference' => 'ئالىي ئىزدەش تەكلىپىنى ئاچ (Vector تېرىدىلا)',
 'vector-view-create'             => 'قۇر',
 'vector-view-edit'               => 'تەھرىر',
 'vector-view-history'            => 'تارىخ كۆرسەت',

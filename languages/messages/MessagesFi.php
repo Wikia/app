@@ -477,7 +477,6 @@ $messages = array(
 'vector-action-protect'          => 'Suojaa',
 'vector-action-undelete'         => 'Palauta',
 'vector-action-unprotect'        => 'Muuta suojausta',
-'vector-simplesearch-preference' => 'Ota käyttöön parannetut hakuehdotukset (vain Vector-ulkoasu)',
 'vector-view-create'             => 'Luo',
 'vector-view-edit'               => 'Muokkaa',
 'vector-view-history'            => 'Näytä historia',
