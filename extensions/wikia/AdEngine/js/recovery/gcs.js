@@ -37,7 +37,7 @@ define('ext.wikia.adEngine.recovery.gcs', [
 		if (!article) {
 			return;
 		}
-		elementsToHide = article.querySelectorAll('table,figure,.portable-infobox');
+		elementsToHide = article.querySelectorAll('table,figure,.portable-infobox,.category-gallery');
 		article.classList.add('p402_premium');
 		Array.prototype.forEach.call(elementsToHide, function (element) {
 			element.classList.add('p402_hide');
