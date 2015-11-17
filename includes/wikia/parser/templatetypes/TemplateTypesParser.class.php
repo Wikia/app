@@ -23,7 +23,7 @@ class TemplateTypesParser {
 					$text = self::handleNavboxTemplate();
 					break;
 				case AutomaticTemplateTypes::TEMPLATE_REFERENCES:
-				case TemplateClassificationService::TEMPLATE_REF:
+				case TemplateClassificationService::TEMPLATE_REFERENCES:
 					$text = self::handleReferencesTemplate();
 					break;
 			}
@@ -121,7 +121,7 @@ class TemplateTypesParser {
 	private static function removeHeadings( $wikitext ) {
 		for ( $i = 6; $i >= 1; --$i ) {
 			$h = str_repeat( '=', $i );
-			$wikitext = preg_replace( "/$h(.+)$h/m", "\\1", $wikitext );
+			$wikitext = preg_replace( "/$h(.+)$h/m", '\\1', $wikitext );
 		}
 
 		return $wikitext;

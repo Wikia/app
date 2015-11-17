@@ -25,7 +25,7 @@ class TemplateClassificationService {
 	const TEMPLATE_NOT_ART = 'nonarticle';
 	const TEMPLATE_FLAG = 'notice';
 	const TEMPLATE_QUOTE = 'quote';
-	const TEMPLATE_REF = 'reference';
+	const TEMPLATE_REFERENCES = 'reference';
 	const TEMPLATE_UNKNOWN = 'unknown';
 	const TEMPLATE_UNCLASSIFIED = '' ;
 
@@ -46,7 +46,7 @@ class TemplateClassificationService {
 		self::TEMPLATE_NAVBOX,
 		self::TEMPLATE_NOT_ART,
 		self::TEMPLATE_QUOTE,
-		self::TEMPLATE_REF,
+		self::TEMPLATE_REFERENCES,
 		self::TEMPLATE_UNKNOWN,
 	];
 
