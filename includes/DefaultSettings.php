@@ -2479,13 +2479,6 @@ $wgFooterIcons = array(
 $wgUseCombinedLoginLink = true;
 
 /**
- * Watch and unwatch as an icon rather than a link for Vector skin only
- * true = use an icon watch/unwatch button
- * false = use watch/unwatch text link
- */
-$wgVectorUseIconWatch = false;
-
-/**
  * Display user edit counts in various prominent places.
  */
 $wgEdititis = false;

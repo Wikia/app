@@ -66,20 +66,8 @@ class VectorTemplate extends BaseTemplate {
 	 * Outputs the entire contents of the (X)HTML page
 	 */
 	public function execute() {
-		global $wgVectorUseIconWatch;
-
 		// Build additional attributes for navigation urls
 		$nav = $this->data['content_navigation'];
-
-		if ( $wgVectorUseIconWatch ) {
-			$mode = $this->getSkin()->getTitle()->userIsWatching() ? 'unwatch' : 'watch';
-			if ( isset( $nav['actions'][$mode] ) ) {
-				$nav['views'][$mode] = $nav['actions'][$mode];
-				$nav['views'][$mode]['class'] = rtrim( 'icon ' . $nav['views'][$mode]['class'], ' ' );
-				$nav['views'][$mode]['primary'] = true;
-				unset( $nav['actions'][$mode] );
-			}
-		}
 
 		$xmlID = '';
 		foreach ( $nav as $section => $links ) {
