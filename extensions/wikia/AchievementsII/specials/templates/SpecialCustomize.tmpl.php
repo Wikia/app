@@ -28,20 +28,20 @@
 global $wgCityId, $wgScriptPath, $wgExternalSharedDB, $wgJsMimeType;
 
 $tracks = array();
-foreach($config->getInTrackStatic() as $badgeTypeId => $trackData){
-	if (!$config->shouldShow($badgeTypeId)) {
+foreach( $config->getInTrackStatic() as $badgeTypeId => $trackData ){
+	if ( !$config->shouldShow( $badgeTypeId ) ) {
 		continue;
 	}
-	if($badgeTypeId != BADGE_EDIT) {
+	if ( $badgeTypeId != BADGE_EDIT ) {
 		$tracks[$badgeTypeId] = $trackData;
 	}
 	else {
 		$tracks[$badgeTypeId] = $trackData;
 		$editPlusCategoryTracks = $config->getInTrackEditPlusCategory();
 
-		if($editPlusCategoryTracks && empty($wgAchievementsEditAddPhotoOnly)) {
-			foreach($editPlusCategoryTracks as $editPlusCategoryTypeId => $editPlusCategoryData) {
-				$tracks[$editPlusCategoryTypeId] = array('category' => $editPlusCategoryData['category'], 'enabled' => $editPlusCategoryData['enabled'], 'laps' => $tracks[$badgeTypeId]['laps'], 'infinite' => $tracks[$badgeTypeId]['infinite']);
+		if( $editPlusCategoryTracks && empty( $wgAchievementsEditAddPhotoOnly ) ) {
+			foreach( $editPlusCategoryTracks as $editPlusCategoryTypeId => $editPlusCategoryData ) {
+				$tracks[$editPlusCategoryTypeId] = array( 'category' => $editPlusCategoryData['category'], 'enabled' => $editPlusCategoryData['enabled'], 'laps' => $tracks[$badgeTypeId]['laps'], 'infinite' => $tracks[$badgeTypeId]['infinite'] );
 			}
 		}
 	}
@@ -109,21 +109,21 @@ foreach($config->getInTrackStatic() as $badgeTypeId => $trackData){
 <?php
 $sections = array();
 
-if (empty($wgAchievementsEditAddPhotoOnly)) {
+if ( empty( $wgAchievementsEditAddPhotoOnly ) ) {
 	$sections = array(
 		'special' => array(),
 		'secret' => array()
 	);
-	foreach($config->getNotInTrackStatic() as $badgeTypeId => $badgeData) {
+	foreach( $config->getNotInTrackStatic() as $badgeTypeId => $badgeData ) {
 		$section = null;
-		if($config->isSpecial($badgeTypeId))
+		if( $config->isSpecial( $badgeTypeId ) )
 			$section = 'special';
-		elseif($config->isSecret($badgeTypeId))
+		elseif( $config->isSecret( $badgeTypeId ) )
 			$section = 'secret';
 		else
 			continue;
 
-		$sections[$section][] = new AchBadge($badgeTypeId, null, $badgeData['level']);
+		$sections[$section][] = new AchBadge( $badgeTypeId, null, $badgeData['level'] );
 	}
 }
 

@@ -351,9 +351,9 @@ class AchConfig {
 		return in_array($badgeTypeId, self::$mSecretBadges);
 	}
 
-	public function shouldShow($badgeTypeId) {
+	public function shouldShow( $badgeTypeId ) {
 		global $wgAchievementsEditAddPhotoOnly;
-		if (empty($wgAchievementsEditAddPhotoOnly) || in_array($badgeTypeId, self::$mEditAddphotoOnlyBadges)) {
+		if ( empty( $wgAchievementsEditAddPhotoOnly ) || in_array( $badgeTypeId, self::$mEditAddphotoOnlyBadges ) ) {
 			return true;
 		}
 		return false;
