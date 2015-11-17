@@ -65,7 +65,6 @@ describe('ext.wikia.adEngine.template.modalOasisHandler', function () {
 	});
 
 	it('Modal called for async ad - not displayed at first', function () {
-		spyOn(mocks.wikiaUiModalMock, 'createComponent').and.callThrough();
 		spyOn(mocks.modalMock, 'show');
 
 		mocks.params.modalVisible = false;
@@ -76,12 +75,25 @@ describe('ext.wikia.adEngine.template.modalOasisHandler', function () {
 			mocks.params.closeButtonDelay
 		);
 
-		expect(mocks.wikiaUiModalMock.createComponent.calls.count()).toEqual(1);
 		expect(mocks.modalMock.show.calls.count()).toEqual(0);
 
 		module.show();
 
 		expect(mocks.modalMock.show.calls.count()).toEqual(1);
+	});
+
+	it('Close button hidden when delay set', function () {
+		spyOn(mocks.modalMock.$close, 'hide');
+
+		mocks.params.closeButtonDelay = 5;
+		var module = getModule();
+		module.create(
+			mocks.params.adContainer,
+			mocks.params.modalVisible,
+			mocks.params.closeButtonDelay
+		);
+
+		expect(mocks.modalMock.$close.hide.calls.count()).toEqual(1);
 	});
 
 });
