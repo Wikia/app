@@ -138,12 +138,15 @@ class PipelineEventProducer {
 	}
 
 	/**
+	 * Fetch latest revision of a given article based on its Id
+	 * Unfortunately, we cannot rely on title cache, thus Title::GAID_FOR_UPDATE
+	 *
 	 * @param $pageId
 	 * @return int
 	 */
 	protected static function getLatestRevision( $pageId ) {
 		$title = Title::newFromID( $pageId );
-		return $title ? $title->getLatestRevID() : null;
+		return $title ? $title->getLatestRevID(Title::GAID_FOR_UPDATE) : null;
 	}
 
 	/**
