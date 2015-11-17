@@ -4,11 +4,12 @@ class InsightsHelper {
 	/**
 	 * Used to create the following messages:
 	 *
-	 * 'insights-list-subtitle-flags',
-	 * 'insights-list-subtitle-uncategorizedpages',
-	 * 'insights-list-subtitle-withoutimages',
 	 * 'insights-list-subtitle-deadendpages',
+	 * 'insights-list-subtitle-flags',
+	 * 'insights-list-subtitle-templateswithouttype'
+	 * 'insights-list-subtitle-uncategorizedpages',
 	 * 'insights-list-subtitle-wantedpages'
+	 * 'insights-list-subtitle-withoutimages',
 	 */
 	const INSIGHT_SUBTITLE_MSG_PREFIX = 'insights-list-subtitle-';
 
@@ -17,6 +18,7 @@ class InsightsHelper {
 	 *
 	 * 'insights-list-description-deadendpages',
 	 * 'insights-list-description-flags',
+	 * 'insights-list-description-templateswithouttype',
 	 * 'insights-list-description-uncategorizedpages',
 	 * 'insights-list-description-wantedpages'
 	 * 'insights-list-description-withoutimages',
@@ -67,6 +69,16 @@ class InsightsHelper {
 		) {
 			self::$insightsPages = array_merge(
 				[ InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE => 'InsightsUnconvertedInfoboxesModel' ],
+				self::$insightsPages
+			);
+		}
+
+		/* Add templates without type insight */
+		if ( !empty( $wgEnableTemplateClassificationExt )
+			&& !isset( self::$insightsPages[InsightsTemplatesWithoutTypeModel::INSIGHT_TYPE] )
+		) {
+			self::$insightsPages = array_merge(
+				[ InsightsTemplatesWithoutTypeModel::INSIGHT_TYPE => 'InsightsTemplatesWithoutTypeModel' ],
 				self::$insightsPages
 			);
 		}
