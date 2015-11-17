@@ -100,7 +100,7 @@ require([
 			});
 		}
 
-		if (gcs) {
+		if (context.opts.googleConsumerSurveys && gcs) {
 			gcs.addRecoveryCallback();
 		}
 
