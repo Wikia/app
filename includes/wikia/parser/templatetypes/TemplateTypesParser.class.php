@@ -15,7 +15,19 @@ class TemplateTypesParser {
 		wfProfileIn( __METHOD__ );
 
 		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson ) {
-			$text = self::handleTemplateType( $finalTitle );
+			$type = self::getTemplateType( $finalTitle );
+
+			switch ( $type ) {
+				case AutomaticTemplateTypes::TEMPLATE_NAVBOX:
+				case TemplateClassificationService::TEMPLATE_NAVBOX:
+					$text = self::handleNavboxTemplate();
+					break;
+				case AutomaticTemplateTypes::TEMPLATE_REFERENCES:
+				case TemplateClassificationService::TEMPLATE_REF:
+					$text = self::handleReferencesTemplate();
+					break;
+				default:
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -35,39 +47,15 @@ class TemplateTypesParser {
 		$title = Title::newFromText( $templateTitle, NS_TEMPLATE );
 
 		if ( self::templateReadyToProcess( $templateWikitext ) && self::isValidTitle( $title ) ) {
-			$templateWikitext = self::handleTemplateType( $title, $templateWikitext );
+			$type = self::getTemplateType( $title );
+			if ( $type == AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK ) {
+				$templateWikitext = self::handleContextLinksTemplate( $templateWikitext );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
 
 		return true;
-	}
-
-	/**
-	 * @desc for given template title process it's content accordingly
-	 *
-	 * @param $title
-	 * @param string $text
-	 * @return string
-	 */
-	private static function handleTemplateType( $title, $text = '' ) {
-		$type = self::getTemplateType( $title );
-
-		switch ( $type ) {
-			case AutomaticTemplateTypes::TEMPLATE_NAVBOX:
-			case TemplateClassificationService::TEMPLATE_NAVBOX:
-				$text = self::handleNavboxTemplate();
-				break;
-			case AutomaticTemplateTypes::TEMPLATE_REFERENCES:
-			case TemplateClassificationService::TEMPLATE_REF:
-				$text = self::handleReferencesTemplate();
-				break;
-			case AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK:
-				$text = self::handleContextLinksTemplate( $text );
-				break;
-		}
-
-		return $text;
 	}
 
 	/**
