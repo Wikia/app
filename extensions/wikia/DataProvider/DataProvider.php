@@ -436,14 +436,6 @@ class DataProvider {
 	 * @return array
 	 */
 	final public static function GetTopFiveUsers($limit = 7) {
-		global $wgDBReadOnly;
-
-		# PLATFORM-1648: running queries on events_local_users in Reston takes ages
-		if ( !empty( $wgDBReadOnly ) ) {
-			wfDebug( __METHOD__ . " disabled\n" );
-			return [];
-		}
-
 		wfProfileIn(__METHOD__);
 
 		$fname = __METHOD__;
@@ -478,7 +470,8 @@ class DataProvider {
 				$fname,
 				[
 					'LIMIT' => self::TOP_USERS_MAX_LIMIT * 4,
-					'ORDER BY' => 'edits DESC'
+					'ORDER BY' => 'edits DESC',
+					'USE INDEX' => 'PRIMARY', # mysql in Reston wants to use a different key (PLATFORM-1648)
 				]
 			);
 
