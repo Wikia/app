@@ -17,7 +17,6 @@ class SkinLegacy extends SkinTemplate {
 	 */
 	function setupSkinUserCss( OutputPage $out ) {
 		$out->addModuleStyles( 'mediawiki.legacy.shared' );
-		$out->addModuleStyles( 'mediawiki.legacy.oldshared' );
 	}
 
 	public function commonPrintStylesheet() {

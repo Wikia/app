@@ -2953,7 +2953,6 @@ Mentsd el a számítógépedre, majd töltsd fel ide.',
 # Stylesheets
 'common.css'              => '/* Közös CSS az összes felületnek */',
 'standard.css'            => '/* Az ide elhelyezett CSS hatással lesz a Klasszikus felület használóira */',
-'nostalgia.css'           => '/* Az ide elhelyezett CSS hatással lesz a Nosztalgia felület használóira */',
 'cologneblue.css'         => '/* Az ide elhelyezett CSS hatással lesz a Kölni kék felület használóira */',
 'monobook.css'            => '/* Az ide elhelyezett CSS hatással lesz a Monobook felület használóira */',
 'myskin.css'              => '/* Az ide elhelyezett CSS hatással lesz a MySkin felület használóira */',
@@ -2971,7 +2970,6 @@ Mentsd el a számítógépedre, majd töltsd fel ide.',
 # Scripts
 'common.js'              => '/* Az ide elhelyezett JavaScript kód minden felhasználó számára lefut az oldalak betöltésekor. */',
 'standard.js'            => '/* A Klasszikus felületet használó szerkesztők számára betöltendő JavaScriptek */',
-'nostalgia.js'           => '/* A Nosztalgia felületet használó szerkesztők számára betöltendő JavaScriptek */',
 'cologneblue.js'         => '/* A Kölni kék felületet használó szerkesztők számára betöltendő JavaScriptek */',
 'monobook.js'            => '/* A Monobook felületet használó szerkesztők számára betöltendő JavaScriptek */',
 'myskin.js'              => '/* A MySkin felületet használó szerkesztők számára betöltendő JavaScriptek */',
@@ -3022,7 +3020,6 @@ Ez valószínűleg egy olyan link miatt van, ami egy feketelistán lévő oldalr
 
 # Skin names
 'skinname-standard'    => 'Klasszikus',
-'skinname-nostalgia'   => 'Nosztalgia',
 'skinname-cologneblue' => 'Kölni kék',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',

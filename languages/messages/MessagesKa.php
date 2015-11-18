@@ -2559,7 +2559,6 @@ $1',
 
 # Skin names
 'skinname-standard'  => 'კლასიკური',
-'skinname-nostalgia' => 'ნოსტალგია',
 'skinname-modern'    => 'თანამედროვე',
 
 # Math options

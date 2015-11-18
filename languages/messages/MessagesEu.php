@@ -2566,7 +2566,6 @@ Baliteke zerrenda beltzean dagoen kanpo lotura batek sortzea arazo hori.',
 
 # Skin names
 'skinname-standard'    => 'Lehenetsia',
-'skinname-nostalgia'   => 'Nostalgia',
 'skinname-cologneblue' => 'Cologne Blue',
 'skinname-simple'      => 'Arrunta',
 'skinname-modern'      => 'Modernoa',

@@ -2513,7 +2513,6 @@ $wgMessageStructure = array(
 	'stylesheets' => array(
 		'common.css',
 		'standard.css',
-		'nostalgia.css',
 		'cologneblue.css',
 		'monobook.css',
 		'myskin.css',
@@ -2531,7 +2530,6 @@ $wgMessageStructure = array(
 	'scripts' => array(
 		'common.js',
 		'standard.js',
-		'nostalgia.js',
 		'cologneblue.js',
 		'monobook.js',
 		'myskin.js',
@@ -2581,7 +2579,6 @@ $wgMessageStructure = array(
 	),
 	'skin' => array(
 		'skinname-standard',
-		'skinname-nostalgia',
 		'skinname-cologneblue',
 		'skinname-monobook',
 		'skinname-myskin',

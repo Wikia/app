@@ -2949,7 +2949,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => 'സാർവത്രികം',
-'skinname-nostalgia'   => 'ഗൃഹാതുരത്വം',
 'skinname-cologneblue' => 'ക്ലോൺ നീല',
 'skinname-monobook'    => 'മോണോബുക്ക്',
 'skinname-myskin'      => 'എന്റിഷ്ടം',

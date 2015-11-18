@@ -2787,7 +2787,6 @@ $1被封禁的理由是：“$2”',
 # Stylesheets
 'common.css'      => '/* 此处的 CSS 将应用于所有的皮肤 */',
 'standard.css'    => '/* 此处的 CSS 将影响使用标准皮肤的用户 */',
-'nostalgia.css'   => '/* 此处的 CSS 将影响使用怀旧皮肤的用户 */',
 'cologneblue.css' => '/* 此处的 CSS 将影响使用科隆香水蓝皮肤的用户 */',
 'monobook.css'    => '/* 此处的 CSS 将影响使用 Monobook 皮肤的用户 */',
 'myskin.css'      => '/* 此处的 CSS 将影响使用 MySkin 皮肤的用户 */',
@@ -2800,7 +2799,6 @@ $1被封禁的理由是：“$2”',
 # Scripts
 'common.js'      => '/* 此处的JavaScript将加载于所有用户每一个页面。 */',
 'standard.js'    => '/* 此处的JavaScript将加载于使用标准皮肤的用户 */',
-'nostalgia.js'   => '/* 此处的JavaScript将加载于使用怀旧皮肤的用户 */',
 'cologneblue.js' => '/* 此处的JavaScript将加载于使用科隆香水蓝皮肤的用户 */',
 'monobook.js'    => '/* 此处的JavaScript将加载于使用Monobook皮肤的用户 */',
 'myskin.js'      => '/* 此处的JavaScript将加载于使用MySkin皮肤的用户 */',
@@ -2847,7 +2845,6 @@ $1被封禁的理由是：“$2”',
 
 # Skin names
 'skinname-standard'    => '标准',
-'skinname-nostalgia'   => '怀旧',
 'skinname-cologneblue' => '科隆香水蓝',
 'skinname-simple'      => '简单',
 'skinname-modern'      => '现代',

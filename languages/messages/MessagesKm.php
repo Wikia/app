@@ -2817,7 +2817,6 @@ $1',
 # Stylesheets
 'common.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើគ្រប់សំបកទាំងអស់ */',
 'standard.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក Standard */',
-'nostalgia.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក Nostalgia */',
 'cologneblue.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក Cologne Blue */',
 'monobook.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក Monobook */',
 'myskin.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក MySkin */',
@@ -2860,7 +2859,6 @@ $1',
 
 # Skin names
 'skinname-standard' => 'បុរាណ',
-'skinname-nostalgia' => 'អាឡោះអាល័យ',
 'skinname-cologneblue' => 'ទឹកអប់ខៀវ',
 'skinname-monobook' => 'សៀវភៅឯក',
 'skinname-myskin' => 'សំបកខ្ញុំ',

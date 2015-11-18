@@ -2918,7 +2918,6 @@ See also {{msg-mw|Anonuser}} and {{msg-mw|Siteusers}}.',
 
 # Skin names
 'skinname-standard'    => '{{optional}}',
-'skinname-nostalgia'   => '{{optional}}',
 'skinname-cologneblue' => '{{optional}}',
 'skinname-monobook'    => '{{optional}}',
 'skinname-myskin'      => '{{optional}}',

@@ -2772,7 +2772,6 @@ Achos hyn yn fwy na thebyg yw presenoldeb cysylltiad i wefan ar y rhestr gwahard
 
 # Skin names
 'skinname-standard'    => 'Safonol',
-'skinname-nostalgia'   => 'Hiraeth',
 'skinname-cologneblue' => 'Glas Cwlen',
 
 # Patrolling

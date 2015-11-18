@@ -2255,7 +2255,6 @@ Wïkï-aparw üşin sırttan alw barlıq äreketter [[{{#special:Log}}/import|s�
 # Stylesheets
 'common.css'      => '/* Mında ornalastırılğan CSS barlıq mänerlerde qoldanıladı */',
 'standard.css'    => '/* Mında ornalastırılğan CSS tek «Dağdılı» (standard) mänerin paýdalanwşılarına ıqpal etedi */',
-'nostalgia.css'   => '/* Mında ornalastırılğan CSS tek «Añsaw» (nostalgia) mänerin paýdalanwşılarına ıqpal etedi */',
 'cologneblue.css' => '/* Mında ornalastırılğan CSS tek «Köln zeñgirligi» (cologneblue) mänerin paýdalanwşılarına ıqpal etedi skin */',
 'monobook.css'    => '/* Mında ornalastırılğan CSS tek «Dara kitap» (monobook) mänerin paýdalanwşılarına ıqpal etedi */',
 'myskin.css'      => '/* Mında ornalastırılğan CSS tek «Öz mänerim» (myskin) mänerin paýdalanwşılarına ıqpal etedi */',
@@ -2266,7 +2265,6 @@ Wïkï-aparw üşin sırttan alw barlıq äreketter [[{{#special:Log}}/import|s�
 # Scripts
 'common.js'      => '/* Mındağı ärtürli JavaScript kez kelgen bet qotarılğanda barlıq paýdalanwşılar üşin jegiledi. */',
 'standard.js'    => '/* Mındağı JavaScript tek «Dağdılı» (standard) mänerin paýdalanwşılar üşin jegiledi */',
-'nostalgia.js'   => '/* Mındağı JavaScript tek «Añsaw» (nostalgia) mänerin paýdalanwşılar üşin jegiledi*/',
 'cologneblue.js' => '/* Mındağı JavaScript tek «Köln zeñgirligi» (cologneblue) mänerin paýdalanwşılar üşin jegiledi */',
 'monobook.js'    => '/* Mındağı JavaScript tek «Dara kitap» (monobook) mänerin paýdalanwşılar üşin jegiledi */',
 'myskin.js'      => '/* Mındağı JavaScript tek «Öz mänerim» (myskin) mänerin paýdalanwşılar üşin jegiledi */',
@@ -2298,7 +2296,6 @@ Bunıñ sebebi şettik torap siltemesinen bolwı mümkin.',
 
 # Skin names
 'skinname-standard'    => 'Dağdılı (standard)',
-'skinname-nostalgia'   => 'Añsaw (nostalgia)',
 'skinname-cologneblue' => 'Köln zeñgirligi (cologneblue)',
 'skinname-monobook'    => 'Dara kitap (monobook)',
 'skinname-myskin'      => 'Öz mänerim (myskin)',

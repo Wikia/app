@@ -2493,7 +2493,6 @@ All Transwiki-Import-Akschonen staht later ok in dat [[Special:Log/import|Import
 
 # Skin names
 'skinname-standard'    => 'Klassik',
-'skinname-nostalgia'   => 'Nostalgie',
 'skinname-cologneblue' => 'Kölsch Blau',
 'skinname-chick'       => 'Küken',
 

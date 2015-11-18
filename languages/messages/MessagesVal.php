@@ -1,7 +1,6 @@
 <?php
 $skinNames = array(
 	'standard' => "Estàndard",
-	'nostalgia' => "Nostàlgia",
 	'cologneblue' => "Colònia blava",
 );
 $namespaceNames = array(

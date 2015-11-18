@@ -2999,7 +2999,6 @@ See on ilmselt põhjustatud linkimisest mustas nimekirjas olevasse välisvõrguk
 
 # Skin names
 'skinname-standard' => 'Algeline',
-'skinname-nostalgia' => 'Nostalgia',
 'skinname-cologneblue' => 'Kölni sinine',
 'skinname-monobook' => 'MonoBook',
 'skinname-myskin' => 'Minu kujundus',

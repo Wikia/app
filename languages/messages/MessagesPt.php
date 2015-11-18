@@ -2982,7 +2982,6 @@ Permite colocar uma justificação no resumo da edição.',
 # Stylesheets
 'common.css'      => '/* Código CSS colocado aqui será aplicado a todos os temas */',
 'standard.css'    => '/* Código CSS colocado aqui afectará os utilizadores do tema Clássico */',
-'nostalgia.css'   => '/* Código CSS colocado aqui afectará os utilizadores do tema Nostalgia */',
 'cologneblue.css' => '/* Código CSS colocado aqui afectará os utilizadores do tema Azul colonial */',
 'monobook.css'    => '/* Código CSS colocado aqui afectará os utilizadores do tema Monobook */',
 'myskin.css'      => '/* Código CSS colocado aqui afectará os utilizadores do tema MySkin */',
@@ -2995,7 +2994,6 @@ Permite colocar uma justificação no resumo da edição.',
 # Scripts
 'common.js'      => '/* Código Javascript colocado aqui será carregado para todos os utilizadores em cada carregamento de página */',
 'standard.js'    => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Clássico */',
-'nostalgia.js'   => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Nostalgia */',
 'cologneblue.js' => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Azul colonial */',
 'monobook.js'    => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Monobook */',
 'myskin.js'      => '/* Código Javascript colocado aqui será carregado para utilizadores do tema MySkin */',
@@ -3042,7 +3040,6 @@ Este bloqueio foi provavelmente causado por um link para um site externo que con
 
 # Skin names
 'skinname-standard'    => 'Clássico',
-'skinname-nostalgia'   => 'Nostalgia',
 'skinname-cologneblue' => 'Azul colonial',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',

@@ -2825,7 +2825,6 @@ W zespominanju dajo se pśicyna pódaś.',
 
 # Skin names
 'skinname-standard' => 'Klasiski',
-'skinname-nostalgia' => 'Nostalgiski',
 'skinname-cologneblue' => 'Kölnski Módry',
 'skinname-monobook' => 'MonoBook',
 'skinname-myskin' => 'Mój šat',

@@ -2090,7 +2090,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => 'Классик',
-'skinname-nostalgia'   => 'Искә алу',
 'skinname-cologneblue' => 'Зәңгәр сагыш',
 'skinname-monobook'    => 'Китап',
 'skinname-myskin'      => 'Үзем',

@@ -2873,7 +2873,6 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 # Stylesheets
 'common.css'              => '/* Tämä sivu sisältää koko sivustoa muuttavia tyylejä. */',
 'standard.css'            => '/* Tämä sivu sisältää Perus-ulkoasua muuttavia tyylejä. */',
-'nostalgia.css'           => '/* Tämä sivu sisältää Nostalgia-ulkoasua muuttavia tyylejä. */',
 'cologneblue.css'         => '/* Tämä sivu sisältää Kölnin sininen -ulkoasua muuttavia tyylejä. */',
 'monobook.css'            => '/* Tämä sivu sisältää Monobook-ulkoasua muuttavia tyylejä. */',
 'myskin.css'              => '/* Tämä sivu sisältää Oma tyylisivu -ulkoasua muuttavia tyylejä. */',
@@ -2890,7 +2889,6 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 # Scripts
 'common.js'              => '/* Tämän sivun JavaScript-koodi liitetään jokaiseen sivulataukseen */',
 'standard.js'            => '/* Tämän sivun JavaScript-koodi liitetään Perus-tyyliin */',
-'nostalgia.js'           => '/* Tämän sivun JavaScript-koodi liitetään Nostalgia-tyyliin */',
 'cologneblue.js'         => '/* Tämän sivun JavaScript-koodi liitetään Kölnin sininen -tyyliin */',
 'monobook.js'            => '/* Tämän sivun JavaScript-koodi liitetään Monobook-tyyliin */',
 'myskin.js'              => '/* Tämän sivun JavaScript-koodi liitetään Oma tyylisivu -tyyliin */',
@@ -2940,7 +2938,6 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 
 # Skin names
 'skinname-standard'    => 'Perus',
-'skinname-nostalgia'   => 'Nostalgia',
 'skinname-cologneblue' => 'Kölnin sininen',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'Oma tyylisivu',

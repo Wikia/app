@@ -1101,7 +1101,6 @@ $3',
 
 # Skin names
 'skinname-standard'    => 'Стандартон',
-'skinname-nostalgia'   => 'Æнкъард',
 'skinname-cologneblue' => 'Кёльны æрхæндæг',
 'skinname-monobook'    => 'Моно-чиныг',
 'skinname-myskin'      => 'Мæхи',

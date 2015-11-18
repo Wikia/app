@@ -3044,7 +3044,6 @@ Pèrmèt de rètablir la vèrsion devant et pués d’apondre una rêson dens la
 # Stylesheets
 'common.css' => '/* Lo code CSS betâ ique serat aplicâ a tôs los habelyâjos. */',
 'standard.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Estandârd ». */',
-'nostalgia.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Cafârd ». */',
 'cologneblue.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Blu de Cologne ». */',
 'monobook.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « MonoBook ». */',
 'myskin.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « MonHabelyâjo ». */',
@@ -3062,7 +3061,6 @@ Pèrmèt de rètablir la vèrsion devant et pués d’apondre una rêson dens la
 # Scripts
 'common.js' => '/* Tot code JavaScript betâ ique serat chargiê per tôs los usanciérs avouéc châque chargement de pâge. */',
 'standard.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Estandârd ». */',
-'nostalgia.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Cafârd ». */',
 'cologneblue.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Blu de Cologne ». */',
 'monobook.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « MonoBook ». */',
 'myskin.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « MonHabelyâjo ». */',
@@ -3114,7 +3112,6 @@ O est probâblament diu a un lim de vers un seto de defôr qu’aparêt sur la l
 
 # Skin names
 'skinname-standard' => 'Estandârd',
-'skinname-nostalgia' => 'Cafârd',
 'skinname-cologneblue' => 'Blu de Cologne',
 'skinname-monobook' => 'MonoBook',
 'skinname-myskin' => 'MonHabelyâjo',

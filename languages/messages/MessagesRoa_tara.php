@@ -2749,7 +2749,6 @@ Permette de aggiungere 'nu mutive jndr'à 'u riepileghe",
 # Stylesheets
 'common.css'              => "/* 'U CSS ca se iacchie aqquà avène applicate a tutte le masckere */",
 'standard.css'            => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Standard */",
-'nostalgia.css'           => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Nostalgie */",
 'cologneblue.css'         => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Blu Cologne */",
 'monobook.css'            => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Monobook */",
 'myskin.css'              => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Personalizzate */",
@@ -2767,7 +2766,6 @@ Permette de aggiungere 'nu mutive jndr'à 'u riepileghe",
 # Scripts
 'common.js'              => '/* Ogne JavaScript aqquà avène carecate pe tutte le utinde sus a ogne pàgene carecate. */',
 'standard.js'            => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Standard */",
-'nostalgia.js'           => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Nostalgie */",
 'cologneblue.js'         => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Blu Cologne */",
 'monobook.js'            => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere MonoBook */",
 'myskin.js'              => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Personalizzate */",
@@ -2817,7 +2815,6 @@ Stu fatte ha state causate da 'nu collegamende a 'nu site esterne ca appartene a
 
 # Skin names
 'skinname-standard'    => 'Classeche',
-'skinname-nostalgia'   => 'Nostalgie',
 'skinname-cologneblue' => 'Blu Cologne',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Personalizzate',

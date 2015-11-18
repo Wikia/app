@@ -2839,7 +2839,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => 'Класика',
-'skinname-nostalgia'   => 'Носталгия',
 'skinname-cologneblue' => 'Кьолнско синьо',
 'skinname-monobook'    => 'Монобук',
 'skinname-myskin'      => 'Моят облик',

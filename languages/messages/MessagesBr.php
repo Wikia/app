@@ -2816,7 +2816,6 @@ Talvezout a ra da ouzhpennañ un displegadenn er c\'hombod diverrañ.',
 # Stylesheets
 'common.css'              => '/** Talvezout a raio ar CSS lakaet amañ evit an holl wiskadurioù */',
 'standard.css'            => '/* Talvezout a raio ar CSS lakaet amañ evit implijerien ar gwiskadur Standard */',
-'nostalgia.css'           => '/* Talvezout a raio ar CSS lakaet amañ evit implijerien ar gwiskadur Melkoni */',
 'cologneblue.css'         => '/* Talvezout a raio ar CSS lakaet amañ evit implijerien ar gwiskadur Glaz Kologn */',
 'monobook.css'            => '/* Talvezout a raio ar CSS lakaet amañ evit implijerien ar gwiskadur Monobook */',
 'myskin.css'              => '/* Talvezout a raio ar CSS lakaet amañ evit implijerien ar gwiskadur MySkin */',
@@ -2834,7 +2833,6 @@ Talvezout a ra da ouzhpennañ un displegadenn er c\'hombod diverrañ.',
 # Scripts
 'common.js'      => '/* Kement JavaScript amañ a vo karget evit an holl implijerien war kement pajenn lennet ganto. */',
 'standard.js'    => '/* Kement JavaScript amañ a vo karget evit an implijerien a ra gant ar gwiskadur Standard */',
-'nostalgia.js'   => '/* Kement JavaScript amañ a vo karget evit an implijerien a ra gant ar gwiskadur Melkoni */',
 'cologneblue.js' => '/* Kement JavaScript amañ a vo karget evit an implijerien a ra gant ar gwiskadur Glaz Kologn */',
 'monobook.js'    => '/* Kement JavaScript amañ a vo karget evit an implijerien a ra gant ar gwiskadur MonoBook */',
 'myskin.js'      => '/* Kement JavaScript amañ a vo karget evit an implijerien a ra gant ar gwiskadur MySkin */',
@@ -2881,7 +2879,6 @@ Sur a-walc'h abalamour d'ul liamm enni a gas d'ul lec'hienn ziavaez berzet.",
 
 # Skin names
 'skinname-standard'    => 'Standard',
-'skinname-nostalgia'   => 'Melkoni',
 'skinname-cologneblue' => 'Glaz Kologn',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',

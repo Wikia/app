@@ -1901,7 +1901,6 @@ Vinarliga vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] o
 
 # Skin names
 'skinname-standard' => 'Standardur',
-'skinname-nostalgia' => 'Nostalgiskur',
 'skinname-cologneblue' => 'Cologne-bláur',
 
 # Patrolling

@@ -2342,7 +2342,6 @@ Voib olda, necil lehtpolel om kosketuz irdsaitale, kudamb om mustas nimikirjutes
 
 # Skin names
 'skinname-standard'    => 'Klassine',
-'skinname-nostalgia'   => "Nostal'gii",
 'skinname-cologneblue' => "Köl'nan sinine",
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Ičeze',

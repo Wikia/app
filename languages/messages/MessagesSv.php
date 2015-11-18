@@ -2965,7 +2965,6 @@ Ger möjlighet att skriva en motivering i redigeringssammanfattningen',
 # Stylesheets
 'common.css'      => '/* CSS som skrivs här påverkar alla skal */',
 'standard.css'    => '/* CSS som skrivs här kommer att påverka alla användare av skalet Standard */',
-'nostalgia.css'   => '/* CSS som skrivs här kommer att påverka alla användare av skalet Nostalgi */',
 'cologneblue.css' => '/* CSS som skrivs här kommer att påverka alla användare av skalet Cologne blå */',
 'monobook.css'    => '/* CSS som skrivs här kommer att påverka alla användare av skalet Monobook */',
 'myskin.css'      => '/* CSS som skrivs här kommer att påverka alla användare av skalet Mitt utseende */',
@@ -2977,7 +2976,6 @@ Ger möjlighet att skriva en motivering i redigeringssammanfattningen',
 # Scripts
 'common.js'      => '/* JavaScript som skrivs här körs varje gång en användare laddar en sida. */',
 'standard.js'    => '/* JavaScript här kommer att laddas för dem som använder skalet Standard */',
-'nostalgia.js'   => '/* JavaScript här kommer att laddas för dem som använder skalet Nostalgi */',
 'cologneblue.js' => '/* JavaScript här kommer att laddas för dem som använder skalet Cologne blå */',
 'monobook.js'    => '/* JavaScript här kommer att laddas för dem som använder skalet Monobook */',
 'myskin.js'      => '/* JavaScript här kommer att laddas för dem som använder skalet Mitt utseende */',
@@ -3024,7 +3022,6 @@ Detta orsakades troligen av en länk till en svartlistad webbplats.',
 
 # Skin names
 'skinname-standard'    => 'Standard',
-'skinname-nostalgia'   => 'Nostalgi',
 'skinname-cologneblue' => 'Cologne blå',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'Mitt utseende',

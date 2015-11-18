@@ -2921,7 +2921,6 @@ $1',
 # Stylesheets
 'common.css'      => '/* Το τοποθετημένο εδώ CSS θα εφαρμοστεί σε όλα τα skins */',
 'standard.css'    => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει χρήστες του Standard skin */',
-'nostalgia.css'   => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει χρήστες του Nostalgia skin */',
 'cologneblue.css' => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει χρήστες του Cologne Blue skin */',
 'monobook.css'    => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει χρήστες του Monobook skin */',
 'myskin.css'      => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει χρήστες του MySkin skin */',
@@ -2934,7 +2933,6 @@ $1',
 # Scripts
 'common.js'      => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για όλους τους χρήστες σε κάθε φόρτωση σελίδας. */',
 'standard.js'    => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για χρήστες που χρησιμοποιούν το Standard skin */',
-'nostalgia.js'   => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για χρήστες που χρησιμοποιούν το Nostalgia skin */',
 'cologneblue.js' => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για χρήστες που χρησιμοποιούν το Cologne Blue skin */',
 'monobook.js'    => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για χρήστες που χρησιμοποιούν το MonoBook skin */',
 'myskin.js'      => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για χρήστες που χρησιμοποιούν το MySkin skin */',
@@ -2980,7 +2978,6 @@ $1',
 
 # Skin names
 'skinname-standard'  => 'Κλασσικό',
-'skinname-nostalgia' => 'Νοσταλγία',
 'skinname-myskin'    => 'ΤοSkinΜου',
 'skinname-simple'    => 'Απλό',
 'skinname-modern'    => 'Μοντέρνο',

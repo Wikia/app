@@ -2939,7 +2939,6 @@ Geçici dosya kayıp.',
 
 # Skin names
 'skinname-standard'  => 'Klasik',
-'skinname-nostalgia' => 'Nostaljik',
 'skinname-chick'     => 'Şık',
 'skinname-simple'    => 'Basit',
 'skinname-modern'    => 'Modern',

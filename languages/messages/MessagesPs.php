@@ -2033,7 +2033,6 @@ $UNWATCHURL  نه ليدنه وکړۍ
 
 # Skin names
 'skinname-standard'    => 'کلاسيک',
-'skinname-nostalgia'   => 'نوستالژي',
 'skinname-cologneblue' => 'شين کلون',
 'skinname-monobook'    => 'مونوبوک',
 'skinname-myskin'      => 'زمابڼه',

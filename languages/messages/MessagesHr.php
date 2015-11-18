@@ -2906,7 +2906,6 @@ Razlog je vjerojatno vanjska poveznica koja se nalazi na crnom popisu.',
 
 # Skin names
 'skinname-standard'    => 'Standardna',
-'skinname-nostalgia'   => 'Nostalgija',
 'skinname-cologneblue' => 'Kölnska plava',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',

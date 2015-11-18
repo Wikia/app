@@ -3007,7 +3007,6 @@ Uložte jej na svůj disk a nahrajte ho sem.',
 # Stylesheets
 'common.css' => '/* Zde uvedené CSS bude ovlivňovat všechny styly */',
 'standard.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Klasický“  */',
-'nostalgia.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Nostalgie“  */',
 'cologneblue.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Kolínská modř“  */',
 'monobook.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Monobook“ */',
 'myskin.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Můj vzhled“ */',
@@ -3025,7 +3024,6 @@ Uložte jej na svůj disk a nahrajte ho sem.',
 # Scripts
 'common.js' => '/* Zde uvedený JavaScript bude použit pro všechny uživatele při načtení každé stránky.  */',
 'standard.js' => '/* JavaScript pro uživatele používající vzhled „Klasický“ */',
-'nostalgia.js' => '/* JavaScript pro uživatele používající vzhled „Nostalgie“  */',
 'cologneblue.js' => '/* JavaScript pro uživatele používající vzhled „Kolínská modř“  */',
 'monobook.js' => '/* JavaScript pro uživatele používající vzhled MonoBook */',
 'myskin.js' => '/* JavaScript pro uživatele používající vzhled „Můj vzhled“ */',
@@ -3076,7 +3074,6 @@ Uložte jej na svůj disk a nahrajte ho sem.',
 
 # Skin names
 'skinname-standard' => 'Klasický',
-'skinname-nostalgia' => 'Nostalgie',
 'skinname-cologneblue' => 'Kolínská modř',
 'skinname-myskin' => 'Můj vzhled',
 'skinname-chick' => 'Kuře',

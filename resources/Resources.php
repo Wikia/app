@@ -47,11 +47,6 @@ return array(
 		'remoteBasePath' => $GLOBALS['wgStylePath'],
 		'localBasePath' => $GLOBALS['wgStyleDirectory'],
 	),
-	'skins.nostalgia' => array(
-		'styles' => array( 'nostalgia/screen.css' => array( 'media' => 'screen' ) ),
-		'remoteBasePath' => $GLOBALS['wgStylePath'],
-		'localBasePath' => $GLOBALS['wgStyleDirectory'],
-	),
 	'skins.simple' => array(
 		'styles' => array( 'simple/main.css' => array( 'media' => 'screen' ) ),
 		'remoteBasePath' => $GLOBALS['wgStylePath'],
@@ -903,11 +898,6 @@ return array(
 	),
 	'mediawiki.legacy.shared' => array(
 		'styles' => array( 'common/shared.css' => array( 'media' => 'screen' ) ),
-		'remoteBasePath' => $GLOBALS['wgStylePath'],
-		'localBasePath' => $GLOBALS['wgStyleDirectory'],
-	),
-	'mediawiki.legacy.oldshared' => array(
-		'styles' => array( 'common/oldshared.css' => array( 'media' => 'screen' ) ),
 		'remoteBasePath' => $GLOBALS['wgStylePath'],
 		'localBasePath' => $GLOBALS['wgStyleDirectory'],
 	),

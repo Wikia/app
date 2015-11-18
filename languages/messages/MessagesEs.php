@@ -2984,7 +2984,6 @@ Permite añadir una razón al resumen de edición.',
 # Stylesheets
 'common.css'      => '/* Los estilos CSS definidos aquí aplicarán a todas las pieles (skins) */',
 'standard.css'    => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Standard */',
-'nostalgia.css'   => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Nostalgia */',
 'cologneblue.css' => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Cologne Blue */',
 'monobook.css'    => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Monobook */',
 'myskin.css'      => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel MySkin */',
@@ -2997,7 +2996,6 @@ Permite añadir una razón al resumen de edición.',
 # Scripts
 'common.js'      => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios en cada carga de página */',
 'standard.js'    => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Estandar */',
-'nostalgia.js'   => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Nostalgia. */',
 'cologneblue.js' => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Colonia azul */',
 'monobook.js'    => '/* El código JavaScript que se ponga aquí será cargado por los usuarios de la piel MonoBook */',
 'myskin.js'      => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Mi piel */',
@@ -3044,7 +3042,6 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 
 # Skin names
 'skinname-standard'    => 'Estándar',
-'skinname-nostalgia'   => 'Nostalgia',
 'skinname-cologneblue' => 'Colonia azul',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Mi piel',

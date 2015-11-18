@@ -2295,7 +2295,6 @@ $1',
 # Stylesheets
 'common.css'      => '/* 此之 CSS 用於全面也 */',
 'standard.css'    => '/* 此之 CSS 用於經典面之簿也 */',
-'nostalgia.css'   => '/* 此之 CSS 用於懷古面之簿也 */',
 'cologneblue.css' => '/* 此之 CSS 用於馨藍面之簿也 */',
 'monobook.css'    => '/* 此之 CSS 用於單書面之簿也 */',
 'myskin.css'      => '/* 此之 CSS 用於吾風面之簿也 */',
@@ -2308,7 +2307,6 @@ $1',
 # Scripts
 'common.js'      => '/* 此之JavaScript將載於全簿之頁。 */',
 'standard.js'    => '/* 此之JavaScript將載於用經典面之簿 */',
-'nostalgia.js'   => '/* 此之JavaScript將載於用懷古面之簿 */',
 'cologneblue.js' => '/* 此之JavaScript將載於用馨藍面之簿 */',
 'monobook.js'    => '/* 此之JavaScript將載於用單書面之簿 */',
 'myskin.js'      => '/* 此之JavaScript將載於用吾風面之簿 */',
@@ -2339,7 +2337,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => '經典',
-'skinname-nostalgia'   => '懷古',
 'skinname-cologneblue' => '馨藍',
 'skinname-monobook'    => '單書',
 'skinname-myskin'      => '吾風',

@@ -35,7 +35,6 @@ $namespaceNames = array(
 
 $skinNames = array(
 	'standard'      => 'Klassik',
-	'nostalgia'     => 'Nostalgie',
 	'cologneblue'   => 'Kölnisch Blau',
 	'monobook'      => 'MonoBook',
 	'myskin'        => 'MySkin',
@@ -2140,7 +2139,6 @@ Ales Dranswigi-Imbord-Agsiones in dose [[Special:Log/import|Imbord-Logbug]] brod
 # Stylesheets
 'common.css'      => '/* CSS an dose Schdel auw ales Sgins auswirg */',
 'standard.css'    => '/* CSS an dose Schdel auw dose Klassik-Sgin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */',
-'nostalgia.css'   => '/* CSS an dose Schdel auw dose Nostalgie-Skin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */',
 'cologneblue.css' => '/* CSS an dose Schdel auw dose Kölnisch Blau-Skin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */',
 'monobook.css'    => '/* CSS an dose Schdel auw dose Monobook-Skin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */
 /* Gleinschreib noggs erswing */
@@ -2158,7 +2156,6 @@ Ales Dranswigi-Imbord-Agsiones in dose [[Special:Log/import|Imbord-Logbug]] brod
 # Scripts
 'common.js'      => '/* Dose wolgendes JawaSgribd wür ales Benudses lad. */',
 'standard.js'    => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Klassik-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
-'nostalgia.js'   => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Nostalgie-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
 'cologneblue.js' => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Kölnisch Blau-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
 'monobook.js'    => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Monobook-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
 'myskin.js'      => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Myskin-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',

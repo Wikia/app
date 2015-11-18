@@ -2949,7 +2949,6 @@ Du kan se på kildeteksten',
 # Stylesheets
 'common.css'      => '/* CSS plassert i denne fila vil gjelde for alle utseender. */',
 'standard.css'    => '/* CSS i denne fila vil gjelde alle som bruker drakta Standard */',
-'nostalgia.css'   => '/* CSS i denne fila vil gjelde alle som bruker drakta Nostalgia */',
 'cologneblue.css' => '/* CSS i denne fila vil gjelde alle som bruker drakta Kølnerblå */',
 'monobook.css'    => '/* CSS i denne fila vil gjelde alle som bruker drakta Monobook */',
 'myskin.css'      => '/* CSS i denne fila vil gjelde alle som bruker drakta MySkin */',
@@ -2960,7 +2959,6 @@ Du kan se på kildeteksten',
 # Scripts
 'common.js'      => '/* Javascript i denne fila vil gjelde for alle drakter. */',
 'standard.js'    => '/* Javascript i denne fila vil gjelde for brukere av drakta Standard */',
-'nostalgia.js'   => '/* Javascript i denne fila vil gjelde for brukere av drakta Nostalgia */',
 'cologneblue.js' => '/* Javascript i denne fila vil gjelde for brukere av drakta Kølnerblå */',
 'monobook.js'    => '/* Javascript i denne fila vil gjelde for brukere av drakta Monobook */',
 'myskin.js'      => '/* Javascript i denne fila vil gjelde for brukere av drakta MySkin */',
@@ -3007,7 +3005,6 @@ Dette er sannsynligvis forårsaket av en lenke til et svartelistet eksternt nett
 
 # Skin names
 'skinname-standard'    => 'Standard',
-'skinname-nostalgia'   => 'Nostalgi',
 'skinname-cologneblue' => 'Kølnerblå',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'Eget utseende',

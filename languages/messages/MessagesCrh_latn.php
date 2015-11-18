@@ -1808,7 +1808,6 @@ MediaWiki interfeysiniñ çeşit tillerge tercime etüvde iştirak etmege istese
 
 # Skin names
 'skinname-standard'    => 'Standart',
-'skinname-nostalgia'   => 'Nostalgiya',
 'skinname-cologneblue' => 'Köln asretligi',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Öz resimleme',

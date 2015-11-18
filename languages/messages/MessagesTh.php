@@ -2731,7 +2731,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => 'คลาสสิก',
-'skinname-nostalgia'   => 'นอสตัลเจีย',
 'skinname-cologneblue' => 'โคโลญจ์บลู',
 'skinname-monobook'    => 'โมโนบุ๊ก',
 'skinname-myskin'      => 'มายสกิน',

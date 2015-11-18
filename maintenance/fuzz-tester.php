@@ -1333,7 +1333,7 @@ class viewPageTest extends pageTest {
 
 		$this->params = array (
 				"useskin"        => wikiFuzz::chooseInput( array( "chick", "cologneblue", "myskin",
-										"nostalgia", "simple", "standard", wikiFuzz::makeFuzz( 2 ) ) ),
+										"simple", "standard", wikiFuzz::makeFuzz( 2 ) ) ),
 				"uselang"        => wikiFuzz::chooseInput( array( wikiFuzz::makeFuzz( 2 ),
 						"ab", "af", "an", "ar", "arc", "as", "ast", "av", "ay", "az", "ba",
 						"bat-smg", "be", "bg", "bm", "bn", "bo", "bpy", "br", "bs", "ca",

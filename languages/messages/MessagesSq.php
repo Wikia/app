@@ -2878,7 +2878,6 @@ Ju lutemi provoni përsëri.',
 
 # Skin names
 'skinname-standard'    => 'Standarte',
-'skinname-nostalgia'   => 'Nostalgjike',
 'skinname-cologneblue' => 'Kolonjë Blu',
 
 # Patrolling

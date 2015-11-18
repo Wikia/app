@@ -3073,7 +3073,6 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 # Stylesheets
 'common.css'              => '/* ここに書いたCSSはすべての外装に反映されます */',
 'standard.css'            => '/* ここに記述したCSSはスタンダード外装の利用者に影響します */',
-'nostalgia.css'           => '/* ここに記述したCSSはノスタルジア外装の利用者に影響します */',
 'cologneblue.css'         => '/* ここに記述したCSSはケルンブルー外装の利用者に影響します */',
 'monobook.css'            => '/* ここに記述したCSSはモノブック外装の利用者に影響します */',
 'myskin.css'              => '/* ここに記述したCSSはマイスキン外装の利用者に影響します */',
@@ -3091,7 +3090,6 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 # Scripts
 'common.js'              => '/* ここにあるすべてのJavaScriptは、すべてのページ読み込みですべての利用者に対して読み込まれます */',
 'standard.js'            => '/* ここにあるすべてのJavaScriptは、スタンダード外装を使用している利用者に対して読み込まれます */',
-'nostalgia.js'           => '/* ここにあるすべてのJavaScriptは、ノスタルジア外装を使用している利用者に対して読み込まれます */',
 'cologneblue.js'         => '/* ここにあるすべてのJavaScriptは、ケルンブルー外装を使用している利用者に対して読み込まれます */',
 'monobook.js'            => '/* ここにあるすべてのJavaScriptは、モノブック外装を使用している利用者に対して読み込まれます */',
 'myskin.js'              => '/* ここにあるすべてのJavaScriptは、マイスキン外装を使用している利用者に対して読み込まれます */',
@@ -3142,7 +3140,6 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 
 # Skin names
 'skinname-standard'    => 'クラシック',
-'skinname-nostalgia'   => 'ノスタルジア',
 'skinname-cologneblue' => 'ケルンブルー',
 'skinname-monobook'    => 'モノブック',
 'skinname-myskin'      => 'マイスキン',

@@ -2837,7 +2837,6 @@ Simpan dalam komputer anda dan muat naiknya di sini.',
 # Stylesheets
 'common.css'      => '/* CSS yang terletak di sini akan digunakan pada semua kulit */',
 'standard.css'    => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Klasik */',
-'nostalgia.css'   => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Nostalgia */',
 'cologneblue.css' => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Cologne Blue */',
 'monobook.css'    => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Monobook */',
 'myskin.css'      => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit MySkin */',
@@ -2883,7 +2882,6 @@ Simpan dalam komputer anda dan muat naiknya di sini.',
 
 # Skin names
 'skinname-standard'    => 'Klasik',
-'skinname-nostalgia'   => 'Nostalgia',
 'skinname-cologneblue' => 'Cologne Blue',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',

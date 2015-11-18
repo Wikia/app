@@ -2409,7 +2409,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => 'کلاسیک',
-'skinname-nostalgia'   => 'نوستالجیک',
 'skinname-cologneblue' => 'نیلی کولاجن',
 'skinname-monobook'    => 'منوبوک',
 'skinname-myskin'      => 'منی جلد',

@@ -2807,7 +2807,6 @@ $1被封禁的理由是“$2”',
 # Stylesheets
 'common.css'      => '/* 此處的 CSS 將應用於所有的面板 */',
 'standard.css'    => '/* 此處的 CSS 將影響使用標準面板的用戶 */',
-'nostalgia.css'   => '/* 此處的 CSS 將影響使用懷舊面板的用戶 */',
 'cologneblue.css' => '/* 此處的 CSS 將影響使用科隆香水藍面板的用戶 */',
 'monobook.css'    => '/* 此處的 CSS 將影響使用 Monobook 面板的用戶 */',
 'myskin.css'      => '/* 此處的 CSS 將影響使用 MySkin 面板的用戶 */',
@@ -2820,7 +2819,6 @@ $1被封禁的理由是“$2”',
 # Scripts
 'common.js'      => '/* 此處的JavaScript將載入於所有用戶每一個頁面。 */',
 'standard.js'    => '/* 此處的JavaScript將載入於使用標準面板的用戶 */',
-'nostalgia.js'   => '/* 此處的JavaScript將載入於使用懷舊面板的用戶 */',
 'cologneblue.js' => '/* 此處的JavaScript將載入於使用科隆香水藍面板的用戶 */',
 'monobook.js'    => '/* 此處的JavaScript將載入於使用Monobook面板的用戶 */',
 'myskin.js'      => '/* 此處的JavaScript將載入於使用MySkin面板的用戶 */',
@@ -2867,7 +2865,6 @@ $1被封禁的理由是“$2”',
 
 # Skin names
 'skinname-standard'    => '標準',
-'skinname-nostalgia'   => '懷舊',
 'skinname-cologneblue' => '科隆香水藍',
 'skinname-simple'      => '簡單',
 'skinname-modern'      => '現代',

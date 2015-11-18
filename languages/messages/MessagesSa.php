@@ -1628,7 +1628,6 @@ $2
 
 # Skin names
 'skinname-standard'    => 'पूर्व',
-'skinname-nostalgia'   => 'पुराण',
 'skinname-cologneblue' => 'नील',
 'skinname-monobook'    => 'पुस्तक',
 'skinname-myskin'      => 'मे चर्मन्',

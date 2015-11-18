@@ -2508,7 +2508,6 @@ MediaWiki локализациясына юлюш къошаргъа излей 
 
 # Skin names
 'skinname-standard'    => 'Стандарт',
-'skinname-nostalgia'   => 'Ностальгия',
 'skinname-cologneblue' => 'Кёльн такъылыкъ',
 'skinname-monobook'    => 'Моно-китаб',
 'skinname-myskin'      => 'Меники',

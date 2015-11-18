@@ -2934,7 +2934,6 @@ $1',
 
 # Skin names
 'skinname-standard' => 'अभिजात',
-'skinname-nostalgia' => 'रम्य',
 'skinname-cologneblue' => 'सुरेखनीळी',
 'skinname-monobook' => 'मोनोबुक',
 'skinname-myskin' => 'माझीकांती',

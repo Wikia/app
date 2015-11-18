@@ -2777,7 +2777,6 @@ W poslednim padźe móžeš tež wotkaz wužiwać, na př. „[[{{#Special:Expor
 
 # Skin names
 'skinname-standard'    => 'Klasiski',
-'skinname-nostalgia'   => 'Nostalgija',
 'skinname-cologneblue' => 'Kölnjanska módrina',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',

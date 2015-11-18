@@ -2973,7 +2973,6 @@ Meestentieds kump dit deur n uutgaonde verwiezing die op de zwarte lieste steet.
 
 # Skin names
 'skinname-standard'    => 'Klassiek',
-'skinname-nostalgia'   => 'Nostalgie',
 'skinname-cologneblue' => 'Keuls blauw',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'MienSkin',

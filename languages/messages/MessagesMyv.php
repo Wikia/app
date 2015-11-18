@@ -1785,7 +1785,6 @@ IP-тешкстэть — $3, саймас совавтоманть ID-сь — 
 
 # Skin names
 'skinname-standard'  => 'Классикань',
-'skinname-nostalgia' => 'ОдПингеньМазы',
 'skinname-myskin'    => 'ЭсьМелемКоряс',
 'skinname-simple'    => 'Шожда',
 'skinname-modern'    => 'НееньШкань',

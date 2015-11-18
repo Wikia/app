@@ -2888,7 +2888,6 @@ Hierdie situasie was waarskynlik deur 'n skakel na 'n eksterne webtuiste op ons 
 
 # Skin names
 'skinname-standard'    => 'Standaard',
-'skinname-nostalgia'   => 'Nostalgie',
 'skinname-cologneblue' => 'Keulen blou',
 
 # Patrolling

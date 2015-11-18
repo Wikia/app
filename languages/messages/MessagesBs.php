@@ -2920,7 +2920,6 @@ Dopušta unos razloga u sažetak.',
 # Stylesheets
 'common.css'      => '/* CSS umetnut ovdje primijenit će se na sve skinove */',
 'standard.css'    => '/* CSS umetnut ovdje uticat će na korisnike koji koriste Standard skin */',
-'nostalgia.css'   => '/* CSS umetnut ovdje uticat će na korisnike koji koriste Nostalgia skin */',
 'cologneblue.css' => '/* CSS umetnut ovdje uticat će na korisnike koji koriste Cologne Blue skin */',
 'monobook.css'    => '/* CSS umetnut ovdje uticat će na korisnike koji koriste Monobook skin */',
 'myskin.css'      => '/* CSS umetnut ovdje uticat će na korisnike koji koriste MySkin skin */',
@@ -2933,7 +2932,6 @@ Dopušta unos razloga u sažetak.',
 # Scripts
 'common.js'      => '/* Bilo koja JavaScript će biti učitana za sve korisnike pri svakom učitavanju stranice. */',
 'standard.js'    => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste Standard skin */',
-'nostalgia.js'   => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste Nostalgia skin */',
 'cologneblue.js' => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste Cologne Blue skin */',
 'monobook.js'    => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste MonoBook skin */',
 'myskin.js'      => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste MySkin skin */',
@@ -2980,7 +2978,6 @@ Ovo je vjerovatno izazvao vezom ka vanjskoj nepoželjnoj stranici.',
 
 # Skin names
 'skinname-standard'    => 'Klasično',
-'skinname-nostalgia'   => 'Nostalgija',
 'skinname-cologneblue' => 'Kelnsko plavo',
 'skinname-monobook'    => 'MonoKnjiga',
 'skinname-myskin'      => 'MojaKoža',

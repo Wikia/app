@@ -2939,7 +2939,6 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 # Stylesheets
 'common.css'              => '/* Mã CSS đặt ở đây sẽ áp dụng cho mọi hình dạng */',
 'standard.css'            => '/* Mã CSS tại đây sẽ ảnh hưởng đến những người dùng sử dụng hình dạng Cổ điển */',
-'nostalgia.css'           => '/* Mã CSS tại đây sẽ ảnh hưởng đến những người dùng sử dụng hình dạng Vọng cổ */',
 'cologneblue.css'         => '/* Mã CSS tại đây sẽ ảnh hưởng đến những người dùng sử dụng hình dạng Xanh Cologne */',
 'monobook.css'            => '/* Mã CSS đặt ở đây sẽ ảnh hưởng đến thành viên sử dụng hình dạng MonoBook */',
 'myskin.css'              => '/* Mã CSS tại đây sẽ ảnh hưởng đến những người dùng sử dụng hình dạng Cá nhân */',
@@ -2957,7 +2956,6 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 # Scripts
 'common.js'              => '/* Bất kỳ mã JavaScript ở đây sẽ được tải cho tất cả các thành viên khi tải một trang nào đó lên. */',
 'standard.js'            => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng hình dạng Cổ điển */',
-'nostalgia.js'           => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng hình dạng Vọng cổ */',
 'cologneblue.js'         => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng hình dạng Xanh Cologne */',
 'monobook.js'            => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng bề ngoài MonoBook */',
 'myskin.js'              => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng bề ngoài Cá nhân */',
@@ -3008,7 +3006,6 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 
 # Skin names
 'skinname-standard'    => 'Cổ điển',
-'skinname-nostalgia'   => 'Vọng cổ',
 'skinname-cologneblue' => 'Xanh Cologne',
 'skinname-myskin'      => 'Cá nhân',
 'skinname-simple'      => 'Đơn giản',

@@ -1815,7 +1815,6 @@ MediaWiki интерфейсининъ чешит тиллерге терджи�
 
 # Skin names
 'skinname-standard'    => 'Стандарт',
-'skinname-nostalgia'   => 'Ностальгия',
 'skinname-cologneblue' => 'Кёльн асретлиги',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Озь ресимлеме',

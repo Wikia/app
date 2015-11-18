@@ -3068,7 +3068,6 @@ $1',
 # Stylesheets
 'common.css' => '/* הסגנונות הנכתבים כאן ישפיעו על כל העיצובים */',
 'standard.css' => '/* הסגנונות הנכתבים כאן ישפיעו על העיצוב Standard בלבד */',
-'nostalgia.css' => '/* הסגנונות הנכתבים כאן ישפיעו על העיצוב Nostalgia בלבד */',
 'cologneblue.css' => '/* הסגנונות הנכתבים כאן ישפיעו על העיצוב CologneBlue בלבד */',
 'monobook.css' => '/* הסגנונות הנכתבים כאן ישפיעו על העיצוב Monobook בלבד */',
 'myskin.css' => '/* הסגנונות הנכתבים כאן ישפיעו על העיצוב MySkin בלבד */',
@@ -3086,7 +3085,6 @@ $1',
 # Scripts
 'common.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ עבור כל המשתמשים בכל טעינת עמוד */',
 'standard.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור המשתמשים בעיצוב Standard */',
-'nostalgia.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור המשתמשים בעיצוב Nostalgia */',
 'cologneblue.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור המשתמשים בעיצוב CologneBlue */',
 'monobook.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור המשתמשים בעיצוב Monobook */',
 'myskin.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור המשתמשים בעיצוב MySkin */',
@@ -3138,7 +3136,6 @@ $1',
 
 # Skin names
 'skinname-standard' => 'קלאסי',
-'skinname-nostalgia' => 'נוסטלגיה',
 'skinname-cologneblue' => 'מים כחולים',
 'skinname-monobook' => 'מונובוק',
 'skinname-myskin' => 'העיצוב שלי',

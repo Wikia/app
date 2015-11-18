@@ -2963,7 +2963,6 @@ $1',
 # Stylesheets
 'common.css'              => '/** Размещённый здесь CSS будет применяться ко всем темам оформления */',
 'standard.css'            => '/* Размещённый здесь CSS будет применяться к теме оформления Standard */',
-'nostalgia.css'           => '/* Размещённый здесь CSS будет применяться к теме оформления Nostalgia */',
 'cologneblue.css'         => '/* Размещённый здесь CSS будет применяться к теме оформления Cologne Blue */',
 'monobook.css'            => '/* Размещённый здесь CSS будет применяться к теме оформления Monobook */',
 'myskin.css'              => '/* Размещённый здесь CSS будет применяться к теме оформления MySkin */',
@@ -2981,7 +2980,6 @@ $1',
 # Scripts
 'common.js'      => '/* Размещённый здесь JavaScript код будет загружаться всем пользователям при обращении к каждой странице */',
 'standard.js'    => '/* Размещённый здесь JavaScript код будет загружаться пользователям использующих тему оформления Standard */',
-'nostalgia.js'   => '/* Размещённый здесь JavaScript код будет загружаться пользователям использующих тему оформления Nostalgia */',
 'cologneblue.js' => '/* Размещённый здесь JavaScript код будет загружаться пользователям использующих тему оформления Cologne Blue */',
 'monobook.js'    => '/* Размещённый здесь JavaScript код будет загружаться пользователям использующих тему оформления MonoBook */',
 
@@ -3025,7 +3023,6 @@ The wiki server can't provide data in a format your client can read.",
 
 # Skin names
 'skinname-standard'    => 'Классическое',
-'skinname-nostalgia'   => 'Ностальгия',
 'skinname-cologneblue' => 'Кёльнская тоска',
 'skinname-myskin'      => 'Своё',
 'skinname-chick'       => 'Цыпа',

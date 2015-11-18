@@ -2151,7 +2151,6 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 
 # Skin names
 'skinname-standard'    => 'Դասական',
-'skinname-nostalgia'   => 'Հայրենաբաղձություն',
 'skinname-cologneblue' => 'Քյոլնի թախիծ',
 'skinname-monobook'    => 'ՄիաԳիրք',
 'skinname-myskin'      => 'ԻմՏեսք',

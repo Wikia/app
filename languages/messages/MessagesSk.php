@@ -2979,7 +2979,6 @@ Umožnuje do zhrnutia pridanie dôvodu.',
 # Stylesheets
 'common.css' => '/* Tu umiestnené CSS bude ovplyvňovať všetky štýly */',
 'standard.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Klasický */',
-'nostalgia.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Nostalgia */',
 'cologneblue.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Kolínska modrá */',
 'monobook.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Monobook */',
 'myskin.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Môjvzhľad */',
@@ -2997,7 +2996,6 @@ Umožnuje do zhrnutia pridanie dôvodu.',
 # Scripts
 'common.js' => '/* Tu uvedený JavaScript sa nahrá všetkým používateľom pri každom nahraní stránky. */',
 'standard.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Klasický */',
-'nostalgia.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Nostalgia */',
 'cologneblue.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Kolínska modrá */',
 'monobook.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Monobook */',
 'myskin.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Môjvzhľad */',
@@ -3049,7 +3047,6 @@ Pravdepodobne to spôsobil odkaz na externú internetovú lokalitu, ktorá sa na
 
 # Skin names
 'skinname-standard' => 'Klasický',
-'skinname-nostalgia' => 'Nostalgia',
 'skinname-cologneblue' => 'Kolínska modrá',
 'skinname-monobook' => 'MonoBook',
 'skinname-myskin' => 'Môj vzhľad',

@@ -2742,7 +2742,6 @@ Vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] og [//trans
 # Stylesheets
 'common.css'      => '/* CSS plassert i denne fila vil gjelde for alle utsjånader. */',
 'standard.css'    => '/* CSS i denne fila vil gjelde alle som nyttar drakta Standard */',
-'nostalgia.css'   => '/* CSS i denne fila vil gjelde alle som nyttar drakta Nostalgia */',
 'cologneblue.css' => '/* CSS i denne fila vil gjelde alle som nyttar drakta Kølnerblå */',
 'monobook.css'    => '/* CSS-tekst som vert plassert her, endrar utsjånaden til sidedrakta Monobook */',
 'myskin.css'      => '/* CSS i denne fila vil gjelde alle som nyttar drakta MySkin */',
@@ -2755,7 +2754,6 @@ Vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] og [//trans
 # Scripts
 'common.js'      => '/* Javascript i denne fila vil gjelde for alle drakter. */',
 'standard.js'    => '/* Javascript i denne fila vil gjelde for brukarar av drakta Standard */',
-'nostalgia.js'   => '/* Javascript i denne fila vil gjelde for brukarar av drakta Nostalgia */',
 'cologneblue.js' => '/* Javascript i denne fila vil gjelde for brukarar av drakta Kølnerblå */',
 'monobook.js'    => '/* Javascript i denne fila vil gjelde for brukarar av drakta Monobook */',
 'myskin.js'      => '* Javascript i denne fila vil gjelde for brukarar av drakta MySkin */',
@@ -2801,7 +2799,6 @@ Vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] og [//trans
 
 # Skin names
 'skinname-standard'    => 'Klassisk',
-'skinname-nostalgia'   => 'Nostalgi',
 'skinname-cologneblue' => 'Kölnerblå',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MiDrakt',

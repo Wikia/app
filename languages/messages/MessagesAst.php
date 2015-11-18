@@ -2741,7 +2741,6 @@ Pues ver el so códigu fonte.',
 # Stylesheets
 'common.css'              => "/* Los CSS allugaos equí s'aplicarán a tolos aspeutos */",
 'standard.css'            => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu Standard */',
-'nostalgia.css'           => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu Nostalgia */',
 'cologneblue.css'         => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu Cologne Blue */',
 'monobook.css'            => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu Monobook */',
 'myskin.css'              => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu MySkin */',
@@ -2759,7 +2758,6 @@ Pues ver el so códigu fonte.',
 # Scripts
 'common.js'              => '/* Cualesquier JavaScript que tea equí se cargará pa tolos usuarios en cada carga de páxina. */',
 'standard.js'            => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu Standard */',
-'nostalgia.js'           => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu Nostalgia */',
 'cologneblue.js'         => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu Cologne Blue */',
 'monobook.js'            => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu MonoBook */',
 'myskin.js'              => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu MySkin */',
@@ -2810,7 +2808,6 @@ Probablemente tea causao por un enllaz a un sitiu esternu de la llista prieta.',
 
 # Skin names
 'skinname-standard'    => 'Clásicu',
-'skinname-nostalgia'   => 'Señardá',
 'skinname-cologneblue' => 'Azul Colonia',
 'skinname-myskin'      => 'MySkin',
 'skinname-modern'      => 'Modernu',

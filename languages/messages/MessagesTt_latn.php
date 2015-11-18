@@ -1892,7 +1892,6 @@ Zinhar başqa isem saylağız.',
 
 # Skin names
 'skinname-standard'    => 'Klassik',
-'skinname-nostalgia'   => 'İskä alu',
 'skinname-cologneblue' => 'Zäñgär sağış',
 'skinname-monobook'    => 'Kitap',
 'skinname-myskin'      => 'Üzem',

@@ -2975,7 +2975,6 @@ Datoj de versioj kaj nomoj de redaktantoj estos preservitaj.
 
 # Skin names
 'skinname-standard'    => 'Klasika',
-'skinname-nostalgia'   => 'Nostalgio',
 'skinname-cologneblue' => 'Kolonja Bluo',
 'skinname-monobook'    => 'Librejo',
 'skinname-chick'       => 'Kokido',

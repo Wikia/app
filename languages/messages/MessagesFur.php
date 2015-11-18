@@ -1479,7 +1479,6 @@ Par plasê va su [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] 
 
 # Skin names
 'skinname-standard'  => 'Classiche',
-'skinname-nostalgia' => 'Nostalgjie',
 'skinname-modern'    => 'Moderne',
 
 # Browsing diffs

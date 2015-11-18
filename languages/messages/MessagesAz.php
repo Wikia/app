@@ -2237,7 +2237,6 @@ Zəhmət olmasa başqa ad seçin.',
 # Stylesheets
 'common.css'              => '/* Burada yerləşən CSS bütün skinlərə tətbiq olunur */',
 'standard.css'            => '/* Burada yerləşən CSS Standard skin istifadəçilərinə tətbiq olunur */',
-'nostalgia.css'           => '/* Burada yerləşən CSS Nostalgia skin istifadəçilərinə tətbiq olunur */',
 'cologneblue.css'         => '/* Burada yerləşən CSS Cologne Blue skin istifadəçilərinə tətbiq olunur */',
 'monobook.css'            => '/* Burada yerləşən CSS Monobook skin istifadəçilərinə tətbiq olunur */',
 'myskin.css'              => '/* Burada yerləşən CSS MySkin skin istifadəçilərinə tətbiq olunur */',
@@ -2252,7 +2251,6 @@ Zəhmət olmasa başqa ad seçin.',
 # Scripts
 'common.js'              => '/* Burada istifadəçilərin hamısı üçün bütün səhifələrdə istənilən JavaScript yüklənəcək */',
 'standard.js'            => '/* Burada Standard skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
-'nostalgia.js'           => '/* Burada Nostalgia skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
 'cologneblue.js'         => '/* Burada Cologne Blue skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
 'monobook.js'            => '/* Burada MonoBook skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
 'myskin.js'              => '/* Burada MySkin skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
@@ -2295,7 +2293,6 @@ Zəhmət olmasa başqa ad seçin.',
 
 # Skin names
 'skinname-standard'    => 'Classic',
-'skinname-nostalgia'   => 'Nostalgia',
 'skinname-cologneblue' => 'Cologne Blue',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',

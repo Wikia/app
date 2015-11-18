@@ -2683,7 +2683,6 @@ $1 एकर प्रतिबन्धक कारण अछि : "$2"',
 
 # Skin names
 'skinname-standard'  => 'प्राचीन',
-'skinname-nostalgia' => 'गामसँ प्रेम',
 'skinname-simple'    => 'साधारण',
 'skinname-modern'    => 'आधुनिक',
 

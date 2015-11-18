@@ -1091,7 +1091,6 @@ Premite ajuntar la rezon de la eidiçon ne l sumário.',
 
 # Skin names
 'skinname-standard'    => 'Clássico',
-'skinname-nostalgia'   => 'Suidade',
 'skinname-cologneblue' => 'Azul',
 'skinname-monobook'    => 'Lhibro',
 'skinname-myskin'      => 'Piel',

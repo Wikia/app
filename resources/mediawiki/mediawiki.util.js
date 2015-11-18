@@ -345,9 +345,6 @@
 			case 'cologneblue':
 				$( '#quickbar' ).append( $link.after( '<br/>' ) );
 				return $link[0];
-			case 'nostalgia':
-				$( '#searchform' ).before( $link ).before( ' &#124; ' );
-				return $link[0];
 			default: // Skins like chick, modern, monobook, myskin, simple, vector...
 
 				// Select the specified portlet

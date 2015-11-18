@@ -2654,7 +2654,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => 'இயல்பான',
-'skinname-nostalgia'   => 'பசுமை நினைவு (Nostalgia)',
 'skinname-cologneblue' => 'கொலோன் (Cologne) நீலம் Blue',
 
 # Patrolling

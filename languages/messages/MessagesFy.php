@@ -2120,7 +2120,6 @@ Sjoch: [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation], [//transl
 
 # Skin names
 'skinname-standard'  => 'Standert',
-'skinname-nostalgia' => 'Nostalgy',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Markearje as kontroleare',

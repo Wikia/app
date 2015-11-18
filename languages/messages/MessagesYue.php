@@ -2645,7 +2645,6 @@ $1',
 # Stylesheets
 'common.css'      => '/* 響呢度放 CSS 碼來改成個網站嘅畫面 */',
 'standard.css'    => '/* 響呢度放 CSS 碼去改用戶用嘅傳統畫面 */',
-'nostalgia.css'   => '/* 響呢度放 CSS 碼去改用戶用嘅懷舊畫面 */',
 'cologneblue.css' => '/* 響呢度放 CSS 碼去改用戶用嘅科隆藍畫面 */',
 'monobook.css'    => '/* 響呢度放 CSS 碼去改用戶用嘅 Monobook 畫面 */',
 'myskin.css'      => '/* 響呢度放 CSS 碼去改用戶用嘅我嘅畫面 */',
@@ -2658,7 +2657,6 @@ $1',
 # Scripts
 'common.js'      => '/* 響每一次個頁面載入時，所有用戶都會載入呢度任何嘅JavaScript。 */',
 'standard.js'    => '/* 響每一次個頁面載入時，用標準畫面嘅用戶都會載入呢度任何嘅JavaScript */',
-'nostalgia.js'   => '/* 響每一次個頁面載入時，用懷舊畫面嘅用戶都會載入呢度任何嘅JavaScript */',
 'cologneblue.js' => '/* 響每一次個頁面載入時，用科隆藍畫面嘅用戶都會載入呢度任何嘅JavaScript */',
 'monobook.js'    => '/* 響每一次個頁面載入時，用 Monobook 畫面嘅用戶都會載入呢度任何嘅JavaScript */',
 'myskin.js'      => '/* 響每一次個頁面載入時，用我嘅畫面嘅用戶都會載入呢度任何嘅JavaScript */',
@@ -2692,7 +2690,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => '傳統',
-'skinname-nostalgia'   => '懷舊',
 'skinname-cologneblue' => '科隆藍',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => '我嘅畫面',

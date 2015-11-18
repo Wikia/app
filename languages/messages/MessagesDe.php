@@ -3006,7 +3006,6 @@ Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
 # Stylesheets
 'common.css'              => '/* Das folgende CSS wird für alle Benutzeroberflächen geladen. */',
 'standard.css'            => '/* Das folgende CSS wird für Benutzer der Klassik-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
-'nostalgia.css'           => '/* Das folgende CSS wird für Benutzer der Nostalgie-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
 'cologneblue.css'         => '/* Das folgende CSS wird für Benutzer der Kölnisch-Blau-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
 'monobook.css'            => '/* Das folgende CSS wird für Benutzer der Monobook-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
 'myskin.css'              => '/* Das folgende CSS wird für Benutzer der MySkin-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
@@ -3024,7 +3023,6 @@ Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
 # Scripts
 'common.js'              => '/* Das folgende JavaScript wird für alle Benutzer geladen. */',
 'standard.js'            => '/* Das folgende JavaScript wird für Benutzer der Klassik-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
-'nostalgia.js'           => '/* Das folgende JavaScript wird für Benutzer der Nostalgie-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
 'cologneblue.js'         => '/* Das folgende JavaScript wird für Benutzer der Kölnisch-Blau-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
 'monobook.js'            => '/* Das folgende JavaScript wird für Benutzer der Monobook-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
 'myskin.js'              => '/* Das folgende JavaScript wird für Benutzer der MySkin-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
@@ -3075,7 +3073,6 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 
 # Skin names
 'skinname-standard'    => 'Klassik',
-'skinname-nostalgia'   => 'Nostalgie',
 'skinname-cologneblue' => 'Kölnisch Blau',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',

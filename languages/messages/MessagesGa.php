@@ -1748,7 +1748,6 @@ iarradh sábháil. Is dócha gur nasc chuig suíomh seachtrach ba chúis leis.',
 
 # Skin names
 'skinname-standard'    => 'Clasaiceach',
-'skinname-nostalgia'   => 'Sean-nós',
 'skinname-cologneblue' => 'Gorm Köln',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MoChraiceann',

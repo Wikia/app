@@ -2976,7 +2976,6 @@ Pozwala na wpisanie powodu w opisie zmian.',
 # Stylesheets
 'common.css'      => '/* Umieszczony tutaj kod CSS zostanie zastosowany we wszystkich skórkach */',
 'standard.css'    => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Standardowa */',
-'nostalgia.css'   => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Tęsknota */',
 'cologneblue.css' => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Błękit */',
 'monobook.css'    => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Książka */',
 'myskin.css'      => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Moja skórka */',
@@ -2990,7 +2989,6 @@ Pozwala na wpisanie powodu w opisie zmian.',
 # Scripts
 'common.js'      => '/* Umieszczony tutaj kod JavaScript zostanie załadowany przez każdego użytkownika, podczas każdego ładowania strony. */',
 'standard.js'    => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Standardowa */',
-'nostalgia.js'   => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Tęsknota */',
 'cologneblue.js' => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Błękit */',
 'monobook.js'    => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Książka */',
 'myskin.js'      => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Moja skórka */',
@@ -3037,7 +3035,6 @@ Najprawdopodobniej zostało to spowodowane przez link do zewnętrznej strony int
 
 # Skin names
 'skinname-standard'    => 'Standardowa',
-'skinname-nostalgia'   => 'Tęsknota',
 'skinname-cologneblue' => 'Błękit',
 'skinname-monobook'    => 'Książka',
 'skinname-myskin'      => 'Moja skórka',

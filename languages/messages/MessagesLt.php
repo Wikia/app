@@ -2850,7 +2850,6 @@ Leidžia pridėti atmetimo priežastį komentaruose',
 
 # Skin names
 'skinname-standard'    => 'Klasikinė',
-'skinname-nostalgia'   => 'Nostalgija',
 'skinname-cologneblue' => 'Kelno mėlyna',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Mano išvaizda',

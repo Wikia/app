@@ -2694,7 +2694,6 @@ $UNWATCHURL కి వెళ్ళండి.
 
 # Skin names
 'skinname-standard'    => 'సంప్రదాయ',
-'skinname-nostalgia'   => 'నాస్టాల్జియా',
 'skinname-cologneblue' => 'కలోన్ నీలం',
 'skinname-monobook'    => 'మోనోబుక్',
 'skinname-myskin'      => 'నాఅలంకారం',

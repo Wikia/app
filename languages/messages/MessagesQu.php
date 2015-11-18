@@ -2866,7 +2866,6 @@ Tukuy hawa wikimanta chaskisqakunaqa [[Special:Log/import|hawamanta chaskiy hall
 # Stylesheets
 'common.css' => "/* Churamusqa CSS chantakunaqa tukuy qarakunapim llamk'anqa */",
 'standard.css' => "/* Churamusqa CSS chantakunaqa ''Standard skin'' nisqa qarata llamk'achiq ruraqkunapaq llamk'anqa */",
-'nostalgia.css' => "/* Churamusqa CSS chantakunaqa ''Nostalgia skin'' nisqa qarata llamk'achiq ruraqkunapaq llamk'anqa */",
 'cologneblue.css' => "/* Churamusqa CSS chantakunaqa ''Cologne Blue skin'' nisqa qarata llamk'achiq ruraqkunapaq llamk'anqa */",
 'monobook.css' => '/* Kayman churasqa CSS nisqaqa Monobook qaratam hukchanqa tukuy internet tiyanapaq */',
 'myskin.css' => "/* Churamusqa CSS chantakunaqa ''MySkin'' nisqa qarata llamk'achiq ruraqkunapaq llamk'anqa */",
@@ -2879,7 +2878,6 @@ Tukuy hawa wikimanta chaskisqakunaqa [[Special:Log/import|hawamanta chaskiy hall
 # Scripts
 'common.js' => "/* Ima kaypi kaq JavaScript qillqapas tukuy ruraqkunapaq tukuy p'anqakunap tukuy chaqnankunapi chaqnamusqa kanqa. */",
 'standard.js' => "/* Ima kaypi qillqamusqa JavaScript nisqa wakichi qillqapas ''Standard skin'' nisqa sapsi qarata llamk'achiq ruraqkunapaq chaqnasqa kanqa */",
-'nostalgia.js' => "/* Ima kaypi qillqamusqa JavaScript nisqa wakichi qillqapas ''Nostalgia skin'' nisqa qarata llamk'achiq ruraqkunapaq chaqnasqa kanqa */",
 'cologneblue.js' => "/* Ima kaypi qillqamusqa JavaScript nisqa wakichi qillqapas ''Cologne Blue skin'' nisqa qarata llamk'achiq ruraqkunapaq chaqnasqa kanqa */",
 'monobook.js' => "/* Ima kaypi qillqamusqa JavaScript nisqa wakichi qillqapas MonoBook nisqata llamk'achiq ruraqkunapaq chaqnasqa kanqa */",
 'myskin.js' => "/* Ima kaypi qillqamusqa JavaScript nisqa wakichi qillqapas ''MySkin'' nisqa qarata llamk'achiq ruraqkunapaq chaqnasqa kanqa */",

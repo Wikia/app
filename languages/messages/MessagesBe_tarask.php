@@ -2940,7 +2940,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => 'Клясычнае',
-'skinname-nostalgia'   => 'Настальгія',
 'skinname-cologneblue' => 'Кёльнскі смутак',
 'skinname-monobook'    => 'Монакніга',
 'skinname-myskin'      => 'MySkin',

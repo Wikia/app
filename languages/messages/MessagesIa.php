@@ -2872,7 +2872,6 @@ Es possibile adder un motivo in le summario.',
 # Stylesheets
 'common.css'      => '/* Le CSS placiate hic se applicara a tote le stilos */',
 'standard.css'    => '/* Le CSS placiate hic afficera le usatores del apparentia Classic */',
-'nostalgia.css'   => '/* Le CSS placiate hic afficera le usatores del apparentia Nostalgia */',
 'cologneblue.css' => '/* Le CSS placiate hic afficera le usatores del apparentia Colonia Blau */',
 'monobook.css'    => '/* Le CSS placiate hic afficera le usatores del apparentia MonoBook */',
 'myskin.css'      => '/* Le CSS placiate hic afficera le usatores del apparentia "Mi apparentia" */',
@@ -2885,7 +2884,6 @@ Es possibile adder un motivo in le summario.',
 # Scripts
 'common.js'      => '/* Omne JavaScript hic se executara pro tote le usatores a cata cargamento de pagina. */',
 'standard.js'    => '/* Omne JavaScript hic se executara pro le usatores del apparentia Classic */',
-'nostalgia.js'   => '/* Omne JavaScript hic se executara pro le usatores del apparentia Nostalgia */',
 'cologneblue.js' => '/* Omne JavaScript hic se executara pro le usatores del apparentia Colonia Blau */',
 'monobook.js'    => '/* Omne JavaScript hic se executara pro le usatores del apparentia MonoBook */',
 'myskin.js'      => '/* Omne JavaScript hic se executara pro le usatores del apparentia "Mi apparentia" */',
@@ -2932,7 +2930,6 @@ Le causa es probabilemente un ligamine verso un sito externe que es presente in 
 
 # Skin names
 'skinname-standard'    => 'Classic',
-'skinname-nostalgia'   => 'Nostalgia',
 'skinname-cologneblue' => 'Colonia Blau',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Mi apparentia',

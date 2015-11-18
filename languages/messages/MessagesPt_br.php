@@ -3005,7 +3005,6 @@ Permite colocar uma justificativa no sumário da edição.',
 # Scripts
 'common.js' => '/* Códigos JavaScript aqui colocados serão carregados por todos aqueles que acessarem alguma página deste wiki */',
 'standard.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Clássico */',
-'nostalgia.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Nostalgia */',
 'cologneblue.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Azul colonial */',
 'monobook.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin MonoBook */',
 'myskin.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin MySkin */',
@@ -3053,7 +3052,6 @@ Tal bloqueio foi provavelmente causado por uma ligação para um ''website'' ext
 
 # Skin names
 'skinname-standard' => 'Clássico',
-'skinname-nostalgia' => 'Nostalgia',
 'skinname-cologneblue' => 'Azul colonial',
 'skinname-monobook' => 'MonoBook',
 'skinname-myskin' => 'MySkin',

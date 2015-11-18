@@ -2829,7 +2829,6 @@ Dette skyldes sandsynligvis en henvisning til et sortlistet eksternt websted.',
 
 # Skin names
 'skinname-standard'    => 'Klassik',
-'skinname-nostalgia'   => 'Nostalgi',
 'skinname-cologneblue' => 'Kølnerblå',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Eget udseende',

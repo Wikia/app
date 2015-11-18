@@ -757,7 +757,6 @@ The password for this new account can be changed on the ''[[Special:ChangePasswo
 
 # Skin names
 'skinname-standard'    => 'Classic',
-'skinname-nostalgia'   => 'Nostalgia',
 'skinname-cologneblue' => 'Cologne Blue',
 'skinname-monobook'    => 'Моно-Ном',
 'skinname-myskin'      => 'MySkin',

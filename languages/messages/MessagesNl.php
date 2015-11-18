@@ -3079,7 +3079,6 @@ Een tijdelijke map is niet aanwezig.',
 # Stylesheets
 'common.css'              => '/** CSS die hier wordt geplaatst heeft invloed op alle skins */',
 'standard.css'            => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Standard */',
-'nostalgia.css'           => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Nostalgie */',
 'cologneblue.css'         => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Keuls blauw */',
 'monobook.css'            => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Monobook */',
 'myskin.css'              => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin MijnSkin */',
@@ -3097,7 +3096,6 @@ Een tijdelijke map is niet aanwezig.',
 # Scripts
 'common.js'              => "/* JavaScript die hier wordt geplaatst heeft invloed op alle pagina's voor alle gebruikers */",
 'standard.js'            => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Standaard gebruiken */',
-'nostalgia.js'           => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Nostalgie gebruiken */',
 'cologneblue.js'         => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Keuls blauw gebruiken */',
 'monobook.js'            => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Monobook gebruiken */',
 'myskin.js'              => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin MijnSkin gebruiken */',
@@ -3148,7 +3146,6 @@ Meestal wordt dit door een externe verwijzing op een zwarte lijst veroorzaakt.',
 
 # Skin names
 'skinname-standard'    => 'Klassiek',
-'skinname-nostalgia'   => 'Nostalgie',
 'skinname-cologneblue' => 'Keuls blauw',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'MijnSkin',

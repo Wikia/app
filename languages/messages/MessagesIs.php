@@ -2863,7 +2863,6 @@ Vinsamlegast reyndu aftur.',
 
 # Skin names
 'skinname-standard' => 'Sígilt',
-'skinname-nostalgia' => 'Gamaldags',
 'skinname-cologneblue' => 'Kölnarblátt',
 'skinname-monobook' => 'EinBók',
 'skinname-myskin' => 'Mitt þema',

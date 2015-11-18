@@ -2719,7 +2719,6 @@ Puede veyer-ne, manimenos, o codigo fuent.',
 # Stylesheets
 'common.css'              => '/* Os estilos CSS definius aquí aplicarán a todas as apariencias (skins) */',
 'standard.css'            => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Standard */",
-'nostalgia.css'           => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Nostalgia */",
 'cologneblue.css'         => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Cologne Blue */",
 'monobook.css'            => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Monobook */",
 'myskin.css'              => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que que faigan servir l'apariencia MySkin */",
@@ -2737,7 +2736,6 @@ Puede veyer-ne, manimenos, o codigo fuent.',
 # Scripts
 'common.js'              => '/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios en cada carga de pachina */',
 'standard.js'            => "/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios que faigan servir l'apariencia Estandar */",
-'nostalgia.js'           => "/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios que faigan servir l'apariencia Nostalgia. */",
 'cologneblue.js'         => "/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios que faigan servir l'apariencia Colonia azul */",
 'monobook.js'            => "/* O codigo Javascript que se meta aquí será cargau por os usuarios faigan servir l'apariencia MonoBook */",
 'myskin.js'              => "/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios que faigan servir l'apariencia MySkin */",
@@ -2787,7 +2785,6 @@ Puede veyer-ne, manimenos, o codigo fuent.',
 
 # Skin names
 'skinname-standard'    => 'Clasica (Classic)',
-'skinname-nostalgia'   => 'Recosiros (Nostalgia)',
 'skinname-cologneblue' => 'Colonia Azul (Cologne Blue)',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'A mía aparencia (MySkin)',

@@ -2969,7 +2969,6 @@ Permite adăugarea unui motiv în descrierea modificărilor',
 # Stylesheets
 'common.css'      => '/** CSS plasate aici vor fi aplicate tuturor aparițiilor */',
 'standard.css'    => '/* CSS plasate aici vor afecta utilizatorii stilului Standard */',
-'nostalgia.css'   => '/* CSS plasate aici vor afecta utilizatorii stilului Nostalgia  */',
 'cologneblue.css' => '/* CSS plasate aici vor afecta utilizatorii stilului Cologne Blue */',
 'monobook.css'    => '/* modificați acest fișier pentru a adapta înfățișarea monobook-ului pentru tot situl*/',
 'myskin.css'      => '/* CSS plasate aici vor afecta utilizatorii stilului MySkin */',
@@ -3016,7 +3015,6 @@ Permite adăugarea unui motiv în descrierea modificărilor',
 
 # Skin names
 'skinname-standard'    => 'Clasic',
-'skinname-nostalgia'   => 'Nostalgie',
 'skinname-cologneblue' => 'Albastru de Cologne',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'StilulMeu',

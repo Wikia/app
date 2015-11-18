@@ -3046,7 +3046,6 @@ Esu kam_mer noch en Aanmerkung en „{{int:summary}}“ maache.',
 # Stylesheets
 'common.css'              => '/* CSS heh aan dä Stell hät Uswirkunge op all Ovverflääsche */',
 'standard.css'            => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Klassesch“ */',
-'nostalgia.css'           => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Nostaljesch“ */',
 'cologneblue.css'         => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Kölsch Blau“ */',
 'monobook.css'            => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Monobooch“ */',
 'myskin.css'              => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Ming Skin“ */',
@@ -3064,7 +3063,6 @@ Esu kam_mer noch en Aanmerkung en „{{int:summary}}“ maache.',
 # Scripts
 'common.js'              => '/* Jedes JavaScrip hee kütt för jede Metmaacher in jede Sigg erinn */',
 'standard.js'            => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Klassesch" jescheck */',
-'nostalgia.js'           => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Nostaljesch" jescheck */',
 'cologneblue.js'         => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Kölsch Blou" jescheck */',
 'monobook.js'            => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Monnobooch" jescheck */',
 'myskin.js'              => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Ming Skin" jescheck */',
@@ -3114,7 +3112,6 @@ Esu kam_mer noch en Aanmerkung en „{{int:summary}}“ maache.',
 
 # Skin names
 'skinname-standard'    => 'Klassesch',
-'skinname-nostalgia'   => 'Nostaljesch',
 'skinname-cologneblue' => 'Kölsch Blau',
 'skinname-monobook'    => 'MonoBoch',
 'skinname-myskin'      => 'Ming Skin',

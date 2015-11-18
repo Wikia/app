@@ -2798,7 +2798,6 @@ Meistal wörd dit door 'ne zwarte externe link veroorzaak.",
 
 # Skin names
 'skinname-standard'    => 'Standaard',
-'skinname-nostalgia'   => 'Nostalgie',
 'skinname-cologneblue' => 'Keuls blauw',
 
 # Patrolling

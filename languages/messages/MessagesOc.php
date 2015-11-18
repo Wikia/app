@@ -2729,7 +2729,6 @@ Totas las accions d’importacion interwiki son conservadas dins lo [[Special:Lo
 # Stylesheets
 'common.css'      => '/** Lo CSS plaçat aicí serà aplicat a totas las aparéncias. */',
 'standard.css'    => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Estandard. */',
-'nostalgia.css'   => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Nostalgia. */',
 'cologneblue.css' => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Cologne Blue */',
 'monobook.css'    => '/* Lo CSS plaçat aicí afectarà los utilizaires del skin Monobook */',
 'myskin.css'      => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge MySkin */',
@@ -2742,7 +2741,6 @@ Totas las accions d’importacion interwiki son conservadas dins lo [[Special:Lo
 # Scripts
 'common.js'      => '/* Tot JavaScript serà cargat amb cada pagina accedida per un utilizaire quin que siá. */',
 'standard.js'    => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Standard unicament. */',
-'nostalgia.js'   => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Nostalgia unicament. */',
 'cologneblue.js' => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Cologne Blue unicament. */',
 'monobook.js'    => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge MonoBook unicament. */',
 'myskin.js'      => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge MySkin unicament. */',
@@ -2776,7 +2774,6 @@ Aquò es probablament causat per un ligam sus lista negra que punta cap a un sit
 
 # Skin names
 'skinname-standard'    => 'Estandard',
-'skinname-nostalgia'   => 'Nostalgia',
 'skinname-cologneblue' => 'Colonha Blau',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'Mon interfàcia',

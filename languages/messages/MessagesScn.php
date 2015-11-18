@@ -2362,7 +2362,6 @@ Visita [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] e [//trans
 
 # Skin names
 'skinname-standard'    => 'Classicu',
-'skinname-nostalgia'   => 'Nustargìa',
 'skinname-cologneblue' => 'Cologne Blu',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
