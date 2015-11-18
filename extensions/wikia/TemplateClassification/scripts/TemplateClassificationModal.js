@@ -131,8 +131,6 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 		});
 
 		modalInstance.bind('close', function () {
-			$(w).unbind('keypress');
-
 			// Track - close TC modal
 			track({
 				action: tracker.ACTIONS.CLOSE,
@@ -158,6 +156,9 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 
 		/* Show the modal */
 		modalInstance.show();
+
+		// Make sure that focus is in the right place
+		$('#template-classification-' + mw.html.escape($preselectedType.val())).focus();
 	}
 
 	function processSave(modalInstance) {
