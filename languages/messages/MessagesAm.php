@@ -189,18 +189,6 @@ $messages = array(
 'faq'            => 'ብጊየጥ (ብዙ ጊዜ የሚጠየቁ ጥያቀዎች)',
 'faqpage'        => 'Project:ብጊየጥ',
 
-# Vector skin
-'vector-action-addsection' => 'ርዕስ ጨምር',
-'vector-action-delete'     => 'አጥፋ',
-'vector-action-move'       => 'ለማዛወር',
-'vector-action-protect'    => 'ለመቆለፍ',
-'vector-action-undelete'   => 'አታጥፋ',
-'vector-action-unprotect'  => 'አለመቆለፍ',
-'vector-view-create'       => 'አዲስ ፍጠር',
-'vector-view-edit'         => 'አርም',
-'vector-view-history'      => ' ታሪኩን አሳይ',
-'vector-view-view'         => 'ለማንበብ',
-'vector-view-viewsource'   => 'ጥሬ ኮድ ለመመልከት',
 
 'errorpagetitle'    => 'ስህተት',
 'returnto'          => '(ወደ $1 ለመመለስ)',
@@ -548,7 +536,6 @@ $1ን ወይም ማንም ሌላ [[{{MediaWiki:Grouppage-sysop}}|መጋቢ]] ስ
 'userjsyoucanpreview'              => "'''ምክር፦''' ሳይቆጠብ አዲስ JSዎን ለመሞከር 'ቅድመ እይታ' የሚለውን ይጫኑ።",
 'usercsspreview'                   => "'''ማስታወሻ፦ CSS-ዎን ለሙከራ ብቻ እያዩ ነው፤ ገና አልተቆጠበም!'''",
 'userjspreview'                    => "'''ማስታወሻ፦ JavaScriptዎን ለሙከራ ብቻ እያዩ ነው፤ ገና አልተቆጠበም!'''",
-'userinvalidcssjstitle'            => "'''ማስጠንቀቂያ፦''' «$1» የሚባል መልክ የለም። ልዩ .css እና .js ገጾች በትንንሽ እንግሊዝኛ ፊደል መጀመር እንዳለባቸው ያስታውሱ። ለምሳሌ፦  {{ns:user}}:Foo/vector.css ልክ ነው እንጂ {{ns:user}}:Foo/Vector.css አይደለም።",
 'updated'                          => '(የታደሰ)',
 'note'                             => "'''ማሳሰቢያ፦'''",
 'previewnote'                      => "ማስታወቂያ፦ '''ይህ ለሙከራው ብቻ ነው የሚታየው -- ምንም ለውጦች ገና አልተላኩም!'''",

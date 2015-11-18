@@ -148,15 +148,6 @@ $messages = array(
 'qbmyoptions'    => 'Ol pes bilong mi',
 'qbspecialpages' => 'Ol sipesol pes',
 
-# Vector skin
-'vector-action-delete'   => 'Rausim',
-'vector-action-move'     => 'Surikim',
-'vector-action-protect'  => 'Tambuim',
-'vector-view-create'     => 'Kirapim',
-'vector-view-edit'       => 'Senisim',
-'vector-view-history'    => 'Ol senis',
-'vector-view-view'       => 'Rit',
-'vector-view-viewsource' => 'Lukim as tok',
 
 'errorpagetitle'   => 'Samting i kranki',
 'returnto'         => 'Go bek long $1',

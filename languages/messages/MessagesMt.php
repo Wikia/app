@@ -426,18 +426,6 @@ $messages = array(
 'faq'            => 'Mistoqsijiet komuni',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Żid diskussjoni',
-'vector-action-delete'           => 'Ħassar',
-'vector-action-move'             => 'Mexxi',
-'vector-action-protect'          => 'Ipproteġi',
-'vector-action-undelete'         => 'Irkupra',
-'vector-action-unprotect'        => 'Biddel il-protezzjoni',
-'vector-view-create'             => 'Oħloq',
-'vector-view-edit'               => 'Editja',
-'vector-view-history'            => 'Ara l-kronoloġija',
-'vector-view-view'               => 'Aqra',
-'vector-view-viewsource'         => 'Ara s-sors',
 'actions'                        => 'Azzjonijiet',
 'namespaces'                     => 'Spazji tal-isem',
 'variants'                       => 'Varjanti',
@@ -931,7 +919,6 @@ L-aħħar daħla fir-reġistru tal-imblokki hi mogħtiha hawn taħt għal refere
 'sitecsspreview'                   => "'''Ftakar li din hija biss dehra proviżorja tas-CSS. Il-modifiki għadhom ma ġewx salvati!'''",
 'sitejspreview'                    => "'''Ftakar li din hija biss dehra proviżorja tal-JavaScript. Il-modifiki għadhom ma ġewx salvati!'''",
 'userinvalidcssjstitle'            => "'''Twissija:''' M'hemm l-ebda aspett bl-isem \"\$1\".
-Ftakar li l-paġni .css u .js personalizzati għandhom l-ewwel ittra tat-titlu żgħira, eż. {{ns:user}}:Foo/vector.css u mhux {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Aġġornata)',
 'note'                             => "'''Nota:'''",
 'previewnote'                      => "'''Ftakar li din hija biss dehra proviżorja, u li għadha ma ġietx salvata!'''",

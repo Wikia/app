@@ -346,18 +346,6 @@ $messages = array(
 'faq'            => 'Pyetje që bëhen shpesh',
 'faqpage'        => 'Project: Pyetje që bëhen shpesh',
 
-# Vector skin
-'vector-action-addsection'       => 'Shto një temë',
-'vector-action-delete'           => 'Grise',
-'vector-action-move'             => 'Zhvendose',
-'vector-action-protect'          => 'Mbroje',
-'vector-action-undelete'         => 'Anullo fshirjen',
-'vector-action-unprotect'        => 'Ndrysho mbrojtjen',
-'vector-view-create'             => 'Krijo',
-'vector-view-edit'               => 'Redakto',
-'vector-view-history'            => 'Shiko historikun',
-'vector-view-view'               => 'Lexo',
-'vector-view-viewsource'         => 'Shiko tekstin',
 'actions'                        => 'Veprimet',
 'namespaces'                     => 'Hapsirat e emrit',
 'variants'                       => 'Variante',
@@ -862,7 +850,6 @@ Më poshtë mund t'i referoheni shënimit të regjistruar për bllokimin e fundi
 '''Nuk është ruajtur ende!'''",
 'sitejspreview'                    => "'''Vini re! Ju jeni duke inspektuar këtë kod JavaScript.'''
 '''Nuk është ruajtur ende!'''",
-'userinvalidcssjstitle'            => "'''Kujdes:''' Nuk ka pamje të quajtur \"\$1\". Vini re se faqet .css dhe .js përdorin titull me gërma të vogla, p.sh. {{ns:user}}:Foo/vector.css, jo {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(E ndryshuar)',
 'note'                             => "'''Shënim:'''",
 'previewnote'                      => "'''Vini re! Kjo faqe është vetëm për inspektim'''

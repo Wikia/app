@@ -158,18 +158,6 @@ $messages = array(
 'faq'            => 'ಸಾಮಾನ್ಯವಾದ್ ಕೇನುನ ಪ್ರಶ್ನೆಲು',
 'faqpage'        => 'Project:ಸಾಮಾನ್ಯವಾದ್ ಕೇನುನ ಪ್ರಶ್ನೆಲು',
 
-# Vector skin
-'vector-action-addsection'       => 'ವಿಷಯ ಸೇರಾಲೆ',
-'vector-action-delete'           => 'ದೆತ್ತ್ ಪಾಡ್ಲೆ',
-'vector-action-move'             => 'ಸ್ಥಳಾಂತರ ಮಲ್ಪುಲೆ',
-'vector-action-protect'          => 'ಸ೦ರಕ್ಷಿಸಾಲೆ',
-'vector-action-undelete'         => 'ಮಾಜಾವಡೆ',
-'vector-action-unprotect'        => 'ಬದಲಾವಣೆನ್ ರಕ್ಷಿಸಾಲೆ',
-'vector-view-create'             => ' ಸುರು ಮಲ್ಪುಲೆ',
-'vector-view-edit'               => 'ಸಂಪಾದನೆ ಮಲ್ಪುಲೆ',
-'vector-view-history'            => 'ಇತಿಹಾಸೊನು ತೂಲೆ',
-'vector-view-view'               => 'ಓದ್ಲೇ',
-'vector-view-viewsource'         => 'ಮೂಲೊನು ತೂಲೆ',
 'actions'                        => 'ಕ್ರಿಯೆಕ್ಕುಲು',
 'namespaces'                     => 'ಪುದರ್ ದ ವರ್ಗೊಲು',
 'variants'                       => 'ರೂಪಾಂತರ ಹೊಂದ್‘ನ',

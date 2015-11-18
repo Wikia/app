@@ -461,18 +461,6 @@ $messages = array(
 'faq' => 'FDQ',
 'faqpage' => 'Project:FDQ',
 
-# Vector skin
-'vector-action-addsection' => 'Apondre un sujèt',
-'vector-action-delete' => 'Suprimar',
-'vector-action-move' => 'Renomar',
-'vector-action-protect' => 'Protègiér',
-'vector-action-undelete' => 'Refâre',
-'vector-action-unprotect' => 'Changiér la protèccion',
-'vector-view-create' => 'Fâre',
-'vector-view-edit' => 'Changiér',
-'vector-view-history' => 'Fâre vêre l’historico',
-'vector-view-view' => 'Liére',
-'vector-view-viewsource' => 'Vêre lo tèxto sôrsa',
 'actions' => 'Accions',
 'namespaces' => 'Èspâços de noms',
 'variants' => 'Variantes',
@@ -1005,7 +993,6 @@ La dèrriére entrâ du jornal des blocâjos est disponibla ce-desot :',
 'sitejspreview' => "'''Rapelâd-vos que vos éte solament aprés èprovar ou ben prèvisualisar cél code JavaScript.'''
 '''Il at p’oncor étâ sôvâ !'''",
 'userinvalidcssjstitle' => "'''Atencion :''' ègziste gins d’habelyâjo « $1 ».
-Rapelâd-vos que les pâges a sè avouéc èxtensions .css et .js utilisont des titros en petiôtes lètres, per ègzemplo {{ns:user}}:Foo/vector.css et pas {{ns:user}}:Foo/Vector.css.",
 'updated' => '(Betâ a jorn)',
 'note' => "'''Nota :'''",
 'previewnote' => "'''Rapelâd-vos qu’o est ren qu’una prèvisualisacion.'''
@@ -3064,7 +3051,6 @@ Pèrmèt de rètablir la vèrsion devant et pués d’apondre una rêson dens la
 'chick.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Pugin ». */',
 'simple.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Simplo ». */',
 'modern.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Modèrno ». */',
-'vector.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Vèctor ». */',
 'print.css' => '/* Lo code CSS betâ ique afècterat les emprèssions. */',
 'handheld.css' => '/* Lo code CSS betâ ique afècterat los aparèlys mobilos d’aprés l’habelyâjo configurâ dedens « $wgHandheldStyle ». */',
 'noscript.css' => '/* Lo code CSS betâ ique afècterat los usanciérs qu’ont dèsactivâ lo code JavaScript. */',
@@ -3083,7 +3069,6 @@ Pèrmèt de rètablir la vèrsion devant et pués d’apondre una rêson dens la
 'chick.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Pugin ». */',
 'simple.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Simplo ». */',
 'modern.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Modèrno ». */',
-'vector.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Vèctor ». */',
 'group-autoconfirmed.js' => '/* Tot code JavaScript betâ ique serat chargiê ren que por los usanciérs encartâs. */',
 'group-bot.js' => '/* Tot code JavaScript betâ ique serat chargiê ren que por los bots. */',
 'group-sysop.js' => '/* Tot code JavaScript betâ ique serat chargiê ren que por los administrators. */',
@@ -3136,7 +3121,6 @@ O est probâblament diu a un lim de vers un seto de defôr qu’aparêt sur la l
 'skinname-chick' => 'Pugin',
 'skinname-simple' => 'Simplo',
 'skinname-modern' => 'Modèrno',
-'skinname-vector' => 'Vèctor',
 
 # Patrolling
 'markaspatrolleddiff' => 'Marcar coment survelyê',

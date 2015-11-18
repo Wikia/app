@@ -178,18 +178,6 @@ $messages = array(
 'faq'            => 'Oftost ascoda ascunȝa',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Mearcunge ēacian',
-'vector-action-delete'           => 'Forlēos',
-'vector-action-move'             => 'Ƿeȝ',
-'vector-action-protect'          => 'Beorȝa',
-'vector-action-undelete'         => 'Sciepe tramet eft',
-'vector-action-unprotect'        => 'Unbeorȝa',
-'vector-view-create'             => 'Sciepe',
-'vector-view-edit'               => 'Ādihte',
-'vector-view-history'            => 'Stǣr',
-'vector-view-view'               => 'Rǣd',
-'vector-view-viewsource'         => 'Sēo fruman',
 'actions'                        => 'Fremmunga',
 'namespaces'                     => 'Namstedas',
 'variants'                       => 'Missenlicnessa',

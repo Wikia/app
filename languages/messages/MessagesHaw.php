@@ -194,12 +194,6 @@ $messages = array(
 'qbmyoptions'    => 'Ka‘u mau ‘ao‘ao',
 'qbspecialpages' => 'Nā ‘ao‘ao kūikawā',
 
-# Vector skin
-'vector-action-delete'  => 'E holoi',
-'vector-action-move'    => 'Neʻe',
-'vector-action-protect' => 'Hoʻomalu',
-'vector-view-edit'      => 'E hoʻololi',
-'vector-view-view'      => 'Heluhelu',
 
 'errorpagetitle'   => 'Hewa',
 'returnto'         => 'Ho‘i iā $1.',

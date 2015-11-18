@@ -235,16 +235,6 @@ $messages = array(
 'qbspecialpages' => 'Pagine speçiä',
 'faq'            => 'Domande frequenti',
 
-# Vector skin
-'vector-action-addsection' => 'Azónzi discusción',
-'vector-action-delete'     => 'Scancella',
-'vector-action-move'       => 'Mescia',
-'vector-action-protect'    => 'Protezzi',
-'vector-view-create'       => 'Crea',
-'vector-view-edit'         => 'Càngia',
-'vector-view-history'      => 'Fanni védde a Stöia',
-'vector-view-view'         => 'Lêzi',
-'vector-view-viewsource'   => 'Veddi a sorgénte',
 'actions'                  => 'Açioìn',
 'namespaces'               => 'Namespaces',
 'variants'                 => 'Diferense',

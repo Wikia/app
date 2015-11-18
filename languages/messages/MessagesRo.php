@@ -453,18 +453,6 @@ pe titlul secțiunii (JavaScript)',
 'faq'            => 'Întrebări frecvente',
 'faqpage'        => 'Project:Întrebări frecvente',
 
-# Vector skin
-'vector-action-addsection'       => 'Mesaj nou',
-'vector-action-delete'           => 'Ștergere',
-'vector-action-move'             => 'Redenumire',
-'vector-action-protect'          => 'Protejare',
-'vector-action-undelete'         => 'Recuperare',
-'vector-action-unprotect'        => 'Modificare protecție',
-'vector-view-create'             => 'Creare',
-'vector-view-edit'               => 'Modificare',
-'vector-view-history'            => 'Istoric',
-'vector-view-view'               => 'Lectură',
-'vector-view-viewsource'         => 'Sursă pagină',
 'actions'                        => 'Acțiuni',
 'namespaces'                     => 'Spații de nume',
 'variants'                       => 'Variante',
@@ -971,7 +959,6 @@ Ultima intrare în jurnalul blocărilor este afișată mai jos pentru referinț�
 'sitejspreview'                    => "'''Rețineți că doar previzualizați acest cod JavaScript.'''
 '''El nu a fost salvat încă!'''",
 'userinvalidcssjstitle'            => "'''Avertizare:''' Nu există aspectul „$1”.
-Paginile .css și .js specifice utilizatorilor au titluri care încep cu literă mică; de exemplu {{ns:user}}:Foo/vector.css în comparație cu {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Actualizat)',
 'note'                             => "'''Notă:'''",
 'previewnote'                      => "Aceasta este doar o previzualizare! Pentru a salva pagina în forma actuală, descrieți succint modificările efectuate și apăsați butonul '''Salvează pagina'''.",
@@ -2989,7 +2976,6 @@ Permite adăugarea unui motiv în descrierea modificărilor',
 'chick.css'       => '/* CSS plasate aici vor afecta utilizatorii stilului Chick */',
 'simple.css'      => '/* CSS plasate aici vor afecta utilizatorii stilului Simple */',
 'modern.css'      => '/* CSS plasate aici vor afecta utilizatorii stilului Modern */',
-'vector.css'      => '/* CSS plasate aici vor afecta utilizatorii stilului Vector */',
 'print.css'       => '/* CSS plasate aici vor afecta modul în care paginile vor fi imprimate */',
 
 # Metadata
@@ -3037,7 +3023,6 @@ Permite adăugarea unui motiv în descrierea modificărilor',
 'skinname-chick'       => 'Șic',
 'skinname-simple'      => 'Simplu',
 'skinname-modern'      => 'Modern',
-'skinname-vector'      => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marchează pagina ca verificată',

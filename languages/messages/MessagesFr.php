@@ -512,18 +512,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Ajouter un sujet',
-'vector-action-delete'           => 'Supprimer',
-'vector-action-move'             => 'Renommer',
-'vector-action-protect'          => 'Protéger',
-'vector-action-undelete'         => 'Rétablir',
-'vector-action-unprotect'        => 'Changer la protection',
-'vector-view-create'             => 'Créer',
-'vector-view-edit'               => 'Modifier',
-'vector-view-history'            => 'Afficher l’historique',
-'vector-view-view'               => 'Lire',
-'vector-view-viewsource'         => 'Voir la source',
 'actions'                        => 'Actions',
 'namespaces'                     => 'Espaces de noms',
 'variants'                       => 'Variantes',
@@ -1021,7 +1009,6 @@ La dernière entrée du registre des blocages est indiquée ci-dessous à titre 
 '''Elle n’a pas encore été enregistrée !'''",
 'sitejspreview'                    => "'''Souvenez-vous que vous êtes seulement en train de prévisualiser ce code JavaScript.'''
 '''Il n’a pas encore été enregistré !'''",
-'userinvalidcssjstitle'            => "'''Attention :''' il n’existe pas d’habillage « $1 ». Rappelez-vous que les pages personnelles avec extensions .css et .js utilisent des titres en minuscules, par exemple {{ns:user}}:Foo/vector.css et non {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Mis à jour)',
 'note'                             => "'''Note :'''",
 'previewnote'                      => "'''Attention, ce texte n’est qu’une prévisualisation et n’a pas encore été publié !'''",
@@ -3043,7 +3030,6 @@ Permet de rétablir la version précédente et d’ajouter un motif dans la boî
 'chick.js'       => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Poussin uniquement */',
 'simple.js'      => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Simple uniquement */',
 'modern.js'      => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Moderne uniquement */',
-'vector.js'      => '/* Tout code JavaScript placé ici sera chargé pour les utilisateurs de l’habillage Vector */',
 'group-sysop.js' => '/* Le JavaScript inclus ici n’affectera que les administrateurs */',
 
 # Metadata
@@ -3091,7 +3077,6 @@ Permet de rétablir la version précédente et d’ajouter un motif dans la boî
 'skinname-chick'       => 'Poussin',
 'skinname-simple'      => 'Simple',
 'skinname-modern'      => 'Moderne',
-'skinname-vector'      => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marquer comme relue',

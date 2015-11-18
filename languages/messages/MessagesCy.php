@@ -268,18 +268,6 @@ $messages = array(
 'faq'            => 'Cwestiynau cyffredin',
 'faqpage'        => 'Project:Cwestiynau cyffredin',
 
-# Vector skin
-'vector-action-addsection'       => 'Ychwanegu adran',
-'vector-action-delete'           => 'Dileu',
-'vector-action-move'             => 'Symud',
-'vector-action-protect'          => 'Diogelu',
-'vector-action-undelete'         => 'Adfer',
-'vector-action-unprotect'        => 'Newid y diogelwch',
-'vector-view-create'             => 'Dechrau',
-'vector-view-edit'               => 'Golygu',
-'vector-view-history'            => 'Gweld yr hanes',
-'vector-view-view'               => 'Darllen',
-'vector-view-viewsource'         => 'Dangos côd y dudalen',
 'actions'                        => 'Gweithrediadau',
 'namespaces'                     => 'Parthau',
 'variants'                       => 'Amrywiolion',
@@ -769,7 +757,6 @@ Dyma'r cofnod lòg diweddaraf, er gwybodaeth:",
 'sitejspreview'                    => "'''Cofiwch - dim ond rhagolwg o'ch côd JavaScript yw hwn.'''
 '''Nid yw wedi'i rhoi ar gadw eto!'''",
 'userinvalidcssjstitle'            => "'''Rhybudd:''' Nid oes gwedd o'r enw \"\$1\".
-Cofiwch bod y tudalennau .css a .js yn defnyddio llythrennau bach, e.e. {{ns:user}}:Foo/vector.css yn hytrach na {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Diweddariad)',
 'note'                             => "'''Dalier sylw:'''",
 'previewnote'                      => "'''Cofiwch taw rhagolwg yw hwn; nid yw'r dudalen wedi ei chadw eto.'''",

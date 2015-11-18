@@ -444,18 +444,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection' => 'Apondre un subjècte',
-'vector-action-delete'     => 'Suprimir',
-'vector-action-move'       => 'Tornar nomenar',
-'vector-action-protect'    => 'Protegir',
-'vector-action-undelete'   => 'Restablir',
-'vector-action-unprotect'  => 'Suprimir la proteccion',
-'vector-view-create'       => 'Crear',
-'vector-view-edit'         => 'Modificar',
-'vector-view-history'      => "Veire l'istoric",
-'vector-view-view'         => 'Legir',
-'vector-view-viewsource'   => 'Veire la font',
 'actions'                  => 'Accions',
 'namespaces'               => 'Espacis de noms',
 'variants'                 => 'Variantas',
@@ -911,7 +899,6 @@ La darrièra entrada del jornal dels blocatges es indicada çaijós a títol d�
 'sitecsspreview'                   => "'''Remembratz-vos que sètz a previsualizar vòstre pròpri fuèlh CSS !'''
 '''Es pas estada encara enregistrada !'''",
 'sitejspreview'                    => "'''Remembratz-vos que sètz a visualizar o testar vòstre còde JavaScript e qu’es pas encara estat enregistrat !'''",
-'userinvalidcssjstitle'            => "'''Atencion :''' existís pas d'estil « $1 ». Remembratz-vos que las paginas personalas amb extensions .css e .js utilizan de títols en minusculas, per exemple, {{ns:user}}:Foo/vector.css e non pas {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Mes a jorn)',
 'note'                             => "'''Nòta :'''",
 'previewnote'                      => "'''Atencion, aqueste tèxte es sonque una previsualizacion e es pas encara estat salvat !'''",
@@ -2749,7 +2736,6 @@ Totas las accions d’importacion interwiki son conservadas dins lo [[Special:Lo
 'chick.css'       => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Chick */',
 'simple.css'      => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Simple */',
 'modern.css'      => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Modern */',
-'vector.css'      => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Vector */',
 'print.css'       => '/* Lo CSS plaçat aicí afectarà las impressions */',
 'handheld.css'    => '/* Lo CSS plaçat aicí afectarà los aparelhs mobils en foncion de l\'abilhatge configurat $wgHandheldStyle */',
 
@@ -2763,7 +2749,6 @@ Totas las accions d’importacion interwiki son conservadas dins lo [[Special:Lo
 'chick.js'       => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Chick unicament. */',
 'simple.js'      => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Simple unicament. */',
 'modern.js'      => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Modern unicament. */',
-'vector.js'      => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Vector unicament. */',
 
 # Metadata
 'notacceptable' => 'Aqueste servidor wiki pòt pas fornir las donadas dins un format que vòstre client es capable de legir.',

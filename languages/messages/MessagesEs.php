@@ -493,18 +493,6 @@ $messages = array(
 'faq'            => 'Preguntas más frecuentes',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Añadir tema',
-'vector-action-delete'           => 'Borrar',
-'vector-action-move'             => 'Mover',
-'vector-action-protect'          => 'Proteger',
-'vector-action-undelete'         => 'Restaurar',
-'vector-action-unprotect'        => 'Cambiar protección',
-'vector-view-create'             => 'Crear',
-'vector-view-edit'               => 'Editar',
-'vector-view-history'            => 'Ver historial',
-'vector-view-view'               => 'Leer',
-'vector-view-viewsource'         => 'Ver fuente',
 'actions'                        => 'Acciones',
 'namespaces'                     => 'Espacios de nombres',
 'variants'                       => 'Variantes',
@@ -1017,7 +1005,6 @@ La última entrada del registro de bloqueos se proporciona debajo para mayor ref
 '''¡Aún no se ha guardado!'''",
 'sitejspreview'                    => "'''Recuerda que sólo estás previsualizando este código JavaScript.'''
 '''¡Aún no se ha guardado!'''",
-'userinvalidcssjstitle'            => "'''Aviso:''' No existe la skin «$1». Recuerda que las páginas personalizadas ''.css'' y ''.js'' tienen un título en minúsculas. Por ejemplo, {{ns:user}}:Ejemplo/vector.css en vez de {{ns:user}}:Ejemplo/Vector.css.",
 'updated'                          => '(Actualizado)',
 'note'                             => "'''Nota:'''",
 'previewnote'                      => "'''¡Recuerda que esto es solo una previsualización.'''
@@ -3004,7 +2991,6 @@ Permite añadir una razón al resumen de edición.',
 'chick.css'       => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Chick */',
 'simple.css'      => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Simple */',
 'modern.css'      => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Modern */',
-'vector.css'      => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Vector */',
 'print.css'       => '/* Los estilos CSS colocados aquí afectarán la impresión */',
 'handheld.css'    => '/* Los estilos CSS colocados aquí afectarán a los dispositivos móviles basados en las pieles configuradas en $wgHandheldStyle */',
 
@@ -3018,7 +3004,6 @@ Permite añadir una razón al resumen de edición.',
 'chick.js'       => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Pollito */',
 'simple.js'      => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Simple */',
 'modern.js'      => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Moderna */',
-'vector.js'      => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Vector */',
 
 # Metadata
 'notacceptable' => 'El servidor wiki no puede proveer los datos en un formato que su cliente (navegador) pueda entender.',
@@ -3066,7 +3051,6 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 'skinname-chick'       => 'Pollito',
 'skinname-simple'      => 'Simple',
 'skinname-modern'      => 'Moderna',
-'skinname-vector'      => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marcar como revisado',

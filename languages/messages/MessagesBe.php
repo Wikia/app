@@ -234,18 +234,6 @@ $messages = array(
 'faq'            => 'ЧАПЫ',
 'faqpage'        => 'Project:ЧАПЫ',
 
-# Vector skin
-'vector-action-addsection'       => 'Дадаць тэму',
-'vector-action-delete'           => 'Сцерці',
-'vector-action-move'             => 'Перанесці',
-'vector-action-protect'          => 'Ахова',
-'vector-action-undelete'         => 'Аднавіць',
-'vector-action-unprotect'        => 'Змяніць ахову',
-'vector-view-create'             => 'Стварыць',
-'vector-view-edit'               => 'Правіць',
-'vector-view-history'            => 'Паказаць гісторыю',
-'vector-view-view'               => 'Чытаць',
-'vector-view-viewsource'         => 'Паказаць выточны тэкст',
 'actions'                        => 'Дзеянні',
 'namespaces'                     => 'Прасторы імёнаў',
 'variants'                       => 'Варыянты',
@@ -733,7 +721,6 @@ $2
 '''Праўкі яшчэ не замацаваныя!'''",
 'sitejspreview'                    => "'''Памятайце, што гэта толькі папярэдні паказ вашага JavaScript.'''
 '''Праўкі яшчэ не замацаваныя!'''",
-'userinvalidcssjstitle'            => "'''Увага:''' Няма вокладкі з назвай \"\$1\". Памятайце, што свае старонкі .css і .js называюцца толькі малымі літарамі, такім чынам, напр., {{ns:user}}:Foo/vector.css, а не {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(абноўлена)',
 'note'                             => "'''Заўвага:'''",
 'previewnote'                      => "'''Гэта папярэдні паказ; праўкі яшчэ не замацаваныя!'''",

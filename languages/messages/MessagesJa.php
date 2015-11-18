@@ -519,18 +519,6 @@ $messages = array(
 'faq'            => 'よくある質問と回答',
 'faqpage'        => 'Project:よくある質問と回答',
 
-# Vector skin
-'vector-action-addsection'       => '話題追加',
-'vector-action-delete'           => '削除',
-'vector-action-move'             => '移動',
-'vector-action-protect'          => '保護',
-'vector-action-undelete'         => '復帰',
-'vector-action-unprotect'        => '保護再設定',
-'vector-view-create'             => '作成',
-'vector-view-edit'               => '編集',
-'vector-view-history'            => '履歴表示',
-'vector-view-view'               => '閲覧',
-'vector-view-viewsource'         => 'ソース表示',
 'actions'                        => '操作',
 'namespaces'                     => '名前空間',
 'variants'                       => '変種',
@@ -1059,7 +1047,6 @@ IPアドレスは複数の利用者の間で共有されていることがあり
 'sitejspreview'                    => "'''ここでは、JavaScriptをプレビューしているだけに過ぎません。'''
 '''まだ保存されていません！'''",
 'userinvalidcssjstitle'            => "'''警告：'''「$1」という外装はありません。
-.cssと.jsページを編集する際には、ページ名を小文字にすることを忘れないでください（例えば、{{ns:user}}:Hoge/Vector.cssではなく{{ns:user}}:Hoge/vector.cssとなります）。",
 'updated'                          => '（更新）',
 'note'                             => "'''お知らせ：'''",
 'previewnote'                      => "'''これはプレビューです。'''
@@ -3093,7 +3080,6 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 'chick.css'               => '/* ここに記述したCSSはチック外装の利用者に影響します */',
 'simple.css'              => '/* ここに記述したCSSはシンプル外装の利用者に影響します */',
 'modern.css'              => '/* ここに記述したCSSはモダン外装の利用者に影響します */',
-'vector.css'              => '/* ここに記述したCSSはベクター外装の利用者に影響します */',
 'print.css'               => '/* ここに記述したCSSは印刷出力に影響します */',
 'handheld.css'            => '/* ここに記述したCSSは$wgHandheldStyleで設定された外装に基づく携帯機器に影響します */',
 'noscript.css'            => '/* ここに記述したCSSはJavaScriptを無効にしている利用者に影響します */',
@@ -3112,7 +3098,6 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 'chick.js'               => '/* ここにあるすべてのJavaScriptは、チック外装を使用している利用者に対して読み込まれます */',
 'simple.js'              => '/* ここにあるすべてのJavaScriptは、シンプル外装を使用している利用者に対して読み込まれます */',
 'modern.js'              => '/* ここにあるすべてのJavaScriptは、モダン外装を使用している利用者に対して読み込まれます */',
-'vector.js'              => '/* ここにあるすべてのJavaScriptは、ベクター外装を使用している利用者に対して読み込まれます */',
 'group-autoconfirmed.js' => '/* ここにあるすべてのJavaScriptは、自動承認された利用者に対して読み込まれます */',
 'group-bot.js'           => '/* ここにあるすべてのJavaScriptは、ボットのみに対して読み込まれます */',
 'group-sysop.js'         => '/* ここにあるすべてのJavaScriptは、管理者のみに対して読み込まれます */',
@@ -3164,7 +3149,6 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 'skinname-chick'       => 'チック',
 'skinname-simple'      => 'シンプル',
 'skinname-modern'      => 'モダン',
-'skinname-vector'      => 'ベクター',
 
 # Patrolling
 'markaspatrolleddiff'                 => '巡回済みにする',

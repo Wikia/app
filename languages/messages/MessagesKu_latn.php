@@ -228,18 +228,6 @@ $messages = array(
 'faq'            => 'PGP',
 'faqpage'        => 'Project:PGP',
 
-# Vector skin
-'vector-action-addsection' => 'Mijarekê lê zêde bike',
-'vector-action-delete'     => 'Jê bibe',
-'vector-action-move'       => 'Nav biguherîne',
-'vector-action-protect'    => 'Biparêze',
-'vector-action-undelete'   => 'Jê nebe',
-'vector-action-unprotect'  => 'Parastinê rake',
-'vector-view-create'       => 'Çêke',
-'vector-view-edit'         => 'Biguherîne',
-'vector-view-history'      => 'Dîrokê bibîne',
-'vector-view-view'         => 'Bixwîne',
-'vector-view-viewsource'   => 'Çavkaniyan bibîne',
 'actions'                  => 'Çalakî',
 'namespaces'               => 'Valahiya nav',
 'variants'                 => 'Variyant',

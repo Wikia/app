@@ -116,23 +116,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-delete'      => 'Lösche',
-'vector-action-move'        => 'Ziehe',
-'vector-action-protect'     => 'Schitze',
-'vector-namespace-category' => 'Abdeeling',
-'vector-namespace-help'     => 'Hilfblatt',
-'vector-namespace-image'    => 'Feil',
-'vector-namespace-main'     => 'Blatt',
-'vector-namespace-project'  => 'Project-Blatt',
-'vector-namespace-special'  => 'Besunneres Blatt',
-'vector-namespace-talk'     => 'Dischbedutt',
-'vector-namespace-template' => 'Moddel',
-'vector-namespace-user'     => 'Yuuser-Blatt',
-'vector-view-create'        => 'Schtaerte',
-'vector-view-edit'          => 'Ennere',
-'vector-view-history'       => 'Gschicht zeige',
-'vector-view-view'          => 'Lese',
 'namespaces'                => 'Blatznaame',
 
 'errorpagetitle'   => 'Mischteek',

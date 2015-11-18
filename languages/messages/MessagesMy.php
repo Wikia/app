@@ -196,18 +196,6 @@ $messages = array(
 'faq'            => 'မေးလေ့ရှိကြသည်များ',
 'faqpage'        => 'Project:မေးလေ့ရှိကြသည်များ',
 
-# Vector skin
-'vector-action-addsection' => 'အကြောင်းအရာအသစ် ထပ်ထည့်ရန်',
-'vector-action-delete'     => 'ဖျက်​ပါ​',
-'vector-action-move'       => 'ရွှေ့ပါ',
-'vector-action-protect'    => 'ထိမ်း​သိမ်း​ပါ​',
-'vector-action-undelete'   => 'မဖျက်တော့ရန်',
-'vector-action-unprotect'  => 'မကာကွယ်တော့ရန်',
-'vector-view-create'       => 'စတင်ရေးသားရန်',
-'vector-view-edit'         => 'ပြင်ရန်',
-'vector-view-history'      => 'ရာဇဝင်ကြည့်ရန်',
-'vector-view-view'         => 'ဖတ်ရန်',
-'vector-view-viewsource'   => 'ရင်းမြစ်ကို ကြည့်ရန်',
 'actions'                  => 'ဆောင်ရွက်ချက်များ',
 'namespaces'               => 'အမည်ညွှန်းများ',
 'variants'                 => 'အမျိုးမျိုးအပြားပြား',

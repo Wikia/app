@@ -306,18 +306,6 @@ $messages = array(
 'faq'            => 'ډ-ځ-پ',
 'faqpage'        => 'Project:ډ-ځ-پ',
 
-# Vector skin
-'vector-action-addsection' => 'سرليکونه ورګډول',
-'vector-action-delete'     => 'ړنګول',
-'vector-action-move'       => 'لېږدول',
-'vector-action-protect'    => 'پروژه',
-'vector-action-undelete'   => 'ناړنګول',
-'vector-action-unprotect'  => 'ژغورنه بدلول',
-'vector-view-create'       => 'جوړول',
-'vector-view-edit'         => 'سمول',
-'vector-view-history'      => 'پېښليک کتل',
-'vector-view-view'         => 'لوستل',
-'vector-view-viewsource'   => 'سرچينه کتل',
 'actions'                  => 'کړنې',
 'namespaces'               => 'نوم-تشيالونه',
 

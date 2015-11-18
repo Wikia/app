@@ -171,18 +171,6 @@ $messages = array(
 'faq'            => 'asaila kaytaawdo bzaf',
 'faqpage'        => 'Project:asaila kaytaawdo',
 
-# Vector skin
-'vector-action-addsection'       => 'Zid topic',
-'vector-action-delete'           => 'Suprimi',
-'vector-action-move'             => 'Neqel',
-'vector-action-protect'          => 'Ḫami',
-'vector-action-undelete'         => 'rja lhadf',
-'vector-action-unprotect'        => 'Ḫiyed l-ḫimaya',
-'vector-view-create'             => 'Ĥṫareĝ',
-'vector-view-edit'               => 'Ĝedel',
-'vector-view-history'            => 'Ṫariĥ l-fiċyé',
-'vector-view-view'               => 'Qra',
-'vector-view-viewsource'         => 'Ċof l-masdar',
 'actions'                        => 'afaal',
 'namespaces'                     => 'Maḫel s-smiyyaṫ :',
 'variants'                       => 'lhja:',
@@ -707,7 +695,6 @@ aĥir mdĥl f-sijill l-blok mĝti lṫḫṫ:',
 'sitejspreview'                    => "'''ma tnsa-ċ billa JavaScript ṫaĝk mazal ġir f-mrḫalt l-iĝdad.'''
 '''rah mazal ma ṫsjjal-ċ!'''",
 'userinvalidcssjstitle'            => "'''ṫḫdir:''' ma kayn ḫṫṫa ċi skin \"\$1\".
-ṣfaḫi .css o-.js l-moĥṣṣaṣa ĥddama b-ĝanawin minuscule, bḫal {{ns:user}}:Foo/vector.css o-maċi bḫal {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(mohdata)',
 'note'                             => "'''molahada:'''",
 'previewnote'                      => "'''Dir fe balek belli hadċi ġir prévizualizasyon.'''

@@ -79,12 +79,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-move'     => "Paléccé'",
-'vector-view-create'     => 'Ebbu',
-'vector-view-edit'       => 'Padéccéng',
-'vector-view-view'       => 'Baca',
-'vector-view-viewsource' => 'Ita sumber',
 
 'errorpagetitle'   => 'Asalaŋ',
 'returnto'         => 'Lisu ri $1.',

@@ -228,18 +228,6 @@ $messages = array(
 'faq'            => 'அடிக்கடி கேட்கப்படும் கேள்விகள்',
 'faqpage'        => 'Project:அடிக்கடி கேட்கப்படும் கேள்விகள்',
 
-# Vector skin
-'vector-action-addsection'       => 'தலைப்பைச் சேர்',
-'vector-action-delete'           => 'நீக்குக',
-'vector-action-move'             => 'நகர்த்தவும்',
-'vector-action-protect'          => 'காக்கவும்',
-'vector-action-undelete'         => 'நீக்கத்தை நிறுத்து',
-'vector-action-unprotect'        => 'காப்பை மாற்று',
-'vector-view-create'             => 'உருவாக்கவும்',
-'vector-view-edit'               => 'தொகு',
-'vector-view-history'            => 'வரலாற்றைக் காட்டவும்',
-'vector-view-view'               => 'படிக்கவும்',
-'vector-view-viewsource'         => 'மூலத்தைக் காட்டவும்',
 'actions'                        => 'செயல்கள்',
 'namespaces'                     => 'பெயர்வெளிகள்',
 'variants'                       => 'மாற்றுக்கள்
@@ -724,7 +712,6 @@ or <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}}
 '''இது இன்னமும் சேமிக்கப்படவில்லை!'''",
 'sitejspreview'                    => "'''நீங்கள் மட்டுமே இந்த JavaScript code இன் முன் தோற்றத்தை காண்கிறீர்கள் என்பதை நினைவில் கொள்ளவும்.'''
 '''இது இன்னமும் சேமிக்கப்படவில்லை!'''",
-'userinvalidcssjstitle'            => "'''எச்சரிக்கை:'''  \"\$1\" என்றப் பெயரில் தோல்லொறுக் கிடையாது. சி.எஸ்.எஸ் மற்றும் ஜெ.எஸ். பக்கங்கள் ஆங்கில கீழ் வரிசைப் பெயர்களைக் கொண்டிருக்க வேண்டும் என்பதைக் கவனிக்கவும். எ+கா: {{ns:user}}:Foo/vector.css என்பது சரியான வடிவம் {{ns:user}}:Foo/Vector.css என்பது பிழையான வடிவம்.",
 'updated'                          => '(இற்றைப்படுத்தப்பட்டது)',
 'note'                             => "'''குறிப்பு:'''",
 'previewnote'                      => "'''இது ஒரு முன்தோற்றம் மட்டுமே, உங்கள் மாற்றங்கள் இன்னும் சேமிக்கப்படவில்லை!'''",

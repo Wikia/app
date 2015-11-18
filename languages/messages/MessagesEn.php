@@ -780,18 +780,6 @@ XHTML id names.
 'sitetitle'      => '{{SITENAME}}', # do not translate or duplicate this message to other languages
 'sitesubtitle'   => '', # do not translate or duplicate this message to other languages
 
-# Vector skin
-'vector-action-addsection'       => 'Add topic',
-'vector-action-delete'           => 'Delete',
-'vector-action-move'             => 'Move',
-'vector-action-protect'          => 'Protect',
-'vector-action-undelete'         => 'Undelete',
-'vector-action-unprotect'        => 'Change protection',
-'vector-view-create'             => 'Create',
-'vector-view-edit'               => 'Edit',
-'vector-view-history'            => 'View history',
-'vector-view-view'               => 'Read',
-'vector-view-viewsource'         => 'View source',
 'actions'                        => 'Actions',
 'namespaces'                     => 'Namespaces',
 'variants'                       => 'Variants',
@@ -1356,7 +1344,6 @@ The latest block log entry is provided below for reference:',
 'sitejspreview'                    => "'''Remember that you are only previewing this JavaScript code.'''
 '''It has not yet been saved!'''",
 'userinvalidcssjstitle'            => "'''Warning:''' There is no skin \"\$1\".
-Custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:Foo/vector.css as opposed to {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Updated)',
 'note'                             => "'''Note:'''",
 'previewnote'                      => "'''Remember that this is only a preview.'''
@@ -3589,7 +3576,6 @@ You can view its source',
 'chick.css'               => '/* CSS placed here will affect users of the Chick skin */', # only translate this message to other languages if you have to change it
 'simple.css'              => '/* CSS placed here will affect users of the Simple skin */', # only translate this message to other languages if you have to change it
 'modern.css'              => '/* CSS placed here will affect users of the Modern skin */', # only translate this message to other languages if you have to change it
-'vector.css'              => '/* CSS placed here will affect users of the Vector skin */', # only translate this message to other languages if you have to change it
 'print.css'               => '/* CSS placed here will affect the print output */', # only translate this message to other languages if you have to change it
 'handheld.css'            => '/* CSS placed here will affect handheld devices based on the skin configured in $wgHandheldStyle */', # only translate this message to other languages if you have to change it
 'noscript.css'            => '/* CSS placed here will affect users with JavaScript disabled */', # only translate this message to other languages if you have to change it
@@ -3608,7 +3594,6 @@ You can view its source',
 'chick.js'               => '/* Any JavaScript here will be loaded for users using the Chick skin */', # only translate this message to other languages if you have to change it
 'simple.js'              => '/* Any JavaScript here will be loaded for users using the Simple skin */', # only translate this message to other languages if you have to change it
 'modern.js'              => '/* Any JavaScript here will be loaded for users using the Modern skin */', # only translate this message to other languages if you have to change it
-'vector.js'              => '/* Any JavaScript here will be loaded for users using the Vector skin */', # only translate this message to other languages if you have to change it
 'group-autoconfirmed.js' => '/* Any JavaScript here will be loaded for autoconfirmed users only */', # only translate this message to other languages if you have to change it
 'group-bot.js'           => '/* Any JavaScript here will be loaded for bots only */', # only translate this message to other languages if you have to change it
 'group-sysop.js'         => '/* Any JavaScript here will be loaded for sysops only */', # only translate this message to other languages if you have to change it
@@ -3660,7 +3645,6 @@ This is probably caused by a link to a blacklisted external site.',
 'skinname-chick'       => 'Chick', # only translate this message to other languages if you have to change it
 'skinname-simple'      => 'Simple', # only translate this message to other languages if you have to change it
 'skinname-modern'      => 'Modern', # only translate this message to other languages if you have to change it
-'skinname-vector'      => 'Vector', # only translate this message to other languages if you have to change it
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Mark as patrolled',

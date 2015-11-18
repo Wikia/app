@@ -296,18 +296,6 @@ $messages = array(
 'faq'            => 'Quaestiones frequentes',
 'faqpage'        => 'Project:Quaestiones frequentes',
 
-# Vector skin
-'vector-action-addsection' => 'Partem novam addere',
-'vector-action-delete'     => 'Delere',
-'vector-action-move'       => 'Movere',
-'vector-action-protect'    => 'Protegere',
-'vector-action-undelete'   => 'Restituere',
-'vector-action-unprotect'  => 'Protectionem mutare',
-'vector-view-create'       => 'Creare',
-'vector-view-edit'         => 'Recensere',
-'vector-view-history'      => 'Historiam inspicere',
-'vector-view-view'         => 'Legere',
-'vector-view-viewsource'   => 'Fontem inspicere',
 'actions'                  => 'Actiones',
 'namespaces'               => 'Spatia nominalia',
 'variants'                 => 'Variantes',

@@ -204,18 +204,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Tambahi tupik',
-'vector-action-delete'           => 'Hapus',
-'vector-action-move'             => 'Pindahakan',
-'vector-action-protect'          => 'Lindungi',
-'vector-action-undelete'         => 'Pawalangan pahapusan',
-'vector-action-unprotect'        => 'Palindungan',
-'vector-view-create'             => 'Ulah',
-'vector-view-edit'               => 'Babak',
-'vector-view-history'            => 'Tiringi halam',
-'vector-view-view'               => 'Baca',
-'vector-view-viewsource'         => 'Tiringi asal mula',
 'actions'                        => 'Tindakan',
 'namespaces'                     => 'Ngarankamar',
 'variants'                       => 'Macam',
@@ -721,7 +709,6 @@ Log blukir pahabisannya tasadia di bawah ini gasan rujukan:',
 'sitejspreview'                    => "'''Ingatakan bahwasa Pian manilik JavaScript code ini haja.'''
 '''Nangini lagi baluman tasimpan!'''",
 'userinvalidcssjstitle'            => "'''Paringatan:''' Kadada kulit \"\$1\".
-Inatakan bahwasa saragam  tungkaran-tungkaran .css wan .js mamuruk aksara halus, cuntuh {{ns:user}}:Foo/vector.css sawagai tandingan {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Dihanyarakan)',
 'note'                             => "'''Catatan:'''",
 'previewnote'                      => "'''Ingatakanlah bahwasa ini titilikan haja nang balum disimpan!'''",

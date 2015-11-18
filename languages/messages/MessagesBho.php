@@ -133,17 +133,6 @@ $messages = array(
 'faq'            => 'साधारण सवाल',
 'faqpage'        => 'Project:साधारण सवाल',
 
-# Vector skin
-'vector-action-delete'    => 'मिटाईं',
-'vector-action-move'      => 'स्थांतरण',
-'vector-action-protect'   => 'संरक्षित करीं',
-'vector-action-undelete'  => 'मत मिटाईं',
-'vector-action-unprotect' => 'असुरक्षित करीं',
-'vector-view-create'      => 'बनाईं',
-'vector-view-edit'        => 'सम्पादन',
-'vector-view-history'     => 'इतिहास देखीं',
-'vector-view-view'        => 'पढ़ीं',
-'vector-view-viewsource'  => 'स्त्रोत देखीं',
 
 'errorpagetitle'    => 'त्रुटी',
 'returnto'          => 'जाईं $1 पर।',

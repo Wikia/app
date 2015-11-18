@@ -190,18 +190,6 @@ $messages = array(
 'faq'            => 'Тогтмол тавигддаг асуултууд',
 'faqpage'        => 'Project:Тогтмол тавигддаг асуултууд',
 
-# Vector skin
-'vector-action-addsection'       => 'Сэдэв нэмэх',
-'vector-action-delete'           => 'Устгах',
-'vector-action-move'             => 'Зөөх',
-'vector-action-protect'          => 'Хамгаалах',
-'vector-action-undelete'         => 'Үл устгах',
-'vector-action-unprotect'        => 'Хамгаалалтаа солих',
-'vector-view-create'             => 'Үүсгэх',
-'vector-view-edit'               => 'Засварлах',
-'vector-view-history'            => 'Түүхийг үзэх',
-'vector-view-view'               => 'Унших',
-'vector-view-viewsource'         => 'Кодыг харах',
 'actions'                        => 'Үйлдлүүд',
 'namespaces'                     => 'Нэрний зайнууд',
 'variants'                       => 'Хувилбарууд',
@@ -698,7 +686,6 @@ $2',
 'sitejspreview'                    => "'''Энэ JavaScript код танд л харагдах хэлбэрт байна'''
 '''Хараахан хадгалагдаагүй байгааг анзаарна уу!'''",
 'userinvalidcssjstitle'            => "'''Анхаар:''' \"\$1\" гэсэн арьс байхгүй байна.
-Өөрсдийн .css болон .js хуудсуудыг нэрлэхэд жижиг үсэг хэрэглэдэг болохыг сануулж байна. Жишээ нь: {{ns:user}}:Foo/vector.css гэж л хэрэглэх бөгөөд {{ns:user}}:Foo/Vector.css гэхгүй.",
 'updated'                          => '（Шинэчлэгдсэн）',
 'note'                             => "'''Анхааруулга:'''",
 'previewnote'                      => "'''Энэ бол зөвхөн урьдчилж харсан байдал; засварууд одоохондоо хадгалагдаагүй байна!'''",

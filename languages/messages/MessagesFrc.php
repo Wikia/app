@@ -149,9 +149,6 @@ $messages = array(
 'faq'            => 'Questions Communes',
 'faqpage'        => 'Project:Questions Communes',
 
-# Vector skin
-'vector-action-delete'  => 'Supprimer',
-'vector-action-protect' => 'Protéger',
 
 'errorpagetitle'    => 'Erreur',
 'returnto'          => 'Retourner back à la page $1.',
@@ -476,7 +473,6 @@ Vous pouvez [[Special:Search/{{PAGENAME}}|charcher pour le titre de cette page]]
 'usercsspreview'                   => "'''Rappelez-vous que vous êtes après regarder votre feuille CSS qu'a pas encore été sauvée!'''",
 'userjspreview'                    => "'''Rappelez-vous que vous êtes juste après regarder ou tester votre code JavaScript qu'a pas encore été sauvé!'''",
 'userinvalidcssjstitle'            => "'''Attention:''' Y a pas de style \"\$1\".  Rappelez-vous qu'il faut user les petites lettres dans le sujet des pages personnelles avec les extensions .css et .js.
-Exemple:  {{ns:user}}:Foo/vector.css (bon)  {{ns:user}}:Foo/Vector.css (mauvais)",
 'updated'                          => '(Renouvelé)',
 'note'                             => "'''Notez:'''",
 'previewnote'                      => "'''Ça ici, c'est juste une vue d'avance; les changements ont pas encore été sauvés!'''",

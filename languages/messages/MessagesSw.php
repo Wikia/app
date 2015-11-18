@@ -276,18 +276,6 @@ $messages = array(
 'faq'            => 'Maswali ya kawaida',
 'faqpage'        => 'Project:Maswali Yaulizwayo Marakwamara',
 
-# Vector skin
-'vector-action-addsection'       => 'Weka mada',
-'vector-action-delete'           => 'Futa',
-'vector-action-move'             => 'Hamisha',
-'vector-action-protect'          => 'Linda',
-'vector-action-undelete'         => 'Rudisha',
-'vector-action-unprotect'        => 'Badilisha ulinzi',
-'vector-view-create'             => 'Anzisha',
-'vector-view-edit'               => 'Hariri',
-'vector-view-history'            => 'Fungua historia',
-'vector-view-view'               => 'Soma',
-'vector-view-viewsource'         => 'Kuonyesha kodi',
 'actions'                        => 'Vitendo',
 'namespaces'                     => 'Maeneo ya wiki',
 'variants'                       => 'Vibadala',
@@ -795,7 +783,6 @@ Rejea kumbukumbu ya uzuio ya mwisho inayoandikwa chini:',
 'sitejspreview'                    => "'''Kumbuka kwamba unahakiki tu mandhari ya JavaScript hii.'''
 '''Haijahifadhiwa bado!'''",
 'userinvalidcssjstitle'            => "'''Onyo:''' Hakuna umbo \"\$1\".
-Kumbuka kwamba desturi ya kurasa za .css na .js hutumia herufi ndogo, yaani, {{ns:user}}:Foo/vector.css na si {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Imesasishwa)',
 'note'                             => "'''Taarifa:'''",
 'previewnote'                      => "'''Hii ni hakikisho tu; mabadiliko hayajahifadhiwa bado!'''",

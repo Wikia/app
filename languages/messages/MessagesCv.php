@@ -178,15 +178,6 @@ $messages = array(
 'faq'            => 'ЫйХу',
 'faqpage'        => 'Project:ЫйХу',
 
-# Vector skin
-'vector-action-addsection' => 'Тема хуш',
-'vector-action-delete'     => 'Кăларса пăрах',
-'vector-action-move'       => 'Ятне улăштар',
-'vector-action-protect'    => 'Хӳтĕле',
-'vector-view-create'       => 'Çĕннине ту',
-'vector-view-edit'         => 'Тӳрлет',
-'vector-view-history'      => 'Кун-çул',
-'vector-view-view'         => 'Вула',
 
 'errorpagetitle'    => 'Йăнăш',
 'returnto'          => '$1 страницăна таврăн.',

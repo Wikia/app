@@ -194,18 +194,6 @@ $messages = array(
 'faq'            => 'Часты звідованя',
 'faqpage'        => 'Project:Часты звідованя',
 
-# Vector skin
-'vector-action-addsection'       => 'Придати тему',
-'vector-action-delete'           => 'Вымазати',
-'vector-action-move'             => 'Переменовати',
-'vector-action-protect'          => 'Хранити',
-'vector-action-undelete'         => 'Обновити',
-'vector-action-unprotect'        => 'Змінити замок',
-'vector-view-create'             => 'Створити',
-'vector-view-edit'               => 'Едітовати',
-'vector-view-history'            => 'Видїти історію',
-'vector-view-view'               => 'Чітати',
-'vector-view-viewsource'         => 'Видїти код',
 'actions'                        => 'Дїї',
 'namespaces'                     => 'Просторы назв',
 'variants'                       => 'Варіанты',
@@ -701,7 +689,6 @@ $2
 '''Іщі не было уложене!'''",
 'sitejspreview'                    => "'''Памятайте, же собі перезерате лем нагляд того JavaScript-у.'''
 '''Іщі не быв уложеный!'''",
-'userinvalidcssjstitle'            => "'''Увага:''' Тема взгляду „$1“ не екзістує. Не забудьте, же хосновательске .css і .js файлы хоснують малы писмена, наприклад {{ns:user}}:{{BASEPAGENAME}}/vector.css, а не {{ns:user}}:{{BASEPAGENAME}}/Vector.css.",
 'updated'                          => '(Зміна уложена)',
 'note'                             => "'''Позначка:'''&nbsp;",
 'previewnote'                      => "'''Памятайте, же то лем попереднїй перегляд,

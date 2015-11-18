@@ -467,18 +467,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Nytt ämne',
-'vector-action-delete'           => 'Radera',
-'vector-action-move'             => 'Flytta',
-'vector-action-protect'          => 'Skrivskydda',
-'vector-action-undelete'         => 'Återställ',
-'vector-action-unprotect'        => 'Ändra skydd',
-'vector-view-create'             => 'Skapa',
-'vector-view-edit'               => 'Redigera',
-'vector-view-history'            => 'Visa historik',
-'vector-view-view'               => 'Visa',
-'vector-view-viewsource'         => 'Visa källa',
 'actions'                        => 'Åtgärder',
 'namespaces'                     => 'Namnrymder',
 'variants'                       => 'Varianter',
@@ -975,7 +963,6 @@ Den har inte sparats än!'''",
 '''Det har ännu inte sparats!'''",
 'sitejspreview'                    => "'''Kom ihåg att du bara förhandsgranskar denna JavaScript-kod.'''
 '''Det har ännu inte sparats!'''",
-'userinvalidcssjstitle'            => "'''Varning:''' Skalet \"\$1\" finns inte. Kom ihåg att .css- och .js-sidor för enskilda användare börjar på liten bokstav. Exempel: {{ns:user}}:Foo/vector.css i stället för {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Uppdaterad)',
 'note'                             => "'''Obs!'''",
 'previewnote'                      => "'''Detta är bara en förhandsvisning;
@@ -2985,7 +2972,6 @@ Ger möjlighet att skriva en motivering i redigeringssammanfattningen',
 'chick.css'       => '/* CSS som skrivs här kommer att påverka alla användare av skalet Chick */',
 'simple.css'      => '/* CSS som skrivs här kommer att påverka alla användare av skalet Enkel */',
 'modern.css'      => '/* CSS som skrivs här kommer att påverka alla användare av skalet Modern */',
-'vector.css'      => '/* CSS som skrivs här kommer att påverka alla användare av skalet Vector */',
 'print.css'       => '/* CSS som skrivs här kommer att påverka utskriftsversionen */',
 
 # Scripts
@@ -2998,7 +2984,6 @@ Ger möjlighet att skriva en motivering i redigeringssammanfattningen',
 'chick.js'       => '/* JavaScript här kommer att laddas för dem som använder skalet Chick */',
 'simple.js'      => '/* JavaScript här kommer att laddas för dem som använder skalet Enkel */',
 'modern.js'      => '/* JavaScript här kommer att laddas för dem som använder skalet Modern */',
-'vector.js'      => '/* JavaScript här kommer att laddas för dem som använder skalet Vector */',
 
 # Metadata
 'notacceptable' => 'Den här wiki-servern kan inte erbjuda data i ett format som din klient kan läsa.',
@@ -3046,7 +3031,6 @@ Detta orsakades troligen av en länk till en svartlistad webbplats.',
 'skinname-chick'       => 'Chick',
 'skinname-simple'      => 'Enkel',
 'skinname-modern'      => 'Modern',
-'skinname-vector'      => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Märk som patrullerad',

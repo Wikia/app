@@ -208,15 +208,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-delete'   => 'Ticpolōz',
-'vector-action-move'     => 'Ticzacāz',
-'vector-action-protect'  => 'Ticquīxtīz',
-'vector-view-create'     => 'Ticchīhuāz',
-'vector-view-edit'       => 'Ticpatlāz',
-'vector-view-history'    => 'Tlahcuilōlli tlahcuilōlloh',
-'vector-view-view'       => 'Tāmapōhuaz',
-'vector-view-viewsource' => 'Tiquittāz in mēyalli',
 'actions'                => 'Āyiliztli',
 'namespaces'             => 'Tòkâyeyàntìn',
 

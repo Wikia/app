@@ -163,18 +163,6 @@ $messages = array(
 'faq'            => 'FAQ (Pitakonan sing sering ditakokna)',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Nambah topik',
-'vector-action-delete'           => 'Busek',
-'vector-action-move'             => 'Pindah',
-'vector-action-protect'          => 'Reksa',
-'vector-action-undelete'         => 'Batalna pambusakan',
-'vector-action-unprotect'        => 'Owahi pangreksan',
-'vector-view-create'             => 'Gawe',
-'vector-view-edit'               => 'Sunting',
-'vector-view-history'            => 'Sajarah kaca',
-'vector-view-view'               => 'Waca',
-'vector-view-viewsource'         => 'Deleng sumbere',
 'actions'                        => 'Tindakan',
 'namespaces'                     => 'Bilik jeneng',
 'variants'                       => 'Varian',
@@ -642,7 +630,6 @@ Log pamblokiran pungkasan ditidokna nang ngisor kiye kanggo bahan rujukan:',
 '''Pratayang kiye anu durung disimpen!'''",
 'sitejspreview'                    => "'''Eling ya Rika kuwe mung lagi nampilna pratayang sekang kode JavaScript kiye.'''
 '''Pratayang kiye anu durung disimpen!'''",
-'userinvalidcssjstitle'            => "'''Pènget:''' Kulit \"\$1\" ora ditemokna. Eling ya nek kaca .css lan .js kuwe nggunakna aksara cilik, conto {{ns:user}}:Foo/vector.css lan dudu {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Dianyari)',
 'note'                             => "'''Cathetan:'''",
 'previewnote'                      => "'''Eling ya kiye tembe pratayang thok.'''

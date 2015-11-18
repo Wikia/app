@@ -321,18 +321,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Sujet derbäisetzen',
-'vector-action-delete'           => 'Läschen',
-'vector-action-move'             => 'Réckelen',
-'vector-action-protect'          => 'Spären',
-'vector-action-undelete'         => 'Restauréieren',
-'vector-action-unprotect'        => 'Spär änneren',
-'vector-view-create'             => 'Uleeën',
-'vector-view-edit'               => 'Änneren',
-'vector-view-history'            => 'Versioune weisen',
-'vector-view-view'               => 'Liesen',
-'vector-view-viewsource'         => 'Quellcode weisen',
 'actions'                        => 'Aktiounen',
 'namespaces'                     => 'Nummraim',
 'variants'                       => 'Varianten',
@@ -822,7 +810,6 @@ E gouf nach net gespäichert!'''",
 'sitejspreview'                    => "'''Denkt drun datt Dir dëse JavaScript-Code just kuckt.
 E gouf nach net gespäichert!'''",
 'userinvalidcssjstitle'            => "'''Opgepasst:''' Et gëtt keen Ausgesinn (skin) \"\$1\".
-Denkt drun datt eegen .css an .js Säiten e kleng geschriwwenen Titel benotzen, z. Bsp. {{ns:user}}:Foo/vector.css am Géigesaz zu {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Geännert)',
 'note'                             => "'''Notiz:'''",
 'previewnote'                      => "'''Dëst ass nëmmen eng net gespäichert Versioun; d'Ännerunge sinn nach net gespäichert!'''",

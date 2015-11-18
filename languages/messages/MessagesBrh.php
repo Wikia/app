@@ -81,16 +81,6 @@ $messages = array(
 # Cologne Blue skin
 'qbfind' => 'Paŧŧa',
 
-# Vector skin
-'vector-action-addsection' => 'Púskun sarhál',
-'vector-action-delete'     => 'Mesa',
-'vector-action-move'       => 'Surif',
-'vector-action-protect'    => 'Rakk',
-'vector-view-create'       => 'Biná',
-'vector-view-edit'         => 'Radbadal',
-'vector-view-history'      => 'Lekav e ur',
-'vector-view-view'         => 'Xuán',
-'vector-view-viewsource'   => 'Bumpad e ur',
 'actions'                  => 'Amal ák',
 'namespaces'               => 'Pin-jága ģák',
 'variants'                 => 'Badaldroşumk',

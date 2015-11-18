@@ -363,18 +363,6 @@ $messages = array(
 'faq'            => 'СиХХ',
 'faqpage'        => 'Project:СиХХ',
 
-# Vector skin
-'vector-action-addsection'       => 'Тlетоха хьедар',
-'vector-action-delete'           => 'Дlадайá',
-'vector-action-move'             => 'Цlе хийца',
-'vector-action-protect'          => 'Гlаролла дé',
-'vector-action-undelete'         => 'Меттахlоттадé',
-'vector-action-unprotect'        => 'Гlароллех къаста',
-'vector-view-create'             => 'Кхоллар',
-'vector-view-edit'               => 'Нисйé',
-'vector-view-history'            => 'Хьажа исторе',
-'vector-view-view'               => 'Éшар',
-'vector-view-viewsource'         => 'Билглонашка хьажа',
 'actions'                        => 'Дийраш',
 'namespaces'                     => 'Цlерийн ана',
 'variants'                       => 'Кепараш',

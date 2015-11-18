@@ -175,18 +175,6 @@ $messages = array(
 'faq'            => 'त्वरित प्रश्नोत्तरी',
 'faqpage'        => 'Project: त्वरित प्रश्नोत्तरी',
 
-# Vector skin
-'vector-action-addsection'       => 'विचार-बिन्दु जोड़ू',
-'vector-action-delete'           => 'मेटाउ',
-'vector-action-move'             => 'घसकाउ',
-'vector-action-protect'          => 'रक्षण करू',
-'vector-action-undelete'         => 'आपस लाउ',
-'vector-action-unprotect'        => 'सुरक्षा बदलू',
-'vector-view-create'             => 'बनाउ',
-'vector-view-edit'               => 'सम्पादन करू',
-'vector-view-history'            => 'इतिहास देखू',
-'vector-view-view'               => 'पढ़ू',
-'vector-view-viewsource'         => 'जड़ि देखू',
 'actions'                        => 'क्रिया सभ',
 'namespaces'                     => 'चेन्हासी समूह सभ',
 'variants'                       => 'प्रकार सभ',
@@ -693,7 +681,6 @@ $2
 'sitejspreview'                    => "''' मोन राखू जे अहाँ मात्र ऐ  जावास्क्रिप्टक पूर्वदृश्य देख रहल छी।'''
 ''' ई अखन धरि संरक्षित नै भऽ सकल!'''",
 'userinvalidcssjstitle'            => "'''चेतौनी:''' ऐ मे कोनो आवरण \"\$1\" नै अछि।
-बनाएल .css आ .js पन्ना लघ्वक्षरक शीर्षकक प्रयोग करैत अछि, जेना {{ns:user}}:Foo/vector.css एकर विरुद्ध {{ns:user}}:Foo/Vector.css ।",
 'updated'                          => '(अद्यतन  कएल)',
 'note'                             => "'''टिप्पणी:'''",
 'previewnote'                      => "'''मोन राखू ई मातर पूर्वावलोकन छी।'''
@@ -2699,7 +2686,6 @@ $1 एकर प्रतिबन्धक कारण अछि : "$2"',
 'skinname-nostalgia' => 'गामसँ प्रेम',
 'skinname-simple'    => 'साधारण',
 'skinname-modern'    => 'आधुनिक',
-'skinname-vector'    => 'सदिश',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'देखि लेल गेल, एहन चिन्ह लगाऊ',

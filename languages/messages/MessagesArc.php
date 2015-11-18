@@ -204,18 +204,6 @@ $messages = array(
 'faq'            => 'ܫܘܐܠ̈ܐ ܬܢܝ̈ܐ',
 'faqpage'        => 'Project:ܫܘܐܠ̈ܐ ܬܢܝ̈ܐ',
 
-# Vector skin
-'vector-action-addsection' => 'ܐܘܣܦ ܡܠܘܐܐ',
-'vector-action-delete'     => 'ܫܘܦ',
-'vector-action-move'       => 'ܫܢܝ',
-'vector-action-protect'    => 'ܢܛܘܪ',
-'vector-action-undelete'   => 'ܠܐ ܫܘܦ',
-'vector-action-unprotect'  => 'ܫܚܠܦ ܢܛܝܪܘܬܐ',
-'vector-view-create'       => 'ܒܪܝ',
-'vector-view-edit'         => 'ܫܚܠܦ',
-'vector-view-history'      => 'ܚܙܝ ܬܫܥܝܬܐ',
-'vector-view-view'         => 'ܩܪܝ',
-'vector-view-viewsource'   => 'ܚܙܝ ܡܒܘܥܐ',
 'actions'                  => 'ܥܒܕ̈ܐ',
 'namespaces'               => 'ܚܩܠܬ̈ܐ',
 'variants'                 => 'ܡܫܬܚܠܦܢܘ̈ܬܐ',

@@ -286,18 +286,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Beunagi barô',
-'vector-action-delete'           => 'Sampôh',
-'vector-action-move'             => 'Peupinah',
-'vector-action-protect'          => 'Peulindông',
-'vector-action-undelete'         => 'Bateuë sampôh',
-'vector-action-unprotect'        => 'Bateuë peulindông',
-'vector-view-create'             => 'Peugöt',
-'vector-view-edit'               => 'Andam',
-'vector-view-history'            => 'Atra u likôt',
-'vector-view-view'               => 'Beuët',
-'vector-view-viewsource'         => 'Eu nè',
 'actions'                        => 'Buet',
 'namespaces'                     => 'Ruweuëng nan',
 'variants'                       => 'Ragam',

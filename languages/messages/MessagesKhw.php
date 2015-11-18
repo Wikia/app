@@ -157,17 +157,6 @@ $messages = array(
 'faq'            => 'عام معلومات',
 'faqpage'        => 'Project:معلوماتِ عامہ',
 
-# Vector skin
-'vector-action-addsection' => 'نوغ موضوع',
-'vector-action-delete'     => 'بوغاوے',
-'vector-action-move'       => 'منتقل کورے',
-'vector-action-protect'    => 'محفوظ کورے',
-'vector-action-unprotect'  => 'غیر محفوظ',
-'vector-view-create'       => 'ساوزاوے',
-'vector-view-edit'         => 'ایڈٹ کورے',
-'vector-view-history'      => 'تاریخچہ',
-'vector-view-view'         => 'راوے',
-'vector-view-viewsource'   => 'مسودہ',
 'actions'                  => 'ایکشنز',
 'namespaces'               => 'نامان ژاغہ',
 'variants'                 => 'الگ',

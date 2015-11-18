@@ -292,18 +292,6 @@ $messages = array(
 'faq'            => 'KBS',
 'faqpage'        => 'Project:KBS',
 
-# Vector skin
-'vector-action-addsection' => 'Tema qosıw',
-'vector-action-delete'     => "O'shiriw",
-'vector-action-move'       => "Ko'shiriw",
-'vector-action-protect'    => "Qorg'aw",
-'vector-action-undelete'   => 'Qayta tiklew',
-'vector-action-unprotect'  => "Qorg'awdı o'zgertiw",
-'vector-view-create'       => 'Jaratıw',
-'vector-view-edit'         => "O'zgertiw",
-'vector-view-history'      => "Tariyxın ko'riw",
-'vector-view-view'         => 'Oqıw',
-'vector-view-viewsource'   => "Deregin ko'riw",
 'actions'                  => "Ha'reketler",
 'namespaces'               => "İsimler ko'plikleri",
 'variants'                 => 'Variantlar',

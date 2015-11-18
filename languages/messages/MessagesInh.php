@@ -156,18 +156,6 @@ $messages = array(
 'faq'            => 'Каст-каста хаттараш',
 'faqpage'        => 'Project:Каст-каста хаттараш',
 
-# Vector skin
-'vector-action-addsection'       => 'БӀагал тӀатоха',
-'vector-action-delete'           => 'ДӀадаккха',
-'vector-action-move'             => 'ЦӀи хувца',
-'vector-action-protect'          => 'Лораде',
-'vector-action-undelete'         => 'Юхаоттаде',
-'vector-action-unprotect'        => 'Лорам хувца',
-'vector-view-create'             => 'Кхоллам',
-'vector-view-edit'               => 'Хувцар',
-'vector-view-history'            => 'Искар',
-'vector-view-view'               => 'Дешам',
-'vector-view-viewsource'         => 'ЗӀембаккхама бӀаргтассам',
 'actions'                        => 'Дулархам',
 'namespaces'                     => 'ЦӀерий аренаш',
 'variants'                       => 'Дошаламаш',

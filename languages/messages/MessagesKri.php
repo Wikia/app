@@ -84,12 +84,6 @@ $messages = array(
 'faq'     => 'Kwestyon we dem de aks boku',
 'faqpage' => 'Project:Kwehstyohn-dehm we ohlman de aks',
 
-# Vector skin
-'vector-action-move'     => 'Muf',
-'vector-view-edit'       => 'Chenj',
-'vector-view-history'    => 'Luk histri',
-'vector-view-view'       => 'Rid',
-'vector-view-viewsource' => 'Luk di sos',
 'actions'                => 'Akshon-dem',
 'namespaces'             => 'Nemspes-dem',
 

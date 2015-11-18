@@ -170,10 +170,6 @@ $messages = array(
 # Cologne Blue skin
 'qbfind' => '尋找',
 
-# Vector skin
-'vector-action-protect' => '保護',
-'vector-view-create'    => '建立',
-'vector-view-view'      => '閱讀',
 
 'help'           => '使用說明',
 'search'         => '搜尋',

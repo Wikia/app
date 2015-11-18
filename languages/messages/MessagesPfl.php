@@ -82,9 +82,6 @@ $messages = array(
 'qbedit'      => 'Bearwaide',
 'qbmyoptions' => 'Mai Saide',
 
-# Vector skin
-'vector-action-move' => 'Verschiewe',
-'vector-view-edit'   => 'Bearwaide',
 
 'errorpagetitle'   => 'Fehler',
 'returnto'         => 'Zrick zu $1.',

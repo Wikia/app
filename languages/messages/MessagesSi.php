@@ -347,18 +347,6 @@ $messages = array(
 'faq'            => 'නිවිප්‍ර',
 'faqpage'        => 'Project:නිවිප්‍ර',
 
-# Vector skin
-'vector-action-addsection'       => 'මාතෘකාව එක්කරන්න',
-'vector-action-delete'           => 'මකාදමන්න',
-'vector-action-move'             => 'ගෙනයන්න',
-'vector-action-protect'          => 'ආරක්‍ෂණය කරන්න',
-'vector-action-undelete'         => 'මකාදැමීම අවලංගු කරන්න',
-'vector-action-unprotect'        => 'ආරක්ෂණ තත්වය වෙනස් කරන්න',
-'vector-view-create'             => 'තනන්න',
-'vector-view-edit'               => 'සංස්කරණය',
-'vector-view-history'            => 'ඉතිහාසය නරඹන්න',
-'vector-view-view'               => 'කියවන්න',
-'vector-view-viewsource'         => 'මූලාශ්‍රය නරඹන්න',
 'actions'                        => 'කාර්යයන්',
 'namespaces'                     => 'නාමඅවකාශයන්',
 'variants'                       => 'ප්‍රභේද',
@@ -874,7 +862,6 @@ $2
 'sitejspreview'                    => "'''ඔබ දකින්නේ මෙම JavaScript කේතයෙහි පෙරදසුනක් පමණක් බව සිහි තබාගන්න.'''
 '''එය තවමත් සුරැකීමට ලක් කොට නොමැත!'''",
 'userinvalidcssjstitle'            => "'''අවවාදයයි:''' ඡවියක් නොමැත \"\$1\".
-රීති ප්‍රකාරව .css හා .js පිටු විසින් ඉංග්‍රීසි කුඩා-අකුරු ශීර්ෂ භාවිතා කෙරෙන බව සිහි තබා ගන්න, නිදසුන. {{ns:user}}:Foo/vector.css මිස {{ns:user}}:Foo/Vector.css නොවන බව.",
 'updated'                          => '(යාවත්කාලීන)',
 'note'                             => "'''සටහන:'''",
 'previewnote'                      => "'''මෙය පෙරදසුනක් පමණි.'''

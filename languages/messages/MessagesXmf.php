@@ -132,16 +132,6 @@ $messages = array(
 'qbspecialpages' => 'გჷშაკერძაფილი ხასჷლეფი',
 'faq'            => 'ბხშირი კითხვეფი',
 
-# Vector skin
-'vector-action-addsection' => 'თემაშ მიშაძინა',
-'vector-action-delete'     => 'ლასუა',
-'vector-action-move'       => 'გინოღალა',
-'vector-action-protect'    => 'თხილუა',
-'vector-view-create'       => 'დორსხუაფა',
-'vector-view-edit'         => 'რედაქტირაფა',
-'vector-view-history'      => 'ისტორიაშ ძირაფა',
-'vector-view-view'         => 'კითხირი',
-'vector-view-viewsource'   => 'ქიძირე წყუ',
 'actions'                  => 'მოქმედალეფი',
 'namespaces'               => 'ჯოხოეფიშ ოფირჩა',
 'variants'                 => 'ვარიანტეფი',

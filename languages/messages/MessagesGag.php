@@ -225,9 +225,6 @@ $messages = array(
 'faq'            => 'SSS',
 'faqpage'        => 'Project:SSS',
 
-# Vector skin
-'vector-view-edit' => 'Diiştir',
-'vector-view-view' => 'Oku',
 
 'errorpagetitle'    => 'Yannış',
 'returnto'          => '$1 dön.',

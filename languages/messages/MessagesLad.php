@@ -329,18 +329,6 @@ $messages = array(
 'faq'            => 'DAD',
 'faqpage'        => 'Project:DDS',
 
-# Vector skin
-'vector-action-addsection'       => 'Àjustar sujeto',
-'vector-action-delete'           => 'Efassar',
-'vector-action-move'             => 'Taxirear',
-'vector-action-protect'          => 'Guardar',
-'vector-action-undelete'         => 'Traer atrás',
-'vector-action-unprotect'        => 'No guardar',
-'vector-view-create'             => 'Crîar',
-'vector-view-edit'               => 'Trocar',
-'vector-view-history'            => 'Ver la storia',
-'vector-view-view'               => 'Meldar',
-'vector-view-viewsource'         => 'Ver su manadero',
 'actions'                        => 'Acciones',
 'namespaces'                     => 'Espacios de nombres',
 'variants'                       => 'Varyantes',

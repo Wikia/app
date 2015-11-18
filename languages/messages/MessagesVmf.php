@@ -162,18 +162,6 @@ ausghenn, mr mus dâdsuu ufm ajchnen rächnâr was âjrichdn ghenn)',
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection' => 'Ân najn abschnid ôôfangn',
-'vector-action-delete'     => 'Leschn',
-'vector-action-move'       => 'Umdaafn',
-'vector-action-protect'    => 'Schidsn',
-'vector-action-undelete'   => 'Leschn riggängich machn',
-'vector-action-unprotect'  => 'Schuds ufgeebn',
-'vector-view-create'       => 'Ôôleechn',
-'vector-view-edit'         => 'Bearbajdn',
-'vector-view-history'      => 'Wärsjoonsfolche',
-'vector-view-view'         => 'Leesn',
-'vector-view-viewsource'   => 'Gwäl-dhägsd ôôgugn',
 'namespaces'               => 'Nôômsrajm',
 'variants'                 => 'Warjandn',
 
@@ -897,7 +885,6 @@ Bidde gug's mi´m foorschau-gnobf ôô fôrm schbajchan",
 #preftoc a {
      text-transform: none;
 }",
-'vector.css'      => "/* CSS hiir beâjflusd nôr dii Vector-schelfn. Wen'd ale uf ôômôôl beâjflusn wilsch, muâsch an MediaWiki:Common.css was ändârn. */",
 'print.css'       => '/* CSS hiir beâjflusd nôr dii drugausgaawe. */',
 'handheld.css'    => '/* CSS hiir beâjflusd nôr dii handgerääde, jee nachdeem, welche schelfn in $wgHandheldStyle âjgeschdeld is. */',
 

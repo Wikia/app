@@ -138,8 +138,6 @@ $messages = array(
 'qbmyoptions'    => 'Мээң арыннарым',
 'qbspecialpages' => 'Тускай арыннар',
 
-# Vector skin
-'vector-namespace-category' => 'Бөлүк',
 
 'errorpagetitle'    => 'Алдаг',
 'returnto'          => '$1 деп арынже эглири.',

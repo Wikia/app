@@ -260,18 +260,6 @@ $messages = array(
 'faq'            => 'Сыкъ берильген суаллер',
 'faqpage'        => 'Project:Сыкъ берильген суаллер',
 
-# Vector skin
-'vector-action-addsection'       => 'Мевзу къош',
-'vector-action-delete'           => 'Ёкъ эт',
-'vector-action-move'             => 'Адыны денъиштир',
-'vector-action-protect'          => 'Къорчала',
-'vector-action-undelete'         => 'Янъыдан ярат',
-'vector-action-unprotect'        => 'Къорчалавны денъиштир',
-'vector-view-create'             => 'Ярат',
-'vector-view-edit'               => 'Денъиштир',
-'vector-view-history'            => 'Кечмишини косьтер',
-'vector-view-view'               => 'Окъу',
-'vector-view-viewsource'         => 'Менба кодуны косьтер',
 'actions'                        => 'Арекетлер',
 'namespaces'                     => 'Исим фезалары',
 'variants'                       => 'Вариантлар',

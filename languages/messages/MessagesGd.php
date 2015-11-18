@@ -167,18 +167,6 @@ $messages = array(
 'faq'            => 'CÀBHA',
 'faqpage'        => 'Project:CÀBHA',
 
-# Vector skin
-'vector-action-addsection'       => 'Cuir ris cuspair',
-'vector-action-delete'           => 'Sguab às',
-'vector-action-move'             => 'Gluais',
-'vector-action-protect'          => 'Dìon',
-'vector-action-undelete'         => 'Neo-dhèan an sguabadh às',
-'vector-action-unprotect'        => 'Atharraich an dìon',
-'vector-view-create'             => 'Cruthaich',
-'vector-view-edit'               => 'Deasaich',
-'vector-view-history'            => 'Seall an eachdraidh',
-'vector-view-view'               => 'Leugh',
-'vector-view-viewsource'         => 'Seall an tùs',
 'actions'                        => 'Gnìomhan',
 'namespaces'                     => 'Namespaces',
 'variants'                       => 'Tionndaidhean',

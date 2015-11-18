@@ -249,14 +249,6 @@ $messages = array(
 'faq'            => 'ڪپوس',
 'faqpage'        => 'Project:ڪپوس',
 
-# Vector skin
-'vector-action-delete'    => 'ڊاھيو',
-'vector-action-move'      => 'چوريو',
-'vector-action-protect'   => 'تحفظيو',
-'vector-action-unprotect' => 'اڻتحفظيو',
-'vector-view-create'      => 'سرجيو',
-'vector-view-edit'        => 'سنواريو',
-'vector-view-viewsource'  => 'ڪوڊ ڏسو',
 
 'errorpagetitle'    => 'چُڪَ',
 'returnto'          => '$1 ڏانهن وَرو.',

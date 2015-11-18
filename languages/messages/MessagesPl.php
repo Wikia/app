@@ -446,18 +446,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Dodaj temat',
-'vector-action-delete'           => 'Usuń',
-'vector-action-move'             => 'Przenieś',
-'vector-action-protect'          => 'Zabezpiecz',
-'vector-action-undelete'         => 'Odtwórz',
-'vector-action-unprotect'        => 'Zmień zabezpieczenie',
-'vector-view-create'             => 'Utwórz',
-'vector-view-edit'               => 'Edytuj',
-'vector-view-history'            => 'Wyświetl historię',
-'vector-view-view'               => 'Czytaj',
-'vector-view-viewsource'         => 'Tekst źródłowy',
 'actions'                        => 'Działania',
 'namespaces'                     => 'Przestrzenie nazw',
 'variants'                       => 'Warianty',
@@ -970,7 +958,6 @@ Ostatni wpis rejestru blokad jest pokazany poniżej.',
 'sitejspreview'                    => "'''Pamiętaj, że to tylko podgląd kodu JavaScript.'''
 '''Zmiany nie zostały jeszcze zapisane!'''",
 'userinvalidcssjstitle'            => "'''Uwaga:''' Brak skórki o nazwie „$1”.
-Strony użytkownika zawierające CSS i JavaScript powinny zaczynać się małą literą, np. {{ns:user}}:Foo/vector.css, w przeciwieństwie do nieprawidłowego {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Zmodyfikowano)',
 'note'                             => "'''Uwaga:'''",
 'previewnote'                      => "'''To jest tylko podgląd – zmiany nie zostały jeszcze zapisane!'''",
@@ -2996,7 +2983,6 @@ Pozwala na wpisanie powodu w opisie zmian.',
 'chick.css'       => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Kurczaczek */',
 'simple.css'      => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Prosta */',
 'modern.css'      => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Nowoczesna */',
-'vector.css'      => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Wektor */',
 'print.css'       => '/* Umieszczony tutaj kod CSS wpłynie na wygląd wydruku */',
 'handheld.css'    => '/* Umieszczony tutaj kod CSS wpłynie na wygląd na urządzeniach kieszonkowych skórki ustawionej w zmiennej $wgHandheldStyle */',
 'noscript.css'    => '/* Umieszczony tu arkusz stylów CSS będzie wykorzystywany dla użytkowników z wyłączoną obsługą JavaScript */',
@@ -3011,7 +2997,6 @@ Pozwala na wpisanie powodu w opisie zmian.',
 'chick.js'       => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Kurczaczek */',
 'simple.js'      => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Prosta */',
 'modern.js'      => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Nowoczesna */',
-'vector.js'      => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Wektor */',
 
 # Metadata
 'notacceptable' => 'Serwer wiki nie może dostarczyć danych w formacie, którego Twoja przeglądarka oczekuje.',
@@ -3059,7 +3044,6 @@ Najprawdopodobniej zostało to spowodowane przez link do zewnętrznej strony int
 'skinname-chick'       => 'Kurczaczek',
 'skinname-simple'      => 'Prosta',
 'skinname-modern'      => 'Nowoczesna',
-'skinname-vector'      => 'Wektor',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'oznacz edycję jako „sprawdzoną”',

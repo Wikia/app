@@ -359,18 +359,6 @@ $messages = array(
 'faq'            => 'Gewilde vrae',
 'faqpage'        => 'Project:GewildeVrae',
 
-# Vector skin
-'vector-action-addsection'       => 'Nuwe onderwerp',
-'vector-action-delete'           => 'Skrap',
-'vector-action-move'             => 'Skuif',
-'vector-action-protect'          => 'Beskerm',
-'vector-action-undelete'         => 'Ontskrap',
-'vector-action-unprotect'        => 'Wysig beskerming',
-'vector-view-create'             => 'Skep',
-'vector-view-edit'               => 'Wysig',
-'vector-view-history'            => 'Wys geskiedenis',
-'vector-view-view'               => 'Lees',
-'vector-view-viewsource'         => 'Wys bronteks',
 'actions'                        => 'Aksies',
 'namespaces'                     => 'Naamruimtes',
 'variants'                       => 'Variante',
@@ -874,7 +862,6 @@ Die laaste inskrywing in die blokkeerlogboek word hieronder vertoon:',
 'sitejspreview'                    => "'''Onthou dat u na 'n voorskou van die JavaScript-kode kyk.'''
 '''Dit is nog nie gestoor nie!'''",
 'userinvalidcssjstitle'            => "'''Waarskuwing:''' daar is nie 'n omslag \"\$1\" nie.
-Onthou dat u eie .css- en .js-bladsye met 'n kleinletter begin, byvoorbeeld {{ns:user}}:Naam/vector.css in plaas van {{ns:user}}:Naam/Vector.css.",
 'updated'                          => '(Gewysig)',
 'note'                             => "'''Nota:'''",
 'previewnote'                      => "'''Onthou dat hierdie slegs 'n voorskou is en nog nie gestoor is nie!'''",

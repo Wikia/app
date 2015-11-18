@@ -141,18 +141,6 @@ $messages = array(
 'faq'            => 'Âhûnda',
 'faqpage'        => 'Project:Âhûnda',
 
-# Vector skin
-'vector-action-addsection' => 'Zîa mbênî lilö daä',
-'vector-action-delete'     => 'Lungûla',
-'vector-action-move'       => 'Sanzêe ïrï',
-'vector-action-protect'    => 'Funga',
-'vector-action-undelete'   => 'Kîri na nî',
-'vector-action-unprotect'  => 'Sanzêe fungä',
-'vector-view-create'       => 'Seka',
-'vector-view-edit'         => 'Sepe',
-'vector-view-history'      => 'Tanda mbai nî',
-'vector-view-view'         => 'Dîko',
-'vector-view-viewsource'   => 'Fa ligbî nî',
 'actions'                  => 'Kua',
 'namespaces'               => 'Pöpö tî âïrï',
 'variants'                 => 'Âmbênî marä nî',

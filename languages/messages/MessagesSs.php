@@ -89,13 +89,6 @@ $messages = array(
 'qbmyoptions'    => 'Makhasi ami',
 'qbspecialpages' => 'Emakhasi labalulekile',
 
-# Vector skin
-'vector-action-addsection' => 'Ngeta sihloko',
-'vector-action-move'       => 'Khweshisa',
-'vector-view-create'       => 'Create',
-'vector-view-edit'         => 'Hlela',
-'vector-view-history'      => 'Bona umlandvo',
-'vector-view-view'         => 'Fundza',
 'actions'                  => 'Tento',
 
 'returnto'          => 'Buyela ku $1.',

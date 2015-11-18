@@ -272,18 +272,6 @@ $messages = array(
 'faq'            => 'معمولی سوالا',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'ایضافه هکردن عونوان',
-'vector-action-delete'           => 'پاک هاکردن',
-'vector-action-move'             => 'دکش هاکردن',
-'vector-action-protect'          => 'زلفن بزوئن',
-'vector-action-undelete'         => 'دباره بنویشته بیّن',
-'vector-action-unprotect'        => 'زلفن عوض هاکردن',
-'vector-view-create'             => 'بساتن',
-'vector-view-edit'               => 'دچی‌ین',
-'vector-view-history'            => 'تاریخچه ره بَدی‌ین',
-'vector-view-view'               => 'بخوندستن',
-'vector-view-viewsource'         => 'ونه منبع ره هارشائن',
 'actions'                        => 'عملکاردون',
 'namespaces'                     => 'ایسم فضائون',
 'variants'                       => 'گویش‌ئون',

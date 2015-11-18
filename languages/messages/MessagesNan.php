@@ -170,18 +170,6 @@ $messages = array(
 'faq'            => 'Būn-tah',
 'faqpage'        => 'Project:Būn-tah',
 
-# Vector skin
-'vector-action-addsection'       => 'Ke chi̍t-ê toān-lo̍h',
-'vector-action-delete'           => 'Thâi',
-'vector-action-move'             => 'Sóa khì',
-'vector-action-protect'          => 'Pó-hō·',
-'vector-action-undelete'         => 'chhú-siau thâi tiàu',
-'vector-action-unprotect'        => 'Chhú-siau pó-hō·',
-'vector-view-create'             => 'Khai-sí siá',
-'vector-view-edit'               => 'Siu-kái',
-'vector-view-history'            => 'khoàⁿ le̍k-sú',
-'vector-view-view'               => 'Tha̍k',
-'vector-view-viewsource'         => 'Khoàⁿ goân-sú lōe-iông',
 'actions'                        => 'Tōng-chok',
 'namespaces'                     => 'Miâ-khong-kan',
 'variants'                       => 'piàn-thé',
@@ -676,8 +664,6 @@ Kháu-chō ê sin bi̍t-bé thang tī teng-ji̍p liáu tī ''[[Special:ChangePas
 '''猶未保存！'''",
 'userinvalidcssjstitle'            => "'''提醒：'''遐無面板\"\$1\"，
 家己設的 .css 佮 .js 頁愛用小寫標題，親像，
-{{ns:user}}:Foo/vector.css 無仝
-{{ns:user}}:Foo/Vector.css。",
 'updated'                          => '（改過矣）',
 'note'                             => "'''Chù-ì:'''",
 'previewnote'                      => "'''Thê-chhéⁿ lí che sī 1 bīn kiám-cha chho͘-phe ēng--ê \"seng-khoàⁿ-ia̍h\", iáu-bōe pó-chûn--khí-lâi!'''",

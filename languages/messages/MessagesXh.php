@@ -49,8 +49,6 @@ $messages = array(
 # Cologne Blue skin
 'qbspecialpages' => 'Amaphepha Abalulekileyo',
 
-# Vector skin
-'vector-view-edit' => 'Tshintsha',
 
 'help'             => 'Uncedo',
 'search'           => 'Khangela',

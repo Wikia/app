@@ -114,18 +114,6 @@ $messages = array(
 'faq'            => 'Rumelfemkelu ramtun',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection' => 'Püñamtun dungu',
-'vector-action-delete'     => 'Liftun',
-'vector-action-move'       => 'Wiñamün',
-'vector-action-protect'    => 'Nürüfkünun',
-'vector-action-undelete'   => 'Wüñoñamümün',
-'vector-action-unprotect'  => 'Kalekünun Nürüfkünun',
-'vector-view-create'       => 'Dewman',
-'vector-view-edit'         => 'Kümeelün',
-'vector-view-history'      => 'Pengelün rupañmael',
-'vector-view-view'         => 'Chillkatun',
-'vector-view-viewsource'   => 'Kimam chew küpan chi wirin',
 'actions'                  => 'Femün',
 'namespaces'               => 'Üytun ñi wellin',
 'variants'                 => 'Kaleyelu',

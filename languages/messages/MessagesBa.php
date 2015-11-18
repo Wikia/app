@@ -195,18 +195,6 @@ $messages = array(
 'faq'            => 'ЙБҺ',
 'faqpage'        => 'Project:ЙБҺ',
 
-# Vector skin
-'vector-action-addsection'       => 'Тема өҫтәргә',
-'vector-action-delete'           => 'Юйырға',
-'vector-action-move'             => 'Исемен үҙгәртергә',
-'vector-action-protect'          => 'Һаҡларға',
-'vector-action-undelete'         => 'Тергеҙергә',
-'vector-action-unprotect'        => 'Һаҡлауҙы үҙгәртергә',
-'vector-view-create'             => 'Яһау',
-'vector-view-edit'               => 'Үҙгәртергә',
-'vector-view-history'            => 'Тарихты ҡарау',
-'vector-view-view'               => 'Уҡыу',
-'vector-view-viewsource'         => 'Сығанаҡты ҡарарға',
 'actions'                        => 'Хәрәкәт',
 'namespaces'                     => 'Исем арауыҡтары',
 'variants'                       => 'Варианттар',
@@ -702,7 +690,6 @@ $2
 '''Ул әле һаҡланмаған!'''",
 'sitejspreview'                    => "'''Һеҙ JavaScript кодын алдан ҡарайһығыҙ ғына икәнен иҫегеҙҙә тотоғоҙ.'''
 '''Ул әле һаҡланмаған!'''",
-'userinvalidcssjstitle'            => "'''Иғтибар:''' \"\$1\" биҙәү темаһы табылманы. Иҫтә тотоғоҙ, .css һәм .js ҡулланыусы биттәренең исемдәре тик бәләкәй хәрефтәрҙән генә торорға тейеш. Мәҫәлән: {{ns:user}}:Foo/vector.css, ә {{ns:user}}:Foo/Vector.css түгел!",
 'updated'                          => '(Яңыртылды)',
 'note'                             => "'''Иҫкәрмә:'''",
 'previewnote'                      => "'''Ҡарап сығыу өлгөһө, әлегә үҙгәрештәр яҙҙырылмаған!'''",
@@ -2741,7 +2728,6 @@ The wiki server cannot provide data in a format your client can read.',
 'skinname-chick'       => 'Себеш',
 'skinname-simple'      => 'Ябай',
 'skinname-modern'      => 'Заманса',
-'skinname-vector'      => 'Векторлы',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Тикшерелгән, тип билдәләргә',

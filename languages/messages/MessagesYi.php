@@ -330,18 +330,6 @@ $messages = array(
 'faq'            => 'מערסטע געפרעגטע פראגעס',
 'faqpage'        => 'Project:מערסטע געפרעגט פראגעס',
 
-# Vector skin
-'vector-action-addsection'       => 'צושטעלן טעמע',
-'vector-action-delete'           => 'אויסמעקן',
-'vector-action-move'             => 'באַוועגן',
-'vector-action-protect'          => 'שיצן',
-'vector-action-undelete'         => 'מבטל זיין אויסמעקן',
-'vector-action-unprotect'        => 'ענדערונג באַשיצונג',
-'vector-view-create'             => 'שאַפֿן',
-'vector-view-edit'               => 'רעדאַקטירן',
-'vector-view-history'            => 'ווײַזן היסטאָריע',
-'vector-view-view'               => 'לייענען',
-'vector-view-viewsource'         => 'ווײַזן מקור',
 'actions'                        => 'אַקציעס',
 'namespaces'                     => 'נאָמענטיילן',
 'variants'                       => 'װאַריאַנטן',
@@ -860,7 +848,6 @@ $2
 '''ער איז דערווײַל נאכנישט אויפֿגעהיטן!'''",
 'sitejspreview'                    => "'''געדענקט אַז איר טוט בלויז פֿאראויסזען דעם דאָזיקן JavaScript קאד.'''
 '''ער איז דערווײַל נאכנישט אויפֿגעהיטן!'''",
-'userinvalidcssjstitle'            => "'''ווארענונג:''' סאיז נישטא קיין סקין \"\$1\". גדענקט אז קאסטעם .css און .js בלעטער נוצען לאוער קעיס טיטול, e.g. {{ns:user}}:Foo/vector.css ווי אנדערשט צו {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(דערהיינטיגט)',
 'note'                             => "'''באמערקונג:'''",
 'previewnote'                      => "'''דאס איז נאָר אין אַ פֿאָרויסיקע ווייזונג, דער אַרטיקל איז דערווייל נאָך נישט געהיט!'''",
@@ -2682,7 +2669,6 @@ $1',
 # Stylesheets
 'common.css'   => '/* CSS געשריבן דא וועט אפילירן און באיינפלוסן אלע סקינס */',
 'monobook.css' => '/* סטייל דא געלייגט וועט באיינפלוסן די בעקגראונד Monobook בלויז */',
-'vector.css'   => '/* CSS געשטעלט דא ווירקט נאר אויפן Vector סקין */',
 
 # Scripts
 'common.js' => '/* אלע סקריפטן פון JavaScript דא געשריבן וועט לויפן פאר אלע באנוצער ווען זיי וועלן לאדירן דעם בלאט */',

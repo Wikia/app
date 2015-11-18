@@ -198,18 +198,6 @@ $messages = array(
 'qbmyoptions'    => 'Мыйын лаштык-влак',
 'qbspecialpages' => 'Лӱмын ыштыме лаштык-влак',
 
-# Vector skin
-'vector-action-addsection' => 'У ӱжашым тӱҥалаш',
-'vector-action-delete'     => 'Шӧраш',
-'vector-action-move'       => 'Кусараш',
-'vector-action-protect'    => 'Тӧрлатымаш деч аралаш',
-'vector-action-undelete'   => 'Шӧрымым пӧртылаш',
-'vector-action-unprotect'  => 'Аралаш огыл',
-'vector-view-create'       => 'Ышташ',
-'vector-view-edit'         => 'Тӧрлаташ',
-'vector-view-history'      => 'Эртымгорным ончалаш',
-'vector-view-view'         => 'Лудаш',
-'vector-view-viewsource'   => 'Тӱҥалтыш текстым ончалаш',
 'actions'                  => 'Сомылка-влак',
 'namespaces'               => 'Лӱм-влакын кумдык-влак',
 

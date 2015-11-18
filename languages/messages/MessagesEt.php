@@ -438,18 +438,6 @@ $messages = array(
 'faq' => 'KKK',
 'faqpage' => 'Project:KKK',
 
-# Vector skin
-'vector-action-addsection' => 'Lisa teema',
-'vector-action-delete' => 'Kustuta',
-'vector-action-move' => 'Teisalda',
-'vector-action-protect' => 'Kaitse',
-'vector-action-undelete' => 'Taasta',
-'vector-action-unprotect' => 'Muuda kaitset',
-'vector-view-create' => 'Loo',
-'vector-view-edit' => 'Redigeeri',
-'vector-view-history' => 'Näita ajalugu',
-'vector-view-view' => 'Vaata',
-'vector-view-viewsource' => 'Vaata lähteteksti',
 'actions' => 'Toimingud',
 'namespaces' => 'Nimeruumid',
 'variants' => 'Variandid',
@@ -957,7 +945,6 @@ Allpool on toodud viimane blokeerimislogi sissekanne:',
 'sitejspreview' => "'''Pea meeles, et see on vaid selle JavaScripti-koodi eelvaade.'''
 '''Seda pole veel salvestatud!'''",
 'userinvalidcssjstitle' => "'''Hoiatus:''' Kujundust nimega \"\$1\" ei ole.
-Ära unusta, et kasutaja isiklikud .css- ja .js-lehed kasutavad väiketähega algavaid nimesid, näiteks  {{ns:user}}:Juhan Julm/vector.css ja mitte {{ns:user}}:Juhan Julm/Vector.css.",
 'updated' => '(Värskendatud)',
 'note' => "'''Meeldetuletus:'''",
 'previewnote' => "'''Ära unusta, et see on kõigest eelvaade!'''
@@ -3019,7 +3006,6 @@ See on ilmselt põhjustatud linkimisest mustas nimekirjas olevasse välisvõrguk
 'skinname-chick' => 'Tibu',
 'skinname-simple' => 'Lihtne',
 'skinname-modern' => 'Uudne',
-'skinname-vector' => 'Vektor',
 
 # Patrolling
 'markaspatrolleddiff' => 'Märgi kui kontrollitud',

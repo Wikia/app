@@ -381,18 +381,6 @@ $messages = array(
 'faq' => 'Algengar spurningar',
 'faqpage' => 'Project:Algengar spurningar',
 
-# Vector skin
-'vector-action-addsection' => 'Bæta við umræðu',
-'vector-action-delete' => 'Eyða',
-'vector-action-move' => 'Færa',
-'vector-action-protect' => 'Vernda',
-'vector-action-undelete' => 'Hætta við eyðingu',
-'vector-action-unprotect' => 'Breyta verndunarstigi',
-'vector-view-create' => 'Skapa',
-'vector-view-edit' => 'Breyta',
-'vector-view-history' => 'Breytingaskrá',
-'vector-view-view' => 'Lesa',
-'vector-view-viewsource' => 'Sýna frumkóða',
 'actions' => 'Aðgerðir',
 'namespaces' => 'Nafnrými',
 'variants' => 'Útgáfur',
@@ -906,7 +894,6 @@ Síðasta færsla notandans úr bönnunarskrá er sýnd hér fyrir neðan til sk
 '''Hann hefur ekki enn verið vistaður!'''",
 'sitejspreview' => "'''Mundu að þú ert aðeins að prófa/forskoða JavaScript-kóðann.'''
 '''Hann hefur ekki enn verið vistaður!'''",
-'userinvalidcssjstitle' => "'''Viðvörun:''' Þemað $1 er ekki til. Sérsniðin CSS og JavaScript útlit nota lágstafi, t.d.  {{ns:user}}:Foo/vector.css en alls ekki {{ns:user}}:Foo/Vector.css.",
 'updated' => '(Uppfært)',
 'note' => "'''Athugið:'''",
 'previewnote' => "'''Það sem sést hér er aðeins forskoðun og hefur ekki enn verið vistað!'''",

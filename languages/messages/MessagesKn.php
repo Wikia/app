@@ -212,18 +212,6 @@ $messages = array(
 'faq'            => 'ಸಾಮಾನ್ಯವಾಗಿ ಕೇಳಲಾಗುವ ಪ್ರಶ್ನೆಗಳು',
 'faqpage'        => 'Project:ಸಾಮಾನ್ಯವಾಗಿ ಕೇಳಲಾಗುವ ಪ್ರಶ್ನೆಗಳು',
 
-# Vector skin
-'vector-action-addsection'       => 'ವಿಷಯ ಸೇರಿಸಿ',
-'vector-action-delete'           => 'ಅಳಿಸು',
-'vector-action-move'             => 'ಸ್ಥಳಾಂತರಿಸಿ',
-'vector-action-protect'          => 'ಸಂರಕ್ಷಿಸು',
-'vector-action-undelete'         => 'ಅಳಿಸಬೇಡ',
-'vector-action-unprotect'        => 'ರಕ್ಷಣೆಯನ್ನು ಬದಲಾವಣೆ',
-'vector-view-create'             => 'ಸೃಷ್ಟಿಸು',
-'vector-view-edit'               => 'ಸಂಪಾದಿಸಿ',
-'vector-view-history'            => 'ಇತಿಹಾಸವನ್ನು ನೋಡಿ',
-'vector-view-view'               => 'ಓದು',
-'vector-view-viewsource'         => 'ಆಕರ ವೀಕ್ಷಿಸು',
 'actions'                        => 'ಕ್ರಿಯೆಗಳು',
 'namespaces'                     => 'ನಾಮವರ್ಗಗಳು',
 'variants'                       => 'ಹಲವು',

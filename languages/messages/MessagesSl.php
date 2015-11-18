@@ -334,18 +334,6 @@ $messages = array(
 'faq'            => 'Najpogostejša vprašanja',
 'faqpage'        => 'Project:Najpogostejša vprašanja',
 
-# Vector skin
-'vector-action-addsection'       => 'Dodaj temo',
-'vector-action-delete'           => 'Izbriši',
-'vector-action-move'             => 'Prestavi',
-'vector-action-protect'          => 'Zaščiti',
-'vector-action-undelete'         => 'Vrni',
-'vector-action-unprotect'        => 'Spremeni zaščito',
-'vector-view-create'             => 'Ustvari',
-'vector-view-edit'               => 'Uredi',
-'vector-view-history'            => 'Zgodovina',
-'vector-view-view'               => 'Preberi',
-'vector-view-viewsource'         => 'Izvorno besedilo',
 'actions'                        => 'Dejanja',
 'namespaces'                     => 'Imenski prostori',
 'variants'                       => 'Različice',
@@ -866,7 +854,6 @@ Najnovejši vnos v dnevniku blokad je prikazan spodaj:',
 'sitejspreview'                    => "'''Ne pozabite, da kodo tega JavaScripta samo preizkušate.'''
 '''Ni še bila shranjena!'''",
 'userinvalidcssjstitle'            => "'''Opozorilo:''' Koža »$1« ne obstaja.
-Vedite, da .css in .js strani po meri uporabljajo naslov z malo začetnico, npr. {{ns:user}}:Blabla/vector.css namesto {{ns:user}}:Blabla/Vector.css.",
 'updated'                          => '(Posodobljeno)',
 'note'                             => "'''Opomba:'''",
 'previewnote'                      => "'''Stran le predogledujete in še ni shranjena!'''",

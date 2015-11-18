@@ -517,18 +517,6 @@ $messages = array(
 'faq'            => 'Жиі қойылған сауалдар',
 'faqpage'        => 'Project:Жиі қойылған сауалдар',
 
-# Vector skin
-'vector-action-addsection'       => 'Тақырып қосу',
-'vector-action-delete'           => 'Жою',
-'vector-action-move'             => 'Жылжыту',
-'vector-action-protect'          => 'Қорғау',
-'vector-action-undelete'         => 'Жоймау',
-'vector-action-unprotect'        => 'Қорғанысты өзгерту',
-'vector-view-create'             => 'Бастау',
-'vector-view-edit'               => 'Өңдеу',
-'vector-view-history'            => 'Тарихы',
-'vector-view-view'               => 'Оқу',
-'vector-view-viewsource'         => 'Қайнар көзін қарау',
 'actions'                        => 'Әрекеттер',
 'namespaces'                     => 'Есім аясы',
 'variants'                       => 'Нұсқалар',
@@ -951,7 +939,6 @@ IP мекенжайыңыз бұл беттің түзету тарихында 
 'usercsspreview'                   => "'''Мынау CSS мәтінін тек қарап шығу екенін ұмытпаңыз, ол әлі сақталған жоқ!'''",
 'userjspreview'                    => "'''Мынау JavaScript қатысушы бағдарламасын тексеру/қарап шығу екенін ұмытпаңыз, ол әлі сақталған жоқ!'''",
 'userinvalidcssjstitle'            => "'''Құлақтандыру:''' Осы арада «$1» деген еш мәнер жоқ.
-Қатысушының .css және .js файл атауы кіші әріпппен жазылу тиісті екенін ұмытпаңыз, мысалға {{ns:user}}:Foo/vector.css дегенді {{ns:user}}:Foo/Vector.css дегенмен салыстырып қараңыз.",
 'updated'                          => '(Жаңартылған)',
 'note'                             => "'''Аңғартпа:'''",
 'previewnote'                      => "Бұл тек '''қарап шығу''' екенін ұмытпаңыз, өзгерістер әлі сақталған жоқ!",

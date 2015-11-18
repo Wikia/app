@@ -92,16 +92,6 @@ $messages = array(
 'qbmyoptions'   => 'Барактарым',
 'faq'           => 'КБС',
 
-# Vector skin
-'vector-action-addsection' => 'Тема кошумчала',
-'vector-action-delete'     => 'Өчүр',
-'vector-action-move'       => 'Аталышын өзгөрт',
-'vector-action-protect'    => 'Корго',
-'vector-view-create'       => 'Башта',
-'vector-view-edit'         => 'Оңдо',
-'vector-view-history'      => 'Тарыхын кара',
-'vector-view-view'         => 'Оку',
-'vector-view-viewsource'   => 'Байкоо',
 'actions'                  => 'Аракеттер',
 'namespaces'               => 'Аталыш топтому',
 'variants'                 => 'Варианттар',

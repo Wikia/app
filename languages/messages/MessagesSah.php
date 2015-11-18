@@ -194,18 +194,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Тиэмэ эбии',
-'vector-action-delete'           => 'Сот',
-'vector-action-move'             => 'Аатын уларыт',
-'vector-action-protect'          => 'Уларыйбат гын',
-'vector-action-undelete'         => 'Төннөр',
-'vector-action-unprotect'        => 'Көмүскэлин уларыт',
-'vector-view-create'             => 'Ай',
-'vector-view-edit'               => 'Уларыт',
-'vector-view-history'            => 'Устуоруйатын көрүү',
-'vector-view-view'               => 'Ааҕыы',
-'vector-view-viewsource'         => 'Бэлиэлэрин көрүү',
 'actions'                        => 'Дьайыылар',
 'namespaces'                     => 'Аат даллара',
 'variants'                       => 'Барыллар',
@@ -713,7 +701,6 @@ IP-аадырыһа эрэ көстөр.
 '''Бигэргэтиллэ илик!'''",
 'sitejspreview'                    => "'''Бу JavaScript-куодун бигэргэппэккэ көрө олороргун умнума.'''
 '''Бигэргэтиллэ илик!'''",
-'userinvalidcssjstitle'            => "'''Болҕой:''' Бу тиэмэ «$1» суох. Кыттааччы .css и .js сирэйдэрэ кыра буукубаннан суруллуохтаахтар, холобур «{{ns:user}}:Ньургун/vector.css», маннык буолуо суохтаах «{{ns:user}}:Ньургун/Vector.css».",
 'updated'                          => '(Саҥардылынна)',
 'note'                             => "'''Хос быһаарыы:'''",
 'previewnote'                      => "'''Бу көрүү эрэ; уларытыылар бигэргэтиллэ иликтэр!'''",

@@ -281,18 +281,6 @@ $messages = array(
 'faq'            => 'NLD',
 'faqpage'        => 'Project:NLD',
 
-# Vector skin
-'vector-action-addsection'       => 'Jieun jejer anyar',
-'vector-action-delete'           => 'Hapus',
-'vector-action-move'             => 'Pindahkeun',
-'vector-action-protect'          => 'Konci',
-'vector-action-undelete'         => 'Bolaykeun ngahapus',
-'vector-action-unprotect'        => 'Robah protéksi',
-'vector-view-create'             => 'Jieun',
-'vector-view-edit'               => 'Édit',
-'vector-view-history'            => 'Témbongkeun jujutan',
-'vector-view-view'               => 'Baca',
-'vector-view-viewsource'         => 'Témbongkeun sumber',
 'actions'                        => 'Peta',
 'namespaces'                     => 'Spasi ngaran',
 'variants'                       => 'Varian',
@@ -777,7 +765,6 @@ Pikeun rujukan, éntri log panungtung dipidangkeun di handap:',
 '''Can disimpen!'''",
 'sitejspreview'                    => "'''Inget yén ieu kodeu JavaScript ukur pramidang.'''
 '''Can disimpen!'''",
-'userinvalidcssjstitle'            => "'''Awas''': kulit \"\$1\" mah teu aya. Sing émut yén kaca .css jeung .js mah migunakeun aksara leutik dina judulna, contona baé {{ns:user}}:Foo/vector.css lawan {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Geus diropéa)',
 'note'                             => "'''Catetan:'''",
 'previewnote'                      => "'''Inget yén ieu ukur pramidang, can disimpen!'''

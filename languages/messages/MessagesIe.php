@@ -270,18 +270,6 @@ $messages = array(
 'qbspecialpages' => 'Págines special',
 'faq'            => 'FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Adjunter tema',
-'vector-action-delete'           => 'Deleter',
-'vector-action-move'             => 'Mover',
-'vector-action-protect'          => 'Gardar',
-'vector-action-undelete'         => 'Restituer',
-'vector-action-unprotect'        => 'Desgardar',
-'vector-view-create'             => 'Crear',
-'vector-view-edit'               => 'Redacter',
-'vector-view-history'            => 'Vider historie',
-'vector-view-view'               => 'Leer',
-'vector-view-viewsource'         => 'Vider fonte',
 'actions'                        => 'Actiones',
 'namespaces'                     => 'Spacies de nómine',
 'variants'                       => 'Variantes',
@@ -530,7 +518,6 @@ Pleser controla si vu cari crear/redacter ti págine.',
 'userjspreview'                    => "'''Memora que vu es solmen provant/monstrant tui JavaScript de usator.'''
 '''It ne ha esset conservat ancor!'''",
 'userinvalidcssjstitle'            => "'''Advertiment:''' Ne vi pelle \"\$1\".
-Memora que hábitu .css e págines .js usa un titul plu bass, e.g. {{ns:user}}:Foo/vector.css quam oposit por {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Modernisat)',
 'previewnote'                      => "'''Memora se que ti es solmen un prevision.'''
 Tui changes ancor ne ha esset conservat!",
@@ -1256,10 +1243,8 @@ Pleser fuse les manualmen.'''",
 'tooltip-summary'                 => 'Intrar un summarium curt',
 
 # Stylesheets
-'vector.css' => '/* CSS colocat ci va afectar usatores de pelle Vector */',
 
 # Scripts
-'vector.js' => '/* Alquel JavaScript ci va esser cargat por usatores que usa li pelle Vector */',
 
 # Browsing diffs
 'previousdiff' => '← Redaction anteriori',

@@ -198,18 +198,6 @@ $messages = array(
 'faq'            => 'আঙলাক',
 'faqpage'        => 'Project:আঙলাক',
 
-# Vector skin
-'vector-action-addsection'       => 'বিষয় তিলকর',
-'vector-action-delete'           => 'পুসে বেলা',
-'vector-action-move'             => 'থেইকর',
-'vector-action-protect'          => 'লুকর',
-'vector-action-undelete'         => 'নাপুসি',
-'vector-action-unprotect'        => 'লুকরানিহান সিলকর',
-'vector-view-create'             => 'হঙকরিক',
-'vector-view-edit'               => 'পতানি',
-'vector-view-history'            => 'ইতিহাস চেইক',
-'vector-view-view'               => 'পাকরিক',
-'vector-view-viewsource'         => 'সোর্স চেইক',
 'actions'                        => 'কার্যক্রম',
 'namespaces'                     => 'নাঙরলাম',
 'variants'                       => 'ভেরিয়েন্টহানি',
@@ -660,7 +648,6 @@ $2',
 'userjspreview'                    => "'''তি মনে থইস এহান তর জাভাস্ক্রিপ্টর পরীক্ষা/আগচাহান।'''
 '''এহান এপাগাউ ইতু নাইসে!'''",
 'userinvalidcssjstitle'            => "'''সিঙুইস:''' \"\$1\" নাঙর কোন সর নেই।
-মনে থইস .css বারো .js পাতার নাঙ এতা রূহিবৃত্তির মাতুঙে হুরকা আতর ইকার মেয়েকল অরতাহে, যেসাদে {{ns:user}}:Foo/vector.css; কিন্তু এসাদে চিঙনাঙ নাইব: {{ns:user}}:Foo/Vector.css",
 'updated'                          => '(আপডেট)',
 'note'                             => "'''নোট:'''",
 'previewnote'                      => "'''এহান হুদ্দা আগচাহান;

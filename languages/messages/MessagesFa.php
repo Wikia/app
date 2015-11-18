@@ -582,18 +582,6 @@ $messages = array(
 'faq'            => 'پرسش‌های متداول',
 'faqpage'        => 'Project:پرسش‌های متداول',
 
-# Vector skin
-'vector-action-addsection'       => 'افزودن بخش',
-'vector-action-delete'           => 'حذف',
-'vector-action-move'             => 'انتقال',
-'vector-action-protect'          => 'محافظت',
-'vector-action-undelete'         => 'احیا',
-'vector-action-unprotect'        => 'تغییر سطح حفاظت',
-'vector-view-create'             => 'ایجاد',
-'vector-view-edit'               => 'ویرایش',
-'vector-view-history'            => 'نمایش تاریخچه',
-'vector-view-view'               => 'خواندن',
-'vector-view-viewsource'         => 'نمایش مبدأ',
 'actions'                        => 'عملکردها',
 'namespaces'                     => 'فضاهای نام',
 'variants'                       => 'گویش‌ها',
@@ -1120,7 +1108,6 @@ $2
 'sitejspreview'                    => "'''به یاد داشته باشید که شما فقط دارید پیش‌نمایش این جاوااسکریپت را می‌بینید.'''
 '''این جاوااسکریپت هنوز ذخیره نشده‌است!'''",
 'userinvalidcssjstitle'            => "'''هشدار:''' پوسته‌ای به نام «$1» وجود ندارد.
-به یاد داشته باشید که صفحه‌های شخصی ‎.css و ‎.js باید عنوانی با حروف کوچک داشته باشند؛ نمونه: {{ns:user}}:فو/vector.css در مقابل {{ns:user}}:فو/Vector.css.",
 'updated'                          => '(به‌روز شد)',
 'note'                             => "'''نکته:'''",
 'previewnote'                      => "'''به یاد داشته باشید که این فقط پیش‌نمایش است.'''
@@ -3196,7 +3183,6 @@ $1',
 'skinname-chick'       => 'شیک',
 'skinname-simple'      => 'ساده',
 'skinname-modern'      => 'مدرن',
-'skinname-vector'      => 'برداری',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'برچسب گشت بزن',

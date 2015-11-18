@@ -188,18 +188,6 @@ $messages = array(
 'qbmyoptions'    => 'Ow folednow',
 'qbspecialpages' => 'Folednow arbednek',
 
-# Vector skin
-'vector-action-addsection' => 'Keworra mater',
-'vector-action-delete'     => 'Dilea',
-'vector-action-move'       => 'Gwaya',
-'vector-action-protect'    => 'Difres',
-'vector-action-undelete'   => 'Disdhilea',
-'vector-action-unprotect'  => 'Disdhifres',
-'vector-view-create'       => 'Gwruthyl',
-'vector-view-edit'         => 'Chanjya',
-'vector-view-history'      => 'Gweles istory an folen',
-'vector-view-view'         => 'Redya',
-'vector-view-viewsource'   => 'Gweles an bednfenten',
 
 'errorpagetitle'    => 'Gwall',
 'returnto'          => 'Dewheles dhe $1.',

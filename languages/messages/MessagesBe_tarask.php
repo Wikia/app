@@ -406,18 +406,6 @@ $messages = array(
 'faq'            => 'Частыя пытаньні',
 'faqpage'        => 'Project:Частыя пытаньні',
 
-# Vector skin
-'vector-action-addsection'       => 'Дадаць тэму',
-'vector-action-delete'           => 'Выдаліць',
-'vector-action-move'             => 'Перанесьці',
-'vector-action-protect'          => 'Абараніць',
-'vector-action-undelete'         => 'Аднавіць',
-'vector-action-unprotect'        => 'Зьмяніць абарону',
-'vector-view-create'             => 'Стварыць',
-'vector-view-edit'               => 'Рэдагаваць',
-'vector-view-history'            => 'Паказаць гісторыю',
-'vector-view-view'               => 'Чытаць',
-'vector-view-viewsource'         => 'Паказаць крыніцу',
 'actions'                        => 'Дзеяньні',
 'namespaces'                     => 'Прасторы назваў',
 'variants'                       => 'Варыянты',
@@ -919,7 +907,6 @@ $2
 'sitejspreview'                    => "'''Памятайце, што гэта толькі папярэдні прагляд гэтага коду JavaScript.'''
 '''Ён яшчэ не захаваны!'''",
 'userinvalidcssjstitle'            => "'''Папярэджаньне:''' няма тэмы афармленьня «$1».
-Памятайце, што ўласныя старонкі .css і .js павінны мець назву, якая складаецца з малых літараў, напрыклад, {{ns:user}}:Хтосьці/vector.css, а не {{ns:user}}:Хтосьці/Vector.css.",
 'updated'                          => '(Абноўлена)',
 'note'                             => "'''Заўвага: '''",
 'previewnote'                      => "'''Гэта толькі папярэдні прагляд і зьмены яшчэ не былі захаваныя!'''",
@@ -2960,7 +2947,6 @@ $1',
 'skinname-chick'       => 'Цыпа',
 'skinname-simple'      => 'Простае',
 'skinname-modern'      => 'Сучаснае',
-'skinname-vector'      => 'Вэктар',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Пазначыць як «патруляваную»',

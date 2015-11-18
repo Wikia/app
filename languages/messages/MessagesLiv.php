@@ -89,16 +89,6 @@ $messages = array(
 'qbfind' => 'Vȯtšõgid',
 'faq'    => 'SKK',
 
-# Vector skin
-'vector-action-addsection' => 'Pangid jūrõ tēma',
-'vector-action-delete'     => 'Kištāntõgid jarā',
-'vector-action-move'       => 'Vīž jarā',
-'vector-action-protect'    => 'Kaitsõmi',
-'vector-view-create'       => 'Lūo',
-'vector-view-edit'         => 'Redigīer',
-'vector-view-history'      => 'Nägţ istōrijõ',
-'vector-view-view'         => 'Vaņ',
-'vector-view-viewsource'   => 'Vaņ ovāt tekstõ',
 'actions'                  => 'Tīemizt',
 'namespaces'               => 'Nim-rūimõd',
 'variants'                 => 'Varianţõd',

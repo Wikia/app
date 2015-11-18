@@ -281,18 +281,6 @@ $messages = array(
 'faq'            => 'ب.ج.س',
 'faqpage'        => 'Project:ب.ج.س',
 
-# Vector skin
-'vector-action-addsection' => 'هور کتن عنوان',
-'vector-action-delete'     => 'زورگ',
-'vector-action-move'       => 'جاه په جاه',
-'vector-action-protect'    => 'حفاظت',
-'vector-action-undelete'   => 'ترینگ',
-'vector-action-unprotect'  => 'حفاظت درگیزگ',
-'vector-view-create'       => 'شرکتن',
-'vector-view-edit'         => 'اصلاح',
-'vector-view-history'      => 'چارتن تاریح',
-'vector-view-view'         => 'وانتن',
-'vector-view-viewsource'   => 'پیشدارگ بن جاه',
 'actions'                  => 'کاران',
 'namespaces'               => 'فضانامان',
 'variants'                 => 'گوشگان',
@@ -706,7 +694,6 @@ $2',
 'usercsspreview'                   => "''''بزان که شما فقط وتی CSS کاربری بازبینی کنین. هنگنت آیی ذخیره نه بوتت!''''",
 'userjspreview'                    => "''''په یاد دار که شما فقط وتی کاربری  JavaScript بازبینی/آزمایش کنگیت، هنگت ذخیره نه بوتت!''''",
 'userinvalidcssjstitle'            => "'''هوژاری:''هچ جلدی نیست\"\$1\".
-بزان که صفحات .css و .js چه عناوین گون هوردین حرف استفاده کننت، مثلا {{ns:user}}:Foo/vector.css بدل به په {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(په روچ بیتگین)',
 'note'                             => "'''یادداشت:'''",
 'previewnote'                      => "'''شی فقط یک بازبینی انت;

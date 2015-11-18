@@ -214,18 +214,6 @@ $messages = array(
 'faq'            => 'Pyetjet e shpeshta',
 'faqpage'        => 'Project:Pyetjet e shpeshta',
 
-# Vector skin
-'vector-action-addsection'       => 'Shto temë',
-'vector-action-delete'           => 'Fshij',
-'vector-action-move'             => 'Zhvendos',
-'vector-action-protect'          => 'Mbroj',
-'vector-action-undelete'         => 'Kthe fshimjen mbrapsht',
-'vector-action-unprotect'        => 'Hiq mbrojtjen',
-'vector-view-create'             => 'Krijo',
-'vector-view-edit'               => 'Redakto',
-'vector-view-history'            => 'Shih historinë',
-'vector-view-view'               => 'Lexo',
-'vector-view-viewsource'         => 'Shih kodin',
 'actions'                        => 'Veprimet',
 'namespaces'                     => 'Hapësinat',
 'variants'                       => 'Variantet',
@@ -677,7 +665,6 @@ Ju lutemi kontrolloni nëse doni me krijue/redaktue këtë faqe.',
 'userjspreview'                    => "'''Vini re, jeni tue testue/pâ veç parapâmjen e JavaScriptit tuej.'''
 '''Ende nuk e keni ruejtë!'''",
 'userinvalidcssjstitle'            => "'''Kujdes:''' Nuk ka pâmje me emën \"\$1\".
-Vini re që faqet .css dhe .js përdorin vetëm titull me germa të vogla, psh. {{ns:user}}:Foo/vector.css për dallim prej {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(E ndryshueme)',
 'note'                             => "'''Shenim:'''",
 'previewnote'                      => "'''Kjo âsht vetëm parapâmje.'''
@@ -1510,7 +1497,6 @@ Lejon dhânien e arsyes në përmbledhje.',
 'chick.css'       => '/* CSSi i vednosun këtu ka me i prekë shfrytëzuesit e dukjes Chick */',
 'simple.css'      => '/* CSSi i vednosun këtu ka me i prekë shfrytëzuesit e dukjes Simple */',
 'modern.css'      => '/* CSSi i vednosun këtu ka me i prekë shfrytëzuesit e dukjes Modern */',
-'vector.css'      => '/* CSSi i vednosun këtu ka me i prekë shfrytëzuesit e dukjes Vector */',
 'print.css'       => '/* CSSi i vednosun këtu ka me e prekë pamjen e shtypjes */',
 'handheld.css'    => '/* CSSi i vednosun këtu ka me i prekë shfletuesit mobil (të dorës) në dukje e konfigurueme në $wgHandheldStyle */',
 
@@ -1524,7 +1510,6 @@ Lejon dhânien e arsyes në përmbledhje.',
 'chick.js'       => '/* Çdo JavaScript këtu ka me u ngarkue për shfrytëzuesit që përdorin dukjen Chick */',
 'simple.js'      => '/* Çdo JavaScript këtu ka me u ngarkue për shfrytëzuesit që përdorin dukjen Simple */',
 'modern.js'      => '/* Çdo JavaScript këtu ka me u ngarkue për shfrytëzuesit që përdorin dukjen Modern */',
-'vector.js'      => '/* Çdo JavaScript këtu ka me u ngarkue për shfrytëzuesit që përdorin dukjen Vector */',
 
 # Metadata
 'notacceptable' => 'Serveri i wikit nuk mundet me i ofrue të dhânat në formatin që kish mujtë me i lexue klienti juej.',

@@ -200,18 +200,6 @@ $messages = array(
 'faq'            => 'BUJ',
 'faqpage'        => 'Project:BUJ',
 
-# Vector skin
-'vector-action-addsection'       => 'Jauna sadaļa',
-'vector-action-delete'           => 'Dzēst',
-'vector-action-move'             => 'Pārvietot',
-'vector-action-protect'          => 'Aizsargāt',
-'vector-action-undelete'         => 'Atjaunot',
-'vector-action-unprotect'        => 'Mainīt aizsardzību',
-'vector-view-create'             => 'Izveidot',
-'vector-view-edit'               => 'Rediģēt',
-'vector-view-history'            => 'Hronoloģija',
-'vector-view-view'               => 'Skatīt',
-'vector-view-viewsource'         => 'Aplūkot kodu',
 'actions'                        => 'Darbības',
 'namespaces'                     => 'Vārdtelpas',
 'variants'                       => 'Varianti',

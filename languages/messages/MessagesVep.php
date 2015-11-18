@@ -239,18 +239,6 @@ $messages = array(
 'faq'            => 'PPK',
 'faqpage'        => 'Project:PPK',
 
-# Vector skin
-'vector-action-addsection'       => 'Ližada tem',
-'vector-action-delete'           => 'Čuta poiš',
-'vector-action-move'             => 'Udesnimitada',
-'vector-action-protect'          => 'Kaita',
-'vector-action-undelete'         => 'Pördutada',
-'vector-action-unprotect'        => 'Toižetada kaičend',
-'vector-view-create'             => 'Säta',
-'vector-view-edit'               => 'Redaktiruida',
-'vector-view-history'            => 'Kacta istorii',
-'vector-view-view'               => 'Lugeda',
-'vector-view-viewsource'         => 'Kacta purtkehe',
 'actions'                        => 'Tegendad',
 'namespaces'                     => 'Nimiavaruded',
 'variants'                       => 'Variantad',

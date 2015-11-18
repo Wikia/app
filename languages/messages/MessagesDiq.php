@@ -171,18 +171,6 @@ $messages = array(
 'faq'            => 'PZP (Persê ke zehf persiyenê)',
 'faqpage'        => 'Project: PZP',
 
-# Vector skin
-'vector-action-addsection'       => 'Qal berze cı',
-'vector-action-delete'           => 'Bestere',
-'vector-action-move'             => 'Bere',
-'vector-action-protect'          => 'Bıpawe',
-'vector-action-undelete'         => 'Esterıtışi peyser bıgê',
-'vector-action-unprotect'        => 'Ake',
-'vector-view-create'             => 'Vıraze',
-'vector-view-edit'               => 'Bıvurne',
-'vector-view-history'            => 'Tarixi bımocne',
-'vector-view-view'               => 'Bıwane',
-'vector-view-viewsource'         => 'Çımey bıvêne',
 'actions'                        => 'Karê kerdey',
 'namespaces'                     => 'Cayê namey',
 'variants'                       => 'Varyanti',
@@ -623,7 +611,6 @@ Cıkewtışo tewr peyêno ke bloke biyo, cêr seba referansi belikerdeyo:',
 'usercsspreview'                   => "'''şıma tena verqaydê dosyayê CSS vineni.''' '''Dosyayê Karberi CSS hema qayd nebiyo!'''",
 'userjspreview'                    => "'''şıma tena test keni ya ziverqayn seyr keni - karberê JavaScript'i hema qayd nebiyo.'''",
 'userinvalidcssjstitle'            => "'''Teme:''' Mewzuyê \"\$1\" çıniyo.
-Dosyanê be namey .css u .js'i de herfa werdiye bıgurêne, mesela herında {{ns:user}}:Foo/Vector.css'i de {{ns:user}}:Foo/vector.css bınuse.",
 'updated'                          => '(Biyo rocane)',
 'note'                             => "'''Not:'''",
 'previewnote'                      => "'''Teme! ena teyna verqeyda.'''

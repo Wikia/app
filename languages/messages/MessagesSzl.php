@@ -177,18 +177,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Nowo tajla',
-'vector-action-delete'           => 'Wyćepej',
-'vector-action-move'             => 'Przećep',
-'vector-action-protect'          => 'Zawrzij',
-'vector-action-undelete'         => 'Wćep',
-'vector-action-unprotect'        => 'Uodymkńij',
-'vector-view-create'             => 'Stwůrz',
-'vector-view-edit'               => 'Sprowjej',
-'vector-view-history'            => 'Uobocz gyszichta',
-'vector-view-view'               => 'Czytej',
-'vector-view-viewsource'         => 'Zdrzůdłowy tekst',
 'actions'                        => 'Akcyje',
 'namespaces'                     => 'Raumy mjan',
 'variants'                       => 'Warjanty',
@@ -646,7 +634,6 @@ abo <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}
 'sitecsspreview'                   => "'''Pamjyntej, aże to je na raźe ino podglůnd Twojego arkusza stylůw CSS.'''
 '''Ńic jeszczče ńy zostoło naszkryflone!'''",
 'sitejspreview'                    => "'''Pamjyntej, aże to je na raźe ino podglůnd Twojego JavaScriptu - nic jeszcze ńy zostoło naškryflone!'''",
-'userinvalidcssjstitle'            => "'''Pozůr:''' Ńy mo skůrki uo mjańe \"\$1\". Pamjyntej, aže zajty užytkowńika zawjyrajůnce CSS i JavaScript powinny začynać śe mouům buchštabům, np. {{ns:user}}:Foo/vector.css.",
 'updated'                          => '(Pomjyńano)',
 'note'                             => "'''Pozůr:'''",
 'previewnote'                      => "'''To je ino podglůnd - artikel ješče ńy je naškryflany!'''",

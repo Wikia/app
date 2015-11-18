@@ -464,18 +464,6 @@ $messages = array(
 'faq' => 'FAQ',
 'faqpage' => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection' => 'Adicionar tópico',
-'vector-action-delete' => 'Eliminar',
-'vector-action-move' => 'Mover',
-'vector-action-protect' => 'Proteger',
-'vector-action-undelete' => 'Restaurar',
-'vector-action-unprotect' => 'Alterar a proteção',
-'vector-view-create' => 'Criar',
-'vector-view-edit' => 'Editar',
-'vector-view-history' => 'Ver histórico',
-'vector-view-view' => 'Ler',
-'vector-view-viewsource' => 'Ver código-fonte',
 'actions' => 'Ações',
 'namespaces' => 'Espaços nominais',
 'variants' => 'Variantes',
@@ -985,7 +973,6 @@ O registro de bloqueio mais recente é fornecido abaixo, para referência:',
 '''Ele ainda não foi salvo!'''",
 'sitejspreview' => "''Lembre-se de que você está apenas previsualizando este código JavaScript.'''
 '''Ele ainda não foi salvo!'''",
-'userinvalidcssjstitle' => "'''Aviso:''' Não existe um tema \"\$1\". Lembre-se que as páginas .css e  .js utilizam um título em minúsculas, exemplo: {{ns:user}}:Alguém/vector.css aposto a {{ns:user}}:Alguém/Vector.css.",
 'updated' => '(Atualizado)',
 'note' => "'''Nota:'''",
 'previewnote' => "'''Lembre-se de que isto é apenas uma previsão.'''
@@ -3025,7 +3012,6 @@ Permite colocar uma justificativa no sumário da edição.',
 'chick.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Chique */',
 'simple.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Simples */',
 'modern.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Moderno */',
-'vector.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Vector */',
 
 # Metadata
 'notacceptable' => 'O servidor não pode fornecer os dados em um formato que o seu cliente possa ler.',

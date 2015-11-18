@@ -172,15 +172,6 @@ $messages = array(
 'qbfind' => 'Кӹчӓлӓш',
 'qbedit' => 'Торлӓш',
 
-# Vector skin
-'vector-action-delete'   => 'Карангдаш',
-'vector-action-move'     => 'Лӹмӹм вашталташ',
-'vector-action-protect'  => 'Ӹшӹклӓш',
-'vector-view-create'     => 'Ӹштӓш',
-'vector-view-edit'       => 'Тӧрлӹмӓш',
-'vector-view-history'    => 'Историм анжымаш',
-'vector-view-view'       => 'Лыдмаш',
-'vector-view-viewsource' => 'Сек пӹтӓриш кодым анжалаш',
 
 'errorpagetitle'   => 'Самынь',
 'returnto'         => 'Мӹнгеш ӹлӹштӓшӹш $1.',

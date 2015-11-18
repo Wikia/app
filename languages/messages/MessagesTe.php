@@ -293,18 +293,6 @@ $messages = array(
 'faq'            => 'తరచూ అడిగే ప్రశ్నలు',
 'faqpage'        => 'Project:తరచూ అడిగే ప్రశ్నలు',
 
-# Vector skin
-'vector-action-addsection'       => 'విషయాన్ని చేర్చు',
-'vector-action-delete'           => 'తొలగించు',
-'vector-action-move'             => 'తరలించు',
-'vector-action-protect'          => 'సంరక్షించు',
-'vector-action-undelete'         => 'తిరిగి చేర్చు',
-'vector-action-unprotect'        => 'సంరక్షణను మార్చు',
-'vector-view-create'             => 'సృష్టించు',
-'vector-view-edit'               => 'సవరించు',
-'vector-view-history'            => 'చరిత్రని చూడండి',
-'vector-view-view'               => 'చదువు',
-'vector-view-viewsource'         => 'మూలాన్ని చూడండి',
 'actions'                        => 'చర్యలు',
 'namespaces'                     => 'నేంస్పేసులు',
 'variants'                       => 'వైవిధ్యాలు',
@@ -792,7 +780,6 @@ $2
 'sitejspreview'                    => "'''మీరు చూస్తున్నది ఈ JavaScript మునుజూపును మాత్రమేనని గుర్తుంచుకోండి.'''
 '''దీన్నింకా భద్రపరచలేదు!'''",
 'userinvalidcssjstitle'            => "'''హెచ్చరిక:''' \"\$1\" అనే అలంకారం లేదు.
-అభిమత .css మరియు .js పుటల శీర్షికలు ఇంగ్లీషు చిన్నబడి అక్షరాల లోనే ఉండాలని గుర్తుంచుకోండి, ఉదాహరణకు ఇలా {{ns:user}}:Foo/vector.css అంతేగానీ, {{ns:user}}:Foo/Vector.css ఇలా కాదు.",
 'updated'                          => '(నవీకరించబడింది)',
 'note'                             => "'''గమనిక:'''",
 'previewnote'                      => "'''ఇది మునుజూపు మాత్రమే;
@@ -2714,7 +2701,6 @@ $UNWATCHURL కి వెళ్ళండి.
 'skinname-chick'       => 'చిక్',
 'skinname-simple'      => 'సరళ',
 'skinname-modern'      => 'ఆధునిక',
-'skinname-vector'      => 'వెక్టర్',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'పరీక్షించినట్లుగా గుర్తు పెట్టు',

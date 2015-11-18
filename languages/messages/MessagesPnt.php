@@ -166,17 +166,6 @@ $messages = array(
 'faq'            => 'Πολλά ερωτήσεις (FAQ)',
 'faqpage'        => 'Project:Πολλά ερωτήσεις (FAQ)',
 
-# Vector skin
-'vector-action-delete'    => 'Σβήσον',
-'vector-action-move'      => 'Ετεροχλάεμαν',
-'vector-action-protect'   => 'Ασπάλιγμαν',
-'vector-action-undelete'  => 'Κλώσιμον',
-'vector-action-unprotect' => 'Άνοιγμαν',
-'vector-view-create'      => 'Ποίσον',
-'vector-view-edit'        => 'Άλλαξον',
-'vector-view-history'     => 'Τερέστεν ιστορίαν',
-'vector-view-view'        => 'Δεάβασον',
-'vector-view-viewsource'  => 'Τερέστεν κωδικόν',
 'actions'                 => 'Ενέργειας',
 'namespaces'              => 'Περιοχάς',
 'variants'                => 'Παραλλαγάς',

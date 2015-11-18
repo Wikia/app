@@ -305,18 +305,6 @@ $messages = array(
 'faq'            => 'Husto stajene prašenja (FAQ)',
 'faqpage'        => 'Project:Husto stajene prašenja (FAQ)',
 
-# Vector skin
-'vector-action-addsection'       => 'Temu přidać',
-'vector-action-delete'           => 'wušmórnyć',
-'vector-action-move'             => 'přesunyć',
-'vector-action-protect'          => 'škitać',
-'vector-action-undelete'         => 'Wobnowić',
-'vector-action-unprotect'        => 'Škit wotstronić',
-'vector-view-create'             => 'Wutworić',
-'vector-view-edit'               => 'Wobdźěłać',
-'vector-view-history'            => 'Stawizny',
-'vector-view-view'               => 'Čitać',
-'vector-view-viewsource'         => 'Žórło sej wobhladać',
 'actions'                        => 'Akcije',
 'namespaces'                     => 'Mjenowe rumy',
 'variants'                       => 'Warianty',
@@ -796,7 +784,6 @@ Móžeš [[Special:Search/{{PAGENAME}}|tutón titul strony]] na druhich stronach
 '''Wón hišće składowany njeje!'''",
 'sitejspreview'                    => "'''Wobkedźbujće, zo sej jenož přehlad tutoho JavaScriptoweho koda wobhladuješ.'''
 '''Wón hišće składowany njeje!'''",
-'userinvalidcssjstitle'            => "'''Warnowanje:''' Drasta z mjenom „$1” njeeksistuje. Prošu mysli na to, zo wosobinske strony .css a .js titul z małym pismikom wuwziwaja, na př. {{ns:user}}:Foo/vector.css město {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Zaktualizowany)',
 'note'                             => "'''Kedźbu:'''",
 'previewnote'                      => "'''Kedźbu, to je jenož přehlad. Twoje změny hišće składowane njejsu!'''",

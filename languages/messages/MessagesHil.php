@@ -166,18 +166,6 @@ $messages = array(
 'faq'            => 'Mga masami pamangkoton',
 'faqpage'        => 'Project:MMP',
 
-# Vector skin
-'vector-action-addsection'       => 'Magdugang sang topiko',
-'vector-action-delete'           => 'Panason',
-'vector-action-move'             => 'Saylohon',
-'vector-action-protect'          => 'Pangapinan',
-'vector-action-undelete'         => 'Dulaon ang pagpanas',
-'vector-action-unprotect'        => 'Ilisan ang pagpangapin',
-'vector-view-create'             => 'Himuon',
-'vector-view-edit'               => 'Ilisan',
-'vector-view-history'            => 'Lantawon ang kasaysayan',
-'vector-view-view'               => 'Magbasa',
-'vector-view-viewsource'         => 'Lantawon ang ginhalinan',
 'actions'                        => 'Mga hulag',
 'namespaces'                     => 'Ngalan-espasyo',
 'variants'                       => 'Mga nagkalain-lain',
@@ -703,7 +691,6 @@ Ang pinaka-ulihi nga log sa pagpuggong yara sa idalom para mahibaluan nimo:',
 'sitejspreview'                    => "'''Tandai nga ginalantaw mo pa lang ang ini nga kodigo sang JavaScript.'''
 '''Wala pa ini matipon!'''",
 'userinvalidcssjstitle'            => "'''Aviso:''' Wala sang panit nga \"\$1\".
-Sa mga pahungod nga mga panid nga .css and .js magamit sang titulo nga may gagmay nga letra (lowercase), e.g. {{ns:user}}:Foo/vector.css kontra sa {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Suno sa oras)',
 'note'                             => "'''Pansinon:'''",
 'previewnote'                      => "'''Tandaan nga prebyu lamang ini.'''

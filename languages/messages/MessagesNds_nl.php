@@ -461,18 +461,6 @@ $messages = array(
 'faq'            => 'Vragen die vake esteld wörden',
 'faqpage'        => 'Project:Vragen die vake esteld wörden',
 
-# Vector skin
-'vector-action-addsection'       => 'Niej onderwarp',
-'vector-action-delete'           => 'Vortdoon',
-'vector-action-move'             => 'Herneumen',
-'vector-action-protect'          => 'Beveiligen',
-'vector-action-undelete'         => 'Weerummeplaotsen',
-'vector-action-unprotect'        => 'Beveiliging wiezigen',
-'vector-view-create'             => 'Anmaken',
-'vector-view-edit'               => 'Bewarken',
-'vector-view-history'            => 'Geschiedenisse bekieken',
-'vector-view-view'               => 'Lezen',
-'vector-view-viewsource'         => 'Brontekste bekieken',
 'actions'                        => 'Haandeling',
 'namespaces'                     => 'Naamruumtes',
 'variants'                       => 'Variaanten',

@@ -464,18 +464,6 @@ $messages = array(
 'faq'            => 'SSS',
 'faqpage'        => 'Project:SSS',
 
-# Vector skin
-'vector-action-addsection'       => 'Konu ekle',
-'vector-action-delete'           => 'Sil',
-'vector-action-move'             => 'Taşı',
-'vector-action-protect'          => 'Koru',
-'vector-action-undelete'         => 'Silinmeyi geri al',
-'vector-action-unprotect'        => 'Korumayı değiştir',
-'vector-view-create'             => 'Oluştur',
-'vector-view-edit'               => 'Düzenle',
-'vector-view-history'            => 'Geçmişi gör',
-'vector-view-view'               => 'Oku',
-'vector-view-viewsource'         => 'Kaynağı gör',
 'actions'                        => 'Eylemler',
 'namespaces'                     => 'Ad alanları',
 'variants'                       => 'Türevler',

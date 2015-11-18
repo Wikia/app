@@ -103,9 +103,6 @@ $messages = array(
 'faq'            => 'Отир сё юасьö',
 'faqpage'        => 'Project:отир сё юасьö',
 
-# Vector skin
-'vector-action-delete' => 'Чышкыны',
-'vector-view-view'     => 'Лыддьöтны',
 'variants'             => 'Варианттэз',
 
 'errorpagetitle'   => 'Сорасьöм',

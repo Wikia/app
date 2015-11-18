@@ -308,18 +308,6 @@ $messages = array(
 'faq'            => 'FAQ (väölgesjtèlde vraoge)',
 'faqpage'        => 'Project:Väölgestjèlde vraoge',
 
-# Vector skin
-'vector-action-addsection'       => 'Voog köpke toe',
-'vector-action-delete'           => 'Ewegsjaffe',
-'vector-action-move'             => 'Verplaats',
-'vector-action-protect'          => 'Besjirm',
-'vector-action-undelete'         => 'Plaats trök',
-'vector-action-unprotect'        => 'Anger beveiliging',
-'vector-view-create'             => 'Maak aan',
-'vector-view-edit'               => 'Bewirk',
-'vector-view-history'            => 'Bekiek de gesjiedenis',
-'vector-view-view'               => 'Laes',
-'vector-view-viewsource'         => 'Bekiek bróntèks',
 'actions'                        => 'Hanjeling',
 'namespaces'                     => 'Naamruumdes',
 'variants'                       => 'Anger vorme',
@@ -811,7 +799,6 @@ De leste bloklogregel wuuertj hiejónger t'r raodpleging gegaeve:",
 'sitejspreview'                    => "'''Dit is allein 'n veurvertuin van de JavaScriptcode.'''
 '''Deze is nog neet opgesjlage!'''",
 'userinvalidcssjstitle'            => "'''Waarsjoewing:''' d'r is gein skin \"\$1\".
-Lèt op: dien eige .css- en .js-pagina's beginne mèt  'ne klein lètter, beveurbeeld {{ns:user}}:Naam/vector.css in plaats van {{ns:user}}:Naam/Vector.css.",
 'updated'                          => '(Biegewèrk)',
 'note'                             => "'''Opmirking:'''",
 'previewnote'                      => "'''Lèt op: dit is 'n controlepazjena; dien tèks is nog neet opgesjlage!'''",

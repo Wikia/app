@@ -160,18 +160,6 @@ $messages = array(
 'faq'            => 'Ebitera okubuuzibwa',
 'faqpage'        => 'Project:Ebitera okubuuzibwa ku',
 
-# Vector skin
-'vector-action-addsection'       => 'Tandikawo emboozi endala',
-'vector-action-delete'           => 'Gyawo olupapula luno',
-'vector-action-move'             => 'Simbuliza',
-'vector-action-protect'          => 'Ssiba',
-'vector-action-undelete'         => 'Zawo',
-'vector-action-unprotect'        => 'Kyusa ebikugizo',
-'vector-view-create'             => 'Lukolewo',
-'vector-view-edit'               => 'Kyusa',
-'vector-view-history'            => 'Ennanda ya fayiro eno',
-'vector-view-view'               => 'Soma',
-'vector-view-viewsource'         => "Kebera obulambike obw'ennono obw'olupapula luno",
 'actions'                        => "By'oyinza okukola",
 'namespaces'                     => 'Makuŋaanyizo',
 
@@ -661,7 +649,6 @@ okukunkumula eggwanika ezzibizi erya kalambulanetti yo olyoke osobole okulaba en
 '''Tannakazibwa.'''",
 'userinvalidcssjstitle'            => "'''Kulabula:''' Tewali endabika eyitibwa \"\$1\".<br />
 Empapula eza .css ne .js bamemba ze b'ekoledde, amannya ga zo ennukuta za mu<br />
-zonna ziteekwa okuba ntono, okugeza ''{{ns:user}}:Foo/vector.css'' so ssi ''{{ns:user}}:Foo/Vector.css''.",
 'updated'                          => '(Ebituukanisidwa)',
 'note'                             => "'''Okunnyonyola:'''",
 'previewnote'                      => "'''Kuno kugezaamubugeza; by'okoze tebinnakazibwa!'''",

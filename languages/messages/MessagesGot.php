@@ -89,11 +89,6 @@ $messages = array(
 'qbmyoptions'    => '𐌼𐌴𐌹𐌽𐌰 𐍃𐌴𐌹𐌳𐍉𐍃',
 'qbspecialpages' => '𐌿𐍃𐍃𐌹𐌽𐌳𐍃𐌴𐌹𐌳𐍉𐍃',
 
-# Vector skin
-'vector-action-delete' => '𐍄𐌰𐌹𐍂𐌰𐌽',
-'vector-view-create'   => 'Skapjan',
-'vector-view-edit'     => 'Máidjan',
-'vector-view-view'     => 'Lisan',
 
 'errorpagetitle'    => '𐍆𐌰𐌹𐍂𐌹𐌽𐌰 𐌳𐍅𐌰𐌻𐌹𐍃',
 'returnto'          => '𐌲𐌰𐍅𐌰𐌽𐌳𐌾𐌰𐌽 𐌰𐍄 $1.',

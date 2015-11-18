@@ -150,18 +150,6 @@ $messages = array(
 'faq'            => 'རྒྱུན་ལྡན་དྲི་བ།',
 'faqpage'        => 'Project: རྒྱུན་ལྡན་དྲི་བ།',
 
-# Vector skin
-'vector-action-addsection' => 'བརྗོད་གཞི་ཁ་སྣོན།',
-'vector-action-delete'     => 'སུབས།',
-'vector-action-move'       => 'སྤོར་བ།',
-'vector-action-protect'    => 'སྲུང་སྐྱོབ།',
-'vector-action-undelete'   => 'བསུབས་པ་གསོ་བ།',
-'vector-action-unprotect'  => 'སྲུང་སྐྱོབ་གློད་པ།',
-'vector-view-create'       => 'གསར་བཟོ།',
-'vector-view-edit'         => 'རྩོམ་སྒྲིག',
-'vector-view-history'      => 'ལོ་རྒྱུས་ལ་ལྟ་བ།',
-'vector-view-view'         => 'ཀློག་པ།',
-'vector-view-viewsource'   => 'ཁུངས་ལ་ལྟ་བ།',
 'actions'                  => 'བྱ་འགུལ།',
 'namespaces'               => 'མིང་འགོད་ས།',
 

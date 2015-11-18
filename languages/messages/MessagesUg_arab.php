@@ -186,18 +186,6 @@ $messages = array(
 'faq'            => 'كۆپ كۆرۈلىدىغان مەسىلىلەر',
 'faqpage'        => 'Project:كۆپ كۆرۈلىدىغان مەسىلىلەر',
 
-# Vector skin
-'vector-action-addsection'       => 'يېڭى باش تېما قوش',
-'vector-action-delete'           => 'ئۆچۈر',
-'vector-action-move'             => 'يۆتكە',
-'vector-action-protect'          => 'قوغدا',
-'vector-action-undelete'         => 'ئەسلىگە قايتۇر',
-'vector-action-unprotect'        => 'قوغداشنى ئۆزگەرت',
-'vector-view-create'             => 'قۇر',
-'vector-view-edit'               => 'تەھرىر',
-'vector-view-history'            => 'تارىخ كۆرسەت',
-'vector-view-view'               => 'ئوقۇ',
-'vector-view-viewsource'         => 'مەنبەنى كۆرسەت',
 'actions'                        => 'مەشغۇلات',
 'namespaces'                     => 'ئات بوشلۇقى',
 'variants'                       => 'ۋارىيانتلار',
@@ -729,7 +717,6 @@ $2
 'sitejspreview'                    => "'''دىققەت سىز پەقەت بۇ JavaScript  كودىنى ئالدىن كۆزىتىۋاتىسىز.'''
 '''ئۇ تېخى ساقلانمىدى!'''",
 'userinvalidcssjstitle'            => "'''ئاگاھلاندۇرۇش:''' تېرە\\\"\$1\" مەۋجۇد ئەمەس.
-ئادەتلەنگەن .css ۋە .js تور بەت ماۋزۇسىغا كىچىك يېزىلىشتىكى ھەرپ ئىشلىتىلىدۇ، مەسىلەن، {{ns:user}}:Foo/vector.css بىلەن {{ns:user}}:Foo/Vector.css ئوخشاش ئەمەس.",
 'updated'                          => '(يېڭىلاندى)',
 'note'                             => "'''ئىزاھات:'''",
 'previewnote'                      => "'''ئېسىڭىزدە بولسۇنكى بۇ پەقەتلا ئالدىن كۆزىتىش.'''

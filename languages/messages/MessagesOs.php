@@ -201,17 +201,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection' => 'Нæуæг ныхас бакæнын',
-'vector-action-delete'     => 'Аппарын',
-'vector-action-move'       => 'Ном ивын',
-'vector-action-protect'    => 'Сæхгæнын',
-'vector-action-undelete'   => 'Рацаразын',
-'vector-view-create'       => 'Скæнын',
-'vector-view-edit'         => 'Ивын',
-'vector-view-history'      => 'Истори',
-'vector-view-view'         => 'Кæсын',
-'vector-view-viewsource'   => 'Код кæсын',
 'actions'                  => 'Архайдтæ',
 'namespaces'               => 'Номдæттæ',
 'variants'                 => 'Варианттæ',

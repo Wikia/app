@@ -135,13 +135,6 @@ $messages = array(
 'qbpageoptions'  => 'Ари адаҟьа',
 'qbspecialpages' => 'Цастәи адаҟьақәа',
 
-# Vector skin
-'vector-action-move'     => 'Ахьӡ аҧсахра',
-'vector-view-create'     => 'Арҿиара',
-'vector-view-edit'       => 'Ариашамҭа',
-'vector-view-history'    => 'Аҭоурых',
-'vector-view-view'       => 'Аҧхьара',
-'vector-view-viewsource' => 'Ахәаҧшра',
 
 'help'             => 'Ацхыраара',
 'search'           => 'Аҧшаара',

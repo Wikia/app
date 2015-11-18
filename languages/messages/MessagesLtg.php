@@ -118,15 +118,6 @@ $messages = array(
 'qbmyoptions'    => 'Munys puslopys',
 'qbspecialpages' => 'Specialuos puslopys',
 
-# Vector skin
-'vector-action-addsection' => 'Dalikt padaļu',
-'vector-action-delete'     => 'Iztreit',
-'vector-action-move'       => 'Puorceļt',
-'vector-action-protect'    => 'Apsorguot',
-'vector-action-unprotect'  => 'Puormeit apsardzeibu',
-'vector-view-edit'         => 'Pataiseit',
-'vector-view-history'      => 'Viesture',
-'vector-view-view'         => 'Vērtīs',
 'actions'                  => 'Darbeibys',
 'namespaces'               => 'Vuordu pluoti',
 'variants'                 => 'Varianti',

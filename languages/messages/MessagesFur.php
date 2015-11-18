@@ -244,18 +244,6 @@ $messages = array(
 'qbspecialpages' => 'Pagjinis speciâls',
 'faq'            => 'Domandis plui frecuentis',
 
-# Vector skin
-'vector-action-addsection' => 'Gnove sezion',
-'vector-action-delete'     => 'Elimine',
-'vector-action-move'       => 'Môf',
-'vector-action-protect'    => 'Protêç',
-'vector-action-undelete'   => 'Recupere',
-'vector-action-unprotect'  => 'No stâ protezi',
-'vector-view-create'       => 'Cree',
-'vector-view-edit'         => 'Cambie',
-'vector-view-history'      => 'Cjale il storic',
-'vector-view-view'         => 'Lei',
-'vector-view-viewsource'   => 'Cjale risultive',
 'actions'                  => 'Azions',
 'namespaces'               => 'Spazis dai nons',
 'variants'                 => 'Variants',

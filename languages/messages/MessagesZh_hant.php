@@ -360,18 +360,6 @@ $messages = array(
 'faq'            => '常見問題解答',
 'faqpage'        => 'Project:常見問題解答',
 
-# Vector skin
-'vector-action-addsection'       => '加入主題',
-'vector-action-delete'           => '刪除',
-'vector-action-move'             => '移動',
-'vector-action-protect'          => '保護',
-'vector-action-undelete'         => '恢復被刪頁面',
-'vector-action-unprotect'        => '更改保護',
-'vector-view-create'             => '建立',
-'vector-view-edit'               => '編輯',
-'vector-view-history'            => '檢視歷史',
-'vector-view-view'               => '閱讀',
-'vector-view-viewsource'         => '檢視原始碼',
 'actions'                        => '動作',
 'namespaces'                     => '名字空間',
 'variants'                       => '變換',
@@ -860,7 +848,6 @@ $2
 '''還沒有儲存！'''",
 'sitejspreview'                    => "'''記住你現在只是預覽此 JavaScript 代碼。'''
 '''還沒有儲存！'''",
-'userinvalidcssjstitle'            => "'''警告:''' 不存在面板\"\$1\"。注意自訂的 .css 和 .js 頁要使用小寫標題，例如，{{ns:user}}:Foo/vector.css 不同於 {{ns:user}}:Foo/Vector.css。",
 'updated'                          => '（已更新）',
 'note'                             => "'''注意:'''",
 'previewnote'                      => "'''請記住這只是預覽，內容尚未儲存！'''",
@@ -2827,7 +2814,6 @@ $1被封禁的理由是“$2”',
 'chick.css'       => '/* 此處的 CSS 將影響使用 Chick 面板的用戶 */',
 'simple.css'      => '/* 此處的 CSS 將影響使用 Simple 面板的用戶 */',
 'modern.css'      => '/* 此處的 CSS 將影響使用 Modern 面板的用戶 */',
-'vector.css'      => '/* 此處的 CSS 將影響使用 Vector 面板的用戶 */',
 'print.css'       => '/* 此處的 CSS 將影響打印輸出 */',
 'handheld.css'    => '/* 此處的 CSS 將影響在 $wgHandheldStyle 設定手提裝置面板 */',
 
@@ -2841,7 +2827,6 @@ $1被封禁的理由是“$2”',
 'chick.js'       => '/* 此處的JavaScript將載入於使用Chick面板的用戶 */',
 'simple.js'      => '/* 此處的JavaScript將載入於使用Simple面板的用戶 */',
 'modern.js'      => '/* 此處的JavaScript將載入於使用Modern面板的用戶 */',
-'vector.js'      => '/* 此處的JavaScript將載入於使用Vector面板的用戶 */',
 
 # Metadata
 'notacceptable' => '該網站伺服器不能提供您的客戶端能識別的數據格式。',

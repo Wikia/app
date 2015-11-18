@@ -204,18 +204,6 @@ $messages = array(
 'faq'            => 'AGG',
 'faqpage'        => 'Project:AGG',
 
-# Vector skin
-'vector-action-addsection' => 'Igdugang hin himangrawon',
-'vector-action-delete'     => 'Para-a',
-'vector-action-move'       => 'Balhina',
-'vector-action-protect'    => 'Panalipda',
-'vector-action-undelete'   => 'Igbalik an ginpara',
-'vector-action-unprotect'  => 'Liwani an panalipod',
-'vector-view-create'       => 'Himo-a',
-'vector-view-edit'         => 'Igliwat',
-'vector-view-history'      => 'Kitaa an kaagi',
-'vector-view-view'         => 'Basaha',
-'vector-view-viewsource'   => 'Kitaa an ginkuhaan',
 'actions'                  => 'Mga buhat',
 'namespaces'               => "Mga ngaran-lat'ang",
 'variants'                 => 'Mga pagkadirudilain',

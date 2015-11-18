@@ -262,18 +262,6 @@ $messages = array(
 'faq'            => 'সততে উঠা প্ৰশ্ন (FAQ)',
 'faqpage'        => 'Project:সততে উঠা প্ৰশ্ন',
 
-# Vector skin
-'vector-action-addsection'       => 'বিষয় যোগ',
-'vector-action-delete'           => 'মচি পেলাওক',
-'vector-action-move'             => 'স্থানান্তৰ কৰক',
-'vector-action-protect'          => 'সুৰক্ষিত কৰক',
-'vector-action-undelete'         => 'পুনৰুদ্ধাৰ কৰক',
-'vector-action-unprotect'        => 'সুৰক্ষা সলনি কৰক',
-'vector-view-create'             => 'সৃষ্টি কৰক',
-'vector-view-edit'               => 'সম্পাদনা',
-'vector-view-history'            => 'ইতিহাস চাওক',
-'vector-view-view'               => 'পঢ়ক',
-'vector-view-viewsource'         => 'উৎস চাওক',
 'actions'                        => 'কাৰ্য্যসমূহ',
 'namespaces'                     => 'নামস্থান',
 'variants'                       => 'বিকল্পসমূহ',
@@ -779,7 +767,6 @@ $1ৰ দ্বাৰা এই অৱৰোধ কৰা হৈছে ।
 '''এইটো এতিয়াও সাঁচি ৰখা হোৱা নাই !'''",
 'sitejspreview'                    => "'''মনত ৰাখিব আপুনি এই জাভালিপি ক’ড কেৱল প্ৰাকদৰ্শন কৰিছে ।'''
  '''এইটো এতিয়াও সাঁচি ৰখা হোৱা নাই !'''",
-'userinvalidcssjstitle'            => "'''সতৰ্কবানী:'''  \"\$1\" নামৰ কোনো আৱৰণ নাই । Custom .css আৰু .js পৃষ্ঠাই সৰুফলাৰ শিৰোনামা ব্যৱহাৰ কৰে, যেনে-  {{ns:user}}:Foo/Vector.css ৰ সলনি {{ns:user}}:Foo/vector.css ।",
 'updated'                          => "(আপডেট কৰা হ'ল)",
 'note'                             => "'''টোকা:'''",
 'previewnote'                      => "'''মনত ৰাখিব যে এয়া কেৱল খচৰা হে, সাল-সলনিবোৰ এতিয়াও সংৰক্ষিত কৰা হোৱা নাই!'''",

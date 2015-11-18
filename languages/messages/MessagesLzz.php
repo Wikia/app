@@ -107,9 +107,6 @@ $messages = array(
 'qbmyoptions'    => 'Çkimi sayfape',
 'qbspecialpages' => 'Doxmeli sayfape',
 
-# Vector skin
-'vector-action-delete' => 'Jili',
-'vector-view-edit'     => 'Doktiri',
 
 'errorpagetitle'   => 'Çilata',
 'returnto'         => '$1 butʼkʼaşa goikti.',

@@ -168,18 +168,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Bagian baru',
-'vector-action-delete'           => 'Hapuih',
-'vector-action-move'             => 'Pindahkan',
-'vector-action-protect'          => 'Lindungi',
-'vector-action-undelete'         => 'Pambatalan panghapusan',
-'vector-action-unprotect'        => 'Palinduangan',
-'vector-view-create'             => 'Buek',
-'vector-view-edit'               => 'Suntiang',
-'vector-view-history'            => 'Caliak riwayat nan lalu',
-'vector-view-view'               => 'Baco',
-'vector-view-viewsource'         => 'Caliak sumber',
 'actions'                        => 'Tindakan',
 'namespaces'                     => 'Ruang namo:',
 'variants'                       => 'Variasi:',
@@ -657,7 +645,6 @@ Pratayang iko alun disimpan!'''",
 '''Parubahan alun disimpan!'''",
 'sitejspreview'                    => "'''Ingeklah bahawa Sanak hanyo manampilan pratayang dari Kode JavaScript iko.'''
 '''Parubahan alun disimpan!'''",
-'userinvalidcssjstitle'            => "'''Paringatan:''' Kulik \"\$1\" indak ditamuan. Harap diingek bahawa laman .css dan .js manggunokan huruf kecil, contoh {{ns:user}}:Foo/vector.css dan bukannyo {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Dipabaharui)',
 'note'                             => "'''Catatan:'''",
 'previewnote'                      => "'''Iko hanyo tampilan pratonton.'''

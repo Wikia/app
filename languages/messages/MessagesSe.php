@@ -133,8 +133,6 @@ $messages = array(
 'qbmyoptions'    => 'Ásahusat',
 'qbspecialpages' => 'Doaibmasiiddut',
 
-# Vector skin
-'vector-view-view' => 'Loga',
 
 'errorpagetitle'    => 'Feaila',
 'returnto'          => 'Máhcat siidui $1.',

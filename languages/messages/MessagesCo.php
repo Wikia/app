@@ -84,10 +84,6 @@ $messages = array(
 'qbmyoptions'    => 'E mo pagine',
 'qbspecialpages' => 'Pagine spiciale',
 
-# Vector skin
-'vector-action-delete'  => 'Supprimà',
-'vector-action-protect' => 'Pruteghje',
-'vector-view-edit'      => 'Mudificà',
 
 'errorpagetitle'   => 'Errore',
 'returnto'         => 'Vultà à $1.',

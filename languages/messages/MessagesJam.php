@@ -163,18 +163,6 @@ Lef aaf dif afta pofaamin ruolbak',
 'faq'            => 'FAK',
 'faqpage'        => 'Project:FAK',
 
-# Vector skin
-'vector-action-addsection'       => 'Ad tapik',
-'vector-action-delete'           => 'Diliit',
-'vector-action-move'             => 'Muuv',
-'vector-action-protect'          => 'Protek',
-'vector-action-undelete'         => 'Andiliit',
-'vector-action-unprotect'        => 'Neu protektian',
-'vector-view-create'             => 'Kriet',
-'vector-view-edit'               => 'Hedit',
-'vector-view-history'            => 'Vyuu ischri',
-'vector-view-view'               => 'Riid',
-'vector-view-viewsource'         => 'Vyuu Suos',
 'actions'                        => 'Akshan',
 'namespaces'                     => 'Niemspies',
 'variants'                       => 'Vieriant',
@@ -630,7 +618,6 @@ Di lietis blak lag enchri provaid biluo fi refrans:',
 'userjspreview'                    => "'''Memba se yu onggl a tes/priivyuu yu yuuza JavaScript.'''
 '''Ino sieb yet!'''",
 'userinvalidcssjstitle'            => "'''Waanin:''' No skin \"\$1\" no de.
-Memba se kostom .css ahn .js piej yuuz a luwakies taikl, e.g. {{ns:user}}:Foo/vector.css az opuoz tu {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Opdiet)',
 'note'                             => "'''Nuot:'''",
 'previewnote'                      => "'''Memb se dis a onggl priivyuu.'''

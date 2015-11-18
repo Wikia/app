@@ -93,14 +93,6 @@ $messages = array(
 'qbmyoptions'    => 'Nyeƒe axawo',
 'qbspecialpages' => 'Axa tɔxewo',
 
-# Vector skin
-'vector-action-delete'   => 'Tutui',
-'vector-action-move'     => 'Ɖɔli eƒe nɔƒe',
-'vector-view-create'     => 'Dze egɔme',
-'vector-view-edit'       => 'Trɔ asi le eŋu',
-'vector-view-history'    => 'Kpɔ xoxoawo',
-'vector-view-view'       => 'Xlẽ',
-'vector-view-viewsource' => 'Kpɔ alesi woŋlɔe',
 
 'errorpagetitle'   => 'Vodada',
 'returnto'         => 'Gbugbɔ yi $1.',

@@ -172,18 +172,6 @@ $messages = array(
 'faq'            => 'ਸਵਾਲ-ਜਵਾਬ',
 'faqpage'        => 'Project:ਸਵਾਲ-ਜਵਾਬ',
 
-# Vector skin
-'vector-action-addsection' => 'ਮਜ਼ਮੂਨ ਜੋੜੋ',
-'vector-action-delete'     => 'ਹਟਾਓ',
-'vector-action-move'       => 'ਭੇਜੋ',
-'vector-action-protect'    => 'ਸੁਰੱਖਿਅਤ',
-'vector-action-undelete'   => 'ਹਟਾਉਣਾ ਵਾਪਸ',
-'vector-action-unprotect'  => 'ਸੁਰੱਖਿਆ ਬਦਲੋ',
-'vector-view-create'       => 'ਬਣਾਓ',
-'vector-view-edit'         => 'ਸੋਧ',
-'vector-view-history'      => 'ਅਤੀਤ ਵੇਖੋ',
-'vector-view-view'         => 'ਪੜ੍ਹੋ',
-'vector-view-viewsource'   => 'ਸਰੋਤ ਵੇਖੋ',
 'actions'                  => 'ਕਾਰਵਾਈ',
 'namespaces'               => 'ਨਾਂ-ਥਾਂ:',
 'variants'                 => 'ਬਦਲ',

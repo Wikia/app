@@ -262,18 +262,6 @@ $messages = array(
 'faq' => 'OSS',
 'faqpage' => 'Project:OSS',
 
-# Vector skin
-'vector-action-addsection' => 'Nýtt evni',
-'vector-action-delete' => 'Strika',
-'vector-action-move' => 'Flyt',
-'vector-action-protect' => 'Friða',
-'vector-action-undelete' => 'Endurstovna',
-'vector-action-unprotect' => 'Broyt friðing',
-'vector-view-create' => 'Stovna',
-'vector-view-edit' => 'Rætta',
-'vector-view-history' => 'Søga',
-'vector-view-view' => 'Les',
-'vector-view-viewsource' => 'Vís keldu',
 'actions' => 'Gerningar',
 'namespaces' => 'Navnarúm',
 'variants' => 'Ymisk sløg',
@@ -782,7 +770,6 @@ Tann seinasti sperringar gerðalistin er her niðanfyri fyri ávísing:',
 'sitejspreview' => "'''Minst til at hetta bert er ein royndar vísing av hesi JavaScript kotuni.'''
 '''Tað er ikki goymt enn!'''",
 'userinvalidcssjstitle' => "'''Ávaring:''' Tað er onki skinn \"\$1\".
-Tilevnaðar .css og .js síður brúka heiti sum byrja við lítlum bókstavi, t.d.  {{ns:user}}:Foo/vector.css í mun til {{ns:user}}:Foo/Vector.css.",
 'updated' => '(Dagført)',
 'note' => "'''Viðmerking:'''",
 'previewnote' => "'''Minst til at hetta bara er ein forskoðan, sum enn ikki er goymd!'''",

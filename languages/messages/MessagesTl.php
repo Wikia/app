@@ -285,18 +285,6 @@ $messages = array(
 'faq'            => "Mga karaniwang itinatanong (''FAQ'')",
 'faqpage'        => "Project:Mga karaniwang itinatanong (''FAQ'')",
 
-# Vector skin
-'vector-action-addsection'       => 'Magdagdag ng paksa',
-'vector-action-delete'           => 'Burahin',
-'vector-action-move'             => 'Ilipat',
-'vector-action-protect'          => 'Ipagsanggalang',
-'vector-action-undelete'         => 'Alisin ang pagbubura',
-'vector-action-unprotect'        => 'Baguhin ang pagsasanggalang',
-'vector-view-create'             => 'Likhain',
-'vector-view-edit'               => 'Baguhin',
-'vector-view-history'            => 'Tingnan ang kasaysayan',
-'vector-view-view'               => 'Basahin',
-'vector-view-viewsource'         => 'Tingnan ang pinagmulan',
 'actions'                        => 'Mga kilos',
 'namespaces'                     => 'Mga ngalan-espasyo',
 'variants'                       => 'Naiiba pa',
@@ -808,7 +796,6 @@ Ang pinakahuling entrada sa talaan  ng pagharang ay ibinigay sa baba para sa iny
 'sitejspreview'                    => "'''Tandaan mong paunang tingin pa lamang ito ng nasabing kodigong JavaScript.'''
 '''Hindi pa ito nasasagip!'''",
 'userinvalidcssjstitle'            => "'''Babala:''' Walang pabalat na \"\$1\".
-Tandaang gumagamit ang pinasadyang mga pahinang .css at .js ng mga pamagat na may maliliit na mga titik, halimbawa na ang {{ns:user}}:Foo/vector.css na taliwas sa {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Naisapanahon na)',
 'note'                             => "'''Paunawa:'''",
 'previewnote'                      => "'''Isang lamang itong paunang tingin;

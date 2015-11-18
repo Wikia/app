@@ -235,12 +235,6 @@ $messages = array(
 'faq'            => 'FAQ (infuimmazioni e aggiuddu)',
 'faqpage'        => 'Project:FAQ (infuimmazioni e aggiuddu)',
 
-# Vector skin
-'vector-action-delete' => 'Canzella',
-'vector-action-move'   => 'Ippustha',
-'vector-view-create'   => 'Cria',
-'vector-view-edit'     => 'Mudifigga',
-'vector-view-view'     => 'Leggi',
 
 'errorpagetitle'    => 'Errori',
 'returnto'          => 'Turra a $1.',
@@ -608,7 +602,6 @@ S'ài sighiddu lu cullegamentu pa un'errori, è suffizenti incalchà lu buttoni 
 'userjsyoucanpreview'              => "'''Suggerimentu:''' Usa lu buttoni '''Visuarizza antiprimma''' pa prubà li nobi JS primma di sàivvaddi.",
 'usercsspreview'                   => "'''Ammitanti ch'è soru un'antiprimma di lu propriu CSS passunari; li mudìfigghi nò so ancora isthaddi sàivvaddi!'''",
 'userjspreview'                    => "'''Ammitanti ch'è soru un'antiprimma pa prubà lu propriu JavaScript passunari; li mudìfigghi nò so ancora isthaddi sàivvaddi!'''",
-'userinvalidcssjstitle'            => "'''Attinzioni:''' Nò isisthi nisciun aipettu gràficu \"\$1\". Amminta chi li pàgini pa li .css e .js passunari àni lu primu caràtteri di lu tìturu minori, cumenti {{ns:user}}:Foo/vector.css e nò {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Aggiornaddu)',
 'note'                             => "'''NOTA:'''",
 'previewnote'                      => "'''Attinzioni: chistha è soru un'antiprimma. Li mudifigghi a la pagina NÒ so ancora isthaddi saivvaddi!'''",

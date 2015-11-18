@@ -165,16 +165,6 @@ $messages = array(
 'qbmyoptions'    => 'моꙗ страницѧ',
 'qbspecialpages' => 'нарочьнꙑ страницѧ',
 
-# Vector skin
-'vector-action-delete'    => 'поничьжєниѥ',
-'vector-action-move'      => 'прѣимєнованиѥ',
-'vector-action-protect'   => 'ꙁабранѥниѥ',
-'vector-action-unprotect' => 'поущєниѥ',
-'vector-view-create'      => 'сътворѥниѥ',
-'vector-view-edit'        => 'исправи',
-'vector-view-history'     => 'їсторїꙗ',
-'vector-view-view'        => 'чьтѥниѥ',
-'vector-view-viewsource'  => 'страницѧ источьнъ обраꙁъ',
 'actions'                 => 'дѣиства',
 'namespaces'              => 'имєнъ просторꙑ',
 

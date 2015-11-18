@@ -202,17 +202,6 @@ $messages = array(
 'faq'            => 'Pregontas/Respostas (FAQ)',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection' => 'Giunghe cuntierra',
-'vector-action-delete'     => 'Cantzella',
-'vector-action-move'       => 'Move',
-'vector-action-protect'    => 'Ampara',
-'vector-action-undelete'   => 'Recùpera',
-'vector-view-create'       => 'Crea',
-'vector-view-edit'         => 'Acontza',
-'vector-view-history'      => 'Càstia istòria',
-'vector-view-view'         => 'Leghe',
-'vector-view-viewsource'   => 'Càstia mitza',
 'actions'                  => 'Atziones',
 'namespaces'               => 'Nùmene-logos',
 'variants'                 => 'Variantes',

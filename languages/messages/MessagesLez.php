@@ -137,18 +137,6 @@ $messages = array(
 'faq'            => 'Фад-фад гузвай жузунар (ФГЖ)',
 'faqpage'        => 'Project:ФГС',
 
-# Vector skin
-'vector-action-addsection' => 'Тема алава авун',
-'vector-action-delete'     => 'Алудун',
-'vector-action-move'       => 'ТIвар эхцигун',
-'vector-action-protect'    => 'Хуьн',
-'vector-action-undelete'   => 'ТуькIуьр хъувун',
-'vector-action-unprotect'  => 'Хуьн дегишарун',
-'vector-view-create'       => 'Туькlуьрун',
-'vector-view-edit'         => 'Дуьзар хъувун',
-'vector-view-history'      => 'Тарихдиз килигун',
-'vector-view-view'         => 'Кlелун',
-'vector-view-viewsource'   => 'Чешме къалурун',
 'actions'                  => 'Крар',
 'namespaces'               => 'Тlварарин генгвилер',
 'variants'                 => 'Жуьреяр',

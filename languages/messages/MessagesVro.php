@@ -192,18 +192,6 @@ $messages = array(
 'faq'            => 'Sagõhõhe küsüdüq küsümiseq',
 'faqpage'        => 'Project:KKK',
 
-# Vector skin
-'vector-action-addsection'       => 'Vahtsõ teema ülespandminõ',
-'vector-action-delete'           => 'Kistudaq ärq',
-'vector-action-move'             => 'Nõstaq ümbre',
-'vector-action-protect'          => 'Kaidsaq',
-'vector-action-undelete'         => 'Tiiq tagasi',
-'vector-action-unprotect'        => 'Muudaq kaidsõt',
-'vector-view-create'             => 'Luuq',
-'vector-view-edit'               => 'Toimõndaq',
-'vector-view-history'            => 'Näütäq aoluku',
-'vector-view-view'               => 'Loeq',
-'vector-view-viewsource'         => 'Kaeq lätteteksti',
 'actions'                        => 'Tallitusõq',
 'namespaces'                     => 'Nimeruumiq',
 'variants'                       => 'Tõõsõndiq',

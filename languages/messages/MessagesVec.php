@@ -299,18 +299,6 @@ $messages = array(
 'faq'            => 'Domande frequenti',
 'faqpage'        => 'Project:Domande frequenti',
 
-# Vector skin
-'vector-action-addsection'       => 'Zonta discusion',
-'vector-action-delete'           => 'Scanseła',
-'vector-action-move'             => 'Sposta',
-'vector-action-protect'          => 'Protezi',
-'vector-action-undelete'         => 'Recupera',
-'vector-action-unprotect'        => 'Sbloca',
-'vector-view-create'             => 'Crea',
-'vector-view-edit'               => 'Canbia',
-'vector-view-history'            => 'Varda la storia',
-'vector-view-view'               => 'Lezi',
-'vector-view-viewsource'         => 'Varda el testo',
 'actions'                        => 'Asion',
 'namespaces'                     => 'Namespace',
 'variants'                       => 'Varianse',
@@ -738,7 +726,6 @@ L'ultimo ełemento del rejistro de i blochi xè riportà de seguito par informas
 'usercsspreview'                   => "'''Sta qua la xe solo n'anteprima del proprio CSS personal.
 Le modifiche no le xe gnancora stà salvà!'''",
 'userjspreview'                    => "'''Sta qua la xe solo n'anteprima par proar el proprio JavaScript personal; le modifiche no le xe gnancora stà salvà!'''",
-'userinvalidcssjstitle'            => "'''Ocio:'''  No ghe xe nissuna skin con nome \"\$1\". Nota che le pagine par i .css e .js personalizà le gà l'iniziale del titolo minuscola, par esenpio {{ns:user}}:Esenpio/vector.css e no {{ns:user}}:Esenpio/Vector.css.",
 'updated'                          => '(Agiornà)',
 'note'                             => "'''Nota:'''",
 'previewnote'                      => "'''Sta qua la xe solo n'anteprima; i canbiamenti a la pagina NO i xe gnancora stà salvà!'''",

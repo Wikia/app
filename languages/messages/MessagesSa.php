@@ -425,18 +425,6 @@ The following {{PLURAL:$1|file is|$1 files are}} in the current category.',
 'faq'            => 'बहुधा पृच्छ्यमानाः प्रश्नाः',
 'faqpage'        => 'Project:बहुधा पृछ्यमानाः प्रश्नाः',
 
-# Vector skin
-'vector-action-addsection'       => 'विषयः योज्यताम्',
-'vector-action-delete'           => 'विलुप्यताम्',
-'vector-action-move'             => 'चाल्यताम्',
-'vector-action-protect'          => 'संरक्ष्यताम्',
-'vector-action-undelete'         => 'अपाकरणस्य निरसनम्',
-'vector-action-unprotect'        => 'सुरक्षितीकरणस्य निरसनम्',
-'vector-view-create'             => 'सृज्यताम्',
-'vector-view-edit'               => 'सम्पाद्यताम्',
-'vector-view-history'            => 'इतिहासः दृश्यताम्',
-'vector-view-view'               => 'पठ्यताम्',
-'vector-view-viewsource'         => 'स्रोतः दृश्यताम्',
 'actions'                        => 'क्रियाः',
 'namespaces'                     => 'नामाकाशानि',
 'variants'                       => 'भिन्नरूपाणि',
@@ -908,7 +896,6 @@ $2
 'sitejspreview'                    => "'''मनसि धारयतु यद्भवान् स्वकीयस्य जावास्क्रिप्ट्कूटस्य केवलं प्राग्दृश्यं पश्यति।'''
 '''इदं अधुनावधि यावत् रक्षितं नास्ति!'''",
 'userinvalidcssjstitle'            => "'''पूर्वसूचना:'''  \"\$1\" इति त्वक् न विद्यते।
-मनसि धारयतु यत् स्वेच्छया परिवर्तिताः .css, .js चेति पृष्ठाः लघूनक्षरान् प्रयोजयन्ति, यथा  {{ns:user}}:Foo/Vector.css इत्येतस्य स्थाने  {{ns:user}}:Foo/vector.css इत्येतत्।",
 'updated'                          => '(अद्यतनीकृतः)',
 'note'                             => "'''सूचना:'''",
 'previewnote'                      => "'''स्मरणीयं यदेतत् केवलं प्राग्दृश्यमस्ति।'''

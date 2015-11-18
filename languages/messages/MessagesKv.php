@@ -56,10 +56,6 @@ $messages = array(
 'qbfind' => 'Корсьысьӧм',
 'qbedit' => 'Веськӧдны',
 
-# Vector skin
-'vector-action-move' => 'Ним вежны',
-'vector-view-edit'   => 'Вежны',
-'vector-view-view'   => 'Лыддьыны',
 'namespaces'         => 'Ним пространствояс',
 
 'search'           => 'Корсьысьӧм',

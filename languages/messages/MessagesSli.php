@@ -166,18 +166,6 @@ $messages = array(
 'qbspecialpages' => 'Spezialseyta',
 'faq'            => 'FAQ',
 
-# Vector skin
-'vector-action-addsection' => 'Obschnitt hinzufiega',
-'vector-action-delete'     => 'Läscha',
-'vector-action-move'       => 'Verschieba',
-'vector-action-protect'    => 'Schützen',
-'vector-action-undelete'   => 'Wiederherstella',
-'vector-action-unprotect'  => 'Freigahn',
-'vector-view-create'       => 'Erstella',
-'vector-view-edit'         => 'Bearbeita',
-'vector-view-history'      => 'Versionsgeschichte',
-'vector-view-view'         => 'Lessa',
-'vector-view-viewsource'   => 'Quelltext siehn',
 'actions'                  => 'Aksjonna',
 'namespaces'               => 'Noamensraum:',
 'variants'                 => 'Varianta',
@@ -554,7 +542,6 @@ oder de zugehieriga <span class="plainlinks">[{{fullurl:{{#special:Log}}|page={{
 '''Beachte:''' Noach damm Speichern mußt du dennen Browser oaweisa, de neue Version zu loada: '''Mozilla/Firefox:''' ''Strg-Shift-R'', '''Internet Explorer:''' ''Strg-F5'', '''Opera:''' ''F5'', '''Safari:''' ''Cmd-Shift-R'', '''Konqueror:''' ''F5''.",
 'userjspreview'                    => "== Vurschau Dennes Nutzer-JavaScript ==
 '''Beachte:''' Noach damm Speichern mußt du dennen Browser oaweisa, de neue Version zu loada: '''Mozilla/Firefox:''' ''Strg-Shift-R'', '''Internet Explorer:''' ''Strg-F5'', '''Opera:''' ''F5'', '''Safari:''' ''Cmd-Shift-R'', '''Konqueror:''' ''F5''.",
-'userinvalidcssjstitle'            => "'''OCHTICHE:''' Skin „$1“ existiert ne. Bedenke, doß nutzerspezifische .css- und .js-Seyta miet a'm Kleenbuchstaba oafanga missa, olso beispielsweise ''{{ns:user}}:Mustermann/vector.css'' oa Stalle vu ''{{ns:user}}:Mustermoan/Vector.css''.",
 'previewnote'                      => "'''Dies ies ock anne Vurschau, de Seite wurde noo nee gespeichert!'''",
 'previewconflict'                  => "Diese Vurschau gitt 'n Inhalt des obern Textfeldes wieder. Su werd de Seite aussahn, wenn du jitz speicherst.",
 'session_fail_preview'             => "'''Denne Beoarbeetung konnte ne gespeichert waan, do Sitzungsdaten verlorn geganga sein.

@@ -359,18 +359,6 @@ $messages = array(
 'faq'            => 'ČPP',
 'faqpage'        => 'Project:ČPP',
 
-# Vector skin
-'vector-action-addsection'       => 'Dodaj temu',
-'vector-action-delete'           => 'Brisanje',
-'vector-action-move'             => 'Preusmjeri',
-'vector-action-protect'          => 'Zaštiti',
-'vector-action-undelete'         => 'Vrati obrisano',
-'vector-action-unprotect'        => 'Promijeni zaštitu',
-'vector-view-create'             => 'Napravi',
-'vector-view-edit'               => 'Uredi',
-'vector-view-history'            => 'Pregled historije',
-'vector-view-view'               => 'Čitaj',
-'vector-view-viewsource'         => 'Vidi izvor (source)',
 'actions'                        => 'Akcije',
 'namespaces'                     => 'Imenski prostori',
 'variants'                       => 'Varijante',
@@ -891,7 +879,6 @@ Posljednje stavke evidencije blokiranja možete pogledati ispod:',
 'sitejspreview'                    => "'''Zapamtite ovo je samo izgled ovog koda JavaScripte.'''
 '''Još uvijek nije snimljen!'''",
 'userinvalidcssjstitle'            => "'''Upozorenje:''' Ne postoji interfejs (skin) pod imenom \"\$1\".
-Ne zaboravite da imena stranica s .css i .js kodom počinju malim slovom, npr. {{ns:user}}:Foo/vector.css, a ne {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Osvježeno)',
 'note'                             => "'''Napomena:'''",
 'previewnote'                      => "'''Upamtite da je ovo samo pretpregled.'''

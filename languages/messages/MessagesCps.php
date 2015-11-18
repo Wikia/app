@@ -165,18 +165,6 @@ $messages = array(
 'faq'            => 'Mga perme napamangkot ("FAQ")',
 'faqpage'        => "Project:Mga perme napamangkot (''FAQ'')",
 
-# Vector skin
-'vector-action-addsection'       => 'Magdugang sang topiko',
-'vector-action-delete'           => 'Panason',
-'vector-action-move'             => 'Isdogon',
-'vector-action-protect'          => 'Protektahan',
-'vector-action-undelete'         => 'Indi pag panason',
-'vector-action-unprotect'        => 'Islan ang proteksyon',
-'vector-view-create'             => 'Ubrahon',
-'vector-view-edit'               => 'Bag-uhon',
-'vector-view-history'            => 'Ipakita ang kasaysayan',
-'vector-view-view'               => 'Basahon',
-'vector-view-viewsource'         => 'Lantawon ang ginhalinan',
 'actions'                        => 'Mga hulag',
 'namespaces'                     => 'Mga lang-at ngalan',
 'variants'                       => 'Mga pililian',

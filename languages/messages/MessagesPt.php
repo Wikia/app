@@ -461,18 +461,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Adicionar&nbsp;tópico',
-'vector-action-delete'           => 'Eliminar',
-'vector-action-move'             => 'Mover',
-'vector-action-protect'          => 'Proteger',
-'vector-action-undelete'         => 'Restaurar',
-'vector-action-unprotect'        => 'Alterar protecção',
-'vector-view-create'             => 'Criar',
-'vector-view-edit'               => 'Editar',
-'vector-view-history'            => 'Ver histórico',
-'vector-view-view'               => 'Ler',
-'vector-view-viewsource'         => 'Ver fonte',
 'actions'                        => 'Acções',
 'namespaces'                     => 'Espaços nominais',
 'variants'                       => 'Variantes',
@@ -986,7 +974,6 @@ Este ainda não foi gravado!",
 '''Ele ainda não foi gravado!'''",
 'sitejspreview'                    => "'''Lembre-se de que está apenas a antever este código JavaScript.'''
 '''Ele ainda não foi gravado!'''",
-'userinvalidcssjstitle'            => "'''Aviso:''' Não existe um tema \"\$1\". Lembre-se que as páginas .css e  .js têm um título em minúsculas, exemplo: {{ns:user}}:Alguém/vector.css em vez de {{ns:user}}:Alguém/Vector.css.",
 'updated'                          => '(Actualizado)',
 'note'                             => "'''Nota:'''",
 'previewnote'                      => "'''Lembre-se que esta é apenas uma antevisão do resultado.'''
@@ -3002,7 +2989,6 @@ Permite colocar uma justificação no resumo da edição.',
 'chick.css'       => '/* Código CSS colocado aqui afectará os utilizadores do tema Chique */',
 'simple.css'      => '/* Código CSS colocado aqui afectará os utilizadores do tema Simples */',
 'modern.css'      => '/* Código CSS colocado aqui afectará os utilizadores do tema Moderno */',
-'vector.css'      => '/* Código CSS colocado aqui afectará os utilizadores do tema Vector */',
 'print.css'       => '/* Código CSS colocado aqui afectará as impressões */',
 'handheld.css'    => '/* Código CSS colocado aqui afectará dispositivos móveis baseados no tema configurado em $wgHandheldStyle */',
 
@@ -3016,7 +3002,6 @@ Permite colocar uma justificação no resumo da edição.',
 'chick.js'       => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Chick */',
 'simple.js'      => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Simples */',
 'modern.js'      => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Moderno */',
-'vector.js'      => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Vector */',
 
 # Metadata
 'notacceptable' => 'O servidor não pode fornecer os dados num formato que o seu cliente possa ler.',
@@ -3064,7 +3049,6 @@ Este bloqueio foi provavelmente causado por um link para um site externo que con
 'skinname-chick'       => 'Chique',
 'skinname-simple'      => 'Simples',
 'skinname-modern'      => 'Moderno',
-'skinname-vector'      => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marcar como patrulhada',

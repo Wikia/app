@@ -222,18 +222,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Tinyé Okwu',
-'vector-action-delete'           => 'Kàcha',
-'vector-action-move'             => 'Páfụ',
-'vector-action-protect'          => 'Cẹdolu',
-'vector-action-undelete'         => 'Á gbàkashikwà',
-'vector-action-unprotect'        => 'Nchẹdo mgbanwe',
-'vector-view-create'             => 'Ké',
-'vector-view-edit'               => 'Mèzi',
-'vector-view-history'            => 'Le akíkó mbu',
-'vector-view-view'               => 'Guwá',
-'vector-view-viewsource'         => 'Zi mkpurụ',
 'actions'                        => 'Mmèmé',
 'namespaces'                     => 'Ámááhà',
 'variants'                       => 'Nke ichè ichè',

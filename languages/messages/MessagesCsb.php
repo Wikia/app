@@ -182,18 +182,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Dodôj témã',
-'vector-action-delete'           => 'Rëmôj',
-'vector-action-move'             => 'Przeniesë',
-'vector-action-protect'          => 'Zazychrëjë',
-'vector-action-undelete'         => 'Doprowôdzë nazôd',
-'vector-action-unprotect'        => 'Òdzychrëjë',
-'vector-view-create'             => 'Ùsôdzë',
-'vector-view-edit'               => 'Edicëjô',
-'vector-view-history'            => 'Historëjô lopka',
-'vector-view-view'               => 'Czëtôj',
-'vector-view-viewsource'         => 'Zdrojowi tekst',
 'actions'                        => 'Dzéjania',
 'namespaces'                     => 'Rum mionów:',
 'variants'                       => 'Wariantë',

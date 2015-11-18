@@ -86,13 +86,6 @@ $messages = array(
 'faq'            => 'Cam caeuq dap',
 'faqpage'        => 'Project:Cam caeuq dap',
 
-# Vector skin
-'vector-action-delete'  => 'Ca',
-'vector-action-move'    => 'Daen',
-'vector-action-protect' => 'Bauj',
-'vector-view-create'    => 'Laeb',
-'vector-view-edit'      => 'gaij',
-'vector-view-history'   => 'Cazyawj lizsij',
 
 'errorpagetitle'   => 'Loengloek',
 'tagline'          => 'okcih {{SITENAME}}',

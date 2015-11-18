@@ -79,12 +79,6 @@ $messages = array(
 'qbbrowse' => 'Tala',
 'qbedit'   => 'Soba',
 
-# Vector skin
-'vector-action-delete' => 'Kufwa',
-'vector-action-move'   => 'Nata',
-'vector-view-edit'     => 'Sonika',
-'vector-view-history'  => 'Tala bansoba',
-'vector-view-view'     => 'Tânga',
 
 'errorpagetitle'   => 'Foti',
 'returnto'         => 'Vutukila $1',

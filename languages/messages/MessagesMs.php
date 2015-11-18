@@ -346,18 +346,6 @@ $messages = array(
 'faq'            => 'Soalan Lazim',
 'faqpage'        => 'Project:Soalan Lazim',
 
-# Vector skin
-'vector-action-addsection'       => 'Buka topik',
-'vector-action-delete'           => 'Hapuskan',
-'vector-action-move'             => 'Pindahkan',
-'vector-action-protect'          => 'Lindungi',
-'vector-action-undelete'         => 'Batal hapus',
-'vector-action-unprotect'        => 'Ubah perlindungan',
-'vector-view-create'             => 'Cipta',
-'vector-view-edit'               => 'Sunting',
-'vector-view-history'            => 'Lihat sejarah',
-'vector-view-view'               => 'Baca',
-'vector-view-viewsource'         => 'Lihat sumber',
 'actions'                        => 'Tindakan',
 'namespaces'                     => 'Ruang nama',
 'variants'                       => 'Kelainan',
@@ -851,7 +839,6 @@ Masukan log sekatan terakhir disediakan di bawah sebagai rujukan:',
 '''Ia belum lagi disimpan!'''",
 'sitejspreview'                    => "'''Ingat bahawa anda cuma mempralihat kod JavaScript ini.'''
 '''Ia belum lagi disimpan!'''",
-'userinvalidcssjstitle'            => "'''Amaran:''' Rupa \"\$1\" tidak wujud. Ingat bahawa laman tempahan .css dan .js menggunakan tajuk berhuruf kecil, contohnya {{ns:user}}:Anu/vector.css tidak sama dengan {{ns:user}}:Anu/Vector.css.",
 'updated'                          => '(Dikemas kini)',
 'note'                             => "'''Catatan:'''",
 'previewnote'                      => "'''Ingatlah bahawa ini hanya pralihat.'''
@@ -2857,7 +2844,6 @@ Simpan dalam komputer anda dan muat naiknya di sini.',
 'chick.css'       => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Chick */',
 'simple.css'      => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Ringkas */',
 'modern.css'      => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Moden */',
-'vector.css'      => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Vector */',
 
 # Metadata
 'notacceptable' => 'Pelayan wiki ini tidak mampu menyediakan data dalam format yang boleh dibaca oleh pelanggan anda.',
@@ -2904,7 +2890,6 @@ Simpan dalam komputer anda dan muat naiknya di sini.',
 'skinname-chick'       => 'Chick',
 'skinname-simple'      => 'Ringkas',
 'skinname-modern'      => 'Moden',
-'skinname-vector'      => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Tanda ronda',

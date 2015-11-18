@@ -382,18 +382,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => '加主題',
-'vector-action-delete'           => '刪除',
-'vector-action-move'             => '移動',
-'vector-action-protect'          => '保護',
-'vector-action-undelete'         => '去睇刪除咗嘅頁面',
-'vector-action-unprotect'        => '解除保護',
-'vector-view-create'             => '建立',
-'vector-view-edit'               => '編輯',
-'vector-view-history'            => '睇吓歷史',
-'vector-view-view'               => '閱',
-'vector-view-viewsource'         => '睇吓原始碼',
 'actions'                        => '動作',
 'namespaces'                     => '空間名',
 'variants'                       => '變換',
@@ -829,7 +817,6 @@ $1',
 '''佢嘅內容重未儲存！'''",
 'sitejspreview'                    => "'''記住你而家只係預覽呢段 JavaScript 代碼。'''
 '''佢嘅內容重未儲存！'''",
-'userinvalidcssjstitle'            => "'''警告：''' 無叫做 \"\$1\" 嘅畫面。請記住自訂介面的 .css 和 .js 頁面時應使用細楷，例如：{{ns:user}}:Foo/vector.css 而唔係 {{ns:user}}:Foo/Vector.css 。",
 'updated'                          => '(己更新)',
 'note'                             => "'''留意:'''",
 'previewnote'                      => "'''請記住呢個只係預覽。'''
@@ -2665,7 +2652,6 @@ $1',
 'chick.css'       => '/* 響呢度放 CSS 碼去改用戶用嘅俏畫面 */',
 'simple.css'      => '/* 響呢度放 CSS 碼去改用戶用嘅簡單畫面 */',
 'modern.css'      => '/* 響呢度放 CSS 碼去改用戶用嘅摩登畫面 */',
-'vector.css'      => '/* 響呢度放 CSS 碼去改用戶用嘅域達畫面 */',
 'print.css'       => '/* 響呢度放 CSS 碼去改打印輸出 */',
 'handheld.css'    => '/* 響呢度放 CSS 碼去改響 $wgHandheldStyle 設定手提裝置畫面 */',
 
@@ -2679,7 +2665,6 @@ $1',
 'chick.js'       => '/* 響每一次個頁面載入時，用俏畫面嘅用戶都會載入呢度任何嘅JavaScript */',
 'simple.js'      => '/* 響每一次個頁面載入時，用簡單畫面嘅用戶都會載入呢度任何嘅JavaScript */',
 'modern.js'      => '/* 響每一次個頁面載入時，用摩登畫面嘅用戶都會載入呢度任何嘅JavaScript */',
-'vector.js'      => '/* 響每一次個頁面載入時，用域達畫面嘅用戶都會載入呢度任何嘅JavaScript */',
 
 # Metadata
 'notacceptable' => '呢個 wiki 伺服器唔能夠畀一個可以讀嘅資料畀個客。',
@@ -2714,7 +2699,6 @@ $1',
 'skinname-chick'       => '俏',
 'skinname-simple'      => '簡單',
 'skinname-modern'      => '摩登',
-'skinname-vector'      => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff'                 => '標示為已巡查嘅',

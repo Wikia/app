@@ -418,18 +418,6 @@ $messages = array(
 'faq' => 'Pasaq tapuykuna',
 'faqpage' => 'Project:Pasaq tapuykuna',
 
-# Vector skin
-'vector-action-addsection' => 'Allwiyta yapay',
-'vector-action-delete' => 'Qulluy',
-'vector-action-move' => 'Astay',
-'vector-action-protect' => 'Amachay',
-'vector-action-undelete' => 'Qullusqata paqarichiy',
-'vector-action-unprotect' => 'Amachayta wakinchay',
-'vector-view-create' => 'Kamariy',
-'vector-view-edit' => "Llamk'apuy",
-'vector-view-history' => 'Wiñay kawsayta qhaway',
-'vector-view-view' => 'Ñawiriy',
-'vector-view-viewsource' => 'Pukyu qillqata qhaway',
 'actions' => 'Ruraykuna',
 'namespaces' => "Suti k'itikuna",
 'variants' => "Ñawra rikch'akuykuna",
@@ -916,7 +904,6 @@ Hark'ay hallch'api qhipaq hark'asqataqa kaypim rikunki willasunaykipaq:",
 '''Manaraqmi waqaychasqachu!'''",
 'sitejspreview' => "'''Yuyariy, qhawarillachkankim kay JavaScript qillqata.'''
 '''Manaraqmi waqaychasqachu!'''",
-'userinvalidcssjstitle' => "'''Paqtataq:''' Manam kanchu \"\$1\" qara. Yuyariy, kikinpa .css, .js p'anqankunaqa uchuy sanampa umalliyuqmi, ahinataq {{ns:user}}:Foo/vector.css manataq  {{ns:user}}:Foo/Vector.css nisqachu.",
 'updated' => '(Musuqchasqa)',
 'note' => "'''Musyay:'''",
 'previewnote' => "'''Yuyaykuy: Kayqa qhawariyllam.'''

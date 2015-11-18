@@ -310,18 +310,6 @@ $messages = array(
 'faq' => 'FAQ (pšašanja a wótegrona)',
 'faqpage' => 'Project:FAQ (pšašanja a wótegrona)',
 
-# Vector skin
-'vector-action-addsection' => 'Temu pśidaś',
-'vector-action-delete' => 'Wulašowaś',
-'vector-action-move' => 'Pśesunuś',
-'vector-action-protect' => 'Šćitaś',
-'vector-action-undelete' => 'Wótnowiś',
-'vector-action-unprotect' => 'Šćit změniś',
-'vector-view-create' => 'Napóraś',
-'vector-view-edit' => 'Wobźěłaś',
-'vector-view-history' => 'Wersije a awtory',
-'vector-view-view' => 'Cytaś',
-'vector-view-viewsource' => 'Žrědło se woglědaś',
 'actions' => 'Akcije',
 'namespaces' => 'Mjenjowe rumy',
 'variants' => 'Warianty',
@@ -813,7 +801,6 @@ Nejnowšy zapisk blokěrowańskego protokola pódawa se dołojce ako referenca:'
 '''Njejo se hyšći składował!'''",
 'sitejspreview' => "'''Źiwaj na to, až wobglědujoš se jano pśeglěd toś togo koda JavaScript.'''
 '''Njejo se hyšći składował!'''",
-'userinvalidcssjstitle' => "'''Warnowanje:''' Njeeksistěrujo šat „$1“. Pšosym mysli na to, až wužywaju .css- a .js-boki mały pismik, na pś. ''{{ns:user}}:Pśikładowa/vector.css'' město ''{{ns:user}}:Pśikładowa/Vector.css''.",
 'updated' => '(Zaktualizěrowane)',
 'note' => "'''Pokazka:'''",
 'previewnote' => "'''Wobmysli, až to jo jano pśeglěd.'''

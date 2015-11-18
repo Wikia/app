@@ -58,8 +58,6 @@ $messages = array(
 # Cologne Blue skin
 'qbspecialpages' => 'piji mappitaq',
 
-# Vector skin
-'vector-view-edit' => 'Suqusiqpaa',
 
 'help'              => 'qajalippaa',
 'search'            => 'ivaaqpuq',

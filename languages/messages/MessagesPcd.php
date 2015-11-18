@@ -145,18 +145,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Rajouter un sujeut',
-'vector-action-delete'           => 'Défacer',
-'vector-action-move'             => "Canger ch'nom",
-'vector-action-protect'          => 'Garantir',
-'vector-action-undelete'         => "N'poin défacher",
-'vector-action-unprotect'        => "Canger l'garantie",
-'vector-view-create'             => 'Créer',
-'vector-view-edit'               => 'Éditer',
-'vector-view-history'            => "Vir l'histoère",
-'vector-view-view'               => 'Lire',
-'vector-view-viewsource'         => "Vir l'source",
 'actions'                        => 'Acchons',
 'namespaces'                     => "Éspaces d'chés noms",
 'variants'                       => 'Ércanjantes',

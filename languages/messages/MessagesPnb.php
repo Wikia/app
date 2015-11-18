@@ -172,18 +172,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'مضمون پاؤ',
-'vector-action-delete'           => 'مکاؤ',
-'vector-action-move'             => 'ٹرو',
-'vector-action-protect'          => 'بچاؤ',
-'vector-action-undelete'         => 'واپس لیاؤ',
-'vector-action-unprotect'        => 'تبدیلی بچاؤ',
-'vector-view-create'             => 'بناؤ',
-'vector-view-edit'               => 'لکھو',
-'vector-view-history'            => 'تریخ وکھاؤ',
-'vector-view-view'               => 'پڑھو',
-'vector-view-viewsource'         => 'ویکھو',
 'actions'                        => 'کم',
 'namespaces'                     => 'ناواں دی جگہ:',
 'variants'                       => 'قسماں',
@@ -678,7 +666,6 @@ $2
 'sitejspreview'                    => "'''یاد رکھو بے  تسی صرف ایہ 'JavaScript کوڈ چیک کررۓ او''
 '''اینوں ہجے بچایا نئیں گیا!'''",
 'userinvalidcssjstitle'            => "'''خبردار:''' \"\$1\" سکن نئیں اے۔
-Custom .css تے .js pages use a lowercase title, e.g. {{ns:user}}:Foo/vector.css as opposed to {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(نواں کیتا گیا)',
 'note'                             => "'''نوٹ:'''",
 'previewnote'                      => "'''اے ہلے کچا کم اے؛ تبدیلیاں بچائیاں نہیں گئیاں'''",

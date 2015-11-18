@@ -390,18 +390,6 @@ $messages = array(
 'faq'            => 'ЧЗВ',
 'faqpage'        => 'Project:ЧЗВ',
 
-# Vector skin
-'vector-action-addsection'       => 'Добавяне на тема',
-'vector-action-delete'           => 'Изтриване',
-'vector-action-move'             => 'Преместване',
-'vector-action-protect'          => 'Защита',
-'vector-action-undelete'         => 'Възстановяване',
-'vector-action-unprotect'        => 'Промяна на защитата',
-'vector-view-create'             => 'Създаване',
-'vector-view-edit'               => 'Редактиране',
-'vector-view-history'            => 'История',
-'vector-view-view'               => 'Преглед',
-'vector-view-viewsource'         => 'Преглед на кода',
 'actions'                        => 'Действия',
 'namespaces'                     => 'Именни пространства',
 'variants'                       => 'Варианти',
@@ -902,7 +890,6 @@ $2
 '''Той все още не е съхранен!'''",
 'sitejspreview'                    => "'''Не забравяйте, че това е само предварителен преглед на този Джаваскрипт код.'''
 '''Той все още не е съхранен!'''",
-'userinvalidcssjstitle'            => "'''Внимание:''' Не съществува облик „$1“. Необходимо е да се знае, че имената на потребителските ви страници за CSS и Джаваскрипт трябва да се състоят от малки букви, например: „{{ns:user}}:Иван/vector.css“ (а не „{{ns:user}}:Иван/Vector.css“).",
 'updated'                          => '(обновена)',
 'note'                             => "'''Забележка:'''",
 'previewnote'                      => "'''Това е само предварителен преглед. Промените все още не са съхранени!'''",

@@ -187,18 +187,6 @@ kiçi kategoriýadan {{PLURAL:$1|sany kiçi kategoriýa|$1 sany kiçi kategoriý
 'faq'            => 'KSS',
 'faqpage'        => 'Project:KSS',
 
-# Vector skin
-'vector-action-addsection'       => 'Tema goş',
-'vector-action-delete'           => 'Öçür',
-'vector-action-move'             => 'Adyny üýtget',
-'vector-action-protect'          => 'Goraga al',
-'vector-action-undelete'         => 'Öçürmäni yzyna al',
-'vector-action-unprotect'        => 'Goragy aýyr',
-'vector-view-create'             => 'Döret',
-'vector-view-edit'               => 'Redaktirle',
-'vector-view-history'            => 'Geçmişi gör',
-'vector-view-view'               => 'Oka',
-'vector-view-viewsource'         => 'Çeşmäni gör',
 'actions'                        => 'Hereketler',
 'namespaces'                     => 'At giňişlikleri',
 'variants'                       => 'Wariantlar',
@@ -644,7 +632,6 @@ Salgylanmak üçin iň soňky blokirleme gündeligi ýazgysy aşakda berilýär:
 'userjspreview'                    => "'''Bu ulanyjy JavaScriptiňiziň ýöne bir barlagy/deslapky syny.'''
 '''Ol heniz ýazdyrylan däldir!'''",
 'userinvalidcssjstitle'            => "''Duýduryş:''' \"\$1\" atly bezeg ýok.
-Hususy .css we .js sahypalarynyň setir harp bilen ýazylýandygyny ýatda saklaň, ýagny {{ns:user}}:Ulanyjy/Vector.css däl-de, eýsem {{ns:user}}:Ulanyjy/vector.css.",
 'updated'                          => '(Täzelenen)',
 'note'                             => "'''Bellik:'''",
 'previewnote'                      => "'''Bu bir ýöne deslapky syn. Üýtgeşmeleriňiz heniz ýazdyrylan däldir!'''",

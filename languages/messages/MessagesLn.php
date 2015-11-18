@@ -100,18 +100,6 @@ $messages = array(
 'qbspecialpages' => 'Nkásá gudi',
 'faq'            => 'Mitúná Mizóngelaka (MM)',
 
-# Vector skin
-'vector-action-addsection'       => 'Kobakisa mpɔ̂',
-'vector-action-delete'           => 'Kolímwisa',
-'vector-action-move'             => 'Kobóngola nkómbó',
-'vector-action-protect'          => 'Kobátela',
-'vector-action-undelete'         => 'Kolímwisa tɛ̂',
-'vector-action-unprotect'        => ' Kobátela tɛ̂',
-'vector-view-create'             => 'Kokela',
-'vector-view-edit'               => 'Kobɔngisa',
-'vector-view-history'            => 'Komɔ́nisa mokóló',
-'vector-view-view'               => 'Kotánga',
-'vector-view-viewsource'         => 'Komɔ́nisa mosólo',
 'namespaces'                     => 'Ntáká ya nkómbó',
 
 'errorpagetitle'    => 'Mbéba',

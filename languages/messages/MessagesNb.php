@@ -456,18 +456,6 @@ $messages = array(
 'faq'            => 'Ofte stilte spørsmål',
 'faqpage'        => 'Project:Ofte stilte spørsmål',
 
-# Vector skin
-'vector-action-addsection'       => 'Nytt emne',
-'vector-action-delete'           => 'Slett',
-'vector-action-move'             => 'Flytt',
-'vector-action-protect'          => 'Beskytt',
-'vector-action-undelete'         => 'Gjenopprett',
-'vector-action-unprotect'        => 'Endre beskyttelse',
-'vector-view-create'             => 'Opprett',
-'vector-view-edit'               => 'Rediger',
-'vector-view-history'            => 'Vis historikk',
-'vector-view-view'               => 'Les',
-'vector-view-viewsource'         => 'Vis kilden',
 'actions'                        => 'Handlinger',
 'namespaces'                     => 'Navnerom',
 'variants'                       => 'Varianter',
@@ -978,7 +966,6 @@ Siste blokkeringsloggelement kan sees nedenfor.',
 '''Den har ikke blitt lagret ennå!'''",
 'sitejspreview'                    => "'''Husk at du bare forhåndsviser denne JavaScript-koden.'''
 '''Den har ikke blitt lagret ennå!'''",
-'userinvalidcssjstitle'            => "'''Advarsel:''' Det finnes ikke noe utseende ved navn «$1». Husk at .css- og .js-sider bruker titler i små bokstaver, for eksempel {{ns:user}}:Eksempel/vector.css, ikke {{ns:user}}:Eksempel/Vector.css",
 'updated'                          => '(Oppdatert)',
 'note'                             => "'''Merk:'''",
 'previewnote'                      => "'''Husk at dette bare er en forhåndsvisning.'''

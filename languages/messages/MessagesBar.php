@@ -173,18 +173,6 @@ $messages = array(
 'faq'            => 'Heiffige Frong',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Obschnit dazuafyng',
-'vector-action-delete'           => 'Leschen',
-'vector-action-move'             => 'Vaschiam',
-'vector-action-protect'          => 'Schytzen',
-'vector-action-undelete'         => 'Wiederherstön',
-'vector-action-unprotect'        => 'freigeem',
-'vector-view-create'             => 'Erstön',
-'vector-view-edit'               => 'Werkeln',
-'vector-view-history'            => 'Versiónsgschicht',
-'vector-view-view'               => 'Leesen',
-'vector-view-viewsource'         => 'Quötext åzong',
 'actions'                        => 'Akziónen',
 'namespaces'                     => 'Nåmensraim',
 'variants'                       => 'Varianten',

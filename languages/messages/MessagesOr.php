@@ -404,18 +404,6 @@ $messages = array(
 'faq'            => 'ବାରମ୍ବାର ପଚରାଯାଉଥିବା ପ୍ରଶ୍ନ',
 'faqpage'        => 'Project:ବାରମ୍ବାର ପଚାରାଯାଉଥିବା ପ୍ରଶ୍ନ',
 
-# Vector skin
-'vector-action-addsection'       => 'ଲେଖା ମିଶାଇବା',
-'vector-action-delete'           => 'ଲିଭାଇବେ',
-'vector-action-move'             => 'ଘୁଞ୍ଚାଇବେ',
-'vector-action-protect'          => 'କିଳିବେ',
-'vector-action-undelete'         => 'ଲିଭାଇବେ ନାହିଁ',
-'vector-action-unprotect'        => 'କିଳିବେ ନାହିଁ',
-'vector-view-create'             => 'ତିଆରି',
-'vector-view-edit'               => 'ବଦଳାଇବେ',
-'vector-view-history'            => 'ଇତିହାସ ଦେଖିବେ',
-'vector-view-view'               => 'ପଢ଼ିବେ',
-'vector-view-viewsource'         => 'ଉତ୍ସ ଦେଖିବେ',
 'actions'                        => 'କାମ',
 'namespaces'                     => 'ନେମସ୍ପେସ',
 'variants'                       => 'ନିଆରା',
@@ -939,7 +927,6 @@ $1 ଦ୍ଵାରା ପ୍ରତିରୋଧ କରାଯାଇଛି
 'sitejspreview'                    => "'''ଜାଣି ରଖନ୍ତୁ ଯେ ଆପଣ କେବଳ ଏହି ଜାଭାସ୍କ୍ରିପ୍ଟ (JavaScript) ଦେଖୁଅଛନ୍ତି ।'''
 '''ଏହା ଏଯାଏଁ ସାଇତା ଯାଇନାହିଁ!'''",
 'userinvalidcssjstitle'            => "'''ଚେତାବନୀ:''' \"\$1\" ନାମରେ କୌଣସି ବି ଆବରଣ ନାହିଁ ।
-ମନମୁତାବକ .css ଓ .js ପୃଷ୍ଠା ଏକ ଛୋଟ ଇଂରାଜୀ ଅକ୍ଷର ଥିବା ନାମ ନେଇଥାନ୍ତି, ଯଥା: {{ns:user}}:Foo/Vector.css ବଦଳରେ {{ns:user}}:Foo/vector.css ର ବ୍ୟବହାର ।",
 'updated'                          => '(ସତେଜ କରିଦିଆଗଲା)',
 'note'                             => "'''ଟୀକା:'''",
 'previewnote'                      => "'''ଜାଣିରଖନ୍ତୁ ଯେ, ଏହା କେବଳ ଏକ ଦେଖଣା ।'''

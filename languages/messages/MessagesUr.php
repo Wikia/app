@@ -188,17 +188,6 @@ $messages = array(
 'faq'            => 'معلوماتِ عامہ',
 'faqpage'        => 'Project:معلوماتِ عامہ',
 
-# Vector skin
-'vector-action-addsection' => 'نیا موضوع',
-'vector-action-delete'     => 'حذف کرو',
-'vector-action-move'       => 'منتقل کرو',
-'vector-action-protect'    => 'محفوظ کرو',
-'vector-action-unprotect'  => 'تحفظ میں تبدیلی',
-'vector-view-create'       => 'تخلیق',
-'vector-view-edit'         => 'ترمیم',
-'vector-view-history'      => 'تاریخ',
-'vector-view-view'         => 'پڑھیں',
-'vector-view-viewsource'   => 'مسودہ',
 'actions'                  => 'ایکشنز',
 'namespaces'               => 'جائے نام',
 'variants'                 => 'متغیرات',

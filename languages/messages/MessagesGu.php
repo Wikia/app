@@ -303,18 +303,6 @@ $messages = array(
 વારંવાર પુછાતા પ્રશ્નો',
 'faqpage'        => 'Project:વારંવાર પુછાતા પ્રશ્નો',
 
-# Vector skin
-'vector-action-addsection'       => 'નવી ચર્ચા',
-'vector-action-delete'           => 'રદ કરો',
-'vector-action-move'             => 'ખસેડો',
-'vector-action-protect'          => 'સુરક્ષિત કરો',
-'vector-action-undelete'         => 'રદ કરેલું પાછું વાળો',
-'vector-action-unprotect'        => 'સુરક્ષા બદલો',
-'vector-view-create'             => 'બનાવો',
-'vector-view-edit'               => 'ફેરફાર કરો',
-'vector-view-history'            => 'ઈતિહાસ જુઓ',
-'vector-view-view'               => 'વાંચો',
-'vector-view-viewsource'         => 'સ્ત્રોત જુઓ',
 'actions'                        => 'ક્રિયાઓ',
 'namespaces'                     => 'નામાવકાશો',
 'variants'                       => 'ભિન્ન રૂપો',
@@ -838,7 +826,6 @@ $2
 'sitejspreview'                    => "'''યાદ રહે કે તમે તમારા સભ્ય JavaScript નું અવલોકન કરો છે.'''
 '''હજી સીધું તે સચવાયું નથી!'''",
 'userinvalidcssjstitle'            => "'''ચેતવણી:''' કોઇ પણ \"\$1\" પટલ નથી.
-સભ્ય રચિત .css અને  .js પાના બીજી અંગ્રેજી બારખડી શીર્ષક વાપરે છે, દા. ત. {{ns:user}}:Foo/vector.css નહીં કે {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(સંવર્ધીત)',
 'note'                             => "'''નોંધ:'''",
 'previewnote'                      => "'''આ ફક્ત પૂર્વાવલોકન છે;'''

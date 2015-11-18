@@ -170,10 +170,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-view-create'  => 'Kria',
-'vector-view-edit'    => 'Edita',
-'vector-view-history' => 'Haree istória',
 
 'errorpagetitle'    => 'Sala',
 'returnto'          => 'Fali ba $1.',

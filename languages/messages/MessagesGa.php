@@ -243,18 +243,6 @@ $messages = array(
 'faq'            => 'Ceisteanna Coiteanta',
 'faqpage'        => 'Project:Ceisteanna_Coiteanta',
 
-# Vector skin
-'vector-action-addsection' => 'Cuir topaic leis',
-'vector-action-delete'     => 'Scrios',
-'vector-action-move'       => 'Athainmnigh',
-'vector-action-protect'    => 'Glasáil',
-'vector-action-undelete'   => 'Díscrios',
-'vector-action-unprotect'  => 'Díghlasáil',
-'vector-view-create'       => 'Cruthaigh',
-'vector-view-edit'         => 'Athraigh an lch seo',
-'vector-view-history'      => 'Féach ar stair',
-'vector-view-view'         => 'Léigh',
-'vector-view-viewsource'   => 'Féach ar fhoinse',
 'actions'                  => 'Gníomhartha',
 'namespaces'               => 'Ainmspásanna',
 'variants'                 => 'Leaganacha Malartacha',
@@ -652,7 +640,6 @@ níor sábháladh é go fóill!'''",
 'userjspreview'                    => "'''Cuimhnigh nach bhfuil seo ach réamhamharc do JavaScript úsáideora
 - níor sábháladh é go fóill!'''",
 'userinvalidcssjstitle'            => "'''Rabhadh:''' Níl an craiceann \"\$1\" ann.
-Cuimhnigh go n-úsáideann leathanaigh shaincheaptha .css agus .js teideal i gcás íochtar, m.sh. {{ns:user}}:Foo/vector.css i leapa {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Leasaithe)',
 'note'                             => "'''Tabhair faoi deara:'''",
 'previewnote'                      => "'''Cuimhnigh nach bhfuil ach réamhamharc sa leathanach seo, agus nach sábháladh fós é!'''",
@@ -1768,7 +1755,6 @@ iarradh sábháil. Is dócha gur nasc chuig suíomh seachtrach ba chúis leis.',
 'skinname-chick'       => 'Sicín',
 'skinname-simple'      => 'Simplí',
 'skinname-modern'      => 'Nua-aimseartha',
-'skinname-vector'      => 'Veicteoir',
 
 # Patrolling
 'markaspatrolleddiff'   => 'Comharthaigh mar patrólta.',

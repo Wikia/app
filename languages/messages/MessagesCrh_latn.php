@@ -255,18 +255,6 @@ $messages = array(
 'faq'            => 'Sıq berilgen sualler',
 'faqpage'        => 'Project:Sıq berilgen sualler',
 
-# Vector skin
-'vector-action-addsection'       => 'Mevzu qoş',
-'vector-action-delete'           => 'Yoq et',
-'vector-action-move'             => 'Adını deñiştir',
-'vector-action-protect'          => 'Qorçala',
-'vector-action-undelete'         => 'Yañıdan yarat',
-'vector-action-unprotect'        => 'Qorçalavnı deñiştir',
-'vector-view-create'             => 'Yarat',
-'vector-view-edit'               => 'Deñiştir',
-'vector-view-history'            => 'Keçmişini köster',
-'vector-view-view'               => 'Oqu',
-'vector-view-viewsource'         => 'Menba kodunı köster',
 'actions'                        => 'Areketler',
 'namespaces'                     => 'İsim fezaları',
 'variants'                       => 'Variantlar',

@@ -412,18 +412,6 @@ $messages = array(
 'faq' => 'សំណួរដែលសួរញឹកញាប់',
 'faqpage' => 'Project:សំណួរដែលសួរញឹកញាប់',
 
-# Vector skin
-'vector-action-addsection' => 'បន្ថែម​ប្រធានបទ​',
-'vector-action-delete' => 'លុបចោល',
-'vector-action-move' => 'ប្តូរទីតាំង',
-'vector-action-protect' => 'ការពារ',
-'vector-action-undelete' => 'ឈប់លុបចោល',
-'vector-action-unprotect' => 'ប្ដូរការការពារ',
-'vector-view-create' => 'បង្កើត​',
-'vector-view-edit' => 'កែប្រែ​',
-'vector-view-history' => 'មើល​ប្រវត្តិ​',
-'vector-view-view' => 'អាន',
-'vector-view-viewsource' => 'មើល​កូដ',
 'actions' => 'សកម្មភាព​',
 'namespaces' => 'លំហឈ្មោះ',
 'variants' => 'អថេរ',
@@ -945,7 +933,6 @@ $2',
 "វាមិនទាន់ត្រូវបានរក្សាទុកទេ!"',
 'sitejspreview' => '"កុំភ្លេចថាអ្នកកំពុងតែមើលមុន កូដJavaScript  នេះប៉ុណ្ណោះ។"
 "វាមិនទាន់ត្រូវបានរក្សាទុកទេ!"',
-'userinvalidcssjstitle' => "'''ប្រយ័ត្ន៖''' គ្មានសំបក \"\$1\"។ ចងចាំថា ទំព័រផ្ទាល់ខ្លួន .css និង .js ប្រើប្រាស់ ចំណងជើង ជាអក្សរតូច, ឧទាហរណ៍  {{ns:user}}:Foo/vector.css ត្រឹមត្រូវ, រីឯ {{ns:user}}:Foo/Vector.css មិនត្រឹមត្រូវ។",
 'updated' => '(បានបន្ទាន់សម័យ)',
 'note' => "'''ចំណាំ៖'''",
 'previewnote' => "'''សូមចាំថានេះគ្រាន់តែជា​ការបង្ហាញការមើលជាមុនប៉ុណ្ណោះ។ បំលាស់ប្ដូរ​របស់អ្នកមិនទាន់បាន​រក្សាទុកទេ!'''",
@@ -2837,7 +2824,6 @@ $1',
 'chick.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក Chick */',
 'simple.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក Simple */',
 'modern.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក Modern */',
-'vector.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក Vector */',
 
 # Attribution
 'anonymous' => '{{PLURAL:$1|user|អ្នកប្រើប្រាស់}}អនាមិកនៃ {{SITENAME}}',
@@ -2881,7 +2867,6 @@ $1',
 'skinname-chick' => 'កូនមាន់',
 'skinname-simple' => 'សាមញ្ញ',
 'skinname-modern' => 'ទំនើប',
-'skinname-vector' => 'វ៉ិចទ័រ​​',
 
 # Patrolling
 'markaspatrolleddiff' => 'ចំណាំថាបានល្បាត',

@@ -238,18 +238,6 @@ $messages = array(
 'qbmyoptions'    => 'Mea pagini',
 'qbspecialpages' => 'Specala pagini',
 
-# Vector skin
-'vector-action-addsection' => 'Adjuntar topiko',
-'vector-action-delete'     => 'Efacar',
-'vector-action-move'       => 'Movar',
-'vector-action-protect'    => 'Protektar',
-'vector-action-undelete'   => 'Rekuperar',
-'vector-action-unprotect'  => 'Desprotektar',
-'vector-view-create'       => 'Krear',
-'vector-view-edit'         => 'Redaktar',
-'vector-view-history'      => 'Vidar versionaro',
-'vector-view-view'         => 'Lektar',
-'vector-view-viewsource'   => 'Vidar fonto',
 'actions'                  => 'Agi',
 'namespaces'               => 'Nomari',
 'variants'                 => 'Varianti',

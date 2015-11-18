@@ -295,18 +295,6 @@ $messages = array(
 'faq'            => 'FAQ',
 'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Adder topico',
-'vector-action-delete'           => 'Deler',
-'vector-action-move'             => 'Renominar',
-'vector-action-protect'          => 'Proteger',
-'vector-action-undelete'         => 'Restaurar',
-'vector-action-unprotect'        => 'Cambiar protection',
-'vector-view-create'             => 'Crear',
-'vector-view-edit'               => 'Modificar',
-'vector-view-history'            => 'Vider historia',
-'vector-view-view'               => 'Leger',
-'vector-view-viewsource'         => 'Vider texto fonte',
 'actions'                        => 'Actiones',
 'namespaces'                     => 'Spatios de nomines',
 'variants'                       => 'Variantes',
@@ -836,7 +824,6 @@ Le ultime entrata del registro de blocadas es reproducite ci infra pro informati
 'sitejspreview'                    => "'''Non oblida que isto es solmente un previsualisation de iste codice JavaScript.'''
 '''Le modificationes non ha ancora essite salveguardate!'''",
 'userinvalidcssjstitle'            => "'''Attention:''' Le apparentia \"\$1\" non existe.
-Memora que le paginas .css and .js personalisate usa un titulo in minusculas, p.ex. {{ns:user}}:Foo/vector.css e non {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Actualisate)',
 'note'                             => "'''Nota:'''",
 'previewnote'                      => "'''Isto es solmente un previsualisation.'''
@@ -2892,7 +2879,6 @@ Es possibile adder un motivo in le summario.',
 'chick.css'       => '/* Le CSS placiate hic afficera le usatores del apparentia Chique */',
 'simple.css'      => '/* Le CSS placiate hic afficera le usatores del apparentia Simple */',
 'modern.css'      => '/* Le CSS placiate hic afficera le usatores del apparentia Moderne */',
-'vector.css'      => '/* Le CSS placiate hic afficera le usatores del apparentia Vector */',
 'print.css'       => '/* Le CSS placiate hic influentiara le apparentia del paginas imprimite */',
 'handheld.css'    => '/* Le CSS placiate hic afficera le apparatos mobile basate super le apparentia configurate in $wgHandheldStyle */',
 
@@ -2906,7 +2892,6 @@ Es possibile adder un motivo in le summario.',
 'chick.js'       => '/* Omne JavaScript hic se executara pro le usatores del apparentia Chique */',
 'simple.js'      => '/* Omne JavaScript hic se executara pro le usatores del apparentia Simple */',
 'modern.js'      => '/* Omne JavaScript hic se executara pro le usatores del apparentia Moderne */',
-'vector.js'      => '/* Omne JavaScript hic se executara pro le usatores del apparentia Vector */',
 
 # Metadata
 'notacceptable' => 'Le servitor wiki non pote provider datos in un formato que tu cliente sape leger.',

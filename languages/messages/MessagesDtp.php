@@ -164,18 +164,6 @@ $messages = array(
 'faq'            => 'Ponguhatan Koinsoruan om Poninimbar',
 'faqpage'        => 'Project:Ponguhatan Koinsoruan om Pininimbar',
 
-# Vector skin
-'vector-action-addsection'       => 'Ruhangai piboboroson',
-'vector-action-delete'           => 'Pugaso',
-'vector-action-move'             => 'Poundoliho',
-'vector-action-protect'          => 'Tingoligai',
-'vector-action-undelete'         => 'Kada pugaso',
-'vector-action-unprotect'        => 'Alanai tingolig',
-'vector-view-create'             => 'Pomonsoi',
-'vector-view-edit'               => 'Idito',
-'vector-view-history'            => 'Intaai susuyan',
-'vector-view-view'               => 'Basao',
-'vector-view-viewsource'         => 'Intaai wowonod',
 'actions'                        => 'Pongkinaraja',
 'namespaces'                     => 'Ponuratan ngaran',
 'variants'                       => 'Kopogisuaian',
@@ -648,7 +636,6 @@ Riporon id siriba kokomoi nantaban di tohuri no:',
 'sitejspreview'                    => "'''Soroho no do mongintong kono tomod diti kod JawaSikrip.'''
 '''Awu po nokogompi iti!'''",
 'userinvalidcssjstitle'            => "'''Pomisunudan:''' Ingaa kulit do \"\$1\".
-Bobolikon pinudali .css om .js momoguno do pimato tokoro, miagal pomitanan {{ns:user}}:Foo/vector.css sobaagi do ponuli di {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Noinwoguan)',
 'note'                             => "'''Pasoniba:'''",
 'previewnote'                      => "'''Soroho no do iti nopo nga pongintangan no toomod.'''

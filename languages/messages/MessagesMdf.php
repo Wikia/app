@@ -281,17 +281,6 @@ $messages = array(
 'faq'            => 'Сидеста Кеподеви Кизефксне',
 'faqpage'        => 'Project:Сидеста Кеподеви Кизефксне',
 
-# Vector skin
-'vector-action-delete'    => 'Нардамс',
-'vector-action-move'      => 'Шашфтомс',
-'vector-action-protect'   => 'Араламс',
-'vector-action-undelete'  => 'Мърдафтомс',
-'vector-action-unprotect' => 'Аралама лоткамс',
-'vector-view-create'      => 'Тиемс',
-'vector-view-edit'        => 'Петнемс',
-'vector-view-history'     => 'История няфтемс',
-'vector-view-view'        => 'Морафтомс',
-'vector-view-viewsource'  => 'Лисьма няфтемс',
 'actions'                 => 'Тефне',
 'namespaces'              => 'Лемботмот',
 'variants'                => 'Вариатт',

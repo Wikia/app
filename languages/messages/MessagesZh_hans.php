@@ -409,18 +409,6 @@ $messages = array(
 'faq'            => '常见问题',
 'faqpage'        => 'Project:常见问题',
 
-# Vector skin
-'vector-action-addsection'       => '添加话题',
-'vector-action-delete'           => '删除',
-'vector-action-move'             => '移动',
-'vector-action-protect'          => '保护',
-'vector-action-undelete'         => '恢复',
-'vector-action-unprotect'        => '更改保护',
-'vector-view-create'             => '创建',
-'vector-view-edit'               => '编辑',
-'vector-view-history'            => '查看历史',
-'vector-view-view'               => '阅读',
-'vector-view-viewsource'         => '查看源代码',
 'actions'                        => '操作',
 'namespaces'                     => '名字空间',
 'variants'                       => '变换',
@@ -879,7 +867,6 @@ $2
 '''还没有保存！'''",
 'sitejspreview'                    => "'''记住你现在只是预览此 JavaScript 代码。'''
 '''还没有保存！'''",
-'userinvalidcssjstitle'            => "'''警告：''' 不存在皮肤\"\$1\"。注意自定义的 .css 和 .js 页要使用小写标题，例如，{{ns:user}}:Foo/vector.css 不同于 {{ns:user}}:Foo/Vector.css。",
 'updated'                          => '（已更新）',
 'note'                             => "'''注意：'''",
 'previewnote'                      => "'''请记住这只是预览。'''你的更改还未保存！",
@@ -2807,7 +2794,6 @@ $1被封禁的理由是：“$2”',
 'chick.css'       => '/* 此处的 CSS 将影响使用 Chick 皮肤的用户 */',
 'simple.css'      => '/* 此处的 CSS 将影响使用 Simple 皮肤的用户 */',
 'modern.css'      => '/* 此处的 CSS 将影响使用 Modern 皮肤的用户 */',
-'vector.css'      => '/* 此处的 CSS 将影响使用 Vector 皮肤的用户 */',
 'print.css'       => '/* 此处的 CSS 将影响打印输出 */',
 'handheld.css'    => '/* 此处的 CSS 将影响在 $wgHandheldStyle 设置手提装置面板 */',
 
@@ -2821,7 +2807,6 @@ $1被封禁的理由是：“$2”',
 'chick.js'       => '/* 此处的JavaScript将加载于使用Chick皮肤的用户 */',
 'simple.js'      => '/* 此处的JavaScript将加载于使用Simple皮肤的用户 */',
 'modern.js'      => '/* 此处的JavaScript将加载于使用Modern皮肤的用户 */',
-'vector.js'      => '/* 此处的JavaScript将加载于使用Vector皮肤的用户 */',
 
 # Metadata
 'notacceptable' => '该网站服务器不能提供您的客户端能识别的数据格式。',
