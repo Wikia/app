@@ -481,11 +481,6 @@ require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
 include_once( "$IP/extensions/wikia/TimeAgoMessaging/TimeAgoMessaging_setup.php" );
 
 /**
- * Updated layout for edit pages (Oasis only)
- */
-//include_once("$IP/extensions/wikia/EditPageLayout/EditPageLayout_setup.php");
-
-/**
  * MW messages in JS
  */
 include_once("$IP/extensions/wikia/JSMessages/JSMessages_setup.php");
@@ -734,12 +729,6 @@ include_once( "$IP/extensions/wikia/CreateNewWiki/CreateWikiLocalJob.php" );
  */
 require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
 require_once( "{$IP}/includes/wikia/tasks/autoload.php");
-
-/**
- * @name wgWikiaStaffLanguages
- * array of language codes supported by ComTeam
- */
-$wgWikiaStaffLanguages = array();
 
 /**
  * @name wgExternalSharedDB
@@ -1038,17 +1027,6 @@ $wgSpecialEditCountExludedUsernames = array(
  * List of mobile skins
  */
 $wgMobileSkins = array( 'wikiamobile' );
-
-/**
- * variable for disabling memcached deleted key replication
- */
-$wgDisableMemCachedReplication = false;
-
-/**
- * variable for enabling Nirvana's per-skin template override
- * @see includes/wikia/WikiaView.class.php
- */
-$wgEnableSkinTemplateOverride = false;
 
 /**
  * variable for enabling Nirvana's API entrypoint wikia.php,
