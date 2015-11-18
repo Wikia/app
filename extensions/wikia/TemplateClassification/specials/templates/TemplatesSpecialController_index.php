@@ -1,7 +1,7 @@
 <p>
 	<form method="GET" action="">
 		<label for="template">
-			<?= wfMessage( 'template-classification-special-search' )->escaped() ?>
+			<?= wfMessage( 'template-classification-special-find' )->escaped() ?>
 			<input name="template" type="text" value="<?= Sanitizer::encodeAttribute( $templateName ) ?>" />
 		</label>
 		<?php if ( !empty( $groups ) ): ?>
@@ -17,9 +17,9 @@
 <?php if ( !empty( $templates ) ): ?>
 <table class="templates-hq article-table">
 	<tr>
-		<th>Page name</th>
-		<th>Used on</th>
-		<th>Template type</th>
+		<th><?= wfMessage( 'template-classification-special-page-header' )->escaped() ?></th>
+		<th><?= wfMessage( 'template-classification-special-used-header' )->escaped() ?></th>
+		<th><?= wfMessage( 'template-classification-special-type-header' )->escaped() ?></th>
 	</tr>
 	<?php foreach( $templates as $template ): ?>
 		<?php $groupName = wfMessage( 'template-classification-type-' . $type )->escaped(); ?>

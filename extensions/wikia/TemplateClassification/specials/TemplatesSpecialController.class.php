@@ -24,15 +24,21 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		$groupedTemplates = $this->getTemplates();
+		$allTemplates = $this->getAllTempaltes();
 
-		if ( empty( $groupedTemplates ) ) {
-			$this->groups = $this->getTemplateGroups( $groupedTemplates );
+		if ( !empty( $allTemplates ) ) {
+			$classifiedTemplates = $this->getClassifiedTemplates();
+
+			$this->groups = $this->getTemplateGroups( $classifiedTemplates );
 			$this->templateName = $this->getVal( 'template' );
 			$this->type = $this->getVal( 'type', $this->getDefaultType() );
 			$page = $this->request->getInt( 'page', 1 ) - 1;
 
-			$this->templates = $this->filterTemplates( $groupedTemplates );
+			if ( !empty( $this->templateName ) ) {
+				$this->templates = $this->filterTemplatesByName( $allTemplates, $classifiedTemplates );
+			} else {
+				$this->templates = $this->getTemplates( $allTemplates, $classifiedTemplates );
+			}
 
 			$total = $this->getTotalTemplatesNum();
 
@@ -49,68 +55,117 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Get tempaltes on wiki with their classification
+	 * Get all classified templates on wiki
 	 *
 	 * @return array
 	 */
-	private function getTemplates() {
+	private function getClassifiedTemplates() {
 		$classifiedTemplates = [];
-		$allTemplates = $this->getAllTempaltes();
 
 		try {
 			$classifiedTemplates = ( new \TemplateClassificationService() )->getTemplatesOnWiki( $this->wg->CityId );
 		} catch( \Exception $e ) {
 		}
 
-		return $this->groupTemplates( $allTemplates, $classifiedTemplates );
+		return $classifiedTemplates;
 	}
 
 	/**
-	 * Filter templates by name or type
+	 * Get all templates on wiki with number of pages on which are included
+	 *
+	 * @return bool|mixed
+	 * @throws \FluentSql\Exception\SqlException
+	 */
+	private function getAllTempaltes() {
+		$db = wfGetDB( DB_SLAVE );
+
+		$templates = ( new \WikiaSQL() )
+			->SELECT( 'page_id', 'qc_title', 'qc_value' )
+			->FROM( 'querycache' )
+			->LEFT_JOIN( 'page' )
+			->ON( 'page_title', 'qc_title' )
+			->WHERE( 'qc_type' )->EQUAL_TO( 'Mostlinkedtemplates' )
+			->AND_( 'qc_namespace' )->EQUAL_TO( NS_TEMPLATE )
+			->AND_( 'page_namespace' )->EQUAL_TO( NS_TEMPLATE )
+			->ORDER_BY( ['qc_value', 'DESC'] )
+			->runLoop( $db, function( &$templates, $row ) {
+				$templates[$row->page_id] = [
+					'page_id' => $row->page_id,
+					'title' => $row->qc_title,
+					'count' => $row->qc_value
+				];
+			});
+
+		return $templates;
+	}
+
+	/**
+	 * Filter templates by name
 	 *
 	 * @param $groupedTemplates
 	 * @return array
 	 */
-	private function filterTemplates( $groupedTemplates ) {
-		$filteredTemplates = [];
+	private function filterTemplatesByName( $allTemplates, $classifiedTemplates ) {
+		$templates = [];
 
-		if ( !empty( $this->templateName ) && !empty( $groupedTemplates ) ) {
-			foreach( $groupedTemplates as $group => $templates ) {
-				if ( $pageId = array_search(
-						$this->templateName,
-						array_column( $groupedTemplates[$group], 'title', 'page_id' )
-					)
-				) {
-					$filteredTemplates = [ $groupedTemplates[$group][$pageId] ];
-					$this->type = $group;
-				}
-			}
-		} elseif ( !empty( $this->type ) && isset( $groupedTemplates[$this->type] ) ) {
-			$filteredTemplates = $groupedTemplates[$this->type];
+		if ( $pageId = array_search( $this->templateName, array_column( $allTemplates, 'title', 'page_id' ) ) ) {
+			$templates[$pageId] = $this->prepareTemplate( $pageId, $allTemplates[$pageId] );
+			$this->type = $this->getTemplateType( $pageId, $classifiedTemplates );
 		}
 
-		return $filteredTemplates;
+		return $templates;
 	}
 
 	/**
-	 * Assign each template to type
+	 * Get templates depending by type
+	 *
+	 * @param $allTemplates
+	 * @param $classifiedTemplates
+	 * @return array
+	 */
+	private function getTemplates( $allTemplates, $classifiedTemplates ) {
+		if ( $this->type === TemplateClassificationService::TEMPLATE_UNKNOWN ) {
+			$templates = $this->getUnknownTemplates( $allTemplates, $classifiedTemplates );
+		} else {
+			$templates = $this->getTemplatesByType( $allTemplates, $classifiedTemplates );
+		}
+
+		return $templates;
+	}
+
+	/**
+	 * Get all unknown templates
 	 *
 	 * @param array $allTemplates all tempaltes on wiki
 	 * @param array $classifiedTemplates all classified templates on wiki
 	 * @return array
 	 */
-	private function groupTemplates( $allTemplates, $classifiedTemplates ) {
+	private function getUnknownTemplates( $allTemplates, $classifiedTemplates ) {
 		$templates = [];
 
 		foreach ( $allTemplates as $pageId => $template ) {
-			$template = $this->prepareTemplate( $pageId, $template );
+			if ( !isset( $classifiedTemplates[$pageId] ) || !$this->isUserType( $classifiedTemplates[$pageId] )	) {
+				$templates[$pageId] = $this->prepareTemplate( $pageId, $template );
+			}
+		}
 
-			if ( !isset( $classifiedTemplates[$pageId] )
-				|| !in_array( $classifiedTemplates[$pageId], TemplateClassificationService::$templateTypes )
-			) {
-				$templates[TemplateClassificationService::TEMPLATE_UNKNOWN][$pageId] = $template;
-			} else {
-				$templates[$classifiedTemplates[$pageId]][$pageId] = $template;
+		return $templates;
+	}
+
+	/**
+	 * Get templates on wiki by type
+	 *
+	 * @param $allTemplates
+	 * @param $classifiedTemplates
+	 * @return array
+	 */
+	private function getTemplatesByType( $allTemplates, $classifiedTemplates ) {
+		$templates = [];
+		$templateIds = array_keys( $classifiedTemplates, $this->type );
+
+		foreach ( $templateIds as $pageId ) {
+			if ( isset( $allTemplates[$pageId] ) ) {
+				$templates[$pageId] = $this->prepareTemplate( $pageId, $allTemplates[$pageId] );
 			}
 		}
 
@@ -205,13 +260,27 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Get all existing template types on wiki
+	 * Get all existing and user facing template types on wiki
 	 *
 	 * @param array $groupedTemplates
 	 * @return array
 	 */
-	private function getTemplateGroups( $groupedTemplates ) {
-		return array_keys( $groupedTemplates );
+	private function getTemplateGroups( $classifiedTemplates ) {
+		$groups = array_unique( $classifiedTemplates );
+
+		foreach ( $groups as $id => $group ) {
+			if ( !$this->isUserType( $group ) ) {
+				if ( !in_array( TemplateClassificationService::TEMPLATE_UNKNOWN, $groups ) ) {
+					$groups[] = TemplateClassificationService::TEMPLATE_UNKNOWN;
+				}
+
+				unset( $groups[$id] );
+			}
+		}
+
+		sort( $groups );
+
+		return $groups;
 	}
 
 	/**
@@ -223,38 +292,43 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 		return count( $this->templates );
 	}
 
+	/**
+	 * Get template type
+	 *
+	 * @param $pageId
+	 * @param $classifiedTemplates
+	 * @return string
+	 */
+	private function getTemplateType( $pageId, $classifiedTemplates ) {
+		if ( !isset( $classifiedTemplates[$pageId] ) || !$this->isUserType( $classifiedTemplates[$pageId] )
+		) {
+			return TemplateClassificationService::TEMPLATE_UNKNOWN;
+		} else {
+			return $classifiedTemplates[$pageId];
+		}
+
+	}
+
+	/**
+	 * Get default type
+	 *
+	 * @return string
+	 */
 	private function getDefaultType() {
-		if ( in_array( $this->groups, \TemplateClassificationService::TEMPLATE_UNKNOWN ) ) {
-			return \TemplateClassificationService::TEMPLATE_UNKNOWN;
+		if ( in_array( TemplateClassificationService::TEMPLATE_UNKNOWN, $this->groups ) ) {
+			return TemplateClassificationService::TEMPLATE_UNKNOWN;
 		} else {
 			return $this->groups[0];
 		}
 	}
 
 	/**
-	 * Get all templates on wiki with number of pages on which are included
+	 * Check if given type is user facing
 	 *
-	 * @return bool|mixed
-	 * @throws \FluentSql\Exception\SqlException
+	 * @param $type
+	 * @return bool
 	 */
-	private function getAllTempaltes() {
-		$db = wfGetDB( DB_SLAVE );
-
-		$templates = ( new \WikiaSQL() )
-			->SELECT( 'page_id', 'page_title', 'COUNT(tl_from) AS count' )
-			->FROM( 'page' )
-			->LEFT_JOIN( 'templatelinks')->ON( 'page_title', 'tl_title' )
-			->WHERE( 'page_namespace' )->EQUAL_TO( NS_TEMPLATE )
-			->GROUP_BY( 'page_id' )
-			->ORDER_BY( ['count', 'DESC'] )
-			->runLoop( $db, function( &$templates, $row ) {
-				$templates[$row->page_id] = [
-					'page_id' => $row->page_id,
-					'title' => $row->page_title,
-					'count' => $row->count
-				];
-			});
-
-		return $templates;
+	private function isUserType( $type ) {
+		return in_array( $type, TemplateClassificationService::$templateTypes );
 	}
 }

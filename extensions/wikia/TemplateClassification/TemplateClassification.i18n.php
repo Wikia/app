@@ -54,6 +54,9 @@ $messages['en'] = [
 	'template-classification-special-search' => 'Search',
 	'template-classification-special-find' => 'Find Template:',
 	'template-classification-special-noresults' => 'No templates found',
+	'template-classification-special-page-header' => 'Page name',
+	'template-classification-special-used-header' => 'Used on',
+	'template-classification-special-type-header' => 'Template type',
 	'special-templates' => 'Templates'
 ];
 
