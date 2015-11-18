@@ -61,7 +61,8 @@ class InsightsHelper {
 	 * @return array
 	 */
 	public static function getInsightsPages() {
-		global $wgEnableInsightsInfoboxes, $wgEnableFlagsExt, $wgEnableTemplateClassificationExt;
+		global $wgEnableInsightsInfoboxes, $wgEnableFlagsExt, $wgEnableTemplateClassificationExt,
+			   $wgEnableInsightsPagesWithoutInfobox, $wgEnableInsightsTemplatesWithoutType;
 
 		/* Add infoboxes insight */
 		if ( !empty( $wgEnableInsightsInfoboxes )
@@ -73,20 +74,8 @@ class InsightsHelper {
 			);
 		}
 
-		/* Add templates without type insight */
-		if ( !empty( $wgEnableTemplateClassificationExt )
-			&& !isset( self::$insightsPages[InsightsTemplatesWithoutTypeModel::INSIGHT_TYPE] )
-		) {
-			self::$insightsPages = array_merge(
-				[ InsightsTemplatesWithoutTypeModel::INSIGHT_TYPE => 'InsightsTemplatesWithoutTypeModel' ],
-				self::$insightsPages
-			);
-		}
-
 		/* Add flags insight */
-		if ( !empty( $wgEnableFlagsExt )
-			&& !isset( self::$insightsPages[InsightsFlagsModel::INSIGHT_TYPE] )
-		) {
+		if ( !empty( $wgEnableFlagsExt ) && !isset( self::$insightsPages[InsightsFlagsModel::INSIGHT_TYPE] ) ) {
 			self::$insightsPages = array_merge(
 				[ InsightsFlagsModel::INSIGHT_TYPE => 'InsightsFlagsModel' ],
 				self::$insightsPages
@@ -94,10 +83,18 @@ class InsightsHelper {
 		}
 
 		if ( !empty( $wgEnableTemplateClassificationExt ) ) {
-			self::$insightsPages = array_merge(
-				[ InsightsPagesWithoutInfoboxModel::INSIGHT_TYPE => 'InsightsPagesWithoutInfoboxModel' ],
-				self::$insightsPages
-			);
+			if ( !empty( $wgEnableInsightsPagesWithoutInfobox ) ) {
+				self::$insightsPages = array_merge(
+					[ InsightsPagesWithoutInfoboxModel::INSIGHT_TYPE => 'InsightsPagesWithoutInfoboxModel' ],
+					self::$insightsPages
+				);
+			}
+			if ( !empty( $wgEnableInsightsTemplatesWithoutType ) ) {
+				self::$insightsPages = array_merge(
+					[ InsightsTemplatesWithoutTypeModel::INSIGHT_TYPE => 'InsightsTemplatesWithoutTypeModel' ],
+					self::$insightsPages
+				);
+			}
 		}
 
 		return self::$insightsPages;
