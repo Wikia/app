@@ -66,7 +66,7 @@ class TemplateTypesParser {
 	 * @param string $templateWikitext
 	 * @return bool
 	 */
-	public static function onBraceSubstitution( $templateTitle, &$templateWikitext ) {
+	public static function onEndBraceSubstitution( $templateTitle, &$templateWikitext ) {
 		wfProfileIn( __METHOD__ );
 
 		$title = Title::newFromText( $templateTitle, NS_TEMPLATE );
