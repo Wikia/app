@@ -3350,8 +3350,9 @@ class Parser {
 
 		# wikia start
 		$outputText = '';
+		wfRunHooks( 'Parser::startBraceSubstitution', array( $piece, $frame, &$outputText ) );
 
-		if ( wfRunHooks( 'Parser::startBraceSubstitution', array( $piece, $frame, &$outputText ) ) === false ) {
+		if ( !empty( $outputText ) ) {
 			return [
 				'text' => $outputText
 			];

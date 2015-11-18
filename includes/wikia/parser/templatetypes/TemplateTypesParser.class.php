@@ -50,7 +50,6 @@ class TemplateTypesParser {
 
 			if ( $type === AutomaticTemplateTypes::TEMPLATE_SCROLBOX ) {
 				$outputText = trim( self::getTemplateArgsLongestVal( self::getTemplateArgs( $piece, $frame ) ) );
-				return false;
 			}
 		}
 
@@ -214,10 +213,6 @@ class TemplateTypesParser {
 	 * @return string
 	 */
 	public static function getTemplateArgsLongestVal( $templateArgs ) {
-		$lengths = array_map( 'strlen', $templateArgs );
-		$maxLength = max( $lengths );
-		$index = array_search( $maxLength, $lengths );
-
-		return $templateArgs[$index];
+		return array_reduce( $templateArgs, function ( $a, $b ) { return strlen( $a ) >= strlen( $b ) ? $a : $b; } );
 	}
 }
