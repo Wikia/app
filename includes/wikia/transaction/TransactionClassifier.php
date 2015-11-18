@@ -14,6 +14,14 @@ class TransactionClassifier {
 	// copied from extensions/wikia/Wall/WallNamespaces.php to use a constant below
 	// while not being dependant on Wall extension inclusion
 	const NS_USER_WALL = 1200;
+	const NS_USER_WALL_MESSAGE = 1201;
+	const NS_USER_WALL_MESSAGE_GREETING = 1202;
+
+	// copied from extensions/wikia/Forum/ForumNamespaces.php to use a constant below
+	// while not being dependant on Forum extension inclusion
+	const NS_WIKIA_FORUM_BOARD = 2000;
+	const NS_WIKIA_FORUM_BOARD_THREAD = 2001;
+	const NS_WIKIA_FORUM_TOPIC_BOARD = 2002;
 
 	protected static $FILTER_ARTICLE_ACTIONS = array(
 		'view',
@@ -57,7 +65,14 @@ class TransactionClassifier {
 		NS_MAIN => 'main',
 		NS_FILE => 'file',
 		NS_CATEGORY => 'category',
+
 		self::NS_USER_WALL => 'message_wall',
+		self::NS_USER_WALL_MESSAGE => 'message_wall',
+		self::NS_USER_WALL_MESSAGE_GREETING => 'message_wall',
+
+		self::NS_WIKIA_FORUM_BOARD => 'forum',
+		self::NS_WIKIA_FORUM_BOARD_THREAD => 'forum',
+		self::NS_WIKIA_FORUM_TOPIC_BOARD => 'forum',
 	);
 
 	protected static $MAP_PARSER_CACHED_USED = array(
