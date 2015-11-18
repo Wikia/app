@@ -347,7 +347,7 @@ class Hooks {
 			if ( $isViewPage ) {
 				$message = ImportJS::getImportJSDescriptionMessage();
 				$text = $parse ? $message->parse() : $message->escaped();
-				$content = $text . '<pre>' . $content . '</pre>';
+				$content = $text . '<pre>' . trim( strip_tags( $content ) ) . '</pre>';
 			}
 		}
 
