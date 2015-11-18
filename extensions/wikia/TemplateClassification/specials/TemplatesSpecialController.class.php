@@ -6,57 +6,53 @@ use Wikia\ContentReview\Helper;
 class TemplatesSpecialController extends WikiaSpecialPageController {
 
 	const ITEMS_PER_PAGE = 20;
-	const TEMPLATES_MEMC_KEY = 'special-templates';
-	const TEMPLATES_MEMC_VER = '1.0';
+
+	public $type;
+	public $templateName;
+	public $templates = [];
+	public $groups;
 
 	function __construct() {
-		parent::__construct( 'Templates', 'template-classification-templates', true );
+		parent::__construct( 'Templates' );
 	}
 
 	public function init() {
 		$this->specialPage->setHeaders();
+		$this->specialPage->getOutput()->setPageTitle( wfMessage( 'special-templates' )->escaped() );
 
 		\Wikia::addAssetsToOutput( 'templates_hq_scss' );
 	}
 
-	protected function checkAccess() {
-		if( !$this->wg->User->isLoggedIn() ) {
-			return false;
-		}
-		return true;
-	}
-
 	public function index() {
-		$this->specialPage->setHeaders();
-/*
-		if( !$this->checkAccess() ) {
-			$this->displayRestrictionError();
-			return false;
-		}
-*/
-		$template = $this->getVal( 'template' );
-		$type = $this->getVal( 'type' );
-		$page = $this->request->getInt( 'page', 1 ) - 1;
-
 		$groupedTemplates = $this->getTemplates();
-		$groups = $this->getTemplateGroups( $groupedTemplates );
 
-		$groupedTemplates = $this->filterTemplates( $groupedTemplates, $type, $template );
+		if ( empty( $groupedTemplates ) ) {
+			$this->groups = $this->getTemplateGroups( $groupedTemplates );
+			$this->templateName = $this->getVal( 'template' );
+			$this->type = $this->getVal( 'type', $this->getDefaultType() );
+			$page = $this->request->getInt( 'page', 1 ) - 1;
 
-		$total = $this->getTotalTemplatesNum( $groupedTemplates );
+			$this->templates = $this->filterTemplates( $groupedTemplates );
 
-		if ( $total > self::ITEMS_PER_PAGE ) {
-			$groupedTemplates = $this->sliceTemplates( $groupedTemplates, $page );
-			$this->paginatiorBar = $this->preparePagination( $total, $page, $type, $template );
+			$total = $this->getTotalTemplatesNum();
+
+			if ( $total > self::ITEMS_PER_PAGE ) {
+				$this->sliceTemplates( $page );
+				$this->preparePagination( $total, $page );
+			}
 		}
 
-		$this->type = $type;
-		$this->template = $template;
-		$this->groups = $groups;
-
-		$this->groupedTemplates = $groupedTemplates;
+		$this->setVal( 'templates', $this->templates );
+		$this->setVal( 'type', $this->type );
+		$this->setVal( 'groups', $this->groups );
+		$this->setVal( 'templateName', $this->templateName );
 	}
 
+	/**
+	 * Get tempaltes on wiki with their classification
+	 *
+	 * @return array
+	 */
 	private function getTemplates() {
 		$classifiedTemplates = [];
 		$allTemplates = $this->getAllTempaltes();
@@ -69,24 +65,40 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 		return $this->groupTemplates( $allTemplates, $classifiedTemplates );
 	}
 
-	private function filterTemplates( $groupedTemplates, $type, $template ) {
-		if ( !empty( $type ) ) {
-			$groupedTemplates = isset( $groupedTemplates[$type] ) ? [ $type => $groupedTemplates[$type] ] : [];
-		}
+	/**
+	 * Filter templates by name or type
+	 *
+	 * @param $groupedTemplates
+	 * @return array
+	 */
+	private function filterTemplates( $groupedTemplates ) {
+		$filteredTemplates = [];
 
-		if ( !empty( $template ) && !empty( $groupedTemplates ) ) {
+		if ( !empty( $this->templateName ) && !empty( $groupedTemplates ) ) {
 			foreach( $groupedTemplates as $group => $templates ) {
-				if ( $pageId = array_search( $template, array_column( $groupedTemplates[$group], 'title', 'page_id' ) ) ) {
-					break;
+				if ( $pageId = array_search(
+						$this->templateName,
+						array_column( $groupedTemplates[$group], 'title', 'page_id' )
+					)
+				) {
+					$filteredTemplates = [ $groupedTemplates[$group][$pageId] ];
+					$this->type = $group;
 				}
 			}
-
-			$groupedTemplates = !empty( $pageId ) && !empty($group) ? [ $group => [ $pageId => $groupedTemplates[$group][$pageId] ] ] : [];
+		} elseif ( !empty( $this->type ) && isset( $groupedTemplates[$this->type] ) ) {
+			$filteredTemplates = $groupedTemplates[$this->type];
 		}
 
-		return $groupedTemplates;
+		return $filteredTemplates;
 	}
 
+	/**
+	 * Assign each template to type
+	 *
+	 * @param array $allTemplates all tempaltes on wiki
+	 * @param array $classifiedTemplates all classified templates on wiki
+	 * @return array
+	 */
 	private function groupTemplates( $allTemplates, $classifiedTemplates ) {
 		$templates = [];
 
@@ -105,6 +117,14 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 		return $templates;
 	}
 
+	/**
+	 * Get data about template page
+	 *
+	 * @param int $pageId
+	 * @param array $template
+	 * @return mixed
+	 * @throws MWException
+	 */
 	private function prepareTemplate( $pageId, $template ) {
 		$title = Title::newFromID( $pageId );
 
@@ -117,6 +137,13 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 		return $template;
 	}
 
+	/**
+	 * Get data about tempalte page last revision
+	 *
+	 * @param Title $title
+	 * @return array
+	 * @throws MWException
+	 */
 	private function getRevisionData( Title $title ) {
 		$data = [];
 		$revision = Revision::newFromId( $title->getLatestRevID() );
@@ -139,16 +166,22 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 		return $data;
 	}
 
-	private function preparePagination( $total, $page, $type, $templateName ) {
+	/**
+	 * Prepare pagination
+	 *
+	 * @param int $total
+	 * @param int $page
+	 */
+	private function preparePagination( $total, $page ) {
 		$itemsPerPage = self::ITEMS_PER_PAGE;
 		$params = [ 'page' => '%s' ];
 
-		if ( $type ) {
-			$params['type'] = $type;
+		if ( $this->type ) {
+			$params['type'] = $this->type;
 		}
 
-		if ( $templateName ) {
-			$params['template'] = $templateName;
+		if ( $this->templateName ) {
+			$params['template'] = $this->templateName;
 		}
 
 		if( $total > $itemsPerPage ) {
@@ -159,49 +192,51 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 		}
 	}
 
-	private function sliceTemplates( $groupedTemplates, $page ) {
-		$in = 0;
-
+	/**
+	 * Slice templates list for pagination
+	 *
+	 * @param $page
+	 */
+	private function sliceTemplates( $page ) {
 		$offset = $page * self::ITEMS_PER_PAGE;
 		$limit = self::ITEMS_PER_PAGE;
 
-		$slicedTemplates = [];
-
-		foreach ( $groupedTemplates as $group => $templates  ) {
-			$count = count($templates) - 1;
-
-			if ( !$in ) {
-				if ( $count - $offset >= 0 ) {
-					$slicedTemplates[$group] = array_slice( $templates, $offset, $limit, true );
-				} else {
-					$offset -= $count;
-				}
-			} else {
-				$slicedTemplates[$group] = array_slice( $templates, 0, $limit, true );
-			}
-
-			$added = count( $slicedTemplates[$group] );
-			$in += $added;
-			$limit -= $added;
-
-			if ( $in == self::ITEMS_PER_PAGE ) { break; }
-		}
-
-		return $slicedTemplates;
+		$this->templates = array_slice( $this->templates, $offset, $limit, true );
 	}
 
+	/**
+	 * Get all existing template types on wiki
+	 *
+	 * @param array $groupedTemplates
+	 * @return array
+	 */
 	private function getTemplateGroups( $groupedTemplates ) {
 		return array_keys( $groupedTemplates );
 	}
 
-	private function getTotalTemplatesNum( $groupedTemplates ) {
-		return array_sum( array_map( 'count', $groupedTemplates ) );
+	/**
+	 * Get number of templates
+	 *
+	 * @return int
+	 */
+	private function getTotalTemplatesNum() {
+		return count( $this->templates );
 	}
 
-	private function getMemcKey() {
-		return wfMemcKey( self::TEMPLATES_MEMC_KEY, self::TEMPLATES_MEMC_VER );
+	private function getDefaultType() {
+		if ( in_array( $this->groups, \TemplateClassificationService::TEMPLATE_UNKNOWN ) ) {
+			return \TemplateClassificationService::TEMPLATE_UNKNOWN;
+		} else {
+			return $this->groups[0];
+		}
 	}
 
+	/**
+	 * Get all templates on wiki with number of pages on which are included
+	 *
+	 * @return bool|mixed
+	 * @throws \FluentSql\Exception\SqlException
+	 */
 	private function getAllTempaltes() {
 		$db = wfGetDB( DB_SLAVE );
 

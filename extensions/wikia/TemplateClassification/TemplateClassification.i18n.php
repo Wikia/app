@@ -51,7 +51,10 @@ $messages['en'] = [
 
 	'template-classification-notification-error-retry' => 'Something went wrong and we could not save the template type. Could you retry it using the link under the page title?',
 	'template-classification-special-last-edit' => 'Last edited by $1, $2',
-	'template-classification-special-search' => 'Search'
+	'template-classification-special-search' => 'Search',
+	'template-classification-special-find' => 'Find Template:',
+	'template-classification-special-noresults' => 'No templates found',
+	'special-templates' => 'Templates'
 ];
 
 $messages['qqq'] = [
