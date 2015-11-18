@@ -2,7 +2,7 @@
 
 class TemplateTypesParser {
 	/**
-	 * @desc removes navbox template text from parser output
+	 * @desc alters template raw text for mercury parser output based on template type
 	 *
 	 * @param string $text - template content
 	 * @param Title $finalTitle - template title object
@@ -12,7 +12,7 @@ class TemplateTypesParser {
 		global $wgEnableTemplateTypesParsing, $wgArticleAsJson, $wgCityId;
 		wfProfileIn( __METHOD__ );
 
-		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson ) {
+		if ( $wgEnableTemplateTypesParsing ) {
 			$type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )
 					->getTemplateTypeFromTitle( $wgCityId, $finalTitle );
 
@@ -33,22 +33,33 @@ class TemplateTypesParser {
 		return true;
 	}
 
-    public static function onArgSubstitution( &$text, $templateId, $numArgs, $namedArgs) {
-        global $wgEnableTemplateTypesParsing, $wgArticleAsJson, $wgCityId;
-        wfProfileIn( __METHOD__ );
+	/**
+	 * @desc alters template parser output based on its arguments and template type
+	 *
+	 * @param array $piece
+	 * @param PPFrame_DOM $frame
+	 * @param string $outputText
+	 * @return bool
+	 */
+	public static function onStartBraceSubstitution( $piece, $frame, &$outputText ) {
+		global $wgEnableTemplateTypesParsing, $wgArticleAsJson, $wgCityId;
+		wfProfileIn( __METHOD__ );
 
-        if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson ) {
-            $type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )
-                ->getTemplateType( $wgCityId, $templateId );
-            switch ( $type ) {
-                case 'scrollbox':
-                    $text = self::handleScrollboxTemplate(array_merge($numArgs, $namedArgs));
-                    break;
-            }
-        }
-        wfProfileOut( __METHOD__ );
-        return true;
-    }
+		$title = Title::newFromText( $frame->expand( $piece['title'] ), NS_TEMPLATE );
+
+		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson && $title ) {
+			$type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )
+				->getTemplateType( $wgCityId, $title->getArticleID() );
+
+			if ( $type === AutomaticTemplateTypes::TEMPLATE_SCROLBOX ) {
+				$outputText = trim( self::getTemplateArgsLongestVal( self::getTemplateArgs( $piece, $frame ) ) );
+				return false;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
 
 	/**
 	 * @desc return skip rendering navbox template
@@ -68,11 +79,36 @@ class TemplateTypesParser {
 		return '<references />';
 	}
 
-    private static function handleScrollboxTemplate($templateArgs) {
-        $lengths = array_map('strlen', $templateArgs);
-        $maxLength = max($lengths);
-        $index = array_search($maxLength, $lengths);
-        return $templateArgs[$index];
-    }
+	/**
+	 * @desc gets array of template arguments values
+	 *
+	 * @param array $piece
+	 * @param PPFrame_DOM $frame
+	 * @return array
+	 */
+	private static function getTemplateArgs( $piece, $frame ) {
+		$templateArgs = [];
+
+		for ($i = 0; $i < count( $piece['parts'] ); $i++ ) {
+			$bits = $piece['parts']->item( $i )->splitArg();
+			$templateArgs[] = $frame->expand( $bits['value'] );
+		}
+
+		return $templateArgs;
+	}
+
+	/**
+	 * @desc gets the longest value from template arguments
+	 *
+	 * @param array $templateArgs
+	 * @return string
+	 */
+	private static function getTemplateArgsLongestVal( $templateArgs ) {
+		$lengths = array_map( 'strlen', $templateArgs );
+		$maxLength = max($lengths);
+		$index = array_search( $maxLength, $lengths );
+
+		return $templateArgs[$index];
+	}
 
 }
