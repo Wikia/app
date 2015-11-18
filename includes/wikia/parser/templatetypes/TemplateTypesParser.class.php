@@ -1,8 +1,6 @@
 <?php
 
 class TemplateTypesParser {
-	const CLASS_CONTEXT_LINK = 'context-link';
-
 	/**
 	 * @desc alters template raw text parser output based on template type
 	 *
@@ -160,7 +158,7 @@ class TemplateTypesParser {
 	 * @return string
 	 */
 	private static function wrapContextLink( $wikitext ) {
-		return sprintf( '<div class="%s">%s</div>', self::CLASS_CONTEXT_LINK, $wikitext );
+		return sprintf( '<div class="%s">%s</div>', AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK, $wikitext );
 	}
 
 	/**
