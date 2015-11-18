@@ -140,6 +140,14 @@ $config['adengine2_taboola_js'] = array(
 	),
 );
 
+$config['adengine2_gcs_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/recovery/gcs.js',
+	),
+);
+
 $config['adengine2_interactive_maps_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(

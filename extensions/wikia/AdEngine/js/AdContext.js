@@ -75,6 +75,12 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.recoveredAdsMessage = geo.isProperGeo(instantGlobals.wgAdDriverAdsRecoveryMessageCountries);
 		}
 
+		// Google Consumer Surveys
+		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
+			context.opts.googleConsumerSurveys = abTest.getGroup('PROJECT_43') === 'GROUP_5' &&
+				geo.isProperGeo(instantGlobals.wgAdDriverGoogleConsumerSurveysCountries);
+		}
+
 		// Showcase.*
 		if (isUrlParamSet('showcase')) {
 			context.opts.showcase = true;

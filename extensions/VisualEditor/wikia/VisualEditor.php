@@ -68,7 +68,8 @@ $wgResourceModules += array(
 	'ext.visualEditor.wikia.oasisViewPageTarget' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => array(
 			've/init/ve.init.wikia.js',
-			've/init/ve.init.wikia.ViewPageTarget.js'
+			've/init/ve.init.wikia.ViewPageTarget.js',
+			've/init/ve.init.wikia.TargetEvents.js',
 		),
 		'styles' => array(
 			've/init/styles/ve.init.wikia.ViewPageTarget.css'
