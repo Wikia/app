@@ -113,6 +113,7 @@ SASS;
 
 	public function quoteIfNeeded( $item, $key ) {
 		if ( !is_numeric( $item ) && strpos( $key, 'color' ) === false ) {
+			$item = addslashes( $item );
 			$item = "'{$item}'";
 		}
 		return $item;
