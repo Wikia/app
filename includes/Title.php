@@ -126,11 +126,12 @@ class Title {
 	 *
 	 * @param $text String the link text; spaces, prefixes, and an
 	 *   initial ':' indicating the main namespace are accepted.
-	 * @param $defaultNamespace Int the namespace to use if none is speci-
-	 *   fied by a prefix.  If you want to force a specific namespace even if
+	 * @param int $defaultNamespace Int the namespace to use if none is
+	 *   specified by a prefix.  If you want to force a specific namespace even if
 	 *   $text might begin with a namespace prefix, use makeTitle() or
 	 *   makeTitleSafe().
-	 * @return Title, or null on an error.
+	 * @return \Title , or null on an error.
+	 * @throws \MWException
 	 */
 	public static function newFromText( $text, $defaultNamespace = NS_MAIN ) {
 		if ( is_object( $text ) ) {
