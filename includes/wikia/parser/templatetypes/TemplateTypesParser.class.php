@@ -213,7 +213,7 @@ class TemplateTypesParser {
 	 * @param array $templateArgs
 	 * @return string
 	 */
-	private static function getTemplateArgsLongestVal( $templateArgs ) {
+	public static function getTemplateArgsLongestVal( $templateArgs ) {
 		$lengths = array_map( 'strlen', $templateArgs );
 		$maxLength = max( $lengths );
 		$index = array_search( $maxLength, $lengths );

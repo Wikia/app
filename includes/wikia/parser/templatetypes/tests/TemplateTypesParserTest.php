@@ -92,7 +92,7 @@ class TemplateTypesParserTest extends WikiaBaseTest
 	 * @param $contextLinkWikitext
 	 * @param $expectedTemplateWikiext
 	 *
-	 * @dataProvider testSanitizeContextLinkWikitextDataProvider
+	 * @dataProvider sanitizeContextLinkWikitextDataProvider
 	 */
 	public function testSanitizeContextLinkWikitext( $contextLinkWikitext, $expectedTemplateWikiext ) {
 		$sanitizedTemplateWikiext = TemplateTypesParser::sanitizeContextLinkWikitext( $contextLinkWikitext );
@@ -100,7 +100,7 @@ class TemplateTypesParserTest extends WikiaBaseTest
 		$this->assertEquals( $sanitizedTemplateWikiext, $expectedTemplateWikiext );
 	}
 
-	public function testSanitizeContextLinkWikitextDataProvider() {
+	public function sanitizeContextLinkWikitextDataProvider() {
 		return [
 			[
 				'[[:Disciplinary hearing of Harry Potter|Disciplinary hearing of Harry Potter]]',
@@ -126,6 +126,56 @@ in \'\'[[and some more crazy stuff!]]\'\'.\'\'',
 			[
 				'===Headers [[Foo Bar]]====>[[foo|here]] in context-links*!.',
 				'Headers [[Foo Bar]]=>[[foo|here]] in context-links*!.'
+			]
+		];
+	}
+
+	/**
+	 * @param array $templateAgrs
+	 * @param string $longestVal
+	 *
+	 * @dataProvider getTemplateArgsLongestValDataProvider
+	 */
+	public function testGetTemplateArgsLongestVal( $templateAgrs, $longestVal ) {
+		$this->assertEquals( TemplateTypesParser::getTemplateArgsLongestVal( $templateAgrs ), $longestVal );
+	}
+
+	public function getTemplateArgsLongestValDataProvider() {
+		return [
+			[
+				[
+					'aaaaa',
+					'aaa',
+					'a'
+				],
+				'aaaaa',
+			],
+			[
+				[
+					'aaaaa',
+					'',
+				],
+				'aaaaa',
+			],
+			[
+				[
+					'aaaaa'
+				],
+				'aaaaa',
+			],
+			[
+				[
+					'aaaaa1',
+					'aaaaa2'
+				],
+				'aaaaa1',
+			],
+			[
+				[
+					'',
+					''
+				],
+				'',
 			]
 		];
 	}
