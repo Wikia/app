@@ -106,10 +106,10 @@ class ImportJS {
 	/**
 	 * Get description how to manage script imports
 	 *
-	 * @return String
+	 * @return \Message
 	 */
-	static public function getImportJSDescription() {
-		return wfMessage( 'content-review-importjs-description' )->escaped();
+	static public function getImportJSDescriptionMessage() {
+		return wfMessage( 'content-review-importjs-description' );
 	}
 
 	/**

@@ -53,7 +53,7 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onArticleNonExistentPage( \Article $article, \OutputPage $out, &$content ) {
-		$content = $this->getImportJSContent( $article->getTitle(), $content );
+		$content = $this->getImportJSContent( $article->getTitle(), $content, false );
 
 		return true;
 	}
@@ -340,12 +340,13 @@ class Hooks {
 		ContentReviewStatusesService::purgeJsPagesCache();
 	}
 
-	private function getImportJSContent( \Title $title, $content ) {
+	private function getImportJSContent( \Title $title, $content, $parse = true ) {
 		if ( ImportJS::isImportJSPage( $title ) ) {
 			$isViewPage = empty( \RequestContext::getMain()->getRequest()->getVal( 'action' ) );
 
 			if ( $isViewPage ) {
-				$text = ImportJS::getImportJSDescription();
+				$message = ImportJS::getImportJSDescriptionMessage();
+				$text = $parse ? $message->parse() : $message->escaped();
 				$content = $text . '<pre>' . $content . '</pre>';
 			}
 		}
