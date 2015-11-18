@@ -264,7 +264,7 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 		}
 	}
 
-	function submitFormOnEnterKeyPress(e, modalInstance) {
+	function submitFormOnEnterKeyPress(e) {
 		var keyCode = e.keyCode ? e.keyCode : e.which;
 		if (keyCode === 13) {
 			e.preventDefault();
