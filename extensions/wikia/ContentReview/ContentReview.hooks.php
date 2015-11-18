@@ -24,32 +24,36 @@ class Hooks {
 		\Hooks::register( 'UserAddGroup', [ $hooks, 'onUserAddGroup' ] );
 		\Hooks::register( 'BeforeUserAddGlobalGroup', [ $hooks, 'onUserAddGroup' ] );
 		\Hooks::register( 'SkinAfterBottomScripts', [ $hooks, 'onSkinAfterBottomScripts' ] );
-		\Hooks::register( 'ArticleAfterFetchContent', [ $hooks, 'onArticleAfterFetchContent' ] );
 		\Hooks::register( 'ArticleNonExistentPage', [ $hooks, 'onArticleNonExistentPage' ] );
+		\Hooks::register( 'OutputPageBeforeHTML', [ $hooks, 'onOutputPageBeforeHTML' ] );
 	}
 
 	/**
-	 * Add description how to import scripts
+	 * Add description how to import scripts on view page
 	 *
-	 * @param \Article $article
-	 * @param String $content
+	 * @param \OutputPage $out
+	 * @param $content
 	 * @return bool
 	 */
-	public function onArticleAfterFetchContent( \Article $article, &$content ) {
-		$content = $this->getImportJSContent( $article, $content );
+	public function onOutputPageBeforeHTML( \OutputPage $out, &$content ) {
+		$title = $out->getTitle();
+
+		if ( $title->exists() ) {
+			$content = $this->getImportJSContent( $title, $content );
+		}
 
 		return true;
 	}
 
 	/**
-	 * Add description how to import scripts
+	 * Add description how to import scripts on non existing page
 	 *
 	 * @param \Article $article
 	 * @param String $content
 	 * @return bool
 	 */
 	public function onArticleNonExistentPage( \Article $article, \OutputPage $out, &$content ) {
-		$content = $this->getImportJSContent( $article, $content );
+		$content = $this->getImportJSContent( $article->getTitle(), $content );
 
 		return true;
 	}
@@ -336,9 +340,7 @@ class Hooks {
 		ContentReviewStatusesService::purgeJsPagesCache();
 	}
 
-	private function getImportJSContent( \Article $article, $content ) {
-		$title = $article->getTitle();
-
+	private function getImportJSContent( \Title $title, $content ) {
 		if ( ImportJS::isImportJSPage( $title ) ) {
 			$isViewPage = empty( \RequestContext::getMain()->getRequest()->getVal( 'action' ) );
 
