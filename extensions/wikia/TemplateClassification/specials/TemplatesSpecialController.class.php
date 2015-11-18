@@ -102,7 +102,8 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	/**
 	 * Filter templates by name
 	 *
-	 * @param $groupedTemplates
+	 * @param array $allTemplates
+	 * @param array $classifiedTemplates
 	 * @return array
 	 */
 	private function filterTemplatesByName( $allTemplates, $classifiedTemplates ) {
@@ -119,8 +120,8 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	/**
 	 * Get templates depending by type
 	 *
-	 * @param $allTemplates
-	 * @param $classifiedTemplates
+	 * @param array $allTemplates
+	 * @param array $classifiedTemplates
 	 * @return array
 	 */
 	private function getTemplates( $allTemplates, $classifiedTemplates ) {
@@ -155,8 +156,8 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	/**
 	 * Get templates on wiki by type
 	 *
-	 * @param $allTemplates
-	 * @param $classifiedTemplates
+	 * @param array $allTemplates
+	 * @param array $classifiedTemplates
 	 * @return array
 	 */
 	private function getTemplatesByType( $allTemplates, $classifiedTemplates ) {
@@ -250,7 +251,7 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	/**
 	 * Slice templates list for pagination
 	 *
-	 * @param $page
+	 * @param int $page
 	 */
 	private function sliceTemplates( $page ) {
 		$offset = $page * self::ITEMS_PER_PAGE;
@@ -262,7 +263,7 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	/**
 	 * Get all existing and user facing template types on wiki
 	 *
-	 * @param array $groupedTemplates
+	 * @param array $classifiedTemplates
 	 * @return array
 	 */
 	private function getTemplateGroups( $classifiedTemplates ) {
@@ -295,8 +296,8 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	/**
 	 * Get template type
 	 *
-	 * @param $pageId
-	 * @param $classifiedTemplates
+	 * @param int $pageId
+	 * @param array $classifiedTemplates
 	 * @return string
 	 */
 	private function getTemplateType( $pageId, $classifiedTemplates ) {
@@ -325,7 +326,7 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	/**
 	 * Check if given type is user facing
 	 *
-	 * @param $type
+	 * @param string $type
 	 * @return bool
 	 */
 	private function isUserType( $type ) {
