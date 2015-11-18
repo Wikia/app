@@ -1305,7 +1305,14 @@ $wgAdDriverUseAdsAfterInfobox = false;
  * @name $wgAdDriverUseGoogleConsumerSurveys
  * Whether to enable Google Consumer Surveys
  */
-$wgAdDriverUseGoogleConsumerSurveys = false;
+$wgAdDriverUseGoogleConsumerSurveys = true;
+
+/**
+ * @name $wgAdDriverGoogleConsumerSurveysCountries
+ * List of countries with enabled Google Consumer Surveys.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverGoogleConsumerSurveysCountries = null;
 
 /**
  * @name $wgAdDriverUseTaboola

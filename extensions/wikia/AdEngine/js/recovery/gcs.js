@@ -21,7 +21,8 @@ define('ext.wikia.adEngine.recovery.gcs', [
 	var article = doc.getElementById('WikiaArticle'),
 		articleUrl = loc.href,
 		contentId = 'everything',
-		logGroup = 'ext.wikia.adEngine.recovery.gcs';
+		logGroup = 'ext.wikia.adEngine.recovery.gcs',
+		publisherId = win.wgDevelEnvironment ? 'grm5podgin6cup4wmqjqct4h5e' : 'ltvovxgnp5p3wkkemdja6sd2wm';
 
 	function getTopPos(el) {
 		var pos;
@@ -36,7 +37,8 @@ define('ext.wikia.adEngine.recovery.gcs', [
 		if (!article) {
 			return;
 		}
-		elementsToHide = article.querySelectorAll('table,figure,.portable-infobox');
+		elementsToHide = article.querySelectorAll('table,figure,.portable-infobox,.category-gallery,' +
+			'#mw-pages,.wikia-slideshow,#toc,.ogg_player');
 		article.classList.add('p402_premium');
 		Array.prototype.forEach.call(elementsToHide, function (element) {
 			element.classList.add('p402_hide');
@@ -60,7 +62,7 @@ define('ext.wikia.adEngine.recovery.gcs', [
 	}
 
 	function getGcsUrl() {
-		return '//survey.g.doubleclick.net/survey?site=_grm5podgin6cup4wmqjqct4h5e' +
+		return '//survey.g.doubleclick.net/survey?site=_' + publisherId +
 				'&url=' + encodeURIComponent(articleUrl) +
 				(contentId ? '&cid=' + encodeURIComponent(contentId) : '') +
 				'&random=' + (new Date()).getTime();
