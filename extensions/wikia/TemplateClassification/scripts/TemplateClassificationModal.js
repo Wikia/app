@@ -131,6 +131,7 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 		});
 
 		modalInstance.bind('close', function () {
+			$(w).unbind('keypress', submitFormOnEnterKeyPress);
 			// Track - close TC modal
 			track({
 				action: tracker.ACTIONS.CLOSE,
@@ -146,13 +147,7 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 			});
 		});
 
-		$(w).bind('keypress', function (e) {
-			var keyCode = e.keyCode ? e.keyCode : e.which;
-			if (keyCode === 13) {
-				e.preventDefault();
-				modalInstance.trigger('done');
-			}
-		});
+		$(w).bind('keypress', {modalInstance: modalInstance}, submitFormOnEnterKeyPress);
 
 		/* Show the modal */
 		modalInstance.show();
@@ -266,6 +261,14 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 				e.preventDefault();
 				openEditModal('editType');
 			}
+		}
+	}
+
+	function submitFormOnEnterKeyPress(e, modalInstance) {
+		var keyCode = e.keyCode ? e.keyCode : e.which;
+		if (keyCode === 13) {
+			e.preventDefault();
+			e.data.modalInstance.trigger('done');
 		}
 	}
 
