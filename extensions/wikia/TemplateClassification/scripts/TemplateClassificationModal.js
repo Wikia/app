@@ -82,11 +82,11 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 		}
 
 		// Mark selected type
-		$preselectedType = $classificationForm.find('input#template-classification-' + templateType);
+		$preselectedType = $classificationForm.find('#template-classification-' + templateType);
 
 		if (!!$preselectedType) {
 			$classificationForm.find('input[checked="checked"]').removeAttr('checked');
-			$preselectedType.attr('checked', 'checked').prop('autofocus', true);
+			$preselectedType.attr('checked', 'checked');
 		}
 
 		// Set modal content
@@ -255,6 +255,7 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 	}
 
 	function openModalKeyboardShortcut(e) {
+		// Shortcut - Action Key (Ctrl or Cmd) + Shift + K
 		if (e.shiftKey && (e.ctrlKey || e.metaKey)) {
 			var keyCode = e.keyCode ? e.keyCode : e.which;
 			if (keyCode === 75) {
@@ -265,6 +266,7 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 	}
 
 	function submitFormOnEnterKeyPress(e) {
+		// On Enter key press
 		var keyCode = e.keyCode ? e.keyCode : e.which;
 		if (keyCode === 13) {
 			e.preventDefault();
