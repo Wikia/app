@@ -334,7 +334,7 @@
 		}
 	}
 
-	// highlight selected reference (ported from Vector skin)
+	// highlight selected reference
 	.references > li:target {
 		background-color: mix($color-page, $color-links, 85%);
 	}
