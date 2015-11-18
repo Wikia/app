@@ -3347,6 +3347,16 @@ class Parser {
 		wfProfileIn( __METHOD__ );
 		wfProfileIn( __METHOD__.'-setup' );
 
+		# wikia start
+		$outputText = '';
+
+		if ( wfRunHooks( 'Parser::startBraceSubstitution', array( $piece, $frame, &$outputText ) ) === false ) {
+			return [
+				'text' => $outputText
+			];
+		}
+		# wikia end
+
 		# Flags
 		$found = false;             # $text has been filled
 		$nowiki = false;            # wiki markup in $text should be escaped
@@ -4043,11 +4053,6 @@ class Parser {
 		$object = false;
 		$text = $frame->getArgument( $argName );
 
-        # wikia start
-        wfRunHooks( 'Parser::ArgSubstitution', array(&$text, $frame->getTitle()->mArticleID,
-            $frame->getNumberedArguments(), $frame->getNamedArguments() ) );
-        # wikia end
-
 		if (  $text === false && $parts->getLength() > 0
 		  && (
 			$this->ot['html']
@@ -4075,7 +4080,6 @@ class Parser {
 		} else {
 			$ret = array( 'text' => $text );
 		}
-
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
@@ -4160,7 +4164,6 @@ class Parser {
 				if ( !is_callable( $callback ) ) {
 					throw new MWException( "Tag hook for $name is not callable\n" );
 				}
-
 				$output = call_user_func_array( $callback, array( &$this, $frame, $content, $attributes ) );
 			} else {
 				$output = '<span class="error">Invalid tag extension name: ' .
