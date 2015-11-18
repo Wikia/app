@@ -22,6 +22,9 @@ class TemplateTypesParser {
 				case TemplateClassificationService::TEMPLATE_NAVBOX:
 					$text = self::handleNavboxTemplate();
 					break;
+				case TemplateClassificationService::TEMPLATE_FLAG:
+					$text = self::handleNoticeTemplate();
+					break;
 				case AutomaticTemplateTypes::TEMPLATE_REFERENCES:
 				case TemplateClassificationService::TEMPLATE_REFERENCES:
 					$text = self::handleReferencesTemplate();
@@ -111,7 +114,7 @@ class TemplateTypesParser {
 		//remove all bold and italics from all of template content
 		$wikitext = preg_replace( '/\'{2,}/', '', $wikitext );
 		//remove all headings from all of template content
-		$wikitext = self::removeHeadings($wikitext);
+		$wikitext = self::removeHeadings( $wikitext );
 		//remove all newlines from the middle of the template text.
 		$wikitext = preg_replace( '/\n/', ' ', $wikitext );
 
@@ -152,6 +155,15 @@ class TemplateTypesParser {
 	 * @return string
 	 */
 	private static function handleNavboxTemplate() {
+		return '';
+	}
+
+	/**
+	 * @desc return skip rendering notice template
+	 *
+	 * @return string
+	 */
+	private static function handleNoticeTemplate() {
 		return '';
 	}
 
