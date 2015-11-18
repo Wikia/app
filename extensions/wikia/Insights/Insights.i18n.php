@@ -410,7 +410,7 @@ $messages['it'] = array(
 	'insights-flags-filter-label' => 'Filtra pagine per tipo di contrassegno',
 	'insights-list-no-flag-types' => 'Non ci sono articoli con il tipo di contrassegno selezionato!',
 	'insights-list-subtitle-pageswithoutinfobox' => 'Pagine senza infobox',
-	'insights-list-description-pageswithoutinfobox' => 'Queste pagine non hanno un [[Help: Infoboxes|infobox]] riconosciuto. Potresti aggiungerne uno!',
+	'insights-list-description-pageswithoutinfobox' => 'Queste pagine non hanno un [[Help:Infoboxes|infobox]] riconosciuto. Potresti aggiungerne uno!',
 	'insights-list-subtitle-templateswithouttype' => 'Modelli non organizzati',
 	'insights-list-description-templateswithouttype' => 'Lo scopo di questi modelli è sconosciuto, dal momento che non sono stati organizzati in base al tipo. Vedi [[Aiuto:Tipi di modello]] per saperne di più!',
 );
@@ -613,7 +613,7 @@ $messages['pl'] = array(
 	'insights-flags-filter-label' => 'Fitltruj strony według rodzaju flag',
 	'insights-list-no-flag-types' => 'W żadnym artykule nie wykorzystano wybranego rodzaju flag!',
 	'insights-list-subtitle-pageswithoutinfobox' => 'Strony bez infoboksu',
-	'insights-list-description-pageswithoutinfobox' => 'Na tych stronach nie wykryto [[pomoc: Infoboxes|infoboksu]]. Warto byłoby rozważyć jego dodanie!',
+	'insights-list-description-pageswithoutinfobox' => 'Na tych stronach nie wykryto [[Pomoc:Infoboksy|infoboksu]]. Warto byłoby rozważyć jego dodanie!',
 	'insights-list-subtitle-templateswithouttype' => 'Niezorganizowane szablony',
 	'insights-list-description-templateswithouttype' => 'Przeznaczenie tych szablonów nie jest znane, ponieważ nie zostały one skategoryzowane pod względem typu. Zobacz [[Pomoc:Typy szablonów]], aby dowiedzieć się więcej!',
 );
@@ -663,10 +663,7 @@ $messages['pt'] = array(
 	'insights-list-header-altaction' => 'Ação',
 	'insights-list-header-pageviews' => 'Visualizações de página',
 	'insights-list-subtitle-flags' => 'Páginas marcadas com bandeiras',
-	'insights-list-description-flags' => 'Use as bandeiras para organizar e etiquetar páginas de artigos. Esta lista de Insights permite a visualização de relatórios personalizados sobre artigos sinalizados para a identificação daqueles que necessitam de melhorias. [[Help:Flags|Saiba mais sobre as bandeiras]]
- 
-Context | Edit Context
-',
+	'insights-list-description-flags' => 'Use as bandeiras para organizar e etiquetar páginas de artigos. Esta lista de Insights permite a visualização de relatórios personalizados sobre artigos sinalizados para a identificação daqueles que necessitam de melhorias. [[Help:Flags|Saiba mais sobre as bandeiras]]',
 	'insights-notification-message-inprogress-flags' => 'Esta página é sinalizada.',
 	'insights-list-subtitle-nonportableinfoboxes' => 'Infoboxes não-portáteis',
 	'insights-list-description-nonportableinfoboxes' => 'As seguintes infoboxes são criadas com tabelas ou divs, e devem ser convertidas para usar o novo [[w:c:comunidade:Ajuda:InfoboxesPortáteis|marcador de infobox]] para que renderizem adequadamente para todos os visitantes. Se tiver problemas, você pode também [[w:c:community:Thread:841717|visitar nosso fórum e fazer perguntas]].',
@@ -685,9 +682,9 @@ Context | Edit Context
 	'insights-flags-filter-label' => 'Selecione páginas pelo tipo de bandeira',
 	'insights-list-no-flag-types' => 'Não existem artigos usando o tipo de bandeira selecionado!',
 	'insights-list-subtitle-pageswithoutinfobox' => 'Páginas sem infoboxes',
-	'insights-list-description-pageswithoutinfobox' => 'Estas páginas não têm [[Ajuda: Infoboxes|infobox]] reconhecidas. Você pode  considerar adicionar uma!',
+	'insights-list-description-pageswithoutinfobox' => 'Estas páginas não têm [[Ajuda:Infoboxes|infobox]] reconhecidas. Você pode  considerar adicionar uma!',
 	'insights-list-subtitle-templateswithouttype' => 'Predefinições não-organizadas',
-	'insights-list-description-templateswithouttype' => 'O propósito destas predefinições é desconhecido, porque não foram organizadas por tipo. Veja [[Ajuda: tipos de predefinição]] para saber mais!',
+	'insights-list-description-templateswithouttype' => 'O propósito destas predefinições é desconhecido, porque não foram organizadas por tipo. Veja [[Ajuda:Tipos de predefinição]] para saber mais!',
 );
 
 $messages['ru'] = array(
