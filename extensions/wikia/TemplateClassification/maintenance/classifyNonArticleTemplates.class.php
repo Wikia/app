@@ -57,7 +57,6 @@ class ClassifyNonArticleTemplates extends Maintenance {
 
 			$this->out( "Processing {$count} inclusions of template {$templateTitle} ({$templateId})" );
 			$isFirstLevel = false;
-			$i = 1;
 
 			foreach ( $linkingPages as $pageId ) {
 				$pageRawTextLc = strtolower( WikiPage::newFromID( $pageId )->getRawText() );
@@ -67,7 +66,6 @@ class ClassifyNonArticleTemplates extends Maintenance {
 					$isFirstLevel = true;
 					break;
 				}
-				$i++;
 			}
 
 			if ( $isFirstLevel ) {
