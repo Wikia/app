@@ -2,6 +2,7 @@
 
 class TemplateTypesParser {
 	const CLASS_CONTEXT_LINK = 'context-link';
+
 	/**
 	 * @desc alters template raw text parser output based on template type
 	 *
