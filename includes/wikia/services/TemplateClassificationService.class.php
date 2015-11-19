@@ -33,20 +33,24 @@ class TemplateClassificationService {
 
 	/**
 	 * Allowed types of templates stored in an array to make a validation process easier.
+	 *
+	 * The order of types in this array determines the order of the types displayed in the
+	 * classification dialog.
+	 *
 	 * @var array
 	 */
 	static $templateTypes = [
+		self::TEMPLATE_INFOBOX,
+		self::TEMPLATE_QUOTE,
+		self::TEMPLATE_NAVBOX,
+		self::TEMPLATE_FLAG,
 		self::TEMPLATE_CONTEXT_LINK,
+		self::TEMPLATE_REFERENCES,
+		self::TEMPLATE_MEDIA,
 		self::TEMPLATE_DATA,
 		self::TEMPLATE_DESIGN,
-		self::TEMPLATE_FLAG,
-		self::TEMPLATE_INFOBOX,
-		self::TEMPLATE_MEDIA,
 		self::TEMPLATE_NAV,
-		self::TEMPLATE_NAVBOX,
 		self::TEMPLATE_NOT_ART,
-		self::TEMPLATE_QUOTE,
-		self::TEMPLATE_REFERENCES,
 		self::TEMPLATE_UNKNOWN,
 	];
 
