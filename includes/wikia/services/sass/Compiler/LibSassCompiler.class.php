@@ -48,8 +48,6 @@ class LibSassCompiler extends Compiler {
 			}
 		);
 
-		//sd( $sassVariables );
-
 		return self::encodeSassMap( $sassVariables );
 	}
 
