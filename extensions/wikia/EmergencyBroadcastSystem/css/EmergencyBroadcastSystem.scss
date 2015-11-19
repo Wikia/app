@@ -27,10 +27,7 @@ $ebs-content-offset: 20px;
 	line-height: $ebs-line-height;
 	margin: $ebs-standard-spacing auto 0;
 	position: relative;
-	padding: $padding-width-small;
-	padding: $padding-width-small-plus;
-	padding: $padding-width-medium;
-	padding: $padding-width-large;
+	z-index: 1;
 
 	a {
 		color: $color-text-dark;
