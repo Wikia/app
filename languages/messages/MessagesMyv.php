@@ -324,16 +324,11 @@ $messages = array(
 'navigation'    => 'Навигация',
 'and'           => '&#32;ды',
 
-# Cologne Blue skin
 'qbfind'         => 'Мук',
 'qbbrowse'       => 'Ваномо-тееме',
-'qbedit'         => 'Витнеме-петнеме',
 'qbpageoptions'  => 'Те лопась',
 'qbpageinfo'     => 'Косо-зярдо',
-'qbmyoptions'    => 'Монь лопан',
-'qbspecialpages' => 'Башка тевень лопат',
 'faq'            => 'Сеедьстэ кепедень кевкстемат',
-'faqpage'        => 'Project:Сеедьстэ кепедень кевкстемат',
 
 'actions'                  => 'Тев теемат',
 'namespaces'               => 'Лемпотмот',
@@ -357,7 +352,6 @@ $messages = array(
 'edit'              => 'Витнеме-петнеме',
 'create'            => 'Тейть-шкак',
 'editthispage'      => 'Витнемс-петнемс те лопанть',
-'create-this-page'  => 'Теик-шкик те лопанть',
 'delete'            => 'Нардамс',
 'deletethispage'    => 'Нардамс те лопанть',
 'undelete_short'    => 'Велявтомс нардазенть {{PLURAL:$1|вейке витнема-петнема|$1 витнемат-петнемат}}',
@@ -372,7 +366,6 @@ $messages = array(
 'specialpage'       => 'Башка тевень лопа',
 'personaltools'     => 'Эсень кедьёнкст',
 'postcomment'       => 'Од явкс',
-'articlepage'       => 'Ваномс потмокслопанть',
 'talk'              => 'Кортнеме',
 'views'             => 'Ваномкат',
 'toolbox'           => 'Кедьёнкс парго',
@@ -863,13 +856,6 @@ IP-тешкстэть — $3, саймас совавтоманть ID-сь — 
 'powersearch-togglenone'           => 'Арась мезе невтемс',
 'search-external'                  => 'Ушо йондонь вешнема',
 
-# Quickbar
-'qbsettings'               => 'Навигациянь лазнэ',
-'qbsettings-none'          => 'Арась мезе невтемс',
-'qbsettings-fixedleft'     => 'Керш ёндо кирдезь',
-'qbsettings-fixedright'    => 'Вить ёндо кирдезь',
-'qbsettings-floatingleft'  => 'Керш ёнга уи',
-'qbsettings-floatingright' => 'Вить ёнга уи',
 
 # Preferences page
 'preferences'               => 'Лия ютксто явома',

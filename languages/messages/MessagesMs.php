@@ -335,16 +335,11 @@ $messages = array(
 'navigation'    => 'Pandu arah',
 'and'           => '&#32;dan',
 
-# Cologne Blue skin
 'qbfind'         => 'Cari',
 'qbbrowse'       => 'Semak imbas',
-'qbedit'         => 'Sunting',
 'qbpageoptions'  => 'Laman ini',
 'qbpageinfo'     => 'Konteks',
-'qbmyoptions'    => 'Laman-laman saya',
-'qbspecialpages' => 'Laman khas',
 'faq'            => 'Soalan Lazim',
-'faqpage'        => 'Project:Soalan Lazim',
 
 'actions'                        => 'Tindakan',
 'namespaces'                     => 'Ruang nama',
@@ -368,7 +363,6 @@ $messages = array(
 'edit'              => 'Sunting',
 'create'            => 'Cipta',
 'editthispage'      => 'Sunting laman ini',
-'create-this-page'  => 'Cipta laman ini',
 'delete'            => 'Hapuskan',
 'deletethispage'    => 'Hapuskan laman ini',
 'undelete_short'    => 'Nyahhapus {{PLURAL:$1|satu suntingan|$1 suntingan}}',
@@ -384,7 +378,6 @@ $messages = array(
 'specialpage'       => 'Laman Khas',
 'personaltools'     => 'Alatan peribadi',
 'postcomment'       => 'Bahagian baru',
-'articlepage'       => 'Lihat laman kandungan',
 'talk'              => 'Perbincangan',
 'views'             => 'Rupa',
 'toolbox'           => 'Alatan',
@@ -1187,14 +1180,6 @@ Cuba berikan awalan ''all:'' untuk mencari semua kandungan (termasuk laman perbi
 'search-external'                  => 'Carian luar',
 'searchdisabled'                   => 'Ciri pencarian dalam {{SITENAME}} dimatikan. Anda boleh mencari melalui Google. Sila ambil perhatian bahawa indeks dalam Google mungkin bukan yang terkini.',
 
-# Quickbar
-'qbsettings'                => 'Bar pantas',
-'qbsettings-none'           => 'Tiada',
-'qbsettings-fixedleft'      => 'Tetap sebelah kiri',
-'qbsettings-fixedright'     => 'Tetap sebelah kanan',
-'qbsettings-floatingleft'   => 'Berubah-ubah sebelah kiri',
-'qbsettings-floatingright'  => 'Berubah-ubah sebelah kanan',
-'qbsettings-directionality' => 'Tetap, bergantung pada kearahan tulisan bahasa anda',
 
 # Preferences page
 'preferences'                   => 'Keutamaan',
@@ -2837,7 +2822,6 @@ Simpan dalam komputer anda dan muat naiknya di sini.',
 # Stylesheets
 'common.css'      => '/* CSS yang terletak di sini akan digunakan pada semua kulit */',
 'standard.css'    => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Klasik */',
-'cologneblue.css' => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Cologne Blue */',
 'monobook.css'    => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Monobook */',
 'myskin.css'      => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit MySkin */',
 'chick.css'       => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Chick */',
@@ -2882,7 +2866,6 @@ Simpan dalam komputer anda dan muat naiknya di sini.',
 
 # Skin names
 'skinname-standard'    => 'Klasik',
-'skinname-cologneblue' => 'Cologne Blue',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
 'skinname-chick'       => 'Chick',

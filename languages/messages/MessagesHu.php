@@ -451,16 +451,11 @@ $messages = array(
 'navigation'    => 'Navigáció',
 'and'           => '&#32;és',
 
-# Cologne Blue skin
 'qbfind'         => 'Keresés',
 'qbbrowse'       => 'Böngészés',
-'qbedit'         => 'Szerkesztés',
 'qbpageoptions'  => 'Lapbeállítások',
 'qbpageinfo'     => 'Lapinformáció',
-'qbmyoptions'    => 'Lapjaim',
-'qbspecialpages' => 'Speciális lapok',
 'faq'            => 'GyIK',
-'faqpage'        => 'Project:GyIK',
 
 'actions'                        => 'Műveletek',
 'namespaces'                     => 'Névterek',
@@ -484,7 +479,6 @@ $messages = array(
 'edit'              => 'Szerkesztés',
 'create'            => 'Létrehozás',
 'editthispage'      => 'Lap szerkesztése',
-'create-this-page'  => 'Oldal létrehozása',
 'delete'            => 'Törlés',
 'deletethispage'    => 'Lap törlése',
 'undelete_short'    => '{{PLURAL:$1|Egy|$1}} szerkesztés helyreállítása',
@@ -500,7 +494,6 @@ $messages = array(
 'specialpage'       => 'Speciális lap',
 'personaltools'     => 'Személyes eszközök',
 'postcomment'       => 'Új szakasz',
-'articlepage'       => 'Szócikk megtekintése',
 'talk'              => 'Vitalap',
 'views'             => 'Nézetek',
 'toolbox'           => 'Eszközök',
@@ -1301,14 +1294,6 @@ Győződj meg róla, hogy a laptörténet folytonossága megmarad.',
 'search-external'                  => 'Külső kereső',
 'searchdisabled'                   => 'Elnézésed kérjük, de a teljes szöveges keresés terhelési okok miatt átmenetileg nem használható. Ezidő alatt használhatod a lenti Google keresést, mely viszont lehetséges, hogy nem teljesen friss adatokkal dolgozik.',
 
-# Quickbar
-'qbsettings'                => 'Gyorsmenü',
-'qbsettings-none'           => 'Nincs',
-'qbsettings-fixedleft'      => 'Fix baloldali',
-'qbsettings-fixedright'     => 'Fix jobboldali',
-'qbsettings-floatingleft'   => 'Lebegő baloldali',
-'qbsettings-floatingright'  => 'Lebegő jobboldali',
-'qbsettings-directionality' => 'Rögzített, a nyelved írásának irányától függően',
 
 # Preferences page
 'preferences'                   => 'Beállítások',
@@ -2953,7 +2938,6 @@ Mentsd el a számítógépedre, majd töltsd fel ide.',
 # Stylesheets
 'common.css'              => '/* Közös CSS az összes felületnek */',
 'standard.css'            => '/* Az ide elhelyezett CSS hatással lesz a Klasszikus felület használóira */',
-'cologneblue.css'         => '/* Az ide elhelyezett CSS hatással lesz a Kölni kék felület használóira */',
 'monobook.css'            => '/* Az ide elhelyezett CSS hatással lesz a Monobook felület használóira */',
 'myskin.css'              => '/* Az ide elhelyezett CSS hatással lesz a MySkin felület használóira */',
 'chick.css'               => '/* Az ide elhelyezett CSS hatással lesz a Chick felület használóira */',
@@ -2970,7 +2954,6 @@ Mentsd el a számítógépedre, majd töltsd fel ide.',
 # Scripts
 'common.js'              => '/* Az ide elhelyezett JavaScript kód minden felhasználó számára lefut az oldalak betöltésekor. */',
 'standard.js'            => '/* A Klasszikus felületet használó szerkesztők számára betöltendő JavaScriptek */',
-'cologneblue.js'         => '/* A Kölni kék felületet használó szerkesztők számára betöltendő JavaScriptek */',
 'monobook.js'            => '/* A Monobook felületet használó szerkesztők számára betöltendő JavaScriptek */',
 'myskin.js'              => '/* A MySkin felületet használó szerkesztők számára betöltendő JavaScriptek */',
 'chick.js'               => '/* A Chick felületet használó szerkesztők számára betöltendő JavaScriptek */',
@@ -3020,7 +3003,6 @@ Ez valószínűleg egy olyan link miatt van, ami egy feketelistán lévő oldalr
 
 # Skin names
 'skinname-standard'    => 'Klasszikus',
-'skinname-cologneblue' => 'Kölni kék',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
 'skinname-chick'       => 'Chick',

@@ -85,7 +85,6 @@ $messages = array(
 'mytalk'     => 'Nõvpidāmi',
 'navigation' => 'Navigīerimi',
 
-# Cologne Blue skin
 'qbfind' => 'Vȯtšõgid',
 'faq'    => 'SKK',
 

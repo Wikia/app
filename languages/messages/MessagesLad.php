@@ -318,16 +318,11 @@ $messages = array(
 'navigation'    => 'Navigación',
 'and'           => '&#32;y',
 
-# Cologne Blue skin
 'qbfind'         => 'Topar',
 'qbbrowse'       => 'Navigar',
-'qbedit'         => 'Trocar',
 'qbpageoptions'  => 'Esta hoja',
 'qbpageinfo'     => 'Enformasyón de hoja',
-'qbmyoptions'    => 'Mis hojas',
-'qbspecialpages' => 'Hojas especiales',
 'faq'            => 'DAD',
-'faqpage'        => 'Project:DDS',
 
 'actions'                        => 'Acciones',
 'namespaces'                     => 'Espacios de nombres',
@@ -351,7 +346,6 @@ $messages = array(
 'edit'              => 'Trocar',
 'create'            => 'Crîar',
 'editthispage'      => 'Trocar esta hoja',
-'create-this-page'  => 'Crîar esta hoja',
 'delete'            => 'Efaçar',
 'deletethispage'    => 'Efassar esta hoja',
 'undelete_short'    => 'Traer atrás $1 {{PLURAL:$1|trocamientos|trocamientos}}',
@@ -367,7 +361,6 @@ $messages = array(
 'specialpage'       => 'Hoja Especial',
 'personaltools'     => 'Aparatos personales',
 'postcomment'       => 'Capítůlo muevo',
-'articlepage'       => 'Ver el artícůlo de contenido',
 'talk'              => 'Diskusyón',
 'views'             => 'Vistas',
 'toolbox'           => 'Cuadro de Aparatos',

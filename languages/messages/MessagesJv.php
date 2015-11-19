@@ -193,16 +193,11 @@ $messages = array(
 'navigation'    => 'Pandhu Arah',
 'and'           => '&#32;Lan',
 
-# Cologne Blue skin
 'qbfind'         => 'Golèk',
 'qbbrowse'       => 'Navigasi',
-'qbedit'         => 'Sunting',
 'qbpageoptions'  => 'Kaca iki',
 'qbpageinfo'     => 'Kontèks kaca',
-'qbmyoptions'    => 'Opsiku',
-'qbspecialpages' => 'Kaca-kaca astaméwa',
 'faq'            => 'FAQ (Pitakonan sing kerep diajokaké)',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                    => 'Tindakan',
 'namespaces'                 => 'Ruang jeneng',
@@ -226,7 +221,6 @@ $messages = array(
 'edit'              => 'Sunting',
 'create'            => 'Nggawé',
 'editthispage'      => 'Sunting kaca iki',
-'create-this-page'  => 'Nggawé kaca iki',
 'delete'            => 'Busak',
 'deletethispage'    => 'Busak kaca iki',
 'undelete_short'    => 'Batal busak $1 {{PLURAL:$1|suntingan|suntingan}}',
@@ -241,7 +235,6 @@ $messages = array(
 'specialpage'       => 'Kaca astaméwa',
 'personaltools'     => 'Piranti pribadi',
 'postcomment'       => 'Bagéyan anyar',
-'articlepage'       => 'nDeleng artikel',
 'talk'              => 'Dhiskusi',
 'views'             => 'Tampilan',
 'toolbox'           => 'Kothak piranti',
@@ -933,13 +926,6 @@ Gunakna tombol radio kanggo nggabungaké révisi-révisi sing digawé sadurungé
 'search-external'                  => 'Panggolèkan èkstèrnal',
 'searchdisabled'                   => 'Sawetara wektu iki panjenengan ora bisa nggolèk mawa fungsi golèk {{SITENAME}}. Kanggo saiki mangga panjenengan bisa golèk nganggo Google. Nanging isi indèks Google kanggo {{SITENAME}} bisa waé lawas lan durung dianyari.',
 
-# Quickbar
-'qbsettings'               => 'Pengaturan bar sidhatan',
-'qbsettings-none'          => 'Ora ana',
-'qbsettings-fixedleft'     => 'Tetep sisih kiwa',
-'qbsettings-fixedright'    => 'Tetep sisih tengen',
-'qbsettings-floatingleft'  => 'Ngambang sisih kiwa',
-'qbsettings-floatingright' => 'Ngambang sisih tengen',
 
 # Preferences page
 'preferences'                   => 'Preferensi (pilihan)',

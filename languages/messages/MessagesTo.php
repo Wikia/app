@@ -107,15 +107,10 @@ $messages = array(
 'navigation'    => 'ʻai taumuʻa ki he…',
 'and'           => '&#32;mo e',
 
-# Cologne Blue skin
 'qbfind'         => 'Kumi',
 'qbbrowse'       => 'Palausa',
-'qbedit'         => 'Fatu',
 'qbpageoptions'  => 'Peesi koʻeni',
-'qbmyoptions'    => 'Peesi ʻaʻaku',
-'qbspecialpages' => 'Ngaahi peesi makehe',
 'faq'            => 'Fehuʻi faʻa eke',
-'faqpage'        => 'Project:Fehuʻi faʻa eke',
 
 'errorpagetitle'    => 'Halaʻi',
 'returnto'          => 'Foki ki he $1',
@@ -148,7 +143,6 @@ $messages = array(
 'specialpage'       => 'Peesi makehe',
 'personaltools'     => 'Puha haʻate meʻangāue',
 'postcomment'       => 'Fokotuʻu ha fakamatala',
-'articlepage'       => 'Vakai ki he peesi kakano',
 'talk'              => 'Alea',
 'views'             => 'Ngaahi vakai',
 'toolbox'           => 'Puha meʻangāue',

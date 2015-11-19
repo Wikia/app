@@ -118,16 +118,11 @@ $messages = array(
 'navigation'    => 'Muya',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Fatukile',
 'qbbrowse'       => 'Nepile',
-'qbedit'         => "Hloli ye ng'i",
 'qbpageoptions'  => 'Bye petulo',
 'qbpageinfo'     => 'Petulo tuto',
-'qbmyoptions'    => 'Zwa petulona',
-'qbspecialpages' => 'Petulo zwenti',
 'faq'            => 'Alabile',
-'faqpage'        => 'Project:Alabile',
 
 'errorpagetitle'    => 'Bufosi',
 'returnto'          => 'Kutezi $1.',
@@ -159,7 +154,6 @@ $messages = array(
 'specialpage'       => 'Petulo Zwenti',
 'personaltools'     => 'Solume sisebelisoni',
 'postcomment'       => 'Bulelezi mulumiwa',
-'articlepage'       => 'Kamukile petulo',
 'talk'              => 'Bulelezi',
 'views'             => 'Kamukile',
 'toolbox'           => 'Sisebelisoni',
@@ -462,8 +456,6 @@ Informasi: (bye) = petuho a nca selt,
 'showingresultsnum'     => "Kamukile {{PLURAL:$3|'''1''' ekali|'''$3''' ekalina}} di #'''$2'''.",
 'powersearch'           => 'Fatukile',
 
-# Quickbar
-'qbsettings-none' => 'Ni',
 
 # Preferences page
 'preferences'               => 'Petohoni di sebelu',

@@ -157,16 +157,11 @@ $messages = array(
 'navigation'    => 'Navigasi',
 'and'           => '&#32;jo',
 
-# Cologne Blue skin
 'qbfind'         => 'Pencarian',
 'qbbrowse'       => 'Browse',
-'qbedit'         => 'Suntiang',
 'qbpageoptions'  => 'Laman ko',
 'qbpageinfo'     => 'Konteks',
-'qbmyoptions'    => 'Laman denai',
-'qbspecialpages' => 'Halaman istimewa',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Tindakan',
 'namespaces'                     => 'Ruang namo:',
@@ -190,7 +185,6 @@ $messages = array(
 'edit'              => 'Suntiang',
 'create'            => 'Buek',
 'editthispage'      => 'Suntiang laman ko',
-'create-this-page'  => 'Buek laman iko',
 'delete'            => 'Hapuih',
 'deletethispage'    => 'Hapuih laman iko',
 'undelete_short'    => 'Batal hapuih $1 {{PLURAL:$1|suntiangan|suntiangan}}',
@@ -206,7 +200,6 @@ $messages = array(
 'specialpage'       => 'Laman istimewa',
 'personaltools'     => 'Peralatan pribadi',
 'postcomment'       => 'Bagian baru',
-'articlepage'       => 'Liek isi laman',
 'talk'              => 'Pembicaraan',
 'views'             => 'Tampilan',
 'toolbox'           => 'Kotak pakakeh',

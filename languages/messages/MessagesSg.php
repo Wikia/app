@@ -130,16 +130,11 @@ $messages = array(
 'navigation'    => 'Simba',
 'and'           => '&#32;na',
 
-# Cologne Blue skin
 'qbfind'         => 'Gi',
 'qbbrowse'       => 'Hasa',
-'qbedit'         => 'Sepe',
 'qbpageoptions'  => 'Lêmbëtï sô',
 'qbpageinfo'     => 'Ndongoro',
-'qbmyoptions'    => 'Âlêmbëtï tî mbï',
-'qbspecialpages' => 'Âlêmbëtï ndê',
 'faq'            => 'Âhûnda',
-'faqpage'        => 'Project:Âhûnda',
 
 'actions'                  => 'Kua',
 'namespaces'               => 'Pöpö tî âïrï',
@@ -163,7 +158,6 @@ $messages = array(
 'edit'              => 'Sepe',
 'create'            => 'Seka',
 'editthispage'      => 'Sepe lêmbëtï sô',
-'create-this-page'  => 'Seka lêmbëtï sô',
 'delete'            => 'Lungûla',
 'deletethispage'    => 'Lungûla lêmbëtï sô',
 'undelete_short'    => 'Kîri na {{PLURAL:$1|sepesû ôko|âsepesû $1}}',

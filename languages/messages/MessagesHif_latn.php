@@ -163,16 +163,11 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => '&#32;aur',
 
-# Cologne Blue skin
 'qbfind'         => 'Khojo',
 'qbbrowse'       => 'Browse karo',
-'qbedit'         => 'Badlo',
 'qbpageoptions'  => 'Ii panna',
 'qbpageinfo'     => 'Vishay',
-'qbmyoptions'    => 'Hamar panna',
-'qbspecialpages' => 'Khaas panna',
 'faq'            => 'Sab time puchhe waala sawal',
-'faqpage'        => 'Project:Sab time puchhe waala sawal',
 
 'actions'                    => 'Karam',
 'namespaces'                 => 'Naam',
@@ -196,7 +191,6 @@ $messages = array(
 'edit'              => 'Badlo',
 'create'            => 'Banao',
 'editthispage'      => 'Ii panna ke badlo',
-'create-this-page'  => 'Ii panna ke banao',
 'delete'            => 'Mitao',
 'deletethispage'    => 'Ii panna ke mitao',
 'undelete_short'    => '{{PLURAL:$1|ek badlao|$1 badlao}} ke pahile jaise karo',
@@ -211,7 +205,6 @@ $messages = array(
 'specialpage'       => 'Khaas Panna',
 'personaltools'     => 'Aapan aujaar',
 'postcomment'       => 'Nawaa section',
-'articlepage'       => 'Content waala panna ke dekho',
 'talk'              => 'Salah',
 'views'             => 'Bichar',
 'toolbox'           => 'Aujaar ke dabba',
@@ -976,13 +969,6 @@ Aapan query ke ''all:'' se suruu kar ke visay suchi me khojo (including talk pag
 Aap tab tak Google se khoje sakta hai.
 Yaad rakhna ki uu log ke {{SITENAME}} ke index saait purana hoi.',
 
-# Quickbar
-'qbsettings'               => 'Quickbar',
-'qbsettings-none'          => 'Koi nai',
-'qbsettings-fixedleft'     => 'Left me fixed hai',
-'qbsettings-fixedright'    => 'Right me fixed hai',
-'qbsettings-floatingleft'  => 'Baaen or baho',
-'qbsettings-floatingright' => 'Daaen or baho',
 
 # Preferences page
 'preferences'                   => 'Pasand',

@@ -161,16 +161,11 @@ $messages = array(
 'navigation'    => 'ਨੇਵੀਗੇਸ਼ਨ',
 'and'           => '&#32;ਅਤੇ',
 
-# Cologne Blue skin
 'qbfind'         => 'ਖੋਜ',
 'qbbrowse'       => 'ਬਰਾਊਜ਼',
-'qbedit'         => 'ਸੋਧ',
 'qbpageoptions'  => 'ਇਹ ਪੇਜ',
 'qbpageinfo'     => 'ਭਾਗ',
-'qbmyoptions'    => 'ਮੇਰੇ ਪੇਜ',
-'qbspecialpages' => 'ਖਾਸ ਪੇਜ',
 'faq'            => 'ਸਵਾਲ-ਜਵਾਬ',
-'faqpage'        => 'Project:ਸਵਾਲ-ਜਵਾਬ',
 
 'actions'                  => 'ਕਾਰਵਾਈ',
 'namespaces'               => 'ਨਾਂ-ਥਾਂ:',
@@ -194,7 +189,6 @@ $messages = array(
 'edit'              => 'ਬਦਲੋ',
 'create'            => 'ਬਣਾਓ',
 'editthispage'      => 'ਇਹ ਪੇਜ ਸੋਧੋ',
-'create-this-page'  => 'ਇਹ ਸਫ਼ਾ ਬਣਾਓ',
 'delete'            => 'ਹਟਾਓ',
 'deletethispage'    => 'ਇਹ ਪੇਜ ਹਟਾਓ',
 'undelete_short'    => 'ਅਣ-ਹਟਾਓ {{PLURAL:$1|one edit|$1 edits}}',
@@ -209,7 +203,6 @@ $messages = array(
 'specialpage'       => 'ਖਾਸ ਪੇਜ',
 'personaltools'     => 'ਨਿੱਜੀ ਟੂਲ',
 'postcomment'       => 'ਨਵਾਂ ਭਾਗ',
-'articlepage'       => 'ਸਮੱਗਰੀ ਪੇਜ ਵੇਖੋ',
 'talk'              => 'ਚਰਚਾ',
 'views'             => 'ਵੇਖੋ',
 'toolbox'           => 'ਟੂਲਬਾਕਸ',
@@ -574,9 +567,6 @@ $1 ਘੰਟੇ ਵਿੱਚ। ਨੁਕਸਾਨ ਤੋਂ ਬਚਣ ਲਈ, $
 'powersearch-redir'                => 'ਰੀ-ਡਿਰੈਕਟ ਲਿਸਟ',
 'powersearch-field'                => 'ਇਸ ਲਈ ਖੋਜ',
 
-# Quickbar
-'qbsettings'      => 'ਤੁਰੰਤ ਬਾਰ',
-'qbsettings-none' => 'ਕੋਈ ਨਹੀਂ',
 
 # Preferences page
 'preferences'                 => 'ਮੇਰੀ ਪਸੰਦ',

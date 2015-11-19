@@ -358,16 +358,11 @@ $messages = array(
 'navigation'    => 'Navigacija',
 'and'           => '&#32;i',
 
-# Cologne Blue skin
 'qbfind'         => 'Pronađi',
 'qbbrowse'       => 'Prelistavaj',
-'qbedit'         => 'Izmeni',
 'qbpageoptions'  => 'Opcije stranice',
 'qbpageinfo'     => 'Podaci o stranici',
-'qbmyoptions'    => 'Moje opcije',
-'qbspecialpages' => 'Posebne stranice',
 'faq'            => 'NPP',
-'faqpage'        => 'Project:NPP',
 
 'actions'                    => 'Akcije',
 'namespaces'                 => 'Imenski prostori',
@@ -391,7 +386,6 @@ $messages = array(
 'edit'              => 'Uredi',
 'create'            => 'Napravi',
 'editthispage'      => 'Uredi ovu stranicu',
-'create-this-page'  => 'Napravi ovu stranicu',
 'delete'            => 'obriši',
 'deletethispage'    => 'Obriši ovu stranicu',
 'undelete_short'    => 'vrati {{PLURAL:$1|jednu obrisanu izmenu|$1 obrisane izmene|$1 obrisanih izmena}}',
@@ -406,7 +400,6 @@ $messages = array(
 'specialpage'       => 'Posebna stranica',
 'personaltools'     => 'Lični alati',
 'postcomment'       => 'Novi odeljak',
-'articlepage'       => 'Pogledaj članak',
 'talk'              => 'Razgovor',
 'views'             => 'Pregledi',
 'toolbox'           => 'alati',
@@ -1119,13 +1112,6 @@ Pokušajte sa prefiksom '''sve:''' da pretražite ceo sadržaj (uključujući st
 'search-external'                  => 'Spoljašnja pretraga',
 'searchdisabled'                   => 'Pretraga za sajt {{SITENAME}} je onemogućena. U međuvremenu, možete koristiti Gugl pretragu. Imajte na umu da indeksi Gugla za sajt {{SITENAME}} mogu biti zastareli.',
 
-# Quickbar
-'qbsettings'               => 'Brza paleta',
-'qbsettings-none'          => 'Nikakva',
-'qbsettings-fixedleft'     => 'Pričvršćena levo',
-'qbsettings-fixedright'    => 'Pričvršćena desno',
-'qbsettings-floatingleft'  => 'Plutajuća levo',
-'qbsettings-floatingright' => 'Plutajuća desno',
 
 # Preferences page
 'preferences'                 => 'Podešavanja',

@@ -195,16 +195,11 @@ $messages = array(
 'navigation'    => '導航',
 'and'           => '&#32;同到',
 
-# Cologne Blue skin
 'qbfind'         => '尋',
 'qbbrowse'       => '查看',
-'qbedit'         => '編寫',
 'qbpageoptions'  => '箇頁',
 'qbpageinfo'     => '箇頁信息',
-'qbmyoptions'    => '我嗰頁面',
-'qbspecialpages' => '特殊頁',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:問得蠻多嗰問題',
 
 'actions'                  => '動作',
 'namespaces'               => '空間名',
@@ -228,7 +223,6 @@ $messages = array(
 'edit'              => '編寫',
 'create'            => '創建',
 'editthispage'      => '編寫箇頁',
-'create-this-page'  => '創建箇頁',
 'delete'            => '刪吥去',
 'deletethispage'    => '刪吥箇頁',
 'undelete_short'    => '反刪吥$1嗰修改',
@@ -244,7 +238,6 @@ $messages = array(
 'specialpage'       => '特殊頁',
 'personaltools'     => '個人工具',
 'postcomment'       => '話滴想法',
-'articlepage'       => '看吖文章',
 'talk'              => '談詑',
 'views'             => '望吖',
 'toolbox'           => '工具盒',
@@ -794,13 +787,6 @@ $2',
 'powersearch-field'                => '尋',
 'searchdisabled'                   => '{{SITENAME}}嗰搜索功能已經關閉。倷可以用Google尋吖。但係佢嗰索引可能係早先嗰。',
 
-# Quickbar
-'qbsettings'               => '快捷導航條',
-'qbsettings-none'          => '冇',
-'qbsettings-fixedleft'     => '左首固定',
-'qbsettings-fixedright'    => '右首固定',
-'qbsettings-floatingleft'  => '左首漂移',
-'qbsettings-floatingright' => '左首漂移',
 
 # Preferences page
 'preferences'               => '參數設置',

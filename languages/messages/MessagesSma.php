@@ -89,14 +89,9 @@ $messages = array(
 'navigation'    => 'Navigasjovne',
 'and'           => '&#32;jih',
 
-# Cologne Blue skin
 'qbfind'         => 'Gaavnedh',
-'qbedit'         => 'Värrhtoedimmie',
 'qbpageoptions'  => 'Dïhte bielie',
-'qbmyoptions'    => 'Mov bielieh',
-'qbspecialpages' => 'Joekoelaakan bielieh',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'errorpagetitle'   => 'Båajhtode',
 'returnto'         => 'Bååstide gåajkoe $1.',
@@ -121,7 +116,6 @@ $messages = array(
 'talkpagelinktext' => 'Digkiedimmie',
 'specialpage'      => 'Joekoelaakan Bielie',
 'personaltools'    => 'Persjovne dïrregeh',
-'articlepage'      => 'Vuesehte artihkle bielie',
 'talk'             => 'Dïjveldeme',
 'views'            => 'Vuesehth',
 'toolbox'          => 'Dïrregeborhtje',

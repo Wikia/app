@@ -156,11 +156,8 @@ $messages = array(
 'anontalk'   => 'Со IP-адрес сярысь вераськон',
 'navigation' => 'Навигация',
 
-# Cologne Blue skin
 'qbpageoptions'  => 'Бамлэн настройкаосыз',
-'qbspecialpages' => 'Ваньмыз панельёс',
 'faq'            => 'Юан-веран',
-'faqpage'        => 'Project:Юан-веран',
 
 
 'errorpagetitle'   => 'Янгыш',

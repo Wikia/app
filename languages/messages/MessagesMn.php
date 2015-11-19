@@ -179,16 +179,11 @@ $messages = array(
 'navigation'    => 'Залуурдлага',
 'and'           => '&#32;ба',
 
-# Cologne Blue skin
 'qbfind'         => 'Хайх',
 'qbbrowse'       => 'Дэлгэх',
-'qbedit'         => 'Засварлах',
 'qbpageoptions'  => 'Энэ хуудас',
 'qbpageinfo'     => 'Агуулга',
-'qbmyoptions'    => 'Миний хуудсууд',
-'qbspecialpages' => 'Тусгай хуудсууд',
 'faq'            => 'Тогтмол тавигддаг асуултууд',
-'faqpage'        => 'Project:Тогтмол тавигддаг асуултууд',
 
 'actions'                        => 'Үйлдлүүд',
 'namespaces'                     => 'Нэрний зайнууд',
@@ -212,7 +207,6 @@ $messages = array(
 'edit'              => 'Засварлах',
 'create'            => 'Үүсгэх',
 'editthispage'      => 'Энэ хуудсыг засварлах',
-'create-this-page'  => 'Энэ хуудсыг үүсгэх',
 'delete'            => 'Устгах',
 'deletethispage'    => 'Энэ хуудсыг устга',
 'undelete_short'    => 'Устгагдсан {{PLURAL:$1|нэг засварыг|$1 засваруудыг}} сэргээх',
@@ -228,7 +222,6 @@ $messages = array(
 'specialpage'       => 'Тусгай хуудас',
 'personaltools'     => 'Өөрийн багаж хэрэгслүүд',
 'postcomment'       => 'Шинэ хэсэг',
-'articlepage'       => 'Өгүүллийг үзэх',
 'talk'              => 'Хэлэлцүүлэг',
 'views'             => 'Харагдацууд',
 'toolbox'           => 'Багаж хэрэгслүүд',
@@ -1039,13 +1032,6 @@ $1",
 Та одоохондоо Google-г ашиглан хайх боломжтой.
 Анхааруулж хэлэхэд, тэдний {{SITENAME}}-н агуулгын индексүүд хоцрогдсон байж магадгүй.',
 
-# Quickbar
-'qbsettings'               => 'Шуурхай тавцан',
-'qbsettings-none'          => 'Байхгүй',
-'qbsettings-fixedleft'     => 'Зүүн талд бэхжүүлсэн',
-'qbsettings-fixedright'    => 'Баруун талд бэхжүүлсэн',
-'qbsettings-floatingleft'  => 'Зүүн талд хөвсөн',
-'qbsettings-floatingright' => 'Баруун талд хөвсөн',
 
 # Preferences page
 'preferences'                   => 'Хэрэглэгчийн тохиргоо',

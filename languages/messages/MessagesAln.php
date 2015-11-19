@@ -203,16 +203,11 @@ $messages = array(
 'navigation'    => 'Navigimi',
 'and'           => '&#32;dhe',
 
-# Cologne Blue skin
 'qbfind'         => 'Kërko',
 'qbbrowse'       => 'Shfleto',
-'qbedit'         => 'Redakto',
 'qbpageoptions'  => 'Kjo faqe',
 'qbpageinfo'     => 'Konteksti',
-'qbmyoptions'    => 'Faqet e mija',
-'qbspecialpages' => 'Faqet speciale',
 'faq'            => 'Pyetjet e shpeshta',
-'faqpage'        => 'Project:Pyetjet e shpeshta',
 
 'actions'                        => 'Veprimet',
 'namespaces'                     => 'Hapësinat',
@@ -235,7 +230,6 @@ $messages = array(
 'edit'              => 'Redakto',
 'create'            => 'Krijo',
 'editthispage'      => 'Redakto këtë faqe',
-'create-this-page'  => 'Krijo këtë faqe',
 'delete'            => 'Fshij',
 'deletethispage'    => 'Fshije këtë faqe',
 'undelete_short'    => 'Kthe {{PLURAL:$1|redaktimin e fshimë|$1 redaktime të fshime}}',
@@ -250,7 +244,6 @@ $messages = array(
 'specialpage'       => 'Faqe speciale',
 'personaltools'     => 'Veglat personale',
 'postcomment'       => 'Sekcion i ri',
-'articlepage'       => 'Shiko artikullin',
 'talk'              => 'Diskutimi',
 'views'             => 'Shikime',
 'toolbox'           => 'Veglat',
@@ -940,13 +933,6 @@ Provoni me ia parashtue kërkesës tuej ''tâna:'' që me lypë tânë përmbajt
 Ndërkohë mundeni me lypë me Google.
 Vini re se indeksat e tyne të përmbajtjes së {{SITENAME}} munden me qenë të vjetëruem.',
 
-# Quickbar
-'qbsettings'               => 'Vegla të shpejta',
-'qbsettings-none'          => 'Asnji',
-'qbsettings-fixedleft'     => 'Lidhun majtas',
-'qbsettings-fixedright'    => 'Lidhun djathtas',
-'qbsettings-floatingleft'  => 'Pezull majtas',
-'qbsettings-floatingright' => 'Pezull djathtas',
 
 # Preferences page
 'preferences'                   => 'Parapëlqimet',
@@ -1490,7 +1476,6 @@ Lejon dhânien e arsyes në përmbledhje.',
 # Stylesheets
 'common.css'      => '/* CSSi i vendosun këtu ka me u zbatue në tâna dukjet */',
 'standard.css'    => '/* CSSi i vendosun këtu ka me i prekë përdoruesit e dukjes standarde */',
-'cologneblue.css' => '/* CSS i vendosun këtu ka me i prekë shfrytëzuesit e dukjes Cologne Blue */',
 'monobook.css'    => '/* CSS i vednosun këtu ka me i prekë shfrytëzuesit e dukjes Monobook */',
 'myskin.css'      => '/* CSSi i vednosun këtu ka me i prekë shfrytëzuesit e dukjes MySkin */',
 'chick.css'       => '/* CSSi i vednosun këtu ka me i prekë shfrytëzuesit e dukjes Chick */',
@@ -1502,7 +1487,6 @@ Lejon dhânien e arsyes në përmbledhje.',
 # Scripts
 'common.js'      => '/* Çdo JavaScript këtu ka me u ngarkue për të gjithë përdoruesit në secilën thirrje të faqes. */',
 'standard.js'    => '/* Çdo JavaScript këtu ka me u ngarkue për shfrytëzuesit që përdorin dukjen Standard */',
-'cologneblue.js' => '/* Çdo JavaScript këtu ka me u ngarkue për shfrytëzuesit që përdorin dukjen Cologne Blue */',
 'monobook.js'    => '/* Çdo JavaScript këtu ka me u ngarkue për shfrytëzuesit që përdorin dukjen MonoBook */',
 'myskin.js'      => '/* Çdo JavaScript këtu ka me u ngarkue për shfrytëzuesit që përdorin dukjen MySkin */',
 'chick.js'       => '/* Çdo JavaScript këtu ka me u ngarkue për shfrytëzuesit që përdorin dukjen Chick */',

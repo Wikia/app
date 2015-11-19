@@ -183,16 +183,11 @@ $messages = array(
 'navigation'    => 'Naršīms',
 'and'           => '&#32;ėr',
 
-# Cologne Blue skin
 'qbfind'         => 'Ėiškuotė',
 'qbbrowse'       => 'Naršītė',
-'qbedit'         => 'Taisītė',
 'qbpageoptions'  => 'Tas poslapis',
 'qbpageinfo'     => 'Konteksts',
-'qbmyoptions'    => 'Mona poslapē',
-'qbspecialpages' => 'Specēlė̅jė poslapē',
 'faq'            => 'DOK',
-'faqpage'        => 'Project:DOK',
 
 'actions'                  => 'Vēksmā',
 'namespaces'               => 'Vardū srėtīs',
@@ -215,7 +210,6 @@ $messages = array(
 'edit'              => 'Taisītė',
 'create'            => 'Sokortė',
 'editthispage'      => 'Taisītė ton poslapė',
-'create-this-page'  => 'Sokortė ta poslapi',
 'delete'            => 'Trintė',
 'deletethispage'    => 'Trintė ton poslapė',
 'protect'           => 'Ožrakintė',
@@ -229,7 +223,6 @@ $messages = array(
 'specialpage'       => 'Specēlosis poslapis',
 'personaltools'     => 'Persuonalėnē rakondā',
 'postcomment'       => 'Rašītė kuomentara',
-'articlepage'       => 'Veizietė straipsnė',
 'talk'              => 'Aptarėms',
 'views'             => 'Parveizėtė',
 'toolbox'           => 'Rakondā',
@@ -725,9 +718,6 @@ Kėtė admėnėstratuorē šėtom pruojekte vėsdar galės pasėiktė pasliepta 
 'powersearch-field'                => 'Ėiškoutė',
 'search-external'                  => 'Ėšuorėnė paėiška',
 
-# Quickbar
-'qbsettings'      => 'Greitasā pasėrėnkėms',
-'qbsettings-none' => 'Neruodītė',
 
 # Preferences page
 'preferences'               => 'Nustatīmā',

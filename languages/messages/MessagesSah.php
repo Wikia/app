@@ -183,16 +183,11 @@ $messages = array(
 'navigation'    => 'Навигация',
 'and'           => '&#32;уонна',
 
-# Cologne Blue skin
 'qbfind'         => 'Бул',
 'qbbrowse'       => 'Көр',
-'qbedit'         => 'Уларыт',
 'qbpageoptions'  => 'Бу сирэй',
 'qbpageinfo'     => 'Ис хоһооно',
-'qbmyoptions'    => 'Мин сирэйдэрим',
-'qbspecialpages' => 'Аналлаах сирэйдэр',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Дьайыылар',
 'namespaces'                     => 'Аат даллара',
@@ -216,7 +211,6 @@ $messages = array(
 'edit'              => 'Уларыт',
 'create'            => 'Саҥаны айыы',
 'editthispage'      => 'Бу сирэйи уларыт',
-'create-this-page'  => 'Бу сирэйи ай',
 'delete'            => 'Соттор',
 'deletethispage'    => 'Бу сирэйи соттор',
 'undelete_short'    => 'Төттөрү аҕал {{PLURAL:$1|биир уларытыыны|$1 уларытыылары}}',
@@ -232,7 +226,6 @@ $messages = array(
 'specialpage'       => 'Анал сирэй',
 'personaltools'     => 'Тус бэйэ туттар туруоруулара',
 'postcomment'       => 'Саҥа салаа',
-'articlepage'       => 'Ыстатыйаны көр',
 'talk'              => 'Ырытыы',
 'views'             => 'Көрүүлэр',
 'toolbox'           => 'Үнүстүрүмүөннэр',
@@ -1047,14 +1040,6 @@ $1",
 'search-external'                  => 'Тастан көрдөөһүн',
 'searchdisabled'                   => '{{SITENAME}} көрдүүр тэрилэ араарыллыбыт. Атын көрдүүр системаларынан наадыйар сирэйдэргитин көрдөтүөххүтүн сөп. Ол гынан баран поисковик кээһигэр баар торум эргэрбит буолуон сөп.',
 
-# Quickbar
-'qbsettings'                => 'Навигация панела',
-'qbsettings-none'           => 'Көрдөрүмэ',
-'qbsettings-fixedleft'      => 'Хаҥас өттө хамсаабат',
-'qbsettings-fixedright'     => 'Уҥа өттө хамсаабат',
-'qbsettings-floatingleft'   => 'Хаҥас өттө устаҥныыр',
-'qbsettings-floatingright'  => 'Уҥа өттө устаҥныыр',
-'qbsettings-directionality' => 'Туттарыллыбыт, тылыҥ суругун-бичигин хайысхатыттан тутулуктаах',
 
 # Preferences page
 'preferences'                   => 'Уларытыылар',

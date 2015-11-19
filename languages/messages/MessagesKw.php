@@ -180,13 +180,9 @@ $messages = array(
 'navigation'    => 'Lewyans',
 'and'           => '&#32;ha(g)',
 
-# Cologne Blue skin
 'qbfind'         => 'Cavos',
 'qbbrowse'       => 'Peury',
-'qbedit'         => 'Chanjya',
 'qbpageoptions'  => 'An folen-ma',
-'qbmyoptions'    => 'Ow folednow',
-'qbspecialpages' => 'Folednow arbednek',
 
 
 'errorpagetitle'    => 'Gwall',
@@ -206,7 +202,6 @@ $messages = array(
 'edit'              => 'Chanjya',
 'create'            => 'Gwruthyl',
 'editthispage'      => 'Chanjya an folen-ma',
-'create-this-page'  => 'Gwruthyl an folen-ma',
 'delete'            => 'Dilea',
 'deletethispage'    => 'Dilea an folen-ma',
 'undelete_short'    => 'Disdhilea {{PLURAL:$1|udn janj|$1 chanj}}',

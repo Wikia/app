@@ -501,16 +501,11 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => '&#32;et',
 
-# Cologne Blue skin
 'qbfind'         => 'Rechercher',
 'qbbrowse'       => 'Parcourir',
-'qbedit'         => 'Modifier',
 'qbpageoptions'  => 'Cette page',
 'qbpageinfo'     => 'Contexte',
-'qbmyoptions'    => 'Mes pages',
-'qbspecialpages' => 'Pages spéciales',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Actions',
 'namespaces'                     => 'Espaces de noms',
@@ -534,7 +529,6 @@ $messages = array(
 'edit'              => 'Modifier',
 'create'            => 'Créer',
 'editthispage'      => 'Modifier cette page',
-'create-this-page'  => 'Créer cette page',
 'delete'            => 'Supprimer',
 'deletethispage'    => 'Supprimer cette page',
 'undelete_short'    => 'Restaurer $1 modification{{PLURAL:$1||s}}',
@@ -550,7 +544,6 @@ $messages = array(
 'specialpage'       => 'Page spéciale',
 'personaltools'     => 'Outils personnels',
 'postcomment'       => 'Nouvelle section',
-'articlepage'       => 'Voir la page de contenu',
 'talk'              => 'Discussion',
 'views'             => 'Affichages',
 'toolbox'           => 'Boîte à outils',
@@ -1349,14 +1342,6 @@ Essayez en utilisant le préfixe ''all:'' pour rechercher dans tout le contenu (
 'search-external'                  => 'Recherche externe',
 'searchdisabled'                   => 'La recherche sur {{SITENAME}} est désactivée. En attendant la réactivation, vous pouvez effectuer une recherche via Google. Attention, leur indexation du contenu de {{SITENAME}} peut ne pas être à jour.',
 
-# Quickbar
-'qbsettings'                => 'Barre d’outils',
-'qbsettings-none'           => 'Aucune',
-'qbsettings-fixedleft'      => 'Gauche',
-'qbsettings-fixedright'     => 'Droite',
-'qbsettings-floatingleft'   => 'Flottante à gauche',
-'qbsettings-floatingright'  => 'Flottante à droite',
-'qbsettings-directionality' => 'Fixe, en fonction de la directivité d’écriture de votre langue',
 
 # Preferences page
 'preferences'                   => 'Préférences',
@@ -3009,7 +2994,6 @@ Permet de rétablir la version précédente et d’ajouter un motif dans la boî
 # Stylesheets
 'common.css'      => '/* Le CSS placé ici sera appliqué à tous les habillages. */',
 'standard.css'    => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Standard. */',
-'cologneblue.css' => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Cologne Blue. */',
 'monobook.css'    => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Monobook. */',
 'myskin.css'      => '/* Le CSS placé ici affectera les utilisateurs de l’habillage MySkin. */',
 'chick.css'       => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Chick. */',
@@ -3022,7 +3006,6 @@ Permet de rétablir la version précédente et d’ajouter un motif dans la boî
 # Scripts
 'common.js'      => '/* Tout JavaScript ici sera chargé avec chaque page accédée par n’importe quel utilisateur. */',
 'standard.js'    => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Standard uniquement */',
-'cologneblue.js' => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Bleu de cologne uniquement */',
 'monobook.js'    => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage MonoBook uniquement. */',
 'myskin.js'      => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Mon habillage uniquement */',
 'chick.js'       => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Poussin uniquement */',
@@ -3068,7 +3051,6 @@ Permet de rétablir la version précédente et d’ajouter un motif dans la boî
 
 # Skin names
 'skinname-standard'    => 'Standard',
-'skinname-cologneblue' => 'Bleu de Cologne',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'Mon Interface',
 'skinname-chick'       => 'Poussin',

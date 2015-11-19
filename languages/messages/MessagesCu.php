@@ -159,11 +159,7 @@ $messages = array(
 'navigation'    => 'плаваниѥ',
 'and'           => '&#32;и',
 
-# Cologne Blue skin
-'qbedit'         => 'исправи',
 'qbpageoptions'  => 'си страни́ца',
-'qbmyoptions'    => 'моꙗ страницѧ',
-'qbspecialpages' => 'нарочьнꙑ страницѧ',
 
 'actions'                 => 'дѣиства',
 'namespaces'              => 'имєнъ просторꙑ',
@@ -183,7 +179,6 @@ $messages = array(
 'edit'              => 'исправи',
 'create'            => 'сътворѥниѥ',
 'editthispage'      => 'си страницѧ исправлѥниѥ',
-'create-this-page'  => 'си страницѧ сътворѥниѥ',
 'delete'            => 'поничьжєниѥ',
 'deletethispage'    => 'си страницѧ поничьжєниѥ',
 'protect'           => 'ꙁабранѥниѥ',

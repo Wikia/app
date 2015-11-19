@@ -177,16 +177,11 @@ $messages = array(
 'navigation'    => 'अन्वेषण',
 'and'           => '&#32;र',
 
-# Cologne Blue skin
 'qbfind'         => 'पत्ता लगाउनु',
 'qbbrowse'       => 'खोज',
-'qbedit'         => 'परिवर्तन्',
 'qbpageoptions'  => 'यो पेज',
 'qbpageinfo'     => 'सन्दर्भ',
-'qbmyoptions'    => 'मेरो पेज',
-'qbspecialpages' => 'विशेष पृष्ठहरु',
 'faq'            => 'धैरै सोधिएका प्रश्नहरु',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                    => 'कृयाकलापहरु',
 'namespaces'                 => 'नेमस्पेस',
@@ -210,7 +205,6 @@ $messages = array(
 'edit'              => 'परिवर्तन',
 'create'            => 'सृजना गर्नुहोस्',
 'editthispage'      => 'यो पृष्ठ सम्पादन गर्नुहोस्',
-'create-this-page'  => 'यो पृष्ठ शृजना गर्नुहोस्',
 'delete'            => 'मेट्नुहोस्',
 'deletethispage'    => 'यो पृष्ठ हटाउनुहोस्',
 'undelete_short'    => 'नमेट्ने {{PLURAL:$1|one सम्पादन|$1 सम्पादनहरु}}',
@@ -225,7 +219,6 @@ $messages = array(
 'specialpage'       => 'विशेष पृष्ठ',
 'personaltools'     => 'व्यक्तिगत औजारहरू',
 'postcomment'       => 'नयाँ खण्ड',
-'articlepage'       => 'कन्टेन्ट पृष्ठ हेर्नुहोस्',
 'talk'              => 'वार्तालाप',
 'views'             => 'अवलोकनहरू',
 'toolbox'           => 'औजारबट्टा',
@@ -875,13 +868,6 @@ $1",
 यस समयमा तपाईले Google द्वारा खोज्न सक्नुहुन्छ ।
 याद गर्नुहोस् उनीहरुको {{SITENAME}}को सूची सामग्री पुरानो पनि हुनसक्छ ।',
 
-# Quickbar
-'qbsettings'               => 'क्विकबार',
-'qbsettings-none'          => 'कुनैपनि होइन',
-'qbsettings-fixedleft'     => 'देब्रे निश्चित गरिएको',
-'qbsettings-fixedright'    => 'दाहिने निश्चित गरिएको',
-'qbsettings-floatingleft'  => 'देब्रे तैरने',
-'qbsettings-floatingright' => 'दाहिने तैरने',
 
 # Preferences page
 'preferences'                   => 'रोजाईहरू',

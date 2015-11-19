@@ -352,16 +352,11 @@ $messages = array(
 'navigation'    => 'Күчү',
 'and'           => '&#32;һәм',
 
-# Cologne Blue skin
 'qbfind'         => 'Эзләү',
 'qbbrowse'       => 'Карау',
-'qbedit'         => 'Үзгәртү',
 'qbpageoptions'  => 'Бу бит',
 'qbpageinfo'     => 'Бит турында мәгълүматлар',
-'qbmyoptions'    => 'Битләрем',
-'qbspecialpages' => 'Махсус битләр',
 'faq'            => 'ЕБС',
-'faqpage'        => 'Project:ЕБС',
 
 'actions'                        => 'Хәрәкәт',
 'namespaces'                     => 'Исемнәр мәйданы',
@@ -385,7 +380,6 @@ $messages = array(
 'edit'              => 'Үзгәртү',
 'create'            => 'Төзү',
 'editthispage'      => 'Бу битне үзгәртү',
-'create-this-page'  => 'Бу битне төзү',
 'delete'            => 'Бетерү',
 'deletethispage'    => 'Бу битне бетерү',
 'undelete_short'    => '$1 {{PLURAL:$1|үзгәртмәне}} торгызу',
@@ -401,7 +395,6 @@ $messages = array(
 'specialpage'       => 'Махсус бит',
 'personaltools'     => 'Шәхси кораллар',
 'postcomment'       => 'Яңа бүлек',
-'articlepage'       => 'Мәкаләне карау',
 'talk'              => 'Бәхәс',
 'views'             => 'Караулар',
 'toolbox'           => 'Кораллар',
@@ -1108,13 +1101,6 @@ $3 күрсәткән сәбәп: ''$2''",
 'powersearch-togglenone'           => 'Бирни дә юк',
 'search-external'                  => 'Тышкы эзләү',
 
-# Quickbar
-'qbsettings'               => 'Күчешләр аслыгы',
-'qbsettings-none'          => 'Күрсәтмәү',
-'qbsettings-fixedleft'     => 'Сулда күчерелмәс',
-'qbsettings-fixedright'    => 'Уңда күчерелмәс',
-'qbsettings-floatingleft'  => 'Сулда йөзмә',
-'qbsettings-floatingright' => 'Уңда йөзмә',
 
 # Preferences page
 'preferences'                   => 'Көйләнмәләр',
@@ -2090,7 +2076,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => 'Классик',
-'skinname-cologneblue' => 'Зәңгәр сагыш',
 'skinname-monobook'    => 'Китап',
 'skinname-myskin'      => 'Үзем',
 'skinname-chick'       => 'Чеби',

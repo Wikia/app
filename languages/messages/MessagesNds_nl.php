@@ -450,16 +450,11 @@ $messages = array(
 'navigation'    => 'Navigasie',
 'and'           => '&#32;en',
 
-# Cologne Blue skin
 'qbfind'         => 'Zeuken',
 'qbbrowse'       => 'Blaojen',
-'qbedit'         => 'Bewark',
 'qbpageoptions'  => 'Pagina-opsies',
 'qbpageinfo'     => 'Pagina-informasie',
-'qbmyoptions'    => 'Veurkeuren',
-'qbspecialpages' => "Spesiale pagina's",
 'faq'            => 'Vragen die vake esteld wörden',
-'faqpage'        => 'Project:Vragen die vake esteld wörden',
 
 'actions'                        => 'Haandeling',
 'namespaces'                     => 'Naamruumtes',
@@ -483,7 +478,6 @@ $messages = array(
 'edit'              => 'Bewarken',
 'create'            => 'Anmaken',
 'editthispage'      => 'Pagina bewarken',
-'create-this-page'  => 'Disse pagina anmaken',
 'delete'            => 'Vortdoon',
 'deletethispage'    => 'Disse pagina vortdoon',
 'undelete_short'    => '$1 {{PLURAL:$1|versie|versies}} weerummeplaotsen',
@@ -499,7 +493,6 @@ $messages = array(
 'specialpage'       => 'Spesiale pagina',
 'personaltools'     => 'Persoonlike instellingen',
 'postcomment'       => 'Niej onderwarp',
-'articlepage'       => 'Artikel',
 'talk'              => 'Overleg',
 'views'             => 'Aspekten/aksies',
 'toolbox'           => 'Hulpmiddels',
@@ -1302,14 +1295,6 @@ Kiek de logboeken nao.',
 'search-external'                  => 'Extern zeuken',
 'searchdisabled'                   => 'Zeuken in {{SITENAME}} is niet meugelik. Je kunnen gebruukmaken van Google. De gegevens over {{SITENAME}} bin misschien niet bie-ewörken.',
 
-# Quickbar
-'qbsettings'                => 'Paginalieste',
-'qbsettings-none'           => 'Gien',
-'qbsettings-fixedleft'      => 'Links, vaste',
-'qbsettings-fixedright'     => 'Rechts, vaste',
-'qbsettings-floatingleft'   => 'Links, zweven',
-'qbsettings-floatingright'  => 'Rechts, zweven',
-'qbsettings-directionality' => 'Vaste, aofhankelik van de schriefrichtige van joew taal',
 
 # Preferences page
 'preferences'                   => 'Veurkeuren',
@@ -2973,7 +2958,6 @@ Meestentieds kump dit deur n uutgaonde verwiezing die op de zwarte lieste steet.
 
 # Skin names
 'skinname-standard'    => 'Klassiek',
-'skinname-cologneblue' => 'Keuls blauw',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'MienSkin',
 'skinname-chick'       => 'Deftig',

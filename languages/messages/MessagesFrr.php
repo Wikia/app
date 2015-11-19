@@ -159,16 +159,11 @@ $messages = array(
 'navigation'    => 'Navigasjoon',
 'and'           => '&#32;än',
 
-# Cologne Blue skin
 'qbfind'         => 'Fine',
 'qbbrowse'       => 'Bleese',
-'qbedit'         => 'Änre',
 'qbpageoptions'  => 'Jüdeer sid',
 'qbpageinfo'     => 'Sidedoote',
-'qbmyoptions'    => 'Min side',
-'qbspecialpages' => 'Spetsjåålside',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Aksjoone',
 'namespaces'                     => 'Noomerüme',
@@ -192,7 +187,6 @@ $messages = array(
 'edit'              => 'Beårbe',
 'create'            => 'Mååge',
 'editthispage'      => 'Sid beårbe',
-'create-this-page'  => 'Sid mååge',
 'delete'            => 'Strike',
 'deletethispage'    => 'Jüdeer sid strike',
 'undelete_short'    => '{{PLURAL:$1|1 färsjoon|$1 färsjoone}} widermååge',
@@ -208,7 +202,6 @@ $messages = array(
 'specialpage'       => 'Spetsjåålsid',
 'personaltools'     => 'Persöönlike räischupe',
 'postcomment'       => 'Nai oufsnaas',
-'articlepage'       => 'Inhåltsid wise',
 'talk'              => 'Diskusjoon',
 'views'             => 'Önjsichte',
 'toolbox'           => 'Räischape',
@@ -918,8 +911,6 @@ Stal sääker, dåt jü färsjoonshistoori foon en sid histoorisch koräkt as.',
 'search-external'                  => 'Extern säkj',
 'searchdisabled'                   => 'Jü {{SITENAME}}-säkj as deaktiviird. Dü koost intwasche ma Google säke. Betånk, dåt di säkindäks for {{SITENAME}} ferüüljet weese koon.',
 
-# Quickbar
-'qbsettings-none' => 'Niinj',
 
 # Preferences page
 'preferences'                 => 'Önjstalinge',

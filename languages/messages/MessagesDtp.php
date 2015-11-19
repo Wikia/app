@@ -153,16 +153,11 @@ $messages = array(
 'navigation'    => 'Popotunud',
 'and'           => '&#32;om',
 
-# Cologne Blue skin
 'qbfind'         => 'Ihum',
 'qbbrowse'       => 'Pogihum',
-'qbedit'         => 'Idito',
 'qbpageoptions'  => 'Bolikon diti',
 'qbpageinfo'     => 'Pogiromutan',
-'qbmyoptions'    => 'Bobolikonku ngawi',
-'qbspecialpages' => 'Bobolikon suaikowokon',
 'faq'            => 'Ponguhatan Koinsoruan om Poninimbar',
-'faqpage'        => 'Project:Ponguhatan Koinsoruan om Pininimbar',
 
 'actions'                        => 'Pongkinaraja',
 'namespaces'                     => 'Ponuratan ngaran',
@@ -186,7 +181,6 @@ $messages = array(
 'edit'              => 'Idito',
 'create'            => 'Pomonsoi',
 'editthispage'      => 'Idito iti bolikon',
-'create-this-page'  => 'Pudoliai iti bolikon',
 'delete'            => 'Pugaso',
 'deletethispage'    => 'Pugaso iti bolikon',
 'undelete_short'    => 'Kada pugaso {{PLURAL:$1|iso niditan|$1 niniditan}}',
@@ -202,7 +196,6 @@ $messages = array(
 'specialpage'       => 'Bolikon suaikowokon',
 'personaltools'     => 'Kakamot minsosondiri',
 'postcomment'       => 'Bogian wagu',
-'articlepage'       => 'Intaai suang bolikon',
 'talk'              => 'Pogigibarasan',
 'views'             => 'Pongintangan',
 'toolbox'           => 'Kabankamot',
@@ -895,13 +888,6 @@ Umbalai momogonop it ihumonnu miampai do ''all:'' mooi do oihum ot oinsanan suan
 Milo ko mogihum maya Googol do daamot.
 Imurai no do indik suang diti {{SITENAME}} nopo nga nokolipas.',
 
-# Quickbar
-'qbsettings'               => 'Barposikap',
-'qbsettings-none'          => 'Ingaa',
-'qbsettings-fixedleft'     => 'Pogolibango',
-'qbsettings-fixedright'    => 'Pawanano',
-'qbsettings-floatingleft'  => 'Posoibaho gibang',
-'qbsettings-floatingright' => 'Posoibaho wanan',
 
 # Preferences page
 'preferences'             => 'Pipilion',

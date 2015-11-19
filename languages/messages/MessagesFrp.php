@@ -450,16 +450,11 @@ $messages = array(
 'navigation' => 'Navigacion',
 'and' => '&#32;et',
 
-# Cologne Blue skin
 'qbfind' => 'Rechèrchiér',
 'qbbrowse' => 'Dèfelar',
-'qbedit' => 'Changiér',
 'qbpageoptions' => 'Pâge de chouèx',
 'qbpageinfo' => 'Pâge d’enformacion',
-'qbmyoptions' => 'Mos chouèx',
-'qbspecialpages' => 'Pâges spèciâles',
 'faq' => 'FDQ',
-'faqpage' => 'Project:FDQ',
 
 'actions' => 'Accions',
 'namespaces' => 'Èspâços de noms',
@@ -483,7 +478,6 @@ $messages = array(
 'edit' => 'Changiér',
 'create' => 'Fâre',
 'editthispage' => 'Changiér ceta pâge',
-'create-this-page' => 'Fâre ceta pâge',
 'delete' => 'Suprimar',
 'deletethispage' => 'Suprimar ceta pâge',
 'undelete_short' => 'Refâre {{PLURAL:$1|yon changement|$1 changements}}',
@@ -499,7 +493,6 @@ $messages = array(
 'specialpage' => 'Pâge spèciâla',
 'personaltools' => 'Outils a sè',
 'postcomment' => 'Novèla sèccion',
-'articlepage' => 'Vêde la pâge de contegnu',
 'talk' => 'Discussion',
 'views' => 'Visualisacions',
 'toolbox' => 'Bouèta d’outils',
@@ -1355,14 +1348,6 @@ Notâd bien que l’usâjo des lims de navigacion tornerat inicialisar cela colo
 En atendent la rèactivacion, vos pouede fâre una rechèrche per Google.
 Atencion, lor endèxacion du contegnu de {{SITENAME}} pôt pas étre a jorn.',
 
-# Quickbar
-'qbsettings' => 'Bârra d’outils',
-'qbsettings-none' => 'Niona',
-'qbsettings-fixedleft' => 'Gôche',
-'qbsettings-fixedright' => 'Drêta',
-'qbsettings-floatingleft' => 'Fllotenta a gôche',
-'qbsettings-floatingright' => 'Fllotenta a drêta',
-'qbsettings-directionality' => 'Fixa, d’aprés la dirèccionalitât d’ècritura de voutra lengoua',
 
 # Preferences page
 'preferences' => 'Prèferences',
@@ -3044,7 +3029,6 @@ Pèrmèt de rètablir la vèrsion devant et pués d’apondre una rêson dens la
 # Stylesheets
 'common.css' => '/* Lo code CSS betâ ique serat aplicâ a tôs los habelyâjos. */',
 'standard.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Estandârd ». */',
-'cologneblue.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Blu de Cologne ». */',
 'monobook.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « MonoBook ». */',
 'myskin.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « MonHabelyâjo ». */',
 'chick.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Pugin ». */',
@@ -3061,7 +3045,6 @@ Pèrmèt de rètablir la vèrsion devant et pués d’apondre una rêson dens la
 # Scripts
 'common.js' => '/* Tot code JavaScript betâ ique serat chargiê per tôs los usanciérs avouéc châque chargement de pâge. */',
 'standard.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Estandârd ». */',
-'cologneblue.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Blu de Cologne ». */',
 'monobook.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « MonoBook ». */',
 'myskin.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « MonHabelyâjo ». */',
 'chick.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Pugin ». */',
@@ -3112,7 +3095,6 @@ O est probâblament diu a un lim de vers un seto de defôr qu’aparêt sur la l
 
 # Skin names
 'skinname-standard' => 'Estandârd',
-'skinname-cologneblue' => 'Blu de Cologne',
 'skinname-monobook' => 'MonoBook',
 'skinname-myskin' => 'MonHabelyâjo',
 'skinname-chick' => 'Pugin',

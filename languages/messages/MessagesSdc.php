@@ -224,16 +224,11 @@ $messages = array(
 'navigation'    => 'Nabiggazioni',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Acciappa',
 'qbbrowse'       => 'Iffuglia',
-'qbedit'         => 'Mudifigga',
 'qbpageoptions'  => 'Prifirenzi pàgina',
 'qbpageinfo'     => "Infuimmazioni i' la pàgina",
-'qbmyoptions'    => "Li me' pàgini",
-'qbspecialpages' => 'Pàgini ippiziari',
 'faq'            => 'FAQ (infuimmazioni e aggiuddu)',
-'faqpage'        => 'Project:FAQ (infuimmazioni e aggiuddu)',
 
 
 'errorpagetitle'    => 'Errori',
@@ -253,7 +248,6 @@ $messages = array(
 'edit'              => 'Mudifigga',
 'create'            => 'Cria',
 'editthispage'      => 'Mudìfigga chistha pàgina',
-'create-this-page'  => 'Cria chistha pàgina',
 'delete'            => 'Canzella',
 'deletethispage'    => 'Canzella chistha pàgina',
 'undelete_short'    => 'Ricùpara {{PLURAL:$1|una ribisioni|$1 ribisioni}}',
@@ -268,7 +262,6 @@ $messages = array(
 'specialpage'       => 'Pagina ippiziari',
 'personaltools'     => 'Isthrumenti passunari',
 'postcomment'       => 'Noba sezzioni',
-'articlepage'       => 'Vedi la bozi',
 'talk'              => 'dischussioni',
 'views'             => 'Vìsiti',
 'toolbox'           => 'Isthrumenti',
@@ -800,13 +793,6 @@ Cunsulthà lu [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} rigi
 'powersearch-togglenone'    => 'Nisciunu',
 'searchdisabled'            => 'Abà no pói zirchà in {{SITENAME}}; proba cun Google o sìmiri, ma ammèntaddi chi li cuntinuddi di {{SITENAME}} poni assé no aggiornaddi.',
 
-# Quickbar
-'qbsettings'               => 'Prifirenzi di lu menù',
-'qbsettings-none'          => 'Nisciunu',
-'qbsettings-fixedleft'     => 'Fissu a manca',
-'qbsettings-fixedright'    => 'Fissu a drestha',
-'qbsettings-floatingleft'  => 'Galliggianti a manca',
-'qbsettings-floatingright' => 'Galliggianti a drestha',
 
 # Preferences page
 'preferences'               => 'Prifirenzi',

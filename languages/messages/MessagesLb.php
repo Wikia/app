@@ -310,16 +310,11 @@ $messages = array(
 'navigation'    => 'Navigatioun',
 'and'           => '&#32;an',
 
-# Cologne Blue skin
 'qbfind'         => 'Fannen',
 'qbbrowse'       => 'Duerchsichen',
-'qbedit'         => 'Änneren',
 'qbpageoptions'  => 'Säitenoptiounen',
 'qbpageinfo'     => 'Kontext',
-'qbmyoptions'    => 'Meng Säiten',
-'qbspecialpages' => 'Spezialsäiten',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Aktiounen',
 'namespaces'                     => 'Nummraim',
@@ -343,7 +338,6 @@ $messages = array(
 'edit'              => 'Änneren',
 'create'            => 'Uleeën',
 'editthispage'      => 'Dës Säit änneren',
-'create-this-page'  => 'Dës Säit uleeën',
 'delete'            => 'Läschen',
 'deletethispage'    => 'Dës Säit läschen',
 'undelete_short'    => '$1 {{PLURAL:$1|Versioun|Versioune}} restauréieren',
@@ -359,7 +353,6 @@ $messages = array(
 'specialpage'       => 'Spezialsäit',
 'personaltools'     => 'Perséinlech Tools',
 'postcomment'       => 'Neien Abschnitt',
-'articlepage'       => 'Säit',
 'talk'              => 'Diskussioun',
 'views'             => 'Affichagen',
 'toolbox'           => 'Geschirkëscht',
@@ -1150,14 +1143,6 @@ Denkt w.e.g drunn datt d'Navigatiounslinken d'Wiel vun de Versiounen nees zréck
 'search-external'                  => 'Extern sichen',
 'searchdisabled'                   => "D'Sichfunktioun op {{SITENAME}} ass ausgeschalt. Dir kënnt iwwerdeems mat Hëllef vu Google sichen. Bedenkt awer, datt deenen hire  Sichindex fir {{SITENAME}} eventuell net dem aktuellste Stand entsprecht.",
 
-# Quickbar
-'qbsettings'                => 'Geschirläischt',
-'qbsettings-none'           => 'Keen',
-'qbsettings-fixedleft'      => 'Lénks, fest',
-'qbsettings-fixedright'     => 'Riets, fest',
-'qbsettings-floatingleft'   => 'schwiewt lenks',
-'qbsettings-floatingright'  => 'Schwiewt riets',
-'qbsettings-directionality' => 'Fix, ofhängeg vun der Schreiwrichtung vun Ärer Sprooch',
 
 # Preferences page
 'preferences'                   => 'Astellungen',
@@ -2775,7 +2760,6 @@ Erlaabt et e Grond an de Resumé derbäizesetzen.',
 # Stylesheets
 'common.css'      => "/* Dës CSS huet nëmmen Afloss op de Skin ''Chick''  */",
 'standard.css'    => "/* Dës CSS huet nëmmen Afloss op de Skin ''Klassesch''  */",
-'cologneblue.css' => "/* Dës CSS huet nëmmen Afloss op de Skin ''Köln Blo''  */",
 'monobook.css'    => "/* Dës CSS huet nëmmen Afloss op de Skin ''Monobook''  */",
 'myskin.css'      => "/* Dës CSS huet nëmmen Afloss op de Skin ''MySkin''  */",
 'chick.css'       => '/* Dës CSS huet nëmmen Afloss op de Skin "Chick" */',
@@ -2824,7 +2808,6 @@ Dëst warscheinlech duerch en externe Link den op der schwaarzer Lëscht (blackl
 
 # Skin names
 'skinname-standard'    => 'Klassesch',
-'skinname-cologneblue' => 'Köln Blo',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
 'skinname-chick'       => 'Chick',

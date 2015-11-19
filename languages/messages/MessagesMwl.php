@@ -206,16 +206,11 @@ $messages = array(
 'navigation'    => 'Nabegaçon',
 'and'           => '&#32;i',
 
-# Cologne Blue skin
 'qbfind'         => 'Percurar',
 'qbbrowse'       => 'Nabegar',
-'qbedit'         => 'Eiditar',
 'qbpageoptions'  => 'Esta páigina',
 'qbpageinfo'     => 'Cuntesto',
-'qbmyoptions'    => 'Mies páiginas',
-'qbspecialpages' => 'Páiginas speciales',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'errorpagetitle'    => 'Erro',
 'returnto'          => 'Retornar pa $1.',
@@ -233,7 +228,6 @@ $messages = array(
 'edit'              => 'Eiditar',
 'create'            => 'Criar',
 'editthispage'      => 'Eiditar esta páigina',
-'create-this-page'  => 'Criar esta páigina',
 'delete'            => 'Botar fuora',
 'deletethispage'    => 'Apagar esta páigina',
 'protect'           => 'Porteger',
@@ -247,7 +241,6 @@ $messages = array(
 'specialpage'       => 'Páigina special',
 'personaltools'     => 'Ferramientas pessonales',
 'postcomment'       => 'Nuobo cacho',
-'articlepage'       => 'Ber páigina de cuntenido',
 'talk'              => 'Çcusson',
 'views'             => 'Besitas',
 'toolbox'           => 'Caixa de Ferramientas',
@@ -1091,7 +1084,6 @@ Premite ajuntar la rezon de la eidiçon ne l sumário.',
 
 # Skin names
 'skinname-standard'    => 'Clássico',
-'skinname-cologneblue' => 'Azul',
 'skinname-monobook'    => 'Lhibro',
 'skinname-myskin'      => 'Piel',
 'skinname-chick'       => 'Cipe-Çape',

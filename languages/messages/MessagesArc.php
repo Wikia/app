@@ -194,15 +194,10 @@ $messages = array(
 'navigation'    => 'ܐܠܦܪܘܬܐ',
 'and'           => '&#32;ܘ',
 
-# Cologne Blue skin
 'qbfind'         => 'ܐܫܟܚ',
 'qbbrowse'       => 'ܡܦܐܬ',
-'qbedit'         => 'ܫܚܠܦ',
 'qbpageoptions'  => 'ܗܕܐ ܦܐܬܐ',
-'qbmyoptions'    => 'ܓܒܝܬ̈ܝ',
-'qbspecialpages' => 'ܦܐܬܬ̈ܐ ܕ̈ܝܠܢܝܬܐ',
 'faq'            => 'ܫܘܐܠ̈ܐ ܬܢܝ̈ܐ',
-'faqpage'        => 'Project:ܫܘܐܠ̈ܐ ܬܢܝ̈ܐ',
 
 'actions'                  => 'ܥܒܕ̈ܐ',
 'namespaces'               => 'ܚܩܠܬ̈ܐ',
@@ -226,7 +221,6 @@ $messages = array(
 'edit'              => 'ܫܚܠܦ',
 'create'            => 'ܒܪܝ',
 'editthispage'      => 'ܫܚܠܦ ܦܐܬܐ ܗܕܐ',
-'create-this-page'  => 'ܒܪܝ ܦܐܬܐ ܗܕܐ',
 'delete'            => 'ܫܘܦ',
 'deletethispage'    => 'ܫܘܦ ܦܐܬܐ ܗܕܐ',
 'undelete_short'    => 'ܠܐ ܫܘܦ {{PLURAL:$1|ܚܕ ܫܘܚܠܦܐ|$1 ܫܘܚܠܦ̈ܐ}}',
@@ -242,7 +236,6 @@ $messages = array(
 'specialpage'       => 'ܦܐܬܐ ܕܝܠܢܝܬܐ',
 'personaltools'     => 'ܡܐܢ̈ܐ ܦܪ̈ܨܘܦܝܐ',
 'postcomment'       => 'ܡܢܬܐ ܚܕܬܐ',
-'articlepage'       => 'ܚܘܝܝܐ ܕܦܐܬܐ ܕܚܒܝܫܬ̈ܐ',
 'talk'              => 'ܡܡܠܠܐ',
 'views'             => 'ܚܙܝܬ̈ܐ',
 'toolbox'           => 'ܣܢܕܘܩܐ ܕܡܐܢ̈ܐ',
@@ -596,8 +589,6 @@ $1',
 'powersearch-togglenone'         => 'ܠܐ ܡܕܡ',
 'search-external'                => 'ܒܘܨܝܐ ܒܪܝܐ',
 
-# Quickbar
-'qbsettings-none' => 'ܠܐ ܡܕܡ',
 
 # Preferences page
 'preferences'                 => 'ܓܒܝܬ̈ܐ',

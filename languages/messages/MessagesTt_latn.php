@@ -231,16 +231,11 @@ $messages = array(
 'navigation'    => 'Küçü',
 'and'           => ' häm',
 
-# Cologne Blue skin
 'qbfind'         => 'Ezläw',
 'qbbrowse'       => 'Qaraw',
-'qbedit'         => 'Üzgärtü',
 'qbpageoptions'  => 'Bu bit',
 'qbpageinfo'     => 'Bit turında mäğlümatlar',
-'qbmyoptions'    => 'Bitlärem',
-'qbspecialpages' => 'Maxsus bitlär',
 'faq'            => 'YBS',
-'faqpage'        => 'Project:YBS',
 
 'actions'                        => 'Xäräkät',
 'namespaces'                     => 'İsemnär mäydanı',
@@ -263,7 +258,6 @@ $messages = array(
 'edit'              => 'Üzgärtü',
 'create'            => 'Tözü',
 'editthispage'      => 'Bu bitne üzgärtü',
-'create-this-page'  => 'Bu bitne tözü',
 'delete'            => 'Beterü',
 'deletethispage'    => 'Bu bitne beterü',
 'undelete_short'    => '$1 {{PLURAL:$1|üzgärtmäne}} torğızu',
@@ -278,7 +272,6 @@ $messages = array(
 'specialpage'       => 'Maxsus bit',
 'personaltools'     => 'Şäxsi qorallar',
 'postcomment'       => 'Yaña bülek',
-'articlepage'       => 'Mäqäläne qaraw',
 'talk'              => 'Bäxäs',
 'views'             => 'Qarawlar',
 'toolbox'           => 'Qorallar',
@@ -934,13 +927,6 @@ Barlıq alannarda (bäxäs bitläre, ürnäklär, h.b.) ezläw öçen ''all'' s�
 'powersearch-togglenone'           => 'Birni dä yuq',
 'search-external'                  => 'Tışqı ezläw',
 
-# Quickbar
-'qbsettings'               => 'Küçeşlär aslığı',
-'qbsettings-none'          => 'Kürsätmäw',
-'qbsettings-fixedleft'     => 'Sulda küçerelmäs',
-'qbsettings-fixedright'    => 'Uñda küçerelmäs',
-'qbsettings-floatingleft'  => 'Sulda yözmä',
-'qbsettings-floatingright' => 'Uñda yözmä',
 
 # Preferences page
 'preferences'                   => 'Köylänmälär',
@@ -1892,7 +1878,6 @@ Zinhar başqa isem saylağız.',
 
 # Skin names
 'skinname-standard'    => 'Klassik',
-'skinname-cologneblue' => 'Zäñgär sağış',
 'skinname-monobook'    => 'Kitap',
 'skinname-myskin'      => 'Üzem',
 'skinname-chick'       => 'Çebi',

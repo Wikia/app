@@ -77,10 +77,7 @@ $messages = array(
 'mytalk'     => 'Gebabbel mit dir',
 'navigation' => 'Navigation',
 
-# Cologne Blue skin
 'qbfind'      => 'Finne',
-'qbedit'      => 'Bearwaide',
-'qbmyoptions' => 'Mai Saide',
 
 
 'errorpagetitle'   => 'Fehler',
@@ -306,8 +303,6 @@ Erklärung: '''({{int:cur}})''' = Unnerschied zu jetzert,
 'powersearch-field'         => 'Suche noch',
 'powersearch-togglenone'    => 'Kään',
 
-# Quickbar
-'qbsettings-none' => 'Kään',
 
 # Preferences page
 'preferences'   => 'Optione',

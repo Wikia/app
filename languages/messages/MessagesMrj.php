@@ -168,9 +168,7 @@ $messages = array(
 'mytalk'     => 'Мӹньӹн кӓнгӓшӹмӹ ӹлӹштӓшем',
 'navigation' => 'Навигаци',
 
-# Cologne Blue skin
 'qbfind' => 'Кӹчӓлӓш',
-'qbedit' => 'Торлӓш',
 
 
 'errorpagetitle'   => 'Самынь',

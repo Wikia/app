@@ -145,16 +145,11 @@ $messages = array(
 'navigation'    => 'Никътахкар',
 'and'           => '&#32;кха',
 
-# Cologne Blue skin
 'qbfind'         => 'Лахар',
 'qbbrowse'       => 'БӀаргтасса',
-'qbedit'         => 'Хувца',
 'qbpageoptions'  => 'ОагӀува оттамаш',
 'qbpageinfo'     => 'ОагӀува тохкам',
-'qbmyoptions'    => 'Са оттамаш',
-'qbspecialpages' => 'ГӀулакхий оагӀувнаш',
 'faq'            => 'Каст-каста хаттараш',
-'faqpage'        => 'Project:Каст-каста хаттараш',
 
 'actions'                        => 'Дулархам',
 'namespaces'                     => 'ЦӀерий аренаш',
@@ -178,7 +173,6 @@ $messages = array(
 'edit'              => 'Хувца',
 'create'            => 'Хьаде',
 'editthispage'      => 'Ер оагӀув хувца',
-'create-this-page'  => 'Ep oагӀув хьае',
 'delete'            => 'ДӀадаккха',
 'deletethispage'    => 'Ер оагӀув дӀаяккха',
 'undelete_short'    => 'Меттаоттае {{PLURAL:$1|хувцам|$1 хувцамаш}}',
@@ -194,7 +188,6 @@ $messages = array(
 'specialpage'       => 'ГӀулакха оагӀув',
 'personaltools'     => 'Са гӀирсаш',
 'postcomment'       => 'Керда декъам',
-'articlepage'       => 'Йоазув тӀа бӀаргтасса',
 'talk'              => 'Дувцам',
 'views'             => 'БӀаргтассараш',
 'toolbox'           => 'ГӀирсаш',
@@ -525,8 +518,6 @@ $messages = array(
 'powersearch-toggleall'            => 'Деррига',
 'powersearch-togglenone'           => 'Цхьаккха',
 
-# Quickbar
-'qbsettings-none' => 'Цхьаккха',
 
 # Preferences page
 'preferences'               => 'Оттамаш',

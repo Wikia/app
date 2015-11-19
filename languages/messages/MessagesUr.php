@@ -177,16 +177,11 @@ $messages = array(
 'navigation'    => 'رہنمائی',
 'and'           => '&#32;اور',
 
-# Cologne Blue skin
 'qbfind'         => 'ڈھونڈ',
 'qbbrowse'       => 'تصفّح',
-'qbedit'         => 'ترمیم',
 'qbpageoptions'  => 'صفحۂ ہٰذا',
 'qbpageinfo'     => 'مفہوم',
-'qbmyoptions'    => 'میرے صفحات',
-'qbspecialpages' => 'خاص صفحات',
 'faq'            => 'معلوماتِ عامہ',
-'faqpage'        => 'Project:معلوماتِ عامہ',
 
 'actions'                  => 'ایکشنز',
 'namespaces'               => 'جائے نام',
@@ -209,7 +204,6 @@ $messages = array(
 'edit'              => 'ترمیم',
 'create'            => 'تخلیق',
 'editthispage'      => 'اس صفحہ میں ترمیم کریں',
-'create-this-page'  => 'صفحہ ہٰذا تخلیق کیجئے',
 'delete'            => 'حذف',
 'deletethispage'    => 'یہ صفحہ حذف کریں',
 'undelete_short'    => 'بحال {{PLURAL:$1|ایک ترمیم|$1 ترامیم}}',
@@ -224,7 +218,6 @@ $messages = array(
 'specialpage'       => 'خصوصی صفحہ',
 'personaltools'     => 'ذاتی اوزار',
 'postcomment'       => 'اگلا حصّہ',
-'articlepage'       => 'مندرجاتی صفحہ دیکھیۓ',
 'talk'              => 'تبادلہٴ خیال',
 'views'             => 'خیالات',
 'toolbox'           => 'اوزاردان',
@@ -800,9 +793,6 @@ $1",
 آپ فی الحال گوگل کے ذریعے تلاش کرسکتے ہیں.
 یاد رکھئے کہ اُن کے {{SITENAME}} اشاریے ممکناً پرانے ہوسکتے ہیں.',
 
-# Quickbar
-'qbsettings'      => 'فوری‌بار',
-'qbsettings-none' => 'ہیچ',
 
 # Preferences page
 'preferences'                   => 'ترجیحات',

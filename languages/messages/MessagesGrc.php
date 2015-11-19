@@ -183,16 +183,11 @@ $messages = array(
 'navigation'    => 'Πλοήγησις',
 'and'           => '&#32;καὶ',
 
-# Cologne Blue skin
 'qbfind'         => 'Εὑρίσκειν',
 'qbbrowse'       => 'Νέμου',
-'qbedit'         => 'Μεταγράφειν',
 'qbpageoptions'  => 'Ἥδε ἡ δέλτος',
 'qbpageinfo'     => 'Συγκείμενον',
-'qbmyoptions'    => 'Δέλτοι μου',
-'qbspecialpages' => 'Εἰδικαὶ δέλτοι',
 'faq'            => 'Τὰ πολλάκις αἰτηθέντα',
-'faqpage'        => 'Project:Πολλάκις αἰτηθέντα',
 
 'actions'                    => 'Δράσεις',
 'namespaces'                 => 'Ὀνοματεῖα',
@@ -216,7 +211,6 @@ $messages = array(
 'edit'              => 'Μεταγράφειν',
 'create'            => 'Ποιεῖν',
 'editthispage'      => 'Μεταγράφειν τήνδε τὴν δέλτον',
-'create-this-page'  => 'Ποιεῖν τήνδε τὴν δέλτον',
 'delete'            => 'Σβεννύναι',
 'deletethispage'    => 'Διαγράφειν τήνδε τὴν δέλτον',
 'undelete_short'    => 'Ἐπανορθοῦν {{PLURAL:$1|ἕνα μεταγραφὲν|$1 μεταγραφέντα}}',
@@ -231,7 +225,6 @@ $messages = array(
 'specialpage'       => 'Εἰδικὴ δέλτος',
 'personaltools'     => 'Ἴδια ἐργαλεῖα',
 'postcomment'       => 'Νέον τμῆμα',
-'articlepage'       => 'Χρήματος δέλτον ὁρᾶν',
 'talk'              => 'Διάλεξις',
 'views'             => 'Ποσάκις ἔσκεπται',
 'toolbox'           => 'Ἐργαλειοκάδος',
@@ -845,13 +838,6 @@ $1",
 'powersearch-togglenone'           => 'Οὐδέν',
 'search-external'                  => 'Ἐξωτέρα ἀναζήτησις',
 
-# Quickbar
-'qbsettings'               => 'Ταχεῖα πρόσβασις',
-'qbsettings-none'          => 'Οὐδέν',
-'qbsettings-fixedleft'     => 'Σταθερὰ ἀριστερώς',
-'qbsettings-fixedright'    => 'Σταθερὰ δεξιώς',
-'qbsettings-floatingleft'  => 'Πλανώμενα αριστερώς',
-'qbsettings-floatingright' => 'Πλανώμενα δεξιώς',
 
 # Preferences page
 'preferences'                   => 'Αἱρέσεις',

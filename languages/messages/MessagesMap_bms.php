@@ -152,16 +152,11 @@ $messages = array(
 'navigation'    => 'pandhu arah',
 'and'           => '&#32;lan',
 
-# Cologne Blue skin
 'qbfind'         => 'Goleti',
 'qbbrowse'       => 'Jelajahi',
-'qbedit'         => 'Sunting',
 'qbpageoptions'  => 'Kaca kiye',
 'qbpageinfo'     => 'Konteks kaca',
-'qbmyoptions'    => 'Kaca-ne inyong',
-'qbspecialpages' => 'Kaca-kaca astamiwa',
 'faq'            => 'FAQ (Pitakonan sing sering ditakokna)',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Tindakan',
 'namespaces'                     => 'Bilik jeneng',
@@ -185,7 +180,6 @@ $messages = array(
 'edit'              => 'Sunting',
 'create'            => 'Gawe',
 'editthispage'      => 'Sunting kaca kiye',
-'create-this-page'  => 'Gawe kaca kiye',
 'delete'            => 'Busek',
 'deletethispage'    => 'Busak kaca kiye',
 'undelete_short'    => 'Batalna pambusakan $1 {{PLURAL:$1|suntingan|suntingan}}',
@@ -201,7 +195,6 @@ $messages = array(
 'specialpage'       => 'Kaca khusus',
 'personaltools'     => 'Piranti pribadi',
 'postcomment'       => 'Bagéyan anyar',
-'articlepage'       => 'Deleng isi tulisan',
 'talk'              => 'bahas',
 'views'             => 'Tampilan',
 'toolbox'           => 'perangkat',
@@ -897,14 +890,6 @@ Jajal aweh awalan ''all:'' kanggo nggolèti kabèh isi (kalebu kaca dhiskusi, ci
 Rika teyeng nggoleti nganggo Google disit.
 Ningen Rika kudu eling nek indeks Google kanggo {{SITENAME}} bisa baen isine anu sing lawas lan durung dianyari.',
 
-# Quickbar
-'qbsettings'                => 'Pangaturan bar pintas',
-'qbsettings-none'           => 'Ora ana',
-'qbsettings-fixedleft'      => 'Tetep sisih kiwa',
-'qbsettings-fixedright'     => 'Tetep sisih tengen',
-'qbsettings-floatingleft'   => 'Ngambang sisih kiwa',
-'qbsettings-floatingright'  => 'Ngambang sisih tengen',
-'qbsettings-directionality' => 'Tetep, ngetutna maring bentuk skrip sekang basane Rika',
 
 # Preferences page
 'preferences'                   => 'Preferensi',

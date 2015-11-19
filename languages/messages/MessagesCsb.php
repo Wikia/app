@@ -171,16 +171,11 @@ $messages = array(
 'navigation'    => 'Nawigacëjô',
 'and'           => '&#32;ë',
 
-# Cologne Blue skin
 'qbfind'         => 'Nalézë',
 'qbbrowse'       => 'Przezeranié',
-'qbedit'         => 'Edicëjô',
 'qbpageoptions'  => 'Òptacëje starnë',
 'qbpageinfo'     => 'Ò starnie',
-'qbmyoptions'    => 'Mòje òptacëje',
-'qbspecialpages' => 'Specjalné starnë',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Dzéjania',
 'namespaces'                     => 'Rum mionów:',
@@ -203,7 +198,6 @@ $messages = array(
 'edit'              => 'Edicëjô',
 'create'            => 'Ùsôdzë',
 'editthispage'      => 'Editëjë nã starnã',
-'create-this-page'  => 'Ùsôdzë nã starnã',
 'delete'            => 'Rëmôj',
 'deletethispage'    => 'Rëmôj nã starnã',
 'undelete_short'    => 'Doprowôdzë nazôd {{PLURAL:$1|1 edicëjã|$1 edicëje|$1 edicëjów}}',
@@ -218,7 +212,6 @@ $messages = array(
 'specialpage'       => 'Specjalnô starna',
 'personaltools'     => 'Priwatné przërëchtënczi',
 'postcomment'       => 'Nowi dzél',
-'articlepage'       => 'Starna artikla',
 'talk'              => 'Diskùsëjô',
 'views'             => 'Pòdzérków',
 'toolbox'           => 'Przërëchtënczi',
@@ -577,8 +570,6 @@ Spróbùjë szëkbë z przëdôwkã ''all:'' dlô całowny zamkłoscë starnów 
 'powersearch-redir'         => 'Lësta przeczerowaniów',
 'powersearch-field'         => 'Szëkba za',
 
-# Quickbar
-'qbsettings' => 'Sztrépk chùtczégò przistãpù',
 
 # Preferences page
 'preferences'               => 'Preferencëje',

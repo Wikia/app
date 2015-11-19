@@ -393,16 +393,11 @@ $messages = array(
 'navigation'    => 'ଦିଗବାରେଣି',
 'and'           => '&#32;ଓ',
 
-# Cologne Blue skin
 'qbfind'         => 'ଖୋଜିବା',
 'qbbrowse'       => 'ଖୋଜିବା',
-'qbedit'         => 'ବଦଳାଇବେ',
 'qbpageoptions'  => 'ଏହି ଫର୍ଦଟି',
 'qbpageinfo'     => 'ଭିତର ଚିଜ',
-'qbmyoptions'    => 'ମୋର ଫର୍ଦ',
-'qbspecialpages' => 'ନିଆରା ପୃଷ୍ଠା',
 'faq'            => 'ବାରମ୍ବାର ପଚରାଯାଉଥିବା ପ୍ରଶ୍ନ',
-'faqpage'        => 'Project:ବାରମ୍ବାର ପଚାରାଯାଉଥିବା ପ୍ରଶ୍ନ',
 
 'actions'                        => 'କାମ',
 'namespaces'                     => 'ନେମସ୍ପେସ',
@@ -426,7 +421,6 @@ $messages = array(
 'edit'              => 'ବଦଳାଇବେ',
 'create'            => 'ତିଆରି କରିବେ',
 'editthispage'      => 'ଏହି ପୃଷ୍ଠାଟିକୁ ବଦଳାଇବା',
-'create-this-page'  => 'ଏହି ପୃଷ୍ଠାଟି ତିଆରିବେ',
 'delete'            => 'ଲିଭାଇବେ',
 'deletethispage'    => 'ଏହି ପୃଷ୍ଠାଟି ଲିଭାଇବେ',
 'undelete_short'    => '{{PLURAL:$1|ଗୋଟିଏ ବଦଳ|$1ଟି ବଦଳ}} ଯାହା ଲିଭାସରିଛି ତାହାକୁ ପଛକୁ ଫେରାଇଦେବା',
@@ -442,7 +436,6 @@ $messages = array(
 'specialpage'       => 'ନିଆରା ପୃଷ୍ଠା',
 'personaltools'     => 'ନିଜର ଟୁଲ',
 'postcomment'       => 'ନୂଆ ଭାଗ',
-'articlepage'       => 'ସୂଚୀ ପୃଷ୍ଠାଟି ଦେଖାଇବେ',
 'talk'              => 'ଆଲୋଚନା',
 'views'             => 'ଦେଖା',
 'toolbox'           => 'ଉପକରଣ',
@@ -1282,14 +1275,6 @@ $1",
 ଆପଣ ଏହି ଭିତରେ ଗୁଗଲ ଦେଖିପାରନ୍ତି ।
 ଜାଣିରଖନ୍ତୁ ଯେ {{SITENAME}}ର ବିଷୟ ସୂଚି ପୁରାତନ ହୋଇଥାଇପାରେ ।',
 
-# Quickbar
-'qbsettings'                => 'ସହଳ ପଟି (Quickbar)',
-'qbsettings-none'           => 'କିଛି ନାହିଁ',
-'qbsettings-fixedleft'      => 'ବାମକୁ ଥୟ କରାଗଲା',
-'qbsettings-fixedright'     => 'ଡାହାଣକୁ ଥୟ କରାଗଲା',
-'qbsettings-floatingleft'   => 'ବାମରେ ଭାସନ୍ତା',
-'qbsettings-floatingright'  => 'ଡାହାଣରେ ଭାସନ୍ତା',
-'qbsettings-directionality' => 'ଆପଣଙ୍କ ଭାଷାର ବାମ-ଡାହାଣ ଲିଖନ ଶୈଳୀ ଅନୁସାରେ ସଜାଡ଼ି ଦିଆଗଲା',
 
 # Preferences page
 'preferences'                   => 'ପସନ୍ଦ',

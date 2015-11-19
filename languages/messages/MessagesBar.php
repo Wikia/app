@@ -162,16 +162,11 @@ $messages = array(
 'navigation'    => 'Navigazión',
 'and'           => '&#32;und',
 
-# Cologne Blue skin
 'qbfind'         => 'Finden',
 'qbbrowse'       => 'Blaadeln',
-'qbedit'         => 'werkeln',
 'qbpageoptions'  => 'Seitenopzionen',
 'qbpageinfo'     => 'Seitendaaten',
-'qbmyoptions'    => 'Meine Seiten',
-'qbspecialpages' => 'Speziaalseiten',
 'faq'            => 'Heiffige Frong',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Akziónen',
 'namespaces'                     => 'Nåmensraim',
@@ -195,7 +190,6 @@ $messages = array(
 'edit'              => 'werkeln',
 'create'            => 'Erstön',
 'editthispage'      => 'Seiten beorweiten',
-'create-this-page'  => 'Seiten erstön',
 'delete'            => 'léschen',
 'deletethispage'    => 'De Seiten leschen',
 'undelete_short'    => '{{PLURAL:$1|1 Version|$1 Versionen}} wiederherstön',
@@ -211,7 +205,6 @@ $messages = array(
 'specialpage'       => 'Speziaalseiten',
 'personaltools'     => 'Persénlichs Werkzeig',
 'postcomment'       => 'Neicher Obschnit',
-'articlepage'       => 'Seiteninhoid åzoang',
 'talk'              => 'Diskussión',
 'views'             => 'Åsichten',
 'toolbox'           => 'Werkzeigkisten',

@@ -244,16 +244,11 @@ $messages = array(
 'navigation'    => 'Saytta yol tapuv',
 'and'           => '&#32;ve',
 
-# Cologne Blue skin
 'qbfind'         => 'Tap',
 'qbbrowse'       => 'Baqıp çıq',
-'qbedit'         => 'Deñiştir',
 'qbpageoptions'  => 'Bu saife',
 'qbpageinfo'     => 'Saife aqqında malümat',
-'qbmyoptions'    => 'Saifelerim',
-'qbspecialpages' => 'Mahsus saifeler',
 'faq'            => 'Sıq berilgen sualler',
-'faqpage'        => 'Project:Sıq berilgen sualler',
 
 'actions'                        => 'Areketler',
 'namespaces'                     => 'İsim fezaları',
@@ -277,7 +272,6 @@ $messages = array(
 'edit'              => 'Deñiştir',
 'create'            => 'Yarat',
 'editthispage'      => 'Saifeni deñiştir',
-'create-this-page'  => 'Bu saifeni yarat',
 'delete'            => 'Yoq et',
 'deletethispage'    => 'Saifeni yoq et',
 'undelete_short'    => '{{PLURAL:$1|1|$1}} deñişmeni keri ketir',
@@ -293,7 +287,6 @@ $messages = array(
 'specialpage'       => 'Mahsus Saife',
 'personaltools'     => 'Şahsiy aletler',
 'postcomment'       => 'Yañı bölük',
-'articlepage'       => 'Saifege bar',
 'talk'              => 'Muzakere',
 'views'             => 'Körünişler',
 'toolbox'           => 'Aletler',
@@ -881,8 +874,6 @@ Vikide bu saifege oşağan saifelerni [[Special:Search|tapıp baqıñız]].',
 'search-external'                  => 'Tış qıdıruv',
 'searchdisabled'                   => '{{SITENAME}} saytında qıdıruv yapma vaqtınca toqtatıldı. Bu arada Google qullanıp {{SITENAME}} içinde qıdıruv yapıp olasıñız. Qıdıruv saytlarında indekslemeleriniñ biraz eski qalğan ola bilecegini köz ögüne alıñız.',
 
-# Quickbar
-'qbsettings' => 'Vızlı irişim sutun sazlamaları',
 
 # Preferences page
 'preferences'                   => 'Sazlamalar',
@@ -1808,7 +1799,6 @@ MediaWiki interfeysiniñ çeşit tillerge tercime etüvde iştirak etmege istese
 
 # Skin names
 'skinname-standard'    => 'Standart',
-'skinname-cologneblue' => 'Köln asretligi',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Öz resimleme',
 'skinname-chick'       => 'Çipçe',

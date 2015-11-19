@@ -270,16 +270,11 @@ $messages = array(
 'navigation'    => 'Навигацие',
 'and'           => '&#32;эди',
 
-# Cologne Blue skin
 'qbfind'         => 'Мук',
 'qbbrowse'       => 'Ванондома',
-'qbedit'         => 'Петнема',
 'qbpageoptions'  => 'Тя лопась',
 'qbpageinfo'     => 'Контекстсь',
-'qbmyoptions'    => 'Монь лопане',
-'qbspecialpages' => 'Башка тевонь лопат',
 'faq'            => 'Сидеста Кеподеви Кизефксне',
-'faqpage'        => 'Project:Сидеста Кеподеви Кизефксне',
 
 'actions'                 => 'Тефне',
 'namespaces'              => 'Лемботмот',
@@ -302,7 +297,6 @@ $messages = array(
 'edit'              => 'Петнеме',
 'create'            => 'Тиемс',
 'editthispage'      => 'Петнемс тя лопать',
-'create-this-page'  => 'Тиемс тя лопать',
 'delete'            => 'Нардамс',
 'deletethispage'    => 'Нардамс тя лопать',
 'undelete_short'    => 'Мърдафтомс {{PLURAL:$1|петнема|$1 петнемат}}',
@@ -317,7 +311,6 @@ $messages = array(
 'specialpage'       => 'Башка тевонь лопа',
 'personaltools'     => 'Эсь кядьёнкст',
 'postcomment'       => 'Од пакш',
-'articlepage'       => 'Ваномс потмакслопать',
 'talk'              => 'Корхнема',
 'views'             => 'Ванфт',
 'toolbox'           => 'Кядьёнкс кярькс',
@@ -945,13 +938,6 @@ $3 макссь туфталсь - ''$2''",
 'search-external'                  => 'Ушеширень вешендема',
 'searchdisabled'                   => '{{SITENAME}}-са тяни вешендемась аш. Ули кода вешендемс Google эли иля вешендемань интернет програпнень вельде. Шарфтк мяльце тостонь {{SITENAME}}-нь потмонц верзиец, улема, сирелгодсь.',
 
-# Quickbar
-'qbsettings'               => 'Навигациень седяфкс',
-'qbsettings-none'          => 'Аф няфтемс',
-'qbsettings-fixedleft'     => 'Кержи шири киртьф',
-'qbsettings-fixedright'    => 'Види шири киртьф',
-'qbsettings-floatingleft'  => 'Кержи ширеса уенди',
-'qbsettings-floatingright' => 'Виде ширеса уенди',
 
 # Preferences page
 'preferences'               => 'Арафнематне',

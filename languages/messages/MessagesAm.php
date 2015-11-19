@@ -178,16 +178,11 @@ $messages = array(
 'navigation'    => 'መቃኘት',
 'and'           => '&#32;እና',
 
-# Cologne Blue skin
 'qbfind'         => 'አግኝ',
 'qbbrowse'       => 'ቃኝ',
-'qbedit'         => 'አርም',
 'qbpageoptions'  => 'ይህ ገጽ',
 'qbpageinfo'     => 'አግባብ',
-'qbmyoptions'    => 'የኔ ገጾች',
-'qbspecialpages' => 'ልዩ ገጾች',
 'faq'            => 'ብጊየጥ (ብዙ ጊዜ የሚጠየቁ ጥያቀዎች)',
-'faqpage'        => 'Project:ብጊየጥ',
 
 
 'errorpagetitle'    => 'ስህተት',
@@ -207,7 +202,6 @@ $messages = array(
 'edit'              => 'አርም',
 'create'            => 'ለመፍጠር',
 'editthispage'      => 'ይህን ገጽ አርም',
-'create-this-page'  => 'ይህን ገጽ ለመፍጠር',
 'delete'            => 'ይጥፋ',
 'deletethispage'    => 'ይህን ገጽ ሰርዝ',
 'undelete_short'    => '{{PLURAL:$1|አንድ ዕትም|$1 ዕትሞች}} ለመመልስ',
@@ -222,7 +216,6 @@ $messages = array(
 'specialpage'       => 'ልዩ ገጽ',
 'personaltools'     => 'የኔ መሣርያዎች',
 'postcomment'       => 'አስተያየት ለማቅረብ',
-'articlepage'       => 'መጣጥፉን ለማየት',
 'talk'              => 'ውይይት',
 'views'             => 'ዕይታዎች',
 'toolbox'           => 'ትዕዛዝ ማስጫ',
@@ -744,12 +737,6 @@ $1ን ወይም ማንም ሌላ [[{{MediaWiki:Grouppage-sysop}}|መጋቢ]] ስ
 'search-external'                  => 'አፍአዊ ፍለጋ',
 'searchdisabled'                   => '{{SITENAME}} ፍለጋ አሁን እንዳይሠራ ተደርጓል። ለጊዜው ግን በGoogle ላይ መፈልግ ይችላሉ። የ{{SITENAME}} ይዞታ ማውጫ በዚያ እንዳልታደሰ ማቻሉ ያስታውሱ።',
 
-# Quickbar
-'qbsettings-none'          => ' ምንም',
-'qbsettings-fixedleft'     => 'በግራ የተለጠፈ',
-'qbsettings-fixedright'    => 'በቀኝ የተለጠፈ',
-'qbsettings-floatingleft'  => 'በግራ ተንሳፋፊ',
-'qbsettings-floatingright' => 'በቀኝ ተንሳፋፊ',
 
 # Preferences page
 'preferences'               => 'ምርጫዎች፤',

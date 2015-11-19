@@ -217,16 +217,11 @@ $messages = array(
 'navigation'    => 'Joowiin',
 'and'           => '&#32;ak',
 
-# Cologne Blue skin
 'qbfind'         => 'Seet',
 'qbbrowse'       => 'Lemmi',
-'qbedit'         => 'Soppi',
 'qbpageoptions'  => 'Xëtuw tànneef',
 'qbpageinfo'     => 'Xëtuw xibaar',
-'qbmyoptions'    => 'Samay tànneef',
-'qbspecialpages' => 'Xëti jagleel',
 'faq'            => 'Laaj yi ëpp',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                  => 'Jëf',
 'namespaces'               => 'Barabu tur',
@@ -249,7 +244,6 @@ $messages = array(
 'edit'              => 'Soppi',
 'create'            => 'Sos',
 'editthispage'      => 'Soppi xët wii',
-'create-this-page'  => 'Sos wii xët',
 'delete'            => 'Far',
 'deletethispage'    => 'Far wii xët',
 'undelete_short'    => 'Delloowaat {{PLURAL:$1|1 coppite| $1 ciy coppite}}',
@@ -264,7 +258,6 @@ $messages = array(
 'specialpage'       => 'Xëtu jagleel',
 'personaltools'     => 'Samay jumtukaay',
 'postcomment'       => 'Xaaj bu bees',
-'articlepage'       => 'Gis jukki bi',
 'talk'              => 'Waxtaan',
 'views'             => 'Xool yo',
 'toolbox'           => 'Boyotu jumtukaay yi',
@@ -922,13 +915,6 @@ Jéemala bindaale ''all'' ngir seet ci biir ëmbit gépp (boolewaale ci xëti wa
 'search-external'                  => 'Ceet gu biti',
 'searchdisabled'                   => 'Ceet gi ci {{SITENAME}} doxul. Ci négandiku doxal gi, man nga seet ci Google. Jàppal ne, xéj-na ëmbiti {{SITENAME}} gi ci bii seetukaay yeesaluñ leen.',
 
-# Quickbar
-'qbsettings'               => 'Banqaasu jumtukaay',
-'qbsettings-none'          => 'Kenn',
-'qbsettings-fixedleft'     => 'Cammooñ',
-'qbsettings-fixedright'    => 'Ndijoor',
-'qbsettings-floatingleft'  => 'Ci cammooñ',
-'qbsettings-floatingright' => 'Ci ndijoor',
 
 # Preferences page
 'preferences'                   => 'Tànneef',
@@ -2061,7 +2047,6 @@ Dafay tax nga man a bind ngirte li ci boyotu tënk bi.',
 # Stylesheets
 'common.css'      => '/* CSS yiñ def fii dañuy am ay njeexit ci col yépp  */',
 'standard.css'    => '/* CSS yiñ def fii dañuy am ay njeexit ci jëfandikukatu col gu Standard  */',
-'cologneblue.css' => '/* CSS yiñ def fii dañuy am ay njeexit ci jëfandikukatu col gu Cologne Blue */',
 'monobook.css'    => '/* CSS yiñ def fii dañuy am ay njeexit ci jëfandikukatu col gu Monobook. */',
 'myskin.css'      => '/* CSS yiñ def fii dañuy am ay njeexit ci jëfandikukatu col gu MySkin */',
 'chick.css'       => '/* CSS yiñ def fii dañuy am ay njeexit ci jëfandikukatu col gu Chick */',
@@ -2071,7 +2056,6 @@ Dafay tax nga man a bind ngirte li ci boyotu tënk bi.',
 # Scripts
 'common.js'      => '/* Bépp JavaScript buñ fi duggal, xët yéppa koy yeb ak jëfandikukat bumu manti doon. */',
 'standard.js'    => '/* Bépp JavaScript buñ fi duggal jëfandikukat yiy jëfandikoo col gu Standard keppa koy yeb  */',
-'cologneblue.js' => '/* Bépp JavaScript buñ fi duggal jëfandikukat yiy jëfandikoo col gu Cologne Blue keppa koy yeb */',
 'monobook.js'    => '/*Bépp JavaScript buñ fi duggal jëfandikukat yiy jëfandikoo col gu Monobook keppa koy yeb. */',
 'myskin.js'      => '/* Bépp JavaScript buñ fi duggal jëfandikukat yiy jëfandikoo col gu MySkin keppa koy yeb */',
 'chick.js'       => '/* Bépp JavaScript buñ fi duggal jëfandikukat yiy jëfandikoo col gu Chick keppa koy yeb */',

@@ -571,16 +571,11 @@ $messages = array(
 'navigation'    => 'گشتن',
 'and'           => '&#32;و',
 
-# Cologne Blue skin
 'qbfind'         => 'یافتن',
 'qbbrowse'       => 'مرور',
-'qbedit'         => 'ویرایش',
 'qbpageoptions'  => 'این صفحه',
 'qbpageinfo'     => 'بافت',
-'qbmyoptions'    => 'صفحه‌های من',
-'qbspecialpages' => 'صفحه‌های ویژه',
 'faq'            => 'پرسش‌های متداول',
-'faqpage'        => 'Project:پرسش‌های متداول',
 
 'actions'                        => 'عملکردها',
 'namespaces'                     => 'فضاهای نام',
@@ -604,7 +599,6 @@ $messages = array(
 'edit'              => 'ویرایش',
 'create'            => 'ایجاد',
 'editthispage'      => 'ویرایش این صفحه',
-'create-this-page'  => 'این صفحه را ایجاد کنید',
 'delete'            => 'حذف',
 'deletethispage'    => 'حذف این صفحه',
 'undelete_short'    => 'احیای {{PLURAL:$1|یک ویرایش|$1 ویرایش}}',
@@ -620,7 +614,6 @@ $messages = array(
 'specialpage'       => 'صفحهٔ ویژه',
 'personaltools'     => 'ابزارهای شخصی',
 'postcomment'       => 'بخش جدید',
-'articlepage'       => 'نمایش مقاله',
 'talk'              => 'بحث',
 'views'             => 'بازدیدها',
 'toolbox'           => 'جعبه‌ابزار',
@@ -1462,14 +1455,6 @@ $1",
 موقتاً می‌توانید از جستجوی Google استفاده کنید.
 توجه کنید که نتایج حاصل از جستجو با آن روش ممکن است به‌روز نباشند.',
 
-# Quickbar
-'qbsettings'                => 'نوار سریع',
-'qbsettings-none'           => 'نباشد',
-'qbsettings-fixedleft'      => 'ثابت چپ',
-'qbsettings-fixedright'     => 'ثابت راست',
-'qbsettings-floatingleft'   => 'شناور چپ',
-'qbsettings-floatingright'  => 'شناور راست',
-'qbsettings-directionality' => 'ثابت، بسته به جهت نگارش زبان شما',
 
 # Preferences page
 'preferences'                   => 'ترجیحات',
@@ -3176,7 +3161,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => 'کلاسیک',
-'skinname-cologneblue' => 'آبی کلن',
 'skinname-monobook'    => 'مونوبوک',
 'skinname-myskin'      => 'پوستهٔ من',
 'skinname-chick'       => 'شیک',

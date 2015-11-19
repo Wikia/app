@@ -476,16 +476,11 @@ $messages = array(
 'navigation'    => 'Navigasi',
 'and'           => '&#32;dan',
 
-# Cologne Blue skin
 'qbfind'         => 'Pencarian',
 'qbbrowse'       => 'Navigasi',
-'qbedit'         => 'Sunting',
 'qbpageoptions'  => 'Halaman ini',
 'qbpageinfo'     => 'Konteks halaman',
-'qbmyoptions'    => 'Halaman saya',
-'qbspecialpages' => 'Halaman istimewa',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Tindakan',
 'namespaces'                     => 'Ruang nama',
@@ -509,7 +504,6 @@ $messages = array(
 'edit'              => 'Sunting',
 'create'            => 'Buat',
 'editthispage'      => 'Sunting halaman ini',
-'create-this-page'  => 'Buat halaman ini',
 'delete'            => 'Hapus',
 'deletethispage'    => 'Hapus halaman ini',
 'undelete_short'    => 'Batal hapus $1 {{PLURAL:$1|suntingan|suntingan}}',
@@ -525,7 +519,6 @@ $messages = array(
 'specialpage'       => 'Halaman istimewa',
 'personaltools'     => 'Peralatan pribadi',
 'postcomment'       => 'Bagian baru',
-'articlepage'       => 'Lihat halaman isi',
 'talk'              => 'Pembicaraan',
 'views'             => 'Tampilan',
 'toolbox'           => 'Kotak peralatan',
@@ -1324,14 +1317,6 @@ Pastikan bahwa perubahan ini tetap mempertahankan kontinuitas versi terdahulu ha
 Anda dapat mencari melalui Google untuk sementara waktu.
 Perlu diingat bahwa indeks Google untuk konten {{SITENAME}} mungkin belum mencakup perubahan-perubahan terakhir.',
 
-# Quickbar
-'qbsettings'                => 'Pengaturan bar pintas',
-'qbsettings-none'           => 'Tidak ada',
-'qbsettings-fixedleft'      => 'Tetap sebelah kiri',
-'qbsettings-fixedright'     => 'Tetap sebelah kanan',
-'qbsettings-floatingleft'   => 'Mengambang sebelah kiri',
-'qbsettings-floatingright'  => 'Mengambang sebelah kanan',
-'qbsettings-directionality' => 'Tetap, tergantung pada bentuk skrip dari bahasa Anda',
 
 # Preferences page
 'preferences'                   => 'Preferensi',
@@ -2880,7 +2865,6 @@ Simpan ke komputer Anda lalu muatkan di sini.',
 # Stylesheets
 'common.css'      => '/* CSS yang ada di sini akan diterapkan untuk semua kulit. */',
 'standard.css'    => '/* CSS yang ada di sini akan diterapkan untuk kulit Standard. */',
-'cologneblue.css' => '/* CSS yang ada di sini akan diterapkan untuk kulit Cologne Blue. */',
 'monobook.css'    => '/* CSS yang ada di sini akan diterapkan untuk kulit Monobook. */',
 'myskin.css'      => '/* CSS yang ada di sini akan diterapkan untuk kulit MySkin. */',
 'chick.css'       => '/* CSS yang ada di sini akan diterapkan untuk kulit Chick. */',
@@ -2892,7 +2876,6 @@ Simpan ke komputer Anda lalu muatkan di sini.',
 # Scripts
 'common.js'      => '/* JavaScript yang ada di sini akan diterapkan untuk semua kulit. */',
 'standard.js'    => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit Standard */',
-'cologneblue.js' => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit Cologne Blue */',
 'monobook.js'    => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit MonoBook */',
 'myskin.js'      => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit MySkin */',
 'chick.js'       => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit Chick */',

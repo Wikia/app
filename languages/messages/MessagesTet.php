@@ -161,14 +161,9 @@ $messages = array(
 'navigation'    => 'Hatudu-dalan',
 'and'           => '&#32;ho',
 
-# Cologne Blue skin
 'qbfind'         => 'Hetan',
-'qbedit'         => 'Edita',
 'qbpageoptions'  => "Pájina ne'e",
-'qbmyoptions'    => "Ha'u-nia pájina sira",
-'qbspecialpages' => 'Pájina espesiál sira',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 
 'errorpagetitle'    => 'Sala',
@@ -187,7 +182,6 @@ $messages = array(
 'edit'              => 'Edita',
 'create'            => 'Kria',
 'editthispage'      => "Edita pájina ne'e",
-'create-this-page'  => "Kria pájina ne'e",
 'delete'            => 'Halakon',
 'deletethispage'    => "Halakon pájina ne'e",
 'undelete_short'    => 'Restaurar {{PLURAL:$1|versaun ida|versaun $1}}',
@@ -828,7 +822,6 @@ Check your spelling, ka [[Special:UserLogin/signup|kria konta foun]].',
 
 # Skin names
 'skinname-standard'    => 'Klásiku',
-'skinname-cologneblue' => 'Kolónia azúl',
 'skinname-myskin'      => 'MySkin',
 'skinname-chick'       => 'Manu',
 

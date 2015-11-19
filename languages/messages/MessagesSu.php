@@ -270,16 +270,11 @@ $messages = array(
 'navigation'    => 'Pituduh',
 'and'           => '&#32;jeung',
 
-# Cologne Blue skin
 'qbfind'         => 'Panggihan',
 'qbbrowse'       => 'Sungsi',
-'qbedit'         => 'Édit',
 'qbpageoptions'  => 'Kaca ieu',
 'qbpageinfo'     => 'Kontéks',
-'qbmyoptions'    => 'Kaca kuring',
-'qbspecialpages' => 'Kaca husus',
 'faq'            => 'NLD',
-'faqpage'        => 'Project:NLD',
 
 'actions'                        => 'Peta',
 'namespaces'                     => 'Spasi ngaran',
@@ -303,7 +298,6 @@ $messages = array(
 'edit'              => 'Édit',
 'create'            => 'Jieun',
 'editthispage'      => 'Édit kaca ieu',
-'create-this-page'  => 'Jieun kaca ieu',
 'delete'            => 'Hapus',
 'deletethispage'    => 'Hapus kaca ieu',
 'undelete_short'    => 'Bolaykeun ngahapus {{PLURAL:$1|hiji éditan|$1 éditan}}',
@@ -319,7 +313,6 @@ $messages = array(
 'specialpage'       => 'Kaca Husus',
 'personaltools'     => 'Parabot pribadi',
 'postcomment'       => 'Bagéan anyar',
-'articlepage'       => 'Témbongkeun kaca eusi',
 'talk'              => 'Sawala',
 'views'             => 'Témbongan',
 'toolbox'           => 'Kotak parabot',
@@ -1086,13 +1079,6 @@ Coba susud dimimitian ku ''all:'' pikeun nyusud sakabéh kandunganana (kaasup ka
 'search-external'                  => 'Panéangan luar',
 'searchdisabled'                   => 'Punten! Néangan téks lengkep di {{SITENAME}} kanggo samentawis ditumpurkeun pikeun alesan kinerja. Jalaran kitu, saheulaanan anjeun bisa nyungsi di Google di handap ieu. Catet yén indéxna ngeunaan eusi {{SITENAME}} bisa jadi teu mutahir.',
 
-# Quickbar
-'qbsettings'               => 'Bar gancang',
-'qbsettings-none'          => 'Henteu aya',
-'qbsettings-fixedleft'     => 'Angger beulah kenca',
-'qbsettings-fixedright'    => 'Angger beulah katuhu',
-'qbsettings-floatingleft'  => 'Ngambang ka kenca',
-'qbsettings-floatingright' => 'Ngambang ka katuhu',
 
 # Preferences page
 'preferences'                   => 'Préferénsi',

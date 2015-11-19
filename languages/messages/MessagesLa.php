@@ -285,16 +285,11 @@ $messages = array(
 'navigation'    => 'Navigatio',
 'and'           => '&#32;et',
 
-# Cologne Blue skin
 'qbfind'         => 'Invenire',
 'qbbrowse'       => 'Perspicere',
-'qbedit'         => 'Recensere',
 'qbpageoptions'  => 'Optiones paginae',
 'qbpageinfo'     => 'Contextus',
-'qbmyoptions'    => 'Paginae meae',
-'qbspecialpages' => 'Paginae speciales',
 'faq'            => 'Quaestiones frequentes',
-'faqpage'        => 'Project:Quaestiones frequentes',
 
 'actions'                  => 'Actiones',
 'namespaces'               => 'Spatia nominalia',
@@ -317,7 +312,6 @@ $messages = array(
 'edit'              => 'Recensere',
 'create'            => 'Creare',
 'editthispage'      => 'Recensere hanc paginam',
-'create-this-page'  => 'Creare hanc paginam',
 'delete'            => 'Delere',
 'deletethispage'    => 'Delere hanc paginam',
 'undelete_short'    => 'Restituere {{PLURAL:$1|unam emendationem|$1 emendationes}}',
@@ -333,7 +327,6 @@ $messages = array(
 'specialpage'       => 'Pagina specialis',
 'personaltools'     => 'Instrumenta personalia',
 'postcomment'       => 'Nova pars',
-'articlepage'       => 'Videre rem',
 'talk'              => 'Disputatio',
 'views'             => 'Visae',
 'toolbox'           => 'Arca ferramentorum',
@@ -855,13 +848,6 @@ Conare praefixare tua inquisitionem cum ''all:'' ut quaeras contenta omnia (pagi
 'search-external'                => 'Inquisitio externalis',
 'searchdisabled'                 => 'Per {{grammar:accusative|{{SITENAME}}}} ad tempus non potes quaerere. Interea per [http://www.google.com Googlem] quaeras. Nota indices {{grammar:genitive|{{SITENAME}}}} contentorum apud Googlem fortasse antiquiores esse.',
 
-# Quickbar
-'qbsettings'               => 'Figuratio claustri celeris',
-'qbsettings-none'          => 'Nullus',
-'qbsettings-fixedleft'     => 'Constituere a sinistra',
-'qbsettings-fixedright'    => 'Constituere a dextra',
-'qbsettings-floatingleft'  => 'Innens a sinistra',
-'qbsettings-floatingright' => 'Innens a dextra',
 
 # Preferences page
 'preferences'               => 'Praeferentiae',
@@ -1955,7 +1941,6 @@ Paginae nomen petitum "[[:$1]]" iam existit. Vin tu eam delere ut pagina illic m
 
 # Skin names
 'skinname-standard'    => 'Norma',
-'skinname-cologneblue' => 'Caerulus Colonia',
 
 # Patrolling
 'markaspatrolleddiff' => 'Indicare hanc paginam qua circumita',

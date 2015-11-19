@@ -154,16 +154,11 @@ $messages = array(
 'navigation'    => 'Nabigayson',
 'and'           => '&#32;kag',
 
-# Cologne Blue skin
 'qbfind'         => 'Pangita-on',
 'qbbrowse'       => 'Pangita-on',
-'qbedit'         => 'Ilisan',
 'qbpageoptions'  => 'Mini nga pahina',
 'qbpageinfo'     => 'Konteksto',
-'qbmyoptions'    => 'Akon mga pahina',
-'qbspecialpages' => 'Pinasahi nga mga pahina',
 'faq'            => 'Mga perme napamangkot ("FAQ")',
-'faqpage'        => "Project:Mga perme napamangkot (''FAQ'')",
 
 'actions'                        => 'Mga hulag',
 'namespaces'                     => 'Mga lang-at ngalan',
@@ -187,7 +182,6 @@ $messages = array(
 'edit'              => 'Bag-uhon',
 'create'            => 'Ubrahon',
 'editthispage'      => 'Islan mini nga pahina',
-'create-this-page'  => 'I-ubrahon ang mini nga pahina',
 'delete'            => 'Panason',
 'deletethispage'    => 'Panason ang mini nga pahina',
 'undelete_short'    => 'Suli-on ang pagpanas sang {{PLURAL:$1|isa ka pagbag-o|$1 ka mga pagbag-o}}',
@@ -203,7 +197,6 @@ $messages = array(
 'specialpage'       => 'Pinasahi nga pahina',
 'personaltools'     => 'Mga pangkaugalingon nga galamiton',
 'postcomment'       => 'Bag-o nga seksyon',
-'articlepage'       => 'Ipakita ang pahina sang ka-undan',
 'talk'              => 'Diskusyon',
 'views'             => 'Mga dagway',
 'toolbox'           => 'Mga galamiton',

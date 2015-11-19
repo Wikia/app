@@ -270,16 +270,11 @@ $messages = array(
 'navigation'    => 'گردگ',
 'and'           => '&#32;و',
 
-# Cologne Blue skin
 'qbfind'         => 'درگیزگ',
 'qbbrowse'       => 'بروز',
-'qbedit'         => 'اصلاح',
 'qbpageoptions'  => 'صفحه',
 'qbpageinfo'     => 'متن',
-'qbmyoptions'    => 'منی صفحات',
-'qbspecialpages' => 'حاصین صفحات',
 'faq'            => 'ب.ج.س',
-'faqpage'        => 'Project:ب.ج.س',
 
 'actions'                  => 'کاران',
 'namespaces'               => 'فضانامان',
@@ -302,7 +297,6 @@ $messages = array(
 'edit'              => 'اصلاح',
 'create'            => 'شرکتن',
 'editthispage'      => 'ای صفحه اصلاح کن',
-'create-this-page'  => 'ای صفحه شرکتن کن',
 'delete'            => 'حذف',
 'deletethispage'    => 'ای صفحه حذف کن',
 'undelete_short'    => 'حذف مکن {{PLURAL:$1|one edit|$1 edits}}',
@@ -317,7 +311,6 @@ $messages = array(
 'specialpage'       => 'حاصین صفحه',
 'personaltools'     => 'شخصی وسایل',
 'postcomment'       => 'نوکین بخش',
-'articlepage'       => 'محتوا صفحه به گند',
 'talk'              => 'بحث',
 'views'             => 'چارگان',
 'toolbox'           => 'جعبه ابزار',
@@ -996,13 +989,6 @@ $1",
 شما نونیت بگردیت چه طرق گوگل هم زمان.
 توجه که اندیکس آن {{SITENAME}} محتوا شاید تاریح گوستگین بنت.',
 
-# Quickbar
-'qbsettings'               => 'میله سریع',
-'qbsettings-none'          => 'هچ یک',
-'qbsettings-fixedleft'     => 'چپ ثابت',
-'qbsettings-fixedright'    => 'راست ثابت',
-'qbsettings-floatingleft'  => 'چپ شناور',
-'qbsettings-floatingright' => 'راست شناور',
 
 # Preferences page
 'preferences'                   => 'ترجیحات',
@@ -2409,7 +2395,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => 'کلاسیک',
-'skinname-cologneblue' => 'نیلی کولاجن',
 'skinname-monobook'    => 'منوبوک',
 'skinname-myskin'      => 'منی جلد',
 'skinname-chick'       => 'شیک',

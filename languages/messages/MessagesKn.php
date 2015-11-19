@@ -201,16 +201,11 @@ $messages = array(
 'navigation'    => 'ಸಂಚರಣೆ',
 'and'           => '&#32;ಮತ್ತು',
 
-# Cologne Blue skin
 'qbfind'         => 'ಹುಡುಕು',
 'qbbrowse'       => 'ವಿಹರಿಸು',
-'qbedit'         => 'ಸಂಪಾದಿಸು',
 'qbpageoptions'  => 'ಈ ಪುಟ',
 'qbpageinfo'     => 'ಸನ್ನಿವೇಶ',
-'qbmyoptions'    => 'ನನ್ನ ಪುಟಗಳು',
-'qbspecialpages' => 'ವಿಶೇಷ ಪುಟಗಳು',
 'faq'            => 'ಸಾಮಾನ್ಯವಾಗಿ ಕೇಳಲಾಗುವ ಪ್ರಶ್ನೆಗಳು',
-'faqpage'        => 'Project:ಸಾಮಾನ್ಯವಾಗಿ ಕೇಳಲಾಗುವ ಪ್ರಶ್ನೆಗಳು',
 
 'actions'                        => 'ಕ್ರಿಯೆಗಳು',
 'namespaces'                     => 'ನಾಮವರ್ಗಗಳು',
@@ -234,7 +229,6 @@ $messages = array(
 'edit'              => 'ಸಂಪಾದಿಸಿ',
 'create'            => 'ಸೃಷ್ಟಿಸು',
 'editthispage'      => 'ಈ ಪುಟವನ್ನು ಬದಲಾಯಿಸಿ',
-'create-this-page'  => 'ಈ ಪುಟವನ್ನು ಸೃಷ್ಟಿಸು',
 'delete'            => 'ಅಳಿಸಿ',
 'deletethispage'    => 'ಈ ಪುಟವನ್ನು ಅಳಿಸಿ',
 'undelete_short'    => '{{PLURAL:$1|ಒಂದು ಸಂಪಾದನೆಯ|$1 ಸಂಪಾದನೆಗಳ}} ಅಳಿಸುವಿಕೆಯನ್ನು ತೊಡೆದುಹಾಕು',
@@ -250,7 +244,6 @@ $messages = array(
 'specialpage'       => 'ವಿಶೇಷ ಪುಟ',
 'personaltools'     => 'ವೈಯಕ್ತಿಕ ಉಪಕರಣಗಳು',
 'postcomment'       => 'ಹೊಸ ವಿಭಾಗ',
-'articlepage'       => 'ಲೇಖನ ಪುಟವನ್ನು ವೀಕ್ಷಿಸಿ',
 'talk'              => 'ಚರ್ಚೆ',
 'views'             => 'ನೋಟಗಳು',
 'toolbox'           => 'ಉಪಕರಣ',
@@ -848,10 +841,6 @@ $2',
 ಈ ವೇಳೆಯಲ್ಲಿ ನೀವು ಗೂಗಲ್ ಉಪಯೋಗಿಸಿ ಹುಡುಕಾಟ ನಡೆಸಬಹುದು.
 ಗಮನಿಸಿ: ಅವರ {{SITENAME}} ಮಾಹಿತಿಯು ಪ್ರಸಕ್ತವಾಗಿಲ್ಲದಿರಬಹುದು.',
 
-# Quickbar
-'qbsettings-none'          => 'ಯಾವುದೂ ಇಲ್ಲ',
-'qbsettings-floatingleft'  => 'ಎಡಕ್ಕ ತೇಲುತ್ತಿದೆ',
-'qbsettings-floatingright' => 'ಬಲಕ್ಕೆ ತೇಲುತ್ತಿದೆ',
 
 # Preferences page
 'preferences'                 => 'ಪ್ರಾಶಸ್ತ್ಯಗಳು',

@@ -138,16 +138,11 @@ $messages = array(
 'anontalk'      => 'Discussion avec cette adresse IP',
 'navigation'    => 'Navigation',
 
-# Cologne Blue skin
 'qbfind'         => 'Charcher',
 'qbbrowse'       => 'Regarder',
-'qbedit'         => 'Changer',
 'qbpageoptions'  => 'Page de choix',
 'qbpageinfo'     => "Page d'information",
-'qbmyoptions'    => 'Mes options',
-'qbspecialpages' => 'Pages espéciales',
 'faq'            => 'Questions Communes',
-'faqpage'        => 'Project:Questions Communes',
 
 
 'errorpagetitle'    => 'Erreur',
@@ -180,7 +175,6 @@ $messages = array(
 'specialpage'       => 'Page espéciale',
 'personaltools'     => 'Outils personnels',
 'postcomment'       => 'Nouvelle section',
-'articlepage'       => "Voir l'article",
 'talk'              => 'Discussion',
 'views'             => 'Vues',
 'toolbox'           => "Boëte d'outils",

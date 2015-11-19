@@ -282,16 +282,11 @@ $messages = array(
 'navigation'    => 'మార్గదర్శకం',
 'and'           => '&#32;మరియు',
 
-# Cologne Blue skin
 'qbfind'         => 'వెతుకు',
 'qbbrowse'       => 'విహరించు',
-'qbedit'         => 'సవరించు',
 'qbpageoptions'  => 'ఈ పేజీ',
 'qbpageinfo'     => 'సందర్భం',
-'qbmyoptions'    => 'నా పేజీలు',
-'qbspecialpages' => 'ప్రత్యేక పేజీలు',
 'faq'            => 'తరచూ అడిగే ప్రశ్నలు',
-'faqpage'        => 'Project:తరచూ అడిగే ప్రశ్నలు',
 
 'actions'                        => 'చర్యలు',
 'namespaces'                     => 'నేంస్పేసులు',
@@ -315,7 +310,6 @@ $messages = array(
 'edit'              => 'సవరించు',
 'create'            => 'సృష్టించు',
 'editthispage'      => 'ఈ పేజీని సవరించండి',
-'create-this-page'  => 'ఈ పేజీని సృష్టించండి',
 'delete'            => 'తొలగించు',
 'deletethispage'    => 'ఈ పేజీని తొలగించండి',
 'undelete_short'    => '{{PLURAL:$1|ఒక్క రచనను|$1 రచనలను}} పునఃస్థాపించు',
@@ -331,7 +325,6 @@ $messages = array(
 'specialpage'       => 'ప్రత్యేక పేజీ',
 'personaltools'     => 'వ్యక్తిగత పనిముట్లు',
 'postcomment'       => 'కొత్త విభాగం',
-'articlepage'       => 'విషయపు పేజీని చూడండి',
 'talk'              => 'చర్చ',
 'views'             => 'పేజీ లింకులు',
 'toolbox'           => 'పరికరాలపెట్టె',
@@ -1118,14 +1111,6 @@ $1",
 'search-external'                  => 'బయటి అన్వేషణ',
 'searchdisabled'                   => '{{SITENAME}} అన్వేషణ తాత్కాలికంగా పని చెయ్యడం లేదు. ఈలోగా మీరు గూగుల్‌ ఉపయోగించి అన్వేషించవచ్చు. ఒక గమనిక: గూగుల్‌ ద్వారా కాలదోషం పట్టిన ఫలితాలు రావడానికి అవకాశం ఉంది.',
 
-# Quickbar
-'qbsettings'                => 'క్విక్‌బార్',
-'qbsettings-none'           => 'ఏదీకాదు',
-'qbsettings-fixedleft'      => 'స్థిర ఎడమ',
-'qbsettings-fixedright'     => 'స్థిర కుడి',
-'qbsettings-floatingleft'   => 'ఎడమకు ఒదిగి',
-'qbsettings-floatingright'  => 'కుడికి ఒదిగి',
-'qbsettings-directionality' => 'స్థిరం, మీ లిపి మరియు భాషల యొక్క దిశ ఆధారంగా',
 
 # Preferences page
 'preferences'                   => 'అభిరుచులు',
@@ -2694,7 +2679,6 @@ $UNWATCHURL కి వెళ్ళండి.
 
 # Skin names
 'skinname-standard'    => 'సంప్రదాయ',
-'skinname-cologneblue' => 'కలోన్ నీలం',
 'skinname-monobook'    => 'మోనోబుక్',
 'skinname-myskin'      => 'నాఅలంకారం',
 'skinname-chick'       => 'చిక్',

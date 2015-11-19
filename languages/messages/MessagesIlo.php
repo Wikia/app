@@ -152,16 +152,11 @@ $messages = array(
 'navigation'    => 'Pagdaliasatan',
 'and'           => '&#32;ken',
 
-# Cologne Blue skin
 'qbfind'         => 'Biruken',
 'qbbrowse'       => 'Agbasabasa',
-'qbedit'         => 'Urnosen',
 'qbpageoptions'  => 'Daytoy a panid',
 'qbpageinfo'     => 'Linaon',
-'qbmyoptions'    => 'Pampanidko',
-'qbspecialpages' => 'Espesial a pampanid',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Dagiti aramid',
 'namespaces'                     => 'Nagan ti lug-lugar',
@@ -185,7 +180,6 @@ $messages = array(
 'edit'              => 'Urnosen',
 'create'            => 'Agaramid',
 'editthispage'      => 'Urnosen daytoy a panid',
-'create-this-page'  => 'Aramidem daytoy a panid',
 'delete'            => 'Ikkaten',
 'deletethispage'    => 'Ikkaten daytoy a panid',
 'undelete_short'    => 'Isubli ti naikkat a {{PLURAL:$1|maysa a naurnos|$1 dagiti naurnos}}',
@@ -201,7 +195,6 @@ $messages = array(
 'specialpage'       => 'Espesial a panid',
 'personaltools'     => 'Kinabukod a ram-ramit',
 'postcomment'       => 'Baro a paset',
-'articlepage'       => 'Kitaen ti naglaon a panid',
 'talk'              => 'Pagtungtongan',
 'views'             => 'Dagiti pangkitaan',
 'toolbox'           => 'Ramramit',
@@ -1043,14 +1036,6 @@ Padasem a  pasarunuan ti pinagbiruk mo ti ''all:'' tapno birukem amin a nagyan (
 Mabalin mo ti agbiruk idiay Google tattan.
 Laglagipem laeng a dagiti listaan da a nagyan ti {{SITENAME}} saan a barbaro.',
 
-# Quickbar
-'qbsettings'                => 'Quickbar',
-'qbsettings-none'           => 'Awan',
-'qbsettings-fixedleft'      => 'Agyan latta iti kanigid',
-'qbsettings-fixedright'     => 'Agyan latta iti kanawan',
-'qbsettings-floatingleft'   => 'Tumpaw ti kanigid',
-'qbsettings-floatingright'  => 'Tumpaw ti kanawan',
-'qbsettings-directionality' => 'Nasimpa, gapu laeng ti papanan ti pinagsurat mo ti pagsasaom.',
 
 # Preferences page
 'preferences'                   => 'Kaykayatan',

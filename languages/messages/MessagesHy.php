@@ -412,16 +412,11 @@ $messages = array(
 'navigation'    => 'Շրջել կայքում',
 'and'           => '&#32;և',
 
-# Cologne Blue skin
 'qbfind'         => 'Գտնել',
 'qbbrowse'       => 'Թերթել',
-'qbedit'         => 'Խմբագրել',
 'qbpageoptions'  => 'Այս էջը',
 'qbpageinfo'     => 'Հոդվածի մասին',
-'qbmyoptions'    => 'Իմ էջերը',
-'qbspecialpages' => 'Սպասարկող էջեր',
 'faq'            => 'ՀՏՀ',
-'faqpage'        => 'Project:ՀՏՀ',
 
 'actions'                  => 'Գործողություններ',
 'namespaces'               => 'Անվանատարածքներ',
@@ -445,7 +440,6 @@ $messages = array(
 'edit'              => 'Խմբագրել',
 'create'            => 'Ստեղծել',
 'editthispage'      => 'Խմբագրել այս էջը',
-'create-this-page'  => 'Ստեղծել այս էջը',
 'delete'            => 'Ջնջել',
 'deletethispage'    => 'Ջնջել այս էջը',
 'undelete_short'    => 'Վերականգնել {{PLURAL:$1|մեկ խմբագրում|$1 խմբագրում}}',
@@ -461,7 +455,6 @@ $messages = array(
 'specialpage'       => 'Սպասարկող էջ',
 'personaltools'     => 'Անձնական գործիքներ',
 'postcomment'       => 'Նոր բաժին',
-'articlepage'       => 'Դիտել հոդվածը',
 'talk'              => 'Քննարկում',
 'views'             => 'Դիտումները',
 'toolbox'           => 'Գործիքներ',
@@ -1057,13 +1050,6 @@ $3 մասնակիցը տվել է հետևյալ պատճառը. ''$2''",
 'search-external'                  => 'Արտաքին որոնում',
 'searchdisabled'                   => '{{SITENAME}} կայքի ներքին որոնումը անջատված է։ Դուք կարող եք որոնել կայքի պարունակությունը արտաքին որոնման շարժիչներով (Google, Yahoo...), սակայն, ի նկատի ունեցեք, որ կայքի իրենց ինդեքսները կարող են հնացած լինել։',
 
-# Quickbar
-'qbsettings'               => 'Արագ անցման վահանակ',
-'qbsettings-none'          => 'Չցուցադրել',
-'qbsettings-fixedleft'     => 'Ձախից անշարժ',
-'qbsettings-fixedright'    => 'Աջից անշարժ',
-'qbsettings-floatingleft'  => 'Ձախից լողացող',
-'qbsettings-floatingright' => 'Աջից լողացող',
 
 # Preferences page
 'preferences'                   => 'Նախընտրություններ',
@@ -2151,7 +2137,6 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 
 # Skin names
 'skinname-standard'    => 'Դասական',
-'skinname-cologneblue' => 'Քյոլնի թախիծ',
 'skinname-monobook'    => 'ՄիաԳիրք',
 'skinname-myskin'      => 'ԻմՏեսք',
 'skinname-chick'       => 'Ծիտ',

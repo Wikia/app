@@ -111,12 +111,8 @@ $messages = array(
 'navigation'    => 'Navigaceja',
 'and'           => '&#32;i',
 
-# Cologne Blue skin
 'qbfind'         => 'Mekliešona',
-'qbedit'         => 'Pataiseit',
 'qbpageoptions'  => 'Ita puslopa',
-'qbmyoptions'    => 'Munys puslopys',
-'qbspecialpages' => 'Specialuos puslopys',
 
 'actions'                  => 'Darbeibys',
 'namespaces'               => 'Vuordu pluoti',
@@ -139,7 +135,6 @@ $messages = array(
 'edit'             => 'Pataiseit',
 'create'           => 'Sataiseit',
 'editthispage'     => 'Pataiseit itū puslopu',
-'create-this-page' => 'Sataiseit itū puslopu',
 'delete'           => 'Iztreit',
 'deletethispage'   => 'Iztreit itū puslopu',
 'protect'          => 'Apsorguot',
@@ -152,7 +147,6 @@ $messages = array(
 'specialpage'      => 'Specialuo puslopa',
 'personaltools'    => 'Muni reiki',
 'postcomment'      => 'Dalikt komentaru',
-'articlepage'      => 'Apsavērt rakstīņu',
 'talk'             => 'Sprīža',
 'views'            => 'Vierīņi',
 'toolbox'          => 'Reiki',

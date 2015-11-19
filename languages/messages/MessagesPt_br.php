@@ -453,16 +453,11 @@ $messages = array(
 'navigation' => 'Navegação',
 'and' => '&#32;e',
 
-# Cologne Blue skin
 'qbfind' => 'Procurar',
 'qbbrowse' => 'Navegar',
-'qbedit' => 'Editar',
 'qbpageoptions' => 'Esta página',
 'qbpageinfo' => 'Contexto',
-'qbmyoptions' => 'Minhas páginas',
-'qbspecialpages' => 'Páginas especiais',
 'faq' => 'FAQ',
-'faqpage' => 'Project:FAQ',
 
 'actions' => 'Ações',
 'namespaces' => 'Espaços nominais',
@@ -486,7 +481,6 @@ $messages = array(
 'edit' => 'Editar',
 'create' => 'Criar',
 'editthispage' => 'Editar esta página',
-'create-this-page' => 'Iniciar esta página',
 'delete' => 'Eliminar',
 'deletethispage' => 'Eliminar esta página',
 'undelete_short' => 'Restaurar {{PLURAL:$1|uma edição|$1 edições}}',
@@ -502,7 +496,6 @@ $messages = array(
 'specialpage' => 'Página especial',
 'personaltools' => 'Ferramentas pessoais',
 'postcomment' => 'Nova seção',
-'articlepage' => 'Ver página de conteúdo',
 'talk' => 'Discussão',
 'views' => 'Visualizações',
 'toolbox' => 'Ferramentas',
@@ -1327,14 +1320,6 @@ Tente utilizar o prefixo ''all:'' em sua busca, para pesquisar por todos os cont
 Você poderá pesquisar através do Google enquanto isso.
 Note que os índices do sistema de busca externo poderão conter referências desatualizadas a {{SITENAME}}.',
 
-# Quickbar
-'qbsettings' => 'Configurações da Barra Rápida',
-'qbsettings-none' => 'Nenhuma',
-'qbsettings-fixedleft' => 'Fixo à esquerda',
-'qbsettings-fixedright' => 'Fixo à direita',
-'qbsettings-floatingleft' => 'Flutuando à esquerda',
-'qbsettings-floatingright' => 'Flutuando à direita',
-'qbsettings-directionality' => 'Fixado, dependendo da direcionalidade do seu alfabeto e da sua língua',
 
 # Preferences page
 'preferences' => 'Preferências',
@@ -3005,7 +2990,6 @@ Permite colocar uma justificativa no sumário da edição.',
 # Scripts
 'common.js' => '/* Códigos JavaScript aqui colocados serão carregados por todos aqueles que acessarem alguma página deste wiki */',
 'standard.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Clássico */',
-'cologneblue.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Azul colonial */',
 'monobook.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin MonoBook */',
 'myskin.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin MySkin */',
 'chick.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Chique */',
@@ -3052,7 +3036,6 @@ Tal bloqueio foi provavelmente causado por uma ligação para um ''website'' ext
 
 # Skin names
 'skinname-standard' => 'Clássico',
-'skinname-cologneblue' => 'Azul colonial',
 'skinname-monobook' => 'MonoBook',
 'skinname-myskin' => 'MySkin',
 'skinname-chick' => 'Chique',

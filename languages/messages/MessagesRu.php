@@ -436,16 +436,11 @@ $messages = array(
 'navigation'    => 'Навигация',
 'and'           => '&#32;и',
 
-# Cologne Blue skin
 'qbfind'         => 'Поиск',
 'qbbrowse'       => 'Просмотреть',
-'qbedit'         => 'Править',
 'qbpageoptions'  => 'Настройки страницы',
 'qbpageinfo'     => 'Сведения о странице',
-'qbmyoptions'    => 'Ваши настройки',
-'qbspecialpages' => 'Специальные страницы',
 'faq'            => 'ЧаВО',
-'faqpage'        => 'Project:ЧаВО',
 
 'actions'                        => 'Действия',
 'namespaces'                     => 'Пространства имён',
@@ -469,7 +464,6 @@ $messages = array(
 'edit'              => 'Править',
 'create'            => 'Создать',
 'editthispage'      => 'Править эту страницу',
-'create-this-page'  => 'Создать эту страницу',
 'delete'            => 'Удалить',
 'deletethispage'    => 'Удалить эту страницу',
 'undelete_short'    => 'Восстановить $1 {{PLURAL:$1|правку|правки|правок}}',
@@ -485,7 +479,6 @@ $messages = array(
 'specialpage'       => 'Служебная страница',
 'personaltools'     => 'Личные инструменты',
 'postcomment'       => 'Новый раздел',
-'articlepage'       => 'Просмотреть статью',
 'talk'              => 'Обсуждение',
 'views'             => 'Просмотры',
 'toolbox'           => 'Инструменты',
@@ -1310,14 +1303,6 @@ $1",
 'search-external'                  => 'Внешний поиск',
 'searchdisabled'                   => 'Извините, но встроенный полнотекстовый поиск выключен. Вы можете воспользоваться поиском по сайту через поисковые системы общего назначения, однако имейте в виду, что копия сайта в их кеше может быть несколько устаревшей.',
 
-# Quickbar
-'qbsettings'                => 'Панель навигации',
-'qbsettings-none'           => 'Не показывать',
-'qbsettings-fixedleft'      => 'Неподвижная слева',
-'qbsettings-fixedright'     => 'Неподвижная справа',
-'qbsettings-floatingleft'   => 'Плавающая слева',
-'qbsettings-floatingright'  => 'Плавающая справа',
-'qbsettings-directionality' => 'Закреплённая, в зависимости от направления письменности вашего языка',
 
 # Preferences page
 'preferences'                   => 'Настройки',
@@ -2963,7 +2948,6 @@ $1',
 # Stylesheets
 'common.css'              => '/** Размещённый здесь CSS будет применяться ко всем темам оформления */',
 'standard.css'            => '/* Размещённый здесь CSS будет применяться к теме оформления Standard */',
-'cologneblue.css'         => '/* Размещённый здесь CSS будет применяться к теме оформления Cologne Blue */',
 'monobook.css'            => '/* Размещённый здесь CSS будет применяться к теме оформления Monobook */',
 'myskin.css'              => '/* Размещённый здесь CSS будет применяться к теме оформления MySkin */',
 'chick.css'               => '/* Размещённый здесь CSS будет применяться к теме оформления Chick */',
@@ -2980,7 +2964,6 @@ $1',
 # Scripts
 'common.js'      => '/* Размещённый здесь JavaScript код будет загружаться всем пользователям при обращении к каждой странице */',
 'standard.js'    => '/* Размещённый здесь JavaScript код будет загружаться пользователям использующих тему оформления Standard */',
-'cologneblue.js' => '/* Размещённый здесь JavaScript код будет загружаться пользователям использующих тему оформления Cologne Blue */',
 'monobook.js'    => '/* Размещённый здесь JavaScript код будет загружаться пользователям использующих тему оформления MonoBook */',
 
 # Metadata
@@ -3023,7 +3006,6 @@ The wiki server can't provide data in a format your client can read.",
 
 # Skin names
 'skinname-standard'    => 'Классическое',
-'skinname-cologneblue' => 'Кёльнская тоска',
 'skinname-myskin'      => 'Своё',
 'skinname-chick'       => 'Цыпа',
 'skinname-simple'      => 'Простое',

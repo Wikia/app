@@ -132,11 +132,8 @@ $messages = array(
 'cancel'    => 'لغو',
 'mytalk'    => 'صحبت مو',
 
-# Cologne Blue skin
 'qbfind'  => 'پیدا کردن',
-'qbedit'  => 'اصلاح',
 'faq'     => 'اف ای کیو',
-'faqpage' => 'Project:اف ای کیو',
 
 'errorpagetitle'   => 'خطا',
 'returnto'         => 'بازگشت به $1.',
@@ -159,7 +156,6 @@ $messages = array(
 'specialpage'      => 'صفحه مخصوص',
 'personaltools'    => 'ابزارهای شخصی',
 'postcomment'      => 'ارسال یک توضیح',
-'articlepage'      => 'دیدن صفحه محتوا',
 'talk'             => 'بحث',
 'views'            => 'مشاهدات',
 'toolbox'          => '

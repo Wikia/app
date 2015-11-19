@@ -297,16 +297,11 @@ $messages = array(
 'navigation'    => 'Navigatie',
 'and'           => '&#32;en',
 
-# Cologne Blue skin
 'qbfind'         => 'Zeuke',
 'qbbrowse'       => 'Bladere',
-'qbedit'         => 'Bewirke',
 'qbpageoptions'  => 'Pazjena-opties',
 'qbpageinfo'     => 'Pazjena-informatie',
-'qbmyoptions'    => 'mien opties',
-'qbspecialpages' => "Speciaal pagina's",
 'faq'            => 'FAQ (väölgesjtèlde vraoge)',
-'faqpage'        => 'Project:Väölgestjèlde vraoge',
 
 'actions'                        => 'Hanjeling',
 'namespaces'                     => 'Naamruumdes',
@@ -330,7 +325,6 @@ $messages = array(
 'edit'              => 'Bewèrk',
 'create'            => 'Aanmake',
 'editthispage'      => 'Pagina bewirke',
-'create-this-page'  => 'Dees pagina aanmake',
 'delete'            => 'Wisse',
 'deletethispage'    => 'Wisse',
 'undelete_short'    => '$1 {{PLURAL:$1|bewirking|bewirkinge}} trökzètte',
@@ -346,7 +340,6 @@ $messages = array(
 'specialpage'       => 'Speciaal pagina',
 'personaltools'     => 'Persuunlike hulpmiddele',
 'postcomment'       => 'Nuuj sectie',
-'articlepage'       => 'Artikel',
 'talk'              => 'Euverlègk',
 'views'             => 'Weergave',
 'toolbox'           => 'Gereidsjapskis',
@@ -1139,14 +1132,6 @@ Doe kans ouch 'n naamruumde es veurvoegsel gebroeke.",
 Zoelang as de servers nog neet sjterk genog zunt kins e zeuke bie Google.
 Mèrk op dat hun indexe van {{SITENAME}} content e bietje gedatierd kint zien.',
 
-# Quickbar
-'qbsettings'                => 'Menubalkinsjtèllinge',
-'qbsettings-none'           => 'Oetgesjakeld',
-'qbsettings-fixedleft'      => 'Links vas',
-'qbsettings-fixedright'     => 'Rechts vas',
-'qbsettings-floatingleft'   => 'Links zjwevend',
-'qbsettings-floatingright'  => 'Rechs zjwevend',
-'qbsettings-directionality' => 'Vas, aafhenkelik vanne sjrifrichting van dien sjpraok',
 
 # Preferences page
 'preferences'                   => 'Veurkäöre',
@@ -2798,7 +2783,6 @@ Meistal wörd dit door 'ne zwarte externe link veroorzaak.",
 
 # Skin names
 'skinname-standard'    => 'Standaard',
-'skinname-cologneblue' => 'Keuls blauw',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Markeer es gecontroleerd',

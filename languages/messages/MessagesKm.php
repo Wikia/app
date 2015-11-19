@@ -401,16 +401,11 @@ $messages = array(
 'navigation' => 'ការណែនាំ',
 'and' => '&#32;និង',
 
-# Cologne Blue skin
 'qbfind' => 'ស្វែងរក',
 'qbbrowse' => 'រាវរក',
-'qbedit' => 'កែប្រែ',
 'qbpageoptions' => 'ទំព័រនេះ',
 'qbpageinfo' => 'ព័ត៌មានទំព័រ',
-'qbmyoptions' => 'ទំព័ររបស់ខ្ញុំ',
-'qbspecialpages' => 'ទំព័រពិសេសៗ',
 'faq' => 'សំណួរដែលសួរញឹកញាប់',
-'faqpage' => 'Project:សំណួរដែលសួរញឹកញាប់',
 
 'actions' => 'សកម្មភាព​',
 'namespaces' => 'លំហឈ្មោះ',
@@ -434,7 +429,6 @@ $messages = array(
 'edit' => 'កែប្រែ',
 'create' => 'បង្កើត',
 'editthispage' => 'កែប្រែទំព័រនេះ',
-'create-this-page' => 'បង្កើតទំព័រនេះ',
 'delete' => 'លុបចោល',
 'deletethispage' => 'លុបទំព័រនេះចោល',
 'undelete_short' => 'ឈប់លុប{{PLURAL:$1|កំណែប្រែមួយ|កំណែប្រែចំនួន$1}}វិញ',
@@ -450,7 +444,6 @@ $messages = array(
 'specialpage' => 'ទំព័រពិសេស',
 'personaltools' => 'ឧបករណ៍ផ្ទាល់ខ្លួន',
 'postcomment' => 'ផ្នែកថ្មី',
-'articlepage' => 'មើលខ្លឹមសារទំព័រ​',
 'talk' => 'ការពិភាក្សា',
 'views' => 'គំហើញ',
 'toolbox' => 'ប្រអប់​ឧបករណ៍',
@@ -1267,14 +1260,6 @@ $1",
 ក្នុង​ពេល​ឥឡូវ​នេះ​ អ្នកអាច​ស្វែង​រក​តាម​រយៈ​ Google បាន​។
 សូមចងចាំ​ថា​ លិបិក្រម​នៃ​មាតិការ​របស់​{{SITENAME}} អាចហួស​សម័យ​។​',
 
-# Quickbar
-'qbsettings' => 'របារទាន់ចិត្ត',
-'qbsettings-none' => 'ទទេ',
-'qbsettings-fixedleft' => 'ចុងខាងឆ្វេង',
-'qbsettings-fixedright' => 'ចុងខាងស្តាំ',
-'qbsettings-floatingleft' => 'អណ្តែតឆ្វេង',
-'qbsettings-floatingright' => 'អណ្តែតស្តាំ',
-'qbsettings-directionality' => 'នៅមួយកន្លែង, អាស្រ័យលើទិសដៅសរសេររបស់ភាសារបស់អ្នក',
 
 # Preferences page
 'preferences' => 'ចំណង់ចំណូលចិត្ត',
@@ -2817,7 +2802,6 @@ $1',
 # Stylesheets
 'common.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើគ្រប់សំបកទាំងអស់ */',
 'standard.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក Standard */',
-'cologneblue.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក Cologne Blue */',
 'monobook.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក Monobook */',
 'myskin.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក MySkin */',
 'chick.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក Chick */',
@@ -2859,7 +2843,6 @@ $1',
 
 # Skin names
 'skinname-standard' => 'បុរាណ',
-'skinname-cologneblue' => 'ទឹកអប់ខៀវ',
 'skinname-monobook' => 'សៀវភៅឯក',
 'skinname-myskin' => 'សំបកខ្ញុំ',
 'skinname-chick' => 'កូនមាន់',

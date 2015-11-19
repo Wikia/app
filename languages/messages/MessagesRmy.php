@@ -79,10 +79,7 @@ $messages = array(
 'navigation' => 'Phiripen',
 'and'        => '&#32;thai',
 
-# Cologne Blue skin
-'qbedit'         => 'Editisar',
 'qbpageinfo'     => 'Patrinyake janglimata',
-'qbspecialpages' => 'Uzalutne patrya',
 
 'errorpagetitle'   => 'Dosh',
 'returnto'         => 'Ja palpale kai $1.',
@@ -106,7 +103,6 @@ $messages = array(
 'newpage'          => 'Nevi patrin',
 'specialpage'      => 'Uzalutni patrin',
 'personaltools'    => 'Mire labne',
-'articlepage'      => 'Dikh o lekh',
 'talk'             => 'Vakyarimata',
 'toolbox'          => 'Labnengo moxton',
 'userpage'         => 'Dikh i jeneski patrin',

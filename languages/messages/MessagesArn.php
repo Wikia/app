@@ -105,14 +105,9 @@ $messages = array(
 'navigation'    => 'Miyawün',
 'and'           => '&#32;ka',
 
-# Cologne Blue skin
 'qbfind'         => 'Kintupe',
-'qbedit'         => 'Pepikape',
 'qbpageinfo'     => 'Trokiñdungu',
-'qbmyoptions'    => 'tañi nütramkawe',
-'qbspecialpages' => 'Kangelu',
 'faq'            => 'Rumelfemkelu ramtun',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                  => 'Femün',
 'namespaces'               => 'Üytun ñi wellin',
@@ -135,7 +130,6 @@ $messages = array(
 'edit'              => 'Kümeelün',
 'create'            => 'Dewman',
 'editthispage'      => 'Wirin tüfachi wülngiñ',
-'create-this-page'  => 'Llitun tüfachi pakina',
 'delete'            => 'Liftun',
 'deletethispage'    => 'Ñamümün tüfachi pakina',
 'viewdeleted_short' => 'Pen {{PLURAL:$1|kiñe wirin ñamümgün|$1 wirin ñamümün}}',
@@ -148,7 +142,6 @@ $messages = array(
 'talkpagelinktext'  => 'Nütramkan',
 'specialpage'       => 'Kangelu',
 'personaltools'     => 'Kidungechi küdawpeyüm',
-'articlepage'       => 'Adkintun trokiñdungu wülngiñ',
 'talk'              => 'Nütramkawün',
 'views'             => 'Adngelün',
 'toolbox'           => 'Küdawpeyüm',

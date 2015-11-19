@@ -449,16 +449,11 @@ $messages = array(
 'navigation'    => 'Navigado',
 'and'           => '&#32;kaj',
 
-# Cologne Blue skin
 'qbfind'         => 'Trovi',
 'qbbrowse'       => 'Foliumi',
-'qbedit'         => 'Redakti',
 'qbpageoptions'  => 'Paĝagado',
 'qbpageinfo'     => 'Paĝinformoj',
-'qbmyoptions'    => 'Personaĵoj',
-'qbspecialpages' => 'Specialaj paĝoj',
 'faq'            => 'Oftaj demandoj',
-'faqpage'        => 'Project:Oftaj demandoj',
 
 'actions'                        => 'Agoj',
 'namespaces'                     => 'Nomspacoj',
@@ -482,7 +477,6 @@ $messages = array(
 'edit'              => 'Redakti',
 'create'            => 'Krei',
 'editthispage'      => 'Redakti la paĝon',
-'create-this-page'  => 'Krei ĉi tiun paĝon',
 'delete'            => 'Forigi',
 'deletethispage'    => 'Forigi ĉi tiun paĝon',
 'undelete_short'    => 'Malforigi {{PLURAL:$1|redakton|$1 redaktojn}}',
@@ -498,7 +492,6 @@ $messages = array(
 'specialpage'       => 'Speciala Paĝo',
 'personaltools'     => 'Personaj iloj',
 'postcomment'       => 'Nova sekcio',
-'articlepage'       => 'Rigardi artikolon',
 'talk'              => 'Diskuto',
 'views'             => 'Vidoj',
 'toolbox'           => 'Iloj',
@@ -1319,14 +1312,6 @@ Provu prefiksi vian mendon kun ''all:'' por serĉi ĉiun enhavon (inkluzivante d
 'searchdisabled'                   => '<p>Oni provizore malŝaltis serĉadon per la plenteksta
 indekso pro troŝarĝita servilo. Intertempe, vi povas serĉi per <i>guglo</i> aŭ per <i>jahu!</i>:</p>',
 
-# Quickbar
-'qbsettings'                => 'Preferoj pri ilaro',
-'qbsettings-none'           => 'Neniu',
-'qbsettings-fixedleft'      => 'Fiksiĝas maldekstre',
-'qbsettings-fixedright'     => 'Fiksiĝas dekstre',
-'qbsettings-floatingleft'   => 'Ŝvebas maldekstre',
-'qbsettings-floatingright'  => 'Ŝvebas dekstre',
-'qbsettings-directionality' => 'Fiksita, laŭ la teksto-direkteco de via lingvo',
 
 # Preferences page
 'preferences'                   => 'Preferoj',
@@ -2975,7 +2960,6 @@ Datoj de versioj kaj nomoj de redaktantoj estos preservitaj.
 
 # Skin names
 'skinname-standard'    => 'Klasika',
-'skinname-cologneblue' => 'Kolonja Bluo',
 'skinname-monobook'    => 'Librejo',
 'skinname-chick'       => 'Kokido',
 

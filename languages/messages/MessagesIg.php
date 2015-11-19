@@ -211,16 +211,11 @@ $messages = array(
 'navigation'    => 'Otú Uzọr',
 'and'           => '&#32;ná',
 
-# Cologne Blue skin
 'qbfind'         => 'Tüo',
 'qbbrowse'       => 'Garia',
-'qbedit'         => 'Mèzi',
 'qbpageoptions'  => 'Ihü nka',
 'qbpageinfo'     => 'Abwátà nka',
-'qbmyoptions'    => 'Ihüm',
-'qbspecialpages' => 'Ihü mkpà',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Mmèmé',
 'namespaces'                     => 'Ámááhà',
@@ -244,7 +239,6 @@ $messages = array(
 'edit'              => 'Mèzi',
 'create'            => 'Ké',
 'editthispage'      => 'Rüwa na ihü nka',
-'create-this-page'  => 'Ké ihü nka',
 'delete'            => 'Kàcha',
 'deletethispage'    => 'Kàcha ihü nkea',
 'undelete_short'    => 'A gbakashikwala {{PLURAL:$1|orü otù|$1 orü}}',
@@ -260,7 +254,6 @@ $messages = array(
 'specialpage'       => 'Ihü mkpà',
 'personaltools'     => 'Ngwa nkem',
 'postcomment'       => 'Nkeji ohúrù',
-'articlepage'       => 'Zi ihü iheníle',
 'talk'              => 'Akíkó',
 'views'             => 'Há hụrụ ya olé',
 'toolbox'           => 'Ngwa Oru',
@@ -736,13 +729,6 @@ Nwàné ótù okwu íshí na ihe Í nè tú jí ''háníle:'' Í tuó ihe nílé
 'powersearch-toggleall'            => 'Haníle',
 'powersearch-togglenone'           => 'Efù',
 
-# Quickbar
-'qbsettings'               => 'Mkpọrọ-ȯsȯ-ọsọ',
-'qbsettings-none'          => 'Efù',
-'qbsettings-fixedleft'     => 'Gbado na áká èkpè',
-'qbsettings-fixedright'    => 'Gbado na áká ìkengà',
-'qbsettings-floatingleft'  => 'Ne fé na áká èkpè',
-'qbsettings-floatingright' => 'Ne fé na áká nrí',
 
 # Preferences page
 'preferences'               => 'Otu ha dosẹrẹ ihe',

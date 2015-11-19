@@ -295,16 +295,11 @@ $messages = array(
 'navigation'    => 'ګرځښت',
 'and'           => '&#32;او',
 
-# Cologne Blue skin
 'qbfind'         => 'موندل',
 'qbbrowse'       => 'سپړل',
-'qbedit'         => 'سمول',
 'qbpageoptions'  => 'همدا مخ',
 'qbpageinfo'     => 'متن',
-'qbmyoptions'    => 'زما پاڼې',
-'qbspecialpages' => 'ځانګړي مخونه',
 'faq'            => 'ډ-ځ-پ',
-'faqpage'        => 'Project:ډ-ځ-پ',
 
 'actions'                  => 'کړنې',
 'namespaces'               => 'نوم-تشيالونه',
@@ -327,7 +322,6 @@ $messages = array(
 'edit'              => 'سمول',
 'create'            => 'جوړول',
 'editthispage'      => 'همدا مخ سمول',
-'create-this-page'  => 'همدا مخ ليکل',
 'delete'            => 'ړنګول',
 'deletethispage'    => 'دا مخ ړنګ کړه',
 'undelete_short'    => '{{PLURAL:$1|يو سمون|$1 سمونې}} ناړنګول',
@@ -343,7 +337,6 @@ $messages = array(
 'specialpage'       => 'ځانګړې پاڼه',
 'personaltools'     => 'شخصي اوزار',
 'postcomment'       => 'نوې برخه',
-'articlepage'       => 'د مخ مېنځپانګه ښکاره کول',
 'talk'              => 'خبرې اترې',
 'views'             => 'کتنې',
 'toolbox'           => 'اوزاربکس',
@@ -943,13 +936,6 @@ $1',
 'powersearch-togglenone'           => 'هېڅ',
 'search-external'                  => 'باندنۍ پلټنه',
 
-# Quickbar
-'qbsettings'               => 'چټک پټه',
-'qbsettings-none'          => 'هېڅ',
-'qbsettings-fixedleft'     => 'ثابته کيڼ',
-'qbsettings-fixedright'    => 'ثابته ښي',
-'qbsettings-floatingleft'  => 'کيڼه لامبا',
-'qbsettings-floatingright' => 'ښي لامبا',
 
 # Preferences page
 'preferences'                   => 'غوره توبونه',
@@ -2033,7 +2019,6 @@ $UNWATCHURL  نه ليدنه وکړۍ
 
 # Skin names
 'skinname-standard'    => 'کلاسيک',
-'skinname-cologneblue' => 'شين کلون',
 'skinname-monobook'    => 'مونوبوک',
 'skinname-myskin'      => 'زمابڼه',
 'skinname-chick'       => 'شيک',

@@ -181,16 +181,11 @@ $messages = array(
 'navigation'    => 'Juhtminõ',
 'and'           => '&#32;ja',
 
-# Cologne Blue skin
 'qbfind'         => 'Otsiq',
 'qbbrowse'       => 'Kaeq',
-'qbedit'         => 'Toimõndaq',
 'qbpageoptions'  => 'Leheküle säädmine',
 'qbpageinfo'     => 'Leheküle teedüs',
-'qbmyoptions'    => 'Mu säädmiseq',
-'qbspecialpages' => 'Tallitusleheküleq',
 'faq'            => 'Sagõhõhe küsüdüq küsümiseq',
-'faqpage'        => 'Project:KKK',
 
 'actions'                        => 'Tallitusõq',
 'namespaces'                     => 'Nimeruumiq',
@@ -214,7 +209,6 @@ $messages = array(
 'edit'              => 'Toimõndaq',
 'create'            => 'Luuq leht',
 'editthispage'      => 'Toimõndaq seod artiklit',
-'create-this-page'  => 'Luuq seo leht',
 'delete'            => 'Kistudaq ärq',
 'deletethispage'    => 'Kistudaq seo artikli ärq',
 'undelete_short'    => 'Võtaq tagasi {{PLURAL:$1|üts muutminõ|$1 muutmist}}',
@@ -230,7 +224,6 @@ $messages = array(
 'specialpage'       => 'Tallituslehekülg',
 'personaltools'     => 'Erätüüriistaq',
 'postcomment'       => 'Vahtsõnõ alajago',
-'articlepage'       => 'Artiklilehekülg',
 'talk'              => 'Arotus',
 'views'             => 'Kaemisõq',
 'toolbox'           => 'Tüüriistakast',
@@ -802,13 +795,6 @@ otsisõna iin edejakku ''all:''. Ütest kimmäst nimeruumist otsmisõs pruugiq e
 'search-external'                  => 'Väline otsminõ',
 'searchdisabled'                   => "{{SITENAME}} otsminõ parhillaq ei tüütäq. Niikavva, ku otsminõ jälq tüüle saa, võit pruukiq otsmisõs alanolõvat Google'i otsikasti, a näide teedüs {{SITENAME}} sisust pruugi-i ollaq alasi kõgõ värskimb.",
 
-# Quickbar
-'qbsettings'               => 'Kipõriba säädmine',
-'qbsettings-none'          => 'Olõ-i',
-'qbsettings-fixedleft'     => 'Kõgõ kural puul',
-'qbsettings-fixedright'    => 'Kõgõ hüäl puul',
-'qbsettings-floatingleft'  => 'Ujovahe kural puul',
-'qbsettings-floatingright' => 'Ujovahe hüäl puul',
 
 # Preferences page
 'preferences'               => 'Säädmine',
@@ -1810,7 +1796,6 @@ Kokkovõttõria pääle või kirotaq tagasivõtmisõ põhjusõ.',
 
 # Skin names
 'skinname-standard'    => 'Array',
-'skinname-cologneblue' => 'Array',
 'skinname-myskin'      => 'Array',
 
 # Patrolling

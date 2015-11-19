@@ -193,16 +193,11 @@ $messages = array(
 'navigation'    => 'Paglayag',
 'and'           => '&#32;ngan',
 
-# Cologne Blue skin
 'qbfind'         => 'Bilnga',
 'qbbrowse'       => 'Igdalikyat',
-'qbedit'         => 'Igliwat',
 'qbpageoptions'  => 'Ini nga pakli',
 'qbpageinfo'     => 'Kontexto',
-'qbmyoptions'    => 'Akon mga pakli',
-'qbspecialpages' => 'Mga pinaurog nga pakli',
 'faq'            => 'AGG',
-'faqpage'        => 'Project:AGG',
 
 'actions'                  => 'Mga buhat',
 'namespaces'               => "Mga ngaran-lat'ang",
@@ -226,7 +221,6 @@ $messages = array(
 'edit'              => 'Igliwat',
 'create'            => 'Himo-a',
 'editthispage'      => 'Igliwat ini nga pakli',
-'create-this-page'  => 'Himo-a ini nga pakli',
 'delete'            => 'Para-a',
 'deletethispage'    => 'Para-a ini nga pakli',
 'undelete_short'    => 'Igkansela an pagpara {{PLURAL:$1|usa nga pagliwat|$1 nga mga pagliwat}}',
@@ -242,7 +236,6 @@ $messages = array(
 'specialpage'       => 'Ispisyal nga Pakli',
 'personaltools'     => 'Kalugaringon nga mga garamiton',
 'postcomment'       => 'Bag-o nga bahin',
-'articlepage'       => 'Kitaa in may sulod nga pakli',
 'talk'              => 'Hiruhimangraw',
 'views'             => 'Mga paglantaw',
 'toolbox'           => 'Garamiton',
@@ -682,12 +675,6 @@ Leyenda: '''({{int:cur}})''' = kaibhan ha giuurhii nga pag-bag-o, '''({{int:last
 'powersearch-togglenone'           => 'Waray',
 'search-external'                  => 'Gawas nga pamiling',
 
-# Quickbar
-'qbsettings-none'          => 'Waray',
-'qbsettings-fixedleft'     => 'Ginayad an wala',
-'qbsettings-fixedright'    => 'Gin-ayad an to-o',
-'qbsettings-floatingleft'  => 'Nalutaw pawala',
-'qbsettings-floatingright' => 'Nalutaw pato-o',
 
 # Preferences page
 'preferences'               => 'Mga karuyag',

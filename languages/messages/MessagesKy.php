@@ -85,11 +85,8 @@ $messages = array(
 'navigation' => 'Багыттоо',
 'and'        => '&#32;жана',
 
-# Cologne Blue skin
-'qbedit'        => 'Оңдоо',
 'qbpageoptions' => 'Бул барак',
 'qbpageinfo'    => 'Контекст',
-'qbmyoptions'   => 'Барактарым',
 'faq'           => 'КБС',
 
 'actions'                  => 'Аракеттер',

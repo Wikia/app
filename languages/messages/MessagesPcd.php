@@ -134,16 +134,11 @@ $messages = array(
 'navigation'    => 'Navigachon',
 'and'           => '&#32;pi',
 
-# Cologne Blue skin
 'qbfind'         => 'Trouvoèr',
 'qbbrowse'       => 'Trifouille',
-'qbedit'         => 'Editer',
 'qbpageoptions'  => 'Chol pache-lo',
 'qbpageinfo'     => 'Conteske',
-'qbmyoptions'    => 'Mes paches',
-'qbspecialpages' => 'Espéciales paches',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Acchons',
 'namespaces'                     => "Éspaces d'chés noms",
@@ -167,7 +162,6 @@ $messages = array(
 'edit'              => 'Éditer',
 'create'            => 'Créer',
 'editthispage'      => "Éditer chl'pache-lo",
-'create-this-page'  => "Créer chl'pache lo",
 'delete'            => 'Défacer',
 'deletethispage'    => "Défacer chl'pache lo",
 'undelete_short'    => 'Déface poin {{PLURAL:$1|un édite|$1 édites}}',
@@ -183,7 +177,6 @@ $messages = array(
 'specialpage'       => 'Pache éspéchiale',
 'personaltools'     => 'Otis dech uzeu',
 'postcomment'       => 'Nouvèle sekchion',
-'articlepage'       => 'Vir el pache ed ches étnus',
 'talk'              => 'distchuter',
 'views'             => 'Vues',
 'toolbox'           => 'Boéte à otis',

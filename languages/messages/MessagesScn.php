@@ -277,16 +277,11 @@ $messages = array(
 'navigation'    => 'Navigazzioni',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Attrova',
 'qbbrowse'       => 'Sfogghia',
-'qbedit'         => 'Cancia',
 'qbpageoptions'  => 'Opzioni pàggina',
 'qbpageinfo'     => 'Nfurmazzioni supra la pàggina',
-'qbmyoptions'    => 'Li mè pàggini',
-'qbspecialpages' => 'Pàggini spiciali',
 'faq'            => 'Dumanni cumuni',
-'faqpage'        => 'Project:Dumanni comuni',
 
 'actions'                        => 'Azzioni',
 'namespaces'                     => 'Namespace',
@@ -310,7 +305,6 @@ $messages = array(
 'edit'              => 'cancia',
 'create'            => 'Crea',
 'editthispage'      => 'Cancia sta pàggina',
-'create-this-page'  => 'Crea sta pàggina',
 'delete'            => 'elìmina',
 'deletethispage'    => 'Elìmina sta pàggina',
 'undelete_short'    => 'Ricùpira {{PLURAL:$1|na rivisioni|$1 rivisioni}}',
@@ -325,7 +319,6 @@ $messages = array(
 'specialpage'       => 'Pàggina spiciali',
 'personaltools'     => 'Strumenta pirsunali',
 'postcomment'       => 'Nova sizzioni',
-'articlepage'       => 'artìculu',
 'talk'              => 'discussioni',
 'views'             => 'Vìsiti',
 'toolbox'           => 'Strummenta',
@@ -998,13 +991,6 @@ S'havi accirtari ca la cuntinuità storica di la pàggina nun veni altirata.",
 'search-external'                  => 'Ricerca sterna',
 'searchdisabled'                   => 'La circata nterna di {{SITENAME}} hà statu disabbilitata. Nta stu mentri, poi usari la circata supra Google o supra àutri muturi di circata. Accura ca li sò ìnnici dê cuntinuti di {{SITENAME}} ponnu nun èssiri aggiurnati.',
 
-# Quickbar
-'qbsettings'               => 'Pusizzioni QuickBar',
-'qbsettings-none'          => 'Nuddu',
-'qbsettings-fixedleft'     => 'Fissu a manu manca',
-'qbsettings-fixedright'    => 'Fissu a manu dritta',
-'qbsettings-floatingleft'  => 'Fluttuanti a manu manca',
-'qbsettings-floatingright' => 'Fluttuanti a manu dritta',
 
 # Preferences page
 'preferences'                   => 'prifirenzi',
@@ -2362,7 +2348,6 @@ Visita [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] e [//trans
 
 # Skin names
 'skinname-standard'    => 'Classicu',
-'skinname-cologneblue' => 'Cologne Blu',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
 'skinname-chick'       => 'Chick',

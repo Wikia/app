@@ -84,12 +84,8 @@ $messages = array(
 'navigation'    => 'Navigatione',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Trova',
-'qbedit'         => 'Modifika',
 'qbpageoptions'  => 'Disi pagine',
-'qbmyoptions'    => 'Men pagines',
-'qbspecialpages' => 'Spesial pagines',
 
 
 'returnto'         => 'Rivada a $1.',
@@ -114,7 +110,6 @@ $messages = array(
 'talkpage'         => 'Diskuse disi pagine',
 'talkpagelinktext' => 'Diskusione',
 'specialpage'      => 'Spesial Pagine',
-'articlepage'      => 'Regarda pagine de kontenaje',
 'talk'             => 'Diskusione',
 'toolbox'          => 'Utensiles',
 'userpage'         => 'Vida useren pagine',

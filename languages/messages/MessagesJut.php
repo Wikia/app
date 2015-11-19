@@ -132,16 +132,11 @@ $messages = array(
 'navigation'    => 'Navigasje',
 'and'           => '&#32;og',
 
-# Cologne Blue skin
 'qbfind'         => 'Søĝ',
 'qbbrowse'       => 'Gennemse',
-'qbedit'         => 'Redigær',
 'qbpageoptions'  => 'Endstellenger før side',
 'qbpageinfo'     => "Informåsje side'm",
-'qbmyoptions'    => 'Miine endstellenger',
-'qbspecialpages' => 'Sonst sider',
 'faq'            => 'VSF',
-'faqpage'        => 'Project:Vøl stellen fråĝer (VSF)',
 
 'errorpagetitle'    => 'Fejl',
 'returnto'          => 'Tilbage til $1.',
@@ -160,7 +155,6 @@ $messages = array(
 'edit'              => 'Redigær',
 'create'            => 'Skep',
 'editthispage'      => 'Redigær side',
-'create-this-page'  => 'Skep denne side',
 'delete'            => 'Slet',
 'deletethispage'    => 'Slet side',
 'undelete_short'    => 'Førtryd sletnenge åf {{PLURAL:$1|$1 versje|$1 versje}}',
@@ -175,7 +169,6 @@ $messages = array(
 'specialpage'       => 'Sonst side',
 'personaltools'     => "Personlige værktø'r",
 'postcomment'       => 'Tilføj en biskrevselenger',
-'articlepage'       => "Se'n ertikel",
 'talk'              => 'Diskusje',
 'views'             => 'Vesnenger',
 'toolbox'           => "Værktø'r",

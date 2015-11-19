@@ -139,14 +139,10 @@ $messages = array(
 'navigation'    => 'Nabegasion',
 'and'           => '&#32;yan',
 
-# Cologne Blue skin
 'qbfind'         => "Sodda'",
 'qbbrowse'       => 'Atan',
-'qbedit'         => 'Tulaika',
 'qbpageoptions'  => 'Este na pahina',
 'qbpageinfo'     => 'Kontekstu',
-'qbmyoptions'    => 'Påhina-hu siha',
-'qbspecialpages' => 'Manespesiat na påhina',
 
 'errorpagetitle'    => 'Linachi',
 'returnto'          => 'Hånao tåtte para $1.',
@@ -165,7 +161,6 @@ $messages = array(
 'edit'              => 'Tulaika',
 'create'            => "Fa'tinas",
 'editthispage'      => 'Tulaika i påhina',
-'create-this-page'  => "Fa'tinas i påhina",
 'delete'            => "Na'suha",
 'deletethispage'    => "Na'suha i påhina",
 'undelete_short'    => "Po'lo tåtte {{PLURAL:$1|unu na tinilaika|$1 na tinilaika siha}}",
@@ -180,7 +175,6 @@ $messages = array(
 'specialpage'       => 'Påhina espesiat',
 'personaltools'     => 'Ramientan petsonat',
 'postcomment'       => "Fa'tinas un komentu",
-'articlepage'       => 'Atan i guinaha i påhina',
 'talk'              => 'Diskuti',
 'views'             => "Mali'e'-ña",
 'toolbox'           => 'Kåhon ramienta',
@@ -662,12 +656,6 @@ Fanapunta na para u na'nuebu i kolumna anggen un usa i inachetton nabegasion.",
 Siña hao manaligao gi Google gi entretanto.
 Fanapunta na fana'an ti gus nuebu i listan-ñiha i guinahan {{SITENAME}}.",
 
-# Quickbar
-'qbsettings-none'          => "Tåya'",
-'qbsettings-fixedleft'     => 'Maplanta gi akague',
-'qbsettings-fixedright'    => "Maplanta gi agapa'",
-'qbsettings-floatingleft'  => "Mamå'ya gi akague",
-'qbsettings-floatingright' => "Mamå'ya gi agapa'",
 
 # Preferences page
 'preferences'               => "I ga'ña-mu",

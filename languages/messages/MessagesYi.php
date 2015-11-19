@@ -319,16 +319,11 @@ $messages = array(
 'navigation'    => 'נאַוויגאַציע',
 'and'           => '&#32;און',
 
-# Cologne Blue skin
 'qbfind'         => 'טרעף',
 'qbbrowse'       => 'בלעטערט',
-'qbedit'         => 'ענדערן',
 'qbpageoptions'  => 'דער בלאט',
 'qbpageinfo'     => 'קאנטעקסט',
-'qbmyoptions'    => 'מיינע בלעטער',
-'qbspecialpages' => 'ספעציעלע בלעטער',
 'faq'            => 'מערסטע געפרעגטע פראגעס',
-'faqpage'        => 'Project:מערסטע געפרעגט פראגעס',
 
 'actions'                        => 'אַקציעס',
 'namespaces'                     => 'נאָמענטיילן',
@@ -352,7 +347,6 @@ $messages = array(
 'edit'              => 'רעדאַקטירן',
 'create'            => 'שאַפֿן',
 'editthispage'      => 'ענדערן דעם בלאט',
-'create-this-page'  => 'שאַפֿן דעם בלאַט',
 'delete'            => 'אויסמעקן',
 'deletethispage'    => 'אויסמעקן דעם בלאַט',
 'undelete_short'    => 'צוריקשטעלן {{PLURAL:$1|איין רעדאַקטירונג|$1 רעדאַקטירונגען}}',
@@ -368,7 +362,6 @@ $messages = array(
 'specialpage'       => 'ספעציעלער בלאט',
 'personaltools'     => 'פערזענלעכע געצייג',
 'postcomment'       => 'נייע אפטיילונג',
-'articlepage'       => 'זען אינהאַלט בלאַט',
 'talk'              => 'שמועס',
 'views'             => 'קוקן',
 'toolbox'           => 'געצייג קאסטן',
@@ -1189,14 +1182,6 @@ $1",
 צווישנצײַט קענט איר זוכן מיט גוגל.
 געב אכט אז ס'איז מעגלעך אַז זייער אינדעקס פֿון {{SITENAME}} אינהאַלט איז אפשר פֿאַרעלטערט.",
 
-# Quickbar
-'qbsettings'                => 'גיכפאַס',
-'qbsettings-none'           => 'גארנישט',
-'qbsettings-fixedleft'      => 'קבוע לינקס',
-'qbsettings-fixedright'     => 'קבוע רעכטס',
-'qbsettings-floatingleft'   => 'שווימנדיג לינקס',
-'qbsettings-floatingright'  => 'שווימנדיג רעכטס',
-'qbsettings-directionality' => 'פֿעסט, אפהענגיק אויף דער שריפֿט ריכטונג פֿון אײַער שפראַך.',
 
 # Preferences page
 'preferences'                   => 'פרעפֿערענצן',

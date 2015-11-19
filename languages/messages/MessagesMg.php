@@ -357,16 +357,11 @@ $messages = array(
 'navigation'    => 'Fikarohana',
 'and'           => '&#32;sy',
 
-# Cologne Blue skin
 'qbfind'         => 'Tadiavina',
 'qbbrowse'       => 'Tadiavina',
-'qbedit'         => 'Hanova',
 'qbpageoptions'  => 'Ity pejy ity',
 'qbpageinfo'     => 'Pejy fanoroana',
-'qbmyoptions'    => 'Ny pejiko',
-'qbspecialpages' => 'Pejy manokana',
 'faq'            => 'FMM',
-'faqpage'        => 'Project:FMM',
 
 'actions'                        => 'Tao',
 'namespaces'                     => 'Valam-pejy',
@@ -390,7 +385,6 @@ $messages = array(
 'edit'              => 'Ovaina',
 'create'            => 'Amboarina',
 'editthispage'      => 'Hanova ity pejy ity',
-'create-this-page'  => 'Forony ity pejy ity',
 'delete'            => 'Hamafa',
 'deletethispage'    => 'Fafao ity pejy ity',
 'undelete_short'    => 'Famerenana fanovana {{PLURAL:$1|$1|$1}}',
@@ -406,7 +400,6 @@ $messages = array(
 'specialpage'       => 'Pejy manokana',
 'personaltools'     => 'Fitaovana manokana',
 'postcomment'       => 'Hametraka fanamarihana',
-'articlepage'       => "Hijery ny votoatin'ny pejy",
 'talk'              => 'dinika',
 'views'             => 'Fijerena',
 'toolbox'           => 'Fitaovana',
@@ -1212,13 +1205,6 @@ ihany no miseho amin'ny vokatry ny karoka).",
 'search-external'                  => 'Hikaroka any ivelany',
 'searchdisabled'                   => "Tsy nalefa ny karoka eto amin'i {{SITENAME}}. Afaka mampiasa an'i Google aloha ianao mandra-paha. Nefa fantaro fa mety ho efa lany daty ny valiny omeny.",
 
-# Quickbar
-'qbsettings'               => 'Tsipika fiasàna',
-'qbsettings-none'          => 'Tsy misy',
-'qbsettings-fixedleft'     => 'Ankavia',
-'qbsettings-fixedright'    => 'Ankavanana',
-'qbsettings-floatingleft'  => 'Mitsingevaheva any ankavanana',
-'qbsettings-floatingright' => 'Mitsigevaheva any ankavanana',
 
 # Preferences page
 'preferences'                   => 'Ny momba anao',

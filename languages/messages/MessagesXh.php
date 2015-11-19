@@ -46,8 +46,6 @@ $messages = array(
 'mypage'  => 'Inqaku yam',
 'mytalk'  => 'Inthetho yam',
 
-# Cologne Blue skin
-'qbspecialpages' => 'Amaphepha Abalulekileyo',
 
 
 'help'             => 'Uncedo',

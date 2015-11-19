@@ -261,16 +261,11 @@ $messages = array(
 'navigation'    => 'بگردستن',
 'and'           => '&#32;و',
 
-# Cologne Blue skin
 'qbfind'         => 'پیدا هکردن',
 'qbbrowse'       => 'چأرخه‌سه‌ن',
-'qbedit'         => 'دچی‌ین',
 'qbpageoptions'  => 'این صفحه',
 'qbpageinfo'     => 'بافت',
-'qbmyoptions'    => 'مه صفحه‌ئون',
-'qbspecialpages' => 'شا صفحه‌ئون',
 'faq'            => 'معمولی سوالا',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'عملکاردون',
 'namespaces'                     => 'ایسم فضائون',
@@ -294,7 +289,6 @@ $messages = array(
 'edit'              => 'دچی‌ین',
 'create'            => 'بساتن',
 'editthispage'      => 'این صفحه ره دچی‌ین',
-'create-this-page'  => 'این صفحه ره شِما بساجین',
 'delete'            => 'پاک هاکردن',
 'deletethispage'    => 'این صفحه ره پاک هاکردن',
 'undelete_short'    => 'احیای {{PLURAL:$1|ات دچی‌یه|$1 دچی‌یه}}',
@@ -310,7 +304,6 @@ $messages = array(
 'specialpage'       => 'شا صفحه',
 'personaltools'     => 'مه‌شه ابزار',
 'postcomment'       => 'نو تیکه',
-'articlepage'       => 'نمایش صفحه',
 'talk'              => 'گپ',
 'views'             => 'هارشی‌ئون',
 'toolbox'           => 'أبـزار جـا',

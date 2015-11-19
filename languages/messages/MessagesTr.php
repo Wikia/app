@@ -453,16 +453,11 @@ $messages = array(
 'navigation'    => 'Gezinti',
 'and'           => '&#32;ve',
 
-# Cologne Blue skin
 'qbfind'         => 'Bul',
 'qbbrowse'       => 'Tara',
-'qbedit'         => 'Değiştir',
 'qbpageoptions'  => 'Bu sayfa',
 'qbpageinfo'     => 'Bağlam',
-'qbmyoptions'    => 'Sayfalarım',
-'qbspecialpages' => 'Özel sayfalar',
 'faq'            => 'SSS',
-'faqpage'        => 'Project:SSS',
 
 'actions'                        => 'Eylemler',
 'namespaces'                     => 'Ad alanları',
@@ -486,7 +481,6 @@ $messages = array(
 'edit'              => 'Düzenle',
 'create'            => 'Oluştur',
 'editthispage'      => 'Bu sayfayı değiştir',
-'create-this-page'  => 'Bu sayfayı oluştur',
 'delete'            => 'sil',
 'deletethispage'    => 'Sayfayı sil',
 'undelete_short'    => '{{PLURAL:$1|değişikliği|$1 değişiklikleri}} geri getir',
@@ -502,7 +496,6 @@ $messages = array(
 'specialpage'       => 'Özel sayfa',
 'personaltools'     => 'Kişisel araçlar',
 'postcomment'       => 'Yeni bölüm',
-'articlepage'       => 'İçerik sayfasını gör',
 'talk'              => 'Tartışma',
 'views'             => 'Görünümler',
 'toolbox'           => 'Araçlar',
@@ -1307,14 +1300,6 @@ Aramanızın başına '''all:''' önekini ekleyerek tüm içeriği aramayı (tar
 'search-external'                  => 'Dış arama',
 'searchdisabled'                   => '{{SITENAME}} sitesinde arama yapma geçici olarak durdurulmuştur. Bu arada Google kullanarak {{SITENAME}} içinde arama yapabilirsiniz. Arama sitelerinde indekslemelerinin biraz eski kalmış olabileceğini göz önünde bulundurunuz.',
 
-# Quickbar
-'qbsettings'                => 'Hızlı erişim sütun ayarları',
-'qbsettings-none'           => 'Hiçbiri',
-'qbsettings-fixedleft'      => 'Sola sabitlendi',
-'qbsettings-fixedright'     => 'Sağa sabitlendi',
-'qbsettings-floatingleft'   => 'Sola yaslanıyor',
-'qbsettings-floatingright'  => 'Sağa yaslanıyor',
-'qbsettings-directionality' => 'Sabit, dilinizin komut dosyasının yönüne bağlı',
 
 # Preferences page
 'preferences'                   => 'Tercihler',

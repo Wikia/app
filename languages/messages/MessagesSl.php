@@ -323,16 +323,11 @@ $messages = array(
 'navigation'    => 'Navigacija',
 'and'           => '&#32;in',
 
-# Cologne Blue skin
 'qbfind'         => 'Poišči',
 'qbbrowse'       => 'Prebrskaj',
-'qbedit'         => 'Uredi',
 'qbpageoptions'  => 'Možnosti strani',
 'qbpageinfo'     => 'Podatki o strani',
-'qbmyoptions'    => 'Moje možnosti',
-'qbspecialpages' => 'Posebne strani',
 'faq'            => 'Najpogostejša vprašanja',
-'faqpage'        => 'Project:Najpogostejša vprašanja',
 
 'actions'                        => 'Dejanja',
 'namespaces'                     => 'Imenski prostori',
@@ -356,7 +351,6 @@ $messages = array(
 'edit'              => 'Uredi stran',
 'create'            => 'Ustvari',
 'editthispage'      => 'Uredi stran',
-'create-this-page'  => 'Ustvari to stran',
 'delete'            => 'Briši',
 'deletethispage'    => 'Briši stran',
 'undelete_short'    => 'Vrni $1 {{PLURAL:$1|izbrisano urejanje|izbrisani urejanji|izbrisana urejanja|izbrisanih urejanj|izbrisanih urejanj}}',
@@ -372,7 +366,6 @@ $messages = array(
 'specialpage'       => 'Posebna stran',
 'personaltools'     => 'Osebna orodja',
 'postcomment'       => 'Nov razdelek',
-'articlepage'       => 'Prikaže članek',
 'talk'              => 'Pogovor',
 'views'             => 'Pogled',
 'toolbox'           => 'Pripomočki',
@@ -1203,14 +1196,6 @@ Upoštevajte, da bo uporaba navigacijskih gumbov ponastavila ta stolpec.',
 Medtem lahko iščete preko Googla.
 Upoštevajte, da so njihovi podatki vsebine {{GRAMMAR:rodilnik|{{SITENAME}}}} morda zastareli.',
 
-# Quickbar
-'qbsettings'                => 'Nastavitve hitre vrstice',
-'qbsettings-none'           => 'Brez',
-'qbsettings-fixedleft'      => 'Levo nepomično',
-'qbsettings-fixedright'     => 'Desno nepomično',
-'qbsettings-floatingleft'   => 'Levo leteče',
-'qbsettings-floatingright'  => 'Desno leteče',
-'qbsettings-directionality' => 'Stalno, odvisno od usmerjenosti pisave vašega jezika',
 
 # Preferences page
 'preferences'                   => 'Nastavitve',

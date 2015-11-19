@@ -328,16 +328,11 @@ $messages = array(
 'navigation'    => 'Navegació',
 'and'           => '&#32;i',
 
-# Cologne Blue skin
 'qbfind'         => 'Cerca',
 'qbbrowse'       => 'Navega',
-'qbedit'         => 'Modifica',
 'qbpageoptions'  => 'Opcions de pàgina',
 'qbpageinfo'     => 'Informació de pàgina',
-'qbmyoptions'    => 'Pàgines pròpies',
-'qbspecialpages' => 'Pàgines especials',
 'faq'            => 'PMF',
-'faqpage'        => 'Project:PMF',
 
 'actions'                        => 'Accions',
 'namespaces'                     => 'Espais de noms',
@@ -361,7 +356,6 @@ $messages = array(
 'edit'              => 'Modifica',
 'create'            => 'Crea',
 'editthispage'      => 'Modifica la pàgina',
-'create-this-page'  => 'Crea aquesta pàgina',
 'delete'            => 'Elimina',
 'deletethispage'    => 'Elimina la pàgina',
 'undelete_short'    => "Restaura {{PLURAL:$1|l'edició eliminada|$1 edicions eliminades}}",
@@ -377,7 +371,6 @@ $messages = array(
 'specialpage'       => 'Pàgina especial',
 'personaltools'     => "Eines de l'usuari",
 'postcomment'       => 'Nova secció',
-'articlepage'       => 'Mostra la pàgina',
 'talk'              => 'Discussió',
 'views'             => 'Vistes',
 'toolbox'           => 'Eines',
@@ -1177,14 +1170,6 @@ Assegureu-vos que aquest canvi mantindrà la continuïtat històrica de la pàgi
 'search-external'                  => 'Cerca externa',
 'searchdisabled'                   => 'La cerca dins el projecte {{SITENAME}} està inhabilitada. Mentrestant, podeu cercar a través de Google, però tingueu en compte que la seua base de dades no estarà actualitzada.',
 
-# Quickbar
-'qbsettings'                => 'Quickbar',
-'qbsettings-none'           => 'Cap',
-'qbsettings-fixedleft'      => "Fixa a l'esquerra",
-'qbsettings-fixedright'     => 'Fixa a la dreta',
-'qbsettings-floatingleft'   => "Surant a l'esquerra",
-'qbsettings-floatingright'  => 'Surant a la dreta',
-'qbsettings-directionality' => "Fix, segons la direcció d'escriptura del vostre idioma",
 
 # Preferences page
 'preferences'                   => 'Preferències',
@@ -2859,7 +2844,6 @@ Això deu ser degut per un enllaç a un lloc extern inclòs a la llista negra.',
 
 # Skin names
 'skinname-standard'    => 'Clàssic',
-'skinname-cologneblue' => 'Colònia blava',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marca com a supervisat',

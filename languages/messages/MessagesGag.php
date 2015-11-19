@@ -214,16 +214,11 @@ $messages = array(
 'navigation'    => 'Saytda yol bulmaa',
 'and'           => '&#32;hem',
 
-# Cologne Blue skin
 'qbfind'         => 'Bul',
 'qbbrowse'       => 'Taramaa',
-'qbedit'         => 'Diiştir',
 'qbpageoptions'  => 'Bu sayfa',
 'qbpageinfo'     => 'Kontekst',
-'qbmyoptions'    => 'Sayfalarım',
-'qbspecialpages' => 'Maasus sayfalar',
 'faq'            => 'SSS',
-'faqpage'        => 'Project:SSS',
 
 
 'errorpagetitle'    => 'Yannış',
@@ -257,7 +252,6 @@ $messages = array(
 'specialpage'       => 'Maasus Sayfa',
 'personaltools'     => 'Personal instrumentlär',
 'postcomment'       => 'Yorum ekle',
-'articlepage'       => 'Yazıya bak',
 'talk'              => 'Dartışma',
 'views'             => 'Görünüşler',
 'toolbox'           => 'İnstrumentlär',

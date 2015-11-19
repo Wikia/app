@@ -495,16 +495,11 @@ $messages = array(
 'navigation' => 'Navigace',
 'and' => '&#32;a',
 
-# Cologne Blue skin
 'qbfind' => 'Hledání',
 'qbbrowse' => 'Listování',
-'qbedit' => 'Editování',
 'qbpageoptions' => 'Tato stránka',
 'qbpageinfo' => 'Kontext',
-'qbmyoptions' => 'Moje volby',
-'qbspecialpages' => 'Speciální stránky',
 'faq' => 'Často kladené otázky',
-'faqpage' => 'Project:Často kladené otázky',
 
 'actions' => 'Akce',
 'namespaces' => 'Jmenné prostory',
@@ -528,7 +523,6 @@ $messages = array(
 'edit' => 'Editovat',
 'create' => 'Vytvořit',
 'editthispage' => 'Editovat stránku',
-'create-this-page' => 'Vytvořit tuto stránku',
 'delete' => 'Smazat',
 'deletethispage' => 'Smazat stránku',
 'undelete_short' => 'Obnovit $1 {{PLURAL:$1|verzi|verze|verzí}}',
@@ -544,7 +538,6 @@ $messages = array(
 'specialpage' => 'Speciální stránka',
 'personaltools' => 'Osobní nástroje',
 'postcomment' => 'Nová sekce',
-'articlepage' => 'Prohlédnout si stránku',
 'talk' => 'Diskuse',
 'views' => 'Zobrazení',
 'toolbox' => 'Nástroje',
@@ -1365,14 +1358,6 @@ Pokud na začátek dotazu přidáte ''all:'', bude se hledat všude (včetně di
 'search-external' => 'Externí hledání',
 'searchdisabled' => '<p>Omlouváme se. Plnotextové vyhledávání je dočasně nedostupné. Zatím můžete zkusit vyhledávání Googlem; je ale možné, že jeho výsledky nemusí být aktuální.</p>',
 
-# Quickbar
-'qbsettings' => 'Nastavení lišty nástrojů',
-'qbsettings-none' => 'Žádný',
-'qbsettings-fixedleft' => 'Leží vlevo',
-'qbsettings-fixedright' => 'Leží vpravo',
-'qbsettings-floatingleft' => 'Plovoucí vlevo',
-'qbsettings-floatingright' => 'Plovoucí vpravo',
-'qbsettings-directionality' => 'Pevný v závislosti na směrovosti vašeho písma',
 
 # Preferences page
 'preferences' => 'Nastavení',
@@ -3007,7 +2992,6 @@ Uložte jej na svůj disk a nahrajte ho sem.',
 # Stylesheets
 'common.css' => '/* Zde uvedené CSS bude ovlivňovat všechny styly */',
 'standard.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Klasický“  */',
-'cologneblue.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Kolínská modř“  */',
 'monobook.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Monobook“ */',
 'myskin.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Můj vzhled“ */',
 'chick.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Kuře“ */',
@@ -3024,7 +3008,6 @@ Uložte jej na svůj disk a nahrajte ho sem.',
 # Scripts
 'common.js' => '/* Zde uvedený JavaScript bude použit pro všechny uživatele při načtení každé stránky.  */',
 'standard.js' => '/* JavaScript pro uživatele používající vzhled „Klasický“ */',
-'cologneblue.js' => '/* JavaScript pro uživatele používající vzhled „Kolínská modř“  */',
 'monobook.js' => '/* JavaScript pro uživatele používající vzhled MonoBook */',
 'myskin.js' => '/* JavaScript pro uživatele používající vzhled „Můj vzhled“ */',
 'chick.js' => '/* JavaScript pro uživatele používající vzhled „Kuře“ */',
@@ -3074,7 +3057,6 @@ Uložte jej na svůj disk a nahrajte ho sem.',
 
 # Skin names
 'skinname-standard' => 'Klasický',
-'skinname-cologneblue' => 'Kolínská modř',
 'skinname-myskin' => 'Můj vzhled',
 'skinname-chick' => 'Kuře',
 'skinname-simple' => 'Jednoduchý',

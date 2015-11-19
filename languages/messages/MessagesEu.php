@@ -265,16 +265,11 @@ $messages = array(
 'navigation'    => 'Nabigazioa',
 'and'           => '&#32;eta',
 
-# Cologne Blue skin
 'qbfind'         => 'Aurkitu',
 'qbbrowse'       => 'Arakatu',
-'qbedit'         => 'Aldatu',
 'qbpageoptions'  => 'Orrialde hau',
 'qbpageinfo'     => 'Testuingurua',
-'qbmyoptions'    => 'Nire orrialdeak',
-'qbspecialpages' => 'Aparteko orrialdeak',
 'faq'            => 'Maiz egindako galderak',
-'faqpage'        => 'Project:Maiz egindako galderak',
 
 'actions'                        => 'Ekintzak',
 'namespaces'                     => 'Izen-tarteak',
@@ -298,7 +293,6 @@ $messages = array(
 'edit'              => 'Aldatu',
 'create'            => 'Sortu',
 'editthispage'      => 'Orrialde hau aldatu',
-'create-this-page'  => 'Orrialde hau sortu',
 'delete'            => 'Ezabatu',
 'deletethispage'    => 'Orrialde hau ezabatu',
 'undelete_short'    => 'Berreskuratu {{PLURAL:$1|aldaketa bat|$1 aldaketa}}',
@@ -314,7 +308,6 @@ $messages = array(
 'specialpage'       => 'Aparteko orrialdea',
 'personaltools'     => 'Tresna pertsonalak',
 'postcomment'       => 'Atal berria',
-'articlepage'       => 'Artikulua ikusi',
 'talk'              => 'Eztabaida',
 'views'             => 'Ikustaldiak',
 'toolbox'           => 'Tresnak',
@@ -1077,13 +1070,6 @@ Saia zaitez zure eskeraren aurretik ''all:'' jartzen eduki guztien artean bilatz
 'search-external'                  => 'Kanpo bilaketa',
 'searchdisabled'                   => '{{SITENAME}}(e)n ezgaituta dago bilaketa. Dena dela, Google erabiliz ere egin dezakezu bilaketa. Kontuan izan bertan dituzten {{SITENAME}}(e)ko emaitzak zaharkituta egon daitezkeela.',
 
-# Quickbar
-'qbsettings'               => 'Laster-barra',
-'qbsettings-none'          => 'Ezein ere',
-'qbsettings-fixedleft'     => 'Eskuinean',
-'qbsettings-fixedright'    => 'Ezkerrean',
-'qbsettings-floatingleft'  => 'Ezkerrean mugikor',
-'qbsettings-floatingright' => 'Eskubian flotatzen',
 
 # Preferences page
 'preferences'                   => 'Hobespenak',
@@ -2566,7 +2552,6 @@ Baliteke zerrenda beltzean dagoen kanpo lotura batek sortzea arazo hori.',
 
 # Skin names
 'skinname-standard'    => 'Lehenetsia',
-'skinname-cologneblue' => 'Cologne Blue',
 'skinname-simple'      => 'Arrunta',
 'skinname-modern'      => 'Modernoa',
 

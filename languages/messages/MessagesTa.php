@@ -217,16 +217,11 @@ $messages = array(
 'navigation'    => 'வழிசெலுத்தல்',
 'and'           => '&#32;மற்றும்',
 
-# Cologne Blue skin
 'qbfind'         => 'கண்டுபிடி',
 'qbbrowse'       => 'உலவு',
-'qbedit'         => 'தொகு',
 'qbpageoptions'  => 'பக்க விருப்பத் தேர்வுகள்',
 'qbpageinfo'     => 'பக்கத் தகவல்கள்',
-'qbmyoptions'    => 'என் விருப்பத்தேர்வுகள்',
-'qbspecialpages' => 'சிறப்புப் பக்கங்கள்',
 'faq'            => 'அடிக்கடி கேட்கப்படும் கேள்விகள்',
-'faqpage'        => 'Project:அடிக்கடி கேட்கப்படும் கேள்விகள்',
 
 'actions'                        => 'செயல்கள்',
 'namespaces'                     => 'பெயர்வெளிகள்',
@@ -252,7 +247,6 @@ $messages = array(
 'edit'              => 'தொகு',
 'create'            => 'உருவாக்கு',
 'editthispage'      => 'இப்பக்கத்தைத் தொகு',
-'create-this-page'  => 'இப்பக்கத்தை உருவாக்கு',
 'delete'            => 'நீக்கவும்',
 'deletethispage'    => 'இப்பக்கத்தை நீக்கு',
 'undelete_short'    => '{{PLURAL:$1|ஒரு தொகுப்பை|$1 தொகுப்புக்களை}} மீட்டெடு',
@@ -268,7 +262,6 @@ $messages = array(
 'specialpage'       => 'சிறப்புப் பக்கம்',
 'personaltools'     => 'தனிப்பட்ட பயன்பாட்டுக் கருவிகள்',
 'postcomment'       => 'புதிய பகுதி',
-'articlepage'       => 'உள்ளடக்கப் பக்கத்தைப் பார்',
 'talk'              => 'உரையாடல்',
 'views'             => 'பார்வைகள்',
 'toolbox'           => 'கருவிப் பெட்டி',
@@ -1056,13 +1049,6 @@ $1",
 'search-external'                  => 'வெளித்தேடல்',
 'searchdisabled'                   => '{{SITENAME}} தளத்தின் தேடல் வசதிகள் தற்காலிகமாக முடக்கப்பட்டுள்ளது. அதுவரை நீங்கள் கீழேயுள்ள கூகிள் தேடலைப் பயன்படுத்தலாம். இது சில சமயம் இற்றைப்படுத்தப்படாததாய் இருக்கக்கூடும்.',
 
-# Quickbar
-'qbsettings'               => 'விரைவுச் சட்ட அமைவுகள்',
-'qbsettings-none'          => 'எதுவுமில்லை',
-'qbsettings-fixedleft'     => 'நிலைத்த இடது',
-'qbsettings-fixedright'    => 'நிலைத்த வலது',
-'qbsettings-floatingleft'  => 'மிதப்பு இடது',
-'qbsettings-floatingright' => 'மிதப்பு வலது',
 
 # Preferences page
 'preferences'                   => 'விருப்பங்கள்',
@@ -2654,7 +2640,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => 'இயல்பான',
-'skinname-cologneblue' => 'கொலோன் (Cologne) நீலம் Blue',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'ரோந்திட்டதாக குறி',

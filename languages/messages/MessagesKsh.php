@@ -353,16 +353,11 @@ $messages = array(
 'navigation'    => 'Jangk noh de',
 'and'           => ', un',
 
-# Cologne Blue skin
 'qbfind'         => 'Fingk',
 'qbbrowse'       => 'Aanluure',
-'qbedit'         => 'Ändere',
 'qbpageoptions'  => 'Sigge Enstellunge',
 'qbpageinfo'     => 'Üvver de Sigg',
-'qbmyoptions'    => 'Ming Sigge',
-'qbspecialpages' => 'Spezial Sigge',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Akßjuhne',
 'namespaces'                     => 'Appachtemangs',
@@ -386,7 +381,6 @@ $messages = array(
 'edit'              => 'Ändere',
 'create'            => 'Aanläje',
 'editthispage'      => 'De Sigg ändere',
-'create-this-page'  => 'Neu aanläje',
 'delete'            => 'Fottschmieße',
 'deletethispage'    => 'De Sigg fottschmieße',
 'undelete_short'    => '{{PLURAL:$1|ein Änderung|$1 Änderunge}} zeröckholle',
@@ -402,7 +396,6 @@ $messages = array(
 'specialpage'       => '{{int:nstab-special}}',
 'personaltools'     => 'Metmaacher Werkzüch',
 'postcomment'       => 'Neu Avschnedd op de Klaafsigg donn',
-'articlepage'       => 'Aanluure wat op dä Sigg drop steiht',
 'talk'              => 'Klaafe',
 'views'             => 'Aansichte',
 'toolbox'           => 'Werkzüch',
@@ -1335,14 +1328,6 @@ Et es nit jesaht,
 dat dänne ihr Daate topaktuell sin,
 ävver et es besser wie jaa_nix.',
 
-# Quickbar
-'qbsettings'                => '„Flöcke Links“',
-'qbsettings-none'           => 'Fottlooße, dat well ich nit sinn',
-'qbsettings-fixedleft'      => 'Am linke Rand fass aanjepapp',
-'qbsettings-fixedright'     => 'Am rächte Rand fass aanjepapp',
-'qbsettings-floatingleft'   => 'Am linke Rand am Schwevve',
-'qbsettings-floatingright'  => 'Am rächte Rand am Schwevve',
-'qbsettings-directionality' => 'Faß, passend för wi eröm de Schreff för Ding Schprooch jeiht',
 
 # Preferences page
 'preferences'                   => 'ming Enstellunge',
@@ -3046,7 +3031,6 @@ Esu kam_mer noch en Aanmerkung en „{{int:summary}}“ maache.',
 # Stylesheets
 'common.css'              => '/* CSS heh aan dä Stell hät Uswirkunge op all Ovverflääsche */',
 'standard.css'            => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Klassesch“ */',
-'cologneblue.css'         => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Kölsch Blau“ */',
 'monobook.css'            => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Monobooch“ */',
 'myskin.css'              => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Ming Skin“ */',
 'chick.css'               => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Höhnsche“ */',
@@ -3063,7 +3047,6 @@ Esu kam_mer noch en Aanmerkung en „{{int:summary}}“ maache.',
 # Scripts
 'common.js'              => '/* Jedes JavaScrip hee kütt för jede Metmaacher in jede Sigg erinn */',
 'standard.js'            => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Klassesch" jescheck */',
-'cologneblue.js'         => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Kölsch Blou" jescheck */',
 'monobook.js'            => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Monnobooch" jescheck */',
 'myskin.js'              => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Ming Skin" jescheck */',
 'chick.js'               => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Höhnsche" jescheck */',
@@ -3112,7 +3095,6 @@ Esu kam_mer noch en Aanmerkung en „{{int:summary}}“ maache.',
 
 # Skin names
 'skinname-standard'    => 'Klassesch',
-'skinname-cologneblue' => 'Kölsch Blau',
 'skinname-monobook'    => 'MonoBoch',
 'skinname-myskin'      => 'Ming Skin',
 'skinname-chick'       => 'Höhnche',

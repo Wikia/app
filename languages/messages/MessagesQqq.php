@@ -281,13 +281,8 @@ This can also appear in the credits page if the credits feature is enabled,for e
 
 {{Identical|And}}',
 
-# Cologne Blue skin
-'qbfind'         => 'Alternative for "search" as used in Cologne Blue skin.
+'qbfind'         => 'Alternative for "search" as used in MultiTasks extensions
 {{Identical|Find}}',
-'qbedit'         => '{{Identical|Edit}}',
-'qbmyoptions'    => '{{Identical|My pages}}',
-'qbspecialpages' => '{{Identical|Special pages}}',
-'faqpage'        => "FAQ is short for ''frequently asked questions''. This page is only linked on some of the old skins, not in Monobook or Modern.
 
 {{doc-important|Do not translate <tt>Project:</tt> part.}}",
 
@@ -352,8 +347,7 @@ Also used as title of [[Special:Search]] page in [[Special:SpecialPages]].
 'create'            => 'The text on the tab for to the edit form on unexisting pages.
 
 {{Identical|Create}}',
-'editthispage'      => 'This is the "edit" link as used in the skins Classic/Standard, Cologne Blue and Nostalgia. See {{msg|create-this-page}} for when the page does not exist.',
-'create-this-page'  => 'In the skins Classic/Standard, Cologne Blue and Nostalgia this is the text for the link leading to the edit form on pages that have not yet been created. See {{msg|editthispage}} for when the page already exists.
+'editthispage'      => 'This is the "edit" link as used by the MyHome extension.',
 {{Identical|Createpage}}',
 'delete'            => 'Name of the Delete tab shown for admins. Should be in the imperative mood.
 
@@ -375,7 +369,6 @@ Also used as title of [[Special:Search]] page in [[Special:SpecialPages]].
 
 {{Identical|Talk}}',
 'personaltools'     => 'Heading for a group of links to your user page, talk page, preferences, watchlist, and contributions. This heading is visible in the sidebar in some skins. For an example, see [http://translatewiki.net/wiki/Main_Page?useskin=simple Main Page using simple skin].',
-'articlepage'       => "'Content page' is used for NS_MAIN and any other non-standard namespace and this message is only used in skins Nostalgia, Cologneblue and Standard in the bottomLinks part.
 
 {{Identical|Content page}}",
 'talk'              => 'Used as display name for the tab to all talk pages. These pages accompany all content pages and can be used for discussing the content page. Example: [[Talk:Example]].
@@ -1204,9 +1197,6 @@ This is a search result (and I guess search engine) dependent messages. I do not
 'search-external'                => 'Legend of the fieldset for the input form when the internal search is disabled. Inside the fieldset [[MediaWiki:Searchdisabled]] and [[MediaWiki:Googlesearch]] is shown.',
 'searchdisabled'                 => 'Shown on [[Special:Search]] when the internal search is disabled.',
 
-# Quickbar
-'qbsettings'      => 'The title of the section in [[Special:Preferences]], only shown when using the skins "Standard/Classic" or "Cologne Blue". The quicbar is the same as the sidebar.',
-'qbsettings-none' => '{{Identical|None}}',
 
 # Preferences page
 'preferences'                   => 'Title of the Special:Preferences page.
@@ -2918,7 +2908,6 @@ See also {{msg-mw|Anonuser}} and {{msg-mw|Siteusers}}.',
 
 # Skin names
 'skinname-standard'    => '{{optional}}',
-'skinname-cologneblue' => '{{optional}}',
 'skinname-monobook'    => '{{optional}}',
 'skinname-myskin'      => '{{optional}}',
 'skinname-chick'       => '{{optional}}',

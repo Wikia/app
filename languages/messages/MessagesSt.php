@@ -50,7 +50,6 @@ $messages = array(
 'mytalk'     => 'Leqephe la ka la moqoqo',
 'navigation' => 'Eya ho',
 
-# Cologne Blue skin
 'faq' => 'Dipotso-mehla',
 
 'returnto'       => 'Kgutlela ho $1.',

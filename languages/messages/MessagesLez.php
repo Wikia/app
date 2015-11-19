@@ -126,16 +126,11 @@ $messages = array(
 'navigation'    => 'КЪекъуьнар',
 'and'           => '&#32;ва',
 
-# Cologne Blue skin
 'qbfind'         => 'Жугъун',
 'qbbrowse'       => 'Килигун',
-'qbedit'         => 'Дегишарун',
 'qbpageoptions'  => 'Ччинин низамарунар',
 'qbpageinfo'     => 'Ччиникай малумат',
-'qbmyoptions'    => 'Зи ччинар',
-'qbspecialpages' => 'Кьетlен хъувун',
 'faq'            => 'Фад-фад гузвай жузунар (ФГЖ)',
-'faqpage'        => 'Project:ФГС',
 
 'actions'                  => 'Крар',
 'namespaces'               => 'Тlварарин генгвилер',
@@ -158,7 +153,6 @@ $messages = array(
 'edit'              => 'Дуьзар хъувун',
 'create'            => 'Туькlуьрун',
 'editthispage'      => 'И ччин дуьзар хъувун',
-'create-this-page'  => 'И ччин туькIуьрун',
 'delete'            => 'Алудун',
 'deletethispage'    => 'И ччин алудун',
 'protect'           => 'Xуьн',
@@ -172,7 +166,6 @@ $messages = array(
 'specialpage'       => 'Куьмекчи ччин',
 'personaltools'     => '-КЬилди вичин алатар',
 'postcomment'       => 'ЦIйий пай',
-'articlepage'       => 'КЪене авайбурун ччиндиз  килигун',
 'talk'              => 'Веревирд авун',
 'views'             => 'Килигунар',
 'toolbox'           => 'Алатрин кьвати',
@@ -471,12 +464,6 @@ $messages = array(
 'powersearch-toggleall'            => 'Вири',
 'powersearch-togglenone'           => 'Садни',
 
-# Quickbar
-'qbsettings-none'          => 'Садни',
-'qbsettings-fixedleft'     => 'Чапла патахъай юзан тийир',
-'qbsettings-fixedright'    => 'ЭрчIи патахъай юзан тийир',
-'qbsettings-floatingleft'  => 'Чапла патаз алгъурзава',
-'qbsettings-floatingright' => 'ЭрчIи патаз алгъурзава',
 
 # Preferences page
 'preferences'               => 'Туькlуьрун',

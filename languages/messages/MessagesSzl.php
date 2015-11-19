@@ -166,16 +166,11 @@ $messages = array(
 'navigation'    => 'Nawigacyjo',
 'and'           => '&#32;a',
 
-# Cologne Blue skin
 'qbfind'         => 'Nojdź',
 'qbbrowse'       => 'Uoglůndańy',
-'qbedit'         => 'Sprowjej',
 'qbpageoptions'  => 'Ta zajta',
 'qbpageinfo'     => 'Kontekst',
-'qbmyoptions'    => 'Moje zajty',
-'qbspecialpages' => 'Szpecyjalne zajty',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Akcyje',
 'namespaces'                     => 'Raumy mjan',
@@ -199,7 +194,6 @@ $messages = array(
 'edit'              => 'Sprowjej',
 'create'            => 'Stwůrz',
 'editthispage'      => 'Sprowjej ta zajta',
-'create-this-page'  => 'Stwůrz ta zajta',
 'delete'            => 'Wyćep',
 'deletethispage'    => 'Wyćep ta zajta',
 'undelete_short'    => 'Wćep nazod {{PLURAL:$1|jedna wersyjo|$1 wersyje|$1 wersyji}}',
@@ -215,7 +209,6 @@ $messages = array(
 'specialpage'       => 'Špecyjalno zajta',
 'personaltools'     => 'Perzůnolne',
 'postcomment'       => 'Skůmyntuj',
-'articlepage'       => 'Zajta artikla',
 'talk'              => 'Dyskusyjo',
 'views'             => 'Widok',
 'toolbox'           => 'Werkcojg',
@@ -922,13 +915,6 @@ $1',
 'search-external'                  => 'Šnupańy zewnyntřne',
 'searchdisabled'                   => 'Šnupańy we {{GRAMMAR:MS.lp|{{SITENAME}}}} zostouo zawarte. Zańim go zouůnčům, možeš sprůbować šnupańo bez Google. Ino zauwaž, co informacyje uo treśći {{GRAMMAR:MS.lp|{{SITENAME}}}} můgům być we Google ńyakuratne.',
 
-# Quickbar
-'qbsettings'               => 'Gurt šybkigo dostympu',
-'qbsettings-none'          => 'Brak',
-'qbsettings-fixedleft'     => 'Stouy, s lewyj',
-'qbsettings-fixedright'    => 'Stouy, s prawyj',
-'qbsettings-floatingleft'  => 'Unošůncy śe, s lewyj',
-'qbsettings-floatingright' => 'Unošůncy śe, s prawyj',
 
 # Preferences page
 'preferences'                   => 'Preferyncyje',

@@ -197,16 +197,11 @@ $messages = array(
 'navigation'    => 'Nènemòwalistli',
 'and'           => '&#32;īhuān',
 
-# Cologne Blue skin
 'qbfind'         => 'Tlatēmōz',
 'qbbrowse'       => 'Titlatēmōz',
-'qbedit'         => 'Ticpatlāz',
 'qbpageoptions'  => 'Inīn zāzanilli',
 'qbpageinfo'     => 'Tlahcuilōltechcopa',
-'qbmyoptions'    => 'Nozāzanil',
-'qbspecialpages' => 'Nònkuâkìskàtlaìxtlapaltìn',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                => 'Āyiliztli',
 'namespaces'             => 'Tòkâyeyàntìn',
@@ -229,7 +224,6 @@ $messages = array(
 'edit'              => 'Ticpatlāz',
 'create'            => 'Ticchīhuāz',
 'editthispage'      => 'Ticpatlāz inīn zāzanilli',
-'create-this-page'  => 'Ticchīhuāz inīn zāzanilli',
 'delete'            => 'Ticpolōz',
 'deletethispage'    => 'Ticpolōz inīn zāzanilli',
 'undelete_short'    => 'Ahticpolōz {{PLURAL:$1|cē tlapatlaliztli|$1 tlapatlaliztli}}',
@@ -245,7 +239,6 @@ $messages = array(
 'specialpage'       => 'Nònkuâkìskàtlaìxtlapalli',
 'personaltools'     => 'In tlein nitēquitiltilia',
 'postcomment'       => 'Yancuīc xeliuhcāyōtl',
-'articlepage'       => 'Xiquittaz in tlahcuilōlli',
 'talk'              => 'tēixnāmiquiliztli',
 'views'             => 'Tlachiyaliztli',
 'toolbox'           => 'In tlein motequitiltia',
@@ -620,8 +613,6 @@ Hueliz ōmopolo huiqui nozo ōmozacac.
 'powersearch-togglenone'           => 'Ahtlein',
 'search-external'                  => 'Tlatēmotiliztli calāmpa',
 
-# Quickbar
-'qbsettings-none' => 'Ahtlein',
 
 # Preferences page
 'preferences'               => 'Tlaēlēhuiliztli',

@@ -163,16 +163,11 @@ href="" class="internal"}?{/a}) bıasne.',
 'navigation'    => 'Pusula',
 'and'           => '&#32;u',
 
-# Cologne Blue skin
 'qbfind'         => 'Bıvêne',
 'qbbrowse'       => 'Çım ra viarne',
-'qbedit'         => 'Bıvurne',
 'qbpageoptions'  => 'Na pele',
 'qbpageinfo'     => 'Girê',
-'qbmyoptions'    => 'Pelê mı',
-'qbspecialpages' => 'Pelê xususiy',
 'faq'            => 'ÇZP',
-'faqpage'        => 'Project:ÇZP',
 
 'actions'                        => 'Kerdey',
 'namespaces'                     => 'Caê namey',
@@ -196,7 +191,6 @@ href="" class="internal"}?{/a}) bıasne.',
 'edit'              => 'Bıvurne',
 'create'            => 'Vıraze',
 'editthispage'      => 'Na pele bıvurne',
-'create-this-page'  => 'Na pele baferne',
 'delete'            => 'Bestere',
 'deletethispage'    => 'Na pele bestere',
 'undelete_short'    => '{{PLURAL:$1|Jü vurnaişi|$1 Vurnaisu}} mestere',
@@ -212,7 +206,6 @@ href="" class="internal"}?{/a}) bıasne.',
 'specialpage'       => 'Pela xususiye',
 'personaltools'     => 'Hacetê keşi',
 'postcomment'       => 'Qısımo newe',
-'articlepage'       => 'Pela tedeesteu bıvêne',
 'talk'              => 'Hurênais',
 'views'             => 'Asaeni',
 'toolbox'           => 'Qutiya hacetu',
@@ -735,13 +728,6 @@ Verê cıfeteliyaene de be ilawekerdena verbendê '''all:'''i ra (ebe pelunê hu
 Sıma şikinê na sıre ''Google'' de şêr kerê.
 Diqet kerê, beno ke tedeestê {{SITENAME}} uza endi rozane niyê.",
 
-# Quickbar
-'qbsettings'               => 'Herbişiyaena hedefi',
-'qbsettings-none'          => 'Qet',
-'qbsettings-fixedleft'     => 'Çhep de bestniyo pa',
-'qbsettings-fixedright'    => 'Rast de bestniyo pa',
-'qbsettings-floatingleft'  => 'Çhepi ser aznino',
-'qbsettings-floatingright' => 'Rasti ser aznino',
 
 # Preferences page
 'preferences'               => 'Tercihi',

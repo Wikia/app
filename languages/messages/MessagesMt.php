@@ -415,16 +415,11 @@ $messages = array(
 'navigation'    => 'Navigazzjoni',
 'and'           => '&#32;u',
 
-# Cologne Blue skin
 'qbfind'         => 'Fittex',
 'qbbrowse'       => 'Qalleb',
-'qbedit'         => 'Immodifika',
 'qbpageoptions'  => 'Din il-paġna',
 'qbpageinfo'     => 'Kuntest',
-'qbmyoptions'    => 'Il-paġni tiegħi',
-'qbspecialpages' => 'Paġni speċjali',
 'faq'            => 'Mistoqsijiet komuni',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Azzjonijiet',
 'namespaces'                     => 'Spazji tal-isem',
@@ -448,7 +443,6 @@ $messages = array(
 'edit'              => 'Editja',
 'create'            => 'Oħloq',
 'editthispage'      => 'Immodifika din il-paġna',
-'create-this-page'  => 'Oħloq din il-paġna',
 'delete'            => 'Ħassar',
 'deletethispage'    => 'Ħassar din il-paġna',
 'undelete_short'    => 'Irkupra {{PLURAL:$1|modifika waħda|$1 modifiki}}',
@@ -464,7 +458,6 @@ $messages = array(
 'specialpage'       => 'Paġna speċjali',
 'personaltools'     => 'Għodda personali',
 'postcomment'       => 'Sezzjoni ġdida',
-'articlepage'       => 'Ara l-artiklu',
 'talk'              => 'Diskussjoni',
 'views'             => 'Veduti',
 'toolbox'           => 'Għodda',
@@ -1264,14 +1257,6 @@ Ipprova għamel prefiss għall-inkjesta tiegħek ma' ''all:'' sabiex tfittex il-
 Sadanittant, tista' tipprova tfittex bil-Google.
 Innota però li l-werreja tal-kontenut ta' {{SITENAME}} f'dawn is-siti, jistgħu ma jkunux aġġornati.",
 
-# Quickbar
-'qbsettings'                => "''Quickbar''",
-'qbsettings-none'           => 'Xejn',
-'qbsettings-fixedleft'      => 'Mehmuż fix-xellug',
-'qbsettings-fixedright'     => 'Mehmuż fil-lemin',
-'qbsettings-floatingleft'   => "''Floating'' lejn ix-xellug",
-'qbsettings-floatingright'  => "''Floating'' lejn il-lemin",
-'qbsettings-directionality' => 'Fiss, skont id-direzzjoni tat-test fil-lingwa tiegħek',
 
 # Preferences page
 'preferences'                   => 'Preferenzi',
@@ -2831,7 +2816,6 @@ Kull azzjonijiet ta' importazzjoni tal-transwiki jiġu reġistrati fil-[[Special
 # Stylesheets
 'common.css'      => '/* CSS li tpoġġa hawnhekk irrid jiġi applikat fl-iskins kollha */',
 'standard.css'    => '/* CSS li tpoġġa hawnhekk se jaffetwa l-utenti li jagħmlu użu mill-iskin Standard */',
-'cologneblue.css' => '/* CSS li tpoġġa hawnhekk se jaffetwa dawk l-utenti li jagħmlu użu mill-aspett grafiku Cologne Blue */',
 'monobook.css'    => "/* CSS li tpoġġa hawnhekk se jaffetwa dawk l-utenti li jagħmlu użu mill-iskin ''Monobook'' */",
 'myskin.css'      => "/* CSS li tpoġġa hawnhekk se jaffetwa dawk l-utenti li jagħmlu użu mill-iskin ''L-Iskin tiegħi'' */",
 'chick.css'       => '/* CSS li tpoġġa hawnhekk se jaffetwa dawk l-utenti li jagħmlu użu mill-aspett grafiku Ckick */',
@@ -2841,7 +2825,6 @@ Kull azzjonijiet ta' importazzjoni tal-transwiki jiġu reġistrati fil-[[Special
 # Scripts
 'common.js'      => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal kull utent f'kull tniżżil ta' paġna. */",
 'standard.js'    => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''Standard'' */",
-'cologneblue.js' => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''Cologne Blue'' */",
 'monobook.js'    => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''Monobook'' */",
 'myskin.js'      => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''MySkin'' */",
 'chick.js'       => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''Chick'' */",
@@ -2886,7 +2869,6 @@ Kull azzjonijiet ta' importazzjoni tal-transwiki jiġu reġistrati fil-[[Special
 
 # Skin names
 'skinname-standard'    => 'Classic',
-'skinname-cologneblue' => 'Cologne Blue',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'MySkin',
 'skinname-chick'       => 'Chick',

@@ -431,16 +431,11 @@ $messages = array(
 'navigation'    => 'Navigering',
 'and'           => '&#32;og',
 
-# Cologne Blue skin
 'qbfind'         => 'Finn',
 'qbbrowse'       => 'Bla gjennom',
-'qbedit'         => 'Endre',
 'qbpageoptions'  => 'Denne sida',
 'qbpageinfo'     => 'Samanheng',
-'qbmyoptions'    => 'Sidene mine',
-'qbspecialpages' => 'Spesialsider',
 'faq'            => 'OSS',
-'faqpage'        => 'Project:OSS',
 
 'actions'                        => 'Handlingar',
 'namespaces'                     => 'Namnerom',
@@ -464,7 +459,6 @@ $messages = array(
 'edit'              => 'Endre',
 'create'            => 'Opprett',
 'editthispage'      => 'Endre sida',
-'create-this-page'  => 'Opprett sida',
 'delete'            => 'Slett',
 'deletethispage'    => 'Slett denne sida',
 'undelete_short'    => 'Attopprett {{PLURAL:$1|éin versjon|$1 versjonar}}',
@@ -480,7 +474,6 @@ $messages = array(
 'specialpage'       => 'Spesialside',
 'personaltools'     => 'Personlege verktøy',
 'postcomment'       => 'Ny bolk',
-'articlepage'       => 'Vis innhaldsside',
 'talk'              => 'Diskusjon',
 'views'             => 'Visningar',
 'toolbox'           => 'Verktøy',
@@ -1242,13 +1235,6 @@ For å søkja i alle, bruk prefikset ''all:'' (det inkluderer diskusjonssider, m
 I mellomtida kan du søkje gjennom Google.
 Ver merksam på at registra deira kan vera utdaterte.',
 
-# Quickbar
-'qbsettings'               => 'Snøggmeny',
-'qbsettings-none'          => 'Ingen',
-'qbsettings-fixedleft'     => 'Venstre',
-'qbsettings-fixedright'    => 'Høgre',
-'qbsettings-floatingleft'  => 'Flytande venstre',
-'qbsettings-floatingright' => 'Flytande høgre',
 
 # Preferences page
 'preferences'                   => 'Innstillingar',
@@ -2742,7 +2728,6 @@ Vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] og [//trans
 # Stylesheets
 'common.css'      => '/* CSS plassert i denne fila vil gjelde for alle utsjånader. */',
 'standard.css'    => '/* CSS i denne fila vil gjelde alle som nyttar drakta Standard */',
-'cologneblue.css' => '/* CSS i denne fila vil gjelde alle som nyttar drakta Kølnerblå */',
 'monobook.css'    => '/* CSS-tekst som vert plassert her, endrar utsjånaden til sidedrakta Monobook */',
 'myskin.css'      => '/* CSS i denne fila vil gjelde alle som nyttar drakta MySkin */',
 'chick.css'       => '/* CSS i denne fila vil gjelde alle som nyttar drakta Chick */',
@@ -2754,7 +2739,6 @@ Vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] og [//trans
 # Scripts
 'common.js'      => '/* Javascript i denne fila vil gjelde for alle drakter. */',
 'standard.js'    => '/* Javascript i denne fila vil gjelde for brukarar av drakta Standard */',
-'cologneblue.js' => '/* Javascript i denne fila vil gjelde for brukarar av drakta Kølnerblå */',
 'monobook.js'    => '/* Javascript i denne fila vil gjelde for brukarar av drakta Monobook */',
 'myskin.js'      => '* Javascript i denne fila vil gjelde for brukarar av drakta MySkin */',
 'chick.js'       => '* Javascript i denne fila vil gjelde for brukarar av drakta Chick */',
@@ -2799,7 +2783,6 @@ Vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] og [//trans
 
 # Skin names
 'skinname-standard'    => 'Klassisk',
-'skinname-cologneblue' => 'Kölnerblå',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MiDrakt',
 'skinname-chick'       => 'Chick',

@@ -155,16 +155,11 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => '&#32;an',
 
-# Cologne Blue skin
 'qbfind'         => 'Rake',
 'qbbrowse'       => 'Brouse',
-'qbedit'         => 'Edit',
 'qbpageoptions'  => 'This page',
 'qbpageinfo'     => 'Context',
-'qbmyoptions'    => 'Ma pages',
-'qbspecialpages' => 'Byordinar pages',
 'faq'            => 'ASQ',
-'faqpage'        => 'Project:ASQ',
 
 'actions'                  => 'Actions',
 'namespaces'               => 'Namespaces',
@@ -187,7 +182,6 @@ $messages = array(
 'edit'              => 'Edit',
 'create'            => 'Mak',
 'editthispage'      => 'Edit this page',
-'create-this-page'  => 'Mak this page',
 'delete'            => 'Delete',
 'deletethispage'    => 'Delete this page',
 'undelete_short'    => 'Undelete {{PLURAL:$1|ane edit|$1 edits}}',
@@ -202,7 +196,6 @@ $messages = array(
 'specialpage'       => 'Byordinar Page',
 'personaltools'     => 'Personal tuils',
 'postcomment'       => 'Eik a message',
-'articlepage'       => 'Leuk at content page',
 'talk'              => 'Collogue',
 'views'             => 'Views',
 'toolbox'           => 'Tuilkist',
@@ -735,8 +728,6 @@ there micht be parteeculars in the [{{fullurl:{{#Special:Log}}/suppress|page={{F
 'powersearch-toggleall'            => 'Aw',
 'searchdisabled'                   => 'Rakin throu {{SITENAME}} is disabled for performance raesons. Ye can rake via Google juist nou. Mynd that thair indexes o {{SITENAME}} content micht be oot o date.',
 
-# Quickbar
-'qbsettings-none' => 'Nane',
 
 # Preferences page
 'mypreferences'             => 'Ma preferences',

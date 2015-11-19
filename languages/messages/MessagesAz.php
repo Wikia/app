@@ -218,16 +218,11 @@ $messages = array(
 'navigation'    => 'Naviqasiya',
 'and'           => '&#32;və',
 
-# Cologne Blue skin
 'qbfind'         => 'Tap',
 'qbbrowse'       => 'Gözdən keçir',
-'qbedit'         => 'Redaktə',
 'qbpageoptions'  => 'Bu səhifə',
 'qbpageinfo'     => 'Məzmun',
-'qbmyoptions'    => 'Mənim səhifələrim',
-'qbspecialpages' => 'Xüsusi səhifələr',
 'faq'            => 'TSS',
-'faqpage'        => 'Project:TSS',
 
 'actions'                        => 'Hərəkətlər',
 'namespaces'                     => 'Adlar fəzası',
@@ -251,7 +246,6 @@ $messages = array(
 'edit'              => 'Redaktə',
 'create'            => 'Yarat',
 'editthispage'      => 'Bu səhifəni redaktə et',
-'create-this-page'  => 'Bu səhifəni yarat',
 'delete'            => 'Sil',
 'deletethispage'    => 'Bu səhifəni sil',
 'undelete_short'    => '$1 {{PLURAL:$1|dəyişikliyi|dəyişiklikləri}} bərpa et',
@@ -267,7 +261,6 @@ $messages = array(
 'specialpage'       => 'Xüsusi səhifə',
 'personaltools'     => 'Şəxsi alətlər',
 'postcomment'       => 'Yeni bölmə',
-'articlepage'       => 'Məqaləni nəzərdən keçir',
 'talk'              => 'Müzakirə',
 'views'             => 'Görünüş',
 'toolbox'           => 'Alətlər qutusu',
@@ -931,13 +924,6 @@ $1",
 'powersearch-togglenone'           => 'Heç biri',
 'search-external'                  => 'Xarici axtarış',
 
-# Quickbar
-'qbsettings'               => 'Naviqasiya paneli',
-'qbsettings-none'          => 'Heç biri',
-'qbsettings-fixedleft'     => 'Sola sabitləndi',
-'qbsettings-fixedright'    => 'Sağa sabitləndi',
-'qbsettings-floatingleft'  => 'Sola əyilir',
-'qbsettings-floatingright' => 'Sağa əyilir',
 
 # Preferences page
 'preferences'                   => 'Nizamlamalar',
@@ -2237,7 +2223,6 @@ Zəhmət olmasa başqa ad seçin.',
 # Stylesheets
 'common.css'              => '/* Burada yerləşən CSS bütün skinlərə tətbiq olunur */',
 'standard.css'            => '/* Burada yerləşən CSS Standard skin istifadəçilərinə tətbiq olunur */',
-'cologneblue.css'         => '/* Burada yerləşən CSS Cologne Blue skin istifadəçilərinə tətbiq olunur */',
 'monobook.css'            => '/* Burada yerləşən CSS Monobook skin istifadəçilərinə tətbiq olunur */',
 'myskin.css'              => '/* Burada yerləşən CSS MySkin skin istifadəçilərinə tətbiq olunur */',
 'chick.css'               => '/* Burada yerləşən CSS Chick skin istifadəçilərinə tətbiq olunur */',
@@ -2251,7 +2236,6 @@ Zəhmət olmasa başqa ad seçin.',
 # Scripts
 'common.js'              => '/* Burada istifadəçilərin hamısı üçün bütün səhifələrdə istənilən JavaScript yüklənəcək */',
 'standard.js'            => '/* Burada Standard skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
-'cologneblue.js'         => '/* Burada Cologne Blue skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
 'monobook.js'            => '/* Burada MonoBook skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
 'myskin.js'              => '/* Burada MySkin skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
 'chick.js'               => '/* Burada Chick skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
@@ -2293,7 +2277,6 @@ Zəhmət olmasa başqa ad seçin.',
 
 # Skin names
 'skinname-standard'    => 'Classic',
-'skinname-cologneblue' => 'Cologne Blue',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
 'skinname-chick'       => 'Chick',

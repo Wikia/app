@@ -420,16 +420,11 @@ $messages = array(
 'navigation'    => 'Navigacija',
 'and'           => '&#32;i',
 
-# Cologne Blue skin
 'qbfind'         => 'Pronađite',
 'qbbrowse'       => 'Prelistajte',
-'qbedit'         => 'Uredi',
 'qbpageoptions'  => 'Opcije stranice',
 'qbpageinfo'     => 'Informacije o stranici',
-'qbmyoptions'    => 'Moje opcije',
-'qbspecialpages' => 'Posebne stranice',
 'faq'            => 'ČPP',
-'faqpage'        => 'Project:NPP',
 
 'actions'                        => 'Akcije',
 'namespaces'                     => 'Imenski prostori',
@@ -453,7 +448,6 @@ $messages = array(
 'edit'              => 'Uredi',
 'create'            => 'Napravi',
 'editthispage'      => 'Uredite ovu stranicu',
-'create-this-page'  => 'Napravi ovu stranicu',
 'delete'            => 'Obriši',
 'deletethispage'    => 'Obriši ovu stranicu',
 'undelete_short'    => 'Vrati obrisanih {{PLURAL:$1|$1 izmjenu|$1 izmjene|$1 izmjena}}',
@@ -469,7 +463,6 @@ $messages = array(
 'specialpage'       => 'Posebna Stranica',
 'personaltools'     => 'Lični alati',
 'postcomment'       => 'Nova sekcija',
-'articlepage'       => 'Pogledaj članak',
 'talk'              => 'Razgovor',
 'views'             => 'Pregledi',
 'toolbox'           => 'Traka sa alatima',
@@ -1296,14 +1289,6 @@ Pokušajte u Vaš upit uključiti prefiks ''all:'' da bi ste pretražili sav sad
 'search-external'                  => 'Vanjska pretraga',
 'searchdisabled'                   => '<p>Izvinjavamo se!  Puno pretraga teksta je privremeno onemogućena.  U međuvremenu, možete koristiti Google za pretragu.  Indeks može biti stariji.',
 
-# Quickbar
-'qbsettings'                => 'Podešavanja brze palete',
-'qbsettings-none'           => 'Nikakva',
-'qbsettings-fixedleft'      => 'Pričvršćena lijevo',
-'qbsettings-fixedright'     => 'Pričvršćena desno',
-'qbsettings-floatingleft'   => 'Plutajuća lijevo',
-'qbsettings-floatingright'  => 'Plutajući desno',
-'qbsettings-directionality' => 'Čvrsto, u zavisnosti od usmjerenosti pisma vašeg jezika',
 
 # Preferences page
 'preferences'                   => 'Podešavanja',
@@ -2920,7 +2905,6 @@ Dopušta unos razloga u sažetak.',
 # Stylesheets
 'common.css'      => '/* CSS umetnut ovdje primijenit će se na sve skinove */',
 'standard.css'    => '/* CSS umetnut ovdje uticat će na korisnike koji koriste Standard skin */',
-'cologneblue.css' => '/* CSS umetnut ovdje uticat će na korisnike koji koriste Cologne Blue skin */',
 'monobook.css'    => '/* CSS umetnut ovdje uticat će na korisnike koji koriste Monobook skin */',
 'myskin.css'      => '/* CSS umetnut ovdje uticat će na korisnike koji koriste MySkin skin */',
 'chick.css'       => '/* CSS umetnut ovdje uticat će na korisnike koji koriste Chick skin */',
@@ -2932,7 +2916,6 @@ Dopušta unos razloga u sažetak.',
 # Scripts
 'common.js'      => '/* Bilo koja JavaScript će biti učitana za sve korisnike pri svakom učitavanju stranice. */',
 'standard.js'    => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste Standard skin */',
-'cologneblue.js' => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste Cologne Blue skin */',
 'monobook.js'    => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste MonoBook skin */',
 'myskin.js'      => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste MySkin skin */',
 'chick.js'       => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste Chick skin */',
@@ -2978,7 +2961,6 @@ Ovo je vjerovatno izazvao vezom ka vanjskoj nepoželjnoj stranici.',
 
 # Skin names
 'skinname-standard'    => 'Klasično',
-'skinname-cologneblue' => 'Kelnsko plavo',
 'skinname-monobook'    => 'MonoKnjiga',
 'skinname-myskin'      => 'MojaKoža',
 'skinname-chick'       => 'Pile (chick)',

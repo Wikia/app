@@ -78,13 +78,8 @@ $messages = array(
 'mytalk'     => 'Gaeq gou gangj',
 'navigation' => 'Dazzaeuh',
 
-# Cologne Blue skin
 'qbfind'         => 'Ra',
-'qbedit'         => 'Gaij',
-'qbmyoptions'    => 'Yieb gou',
-'qbspecialpages' => 'Doenghmae daegxsei',
 'faq'            => 'Cam caeuq dap',
-'faqpage'        => 'Project:Cam caeuq dap',
 
 
 'errorpagetitle'   => 'Loengloek',

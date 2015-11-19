@@ -223,16 +223,11 @@ $messages = array(
 'navigation'    => 'Навігацыя',
 'and'           => '&#32;і',
 
-# Cologne Blue skin
 'qbfind'         => 'Знайсці',
 'qbbrowse'       => 'Выбраць',
-'qbedit'         => 'Правіць',
 'qbpageoptions'  => 'Гэтая старонка',
 'qbpageinfo'     => 'Кантэкст',
-'qbmyoptions'    => 'Свае старонкі',
-'qbspecialpages' => 'Адмысловыя старонкі',
 'faq'            => 'ЧАПЫ',
-'faqpage'        => 'Project:ЧАПЫ',
 
 'actions'                        => 'Дзеянні',
 'namespaces'                     => 'Прасторы імёнаў',
@@ -256,7 +251,6 @@ $messages = array(
 'edit'              => 'Правіць',
 'create'            => 'Стварыць',
 'editthispage'      => 'Правіць гэту старонку',
-'create-this-page'  => 'Стварыць старонку',
 'delete'            => 'сцерці',
 'deletethispage'    => 'Сцерці гэту старонку',
 'undelete_short'    => 'Аднавіць {{PLURAL:$1|адну праўку|$1 правак}}',
@@ -272,7 +266,6 @@ $messages = array(
 'specialpage'       => 'Адмысловая старонка',
 'personaltools'     => 'Асабістыя прылады',
 'postcomment'       => 'Новы раздзел',
-'articlepage'       => 'Паказаць старонку змесціва',
 'talk'              => 'Размовы',
 'views'             => 'Віды',
 'toolbox'           => 'Прылады',
@@ -1060,14 +1053,6 @@ $1",
 'search-external'                  => 'Вонкавы пошук',
 'searchdisabled'                   => 'Функцыя пошуку {{SITENAME}} не працуе. Тымчасова можна шукаць з дапамогай Google. Заўважце, што тамтэйшыя індэксы зместу {{SITENAME}} могуць не быць актуальнымі.',
 
-# Quickbar
-'qbsettings'                => 'Хуткая стужка',
-'qbsettings-none'           => 'Няма',
-'qbsettings-fixedleft'      => 'Прымацавана злева',
-'qbsettings-fixedright'     => 'Прымацавана справа',
-'qbsettings-floatingleft'   => 'Плавае злева',
-'qbsettings-floatingright'  => 'Плавае справа',
-'qbsettings-directionality' => 'Фіксаваная, у залежнасці ад накіравання вашай мовы',
 
 # Preferences page
 'preferences'                   => 'Настаўленні',
@@ -2713,7 +2698,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => 'Класіка',
-'skinname-cologneblue' => 'Сіні Кёльн',
 'skinname-monobook'    => 'Манабук',
 'skinname-myskin'      => 'Майскін',
 'skinname-chick'       => 'Чык',

@@ -150,16 +150,11 @@ $messages = array(
 'navigation'    => 'Ẓer isebtar',
 'and'           => '&#32;u',
 
-# Cologne Blue skin
 'qbfind'         => 'Af',
 'qbbrowse'       => 'Ẓer isebtar',
-'qbedit'         => 'Beddel',
 'qbpageoptions'  => 'Asebter-agi',
 'qbpageinfo'     => 'Asatal',
-'qbmyoptions'    => 'isebtar inu',
-'qbspecialpages' => 'isebtar usligen',
 'faq'            => 'Isteqsiyen',
-'faqpage'        => 'Project:Isteqsiyen',
 
 'errorpagetitle'    => 'Agul',
 'returnto'          => 'Uɣal ar $1.',
@@ -191,7 +186,6 @@ $messages = array(
 'specialpage'       => 'Asebter uslig',
 'personaltools'     => 'Dduzan inu',
 'postcomment'       => 'Azen awennit',
-'articlepage'       => 'Ẓer ayen yellan deg usebter',
 'talk'              => 'Amyannan',
 'views'             => 'Tuẓrin',
 'toolbox'           => 'Dduzan',
@@ -613,13 +607,6 @@ i yesɛan akk awalen i banen-d).",
 'powersearch'           => 'Nadi',
 'searchdisabled'        => 'Anadi deg {{SITENAME}} yettwakkes. Tzemreḍ ad tnadiḍ s Google. Meɛna ur tettuḍ ara, tasmult n google taqdimt.',
 
-# Quickbar
-'qbsettings'               => 'Tanuga taǧiḥbuṭ',
-'qbsettings-none'          => 'Ulaḥedd',
-'qbsettings-fixedleft'     => 'Aẓelmaḍ',
-'qbsettings-fixedright'    => 'Ayeffus',
-'qbsettings-floatingleft'  => 'Tufeg aẓelmaḍ',
-'qbsettings-floatingright' => 'Tufeg ayeffus',
 
 # Preferences page
 'preferences'           => 'Isemyifiyen',

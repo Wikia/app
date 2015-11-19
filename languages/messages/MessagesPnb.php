@@ -161,16 +161,11 @@ $messages = array(
 'navigation'    => 'کھوج',
 'and'           => '&#32;and',
 
-# Cologne Blue skin
 'qbfind'         => 'کھوج',
 'qbbrowse'       => 'لبو',
-'qbedit'         => 'لکھو',
 'qbpageoptions'  => 'اے صفہ',
 'qbpageinfo'     => 'محول',
-'qbmyoptions'    => 'میرے صفے',
-'qbspecialpages' => 'خاص صفے',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'کم',
 'namespaces'                     => 'ناواں دی جگہ:',
@@ -194,7 +189,6 @@ $messages = array(
 'edit'              => 'لکھو',
 'create'            => 'بناؤ',
 'editthispage'      => 'اس صفحہ تے لکھو',
-'create-this-page'  => 'اے صفحہ بناؤ',
 'delete'            => 'مٹاؤ',
 'deletethispage'    => 'اے صفحہ مٹاؤ',
 'undelete_short'    => 'مٹانا واپس {{PLURAL:$1|اکتبدیلی|$1 تبدیلی}}',
@@ -210,7 +204,6 @@ $messages = array(
 'specialpage'       => 'خاص صفحہ',
 'personaltools'     => 'ذاتی اوزار',
 'postcomment'       => 'نویں ونڈ',
-'articlepage'       => 'مضمون آلا صفحہ',
 'talk'              => 'گل بات',
 'views'             => 'منظر',
 'toolbox'           => 'اوزار',
@@ -1015,14 +1008,6 @@ $1",
 تسیں گوگل تے کھوج کرو۔
 اے گل یاد رکھنا جے انڈیکس {{SITENAME}} دے پرانے ہون۔',
 
-# Quickbar
-'qbsettings'                => 'کوئکبار',
-'qbsettings-none'           => 'کوئی نئیں',
-'qbsettings-fixedleft'      => 'فکسڈ کھبے',
-'qbsettings-fixedright'     => 'فکسڈ سجے',
-'qbsettings-floatingleft'   => 'ہلدا کھبے',
-'qbsettings-floatingright'  => 'ہلدا سجے',
-'qbsettings-directionality' => '!!!!فکسڈ، تھاڈی بولی تے لپی نال',
 
 # Preferences page
 'preferences'                   => 'تانگاں',

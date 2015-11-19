@@ -185,16 +185,11 @@ $messages = array(
 'navigation'    => 'အ​ညွှန်း​',
 'and'           => '&#32;နှင့်',
 
-# Cologne Blue skin
 'qbfind'         => 'ရှာပါ',
 'qbbrowse'       => 'ရှာဖွေလှန်လှောရန်',
-'qbedit'         => 'ပြင်​ဆင်​ရန်​',
 'qbpageoptions'  => 'ဤစာမျက်နှာ',
 'qbpageinfo'     => 'မာတိကာ',
-'qbmyoptions'    => 'ကျွန်ုပ် စာမျက်နှာများ',
-'qbspecialpages' => 'အ​ထူး​စာ​မျက်​နှာ​',
 'faq'            => 'မေးလေ့ရှိကြသည်များ',
-'faqpage'        => 'Project:မေးလေ့ရှိကြသည်များ',
 
 'actions'                  => 'ဆောင်ရွက်ချက်များ',
 'namespaces'               => 'အမည်ညွှန်းများ',
@@ -218,7 +213,6 @@ $messages = array(
 'edit'              => 'ပြင်​ဆင်​ရန်​',
 'create'            => 'စတင်ရေးသားရန်',
 'editthispage'      => 'ဤစာမျက်နှာကို ပြင်ရန်',
-'create-this-page'  => 'ဤစာမျက်နှာကို စတင်ရေးသားရန်',
 'delete'            => 'ဖျက်​ပါ​',
 'deletethispage'    => 'ဤစာမျက်နှာဖျက်ပါ',
 'undelete_short'    => '{{PLURAL:$1|တည်းဖြတ်မှုတစ်ခု|တည်းဖြတ်မှု $1 ခုတို့}}ကို မဖျက်တော့ရန်',
@@ -234,7 +228,6 @@ $messages = array(
 'specialpage'       => 'အထူး စာမျက်နှာ',
 'personaltools'     => 'ကိုယ်ပိုင် ကိရိယာများ',
 'postcomment'       => 'အပိုင်းသစ်',
-'articlepage'       => 'မာတိကာ ကြည့်ရန်',
 'talk'              => 'ဆွေးနွေးချက်များ',
 'views'             => 'ပုံပန်းသွင်ပြင်',
 'toolbox'           => 'လက်စွဲ ကိရိယာများ',
@@ -704,12 +697,6 @@ Try prefixing your query with ''all:'' to search all content (including talk pag
 'powersearch-togglenone'           => 'အမည်ညွှန်းမရှိ',
 'search-external'                  => 'အပြင်တွင် ရှာရန်',
 
-# Quickbar
-'qbsettings-none'          => 'အမည်ညွှန်းမရှိ',
-'qbsettings-fixedleft'     => 'ဘယ်ဘက်ကို အသေထားရန်',
-'qbsettings-fixedright'    => 'ညာဘက်ကို အသေထားရန်',
-'qbsettings-floatingleft'  => 'ဘယ်ဘက်ကို အရှင်ထားရန်',
-'qbsettings-floatingright' => 'ညာဘက်ကို အရှင်ထားရန်',
 
 # Preferences page
 'preferences'                   => '​ရွေး​ချယ်​စ​ရာ​များ​',

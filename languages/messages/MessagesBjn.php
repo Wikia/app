@@ -193,16 +193,11 @@ $messages = array(
 'navigation'    => 'Napigasi',
 'and'           => '&#32;wan',
 
-# Cologne Blue skin
 'qbfind'         => 'Paugaian',
 'qbbrowse'       => 'Tangadahi',
-'qbedit'         => 'Babak',
 'qbpageoptions'  => 'Tungkaran ini',
 'qbpageinfo'     => 'Naskah aluran',
-'qbmyoptions'    => 'Tungkaran ulun',
-'qbspecialpages' => 'Tungkaran istimiwa',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Tindakan',
 'namespaces'                     => 'Ngarankamar',
@@ -226,7 +221,6 @@ $messages = array(
 'edit'              => 'Babak',
 'create'            => 'Ulah',
 'editthispage'      => 'Babak tungkaran ini',
-'create-this-page'  => 'Ulah tungkaran ini',
 'delete'            => 'Hapus',
 'deletethispage'    => 'Hapus tungkaran ini',
 'undelete_short'    => 'Walang mahapus {{PLURAL:$1|asa babakan|$1 bababakan}}',
@@ -242,7 +236,6 @@ $messages = array(
 'specialpage'       => 'Tungkaran istimiwa',
 'personaltools'     => 'Pakakas surang',
 'postcomment'       => 'Palih hanyar',
-'articlepage'       => 'Tiringi isi tungkaran',
 'talk'              => 'Pamandiran',
 'views'             => 'Titiringan',
 'toolbox'           => 'Wadah pakakas',
@@ -1060,14 +1053,6 @@ Tarai pamintaan Pian lawan ''all:'' gasan manggagai samunyaan isi (tamasuk tungk
 Pian kawa manggagai lung Google parhatan ini.
 Catatan nang dihaharnya matan isi {{SITENAME}} kawa-ai sudah kadaluarsa.',
 
-# Quickbar
-'qbsettings'                => 'Bilahhancap',
-'qbsettings-none'           => 'Kadada',
-'qbsettings-fixedleft'      => 'Tatap di kiwa',
-'qbsettings-fixedright'     => 'Tatap di kanan',
-'qbsettings-floatingleft'   => 'Mangambang sabalah kiwa',
-'qbsettings-floatingright'  => 'Mangambang sabalah kanan',
-'qbsettings-directionality' => 'Tatap, tagantung pada ampah skrip matan bahasa Pian',
 
 # Preferences page
 'preferences'                   => 'Kakatujuan',

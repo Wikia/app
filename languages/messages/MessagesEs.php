@@ -482,16 +482,11 @@ $messages = array(
 'navigation'    => 'Navegación',
 'and'           => '&#32;y',
 
-# Cologne Blue skin
 'qbfind'         => 'Buscar',
 'qbbrowse'       => 'Navegar',
-'qbedit'         => 'Editar',
 'qbpageoptions'  => 'Opciones de página',
 'qbpageinfo'     => 'Información de página',
-'qbmyoptions'    => 'Mis páginas',
-'qbspecialpages' => 'Páginas especiales',
 'faq'            => 'Preguntas más frecuentes',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Acciones',
 'namespaces'                     => 'Espacios de nombres',
@@ -515,7 +510,6 @@ $messages = array(
 'edit'              => 'Editar',
 'create'            => 'Crear',
 'editthispage'      => 'Editar esta página',
-'create-this-page'  => 'Crear esta página',
 'delete'            => 'Borrar',
 'deletethispage'    => 'Borrar esta página',
 'undelete_short'    => 'Restaurar {{PLURAL:$1|una edición|$1 ediciones}}',
@@ -531,7 +525,6 @@ $messages = array(
 'specialpage'       => 'Página especial',
 'personaltools'     => 'Herramientas personales',
 'postcomment'       => 'Nueva sección',
-'articlepage'       => 'Ver artículo',
 'talk'              => 'Discusión',
 'views'             => 'Vistas',
 'toolbox'           => 'Herramientas',
@@ -1354,14 +1347,6 @@ Prueba a usar el prefijo ''all:'' para buscar en todo el contenido (incluyendo p
 'searchdisabled'                   => 'Las búsquedas en {{SITENAME}} están temporalmente desactivadas.
 Mientras tanto puedes buscar mediante Google, pero ten en cuenta que sus índices relativos a {{SITENAME}} pueden estar desactualizados.',
 
-# Quickbar
-'qbsettings'                => 'Quickbar',
-'qbsettings-none'           => 'Ninguna',
-'qbsettings-fixedleft'      => 'Fija a la izquierda',
-'qbsettings-fixedright'     => 'Fija a la derecha',
-'qbsettings-floatingleft'   => 'Flotante a la izquierda',
-'qbsettings-floatingright'  => 'Flotante a la derecha',
-'qbsettings-directionality' => 'Fijos, dependiendo de la direccionalidad de la escritura de su idioma',
 
 # Preferences page
 'preferences'                   => 'Preferencias',
@@ -2984,7 +2969,6 @@ Permite añadir una razón al resumen de edición.',
 # Stylesheets
 'common.css'      => '/* Los estilos CSS definidos aquí aplicarán a todas las pieles (skins) */',
 'standard.css'    => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Standard */',
-'cologneblue.css' => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Cologne Blue */',
 'monobook.css'    => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Monobook */',
 'myskin.css'      => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel MySkin */',
 'chick.css'       => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Chick */',
@@ -2996,7 +2980,6 @@ Permite añadir una razón al resumen de edición.',
 # Scripts
 'common.js'      => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios en cada carga de página */',
 'standard.js'    => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Estandar */',
-'cologneblue.js' => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Colonia azul */',
 'monobook.js'    => '/* El código JavaScript que se ponga aquí será cargado por los usuarios de la piel MonoBook */',
 'myskin.js'      => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Mi piel */',
 'chick.js'       => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Pollito */',
@@ -3042,7 +3025,6 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 
 # Skin names
 'skinname-standard'    => 'Estándar',
-'skinname-cologneblue' => 'Colonia azul',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Mi piel',
 'skinname-chick'       => 'Pollito',

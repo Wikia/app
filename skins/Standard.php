@@ -161,7 +161,7 @@ class StandardTemplate extends LegacyTemplate {
 							$text = wfMsg('viewtalkpage');
 							break;
 						case NS_MAIN:
-							$text = wfMsg( 'articlepage' );
+							$text = '';
 							break;
 						case NS_USER:
 							$text = wfMsg( 'userpage' );
@@ -185,7 +185,8 @@ class StandardTemplate extends LegacyTemplate {
 							$text = wfMsg( 'categorypage' );
 							break;
 						default:
-							$text = wfMsg( 'articlepage' );
+							$text = '';
+							break;
 					}
 
 					$link = $title->getText();

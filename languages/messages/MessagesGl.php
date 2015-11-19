@@ -363,16 +363,11 @@ $messages = array(
 'navigation'    => 'Navegación',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Procurar',
 'qbbrowse'       => 'Navegar',
-'qbedit'         => 'Editar',
 'qbpageoptions'  => 'Esta páxina',
 'qbpageinfo'     => 'Contexto',
-'qbmyoptions'    => 'As miñas páxinas',
-'qbspecialpages' => 'Páxinas especiais',
 'faq'            => 'Preguntas máis frecuentes',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Accións',
 'namespaces'                     => 'Espazos de nomes',
@@ -396,7 +391,6 @@ $messages = array(
 'edit'              => 'Editar',
 'create'            => 'Crear',
 'editthispage'      => 'Editar esta páxina',
-'create-this-page'  => 'Crear esta páxina',
 'delete'            => 'Borrar',
 'deletethispage'    => 'Borrar esta páxina',
 'undelete_short'    => 'Restaurar {{PLURAL:$1|unha edición|$1 edicións}}',
@@ -412,7 +406,6 @@ $messages = array(
 'specialpage'       => 'Páxina especial',
 'personaltools'     => 'Ferramentas persoais',
 'postcomment'       => 'Nova sección',
-'articlepage'       => 'Ver a páxina de contido',
 'talk'              => 'Conversa',
 'views'             => 'Vistas',
 'toolbox'           => 'Caixa de ferramentas',
@@ -1247,14 +1240,6 @@ Probe a fixar a súa petición con ''all:'' para procurar en todo o contido (inc
 Mentres tanto pode procurar usando o Google.
 Note que os seus índices do contido de {{SITENAME}} poden estar desactualizados.',
 
-# Quickbar
-'qbsettings'                => 'Opcións da barra rápida',
-'qbsettings-none'           => 'Ningunha',
-'qbsettings-fixedleft'      => 'Fixa á esquerda',
-'qbsettings-fixedright'     => 'Fixa á dereita',
-'qbsettings-floatingleft'   => 'Flotante á esquerda',
-'qbsettings-floatingright'  => 'Flotante á dereita',
-'qbsettings-directionality' => 'Fixa, segundo a dirección de escritura da súa lingua',
 
 # Preferences page
 'preferences'                   => 'Preferencias',
@@ -2912,7 +2897,6 @@ Pode ver o código fonte.',
 # Stylesheets
 'common.css'              => '/** O CSS que se coloque aquí será aplicado a todas as aparencias */',
 'standard.css'            => '/* O CSS que se coloque aquí afectará a quen use a aparencia Clásica */',
-'cologneblue.css'         => '/* O CSS que se coloque aquí afectará a quen use a aparencia Azul colonial */',
 'monobook.css'            => '/* O CSS que se coloque aquí afectará a quen use a aparencia Monobook */',
 'myskin.css'              => '/* O CSS que se coloque aquí afectará a quen use a aparencia A miña aparencia */',
 'chick.css'               => '/* O CSS que se coloque aquí afectará a quen use a aparencia Parrulo */',
@@ -2929,7 +2913,6 @@ Pode ver o código fonte.',
 # Scripts
 'common.js'              => '/* Calquera JavaScript que haxa aquí será cargado para todos os usuarios en cada páxina que vexan. */',
 'standard.js'            => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia Clásica */',
-'cologneblue.js'         => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia Azul colonial */',
 'monobook.js'            => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia MonoBook */',
 'myskin.js'              => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia A miña aparencia */',
 'chick.js'               => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia Parrulo */',
@@ -2979,7 +2962,6 @@ Isto, probabelmente, se debe a unha ligazón cara a un sitio externo que está n
 
 # Skin names
 'skinname-standard'    => 'Clásica',
-'skinname-cologneblue' => 'Azul colonial',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'A miña aparencia',
 'skinname-chick'       => 'Parrulo',

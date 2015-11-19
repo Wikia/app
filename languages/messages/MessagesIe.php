@@ -261,13 +261,9 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Constatar',
-'qbedit'         => 'Redacter',
 'qbpageoptions'  => 'Págine de optiones',
 'qbpageinfo'     => 'Págine de information',
-'qbmyoptions'    => 'Mi optiones',
-'qbspecialpages' => 'Págines special',
 'faq'            => 'FAQ',
 
 'actions'                        => 'Actiones',
@@ -304,7 +300,6 @@ $messages = array(
 'specialpage'       => 'Págine special',
 'personaltools'     => 'Utensiles personal',
 'postcomment'       => 'Nov division',
-'articlepage'       => 'Vider li articul',
 'talk'              => 'Discussion',
 'views'             => 'Vistas',
 'toolbox'           => 'Buxe de utensiles',
@@ -643,8 +638,6 @@ Vider li [[Special:IPBlockList|liste de bloc de IP]] por li liste de bloces e ba
 'search-nonefound'                 => 'Ne esset constatat resultates por li question.',
 'powersearch'                      => 'Serchar avansat',
 
-# Quickbar
-'qbsettings' => 'Personalisation del barre de utensiles',
 
 # Preferences page
 'preferences'               => 'Preferenties',

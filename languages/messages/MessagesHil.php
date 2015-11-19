@@ -155,16 +155,11 @@ $messages = array(
 'navigation'    => 'Nabigayson',
 'and'           => '&#32;kag',
 
-# Cologne Blue skin
 'qbfind'         => 'Pangita',
 'qbbrowse'       => 'Magbasa-basa',
-'qbedit'         => 'Ilisan',
 'qbpageoptions'  => 'Ining panid',
 'qbpageinfo'     => 'Kahulugan/Konteksto',
-'qbmyoptions'    => 'Akon mga panid',
-'qbspecialpages' => 'Pinasahi nga mga panid',
 'faq'            => 'Mga masami pamangkoton',
-'faqpage'        => 'Project:MMP',
 
 'actions'                        => 'Mga hulag',
 'namespaces'                     => 'Ngalan-espasyo',
@@ -188,7 +183,6 @@ $messages = array(
 'edit'              => 'Ilisan',
 'create'            => 'Himuon',
 'editthispage'      => 'Islan ini nga pahina',
-'create-this-page'  => 'Himuon ang ini nga panid',
 'delete'            => 'Panason',
 'deletethispage'    => 'Panason ang ini nga panid',
 'undelete_short'    => 'Dulaon ang pagpanas sang {{PLURAL:$1|isa ka pag-ilis|$1 ka pag-ilis}}',
@@ -204,7 +198,6 @@ $messages = array(
 'specialpage'       => 'Espesyal nga panid',
 'personaltools'     => 'Mga kinaugalingon nga galamiton',
 'postcomment'       => 'Bag-o nga seksyon',
-'articlepage'       => 'Lantawon ang panid sang ka-undan',
 'talk'              => 'Paghisayranay',
 'views'             => 'Mga talanawon',
 'toolbox'           => 'Mga galamiton',
@@ -1049,14 +1042,6 @@ Testingan mo i-prefiks ang imo pamangkot upod sang ''tanan:'' para makita mo ang
 Mahimo ka nga magpangita gamit ang Google sa sini nga tion.
 Tandai nga ang ila nga palasulundan sang mga unod sang {{SITENAME}} mahimo nga madaan na.',
 
-# Quickbar
-'qbsettings'                => 'Bar nga mahapos',
-'qbsettings-none'           => 'Wala',
-'qbsettings-fixedleft'      => 'Gintadlong sa wala',
-'qbsettings-fixedright'     => 'Gintadlong sa too',
-'qbsettings-floatingleft'   => 'Nagalutaw sa wala',
-'qbsettings-floatingright'  => 'Nagalutaw sa too',
-'qbsettings-directionality' => 'Indi na maliwat, depende sa direksyon sang iskrip sang imo lenggwahe',
 
 # Preferences page
 'preferences'                   => 'Mga Ginabasehan',

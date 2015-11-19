@@ -264,16 +264,11 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => '&#32;un',
 
-# Cologne Blue skin
 'qbfind'         => 'Finde',
 'qbbrowse'       => 'Blättre',
-'qbedit'         => 'Ändere',
 'qbpageoptions'  => 'Sytenoptione',
 'qbpageinfo'     => 'Sytedate',
-'qbmyoptions'    => 'Ystellige',
-'qbspecialpages' => 'Spezialsytene',
 'faq'            => 'Froge, wo vilmol gstellt wäre',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Aktione',
 'namespaces'                     => 'Namensryym',
@@ -297,7 +292,6 @@ $messages = array(
 'edit'              => 'Ändere',
 'create'            => 'Erstelle',
 'editthispage'      => 'Syte bearbeite',
-'create-this-page'  => 'Die Syte afange',
 'delete'            => 'Lösche',
 'deletethispage'    => 'Syte lösche',
 'undelete_short'    => '{{PLURAL:$1|1 Version|$1 Versione}} widerherstelle',
@@ -313,7 +307,6 @@ $messages = array(
 'specialpage'       => 'Spezialsyte',
 'personaltools'     => 'Persönlichi Wärkzüg',
 'postcomment'       => 'Neje Abschnitt',
-'articlepage'       => 'Syte',
 'talk'              => 'Diskussion',
 'views'             => 'Wievylmol agluegt',
 'toolbox'           => 'Wärkzügkäschtli',
@@ -1117,14 +1110,6 @@ Stell sicher, ass d Versionsgschicht vun eme Artikel historisch korrekt isch.',
 'search-external'                  => 'Externi Suech',
 'searchdisabled'                   => 'D {{SITENAME}}-Suech isch deaktiviert. Du chasch mit Google sueche, s cha aber syy ass dr Suechindex vu Google fir {{SITENAME}} veraltet isch.',
 
-# Quickbar
-'qbsettings'                => 'Syteleischte',
-'qbsettings-none'           => 'Keini',
-'qbsettings-fixedleft'      => 'Links, fescht',
-'qbsettings-fixedright'     => 'Rächts, fescht',
-'qbsettings-floatingleft'   => 'Links, in dr Schwebi',
-'qbsettings-floatingright'  => 'Rächts, in dr Schwebi',
-'qbsettings-directionality' => 'Fescht, abhängig vu dr Schrybrichtig vu dr gwehlte Sproch',
 
 # Preferences page
 'preferences'                   => 'Yystellige',

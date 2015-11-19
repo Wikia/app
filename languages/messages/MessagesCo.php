@@ -78,11 +78,8 @@ $messages = array(
 'navigation' => 'Navigazione',
 'and'        => '&#32;è',
 
-# Cologne Blue skin
 'qbpageoptions'  => 'Issa pagina',
 'qbpageinfo'     => 'Cuntestu',
-'qbmyoptions'    => 'E mo pagine',
-'qbspecialpages' => 'Pagine spiciale',
 
 
 'errorpagetitle'   => 'Errore',
@@ -104,7 +101,6 @@ $messages = array(
 'newpage'          => 'Pagina nova',
 'talkpagelinktext' => 'discussione',
 'specialpage'      => 'Pagina speciale',
-'articlepage'      => "Vede l'articulu",
 'talk'             => 'Discussione',
 'toolbox'          => 'Stuvigli',
 'userpage'         => 'Vede a pagina di utilizatore',

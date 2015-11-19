@@ -508,16 +508,11 @@ $messages = array(
 'navigation'    => '案内',
 'and'           => 'および',
 
-# Cologne Blue skin
 'qbfind'         => '検索',
 'qbbrowse'       => '閲覧',
-'qbedit'         => '編集',
 'qbpageoptions'  => 'このページについて',
 'qbpageinfo'     => '関連情報',
-'qbmyoptions'    => '自分のページ',
-'qbspecialpages' => '特別ページ',
 'faq'            => 'よくある質問と回答',
-'faqpage'        => 'Project:よくある質問と回答',
 
 'actions'                        => '操作',
 'namespaces'                     => '名前空間',
@@ -541,7 +536,6 @@ $messages = array(
 'edit'              => '編集',
 'create'            => '作成',
 'editthispage'      => 'このページを編集',
-'create-this-page'  => 'このページを作成',
 'delete'            => '削除',
 'deletethispage'    => 'このページを削除',
 'undelete_short'    => '{{PLURAL:$1|$1版}}を復帰',
@@ -557,7 +551,6 @@ $messages = array(
 'specialpage'       => '特別ページ',
 'personaltools'     => '個人用ツール',
 'postcomment'       => '新しい節',
-'articlepage'       => '本文を表示',
 'talk'              => '議論',
 'views'             => '表示',
 'toolbox'           => 'ツールボックス',
@@ -1413,14 +1406,6 @@ $1",
 さしあたってはGoogleなどの検索が利用できます。
 ただし外部の検索エンジンの索引にある{{SITENAME}}の情報は古い場合があります。',
 
-# Quickbar
-'qbsettings'                => 'クイックバー',
-'qbsettings-none'           => 'なし',
-'qbsettings-fixedleft'      => '左端',
-'qbsettings-fixedright'     => '右端',
-'qbsettings-floatingleft'   => 'ウィンドウの左上に固定',
-'qbsettings-floatingright'  => 'ウィンドウの右上に固定',
-'qbsettings-directionality' => 'あなたの言語のスクリプトの方向に応じて固定',
 
 # Preferences page
 'preferences'                   => '個人設定',
@@ -3073,7 +3058,6 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 # Stylesheets
 'common.css'              => '/* ここに書いたCSSはすべての外装に反映されます */',
 'standard.css'            => '/* ここに記述したCSSはスタンダード外装の利用者に影響します */',
-'cologneblue.css'         => '/* ここに記述したCSSはケルンブルー外装の利用者に影響します */',
 'monobook.css'            => '/* ここに記述したCSSはモノブック外装の利用者に影響します */',
 'myskin.css'              => '/* ここに記述したCSSはマイスキン外装の利用者に影響します */',
 'chick.css'               => '/* ここに記述したCSSはチック外装の利用者に影響します */',
@@ -3090,7 +3074,6 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 # Scripts
 'common.js'              => '/* ここにあるすべてのJavaScriptは、すべてのページ読み込みですべての利用者に対して読み込まれます */',
 'standard.js'            => '/* ここにあるすべてのJavaScriptは、スタンダード外装を使用している利用者に対して読み込まれます */',
-'cologneblue.js'         => '/* ここにあるすべてのJavaScriptは、ケルンブルー外装を使用している利用者に対して読み込まれます */',
 'monobook.js'            => '/* ここにあるすべてのJavaScriptは、モノブック外装を使用している利用者に対して読み込まれます */',
 'myskin.js'              => '/* ここにあるすべてのJavaScriptは、マイスキン外装を使用している利用者に対して読み込まれます */',
 'chick.js'               => '/* ここにあるすべてのJavaScriptは、チック外装を使用している利用者に対して読み込まれます */',
@@ -3140,7 +3123,6 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 
 # Skin names
 'skinname-standard'    => 'クラシック',
-'skinname-cologneblue' => 'ケルンブルー',
 'skinname-monobook'    => 'モノブック',
 'skinname-myskin'      => 'マイスキン',
 'skinname-chick'       => 'チック',

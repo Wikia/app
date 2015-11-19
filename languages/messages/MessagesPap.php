@@ -64,9 +64,7 @@ $messages = array(
 'navigation'    => 'Nabegashon',
 'and'           => '&#32;i',
 
-# Cologne Blue skin
 'faq'     => 'Preguntanan mas Puntrá',
-'faqpage' => 'Project:Preguntanan mas Puntrá',
 
 'errorpagetitle'    => 'Eror',
 'returnto'          => 'Bai bèk $1.',
@@ -85,7 +83,6 @@ $messages = array(
 'specialpage'       => 'Página Spesial',
 'personaltools'     => 'Hèrmèntnan Personal',
 'postcomment'       => 'Sekshon Nobo',
-'articlepage'       => 'Wak página di kontenido',
 'talk'              => 'Diskushon',
 'views'             => 'Kantidat di biaha mirá',
 'toolbox'           => 'Kaha di Hèrmènt',

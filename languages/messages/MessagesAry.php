@@ -160,16 +160,11 @@ $messages = array(
 'navigation'    => 'Navigasyon',
 'and'           => '&#32;o',
 
-# Cologne Blue skin
 'qbfind'         => 'Lqa',
 'qbbrowse'       => 'ṫsffeh',
-'qbedit'         => 'Ĝedel',
 'qbpageoptions'  => "Had 'ṣ-ṣefḫa",
 'qbpageinfo'     => 'L-Meḍmon',
-'qbmyoptions'    => "'Ṣ-Ṣefḫaṫ dyawli",
-'qbspecialpages' => 'Ṣefḫaṫ ĥaṣṣin',
 'faq'            => 'asaila kaytaawdo bzaf',
-'faqpage'        => 'Project:asaila kaytaawdo',
 
 'actions'                        => 'afaal',
 'namespaces'                     => 'Maḫel s-smiyyaṫ :',
@@ -193,7 +188,6 @@ $messages = array(
 'edit'              => 'Ṣayeb',
 'create'            => 'Ĥṫareĝ',
 'editthispage'      => 'Ĝeddel had ṣ-ṣefḫa',
-'create-this-page'  => "Ĥṫareĝ had 'ṣ-ṣefḫa",
 'delete'            => 'Mḫi',
 'deletethispage'    => "Suprimi had 'ṣ-ṣefḫa",
 'undelete_short'    => 'strjaa {{PLURAL:$1|wahd taadil|$1 taadil}}',
@@ -209,7 +203,6 @@ $messages = array(
 'specialpage'       => 'Ṣefḫa ĥaṣa',
 'personaltools'     => 'Adawaṫ ċeĥṣiya',
 'postcomment'       => 'Seksyon jdida',
-'articlepage'       => 'Ċof l-li fe ṣ-ṣefḫa',
 'talk'              => 'Modakara',
 'views'             => 'Afiċaj',
 'toolbox'           => "Ṣendoq l-'adawaṫ",
@@ -973,14 +966,6 @@ Jerreb be l-préfiks \"all:\" baċ ṫqelleb ĝla l-meḍmon kollo (o ḫṫa �
 Imken lik ṫqeleb fe google.
 Laḫed ana imken ikono l-indexaṫ dial {{SITENAME}} qdam o ma bqaoċ ṣalḫin.',
 
-# Quickbar
-'qbsettings'                => "L-lawḫa 's-sariĝa",
-'qbsettings-none'           => 'Ma kaynċ',
-'qbsettings-fixedleft'      => "Meḫbos fe 'ċ-ċmal",
-'qbsettings-fixedright'     => "Meḫbos fe 'l-limin",
-'qbsettings-floatingleft'   => "Ḫor fe 'ċ-ċmal",
-'qbsettings-floatingright'  => "Ḫor fe 'l-limen",
-'qbsettings-directionality' => 'ṫabṫ, ĝla ḫasab ṫṫijah l-kṫaba b-loġṫk',
 
 # Preferences page
 'preferences'                   => 'ṫfḍilaṫ',

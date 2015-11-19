@@ -81,13 +81,9 @@ $messages = array(
 'mytalk'        => 'Tingcoco tami',
 'anontalk'      => 'Tingcogco letentwe ngulelikheli lale-IP',
 
-# Cologne Blue skin
 'qbfind'         => 'Tfola',
 'qbbrowse'       => 'Browse',
-'qbedit'         => 'Hlela',
 'qbpageoptions'  => 'Lelikhasi',
-'qbmyoptions'    => 'Makhasi ami',
-'qbspecialpages' => 'Emakhasi labalulekile',
 
 'actions'                  => 'Tento',
 
@@ -103,7 +99,6 @@ $messages = array(
 'edit'              => 'Hlela',
 'create'            => 'Yakha',
 'editthispage'      => 'Hlela lelikhasi',
-'create-this-page'  => 'Yakha lelikhasi',
 'delete'            => 'Sula',
 'deletethispage'    => 'Sula lelikhasi',
 'protect'           => 'Vikela',
@@ -117,7 +112,6 @@ $messages = array(
 'specialpage'       => 'Likhasi lelibalulekile',
 'personaltools'     => 'Mathulusi emuntfu',
 'postcomment'       => 'Sihloko lesinsha',
-'articlepage'       => 'Bona likhasi lelicuketse',
 'talk'              => 'Ingcoco',
 'views'             => 'Kubukeka',
 'toolbox'           => 'Libhokisi Lemathulusi',
@@ -213,8 +207,6 @@ $1',
 Ungasesha nge Google.
 Naka kutsi makhasi abo e {{SITENAME}} angaba sekadlulelwe sikhatsi.',
 
-# Quickbar
-'qbsettings-none' => 'Kute',
 
 # Preferences page
 'searchresultshead' => 'Sesha',

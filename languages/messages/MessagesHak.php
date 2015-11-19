@@ -130,16 +130,11 @@ $messages = array(
 'navigation'    => 'Thô-hòng',
 'and'           => '&#32;lâu',
 
-# Cologne Blue skin
 'qbfind'         => 'Chhìm-cháu',
 'qbbrowse'       => 'Chhà-khon',
-'qbedit'         => 'Phiên-siá',
 'qbpageoptions'  => 'Vùn-chông sién-hong',
 'qbpageinfo'     => 'Vùn-chông chṳ̂-liau',
-'qbmyoptions'    => 'Ngô-ke sién-hong',
-'qbspecialpages' => 'Thi̍t-sû hong-mien',
 'faq'            => 'Sòng-kien mun-thì kié-tap',
-'faqpage'        => 'Project:Sòng-kien mun-thì kié-tap',
 
 
 'errorpagetitle'    => 'Chho-ngu',
@@ -159,7 +154,6 @@ $messages = array(
 'edit'              => 'Phiên-chho',
 'create'            => 'Tshóng-kien',
 'editthispage'      => 'Phiên-siá pún-chông',
-'create-this-page'  => 'Tshóng-kien liá-ke vùn-tsông',
 'delete'            => 'Chhù-thet',
 'deletethispage'    => 'Chhù-thet pún-chông',
 'undelete_short'    => 'Fî-fu̍k yî-chhièn $1-ke pán-pún',
@@ -174,7 +168,6 @@ $messages = array(
 'specialpage'       => 'Thi̍t-sû hong-mien',
 'personaltools'     => 'Ke-ngìn kûng-khí',
 'postcomment'       => 'Fat-péu phìn-lun',
-'articlepage'       => 'Chhà-khon vùn-chông',
 'talk'              => 'Thó-lun',
 'views'             => 'Kiám-sṳ',
 'toolbox'           => 'Kûng-khí-siông',
@@ -629,13 +622,6 @@ Tông-tsûng pûn $3 fûng-só ke ngièn-yîn he ''$2''",
 'powersearch-togglelabel'   => 'Kiám-chhà:',
 'searchdisabled'            => '{{SITENAME}} sin-nèn fông-mien ke ngièn-yîn, chhiòn-vùn chhìm-cháu yí-kîn pûn chhiam-sṳ̀ thìn-yung. Ngì khó-yî chhiam-sṳ̀ theu-ko Google chhà-chhìm. Chhiáng liù-yi sok-yîn khó-nèn voi ko-sṳ̀.',
 
-# Quickbar
-'qbsettings'               => 'Khoai-suk thô-hòng-thiàu',
-'qbsettings-none'          => 'Mò',
-'qbsettings-fixedleft'     => 'Hiong-chó ku-thin',
-'qbsettings-fixedright'    => 'Hiong-yu ku-thin',
-'qbsettings-floatingleft'  => 'Phêu-yì chhai chó',
-'qbsettings-floatingright' => 'Phêu-yì chhai yu',
 
 # Preferences page
 'preferences'           => 'Chhâm-su sat-chṳ',

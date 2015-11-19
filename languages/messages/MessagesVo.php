@@ -253,16 +253,11 @@ $messages = array(
 'navigation'    => 'Nafam',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Tuvön',
 'qbbrowse'       => 'Padön',
-'qbedit'         => 'Redakön',
 'qbpageoptions'  => 'Pad at',
 'qbpageinfo'     => 'Yumed',
-'qbmyoptions'    => 'Pads obik',
-'qbspecialpages' => 'Pads patik',
 'faq'            => 'Säks suvo pasäköls',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                    => 'Duns',
 'namespaces'                 => 'Nemaspads',
@@ -285,7 +280,6 @@ $messages = array(
 'edit'              => 'Redakön',
 'create'            => 'Jafön',
 'editthispage'      => 'Redakolöd padi at',
-'create-this-page'  => 'Jafön padi at',
 'delete'            => 'Moükön',
 'deletethispage'    => 'Moükolös padi at',
 'undelete_short'    => 'Sädunön moükami {{PLURAL:$1|redakama bal|redakamas $1}}',
@@ -300,7 +294,6 @@ $messages = array(
 'specialpage'       => 'Pad patik',
 'personaltools'     => 'Stums pösodik',
 'postcomment'       => 'Diläd nulik',
-'articlepage'       => 'Jonön ninädapadi',
 'talk'              => 'Bespik',
 'views'             => 'Logams',
 'toolbox'           => 'Stumem',
@@ -956,13 +949,6 @@ Kontrololös, va votükam at okipon fovöfi padajenotema.',
 'search-external'                  => 'Suk plödik',
 'searchdisabled'                   => 'Suk in {{SITENAME}} penemogükon. Vütimo kanol sukön yufü el Google. Demolös, das liseds onik tefü ninäd in {{SITENAME}} ba no binon anuik.',
 
-# Quickbar
-'qbsettings'               => 'Stumem',
-'qbsettings-none'          => 'Nonik',
-'qbsettings-fixedleft'     => 'nedeto (fimiko)',
-'qbsettings-fixedright'    => 'Deto (fimiko)',
-'qbsettings-floatingleft'  => 'nedeto (vebölo)',
-'qbsettings-floatingright' => 'deto (vebölo)',
 
 # Preferences page
 'preferences'               => 'Buükams',

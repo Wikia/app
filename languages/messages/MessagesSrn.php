@@ -272,16 +272,11 @@ $messages = array(
 'navigation'    => 'Fenipresi',
 'and'           => '&#32;nanga',
 
-# Cologne Blue skin
 'qbfind'         => 'Suku',
 'qbbrowse'       => 'Browse',
-'qbedit'         => 'Kenki',
 'qbpageoptions'  => 'A papira disi',
 'qbpageinfo'     => 'Abra a papira',
-'qbmyoptions'    => 'Mi papira',
-'qbspecialpages' => 'Spesrutu papira',
 'faq'            => 'FAQ (Sani di ben aksi furu)',
-'faqpage'        => 'Project:Sani di ben aksi furu',
 
 'errorpagetitle'    => 'Fowtu',
 'returnto'          => 'Drai baka go na $1.',
@@ -300,7 +295,6 @@ $messages = array(
 'edit'              => 'Kenki',
 'create'            => 'Meki',
 'editthispage'      => 'Kenki a papira disi',
-'create-this-page'  => 'Meki a papira disi',
 'delete'            => 'Puru',
 'deletethispage'    => 'Puru a papira disi',
 'undelete_short'    => 'Poti $1 {{PLURAL:$1|kenki|kenki}} baka',
@@ -315,7 +309,6 @@ $messages = array(
 'specialpage'       => 'Spesrutu papira',
 'personaltools'     => 'Mi eigi wrokosani',
 'postcomment'       => 'Poti wan boskopu',
-'articlepage'       => 'Luku a papira',
 'talk'              => 'Taki',
 'views'             => 'Views',
 'toolbox'           => 'Wrokosani baki',
@@ -644,13 +637,6 @@ A kan ben trowe efu dribi.
 'searchhelp-url'        => 'Help:San de',
 'powersearch'           => 'Suku moro dipi',
 
-# Quickbar
-'qbsettings'               => 'Kwikbak',
-'qbsettings-none'          => 'Nowan',
-'qbsettings-fixedleft'     => 'Set na ku',
-'qbsettings-fixedright'    => 'Set na pe',
-'qbsettings-floatingleft'  => 'Han na ku',
-'qbsettings-floatingright' => 'Han na pe',
 
 # Preferences page
 'preferences'               => 'Seti',

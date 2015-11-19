@@ -156,16 +156,11 @@ $messages = array(
 'navigation'    => 'Навигацэ',
 'and'           => '&#32;икIи',
 
-# Cologne Blue skin
 'qbfind'         => 'Лъыхъуэн',
 'qbbrowse'       => 'Хэплъэн',
-'qbedit'         => 'Гъэтэрэзын',
 'qbpageoptions'  => 'НапэкӀуэцӀым и зэгъэзэхуэгъуэр',
 'qbpageinfo'     => 'НапэкIуэцIым теухуауэ',
-'qbmyoptions'    => 'Уи зэгъэзэхуэгъуэхэр',
-'qbspecialpages' => 'Специал напэкӀуэцӀхэр',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'ЩӀыгъэхэр',
 'namespaces'                     => 'ЦӀэхэм я пӀэр',
@@ -189,7 +184,6 @@ $messages = array(
 'edit'              => 'Гъэтэрэзын',
 'create'            => 'ЩIын',
 'editthispage'      => 'Мы напэкIуэцIыр гъэтэрэзын',
-'create-this-page'  => 'Мыбы и напэкӀуэцӀ щӀын',
 'delete'            => 'Ихын',
 'deletethispage'    => 'Мы напэкӀуэцӀыр ихын',
 'undelete_short'    => 'ЗэфӀэгъэувэжын $1 {{PLURAL:$1|гъэтэрэзыгъуэ|гъэтэрэзыгъуэхэр}}',
@@ -205,7 +199,6 @@ $messages = array(
 'specialpage'       => 'Лэжыгъэ напэкӀуэцӀ',
 'personaltools'     => 'Уи Ӏэмэпсымэхэр',
 'postcomment'       => 'ЛъэныкъуэщӀэ',
-'articlepage'       => 'Тхыгъэм хэплъэн',
 'talk'              => 'Тепсэлъэхьыгъуэ',
 'views'             => 'Зыхэплъахэр',
 'toolbox'           => 'Ӏэмэпсымэхэр',

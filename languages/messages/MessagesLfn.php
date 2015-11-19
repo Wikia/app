@@ -145,14 +145,10 @@ $messages = array(
 'navigation'    => 'Naviga',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Trova',
 'qbbrowse'       => 'Surfa',
-'qbedit'         => 'Edita',
 'qbpageoptions'  => 'Esta paje',
 'qbpageinfo'     => 'Situa',
-'qbmyoptions'    => 'Me pajes',
-'qbspecialpages' => 'Pajes spesial',
 
 'errorpagetitle'    => 'Era',
 'returnto'          => 'Restora a $1.',
@@ -171,7 +167,6 @@ $messages = array(
 'edit'              => 'Cambia',
 'create'            => 'Crea',
 'editthispage'      => 'Cambia esta paje',
-'create-this-page'  => 'Crea esta paje',
 'delete'            => 'Sutrae',
 'deletethispage'    => 'Sutrae esta paje',
 'undelete_short'    => 'Desutrae {{PLURAL:$1|edita|editas}}',
@@ -186,7 +181,6 @@ $messages = array(
 'specialpage'       => 'Paje spesial',
 'personaltools'     => 'Utiles personal',
 'postcomment'       => 'Sesion nova',
-'articlepage'       => 'Vide la paje de contenis',
 'talk'              => 'Discutes',
 'views'             => 'Vides',
 'toolbox'           => 'Utiles',

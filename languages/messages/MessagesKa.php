@@ -263,16 +263,11 @@ $messages = array(
 'navigation'    => 'ნავიგაცია',
 'and'           => '&#32;და',
 
-# Cologne Blue skin
 'qbfind'         => 'მოძებნე',
 'qbbrowse'       => 'გადახედე',
-'qbedit'         => 'რედაქტირება',
 'qbpageoptions'  => 'ეს გვერდი',
 'qbpageinfo'     => 'კონტექსტი',
-'qbmyoptions'    => 'ჩემი გვერდები',
-'qbspecialpages' => 'სპეციალური გვერდები',
 'faq'            => 'ხშირი შეკითხვები',
-'faqpage'        => 'Project:ხშირი შეკითხვები',
 
 'actions'                    => 'მოქმედებები',
 'namespaces'                 => 'სახელთა სივრცე',
@@ -296,7 +291,6 @@ $messages = array(
 'edit'              => 'რედაქტირება',
 'create'            => 'შექმნა',
 'editthispage'      => 'გვერდის რედაქტირება',
-'create-this-page'  => 'ამ გვერდის შექმნა',
 'delete'            => 'წაშლა',
 'deletethispage'    => 'გვერდის წაშლა',
 'undelete_short'    => 'გააუქმე წაშლა {{PLURAL:$1|ერთი რედაქტირება|$1 რედაქტირება}}',
@@ -311,7 +305,6 @@ $messages = array(
 'specialpage'       => 'სპეციალური გვერდი',
 'personaltools'     => 'პირადი ხელსაწყოები',
 'postcomment'       => 'ახალი სექცია',
-'articlepage'       => 'სტატიის ნახვა',
 'talk'              => 'განხილვა',
 'views'             => 'გადახედვა',
 'toolbox'           => 'ინსტრუმენტები',
@@ -1059,13 +1052,6 @@ $1",
 'search-external'                  => 'გარე ძიება',
 'searchdisabled'                   => '{{SITENAME}}ში ძებნა გაუქმებულია. თქვენ შეგიძლიათ დროის შუალედით Google-ით ძებნა. მიაქციეთ ყურადღება, რომ {{SITENAME}}ში შესაძლებელია მათი ინდექსები აქტუალური არ არის.',
 
-# Quickbar
-'qbsettings'               => 'სწრაფი ზოლი',
-'qbsettings-none'          => 'არაფერი',
-'qbsettings-fixedleft'     => 'ფიქსირებული მარცხნივ',
-'qbsettings-fixedright'    => 'ფიქსირებული მარჯვნივ',
-'qbsettings-floatingleft'  => 'მარცხნივ მცურავი',
-'qbsettings-floatingright' => 'მარჯვნივ მცურავი',
 
 # Preferences page
 'preferences'                   => 'კონფიგურაცია',

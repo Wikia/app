@@ -284,16 +284,11 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Cercar',
 'qbbrowse'       => 'Foliar',
-'qbedit'         => 'Modificar',
 'qbpageoptions'  => 'Iste pagina',
 'qbpageinfo'     => 'Contexto',
-'qbmyoptions'    => 'Mi paginas',
-'qbspecialpages' => 'Paginas special',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Actiones',
 'namespaces'                     => 'Spatios de nomines',
@@ -317,7 +312,6 @@ $messages = array(
 'edit'              => 'Modificar',
 'create'            => 'Crear',
 'editthispage'      => 'Modificar iste pagina',
-'create-this-page'  => 'Crear iste pagina',
 'delete'            => 'Deler',
 'deletethispage'    => 'Deler iste pagina',
 'undelete_short'    => 'Restaurar {{PLURAL:$1|un modification|$1 modificationes}}',
@@ -333,7 +327,6 @@ $messages = array(
 'specialpage'       => 'Pagina special',
 'personaltools'     => 'Instrumentos personal',
 'postcomment'       => 'Nove section',
-'articlepage'       => 'Vider pagina de contento',
 'talk'              => 'Discussion',
 'views'             => 'Representationes',
 'toolbox'           => 'Instrumentario',
@@ -1181,14 +1174,6 @@ Tenta prefixar tu consulta con ''all:'' pro cercar in tote le contento (includen
 Tu pote cercar via Google in le interim.
 Nota que lor indices del contento de {{SITENAME}} pote esser obsolete.',
 
-# Quickbar
-'qbsettings'                => 'Barra rapide',
-'qbsettings-none'           => 'Necun',
-'qbsettings-fixedleft'      => 'Fixe a sinistra',
-'qbsettings-fixedright'     => 'Fixe a dextra',
-'qbsettings-floatingleft'   => 'Flottante a sinistra',
-'qbsettings-floatingright'  => 'Flottante a dextra',
-'qbsettings-directionality' => 'Fixe, dependente del direction de scriptura de tu lingua',
 
 # Preferences page
 'preferences'                   => 'Preferentias',
@@ -2872,7 +2857,6 @@ Es possibile adder un motivo in le summario.',
 # Stylesheets
 'common.css'      => '/* Le CSS placiate hic se applicara a tote le stilos */',
 'standard.css'    => '/* Le CSS placiate hic afficera le usatores del apparentia Classic */',
-'cologneblue.css' => '/* Le CSS placiate hic afficera le usatores del apparentia Colonia Blau */',
 'monobook.css'    => '/* Le CSS placiate hic afficera le usatores del apparentia MonoBook */',
 'myskin.css'      => '/* Le CSS placiate hic afficera le usatores del apparentia "Mi apparentia" */',
 'chick.css'       => '/* Le CSS placiate hic afficera le usatores del apparentia Chique */',
@@ -2884,7 +2868,6 @@ Es possibile adder un motivo in le summario.',
 # Scripts
 'common.js'      => '/* Omne JavaScript hic se executara pro tote le usatores a cata cargamento de pagina. */',
 'standard.js'    => '/* Omne JavaScript hic se executara pro le usatores del apparentia Classic */',
-'cologneblue.js' => '/* Omne JavaScript hic se executara pro le usatores del apparentia Colonia Blau */',
 'monobook.js'    => '/* Omne JavaScript hic se executara pro le usatores del apparentia MonoBook */',
 'myskin.js'      => '/* Omne JavaScript hic se executara pro le usatores del apparentia "Mi apparentia" */',
 'chick.js'       => '/* Omne JavaScript hic se executara pro le usatores del apparentia Chique */',
@@ -2930,7 +2913,6 @@ Le causa es probabilemente un ligamine verso un sito externe que es presente in 
 
 # Skin names
 'skinname-standard'    => 'Classic',
-'skinname-cologneblue' => 'Colonia Blau',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Mi apparentia',
 'skinname-chick'       => 'Chique',

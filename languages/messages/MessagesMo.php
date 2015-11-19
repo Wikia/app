@@ -73,7 +73,6 @@ $messages = array(
 'mytalk'     => 'Дискуцииле меле',
 'navigation' => 'Навигаре',
 
-# Cologne Blue skin
 'qbfind' => 'Гэсеште',
 
 'errorpagetitle'   => 'Ероаре',

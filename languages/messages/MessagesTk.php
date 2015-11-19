@@ -176,16 +176,11 @@ kiçi kategoriýadan {{PLURAL:$1|sany kiçi kategoriýa|$1 sany kiçi kategoriý
 'navigation'    => 'Nawigasiýa',
 'and'           => '&#32;we',
 
-# Cologne Blue skin
 'qbfind'         => 'Tap',
 'qbbrowse'       => 'Göz aýla',
-'qbedit'         => 'Redaktirle',
 'qbpageoptions'  => 'Bu sahypa',
 'qbpageinfo'     => 'Kontekst',
-'qbmyoptions'    => 'Meniň sahypalarym',
-'qbspecialpages' => 'Ýörite sahypalar',
 'faq'            => 'KSS',
-'faqpage'        => 'Project:KSS',
 
 'actions'                        => 'Hereketler',
 'namespaces'                     => 'At giňişlikleri',
@@ -209,7 +204,6 @@ kiçi kategoriýadan {{PLURAL:$1|sany kiçi kategoriýa|$1 sany kiçi kategoriý
 'edit'              => 'Redaktirle',
 'create'            => 'Döret',
 'editthispage'      => 'Bu sahypany redaktirle',
-'create-this-page'  => 'Bu sahypany döret',
 'delete'            => 'Öçür',
 'deletethispage'    => 'Bu sahypany öçür',
 'undelete_short'    => '{{PLURAL:$1|özgerdişi|$1 özgerdişi}} yzyna getir',
@@ -224,7 +218,6 @@ kiçi kategoriýadan {{PLURAL:$1|sany kiçi kategoriýa|$1 sany kiçi kategoriý
 'specialpage'       => 'Ýörite Sahypa',
 'personaltools'     => 'Şahsy gurallar',
 'postcomment'       => 'Täze bölüm',
-'articlepage'       => 'Makalany görkez',
 'talk'              => 'Çekişme',
 'views'             => 'Keşpler',
 'toolbox'           => 'Gural sandygy',
@@ -987,13 +980,6 @@ Gözlegiňiziň başyna '''all:''' pristawkasyny goşup tutuş mazmuny (şol san
 Ýogsa-da, oňa çenli Google bilen gözleg geçirip bilersiňiz.
 Emma olaryň {{SITENAME}} indeksleriniň möwriti geçen bolmagy mümkindir.',
 
-# Quickbar
-'qbsettings'               => 'Tiz panel',
-'qbsettings-none'          => 'Hiç biri',
-'qbsettings-fixedleft'     => 'Çepe berkidildi',
-'qbsettings-fixedright'    => 'Saga berkidildi',
-'qbsettings-floatingleft'  => 'Çepe ýaplanýar',
-'qbsettings-floatingright' => 'Saga ýaplanýar',
 
 # Preferences page
 'preferences'                   => 'Ileri tutmalar',

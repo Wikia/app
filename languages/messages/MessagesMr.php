@@ -459,16 +459,11 @@ $messages = array(
 'navigation' => 'सुचालन',
 'and' => '&#32;आणि',
 
-# Cologne Blue skin
 'qbfind' => 'शोधा',
 'qbbrowse' => 'न्याहाळा',
-'qbedit' => 'संपादन',
 'qbpageoptions' => 'हे पान',
 'qbpageinfo' => 'सामग्री',
-'qbmyoptions' => 'माझी पाने',
-'qbspecialpages' => 'विशेष पाने',
 'faq' => 'नेहमीची प्रश्नावली',
-'faqpage' => 'Project:प्रश्नावली',
 
 'actions' => 'क्रिया',
 'namespaces' => 'नामविश्वे',
@@ -492,7 +487,6 @@ $messages = array(
 'edit' => 'संपादन',
 'create' => 'तयार करा',
 'editthispage' => 'हे पृष्ठ संपादित करा',
-'create-this-page' => 'हे पान तयार करा',
 'delete' => 'वगळा',
 'deletethispage' => 'हे पृष्ठ काढून टाका',
 'undelete_short' => 'पुनर्स्थापन {{PLURAL:$1|एक संपादन|$1 संपादने}}',
@@ -508,7 +502,6 @@ $messages = array(
 'specialpage' => 'विशेष पृष्ठ',
 'personaltools' => 'वैयक्तिक साधने',
 'postcomment' => 'नवीन चर्चा',
-'articlepage' => 'लेख पृष्ठ',
 'talk' => 'चर्चा',
 'views' => 'दृष्ये',
 'toolbox' => 'साधनपेटी',
@@ -1283,14 +1276,6 @@ $1",
 'search-external' => 'बाह्य शोध',
 'searchdisabled' => '{{SITENAME}} शोध अनुपलब्ध केला आहे.तो पर्यंत गूगलवरून शोध घ्या.{{SITENAME}}च्या मजकुराची त्यांची सूचिबद्धता शिळी असण्याची शक्यता असु शकते हे लक्षात घ्या.',
 
-# Quickbar
-'qbsettings' => 'शीघ्रपट',
-'qbsettings-none' => 'नाही',
-'qbsettings-fixedleft' => 'स्थिर डावे',
-'qbsettings-fixedright' => 'स्थिर ऊजवे',
-'qbsettings-floatingleft' => 'तरंगते डावे',
-'qbsettings-floatingright' => 'तरंगते ऊजवे',
-'qbsettings-directionality' => 'तुमच्या भाशा ची पद्धत दिशात्मक असली पाहिजे.',
 
 # Preferences page
 'preferences' => 'माझ्या पसंती',
@@ -2934,7 +2919,6 @@ $1',
 
 # Skin names
 'skinname-standard' => 'अभिजात',
-'skinname-cologneblue' => 'सुरेखनीळी',
 'skinname-monobook' => 'मोनोबुक',
 'skinname-myskin' => 'माझीकांती',
 'skinname-chick' => 'मस्त',

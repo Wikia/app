@@ -68,16 +68,11 @@ $messages = array(
 'navigation' => 'Navigasi',
 'and'        => '&#32;na',
 
-# Cologne Blue skin
 'qbfind'         => 'Assapparang',
 'qbbrowse'       => 'Berowoso',
-'qbedit'         => 'Padécéŋ',
 'qbpageoptions'  => 'Édé leppa',
 'qbpageinfo'     => 'Konteks',
-'qbmyoptions'    => "Leppana iya'",
-'qbspecialpages' => 'Leppa spésiala',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 
 'errorpagetitle'   => 'Asalaŋ',
@@ -94,7 +89,6 @@ $messages = array(
 'edit'             => 'Padécéŋ',
 'create'           => 'Ebbu',
 'editthispage'     => 'Padécéŋiki iyé leppa',
-'create-this-page' => 'Ebbuiki leppa iyé',
 'delete'           => 'Peddé',
 'deletethispage'   => 'Peddé iyé leppa',
 'protect'          => 'Accalinruŋi',
@@ -106,7 +100,6 @@ $messages = array(
 'talkpagelinktext' => 'Bicara',
 'specialpage'      => 'Leppa spésiala',
 'personaltools'    => 'Tool sialé-alé',
-'articlepage'      => 'Ita lontara',
 'talk'             => 'Bicara',
 'toolbox'          => 'Toolbox',
 'userpage'         => 'Ita leppa papaké',
@@ -243,8 +236,6 @@ $messages = array(
 'search-result-size'    => '$1 ({{PLURAL:$2|1 ada|$2 ada}})',
 'search-redirect'       => '(redirect $1)',
 
-# Quickbar
-'qbsettings-none' => 'Dégaga',
 
 # Preferences page
 'mypreferences'     => 'Bérékkeŋeŋna iyya',

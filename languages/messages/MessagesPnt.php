@@ -155,16 +155,11 @@ $messages = array(
 'navigation'    => 'Πορπάτεμαν',
 'and'           => '&#32;και',
 
-# Cologne Blue skin
 'qbfind'         => 'Εύρον',
 'qbbrowse'       => 'Πλοήγησην',
-'qbedit'         => 'Άλλαξον',
 'qbpageoptions'  => 'Ατή η σελίδαν',
 'qbpageinfo'     => 'Συμφραζόμενα',
-'qbmyoptions'    => "Τ' εμά τα σελίδας",
-'qbspecialpages' => 'Ειδικά σελίδας',
 'faq'            => 'Πολλά ερωτήσεις (FAQ)',
-'faqpage'        => 'Project:Πολλά ερωτήσεις (FAQ)',
 
 'actions'                 => 'Ενέργειας',
 'namespaces'              => 'Περιοχάς',
@@ -187,7 +182,6 @@ $messages = array(
 'edit'              => 'Άλλαξον',
 'create'            => 'Ποίσον',
 'editthispage'      => 'Άλλαξον τη σελίδαν ατέν',
-'create-this-page'  => 'Ποίσον τη σελίδαν',
 'delete'            => 'Σβήσον',
 'deletethispage'    => 'Σβήσεμαν τη σελίδας',
 'undelete_short'    => 'Κλώσιμον {{PLURAL:$1|αλλαγματί|$1 αλλαγματίων}}',
@@ -202,7 +196,6 @@ $messages = array(
 'specialpage'       => 'Ειδικόν σελίδαν',
 'personaltools'     => 'Προσωπικά εργαλεία',
 'postcomment'       => "Νέον κομμάτ'",
-'articlepage'       => 'Σελίδα',
 'talk'              => 'Καλάτσεμαν',
 'views'             => 'Τερέματα',
 'toolbox'           => 'Εργαλεία',
@@ -602,8 +595,6 @@ $messages = array(
 'powersearch-togglenone'    => 'Τιδέν',
 'search-external'           => 'Εύρον σα εξ μερέαν',
 
-# Quickbar
-'qbsettings-none' => 'Τιδέν',
 
 # Preferences page
 'preferences'               => 'Αγαπεμένα',

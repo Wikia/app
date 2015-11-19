@@ -400,16 +400,11 @@ $messages = array(
 'navigation'    => 'Navigazione',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Trova',
 'qbbrowse'       => 'Sfoglia',
-'qbedit'         => 'Modifica',
 'qbpageoptions'  => 'Opzioni pagina',
 'qbpageinfo'     => 'Informazioni sulla pagina',
-'qbmyoptions'    => 'Le mie pagine',
-'qbspecialpages' => 'Pagine speciali',
 'faq'            => 'Domande frequenti',
-'faqpage'        => 'Project:Domande frequenti',
 
 'actions'                        => 'Azioni',
 'namespaces'                     => 'Namespace',
@@ -433,7 +428,6 @@ $messages = array(
 'edit'              => 'Modifica',
 'create'            => 'Crea',
 'editthispage'      => 'Modifica questa pagina',
-'create-this-page'  => 'Crea questa pagina',
 'delete'            => 'Cancella',
 'deletethispage'    => 'Cancella questa pagina',
 'undelete_short'    => 'Recupera {{PLURAL:$1|una revisione|$1 revisioni}}',
@@ -449,7 +443,6 @@ $messages = array(
 'specialpage'       => 'Pagina speciale',
 'personaltools'     => 'Strumenti personali',
 'postcomment'       => 'Nuova sezione',
-'articlepage'       => 'Vedi la voce',
 'talk'              => 'Discussione',
 'views'             => 'Visite',
 'toolbox'           => 'Strumenti',
@@ -1233,14 +1226,6 @@ $1",
 'search-external'                  => 'Ricerca esterna',
 'searchdisabled'                   => 'La ricerca interna di {{SITENAME}} non è attiva; nel frattempo si può provare ad usare un motore di ricerca esterno come Google. (Si noti però che i contenuti di {{SITENAME}} presenti in tali motori potrebbero non essere aggiornati.)',
 
-# Quickbar
-'qbsettings'                => 'Quickbar',
-'qbsettings-none'           => 'Nessuno',
-'qbsettings-fixedleft'      => 'Fisso a sinistra',
-'qbsettings-fixedright'     => 'Fisso a destra',
-'qbsettings-floatingleft'   => 'Fluttuante a sinistra',
-'qbsettings-floatingright'  => 'Fluttuante a destra',
-'qbsettings-directionality' => 'Fisso, a seconda della direzione del testo nella tua lingua',
 
 # Preferences page
 'preferences'                   => 'Preferenze',
@@ -2842,7 +2827,6 @@ Tutte le operazioni di importazione trans-wiki sono registrate nel [[Special:Log
 # Stylesheets
 'common.css'              => '/* Gli stili CSS inseriti qui si applicano a tutte le skin */',
 'standard.css'            => '/* Gli stili CSS inseriti qui si applicano agli utenti che usano la skin Standard */',
-'cologneblue.css'         => '/* Gli stili CSS inseriti qui si applicano agli utenti che usano la skin Cologne Blue */',
 'monobook.css'            => '/* Gli stili CSS inseriti qui si applicano agli utenti che usano la skin Monobook */',
 'myskin.css'              => '/* Gli stili CSS inseriti qui si applicano agli utenti che usano la skin MySkin */',
 'chick.css'               => '/* Gli stili CSS inseriti qui si applicano agli utenti che usano la skin Chick */',
@@ -2859,7 +2843,6 @@ Tutte le operazioni di importazione trans-wiki sono registrate nel [[Special:Log
 # Scripts
 'common.js'              => '/* Il codice JavaScript inserito qui viene caricato da ciascuna pagina, per tutti gli utenti. */',
 'standard.js'            => '/* Il codice JavaScript inserito qui viene caricato dagli utenti che usano la skin Standard */',
-'cologneblue.js'         => '/* Il codice JavaScript inserito qui viene caricato dagli utenti che usano la skin Cologne Blue */',
 'monobook.js'            => '/* Il codice JavaScript inserito qui viene caricato dagli utenti che usano la skin MonoBook */',
 'myskin.js'              => '/* Il codice JavaScript inserito qui viene caricato dagli utenti che usano la skin MySkin */',
 'chick.js'               => '/* Il codice JavaScript inserito qui viene caricato dagli utenti che usano la skin Chick */',

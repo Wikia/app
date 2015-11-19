@@ -493,16 +493,11 @@ $messages = array(
 'navigation' => 'ניווט',
 'and' => '&#32;וגם',
 
-# Cologne Blue skin
 'qbfind' => 'חיפוש',
 'qbbrowse' => 'דפדוף',
-'qbedit' => 'עריכה',
 'qbpageoptions' => 'אפשרויות דף',
 'qbpageinfo' => 'מידע על הדף',
-'qbmyoptions' => 'האפשרויות שלי',
-'qbspecialpages' => 'דפים מיוחדים',
 'faq' => 'שאלות ותשובות',
-'faqpage' => 'Project:שאלות ותשובות',
 
 'actions' => 'פעולות',
 'namespaces' => 'מרחבי שם',
@@ -526,7 +521,6 @@ $messages = array(
 'edit' => 'עריכה',
 'create' => 'יצירה',
 'editthispage' => 'עריכת דף זה',
-'create-this-page' => 'יצירת דף זה',
 'delete' => 'מחיקה',
 'deletethispage' => 'מחיקת דף זה',
 'undelete_short' => 'שחזור {{PLURAL:$1|עריכה אחת|$1 עריכות}}',
@@ -542,7 +536,6 @@ $messages = array(
 'specialpage' => 'דף מיוחד',
 'personaltools' => 'כלים אישיים',
 'postcomment' => 'פסקה חדשה',
-'articlepage' => 'צפייה בדף התוכן',
 'talk' => 'שיחה',
 'views' => 'צפיות',
 'toolbox' => 'תיבת כלים',
@@ -1386,14 +1379,6 @@ $1",
 בינתיים אפשר לחפש באמצעות גוגל.
 שימו לב שייתכן שהמידע של {{SITENAME}} שם אינו מעודכן.',
 
-# Quickbar
-'qbsettings' => 'הגדרות סרגל כלים',
-'qbsettings-none' => 'ללא',
-'qbsettings-fixedleft' => 'קבוע משמאל',
-'qbsettings-fixedright' => 'קבוע מימין',
-'qbsettings-floatingleft' => 'צף משמאל',
-'qbsettings-floatingright' => 'צף מימין',
-'qbsettings-directionality' => 'קבוע, תלוי בכיוון הכתב של השפה שלך',
 
 # Preferences page
 'preferences' => 'העדפות',
@@ -3068,7 +3053,6 @@ $1',
 # Stylesheets
 'common.css' => '/* הסגנונות הנכתבים כאן ישפיעו על כל העיצובים */',
 'standard.css' => '/* הסגנונות הנכתבים כאן ישפיעו על העיצוב Standard בלבד */',
-'cologneblue.css' => '/* הסגנונות הנכתבים כאן ישפיעו על העיצוב CologneBlue בלבד */',
 'monobook.css' => '/* הסגנונות הנכתבים כאן ישפיעו על העיצוב Monobook בלבד */',
 'myskin.css' => '/* הסגנונות הנכתבים כאן ישפיעו על העיצוב MySkin בלבד */',
 'chick.css' => '/* הסגנונות הנכתבים כאן ישפיעו על העיצוב Chick בלבד */',
@@ -3085,7 +3069,6 @@ $1',
 # Scripts
 'common.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ עבור כל המשתמשים בכל טעינת עמוד */',
 'standard.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור המשתמשים בעיצוב Standard */',
-'cologneblue.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור המשתמשים בעיצוב CologneBlue */',
 'monobook.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור המשתמשים בעיצוב Monobook */',
 'myskin.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור המשתמשים בעיצוב MySkin */',
 'chick.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור המשתמשים בעיצוב Chick */',
@@ -3136,7 +3119,6 @@ $1',
 
 # Skin names
 'skinname-standard' => 'קלאסי',
-'skinname-cologneblue' => 'מים כחולים',
 'skinname-monobook' => 'מונובוק',
 'skinname-myskin' => 'העיצוב שלי',
 'skinname-chick' => "צ'יק",

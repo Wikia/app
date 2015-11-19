@@ -101,12 +101,8 @@ $messages = array(
 'navigation'    => 'Navigatioon',
 'and'           => '&#32;onn',
 
-# Cologne Blue skin
 'qbfind'         => 'finje',
-'qbedit'         => 'Endre',
 'qbpageoptions'  => 'Dise Sied',
-'qbmyoptions'    => 'Miene Siede',
-'qbspecialpages' => "Opp'poate Siede",
 
 'errorpagetitle'   => 'Fäla',
 'returnto'         => 'Trigj no $1.',
@@ -125,7 +121,6 @@ $messages = array(
 'edit'             => 'Endre',
 'create'           => 'Moak',
 'editthispage'     => 'Endre dise Sied',
-'create-this-page' => 'Moak dise Sied',
 'delete'           => 'Lasche',
 'deletethispage'   => 'Dise Sied lasche',
 'protect'          => "be'schutse",
@@ -548,7 +543,6 @@ Dee Grunt es: "$2"',
 # Stylesheets
 'common.css'      => '/* CSS opp dise Sted woat opp aula Skins wirtje */',
 'standard.css'    => '/* CSS opp dise Sted wirtjt opp dem Standard-Skin */',
-'cologneblue.css' => '/* CSS opp dise Sted wirtjt opp daut Keloonsch-Blau-Skin */',
 'monobook.css'    => '/* CSS opp dise Sted wirtjt opp daut Monobook-Skin */',
 'myskin.css'      => '/* CSS opp dise Sted wirtjt opp daut MySkin-Skin */',
 'chick.css'       => '/* CSS opp dise Sted wirtjt opp daut Chick-Skin */',
@@ -559,7 +553,6 @@ Dee Grunt es: "$2"',
 # Scripts
 'common.js'      => '/* Daut neachste JavaScript woat fe aula Brucka jelode. */',
 'standard.js'    => '/* Daut neachste JavaScript woat fe Brucka mett Standard-Skin jelode. */',
-'cologneblue.js' => '/* Daut neachste JavaScript woat fe Brucka mett Keloonsch-Blau-Skin jelode */',
 'monobook.js'    => '/* Daut neachste JavaScript woat fe Brucka mett Monobook-Skin jelode */',
 'myskin.js'      => '/* Daut neachste JavaScript woat fe Brucka mett MySkin-Skin jelode */',
 'chick.js'       => '/* Daut neachste JavaScript woat fe Brucka mett Chick-Skin jelode */',

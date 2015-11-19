@@ -226,13 +226,9 @@ $messages = array(
 'navigation'    => 'Navegaçión',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Attrêuva',
-'qbedit'         => 'Cangia',
 'qbpageoptions'  => "Opsioîn de 'sta paggina",
 'qbpageinfo'     => 'Informassion inscia paggina',
-'qbmyoptions'    => 'E mæ paggine',
-'qbspecialpages' => 'Pagine speçiä',
 'faq'            => 'Domande frequenti',
 
 'actions'                  => 'Açioìn',
@@ -255,7 +251,6 @@ $messages = array(
 'edit'              => 'Càngia',
 'create'            => 'Crea',
 'editthispage'      => "Modificâ 'sta pagina",
-'create-this-page'  => "Crea 'sta paggina",
 'delete'            => 'Scancella',
 'deletethispage'    => "Scassa 'sta paggina",
 'protect'           => 'Proteze',
@@ -268,7 +263,6 @@ $messages = array(
 'talkpagelinktext'  => 'Ciæti',
 'specialpage'       => 'Pagina speçiâ',
 'personaltools'     => 'Strùmenti personâli',
-'articlepage'       => 'Veddi a voxe',
 'talk'              => 'Ciæti',
 'views'             => 'Vìxite',
 'toolbox'           => 'Arneixi',

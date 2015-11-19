@@ -164,16 +164,11 @@ $messages = array(
 'navigation'    => 'संचार',
 'and'           => '&#32;आर',
 
-# Cologne Blue skin
 'qbfind'         => 'ताकू',
 'qbbrowse'       => 'गवेषण करू',
-'qbedit'         => 'सम्पादन करू',
 'qbpageoptions'  => 'ई पन्ना',
 'qbpageinfo'     => 'विषय',
-'qbmyoptions'    => 'हमर पन्ना सभ',
-'qbspecialpages' => 'विशेष पन्ना सभ',
 'faq'            => 'त्वरित प्रश्नोत्तरी',
-'faqpage'        => 'Project: त्वरित प्रश्नोत्तरी',
 
 'actions'                        => 'क्रिया सभ',
 'namespaces'                     => 'चेन्हासी समूह सभ',
@@ -197,7 +192,6 @@ $messages = array(
 'edit'              => 'संपादन',
 'create'            => 'बनाउ',
 'editthispage'      => 'एहि पृष्ठक संपादन',
-'create-this-page'  => 'ई पन्ना बनाउ',
 'delete'            => 'मेटाउ',
 'deletethispage'    => 'ई पन्ना मेटाउ',
 'undelete_short'    => 'आपस आनू  {{PLURAL:$1|एक सम्पादनt|$1 सम्पादन सभ}}',
@@ -213,7 +207,6 @@ $messages = array(
 'specialpage'       => 'विशेष पन्ना',
 'personaltools'     => 'व्यक्तिगत उपकरण',
 'postcomment'       => 'नव खण्ड',
-'articlepage'       => 'विषय-सूची पन्ना देखू',
 'talk'              => 'वार्तालाप',
 'views'             => 'दृष्टि',
 'toolbox'           => 'उपकरण-बक्सा',
@@ -1031,14 +1024,6 @@ $3 द्वारा देल कारण अछि ''$2''",
 अहाँक गूगलक माध्यमसँ ऐ बीच ताकि सकै छी।
 मोन राखू जे तकर विवरणी {{अन्तर्जाल}} सामिग्री समयातीत भऽ सकैए।',
 
-# Quickbar
-'qbsettings'                => 'त्वरित दृश्य',
-'qbsettings-none'           => 'कोनो नै',
-'qbsettings-fixedleft'      => 'वाम कात सटल',
-'qbsettings-fixedright'     => 'दहिन दिस सटल',
-'qbsettings-floatingleft'   => 'वाम कात घुमैत',
-'qbsettings-floatingright'  => 'दहिन कात घुमैत',
-'qbsettings-directionality' => 'कीलित, अहाँक भाषाक लिपि दिशा-निर्देशपर आधारित',
 
 # Preferences page
 'preferences'                   => 'विकल्प',

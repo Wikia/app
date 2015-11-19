@@ -348,16 +348,11 @@ $messages = array(
 'navigation'    => 'Navigacija',
 'and'           => '&#32;i',
 
-# Cologne Blue skin
 'qbfind'         => 'Pronađite',
 'qbbrowse'       => 'Prelistajte',
-'qbedit'         => 'Uredi',
 'qbpageoptions'  => 'Opcije stranice',
 'qbpageinfo'     => 'Informacije o stranici',
-'qbmyoptions'    => 'Moje opcije',
-'qbspecialpages' => 'Posebne stranice',
 'faq'            => 'ČPP',
-'faqpage'        => 'Project:ČPP',
 
 'actions'                        => 'Akcije',
 'namespaces'                     => 'Imenski prostori',
@@ -381,7 +376,6 @@ $messages = array(
 'edit'              => 'Uredi',
 'create'            => 'Napravi',
 'editthispage'      => 'Uredite ovu stranicu',
-'create-this-page'  => 'Stvori ovu stranicu',
 'delete'            => 'Obriši',
 'deletethispage'    => 'Obriši ovu stranicu',
 'undelete_short'    => 'Vrati obrisanih {{PLURAL:$1|$1 izmjenu|$1 izmjene|$1 izmjena}}',
@@ -397,7 +391,6 @@ $messages = array(
 'specialpage'       => 'Posebna stranica',
 'personaltools'     => 'Lični alati',
 'postcomment'       => 'Nova sekcija',
-'articlepage'       => 'Pogledaj stranicu sa sadržajem (članak)',
 'talk'              => 'Razgovor',
 'views'             => 'Pregledi',
 'toolbox'           => 'Traka sa alatima',
@@ -1231,14 +1224,6 @@ Pokušajte u svoju pretragu staviti ''all:'' da se pretražuje cjelokupan sadrž
 U međuvremenu možete pretraživati preko Googlea.
 Uzmite u obzir da njegovi indeksi za ovu Wiki ne moraju biti ažurirani.',
 
-# Quickbar
-'qbsettings'                => 'Podešavanja brze palete',
-'qbsettings-none'           => 'Nikakva',
-'qbsettings-fixedleft'      => 'Fiksirana lijevo',
-'qbsettings-fixedright'     => 'Fiksirana desno',
-'qbsettings-floatingleft'   => 'Plutajuća lijevo',
-'qbsettings-floatingright'  => 'Plutajuća desno',
-'qbsettings-directionality' => 'Fiksno, ovisno o smjeru pisma Vašeg jezika',
 
 # Preferences page
 'preferences'                   => 'Postavke',

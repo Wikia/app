@@ -275,16 +275,11 @@ $messages = array(
 'navigation'    => 'Navigasi',
 'and'           => '&#32;ngon',
 
-# Cologne Blue skin
 'qbfind'         => 'Mita',
 'qbbrowse'       => 'Lop',
-'qbedit'         => 'Andam',
 'qbpageoptions'  => 'Ôn nyoe',
 'qbpageinfo'     => 'Asoe ôn',
-'qbmyoptions'    => 'Ôn lôn',
-'qbspecialpages' => 'Ôn kusuih',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Buet',
 'namespaces'                     => 'Ruweuëng nan',
@@ -306,7 +301,6 @@ $messages = array(
 'edit'              => 'Andam',
 'create'            => 'Peugöt',
 'editthispage'      => 'Andam ôn nyoë',
-'create-this-page'  => 'Peugèt ôn nyoe',
 'delete'            => 'Sampôh',
 'deletethispage'    => 'Sampôh ôn nyoe',
 'undelete_short'    => 'Bateuë sampôh {{PLURAL:$1|one edit|$1 edits}}',
@@ -321,7 +315,6 @@ $messages = array(
 'specialpage'       => 'Ôn kusuih',
 'personaltools'     => 'Alat droë',
 'postcomment'       => 'Beunagi baro',
-'articlepage'       => 'Eu ôn asoë',
 'talk'              => 'Peugah haba',
 'views'             => 'Leumah',
 'toolbox'           => 'Plôk alat',

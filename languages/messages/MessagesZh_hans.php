@@ -398,16 +398,11 @@ $messages = array(
 'navigation'    => '导航',
 'and'           => '和',
 
-# Cologne Blue skin
 'qbfind'         => '查找',
 'qbbrowse'       => '浏览',
-'qbedit'         => '编辑',
 'qbpageoptions'  => '页面选项',
 'qbpageinfo'     => '页面信息',
-'qbmyoptions'    => '我的选项',
-'qbspecialpages' => '特殊页面',
 'faq'            => '常见问题',
-'faqpage'        => 'Project:常见问题',
 
 'actions'                        => '操作',
 'namespaces'                     => '名字空间',
@@ -431,7 +426,6 @@ $messages = array(
 'edit'              => '编辑',
 'create'            => '创建',
 'editthispage'      => '编辑本页',
-'create-this-page'  => '创建本页',
 'delete'            => '删除',
 'deletethispage'    => '删除本页',
 'undelete_short'    => '恢复$1个被删除的编辑',
@@ -447,7 +441,6 @@ $messages = array(
 'specialpage'       => '特殊页面',
 'personaltools'     => '个人工具',
 'postcomment'       => '新段落',
-'articlepage'       => '查看内容页面',
 'talk'              => '讨论',
 'views'             => '查看',
 'toolbox'           => '工具箱',
@@ -1187,14 +1180,6 @@ $1",
 'search-external'                  => '外部搜索',
 'searchdisabled'                   => '{{SITENAME}}的搜索已被禁用。您可以暂时使用Google进行搜索，须注意他们索引的{{SITENAME}}内容可能会过时。',
 
-# Quickbar
-'qbsettings'                => '快速导航栏',
-'qbsettings-none'           => '无',
-'qbsettings-fixedleft'      => '左侧固定',
-'qbsettings-fixedright'     => '右侧固定',
-'qbsettings-floatingleft'   => '左侧漂移',
-'qbsettings-floatingright'  => '右侧漂移',
-'qbsettings-directionality' => '根据您的语言文本方向固定位置',
 
 # Preferences page
 'preferences'                   => '系统设置',
@@ -2787,7 +2772,6 @@ $1被封禁的理由是：“$2”',
 # Stylesheets
 'common.css'      => '/* 此处的 CSS 将应用于所有的皮肤 */',
 'standard.css'    => '/* 此处的 CSS 将影响使用标准皮肤的用户 */',
-'cologneblue.css' => '/* 此处的 CSS 将影响使用科隆香水蓝皮肤的用户 */',
 'monobook.css'    => '/* 此处的 CSS 将影响使用 Monobook 皮肤的用户 */',
 'myskin.css'      => '/* 此处的 CSS 将影响使用 MySkin 皮肤的用户 */',
 'chick.css'       => '/* 此处的 CSS 将影响使用 Chick 皮肤的用户 */',
@@ -2799,7 +2783,6 @@ $1被封禁的理由是：“$2”',
 # Scripts
 'common.js'      => '/* 此处的JavaScript将加载于所有用户每一个页面。 */',
 'standard.js'    => '/* 此处的JavaScript将加载于使用标准皮肤的用户 */',
-'cologneblue.js' => '/* 此处的JavaScript将加载于使用科隆香水蓝皮肤的用户 */',
 'monobook.js'    => '/* 此处的JavaScript将加载于使用Monobook皮肤的用户 */',
 'myskin.js'      => '/* 此处的JavaScript将加载于使用MySkin皮肤的用户 */',
 'chick.js'       => '/* 此处的JavaScript将加载于使用Chick皮肤的用户 */',
@@ -2845,7 +2828,6 @@ $1被封禁的理由是：“$2”',
 
 # Skin names
 'skinname-standard'    => '标准',
-'skinname-cologneblue' => '科隆香水蓝',
 'skinname-simple'      => '简单',
 'skinname-modern'      => '现代',
 

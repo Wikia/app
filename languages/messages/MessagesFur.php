@@ -234,14 +234,10 @@ $messages = array(
 'navigation'    => 'somari',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Cjate',
 'qbbrowse'       => 'Sgarfe',
-'qbedit'         => 'Cambie',
 'qbpageoptions'  => 'Cheste pagjine',
 'qbpageinfo'     => 'Contest',
-'qbmyoptions'    => 'Mês pagjinis',
-'qbspecialpages' => 'Pagjinis speciâls',
 'faq'            => 'Domandis plui frecuentis',
 
 'actions'                  => 'Azions',
@@ -266,7 +262,6 @@ $messages = array(
 'edit'              => 'Cambie',
 'create'            => 'Cree',
 'editthispage'      => 'Cambie cheste pagjine',
-'create-this-page'  => 'Cree cheste pagjine',
 'delete'            => 'Elimine',
 'deletethispage'    => 'Elimine cheste pagjine',
 'undelete_short'    => 'Recupere {{PLURAL:$1|modifiche eliminade|$1 modifichis eliminadis}}',
@@ -282,7 +277,6 @@ $messages = array(
 'specialpage'       => 'Pagjine speciâl',
 'personaltools'     => 'Imprescj personâi',
 'postcomment'       => 'Gnove sezion',
-'articlepage'       => 'Cjale la vôs',
 'talk'              => 'Discussion',
 'views'             => 'Visitis',
 'toolbox'           => 'imprescj',
@@ -700,13 +694,6 @@ Leiende: (cur) = difarencis cun la version atuâl, (prec) = difarencis cun la ve
 'search-external'                  => 'Ricercje esterne',
 'searchdisabled'                   => 'La ricercje in {{SITENAME}} no je ative. Tu puedis doprâ Google intant. Sta atent che lis lôr tabelis sul contignût di {{SITENAME}} a puedin jessi pôc inzornadis.',
 
-# Quickbar
-'qbsettings'               => 'Sbare svelte',
-'qbsettings-none'          => 'Nissune',
-'qbsettings-fixedleft'     => 'Fis a Çampe',
-'qbsettings-fixedright'    => 'Fis a Drete',
-'qbsettings-floatingleft'  => 'Flutuant a çampe',
-'qbsettings-floatingright' => 'Flutuant a diestre',
 
 # Preferences page
 'preferences'                 => 'Preferencis',

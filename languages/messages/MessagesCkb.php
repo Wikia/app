@@ -166,16 +166,11 @@ $messages = array(
 'navigation'    => 'ڕێدۆزی',
 'and'           => '&#32;و',
 
-# Cologne Blue skin
 'qbfind'         => 'بدۆزەرەوە',
 'qbbrowse'       => 'بگه‌ڕێ',
-'qbedit'         => 'دەستکاری',
 'qbpageoptions'  => 'ئەم پەڕەیە',
 'qbpageinfo'     => 'زانیاریی په‌ڕه‌',
-'qbmyoptions'    => 'پەڕەکانم',
-'qbspecialpages' => 'پەڕە تایبەتەکان',
 'faq'            => 'پرسیار و وەڵام (FAQ)',
-'faqpage'        => 'Project:پرسیار و وەڵام',
 
 'actions'                    => 'کردارەکان',
 'namespaces'                 => 'شوێنناوەکان',
@@ -199,7 +194,6 @@ $messages = array(
 'edit'              => 'دەستکاری',
 'create'            => 'دروستکردن',
 'editthispage'      => 'دەستکاری ئەم پەڕەیە بکە‌',
-'create-this-page'  => 'ئەم پەڕە دروست بکە',
 'delete'            => 'سڕینەوە',
 'deletethispage'    => 'سڕینه‌وه‌ی ئه‌م په‌ڕه‌یه‌',
 'undelete_short'    => '{{PLURAL:$1|یەک گۆڕانکاریی|$1 گۆڕانکاریی}} سڕاوە بەجێبھێنەرەوە',
@@ -214,7 +208,6 @@ $messages = array(
 'specialpage'       => 'په‌ڕه‌ی تایبه‌ت',
 'personaltools'     => 'ئامڕازە تاکەکەسییەکان',
 'postcomment'       => 'بەشی نوێ',
-'articlepage'       => 'پەڕەی ناوەڕۆک ببینە',
 'talk'              => 'وتووێژ',
 'views'             => 'بینینەکان',
 'toolbox'           => 'ئامرازدان',
@@ -945,13 +938,6 @@ $1",
 دەتوانی بۆ ئێستا لە گەڕانی گووگڵ کەڵک وەرگری.
 لەیادت بێت لەوانەیە پێرستەکانیان بۆ گەڕانی ناو {{SITENAME}}، کات‌بەسەرچوو بێت.',
 
-# Quickbar
-'qbsettings'               => 'خێرا-تووڵ',
-'qbsettings-none'          => 'هیچ',
-'qbsettings-fixedleft'     => 'چەپ‌ سەپێندراو',
-'qbsettings-fixedright'    => 'ڕاست سەپێندراو',
-'qbsettings-floatingleft'  => 'سەراوی چەپ',
-'qbsettings-floatingright' => 'سەراوی ڕاست',
 
 # Preferences page
 'preferences'                   => 'ھەڵبژاردەکان',
@@ -2416,7 +2402,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => 'کلاسیک',
-'skinname-cologneblue' => 'شینی کۆلۆن',
 'skinname-monobook'    => 'مۆنۆ',
 'skinname-myskin'      => 'پێستی خۆم',
 'skinname-chick'       => 'جووچک',

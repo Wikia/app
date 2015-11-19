@@ -167,7 +167,6 @@ $messages = array(
 # Categories related messages
 'subcategories' => '子分類',
 
-# Cologne Blue skin
 'qbfind' => '尋找',
 
 

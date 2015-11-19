@@ -79,10 +79,7 @@ $messages = array(
 'mytalk'     => 'Mi Tok',
 'navigation' => 'Navigeshon',
 
-# Cologne Blue skin
-'qbedit'  => 'Edit',
 'faq'     => 'Kwestyon we dem de aks boku',
-'faqpage' => 'Project:Kwehstyohn-dehm we ohlman de aks',
 
 'actions'                => 'Akshon-dem',
 'namespaces'             => 'Nemspes-dem',
@@ -104,7 +101,6 @@ $messages = array(
 'edit'             => 'Edit',
 'create'           => 'Mek',
 'editthispage'     => 'Edit dis pej-ya',
-'create-this-page' => 'Mek dis pej-ya',
 'delete'           => 'Dilit',
 'deletethispage'   => 'Dilit dis pej-ya',
 'protect'          => 'Protekt',
@@ -114,7 +110,6 @@ $messages = array(
 'specialpage'      => 'Speshal Pej',
 'personaltools'    => 'Pasonal tul-dèm',
 'postcomment'      => 'Nyu sekshon',
-'articlepage'      => 'Luk kontent pej',
 'talk'             => 'Diskoshon',
 'views'            => 'Vyu-dem',
 'toolbox'          => 'Tulboks',

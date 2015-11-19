@@ -214,12 +214,8 @@ $messages = array(
 'navigation'    => 'ນຳທິດ',
 'and'           => '&#32;ແລະ',
 
-# Cologne Blue skin
 'qbfind'         => 'ຊອກຫາ',
-'qbedit'         => 'ດັດແກ້',
 'qbpageoptions'  => 'ໜ້ານີ້',
-'qbmyoptions'    => 'ໝ້າຂ້ອຍ',
-'qbspecialpages' => 'ໜ້າພິເສດ',
 
 'errorpagetitle'   => 'ຜິດພາດ',
 'returnto'         => 'ກັບໄປ  $1.',
@@ -237,7 +233,6 @@ $messages = array(
 'edit'             => 'ດັດແກ້',
 'create'           => 'ສ້າງ',
 'editthispage'     => 'ດັດແກ້ໜ້ານີ້',
-'create-this-page' => 'ສ້າງໜ້ານີ້',
 'delete'           => 'ລຶບ',
 'deletethispage'   => 'ລຶບໜ້ານີ້',
 'protect'          => 'ປົກປ້ອງ',
@@ -249,7 +244,6 @@ $messages = array(
 'talkpagelinktext' => 'ສົນທະນາ',
 'specialpage'      => 'ໝ້າພິເສດ',
 'personaltools'    => 'ເຄື່ອງມືສ່ວນຕົວ',
-'articlepage'      => 'ເບິ່ງໜ້າເນື້ອໃນ',
 'talk'             => 'ສົນທະນາ',
 'views'            => 'ເທື່ອເບິ່ງ',
 'toolbox'          => 'ກັບອຸບປະກອນ',

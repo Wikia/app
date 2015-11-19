@@ -323,16 +323,11 @@ $messages = array(
 'navigation'    => 'ป้ายบอกทาง',
 'and'           => '&#32;และ',
 
-# Cologne Blue skin
 'qbfind'         => 'ค้นหา',
 'qbbrowse'       => 'สืบค้น',
-'qbedit'         => 'แก้ไข',
 'qbpageoptions'  => 'หน้านี้',
 'qbpageinfo'     => 'บริบท',
-'qbmyoptions'    => 'หน้าของฉัน',
-'qbspecialpages' => 'หน้าพิเศษ',
 'faq'            => 'คำถามถามบ่อย',
-'faqpage'        => 'Project:คำถามถามบ่อย',
 
 'actions'                        => 'การกระทำ',
 'namespaces'                     => 'เนมสเปซ',
@@ -356,7 +351,6 @@ $messages = array(
 'edit'              => 'แก้ไข',
 'create'            => 'สร้าง',
 'editthispage'      => 'แก้ไขหน้านี้',
-'create-this-page'  => 'สร้างหน้านี้',
 'delete'            => 'ลบ',
 'deletethispage'    => 'ลบหน้านี้',
 'undelete_short'    => 'เรียกคืน {{PLURAL:$1|1 การแก้ไข|$1 การแก้ไข}}',
@@ -372,7 +366,6 @@ $messages = array(
 'specialpage'       => 'หน้าพิเศษ',
 'personaltools'     => 'เครื่องมือส่วนตัว',
 'postcomment'       => 'หัวข้อใหม่',
-'articlepage'       => 'แสดงเนื้อหาของหน้า',
 'talk'              => 'อภิปราย',
 'views'             => 'ดู',
 'toolbox'           => 'เครื่องมือเพิ่ม',
@@ -1141,13 +1134,6 @@ $1",
 'search-external'                  => 'ค้นหาจากภายนอก',
 'searchdisabled'                   => 'ระบบการค้นหาใน {{SITENAME}} ไม่เปิดการใช้งาน คุณสามารถค้นหาในกูเกิลหรือเซิร์ชเอนจินอื่น โปรดจำไว้ว่าเนื้อหาของ {{SITENAME}} บนเซิร์ชเอนจินอาจเป็นข้อมูลเก่า',
 
-# Quickbar
-'qbsettings'               => 'แถบพิเศษ',
-'qbsettings-none'          => 'ไม่มี',
-'qbsettings-fixedleft'     => 'อยู่ทางซ้าย',
-'qbsettings-fixedright'    => 'อยู่ทางขวา',
-'qbsettings-floatingleft'  => 'ด้านซ้าย',
-'qbsettings-floatingright' => 'ด้านขวา',
 
 # Preferences page
 'preferences'                   => 'ตั้งค่าส่วนตัว',
@@ -2731,7 +2717,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => 'คลาสสิก',
-'skinname-cologneblue' => 'โคโลญจ์บลู',
 'skinname-monobook'    => 'โมโนบุ๊ก',
 'skinname-myskin'      => 'มายสกิน',
 'skinname-chick'       => 'ชิก',

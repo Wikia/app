@@ -159,16 +159,11 @@ $messages = array(
 'navigation'    => 'Tunigin',
 'and'           => '&#32; d',
 
-# Cologne Blue skin
 'qbfind'         => 'Af',
 'qbbrowse'       => 'Cabba',
-'qbedit'         => 'Sbadl',
 'qbpageoptions'  => 'Tasnat ad',
 'qbpageinfo'     => 'Context',
-'qbmyoptions'    => 'Tisnatin inu',
-'qbspecialpages' => 'Tisnatin timzlay',
 'faq'            => 'Isqsitn li bdda tsutulnin',
-'faqpage'        => 'Project: Isqqsit li bdda',
 
 'actions'                    => 'Imskarn',
 'namespaces'                 => 'Ismawn n tɣula',
@@ -192,7 +187,6 @@ $messages = array(
 'edit'              => 'Ẓreg (bddel)',
 'create'            => 'Skr',
 'editthispage'      => 'Ara tasna yad',
-'create-this-page'  => 'Sker tasna yad',
 'delete'            => 'Ḥiyd',
 'deletethispage'    => 'Ḥiyd tasna yad',
 'undelete_short'    => 'Yurrid {{PLURAL:$1|yan umbddel|$1 imbddeln}}',
@@ -207,7 +201,6 @@ $messages = array(
 'specialpage'       => 'Tasna izlin',
 'personaltools'     => 'Imasn inu',
 'postcomment'       => 'Ayyaw amaynu',
-'articlepage'       => 'Mel mayllan ɣ tasna',
 'talk'              => 'Amsgdal',
 'views'             => 'Ẓr.. (Mel)',
 'toolbox'           => 'Tanaka n imasn',
@@ -643,13 +636,6 @@ ikhssak ola kiyi ador tnqilt ɣtamani yadni.
 Tzdar at cabbat ɣilad ɣ Google.
 Izdar ad urtili ɣ isbidn n mayllan ɣ {{SITENAME}} .',
 
-# Quickbar
-'qbsettings'               => 'Tafeggagt izrbn',
-'qbsettings-none'          => 'Ur iḥudda',
-'qbsettings-fixedleft'     => 'Aẓẓugz azlmaḍ',
-'qbsettings-fixedright'    => 'Azzugz afasi',
-'qbsettings-floatingleft'  => 'Yaywul su uzlmad',
-'qbsettings-floatingright' => 'Yaywul su ufasi',
 
 # Preferences page
 'preferences'               => 'Timssusmin',

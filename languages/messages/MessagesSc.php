@@ -191,16 +191,11 @@ $messages = array(
 'navigation'    => 'Navigadura',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Busca',
 'qbbrowse'       => 'Nàviga',
-'qbedit'         => 'Acontza',
 'qbpageoptions'  => 'Possibilidades de sa pàgina',
 'qbpageinfo'     => 'Cuntestu de sa pàgina',
-'qbmyoptions'    => 'Is preferèntzias meas',
-'qbspecialpages' => 'Pàginas spetziales',
 'faq'            => 'Pregontas/Respostas (FAQ)',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                  => 'Atziones',
 'namespaces'               => 'Nùmene-logos',
@@ -223,7 +218,6 @@ $messages = array(
 'edit'              => 'Acontza',
 'create'            => 'Crea',
 'editthispage'      => 'Acontza custa pàgina',
-'create-this-page'  => 'Crea custa pàgina',
 'delete'            => 'Fùlia',
 'deletethispage'    => 'Fùlia custa pàgina',
 'undelete_short'    => 'Restaurare {{PLURAL:$1|un acontzu|$1 acontzos}}',
@@ -238,7 +232,6 @@ $messages = array(
 'specialpage'       => 'Pàgina Ispetziale',
 'personaltools'     => 'Ainas personales',
 'postcomment'       => 'Setzione noa',
-'articlepage'       => "Càstia s'artìculu",
 'talk'              => 'Cuntierras',
 'views'             => 'Bisuras',
 'toolbox'           => 'Ainas',
@@ -659,13 +652,6 @@ Prova a seberare ''totu:'' pro chircare in totu su cuntènnidu (inclùdidas pàg
 'powersearch-toggleall'          => 'Totu',
 'powersearch-togglenone'         => 'Nudda',
 
-# Quickbar
-'qbsettings'               => 'Settaggio della barra menu',
-'qbsettings-none'          => 'Nessuno',
-'qbsettings-fixedleft'     => 'Fisso a sinistra',
-'qbsettings-fixedright'    => 'Fisso a destra',
-'qbsettings-floatingleft'  => 'Fluttuante a sinistra',
-'qbsettings-floatingright' => 'Fluttuante a destra',
 
 # Preferences page
 'preferences'                 => 'Preferèntzias',

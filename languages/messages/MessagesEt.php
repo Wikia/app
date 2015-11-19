@@ -427,16 +427,11 @@ $messages = array(
 'navigation' => 'Navigeerimine',
 'and' => '&#32;ja',
 
-# Cologne Blue skin
 'qbfind' => 'Otsi',
 'qbbrowse' => 'Sirvi',
-'qbedit' => 'Redigeeri',
 'qbpageoptions' => 'Lehekülje suvandid',
 'qbpageinfo' => 'Lehekülje andmed',
-'qbmyoptions' => 'Minu suvandid',
-'qbspecialpages' => 'Erileheküljed',
 'faq' => 'KKK',
-'faqpage' => 'Project:KKK',
 
 'actions' => 'Toimingud',
 'namespaces' => 'Nimeruumid',
@@ -460,7 +455,6 @@ $messages = array(
 'edit' => 'Redigeeri',
 'create' => 'Loo',
 'editthispage' => 'Redigeeri seda lehekülge',
-'create-this-page' => 'Loo see lehekülg',
 'delete' => 'Kustuta',
 'deletethispage' => 'Kustuta see lehekülg',
 'undelete_short' => 'Taasta {{PLURAL:$1|üks muudatus|$1 muudatust}}',
@@ -476,7 +470,6 @@ $messages = array(
 'specialpage' => 'Erilehekülg',
 'personaltools' => 'Personaalsed tööriistad',
 'postcomment' => 'Uus alaosa',
-'articlepage' => 'Artiklilehekülg',
 'talk' => 'Arutelu',
 'views' => 'vaatamisi',
 'toolbox' => 'Tööriistad',
@@ -1297,14 +1290,6 @@ päringu ees prefiksit ''all:''. Konkreetsest nimeruumist otsimiseks kasuta pref
 Vahepeal saad otsimiseks Google'it kasutada.
 Pane tähele, et Google'is talletatud {{GRAMMAR:genitive|{{SITENAME}}}} sisu võib olla iganenud.",
 
-# Quickbar
-'qbsettings' => 'Kiirriba sätted',
-'qbsettings-none' => 'Ei_ole',
-'qbsettings-fixedleft' => 'Püsivalt_vasakul',
-'qbsettings-fixedright' => 'Püsivalt paremal',
-'qbsettings-floatingleft' => 'Ujuvalt vasakul',
-'qbsettings-floatingright' => 'Ujuvalt paremal',
-'qbsettings-directionality' => 'Fikseeritud, tulenevalt sinu keeles kasutatava kirja suunast',
 
 # Preferences page
 'preferences' => 'Eelistused',
@@ -2999,7 +2984,6 @@ See on ilmselt põhjustatud linkimisest mustas nimekirjas olevasse välisvõrguk
 
 # Skin names
 'skinname-standard' => 'Algeline',
-'skinname-cologneblue' => 'Kölni sinine',
 'skinname-monobook' => 'MonoBook',
 'skinname-myskin' => 'Minu kujundus',
 'skinname-chick' => 'Tibu',

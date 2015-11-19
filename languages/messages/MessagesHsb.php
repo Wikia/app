@@ -294,16 +294,11 @@ $messages = array(
 'navigation'    => 'Nawigacija',
 'and'           => '&#32;a',
 
-# Cologne Blue skin
 'qbfind'         => 'Namakać',
 'qbbrowse'       => 'Přepytować',
-'qbedit'         => 'Wobdźěłać',
 'qbpageoptions'  => 'Tuta strona',
 'qbpageinfo'     => 'Kontekst',
-'qbmyoptions'    => 'Moje strony',
-'qbspecialpages' => 'Specialne strony',
 'faq'            => 'Husto stajene prašenja (FAQ)',
-'faqpage'        => 'Project:Husto stajene prašenja (FAQ)',
 
 'actions'                        => 'Akcije',
 'namespaces'                     => 'Mjenowe rumy',
@@ -327,7 +322,6 @@ $messages = array(
 'edit'              => 'wobdźěłać',
 'create'            => 'Wutworić',
 'editthispage'      => 'Tutu stronu wobdźěłać',
-'create-this-page'  => 'Stronu wutworić',
 'delete'            => 'wušmórnyć',
 'deletethispage'    => 'Stronu wušmórnyć',
 'undelete_short'    => '{{PLURAL:$1|jednu wersiju|$1 wersiji|$1 wersije|$1 wersijow}} wobnowić',
@@ -343,7 +337,6 @@ $messages = array(
 'specialpage'       => 'Specialna strona',
 'personaltools'     => 'Wosobinske nastroje',
 'postcomment'       => 'Nowy wotrězk',
-'articlepage'       => 'Nastawk',
 'talk'              => 'diskusija',
 'views'             => 'Zwobraznjenja',
 'toolbox'           => 'Nastroje',
@@ -1122,14 +1115,6 @@ Spytaj swoje naprašowanje z prefiksom ''all:'' wužiwać, zo by wšón wobsah (
 'search-external'                  => 'Eksterne pytanje',
 'searchdisabled'                   => 'Pytanje w {{GRAMMAR:lokatiw|{{SITENAME}}}} tuchwilu móžne njeje. Móžeš mjeztym z Google pytać. Wobkedźbuj, zo móža wuslědki z wobsaha {{GRAMMAR:genitiw|{{SITENAME}}}} zestarjene być.',
 
-# Quickbar
-'qbsettings'                => 'Pobóčna lajsta',
-'qbsettings-none'           => 'Žane',
-'qbsettings-fixedleft'      => 'Leži nalěwo',
-'qbsettings-fixedright'     => 'Leži naprawo',
-'qbsettings-floatingleft'   => 'Wisa nalěwo',
-'qbsettings-floatingright'  => 'Wisa naprawo',
-'qbsettings-directionality' => 'Kruty, wotwisny wot pisanskeho směra twojeje rěče',
 
 # Preferences page
 'preferences'                   => 'Nastajenja',
@@ -2777,7 +2762,6 @@ W poslednim padźe móžeš tež wotkaz wužiwać, na př. „[[{{#Special:Expor
 
 # Skin names
 'skinname-standard'    => 'Klasiski',
-'skinname-cologneblue' => 'Kölnjanska módrina',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
 'skinname-chick'       => 'Ćipka',

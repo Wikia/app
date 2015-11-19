@@ -206,16 +206,11 @@ $messages = array(
 'navigation'    => '導',
 'and'           => '與',
 
-# Cologne Blue skin
 'qbfind'         => '尋',
 'qbbrowse'       => '覽',
-'qbedit'         => '纂',
 'qbpageoptions'  => '此頁',
 'qbpageinfo'     => '內文',
-'qbmyoptions'    => '吾好',
-'qbspecialpages' => '非凡',
 'faq'            => '頻答問',
-'faqpage'        => 'Project:頻答問',
 
 'actions'                        => '動',
 'namespaces'                     => '名集',
@@ -239,7 +234,6 @@ $messages = array(
 'edit'              => '纂',
 'create'            => '立',
 'editthispage'      => '纂',
-'create-this-page'  => '立',
 'delete'            => '刪',
 'deletethispage'    => '刪',
 'undelete_short'    => '還$1已刪',
@@ -255,7 +249,6 @@ $messages = array(
 'specialpage'       => '特查',
 'personaltools'     => '家私',
 'postcomment'       => '評',
-'articlepage'       => '閱內文',
 'talk'              => '議',
 'views'             => '覽',
 'toolbox'           => '多寶',
@@ -915,8 +908,6 @@ $1",
 'search-external'                  => '外尋',
 'searchdisabled'                   => '{{SITENAME}}因性能而停用之。可Gooogle查之，乃之過時也。',
 
-# Quickbar
-'qbsettings-none' => '無',
 
 # Preferences page
 'preferences'                   => '簿註',
@@ -2295,7 +2286,6 @@ $1',
 # Stylesheets
 'common.css'      => '/* 此之 CSS 用於全面也 */',
 'standard.css'    => '/* 此之 CSS 用於經典面之簿也 */',
-'cologneblue.css' => '/* 此之 CSS 用於馨藍面之簿也 */',
 'monobook.css'    => '/* 此之 CSS 用於單書面之簿也 */',
 'myskin.css'      => '/* 此之 CSS 用於吾風面之簿也 */',
 'chick.css'       => '/* 此之 CSS 用於窈窕面之簿也 */',
@@ -2307,7 +2297,6 @@ $1',
 # Scripts
 'common.js'      => '/* 此之JavaScript將載於全簿之頁。 */',
 'standard.js'    => '/* 此之JavaScript將載於用經典面之簿 */',
-'cologneblue.js' => '/* 此之JavaScript將載於用馨藍面之簿 */',
 'monobook.js'    => '/* 此之JavaScript將載於用單書面之簿 */',
 'myskin.js'      => '/* 此之JavaScript將載於用吾風面之簿 */',
 'chick.js'       => '/* 此之JavaScript將載於用窈窕面之簿 */',
@@ -2337,7 +2326,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => '經典',
-'skinname-cologneblue' => '馨藍',
 'skinname-monobook'    => '單書',
 'skinname-myskin'      => '吾風',
 'skinname-chick'       => '窈窕',

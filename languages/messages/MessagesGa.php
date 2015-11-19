@@ -232,16 +232,11 @@ $messages = array(
 'navigation'    => 'Nascleanúint',
 'and'           => '&#32;agus',
 
-# Cologne Blue skin
 'qbfind'         => 'Aimsigh',
 'qbbrowse'       => 'Brabhsáil',
-'qbedit'         => 'Cuir in eagar',
 'qbpageoptions'  => 'An leathanach seo',
 'qbpageinfo'     => 'Comhthéacs',
-'qbmyoptions'    => 'Mo chuid leathanaigh',
-'qbspecialpages' => 'Leathanaigh speisialta',
 'faq'            => 'Ceisteanna Coiteanta',
-'faqpage'        => 'Project:Ceisteanna_Coiteanta',
 
 'actions'                  => 'Gníomhartha',
 'namespaces'               => 'Ainmspásanna',
@@ -265,7 +260,6 @@ $messages = array(
 'edit'              => 'Athraigh an lch seo',
 'create'            => 'Cruthaigh',
 'editthispage'      => 'Athraigh an lch seo',
-'create-this-page'  => 'Cruthaigh an lch seo',
 'delete'            => 'Scrios',
 'deletethispage'    => 'Scrios an lch seo',
 'undelete_short'    => 'Díscrios {{PLURAL:$1|athrú amháin|$1 athrú}}',
@@ -281,7 +275,6 @@ $messages = array(
 'specialpage'       => 'Leathanach Speisialta',
 'personaltools'     => 'Do chuid uirlisí',
 'postcomment'       => 'Mír nua',
-'articlepage'       => 'Féach ar an alt',
 'talk'              => 'Plé',
 'views'             => 'Radhairc',
 'toolbox'           => 'Bosca uirlisí',
@@ -802,13 +795,6 @@ Bain triail as ''all:'' a chur roimh d'iarratas chun an t-inneachar ar fad (leat
 'powersearch-toggleall'          => 'Uile',
 'searchdisabled'                 => "Tá brón orainn! Mhíchumasaíodh an cuardach téacs iomlán go sealadach chun luas an tsuímh a chosaint. Idir an dá linn, is féidir leat an cuardach Google anseo thíos a úsáid - b'fhéidir go bhfuil sé as dáta.",
 
-# Quickbar
-'qbsettings'               => 'Sainroghanna an bosca uirlisí',
-'qbsettings-none'          => 'Faic',
-'qbsettings-fixedleft'     => 'Greamaithe ar chlé',
-'qbsettings-fixedright'    => 'Greamaithe ar dheis',
-'qbsettings-floatingleft'  => 'Ag faoileáil ar chlé',
-'qbsettings-floatingright' => 'Ag faoileáil ar dheis',
 
 # Preferences page
 'preferences'                 => 'Sainroghanna',
@@ -1748,7 +1734,6 @@ iarradh sábháil. Is dócha gur nasc chuig suíomh seachtrach ba chúis leis.',
 
 # Skin names
 'skinname-standard'    => 'Clasaiceach',
-'skinname-cologneblue' => 'Gorm Köln',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MoChraiceann',
 'skinname-chick'       => 'Sicín',

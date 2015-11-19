@@ -148,16 +148,11 @@ Pāusai en kategōrijai "$1"',
 'navigation'    => 'Nawigaciōni',
 'and'           => '&#32;be',
 
-# Cologne Blue skin
 'qbfind'         => 'Aupallais',
 'qbbrowse'       => 'Pradirēis',
-'qbedit'         => 'Redigīs',
 'qbpageoptions'  => 'Šin pāusan',
 'qbpageinfo'     => 'Kōnteksts',
-'qbmyoptions'    => 'Majāi pāusai',
-'qbspecialpages' => 'Speciālai pāusai',
 'faq'            => 'Ukadeznai prasīsenei',
-'faqpage'        => 'Project:Ukadeznai prasīsenei',
 
 'actions'                 => 'Dīlasenei',
 'namespaces'              => 'Tītelin plattibis',
@@ -180,7 +175,6 @@ Pāusai en kategōrijai "$1"',
 'edit'              => 'Redigīs',
 'create'            => 'Teīkeis',
 'editthispage'      => 'Redigīs šin pāusan',
-'create-this-page'  => 'Teīkeis stan pāusan',
 'delete'            => 'Āupausinais',
 'deletethispage'    => 'Āupausinais šin pāusan',
 'undelete_short'    => 'Etgaūneis {{PLURAL:$1|1 wersiōnin|$1 wersiōnins}}',
@@ -195,7 +189,6 @@ Pāusai en kategōrijai "$1"',
 'specialpage'       => 'Speciālin pāusan',
 'personaltools'     => 'Persōniskas pagaptis',
 'postcomment'       => 'Naunā sekciōni',
-'articlepage'       => 'Wīdais ēnturas pāusan',
 'talk'              => 'Diskusiōni',
 'views'             => 'Pawīda',
 'toolbox'           => 'Pagaptis',
@@ -840,13 +833,6 @@ Bandais pagaūtun laukītan frāzin sen prefiksan \"all:\", kāi pralaukīlai pa
 En šissei kērdan tu mazzi laukītun sen Google.
 Pamēnais, kāi tenēisan indicai mazzi ni būtwei aktuālin.',
 
-# Quickbar
-'qbsettings'               => 'Dīwas preiēisenes sawinzli',
-'qbsettings-none'          => 'Nisatausnā',
-'qbsettings-fixedleft'     => 'Preidrūktintan prei kāirai',
-'qbsettings-fixedright'    => 'Preidrūktintan prei tikrai',
-'qbsettings-floatingleft'  => 'Plūjants prei kāirai',
-'qbsettings-floatingright' => 'Plūjants prei tikrai',
 
 # Preferences page
 'preferences'                 => 'Pirminiskwas',

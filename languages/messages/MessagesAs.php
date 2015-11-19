@@ -251,16 +251,11 @@ $messages = array(
 'navigation'    => 'দিকদৰ্শন',
 'and'           => '&#32;আৰু',
 
-# Cologne Blue skin
 'qbfind'         => 'বিচৰা হওক',
 'qbbrowse'       => 'ব্ৰাওজ',
-'qbedit'         => 'সম্পাদনা',
 'qbpageoptions'  => 'এই পৃষ্ঠা',
 'qbpageinfo'     => 'প্ৰসংগ',
-'qbmyoptions'    => 'মোৰ পৃষ্ঠাসমূহ',
-'qbspecialpages' => 'বিশেষ পৃষ্ঠাসমূহ',
 'faq'            => 'সততে উঠা প্ৰশ্ন (FAQ)',
-'faqpage'        => 'Project:সততে উঠা প্ৰশ্ন',
 
 'actions'                        => 'কাৰ্য্যসমূহ',
 'namespaces'                     => 'নামস্থান',
@@ -284,7 +279,6 @@ $messages = array(
 'edit'              => 'সম্পাদনা',
 'create'            => 'সৃষ্টি কৰক',
 'editthispage'      => 'বৰ্তমান পৃষ্ঠাটো সম্পাদন কৰিবলৈ',
-'create-this-page'  => 'নতুন পৃষ্ঠা সৃষ্টি কৰক',
 'delete'            => 'বিলোপন (ডিলিট)',
 'deletethispage'    => 'বৰ্তমান পৃষ্ঠাৰ বিলোপন (ডিলিট)',
 'undelete_short'    => '{{PLURAL:$1|বিলোপিত পৃষ্ঠাৰ|$1 সংখ্যক বিলোপিত পৃষ্ঠাৰ}} পূৰ্ববৎকৰণ',
@@ -300,7 +294,6 @@ $messages = array(
 'specialpage'       => 'বিশেষ পৃষ্ঠা',
 'personaltools'     => 'ব্যক্তিগত সৰঞ্জাম',
 'postcomment'       => 'নতুন অনুচ্ছেদ',
-'articlepage'       => 'বিষয়বস্তু পৃষ্ঠা চাওক',
 'talk'              => 'আলোচনা',
 'views'             => 'দৰ্শন',
 'toolbox'           => 'সাজ-সৰঞ্জাম',
@@ -1125,14 +1118,6 @@ $1",
 তেতিয়ালৈকে গুগলত অনুসন্ধান কৰক।
 মনত ৰাখিব যে তেঁওলোকৰ {{SITENAME}}ৰ ইণ্ডেক্স পুৰণি হব পাৰে।',
 
-# Quickbar
-'qbsettings'                => 'শীঘ্ৰদণ্ডিকা',
-'qbsettings-none'           => 'একেবাৰে নহয়',
-'qbsettings-fixedleft'      => 'বাঁওফাল স্থিৰ',
-'qbsettings-fixedright'     => 'সোঁফাল স্থিৰ',
-'qbsettings-floatingleft'   => 'বাঁওফাল অস্থিৰ',
-'qbsettings-floatingright'  => 'সোঁফাল অস্থিৰ',
-'qbsettings-directionality' => 'আপোনাৰ ভাষাৰ আৰু লিপিৰ দিশৰ ওপৰত নিৰ্ভৰ কৰি ঠিক কৰা হ’ল',
 
 # Preferences page
 'preferences'                   => 'পছন্দসমূহ',

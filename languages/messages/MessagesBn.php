@@ -209,16 +209,11 @@ $messages = array(
 'navigation'    => 'পরিভ্রমণ',
 'and'           => '&#32;এবং',
 
-# Cologne Blue skin
 'qbfind'         => 'অনুসন্ধান করুন',
 'qbbrowse'       => 'ব্রাউজ',
-'qbedit'         => 'সম্পাদনা',
 'qbpageoptions'  => 'এ পাতার বিকল্পসমূহ',
 'qbpageinfo'     => 'পাতা-সংক্রান্ত তথ্য',
-'qbmyoptions'    => 'আমার পছন্দ',
-'qbspecialpages' => 'বিশেষ পাতাসমূহ',
 'faq'            => 'সম্ভাব্য প্রশ্নসমূহ',
-'faqpage'        => 'Project:প্রাজিপ্র',
 
 'actions'                        => 'কার্যক্রম',
 'namespaces'                     => 'নামস্থান',
@@ -242,7 +237,6 @@ $messages = array(
 'edit'              => 'সম্পাদনা',
 'create'            => 'তৈরি করো',
 'editthispage'      => 'সম্পাদনা করুন',
-'create-this-page'  => 'পাতাটি তৈরি করো',
 'delete'            => 'অপসারণ',
 'deletethispage'    => 'এই পাতাটি মুছে ফেলুন',
 'undelete_short'    => 'পুনঃস্থাপন {{PLURAL:$1|১টি সম্পাদনা|$1টি সম্পাদনাসমূহ}}',
@@ -258,7 +252,6 @@ $messages = array(
 'specialpage'       => 'বিশেষ পাতা',
 'personaltools'     => 'নিজস্ব হাতিয়ারসমূহ',
 'postcomment'       => 'নতুন অনুচ্ছেদ',
-'articlepage'       => 'নিবন্ধ দেখুন',
 'talk'              => 'আলোচনা',
 'views'             => 'দৃষ্টিকোণ',
 'toolbox'           => 'সরঞ্জাম',
@@ -1012,13 +1005,6 @@ $3-এর দেয়া কারণ হল ''$2''",
 'search-external'                  => 'বহিঃস্থ অনুসন্ধান',
 'searchdisabled'                   => '{{SITENAME}} অনুসন্ধান এখন নিষ্ক্রিয় আছে। আপনি গুগলের মাধ্যমে অনুসন্ধান চালাতে পারেন। লক্ষ্য করুন যে {{SITENAME}}-এর বিষয়বস্তুর উপর গুগলের ইন্ডেক্সগুলি হালনাগাদ না-ও করা থাকতে পারে।',
 
-# Quickbar
-'qbsettings'               => 'কুইকবার',
-'qbsettings-none'          => 'কিছুই না',
-'qbsettings-fixedleft'     => 'স্থায়ী বাম',
-'qbsettings-fixedright'    => 'স্থায়ী ডান',
-'qbsettings-floatingleft'  => 'ভাসমান বাম',
-'qbsettings-floatingright' => 'ভাসমান ডান',
 
 # Preferences page
 'preferences'                   => 'আমার পছন্দ',

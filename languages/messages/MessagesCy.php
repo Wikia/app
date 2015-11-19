@@ -257,16 +257,11 @@ $messages = array(
 'navigation'    => 'Panel llywio',
 'and'           => '&#32;a/ac',
 
-# Cologne Blue skin
 'qbfind'         => 'Canfod',
 'qbbrowse'       => 'Pori',
-'qbedit'         => 'Golygu',
 'qbpageoptions'  => 'Y dudalen hon',
 'qbpageinfo'     => 'Cyd-destun',
-'qbmyoptions'    => 'Fy nhudalennau',
-'qbspecialpages' => 'Tudalennau arbennig',
 'faq'            => 'Cwestiynau cyffredin',
-'faqpage'        => 'Project:Cwestiynau cyffredin',
 
 'actions'                        => 'Gweithrediadau',
 'namespaces'                     => 'Parthau',
@@ -290,7 +285,6 @@ $messages = array(
 'edit'              => 'Golygu',
 'create'            => 'Creu',
 'editthispage'      => 'Golygwch y dudalen hon',
-'create-this-page'  => "Creu'r dudalen",
 'delete'            => 'Dileu',
 'deletethispage'    => 'Dileer y dudalen hon',
 'undelete_short'    => 'Adfer $1 {{PLURAL:$1|golygiad|golygiad|olygiad|golygiad|golygiad|golygiad}}',
@@ -306,7 +300,6 @@ $messages = array(
 'specialpage'       => 'Tudalen Arbennig',
 'personaltools'     => 'Offer personol',
 'postcomment'       => 'Adran newydd',
-'articlepage'       => 'Dangos tudalen bwnc',
 'talk'              => 'Sgwrs',
 'views'             => 'Golygon',
 'toolbox'           => 'Blwch offer',
@@ -1102,14 +1095,6 @@ Pan yn gwneud hyn dylid sicrhau nad yw dilyniant hanes tudalennau yn cael ei ddi
 Yn y cyfamser gallwch chwilio drwy Google.
 Cofiwch y gall mynegeion Google o gynnwys {{SITENAME}} fod ar ei hôl hi.",
 
-# Quickbar
-'qbsettings'                => 'Panel llywio',
-'qbsettings-none'           => 'Dim',
-'qbsettings-fixedleft'      => 'Sefydlog ar y chwith',
-'qbsettings-fixedright'     => 'Sefydlog ar y dde',
-'qbsettings-floatingleft'   => 'Yn arnofio ar y chwith',
-'qbsettings-floatingright'  => 'Yn arnofio ar y dde',
-'qbsettings-directionality' => "Yn sefydlog, ar yr ochr o'r ddalen lle rydych yn dechrau ysgrifennu eich iaith",
 
 # Preferences page
 'preferences'                   => 'Dewisiadau',
@@ -2772,7 +2757,6 @@ Achos hyn yn fwy na thebyg yw presenoldeb cysylltiad i wefan ar y rhestr gwahard
 
 # Skin names
 'skinname-standard'    => 'Safonol',
-'skinname-cologneblue' => 'Glas Cwlen',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marcio ei bod wedi derbyn ymweliad patrôl',

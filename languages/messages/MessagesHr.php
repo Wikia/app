@@ -449,16 +449,11 @@ $messages = array(
 'navigation'    => 'Orijentacija',
 'and'           => '&#32;i',
 
-# Cologne Blue skin
 'qbfind'         => 'Nađi',
 'qbbrowse'       => 'Pregledaj',
-'qbedit'         => 'Uredi',
 'qbpageoptions'  => 'Postavke stranice',
 'qbpageinfo'     => 'O stranici',
-'qbmyoptions'    => 'Moje stranice',
-'qbspecialpages' => 'Posebne stranice',
 'faq'            => 'Najčešća pitanja',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Radnje',
 'namespaces'                     => 'Imenski prostori',
@@ -482,7 +477,6 @@ $messages = array(
 'edit'              => 'Uredi',
 'create'            => 'Započni',
 'editthispage'      => 'Uredi ovu stranicu',
-'create-this-page'  => 'Započni ovu stranicu',
 'delete'            => 'Izbriši',
 'deletethispage'    => 'Izbriši ovu stranicu',
 'undelete_short'    => 'Vrati {{PLURAL:$1|$1 uređivanje|$1 uređivanja}}',
@@ -498,7 +492,6 @@ $messages = array(
 'specialpage'       => 'Posebna stranica',
 'personaltools'     => 'Osobni alati',
 'postcomment'       => 'Novi odlomak',
-'articlepage'       => 'Vidi članak',
 'talk'              => 'Razgovor',
 'views'             => 'Pogledi',
 'toolbox'           => 'Traka s alatima',
@@ -1297,14 +1290,6 @@ Primijetite da uporaba navigacijskih poveznica resetira Vaše izbore u stupcu.',
 'search-external'                  => 'Vanjski pretraživač',
 'searchdisabled'                   => '<p>Oprostite! Pretraga po cjelokupnoj bazi je zbog bržeg rada projekta {{SITENAME}} trenutačno onemogućena. Možete se poslužiti tražilicom Google.</p>',
 
-# Quickbar
-'qbsettings'                => 'Traka',
-'qbsettings-none'           => 'Bez',
-'qbsettings-fixedleft'      => 'Lijevo nepomično',
-'qbsettings-fixedright'     => 'Desno nepomično',
-'qbsettings-floatingleft'   => 'Lijevo leteće',
-'qbsettings-floatingright'  => 'Desno leteće',
-'qbsettings-directionality' => 'Fiksno, ovisno o smjeru pisma Vašeg jezika',
 
 # Preferences page
 'preferences'                   => 'Postavke',
@@ -2906,7 +2891,6 @@ Razlog je vjerojatno vanjska poveznica koja se nalazi na crnom popisu.',
 
 # Skin names
 'skinname-standard'    => 'Standardna',
-'skinname-cologneblue' => 'Kölnska plava',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
 'skinname-chick'       => 'Chick',

@@ -153,16 +153,11 @@ $messages = array(
 'navigation'    => 'Navgaziòn',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Tróva',
 'qbbrowse'       => 'Sföja',
-'qbedit'         => 'Mudèfica',
 'qbpageoptions'  => 'Upziòn dla pàgina',
 'qbpageinfo'     => 'Infurmaziòn sora la pàgina',
-'qbmyoptions'    => 'Al mi pàgin',
-'qbspecialpages' => 'Pàgin particulèri',
 'faq'            => 'Question frequenti',
-'faqpage'        => 'Prugèt:Question frequenti',
 
 
 'errorpagetitle'   => "Oci! T'ê fat una capèla",

@@ -106,15 +106,10 @@ $messages = array(
 'navigation'    => 'Faahre-Gnepp',
 'and'           => '&#32;unn',
 
-# Cologne Blue skin
 'qbfind'         => 'Finne',
-'qbedit'         => 'Ennere',
 'qbpageoptions'  => 'Des Blatt',
 'qbpageinfo'     => 'Daade vun dem Blatt',
-'qbmyoptions'    => 'Mei Bledder',
-'qbspecialpages' => 'Besunnere Bledder',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'namespaces'                => 'Blatznaame',
 
@@ -135,7 +130,6 @@ $messages = array(
 'edit'             => 'Ennere/Tscheensche',
 'create'           => 'Schtaerte',
 'editthispage'     => 'Des Blatt ennere',
-'create-this-page' => 'Blatt schtaerte',
 'delete'           => 'Lösche',
 'deletethispage'   => 'Des Blatt lösche',
 'protect'          => 'Schitze',
@@ -146,7 +140,6 @@ $messages = array(
 'talkpagelinktext' => 'Gschwetz',
 'specialpage'      => 'Besunneres Blatt',
 'personaltools'    => 'Paerseenlich Gscharr',
-'articlepage'      => 'Inhalt vun dem Blatt aagucke',
 'talk'             => 'Dischbedutt',
 'views'            => 'Aasichte',
 'toolbox'          => 'Gscharr',
@@ -361,8 +354,6 @@ Wenns des net iss, hoscht verleicht en Fehler in de Daadebank gfunne. Bitte meld
 'powersearch-togglenone'         => 'Ken',
 'search-external'                => 'Guck im Gewebb',
 
-# Quickbar
-'qbsettings-none' => 'Ken',
 
 # Preferences page
 'preferences'              => 'paerseenlich Profil',

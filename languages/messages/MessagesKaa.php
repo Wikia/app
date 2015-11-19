@@ -281,16 +281,11 @@ $messages = array(
 'navigation'    => 'Navigatsiya',
 'and'           => "&#32;ha'm",
 
-# Cologne Blue skin
 'qbfind'         => 'Tabıw',
 'qbbrowse'       => "Ko'riw",
-'qbedit'         => "O'zgertiw",
 'qbpageoptions'  => 'Usı bet',
 'qbpageinfo'     => 'Kontekst',
-'qbmyoptions'    => "Menin' betlerim",
-'qbspecialpages' => 'Arnawlı betler',
 'faq'            => 'KBS',
-'faqpage'        => 'Project:KBS',
 
 'actions'                  => "Ha'reketler",
 'namespaces'               => "İsimler ko'plikleri",
@@ -313,7 +308,6 @@ $messages = array(
 'edit'              => "O'zgertiw",
 'create'            => 'Jaratıw',
 'editthispage'      => "Usı betti o'zgertiw",
-'create-this-page'  => 'Bul betti jaratıw',
 'delete'            => "O'shiriw",
 'deletethispage'    => "Usı betti o'shiriw",
 'undelete_short'    => "{{PLURAL:$1|1 o'zgeristi|$1 o'zgerisin}} qayta tiklew",
@@ -328,7 +322,6 @@ $messages = array(
 'specialpage'       => 'Arnawlı bet',
 'personaltools'     => "Paydalanıwshı a'sbapları",
 'postcomment'       => "Taza bo'lim",
-'articlepage'       => "Mag'lıwmat betin ko'riw",
 'talk'              => 'Diskussiya',
 'views'             => "Ko'rinis",
 'toolbox'           => "A'sbaplar",
@@ -861,13 +854,6 @@ Barlıq mag'lıwmat tu'rin (sonın' ishinde sa'wbet betlerdi, shablonlardı h.t.
 'powersearch-field'                => "İzlenetug'ın so'z (yamasa so'z dizbegi):",
 'search-external'                  => 'Sırtqı izlewshi',
 
-# Quickbar
-'qbsettings'               => 'Navigatsiya paneli',
-'qbsettings-none'          => 'Hesh qanday',
-'qbsettings-fixedleft'     => 'Shepke bekitilgen',
-'qbsettings-fixedright'    => "On'g'a bekitilgen",
-'qbsettings-floatingleft'  => 'Shepte jıljıwshı',
-'qbsettings-floatingright' => "On'da jıljıwshı",
 
 # Preferences page
 'preferences'               => 'Sazlawlar',

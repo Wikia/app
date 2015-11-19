@@ -86,12 +86,8 @@ $messages = array(
 'navigation' => 'Mɔtabiala',
 'and'        => '&#32;kpakple',
 
-# Cologne Blue skin
 'qbfind'         => 'Di',
-'qbedit'         => 'Trɔ asi le eŋu',
 'qbpageoptions'  => 'Axa sia',
-'qbmyoptions'    => 'Nyeƒe axawo',
-'qbspecialpages' => 'Axa tɔxewo',
 
 
 'errorpagetitle'   => 'Vodada',
@@ -107,7 +103,6 @@ $messages = array(
 'edit'             => 'Trɔ asi le eŋu',
 'create'           => 'Dze egɔme',
 'editthispage'     => 'Ðɔ axa sia ɖo',
-'create-this-page' => 'Dze axa sia gɔme',
 'delete'           => 'Tutui',
 'deletethispage'   => 'Tutu axa sia',
 'protect'          => 'Dzɔ eŋu',

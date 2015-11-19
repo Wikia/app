@@ -199,16 +199,11 @@ $messages = array(
 'navigation'    => 'Navegación',
 'and'           => '&#32;y',
 
-# Cologne Blue skin
 'qbfind'         => 'Alcontrar',
 'qbbrowse'       => 'Escartafoyar',
-'qbedit'         => 'Editar',
 'qbpageoptions'  => 'Esta páxina',
 'qbpageinfo'     => 'Contestu',
-'qbmyoptions'    => 'Les mios páxines',
-'qbspecialpages' => 'Páxines especiales',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:Entrugues más frecuentes',
 
 'actions'                        => 'Aiciones',
 'namespaces'                     => 'Espacios de nome',
@@ -232,7 +227,6 @@ $messages = array(
 'edit'              => 'Editar',
 'create'            => 'Crear',
 'editthispage'      => 'Editar esta páxina',
-'create-this-page'  => 'Crear esta páxina',
 'delete'            => 'Desaniciar',
 'deletethispage'    => 'Desaniciar esta páxina',
 'undelete_short'    => 'Restaurar {{PLURAL:$1|una edición|$1 ediciones}}',
@@ -248,7 +242,6 @@ $messages = array(
 'specialpage'       => 'Páxina especial',
 'personaltools'     => 'Ferramientes personales',
 'postcomment'       => 'Seición nueva',
-'articlepage'       => 'Ver conteníu de la páxina',
 'talk'              => 'Alderique',
 'views'             => 'Vistes',
 'toolbox'           => 'Ferramientes',
@@ -1077,14 +1070,6 @@ Asegúrate de qu'esti cambéu caltenga la continuidá del históricu de la páxi
 'search-external'                  => 'Busca esterna',
 'searchdisabled'                   => "La busca en {{SITENAME}} ta desactivada. Mentanto, pues buscar en Google. Has fixate en que'l conteníu de los sos índices de {{SITENAME}} pue tar desfasáu.",
 
-# Quickbar
-'qbsettings'                => 'Barra rápida',
-'qbsettings-none'           => 'Nenguna',
-'qbsettings-fixedleft'      => 'Fixa a manzorga',
-'qbsettings-fixedright'     => 'Fixa a mandrecha',
-'qbsettings-floatingleft'   => 'Flotante a manzorga',
-'qbsettings-floatingright'  => 'Flotante a mandrecha',
-'qbsettings-directionality' => "Fixa, según la direición d'escritura de la to llingua",
 
 # Preferences page
 'preferences'                   => 'Preferencies',
@@ -2741,7 +2726,6 @@ Pues ver el so códigu fonte.',
 # Stylesheets
 'common.css'              => "/* Los CSS allugaos equí s'aplicarán a tolos aspeutos */",
 'standard.css'            => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu Standard */',
-'cologneblue.css'         => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu Cologne Blue */',
 'monobook.css'            => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu Monobook */',
 'myskin.css'              => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu MySkin */',
 'chick.css'               => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu Chick */',
@@ -2758,7 +2742,6 @@ Pues ver el so códigu fonte.',
 # Scripts
 'common.js'              => '/* Cualesquier JavaScript que tea equí se cargará pa tolos usuarios en cada carga de páxina. */',
 'standard.js'            => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu Standard */',
-'cologneblue.js'         => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu Cologne Blue */',
 'monobook.js'            => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu MonoBook */',
 'myskin.js'              => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu MySkin */',
 'chick.js'               => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu Chick */',
@@ -2808,7 +2791,6 @@ Probablemente tea causao por un enllaz a un sitiu esternu de la llista prieta.',
 
 # Skin names
 'skinname-standard'    => 'Clásicu',
-'skinname-cologneblue' => 'Azul Colonia',
 'skinname-myskin'      => 'MySkin',
 'skinname-modern'      => 'Modernu',
 

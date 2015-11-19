@@ -135,10 +135,7 @@ $messages = array(
 'mytalk'     => 'Mahawarata',
 'navigation' => 'Shawagi',
 
-# Cologne Blue skin
 'qbfind'         => 'Nemo',
-'qbedit'         => 'Gyarawa',
-'qbspecialpages' => 'Shafuna na musamman',
 
 
 'errorpagetitle'   => 'Tangarɗa',

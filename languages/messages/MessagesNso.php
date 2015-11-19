@@ -147,12 +147,8 @@ $messages = array(
 'navigation'    => 'Tšwelotšo',
 'and'           => '&#32;le',
 
-# Cologne Blue skin
 'qbfind'         => 'Humana',
-'qbedit'         => 'Fetola',
 'qbpageoptions'  => 'Letlakala le',
-'qbmyoptions'    => 'Matlakala a ka',
-'qbspecialpages' => 'Matlakala a itšego',
 
 
 'errorpagetitle'    => 'Phošo',
@@ -172,7 +168,6 @@ $messages = array(
 'edit'              => 'Fetola',
 'create'            => 'Tlhoma',
 'editthispage'      => 'Fetola letlakala  le',
-'create-this-page'  => 'Tlhoma letlakala le',
 'delete'            => 'Phumula',
 'deletethispage'    => 'Phumula letlakala le',
 'protect'           => 'Lota',
@@ -186,7 +181,6 @@ $messages = array(
 'specialpage'       => 'Matlaka a itšeng',
 'personaltools'     => "Dithulusu tša gago (''personal'')",
 'postcomment'       => 'Sekgao se sempsha',
-'articlepage'       => 'Nyakoretša letlakala la mateng',
 'talk'              => 'Poledišano',
 'views'             => 'Dinyakorêtšo',
 'toolbox'           => 'Lepokisi la dithulusu',

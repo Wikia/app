@@ -159,16 +159,11 @@ $messages = array(
 'navigation'    => 'Se̍h chām',
 'and'           => '&#32;kap',
 
-# Cologne Blue skin
 'qbfind'         => 'Chhoé',
 'qbbrowse'       => 'Liū-lám',
-'qbedit'         => 'Siu-kái',
 'qbpageoptions'  => 'Chit ia̍h',
 'qbpageinfo'     => 'Bo̍k-lo̍k',
-'qbmyoptions'    => 'Goá ê ia̍h',
-'qbspecialpages' => 'Te̍k-sû-ia̍h',
 'faq'            => 'Būn-tah',
-'faqpage'        => 'Project:Būn-tah',
 
 'actions'                        => 'Tōng-chok',
 'namespaces'                     => 'Miâ-khong-kan',
@@ -192,7 +187,6 @@ $messages = array(
 'edit'              => 'Siu-kái',
 'create'            => 'Khai-sí siá',
 'editthispage'      => 'Siu-kái chit ia̍h',
-'create-this-page'  => 'Khai-sí siá chit ia̍h',
 'delete'            => 'Thâi',
 'deletethispage'    => 'Thâi chit ia̍h',
 'undelete_short'    => 'Kiù {{PLURAL:$1| ê siu-káit|$1  ê siu-kái}}',
@@ -208,7 +202,6 @@ $messages = array(
 'specialpage'       => 'Te̍k-sû-ia̍h',
 'personaltools'     => 'Kò-jîn kang-khū',
 'postcomment'       => 'Hoat-piáu phêng-lūn',
-'articlepage'       => 'Khoàⁿ loē-iông ia̍h',
 'talk'              => 'thó-lūn',
 'views'             => 'Khoàⁿ',
 'toolbox'           => 'Ke-si kheh-á',
@@ -1006,14 +999,6 @@ $1",
 'search-external'                  => '外部的搜揣',
 'searchdisabled'                   => '{{SITENAME}}因為性能方面的原因，全文搜揣已經暫時停用。你會使暫時透過Google搜揣。請注意怹的索引可能過時。',
 
-# Quickbar
-'qbsettings'                => 'Quickbar ê siat-tēng',
-'qbsettings-none'           => '無',
-'qbsettings-fixedleft'      => '倒手爿固定',
-'qbsettings-fixedright'     => '正手爿固定',
-'qbsettings-floatingleft'   => '倒手爿無固定',
-'qbsettings-floatingright'  => '正手爿無固定',
-'qbsettings-directionality' => '固定，照你話語文字的方向。',
 
 # Preferences page
 'preferences'                   => 'Siat-tēng',

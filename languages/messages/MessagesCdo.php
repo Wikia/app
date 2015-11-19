@@ -100,8 +100,6 @@ $messages = array(
 'navigation'    => 'Īng-dô̤',
 'and'           => '&#32;gâe̤ng',
 
-# Cologne Blue skin
-'qbspecialpages' => 'Dĕk-sṳ̀ hiĕk',
 
 'returnto'         => 'Duōng kó̤ $1.',
 'tagline'          => 'Lài-nguòng: {{SITENAME}}',

@@ -288,16 +288,11 @@ $messages = array(
 'navigation'    => 'Navigasion',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Trova',
 'qbbrowse'       => 'Sfoja',
-'qbedit'         => 'Canbia',
 'qbpageoptions'  => 'Opsion pajina',
 'qbpageinfo'     => 'Informasion so ła pajina',
-'qbmyoptions'    => 'Łe me pajine',
-'qbspecialpages' => 'Pagine speciali',
 'faq'            => 'Domande frequenti',
-'faqpage'        => 'Project:Domande frequenti',
 
 'actions'                        => 'Asion',
 'namespaces'                     => 'Namespace',
@@ -320,7 +315,6 @@ $messages = array(
 'edit'              => 'Canbia',
 'create'            => 'Crea',
 'editthispage'      => 'Canbia sta pagina',
-'create-this-page'  => 'Crea sta pagina',
 'delete'            => 'Scansela',
 'deletethispage'    => 'Scansela sta pagina',
 'undelete_short'    => 'Recupera {{PLURAL:$1|na revision|$1 revision}}',
@@ -335,7 +329,6 @@ $messages = array(
 'specialpage'       => 'Pagina speciale',
 'personaltools'     => 'Strumenti personali',
 'postcomment'       => 'Nova sesion',
-'articlepage'       => 'Varda ła voxe',
 'talk'              => 'Discussion',
 'views'             => 'Visite',
 'toolbox'           => 'Strumenti',
@@ -1063,13 +1056,6 @@ Prova a métarghe \"all:\" davanti al testo che te serchi par vardar in tuti i n
 'search-external'                  => 'Riserca esterna',
 'searchdisabled'                   => 'La riserca interna de {{SITENAME}} no la xe ativa; par intanto te pol proár a doparar un motore de riserca esterno come Google. (Nota però che i contenuti de {{SITENAME}} presenti in sti motori i podarìa èssar mìà agiornà.)',
 
-# Quickbar
-'qbsettings'               => 'Settaggio barra menu',
-'qbsettings-none'          => 'Nessun',
-'qbsettings-fixedleft'     => 'Fisso a sinistra',
-'qbsettings-fixedright'    => 'Fisso a destra',
-'qbsettings-floatingleft'  => 'Fluttuante a sinistra',
-'qbsettings-floatingright' => 'Fluttuante a destra',
 
 # Preferences page
 'preferences'                   => 'Prefarense',

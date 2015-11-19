@@ -445,16 +445,11 @@ $messages = array(
 'navigation'    => '둘러보기',
 'and'           => ',',
 
-# Cologne Blue skin
 'qbfind'         => '찾기',
 'qbbrowse'       => '탐색',
-'qbedit'         => '편집',
 'qbpageoptions'  => '문서 기능',
 'qbpageinfo'     => '문서 정보',
-'qbmyoptions'    => '내 문서',
-'qbspecialpages' => '특수 문서',
 'faq'            => '자주 묻는 질문',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => '행위',
 'namespaces'                     => '이름공간',
@@ -478,7 +473,6 @@ $messages = array(
 'edit'              => '편집',
 'create'            => '생성',
 'editthispage'      => '이 문서 편집하기',
-'create-this-page'  => '이 문서 만들기',
 'delete'            => '삭제',
 'deletethispage'    => '이 문서 삭제하기',
 'undelete_short'    => '편집 $1개 되살리기',
@@ -494,7 +488,6 @@ $messages = array(
 'specialpage'       => '특수 문서',
 'personaltools'     => '개인 도구',
 'postcomment'       => '새 주제',
-'articlepage'       => '문서 보기',
 'talk'              => '토론',
 'views'             => '보기',
 'toolbox'           => '도구모음',
@@ -1278,14 +1271,6 @@ $1",
 'search-external'                  => '외부 검색',
 'searchdisabled'                   => '{{SITENAME}} 검색 기능이 비활성화되어 있습니다. 기능이 작동하지 않는 동안에는 구글(Google)을 이용해 검색할 수 있습니다. 검색 엔진의 내용은 최근 것이 아닐 수 있다는 점을 주의해주세요.',
 
-# Quickbar
-'qbsettings'                => '빨리가기 맞춤',
-'qbsettings-none'           => '없음',
-'qbsettings-fixedleft'      => '왼쪽 고정',
-'qbsettings-fixedright'     => '오른쪽 고정',
-'qbsettings-floatingleft'   => '왼쪽 유동',
-'qbsettings-floatingright'  => '오른쪽 유동',
-'qbsettings-directionality' => '사용자 언어의 문자 입력 방향에 맞추어 고정',
 
 # Preferences page
 'preferences'                   => '사용자 환경 설정',
@@ -2972,7 +2957,6 @@ $1 사용자가 차단된 이유는 다음과 같습니다: "$2"',
 
 # Skin names
 'skinname-standard'    => '클래식',
-'skinname-cologneblue' => '쾰른 블루',
 'skinname-monobook'    => '모노북',
 'skinname-myskin'      => '마이스킨',
 'skinname-chick'       => '치크',

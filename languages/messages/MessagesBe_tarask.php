@@ -395,16 +395,11 @@ $messages = array(
 'navigation'    => 'Навігацыя',
 'and'           => '&#32;і',
 
-# Cologne Blue skin
 'qbfind'         => 'Знайсьці',
 'qbbrowse'       => 'Праглядзець',
-'qbedit'         => 'Рэдагаваць',
 'qbpageoptions'  => 'Гэтая старонка',
 'qbpageinfo'     => 'Інфармацыя пра старонку',
-'qbmyoptions'    => 'Мае старонкі',
-'qbspecialpages' => 'Спэцыяльныя старонкі',
 'faq'            => 'Частыя пытаньні',
-'faqpage'        => 'Project:Частыя пытаньні',
 
 'actions'                        => 'Дзеяньні',
 'namespaces'                     => 'Прасторы назваў',
@@ -428,7 +423,6 @@ $messages = array(
 'edit'              => 'Рэдагаваць',
 'create'            => 'Стварыць',
 'editthispage'      => 'Рэдагаваць гэтую старонку',
-'create-this-page'  => 'Стварыць гэтую старонку',
 'delete'            => 'Выдаліць',
 'deletethispage'    => 'Выдаліць гэтую старонку',
 'undelete_short'    => 'Аднавіць $1 {{PLURAL:$1|рэдагаваньне|рэдагаваньні|рэдагаваньняў}}',
@@ -444,7 +438,6 @@ $messages = array(
 'specialpage'       => 'Спэцыяльная старонка',
 'personaltools'     => 'Асабістыя прылады',
 'postcomment'       => 'Новая сэкцыя',
-'articlepage'       => 'Паказаць старонку зьместу',
 'talk'              => 'Абмеркаваньне',
 'views'             => 'Прагляды',
 'toolbox'           => 'Інструмэнты',
@@ -1254,14 +1247,6 @@ $1",
 'searchdisabled'                   => 'Функцыя пошуку ў {{GRAMMAR:месны|{{SITENAME}}}} адключаная.
 Вы можаце пашукаць з дапамогай Google, але заўважце, што там інфармацыя пра старонкі {{GRAMMAR:родны|{{SITENAME}}}} можа быць састарэлай.',
 
-# Quickbar
-'qbsettings'                => 'Панэль хуткага доступу',
-'qbsettings-none'           => 'Не паказваць',
-'qbsettings-fixedleft'      => 'Замацаваная зьлева',
-'qbsettings-fixedright'     => 'Замацаваная справа',
-'qbsettings-floatingleft'   => 'Рухомая зьлева',
-'qbsettings-floatingright'  => 'Плавае справа',
-'qbsettings-directionality' => 'Замацаваная, у залежнасьці ад накірунку напісаньня ў Вашай мове',
 
 # Preferences page
 'preferences'                   => 'Налады',
@@ -2940,7 +2925,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => 'Клясычнае',
-'skinname-cologneblue' => 'Кёльнскі смутак',
 'skinname-monobook'    => 'Монакніга',
 'skinname-myskin'      => 'MySkin',
 'skinname-chick'       => 'Цыпа',

@@ -23,35 +23,8 @@ class SkinLegacy extends SkinTemplate {
 		return true;
 	}
 
-	/**
-	 * This was for the old skins and for users with 640x480 screen.
-	 * Please note old skins are still used and might prove useful for
-	 * users having old computers or visually impaired.
-	 */
-	var $mSuppressQuickbar = false;
-
-	/**
-	 * Suppress the quickbar from the output, only for skin supporting
-	 * the quickbar
-	 */
-	public function suppressQuickbar() {
-		$this->mSuppressQuickbar = true;
-	}
-
-	/**
-	 * Return whether the quickbar should be suppressed from the output
-	 *
-	 * @return Boolean
-	 */
-	public function isQuickbarSuppressed() {
-		return $this->mSuppressQuickbar;
-	}
-
 	function qbSetting() {
 		global $wgUser;
-		if ( $this->isQuickbarSuppressed() ) {
-			return 0;
-		}
 		$q = $wgUser->getGlobalPreference( 'quickbar', 0 );
 		if( $q == 5 ) {
 			# 5 is the default, which chooses the setting
@@ -527,14 +500,6 @@ class LegacyTemplate extends BaseTemplate {
 		return $wgLang->pipeList( $s );
 	}
 
-	/**
-	 * @deprecated in 1.19
-	 */
-	function getQuickbarCompensator( $rows = 1 ) {
-		wfDeprecated( __METHOD__, '1.19' );
-		return "<td width='152' rowspan='{$rows}'>&#160;</td>";
-	}
-
 	function editThisPage() {
 		global $wgOut;
 
@@ -544,8 +509,6 @@ class LegacyTemplate extends BaseTemplate {
 			$title = $this->getSkin()->getTitle();
 			if ( $title->quickUserCan( 'edit' ) && $title->exists() ) {
 				$t = wfMsg( 'editthispage' );
-			} elseif ( $title->quickUserCan( 'create' ) && !$title->exists() ) {
-				$t = wfMsg( 'create-this-page' );
 			} else {
 				$t = wfMsg( 'viewsource' );
 			}
@@ -718,7 +681,7 @@ class LegacyTemplate extends BaseTemplate {
 			$link = $title->getSubjectPage();
 			switch( $link->getNamespace() ) {
 				case NS_MAIN:
-					$text = wfMsg( 'articlepage' );
+					$text = '';
 					break;
 				case NS_USER:
 					$text = wfMsg( 'userpage' );
@@ -745,7 +708,7 @@ class LegacyTemplate extends BaseTemplate {
 					$text = wfMsg( 'categorypage' );
 					break;
 				default:
-					$text = wfMsg( 'articlepage' );
+					$text = '';
 			}
 		} else {
 			$link = $title->getTalkPage();

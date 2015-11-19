@@ -335,16 +335,11 @@ $messages = array(
 'navigation'    => 'Shfleto',
 'and'           => '&#32;dhe',
 
-# Cologne Blue skin
 'qbfind'         => 'Kërko',
 'qbbrowse'       => 'Shfletoni',
-'qbedit'         => 'Redaktoni',
 'qbpageoptions'  => 'Kjo faqe',
 'qbpageinfo'     => 'Kontekst',
-'qbmyoptions'    => 'Faqet e mia',
-'qbspecialpages' => 'Faqet speciale',
 'faq'            => 'Pyetje që bëhen shpesh',
-'faqpage'        => 'Project: Pyetje që bëhen shpesh',
 
 'actions'                        => 'Veprimet',
 'namespaces'                     => 'Hapsirat e emrit',
@@ -368,7 +363,6 @@ $messages = array(
 'edit'              => 'Redakto',
 'create'            => 'Krijo',
 'editthispage'      => 'Redakto këtë faqe',
-'create-this-page'  => 'Krijoje këtë faqe',
 'delete'            => 'Grise',
 'deletethispage'    => 'Grise këtë faqe',
 'undelete_short'    => 'Anullo fshirjen {{PLURAL:$1|një redaktim|$1 redaktime}}',
@@ -384,7 +378,6 @@ $messages = array(
 'specialpage'       => 'Faqe speciale',
 'personaltools'     => 'Mjetet e mia',
 'postcomment'       => 'Seksion i ri',
-'articlepage'       => 'Shiko faqen me përmbajtje',
 'talk'              => 'Diskutimet',
 'views'             => 'Shikime',
 'toolbox'           => 'Mjete',
@@ -1197,14 +1190,6 @@ Kini kujdes se përdorimi i lidhjeve të shfletimit do të ndryshojë përzgjedh
 'search-external'                  => 'Kërkim i jashtëm',
 'searchdisabled'                   => '<p>Kërkimi me tekst të plotë është bllokuar tani për tani ngaqë shërbyesi është shumë i ngarkuar; shpresojmë ta nxjerrim prapë në gjendje normale pas disa punimeve. Deri atëherë mund të përdorni Google-in për kërkime:</p>',
 
-# Quickbar
-'qbsettings'                => 'Vendime të shpejta',
-'qbsettings-none'           => 'Asnjë',
-'qbsettings-fixedleft'      => 'Lidhur majtas',
-'qbsettings-fixedright'     => 'Lidhur djathtas',
-'qbsettings-floatingleft'   => 'Pezull majtas',
-'qbsettings-floatingright'  => 'Pezull djathtas',
-'qbsettings-directionality' => 'Fikse, në varësi të skriptës së drejtuar në gjuhën tuaj',
 
 # Preferences page
 'preferences'                   => 'Parapëlqimet',
@@ -2878,7 +2863,6 @@ Ju lutemi provoni përsëri.',
 
 # Skin names
 'skinname-standard'    => 'Standarte',
-'skinname-cologneblue' => 'Kolonjë Blu',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Shënoje si të patrulluar',

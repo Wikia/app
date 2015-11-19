@@ -72,7 +72,7 @@
 				util.$content = $( '#mw_contentholder' );
 
 			} else if ( $( '#article' ).length ) {
-				// Standard, CologneBlue
+				// Standard
 				util.$content = $( '#article' );
 
 			// Wikia change - begin - @author: wladek
@@ -342,7 +342,6 @@
 			// just add it to the bottom of their 'sidebar' element as a fallback
 			switch ( mw.config.get( 'skin' ) ) {
 			case 'standard':
-			case 'cologneblue':
 				$( '#quickbar' ).append( $link.after( '<br/>' ) );
 				return $link[0];
 			default: // Skins like chick, modern, monobook, myskin, simple, vector...

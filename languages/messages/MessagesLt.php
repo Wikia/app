@@ -317,16 +317,11 @@ $messages = array(
 'navigation'    => 'Naršymas',
 'and'           => '&#32;ir',
 
-# Cologne Blue skin
 'qbfind'         => 'Paieška',
 'qbbrowse'       => 'Naršymas',
-'qbedit'         => 'Taisyti',
 'qbpageoptions'  => 'Šis puslapis',
 'qbpageinfo'     => 'Kontekstas',
-'qbmyoptions'    => 'Mano puslapiai',
-'qbspecialpages' => 'Specialieji puslapiai',
 'faq'            => 'DUK',
-'faqpage'        => 'Project:DUK',
 
 'actions'                        => 'Veiksmai',
 'namespaces'                     => 'Vardų sritys',
@@ -350,7 +345,6 @@ $messages = array(
 'edit'              => 'Redaguoti',
 'create'            => 'Sukurti',
 'editthispage'      => 'Redaguoti šį puslapį',
-'create-this-page'  => 'Sukurti šį puslapį',
 'delete'            => 'Trinti',
 'deletethispage'    => 'Ištrinti šį puslapį',
 'undelete_short'    => 'Atstatyti $1 {{PLURAL:$1:redagavimą|redagavimus|redagavimų}}',
@@ -366,7 +360,6 @@ $messages = array(
 'specialpage'       => 'Specialusis puslapis',
 'personaltools'     => 'Asmeniniai įrankiai',
 'postcomment'       => 'Rašyti komentarą',
-'articlepage'       => 'Rodyti turinio puslapį',
 'talk'              => 'Aptarimas',
 'views'             => 'Žiūrėti',
 'toolbox'           => 'Įrankiai',
@@ -1165,14 +1158,6 @@ Prašome patikrinti sąrašus.',
 'search-external'                  => 'Išorinė paieška',
 'searchdisabled'                   => 'Projekto {{SITENAME}} paieška yra uždrausta. Galite pamėginti ieškoti Google paieškos sistemoje. Paieškos sistemoje projekto {{SITENAME}} duomenys gali būti pasenę.',
 
-# Quickbar
-'qbsettings'                => 'Greitasis pasirinkimas',
-'qbsettings-none'           => 'Nerodyti',
-'qbsettings-fixedleft'      => 'Fiksuoti kairėje',
-'qbsettings-fixedright'     => 'Fiksuoti dešinėje',
-'qbsettings-floatingleft'   => 'Plaukiojantis kairėje',
-'qbsettings-floatingright'  => 'Plaukiojantis dešinėje',
-'qbsettings-directionality' => 'Pataisyta, priklausomai nuo jūsų rašybos ir kalbos krypties',
 
 # Preferences page
 'preferences'                   => 'Nustatymai',
@@ -2850,7 +2835,6 @@ Leidžia pridėti atmetimo priežastį komentaruose',
 
 # Skin names
 'skinname-standard'    => 'Klasikinė',
-'skinname-cologneblue' => 'Kelno mėlyna',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Mano išvaizda',
 'skinname-chick'       => 'Chick',

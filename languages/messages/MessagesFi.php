@@ -459,16 +459,11 @@ $messages = array(
 'navigation'    => 'Valikko',
 'and'           => '&#32;ja',
 
-# Cologne Blue skin
 'qbfind'         => 'Etsi',
 'qbbrowse'       => 'Selaa',
-'qbedit'         => 'Muokkaa',
 'qbpageoptions'  => 'Sivuasetukset',
 'qbpageinfo'     => 'Sivun tiedot',
-'qbmyoptions'    => 'Asetukset',
-'qbspecialpages' => 'Toimintosivut',
 'faq'            => 'Usein kysytyt kysymykset',
-'faqpage'        => 'Project:Usein kysytyt kysymykset',
 
 'actions'                        => 'Toiminnot',
 'namespaces'                     => 'Nimiavaruudet',
@@ -492,7 +487,6 @@ $messages = array(
 'edit'              => 'Muokkaa',
 'create'            => 'Luo sivu',
 'editthispage'      => 'Muokkaa tätä sivua',
-'create-this-page'  => 'Luo tämä sivu',
 'delete'            => 'Poista',
 'deletethispage'    => 'Poista tämä sivu',
 'undelete_short'    => 'Palauta {{PLURAL:$1|yksi muokkaus|$1 muokkausta}}',
@@ -508,7 +502,6 @@ $messages = array(
 'specialpage'       => 'Toimintosivu',
 'personaltools'     => 'Henkilökohtaiset työkalut',
 'postcomment'       => 'Uusi osio',
-'articlepage'       => 'Näytä varsinainen sivu',
 'talk'              => 'Keskustelu',
 'views'             => 'Näkymät',
 'toolbox'           => 'Työkalut',
@@ -1283,14 +1276,6 @@ Kokeile lisätä haun alkuun ''all:'', niin haku kohdistuu kaikkeen sisältöön
 'search-external'                  => 'Ulkoinen haku',
 'searchdisabled'                   => 'Tekstihaku on poistettu toistaiseksi käytöstä suuren kuorman vuoksi. Voit käyttää alla olevaa Googlen hakukenttää sivujen etsimiseen, kunnes haku tulee taas käyttöön. <small>Huomaa, että ulkopuoliset kopiot {{GRAMMAR:genitive|{{SITENAME}}}} sisällöstä eivät välttämättä ole ajan tasalla.</small>',
 
-# Quickbar
-'qbsettings'                => 'Pikavalikko',
-'qbsettings-none'           => 'Ei mitään',
-'qbsettings-fixedleft'      => 'Tekstin mukana, vasen',
-'qbsettings-fixedright'     => 'Tekstin mukana, oikea',
-'qbsettings-floatingleft'   => 'Pysyen vasemmalla',
-'qbsettings-floatingright'  => 'Pysyen oikealla',
-'qbsettings-directionality' => 'Kiinteä, riippuen käyttämäsi kielen kirjoitusjärjestelmän suunnasta',
 
 # Preferences page
 'preferences'                   => 'Asetukset',
@@ -2873,7 +2858,6 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 # Stylesheets
 'common.css'              => '/* Tämä sivu sisältää koko sivustoa muuttavia tyylejä. */',
 'standard.css'            => '/* Tämä sivu sisältää Perus-ulkoasua muuttavia tyylejä. */',
-'cologneblue.css'         => '/* Tämä sivu sisältää Kölnin sininen -ulkoasua muuttavia tyylejä. */',
 'monobook.css'            => '/* Tämä sivu sisältää Monobook-ulkoasua muuttavia tyylejä. */',
 'myskin.css'              => '/* Tämä sivu sisältää Oma tyylisivu -ulkoasua muuttavia tyylejä. */',
 'chick.css'               => '/* Tämä sivu sisältää Chick-ulkoasua muuttavia tyylejä. */',
@@ -2889,7 +2873,6 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 # Scripts
 'common.js'              => '/* Tämän sivun JavaScript-koodi liitetään jokaiseen sivulataukseen */',
 'standard.js'            => '/* Tämän sivun JavaScript-koodi liitetään Perus-tyyliin */',
-'cologneblue.js'         => '/* Tämän sivun JavaScript-koodi liitetään Kölnin sininen -tyyliin */',
 'monobook.js'            => '/* Tämän sivun JavaScript-koodi liitetään Monobook-tyyliin */',
 'myskin.js'              => '/* Tämän sivun JavaScript-koodi liitetään Oma tyylisivu -tyyliin */',
 'chick.js'               => '/* Tämän sivun JavaScript-koodi liitetään Chick-tyyliin */',
@@ -2938,7 +2921,6 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 
 # Skin names
 'skinname-standard'    => 'Perus',
-'skinname-cologneblue' => 'Kölnin sininen',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'Oma tyylisivu',
 'skinname-chick'       => 'Chick',

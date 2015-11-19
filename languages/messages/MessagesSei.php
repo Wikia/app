@@ -127,16 +127,11 @@ $messages = array(
 'navigation'    => 'Navigacion',
 'and'           => '&#32;ö',
 
-# Cologne Blue skin
 'qbfind'         => 'Hinuetzöx',
 'qbbrowse'       => 'Quetzexal',
-'qbedit'         => 'Ticpatlöx',
 'qbpageoptions'  => 'Jan páhina',
 'qbpageinfo'     => 'Contextua',
-'qbmyoptions'    => 'Hepáhinám',
-'qbspecialpages' => 'Páhinám extravám',
 'faq'            => 'Cocmíiit cmaa',
-'faqpage'        => 'Project:Cocmíiit cmaa',
 
 'errorpagetitle'    => 'Römj',
 'returnto'          => 'Jumpöx $1.',
@@ -168,7 +163,6 @@ $messages = array(
 'specialpage'       => 'Páhina extrava',
 'personaltools'     => 'Cui personalui',
 'postcomment'       => 'Iitom pte queeet',
-'articlepage'       => 'Cohuatlöx contentua páhina',
 'talk'              => 'Czaxö',
 'views'             => 'Cohuatlöxám',
 'toolbox'           => 'Caitómam',
@@ -583,9 +577,6 @@ Informacion: (curt) = quiíxde vercion currentua,
 'searchhelp-url'        => 'Help:Caálixötöj',
 'powersearch'           => 'Yahöx',
 
-# Quickbar
-'qbsettings'      => 'Zuónaát',
-'qbsettings-none' => 'Nepartám',
 
 # Preferences page
 'preferences'         => 'Quáatlaác',

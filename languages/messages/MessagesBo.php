@@ -140,15 +140,10 @@ $messages = array(
 'navigation'    => 'ཕྱོགས་ཁྲིད།',
 'and'           => '&#32;དང་',
 
-# Cologne Blue skin
 'qbfind'         => 'འཚོལ་བ།',
-'qbedit'         => 'རྩོམ་སྒྲིག',
 'qbpageoptions'  => 'ཤོག་ངོས་འདི།',
 'qbpageinfo'     => 'འབྲེལ་ཆགས།',
-'qbmyoptions'    => 'ངའི་ཤོག་ངོས།',
-'qbspecialpages' => 'དམིཊ་བསལ་གྱི་བཟོ་བཅོས།',
 'faq'            => 'རྒྱུན་ལྡན་དྲི་བ།',
-'faqpage'        => 'Project: རྒྱུན་ལྡན་དྲི་བ།',
 
 'actions'                  => 'བྱ་འགུལ།',
 'namespaces'               => 'མིང་འགོད་ས།',
@@ -171,7 +166,6 @@ $messages = array(
 'edit'              => 'རྩོམ་སྒྲིག',
 'create'            => 'གསར་སྐྲུན།',
 'editthispage'      => 'ངོས་འདི་བཟོ་བཅོས་བྱེད་པ།',
-'create-this-page'  => 'ཤོག་ངོས་འདི་སྐྲུན་པ།',
 'delete'            => 'སུབས།',
 'deletethispage'    => 'ཤོག་ངོས་འདི་འདོར་བ།',
 'undelete_short'    => '{{PLURAL:$1|one edit|$1edits}} མ་འདོར་ཞིག',
@@ -187,7 +181,6 @@ $messages = array(
 'specialpage'       => 'དམིགས་གསལ་ཤོག་ངོས།',
 'personaltools'     => 'སྒེར་ཀྱི་ལག་ཆ།',
 'postcomment'       => 'སྡེ་ཚན་གསར་བ།',
-'articlepage'       => 'ནང་དོན་ཤོག་ངོས་ལ་ལྟ་བ།',
 'talk'              => 'གྲོས་བསྡུར།',
 'views'             => 'མཐོང་རིས།',
 'toolbox'           => 'ལག་ཆའི་སྒྲོམ།',

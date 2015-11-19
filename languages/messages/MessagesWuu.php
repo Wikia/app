@@ -155,16 +155,11 @@ $messages = array(
 'navigation'    => '导航',
 'and'           => '&#32;搭仔',
 
-# Cologne Blue skin
 'qbfind'         => '寻',
 'qbbrowse'       => '浏览',
-'qbedit'         => '编辑',
 'qbpageoptions'  => '迭只页面',
 'qbpageinfo'     => '上下文',
-'qbmyoptions'    => '我个选项',
-'qbspecialpages' => '特殊页面',
 'faq'            => 'FAQs',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => '动作',
 'namespaces'                     => '名字空间',
@@ -187,7 +182,6 @@ $messages = array(
 'edit'              => '编辑',
 'create'            => '创建',
 'editthispage'      => '编辑此页',
-'create-this-page'  => '创建箇只页面',
 'delete'            => '删除',
 'deletethispage'    => '删除此页',
 'undelete_short'    => '恢复拨删脱个$1项修订',
@@ -202,7 +196,6 @@ $messages = array(
 'specialpage'       => '特殊页',
 'personaltools'     => '个人工具',
 'postcomment'       => '新段落',
-'articlepage'       => '查看内容页面',
 'talk'              => '讨论',
 'views'             => '查看',
 'toolbox'           => '家生',
@@ -896,13 +889,6 @@ $1",
 'search-external'                  => '外部搜索',
 'searchdisabled'                   => '{{SITENAME}}个搜索已禁用。侬可以暂时使用Google搜索，须注意渠拉索引个{{SITENAME}}内容作兴会过时。',
 
-# Quickbar
-'qbsettings'               => '快速导航排',
-'qbsettings-none'          => '呒',
-'qbsettings-fixedleft'     => '左许固定',
-'qbsettings-fixedright'    => '右许固定',
-'qbsettings-floatingleft'  => '左许氽移',
-'qbsettings-floatingright' => '右许氽移',
 
 # Preferences page
 'preferences'                   => '偏好',

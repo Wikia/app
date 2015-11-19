@@ -281,16 +281,11 @@ $messages = array(
 'navigation'    => 'Navigasyon',
 'and'           => '&#32;epi',
 
-# Cologne Blue skin
 'qbfind'         => 'Chache',
 'qbbrowse'       => 'Bouske',
-'qbedit'         => 'Modifye',
 'qbpageoptions'  => 'Paj sa a',
 'qbpageinfo'     => 'Kontèks',
-'qbmyoptions'    => 'Paj mwen yo',
-'qbspecialpages' => 'Paj espesyal',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Aksyon yo',
 'namespaces'                     => 'Espas non yo',
@@ -314,7 +309,6 @@ $messages = array(
 'edit'              => 'Modifye',
 'create'            => 'Kreye',
 'editthispage'      => 'Modifye paj sa a',
-'create-this-page'  => 'Kreye paj sa',
 'delete'            => 'Efase',
 'deletethispage'    => 'Efase paj sa',
 'undelete_short'    => 'Restore {{PLURAL:$1|Yon modifikasyon| $1 modifikasyon yo}}',
@@ -330,7 +324,6 @@ $messages = array(
 'specialpage'       => 'Paj Espesyal',
 'personaltools'     => 'Zouti pèsonèl yo',
 'postcomment'       => 'Nouvo seksyon',
-'articlepage'       => 'Wè paj atik',
 'talk'              => 'Diskisyon',
 'views'             => 'Afichay yo',
 'toolbox'           => 'Bwat zouti',

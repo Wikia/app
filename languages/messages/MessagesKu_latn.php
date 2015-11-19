@@ -217,16 +217,11 @@ $messages = array(
 'navigation'    => 'Navîgasyon',
 'and'           => '&#32;û',
 
-# Cologne Blue skin
 'qbfind'         => 'Bibîne',
 'qbbrowse'       => 'Bigere',
-'qbedit'         => 'Biguherîne',
 'qbpageoptions'  => 'Ev rûpel',
 'qbpageinfo'     => 'Naverok',
-'qbmyoptions'    => 'Rûpelên min',
-'qbspecialpages' => 'Rûpelên taybet',
 'faq'            => 'PGP',
-'faqpage'        => 'Project:PGP',
 
 'actions'                  => 'Çalakî',
 'namespaces'               => 'Valahiya nav',
@@ -250,7 +245,6 @@ $messages = array(
 'edit'              => 'Biguherîne',
 'create'            => 'Biafirîne',
 'editthispage'      => 'Vê rûpelê biguherîne',
-'create-this-page'  => 'Vê rûpelê çêke',
 'delete'            => 'Jê bibe',
 'deletethispage'    => 'Vê rûpelê jê bibe',
 'undelete_short'    => 'Dîsa {{PLURAL:$1|guherandinekî|$1 guherandinan}} çêke',
@@ -265,7 +259,6 @@ $messages = array(
 'specialpage'       => 'Rûpela taybet',
 'personaltools'     => 'Amûrên kesane',
 'postcomment'       => 'Beşeke nû',
-'articlepage'       => 'Li rûpela naverokê binêre',
 'talk'              => 'Guftûgo',
 'views'             => 'Dîtin',
 'toolbox'           => 'Qutiya amûran',
@@ -820,8 +813,6 @@ Sedema qedexekirina $3 ev e: ''$2''",
 'searchdisabled'                 => '<p>Tu dikarî li {{SITENAME}} bi Google an Yahoo! bigere. Têbînî: Dibe ku encamen lêgerîne ne yên herî nû ne.
 </p>',
 
-# Quickbar
-'qbsettings-none' => 'Tune',
 
 # Preferences page
 'preferences'                 => 'Tercîhên min',

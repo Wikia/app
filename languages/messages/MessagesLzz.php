@@ -100,12 +100,8 @@ $messages = array(
 'navigation'    => 'Goxtima',
 'and'           => '&#32;do',
 
-# Cologne Blue skin
 'qbfind'         => 'Koz*iri',
-'qbedit'         => 'Doktiri',
 'qbpageoptions'  => 'Am sayfa',
-'qbmyoptions'    => 'Çkimi sayfape',
-'qbspecialpages' => 'Doxmeli sayfape',
 
 
 'errorpagetitle'   => 'Çilata',

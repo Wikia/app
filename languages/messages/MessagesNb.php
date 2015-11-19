@@ -445,16 +445,11 @@ $messages = array(
 'navigation'    => 'Navigasjon',
 'and'           => '&#32;og',
 
-# Cologne Blue skin
 'qbfind'         => 'Finn',
 'qbbrowse'       => 'Bla gjennom',
-'qbedit'         => 'Rediger',
 'qbpageoptions'  => 'Sideinnstillinger',
 'qbpageinfo'     => 'Sideinformasjon',
-'qbmyoptions'    => 'Egne innstillinger',
-'qbspecialpages' => 'Spesialsider',
 'faq'            => 'Ofte stilte spørsmål',
-'faqpage'        => 'Project:Ofte stilte spørsmål',
 
 'actions'                        => 'Handlinger',
 'namespaces'                     => 'Navnerom',
@@ -478,7 +473,6 @@ $messages = array(
 'edit'              => 'Rediger',
 'create'            => 'Opprett',
 'editthispage'      => 'Rediger siden',
-'create-this-page'  => 'Opprett denne siden',
 'delete'            => 'Slett',
 'deletethispage'    => 'Slett denne siden',
 'undelete_short'    => 'Gjenopprett {{PLURAL:$1|én revisjon|$1 revisjoner}}',
@@ -494,7 +488,6 @@ $messages = array(
 'specialpage'       => 'Spesialside',
 'personaltools'     => 'Personlige verktøy',
 'postcomment'       => 'Ny seksjon',
-'articlepage'       => 'Vis innholdsside',
 'talk'              => 'Diskusjon',
 'views'             => 'Visninger',
 'toolbox'           => 'Verktøy',
@@ -1312,14 +1305,6 @@ For å søke i alle, bruk prefikset ''all:'' (inkluderer diskusjonssider, maler,
 'search-external'                  => 'Eksternt søk',
 'searchdisabled'                   => 'Søkefunksjonen er slått av. Du kan søke via Google i mellomtiden. Merk at Googles indeksering av {{SITENAME}} muligens er utdatert.',
 
-# Quickbar
-'qbsettings'                => 'Brukerinnstillinger for hurtigmeny.',
-'qbsettings-none'           => 'Ingen',
-'qbsettings-fixedleft'      => 'Fast venstre',
-'qbsettings-fixedright'     => 'Fast høyre',
-'qbsettings-floatingleft'   => 'Flytende venstre',
-'qbsettings-floatingright'  => 'Flytende til høyre',
-'qbsettings-directionality' => '"Låst", f. eks. i posisjon "låst til venstre eller til høyre". For venstre-mot-høyre-språk vil hurtigvelgeren være satt til venstre, for høyre-mot-venstre-språk til høyre.',
 
 # Preferences page
 'preferences'                   => 'Innstillinger',
@@ -2949,7 +2934,6 @@ Du kan se på kildeteksten',
 # Stylesheets
 'common.css'      => '/* CSS plassert i denne fila vil gjelde for alle utseender. */',
 'standard.css'    => '/* CSS i denne fila vil gjelde alle som bruker drakta Standard */',
-'cologneblue.css' => '/* CSS i denne fila vil gjelde alle som bruker drakta Kølnerblå */',
 'monobook.css'    => '/* CSS i denne fila vil gjelde alle som bruker drakta Monobook */',
 'myskin.css'      => '/* CSS i denne fila vil gjelde alle som bruker drakta MySkin */',
 'chick.css'       => '/* CSS i denne fila vil gjelde alle som bruker drakta Chick */',
@@ -2959,7 +2943,6 @@ Du kan se på kildeteksten',
 # Scripts
 'common.js'      => '/* Javascript i denne fila vil gjelde for alle drakter. */',
 'standard.js'    => '/* Javascript i denne fila vil gjelde for brukere av drakta Standard */',
-'cologneblue.js' => '/* Javascript i denne fila vil gjelde for brukere av drakta Kølnerblå */',
 'monobook.js'    => '/* Javascript i denne fila vil gjelde for brukere av drakta Monobook */',
 'myskin.js'      => '/* Javascript i denne fila vil gjelde for brukere av drakta MySkin */',
 'chick.js'       => '/* Javascript i denne fila vil gjelde for brukere av drakta Chick */',
@@ -3005,7 +2988,6 @@ Dette er sannsynligvis forårsaket av en lenke til et svartelistet eksternt nett
 
 # Skin names
 'skinname-standard'    => 'Standard',
-'skinname-cologneblue' => 'Kølnerblå',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'Eget utseende',
 'skinname-simple'      => 'Enkel',

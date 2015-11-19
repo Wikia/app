@@ -456,16 +456,11 @@ $messages = array(
 'navigation'    => 'Navigering',
 'and'           => '&#32;och',
 
-# Cologne Blue skin
 'qbfind'         => 'Hitta',
 'qbbrowse'       => 'Bläddra igenom',
-'qbedit'         => 'Redigera',
 'qbpageoptions'  => 'Denna sida',
 'qbpageinfo'     => 'Sidinformation',
-'qbmyoptions'    => 'Mina inställningar',
-'qbspecialpages' => 'Specialsidor',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Åtgärder',
 'namespaces'                     => 'Namnrymder',
@@ -489,7 +484,6 @@ $messages = array(
 'edit'              => 'Redigera',
 'create'            => 'Skapa',
 'editthispage'      => 'Redigera denna sida',
-'create-this-page'  => 'Skapa denna sida',
 'delete'            => 'Radera',
 'deletethispage'    => 'Radera denna sida',
 'undelete_short'    => 'Återställ {{PLURAL:$1|en version|$1 versioner}}',
@@ -505,7 +499,6 @@ $messages = array(
 'specialpage'       => 'Specialsida',
 'personaltools'     => 'Personliga verktyg',
 'postcomment'       => 'Nytt avsnitt',
-'articlepage'       => 'Visa innehållssida',
 'talk'              => 'Diskussion',
 'views'             => 'Visningar',
 'toolbox'           => 'Verktygslåda',
@@ -1315,14 +1308,6 @@ Se till att sidhistorikens kontinuitet behålls när du sammanfogar historik.',
 Du kan istället göra sökningar med hjälp av Google.
 Notera dock att deras indexering av {{SITENAME}} kan vara något föråldrad.',
 
-# Quickbar
-'qbsettings'                => 'Snabbmeny',
-'qbsettings-none'           => 'Ingen',
-'qbsettings-fixedleft'      => 'Fast vänster',
-'qbsettings-fixedright'     => 'Fast höger',
-'qbsettings-floatingleft'   => 'Flytande vänster',
-'qbsettings-floatingright'  => 'Flytande höger',
-'qbsettings-directionality' => 'Fast, beroende på riktningen av ditt skript och språk',
 
 # Preferences page
 'preferences'                   => 'Inställningar',
@@ -2965,7 +2950,6 @@ Ger möjlighet att skriva en motivering i redigeringssammanfattningen',
 # Stylesheets
 'common.css'      => '/* CSS som skrivs här påverkar alla skal */',
 'standard.css'    => '/* CSS som skrivs här kommer att påverka alla användare av skalet Standard */',
-'cologneblue.css' => '/* CSS som skrivs här kommer att påverka alla användare av skalet Cologne blå */',
 'monobook.css'    => '/* CSS som skrivs här kommer att påverka alla användare av skalet Monobook */',
 'myskin.css'      => '/* CSS som skrivs här kommer att påverka alla användare av skalet Mitt utseende */',
 'chick.css'       => '/* CSS som skrivs här kommer att påverka alla användare av skalet Chick */',
@@ -2976,7 +2960,6 @@ Ger möjlighet att skriva en motivering i redigeringssammanfattningen',
 # Scripts
 'common.js'      => '/* JavaScript som skrivs här körs varje gång en användare laddar en sida. */',
 'standard.js'    => '/* JavaScript här kommer att laddas för dem som använder skalet Standard */',
-'cologneblue.js' => '/* JavaScript här kommer att laddas för dem som använder skalet Cologne blå */',
 'monobook.js'    => '/* JavaScript här kommer att laddas för dem som använder skalet Monobook */',
 'myskin.js'      => '/* JavaScript här kommer att laddas för dem som använder skalet Mitt utseende */',
 'chick.js'       => '/* JavaScript här kommer att laddas för dem som använder skalet Chick */',
@@ -3022,7 +3005,6 @@ Detta orsakades troligen av en länk till en svartlistad webbplats.',
 
 # Skin names
 'skinname-standard'    => 'Standard',
-'skinname-cologneblue' => 'Cologne blå',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'Mitt utseende',
 'skinname-chick'       => 'Chick',

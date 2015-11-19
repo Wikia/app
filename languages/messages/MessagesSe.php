@@ -124,14 +124,10 @@ $messages = array(
 'navigation'    => 'Navigašuvdna',
 'and'           => '&#32;ja',
 
-# Cologne Blue skin
 'qbfind'         => 'Oza',
 'qbbrowse'       => 'Bláđe',
-'qbedit'         => 'Rievdat',
 'qbpageoptions'  => 'Siidoásahusat',
 'qbpageinfo'     => 'Siiddu dieđut',
-'qbmyoptions'    => 'Ásahusat',
-'qbspecialpages' => 'Doaibmasiiddut',
 
 
 'errorpagetitle'    => 'Feaila',
@@ -164,7 +160,6 @@ $messages = array(
 'specialpage'       => 'Sierrasiidu',
 'personaltools'     => 'Persovnnalaš bargoneavvu',
 'postcomment'       => 'Ođđa sekšuvdna',
-'articlepage'       => 'Čájet sisdoallusiiddu',
 'talk'              => 'Ságastallan',
 'views'             => 'Čájáhusat',
 'toolbox'           => 'Neavvobumbá',
@@ -476,12 +471,6 @@ $1 {{int:pipe-separator}} $2',
 'showingresultsnum'     => "Vuolábealde {{PLURAL:$3|lea '''okta''' ohcanboađus|leat '''$3''' ohcanbohtosa}} '''$2.''' bohtosa rájes.",
 'powersearch'           => 'Oza',
 
-# Quickbar
-'qbsettings-none'          => 'Ii maidige',
-'qbsettings-fixedleft'     => 'Teaksta mielde, gurut',
-'qbsettings-fixedright'    => 'Teaksta mielde, olgeš',
-'qbsettings-floatingleft'  => 'Biso gurutbealde',
-'qbsettings-floatingright' => 'Biso olgesbealde',
 
 # Preferences page
 'preferences'           => 'Ásahusat',

@@ -542,18 +542,6 @@ class Preferences {
 				'section' => 'rendering/skin',
 			);
 		}
-
-		$selectedSkin = $user->getGlobalPreference( 'skin' );
-		if ( in_array( $selectedSkin, array( 'cologneblue', 'standard' ) ) ) {
-			$settings = array_flip( $context->getLanguage()->getQuickbarSettings() );
-
-			$defaultPreferences['quickbar'] = array(
-				'type' => 'radio',
-				'options' => $settings,
-				'section' => 'rendering/skin',
-				'label-message' => 'qbsettings',
-			);
-		}
 	}
 
 	/**

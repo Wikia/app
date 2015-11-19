@@ -184,16 +184,11 @@ $messages = array(
 'navigation'    => 'Төп йүнәлештәр',
 'and'           => '&#32;һәм',
 
-# Cologne Blue skin
 'qbfind'         => 'Эҙләү',
 'qbbrowse'       => 'Байҡарға',
-'qbedit'         => 'Үҙгәртергә',
 'qbpageoptions'  => 'Был бит',
 'qbpageinfo'     => 'Бит тураһында мәғлүмәттәр',
-'qbmyoptions'    => 'Биттәрем',
-'qbspecialpages' => 'Махсус биттәр',
 'faq'            => 'ЙБҺ',
-'faqpage'        => 'Project:ЙБҺ',
 
 'actions'                        => 'Хәрәкәт',
 'namespaces'                     => 'Исем арауыҡтары',
@@ -217,7 +212,6 @@ $messages = array(
 'edit'              => 'Үҙгәртеү',
 'create'            => 'Яһарға',
 'editthispage'      => 'Был мәҡәләне үҙгәртергә',
-'create-this-page'  => 'Был битте яһарға',
 'delete'            => 'Юҡ  итергә',
 'deletethispage'    => 'Был битте юйырға',
 'undelete_short'    => '$1 {{PLURAL:$1|үҙгәртеүҙе}} тергеҙергә',
@@ -233,7 +227,6 @@ $messages = array(
 'specialpage'       => 'Ярҙамсы бит',
 'personaltools'     => 'Шәхси ҡоралдар',
 'postcomment'       => 'Яңы бүлек',
-'articlepage'       => 'Мәҡәләне ҡарап сығырға',
 'talk'              => 'Әңгәмә',
 'views'             => 'Ҡарауҙар',
 'toolbox'           => 'Ҡоралдар',
@@ -1036,14 +1029,6 @@ $1",
 Хәҙергә эҙләүҙе Google менән үтәй алаһығыҙ.
 Тик унда {{SITENAME}} өсөн индекслауҙың иҫке булыуы мөмкинлеген онотмағыҙ.',
 
-# Quickbar
-'qbsettings'                => 'Тиҙ күсеү',
-'qbsettings-none'           => 'Һис бере',
-'qbsettings-fixedleft'      => 'Һулда нығытылған',
-'qbsettings-fixedright'     => 'Уңда нығытылған',
-'qbsettings-floatingleft'   => 'Һулда күсеүсе',
-'qbsettings-floatingright'  => 'Уңда күсеүсе',
-'qbsettings-directionality' => 'Беркетелгән, телегеҙҙең яҙыу йүнәлешенә бәйле',
 
 # Preferences page
 'preferences'                   => 'Көйләүҙәр',
@@ -2723,7 +2708,6 @@ The wiki server cannot provide data in a format your client can read.',
 
 # Skin names
 'skinname-standard'    => 'Классик',
-'skinname-cologneblue' => 'Кёльн һағышы',
 'skinname-myskin'      => 'Шәхси',
 'skinname-chick'       => 'Себеш',
 'skinname-simple'      => 'Ябай',

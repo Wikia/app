@@ -33,10 +33,7 @@ $messages = array(
 'mytalk'  => "N'ka baronyɛ",
 'and'     => '&#32;ani',
 
-# Cologne Blue skin
 'qbfind'         => 'Nyini',
-'qbedit'         => 'Yɛlɛma',
-'qbspecialpages' => 'Nyɛw kɛrɛnkɛrɛnnen',
 
 'help'           => 'Dɛmɛ',
 'search'         => 'Nyini',

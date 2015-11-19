@@ -379,16 +379,11 @@ $messages = array(
 'navigation'    => 'Навигация',
 'and'           => '&#32;и',
 
-# Cologne Blue skin
 'qbfind'         => 'Търсене',
 'qbbrowse'       => 'Избор',
-'qbedit'         => 'Редактиране',
 'qbpageoptions'  => 'Тази страница',
 'qbpageinfo'     => 'Информация за страницата',
-'qbmyoptions'    => 'Моите страници',
-'qbspecialpages' => 'Специални страници',
 'faq'            => 'ЧЗВ',
-'faqpage'        => 'Project:ЧЗВ',
 
 'actions'                        => 'Действия',
 'namespaces'                     => 'Именни пространства',
@@ -412,7 +407,6 @@ $messages = array(
 'edit'              => 'Редактиране',
 'create'            => 'Създаване',
 'editthispage'      => 'Редактиране',
-'create-this-page'  => 'Създаване на страницата',
 'delete'            => 'Изтриване',
 'deletethispage'    => 'Изтриване',
 'undelete_short'    => 'Възстановяване на {{PLURAL:$1|една редакция|$1 редакции}}',
@@ -428,7 +422,6 @@ $messages = array(
 'specialpage'       => 'Специална страница',
 'personaltools'     => 'Лични инструменти',
 'postcomment'       => 'Нов раздел',
-'articlepage'       => 'Преглед на страница',
 'talk'              => 'Беседа',
 'views'             => 'Прегледи',
 'toolbox'           => 'Инструменти',
@@ -1232,14 +1225,6 @@ $1",
 'search-external'                  => 'Външно търсене',
 'searchdisabled'                   => 'Търсенето в {{SITENAME}} е временно изключено. Междувременно можете да търсите чрез Google. Обърнете внимание, че съхранените при тях страници най-вероятно са остарели.',
 
-# Quickbar
-'qbsettings'                => 'Лента за бърз избор',
-'qbsettings-none'           => 'Без меню',
-'qbsettings-fixedleft'      => 'Неподвижно вляво',
-'qbsettings-fixedright'     => 'Неподвижно вдясно',
-'qbsettings-floatingleft'   => 'Плаващо вляво',
-'qbsettings-floatingright'  => 'Плаващо вдясно',
-'qbsettings-directionality' => 'Фиксирана, в зависимост от посоката на писане на вашия език',
 
 # Preferences page
 'preferences'                   => 'Настройки',
@@ -2839,7 +2824,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => 'Класика',
-'skinname-cologneblue' => 'Кьолнско синьо',
 'skinname-monobook'    => 'Монобук',
 'skinname-myskin'      => 'Моят облик',
 'skinname-chick'       => 'Пиленце',

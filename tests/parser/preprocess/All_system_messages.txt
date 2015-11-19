@@ -488,13 +488,6 @@ Please choose another name.
 </td><td>
 {{int:Articleexists}}
 </td></tr><tr><td>
-[http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Articlepage&action=edit articlepage]<br>
-[[MediaWiki_talk:Articlepage|Talk]]
-</td><td>
-View content page
-</td><td>
-{{int:Articlepage}}
-</td></tr><tr><td>
 [http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Asksql&action=edit asksql]<br>
 [[MediaWiki_talk:Asksql|Talk]]
 </td><td>
@@ -1552,13 +1545,6 @@ External link (remember http&#58;// prefix)
 FAQ
 </td><td>
 {{int:Faq}}
-</td></tr><tr><td>
-[http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Faqpage&action=edit faqpage]<br>
-[[MediaWiki_talk:Faqpage|Talk]]
-</td><td>
-Wiktionary:FAQ
-</td><td>
-{{int:Faqpage}}
 </td></tr><tr><td>
 [http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Feedlinks&action=edit feedlinks]<br>
 [[MediaWiki_talk:Feedlinks|Talk]]
@@ -3632,26 +3618,12 @@ Browse
 </td><td>
 {{int:Qbbrowse}}
 </td></tr><tr><td>
-[http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Qbedit&action=edit qbedit]<br>
-[[MediaWiki_talk:Qbedit|Talk]]
-</td><td>
-Edit
-</td><td>
-{{int:Qbedit}}
-</td></tr><tr><td>
 [http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Qbfind&action=edit qbfind]<br>
 [[MediaWiki_talk:Qbfind|Talk]]
 </td><td>
 Find
 </td><td>
 {{int:Qbfind}}
-</td></tr><tr><td>
-[http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Qbmyoptions&action=edit qbmyoptions]<br>
-[[MediaWiki_talk:Qbmyoptions|Talk]]
-</td><td>
-My pages
-</td><td>
-{{int:Qbmyoptions}}
 </td></tr><tr><td>
 [http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Qbpageinfo&action=edit qbpageinfo]<br>
 [[MediaWiki_talk:Qbpageinfo|Talk]]
@@ -3666,20 +3638,6 @@ Context
 This page
 </td><td>
 {{int:Qbpageoptions}}
-</td></tr><tr><td>
-[http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Qbsettings&action=edit qbsettings]<br>
-[[MediaWiki_talk:Qbsettings|Talk]]
-</td><td>
-Quickbar settings
-</td><td>
-{{int:Qbsettings}}
-</td></tr><tr><td>
-[http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Qbspecialpages&action=edit qbspecialpages]<br>
-[[MediaWiki_talk:Qbspecialpages|Talk]]
-</td><td>
-Special pages
-</td><td>
-{{int:Qbspecialpages}}
 </td></tr><tr><td>
 [http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Querybtn&action=edit querybtn]<br>
 [[MediaWiki_talk:Querybtn|Talk]]

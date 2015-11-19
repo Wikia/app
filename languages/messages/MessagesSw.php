@@ -265,16 +265,11 @@ $messages = array(
 'navigation'    => 'Urambazaji',
 'and'           => '&#32;na',
 
-# Cologne Blue skin
 'qbfind'         => 'Gundua',
 'qbbrowse'       => 'Vinjari',
-'qbedit'         => 'Hariri',
 'qbpageoptions'  => 'Ukurasa huu',
 'qbpageinfo'     => 'Muktadha',
-'qbmyoptions'    => 'Kurasa zangu',
-'qbspecialpages' => 'Kurasa za pekee',
 'faq'            => 'Maswali ya kawaida',
-'faqpage'        => 'Project:Maswali Yaulizwayo Marakwamara',
 
 'actions'                        => 'Vitendo',
 'namespaces'                     => 'Maeneo ya wiki',
@@ -298,7 +293,6 @@ $messages = array(
 'edit'              => 'Hariri',
 'create'            => 'Anzisha kurasa',
 'editthispage'      => 'Hariri ukurasa huu',
-'create-this-page'  => 'Anzisha ukurasa huu',
 'delete'            => 'Futa',
 'deletethispage'    => 'Futa ukurasa huo',
 'undelete_short'    => 'Rudisha {{PLURAL:$1|haririo moja|maharirio $1}}',
@@ -314,7 +308,6 @@ $messages = array(
 'specialpage'       => 'Ukurasa maalumu',
 'personaltools'     => 'Vifaa binafsi',
 'postcomment'       => 'Fungu jipya',
-'articlepage'       => 'Onyesha kurasa zilizopo',
 'talk'              => 'Majadiliano',
 'views'             => 'Mitazamo',
 'toolbox'           => 'Vifaa',
@@ -1091,13 +1084,6 @@ Ukitaka kutafuta kwenye maeneo yote (pamoja na kurasa za majadiliano, vigezo, nk
 Unaweza kutafuta kwa kutumia Google punde si punde.
 Ujue lakini kwamba kumbukumbu za {{SITENAME}} kule Google labda zilipitwa na wakati.',
 
-# Quickbar
-'qbsettings'               => 'Mwambaa pembe',
-'qbsettings-none'          => 'Hakuna',
-'qbsettings-fixedleft'     => 'Kushoto tuli',
-'qbsettings-fixedright'    => 'Kulia tuli',
-'qbsettings-floatingleft'  => 'Kushoto geugeu',
-'qbsettings-floatingright' => 'Kulia geugeu',
 
 # Preferences page
 'preferences'                   => 'Mapendekezo',

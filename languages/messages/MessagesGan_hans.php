@@ -172,16 +172,11 @@ $messages = array(
 'navigation'    => '导航',
 'and'           => ' 同到',
 
-# Cologne Blue skin
 'qbfind'         => '寻',
 'qbbrowse'       => '查看',
-'qbedit'         => '编写',
 'qbpageoptions'  => '个页',
 'qbpageinfo'     => '个页信息',
-'qbmyoptions'    => '偶𠮶选项',
-'qbspecialpages' => '特殊页',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:问得蛮多𠮶问题',
 
 'actions'                  => '动作',
 'namespaces'               => '空间名',
@@ -205,7 +200,6 @@ $messages = array(
 'edit'              => '编写',
 'create'            => '创建',
 'editthispage'      => '编写个页',
-'create-this-page'  => '创建个页',
 'delete'            => '删吥去',
 'deletethispage'    => '删吥个页',
 'undelete_short'    => '反删吥$1𠮶修改',
@@ -221,7 +215,6 @@ $messages = array(
 'specialpage'       => '特殊页',
 'personaltools'     => '个人工具',
 'postcomment'       => '话滴想法',
-'articlepage'       => '看吖文章',
 'talk'              => '谈詑',
 'views'             => '眵',
 'toolbox'           => '工具盒',
@@ -771,13 +764,6 @@ $2',
 'powersearch-field'                => '寻',
 'searchdisabled'                   => '{{SITENAME}}𠮶搜索功能已经关闭。倷可以用Google寻吖。但系佢𠮶索引可能系早先𠮶。',
 
-# Quickbar
-'qbsettings'               => '快捷导航条',
-'qbsettings-none'          => '冇',
-'qbsettings-fixedleft'     => '左首固定',
-'qbsettings-fixedright'    => '右首固定',
-'qbsettings-floatingleft'  => '左首漂移',
-'qbsettings-floatingright' => '左首漂移',
 
 # Preferences page
 'preferences'               => '参数设置',

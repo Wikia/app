@@ -92,12 +92,9 @@ $messages = array(
 'navigation' => 'Botamboli',
 'and'        => '&#32;mpé',
 
-# Cologne Blue skin
 'qbfind'         => 'Koluka',
 'qbbrowse'       => 'Kolúka',
-'qbedit'         => 'Kobɔngisa',
 'qbpageinfo'     => 'Context',
-'qbspecialpages' => 'Nkásá gudi',
 'faq'            => 'Mitúná Mizóngelaka (MM)',
 
 'namespaces'                     => 'Ntáká ya nkómbó',
@@ -119,7 +116,6 @@ $messages = array(
 'edit'              => 'kobɔngisa',
 'create'            => 'Kokela',
 'editthispage'      => 'Kokoma lonkásá óyo',
-'create-this-page'  => 'Kokela lonkásá loye',
 'delete'            => 'Kolímwisa',
 'deletethispage'    => 'Kolímwisa lonkásá loye',
 'protect'           => 'Kobátela',
@@ -132,7 +128,6 @@ $messages = array(
 'talkpagelinktext'  => 'Ntembe',
 'specialpage'       => 'Lonkásá gudi',
 'personaltools'     => 'Bisáleli ya moto-mɛ́i',
-'articlepage'       => 'Komɔ́nisa káti',
 'talk'              => 'Ntembe',
 'views'             => 'Bomɔ́nisi',
 'toolbox'           => 'Bisáleli',

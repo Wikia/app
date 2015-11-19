@@ -93,15 +93,10 @@ $messages = array(
 'navigation'    => 'Уялöм',
 'and'           => '&#32;да',
 
-# Cologne Blue skin
 'qbfind'         => 'Кошшан',
 'qbbrowse'       => 'Мыччавны',
-'qbedit'         => 'Мöдкодьсьöтны',
 'qbpageoptions'  => 'Этiя листбок',
-'qbmyoptions'    => 'Листбоккезö',
-'qbspecialpages' => 'Тодильнöй листбоккез',
 'faq'            => 'Отир сё юасьö',
-'faqpage'        => 'Project:отир сё юасьö',
 
 'variants'             => 'Варианттэз',
 
@@ -120,7 +115,6 @@ $messages = array(
 'edit'             => 'Веськöтны',
 'create'           => 'Лöсьöтны',
 'editthispage'     => 'Мöдкодьсьöтны этiйö листбоксö',
-'create-this-page' => 'Аркмöтны этiйö листбоксö',
 'delete'           => 'Чышкыны',
 'deletethispage'   => 'Чышкыны этiйö листбоксö',
 'protect'          => 'Дорйыны',

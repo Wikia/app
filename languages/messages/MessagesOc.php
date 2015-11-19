@@ -433,16 +433,11 @@ $messages = array(
 'navigation'    => 'Navigacion',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Recercar',
 'qbbrowse'       => 'Far desfilar',
-'qbedit'         => 'Modificar',
 'qbpageoptions'  => 'Opcions de la pagina',
 'qbpageinfo'     => 'Pagina d’entresenhas',
-'qbmyoptions'    => 'Mas opcions',
-'qbspecialpages' => 'Paginas especialas',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                  => 'Accions',
 'namespaces'               => 'Espacis de noms',
@@ -466,7 +461,6 @@ $messages = array(
 'edit'              => 'Modificar',
 'create'            => 'Crear',
 'editthispage'      => 'Modificar aquesta pagina',
-'create-this-page'  => 'Crear aquesta pagina',
 'delete'            => 'Suprimir',
 'deletethispage'    => 'Suprimir aquesta pagina',
 'undelete_short'    => 'Restablir {{PLURAL:$1|1 modificacion| $1 modificacions}}',
@@ -482,7 +476,6 @@ $messages = array(
 'specialpage'       => 'Pagina especiala',
 'personaltools'     => 'Aisinas personalas',
 'postcomment'       => 'Seccion novèla',
-'articlepage'       => "Vejatz l'article",
 'talk'              => 'Discussion',
 'views'             => 'Afichatges',
 'toolbox'           => "Bóstia d'espleches",
@@ -1234,13 +1227,6 @@ Ensajatz en utilizant lo prefix ''all:'' per recercar tot lo contengut (tot incl
 En esperant la reactivacion, podètz efectuar una recèrca via Google.
 Atencion, lor indexacion de contengut {{SITENAME}} benlèu es pas a jorn.',
 
-# Quickbar
-'qbsettings'               => "Barra d'espleches",
-'qbsettings-none'          => 'Cap',
-'qbsettings-fixedleft'     => 'Esquèrra',
-'qbsettings-fixedright'    => 'Drecha',
-'qbsettings-floatingleft'  => 'Flotanta a esquèrra',
-'qbsettings-floatingright' => 'Flotanta a drecha',
 
 # Preferences page
 'preferences'                   => 'Preferéncias',
@@ -2729,7 +2715,6 @@ Totas las accions d’importacion interwiki son conservadas dins lo [[Special:Lo
 # Stylesheets
 'common.css'      => '/** Lo CSS plaçat aicí serà aplicat a totas las aparéncias. */',
 'standard.css'    => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Estandard. */',
-'cologneblue.css' => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Cologne Blue */',
 'monobook.css'    => '/* Lo CSS plaçat aicí afectarà los utilizaires del skin Monobook */',
 'myskin.css'      => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge MySkin */',
 'chick.css'       => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Chick */',
@@ -2741,7 +2726,6 @@ Totas las accions d’importacion interwiki son conservadas dins lo [[Special:Lo
 # Scripts
 'common.js'      => '/* Tot JavaScript serà cargat amb cada pagina accedida per un utilizaire quin que siá. */',
 'standard.js'    => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Standard unicament. */',
-'cologneblue.js' => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Cologne Blue unicament. */',
 'monobook.js'    => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge MonoBook unicament. */',
 'myskin.js'      => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge MySkin unicament. */',
 'chick.js'       => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Chick unicament. */',
@@ -2774,7 +2758,6 @@ Aquò es probablament causat per un ligam sus lista negra que punta cap a un sit
 
 # Skin names
 'skinname-standard'    => 'Estandard',
-'skinname-cologneblue' => 'Colonha Blau',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'Mon interfàcia',
 'skinname-chick'       => 'Poleton',

@@ -278,16 +278,11 @@ $messages = array(
 'navigation'    => 'Navigaasje',
 'and'           => '&#32;en',
 
-# Cologne Blue skin
 'qbfind'         => 'Sykje',
 'qbbrowse'       => 'Blêdzje',
-'qbedit'         => 'Bewurkje',
 'qbpageoptions'  => 'Side-opsjes',
 'qbpageinfo'     => 'Side-ynfo',
-'qbmyoptions'    => 'Myn Opsjes',
-'qbspecialpages' => 'Bysûndere siden',
 'faq'            => 'FAQ (faak stelde fragen)',
-'faqpage'        => 'Project:Faak stelde fragen',
 
 'namespaces'              => 'Nammeromten',
 'variants'                => 'Farianten',
@@ -309,7 +304,6 @@ $messages = array(
 'edit'              => 'Wizigje',
 'create'            => 'Oanmeitsje',
 'editthispage'      => 'Side bewurkje',
-'create-this-page'  => 'Dizze side oanmeitsje',
 'delete'            => 'Wiskje',
 'deletethispage'    => 'Side wiskje',
 'undelete_short'    => '$1 {{PLURAL:$1|ferzje|ferzjes}} weromsette',
@@ -324,7 +318,6 @@ $messages = array(
 'specialpage'       => 'Bysûndere side',
 'personaltools'     => 'Persoanlike ynstellings',
 'postcomment'       => 'Skriuw in opmerking',
-'articlepage'       => 'Side lêze',
 'talk'              => 'Oerlis',
 'views'             => 'Aspekten/aksjes',
 'toolbox'           => 'Arkkiste',
@@ -958,13 +951,6 @@ Jo kinne ek in nammerûmte as foarheaksel brûke.",
 'search-external'                  => 'Utwindich sykje',
 'searchdisabled'                   => '<p>Op it stuit stiet it trochsykjen fan tekst út omdat dizze funksje tefolle kompjûterkapasiteit ferget. As we nije apparatuer krije, en dy is ûnderweis, dan wurdt dizze funksje wer aktyf. Oant salang kinne jo sykje fia Google:</p>',
 
-# Quickbar
-'qbsettings'               => 'Menu',
-'qbsettings-none'          => 'Ut',
-'qbsettings-fixedleft'     => 'Lofts fêst',
-'qbsettings-fixedright'    => 'Rjochts fêst',
-'qbsettings-floatingleft'  => 'Lofts sweevjend',
-'qbsettings-floatingright' => 'Rjochts sweevjend',
 
 # Preferences page
 'preferences'               => 'Ynstellings',

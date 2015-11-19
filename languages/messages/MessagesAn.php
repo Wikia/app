@@ -270,16 +270,11 @@ $messages = array(
 'navigation'    => 'Navego',
 'and'           => '&#32;y',
 
-# Cologne Blue skin
 'qbfind'         => 'Mirar',
 'qbbrowse'       => 'Navegar',
-'qbedit'         => 'Editar',
 'qbpageoptions'  => 'Ista pachina',
 'qbpageinfo'     => 'Contexto',
-'qbmyoptions'    => 'Pachinas propias',
-'qbspecialpages' => 'Pachinas especials',
 'faq'            => 'Preguntas freqüents (FAQ)',
-'faqpage'        => 'Project:Preguntas freqüents',
 
 'actions'                        => 'Accions',
 'namespaces'                     => 'Espacios de nombres',
@@ -303,7 +298,6 @@ $messages = array(
 'edit'              => 'Editar',
 'create'            => 'Creyar',
 'editthispage'      => 'Editar ista pachina',
-'create-this-page'  => 'Creyar ista pachina',
 'delete'            => 'Borrar',
 'deletethispage'    => 'Borrar ista pachina',
 'undelete_short'    => 'Restaurar {{PLURAL:$1|una edición|$1 edicions}}',
@@ -319,7 +313,6 @@ $messages = array(
 'specialpage'       => 'Pachina Especial',
 'personaltools'     => 'Ferramientas personals',
 'postcomment'       => 'Nueva sección',
-'articlepage'       => "Veyer l'articlo",
 'talk'              => 'Discusión',
 'views'             => 'Visualizacions',
 'toolbox'           => 'Ferramientas',
@@ -1095,14 +1088,6 @@ Asegure-se que iste cambio no trencará a continidat de l'historial d'a pachina.
 'search-external'                  => 'Busca externa',
 'searchdisabled'                   => 'A busca en {{SITENAME}} ye temporalment desactivata. Entremistanto, puede mirar en {{SITENAME}} fendo servir buscadors externos, pero pare cuenta que os suyos endices de {{SITENAME}} puede no estar esviellatos.',
 
-# Quickbar
-'qbsettings'                => 'Preferencias de "Quickbar"',
-'qbsettings-none'           => 'Garra',
-'qbsettings-fixedleft'      => 'Fixa a la zurda',
-'qbsettings-fixedright'     => 'Fixa a la dreita',
-'qbsettings-floatingleft'   => 'Flotant a la zurda',
-'qbsettings-floatingright'  => 'Flotant a la dreita',
-'qbsettings-directionality' => "Fixato, pendendo en a direccionalidat d'o suyo script y o suyo luengache",
 
 # Preferences page
 'preferences'                   => 'Preferencias',
@@ -2719,7 +2704,6 @@ Puede veyer-ne, manimenos, o codigo fuent.',
 # Stylesheets
 'common.css'              => '/* Os estilos CSS definius aquí aplicarán a todas as apariencias (skins) */',
 'standard.css'            => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Standard */",
-'cologneblue.css'         => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Cologne Blue */",
 'monobook.css'            => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Monobook */",
 'myskin.css'              => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que que faigan servir l'apariencia MySkin */",
 'chick.css'               => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Chick */",
@@ -2736,7 +2720,6 @@ Puede veyer-ne, manimenos, o codigo fuent.',
 # Scripts
 'common.js'              => '/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios en cada carga de pachina */',
 'standard.js'            => "/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios que faigan servir l'apariencia Estandar */",
-'cologneblue.js'         => "/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios que faigan servir l'apariencia Colonia azul */",
 'monobook.js'            => "/* O codigo Javascript que se meta aquí será cargau por os usuarios faigan servir l'apariencia MonoBook */",
 'myskin.js'              => "/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios que faigan servir l'apariencia MySkin */",
 'chick.js'               => "/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios que faigan servir l'apariencia Chick */",
@@ -2785,7 +2768,6 @@ Puede veyer-ne, manimenos, o codigo fuent.',
 
 # Skin names
 'skinname-standard'    => 'Clasica (Classic)',
-'skinname-cologneblue' => 'Colonia Azul (Cologne Blue)',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'A mía aparencia (MySkin)',
 'skinname-chick'       => 'Chick',

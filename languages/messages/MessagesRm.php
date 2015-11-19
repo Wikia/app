@@ -182,16 +182,11 @@ $messages = array(
 'navigation'    => 'Navigaziun',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Chattar',
 'qbbrowse'       => 'Sfegliar',
-'qbedit'         => 'Modifitgar',
 'qbpageoptions'  => 'Questa pagina',
 'qbpageinfo'     => 'Context',
-'qbmyoptions'    => 'Mia pagina',
-'qbspecialpages' => 'paginas spezialas',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Acziuns',
 'namespaces'                     => 'Tip da pagina',
@@ -215,7 +210,6 @@ $messages = array(
 'edit'              => 'Modifitgar',
 'create'            => 'Crear',
 'editthispage'      => 'Modifitgar questa pagina',
-'create-this-page'  => 'Crear questa pagina',
 'delete'            => 'Stizzar',
 'deletethispage'    => 'Stizzar questa pagina',
 'undelete_short'    => 'Revocar {{PLURAL:$1|ina modificaziun|$1 modificaziuns}}',
@@ -231,7 +225,6 @@ $messages = array(
 'specialpage'       => 'Pagina speziala',
 'personaltools'     => 'Utensils persunals',
 'postcomment'       => 'Nova secziun',
-'articlepage'       => 'Mussar la pagina da cuntegn',
 'talk'              => 'Discussiun',
 'views'             => 'Questa pagina',
 'toolbox'           => 'Utensils',
@@ -993,13 +986,6 @@ Scriva il prefix ''all:'' avant il term che ti vuls tschertgar, per tschertgar e
 Ti pos tschertgar en il fratemp cun Google.
 Considerescha che lur index da {{SITENAME}} po cuntegnair datas ch'èn betg pli actualas.",
 
-# Quickbar
-'qbsettings'               => 'Glista laterala',
-'qbsettings-none'          => 'Nagins',
-'qbsettings-fixedleft'     => 'Sanester, fixà',
-'qbsettings-fixedright'    => 'Dretg, fixà',
-'qbsettings-floatingleft'  => 'Sanester, flottand',
-'qbsettings-floatingright' => 'Dretg, flottand',
 
 # Preferences page
 'preferences'                 => 'Preferenzas',

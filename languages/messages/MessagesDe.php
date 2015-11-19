@@ -519,16 +519,11 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => '&#32;und',
 
-# Cologne Blue skin
 'qbfind'         => 'Finden',
 'qbbrowse'       => 'Durchsuchen',
-'qbedit'         => 'Bearbeiten',
 'qbpageoptions'  => 'Seitenoptionen',
 'qbpageinfo'     => 'Seitendaten',
-'qbmyoptions'    => 'Meine Seiten',
-'qbspecialpages' => 'Spezialseiten',
 'faq'            => 'Häufige Fragen',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Aktionen',
 'namespaces'                     => 'Namensräume',
@@ -552,7 +547,6 @@ $messages = array(
 'edit'              => 'Bearbeiten',
 'create'            => 'Erstellen',
 'editthispage'      => 'Seite bearbeiten',
-'create-this-page'  => 'Seite erstellen',
 'delete'            => 'Löschen',
 'deletethispage'    => 'Diese Seite löschen',
 'undelete_short'    => '{{PLURAL:$1|1 Version|$1 Versionen}} wiederherstellen',
@@ -568,7 +562,6 @@ $messages = array(
 'specialpage'       => 'Spezialseite',
 'personaltools'     => 'Meine Werkzeuge',
 'postcomment'       => 'Neuer Abschnitt',
-'articlepage'       => 'Inhaltsseite anzeigen',
 'talk'              => 'Diskussion',
 'views'             => 'Ansichten',
 'toolbox'           => 'Werkzeuge',
@@ -1367,14 +1360,6 @@ Stelle sicher, dass die Versionsgeschichte einer Seite historisch korrekt ist.',
 'search-external'                  => 'Externe Suche',
 'searchdisabled'                   => 'Die {{SITENAME}}-Suche ist deaktiviert. Du kannst unterdessen mit Google suchen. Bitte bedenke, dass der Suchindex von {{SITENAME}} veraltet sein kann.',
 
-# Quickbar
-'qbsettings'                => 'Seitenleiste',
-'qbsettings-none'           => 'Keine',
-'qbsettings-fixedleft'      => 'Links, fest',
-'qbsettings-fixedright'     => 'Rechts, fest',
-'qbsettings-floatingleft'   => 'Links, schwebend',
-'qbsettings-floatingright'  => 'Rechts, schwebend',
-'qbsettings-directionality' => 'Fest, abhängig von der Schreibrichtung der gewählten Sprache',
 
 # Preferences page
 'preferences'                   => 'Einstellungen',
@@ -3006,7 +2991,6 @@ Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
 # Stylesheets
 'common.css'              => '/* Das folgende CSS wird für alle Benutzeroberflächen geladen. */',
 'standard.css'            => '/* Das folgende CSS wird für Benutzer der Klassik-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
-'cologneblue.css'         => '/* Das folgende CSS wird für Benutzer der Kölnisch-Blau-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
 'monobook.css'            => '/* Das folgende CSS wird für Benutzer der Monobook-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
 'myskin.css'              => '/* Das folgende CSS wird für Benutzer der MySkin-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
 'chick.css'               => '/* Das folgende CSS wird für Benutzer der Küken-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
@@ -3023,7 +3007,6 @@ Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
 # Scripts
 'common.js'              => '/* Das folgende JavaScript wird für alle Benutzer geladen. */',
 'standard.js'            => '/* Das folgende JavaScript wird für Benutzer der Klassik-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
-'cologneblue.js'         => '/* Das folgende JavaScript wird für Benutzer der Kölnisch-Blau-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
 'monobook.js'            => '/* Das folgende JavaScript wird für Benutzer der Monobook-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
 'myskin.js'              => '/* Das folgende JavaScript wird für Benutzer der MySkin-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
 'chick.js'               => '/* Das folgende JavaScript wird für Benutzer der Küken-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
@@ -3073,7 +3056,6 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 
 # Skin names
 'skinname-standard'    => 'Klassik',
-'skinname-cologneblue' => 'Kölnisch Blau',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
 'skinname-chick'       => 'Küken',

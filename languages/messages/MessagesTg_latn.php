@@ -151,16 +151,11 @@ $messages = array(
 'navigation'    => 'Gaştan',
 'and'           => '&#32;va',
 
-# Cologne Blue skin
 'qbfind'         => 'Joftan',
 'qbbrowse'       => 'Murur',
-'qbedit'         => 'Viroiş',
 'qbpageoptions'  => 'In sahifa',
 'qbpageinfo'     => 'Boft',
-'qbmyoptions'    => 'Sahifahoi man',
-'qbspecialpages' => 'Sahifahoi viƶa',
 'faq'            => 'Savolhoi tez-tez pursidaşuda',
-'faqpage'        => 'Project:Savolhoi tez-tez pursidaşuda',
 
 'actions'                  => 'Amalkardho',
 'namespaces'               => 'Fazohoi nom',
@@ -183,7 +178,6 @@ $messages = array(
 'edit'              => 'Viroiş',
 'create'            => 'Eçod',
 'editthispage'      => 'Viroişi in sahifa',
-'create-this-page'  => 'Eçod kardani in sahifa',
 'delete'            => 'Hazf',
 'deletethispage'    => 'In sahifaro hazf kuned',
 'undelete_short'    => 'Ehjoi {{PLURAL:$1|viroiş|$1 viroişot}}',
@@ -198,7 +192,6 @@ $messages = array(
 'specialpage'       => 'Sahifai viƶa',
 'personaltools'     => 'Abzorhoi şaxsī',
 'postcomment'       => 'Baxşi nav',
-'articlepage'       => 'Namoişi maqola',
 'talk'              => 'Bahs',
 'views'             => 'Nazarot',
 'toolbox'           => "Ça'bai abzor",
@@ -731,13 +724,6 @@ Itminon hosil kuned, ki in taƣjir davomnokiji ta'rixiji sahifaro nigoh dorad.",
 'search-external'                  => 'Çustuçūi xoriçī',
 'searchdisabled'                   => "Çustuçu dar {{SITENAME}} ƣajrifa'ol karda şudaast. Şumo metavoned tariqi Google dar hol çustuçū kuned. Tavaççūh kuned, ki natoiçi çustuçū {{SITENAME}} metavonad barūz naboşad.",
 
-# Quickbar
-'qbsettings'               => 'Tanzimoti tezxat (Quickbar)',
-'qbsettings-none'          => 'Naboşad',
-'qbsettings-fixedleft'     => 'Sabti cap',
-'qbsettings-fixedright'    => 'Sabti rost',
-'qbsettings-floatingleft'  => 'Şinovar cap',
-'qbsettings-floatingright' => 'Şinovar rost',
 
 # Preferences page
 'preferences'               => 'Tarçihot',

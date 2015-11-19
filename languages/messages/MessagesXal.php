@@ -195,16 +195,11 @@ $messages = array(
 'navigation'    => 'Орм медлһн',
 'and'           => '&#32;болн',
 
-# Cologne Blue skin
 'qbfind'         => 'Хәәлһн',
 'qbbrowse'       => 'Гүүһәд хәләх',
-'qbedit'         => 'Чиклх',
 'qbpageoptions'  => 'Тер халх',
 'qbpageinfo'     => 'Халхин туск',
-'qbmyoptions'    => 'Тана халхс',
-'qbspecialpages' => 'Көдлхнә халхс',
 'faq'            => 'Юм би',
-'faqpage'        => 'Project:Юм би',
 
 'actions'                  => 'Үүлд',
 'namespaces'               => 'Нернә ус',
@@ -227,7 +222,6 @@ $messages = array(
 'edit'              => 'Чиклх',
 'create'            => 'Бүтәх',
 'editthispage'      => 'Эн халхиг чиклх',
-'create-this-page'  => 'Эн халхиг бүтәх',
 'delete'            => 'Һарһх',
 'deletethispage'    => 'Эн халхиг һарһх',
 'undelete_short'    => '$1 {{PLURAL:$1|сольлһиг|сольлһиг|сольлһиг}} босхҗ тохрар',
@@ -242,7 +236,6 @@ $messages = array(
 'specialpage'       => 'Көдлхнә халх',
 'personaltools'     => 'Эврән зер-зев',
 'postcomment'       => 'Шин хүв',
-'articlepage'       => 'Зүүл үзх',
 'talk'              => 'Меткән',
 'views'             => 'Хәләврүд',
 'toolbox'           => 'Зер-зев',
@@ -600,8 +593,6 @@ $1',
 'powersearch-field'              => 'Хәәх',
 'powersearch-togglenone'         => 'Уга',
 
-# Quickbar
-'qbsettings' => 'Ормин самбр',
 
 # Preferences page
 'preferences'                 => 'Дурллһн',

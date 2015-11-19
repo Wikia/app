@@ -224,16 +224,11 @@ $messages = array(
 'navigation'    => 'Bugrablera',
 'and'           => '&#32;is',
 
-# Cologne Blue skin
 'qbfind'         => 'Aneyara',
 'qbbrowse'       => 'Farura',
-'qbedit'         => 'Betara',
 'qbpageoptions'  => 'Ikatcuksbu',
 'qbpageinfo'     => 'Givabu',
-'qbmyoptions'    => 'Jinaf ikatcukseem',
-'qbspecialpages' => 'Aptaf bueem',
 'faq'            => 'NEB',
-'faqpage'        => 'Project:FAQ',
 
 'errorpagetitle'    => 'Rokla',
 'returnto'          => 'Dimgrablera va $1 bu.',
@@ -253,7 +248,6 @@ $messages = array(
 'edit'              => 'Betara',
 'create'            => 'Redura',
 'editthispage'      => 'Bubetara',
-'create-this-page'  => 'Redura va batu bu',
 'delete'            => 'Sulara',
 'deletethispage'    => 'Busulara',
 'undelete_short'    => 'Dimplekura {{PLURAL:$1|tanoy betaks|$1 betaks}}',
@@ -268,7 +262,6 @@ $messages = array(
 'specialpage'       => 'Aptafu bu',
 'personaltools'     => 'Weltafa xeka se',
 'postcomment'       => 'Warzaf gabot',
-'articlepage'       => 'Telizwira',
 'talk'              => 'Keyaksera',
 'views'             => 'Wira',
 'toolbox'           => 'Xekak',
@@ -799,13 +792,6 @@ Kan ''all:'' laganeyal ta varafa exulera (gon keyaksexo is teza ikz-), oke wetce
 'search-external'                => 'Divafa aneyara',
 'searchdisabled'                 => "<p>La fonction de recherche sur l'intégralité du texte a été temporairement désactivée à cause de la grande charge que cela impose au serveur. Nous espérons la rétablir prochainement lorsque nous disposerons d'un serveur plus puissant. En attendant, vous pouvez faire la recherche avec Google:</p>",
 
-# Quickbar
-'qbsettings'               => 'Tuweltara va xekobla',
-'qbsettings-none'          => 'Mek',
-'qbsettings-fixedleft'     => 'Roneon titickanaf',
-'qbsettings-fixedright'    => 'Talteon titickanaf',
-'qbsettings-floatingleft'  => 'Roneon ezas',
-'qbsettings-floatingright' => 'Talteon ezas',
 
 # Preferences page
 'preferences'               => 'Lodamaceem',

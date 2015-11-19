@@ -183,16 +183,11 @@ $messages = array(
 'navigation'    => 'Навіґація',
 'and'           => '&#32;і',
 
-# Cologne Blue skin
 'qbfind'         => 'Найти',
 'qbbrowse'       => 'Переглядати',
-'qbedit'         => 'Едітовати',
 'qbpageoptions'  => 'Тота сторінка',
 'qbpageinfo'     => 'Контекст',
-'qbmyoptions'    => 'Мої сторінкы',
-'qbspecialpages' => 'Шпеціалны сторінкы',
 'faq'            => 'Часты звідованя',
-'faqpage'        => 'Project:Часты звідованя',
 
 'actions'                        => 'Дїї',
 'namespaces'                     => 'Просторы назв',
@@ -216,7 +211,6 @@ $messages = array(
 'edit'              => 'Едітовати',
 'create'            => 'Створити',
 'editthispage'      => 'Едітовату тоту сторінку',
-'create-this-page'  => 'Створити тоту сторінку',
 'delete'            => 'Вымазати',
 'deletethispage'    => 'Змазати тоту сторінку',
 'undelete_short'    => 'Обновити $1 {{PLURAL:$1|верзію|верзії|верзії}}',
@@ -232,7 +226,6 @@ $messages = array(
 'specialpage'       => 'Шпеціална сторінка',
 'personaltools'     => 'Особны інштрументы',
 'postcomment'       => 'Нова секція',
-'articlepage'       => 'Перегляднути сторінку',
 'talk'              => 'Діскузія',
 'views'             => 'Перегляды',
 'toolbox'           => 'Інштрументы',
@@ -1031,14 +1024,6 @@ $1",
 'search-external'                  => 'Екстерне гляданя',
 'searchdisabled'                   => '<p>Перебачте. Повнотекстове гляданя є дочасно недоступне. Затля можете спробовати гляданя Google; є але можне, же ёго резултаты не мусять быти актуалны.</p>',
 
-# Quickbar
-'qbsettings'                => 'Панел навіґації',
-'qbsettings-none'           => 'Жадный',
-'qbsettings-fixedleft'      => 'Лежыть влїво',
-'qbsettings-fixedright'     => 'Лежыть вправо',
-'qbsettings-floatingleft'   => 'Плаваюча влїво',
-'qbsettings-floatingright'  => 'Плаваюча вправо',
-'qbsettings-directionality' => 'Певный, в залежности на напрями вашого письма',
 
 # Preferences page
 'preferences'                   => 'Наставлїня',

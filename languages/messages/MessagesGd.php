@@ -156,16 +156,11 @@ $messages = array(
 'navigation'    => 'Seòladh',
 'and'           => '&#32;agus',
 
-# Cologne Blue skin
 'qbfind'         => 'Lorg',
 'qbbrowse'       => 'Brabhsaich',
-'qbedit'         => 'Deasaich',
 'qbpageoptions'  => 'An duilleag seo',
 'qbpageinfo'     => 'Co-theacs',
-'qbmyoptions'    => 'Na duilleagan agam',
-'qbspecialpages' => 'Duilleagan sònraichte',
 'faq'            => 'CÀBHA',
-'faqpage'        => 'Project:CÀBHA',
 
 'actions'                        => 'Gnìomhan',
 'namespaces'                     => 'Namespaces',
@@ -189,7 +184,6 @@ $messages = array(
 'edit'              => 'Deasaich',
 'create'            => 'Cruthaich',
 'editthispage'      => 'Deasaich an duilleag seo',
-'create-this-page'  => 'Cruthaich an duilleag seo',
 'delete'            => 'Sguab às',
 'deletethispage'    => 'Sguab às an duilleag seo',
 'undelete_short'    => "Neo-dhèan sguabadh às de {{PLURAL:$1|dh'aon deasachadh|$1 dheasachadh|$1 deasachadh|$1 dheasachadh|$1 deasachaidhean|$1 deasachadh}}",
@@ -205,7 +199,6 @@ $messages = array(
 'specialpage'       => 'Duilleag shònraichte',
 'personaltools'     => 'Innealan pearsanta',
 'postcomment'       => 'Earrann ùr',
-'articlepage'       => 'Seall duilleag na susbainte',
 'talk'              => 'Deasbaireachd',
 'views'             => 'Tadhalan',
 'toolbox'           => 'Bogsa-innealan',

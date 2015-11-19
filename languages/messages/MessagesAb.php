@@ -129,11 +129,8 @@ $messages = array(
 'mytalk'     => 'Сахцәажәара',
 'navigation' => 'Анавигациа',
 
-# Cologne Blue skin
 'qbfind'         => 'Аҧшаара',
-'qbedit'         => 'Ариашара',
 'qbpageoptions'  => 'Ари адаҟьа',
-'qbspecialpages' => 'Цастәи адаҟьақәа',
 
 
 'help'             => 'Ацхыраара',
@@ -146,7 +143,6 @@ $messages = array(
 'permalink'        => 'Еисымшатәи ахьарҧш',
 'edit'             => 'Ариашамҭа',
 'create'           => 'Арҿиара',
-'create-this-page' => 'Ариашара ари адаҟьа',
 'newpage'          => 'Адаҟьа Ҿыц',
 'talkpagelinktext' => 'Ахцәажәара',
 'specialpage'      => 'Цастәи адаҟьа',

@@ -414,16 +414,11 @@ The following {{PLURAL:$1|file is|$1 files are}} in the current category.',
 'navigation'    => 'पर्यटनम्',
 'and'           => '&#32;तथा च',
 
-# Cologne Blue skin
 'qbfind'         => 'अन्विष्यताम्',
 'qbbrowse'       => 'ब्राउस् इत्येतत् करोतु।',
-'qbedit'         => 'सम्पाद्यताम्',
 'qbpageoptions'  => 'इदं पृष्ठम्',
 'qbpageinfo'     => 'प्रसंगः',
-'qbmyoptions'    => 'मम पृष्ठानि',
-'qbspecialpages' => 'विशेषपृष्ठानि',
 'faq'            => 'बहुधा पृच्छ्यमानाः प्रश्नाः',
-'faqpage'        => 'Project:बहुधा पृछ्यमानाः प्रश्नाः',
 
 'actions'                        => 'क्रियाः',
 'namespaces'                     => 'नामाकाशानि',
@@ -447,7 +442,6 @@ The following {{PLURAL:$1|file is|$1 files are}} in the current category.',
 'edit'              => 'सम्पाद्यताम्',
 'create'            => 'सृज्यताम्',
 'editthispage'      => 'इदं पृष्ठं सम्पाद्यताम्',
-'create-this-page'  => 'इदं पृष्ठं सृज्यताम्',
 'delete'            => 'विलुप्यताम्',
 'deletethispage'    => 'इदं पृष्ठम् अपाक्रियताम्',
 'undelete_short'    => '{{PLURAL:$1|एकं सम्पादनं|$1 सम्पादनानि}} अनपाकरोतु',
@@ -463,7 +457,6 @@ The following {{PLURAL:$1|file is|$1 files are}} in the current category.',
 'specialpage'       => 'विशेषपृष्ठम्',
 'personaltools'     => 'वैयक्तिकोपकरणानि',
 'postcomment'       => 'नवीनः विभागः',
-'articlepage'       => 'लेखः दृश्यताम्',
 'talk'              => 'सम्भाषणम्',
 'views'             => 'दृश्यानि',
 'toolbox'           => 'उपकरणपेटिका',
@@ -1103,11 +1096,6 @@ $2
 अश्मिन् समये भवान् गूगल माध्यमेन अन्वेषणं कर्तुं शक्नोति
 स्मरयतु यत् {{SITENAME}} इति स्थलस्य क्रमाङ्का नैव अद्यातना  इति सोच्यते।',
 
-# Quickbar
-'qbsettings'            => 'शीघ्रपट',
-'qbsettings-none'       => 'नास्ति',
-'qbsettings-fixedleft'  => 'बामे स्थापितः',
-'qbsettings-fixedright' => 'दक्षिणे स्थापितः',
 
 # Preferences page
 'preferences'               => 'इष्टतमानि',
@@ -1628,7 +1616,6 @@ $2
 
 # Skin names
 'skinname-standard'    => 'पूर्व',
-'skinname-cologneblue' => 'नील',
 'skinname-monobook'    => 'पुस्तक',
 'skinname-myskin'      => 'मे चर्मन्',
 'skinname-chick'       => 'Chick',

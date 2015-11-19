@@ -436,16 +436,11 @@ $messages = array(
 'navigation'    => 'Xem nhanh',
 'and'           => '&#32;và',
 
-# Cologne Blue skin
 'qbfind'         => 'Tìm kiếm',
 'qbbrowse'       => 'Duyệt',
-'qbedit'         => 'Sửa đổi',
 'qbpageoptions'  => 'Trang này',
 'qbpageinfo'     => 'Ngữ cảnh',
-'qbmyoptions'    => 'Trang cá nhân',
-'qbspecialpages' => 'Trang đặc biệt',
 'faq'            => 'Câu hỏi thường gặp',
-'faqpage'        => 'Project:Các câu hỏi thường gặp',
 
 'actions'                        => 'Tác vụ',
 'namespaces'                     => 'Không gian tên',
@@ -469,7 +464,6 @@ $messages = array(
 'edit'              => 'Sửa đổi',
 'create'            => 'Tạo',
 'editthispage'      => 'Sửa đổi trang này',
-'create-this-page'  => 'Tạo trang này',
 'delete'            => 'Xóa',
 'deletethispage'    => 'Xóa trang này',
 'undelete_short'    => 'Phục hồi {{PLURAL:$1|một sửa đổi|$1 sửa đổi}}',
@@ -485,7 +479,6 @@ $messages = array(
 'specialpage'       => 'Trang đặc biệt',
 'personaltools'     => 'Công cụ cá nhân',
 'postcomment'       => 'Đề mục mới',
-'articlepage'       => 'Xem trang nội dung',
 'talk'              => 'Thảo luận',
 'views'             => 'Xem',
 'toolbox'           => 'Công cụ',
@@ -1289,14 +1282,6 @@ Xin hãy bảo đảm giữ vững tính liên tục của lịch sử trang.',
 'search-external'                  => 'Tìm kiếm từ bên ngoài',
 'searchdisabled'                   => 'Chức năng tìm kiếm tại {{SITENAME}} đã bị tắt. Bạn có tìm kiếm bằng Google trong thời gian này. Chú ý rằng các chỉ mục từ {{SITENAME}} của chúng có thể đã lỗi thời.',
 
-# Quickbar
-'qbsettings'                => 'Thanh công cụ',
-'qbsettings-none'           => 'Không có',
-'qbsettings-fixedleft'      => 'Cố định trái',
-'qbsettings-fixedright'     => 'Cố định phải',
-'qbsettings-floatingleft'   => 'Nổi bên trái',
-'qbsettings-floatingright'  => 'Nổi bên phải',
-'qbsettings-directionality' => 'Cố định, tùy theo hướng viết ngôn ngữ của bạn',
 
 # Preferences page
 'preferences'                   => 'Tùy chọn',
@@ -2939,7 +2924,6 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 # Stylesheets
 'common.css'              => '/* Mã CSS đặt ở đây sẽ áp dụng cho mọi hình dạng */',
 'standard.css'            => '/* Mã CSS tại đây sẽ ảnh hưởng đến những người dùng sử dụng hình dạng Cổ điển */',
-'cologneblue.css'         => '/* Mã CSS tại đây sẽ ảnh hưởng đến những người dùng sử dụng hình dạng Xanh Cologne */',
 'monobook.css'            => '/* Mã CSS đặt ở đây sẽ ảnh hưởng đến thành viên sử dụng hình dạng MonoBook */',
 'myskin.css'              => '/* Mã CSS tại đây sẽ ảnh hưởng đến những người dùng sử dụng hình dạng Cá nhân */',
 'chick.css'               => '/* Mã CSS tại đây sẽ ảnh hưởng đến những người dùng sử dụng hình dạng Chick */',
@@ -2956,7 +2940,6 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 # Scripts
 'common.js'              => '/* Bất kỳ mã JavaScript ở đây sẽ được tải cho tất cả các thành viên khi tải một trang nào đó lên. */',
 'standard.js'            => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng hình dạng Cổ điển */',
-'cologneblue.js'         => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng hình dạng Xanh Cologne */',
 'monobook.js'            => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng bề ngoài MonoBook */',
 'myskin.js'              => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng bề ngoài Cá nhân */',
 'chick.js'               => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng bề ngoài Chick */',
@@ -3006,7 +2989,6 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 
 # Skin names
 'skinname-standard'    => 'Cổ điển',
-'skinname-cologneblue' => 'Xanh Cologne',
 'skinname-myskin'      => 'Cá nhân',
 'skinname-simple'      => 'Đơn giản',
 'skinname-modern'      => 'Hiện đại',

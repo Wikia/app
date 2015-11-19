@@ -190,14 +190,10 @@ $messages = array(
 'navigation'    => 'Naiviaedje',
 'and'           => '&#32;eyet',
 
-# Cologne Blue skin
 'qbfind'         => 'Trover',
 'qbbrowse'       => 'Foyter',
-'qbedit'         => 'Candjî',
 'qbpageoptions'  => 'Cisse pådje ci',
 'qbpageinfo'     => 'Contecse',
-'qbmyoptions'    => 'Mes pådjes',
-'qbspecialpages' => 'Pådjes sipeciåles',
 
 'errorpagetitle'    => 'Aroke',
 'returnto'          => 'Rivni al pådje «$1».',
@@ -216,7 +212,6 @@ $messages = array(
 'edit'              => 'Candjî',
 'create'            => 'Ahiver',
 'editthispage'      => "Candjî l' pådje",
-'create-this-page'  => 'Ahiver cisse pådje la',
 'delete'            => 'Disfacer',
 'deletethispage'    => "Disfacer l' pådje",
 'undelete_short'    => 'Rapexhî {{PLURAL:$1|on candjmint|$1 candjmints}}',
@@ -231,7 +226,6 @@ $messages = array(
 'specialpage'       => 'Pådje sipeciåle',
 'personaltools'     => 'Usteyes da vosse',
 'postcomment'       => 'Sicrire on comintaire',
-'articlepage'       => "Vey l' årtike",
 'talk'              => 'Copene',
 'views'             => 'Vuwes',
 'toolbox'           => 'Boesse ås usteyes',
@@ -624,13 +618,6 @@ Les ôtes manaedjeus so ç' wiki ci pôront todi vey li contnou catchî eyet l' 
 'powersearch-redir'        => 'Håyner les rdjiblaedjes',
 'searchdisabled'           => "Mande escuzes! Li cweraedje å dvins des årtikes a stî dismetou pol moumint, cåze ki l' sierveu est fortcherdjî. Tot ratindant, vos ploz eployî Google po fé les rcweraedjes so {{SITENAME}}, mins çoula pout esse ene miete vî.",
 
-# Quickbar
-'qbsettings'               => 'Apontiaedjes pol bår di menu',
-'qbsettings-none'          => 'Nole bår',
-'qbsettings-fixedleft'     => 'Aclawêye a hintche',
-'qbsettings-fixedright'    => 'Aclawêye a droete',
-'qbsettings-floatingleft'  => 'Flotante a hintche',
-'qbsettings-floatingright' => 'Flotante a droete',
 
 # Preferences page
 'preferences'           => 'Preferinces',

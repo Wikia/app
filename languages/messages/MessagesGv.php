@@ -141,16 +141,11 @@ $messages = array(
 'navigation'    => 'Stiureydys',
 'and'           => '&#32;as',
 
-# Cologne Blue skin
 'qbfind'         => 'Fow',
 'qbbrowse'       => 'Ronsaghey',
-'qbedit'         => 'Reaghey',
 'qbpageoptions'  => 'Yn duillag shoh',
 'qbpageinfo'     => 'Co-hecks',
-'qbmyoptions'    => 'My ghuillagyn',
-'qbspecialpages' => 'Duillagyn er lheh',
 'faq'            => 'FC',
-'faqpage'        => 'Project:FC',
 
 'namespaces'                 => 'Reamyssyn',
 
@@ -171,7 +166,6 @@ $messages = array(
 'edit'              => 'Reaghey',
 'create'            => 'Croo',
 'editthispage'      => 'Reaghey yn duillag shoh',
-'create-this-page'  => 'Croo yn duillag shoh',
 'delete'            => 'Scryss',
 'deletethispage'    => 'Scryss y duillag shoh',
 'undelete_short'    => 'Jee-scryssey {{PLURAL:$1|$1 caghlaa|$1 chaghlaa|$1 chaghlaa|$1 caghlaaghyn}}',
@@ -186,7 +180,6 @@ $messages = array(
 'specialpage'       => 'Duillag er lheh',
 'personaltools'     => 'Greienyn persoonagh',
 'postcomment'       => 'Cohaggloo y chur seose',
-'articlepage'       => 'Jeeagh er duillag y chummal',
 'talk'              => 'Resoonaght',
 'views'             => 'Reayrtyn',
 'toolbox'           => 'Kishtey greie',
@@ -530,8 +523,6 @@ My t'ou uss son ronsaghey dagh cooid (as shen goaill stiagh duillagyn resooney, 
 'powersearch-field'         => 'Ronsaghey er son',
 'search-external'           => 'Ronsaghey mooie',
 
-# Quickbar
-'qbsettings-none' => 'Veg',
 
 # Preferences page
 'preferences'               => 'Tosheeaghtyn',

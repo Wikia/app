@@ -183,16 +183,11 @@ $messages = array(
 'navigation'    => 'Navigaotie',
 'and'           => '&#32;en',
 
-# Cologne Blue skin
 'qbfind'         => 'Zoeken',
 'qbbrowse'       => 'Blaeren',
-'qbedit'         => 'Bewerk',
 'qbpageoptions'  => 'Paginaopties',
 'qbpageinfo'     => 'Pagina-informaotie',
-'qbmyoptions'    => 'Mien opties',
-'qbspecialpages' => 'Speciaole pahina’s',
 'faq'            => 'FAQ (veehestelde vraehen)',
-'faqpage'        => 'Project:Veehestelde vraehen',
 
 'actions'                        => 'Handeliengen',
 'namespaces'                     => 'Naemruumtes',
@@ -216,7 +211,6 @@ $messages = array(
 'edit'              => 'Bewerken',
 'create'            => 'Anmaeken',
 'editthispage'      => 'Deêze bladzie bewerken',
-'create-this-page'  => 'Deêze pahina anmaeken',
 'delete'            => 'Wissen',
 'deletethispage'    => 'Wis deêze bladzie',
 'undelete_short'    => '$1 {{PLURAL:$1|bewerkieng|bewerkiengen}} terugzetten',
@@ -232,7 +226,6 @@ $messages = array(
 'specialpage'       => 'Speciaole bladzie',
 'personaltools'     => 'Persoônlijke instelliengen',
 'postcomment'       => 'Nuuw kopje toevoehen',
-'articlepage'       => "Bekiek 't artikel",
 'talk'              => 'Overleg',
 'views'             => 'Acties',
 'toolbox'           => 'Ulpmiddels',
@@ -835,13 +828,6 @@ Zurg da je bie deêze wiezigieng de heschiedenisdeurloôpendeid van de pagina be
 Je kan gebruuk maeken van Google.
 De hehevens over {{SITENAME}} zien meuhlijk nie bie'ewerkt.",
 
-# Quickbar
-'qbsettings'               => 'Menubalke',
-'qbsettings-none'          => 'Uuteschaokeld',
-'qbsettings-fixedleft'     => 'Lienks vast',
-'qbsettings-fixedright'    => 'Rechs vast',
-'qbsettings-floatingleft'  => 'Lienks zwevend',
-'qbsettings-floatingright' => 'Rechs zwevend',
 
 # Preferences page
 'preferences'               => 'Vòkeuren',

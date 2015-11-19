@@ -140,13 +140,9 @@ $messages = array(
 'navigation'    => 'Ol bikpela pes',
 'and'           => '&#32;na',
 
-# Cologne Blue skin
 'qbfind'         => 'Painim',
 'qbbrowse'       => 'Lukim',
-'qbedit'         => 'Senisim',
 'qbpageoptions'  => 'Dispela pes',
-'qbmyoptions'    => 'Ol pes bilong mi',
-'qbspecialpages' => 'Ol sipesol pes',
 
 
 'errorpagetitle'   => 'Samting i kranki',
@@ -163,7 +159,6 @@ $messages = array(
 'edit'             => 'Senisim',
 'create'           => 'Kirapim',
 'editthispage'     => 'Senisim dispela pes',
-'create-this-page' => 'Kirapim dispela pes',
 'delete'           => 'Rausim',
 'deletethispage'   => 'Rausim dispela pes',
 'protect'          => 'Tambuim',
@@ -353,8 +348,6 @@ Na tu yu tok tru nau olsem yu raitim dispela yu yet, o yu kisim long wanpela hap
 'powersearch-toggleall'          => 'Olgeta',
 'powersearch-togglenone'         => 'I nogat wanpela',
 
-# Quickbar
-'qbsettings-none' => 'I nogat wanpela',
 
 # Preferences page
 'preferences'               => 'Ol laik',

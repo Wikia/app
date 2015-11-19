@@ -120,8 +120,7 @@ abstract class Skin extends ContextSource {
 		// Older versions of the software used a numeric setting
 		// in the user preferences.
 		$fallback = array(
-			0 => $wgDefaultSkin,
-			2 => 'cologneblue'
+			0 => $wgDefaultSkin
 		);
 
 		if ( isset( $fallback[$key] ) ) {

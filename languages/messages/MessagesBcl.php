@@ -217,16 +217,11 @@ $messages = array(
 'navigation'    => 'Paglibotlíbot',
 'and'           => '&#32;asin',
 
-# Cologne Blue skin
 'qbfind'         => 'Hanápon',
 'qbbrowse'       => 'Maghalungkát',
-'qbedit'         => 'Hirahón',
 'qbpageoptions'  => 'Ining pahina',
 'qbpageinfo'     => 'Konteksto',
-'qbmyoptions'    => 'Mga pahina ko',
-'qbspecialpages' => 'Espesyal na mga pahina',
 'faq'            => 'HD',
-'faqpage'        => 'Project:HD',
 
 'actions'                => 'Mga paghiro',
 
@@ -248,7 +243,6 @@ $messages = array(
 'edit'              => 'Liwatón',
 'create'            => 'Maggíbo',
 'editthispage'      => 'Hirahón ining pahina',
-'create-this-page'  => 'Gibohon ining pahina',
 'delete'            => 'Paraon',
 'deletethispage'    => 'Paraon ining pahina',
 'undelete_short'    => 'Bawion an pagparà {{PLURAL:$1|paghirá|$1 mga paghirá}}',
@@ -263,7 +257,6 @@ $messages = array(
 'specialpage'       => 'Espesyal na Pahina',
 'personaltools'     => 'Mga gamit na personal',
 'postcomment'       => 'Magkomento',
-'articlepage'       => 'Hilingón an pahina kan laog',
 'talk'              => 'Orólay',
 'views'             => 'Mga hilíng',
 'toolbox'           => 'Kagamitan',
@@ -759,13 +752,6 @@ An ibang mga administrador sa ining wiki pwede pang maghiling kan mga nakatagong
 'powersearch-field'         => 'Hanápon an',
 'searchdisabled'            => 'Pigpopogolan mûna an paghanap sa {{SITENAME}}. Mientras tanto, pwede ka man maghanap sa Google. Giromdomon tabî na an mga indise kan laog ninda sa {{SITENAME}} pwede ser na lumâ na.',
 
-# Quickbar
-'qbsettings'               => 'Quickbar',
-'qbsettings-none'          => 'Mayô',
-'qbsettings-fixedleft'     => 'Nakatakód sa walá',
-'qbsettings-fixedright'    => 'Nakatakód sa tûo',
-'qbsettings-floatingleft'  => 'Naglálatáw sa walá',
-'qbsettings-floatingright' => 'Naglálatáw sa tûo',
 
 # Preferences page
 'preferences'               => 'Mga kabòtan',

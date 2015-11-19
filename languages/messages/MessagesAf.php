@@ -348,16 +348,11 @@ $messages = array(
 'navigation'    => 'Navigasie',
 'and'           => '&#32;en',
 
-# Cologne Blue skin
 'qbfind'         => 'Vind',
 'qbbrowse'       => 'Snuffel',
-'qbedit'         => 'Wysig',
 'qbpageoptions'  => 'Bladsyopsies',
 'qbpageinfo'     => 'Bladsyinligting',
-'qbmyoptions'    => 'My bladsye',
-'qbspecialpages' => 'Spesiale bladsye',
 'faq'            => 'Gewilde vrae',
-'faqpage'        => 'Project:GewildeVrae',
 
 'actions'                        => 'Aksies',
 'namespaces'                     => 'Naamruimtes',
@@ -381,7 +376,6 @@ $messages = array(
 'edit'              => 'Wysig',
 'create'            => 'Skep',
 'editthispage'      => 'Wysig hierdie bladsy',
-'create-this-page'  => 'Skep hierdie bladsy',
 'delete'            => 'Skrap',
 'deletethispage'    => 'Skrap die bladsy',
 'undelete_short'    => 'Herstel {{PLURAL:$1|een wysiging|$1 wysigings}}',
@@ -397,7 +391,6 @@ $messages = array(
 'specialpage'       => 'Spesiale bladsy',
 'personaltools'     => 'Persoonlike gereedskap',
 'postcomment'       => 'Nuwe opskrif',
-'articlepage'       => 'Lees artikel',
 'talk'              => 'Bespreking',
 'views'             => 'Weergawes',
 'toolbox'           => 'Gereedskap',
@@ -1210,14 +1203,6 @@ U kan ook 'n naamruimte as voorvoegsel gebruik.",
 'search-external'                  => 'Eksterne soektog',
 'searchdisabled'                   => '{{SITENAME}} se soekfunksie is tans afgeskakel ter wille van werkverrigting. Gebruik gerus intussen Google of Yahoo! Let daarop dat hulle indekse van die {{SITENAME}}-inhoud verouderd mag wees.',
 
-# Quickbar
-'qbsettings'                => 'Snelbalkvoorkeure',
-'qbsettings-none'           => 'Geen',
-'qbsettings-fixedleft'      => 'Links vas.',
-'qbsettings-fixedright'     => 'Regs vas.',
-'qbsettings-floatingleft'   => 'Dryf links.',
-'qbsettings-floatingright'  => 'Dryf regs.',
-'qbsettings-directionality' => 'Vas, afhanklik van die skryfrigting van u taal',
 
 # Preferences page
 'preferences'                   => 'Voorkeure',
@@ -2888,7 +2873,6 @@ Hierdie situasie was waarskynlik deur 'n skakel na 'n eksterne webtuiste op ons 
 
 # Skin names
 'skinname-standard'    => 'Standaard',
-'skinname-cologneblue' => 'Keulen blou',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Merk as gekontroleerd',

@@ -435,16 +435,11 @@ $messages = array(
 'navigation'    => 'Nawigacja',
 'and'           => '&#32;oraz',
 
-# Cologne Blue skin
 'qbfind'         => 'Znajdź',
 'qbbrowse'       => 'Przeglądanie',
-'qbedit'         => 'Edycja',
 'qbpageoptions'  => 'Ta strona',
 'qbpageinfo'     => 'Kontekst',
-'qbmyoptions'    => 'Moje strony',
-'qbspecialpages' => 'strony specjalne',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Działania',
 'namespaces'                     => 'Przestrzenie nazw',
@@ -468,7 +463,6 @@ $messages = array(
 'edit'              => 'Edytuj',
 'create'            => 'Utwórz',
 'editthispage'      => 'Edytuj tę stronę',
-'create-this-page'  => 'Utwórz tę stronę',
 'delete'            => 'Usuń',
 'deletethispage'    => 'Usuń tę stronę',
 'undelete_short'    => 'odtwórz {{PLURAL:$1|1 wersję|$1 wersje|$1 wersji}}',
@@ -484,7 +478,6 @@ $messages = array(
 'specialpage'       => 'Strona specjalna',
 'personaltools'     => 'Osobiste',
 'postcomment'       => 'Nowa sekcja',
-'articlepage'       => 'Artykuł',
 'talk'              => 'Dyskusja',
 'views'             => 'Widok',
 'toolbox'           => 'Narzędzia',
@@ -1315,14 +1308,6 @@ Użycie linków nawigacyjnych kasuje wybór w kolumnie.',
 W międzyczasie możesz skorzystać z wyszukiwania Google.
 Jednak informacje o treści {{GRAMMAR:D.lp|{{SITENAME}}}} mogą być w Google nieaktualne.',
 
-# Quickbar
-'qbsettings'                => 'Pasek szybkiego dostępu',
-'qbsettings-none'           => 'Brak',
-'qbsettings-fixedleft'      => 'Stały, z lewej',
-'qbsettings-fixedright'     => 'Stały, z prawej',
-'qbsettings-floatingleft'   => 'Unoszący się, z lewej',
-'qbsettings-floatingright'  => 'Unoszący się, z prawej',
-'qbsettings-directionality' => 'Ustawione na stałe, zgodnie z kierunkiem zapisywania w wybranym języku',
 
 # Preferences page
 'preferences'                   => 'Preferencje',
@@ -2976,7 +2961,6 @@ Pozwala na wpisanie powodu w opisie zmian.',
 # Stylesheets
 'common.css'      => '/* Umieszczony tutaj kod CSS zostanie zastosowany we wszystkich skórkach */',
 'standard.css'    => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Standardowa */',
-'cologneblue.css' => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Błękit */',
 'monobook.css'    => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Książka */',
 'myskin.css'      => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Moja skórka */',
 'chick.css'       => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Kurczaczek */',
@@ -2989,7 +2973,6 @@ Pozwala na wpisanie powodu w opisie zmian.',
 # Scripts
 'common.js'      => '/* Umieszczony tutaj kod JavaScript zostanie załadowany przez każdego użytkownika, podczas każdego ładowania strony. */',
 'standard.js'    => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Standardowa */',
-'cologneblue.js' => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Błękit */',
 'monobook.js'    => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Książka */',
 'myskin.js'      => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Moja skórka */',
 'chick.js'       => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Kurczaczek */',
@@ -3035,7 +3018,6 @@ Najprawdopodobniej zostało to spowodowane przez link do zewnętrznej strony int
 
 # Skin names
 'skinname-standard'    => 'Standardowa',
-'skinname-cologneblue' => 'Błękit',
 'skinname-monobook'    => 'Książka',
 'skinname-myskin'      => 'Moja skórka',
 'skinname-chick'       => 'Kurczaczek',

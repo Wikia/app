@@ -352,16 +352,11 @@ $messages = array(
 'navigation'    => 'Шавигар',
 'and'           => '&#32;а',
 
-# Cologne Blue skin
 'qbfind'         => 'Лаха',
 'qbbrowse'       => 'Хьажар',
-'qbedit'         => 'Нисйé',
 'qbpageoptions'  => 'Агlо нисйар',
 'qbpageinfo'     => 'Агlонах болу бовзам',
-'qbmyoptions'    => 'Хьан нисдарш',
-'qbspecialpages' => 'Леррина агlонаш',
 'faq'            => 'СиХХ',
-'faqpage'        => 'Project:СиХХ',
 
 'actions'                        => 'Дийраш',
 'namespaces'                     => 'Цlерийн ана',
@@ -385,7 +380,6 @@ $messages = array(
 'edit'              => 'Нисйé',
 'create'            => 'Кхолла',
 'editthispage'      => 'Нисйé хlара агlо',
-'create-this-page'  => 'Кхолла хlара агlо',
 'delete'            => 'Дlадайá',
 'deletethispage'    => 'Дlайайá хlара агlо',
 'undelete_short'    => 'Меттахlоттайé $1 {{PLURAL:$1|нисйинарг|нисйинарш|нисйинарш}}',
@@ -401,7 +395,6 @@ $messages = array(
 'specialpage'       => 'Белха агlо',
 'personaltools'     => 'Долахь болу гlирсаш',
 'postcomment'       => 'Керла дакъа',
-'articlepage'       => 'Хьажа яззаме',
 'talk'              => 'Дийцаре',
 'views'             => 'Хьажарш',
 'toolbox'           => 'Гlирсаш',

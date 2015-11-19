@@ -251,16 +251,11 @@ $messages = array(
 'navigation' => 'Navigatión',
 'and' => '&#32;og',
 
-# Cologne Blue skin
 'qbfind' => 'Finn',
 'qbbrowse' => 'Kaga',
-'qbedit' => 'Rætta',
 'qbpageoptions' => 'Henda síðan',
 'qbpageinfo' => 'Samanhangur',
-'qbmyoptions' => 'Mínar síður',
-'qbspecialpages' => 'Serstakar síður',
 'faq' => 'OSS',
-'faqpage' => 'Project:OSS',
 
 'actions' => 'Gerningar',
 'namespaces' => 'Navnarúm',
@@ -284,7 +279,6 @@ $messages = array(
 'edit' => 'Rætta',
 'create' => 'Stovna',
 'editthispage' => 'Rætta hesa síðuna',
-'create-this-page' => 'Stovna hesa síðuna',
 'delete' => 'Strika',
 'deletethispage' => 'Strika hesa síðuna',
 'undelete_short' => 'Ógilda striking av {{PLURAL:$1|broyting|$1 broytingar}}',
@@ -300,7 +294,6 @@ $messages = array(
 'specialpage' => 'Serlig síða',
 'personaltools' => 'Persónlig amboð',
 'postcomment' => 'Nýtt brot',
-'articlepage' => 'Skoða innihaldssíðuna',
 'talk' => 'Kjak',
 'views' => 'Skoðanir',
 'toolbox' => 'Amboð',
@@ -1036,13 +1029,6 @@ Tú kanst royna at brúka ''all:'' sum fyrsta stavilsi fyri at søkja í øllum 
 Tú kanst leita via Google ímeðan.
 Legg til merkis, at teirra innihaldsyvirlit av {{SITENAME}} kann vera gamalt og ikki dagført.',
 
-# Quickbar
-'qbsettings' => 'Skundfjøl innstillingar',
-'qbsettings-none' => 'Eingin',
-'qbsettings-fixedleft' => 'Fast vinstru',
-'qbsettings-fixedright' => 'Fast høgru',
-'qbsettings-floatingleft' => 'Flótandi vinstru',
-'qbsettings-floatingright' => 'Flótandi høgra',
 
 # Preferences page
 'preferences' => 'Innstillingar',
@@ -1901,7 +1887,6 @@ Vinarliga vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] o
 
 # Skin names
 'skinname-standard' => 'Standardur',
-'skinname-cologneblue' => 'Cologne-bláur',
 
 # Patrolling
 'markaspatrolleddiff' => 'Merk síðuna sum eftirhugda',

@@ -47,7 +47,6 @@ $messages = array(
 'delete'           => 'Bora',
 'talkpagelinktext' => 'Cuento',
 'personaltools'    => 'Maga herramientas personal',
-'articlepage'      => 'Mira con el laman del pagina',
 'views'            => 'Maga vista',
 'categorypage'     => 'Mira con el pagina de categoria',
 'otherlanguages'   => 'na otro maga lenguaje',

@@ -186,13 +186,9 @@ $messages = array(
 'navigation'    => 'Ka hoʻokele ʻana',
 'and'           => '&#32;a me',
 
-# Cologne Blue skin
 'qbfind'         => 'Loa‘a',
-'qbedit'         => 'E ho‘ololi',
 'qbpageoptions'  => 'Kēia ‘ao‘ao',
 'qbpageinfo'     => 'Pō‘aiapili',
-'qbmyoptions'    => 'Ka‘u mau ‘ao‘ao',
-'qbspecialpages' => 'Nā ‘ao‘ao kūikawā',
 
 
 'errorpagetitle'   => 'Hewa',
@@ -212,7 +208,6 @@ $messages = array(
 'edit'             => 'E ho‘ololi',
 'create'           => 'Hana',
 'editthispage'     => 'E ho‘opololei i kēia ‘ao‘ao',
-'create-this-page' => 'Hana i keia ‘ao‘ao',
 'delete'           => 'E kāpae',
 'deletethispage'   => 'E kāpae i kēia mo‘olelo',
 'undelete_short'   => 'Wehe-kāpae i {{PLURAL:$1|kekahi ho‘opololei|$1 ho‘opololei}}',

@@ -485,16 +485,11 @@ $messages = array(
 'navigation'    => 'Navigatie',
 'and'           => '&#32;en',
 
-# Cologne Blue skin
 'qbfind'         => 'Zoeken',
 'qbbrowse'       => 'Bladeren',
-'qbedit'         => 'Bewerken',
 'qbpageoptions'  => 'Deze pagina',
 'qbpageinfo'     => 'Pagina-informatie',
-'qbmyoptions'    => "Mijn pagina's",
-'qbspecialpages' => 'Speciale pagina’s',
 'faq'            => 'Veel gestelde vragen',
-'faqpage'        => 'Project:Veelgestelde vragen',
 
 'actions'                        => 'Handelingen',
 'namespaces'                     => 'Naamruimten',
@@ -518,7 +513,6 @@ $messages = array(
 'edit'              => 'Bewerken',
 'create'            => 'Aanmaken',
 'editthispage'      => 'Deze pagina bewerken',
-'create-this-page'  => 'Deze pagina aanmaken',
 'delete'            => 'Verwijderen',
 'deletethispage'    => 'Deze pagina verwijderen',
 'undelete_short'    => '$1 {{PLURAL:$1|bewerking|bewerkingen}} terugplaatsen',
@@ -534,7 +528,6 @@ $messages = array(
 'specialpage'       => 'Speciale pagina',
 'personaltools'     => 'Persoonlijke instellingen',
 'postcomment'       => 'Nieuw kopje',
-'articlepage'       => 'Pagina bekijken',
 'talk'              => 'Overleg',
 'views'             => 'Weergaven',
 'toolbox'           => 'Hulpmiddelen',
@@ -1386,14 +1379,6 @@ U kunt ook een naamruimte als voorvoegsel gebruiken.",
 U kunt gebruik maken van Google.
 De gegevens over {{SITENAME}} zijn mogelijk niet bijgewerkt.',
 
-# Quickbar
-'qbsettings'                => 'Menubalk',
-'qbsettings-none'           => 'Uitgeschakeld',
-'qbsettings-fixedleft'      => 'Links vast',
-'qbsettings-fixedright'     => 'Rechts vast',
-'qbsettings-floatingleft'   => 'Links zwevend',
-'qbsettings-floatingright'  => 'Rechts zwevend',
-'qbsettings-directionality' => 'Vast, afhankelijk van de schrijfrichting van uw taal',
 
 # Preferences page
 'preferences'                   => 'Voorkeuren',
@@ -3079,7 +3064,6 @@ Een tijdelijke map is niet aanwezig.',
 # Stylesheets
 'common.css'              => '/** CSS die hier wordt geplaatst heeft invloed op alle skins */',
 'standard.css'            => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Standard */',
-'cologneblue.css'         => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Keuls blauw */',
 'monobook.css'            => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Monobook */',
 'myskin.css'              => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin MijnSkin */',
 'chick.css'               => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Chick */',
@@ -3096,7 +3080,6 @@ Een tijdelijke map is niet aanwezig.',
 # Scripts
 'common.js'              => "/* JavaScript die hier wordt geplaatst heeft invloed op alle pagina's voor alle gebruikers */",
 'standard.js'            => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Standaard gebruiken */',
-'cologneblue.js'         => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Keuls blauw gebruiken */',
 'monobook.js'            => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Monobook gebruiken */',
 'myskin.js'              => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin MijnSkin gebruiken */',
 'chick.js'               => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Chick gebruiken */',
@@ -3146,7 +3129,6 @@ Meestal wordt dit door een externe verwijzing op een zwarte lijst veroorzaakt.',
 
 # Skin names
 'skinname-standard'    => 'Klassiek',
-'skinname-cologneblue' => 'Keuls blauw',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'MijnSkin',
 'skinname-chick'       => 'Chick',

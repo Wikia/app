@@ -156,16 +156,11 @@ $messages = array(
 'anontalk'      => 'Kay IP yupaypak rimana',
 'navigation'    => 'Wampuna',
 
-# Cologne Blue skin
 'qbfind'         => 'Maskana',
 'qbbrowse'       => 'Maskana',
-'qbedit'         => 'Killkana',
 'qbpageoptions'  => 'Pankapak akllanakuna',
 'qbpageinfo'     => 'Pankamanta willaykuna',
-'qbmyoptions'    => 'Ñukapak pankakuna',
-'qbspecialpages' => 'mans shukkunashina pankakuna',
 'faq'            => 'Ashtawan tapushkaka tapunakuna',
-'faqpage'        => 'Project:ashta ministishka tapuykuna',
 
 'actions'                        => 'Ruraykuna',
 'namespaces'                     => 'Shutipak kitikuna',
@@ -189,7 +184,6 @@ $messages = array(
 'edit'              => 'killkana',
 'create'            => 'Kamarina',
 'editthispage'      => 'Kay pankapi killkana',
-'create-this-page'  => 'Kay pankata kallarina',
 'delete'            => 'pichay',
 'deletethispage'    => 'Kay pankata pichana',
 'undelete_short'    => 'Kutin chay {{PLURAL:$1|killkayta|$1 killkaykunata}} churana',
@@ -205,7 +199,6 @@ $messages = array(
 'specialpage'       => 'Mana shukkunashina panka',
 'personaltools'     => 'Kikinpak llankanaman yanapanakuna',
 'postcomment'       => 'Mushuk raki',
-'articlepage'       => 'Pankata rikuna',
 'talk'              => 'Rimanakuna',
 'views'             => 'Rikunakuna',
 'toolbox'           => 'Llankanakuna',

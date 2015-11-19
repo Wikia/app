@@ -198,16 +198,11 @@ $messages = array(
 'navigation'    => 'Tabok-tabok',
 'and'           => '&#32;ug',
 
-# Cologne Blue skin
 'qbfind'         => 'Pangitaa',
 'qbbrowse'       => 'Browse',
-'qbedit'         => 'Usba',
 'qbpageoptions'  => 'Kini nga panid',
 'qbpageinfo'     => 'Konteksto',
-'qbmyoptions'    => 'Akong mga panid',
-'qbspecialpages' => 'Mga espesyal nga panid',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                  => 'Mga lihok',
 'namespaces'               => 'Mga ngalang espasyo',
@@ -230,7 +225,6 @@ $messages = array(
 'edit'              => 'Usba',
 'create'            => 'Himoa',
 'editthispage'      => 'Usba kining panid',
-'create-this-page'  => 'Himoa kining panid',
 'delete'            => 'Papasa',
 'deletethispage'    => 'Papasa kining panid',
 'undelete_short'    => 'Ibalik ang {{PLURAL:$1|usa ka pag-usab|$1 ka mga pag-usab}}',
@@ -245,7 +239,6 @@ $messages = array(
 'specialpage'       => 'Espesyal nga panid',
 'personaltools'     => 'Personal nga galamiton',
 'postcomment'       => 'Pagbilin og komento',
-'articlepage'       => 'Tan-awa ang panid sa sulod',
 'talk'              => 'Panaghisgot-hisgot',
 'views'             => 'Mga pagtan-aw',
 'toolbox'           => 'Galamiton',
@@ -726,13 +719,6 @@ Sulayi'g prefix ang imong gipangita gamit ang ''all:'' alang mangita sa tanang s
 Puyde ka mangita gamit ang Google sa kasamtangan.
 Hinumdomi nga ang ilang indeks sa sulod sa {{SITENAME}} mahimong dugay-dugay na.',
 
-# Quickbar
-'qbsettings'               => 'Quickbar',
-'qbsettings-none'          => 'Wala',
-'qbsettings-fixedleft'     => 'Naka-fix sa wala',
-'qbsettings-fixedright'    => 'Naka-fix sa tuo',
-'qbsettings-floatingleft'  => 'Floating sa wala',
-'qbsettings-floatingright' => 'Floating sa tuo',
 
 # Preferences page
 'preferences'                   => 'Mga preperensiya',

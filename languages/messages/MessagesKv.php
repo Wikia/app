@@ -52,9 +52,7 @@ $messages = array(
 'cancel'  => 'Дугӧдны',
 'mytalk'  => 'Сёрнитан лист бокӧй',
 
-# Cologne Blue skin
 'qbfind' => 'Корсьысьӧм',
-'qbedit' => 'Веськӧдны',
 
 'namespaces'         => 'Ним пространствояс',
 

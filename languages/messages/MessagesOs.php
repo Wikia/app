@@ -190,16 +190,11 @@ $messages = array(
 'navigation'    => 'Навигаци',
 'and'           => '&#32;æмæ',
 
-# Cologne Blue skin
 'qbfind'         => 'Агур',
 'qbbrowse'       => 'Фен',
-'qbedit'         => 'Ивын',
 'qbpageoptions'  => 'Ацы фарс',
 'qbpageinfo'     => 'Фарсы контекст',
-'qbmyoptions'    => 'Мæ фæрстæ',
-'qbspecialpages' => 'Сæрмагонд фæрстæ',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                  => 'Архайдтæ',
 'namespaces'               => 'Номдæттæ',
@@ -222,7 +217,6 @@ $messages = array(
 'edit'              => 'Ивын',
 'create'            => 'Скæнын',
 'editthispage'      => 'Ивын ацы фарс',
-'create-this-page'  => 'Ацы фарс скæнын',
 'delete'            => 'Аппар',
 'deletethispage'    => 'Аппарын ацы фарс',
 'undelete_short'    => 'Рацаразын {{PLURAL:$1|иу ивд|$1 ивды}}',
@@ -237,7 +231,6 @@ $messages = array(
 'specialpage'       => 'Сæрмагонд фарс',
 'personaltools'     => 'Мигæнæнтæ',
 'postcomment'       => 'Ног хай',
-'articlepage'       => 'Фен статья',
 'talk'              => 'Тæрхон',
 'views'             => 'Æркæстытæ',
 'toolbox'           => 'Фæрæзтæ',
@@ -567,12 +560,6 @@ $messages = array(
 'powersearch-field'                => 'Агуырд',
 'powersearch-toggleall'            => 'Иууылдæр',
 
-# Quickbar
-'qbsettings'              => 'Навигацион таг',
-'qbsettings-none'         => 'Ма равдис',
-'qbsettings-fixedleft'    => 'Галиуырдыгæй',
-'qbsettings-fixedright'   => 'Рахизырдыгæй',
-'qbsettings-floatingleft' => 'Рахизырдыгæй ленккæнгæ',
 
 # Preferences page
 'mypreferences'             => 'Мæ фадæттæ',
@@ -1101,7 +1088,6 @@ $3',
 
 # Skin names
 'skinname-standard'    => 'Стандартон',
-'skinname-cologneblue' => 'Кёльны æрхæндæг',
 'skinname-monobook'    => 'Моно-чиныг',
 'skinname-myskin'      => 'Мæхи',
 'skinname-chick'       => 'Карк',

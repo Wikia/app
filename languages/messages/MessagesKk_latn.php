@@ -485,16 +485,11 @@ $messages = array(
 'navigation'    => 'Şarlaw',
 'and'           => '&#32;jäne',
 
-# Cologne Blue skin
 'qbfind'         => 'Tabw',
 'qbbrowse'       => 'Şolw',
-'qbedit'         => 'Öñdew',
 'qbpageoptions'  => 'Bul bet',
 'qbpageinfo'     => 'Aýnala',
-'qbmyoptions'    => 'Betterim',
-'qbspecialpages' => 'Arnaýı better',
 'faq'            => 'Jïi qoýılğan sawaldar',
-'faqpage'        => 'Project:Jïi qoýılğan sawaldar',
 
 'errorpagetitle'    => 'Qatelik',
 'returnto'          => '$1 degenge qaýta kelw.',
@@ -513,7 +508,6 @@ $messages = array(
 'edit'              => 'Öñdew',
 'create'            => 'Bastaw',
 'editthispage'      => 'Betti öñdew',
-'create-this-page'  => 'Jaña bet bastaw',
 'delete'            => 'Joyw',
 'deletethispage'    => 'Betti joyw',
 'undelete_short'    => '$1 öñdeme joywın boldırmaw',
@@ -528,7 +522,6 @@ $messages = array(
 'specialpage'       => 'Arnaýı bet',
 'personaltools'     => 'Jeke quraldar',
 'postcomment'       => 'Mändeme jöneltw',
-'articlepage'       => 'Mağlumat betin qaraw',
 'talk'              => 'Talqılaw',
 'views'             => 'Körinis',
 'toolbox'           => 'Quraldar',
@@ -1117,13 +1110,6 @@ Añğartpa: bağıttaw siltemelerin qoldanğanda bul bağan qaýta qoýıladı.'
 Äzirşe Google arqılı izdewge boladı.
 Añğartpa: {{SITENAME}} torabınıñ mağlumat tizbeleri eskirgen bolwı mümkin.',
 
-# Quickbar
-'qbsettings'               => 'Mäzir',
-'qbsettings-none'          => 'Eşqandaý',
-'qbsettings-fixedleft'     => 'Solğa bekitilgen',
-'qbsettings-fixedright'    => 'Oñğa bekitilgen',
-'qbsettings-floatingleft'  => 'Solğa qalqığan',
-'qbsettings-floatingright' => 'Oñğa qalqığan',
 
 # Preferences page
 'preferences'               => 'Baptalımdar',
@@ -2255,7 +2241,6 @@ Wïkï-aparw üşin sırttan alw barlıq äreketter [[{{#special:Log}}/import|s�
 # Stylesheets
 'common.css'      => '/* Mında ornalastırılğan CSS barlıq mänerlerde qoldanıladı */',
 'standard.css'    => '/* Mında ornalastırılğan CSS tek «Dağdılı» (standard) mänerin paýdalanwşılarına ıqpal etedi */',
-'cologneblue.css' => '/* Mında ornalastırılğan CSS tek «Köln zeñgirligi» (cologneblue) mänerin paýdalanwşılarına ıqpal etedi skin */',
 'monobook.css'    => '/* Mında ornalastırılğan CSS tek «Dara kitap» (monobook) mänerin paýdalanwşılarına ıqpal etedi */',
 'myskin.css'      => '/* Mında ornalastırılğan CSS tek «Öz mänerim» (myskin) mänerin paýdalanwşılarına ıqpal etedi */',
 'chick.css'       => '/* Mında ornalastırılğan CSS tek «Balapan» (chick) mänerin paýdalanwşılarına ıqpal etedi */',
@@ -2265,7 +2250,6 @@ Wïkï-aparw üşin sırttan alw barlıq äreketter [[{{#special:Log}}/import|s�
 # Scripts
 'common.js'      => '/* Mındağı ärtürli JavaScript kez kelgen bet qotarılğanda barlıq paýdalanwşılar üşin jegiledi. */',
 'standard.js'    => '/* Mındağı JavaScript tek «Dağdılı» (standard) mänerin paýdalanwşılar üşin jegiledi */',
-'cologneblue.js' => '/* Mındağı JavaScript tek «Köln zeñgirligi» (cologneblue) mänerin paýdalanwşılar üşin jegiledi */',
 'monobook.js'    => '/* Mındağı JavaScript tek «Dara kitap» (monobook) mänerin paýdalanwşılar üşin jegiledi */',
 'myskin.js'      => '/* Mındağı JavaScript tek «Öz mänerim» (myskin) mänerin paýdalanwşılar üşin jegiledi */',
 'chick.js'       => '/* Mındağı JavaScript tek «Balapan» (chick) mänerin paýdalanwşılar üşin jegiledi */',
@@ -2296,7 +2280,6 @@ Bunıñ sebebi şettik torap siltemesinen bolwı mümkin.',
 
 # Skin names
 'skinname-standard'    => 'Dağdılı (standard)',
-'skinname-cologneblue' => 'Köln zeñgirligi (cologneblue)',
 'skinname-monobook'    => 'Dara kitap (monobook)',
 'skinname-myskin'      => 'Öz mänerim (myskin)',
 'skinname-chick'       => 'Balapan (chick)',

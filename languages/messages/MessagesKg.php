@@ -74,10 +74,8 @@ $messages = array(
 'mytalk'  => 'Disolo ya munu',
 'and'     => '&#32;mpe',
 
-# Cologne Blue skin
 'qbfind'   => 'Sosa',
 'qbbrowse' => 'Tala',
-'qbedit'   => 'Soba',
 
 
 'errorpagetitle'   => 'Foti',

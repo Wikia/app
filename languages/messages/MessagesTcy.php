@@ -147,16 +147,11 @@ $messages = array(
 'navigation'    => 'ಸಂಚಾರ',
 'and'           => '&#32;ಬೊಕ್ಕ',
 
-# Cologne Blue skin
 'qbfind'         => 'ನಾಡ್’ಲೆ',
 'qbbrowse'       => 'ಬ್ರೌಸ್',
-'qbedit'         => 'ಸಂಪಾದನೆ ಮಲ್ಪುಲೆ',
 'qbpageoptions'  => 'ಈ ಪುಟ',
 'qbpageinfo'     => 'ಸನ್ನಿವೇಶ',
-'qbmyoptions'    => 'ಎನ್ನ ಪುಟೊಲು',
-'qbspecialpages' => 'ವಿಶೇಷ ಪುಟೊಲು',
 'faq'            => 'ಸಾಮಾನ್ಯವಾದ್ ಕೇನುನ ಪ್ರಶ್ನೆಲು',
-'faqpage'        => 'Project:ಸಾಮಾನ್ಯವಾದ್ ಕೇನುನ ಪ್ರಶ್ನೆಲು',
 
 'actions'                        => 'ಕ್ರಿಯೆಕ್ಕುಲು',
 'namespaces'                     => 'ಪುದರ್ ದ ವರ್ಗೊಲು',
@@ -180,7 +175,6 @@ $messages = array(
 'edit'              => 'ಸಂಪಾದನೆ ಮಲ್ಪುಲೆ(Edit this page)',
 'create'            => 'ಸೃಷ್ಟಿಸಾಲೆ',
 'editthispage'      => 'ಈ ಪುಟೊನು ಬದಲಾಯಿಸಾಲೆ',
-'create-this-page'  => 'ಈ ಪುಟೊನು ಸೃಷ್ಟಿಸಾಲೆ',
 'delete'            => 'ದೆತ್ತ್ ಪಾಡ್ಲೆ',
 'deletethispage'    => 'ಈ ಪುಟೊನು ದೆತ್ತ್ ಪಾಡ್ಲೆ',
 'undelete_short'    => 'ಪಿರ ಪಾಡ್ಲೆ {{PLURAL:$1|ಒ೦ಜಿ ಬದಲಾವಣೆ|$1 ಬದಲಾವಣೆಲು}}',
@@ -196,7 +190,6 @@ $messages = array(
 'specialpage'       => 'ವಿಶೇಷ ಪುಟ',
 'personaltools'     => 'ವೈಯಕ್ತಿಕ ಉಪಕರಣಲು',
 'postcomment'       => 'ಕಮೆಂಟ್ ಬರೆಲೆ',
-'articlepage'       => 'ಲೇಖನ ಪುಟೊನು ತೂಲೆ',
 'talk'              => 'ಚರ್ಚೆ',
 'views'             => 'ನೋಟಲು',
 'toolbox'           => 'ಉಪಕರಣ(ಟೂಲ್)',

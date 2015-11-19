@@ -103,10 +103,7 @@ $messages = array(
 'mytalk'     => 'Che myangekõi',
 'navigation' => 'Kundaharã',
 
-# Cologne Blue skin
 'qbfind'         => 'Heka',
-'qbedit'         => 'Jehaijey',
-'qbspecialpages' => 'Kuatiarogue hekochĩchĩva',
 
 'tagline'          => '{{SITENAME}}megua',
 'help'             => 'Pytyvõhára',

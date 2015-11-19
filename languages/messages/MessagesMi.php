@@ -35,8 +35,6 @@ $messages = array(
 'mytalk'     => 'Karere mōku',
 'navigation' => 'Huarahi',
 
-# Cologne Blue skin
-'qbspecialpages' => 'Whārangi motuhake',
 
 
 'help'             => 'Whakamārama',

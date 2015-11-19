@@ -1332,7 +1332,7 @@ class viewPageTest extends pageTest {
 		$this->pagePath = "index.php?title=Main_Page";
 
 		$this->params = array (
-				"useskin"        => wikiFuzz::chooseInput( array( "chick", "cologneblue", "myskin",
+				"useskin"        => wikiFuzz::chooseInput( array( "chick", "myskin",
 										"simple", "standard", wikiFuzz::makeFuzz( 2 ) ) ),
 				"uselang"        => wikiFuzz::chooseInput( array( wikiFuzz::makeFuzz( 2 ),
 						"ab", "af", "an", "ar", "arc", "as", "ast", "av", "ay", "az", "ba",

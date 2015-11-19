@@ -488,13 +488,6 @@ Please choose another name.
 &lt;/td&gt;&lt;td&gt;
 <template lineStart="1"><title>int:Articleexists</title></template>
 &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;
-[http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Articlepage&amp;action=edit articlepage]&lt;br&gt;
-[[MediaWiki_talk:Articlepage|Talk]]
-&lt;/td&gt;&lt;td&gt;
-View content page
-&lt;/td&gt;&lt;td&gt;
-<template lineStart="1"><title>int:Articlepage</title></template>
-&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;
 [http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Asksql&amp;action=edit asksql]&lt;br&gt;
 [[MediaWiki_talk:Asksql|Talk]]
 &lt;/td&gt;&lt;td&gt;
@@ -1552,13 +1545,6 @@ External link (remember http&amp;#58;// prefix)
 FAQ
 &lt;/td&gt;&lt;td&gt;
 <template lineStart="1"><title>int:Faq</title></template>
-&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;
-[http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Faqpage&amp;action=edit faqpage]&lt;br&gt;
-[[MediaWiki_talk:Faqpage|Talk]]
-&lt;/td&gt;&lt;td&gt;
-Wiktionary:FAQ
-&lt;/td&gt;&lt;td&gt;
-<template lineStart="1"><title>int:Faqpage</title></template>
 &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;
 [http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Feedlinks&amp;action=edit feedlinks]&lt;br&gt;
 [[MediaWiki_talk:Feedlinks|Talk]]
@@ -3632,26 +3618,12 @@ Browse
 &lt;/td&gt;&lt;td&gt;
 <template lineStart="1"><title>int:Qbbrowse</title></template>
 &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;
-[http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Qbedit&amp;action=edit qbedit]&lt;br&gt;
-[[MediaWiki_talk:Qbedit|Talk]]
-&lt;/td&gt;&lt;td&gt;
-Edit
-&lt;/td&gt;&lt;td&gt;
-<template lineStart="1"><title>int:Qbedit</title></template>
-&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;
 [http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Qbfind&amp;action=edit qbfind]&lt;br&gt;
 [[MediaWiki_talk:Qbfind|Talk]]
 &lt;/td&gt;&lt;td&gt;
 Find
 &lt;/td&gt;&lt;td&gt;
 <template lineStart="1"><title>int:Qbfind</title></template>
-&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;
-[http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Qbmyoptions&amp;action=edit qbmyoptions]&lt;br&gt;
-[[MediaWiki_talk:Qbmyoptions|Talk]]
-&lt;/td&gt;&lt;td&gt;
-My pages
-&lt;/td&gt;&lt;td&gt;
-<template lineStart="1"><title>int:Qbmyoptions</title></template>
 &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;
 [http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Qbpageinfo&amp;action=edit qbpageinfo]&lt;br&gt;
 [[MediaWiki_talk:Qbpageinfo|Talk]]
@@ -3666,20 +3638,6 @@ Context
 This page
 &lt;/td&gt;&lt;td&gt;
 <template lineStart="1"><title>int:Qbpageoptions</title></template>
-&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;
-[http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Qbsettings&amp;action=edit qbsettings]&lt;br&gt;
-[[MediaWiki_talk:Qbsettings|Talk]]
-&lt;/td&gt;&lt;td&gt;
-Quickbar settings
-&lt;/td&gt;&lt;td&gt;
-<template lineStart="1"><title>int:Qbsettings</title></template>
-&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;
-[http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Qbspecialpages&amp;action=edit qbspecialpages]&lt;br&gt;
-[[MediaWiki_talk:Qbspecialpages|Talk]]
-&lt;/td&gt;&lt;td&gt;
-Special pages
-&lt;/td&gt;&lt;td&gt;
-<template lineStart="1"><title>int:Qbspecialpages</title></template>
 &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;
 [http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Querybtn&amp;action=edit querybtn]&lt;br&gt;
 [[MediaWiki_talk:Querybtn|Talk]]

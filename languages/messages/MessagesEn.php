@@ -767,16 +767,11 @@ XHTML id names.
 'navigation'    => 'Navigation',
 'and'           => '&#32;and',
 
-# Cologne Blue skin
 'qbfind'         => 'Find',
 'qbbrowse'       => 'Browse',
-'qbedit'         => 'Edit',
 'qbpageoptions'  => 'This page',
 'qbpageinfo'     => 'Context',
-'qbmyoptions'    => 'My pages',
-'qbspecialpages' => 'Special pages',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 'sitetitle'      => '{{SITENAME}}', # do not translate or duplicate this message to other languages
 'sitesubtitle'   => '', # do not translate or duplicate this message to other languages
 
@@ -802,7 +797,6 @@ XHTML id names.
 'edit'              => 'Edit',
 'create'            => 'Create',
 'editthispage'      => 'Edit this page',
-'create-this-page'  => 'Create this page',
 'delete'            => 'Delete',
 'deletethispage'    => 'Delete this page',
 'undelete_short'    => 'Undelete {{PLURAL:$1|one edit|$1 edits}}',
@@ -819,7 +813,6 @@ XHTML id names.
 'personaltools'     => 'Personal tools',
 'postcomment'       => 'New section',
 'addsection'        => '+', # do not translate or duplicate this message to other languages
-'articlepage'       => 'View content page',
 'talk'              => 'Discussion',
 'views'             => 'Views',
 'toolbox'           => 'Toolbox',
@@ -1730,14 +1723,6 @@ Note that their indexes of {{SITENAME}} content may be out of date.',
 # OpenSearch description
 'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})', # do not translate or duplicate this message to other languages
 
-# Quickbar
-'qbsettings'                => 'Quickbar',
-'qbsettings-none'           => 'None',
-'qbsettings-fixedleft'      => 'Fixed left',
-'qbsettings-fixedright'     => 'Fixed right',
-'qbsettings-floatingleft'   => 'Floating left',
-'qbsettings-floatingright'  => 'Floating right',
-'qbsettings-directionality' => 'Fixed, depending on the script directionality of your language',
 
 # Preferences page
 'preferences'                   => 'Preferences',
@@ -3569,7 +3554,6 @@ You can view its source',
 # Stylesheets
 'common.css'              => '/* CSS placed here will be applied to all skins */', # only translate this message to other languages if you have to change it
 'standard.css'            => '/* CSS placed here will affect users of the Standard skin */', # only translate this message to other languages if you have to change it
-'cologneblue.css'         => '/* CSS placed here will affect users of the Cologne Blue skin */', # only translate this message to other languages if you have to change it
 'monobook.css'            => '/* CSS placed here will affect users of the Monobook skin */', # only translate this message to other languages if you have to change it
 'myskin.css'              => '/* CSS placed here will affect users of the MySkin skin */', # only translate this message to other languages if you have to change it
 'chick.css'               => '/* CSS placed here will affect users of the Chick skin */', # only translate this message to other languages if you have to change it
@@ -3586,7 +3570,6 @@ You can view its source',
 # Scripts
 'common.js'              => '/* Any JavaScript here will be loaded for all users on every page load. */', # only translate this message to other languages if you have to change it
 'standard.js'            => '/* Any JavaScript here will be loaded for users using the Standard skin */', # only translate this message to other languages if you have to change it
-'cologneblue.js'         => '/* Any JavaScript here will be loaded for users using the Cologne Blue skin */', # only translate this message to other languages if you have to change it
 'monobook.js'            => '/* Any JavaScript here will be loaded for users using the MonoBook skin */', # only translate this message to other languages if you have to change it
 'myskin.js'              => '/* Any JavaScript here will be loaded for users using the MySkin skin */', # only translate this message to other languages if you have to change it
 'chick.js'               => '/* Any JavaScript here will be loaded for users using the Chick skin */', # only translate this message to other languages if you have to change it
@@ -3636,7 +3619,6 @@ This is probably caused by a link to a blacklisted external site.',
 
 # Skin names
 'skinname-standard'    => 'Classic', # only translate this message to other languages if you have to change it
-'skinname-cologneblue' => 'Cologne Blue', # only translate this message to other languages if you have to change it
 'skinname-monobook'    => 'MonoBook', # only translate this message to other languages if you have to change it
 'skinname-myskin'      => 'MySkin', # only translate this message to other languages if you have to change it
 'skinname-chick'       => 'Chick', # only translate this message to other languages if you have to change it

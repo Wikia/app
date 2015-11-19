@@ -299,16 +299,11 @@ $messages = array(
 'navigation' => 'Nawigacija',
 'and' => '&#32;a',
 
-# Cologne Blue skin
 'qbfind' => 'Namakaś',
 'qbbrowse' => 'Pśeběraś',
-'qbedit' => 'Pśeměniś',
 'qbpageoptions' => 'Toś ten bok',
 'qbpageinfo' => 'Kontekst',
-'qbmyoptions' => 'Móje boki',
-'qbspecialpages' => 'Specialne boki',
 'faq' => 'FAQ (pšašanja a wótegrona)',
-'faqpage' => 'Project:FAQ (pšašanja a wótegrona)',
 
 'actions' => 'Akcije',
 'namespaces' => 'Mjenjowe rumy',
@@ -332,7 +327,6 @@ $messages = array(
 'edit' => 'wobźěłaś',
 'create' => 'Wuźěłaś',
 'editthispage' => 'Bok wobźěłaś',
-'create-this-page' => 'Bok wuźěłaś',
 'delete' => 'Wulašowaś',
 'deletethispage' => 'Toś ten bok wulašowaś',
 'undelete_short' => '{{PLURAL:$1|1 wersiju|$1 wersiji|$1 wersije}} nawrośiś.',
@@ -348,7 +342,6 @@ $messages = array(
 'specialpage' => 'Specialny bok',
 'personaltools' => 'Wósobinske pomocne srědki',
 'postcomment' => 'Nowy wótrězk',
-'articlepage' => 'Nastawk',
 'talk' => 'Diskusija',
 'views' => 'Naglědy',
 'toolbox' => 'Pomocne srědki',
@@ -1145,14 +1138,6 @@ Zaruc, až historija wersijow nastawka jo njepśetergnjona.',
 'search-external' => 'Eksterne pytanje',
 'searchdisabled' => 'Pytanje we {{SITENAME}} jo se deaktiwěrowało. Tak dłujko móžoš w googlu pytaś. Pšosym wobmysli, až móžo pytanski indeks za {{SITENAME}} njeaktualny byś.',
 
-# Quickbar
-'qbsettings' => 'Bocna lejstwa',
-'qbsettings-none' => 'Žedne',
-'qbsettings-fixedleft' => 'nalěwo fiksěrowane',
-'qbsettings-fixedright' => 'napšawo fiksěrowane',
-'qbsettings-floatingleft' => 'nalěwo se znosujuce',
-'qbsettings-floatingright' => 'napšawo se znosujuce',
-'qbsettings-directionality' => 'Kšuty, wótwisny wót pisańskego směra twójeje rěcy',
 
 # Preferences page
 'preferences' => 'Nastajenja',
@@ -2825,7 +2810,6 @@ W zespominanju dajo se pśicyna pódaś.',
 
 # Skin names
 'skinname-standard' => 'Klasiski',
-'skinname-cologneblue' => 'Kölnski Módry',
 'skinname-monobook' => 'MonoBook',
 'skinname-myskin' => 'Mój šat',
 'skinname-chick' => 'Kurjetko',

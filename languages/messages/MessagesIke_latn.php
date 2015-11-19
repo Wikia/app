@@ -55,8 +55,6 @@ $messages = array(
 'navigation'    => 'mianirivaa',
 'and'           => '&#32;amma',
 
-# Cologne Blue skin
-'qbspecialpages' => 'piji mappitaq',
 
 
 'help'              => 'qajalippaa',
@@ -73,7 +71,6 @@ $messages = array(
 'unprotectthispage' => 'iq sapummivaa mappitaq',
 'newpage'           => 'pigivuk mappitaq',
 'specialpage'       => 'piji mappitaq',
-'articlepage'       => 'ilulik mappitaq uvva',
 'talk'              => 'uqalimajuq',
 'toolbox'           => 'sanarqutiqauti',
 'otherlanguages'    => 'killumut uiki',

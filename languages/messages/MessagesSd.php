@@ -239,15 +239,10 @@ $messages = array(
 'mytalk'        => 'مون سان ڳالهه',
 'and'           => '&#32;۽',
 
-# Cologne Blue skin
 'qbfind'         => 'ڳوليو',
 'qbbrowse'       => 'جھانگيو',
-'qbedit'         => 'سنواريو',
 'qbpageoptions'  => 'هيءُ صفحو',
-'qbmyoptions'    => 'منهنجا صفحا',
-'qbspecialpages' => 'خاص صفحا',
 'faq'            => 'ڪپوس',
-'faqpage'        => 'Project:ڪپوس',
 
 
 'errorpagetitle'    => 'چُڪَ',
@@ -266,7 +261,6 @@ $messages = array(
 'edit'              => 'سنواريو',
 'create'            => 'سرجيو',
 'editthispage'      => 'هيءُ صفحو سنواريو',
-'create-this-page'  => 'اهو صفحو نئين سر جوڙيو',
 'delete'            => 'ڊاھيو',
 'deletethispage'    => 'هيءُ صفحو ڊاهيو',
 'undelete_short'    => 'اڻڊاهيو {{PLURAL:$1|هڪ ترميم|$1 ترميمون}}',
@@ -280,7 +274,6 @@ $messages = array(
 'specialpage'       => 'خاص صفحو',
 'personaltools'     => 'ذاتي اوزار',
 'postcomment'       => 'تاثرات درج ڪريو',
-'articlepage'       => 'مسودو ڏسو',
 'talk'              => 'بحث',
 'views'             => 'ڏيٺون',
 'toolbox'           => 'اوزاردٻي',

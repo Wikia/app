@@ -191,12 +191,8 @@ $messages = array(
 'anontalk'      => 'Каҥашымаш тиде IP нерген',
 'navigation'    => 'Навигаций',
 
-# Cologne Blue skin
 'qbfind'         => 'Муаш',
-'qbedit'         => 'Тӧрлаташ',
 'qbpageoptions'  => 'Тиде лаштык',
-'qbmyoptions'    => 'Мыйын лаштык-влак',
-'qbspecialpages' => 'Лӱмын ыштыме лаштык-влак',
 
 'actions'                  => 'Сомылка-влак',
 'namespaces'               => 'Лӱм-влакын кумдык-влак',
@@ -217,7 +213,6 @@ $messages = array(
 'edit'             => 'Тӧрлаташ',
 'create'           => 'Ышташ',
 'editthispage'     => 'Тӧрлаташ тиде лаштыкым',
-'create-this-page' => 'Тиде лаштыкым ышташ',
 'delete'           => 'Шӧраш',
 'deletethispage'   => 'Тиде лаштыкым шӧраш',
 'protect'          => 'Аралаш',
@@ -229,7 +224,6 @@ $messages = array(
 'specialpage'      => 'Лӱмын ыштыме лаштык',
 'personaltools'    => 'Паша ӱзгар',
 'postcomment'      => 'У ужаш',
-'articlepage'      => 'Лаштыкыште возымым ончыкташ',
 'talk'             => 'Каҥашымаш',
 'views'            => 'Ончалаш',
 'toolbox'          => 'Ӱзгар-влак',

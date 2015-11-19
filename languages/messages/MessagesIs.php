@@ -370,16 +370,11 @@ $messages = array(
 'navigation' => 'Flakk',
 'and' => '&#32;og',
 
-# Cologne Blue skin
 'qbfind' => 'Finna',
 'qbbrowse' => 'Flakka',
-'qbedit' => 'Breyta',
 'qbpageoptions' => 'Þessi síða',
 'qbpageinfo' => 'Samhengi',
-'qbmyoptions' => 'Mínar síður',
-'qbspecialpages' => 'Kerfissíður',
 'faq' => 'Algengar spurningar',
-'faqpage' => 'Project:Algengar spurningar',
 
 'actions' => 'Aðgerðir',
 'namespaces' => 'Nafnrými',
@@ -403,7 +398,6 @@ $messages = array(
 'edit' => 'Breyta',
 'create' => 'Skapa',
 'editthispage' => 'Breyta þessari síðu',
-'create-this-page' => 'Skapa þessari síðu',
 'delete' => 'Eyða',
 'deletethispage' => 'Eyða þessari síðu',
 'undelete_short' => 'Endurvekja {{PLURAL:$1|eina breytingu|$1 breytingar}}',
@@ -419,7 +413,6 @@ $messages = array(
 'specialpage' => 'Kerfissíða',
 'personaltools' => 'Tenglar',
 'postcomment' => 'Nýr hluti',
-'articlepage' => 'Sýna núverandi síðu',
 'talk' => 'Spjall',
 'views' => 'Sýn',
 'toolbox' => 'Verkfæri',
@@ -1207,14 +1200,6 @@ Sjáðu til þess að þessi breyting sameini breytingarskrárnar samfellt.',
 Þú getur leitað í genum Google á meðan.
 Athugaðu að skrár þeirra yfir {{SITENAME}}-efni kunna að vera úreltar.',
 
-# Quickbar
-'qbsettings' => 'Valblað',
-'qbsettings-none' => 'Sleppa',
-'qbsettings-fixedleft' => 'Fast vinstra megin',
-'qbsettings-fixedright' => 'Fast hægra megin',
-'qbsettings-floatingleft' => 'Fljótandi til vinstri',
-'qbsettings-floatingright' => 'Fljótandi til hægri',
-'qbsettings-directionality' => 'Lagað, fer eftir því í hvaða átt er skrifað á þínu tungumáli.',
 
 # Preferences page
 'preferences' => 'Stillingar',
@@ -2863,7 +2848,6 @@ Vinsamlegast reyndu aftur.',
 
 # Skin names
 'skinname-standard' => 'Sígilt',
-'skinname-cologneblue' => 'Kölnarblátt',
 'skinname-monobook' => 'EinBók',
 'skinname-myskin' => 'Mitt þema',
 'skinname-chick' => 'Gella',

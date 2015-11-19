@@ -157,13 +157,9 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => ',&#32;und',
 
-# Cologne Blue skin
 'qbfind'         => 'Fenda',
-'qbedit'         => 'Ändern',
 'qbpageoptions'  => 'Seytaoptiona',
 'qbpageinfo'     => 'Seytadata',
-'qbmyoptions'    => 'Menne Seyta',
-'qbspecialpages' => 'Spezialseyta',
 'faq'            => 'FAQ',
 
 'actions'                  => 'Aksjonna',
@@ -186,7 +182,6 @@ $messages = array(
 'edit'             => 'Bearbta',
 'create'           => 'Erstella',
 'editthispage'     => 'Seite bearbta',
-'create-this-page' => 'Seite erstella',
 'delete'           => 'Löschen',
 'deletethispage'   => 'Diese Seite läscha',
 'protect'          => 'Schützen',
@@ -198,7 +193,6 @@ $messages = array(
 'specialpage'      => 'Spezialseyte',
 'personaltools'    => 'Meine Werkzeuge',
 'postcomment'      => 'Neuer Obschnitt',
-'articlepage'      => 'Inhaltsseite oazeiga',
 'talk'             => 'Dischkur',
 'views'            => 'Oansichta',
 'toolbox'          => 'Werkzeuge',
@@ -805,9 +799,6 @@ Stelle sicher, doaß de Versionsgeschichte anner Seite historisch korrekt ies.',
 'powersearch-togglenone'           => 'Kenne',
 'searchdisabled'                   => 'De {{SITENAME}}-Suche ies deaktiviert. Du koast underdessa miet Google sucha. Bitte bedenke, doaß der Suchindex fier {{SITENAME}} veraltet sei koan.',
 
-# Quickbar
-'qbsettings'      => 'Seytaleiste',
-'qbsettings-none' => 'Keene',
 
 # Preferences page
 'preferences'               => 'Eenstellunga',

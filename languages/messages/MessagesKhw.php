@@ -146,16 +146,11 @@ $messages = array(
 'navigation'    => 'رہنمائی',
 'and'           => '&#32;وا',
 
-# Cologne Blue skin
 'qbfind'         => 'تلاش کورے',
 'qbbrowse'       => 'Browse/تصفّح',
-'qbedit'         => 'ترمیم',
 'qbpageoptions'  => 'ھیہ صفحہ',
 'qbpageinfo'     => 'مفہوم',
-'qbmyoptions'    => 'مہ صفحات',
-'qbspecialpages' => 'خاص صفحات',
 'faq'            => 'عام معلومات',
-'faqpage'        => 'Project:معلوماتِ عامہ',
 
 'actions'                  => 'ایکشنز',
 'namespaces'               => 'نامان ژاغہ',
@@ -178,7 +173,6 @@ $messages = array(
 'edit'              => 'ترمیم',
 'create'            => 'ساوزاوے',
 'editthispage'      => 'ھی صفحہا ترمیم کورے',
-'create-this-page'  => 'ھیہ صفحو ساوزاوے',
 'delete'            => 'بوغاوے',
 'deletethispage'    => 'ھیہ صفحہو بوغاوے',
 'undelete_short'    => 'بحال {{PLURAL:$1|ای ترمیم|$1 ترامیم}}',
@@ -193,7 +187,6 @@ $messages = array(
 'specialpage'       => 'خصوصی صفحہ',
 'personaltools'     => 'ذاتی سماند',
 'postcomment'       => 'پروشٹیو حصّہ',
-'articlepage'       => 'مندرجاتی صفحہو لوڑے',
 'talk'              => 'تبادلہٴ خیال',
 'views'             => 'خیالات',
 'toolbox'           => 'ٹول بکس',

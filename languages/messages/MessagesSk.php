@@ -422,16 +422,11 @@ $messages = array(
 'navigation' => 'Navigácia',
 'and' => '&#32;a',
 
-# Cologne Blue skin
 'qbfind' => 'Hľadať',
 'qbbrowse' => 'Prehliadať',
-'qbedit' => 'Upraviť',
 'qbpageoptions' => 'Táto stránka',
 'qbpageinfo' => 'Kontext',
-'qbmyoptions' => 'Moje stránky',
-'qbspecialpages' => 'Špeciálne stránky',
 'faq' => 'Často kladené otázky',
-'faqpage' => 'Project:Často kladené otázky',
 
 'actions' => 'Operácie',
 'namespaces' => 'Menné priestory',
@@ -455,7 +450,6 @@ $messages = array(
 'edit' => 'upraviť',
 'create' => 'Vytvoriť',
 'editthispage' => 'Upraviť túto stránku',
-'create-this-page' => 'Vytvoriť túto stránku',
 'delete' => 'Vymazať',
 'deletethispage' => 'Vymazať túto stránku',
 'undelete_short' => 'Obnoviť {{PLURAL:$1|jednu úpravu|$1 úpravy|$1 úprav}}',
@@ -471,7 +465,6 @@ $messages = array(
 'specialpage' => 'Špeciálna stránka',
 'personaltools' => 'Osobné nástroje',
 'postcomment' => 'Nová sekcia',
-'articlepage' => 'Zobraziť stránku',
 'talk' => 'Diskusia',
 'views' => 'Zobrazení',
 'toolbox' => 'Nástroje',
@@ -1308,14 +1301,6 @@ Uistite sa, že táto zmena zachová historickú kontinuitu zmien stránky.',
 'search-external' => 'Externé vyhľadávanie',
 'searchdisabled' => 'Prepáčte! Fulltextové vyhľadávanie bolo dočasne vypnuté z dôvodu preťaženia. Zatiaľ môžete použiť hľadanie pomocou Google, ktoré však nemusí byť aktuálne.',
 
-# Quickbar
-'qbsettings' => 'Navigačný panel',
-'qbsettings-none' => 'Žiadne',
-'qbsettings-fixedleft' => 'Ukotvené vľavo',
-'qbsettings-fixedright' => 'Ukotvené vpravo',
-'qbsettings-floatingleft' => 'Plávajúce vľavo',
-'qbsettings-floatingright' => 'Plávajúce vpravo',
-'qbsettings-directionality' => 'Pevný, v závislosti na smerovosti písma vášho jazyka',
 
 # Preferences page
 'preferences' => 'Nastavenia',
@@ -2979,7 +2964,6 @@ Umožnuje do zhrnutia pridanie dôvodu.',
 # Stylesheets
 'common.css' => '/* Tu umiestnené CSS bude ovplyvňovať všetky štýly */',
 'standard.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Klasický */',
-'cologneblue.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Kolínska modrá */',
 'monobook.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Monobook */',
 'myskin.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Môjvzhľad */',
 'chick.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Kuriatko */',
@@ -2996,7 +2980,6 @@ Umožnuje do zhrnutia pridanie dôvodu.',
 # Scripts
 'common.js' => '/* Tu uvedený JavaScript sa nahrá všetkým používateľom pri každom nahraní stránky. */',
 'standard.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Klasický */',
-'cologneblue.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Kolínska modrá */',
 'monobook.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Monobook */',
 'myskin.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Môjvzhľad */',
 'chick.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Kuriatko */',
@@ -3047,7 +3030,6 @@ Pravdepodobne to spôsobil odkaz na externú internetovú lokalitu, ktorá sa na
 
 # Skin names
 'skinname-standard' => 'Klasický',
-'skinname-cologneblue' => 'Kolínska modrá',
 'skinname-monobook' => 'MonoBook',
 'skinname-myskin' => 'Môj vzhľad',
 'skinname-chick' => 'Kuriatko',

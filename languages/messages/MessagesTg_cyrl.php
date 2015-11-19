@@ -209,16 +209,11 @@ $messages = array(
 'navigation'    => 'Гаштан',
 'and'           => '&#32;ва',
 
-# Cologne Blue skin
 'qbfind'         => 'Ёфтан',
 'qbbrowse'       => 'Мурур',
-'qbedit'         => 'Вироиш',
 'qbpageoptions'  => 'Ин саҳифа',
 'qbpageinfo'     => 'Бофт',
-'qbmyoptions'    => 'Саҳифаҳои ман',
-'qbspecialpages' => 'Саҳифаҳои вижа',
 'faq'            => 'Саволҳои тез-тез пурсидашуда',
-'faqpage'        => 'Project:Саволҳои тез-тез пурсидашуда',
 
 'actions'                  => 'Амалкардҳо',
 'namespaces'               => 'Фазоҳои ном',
@@ -241,7 +236,6 @@ $messages = array(
 'edit'              => 'Вироиш',
 'create'            => 'Эҷод',
 'editthispage'      => 'Вироиши ин саҳифа',
-'create-this-page'  => 'Эҷод кардани ин саҳифа',
 'delete'            => 'Ҳазф',
 'deletethispage'    => 'Ин саҳифаро ҳазф кунед',
 'undelete_short'    => 'Эҳёи {{PLURAL:$1|вироиш|$1 вироишот}}',
@@ -256,7 +250,6 @@ $messages = array(
 'specialpage'       => 'Саҳифаи вижа',
 'personaltools'     => 'Абзорҳои шахсӣ',
 'postcomment'       => 'Бахши нав',
-'articlepage'       => 'Намоиши мақола',
 'talk'              => 'Баҳс',
 'views'             => 'Назарот',
 'toolbox'           => 'Ҷаъбаи абзор',
@@ -843,13 +836,6 @@ $1',
 'search-external'                  => 'Ҷустуҷӯи хориҷӣ',
 'searchdisabled'                   => 'Ҷустуҷу дар {{SITENAME}} ғайрифаъол карда шудааст. Шумо метавонед тариқи Google дар ҳол ҷустуҷӯ кунед. Таваҷҷӯҳ кунед, ки натоиҷи ҷустуҷӯ {{SITENAME}} метавонад барӯз набошад.',
 
-# Quickbar
-'qbsettings'               => 'Танзимоти тезхат (Quickbar)',
-'qbsettings-none'          => 'Набошад',
-'qbsettings-fixedleft'     => 'Сабти чап',
-'qbsettings-fixedright'    => 'Сабти рост',
-'qbsettings-floatingleft'  => 'Шиновар чап',
-'qbsettings-floatingright' => 'Шиновар рост',
 
 # Preferences page
 'preferences'               => 'Тарҷиҳот',

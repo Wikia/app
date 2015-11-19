@@ -291,17 +291,12 @@ $messages = array(
 'navigation'    => 'ભ્રમણ',
 'and'           => '&#32;અને',
 
-# Cologne Blue skin
 'qbfind'         => 'શોધો',
 'qbbrowse'       => 'બ્રાઉઝ',
-'qbedit'         => 'ફેરફાર કરો',
 'qbpageoptions'  => 'આ પાનું',
 'qbpageinfo'     => 'સંદર્ભ',
-'qbmyoptions'    => 'મારાં પાનાં',
-'qbspecialpages' => 'ખાસ પાનાં',
 'faq'            => 'FAQ
 વારંવાર પુછાતા પ્રશ્નો',
-'faqpage'        => 'Project:વારંવાર પુછાતા પ્રશ્નો',
 
 'actions'                        => 'ક્રિયાઓ',
 'namespaces'                     => 'નામાવકાશો',
@@ -325,7 +320,6 @@ $messages = array(
 'edit'              => 'ફેરફાર કરો',
 'create'            => 'બનાવો',
 'editthispage'      => 'આ પાનામાં ફેરફાર કરો',
-'create-this-page'  => 'આ પાનું બનાવો.',
 'delete'            => 'રદ કરો',
 'deletethispage'    => 'આ પાનું હટાવો',
 'undelete_short'    => 'હટાવેલ {{PLURAL:$1|એક ફેરફાર|$1 ફેરફારો}} પરત લાવો.',
@@ -341,7 +335,6 @@ $messages = array(
 'specialpage'       => 'ખાસ પાનુ',
 'personaltools'     => 'વ્યક્તિગત સાધનો',
 'postcomment'       => 'નવો વિભાગ',
-'articlepage'       => 'લેખનું પાનું જુઓ',
 'talk'              => 'ચર્ચા',
 'views'             => 'દેખાવ',
 'toolbox'           => 'સાધન પેટી',
@@ -1183,14 +1176,6 @@ $1",
 ત્યાં સુધી તમે ગુગલ દ્વારા શોધ કરી શકો.
 '''નોંધઃ'''{{SITENAME}}નાં તેમના (ગુગલના) ઈન્ડેક્સ જુના હોઇ શકે.",
 
-# Quickbar
-'qbsettings'                => 'શીઘ્રપટ્ટ',
-'qbsettings-none'           => 'કોઇપણ નહીં',
-'qbsettings-fixedleft'      => 'અચળ ડાબે',
-'qbsettings-fixedright'     => 'અચળ જમણે',
-'qbsettings-floatingleft'   => 'ચલિત ડાબે',
-'qbsettings-floatingright'  => 'ચલિત જમણે',
-'qbsettings-directionality' => 'નિશ્ચિત, તમારી ભાષા સ્ક્રિપ્ટ directionality પર આધાર રાખીને',
 
 # Preferences page
 'preferences'                   => 'પસંદ',

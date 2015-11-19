@@ -355,16 +355,11 @@ $messages = array(
 'navigation'    => 'Navigatschoon',
 'and'           => '&#32;un',
 
-# Cologne Blue skin
 'qbfind'         => 'Finnen',
 'qbbrowse'       => 'Blädern',
-'qbedit'         => 'Ännern',
 'qbpageoptions'  => 'Disse Sied',
 'qbpageinfo'     => 'Sietendaten',
-'qbmyoptions'    => 'Instellen',
-'qbspecialpages' => 'Spezialsieten',
 'faq'            => 'Faken stellte Fragen',
-'faqpage'        => 'Project:Faken stellte Fragen',
 
 'actions'                        => 'Akschonen',
 'namespaces'                     => 'Naamrüüm',
@@ -388,7 +383,6 @@ $messages = array(
 'edit'              => 'Ännern',
 'create'            => 'Opstellen',
 'editthispage'      => 'Disse Siet ännern',
-'create-this-page'  => 'Siet opstellen',
 'delete'            => 'Wegsmieten',
 'deletethispage'    => 'Disse Siet wegsmieten',
 'undelete_short'    => '{{PLURAL:$1|ene Version|$1 Versionen}} wedderhalen',
@@ -404,7 +398,6 @@ $messages = array(
 'specialpage'       => 'Spezialsiet',
 'personaltools'     => 'Persönliche Warktüüch',
 'postcomment'       => 'Afsnidd tofögen',
-'articlepage'       => 'Artikel',
 'talk'              => 'Diskuschoon',
 'views'             => 'Ansichten',
 'toolbox'           => 'Warktüüch',
@@ -1118,13 +1111,6 @@ Du kannst dat Woord ''all:'' vör dien Söökwoord setten, dat all Naamrüüm (o
 'searchdisabled'                   => '<p>De Vulltextsöök is wegen Överlast en Stoot deaktiveert. In disse Tied kannst du disse Google-Söök verwennen,
 de aver nich jümmer den aktuellsten Stand weerspegelt.<p>',
 
-# Quickbar
-'qbsettings'               => 'Siedenliest',
-'qbsettings-none'          => 'Keen',
-'qbsettings-fixedleft'     => 'Links, fast',
-'qbsettings-fixedright'    => 'Rechts, fast',
-'qbsettings-floatingleft'  => 'Links, sweven',
-'qbsettings-floatingright' => 'Rechts, sweven',
 
 # Preferences page
 'preferences'                   => 'Instellen',
@@ -2493,7 +2479,6 @@ All Transwiki-Import-Akschonen staht later ok in dat [[Special:Log/import|Import
 
 # Skin names
 'skinname-standard'    => 'Klassik',
-'skinname-cologneblue' => 'Kölsch Blau',
 'skinname-chick'       => 'Küken',
 
 # Patrolling

@@ -29,9 +29,7 @@ $messages = array(
 'anontalk' => 'Tongtongan para ed sayan IP',
 'and'      => '&#32;san',
 
-# Cologne Blue skin
 'qbpageoptions'  => 'Ayan bolong',
-'qbspecialpages' => 'Niduma ran Bolobolong',
 
 'returnto'          => 'Impawel ed $1.',
 'help'              => 'Tolong',
@@ -53,7 +51,6 @@ $messages = array(
 'newpage'           => 'Balon bolong',
 'talkpage'          => 'Pantongtongan yan bolong',
 'specialpage'       => 'Niduman Bolong',
-'articlepage'       => 'Nengnengen so content page',
 'talk'              => 'Tongtongan',
 'userpage'          => 'Basaen so bolong na manag-usar',
 'mediawikipage'     => 'Nengnengen so bolong na pakabat',
@@ -153,8 +150,6 @@ San ipropromisam met ya insulat mo yan dili o kinopyam ya manlapo ed sakey ya pu
 'searchhelp-url'        => 'Help:Saray Laman',
 'powersearch'           => 'Anapen',
 
-# Quickbar
-'qbsettings-none' => 'Anggapo',
 
 # Preferences page
 'mypreferences'     => 'Saray preference ko',

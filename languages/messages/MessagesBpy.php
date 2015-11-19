@@ -187,16 +187,11 @@ $messages = array(
 'navigation'    => 'দিশা-ধরুনী',
 'and'           => '&#32;বারো',
 
-# Cologne Blue skin
 'qbfind'         => 'বিসারিয়া চা',
 'qbbrowse'       => 'বুলিয়া চা',
-'qbedit'         => 'পতানি',
 'qbpageoptions'  => 'পাতা এহানর সারুক',
 'qbpageinfo'     => 'পাতা এহানর পৌ',
-'qbmyoptions'    => 'মর পছন',
-'qbspecialpages' => 'বিশেষ পাতাহানি',
 'faq'            => 'আঙলাক',
-'faqpage'        => 'Project:আঙলাক',
 
 'actions'                        => 'কার্যক্রম',
 'namespaces'                     => 'নাঙরলাম',
@@ -220,7 +215,6 @@ $messages = array(
 'edit'              => 'পতানি',
 'create'            => 'হঙকর',
 'editthispage'      => 'পাতা এহান পতিক',
-'create-this-page'  => 'পাতা এহান হঙকর',
 'delete'            => 'পুসানি',
 'deletethispage'    => 'পাতা এহান পুসে বেলিক',
 'undelete_short'    => 'পুসানিহান আলকর {{PLURAL:$1|পতাহান|$1 পতাহানি}}',
@@ -236,7 +230,6 @@ $messages = array(
 'specialpage'       => 'বিশেষ পাতাহান',
 'personaltools'     => 'নিজস্ব আতিয়ার',
 'postcomment'       => 'নুৱা অনুচ্ছেদহান',
-'articlepage'       => 'নিবন্ধ চেইক',
 'talk'              => 'য়্যারী',
 'views'             => 'চা',
 'toolbox'           => 'আতিয়ার',
@@ -867,13 +860,6 @@ $2',
 'powersearch-togglenone'           => 'কিত্তাউ নেই',
 'search-external'                  => 'বারেদে বিসারা',
 
-# Quickbar
-'qbsettings'               => 'কুইকবার',
-'qbsettings-none'          => 'কিত্তাউ নেই',
-'qbsettings-fixedleft'     => 'লেপ্পা বিঙ',
-'qbsettings-fixedright'    => 'লেপ্পা বাত',
-'qbsettings-floatingleft'  => 'বাহের বিঙ',
-'qbsettings-floatingright' => 'বাহের বাত',
 
 # Preferences page
 'preferences'               => 'পছনহানি',

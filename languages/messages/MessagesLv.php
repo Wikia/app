@@ -189,16 +189,11 @@ $messages = array(
 'navigation'    => 'Navigācija',
 'and'           => '&#32;un',
 
-# Cologne Blue skin
 'qbfind'         => 'Meklēšana',
 'qbbrowse'       => 'Navigācija',
-'qbedit'         => 'Izmainīšana',
 'qbpageoptions'  => 'Šī lapa',
 'qbpageinfo'     => 'Konteksts',
-'qbmyoptions'    => 'Manas lapas',
-'qbspecialpages' => 'Īpašās lapas',
 'faq'            => 'BUJ',
-'faqpage'        => 'Project:BUJ',
 
 'actions'                        => 'Darbības',
 'namespaces'                     => 'Vārdtelpas',
@@ -222,7 +217,6 @@ $messages = array(
 'edit'              => 'Izmainīt šo lapu',
 'create'            => 'Izveidot',
 'editthispage'      => 'Izmainīt šo lapu',
-'create-this-page'  => 'Izveidot šo lapu',
 'delete'            => 'Dzēst',
 'deletethispage'    => 'Dzēst šo lapu',
 'undelete_short'    => 'Atjaunot $1 {{PLURAL:$1|versiju|versijas}}',
@@ -238,7 +232,6 @@ $messages = array(
 'specialpage'       => 'Īpašā Lapa',
 'personaltools'     => 'Lietotāja rīki',
 'postcomment'       => 'Pievienot komentāru',
-'articlepage'       => 'Apskatīt rakstu',
 'talk'              => 'Diskusija',
 'views'             => 'Apskates',
 'toolbox'           => 'Rīki',
@@ -943,12 +936,6 @@ $1",
 Pagaidām vari meklēt, izmantojot Google vai Yahoo.
 Ņem vērā, ka meklētāju indeksētais {{grammar:ģenitīvs|{{SITENAME}}}} saturs var būt novecojis.',
 
-# Quickbar
-'qbsettings'               => 'Rīku joslas stāvoklis',
-'qbsettings-fixedleft'     => 'Fiksēts pa kreisi',
-'qbsettings-fixedright'    => 'Fiksēts pa labi',
-'qbsettings-floatingleft'  => 'Peldošs pa kreisi',
-'qbsettings-floatingright' => 'Peldošs pa labi',
 
 # Preferences page
 'preferences'                   => 'Izvēles',

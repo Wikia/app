@@ -407,16 +407,11 @@ $messages = array(
 'navigation' => "Wamp'una",
 'and' => '&#32;-wan',
 
-# Cologne Blue skin
 'qbfind' => 'Maskay',
 'qbbrowse' => 'Maskapuy',
-'qbedit' => "Llamk'apuy",
 'qbpageoptions' => "P'anqap akllanankuna",
 'qbpageinfo' => "P'anqamanta willay",
-'qbmyoptions' => 'Akllanaykuna',
-'qbspecialpages' => "Sapaq p'anqakuna",
 'faq' => 'Pasaq tapuykuna',
-'faqpage' => 'Project:Pasaq tapuykuna',
 
 'actions' => 'Ruraykuna',
 'namespaces' => "Suti k'itikuna",
@@ -440,7 +435,6 @@ $messages = array(
 'edit' => 'qillqay',
 'create' => 'Kamariy',
 'editthispage' => "Kay p'anqata llamk'apuy",
-'create-this-page' => "Kay p'anqata kamariy",
 'delete' => 'Qulluy',
 'deletethispage' => "Kay p'anqata qulluy",
 'undelete_short' => "Paqarichiy {{PLURAL:$1|huk llamk'apusqa|$1 llamk'apusqa}}",
@@ -456,7 +450,6 @@ $messages = array(
 'specialpage' => "Sapaq p'anqa",
 'personaltools' => "Kikin ruraqpa llamk'anankuna",
 'postcomment' => 'Musuq raki',
-'articlepage' => 'Qillqata qhaway',
 'talk' => 'Rimachina',
 'views' => 'Rikunakuna',
 'toolbox' => "Llamk'anakuna",
@@ -1252,14 +1245,6 @@ Takyachikuy kay hukchayqa allin wiñay kawsay ñiqita ama waqllichunchu chaylla.
 'search-external' => 'Hawapi maskay',
 'searchdisabled' => "{{SITENAME}} nisqapi maskaymanqa ama nisqam. Hinachkaptinqa, maskariy google nisqawan icha huk hawa maskanakunawan, ichataq yuyariy, {{SITENAME}}manta hallch'asqankunaqa manañachá musuqllachu.",
 
-# Quickbar
-'qbsettings' => 'Utqaytawna ("Quickbar") allinkachinakuna',
-'qbsettings-none' => 'Mana imapas',
-'qbsettings-fixedleft' => "Lluq'iman watay",
-'qbsettings-fixedright' => 'Pañaman watay',
-'qbsettings-floatingleft' => "Lluq'iman tuytuy",
-'qbsettings-floatingright' => 'Pañaman tuytuy',
-'qbsettings-directionality' => 'Watasqa, rimayniykip qillqa puririyninmanta wachariq',
 
 # Preferences page
 'preferences' => 'Allinkachinakuna',
@@ -2866,7 +2851,6 @@ Tukuy hawa wikimanta chaskisqakunaqa [[Special:Log/import|hawamanta chaskiy hall
 # Stylesheets
 'common.css' => "/* Churamusqa CSS chantakunaqa tukuy qarakunapim llamk'anqa */",
 'standard.css' => "/* Churamusqa CSS chantakunaqa ''Standard skin'' nisqa qarata llamk'achiq ruraqkunapaq llamk'anqa */",
-'cologneblue.css' => "/* Churamusqa CSS chantakunaqa ''Cologne Blue skin'' nisqa qarata llamk'achiq ruraqkunapaq llamk'anqa */",
 'monobook.css' => '/* Kayman churasqa CSS nisqaqa Monobook qaratam hukchanqa tukuy internet tiyanapaq */',
 'myskin.css' => "/* Churamusqa CSS chantakunaqa ''MySkin'' nisqa qarata llamk'achiq ruraqkunapaq llamk'anqa */",
 'chick.css' => "/* Churamusqa CSS chantakunaqa ''Chick skin'' nisqa qarata llamk'achiq ruraqkunapaq llamk'anqa */",
@@ -2878,7 +2862,6 @@ Tukuy hawa wikimanta chaskisqakunaqa [[Special:Log/import|hawamanta chaskiy hall
 # Scripts
 'common.js' => "/* Ima kaypi kaq JavaScript qillqapas tukuy ruraqkunapaq tukuy p'anqakunap tukuy chaqnankunapi chaqnamusqa kanqa. */",
 'standard.js' => "/* Ima kaypi qillqamusqa JavaScript nisqa wakichi qillqapas ''Standard skin'' nisqa sapsi qarata llamk'achiq ruraqkunapaq chaqnasqa kanqa */",
-'cologneblue.js' => "/* Ima kaypi qillqamusqa JavaScript nisqa wakichi qillqapas ''Cologne Blue skin'' nisqa qarata llamk'achiq ruraqkunapaq chaqnasqa kanqa */",
 'monobook.js' => "/* Ima kaypi qillqamusqa JavaScript nisqa wakichi qillqapas MonoBook nisqata llamk'achiq ruraqkunapaq chaqnasqa kanqa */",
 'myskin.js' => "/* Ima kaypi qillqamusqa JavaScript nisqa wakichi qillqapas ''MySkin'' nisqa qarata llamk'achiq ruraqkunapaq chaqnasqa kanqa */",
 'chick.js' => "/* Ima kaypi qillqamusqa JavaScript nisqa wakichi qillqapas ''Chick skin'' nisqa qarata llamk'achiq ruraqkunapaq chaqnasqa kanqa */",

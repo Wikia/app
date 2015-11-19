@@ -169,16 +169,11 @@ $messages = array(
 'navigation'    => 'Naveghesce',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Cirche',
 'qbbrowse'       => 'Sfoglie',
-'qbedit'         => 'Cange',
 'qbpageoptions'  => 'Pàgene currende',
 'qbpageinfo'     => 'Condeste',
-'qbmyoptions'    => 'Pàggene mije',
-'qbspecialpages' => 'Pàggene speciale',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Aziune',
 'namespaces'                     => 'Namespace',
@@ -202,7 +197,6 @@ $messages = array(
 'edit'              => 'Cange',
 'create'            => 'Ccreje',
 'editthispage'      => 'Cange sta pàgene',
-'create-this-page'  => "Ccreje 'a pàgene",
 'delete'            => 'Scangìlle',
 'deletethispage'    => 'Scangille sta pàgene',
 'undelete_short'    => "Annulle {{PLURAL:$1|'nu camgiamende|$1 cangiaminde}}",
@@ -218,7 +212,6 @@ $messages = array(
 'specialpage'       => 'Pàgene Speciele',
 'personaltools'     => 'Struminde personele',
 'postcomment'       => 'Seziona nove',
-'articlepage'       => "Vide 'a pàgene de le condenute",
 'talk'              => "'Ngazzaminde",
 'views'             => 'Visite',
 'toolbox'           => 'Cascette de le struminde',
@@ -1066,14 +1059,6 @@ Prueve mettènne nnande a l'inderrogaziona toje 'u prefisse '''all:''' pe cercà
 Tu puè cercà ausanne Google.
 Però fa attenzione purcè l'indice lore sus a {{SITENAME}} ponne condenè pàggene ca non ge sonde aggiornate.",
 
-# Quickbar
-'qbsettings'                => 'Barra veloce',
-'qbsettings-none'           => 'Ninde',
-'qbsettings-fixedleft'      => 'Fissete a sinistre (Fixed left)',
-'qbsettings-fixedright'     => 'Fissete a destre (Fixed right)',
-'qbsettings-floatingleft'   => 'Volanne a sinistre (Floating left)',
-'qbsettings-floatingright'  => 'Volanne a destre (Floating right)',
-'qbsettings-directionality' => "Corrette, depende da 'a direzionalità d'u script tune e da 'a lènga toje",
 
 # Preferences page
 'preferences'                   => 'Me piece accussì',
@@ -2749,7 +2734,6 @@ Permette de aggiungere 'nu mutive jndr'à 'u riepileghe",
 # Stylesheets
 'common.css'              => "/* 'U CSS ca se iacchie aqquà avène applicate a tutte le masckere */",
 'standard.css'            => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Standard */",
-'cologneblue.css'         => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Blu Cologne */",
 'monobook.css'            => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Monobook */",
 'myskin.css'              => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Personalizzate */",
 'chick.css'               => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Purecine */",
@@ -2766,7 +2750,6 @@ Permette de aggiungere 'nu mutive jndr'à 'u riepileghe",
 # Scripts
 'common.js'              => '/* Ogne JavaScript aqquà avène carecate pe tutte le utinde sus a ogne pàgene carecate. */',
 'standard.js'            => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Standard */",
-'cologneblue.js'         => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Blu Cologne */",
 'monobook.js'            => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere MonoBook */",
 'myskin.js'              => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Personalizzate */",
 'chick.js'               => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Purecine */",
@@ -2815,7 +2798,6 @@ Stu fatte ha state causate da 'nu collegamende a 'nu site esterne ca appartene a
 
 # Skin names
 'skinname-standard'    => 'Classeche',
-'skinname-cologneblue' => 'Blu Cologne',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Personalizzate',
 'skinname-chick'       => 'Purecine',

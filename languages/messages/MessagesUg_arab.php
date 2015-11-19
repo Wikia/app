@@ -175,16 +175,11 @@ $messages = array(
 'navigation'    => 'يولباشچى',
 'and'           => '&#32;ۋە',
 
-# Cologne Blue skin
 'qbfind'         => 'ئىزدە',
 'qbbrowse'       => 'كۆز يۈگۈرت',
-'qbedit'         => 'تەھرىر',
 'qbpageoptions'  => 'بۇ بەت',
 'qbpageinfo'     => 'كونتېكست',
-'qbmyoptions'    => 'بەتلەرىم',
-'qbspecialpages' => 'ئالاھىدە بەتلەر',
 'faq'            => 'كۆپ كۆرۈلىدىغان مەسىلىلەر',
-'faqpage'        => 'Project:كۆپ كۆرۈلىدىغان مەسىلىلەر',
 
 'actions'                        => 'مەشغۇلات',
 'namespaces'                     => 'ئات بوشلۇقى',
@@ -208,7 +203,6 @@ $messages = array(
 'edit'              => 'تەھرىر',
 'create'            => 'قۇر',
 'editthispage'      => 'بۇ بەتنى تەھرىرلە',
-'create-this-page'  => 'بۇ بەتنى قۇر',
 'delete'            => 'ئۆچۈر',
 'deletethispage'    => 'بۇ بەتنى ئۆچۈر',
 'undelete_short'    => 'ئۆچۈرۈلگەن {{PLURAL:$1|بىر تەھرىر|$1 تەھرىر}} ئەسلىگە كەلتۈرۈلدى',
@@ -224,7 +218,6 @@ $messages = array(
 'specialpage'       => 'ئالاھىدە بەت',
 'personaltools'     => 'شەخسىي قوراللار',
 'postcomment'       => 'يېڭى ئابزاس',
-'articlepage'       => 'مەزمۇن بېتىنى كۆرسەت',
 'talk'              => 'مۇنازىرە',
 'views'             => 'كۆرۈنۈش',
 'toolbox'           => 'قورال ستونى',
@@ -1068,14 +1061,6 @@ $1",
 'searchdisabled'                   => '{{SITENAME}} نىڭ ئىزدىشى چەكلەنگەن. سىز ھازىرچە Google ئىشلىتىپ ئىزدەپ تۇرۇڭ،.
 دىققەت ئۇلار ئىندېكسلىغان {{SITENAME}} مەزمۇنىنىڭ ۋاقتى ئۆتكەن بولۇشى مۇمكىن.',
 
-# Quickbar
-'qbsettings'                => 'تېز يولباشچى ستونى',
-'qbsettings-none'           => 'يوق',
-'qbsettings-fixedleft'      => 'سول تەرەپ مۇقىم',
-'qbsettings-fixedright'     => 'ئوڭ تەرەپ مۇقىم',
-'qbsettings-floatingleft'   => 'سول تەرەپ لەيلىمە',
-'qbsettings-floatingright'  => 'ئوڭ تەرەپ لەيلىمە',
-'qbsettings-directionality' => 'تىلىڭىزدىكى تېكىست ۋە قوليازمىنىڭ يۆنىلىشىگە ئاساسەن مۇقىملاشتۇرىدۇ.',
 
 # Preferences page
 'preferences'                   => 'مايىللىق',

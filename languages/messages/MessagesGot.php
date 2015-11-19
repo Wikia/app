@@ -83,11 +83,7 @@ $messages = array(
 'navigation'    => '𐍃𐌴𐌹𐌳𐍉𐌲𐌰𐍅𐌹𐍃𐍃',
 'and'           => '𐌾𐌰𐌷',
 
-# Cologne Blue skin
 'qbfind'         => '𐍃𐍉𐌺𐌴𐌹𐌸',
-'qbedit'         => '𐌼𐌰𐌹𐌳𐌾𐌰𐌽',
-'qbmyoptions'    => '𐌼𐌴𐌹𐌽𐌰 𐍃𐌴𐌹𐌳𐍉𐍃',
-'qbspecialpages' => '𐌿𐍃𐍃𐌹𐌽𐌳𐍃𐌴𐌹𐌳𐍉𐍃',
 
 
 'errorpagetitle'    => '𐍆𐌰𐌹𐍂𐌹𐌽𐌰 𐌳𐍅𐌰𐌻𐌹𐍃',
@@ -106,7 +102,6 @@ $messages = array(
 'edit'              => '𐌼𐌰𐌹𐌳𐌾𐌰𐌽',
 'create'            => 'Skapjan',
 'editthispage'      => '𐌼𐌰𐌹𐌳𐌾𐌰 𐌸𐍉 𐍃𐌴𐌹𐌳𐍉',
-'create-this-page'  => 'Skapja þo seido',
 'delete'            => '𐍄𐌰𐌹𐍂𐌰𐌽',
 'deletethispage'    => '𐍄𐌰𐌹𐍂𐌰 𐌸𐍉 𐍃𐌴𐌹𐌳𐍉',
 'protect'           => '𐌱𐌰𐌹𐍂𐌲𐌰𐌽',

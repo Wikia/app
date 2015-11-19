@@ -130,13 +130,9 @@ $messages = array(
 'navigation'    => 'Навигация',
 'and'           => '&#32;болгаш',
 
-# Cologne Blue skin
 'qbfind'         => 'Тывары',
 'qbbrowse'       => 'Каралаары',
-'qbedit'         => 'Өскертир',
 'qbpageoptions'  => 'Бо арын',
-'qbmyoptions'    => 'Мээң арыннарым',
-'qbspecialpages' => 'Тускай арыннар',
 
 
 'errorpagetitle'    => 'Алдаг',
@@ -156,7 +152,6 @@ $messages = array(
 'edit'              => 'Өскертири',
 'create'            => 'Кылыры',
 'editthispage'      => 'Бо арынны өскертири',
-'create-this-page'  => 'Бо арынны кылыр',
 'delete'            => 'Ап каары',
 'deletethispage'    => 'Бо арынны ап каар',
 'protect'           => 'Камгалаары',
@@ -170,7 +165,6 @@ $messages = array(
 'specialpage'       => 'Тускай арын',
 'personaltools'     => 'Хууда херекселдер',
 'postcomment'       => 'Чаа салбыр',
-'articlepage'       => 'Допчу арынны көөр',
 'talk'              => 'Чугаалажыры',
 'views'             => 'Көрүштер',
 'toolbox'           => 'Херекселдер',
@@ -757,7 +751,6 @@ The password for this new account can be changed on the ''[[Special:ChangePasswo
 
 # Skin names
 'skinname-standard'    => 'Classic',
-'skinname-cologneblue' => 'Cologne Blue',
 'skinname-monobook'    => 'Моно-Ном',
 'skinname-myskin'      => 'MySkin',
 'skinname-chick'       => 'Chick',

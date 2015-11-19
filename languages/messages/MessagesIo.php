@@ -230,13 +230,9 @@ $messages = array(
 'navigation'    => 'Navigado',
 'and'           => '&#32;ed',
 
-# Cologne Blue skin
 'qbfind'         => 'Trovez',
-'qbedit'         => 'Redaktar',
 'qbpageoptions'  => 'Ica pagino',
 'qbpageinfo'     => 'Kuntexto',
-'qbmyoptions'    => 'Mea pagini',
-'qbspecialpages' => 'Specala pagini',
 
 'actions'                  => 'Agi',
 'namespaces'               => 'Nomari',
@@ -259,7 +255,6 @@ $messages = array(
 'edit'              => 'Redaktar',
 'create'            => 'Krear',
 'editthispage'      => 'Redaktar ca pagino',
-'create-this-page'  => 'Kreez ca pagino',
 'delete'            => 'Efacar',
 'deletethispage'    => 'Efacar ica pagino',
 'undelete_short'    => 'Restaurar {{PLURAL:$1|1 redakto|$1 redakti}}',
@@ -274,7 +269,6 @@ $messages = array(
 'specialpage'       => 'Specala pagino',
 'personaltools'     => 'Personala utensili',
 'postcomment'       => 'Nova seciono',
-'articlepage'       => 'Regardar artiklo',
 'talk'              => 'Diskuto',
 'views'             => 'Apari',
 'toolbox'           => 'Utensili',
@@ -677,9 +671,6 @@ Probez prefixizar vua demando kun ''all:'' por serchar omna kontenajo (inkluzant
 'search-external'                => 'Extera sercho',
 'searchdisabled'                 => 'La sercho en la kompleta texto desaktivigesis temporale pro superkargo dil servanto. Ni esperas riaktivigar ol pos facar ula proxima aktualigi. Dum ica tempo, vu povas serchar per Google.',
 
-# Quickbar
-'qbsettings'      => 'Preferaji pri "Quickbar"',
-'qbsettings-none' => 'Nula',
 
 # Preferences page
 'preferences'                   => 'Preferaji',

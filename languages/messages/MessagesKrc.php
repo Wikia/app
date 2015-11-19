@@ -179,16 +179,11 @@ $messages = array(
 'navigation'    => 'Навигация',
 'and'           => '&#32;эм',
 
-# Cologne Blue skin
 'qbfind'         => 'Излеу',
 'qbbrowse'       => 'Къарау',
-'qbedit'         => 'Тюрлендир',
 'qbpageoptions'  => 'Бу бет',
 'qbpageinfo'     => 'Бетни юсюнден',
-'qbmyoptions'    => 'Бетлерим',
-'qbspecialpages' => 'Къуллукъчу бетле',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Этимле',
 'namespaces'                     => 'Атланы аламы',
@@ -212,7 +207,6 @@ $messages = array(
 'edit'              => 'Тюрлендир',
 'create'            => 'Къура',
 'editthispage'      => 'Бу бетни тюрлендир',
-'create-this-page'  => 'Бу бетни къура',
 'delete'            => 'Кетер',
 'deletethispage'    => 'Бу бетни кетер',
 'undelete_short'    => '$1 {{PLURAL:$1|тюрлендириуню}} къайтар',
@@ -228,7 +222,6 @@ $messages = array(
 'specialpage'       => 'Къуллукъ бет',
 'personaltools'     => 'Энчи инструментле',
 'postcomment'       => 'Джангы бёлюм',
-'articlepage'       => 'Статьягъа къарау',
 'talk'              => 'Сюзюу',
 'views'             => 'Къараула',
 'toolbox'           => 'Инструментле',
@@ -962,13 +955,6 @@ $1",
 'search-external'                  => 'Тыш излеу',
 'searchdisabled'                   => '{{SITENAME}} сайтда излеу талай заманнга тохтатылгъанды. Бусагъатда Google бла хайырланыб {{SITENAME}} ичинде излеу этерге боллукъсуз. Излеу сайтлада индекслери бир кесек эски болургъа боллугъун унутмагъыз.',
 
-# Quickbar
-'qbsettings'               => 'Джюрютюуню панели',
-'qbsettings-none'          => 'Кёргюзтме',
-'qbsettings-fixedleft'     => 'Солу къатды',
-'qbsettings-fixedright'    => 'Онгу къатды',
-'qbsettings-floatingleft'  => 'Солгъа джюзеди',
-'qbsettings-floatingright' => 'Оннга джюзеди',
 
 # Preferences page
 'preferences'                   => 'Джарашдырыула',
@@ -2508,7 +2494,6 @@ MediaWiki локализациясына юлюш къошаргъа излей 
 
 # Skin names
 'skinname-standard'    => 'Стандарт',
-'skinname-cologneblue' => 'Кёльн такъылыкъ',
 'skinname-monobook'    => 'Моно-китаб',
 'skinname-myskin'      => 'Меники',
 'skinname-chick'       => 'Шик',

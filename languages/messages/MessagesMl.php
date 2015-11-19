@@ -462,16 +462,11 @@ $messages = array(
 'navigation'    => 'ഉള്ളടക്കം',
 'and'           => '&#32;ഒപ്പം',
 
-# Cologne Blue skin
 'qbfind'         => 'കണ്ടെത്തുക',
 'qbbrowse'       => 'ബ്രൗസ്',
-'qbedit'         => 'തിരുത്തുക',
 'qbpageoptions'  => 'ഈ താൾ',
 'qbpageinfo'     => 'സന്ദർഭം',
-'qbmyoptions'    => 'എന്റെ താളുകൾ',
-'qbspecialpages' => 'പ്രത്യേക താളുകൾ',
 'faq'            => 'പതിവുചോദ്യങ്ങൾ',
-'faqpage'        => 'Project:പതിവുചോദ്യങ്ങൾ',
 
 'actions'                        => 'നടപടികൾ',
 'namespaces'                     => 'നാമമേഖല',
@@ -495,7 +490,6 @@ $messages = array(
 'edit'              => 'തിരുത്തുക',
 'create'            => 'ഈ താൾ സൃഷ്ടിക്കുക',
 'editthispage'      => 'ഈ താൾ തിരുത്തുക',
-'create-this-page'  => 'ഈ താൾ സൃഷ്ടിക്കുക',
 'delete'            => 'മായ്ക്കുക',
 'deletethispage'    => 'ഈ താൾ നീക്കം ചെയ്യുക',
 'undelete_short'    => '{{PLURAL:$1|ഒരു തിരുത്തൽ|$1 തിരുത്തലുകൾ}} പുനഃസ്ഥാപിക്കുക',
@@ -511,7 +505,6 @@ $messages = array(
 'specialpage'       => 'പ്രത്യേക താൾ',
 'personaltools'     => 'സ്വകാര്യതാളുകൾ',
 'postcomment'       => 'അഭിപ്രായം ചേർക്കുക',
-'articlepage'       => 'ലേഖനം കാണുക',
 'talk'              => 'സംവാദം',
 'views'             => 'ദർശനീയത',
 'toolbox'           => 'പണിസഞ്ചി',
@@ -1301,14 +1294,6 @@ $1",
 'search-external'                  => 'ബാഹ്യ അന്വേഷണം',
 'searchdisabled'                   => '{{SITENAME}} സം‌രംഭത്തിൽ തിരച്ചിൽ ദുർബലപ്പെടുത്തിയിരിക്കുന്നു. താങ്കൾക്ക് ഗൂഗിൾ ഉപയോഗിച്ച് തത്കാലം തിരച്ചിൽ നടത്താവുന്നതാണ്‌. പക്ഷെ ഗൂഗിളിൽ {{SITENAME}} സം‌രംഭത്തിന്റെ സൂചിക കാലഹരണപ്പെട്ടതായിരിക്കാൻ സാദ്ധ്യതയുണ്ട്.',
 
-# Quickbar
-'qbsettings'                => 'ദ്രുത സൗകര്യം',
-'qbsettings-none'           => 'ഒന്നുമില്ല',
-'qbsettings-fixedleft'      => 'സ്ഥിരമായ ഇടത്',
-'qbsettings-fixedright'     => 'സ്ഥിരമായ വലത്',
-'qbsettings-floatingleft'   => 'ഇടത്തേയ്ക്ക് ഒഴുകി നിൽക്കുക',
-'qbsettings-floatingright'  => 'വലത്തേയ്ക്ക് ഒഴുകി നിൽക്കുക',
-'qbsettings-directionality' => 'താങ്കളുടെ ഭാഷയുടെ ലിപിയിൽ എഴുത്തുന്ന ദിശയനുസരിച്ച് ശരിയാക്കിയിരിക്കുന്നു',
 
 # Preferences page
 'preferences'                   => 'ക്രമീകരണങ്ങൾ',
@@ -2949,7 +2934,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => 'സാർവത്രികം',
-'skinname-cologneblue' => 'ക്ലോൺ നീല',
 'skinname-monobook'    => 'മോണോബുക്ക്',
 'skinname-myskin'      => 'എന്റിഷ്ടം',
 'skinname-chick'       => 'സുന്ദരി',

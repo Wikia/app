@@ -371,16 +371,11 @@ $messages = array(
 'navigation'    => '導覽',
 'and'           => '同埋',
 
-# Cologne Blue skin
 'qbfind'         => '搵嘢',
 'qbbrowse'       => '瀏覽',
-'qbedit'         => '編輯',
 'qbpageoptions'  => '呢一頁',
 'qbpageinfo'     => '附近文字',
-'qbmyoptions'    => '我嘅選項',
-'qbspecialpages' => '特別頁',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => '動作',
 'namespaces'                     => '空間名',
@@ -404,7 +399,6 @@ $messages = array(
 'edit'              => '改',
 'create'            => '建立',
 'editthispage'      => '編輯呢頁',
-'create-this-page'  => '建立呢頁',
 'delete'            => '刪除',
 'deletethispage'    => '刪除呢頁',
 'undelete_short'    => '反刪除$1次修改',
@@ -420,7 +414,6 @@ $messages = array(
 'specialpage'       => '特別頁',
 'personaltools'     => '個人工具',
 'postcomment'       => '新小節',
-'articlepage'       => '睇目錄',
 'talk'              => '討論',
 'views'             => '去睇',
 'toolbox'           => '工具箱',
@@ -1158,13 +1151,6 @@ $1",
 'search-external'                  => '出面搵嘢',
 'searchdisabled'                   => '{{SITENAME}}嘅搜尋功能已經關閉。你可以利用Google嚟搵。不過佢哋對{{SITENAME}}嘅索引可能唔係最新嘅。',
 
-# Quickbar
-'qbsettings'               => '快捷列',
-'qbsettings-none'          => '無',
-'qbsettings-fixedleft'     => '左邊固定',
-'qbsettings-fixedright'    => '右邊固定',
-'qbsettings-floatingleft'  => '左邊浮動',
-'qbsettings-floatingright' => '右邊浮動',
 
 # Preferences page
 'preferences'                   => '喜好設定',
@@ -2645,7 +2631,6 @@ $1',
 # Stylesheets
 'common.css'      => '/* 響呢度放 CSS 碼來改成個網站嘅畫面 */',
 'standard.css'    => '/* 響呢度放 CSS 碼去改用戶用嘅傳統畫面 */',
-'cologneblue.css' => '/* 響呢度放 CSS 碼去改用戶用嘅科隆藍畫面 */',
 'monobook.css'    => '/* 響呢度放 CSS 碼去改用戶用嘅 Monobook 畫面 */',
 'myskin.css'      => '/* 響呢度放 CSS 碼去改用戶用嘅我嘅畫面 */',
 'chick.css'       => '/* 響呢度放 CSS 碼去改用戶用嘅俏畫面 */',
@@ -2657,7 +2642,6 @@ $1',
 # Scripts
 'common.js'      => '/* 響每一次個頁面載入時，所有用戶都會載入呢度任何嘅JavaScript。 */',
 'standard.js'    => '/* 響每一次個頁面載入時，用標準畫面嘅用戶都會載入呢度任何嘅JavaScript */',
-'cologneblue.js' => '/* 響每一次個頁面載入時，用科隆藍畫面嘅用戶都會載入呢度任何嘅JavaScript */',
 'monobook.js'    => '/* 響每一次個頁面載入時，用 Monobook 畫面嘅用戶都會載入呢度任何嘅JavaScript */',
 'myskin.js'      => '/* 響每一次個頁面載入時，用我嘅畫面嘅用戶都會載入呢度任何嘅JavaScript */',
 'chick.js'       => '/* 響每一次個頁面載入時，用俏畫面嘅用戶都會載入呢度任何嘅JavaScript */',
@@ -2690,7 +2674,6 @@ $1',
 
 # Skin names
 'skinname-standard'    => '傳統',
-'skinname-cologneblue' => '科隆藍',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => '我嘅畫面',
 'skinname-chick'       => '俏',

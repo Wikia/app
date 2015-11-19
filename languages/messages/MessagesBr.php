@@ -320,16 +320,11 @@ $messages = array(
 'navigation'    => 'Merdeiñ',
 'and'           => '&#32;ha(g)',
 
-# Cologne Blue skin
 'qbfind'         => 'Klask',
 'qbbrowse'       => 'Furchal',
-'qbedit'         => 'Kemmañ',
 'qbpageoptions'  => 'Pajenn an dibaboù',
 'qbpageinfo'     => 'Pajenn gelaouiñ',
-'qbmyoptions'    => 'Ma dibaboù',
-'qbspecialpages' => 'Pajennoù dibar',
 'faq'            => 'FAG',
-'faqpage'        => 'Project:FAG',
 
 'actions'                        => 'Oberoù',
 'namespaces'                     => 'Esaouennoù anv',
@@ -353,7 +348,6 @@ $messages = array(
 'edit'              => 'Kemmañ',
 'create'            => 'Krouiñ',
 'editthispage'      => 'Kemmañ ar bajenn-mañ',
-'create-this-page'  => 'Krouiñ ar bajenn-mañ',
 'delete'            => 'Diverkañ',
 'deletethispage'    => 'Diverkañ ar bajenn-mañ',
 'undelete_short'    => "Diziverkañ {{PLURAL:$1|ur c'hemm|$1 kemm}}",
@@ -369,7 +363,6 @@ $messages = array(
 'specialpage'       => 'Pajenn dibar',
 'personaltools'     => 'Ostilhoù personel',
 'postcomment'       => 'Rann nevez',
-'articlepage'       => 'Sellet ouzh ar pennad',
 'talk'              => 'Kaozeal',
 'views'             => 'Gweladennoù',
 'toolbox'           => 'Boest ostilhoù',
@@ -1169,14 +1162,6 @@ Gwiriit ne vo ket torret red istor ar bajenn gant ar c'hemm-mañ.",
 'search-external'                  => 'Klask diavaez',
 'searchdisabled'                   => "<p>Diweredekaet eo bet an arc'hwel klask war an destenn a-bezh evit ur frapad rak ur samm re vras e oa evit ar servijer. Emichañs e vo tu d'e adlakaat pa vo ur servijer galloudusoc'h ganeomp. Da c'hortoz e c'hallit klask gant Google:</p>",
 
-# Quickbar
-'qbsettings'                => 'Personelaat ar varrenn ostilhoù',
-'qbsettings-none'           => 'Hini ebet',
-'qbsettings-fixedleft'      => 'Kleiz',
-'qbsettings-fixedright'     => 'Dehou',
-'qbsettings-floatingleft'   => 'War-neuñv a-gleiz',
-'qbsettings-floatingright'  => 'War-neuñv a-zehou',
-'qbsettings-directionality' => 'Difiñv, hervez an tu ma vez skrivet ho yezh',
 
 # Preferences page
 'preferences'                   => 'Penndibaboù',
@@ -2816,7 +2801,6 @@ Talvezout a ra da ouzhpennañ un displegadenn er c\'hombod diverrañ.',
 # Stylesheets
 'common.css'              => '/** Talvezout a raio ar CSS lakaet amañ evit an holl wiskadurioù */',
 'standard.css'            => '/* Talvezout a raio ar CSS lakaet amañ evit implijerien ar gwiskadur Standard */',
-'cologneblue.css'         => '/* Talvezout a raio ar CSS lakaet amañ evit implijerien ar gwiskadur Glaz Kologn */',
 'monobook.css'            => '/* Talvezout a raio ar CSS lakaet amañ evit implijerien ar gwiskadur Monobook */',
 'myskin.css'              => '/* Talvezout a raio ar CSS lakaet amañ evit implijerien ar gwiskadur MySkin */',
 'chick.css'               => '/* Talvezout a raio ar CSS lakaet amañ evit implijerien ar gwiskadur Plogig */',
@@ -2833,7 +2817,6 @@ Talvezout a ra da ouzhpennañ un displegadenn er c\'hombod diverrañ.',
 # Scripts
 'common.js'      => '/* Kement JavaScript amañ a vo karget evit an holl implijerien war kement pajenn lennet ganto. */',
 'standard.js'    => '/* Kement JavaScript amañ a vo karget evit an implijerien a ra gant ar gwiskadur Standard */',
-'cologneblue.js' => '/* Kement JavaScript amañ a vo karget evit an implijerien a ra gant ar gwiskadur Glaz Kologn */',
 'monobook.js'    => '/* Kement JavaScript amañ a vo karget evit an implijerien a ra gant ar gwiskadur MonoBook */',
 'myskin.js'      => '/* Kement JavaScript amañ a vo karget evit an implijerien a ra gant ar gwiskadur MySkin */',
 'chick.js'       => '/* Kement JavaScript amañ a vo karget evit an implijerien a ra gant ar gwiskadur Plogig */',
@@ -2879,7 +2862,6 @@ Sur a-walc'h abalamour d'ul liamm enni a gas d'ul lec'hienn ziavaez berzet.",
 
 # Skin names
 'skinname-standard'    => 'Standard',
-'skinname-cologneblue' => 'Glaz Kologn',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
 'skinname-chick'       => 'Plogig',

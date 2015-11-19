@@ -167,16 +167,11 @@ $messages = array(
 'navigation'    => 'Þurhfōr',
 'and'           => '&#32;and',
 
-# Cologne Blue skin
 'qbfind'         => 'Find',
 'qbbrowse'       => 'Onbirȝe',
-'qbedit'         => 'Ādihte',
 'qbpageoptions'  => 'Þēos sīde',
 'qbpageinfo'     => 'Ȝeƿef',
-'qbmyoptions'    => 'Mīna sīdan',
-'qbspecialpages' => 'Syndriȝa sīdan',
 'faq'            => 'Oftost ascoda ascunȝa',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Fremmunga',
 'namespaces'                     => 'Namstedas',
@@ -199,7 +194,6 @@ $messages = array(
 'edit'              => 'Ādiht',
 'create'            => 'Sciepe',
 'editthispage'      => 'Ādiht þās sīdan',
-'create-this-page'  => 'Sciepe þās sīdan',
 'delete'            => 'Forlēos',
 'deletethispage'    => 'Forlēos þās sīdan',
 'undelete_short'    => 'Maca {{PLURAL:$1|ānne ādiht|$1 ādihtas}} eft',
@@ -214,7 +208,6 @@ $messages = array(
 'specialpage'       => 'Syndriȝ sīde',
 'personaltools'     => 'Āgne tōlas',
 'postcomment'       => 'Nīƿe dǣl',
-'articlepage'       => 'Seoh innungsīdan',
 'talk'              => 'Ȝespreċ',
 'views'             => 'Ansīena',
 'toolbox'           => 'Tōlearc',
@@ -569,8 +562,6 @@ folcliċum āgnunge oþþe ȝelīċum frēom horde (sēo $1 for āscungum).
 'powersearch-field'              => 'Sēċan',
 'search-external'                => 'Ūtan sōcn',
 
-# Quickbar
-'qbsettings-none' => 'Nān',
 
 # Preferences page
 'preferences'        => 'Foreberunga',

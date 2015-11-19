@@ -106,15 +106,11 @@ $messages = array(
 'mypage'        => 'Akun nga pahina',
 'anontalk'      => "Istoryahun ang dya nga ''IP''",
 
-# Cologne Blue skin
 'qbfind'         => 'Sagap',
 'qbbrowse'       => 'Bilid',
-'qbedit'         => 'Iislan',
 'qbpageoptions'  => 'Dya nga Pahina',
 'qbpageinfo'     => 'Konteksto',
-'qbspecialpages' => 'Manga espesyal nga pahina',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'errorpagetitle'    => 'Sayup',
 'returnto'          => 'Balik sa $1.',
@@ -143,7 +139,6 @@ $messages = array(
 'talkpagelinktext'  => 'Wakal',
 'specialpage'       => 'Espesyal nga Pahina',
 'postcomment'       => 'Togro Komento',
-'articlepage'       => 'Turukun ang pahina kasudlan',
 'talk'              => 'Sugilanon',
 'views'             => 'Manga paglantaw',
 'toolbox'           => 'Pangbolig',

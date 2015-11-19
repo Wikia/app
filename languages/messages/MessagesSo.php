@@ -115,15 +115,10 @@ $messages = array(
 'anontalk'      => 'Wadahadalka IP:gan',
 'and'           => '&#32;iyo',
 
-# Cologne Blue skin
 'qbfind'         => 'Raadi',
 'qbbrowse'       => 'Fiirfiiri',
-'qbedit'         => 'Wax ka bedel',
 'qbpageoptions'  => 'Boggaan',
-'qbmyoptions'    => 'Boggageyga',
-'qbspecialpages' => 'Bogaga qaaska ah',
 'faq'            => 'SIL',
-'faqpage'        => 'Project:SIL',
 
 'errorpagetitle'    => 'Qalad',
 'returnto'          => 'Ku noqo $1.',
@@ -153,7 +148,6 @@ $messages = array(
 'talkpagelinktext'  => 'Wadahadal',
 'specialpage'       => 'Bogaga qaaska ah',
 'postcomment'       => 'Aragti ku qor bogga dhamaadkiisa',
-'articlepage'       => 'Fiiri bogga qoraalka',
 'talk'              => 'Wadahadal',
 'views'             => 'Muuqaalka',
 'toolbox'           => 'Qalabka shaqada',

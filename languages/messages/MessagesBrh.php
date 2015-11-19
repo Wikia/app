@@ -78,7 +78,6 @@ $messages = array(
 'mytalk'     => 'Kaná ítgap',
 'navigation' => 'Kasarşoní',
 
-# Cologne Blue skin
 'qbfind' => 'Paŧŧa',
 
 'actions'                  => 'Amal ák',
@@ -99,7 +98,6 @@ $messages = array(
 'edit'             => 'Radbadal',
 'create'           => 'Biná',
 'editthispage'     => 'Dá panna ŧí radbadal kar',
-'create-this-page' => 'Dá panna e ađđ et',
 'delete'           => 'Mesa',
 'protect'          => 'Rakk',
 'protect_change'   => 'badal kar',

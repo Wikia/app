@@ -327,16 +327,11 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => '&#32;og',
 
-# Cologne Blue skin
 'qbfind'         => 'Søg',
 'qbbrowse'       => 'Gennemse',
-'qbedit'         => 'Redigér',
 'qbpageoptions'  => 'Indstillinger for side',
 'qbpageinfo'     => 'Information om side',
-'qbmyoptions'    => 'Mine indstillinger',
-'qbspecialpages' => 'Specielle sider',
 'faq'            => 'OSS',
-'faqpage'        => 'Project:OSS',
 
 'actions'                        => 'Handlinger',
 'namespaces'                     => 'Navnerum',
@@ -360,7 +355,6 @@ $messages = array(
 'edit'              => 'Redigér',
 'create'            => 'opret',
 'editthispage'      => 'Redigér side',
-'create-this-page'  => 'opret ny side',
 'delete'            => 'Slet',
 'deletethispage'    => 'Slet side',
 'undelete_short'    => 'Fortryd sletning af {{PLURAL:$1|$1 version|$1 versioner}}',
@@ -376,7 +370,6 @@ $messages = array(
 'specialpage'       => 'Speciel side',
 'personaltools'     => 'Personlige værktøjer',
 'postcomment'       => 'Nyt afsnit',
-'articlepage'       => 'Se artiklen',
 'talk'              => 'Diskussion',
 'views'             => 'Visninger',
 'toolbox'           => 'Værktøjer',
@@ -1175,14 +1168,6 @@ Du kan prøve at bruge \"all:\" som præfiks for at søge i alt indhold (inkl. d
 'search-external'                  => 'Brug anden søgemaskine',
 'searchdisabled'                   => '<p>Beklager! Fuldtekstsøgningen er midlertidigt afbrudt på grund af for stor belastning på serverne. I mellemtidem kan du anvende Google- eller Yahoo!-søgefelterne herunder. Bemærk at deres kopier af {{SITENAME}}s indhold kan være forældet.</p>',
 
-# Quickbar
-'qbsettings'                => 'Hurtigmenu',
-'qbsettings-none'           => 'Ingen',
-'qbsettings-fixedleft'      => 'Fast venstre',
-'qbsettings-fixedright'     => 'Fast højre',
-'qbsettings-floatingleft'   => 'Flydende venstre',
-'qbsettings-floatingright'  => 'Flydende højre',
-'qbsettings-directionality' => 'Fast, afhængigt af dit sprogs skriveretning',
 
 # Preferences page
 'preferences'                   => 'Indstillinger',
@@ -2829,7 +2814,6 @@ Dette skyldes sandsynligvis en henvisning til et sortlistet eksternt websted.',
 
 # Skin names
 'skinname-standard'    => 'Klassik',
-'skinname-cologneblue' => 'Kølnerblå',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Eget udseende',
 'skinname-chick'       => 'Chick',

@@ -151,14 +151,9 @@ $messages = array(
 'navigation'    => 'Endagiriro',
 'and'           => '&#32;ne',
 
-# Cologne Blue skin
 'qbfind'         => 'Noonya',
 'qbbrowse'       => 'Lambula',
-'qbedit'         => 'Kyusa',
-'qbmyoptions'    => 'Empapula zange',
-'qbspecialpages' => 'Empapula enjawule',
 'faq'            => 'Ebitera okubuuzibwa',
-'faqpage'        => 'Project:Ebitera okubuuzibwa ku',
 
 'actions'                        => "By'oyinza okukola",
 'namespaces'                     => 'Makuŋaanyizo',
@@ -181,7 +176,6 @@ $messages = array(
 'edit'              => 'Kyusa',
 'create'            => 'Kolawo',
 'editthispage'      => 'Olupapula luno lukyusemu',
-'create-this-page'  => 'Olupapula luno lukolewo',
 'delete'            => 'Gyawo olupapula luno',
 'deletethispage'    => 'Olupapula luno lugyewo',
 'undelete_short'    => 'Julula {{PLURAL:$1|enkyukakyuka emu|enkyukakyuka $1}}',
@@ -197,7 +191,6 @@ $messages = array(
 'specialpage'       => 'Olupapula olwawule',
 'personaltools'     => "Ebikola ku akawunti n'enfo yo",
 'postcomment'       => 'Kitundu kipya',
-'articlepage'       => 'Kebera olupapula',
 'talk'              => 'Emboozi',
 'views'             => "Kyusa endabika ya by'olaba wano",
 'toolbox'           => 'Ebikozesebwa',

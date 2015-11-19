@@ -123,9 +123,7 @@ $messages = array(
 'mytalk'        => 'Oqalliffikka',
 'navigation'    => 'Sumiissusersiuut',
 
-# Cologne Blue skin
 'qbfind' => 'Naniuk',
-'qbedit' => 'Aaqqissoruk',
 
 
 'errorpagetitle'   => 'Kukkuneq',

@@ -160,16 +160,11 @@ $messages = array(
 'navigation'    => 'Pusula',
 'and'           => '&#32;u',
 
-# Cologne Blue skin
 'qbfind'         => 'Bıvêne',
 'qbbrowse'       => 'Çım ra viyarne',
-'qbedit'         => 'Bıvurne',
 'qbpageoptions'  => 'Ena pele',
 'qbpageinfo'     => 'Gıre',
-'qbmyoptions'    => 'Pelê mı',
-'qbspecialpages' => 'Pelê Mêniye',
 'faq'            => 'PZP (Persê ke zehf persiyenê)',
-'faqpage'        => 'Project: PZP',
 
 'actions'                        => 'Karê kerdey',
 'namespaces'                     => 'Cayê namey',
@@ -193,7 +188,6 @@ $messages = array(
 'edit'              => 'Bıvurne',
 'create'            => 'Vırazê',
 'editthispage'      => 'Ena pele bıvurne',
-'create-this-page'  => 'Na pele bınuse',
 'delete'            => 'Bestere',
 'deletethispage'    => 'Ena pele bestere',
 'undelete_short'    => '{{PLURAL:$1|Yew vurnayışi|$1 Vurnayışan}} mestere',
@@ -209,7 +203,6 @@ $messages = array(
 'specialpage'       => 'Pela xase',
 'personaltools'     => 'Hacetê şexsi',
 'postcomment'       => 'Qısımo newe',
-'articlepage'       => 'Pela zerreki bıvêne',
 'talk'              => 'Werênayış',
 'views'             => 'Asayışi',
 'toolbox'           => 'Qutiya hacetan',
@@ -946,13 +939,6 @@ Pe verbendi ''all:'', vaceyê xo bıvurni ki contenti hemi cıgeyro (pelanê mı
 'search-external'                  => 'Cıgeyrayışê teberi',
 'searchdisabled'                   => '{{SITENAME}} no keyepel de cıgerayiş muweqqet bıryayo. no benatê de şıma pê Google eşkeni zerreyê {{SITENAME}} de cıgerayiş bıkeri.',
 
-# Quickbar
-'qbsettings'               => 'Çûwo pêt',
-'qbsettings-none'          => 'Çıniyo',
-'qbsettings-fixedleft'     => 'Rêcaene çhep',
-'qbsettings-fixedright'    => 'Rêcaene raşt',
-'qbsettings-floatingleft'  => 'rêcaene çhep',
-'qbsettings-floatingright' => 'rêcaene raşt',
 
 # Preferences page
 'preferences'                   => 'Tercihi',

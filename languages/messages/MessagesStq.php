@@ -186,16 +186,11 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => '&#32;un',
 
-# Cologne Blue skin
 'qbfind'         => 'Fiende',
 'qbbrowse'       => 'Bleederje',
-'qbedit'         => 'Annerje',
 'qbpageoptions'  => 'Disse Siede',
 'qbpageinfo'     => 'Siedendoatäie',
-'qbmyoptions'    => 'Mien Sieden',
-'qbspecialpages' => 'Spezialsieden',
 'faq'            => 'Oafte stoalde Froagen',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Aktione',
 'namespaces'                     => 'Noomeruume',
@@ -219,7 +214,6 @@ $messages = array(
 'edit'              => 'Siede beoarbaidje',
 'create'            => 'Moakje',
 'editthispage'      => 'Siede beoarbaidje',
-'create-this-page'  => 'Siede moakje',
 'delete'            => 'Läskje',
 'deletethispage'    => 'Disse Siede läskje',
 'undelete_short'    => '{{PLURAL:$1|1 Version|$1 Versione}} wier häärstaale',
@@ -235,7 +229,6 @@ $messages = array(
 'specialpage'       => 'Spezioalsiede',
 'personaltools'     => 'Persöönelke Reewen',
 'postcomment'       => 'Näi Stuk',
-'articlepage'       => 'Siede',
 'talk'              => 'Diskussion',
 'views'             => 'Anwiesengen',
 'toolbox'           => 'Reewen',
@@ -974,13 +967,6 @@ Staal deertruch sicher, dät ju Versionsgeskichte fon n Artikkel historisk akroa
 'search-external'                  => 'Externe Säike',
 'searchdisabled'                   => 'Ju {{SITENAME}} Fultextsäike is weegen Uurläästenge apstuuns deaktivierd. Du koast insteede deerfon ne Google- of Yahoo-Säike startje. Do Resultoate foar {{SITENAME}} speegelje oawers nit uunbedingd dän aktuällen Stand wier.',
 
-# Quickbar
-'qbsettings'               => 'Siedenlieste',
-'qbsettings-none'          => 'Naan',
-'qbsettings-fixedleft'     => 'Links, fääst',
-'qbsettings-fixedright'    => 'Gjuchts, fääst',
-'qbsettings-floatingleft'  => 'Links, swieuwjend',
-'qbsettings-floatingright' => 'Gjuchts, swieuwjend',
 
 # Preferences page
 'preferences'                   => 'Ienstaalengen',

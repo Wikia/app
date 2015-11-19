@@ -140,16 +140,11 @@ Pabusten ing pamanaliling dake kapamilatan [alilan] ning suglung',
 'navigation'    => 'Pamaglibut',
 'and'           => '&#32;ampo',
 
-# Cologne Blue skin
 'qbfind'         => 'Maintun',
 'qbbrowse'       => 'Bation (browse)',
-'qbedit'         => 'Mag-edit',
 'qbpageoptions'  => 'Ining bulung',
 'qbpageinfo'     => 'Kontekstu/kabilian',
-'qbmyoptions'    => 'Deng kakung bulung',
-'qbspecialpages' => 'Bulung a makabukud',
 'faq'            => 'Maralas a Kukutang (MAK)',
-'faqpage'        => 'Project:MAK',
 
 
 'errorpagetitle'    => 'Mali',
@@ -169,7 +164,6 @@ Pabusten ing pamanaliling dake kapamilatan [alilan] ning suglung',
 'edit'              => 'Alilan',
 'create'            => 'Maglalang',
 'editthispage'      => 'I-edit ya ing bulung a ini',
-'create-this-page'  => 'Ilalang ya ining bulung',
 'delete'            => 'Buran',
 'deletethispage'    => 'Buran ya ing bulung a ini',
 'undelete_short'    => 'Isubli {{PLURAL:$1|metung a edit|$1 edit}}',
@@ -184,7 +178,6 @@ Pabusten ing pamanaliling dake kapamilatan [alilan] ning suglung',
 'specialpage'       => 'Bulung a Makabukud',
 'personaltools'     => 'Sariling kasangkapan',
 'postcomment'       => 'Magpaskil kang komentu o puna',
-'articlepage'       => 'Lawen me ing kalamnan ning bulung',
 'talk'              => 'Pamisabi-sabi',
 'views'             => 'Pamaglawe',
 'toolbox'           => 'Kasangkapan',
@@ -769,12 +762,6 @@ Gamitan me ing radio button column bang bukud mung detang miyalilan aniang o bay
 Samantala, maliari kang maintun kapamilatan ning Google.
 Pakitandanan mung maliaring e no makapanaun deng karelang index king kalamnan ning {{SITENAME}}.',
 
-# Quickbar
-'qbsettings-none'          => 'Ala',
-'qbsettings-fixedleft'     => 'Makapirmi ya ing kaili',
-'qbsettings-fixedright'    => 'Makapirmi ya ing wanan',
-'qbsettings-floatingleft'  => 'Kikimut ya ing kaili',
-'qbsettings-floatingright' => 'Kikimut ya ing wanan',
 
 # Preferences page
 'preferences'               => 'Pinili',

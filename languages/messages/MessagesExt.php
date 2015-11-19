@@ -147,16 +147,11 @@ $messages = array(
 'navigation'    => 'Güiquipeandu',
 'and'           => '&#32;i',
 
-# Cologne Blue skin
 'qbfind'         => 'Alcuentral',
 'qbbrowse'       => 'Escrucal',
-'qbedit'         => 'Eital',
 'qbpageoptions'  => 'Esta páhina',
 'qbpageinfo'     => 'Contestu',
-'qbmyoptions'    => 'Las mis páhinas',
-'qbspecialpages' => 'Páhinas especialis',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                  => 'Acionis',
 'namespaces'               => 'Espáciu nombris',
@@ -179,7 +174,6 @@ $messages = array(
 'edit'              => 'Eital',
 'create'            => 'Crial',
 'editthispage'      => 'Eital esta páhina',
-'create-this-page'  => 'Crial esta páhina',
 'delete'            => 'Esborral',
 'deletethispage'    => 'Esborral esta páhina',
 'undelete_short'    => 'Arrecuperal {{PLURAL:$1|una eición|$1 eicionis}}',
@@ -194,7 +188,6 @@ $messages = array(
 'specialpage'       => 'Página Especial',
 'personaltools'     => 'Herramientas presonalis',
 'postcomment'       => 'Nueva seción',
-'articlepage'       => 'Vel artículu',
 'talk'              => 'Caraba',
 'views'             => 'Guipás',
 'toolbox'           => 'Herramientas',
@@ -793,13 +786,6 @@ Asigurati e qu'esti chambu mantenga la continuiá el estorial la páhina.",
 'search-external'                  => 'Landeu estelnu',
 'searchdisabled'                   => 'Los landeus en {{SITENAME}} están temporalmenti desativaus. Mentris tantu, pueis landeal meyanti landerus esternus, inque ten en cuenta que los sus éndicis concernientis a {{SITENAME}} puein nu estal atualizaus.',
 
-# Quickbar
-'qbsettings'               => 'Preferéncias la "Quickbar"',
-'qbsettings-none'          => 'Dengunu',
-'qbsettings-fixedleft'     => 'Asiahau a la gocha',
-'qbsettings-fixedright'    => 'Asiahau a la derecha',
-'qbsettings-floatingleft'  => 'Frotanti ena gocha',
-'qbsettings-floatingright' => 'Frotanti ena derecha',
 
 # Preferences page
 'preferences'               => 'Preferéncias',

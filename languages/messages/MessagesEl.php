@@ -490,16 +490,11 @@ $messages = array(
 'navigation'    => 'Πλοήγηση',
 'and'           => '&#32;και',
 
-# Cologne Blue skin
 'qbfind'         => 'Εύρεση',
 'qbbrowse'       => 'Περιήγηση',
-'qbedit'         => 'Επεξεργασία',
 'qbpageoptions'  => 'Αυτή η σελίδα',
 'qbpageinfo'     => 'Συμφραζόμενα',
-'qbmyoptions'    => 'Οι σελίδες μου',
-'qbspecialpages' => 'Σελίδες λειτουργιών',
 'faq'            => 'Συχνές ερωτήσεις (FAQ)',
-'faqpage'        => 'Project:Συχνές ερωτήσεις (FAQ)',
 
 'actions'                        => 'Ενέργειες',
 'namespaces'                     => 'Περιοχές ονομάτων',
@@ -523,7 +518,6 @@ $messages = array(
 'edit'              => 'Επεξεργασία',
 'create'            => 'Δημιουργήστε',
 'editthispage'      => 'Επεξεργασία αυτής της σελίδας',
-'create-this-page'  => 'Δημιουργήστε αυτή τη σελίδα',
 'delete'            => 'Διαγραφή',
 'deletethispage'    => 'Διαγραφή αυτής της σελίδας',
 'undelete_short'    => 'Να αναστραφεί η διαγραφή {{PLURAL:$1|μιας επεξεργασίας|$1 επεξεργασιών}}.',
@@ -539,7 +533,6 @@ $messages = array(
 'specialpage'       => 'Σελίδα λειτουργιών',
 'personaltools'     => 'Προσωπικά εργαλεία',
 'postcomment'       => 'Νέο τμήμα',
-'articlepage'       => 'Εμφάνιση σελίδας κειμένου',
 'talk'              => 'Συζήτηση',
 'views'             => 'Εμφανίσεις',
 'toolbox'           => 'Εργαλεία',
@@ -1327,14 +1320,6 @@ $1",
 'search-external'                  => 'Εξωτερική αναζήτηση',
 'searchdisabled'                   => 'Η αναζήτηση για τον ιστότοπο "{{SITENAME}}" είναι απενεργοποιημένη. Μπορείτε να αναζητήσετε μέσω του Google εν τω μεταξύ. Σημειώστε ότι οι κατάλογοί τους για το περιεχόμενο του ιστοτόπου "{{SITENAME}}" μπορεί να είναι απαρχαιωμένοι.',
 
-# Quickbar
-'qbsettings'                => 'Γρήγορη πρόσβαση',
-'qbsettings-none'           => 'Καμία',
-'qbsettings-fixedleft'      => 'Σταθερά αριστερά',
-'qbsettings-fixedright'     => 'Σταθερά δεξιά',
-'qbsettings-floatingleft'   => 'Πλανώμενα αριστερά',
-'qbsettings-floatingright'  => 'Πλανώμενα δεξιά',
-'qbsettings-directionality' => 'Διορθώθηκε, ανάλογα με τις κατευθύνσεις του σεναρίου εντολών της γλώσσας σας',
 
 # Preferences page
 'preferences'                   => 'Προτιμήσεις',
@@ -2921,7 +2906,6 @@ $1',
 # Stylesheets
 'common.css'      => '/* Το τοποθετημένο εδώ CSS θα εφαρμοστεί σε όλα τα skins */',
 'standard.css'    => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει χρήστες του Standard skin */',
-'cologneblue.css' => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει χρήστες του Cologne Blue skin */',
 'monobook.css'    => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει χρήστες του Monobook skin */',
 'myskin.css'      => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει χρήστες του MySkin skin */',
 'chick.css'       => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει χρήστες του Chick skin */',
@@ -2933,7 +2917,6 @@ $1',
 # Scripts
 'common.js'      => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για όλους τους χρήστες σε κάθε φόρτωση σελίδας. */',
 'standard.js'    => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για χρήστες που χρησιμοποιούν το Standard skin */',
-'cologneblue.js' => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για χρήστες που χρησιμοποιούν το Cologne Blue skin */',
 'monobook.js'    => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για χρήστες που χρησιμοποιούν το MonoBook skin */',
 'myskin.js'      => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για χρήστες που χρησιμοποιούν το MySkin skin */',
 'chick.js'       => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για χρήστες που χρησιμοποιούν το Chick skin */',

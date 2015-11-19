@@ -450,16 +450,11 @@ $messages = array(
 'navigation'    => 'Navegação',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Procurar',
 'qbbrowse'       => 'Navegar',
-'qbedit'         => 'Editar',
 'qbpageoptions'  => 'Esta página',
 'qbpageinfo'     => 'Contexto',
-'qbmyoptions'    => 'Minhas páginas',
-'qbspecialpages' => 'Páginas especiais',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                        => 'Acções',
 'namespaces'                     => 'Espaços nominais',
@@ -483,7 +478,6 @@ $messages = array(
 'edit'              => 'Editar',
 'create'            => 'Criar',
 'editthispage'      => 'Editar esta página',
-'create-this-page'  => 'Criar/iniciar esta página',
 'delete'            => 'Eliminar',
 'deletethispage'    => 'Eliminar esta página',
 'undelete_short'    => 'Restaurar {{PLURAL:$1|uma edição|$1 edições}}',
@@ -499,7 +493,6 @@ $messages = array(
 'specialpage'       => 'Página especial',
 'personaltools'     => 'Ferramentas pessoais',
 'postcomment'       => 'Nova secção',
-'articlepage'       => 'Ver página de conteúdo',
 'talk'              => 'Discussão',
 'views'             => 'Vistas',
 'toolbox'           => 'Ferramentas',
@@ -1334,14 +1327,6 @@ Tente usar o prefixo ''all:'' para pesquisar todo o conteúdo (incluindo página
 Entretanto, pode realizar pesquisas através do Google.
 Note, no entanto, que a indexação da {{SITENAME}} neste motor de busca pode estar desactualizada.',
 
-# Quickbar
-'qbsettings'                => 'Barra Rápida',
-'qbsettings-none'           => 'Nenhuma',
-'qbsettings-fixedleft'      => 'Fixa à esquerda',
-'qbsettings-fixedright'     => 'Fixa à direita',
-'qbsettings-floatingleft'   => 'Flutuante à esquerda',
-'qbsettings-floatingright'  => 'Flutuante à direita',
-'qbsettings-directionality' => 'Fixado, a dependener da direccionalidade do script da sua língua',
 
 # Preferences page
 'preferences'                   => 'Preferências',
@@ -2982,7 +2967,6 @@ Permite colocar uma justificação no resumo da edição.',
 # Stylesheets
 'common.css'      => '/* Código CSS colocado aqui será aplicado a todos os temas */',
 'standard.css'    => '/* Código CSS colocado aqui afectará os utilizadores do tema Clássico */',
-'cologneblue.css' => '/* Código CSS colocado aqui afectará os utilizadores do tema Azul colonial */',
 'monobook.css'    => '/* Código CSS colocado aqui afectará os utilizadores do tema Monobook */',
 'myskin.css'      => '/* Código CSS colocado aqui afectará os utilizadores do tema MySkin */',
 'chick.css'       => '/* Código CSS colocado aqui afectará os utilizadores do tema Chique */',
@@ -2994,7 +2978,6 @@ Permite colocar uma justificação no resumo da edição.',
 # Scripts
 'common.js'      => '/* Código Javascript colocado aqui será carregado para todos os utilizadores em cada carregamento de página */',
 'standard.js'    => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Clássico */',
-'cologneblue.js' => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Azul colonial */',
 'monobook.js'    => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Monobook */',
 'myskin.js'      => '/* Código Javascript colocado aqui será carregado para utilizadores do tema MySkin */',
 'chick.js'       => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Chick */',
@@ -3040,7 +3023,6 @@ Este bloqueio foi provavelmente causado por um link para um site externo que con
 
 # Skin names
 'skinname-standard'    => 'Clássico',
-'skinname-cologneblue' => 'Azul colonial',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
 'skinname-chick'       => 'Chique',

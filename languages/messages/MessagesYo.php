@@ -178,15 +178,10 @@ $messages = array(
 'navigation'    => 'Atọ́ka',
 'and'           => '&#32;àti',
 
-# Cologne Blue skin
 'qbfind'         => 'Wíwárí',
 'qbbrowse'       => 'Ìṣíwò',
-'qbedit'         => 'Àtúnṣe',
 'qbpageoptions'  => 'Ojúewé yi',
-'qbmyoptions'    => 'Àwọn ojúewé mi',
-'qbspecialpages' => 'Àwọn ojúewé pàtàkì',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'actions'                    => 'Àwọn ìgbéṣe',
 'namespaces'                 => 'Àwọn orúkọàyè',
@@ -210,7 +205,6 @@ $messages = array(
 'edit'              => 'Àtúnṣe',
 'create'            => 'Ṣèdá',
 'editthispage'      => "S'àtúnṣe ojúewé yi",
-'create-this-page'  => "Ṣè'dá ojúewé yìí",
 'delete'            => 'Ìparẹ́',
 'deletethispage'    => 'Pa ojúewé yi rẹ́',
 'undelete_short'    => 'Ìdápadà ìparẹ́ {{PLURAL:$1|àtúnṣe kan|àwọn àtúnṣe $1}}',
@@ -225,7 +219,6 @@ $messages = array(
 'specialpage'       => 'Ojúewé Pàtàkì',
 'personaltools'     => 'Àwọn irinṣẹ́ àdáni',
 'postcomment'       => 'Abala tuntun',
-'articlepage'       => 'Ìfihàn àkóónú ojúewé',
 'talk'              => 'Ìfọ̀rọ̀wérọ̀',
 'views'             => 'Àwọn ìfihàn',
 'toolbox'           => 'Àpótí irinṣẹ',
@@ -901,12 +894,6 @@ Gẹ́gẹ́ bíi olùmójútó ẹ ṣì le wo ìyàtọ̀ yìí; ẹ̀kúnrẹ
 Ní báyìí ná ẹ le ṣàwárí lọ́dọ̀ Google.
 Àkíyèsí pé àwọn atọ́ka wọn fún àkóónú {{SITENAME}} le mọ́ jẹ́ tuntun.',
 
-# Quickbar
-'qbsettings-none'          => 'Ìkankan',
-'qbsettings-fixedleft'     => 'Kíkàn sí òsì',
-'qbsettings-fixedright'    => 'Kíkàn sí ọ̀tún',
-'qbsettings-floatingleft'  => 'Léfòó sí òsì',
-'qbsettings-floatingright' => 'Léfòó sí ọ̀tún',
 
 # Preferences page
 'preferences'                 => 'Àwọn ìfẹ́ràn',

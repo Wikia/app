@@ -209,16 +209,11 @@ $messages = array(
 'navigation'    => 'भ्रमण',
 'and'           => '&#32;और',
 
-# Cologne Blue skin
 'qbfind'         => 'खोज',
 'qbbrowse'       => 'ब्राउज़',
-'qbedit'         => 'बदलें',
 'qbpageoptions'  => 'यह पन्ना',
 'qbpageinfo'     => 'पृष्ठ जानकारी',
-'qbmyoptions'    => 'मेरे पन्नें',
-'qbspecialpages' => 'विशेष पन्नें',
 'faq'            => 'अक्सर पूछे जाने वाले सवाल',
-'faqpage'        => 'Project:अक्सर पूछे जाने वाले सवाल',
 
 'actions'                    => 'क्रियाएँ',
 'namespaces'                 => 'नामस्थान',
@@ -242,7 +237,6 @@ $messages = array(
 'edit'              => 'संपादन',
 'create'            => 'बनाएँ',
 'editthispage'      => 'इस पृष्ठ को बदलें',
-'create-this-page'  => 'इस लेख को लिखें',
 'delete'            => 'हटायें',
 'deletethispage'    => 'इस पृष्ठ को हटायें',
 'undelete_short'    => '{{PLURAL:$1|एक हटायागया|$1 हटायागये}} बदलाव वापस लायें',
@@ -257,7 +251,6 @@ $messages = array(
 'specialpage'       => 'विशेष पन्ना',
 'personaltools'     => 'वैयक्तिक औज़ार',
 'postcomment'       => 'नया विभाग',
-'articlepage'       => 'लेख देखें',
 'talk'              => 'चर्चा',
 'views'             => 'दर्शाव',
 'toolbox'           => 'साधन पेटी',
@@ -1009,13 +1002,6 @@ $1",
 तब तक गूगलसे खोज करें।
 {{SITENAME}} के उनके इंडेक्स पुराने हो सकतें हैं, इसका ध्यान रखें।',
 
-# Quickbar
-'qbsettings'               => 'शीघ्रपट',
-'qbsettings-none'          => 'बिल्कुल नहीं',
-'qbsettings-fixedleft'     => 'स्थिर बाई तरफ़',
-'qbsettings-fixedright'    => 'स्थिर दाहिनी तरफ़',
-'qbsettings-floatingleft'  => 'अस्थिर बाईं तरफ़',
-'qbsettings-floatingright' => 'अस्थिर दाहिनी तरफ़',
 
 # Preferences page
 'preferences'                   => 'मेरी पसंद',
