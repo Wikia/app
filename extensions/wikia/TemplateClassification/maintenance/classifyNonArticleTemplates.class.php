@@ -32,7 +32,6 @@ class ClassifyNonArticleTemplates extends Maintenance {
 
 		$this->setDB( wfGetDB( DB_SLAVE ) );
 		$tcs = new TemplateClassificationService();
-		$firstLevelTemplates = $nestedTemplates = [];
 
 		$namespacesTemplates = ( new \WikiaSQL() )
 			->SELECT( 'pt.page_title as template_title, pt.page_id as template_id, p.page_id as page_id' )
@@ -54,6 +53,7 @@ class ClassifyNonArticleTemplates extends Maintenance {
 				$pages[$row->template_id]['linkingPages'][] = (int)$row->page_id;
 			} );
 
+		$countFirstLevelTemplates = 0;
 		foreach ( $namespacesTemplates as $templateId => $data ) {
 			$templateTitle = $data['title'];
 			$linkingPages = $data['linkingPages'];
@@ -66,7 +66,7 @@ class ClassifyNonArticleTemplates extends Maintenance {
 				$pageRawTextLc = strtolower( WikiPage::newFromID( $pageId )->getRawText() );
 				$templateTitleLc = strtolower( $templateTitle );
 				if ( strpos( $pageRawTextLc, "{{{$templateTitleLc}" ) > -1 ) {
-					$firstLevelTemplates[] = $templateId;
+					$countFirstLevelTemplates++;
 					$isFirstLevel = true;
 					break;
 				}
@@ -93,7 +93,6 @@ class ClassifyNonArticleTemplates extends Maintenance {
 		}
 
 		$countContentNsTemplates = count( $namespacesTemplates );
-		$countFirstLevelTemplates = count( $firstLevelTemplates );
 		$results = [
 			'wiki_id' => $wgCityId,
 			'dbname' => $wgDBname,
