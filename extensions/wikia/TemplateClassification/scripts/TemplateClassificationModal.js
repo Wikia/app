@@ -19,7 +19,8 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 		track = tracker.buildTrackingFunction({
 			category: 'template-classification-dialog',
 			trackingMethod: 'analytics'
-		});
+		}),
+		$w = $(w);
 
 	/**
 	 * @param {function} typeGetterProvided Method that should return type in json format,
@@ -33,7 +34,7 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 		typeGetter = typeGetterProvided;
 		$typeLabel = $('.template-classification-type-text');
 
-		$(w).bind('keydown', openModalKeyboardShortcut);
+		$w.on('keydown', openModalKeyboardShortcut);
 
 		$('.template-classification-edit').click(function (e) {
 			e.preventDefault();
@@ -44,6 +45,9 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 	function openEditModal(modeProvided) {
 		var messagesLoader = falseFunction,
 			classificationFormLoader = falseFunction;
+
+		// Unbind modal opening keyboard shortcut while it's open
+		$w.unbind('keydown', openModalKeyboardShortcut);
 
 		labeling.init(modeProvided);
 
@@ -131,7 +135,11 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 		});
 
 		modalInstance.bind('close', function () {
-			$(w).unbind('keypress', submitFormOnEnterKeyPress);
+			$w.unbind('keypress', submitFormOnEnterKeyPress);
+
+			// Re-bind modal opening keyboard shortcut
+			$w.on('keydown', openModalKeyboardShortcut);
+
 			// Track - close TC modal
 			track({
 				action: tracker.ACTIONS.CLOSE,
@@ -147,7 +155,7 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 			});
 		});
 
-		$(w).bind('keypress', {modalInstance: modalInstance}, submitFormOnEnterKeyPress);
+		$w.on('keypress', {modalInstance: modalInstance}, submitFormOnEnterKeyPress);
 
 		/* Show the modal */
 		modalInstance.show();
@@ -255,19 +263,19 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 	}
 
 	function openModalKeyboardShortcut(e) {
-		// Shortcut - Action Key (Ctrl or Cmd) + Shift + K
-		if (e.shiftKey && (e.ctrlKey || e.metaKey)) {
-			var keyCode = e.keyCode ? e.keyCode : e.which;
-			if (keyCode === 75) {
-				e.preventDefault();
-				openEditModal('editType');
-			}
+		var keyCode = e.keyCode ? e.keyCode : e.which;
+
+		// Shortcut - Shift + Action Key (Ctrl or Cmd) + K
+		if (e.shiftKey && (e.ctrlKey || e.metaKey) && keyCode === 75) {
+			e.preventDefault();
+			openEditModal('editType');
 		}
 	}
 
 	function submitFormOnEnterKeyPress(e) {
-		// On Enter key press
 		var keyCode = e.keyCode ? e.keyCode : e.which;
+
+		// On Enter key press
 		if (keyCode === 13) {
 			e.preventDefault();
 			e.data.modalInstance.trigger('done');
