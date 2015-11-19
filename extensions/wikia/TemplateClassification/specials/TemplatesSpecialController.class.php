@@ -27,7 +27,7 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 		$allTemplates = $this->getAllTemplates();
 
 		if ( !empty( $allTemplates ) ) {
-			$classifiedTemplates = $this->getClassifiedTemplates();
+			$classifiedTemplates = $this->getClassifiedTemplates( $allTemplates );
 
 			$this->groups = $this->getTemplateGroups( $classifiedTemplates );
 			$this->templateName = $this->getVal( 'template' );
@@ -61,13 +61,15 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	 *
 	 * @return array
 	 */
-	private function getClassifiedTemplates() {
+	private function getClassifiedTemplates( $allTemplates ) {
 		$classifiedTemplates = [];
 
 		try {
 			$classifiedTemplates = ( new \TemplateClassificationService() )->getTemplatesOnWiki( $this->wg->CityId );
 		} catch( \Swagger\Client\ApiException $e ) {
 		}
+
+		$classifiedTemplates = array_intersect_key( $classifiedTemplates, $allTemplates );
 
 		return $classifiedTemplates;
 	}
