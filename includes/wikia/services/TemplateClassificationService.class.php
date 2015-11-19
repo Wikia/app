@@ -14,17 +14,18 @@ class TemplateClassificationService {
 
 	// TODO: Move types used for manual classification outside of Template Classification Service
 	// TODO: https://wikia-inc.atlassian.net/browse/CE-3017
-	const TEMPLATE_INFOBOX = 'infobox';
+	const TEMPLATE_CONTEXT_LINK = 'context-link';
 	const TEMPLATE_CUSTOM_INFOBOX = 'custom-infobox';
-	const TEMPLATE_QUOTE = 'quote';
-	const TEMPLATE_NAVBOX = 'navbox';
-	const TEMPLATE_FLAG = 'notice';
-	const TEMPLATE_REF = 'reference';
-	const TEMPLATE_MEDIA = 'media';
 	const TEMPLATE_DATA = 'data';
 	const TEMPLATE_DESIGN = 'design';
+	const TEMPLATE_INFOBOX = 'infobox';
+	const TEMPLATE_MEDIA = 'media';
+	const TEMPLATE_NAVBOX = 'navbox';
 	const TEMPLATE_NAV = 'navigation';
 	const TEMPLATE_NOT_ART = 'nonarticle';
+	const TEMPLATE_FLAG = 'notice';
+	const TEMPLATE_QUOTE = 'quote';
+	const TEMPLATE_REFERENCES = 'reference';
 	const TEMPLATE_UNKNOWN = 'unknown';
 	const TEMPLATE_UNCLASSIFIED = '' ;
 
@@ -32,6 +33,10 @@ class TemplateClassificationService {
 
 	/**
 	 * Allowed types of templates stored in an array to make a validation process easier.
+	 *
+	 * The order of types in this array determines the order of the types displayed in the
+	 * classification dialog.
+	 *
 	 * @var array
 	 */
 	static $templateTypes = [
@@ -39,7 +44,8 @@ class TemplateClassificationService {
 		self::TEMPLATE_QUOTE,
 		self::TEMPLATE_NAVBOX,
 		self::TEMPLATE_FLAG,
-		self::TEMPLATE_REF,
+		self::TEMPLATE_CONTEXT_LINK,
+		self::TEMPLATE_REFERENCES,
 		self::TEMPLATE_MEDIA,
 		self::TEMPLATE_DATA,
 		self::TEMPLATE_DESIGN,

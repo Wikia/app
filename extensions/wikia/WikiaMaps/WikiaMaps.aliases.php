@@ -56,3 +56,8 @@ $specialPageAliases['pl'] = array(
 $specialPageAliases['vi'] = array(
 	'Maps' => array( 'Bản_đồ' ),
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'Maps' => array( 'マップ' )
+);

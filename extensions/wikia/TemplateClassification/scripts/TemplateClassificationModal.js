@@ -197,6 +197,17 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 	}
 
 	function setupTemplateClassificationModal(content) {
+		/* Modal component configuration */
+		modalConfig = {
+			vars: {
+				id: 'TemplateClassificationEditModal',
+				classes: ['template-classification-edit-modal'],
+				size: 'small', // size of the modal
+				content: content, // content
+				title: labeling.getTitle()
+			}
+		};
+
 		var modalButtons = [
 			{
 				vars: {

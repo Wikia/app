@@ -60,7 +60,6 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 		detectionScript.src = context.opts.sourcePointDetectionUrl;
 		detectionScript.setAttribute('data-client-id', getClientId());
 
-		// @TODO Refactor event listeners after ADEN-2452
 		doc.addEventListener('sp.blocking', function () {
 			trackStatusOnce('yes');
 		});

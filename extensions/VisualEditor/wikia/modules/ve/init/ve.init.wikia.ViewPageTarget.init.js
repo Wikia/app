@@ -89,6 +89,11 @@
 	function getTarget() {
 		var loadTargetDeferred;
 
+		ve.track( 'wikia', {
+			action: Wikia.Tracker.ACTIONS.IMPRESSION,
+			label: 'edit-page'
+		} );
+
 		showSpinner();
 
 		if ( !targetDeferred ) {

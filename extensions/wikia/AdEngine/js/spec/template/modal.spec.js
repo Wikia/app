@@ -17,25 +17,29 @@ describe('ext.wikia.adEngine.template.modal', function () {
 			adDetect: {},
 			modalHandlerFactory: {
 				create: function () {
+					return mocks.modalHandlerMock;
+				}
+			},
+			modalHandlerMock: {
+				create: noop,
+				show: noop,
+				getExpansionModel: function () {
 					return {
-						create: noop,
-						show: noop,
-						getExpansionModel: function () {
-							return {
-								availableHeightRatio: 1,
-								availableWidthRatio: 1,
-								heightSubtract: 80,
-								minWidth: 100,
-								minHeight: 100,
-								maximumRatio: 3
-							};
-						}
+						availableHeightRatio: 1,
+						availableWidthRatio: 1,
+						heightSubtract: 80,
+						minWidth: 100,
+						minHeight: 100,
+						maximumRatio: 3
 					};
 				}
 			},
 			log: noop,
 			iframeWriter: {
 				getIframe: noop
+			},
+			iframeMock: {
+				style: {}
 			},
 			win: {
 				addEventListener: noop,
@@ -56,17 +60,19 @@ describe('ext.wikia.adEngine.template.modal', function () {
 						style: {}
 					};
 				}
-			},
-			params: {
-				width: 100,
-				height: 100,
-				scalable: true
 			}
 		};
 
 	beforeEach(function () {
 		mocks.win.innerWidth = 0;
 		mocks.win.innerHeight = 0;
+		mocks.params = {
+			width: 100,
+			height: 100,
+			scalable: true
+		};
+
+		spyOn(mocks.iframeWriter, 'getIframe').and.returnValue(mocks.iframeMock);
 	});
 
 	function getModule() {
@@ -82,23 +88,32 @@ describe('ext.wikia.adEngine.template.modal', function () {
 	}
 
 	it('Ad should be scaled by height', function () {
-		var myIframe = { style: {} };
-		spyOn(mocks.iframeWriter, 'getIframe').and.returnValue(myIframe);
-
 		mocks.win.innerWidth = 300;
 		mocks.win.innerHeight = 280;
 		getModule().show(mocks.params);
-		expect(myIframe.style.transform).toBe('scale(2)');
+		expect(mocks.iframeMock.style.transform).toBe('scale(2)');
 	});
 
 	it('Ad should be scaled by width', function () {
-		var myIframe = { style: {} };
-		spyOn(mocks.iframeWriter, 'getIframe').and.returnValue(myIframe);
-
 		mocks.win.innerWidth = 300;
 		mocks.win.innerHeight = 600;
 		getModule().show(mocks.params);
-		expect(myIframe.style.transform).toBe('scale(3)');
+		expect(mocks.iframeMock.style.transform).toBe('scale(3)');
+	});
+
+	it('Sets default close button delay', function () {
+		spyOn(mocks.modalHandlerMock, 'create');
+		getModule().show(mocks.params);
+
+		expect(mocks.modalHandlerMock.create.calls.mostRecent().args[2]).toEqual(0);
+	});
+
+	it('Sets close button delay from params', function () {
+		spyOn(mocks.modalHandlerMock, 'create');
+		mocks.params.closeDelay = 5;
+		getModule().show(mocks.params);
+
+		expect(mocks.modalHandlerMock.create.calls.mostRecent().args[2]).toEqual(5);
 	});
 
 });

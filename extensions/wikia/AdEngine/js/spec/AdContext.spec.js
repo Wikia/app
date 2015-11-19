@@ -739,4 +739,113 @@ describe('AdContext', function () {
 		adContext = getModule();
 		expect(adContext.getContext().providers.taboola).toBeFalsy();
 	});
+
+	it('enables google consumer surveys when country in instant var and abtest group is GROUP_5', function () {
+		mocks.win = {
+			ads: {
+				context: {
+					opts: {
+						sourcePointDetectionUrl: '//foo.bar',
+						showAds: true
+					},
+					targeting: {
+						skin: 'oasis'
+					}
+				}
+			}
+		};
+		mocks.instantGlobals = {
+			wgAdDriverSourcePointDetectionCountries: ['CURRENT_COUNTRY'],
+			wgAdDriverGoogleConsumerSurveysCountries: ['CURRENT_COUNTRY']
+		};
+		spyOn(mocks.abTesting, 'getGroup').and.returnValue('GROUP_5');
+
+		expect(getModule().getContext().opts.googleConsumerSurveys).toBeTruthy();
+	});
+
+	it('disables google consumer surveys when abtest group is not GROUP_5', function () {
+		mocks.win = {
+			ads: {
+				context: {
+					opts: {
+						sourcePointDetectionUrl: '//foo.bar',
+						showAds: true
+					},
+					targeting: {
+						skin: 'oasis'
+					}
+				}
+			}
+		};
+		mocks.instantGlobals = {
+			wgAdDriverSourcePointDetectionCountries: ['CURRENT_COUNTRY'],
+			wgAdDriverGoogleConsumerSurveysCountries: ['YY']
+		};
+
+		expect(getModule().getContext().opts.googleConsumerSurveys).toBeFalsy();
+	});
+
+	it('disables google consumer surveys when country not in instant var', function () {
+		mocks.win = {
+			ads: {
+				context: {
+					opts: {
+						sourcePointDetectionUrl: '//foo.bar'
+					},
+					targeting: {
+						skin: 'oasis'
+					}
+				}
+			}
+		};
+		mocks.instantGlobals = {
+			wgAdDriverSourcePointDetectionCountries: ['CURRENT_COUNTRY'],
+			wgAdDriverGoogleConsumerSurveysCountries: ['CURRENT_COUNTRY']
+		};
+
+		expect(getModule().getContext().opts.googleConsumerSurveys).toBeFalsy();
+	});
+
+	it('disables google consumer surveys when detection is off', function () {
+		mocks.win = {
+			ads: {
+				context: {
+					opts: {
+						sourcePointDetectionUrl: '//foo.bar'
+					},
+					targeting: {
+						skin: 'oasis'
+					}
+				}
+			}
+		};
+		mocks.instantGlobals = {
+			wgAdDriverSourcePointDetectionCountries: ['YY'],
+			wgAdDriverGoogleConsumerSurveysCountries: ['CURRENT_COUNTRY']
+		};
+
+		expect(getModule().getContext().opts.googleConsumerSurveys).toBeFalsy();
+	});
+
+	it('disables recoveredAdsMessage when showAds is false', function () {
+		mocks.win = {
+			ads: {
+				context: {
+					opts: {
+						sourcePointDetectionUrl: '//foo.bar',
+						showAds: false
+					},
+					targeting: {
+						skin: 'oasis'
+					}
+				}
+			}
+		};
+		mocks.instantGlobals = {
+			wgAdDriverSourcePointDetectionCountries: ['CURRENT_COUNTRY'],
+			wgAdDriverGoogleConsumerSurveysCountries: ['CURRENT_COUNTRY']
+		};
+
+		expect(getModule().getContext().opts.googleConsumerSurveys).toBeFalsy();
+	});
 });
