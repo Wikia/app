@@ -39,16 +39,16 @@ class TemplateClassificationService {
 	 * @var array
 	 */
 	static $templateTypes = [
+		self::TEMPLATE_INFOBOX,
+		self::TEMPLATE_QUOTE,
+		self::TEMPLATE_NAVBOX,
+		self::TEMPLATE_FLAG,
+		self::TEMPLATE_REFERENCES,
+		self::TEMPLATE_MEDIA,
 		self::TEMPLATE_DATA,
 		self::TEMPLATE_DESIGN,
-		self::TEMPLATE_FLAG,
-		self::TEMPLATE_INFOBOX,
-		self::TEMPLATE_MEDIA,
 		self::TEMPLATE_NAV,
-		self::TEMPLATE_NAVBOX,
 		self::TEMPLATE_NOT_ART,
-		self::TEMPLATE_QUOTE,
-		self::TEMPLATE_REFERENCES,
 		self::TEMPLATE_UNKNOWN,
 	];
 
