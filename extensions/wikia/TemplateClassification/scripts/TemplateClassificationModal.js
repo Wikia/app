@@ -81,14 +81,10 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 			$classificationForm = $(classificationForm[0]);
 		}
 
-		if (!templateType) {
-			templateType = 'unknown';
-		}
-
 		// Mark selected type
 		$preselectedType = $classificationForm.find('#template-classification-' + templateType);
 
-		if (!!$preselectedType) {
+		if ($preselectedType.length !== 0) {
 			$classificationForm.find('input[checked="checked"]').removeAttr('checked');
 			$preselectedType.attr('checked', 'checked');
 		}
