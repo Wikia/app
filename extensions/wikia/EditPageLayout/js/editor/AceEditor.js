@@ -49,6 +49,7 @@ define(
 	function beforeEditorInit() {
 		$('.loading-indicator').remove();
 		$('#wpSave').removeAttr('disabled');
+		$('#infoboxpreview').click(launchEditorPreview);
 		$editPage.addClass('editpage-sourcewidemode mode-source ' + narrowClassName);
 	}
 
@@ -57,7 +58,6 @@ define(
 	 */
 	function initOptions() {
 		var options = {
-			wrap: true,
 			showPrintMargin: false,
 			fontFamily: 'Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace'
 		};
@@ -174,6 +174,19 @@ define(
 		}
 
 		$('.editpage-widemode-trigger').click(editorModeChange);
+	}
+
+	function launchEditorPreview(){
+		var editor_value = ace.getContent();
+		var wiki_url = mw.config.get('wgServer').split('://')[1];
+		var template_name = mw.config.get('wgPageName').split(':')[1];
+
+		$('<form action="http://infoboxpreview.appspot.com" method="POST"/>')
+			.append($('<input type="hidden" name="editor_value" value="' + editor_value + '">'))
+			.append($('<input type="hidden" name="wiki_url" value="' + wiki_url + '">'))
+			.append($('<input type="hidden" name="template_name" value="' + template_name + '">'))
+			.appendTo($(document.body))
+			.submit();
 	}
 
 	return {

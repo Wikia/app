@@ -20,11 +20,6 @@
 			<a id="EditPageTitle" class="EditPageTitle" title="<?= wfMessage('editpagelayout-edit-title')->escaped() ?>">
 				<img class="sprite edit-pencil-small" src="<?= $wg->BlankImgUrl ?>">
 			</a>
-			<?php if ( !empty( $extraHeaderHtml ) ) : ?>
-				<div class="editpage-extra-header-html">
-					<?= $extraHeaderHtml ?>
-				</div>
-			<?php endif; ?>
 			<nav id="EditPageTabs" class="EditPageTabs editpage-tabs" data-space-type="tabs" data-space-autoshow="true"></nav>
 			<aside id="HelpLink" class="HelpLink"><?= $helpLink ?></aside>
 			<aside id="NotificationsLink" class="NotificationsLink"><a href="#"><?= $notificationsLink ?></a></aside>
@@ -129,6 +124,9 @@
 									</a>
 								</div>
 							<?php endif ?>
+							<?php if ( $extraPageControlsHtml ) : ?>
+								<?= $extraPageControlsHtml ?>
+							<?php endif; ?>
 							<nav class="buttons">
 								<?php if ( $showPreview ): ?>
 									<?= $app->renderView( 'EditPageLayout', 'Buttons', [ 'showMobilePreview' => $showMobilePreview ]); ?>
@@ -136,6 +134,10 @@
 									<?= $app->renderView( 'EditPageLayout', 'CodeButtons'); ?>
 								<?php endif ?>
 							</nav>
+						</div>
+						<div class="module_content">
+							<br />
+							Try the new infobox editor!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="infoboxpreview" value="Go to Editor"/>
 						</div>
 					</div>
 				</div>
