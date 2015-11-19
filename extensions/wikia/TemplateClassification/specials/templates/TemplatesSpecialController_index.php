@@ -16,8 +16,8 @@
 					<?php endforeach ?>
 				</select>
 			</label>
+			<input type="submit" value="<?= wfMessage( 'template-classification-special-search' )->escaped() ?>">
 		<?php endif ?>
-		<input type="submit" value="<?= wfMessage( 'template-classification-special-search' )->escaped() ?>">
 	</form>
 </p><br/>
 <?php if ( !empty( $templates ) ): ?>
