@@ -111,7 +111,12 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	private function filterTemplatesByName( $allTemplates, $classifiedTemplates ) {
 		$templates = [];
 
-		if ( $pageId = array_search( $this->templateName, array_column( $allTemplates, 'title', 'page_id' ) ) ) {
+		$pageId = array_search(
+			strtolower( $this->templateName ),
+			array_map( 'strtolower', array_column( $allTemplates, 'title', 'page_id' ) )
+		);
+
+		if ( $pageId ) {
 			$templates[$pageId] = $this->prepareTemplate( $pageId, $allTemplates[$pageId] );
 			$this->type = $this->getTemplateType( $pageId, $classifiedTemplates );
 		}

@@ -1,15 +1,21 @@
 <p>
 	<form method="GET" action="">
 		<label for="template">
-			<?= wfMessage( 'template-classification-special-find' )->escaped() ?>
+			<?= wfMessage( 'template-classification-special-find-template' )->escaped() ?>
 			<input name="template" type="text" value="<?= Sanitizer::encodeAttribute( $templateName ) ?>" />
 		</label>
+		<input type="submit" value="<?= wfMessage( 'template-classification-special-search' )->escaped() ?>">
+	</form>
+	<form method="GET" action="">
 		<?php if ( !empty( $groups ) ): ?>
-			<select name="type">
-				<?php foreach( $groups as $group ): ?>
-					<option value="<?= Sanitizer::encodeAttribute( $group ) ?>" <?php if( $group == $type ): ?>selected<?php endif ?>><?= wfMessage( 'template-classification-type-' . $group )->escaped() ?></option>
-				<?php endforeach ?>
-			</select>
+			<label for="type">
+				<?= wfMessage( 'template-classification-special-find-type' )->escaped() ?>
+				<select name="type">
+					<?php foreach( $groups as $group ): ?>
+						<option value="<?= Sanitizer::encodeAttribute( $group ) ?>" <?php if( $group == $type ): ?>selected<?php endif ?>><?= wfMessage( 'template-classification-type-' . $group )->escaped() ?></option>
+					<?php endforeach ?>
+				</select>
+			</label>
 		<?php endif ?>
 		<input type="submit" value="<?= wfMessage( 'template-classification-special-search' )->escaped() ?>">
 	</form>
