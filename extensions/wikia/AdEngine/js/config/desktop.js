@@ -9,8 +9,8 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.adDecoratorPageDimensions',
 
 	// adProviders
-	'ext.wikia.adEngine.provider.evolve',
 	'ext.wikia.adEngine.provider.directGpt',
+	'ext.wikia.adEngine.provider.evolve',
 	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.monetizationService',
 	'ext.wikia.adEngine.provider.openX',
@@ -28,8 +28,8 @@ define('ext.wikia.adEngine.config.desktop', [
 	adDecoratorPageDimensions,
 
 	// AdProviders
-	adProviderEvolve,
 	adProviderDirectGpt,
+	adProviderEvolve,
 	adProviderLiftium,
 	adProviderMonetizationService,
 	adProviderOpenX,
