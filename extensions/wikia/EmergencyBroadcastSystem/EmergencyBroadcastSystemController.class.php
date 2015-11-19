@@ -6,15 +6,17 @@ class EmergencyBroadcastSystemController extends WikiaController {
 
 	public static function saveUserResponse( $val ) {
 		global $wgUser;
+		$option_name = 'ebs_response';
 		if ($val === null) {
 			// invalid call, do nothing
+			wfErrorLog( 'Invalid call to EmergencyBroadcastSystemController::saveUserResponse()', $wgDebugLogFile );
 		} elseif ($val === 0) { // no
 			// if user clicks no, set ebs_response to 0
-			$wgUser->setOption( 'ebs_response', 0 );
+			$wgUser->setOption( $option_name, 0 );
 		} else {
 			// if user clicks yes, set ebs_response to the current time
 			$timestamp = (new DateTime())->getTimestamp();
-			$wgUser->setOption( 'ebs_response', $timestamp );
+			$wgUser->setOption( $option_name, $timestamp );
 		}
 	}
 

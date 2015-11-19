@@ -2,17 +2,18 @@
 	'use strict';
 
 	function init() {
-		$('.ebs-primary-action').click(onClickYes);
-		$('.ebs-secondary-action').click(onClickNo);
+		$('.ebs-primary-action').click(function(){ handleClick( 1 ); });
+		$('.ebs-secondary-action').click(function(){ handleClick( 0 ); });
 	}
 
-	function onClickYes() {
-		$.nirvana.postJson('EmergencyBroadcastSystemController', 'saveUserResponse', 1, function(response){ alert('success yes'); }, function(response){ alert('error yes'); });
-		hideEBS();
-	}
-
-	function onClickNo() {
-		$.nirvana.postJson('EmergencyBroadcastSystemController', 'saveUserResponse', 0, function(response){ alert('success no'); }, function(response){ alert('error no'); });
+	function handleClick( val ) {
+		$.nirvana.postJson('EmergencyBroadcastSystemController', 'saveUserResponse', val,
+			function( response ) {
+				console.log('Successfully saved user EBS response.');
+			},
+			function( response ) {
+				console.error('Error saving user EBS response.');
+			});
 		hideEBS();
 	}
 
