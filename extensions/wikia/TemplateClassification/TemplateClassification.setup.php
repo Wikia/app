@@ -27,6 +27,11 @@ $wgExtensionCredits['other'][] = [
 ];
 
 /**
+ * UserTemplateClassificationService
+ */
+$wgAutoloadClasses['UserTemplateClassificationService'] = __DIR__ . '/services/UserTemplateClassificationService.class.php';
+
+/**
  * Hooks
  */
 $wgAutoloadClasses['Wikia\TemplateClassification\Hooks'] = __DIR__ . '/TemplateClassification.hooks.php';

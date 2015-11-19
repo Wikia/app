@@ -1,8 +1,5 @@
 <?php
 
-
-use Swagger\Client\ApiException;
-
 class TemplateClassificationApiController extends WikiaApiController {
 
 	private $templateClassificationService = null;
@@ -77,7 +74,7 @@ class TemplateClassificationApiController extends WikiaApiController {
 
 	private function getTemplateClassificationService() {
 		if ( is_null( $this->templateClassificationService ) ) {
-			$this->templateClassificationService = new TemplateClassificationService();
+			$this->templateClassificationService = new UserTemplateClassificationService();
 		}
 
 		return $this->templateClassificationService;
