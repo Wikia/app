@@ -100,6 +100,15 @@ $messages['qqq'] = [
 	'template-classification-indicator' => 'Shown in page subheader and near classification dialog entry points to indicate which type the template is currently classified as.',
 
 	'template-classification-notification-error-retry' => 'A message shown to a user in a Banner Notification if classifying of a template resulted with an error and we want a user to retry doing it.',
+
+	'template-classification-special-last-edit' => 'Information who and when made last edit for chosen article on the list.',
+	'template-classification-special-search' => 'Label for search button.',
+	'template-classification-special-find' => 'Label before text input field to find template by name.',
+	'template-classification-special-noresults' => 'Messages shown if no templates were found.',
+	'template-classification-special-page-header' => 'Table column header describing page name.',
+	'template-classification-special-used-header' => 'Table column header describing where this templates were used.',
+	'template-classification-special-type-header' => 'Table column header describing template type.',
+	'special-templates' => 'Name of special page containing all templates on wiki with types.'
 ];
 
 $messages['pl'] = [

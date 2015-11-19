@@ -48,10 +48,12 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 			}
 		}
 
-		$this->setVal( 'templates', $this->templates );
-		$this->setVal( 'type', $this->type );
-		$this->setVal( 'groups', $this->groups );
-		$this->setVal( 'templateName', $this->templateName );
+		$this->response->setValues( [
+			'templates' => $this->templates,
+			'type' => $this->type,
+			'groups'=> $this->groups,
+			'templateName' => $this->templateName
+		] );
 	}
 
 	/**
