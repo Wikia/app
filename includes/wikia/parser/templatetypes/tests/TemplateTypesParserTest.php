@@ -34,7 +34,8 @@ class TemplateTypesParserTest extends WikiaBaseTest {
 	 *
 	 * @dataProvider shouldChangeTemplateParsingDataProvider
 	 */
-	public function testShouldChangeTemplateParsing( $type, $changedTemplateText ) {
+	public function testShouldChangeTemplateParsing( $type, $changedTemplateText )
+	{
 		$text = self::TEST_TEMPLATE_TEXT;
 		$title = $this->getMock( 'Title' );
 
@@ -86,48 +87,6 @@ class TemplateTypesParserTest extends WikiaBaseTest {
 			[
 				'references',
 				'<references />'
-			]
-		];
-	}
-
-	/**
-	 * @param $contextLinkWikitext
-	 * @param $expectedTemplateWikiext
-	 *
-	 * @dataProvider testSanitizeContextLinkWikitextDataProvider
-	 */
-	public function testSanitizeContextLinkWikitext( $contextLinkWikitext, $expectedTemplateWikiext ) {
-		$sanitizedTemplateWikiext = TemplateTypesParser::sanitizeContextLinkWikitext( $contextLinkWikitext );
-
-		$this->assertEquals( $sanitizedTemplateWikiext, $expectedTemplateWikiext );
-	}
-
-	public function testSanitizeContextLinkWikitextDataProvider() {
-		return [
-			[
-				'[[:Disciplinary hearing of Harry Potter|Disciplinary hearing of Harry Potter]]',
-				'[[:Disciplinary hearing of Harry Potter|Disciplinary hearing of Harry Potter]]'
-			],
-			[
-				'* [[Let\'s see powerrangers]] - \'\'[[Super Sentai]]\'\' counterpart
-in \'\'[[and some more crazy stuff!]]\'\'.\'\'',
-				'[[Let\'s see powerrangers]] - [[Super Sentai]] counterpart in [[and some more crazy stuff!]].'
-			],
-			[
-				':\'\'Italics [[Foo Bar]] - [[foo|here]]\'\'.',
-				'Italics [[Foo Bar]] - [[foo|here]].',
-			],
-			[
-				'   \'\'\'Bold [[Foo Bar]] - [[foo|here]] with spaces\'\'\'.',
-				'Bold [[Foo Bar]] - [[foo|here]] with spaces.',
-			],
-			[
-				'===Headers [[Foo Bar]]=== - [[foo|here]] in context-links*!.',
-				'Headers [[Foo Bar]] - [[foo|here]] in context-links*!.'
-			],
-			[
-				'===Headers [[Foo Bar]]====>[[foo|here]] in context-links*!.',
-				'Headers [[Foo Bar]]=>[[foo|here]] in context-links*!.'
 			]
 		];
 	}
