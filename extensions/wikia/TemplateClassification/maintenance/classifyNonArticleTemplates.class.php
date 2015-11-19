@@ -42,7 +42,8 @@ class ClassifyNonArticleTemplates extends Maintenance {
 			->INNER_JOIN( 'page' )->AS_( 'p' )
 			->ON( 'tl.tl_from', 'p.page_id' )
 			->WHERE( 'tl.tl_namespace' )->EQUAL_TO( NS_TEMPLATE )
-				->AND_( 'p.page_namespace' )->IN( $wgContentNamespaces )
+			->AND_( 'pt.page_namespace' )->EQUAL_TO( NS_TEMPLATE )
+			->AND_( 'p.page_namespace' )->IN( $wgContentNamespaces )
 			->runLoop( $this->getDB(), function ( &$pages, $row ) {
 				if ( !isset( $pages[$row->template_id]['title'] ) ) {
 					// First run for this template ID
@@ -58,7 +59,7 @@ class ClassifyNonArticleTemplates extends Maintenance {
 			$linkingPages = $data['linkingPages'];
 			$count = count( $linkingPages );
 
-			$this->out( "Processing {$count} inclusions of template {$templateTitle} ({$templateId})" );
+			$this->out( "\nProcessing {$count} inclusions of template {$templateTitle} ({$templateId})" );
 			$isFirstLevel = false;
 
 			foreach ( $linkingPages as $pageId ) {
@@ -101,12 +102,13 @@ class ClassifyNonArticleTemplates extends Maintenance {
 			'Nested templates' => $countContentNsTemplates - $countFirstLevelTemplates,
 		];
 
+		$this->out( "\nResults: " . json_encode( $results ) );
 		$this->logResults( $results );
 	}
 
 	private function out( $s ) {
 		if ( !$this->quiet ) {
-			$this->output( "$s\n\n" );
+			$this->output( "$s\n" );
 		}
 	}
 
