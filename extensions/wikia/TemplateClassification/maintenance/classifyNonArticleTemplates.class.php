@@ -118,7 +118,7 @@ class ClassifyNonArticleTemplates extends Maintenance {
 
 	private function logResults( array $results ) {
 		if ( isset( $this->logFile ) ) {
-			$data = implode( ',', array_values( $results ) );
+			$data = implode( ',', $results );
 			file_put_contents( $this->logFile, $data, FILE_APPEND );
 		}
 	}
