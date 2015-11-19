@@ -15,6 +15,13 @@ class TransactionTraceNewrelic {
 		# PLATFORM-1696: RabbitMQ traffic
 		'Wikia\Tasks\Tasks\BaseTask::queue',
 		'PhpAmqpLib\Wire\IO\StreamIO::read',
+
+		# PLATFORM-1694: HTTP requests
+		'Wikia\Service\Helios\HeliosClientImpl::request', # Helios
+		'PhalanxService::sendToPhalanxDaemon', # Phalanx
+		'Wikia\Persistence\User\Preferences\PreferencePersistenceSwaggerService::get', # Preferences
+		'TemplateClassificationService::getType', # Template classification
+		'UserMailer::send', # emails
 	];
 
 	/**
