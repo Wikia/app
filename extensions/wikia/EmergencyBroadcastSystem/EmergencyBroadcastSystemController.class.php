@@ -1,6 +1,22 @@
 <?php
 class EmergencyBroadcastSystemController extends WikiaController {
-	public function index( ) {
+	private $helper;
+
+	public function __construct() {
+		parent::__construct();
+	}
+
+	public function index() {
+		$content = '';
+
+		if ( $this->isCorrectPage() && $this->userIsPowerUser() && $this->hasNonPortableInfoBoxes() ) {
+			$content = F::app()->renderView('EmergencyBroadcastSystem', 'indexContent');
+		}
+
+		$this->response->setVal( 'content', $content );
+	}
+
+	public function indexContent() {
 		$this->response->setVal( 'nonPortableCount', '3' ); // Temporary number for testing
 	}
 
@@ -40,5 +56,24 @@ class EmergencyBroadcastSystemController extends WikiaController {
 				return false;
 			}
 		}
+	}
+
+	// PROTECTED
+
+	protected function isCorrectPage() {
+		$title = $this->getContext()->getTitle();
+		$specialPageName = Transaction::getAttribute(Transaction::PARAM_SPECIAL_PAGE_NAME);
+
+		return $title->isContentPage() || $specialPageName === 'WikiActivity' || $specialPageName === 'Recentactivity';
+	}
+
+	protected function userIsPowerUser() {
+		$user = $this->getContext()->getUser();
+		return $user->isPowerUser();
+	}
+
+	protected function hasNonPortableInfoBoxes() {
+		// TODO: Actually check for non portable infoboxes
+		return true;
 	}
 }
