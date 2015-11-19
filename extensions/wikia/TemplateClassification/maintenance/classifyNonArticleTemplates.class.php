@@ -63,7 +63,12 @@ class ClassifyNonArticleTemplates extends Maintenance {
 			$isFirstLevel = false;
 
 			foreach ( $linkingPages as $pageId ) {
-				$pageRawTextLc = strtolower( WikiPage::newFromID( $pageId )->getRawText() );
+				$wikiPage = WikiPage::newFromID( $pageId );
+				if ( !$wikiPage instanceof WikiPage ) {
+					continue;
+				}
+
+				$pageRawTextLc = strtolower( $wikiPage->getRawText() );
 				$templateTitleLc = strtolower( $templateTitle );
 				if ( strpos( $pageRawTextLc, "{{{$templateTitleLc}" ) > -1 ) {
 					$countFirstLevelTemplates++;
