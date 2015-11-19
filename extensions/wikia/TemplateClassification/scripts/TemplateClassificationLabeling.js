@@ -87,13 +87,9 @@ define('TemplateClassificationLabeling',
 		 * @returns {string}
 		 */
 		function addTargetBlankToLinks(content) {
-			var $c = $(content),
-				newContent = '';
+			var $c = $('<div>').html(content);
 			$c.find('a').attr('target', '_blank');
-			$.each($c, function (key, val) {
-				newContent += val.outerHTML;
-			});
-			return newContent;
+			return $c.html();
 		}
 
 		return {
