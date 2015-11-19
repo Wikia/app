@@ -160,7 +160,6 @@ $messages = array(
 'specialpage'       => 'Paggena speciàle',
 'talk'              => 'Chiàcchiera',
 'toolbox'           => 'Strumiente',
-'imagepage'         => 'Paggena fiùra',
 'otherlanguages'    => 'Ate léngue',
 'redirectedfrom'    => "(Redirect 'a $1)",
 'lastmodifiedat'    => "Urdema cagnamiénto pe' a paggena: $2, $1.",

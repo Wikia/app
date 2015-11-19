@@ -22,7 +22,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  * //Wikia Change End
  */
 abstract class Skin extends ContextSource {
-	protected $skinname = 'standard';
+	protected $skinname = 'oasis';
 	protected $mRelevantTitle = null;
 	protected $mRelevantUser = null;
 
@@ -99,7 +99,7 @@ abstract class Skin extends ContextSource {
 	 * Normalize a skin preference value to a form that can be loaded.
 	 * If a skin can't be found, it will fall back to the configured
 	 * default (or the old 'Classic' skin if that's broken).
-	 * @param $key String: 'monobook', 'standard', etc.
+	 * @param $key String: 'monobook', etc.
 	 * @return string
 	 */
 	static function normalizeKey( $key ) {
@@ -138,7 +138,7 @@ abstract class Skin extends ContextSource {
 
 	/**
 	 * Factory method for loading a skin of a given type
-	 * @param $key String: 'monobook', 'standard', etc.
+	 * @param $key String: 'monobook', etc.
 	 * @return Skin
 	 */
 	static function &newFromKey( $key ) {

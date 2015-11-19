@@ -190,7 +190,6 @@ $messages = array(
 'talkpagelinktext'  => 'бєсѣда',
 'specialpage'       => 'нарочьна страница',
 'personaltools'     => 'моꙗ орѫдиꙗ',
-'postcomment'       => 'нова чѧсть',
 'talk'              => 'бєсѣда',
 'toolbox'           => 'орѫдиꙗ',
 'otherlanguages'    => 'дроугꙑ ѩꙁꙑкꙑ',

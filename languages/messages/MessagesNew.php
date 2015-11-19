@@ -186,7 +186,6 @@ $messages = array(
 'personaltools'    => 'निजी ज्याब्व',
 'talk'             => 'खँलाबँला',
 'toolbox'          => 'ज्याब्व सन्दुक',
-'projectpage'      => 'ज्याखँ पौ क्येनादिसँ',
 'otherlanguages'   => 'मेमेगु भाषाय्',
 'jumptosearch'     => 'मालादिसँ',
 

@@ -138,7 +138,6 @@ $messages = array(
 'talkpage'          => 'Sogdanunun ang dya nga pahina',
 'talkpagelinktext'  => 'Wakal',
 'specialpage'       => 'Espesyal nga Pahina',
-'postcomment'       => 'Togro Komento',
 'talk'              => 'Sugilanon',
 'views'             => 'Manga paglantaw',
 'toolbox'           => 'Pangbolig',

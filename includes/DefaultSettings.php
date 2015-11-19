@@ -2288,11 +2288,6 @@ $wgSiteNotice = '';
 $wgExtraSubtitle	= '';
 
 /**
- * If this is set, a "donate" link will appear in the sidebar. Set it to a URL.
- */
-$wgSiteSupportPage	= '';
-
-/**
  * Validate the overall output using tidy and refuse
  * to display the page if it's not valid.
  */

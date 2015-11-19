@@ -179,10 +179,7 @@ $messages = array(
 'create'         => '建立',
 'delete'         => '刪除',
 'protect_change' => '更改',
-'postcomment'    => '新段落',
 'toolbox'        => '工具箱',
-'userpage'       => '檢視使用者頁面',
-'projectpage'    => '檢視計畫頁面',
 'lastmodifiedat' => '本頁最後更動時間在 $1 $2。',
 'jumptosearch'   => '搜尋',
 

@@ -103,7 +103,6 @@ $messages = array(
 'specialpage'      => 'Pagina speciale',
 'talk'             => 'Discussione',
 'toolbox'          => 'Stuvigli',
-'userpage'         => 'Vede a pagina di utilizatore',
 'otherlanguages'   => 'In altri lingui',
 'lastmodifiedat'   => 'Ultima mudifica di ista pagina u $1 à e $2.',
 'protectedpage'    => 'Pagina prutetta',

@@ -124,7 +124,6 @@ $messages = array(
 'talkpagelinktext' => 'Сёрнитан',
 'specialpage'      => 'Тодильнöй листбок',
 'personaltools'    => 'Аслат керöтаннэз',
-'postcomment'      => 'Виль юкöт',
 'talk'             => 'Сёрни',
 'views'            => 'Видзöтöммез',
 'toolbox'          => 'Керöтаннэз',

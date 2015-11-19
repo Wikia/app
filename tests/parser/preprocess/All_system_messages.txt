@@ -5323,13 +5323,6 @@ View source
 </td><td>
 {{int:Viewsource}}
 </td></tr><tr><td>
-[http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Viewtalkpage&action=edit viewtalkpage]<br>
-[[MediaWiki_talk:Viewtalkpage|Talk]]
-</td><td>
-View discussion
-</td><td>
-{{int:Viewtalkpage}}
-</td></tr><tr><td>
 [http://tl.wiktionary.org/w/wiki.phtml?title=MediaWiki:Wantedpages&action=edit wantedpages]<br>
 [[MediaWiki_talk:Wantedpages|Talk]]
 </td><td>

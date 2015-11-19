@@ -314,7 +314,6 @@ $messages = array(
 'talkpagelinktext'  => 'Peugah haba',
 'specialpage'       => 'Ôn kusuih',
 'personaltools'     => 'Alat droë',
-'postcomment'       => 'Beunagi baro',
 'talk'              => 'Peugah haba',
 'views'             => 'Leumah',
 'toolbox'           => 'Plôk alat',

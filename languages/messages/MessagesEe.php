@@ -112,7 +112,6 @@ $messages = array(
 'talkpagelinktext' => 'Nyamedzroƒe',
 'specialpage'      => 'Axa Tɔxe',
 'personaltools'    => 'Wòƒe dɔwɔnuwo',
-'postcomment'      => 'Akpa yeye',
 'talk'             => 'Nyamedzroƒe',
 'toolbox'          => 'Dɔwɔnuɖaka',
 'otherlanguages'   => 'Le gbe bubuwo me',

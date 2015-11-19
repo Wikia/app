@@ -60,7 +60,6 @@ $messages = array(
 'newpage'        => 'Leqephe le letjha',
 'talkpage'       => 'Qoqa ka leqephe lena',
 'talk'           => 'Moqoqo',
-'categorypage'   => 'Mpontshe leqephe la mekga',
 'otherlanguages' => 'Ka maleme a mang',
 'jumptosearch'   => 'phuputso',
 

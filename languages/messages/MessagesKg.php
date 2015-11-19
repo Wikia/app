@@ -95,7 +95,6 @@ $messages = array(
 'talk'             => 'Disolo',
 'views'            => 'Bantadilu',
 'toolbox'          => 'Bisadilu',
-'viewtalkpage'     => 'Tala disolo',
 'otherlanguages'   => 'Bandinga ya nkaka',
 'redirectedfrom'   => '(Balulama tuka $1)',
 'lastmodifiedat'   => 'Mukânda yayi me sobama na kilumbu $1 na ngûnga $2',

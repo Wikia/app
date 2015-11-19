@@ -48,8 +48,6 @@ $messages = array(
 'specialpage'    => 'Nyɛ kɛrɛnkɛrɛnnen',
 'talk'           => 'Sɔsɔli',
 'toolbox'        => 'Minanw',
-'userpage'       => 'Utilisateur ka nyɛ',
-'imagepage'      => 'Janin ka nyɛ',
 'otherlanguages' => 'Kanw wɛrɛ',
 'jumptosearch'   => 'Nyini',
 

@@ -146,7 +146,6 @@ $messages = array(
 'talkpagelinktext' => 'sprīža',
 'specialpage'      => 'Specialuo puslopa',
 'personaltools'    => 'Muni reiki',
-'postcomment'      => 'Dalikt komentaru',
 'talk'             => 'Sprīža',
 'views'            => 'Vierīņi',
 'toolbox'          => 'Reiki',
