@@ -63,6 +63,8 @@ class TransactionClassifier {
 
 	protected static $MAP_ARTICLE_NAMESPACES = array(
 		NS_MAIN => 'main',
+		NS_USER => 'user',
+		NS_USER_TALK => 'user_talk',
 		NS_FILE => 'file',
 		NS_CATEGORY => 'category',
 
