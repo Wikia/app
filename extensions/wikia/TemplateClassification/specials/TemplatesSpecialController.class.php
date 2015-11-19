@@ -18,13 +18,13 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 
 	public function init() {
 		$this->specialPage->setHeaders();
-		$this->specialPage->getOutput()->setPageTitle( wfMessage( 'special-templates' )->escaped() );
+		$this->specialPage->getOutput()->setPageTitle( wfMessage( 'special-templates' )->plain() );
 
 		\Wikia::addAssetsToOutput( 'templates_hq_scss' );
 	}
 
 	public function index() {
-		$allTemplates = $this->getAllTempaltes();
+		$allTemplates = $this->getAllTemplates();
 
 		if ( !empty( $allTemplates ) ) {
 			$classifiedTemplates = $this->getClassifiedTemplates();
@@ -64,7 +64,7 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 
 		try {
 			$classifiedTemplates = ( new \TemplateClassificationService() )->getTemplatesOnWiki( $this->wg->CityId );
-		} catch( \Exception $e ) {
+		} catch( \Swagger\Client\ApiException $e ) {
 		}
 
 		return $classifiedTemplates;
@@ -76,7 +76,7 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	 * @return bool|mixed
 	 * @throws \FluentSql\Exception\SqlException
 	 */
-	private function getAllTempaltes() {
+	private function getAllTemplates() {
 		$db = wfGetDB( DB_SLAVE );
 
 		$templates = ( new \WikiaSQL() )
@@ -126,12 +126,10 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	 */
 	private function getTemplates( $allTemplates, $classifiedTemplates ) {
 		if ( $this->type === TemplateClassificationService::TEMPLATE_UNKNOWN ) {
-			$templates = $this->getUnknownTemplates( $allTemplates, $classifiedTemplates );
-		} else {
-			$templates = $this->getTemplatesByType( $allTemplates, $classifiedTemplates );
+			return $this->getUnknownTemplates( $allTemplates, $classifiedTemplates );
 		}
 
-		return $templates;
+		return $this->getTemplatesByType( $allTemplates, $classifiedTemplates );
 	}
 
 	/**
@@ -301,13 +299,11 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	 * @return string
 	 */
 	private function getTemplateType( $pageId, $classifiedTemplates ) {
-		if ( !isset( $classifiedTemplates[$pageId] ) || !$this->isUserType( $classifiedTemplates[$pageId] )
-		) {
+		if ( !isset( $classifiedTemplates[$pageId] ) || !$this->isUserType( $classifiedTemplates[$pageId] )	) {
 			return TemplateClassificationService::TEMPLATE_UNKNOWN;
-		} else {
-			return $classifiedTemplates[$pageId];
 		}
 
+		return $classifiedTemplates[$pageId];
 	}
 
 	/**
@@ -318,9 +314,9 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	private function getDefaultType() {
 		if ( in_array( TemplateClassificationService::TEMPLATE_UNKNOWN, $this->groups ) ) {
 			return TemplateClassificationService::TEMPLATE_UNKNOWN;
-		} else {
-			return $this->groups[0];
 		}
+
+		return $this->groups[0];
 	}
 
 	/**

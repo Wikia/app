@@ -21,27 +21,27 @@
 		<th><?= wfMessage( 'template-classification-special-used-header' )->escaped() ?></th>
 		<th><?= wfMessage( 'template-classification-special-type-header' )->escaped() ?></th>
 	</tr>
+	<?php $groupName = wfMessage( 'template-classification-type-' . $type )->escaped(); ?>
 	<?php foreach( $templates as $template ): ?>
-		<?php $groupName = wfMessage( 'template-classification-type-' . $type )->escaped(); ?>
-			<tr>
-				<td>
-					<h3><a href="<?= Sanitizer::cleanUrl( $template['url'] ) ?>">
-						<?= Sanitizer::escapeHtmlAllowEntities( $template['title'] ); ?>
-					</a></h3>
-					<?php if ( isset( $template['revision'] ) ) : ?>
-						<?= wfMessage( 'template-classification-special-last-edit' )->rawParams(
-							Xml::element( 'a', [
-								'href' => $template['revision']['userpage']
-							],
-								$template['revision']['username']
-							),
-							date( 'F j, Y', $template['revision']['timestamp'] )
-						)->escaped() ?>
-					<?php endif; ?>
-				</td>
-				<td><a href="<?= Sanitizer::cleanUrl( $template['wlh'] ) ?>"><?= Sanitizer::escapeHtmlAllowEntities( $template['count'] ); ?></a></td>
-				<td><?= $groupName ?></td>
-			</tr>
+		<tr>
+			<td>
+				<h3><a href="<?= Sanitizer::cleanUrl( $template['url'] ) ?>">
+					<?= Sanitizer::escapeHtmlAllowEntities( $template['title'] ); ?>
+				</a></h3>
+				<?php if ( isset( $template['revision'] ) ) : ?>
+					<?= wfMessage( 'template-classification-special-last-edit' )->rawParams(
+						Xml::element( 'a', [
+							'href' => $template['revision']['userpage']
+						],
+							$template['revision']['username']
+						),
+						date( 'F j, Y', $template['revision']['timestamp'] )
+					)->escaped() ?>
+				<?php endif; ?>
+			</td>
+			<td><a href="<?= Sanitizer::cleanUrl( $template['wlh'] ) ?>"><?= Sanitizer::escapeHtmlAllowEntities( $template['count'] ); ?></a></td>
+			<td><?= $groupName ?></td>
+		</tr>
 	<?php endforeach ?>
 </table>
 <?php if ( $paginatorBar ) : ?>
