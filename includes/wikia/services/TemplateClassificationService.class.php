@@ -14,7 +14,6 @@ class TemplateClassificationService {
 
 	// TODO: Move types used for manual classification outside of Template Classification Service
 	// TODO: https://wikia-inc.atlassian.net/browse/CE-3017
-	const TEMPLATE_CONTEXT_LINK = 'context-link';
 	const TEMPLATE_CUSTOM_INFOBOX = 'custom-infobox';
 	const TEMPLATE_DATA = 'data';
 	const TEMPLATE_DESIGN = 'design';
@@ -44,7 +43,6 @@ class TemplateClassificationService {
 		self::TEMPLATE_QUOTE,
 		self::TEMPLATE_NAVBOX,
 		self::TEMPLATE_FLAG,
-		self::TEMPLATE_CONTEXT_LINK,
 		self::TEMPLATE_REFERENCES,
 		self::TEMPLATE_MEDIA,
 		self::TEMPLATE_DATA,
