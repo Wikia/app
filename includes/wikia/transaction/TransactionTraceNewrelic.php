@@ -3,8 +3,28 @@
 /**
  * TransactionTraceNewrelic implements the TransactionTrace plugin interface and handles reporting
  * transaction type name as newrelic's transaction name and all attributes as custom parameters.
+ *
+ * @see https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-api
  */
 class TransactionTraceNewrelic {
+
+	// create custom transactions for given PHP calls
+	private static $customTraces = [
+		# PLATFORM-1696: RabbitMQ traffic
+		'Wikia\Tasks\Tasks\BaseTask::queue',
+		'PhpAmqpLib\Wire\IO\StreamIO::read',
+	];
+
+	/**
+	 * Set up NewRelic integration and custom PHP calls tracer
+	 */
+	function __construct() {
+		if ( function_exists( 'newrelic_add_custom_tracer' ) ) {
+			foreach( self::$customTraces as $customTrace ) {
+				newrelic_add_custom_tracer( $customTrace );
+			}
+		}
+	}
 
 	/**
 	 * Update Newrelic's transaction name
