@@ -124,10 +124,11 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 	function processInstance(modalInstance) {
 		/* Submit template type edit form on Done button click */
 		modalInstance.bind('done', function runSave(e) {
+			var label = e ? $(e.currentTarget).text() : 'keypress';
+
 			processSave(modalInstance);
 
 			// Track - primary-button click or save by pressing Enter key
-			var label = e ? $(e.currentTarget).text() : 'keypress';
 			track({
 				action: tracker.ACTIONS.CLICK_LINK_BUTTON,
 				label: label
@@ -200,29 +201,18 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 	}
 
 	function setupTemplateClassificationModal(content) {
-		/* Modal component configuration */
-		modalConfig = {
-			vars: {
-				id: 'TemplateClassificationEditModal',
-				classes: ['template-classification-edit-modal'],
-				size: 'small', // size of the modal
-				content: content, // content
-				title: labeling.getTitle()
-			}
-		};
-
 		var modalButtons = [
 			{
 				vars: {
-						value: labeling.getConfirmButtonLabel(),
-						classes: ['normal', 'primary'],
-						data: [
-							{
-								key: 'event',
-								value: 'done'
-							}
-						]
-					}
+					value: labeling.getConfirmButtonLabel(),
+					classes: ['normal', 'primary'],
+					data: [
+						{
+							key: 'event',
+							value: 'done'
+						}
+					]
+				}
 			},
 			{
 				vars: {
@@ -236,6 +226,17 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 				}
 			}
 		];
+
+		/* Modal component configuration */
+		modalConfig = {
+			vars: {
+				id: 'TemplateClassificationEditModal',
+				classes: ['template-classification-edit-modal'],
+				size: 'small', // size of the modal
+				content: content, // content
+				title: labeling.getTitle()
+			}
+		};
 
 		modalConfig.vars.buttons = modalButtons;
 	}
