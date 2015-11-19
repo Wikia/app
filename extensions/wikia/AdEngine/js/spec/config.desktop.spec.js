@@ -48,6 +48,10 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 					name: 'evolve',
 					canHandleSlot: noop
 				},
+				evolve2: {
+					name: 'evolve2',
+					canHandleSlot: noop
+				},
 				liftium: {
 					name: 'liftium'
 				},
@@ -90,6 +94,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			mocks.adDecoratorPageDimensions,
 			mocks.providers.directGpt,
 			mocks.providers.evolve,
+			mocks.providers.evolve2,
 			mocks.providers.liftium,
 			mocks.providers.monetizationService,
 			mocks.providers.openX,
@@ -142,6 +147,12 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		spyOn(mocks.providers.evolve, 'canHandleSlot').and.returnValue(true);
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({sevenOneMedia: true});
 		expect(getProviders('foo')).toEqual('sevenOneMedia');
+	});
+
+	it('non-Evolve country, Evolve-slot, SevenOne Media on: SevenOneMedia', function () {
+		spyOn(mocks.providers.evolve2, 'canHandleSlot').and.returnValue(true);
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({evolve2: true});
+		expect(getProviders('foo')).toEqual('evolve2,remnant,liftium');
 	});
 
 	it('NZ, Evolve-slot, SevenOne Media on: SevenOneMedia', function () {
