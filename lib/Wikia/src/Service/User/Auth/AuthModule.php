@@ -13,6 +13,7 @@ class AuthModule implements Module {
 		$builder
 			->bind( AuthService::class )->toClass( MediaWikiAuthService::class )
 			->bind( HeliosClient::class )->toClass( HeliosClientImpl::class )
+			->bind( CookieHelper::class )->toClass( HeliosCookieHelper::class )
 			->bind( HeliosClientImpl::BASE_URI )->to( function () {
 				global $wgHeliosBaseUri;
 				return $wgHeliosBaseUri;

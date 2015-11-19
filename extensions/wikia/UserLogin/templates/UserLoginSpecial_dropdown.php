@@ -35,9 +35,8 @@
 			),
 
 			array(
-				'type' => 'nirvanaview',
-				'controller' => 'UserLogin',
-				'view' => 'forgotPasswordLink',
+				'type' => 'custom',
+				'output' => F::app()->renderPartial( 'UserLogin', 'forgotPasswordLink' ),
 			),
 			array(
 				'type' => 'checkbox',

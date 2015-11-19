@@ -17,7 +17,8 @@ require([
 	'ext.wikia.adEngine.sourcePointDetection',
 	'wikia.krux',
 	'wikia.window',
-	'wikia.loader'
+	'wikia.loader',
+	require.optional('ext.wikia.adEngine.recovery.gcs')
 ], function (
 	adContext,
 	adEngine,
@@ -35,7 +36,8 @@ require([
 	sourcePoint,
 	krux,
 	win,
-	loader
+	loader,
+	gcs
 ) {
 	'use strict';
 
@@ -90,12 +92,16 @@ require([
 		recoveryHelper.initEventQueue();
 		sourcePoint.initDetection();
 
-		if (context.opts.sourcePoint && win.ads) {
+		if (context.opts.sourcePointRecovery && win.ads) {
 			win.ads.runtime.sp.slots = win.ads.runtime.sp.slots || [];
 			recoveryHelper.addOnBlockingCallback(function () {
-				adTracker.measureTime('adengine.init', 'queue.desktop').track();
+				adTracker.measureTime('adengine.init', 'queue.sp').track();
 				adEngine.run(adConfigDesktop, win.ads.runtime.sp.slots, 'queue.sp');
 			});
+		}
+
+		if (context.opts.googleConsumerSurveys && gcs) {
+			gcs.addRecoveryCallback();
 		}
 
 		if (context.opts.recoveredAdsMessage) {

@@ -1,6 +1,7 @@
 .EditPageTabs {
 	bottom: -1px;
 	display: none;
+	line-height: 12px;
 	position: absolute;
 	right: $width-rail-epl;
 
@@ -8,9 +9,8 @@
 		background-color: $color-epl-gradient-light;
 		border: 1px solid $color-page-border;
 		border-bottom: 0;
-		border-bottom-left-radius: 0;
-		border-bottom-right-radius: 0;
-		border-radius: 5px;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
 		display: inline-block;
 		margin-left: 3px;
 		padding: 1px 0;

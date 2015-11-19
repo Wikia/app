@@ -1,7 +1,12 @@
 @import 'extensions/wikia/ContentReview/styles/ContentReviewVariables';
 
 .content-review-module-help {
+	margin-top: 15px;
 	text-align: right;
+
+	a {
+		margin-left: 10px;
+	}
 }
 
 .content-review-module-submit-container {

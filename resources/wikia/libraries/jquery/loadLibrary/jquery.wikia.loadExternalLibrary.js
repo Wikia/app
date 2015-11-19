@@ -1,3 +1,4 @@
+/*global jQuery, Wikia*/
 (function ($) {
 	'use strict';
 
@@ -65,7 +66,7 @@
 	$.loadFacebookSDK = function (callback) {
 		// create our own deferred object to resolve after FB.init finishes
 		var $deferred = $.Deferred(),
-			url = window.fbScript || '//connect.facebook.net/en_US/sdk.js';
+			url = window.fbScript || window.Wikia.fbLocale.getSdkUrl(window.wgUserLanguage);
 
 		// ShareButton code still uses the callback, but it's deprecated.
 		if (typeof callback === 'function') {

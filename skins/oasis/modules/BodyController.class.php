@@ -289,6 +289,7 @@ class BodyController extends WikiaController {
 		}
 
 		$railModuleList[1440] = array('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']);
+		$railModuleList[1435] = array('AdEmptyContainer', 'Index', ['slotName' => 'NATIVE_TABOOLA_RAIL']);
 		$railModuleList[1100] = array('Ad', 'Index', ['slotName' => 'LEFT_SKYSCRAPER_2']);
 
 		unset($railModuleList[1450]);
@@ -498,10 +499,6 @@ class BodyController extends WikiaController {
 
 		// bugid-70243: optionally hide navigation h1s for SEO
 		$this->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
-
-		if ( $this->wg->EnableSeoTestingExt ) {
-			$this->setVal( 'seoTestOneH1', SeoTesting::getGroup('One_H1') === 2 );
-		}
 
 		wfProfileOut(__METHOD__);
 	}

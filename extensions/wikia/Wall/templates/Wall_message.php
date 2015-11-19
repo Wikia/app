@@ -125,7 +125,7 @@
 			<? if( $repliesNumber < $repliesLimit ) {
 				echo $app->renderViewCached( 'WallController', 'reply', 'Wall_message'.$showReplyForm, array('showReplyForm' => $showReplyForm ));
 			} else {
-				echo "<div class=message-topic-error >" . wfMsgExt('wall-message-limit-reached', array('parsemag'), array( $repliesLimit ));
+				echo "<div class=message-topic-error >" . wfMsgExt('wall-message-limit-reached', array('parsemag'), array( $repliesLimit )) . "</div>";
 			} ?>
 			<?php if($showTopics): ?>
 				<?= F::app()->renderPartial( 'Wall', 'relatedTopics', array('relatedTopics' => $relatedTopics) ) ?>

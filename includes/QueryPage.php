@@ -297,8 +297,7 @@ abstract class QueryPage extends SpecialPage {
 		 * Wikia change begin
 		 * @author <adamk@wikia-inc.com>
 		 */
-		$resClone = clone $res;
-		wfRunHooks( 'QueryPageUseResultsBeforeRecache', [ $this, $resClone ] );
+		wfRunHooks( 'QueryPageUseResultsBeforeRecache', [ $this, $dbr, $res ] );
 		/**
 		 * Wikia change end
 		 */

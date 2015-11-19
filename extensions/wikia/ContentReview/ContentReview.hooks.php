@@ -22,6 +22,40 @@ class Hooks {
 		\Hooks::register( 'ShowDiff', [ $hooks, 'onShowDiff' ] );
 		\Hooks::register( 'UserRights::groupCheckboxes', [ $hooks, 'onUserRightsGroupCheckboxes' ] );
 		\Hooks::register( 'UserAddGroup', [ $hooks, 'onUserAddGroup' ] );
+		\Hooks::register( 'BeforeUserAddGlobalGroup', [ $hooks, 'onUserAddGroup' ] );
+		\Hooks::register( 'SkinAfterBottomScripts', [ $hooks, 'onSkinAfterBottomScripts' ] );
+		\Hooks::register( 'ArticleNonExistentPage', [ $hooks, 'onArticleNonExistentPage' ] );
+		\Hooks::register( 'OutputPageBeforeHTML', [ $hooks, 'onOutputPageBeforeHTML' ] );
+	}
+
+	/**
+	 * Add description how to import scripts on view page
+	 *
+	 * @param \OutputPage $out
+	 * @param $content
+	 * @return bool
+	 */
+	public function onOutputPageBeforeHTML( \OutputPage $out, &$content ) {
+		$title = $out->getTitle();
+
+		if ( $title->exists() ) {
+			$content = $this->getImportJSContent( $title, $content );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Add description how to import scripts on non existing page
+	 *
+	 * @param \Article $article
+	 * @param String $content
+	 * @return bool
+	 */
+	public function onArticleNonExistentPage( \Article $article, \OutputPage $out, &$content ) {
+		$content = $this->getImportJSContent( $article->getTitle(), $content, false );
+
+		return true;
 	}
 
 	public function onGetRailModuleList( Array &$railModuleList ) {
@@ -65,6 +99,20 @@ class Hooks {
 			\Wikia::addAssetsToOutput('content_review_module_monobook_js');
 			\Wikia::addAssetsToOutput('content_review_module_monobook_scss');
 		}
+
+		return true;
+	}
+
+	/**
+	 * Add script to load safe imports
+	 *
+	 * @param $skin
+	 * @param String $bottomScripts
+	 * @return bool
+	 * @throws \MWException
+	 */
+	public function onSkinAfterBottomScripts( $skin, &$bottomScripts ) {
+		$bottomScripts .= ( new ImportJS() )->getImportScripts();
 
 		return true;
 	}
@@ -170,12 +218,19 @@ class Hooks {
 
 		$title = $article->getTitle();
 
-		if ( !is_null( $title )	&&  $title->isJsPage() ) {
-			$this->purgeContentReviewData();
+		if ( !is_null( $title ) ) {
+			if ( $title->isJsPage() ) {
+				$this->purgeContentReviewData();
 
-			if ( ( new Helper() )->userCanAutomaticallyApprove( $user ) ) {
-				( new ContentReviewService() )
-					->automaticallyApproveRevision( $user, $wgCityId, $title->getArticleID(), $revision->getId() );
+				if ( ( new Helper() )->userCanAutomaticallyApprove( $user ) ) {
+					( new ContentReviewService() )
+						->automaticallyApproveRevision( $user, $wgCityId, $title->getArticleID(), $revision->getId() );
+				}
+			}
+
+			if ( ImportJS::isImportJSPage( $title ) ) {
+				ImportJS::purgeImportScripts();
+				\WikiPage::factory( $title )->doPurge();
 			}
 		}
 
@@ -193,8 +248,14 @@ class Hooks {
 	public function onArticleDeleteComplete( \WikiPage &$article, \User &$user, $reason, $id ) {
 		$title = $article->getTitle();
 
-		if ( !is_null( $title )	&&  $title->isJsPage() ) {
-			$this->purgeContentReviewData();
+		if ( !is_null( $title )	) {
+			if ( $title->isJsPage() ) {
+				$this->purgeContentReviewData();
+			}
+
+			if ( ImportJS::isImportJSPage( $title ) ) {
+				ImportJS::purgeImportScripts();
+			}
 		}
 
 		return true;
@@ -209,8 +270,14 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onArticleUndelete( \Title $title, $created, $comment ) {
-		if ( !is_null( $title )	&&  $title->isJsPage() ) {
-			$this->purgeContentReviewData();
+		if ( !is_null( $title )	) {
+			if ( $title->isJsPage() ) {
+				$this->purgeContentReviewData();
+			}
+
+			if ( ImportJS::isImportJSPage( $title ) ) {
+				ImportJS::purgeImportScripts();
+			}
 		}
 
 		return true;
@@ -271,5 +338,19 @@ class Hooks {
 		$helper->purgeCurrentJsPagesTimestamp();
 
 		ContentReviewStatusesService::purgeJsPagesCache();
+	}
+
+	private function getImportJSContent( \Title $title, $content, $parse = true ) {
+		if ( ImportJS::isImportJSPage( $title ) ) {
+			$isViewPage = empty( \RequestContext::getMain()->getRequest()->getVal( 'action' ) );
+
+			if ( $isViewPage ) {
+				$message = ImportJS::getImportJSDescriptionMessage();
+				$text = $parse ? $message->parse() : $message->escaped();
+				$content = $text . '<pre>' . trim( strip_tags( $content ) ) . '</pre>';
+			}
+		}
+
+		return $content;
 	}
 }

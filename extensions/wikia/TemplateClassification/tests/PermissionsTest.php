@@ -22,7 +22,7 @@ class PermissionsTest extends WikiaBaseTest {
 		$titleMock = $this->getMock( 'Title', [ 'userCan' ] );
 		$titleMock->mNamespace = $testData['titleNamespace'];
 
-		if ( $testData['isLoggedIn'] && $testData['titleNamespace'] === NS_TEMPLATE ) {
+		if ( $testData['isLoggedIn'] ) {
 			$invokeUserCan = $this->atLeastOnce();
 		} else {
 			$invokeUserCan = $this->never();

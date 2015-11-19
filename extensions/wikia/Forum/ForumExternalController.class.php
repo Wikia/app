@@ -58,6 +58,13 @@ class ForumExternalController extends WallExternalController {
 			return;
 		}
 
+		try {
+			$this->checkWriteRequest();
+		} catch ( \BadRequestException $bre ) {
+			$this->setTokenMismatchError();
+			return;
+		}
+
 		$boardTitle = $this->getVal( 'boardTitle', '' );
 		$boardDescription = $this->getVal( 'boardDescription', '' );
 
@@ -99,6 +106,13 @@ class ForumExternalController extends WallExternalController {
 		$this->status = self::checkAdminAccess();
 
 		if ( !empty( $this->status ) ) {
+			return;
+		}
+
+		try {
+			$this->checkWriteRequest();
+		} catch ( \BadRequestException $bre ) {
+			$this->setTokenMismatchError();
 			return;
 		}
 
@@ -158,6 +172,13 @@ class ForumExternalController extends WallExternalController {
 	public function removeBoard() {
 		$this->status = self::checkAdminAccess();
 		if ( !empty( $this->status ) ) {
+			return;
+		}
+
+		try {
+			$this->checkWriteRequest();
+		} catch ( \BadRequestException $bre ) {
+			$this->setTokenMismatchError();
 			return;
 		}
 

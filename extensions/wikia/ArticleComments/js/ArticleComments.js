@@ -676,15 +676,7 @@
 			hash = window.location.hash;
 			permalink = /^#comm-/.test(hash);
 
-			switch (window.skin) {
-				case 'venus':
-					styleAssets.push($.getSassCommonURL('extensions/wikia/Venus/styles/article/comments.scss'));
-					break;
-
-				case 'oasis':
-				default:
-					styleAssets.push($.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss'));
-			}
+			styleAssets.push($.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss'));
 
 			belowTheFold = function () {
 				return ArticleComments.$wrapper.offset().top >= ($window.scrollTop() + $window.height());
@@ -721,11 +713,6 @@
 
 					if (permalink) {
 						ArticleComments.scrollToElement(hash);
-					}
-
-					// "Show more comments" button for Venus
-					if (!permalink && window.skin === 'venus') {
-						ArticleComments.showMoreComments();
 					}
 
 					ArticleComments.bucky.timer.stop('loadAssets');

@@ -1,15 +1,15 @@
-/*global define,require*/
+/*global define*/
 /**
  * The AMD module to hold all the context needed for the client-side scripts to run.
  */
 define('ext.wikia.adEngine.adContext', [
-	'wikia.window',
+	'wikia.abTest',
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
-	'wikia.querystring',
-	require.optional('wikia.abTest')
-], function (w, doc, geo, instantGlobals, Querystring, abTest) {
+	'wikia.window',
+	'wikia.querystring'
+], function (abTest, doc, geo, instantGlobals, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -64,15 +64,21 @@ define('ext.wikia.adEngine.adContext', [
 				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
 		}
 
-		// SourcePoint integration
-		if (context.opts.sourcePointDetection && context.opts.sourcePointUrl) {
-			context.opts.sourcePoint = isUrlParamSet('sourcepoint') ||
-				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointCountries);
+		// SourcePoint recovery integration
+		if (context.opts.sourcePointDetection && context.opts.sourcePointRecoveryUrl) {
+			context.opts.sourcePointRecovery = isUrlParamSet('sourcepointrecovery') ||
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
 		}
 
 		// Recoverable ads message
-		if (context.opts.sourcePointDetection && !context.opts.sourcePoint && context.opts.showAds) {
+		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
 			context.opts.recoveredAdsMessage = geo.isProperGeo(instantGlobals.wgAdDriverAdsRecoveryMessageCountries);
+		}
+
+		// Google Consumer Surveys
+		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
+			context.opts.googleConsumerSurveys = abTest.getGroup('PROJECT_43') === 'GROUP_5' &&
+				geo.isProperGeo(instantGlobals.wgAdDriverGoogleConsumerSurveysCountries);
 		}
 
 		// Showcase.*
@@ -87,8 +93,9 @@ define('ext.wikia.adEngine.adContext', [
 
 		// Taboola integration
 		if (context.providers.taboola) {
-			context.providers.taboola = abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES') &&
-				(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
+			context.providers.taboola = !!abTest.getGroup('TABOOLA_MODULES') &&
+				geo.isProperGeo(instantGlobals.wgAdDriverTaboolaCountries) &&
+				context.targeting.pageType === 'article';
 		}
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverTurtleCountries)) {

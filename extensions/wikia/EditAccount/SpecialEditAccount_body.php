@@ -533,7 +533,7 @@ class EditAccount extends SpecialPage {
 	/** Hook for storing historical log of email changes **/
 	public static function logEmailChanges($user, $new_email, $old_email) {
 		global $wgExternalSharedDB, $wgUser, $wgRequest;
-		if ( $wgExternalSharedDB ) {
+		if ( $wgExternalSharedDB && isset( $new_email ) && isset( $old_email ) ) {
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$dbw->insert(
 				'user_email_log',

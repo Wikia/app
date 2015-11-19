@@ -15,8 +15,18 @@ class Permissions {
 	 * @return bool
 	 */
 	public function shouldDisplayEntryPoint( \User $user, \Title $title ) {
+		return $this->userCanChangeType( $user, $title )
+		       && $title->inNamespace( NS_TEMPLATE );
+	}
+
+	/**
+	 * Checks if user is allowed to change
+	 * @param \User $user
+	 * @param \Title $title
+	 * @return bool
+	 */
+	public function userCanChangeType( \User $user, \Title $title ) {
 		return $user->isLoggedIn()
-		&& $title->inNamespace( NS_TEMPLATE )
-		&& $title->userCan( 'edit', $user );
+		       && $title->userCan( 'edit', $user );
 	}
 }

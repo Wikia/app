@@ -205,7 +205,7 @@ abstract class InsightsPageModel extends InsightsModel {
 	 * Fetches page views data for a given set of articles. The data includes
 	 * number of views for the last four time ids (data points).
 	 *
-	 * @param $articlesIds An array of IDs of articles to fetch views for
+	 * @param array $articlesIds An array of IDs of articles to fetch views for
 	 * @return array An array with views for the last four time ids
 	 */
 	public function getPageViewsData( array $articlesIds ) {
@@ -391,7 +391,7 @@ abstract class InsightsPageModel extends InsightsModel {
 	 * @return string
 	 */
 	public function getWlhUrl( Title $title ) {
-		return SpecialPage::getTitleFor( 'Whatlinkshere', $title->getPrefixedText() );
+		return SpecialPage::getTitleFor( 'Whatlinkshere', $title->getPrefixedText() )->getFullUrl();
 	}
 
 	/**
