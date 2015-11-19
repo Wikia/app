@@ -3751,9 +3751,9 @@ class Parser {
 			$ret = array( 'text' => $text );
 		}
 
-		# wikia start
-		wfRunHooks( 'Parser::BraceSubstitution', array( $originalTitle, &$ret['text']) );
-		# wikia end
+		# TODO: remove me in next release. This hook causes significant performance drop. Do not uncomment.
+		# wfRunHooks( 'Parser::BraceSubstitution', array( $originalTitle, &$ret['text']) );
+		# 
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
