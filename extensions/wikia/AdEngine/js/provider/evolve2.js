@@ -1,10 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.evolve2', [
-	'wikia.log',
 	'ext.wikia.adEngine.evolveHelper',
 	'ext.wikia.adEngine.provider.gpt.helper',
-	'ext.wikia.adEngine.slotTweaker'
-], function (log, evolveHelper, gptHelper, slotTweaker) {
+	'ext.wikia.adEngine.slotTweaker',
+	'wikia.log'
+], function (evolveHelper, gptHelper, slotTweaker, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.evolve2',
