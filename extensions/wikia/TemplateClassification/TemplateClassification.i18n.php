@@ -16,6 +16,9 @@ $messages['en'] = [
 	'template-classification-type-notice' => 'Notice',
 	'template-classification-description-notice' => 'Also known as tophats or alerts, these templates notify the reader about the status of the article itself, such as stub, disambiguation, or spoiler.',
 
+	'template-classification-type-context-link' => 'Context-link',
+	'template-classification-description-context-link' => 'Suggests another page to readers that is related to the current page or section. Usually these include “Main article” or “See also” and display as italicized text.',
+
 	'template-classification-type-reference' => 'Citation or reference',
 	'template-classification-description-reference' => 'Organizes and standardizes how sources of content on an article page are annotated.',
 
@@ -43,7 +46,7 @@ $messages['en'] = [
 	'template-classification-edit-modal-cancel-button-text' => 'Cancel',
 	'template-classification-edit-modal-title-edit-type' => 'Edit template type',
 	'template-classification-edit-modal-title-select-type' => 'Choose template type',
-	'template-classification-edit-modal-help' => 'To learn more about each template type, including examples, please visit [[Help:Template classification]].',
+	'template-classification-edit-modal-help' => 'To learn more about each template type, including examples, please visit [[Help:Template Types]].',
 	'template-classification-edit-modal-success' => 'New template type has been saved. Thank you!',
 	'template-classification-edit-modal-error' => 'Unfortunately we were not able to save this template type. Would you mind trying again?',
 
@@ -66,6 +69,7 @@ $messages['qqq'] = [
 	'template-classification-type-notice' => 'Name of a notice type',
 	'template-classification-type-reference' => 'Name of a reference type',
 	'template-classification-type-unknown' => 'Name of an unknown template type',
+	'template-classification-type-context-link' => 'Name of the context link type',
 
 	'template-classification-description-infobox' => 'Description (additional label) for the infobox type. This is shown in dialog box under the type name to explain what each type is.',
 	'template-classification-description-navbox' => 'Description (additional label) for the navbox type. This is shown in dialog box under the type name to explain what each type is.',
@@ -78,6 +82,7 @@ $messages['qqq'] = [
 	'template-classification-description-media' => 'Description (additional label) for the media template type. This is shown in dialog box under the type name to explain what each type is.',
 	'template-classification-description-notice' => 'Description (additional label) for the notice template type. This is shown in dialog box under the type name to explain what each type is.',
 	'template-classification-description-reference' => 'Description (additional label) for the reference template type. This is shown in dialog box under the type name to explain what each type is.',
+	'template-classification-description-context-link' => 'Description (additional label) for the context link template type. This is shown in the dialog box under the type name to explain what each type is.',
 
 	'template-classification-type-header' => 'A header of all boxes that display a type of a template.',
 	'template-classification-edit-modal-add-button-text' => 'Text on add button on modal for proceeding to template adding after template type is choose',
