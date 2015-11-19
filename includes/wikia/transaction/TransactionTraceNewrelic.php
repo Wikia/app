@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Util\RequestId;
+
 /**
  * TransactionTraceNewrelic implements the TransactionTrace plugin interface and handles reporting
  * transaction type name as newrelic's transaction name and all attributes as custom parameters.
@@ -23,6 +25,11 @@ class TransactionTraceNewrelic {
 			foreach( self::$customTraces as $customTrace ) {
 				newrelic_add_custom_tracer( $customTrace );
 			}
+		}
+
+		// report request ID as a custom request parameter for easier debugging of slow transactions
+		if ( function_exists( 'newrelic_add_custom_parameter' ) ) {
+			newrelic_add_custom_parameter( 'requestId', RequestId::instance()->getRequestId() );
 		}
 	}
 
