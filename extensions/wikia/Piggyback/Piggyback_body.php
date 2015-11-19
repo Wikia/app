@@ -1,5 +1,8 @@
 <?php
 
+use Wikia\Helios\User as HeliosUser;
+use Wikia\Service\Constants;
+
 class Piggyback extends SpecialPage {
 	var $mAction;
 
@@ -37,6 +40,24 @@ class Piggyback extends SpecialPage {
 		}
 
 		$LoginForm->render();
+	}
+}
+
+class PBHooks {
+	public static function onLoginFormAuthenticateModifyRetval( $invoker, $username, $password, &$retVal ) {
+		global $wgEnableHeliosExt;
+		/**
+		 * status of forbidden from authentication means that the credentials are correct, but the
+		 * user is unable to log in with those credentials (because security). In this case we should
+		 * let the login succeed when piggybacking, assuming the login request came from the
+		 * piggyback form
+		 */
+		if ( get_class( $invoker ) == PBLoginForm::class &&
+				$wgEnableHeliosExt &&
+				HeliosUser::checkAuthenticationStatus( $username, $password, Constants::HTTP_STATUS_FORBIDDEN ) ) {
+
+			$retVal = LoginForm::SUCCESS;
+		}
 	}
 }
 
