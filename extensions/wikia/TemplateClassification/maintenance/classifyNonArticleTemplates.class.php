@@ -25,10 +25,13 @@ class ClassifyNonArticleTemplates extends Maintenance {
 		$this->quiet = $this->getOption( 'quiet' );
 		$this->logFile = $this->getOption( 'log-file' );
 
+		if ( isset( $this->logFile ) && !$this->verifyLogFile() ) {
+			$this->out( "The log file {$this->logFile} does not exist, please create it." );
+			return false;
+		}
+
 		$this->setDB( wfGetDB( DB_SLAVE ) );
-
 		$tcs = new TemplateClassificationService();
-
 		$firstLevelTemplates = $nestedTemplates = [];
 
 		$namespacesTemplates = ( new \WikiaSQL() )
@@ -109,11 +112,13 @@ class ClassifyNonArticleTemplates extends Maintenance {
 
 	private function logResults( array $results ) {
 		if ( isset( $this->logFile ) ) {
-			if ( file_exists( $this->logFile ) ) {
-				$data = implode( ',', array_values( $results ) );
-				file_put_contents( $this->logFile, $data, FILE_APPEND );
-			}
+			$data = implode( ',', array_values( $results ) );
+			file_put_contents( $this->logFile, $data, FILE_APPEND );
 		}
+	}
+
+	private function verifyLogFile() {
+		return file_exists( $this->logFile );
 	}
 }
 
