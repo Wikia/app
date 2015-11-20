@@ -1,4 +1,4 @@
-/*global define*/
+/*global define, setTimeout*/
 define('ext.wikia.adEngine.recovery.message', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.recovery.helper',
@@ -57,7 +57,9 @@ define('ext.wikia.adEngine.recovery.message', [
 
 	function accept() {
 		track('accept');
-		location.reload();
+		setTimeout(function () {
+			location.reload();
+		}, 200);
 	}
 
 	function reject(messageContainer) {
