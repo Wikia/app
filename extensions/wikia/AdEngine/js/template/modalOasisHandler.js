@@ -46,8 +46,6 @@ define('ext.wikia.adEngine.template.modalOasisHandler', [
 					var $header = modal.$close.parent(),
 						$counter = $(document.createElement('div'))
 							.addClass('close-counter')
-							.css('float', 'right')
-							.css('font-size', '17px')
 							.text(count);
 
 					modal.$close.hide();
