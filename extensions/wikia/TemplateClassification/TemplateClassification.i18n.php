@@ -47,6 +47,7 @@ $messages['en'] = [
 	'template-classification-edit-modal-title-edit-type' => 'Edit template type',
 	'template-classification-edit-modal-title-select-type' => 'Choose template type',
 	'template-classification-edit-modal-help' => 'To learn more about each template type, including examples, please visit [[Help:Template Types]].',
+	'template-classification-edit-modal-success' => 'New template type has been saved. Thank you!',
 	'template-classification-edit-modal-error' => 'Unfortunately we were not able to save this template type. Would you mind trying again?',
 
 	'template-classification-indicator' => 'Template type:',
