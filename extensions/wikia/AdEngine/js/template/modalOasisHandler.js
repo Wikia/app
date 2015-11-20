@@ -23,7 +23,8 @@ define('ext.wikia.adEngine.template.modalOasisHandler', [
 
 		uiFactory.init('modal').then((function (uiModal) {
 			uiModal.createComponent(modalConfig, (function (modal) {
-				var closeBtnDelay = parseInt(closeButtonDelay, 10) || 0,
+				closeButtonDelay = parseInt(closeButtonDelay, 10) || 0;
+				var hideCloseButton = closeButtonDelay > 0,
 					$header,
 					$counter,
 					counter;
@@ -45,7 +46,7 @@ define('ext.wikia.adEngine.template.modalOasisHandler', [
 					$counter.text(closeButtonDelay);
 				}
 
-				if (closeBtnDelay > 0) {
+				if (hideCloseButton) {
 					$header = modal.$close.parent();
 					$counter = $(document.createElement('div'));
 
