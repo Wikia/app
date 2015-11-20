@@ -70,7 +70,10 @@ class ClassifyNonArticleTemplates extends Maintenance {
 
 				$pageRawTextLc = strtolower( $wikiPage->getRawText() );
 				$templateTitleLc = strtolower( $templateTitle );
-				if ( strpos( $pageRawTextLc, "{{{$templateTitleLc}" ) > -1 ) {
+				$templateTitleLcSpaces = str_replace( '_', ' ', $templateTitleLc );
+				if ( strpos( $pageRawTextLc, "{{{$templateTitleLcSpaces}" ) > -1
+					|| strpos( $pageRawTextLc, "{{{$templateTitleLc}" ) > -1
+				) {
 					$countFirstLevelTemplates++;
 					$isFirstLevel = true;
 					break;
