@@ -23,7 +23,7 @@ define('ext.wikia.adEngine.template.modalOasisHandler', [
 
 		uiFactory.init('modal').then((function (uiModal) {
 			uiModal.createComponent(modalConfig, (function (modal) {
-				var closeBtnDelay = parseInt(closeButtonDelay, 10) * 1000 || 0,
+				var closeBtnDelay = parseInt(closeButtonDelay, 10) || 0,
 					$header,
 					$counter,
 					counter;
