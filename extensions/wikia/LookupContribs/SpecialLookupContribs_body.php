@@ -87,14 +87,11 @@ class LookupContribsPage extends SpecialPage {
 		} else {
 			$this->showMainForm();
 		}
-		# $this->showUserList();
 	}
 
 	/* draws the form itself  */
 	function showMainForm ( $error = "" ) {
 		global $wgOut;
-
-		wfProfileIn( __METHOD__ );
 
 		$action = htmlspecialchars( $this->mTitle->getLocalURL() );
 
@@ -109,22 +106,18 @@ class LookupContribsPage extends SpecialPage {
 			"modes"		=> $this->mShortModes
 		) );
 		$wgOut->addHTML( $oTmpl->render( "main-form" ) );
-		wfProfileOut( __METHOD__ );
 	}
 
 	/* draws the results table  */
 	function showWikiForm( $error = "" ) {
 		global $wgOut, $wgLang ;
-		wfProfileIn( __METHOD__ );
 
 		/* no list when no user */
 		if ( empty( $this->mUsername ) ) {
-			wfProfileOut( __METHOD__ );
 			return false ;
 		}
 
 		$action = htmlspecialchars( $this->mTitle->getLocalURL() );
-		$oWiki = WikiFactory::getWikiByDB( $this->mWiki );
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
@@ -140,40 +133,31 @@ class LookupContribsPage extends SpecialPage {
 			"nspaces"	=> $wgLang->getFormattedNamespaces(),
 		) );
 		$wgOut->addHTML( $oTmpl->render( "mode-form" ) );
-		wfProfileOut( __METHOD__ );
 	}
 
 	function getResults() {
-		global $wgOut, $wgRequest ;
-		wfProfileIn( __METHOD__ );
+		global $wgOut;
 
 		/* no list when no user */
 		if ( empty( $this->mUsername ) ) {
-			wfProfileOut( __METHOD__ );
 			return false ;
 		}
 
 		/* no list when user does not exist - may be a typo */
 		if ( $this->mCore->checkUser() === false ) {
 			$wgOut->addHTML( wfMessage( 'lookupcontribsinvaliduser', $this->mUsername )->parse() );
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		/* run a check against possible modes */
 		if ( !in_array( $this->mView, $this->mViewModes ) ) {
 			$wgOut->addHTML( wfMessage( 'lookupcontribsinvalidviewmode', $this->mView )->parse() );
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		if ( !in_array( $this->mMode, array_keys( $this->mModes ) ) ) {
 			$wgOut->addHTML( wfMessage( 'lookupcontribsinvalidmode', $this->mMode )->parse() );
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
-
-		/* before, we need that numResults */
-		wfProfileOut( __METHOD__ );
 	}
 }

@@ -28,13 +28,13 @@ class LookupContribsAjax {
 		$order		= $wgRequest->getVal( 'order' );
 		$lookupUser = $wgRequest->getBool( 'lookupUser' );
 
-		$result = array(
+		$result = [
 			'sEcho' => intval( $loop ),
 			'iTotalRecords' => 0,
 			'iTotalDisplayRecords' => 0,
 			'sColumns' => '',
 			'aaData' => []
-		);
+		];
 
 		// $dbname, $username, $mode, $limit = 25, $offset = 0, $nspace = -1
 
