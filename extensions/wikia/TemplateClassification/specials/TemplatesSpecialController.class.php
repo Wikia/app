@@ -283,12 +283,12 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 
 		foreach ( $groups as $id => $group ) {
 			if ( !$this->isUserType( $group ) ) {
-				if ( !in_array( TemplateClassificationService::TEMPLATE_UNKNOWN, $groups ) ) {
-					$groups[] = TemplateClassificationService::TEMPLATE_UNKNOWN;
-				}
-
 				unset( $groups[$id] );
 			}
+		}
+
+		if ( !in_array( TemplateClassificationService::TEMPLATE_UNKNOWN, $groups ) ) {
+			$groups[] = TemplateClassificationService::TEMPLATE_UNKNOWN;
 		}
 
 		sort( $groups );
