@@ -267,6 +267,8 @@ ___________________________________________________________
 ',
 'rcshowhideenhanced' => '$1 enhanced recent changes',
 'prefsnologintext'	=> 'You must be <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} logged in]</span> to set user preferences.',
+'recentchanges-on-wikia-title' => 'Recent changes on Wikia',
+'recentchanges-on-wikia-content' => 'Have you heard about [[Help:Template types|template types]]?',
 'recentchangestext' => '<div style="border:solid 3px #e9e9e9; margin-bottom:0.3em;">
 <div style="padding-left:0.5em; padding-right:0.5em;">
 This special page lets you track the most recent changes to the wiki.

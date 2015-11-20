@@ -592,6 +592,11 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 	public function doHeader( $opts ) {
 		global $wgScript;
 
+		// Wikia change begin
+		// Adding "Recent changes on Wikia" section - CE-3050
+		$this->setRecentChangesOnWikia();
+		// Wikia change end
+
 		$this->setTopText( $opts );
 
 		$defaults = $opts->getAllValues();
@@ -670,6 +675,20 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 
 		wfRunHooks( 'SpecialRecentChangesPanel', array( &$extraOpts, $opts ) );
 		return $extraOpts;
+	}
+
+	function setRecentChangesOnWikia() {
+		$content = Html::rawElement( 'legend', [],
+			wfMessage( 'recentchanges-on-wikia-title' )->escaped()
+		);
+		$content .= wfMessage( 'recentchanges-on-wikia-content' )->parse();
+
+		$this->getOutput()->addHTML(
+			Html::rawElement( 'fieldset',
+				[ 'class' => 'recentchanges-on-wikia collapsible collapsed' ],
+				$content
+			)
+		);
 	}
 
 	/**

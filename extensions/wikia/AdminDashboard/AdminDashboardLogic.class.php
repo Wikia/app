@@ -87,7 +87,6 @@ class AdminDashboardLogic {
 				'Play',
 				'Preferences',
 				'PromoteImageReview',
-				'Recentchanges',
 				'ScavengerHunt',
 				'Search',
 				'SendEmail',
