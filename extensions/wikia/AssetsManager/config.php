@@ -2689,14 +2689,6 @@ $config['insights_module_js'] = [
 	],
 ];
 
-$config['emergency_broadcast_system_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/EmergencyBroadcastSystem/css/EmergencyBroadcastSystem.scss',
-	],
-];
-
 $config['templates_hq_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
