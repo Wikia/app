@@ -647,6 +647,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		$this->getOutput()->addHTML(
 			Xml::fieldset( wfMessage( 'recentchanges-legend' )->escaped(), $panelString, [
 				'class' => 'rcoptions collapsible collapsed',
+				'id' => 'recentchanges-options',
 			] )
 		);
 
@@ -678,14 +679,17 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 	}
 
 	function setRecentChangesOnWikia() {
-		$content = Html::rawElement( 'legend', [],
+		$content = Html::rawElement( 'legend', [ 'id' => 'recentchanges-on-wikia' ],
 			wfMessage( 'recentchanges-on-wikia-title' )->escaped()
 		);
 		$content .= wfMessage( 'recentchanges-on-wikia-content' )->parse();
 
 		$this->getOutput()->addHTML(
 			Html::rawElement( 'fieldset',
-				[ 'class' => 'recentchanges-on-wikia collapsible collapsed' ],
+				[
+					'class' => 'collapsible collapsed',
+					'id' => 'recentchanges-on-wikia',
+				],
 				$content
 			)
 		);

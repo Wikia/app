@@ -10,12 +10,42 @@
 
 	var rc = mw.special.recentchanges = {
 
-		bindCollapsible: function() {
-			$('.collapsible').find('legend').on('click', rc.toggleCollapsible);
-		},
+		handleCollapsible: function() {
+			var prefix = 'rce_',
+				$legendElements = $('.collapsible').find('legend');
 
-		toggleCollapsible: function(e) {
-			$(e.currentTarget).parent().toggleClass('collapsed');
+			$legendElements.each( function (i) {
+				var $this = $(this),
+					id = $this.attr('id');
+
+				if (id !== null) {
+					if (!!localStorage.getItem(prefix + id)) {
+						toggleCollapsible($this);
+					}
+				}
+			});
+
+			$legendElements.on('click', function(e) {
+				toggleCollapsible($(e.currentTarget).parent());
+			});
+
+			function toggleCollapsible($target) {
+				$target.toggleClass('collapsed');
+				updateCollapsedCache($target);
+			}
+
+			function updateCollapsedCache($target) {
+				var id = $target.attr('id');
+
+				if (id !== null) {
+					if ($target.hasClass('collapsed')) {
+						localStorage.removeItem(prefix + id);
+					} else {
+						localStorage.getItem(prefix + id); // Chrome bug
+						localStorage.setItem(prefix + id, true);
+					}
+				}
+			}
 		},
 
 		/**
@@ -40,7 +70,7 @@
 			$select.change( rc.updateCheckboxes ).change();
 
 			// Collapse fieldsets
-			rc.bindCollapsible();
+			rc.handleCollapsible();
 		}
 	};
 
