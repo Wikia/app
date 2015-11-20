@@ -327,6 +327,11 @@ class PageArchive {
 	 */
 	function undelete( $timestamps, $comment = '', $fileVersions = array(), $unsuppress = false ) {
 		global $wgUser;
+
+		if ( !$this->canUndelete($wgUser) ) {
+			return false;
+		}
+
 		// If both the set of text revisions and file revisions are empty,
 		// restore everything. Otherwise, just restore the requested items.
 		$restoreAll = empty( $timestamps ) && empty( $fileVersions );
@@ -376,7 +381,7 @@ class PageArchive {
 		if( trim( $comment ) != '' ) {
 			$reason .= wfMsgForContent( 'colon-separator' ) . $comment;
 		}
-		
+
 		/* Wikia change begin - @author: Andrzej 'nAndy' Lukaszewski */
 		$hookAddedLogEntry = false;
 		wfRunHooks('PageArchiveUndeleteBeforeLogEntry', array(&$this, &$log, &$this->title, $reason, &$hookAddedLogEntry));
@@ -389,6 +394,15 @@ class PageArchive {
 		wfRunHooks( 'UndeleteComplete', array(&$this->title, &$wgUser, $reason ) );
 
 		return array( $textRestored, $filesRestored, $reason );
+	}
+
+	public function canUndelete( User $user ) {
+		global $wgEditInterfaceWhitelist;
+		// Check if is allowed to undelete in MediaWiki namespace
+		if ( $this->title->inNamespace( NS_MEDIAWIKI ) && !$user->isAllowed( 'editinterfacetrusted' ) ) {
+			throw new PermissionsError( 'editinterfacetrusted' );
+		}
+		return true;
 	}
 
 	/**
