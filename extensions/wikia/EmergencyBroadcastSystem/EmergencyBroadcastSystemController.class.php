@@ -2,8 +2,9 @@
 class EmergencyBroadcastSystemController extends WikiaController {
 
 	public function index() {
-		if ( $this->isCorrectPage() && $this->isPowerUser() && $this->hasNonPortableInfoBoxes() && $this->canOpenEBS() ) {
-			$this->response->setVal( 'nonPortableCount', '3' ); // Temporary number for testing
+		$nonPortableCount = $this->countOfNonPortableInfoBoxes();
+		if ( $this->isCorrectPage() && $this->isPowerUser() && $this->canOpenEBS() && ( $nonPortableCount > 0 ) ) {
+			$this->response->setVal( 'nonPortableCount', $nonPortableCount ); // Temporary number for testing
 		} else {
 			return false;
 		}
@@ -60,8 +61,8 @@ class EmergencyBroadcastSystemController extends WikiaController {
 		}
 	}
 
-	protected function hasNonPortableInfoBoxes() {
-		// TODO: Actually check for non portable infoboxes
-		return true;
+	protected function countOfNonPortableInfoboxes() {
+		$nonPortableInfoboxes = PortableInfoboxQueryService::getNonportableInfoboxes();
+		return count($nonPortableInfoboxes);
 	}
 }
