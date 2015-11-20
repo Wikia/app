@@ -48,7 +48,7 @@ class EmergencyBroadcastSystemController extends WikiaController {
 			return false;
 		} else {
 			$currentTimestamp = ( new DateTime() )->getTimestamp();
-                        $cutoffTimestamp = $currentTimestamp - 24 * 60 * 60; // 24 hrs ago
+			$cutoffTimestamp = $currentTimestamp - 24 * 60 * 60; // 24 hrs ago
 			return $ebsResponse < $cutoffTimestamp;
 		}
 	}
