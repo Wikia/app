@@ -650,7 +650,6 @@ class LookupContribsCore {
 			'cnt' => 0,
 			'data' => []
 		];
-		$dbr = wfGetDB( DB_SLAVE, 'stats', $this->getDBname() );
 
 		/* todo since there are now TWO modes, we need TWO keys to rule them all */
 		$memKey = $this->getContribsMemKey();
@@ -661,6 +660,8 @@ class LookupContribsCore {
 			$this->mNumRecords = count( $data );
 			return $data;
 		}
+
+		$dbr = wfGetDB( DB_SLAVE, 'stats', $this->getDBname() );
 
 		// Determine what type of data to retrieve and get it
 		switch ( $this->mMode ) {
