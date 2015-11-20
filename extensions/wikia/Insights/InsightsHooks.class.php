@@ -91,10 +91,21 @@ class InsightsHooks {
 	 * @return bool
 	 */
 	public static function onwgQueryPages( Array &$wgQueryPages ) {
-		global $wgEnableInsightsInfoboxes;
+		global $wgEnableInsightsInfoboxes, $wgEnableTemplateClassificationExt,
+			   $wgEnableInsightsPagesWithoutInfobox, $wgEnableInsightsTemplatesWithoutType;
 
-		if ( $wgEnableInsightsInfoboxes ) {
+		if ( !empty( $wgEnableInsightsInfoboxes ) ) {
 			$wgQueryPages[] = [ 'UnconvertedInfoboxesPage', 'Nonportableinfoboxes' ];
+		}
+
+		if ( !empty( $wgEnableTemplateClassificationExt ) ) {
+			if ( !empty( $wgEnableInsightsPagesWithoutInfobox ) ) {
+				$wgQueryPages[] = [ 'PagesWithoutInfobox', 'Pageswithoutinfobox' ];
+			}
+
+			if ( !empty( $wgEnableInsightsTemplatesWithoutType ) ) {
+				$wgQueryPages[] = [ 'TemplatesWithoutTypePage', 'Templateswithouttype' ];
+			}
 		}
 
 		return true;

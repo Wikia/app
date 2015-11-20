@@ -22,8 +22,11 @@ class TemplateTypesParser {
 				case TemplateClassificationService::TEMPLATE_NAVBOX:
 					$text = self::handleNavboxTemplate();
 					break;
+				case TemplateClassificationService::TEMPLATE_FLAG:
+					$text = self::handleNoticeTemplate();
+					break;
 				case AutomaticTemplateTypes::TEMPLATE_REFERENCES:
-				case TemplateClassificationService::TEMPLATE_REF:
+				case TemplateClassificationService::TEMPLATE_REFERENCES:
 					$text = self::handleReferencesTemplate();
 					break;
 			}
@@ -40,6 +43,15 @@ class TemplateTypesParser {
 	 * @return string
 	 */
 	private static function handleNavboxTemplate() {
+		return '';
+	}
+
+	/**
+	 * @desc return skip rendering notice template
+	 *
+	 * @return string
+	 */
+	private static function handleNoticeTemplate() {
 		return '';
 	}
 

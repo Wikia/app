@@ -20,20 +20,19 @@ class Hooks {
 	 * @return \FSFileBackend
 	 */
 	static private function initLocalFS( ) {
-		global $wgUploadDirectory, $wgUploadDirectoryNFS;
+		global $wgUploadDirectory;
 
 		$repoName = self::$repoName;
-		$directory = ( !empty( $wgUploadDirectoryNFS ) ) ? $wgUploadDirectoryNFS : $wgUploadDirectory;
 
 		$config = array (
 			'name'           => "{$repoName}-backend",
 			'class'          => 'FSFileBackend',
 			'lockManager'    => 'fsLockManager',
 			'containerPaths' => array(
-				"{$repoName}-public"  => "{$directory}",
-				"{$repoName}-thumb"   => "{$directory}/thumb",
-				"{$repoName}-deleted" => "{$directory}",
-				"{$repoName}-temp"    => "{$directory}/temp"
+				"{$repoName}-public"  => "{$wgUploadDirectory}",
+				"{$repoName}-thumb"   => "{$wgUploadDirectory}/thumb",
+				"{$repoName}-deleted" => "{$wgUploadDirectory}",
+				"{$repoName}-temp"    => "{$wgUploadDirectory}/temp"
 			),
 			'fileMode'       => 0644,
 		);
