@@ -1,8 +1,8 @@
 <?php
 class EmergencyBroadcastSystemController extends WikiaController {
-	
+
 	public function index() {
-		if ( $this->isCorrectPage() && $this->userIsPowerUser() && $this->hasNonPortableInfoBoxes() && $this->canOpenEBS() ) {
+		if ( $this->isCorrectPage() && $this->isPowerUser() && $this->hasNonPortableInfoBoxes() && $this->canOpenEBS() ) {
 			$this->response->setVal( 'nonPortableCount', '3' ); // Temporary number for testing
 		} else {
 			return false;
@@ -28,12 +28,12 @@ class EmergencyBroadcastSystemController extends WikiaController {
 
 	protected function isCorrectPage() {
 		$title = $this->getContext()->getTitle();
-		$specialPageName = Transaction::getAttribute(Transaction::PARAM_SPECIAL_PAGE_NAME);
+		$specialPageName = $title->isSpecialPage() ? Transaction::getAttribute(Transaction::PARAM_SPECIAL_PAGE_NAME) : '';
 
 		return $title->isContentPage() || $specialPageName === 'WikiActivity' || $specialPageName === 'Recentchanges';
 	}
 
-	protected function userIsPowerUser() {
+	protected function isPowerUser() {
 		$user = $this->getContext()->getUser();
 		return $user->isPowerUser();
 	}
