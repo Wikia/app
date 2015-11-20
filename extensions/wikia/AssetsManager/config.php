@@ -141,6 +141,14 @@ $config['adengine2_taboola_js'] = array(
 	),
 );
 
+$config['adengine2_gcs_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/recovery/gcs.js',
+	),
+);
+
 $config['adengine2_interactive_maps_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -2687,4 +2695,12 @@ $config['emergency_broadcast_system_scss'] = [
 	'assets' => [
 		'//extensions/wikia/EmergencyBroadcastSystem/css/EmergencyBroadcastSystem.scss',
 	],
+];
+
+$config['templates_hq_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/TemplateClassification/styles/SpecialTemplates.scss',
+	]
 ];

@@ -164,4 +164,3 @@ define('ext.wikia.adEngine.recovery.message', [
 		addRecoveryCallback: addRecoveryCallback
 	};
 });
-/*global define*/

@@ -1,7 +1,6 @@
 <?php
 
-class TemplateTypesParserTest extends WikiaBaseTest
-{
+class TemplateTypesParserTest extends WikiaBaseTest {
 	const TEST_TEMPLATE_TEXT = 'test-template-test';
 
 	/**
@@ -10,8 +9,7 @@ class TemplateTypesParserTest extends WikiaBaseTest
 	 *
 	 * @dataProvider shouldNotChangeTemplateParsingDataProvider
 	 */
-	public function testShouldNotChangeTemplateParsing( $enableTemplateTypesParsing, $wgArticleAsJson )
-	{
+	public function testShouldNotChangeTemplateParsing( $enableTemplateTypesParsing, $wgArticleAsJson ) {
 		$text = self::TEST_TEMPLATE_TEXT;
 		$title = $this->getMock( 'Title' );
 
@@ -76,6 +74,10 @@ class TemplateTypesParserTest extends WikiaBaseTest
 		return [
 			[
 				'navbox',
+				''
+			],
+			[
+				'notice',
 				''
 			],
 			[
