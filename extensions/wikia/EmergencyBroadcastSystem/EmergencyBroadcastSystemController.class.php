@@ -41,15 +41,15 @@ class EmergencyBroadcastSystemController extends WikiaController {
 			return false;
 		}
 
-		$ebs_response = $user->getOption( self::EBS_RESPONSE_KEY );
-		if ( $ebs_response === null )  { // user has not seen/interacted with EBS yet
+		$ebsResponse = $user->getOption( self::EBS_RESPONSE_KEY );
+		if ( $ebsResponse === null )  { // user has not seen/interacted with EBS yet
                         return true;
-		} elseif ( $ebs_response === 0 ) { // user has clicked 'no'
+		} elseif ( $ebsResponse === 0 ) { // user has clicked 'no'
 			return false;
 		} else {
-			$current_timestamp = ( new DateTime() )->getTimestamp();
-                        $cutoff_timestamp = $current_timestamp - 24 * 60 * 60; // 24 hrs ago
-			return $ebs_response < $cutoff_timestamp;
+			$currentTimestamp = ( new DateTime() )->getTimestamp();
+                        $cutoffTimestamp = $currentTimestamp - 24 * 60 * 60; // 24 hrs ago
+			return $ebsResponse < $cutoffTimestamp;
 		}
 	}
 
