@@ -640,7 +640,9 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		$panelString = implode( "\n", $panel );
 
 		$this->getOutput()->addHTML(
-			Xml::fieldset( wfMsg( 'recentchanges-legend' ), $panelString, array( 'class' => 'rcoptions' ) )
+			Xml::fieldset( wfMessage( 'recentchanges-legend' )->escaped(), $panelString, [
+				'class' => 'rcoptions collapsible collapsed',
+			] )
 		);
 
 		$this->setBottomText( $opts );

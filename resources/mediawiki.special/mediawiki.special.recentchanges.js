@@ -10,6 +10,14 @@
 
 	var rc = mw.special.recentchanges = {
 
+		bindCollapsible: function() {
+			$('.collapsible').find('legend').on('click', rc.toggleCollapsible);
+		},
+
+		toggleCollapsible: function(e) {
+			$(e.currentTarget).parent().toggleClass('collapsed');
+		},
+
 		/**
 		 * Handler to disable/enable the namespace selector checkboxes when the
 		 * special 'all' namespace is selected/unselected respectively.
@@ -30,6 +38,9 @@
 
 			// Bind to change event, and trigger once to set the initial state of the checkboxes.
 			$select.change( rc.updateCheckboxes ).change();
+
+			// Collapse fieldsets
+			rc.bindCollapsible();
 		}
 	};
 
