@@ -46,7 +46,7 @@ $messages['en'] = [
 	'template-classification-edit-modal-cancel-button-text' => 'Cancel',
 	'template-classification-edit-modal-title-edit-type' => 'Edit template type',
 	'template-classification-edit-modal-title-select-type' => 'Choose template type',
-	'template-classification-edit-modal-help' => 'To learn more about each template type, including examples, please visit [[Help:Template types]].',
+	'template-classification-edit-modal-help' => 'To learn more about each template type, including examples, please visit [[Help:Template Types]].',
 	'template-classification-edit-modal-success' => 'New template type has been saved. Thank you!',
 	'template-classification-edit-modal-error' => 'Unfortunately we were not able to save this template type. Would you mind trying again?',
 
@@ -320,7 +320,7 @@ $messages['pl'] = [
 	'template-classification-description-unknown' => 'Nie wiem.',
 	'template-classification-edit-modal-add-button-text' => 'Dodaj',
 	'template-classification-edit-modal-title-select-type' => 'Wybierz typ szablonu',
-	'template-classification-edit-modal-help' => 'Aby dowiedzieć się więcej na temat każdego typu szablonu oraz zobaczyć przykłady, wejdź na [[Help:Template classification]].',
+	'template-classification-edit-modal-help' => 'Aby dowiedzieć się więcej na temat każdego typu szablonu oraz zobaczyć przykłady, wejdź na [[Help:Template Types]].',
 	'template-classification-edit-modal-success' => 'Nowy typ szablonu został zapisany. Dziękujemy!',
 	'template-classification-edit-modal-error' => 'Niestety nie udało nam się zapisać typu szablonu. Czy możesz spróbować ponownie?',
 	'template-classification-indicator' => 'Typ szablonu:',
