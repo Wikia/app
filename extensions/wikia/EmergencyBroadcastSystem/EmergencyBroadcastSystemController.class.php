@@ -1,10 +1,11 @@
 <?php
 class EmergencyBroadcastSystemController extends WikiaController {
 
+	protected $nonPortableInfoboxes;
+
 	public function index() {
-		$nonPortableCount = $this->countOfNonPortableInfoBoxes();
-		if ( $this->isCorrectPage() && $this->isPowerUser() && $this->canOpenEBS() && ( $nonPortableCount > 0 ) ) {
-			$this->response->setVal( 'nonPortableCount', $nonPortableCount ); // Temporary number for testing
+		if ( $this->isCorrectPage() && $this->isPowerUser() && $this->canOpenEBS() && ( $this->countOfNonPortableInfoBoxes() > 0 ) ) {
+			$this->response->setVal( 'nonPortableCount', $this->countOfNonPortableInfoBoxes() );
 		} else {
 			return false;
 		}
@@ -62,7 +63,13 @@ class EmergencyBroadcastSystemController extends WikiaController {
 	}
 
 	protected function countOfNonPortableInfoboxes() {
-		$nonPortableInfoboxes = PortableInfoboxQueryService::getNonportableInfoboxes();
+		if ( isset( $this->nonPortableInfoboxes ) ) {
+			$nonPortableInfoboxes = $this->nonPortableInfoboxes;
+		} else {
+			$nonPortableInfoboxes = PortableInfoboxQueryService::getNonportableInfoboxes();
+			$this->nonPortableInfoboxes = $nonPortableInfoboxes;
+		}
+
 		return count($nonPortableInfoboxes);
 	}
 }
