@@ -2,6 +2,8 @@
 
 use Wikia\Helios\User as HeliosUser;
 use Wikia\Service\Constants;
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Auth\CookieHelper;
 
 class Piggyback extends SpecialPage {
 	var $mAction;
@@ -58,6 +60,19 @@ class PBHooks {
 
 			$retVal = LoginForm::SUCCESS;
 		}
+
+		return true;
+	}
+
+	public static function onUserSetCookies(User $user, $session, $cookies) {
+		if (PBLoginForm::isPiggyback()) {
+			/** @var CookieHelper $cookieHelper */
+			$cookieHelper = Injector::getInjector()->get(CookieHelper::class);
+			$response = RequestContext::getMain()->getRequest()->response();
+			$cookieHelper->setAuthenticationCookieWithUserId($user->getId(), $response);
+		}
+
+		return true;
 	}
 }
 
@@ -94,14 +109,16 @@ class PBLoginForm extends LoginForm {
 	}
 
 	function successfulLogin() {
-		global $wgUser, $wgAuth, $wgOut, $wgRequest;
+		global $wgUser, $wgRequest;
 
 		/* post valid */
 		$u = User::newFromName( $this->mOtherName );
 
 		$cu = User::newFromName( $this->mUsername );
 
-		if ( !$cu->checkPassword( $this->mPassword ) ) {
+		if ( !$cu->checkPassword( $this->mPassword ) &&
+				!HeliosUser::checkAuthenticationStatus( $cu->getName(), $this->mPassword, Constants::HTTP_STATUS_FORBIDDEN )) {
+
 			if ( $retval = '' == $this->mPassword ) {
 				$this->mainLoginForm( wfMessage( 'wrongpasswordempty' )->escaped() );
 			} else {

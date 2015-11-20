@@ -39,6 +39,7 @@ $wgAvailableRights[] = 'piggyback';
 $wgGroupPermissions['util']['piggyback'] = true;
 
 $wgHooks['LoginFormAuthenticateModifyRetval'][] = 'PBHooks::onLoginFormAuthenticateModifyRetval';
+$wgHooks['UserSetCookies'][] = 'PBHooks::onUserSetCookies';
 
 /*
  * event for logout (back to parent user)
@@ -75,9 +76,9 @@ function efPiggybackAddToolLinks( $id, $nt, &$tools ) {
 
 $wgHooks['RequestContextOverrideUser'][] = 'efPiggybackRequestContextOverrideUser';
 function efPiggybackRequestContextOverrideUser( &$user, $request ) {
-	if ( PBLoginForm::isPiggyback() ) {
-		$user = User::newFromSession( $request );
-		return false;
-	}
+//	if ( PBLoginForm::isPiggyback() ) {
+//		$user = User::newFromSession( $request );
+//		return false;
+//	}
 	return true;
 }

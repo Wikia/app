@@ -199,7 +199,7 @@ class User {
 			throw $throwException;
 		}
 
-		if ( !empty( $loginInfo ) && $authMethod != self::AUTH_TYPE_RESET_PW ) {
+		if ( isset( $loginInfo->access_token ) && $authMethod != self::AUTH_TYPE_RESET_PW ) {
 			self::setAccessTokenCookie( $loginInfo->access_token );
 		}
 
