@@ -4,6 +4,7 @@ namespace Wikia\Helios;
 
 use DI\Container;
 use Wikia\DependencyInjection\InjectorBuilder;
+use Wikia\Service\Constants;
 use Wikia\Service\Helios\ClientException;
 use Wikia\Service\Helios\HeliosClient;
 
@@ -216,7 +217,7 @@ class UserTest extends \WikiaBaseTest {
 		$client->expects( $this->once() )
 			->method( 'login' )
 			->with( $username, $password )
-			->willReturn( new \StdClass );
+			->willReturn( [Constants::HTTP_STATUS_OK, new \StdClass] );
 		$this->mockClass( 'Wikia\Service\Helios\HeliosClient', $client );
 
 		$this->assertFalse( User::authenticate( $username, $password ) );
@@ -248,7 +249,7 @@ class UserTest extends \WikiaBaseTest {
 		$client->expects( $this->once() )
 			->method( 'login' )
 			->with( $username, $password )
-			->willReturn( $loginInfo );
+			->willReturn( [Constants::HTTP_STATUS_OK, $loginInfo] );
 		$this->mockClass( 'Wikia\Service\Helios\HeliosClient', $client );
 
 		$this->assertTrue( User::authenticate( $username, $password ) );
