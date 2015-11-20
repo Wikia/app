@@ -73,12 +73,3 @@ function efPiggybackAddToolLinks( $id, $nt, &$tools ) {
 
 	return true;
 }
-
-$wgHooks['RequestContextOverrideUser'][] = 'efPiggybackRequestContextOverrideUser';
-function efPiggybackRequestContextOverrideUser( &$user, $request ) {
-//	if ( PBLoginForm::isPiggyback() ) {
-//		$user = User::newFromSession( $request );
-//		return false;
-//	}
-	return true;
-}
