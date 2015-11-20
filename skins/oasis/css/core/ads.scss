@@ -278,6 +278,11 @@ body >a >img[src$="noad.gif"] {
 			overflow: hidden;
 		}
 	}
+
+	> header .close-counter {
+		float: right;
+		font-size: 17px;
+	}
 }
 
 //@TODO remove .oasis-responsive after deprecating responsive (July 2015)

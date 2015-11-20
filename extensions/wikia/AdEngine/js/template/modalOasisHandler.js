@@ -23,7 +23,11 @@ define('ext.wikia.adEngine.template.modalOasisHandler', [
 
 		uiFactory.init('modal').then((function (uiModal) {
 			uiModal.createComponent(modalConfig, (function (modal) {
-				var closeBtnDelay = parseInt(closeButtonDelay, 10) * 1000 || 0;
+				var closeBtnDelay = parseInt(closeButtonDelay, 10) * 1000 || 0,
+					$header,
+					$counter,
+					counter;
+
 				this.modal = modal;
 				modal.$content.append(adContainer);
 				modal.$element.width('auto');
@@ -42,8 +46,8 @@ define('ext.wikia.adEngine.template.modalOasisHandler', [
 				}
 
 				if (closeBtnDelay > 0) {
-					var $header = modal.$close.parent(),
-						$counter = $(document.createElement('div'));
+					$header = modal.$close.parent();
+					$counter = $(document.createElement('div'));
 
 					modal.$close.hide();
 
@@ -51,7 +55,7 @@ define('ext.wikia.adEngine.template.modalOasisHandler', [
 					$counter.text(closeButtonDelay);
 					$header.prepend($counter);
 
-					var counter = setInterval(timer, 1000);
+					counter = setInterval(timer, 1000);
 				}
 
 				if (modalVisible) {
