@@ -12,35 +12,43 @@ $messages['en'] = array(
 	'insights-list-header-altaction' => 'Action',
 	'insights-list-header-pageviews' => 'Page views',
 	'insights-last-edit' => 'Last edited by $1, $2',
+
 	'insights-list-subtitle-flags' => 'Pages marked with flags',
 	'insights-list-description-flags' => 'Use Flags to organize and label article pages. This Insight list allows you to view custom reports of flagged articles to find the articles that most need improvements. [[Help:Flags|Learn more about flags]]',
+
 	'insights-list-subtitle-uncategorizedpages' => 'Pages without categories',
 	'insights-list-description-uncategorizedpages' => 'Add categories to these pages. Good categorization is vital to a successfully organized wikia!',
 	'insights-notification-message-inprogress-uncategorizedpages' => 'This page needs categories added. ',
 	'insights-notification-message-fixed-uncategorizedpages' => 'Awesome, this page is now categorized.',
 	'insights-notification-next-item-uncategorizedpages' => 'Go to the next uncategorized article.',
+
 	'insights-list-subtitle-withoutimages' => 'Pages without images',
 	'insights-list-description-withoutimages' => 'Articles with images are read more often, shared more often, and perform better in search engines than those without images. Even adding a loosely related image can help.',
 	'insights-notification-message-inprogress-withoutimages' => 'This page needs an image. ',
 	'insights-notification-message-fixed-withoutimages' => 'Great, the page looks much better!',
 	'insights-notification-next-item-withoutimages' => ' Go to the next article that could use one.',
+
 	'insights-list-subtitle-deadendpages' => 'Pages without links',
 	'insights-list-description-deadendpages' => 'These pages should link to other articles on your wikia. Well-linked articles help readers discover more information about your topic and improve search engine rankings.',
 	'insights-notification-message-inprogress-deadendpages' => 'This page needs links to other pages. ',
 	'insights-notification-message-fixed-deadendpages' => 'Yay, this page is now linked!',
 	'insights-notification-next-item-deadendpages' => 'Go to the next article that needs links.',
+
 	'insights-list-subtitle-wantedpages' => 'Wanted pages',
 	'insights-list-description-wantedpages' => "There are redlinks pointing to these pages, but the pages don't exist! Create the article or make it a redirect to the correct article to help readers navigate your community.",
 	'insights-notification-message-inprogress-wantedpages' => 'This page needs to be created. ',
 	'insights-notification-message-fixed-wantedpages' => 'Thanks for making this page!',
 	'insights-notification-next-item-wantedpages' => 'Create another article.',
+
 	'insights-list-subtitle-nonportableinfoboxes' => 'Non-portable infoboxes',
 	'insights-list-description-nonportableinfoboxes' => "The following infoboxes are built with tables or divs, and should be converted to use the new [[Help:PortableInfoboxes|infobox markup]] so they render appropriately to all visitors. If you're stuck you can also [[w:c:community:Thread:841717|visit our forum thread and ask questions there]].",
 	'insights-notification-message-inprogress-nonportableinfoboxes' => 'This infobox needs to be updated with the new infobox markup.',
 	'insights-notification-message-fixed-nonportableinfoboxes' => 'Awesome! The infobox on this page has been converted.',
 	'insights-notification-next-item-nonportableinfoboxes' => 'Convert the next infobox.',
+
 	'insights-list-subtitle-pageswithoutinfobox' => 'Pages without an infobox',
 	'insights-list-description-pageswithoutinfobox' => 'These pages do not have a recognized [[Help:Infoboxes|infobox]] on them. You may want to consider adding one!',
+
 	'insights-list-subtitle-templateswithouttype' => 'Unorganized templates',
 	'insights-list-description-templateswithouttype' => 'The purpose of these templates is unknown, as they have not been organized by type. See [[Help:Template Types]] to learn more!',
 
@@ -74,6 +82,7 @@ $messages['qqq'] = array(
 	'insights-list-header-altaction' => 'A header of an Insights list table for a column with a link to a semi- or fully automatic action taken on the corresponding page',
 	'insights-list-header-pageviews' => 'A header of an Insights list table for a column with a number of views of an article',
 	'insights-last-edit' => 'Information who and when made last edit for chosen article on the list',
+
 	'insights-list-subtitle-flags' => 'A title of a subpage with a list of pages marked with flags',
 	'insights-list-description-flags' => 'A description for a subpage with a list of pages marked with flags',
 	'insights-list-subtitle-uncategorizedpages' => 'A title of a subpage with a list of uncategorized pages',
@@ -81,30 +90,37 @@ $messages['qqq'] = array(
 	'insights-notification-message-inprogress-uncategorizedpages' => 'Message displayed on notification banner informing user that category should be added to the page',
 	'insights-notification-message-fixed-uncategorizedpages' => 'Message displayed on notification banner informing user that category was added to the page',
 	'insights-notification-next-item-uncategorizedpages' => 'Link text to redirect to next uncategorized page',
+
 	'insights-list-subtitle-withoutimages' => 'A title of a subpage with a list of pages without images',
 	'insights-list-description-withoutimages' => 'A description for a subpage with a list of pages without images',
 	'insights-notification-message-inprogress-withoutimages' => 'Message displayed on notification banner informing user that image should be added to the page',
 	'insights-notification-message-fixed-withoutimages' => 'Message displayed on notification banner informing user that image was added to the page',
 	'insights-notification-next-item-withoutimages' => ' Link text to redirect to next page without image',
+
 	'insights-list-subtitle-deadendpages' => 'A title of a subpage with a list of pages with no links',
 	'insights-list-description-deadendpages' => 'A description for a subpage with a list of pages with no links',
 	'insights-notification-message-inprogress-deadendpages' => 'Message displayed on notification banner informing user that the page needs links',
 	'insights-notification-message-fixed-deadendpages' => 'Message displayed on notification banner informing user that links were added to the page',
 	'insights-notification-next-item-deadendpages' => 'Link text to redirect to next page without links',
+
 	'insights-list-subtitle-wantedpages' => 'A title of a subpage with a list of wanted pages',
 	'insights-list-description-wantedpages' => 'A description for a subpage with a list of wanted pages',
 	'insights-notification-message-inprogress-wantedpages' => 'Message displayed on notification banner informing user that page should be created',
 	'insights-notification-message-fixed-wantedpages' => 'Message displayed on notification banner informing user that page was created',
 	'insights-notification-next-item-wantedpages' => 'Link text to redirect to next not existing page',
+
 	'insights-list-subtitle-nonportableinfoboxes' => 'A title of list of pages with old (unconverted, non-portable) infoboxes',
 	'insights-list-description-nonportableinfoboxes' => 'The description of what the list of old infoboxes is.',
 	'insights-notification-message-inprogress-nonportableinfoboxes' => 'A hint that is displayed if a currently visited page needs conversion of an infobox.',
 	'insights-notification-message-fixed-nonportableinfoboxes' => 'A message shown if an old infobox has been converted to the new syntax.',
 	'insights-notification-next-item-nonportableinfoboxes' => 'A text of a link that leads to the next article that need infobox conversion.',
+
 	'insights-list-subtitle-pageswithoutinfobox' => 'A title of list of pages without an infobox.',
 	'insights-list-description-pageswithoutinfobox' => 'The description of what the list of pages without infoboxes is.',
+
 	'insights-list-subtitle-templateswithouttype' => 'A title of list of templates without type coming from template classification',
 	'insights-list-description-templateswithouttype' => 'The description of what the list of templates without type is',
+
 	'insights-sort-pv7' => 'Sorting option by page views in last week',
 	'insights-sort-pv28' => 'Sorting option by page views in last 4 weeks',
 	'insights-sort-pvDiff' => 'Sorting option by recent increase in page views',

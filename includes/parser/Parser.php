@@ -3339,7 +3339,8 @@ class Parser {
 	 *  $piece['parts']: the parameter array
 	 *  $piece['lineStart']: whether the brace was at the start of a line
 	 * @param $frame PPFrame The current frame, contains template arguments
-	 * @return String: the text of the template
+	 * @return String : the text of the template
+	 * @throws \MWException
 	 * @private
 	 */
 	function braceSubstitution( $piece, $frame ) {
@@ -3749,6 +3750,10 @@ class Parser {
 		} else {
 			$ret = array( 'text' => $text );
 		}
+
+		# TODO: remove me in next release. This hook causes significant performance drop. Do not uncomment.
+		# wfRunHooks( 'Parser::BraceSubstitution', array( $originalTitle, &$ret['text']) );
+		# 
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
