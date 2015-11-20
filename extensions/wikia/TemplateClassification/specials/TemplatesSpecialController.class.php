@@ -56,6 +56,8 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 		] );
 	}
 
+	public function exception() {}
+
 	/**
 	 * Get all classified templates on wiki
 	 *
@@ -67,6 +69,8 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 		try {
 			$classifiedTemplates = ( new \TemplateClassificationService() )->getTemplatesOnWiki( $this->wg->CityId );
 		} catch( \Swagger\Client\ApiException $e ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'SpecialTemplatesException', [ 'ex' => $e ] );
+			$this->forward( __CLASS__, 'exception' );
 		}
 
 		$classifiedTemplates = array_intersect_key( $classifiedTemplates, $allTemplates );
@@ -195,6 +199,7 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 			$template['url'] = $title->getLocalURL();
 			$template['wlh'] = SpecialPage::getTitleFor( 'Whatlinkshere', $title->getPrefixedText() )->getLocalURL();
 			$template['revision'] = $this->getRevisionData( $title );
+			$template['count'] = $this->wg->Lang->formatNum( $template['count'] );
 		}
 
 		return $template;
@@ -212,7 +217,7 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 		$revision = Revision::newFromId( $title->getLatestRevID() );
 
 		if ( $revision instanceof Revision ) {
-			$data['timestamp'] = wfTimestamp( TS_UNIX, $revision->getTimestamp() );
+			$data['timestamp'] = $this->wg->Lang->date( $revision->getTimestamp() );
 
 			$user = $revision->getUserText();
 

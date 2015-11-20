@@ -41,7 +41,7 @@
 						],
 							$template['revision']['username']
 						),
-						date( 'F j, Y', $template['revision']['timestamp'] )
+						$template['revision']['timestamp']
 					)->escaped() ?>
 				<?php endif; ?>
 			</td>

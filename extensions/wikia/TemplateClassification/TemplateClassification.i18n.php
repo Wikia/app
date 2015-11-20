@@ -58,6 +58,7 @@ $messages['en'] = [
 	'template-classification-special-page-header' => 'Page name',
 	'template-classification-special-used-header' => 'Used on',
 	'template-classification-special-type-header' => 'Template type',
+	'template-classification-special-exception' => 'We are sorry, but something went wrong on our side! Please try again.',
 	'special-templates' => 'Templates'
 ];
 
@@ -110,6 +111,7 @@ $messages['qqq'] = [
 	'template-classification-special-page-header' => 'Table column header describing page name.',
 	'template-classification-special-used-header' => 'Table column header describing where this templates were used.',
 	'template-classification-special-type-header' => 'Table column header describing template type.',
+	'template-classification-special-exception' => 'Message shown when fetching data was impossible and informing user that something went wrong and ask to try again.',
 	'special-templates' => 'Name of special page containing all templates on wiki with types.'
 ];
 
