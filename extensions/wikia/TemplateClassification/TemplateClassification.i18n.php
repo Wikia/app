@@ -53,6 +53,16 @@ $messages['en'] = [
 	'template-classification-indicator' => 'Template type:',
 
 	'template-classification-notification-error-retry' => 'Something went wrong and we could not save the template type. Could you retry it using the link under the page title?',
+	'template-classification-special-last-edit' => 'Last edited by $1, $2',
+	'template-classification-special-search' => 'Search',
+	'template-classification-special-find-template' => 'Find Template:',
+	'template-classification-special-find-type' => 'Browse by type:',
+	'template-classification-special-noresults' => 'No templates found',
+	'template-classification-special-page-header' => 'Page name',
+	'template-classification-special-used-header' => 'Used on',
+	'template-classification-special-type-header' => 'Template type',
+	'template-classification-special-exception' => 'We are sorry, but something went wrong on our side! Please try again.',
+	'special-templates' => 'Templates'
 ];
 
 $messages['qqq'] = [
@@ -97,6 +107,17 @@ $messages['qqq'] = [
 	'template-classification-indicator' => 'Shown in page subheader and near classification dialog entry points to indicate which type the template is currently classified as.',
 
 	'template-classification-notification-error-retry' => 'A message shown to a user in a Banner Notification if classifying of a template resulted with an error and we want a user to retry doing it.',
+
+	'template-classification-special-last-edit' => 'Information who and when made last edit for chosen article on the list.',
+	'template-classification-special-search' => 'Label for search button.',
+	'template-classification-special-find-template' => 'Label before text input field to find template by name.',
+	'template-classification-special-find-type' => 'Label before select dropdown to browse template by type.',
+	'template-classification-special-noresults' => 'Message shown if no templates were found.',
+	'template-classification-special-page-header' => 'Table column header describing page name.',
+	'template-classification-special-used-header' => 'Table column header describing where this templates were used.',
+	'template-classification-special-type-header' => 'Table column header describing template type.',
+	'template-classification-special-exception' => 'Message shown when fetching data was impossible and informing user that something went wrong and ask to try again.',
+	'special-templates' => 'Name of special page containing all templates on wiki with types.'
 ];
 
 $messages['de'] = [
