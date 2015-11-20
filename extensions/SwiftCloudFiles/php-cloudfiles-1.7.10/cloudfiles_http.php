@@ -262,7 +262,7 @@ class CF_Http
 			$level = ( $retriesLeft === 0 ) ? 'error' : 'warning';
 
 			Wikia\Logger\WikiaLogger::instance()->$level( 'SwiftStorage: authentication retry', [
-				'exception'    => new Exception( $reason, is_numeric($status) ? $status : 0 ),
+				'exception'    => new SwiftRetryException( $reason, is_numeric($status) ? $status : 0 ),
 				'retries-left' => $retriesLeft,
 			] );
 
@@ -1528,7 +1528,7 @@ class CF_Http
 			$level = ( $retriesLeft === 0 ) ? 'error' : 'warning';
 
 			Wikia\Logger\WikiaLogger::instance()->$level( 'SwiftStorage: retry', [
-				'exception'    => new Exception( $this->error_str, is_numeric($res) ? $res : 0 ),
+				'exception'    => new SwiftRetryException( $this->error_str, is_numeric($res) ? $res : 0 ),
 				'retries-left' => $retriesLeft,
 				'headers'      => $hdrs,
 				'conn-type'    => $conn_type,
