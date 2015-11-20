@@ -1,7 +1,12 @@
 <?php
 class EmergencyBroadcastSystemController extends WikiaController {
-	public function index( ) {
-		$this->response->setVal( 'nonPortableCount', '3' ); // Temporary number for testing
+
+	public function index() {
+		if ( $this->isCorrectPage() && $this->isPowerUser() && $this->hasNonPortableInfoBoxes() && $this->canOpenEBS() ) {
+			$this->response->setVal( 'nonPortableCount', '3' ); // Temporary number for testing
+		} else {
+			return false;
+		}
 	}
 
 	public static function saveUserResponse( $val ) {
@@ -19,8 +24,21 @@ class EmergencyBroadcastSystemController extends WikiaController {
 			$wgUser->setOption( $option_name, $timestamp );
 		}
 	}
+	// PROTECTED
 
-	public static function canOpenEBS( ) {
+	protected function isCorrectPage() {
+		$title = $this->getContext()->getTitle();
+		$specialPageName = $title->isSpecialPage() ? Transaction::getAttribute(Transaction::PARAM_SPECIAL_PAGE_NAME) : '';
+
+		return $title->isContentPage() || $specialPageName === 'WikiActivity' || $specialPageName === 'Recentchanges';
+	}
+
+	protected function isPowerUser() {
+		$user = $this->getContext()->getUser();
+		return $user->isPowerUser();
+	}
+
+	protected function canOpenEBS( ) {
 		global $wgUser;
 		$ebs_response = $wgUser->getOption( 'ebs_response' );
 		if ($ebs_response === null) {
@@ -40,5 +58,10 @@ class EmergencyBroadcastSystemController extends WikiaController {
 				return false;
 			}
 		}
+	}
+
+	protected function hasNonPortableInfoBoxes() {
+		// TODO: Actually check for non portable infoboxes
+		return true;
 	}
 }
