@@ -69,11 +69,11 @@ class SpecialController extends \WikiaSpecialPageController {
 		$data = $resp->getData();
 
 		$this->getResponse()->setData( [
-			'pageDescription' => wfMessage( 'user-activity-page-description' )->text(),
-			'tableTitle' => wfMessage( 'user-activity-table-title' )->text(),
-			'tableEdits' => wfMessage( 'user-activity-table-edits' )->text(),
-			'tableLastEdit' => wfMessage( 'user-activity-table-lastedit' )->text(),
-			'tableRights' => wfMessage( 'user-activity-table-rights' )->text(),
+			'pageDescription' => wfMessage( 'user-activity-page-description' )->escaped(),
+			'tableTitle' => wfMessage( 'user-activity-table-title' )->escaped(),
+			'tableEdits' => wfMessage( 'user-activity-table-edits' )->escaped(),
+			'tableLastEdit' => wfMessage( 'user-activity-table-lastedit' )->escaped(),
+			'tableRights' => wfMessage( 'user-activity-table-rights' )->escaped(),
 			'items' => $data['items'],
 			'username' => $this->app->wg->User->getName(),
 			'total' => $data['total'],
