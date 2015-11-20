@@ -23,32 +23,32 @@ define('ext.wikia.adEngine.template.modalOasisHandler', [
 
 		uiFactory.init('modal').then((function (uiModal) {
 			uiModal.createComponent(modalConfig, (function (modal) {
-				var count = closeButtonDelay,
-					closeBtnDelay = parseInt(closeButtonDelay, 10) * 1000 || 0;
+				var closeBtnDelay = parseInt(closeButtonDelay, 10) * 1000 || 0;
 				this.modal = modal;
 				modal.$content.append(adContainer);
 				modal.$element.width('auto');
 
 				function timer() {
-					count = count - 1;
+					closeButtonDelay = closeButtonDelay - 1;
 
-					if (count < 0) {
+					if (closeButtonDelay < 0) {
 						clearInterval(counter);
 						$counter.hide();
 						modal.$close.show();
 						return;
 					}
 
-					$counter.text(count);
+					$counter.text(closeButtonDelay);
 				}
 
 				if (closeBtnDelay > 0) {
 					var $header = modal.$close.parent(),
-						$counter = $(document.createElement('div'))
-							.addClass('close-counter')
-							.text(count);
+						$counter = $(document.createElement('div'));
 
 					modal.$close.hide();
+
+					$counter.addClass('close-counter');
+					$counter.text(closeButtonDelay);
 					$header.prepend($counter);
 
 					var counter = setInterval(timer, 1000);
