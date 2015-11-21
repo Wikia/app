@@ -67,6 +67,7 @@ $wgAutoloadClasses['Wikia\ContentReview\ContentReviewStatusesService'] = __DIR__
  * Helpers
  */
 $wgAutoloadClasses['Wikia\ContentReview\Helper'] = __DIR__ . '/ContentReviewHelper.php';
+$wgAutoloadClasses['Wikia\ContentReview\ImportJS'] = __DIR__ . '/ContentReviewImportJS.php';
 
 /**
  * Hooks

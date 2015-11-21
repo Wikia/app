@@ -16,6 +16,9 @@ $messages['en'] = [
 	'template-classification-type-notice' => 'Notice',
 	'template-classification-description-notice' => 'Also known as tophats or alerts, these templates notify the reader about the status of the article itself, such as stub, disambiguation, or spoiler.',
 
+	'template-classification-type-context-link' => 'Context-link',
+	'template-classification-description-context-link' => 'Suggests another page to readers that is related to the current page or section. Usually these include “Main article” or “See also” and display as italicized text.',
+
 	'template-classification-type-reference' => 'Citation or reference',
 	'template-classification-description-reference' => 'Organizes and standardizes how sources of content on an article page are annotated.',
 
@@ -43,13 +46,23 @@ $messages['en'] = [
 	'template-classification-edit-modal-cancel-button-text' => 'Cancel',
 	'template-classification-edit-modal-title-edit-type' => 'Edit template type',
 	'template-classification-edit-modal-title-select-type' => 'Choose template type',
-	'template-classification-edit-modal-help' => 'To learn more about each template type, including examples, please visit [[Help:Template classification]].',
+	'template-classification-edit-modal-help' => 'To learn more about each template type, including examples, please visit [[Help:Template Types]].',
 	'template-classification-edit-modal-success' => 'New template type has been saved. Thank you!',
 	'template-classification-edit-modal-error' => 'Unfortunately we were not able to save this template type. Would you mind trying again?',
 
 	'template-classification-indicator' => 'Template type:',
 
 	'template-classification-notification-error-retry' => 'Something went wrong and we could not save the template type. Could you retry it using the link under the page title?',
+	'template-classification-special-last-edit' => 'Last edited by $1, $2',
+	'template-classification-special-search' => 'Search',
+	'template-classification-special-find-template' => 'Find Template:',
+	'template-classification-special-find-type' => 'Browse by type:',
+	'template-classification-special-noresults' => 'No templates found',
+	'template-classification-special-page-header' => 'Page name',
+	'template-classification-special-used-header' => 'Used on',
+	'template-classification-special-type-header' => 'Template type',
+	'template-classification-special-exception' => 'We are sorry, but something went wrong on our side! Please try again.',
+	'special-templates' => 'Templates'
 ];
 
 $messages['qqq'] = [
@@ -66,6 +79,7 @@ $messages['qqq'] = [
 	'template-classification-type-notice' => 'Name of a notice type',
 	'template-classification-type-reference' => 'Name of a reference type',
 	'template-classification-type-unknown' => 'Name of an unknown template type',
+	'template-classification-type-context-link' => 'Name of the context link type',
 
 	'template-classification-description-infobox' => 'Description (additional label) for the infobox type. This is shown in dialog box under the type name to explain what each type is.',
 	'template-classification-description-navbox' => 'Description (additional label) for the navbox type. This is shown in dialog box under the type name to explain what each type is.',
@@ -78,6 +92,7 @@ $messages['qqq'] = [
 	'template-classification-description-media' => 'Description (additional label) for the media template type. This is shown in dialog box under the type name to explain what each type is.',
 	'template-classification-description-notice' => 'Description (additional label) for the notice template type. This is shown in dialog box under the type name to explain what each type is.',
 	'template-classification-description-reference' => 'Description (additional label) for the reference template type. This is shown in dialog box under the type name to explain what each type is.',
+	'template-classification-description-context-link' => 'Description (additional label) for the context link template type. This is shown in the dialog box under the type name to explain what each type is.',
 
 	'template-classification-type-header' => 'A header of all boxes that display a type of a template.',
 	'template-classification-edit-modal-add-button-text' => 'Text on add button on modal for proceeding to template adding after template type is choose',
@@ -92,6 +107,17 @@ $messages['qqq'] = [
 	'template-classification-indicator' => 'Shown in page subheader and near classification dialog entry points to indicate which type the template is currently classified as.',
 
 	'template-classification-notification-error-retry' => 'A message shown to a user in a Banner Notification if classifying of a template resulted with an error and we want a user to retry doing it.',
+
+	'template-classification-special-last-edit' => 'Information who and when made last edit for chosen article on the list.',
+	'template-classification-special-search' => 'Label for search button.',
+	'template-classification-special-find-template' => 'Label before text input field to find template by name.',
+	'template-classification-special-find-type' => 'Label before select dropdown to browse template by type.',
+	'template-classification-special-noresults' => 'Message shown if no templates were found.',
+	'template-classification-special-page-header' => 'Table column header describing page name.',
+	'template-classification-special-used-header' => 'Table column header describing where this templates were used.',
+	'template-classification-special-type-header' => 'Table column header describing template type.',
+	'template-classification-special-exception' => 'Message shown when fetching data was impossible and informing user that something went wrong and ask to try again.',
+	'special-templates' => 'Name of special page containing all templates on wiki with types.'
 ];
 
 $messages['de'] = [
@@ -284,44 +310,6 @@ $messages['ja'] = [
 	'template-classification-notification-error-retry' => 'エラーが発生したため、テンプレートの種類を保存できませんでした。ページタイトルの下にあるリンクを使ってもう一度お試しください。',
 ];
 
-$messages['nl'] = [
-	'template-classification-description' => 'Interface for classifying templates to understand content better.',
-	'template-classification-type-unclassified' => 'Unclassified',
-	'template-classification-type-infobox' => 'Infobox',
-	'template-classification-description-infobox' => 'Displays the most essential information about an article in a box at the top of the page, usually to the right side.',
-	'template-classification-type-navbox' => 'Navbox',
-	'template-classification-description-navbox' => 'Displays a list of organized links in a box for readers to navigate to related articles, usually at the bottom of the page.',
-	'template-classification-type-quote' => 'Quote',
-	'template-classification-description-quote' => 'Highlights notable snippets of text such as lyrics, book passages, or spoken dialog. Can contain dialog between one person or multiple people.',
-	'template-classification-type-notice' => 'Notice',
-	'template-classification-description-notice' => 'Also known as tophats or alerts, these templates notify the reader about the status of the article itself, such as stub, disambiguation, or spoiler.',
-	'template-classification-type-reference' => 'Citation or reference',
-	'template-classification-description-reference' => 'Organizes and standardizes how sources of content on an article page are annotated.',
-	'template-classification-type-media' => 'Image, video, or gallery',
-	'template-classification-description-media' => 'This template will standardize or modify the display of one or more images or videos.',
-	'template-classification-type-data' => 'Data',
-	'template-classification-description-data' => 'This template is used to display data on an article page.',
-	'template-classification-type-design' => 'Design',
-	'template-classification-description-design' => 'This template is used to design or structure article pages.',
-	'template-classification-type-navigation' => 'Navigation',
-	'template-classification-description-navigation' => 'This template is used for navigation.',
-	'template-classification-type-nonarticle' => 'Non-article',
-	'template-classification-description-nonarticle' => 'This template is not used on article pages.',
-	'template-classification-type-unknown' => 'Unknown',
-	'template-classification-description-unknown' => "I don't know.",
-	'template-classification-type-header' => 'Template type',
-	'template-classification-edit-modal-add-button-text' => 'Add',
-	'template-classification-edit-modal-save-button-text' => 'Save',
-	'template-classification-edit-modal-cancel-button-text' => 'Cancel',
-	'template-classification-edit-modal-title-edit-type' => 'Edit template type',
-	'template-classification-edit-modal-title-select-type' => 'Choose template type',
-	'template-classification-edit-modal-help' => 'To learn more about each template type, including examples, please visit [[Help:Template classification]].',
-	'template-classification-edit-modal-success' => 'New template type has been saved. Thank you!',
-	'template-classification-edit-modal-error' => 'Unfortunately we were not able to save this template type. Would you mind trying again?',
-	'template-classification-indicator' => 'Template type:',
-	'template-classification-notification-error-retry' => 'Something went wrong and we could not save the template type. Could you retry it using the link under the page title?',
-];
-
 $messages['pl'] = [
 	'template-classification-description' => 'Interfejs do klasyfikacji szablonów w celu lepszego zrozumienia treści.',
 	'template-classification-type-unclassified' => 'Niesklasyfikowany',
@@ -353,7 +341,7 @@ $messages['pl'] = [
 	'template-classification-description-unknown' => 'Nie wiem.',
 	'template-classification-edit-modal-add-button-text' => 'Dodaj',
 	'template-classification-edit-modal-title-select-type' => 'Wybierz typ szablonu',
-	'template-classification-edit-modal-help' => 'Aby dowiedzieć się więcej na temat każdego typu szablonu oraz zobaczyć przykłady, wejdź na [[Help:Template classification]].',
+	'template-classification-edit-modal-help' => 'Aby dowiedzieć się więcej na temat każdego typu szablonu oraz zobaczyć przykłady, wejdź na [[Help:Template Types]].',
 	'template-classification-edit-modal-success' => 'Nowy typ szablonu został zapisany. Dziękujemy!',
 	'template-classification-edit-modal-error' => 'Niestety nie udało nam się zapisać typu szablonu. Czy możesz spróbować ponownie?',
 	'template-classification-indicator' => 'Typ szablonu:',
@@ -391,7 +379,6 @@ $messages['pt'] = [
 	'template-classification-edit-modal-cancel-button-text' => 'Cancelar',
 	'template-classification-edit-modal-title-edit-type' => 'Editar o tipo de predefinição',
 	'template-classification-edit-modal-title-select-type' => 'Escolha o tipo de predefinição',
-	'template-classification-edit-modal-help' => 'To learn more about each template type, including examples, please visit [[Help:Template classification]].',
 	'template-classification-edit-modal-success' => 'O novo tipo de predefinição foi salvo. Obrigado!',
 	'template-classification-edit-modal-error' => 'Infelizmente não foi possível salvar este tipo de predefinição. Por favor, tente novamente.',
 	'template-classification-indicator' => 'Tipo de predefinição:',
@@ -467,7 +454,6 @@ $messages['zh-hans'] = [
 	'template-classification-edit-modal-cancel-button-text' => '取消',
 	'template-classification-edit-modal-title-edit-type' => '编辑模板类型',
 	'template-classification-edit-modal-title-select-type' => '选择模板类型',
-	'template-classification-edit-modal-help' => 'To learn more about each template type, including examples, please visit [[Help:Template classification]].',
 	'template-classification-edit-modal-success' => '已保存新模板类型。谢谢！',
 	'template-classification-edit-modal-error' => '很抱歉，我们无法保存此模板类型。您介意再试一次吗?',
 	'template-classification-indicator' => '模板类型：',
@@ -505,7 +491,6 @@ $messages['zh-hant'] = [
 	'template-classification-edit-modal-cancel-button-text' => '取消',
 	'template-classification-edit-modal-title-edit-type' => '編輯模版類型',
 	'template-classification-edit-modal-title-select-type' => '選擇模版類型',
-	'template-classification-edit-modal-help' => 'To learn more about each template type, including examples, please visit [[Help:Template classification]].',
 	'template-classification-edit-modal-success' => '已保存新模版類型。謝謝！',
 	'template-classification-edit-modal-error' => '抱歉，我們無法保存此模版類型。 您介意再試一次嗎?',
 	'template-classification-indicator' => '模版類型',
