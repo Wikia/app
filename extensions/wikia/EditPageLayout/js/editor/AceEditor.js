@@ -181,10 +181,15 @@ define(
 		var wiki_url = mw.config.get('wgServer').split('://')[1];
 		var template_name = mw.config.get('wgPageName').split(':')[1];
 
-		$('<form action="http://infoboxpreview.appspot.com" method="POST"/>')
-			.append($('<input type="hidden" name="editor_value" value="' + editor_value + '">'))
-			.append($('<input type="hidden" name="wiki_url" value="' + wiki_url + '">'))
-			.append($('<input type="hidden" name="template_name" value="' + template_name + '">'))
+		var encode = function(str) {
+			return encodeURI(str).replace(/'/g, '%27');
+		}
+
+		$('<form action="http://localhost:8080/api/entrypoint/" method="POST">')
+			.append($('<input type="hidden" name="editor_value" value="' + encode(editor_value) + '">'))
+			.append($('<input type="hidden" name="wiki_url" value="' + encode(wiki_url) + '">'))
+			.append($('<input type="hidden" name="template_name" value="' + encode(template_name) + '">'))
+			.append($('</form>'))
 			.appendTo($(document.body))
 			.submit();
 	}
