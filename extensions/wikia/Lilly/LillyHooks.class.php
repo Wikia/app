@@ -23,9 +23,9 @@ class LillyHooks {
 		'ru.starwars.wikia.com',
 		'sl.starwars.wikia.com',
 		'sr.starwars.wikia.com',
-		'fi.starwars.wikia.com',
 		'sv.starwars.wikia.com',
 		'tr.starwars.wikia.com',
+		'zh.starwars.wikia.com',
 		'zh-hk.starwars.wikia.com',
 	];
 
@@ -34,6 +34,7 @@ class LillyHooks {
 		'Česky',
 		'Dansk',
 		'Deutsch',
+		'English',
 		'Ελληνικά',
 		'Español',
 		'Français',
@@ -50,7 +51,6 @@ class LillyHooks {
 		'Русский',
 		'Slovenščina',
 		'Српски / Srpski',
-		'Suomi',
 		'Svenska',
 		'Türkçe',
 		// WARNING, There are Unicode LEFT-TO-RIGHT EMBEDDING and
@@ -63,6 +63,11 @@ class LillyHooks {
 
 	static function onLinkerMakeExternalLink( &$url, &$text, &$link, &$attribs ) {
 		global $wgLillyServiceUrl, $wgTitle;
+
+		// wgTitle is null sometimes
+		if ( !( $wgTitle instanceof Title ) ) {
+			return true;
+		}
 
 		$sourceUrl = $wgTitle->getFullURL();
 		$targetUrl = $url;

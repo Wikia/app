@@ -8,48 +8,6 @@ class TemplateClassificationApiController extends WikiaApiController {
 	private $templateClassificationService = null;
 
 	/**
-	 * Get template type
-	 *
-	 * Type can be provided by user or automatic script, but user classification overrides automatic generated type
-	 *
-	 * @return string
-	 * @throws BadRequestApiException
-	 * @throws Exception
-	 * @throws \Swagger\Client\ApiException
-	 */
-	public function getType() {
-		$pageId = $this->request->getVal( 'pageId', null );
-
-		try {
-			$templateType = $this->getTemplateClassificationService()->getType( $this->wg->CityId, $pageId );
-		} catch ( InvalidArgumentException $e ) {
-			throw new BadRequestApiException( $e->getMessage() );
-		}
-
-		return $templateType;
-	}
-
-	/**
-	 * Get details about template type (provider, origin)
-	 *
-	 * @return array
-	 * @throws BadRequestApiException
-	 * @throws Exception
-	 * @throws \Swagger\Client\ApiException
-	 */
-	public function getDetails() {
-		$pageId = $this->request->getVal( 'pageId', null );
-
-		try {
-			$templateDetails = $this->getTemplateClassificationService()->getDetails( $this->wg->CityId, $pageId );
-		} catch ( InvalidArgumentException $e ) {
-			throw new BadRequestApiException( $e->getMessage() );
-		}
-
-		return $templateDetails;
-	}
-
-	/**
 	 * Classify template type
 	 *
 	 * @throws BadRequestApiException
@@ -74,6 +32,11 @@ class TemplateClassificationApiController extends WikiaApiController {
 				TemplateClassificationService::USER_PROVIDER,
 				$userId
 			);
+
+			$title = Title::newFromId( $pageId );
+			if ( $title instanceof Title ) {
+				$title->invalidateCache();
+			}
 		} catch ( InvalidArgumentException $e ) {
 			throw new BadRequestApiException( $e->getMessage() );
 		}

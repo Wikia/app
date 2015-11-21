@@ -134,9 +134,17 @@ $config['spotlights_js'] = array(
 
 $config['adengine2_taboola_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'wikiamobile' ],
+	'skin' => [ 'oasis' ],
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/provider/taboola.js',
+	),
+);
+
+$config['adengine2_gcs_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/recovery/gcs.js',
 	),
 );
 
@@ -172,14 +180,6 @@ $config['adengine2_tracking_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdContext.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
-	),
-);
-
-$config['adengine2_rubicon_rtp_js'] = array(
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/AdEngine/js/lookup/rubiconRtp.js',
 	),
 );
 
@@ -2636,15 +2636,28 @@ $config['visit_source_js'] = [
 	]
 ];
 
-$config['tempate_classification_js'] = [
+$config['template_classification_in_view_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/TemplateClassification/scripts/TemplateClassification.js',
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationInView.js',
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationLabeling.js',
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationModal.js',
 	]
 ];
 
-$config['tempate_classification_scss'] = [
+$config['template_classification_in_edit_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationInEdit.js',
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationLabeling.js',
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationModal.js',
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationModalForce.js',
+	]
+];
+
+$config['template_classification_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
@@ -2656,5 +2669,21 @@ $config['special_broken_rename_fix'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => [
 		'//extensions/wikia/BrokenRenameFix/styles/SpecialBrokenRenameFix.scss',
+	],
+];
+
+$config['insights_module_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//skins/oasis/css/modules/InsightsModule.scss',
+	],
+];
+
+$config['insights_module_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//skins/oasis/js/modules/InsightsModule.js',
 	],
 ];

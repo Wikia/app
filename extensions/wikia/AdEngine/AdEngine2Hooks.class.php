@@ -8,9 +8,9 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
 	const ASSET_GROUP_ADENGINE_OPENX_BIDDER = 'adengine2_ox_bidder_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
-	const ASSET_GROUP_ADENGINE_RUBICON_RTP = 'adengine2_rubicon_rtp_js';
 	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
 	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
+	const ASSET_GROUP_ADENGINE_GCS = 'adengine2_gcs_js';
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
 	const ASSET_GROUP_LIFTIUM_EXTRA = 'liftium_ads_extra_js';
 
@@ -45,17 +45,18 @@ class AdEngine2Hooks {
 	public static function onInstantGlobalsGetVariables( array &$vars )
 	{
 		$vars[] = 'wgAdDriverAdsRecoveryMessageCountries';
+		$vars[] = 'wgAdDriverGoogleConsumerSurveysCountries';
 		$vars[] = 'wgAdDriverHighImpactSlotCountries';
 		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
 		$vars[] = 'wgAdDriverKruxCountries';
 		$vars[] = 'wgAdDriverOpenXBidderCountries';
 		$vars[] = 'wgAdDriverOpenXBidderCountriesMobile';
-		$vars[] = 'wgAdDriverSourcePointCountries'; // @TODO ADEN-2578 - cleanup
 		$vars[] = 'wgAdDriverSourcePointDetectionCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionMobileCountries';
 		$vars[] = 'wgAdDriverSourcePointRecoveryCountries';
 		$vars[] = 'wgAdDriverScrollHandlerConfig';
 		$vars[] = 'wgAdDriverScrollHandlerCountries';
+		$vars[] = 'wgAdDriverTaboolaCountries';
 		$vars[] = 'wgAdDriverTurtleCountries';
 		$vars[] = 'wgAmazonMatchCountries';
 		$vars[] = 'wgAmazonMatchCountriesMobile';
@@ -69,7 +70,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgSitewideDisableKrux';
 		$vars[] = 'wgSitewideDisableLiftium';
 		$vars[] = 'wgSitewideDisableMonetizationService';
-		$vars[] = 'wgSitewideDisableRubiconRTP';
 		$vars[] = 'wgSitewideDisableSevenOneMedia';
 
 		return true;
@@ -120,13 +120,17 @@ class AdEngine2Hooks {
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 
-		global $wgAdDriverUseTopInContentBoxad, $wgAdDriverUseTaboola;
+		global $wgAdDriverUseGoogleConsumerSurveys, $wgAdDriverUseTopInContentBoxad, $wgAdDriverUseTaboola;
 
 		$jsAssets[] = self::ASSET_GROUP_ADENGINE_DESKTOP;
 
 		if ( AdEngine2Service::shouldLoadLiftium() ) {
 			$jsAssets[] = self::ASSET_GROUP_LIFTIUM;
 			$jsAssets[] = self::ASSET_GROUP_LIFTIUM_EXTRA;
+		}
+
+		if ( $wgAdDriverUseGoogleConsumerSurveys && WikiaPageType::getPageType() === 'article' ) {
+			$jsAssets[] = self::ASSET_GROUP_ADENGINE_GCS;
 		}
 
 		if ( $wgAdDriverUseTopInContentBoxad ) {
@@ -143,7 +147,7 @@ class AdEngine2Hooks {
 	}
 
 	/**
-	 * Modify assets appended to the top of the page: add RubiconRtp and AmazonMatch lookup services
+	 * Modify assets appended to the top of the page: add lookup services
 	 *
 	 * @param array $jsAssets
 	 *
@@ -151,12 +155,8 @@ class AdEngine2Hooks {
 	 */
 	public static function onOasisSkinAssetGroupsBlocking( &$jsAssets ) {
 
-		// Tracking should be available very early, so we can track how lookup calls (Amazon, Rubicon) perform
+		// Tracking should be available very early, so we can track how lookup calls perform
 		$jsAssets[] = self::ASSET_GROUP_ADENGINE_TRACKING;
-
-		if ( AnalyticsProviderRubiconRTP::isEnabled() ) {
-			$jsAssets[] = self::ASSET_GROUP_ADENGINE_RUBICON_RTP;
-		}
 
 		if ( AnalyticsProviderAmazonMatch::isEnabled() ) {
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE_AMAZON_MATCH;
@@ -233,7 +233,7 @@ class AdEngine2Hooks {
 
 		// File pages handle their own rendering of related pages wrapper
 		if ( ( $skin === 'oasis' ) && $wgTitle->getNamespace() !== NS_FILE ) {
-			$text = $text . F::app()->renderView( 'Ad', 'Index', ['slotName' => 'NATIVE_TABOOLA'] );
+			$text = $text . F::app()->renderView( 'AdEmptyContainer', 'Index', ['slotName' => 'NATIVE_TABOOLA_ARTICLE'] );
 		}
 
 		return true;

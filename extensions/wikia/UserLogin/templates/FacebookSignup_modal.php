@@ -45,14 +45,12 @@ if ( trim( $fbEmail ) == '' ) {
 	array_splice( $signupForm['inputs'], 1, 0, [$emailInput] );
 } else {
 	$signupForm['inputs'][] = [
-		'type' => 'nirvana',
+		'type' => 'custom',
 		'class' => 'email',
-		'controller' => 'WikiaStyleGuideTooltipIconController',
-		'method' => 'index',
-		'params' => [
+		'output' => F::app()->renderView( 'WikiaStyleGuideTooltipIconController', 'index', [
 			'text' => wfMessage( 'email' )->escaped(),
 			'tooltipIconTitle' => wfMessage( 'usersignup-facebook-email-tooltip' )->text(),
-		],
+		]),
 	];
 
 	$signupForm['inputs'][] = [
@@ -99,10 +97,9 @@ $signupForm['submits'] = [
  */
 
 $loginForm['inputs'][] = [
-	'type' => 'nirvanaview',
-	'controller' => 'UserLogin',
-	'view' => 'forgotPasswordLink',
+	'type' => 'custom',
 	'class' => 'forgot-password-container',
+	'output' => F::app()->renderPartial( 'UserLogin', 'forgotPasswordLink' ),
 ];
 
 $loginForm['inputs'][] = [

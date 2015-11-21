@@ -22,6 +22,7 @@
  * @method exists
  * @method getID
  * @method getRedirectTarget
+ * @method loadPageData
  * //Wikia Change End
  */
 class Article extends Page {
@@ -104,8 +105,8 @@ class Article extends Page {
 	/**
 	 * Create an Article object of the appropriate class for the given page.
 	 *
-	 * @param Title $title
-	 * @param IContextSource $context
+	 * @param $title Title
+	 * @param $context IContextSource
 	 * @return Article object
 	 */
 	public static function newFromTitle( $title, IContextSource $context ) {
@@ -744,6 +745,8 @@ class Article extends Page {
 	 */
 	public function showDiffPage() {
 		global $wgRequest, $wgUser;
+
+		Transaction::setAttribute( Transaction::PARAM_ACTION, 'diff' ); # Wikia change
 
 		$diff = $wgRequest->getVal( 'diff' );
 		$rcid = $wgRequest->getVal( 'rcid' );

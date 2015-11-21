@@ -37,6 +37,9 @@ $wgCSRFDetectorHooks = [
 	// WikiFactory related actions should be protected as well
 	'WikiFactoryChanged',
 	'WikiFactoryVariableRemoved',
+
+	// emails delivery should be protected as well
+	'UserMailerSend',
 ];
 
 // bind to all hooks defined in $wgCSRFDetectorHooks

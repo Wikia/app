@@ -582,8 +582,5 @@ class BodyController extends WikiaController {
 
 		// bugid-70243: optionally hide navigation h1s for SEO
 		$this->displayHeader = !$wg->HideNavigationHeaders;
-
-		$this->seoTestOneH1 = $wg->EnableSeoTestingExt &&
-			SeoTesting::getGroup( 'One_H1' ) === 2;
 	}
 }

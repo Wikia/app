@@ -236,8 +236,25 @@ body >a >img[src$="noad.gif"] {
 	}
 }
 
-#NATIVE_TABOOLA {
+#NATIVE_TABOOLA_ARTICLE {
 	max-width: 700px;
+}
+
+#NATIVE_TABOOLA_ARTICLE, #NATIVE_TABOOLA_RAIL {
+	.trc_rbox_header .trc_rbox_header_span {
+		color: $color-page-opposite;
+	}
+	.trc_header_ext, .trc-widget-footer {
+		.logoDiv a span {
+			color: $color-links;
+		}
+	}
+	.trc_rbox_div .video-label-box .video-title {
+		color: $color-text;
+	}
+	.trc_rbox_div .video-label-box .branding {
+		color: $color-alternate-text;
+	}
 }
 
 .wikia-ad-interactive-map {
@@ -291,12 +308,14 @@ body >a >img[src$="noad.gif"] {
 			font-weight: bold;
 		}
 
-		strong {
-			font-weight: bold;
-		}
-
 		.action-accept {
+			color: #000;
 			cursor: pointer;
+			font-weight: bold;
+
+			&:hover {
+				text-decoration: underline;
+			}
 		}
 
 		.dialog-pointer {
@@ -328,9 +347,9 @@ body >a >img[src$="noad.gif"] {
 	}
 
 	.icon {
-		width: 98px;
-		height: 90px;
-		margin: 0 auto 5px auto;
+		width: 140px;
+		height: 100px;
+		margin: 0 auto -5px auto;
 		cursor: pointer;
 		background: url(/skins/oasis/images/recovered_message_icon.png) no-repeat; /* $wgCdnStylePath */
 	}
@@ -341,8 +360,12 @@ body >a >img[src$="noad.gif"] {
 		max-width: 728px;
 		z-index: $wikia-top-ads-index;
 
+		.icon {
+			margin: 0;
+		}
+
 		.message {
-			max-width: 580px;
+			max-width: 550px;
 			display: inline-block;
 
 			.dialog-pointer {

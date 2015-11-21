@@ -35,8 +35,13 @@ class WikiaSpecialPageController extends WikiaController {
 	}
 
 	public function execute( $par ) {
+		$params = array_merge( $_GET, $_POST, [
+			self::PAR => $par /* to be compatibile with MW core */
+		]);
+		unset($params['controller']);
+		unset($params['method']);
 
-		$response = $this->sendRequest( get_class( $this ), null, array( self::PAR => $par /* to be compatibile with MW core */ ) );
+		$response = $this->sendExternalRequest( get_class( $this ), null, $params );
 		$this->response = $response;
 
 		if( $response->getFormat() == WikiaResponse::FORMAT_HTML ) {

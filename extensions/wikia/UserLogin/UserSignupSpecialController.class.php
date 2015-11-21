@@ -42,6 +42,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 		if ( $this->wg->User->isLoggedIn() && !$this->wg->User->isAllowed( 'createaccount' ) ) {
 			$this->forward( 'UserLoginSpecialController', 'loggedIn' );
+		} elseif ( $this->request->getBool( 'sendConfirmationEmail' ) ) {
+			$this->forward( __CLASS__, 'sendConfirmationEmail' );
 		} else {
 			$this->forward( __CLASS__, 'signupForm' );
 		}
@@ -181,7 +183,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 				 * end remove
 				 */
 				$params = [
-					'method' => 'sendConfirmationEmail',
+					'sendConfirmationEmail' => true,
 					'username' => $this->username,
 					'byemail' => intval( $this->byemail ),
 				];

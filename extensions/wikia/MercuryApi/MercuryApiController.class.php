@@ -352,9 +352,6 @@ class MercuryApiController extends WikiaController {
 				}
 			}
 
-			// CONCF-855: $article is null sometimes, fix added
-			// I add logging as well to be sure that this not happen anymore
-			// TODO: Remove after 2 weeks: CONCF-1012
 			if ( !$article instanceof Article ) {
 				\Wikia\Logger\WikiaLogger::instance()->error(
 					'$article should be an instance of an Article',
@@ -369,9 +366,7 @@ class MercuryApiController extends WikiaController {
 			}
 
 			$data['details'] = $this->getArticleDetails( $article );
-			$data['topContributors'] = $this->getTopContributorsDetails(
-				$this->getTopContributorsPerArticle( $articleId )
-			);
+
 			$isMainPage = $title->isMainPage();
 			$data['isMainPage'] = $isMainPage;
 
@@ -380,12 +375,14 @@ class MercuryApiController extends WikiaController {
 			} else {
 				$articleAsJson = $this->getArticleJson( $articleId, $title, $sections );
 				$data['article'] = $articleAsJson;
-			}
+				$data['topContributors'] = $this->getTopContributorsDetails(
+					$this->getTopContributorsPerArticle( $articleId )
+				);
+				$relatedPages = $this->getRelatedPages( $articleId );
 
-			$relatedPages = $this->getRelatedPages( $articleId );
-
-			if ( !empty( $relatedPages ) ) {
-				$data['relatedPages'] = $relatedPages;
+				if ( !empty( $relatedPages ) ) {
+					$data['relatedPages'] = $relatedPages;
+				}
 			}
 
 			$data['htmlTitle'] = WikiaHtmlTitle::getPageTitle( $title->getPrefixedText(), $title->isMainPage() );
@@ -472,7 +469,21 @@ class MercuryApiController extends WikiaController {
 			throw new NotFoundApiException( 'No members' );
 		}
 
-		$this->response->setVal( 'items', $data[ 'items' ] );
+		$this->response->setVal( 'items', $data['items'] );
+	}
+
+	public function getMainPageDetailsAndAdsContext() {
+		$mainPageTitle = Title::newMainPage();
+		$mainPageArticleID = $mainPageTitle->getArticleID();
+		$article = Article::newFromID( $mainPageArticleID );
+		$data = [ ];
+
+		$data['details'] = $this->getArticleDetails( $article );
+		$data['adsContext'] = $this->mercuryApi->getAdsContext( $mainPageTitle );
+
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		$this->response->setVal( 'data', $data );
 	}
 
 	public static function curatedContentDataMemcKey( $section = null ) {

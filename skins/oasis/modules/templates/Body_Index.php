@@ -1,9 +1,6 @@
-<?php if ( $displayHeader ) {
-	echo ( $seoTestOneH1 ? '<h2>' : '<h1>' );
-		echo wfMessage( 'oasis-global-page-header' )->escaped();
-	echo ( $seoTestOneH1 ? '</h2>' : '</h1>' );
-} ?>
-
+<?php if ( $displayHeader ) { ?>
+	<h2><?= wfMessage( 'oasis-global-page-header' )->escaped() ?></h2>
+<?php } ?>
 <div class="skiplinkcontainer">
 	<a class="skiplink" rel="nofollow" href="#WikiaArticle">
 		<?= wfMessage( 'oasis-skip-to-content' )->escaped() ?>

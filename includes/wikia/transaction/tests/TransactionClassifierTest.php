@@ -103,6 +103,58 @@ class TransactionClassifierTest extends WikiaBaseTest {
 				],
 				'expectedName' => 'api/nirvana/ImageServing'
 			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => NS_MAIN,
+					Transaction::PARAM_ACTION => 'diff',
+					Transaction::PARAM_SKIN => 'foo-skin',
+				],
+				'expectedName' => 'page/main/diff'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_MAINTENANCE,
+				],
+				'expectedName' => 'maintenance'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_MAINTENANCE,
+					Transaction::PARAM_MAINTENANCE_SCRIPT => 'EventsCleanup',
+				],
+				'expectedName' => 'maintenance/EventsCleanup'
+			],
+			# Wall / Forum
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => TransactionClassifier::NS_USER_WALL,
+				],
+				'expectedName' => 'page/message_wall'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => TransactionClassifier::NS_WIKIA_FORUM_BOARD,
+				],
+				'expectedName' => 'page/forum'
+			],
+			# User pages
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => NS_USER,
+				],
+				'expectedName' => 'page/user'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => NS_USER_TALK,
+				],
+				'expectedName' => 'page/user_talk'
+			],
 		];
 	}
 }

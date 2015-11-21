@@ -41,8 +41,16 @@ $wgHooks['SkinAfterContent'][] = 'AdEngine2Hooks::onSkinAfterContent';
 // i18n
 $wgExtensionMessagesFiles['AdEngine'] = __DIR__ . '/AdEngine.i18n.php';
 $wgExtensionFunctions[] = function() {
-	JSMessages::registerPackage( 'AdEngine', array( 'adengine-*' ) );
-} ;
+	JSMessages::registerPackage( 'AdEngine', [
+		'adengine-*'
+	] );
+};
+
+$wgExtensionFunctions[] = function() {
+	JSMessages::registerPackage( 'AdEngineRecoveryMessage', [
+		'adengine-recovery-message-*'
+	] );
+};
 
 // Register Resource Loader module for SevenOne Media files
 $wgResourceModules['wikia.ext.adengine.sevenonemedia'] = array(

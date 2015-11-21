@@ -23,7 +23,9 @@ class TemplateClassificationHooksTest extends WikiaBaseTest {
 
 		$resultsMock = $this->getMock( 'ResultWrapper' );
 
-		$hooksMock->onQueryPageUseResultsBeforeRecache( $queryPageMock, $resultsMock );
+		$dbMock = $this->getMock( 'DatabaseMysqli' );
+
+		$hooksMock->onQueryPageUseResultsBeforeRecache( $queryPageMock, $dbMock, $resultsMock );
 	}
 
 	public function testQueryPageBeforeRecacheNoResults() {
@@ -41,7 +43,9 @@ class TemplateClassificationHooksTest extends WikiaBaseTest {
 
 		$results = false;
 
-		$hooksMock->onQueryPageUseResultsBeforeRecache( $queryPage, $results );
+		$dbMock = $this->getMock( 'DatabaseMysqli' );
+
+		$hooksMock->onQueryPageUseResultsBeforeRecache( $queryPage, $dbMock, $results );
 	}
 
 	public function testQueryPageBeforeRecacheGoodResults() {
@@ -59,7 +63,9 @@ class TemplateClassificationHooksTest extends WikiaBaseTest {
 
 		$results = $this->getMock( 'ResultWrapper' );
 
-		$hooksMock->onQueryPageUseResultsBeforeRecache( $queryPage, $results );
+		$dbMock = $this->getMock( 'DatabaseMysqli' );
+
+		$hooksMock->onQueryPageUseResultsBeforeRecache( $queryPage, $dbMock, $results );
 	}
 
 	/**

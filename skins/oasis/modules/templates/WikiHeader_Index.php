@@ -1,11 +1,9 @@
 <header id="WikiHeader" class="WikiHeader">
 	<?= $app->renderView( 'WikiHeader', 'Wordmark' ) ?>
 	<nav class="WikiNav">
-		<?php if ( $displayHeader ) {
-			echo ( $seoTestOneH1 ? '<h2>' : '<h1>' );
-				echo wfMessage( 'oasis-wiki-navigation', $wordmarkText )->escaped();
-			echo ( $seoTestOneH1 ? '</h2>' : '</h1>' );
-		} ?>
+		<?php if ( $displayHeader ) { ?>
+			<h2><?= wfMessage( 'oasis-wiki-navigation', $wordmarkText )->escaped() ?></h2>
+		<?php } ?>
 		<?= $app->renderView( 'WikiNavigation', 'Index' ) ?>
 	</nav>
 	<div class="hiddenLinks">
