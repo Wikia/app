@@ -20,6 +20,11 @@
 			<a id="EditPageTitle" class="EditPageTitle" title="<?= wfMessage('editpagelayout-edit-title')->escaped() ?>">
 				<img class="sprite edit-pencil-small" src="<?= $wg->BlankImgUrl ?>">
 			</a>
+			<?php if ( !empty( $extraHeaderHtml ) ) : ?>
+				<div class="editpage-extra-header-html">
+					<?= $extraHeaderHtml ?>
+				</div>
+			<?php endif; ?>
 			<nav id="EditPageTabs" class="EditPageTabs editpage-tabs" data-space-type="tabs" data-space-autoshow="true"></nav>
 			<aside id="HelpLink" class="HelpLink"><?= $helpLink ?></aside>
 			<aside id="NotificationsLink" class="NotificationsLink"><a href="#"><?= $notificationsLink ?></a></aside>
