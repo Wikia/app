@@ -9,22 +9,12 @@ class SkinChooser {
 	 * @return bool
 	 */
 	public static function onGetPreferences( $user, &$defaultPreferences ) {
-		global $wgEnableAnswers, $wgForceSkin, $wgAdminSkin, $wgDefaultSkin, $wgSkinPreviewPage, $wgSkipSkins, $wgSkipOldSkins, $wgEnableUserPreferencesV2Ext;
+		global $wgEnableAnswers, $wgAdminSkin, $wgDefaultSkin, $wgSkinPreviewPage, $wgSkipSkins, $wgSkipOldSkins, $wgEnableUserPreferencesV2Ext;
 
 		// hide default MediaWiki skin fieldset
 		unset( $defaultPreferences['skin'] );
 
 		$mSkin  = $user->getGlobalPreference( 'skin' );
-
-		// hacks for Answers
-		if ( !empty( $wgEnableAnswers ) ) {
-			$mSkin = 'answers';
-		}
-
-		// no skin settings at all when skin is forced
-		if ( !empty( $wgForceSkin ) ) {
-			return true;
-		}
 
 		if ( !empty( $wgAdminSkin ) ) {
 			$defaultSkinKey = $wgAdminSkin;
@@ -187,7 +177,7 @@ class SkinChooser {
 	 * Select proper skin and theme based on user preferences / default settings
 	 */
 	public static function onGetSkin( RequestContext $context, &$skin ) {
-		global $wgDefaultSkin, $wgDefaultTheme, $wgSkinTheme, $wgForceSkin, $wgAdminSkin, $wgSkipSkins, $wgEnableAnswers;
+		global $wgDefaultSkin, $wgDefaultTheme, $wgSkinTheme, $wgAdminSkin, $wgSkipSkins, $wgEnableAnswers;
 
 		wfProfileIn( __METHOD__ );
 
@@ -233,22 +223,6 @@ class SkinChooser {
 			$request->setVal( 'useskin', 'oasis' );
 		}
 
-		if ( !empty( $wgForceSkin ) ) {
-			$wgForceSkin = $request->getVal( 'useskin', $wgForceSkin );
-			$elems = explode( '-', $wgForceSkin );
-			$userSkin = ( array_key_exists( 0, $elems ) ) ? $elems[ 0 ] : null;
-			$userTheme = ( array_key_exists( 1, $elems ) ) ? $elems[ 1 ] : null;
-
-			$skin = Skin::newFromKey( $userSkin );
-			$skin->themename = $userTheme;
-
-			self::log( __METHOD__, "forced skin to be {$wgForceSkin}" );
-
-			wfProfileOut( __METHOD__ );
-
-			return false;
-		}
-
 		# Get skin logic
 		wfProfileIn( __METHOD__ . '::GetSkinLogic' );
 
@@ -267,11 +241,6 @@ class SkinChooser {
 		} else {
 			$userSkin = self::getUserOption( 'skin' );
 			$userTheme = self::getUserOption( 'theme' );
-
-			// RT:81173 Answers force hack.  It's in here because wgForceSkin is overwritten in CommonExtensions to '', most likely due to allowing admin skins and themes.  This will force answers and falls through to admin skin and theme logic if there is one.
-			if ( !empty( $wgDefaultSkin ) && $wgDefaultSkin == 'answers' ) {
-				$userSkin = 'answers';
-			}
 
 			if ( empty( $userSkin ) ) {
 				if ( !empty( $wgAdminSkin ) ) {
