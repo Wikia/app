@@ -227,9 +227,8 @@ EOS;
 		// <script type="text/javascript" src="URL"></script>
 		// load them using WSL and remove from $wgOut->mScripts
 		//
-		// macbre: Perform only for Monaco skin! New Answers skin does not use WikiaScriptLoader
-		if ((get_class($this) == 'SkinMonaco') || (get_class($this) == 'SkinAnswers')
-			|| (get_class($this) == 'SkinLyricsMinimal')) {
+		// macbre: Perform only for Monaco skin!
+		if ((get_class($this) == 'SkinMonaco') || (get_class($this) == 'SkinLyricsMinimal')) {
 			global $wgJsMimeType;
 
 			$headScripts = $tpl->data['headscripts'];
