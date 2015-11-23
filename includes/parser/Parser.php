@@ -4066,7 +4066,6 @@ class Parser {
 		$argName = trim( $nameWithSpaces );
 		$object = false;
 		$text = $frame->getArgument( $argName );
-
 		if (  $text === false && $parts->getLength() > 0
 		  && (
 			$this->ot['html']
@@ -4094,6 +4093,7 @@ class Parser {
 		} else {
 			$ret = array( 'text' => $text );
 		}
+
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
@@ -4178,6 +4178,7 @@ class Parser {
 				if ( !is_callable( $callback ) ) {
 					throw new MWException( "Tag hook for $name is not callable\n" );
 				}
+
 				$output = call_user_func_array( $callback, array( &$this, $frame, $content, $attributes ) );
 			} else {
 				$output = '<span class="error">Invalid tag extension name: ' .
