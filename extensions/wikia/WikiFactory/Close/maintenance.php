@@ -187,14 +187,34 @@ class CloseWikiMaintenance {
 					}
 				}
 			}
-			if( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES ||
-			$row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) {
-				$this->log( "Cleaning the shared database" );
+			if( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES || $row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) {
+
+				// PLATFORM-1700: remove DFS bucket
+				try {
+					$swift = \Wikia\SwiftStorage::newFromWiki( $cityid );
+
+					$container = $swift->getContainer();
+					$this->log( "Removing DFS bucket - {$container}" );
+
+					/**
+					 * The Container must be empty prior to removing it.
+					 *
+					 * Throws NonEmptyContainerException otherwise
+					 */
+					$swift->getConnection()->delete_container( $container );
+				} catch ( Exception $ex ) {
+					Wikia\Logger\WikiaLogger::instance()->error( 'Removing DFS bucket failed', [
+						'exception' => $ex,
+						'city_id' => $cityid
+					] );
+				}
 
 				/**
 				 * clear wikifactory tables, condition for city_public should
 				 * be always true there but better safe than sorry
 				 */
+				$this->log( "Cleaning the shared database" );
+
 				WikiFactory::copyToArchive( $row->city_id );
 				$dbw = WikiFactory::db( DB_MASTER );
 				$dbw->delete(
