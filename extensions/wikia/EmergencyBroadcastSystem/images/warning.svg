@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="24px" height="22px" viewBox="0 0 24 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="EBS-notification_spec" sketch:type="MSArtboardGroup" transform="translate(-1161.000000, -1384.000000)" fill="#2F3742">
-            <g id="bounds-+-Page-1" sketch:type="MSLayerGroup" transform="translate(1157.000000, 1379.000000)">
-                <path d="M17.1840067,19.7122743 L15.0115766,19.7122743 L14.279984,10.8672965 L17.9155992,10.8672965 L17.1840067,19.7122743 Z M16.0977916,23.7472073 C15.244463,23.7472073 14.565211,23.0685435 14.565211,22.2146267 C14.565211,21.3612981 15.244463,20.6820461 16.0977916,20.6820461 C16.9511203,20.6820461 17.6303722,21.3612981 17.6303722,22.2146267 C17.6303722,23.0685435 16.9511203,23.7472073 16.0977916,23.7472073 L16.0977916,23.7472073 Z M27.4086599,22.1099455 L18.5313367,6.78943237 C17.1493089,4.40469932 14.886312,4.40352312 13.5019318,6.78590379 L4.5934395,22.1134741 C3.20905933,24.4964428 4.33056017,26.445396 7.08638239,26.445396 L24.9110122,26.445396 C27.6662463,26.445396 28.7906877,24.4946785 27.4086599,22.1099455 L27.4086599,22.1099455 Z" id="Page-1" sketch:type="MSShapeGroup"></path>
-            </g>
-        </g>
-    </g>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="22" viewBox="0 0 24 22" version="1.1">
+	<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+		<g transform="translate(-1161.000000, -1384.000000)" fill="#2F3742">
+			<g transform="translate(1157.000000, 1379.000000)">
+				<path d="M17.2 19.7L15 19.7 14.3 10.9 17.9 10.9 17.2 19.7ZM16.1 23.7C15.2 23.7 14.6 23.1 14.6 22.2 14.6 21.4 15.2 20.7 16.1 20.7 17 20.7 17.6 21.4 17.6 22.2 17.6 23.1 17 23.7 16.1 23.7L16.1 23.7ZM27.4 22.1L18.5 6.8C17.1 4.4 14.9 4.4 13.5 6.8L4.6 22.1C3.2 24.5 4.3 26.4 7.1 26.4L24.9 26.4C27.7 26.4 28.8 24.5 27.4 22.1L27.4 22.1Z"/>
+			</g>
+		</g>
+	</g>
 </svg>
