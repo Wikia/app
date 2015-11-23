@@ -14,7 +14,6 @@ $config['oasis_shared_core_js'] = array(
 		'//resources/mediawiki/mediawiki.Uri.js',
 		'#group_banner_notifications_js',
 		'#group_ui_repo_api_js',
-		'//extensions/wikia/EmergencyBroadcastSystem/js/EmergencyBroadcastSystem.js'
 	),
 );
 
@@ -442,7 +441,9 @@ $config['user_signup_js'] = [
  */
 $config['oasis_user_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'assets' => []
+	'assets' => [
+		'//extensions/wikia/EmergencyBroadcastSystem/js/EmergencyBroadcastSystem.js'
+	]
 );
 
 /** GameGuides */
@@ -2686,14 +2687,6 @@ $config['insights_module_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//skins/oasis/js/modules/InsightsModule.js',
-	],
-];
-
-$config['emergency_broadcast_system_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/EmergencyBroadcastSystem/css/EmergencyBroadcastSystem.scss',
 	],
 ];
 
