@@ -68,32 +68,28 @@ class EmergencyBroadcastSystemController extends WikiaController {
 	protected function buildSurveyUrl() {
 		global $wgContLang, $wgServer;
 
-		$context = $this->getContext();
-		$domain = parse_url( $wgServer, PHP_URL_HOST );
-		$userLanguage = $context->getLanguage();
-		$userName = $context->getUser()->getName();
-
 		$formUrls = [
-			'de' => "https://docs.google.com/forms/d/1Ks_uhxdi5Cb9EiNDup4bc7O6kI3Dl6rjq7AjlfqtX9A/viewform?entry.2019588325={$userName}&entry.1160019288={$domain}&entry.830663849",
-			'en' => "https://docs.google.com/forms/d/18qE5ub8qs8bkrubcN-00JxuLrfnfpJ88MyGhq1x3RpY/viewform?entry.2019588325={$userName}&entry.1160019288={$domain}&entry.830663849",
-			'es' => "https://docs.google.com/forms/d/1MLwwR8t-uoIOBXjjlW7YnBLOOrbH8_19Q3N5Bttqp0Y/viewform?entry.2019588325={$userName}&entry.1160019288={$domain}&entry.830663849",
-			'fr' => "https://docs.google.com/forms/d/1MUAxAhzIU5rQfaPeBAX3sDHCcxA87L74R04D2TftPx8/viewform?entry.2019588325={$userName}&entry.1160019288={$domain}&entry.830663849",
-			'it' => "https://docs.google.com/forms/d/1R4CHKl620CGwPGcMwQMC3VCnQ2v1LCZKf8JanAoKxj8/viewform?entry.2019588325={$userName}&entry.1160019288={$domain}&entry.830663849",
-			'ja' => "https://docs.google.com/forms/d/1Cn1MkdtNn3HF6eaUmqU2VTcvOm9D-KOl3EoIgMNX_Rs/viewform?entry.2019588325={$userName}&entry.1160019288={$domain}&entry.830663849",
-			'pl' => "https://docs.google.com/forms/d/1fbsGFW01P6vJ_vqAH2yH-CM27K-a484k34Ne1Qc6r00/viewform?entry.2019588325={$userName}&entry.1160019288={$domain}&entry.830663849",
-			'pt-br' => "https://docs.google.com/forms/d/1sYpFtiR-vewJegYXO2gfMtvv-wz2Aml4xuVXzSZtssU/viewform?entry.2019588325={$userName}&entry.1160019288={$domain}&entry.830663849",
-			'ru' => "https://docs.google.com/forms/d/1yH_MiPY9GRj9yXYUjuUwu2Z_e2bulTZp5GXAd0NaB-8/viewform?entry.2019588325={$userName}&entry.1160019288={$domain}&entry.830663849",
-			'zh' => "https://docs.google.com/forms/d/1vnLsNYhWPa4lghIMyC8Eyu6gK0dZ0N3j4_RP1K3HH28/viewform?entry.2019588325={$userName}&entry.1160019288={$domain}&entry.830663849"
+			'de' => 'https://docs.google.com/forms/d/1Ks_uhxdi5Cb9EiNDup4bc7O6kI3Dl6rjq7AjlfqtX9A/viewform?entry.2019588325=%s&entry.1160019288=%s&entry.830663849',
+			'en' => 'https://docs.google.com/forms/d/18qE5ub8qs8bkrubcN-00JxuLrfnfpJ88MyGhq1x3RpY/viewform?entry.2019588325=%s&entry.1160019288=%s&entry.830663849',
+			'es' => 'https://docs.google.com/forms/d/1MLwwR8t-uoIOBXjjlW7YnBLOOrbH8_19Q3N5Bttqp0Y/viewform?entry.2019588325=%s&entry.1160019288=%s&entry.830663849',
+			'fr' => 'https://docs.google.com/forms/d/1MUAxAhzIU5rQfaPeBAX3sDHCcxA87L74R04D2TftPx8/viewform?entry.2019588325=%s&entry.1160019288=%s&entry.830663849',
+			'it' => 'https://docs.google.com/forms/d/1R4CHKl620CGwPGcMwQMC3VCnQ2v1LCZKf8JanAoKxj8/viewform?entry.2019588325=%s&entry.1160019288=%s&entry.830663849',
+			'ja' => 'https://docs.google.com/forms/d/1Cn1MkdtNn3HF6eaUmqU2VTcvOm9D-KOl3EoIgMNX_Rs/viewform?entry.2019588325=%s&entry.1160019288=%s&entry.830663849',
+			'pl' => 'https://docs.google.com/forms/d/1fbsGFW01P6vJ_vqAH2yH-CM27K-a484k34Ne1Qc6r00/viewform?entry.2019588325=%s&entry.1160019288=%s&entry.830663849',
+			'pt-br' => 'https://docs.google.com/forms/d/1sYpFtiR-vewJegYXO2gfMtvv-wz2Aml4xuVXzSZtssU/viewform?entry.2019588325=%s&entry.1160019288=%s&entry.830663849',
+			'ru' => 'https://docs.google.com/forms/d/1yH_MiPY9GRj9yXYUjuUwu2Z_e2bulTZp5GXAd0NaB-8/viewform?entry.2019588325=%s&entry.1160019288=%s&entry.830663849',
+			'zh' => 'https://docs.google.com/forms/d/1vnLsNYhWPa4lghIMyC8Eyu6gK0dZ0N3j4_RP1K3HH28/viewform?entry.2019588325=%s&entry.1160019288=%s&entry.830663849'
 		];
 
-		$language = $userLanguage->mCode;
+		$context = $this->getContext();
+		$language = $context->getLanguage()->getCode(); // user language
 		if ( !isset( $formUrls[ $language ] ) ) {
-			$language = $wgContLang->mCode;
+			$language = $wgContLang->getCode(); // content language
 			if ( !isset( $formUrls[ $language ] ) ) {
 				$language = 'en';
 			}
 		}
 
-		return $formUrls[ $language ];
+		return sprintf( $formUrls[ $language ], $context->getUser()->getName(), parse_url( $wgServer, PHP_URL_HOST ) );
 	}
 }
