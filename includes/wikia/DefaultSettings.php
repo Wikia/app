@@ -1299,11 +1299,11 @@ $wgAdDriverGoogleConsumerSurveysCountries = null;
 $wgAdDriverUseTaboola = true;
 
 /**
- * @name $wgAdDriverTaboolaCountries
- * List of countries with enabled Taboola module.
+ * @name $wgAdDriverTaboolaConfig
+ * Config with list of countries with enabled Taboola module.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverTaboolaCountries = null;
+$wgAdDriverTaboolaConfig = null;
 
 /**
  * @name $wgAdDriverUseTopInContentBoxad
