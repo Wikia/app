@@ -3627,7 +3627,7 @@ class Parser {
 					$found = false; # access denied
 					wfDebug( __METHOD__.": template inclusion denied for " . $title->getPrefixedDBkey() );
 				} else {
-					list( $text, $title ) = $this->getTemplateDom( $title );
+					list( $text, $title ) = $this->getTemplateDom( $title, $args, $frame );
 					if ( $text !== false ) {
 						$found = true;
 						$isChildObj = true;
@@ -3775,12 +3775,24 @@ class Parser {
 	 * and its redirect destination title. Cached.
 	 *
 	 * @param $title Title
+	 * @param $args array
+	 * @param $frame PPFrame_DOM
 	 *
 	 * @return array
 	 */
-	function getTemplateDom( $title ) {
+	function getTemplateDom( $title, $args, $frame ) {
 		$cacheTitle = $title;
 		$titleText = $title->getPrefixedDBkey();
+
+		# wikia start
+		$text = '';
+		wfRunHooks( 'Parser::getTemplateDom', array( $title, $args, $frame,  &$text ) );
+
+		if ( !empty( $text ) ) {
+			$dom = $this->preprocessToDom( $text, self::PTD_FOR_INCLUSION );
+			return array( $dom, $title );
+		}
+		# wikia end
 
 		if ( isset( $this->mTplRedirCache[$titleText] ) ) {
 			list( $ns, $dbk ) = $this->mTplRedirCache[$titleText];
