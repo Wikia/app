@@ -18,7 +18,7 @@ class CloseWikiMaintenance {
 
 	const CLOSE_WIKI_DELAY = 30;
 
-	private $mTarget, $mOptions;
+	private $mOptions;
 
 	/**
 	 * constructor
@@ -26,13 +26,6 @@ class CloseWikiMaintenance {
 	 * @access public
 	 */
 	public function __construct( $options ) {
-		global $wgDevelEnvironment;
-		if( !empty( $wgDevelEnvironment ) ) {
-			$this->mTarget = "root@127.0.0.1:/tmp/dumps";
-		}
-		else {
-			$this->mTarget = "root@file-i6:/raid/dumps";
-		}
 		$this->mOptions = $options;
 	}
 
@@ -149,7 +142,6 @@ class CloseWikiMaintenance {
 			}
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_DB_DUMP ) {
 				$this->log( "Dumping database on remote host" );
-				list ( $remote  ) = explode( ":", $this->mTarget, 2 );
 
 				$script = ( $hide )
 					? "--script='../extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$cityid} --tmp --s3'"
