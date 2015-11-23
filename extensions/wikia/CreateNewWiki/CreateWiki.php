@@ -267,15 +267,6 @@ class CreateWiki {
 
 		wfDebugLog( "createwiki", __METHOD__ . ": Row added into city_domains table, city_id = {$this->mNewWiki->city_id}\n", true );
 
-		/**
-		 * create image folder
-		 */
-		global $wgEnableSwiftFileBackend;
-		if (empty($wgEnableSwiftFileBackend)) {
-			wfMkdirParents( "{$this->mNewWiki->images_dir}" );
-			wfDebugLog( "createwiki", __METHOD__ . ": Folder {$this->mNewWiki->images_dir} created\n", true );
-		}
-
 		// Force initialize uploader user from correct shared db
 		$uploader = User::newFromName( 'CreateWiki script' );
 		$uploader->getId();
@@ -330,8 +321,6 @@ class CreateWiki {
 		/**
 		 * copy default logo
 		 */
-
-
 		$res = ImagesService::uploadImageFromUrl( self::CREATEWIKI_LOGO, (object) ['name' => 'Wiki.png'], $uploader );
 		if ( $res['status'] === true ) {
 			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has been uploaded\n", true );
