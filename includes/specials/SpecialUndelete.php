@@ -399,7 +399,10 @@ class PageArchive {
 	public function canUndelete( User $user ) {
 		global $wgEditInterfaceWhitelist;
 		// Check if is allowed to undelete in MediaWiki namespace
-		if ( $this->title->inNamespace( NS_MEDIAWIKI ) && !$user->isAllowed( 'editinterfacetrusted' ) ) {
+		if ( $this->title->inNamespace( NS_MEDIAWIKI )
+			&& !in_array( $this->title->getDBkey(), $wgEditInterfaceWhitelist )
+			&& !$user->isAllowed( 'editinterfacetrusted' )
+		) {
 			throw new PermissionsError( 'editinterfacetrusted' );
 		}
 		return true;
