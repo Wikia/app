@@ -2012,7 +2012,6 @@ $UNWATCHURL  نه ليدنه وکړۍ
 'skinname-standard'    => 'کلاسيک',
 'skinname-monobook'    => 'مونوبوک',
 'skinname-myskin'      => 'زمابڼه',
-'skinname-chick'       => 'شيک',
 'skinname-simple'      => 'ساده',
 'skinname-modern'      => 'نوی',
 

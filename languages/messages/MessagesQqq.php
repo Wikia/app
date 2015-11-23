@@ -2910,7 +2910,6 @@ See also {{msg-mw|Anonuser}} and {{msg-mw|Siteusers}}.',
 'skinname-standard'    => '{{optional}}',
 'skinname-monobook'    => '{{optional}}',
 'skinname-myskin'      => '{{optional}}',
-'skinname-chick'       => '{{optional}}',
 'skinname-simple'      => '{{optional}}',
 'skinname-modern'      => '{{optional}}',
 

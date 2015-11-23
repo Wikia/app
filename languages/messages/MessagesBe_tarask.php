@@ -2918,7 +2918,6 @@ $1',
 'skinname-standard'    => 'Клясычнае',
 'skinname-monobook'    => 'Монакніга',
 'skinname-myskin'      => 'MySkin',
-'skinname-chick'       => 'Цыпа',
 'skinname-simple'      => 'Простае',
 'skinname-modern'      => 'Сучаснае',
 

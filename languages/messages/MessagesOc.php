@@ -2708,7 +2708,6 @@ Totas las accions d’importacion interwiki son conservadas dins lo [[Special:Lo
 'standard.css'    => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Estandard. */',
 'monobook.css'    => '/* Lo CSS plaçat aicí afectarà los utilizaires del skin Monobook */',
 'myskin.css'      => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge MySkin */',
-'chick.css'       => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Chick */',
 'simple.css'      => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Simple */',
 'modern.css'      => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Modern */',
 'print.css'       => '/* Lo CSS plaçat aicí afectarà las impressions */',
@@ -2719,7 +2718,6 @@ Totas las accions d’importacion interwiki son conservadas dins lo [[Special:Lo
 'standard.js'    => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Standard unicament. */',
 'monobook.js'    => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge MonoBook unicament. */',
 'myskin.js'      => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge MySkin unicament. */',
-'chick.js'       => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Chick unicament. */',
 'simple.js'      => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Simple unicament. */',
 'modern.js'      => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Modern unicament. */',
 
@@ -2751,7 +2749,6 @@ Aquò es probablament causat per un ligam sus lista negra que punta cap a un sit
 'skinname-standard'    => 'Estandard',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'Mon interfàcia',
-'skinname-chick'       => 'Poleton',
 'skinname-simple'      => 'Simple',
 'skinname-modern'      => 'Modèrne',
 

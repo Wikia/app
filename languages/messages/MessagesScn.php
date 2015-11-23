@@ -2341,7 +2341,6 @@ Visita [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] e [//trans
 'skinname-standard'    => 'Classicu',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
-'skinname-chick'       => 'Chick',
 'skinname-simple'      => 'Sìmprici',
 'skinname-modern'      => 'Mudernu',
 

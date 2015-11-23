@@ -1871,7 +1871,6 @@ Zinhar başqa isem saylağız.',
 'skinname-standard'    => 'Klassik',
 'skinname-monobook'    => 'Kitap',
 'skinname-myskin'      => 'Üzem',
-'skinname-chick'       => 'Çebi',
 'skinname-simple'      => 'Ğädi',
 'skinname-modern'      => 'Zamana',
 

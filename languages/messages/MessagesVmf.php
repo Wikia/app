@@ -848,7 +848,6 @@ Bidde gug's mi´m foorschau-gnobf ôô fôrm schbajchan",
 'standard.css'    => "/* CSS hiir beâjflusd nôr dii Klassik-schelfn. Wen'd ale uf ôômôôl beâjflusn wilsch, muâsch an [[MediaWiki:Common.css]] was ändârn. */",
 'monobook.css'    => "/* CSS hiir beâjflusd nôr dii Monobook-schelfn. Wen'd ale uf ôômôôl beâjflusn wilsch, muâsch an MediaWiki:Common.css was ändârn. */",
 'myskin.css'      => "/* CSS hiir beâjflusd nôr dii MySkin-schelfn. Wen'd ale uf ôômôôl beâjflusn wilsch, muâsch an MediaWiki:Common.css was ändârn. */",
-'chick.css'       => "/* CSS hiir beâjflusd nôr dii Küken-schelfn. Wen'd ale uf ôômôôl beâjflusn wilsch, muâsch an MediaWiki:Common.css was ändârn. */",
 'simple.css'      => "/* CSS hiir beâjflusd nôr dii Simple-schelfn. Wen'd ale uf ôômôôl beâjflusn wilsch, muâsch an MediaWiki:Common.css was ändârn. */",
 'modern.css'      => "/* CSS hiir beâjflusd nôr dii Modern-schelfn. Wen'd ale uf ôômôôl beâjflusn wilsch, muâsch an MediaWiki:Common.css was ändârn. */
 

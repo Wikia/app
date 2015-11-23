@@ -2950,7 +2950,6 @@ $1 사용자가 차단된 이유는 다음과 같습니다: "$2"',
 'skinname-standard'    => '클래식',
 'skinname-monobook'    => '모노북',
 'skinname-myskin'      => '마이스킨',
-'skinname-chick'       => '치크',
 'skinname-simple'      => '심플',
 'skinname-modern'      => '모던',
 

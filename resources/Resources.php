@@ -19,11 +19,6 @@ return array(
 
 	/* Skins */
 
-	'skins.chick' => array(
-		'styles' => array( 'chick/main.css' => array( 'media' => 'screen, handheld' ) ),
-		'remoteBasePath' => $GLOBALS['wgStylePath'],
-		'localBasePath' => $GLOBALS['wgStyleDirectory'],
-	),
 	'skins.modern' => array(
 		'styles' => array(
 			'modern/main.css' => array( 'media' => 'screen' ),

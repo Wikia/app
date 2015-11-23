@@ -2987,7 +2987,6 @@ Permet de rétablir la version précédente et d’ajouter un motif dans la boî
 'standard.css'    => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Standard. */',
 'monobook.css'    => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Monobook. */',
 'myskin.css'      => '/* Le CSS placé ici affectera les utilisateurs de l’habillage MySkin. */',
-'chick.css'       => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Chick. */',
 'simple.css'      => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Simple. */',
 'modern.css'      => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Modern. */',
 'print.css'       => '/* Le CSS placé ici affectera les impressions */',
@@ -2999,7 +2998,6 @@ Permet de rétablir la version précédente et d’ajouter un motif dans la boî
 'standard.js'    => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Standard uniquement */',
 'monobook.js'    => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage MonoBook uniquement. */',
 'myskin.js'      => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Mon habillage uniquement */',
-'chick.js'       => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Poussin uniquement */',
 'simple.js'      => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Simple uniquement */',
 'modern.js'      => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Moderne uniquement */',
 'group-sysop.js' => '/* Le JavaScript inclus ici n’affectera que les administrateurs */',
@@ -3044,7 +3042,6 @@ Permet de rétablir la version précédente et d’ajouter un motif dans la boî
 'skinname-standard'    => 'Standard',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'Mon Interface',
-'skinname-chick'       => 'Poussin',
 'skinname-simple'      => 'Simple',
 'skinname-modern'      => 'Moderne',
 

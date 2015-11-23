@@ -2841,7 +2841,6 @@ Vinsamlegast reyndu aftur.',
 'skinname-standard' => 'Sígilt',
 'skinname-monobook' => 'EinBók',
 'skinname-myskin' => 'Mitt þema',
-'skinname-chick' => 'Gella',
 'skinname-simple' => 'Einfalt',
 'skinname-modern' => 'Nútímalegt',
 

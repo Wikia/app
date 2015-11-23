@@ -1081,7 +1081,6 @@ $3',
 'skinname-standard'    => 'Стандартон',
 'skinname-monobook'    => 'Моно-чиныг',
 'skinname-myskin'      => 'Мæхи',
-'skinname-chick'       => 'Карк',
 
 # Browsing diffs
 'previousdiff' => '← Зæронддæр ивд',

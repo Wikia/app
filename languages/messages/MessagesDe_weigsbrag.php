@@ -37,7 +37,6 @@ $skinNames = array(
 	'standard'      => 'Klassik',
 	'monobook'      => 'MonoBook',
 	'myskin'        => 'MySkin',
-	'chick'         => 'Küken',
 	'simple'        => 'Einfach',
 	'modern'        => 'Modern'
 );
@@ -2125,7 +2124,6 @@ Ales Dranswigi-Imbord-Agsiones in dose [[Special:Log/import|Imbord-Logbug]] brod
 	text-transform: none;
 }',
 'myskin.css'      => '/* CSS an dose Schdel auw dose MySkin-Skin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */',
-'chick.css'       => '/* CSS an dose Schdel auw dose Küken-Skin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */',
 'simple.css'      => '/* CSS an dose Schdel auw dose Einfach-Skin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */',
 'modern.css'      => '/* CSS an dose Schdel auw dose MySkin-Skin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */',
 
@@ -2134,7 +2132,6 @@ Ales Dranswigi-Imbord-Agsiones in dose [[Special:Log/import|Imbord-Logbug]] brod
 'standard.js'    => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Klassik-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
 'monobook.js'    => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Monobook-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
 'myskin.js'      => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Myskin-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
-'chick.js'       => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose KükenSgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
 'simple.js'      => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Einfach-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
 'modern.js'      => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Modern-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
 

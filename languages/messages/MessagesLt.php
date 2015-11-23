@@ -2828,7 +2828,6 @@ Leidžia pridėti atmetimo priežastį komentaruose',
 'skinname-standard'    => 'Klasikinė',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Mano išvaizda',
-'skinname-chick'       => 'Chick',
 'skinname-simple'      => 'Paprasta',
 'skinname-modern'      => 'Moderni',
 

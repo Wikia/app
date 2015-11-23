@@ -2700,7 +2700,6 @@ The wiki server cannot provide data in a format your client can read.',
 # Skin names
 'skinname-standard'    => 'Классик',
 'skinname-myskin'      => 'Шәхси',
-'skinname-chick'       => 'Себеш',
 'skinname-simple'      => 'Ябай',
 'skinname-modern'      => 'Заманса',
 

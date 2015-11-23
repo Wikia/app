@@ -2487,7 +2487,6 @@ MediaWiki локализациясына юлюш къошаргъа излей 
 'skinname-standard'    => 'Стандарт',
 'skinname-monobook'    => 'Моно-китаб',
 'skinname-myskin'      => 'Меники',
-'skinname-chick'       => 'Шик',
 'skinname-simple'      => 'Бош',
 'skinname-modern'      => 'Бусагъатдагъы',
 

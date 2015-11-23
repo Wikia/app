@@ -2321,7 +2321,6 @@ Voib olda, necil lehtpolel om kosketuz irdsaitale, kudamb om mustas nimikirjutes
 'skinname-standard'    => 'Klassine',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Ičeze',
-'skinname-chick'       => 'Cipuine',
 'skinname-simple'      => 'Koveritoi',
 'skinname-modern'      => "Nügüd'aigaine",
 

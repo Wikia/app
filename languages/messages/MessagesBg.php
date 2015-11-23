@@ -2817,7 +2817,6 @@ $1',
 'skinname-standard'    => 'Класика',
 'skinname-monobook'    => 'Монобук',
 'skinname-myskin'      => 'Моят облик',
-'skinname-chick'       => 'Пиленце',
 'skinname-simple'      => 'Семпъл',
 'skinname-modern'      => 'Модерен',
 

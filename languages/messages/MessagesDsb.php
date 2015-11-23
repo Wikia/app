@@ -2803,7 +2803,6 @@ W zespominanju dajo se pśicyna pódaś.',
 'skinname-standard' => 'Klasiski',
 'skinname-monobook' => 'MonoBook',
 'skinname-myskin' => 'Mój šat',
-'skinname-chick' => 'Kurjetko',
 'skinname-simple' => 'Jadnorje',
 'skinname-modern' => 'Moderny',
 

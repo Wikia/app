@@ -2712,7 +2712,6 @@ $1',
 # Skin names
 'skinname-standard'  => 'Классика',
 'skinname-myskin'    => 'Миэнэ',
-'skinname-chick'     => 'Чуппууска',
 'skinname-simple'    => 'Судургу',
 'skinname-modern'    => 'Билиҥҥи',
 

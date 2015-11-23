@@ -2672,7 +2672,6 @@ $UNWATCHURL కి వెళ్ళండి.
 'skinname-standard'    => 'సంప్రదాయ',
 'skinname-monobook'    => 'మోనోబుక్',
 'skinname-myskin'      => 'నాఅలంకారం',
-'skinname-chick'       => 'చిక్',
 'skinname-simple'      => 'సరళ',
 'skinname-modern'      => 'ఆధునిక',
 

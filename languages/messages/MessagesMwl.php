@@ -1079,7 +1079,6 @@ Premite ajuntar la rezon de la eidiçon ne l sumário.',
 'skinname-standard'    => 'Clássico',
 'skinname-monobook'    => 'Lhibro',
 'skinname-myskin'      => 'Piel',
-'skinname-chick'       => 'Cipe-Çape',
 'skinname-simple'      => 'Simpre',
 'skinname-modern'      => 'Moderno',
 

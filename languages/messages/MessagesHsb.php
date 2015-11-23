@@ -2755,7 +2755,6 @@ W poslednim padźe móžeš tež wotkaz wužiwać, na př. „[[{{#Special:Expor
 'skinname-standard'    => 'Klasiski',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
-'skinname-chick'       => 'Ćipka',
 'skinname-simple'      => 'Jednory',
 'skinname-modern'      => 'Moderny',
 

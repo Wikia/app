@@ -815,7 +815,6 @@ Check your spelling, ka [[Special:UserLogin/signup|kria konta foun]].',
 # Skin names
 'skinname-standard'    => 'Klásiku',
 'skinname-myskin'      => 'MySkin',
-'skinname-chick'       => 'Manu',
 
 # Browsing diffs
 'previousdiff' => '←Versaun molok',

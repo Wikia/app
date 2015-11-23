@@ -2927,7 +2927,6 @@ $1',
 'skinname-standard'    => 'സാർവത്രികം',
 'skinname-monobook'    => 'മോണോബുക്ക്',
 'skinname-myskin'      => 'എന്റിഷ്ടം',
-'skinname-chick'       => 'സുന്ദരി',
 'skinname-simple'      => 'ലളിതം',
 'skinname-modern'      => 'നവീനം',
 

@@ -3022,7 +3022,6 @@ Pèrmèt de rètablir la vèrsion devant et pués d’apondre una rêson dens la
 'standard.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Estandârd ». */',
 'monobook.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « MonoBook ». */',
 'myskin.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « MonHabelyâjo ». */',
-'chick.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Pugin ». */',
 'simple.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Simplo ». */',
 'modern.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Modèrno ». */',
 'print.css' => '/* Lo code CSS betâ ique afècterat les emprèssions. */',
@@ -3038,7 +3037,6 @@ Pèrmèt de rètablir la vèrsion devant et pués d’apondre una rêson dens la
 'standard.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Estandârd ». */',
 'monobook.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « MonoBook ». */',
 'myskin.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « MonHabelyâjo ». */',
-'chick.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Pugin ». */',
 'simple.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Simplo ». */',
 'modern.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Modèrno ». */',
 'group-autoconfirmed.js' => '/* Tot code JavaScript betâ ique serat chargiê ren que por los usanciérs encartâs. */',
@@ -3088,7 +3086,6 @@ O est probâblament diu a un lim de vers un seto de defôr qu’aparêt sur la l
 'skinname-standard' => 'Estandârd',
 'skinname-monobook' => 'MonoBook',
 'skinname-myskin' => 'MonHabelyâjo',
-'skinname-chick' => 'Pugin',
 'skinname-simple' => 'Simplo',
 'skinname-modern' => 'Modèrno',
 

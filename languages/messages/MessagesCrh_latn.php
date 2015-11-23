@@ -1792,7 +1792,6 @@ MediaWiki interfeysiniñ çeşit tillerge tercime etüvde iştirak etmege istese
 'skinname-standard'    => 'Standart',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Öz resimleme',
-'skinname-chick'       => 'Çipçe',
 'skinname-simple'      => 'Adiy',
 
 # Patrol log

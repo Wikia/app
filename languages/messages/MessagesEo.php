@@ -2952,7 +2952,6 @@ Datoj de versioj kaj nomoj de redaktantoj estos preservitaj.
 # Skin names
 'skinname-standard'    => 'Klasika',
 'skinname-monobook'    => 'Librejo',
-'skinname-chick'       => 'Kokido',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marki kiel patrolitan',

@@ -2753,7 +2753,6 @@ Erlaabt et e Grond an de Resumé derbäizesetzen.',
 'standard.css'    => "/* Dës CSS huet nëmmen Afloss op de Skin ''Klassesch''  */",
 'monobook.css'    => "/* Dës CSS huet nëmmen Afloss op de Skin ''Monobook''  */",
 'myskin.css'      => "/* Dës CSS huet nëmmen Afloss op de Skin ''MySkin''  */",
-'chick.css'       => '/* Dës CSS huet nëmmen Afloss op de Skin "Chick" */',
 'simple.css'      => "/* Dës CSS huet nëmmen Afloss op de Skin ''Einfach''  */",
 'modern.css'      => "/* Dës CSS huet nëmmen Afloss op de Skin ''Modern''  */",
 
@@ -2801,7 +2800,6 @@ Dëst warscheinlech duerch en externe Link den op der schwaarzer Lëscht (blackl
 'skinname-standard'    => 'Klassesch',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
-'skinname-chick'       => 'Chick',
 'skinname-simple'      => 'Einfach',
 'skinname-modern'      => 'Modern',
 

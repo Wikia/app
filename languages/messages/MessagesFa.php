@@ -3154,7 +3154,6 @@ $1',
 'skinname-standard'    => 'کلاسیک',
 'skinname-monobook'    => 'مونوبوک',
 'skinname-myskin'      => 'پوستهٔ من',
-'skinname-chick'       => 'شیک',
 'skinname-simple'      => 'ساده',
 'skinname-modern'      => 'مدرن',
 

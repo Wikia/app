@@ -2069,7 +2069,6 @@ $1',
 'skinname-standard'    => 'Классик',
 'skinname-monobook'    => 'Китап',
 'skinname-myskin'      => 'Үзем',
-'skinname-chick'       => 'Чеби',
 'skinname-simple'      => 'Гади',
 'skinname-modern'      => 'Замана',
 

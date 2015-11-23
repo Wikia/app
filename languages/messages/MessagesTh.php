@@ -2710,7 +2710,6 @@ $1',
 'skinname-standard'    => 'คลาสสิก',
 'skinname-monobook'    => 'โมโนบุ๊ก',
 'skinname-myskin'      => 'มายสกิน',
-'skinname-chick'       => 'ชิก',
 'skinname-simple'      => 'ซิมเปิล',
 'skinname-modern'      => 'โมเดิร์น',
 

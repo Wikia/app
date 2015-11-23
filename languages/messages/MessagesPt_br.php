@@ -2983,7 +2983,6 @@ Permite colocar uma justificativa no sumário da edição.',
 'standard.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Clássico */',
 'monobook.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin MonoBook */',
 'myskin.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin MySkin */',
-'chick.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Chique */',
 'simple.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Simples */',
 'modern.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Moderno */',
 
@@ -3029,7 +3028,6 @@ Tal bloqueio foi provavelmente causado por uma ligação para um ''website'' ext
 'skinname-standard' => 'Clássico',
 'skinname-monobook' => 'MonoBook',
 'skinname-myskin' => 'MySkin',
-'skinname-chick' => 'Chique',
 'skinname-simple' => 'Simples',
 'skinname-modern' => 'Moderno',
 

@@ -646,7 +646,6 @@ include_once( "$IP/extensions/wikia/Security/Security.setup.php" );
 $wgSkipSkins = array(
 		'armchairgm',
 		'cars',
-		'chick',
 		'corporate',
 		'corporatebase',
 		'corporatehome',

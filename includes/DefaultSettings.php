@@ -2317,7 +2317,6 @@ $wgSkipSkins = array();
  * stylesheet, which is specified for 'screen' media.
  *
  * Can be a complete URL, base-relative path, or $wgStylePath-relative path.
- * Try 'chick/main.css' to apply the Chick styles to the MonoBook HTML.
  *
  * Will also be switched in when 'handheld=yes' is added to the URL, like
  * the 'printable=yes' mode for print media.

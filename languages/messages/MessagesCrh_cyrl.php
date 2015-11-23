@@ -1799,7 +1799,6 @@ MediaWiki интерфейсининъ чешит тиллерге терджи�
 'skinname-standard'    => 'Стандарт',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Озь ресимлеме',
-'skinname-chick'       => 'Чипче',
 'skinname-simple'      => 'Адий',
 
 # Patrol log

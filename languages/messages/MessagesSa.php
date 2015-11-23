@@ -1609,7 +1609,6 @@ $2
 'skinname-standard'    => 'पूर्व',
 'skinname-monobook'    => 'पुस्तक',
 'skinname-myskin'      => 'मे चर्मन्',
-'skinname-chick'       => 'Chick',
 
 # Browsing diffs
 'previousdiff' => '← पुरातनतरं सम्पादनम्',

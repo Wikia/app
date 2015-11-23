@@ -2912,7 +2912,6 @@ $1',
 'skinname-standard' => 'अभिजात',
 'skinname-monobook' => 'मोनोबुक',
 'skinname-myskin' => 'माझीकांती',
-'skinname-chick' => 'मस्त',
 'skinname-simple' => 'साधी',
 'skinname-modern' => 'आधुनिक',
 

@@ -2807,7 +2807,6 @@ Dette skyldes sandsynligvis en henvisning til et sortlistet eksternt websted.',
 'skinname-standard'    => 'Klassik',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Eget udseende',
-'skinname-chick'       => 'Chick',
 'skinname-simple'      => 'Enkelt',
 'skinname-modern'      => 'Moderne',
 

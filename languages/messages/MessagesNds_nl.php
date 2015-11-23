@@ -2951,7 +2951,6 @@ Meestentieds kump dit deur n uutgaonde verwiezing die op de zwarte lieste steet.
 'skinname-standard'    => 'Klassiek',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'MienSkin',
-'skinname-chick'       => 'Deftig',
 'skinname-simple'      => 'Eenvoudig',
 'skinname-modern'      => 'Niejmoeds',
 

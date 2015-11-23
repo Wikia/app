@@ -1096,7 +1096,6 @@ to upload files.',
 'skinname-standard' => 'ਕਲਾਸਿਕ',
 'skinname-monobook' => 'ਮੋਨੋਬੁੱਕ',
 'skinname-myskin'   => 'ਮੇਰੀਸਕਿਨ',
-'skinname-chick'    => 'ਚੀਚਕ',
 'skinname-simple'   => 'ਸੈਂਪਲ',
 
 # Browsing diffs

@@ -344,7 +344,7 @@
 			case 'standard':
 				$( '#quickbar' ).append( $link.after( '<br/>' ) );
 				return $link[0];
-			default: // Skins like chick, modern, monobook, myskin, simple, vector...
+			default: // Skins like modern, monobook, myskin, simple...
 
 				// Select the specified portlet
 				$portlet = $( '#' + portlet );

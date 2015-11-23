@@ -2884,7 +2884,6 @@ Razlog je vjerojatno vanjska poveznica koja se nalazi na crnom popisu.',
 'skinname-standard'    => 'Standardna',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
-'skinname-chick'       => 'Chick',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Označi za pregledano',

@@ -2130,7 +2130,6 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 'skinname-standard'    => 'Դասական',
 'skinname-monobook'    => 'ՄիաԳիրք',
 'skinname-myskin'      => 'ԻմՏեսք',
-'skinname-chick'       => 'Ծիտ',
 'skinname-simple'      => 'Պարզ',
 
 # Patrolling

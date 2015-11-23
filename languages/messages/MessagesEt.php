@@ -2977,7 +2977,6 @@ See on ilmselt põhjustatud linkimisest mustas nimekirjas olevasse välisvõrguk
 'skinname-standard' => 'Algeline',
 'skinname-monobook' => 'MonoBook',
 'skinname-myskin' => 'Minu kujundus',
-'skinname-chick' => 'Tibu',
 'skinname-simple' => 'Lihtne',
 'skinname-modern' => 'Uudne',
 

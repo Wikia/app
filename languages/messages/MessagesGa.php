@@ -1727,7 +1727,6 @@ iarradh sábháil. Is dócha gur nasc chuig suíomh seachtrach ba chúis leis.',
 'skinname-standard'    => 'Clasaiceach',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MoChraiceann',
-'skinname-chick'       => 'Sicín',
 'skinname-simple'      => 'Simplí',
 'skinname-modern'      => 'Nua-aimseartha',
 
