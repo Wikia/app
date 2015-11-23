@@ -32,10 +32,7 @@ class RecognizedTemplatesProvider {
 	 * @return array
 	 */
 	public function getRecognizedTemplates() {
-		$recognizedTemplates = $this->getTemplates( true );
-		if ( empty( $this->namespaces ) ) {
-			return $recognizedTemplates;
-		}
+		$recognizedTemplates = $this->getRecognizedTemplatesFromService();
 		return array_intersect_key( $recognizedTemplates, $this->getNamespacesTemplates() );
 	}
 
@@ -45,10 +42,7 @@ class RecognizedTemplatesProvider {
 	 * @return array
 	 */
 	public function getNotRecognizedTemplates() {
-		$recognizedTemplates = $this->getTemplates( true );
-		if ( empty( $this->namespaces ) ) {
-			return $recognizedTemplates;
-		}
+		$recognizedTemplates = $this->getRecognizedTemplatesFromService();
 		return array_diff_key( $this->getNamespacesTemplates(), $recognizedTemplates );
 	}
 
@@ -67,28 +61,6 @@ class RecognizedTemplatesProvider {
 	}
 
 	/**
-	 * Get all recognoized or all unrecognized classified tempaltes (depending on parameter)
-	 *
-	 * @param bool|true $getRecognized determine should get only recognized or unrecognized templates
-	 * @return array
-	 */
-	private function getTemplates( $getRecognized = true ) {
-		try {
-			$templates = $this->tcs->getTemplatesOnWiki( $this->wikiId );
-		} catch ( \Swagger\Client\ApiException $exception ) {
-			$context = [ 'TCSApiException' => $exception ];
-			$this->handleException( $context );
-			return [];
-		}
-		foreach ( $templates as $pageId => $type ) {
-			if ( !( $getRecognized xor self::isUnrecognized( $type ) ) ) {
-				unset( $templates[$pageId] );
-			}
-		}
-		return $templates;
-	}
-
-	/**
 	 * Get all templates from given namespaces
 	 *
 	 * @return array|bool|mixed
@@ -100,25 +72,54 @@ class RecognizedTemplatesProvider {
 			return $this->namespacesTemplates;
 		}
 
-		if ( empty( $this->namespaces ) ) {
-			return [];
-		}
-
-		$this->namespacesTemplates = ( new \WikiaSQL() )
+		$sql = ( new \WikiaSQL() )
 			->SELECT()->DISTINCT( 'p2.page_id as temp_id' )
 			->FROM( 'page' )->AS_( 'p' )
 			->INNER_JOIN( 'templatelinks' )->AS_( 't' )
 			->ON( 't.tl_from', 'p.page_id' )
 			->INNER_JOIN( 'page' )->AS_( 'p2' )
 			->ON( 'p2.page_title', 't.tl_title' )
-			->WHERE( 'p.page_namespace' )->IN( $this->namespaces )
-			->AND_( 'p2.page_namespace' )->EQUAL_TO( NS_TEMPLATE )
-			->AND_( 'p.page_id' )->NOT_EQUAL_TO( Title::newMainPage()->getArticleID() )
-			->runLoop( $this->getDB(), function ( &$pages, $row ) {
-				$pages[$row->temp_id] = $row->temp_id;
-			} );
+			->WHERE( 'p2.page_namespace' )->EQUAL_TO( NS_TEMPLATE )
+			->AND_( 'p.page_id' )->NOT_EQUAL_TO( Title::newMainPage()->getArticleID() );
+		if ( !empty( $this->namespaces ) ) {
+			$sql->AND_( 'p.page_namespace' )->IN( $this->namespaces );
+		}
+
+		$this->namespacesTemplates = $sql->runLoop( $this->getDB(), function ( &$pages, $row ) {
+			$pages[$row->temp_id] = $row->temp_id;
+		} );
 
 		return $this->namespacesTemplates;
+	}
+
+	private function getRecognizedTemplatesFromService() {
+		$classifiedTemplates = $this->getClassifiedTemplates();
+		return $this->unsetUnrecognized( $classifiedTemplates );
+	}
+
+	private function unsetUnrecognized( $classifiedTemplates ) {
+		foreach ( $classifiedTemplates as $pageId => $type ) {
+			if ( self::isUnrecognized( $type ) ) {
+				unset( $classifiedTemplates[$pageId] );
+			}
+		}
+		// Now it's recognizedTemplates
+		return $classifiedTemplates;
+	}
+
+	/**
+	 * Get all classified templates
+	 * @return array
+	 */
+	private function getClassifiedTemplates() {
+		try {
+			$templates = $this->tcs->getTemplatesOnWiki( $this->wikiId );
+		} catch ( \Swagger\Client\ApiException $exception ) {
+			$context = [ 'TCSApiException' => $exception ];
+			$this->handleException( $context );
+			return [];
+		}
+		return $templates;
 	}
 
 	private function getDB() {
