@@ -111,6 +111,24 @@ class PipelineEventProducer {
 		return true;
 	}
 
+	/**
+	 * @desc Fires on:
+	 *  - successful save from TemplateClassificationApiController
+	 *
+	 * @param integer $pageId The affected template's pageId
+	 * @param Title $title The affected template's Title object
+	 * @return bool
+	 */
+	public static function onTemplateClassified( $pageId, $title ) {
+		$ns = self::preparePageNamespaceName( $title );
+		$revisionId = $title->getLatestRevID();
+
+		// there is purposedly no legacy (unflagged) event sent here
+		self::sendFlaggedSyntax( self::ACTION_UPDATE, $pageId, $revisionId, $ns );
+
+		return true;
+	}
+
 	/*
 	 * Helper methods
 	 */
