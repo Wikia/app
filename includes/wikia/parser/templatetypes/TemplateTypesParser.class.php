@@ -1,6 +1,7 @@
 <?php
 
 class TemplateTypesParser {
+	private $cachedTemplateTitles = [];
 	/**
 	 * @desc alters template raw text parser output based on template type
 	 *
@@ -74,9 +75,9 @@ class TemplateTypesParser {
 		wfProfileIn( __METHOD__ );
 
 		if ( ContextLinkTemplate::templateShouldBeProcessed( $templateWikitext ) ) {
-			$title = Title::newFromText( $templateTitle, NS_TEMPLATE );
+			$title = self::getValidTemplateTitle( $templateTitle );
 
-			if ( self::isValidTitle( $title ) ) {
+			if ( $title ) {
 				$type = self::getTemplateType( $title );
 				if ( $type == AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK ) {
 					$templateWikitext = ContextLinkTemplate::handle( $templateWikitext );
@@ -107,13 +108,20 @@ class TemplateTypesParser {
 	}
 
 	/**
-	 * @desc check if template title got from Parser is valid
+	 * @desc return a valid cached Title object for a given template title string
+	 * or if not in cache yet check it's correctness and save there valid Title
+	 * object or false if templateTitle invalid
 	 *
-	 * @param Title $title
-	 *
-	 * @return bool
+	 * @param string $templateTitle
+	 * @return Title | bool
+	 * @throws \MWException
 	 */
-	private static function isValidTitle( $title ) {
-		return $title && $title->exists();
+	private function getValidTemplateTitle( $templateTitle ) {
+		if ( !isset( $this->cachedTemplateTitles[ $templateTitle ] ) ) {
+			$title = Title::newFromText( $templateTitle, NS_TEMPLATE );
+			$this->cachedTemplateTitles[ $templateTitle ] = ( $title && $title->exists() ) ? $title : false;
+		}
+
+		return $this->cachedTemplateTitles[ $templateTitle ];
 	}
 }
