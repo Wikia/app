@@ -995,7 +995,7 @@ class WallNotifications {
 			[
 				'DISTINCT',
 				'LIMIT' => '50',
-				'ORDER BY' => 'unique_id'
+				'ORDER BY' => 'unique_id DESC'
 			]
 		);
 
