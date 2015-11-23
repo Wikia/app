@@ -67,30 +67,14 @@ class EmergencyBroadcastSystemController extends WikiaController {
 	}
 
 	protected function buildSurveyUrl() {
-		global $wgContLang;
+		global $wgContLang, $wgServer;
 
 		$context = $this->getContext();
+		$domain = parse_url( $wgServer, PHP_URL_HOST );
 		$userLanguage = $context->getLanguage();
 		$userName = $context->getUser()->getName();
 
-		$url = $this->googleFormUrl( $userLanguage->mCode, $userName );
-
-		if ( $url === null ) {
-			$url = $this->googleFormUrl( $wgContLang->mCode, $userName );
-		}
-
-		if ( $url === null ) {
-			$url = $this->googleFormUrl( 'en', $userName );
-		}
-
-		return $url;
-	}
-
-	protected function googleFormUrl( $language, $userName ) {
-		global $wgServer;
-
-		$domain = parse_url( $wgServer, PHP_URL_HOST );
-		$forms = [
+		$formUrls = [
 			'de' => "https://docs.google.com/forms/d/1Ks_uhxdi5Cb9EiNDup4bc7O6kI3Dl6rjq7AjlfqtX9A/viewform?entry.2019588325={$userName}&entry.1160019288={$domain}&entry.830663849",
 			'en' => "https://docs.google.com/forms/d/18qE5ub8qs8bkrubcN-00JxuLrfnfpJ88MyGhq1x3RpY/viewform?entry.2019588325={$userName}&entry.1160019288={$domain}&entry.830663849",
 			'es' => "https://docs.google.com/forms/d/1MLwwR8t-uoIOBXjjlW7YnBLOOrbH8_19Q3N5Bttqp0Y/viewform?entry.2019588325={$userName}&entry.1160019288={$domain}&entry.830663849",
@@ -103,6 +87,14 @@ class EmergencyBroadcastSystemController extends WikiaController {
 			'zh' => "https://docs.google.com/forms/d/1vnLsNYhWPa4lghIMyC8Eyu6gK0dZ0N3j4_RP1K3HH28/viewform?entry.2019588325={$userName}&entry.1160019288={$domain}&entry.830663849"
 		];
 
-		return $forms[ $language ];
+		$language = $userLanguage->mCode;
+		if ( !isset( $formUrls[ $language ] ) ) {
+			$language = $wgContLang->mCode;
+			if ( !isset( $formUrls[ $language ] ) ) {
+				$language = 'en';
+			}
+		}
+
+		return $formUrls[ $language ];
 	}
 }
