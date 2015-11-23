@@ -4,6 +4,7 @@ class EmergencyBroadcastSystemController extends WikiaController {
 	public function index() {
 		if ( $this->isCorrectPage() && $this->isPowerUser() && $this->hasNonPortableInfoBoxes() && $this->canOpenEBS() ) {
 			$this->response->setVal( 'nonPortableCount', '3' ); // Temporary number for testing
+			$this->response->setVal( 'surveyUrl', $this->buildSurveyUrl() );
 		} else {
 			return false;
 		}
@@ -65,7 +66,7 @@ class EmergencyBroadcastSystemController extends WikiaController {
 		return true;
 	}
 
-	protected function buildSurveyUrlForUser() {
+	protected function buildSurveyUrl() {
 		global $wgContLang;
 
 		$context = $this->getContext();
