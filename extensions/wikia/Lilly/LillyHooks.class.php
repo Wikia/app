@@ -15,6 +15,8 @@ class LillyHooks {
 		'it.starwars.wikia.com',
 		'la.starwars.wikia.com',
 		'hu.starwars.wikia.com',
+		// alias for hu.starwars.wikia.com:
+		'kaminopedia.wikia.com',
 		'nl.starwars.wikia.com',
 		'ja.starwars.wikia.com',
 		'no.starwars.wikia.com',
@@ -26,6 +28,7 @@ class LillyHooks {
 		'sv.starwars.wikia.com',
 		'tr.starwars.wikia.com',
 		'zh.starwars.wikia.com',
+		// alias for zh.starwars.wikia.com:
 		'zh-hk.starwars.wikia.com',
 	];
 
