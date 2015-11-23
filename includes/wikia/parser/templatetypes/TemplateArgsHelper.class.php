@@ -1,8 +1,6 @@
 <?php
 
 class TemplateArgsHelper {
-
-
 	/**
 	 * Parse template args to associative array
 	 *

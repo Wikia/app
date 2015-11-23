@@ -63,6 +63,7 @@ class TemplateTypesParser {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * @desc change template wikitext according to template type
 	 *
 	 * @param string $templateTitle
