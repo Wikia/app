@@ -189,25 +189,8 @@ class CloseWikiMaintenance {
 			}
 			if( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES || $row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) {
 
-				// PLATFORM-1700: remove DFS bucket
-				try {
-					$swift = \Wikia\SwiftStorage::newFromWiki( $cityid );
-
-					$container = $swift->getContainer();
-					$this->log( "Removing DFS bucket - {$container}" );
-
-					/**
-					 * The Container must be empty prior to removing it.
-					 *
-					 * Throws NonEmptyContainerException otherwise
-					 */
-					$swift->getConnection()->delete_container( $container );
-				} catch ( Exception $ex ) {
-					Wikia\Logger\WikiaLogger::instance()->error( 'Removing DFS bucket failed', [
-						'exception' => $ex,
-						'city_id' => $cityid
-					] );
-				}
+				// PLATFORM-1700: Remove wiki's DFS bucket
+				$this->removeBucket( $cityid );
 
 				/**
 				 * clear wikifactory tables, condition for city_public should
@@ -425,6 +408,37 @@ class CloseWikiMaintenance {
 		wfProfileOut( __METHOD__ );
 
 		return $files;
+	}
+
+	/**
+	 * Remove DFS bucket of a given wiki
+	 *
+	 * @see PLATFORM-1700
+	 * @param int $cityId
+	 */
+	private function removeBucket( $cityid ) {
+		try {
+			$container = \Wikia\SwiftStorage::newFromWiki( $cityid )->getContainer();
+			$this->log( "Removing DFS bucket - {$container}" );
+
+			//  Remove bucket / s3cmd rb s3://BUCKET
+			$cmd = sprintf(
+				'sudo /usr/bin/s3cmd -c %s --verbose rb s3://%s/',
+				'/etc/s3cmd/sjc_prod.cfg', // s3cmd config for Swift storage
+				$container->name
+			);
+			$out = wfShellExec( $cmd, $iStatus );
+			$this->log( $cmd . ' : ' . $out );
+
+			if ( $iStatus !== 0 ) {
+				throw new Exception( 'Failed to remove a bucket - ' . $cmd, $iStatus );
+			}
+		} catch ( Exception $ex ) {
+			Wikia\Logger\WikiaLogger::instance()->error( 'Removing DFS bucket failed', [
+				'exception' => $ex,
+				'city_id' => $cityid
+			] );
+		}
 	}
 
 	/**
