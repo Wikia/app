@@ -1,67 +1,66 @@
 <?php
+
 class EmergencyBroadcastSystemController extends WikiaController {
 
+	const EBS_RESPONSE_KEY = 'ebs_response';
+
 	public function index() {
-		if ( $this->isCorrectPage() && $this->isPowerUser() && $this->hasNonPortableInfoBoxes() && $this->canOpenEBS() ) {
-			$this->response->setVal( 'nonPortableCount', '3' ); // Temporary number for testing
+		if ( $this->isQualifiedUser() && $this->isQualifiedPage() ) {
+			$count = $this->getCountOfNonPortableInfoboxes();
+			if ( $count > 0 ) {
+				$this->response->setVal( 'nonPortableCount', $count );
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public function saveUserResponse( $val ) {
+		$user = $this->context->getUser();
+		$data = $this->request->getParams();
+
+		if ( $data[ 'val']  === '0' ) { // no
+			// if user clicks no, set ebs_response to 0
+			$user->setOption( self::EBS_RESPONSE_KEY, 0 );
+		} elseif ( $data[ 'val' ] === '1' ) { // yes
+			// if user clicks yes, set ebs_response to the current time
+			$user->setOption( self::EBS_RESPONSE_KEY, ( new DateTime() )->getTimestamp() );
+		} else if ( $data[ 'val']  === '-1' ) { // for testing purposes
+			$user->setOption( self::EBS_RESPONSE_KEY, null );
 		} else {
+			// invalid call, do nothing
+			// TODO: Figure out proper way to log error
+		}
+		$user->saveSettings();
+	}
+
+	protected function isQualifiedUser() {
+		$user = $this->context->getUser();
+
+		if ( !$user->isPowerUser() ) {
 			return false;
 		}
-	}
 
-	public static function saveUserResponse( $val ) {
-		global $wgUser;
-		$option_name = 'ebs_response';
-		if ($val === null) {
-			// invalid call, do nothing
-			wfErrorLog( 'Invalid call to EmergencyBroadcastSystemController::saveUserResponse()', $wgDebugLogFile );
-		} elseif ($val === 0) { // no
-			// if user clicks no, set ebs_response to 0
-			$wgUser->setOption( $option_name, 0 );
+		$ebsResponse = $user->getOption( self::EBS_RESPONSE_KEY );
+		if ( $ebsResponse === null )  { // user has not seen/interacted with EBS yet
+                        return true;
+		} elseif ( $ebsResponse === 0 ) { // user has clicked 'no'
+			return false;
 		} else {
-			// if user clicks yes, set ebs_response to the current time
-			$timestamp = (new DateTime())->getTimestamp();
-			$wgUser->setOption( $option_name, $timestamp );
+			$currentTimestamp = ( new DateTime() )->getTimestamp();
+			$cutoffTimestamp = $currentTimestamp - 24 * 60 * 60; // 24 hrs ago
+			return $ebsResponse < $cutoffTimestamp;
 		}
 	}
-	// PROTECTED
 
-	protected function isCorrectPage() {
-		$title = $this->getContext()->getTitle();
-		$specialPageName = $title->isSpecialPage() ? Transaction::getAttribute(Transaction::PARAM_SPECIAL_PAGE_NAME) : '';
-
+	protected function isQualifiedPage() {
+		$title = $this->context->getTitle();
+		$specialPageName = $title->isSpecialPage() ? Transaction::getAttribute( Transaction::PARAM_SPECIAL_PAGE_NAME ) : null;
 		return $title->isContentPage() || $specialPageName === 'WikiActivity' || $specialPageName === 'Recentchanges';
 	}
 
-	protected function isPowerUser() {
-		$user = $this->getContext()->getUser();
-		return $user->isPowerUser();
+	protected function getCountOfNonPortableInfoboxes() {
+		return 5;
 	}
 
-	protected function canOpenEBS( ) {
-		global $wgUser;
-		$ebs_response = $wgUser->getOption( 'ebs_response' );
-		if ($ebs_response === null) {
-			// user has not seen/interacted with EBS yet, so display it
-			return true;
-		} elseif ($ebs_response === 0) {
-			// user has clicked 'no', don't display it
-			return false;
-		} else {
-			$curr_timestamp = (new DateTime())->getTimestamp();
-			$cutoff_timestamp = $curr_timestamp - 24*60*60; // 24 hrs ago
-
-			// if the timestamp is more than 24 hours ago, display it
-			if ($ebs_response < $cutoff_timestamp) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
-
-	protected function hasNonPortableInfoBoxes() {
-		// TODO: Actually check for non portable infoboxes
-		return true;
-	}
 }
