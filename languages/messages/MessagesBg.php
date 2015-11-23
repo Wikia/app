@@ -2814,11 +2814,8 @@ $1',
 'pageinfo-viewsperedit'     => 'Прегледи на редакция',
 
 # Skin names
-'skinname-standard'    => 'Класика',
 'skinname-monobook'    => 'Монобук',
 'skinname-myskin'      => 'Моят облик',
-'skinname-simple'      => 'Семпъл',
-'skinname-modern'      => 'Модерен',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Отбелязване като проверена редакция',

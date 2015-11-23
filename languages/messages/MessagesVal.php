@@ -1,7 +1,4 @@
 <?php
-$skinNames = array(
-	'standard' => "Estàndard",
-);
 $namespaceNames = array(
 	NS_MEDIA          => 'Media',
 	NS_SPECIAL        => 'Especial',

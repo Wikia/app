@@ -2535,8 +2535,6 @@ $1',
 'numtalkauthors' => 'სხვადასხვა ავტორთა რაოდენობა (განხილვის გვერდი): $1',
 
 # Skin names
-'skinname-standard'  => 'კლასიკური',
-'skinname-modern'    => 'თანამედროვე',
 
 # Math options
 'mw_math_png'    => 'მუდამ გამოიყენე PNG',

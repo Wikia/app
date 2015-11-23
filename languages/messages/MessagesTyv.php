@@ -741,7 +741,6 @@ The password for this new account can be changed on the ''[[Special:ChangePasswo
 'anonymous' => '{{grammar:genitive|{{SITENAME}}}} ат эвес {{PLURAL:$1|ажыглакчызы|ажыглакчылары}}',
 
 # Skin names
-'skinname-standard'    => 'Classic',
 'skinname-monobook'    => 'Моно-Ном',
 'skinname-myskin'      => 'MySkin',
 

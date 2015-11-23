@@ -2838,11 +2838,8 @@ Vinsamlegast reyndu aftur.',
 'pageinfo-viewsperedit' => 'Flettingar á hverja breytingu',
 
 # Skin names
-'skinname-standard' => 'Sígilt',
 'skinname-monobook' => 'EinBók',
 'skinname-myskin' => 'Mitt þema',
-'skinname-simple' => 'Einfalt',
-'skinname-modern' => 'Nútímalegt',
 
 # Patrolling
 'markaspatrolleddiff' => 'Merkja sem yfirfarið',

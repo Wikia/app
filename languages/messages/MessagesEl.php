@@ -2896,21 +2896,15 @@ $1',
 
 # Stylesheets
 'common.css'      => '/* Το τοποθετημένο εδώ CSS θα εφαρμοστεί σε όλα τα skins */',
-'standard.css'    => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει χρήστες του Standard skin */',
 'monobook.css'    => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει χρήστες του Monobook skin */',
 'myskin.css'      => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει χρήστες του MySkin skin */',
-'simple.css'      => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει χρήστες του Simple skin */',
-'modern.css'      => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει χρήστες του Modern skin */',
 'print.css'       => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει το αποτέλεσμα της εκτύπωσης */',
 'handheld.css'    => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει συσκευές χειρός βάση του skin ρυθμισμένου στο $wgHandheldStyle */',
 
 # Scripts
 'common.js'      => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για όλους τους χρήστες σε κάθε φόρτωση σελίδας. */',
-'standard.js'    => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για χρήστες που χρησιμοποιούν το Standard skin */',
 'monobook.js'    => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για χρήστες που χρησιμοποιούν το MonoBook skin */',
 'myskin.js'      => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για χρήστες που χρησιμοποιούν το MySkin skin */',
-'simple.js'      => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για χρήστες που χρησιμοποιούν το Simple skin */',
-'modern.js'      => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για χρήστες που χρησιμοποιούν το Modern skin */',
 
 # Metadata
 'notacceptable' => 'Ο server του Wiki δεν μπορεί να αποδώσει δεδομένα σε μορφή που να μπορεί να διαβάσει ο client σας.',
@@ -2949,10 +2943,7 @@ $1',
 'pageinfo-viewsperedit'     => 'Προβολές ανά επεξεργασία',
 
 # Skin names
-'skinname-standard'  => 'Κλασσικό',
 'skinname-myskin'    => 'ΤοSkinΜου',
-'skinname-simple'    => 'Απλό',
-'skinname-modern'    => 'Μοντέρνο',
 
 # Patrolling
 'markaspatrolleddiff'                 => "Να σημειωθεί 'υπό παρακολούθηση'",

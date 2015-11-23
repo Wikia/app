@@ -2924,11 +2924,8 @@ $1',
 'pageinfo-viewsperedit'     => 'ഓരോ തിരുത്തലിലും ഉള്ള എടുത്തുനോട്ടങ്ങൾ',
 
 # Skin names
-'skinname-standard'    => 'സാർവത്രികം',
 'skinname-monobook'    => 'മോണോബുക്ക്',
 'skinname-myskin'      => 'എന്റിഷ്ടം',
-'skinname-simple'      => 'ലളിതം',
-'skinname-modern'      => 'നവീനം',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'റോന്തുചുറ്റിയതായി അടയാളപ്പെടുത്തുക',

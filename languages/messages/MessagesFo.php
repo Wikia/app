@@ -1877,7 +1877,6 @@ Vinarliga vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] o
 'pageinfo-views' => 'Tal av skoðanum',
 
 # Skin names
-'skinname-standard' => 'Standardur',
 
 # Patrolling
 'markaspatrolleddiff' => 'Merk síðuna sum eftirhugda',

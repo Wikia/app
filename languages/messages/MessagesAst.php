@@ -2716,11 +2716,8 @@ Pues ver el so códigu fonte.',
 
 # Stylesheets
 'common.css'              => "/* Los CSS allugaos equí s'aplicarán a tolos aspeutos */",
-'standard.css'            => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu Standard */',
 'monobook.css'            => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu Monobook */',
 'myskin.css'              => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu MySkin */',
-'simple.css'              => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu Simple */',
-'modern.css'              => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu Modern */',
 'print.css'               => '/* Los CSS allugaos equí afeutarán a la salida pola imprentadora */',
 'handheld.css'            => '/* Los CSS allugaos equí afeutarán a los preseos portátiles basaos nel aspeutu configuráu en $wgHandheldStyle */',
 'noscript.css'            => '/* Los CSS allugaos equí afeutarán a los usuarios col JavaScript desactiváu */',
@@ -2731,11 +2728,8 @@ Pues ver el so códigu fonte.',
 
 # Scripts
 'common.js'              => '/* Cualesquier JavaScript que tea equí se cargará pa tolos usuarios en cada carga de páxina. */',
-'standard.js'            => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu Standard */',
 'monobook.js'            => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu MonoBook */',
 'myskin.js'              => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu MySkin */',
-'simple.js'              => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu Simple */',
-'modern.js'              => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu Modern */',
 'group-autoconfirmed.js' => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios autoconfirmaos namái */',
 'group-bot.js'           => '/* Cualesquier JavaScript que tea equí se cargará pa los bots namái */',
 'group-sysop.js'         => '/* Cualesquier JavaScript que tea equí se cargará pa los sysops namái */',
@@ -2779,9 +2773,7 @@ Probablemente tea causao por un enllaz a un sitiu esternu de la llista prieta.',
 'pageinfo-viewsperedit'     => 'Visites por edición',
 
 # Skin names
-'skinname-standard'    => 'Clásicu',
 'skinname-myskin'      => 'MySkin',
-'skinname-modern'      => 'Modernu',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marcar como supervisada',

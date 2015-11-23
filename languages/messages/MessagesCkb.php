@@ -2392,11 +2392,8 @@ $1',
 'numauthors'   => 'ژمارەی نووسەری جودا (لاپەڕە): $1',
 
 # Skin names
-'skinname-standard'    => 'کلاسیک',
 'skinname-monobook'    => 'مۆنۆ',
 'skinname-myskin'      => 'پێستی خۆم',
-'skinname-simple'      => 'ساده‌',
-'skinname-modern'      => 'مۆدێڕن',
 
 # Math options
 'mw_math_png'    => 'ھەموو جارێک وەک PNG نیشان بدە',

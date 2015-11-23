@@ -2948,11 +2948,8 @@ Meestentieds kump dit deur n uutgaonde verwiezing die op de zwarte lieste steet.
 'pageinfo-viewsperedit'     => 'Antal keer bekeken per bewarking',
 
 # Skin names
-'skinname-standard'    => 'Klassiek',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'MienSkin',
-'skinname-simple'      => 'Eenvoudig',
-'skinname-modern'      => 'Niejmoeds',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Markeer as ekontroleerd',

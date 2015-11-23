@@ -2385,11 +2385,8 @@ $1',
 'spam_blanking'       => 'کل بازبینی آن شامل لینکان په $1, بوتت  هالیکی',
 
 # Skin names
-'skinname-standard'    => 'کلاسیک',
 'skinname-monobook'    => 'منوبوک',
 'skinname-myskin'      => 'منی جلد',
-'skinname-simple'      => 'ساده',
-'skinname-modern'      => 'مدرن',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'نشان کن په داب نظارت بوتگین',

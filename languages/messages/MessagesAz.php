@@ -2213,11 +2213,8 @@ Zəhmət olmasa başqa ad seçin.',
 
 # Stylesheets
 'common.css'              => '/* Burada yerləşən CSS bütün skinlərə tətbiq olunur */',
-'standard.css'            => '/* Burada yerləşən CSS Standard skin istifadəçilərinə tətbiq olunur */',
 'monobook.css'            => '/* Burada yerləşən CSS Monobook skin istifadəçilərinə tətbiq olunur */',
 'myskin.css'              => '/* Burada yerləşən CSS MySkin skin istifadəçilərinə tətbiq olunur */',
-'simple.css'              => '/* Burada yerləşən CSS Simple skin istifadəçilərinə tətbiq olunur */',
-'modern.css'              => '/* Burada yerləşən CSS Modern skin istifadəçilərinə tətbiq olunur */',
 'group-autoconfirmed.css' => '/* Burada yerləşən CSS yalnız avtotəsdiqlənmiş istifadəçilərə şamil olunur */',
 'group-bot.css'           => '/* Burada yerləşən CSS yalnız botlara şamil olunur */',
 'group-sysop.css'         => '/* Burada yerləşən CSS yalnız idarəçilərə şamil olunur */',
@@ -2225,11 +2222,8 @@ Zəhmət olmasa başqa ad seçin.',
 
 # Scripts
 'common.js'              => '/* Burada istifadəçilərin hamısı üçün bütün səhifələrdə istənilən JavaScript yüklənəcək */',
-'standard.js'            => '/* Burada Standard skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
 'monobook.js'            => '/* Burada MonoBook skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
 'myskin.js'              => '/* Burada MySkin skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
-'simple.js'              => '/* Burada Simple skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
-'modern.js'              => '/* Burada Modern skin istifadəçiləri üçün istənilən JavaScript yüklənəcək */',
 'group-autoconfirmed.js' => '/* Burada istənilən JavaScript yalnız avtotəsdiqlənmiş istifadəçilər üçün yüklənəcək */',
 'group-bot.js'           => '/* Burada istənilən JavaScript yalnız botlar üçün yüklənəcək */',
 'group-sysop.js'         => '/* Burada istənilən JavaScript yalnız idarəçilər üçün yüklənəcək */',
@@ -2265,11 +2259,8 @@ Zəhmət olmasa başqa ad seçin.',
 'pageinfo-viewsperedit'     => 'Redaktə başına göstərmə',
 
 # Skin names
-'skinname-standard'    => 'Classic',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
-'skinname-simple'      => 'Simple',
-'skinname-modern'      => 'Modern',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Yoxlanıldı',

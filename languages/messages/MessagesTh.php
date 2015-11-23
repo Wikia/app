@@ -2707,11 +2707,8 @@ $1',
 'pageinfo-viewsperedit'     => 'จำนวนการเข้าดูต่อการแก้ไข',
 
 # Skin names
-'skinname-standard'    => 'คลาสสิก',
 'skinname-monobook'    => 'โมโนบุ๊ก',
 'skinname-myskin'      => 'มายสกิน',
-'skinname-simple'      => 'ซิมเปิล',
-'skinname-modern'      => 'โมเดิร์น',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'ทำเครื่องหมายว่าตรวจสอบแล้ว',

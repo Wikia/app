@@ -2773,7 +2773,6 @@ Meistal wörd dit door 'ne zwarte externe link veroorzaak.",
 'pageinfo-viewsperedit'     => 'Weergave per bewerking',
 
 # Skin names
-'skinname-standard'    => 'Standaard',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Markeer es gecontroleerd',

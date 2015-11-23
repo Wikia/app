@@ -2710,10 +2710,7 @@ $1',
 'pageinfo-viewsperedit'     => 'Биир уларытыыга тиксэр көрүү ахсаана',
 
 # Skin names
-'skinname-standard'  => 'Классика',
 'skinname-myskin'    => 'Миэнэ',
-'skinname-simple'    => 'Судургу',
-'skinname-modern'    => 'Билиҥҥи',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Бэрэбиэркэлэммит курдук бэлиэтээ',

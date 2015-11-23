@@ -1724,11 +1724,8 @@ iarradh sábháil. Is dócha gur nasc chuig suíomh seachtrach ba chúis leis.',
 'spambot_username'    => 'MediaWiki turscar glanadh',
 
 # Skin names
-'skinname-standard'    => 'Clasaiceach',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MoChraiceann',
-'skinname-simple'      => 'Simplí',
-'skinname-modern'      => 'Nua-aimseartha',
 
 # Patrolling
 'markaspatrolleddiff'   => 'Comharthaigh mar patrólta.',

@@ -2903,7 +2903,6 @@ $1 사용자가 차단된 이유는 다음과 같습니다: "$2"',
 # Stylesheets
 'common.css'   => '/** 이 CSS 설정은 모든 스킨에 적용됩니다 */',
 'monobook.css' => '/* 이 CSS 설정은 모든 모노북 스킨에 적용됩니다 */',
-'modern.css'   => '/* 이 CSS 설정은 모든 모던 스킨에 적용됩니다 */',
 
 # Scripts
 'common.js'   => '/* 이 자바스크립트 설정은 모든 문서, 모든 사용자에게 적용됩니다. */',
@@ -2947,11 +2946,8 @@ $1 사용자가 차단된 이유는 다음과 같습니다: "$2"',
 'pageinfo-viewsperedit'     => '읽힌 횟수/편집 수',
 
 # Skin names
-'skinname-standard'    => '클래식',
 'skinname-monobook'    => '모노북',
 'skinname-myskin'      => '마이스킨',
-'skinname-simple'      => '심플',
-'skinname-modern'      => '모던',
 
 # Patrolling
 'markaspatrolleddiff'                 => '검토한 문서로 표시',

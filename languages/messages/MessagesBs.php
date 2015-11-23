@@ -2895,21 +2895,15 @@ Dopušta unos razloga u sažetak.',
 
 # Stylesheets
 'common.css'      => '/* CSS umetnut ovdje primijenit će se na sve skinove */',
-'standard.css'    => '/* CSS umetnut ovdje uticat će na korisnike koji koriste Standard skin */',
 'monobook.css'    => '/* CSS umetnut ovdje uticat će na korisnike koji koriste Monobook skin */',
 'myskin.css'      => '/* CSS umetnut ovdje uticat će na korisnike koji koriste MySkin skin */',
-'simple.css'      => '/* CSS umetnut ovdje uticat će na korisnike koji koriste Simple skin */',
-'modern.css'      => '/* CSS umetnut ovdje uticat će na korisnike koji koriste Modern skin */',
 'print.css'       => '/* CSS umetnut ovdje uticat će na izgled isprintane stranice */',
 'handheld.css'    => '/* CSS umetnut ovdje uticat će na ručne sprave koji rade na skinu konfigurisanom u $wgHandheldStyle */',
 
 # Scripts
 'common.js'      => '/* Bilo koja JavaScript će biti učitana za sve korisnike pri svakom učitavanju stranice. */',
-'standard.js'    => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste Standard skin */',
 'monobook.js'    => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste MonoBook skin */',
 'myskin.js'      => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste MySkin skin */',
-'simple.js'      => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste Simple skin */',
-'modern.js'      => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste Modern skin */',
 
 # Metadata
 'notacceptable' => 'Viki server ne može da pruži podatke u onom formatu koji Vaš klijent može da pročita.',
@@ -2949,11 +2943,8 @@ Ovo je vjerovatno izazvao vezom ka vanjskoj nepoželjnoj stranici.',
 'pageinfo-viewsperedit'     => 'Pogleda po izmjeni',
 
 # Skin names
-'skinname-standard'    => 'Klasično',
 'skinname-monobook'    => 'MonoKnjiga',
 'skinname-myskin'      => 'MojaKoža',
-'skinname-simple'      => 'Jednostavna',
-'skinname-modern'      => 'Moderna',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Označi kao patrolirano',

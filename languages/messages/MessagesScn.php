@@ -2338,11 +2338,8 @@ Visita [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] e [//trans
 'spam_blanking'       => 'Pàggina svacantata, tutti li virsioni cuntinìanu culligamenti a $1',
 
 # Skin names
-'skinname-standard'    => 'Classicu',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
-'skinname-simple'      => 'Sìmprici',
-'skinname-modern'      => 'Mudernu',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Segna lu canciamentu comu virificatu',

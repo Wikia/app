@@ -2915,11 +2915,8 @@ $1',
 'pageinfo-viewsperedit'     => 'Колькасьць праглядаў на рэдагаваньне',
 
 # Skin names
-'skinname-standard'    => 'Клясычнае',
 'skinname-monobook'    => 'Монакніга',
 'skinname-myskin'      => 'MySkin',
-'skinname-simple'      => 'Простае',
-'skinname-modern'      => 'Сучаснае',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Пазначыць як «патруляваную»',

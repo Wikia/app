@@ -2887,11 +2887,8 @@ Pode ver o código fonte.',
 
 # Stylesheets
 'common.css'              => '/** O CSS que se coloque aquí será aplicado a todas as aparencias */',
-'standard.css'            => '/* O CSS que se coloque aquí afectará a quen use a aparencia Clásica */',
 'monobook.css'            => '/* O CSS que se coloque aquí afectará a quen use a aparencia Monobook */',
 'myskin.css'              => '/* O CSS que se coloque aquí afectará a quen use a aparencia A miña aparencia */',
-'simple.css'              => '/* O CSS que se coloque aquí afectará a quen use a aparencia Sinxela */',
-'modern.css'              => '/* O CSS que se coloque aquí afectará a quen use a aparencia Moderna */',
 'print.css'               => '/* O CSS que se coloque aquí afectará ás impresións */',
 'handheld.css'            => '/* O CSS que se coloque aquí afectará aos dispositivos móbiles baseados na aparencia configurada en $wgHandheldStyle */',
 'noscript.css'            => '/* O CSS que se coloque aquí afectará aos usuarios co JavaScript desactivado */',
@@ -2902,11 +2899,8 @@ Pode ver o código fonte.',
 
 # Scripts
 'common.js'              => '/* Calquera JavaScript que haxa aquí será cargado para todos os usuarios en cada páxina que vexan. */',
-'standard.js'            => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia Clásica */',
 'monobook.js'            => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia MonoBook */',
 'myskin.js'              => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia A miña aparencia */',
-'simple.js'              => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia Sinxela */',
-'modern.js'              => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia Moderna */',
 'group-autoconfirmed.js' => '/* Calquera JavaScript que haxa aquí será cargado soamente para os usuarios autoconfirmados */',
 'group-bot.js'           => '/* Calquera JavaScript que haxa aquí será cargado soamente para os bots */',
 'group-sysop.js'         => '/* Calquera JavaScript que haxa aquí será cargado soamente para os administradores */',
@@ -2950,11 +2944,8 @@ Isto, probabelmente, se debe a unha ligazón cara a un sitio externo que está n
 'pageinfo-viewsperedit'     => 'Visitas por edición',
 
 # Skin names
-'skinname-standard'    => 'Clásica',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'A miña aparencia',
-'skinname-simple'      => 'Sinxela',
-'skinname-modern'      => 'Moderna',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marcar como revisada',

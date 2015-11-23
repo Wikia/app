@@ -813,7 +813,6 @@ Check your spelling, ka [[Special:UserLogin/signup|kria konta foun]].',
 'siteusers'        => "{{PLURAL:$2|uza-na'in|uza-na'in}} {{SITENAME}} nian $1",
 
 # Skin names
-'skinname-standard'    => 'Klásiku',
 'skinname-myskin'      => 'MySkin',
 
 # Browsing diffs

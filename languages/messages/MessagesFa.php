@@ -3151,11 +3151,8 @@ $1',
 'pageinfo-viewsperedit'     => 'تعداد بازدید به ازای هر ویرایش',
 
 # Skin names
-'skinname-standard'    => 'کلاسیک',
 'skinname-monobook'    => 'مونوبوک',
 'skinname-myskin'      => 'پوستهٔ من',
-'skinname-simple'      => 'ساده',
-'skinname-modern'      => 'مدرن',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'برچسب گشت بزن',

@@ -2984,22 +2984,16 @@ Permet de rétablir la version précédente et d’ajouter un motif dans la boî
 
 # Stylesheets
 'common.css'      => '/* Le CSS placé ici sera appliqué à tous les habillages. */',
-'standard.css'    => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Standard. */',
 'monobook.css'    => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Monobook. */',
 'myskin.css'      => '/* Le CSS placé ici affectera les utilisateurs de l’habillage MySkin. */',
-'simple.css'      => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Simple. */',
-'modern.css'      => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Modern. */',
 'print.css'       => '/* Le CSS placé ici affectera les impressions */',
 'handheld.css'    => '/* Le CSS placé ici affectera les appareils mobiles en fonction de l\'habillage configuré $wgHandheldStyle */',
 'group-sysop.css' => '/* Le CSS inclus ici n’affectera que les administrateurs */',
 
 # Scripts
 'common.js'      => '/* Tout JavaScript ici sera chargé avec chaque page accédée par n’importe quel utilisateur. */',
-'standard.js'    => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Standard uniquement */',
 'monobook.js'    => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage MonoBook uniquement. */',
 'myskin.js'      => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Mon habillage uniquement */',
-'simple.js'      => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Simple uniquement */',
-'modern.js'      => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Moderne uniquement */',
 'group-sysop.js' => '/* Le JavaScript inclus ici n’affectera que les administrateurs */',
 
 # Metadata
@@ -3039,11 +3033,8 @@ Permet de rétablir la version précédente et d’ajouter un motif dans la boî
 'pageinfo-viewsperedit'     => 'Visites par modification',
 
 # Skin names
-'skinname-standard'    => 'Standard',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'Mon Interface',
-'skinname-simple'      => 'Simple',
-'skinname-modern'      => 'Moderne',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marquer comme relue',

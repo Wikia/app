@@ -1076,11 +1076,8 @@ Por fabor, scuolhe outro nome.',
 Premite ajuntar la rezon de la eidiçon ne l sumário.',
 
 # Skin names
-'skinname-standard'    => 'Clássico',
 'skinname-monobook'    => 'Lhibro',
 'skinname-myskin'      => 'Piel',
-'skinname-simple'      => 'Simpre',
-'skinname-modern'      => 'Moderno',
 
 # Browsing diffs
 'previousdiff' => "← Eidiçon d'atrás",

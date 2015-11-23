@@ -1078,7 +1078,6 @@ $3',
 'spamprotectiontitle' => 'Спамы ныхмæ фильтр',
 
 # Skin names
-'skinname-standard'    => 'Стандартон',
 'skinname-monobook'    => 'Моно-чиныг',
 'skinname-myskin'      => 'Мæхи',
 

@@ -2630,7 +2630,6 @@ $1',
 'pageinfo-viewsperedit'     => 'திருத்தந்களுக்கான காட்சிகள்',
 
 # Skin names
-'skinname-standard'    => 'இயல்பான',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'ரோந்திட்டதாக குறி',

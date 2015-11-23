@@ -2834,7 +2834,6 @@ Això deu ser degut per un enllaç a un lloc extern inclòs a la llista negra.',
 'pageinfo-viewsperedit'     => 'Visites per edició',
 
 # Skin names
-'skinname-standard'    => 'Clàssic',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marca com a supervisat',

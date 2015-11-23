@@ -2792,11 +2792,8 @@ $1',
 
 # Stylesheets
 'common.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើគ្រប់សំបកទាំងអស់ */',
-'standard.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក Standard */',
 'monobook.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក Monobook */',
 'myskin.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក MySkin */',
-'simple.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក Simple */',
-'modern.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក Modern */',
 
 # Attribution
 'anonymous' => '{{PLURAL:$1|user|អ្នកប្រើប្រាស់}}អនាមិកនៃ {{SITENAME}}',
@@ -2832,11 +2829,8 @@ $1',
 'pageinfo-viewsperedit' => 'ចំនួនការចូលមើលក្នុងមួយកំណែប្រែ',
 
 # Skin names
-'skinname-standard' => 'បុរាណ',
 'skinname-monobook' => 'សៀវភៅឯក',
 'skinname-myskin' => 'សំបកខ្ញុំ',
-'skinname-simple' => 'សាមញ្ញ',
-'skinname-modern' => 'ទំនើប',
 
 # Patrolling
 'markaspatrolleddiff' => 'ចំណាំថាបានល្បាត',

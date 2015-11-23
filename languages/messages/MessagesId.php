@@ -2855,21 +2855,15 @@ Simpan ke komputer Anda lalu muatkan di sini.',
 
 # Stylesheets
 'common.css'      => '/* CSS yang ada di sini akan diterapkan untuk semua kulit. */',
-'standard.css'    => '/* CSS yang ada di sini akan diterapkan untuk kulit Standard. */',
 'monobook.css'    => '/* CSS yang ada di sini akan diterapkan untuk kulit Monobook. */',
 'myskin.css'      => '/* CSS yang ada di sini akan diterapkan untuk kulit MySkin. */',
-'simple.css'      => '/* CSS yang ada di sini akan diterapkan untuk kulit Simple. */',
-'modern.css'      => '/* CSS yang ada di sini akan diterapkan untuk kulit Modern. */',
 'print.css'       => '/* CSS yang ada di sini akan diterapkan untuk tampilan cetak. */',
 'handheld.css'    => '/* CSS yang ada di sini akan diterapkan untuk tampilan piranti genggam yang dikonfigurasi di $wgHandheldStyle. */',
 
 # Scripts
 'common.js'      => '/* JavaScript yang ada di sini akan diterapkan untuk semua kulit. */',
-'standard.js'    => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit Standard */',
 'monobook.js'    => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit MonoBook */',
 'myskin.js'      => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit MySkin */',
-'simple.js'      => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit Simple */',
-'modern.js'      => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit Modern */',
 
 # Metadata
 'notacceptable' => 'Server wiki tidak dapat menyediakan data dalam format yang dapat dibaca oleh client Anda.',
@@ -2909,8 +2903,6 @@ Ini mungkin disebabkan oleh pranala ke situs luar yang termasuk dalam daftar hit
 'pageinfo-viewsperedit'     => 'Jumlah penampilan per suntingan',
 
 # Skin names
-'skinname-standard' => 'Klasik',
-'skinname-simple'   => 'Sederhana',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Tandai telah dipatroli',

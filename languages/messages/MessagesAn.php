@@ -2694,11 +2694,8 @@ Puede veyer-ne, manimenos, o codigo fuent.',
 
 # Stylesheets
 'common.css'              => '/* Os estilos CSS definius aquí aplicarán a todas as apariencias (skins) */',
-'standard.css'            => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Standard */",
 'monobook.css'            => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Monobook */",
 'myskin.css'              => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que que faigan servir l'apariencia MySkin */",
-'simple.css'              => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Simpla */",
-'modern.css'              => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Modern */",
 'print.css'               => '/* Os estilos CSS colocaus aquí afectarán a la impresión */',
 'handheld.css'            => '/* Os estilos CSS colocaus aquí afectarán a os dispositivos mobils basaus en as apariencias configuradas en $wgHandheldStyle */',
 'noscript.css'            => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que tiengan desactivato JavaScript */",
@@ -2709,11 +2706,8 @@ Puede veyer-ne, manimenos, o codigo fuent.',
 
 # Scripts
 'common.js'              => '/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios en cada carga de pachina */',
-'standard.js'            => "/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios que faigan servir l'apariencia Estandar */",
 'monobook.js'            => "/* O codigo Javascript que se meta aquí será cargau por os usuarios faigan servir l'apariencia MonoBook */",
 'myskin.js'              => "/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios que faigan servir l'apariencia MySkin */",
-'simple.js'              => "/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios que faigan servir l'apariencia Simple */",
-'modern.js'              => "/* O codigo Javascript que se meta aquí será cargau por os usuarios faigan servir l'apariencia Modern */",
 'group-autoconfirmed.js' => '/* Qualsiquier codigo Javascript escrito aquí se cargará nomás ta os usuarios autoconfirmatos */',
 'group-bot.js'           => '/* Qualsiquier codigo Javascript escrito aquí se cargará nomás ta os bots */',
 'group-sysop.js'         => '/* Qualsiquier codigo Javascript escrito aquí se cargará nomás ta os administradors */',
@@ -2756,11 +2750,8 @@ Puede veyer-ne, manimenos, o codigo fuent.',
 'pageinfo-viewsperedit'     => 'Vistas por edición',
 
 # Skin names
-'skinname-standard'    => 'Clasica (Classic)',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'A mía aparencia (MySkin)',
-'skinname-simple'      => 'Simpla (Simple)',
-'skinname-modern'      => 'Moderna',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Sinyalar como ya controlato',

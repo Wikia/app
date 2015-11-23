@@ -3043,11 +3043,8 @@ $1',
 
 # Stylesheets
 'common.css' => '/* הסגנונות הנכתבים כאן ישפיעו על כל העיצובים */',
-'standard.css' => '/* הסגנונות הנכתבים כאן ישפיעו על העיצוב Standard בלבד */',
 'monobook.css' => '/* הסגנונות הנכתבים כאן ישפיעו על העיצוב Monobook בלבד */',
 'myskin.css' => '/* הסגנונות הנכתבים כאן ישפיעו על העיצוב MySkin בלבד */',
-'simple.css' => '/* הסגנונות הנכתבים כאן ישפיעו על העיצוב Simple בלבד */',
-'modern.css' => '/* הסגנונות הנכתבים כאן ישפיעו על העיצוב Modern בלבד */',
 'print.css' => '/* הסגנונות הנכתבים כאן ישפיעו על הפלט בהדפסה בלבד */',
 'handheld.css' => '/* הסגנונות הנכתבים כאן ישפיעו על מכשירים ניידים המבוססים על העיצוב שבהגדרה $wgHandheldStyle בלבד */',
 'noscript.css' => '/* הסגנונות הנכתבים כאן ישפיעו על משתמשים עם JavaScript מבוטל */',
@@ -3058,11 +3055,8 @@ $1',
 
 # Scripts
 'common.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ עבור כל המשתמשים בכל טעינת עמוד */',
-'standard.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור המשתמשים בעיצוב Standard */',
 'monobook.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור המשתמשים בעיצוב Monobook */',
 'myskin.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור המשתמשים בעיצוב MySkin */',
-'simple.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור המשתמשים בעיצוב Simple */',
-'modern.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור המשתמשים בעיצוב Modern */',
 'group-autoconfirmed.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור משתמשים ותיקים */',
 'group-bot.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור בוטים */',
 'group-sysop.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור מפעילי מערכת */',
@@ -3107,11 +3101,8 @@ $1',
 'pageinfo-viewsperedit' => 'צפיות לכל עריכה',
 
 # Skin names
-'skinname-standard' => 'קלאסי',
 'skinname-monobook' => 'מונובוק',
 'skinname-myskin' => 'העיצוב שלי',
-'skinname-simple' => 'פשוט',
-'skinname-modern' => 'מודרני',
 
 # Patrolling
 'markaspatrolleddiff' => 'סימון השינוי כבדוק',

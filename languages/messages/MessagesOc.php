@@ -2705,21 +2705,15 @@ Totas las accions d’importacion interwiki son conservadas dins lo [[Special:Lo
 
 # Stylesheets
 'common.css'      => '/** Lo CSS plaçat aicí serà aplicat a totas las aparéncias. */',
-'standard.css'    => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Estandard. */',
 'monobook.css'    => '/* Lo CSS plaçat aicí afectarà los utilizaires del skin Monobook */',
 'myskin.css'      => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge MySkin */',
-'simple.css'      => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Simple */',
-'modern.css'      => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Modern */',
 'print.css'       => '/* Lo CSS plaçat aicí afectarà las impressions */',
 'handheld.css'    => '/* Lo CSS plaçat aicí afectarà los aparelhs mobils en foncion de l\'abilhatge configurat $wgHandheldStyle */',
 
 # Scripts
 'common.js'      => '/* Tot JavaScript serà cargat amb cada pagina accedida per un utilizaire quin que siá. */',
-'standard.js'    => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Standard unicament. */',
 'monobook.js'    => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge MonoBook unicament. */',
 'myskin.js'      => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge MySkin unicament. */',
-'simple.js'      => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Simple unicament. */',
-'modern.js'      => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Modern unicament. */',
 
 # Metadata
 'notacceptable' => 'Aqueste servidor wiki pòt pas fornir las donadas dins un format que vòstre client es capable de legir.',
@@ -2746,11 +2740,8 @@ Aquò es probablament causat per un ligam sus lista negra que punta cap a un sit
 'spam_blanking'       => 'Totas las versions que contenon de ligams cap a $1 son blanquidas',
 
 # Skin names
-'skinname-standard'    => 'Estandard',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'Mon interfàcia',
-'skinname-simple'      => 'Simple',
-'skinname-modern'      => 'Modèrne',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marcar coma essent pas un vandalisme',

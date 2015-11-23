@@ -2980,11 +2980,8 @@ Permite colocar uma justificativa no sumário da edição.',
 
 # Scripts
 'common.js' => '/* Códigos JavaScript aqui colocados serão carregados por todos aqueles que acessarem alguma página deste wiki */',
-'standard.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Clássico */',
 'monobook.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin MonoBook */',
 'myskin.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin MySkin */',
-'simple.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Simples */',
-'modern.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Moderno */',
 
 # Metadata
 'notacceptable' => 'O servidor não pode fornecer os dados em um formato que o seu cliente possa ler.',
@@ -3025,11 +3022,8 @@ Tal bloqueio foi provavelmente causado por uma ligação para um ''website'' ext
 'pageinfo-viewsperedit' => 'Visitas por edição',
 
 # Skin names
-'skinname-standard' => 'Clássico',
 'skinname-monobook' => 'MonoBook',
 'skinname-myskin' => 'MySkin',
-'skinname-simple' => 'Simples',
-'skinname-modern' => 'Moderno',
 
 # Patrolling
 'markaspatrolleddiff' => 'Marcar como patrulhada',

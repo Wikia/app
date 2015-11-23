@@ -2698,10 +2698,7 @@ The wiki server cannot provide data in a format your client can read.',
 'pageinfo-viewsperedit'     => 'Бер үҙгәртеүгә ҡарау һаны',
 
 # Skin names
-'skinname-standard'    => 'Классик',
 'skinname-myskin'      => 'Шәхси',
-'skinname-simple'      => 'Ябай',
-'skinname-modern'      => 'Заманса',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Тикшерелгән, тип билдәләргә',

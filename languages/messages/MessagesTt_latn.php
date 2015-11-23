@@ -1868,11 +1868,8 @@ Zinhar başqa isem saylağız.',
 'spamprotectiontitle' => 'Spam filtrı',
 
 # Skin names
-'skinname-standard'    => 'Klassik',
 'skinname-monobook'    => 'Kitap',
 'skinname-myskin'      => 'Üzem',
-'skinname-simple'      => 'Ğädi',
-'skinname-modern'      => 'Zamana',
 
 # Patrolling
 'markaspatrolledtext'   => 'Bu mäqäläne tikşerelgän dip tamğalaw',

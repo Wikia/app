@@ -2951,22 +2951,16 @@ Pozwala na wpisanie powodu w opisie zmian.',
 
 # Stylesheets
 'common.css'      => '/* Umieszczony tutaj kod CSS zostanie zastosowany we wszystkich skórkach */',
-'standard.css'    => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Standardowa */',
 'monobook.css'    => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Książka */',
 'myskin.css'      => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Moja skórka */',
-'simple.css'      => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Prosta */',
-'modern.css'      => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Nowoczesna */',
 'print.css'       => '/* Umieszczony tutaj kod CSS wpłynie na wygląd wydruku */',
 'handheld.css'    => '/* Umieszczony tutaj kod CSS wpłynie na wygląd na urządzeniach kieszonkowych skórki ustawionej w zmiennej $wgHandheldStyle */',
 'noscript.css'    => '/* Umieszczony tu arkusz stylów CSS będzie wykorzystywany dla użytkowników z wyłączoną obsługą JavaScript */',
 
 # Scripts
 'common.js'      => '/* Umieszczony tutaj kod JavaScript zostanie załadowany przez każdego użytkownika, podczas każdego ładowania strony. */',
-'standard.js'    => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Standardowa */',
 'monobook.js'    => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Książka */',
 'myskin.js'      => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Moja skórka */',
-'simple.js'      => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Prosta */',
-'modern.js'      => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Nowoczesna */',
 
 # Metadata
 'notacceptable' => 'Serwer wiki nie może dostarczyć danych w formacie, którego Twoja przeglądarka oczekuje.',
@@ -3006,11 +3000,8 @@ Najprawdopodobniej zostało to spowodowane przez link do zewnętrznej strony int
 'pageinfo-viewsperedit'     => 'Odsłon na edycję',
 
 # Skin names
-'skinname-standard'    => 'Standardowa',
 'skinname-monobook'    => 'Książka',
 'skinname-myskin'      => 'Moja skórka',
-'skinname-simple'      => 'Prosta',
-'skinname-modern'      => 'Nowoczesna',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'oznacz edycję jako „sprawdzoną”',

@@ -2909,11 +2909,8 @@ $1',
 'pageinfo-viewsperedit' => 'प्रति संपादन अभिप्राय',
 
 # Skin names
-'skinname-standard' => 'अभिजात',
 'skinname-monobook' => 'मोनोबुक',
 'skinname-myskin' => 'माझीकांती',
-'skinname-simple' => 'साधी',
-'skinname-modern' => 'आधुनिक',
 
 # Patrolling
 'markaspatrolleddiff' => 'टेहळणी केल्याची खूण करा',

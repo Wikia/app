@@ -2621,21 +2621,15 @@ $1',
 
 # Stylesheets
 'common.css'      => '/* 響呢度放 CSS 碼來改成個網站嘅畫面 */',
-'standard.css'    => '/* 響呢度放 CSS 碼去改用戶用嘅傳統畫面 */',
 'monobook.css'    => '/* 響呢度放 CSS 碼去改用戶用嘅 Monobook 畫面 */',
 'myskin.css'      => '/* 響呢度放 CSS 碼去改用戶用嘅我嘅畫面 */',
-'simple.css'      => '/* 響呢度放 CSS 碼去改用戶用嘅簡單畫面 */',
-'modern.css'      => '/* 響呢度放 CSS 碼去改用戶用嘅摩登畫面 */',
 'print.css'       => '/* 響呢度放 CSS 碼去改打印輸出 */',
 'handheld.css'    => '/* 響呢度放 CSS 碼去改響 $wgHandheldStyle 設定手提裝置畫面 */',
 
 # Scripts
 'common.js'      => '/* 響每一次個頁面載入時，所有用戶都會載入呢度任何嘅JavaScript。 */',
-'standard.js'    => '/* 響每一次個頁面載入時，用標準畫面嘅用戶都會載入呢度任何嘅JavaScript */',
 'monobook.js'    => '/* 響每一次個頁面載入時，用 Monobook 畫面嘅用戶都會載入呢度任何嘅JavaScript */',
 'myskin.js'      => '/* 響每一次個頁面載入時，用我嘅畫面嘅用戶都會載入呢度任何嘅JavaScript */',
-'simple.js'      => '/* 響每一次個頁面載入時，用簡單畫面嘅用戶都會載入呢度任何嘅JavaScript */',
-'modern.js'      => '/* 響每一次個頁面載入時，用摩登畫面嘅用戶都會載入呢度任何嘅JavaScript */',
 
 # Metadata
 'notacceptable' => '呢個 wiki 伺服器唔能夠畀一個可以讀嘅資料畀個客。',
@@ -2662,11 +2656,8 @@ $1',
 'spam_blanking'       => '全部版本都含有指去$1嘅連結，留空',
 
 # Skin names
-'skinname-standard'    => '傳統',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => '我嘅畫面',
-'skinname-simple'      => '簡單',
-'skinname-modern'      => '摩登',
 
 # Patrolling
 'markaspatrolleddiff'                 => '標示為已巡查嘅',

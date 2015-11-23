@@ -2542,9 +2542,6 @@ Baliteke zerrenda beltzean dagoen kanpo lotura batek sortzea arazo hori.',
 'pageinfo-views'        => 'Bistaratze-kopurua',
 
 # Skin names
-'skinname-standard'    => 'Lehenetsia',
-'skinname-simple'      => 'Arrunta',
-'skinname-modern'      => 'Modernoa',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Patruilatutzat markatu',

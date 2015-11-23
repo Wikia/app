@@ -2669,11 +2669,8 @@ $UNWATCHURL కి వెళ్ళండి.
 'pageinfo-viewsperedit'     => 'ఒక మార్పుకి వీక్షణలు',
 
 # Skin names
-'skinname-standard'    => 'సంప్రదాయ',
 'skinname-monobook'    => 'మోనోబుక్',
 'skinname-myskin'      => 'నాఅలంకారం',
-'skinname-simple'      => 'సరళ',
-'skinname-modern'      => 'ఆధునిక',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'పరీక్షించినట్లుగా గుర్తు పెట్టు',

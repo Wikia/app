@@ -2812,11 +2812,8 @@ Simpan dalam komputer anda dan muat naiknya di sini.',
 
 # Stylesheets
 'common.css'      => '/* CSS yang terletak di sini akan digunakan pada semua kulit */',
-'standard.css'    => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Klasik */',
 'monobook.css'    => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Monobook */',
 'myskin.css'      => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit MySkin */',
-'simple.css'      => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Ringkas */',
-'modern.css'      => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Moden */',
 
 # Metadata
 'notacceptable' => 'Pelayan wiki ini tidak mampu menyediakan data dalam format yang boleh dibaca oleh pelanggan anda.',
@@ -2855,11 +2852,8 @@ Simpan dalam komputer anda dan muat naiknya di sini.',
 'pageinfo-viewsperedit'     => 'Kunjungan sesuntingan',
 
 # Skin names
-'skinname-standard'    => 'Klasik',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
-'skinname-simple'      => 'Ringkas',
-'skinname-modern'      => 'Moden',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Tanda ronda',

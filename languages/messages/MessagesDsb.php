@@ -2800,11 +2800,8 @@ W zespominanju dajo se pśicyna pódaś.',
 'pageinfo-viewsperedit' => 'Zwobraznjenja na změnu',
 
 # Skin names
-'skinname-standard' => 'Klasiski',
 'skinname-monobook' => 'MonoBook',
 'skinname-myskin' => 'Mój šat',
-'skinname-simple' => 'Jadnorje',
-'skinname-modern' => 'Moderny',
 
 # Patrolling
 'markaspatrolleddiff' => 'Ako kontrolěrowane markěrowaś',

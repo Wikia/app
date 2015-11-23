@@ -2825,11 +2825,8 @@ Leidžia pridėti atmetimo priežastį komentaruose',
 'pageinfo-viewsperedit'     => 'Peržiūrėta redaguojant',
 
 # Skin names
-'skinname-standard'    => 'Klasikinė',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Mano išvaizda',
-'skinname-simple'      => 'Paprasta',
-'skinname-modern'      => 'Moderni',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Žymėti, kad patikrinta',

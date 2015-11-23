@@ -2944,11 +2944,8 @@ Permite adăugarea unui motiv în descrierea modificărilor',
 
 # Stylesheets
 'common.css'      => '/** CSS plasate aici vor fi aplicate tuturor aparițiilor */',
-'standard.css'    => '/* CSS plasate aici vor afecta utilizatorii stilului Standard */',
 'monobook.css'    => '/* modificați acest fișier pentru a adapta înfățișarea monobook-ului pentru tot situl*/',
 'myskin.css'      => '/* CSS plasate aici vor afecta utilizatorii stilului MySkin */',
-'simple.css'      => '/* CSS plasate aici vor afecta utilizatorii stilului Simple */',
-'modern.css'      => '/* CSS plasate aici vor afecta utilizatorii stilului Modern */',
 'print.css'       => '/* CSS plasate aici vor afecta modul în care paginile vor fi imprimate */',
 
 # Metadata
@@ -2988,11 +2985,8 @@ Permite adăugarea unui motiv în descrierea modificărilor',
 'pageinfo-viewsperedit'     => 'Vizualizări per modificare',
 
 # Skin names
-'skinname-standard'    => 'Clasic',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'StilulMeu',
-'skinname-simple'      => 'Simplu',
-'skinname-modern'      => 'Modern',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marchează pagina ca verificată',

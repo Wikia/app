@@ -2276,21 +2276,15 @@ $1',
 
 # Stylesheets
 'common.css'      => '/* 此之 CSS 用於全面也 */',
-'standard.css'    => '/* 此之 CSS 用於經典面之簿也 */',
 'monobook.css'    => '/* 此之 CSS 用於單書面之簿也 */',
 'myskin.css'      => '/* 此之 CSS 用於吾風面之簿也 */',
-'simple.css'      => '/* 此之 CSS 用於簡明面之簿也 */',
-'modern.css'      => '/* 此之 CSS 用於時髦面之簿也 */',
 'print.css'       => '/* 此之 CSS 用於印之出力也 */',
 'handheld.css'    => '/* 此之 CSS 用於 $wgHandheldStyle 之手置面也 */',
 
 # Scripts
 'common.js'      => '/* 此之JavaScript將載於全簿之頁。 */',
-'standard.js'    => '/* 此之JavaScript將載於用經典面之簿 */',
 'monobook.js'    => '/* 此之JavaScript將載於用單書面之簿 */',
 'myskin.js'      => '/* 此之JavaScript將載於用吾風面之簿 */',
-'simple.js'      => '/* 此之JavaScript將載於用簡明面之簿 */',
-'modern.js'      => '/* 此之JavaScript將載於用時髦面之簿 */',
 
 # Attribution
 'anonymous'        => '{{SITENAME}}無{{PLURAL:$1|簿|簿}}者',
@@ -2314,11 +2308,8 @@ $1',
 'spam_blanking'       => '審皆鏈$1，遂令白頁。',
 
 # Skin names
-'skinname-standard'    => '經典',
 'skinname-monobook'    => '單書',
 'skinname-myskin'      => '吾風',
-'skinname-simple'      => '簡明',
-'skinname-modern'      => '時髦',
 
 # Patrolling
 'markaspatrolleddiff'                 => '派哨',

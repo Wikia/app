@@ -2127,10 +2127,8 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 'spam_blanking'       => 'Բոլոր տարբերակները պարունակում են հղումներ դեպի $1, մաքրում',
 
 # Skin names
-'skinname-standard'    => 'Դասական',
 'skinname-monobook'    => 'ՄիաԳիրք',
 'skinname-myskin'      => 'ԻմՏեսք',
-'skinname-simple'      => 'Պարզ',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Նշել որպես ստուգված',

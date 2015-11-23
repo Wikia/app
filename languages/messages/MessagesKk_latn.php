@@ -2231,19 +2231,13 @@ Wïkï-aparw üşin sırttan alw barlıq äreketter [[{{#special:Log}}/import|s�
 
 # Stylesheets
 'common.css'      => '/* Mında ornalastırılğan CSS barlıq mänerlerde qoldanıladı */',
-'standard.css'    => '/* Mında ornalastırılğan CSS tek «Dağdılı» (standard) mänerin paýdalanwşılarına ıqpal etedi */',
 'monobook.css'    => '/* Mında ornalastırılğan CSS tek «Dara kitap» (monobook) mänerin paýdalanwşılarına ıqpal etedi */',
 'myskin.css'      => '/* Mında ornalastırılğan CSS tek «Öz mänerim» (myskin) mänerin paýdalanwşılarına ıqpal etedi */',
-'simple.css'      => '/* Mında ornalastırılğan CSS tek «Kädimgi» (simple) mänerin paýdalanwşılarına ıqpal etedi */',
-'modern.css'      => '/* Mında ornalastırılğan CSS tek «Zamanawï» (modern) mänerin paýdalanwşılarına ıqpal etedi */',
 
 # Scripts
 'common.js'      => '/* Mındağı ärtürli JavaScript kez kelgen bet qotarılğanda barlıq paýdalanwşılar üşin jegiledi. */',
-'standard.js'    => '/* Mındağı JavaScript tek «Dağdılı» (standard) mänerin paýdalanwşılar üşin jegiledi */',
 'monobook.js'    => '/* Mındağı JavaScript tek «Dara kitap» (monobook) mänerin paýdalanwşılar üşin jegiledi */',
 'myskin.js'      => '/* Mındağı JavaScript tek «Öz mänerim» (myskin) mänerin paýdalanwşılar üşin jegiledi */',
-'simple.js'      => '/* Mındağı JavaScript tek «Kädimgi» (simple) mänerin paýdalanwşılar üşin jegiledi */',
-'modern.js'      => '/* Mındağı JavaScript tek «Zamanawï» (modern) mänerin paýdalanwşılar üşin jegiledi */',
 
 # Metadata
 'notacceptable' => 'Tutınğışıñız oqï alatın pişimi bar derekterdi bul wïkï server jetistire almaýdı.',
@@ -2268,11 +2262,8 @@ Bunıñ sebebi şettik torap siltemesinen bolwı mümkin.',
 'spam_blanking'       => '$1 degenge siltemeleri bar barlıq tüzetwler tazartıldı',
 
 # Skin names
-'skinname-standard'    => 'Dağdılı (standard)',
 'skinname-monobook'    => 'Dara kitap (monobook)',
 'skinname-myskin'      => 'Öz mänerim (myskin)',
-'skinname-simple'      => 'Kädimgi (simple)',
-'skinname-modern'      => 'Zamanawï (modern)',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Zertteldi dep belgilew',

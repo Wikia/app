@@ -2863,7 +2863,6 @@ Hierdie situasie was waarskynlik deur 'n skakel na 'n eksterne webtuiste op ons 
 'pageinfo-viewsperedit'     => 'Kere gewys per wysiging',
 
 # Skin names
-'skinname-standard'    => 'Standaard',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Merk as gekontroleerd',

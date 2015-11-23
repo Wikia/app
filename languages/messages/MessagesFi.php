@@ -2848,11 +2848,8 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 
 # Stylesheets
 'common.css'              => '/* Tämä sivu sisältää koko sivustoa muuttavia tyylejä. */',
-'standard.css'            => '/* Tämä sivu sisältää Perus-ulkoasua muuttavia tyylejä. */',
 'monobook.css'            => '/* Tämä sivu sisältää Monobook-ulkoasua muuttavia tyylejä. */',
 'myskin.css'              => '/* Tämä sivu sisältää Oma tyylisivu -ulkoasua muuttavia tyylejä. */',
-'simple.css'              => '/* Tämä sivu sisältää Yksinkertainen-ulkoasua muuttavia tyylejä. */',
-'modern.css'              => '/* Tämä sivu sisältää Moderni-ulkoasua muuttavia tyylejä. */',
 'print.css'               => '/* Tämä sivu sisältää tulostettua sivua muuttavia tyylejä */',
 'noscript.css'            => '/* Tämä sivun tyylit muuttavat niiden käyttäjien tyylejä, joilla JavaScript ei ole käytössä */',
 'group-autoconfirmed.css' => '/* Tämä sivun tyylit muuttavat automaattisesti hyväksyttyjen käyttäjien tyylejä */',
@@ -2862,11 +2859,8 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 
 # Scripts
 'common.js'              => '/* Tämän sivun JavaScript-koodi liitetään jokaiseen sivulataukseen */',
-'standard.js'            => '/* Tämän sivun JavaScript-koodi liitetään Perus-tyyliin */',
 'monobook.js'            => '/* Tämän sivun JavaScript-koodi liitetään Monobook-tyyliin */',
 'myskin.js'              => '/* Tämän sivun JavaScript-koodi liitetään Oma tyylisivu -tyyliin */',
-'simple.js'              => '/* Tämän sivun JavaScript-koodi liitetään Yksinkertaistettuun tyyliin */',
-'modern.js'              => '/* Tämän sivun JavaScript-koodi liitetään Moderni-tyyliin */',
 'group-autoconfirmed.js' => '/* Tämän sivun JavaScript-koodi liitetään vain automaattisesti hyväksytyille käyttäjille */',
 'group-bot.js'           => '/* Tämän sivun JavaScript-koodi liitetään vain boteille */',
 'group-sysop.js'         => '/* Tämän sivun JavaScript-koodi liitetään vain ylläpitäjille */',
@@ -2909,11 +2903,8 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 'pageinfo-viewsperedit'     => 'Katseluita per muokkaus',
 
 # Skin names
-'skinname-standard'    => 'Perus',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'Oma tyylisivu',
-'skinname-simple'      => 'Yksinkertainen',
-'skinname-modern'      => 'Moderni',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Merkitse tarkastetuksi',

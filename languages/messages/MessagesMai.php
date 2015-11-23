@@ -2658,9 +2658,6 @@ $1 एकर प्रतिबन्धक कारण अछि : "$2"',
 'pageinfo-viewsperedit'     => 'प्रति सम्पादन देखल गेल',
 
 # Skin names
-'skinname-standard'  => 'प्राचीन',
-'skinname-simple'    => 'साधारण',
-'skinname-modern'    => 'आधुनिक',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'देखि लेल गेल, एहन चिन्ह लगाऊ',

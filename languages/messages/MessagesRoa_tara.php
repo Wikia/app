@@ -2724,11 +2724,8 @@ Permette de aggiungere 'nu mutive jndr'à 'u riepileghe",
 
 # Stylesheets
 'common.css'              => "/* 'U CSS ca se iacchie aqquà avène applicate a tutte le masckere */",
-'standard.css'            => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Standard */",
 'monobook.css'            => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Monobook */",
 'myskin.css'              => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Personalizzate */",
-'simple.css'              => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Semblice */",
-'modern.css'              => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Moderne */",
 'print.css'               => "/* 'U CSS ca se iacchie aqquà avène applicate a 'u resultate d'a stambe */",
 'handheld.css'            => "/* 'U CSS ca se iacchie aqquà l'ausane le dispositive de gestione manuale basate sus a masckere configurate in \$wgHandheldStyle */",
 'noscript.css'            => "/* 'U CSS ca se iacchie aqquà l'ausane le utinde cu 'u Javascript disabbilitate */",
@@ -2739,10 +2736,8 @@ Permette de aggiungere 'nu mutive jndr'à 'u riepileghe",
 
 # Scripts
 'common.js'              => '/* Ogne JavaScript aqquà avène carecate pe tutte le utinde sus a ogne pàgene carecate. */',
-'standard.js'            => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Standard */",
 'monobook.js'            => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere MonoBook */",
 'myskin.js'              => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Personalizzate */",
-'modern.js'              => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Moderne */",
 'group-autoconfirmed.js' => '/* Ogne JavaScript aqquà avène carecate pe le utinde autoconfirmatarie */',
 'group-bot.js'           => '/* Ogne JavaScript aqquà avène carecate pe le bot */',
 'group-sysop.js'         => '/* Ogne JavaScript aqquà avène carecate pe le utinde amministrature */',
@@ -2786,11 +2781,8 @@ Stu fatte ha state causate da 'nu collegamende a 'nu site esterne ca appartene a
 'pageinfo-viewsperedit'     => 'Visite pe cangiaminde',
 
 # Skin names
-'skinname-standard'    => 'Classeche',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Personalizzate',
-'skinname-simple'      => 'Semblice',
-'skinname-modern'      => 'Moderne',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Signe cumme condrollate',

@@ -2950,7 +2950,6 @@ Datoj de versioj kaj nomoj de redaktantoj estos preservitaj.
 'pageinfo-viewsperedit'     => 'Po rigardoj por redakto',
 
 # Skin names
-'skinname-standard'    => 'Klasika',
 'skinname-monobook'    => 'Librejo',
 
 # Patrolling

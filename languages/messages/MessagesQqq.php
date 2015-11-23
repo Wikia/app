@@ -2907,11 +2907,8 @@ See also {{msg-mw|Anonuser}} and {{msg-mw|Siteusers}}.',
 'spam_reverting' => '{{Identical|Revert}}',
 
 # Skin names
-'skinname-standard'    => '{{optional}}',
 'skinname-monobook'    => '{{optional}}',
 'skinname-myskin'      => '{{optional}}',
-'skinname-simple'      => '{{optional}}',
-'skinname-modern'      => '{{optional}}',
 
 # Math options
 'mw_math_png'    => 'In user preferences.',

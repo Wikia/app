@@ -2484,11 +2484,8 @@ MediaWiki локализациясына юлюш къошаргъа излей 
 'spam_blanking'       => 'Бютеу версияла $1 бетге джибериу тутадыла, ариуланадыла',
 
 # Skin names
-'skinname-standard'    => 'Стандарт',
 'skinname-monobook'    => 'Моно-китаб',
 'skinname-myskin'      => 'Меники',
-'skinname-simple'      => 'Бош',
-'skinname-modern'      => 'Бусагъатдагъы',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Контроль этилгенин белгиле',

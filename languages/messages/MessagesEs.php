@@ -2959,21 +2959,15 @@ Permite añadir una razón al resumen de edición.',
 
 # Stylesheets
 'common.css'      => '/* Los estilos CSS definidos aquí aplicarán a todas las pieles (skins) */',
-'standard.css'    => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Standard */',
 'monobook.css'    => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Monobook */',
 'myskin.css'      => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel MySkin */',
-'simple.css'      => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Simple */',
-'modern.css'      => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Modern */',
 'print.css'       => '/* Los estilos CSS colocados aquí afectarán la impresión */',
 'handheld.css'    => '/* Los estilos CSS colocados aquí afectarán a los dispositivos móviles basados en las pieles configuradas en $wgHandheldStyle */',
 
 # Scripts
 'common.js'      => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios en cada carga de página */',
-'standard.js'    => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Estandar */',
 'monobook.js'    => '/* El código JavaScript que se ponga aquí será cargado por los usuarios de la piel MonoBook */',
 'myskin.js'      => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Mi piel */',
-'simple.js'      => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Simple */',
-'modern.js'      => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Moderna */',
 
 # Metadata
 'notacceptable' => 'El servidor wiki no puede proveer los datos en un formato que su cliente (navegador) pueda entender.',
@@ -3013,11 +3007,8 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 'pageinfo-viewsperedit'     => 'Vistas por edición',
 
 # Skin names
-'skinname-standard'    => 'Estándar',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Mi piel',
-'skinname-simple'      => 'Simple',
-'skinname-modern'      => 'Moderna',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marcar como revisado',

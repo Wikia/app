@@ -2804,11 +2804,8 @@ Dette skyldes sandsynligvis en henvisning til et sortlistet eksternt websted.',
 'pageinfo-viewsperedit'     => 'Visninger per redigering',
 
 # Skin names
-'skinname-standard'    => 'Klassik',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Eget udseende',
-'skinname-simple'      => 'Enkelt',
-'skinname-modern'      => 'Moderne',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Markér som patruljeret',

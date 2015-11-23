@@ -2853,7 +2853,6 @@ Ju lutemi provoni përsëri.',
 'pageinfo-viewsperedit'     => 'Shikime për redaktim',
 
 # Skin names
-'skinname-standard'    => 'Standarte',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Shënoje si të patrulluar',

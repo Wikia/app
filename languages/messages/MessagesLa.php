@@ -1931,7 +1931,6 @@ Paginae nomen petitum "[[:$1]]" iam existit. Vin tu eam delere ut pagina illic m
 'creditspage'      => 'Auctores paginae',
 
 # Skin names
-'skinname-standard'    => 'Norma',
 
 # Patrolling
 'markaspatrolleddiff' => 'Indicare hanc paginam qua circumita',

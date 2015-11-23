@@ -2782,21 +2782,15 @@ $1被封禁的理由是“$2”',
 
 # Stylesheets
 'common.css'      => '/* 此處的 CSS 將應用於所有的面板 */',
-'standard.css'    => '/* 此處的 CSS 將影響使用標準面板的用戶 */',
 'monobook.css'    => '/* 此處的 CSS 將影響使用 Monobook 面板的用戶 */',
 'myskin.css'      => '/* 此處的 CSS 將影響使用 MySkin 面板的用戶 */',
-'simple.css'      => '/* 此處的 CSS 將影響使用 Simple 面板的用戶 */',
-'modern.css'      => '/* 此處的 CSS 將影響使用 Modern 面板的用戶 */',
 'print.css'       => '/* 此處的 CSS 將影響打印輸出 */',
 'handheld.css'    => '/* 此處的 CSS 將影響在 $wgHandheldStyle 設定手提裝置面板 */',
 
 # Scripts
 'common.js'      => '/* 此處的JavaScript將載入於所有用戶每一個頁面。 */',
-'standard.js'    => '/* 此處的JavaScript將載入於使用標準面板的用戶 */',
 'monobook.js'    => '/* 此處的JavaScript將載入於使用Monobook面板的用戶 */',
 'myskin.js'      => '/* 此處的JavaScript將載入於使用MySkin面板的用戶 */',
-'simple.js'      => '/* 此處的JavaScript將載入於使用Simple面板的用戶 */',
-'modern.js'      => '/* 此處的JavaScript將載入於使用Modern面板的用戶 */',
 
 # Metadata
 'notacceptable' => '該網站伺服器不能提供您的客戶端能識別的數據格式。',
@@ -2836,9 +2830,6 @@ $1被封禁的理由是“$2”',
 'pageinfo-viewsperedit'     => '每次編輯檢視數',
 
 # Skin names
-'skinname-standard'    => '標準',
-'skinname-simple'      => '簡單',
-'skinname-modern'      => '現代',
 
 # Patrolling
 'markaspatrolleddiff'                 => '標記為已巡查',

@@ -2718,21 +2718,15 @@ Vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] og [//trans
 
 # Stylesheets
 'common.css'      => '/* CSS plassert i denne fila vil gjelde for alle utsjånader. */',
-'standard.css'    => '/* CSS i denne fila vil gjelde alle som nyttar drakta Standard */',
 'monobook.css'    => '/* CSS-tekst som vert plassert her, endrar utsjånaden til sidedrakta Monobook */',
 'myskin.css'      => '/* CSS i denne fila vil gjelde alle som nyttar drakta MySkin */',
-'simple.css'      => '/* CSS i denne fila vil gjelde alle som nyttar drakta Simple */',
-'modern.css'      => '/* CSS i denne fila vil gjelde alle som nyttar drakta Modern */',
 'print.css'       => '/* CSS i denne fila vil påverke utskriftsversjonen */',
 'handheld.css'    => '/* CSS i denne fila vil gjelde alle handheldte innretnigar konfigurert i $wgHandheldStyle */',
 
 # Scripts
 'common.js'      => '/* Javascript i denne fila vil gjelde for alle drakter. */',
-'standard.js'    => '/* Javascript i denne fila vil gjelde for brukarar av drakta Standard */',
 'monobook.js'    => '/* Javascript i denne fila vil gjelde for brukarar av drakta Monobook */',
 'myskin.js'      => '* Javascript i denne fila vil gjelde for brukarar av drakta MySkin */',
-'simple.js'      => '* Javascript i denne fila vil gjelde for brukarar av drakta Simple */',
-'modern.js'      => '* Javascript i denne fila vil gjelde for brukarar av drakta Modern */',
 
 # Metadata
 'notacceptable' => 'Wikitenaren kan ikkje gje data i noko format som programmet ditt kan lesa.',
@@ -2771,11 +2765,8 @@ Vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] og [//trans
 'pageinfo-viewsperedit'     => 'Visningar per endring',
 
 # Skin names
-'skinname-standard'    => 'Klassisk',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MiDrakt',
-'skinname-simple'      => 'Enkel',
-'skinname-modern'      => 'Moderne',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Merk som patruljert',

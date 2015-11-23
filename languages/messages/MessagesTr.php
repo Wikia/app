@@ -2914,9 +2914,6 @@ Geçici dosya kayıp.',
 'pageinfo-viewsperedit'     => 'Değişiklik başına görüntüleme',
 
 # Skin names
-'skinname-standard'  => 'Klasik',
-'skinname-simple'    => 'Basit',
-'skinname-modern'    => 'Modern',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Kontrol edilmiş olarak işaretle',

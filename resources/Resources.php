@@ -19,14 +19,6 @@ return array(
 
 	/* Skins */
 
-	'skins.modern' => array(
-		'styles' => array(
-			'modern/main.css' => array( 'media' => 'screen' ),
-			'modern/print.css' => array( 'media' => 'print' ),
-		),
-		'remoteBasePath' => $GLOBALS['wgStylePath'],
-		'localBasePath' => $GLOBALS['wgStyleDirectory'],
-	),
 	'skins.monobook' => array(
 		'styles' => array(
 			'common/commonElements.css' => array( 'media' => 'screen' ),
@@ -34,11 +26,6 @@ return array(
 			'common/commonInterface.css' => array( 'media' => 'screen' ),
 			'monobook/main.css' => array( 'media' => 'screen' ),
 		),
-		'remoteBasePath' => $GLOBALS['wgStylePath'],
-		'localBasePath' => $GLOBALS['wgStyleDirectory'],
-	),
-	'skins.simple' => array(
-		'styles' => array( 'simple/main.css' => array( 'media' => 'screen' ) ),
 		'remoteBasePath' => $GLOBALS['wgStylePath'],
 		'localBasePath' => $GLOBALS['wgStyleDirectory'],
 	),

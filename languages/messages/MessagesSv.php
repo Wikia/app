@@ -2940,20 +2940,14 @@ Ger möjlighet att skriva en motivering i redigeringssammanfattningen',
 
 # Stylesheets
 'common.css'      => '/* CSS som skrivs här påverkar alla skal */',
-'standard.css'    => '/* CSS som skrivs här kommer att påverka alla användare av skalet Standard */',
 'monobook.css'    => '/* CSS som skrivs här kommer att påverka alla användare av skalet Monobook */',
 'myskin.css'      => '/* CSS som skrivs här kommer att påverka alla användare av skalet Mitt utseende */',
-'simple.css'      => '/* CSS som skrivs här kommer att påverka alla användare av skalet Enkel */',
-'modern.css'      => '/* CSS som skrivs här kommer att påverka alla användare av skalet Modern */',
 'print.css'       => '/* CSS som skrivs här kommer att påverka utskriftsversionen */',
 
 # Scripts
 'common.js'      => '/* JavaScript som skrivs här körs varje gång en användare laddar en sida. */',
-'standard.js'    => '/* JavaScript här kommer att laddas för dem som använder skalet Standard */',
 'monobook.js'    => '/* JavaScript här kommer att laddas för dem som använder skalet Monobook */',
 'myskin.js'      => '/* JavaScript här kommer att laddas för dem som använder skalet Mitt utseende */',
-'simple.js'      => '/* JavaScript här kommer att laddas för dem som använder skalet Enkel */',
-'modern.js'      => '/* JavaScript här kommer att laddas för dem som använder skalet Modern */',
 
 # Metadata
 'notacceptable' => 'Den här wiki-servern kan inte erbjuda data i ett format som din klient kan läsa.',
@@ -2993,11 +2987,8 @@ Detta orsakades troligen av en länk till en svartlistad webbplats.',
 'pageinfo-viewsperedit'     => 'Sidvisningar per redigering',
 
 # Skin names
-'skinname-standard'    => 'Standard',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'Mitt utseende',
-'skinname-simple'      => 'Enkel',
-'skinname-modern'      => 'Modern',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Märk som patrullerad',

@@ -1456,8 +1456,6 @@ Par plasê va su [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] 
 'nocredits'        => 'Nissune informazion sui ricognossiments disponibil par cheste pagjine.',
 
 # Skin names
-'skinname-standard'  => 'Classiche',
-'skinname-modern'    => 'Moderne',
 
 # Browsing diffs
 'previousdiff' => '← Difarence precedente',

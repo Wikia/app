@@ -34,11 +34,9 @@ $namespaceNames = array(
 );
 
 $skinNames = array(
-	'standard'      => 'Klassik',
 	'monobook'      => 'MonoBook',
 	'myskin'        => 'MySkin',
 	'simple'        => 'Einfach',
-	'modern'        => 'Modern'
 );
 
 $bookstoreList = array(
@@ -2114,7 +2112,6 @@ Ales Dranswigi-Imbord-Agsiones in dose [[Special:Log/import|Imbord-Logbug]] brod
 
 # Stylesheets
 'common.css'      => '/* CSS an dose Schdel auw ales Sgins auswirg */',
-'standard.css'    => '/* CSS an dose Schdel auw dose Klassik-Sgin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */',
 'monobook.css'    => '/* CSS an dose Schdel auw dose Monobook-Skin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */
 /* Gleinschreib noggs erswing */
 .portlet h5,
@@ -2124,16 +2121,11 @@ Ales Dranswigi-Imbord-Agsiones in dose [[Special:Log/import|Imbord-Logbug]] brod
 	text-transform: none;
 }',
 'myskin.css'      => '/* CSS an dose Schdel auw dose MySkin-Skin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */',
-'simple.css'      => '/* CSS an dose Schdel auw dose Einfach-Skin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */',
-'modern.css'      => '/* CSS an dose Schdel auw dose MySkin-Skin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */',
 
 # Scripts
 'common.js'      => '/* Dose wolgendes JawaSgribd wür ales Benudses lad. */',
-'standard.js'    => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Klassik-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
 'monobook.js'    => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Monobook-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
 'myskin.js'      => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Myskin-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
-'simple.js'      => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Einfach-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
-'modern.js'      => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Modern-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
 
 # Metadata
 'nodublincore'      => 'Dublin-Core-RDF-Medadades wür dose Sörw deagdiwärdes sei.',

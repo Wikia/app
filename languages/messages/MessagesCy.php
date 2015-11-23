@@ -2747,7 +2747,6 @@ Achos hyn yn fwy na thebyg yw presenoldeb cysylltiad i wefan ar y rhestr gwahard
 'pageinfo-viewsperedit'     => 'Ymweliadau wrth y golygiad',
 
 # Skin names
-'skinname-standard'    => 'Safonol',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marcio ei bod wedi derbyn ymweliad patrôl',

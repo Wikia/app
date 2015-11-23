@@ -2928,11 +2928,8 @@ Mentsd el a számítógépedre, majd töltsd fel ide.',
 
 # Stylesheets
 'common.css'              => '/* Közös CSS az összes felületnek */',
-'standard.css'            => '/* Az ide elhelyezett CSS hatással lesz a Klasszikus felület használóira */',
 'monobook.css'            => '/* Az ide elhelyezett CSS hatással lesz a Monobook felület használóira */',
 'myskin.css'              => '/* Az ide elhelyezett CSS hatással lesz a MySkin felület használóira */',
-'simple.css'              => '/* Az ide elhelyezett CSS hatással lesz a Egyszerű felület használóira */',
-'modern.css'              => '/* Az ide elhelyezett CSS hatással lesz a Modern felület használóira */',
 'print.css'               => '/* Az ide elhelyezett CSS hatással lesz a nyomtatás kimenetelére */',
 'handheld.css'            => '/* Az ide elhelyezett CSS hatással lesz azon kézi eszközökre, amelyek $wgHandheldStyle felülettel vannak konfigurálva */',
 'noscript.css'            => '/* Az ide elhelyezett CSS azon felhasználókra lesz hatással, ahol a JavaScript le van tiltva */',
@@ -2943,11 +2940,8 @@ Mentsd el a számítógépedre, majd töltsd fel ide.',
 
 # Scripts
 'common.js'              => '/* Az ide elhelyezett JavaScript kód minden felhasználó számára lefut az oldalak betöltésekor. */',
-'standard.js'            => '/* A Klasszikus felületet használó szerkesztők számára betöltendő JavaScriptek */',
 'monobook.js'            => '/* A Monobook felületet használó szerkesztők számára betöltendő JavaScriptek */',
 'myskin.js'              => '/* A MySkin felületet használó szerkesztők számára betöltendő JavaScriptek */',
-'simple.js'              => '/* Az Egyszerű felületet használó szerkesztők számára betöltendő JavaScriptek */',
-'modern.js'              => '/* A Modern felületet használó szerkesztők számára betöltendő JavaScriptek */',
 'group-autoconfirmed.js' => '/* Az ide elhelyezett JavaScript csak automatikusan megerősített felhasználóknak töltődik be */',
 'group-bot.js'           => '/* Az ide elhelyezett JavaScript csak botoknak töltődik be */',
 'group-sysop.js'         => '/* Az ide elhelyezett JavaScript csak adminisztrátoroknak töltődik be */',
@@ -2991,11 +2985,8 @@ Ez valószínűleg egy olyan link miatt van, ami egy feketelistán lévő oldalr
 'pageinfo-viewsperedit'     => 'Megtekintés/szerkesztés',
 
 # Skin names
-'skinname-standard'    => 'Klasszikus',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
-'skinname-simple'      => 'Egyszerű',
-'skinname-modern'      => 'Modern',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Ellenőrzöttnek jelölöd',

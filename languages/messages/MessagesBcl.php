@@ -1694,9 +1694,6 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 'spam_blanking'       => 'An gabos na mga pahirá na may takod sa $1, pigblablanko',
 
 # Skin names
-'skinname-standard' => 'Klasiko',
-'skinname-simple'   => 'Simple',
-'skinname-modern'   => 'Bago',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Markahan bilang pigpapatrolya',

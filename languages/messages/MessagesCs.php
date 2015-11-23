@@ -2982,11 +2982,8 @@ Uložte jej na svůj disk a nahrajte ho sem.',
 
 # Stylesheets
 'common.css' => '/* Zde uvedené CSS bude ovlivňovat všechny styly */',
-'standard.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Klasický“  */',
 'monobook.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Monobook“ */',
 'myskin.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Můj vzhled“ */',
-'simple.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Jednoduchý“ */',
-'modern.css' => '/* Zde uvedené CSS bude ovlivňovat pouze styl „Moderní“ */',
 'print.css' => '/* Zde uvedené CSS bude ovlivňovat tiskový výstup */',
 'handheld.css' => '/* Zde uvedené CSS bude ovlivňovat přenosná zařízení vycházející ze stylu nastaveného v proměnné $wgHandheldStyle */',
 'noscript.css' => '/* Zde uvedené CSS bude ovlivňovat uživatele s vypnutým JavaScriptem */',
@@ -2997,11 +2994,8 @@ Uložte jej na svůj disk a nahrajte ho sem.',
 
 # Scripts
 'common.js' => '/* Zde uvedený JavaScript bude použit pro všechny uživatele při načtení každé stránky.  */',
-'standard.js' => '/* JavaScript pro uživatele používající vzhled „Klasický“ */',
 'monobook.js' => '/* JavaScript pro uživatele používající vzhled MonoBook */',
 'myskin.js' => '/* JavaScript pro uživatele používající vzhled „Můj vzhled“ */',
-'simple.js' => '/* JavaScript pro uživatele používající vzhled „Jednoduchý“ */',
-'modern.js' => '/* JavaScript pro uživatele používající vzhled „Moderní“ */',
 'group-autoconfirmed.js' => '/* Zde uvedený JavaScript bude použit pouze pro automaticky schválené uživatele */',
 'group-bot.js' => '/* Zde uvedený JavaScript bude použit pouze pro boty */',
 'group-sysop.js' => '/* Zde uvedený JavaScript bude použit pouze pro správce */',
@@ -3045,10 +3039,7 @@ Uložte jej na svůj disk a nahrajte ho sem.',
 'pageinfo-viewsperedit' => 'Počet zobrazení na editaci',
 
 # Skin names
-'skinname-standard' => 'Klasický',
 'skinname-myskin' => 'Můj vzhled',
-'skinname-simple' => 'Jednoduchý',
-'skinname-modern' => 'Moderní',
 
 # Patrolling
 'markaspatrolleddiff' => 'Označit jako prověřené',

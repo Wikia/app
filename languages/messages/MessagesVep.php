@@ -2318,11 +2318,8 @@ Voib olda, necil lehtpolel om kosketuz irdsaitale, kudamb om mustas nimikirjutes
 'pageinfo-views'            => 'Kacundoiden lugu',
 
 # Skin names
-'skinname-standard'    => 'Klassine',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Ičeze',
-'skinname-simple'      => 'Koveritoi',
-'skinname-modern'      => "Nügüd'aigaine",
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Znamoita kut patruliruidud',

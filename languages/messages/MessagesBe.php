@@ -2688,11 +2688,8 @@ $1',
 'pageinfo-viewsperedit'     => 'Колькасць паказаў на 1 праўку',
 
 # Skin names
-'skinname-standard'    => 'Класіка',
 'skinname-monobook'    => 'Манабук',
 'skinname-myskin'      => 'Майскін',
-'skinname-simple'      => 'Проста',
-'skinname-modern'      => 'Сучаснасць',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Пазначыць як ухваленае',

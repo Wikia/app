@@ -2469,7 +2469,6 @@ All Transwiki-Import-Akschonen staht later ok in dat [[Special:Log/import|Import
 'spam_blanking'       => 'All Versionen harrn Lenken na $1, rein maakt.',
 
 # Skin names
-'skinname-standard'    => 'Klassik',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'As nakeken marken',

@@ -2924,19 +2924,13 @@ Du kan se på kildeteksten',
 
 # Stylesheets
 'common.css'      => '/* CSS plassert i denne fila vil gjelde for alle utseender. */',
-'standard.css'    => '/* CSS i denne fila vil gjelde alle som bruker drakta Standard */',
 'monobook.css'    => '/* CSS i denne fila vil gjelde alle som bruker drakta Monobook */',
 'myskin.css'      => '/* CSS i denne fila vil gjelde alle som bruker drakta MySkin */',
-'simple.css'      => '/* CSS i denne fila vil gjelde alle som bruker drakta Simple */',
-'modern.css'      => '/* CSS i denne fila vil gjelde alle som bruker drakta Modern */',
 
 # Scripts
 'common.js'      => '/* Javascript i denne fila vil gjelde for alle drakter. */',
-'standard.js'    => '/* Javascript i denne fila vil gjelde for brukere av drakta Standard */',
 'monobook.js'    => '/* Javascript i denne fila vil gjelde for brukere av drakta Monobook */',
 'myskin.js'      => '/* Javascript i denne fila vil gjelde for brukere av drakta MySkin */',
-'simple.js'      => '/* Javascript i denne fila vil gjelde for brukere av drakta Simple */',
-'modern.js'      => '/* Javascript i denne fila vil gjelde for brukere av drakta Modern */',
 
 # Metadata
 'notacceptable' => 'Tjeneren har ingen mulige måter å vise data i din nettleser.',
@@ -2976,11 +2970,8 @@ Dette er sannsynligvis forårsaket av en lenke til et svartelistet eksternt nett
 'pageinfo-viewsperedit'     => 'Visninger per redigering',
 
 # Skin names
-'skinname-standard'    => 'Standard',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'Eget utseende',
-'skinname-simple'      => 'Enkel',
-'skinname-modern'      => 'Moderne',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Godkjenn endringen',

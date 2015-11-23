@@ -1345,7 +1345,6 @@ PICT # тайп тайпан
 'spamprotectiontitle' => 'Совбиларна литтар',
 
 # Skin names
-'skinname-standard' => 'Лела ма ярра',
 
 # Browsing diffs
 'previousdiff' => '← Хьалхдоьда нисдинарг',

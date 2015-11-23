@@ -2881,7 +2881,6 @@ Razlog je vjerojatno vanjska poveznica koja se nalazi na crnom popisu.',
 'pageinfo-viewsperedit'     => 'Pregleda po uređivanju',
 
 # Skin names
-'skinname-standard'    => 'Standardna',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
 

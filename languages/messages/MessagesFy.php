@@ -2096,7 +2096,6 @@ Sjoch: [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation], [//transl
 'spamprotectionmatch' => 'De neikommende tekst hat it spam filter aktivearre: $1',
 
 # Skin names
-'skinname-standard'  => 'Standert',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Markearje as kontroleare',

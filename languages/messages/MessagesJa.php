@@ -3048,11 +3048,8 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 
 # Stylesheets
 'common.css'              => '/* ここに書いたCSSはすべての外装に反映されます */',
-'standard.css'            => '/* ここに記述したCSSはスタンダード外装の利用者に影響します */',
 'monobook.css'            => '/* ここに記述したCSSはモノブック外装の利用者に影響します */',
 'myskin.css'              => '/* ここに記述したCSSはマイスキン外装の利用者に影響します */',
-'simple.css'              => '/* ここに記述したCSSはシンプル外装の利用者に影響します */',
-'modern.css'              => '/* ここに記述したCSSはモダン外装の利用者に影響します */',
 'print.css'               => '/* ここに記述したCSSは印刷出力に影響します */',
 'handheld.css'            => '/* ここに記述したCSSは$wgHandheldStyleで設定された外装に基づく携帯機器に影響します */',
 'noscript.css'            => '/* ここに記述したCSSはJavaScriptを無効にしている利用者に影響します */',
@@ -3063,11 +3060,8 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 
 # Scripts
 'common.js'              => '/* ここにあるすべてのJavaScriptは、すべてのページ読み込みですべての利用者に対して読み込まれます */',
-'standard.js'            => '/* ここにあるすべてのJavaScriptは、スタンダード外装を使用している利用者に対して読み込まれます */',
 'monobook.js'            => '/* ここにあるすべてのJavaScriptは、モノブック外装を使用している利用者に対して読み込まれます */',
 'myskin.js'              => '/* ここにあるすべてのJavaScriptは、マイスキン外装を使用している利用者に対して読み込まれます */',
-'simple.js'              => '/* ここにあるすべてのJavaScriptは、シンプル外装を使用している利用者に対して読み込まれます */',
-'modern.js'              => '/* ここにあるすべてのJavaScriptは、モダン外装を使用している利用者に対して読み込まれます */',
 'group-autoconfirmed.js' => '/* ここにあるすべてのJavaScriptは、自動承認された利用者に対して読み込まれます */',
 'group-bot.js'           => '/* ここにあるすべてのJavaScriptは、ボットのみに対して読み込まれます */',
 'group-sysop.js'         => '/* ここにあるすべてのJavaScriptは、管理者のみに対して読み込まれます */',
@@ -3111,11 +3105,8 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 'pageinfo-viewsperedit'     => '閲覧回数に対する編集回数',
 
 # Skin names
-'skinname-standard'    => 'クラシック',
 'skinname-monobook'    => 'モノブック',
 'skinname-myskin'      => 'マイスキン',
-'skinname-simple'      => 'シンプル',
-'skinname-modern'      => 'モダン',
 
 # Patrolling
 'markaspatrolleddiff'                 => '巡回済みにする',

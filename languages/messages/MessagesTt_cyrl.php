@@ -2066,11 +2066,8 @@ $1',
 'spamprotectiontitle' => 'Спам фильтры',
 
 # Skin names
-'skinname-standard'    => 'Классик',
 'skinname-monobook'    => 'Китап',
 'skinname-myskin'      => 'Үзем',
-'skinname-simple'      => 'Гади',
-'skinname-modern'      => 'Замана',
 
 # Patrolling
 'markaspatrolledtext'   => 'Бу мәкаләне тикшерелгән дип тамгалау',

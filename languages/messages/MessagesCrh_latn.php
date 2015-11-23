@@ -1789,10 +1789,8 @@ MediaWiki interfeysiniñ çeşit tillerge tercime etüvde iştirak etmege istese
 'spam_blanking'       => 'Bar olğan versiyalarda $1 saytına bağlantılar bar, temizlev',
 
 # Skin names
-'skinname-standard'    => 'Standart',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'Öz resimleme',
-'skinname-simple'      => 'Adiy',
 
 # Patrol log
 'patrol-log-page'      => 'Teşkerüv jurnalı',

@@ -2954,11 +2954,8 @@ Umožnuje do zhrnutia pridanie dôvodu.',
 
 # Stylesheets
 'common.css' => '/* Tu umiestnené CSS bude ovplyvňovať všetky štýly */',
-'standard.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Klasický */',
 'monobook.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Monobook */',
 'myskin.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Môjvzhľad */',
-'simple.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Jednoduchý */',
-'modern.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Moderný */',
 'print.css' => '/* Tu umiestnené CSS bude ovplyvňovať tlačový výstup */',
 'handheld.css' => '/* Tu umiestnené CSS bude ovplyvňovať prenosné zariadenia vychádzajúceho zo štýlu nastaveného v $wgHandheldStyle */',
 'noscript.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov s vypnutým JavaScriptom */',
@@ -2969,11 +2966,8 @@ Umožnuje do zhrnutia pridanie dôvodu.',
 
 # Scripts
 'common.js' => '/* Tu uvedený JavaScript sa nahrá všetkým používateľom pri každom nahraní stránky. */',
-'standard.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Klasický */',
 'monobook.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Monobook */',
 'myskin.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Môjvzhľad */',
-'simple.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Jednoduchý */',
-'modern.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Moderný */',
 'group-autoconfirmed.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom s potvrdenou emailovou adresou */',
 'group-bot.js' => '/* Tu sa nachádzajúci JavaScript sa načíta len robotom */',
 'group-sysop.js' => '/* Tu sa nachádzajúci JavaScript sa načíta len správcom */',
@@ -3018,11 +3012,8 @@ Pravdepodobne to spôsobil odkaz na externú internetovú lokalitu, ktorá sa na
 'pageinfo-viewsperedit' => 'Zobrazení na úpravu',
 
 # Skin names
-'skinname-standard' => 'Klasický',
 'skinname-monobook' => 'MonoBook',
 'skinname-myskin' => 'Môj vzhľad',
-'skinname-simple' => 'Jednoduchý',
-'skinname-modern' => 'Moderný',
 
 # Patrolling
 'markaspatrolleddiff' => 'Označiť ako stráženú',

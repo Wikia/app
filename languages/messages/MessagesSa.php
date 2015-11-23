@@ -1606,7 +1606,6 @@ $2
 'pageinfo-talkpage'     => 'कथा पृष्ठम्',
 
 # Skin names
-'skinname-standard'    => 'पूर्व',
 'skinname-monobook'    => 'पुस्तक',
 'skinname-myskin'      => 'मे चर्मन्',
 

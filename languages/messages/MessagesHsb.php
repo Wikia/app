@@ -2752,11 +2752,8 @@ W poslednim padźe móžeš tež wotkaz wužiwać, na př. „[[{{#Special:Expor
 'pageinfo-viewsperedit'     => 'Zwobraznjenja na změnu',
 
 # Skin names
-'skinname-standard'    => 'Klasiski',
 'skinname-monobook'    => 'MonoBook',
 'skinname-myskin'      => 'MySkin',
-'skinname-simple'      => 'Jednory',
-'skinname-modern'      => 'Moderny',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Změnu jako přepruwowanu woznamjenić',

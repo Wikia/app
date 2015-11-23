@@ -1093,10 +1093,8 @@ to upload files.',
 'spamprotectiontitle' => 'Spam ਸੁਰੱਖਿਆ ਫਿਲਟਰ',
 
 # Skin names
-'skinname-standard' => 'ਕਲਾਸਿਕ',
 'skinname-monobook' => 'ਮੋਨੋਬੁੱਕ',
 'skinname-myskin'   => 'ਮੇਰੀਸਕਿਨ',
-'skinname-simple'   => 'ਸੈਂਪਲ',
 
 # Browsing diffs
 'previousdiff' => '← ਪੁਰਾਣੀ ਸੋਧ',

@@ -2009,11 +2009,8 @@ $UNWATCHURL  نه ليدنه وکړۍ
 'pageinfo-views'            => 'د کتنو شمېر',
 
 # Skin names
-'skinname-standard'    => 'کلاسيک',
 'skinname-monobook'    => 'مونوبوک',
 'skinname-myskin'      => 'زمابڼه',
-'skinname-simple'      => 'ساده',
-'skinname-modern'      => 'نوی',
 
 # Patrolling
 'markaspatrolledtext' => 'دا مخ څارل شوی په نخښه کول',

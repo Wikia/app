@@ -3054,11 +3054,8 @@ Een tijdelijke map is niet aanwezig.',
 
 # Stylesheets
 'common.css'              => '/** CSS die hier wordt geplaatst heeft invloed op alle skins */',
-'standard.css'            => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Standard */',
 'monobook.css'            => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Monobook */',
 'myskin.css'              => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin MijnSkin */',
-'simple.css'              => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Eenvoudig */',
-'modern.css'              => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Modern */',
 'print.css'               => '/* CSS die hier wordt geplaatst heeft alleen invloed op de printuitvoer */',
 'handheld.css'            => '/* CSS die hier wordt geplaatst heeft alleen invloed op handheldapparaten gebaseerd op de skin die is ingesteld in $wgHandheldStyle */',
 'noscript.css'            => '/ * CSS die hier wordt geplaatst heeft invloed voor gebruikers die JavaScript hebben uitgeschakeld * /',
@@ -3069,11 +3066,8 @@ Een tijdelijke map is niet aanwezig.',
 
 # Scripts
 'common.js'              => "/* JavaScript die hier wordt geplaatst heeft invloed op alle pagina's voor alle gebruikers */",
-'standard.js'            => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Standaard gebruiken */',
 'monobook.js'            => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Monobook gebruiken */',
 'myskin.js'              => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin MijnSkin gebruiken */',
-'simple.js'              => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Eenvoudig gebruiken */',
-'modern.js'              => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Modern gebruiken */',
 'group-autoconfirmed.js' => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op automatisch bevestigde gebruikers */',
 'group-bot.js'           => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op robots */',
 'group-sysop.js'         => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op beheerders */',
@@ -3117,11 +3111,8 @@ Meestal wordt dit door een externe verwijzing op een zwarte lijst veroorzaakt.',
 'pageinfo-viewsperedit'     => 'Weergaven per bewerking',
 
 # Skin names
-'skinname-standard'    => 'Klassiek',
 'skinname-monobook'    => 'Monobook',
 'skinname-myskin'      => 'MijnSkin',
-'skinname-simple'      => 'Eenvoudig',
-'skinname-modern'      => 'Modern',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Als gecontroleerd markeren',
