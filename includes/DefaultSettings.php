@@ -2306,8 +2306,6 @@ $wgDefaultSkin = 'oasis';
  * available skins.  Use for blacklisting a skin which you do not want to
  * remove from the .../skins/ directory
  */
-$wgSkipSkin = '';
-/** Array for more like $wgSkipSkin. */
 $wgSkipSkins = array();
 
 /**

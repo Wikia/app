@@ -238,10 +238,6 @@ if ( $wgRCFilterByAge ) {
 	}
 }
 
-if ( $wgSkipSkin ) {
-	$wgSkipSkins[] = $wgSkipSkin;
-}
-
 # Set default shared prefix
 if ( $wgSharedPrefix === false ) {
 	$wgSharedPrefix = $wgDBprefix;
