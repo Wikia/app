@@ -44,26 +44,26 @@ define('ext.wikia.adEngine.recovery.message', [
 		logGroup = 'ext.wikia.adEngine.recovery.message',
 		localStorageKey = 'rejectedRecoveredMessage';
 
-	function track(action) {
+	function track(action, trackerAction) {
 		tracker.track({
-			'ga_category': 'ads-recovery-message',
-			'ga_action': action,
-			'ga_label': '',
-			'ga_value': 0,
+			category: 'ads',
+			action: trackerAction,
+			label: 'ads-recovery-message',
+			value: 0,
 			trackingMethod: 'analytics'
 		});
 		adTracker.track('recovery/message', action);
 	}
 
 	function accept() {
-		track('accept');
+		track('accept', win.Wikia.Tracker.ACTIONS.CLICK);
 		setTimeout(function () {
 			location.reload();
 		}, 200);
 	}
 
 	function reject(messageContainer) {
-		track('reject');
+		track('reject', win.Wikia.Tracker.ACTIONS.CLICK);
 		messageContainer.hide();
 		localStorage.setItem(localStorageKey, true);
 	}
@@ -126,7 +126,7 @@ define('ext.wikia.adEngine.recovery.message', [
 	function injectTopMessage(messageVariant) {
 		log('recoveredAdsMessage.recover - injecting top message', 'debug', logGroup);
 		createMessage('top', messageVariant).done(function (messageContainer) {
-			track('impression');
+			track('impression', win.Wikia.Tracker.ACTIONS.IMPRESSION);
 			$('#WikiaTopAds').before(messageContainer);
 		});
 	}
@@ -134,7 +134,7 @@ define('ext.wikia.adEngine.recovery.message', [
 	function injectRightRailMessage(messageVariant) {
 		log('recoveredAdsMessage.recover - injecting right rail message', 'debug', logGroup);
 		createMessage('right-rail', messageVariant).done(function (messageContainer) {
-			track('impression');
+			track('impression', win.Wikia.Tracker.ACTIONS.IMPRESSION);
 			$('#WikiaRail').prepend(messageContainer);
 		});
 	}
