@@ -3762,6 +3762,10 @@ class Parser {
 			$ret = array( 'text' => $text );
 		}
 
+		# wikia start
+		wfRunHooks( 'Parser::endBraceSubstitution', array( $originalTitle, &$ret['text']) );
+		# wikia end
+
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
