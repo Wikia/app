@@ -66,21 +66,29 @@ class EmergencyBroadcastSystemController extends WikiaController {
 	}
 
 	protected function buildSurveyUrlForUser() {
-		global $wgContLang, $wgServer;
+		global $wgContLang;
 
-		// TODO: Make sure these are all the correct language codes, particularily pt-br
-		$supportedLanguages = ['en', 'de', 'es', 'fr', 'it', 'ja', 'pl', 'pt-br', 'ru', 'zh'];
 		$context = $this->getContext();
 		$userName = $context->getUser()->getName();
 		$userLanguage = $context->getLanguage();
 
-		preg_match( '/\/\/(.*)/', $wgServer, $matches );
-		$domain = $matches[1];
-
 		$lang = $userLanguage->mCode;
+		$supportedLanguages = ['en', 'de', 'es', 'fr', 'it', 'ja', 'pl', 'pt-br', 'ru', 'zh'];
+
 		if ( !in_array( $lang, $supportedLanguages ) ) {
 			$lang = $wgContLang->mCode;
 		}
+
+		$url = $this->googleFormUrl( $lang, $userName);
+
+		return $url;
+	}
+
+	protected function googleFormUrl( $language, $userName ) {
+		global $wgServer;
+
+		preg_match( '/\/\/(.*)/', $wgServer, $matches );
+		$domain = $matches[1];
 
 		switch ( $lang ) {
 			case 'zh':
