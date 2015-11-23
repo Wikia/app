@@ -18,7 +18,7 @@ define('ext.wikia.adEngine.provider.taboola', [
 			recovery: abTest.getGroup('PROJECT_43') === 'GROUP_6',
 			regular: abTest.getGroup('NATIVE_ADS_TABOOLA') === 'YES'
 		},
-		config = instantGlobals.wgAdDriverTaboolaConfig,
+		config = instantGlobals.wgAdDriverTaboolaConfig || {},
 		context = adContext.getContext(),
 		libraryLoaded = false,
 		logGroup = 'ext.wikia.adEngine.provider.taboola',
@@ -61,12 +61,12 @@ define('ext.wikia.adEngine.provider.taboola', [
 			return false;
 		}
 
-		if (config[slotName] && abGroups.regular && geo.isProperGeo(config[slotName].regular)) {
+		if (slots[slotName] && config[slotName] && abGroups.regular && geo.isProperGeo(config[slotName].regular)) {
 			supportedSlots.regular.push(slotName);
 			return true;
 		}
 
-		if (config[slotName] && abGroups.recovery && geo.isProperGeo(config[slotName].recovery)) {
+		if (slots[slotName] && config[slotName] && abGroups.recovery && geo.isProperGeo(config[slotName].recovery)) {
 			supportedSlots.recovery.push(slotName);
 			return true;
 		}
