@@ -250,7 +250,7 @@ class CF_Http
 		wfDebug( __METHOD__ . "\n" );
 
 		while( $retriesLeft >= 0 ) {
-			list( $status,$reason,$surl,$curl,$atoken ) = $this->do_authenticate( $user, $pass, $host );
+			list( $status, $reason, $surl, $curl, $atoken ) = $this->do_authenticate( $user, $pass, $host );
 
 			# PLATFORM-1659 - retry all HTTP 50x responses
 			if ( ($status >= 200 && $status <= 299) ) {
@@ -261,10 +261,10 @@ class CF_Http
 			# PLATFORM-1521 - report an error only when there are no retries left
 			$level = ( $retriesLeft === 0 ) ? 'error' : 'warning';
 
-			Wikia\Logger\WikiaLogger::instance()->$level( 'SwiftStorage: authentication retry', [
+			Wikia\Logger\WikiaLogger::instance()->$level( 'SwiftStorage: authentication retry', array(
 				'exception'    => new SwiftRetryException( $reason, is_numeric($status) ? $status : 0 ),
 				'retries-left' => $retriesLeft,
-			] );
+			) );
 
 			wfDebug( sprintf( "%s : retrying as I got '%s' (%d retries left)\n", __METHOD__ , trim( $reason ), $retriesLeft ) );
 
@@ -273,7 +273,7 @@ class CF_Http
 			$retriesLeft--;
 		}
 
-		return array( $status,$reason,$surl,$curl,$atoken );
+		return array( $status, $reason, $surl, $curl, $atoken );
 	}
 	// Wikia change - end
 
