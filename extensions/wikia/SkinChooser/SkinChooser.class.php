@@ -9,7 +9,7 @@ class SkinChooser {
 	 * @return bool
 	 */
 	public static function onGetPreferences( $user, &$defaultPreferences ) {
-		global $wgEnableAnswers, $wgAdminSkin, $wgDefaultSkin, $wgSkinPreviewPage, $wgSkipSkins, $wgSkipOldSkins, $wgEnableUserPreferencesV2Ext;
+		global $wgEnableAnswers, $wgAdminSkin, $wgDefaultSkin, $wgSkinPreviewPage, $wgSkipSkins, $wgEnableUserPreferencesV2Ext;
 
 		// hide default MediaWiki skin fieldset
 		unset( $defaultPreferences['skin'] );
@@ -45,7 +45,7 @@ class SkinChooser {
 
 		$oldSkinNames = array();
 		foreach ( $validSkinNames as $skinKey => $skinVal ) {
-			if ( $skinKey == 'oasis' || ( ( in_array( $skinKey, $wgSkipSkins ) || in_array( $skinKey, $wgSkipOldSkins ) ) && !( $skinKey == $mSkin ) ) ) {
+			if ( $skinKey == 'oasis' || ( ( in_array( $skinKey, $wgSkipSkins ) ) && !( $skinKey == $mSkin ) ) ) {
 				continue;
 			}
 			$oldSkinNames[$skinKey] = $skinVal;
