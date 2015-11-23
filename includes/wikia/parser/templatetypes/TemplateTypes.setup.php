@@ -11,5 +11,5 @@ $wgAutoloadClasses['TemplateTypesParser'] = __DIR__ . '/TemplateTypesParser.clas
 
 // hooks
 $wgHooks['Parser::FetchTemplateAndTitle'][] = 'TemplateTypesParser::onFetchTemplateAndTitle';
-$wgHooks['Parser::startBraceSubstitution'][] = 'TemplateTypesParser::onStartBraceSubstitution';
+$wgHooks['Parser::getTemplateDom'][] = 'TemplateTypesParser::onGetTemplateDom';
 $wgHooks['Parser::endBraceSubstitution'][] = 'TemplateTypesParser::onEndBraceSubstitution';

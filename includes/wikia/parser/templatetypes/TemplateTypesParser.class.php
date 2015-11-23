@@ -34,22 +34,23 @@ class TemplateTypesParser {
 	/**
 	 * @desc alters template parser output based on its arguments and template type
 	 *
-	 * @param array $piece
+	 * @param Title $title
+	 * @param array $args
 	 * @param PPFrame_DOM $frame
 	 * @param string $outputText
 	 * @return bool
 	 */
-	public static function onStartBraceSubstitution( $piece, $frame, &$outputText ) {
+	public static function onGetTemplateDom( $title, $args, $frame, &$outputText ) {
 		global $wgEnableTemplateTypesParsing, $wgArticleAsJson;
 		wfProfileIn( __METHOD__ );
-
-		$title = Title::newFromText( $frame->expand( $piece['title'] ), NS_TEMPLATE );
 
 		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson && self::isValidTitle( $title ) ) {
 			$type = self::getTemplateType( $title );
 
 			if ( $type === AutomaticTemplateTypes::TEMPLATE_SCROLBOX ) {
-				$outputText = trim( self::getTemplateArgsLongestVal( self::getTemplateArgs( $piece, $frame ) ) );
+				$templateArgs = self::getTemplateArgs($args, $frame);
+
+				$outputText = self::getTemplateArgsLongestVal($templateArgs);
 			}
 		}
 
@@ -89,8 +90,9 @@ class TemplateTypesParser {
 	private static function getTemplateType( $title ) {
 		global $wgCityId;
 
-		$type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )
-			->getTemplateTypeFromTitle( $wgCityId, $title );
+		$type = ExternalTemplateTypesProvider::getInstance()
+				->setTCS( new \TemplateClassificationService )
+				->getTemplateTypeFromTitle( $wgCityId, $title );
 
 		return $type;
 	}
@@ -191,15 +193,15 @@ class TemplateTypesParser {
 	/**
 	 * @desc gets array of template arguments values
 	 *
-	 * @param array $piece
+	 * @param array $args
 	 * @param PPFrame_DOM $frame
 	 * @return array
 	 */
-	private static function getTemplateArgs( $piece, $frame ) {
+	private static function getTemplateArgs( $args, $frame ) {
 		$templateArgs = [];
 
-		for ( $i = 0; $i < count( $piece['parts'] ); $i++ ) {
-			$bits = $piece['parts']->item( $i )->splitArg();
+		for ( $i = 0; $i < count( $args ); $i++ ) {
+			$bits = $args->item( $i )->splitArg();
 			$templateArgs[] = $frame->expand( $bits['value'] );
 		}
 
