@@ -1,45 +1,33 @@
 <?php
-$messages = [];
+$messages = array();
 
-$messages['en'] = [
+$messages['en'] = array(
 	'template-classification-description' => 'Interface for classifying templates to understand content better.',
 	'template-classification-type-unclassified' => 'Unclassified',
 	'template-classification-type-infobox' => 'Infobox',
 	'template-classification-description-infobox' => 'Displays the most essential information about an article in a box at the top of the page, usually to the right side.',
-
 	'template-classification-type-navbox' => 'Navbox',
 	'template-classification-description-navbox' => 'Displays a list of organized links in a box for readers to navigate to related articles, usually at the bottom of the page.',
-
 	'template-classification-type-quote' => 'Quote',
 	'template-classification-description-quote' => 'Highlights notable snippets of text such as lyrics, book passages, or spoken dialog. Can contain dialog between one person or multiple people.',
-
 	'template-classification-type-notice' => 'Notice',
 	'template-classification-description-notice' => 'Also known as tophats or alerts, these templates notify the reader about the status of the article itself, such as stub, disambiguation, or spoiler.',
-
 	'template-classification-type-context-link' => 'Context-link',
 	'template-classification-description-context-link' => 'Suggests another page to readers that is related to the current page or section. Usually these include “Main article” or “See also” and display as italicized text.',
-
 	'template-classification-type-reference' => 'Citation or reference',
 	'template-classification-description-reference' => 'Organizes and standardizes how sources of content on an article page are annotated.',
-
 	'template-classification-type-media' => 'Image, video, or gallery',
 	'template-classification-description-media' => 'This template will standardize or modify the display of one or more images or videos.',
-
 	'template-classification-type-data' => 'Data',
 	'template-classification-description-data' => 'This template is used to display data on an article page.',
-
 	'template-classification-type-design' => 'Design',
 	'template-classification-description-design' => 'This template is used to design or structure article pages.',
-
 	'template-classification-type-navigation' => 'Navigation',
 	'template-classification-description-navigation' => 'This template is used for navigation.',
-
 	'template-classification-type-nonarticle' => 'Non-article',
 	'template-classification-description-nonarticle' => 'This template is not used on article pages.',
-
 	'template-classification-type-unknown' => 'Unknown',
 	'template-classification-description-unknown' => "I don't know.",
-
 	'template-classification-type-header' => 'Template type',
 	'template-classification-edit-modal-add-button-text' => 'Add',
 	'template-classification-edit-modal-save-button-text' => 'Save',
@@ -49,9 +37,7 @@ $messages['en'] = [
 	'template-classification-edit-modal-help' => 'To learn more about each template type, including examples, please visit [[Help:Template Types]].',
 	'template-classification-edit-modal-success' => 'New template type has been saved. Thank you!',
 	'template-classification-edit-modal-error' => 'Unfortunately we were not able to save this template type. Would you mind trying again?',
-
 	'template-classification-indicator' => 'Template type:',
-
 	'template-classification-notification-error-retry' => 'Something went wrong and we could not save the template type. Could you retry it using the link under the page title?',
 	'template-classification-special-last-edit' => 'Last edited by $1, $2',
 	'template-classification-special-search' => 'Search',
@@ -62,10 +48,10 @@ $messages['en'] = [
 	'template-classification-special-used-header' => 'Used on',
 	'template-classification-special-type-header' => 'Template type',
 	'template-classification-special-exception' => 'We are sorry, but something went wrong on our side! Please try again.',
-	'special-templates' => 'Templates'
-];
+	'special-templates' => 'Templates',
+);
 
-$messages['qqq'] = [
+$messages['qqq'] = array(
 	'template-classification-description' => 'Description of extension viewed on Special:Version',
 	'template-classification-type-unclassified' => 'Name of an unclassified type',
 	'template-classification-type-infobox' => 'Name of an infobox type',
@@ -80,7 +66,6 @@ $messages['qqq'] = [
 	'template-classification-type-reference' => 'Name of a reference type',
 	'template-classification-type-unknown' => 'Name of an unknown template type',
 	'template-classification-type-context-link' => 'Name of the context link type',
-
 	'template-classification-description-infobox' => 'Description (additional label) for the infobox type. This is shown in dialog box under the type name to explain what each type is.',
 	'template-classification-description-navbox' => 'Description (additional label) for the navbox type. This is shown in dialog box under the type name to explain what each type is.',
 	'template-classification-description-quote' => 'Description (additional label) for the quote type. This is shown in dialog box under the type name to explain what each type is.',
@@ -93,7 +78,6 @@ $messages['qqq'] = [
 	'template-classification-description-notice' => 'Description (additional label) for the notice template type. This is shown in dialog box under the type name to explain what each type is.',
 	'template-classification-description-reference' => 'Description (additional label) for the reference template type. This is shown in dialog box under the type name to explain what each type is.',
 	'template-classification-description-context-link' => 'Description (additional label) for the context link template type. This is shown in the dialog box under the type name to explain what each type is.',
-
 	'template-classification-type-header' => 'A header of all boxes that display a type of a template.',
 	'template-classification-edit-modal-add-button-text' => 'Text on add button on modal for proceeding to template adding after template type is choose',
 	'template-classification-edit-modal-save-button-text' => 'Text on save button on modal for editing template type',
@@ -103,11 +87,8 @@ $messages['qqq'] = [
 	'template-classification-edit-modal-help' => 'Some tips for user on template classification modal shown above form with types to choose',
 	'template-classification-edit-modal-success' => 'A message shown in a Banner Notification after a user chooses a type of a template in a modal and the classification is successfully saved.',
 	'template-classification-edit-modal-error' => 'A message shown in a Banner Notification after a user chooses a type of a template in a modal and the classification trial results with an error.',
-
 	'template-classification-indicator' => 'Shown in page subheader and near classification dialog entry points to indicate which type the template is currently classified as.',
-
 	'template-classification-notification-error-retry' => 'A message shown to a user in a Banner Notification if classifying of a template resulted with an error and we want a user to retry doing it.',
-
 	'template-classification-special-last-edit' => 'Information who and when made last edit for chosen article on the list.',
 	'template-classification-special-search' => 'Label for search button.',
 	'template-classification-special-find-template' => 'Label before text input field to find template by name.',
@@ -117,10 +98,10 @@ $messages['qqq'] = [
 	'template-classification-special-used-header' => 'Table column header describing where this templates were used.',
 	'template-classification-special-type-header' => 'Table column header describing template type.',
 	'template-classification-special-exception' => 'Message shown when fetching data was impossible and informing user that something went wrong and ask to try again.',
-	'special-templates' => 'Name of special page containing all templates on wiki with types.'
-];
+	'special-templates' => 'Name of special page containing all templates on wiki with types.',
+);
 
-$messages['de'] = [
+$messages['de'] = array(
 	'template-classification-description' => 'Schnittstelle zur Klassifizierung von Vorlagen, um Inhalte besser zu verstehen.',
 	'template-classification-type-unclassified' => 'Nicht klassifiziert',
 	'template-classification-type-infobox' => 'Infobox',
@@ -156,9 +137,9 @@ $messages['de'] = [
 	'template-classification-edit-modal-error' => 'Leider konnten wir diesen Vorlagentyp nicht speichern. Könntest du es bitte noch einmal probieren?',
 	'template-classification-indicator' => 'Vorlagentyp:',
 	'template-classification-notification-error-retry' => 'Leider ist etwas schief gelaufen und wir können den Vorlagentyp nicht speichern. Bitte probiere es noch einmal und verwende dabei den Link unter dem Seitentitel.',
-];
+);
 
-$messages['es'] = [
+$messages['es'] = array(
 	'template-classification-description' => 'Interfaz para clasificar plantillas para entender mejor el contenido.',
 	'template-classification-type-unclassified' => 'No clasificado',
 	'template-classification-type-infobox' => 'Infobox',
@@ -194,14 +175,14 @@ $messages['es'] = [
 	'template-classification-edit-modal-error' => 'Desafortunadamente no pudimos guardar este tipo de plantilla. ¿Te importaría volver a intentarlo?',
 	'template-classification-indicator' => 'Tipo de plantilla:',
 	'template-classification-notification-error-retry' => 'Algo salió mal y no pudimos guardar el tipo de plantilla. ¿Podrías intentarlo nuevamente usando el enlace bajo el título de la página?',
-];
+);
 
-$messages['fr'] = [
+$messages['fr'] = array(
 	'template-classification-description' => 'Interface de classification des modèles permettant de mieux comprendre le contenu.',
 	'template-classification-type-unclassified' => 'Non classifié',
 	'template-classification-type-infobox' => 'Infobox',
 	'template-classification-description-infobox' => "Affiche les informations les plus importantes d'un article dans un encadré situé en haut de la page, généralement sur le côté droit.",
-	'template-classification-type-navbox' => 'Méta palette de navigation',
+	'template-classification-type-navbox' => 'Navbox',
 	'template-classification-description-navbox' => 'Affiche une liste de liens organisés vers des articles liés destinés aux lecteurs, dans un encadré généralement situé en bas de la page.',
 	'template-classification-type-quote' => 'Citation',
 	'template-classification-description-quote' => "Met en relief certains extraits de texte importants tels que des paroles, les passages d'un livre ou un dialogue parlé entre deux ou plusieurs personnes.",
@@ -232,9 +213,9 @@ $messages['fr'] = [
 	'template-classification-edit-modal-error' => "Ce type de modèle n'a malheureusement pas pu être enregistré. Veuillez réessayer.",
 	'template-classification-indicator' => 'Type de modèle :',
 	'template-classification-notification-error-retry' => "Le type de modèle n'a pas pu être enregistré en raison d'un problème. Veuillez réessayer avec le lien sous le titre de la page.",
-];
+);
 
-$messages['it'] = [
+$messages['it'] = array(
 	'template-classification-description' => 'Interfaccia di classificazione dei modelli per comprendere meglio il contenuto.',
 	'template-classification-type-unclassified' => 'Non classificato',
 	'template-classification-type-infobox' => 'Infobox',
@@ -270,23 +251,23 @@ $messages['it'] = [
 	'template-classification-edit-modal-error' => 'Purtroppo non siamo riusciti a salvare questo tipo di modello. Potresti riprovare?',
 	'template-classification-indicator' => 'Tipo di modello:',
 	'template-classification-notification-error-retry' => 'Qualcosa è andato storto e non siamo riusciti a salvare il tipo di modello. Potresti riprovare utilizzando il link sotto il titolo della pagina?',
-];
+);
 
-$messages['ja'] = [
+$messages['ja'] = array(
 	'template-classification-description' => 'テンプレートを分類してコンテンツをわかりやすくするための画面。',
 	'template-classification-type-unclassified' => '未分類',
 	'template-classification-type-infobox' => 'インフォボックス',
 	'template-classification-description-infobox' => 'ページの上部（通常右側）のボックス内に、記事についての最も重要な情報を表示します。',
 	'template-classification-type-navbox' => 'Navbox',
-	'template-classification-description-navbox' => '通常はページ下部にあるボックス内に、リンクのリストを整理して表示します。閲覧者はこれらのリンクを使って関連記事に移動できます。',
+	'template-classification-description-navbox' => 'リンクを一覧表示するためのもので、通常はページ下部にあるボックス内に表示されます。閲覧者はこれらのリンクを使って関連記事に移動できます。',
 	'template-classification-type-quote' => '引用文',
-	'template-classification-description-quote' => '歌詞、本の中の一節、会話など、テキスト内の注目すべき部分をハイライト表示します。何人の会話でも含められます。',
+	'template-classification-description-quote' => '歌詞、本の中の一節、会話など、テキスト内の強調したい部分を示します。何人分の会話でも含められます。',
 	'template-classification-type-notice' => '通知',
-	'template-classification-description-notice' => '「警告」や「アラート」とも呼ばれるこれらのテンプレートは、記事自体のステータス（スタブ、曖昧さ回避、ネタバレなど）について閲覧者に通知します。',
+	'template-classification-description-notice' => '「警告」や「アラート」とも呼ばれるこれらのテンプレートは、記事自体のステータス（スタブ、曖昧さ回避、ネタバレなど）について閲覧者に通知するためのものです。',
 	'template-classification-type-reference' => '引用または参照',
-	'template-classification-description-reference' => '記事ページ上のコンテンツの提供元に注釈を付ける方法を整理し、標準化します。',
+	'template-classification-description-reference' => '記事ページ上のコンテンツの出典の記載方法を整理して標準化するためのものです。',
 	'template-classification-type-media' => '画像、動画、ギャラリー',
-	'template-classification-description-media' => '1つ以上の画像や動画の表示を標準化または変更します。',
+	'template-classification-description-media' => '1つ以上の画像や動画の表示方法を統一したり変更したりするためのものです。',
 	'template-classification-type-data' => 'データ',
 	'template-classification-description-data' => '記事ページ上にデータを表示するために使用します。',
 	'template-classification-type-design' => 'デザイン',
@@ -308,9 +289,47 @@ $messages['ja'] = [
 	'template-classification-edit-modal-error' => '申し訳ありませんが、このテンプレートの種類を保存できませんでした。もう一度お試しください。',
 	'template-classification-indicator' => 'テンプレートの種類：',
 	'template-classification-notification-error-retry' => 'エラーが発生したため、テンプレートの種類を保存できませんでした。ページタイトルの下にあるリンクを使ってもう一度お試しください。',
-];
+);
 
-$messages['pl'] = [
+$messages['nl'] = array(
+	'template-classification-description' => 'Interface for classifying templates to understand content better.',
+	'template-classification-type-unclassified' => 'Unclassified',
+	'template-classification-type-infobox' => 'Infobox',
+	'template-classification-description-infobox' => 'Displays the most essential information about an article in a box at the top of the page, usually to the right side.',
+	'template-classification-type-navbox' => 'Navbox',
+	'template-classification-description-navbox' => 'Displays a list of organized links in a box for readers to navigate to related articles, usually at the bottom of the page.',
+	'template-classification-type-quote' => 'Quote',
+	'template-classification-description-quote' => 'Highlights notable snippets of text such as lyrics, book passages, or spoken dialog. Can contain dialog between one person or multiple people.',
+	'template-classification-type-notice' => 'Notice',
+	'template-classification-description-notice' => 'Also known as tophats or alerts, these templates notify the reader about the status of the article itself, such as stub, disambiguation, or spoiler.',
+	'template-classification-type-reference' => 'Citation or reference',
+	'template-classification-description-reference' => 'Organizes and standardizes how sources of content on an article page are annotated.',
+	'template-classification-type-media' => 'Image, video, or gallery',
+	'template-classification-description-media' => 'This template will standardize or modify the display of one or more images or videos.',
+	'template-classification-type-data' => 'Data',
+	'template-classification-description-data' => 'This template is used to display data on an article page.',
+	'template-classification-type-design' => 'Design',
+	'template-classification-description-design' => 'This template is used to design or structure article pages.',
+	'template-classification-type-navigation' => 'Navigation',
+	'template-classification-description-navigation' => 'This template is used for navigation.',
+	'template-classification-type-nonarticle' => 'Non-article',
+	'template-classification-description-nonarticle' => 'This template is not used on article pages.',
+	'template-classification-type-unknown' => 'Unknown',
+	'template-classification-description-unknown' => "I don't know.",
+	'template-classification-type-header' => 'Template type',
+	'template-classification-edit-modal-add-button-text' => 'Add',
+	'template-classification-edit-modal-save-button-text' => 'Save',
+	'template-classification-edit-modal-cancel-button-text' => 'Cancel',
+	'template-classification-edit-modal-title-edit-type' => 'Edit template type',
+	'template-classification-edit-modal-title-select-type' => 'Choose template type',
+	'template-classification-edit-modal-help' => 'To learn more about each template type, including examples, please visit [[Help:Template classification]].',
+	'template-classification-edit-modal-success' => 'New template type has been saved. Thank you!',
+	'template-classification-edit-modal-error' => 'Unfortunately we were not able to save this template type. Would you mind trying again?',
+	'template-classification-indicator' => 'Template type:',
+	'template-classification-notification-error-retry' => 'Something went wrong and we could not save the template type. Could you retry it using the link under the page title?',
+);
+
+$messages['pl'] = array(
 	'template-classification-description' => 'Interfejs do klasyfikacji szablonów w celu lepszego zrozumienia treści.',
 	'template-classification-type-unclassified' => 'Niesklasyfikowany',
 	'template-classification-type-infobox' => 'Infoboks',
@@ -341,14 +360,14 @@ $messages['pl'] = [
 	'template-classification-description-unknown' => 'Nie wiem.',
 	'template-classification-edit-modal-add-button-text' => 'Dodaj',
 	'template-classification-edit-modal-title-select-type' => 'Wybierz typ szablonu',
-	'template-classification-edit-modal-help' => 'Aby dowiedzieć się więcej na temat każdego typu szablonu oraz zobaczyć przykłady, wejdź na [[Help:Template Types]].',
+	'template-classification-edit-modal-help' => 'Aby dowiedzieć się więcej na temat każdego typu szablonu oraz zobaczyć przykłady, wejdź na [[Help:Template classification]].',
 	'template-classification-edit-modal-success' => 'Nowy typ szablonu został zapisany. Dziękujemy!',
 	'template-classification-edit-modal-error' => 'Niestety nie udało nam się zapisać typu szablonu. Czy możesz spróbować ponownie?',
 	'template-classification-indicator' => 'Typ szablonu:',
 	'template-classification-notification-error-retry' => 'Coś poszło nie tak i nie byliśmy w stanie zapisać typu szablonu. Spróbuj ponownie korzystając z linku pod tytułem strony?',
-];
+);
 
-$messages['pt'] = [
+$messages['pt'] = array(
 	'template-classification-description' => 'Interface para a classificação de predefinições para auxiliar na compreensão do conteúdo.',
 	'template-classification-type-unclassified' => 'Não classificado',
 	'template-classification-type-infobox' => 'Infobox',
@@ -383,9 +402,10 @@ $messages['pt'] = [
 	'template-classification-edit-modal-error' => 'Infelizmente não foi possível salvar este tipo de predefinição. Por favor, tente novamente.',
 	'template-classification-indicator' => 'Tipo de predefinição:',
 	'template-classification-notification-error-retry' => 'Algo deu errado e não foi possível salvar o tipo de predefinição. Você poderia tentar novamente usando o link que está sob o título da página?',
-];
+	'template-classification-edit-modal-help' => 'Para saber mais sobre cada tipo de predefinição, incluindo exemplos, por favor visite [[Ajuda:classificação de predefinição]].',
+);
 
-$messages['ru'] = [
+$messages['ru'] = array(
 	'template-classification-description' => 'Интерфейс классификации шаблонов для лучшего понимания их содержимого.',
 	'template-classification-type-unclassified' => 'Неклассифицированные',
 	'template-classification-type-infobox' => 'Инфобоксы',
@@ -421,9 +441,9 @@ $messages['ru'] = [
 	'template-classification-edit-modal-error' => 'Произошла ошибка во время сохранения типа шаблона.',
 	'template-classification-indicator' => 'Тип шаблона:',
 	'template-classification-notification-error-retry' => 'Во время сохранения типа шаблона произошла ошибка. Пожалуйста, попробуйте снова, используя ссылку под названием страницы.',
-];
+);
 
-$messages['zh-hans'] = [
+$messages['zh-hans'] = array(
 	'template-classification-description' => '界面用于分类模板以更好地理解内容。',
 	'template-classification-type-unclassified' => '未分类',
 	'template-classification-type-infobox' => '信息框',
@@ -458,9 +478,10 @@ $messages['zh-hans'] = [
 	'template-classification-edit-modal-error' => '很抱歉，我们无法保存此模板类型。您介意再试一次吗?',
 	'template-classification-indicator' => '模板类型：',
 	'template-classification-notification-error-retry' => '出现错误，我们无法保存这个模板类型。您希望使用页面标题下方的链接重新尝试吗？',
-];
+	'template-classification-edit-modal-help' => '学习每一个模版的类型，包括例子，请点击[[Help:Template classification|模版分类]]了解详情。',
+);
 
-$messages['zh-hant'] = [
+$messages['zh-hant'] = array(
 	'template-classification-description' => '介面用於分類模版以更好地理解內容。',
 	'template-classification-type-unclassified' => '未分類',
 	'template-classification-type-infobox' => '資訊框',
@@ -495,4 +516,6 @@ $messages['zh-hant'] = [
 	'template-classification-edit-modal-error' => '抱歉，我們無法保存此模版類型。 您介意再試一次嗎?',
 	'template-classification-indicator' => '模版類型',
 	'template-classification-notification-error-retry' => '出現錯誤，我們無法保存這個模版類型。 您希望使用頁面標題下方的連結重新嘗試嗎？',
-];
+	'template-classification-edit-modal-help' => '學習每一個模版的類型，包括例子，請點擊[[Help:Template classification|模版分類]]了解詳情。',
+);
+
