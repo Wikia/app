@@ -8,6 +8,7 @@ $wgAutoloadClasses['RecognizedTemplatesProvider'] = __DIR__ . '/RecognizedTempla
 
 // Handles special parsing of templates classified by Template Classification Service
 $wgAutoloadClasses['TemplateTypesParser'] = __DIR__ . '/TemplateTypesParser.class.php';
+$wgAutoloadClasses['TemplateArgsHelper'] = __DIR__ . '/TemplateArgsHelper.class.php';
 
 // hooks
 $wgHooks['Parser::FetchTemplateAndTitle'][] = 'TemplateTypesParser::onFetchTemplateAndTitle';
