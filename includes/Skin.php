@@ -60,6 +60,18 @@ abstract class Skin extends ContextSource {
 
 			ksort($wgValidSkinNames); // Wikia change - BAC-1154
 
+			# PLATFORM-1652 Remove legacy skins
+			# Michał 'Mix' Roszka <mix@wikia.com>
+			# I am wondering how often we do these file system scans.
+			# I see room for improvement here.
+			# I log therefore I am.
+			if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
+				Wikia\Logger\WikiaLogger::instance()->info(
+					'PLATFORM-1652 getSkinNames',
+					[ 'wgValidSkinNames' => $wgValidSkinNames ]
+				);
+			}
+
 			wfProfileOut( __METHOD__ . '-init' );
 		}
 		return $wgValidSkinNames;
