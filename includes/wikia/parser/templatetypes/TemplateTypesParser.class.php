@@ -61,19 +61,20 @@ class TemplateTypesParser {
 	/**
 	 * @desc change template wikitext according to template type
 	 *
-	 * @param Title $templateTitle
+	 * @param string $templateTitle
 	 * @param string $templateWikitext
 	 * @return bool
 	 */
 	public static function onEndBraceSubstitution( $templateTitle, &$templateWikitext ) {
 		wfProfileIn( __METHOD__ );
 
-		$title = Title::newFromText( $templateTitle, NS_TEMPLATE );
-
-		if ( self::templateShouldBeProcessed( $templateWikitext ) && self::isValidTitle( $title ) ) {
-			$type = self::getTemplateType( $title );
-			if ( $type == AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK ) {
-				$templateWikitext = self::handleContextLinksTemplate( $templateWikitext );
+		if ( self::templateShouldBeProcessed( $templateWikitext ) ) {
+				$title = Title::newFromText( $templateTitle, NS_TEMPLATE );
+				if ( self::isValidTitle( $title ) ) {
+					$type = self::getTemplateType( $title );
+					if ( $type == AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK ) {
+						$templateWikitext = self::handleContextLinksTemplate( $templateWikitext );
+					}
 			}
 		}
 
@@ -117,10 +118,23 @@ class TemplateTypesParser {
 	 * @return string
 	 */
 	private static function handleContextLinksTemplate( $wikitext ) {
-		$wikitext = self::sanitizeContextLinkWikitext( $wikitext );
-		$wikitext = self::wrapContextLink( $wikitext );
+		if ( !self::containNestedTemplates( $wikitext ) ) {
+			$wikitext = self::sanitizeContextLinkWikitext( $wikitext );
+			$wikitext = self::wrapContextLink( $wikitext );
+		}
 
 		return $wikitext;
+	}
+
+	/**
+	 * @desc If curly brackets found, means that template contain some not parsed
+	 * wikitext (e.g. was wrongly classified) and should not be changed!
+	 *
+	 * @param $wikitext
+	 * @return bool
+	 */
+	private static function containNestedTemplates( $wikitext ) {
+		return preg_match('/{{.+}}/', $wikitext);
 	}
 
 	/**
