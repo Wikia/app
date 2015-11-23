@@ -11,6 +11,7 @@ $wgAutoloadClasses['TemplateTypesParser'] = __DIR__ . '/TemplateTypesParser.clas
 $wgAutoloadClasses['TemplateArgsHelper'] = __DIR__ . '/TemplateArgsHelper.class.php';
 
 // Template type handlers
+$wgAutoloadClasses['ContextLinkTemplate'] = __DIR__ . '/handlers/ContextLinkTemplate.class.php';
 $wgAutoloadClasses['ScrollboxTemplate'] = __DIR__ . '/handlers/ScrollboxTemplate.class.php';
 $wgAutoloadClasses['NavboxTemplate'] = __DIR__ . '/handlers/NavboxTemplate.class.php';
 $wgAutoloadClasses['ReferencesTemplate'] = __DIR__ . '/handlers/ReferencesTemplate.class.php';
