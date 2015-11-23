@@ -3,17 +3,18 @@
 @import 'skins/oasis/css/core/breakpoints-variables';
 
 $ebs-background-color: #f08a24;
+$ebs-color: #303842;
 $ebs-font-size: 14px;
 $ebs-line-height: 20px;
 $ebs-shadow-color: rgba(0,0,0,0.3);
 $ebs-standard-spacing: 10px;
 
-$ebs-unread-background: #ed1c24;
-$ebs-unread-color: white;
-$ebs-unread-font-size: 10px;
-$ebs-unread-size: 18px;
-$ebs-unread-offset-top: -8px;
-$ebs-unread-offset-left: 12px;
+$ebs-count-background: #ed1c24;
+$ebs-count-color: white;
+$ebs-count-font-size: 10px;
+$ebs-count-size: 18px;
+$ebs-count-offset-top: -8px;
+$ebs-count-offset-left: 12px;
 
 $ebs-content-border: 1px solid #f4ad66;
 $ebs-content-offset: 20px;
@@ -23,6 +24,7 @@ $ebs-content-offset: 20px;
 	background-color: $ebs-background-color;
 	background-image: url('/extensions/wikia/EmergencyBroadcastSystem/images/warning.svg'); /* $wgCdnStylePath */
 	background-repeat: no-repeat;
+	color: $ebs-color;
 	font-size: $ebs-font-size;
 	line-height: $ebs-line-height;
 	margin: $ebs-standard-spacing auto 0;
@@ -30,7 +32,7 @@ $ebs-content-offset: 20px;
 	z-index: 1;
 
 	a {
-		color: $color-text-dark;
+		color: $ebs-color;
 	}
 
 	h3 {
@@ -38,23 +40,31 @@ $ebs-content-offset: 20px;
 		margin-bottom: $ebs-standard-spacing;
 	}
 
-	.ebs-unread {
-		background: $ebs-unread-background;
+	.ebs-count {
+		background: $ebs-count-background;
 		border-radius: 100%;
-		color: $ebs-unread-color;
-		font-size: $ebs-unread-font-size;
-		height: $ebs-unread-size;
-		margin-left: $ebs-unread-offset-left;
-		margin-top: $ebs-unread-offset-top;
-		line-height: $ebs-unread-size - 2px;
+		color: $ebs-count-color;
+		font-size: $ebs-count-font-size;
+		height: $ebs-count-size;
+		margin-left: $ebs-count-offset-left;
+		margin-top: $ebs-count-offset-top;
+		line-height: $ebs-count-size - 2px;
 		position: absolute;
 		text-align: center;
-		width: $ebs-unread-size;
+		width: $ebs-count-size;
 	}
 
 	.ebs-content {
 		border-bottom: $ebs-content-border;
 		padding-bottom: $ebs-standard-spacing;
+
+		a {
+			text-decoration: underline;
+		}
+
+		a:hover {
+			opacity: 0.64;
+		}
 	}
 
 	.ebs-actions {
@@ -84,7 +94,7 @@ $ebs-content-offset: 20px;
 				margin-left: $padding-width-small + $ebs-content-offset;
 			}
 
-			.ebs-unread {
+			.ebs-count {
 				left: $padding-width-small;
 				top: $padding-width-small;
 			}
@@ -101,7 +111,7 @@ $ebs-content-offset: 20px;
 				margin-left: $padding-width-small + $ebs-content-offset;
 			}
 
-			.ebs-unread {
+			.ebs-count {
 				left: $padding-width-small-plus;
 				top: $padding-width-small-plus;
 			}
@@ -118,7 +128,7 @@ $ebs-content-offset: 20px;
 				margin-left: $padding-width-medium + $ebs-content-offset;
 			}
 
-			.ebs-unread {
+			.ebs-count {
 				left: $padding-width-medium;
 				top: $padding-width-medium;
 			}
@@ -135,7 +145,7 @@ $ebs-content-offset: 20px;
 				margin-left: $padding-width-large + $ebs-content-offset;
 			}
 
-			.ebs-unread {
+			.ebs-count {
 				left: $padding-width-large;
 				top: $padding-width-large;
 			}
