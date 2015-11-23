@@ -420,20 +420,21 @@ class CloseWikiMaintenance {
 	 */
 	private function removeBucket( $cityid ) {
 		try {
-			$container = \Wikia\SwiftStorage::newFromWiki( $cityid )->getContainer();
-			$this->log( "Removing DFS bucket - {$container}" );
+			$swift = \Wikia\SwiftStorage::newFromWiki( $cityid );
+			$this->log( sprintf( "Removing DFS bucket /%s%s", $swift->getContainerName(), $swift->getPathPrefix() ) );
 
-			//  Remove bucket / s3cmd rb s3://BUCKET
+			// s3cmd --recursive del s3://BUCKET/OBJECT / Recursively delete files from bucket
 			$cmd = sprintf(
-				'sudo /usr/bin/s3cmd -c %s --verbose rb s3://%s/',
+				'sudo /usr/bin/s3cmd -c %s --recursive del s3://%s%s/',
 				self::S3_CONFIG,
-				$container->name
+				$swift->getContainerName(),  # e.g. 'nordycka'
+				$swift->getPathPrefix()      # e.g. '/pl/images'
 			);
 			$out = wfShellExec( $cmd, $iStatus );
-			$this->log( $cmd . ' : ' . $out );
+			$this->log( $cmd );
 
 			if ( $iStatus !== 0 ) {
-				throw new Exception( 'Failed to remove a bucket - ' . $cmd, $iStatus );
+				throw new Exception( 'Failed to remove a bucket content - ' . $cmd, $iStatus );
 			}
 		} catch ( Exception $ex ) {
 			Wikia\Logger\WikiaLogger::instance()->error( 'Removing DFS bucket failed', [
