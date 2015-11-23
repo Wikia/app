@@ -61,7 +61,7 @@ class LillyHooks {
 		'‪中文(香港)‬',
 	];
 
-	static function onLinkerMakeExternalLink( &$url, &$text, &$link, &$attribs ) {
+	private static function processLink( $targetUrl, $linkText ) {
 		global $wgLillyServiceUrl, $wgTitle;
 
 		// wgTitle is null sometimes
@@ -70,7 +70,6 @@ class LillyHooks {
 		}
 
 		$sourceUrl = $wgTitle->getFullURL();
-		$targetUrl = $url;
 
 		// Double check the sanity of URLs
 		if ( filter_var( $sourceUrl, FILTER_VALIDATE_URL ) === false ||
@@ -80,7 +79,7 @@ class LillyHooks {
 		}
 
 		// Only capture the "in other languages" links, not regular in-article links
-		if ( !in_array( trim( $text ), self::TARGET_TEXTS ) ) {
+		if ( !in_array( trim( $linkText ), self::TARGET_TEXTS ) ) {
 			return true;
 		}
 
@@ -105,6 +104,18 @@ class LillyHooks {
 				'target' => $targetUrl,
 			]
 		] );
+	}
+
+	public static function onLinkerMakeExternalLink( &$url, &$text, &$link, &$attribs ) {
+		self::processLink( $url, $text );
+
+		return true;
+	}
+
+	public static function onLinkEnd( $dummy, Title $target, array $options, &$html, array &$attribs, &$ret ) {
+		if ( $target->getInterwiki() ) {
+			self::processLink( $attribs['href'], $html );
+		}
 
 		return true;
 	}
