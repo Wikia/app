@@ -5,7 +5,7 @@
 		<p><?= wfMessage( 'ebs-content' )->parse() ?></p>
 	</div>
 	<div class="ebs-actions">
-		<a class="ebs-secondary-action" href="<?= $surveyUrl ?>" target="_blank"><?= wfMessage( 'ebs-no' )->parse() ?</a>
+		<a class="ebs-secondary-action" href="<?= $surveyUrl ?>" target="_blank"><?= wfMessage( 'ebs-no' )->parse() ?></a>
 		<a class="ebs-primary-action" href="#"><?= wfMessage( 'ebs-yes' )->parse() ?></a>
 	</div>
 </section>
