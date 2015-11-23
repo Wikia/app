@@ -46,7 +46,6 @@ class WallBaseController extends WikiaController {
 
 		$this->addAsset();
 
-		$title = $this->request->getVal( 'title', $this->app->wg->Title );
 		$id = $this->request->getVal( 'id', null );
 
 		$this->getThread( $id );

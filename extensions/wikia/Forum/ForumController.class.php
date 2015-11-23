@@ -24,10 +24,8 @@ class ForumController extends WallBaseController {
 		if ( $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$topicTitle = $this->getTopicTitle();
 			if ( empty( $topicTitle ) || !$topicTitle->exists() ) {
-				if ( !$topicTitle->exists() ) {
-					$this->redirectToIndex();
-					return false;
-				}
+				$this->redirectToIndex();
+				return false;
 			}
 		}
 

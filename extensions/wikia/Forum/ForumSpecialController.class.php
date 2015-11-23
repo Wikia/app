@@ -59,8 +59,6 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		$output->setPageTitle( wfMessage( 'forum-forum-title' )->plain() );
 
-		$action = $this->getVal( 'action', '' );
-
 		$this->blurb = wfMessage( 'forum-specialpage-blurb' )->parse();
 		$this->blurbHeading = wfMessage( 'forum-specialpage-blurb-heading' )->parse();
 		$this->lastPostByMsg = wfMessage( 'forum-specialpage-board-lastpostby' )->escaped();
