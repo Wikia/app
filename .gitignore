@@ -31,6 +31,7 @@ spamAccountIds.txt
 
 lib/composer/**/.git
 node_modules
+npm-debug.log
 
 # Ignore eval.php log
 maintenance/.mweval_history

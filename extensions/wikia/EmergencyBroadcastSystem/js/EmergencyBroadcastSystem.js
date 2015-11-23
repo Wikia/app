@@ -1,25 +1,11 @@
 (function ($) {
 	'use strict';
 
-	function init() {
-		$('.ebs-primary-action').click(function(){ handleClick( 1 ); });
-		$('.ebs-secondary-action').click(function(){ handleClick( 0 ); });
-	}
-
 	function handleClick( val ) {
-		$.nirvana.postJson('EmergencyBroadcastSystemController', 'saveUserResponse', val,
-			function( response ) {
-				console.log('Successfully saved user EBS response.');
-			},
-			function( response ) {
-				console.error('Error saving user EBS response.');
-			});
-		hideEBS();
-	}
-
-	function hideEBS() {
+		$.nirvana.postJson('EmergencyBroadcastSystemController', 'saveUserResponse', { val: val });
 		$('.ebs-container').hide();
 	}
 
-	init();
+	$('.ebs-primary-action').click(function(){ handleClick( 1 ); return false; });
+	$('.ebs-secondary-action').click(function(){ handleClick( 0 ); return false; });
 })(jQuery);
