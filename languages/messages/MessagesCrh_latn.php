@@ -1790,7 +1790,6 @@ MediaWiki interfeysiniñ çeşit tillerge tercime etüvde iştirak etmege istese
 
 # Skin names
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'Öz resimleme',
 
 # Patrol log
 'patrol-log-page'      => 'Teşkerüv jurnalı',

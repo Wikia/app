@@ -2842,14 +2842,12 @@ Tukuy hawa wikimanta chaskisqakunaqa [[Special:Log/import|hawamanta chaskiy hall
 # Stylesheets
 'common.css' => "/* Churamusqa CSS chantakunaqa tukuy qarakunapim llamk'anqa */",
 'monobook.css' => '/* Kayman churasqa CSS nisqaqa Monobook qaratam hukchanqa tukuy internet tiyanapaq */',
-'myskin.css' => "/* Churamusqa CSS chantakunaqa ''MySkin'' nisqa qarata llamk'achiq ruraqkunapaq llamk'anqa */",
 'print.css' => "/* Churamusqa CSS chantakunaqa ch'ipachinap rikch'akuynintam hukchanqa */",
 'handheld.css' => "/* Churamusqa CSS chantakunaqa makiwan hap'isqa qarapi tiksisqa \$wgHandheldStyle nisqapi allichasqa antakunap llamk'aynintam hukchanqa */",
 
 # Scripts
 'common.js' => "/* Ima kaypi kaq JavaScript qillqapas tukuy ruraqkunapaq tukuy p'anqakunap tukuy chaqnankunapi chaqnamusqa kanqa. */",
 'monobook.js' => "/* Ima kaypi qillqamusqa JavaScript nisqa wakichi qillqapas MonoBook nisqata llamk'achiq ruraqkunapaq chaqnasqa kanqa */",
-'myskin.js' => "/* Ima kaypi qillqamusqa JavaScript nisqa wakichi qillqapas ''MySkin'' nisqa qarata llamk'achiq ruraqkunapaq chaqnasqa kanqa */",
 
 # Metadata
 'notacceptable' => "Wiki sirwiqqa manam willakunata quyta atinchu mink'akuqniykip (wamp'unaykip) hap'iyta atisqan chantapi.",

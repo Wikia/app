@@ -2232,12 +2232,10 @@ Wïkï-aparw üşin sırttan alw barlıq äreketter [[{{#special:Log}}/import|s�
 # Stylesheets
 'common.css'      => '/* Mında ornalastırılğan CSS barlıq mänerlerde qoldanıladı */',
 'monobook.css'    => '/* Mında ornalastırılğan CSS tek «Dara kitap» (monobook) mänerin paýdalanwşılarına ıqpal etedi */',
-'myskin.css'      => '/* Mında ornalastırılğan CSS tek «Öz mänerim» (myskin) mänerin paýdalanwşılarına ıqpal etedi */',
 
 # Scripts
 'common.js'      => '/* Mındağı ärtürli JavaScript kez kelgen bet qotarılğanda barlıq paýdalanwşılar üşin jegiledi. */',
 'monobook.js'    => '/* Mındağı JavaScript tek «Dara kitap» (monobook) mänerin paýdalanwşılar üşin jegiledi */',
-'myskin.js'      => '/* Mındağı JavaScript tek «Öz mänerim» (myskin) mänerin paýdalanwşılar üşin jegiledi */',
 
 # Metadata
 'notacceptable' => 'Tutınğışıñız oqï alatın pişimi bar derekterdi bul wïkï server jetistire almaýdı.',
@@ -2263,7 +2261,6 @@ Bunıñ sebebi şettik torap siltemesinen bolwı mümkin.',
 
 # Skin names
 'skinname-monobook'    => 'Dara kitap (monobook)',
-'skinname-myskin'      => 'Öz mänerim (myskin)',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Zertteldi dep belgilew',

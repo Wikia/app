@@ -2916,7 +2916,6 @@ $1',
 
 # Skin names
 'skinname-monobook'    => 'Монакніга',
-'skinname-myskin'      => 'MySkin',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Пазначыць як «патруляваную»',

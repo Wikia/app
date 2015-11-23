@@ -2670,7 +2670,6 @@ $UNWATCHURL కి వెళ్ళండి.
 
 # Skin names
 'skinname-monobook'    => 'మోనోబుక్',
-'skinname-myskin'      => 'నాఅలంకారం',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'పరీక్షించినట్లుగా గుర్తు పెట్టు',

@@ -2710,7 +2710,6 @@ $1',
 'pageinfo-viewsperedit'     => 'Биир уларытыыга тиксэр көрүү ахсаана',
 
 # Skin names
-'skinname-myskin'    => 'Миэнэ',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Бэрэбиэркэлэммит курдук бэлиэтээ',

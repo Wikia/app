@@ -2848,14 +2848,12 @@ Es possibile adder un motivo in le summario.',
 # Stylesheets
 'common.css'      => '/* Le CSS placiate hic se applicara a tote le stilos */',
 'monobook.css'    => '/* Le CSS placiate hic afficera le usatores del apparentia MonoBook */',
-'myskin.css'      => '/* Le CSS placiate hic afficera le usatores del apparentia "Mi apparentia" */',
 'print.css'       => '/* Le CSS placiate hic influentiara le apparentia del paginas imprimite */',
 'handheld.css'    => '/* Le CSS placiate hic afficera le apparatos mobile basate super le apparentia configurate in $wgHandheldStyle */',
 
 # Scripts
 'common.js'      => '/* Omne JavaScript hic se executara pro tote le usatores a cata cargamento de pagina. */',
 'monobook.js'    => '/* Omne JavaScript hic se executara pro le usatores del apparentia MonoBook */',
-'myskin.js'      => '/* Omne JavaScript hic se executara pro le usatores del apparentia "Mi apparentia" */',
 
 # Metadata
 'notacceptable' => 'Le servitor wiki non pote provider datos in un formato que tu cliente sape leger.',
@@ -2896,7 +2894,6 @@ Le causa es probabilemente un ligamine verso un sito externe que es presente in 
 
 # Skin names
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'Mi apparentia',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marcar como patruliate',

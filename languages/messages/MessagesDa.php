@@ -2805,7 +2805,6 @@ Dette skyldes sandsynligvis en henvisning til et sortlistet eksternt websted.',
 
 # Skin names
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'Eget udseende',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Markér som patruljeret',

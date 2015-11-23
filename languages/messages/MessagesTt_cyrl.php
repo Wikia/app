@@ -2067,7 +2067,6 @@ $1',
 
 # Skin names
 'skinname-monobook'    => 'Китап',
-'skinname-myskin'      => 'Үзем',
 
 # Patrolling
 'markaspatrolledtext'   => 'Бу мәкаләне тикшерелгән дип тамгалау',

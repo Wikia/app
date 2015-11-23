@@ -2955,7 +2955,6 @@ Umožnuje do zhrnutia pridanie dôvodu.',
 # Stylesheets
 'common.css' => '/* Tu umiestnené CSS bude ovplyvňovať všetky štýly */',
 'monobook.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Monobook */',
-'myskin.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Môjvzhľad */',
 'print.css' => '/* Tu umiestnené CSS bude ovplyvňovať tlačový výstup */',
 'handheld.css' => '/* Tu umiestnené CSS bude ovplyvňovať prenosné zariadenia vychádzajúceho zo štýlu nastaveného v $wgHandheldStyle */',
 'noscript.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov s vypnutým JavaScriptom */',
@@ -2967,7 +2966,6 @@ Umožnuje do zhrnutia pridanie dôvodu.',
 # Scripts
 'common.js' => '/* Tu uvedený JavaScript sa nahrá všetkým používateľom pri každom nahraní stránky. */',
 'monobook.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Monobook */',
-'myskin.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Môjvzhľad */',
 'group-autoconfirmed.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom s potvrdenou emailovou adresou */',
 'group-bot.js' => '/* Tu sa nachádzajúci JavaScript sa načíta len robotom */',
 'group-sysop.js' => '/* Tu sa nachádzajúci JavaScript sa načíta len správcom */',
@@ -3013,7 +3011,6 @@ Pravdepodobne to spôsobil odkaz na externú internetovú lokalitu, ktorá sa na
 
 # Skin names
 'skinname-monobook' => 'MonoBook',
-'skinname-myskin' => 'Môj vzhľad',
 
 # Patrolling
 'markaspatrolleddiff' => 'Označiť ako stráženú',

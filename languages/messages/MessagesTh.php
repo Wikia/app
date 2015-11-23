@@ -2708,7 +2708,6 @@ $1',
 
 # Skin names
 'skinname-monobook'    => 'โมโนบุ๊ก',
-'skinname-myskin'      => 'มายสกิน',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'ทำเครื่องหมายว่าตรวจสอบแล้ว',

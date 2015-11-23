@@ -3022,7 +3022,6 @@ Esu kam_mer noch en Aanmerkung en „{{int:summary}}“ maache.',
 # Stylesheets
 'common.css'              => '/* CSS heh aan dä Stell hät Uswirkunge op all Ovverflääsche */',
 'monobook.css'            => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Monobooch“ */',
-'myskin.css'              => '/* CSS heh aan dä Stell wirrek nur op de Ovverflääsch „Ming Skin“ */',
 'print.css'               => '/* CSS heh aan dä Stell wirrek nur op et Sigge Drökke */',
 'handheld.css'            => '/* dat CSS hee wirrek sesch uß op su jeannte Handheld-Apparaate, opjebout op de Ovverflääsch uß $wgHandheldStyle */',
 'noscript.css'            => '/* Dat CSS heh aan dä Stell krijje nur de Metmaacher met affjeschaldt JavaSkrepp jescheck */',
@@ -3034,7 +3033,6 @@ Esu kam_mer noch en Aanmerkung en „{{int:summary}}“ maache.',
 # Scripts
 'common.js'              => '/* Jedes JavaScrip hee kütt för jede Metmaacher in jede Sigg erinn */',
 'monobook.js'            => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Monnobooch" jescheck */',
-'myskin.js'              => '/* De JavaSkrippte fun hee krijje alle Sigge met de Ovverflääsch "Ming Skin" jescheck */',
 'group-autoconfirmed.js' => '/* De JavaSkreppte fun hee krijje bloß de autemattesch beshtääteschte Metmaacher jescheck */',
 'group-bot.js'           => '/* De JavaSkreppte fun hee krijje bloß de Bots jescheck */',
 'group-sysop.js'         => '/* De JavaSkreppte fun hee krijje bloß de Wiki_Köbeße jescheck */',
@@ -3078,7 +3076,6 @@ Esu kam_mer noch en Aanmerkung en „{{int:summary}}“ maache.',
 
 # Skin names
 'skinname-monobook'    => 'MonoBoch',
-'skinname-myskin'      => 'Ming Skin',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Nohjeluurt. Dun dat fasshallde.',

@@ -3545,7 +3545,6 @@ You can view its source',
 # Stylesheets
 'common.css'              => '/* CSS placed here will be applied to all skins */', # only translate this message to other languages if you have to change it
 'monobook.css'            => '/* CSS placed here will affect users of the Monobook skin */', # only translate this message to other languages if you have to change it
-'myskin.css'              => '/* CSS placed here will affect users of the MySkin skin */', # only translate this message to other languages if you have to change it
 'print.css'               => '/* CSS placed here will affect the print output */', # only translate this message to other languages if you have to change it
 'handheld.css'            => '/* CSS placed here will affect handheld devices based on the skin configured in $wgHandheldStyle */', # only translate this message to other languages if you have to change it
 'noscript.css'            => '/* CSS placed here will affect users with JavaScript disabled */', # only translate this message to other languages if you have to change it
@@ -3557,7 +3556,6 @@ You can view its source',
 # Scripts
 'common.js'              => '/* Any JavaScript here will be loaded for all users on every page load. */', # only translate this message to other languages if you have to change it
 'monobook.js'            => '/* Any JavaScript here will be loaded for users using the MonoBook skin */', # only translate this message to other languages if you have to change it
-'myskin.js'              => '/* Any JavaScript here will be loaded for users using the MySkin skin */', # only translate this message to other languages if you have to change it
 'group-autoconfirmed.js' => '/* Any JavaScript here will be loaded for autoconfirmed users only */', # only translate this message to other languages if you have to change it
 'group-bot.js'           => '/* Any JavaScript here will be loaded for bots only */', # only translate this message to other languages if you have to change it
 'group-sysop.js'         => '/* Any JavaScript here will be loaded for sysops only */', # only translate this message to other languages if you have to change it
@@ -3602,7 +3600,6 @@ This is probably caused by a link to a blacklisted external site.',
 
 # Skin names
 'skinname-monobook'    => 'MonoBook', # only translate this message to other languages if you have to change it
-'skinname-myskin'      => 'MySkin', # only translate this message to other languages if you have to change it
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Mark as patrolled',

@@ -2882,7 +2882,6 @@ Razlog je vjerojatno vanjska poveznica koja se nalazi na crnom popisu.',
 
 # Skin names
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'MySkin',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Označi za pregledano',

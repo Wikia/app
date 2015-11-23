@@ -1786,7 +1786,6 @@ Kokkovõttõria pääle või kirotaq tagasivõtmisõ põhjusõ.',
 'spam_blanking'       => "Kõigin kujõn oll' linke lehele $1. Leht tühäs tett.",
 
 # Skin names
-'skinname-myskin'      => 'Array',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Märgiq ülekaetus',

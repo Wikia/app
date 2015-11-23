@@ -2339,7 +2339,6 @@ Visita [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] e [//trans
 
 # Skin names
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'MySkin',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Segna lu canciamentu comu virificatu',

@@ -2974,7 +2974,6 @@ See on ilmselt põhjustatud linkimisest mustas nimekirjas olevasse välisvõrguk
 
 # Skin names
 'skinname-monobook' => 'MonoBook',
-'skinname-myskin' => 'Minu kujundus',
 
 # Patrolling
 'markaspatrolleddiff' => 'Märgi kui kontrollitud',

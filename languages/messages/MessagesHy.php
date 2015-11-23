@@ -2128,7 +2128,6 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 
 # Skin names
 'skinname-monobook'    => 'ՄիաԳիրք',
-'skinname-myskin'      => 'ԻմՏեսք',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Նշել որպես ստուգված',

@@ -2925,12 +2925,10 @@ Du kan se på kildeteksten',
 # Stylesheets
 'common.css'      => '/* CSS plassert i denne fila vil gjelde for alle utseender. */',
 'monobook.css'    => '/* CSS i denne fila vil gjelde alle som bruker drakta Monobook */',
-'myskin.css'      => '/* CSS i denne fila vil gjelde alle som bruker drakta MySkin */',
 
 # Scripts
 'common.js'      => '/* Javascript i denne fila vil gjelde for alle drakter. */',
 'monobook.js'    => '/* Javascript i denne fila vil gjelde for brukere av drakta Monobook */',
-'myskin.js'      => '/* Javascript i denne fila vil gjelde for brukere av drakta MySkin */',
 
 # Metadata
 'notacceptable' => 'Tjeneren har ingen mulige måter å vise data i din nettleser.',
@@ -2971,7 +2969,6 @@ Dette er sannsynligvis forårsaket av en lenke til et svartelistet eksternt nett
 
 # Skin names
 'skinname-monobook'    => 'Monobook',
-'skinname-myskin'      => 'Eget utseende',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Godkjenn endringen',

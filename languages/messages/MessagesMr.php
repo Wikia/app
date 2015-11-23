@@ -2910,7 +2910,6 @@ $1',
 
 # Skin names
 'skinname-monobook' => 'मोनोबुक',
-'skinname-myskin' => 'माझीकांती',
 
 # Patrolling
 'markaspatrolleddiff' => 'टेहळणी केल्याची खूण करा',

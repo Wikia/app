@@ -2393,7 +2393,6 @@ $1',
 
 # Skin names
 'skinname-monobook'    => 'مۆنۆ',
-'skinname-myskin'      => 'پێستی خۆم',
 
 # Math options
 'mw_math_png'    => 'ھەموو جارێک وەک PNG نیشان بدە',

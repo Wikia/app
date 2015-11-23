@@ -534,13 +534,11 @@ Dee Grunt es: "$2"',
 # Stylesheets
 'common.css'      => '/* CSS opp dise Sted woat opp aula Skins wirtje */',
 'monobook.css'    => '/* CSS opp dise Sted wirtjt opp daut Monobook-Skin */',
-'myskin.css'      => '/* CSS opp dise Sted wirtjt opp daut MySkin-Skin */',
 'print.css'       => '/* CSS opp dise Sted woat daut Utkome vom Dretje aundasch moake */',
 
 # Scripts
 'common.js'      => '/* Daut neachste JavaScript woat fe aula Brucka jelode. */',
 'monobook.js'    => '/* Daut neachste JavaScript woat fe Brucka mett Monobook-Skin jelode */',
-'myskin.js'      => '/* Daut neachste JavaScript woat fe Brucka mett MySkin-Skin jelode */',
 
 # Metadata
 'notacceptable' => 'Dee Wiki-Server kaun dee Dote nich soo reedmoake, daut dien Jereetschauft dee lese kaun.',

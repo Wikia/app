@@ -2010,7 +2010,6 @@ $UNWATCHURL  نه ليدنه وکړۍ
 
 # Skin names
 'skinname-monobook'    => 'مونوبوک',
-'skinname-myskin'      => 'زمابڼه',
 
 # Patrolling
 'markaspatrolledtext' => 'دا مخ څارل شوی په نخښه کول',

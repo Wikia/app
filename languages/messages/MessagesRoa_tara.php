@@ -2725,7 +2725,6 @@ Permette de aggiungere 'nu mutive jndr'à 'u riepileghe",
 # Stylesheets
 'common.css'              => "/* 'U CSS ca se iacchie aqquà avène applicate a tutte le masckere */",
 'monobook.css'            => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Monobook */",
-'myskin.css'              => "/* 'U CSS ca se iacchie aqquà 'u 'ndrucane le utinde d'a masckere Personalizzate */",
 'print.css'               => "/* 'U CSS ca se iacchie aqquà avène applicate a 'u resultate d'a stambe */",
 'handheld.css'            => "/* 'U CSS ca se iacchie aqquà l'ausane le dispositive de gestione manuale basate sus a masckere configurate in \$wgHandheldStyle */",
 'noscript.css'            => "/* 'U CSS ca se iacchie aqquà l'ausane le utinde cu 'u Javascript disabbilitate */",
@@ -2737,7 +2736,6 @@ Permette de aggiungere 'nu mutive jndr'à 'u riepileghe",
 # Scripts
 'common.js'              => '/* Ogne JavaScript aqquà avène carecate pe tutte le utinde sus a ogne pàgene carecate. */',
 'monobook.js'            => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere MonoBook */",
-'myskin.js'              => "/* Ogne JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Personalizzate */",
 'group-autoconfirmed.js' => '/* Ogne JavaScript aqquà avène carecate pe le utinde autoconfirmatarie */',
 'group-bot.js'           => '/* Ogne JavaScript aqquà avène carecate pe le bot */',
 'group-sysop.js'         => '/* Ogne JavaScript aqquà avène carecate pe le utinde amministrature */',
@@ -2782,7 +2780,6 @@ Stu fatte ha state causate da 'nu collegamende a 'nu site esterne ca appartene a
 
 # Skin names
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'Personalizzate',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Signe cumme condrollate',

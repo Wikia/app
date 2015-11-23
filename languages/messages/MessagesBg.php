@@ -2815,7 +2815,6 @@ $1',
 
 # Skin names
 'skinname-monobook'    => 'Монобук',
-'skinname-myskin'      => 'Моят облик',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Отбелязване като проверена редакция',

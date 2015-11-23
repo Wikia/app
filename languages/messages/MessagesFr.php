@@ -2985,7 +2985,6 @@ Permet de rétablir la version précédente et d’ajouter un motif dans la boî
 # Stylesheets
 'common.css'      => '/* Le CSS placé ici sera appliqué à tous les habillages. */',
 'monobook.css'    => '/* Le CSS placé ici affectera les utilisateurs de l’habillage Monobook. */',
-'myskin.css'      => '/* Le CSS placé ici affectera les utilisateurs de l’habillage MySkin. */',
 'print.css'       => '/* Le CSS placé ici affectera les impressions */',
 'handheld.css'    => '/* Le CSS placé ici affectera les appareils mobiles en fonction de l\'habillage configuré $wgHandheldStyle */',
 'group-sysop.css' => '/* Le CSS inclus ici n’affectera que les administrateurs */',
@@ -2993,7 +2992,6 @@ Permet de rétablir la version précédente et d’ajouter un motif dans la boî
 # Scripts
 'common.js'      => '/* Tout JavaScript ici sera chargé avec chaque page accédée par n’importe quel utilisateur. */',
 'monobook.js'    => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage MonoBook uniquement. */',
-'myskin.js'      => '/* Tout JavaScript ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Mon habillage uniquement */',
 'group-sysop.js' => '/* Le JavaScript inclus ici n’affectera que les administrateurs */',
 
 # Metadata
@@ -3034,7 +3032,6 @@ Permet de rétablir la version précédente et d’ajouter un motif dans la boî
 
 # Skin names
 'skinname-monobook'    => 'Monobook',
-'skinname-myskin'      => 'Mon Interface',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marquer comme relue',

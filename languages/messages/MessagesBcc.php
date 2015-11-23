@@ -2386,7 +2386,6 @@ $1',
 
 # Skin names
 'skinname-monobook'    => 'منوبوک',
-'skinname-myskin'      => 'منی جلد',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'نشان کن په داب نظارت بوتگین',

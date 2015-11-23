@@ -2925,7 +2925,6 @@ $1',
 
 # Skin names
 'skinname-monobook'    => 'മോണോബുക്ക്',
-'skinname-myskin'      => 'എന്റിഷ്ടം',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'റോന്തുചുറ്റിയതായി അടയാളപ്പെടുത്തുക',

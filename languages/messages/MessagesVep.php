@@ -2319,7 +2319,6 @@ Voib olda, necil lehtpolel om kosketuz irdsaitale, kudamb om mustas nimikirjutes
 
 # Skin names
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'Ičeze',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Znamoita kut patruliruidud',

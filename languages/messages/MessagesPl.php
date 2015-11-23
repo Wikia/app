@@ -2952,7 +2952,6 @@ Pozwala na wpisanie powodu w opisie zmian.',
 # Stylesheets
 'common.css'      => '/* Umieszczony tutaj kod CSS zostanie zastosowany we wszystkich skórkach */',
 'monobook.css'    => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Książka */',
-'myskin.css'      => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Moja skórka */',
 'print.css'       => '/* Umieszczony tutaj kod CSS wpłynie na wygląd wydruku */',
 'handheld.css'    => '/* Umieszczony tutaj kod CSS wpłynie na wygląd na urządzeniach kieszonkowych skórki ustawionej w zmiennej $wgHandheldStyle */',
 'noscript.css'    => '/* Umieszczony tu arkusz stylów CSS będzie wykorzystywany dla użytkowników z wyłączoną obsługą JavaScript */',
@@ -2960,7 +2959,6 @@ Pozwala na wpisanie powodu w opisie zmian.',
 # Scripts
 'common.js'      => '/* Umieszczony tutaj kod JavaScript zostanie załadowany przez każdego użytkownika, podczas każdego ładowania strony. */',
 'monobook.js'    => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Książka */',
-'myskin.js'      => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Moja skórka */',
 
 # Metadata
 'notacceptable' => 'Serwer wiki nie może dostarczyć danych w formacie, którego Twoja przeglądarka oczekuje.',
@@ -3001,7 +2999,6 @@ Najprawdopodobniej zostało to spowodowane przez link do zewnętrznej strony int
 
 # Skin names
 'skinname-monobook'    => 'Książka',
-'skinname-myskin'      => 'Moja skórka',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'oznacz edycję jako „sprawdzoną”',

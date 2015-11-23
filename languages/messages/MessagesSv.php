@@ -2941,13 +2941,11 @@ Ger möjlighet att skriva en motivering i redigeringssammanfattningen',
 # Stylesheets
 'common.css'      => '/* CSS som skrivs här påverkar alla skal */',
 'monobook.css'    => '/* CSS som skrivs här kommer att påverka alla användare av skalet Monobook */',
-'myskin.css'      => '/* CSS som skrivs här kommer att påverka alla användare av skalet Mitt utseende */',
 'print.css'       => '/* CSS som skrivs här kommer att påverka utskriftsversionen */',
 
 # Scripts
 'common.js'      => '/* JavaScript som skrivs här körs varje gång en användare laddar en sida. */',
 'monobook.js'    => '/* JavaScript här kommer att laddas för dem som använder skalet Monobook */',
-'myskin.js'      => '/* JavaScript här kommer att laddas för dem som använder skalet Mitt utseende */',
 
 # Metadata
 'notacceptable' => 'Den här wiki-servern kan inte erbjuda data i ett format som din klient kan läsa.',
@@ -2988,7 +2986,6 @@ Detta orsakades troligen av en länk till en svartlistad webbplats.',
 
 # Skin names
 'skinname-monobook'    => 'Monobook',
-'skinname-myskin'      => 'Mitt utseende',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Märk som patrullerad',

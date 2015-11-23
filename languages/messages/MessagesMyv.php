@@ -1761,7 +1761,6 @@ IP-тешкстэть — $3, саймас совавтоманть ID-сь — 
 'pageinfo-views'        => 'Зяро ванома потмонзо',
 
 # Skin names
-'skinname-myskin'    => 'ЭсьМелемКоряс',
 
 # Patrolling
 'markaspatrolleddiff' => 'Тешкстамс ванстнемань ютазекс',

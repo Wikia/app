@@ -1467,14 +1467,12 @@ Lejon dhânien e arsyes në përmbledhje.',
 # Stylesheets
 'common.css'      => '/* CSSi i vendosun këtu ka me u zbatue në tâna dukjet */',
 'monobook.css'    => '/* CSS i vednosun këtu ka me i prekë shfrytëzuesit e dukjes Monobook */',
-'myskin.css'      => '/* CSSi i vednosun këtu ka me i prekë shfrytëzuesit e dukjes MySkin */',
 'print.css'       => '/* CSSi i vednosun këtu ka me e prekë pamjen e shtypjes */',
 'handheld.css'    => '/* CSSi i vednosun këtu ka me i prekë shfletuesit mobil (të dorës) në dukje e konfigurueme në $wgHandheldStyle */',
 
 # Scripts
 'common.js'      => '/* Çdo JavaScript këtu ka me u ngarkue për të gjithë përdoruesit në secilën thirrje të faqes. */',
 'monobook.js'    => '/* Çdo JavaScript këtu ka me u ngarkue për shfrytëzuesit që përdorin dukjen MonoBook */',
-'myskin.js'      => '/* Çdo JavaScript këtu ka me u ngarkue për shfrytëzuesit që përdorin dukjen MySkin */',
 
 # Metadata
 'notacceptable' => 'Serveri i wikit nuk mundet me i ofrue të dhânat në formatin që kish mujtë me i lexue klienti juej.',

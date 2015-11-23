@@ -2763,14 +2763,12 @@ $1被封禁的理由是：“$2”',
 # Stylesheets
 'common.css'      => '/* 此处的 CSS 将应用于所有的皮肤 */',
 'monobook.css'    => '/* 此处的 CSS 将影响使用 Monobook 皮肤的用户 */',
-'myskin.css'      => '/* 此处的 CSS 将影响使用 MySkin 皮肤的用户 */',
 'print.css'       => '/* 此处的 CSS 将影响打印输出 */',
 'handheld.css'    => '/* 此处的 CSS 将影响在 $wgHandheldStyle 设置手提装置面板 */',
 
 # Scripts
 'common.js'      => '/* 此处的JavaScript将加载于所有用户每一个页面。 */',
 'monobook.js'    => '/* 此处的JavaScript将加载于使用Monobook皮肤的用户 */',
-'myskin.js'      => '/* 此处的JavaScript将加载于使用MySkin皮肤的用户 */',
 
 # Metadata
 'notacceptable' => '该网站服务器不能提供您的客户端能识别的数据格式。',

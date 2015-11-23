@@ -3152,7 +3152,6 @@ $1',
 
 # Skin names
 'skinname-monobook'    => 'مونوبوک',
-'skinname-myskin'      => 'پوستهٔ من',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'برچسب گشت بزن',

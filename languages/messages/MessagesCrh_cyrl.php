@@ -1797,7 +1797,6 @@ MediaWiki интерфейсининъ чешит тиллерге терджи�
 
 # Skin names
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'Озь ресимлеме',
 
 # Patrol log
 'patrol-log-page'      => 'Тешкерюв журналы',

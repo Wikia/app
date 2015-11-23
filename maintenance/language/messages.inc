@@ -2479,11 +2479,7 @@ $wgMessageStructure = array(
 	),
 	'stylesheets' => array(
 		'common.css',
-		'standard.css',
 		'monobook.css',
-		'myskin.css',
-		'simple.css',
-		'modern.css',
 		'print.css',
 		'handheld.css',
 		'noscript.css',
@@ -2494,11 +2490,7 @@ $wgMessageStructure = array(
 	),
 	'scripts' => array(
 		'common.js',
-		'standard.js',
 		'monobook.js',
-		'myskin.js',
-		'simple.js',
-		'modern.js',
 		'group-autoconfirmed.js',
 		'group-bot.js',
 		'group-sysop.js',
@@ -2541,11 +2533,7 @@ $wgMessageStructure = array(
 		'pageinfo-viewsperedit',
 	),
 	'skin' => array(
-		'skinname-standard',
 		'skinname-monobook',
-		'skinname-myskin',
-		'skinname-simple',
-		'skinname-modern',
 	),
 	'patrolling' => array(
 		'markaspatrolleddiff',

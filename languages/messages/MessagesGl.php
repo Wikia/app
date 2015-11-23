@@ -2888,7 +2888,6 @@ Pode ver o código fonte.',
 # Stylesheets
 'common.css'              => '/** O CSS que se coloque aquí será aplicado a todas as aparencias */',
 'monobook.css'            => '/* O CSS que se coloque aquí afectará a quen use a aparencia Monobook */',
-'myskin.css'              => '/* O CSS que se coloque aquí afectará a quen use a aparencia A miña aparencia */',
 'print.css'               => '/* O CSS que se coloque aquí afectará ás impresións */',
 'handheld.css'            => '/* O CSS que se coloque aquí afectará aos dispositivos móbiles baseados na aparencia configurada en $wgHandheldStyle */',
 'noscript.css'            => '/* O CSS que se coloque aquí afectará aos usuarios co JavaScript desactivado */',
@@ -2900,7 +2899,6 @@ Pode ver o código fonte.',
 # Scripts
 'common.js'              => '/* Calquera JavaScript que haxa aquí será cargado para todos os usuarios en cada páxina que vexan. */',
 'monobook.js'            => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia MonoBook */',
-'myskin.js'              => '/* Calquera JavaScript que haxa aquí será cargado para os usuarios que usen a aparencia A miña aparencia */',
 'group-autoconfirmed.js' => '/* Calquera JavaScript que haxa aquí será cargado soamente para os usuarios autoconfirmados */',
 'group-bot.js'           => '/* Calquera JavaScript que haxa aquí será cargado soamente para os bots */',
 'group-sysop.js'         => '/* Calquera JavaScript que haxa aquí será cargado soamente para os administradores */',
@@ -2945,7 +2943,6 @@ Isto, probabelmente, se debe a unha ligazón cara a un sitio externo que está n
 
 # Skin names
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'A miña aparencia',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marcar como revisada',

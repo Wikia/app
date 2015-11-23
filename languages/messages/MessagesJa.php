@@ -3049,7 +3049,6 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 # Stylesheets
 'common.css'              => '/* ここに書いたCSSはすべての外装に反映されます */',
 'monobook.css'            => '/* ここに記述したCSSはモノブック外装の利用者に影響します */',
-'myskin.css'              => '/* ここに記述したCSSはマイスキン外装の利用者に影響します */',
 'print.css'               => '/* ここに記述したCSSは印刷出力に影響します */',
 'handheld.css'            => '/* ここに記述したCSSは$wgHandheldStyleで設定された外装に基づく携帯機器に影響します */',
 'noscript.css'            => '/* ここに記述したCSSはJavaScriptを無効にしている利用者に影響します */',
@@ -3061,7 +3060,6 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 # Scripts
 'common.js'              => '/* ここにあるすべてのJavaScriptは、すべてのページ読み込みですべての利用者に対して読み込まれます */',
 'monobook.js'            => '/* ここにあるすべてのJavaScriptは、モノブック外装を使用している利用者に対して読み込まれます */',
-'myskin.js'              => '/* ここにあるすべてのJavaScriptは、マイスキン外装を使用している利用者に対して読み込まれます */',
 'group-autoconfirmed.js' => '/* ここにあるすべてのJavaScriptは、自動承認された利用者に対して読み込まれます */',
 'group-bot.js'           => '/* ここにあるすべてのJavaScriptは、ボットのみに対して読み込まれます */',
 'group-sysop.js'         => '/* ここにあるすべてのJavaScriptは、管理者のみに対して読み込まれます */',
@@ -3106,7 +3104,6 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 
 # Skin names
 'skinname-monobook'    => 'モノブック',
-'skinname-myskin'      => 'マイスキン',
 
 # Patrolling
 'markaspatrolleddiff'                 => '巡回済みにする',

@@ -2485,7 +2485,6 @@ MediaWiki локализациясына юлюш къошаргъа излей 
 
 # Skin names
 'skinname-monobook'    => 'Моно-китаб',
-'skinname-myskin'      => 'Меники',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Контроль этилгенин белгиле',

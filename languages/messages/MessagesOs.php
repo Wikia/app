@@ -1079,7 +1079,6 @@ $3',
 
 # Skin names
 'skinname-monobook'    => 'Моно-чиныг',
-'skinname-myskin'      => 'Мæхи',
 
 # Browsing diffs
 'previousdiff' => '← Зæронддæр ивд',

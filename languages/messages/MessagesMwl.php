@@ -1077,7 +1077,6 @@ Premite ajuntar la rezon de la eidiçon ne l sumário.',
 
 # Skin names
 'skinname-monobook'    => 'Lhibro',
-'skinname-myskin'      => 'Piel',
 
 # Browsing diffs
 'previousdiff' => "← Eidiçon d'atrás",

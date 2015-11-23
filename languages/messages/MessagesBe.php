@@ -2689,7 +2689,6 @@ $1',
 
 # Skin names
 'skinname-monobook'    => 'Манабук',
-'skinname-myskin'      => 'Майскін',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Пазначыць як ухваленае',

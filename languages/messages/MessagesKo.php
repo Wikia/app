@@ -2947,7 +2947,6 @@ $1 사용자가 차단된 이유는 다음과 같습니다: "$2"',
 
 # Skin names
 'skinname-monobook'    => '모노북',
-'skinname-myskin'      => '마이스킨',
 
 # Patrolling
 'markaspatrolleddiff'                 => '검토한 문서로 표시',

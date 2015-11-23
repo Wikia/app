@@ -2038,12 +2038,10 @@ Dafay tax nga man a bind ngirte li ci boyotu tënk bi.',
 # Stylesheets
 'common.css'      => '/* CSS yiñ def fii dañuy am ay njeexit ci col yépp  */',
 'monobook.css'    => '/* CSS yiñ def fii dañuy am ay njeexit ci jëfandikukatu col gu Monobook. */',
-'myskin.css'      => '/* CSS yiñ def fii dañuy am ay njeexit ci jëfandikukatu col gu MySkin */',
 
 # Scripts
 'common.js'      => '/* Bépp JavaScript buñ fi duggal, xët yéppa koy yeb ak jëfandikukat bumu manti doon. */',
 'monobook.js'    => '/*Bépp JavaScript buñ fi duggal jëfandikukat yiy jëfandikoo col gu Monobook keppa koy yeb. */',
-'myskin.js'      => '/* Bépp JavaScript buñ fi duggal jëfandikukat yiy jëfandikoo col gu MySkin keppa koy yeb */',
 
 # Metadata
 'notacceptable' => 'Bii joxekaay bu wiki manuta jébbal ay njoxe cib kem bu sa client mana jàng.',

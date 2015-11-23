@@ -3020,7 +3020,6 @@ Pèrmèt de rètablir la vèrsion devant et pués d’apondre una rêson dens la
 # Stylesheets
 'common.css' => '/* Lo code CSS betâ ique serat aplicâ a tôs los habelyâjos. */',
 'monobook.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « MonoBook ». */',
-'myskin.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « MonHabelyâjo ». */',
 'print.css' => '/* Lo code CSS betâ ique afècterat les emprèssions. */',
 'handheld.css' => '/* Lo code CSS betâ ique afècterat los aparèlys mobilos d’aprés l’habelyâjo configurâ dedens « $wgHandheldStyle ». */',
 'noscript.css' => '/* Lo code CSS betâ ique afècterat los usanciérs qu’ont dèsactivâ lo code JavaScript. */',
@@ -3032,7 +3031,6 @@ Pèrmèt de rètablir la vèrsion devant et pués d’apondre una rêson dens la
 # Scripts
 'common.js' => '/* Tot code JavaScript betâ ique serat chargiê per tôs los usanciérs avouéc châque chargement de pâge. */',
 'monobook.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « MonoBook ». */',
-'myskin.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « MonHabelyâjo ». */',
 'group-autoconfirmed.js' => '/* Tot code JavaScript betâ ique serat chargiê ren que por los usanciérs encartâs. */',
 'group-bot.js' => '/* Tot code JavaScript betâ ique serat chargiê ren que por los bots. */',
 'group-sysop.js' => '/* Tot code JavaScript betâ ique serat chargiê ren que por los administrators. */',
@@ -3078,7 +3076,6 @@ O est probâblament diu a un lim de vers un seto de defôr qu’aparêt sur la l
 
 # Skin names
 'skinname-monobook' => 'MonoBook',
-'skinname-myskin' => 'MonHabelyâjo',
 
 # Patrolling
 'markaspatrolleddiff' => 'Marcar coment survelyê',

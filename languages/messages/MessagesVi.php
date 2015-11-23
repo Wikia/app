@@ -2915,7 +2915,6 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 # Stylesheets
 'common.css'              => '/* Mã CSS đặt ở đây sẽ áp dụng cho mọi hình dạng */',
 'monobook.css'            => '/* Mã CSS đặt ở đây sẽ ảnh hưởng đến thành viên sử dụng hình dạng MonoBook */',
-'myskin.css'              => '/* Mã CSS tại đây sẽ ảnh hưởng đến những người dùng sử dụng hình dạng Cá nhân */',
 'print.css'               => '/* Mã CSS tại đây sẽ ảnh hưởng đến bản để in */',
 'handheld.css'            => '/* Mã CSS tại đây sẽ ảnh hưởng đến các thiết bị cầm tay dựa trên hình dạng cấu hình trong $wgHandheldStyle */',
 'noscript.css'            => '/* Mã CSS tại đây sẽ ảnh hưởng đến những người dùng tắt JavaScript */',
@@ -2927,7 +2926,6 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 # Scripts
 'common.js'              => '/* Bất kỳ mã JavaScript ở đây sẽ được tải cho tất cả các thành viên khi tải một trang nào đó lên. */',
 'monobook.js'            => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng bề ngoài MonoBook */',
-'myskin.js'              => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng bề ngoài Cá nhân */',
 'group-autoconfirmed.js' => '/* Mã JavaScript tại đây sẽ chỉ được tải cho các thành viên tự động xác nhận */',
 'group-bot.js'           => '/* Mã JavaScript tại đây sẽ chỉ được tải cho các bot */',
 'group-sysop.js'         => '/* Mã JavaScript tại đây sẽ chỉ được tải cho các bảo quản viên */',
@@ -2971,7 +2969,6 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 'pageinfo-viewsperedit'     => 'Số lần xem mỗi sửa đổi',
 
 # Skin names
-'skinname-myskin'      => 'Cá nhân',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Đánh dấu tuần tra',

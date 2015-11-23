@@ -2792,7 +2792,6 @@ Talvezout a ra da ouzhpennañ un displegadenn er c\'hombod diverrañ.',
 # Stylesheets
 'common.css'              => '/** Talvezout a raio ar CSS lakaet amañ evit an holl wiskadurioù */',
 'monobook.css'            => '/* Talvezout a raio ar CSS lakaet amañ evit implijerien ar gwiskadur Monobook */',
-'myskin.css'              => '/* Talvezout a raio ar CSS lakaet amañ evit implijerien ar gwiskadur MySkin */',
 'print.css'               => '/* Talvezout a raio ar CSS lakaet amañ evit ar moullañ */',
 'handheld.css'            => '/* Talvezout a raio ar CSS lakaet amañ evit an ardivinkoù hezoug diouzh ar gwiskadur kefluniet e $wgHandheldStyle */',
 'noscript.css'            => '/* Talvezout a raio ar CSS lakaet amañ evit an implijerien o deus diweredekaet JavaScript */',
@@ -2804,7 +2803,6 @@ Talvezout a ra da ouzhpennañ un displegadenn er c\'hombod diverrañ.',
 # Scripts
 'common.js'      => '/* Kement JavaScript amañ a vo karget evit an holl implijerien war kement pajenn lennet ganto. */',
 'monobook.js'    => '/* Kement JavaScript amañ a vo karget evit an implijerien a ra gant ar gwiskadur MonoBook */',
-'myskin.js'      => '/* Kement JavaScript amañ a vo karget evit an implijerien a ra gant ar gwiskadur MySkin */',
 
 # Metadata
 'notacceptable' => "N'eo ket ar servijer wiki-mañ evit pourchas stlennoù en ur furmad lennus evit ho arval.",
@@ -2845,7 +2843,6 @@ Sur a-walc'h abalamour d'ul liamm enni a gas d'ul lec'hienn ziavaez berzet.",
 
 # Skin names
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'MySkin',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Merkañ evel gwiriet',

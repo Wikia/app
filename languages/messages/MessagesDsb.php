@@ -2801,7 +2801,6 @@ W zespominanju dajo se pśicyna pódaś.',
 
 # Skin names
 'skinname-monobook' => 'MonoBook',
-'skinname-myskin' => 'Mój šat',
 
 # Patrolling
 'markaspatrolleddiff' => 'Ako kontrolěrowane markěrowaś',

@@ -2695,7 +2695,6 @@ Puede veyer-ne, manimenos, o codigo fuent.',
 # Stylesheets
 'common.css'              => '/* Os estilos CSS definius aquí aplicarán a todas as apariencias (skins) */',
 'monobook.css'            => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Monobook */",
-'myskin.css'              => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que que faigan servir l'apariencia MySkin */",
 'print.css'               => '/* Os estilos CSS colocaus aquí afectarán a la impresión */',
 'handheld.css'            => '/* Os estilos CSS colocaus aquí afectarán a os dispositivos mobils basaus en as apariencias configuradas en $wgHandheldStyle */',
 'noscript.css'            => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que tiengan desactivato JavaScript */",
@@ -2707,7 +2706,6 @@ Puede veyer-ne, manimenos, o codigo fuent.',
 # Scripts
 'common.js'              => '/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios en cada carga de pachina */',
 'monobook.js'            => "/* O codigo Javascript que se meta aquí será cargau por os usuarios faigan servir l'apariencia MonoBook */",
-'myskin.js'              => "/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios que faigan servir l'apariencia MySkin */",
 'group-autoconfirmed.js' => '/* Qualsiquier codigo Javascript escrito aquí se cargará nomás ta os usuarios autoconfirmatos */',
 'group-bot.js'           => '/* Qualsiquier codigo Javascript escrito aquí se cargará nomás ta os bots */',
 'group-sysop.js'         => '/* Qualsiquier codigo Javascript escrito aquí se cargará nomás ta os administradors */',
@@ -2751,7 +2749,6 @@ Puede veyer-ne, manimenos, o codigo fuent.',
 
 # Skin names
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'A mía aparencia (MySkin)',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Sinyalar como ya controlato',

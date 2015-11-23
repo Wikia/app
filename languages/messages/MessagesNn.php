@@ -2719,14 +2719,12 @@ Vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] og [//trans
 # Stylesheets
 'common.css'      => '/* CSS plassert i denne fila vil gjelde for alle utsjånader. */',
 'monobook.css'    => '/* CSS-tekst som vert plassert her, endrar utsjånaden til sidedrakta Monobook */',
-'myskin.css'      => '/* CSS i denne fila vil gjelde alle som nyttar drakta MySkin */',
 'print.css'       => '/* CSS i denne fila vil påverke utskriftsversjonen */',
 'handheld.css'    => '/* CSS i denne fila vil gjelde alle handheldte innretnigar konfigurert i $wgHandheldStyle */',
 
 # Scripts
 'common.js'      => '/* Javascript i denne fila vil gjelde for alle drakter. */',
 'monobook.js'    => '/* Javascript i denne fila vil gjelde for brukarar av drakta Monobook */',
-'myskin.js'      => '* Javascript i denne fila vil gjelde for brukarar av drakta MySkin */',
 
 # Metadata
 'notacceptable' => 'Wikitenaren kan ikkje gje data i noko format som programmet ditt kan lesa.',
@@ -2766,7 +2764,6 @@ Vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] og [//trans
 
 # Skin names
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'MiDrakt',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Merk som patruljert',

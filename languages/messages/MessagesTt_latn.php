@@ -1869,7 +1869,6 @@ Zinhar başqa isem saylağız.',
 
 # Skin names
 'skinname-monobook'    => 'Kitap',
-'skinname-myskin'      => 'Üzem',
 
 # Patrolling
 'markaspatrolledtext'   => 'Bu mäqäläne tikşerelgän dip tamğalaw',

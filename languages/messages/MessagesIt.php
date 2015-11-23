@@ -2818,7 +2818,6 @@ Tutte le operazioni di importazione trans-wiki sono registrate nel [[Special:Log
 # Stylesheets
 'common.css'              => '/* Gli stili CSS inseriti qui si applicano a tutte le skin */',
 'monobook.css'            => '/* Gli stili CSS inseriti qui si applicano agli utenti che usano la skin Monobook */',
-'myskin.css'              => '/* Gli stili CSS inseriti qui si applicano agli utenti che usano la skin MySkin */',
 'print.css'               => "/* Gli stili CSS inseriti qui si applicano all'output in stampa */",
 'handheld.css'            => '/* Gli stili CSS inseriti qui si applicano ai dispositivi portatili basati sulla skin configurata in $wgHandheldStyle */',
 'noscript.css'            => '/ * Gli stili CSS inseriti qui si applicano agli utenti che hanno JavaScript disabilitato * /',
@@ -2830,7 +2829,6 @@ Tutte le operazioni di importazione trans-wiki sono registrate nel [[Special:Log
 # Scripts
 'common.js'              => '/* Il codice JavaScript inserito qui viene caricato da ciascuna pagina, per tutti gli utenti. */',
 'monobook.js'            => '/* Il codice JavaScript inserito qui viene caricato dagli utenti che usano la skin MonoBook */',
-'myskin.js'              => '/* Il codice JavaScript inserito qui viene caricato dagli utenti che usano la skin MySkin */',
 'group-autoconfirmed.js' => '/ * Il codice JavaScript inserito qui viene caricato solo per gli utenti autoconvalidati * /',
 'group-bot.js'           => '/ * Il codice JavaScript inserito qui viene caricato solo per i bot * /',
 'group-sysop.js'         => '/ * Il codice JavaScript inserito qui viene caricato solo per gli amministratori/sysop * /',

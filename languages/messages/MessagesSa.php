@@ -1607,7 +1607,6 @@ $2
 
 # Skin names
 'skinname-monobook'    => 'पुस्तक',
-'skinname-myskin'      => 'मे चर्मन्',
 
 # Browsing diffs
 'previousdiff' => '← पुरातनतरं सम्पादनम्',

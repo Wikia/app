@@ -3055,7 +3055,6 @@ Een tijdelijke map is niet aanwezig.',
 # Stylesheets
 'common.css'              => '/** CSS die hier wordt geplaatst heeft invloed op alle skins */',
 'monobook.css'            => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Monobook */',
-'myskin.css'              => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin MijnSkin */',
 'print.css'               => '/* CSS die hier wordt geplaatst heeft alleen invloed op de printuitvoer */',
 'handheld.css'            => '/* CSS die hier wordt geplaatst heeft alleen invloed op handheldapparaten gebaseerd op de skin die is ingesteld in $wgHandheldStyle */',
 'noscript.css'            => '/ * CSS die hier wordt geplaatst heeft invloed voor gebruikers die JavaScript hebben uitgeschakeld * /',
@@ -3067,7 +3066,6 @@ Een tijdelijke map is niet aanwezig.',
 # Scripts
 'common.js'              => "/* JavaScript die hier wordt geplaatst heeft invloed op alle pagina's voor alle gebruikers */",
 'monobook.js'            => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Monobook gebruiken */',
-'myskin.js'              => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin MijnSkin gebruiken */',
 'group-autoconfirmed.js' => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op automatisch bevestigde gebruikers */',
 'group-bot.js'           => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op robots */',
 'group-sysop.js'         => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op beheerders */',
@@ -3112,7 +3110,6 @@ Meestal wordt dit door een externe verwijzing op een zwarte lijst veroorzaakt.',
 
 # Skin names
 'skinname-monobook'    => 'Monobook',
-'skinname-myskin'      => 'MijnSkin',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Als gecontroleerd markeren',

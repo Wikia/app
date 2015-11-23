@@ -35,8 +35,6 @@ $namespaceNames = array(
 
 $skinNames = array(
 	'monobook'      => 'MonoBook',
-	'myskin'        => 'MySkin',
-	'simple'        => 'Einfach',
 );
 
 $bookstoreList = array(
@@ -2120,12 +2118,10 @@ Ales Dranswigi-Imbord-Agsiones in dose [[Special:Log/import|Imbord-Logbug]] brod
 #p-cactions li a {
 	text-transform: none;
 }',
-'myskin.css'      => '/* CSS an dose Schdel auw dose MySkin-Skin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */',
 
 # Scripts
 'common.js'      => '/* Dose wolgendes JawaSgribd wür ales Benudses lad. */',
 'monobook.js'    => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Monobook-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
-'myskin.js'      => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Myskin-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
 
 # Metadata
 'nodublincore'      => 'Dublin-Core-RDF-Medadades wür dose Sörw deagdiwärdes sei.',

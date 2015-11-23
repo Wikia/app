@@ -2849,7 +2849,6 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 # Stylesheets
 'common.css'              => '/* Tämä sivu sisältää koko sivustoa muuttavia tyylejä. */',
 'monobook.css'            => '/* Tämä sivu sisältää Monobook-ulkoasua muuttavia tyylejä. */',
-'myskin.css'              => '/* Tämä sivu sisältää Oma tyylisivu -ulkoasua muuttavia tyylejä. */',
 'print.css'               => '/* Tämä sivu sisältää tulostettua sivua muuttavia tyylejä */',
 'noscript.css'            => '/* Tämä sivun tyylit muuttavat niiden käyttäjien tyylejä, joilla JavaScript ei ole käytössä */',
 'group-autoconfirmed.css' => '/* Tämä sivun tyylit muuttavat automaattisesti hyväksyttyjen käyttäjien tyylejä */',
@@ -2860,7 +2859,6 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 # Scripts
 'common.js'              => '/* Tämän sivun JavaScript-koodi liitetään jokaiseen sivulataukseen */',
 'monobook.js'            => '/* Tämän sivun JavaScript-koodi liitetään Monobook-tyyliin */',
-'myskin.js'              => '/* Tämän sivun JavaScript-koodi liitetään Oma tyylisivu -tyyliin */',
 'group-autoconfirmed.js' => '/* Tämän sivun JavaScript-koodi liitetään vain automaattisesti hyväksytyille käyttäjille */',
 'group-bot.js'           => '/* Tämän sivun JavaScript-koodi liitetään vain boteille */',
 'group-sysop.js'         => '/* Tämän sivun JavaScript-koodi liitetään vain ylläpitäjille */',
@@ -2904,7 +2902,6 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 
 # Skin names
 'skinname-monobook'    => 'Monobook',
-'skinname-myskin'      => 'Oma tyylisivu',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Merkitse tarkastetuksi',

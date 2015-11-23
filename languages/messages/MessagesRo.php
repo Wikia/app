@@ -2945,7 +2945,6 @@ Permite adăugarea unui motiv în descrierea modificărilor',
 # Stylesheets
 'common.css'      => '/** CSS plasate aici vor fi aplicate tuturor aparițiilor */',
 'monobook.css'    => '/* modificați acest fișier pentru a adapta înfățișarea monobook-ului pentru tot situl*/',
-'myskin.css'      => '/* CSS plasate aici vor afecta utilizatorii stilului MySkin */',
 'print.css'       => '/* CSS plasate aici vor afecta modul în care paginile vor fi imprimate */',
 
 # Metadata
@@ -2986,7 +2985,6 @@ Permite adăugarea unui motiv în descrierea modificărilor',
 
 # Skin names
 'skinname-monobook'    => 'Monobook',
-'skinname-myskin'      => 'StilulMeu',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marchează pagina ca verificată',

@@ -2949,7 +2949,6 @@ Meestentieds kump dit deur n uutgaonde verwiezing die op de zwarte lieste steet.
 
 # Skin names
 'skinname-monobook'    => 'Monobook',
-'skinname-myskin'      => 'MienSkin',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Markeer as ekontroleerd',

@@ -1094,7 +1094,6 @@ to upload files.',
 
 # Skin names
 'skinname-monobook' => 'ਮੋਨੋਬੁੱਕ',
-'skinname-myskin'   => 'ਮੇਰੀਸਕਿਨ',
 
 # Browsing diffs
 'previousdiff' => '← ਪੁਰਾਣੀ ਸੋਧ',

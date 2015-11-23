@@ -2277,14 +2277,12 @@ $1',
 # Stylesheets
 'common.css'      => '/* 此之 CSS 用於全面也 */',
 'monobook.css'    => '/* 此之 CSS 用於單書面之簿也 */',
-'myskin.css'      => '/* 此之 CSS 用於吾風面之簿也 */',
 'print.css'       => '/* 此之 CSS 用於印之出力也 */',
 'handheld.css'    => '/* 此之 CSS 用於 $wgHandheldStyle 之手置面也 */',
 
 # Scripts
 'common.js'      => '/* 此之JavaScript將載於全簿之頁。 */',
 'monobook.js'    => '/* 此之JavaScript將載於用單書面之簿 */',
-'myskin.js'      => '/* 此之JavaScript將載於用吾風面之簿 */',
 
 # Attribution
 'anonymous'        => '{{SITENAME}}無{{PLURAL:$1|簿|簿}}者',
@@ -2309,7 +2307,6 @@ $1',
 
 # Skin names
 'skinname-monobook'    => '單書',
-'skinname-myskin'      => '吾風',
 
 # Patrolling
 'markaspatrolleddiff'                 => '派哨',

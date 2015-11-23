@@ -2896,14 +2896,12 @@ Dopušta unos razloga u sažetak.',
 # Stylesheets
 'common.css'      => '/* CSS umetnut ovdje primijenit će se na sve skinove */',
 'monobook.css'    => '/* CSS umetnut ovdje uticat će na korisnike koji koriste Monobook skin */',
-'myskin.css'      => '/* CSS umetnut ovdje uticat će na korisnike koji koriste MySkin skin */',
 'print.css'       => '/* CSS umetnut ovdje uticat će na izgled isprintane stranice */',
 'handheld.css'    => '/* CSS umetnut ovdje uticat će na ručne sprave koji rade na skinu konfigurisanom u $wgHandheldStyle */',
 
 # Scripts
 'common.js'      => '/* Bilo koja JavaScript će biti učitana za sve korisnike pri svakom učitavanju stranice. */',
 'monobook.js'    => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste MonoBook skin */',
-'myskin.js'      => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste MySkin skin */',
 
 # Metadata
 'notacceptable' => 'Viki server ne može da pruži podatke u onom formatu koji Vaš klijent može da pročita.',
@@ -2944,7 +2942,6 @@ Ovo je vjerovatno izazvao vezom ka vanjskoj nepoželjnoj stranici.',
 
 # Skin names
 'skinname-monobook'    => 'MonoKnjiga',
-'skinname-myskin'      => 'MojaKoža',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Označi kao patrolirano',

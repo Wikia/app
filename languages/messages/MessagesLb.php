@@ -2751,7 +2751,6 @@ Erlaabt et e Grond an de Resumé derbäizesetzen.',
 # Stylesheets
 'common.css'      => "/* Dës CSS huet nëmmen Afloss op de Skin ''Chick''  */",
 'monobook.css'    => "/* Dës CSS huet nëmmen Afloss op de Skin ''Monobook''  */",
-'myskin.css'      => "/* Dës CSS huet nëmmen Afloss op de Skin ''MySkin''  */",
 
 # Scripts
 'common.js' => '/* All JavaScript hei gëtt fir all Benotzer beim Luede vun all Säit gelueden. */',
@@ -2795,7 +2794,6 @@ Dëst warscheinlech duerch en externe Link den op der schwaarzer Lëscht (blackl
 
 # Skin names
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'MySkin',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Als nogekuckt markéieren',

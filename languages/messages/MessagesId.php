@@ -2856,14 +2856,12 @@ Simpan ke komputer Anda lalu muatkan di sini.',
 # Stylesheets
 'common.css'      => '/* CSS yang ada di sini akan diterapkan untuk semua kulit. */',
 'monobook.css'    => '/* CSS yang ada di sini akan diterapkan untuk kulit Monobook. */',
-'myskin.css'      => '/* CSS yang ada di sini akan diterapkan untuk kulit MySkin. */',
 'print.css'       => '/* CSS yang ada di sini akan diterapkan untuk tampilan cetak. */',
 'handheld.css'    => '/* CSS yang ada di sini akan diterapkan untuk tampilan piranti genggam yang dikonfigurasi di $wgHandheldStyle. */',
 
 # Scripts
 'common.js'      => '/* JavaScript yang ada di sini akan diterapkan untuk semua kulit. */',
 'monobook.js'    => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit MonoBook */',
-'myskin.js'      => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit MySkin */',
 
 # Metadata
 'notacceptable' => 'Server wiki tidak dapat menyediakan data dalam format yang dapat dibaca oleh client Anda.',

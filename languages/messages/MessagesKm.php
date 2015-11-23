@@ -2793,7 +2793,6 @@ $1',
 # Stylesheets
 'common.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើគ្រប់សំបកទាំងអស់ */',
 'monobook.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក Monobook */',
-'myskin.css' => '/* CSS បានដាក់ទីនេះនឹងមានអនុភាពលើអ្នកប្រើប្រាស់នៃសំបក MySkin */',
 
 # Attribution
 'anonymous' => '{{PLURAL:$1|user|អ្នកប្រើប្រាស់}}អនាមិកនៃ {{SITENAME}}',
@@ -2830,7 +2829,6 @@ $1',
 
 # Skin names
 'skinname-monobook' => 'សៀវភៅឯក',
-'skinname-myskin' => 'សំបកខ្ញុំ',
 
 # Patrolling
 'markaspatrolleddiff' => 'ចំណាំថាបានល្បាត',

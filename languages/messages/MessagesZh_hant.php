@@ -2783,14 +2783,12 @@ $1被封禁的理由是“$2”',
 # Stylesheets
 'common.css'      => '/* 此處的 CSS 將應用於所有的面板 */',
 'monobook.css'    => '/* 此處的 CSS 將影響使用 Monobook 面板的用戶 */',
-'myskin.css'      => '/* 此處的 CSS 將影響使用 MySkin 面板的用戶 */',
 'print.css'       => '/* 此處的 CSS 將影響打印輸出 */',
 'handheld.css'    => '/* 此處的 CSS 將影響在 $wgHandheldStyle 設定手提裝置面板 */',
 
 # Scripts
 'common.js'      => '/* 此處的JavaScript將載入於所有用戶每一個頁面。 */',
 'monobook.js'    => '/* 此處的JavaScript將載入於使用Monobook面板的用戶 */',
-'myskin.js'      => '/* 此處的JavaScript將載入於使用MySkin面板的用戶 */',
 
 # Metadata
 'notacceptable' => '該網站伺服器不能提供您的客戶端能識別的數據格式。',

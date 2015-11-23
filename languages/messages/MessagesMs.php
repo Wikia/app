@@ -2813,7 +2813,6 @@ Simpan dalam komputer anda dan muat naiknya di sini.',
 # Stylesheets
 'common.css'      => '/* CSS yang terletak di sini akan digunakan pada semua kulit */',
 'monobook.css'    => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Monobook */',
-'myskin.css'      => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit MySkin */',
 
 # Metadata
 'notacceptable' => 'Pelayan wiki ini tidak mampu menyediakan data dalam format yang boleh dibaca oleh pelanggan anda.',
@@ -2853,7 +2852,6 @@ Simpan dalam komputer anda dan muat naiknya di sini.',
 
 # Skin names
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'MySkin',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Tanda ronda',

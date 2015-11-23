@@ -2908,7 +2908,6 @@ See also {{msg-mw|Anonuser}} and {{msg-mw|Siteusers}}.',
 
 # Skin names
 'skinname-monobook'    => '{{optional}}',
-'skinname-myskin'      => '{{optional}}',
 
 # Math options
 'mw_math_png'    => 'In user preferences.',

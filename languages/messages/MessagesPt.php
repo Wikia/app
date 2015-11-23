@@ -2958,14 +2958,12 @@ Permite colocar uma justificação no resumo da edição.',
 # Stylesheets
 'common.css'      => '/* Código CSS colocado aqui será aplicado a todos os temas */',
 'monobook.css'    => '/* Código CSS colocado aqui afectará os utilizadores do tema Monobook */',
-'myskin.css'      => '/* Código CSS colocado aqui afectará os utilizadores do tema MySkin */',
 'print.css'       => '/* Código CSS colocado aqui afectará as impressões */',
 'handheld.css'    => '/* Código CSS colocado aqui afectará dispositivos móveis baseados no tema configurado em $wgHandheldStyle */',
 
 # Scripts
 'common.js'      => '/* Código Javascript colocado aqui será carregado para todos os utilizadores em cada carregamento de página */',
 'monobook.js'    => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Monobook */',
-'myskin.js'      => '/* Código Javascript colocado aqui será carregado para utilizadores do tema MySkin */',
 
 # Metadata
 'notacceptable' => 'O servidor não pode fornecer os dados num formato que o seu cliente possa ler.',
@@ -3006,7 +3004,6 @@ Este bloqueio foi provavelmente causado por um link para um site externo que con
 
 # Skin names
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'MySkin',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marcar como patrulhada',

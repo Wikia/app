@@ -2826,7 +2826,6 @@ Leidžia pridėti atmetimo priežastį komentaruose',
 
 # Skin names
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'Mano išvaizda',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Žymėti, kad patikrinta',

@@ -1725,7 +1725,6 @@ iarradh sábháil. Is dócha gur nasc chuig suíomh seachtrach ba chúis leis.',
 
 # Skin names
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'MoChraiceann',
 
 # Patrolling
 'markaspatrolleddiff'   => 'Comharthaigh mar patrólta.',

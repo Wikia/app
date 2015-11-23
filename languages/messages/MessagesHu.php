@@ -2929,7 +2929,6 @@ Mentsd el a számítógépedre, majd töltsd fel ide.',
 # Stylesheets
 'common.css'              => '/* Közös CSS az összes felületnek */',
 'monobook.css'            => '/* Az ide elhelyezett CSS hatással lesz a Monobook felület használóira */',
-'myskin.css'              => '/* Az ide elhelyezett CSS hatással lesz a MySkin felület használóira */',
 'print.css'               => '/* Az ide elhelyezett CSS hatással lesz a nyomtatás kimenetelére */',
 'handheld.css'            => '/* Az ide elhelyezett CSS hatással lesz azon kézi eszközökre, amelyek $wgHandheldStyle felülettel vannak konfigurálva */',
 'noscript.css'            => '/* Az ide elhelyezett CSS azon felhasználókra lesz hatással, ahol a JavaScript le van tiltva */',
@@ -2941,7 +2940,6 @@ Mentsd el a számítógépedre, majd töltsd fel ide.',
 # Scripts
 'common.js'              => '/* Az ide elhelyezett JavaScript kód minden felhasználó számára lefut az oldalak betöltésekor. */',
 'monobook.js'            => '/* A Monobook felületet használó szerkesztők számára betöltendő JavaScriptek */',
-'myskin.js'              => '/* A MySkin felületet használó szerkesztők számára betöltendő JavaScriptek */',
 'group-autoconfirmed.js' => '/* Az ide elhelyezett JavaScript csak automatikusan megerősített felhasználóknak töltődik be */',
 'group-bot.js'           => '/* Az ide elhelyezett JavaScript csak botoknak töltődik be */',
 'group-sysop.js'         => '/* Az ide elhelyezett JavaScript csak adminisztrátoroknak töltődik be */',
@@ -2986,7 +2984,6 @@ Ez valószínűleg egy olyan link miatt van, ami egy feketelistán lévő oldalr
 
 # Skin names
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'MySkin',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Ellenőrzöttnek jelölöd',

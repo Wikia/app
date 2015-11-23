@@ -2897,14 +2897,12 @@ $1',
 # Stylesheets
 'common.css'      => '/* Το τοποθετημένο εδώ CSS θα εφαρμοστεί σε όλα τα skins */',
 'monobook.css'    => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει χρήστες του Monobook skin */',
-'myskin.css'      => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει χρήστες του MySkin skin */',
 'print.css'       => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει το αποτέλεσμα της εκτύπωσης */',
 'handheld.css'    => '/* Το τοποθετημένο εδώ CSS θα επηρεάσει συσκευές χειρός βάση του skin ρυθμισμένου στο $wgHandheldStyle */',
 
 # Scripts
 'common.js'      => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για όλους τους χρήστες σε κάθε φόρτωση σελίδας. */',
 'monobook.js'    => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για χρήστες που χρησιμοποιούν το MonoBook skin */',
-'myskin.js'      => '/* Οποιοσδήποτε κώδικας JavaScript εδώ θα φορτωθεί για χρήστες που χρησιμοποιούν το MySkin skin */',
 
 # Metadata
 'notacceptable' => 'Ο server του Wiki δεν μπορεί να αποδώσει δεδομένα σε μορφή που να μπορεί να διαβάσει ο client σας.',
@@ -2943,7 +2941,6 @@ $1',
 'pageinfo-viewsperedit'     => 'Προβολές ανά επεξεργασία',
 
 # Skin names
-'skinname-myskin'    => 'ΤοSkinΜου',
 
 # Patrolling
 'markaspatrolleddiff'                 => "Να σημειωθεί 'υπό παρακολούθηση'",

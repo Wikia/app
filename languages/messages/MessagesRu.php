@@ -2939,7 +2939,6 @@ $1',
 # Stylesheets
 'common.css'              => '/** Размещённый здесь CSS будет применяться ко всем темам оформления */',
 'monobook.css'            => '/* Размещённый здесь CSS будет применяться к теме оформления Monobook */',
-'myskin.css'              => '/* Размещённый здесь CSS будет применяться к теме оформления MySkin */',
 'print.css'               => '/* Размещённый здесь CSS будет применяться к версии для печати */',
 'handheld.css'            => '/* Размещённый здесь CSS-код будет применяться для мобильных устройств, использующих тему оформления, указанную в $wgHandheldStyle */',
 'noscript.css'            => '/* Размещённый здесь CSS будет применяться для участников с отключенным JavaScript  */',
@@ -2991,7 +2990,6 @@ The wiki server can't provide data in a format your client can read.",
 'pageinfo-viewsperedit'     => 'Просмотров на правку',
 
 # Skin names
-'skinname-myskin'      => 'Своё',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Отметить как проверенную',

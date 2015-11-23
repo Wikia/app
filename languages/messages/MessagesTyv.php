@@ -742,7 +742,6 @@ The password for this new account can be changed on the ''[[Special:ChangePasswo
 
 # Skin names
 'skinname-monobook'    => 'Моно-Ном',
-'skinname-myskin'      => 'MySkin',
 
 # Math errors
 'math_unknown_error' => 'билбес алдаг',

@@ -2960,14 +2960,12 @@ Permite añadir una razón al resumen de edición.',
 # Stylesheets
 'common.css'      => '/* Los estilos CSS definidos aquí aplicarán a todas las pieles (skins) */',
 'monobook.css'    => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Monobook */',
-'myskin.css'      => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel MySkin */',
 'print.css'       => '/* Los estilos CSS colocados aquí afectarán la impresión */',
 'handheld.css'    => '/* Los estilos CSS colocados aquí afectarán a los dispositivos móviles basados en las pieles configuradas en $wgHandheldStyle */',
 
 # Scripts
 'common.js'      => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios en cada carga de página */',
 'monobook.js'    => '/* El código JavaScript que se ponga aquí será cargado por los usuarios de la piel MonoBook */',
-'myskin.js'      => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Mi piel */',
 
 # Metadata
 'notacceptable' => 'El servidor wiki no puede proveer los datos en un formato que su cliente (navegador) pueda entender.',
@@ -3008,7 +3006,6 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 
 # Skin names
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'Mi piel',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marcar como revisado',

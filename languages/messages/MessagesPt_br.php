@@ -2981,7 +2981,6 @@ Permite colocar uma justificativa no sumário da edição.',
 # Scripts
 'common.js' => '/* Códigos JavaScript aqui colocados serão carregados por todos aqueles que acessarem alguma página deste wiki */',
 'monobook.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin MonoBook */',
-'myskin.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin MySkin */',
 
 # Metadata
 'notacceptable' => 'O servidor não pode fornecer os dados em um formato que o seu cliente possa ler.',
@@ -3023,7 +3022,6 @@ Tal bloqueio foi provavelmente causado por uma ligação para um ''website'' ext
 
 # Skin names
 'skinname-monobook' => 'MonoBook',
-'skinname-myskin' => 'MySkin',
 
 # Patrolling
 'markaspatrolleddiff' => 'Marcar como patrulhada',

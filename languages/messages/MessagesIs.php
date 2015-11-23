@@ -2839,7 +2839,6 @@ Vinsamlegast reyndu aftur.',
 
 # Skin names
 'skinname-monobook' => 'EinBók',
-'skinname-myskin' => 'Mitt þema',
 
 # Patrolling
 'markaspatrolleddiff' => 'Merkja sem yfirfarið',
