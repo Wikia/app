@@ -18,6 +18,8 @@ class CloseWikiMaintenance {
 
 	const CLOSE_WIKI_DELAY = 30;
 
+	const S3_CONFIG = '/etc/s3cmd/sjc_prod.cfg'; # s3cmd config for Swift storage
+
 	private $mOptions;
 
 	/**
@@ -337,7 +339,7 @@ class CloseWikiMaintenance {
 			// s3cmd sync --dry-run s3://dilbert ~/images/dilbert/ --exclude "/thumb/*" --exclude "/temp/*"
 			$cmd = sprintf(
 				'sudo /usr/bin/s3cmd -c %s sync s3://%s/images "%s" --exclude "/thumb/*" --exclude "/temp/*"',
-				'/etc/s3cmd/sjc_prod.cfg', // s3cmd config for Swift storage
+				self::S3_CONFIG,
 				$container,
 				$directory
 			);
@@ -424,7 +426,7 @@ class CloseWikiMaintenance {
 			//  Remove bucket / s3cmd rb s3://BUCKET
 			$cmd = sprintf(
 				'sudo /usr/bin/s3cmd -c %s --verbose rb s3://%s/',
-				'/etc/s3cmd/sjc_prod.cfg', // s3cmd config for Swift storage
+				self::S3_CONFIG,
 				$container->name
 			);
 			$out = wfShellExec( $cmd, $iStatus );
