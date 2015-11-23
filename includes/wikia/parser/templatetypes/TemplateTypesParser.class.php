@@ -6,6 +6,7 @@ class TemplateTypesParser {
 	 *
 	 * @param string $text - template content
 	 * @param Title $finalTitle - template title object
+	 *
 	 * @return bool
 	 */
 	public static function onFetchTemplateAndTitle( &$text, &$finalTitle ) {
@@ -18,16 +19,17 @@ class TemplateTypesParser {
 			switch ( $type ) {
 				case AutomaticTemplateTypes::TEMPLATE_NAVBOX:
 				case TemplateClassificationService::TEMPLATE_NAVBOX:
-					$text = self::handleNavboxTemplate();
+					$text = NavboxTemplate::handle();
 					break;
 				case AutomaticTemplateTypes::TEMPLATE_REFERENCES:
 				case TemplateClassificationService::TEMPLATE_REFERENCES:
-					$text = self::handleReferencesTemplate();
+					$text = ReferencesTemplate::handle();
 					break;
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 
@@ -35,9 +37,10 @@ class TemplateTypesParser {
 	 * @desc alters template parser output based on its arguments and template type
 	 *
 	 * @param Title $title
-	 * @param array $args
+	 * @param PPNode_DOM $args
 	 * @param PPFrame_DOM $frame
 	 * @param string $outputText
+	 *
 	 * @return bool
 	 */
 	public static function onGetTemplateDom( $title, $args, $frame, &$outputText ) {
@@ -48,13 +51,14 @@ class TemplateTypesParser {
 			$type = self::getTemplateType( $title );
 
 			if ( $type === AutomaticTemplateTypes::TEMPLATE_SCROLBOX ) {
-				$templateArgs = self::getTemplateArgs($args, $frame);
-
-				$outputText = self::getTemplateArgsLongestVal($templateArgs);
+				$outputText = ScrollboxTemplate::getTemplateArgsLongestVal(
+					TemplateArgsHelper::getTemplateArgs( $args, $frame )
+				);
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 
@@ -63,6 +67,7 @@ class TemplateTypesParser {
 	 *
 	 * @param string $templateTitle
 	 * @param string $templateWikitext
+	 *
 	 * @return bool
 	 */
 	public static function onEndBraceSubstitution( $templateTitle, &$templateWikitext ) {
@@ -79,6 +84,7 @@ class TemplateTypesParser {
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 
@@ -86,35 +92,39 @@ class TemplateTypesParser {
 	 * @desc return template type for a given template title object
 	 *
 	 * @param Title $title
+	 *
 	 * @return string
 	 */
 	private static function getTemplateType( $title ) {
 		global $wgCityId;
 
 		$type = ExternalTemplateTypesProvider::getInstance()
-				->setTCS( new \TemplateClassificationService )
-				->getTemplateTypeFromTitle( $wgCityId, $title );
+			->setTCS( new \TemplateClassificationService )
+			->getTemplateTypeFromTitle( $wgCityId, $title );
 
 		return $type;
 	}
 
 	/**
 	 * @desc check if template should be processed
+	 *
 	 * @param $templateWikitext
+	 *
 	 * @return bool
 	 */
 	private static function templateShouldBeProcessed( $templateWikitext ) {
 		global $wgEnableTemplateTypesParsing, $wgArticleAsJson;
 
 		return $wgEnableTemplateTypesParsing
-			&& $wgArticleAsJson
-			&& !empty( $templateWikitext );
+			   && $wgArticleAsJson
+			   && !empty( $templateWikitext );
 	}
 
 	/**
 	 * @desc sanitize context-link template content
 	 *
 	 * @param $wikitext
+	 *
 	 * @return string
 	 */
 	private static function handleContextLinksTemplate( $wikitext ) {
@@ -141,6 +151,7 @@ class TemplateTypesParser {
 	 * @desc remove all non-link and non-text elements of context-link wikitext
 	 *
 	 * @param string $wikitext context-link template wikitext
+	 *
 	 * @return string
 	 */
 	public static function sanitizeContextLinkWikitext( $wikitext ) {
@@ -151,7 +162,7 @@ class TemplateTypesParser {
 		//remove all bold and italics from all of template content
 		$wikitext = preg_replace( '/\'{2,}/', '', $wikitext );
 		//remove all headings from all of template content
-		$wikitext = self::removeHeadings($wikitext);
+		$wikitext = self::removeHeadings( $wikitext );
 		//remove all newlines from the middle of the template text.
 		$wikitext = preg_replace( '/\n/', ' ', $wikitext );
 
@@ -169,7 +180,9 @@ class TemplateTypesParser {
 
 	/**
 	 * @desc wrap text of context-link in div with CLASS_CONTEXT_LINK class
+	 *
 	 * @param string $wikitext context-link template wikitext
+	 *
 	 * @return string
 	 */
 	private static function wrapContextLink( $wikitext ) {
@@ -180,55 +193,10 @@ class TemplateTypesParser {
 	 * @desc check if template title got from Parser is valid
 	 *
 	 * @param Title $title
+	 *
 	 * @return bool
 	 */
 	private static function isValidTitle( $title ) {
 		return $title && $title->exists();
-	}
-
-	/**
-	 * @desc return skip rendering navbox template
-	 *
-	 * @return string
-	 */
-	private static function handleNavboxTemplate() {
-		return '';
-	}
-
-	/**
-	 * @desc return simple <references /> parser tag
-	 *
-	 * @return string
-	 */
-	private static function handleReferencesTemplate() {
-		return '<references />';
-	}
-
-	/**
-	 * @desc gets array of template arguments values
-	 *
-	 * @param array $args
-	 * @param PPFrame_DOM $frame
-	 * @return array
-	 */
-	private static function getTemplateArgs( $args, $frame ) {
-		$templateArgs = [];
-
-		for ( $i = 0; $i < count( $args ); $i++ ) {
-			$bits = $args->item( $i )->splitArg();
-			$templateArgs[] = $frame->expand( $bits['value'] );
-		}
-
-		return $templateArgs;
-	}
-
-	/**
-	 * @desc gets the longest value from template arguments
-	 *
-	 * @param array $templateArgs
-	 * @return string
-	 */
-	public static function getTemplateArgsLongestVal( $templateArgs ) {
-		return array_reduce( $templateArgs, function ( $a, $b ) { return strlen( $a ) >= strlen( $b ) ? $a : $b; } );
 	}
 }
