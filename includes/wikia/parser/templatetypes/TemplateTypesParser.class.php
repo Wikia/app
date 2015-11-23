@@ -19,11 +19,11 @@ class TemplateTypesParser {
 			switch ( $type ) {
 				case AutomaticTemplateTypes::TEMPLATE_NAVBOX:
 				case TemplateClassificationService::TEMPLATE_NAVBOX:
-					$text = self::handleNavboxTemplate();
+					$text = NavboxTemplate::handle();
 					break;
 				case AutomaticTemplateTypes::TEMPLATE_REFERENCES:
 				case TemplateClassificationService::TEMPLATE_REFERENCES:
-					$text = self::handleReferencesTemplate();
+					$text = ReferencesTemplate::handle();
 					break;
 			}
 		}
@@ -51,9 +51,9 @@ class TemplateTypesParser {
 			$type = self::getTemplateType( $title );
 
 			if ( $type === AutomaticTemplateTypes::TEMPLATE_SCROLBOX ) {
-				$templateArgs = TemplateArgsHelper::getTemplateArgs( $args, $frame );
-
-				$outputText = self::getTemplateArgsLongestVal( $templateArgs );
+				$outputText = ScrollboxTemplate::getTemplateArgsLongestVal(
+					TemplateArgsHelper::getTemplateArgs( $args, $frame )
+				);
 			}
 		}
 
@@ -184,36 +184,5 @@ class TemplateTypesParser {
 	 */
 	private static function isValidTitle( $title ) {
 		return $title && $title->exists();
-	}
-
-	/**
-	 * @desc return skip rendering navbox template
-	 *
-	 * @return string
-	 */
-	private static function handleNavboxTemplate() {
-		return '';
-	}
-
-	/**
-	 * @desc return simple <references /> parser tag
-	 *
-	 * @return string
-	 */
-	private static function handleReferencesTemplate() {
-		return '<references />';
-	}
-
-	/**
-	 * @desc gets the longest value from template arguments
-	 *
-	 * @param array $templateArgs
-	 *
-	 * @return string
-	 */
-	public static function getTemplateArgsLongestVal( $templateArgs ) {
-		return array_reduce( $templateArgs, function ( $a, $b ) {
-			return strlen( $a ) >= strlen( $b ) ? $a : $b;
-		} );
 	}
 }
