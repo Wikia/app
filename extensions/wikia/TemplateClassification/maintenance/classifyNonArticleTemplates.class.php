@@ -5,8 +5,7 @@ require_once( $mainDir . '/maintenance/Maintenance.php' );
 
 class ClassifyNonArticleTemplates extends Maintenance {
 
-	const NONARTICLE_MAINTENANCE_PROVIDER = 'maintenance';
-	const NONARTICLE_MAINTENANCE_ORIGIN = 1; // Since it's the first script of this type
+	const NONARTICLE_MAINTENANCE_PROVIDER = 'usage_classifier';
 
 	private $dryRun, $quiet, $logFile;
 
@@ -30,6 +29,7 @@ class ClassifyNonArticleTemplates extends Maintenance {
 			return false;
 		}
 
+		$origin = date('Y-m-d');
 		$this->setDB( wfGetDB( DB_SLAVE ) );
 		$tcs = new TemplateClassificationService();
 
@@ -83,7 +83,7 @@ class ClassifyNonArticleTemplates extends Maintenance {
 			if ( $isFirstLevel ) {
 				$this->out( "{$templateTitle} - First level inclusion found in {$pageId}!" );
 			} else {
-				$this->out( "{$templateTitle} is just a nested template! Classify it!" );
+				$this->out( "{$templateTitle} is just a nested template! Classify it as nonarticle!" );
 				if ( !$this->dryRun ) {
 					try {
 						$tcs->classifyTemplate(
@@ -91,7 +91,7 @@ class ClassifyNonArticleTemplates extends Maintenance {
 							$templateId,
 							TemplateClassificationService::TEMPLATE_NOT_ART,
 							self::NONARTICLE_MAINTENANCE_PROVIDER,
-							self::NONARTICLE_MAINTENANCE_ORIGIN
+							$origin
 						);
 					} catch ( \Swagger\Client\ApiException $e ) {
 						$this->out( 'Classification failed!' );
