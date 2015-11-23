@@ -36,7 +36,7 @@ class RecognizedTemplatesProvider {
 		if ( empty( $this->namespaces ) ) {
 			return $recognizedTemplates;
 		}
-		return $this->intersectSets( $recognizedTemplates, $this->getNamespacesTemplates() );
+		return array_intersect_key( $recognizedTemplates, $this->getNamespacesTemplates() );
 	}
 
 	/**
@@ -45,11 +45,11 @@ class RecognizedTemplatesProvider {
 	 * @return array
 	 */
 	public function getNotRecognizedTemplates() {
-		$notRecognizedTemplates = $this->getTemplates( false );
+		$recognizedTemplates = $this->getTemplates( true );
 		if ( empty( $this->namespaces ) ) {
-			return $notRecognizedTemplates;
+			return $recognizedTemplates;
 		}
-		return $this->intersectSets( $notRecognizedTemplates, $this->getNamespacesTemplates() );
+		return array_diff_key( $this->getNamespacesTemplates(), $recognizedTemplates );
 	}
 
 	/**
@@ -119,13 +119,6 @@ class RecognizedTemplatesProvider {
 			} );
 
 		return $this->namespacesTemplates;
-	}
-
-	/**
-	 * Remove templates from second set that doesn't exist in first set
-	 */
-	private function intersectSets( $templates, $namespacesTemplates ) {
-		return array_intersect_key( $templates, $namespacesTemplates );
 	}
 
 	private function getDB() {
