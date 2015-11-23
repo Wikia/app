@@ -41,6 +41,7 @@ class AdminDashboardLogic {
 			$bits = explode( '/', $title->getDBkey(), 2 );
 			$alias = SpecialPageFactory::resolveAlias($bits[0])[0];
 
+
 			// NOTE: keep this list in alphabetical order
 			static $exclusionList = [
 				'AbTesting',

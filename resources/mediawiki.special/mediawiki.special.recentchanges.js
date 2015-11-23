@@ -10,24 +10,9 @@
 
 	var rc = mw.special.recentchanges = {
 
-		handleCollapsible: function() {
+		handleCollapsible: function(cache) {
 			var prefix = 'rce_',
 				$legendElements = $('.collapsible').find('legend');
-
-			$legendElements.each( function (i) {
-				var $this = $(this),
-					id = $this.attr('id');
-
-				if (id !== null) {
-					if (!!localStorage.getItem(prefix + id)) {
-						toggleCollapsible($this);
-					}
-				}
-			});
-
-			$legendElements.on('click', function(e) {
-				toggleCollapsible($(e.currentTarget).parent());
-			});
 
 			function toggleCollapsible($target) {
 				$target.toggleClass('collapsed');
@@ -39,13 +24,27 @@
 
 				if (id !== null) {
 					if ($target.hasClass('collapsed')) {
-						localStorage.removeItem(prefix + id);
+						cache.del(prefix + id);
 					} else {
-						localStorage.getItem(prefix + id); // Chrome bug
-						localStorage.setItem(prefix + id, true);
+						cache.set(prefix + id, 'expand', cache.CACHE_LONG);
 					}
 				}
 			}
+
+			$legendElements.each( function () {
+				var $this = $(this),
+					id = $this.attr('id');
+
+				if (id !== null) {
+					if (!!cache.get(prefix + id)) {
+						toggleCollapsible($this.parent());
+					}
+				}
+			});
+
+			$legendElements.on('click', function(e) {
+				toggleCollapsible($(e.currentTarget).parent());
+			});
 		},
 
 		/**
@@ -69,8 +68,10 @@
 			// Bind to change event, and trigger once to set the initial state of the checkboxes.
 			$select.change( rc.updateCheckboxes ).change();
 
-			// Collapse fieldsets
-			rc.handleCollapsible();
+			require(['wikia.cache'], function (cache) {
+				// Collapse fieldsets
+				rc.handleCollapsible(cache);
+			});
 		}
 	};
 
