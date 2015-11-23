@@ -56,6 +56,14 @@ class SkinLyricsMinimal extends SkinTemplate {
 		wfProfileIn(__METHOD__);
 		global $wgHooks, $wgCityId;
 
+		# PLATFORM-1652 Remove legacy skins
+		# Michał 'Mix' Roszka <mix@wikia.com>
+		# Is this skin ever used?
+		# I log therefore I am.
+		if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.1 ) )->shouldSample() ) {
+			Wikia\Logger\WikiaLogger::instance()->info( 'PLATFORM-1652 LyricsMinimal' );
+		}
+
 		SkinTemplate::initPage($out);
 
 		$this->skinname  = 'lyricsminimal';
