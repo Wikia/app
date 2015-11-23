@@ -2,10 +2,8 @@
 
 namespace Wikia\Helios;
 
-use LoginForm;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\WikiaLogger;
-use Wikia\Service\Constants;
 use Wikia\Service\Helios\ClientException;
 use Wikia\Service\Helios\HeliosClient;
 use Wikia\Service\User\Auth\CookieHelper;
@@ -159,7 +157,7 @@ class User {
 
 		$result = false;
 		$authMethod = self::AUTH_TYPE_FAILED;
-		$status = Constants::HTTP_STATUS_SERVER_ERROR;
+		$status = \WikiaResponse::RESPONSE_CODE_ERROR;
 		$throwException = null;
 
 		// Authenticate with username and password.

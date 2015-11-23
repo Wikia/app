@@ -1,8 +1,7 @@
 <?php
 
-use Wikia\Helios\User as HeliosUser;
-use Wikia\Service\Constants;
 use Wikia\DependencyInjection\Injector;
+use Wikia\Helios\User as HeliosUser;
 use Wikia\Service\User\Auth\CookieHelper;
 
 class Piggyback extends SpecialPage {
@@ -56,7 +55,7 @@ class PBHooks {
 		 */
 		if ( get_class( $invoker ) == PBLoginForm::class &&
 				$wgEnableHeliosExt &&
-				HeliosUser::checkAuthenticationStatus( $username, $password, Constants::HTTP_STATUS_FORBIDDEN ) ) {
+				HeliosUser::checkAuthenticationStatus( $username, $password, WikiaResponse::RESPONSE_CODE_FORBIDDEN ) ) {
 
 			$retVal = LoginForm::SUCCESS;
 		}
@@ -117,7 +116,7 @@ class PBLoginForm extends LoginForm {
 		$cu = User::newFromName( $this->mUsername );
 
 		if ( !$cu->checkPassword( $this->mPassword ) &&
-				!HeliosUser::checkAuthenticationStatus( $cu->getName(), $this->mPassword, Constants::HTTP_STATUS_FORBIDDEN )) {
+				!HeliosUser::checkAuthenticationStatus( $cu->getName(), $this->mPassword, WikiaResponse::RESPONSE_CODE_FORBIDDEN )) {
 
 			if ( $retval = '' == $this->mPassword ) {
 				$this->mainLoginForm( wfMessage( 'wrongpasswordempty' )->escaped() );
