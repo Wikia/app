@@ -9,7 +9,7 @@ class ContextLinkTemplate {
 	 *
 	 * @return bool
 	 */
-	public static function templateShouldBeProcessed( $templateWikitext ) {
+	public static function shouldTemplateBeProcessed( $templateWikitext ) {
 		global $wgEnableTemplateTypesParsing, $wgArticleAsJson;
 
 		return $wgEnableTemplateTypesParsing
@@ -25,7 +25,7 @@ class ContextLinkTemplate {
 	 * @return string
 	 */
 	public static function handle( $wikitext ) {
-		if ( !self::containNestedTemplates( $wikitext ) ) {
+		if ( !self::containsUnexpandedArguments( $wikitext ) ) {
 			$wikitext = self::sanitizeContextLinkWikitext( $wikitext );
 			$wikitext = self::wrapContextLink( $wikitext );
 		}
@@ -34,13 +34,13 @@ class ContextLinkTemplate {
 	}
 
 	/**
-	 * @desc If curly brackets found, means that template contain some not parsed
-	 * wikitext (e.g. was wrongly classified) and should not be changed!
+	 * @desc If curly brackets found, means that template contain some not expanded
+	 * templates and arguments yet, should not be here and should not be changed!
 	 *
 	 * @param $wikitext
 	 * @return bool
 	 */
-	private static function containNestedTemplates( $wikitext ) {
+	private static function containsUnexpandedArguments( $wikitext ) {
 		return preg_match('/{{.+}}/', $wikitext);
 	}
 

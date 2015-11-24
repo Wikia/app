@@ -1,7 +1,7 @@
 <?php
 
 class TemplateTypesParser {
-	private $cachedTemplateTitles = [];
+	private static $cachedTemplateTitles = [];
 	/**
 	 * @desc alters template raw text parser output based on template type
 	 *
@@ -74,7 +74,7 @@ class TemplateTypesParser {
 	public static function onEndBraceSubstitution( $templateTitle, &$templateWikitext ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( ContextLinkTemplate::templateShouldBeProcessed( $templateWikitext ) ) {
+		if ( ContextLinkTemplate::shouldTemplateBeProcessed( $templateWikitext ) ) {
 			$title = self::getValidTemplateTitle( $templateTitle );
 
 			if ( $title ) {
@@ -116,12 +116,12 @@ class TemplateTypesParser {
 	 * @return Title | bool
 	 * @throws \MWException
 	 */
-	private function getValidTemplateTitle( $templateTitle ) {
-		if ( !isset( $this->cachedTemplateTitles[ $templateTitle ] ) ) {
+	private static function getValidTemplateTitle( $templateTitle ) {
+		if ( !isset( self::$cachedTemplateTitles[ $templateTitle ] ) ) {
 			$title = Title::newFromText( $templateTitle, NS_TEMPLATE );
-			$this->cachedTemplateTitles[ $templateTitle ] = ( $title && $title->exists() ) ? $title : false;
+			self::$cachedTemplateTitles[ $templateTitle ] = ( $title && $title->exists() ) ? $title : false;
 		}
 
-		return $this->cachedTemplateTitles[ $templateTitle ];
+		return self::$cachedTemplateTitles[ $templateTitle ];
 	}
 }
