@@ -688,7 +688,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 			Html::rawElement( 'fieldset',
 				[
 					'class' => 'collapsible collapsed',
-					'id' => 'recentchanges-on-wikia',
+					'id' => 'recentchanges-on-wikia-box',
 				],
 				$content
 			)
