@@ -7,11 +7,9 @@
 	}
 
 	$( '.ebs-primary-action' ).click( function(){
-		var href = this.href;
-		var request = handleClick( 1 );
-		request.success( function() {
-			window.location = href;
-		} );
+		handleClick( 1 ).then( function() {
+			window.location = this.href;
+		}.bind( this ) );
 		return false;
 	} );
 
