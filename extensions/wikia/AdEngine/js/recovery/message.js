@@ -46,9 +46,9 @@ define('ext.wikia.adEngine.recovery.message', [
 
 	function track(action, trackerAction) {
 		tracker.track({
-			category: 'ads',
+			category: 'ads-recovery-message',
 			action: trackerAction,
-			label: 'ads-recovery-message',
+			label: action,
 			value: 0,
 			trackingMethod: 'analytics'
 		});
