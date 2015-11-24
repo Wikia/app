@@ -15,9 +15,9 @@ class ContextLinkTemplate {
 		global $wgEnableTemplateTypesParsing, $wgArticleAsJson;
 
 		return $wgEnableTemplateTypesParsing
-		&& $wgArticleAsJson
-		&& !empty( $templateWikitext )
-		&& !self::containsUnexpandedArguments( $templateWikitext );
+			&& $wgArticleAsJson
+			&& !empty( $templateWikitext )
+			&& !self::containsUnexpandedArguments( $templateWikitext );
 	}
 
 	/**
@@ -28,8 +28,9 @@ class ContextLinkTemplate {
 	 * @return string
 	 */
 	public static function handle( $wikitext ) {
-			$wikitext = self::sanitizeContextLinkWikitext( $wikitext );
-			$wikitext = self::wrapContextLink( $wikitext );
+		$wikitext = self::parseTables( $wikitext );
+		$wikitext = self::sanitizeContextLinkWikitext( $wikitext );
+		$wikitext = self::wrapContextLink( $wikitext );
 
 		return $wikitext;
 	}
@@ -63,8 +64,23 @@ class ContextLinkTemplate {
 		$wikitext = self::removeHeadings( $wikitext );
 		//remove all newlines from the middle of the template text.
 		$wikitext = preg_replace( '/\n/', ' ', $wikitext );
+		//remove images from template content
+		$wikitext = preg_replace( '/\[\[(Image|File):.*\]\]/U', '', $wikitext );
 
 		return $wikitext;
+	}
+
+	/**
+	 * @desc preparse tables to be able to remove their markup
+	 * in the following steps
+	 *
+	 * @param string $wikitext
+	 * @return string html table markup
+	 */
+	private static function parseTables( $wikitext ) {
+		global $wgParser;
+
+		return $wgParser->doTableStuff( $wikitext );
 	}
 
 	private static function removeHeadings( $wikitext ) {
