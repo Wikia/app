@@ -178,21 +178,16 @@ define(
 	}
 
 	function launchEditorPreview(){
-		var editor_value = ace.getContent();
-		var wiki_url = mw.config.get('wgServer').split('://')[1];
-		var template_name = mw.config.get('wgPageName').split(':')[1];
+		var editorValue = ace.getContent();
+		var wikiURL = mw.config.get('wgServer').split('://')[1];
+		var templateName = mw.config.get('wgPageName').split(':')[1];
+		var infoboxPreviewURL = 'http://localhost:8080/api/entrypoint/';
 
-		var encode = function(str) {
-			return encodeURI(str).replace(/'/g, '%27');
-		}
-
-		$('<form action="http://localhost:8080/api/entrypoint/" method="POST">')
-			.append($('<input type="hidden" name="editor_value" value="' + encode(editor_value) + '">'))
-			.append($('<input type="hidden" name="wiki_url" value="' + encode(wiki_url) + '">'))
-			.append($('<input type="hidden" name="template_name" value="' + encode(template_name) + '">'))
-			.append($('</form>'))
-			.appendTo($(document.body))
-			.submit();
+		var $form = $('<form>').attr({'action': infoboxPreviewURL, 'method': 'POST'});
+		$('<input>').val(editorValue).attr({'name': 'editor_value', 'type': 'hidden'}).appendTo($form);
+		$('<input>').val(wikiURL).attr({'name': 'wiki_url', 'type': 'hidden'}).appendTo($form);
+		$('<input>').val(templateName).attr({'name': 'template_name', 'type': 'hidden'}).appendTo($form);
+		$form.submit();
 	}
 
 	return {
