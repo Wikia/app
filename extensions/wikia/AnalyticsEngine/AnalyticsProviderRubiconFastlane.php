@@ -19,11 +19,12 @@ class AnalyticsProviderRubiconFastlane implements iAnalyticsProvider {
 		$code = <<< CODE
 	require([
 		"wikia.geo",
-		"wikia.querystring",
 		"wikia.instantGlobals",
 		require.optional($moduleName)
-	], function (geo, Querystring, globals, rubiconFastlane) {
-		rubiconFastlane.call('oasis');
+	], function (geo, instantGlobals, rubiconFastlane) {
+		if (geo.isProperGeo(instantGlobals[$instantGlobalName])) {
+			rubiconFastlane.call('oasis');
+		};
 	});
 CODE;
 
@@ -46,7 +47,7 @@ CODE;
 		}
 
 		if ( $wgAdDriverEnableRubiconFastlane ) {
-			$rubiconScript = self::getIntegrationScript( 'rubiconFastlane', 'wgAdDriverOpenXBidderCountries' );
+			$rubiconScript = self::getIntegrationScript( 'rubiconFastlane', 'wgAdDriverRubiconFastlaneCountries' );
 		} else {
 			$rubiconScript = '/* Rubicon Fastlane integration disabled */';
 		}
