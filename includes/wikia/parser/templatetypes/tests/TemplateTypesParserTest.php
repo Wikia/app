@@ -4,14 +4,19 @@ class TemplateTypesParserTest extends WikiaBaseTest {
 	const TEST_TEMPLATE_TEXT = 'test-template-test';
 
 	/**
+	 * @param int $templateId
 	 * @param $enableTemplateTypesParsing
 	 * @param $wgArticleAsJson
 	 *
 	 * @dataProvider shouldNotChangeTemplateParsingDataProvider
 	 */
-	public function testShouldNotChangeTemplateParsing( $enableTemplateTypesParsing, $wgArticleAsJson ) {
+	public function testShouldNotChangeTemplateParsing( $templateId, $enableTemplateTypesParsing, $wgArticleAsJson ) {
 		$text = self::TEST_TEMPLATE_TEXT;
-		$title = $this->getMock( 'Title' );
+
+		$this->mockClassWithMethods(
+				'Title',
+				[ 'getArticleId' => $templateId ]
+		);
 
 		$this->mockClassWithMethods(
 			'ExternalTemplateTypesProvider',
@@ -29,26 +34,30 @@ class TemplateTypesParserTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @param int $templateId
 	 * @param string $type
 	 * @param string $changedTemplateText
 	 *
 	 * @dataProvider shouldChangeTemplateParsingDataProvider
 	 */
-	public function testShouldChangeTemplateParsing( $type, $changedTemplateText )
-	{
+	public function testShouldChangeTemplateParsing( $templateId, $type, $changedTemplateText ) {
 		$text = self::TEST_TEMPLATE_TEXT;
-		$title = $this->getMock( 'Title' );
 
 		$this->mockClassWithMethods(
-			'ExternalTemplateTypesProvider',
-			[ 'getTemplateTypeFromTitle' => $type ]
+				'Title',
+				[ 'getArticleId' => $templateId ]
+		);
+
+		$this->mockClassWithMethods(
+			'TemplateClassificationService',
+			[ 'getType' => $type ]
 		);
 
 		$this->mockGlobalVariable( 'wgCityId', '12345' );
 		$this->mockGlobalVariable( 'wgEnableTemplateTypesParsing', true );
 		$this->mockGlobalVariable( 'wgArticleAsJson', true );
 
-		TemplateTypesParser::onFetchTemplateAndTitle( $text, $title );
+		TemplateTypesParser::onFetchTemplateAndTitle( $text, new Title );
 
 		$this->assertEquals( $text, $changedTemplateText );
 	}
@@ -56,14 +65,17 @@ class TemplateTypesParserTest extends WikiaBaseTest {
 	public function shouldNotChangeTemplateParsingDataProvider() {
 		return [
 			[
+				1,
 				false,
 				false
 			],
 			[
+				2,
 				true,
 				false
 			],
 			[
+				3,
 				false,
 				true
 			]
@@ -73,20 +85,116 @@ class TemplateTypesParserTest extends WikiaBaseTest {
 	public function shouldChangeTemplateParsingDataProvider() {
 		return [
 			[
+				4,
 				'navbox',
 				''
 			],
 			[
+				5,
 				'notice',
 				''
 			],
 			[
+				6,
 				'reference',
 				'<references />'
 			],
 			[
+				7,
 				'references',
 				'<references />'
+			]
+		];
+	}
+
+	/**
+	 * @param $contextLinkWikitext
+	 * @param $expectedTemplateWikiext
+	 *
+	 * @dataProvider sanitizeContextLinkWikitextDataProvider
+	 */
+	public function testSanitizeContextLinkWikitext( $contextLinkWikitext, $expectedTemplateWikiext ) {
+		$sanitizedTemplateWikiext = TemplateTypesParser::sanitizeContextLinkWikitext( $contextLinkWikitext );
+
+		$this->assertEquals( $sanitizedTemplateWikiext, $expectedTemplateWikiext );
+	}
+
+	public function sanitizeContextLinkWikitextDataProvider() {
+		return [
+			[
+				'[[:Disciplinary hearing of Harry Potter|Disciplinary hearing of Harry Potter]]',
+				'[[:Disciplinary hearing of Harry Potter|Disciplinary hearing of Harry Potter]]'
+			],
+			[
+				'* [[Let\'s see powerrangers]] - \'\'[[Super Sentai]]\'\' counterpart
+in \'\'[[and some more crazy stuff!]]\'\'.\'\'',
+				'[[Let\'s see powerrangers]] - [[Super Sentai]] counterpart in [[and some more crazy stuff!]].'
+			],
+			[
+				':\'\'Italics [[Foo Bar]] - [[foo|here]]\'\'.',
+				'Italics [[Foo Bar]] - [[foo|here]].',
+			],
+			[
+				'   \'\'\'Bold [[Foo Bar]] - [[foo|here]] with spaces\'\'\'.',
+				'Bold [[Foo Bar]] - [[foo|here]] with spaces.',
+			],
+			[
+				'===Headers [[Foo Bar]]=== - [[foo|here]] in context-links*!.',
+				'Headers [[Foo Bar]] - [[foo|here]] in context-links*!.'
+			],
+			[
+				'===Headers [[Foo Bar]]====>[[foo|here]] in context-links*!.',
+				'Headers [[Foo Bar]]=>[[foo|here]] in context-links*!.'
+			]
+		];
+	}
+
+	/**
+	 * @param array $templateAgrs
+	 * @param string $longestVal
+	 *
+	 * @dataProvider getTemplateArgsLongestValDataProvider
+	 */
+	public function testGetTemplateArgsLongestVal( $templateAgrs, $longestVal ) {
+		$this->assertEquals( TemplateTypesParser::getTemplateArgsLongestVal( $templateAgrs ), $longestVal );
+	}
+
+	public function getTemplateArgsLongestValDataProvider() {
+		return [
+			[
+				[
+					'aaaaa',
+					'aaa',
+					'a'
+				],
+				'aaaaa',
+			],
+			[
+				[
+					'aaaaa',
+					'',
+				],
+				'aaaaa',
+			],
+			[
+				[
+					'aaaaa'
+				],
+				'aaaaa',
+			],
+			[
+				[
+					'aaaaa1',
+					'aaaaa2'
+				],
+				'aaaaa1',
+			],
+			[
+				[
+					'',
+					''
+				],
+				'',
 			]
 		];
 	}

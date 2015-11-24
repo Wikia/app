@@ -3347,6 +3347,17 @@ class Parser {
 		wfProfileIn( __METHOD__ );
 		wfProfileIn( __METHOD__.'-setup' );
 
+		# wikia start
+		$outputText = '';
+		wfRunHooks( 'Parser::startBraceSubstitution', array( $piece, $frame, &$outputText ) );
+
+		if ( !empty( $outputText ) ) {
+			return [
+				'text' => $outputText
+			];
+		}
+		# wikia end
+
 		# Flags
 		$found = false;             # $text has been filled
 		$nowiki = false;            # wiki markup in $text should be escaped
@@ -3615,7 +3626,7 @@ class Parser {
 					$found = false; # access denied
 					wfDebug( __METHOD__.": template inclusion denied for " . $title->getPrefixedDBkey() );
 				} else {
-					list( $text, $title ) = $this->getTemplateDom( $title );
+					list( $text, $title ) = $this->getTemplateDom( $title, $args, $frame );
 					if ( $text !== false ) {
 						$found = true;
 						$isChildObj = true;
@@ -3759,10 +3770,12 @@ class Parser {
 	 * and its redirect destination title. Cached.
 	 *
 	 * @param $title Title
+	 * @param $args array
+	 * @param $frame PPFrame_DOM
 	 *
 	 * @return array
 	 */
-	function getTemplateDom( $title ) {
+	function getTemplateDom( $title, $args, $frame ) {
 		$cacheTitle = $title;
 		$titleText = $title->getPrefixedDBkey();
 
