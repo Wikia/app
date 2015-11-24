@@ -1,18 +1,22 @@
-(function ($) {
+( function ($) {
 	'use strict';
 
 	function handleClick( val ) {
-		$('.ebs-container').hide();
-		return $.nirvana.postJson('EmergencyBroadcastSystemController', 'saveUserResponse', { val: val });
+		$( '.ebs-container' ).hide();
+		return $.nirvana.postJson( 'EmergencyBroadcastSystemController', 'saveUserResponse', { val: val } );
 	}
 
-	$('.ebs-primary-action').click(function( e ){
+	$( '.ebs-primary-action' ).click( function(){
 		var href = this.href;
 		var request = handleClick( 1 );
 		request.success( function() {
 			window.location = href;
-		});
+		} );
 		return false;
-	});
-	$('.ebs-secondary-action').click(function(){ handleClick( 0 ); return false; });
-})(jQuery);
+	} );
+
+	$( '.ebs-secondary-action' ).click( function() {
+		handleClick( 0 );
+		return false;
+	} );
+} )( jQuery );
