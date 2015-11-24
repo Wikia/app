@@ -54,7 +54,7 @@ class TemplateTypesParser {
 		if ( self::shouldTemplateBeParsed() && !isNull( $args ) ) {
 			$type = self::getTemplateType( $title );
 
-			if ( $type === AutomaticTemplateTypes::TEMPLATE_SCROLBOX && $wgEnableScrollboxTemplateParsing ) {
+			if ( $type === AutomaticTemplateTypes::TEMPLATE_SCROLLBOX && $wgEnableScrollboxTemplateParsing ) {
 				$outputText = ScrollboxTemplate::getLongestElement(
 					TemplateArgsHelper::getTemplateArgs( $args, $frame )
 				);
