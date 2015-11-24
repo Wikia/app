@@ -14,13 +14,12 @@ class TemplateTypesParserTest extends WikiaBaseTest {
 		$text = self::TEST_TEMPLATE_TEXT;
 
 		$this->mockClassWithMethods(
-				'Title',
-				[ 'getArticleId' => $templateId ]
+			'Title',
+			[ 'getArticleId' => $templateId ]
 		);
-
 		$this->mockClassWithMethods(
-			'ExternalTemplateTypesProvider',
-			[ 'getTemplateTypeFromTitle' => '' ]
+			'TemplateClassificationService',
+			[ 'getType' => '' ]
 		);
 
 		$this->mockGlobalVariable( 'wgCityId', '12345' );
