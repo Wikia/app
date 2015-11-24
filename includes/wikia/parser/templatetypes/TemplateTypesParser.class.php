@@ -23,7 +23,7 @@ class TemplateTypesParser {
 					$text = NavboxTemplate::handle();
 					break;
 				case TemplateClassificationService::TEMPLATE_FLAG:
-					$text = self::handleNoticeTemplate();
+					$text = NoticeTemplate::handleNoticeTemplate();
 					break;
 				case AutomaticTemplateTypes::TEMPLATE_REFERENCES:
 				case TemplateClassificationService::TEMPLATE_REFERENCES:
@@ -110,14 +110,5 @@ class TemplateTypesParser {
 	 */
 	private static function isValidTitle( $title ) {
 		return $title && $title->exists();
-	}
-
-	/**
-	 * @desc return skip rendering notice template
-	 *
-	 * @return string
-	 */
-	private static function handleNoticeTemplate() {
-		return '';
 	}
 }

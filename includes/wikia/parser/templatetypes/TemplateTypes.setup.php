@@ -11,10 +11,11 @@ $wgAutoloadClasses['TemplateTypesParser'] = __DIR__ . '/TemplateTypesParser.clas
 $wgAutoloadClasses['TemplateArgsHelper'] = __DIR__ . '/TemplateArgsHelper.class.php';
 
 // Template type handlers
-$wgAutoloadClasses['ScrollboxTemplate'] = __DIR__ . '/handlers/ScrollboxTemplate.class.php';
 $wgAutoloadClasses['NavboxTemplate'] = __DIR__ . '/handlers/NavboxTemplate.class.php';
-$wgAutoloadClasses['ReferencesTemplate'] = __DIR__ . '/handlers/ReferencesTemplate.class.php';
+$wgAutoloadClasses['NoticeTemplate'] = __DIR__ . '/handlers/NoticeTemplate.class.php';
 $wgAutoloadClasses['QuoteTemplate'] = __DIR__ . '/handlers/QuoteTemplate.class.php';
+$wgAutoloadClasses['ReferencesTemplate'] = __DIR__ . '/handlers/ReferencesTemplate.class.php';
+$wgAutoloadClasses['ScrollboxTemplate'] = __DIR__ . '/handlers/ScrollboxTemplate.class.php';
 
 // hooks
 $wgHooks['Parser::FetchTemplateAndTitle'][] = 'TemplateTypesParser::onFetchTemplateAndTitle';
