@@ -10,6 +10,9 @@ $wgAutoloadClasses['RecognizedTemplatesProvider'] = __DIR__ . '/RecognizedTempla
 $wgAutoloadClasses['TemplateTypesParser'] = __DIR__ . '/TemplateTypesParser.class.php';
 $wgAutoloadClasses['TemplateArgsHelper'] = __DIR__ . '/TemplateArgsHelper.class.php';
 
+// Handlers load
+$wgAutoloadClasses['QuoteTemplate'] = __DIR__ . '/handlers/QuoteTemplate.class.php';
+
 // hooks
 $wgHooks['Parser::FetchTemplateAndTitle'][] = 'TemplateTypesParser::onFetchTemplateAndTitle';
 $wgHooks['Parser::getTemplateDom'][] = 'TemplateTypesParser::onGetTemplateDom';
