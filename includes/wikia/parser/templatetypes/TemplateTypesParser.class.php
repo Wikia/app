@@ -44,10 +44,11 @@ class TemplateTypesParser {
 	 * @return bool
 	 */
 	public static function onGetTemplateDom( $title, $args, $frame, &$outputText ) {
-		global $wgEnableTemplateTypesParsing, $wgArticleAsJson;
+		global $wgEnableTemplateTypesParsing, $wgEnableScrollboxTemplateParsing, $wgArticleAsJson;
 		wfProfileIn( __METHOD__ );
 
-		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson && !isNull($args) && self::isValidTitle(
+		if ( $wgEnableTemplateTypesParsing && $wgEnableScrollboxTemplateParsing && $wgArticleAsJson && !isNull($args) &&
+				self::isValidTitle(
 						$title ) ) {
 			$type = self::getTemplateType( $title );
 
