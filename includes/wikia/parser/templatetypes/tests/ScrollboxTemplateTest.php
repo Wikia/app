@@ -8,7 +8,7 @@ class ScrollboxTemplateTest extends WikiaBaseTest {
 	 * @dataProvider getTemplateArgsLongestValDataProvider
 	 */
 	public function testGetTemplateArgsLongestVal( $templateAgrs, $longestVal ) {
-		$this->assertEquals( ScrollboxTemplate::getTemplateArgsLongestVal( $templateAgrs ), $longestVal );
+		$this->assertEquals( ScrollboxTemplate::getLongestElement( $templateAgrs ), $longestVal );
 	}
 
 	public function getTemplateArgsLongestValDataProvider() {

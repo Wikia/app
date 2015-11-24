@@ -3339,25 +3339,13 @@ class Parser {
 	 *  $piece['parts']: the parameter array
 	 *  $piece['lineStart']: whether the brace was at the start of a line
 	 * @param $frame PPFrame The current frame, contains template arguments
-	 * @return String : the text of the template
-	 * @throws \MWException
+	 * @return String: the text of the template
 	 * @private
 	 */
 	function braceSubstitution( $piece, $frame ) {
 		global $wgNonincludableNamespaces, $wgContLang;
 		wfProfileIn( __METHOD__ );
 		wfProfileIn( __METHOD__.'-setup' );
-
-		# wikia start
-		$outputText = '';
-		wfRunHooks( 'Parser::startBraceSubstitution', array( $piece, $frame, &$outputText ) );
-
-		if ( !empty( $outputText ) ) {
-			return [
-				'text' => $outputText
-			];
-		}
-		# wikia end
 
 		# Flags
 		$found = false;             # $text has been filled
@@ -3783,7 +3771,7 @@ class Parser {
 	 *
 	 * @return array
 	 */
-	function getTemplateDom( $title, $args, $frame ) {
+	function getTemplateDom( $title, $args = null, $frame = null ) {
 		$cacheTitle = $title;
 		$titleText = $title->getPrefixedDBkey();
 

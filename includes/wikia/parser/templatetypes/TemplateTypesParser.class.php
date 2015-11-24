@@ -11,16 +11,18 @@ class TemplateTypesParser {
 	 * @return bool
 	 */
 	public static function onFetchTemplateAndTitle( &$text, &$finalTitle ) {
-		global $wgEnableTemplateTypesParsing, $wgArticleAsJson;
 		wfProfileIn( __METHOD__ );
 
-		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson ) {
+		if ( self::shouldTemplateBeParsed() ) {
 			$type = self::getTemplateType( $finalTitle );
 
 			switch ( $type ) {
 				case AutomaticTemplateTypes::TEMPLATE_NAVBOX:
 				case TemplateClassificationService::TEMPLATE_NAVBOX:
 					$text = NavboxTemplate::handle();
+					break;
+				case TemplateClassificationService::TEMPLATE_FLAG:
+					$text = NoticeTemplate::handleNoticeTemplate();
 					break;
 				case AutomaticTemplateTypes::TEMPLATE_REFERENCES:
 				case TemplateClassificationService::TEMPLATE_REFERENCES:
@@ -45,16 +47,23 @@ class TemplateTypesParser {
 	 * @return bool
 	 */
 	public static function onGetTemplateDom( $title, $args, $frame, &$outputText ) {
-		global $wgEnableTemplateTypesParsing, $wgArticleAsJson;
+		global $wgEnableScrollboxTemplateParsing, $wgEnableQuoteTemplateParsing;
 		wfProfileIn( __METHOD__ );
 
-		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson && $title->exists() ) {
-			$type = self::getTemplateType( $title );
 
-			if ( $type === AutomaticTemplateTypes::TEMPLATE_SCROLBOX ) {
-				$outputText = ScrollboxTemplate::getTemplateArgsLongestVal(
-					TemplateArgsHelper::getTemplateArgs( $args, $frame )
-				);
+		if ( self::shouldTemplateBeParsed() && !is_null( $args ) ) {
+			$type = self::getTemplateType( $title );
+			$templateArgs = TemplateArgsHelper::getTemplateArgs( $args, $frame );
+
+			if ( $type === AutomaticTemplateTypes::TEMPLATE_SCROLLBOX && $wgEnableScrollboxTemplateParsing ) {
+				$outputText = ScrollboxTemplate::getLongestElement( $templateArgs );
+			}
+
+			if ( ( $type === AutomaticTemplateTypes::TEMPLATE_QUOTE ||
+				$type === TemplateClassificationService::TEMPLATE_QUOTE ) &&
+				$wgEnableQuoteTemplateParsing
+			) {
+				$outputText = QuoteTemplate::execute( $templateArgs );
 			}
 		}
 
@@ -108,6 +117,17 @@ class TemplateTypesParser {
 	}
 
 	/**
+	 * @desc checks if template can be parsed
+	 *
+	 * @return bool
+	 */
+	private static function shouldTemplateBeParsed() {
+		global $wgEnableTemplateTypesParsing, $wgArticleAsJson;
+
+		return $wgEnableTemplateTypesParsing && $wgArticleAsJson;
+	}
+
+	/**
 	 * @desc return a valid cached Title object for a given template title string
 	 * or if not in cache yet check it's correctness and save there valid Title
 	 * object or false if templateTitle invalid
@@ -121,7 +141,6 @@ class TemplateTypesParser {
 			$title = Title::newFromText( $templateTitle, NS_TEMPLATE );
 			self::$cachedTemplateTitles[ $templateTitle ] = ( $title && $title->exists() ) ? $title : false;
 		}
-
 		return self::$cachedTemplateTitles[ $templateTitle ];
 	}
 }
