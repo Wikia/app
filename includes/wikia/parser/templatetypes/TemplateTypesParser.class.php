@@ -14,7 +14,7 @@ class TemplateTypesParser {
 
 		wfProfileIn( __METHOD__ );
 
-		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson ) {
+		if ( self::shouldTemplateBeParsed() ) {
 			$type = self::getTemplateType( $finalTitle );
 
 			switch ( $type ) {
@@ -38,7 +38,6 @@ class TemplateTypesParser {
 	}
 
 	/**
-<<<<<<< HEAD
 	 * @desc alters template parser output based on its arguments and template type
 	 *
 	 * @param Title $title
@@ -49,12 +48,13 @@ class TemplateTypesParser {
 	 * @return bool
 	 */
 	public static function onGetTemplateDom( $title, $args, $frame, &$outputText ) {
+		global $wgEnableScrollboxTemplateParsing;
 		wfProfileIn( __METHOD__ );
 
-		if ( self::shouldTemplateBeParsed( $title, $args ) ) {
+		if ( self::shouldTemplateBeParsed() && !isNull( $args ) ) {
 			$type = self::getTemplateType( $title );
 
-			if ( $type === AutomaticTemplateTypes::TEMPLATE_SCROLBOX ) {
+			if ( $type === AutomaticTemplateTypes::TEMPLATE_SCROLBOX && $wgEnableScrollboxTemplateParsing ) {
 				$outputText = ScrollboxTemplate::getLongestElement(
 					TemplateArgsHelper::getTemplateArgs( $args, $frame )
 				);
@@ -64,24 +64,6 @@ class TemplateTypesParser {
 		wfProfileOut( __METHOD__ );
 
 		return true;
-	}
-
-	/**
-	 * @desc checks is template should be parsed
-	 *
-	 * @param Title $title
-	 * @param PPNode_DOM $args
-	 *
-	 * @return bool
-	 */
-	private static function shouldTemplateBeParsed( $title, $args ) {
-		global $wgEnableTemplateTypesParsing, $wgEnableScrollboxTemplateParsing, $wgArticleAsJson;
-
-		return $wgEnableTemplateTypesParsing &&
-			$wgEnableScrollboxTemplateParsing &&
-			$wgArticleAsJson &&
-			self::isValidTitle( $title ) &&
-			!isNull($args);
 	}
 
 	/**
@@ -102,13 +84,13 @@ class TemplateTypesParser {
 	}
 
 	/**
-	 * @desc check if template title got from Parser is valid
-	 *
-	 * @param Title $title
+	 * @desc checks if template can be parsed
 	 *
 	 * @return bool
 	 */
-	private static function isValidTitle( $title ) {
-		return $title && $title->exists();
+	private static function shouldTemplateBeParsed() {
+		global $wgEnableTemplateTypesParsing, $wgArticleAsJson;
+
+		return $wgEnableTemplateTypesParsing && $wgArticleAsJson;
 	}
 }
