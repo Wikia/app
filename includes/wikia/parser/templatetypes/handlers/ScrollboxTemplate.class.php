@@ -2,7 +2,7 @@
 
 class ScrollboxTemplate {
 	/**
-	 * @desc gets the longest value from template arguments
+	 * @desc gets longest element from array
 	 *
 	 * @param array $templateArgs
 	 *
