@@ -77,7 +77,7 @@ class SpecialController extends \WikiaSpecialPageController {
 			'items' => $data['items'],
 			'username' => $this->app->wg->User->getName(),
 			'total' => $data['total'],
-    		'totalReturned' => $data['totalReturned'],
+			'totalReturned' => $data['totalReturned'],
 			'pagination' => $this->getPagination( $data['total'], $page, $order )
 		] );
 	}

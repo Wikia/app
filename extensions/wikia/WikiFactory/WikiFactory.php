@@ -497,6 +497,13 @@ class WikiFactory {
 		return $city_id;
 	}
 
+	/**
+	 * Given a wiki's dbName, return the wgServer value properly altered to reflect the current environment.
+	 *
+	 * @param int $dbName
+	 *
+	 * @return string
+	 */
 	public static function getHostByDbName( $dbName ) {
 		global $wgDevelEnvironment, $wgDevelEnvironmentName;
 

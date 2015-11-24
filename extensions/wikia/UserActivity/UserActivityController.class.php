@@ -91,23 +91,23 @@ class Controller extends \WikiaController {
 
 		if ( ( $resp === false ) || ( empty( $resp['query']['users'][0]['groups'] ) ) ) {
 			return [];
-		} else {
-			$allGroups = $resp['query']['users'][0]['groups'];
-			$selectGroups = preg_grep( '/chatmoderator|bureaucrat|sysop/', $allGroups );
-			$translatedGroups = array_map(
-				function( $value ) {
-					$key = "group-$value-member";
-					return wfMessage( $key )->text();
-				},
-				$selectGroups
-			);
-
-			if ( $this->isUserFounder( $dbName ) ) {
-				$translatedGroups[] = wfMessage( 'lookupuser-founder' )->text();
-			}
-
-			return $translatedGroups;
 		}
+
+		$allGroups = $resp['query']['users'][0]['groups'];
+		$selectGroups = preg_grep( '/chatmoderator|bureaucrat|sysop/', $allGroups );
+		$translatedGroups = array_map(
+			function( $value ) {
+				$key = "group-$value-member";
+				return wfMessage( $key )->text();
+			},
+			$selectGroups
+		);
+
+		if ( $this->isUserFounder( $dbName ) ) {
+			$translatedGroups[] = wfMessage( 'lookupuser-founder' )->text();
+		}
+
+		return $translatedGroups;
 	}
 
 	private function isUserFounder( $dbName ) {
