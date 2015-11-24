@@ -1,6 +1,4 @@
 /*global define*/
-/*jshint camelcase:false*/
-/*jshint maxdepth:5*/
 define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
@@ -10,21 +8,30 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 ], function (adTracker, adLogicZoneParams, doc, log, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.lookup.rubiconFastlane',
-		rubiconResponse = false,
-		rubiconTiming,
-		slots = {},
+	var called = false,
 		config = {
 			oasis: {
-				TOP_RIGHT_BOXAD: [[300, 250]]
+				TOP_LEADERBOARD: [[728, 90],[970, 250]],
+				TOP_RIGHT_BOXAD: [[300, 250],[300, 600]],
+				LEFT_SKYSCRAPER_2: [[160,600]],
+				LEFT_SKYSCRAPER_3: [[160,600]],
+				PREFOOTER_LEFT_BOXAD: [[300, 250]],
+				PREFOOTER_RIGHT_BOXAD: [[300, 250]]
 			},
-			mercury: {}
+			mercury: {
+				MOBILE_IN_CONTENT: [[300, 250]],
+				MOBILE_PREFOOTER: [[300, 250]],
+				MOBILE_TOP_LEADERBOARD: [[320, 50]]
+			}
 		},
+		logGroup = 'ext.wikia.adEngine.lookup.rubiconFastlane',
+		response = false,
 		rubiconSlots = [],
-		called = false;
+		slots = {},
+		timing;
 
 	function onResponse() {
-		rubiconResponse = true;
+		response = true;
 	}
 
 	function getSlots(skin) {
@@ -77,8 +84,8 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		win.rubicontag = win.rubicontag || {};
 		win.rubicontag.cmd = win.rubicontag.cmd || [];
 
-		rubiconTiming = adTracker.measureTime('rubicon_fastlane', {}, 'start');
-		rubiconTiming.track();
+		timing = adTracker.measureTime('rubicon_fastlane', {}, 'start');
+		timing.track();
 
 		rubicon.async = true;
 		rubicon.type = 'text/javascript';
@@ -97,7 +104,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	function getSlotParams(slotName) {
 		var targeting,
 			params = {};
-		if (rubiconResponse && slots[slotName]) {
+		if (response && slots[slotName]) {
 			targeting = slots[slotName].getAdServerTargeting();
 			targeting.forEach(function (t) {
 				params[t.key] = t.values[0];
