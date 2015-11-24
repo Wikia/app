@@ -915,11 +915,11 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	static private function followRedirect( $category ) {
+
 		if ( $category instanceof Title && $category->exists() ) {
 			$redirect = ( new WikiPage( $category ) )->getRedirectTarget();
 
-			// Follow redirects only to other categories.
-			if ( !empty( $redirect ) && $redirect->getNamespace() === NS_CATEGORY ) {
+			if ( !empty( $redirect ) ) {
 				return $redirect;
 			}
 		}
