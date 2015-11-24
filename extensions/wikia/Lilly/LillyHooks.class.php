@@ -3,23 +3,55 @@
 class LillyHooks {
 	const LILLY_API_LINKS_V1 = '/links/v1';
 
+	const TARGET_LANGS = [
+		'bg',
+		'cs',
+		'da',
+		'de',
+		'el',
+		'en',
+		'es',
+		'fr',
+		'hr',
+		'hu',
+		'it',
+		'ja',
+		'ko',
+		'la',
+		'nl',
+		'no',
+		'pl',
+		'pt',
+		'ro',
+		'ru',
+		'sl',
+		'sr',
+		'sv',
+		'tr',
+		'zh',
+		'zh-hk',
+	];
+
 	const TARGET_HOSTS = [
 		'starwars.wikia.com',
 		'bg.starwars.wikia.com',
 		'cs.starwars.wikia.com',
 		'da.starwars.wikia.com',
+		'de.starwars.wikia.com',
 		'el.starwars.wikia.com',
 		'es.starwars.wikia.com',
-		'ko.starwars.wikia.com',
+		'fr.starwars.wikia.com',
 		'hr.starwars.wikia.com',
-		'it.starwars.wikia.com',
-		'la.starwars.wikia.com',
 		'hu.starwars.wikia.com',
+		'it.starwars.wikia.com',
+		'ja.starwars.wikia.com',
 		// alias for hu.starwars.wikia.com:
 		'kaminopedia.wikia.com',
+		'ko.starwars.wikia.com',
+		'la.starwars.wikia.com',
 		'nl.starwars.wikia.com',
-		'ja.starwars.wikia.com',
 		'no.starwars.wikia.com',
+		'pl.starwars.wikia.com',
 		'pt.starwars.wikia.com',
 		'ro.starwars.wikia.com',
 		'ru.starwars.wikia.com',
@@ -32,37 +64,21 @@ class LillyHooks {
 		'zh-hk.starwars.wikia.com',
 	];
 
-	const TARGET_TEXTS = [
-		'Български',
-		'Česky',
-		'Dansk',
-		'Deutsch',
-		'English',
-		'Ελληνικά',
-		'Español',
-		'Français',
-		'한국어',
-		'Hrvatski',
-		'Italiano',
-		'Latina',
-		'Magyar',
-		'Nederlands',
-		'日本語',
-		'Polski',
-		'Português',
-		'Română',
-		'Русский',
-		'Slovenščina',
-		'Српски / Srpski',
-		'Svenska',
-		'Türkçe',
-		// WARNING, There are Unicode LEFT-TO-RIGHT EMBEDDING and
-		//          POP DIRECTIONAL FORMATTING chars in those two string:
-		// @see http://www.fileformat.info/info/unicode/char/202a/index.htm
-		// @see http://www.fileformat.info/info/unicode/char/202c/index.htm
-		'‪Norsk (bokmål)‬',
-		'‪中文(香港)‬',
-	];
+	// Filled in getAllowedTargetTexts
+	private static $targetTexts = null;
+
+	private static function getAllowedTargetTexts() {
+		if ( self::$targetTexts !== null ) {
+			return self::$targetTexts;
+		}
+
+		self::$targetTexts = [];
+		foreach ( self::TARGET_LANGS as $lang ) {
+			self::$targetTexts[] = Language::getLanguageName( $lang );
+		}
+
+		return self::$targetTexts;
+	}
 
 	private static function processLink( $targetUrl, $linkText ) {
 		global $wgLillyServiceUrl, $wgTitle;
@@ -82,7 +98,7 @@ class LillyHooks {
 		}
 
 		// Only capture the "in other languages" links, not regular in-article links
-		if ( !in_array( trim( $linkText ), self::TARGET_TEXTS ) ) {
+		if ( !in_array( trim( $linkText ), self::getAllowedTargetTexts() ) ) {
 			return true;
 		}
 
@@ -116,7 +132,7 @@ class LillyHooks {
 	}
 
 	public static function onLinkEnd( $dummy, Title $target, array $options, &$html, array &$attribs, &$ret ) {
-		if ( $target->getInterwiki() ) {
+		if ( $target->isExternal() ) {
 			self::processLink( $attribs['href'], $html );
 		}
 
