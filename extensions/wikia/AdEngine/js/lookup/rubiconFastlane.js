@@ -1,11 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.rubiconFastlane', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, adLogicZoneParams, doc, log, win) {
+], function (adContext, adTracker, adLogicZoneParams, doc, log, win) {
 	'use strict';
 
 	var called = false,
@@ -27,26 +28,39 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		logGroup = 'ext.wikia.adEngine.lookup.rubiconFastlane',
 		response = false,
 		rubiconSlots = [],
+		slotPath = [
+			'/5441',
+			'wka.' + adLogicZoneParams.getSite(),
+			adLogicZoneParams.getMappedVertical(),
+			'',
+			adLogicZoneParams.getPageType()
+		].join('/'),
 		slots = {},
 		timing;
+
+	function getSlots(skin) {
+		var context = adContext.getContext(),
+			pageType = context.targeting.pageType,
+			slotName;
+
+		slots = config[skin];
+		if (skin === 'oasis' && pageType === 'home') {
+			for (slotName in slots) {
+				if (slots.hasOwnProperty(slotName) && slotName.indexOf('TOP') > -1) {
+					slots['HOME_' + slotName] = slots[slotName];
+					delete slots[slotName];
+				}
+			}
+		}
+
+		return slots;
+	}
 
 	function onResponse() {
 		response = true;
 	}
 
-	function getSlots(skin) {
-		return config[skin];
-	}
-
-	function defineSlot(slotName, sizes) {
-		var slotPath = [
-				'/5441',
-				'wka.' + adLogicZoneParams.getSite(),
-				adLogicZoneParams.getMappedVertical(),
-				'',
-				adLogicZoneParams.getPageType()
-			].join('/');
-
+	function defineSingleSlot(slotName, sizes) {
 		win.rubicontag.cmd.push(function () {
 			var slot = win.rubicontag.defineSlot(
 				'wikia_gpt' + slotPath + '/gpt/' + slotName,
@@ -61,7 +75,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	function defineSlots(skin) {
 		var definedSlots = getSlots(skin);
 		Object.keys(definedSlots).forEach(function (slotName) {
-			defineSlot(slotName, definedSlots[slotName]);
+			defineSingleSlot(slotName, definedSlots[slotName]);
 		});
 		win.rubicontag.cmd.push(function () {
 			win.rubicontag.run(onResponse, {
@@ -103,14 +117,14 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 
 	function getSlotParams(slotName) {
 		var targeting,
-			params = {};
+			parameters = {};
 		if (response && slots[slotName]) {
 			targeting = slots[slotName].getAdServerTargeting();
-			targeting.forEach(function (t) {
-				params[t.key] = t.values[0];
+			targeting.forEach(function (params) {
+				parameters[params.key] = params.values;
 			});
-			log(['getSlotParams', slotName, params], 'debug', logGroup);
-			return params;
+			log(['getSlotParams', slotName, parameters], 'debug', logGroup);
+			return parameters;
 		}
 		return {};
 	}
