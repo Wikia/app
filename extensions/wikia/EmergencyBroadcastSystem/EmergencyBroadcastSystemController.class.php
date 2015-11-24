@@ -10,6 +10,7 @@ class EmergencyBroadcastSystemController extends WikiaController {
 			if ( $count > 0 ) {
 				$this->response->setVal( 'nonPortableCount', $count );
 				$this->response->setVal( 'surveyUrl', $this->buildSurveyUrl() );
+				$this->response->setVal( 'specialPageUrl', SpecialPage::getTitleFor( 'Insights', 'nonportableinfoboxes' )->getLocalURL() );
 				return true;
 			}
 		}
