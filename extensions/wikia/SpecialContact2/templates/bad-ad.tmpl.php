@@ -10,6 +10,7 @@ echo wfMessage( 'specialcontact-intro-bad-ad' )->parseAsBlock();
 
 <form id="contactform" method="post" action="" enctype="multipart/form-data">
 <input hidden="wpContactCategory" value="bad-ad" />
+<input name="wpEditToken" type="hidden" value="<?= Sanitizer::encodeAttribute( $editToken ) ?>" />
 
 <?php
 if ( $isLoggedIn ) {

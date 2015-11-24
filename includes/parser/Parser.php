@@ -3339,8 +3339,7 @@ class Parser {
 	 *  $piece['parts']: the parameter array
 	 *  $piece['lineStart']: whether the brace was at the start of a line
 	 * @param $frame PPFrame The current frame, contains template arguments
-	 * @return String : the text of the template
-	 * @throws \MWException
+	 * @return String: the text of the template
 	 * @private
 	 */
 	function braceSubstitution( $piece, $frame ) {

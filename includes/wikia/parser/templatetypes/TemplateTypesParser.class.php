@@ -11,6 +11,7 @@ class TemplateTypesParser {
 	 */
 	public static function onFetchTemplateAndTitle( &$text, &$finalTitle ) {
 		global $wgEnableTemplateTypesParsing, $wgArticleAsJson;
+
 		wfProfileIn( __METHOD__ );
 
 		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson ) {
@@ -20,6 +21,9 @@ class TemplateTypesParser {
 				case AutomaticTemplateTypes::TEMPLATE_NAVBOX:
 				case TemplateClassificationService::TEMPLATE_NAVBOX:
 					$text = NavboxTemplate::handle();
+					break;
+				case TemplateClassificationService::TEMPLATE_FLAG:
+					$text = self::handleNoticeTemplate();
 					break;
 				case AutomaticTemplateTypes::TEMPLATE_REFERENCES:
 				case TemplateClassificationService::TEMPLATE_REFERENCES:
@@ -34,6 +38,7 @@ class TemplateTypesParser {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * @desc alters template parser output based on its arguments and template type
 	 *
 	 * @param Title $title
@@ -44,7 +49,6 @@ class TemplateTypesParser {
 	 * @return bool
 	 */
 	public static function onGetTemplateDom( $title, $args, $frame, &$outputText ) {
-		global $wgEnableTemplateTypesParsing, $wgEnableScrollboxTemplateParsing, $wgArticleAsJson;
 		wfProfileIn( __METHOD__ );
 
 		if ( self::shouldTemplateBeParsed( $title, $args ) ) {
@@ -106,5 +110,14 @@ class TemplateTypesParser {
 	 */
 	private static function isValidTitle( $title ) {
 		return $title && $title->exists();
+	}
+
+	/**
+	 * @desc return skip rendering notice template
+	 *
+	 * @return string
+	 */
+	private static function handleNoticeTemplate() {
+		return '';
 	}
 }
