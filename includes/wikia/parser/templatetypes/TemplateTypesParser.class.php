@@ -2,11 +2,8 @@
 
 class TemplateTypesParser {
 	/**
-<<<<<<< HEAD
 	 * @desc alters template raw text parser output based on template type
-=======
 	 * @desc removes navbox template text from parser output
->>>>>>> dev
 	 *
 	 * @param string $text - template content
 	 * @param Title $finalTitle - template title object
