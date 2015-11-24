@@ -27,7 +27,7 @@ class ExternalTemplateTypesProvider {
 	 */
 	public function getTCS() {
 		if ( $this->tcs === null ) {
-			throw new Exception('TCS not set');
+			throw new TCSNotSetException('TCS not set');
 		}
 
 		return $this->tcs;
@@ -101,4 +101,7 @@ class ExternalTemplateTypesProvider {
 	private function handleException( $context ) {
 		\Wikia\Logger\WikiaLogger::instance()->error( self::ERROR_MESSAGE, $context );
 	}
+}
+
+class TCSNotSetException extends \Exception {
 }
