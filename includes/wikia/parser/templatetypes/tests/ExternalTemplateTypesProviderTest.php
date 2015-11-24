@@ -15,7 +15,7 @@ class ExternalTemplateTypesProviderTest extends WikiaBaseTest {
 	public function testGetTemplateType( $wikiId, $templateId, $type ) {
 		$this->assertEquals(
 			ExternalTemplateTypesProvider::getInstance()
-				->setTCS( new TCSMock() )
+				->setTCS( new TCSMock( false ) )
 				->getTemplateType( $wikiId, $templateId ),
 			$type
 		);
@@ -48,7 +48,7 @@ class ExternalTemplateTypesProviderTest extends WikiaBaseTest {
 		$templateTypesProvider = ExternalTemplateTypesProvider::getInstance();
 
 		// cache type
-		$templateTypesProvider->setTCS( new TCSMock() )
+		$templateTypesProvider->setTCS( new TCSMock( false ) )
 			->getTemplateType( $wikiId, $templateId );
 
 		// check if get type is returned from cache
