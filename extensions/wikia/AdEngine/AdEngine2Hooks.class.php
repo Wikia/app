@@ -167,7 +167,9 @@ class AdEngine2Hooks {
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE_OPENX_BIDDER;
 		}
 
-		$jsAssets[] = self::ASSET_GROUP_ADENGINE_RUBICON_FASTLANE;
+		if ( AnalyticsProviderRubiconFastlane::isEnabled() ) {
+			$jsAssets[] = self::ASSET_GROUP_ADENGINE_RUBICON_FASTLANE;
+		}
 
 		return true;
 	}
