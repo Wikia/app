@@ -43,7 +43,7 @@ class ContextLinkTemplate {
 	 * @return bool
 	 */
 	private static function containsUnexpandedArguments( $wikitext ) {
-		return preg_match('/{{.+}}/', $wikitext);
+		return preg_match( '/{{.+}}/', $wikitext );
 	}
 
 	/**
@@ -54,6 +54,8 @@ class ContextLinkTemplate {
 	 * @return string
 	 */
 	public static function sanitizeContextLinkWikitext( $wikitext ) {
+		global $wgContLang;
+
 		//remove any custom HTML tags
 		$wikitext = strip_tags( $wikitext );
 		//remove list and indent elements from the beginning of line
@@ -65,7 +67,11 @@ class ContextLinkTemplate {
 		//remove all newlines from the middle of the template text.
 		$wikitext = preg_replace( '/\n/', ' ', $wikitext );
 		//remove images from template content
-		$wikitext = preg_replace( '/\[\[(Image|File):.*\]\]/U', '', $wikitext );
+		$imageFilenameSanitizer = \Wikia\PortableInfobox\Helpers\ImageFilenameSanitizer::getInstance();
+		$filePrefixRegex = substr( $imageFilenameSanitizer->getFilePrefixRegex( $wgContLang ), 1 );
+		$wikitext = preg_replace( '/\[\[' . $filePrefixRegex .'.*\]\]/U', '', $wikitext );
+		//trim all unwanted spaces around content
+		$wikitext = trim( $wikitext );
 
 		return $wikitext;
 	}
@@ -81,7 +87,7 @@ class ContextLinkTemplate {
 	private static function parseTables( $wikitext ) {
 		global $wgParser;
 
-		if ( strpos($wikitext, '{|') !== false ) {
+		if ( strpos( $wikitext, '{|' ) !== false ) {
 			$wikitext = $wgParser->doTableStuff( $wikitext );
 		}
 

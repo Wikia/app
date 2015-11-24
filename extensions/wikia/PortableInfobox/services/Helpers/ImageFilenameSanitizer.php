@@ -28,7 +28,7 @@ class ImageFilenameSanitizer {
 	 * @param $contLang \Language
 	 * Used as local cache for getting string to remove
 	 */
-	private function getFilePrefixRegex( $contLang ) {
+	public function getFilePrefixRegex( $contLang ) {
 		global $wgNamespaceAliases;
 		$langCode = $contLang->getCode();
 		if ( empty( $this->filePrefixRegex[ $langCode ] ) ) {
