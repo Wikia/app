@@ -71,7 +71,8 @@ class ContextLinkTemplate {
 	}
 
 	/**
-	 * @desc preparse tables to be able to remove their markup
+	 * @desc if wikitext contains '{\' that is contains a wikitable,
+	 * preparse tables to be able to remove their markup
 	 * in the following steps
 	 *
 	 * @param string $wikitext
@@ -80,7 +81,11 @@ class ContextLinkTemplate {
 	private static function parseTables( $wikitext ) {
 		global $wgParser;
 
-		return $wgParser->doTableStuff( $wikitext );
+		if ( strpos($wikitext, '{|') !== false ) {
+			$wikitext = $wgParser->doTableStuff( $wikitext );
+		}
+
+		return $wikitext;
 	}
 
 	private static function removeHeadings( $wikitext ) {
