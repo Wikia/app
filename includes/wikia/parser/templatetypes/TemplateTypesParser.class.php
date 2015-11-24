@@ -47,7 +47,8 @@ class TemplateTypesParser {
 		global $wgEnableTemplateTypesParsing, $wgArticleAsJson;
 		wfProfileIn( __METHOD__ );
 
-		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson && self::isValidTitle( $title ) ) {
+		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson && !isNull($args) && self::isValidTitle(
+						$title ) ) {
 			$type = self::getTemplateType( $title );
 
 			if ( $type === AutomaticTemplateTypes::TEMPLATE_SCROLBOX ) {
