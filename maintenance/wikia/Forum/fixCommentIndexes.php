@@ -2,7 +2,10 @@
 /**
  * fixCommentIndexes
  *
- * Jira: https://wikia-inc.atlassian.net/browse/SOC-1485
+ * Jira:
+ *
+ * Ticket for this fix: https://wikia-inc.atlassian.net/browse/SOC-1485
+ * Ticket that caused the problem: https://wikia-inc.atlassian.net/browse/PLATFORM-1658
  *
  * This script fixes the issue where the same comment index number is used on multiple comments, e.g. the #2 in
  * the fragment portion of this URL:
@@ -37,16 +40,13 @@ ini_set('error_reporting', E_NOTICE);
 
 require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 
-/**
- * Class FSCKVideos
- */
 class FixCommentIndexes extends Maintenance {
 	static protected $verbose = false;
 	static protected $test = false;
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Pre-populate LVS suggestions";
+		$this->mDescription = "Fix duplicate comment URL problems on Wall and Forum posts";
 		$this->addOption( 'test', 'Test mode; make no changes', false, false, 't' );
 		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
 	}
@@ -144,9 +144,6 @@ class BrokenThread {
 
 	protected $threadId;
 
-	protected $commentCount;
-	protected $currentIndex;
-
 	protected $renumberStart;
 	protected $newWallCount;
 
@@ -156,16 +153,16 @@ class BrokenThread {
 	public function __construct( $threadId ) {
 		$this->threadId = $threadId;
 
-		$this->currentIndex = $this->getCurrentIndex();
-		$this->commentCount = $this->getCommentCount();
+		$currentIndex = $this->getCurrentIndex();
+		$commentCount = $this->getCommentCount();
 
 		// Start renumbering the duplicates at the current index plus a buffer in case comments are
 		// being made while this script runs
-		$this->renumberStart = $this->currentIndex + self::RACE_BUFFER;
+		$this->renumberStart = $currentIndex + self::RACE_BUFFER;
 
 		// Set the start for new comments after this script runs to where we started renumbering plus
 		// the total number of comments we have (worst possible case of all comments being dups)
-		$this->newWallCount = $this->renumberStart + $this->commentCount;
+		$this->newWallCount = $this->renumberStart + $commentCount;
 	}
 
 	/**
@@ -183,7 +180,7 @@ class BrokenThread {
 	 * call PHP's count on the comments we get later so that we can quickly update the starting comment
 	 * index before we do anything else.
 	 *
-	 * @return array
+	 * @return int
 	 */
 	private function getCommentCount() {
 		$dbr = wfGetDB( DB_SLAVE );
@@ -191,12 +188,11 @@ class BrokenThread {
 			->SELECT( 'count(*)' )->AS_( 'count' )
 			->FROM( 'comments_index' )
 			->WHERE( 'parent_comment_id' )->EQUAL_TO( $this->threadId )
-			->ORDER_BY( 'comment_id' )
 			->runLoop( $dbr, function ( &$count, $row ) {
 				$count = $row->count;
 			});
 
-		// Ensure that we're always sending an array back
+		// Ensure that we're always sending an integer back
 		return empty( $count ) ? 0 : $count;
 	}
 
@@ -229,8 +225,7 @@ class BrokenThread {
 	private function renumberComments() {
 		$comments = $this->getCommentIds();
 
-		// Output some info if we're verbose.  Note that count($comments) could be higher than our
-		// $this->commentCount if anyone has commented while this script is running
+		// Output some info if we're verbose.
 		FixCommentIndexes::debug(" -- ".$this->getThreadURL()."\n" );
 		FixCommentIndexes::debug( "-- Found ".count($comments)." comments\n" );
 		FixCommentIndexes::debug( "-- Renumbering ... " );
