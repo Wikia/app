@@ -46,13 +46,13 @@ CODE;
 		}
 
 		if ( $wgAdDriverEnableOpenXBidder ) {
-			$oxScript = self::getIntegrationScript( 'rubiconFastlane', 'wgAdDriverOpenXBidderCountries' );
+			$rubiconScript = self::getIntegrationScript( 'rubiconFastlane', 'wgAdDriverOpenXBidderCountries' );
 		} else {
-			$oxScript = '/* Rubicon Fastlane integration disabled */';
+			$rubiconScript = '/* Rubicon Fastlane integration disabled */';
 		}
 
 		return '<script id="analytics-provider-rubicon-fastlane">' . PHP_EOL .
-			$oxScript . PHP_EOL .
+			$rubiconScript . PHP_EOL .
 			'</script>' . PHP_EOL;
 	}
 
