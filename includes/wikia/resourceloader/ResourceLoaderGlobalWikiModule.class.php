@@ -103,11 +103,11 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 
 		$title = null;
 		$external = false;
-		$targetCityId = !empty( $options['city_id'] ) ? $options['city_id'] : 0;
+		$targetCityId = (int) $options['city_id'];
 
 		list( $text, $namespace ) = $this->parseTitle( $titleText );
 
-		if ( $targetCityId !== 0 && $wgCityId != $targetCityId && $text !== false ) {
+		if ( $targetCityId !== 0 && $wgCityId !== $targetCityId && $text !== false ) {
 			$external = true;
 			$title = GlobalTitle::newFromTextCached( $text, NS_MEDIAWIKI, $targetCityId );
 		} else {
@@ -115,7 +115,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		}
 
 		// TODO: After scripts transition on dev wiki is done, remove this if statement (CE-3093)
-		if ( ( !$title || !$title->exists() ) && $targetCityId == Wikia\ContentReview\Helper::DEV_WIKI_ID ) {
+		if ( ( !$title || !$title->exists() ) && $targetCityId === Wikia\ContentReview\Helper::DEV_WIKI_ID ) {
 			$title = $this->devWikiFallback( $text, $external );
 		}
 
