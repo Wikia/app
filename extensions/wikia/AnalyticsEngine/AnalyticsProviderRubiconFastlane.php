@@ -3,13 +3,13 @@
 class AnalyticsProviderRubiconFastlane implements iAnalyticsProvider {
 
 	public static function isEnabled() {
-		global $wgAdDriverEnableOpenXBidder, $wgEnableAdEngineExt, $wgShowAds, $wgAdDriverUseSevenOneMedia;
+		global $wgAdDriverEnableRubiconFastlane, $wgEnableAdEngineExt, $wgShowAds, $wgAdDriverUseSevenOneMedia;
 
-		return ( true )
+		return $wgAdDriverEnableRubiconFastlane
 			&& $wgEnableAdEngineExt
 			&& $wgShowAds
 			&& AdEngine2Service::areAdsShowableOnPage()
-			;
+			&& !$wgAdDriverUseSevenOneMedia;
 	}
 
 	private function getIntegrationScript( $moduleName, $instantGlobalName ) {
@@ -31,7 +31,7 @@ CODE;
 	}
 
 	public function getSetupHtml( $params = array() ) {
-		global $wgAdDriverEnableOpenXBidder;
+		global $wgAdDriverEnableRubiconFastlane;
 
 		static $called = false;
 
@@ -45,7 +45,7 @@ CODE;
 			return '';
 		}
 
-		if ( $wgAdDriverEnableOpenXBidder ) {
+		if ( $wgAdDriverEnableRubiconFastlane ) {
 			$rubiconScript = self::getIntegrationScript( 'rubiconFastlane', 'wgAdDriverOpenXBidderCountries' );
 		} else {
 			$rubiconScript = '/* Rubicon Fastlane integration disabled */';
