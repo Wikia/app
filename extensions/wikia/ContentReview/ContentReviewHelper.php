@@ -15,6 +15,8 @@ class Helper extends \ContextSource {
 	const CONTENT_REVIEW_CURRENT_KEY = 'current-js-pages';
 	const JS_FILE_EXTENSION = '.js';
 
+	const DEV_WIKI_ID = 7931;
+
 
 	/**
 	 * Returns data about all approved revisions (of JS pages) for current wiki

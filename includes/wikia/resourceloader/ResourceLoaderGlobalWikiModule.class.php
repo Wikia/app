@@ -68,7 +68,13 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		global $wgCityId;
 		wfProfileIn(__METHOD__);
 		$title = null;
+
 		$realTitleText = isset($options['title']) ? $options['title'] : $titleText;
+
+		if ( $options['type'] === 'script' ) {
+			return $this->createScriptTitle( $realTitleText, $options );
+		}
+
 		if ( !empty( $options['city_id'] ) && $wgCityId != $options['city_id'] ) {
 			list( $text, $namespace ) = $this->parseTitle($realTitleText);
 			if ( $text !== false ) {
@@ -81,6 +87,57 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		}
 
 		wfProfileOut(__METHOD__);
+		return $title;
+	}
+
+	/**
+	 * Create title for scripts. Only NS_MEDIAWIKI is allowed for javascript pages.
+	 *
+	 * @param string $titleText
+	 * @param array $options
+	 * @return GlobalTitle|null|Title
+	 * @throws MWException
+	 */
+	private function createScriptTitle( $titleText, $options ) {
+		global $wgCityId;
+
+		$title = null;
+		$external = false;
+
+		list( $text, $namespace ) = $this->parseTitle( $titleText );
+
+		if ( !empty( $options['city_id'] ) && $wgCityId != $options['city_id'] && $text !== false ) {
+			$external = true;
+			$title = GlobalTitle::newFromTextCached( $text, NS_MEDIAWIKI, $options['city_id'] );
+		} else {
+			$title = Title::newFromText( $text, NS_MEDIAWIKI );
+		}
+
+		// TODO: After scripts transition on dev wiki is done, remove this if statement (CE-3093)
+		if ( ( !$title || !$title->exists() ) && $options['city_id'] == Wikia\ContentReview\Helper::DEV_WIKI_ID ) {
+			$title = $this->devWikiFallback( $text, $external );
+		}
+
+		$title = $this->resolveRedirect($title);
+
+		return $title;
+	}
+
+	/**
+	 * While scripts on dev.wikia.com will be moved to NS_MEDIAWIKI we need this fallback till transition is completed.
+	 *
+	 * @param string $titleText
+	 * @param bool|false $external
+	 * @return Title
+	 * @throws MWException
+	 */
+	private function devWikiFallback( $titleText, $external = false ) {
+		if ( $external ) {
+			$title = GlobalTitle::newFromTextCached( $titleText, NS_MAIN, Wikia\ContentReview\Helper::DEV_WIKI_ID );
+		} else {
+			$title = Title::newFromText( $titleText );
+		}
+
 		return $title;
 	}
 

@@ -139,7 +139,22 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onRawPageViewBeforeOutput( \RawAction $rawAction, &$text ) {
+		global $wgCityId;
+
 		$title = $rawAction->getTitle();
+		$titleText = $title->getText();
+
+		if ( $wgCityId == Helper::DEV_WIKI_ID && !$title->inNamespace( NS_MEDIAWIKI ) ) {
+			$title = \Title::newFromText( $titleText, NS_MEDIAWIKI );
+
+			// TODO: After scripts transition on dev wiki is done, remove this if statement (CE-3093)
+			if ( !$title || !$title->exists() ) {
+				return true;
+			}
+
+			$text = \Revision::newFromTitle( $title )->getRawText();
+		}
+
 		$helper = new Helper();
 		$text = $helper->replaceWithLastApproved( $title, $rawAction->getContentType(), $text );
 		return true;
