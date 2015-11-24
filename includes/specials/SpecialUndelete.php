@@ -328,8 +328,9 @@ class PageArchive {
 	function undelete( $timestamps, $comment = '', $fileVersions = array(), $unsuppress = false ) {
 		global $wgUser;
 
-		if ( !$this->canUndelete($wgUser) ) {
-			return false;
+		$resultMock = '';
+		if ( !Wikia::canEditInterfaceWhitelist( $this->title, $wgUser, 'undelete', $resultMock ) ) {
+			throw new PermissionsError( 'editinterfacetrusted' );
 		}
 
 		// If both the set of text revisions and file revisions are empty,
@@ -394,18 +395,6 @@ class PageArchive {
 		wfRunHooks( 'UndeleteComplete', array(&$this->title, &$wgUser, $reason ) );
 
 		return array( $textRestored, $filesRestored, $reason );
-	}
-
-	public function canUndelete( User $user ) {
-		global $wgEditInterfaceWhitelist;
-		// Check if is allowed to undelete in MediaWiki namespace
-		if ( $this->title->inNamespace( NS_MEDIAWIKI )
-			&& !in_array( $this->title->getDBkey(), $wgEditInterfaceWhitelist )
-			&& !$user->isAllowed( 'editinterfacetrusted' )
-		) {
-			throw new PermissionsError( 'editinterfacetrusted' );
-		}
-		return true;
 	}
 
 	/**
