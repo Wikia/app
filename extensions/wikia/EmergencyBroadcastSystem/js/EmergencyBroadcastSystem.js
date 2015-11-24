@@ -1,20 +1,19 @@
 ( function ($) {
 	'use strict';
 
-	function handleClick( val ) {
+	function saveUserResponse( val ) {
 		$( '.ebs-container' ).hide();
 		return $.nirvana.postJson( 'EmergencyBroadcastSystemController', 'saveUserResponse', { val: val } );
 	}
 
 	$( '.ebs-primary-action' ).click( function(){
-		handleClick( 1 ).then( function() {
+		saveUserResponse( 1 ).then( function() {
 			window.location = this.href;
 		}.bind( this ) );
 		return false;
 	} );
 
 	$( '.ebs-secondary-action' ).click( function() {
-		handleClick( 0 );
-		return false;
+		saveUserResponse( 0 );
 	} );
 } )( jQuery );
