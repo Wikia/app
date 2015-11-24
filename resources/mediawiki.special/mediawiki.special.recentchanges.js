@@ -35,7 +35,7 @@
 				var $this = $(this),
 					id = $this.attr('id');
 
-				if (!!id) {
+				if (id !== null) {
 					var previousState = cache.get(prefix + id);
 
 					if (!!previousState) {
