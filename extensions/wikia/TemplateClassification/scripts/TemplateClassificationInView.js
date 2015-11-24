@@ -12,10 +12,10 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'wikia.
 		var $typeLabel;
 
 		function init() {
-			$typeLabel = $('.template-classification-type-text');
+			$typeLabel = $('.template-classification-edit');
 			templateClassificationModal.init(getType, sendClassifyTemplateRequest);
 
-			$('.template-classification-edit').on('mousedown', function () {
+			$typeLabel.on('mousedown', function () {
 				tracker.track({
 					trackingMethod: 'analytics',
 					category: 'template-classification-entry-point',
