@@ -69,7 +69,7 @@ class ContextLinkTemplate {
 		//remove images from template content
 		$imageFilenameSanitizer = \Wikia\PortableInfobox\Helpers\ImageFilenameSanitizer::getInstance();
 		$filePrefixRegex = substr( $imageFilenameSanitizer->getFilePrefixRegex( $wgContLang ), 1 );
-		$wikitext = preg_replace( '/\[\[' . $filePrefixRegex .'.*\]\]/U', '', $wikitext );
+		$wikitext = preg_replace( '/\[\[' . $filePrefixRegex . '.*\]\]/U', '', $wikitext );
 		//trim all unwanted spaces around content
 		$wikitext = trim( $wikitext );
 
@@ -88,7 +88,10 @@ class ContextLinkTemplate {
 		global $wgParser;
 
 		if ( strpos( $wikitext, '{|' ) !== false ) {
-			$wikitext = $wgParser->doTableStuff( $wikitext );
+			$parser = ParserPool::get();
+			$parser->mStripState = new StripState( $wgParser->getRandomString() );
+			$wikitext = $parser->doTableStuff( $wikitext );
+			ParserPool::release( $parser );
 		}
 
 		return $wikitext;
