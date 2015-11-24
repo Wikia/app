@@ -127,6 +127,11 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		var rubicon = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
+		if (adLogicZoneParams.getSite() !== 'life') {
+			log(['call', 'Not wka.life vertical'], 'debug', logGroup);
+			return;
+		}
+
 		if (called) {
 			log(['call', 'Already called'], 'debug', logGroup);
 			return;
