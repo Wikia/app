@@ -27,6 +27,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			}
 		},
 		logGroup = 'ext.wikia.adEngine.lookup.rubiconFastlane',
+		priceMap = {},
 		response = false,
 		rubiconSlots = [],
 		slotPath = [
@@ -57,8 +58,43 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		return slots;
 	}
 
+	function trackState(trackEnd) {
+		log(['trackState', response], 'debug', logGroup);
+		var eventName = 'lookupError';
+
+		if (response) {
+			eventName = 'lookupSuccess';
+		}
+
+		if (trackEnd) {
+			eventName = 'lookupEnd';
+		}
+
+		adTracker.track(eventName + '/rubicon_fastlane', priceMap || '(unknown)', 0);
+	}
+
+	function addSlotPrice(slotName, rubiconTargeting) {
+		rubiconTargeting.forEach(function (params) {
+			if (params.key === 'rpfl_7450') {
+				priceMap[slotName] = params.values.join(',');
+			}
+		});
+	}
+
 	function onResponse() {
+		timing.measureDiff({}, 'end').track();
+		log('Rubicon Fastlane done', 'info', logGroup);
+		var slotName;
+
+		for (slotName in slots) {
+			if (slots.hasOwnProperty(slotName)) {
+				addSlotPrice(slotName, slots[slotName].getAdServerTargeting());
+			}
+		}
 		response = true;
+		log(['Rubicon Fastlane prices', priceMap], 'info', logGroup);
+
+		trackState(true);
 	}
 
 	function defineSingleSlot(slotName, sizes) {
@@ -133,7 +169,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	return {
 		call: call,
 		getSlotParams: getSlotParams,
-		trackState: function () {},
+		trackState: trackState,
 		wasCalled: wasCalled
 	};
 });
