@@ -111,7 +111,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	function defineSlots(skin) {
 		var definedSlots = getSlots(skin);
 		Object.keys(definedSlots).forEach(function (slotName) {
-			defineSingleSlot(slotName, definedSlots[slotName]);
+			defineSingleSlot(slotName, definedSlots[slotName], skin);
 		});
 		win.rubicontag.cmd.push(function () {
 			win.rubicontag.run(onResponse, {
