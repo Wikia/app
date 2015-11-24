@@ -1,5 +1,5 @@
 <?php
-
+//TODO: draft - part of https://wikia-inc.atlassian.net/browse/DAT-3436
 class QuoteTemplateTest extends WikiaBaseTest {
 
 
