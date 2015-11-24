@@ -4,11 +4,10 @@ $tc-name-color-checked: #1a5eb8;
 $tc-name-color: #39424d;
 
 .template-classification-edit {
-	display: inline-block;
-	margin: 0 4px;
 	cursor: pointer;
 	span {
-		display: inherit;
+		display: inline-block;
+		margin: 0 4px;
 	}
 }
 
