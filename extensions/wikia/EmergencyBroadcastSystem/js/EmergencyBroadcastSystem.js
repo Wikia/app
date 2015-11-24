@@ -1,11 +1,19 @@
-(function ($) {
+( function ($) {
 	'use strict';
 
-	function handleClick( val ) {
-		$.nirvana.postJson('EmergencyBroadcastSystemController', 'saveUserResponse', { val: val });
-		$('.ebs-container').hide();
+	function saveUserResponse( val ) {
+		$( '.ebs-container' ).hide();
+		return $.nirvana.postJson( 'EmergencyBroadcastSystemController', 'saveUserResponse', { val: val } );
 	}
 
-	$('.ebs-primary-action').click(function(){ handleClick( 1 ); return false; });
-	$('.ebs-secondary-action').click(function(){ handleClick( 0 ); return false; });
-})(jQuery);
+	$( '.ebs-primary-action' ).click( function(){
+		saveUserResponse( 1 ).then( function() {
+			window.location = this.href;
+		}.bind( this ) );
+		return false;
+	} );
+
+	$( '.ebs-secondary-action' ).click( function() {
+		saveUserResponse( 0 );
+	} );
+} )( jQuery );
