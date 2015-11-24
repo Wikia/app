@@ -114,6 +114,7 @@ class PipelineEventProducer {
 	/**
 	 * @desc Fires on:
 	 *  - successful save from TemplateClassificationApiController
+	 *  - successful classification of parent template during draft creation
 	 *
 	 * @param integer $pageId The affected template's pageId
 	 * @param Title $title The affected template's Title object
