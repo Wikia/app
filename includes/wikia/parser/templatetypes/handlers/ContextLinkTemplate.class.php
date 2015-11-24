@@ -3,7 +3,9 @@
 class ContextLinkTemplate {
 
 	/**
-	 * @desc check if template should be processed
+	 * @desc check if template should be processed.
+	 * Wikitext should not be empty and should not contain curly brackets
+	 * which indicate that template has not yet expanded templates or arguments.
 	 *
 	 * @param $templateWikitext
 	 *
@@ -14,7 +16,8 @@ class ContextLinkTemplate {
 
 		return $wgEnableTemplateTypesParsing
 		&& $wgArticleAsJson
-		&& !empty( $templateWikitext );
+		&& !empty( $templateWikitext )
+		&& !self::containsUnexpandedArguments( $templateWikitext );
 	}
 
 	/**
@@ -25,17 +28,15 @@ class ContextLinkTemplate {
 	 * @return string
 	 */
 	public static function handle( $wikitext ) {
-		if ( !self::containsUnexpandedArguments( $wikitext ) ) {
 			$wikitext = self::sanitizeContextLinkWikitext( $wikitext );
 			$wikitext = self::wrapContextLink( $wikitext );
-		}
 
 		return $wikitext;
 	}
 
 	/**
 	 * @desc If curly brackets found, means that template contain some not expanded
-	 * templates and arguments yet, should not be here and should not be changed!
+	 * templates and arguments yet.
 	 *
 	 * @param $wikitext
 	 * @return bool
