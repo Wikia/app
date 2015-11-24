@@ -94,11 +94,12 @@ class TemplateTypesParserTest extends WikiaBaseTest {
 				''
 			],
 			[
+				6,
 				'reference',
 				'<references />'
 			],
 			[
-				6,
+				7,
 				'references',
 				'<references />'
 			]
