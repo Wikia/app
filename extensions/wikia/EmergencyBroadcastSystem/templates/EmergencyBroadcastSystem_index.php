@@ -1,5 +1,5 @@
 <section class="ebs-container">
-	<p class="ebs-unread"><?= $nonPortableCount ?></p>
+	<p class="ebs-count"><?= $nonPortableCount ?></p>
 	<div class="ebs-content">
 		<h3><?= wfMessage( 'ebs-heading' )->parse() ?></h3>
 		<p><?= wfMessage( 'ebs-content' )->parse() ?></p>
