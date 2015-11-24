@@ -121,7 +121,7 @@ class AdEngine2Hooks {
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 
 		global $wgAdDriverUseGoogleConsumerSurveys, $wgAdDriverUseTopInContentBoxad, $wgAdDriverUseTaboola;
-		$pageType = WikiaPageType::getPageType();
+		$isArticle = WikiaPageType::getPageType() === 'article';
 
 		$jsAssets[] = self::ASSET_GROUP_ADENGINE_DESKTOP;
 
@@ -130,7 +130,7 @@ class AdEngine2Hooks {
 			$jsAssets[] = self::ASSET_GROUP_LIFTIUM_EXTRA;
 		}
 
-		if ( $wgAdDriverUseGoogleConsumerSurveys && $pageType === 'article' ) {
+		if ( $wgAdDriverUseGoogleConsumerSurveys && $isArticle ) {
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE_GCS;
 		}
 
@@ -138,7 +138,7 @@ class AdEngine2Hooks {
 			$jsAssets[] = self::ASSET_GROUP_OASIS_IN_CONTENT_ADS;
 		}
 
-		if ( $wgAdDriverUseTaboola && $pageType === 'article' ) {
+		if ( $wgAdDriverUseTaboola && $isArticle ) {
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE_TABOOLA;
 		}
 
