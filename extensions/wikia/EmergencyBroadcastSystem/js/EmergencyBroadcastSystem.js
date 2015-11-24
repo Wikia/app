@@ -8,10 +8,7 @@
 		}
 
 		$( '.ebs-primary-action' ).click( function(){
-			saveUserResponse( 1 ).then( function() {
-				window.location = this.href;
-			}.bind( this ) );
-			return false;
+			saveUserResponse( 1 );
 		} );
 
 		$( '.ebs-secondary-action' ).click( function() {
