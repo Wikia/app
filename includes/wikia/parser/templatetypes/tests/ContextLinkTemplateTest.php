@@ -39,6 +39,10 @@ in \'\'[[and some more crazy stuff!]]\'\'.\'\'',
 			[
 				'===Headers [[Foo Bar]]====>[[foo|here]] in context-links*!.',
 				'Headers [[Foo Bar]]=>[[foo|here]] in context-links*!.'
+			],
+			[
+				'===Files===[[File:infoicon]] Big images [[Image:big.jpg]]',
+				'Files Big images'
 			]
 		];
 	}
