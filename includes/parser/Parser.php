@@ -3348,17 +3348,6 @@ class Parser {
 		wfProfileIn( __METHOD__ );
 		wfProfileIn( __METHOD__.'-setup' );
 
-		# wikia start
-		$outputText = '';
-		wfRunHooks( 'Parser::startBraceSubstitution', array( $piece, $frame, &$outputText ) );
-
-		if ( !empty( $outputText ) ) {
-			return [
-				'text' => $outputText
-			];
-		}
-		# wikia end
-
 		# Flags
 		$found = false;             # $text has been filled
 		$nowiki = false;            # wiki markup in $text should be escaped
@@ -3776,7 +3765,7 @@ class Parser {
 	 *
 	 * @return array
 	 */
-	function getTemplateDom( $title, $args, $frame ) {
+	function getTemplateDom( $title, $args = null, $frame = null ) {
 		$cacheTitle = $title;
 		$titleText = $title->getPrefixedDBkey();
 
