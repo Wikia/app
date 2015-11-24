@@ -12,37 +12,43 @@
 
 		handleCollapsible: function(cache) {
 			var prefix = 'rce_',
-				$legendElements = $('.collapsible').find('legend');
+				$collapsibleElements = $('.collapsible');
 
-			function toggleCollapsible($target) {
-				$target.toggleClass('collapsed');
-				updateCollapsedCache($target);
+			function toggleCollapsible($collapsible) {
+				$collapsible.toggleClass('collapsed');
+				updateCollapsedCache($collapsible);
 			}
 
-			function updateCollapsedCache($target) {
-				var id = $target.attr('id');
+			function updateCollapsedCache($collapsible) {
+				var id = $collapsible.attr('id');
 
 				if (id !== null) {
-					if ($target.hasClass('collapsed')) {
-						cache.del(prefix + id);
+					if ($collapsible.hasClass('collapsed')) {
+						cache.set(prefix + id, 'collapsed', cache.CACHE_LONG);
 					} else {
-						cache.set(prefix + id, 'expand', cache.CACHE_LONG);
+						cache.set(prefix + id, 'expanded', cache.CACHE_LONG);
 					}
 				}
 			}
 
-			$legendElements.each( function () {
+			$collapsibleElements.each(function () {
 				var $this = $(this),
 					id = $this.attr('id');
 
-				if (id !== null) {
-					if (!!cache.get(prefix + id)) {
-						toggleCollapsible($this.parent());
+				if (!!id) {
+					var previousState = cache.get(prefix + id);
+
+					if (!!previousState) {
+						if (previousState === 'collapsed') {
+							$this.addClass('collapsed');
+						} else {
+							$this.removeClass('collapsed');
+						}
 					}
 				}
 			});
 
-			$legendElements.on('click', function(e) {
+			$collapsibleElements.on('click', 'legend', function(e) {
 				toggleCollapsible($(e.currentTarget).parent());
 			});
 		},
