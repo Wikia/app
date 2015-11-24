@@ -62,11 +62,13 @@ define('ext.wikia.adEngine.provider.taboola', [
 		}
 
 		if (slots[slotName] && config[slotName] && abGroups.regular && geo.isProperGeo(config[slotName].regular)) {
+			log(['canHandleSlot', 'Using regular taboola', slotName], 'debug', logGroup);
 			supportedSlots.regular.push(slotName);
 			return true;
 		}
 
 		if (slots[slotName] && config[slotName] && abGroups.recovery && geo.isProperGeo(config[slotName].recovery)) {
+			log(['canHandleSlot', 'Using recovery taboola', slotName], 'debug', logGroup);
 			supportedSlots.recovery.push(slotName);
 			return true;
 		}
