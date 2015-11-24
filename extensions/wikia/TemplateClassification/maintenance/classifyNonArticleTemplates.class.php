@@ -5,9 +5,10 @@ require_once( $mainDir . '/maintenance/Maintenance.php' );
 
 class ClassifyNonArticleTemplates extends Maintenance {
 
+	const TEMPLATE_TYPE_DIRECTLY_USED = 'directlyused';
 	const NONARTICLE_MAINTENANCE_PROVIDER = 'usage_classifier';
 
-	private $dryRun, $quiet, $logFile;
+	private $dryRun, $quiet, $logFile, $wikiaLogger;
 
 	public function __construct() {
 		parent::__construct();
@@ -82,20 +83,24 @@ class ClassifyNonArticleTemplates extends Maintenance {
 
 			if ( $isFirstLevel ) {
 				$this->out( "{$templateTitle} - First level inclusion found in {$pageId}!" );
+				$type = self::TEMPLATE_TYPE_DIRECTLY_USED;
 			} else {
 				$this->out( "{$templateTitle} is just a nested template! Classify it as nonarticle!" );
-				if ( !$this->dryRun ) {
-					try {
-						$tcs->classifyTemplate(
-							$wgCityId,
-							$templateId,
-							TemplateClassificationService::TEMPLATE_NOT_ART,
-							self::NONARTICLE_MAINTENANCE_PROVIDER,
-							$origin
-						);
-					} catch ( \Swagger\Client\ApiException $e ) {
-						$this->out( 'Classification failed!' );
-					}
+				$type = TemplateClassificationService::TEMPLATE_NOT_ART;
+			}
+
+			if ( !$this->dryRun ) {
+				try {
+					$tcs->classifyTemplate(
+						$wgCityId,
+						$templateId,
+						$type,
+						self::NONARTICLE_MAINTENANCE_PROVIDER,
+						$origin
+					);
+				} catch ( \Swagger\Client\ApiException $e ) {
+					$this->out( 'Classification failed!' );
+					$this->logException( $e, $wgCityId, $templateId );
 				}
 			}
 		}
@@ -128,6 +133,20 @@ class ClassifyNonArticleTemplates extends Maintenance {
 
 	private function verifyLogFile() {
 		return file_exists( $this->logFile );
+	}
+
+	private function logException( \Swagger\Client\ApiException $e, $wikiId, $templateId ) {
+		if ( !isset( $this->wikiaLogger ) ) {
+			$this->wikiaLogger = \Wikia\Logger\WikiaLogger::instance();
+		}
+
+		$this->wikiaLogger->error( 'TC_MAINTENANCE_SCRIPT_EXCEPTION', [
+			'wikiId' => $wikiId,
+			'templateId' => $templateId,
+			'tcExcptBcktrc' => $e->getTrace(),
+			'tcExcptRspnsHeaders' => $e->getResponseHeaders(),
+			'tcExcptRspnsBody' => $e->getResponseBody(),
+		] );
 	}
 }
 
