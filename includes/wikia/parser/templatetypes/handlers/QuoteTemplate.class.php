@@ -1,7 +1,7 @@
 <?php
 
 class QuoteTemplate {
-	const LENGTH_CHECK_MULTIPLY = 2;
+	const LENGTH_CHECK_MULTIPLIER = 2;
 	const QUOTES_KEYS = [ 'quotation', 'author', 'subject' ];
 	const QUOTE_TEMPLATE_PATH = 'includes/wikia/parser/templatetypes/templates/quote.mustache';
 
@@ -38,7 +38,7 @@ class QuoteTemplate {
 		}, 0 );
 
 		// we don't want to reverse if sizes are close
-		$sized = $first * self::LENGTH_CHECK_MULTIPLY < $max ? array_reverse( $filtered, true ) : $filtered;
+		$sized = $first * self::LENGTH_CHECK_MULTIPLIER < $max ? array_reverse( $filtered, true ) : $filtered;
 		$size = min( count( $sized ), count( self::QUOTES_KEYS ) );
 
 		return array_combine( array_slice( self::QUOTES_KEYS, 0, $size ), array_slice( $sized, 0, $size ) );
