@@ -16,6 +16,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 				TOP_RIGHT_BOXAD: [[300, 250],[300, 600]],
 				LEFT_SKYSCRAPER_2: [[160,600]],
 				LEFT_SKYSCRAPER_3: [[160,600]],
+				INCONTENT_BOXAD_1: [[300, 250]],
 				PREFOOTER_LEFT_BOXAD: [[300, 250]],
 				PREFOOTER_RIGHT_BOXAD: [[300, 250]]
 			},
