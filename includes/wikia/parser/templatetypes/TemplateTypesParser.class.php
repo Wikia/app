@@ -49,11 +49,16 @@ class TemplateTypesParser {
 
 		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson && self::isValidTitle( $title ) ) {
 			$type = self::getTemplateType( $title );
+			$templateArgs = TemplateArgsHelper::getTemplateArgs( $args, $frame );
 
-			if ( $type === AutomaticTemplateTypes::TEMPLATE_SCROLBOX ) {
-				$templateArgs = TemplateArgsHelper::getTemplateArgs( $args, $frame );
-
-				$outputText = self::getTemplateArgsLongestVal( $templateArgs );
+			switch ( $type ) {
+				case AutomaticTemplateTypes::TEMPLATE_SCROLBOX:
+					$outputText = self::getTemplateArgsLongestVal( $templateArgs );
+					break;
+				case AutomaticTemplateTypes::TEMPLATE_QUOTE:
+				case TemplateClassificationService::TEMPLATE_QUOTE:
+					$outputText = QuoteTemplate::execute( TemplateArgsHelper::getTemplateArgs( $args, $frame ) );
+					break;
 			}
 		}
 
