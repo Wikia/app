@@ -37,7 +37,7 @@ class QuoteTemplate {
 			return max( $max, strlen( $item ) );
 		}, 0 );
 
-		// we dont want to reverse if sizes are close
+		// we don't want to reverse if sizes are close
 		$sized = $first * self::LENGTH_CHECK_MULTIPLY < $max ? array_reverse( $filtered, true ) : $filtered;
 		$size = min( count( $sized ), count( self::QUOTES_KEYS ) );
 
