@@ -64,20 +64,20 @@ class LillyHooks {
 		'zh-hk.starwars.wikia.com',
 	];
 
-	// Filled in getAllowedTargetTexts
-	private static $targetTexts = null;
+	// Filled in getAllowedLanguageNames
+	private static $targetLanguageNames = null;
 
-	private static function getAllowedTargetTexts() {
-		if ( self::$targetTexts !== null ) {
-			return self::$targetTexts;
+	private static function getTargetLanguageNames() {
+		if ( self::$targetLanguageNames !== null ) {
+			return self::$targetLanguageNames;
 		}
 
-		self::$targetTexts = [];
+		self::$targetLanguageNames = [];
 		foreach ( self::TARGET_LANGS as $lang ) {
-			self::$targetTexts[] = Language::getLanguageName( $lang );
+			self::$targetLanguageNames[] = Language::getLanguageName( $lang );
 		}
 
-		return self::$targetTexts;
+		return self::$targetLanguageNames;
 	}
 
 	private static function processLink( $targetUrl, $linkText ) {
@@ -97,8 +97,10 @@ class LillyHooks {
 			return true;
 		}
 
-		// Only capture the "in other languages" links, not regular in-article links
-		if ( !in_array( trim( $linkText ), self::getAllowedTargetTexts() ) ) {
+		// Only capture links in the "in other languages" section, not other cross-wiki links
+		// We detect those links by checking their texts which are just the language names
+		// as returned by Language::getLanguageName
+		if ( !in_array( trim( $linkText ), self::getTargetLanguageNames() ) ) {
 			return true;
 		}
 
@@ -115,7 +117,7 @@ class LillyHooks {
 			return true;
 		}
 
-		// Post the connection to Lilly
+		// Post the link to Lilly
 		Http::post( $wgLillyServiceUrl . self::LILLY_API_LINKS_V1, [
 			'noProxy' => true,
 			'postData' => [
