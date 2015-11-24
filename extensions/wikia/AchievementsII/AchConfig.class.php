@@ -351,8 +351,8 @@ class AchConfig {
 	}
 
 	public function shouldShow( $badgeTypeId ) {
-		global $wgAchievementsEditAddPhotoOnly;
-		if ( empty( $wgAchievementsEditAddPhotoOnly ) || in_array( $badgeTypeId, self::$mEditOnlyBadge ) ) {
+		global $wgAchievementsEditOnly;
+		if ( empty( $wgAchievementsEditOnly ) || in_array( $badgeTypeId, self::$mEditOnlyBadge ) ) {
 			return true;
 		}
 		return false;

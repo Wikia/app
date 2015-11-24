@@ -39,7 +39,7 @@ foreach( $config->getInTrackStatic() as $badgeTypeId => $trackData ){
 		$tracks[$badgeTypeId] = $trackData;
 		$editPlusCategoryTracks = $config->getInTrackEditPlusCategory();
 
-		if( $editPlusCategoryTracks && empty( $wgAchievementsEditAddPhotoOnly ) ) {
+		if( $editPlusCategoryTracks && empty( $wgAchievementsEditOnly ) ) {
 			foreach( $editPlusCategoryTracks as $editPlusCategoryTypeId => $editPlusCategoryData ) {
 				$tracks[$editPlusCategoryTypeId] = array( 'category' => $editPlusCategoryData['category'], 'enabled' => $editPlusCategoryData['enabled'], 'laps' => $tracks[$badgeTypeId]['laps'], 'infinite' => $tracks[$badgeTypeId]['infinite'] );
 			}
@@ -109,7 +109,7 @@ foreach( $config->getInTrackStatic() as $badgeTypeId => $trackData ){
 <?php
 $sections = array();
 
-if ( empty( $wgAchievementsEditAddPhotoOnly ) ) {
+if ( empty( $wgAchievementsEditOnly ) ) {
 	$sections = array(
 		'special' => array(),
 		'secret' => array()

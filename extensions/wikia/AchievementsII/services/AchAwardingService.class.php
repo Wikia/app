@@ -80,13 +80,13 @@ class AchAwardingService {
 	}
 
 	public function processSharing( $articleID, $sharerID, $IP ) {
-		global $wgEnableAchievementsForSharing, $wgAchievementsEditAddPhotoOnly;
+		global $wgEnableAchievementsForSharing, $wgAchievementsEditOnly;
 
 		if ( empty( $wgEnableAchievementsForSharing ) ) {
 			return;
 		}
 
-		if (!empty( $wgAchievementsEditAddPhotoOnly ) ) {
+		if (!empty( $wgAchievementsEditOnly ) ) {
 			return;
 		}
 
@@ -357,9 +357,9 @@ class AchAwardingService {
 	private function processAllInTrack() {
 		wfProfileIn( __METHOD__ );
 
-		global $wgAchievementsEditAddPhotoOnly;
+		global $wgAchievementsEditOnly;
 
-		if ( empty( $wgAchievementsEditAddPhotoOnly ) ) {
+		if ( empty( $wgAchievementsEditOnly ) ) {
 			if ( $this->mTitle->isContentPage() ) {
 				$this->processInTrackPicture();
 				$this->processInTrackEditCategory();
@@ -517,9 +517,9 @@ class AchAwardingService {
 	}
 
 	private function processAllNotInTrack() {
-		global $wgAchievementsEditAddPhotoOnly;
+		global $wgAchievementsEditOnly;
 
-		if ( !empty( $wgAchievementsEditAddPhotoOnly ) ) {
+		if ( !empty( $wgAchievementsEditOnly ) ) {
 			return;
 		}
 
