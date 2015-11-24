@@ -52,7 +52,7 @@ class TemplateTypesParser {
 			$type = self::getTemplateType( $title );
 
 			if ( $type === AutomaticTemplateTypes::TEMPLATE_SCROLBOX ) {
-				$outputText = ScrollboxTemplate::getTemplateArgsLongestVal(
+				$outputText = ScrollboxTemplate::getLongestElement(
 					TemplateArgsHelper::getTemplateArgs( $args, $frame )
 				);
 			}

@@ -8,7 +8,7 @@ class ScrollboxTemplate {
 	 *
 	 * @return string
 	 */
-	public static function getTemplateArgsLongestVal( $templateArgs ) {
+	public static function getLongestElement($templateArgs ) {
 		return array_reduce( $templateArgs, function ( $a, $b ) {
 			return strlen( $a ) >= strlen( $b ) ? $a : $b;
 		} );
