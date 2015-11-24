@@ -96,6 +96,10 @@ CSS;
 				'123', 'width', 123
 			], [
 				'foo', 'border', '\'foo\''
+			], [
+				'double"quote', 'position', '\'double"quote\''
+			], [
+				'single\'quote', 'transform', '\'single\\\'quote\''
 			]
 		];
 	}

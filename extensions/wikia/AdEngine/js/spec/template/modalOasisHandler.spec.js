@@ -7,6 +7,12 @@ describe('ext.wikia.adEngine.template.modalOasisHandler', function () {
 	}
 
 	var mocks = {
+		$: function () {
+			return {
+				addClass: noop,
+				text: noop
+			};
+		},
 		wikiaUiFactory: {
 			init: function () {
 				return mocks.promiseMock;
@@ -31,7 +37,12 @@ describe('ext.wikia.adEngine.template.modalOasisHandler', function () {
 			},
 			$close: {
 				hide: noop,
-				show: noop
+				show: noop,
+				parent: function () {
+					return {
+						prepend: noop
+					};
+				}
 			},
 			show: noop
 		}
@@ -39,6 +50,7 @@ describe('ext.wikia.adEngine.template.modalOasisHandler', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.template.modalOasisHandler'](
+			mocks.$,
 			mocks.wikiaUiFactory
 		).prototype;
 	}

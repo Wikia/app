@@ -16,4 +16,3 @@ $wgAutoloadClasses['QuoteTemplate'] = __DIR__ . '/handlers/QuoteTemplate.class.p
 // hooks
 $wgHooks['Parser::FetchTemplateAndTitle'][] = 'TemplateTypesParser::onFetchTemplateAndTitle';
 $wgHooks['Parser::getTemplateDom'][] = 'TemplateTypesParser::onGetTemplateDom';
-$wgHooks['Parser::endBraceSubstitution'][] = 'TemplateTypesParser::onEndBraceSubstitution';

@@ -2,7 +2,11 @@
 
 class TemplateTypesParser {
 	/**
+<<<<<<< HEAD
 	 * @desc alters template raw text parser output based on template type
+=======
+	 * @desc removes navbox template text from parser output
+>>>>>>> dev
 	 *
 	 * @param string $text - template content
 	 * @param Title $finalTitle - template title object
@@ -10,16 +14,21 @@ class TemplateTypesParser {
 	 * @return bool
 	 */
 	public static function onFetchTemplateAndTitle( &$text, &$finalTitle ) {
-		global $wgEnableTemplateTypesParsing, $wgArticleAsJson;
+		global $wgEnableTemplateTypesParsing, $wgArticleAsJson, $wgCityId;
+
 		wfProfileIn( __METHOD__ );
 
 		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson ) {
-			$type = self::getTemplateType( $finalTitle );
+			$type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )
+					->getTemplateTypeFromTitle( $wgCityId, $finalTitle );
 
 			switch ( $type ) {
 				case AutomaticTemplateTypes::TEMPLATE_NAVBOX:
 				case TemplateClassificationService::TEMPLATE_NAVBOX:
 					$text = self::handleNavboxTemplate();
+					break;
+				case TemplateClassificationService::TEMPLATE_FLAG:
+					$text = self::handleNoticeTemplate();
 					break;
 				case AutomaticTemplateTypes::TEMPLATE_REFERENCES:
 				case TemplateClassificationService::TEMPLATE_REFERENCES:
@@ -191,12 +200,20 @@ class TemplateTypesParser {
 		return $title && $title->exists();
 	}
 
-	/**
-	 * @desc return skip rendering navbox template
+	/** @desc return skip rendering navbox template
 	 *
 	 * @return string
 	 */
 	private static function handleNavboxTemplate() {
+		return '';
+	}
+
+	/**
+	 * @desc return skip rendering notice template
+	 *
+	 * @return string
+	 */
+	private static function handleNoticeTemplate() {
 		return '';
 	}
 

@@ -42,6 +42,12 @@ $wgAutoloadClasses['Wikia\TemplateClassification\UnusedTemplates\Handler'] = __D
  */
 $wgAutoloadClasses['TemplateClassificationController'] = __DIR__ . '/TemplateClassificationController.class.php';
 $wgAutoloadClasses['Wikia\TemplateClassification\Permissions'] = __DIR__ . '/Permissions.class.php';
+$wgAutoloadClasses['TemplatesSpecialController'] = __DIR__ . '/specials/TemplatesSpecialController.class.php';
+
+/**
+ * Special page
+ */
+$wgSpecialPages['Templates'] = 'TemplatesSpecialController';
 
 /**
  * View

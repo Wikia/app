@@ -82,6 +82,9 @@
 
 		this.hidden = false;
 
+		// If the page is already scrolled, make sure we update our position
+		handleScrolling();
+
 		// Close notification after specified amount of time
 		if (typeof this.timeout === 'number') {
 			setTimeout(function () {

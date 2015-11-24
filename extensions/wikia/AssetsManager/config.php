@@ -2687,3 +2687,11 @@ $config['insights_module_js'] = [
 		'//skins/oasis/js/modules/InsightsModule.js',
 	],
 ];
+
+$config['templates_hq_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/TemplateClassification/styles/SpecialTemplates.scss',
+	]
+];
