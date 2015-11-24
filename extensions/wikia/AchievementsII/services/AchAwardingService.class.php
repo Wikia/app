@@ -361,6 +361,7 @@ class AchAwardingService {
 
 		if ( empty( $wgAchievementsEditAddPhotoOnly ) ) {
 			if ( $this->mTitle->isContentPage() ) {
+				$this->processInTrackPicture();
 				$this->processInTrackEditCategory();
 				$this->processInTrackCategory();
 			}
@@ -371,7 +372,6 @@ class AchAwardingService {
 
 		if ( $this->mTitle->isContentPage() ) {
 			$this->processInTrackEdit();
-			$this->processInTrackPicture();
 		}
 
 		wfProfileOut( __METHOD__ );
