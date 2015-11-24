@@ -30,13 +30,6 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		priceMap = {},
 		response = false,
 		rubiconSlots = [],
-		slotPath = [
-			'/5441',
-			'wka.' + adLogicZoneParams.getSite(),
-			adLogicZoneParams.getMappedVertical(),
-			'',
-			adLogicZoneParams.getPageType()
-		].join('/'),
 		slots = {},
 		timing;
 
@@ -97,13 +90,19 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		trackState(true);
 	}
 
-	function defineSingleSlot(slotName, sizes) {
+	function defineSingleSlot(slotName, sizes, skin) {
+		var provider = skin === 'oasis' ? 'gpt' : 'mobile',
+			slotPath = [
+				'/5441',
+				'wka.' + adLogicZoneParams.getSite(),
+				adLogicZoneParams.getMappedVertical(),
+				'',
+				adLogicZoneParams.getPageType()
+			].join('/'),
+			unit = 'wikia_gpt' + slotPath + '/' + provider + '/' + slotName;
+
 		win.rubicontag.cmd.push(function () {
-			var slot = win.rubicontag.defineSlot(
-				'wikia_gpt' + slotPath + '/gpt/' + slotName,
-				sizes,
-				'wikia_gpt' + slotPath + '/gpt/' + slotName
-			).setPosition('atf');
+			var slot = win.rubicontag.defineSlot(unit, sizes, unit).setPosition('atf');
 			rubiconSlots.push(slot);
 			slots[slotName] = slot;
 		});
@@ -129,11 +128,6 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 
 		if (adLogicZoneParams.getSite() !== 'life') {
 			log(['call', 'Not wka.life vertical'], 'debug', logGroup);
-			return;
-		}
-
-		if (called) {
-			log(['call', 'Already called'], 'debug', logGroup);
 			return;
 		}
 
