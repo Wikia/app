@@ -47,9 +47,7 @@ class TemplateTypesParser {
 		global $wgEnableTemplateTypesParsing, $wgEnableScrollboxTemplateParsing, $wgArticleAsJson;
 		wfProfileIn( __METHOD__ );
 
-		if ( $wgEnableTemplateTypesParsing && $wgEnableScrollboxTemplateParsing && $wgArticleAsJson && !isNull($args) &&
-				self::isValidTitle(
-						$title ) ) {
+		if ( self::shouldTemplateBeParsed( $title, $args ) ) {
 			$type = self::getTemplateType( $title );
 
 			if ( $type === AutomaticTemplateTypes::TEMPLATE_SCROLBOX ) {
@@ -62,6 +60,24 @@ class TemplateTypesParser {
 		wfProfileOut( __METHOD__ );
 
 		return true;
+	}
+
+	/**
+	 * @desc checks is template should be parsed
+	 *
+	 * @param Title $title
+	 * @param PPNode_DOM $args
+	 *
+	 * @return bool
+	 */
+	private static function shouldTemplateBeParsed( $title, $args ) {
+		global $wgEnableTemplateTypesParsing, $wgEnableScrollboxTemplateParsing, $wgArticleAsJson;
+
+		return $wgEnableTemplateTypesParsing &&
+			$wgEnableScrollboxTemplateParsing &&
+			$wgArticleAsJson &&
+			self::isValidTitle( $title ) &&
+			!isNull($args);
 	}
 
 	/**
