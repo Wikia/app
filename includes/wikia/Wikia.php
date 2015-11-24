@@ -2344,6 +2344,10 @@ class Wikia {
 			return true;
 		}
 
+		if ( $action === 'delete' && $wgUser->isAllowed( 'deleteinterfacetrusted' ) ) {
+			return true;
+		}
+
 		// In this NS, editinterface applies only to white listed pages
 		if ( in_array( $title->getDBKey(), $wgEditInterfaceWhitelist )
 			|| $title->isCssPage()
