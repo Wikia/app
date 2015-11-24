@@ -10,8 +10,6 @@ class TemplateTypesParser {
 	 * @return bool
 	 */
 	public static function onFetchTemplateAndTitle( &$text, &$finalTitle ) {
-		global $wgEnableTemplateTypesParsing, $wgArticleAsJson;
-
 		wfProfileIn( __METHOD__ );
 
 		if ( self::shouldTemplateBeParsed() ) {
@@ -48,16 +46,22 @@ class TemplateTypesParser {
 	 * @return bool
 	 */
 	public static function onGetTemplateDom( $title, $args, $frame, &$outputText ) {
-		global $wgEnableScrollboxTemplateParsing;
+		global $wgEnableScrollboxTemplateParsing, $wgEnableQuoteTemplateParsing;
 		wfProfileIn( __METHOD__ );
 
 		if ( self::shouldTemplateBeParsed() && !is_null( $args ) ) {
 			$type = self::getTemplateType( $title );
+			$templateArgs = TemplateArgsHelper::getTemplateArgs( $args, $frame );
 
 			if ( $type === AutomaticTemplateTypes::TEMPLATE_SCROLLBOX && $wgEnableScrollboxTemplateParsing ) {
-				$outputText = ScrollboxTemplate::getLongestElement(
-					TemplateArgsHelper::getTemplateArgs( $args, $frame )
-				);
+				$outputText = ScrollboxTemplate::getLongestElement( $templateArgs );
+			}
+
+			if ( ( $type === AutomaticTemplateTypes::TEMPLATE_QUOTE ||
+				$type === TemplateClassificationService::TEMPLATE_QUOTE ) &&
+				$wgEnableQuoteTemplateParsing
+			) {
+				$outputText = QuoteTemplate::execute( $templateArgs );
 			}
 		}
 
