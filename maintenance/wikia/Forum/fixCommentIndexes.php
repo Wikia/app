@@ -26,50 +26,9 @@
  *                                               ...#5
  *                                               ...#6
  *
- * Additionally, consider the following comment numbering:
- *
- *   ...#2
- *   ...#5
- *   ...#6
- *   ...#6
- *   ...#6
- *   ...#7
- *   ...#8
- *
- * Here, posts numbered #3 and #4 were deleted and so do not show up.  Posts #7 and #8 were made after
- * the fix for the duplication problem was addressed in production but before this script was created.  In this
- * situation, the correct numbering would be:
- *
- *   ...#2
- *   ...#5
- *   ...#6
- *   ...#9
- *   ...#10
- *   ...#7
- *   ...#8
- *
- * This preserves the index for existing comments so that their URLs do not change and gives the duplicated
- * comments new indexes.  It does not matter that the numbers are now out of order as the code uses other
- * methods to order the comments chronologically.
- *
- * To further confuse matters, new comments might be made while this script is running, therefore this script
- * will need to set the starting index for new comments to something larger than $maxIndex + 1.
- *
- *
- * #2
- * #2 / #3
- * #2 / #4
- * #2 / #5
- * #2 / #6
- * #2 / #7
- * #2 / #8
- * #2 / #9
- * #2 / #10
- * #2 / #11
- * #3
- *
- *
- * $commentCount + $maxIndex - 2
+ * Its possible that this streak of duplicates can happen within normally numbered comments.  This is because
+ * we released a fix for the problem before creating this script.  All we need to do is make sure we only update
+ * the indexes that are duplicates so we don't change URLs that don't need to change.
  *
  */
 
