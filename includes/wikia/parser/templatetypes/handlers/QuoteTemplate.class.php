@@ -1,14 +1,28 @@
 <?php
 
 class QuoteTemplate {
-
 	const LENGTH_CHECK_MULTIPLY = 2;
 	const QUOTES_KEYS = [ 'quotation', 'author', 'subject' ];
+	const QUOTE_TEMPLATE_PATH = 'includes/wikia/parser/templatetypes/templates/quote.mustache';
 
+	/**
+	 * @desc renders wikia quote template
+	 *
+	 * @param array $args
+	 * @return string
+	 */
 	public static function execute( $args ) {
-		//render templates
+		$params = self::mapQuoteParams( $args );
+
+		return !empty($params) ? \MustacheService::getInstance()->render( self::QUOTE_TEMPLATE_PATH, $params ) : '';
 	}
 
+	/**
+	 * @desc maps template args to the wikia quote template format
+	 *
+	 * @param array $params
+	 * @return array
+	 */
 	public static function mapQuoteParams( $params ) {
 		$clean = [ ];
 		foreach ( $params as $key => $value ) {
