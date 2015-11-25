@@ -30,10 +30,10 @@ class InsightsCountService extends WikiaService {
 	public function getAllCounts() {
 		$response = [];
 		foreach ( InsightsHelper::getInsightsPages() as $type => $className ) {
-			if ( in_array( $type, self::$excludedFromCount ) ) {
-				continue;
+			$count = $this->calculateCount( $type );
+			if ( $count !== false ) {
+				$response[$type] = $this->calculateCount( $type );
 			}
-			$response[$type] = $this->calculateCount( $type );
 		}
 
 		return $response;
@@ -44,8 +44,12 @@ class InsightsCountService extends WikiaService {
 	 * @return int|bool Returns false if a given class does not exist or the count otherwise.
 	 */
 	private function calculateCount( $type ) {
+		if ( !$this->shouldCalculateForType( $type ) ) {
+			return false;
+		}
+
 		$className = InsightsHelper::getInsightsPages()[$type];
-		if ( !class_exists( $className ) ) {
+		if (  !class_exists( $className ) ) {
 			return false;
 		}
 
@@ -55,5 +59,15 @@ class InsightsCountService extends WikiaService {
 		$subpageModel = new $className;
 		$subpageModel->initModel( [] );
 		return count( $subpageModel->fetchArticlesData() );
+	}
+
+	/**
+	 * Checks if conditions for calculating a count of items are met for a given type of Insights.
+	 * @param $type
+	 * @return bool
+	 */
+	private function shouldCalculateForType( $type ) {
+		return !in_array( $type, self::$excludedFromCount )
+			&& InsightsHelper::isInsightPage( $type );
 	}
 }
