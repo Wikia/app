@@ -152,6 +152,7 @@ class TransactionClassifier {
 			// api call - api.php
 			case Transaction::ENTRY_POINT_API:
 				$this->addByList( Transaction::PARAM_API_ACTION, self::$FILTER_API_CALLS );
+				$this->add( Transaction::PARAM_API_LIST );
 				break;
 			// MediaWiki maintenance scripts
 			case Transaction::ENTRY_POINT_MAINTENANCE:

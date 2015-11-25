@@ -91,6 +91,13 @@ class TransactionClassifierTest extends WikiaBaseTest {
 			[
 				'attributes' => [
 					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_NIRVANA,
+					Transaction::PARAM_CONTROLLER => 'SearchSuggestionsApi',
+				],
+				'expectedName' => 'api/nirvana/SearchSuggestionsApi'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_NIRVANA,
 					Transaction::PARAM_CONTROLLER => 'Places',
 				],
 				'expectedName' => 'api/nirvana/Places'
@@ -154,6 +161,22 @@ class TransactionClassifierTest extends WikiaBaseTest {
 					Transaction::PARAM_NAMESPACE => NS_USER_TALK,
 				],
 				'expectedName' => 'page/user_talk'
+			],
+			# MW API
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_API,
+					Transaction::PARAM_API_ACTION => 'query',
+				],
+				'expectedName' => 'api/api/query'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_API,
+					Transaction::PARAM_API_ACTION => 'query',
+					Transaction::PARAM_API_LIST => 'users',
+				],
+				'expectedName' => 'api/api/query/users'
 			],
 		];
 	}
