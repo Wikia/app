@@ -155,6 +155,21 @@ class TransactionClassifierTest extends WikiaBaseTest {
 				],
 				'expectedName' => 'page/user_talk'
 			],
+			# blogs
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => TransactionClassifier::NS_BLOG_ARTICLE,
+				],
+				'expectedName' => 'page/blog'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => TransactionClassifier::NS_BLOG_LISTING,
+				],
+				'expectedName' => 'page/blog'
+			],
 		];
 	}
 }
