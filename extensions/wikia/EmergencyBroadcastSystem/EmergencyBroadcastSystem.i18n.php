@@ -2,11 +2,53 @@
 
 $messages = array();
 
+$messages['de'] = array(
+	'ebs-heading' => 'Die Infoboxen dieser Community funktionieren auf Mobilgeräten nicht',
+	'ebs-content' => 'Deine Infoboxen sind veraltet. Lass sie uns mit neuen Methoden erneut einrichten, damit sie auch für Mobilgeräte optimiert sind. [[w:c:de.community:Hilfe:Infoboxen|Hier erfährst du mehr.]]',
+	'ebs-yes' => 'Ja',
+	'ebs-no' => 'Nein'
+);
+
 $messages['en'] = array(
-	'ebs-heading' => 'Infoboxes on this wiki are not properly rendered on mobile devices',
-	'ebs-content' => 'Because they\'re not portable. You can fix this issue by converting those infoboxes into portable ones.<br />Do you want to do that? [[w:Help:Infoboxes|Learn more]]',
+	'ebs-heading' => 'This community\'s infoboxes are broken on mobile devices.',
+	'ebs-content' => 'Your infoboxes are outdated. Let\'s rebuild them with new methods that are mobile-friendly. [[w:Help:Infoboxes|Learn more here.]]',
 	'ebs-yes' => 'Yes',
 	'ebs-no' => 'No'
+);
+
+$messages['es'] = array(
+	'ebs-heading' => 'Las infoboxes de esta comunidad no funcionan en dispositivos móviles.',
+	'ebs-content' => 'Las infoboxes están desactualizadas. Reconstruyámoslas con nuevos métodos que sean compatibles con dispositivos móviles. [[w:c:comunidad:Ayuda:Infoboxes|Aprénde más aquí.]]',
+	'ebs-yes' => 'Sí',
+	'ebs-no' => 'No'
+);
+
+$messages['fr'] = array(
+	'ebs-heading' => 'Les infoboxes de cette communauté n\'apparaissent pas correctement sur les appareils mobiles.',
+	'ebs-content' => 'Vos infoboxes sont obsolètes. Recréez-les avec des méthodes plus adaptées aux appareils mobiles. [[w:c:communaute:Aide:Infoboxes|En savoir plus]]',
+	'ebs-yes' => 'Oui',
+	'ebs-no' => 'Non'
+);
+
+$messages['it'] = array(
+	'ebs-heading' => 'Gli infobox di questa comunità risultano non funzionanti sui dispositivi mobili.',
+	'ebs-content' => 'I tuoi infobox sono obsoleti. Ricreiamoli con nuovi metodi che sono compatibili con i dispositivi mobili. [[w:c:it.community:Aiuto:Infobox|Per saperne di più.]]',
+	'ebs-yes' => 'Sì',
+	'ebs-no' => 'No'
+);
+
+$messages['ja'] = array(
+	'ebs-heading' => 'モバイル端末上のこのコミュニティのインフォボックスは破損しています。',
+	'ebs-content' => 'インフォボックスが古くなっています。モバイルに適した新しい方法でインフォボックスをもう一度作成してみましょう。[[w:c:ja.community:ヘルプ:ポータブル・インフォボックス|詳しくは、こちらをご覧ください。]]',
+	'ebs-yes' => 'はい',
+	'ebs-no' => 'いいえ'
+);
+
+$messages['pl'] = array(
+	'ebs-heading' => 'Infoboksy tej społeczności nie funkcjonują poprawnie na urządzeniach mobilnych.',
+	'ebs-content' => 'Twoje infoboksy są nieaktualne. Przebudujmy je razem, tak aby były przyjazne dla urządzeń mobilnych. [[w:c:spolecznosc:Pomoc:Infoboksy|Tutaj znajdziesz więcej informacji.]]',
+	'ebs-yes' => 'Tak',
+	'ebs-no' => 'Nie'
 );
 
 $messages['pt-br'] = array(
