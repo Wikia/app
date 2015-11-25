@@ -367,7 +367,7 @@
 		}
 
 		&.collapsible {
-			height: auto; // Exaggerated on purpose
+			height: auto;
 
 			legend::before {
 				content: "\25b4\00a0";
@@ -376,6 +376,10 @@
 			&.collapsed {
 				height: 25px;
 				overflow: hidden;
+
+				.rc-fieldset-content {
+					visibility: hidden;
+				}
 
 				legend::before {
 					content: "\25be\00a0";

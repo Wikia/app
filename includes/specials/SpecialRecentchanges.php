@@ -643,6 +643,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		$form = Xml::tags( 'form', array( 'action' => $wgScript ), $out );
 		$panel[] = $form;
 		$panelString = implode( "\n", $panel );
+		$panelString = Html::rawElement( 'div', [ 'class' => 'rc-fieldset-content' ], $panelString );
 
 		$this->getOutput()->addHTML(
 			Xml::fieldset( wfMessage( 'recentchanges-legend' )->escaped(), $panelString, [
@@ -682,7 +683,9 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		$content = Html::rawElement( 'legend', [ 'id' => 'recentchanges-on-wikia' ],
 			wfMessage( 'recentchanges-on-wikia-title' )->escaped()
 		);
-		$content .= wfMessage( 'recentchanges-on-wikia-content' )->parse();
+		$content .= Html::rawElement( 'div', [ 'class' => 'rc-fieldset-content' ],
+			wfMessage( 'recentchanges-on-wikia-content' )->parse()
+		);
 
 		$this->getOutput()->addHTML(
 			Html::rawElement( 'fieldset',
