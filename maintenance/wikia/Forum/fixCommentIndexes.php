@@ -47,8 +47,9 @@ class FixCommentIndexes extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Fix duplicate comment URL problems on Wall and Forum posts";
-		$this->addOption( 'test', 'Test mode; make no changes', false, false, 't' );
-		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
+		$this->addOption( 'test', 'Test mode; make no changes', $required = false, $withArg = false, 't' );
+		$this->addOption( 'verbose', 'Show extra debugging output', $required = false, $withArg = false, 'v' );
+		$this->addOption( 'thread', 'Specify a thread to fix', $required = false, $withArg = true );
 	}
 
 	static public function isVerbose() {
@@ -73,6 +74,7 @@ class FixCommentIndexes extends Maintenance {
 	public function execute() {
 		self::$test = $this->hasOption( 'test' );
 		self::$verbose = $this->hasOption( 'verbose' );
+		$thread = $this->getOption( 'thread' );
 
 		echo "Fixing " . self::getWikiURL() . "\n";
 
@@ -84,7 +86,11 @@ class FixCommentIndexes extends Maintenance {
 		// A current Title object is needed for some of the operations that follow
 		F::app()->wg->Title = SpecialPage::getTitleFor( 'Forum' );
 
-		$threads = $this->getAffectedThreads();
+		if ( empty( $thread ) ) {
+			$threads = $this->getAffectedThreads();
+		} else {
+			$threads = [ $thread ];
+		}
 		$this->debug( 'Found ' . count( $threads ) . " threads to fix\n" );
 
 		foreach ( $threads as $threadId ) {

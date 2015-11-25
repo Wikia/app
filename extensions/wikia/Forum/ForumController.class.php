@@ -260,17 +260,20 @@ class ForumController extends WallBaseController {
 				// keys of sorting array are names of DOM elements' classes
 				// which are needed to click tracking
 				// if you change those keys here, do so in Wall.js file, please
-				$options = array( 'nf' => wfMessage( 'wall-history-sorting-newest-first' )->escaped(), 'of' => wfMessage( 'wall-history-sorting-oldest-first' )->escaped(), );
+				$options = [
+					'nf' => wfMessage( 'wall-history-sorting-newest-first' )->escaped(),
+					'of' => wfMessage( 'wall-history-sorting-oldest-first' )->escaped(),
+				];
 				break;
 			case 'index' :
 			default :
-				$options = array(
+				$options = [
 					'nr' => wfMessage( 'forum-sorting-option-newest-replies' )->escaped(),
 					// 'pt' => wfMessage('forum-sorting-option-popular-threads')->escaped(),
 					'mr' => wfMessage( 'forum-sorting-option-most-replies' )->escaped(),
 					'nt' => wfMessage( 'forum-sorting-option-newest-threads' )->escaped(),
 					'ot' => wfMessage( 'forum-sorting-option-oldest-threads' )->escaped(),
-				);
+				];
 				break;
 		}
 

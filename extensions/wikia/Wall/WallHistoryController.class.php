@@ -1,7 +1,5 @@
 <?php
 
-use Wikia\Logger\WikiaLogger;
-
 class WallHistoryController extends WallController {
 	private $isThreadLevel = false;
 

@@ -111,5 +111,9 @@ $wgGroupPermissions['staff']['access-sendemail'] = true;
 $wgGroupPermissions['helper']['access-sendemail'] = true;
 $wgGroupPermissions['translator']['access-sendemail'] = true;
 
-$wgAddGroups['staff'][] = 'translator';
-$wgRemoveGroups['staff'][] = 'translator';
+if ( is_array( $wgAddGroups['staff'] ) ) {
+	$wgAddGroups[ 'staff' ][] = 'translator';
+}
+if ( is_array( $wgRemoveGroups[ 'staff' ] ) ) {
+	$wgRemoveGroups[ 'staff' ][] = 'translator';
+}
