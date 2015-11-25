@@ -67,8 +67,7 @@ class ContextLinkTemplate {
 		//remove all newlines from the middle of the template text.
 		$wikitext = preg_replace( '/\n/', ' ', $wikitext );
 		//remove images from template content
-		$fileNamespaceSanitizeHelper = FileNamespaceSanitizeHelper::getInstance();
-		$wikitext = $fileNamespaceSanitizeHelper->stripFilesFromWikitext( $wikitext, $wgContLang );
+		FileNamespaceSanitizeHelper::getInstance()->stripFilesFromWikitext( $wikitext, $wgContLang );
 		//trim all unwanted spaces around content
 		$wikitext = trim( $wikitext );
 
