@@ -329,7 +329,7 @@ class PageArchive {
 		global $wgUser;
 
 		$resultMock = '';
-		if ( !Wikia::canEditInterfaceWhitelist( $this->title, $wgUser, 'undelete', $resultMock ) ) {
+		if ( !$this->title->userCan( 'undelete' ) ) {
 			throw new PermissionsError( 'editinterfacetrusted' );
 		}
 
