@@ -242,7 +242,7 @@ class AdEngine2Hooks {
 	public static function onSkinAfterBottomScripts( $skin, &$bottomScriptsText ) {
 		/* ADEN-2592 not meant for production START */
 		$bottomScriptsText .= <<<CODE
-<script src=“http://www.changetip.com/public/changepay/changePay-sdk.js"></script>
+<script src=“https://www.changetip.com/public/changepay/changePay-sdk.js"></script>
 
 <style>
 .changepay-modal-inner {
