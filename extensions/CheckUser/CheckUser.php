@@ -38,8 +38,6 @@ $wgExtensionCredits['specialpage'][] = array(
 // 'checkuser-log' is required to view the private log of checkuser checks
 $wgAvailableRights[] = 'checkuser';
 $wgAvailableRights[] = 'checkuser-log';
-$wgGroupPermissions['checkuser']['checkuser'] = true;
-$wgGroupPermissions['checkuser']['checkuser-log'] = true;
 
 // Legacy variable, no longer used. Used to point to a file in the server where
 // CheckUser would log all queries done through Special:CheckUser.
