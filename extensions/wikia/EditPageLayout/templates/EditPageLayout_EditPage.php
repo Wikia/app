@@ -142,7 +142,7 @@
 						</div>
 						<div class="module_content">
 							<br />
-							Try the new infobox editor!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="infoboxpreview" value="Go to Editor"/>
+							Try the new infobox editor!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="infoboxPreview" value="Go to Editor"/>
 						</div>
 					</div>
 				</div>

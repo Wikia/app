@@ -49,7 +49,7 @@ define(
 	function beforeEditorInit() {
 		$('.loading-indicator').remove();
 		$('#wpSave').removeAttr('disabled');
-		$('#infoboxpreview').click(launchEditorPreview);
+		$('#infoboxPreview').click(launchEditorPreview);
 		$editPage.addClass('editpage-sourcewidemode mode-source ' + narrowClassName);
 	}
 
@@ -184,9 +184,9 @@ define(
 		var infoboxPreviewURL = 'http://localhost:8080/api/entrypoint/';
 
 		var $form = $('<form>').attr({'action': infoboxPreviewURL, 'method': 'POST'});
-		$('<input>').val(editorValue).attr({'name': 'editor_value', 'type': 'hidden'}).appendTo($form);
-		$('<input>').val(wikiURL).attr({'name': 'wiki_url', 'type': 'hidden'}).appendTo($form);
-		$('<input>').val(templateName).attr({'name': 'template_name', 'type': 'hidden'}).appendTo($form);
+		$('<textarea>').val(editorValue).attr({'name': 'editor_value'}).appendTo($form);
+		$('<input>').val(wikiURL).attr({'name': 'wiki_url'}).appendTo($form);
+		$('<input>').val(templateName).attr({'name': 'template_name'}).appendTo($form);
 		$form.submit();
 	}
 
