@@ -69,19 +69,16 @@ class HubService extends Service {
 	 * @return Boolean|String
 	 */
 	public static function getVerticalNameForComscore( $cityId ) {
-		$verticalId = WikiFactoryHub::getInstance()->getVerticalId( $cityId );
+		if ( WikiaPageType::isCorporatePage() ) {
+			return 'fandom';
+		}
 
-		switch ($verticalId) {
+		switch ( WikiFactoryHub::getInstance()->getVerticalId( $cityId ) ) {
 			case WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES:
 				return 'gaming';
 			case WikiFactoryHub::VERTICAL_ID_LIFESTYLE:
-				return 'lifestyle';
 			case WikiFactoryHub::VERTICAL_ID_OTHER:
-				if ( WikiaPageType::isCorporatePage() ) {
-					return false;
-				} else {
-					return 'lifestyle';
-				}
+				return 'lifestyle';
 			default:
 				return 'entertainment';
 		}
