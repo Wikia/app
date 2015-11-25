@@ -10,7 +10,6 @@ class ExternalTemplateTypesProvider {
 	private $cachedTypes = [];
 
 	/**
-	 * @param TemplateClassificationService $tcs
 	 * @return ExternalTemplateTypesProvider
 	 */
 	public static function getInstance() {
@@ -65,11 +64,11 @@ class ExternalTemplateTypesProvider {
 	 * @return string - template type
 	 */
 	public function getTemplateType( $wikiId, $templateId ) {
-		if ( !isset( $this->cachedTypes[$templateId] ) ) {
-			$this->cachedTypes[$templateId] = $this->getExternalTemplateType( $wikiId, $templateId );
+		if ( !isset( $this->cachedTypes[ $templateId ] ) ) {
+			$this->cachedTypes[ $templateId ] = $this->getExternalTemplateType( $wikiId, $templateId );
 		}
 
-		return $this->cachedTypes[$templateId];
+		return $this->cachedTypes[ $templateId ];
 	}
 
 	/**
