@@ -5542,7 +5542,9 @@ $wgAjaxLicensePreview = true;
  );
  *
  */
-$wgCrossSiteAJAXdomains = array();
+$wgCrossSiteAJAXdomains = [
+	'internal.vstf.wikia.com', # PLATFORM-1719
+];
 
 /**
  * Domains that should not be allowed to make AJAX requests,
