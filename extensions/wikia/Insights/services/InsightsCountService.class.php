@@ -49,7 +49,7 @@ class InsightsCountService extends WikiaService {
 		}
 
 		$className = InsightsHelper::getInsightsPages()[$type];
-		if (  !class_exists( $className ) ) {
+		if ( !class_exists( $className ) ) {
 			return false;
 		}
 
