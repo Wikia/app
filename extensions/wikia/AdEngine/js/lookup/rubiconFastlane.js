@@ -58,21 +58,25 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		priceMap = {},
 		response = false,
 		rubiconSlots = [],
+		rubiconTierKey = 'rpfl_7450',
+		rubiconLibraryUrl = '//ads.rubiconproject.com/header/7450.js',
 		slots = {},
 		timing;
 
-	function getSlots(skin) {
-		var pageType = context.targeting.pageType,
-			slotName;
-
-		slots = config[skin];
-		if (skin === 'oasis' && pageType === 'home') {
-			for (slotName in slots) {
-				if (slots.hasOwnProperty(slotName) && slotName.indexOf('TOP') > -1) {
-					slots['HOME_' + slotName] = slots[slotName];
-					delete slots[slotName];
-				}
+	function configureHomePageSlots() {
+		var slotName;
+		for (slotName in slots) {
+			if (slots.hasOwnProperty(slotName) && slotName.indexOf('TOP') > -1) {
+				slots['HOME_' + slotName] = slots[slotName];
+				delete slots[slotName];
 			}
+		}
+	}
+
+	function getSlots(skin) {
+		slots = config[skin];
+		if (skin === 'oasis' && context.targeting.pageType === 'home') {
+			configureHomePageSlots();
 		}
 
 		return slots;
@@ -95,7 +99,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 
 	function addSlotPrice(slotName, rubiconTargeting) {
 		rubiconTargeting.forEach(function (params) {
-			if (params.key === 'rpfl_7450') {
+			if (params.key === rubiconTierKey) {
 				priceMap[slotName] = params.values.join(',');
 			}
 		});
@@ -186,7 +190,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 
 		rubicon.async = true;
 		rubicon.type = 'text/javascript';
-		rubicon.src = '//ads.rubiconproject.com/header/7450.js';
+		rubicon.src = rubiconLibraryUrl;
 
 		node.parentNode.insertBefore(rubicon, node);
 		defineSlots(skin);
