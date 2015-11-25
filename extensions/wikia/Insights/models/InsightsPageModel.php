@@ -482,6 +482,7 @@ abstract class InsightsPageModel extends InsightsModel {
 		return wfMemcKey(
 			self::INSIGHTS_MEMC_PREFIX,
 			$this->getInsightType(),
+			$this->getInsightCacheParams(),
 			$params,
 			self::INSIGHTS_MEMC_VERSION
 		);
