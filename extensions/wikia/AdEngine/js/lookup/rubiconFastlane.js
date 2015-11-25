@@ -103,7 +103,10 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			unit = 'wikia_gpt' + slotPath + '/' + provider + '/' + slotName;
 
 		win.rubicontag.cmd.push(function () {
-			var slot = win.rubicontag.defineSlot(unit, sizes, unit).setPosition(position);
+			var slot = win.rubicontag.defineSlot(unit, sizes, unit);
+			if (skin === 'oasis') {
+				slot.setPosition(position);
+			}
 			rubiconSlots.push(slot);
 			slots[slotName] = slot;
 		});

@@ -51,9 +51,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 			},
 			log: noop,
 			slot: {
-				setPosition: function () {
-					return mocks.slot;
-				},
+				setPosition: noop,
 				getAdServerTargeting: function () {
 					return [{
 						key: 'rpflKey',
@@ -124,7 +122,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 	});
 
 	it('Define /TOP/ slot as atf', function () {
-		spyOn(mocks.slot, 'setPosition').and.callThrough();
+		spyOn(mocks.slot, 'setPosition');
 		var rubiconFastlane = getRubiconFastlane();
 
 		rubiconFastlane.call('oasis');
@@ -133,12 +131,21 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 	});
 
 	it('Define not-/TOP/ slot as btf', function () {
-		spyOn(mocks.slot, 'setPosition').and.callThrough();
+		spyOn(mocks.slot, 'setPosition');
+		var rubiconFastlane = getRubiconFastlane();
+
+		rubiconFastlane.call('oasis');
+
+		expect(mocks.slot.setPosition.calls.argsFor(2)[0]).toEqual('btf');
+	});
+
+	it('Do not define position on mobile', function () {
+		spyOn(mocks.slot, 'setPosition');
 		var rubiconFastlane = getRubiconFastlane();
 
 		rubiconFastlane.call('mercury');
 
-		expect(mocks.slot.setPosition.calls.argsFor(2)[0]).toEqual('atf');
+		expect(mocks.slot.setPosition).not.toHaveBeenCalled();
 	});
 
 	it('Returns empty parameters list on not defined slot', function () {
