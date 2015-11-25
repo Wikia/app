@@ -100,12 +100,11 @@ class FileNamespaceSanitizeHelper {
 	 * @desc removes all files and images occurrences from wikitext
 	 *
 	 * @param string $wikitext
+	 * @param $lang \Language
 	 * @return string wikitext without files and images
 	 */
-	public function stripFilesFromWikitext( $wikitext ) {
-		global $wgContLang;
-
-		$filePrefixRegex = substr( $this->getFilePrefixRegex( $wgContLang ), 1 );
+	public function stripFilesFromWikitext( $wikitext, $lang ) {
+		$filePrefixRegex = substr( $this->getFilePrefixRegex( $lang ), 1 );
 		$wikitext = preg_replace( '/\[\[' . $filePrefixRegex .'.*\]\]/U', '', $wikitext );
 
 		return $wikitext;

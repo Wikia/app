@@ -191,4 +191,44 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 			],
 		];
 	}
+
+	/**
+	 * @param $wikitext
+	 * @param $contentLanguageCode
+	 * @param $expectedOutput
+	 *
+	 * @dataProvider testStripFilesFromWikitextDataProvider
+	 */
+	public function testStripFilesFromWikitext( $wikitext, $contentLanguageCode, $expectedOutput ) {
+		$language = new \Language();
+		$language->setCode( $contentLanguageCode );
+		$actualOutput = $this->fileNamespaceSanitizeHelper->stripFilesFromWikitext( $wikitext, $language );
+
+		$this->assertEquals( $expectedOutput, $actualOutput );
+	}
+
+	public function testStripFilesFromWikitextDataProvider() {
+		return [
+			[
+				'[[File:image.jpg|300px|lorem ipsum]]His clothes are not the same as they were in The Sims 2.',
+				'en',
+				'His clothes are not the same as they were in The Sims 2.'
+			],
+			[
+				'His [[Image:image.jpg|300px|lorem ipsum|other param]]clothes are not the same as they were in The Sims 2[[File:image.jpg|300px|lorem ipsum]].',
+				'en',
+				'His clothes are not the same as they were in The Sims 2.'
+			],
+			[
+				'Der ehrgeizige Sim nimmt sich mehr vor, als seine Zeitgenossen und verfolgt seine Ziele mit eiserner Disziplin.[[Datei:Merkmal-Ehrgeizig.jpg|left]]',
+				'de',
+				'Der ehrgeizige Sim nimmt sich mehr vor, als seine Zeitgenossen und verfolgt seine Ziele mit eiserner Disziplin.'
+			],
+			[
+				'[[Plik:Medina_Hoit.png]]Ma siwe włosy, ciemną skórę, [[Grafika:Medina_Hoit.png]]małe okulary oraz nosi białą koszulę i niebieskie spodnie. [[File:Merkmal-Ehrgeizig.jpg|left]]',
+				'pl',
+				'Ma siwe włosy, ciemną skórę, małe okulary oraz nosi białą koszulę i niebieskie spodnie. '
+			]
+		];
+	}
 }
