@@ -9,6 +9,13 @@ $messages['en'] = array(
 	'ebs-no' => 'No'
 );
 
+$messages['pt-br'] = array(
+	'ebs-heading' => 'As infoboxes desta comunidade não funcionam em dispositivos móveis.',
+	'ebs-content' => 'Suas infoboxes estão desatualizadas. Vamos reconstruí-las com novos métodos que são compatíveis com dispositivos móveis. [[w:c:comunidade:Ajuda:Infoboxes_Portáteis|Saiba mais aqui.]]',
+	'ebs-yes' => 'Sim',
+	'ebs-no' => 'Não'
+);
+
 $messages['ru'] = array(
 	'ebs-heading' => 'Инфобоксы этой вики некорректно отображаются на мобильных устройствах',
 	'ebs-content' => 'Ваши инфобоксы устарели. Мы предлагаем переписать их с использованием новых методов, для корректного отображения на всех устройствах. [[w:c:ru.community:Справка:Инфобоксы|Узнать больше.]]',
