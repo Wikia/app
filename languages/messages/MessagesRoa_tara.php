@@ -693,6 +693,7 @@ L'urteme archivije de le bloccaminde se iacche aqquà sotte pe referimende:",
 'sitejspreview'                    => "'''Arrecuerdete ca tu ste vide sulamende in andeprime 'u codece JavaScript tune.'''
 '''Non g'à state angore reggistrate ninde!'''",
 'userinvalidcssjstitle'            => "'''Attenziò:''' Non ge stè 'nu skin \"\$1\".
+Arrecuerdete ca jndr'à le file personalizzete .css e .js s'ause scrivere le titele cu le lettere piccenne, pe esembie {{ns:user}}:Foo/vector.css è diverse da {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Cangiete)',
 'note'                             => "'''Vide Bbuene:'''",
 'previewnote'                      => "'''Queste è sole 'n'andeprime;

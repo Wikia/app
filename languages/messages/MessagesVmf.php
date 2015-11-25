@@ -846,15 +846,6 @@ Bidde gug's mi´m foorschau-gnobf ôô fôrm schbajchan",
 # Stylesheets
 'common.css'      => '/* CSS hiir beâjflusd ale schelfn */',
 'monobook.css'    => "/* CSS hiir beâjflusd nôr dii Monobook-schelfn. Wen'd ale uf ôômôôl beâjflusn wilsch, muâsch an MediaWiki:Common.css was ändârn. */",
-
-/* Dii glôôschrajwung im nawigadsjoonsberajch fârhindârd des: */
-.portlet h5,
-.portlet h6,
-#p-personal ul,
-#p-cactions li a,
-#preftoc a {
-     text-transform: none;
-}",
 'print.css'       => '/* CSS hiir beâjflusd nôr dii drugausgaawe. */',
 'handheld.css'    => '/* CSS hiir beâjflusd nôr dii handgerääde, jee nachdeem, welche schelfn in $wgHandheldStyle âjgeschdeld is. */',
 

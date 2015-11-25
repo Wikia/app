@@ -783,6 +783,7 @@ De leste bloklogregel wuuertj hiejónger t'r raodpleging gegaeve:",
 'sitejspreview'                    => "'''Dit is allein 'n veurvertuin van de JavaScriptcode.'''
 '''Deze is nog neet opgesjlage!'''",
 'userinvalidcssjstitle'            => "'''Waarsjoewing:''' d'r is gein skin \"\$1\".
+Lèt op: dien eige .css- en .js-pagina's beginne mèt  'ne klein lètter, beveurbeeld {{ns:user}}:Naam/vector.css in plaats van {{ns:user}}:Naam/Vector.css.",
 'updated'                          => '(Biegewèrk)',
 'note'                             => "'''Opmirking:'''",
 'previewnote'                      => "'''Lèt op: dit is 'n controlepazjena; dien tèks is nog neet opgesjlage!'''",

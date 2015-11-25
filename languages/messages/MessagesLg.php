@@ -633,6 +633,7 @@ okukunkumula eggwanika ezzibizi erya kalambulanetti yo olyoke osobole okulaba en
 '''Tannakazibwa.'''",
 'userinvalidcssjstitle'            => "'''Kulabula:''' Tewali endabika eyitibwa \"\$1\".<br />
 Empapula eza .css ne .js bamemba ze b'ekoledde, amannya ga zo ennukuta za mu<br />
+zonna ziteekwa okuba ntono, okugeza ''{{ns:user}}:Foo/vector.css'' so ssi ''{{ns:user}}:Foo/Vector.css''.",
 'updated'                          => '(Ebituukanisidwa)',
 'note'                             => "'''Okunnyonyola:'''",
 'previewnote'                      => "'''Kuno kugezaamubugeza; by'okoze tebinnakazibwa!'''",

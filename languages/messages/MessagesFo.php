@@ -754,6 +754,7 @@ Tann seinasti sperringar gerðalistin er her niðanfyri fyri ávísing:',
 'sitejspreview' => "'''Minst til at hetta bert er ein royndar vísing av hesi JavaScript kotuni.'''
 '''Tað er ikki goymt enn!'''",
 'userinvalidcssjstitle' => "'''Ávaring:''' Tað er onki skinn \"\$1\".
+Tilevnaðar .css og .js síður brúka heiti sum byrja við lítlum bókstavi, t.d.  {{ns:user}}:Foo/vector.css í mun til {{ns:user}}:Foo/Vector.css.",
 'updated' => '(Dagført)',
 'note' => "'''Viðmerking:'''",
 'previewnote' => "'''Minst til at hetta bara er ein forskoðan, sum enn ikki er goymd!'''",

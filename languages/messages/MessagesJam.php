@@ -602,6 +602,7 @@ Di lietis blak lag enchri provaid biluo fi refrans:',
 'userjspreview'                    => "'''Memba se yu onggl a tes/priivyuu yu yuuza JavaScript.'''
 '''Ino sieb yet!'''",
 'userinvalidcssjstitle'            => "'''Waanin:''' No skin \"\$1\" no de.
+Memba se kostom .css ahn .js piej yuuz a luwakies taikl, e.g. {{ns:user}}:Foo/vector.css az opuoz tu {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Opdiet)',
 'note'                             => "'''Nuot:'''",
 'previewnote'                      => "'''Memb se dis a onggl priivyuu.'''

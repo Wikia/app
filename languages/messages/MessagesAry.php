@@ -679,6 +679,7 @@ aĥir mdĥl f-sijill l-blok mĝti lṫḫṫ:',
 'sitejspreview'                    => "'''ma tnsa-ċ billa JavaScript ṫaĝk mazal ġir f-mrḫalt l-iĝdad.'''
 '''rah mazal ma ṫsjjal-ċ!'''",
 'userinvalidcssjstitle'            => "'''ṫḫdir:''' ma kayn ḫṫṫa ċi skin \"\$1\".
+ṣfaḫi .css o-.js l-moĥṣṣaṣa ĥddama b-ĝanawin minuscule, bḫal {{ns:user}}:Foo/vector.css o-maċi bḫal {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(mohdata)',
 'note'                             => "'''molahada:'''",
 'previewnote'                      => "'''Dir fe balek belli hadċi ġir prévizualizasyon.'''

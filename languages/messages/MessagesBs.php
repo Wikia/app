@@ -929,6 +929,7 @@ Posljednje stavke zapisnika blokiranja možete pogledati ispod:',
 'sitejspreview'                    => "'''Zapamtite ovo je samo izgled ovog koda JavaScripte.'''
 '''Još uvijek nije sačuvan!'''",
 'userinvalidcssjstitle'            => "'''Upozorenje:''' Ne postoji interfejs pod imenom \"\$1\".
+Ne zaboravite da imena stranica s .css i .js kodom počinju malim slovom, npr. {{ns:user}}:Foo/vector.css, a ne {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Osvježeno)',
 'note'                             => "'''Pažnja:'''",
 'previewnote'                      => "'''Ovo je samo pregled; izmjene stranice nisu još sačuvane!'''",

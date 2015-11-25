@@ -506,6 +506,7 @@ Pleser controla si vu cari crear/redacter ti págine.',
 'userjspreview'                    => "'''Memora que vu es solmen provant/monstrant tui JavaScript de usator.'''
 '''It ne ha esset conservat ancor!'''",
 'userinvalidcssjstitle'            => "'''Advertiment:''' Ne vi pelle \"\$1\".
+Memora que hábitu .css e págines .js usa un titul plu bass, e.g. {{ns:user}}:Foo/vector.css quam oposit por {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Modernisat)',
 'previewnote'                      => "'''Memora se que ti es solmen un prevision.'''
 Tui changes ancor ne ha esset conservat!",

@@ -650,6 +650,7 @@ $2
 'sitejspreview'                    => "'''یاد رکھو بے  تسی صرف ایہ 'JavaScript کوڈ چیک کررۓ او''
 '''اینوں ہجے بچایا نئیں گیا!'''",
 'userinvalidcssjstitle'            => "'''خبردار:''' \"\$1\" سکن نئیں اے۔
+Custom .css تے .js pages use a lowercase title, e.g. {{ns:user}}:Foo/vector.css as opposed to {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(نواں کیتا گیا)',
 'note'                             => "'''نوٹ:'''",
 'previewnote'                      => "'''اے ہلے کچا کم اے؛ تبدیلیاں بچائیاں نہیں گئیاں'''",

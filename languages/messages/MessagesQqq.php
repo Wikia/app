@@ -284,30 +284,6 @@ This can also appear in the credits page if the credits feature is enabled,for e
 'qbfind'         => 'Alternative for "search" as used in MultiTasks extensions
 {{Identical|Find}}',
 
-{{doc-important|Do not translate <tt>Project:</tt> part.}}",
-
-
-{{Identical|Delete}}',
-
-{{Identical|Move}}',
-
-{{Identical|Protect}}',
-{{Identical|Undelete}}',
-
-{{Identical|Unprotect}}',
-
-{{Identical|Category}}',
-
-{{Identical|File}}',
-{{Identical|Page}}',
-{{Identical|Message}}',
-{{Identical|Discussion}}',
-{{Identical|Template}}',
-{{Identical|User page}}',
-{{Identical|Create}}',
-{{Identical|Edit}}',
-{{Identical|View history}}',
-{{Identical|View source}}',
 'actions'                    => '{{Identical|Action}}',
 'namespaces'                 => '{{Identical|Namespace}}',
 
@@ -348,7 +324,7 @@ Also used as title of [[Special:Search]] page in [[Special:SpecialPages]].
 
 {{Identical|Create}}',
 'editthispage'      => 'This is the "edit" link as used by the MyHome extension.',
-{{Identical|Createpage}}',
+
 'delete'            => 'Name of the Delete tab shown for admins. Should be in the imperative mood.
 
 {{Identical|Delete}}',
@@ -370,7 +346,6 @@ Also used as title of [[Special:Search]] page in [[Special:SpecialPages]].
 {{Identical|Talk}}',
 'personaltools'     => 'Heading for a group of links to your user page, talk page, preferences, watchlist, and contributions. This heading is visible in the sidebar in some skins. For an example, see [http://translatewiki.net/wiki/Main_Page?useskin=simple Main Page using simple skin].',
 
-{{Identical|Content page}}",
 'talk'              => 'Used as display name for the tab to all talk pages. These pages accompany all content pages and can be used for discussing the content page. Example: [[Talk:Example]].
 
 {{Identical|Discussion}}',

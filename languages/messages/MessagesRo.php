@@ -943,6 +943,7 @@ Ultima intrare în jurnalul blocărilor este afișată mai jos pentru referinț�
 'sitejspreview'                    => "'''Rețineți că doar previzualizați acest cod JavaScript.'''
 '''El nu a fost salvat încă!'''",
 'userinvalidcssjstitle'            => "'''Avertizare:''' Nu există aspectul „$1”.
+Paginile .css și .js specifice utilizatorilor au titluri care încep cu literă mică; de exemplu {{ns:user}}:Foo/vector.css în comparație cu {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Actualizat)',
 'note'                             => "'''Notă:'''",
 'previewnote'                      => "Aceasta este doar o previzualizare! Pentru a salva pagina în forma actuală, descrieți succint modificările efectuate și apăsați butonul '''Salvează pagina'''.",

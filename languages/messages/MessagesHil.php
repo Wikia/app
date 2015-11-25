@@ -675,6 +675,7 @@ Ang pinaka-ulihi nga log sa pagpuggong yara sa idalom para mahibaluan nimo:',
 'sitejspreview'                    => "'''Tandai nga ginalantaw mo pa lang ang ini nga kodigo sang JavaScript.'''
 '''Wala pa ini matipon!'''",
 'userinvalidcssjstitle'            => "'''Aviso:''' Wala sang panit nga \"\$1\".
+Sa mga pahungod nga mga panid nga .css and .js magamit sang titulo nga may gagmay nga letra (lowercase), e.g. {{ns:user}}:Foo/vector.css kontra sa {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Suno sa oras)',
 'note'                             => "'''Pansinon:'''",
 'previewnote'                      => "'''Tandaan nga prebyu lamang ini.'''

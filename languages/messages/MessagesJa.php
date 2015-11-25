@@ -1031,6 +1031,7 @@ IPアドレスは複数の利用者の間で共有されていることがあり
 'sitejspreview'                    => "'''ここでは、JavaScriptをプレビューしているだけに過ぎません。'''
 '''まだ保存されていません！'''",
 'userinvalidcssjstitle'            => "'''警告：'''「$1」という外装はありません。
+.cssと.jsページを編集する際には、ページ名を小文字にすることを忘れないでください（例えば、{{ns:user}}:Hoge/Vector.cssではなく{{ns:user}}:Hoge/vector.cssとなります）。",
 'updated'                          => '（更新）',
 'note'                             => "'''お知らせ：'''",
 'previewnote'                      => "'''これはプレビューです。'''

@@ -794,6 +794,7 @@ E gouf nach net gespäichert!'''",
 'sitejspreview'                    => "'''Denkt drun datt Dir dëse JavaScript-Code just kuckt.
 E gouf nach net gespäichert!'''",
 'userinvalidcssjstitle'            => "'''Opgepasst:''' Et gëtt keen Ausgesinn (skin) \"\$1\".
+Denkt drun datt eegen .css an .js Säiten e kleng geschriwwenen Titel benotzen, z. Bsp. {{ns:user}}:Foo/vector.css am Géigesaz zu {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Geännert)',
 'note'                             => "'''Notiz:'''",
 'previewnote'                      => "'''Dëst ass nëmmen eng net gespäichert Versioun; d'Ännerunge sinn nach net gespäichert!'''",

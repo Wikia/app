@@ -942,6 +942,7 @@ Ostatni wpis rejestru blokad jest pokazany poniżej.',
 'sitejspreview'                    => "'''Pamiętaj, że to tylko podgląd kodu JavaScript.'''
 '''Zmiany nie zostały jeszcze zapisane!'''",
 'userinvalidcssjstitle'            => "'''Uwaga:''' Brak skórki o nazwie „$1”.
+Strony użytkownika zawierające CSS i JavaScript powinny zaczynać się małą literą, np. {{ns:user}}:Foo/vector.css, w przeciwieństwie do nieprawidłowego {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Zmodyfikowano)',
 'note'                             => "'''Uwaga:'''",
 'previewnote'                      => "'''To jest tylko podgląd – zmiany nie zostały jeszcze zapisane!'''",

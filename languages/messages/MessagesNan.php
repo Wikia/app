@@ -648,6 +648,8 @@ Kháu-chō ê sin bi̍t-bé thang tī teng-ji̍p liáu tī ''[[Special:ChangePas
 '''猶未保存！'''",
 'userinvalidcssjstitle'            => "'''提醒：'''遐無面板\"\$1\"，
 家己設的 .css 佮 .js 頁愛用小寫標題，親像，
+{{ns:user}}:Foo/vector.css 無仝
+{{ns:user}}:Foo/Vector.css。",
 'updated'                          => '（改過矣）',
 'note'                             => "'''Chù-ì:'''",
 'previewnote'                      => "'''Thê-chhéⁿ lí che sī 1 bīn kiám-cha chho͘-phe ēng--ê \"seng-khoàⁿ-ia̍h\", iáu-bōe pó-chûn--khí-lâi!'''",

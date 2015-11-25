@@ -666,6 +666,7 @@ L'ultima endataziun dal log da bloccar vegn mussà sutvart sco referenza:",
 'sitejspreview'                    => "'''Fa stim che quai è be ina prevista da quest JavaScript.'''
 '''El n'è anc betg memorisà.'''",
 'userinvalidcssjstitle'            => "'''Attenziun:''' I n'exista nagin skin \"\$1\".
+Fa stim che titels da paginas persunalisadas .css u .js vegnan scrits pitschen, p. ex. {{ns:user}}:Foo/vector.css e betg {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(midà)',
 'note'                             => "'''Remartga:'''",
 'previewnote'                      => "'''Fa stim che quai è be ina prevista.'''

@@ -553,6 +553,7 @@ Izbāndais, anga tū perarwi kwaitīwuns teīktun/redigītun šin pāusan.',
 'usercsspreview'                   => "'''Pamēnais, kāi sta ast tēr twāise CSS pirmādira - nika dabber ni pastāi enpeisātan!'''",
 'userjspreview'                    => "'''Pamēnais, kāi sta ast tēr twāise JS kōdas pirmādira - nika dabber ni pastāi enpeisātan!'''",
 'userinvalidcssjstitle'            => "'''Ēmpirsergīsenis:''' Ni ast prusna \"\$1\".
+Pamēnais kāi tērpautajas .css be .js pāusai turri pagaūtun si sen līkutan litteran, p. e.g. {{ns:user}}:Foo/vector.css, ni {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Ernaunīntan)',
 'note'                             => "'''Endirīsenis:'''",
 'previewnote'                      => "'''Sta ast tēr pirmādira.'''

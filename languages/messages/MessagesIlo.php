@@ -672,6 +672,7 @@ Ti naudi a listaan ti panaka-serra ket adda dita baba tapno mausar a reperensia:
 'sitejspreview'                    => "'''Laglagipem nga ipadpadas mo laeng ti kodigo daytoy a JavaScript.'''
 '''Saan pay nga naidulin!'''",
 'userinvalidcssjstitle'            => "'''Ballaag:''' Awan ti kudil a \"\$1\".
+Annawid a .css ken .js dagiti titulo ket agususar ti napababa a letra, a kas dagiti {{ns:user}}:Foo/vector.css saan ket a {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Napabaro)',
 'note'                             => "'''Paammo:'''",
 'previewnote'                      => "'''Maysa laeng a pagpadas daytoy; dagiti sinukatam ket saan pay a naidulin!'''",

@@ -693,6 +693,7 @@ Log blukir pahabisannya tasadia di bawah ini gasan rujukan:',
 'sitejspreview'                    => "'''Ingatakan bahwasa Pian manilik JavaScript code ini haja.'''
 '''Nangini lagi baluman tasimpan!'''",
 'userinvalidcssjstitle'            => "'''Paringatan:''' Kadada kulit \"\$1\".
+Inatakan bahwasa saragam  tungkaran-tungkaran .css wan .js mamuruk aksara halus, cuntuh {{ns:user}}:Foo/vector.css sawagai tandingan {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Dihanyarakan)',
 'note'                             => "'''Catatan:'''",
 'previewnote'                      => "'''Ingatakanlah bahwasa ini titilikan haja nang balum disimpan!'''",

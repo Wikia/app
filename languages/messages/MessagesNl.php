@@ -1012,6 +1012,7 @@ De laatste regel uit het blokkeerlogboek wordt hieronder ter referentie weergege
 'sitejspreview'                    => "'''Dit is alleen een voorvertoning van de JavaScriptcode.'''
 '''Deze is nog niet opgeslagen!'''",
 'userinvalidcssjstitle'            => "'''Waarschuwing:''' er is geen uiterlijk \"\$1\".
+Uw eigen .css- en .js-pagina's beginnen met een kleine letter, bijvoorbeeld {{ns:user}}:Naam/vector.css in plaats van {{ns:user}}:Naam/Vector.css.",
 'updated'                          => '(Bijgewerkt)',
 'note'                             => "'''Opmerking:'''",
 'previewnote'                      => "'''Let op: dit is een controlepagina; uw tekst is niet opgeslagen!'''",

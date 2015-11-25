@@ -929,6 +929,7 @@ Allpool on toodud viimane blokeerimislogi sissekanne:',
 'sitejspreview' => "'''Pea meeles, et see on vaid selle JavaScripti-koodi eelvaade.'''
 '''Seda pole veel salvestatud!'''",
 'userinvalidcssjstitle' => "'''Hoiatus:''' Kujundust nimega \"\$1\" ei ole.
+Ära unusta, et kasutaja isiklikud .css- ja .js-lehed kasutavad väiketähega algavaid nimesid, näiteks  {{ns:user}}:Juhan Julm/vector.css ja mitte {{ns:user}}:Juhan Julm/Vector.css.",
 'updated' => '(Värskendatud)',
 'note' => "'''Meeldetuletus:'''",
 'previewnote' => "'''Ära unusta, et see on kõigest eelvaade!'''

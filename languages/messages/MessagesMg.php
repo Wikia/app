@@ -849,6 +849,7 @@ Ny fampidirana faran'ny laogin'ny fanakanam-pikambana dia naseho teo ambany ho a
 'sitejspreview'                    => "'''Tadidio fa manao topi-maso renifango JavaScript ianao.'''
 '''Mbola tsy notahirizina izy io !'''",
 'userinvalidcssjstitle'            => "'''Tandremo''' : Tsy misy fampiankanjoana « $1 » izany.
+Tadidio fa mampiasa soramadinika ny lohatenin'ny pejinao manan-tovana *.css sy *.js, ohatra {{ns:user}}:Foo/vector.css fa tsy {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Nohavaozina)',
 'note'                             => "'''Fanamarihana:'''",
 'previewnote'                      => "'''Topi-maso ihany ity hitanao ity, tsy mbola voatahiry ny fanovana nataonao!'''",

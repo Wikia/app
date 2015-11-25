@@ -620,6 +620,7 @@ Riporon id siriba kokomoi nantaban di tohuri no:',
 'sitejspreview'                    => "'''Soroho no do mongintong kono tomod diti kod JawaSikrip.'''
 '''Awu po nokogompi iti!'''",
 'userinvalidcssjstitle'            => "'''Pomisunudan:''' Ingaa kulit do \"\$1\".
+Bobolikon pinudali .css om .js momoguno do pimato tokoro, miagal pomitanan {{ns:user}}:Foo/vector.css sobaagi do ponuli di {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Noinwoguan)',
 'note'                             => "'''Pasoniba:'''",
 'previewnote'                      => "'''Soroho no do iti nopo nga pongintangan no toomod.'''

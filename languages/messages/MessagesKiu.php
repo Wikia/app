@@ -526,6 +526,7 @@ ya ki <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}
 Kerem ke, tı ke wazena na pele vırazê/bıvurnê, qontrol ke.',
 'userpage-userdoesnotexist-view'   => 'Hesabê karberi "$1" qeyd nêbiyo.',
 'userinvalidcssjstitle'            => "'''Teme:''' Mewzuyê \"\$1\" çino.
+Dosyunê ebe namê .css u .js'y de herfa hurdiye bıgurêne, mesela hurêndia {{ns:user}}:Foo/Vector.css'i de {{ns:user}}:Foo/vector.css bınuse.",
 'updated'                          => '(Bi rozane)',
 'note'                             => "'''Not:'''",
 'previewnote'                      => "'''Bıfıkıriye ke no teyna jü verqayto.'''
