@@ -30,8 +30,8 @@
  *                                               ...#6
  *
  * Its possible that this streak of duplicates can happen within normally numbered comments.  This is because
- * we released a fix for the problem before creating this script.  All we need to do is make sure we only update
- * the indexes that are duplicates so we don't change URLs that don't need to change.
+ * we released a fix for the problem before creating this script.  In this case all comments after the duplicate
+ * streak will be renumbered and have different URLs than they did previously.  Community has OK'ed this choice.
  *
  */
 
@@ -145,61 +145,13 @@ class FixCommentIndexes extends Maintenance {
 
 class BrokenThread {
 
-	// Give a buffer for the new comment index we use in case the thread is actively being commented on
-	const RACE_BUFFER = 100;
-
-	protected $threadId;
-
-	protected $renumberStart;
-	protected $newWallCount;
+	private $threadId;
 
 	/**
 	 * @param int $threadId
 	 */
 	public function __construct( $threadId ) {
 		$this->threadId = $threadId;
-
-		$currentIndex = $this->getCurrentIndex();
-		$commentCount = $this->getCommentCount();
-
-		// Start renumbering the duplicates at the current index plus a buffer in case comments are
-		// being made while this script runs
-		$this->renumberStart = $currentIndex + self::RACE_BUFFER;
-
-		// Set the start for new comments after this script runs to where we started renumbering plus
-		// the total number of comments we have (worst possible case of all comments being dups)
-		$this->newWallCount = $this->renumberStart + $commentCount;
-	}
-
-	/**
-	 * Get the index to be used for the next new comment
-	 *
-	 * @return int
-	 */
-	private function getCurrentIndex() {
-		$index = wfGetWikiaPageProp( WPP_WALL_COUNT, $this->threadId );
-		return empty( $index ) ? 0 : $index;
-	}
-
-	/**
-	 * Get the count of comments made on the thread given by $threadId.  We do this as a separate query rather
-	 * call PHP's count on the comments we get later so that we can quickly update the starting comment
-	 * index before we do anything else.
-	 *
-	 * @return int
-	 */
-	private function getCommentCount() {
-		$dbr = wfGetDB( DB_SLAVE );
-		$count = ( new WikiaSQL )
-			->SELECT( 'count(*)' )->AS_( 'count' )
-			->FROM( 'comments_index' )
-			->WHERE( 'parent_comment_id' )->EQUAL_TO( $this->threadId )
-			->runLoop( $dbr, function ( &$count, $row ) {
-				$count = $row->count;
-			});
-
-		// Ensure that we're always sending an integer back
-		return empty( $count ) ? 0 : $count;
 	}
 
 	/**
@@ -208,25 +160,29 @@ class BrokenThread {
 	public function fix() {
 		FixCommentIndexes::debug( "* Fixing thread ".$this->threadId );
 
-		$this->setNewWallCount();
-		$this->renumberComments();
+		$lastIdx = $this->renumberComments();
+		$this->setNewWallCount( $lastIdx );
 	}
 
 	/**
 	 * Sets the new index to use whenever the next comment is made on the current thread
+	 *
+	 * @param int $idx Update the new last used index on this wall
 	 */
-	private function setNewWallCount() {
+	private function setNewWallCount( $idx ) {
 		if ( FixCommentIndexes::isTest() ) {
 			return;
 		}
 
-		wfSetWikiaPageProp( WPP_WALL_COUNT, $this->threadId, $this->newWallCount );
+		wfSetWikiaPageProp( WPP_WALL_COUNT, $this->threadId, $idx );
 	}
 
 	/**
 	 * Update the comment number used for creating links to those comments.  It doesn't matter what they are
 	 * as long as each comment has a unique number, however ascending from 2 is how it works now and makes the
 	 * most sense.
+	 *
+	 * @return int The last index we assigned to a comment
 	 */
 	private function renumberComments() {
 		$comments = $this->getCommentIds();
@@ -236,40 +192,37 @@ class BrokenThread {
 		FixCommentIndexes::debug( "-- Found ".count($comments)." comments\n" );
 		FixCommentIndexes::debug( "-- Renumbering ... " );
 
-		$commentIdx = $this->renumberStart;
+		$commentIdx = 0;
 		$lastIdx = 0;
 		$foundDuplicates = false;
 
 		foreach ( $comments as $commentId ) {
 			$thisIdx = wfGetWikiaPageProp( WPP_WALL_COUNT, $commentId );
 			$isDuplicate = $thisIdx == $lastIdx;
-			$lastIdx = $thisIdx;
 
-			// If we found the start of duplicate indexes, start renumbering
-			if ( $isDuplicate ) {
-				// For verbose mode, print the dupe we found once
-				if ( !$foundDuplicates ) {
-					FixCommentIndexes::debug( 'dupe at ' . $thisIdx . ' ... ' );
-				}
-
-				// Note that we found our streak of duplicates
+			// Run this when we find the first duplicate
+			if ( $isDuplicate && !$foundDuplicates ) {
+				$commentIdx = $thisIdx + 1;
 				$foundDuplicates = true;
 
-				if ( !FixCommentIndexes::isTest() ) {
-					wfSetWikiaPageProp( WPP_WALL_COUNT, $commentId, $commentIdx++ );
-				}
+				FixCommentIndexes::debug( 'dupe at ' . $thisIdx . ' ... ' );
+			}
 
+			// If we haven't found the duplicate yet, keep searching
+			if ( !$foundDuplicates ) {
+				$lastIdx = $thisIdx;
 				continue;
 			}
 
-			// If we're here, this isn't a duplicate ID.  If $foundDuplicates is true it means we're past
-			// the streak of duplicates and can stop
-			if ( $foundDuplicates ) {
-				break;
+			if ( !FixCommentIndexes::isTest() ) {
+				wfSetWikiaPageProp( WPP_WALL_COUNT, $commentId, $commentIdx++ );
 			}
 		}
 
 		FixCommentIndexes::debug( "done\n" );
+
+		// At the end of the loop we're 1 past the last index used
+		return $commentIdx - 1;
 	}
 
 	/**
