@@ -1,12 +1,6 @@
 <?php
 
-namespace Wikia\PortableInfobox\Helpers;
-
-/**
- * Class ImageFilenameSanitizer
- * @package Wikia\PortableInfobox\Helpers
- */
-class ImageFilenameSanitizer {
+class FileNamespaceSanitizeHelper {
 	private static $instance = null;
 	private $filePrefixRegex = [ ];
 
@@ -14,7 +8,7 @@ class ImageFilenameSanitizer {
 	}
 
 	/**
-	 * @return null|ImageFilenameSanitizer
+	 * @return null|FileNamespaceSanitizeHelper
 	 */
 	public static function getInstance() {
 		if ( is_null( self::$instance ) ) {
@@ -28,7 +22,7 @@ class ImageFilenameSanitizer {
 	 * @param $contLang \Language
 	 * Used as local cache for getting string to remove
 	 */
-	public function getFilePrefixRegex( $contLang ) {
+	private function getFilePrefixRegex( $contLang ) {
 		global $wgNamespaceAliases;
 		$langCode = $contLang->getCode();
 		if ( empty( $this->filePrefixRegex[ $langCode ] ) ) {
@@ -100,5 +94,20 @@ class ImageFilenameSanitizer {
 		}
 
 		return null;
+	}
+
+	/**
+	 * @desc removes all files and images occurrences from wikitext
+	 *
+	 * @param string $wikitext
+	 * @return string wikitext without files and images
+	 */
+	public function stripFilesFromWikitext( $wikitext ) {
+		global $wgContLang;
+
+		$filePrefixRegex = substr( $this->getFilePrefixRegex( $wgContLang ), 1 );
+		$wikitext = preg_replace( '/\[\[' . $filePrefixRegex .'.*\]\]/U', '', $wikitext );
+
+		return $wikitext;
 	}
 }

@@ -1,17 +1,18 @@
 <?php
 
-class ImageFilenameSanitizerTest extends WikiaBaseTest {
-	private $imageFilenameSanitizer;
+class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
+	private $fileNamespaceSanitizeHelper;
 
-	protected function setUp() {
-		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
+	public function setUp() {
+		require_once( __DIR__ . '/../FileNamespaceSanitizeHelper.php' );
 		parent::setUp();
 
-		$this->imageFilenameSanitizer = \Wikia\PortableInfobox\Helpers\ImageFilenameSanitizer::getInstance();
+		$this->fileNamespaceSanitizeHelper = FileNamespaceSanitizeHelper::getInstance();
 	}
 
 	/**
 	 * @param $inputFileName
+	 * @param $contentLanguageCode
 	 * @param $expectedOutput
 	 * @param $description
 	 * @dataProvider testSanitizeFilenameDataProvider
@@ -19,7 +20,7 @@ class ImageFilenameSanitizerTest extends WikiaBaseTest {
 	public function testSanitizeFilename( $inputFileName, $contentLanguageCode, $expectedOutput, $description ) {
 		$language = new \Language();
 		$language->setCode( $contentLanguageCode );
-		$actualOutput = $this->imageFilenameSanitizer->sanitizeImageFileName( $inputFileName, $language );
+		$actualOutput = $this->fileNamespaceSanitizeHelper->sanitizeImageFileName( $inputFileName, $language );
 
 		$this->assertEquals( $expectedOutput, $actualOutput, $description );
 	}

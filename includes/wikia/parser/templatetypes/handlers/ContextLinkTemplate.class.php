@@ -54,8 +54,6 @@ class ContextLinkTemplate {
 	 * @return string
 	 */
 	public static function sanitizeContextLinkWikitext( $wikitext ) {
-		global $wgContLang;
-
 		//remove any custom HTML tags
 		$wikitext = strip_tags( $wikitext );
 		//remove list and indent elements from the beginning of line
@@ -67,9 +65,8 @@ class ContextLinkTemplate {
 		//remove all newlines from the middle of the template text.
 		$wikitext = preg_replace( '/\n/', ' ', $wikitext );
 		//remove images from template content
-		$imageFilenameSanitizer = \Wikia\PortableInfobox\Helpers\ImageFilenameSanitizer::getInstance();
-		$filePrefixRegex = substr( $imageFilenameSanitizer->getFilePrefixRegex( $wgContLang ), 1 );
-		$wikitext = preg_replace( '/\[\[' . $filePrefixRegex . '.*\]\]/U', '', $wikitext );
+		$fileNamespaceSanitizeHelper = FileNamespaceSanitizeHelper::getInstance();
+		$wikitext = $fileNamespaceSanitizeHelper->stripFilesFromWikitext( $wikitext );
 		//trim all unwanted spaces around content
 		$wikitext = trim( $wikitext );
 
