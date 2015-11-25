@@ -1,8 +1,6 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
-use Wikia\PortableInfobox\Helpers\ImageFilenameSanitizer;
-use Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag;
 use WikiaFileHelper;
 
 class NodeImage extends Node {
@@ -186,7 +184,7 @@ class NodeImage extends Node {
 		global $wgContLang;
 		$title = \Title::makeTitleSafe(
 			NS_FILE,
-			ImageFilenameSanitizer::getInstance()->sanitizeImageFileName( $imageName, $wgContLang )
+			\FileNamespaceSanitizeHelper::getInstance()->sanitizeImageFileName( $imageName, $wgContLang )
 		);
 
 		return $title;
