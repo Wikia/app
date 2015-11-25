@@ -41,8 +41,9 @@ in \'\'[[and some more crazy stuff!]]\'\'.\'\'',
 				'Headers [[Foo Bar]]=>[[foo|here]] in context-links*!.'
 			],
 			[
-				'===Files===[[File:infoicon]] Big images [[Image:big.jpg]]',
-				'Files Big images'
+				'# Collaborative encyclopedia for everything related to [[The Sims]]
+				 # series',
+				'Collaborative encyclopedia for everything related to The Sims series'
 			]
 		];
 	}

@@ -29,6 +29,7 @@ class ContextLinkTemplate {
 	 */
 	public static function handle( $wikitext ) {
 		$wikitext = self::parseTables( $wikitext );
+		$wikitext = self::stripImages( $wikitext );
 		$wikitext = self::sanitizeContextLinkWikitext( $wikitext );
 		$wikitext = self::wrapContextLink( $wikitext );
 
@@ -54,24 +55,32 @@ class ContextLinkTemplate {
 	 * @return string
 	 */
 	public static function sanitizeContextLinkWikitext( $wikitext ) {
-		global $wgContLang;
-
 		//remove any custom HTML tags
 		$wikitext = strip_tags( $wikitext );
 		//remove list and indent elements from the beginning of line
-		$wikitext = preg_replace( '/^[:#* \n]+/', '', $wikitext );
+		$wikitext = preg_replace( '/^[:#* \n]+/s', '', $wikitext );
 		//remove all bold and italics from all of template content
 		$wikitext = preg_replace( '/\'{2,}/', '', $wikitext );
 		//remove all headings from all of template content
 		$wikitext = self::removeHeadings( $wikitext );
 		//remove all newlines from the middle of the template text.
 		$wikitext = preg_replace( '/\n/', ' ', $wikitext );
-		//remove images from template content
-		FileNamespaceSanitizeHelper::getInstance()->stripFilesFromWikitext( $wikitext, $wgContLang );
 		//trim all unwanted spaces around content
 		$wikitext = trim( $wikitext );
 
 		return $wikitext;
+	}
+
+	/**
+	 * @desc remove images from wikitext
+	 *
+	 * @param $wikitext
+	 * @return string
+	 */
+	private static function stripImages( $wikitext ) {
+		global $wgContLang;
+
+		return FileNamespaceSanitizeHelper::getInstance()->stripFilesFromWikitext( $wikitext, $wgContLang );
 	}
 
 	/**
