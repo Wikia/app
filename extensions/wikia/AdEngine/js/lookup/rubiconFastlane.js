@@ -12,8 +12,8 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	var called = false,
 		config = {
 			oasis: {
-				TOP_LEADERBOARD: [[728, 90],[970, 250]],
-				TOP_RIGHT_BOXAD: [[300, 250],[300, 600]],
+				TOP_LEADERBOARD: [[728, 90], [970, 250]],
+				TOP_RIGHT_BOXAD: [[300, 250], [300, 600]],
 				LEFT_SKYSCRAPER_2: [[160,600]],
 				LEFT_SKYSCRAPER_3: [[160,600]],
 				INCONTENT_BOXAD_1: [[300, 250]],
