@@ -58,7 +58,7 @@ class ContextLinkTemplate {
 		//remove any custom HTML tags
 		$wikitext = strip_tags( $wikitext );
 		//remove list and indent elements from the beginning of line
-		$wikitext = preg_replace( '/^[:#* \n]+/s', '', $wikitext );
+		$wikitext = preg_replace( '/^[:#* \n]+/m', '', $wikitext );
 		//remove all bold and italics from all of template content
 		$wikitext = preg_replace( '/\'{2,}/', '', $wikitext );
 		//remove all headings from all of template content

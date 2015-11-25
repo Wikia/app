@@ -42,8 +42,8 @@ in \'\'[[and some more crazy stuff!]]\'\'.\'\'',
 			],
 			[
 				'# Collaborative encyclopedia for everything related to [[The Sims]]
-				 # series',
-				'Collaborative encyclopedia for everything related to The Sims series'
+# series',
+				'Collaborative encyclopedia for everything related to [[The Sims]] series'
 			]
 		];
 	}
