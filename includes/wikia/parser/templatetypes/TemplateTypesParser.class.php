@@ -2,32 +2,30 @@
 
 class TemplateTypesParser {
 	/**
-	 * @desc removes navbox template text from parser output
+	 * @desc alters template raw text parser output based on template type
 	 *
 	 * @param string $text - template content
 	 * @param Title $finalTitle - template title object
+	 *
 	 * @return bool
 	 */
 	public static function onFetchTemplateAndTitle( &$text, &$finalTitle ) {
-		global $wgEnableTemplateTypesParsing, $wgArticleAsJson, $wgCityId;
-
 		wfProfileIn( __METHOD__ );
 
-		if ( $wgEnableTemplateTypesParsing && $wgArticleAsJson ) {
-			$type = ( new ExternalTemplateTypesProvider( new \TemplateClassificationService ) )
-					->getTemplateTypeFromTitle( $wgCityId, $finalTitle );
+		if ( self::shouldTemplateBeParsed() ) {
+			$type = self::getTemplateType( $finalTitle );
 
 			switch ( $type ) {
 				case AutomaticTemplateTypes::TEMPLATE_NAVBOX:
 				case TemplateClassificationService::TEMPLATE_NAVBOX:
-					$text = self::handleNavboxTemplate();
+					$text = NavboxTemplate::handle();
 					break;
 				case TemplateClassificationService::TEMPLATE_FLAG:
-					$text = self::handleNoticeTemplate();
+					$text = NoticeTemplate::handleNoticeTemplate();
 					break;
 				case AutomaticTemplateTypes::TEMPLATE_REFERENCES:
 				case TemplateClassificationService::TEMPLATE_REFERENCES:
-					$text = self::handleReferencesTemplate();
+					$text = ReferencesTemplate::handle();
 					break;
 			}
 		}
@@ -38,29 +36,65 @@ class TemplateTypesParser {
 	}
 
 	/**
-	 * @desc return skip rendering navbox template
+	 * @desc alters template parser output based on its arguments and template type
 	 *
-	 * @return string
+	 * @param Title $title
+	 * @param PPNode_DOM $args
+	 * @param PPFrame_DOM $frame
+	 * @param string $outputText
+	 *
+	 * @return bool
 	 */
-	private static function handleNavboxTemplate() {
-		return '';
+	public static function onGetTemplateDom( $title, $args, $frame, &$outputText ) {
+		global $wgEnableScrollboxTemplateParsing, $wgEnableQuoteTemplateParsing;
+		wfProfileIn( __METHOD__ );
+
+		if ( self::shouldTemplateBeParsed() && !is_null( $args ) ) {
+			$type = self::getTemplateType( $title );
+			$templateArgs = TemplateArgsHelper::getTemplateArgs( $args, $frame );
+
+			if ( $type === AutomaticTemplateTypes::TEMPLATE_SCROLLBOX && $wgEnableScrollboxTemplateParsing ) {
+				$outputText = ScrollboxTemplate::getLongestElement( $templateArgs );
+			}
+
+			if ( ( $type === AutomaticTemplateTypes::TEMPLATE_QUOTE ||
+				$type === TemplateClassificationService::TEMPLATE_QUOTE ) &&
+				$wgEnableQuoteTemplateParsing
+			) {
+				$outputText = QuoteTemplate::execute( $templateArgs );
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return true;
 	}
 
 	/**
-	 * @desc return skip rendering notice template
+	 * @desc return template type for a given template title object
+	 *
+	 * @param Title $title
 	 *
 	 * @return string
 	 */
-	private static function handleNoticeTemplate() {
-		return '';
+	private static function getTemplateType( $title ) {
+		global $wgCityId;
+
+		$type = ExternalTemplateTypesProvider::getInstance()
+			->setTCS( new \TemplateClassificationService )
+			->getTemplateTypeFromTitle( $wgCityId, $title );
+
+		return $type;
 	}
 
 	/**
-	 * @desc return simple <references /> parser tag
+	 * @desc checks if template can be parsed
 	 *
-	 * @return string
+	 * @return bool
 	 */
-	private static function handleReferencesTemplate() {
-		return '<references />';
+	private static function shouldTemplateBeParsed() {
+		global $wgEnableTemplateTypesParsing, $wgArticleAsJson;
+
+		return $wgEnableTemplateTypesParsing && $wgArticleAsJson;
 	}
 }

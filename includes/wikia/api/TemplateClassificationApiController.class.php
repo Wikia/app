@@ -32,6 +32,7 @@ class TemplateClassificationApiController extends WikiaApiController {
 
 			$title = Title::newFromId( $pageId );
 			if ( $title instanceof Title ) {
+				wfRunHooks( 'TemplateClassification::TemplateClassified', [ $pageId, $title ] );
 				$title->invalidateCache();
 			}
 		} catch ( InvalidArgumentException $e ) {
