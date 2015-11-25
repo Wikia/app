@@ -50,7 +50,6 @@ class TemplateTypesParser {
 		global $wgEnableScrollboxTemplateParsing, $wgEnableQuoteTemplateParsing;
 		wfProfileIn( __METHOD__ );
 
-
 		if ( self::shouldTemplateBeParsed() && !is_null( $args ) ) {
 			$type = self::getTemplateType( $title );
 			$templateArgs = TemplateArgsHelper::getTemplateArgs( $args, $frame );
