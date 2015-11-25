@@ -130,4 +130,14 @@ class InsightsHooks {
 
 		return true;
 	}
+
+	public static function onTemplateClassified( $pageId, $title, $templateType ) {
+		if ( !RecognizedTemplatesProvider::isUnrecognized( $templateType ) ) {
+			$model = new InsightsTemplatesWithoutTypeModel();
+			$model->removeFixedItem( TemplatesWithoutTypePage::TEMPLATES_WITHOUT_TYPE_TYPE, $title );
+			$model->purgeInsightsCache();
+		}
+		return true;
+	}
+
 } 
