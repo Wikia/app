@@ -12,20 +12,48 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	var called = false,
 		config = {
 			oasis: {
-				TOP_LEADERBOARD: [[728, 90], [970, 250]],
-				TOP_RIGHT_BOXAD: [[300, 250], [300, 600]],
-				LEFT_SKYSCRAPER_2: [[160,600]],
-				LEFT_SKYSCRAPER_3: [[160,600]],
-				INCONTENT_BOXAD_1: [[300, 250]],
-				PREFOOTER_LEFT_BOXAD: [[300, 250]],
-				PREFOOTER_RIGHT_BOXAD: [[300, 250]]
+				TOP_LEADERBOARD: {
+					sizes: [[728, 90], [970, 250]],
+					targeting: { loc: 'top' }
+				},
+				TOP_RIGHT_BOXAD: {
+					sizes: [[300, 250], [300, 600]],
+					targeting: { loc: 'top' }
+				},
+				LEFT_SKYSCRAPER_2: {
+					sizes: [[160,600]],
+					targeting: { loc: 'middle' }
+				},
+				LEFT_SKYSCRAPER_3: {
+					sizes: [[160,600]],
+					targeting: { loc: 'footer' }
+				},
+				INCONTENT_BOXAD_1: {
+					sizes: [[300, 250]],
+					targeting: { loc: 'middle' }
+				},
+				PREFOOTER_LEFT_BOXAD: {
+					sizes: [[300, 250]],
+					targeting: { loc: 'footer' }
+				},
+				PREFOOTER_RIGHT_BOXAD: {
+					sizes: [[300, 250]],
+					targeting: { loc: 'footer' }
+				}
 			},
 			mercury: {
-				MOBILE_IN_CONTENT: [[300, 250]],
-				MOBILE_PREFOOTER: [[300, 250]],
-				MOBILE_TOP_LEADERBOARD: [[320, 50]]
+				MOBILE_IN_CONTENT: {
+					sizes: [[300, 250]]
+				},
+				MOBILE_PREFOOTER: {
+					sizes: [[300, 250]]
+				},
+				MOBILE_TOP_LEADERBOARD: {
+					sizes: [[320, 50]]
+				}
 			}
 		},
+		context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.lookup.rubiconFastlane',
 		priceMap = {},
 		response = false,
@@ -34,8 +62,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		timing;
 
 	function getSlots(skin) {
-		var context = adContext.getContext(),
-			pageType = context.targeting.pageType,
+		var pageType = context.targeting.pageType,
 			slotName;
 
 		slots = config[skin];
@@ -90,7 +117,22 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		trackState(true);
 	}
 
-	function defineSingleSlot(slotName, sizes, skin) {
+	function setTargeting(slotName, targeting, rubiconSlot, provider) {
+		var s1 = context.targeting.wikiIsTop1000 ? adLogicZoneParams.getMappedVertical() : 'not a top1k wiki';
+		if (targeting) {
+			Object.keys(targeting).forEach(function (key) {
+				rubiconSlot.setFPI(key, targeting[key]);
+			});
+		}
+		rubiconSlot.setFPI('pos', slotName);
+		rubiconSlot.setFPI('src', provider);
+		rubiconSlot.setFPI('s0', adLogicZoneParams.getSite());
+		rubiconSlot.setFPI('s1', s1);
+		rubiconSlot.setFPI('s2', adLogicZoneParams.getPageType());
+		rubiconSlot.setFPI('lang', adLogicZoneParams.getLanguage());
+	}
+
+	function defineSingleSlot(slotName, slot, skin) {
 		var position = slotName.indexOf('TOP') !== -1 ? 'atf' : 'btf',
 			provider = skin === 'oasis' ? 'gpt' : 'mobile',
 			slotPath = [
@@ -103,12 +145,13 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			unit = 'wikia_gpt' + slotPath + '/' + provider + '/' + slotName;
 
 		win.rubicontag.cmd.push(function () {
-			var slot = win.rubicontag.defineSlot(unit, sizes, unit);
+			var rubiconSlot = win.rubicontag.defineSlot(unit, slot.sizes, unit);
 			if (skin === 'oasis') {
-				slot.setPosition(position);
+				rubiconSlot.setPosition(position);
 			}
-			rubiconSlots.push(slot);
-			slots[slotName] = slot;
+			setTargeting(slotName, slot.targeting, rubiconSlot, provider);
+			rubiconSlots.push(rubiconSlot);
+			slots[slotName] = rubiconSlot;
 		});
 	}
 

@@ -3,13 +3,13 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 	'use strict';
 	function noop() {}
 
-	var mocks = {
+	var slotParams = {},
+		mocks = {
+			targeting: {},
 			adContext: {
 				getContext: function () {
 					return {
-						targeting: {
-							pageType: 'article'
-						}
+						targeting: mocks.targeting
 					};
 				}
 			},
@@ -34,6 +34,9 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 				},
 				getPageType: function () {
 					return 'article';
+				},
+				getLanguage: function () {
+					return 'en';
 				}
 			},
 			doc: {
@@ -51,6 +54,9 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 			},
 			log: noop,
 			slot: {
+				setFPI: function (key, value) {
+					slotParams[key] = value;
+				},
 				setPosition: noop,
 				getAdServerTargeting: function () {
 					return [{
@@ -87,6 +93,10 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		mocks.win.rubicontag.cmd.push = function (callback) {
 			callback();
 		};
+		mocks.targeting = {
+			pageType: 'article'
+		};
+		slotParams = {};
 	});
 
 	it('Returns falsy status without initialise', function () {
@@ -164,5 +174,48 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		expect(rubiconFastlane.getSlotParams('MOBILE_TOP_LEADERBOARD')).toEqual({
 			rpflKey: ['1_tier', '3_tier']
 		});
+	});
+
+	it('Sets FPI.src to mobile on mercury', function () {
+		var rubiconFastlane = getRubiconFastlane();
+
+		rubiconFastlane.call('mercury');
+
+		expect(slotParams.src).toEqual('mobile');
+	});
+
+	it('Sets FPI.src to gpt on oasis', function () {
+		var rubiconFastlane = getRubiconFastlane();
+
+		rubiconFastlane.call('oasis');
+
+		expect(slotParams.src).toEqual('gpt');
+	});
+
+	it('Sets FPI.s1 to dbName when it is in top1k', function () {
+		mocks.targeting.wikiIsTop1000 = true;
+		var rubiconFastlane = getRubiconFastlane();
+
+		rubiconFastlane.call('oasis');
+
+		expect(slotParams.s1).toEqual('_dragonball');
+	});
+
+	it('Sets FPI.s1 to defined string when it is not in top1k', function () {
+		var rubiconFastlane = getRubiconFastlane();
+
+		rubiconFastlane.call('oasis');
+
+		expect(slotParams.s1).toEqual('not a top1k wiki');
+	});
+
+	it('Sets other FPI based on AdLogicZoneParams', function () {
+		var rubiconFastlane = getRubiconFastlane();
+
+		rubiconFastlane.call('oasis');
+
+		expect(slotParams.s0).toEqual('life');
+		expect(slotParams.s2).toEqual('article');
+		expect(slotParams.lang).toEqual('en');
 	});
 });
