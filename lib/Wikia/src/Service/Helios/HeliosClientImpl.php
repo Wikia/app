@@ -104,7 +104,7 @@ class HeliosClientImpl implements HeliosClient
 			return \Http::request( $options['method'], $uri, $options );
 		} );
 
-		$this->status = $request->status;
+		$this->status = $request->getStatus();
 		return $this->processResponseOutput( $request );
 	}
 
@@ -149,7 +149,7 @@ class HeliosClientImpl implements HeliosClient
 			[ 'method'	=> 'POST' ]
 		);
 
-		return $response;
+		return [$this->status, $response];
 	}
 
 	/**

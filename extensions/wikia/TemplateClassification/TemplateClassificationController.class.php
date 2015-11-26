@@ -13,7 +13,7 @@ class TemplateClassificationController extends WikiaController {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 		$this->overrideTemplate( 'editForm' );
 
-		foreach ( TemplateClassificationService::$templateTypes as $type ) {
+		foreach ( UserTemplateClassificationService::$templateTypes as $type ) {
 			$templateTypes[] = [
 				'type' => $type,
 				/**

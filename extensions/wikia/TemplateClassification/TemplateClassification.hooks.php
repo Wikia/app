@@ -211,7 +211,7 @@ class Hooks {
 		}
 
 		try {
-			$templateType = ( new \TemplateClassificationService() )->getUserDefinedType( $wikiaId, $title->getArticleID() );
+			$templateType = ( new \UserTemplateClassificationService() )->getType( $wikiaId, $title->getArticleID() );
 		} catch ( ApiException $e ) {
 			( new Logger() )->exception( $e );
 			/**

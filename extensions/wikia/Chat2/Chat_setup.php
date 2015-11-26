@@ -26,6 +26,7 @@ $wgGroupPermissions['sysop']['chatmoderator'] = true;
 $wgGroupPermissions['staff']['chatmoderator'] = true;
 $wgGroupPermissions['helper']['chatmoderator'] = true;
 $wgGroupPermissions['chatmoderator']['chatmoderator'] = true;
+$wgGroupPermissions['threadmoderator']['chatmoderator'] = true;
 
 $wgGroupPermissions['*']['chatstaff'] = false;
 $wgGroupPermissions['staff']['chatstaff'] = true;

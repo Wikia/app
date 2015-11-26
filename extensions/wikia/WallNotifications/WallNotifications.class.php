@@ -995,7 +995,7 @@ class WallNotifications {
 			[
 				'DISTINCT',
 				'LIMIT' => '50',
-				'ORDER BY' => 'unique_id'
+				'ORDER BY' => 'unique_id DESC'
 			]
 		);
 
@@ -1057,7 +1057,7 @@ class WallNotifications {
 	}
 
 	public function getKey( $userId, $wikiId ) {
-		return wfSharedMemcKey( __CLASS__, $userId, $wikiId . 'v31' );
+		return wfSharedMemcKey( __CLASS__, $userId, $wikiId . 'v32' );
 	}
 
 	/**

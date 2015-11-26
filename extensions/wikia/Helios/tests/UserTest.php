@@ -216,7 +216,7 @@ class UserTest extends \WikiaBaseTest {
 		$client->expects( $this->once() )
 			->method( 'login' )
 			->with( $username, $password )
-			->willReturn( new \StdClass );
+			->willReturn( [\WikiaResponse::RESPONSE_CODE_OK, new \StdClass] );
 		$this->mockClass( 'Wikia\Service\Helios\HeliosClient', $client );
 
 		$this->assertFalse( User::authenticate( $username, $password ) );
@@ -248,7 +248,7 @@ class UserTest extends \WikiaBaseTest {
 		$client->expects( $this->once() )
 			->method( 'login' )
 			->with( $username, $password )
-			->willReturn( $loginInfo );
+			->willReturn( [\WikiaResponse::RESPONSE_CODE_OK, $loginInfo] );
 		$this->mockClass( 'Wikia\Service\Helios\HeliosClient', $client );
 
 		$this->assertTrue( User::authenticate( $username, $password ) );
