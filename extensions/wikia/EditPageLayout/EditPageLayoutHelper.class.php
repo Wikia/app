@@ -165,7 +165,7 @@ class EditPageLayoutHelper {
 
 	/**
 	 * Check if edited page is a code page
-	 * (page to edit CSS, JS or Lua code)
+	 * (page to edit CSS, JS, Lua code or an infobox template)
 	 *
 	 * @param Title $articleTitle page title
 	 * @return bool
@@ -173,7 +173,7 @@ class EditPageLayoutHelper {
 	static public function isCodePage( Title $articleTitle ) {
 		global $wgCityId;
 
-		if ( $articleTitle->isCssOrJsPage() || $articleTitle->isCssJsSubpage() ) {
+		if ( $articleTitle->inNamespace( NS_MODULE ) ) {
 			return true;
 		} elseif ( $articleTitle->inNamespace( NS_TEMPLATE ) ) {
 			$templateType = ( new UserTemplateClassificationService() )
@@ -182,7 +182,7 @@ class EditPageLayoutHelper {
 			return $templateType === TemplateClassificationService::TEMPLATE_INFOBOX;
 		}
 
-		return false;
+		return $articleTitle->isCssOrJsPage() || $articleTitle->isCssJsSubpage();
 	}
 
 	/**
