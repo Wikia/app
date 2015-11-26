@@ -138,7 +138,7 @@
 							</nav>
 						</div>
 						<div class="module_content">
-							<p><?= wfMessage('infoboxpreview-entrypoint-message')->escaped() ?></p>
+							<p><?= wfMsgExt('infoboxpreview-entrypoint-message', array('parse') ) ?></p>
 							<input type="button" id="infoboxPreview" value="<?= wfMessage('infoboxpreview-entrypoint-button')->escaped(); ?>"/>
 						</div>
 					</div>
