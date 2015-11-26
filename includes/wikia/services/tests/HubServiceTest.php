@@ -36,42 +36,58 @@ class HubServiceTest extends WikiaBaseTest {
 	public function getVerticalNameForComscoreDataProvider() {
 		return [
 			// actual corporate hompages
-			// e.g. www.wikia.com (on 2015-11-26)
-			[ true, false, false, WikiFactoryHub::VERTICAL_ID_LIFESTYLE, 'fandom' ],
-			// e.g. pl.wikia.com
-			[ true, false, false, WikiFactoryHub::VERTICAL_ID_OTHER, 'fandom' ],
+			'actual corporate hompage — e.g. www.wikia.com (on 2015-11-26)' =>
+				[ true, false, false, WikiFactoryHub::VERTICAL_ID_LIFESTYLE, 'fandom' ],
+			'actual corporate hompage — e.g. pl.wikia.com' =>
+				[ true, false, false, WikiFactoryHub::VERTICAL_ID_OTHER, 'fandom' ],
+
 			// hypothetical cases
-			[ true, true, true, WikiFactoryHub::VERTICAL_ID_BOOKS, 'fandom' ],
-			[ true, false, true, WikiFactoryHub::VERTICAL_ID_COMICS, 'fandom' ],
-			[ true, true, false, WikiFactoryHub::VERTICAL_ID_MOVIES, 'fandom' ],
+			'actual cororate hompage — hypothetical case, vertical: books' =>
+				[ true, true, true, WikiFactoryHub::VERTICAL_ID_BOOKS, 'fandom' ],
+			'actual cororate hompage — hypothetical case, vertical: comics' =>
+				[ true, false, true, WikiFactoryHub::VERTICAL_ID_COMICS, 'fandom' ],
+			'actual cororate hompage — hypothetical case, vertical: movies' =>
+				[ true, true, false, WikiFactoryHub::VERTICAL_ID_MOVIES, 'fandom' ],
 
 			// hub-based corporate homepages
-			// e.g. pt-br.wikia.com
-			[ false, true, true, WikiFactoryHub::VERTICAL_ID_OTHER, 'fandom' ],
-			// hypothetical case
-			[ false, true, true, WikiFactoryHub::VERTICAL_ID_LIFESTYLE, 'fandom' ],
+			'hub-based corporate homepage — e.g. pt-br.wikia.com' =>
+				[ false, true, true, WikiFactoryHub::VERTICAL_ID_OTHER, 'fandom' ],
+
+			// hub-based corporate homepages — hypothetical case
+			'hub-based corporate homepage — hypothetical case' =>
+				[ false, true, true, WikiFactoryHub::VERTICAL_ID_LIFESTYLE, 'fandom' ],
 
 			// corporate hubs
-			// e.g. gryhub.wikia.com
-			[ false, true, false, WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES, 'gaming' ],
-			// e.g. lifestylehub.wikia.com
-			[ false, true, false, WikiFactoryHub::VERTICAL_ID_LIFESTYLE, 'lifestyle' ],
-			// e.g. tvhub.wikia.com
-			[ false, true, false, WikiFactoryHub::VERTICAL_ID_TV, 'entertainment' ],
-			// hypothetical case
-			[ false, true, false, WikiFactoryHub::VERTICAL_ID_OTHER, 'lifestyle' ],
+			'corporate hub — e.g. gryhub.wikia.com' =>
+				[ false, true, false, WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES, 'gaming' ],
+			'corporate hub — e.g. lifestylehub.wikia.com' =>
+				[ false, true, false, WikiFactoryHub::VERTICAL_ID_LIFESTYLE, 'lifestyle' ],
+			'corporate hub — e.g. tvhub.wikia.com' =>
+				[ false, true, false, WikiFactoryHub::VERTICAL_ID_TV, 'entertainment' ],
+
+			// corporate hubs — hypothetical case
+			'corporate hub — hypothetical case' =>
+				[ false, true, false, WikiFactoryHub::VERTICAL_ID_OTHER, 'lifestyle' ],
 
 			// usual wiki(a)s
-			[ false, false, false, WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES, 'gaming' ],
-			[ false, false, false, WikiFactoryHub::VERTICAL_ID_LIFESTYLE, 'lifestyle' ],
-			[ false, false, false, WikiFactoryHub::VERTICAL_ID_OTHER, 'lifestyle' ],
-			[ false, false, false, WikiFactoryHub::VERTICAL_ID_MUSIC, 'entertainment' ],
+			'usual wiki(a) — vertical: games' =>
+				[ false, false, false, WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES, 'gaming' ],
+			'usual wiki(a) — vertical: lifestyle' =>
+				[ false, false, false, WikiFactoryHub::VERTICAL_ID_LIFESTYLE, 'lifestyle' ],
+			'usual wiki(a) — vertical: other' =>
+				[ false, false, false, WikiFactoryHub::VERTICAL_ID_OTHER, 'lifestyle' ],
+			'usual wiki(a) — vertical: music' =>
+				[ false, false, false, WikiFactoryHub::VERTICAL_ID_MUSIC, 'entertainment' ],
 
-			// hypothetical cases
-			[ false, false, true, WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES, 'gaming' ],
-			[ false, false, true, WikiFactoryHub::VERTICAL_ID_LIFESTYLE, 'lifestyle' ],
-			[ false, false, true, WikiFactoryHub::VERTICAL_ID_OTHER, 'lifestyle' ],
-			[ false, false, true, WikiFactoryHub::VERTICAL_ID_MUSIC, 'entertainment' ],
+			// usual wiki(a)s — hypothetical cases
+			'usual wiki(a) — hypothetical case, vertical: games' =>
+				[ false, false, true, WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES, 'gaming' ],
+			'usual wiki(a) — hypothetical case, vertical: lifestyle' =>
+				[ false, false, true, WikiFactoryHub::VERTICAL_ID_LIFESTYLE, 'lifestyle' ],
+			'usual wiki(a) — hypothetical case, vertical: other' =>
+				[ false, false, true, WikiFactoryHub::VERTICAL_ID_OTHER, 'lifestyle' ],
+			'usual wiki(a) — hypothetical case, vertical: music' =>
+				[ false, false, true, WikiFactoryHub::VERTICAL_ID_MUSIC, 'entertainment' ],
 		];
 	}
 }
