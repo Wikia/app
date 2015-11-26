@@ -138,9 +138,8 @@
 							</nav>
 						</div>
 						<div class="module_content">
-							<br />
-							Use the Infobox Preview feature to quickly build and design your infobox. Instantly preview your changes with zero risk of breaking any pages to readers. <a href="/wiki/Help:Infobox_preview">Learn more.</a><br />
-							<input type="button" id="infoboxPreview" value="Open Infobox Preview"/>
+							<p><?= wfMessage('infoboxpreview-entrypoint-message')->escaped() ?></p>
+							<input type="button" id="infoboxPreview" value="<?= wfMessage('infoboxpreview-entrypoint-button')->escaped(); ?>"/>
 						</div>
 					</div>
 				</div>
