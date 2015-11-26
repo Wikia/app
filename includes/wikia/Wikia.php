@@ -2333,19 +2333,20 @@ class Wikia {
 	 * usually return true to allow processing other hooks
 	 * return false stops permissions processing and we are totally decided (nothing later can override)
 	 */
-	static function canEditInterfaceWhitelist (&$title, &$wgUser, $action, &$result) {
+	static function canEditInterfaceWhitelist ( &$title, &$wgUser, $action, &$result ) {
 		global $wgEditInterfaceWhitelist;
 
 		// List the conditions we don't care about for early exit
 		if ( $action == "read"
 			|| $action == "undelete" // Is being checked in next hook canUndeleteMediaWikiNS
 			|| $title->getNamespace() != NS_MEDIAWIKI
-			|| empty( $wgEditInterfaceWhitelist )) {
+			|| empty( $wgEditInterfaceWhitelist )
+		) {
 			return true;
 		}
 
 		// Allow trusted users to edit interface messages (util, vstf, select admins)
-		if ( $wgUser->isAllowed('editinterfacetrusted') ) {
+		if ( $wgUser->isAllowed( 'editinterfacetrusted' ) ) {
 			return true;
 		}
 
@@ -2359,7 +2360,7 @@ class Wikia {
 			|| ( Wikia::isUsingSafeJs() && $title->isJsPage() )
 			|| startsWith( lcfirst( $title->getDBKey() ), self::CUSTOM_INTERFACE_PREFIX )
 		) {
-			return $wgUser->isAllowed('editinterface');
+			return $wgUser->isAllowed( 'editinterface' );
 		}
 
 		return false;
@@ -2373,17 +2374,15 @@ class Wikia {
 	 * @param $result Allows to pass error. Set $result true to allow, false to deny, leave alone means don't care
 	 * @return bool False to break flow to throw an error, true to continue
 	 */
-	public static function canMoveMediaWikiNS(\Title $title, \User $user, $action, &$result) {
-		global $wgLang;
-		if ( $action === 'move' && $title->inNamespace( NS_MEDIAWIKI ) && !$user->isAllowed('editinterfacetrusted') ) {
-			$groups = array_map(
-				array( 'User', 'makeGroupLinkWiki' ),
-				User::getGroupsWithPermission( 'editinterfacetrusted' )
-			);
-			$result = [ [ 'badaccess-groups', $wgLang->commaList( $groups ), count( $groups ) ] ];
+	public static function canMoveMediaWikiNS( \Title $title, \User $user, $action, &$result ) {
+		if ( $action === 'move'
+			&& $title->inNamespace( NS_MEDIAWIKI )
+			&& !$user->isAllowed( 'editinterfacetrusted' )
+		) {
+			$result = [ \PermissionsError::prepareBadAccessErrorArray( 'editinterfacetrusted' ) ];
 			return false;
 		}
-		$result = true;
+
 		return true;
 	}
 
@@ -2395,19 +2394,15 @@ class Wikia {
 	 * @param $result Allows to pass error. Set $result true to allow, false to deny, leave alone means don't care
 	 * @return bool False to break flow to throw an error, true to continue
 	 */
-	public static function canUndeleteMediaWikiNS(\Title $title, \User $user, $action, &$result) {
-		global $wgLang;
+	public static function canUndeleteMediaWikiNS( \Title $title, \User $user, $action, &$result ) {
 		if ( $action === 'undelete'
 			&& $title->inNamespace( NS_MEDIAWIKI )
-			&& !$user->isAllowed('editinterfacetrusted') ) {
-			$groups = array_map(
-				array( 'User', 'makeGroupLinkWiki' ),
-				User::getGroupsWithPermission( 'editinterfacetrusted' )
-			);
-			$result = [ [ 'badaccess-groups', $wgLang->commaList( $groups ), count( $groups ) ] ];
+			&& !$user->isAllowed( 'editinterfacetrusted' )
+		) {
+			$result = [ \PermissionsError::prepareBadAccessErrorArray( 'editinterfacetrusted' ) ];
 			return false;
 		}
-		$result = true;
+
 		return true;
 	}
 
