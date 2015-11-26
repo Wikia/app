@@ -25,6 +25,15 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 	];
 
 	/**
+	 * Types mapped as infobox ones
+	 * @var array
+	 */
+	static $infoboxTypes = [
+		self::TEMPLATE_INFOBOX,
+		self::TEMPLATE_CUSTOM_INFOBOX,
+	];
+
+	/**
 	 * Fallback to the Unclassified string if a received type is not supported by
 	 * the user-facing tools.
 	 *
@@ -42,5 +51,14 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 		}
 
 		return $templateType;
+	}
+
+	/**
+	 * Check if a given type is mapped as an infobox one.
+	 * @param string $type
+	 * @return bool
+	 */
+	public function isInfoboxType( $type ) {
+		return in_array( $type, self::$infoboxTypes );
 	}
 }
