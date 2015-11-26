@@ -81,10 +81,20 @@ class LillyHooks {
 	}
 
 	private static function processLink( $targetUrl, $linkText ) {
-		global $wgLillyServiceUrl, $wgTitle;
+		global $wgLillyServiceUrl, $wgTitle, $wgWikiaDatacenter;
+
+		// No calls from Reston
+		if ( $wgWikiaDatacenter === WIKIA_DC_RES ) {
+			return true;
+		}
 
 		// wgTitle is null sometimes
 		if ( !( $wgTitle instanceof Title ) ) {
+			return true;
+		}
+
+		// No links from redirect pages to avoid duplicates
+		if ( $wgTitle->isRedirect() ) {
 			return true;
 		}
 

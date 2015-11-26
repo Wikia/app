@@ -441,7 +441,9 @@ $config['user_signup_js'] = [
  */
 $config['oasis_user_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'assets' => []
+	'assets' => [
+		'//extensions/wikia/EmergencyBroadcastSystem/js/EmergencyBroadcastSystem.js'
+	]
 );
 
 /** GameGuides */

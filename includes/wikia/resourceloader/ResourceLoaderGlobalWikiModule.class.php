@@ -71,7 +71,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 
 		$realTitleText = isset($options['title']) ? $options['title'] : $titleText;
 
-		if ( $options['type'] === 'script' ) {
+		if ( $options['type'] === 'script' && Wikia::isUsingSafeJs() ) {
 			return $this->createScriptTitle( $realTitleText, $options );
 		}
 
