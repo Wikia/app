@@ -599,3 +599,9 @@ body {
 		@include breakpoints-large-typography;
 	}
 }
+
+#infoboxPreview {
+	width: 150px;
+	margin-top: 10px;
+	margin-left: 50px;
+}

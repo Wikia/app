@@ -178,14 +178,14 @@ define(
 	}
 
 	function launchEditorPreview(){
-		var editorValue = ace.getContent();
-		var wikiURL = mw.config.get('wgServer').split('://')[1];
-		var templateName = mw.config.get('wgPageName').split(':')[1];
-		var infoboxPreviewURL = 'http://localhost:8080/api/entrypoint/';
+		var editorValue = ace.getContent(),
+			wikiaDomain = mw.config.get('wgServer').split('://')[1],
+			templateName = mw.config.get('wgPageName').split(':')[1],
+			infoboxPreviewURL = 'http://localhost:8080/',
+			$form = $('<form>').attr({'action': infoboxPreviewURL, 'method': 'POST'});
 
-		var $form = $('<form>').attr({'action': infoboxPreviewURL, 'method': 'POST'});
 		$('<textarea>').val(editorValue).attr({'name': 'editor_value'}).appendTo($form);
-		$('<input>').val(wikiURL).attr({'name': 'wiki_url'}).appendTo($form);
+		$('<input>').val(wikiaDomain).attr({'name': 'wikia_domain'}).appendTo($form);
 		$('<input>').val(templateName).attr({'name': 'template_name'}).appendTo($form);
 		$form.submit();
 	}

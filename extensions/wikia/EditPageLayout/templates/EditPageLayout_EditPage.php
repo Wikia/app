@@ -142,7 +142,8 @@
 						</div>
 						<div class="module_content">
 							<br />
-							Try the new infobox editor!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="infoboxPreview" value="Go to Editor"/>
+							Use the Infobox Preview feature to quickly build and design your infobox. Instantly preview your changes with zero risk of breaking any pages to readers. <a href="/wiki/Help:Infobox_preview">Learn more.</a><br />
+							<input type="button" id="infoboxPreview" value="Open Infobox Preview"/>
 						</div>
 					</div>
 				</div>
