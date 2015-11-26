@@ -171,12 +171,18 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	static public function isCodePage( Title $articleTitle ) {
-		$namespace = $articleTitle->getNamespace();
+		global $wgCityId;
 
-		return ( $articleTitle->isCssOrJsPage()
-			|| $articleTitle->isCssJsSubpage()
-			|| in_array( $namespace, [ NS_MODULE, NS_TEMPLATE ] )
-		);
+		if ( $articleTitle->isCssOrJsPage() || $articleTitle->isCssJsSubpage() ) {
+			return true;
+		} elseif ( $articleTitle->inNamespace( NS_TEMPLATE ) ) {
+			$templateType = ( new UserTemplateClassificationService() )
+				->getType( $wgCityId, $articleTitle->getArticleID() );
+
+			return $templateType === TemplateClassificationService::TEMPLATE_INFOBOX;
+		}
+
+		return false;
 	}
 
 	/**
