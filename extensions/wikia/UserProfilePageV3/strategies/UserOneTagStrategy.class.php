@@ -8,6 +8,7 @@ class UserOneTagStrategy extends UserTagsStrategyBase {
 		'sysop' => 9,
 		'staff' => 8,
 		'helper' => 7,
+		'adminmentor' => 6,
 		'vstf' => 5,
 		'voldev' => 4,
 		'council' => 3,
