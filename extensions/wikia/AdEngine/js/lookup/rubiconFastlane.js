@@ -55,6 +55,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		},
 		context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.lookup.rubiconFastlane',
+		name = 'rubicon_fastlane',
 		priceMap = {},
 		response = false,
 		rubiconSlots = [],
@@ -82,19 +83,30 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		return slots;
 	}
 
-	function trackState(trackEnd) {
-		log(['trackState', response], 'debug', logGroup);
-		var eventName = 'lookupError';
+	function encodeParamsForTracking(params) {
+		if (params[rubiconTierKey]) {
+			return params[rubiconTierKey].join(';');
+		}
+	}
 
+	function trackState(providerName, slotName, params) {
+		log(['trackState', response, providerName, slotName], 'debug', logGroup);
+		var category,
+				eventName = 'lookup_error';
+
+		if (!slots[slotName]) {
+			log(['trackState', 'Not supported slot', slotName], 'debug', logGroup);
+			return;
+		}
 		if (response) {
-			eventName = 'lookupSuccess';
+			eventName = 'lookup_success';
 		}
+		category = name + '/' + eventName + '/' + providerName;
+		adTracker.track(category, slotName, 0, encodeParamsForTracking(params) || 'nodata');
+	}
 
-		if (trackEnd) {
-			eventName = 'lookupEnd';
-		}
-
-		adTracker.track(eventName + '/rubicon_fastlane', priceMap || '(unknown)', 0);
+	function trackLookupEnd() {
+		adTracker.track(name + '/lookup_end', priceMap || 'nodata', 0);
 	}
 
 	function addSlotPrice(slotName, rubiconTargeting) {
@@ -117,8 +129,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		}
 		response = true;
 		log(['Rubicon Fastlane prices', priceMap], 'info', logGroup);
-
-		trackState(true);
+		trackLookupEnd();
 	}
 
 	function setTargeting(slotName, targeting, rubiconSlot, provider) {
