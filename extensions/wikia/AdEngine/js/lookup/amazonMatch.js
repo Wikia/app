@@ -41,35 +41,6 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		module,
 		name = 'amazon';
 
-	function getSlotParams(slotName) {
-		log(['getSlotParams', slotName], 'debug', logGroup);
-
-		var amznSlots = [];
-
-		if (!amazonRendered) {
-			Object.keys(sizeMapping).forEach(function (amazonSize) {
-				var validSlotNames = sizeMapping[amazonSize],
-					amazonPricePoint = bestPricePointForSize[amazonSize];
-
-				if (validSlotNames.indexOf(slotName) !== -1 && amazonPricePoint) {
-					amznSlots.push('a' + amazonSize + 'p' + amazonPricePoint);
-				}
-			});
-
-			log(['getSlotParams - amznSlots: ', amznSlots], 'debug', logGroup);
-		} else {
-			log(['getSlotParams - no amznSlots since ads has been already displayed', slotName], 'debug', logGroup);
-		}
-
-		if (amznSlots.length) {
-			return {
-				amznslots: amznSlots
-			};
-		}
-
-		return {};
-	}
-
 	function isSlotSupported(slotName) {
 		var key;
 		for (key in sizeMapping) {
@@ -189,6 +160,35 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 	function hasResponse() {
 		log(['hasResponse', amazonResponse], 'debug', logGroup);
 		return amazonResponse ? true : false;
+	}
+
+	function getSlotParams(slotName) {
+		log(['getSlotParams', slotName], 'debug', logGroup);
+
+		var amznSlots = [];
+
+		if (!amazonRendered) {
+			Object.keys(sizeMapping).forEach(function (amazonSize) {
+				var validSlotNames = sizeMapping[amazonSize],
+						amazonPricePoint = bestPricePointForSize[amazonSize];
+
+				if (validSlotNames.indexOf(slotName) !== -1 && amazonPricePoint) {
+					amznSlots.push('a' + amazonSize + 'p' + amazonPricePoint);
+				}
+			});
+
+			log(['getSlotParams - amznSlots: ', amznSlots], 'debug', logGroup);
+		} else {
+			log(['getSlotParams - no amznSlots since ads has been already displayed', slotName], 'debug', logGroup);
+		}
+
+		if (amznSlots.length) {
+			return {
+				amznslots: amznSlots
+			};
+		}
+
+		return {};
 	}
 
 	module = {
