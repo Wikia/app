@@ -30,6 +30,7 @@ $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
 $wgHooks['AjaxAddScript']            [] = 'Wikia::onAjaxAddScript';
 $wgHooks['TitleGetSquidURLs']        [] = 'Wikia::onTitleGetSquidURLs';
 $wgHooks['userCan']                  [] = 'Wikia::canEditInterfaceWhitelist';
+$wgHooks['getUserPermissionsErrors'] [] = 'Wikia::canMoveMediaWikiNS';
 
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
@@ -2358,6 +2359,28 @@ class Wikia {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Prepares error message to throw when user wants to move page within MediaWiki namespace
+	 * @param Title $title Title on which action will be performed
+	 * @param User $user User that wants to perform action
+	 * @param $action action to perform
+	 * @param $result Allows to pass error. Set $result true to allow, false to deny, leave alone means don't care
+	 * @return bool False to break flow to throw an error, true to continue
+	 */
+	public static function canMoveMediaWikiNS(\Title $title, \User $user, $action, &$result) {
+		global $wgLang;
+		if ( $action === 'move' && $title->inNamespace( NS_MEDIAWIKI ) && !$user->isAllowed('editinterfacetrusted') ) {
+			$groups = array_map(
+				array( 'User', 'makeGroupLinkWiki' ),
+				User::getGroupsWithPermission( 'editinterfacetrusted' )
+			);
+			$result = [ [ 'badaccess-groups', $wgLang->commaList( $groups ), count( $groups ) ] ];
+			return false;
+		}
+		$result = true;
+		return true;
 	}
 
 	/**
