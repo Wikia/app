@@ -832,7 +832,7 @@ describe('AdContext', function () {
 	it('showcase is enabled if the cookie is set', function () {
 		mocks.wikiaCookies = {
 			get: function () {
-				return true;
+				return 'secretly-secret-value-talk-to-Ludwik';
 			}
 		};
 

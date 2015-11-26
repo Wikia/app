@@ -83,7 +83,7 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// showcase.*
-		if (cookies.get('mock-ads') === true) {
+		if (cookies.get('mock-ads') === 'secretly-secret-value-talk-to-Ludwik') {
 			context.opts.showcase = true;
 		}
 
