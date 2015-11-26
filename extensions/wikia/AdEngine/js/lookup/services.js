@@ -23,15 +23,7 @@ define('ext.wikia.adEngine.lookup.services', [
 			rubiconFastlane
 		];
 
-	function trackState(providerName, slotName, params) {
-		bidders.forEach(function (bidder) {
-			if (bidder && bidder.wasCalled()) {
-				bidder.trackState(false, providerName, slotName, params);
-			}
-		});
-	}
-
-	function addParameters(slotName, slotTargeting) {
+	function addParameters(providerName, slotName, slotTargeting) {
 		var params = {};
 		if (!Object.keys) {
 			return;
@@ -39,6 +31,7 @@ define('ext.wikia.adEngine.lookup.services', [
 		bidders.forEach(function (bidder) {
 			if (bidder && bidder.wasCalled()) {
 				params = bidder.getSlotParams(slotName);
+				bidder.trackState(providerName, slotName, params);
 				Object.keys(params).forEach(function (key) {
 					slotTargeting[key] = params[key];
 				});
@@ -49,8 +42,7 @@ define('ext.wikia.adEngine.lookup.services', [
 	function extendSlotTargeting(slotName, slotTargeting, providerName) {
 		log(['extendSlotTargeting', slotName, slotTargeting], 'debug', logGroup);
 		providerName = providerName.toLowerCase().replace('gpt', '');
-		trackState(providerName, slotName);
-		addParameters(slotName, slotTargeting);
+		addParameters(providerName, slotName, slotTargeting);
 	}
 
 	return {
