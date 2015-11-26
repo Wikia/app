@@ -7,7 +7,9 @@
 
 	function geo(cookies) {
 		var cookieName = 'Geo',
-			geoData = false;
+			earth = 'XX',
+			geoData = false,
+			negativePrefix = 'non-';
 
 		/**
 		 * Gets the whole data as an object representation
@@ -88,8 +90,7 @@
 			return !!(
 				countryList &&
 				countryList.indexOf &&
-				countryList.indexOf(getCountryCode()) > -1 &&
-				countryList.indexOf('non-' + getCountryCode()) === -1
+				countryList.indexOf(getCountryCode()) > -1
 			);
 		}
 
@@ -102,8 +103,7 @@
 			return !!(
 				countryList &&
 				countryList.indexOf &&
-				countryList.indexOf(getCountryCode() + '-' + getRegionCode()) > -1 &&
-				countryList.indexOf('non-' + getCountryCode() + '-' + getRegionCode()) === -1
+				countryList.indexOf(getCountryCode() + '-' + getRegionCode()) > -1
 			);
 		}
 
@@ -115,9 +115,9 @@
 		function isProperContinent(countryList) {
 			if (countryList && countryList.indexOf) {
 				return !!(
-					countryList.indexOf('XX') > -1 ||
-					countryList.indexOf('XX-' + getContinentCode()) > -1
-				) && countryList.indexOf('non-XX-' + getContinentCode()) === -1;
+					countryList.indexOf(earth) > -1 ||
+					countryList.indexOf(earth + '-' + getContinentCode()) > -1
+				);
 			}
 			return false;
 		}
@@ -129,9 +129,9 @@
 		 */
 		function isGeoExcluded(countryList) {
 			return !!(
-				countryList.indexOf('non-' + getCountryCode()) > -1 ||
-				countryList.indexOf('non-' + getCountryCode() + '-' + getRegionCode()) > -1 ||
-				countryList.indexOf('non-XX-' + getContinentCode()) > -1
+				countryList.indexOf(negativePrefix + getCountryCode()) > -1 ||
+				countryList.indexOf(negativePrefix + getCountryCode() + '-' + getRegionCode()) > -1 ||
+				countryList.indexOf(negativePrefix + earth + '-' + getContinentCode()) > -1
 			);
 		}
 
@@ -155,10 +155,7 @@
 			getContinentCode: getContinentCode,
 			getRegionCode: getRegionCode,
 			setCountryCode: setCountryCode,
-			isProperGeo: isProperGeo,
-			isProperRegion: isProperRegion,
-			isProperContinent: isProperContinent,
-			isProperCountry: isProperCountry
+			isProperGeo: isProperGeo
 		};
 	}
 
