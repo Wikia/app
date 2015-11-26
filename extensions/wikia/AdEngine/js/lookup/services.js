@@ -32,17 +32,16 @@ define('ext.wikia.adEngine.lookup.services', [
 			}
 		];
 
-	function trackState() {
+	function trackState(providerName, slotName, params) {
 		bidders.forEach(function (bidder) {
-			if (!bidder.tracked && bidder.module && bidder.module.wasCalled()) {
-				bidder.tracked = true;
-				bidder.module.trackState();
+			if (bidder.module && bidder.module.wasCalled()) {
+				bidder.module.trackState(false, providerName, slotName, params);
 			}
 		});
 	}
 
 	function addParameters(slotName, slotTargeting) {
-		var params;
+		var params = {};
 		if (!Object.keys) {
 			return;
 		}
@@ -54,12 +53,15 @@ define('ext.wikia.adEngine.lookup.services', [
 				});
 			}
 		});
+
+		return params;
 	}
 
-	function extendSlotTargeting(slotName, slotTargeting) {
+	function extendSlotTargeting(slotName, slotTargeting, providerName) {
 		log(['extendSlotTargeting', slotName, slotTargeting], 'debug', logGroup);
-		trackState();
-		addParameters(slotName, slotTargeting);
+		var params = addParameters(slotName, slotTargeting);
+		providerName = providerName.toLowerCase().replace('gpt', '');
+		trackState(providerName, slotName, params);
 	}
 
 	return {
