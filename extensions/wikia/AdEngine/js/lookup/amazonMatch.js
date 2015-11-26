@@ -38,31 +38,78 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			'7x9': null,
 			'9x2': null
 		},
-		module;
+		module,
+		name = 'amazon';
 
-	function trackState(trackEnd) {
-		log(['trackState', amazonResponse], 'debug', logGroup);
+	function getSlotParams(slotName) {
+		log(['getSlotParams', slotName], 'debug', logGroup);
 
-		var eventName,
-			data = {};
+		var amznSlots = [];
 
-		if (amazonResponse) {
-			eventName = 'lookupSuccess';
+		if (!amazonRendered) {
 			Object.keys(sizeMapping).forEach(function (amazonSize) {
-				var pricePoint = bestPricePointForSize[amazonSize];
-				if (pricePoint) {
-					data['a' + amazonSize] = 'p' + pricePoint;
+				var validSlotNames = sizeMapping[amazonSize],
+					amazonPricePoint = bestPricePointForSize[amazonSize];
+
+				if (validSlotNames.indexOf(slotName) !== -1 && amazonPricePoint) {
+					amznSlots.push('a' + amazonSize + 'p' + amazonPricePoint);
 				}
 			});
+
+			log(['getSlotParams - amznSlots: ', amznSlots], 'debug', logGroup);
 		} else {
-			eventName = 'lookupError';
+			log(['getSlotParams - no amznSlots since ads has been already displayed', slotName], 'debug', logGroup);
 		}
 
-		if (trackEnd) {
-			eventName = 'lookupEnd';
+		if (amznSlots.length) {
+			return {
+				amznslots: amznSlots
+			};
 		}
 
-		adTracker.track(eventName + '/amazon', data || '(unknown)', 0);
+		return {};
+	}
+
+	function isSlotSupported(slotName) {
+		var key;
+		for (key in sizeMapping) {
+			if (sizeMapping.hasOwnProperty(key) && sizeMapping[key].indexOf(slotName) !== -1) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	function trackState(providerName, slotName, params) {
+		log(['trackState', amazonResponse, providerName, slotName], 'debug', logGroup);
+		var category,
+			eventName = 'lookup_error',
+			prices;
+
+		if (!isSlotSupported(slotName)) {
+			log(['trackState', 'Not supported slot', slotName], 'debug', logGroup);
+			return;
+		}
+		if (amazonResponse) {
+			eventName = 'lookup_success';
+		}
+		category = name + '/' + eventName + '/' + providerName;
+		if (params.amznslots) {
+			prices = params.amznslots.join(';');
+		}
+		adTracker.track(category, slotName, 0, prices || 'nodata');
+	}
+
+	function trackLookupEnd() {
+		var data = {};
+		Object.keys(sizeMapping).forEach(function (amazonSize) {
+			var pricePoint = bestPricePointForSize[amazonSize];
+			if (pricePoint) {
+				data['a' + amazonSize] = 'p' + pricePoint;
+			}
+		});
+		adTracker.track(name + '/lookup_end', data || 'nodata', 0);
 	}
 
 	function onAmazonResponse() {
@@ -103,8 +150,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		});
 
 		log(['onAmazonResponse - end', bestPricePointForSize], 'debug', logGroup);
-
-		trackState(true);
+		trackLookupEnd();
 	}
 
 	function call() {
@@ -143,35 +189,6 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 	function hasResponse() {
 		log(['hasResponse', amazonResponse], 'debug', logGroup);
 		return amazonResponse ? true : false;
-	}
-
-	function getSlotParams(slotName) {
-		log(['getSlotParams', slotName], 'debug', logGroup);
-
-		var amznSlots = [];
-
-		if (!amazonRendered) {
-			Object.keys(sizeMapping).forEach(function (amazonSize) {
-				var validSlotNames = sizeMapping[amazonSize],
-					amazonPricePoint = bestPricePointForSize[amazonSize];
-
-				if (validSlotNames.indexOf(slotName) !== -1 && amazonPricePoint) {
-					amznSlots.push('a' + amazonSize + 'p' + amazonPricePoint);
-				}
-			});
-
-			log(['getSlotParams - amznSlots: ', amznSlots], 'debug', logGroup);
-		} else {
-			log(['getSlotParams - no amznSlots since ads has been already displayed', slotName], 'debug', logGroup);
-		}
-
-		if (amznSlots.length) {
-			return {
-				amznslots: amznSlots
-			};
-		}
-
-		return {};
 	}
 
 	module = {

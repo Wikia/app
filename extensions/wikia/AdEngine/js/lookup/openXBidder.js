@@ -105,11 +105,11 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 			eventName = 'lookup_success';
 		}
 		category = name + '/' + eventName + '/' + providerName;
-		adTracker.track(category, slotName, 0, encodeParamsForTracking(params) || '(unknown)');
+		adTracker.track(category, slotName, 0, encodeParamsForTracking(params) || 'nodata');
 	}
 
 	function trackLookupEnd() {
-		adTracker.track(name + '/lookup_end', priceMap || '(unknown)', 0);
+		adTracker.track(name + '/lookup_end', priceMap || 'nodata', 0);
 	}
 
 	function onResponse() {
