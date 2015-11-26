@@ -101,6 +101,29 @@ class InsightsHelper {
 	}
 
 	/**
+	 * Get list of insights which should be highlighted in insights list (should have red dot)
+	 *
+	 * @return array
+	 */
+	public static function getHighlightedInsights() {
+		global $wgEnableTemplateClassificationExt, $wgEnableInsightsPagesWithoutInfobox,
+			   $wgEnableInsightsTemplatesWithoutType;
+
+		$highlightedInsights = [];
+
+		if ( !empty( $wgEnableTemplateClassificationExt ) ) {
+			if ( !empty( $wgEnableInsightsPagesWithoutInfobox ) ) {
+				$highlightedInsights[] = InsightsPagesWithoutInfoboxModel::INSIGHT_TYPE;
+			}
+			if ( !empty( $wgEnableInsightsTemplatesWithoutType ) ) {
+				$highlightedInsights[] = InsightsTemplatesWithoutTypeModel::INSIGHT_TYPE;
+			}
+		}
+
+		return $highlightedInsights;
+	}
+
+	/**
 	 * Returns a full URL for a known subpage and a NULL for an unknown one.
 	 * @param $subpage A slug of subpage
 	 * @return String|null
@@ -198,11 +221,13 @@ class InsightsHelper {
 		$insightsCountService = new InsightsCountService();
 
 		$insightsPages = self::getInsightsPages();
+		$highlightedInsighs = self::getHighlightedInsights();
 		foreach ( $insightsPages as $key => $class ) {
 			$insightsList[$key] = [
 				'subtitle' => self::INSIGHT_SUBTITLE_MSG_PREFIX . $key,
 				'description' => self::INSIGHT_DESCRIPTION_MSG_PREFIX . $key,
-				'count' => $this->prepareCountDisplay( $insightsCountService->getCount( $key ) )
+				'count' => $this->prepareCountDisplay( $insightsCountService->getCount( $key ) ),
+				'highlighted' => in_array( $key, $highlightedInsighs )
 			];
 		}
 		return $insightsList;

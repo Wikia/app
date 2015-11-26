@@ -1,8 +1,10 @@
+@import "skins/shared/color";
+
 @mixin insights-red-dot {
 	.insights-red-dot {
-		background-color: red;
+		background-color: $color-buttons;
 		border-radius: 12px;
-		color: #fff;
+		color: $color-button-text;
 		font-size: 10px;
 		font-weight: bold;
 		height: 12px;
@@ -12,7 +14,11 @@
 		position: absolute;
 		min-width: 16px;
 		text-align: center;
-		top: 28px;
+		top: 10px;
+
+		&.highlighted {
+			background-color: #ed1c24;
+		}
 
 		.insights-red-dot-count {
 			min-width: 12px;

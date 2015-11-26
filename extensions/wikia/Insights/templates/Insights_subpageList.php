@@ -7,7 +7,7 @@
 					<?= wfMessage(  $insight['subtitle'] )->escaped() ?>
 				</a>
 				<?php if ( $insight['count'] ): ?>
-					<div class="insights-red-dot"><div class="insights-red-dot-count"><?= $insight['count'] ?></div></div>
+					<div class="insights-red-dot<?php if ( $insight['highlighted'] ):?> highlighted<?php endif ?>"><div class="insights-red-dot-count"><?= $insight['count'] ?></div></div>
 				<?php endif ?>
 			</li>
 		<? endforeach; ?>
