@@ -2336,9 +2336,15 @@ class Wikia {
 	static function canEditInterfaceWhitelist ( &$title, &$wgUser, $action, &$result ) {
 		global $wgEditInterfaceWhitelist;
 
+		// Allowed actions at this point
+		$notRelevantActions = [
+			'read',
+			'move', // Is being checked in next hook canMoveMediaWikiNS
+			'undelete' // Is being checked in next hook canUndeleteMediaWikiNS
+		];
+
 		// List the conditions we don't care about for early exit
-		if ( $action == "read"
-			|| $action == "undelete" // Is being checked in next hook canUndeleteMediaWikiNS
+		if ( in_array( $action, $notRelevantActions )
 			|| $title->getNamespace() != NS_MEDIAWIKI
 			|| empty( $wgEditInterfaceWhitelist )
 		) {
