@@ -92,7 +92,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	function trackState(providerName, slotName, params) {
 		log(['trackState', response, providerName, slotName], 'debug', logGroup);
 		var category,
-				eventName = 'lookup_error';
+			eventName = 'lookup_error';
 
 		if (!slots[slotName]) {
 			log(['trackState', 'Not supported slot', slotName], 'debug', logGroup);

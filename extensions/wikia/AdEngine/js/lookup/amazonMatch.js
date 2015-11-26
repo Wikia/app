@@ -170,7 +170,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		if (!amazonRendered) {
 			Object.keys(sizeMapping).forEach(function (amazonSize) {
 				var validSlotNames = sizeMapping[amazonSize],
-						amazonPricePoint = bestPricePointForSize[amazonSize];
+					amazonPricePoint = bestPricePointForSize[amazonSize];
 
 				if (validSlotNames.indexOf(slotName) !== -1 && amazonPricePoint) {
 					amznSlots.push('a' + amazonSize + 'p' + amazonPricePoint);
