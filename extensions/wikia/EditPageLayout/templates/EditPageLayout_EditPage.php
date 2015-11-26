@@ -129,9 +129,6 @@
 									</a>
 								</div>
 							<?php endif ?>
-							<?php if ( $extraPageControlsHtml ) : ?>
-								<?= $extraPageControlsHtml ?>
-							<?php endif; ?>
 							<nav class="buttons">
 								<?php if ( $showPreview ): ?>
 									<?= $app->renderView( 'EditPageLayout', 'Buttons', [ 'showMobilePreview' => $showMobilePreview ]); ?>
