@@ -1,0 +1,22 @@
+@mixin insights-red-dot {
+	.insights-red-dot {
+		background-color: red;
+		border-radius: 12px;
+		color: #fff;
+		font-size: 10px;
+		font-weight: bold;
+		height: 12px;
+		left: 0;
+		line-height: 17px;
+		padding-bottom: 4px;
+		position: absolute;
+		min-width: 16px;
+		text-align: center;
+		top: 28px;
+
+		.insights-red-dot-count {
+			min-width: 12px;
+			padding: 0 2px;
+		}
+	}
+}
