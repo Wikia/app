@@ -62,11 +62,14 @@ class HubService extends Service {
 
 	/**
 	 * Get canonical vertical name for given cityId.
+	 * For corporate homepages (actual and hub-based) return 'fandom'.
 	 * For Lifestyle and Gaming return their names.
-	 * For corporate pages return false - we don't want to track traffic from there in Comscore
+	 * For Other return 'lifestyle'.
 	 * For rest of values return Entertainment.
+	 * 
 	 * @param $cityId
-	 * @return Boolean|String
+	 *
+	 * @return String
 	 */
 	public static function getVerticalNameForComscore( $cityId ) {
 		global $wgDisableWAMOnHubs;
