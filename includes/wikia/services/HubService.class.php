@@ -66,7 +66,7 @@ class HubService extends Service {
 	 * For Lifestyle and Gaming return their names.
 	 * For Other return 'lifestyle'.
 	 * For rest of values return Entertainment.
-	 * 
+	 *
 	 * @param $cityId
 	 *
 	 * @return String
