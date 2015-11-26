@@ -57,7 +57,9 @@ class InsightsController extends WikiaSpecialPageController {
 	 * @throws MWException
 	 */
 	private function renderSubpage() {
-		$this->model = InsightsHelper::getInsightModel( $this->subpage );
+		$helper = new InsightsHelper();
+
+		$this->model = $helper->getInsightModel( $this->subpage );
 		/**
 		 * A model for insights should implement at least 3 methods:
 		 * - getContent() - returning all the visible data
@@ -72,6 +74,7 @@ class InsightsController extends WikiaSpecialPageController {
 			$this->prepareSortingData();
 			$this->renderFlagsFiltering();
 			$this->setVal( 'data', $this->model->getViewData() );
+			$this->setVal( 'insightsList', $helper->prepareInsightsList() );
 			$this->overrideTemplate( $this->model->getTemplate() );
 		} else {
 			throw new MWException( 'An Insights subpage should implement the InsightsQueryPageModel interface.' );

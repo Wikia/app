@@ -192,16 +192,20 @@ class InsightsHelper {
 	 *
 	 * @return array
 	 */
-	public static function getMessageKeys() {
-		$messageKeys = [];
+	public function prepareInsightsList() {
+		$insightsList = [];
+
+		$insightsCountService = new InsightsCountService();
+
 		$insightsPages = self::getInsightsPages();
 		foreach ( $insightsPages as $key => $class ) {
-			$messageKeys[$key] = [
+			$insightsList[$key] = [
 				'subtitle' => self::INSIGHT_SUBTITLE_MSG_PREFIX . $key,
 				'description' => self::INSIGHT_DESCRIPTION_MSG_PREFIX . $key,
+				'count' => $this->prepareCountDisplay( $insightsCountService->getCount( $key ) )
 			];
 		}
-		return $messageKeys;
+		return $insightsList;
 	}
 
 	/**
@@ -219,5 +223,13 @@ class InsightsHelper {
 			$lastTimeId->modify( '-2 week' )->format( $format ),
 			$lastTimeId->modify( '-3 week' )->format( $format ),
 		];
+	}
+
+	private function prepareCountDisplay( $count ) {
+		if ( $count > 99 ) {
+			return '99+';
+		}
+
+		return $count;
 	}
 }
