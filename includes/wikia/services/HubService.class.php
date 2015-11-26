@@ -69,7 +69,9 @@ class HubService extends Service {
 	 * @return Boolean|String
 	 */
 	public static function getVerticalNameForComscore( $cityId ) {
-		if ( WikiaPageType::isCorporatePage() ) {
+		global $wgDisableWAMOnHubs;
+
+		if ( WikiaPageType::isWikiaHomePage() || WikiaPageType::isWikiaHub() && $wgDisableWAMOnHubs ) {
 			return 'fandom';
 		}
 
