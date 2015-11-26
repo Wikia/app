@@ -85,7 +85,12 @@
 		 * @returns {boolean}
 		 */
 		function isProperCountry(countryList) {
-			return !!(countryList && countryList.indexOf && countryList.indexOf(getCountryCode()) > -1);
+			return !!(
+				countryList &&
+				countryList.indexOf &&
+				countryList.indexOf(getCountryCode()) > -1 &&
+				countryList.indexOf('non-' + getCountryCode()) === -1
+			);
 		}
 
 		/**
@@ -97,7 +102,8 @@
 			return !!(
 				countryList &&
 				countryList.indexOf &&
-				countryList.indexOf(getCountryCode() + '-' + getRegionCode()) > -1
+				countryList.indexOf(getCountryCode() + '-' + getRegionCode()) > -1 &&
+				countryList.indexOf('non-' + getCountryCode() + '-' + getRegionCode()) === -1
 			);
 		}
 
@@ -110,10 +116,23 @@
 			if (countryList && countryList.indexOf) {
 				return !!(
 					countryList.indexOf('XX') > -1 ||
-					countryList.indexOf('XX-'+getContinentCode())  > -1
-				);
+					countryList.indexOf('XX-' + getContinentCode()) > -1
+				) && countryList.indexOf('non-XX-' + getContinentCode()) === -1;
 			}
 			return false;
+		}
+
+		/**
+		 * Returns true if current region/country/continent is not excluded in countryList
+		 * @param {array} countryList
+		 * @returns {boolean}
+		 */
+		function isGeoExcluded(countryList) {
+			return !!(
+				countryList.indexOf('non-' + getCountryCode()) > -1 ||
+				countryList.indexOf('non-' + getCountryCode() + '-' + getRegionCode()) > -1 ||
+				countryList.indexOf('non-XX-' + getContinentCode()) > -1
+			);
 		}
 
 		/**
@@ -122,15 +141,14 @@
 		 * @returns {boolean}
 		 */
 		function isProperGeo(countryList) {
-			return  !!(countryList &&
+			return !!(countryList &&
 				countryList.indexOf &&
+				!isGeoExcluded(countryList) &&
 				(isProperContinent(countryList) || isProperCountry(countryList) || isProperRegion(countryList))
 			);
 		}
 
-
 		/** @public **/
-
 		return {
 			getGeoData: getGeoData,
 			getCountryCode: getCountryCode,
