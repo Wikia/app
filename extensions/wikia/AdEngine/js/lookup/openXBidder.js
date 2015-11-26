@@ -31,6 +31,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 				MOBILE_TOP_LEADERBOARD: '320x50'
 			}
 		},
+		name = 'ox_bidder',
 		priceMap = {},
 		slots = [];
 
@@ -79,29 +80,36 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		return ads;
 	}
 
-	function trackState(trackEnd) {
-		log(['trackState', oxResponse], 'debug', logGroup);
-
-		var eventName,
-			slotName,
-			data = {};
-
-		if (oxResponse) {
-			eventName = 'lookupSuccess';
-			for (slotName in priceMap) {
-				if (priceMap.hasOwnProperty(slotName)) {
-					data[slotName] = priceMap[slotName];
-				}
+	function encodeParamsForTracking(params) {
+		var key,
+			encoded = [];
+		for (key in params) {
+			if (params.hasOwnProperty(key)) {
+				encoded.push(key + '=' + params[key]);
 			}
-		} else {
-			eventName = 'lookupError';
 		}
 
-		if (trackEnd) {
-			eventName = 'lookupEnd';
-		}
+		return encoded.join(';');
+	}
 
-		adTracker.track(eventName + '/ox_bidder', data || '(unknown)', 0);
+	function trackState(providerName, slotName, params) {
+		log(['trackState', oxResponse, providerName, slotName], 'debug', logGroup);
+		var category,
+			eventName = 'lookup_error';
+
+		if (!slots[slotName]) {
+			log(['trackState', 'Not supported slot', slotName], 'debug', logGroup);
+			return;
+		}
+		if (oxResponse) {
+			eventName = 'lookup_success';
+		}
+		category = name + '/' + eventName + '/' + providerName;
+		adTracker.track(category, slotName, 0, encodeParamsForTracking(params) || '(unknown)');
+	}
+
+	function trackLookupEnd() {
+		adTracker.track(name + '/lookup_end', priceMap || '(unknown)', 0);
 	}
 
 	function onResponse() {
@@ -119,8 +127,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		}
 		oxResponse = true;
 		log(['OpenX bidder prices', priceMap], 'info', logGroup);
-
-		trackState(true);
+		trackLookupEnd();
 	}
 
 	function call(skin) {
@@ -134,7 +141,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 			return;
 		}
 
-		oxTiming = adTracker.measureTime('ox_bidder', {}, 'start');
+		oxTiming = adTracker.measureTime(name, {}, 'start');
 		oxTiming.track();
 		win.OX_dfp_ads = getAds(skin);
 
