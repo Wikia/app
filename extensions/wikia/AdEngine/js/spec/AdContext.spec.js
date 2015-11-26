@@ -60,9 +60,7 @@ describe('AdContext', function () {
 				getVal: noop
 			},
 			wikiaCookies: {
-				get: function () {
-					return false;
-				}
+				get: noop
 			},
 			callback: noop
 		},
@@ -75,6 +73,7 @@ describe('AdContext', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.adContext'](
 			mocks.abTesting,
+			mocks.wikiaCookies,
 			mocks.doc,
 			mocks.geo,
 			mocks.instantGlobals,
@@ -831,6 +830,12 @@ describe('AdContext', function () {
 	});
 
 	it('showcase is enabled if the cookie is set', function () {
+		mocks.wikiaCookies = {
+			get: function () {
+				return true;
+			}
+		};
+
 		expect(getModule().getContext().opts.showcase).toBeTruthy();
 	});
 
