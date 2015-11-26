@@ -71,7 +71,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 
 		$realTitleText = isset($options['title']) ? $options['title'] : $titleText;
 
-		if ( $options['type'] === 'script' ) {
+		if ( $options['type'] === 'script' && Wikia::isUsingSafeJs() ) {
 			return $this->createScriptTitle( $realTitleText, $options );
 		}
 
@@ -99,7 +99,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	 * @throws MWException
 	 */
 	private function createScriptTitle( $titleText, $options ) {
-		global $wgCityId, $wgUseSiteJs, $wgEnableContentReviewExt;
+		global $wgCityId;
 
 		$title = null;
 		$external = false;
@@ -115,7 +115,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		}
 
 		// TODO: After scripts transition on dev wiki is done, remove this if statement (CE-3093)
-		if ( !empty( $wgUseSiteJs ) && !empty( $wgEnableContentReviewExt ) && $targetCityId === Wikia\ContentReview\Helper::DEV_WIKI_ID && ( !$title || !$title->exists() ) ) {
+		if ( $targetCityId === Wikia\ContentReview\Helper::DEV_WIKI_ID && ( !$title || !$title->exists() ) ) {
 			$title = $this->devWikiFallback( $titleText, $external );
 		}
 
