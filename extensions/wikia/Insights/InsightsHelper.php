@@ -2,7 +2,7 @@
 
 class InsightsHelper {
 
-	const MAX_DISPLAY_COUNT = 99;
+	const MAX_DISPLAY_COUNT = 999;
 
 	/**
 	 * Used to create the following messages:
