@@ -26,3 +26,8 @@ $wgSpecialPageGroups['Templateswithouttype'] = 'wikia';
  * Models
  */
 $wgAutoloadClasses['InsightsTemplatesWithoutTypeModel'] = __DIR__ . '/models/InsightsTemplatesWithoutTypeModel.php';
+
+/**
+ * Hooks
+ */
+$wgHooks['TemplateClassification::TemplateClassified'][] = 'InsightsHooks::onTemplateClassified';

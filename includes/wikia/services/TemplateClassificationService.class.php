@@ -11,9 +11,7 @@ class TemplateClassificationService {
 	const SERVICE_NAME = 'template-classification-storage';
 	const USER_PROVIDER = 'user';
 	const AUTO_PROVIDER = 'auto';
-
-	// TODO: Move types used for manual classification outside of Template Classification Service
-	// TODO: https://wikia-inc.atlassian.net/browse/CE-3017
+	
 	const TEMPLATE_CONTEXT_LINK = 'context-link';
 	const TEMPLATE_CUSTOM_INFOBOX = 'custom-infobox';
 	const TEMPLATE_DATA = 'data';
@@ -30,29 +28,6 @@ class TemplateClassificationService {
 	const TEMPLATE_UNCLASSIFIED = '' ;
 
 	const NOT_AVAILABLE = 'not-available';
-
-	/**
-	 * Allowed types of templates stored in an array to make a validation process easier.
-	 *
-	 * The order of types in this array determines the order of the types displayed in the
-	 * classification dialog.
-	 *
-	 * @var array
-	 */
-	static $templateTypes = [
-		self::TEMPLATE_INFOBOX,
-		self::TEMPLATE_QUOTE,
-		self::TEMPLATE_NAVBOX,
-		self::TEMPLATE_FLAG,
-		self::TEMPLATE_CONTEXT_LINK,
-		self::TEMPLATE_REFERENCES,
-		self::TEMPLATE_MEDIA,
-		self::TEMPLATE_DATA,
-		self::TEMPLATE_DESIGN,
-		self::TEMPLATE_NAV,
-		self::TEMPLATE_NOT_ART,
-		self::TEMPLATE_UNKNOWN,
-	];
 
 	private $apiClient = null;
 
@@ -73,27 +48,6 @@ class TemplateClassificationService {
 		$type = $this->getApiClient()->getTemplateType( $wikiId, $pageId );
 		if ( !is_null( $type ) ) {
 			$templateType = $type->getType();
-		}
-
-		return $templateType;
-	}
-
-	/**
-	 * Quick fix
-	 * Permanent change will be needed from the Services team.
-	 * Fallback to empty type that means no classification.
-	 *
-	 * @param $wikiId
-	 * @param $pageId
-	 * @return string template type
-	 * @throws Exception
-	 * @throws \Swagger\Client\ApiException
-	 */
-	public function getUserDefinedType( $wikiId, $pageId ) {
-		$templateType = $this->getType( $wikiId, $pageId );
-
-		if ( !in_array( $templateType, self::$templateTypes ) ) {
-			$templateType = self::TEMPLATE_UNCLASSIFIED;
 		}
 
 		return $templateType;

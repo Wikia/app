@@ -91,13 +91,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
 		}
 
-		// Taboola integration
-		if (context.providers.taboola) {
-			context.providers.taboola = !!abTest.getGroup('TABOOLA_MODULES') &&
-				geo.isProperGeo(instantGlobals.wgAdDriverTaboolaCountries) &&
-				context.targeting.pageType === 'article';
-		}
-
 		if (geo.isProperGeo(instantGlobals.wgAdDriverTurtleCountries)) {
 			context.providers.turtle = true;
 		}

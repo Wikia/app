@@ -8,7 +8,7 @@
 require_once( dirname( __FILE__ ) . '../../Maintenance.php' );
 
 class allTemplatesFromWiki extends Maintenance {
-	const TEMPLATE_MESSAGE_PREFIX = 'initialClassification._namespace:template';
+	const TEMPLATE_MESSAGE_PREFIX = 'initialClassification._action:update._namespace:template';
 	/** @var PipelineConnectionBase */
 	protected static $pipe;
 
@@ -39,13 +39,14 @@ class allTemplatesFromWiki extends Maintenance {
 		$db = wfGetDB( DB_SLAVE );
 
 		$pages = ( new \WikiaSQL() )
-			->SELECT('page_id','page_title')
+			->SELECT('page_id','page_title', 'page_latest')
 			->FROM('page')
 			->WHERE('page_namespace')->EQUAL_TO( NS_TEMPLATE )
 			->runLoop( $db, function ( &$pages, $row ) {
 				$pages[] = [
 					'page_id' => $row->page_id,
-					'page_title' => $row->page_title
+					'page_title' => $row->page_title,
+					'revision_id' => $row->page_latest
 				];
 			} );
 
@@ -58,21 +59,31 @@ class allTemplatesFromWiki extends Maintenance {
 	 */
 	protected function pushDataToRabbit( $data ) {
 		global $wgCityId;
+
+		$retries = [];
 		$msg = new stdClass();
 		$msg->cityId = $wgCityId;
 		foreach ( $data as $template ) {
 			$msg->pageId = $template[ 'page_id' ];
+			$msg->revisionId = $template[ 'revision_id' ];
 
 			try {
-				self::getPipeline()
-					->publish( implode( '.', [ self::TEMPLATE_MESSAGE_PREFIX ] ), $msg );
+				self::getPipeline()->publish( implode( '.', [ self::TEMPLATE_MESSAGE_PREFIX ] ), $msg );
 			} catch ( Exception $e ) {
-				print( "Error while pushing template with ID:". $template[ 'page_id' ] );
+				print( "Error while pushing template with ID:" . $template[ 'page_id' ] . PHP_EOL );
 				\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
 					'exception' => $e,
 					'event_name' => 'push templates to rabbit'
 				] );
+				$retries []= $template;
 			}
+		}
+
+		// In case there was even a single failure, retry all failed messages
+		// TODO: Check if we need to move beyond recursive call
+		if(!empty($retries)) {
+			self::$pipe = null;
+			$this->pushDataToRabbit($retries);
 		}
 	}
 
