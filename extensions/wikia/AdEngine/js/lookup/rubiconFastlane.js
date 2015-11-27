@@ -139,17 +139,19 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	function defineSingleSlot(slotName, slot, skin) {
 		var position = slotName.indexOf('TOP') !== -1 ? 'atf' : 'btf',
 			provider = skin === 'oasis' ? 'gpt' : 'mobile',
-			slotPath = [
-				'/5441',
+			divId = [
+				'wikia_gpt',
+				'5441',
 				'wka.' + adLogicZoneParams.getSite(),
 				adLogicZoneParams.getMappedVertical(),
 				'',
-				adLogicZoneParams.getPageType()
-			].join('/'),
-			unit = 'wikia_gpt' + slotPath + '/' + provider + '/' + slotName;
+				adLogicZoneParams.getPageType(),
+				provider,
+				slotName
+			].join('/');
 
 		win.rubicontag.cmd.push(function () {
-			var rubiconSlot = win.rubicontag.defineSlot(unit, slot.sizes, unit);
+			var rubiconSlot = win.rubicontag.defineSlot(slotName, slot.sizes, divId);
 			if (skin === 'oasis') {
 				rubiconSlot.setPosition(position);
 			}
