@@ -1,6 +1,9 @@
 <?php
 
 class InsightsHelper {
+
+	const MAX_DISPLAY_COUNT = 99;
+
 	/**
 	 * Used to create the following messages:
 	 *
@@ -106,18 +109,16 @@ class InsightsHelper {
 	 * @return array
 	 */
 	public static function getHighlightedInsights() {
-		global $wgEnableTemplateClassificationExt, $wgEnableInsightsPagesWithoutInfobox,
-			   $wgEnableInsightsTemplatesWithoutType;
+		global $wgEnableTemplateClassificationExt, $wgEnableInsightsInfoboxes, $wgEnableInsightsTemplatesWithoutType;
 
 		$highlightedInsights = [];
 
-		if ( !empty( $wgEnableTemplateClassificationExt ) ) {
-			if ( !empty( $wgEnableInsightsPagesWithoutInfobox ) ) {
-				$highlightedInsights[] = InsightsPagesWithoutInfoboxModel::INSIGHT_TYPE;
-			}
-			if ( !empty( $wgEnableInsightsTemplatesWithoutType ) ) {
-				$highlightedInsights[] = InsightsTemplatesWithoutTypeModel::INSIGHT_TYPE;
-			}
+		if ( !empty( $wgEnableInsightsInfoboxes ) ) {
+			$highlightedInsights[] = InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE;
+		}
+
+		if ( !empty( $wgEnableTemplateClassificationExt ) && !empty( $wgEnableInsightsTemplatesWithoutType ) ) {
+			$highlightedInsights[] = InsightsTemplatesWithoutTypeModel::INSIGHT_TYPE;
 		}
 
 		return $highlightedInsights;
@@ -251,8 +252,8 @@ class InsightsHelper {
 	}
 
 	private function prepareCountDisplay( $count ) {
-		if ( $count > 99 ) {
-			return '99+';
+		if ( $count > self::MAX_DISPLAY_COUNT ) {
+			return self::MAX_DISPLAY_COUNT . '+';
 		}
 
 		return $count;
