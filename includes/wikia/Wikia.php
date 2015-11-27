@@ -30,8 +30,7 @@ $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
 $wgHooks['AjaxAddScript']            [] = 'Wikia::onAjaxAddScript';
 $wgHooks['TitleGetSquidURLs']        [] = 'Wikia::onTitleGetSquidURLs';
 $wgHooks['userCan']                  [] = 'Wikia::canEditInterfaceWhitelist';
-$wgHooks['getUserPermissionsErrors'] [] = 'Wikia::canMoveMediaWikiNS';
-$wgHooks['getUserPermissionsErrors'] [] = 'Wikia::canUndeleteMediaWikiNS';
+$wgHooks['getUserPermissionsErrors'] [] = 'Wikia::canEditInterfaceWhitelistErrors';
 
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
@@ -2337,16 +2336,15 @@ class Wikia {
 		global $wgEditInterfaceWhitelist;
 
 		// Allowed actions at this point
-		$notRelevantActions = [
+		$allowedActions = [
 			'read',
-			'move', // Is being checked in next hook canMoveMediaWikiNS
-			'undelete' // Is being checked in next hook canUndeleteMediaWikiNS
+			'move', // Is being checked in next hook canEditInterfaceWhitelistErrors
+			'undelete' // Is being checked in next hook canEditInterfaceWhitelistErrors
 		];
 
 		// List the conditions we don't care about for early exit
-		if ( in_array( $action, $notRelevantActions )
+		if ( in_array( $action, $allowedActions )
 			|| $title->getNamespace() != NS_MEDIAWIKI
-			|| empty( $wgEditInterfaceWhitelist )
 		) {
 			return true;
 		}
@@ -2373,40 +2371,31 @@ class Wikia {
 	}
 
 	/**
-	 * Prepares error message to throw when user wants to move page within MediaWiki namespace
+	 * Rights checks for MediaWiki namespace
+	 * Prepares error message to throw when user is not allowed to do action within MediaWiki namespace
 	 * @param Title $title Title on which action will be performed
 	 * @param User $user User that wants to perform action
 	 * @param $action action to perform
 	 * @param $result Allows to pass error. Set $result true to allow, false to deny, leave alone means don't care
 	 * @return bool False to break flow to throw an error, true to continue
 	 */
-	public static function canMoveMediaWikiNS( \Title $title, \User $user, $action, &$result ) {
-		if ( $action === 'move'
-			&& $title->inNamespace( NS_MEDIAWIKI )
+	public static function canEditInterfaceWhitelistErrors( \Title $title, \User $user, $action, &$result ) {
+		global $wgEditInterfaceWhitelist;
+
+		if ( $title->inNamespace( NS_MEDIAWIKI )
 			&& !$user->isAllowed( 'editinterfacetrusted' )
 		) {
-			$result = [ \PermissionsError::prepareBadAccessErrorArray( 'editinterfacetrusted' ) ];
-			return false;
-		}
+			// Restrict move
+			if ( $action === 'move' ) {
+				$result = [ \PermissionsError::prepareBadAccessErrorArray( 'editinterfacetrusted' ) ];
+				return false;
+			}
 
-		return true;
-	}
-
-	/**
-	 * Prepares error message to throw when user wants to undelete page within MediaWiki namespace
-	 * @param Title $title Title on which action will be performed
-	 * @param User $user User that wants to perform action
-	 * @param $action action to perform
-	 * @param $result Allows to pass error. Set $result true to allow, false to deny, leave alone means don't care
-	 * @return bool False to break flow to throw an error, true to continue
-	 */
-	public static function canUndeleteMediaWikiNS( \Title $title, \User $user, $action, &$result ) {
-		if ( $action === 'undelete'
-			&& $title->inNamespace( NS_MEDIAWIKI )
-			&& !$user->isAllowed( 'editinterfacetrusted' )
-		) {
-			$result = [ \PermissionsError::prepareBadAccessErrorArray( 'editinterfacetrusted' ) ];
-			return false;
+			// Restrict undelete
+			if ( $action === 'undelete' && !in_array( $title->getDBKey(), $wgEditInterfaceWhitelist ) ) {
+				$result = [ \PermissionsError::prepareBadAccessErrorArray( 'editinterfacetrusted' ) ];
+				return false;
+			}
 		}
 
 		return true;
