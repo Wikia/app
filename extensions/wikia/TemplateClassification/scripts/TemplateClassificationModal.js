@@ -36,10 +36,10 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 
 		$w.on('keydown', openModalKeyboardShortcut);
 
-		$('.template-classification-type-text').click(function (e) {
+		$typeLabel.click(function (e) {
 			e.preventDefault();
 			openEditModal('editType');
-		});
+		}).popover();
 	}
 
 	function openEditModal(modeProvided) {
