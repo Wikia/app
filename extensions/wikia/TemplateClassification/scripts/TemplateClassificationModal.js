@@ -193,7 +193,7 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 	function updateEntryPointLabel(templateType) {
 		$typeLabel
 			.data('type', mw.html.escape(templateType))
-			.find('.template-classification-type-label')
+			.children('.template-classification-type-label')
 			.html(getTypeMessage(templateType).escaped());
 	}
 
