@@ -1,6 +1,9 @@
 <?php
 
 class InsightsHelper {
+
+	const MAX_DISPLAY_COUNT = 999;
+
 	/**
 	 * Used to create the following messages:
 	 *
@@ -89,6 +92,27 @@ class InsightsHelper {
 
 
 		return array_merge( $dynamicInsights, self::$defaultInsights );
+	}
+
+	/**
+	 * Get list of insights which should be highlighted in insights list (should have red dot)
+	 *
+	 * @return array
+	 */
+	public static function getHighlightedInsights() {
+		global $wgEnableTemplateClassificationExt, $wgEnableInsightsInfoboxes, $wgEnableInsightsTemplatesWithoutType;
+
+		$highlightedInsights = [];
+
+		if ( !empty( $wgEnableInsightsInfoboxes ) ) {
+			$highlightedInsights[] = InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE;
+		}
+
+		if ( !empty( $wgEnableTemplateClassificationExt ) && !empty( $wgEnableInsightsTemplatesWithoutType ) ) {
+			$highlightedInsights[] = InsightsTemplatesWithoutTypeModel::INSIGHT_TYPE;
+		}
+
+		return $highlightedInsights;
 	}
 
 	/**
@@ -184,19 +208,27 @@ class InsightsHelper {
 	 * @param int $limit Limit insights pages returned. No limit if 0.
 	 * @return array
 	 */
-	public static function getMessageKeys( $limit = 0 ) {
-		$messageKeys = [];
+	public function prepareInsightsList( $limit = 0 ) {
+		$insightsList = [];
+
+		$insightsCountService = new InsightsCountService();
 		$insightsPages = self::getInsightsPages();
+
 		if ( $limit > 0 ) {
 			$insightsPages = array_slice( $insightsPages, 0, $limit );
 		}
+
+		$highlightedInsighs = self::getHighlightedInsights();
+
 		foreach ( $insightsPages as $key => $class ) {
-			$messageKeys[$key] = [
+			$insightsList[$key] = [
 				'subtitle' => self::INSIGHT_SUBTITLE_MSG_PREFIX . $key,
 				'description' => self::INSIGHT_DESCRIPTION_MSG_PREFIX . $key,
+				'count' => $this->prepareCountDisplay( $insightsCountService->getCount( $key ) ),
+				'highlighted' => in_array( $key, $highlightedInsighs )
 			];
 		}
-		return $messageKeys;
+		return $insightsList;
 	}
 
 	/**
@@ -214,5 +246,13 @@ class InsightsHelper {
 			$lastTimeId->modify( '-2 week' )->format( $format ),
 			$lastTimeId->modify( '-3 week' )->format( $format ),
 		];
+	}
+
+	private function prepareCountDisplay( $count ) {
+		if ( $count > self::MAX_DISPLAY_COUNT ) {
+			return self::MAX_DISPLAY_COUNT . '+';
+		}
+
+		return $count;
 	}
 }

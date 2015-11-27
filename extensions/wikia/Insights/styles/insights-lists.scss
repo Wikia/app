@@ -1,5 +1,6 @@
 @import './insights-settings';
 @import './insights-icons-mixin';
+@import './insights-red-dot-mixin';
 
 @if $is-dark-wiki {
 	@include insights-icons-dark();
@@ -52,6 +53,8 @@
 	}
 
 	.insights-nav-item {
+		@include insights-red-dot();
+
 		background-position: 5% 50%;
 		background-repeat: no-repeat;
 		background-size: $insights-small-icon-size;
@@ -59,6 +62,7 @@
 		list-style-type: none;
 		margin: 0;
 		padding: 5px 0;
+		position: relative;
 
 		&:last-child {
 			border-bottom: 0;

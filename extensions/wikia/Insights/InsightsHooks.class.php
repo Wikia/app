@@ -78,7 +78,7 @@ class InsightsHooks {
 	public static function onGetRailModuleList( Array &$railModuleList ) {
 		global $wgTitle, $wgUser;
 
-		if ( $wgTitle->isSpecial( 'WikiActivity' ) && $wgUser->isPowerUser() ) {
+		if ( $wgTitle->isSpecial( 'WikiActivity' ) && $wgUser->isLoggedIn() ) {
 			$railModuleList[1501] = [ 'InsightsModule', 'Index', null ];
 		}
 
