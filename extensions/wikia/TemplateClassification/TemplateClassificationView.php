@@ -74,6 +74,7 @@ class View {
 				'templateType' => $templateType,
 				'templateTypeName' => $templateTypeMessage,
 				'editButton' => $editButton,
+				'keyTip' => wfMessage( 'template-classification-open-modal-key-tip' )->plain(),
 			]
 		);
 	}
