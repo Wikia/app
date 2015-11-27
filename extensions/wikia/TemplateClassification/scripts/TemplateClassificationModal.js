@@ -34,8 +34,8 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	 * @param {function} saveHandlerProvided Method that should handle modal save,
 	 *  	receives {string} selectedType as parameter
 	 */
-	function init(typeGetterProvided, saveHandlerProvided, mode) {
-		var mode = mode || 'editType';
+	function init(typeGetterProvided, saveHandlerProvided, modeProvided) {
+		var mode = modeProvided || 'editType';
 
 		saveHandler = saveHandlerProvided;
 		typeGetter = typeGetterProvided;
@@ -46,7 +46,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		$typeLabel.click(function (e) {
 			e.preventDefault();
 			openEditModal(mode);
-		});
+		}).popover();
 	}
 
 	function openEditModal(modeProvided) {
