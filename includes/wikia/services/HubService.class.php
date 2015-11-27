@@ -58,9 +58,9 @@ class HubService extends Service {
 
 		$categoryId = WikiFactoryHub::getInstance()->getCategoryId( $wgCityId );
 
-		return !empty( $categoryId )
-			? self::$canonicalCategoryNames[self::getCanonicalCategoryId( $categoryId )]
-			: '';
+		return empty( $categoryId )
+			? ''
+			: self::$canonicalCategoryNames[self::getCanonicalCategoryId( $categoryId )];
 	}
 
 	/**
