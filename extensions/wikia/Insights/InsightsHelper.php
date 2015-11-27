@@ -50,7 +50,7 @@ class InsightsHelper {
 	 */
 	const INSIGHT_FIXED_MSG_PREFIX = 'insights-notification-message-fixed-';
 
-	public static $insightsPages = [
+	private static $defaultInsights = [
 		InsightsUncategorizedModel::INSIGHT_TYPE	=> 'InsightsUncategorizedModel',
 		InsightsWithoutimagesModel::INSIGHT_TYPE	=> 'InsightsWithoutimagesModel',
 		InsightsDeadendModel::INSIGHT_TYPE			=> 'InsightsDeadendModel',
@@ -67,40 +67,31 @@ class InsightsHelper {
 		global $wgEnableInsightsInfoboxes, $wgEnableFlagsExt, $wgEnableTemplateClassificationExt,
 			   $wgEnableInsightsPagesWithoutInfobox, $wgEnableInsightsTemplatesWithoutType;
 
-		/* Add infoboxes insight */
-		if ( !empty( $wgEnableInsightsInfoboxes )
-			&& !isset( self::$insightsPages[InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE] )
-		) {
-			self::$insightsPages = array_merge(
-				[ InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE => 'InsightsUnconvertedInfoboxesModel' ],
-				self::$insightsPages
-			);
+		/* Order of inserting determines default order on insights entry points list */
+		$dynamicInsights = [];
+
+		/* Add TemplatesWithoutType insight */
+		if ( !empty( $wgEnableTemplateClassificationExt ) && !empty( $wgEnableInsightsTemplatesWithoutType ) ) {
+			$dynamicInsights[InsightsTemplatesWithoutTypeModel::INSIGHT_TYPE] = 'InsightsTemplatesWithoutTypeModel';
 		}
 
-		/* Add flags insight */
-		if ( !empty( $wgEnableFlagsExt ) && !isset( self::$insightsPages[InsightsFlagsModel::INSIGHT_TYPE] ) ) {
-			self::$insightsPages = array_merge(
-				[ InsightsFlagsModel::INSIGHT_TYPE => 'InsightsFlagsModel' ],
-				self::$insightsPages
-			);
+		/* Add Infoboxes insight */
+		if ( !empty( $wgEnableInsightsInfoboxes ) ) {
+			$dynamicInsights[InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE] = 'InsightsUnconvertedInfoboxesModel';
 		}
 
-		if ( !empty( $wgEnableTemplateClassificationExt ) ) {
-			if ( !empty( $wgEnableInsightsPagesWithoutInfobox ) ) {
-				self::$insightsPages = array_merge(
-					[ InsightsPagesWithoutInfoboxModel::INSIGHT_TYPE => 'InsightsPagesWithoutInfoboxModel' ],
-					self::$insightsPages
-				);
-			}
-			if ( !empty( $wgEnableInsightsTemplatesWithoutType ) ) {
-				self::$insightsPages = array_merge(
-					[ InsightsTemplatesWithoutTypeModel::INSIGHT_TYPE => 'InsightsTemplatesWithoutTypeModel' ],
-					self::$insightsPages
-				);
-			}
+		/* Add PagesWithoutInfobox insight */
+		if ( !empty( $wgEnableTemplateClassificationExt ) && !empty( $wgEnableInsightsPagesWithoutInfobox ) ) {
+			$dynamicInsights[InsightsPagesWithoutInfoboxModel::INSIGHT_TYPE] = 'InsightsPagesWithoutInfoboxModel';
 		}
 
-		return self::$insightsPages;
+		/* Add Flags insight */
+		if ( !empty( $wgEnableFlagsExt ) ) {
+			$dynamicInsights[InsightsFlagsModel::INSIGHT_TYPE] = 'InsightsFlagsModel';
+		}
+
+
+		return array_merge( $dynamicInsights, self::$defaultInsights );
 	}
 
 	/**
@@ -214,15 +205,21 @@ class InsightsHelper {
 	 * Returns an array of basic messages keys associated with slugs of subpages
 	 * (subtitle and description). Used mainly to generate navigation elements.
 	 *
+	 * @param int $limit Limit insights pages returned. No limit if 0.
 	 * @return array
 	 */
-	public function prepareInsightsList() {
+	public function prepareInsightsList( $limit = 0 ) {
 		$insightsList = [];
 
 		$insightsCountService = new InsightsCountService();
-
 		$insightsPages = self::getInsightsPages();
+
+		if ( $limit > 0 ) {
+			$insightsPages = array_slice( $insightsPages, 0, $limit );
+		}
+
 		$highlightedInsighs = self::getHighlightedInsights();
+
 		foreach ( $insightsPages as $key => $class ) {
 			$insightsList[$key] = [
 				'subtitle' => self::INSIGHT_SUBTITLE_MSG_PREFIX . $key,

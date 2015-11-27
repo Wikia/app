@@ -592,6 +592,11 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 	public function doHeader( $opts ) {
 		global $wgScript;
 
+		// Wikia change begin
+		// Adding "Recent changes on Wikia" section - CE-3050
+		$this->setRecentChangesOnWikia();
+		// Wikia change end
+
 		$this->setTopText( $opts );
 
 		$defaults = $opts->getAllValues();
@@ -638,9 +643,13 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		$form = Xml::tags( 'form', array( 'action' => $wgScript ), $out );
 		$panel[] = $form;
 		$panelString = implode( "\n", $panel );
+		$panelString = Html::rawElement( 'div', [ 'class' => 'rc-fieldset-content' ], $panelString );
 
 		$this->getOutput()->addHTML(
-			Xml::fieldset( wfMsg( 'recentchanges-legend' ), $panelString, array( 'class' => 'rcoptions' ) )
+			Xml::fieldset( wfMessage( 'recentchanges-legend' )->escaped(), $panelString, [
+				'class' => 'rcoptions collapsible collapsed',
+				'id' => 'recentchanges-options',
+			] )
 		);
 
 		$this->setBottomText( $opts );
@@ -668,6 +677,25 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 
 		wfRunHooks( 'SpecialRecentChangesPanel', array( &$extraOpts, $opts ) );
 		return $extraOpts;
+	}
+
+	function setRecentChangesOnWikia() {
+		$content = Html::rawElement( 'legend', [ 'id' => 'recentchanges-on-wikia' ],
+			wfMessage( 'recentchanges-on-wikia-title' )->escaped()
+		);
+		$content .= Html::rawElement( 'div', [ 'class' => 'rc-fieldset-content' ],
+			wfMessage( 'recentchanges-on-wikia-content' )->parse()
+		);
+
+		$this->getOutput()->addHTML(
+			Html::rawElement( 'fieldset',
+				[
+					'class' => 'collapsible',
+					'id' => 'recentchanges-on-wikia-box',
+				],
+				$content
+			)
+		);
 	}
 
 	/**
