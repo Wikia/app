@@ -158,7 +158,9 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 		modalInstance.show();
 
 		// Make sure that focus is in the right place
-		$('#template-classification-' + mw.html.escape($preselectedType.val())).focus();
+		if ($preselectedType.length !== 0) {
+			$('#template-classification-' + mw.html.escape($preselectedType.val())).focus();
+		}
 	}
 
 	function processSave(modalInstance) {
