@@ -5,11 +5,12 @@
 			<?php $key = Sanitizer::encodeAttribute( $key ); ?>
 			<li class="insights-module-item insights-icon-<?= strtolower( $key ) ?>">
 				<a href="<?= InsightsHelper::getSubpageLocalUrl( $key ) ?>" class="insights-module-link" data-type="<?= $key ?>">
+					<?php if ( $insight['count'] ): ?>
+						<div class="insights-red-dot<?php if ( $insight['highlighted'] ):?> highlighted<?php endif ?>"><div class="insights-red-dot-count"><?= $insight['count'] ?></div></div>
+					<?php endif ?>
+
 					<?= wfMessage( $insight['subtitle'] )->escaped() ?>
 				</a>
-				<?php if ( $insight['count'] ): ?>
-					<div class="insights-red-dot<?php if ( $insight['highlighted'] ):?> highlighted<?php endif ?>"><div class="insights-red-dot-count"><?= $insight['count'] ?></div></div>
-				<?php endif ?>
 			</li>
 		<? endforeach; ?>
 	</ul>
