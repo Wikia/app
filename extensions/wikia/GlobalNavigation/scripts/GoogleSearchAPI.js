@@ -32,7 +32,7 @@ $(function () {
 
 		evt.preventDefault();
 
-		//get info of local or global and modify query scope
+		//get info of local or global search and modify query scope
 		if ($selectedOption.val() === 'local') {
 			fakeSearchParam = '&qIntra=' + encodeURIComponent(searchQuery);
 			searchQuery += ' site:' + window.location.hostname;
