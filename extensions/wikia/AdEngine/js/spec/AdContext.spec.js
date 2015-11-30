@@ -59,6 +59,9 @@ describe('AdContext', function () {
 			querystring: {
 				getVal: noop
 			},
+			wikiaCookies: {
+				get: noop
+			},
 			callback: noop
 		},
 		queryParams = [
@@ -70,6 +73,7 @@ describe('AdContext', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.adContext'](
 			mocks.abTesting,
+			mocks.wikiaCookies,
 			mocks.doc,
 			mocks.geo,
 			mocks.instantGlobals,
@@ -823,5 +827,25 @@ describe('AdContext', function () {
 		};
 
 		expect(getModule().getContext().opts.googleConsumerSurveys).toBeFalsy();
+	});
+
+	it('showcase is enabled if the cookie is set', function () {
+		mocks.wikiaCookies = {
+			get: function () {
+				return 'NlfdjR5xC0';
+			}
+		};
+
+		expect(getModule().getContext().opts.showcase).toBeTruthy();
+	});
+
+	it('showcase is disabled if cookie is not set', function () {
+		mocks.wikiaCookies = {
+			get: function () {
+				return false;
+			}
+		};
+
+		expect(getModule().getContext().opts.showcase).toBeFalsy();
 	});
 });

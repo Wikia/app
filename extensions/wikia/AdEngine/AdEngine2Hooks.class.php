@@ -7,6 +7,7 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_OASIS_IN_CONTENT_ADS = 'adengine2_oasis_in_content_ads_js';
 	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
 	const ASSET_GROUP_ADENGINE_OPENX_BIDDER = 'adengine2_ox_bidder_js';
+	const ASSET_GROUP_ADENGINE_RUBICON_FASTLANE = 'adengine2_rubicon_fastlane_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
 	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
 	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
@@ -51,6 +52,8 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverKruxCountries';
 		$vars[] = 'wgAdDriverOpenXBidderCountries';
 		$vars[] = 'wgAdDriverOpenXBidderCountriesMobile';
+		$vars[] = 'wgAdDriverRubiconFastlaneCountries';
+		$vars[] = 'wgAdDriverRubiconFastlaneCountriesMobile';
 		$vars[] = 'wgAdDriverSourcePointDetectionCountries';
 		$vars[] = 'wgAdDriverSourcePointDetectionMobileCountries';
 		$vars[] = 'wgAdDriverSourcePointRecoveryCountries';
@@ -165,6 +168,10 @@ class AdEngine2Hooks {
 
 		if ( AnalyticsProviderOpenXBidder::isEnabled() ) {
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE_OPENX_BIDDER;
+		}
+
+		if ( AnalyticsProviderRubiconFastlane::isEnabled() ) {
+			$jsAssets[] = self::ASSET_GROUP_ADENGINE_RUBICON_FASTLANE;
 		}
 
 		return true;

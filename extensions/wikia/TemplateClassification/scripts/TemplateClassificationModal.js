@@ -38,7 +38,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 
 		$w.on('keydown', openModalKeyboardShortcut);
 
-		$('.template-classification-edit').click(function (e) {
+		$('.template-classification-type-text').click(function (e) {
 			e.preventDefault();
 			openEditModal('editType');
 		});
@@ -199,6 +199,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	function updateEntryPointLabel(templateType) {
 		$typeLabel
 			.data('type', mw.html.escape(templateType))
+			.children('.template-classification-type-label')
 			.html(getTypeMessage(templateType).escaped());
 	}
 

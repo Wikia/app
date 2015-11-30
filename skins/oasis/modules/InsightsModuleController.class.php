@@ -11,7 +11,7 @@ class InsightsModuleController extends WikiaController {
 		Wikia::addAssetsToOutput( 'insights_module_js' );
 
 		$this->themeClass = SassUtil::isThemeDark() ? 'insights-dark' : 'insights-light';
-		$this->messageKeys = InsightsHelper::getMessageKeys( self::ITEMS_LIMIT );
+		$this->insightsList = ( new InsightsHelper() )->prepareInsightsList( self::ITEMS_LIMIT );
 
 		wfProfileOut(__METHOD__);
 	}

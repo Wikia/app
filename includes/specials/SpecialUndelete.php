@@ -328,9 +328,9 @@ class PageArchive {
 	function undelete( $timestamps, $comment = '', $fileVersions = array(), $unsuppress = false ) {
 		global $wgUser;
 
-		$resultMock = '';
-		if ( !$this->title->userCan( 'undelete' ) ) {
-			throw new PermissionsError( 'editinterfacetrusted' );
+		$permErrors = $this->title->getUserPermissionsErrors( 'undelete', $wgUser );
+		if ( count( $permErrors ) ) {
+			throw new PermissionsError( 'undelete', $permErrors );
 		}
 
 		// If both the set of text revisions and file revisions are empty,

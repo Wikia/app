@@ -4,12 +4,13 @@
  */
 define('ext.wikia.adEngine.adContext', [
 	'wikia.abTest',
+	'wikia.cookies',
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.window',
 	'wikia.querystring'
-], function (abTest, doc, geo, instantGlobals, w, Querystring) {
+], function (abTest, cookies, doc, geo, instantGlobals, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -81,8 +82,8 @@ define('ext.wikia.adEngine.adContext', [
 				geo.isProperGeo(instantGlobals.wgAdDriverGoogleConsumerSurveysCountries);
 		}
 
-		// Showcase.*
-		if (isUrlParamSet('showcase')) {
+		// showcase.*
+		if (cookies.get('mock-ads') === 'NlfdjR5xC0') {
 			context.opts.showcase = true;
 		}
 

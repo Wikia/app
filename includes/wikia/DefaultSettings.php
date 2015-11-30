@@ -1224,7 +1224,7 @@ $wgAmazonMatchCountries = null;
 $wgAmazonMatchCountriesMobile = null;
 
 /**
- * @name $wgEnableOpenXBidder
+ * @name $wgAdDriverEnableOpenXBidder
  * Enables OpenX bidder
  */
 $wgAdDriverEnableOpenXBidder = true;
@@ -1242,6 +1242,26 @@ $wgAdDriverOpenXBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverOpenXBidderCountriesMobile = null;
+
+/**
+ * @name $wgAdDriverEnableRubiconFastlane
+ * Enables Rubicon Fastlane
+ */
+$wgAdDriverEnableRubiconFastlane = true;
+
+/**
+ * @name $wgAdDriverRubiconFastlaneCountries
+ * Enables RubiconFastlane in these countries (given wgAdDriverEnableRubiconFastlane is also true).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRubiconFastlaneCountries = null;
+
+/**
+ * @name $wgAdDriverRubiconFastlaneCountriesMobile
+ * Enables RubiconFastlane on mobile in these countries (given wgAdDriverEnableRubiconFastlane is also true).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRubiconFastlaneCountriesMobile = null;
 
 /**
  * @name $wgAdPageLevelCategoryLangs

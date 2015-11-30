@@ -10,9 +10,11 @@ class InsightsCountService extends WikiaService {
 	 * @var array
 	 * If you do not want to calculate a count for a set of lists - put them in this array.
 	 */
-	public static $excludedFromCount = [
-		InsightsFlagsModel::INSIGHT_TYPE,
-	];
+	private static $excludedFromCount = [];
+
+	public function __construct() {
+		$this->initExcludedFromCountList();
+	}
 
 	/**
 	 * Returns a count of items on a given Insights list based on a passed type.
@@ -37,6 +39,17 @@ class InsightsCountService extends WikiaService {
 		}
 
 		return $response;
+	}
+
+	/**
+	 * Init list with insights without count
+	 */
+	private function initExcludedFromCountList() {
+		global $wgEnableFlagsExt;
+
+		if ( !empty( $wgEnableFlagsExt ) ) {
+			self::$excludedFromCount[] = InsightsFlagsModel::INSIGHT_TYPE;
+		}
 	}
 
 	/**

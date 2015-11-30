@@ -3008,7 +3008,6 @@ It may have already been undeleted.',
 $1',
 'undelete-show-file-confirm'   => 'Are you sure you want to view the deleted revision of the file "<nowiki>$1</nowiki>" from $2 at $3?',
 'undelete-show-file-submit'    => 'Yes',
-'action-editinterfacetrusted'  => 'restore pages in MediaWiki namespace',
 
 # Namespace form on various pages
 'namespace'                     => 'Namespace:',
