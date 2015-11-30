@@ -95,7 +95,7 @@ class PagesWithoutInfobox extends PageQueryPage {
 
 		$infoboxTemplates = [];
 		foreach( $tc->getTemplatesOnWiki( $wgCityId ) as $pageId => $templateType ) {
-			if ( $templateType === TemplateClassificationService::TEMPLATE_INFOBOX ) {
+			if ( $tc->isInfoboxType( $templateType ) ) {
 				$templateTitle = Title::newFromID( $pageId );
 				if ( $templateTitle instanceof Title ) {
 					$infoboxTemplates[] = $templateTitle->getDBkey();

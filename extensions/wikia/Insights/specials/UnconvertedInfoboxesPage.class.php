@@ -95,27 +95,32 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 	 * @return bool|mixed
 	 */
 	public function reallyDoQuery( $limit = false, $offset = false ) {
-		$dbr = wfGetDB( DB_SLAVE, [ $this->getName(), __METHOD__, 'vslow' ] );
+		global $wgCityId;
 
-		$nonportableTemplates = ( new WikiaSQL() )
-			->SELECT( 'page_title' )->AS_( 'title' )
-			->FROM( 'page' )
-			->WHERE( 'page_namespace' )->EQUAL_TO( NS_TEMPLATE )
-				->AND_( 'page_is_redirect' )->EQUAL_TO( 0 )
-			->runLoop( $dbr, function( &$nonportableTemplates, $row ) {
-				$title = Title::newFromText( $row->title, NS_TEMPLATE );
-				$contentText = ( new WikiPage( $title ) )->getText();
-				if ( $title !== null && PortableInfoboxClassification::isTitleWithNonportableInfobox( $title->getText(), $contentText ) ) {
+		$tcs = new UserTemplateClassificationService();
+		$recognizedTemplates = $tcs->getTemplatesOnWiki( $wgCityId );
+
+		$nonportableInfoboxes = [];
+
+		foreach ( $recognizedTemplates as $templateId => $type ) {
+			if ( $tcs->isInfoboxType( $type ) ) {
+				$title = Title::newFromID( $templateId );
+				if ( !$title instanceof Title ) {
+					continue;
+				}
+
+				if ( empty( PortableInfoboxDataService::newFromTitle( $title )->getData() ) ) {
 					$links = $title->getIndirectLinks();
-					$nonportableTemplates[] = [
+					$nonportableInfoboxes[] = [
 						$this->getName(),
 						count( $links ),
 						NS_TEMPLATE,
-						$row->title,
+						$title->getText(),
 					];
 				}
-			} );
+			}
+		}
 
-		return $nonportableTemplates;
+		return $nonportableInfoboxes;
 	}
 }

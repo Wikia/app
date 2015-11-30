@@ -67,7 +67,7 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 		$classifiedTemplates = [];
 
 		try {
-			$classifiedTemplates = ( new \TemplateClassificationService() )->getTemplatesOnWiki( $this->wg->CityId );
+			$classifiedTemplates = ( new \UserTemplateClassificationService() )->getTemplatesOnWiki( $this->wg->CityId );
 		} catch( \Swagger\Client\ApiException $e ) {
 			\Wikia\Logger\WikiaLogger::instance()->error( 'SpecialTemplatesException', [ 'ex' => $e ] );
 			$this->forward( __CLASS__, 'exception' );
@@ -340,6 +340,6 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	 * @return bool
 	 */
 	private function isUserType( $type ) {
-		return in_array( $type, TemplateClassificationService::$templateTypes );
+		return in_array( $type, UserTemplateClassificationService::$templateTypes );
 	}
 }

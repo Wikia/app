@@ -44,13 +44,7 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 	 * @throws \Swagger\Client\ApiException
 	 */
 	public function getType( $wikiId, $pageId ) {
-		$templateType = parent::getType( $wikiId, $pageId );
-
-		if ( !in_array( $templateType, self::$templateTypes ) ) {
-			$templateType = self::TEMPLATE_UNCLASSIFIED;
-		}
-
-		return $templateType;
+		return $this->getMappedType( parent::getType( $wikiId, $pageId ) );
 	}
 
 	/**
@@ -60,5 +54,27 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 	 */
 	public function isInfoboxType( $type ) {
 		return in_array( $type, self::$infoboxTypes );
+	}
+
+	protected function prepareTypes( $types ) {
+		$templateTypes = [];
+
+		foreach ( $types as $type ) {
+			$templateTypes[$type->getPageId()] = $this->getMappedType( $type->getType() );
+		}
+
+		return $templateTypes;
+	}
+
+	private function getMappedType( $type ) {
+		if ( $this->isInfoboxType( $type ) ) {
+			return self::TEMPLATE_INFOBOX;
+		}
+
+		if ( !in_array( $type, self::$templateTypes ) ) {
+			return self::TEMPLATE_UNCLASSIFIED;
+		}
+
+		return $type;
 	}
 }
