@@ -155,6 +155,22 @@ class TransactionClassifierTest extends WikiaBaseTest {
 				],
 				'expectedName' => 'page/user_talk'
 			],
+			# MW API
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_API,
+					Transaction::PARAM_API_ACTION => 'query',
+				],
+				'expectedName' => 'api/api/query'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_API,
+					Transaction::PARAM_API_ACTION => 'query',
+					Transaction::PARAM_API_LIST => 'users',
+				],
+				'expectedName' => 'api/api/query/users'
+			],
 			# blogs
 			[
 				'attributes' => [
