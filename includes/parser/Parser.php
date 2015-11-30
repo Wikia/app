@@ -3387,6 +3387,7 @@ class Parser {
 		# SUBST
 		wfProfileIn( __METHOD__.'-modifiers' );
 		if ( !$found ) {
+			Wikia\Util\Assert::true( $this->mSubstWords instanceof MagicWordArray, 'Parser::mSubstWords should be an instance of MagicWordArray', [ 'part1' => $part1 ] ); // ER-9507
 
 			$substMatch = $this->mSubstWords->matchStartAndRemove( $part1 );
 
