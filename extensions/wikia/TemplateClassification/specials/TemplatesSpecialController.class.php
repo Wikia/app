@@ -340,6 +340,6 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	 * @return bool
 	 */
 	private function isUserType( $type ) {
-		return in_array( $type, TemplateClassificationService::$templateTypes );
+		return in_array( $type, UserTemplateClassificationService::$templateTypes );
 	}
 }
