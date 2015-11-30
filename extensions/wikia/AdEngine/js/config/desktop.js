@@ -75,6 +75,12 @@ define('ext.wikia.adEngine.config.desktop', [
 			return [adProviderTurtle];
 		}
 
+		// Force Evolve2
+		if (context.forcedProvider === 'evolve2') {
+			log(['getProvider', slotName, 'Evolve (wgAdDriverForcedProvider)'], 'info', logGroup);
+			return [adProviderEvolve2];
+		}
+
 		// Force OpenX
 		if (context.forcedProvider === 'openx') {
 			log(['getProvider', slotName, 'OpenX (wgAdDriverForcedProvider)'], 'info', logGroup);

@@ -1,9 +1,13 @@
-/*global describe, it, modules, expect*/
+/*global beforeEach, describe, it, modules, expect, spyOn*/
 describe('ext.wikia.adEngine.config.mobile', function () {
 	'use strict';
 
 	var adProviderDirectMock = {
 			name: 'GptMobileMock',
+			canHandleSlot: function () { return true; }
+		},
+		adProviderEvolveMock = {
+			name: 'Evolve2',
 			canHandleSlot: function () { return true; }
 		},
 		adProviderPaidAssetDropMock = {
@@ -17,100 +21,111 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		adProviderOpenXMock = {
 			name: 'OpenX',
 			canHandleSlot: function () { return true; }
+		},
+		context = {},
+		mocks = {
+			adContext: {
+				getContext: function () {
+					return context;
+				}
+			},
+			instantGlobals: {}
 		};
 
-	function mockAdContext(showAds, enableInvisibleHighImpactSlot, providers) {
-		return {
-			getContext: function () {
-				return {
-					opts: {
-						showAds: showAds,
-						pageType: 'all_ads'
-					},
-					slots: {
-						invisibleHighImpact: enableInvisibleHighImpactSlot
-					},
-					providers: providers || {},
-					forcedProvider: null
-				};
-			}
+	beforeEach(function () {
+		context = {
+			opts: {
+				showAds: true,
+				pageType: 'all_ads'
+			},
+			slots: {
+				invisibleHighImpact: false
+			},
+			providers: {},
+			forcedProvider: null
 		};
-	}
+	});
 
-	it('getProviderList returns DirectGPT, RemnantGPT in the regular case', function () {
-		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
-			mockAdContext(true),
+	function getConfig() {
+		return modules['ext.wikia.adEngine.config.mobile'](
+			mocks.adContext,
 			adProviderDirectMock,
+			adProviderEvolveMock,
 			adProviderOpenXMock,
 			adProviderPaidAssetDropMock,
 			adProviderRemnantMock
 		);
+	}
+
+	it('getProviderList returns DirectGPT, RemnantGPT in the regular case', function () {
+		var adConfigMobile = getConfig();
 
 		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
 	});
 
 	it('getProviderLists returns [] when showAds is false', function () {
-		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
-			mockAdContext(false),
-			adProviderDirectMock,
-			adProviderOpenXMock,
-			adProviderPaidAssetDropMock,
-			adProviderRemnantMock
-		);
+		context.opts.showAds = false;
+		var adConfigMobile = getConfig();
 
 		expect(adConfigMobile.getProviderList('foo')).toEqual([]);
 	});
 
 	it('getProviderList returns DirectGPT, RemnantGPT for high impact slot', function () {
-		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
-			mockAdContext(true, true),
-			adProviderDirectMock,
-			adProviderOpenXMock,
-			adProviderPaidAssetDropMock,
-			adProviderRemnantMock
-		);
+		context.slots.invisibleHighImpact = true;
+		var adConfigMobile = getConfig();
 
-		expect(adConfigMobile.getProviderList('INVISIBLE_HIGH_IMPACT')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
+		expect(adConfigMobile.getProviderList('INVISIBLE_HIGH_IMPACT'))
+				.toEqual([adProviderDirectMock, adProviderRemnantMock]);
 	});
 
 	it('getProviderLists returns [] for high impact slot when high impact slot is turned off', function () {
-		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
-			mockAdContext(true, false),
-			adProviderDirectMock,
-			adProviderOpenXMock,
-			adProviderPaidAssetDropMock,
-			adProviderRemnantMock
-		);
+		var adConfigMobile = getConfig();
 
 		expect(adConfigMobile.getProviderList('INVISIBLE_HIGH_IMPACT')).toEqual([]);
 	});
 
 	it('getProviderLists returns DirectGPT, RemnantGPT, OpenX when OpenX provider is turned on', function () {
-		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
-			mockAdContext(true, false, {
-				openX: true
-			}),
-			adProviderDirectMock,
-			adProviderOpenXMock,
-			adProviderPaidAssetDropMock,
-			adProviderRemnantMock
-		);
+		context.providers.openX = true;
+		var adConfigMobile = getConfig();
 
-		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock, adProviderOpenXMock]);
+		expect(adConfigMobile.getProviderList('foo'))
+				.toEqual([adProviderDirectMock, adProviderRemnantMock, adProviderOpenXMock]);
 	});
 
-	it('getProviderLists returns DirectGPT, RemnantGPT when OpenX provider is turned on but cannot handle slot', function () {
+	it('getProviderLists returns DirectGPT, RemnantGPT when ox is turned on but cannot handle slot', function () {
 		spyOn(adProviderOpenXMock, 'canHandleSlot').and.returnValue(false);
-		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
-			mockAdContext(true, false, {
-				openX: true
-			}),
-			adProviderDirectMock,
-			adProviderOpenXMock,
-			adProviderPaidAssetDropMock,
-			adProviderRemnantMock
-		);
+		context.providers.openX = true;
+		var adConfigMobile = getConfig();
 
 		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
+	});
+
+	it('getProviderLists returns Evolve2, RemnantGPT when evolve is enabled', function () {
+		context.providers.evolve2 = true;
+		var adConfigMobile = getConfig();
+
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderEvolveMock, adProviderRemnantMock]);
+	});
+
+	it('getProviderLists returns DirectGpt, RemnantGPT when evolve is enabled but cannot handle the slot', function () {
+		spyOn(adProviderEvolveMock, 'canHandleSlot').and.returnValue(false);
+		context.providers.evolve2 = true;
+		var adConfigMobile = getConfig();
+
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
+	});
+
+	it('getProviderLists returns Evolve2 when force provider is set', function () {
+		context.forcedProvider = 'evolve2';
+		var adConfigMobile = getConfig();
+
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderEvolveMock]);
+	});
+
+	it('getProviderLists returns OpenX when force provider is set', function () {
+		context.forcedProvider = 'openx';
+		var adConfigMobile = getConfig();
+
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderOpenXMock]);
 	});
 });
