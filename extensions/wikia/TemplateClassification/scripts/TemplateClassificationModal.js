@@ -30,6 +30,12 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 	 *  	receives {string} selectedType as parameter
 	 */
 	function init(typeGetterProvided, saveHandlerProvided) {
+		var popoverConfig = {
+			delay: {
+				show: 500,
+				hide: 300
+			}
+		};
 		saveHandler = saveHandlerProvided;
 		typeGetter = typeGetterProvided;
 		$typeLabel = $('.template-classification-type-text');
@@ -39,7 +45,7 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 		$typeLabel.click(function (e) {
 			e.preventDefault();
 			openEditModal('editType');
-		}).popover();
+		}).popover(popoverConfig);
 	}
 
 	function openEditModal(modeProvided) {
