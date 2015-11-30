@@ -1314,6 +1314,12 @@ $wgAdDriverUseGoogleConsumerSurveys = true;
 $wgAdDriverGoogleConsumerSurveysCountries = null;
 
 /**
+ * @name $wgAdDriverUseEvolve2
+ * Whether to enable AdProviderEvolve2 (true) or not (false)
+ */
+$wgAdDriverUseEvolve2 = false;
+
+/**
  * @name $wgAdDriverUseTaboola
  * Whether to enable AdProviderTaboola (true) or not (false)
  */
