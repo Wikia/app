@@ -117,7 +117,7 @@ define('ext.wikia.adEngine.config.desktop', [
 		}
 
 		// First provider: Turtle, Evolve or Direct GPT?
-		if (context.providers.turtle) {
+		if (context.providers.turtle && adProviderTurtle.canHandleSlot(slotName)) {
 			providerList.push(adProviderTurtle);
 		} else if (evolveCountry && adProviderEvolve.canHandleSlot(slotName)) {
 			providerList.push(adProviderEvolve);

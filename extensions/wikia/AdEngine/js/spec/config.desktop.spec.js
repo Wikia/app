@@ -70,7 +70,8 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 					canHandleSlot: noop
 				},
 				turtle: {
-					name: 'turtle'
+					name: 'turtle',
+					canHandleSlot: noop
 				}
 			}
 		},
@@ -129,8 +130,15 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 	});
 
 	it('Turtle: Turtle, Remnant, Liftium', function () {
+		spyOn(mocks.providers.turtle, 'canHandleSlot').and.returnValue(true);
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({turtle: true});
 		expect(getProviders('foo')).toEqual('turtle,remnant,liftium');
+	});
+
+	it('Turtle cannot handle slot: Direct, Remnant, Liftium', function () {
+		spyOn(mocks.providers.turtle, 'canHandleSlot').and.returnValue(false);
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({turtle: true});
+		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
 	});
 
 	it('non-Evolve country, SevenOne Media on: SevenOneMedia', function () {
@@ -201,6 +209,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 	});
 
 	it('Turtle country, wgSitewideDisableGpt on: Turtle, Liftium', function () {
+		spyOn(mocks.providers.turtle, 'canHandleSlot').and.returnValue(true);
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({turtle: true});
 		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableGpt: true});
 		expect(getProviders('foo')).toEqual('turtle,liftium');
