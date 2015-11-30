@@ -594,7 +594,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 
 		// Wikia change begin
 		// Adding "Recent changes on Wikia" section - CE-3050
-		if ( $wgLanguageCode == 'en' ) {
+		if ( $wgLanguageCode === 'en' ) {
 			$this->setRecentChangesOnWikia();
 		}
 		// Wikia change end
