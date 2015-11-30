@@ -65,7 +65,7 @@ class Track {
 		window.beacon_id = result[1];
 	} else {
 		// something went terribly wrong
-		document.write('<img src="http://logs-01.loggly.com/inputs/88a88e56-77c6-49cc-af41-6f44f83fe7fe.gif?message=something%20went%20terribly%20wrong"/>');
+		document.write('<img src="http://logs-01.loggly.com/inputs/88a88e56-77c6-49cc-af41-6f44f83fe7fe.gif?message=wikia_beacon_id%20is%20empty"/>');
 	}
 
 	var utma = RegExp("__utma=([0-9\.]+)").exec(document.cookie);
