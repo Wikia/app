@@ -9,8 +9,9 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.adDecoratorPageDimensions',
 
 	// adProviders
-	'ext.wikia.adEngine.provider.evolve',
 	'ext.wikia.adEngine.provider.directGpt',
+	'ext.wikia.adEngine.provider.evolve',
+	'ext.wikia.adEngine.provider.evolve2',
 	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.monetizationService',
 	'ext.wikia.adEngine.provider.openX',
@@ -28,8 +29,9 @@ define('ext.wikia.adEngine.config.desktop', [
 	adDecoratorPageDimensions,
 
 	// AdProviders
-	adProviderEvolve,
 	adProviderDirectGpt,
+	adProviderEvolve,
+	adProviderEvolve2,
 	adProviderLiftium,
 	adProviderMonetizationService,
 	adProviderOpenX,
@@ -119,6 +121,8 @@ define('ext.wikia.adEngine.config.desktop', [
 		// First provider: Turtle, Evolve or Direct GPT?
 		if (context.providers.turtle) {
 			providerList.push(adProviderTurtle);
+		} else if (context.providers.evolve2 && adProviderEvolve2.canHandleSlot(slotName)) {
+			providerList.push(adProviderEvolve2);
 		} else if (evolveCountry && adProviderEvolve.canHandleSlot(slotName)) {
 			providerList.push(adProviderEvolve);
 		} else if (dartEnabled) {
