@@ -12,7 +12,10 @@ define('ext.wikia.adEngine.provider.evolve2', [
 			'728x90,970x250,970x300,970x90': 'a',
 			'300x250,300x600': 'a',
 			'1000x1000,1x1': 'a',
-			'160x600': 'b'
+			'160x600': 'b',
+
+			'320x50,320x100,300x250': 'a',
+			'300x250': 'a'
 		},
 		section = evolveHelper.getSect(),
 		site = 'wikia_intl',
@@ -23,7 +26,11 @@ define('ext.wikia.adEngine.provider.evolve2', [
 			INVISIBLE_SKIN:           {size: '1000x1000,1x1'},
 			LEFT_SKYSCRAPER_2:        {size: '160x600'},
 			TOP_LEADERBOARD:          {size: '728x90,970x250,970x300,970x90'},
-			TOP_RIGHT_BOXAD:          {size: '300x250,300x600'}
+			TOP_RIGHT_BOXAD:          {size: '300x250,300x600'},
+
+			MOBILE_TOP_LEADERBOARD:   {size: '320x50,320x100,300x250'},
+			MOBILE_IN_CONTENT:        {size: '300x250'},
+			MOBILE_PREFOOTER:         {size: '300x250'}
 		};
 
 	function nextChar(char) {
