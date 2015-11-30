@@ -280,7 +280,7 @@ $messages['it'] = array(
 	'content-review-rejection-explanation' => '==$1==
 La modifica inviata di recente per questa pagina in JavaScript (revisione [$2 $3]) è stata respinta dal processo di revisione di Wikia. Assicurati di seguire le [[Help:JavaScript review process|Linee guida del JavaScript personalizzato]]. --~~~~',
 	'content-review-status-link-text' => 'Stato della revisione',
-	'content-review-rejection-explanation-title' => 'La modifica $ inviata per lo script è stata respinta',
+	'content-review-rejection-explanation-title' => 'La modifica $1 inviata per lo script è stata respinta',
 	'content-review-special-js-pages-title' => 'Pagine in JavaScript',
 	'content-review-module-header-pagename' => 'Titolo della pagina',
 	'content-review-module-header-actions' => 'Azioni',
@@ -290,7 +290,8 @@ La modifica inviata di recente per questa pagina in JavaScript (revisione [$2 $3
 	'content-review-importjs-description' => 'Potrai facilmente importare gli script:
 * dalla tua wikia locale con il nome dell\'articolo (per es., MyScript.js)
 * da dev.wikia.com con il nome dell\'articolo preceduto da "dev:" (per es., dev:Code.js)
-I nomi non devono contenere il prefisso dello spazio dei nomi MediaWiki. Scrivi ogni script su una riga nuova. Per maggiori informazioni consulta [[Aiuto:Includere CSS e JS] supplementari].
+I nomi non devono contenere il prefisso dello spazio dei nomi MediaWiki. Scrivi ogni script su una riga nuova. Per maggiori informazioni consulta [[Aiuto:Includere CSS e JS]] supplementari.
+----
 ',
 );
 
