@@ -90,8 +90,6 @@ class InsightsUnconvertedInfoboxesModel extends InsightsQueryPageModel {
 	 * @return bool
 	 */
 	public function isItemFixed( Title $title ) {
-		$titleText = $title->getText();
-		$contentText = ( new WikiPage( $title ) )->getText();
-		return !PortableInfoboxClassification::isTitleWithNonportableInfobox( $titleText, $contentText );
+		return !empty( PortableInfoboxDataService::newFromTitle( $title )->getData() );
 	}
 }
