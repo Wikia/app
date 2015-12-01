@@ -49,6 +49,10 @@ The recently submitted change to this JavaScript page (revision [$2 $3]) was rej
 Names should not contain the MediaWiki namespace prefix. Write each script on a new line. See [[Help:Including additional CSS and JS]] for more information.
 ----
 ',
+	'content-review-user-badges-description' => 'Here, you can easily add custom badges to users. Just separate user name and rights by colon. If there is more rights list them using comma,
+e.g. User name : Trainee, Newbie. Write each pair on a new line.
+----
+',
 );
 
 $messages['qqq'] = array(
