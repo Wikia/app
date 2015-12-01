@@ -19,8 +19,7 @@ class EmergencyBroadcastSystemController extends WikiaController {
 
 	public function saveUserResponse() {
 		$user = $this->context->getUser();
-		$data = $this->request->getParams();
-		$val = intval( $data[ 'val'] );
+		$val = $this->request->getInt( 'val', null );
 
 		if ( $val === 0 ) { // no
 			// if user clicks no, set ebs_response to 0
