@@ -182,7 +182,7 @@ define(
 			wikiaDomain = mw.config.get('wgServer').split('://')[1],
 			templateName = (new mw.Title(mw.config.get('wgPageName'))).getMain(),
 			infoboxPreviewURL = mw.config.get('wgInfoboxPreviewURL'),
-			$form = $('<form>').attr({'action': infoboxPreviewURL, 'method': 'POST'});
+			$form = $('<form>').attr({'action': infoboxPreviewURL, 'method': 'POST', 'target': '_blank'});
 
 		$('<textarea>').val(editorValue).attr({'name': 'editor_value'}).appendTo($form);
 		$('<input>').val(wikiaDomain).attr({'name': 'wikia_domain'}).appendTo($form);
