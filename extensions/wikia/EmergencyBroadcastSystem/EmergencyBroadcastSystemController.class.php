@@ -17,17 +17,18 @@ class EmergencyBroadcastSystemController extends WikiaController {
 		return false;
 	}
 
-	public function saveUserResponse( $val ) {
+	public function saveUserResponse() {
 		$user = $this->context->getUser();
 		$data = $this->request->getParams();
+		$val = intval( $data[ 'val'] );
 
-		if ( $data[ 'val']  === '0' ) { // no
+		if ( $val === 0 ) { // no
 			// if user clicks no, set ebs_response to 0
 			$user->setOption( self::EBS_RESPONSE_KEY, 0 );
-		} elseif ( $data[ 'val' ] === '1' ) { // yes
+		} elseif ( $val === 1 ) { // yes
 			// if user clicks yes, set ebs_response to the current time
 			$user->setOption( self::EBS_RESPONSE_KEY, ( new DateTime() )->getTimestamp() );
-		} else if ( $data[ 'val']  === '-1' ) { // for testing purposes
+		} else if ( $val === -1 ) { // for testing purposes
 			$user->setOption( self::EBS_RESPONSE_KEY, null );
 		} else {
 			// invalid call, do nothing
@@ -46,13 +47,17 @@ class EmergencyBroadcastSystemController extends WikiaController {
 		$ebsResponse = $user->getOption( self::EBS_RESPONSE_KEY );
 
 		if ( $ebsResponse === null )  { // user has not seen/interacted with EBS yet
-                        return true;
-		} elseif ( $ebsResponse === '0' ) { // user has clicked 'no'
+			return true;
+		}
+
+		$ebsResponse = intval( $ebsResponse );
+
+		if ( $ebsResponse === 0 ) { // user has clicked 'no'
 			return false;
 		} else {
 			$currentTimestamp = ( new DateTime() )->getTimestamp();
 			$cutoffTimestamp = $currentTimestamp - 24 * 60 * 60; // 24 hrs ago
-			return intval( $ebsResponse ) < $cutoffTimestamp;
+			return $ebsResponse < $cutoffTimestamp;
 		}
 	}
 
