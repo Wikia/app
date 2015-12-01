@@ -171,14 +171,18 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	static public function isCodePage( Title $articleTitle ) {
-		global $wgCityId;
+		global $wgCityId, $wgRequest, $wgEnableTemplateDraftExt;
 
 		if ( $articleTitle->inNamespace( NS_MODULE ) ) {
 			return true;
 		} elseif ( $articleTitle->inNamespace( NS_TEMPLATE ) ) {
+			// Is template being converted to a portable infobox?
+			if ( $wgEnableTemplateDraftExt && TemplateConverter::isConversion()	) {
+				return true;
+			}
+
 			$templateType = ( new UserTemplateClassificationService() )
 				->getType( $wgCityId, $articleTitle->getArticleID() );
-
 			return $templateType === TemplateClassificationService::TEMPLATE_INFOBOX;
 		}
 
