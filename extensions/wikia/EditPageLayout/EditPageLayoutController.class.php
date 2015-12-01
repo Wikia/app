@@ -25,7 +25,7 @@ class EditPageLayoutController extends WikiaController {
 
 		// adding 'editor' class as a CSS helper
 		OasisController::addBodyClass('editor');
-		
+
 		// temporary grid transition code, remove after transition
 		OasisController::addBodyClass('WikiaGrid');
 
@@ -85,6 +85,8 @@ class EditPageLayoutController extends WikiaController {
 	 * Render template for <body> tag content
 	 */
 	public function executeEditPage() {
+		global $wgCityId;
+
 		wfProfileIn( __METHOD__ );
 
 		$helper = EditPageLayoutHelper::getInstance();
@@ -205,6 +207,18 @@ class EditPageLayoutController extends WikiaController {
 			( count( $this->notices ) == 0 )
 			? wfMessage( 'editpagelayout-notificationsLink-none' )->escaped()
 			: wfMessage( 'editpagelayout-notificationsLink', count( $this->notices ) )->parse();
+
+		$templateType = ( new UserTemplateClassificationService() )
+			->getType( $wgCityId, $this->title->getArticleID() );
+
+		var_dump($this->title->getArticleID());
+		var_dump($templateType);
+
+		$helper = EditPageLayoutHelper::getInstance();
+		$editPage = $helper->isCodePage( $this->title );
+
+		$this->showInfoboxPreview = $this->title->inNamespace( NS_TEMPLATE ) && $editPage;
+			//&& $templateType === TemplateClassificationService::TEMPLATE_INFOBOX;
 
 		// check if we're in read only mode
 		// disable edit form when in read-only mode

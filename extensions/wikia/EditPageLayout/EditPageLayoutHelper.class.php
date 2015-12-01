@@ -50,8 +50,7 @@ class EditPageLayoutHelper {
 	 * @author macbre
 	 */
 	function setupEditPage( Article $editedArticle, $fullScreen = true, $class = false ) {
-		global $wgHooks;
-		global $wgInfoboxPreviewURL;
+		global $wgHooks, $wgInfoboxPreviewURL;
 
 		wfProfileIn( __METHOD__ );
 

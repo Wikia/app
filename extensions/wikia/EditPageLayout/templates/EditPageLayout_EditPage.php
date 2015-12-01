@@ -137,10 +137,12 @@
 								<?php endif ?>
 							</nav>
 						</div>
+						<?php if ( $showInfoboxPreview ): ?>
 						<div class="module_content">
-							<p><?= wfMsgExt('infoboxpreview-entrypoint-message', array('parse') ) ?></p>
+							<p><?= wfMessage('infoboxpreview-entrypoint-message')->parse() ?></p>
 							<input type="button" id="infoboxPreview" value="<?= wfMessage('infoboxpreview-entrypoint-button')->escaped(); ?>"/>
 						</div>
+						<?php endif ?>
 					</div>
 				</div>
 			</section>
