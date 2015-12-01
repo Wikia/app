@@ -40,15 +40,6 @@ describe('AdContext', function () {
 						return true;
 					}
 					return false;
-				},
-				isProperRegion: function () {
-					return false;
-				},
-				isProperContinent: function () {
-					return false;
-				},
-				isProperCountry: function () {
-					return false;
 				}
 			},
 			instantGlobals: {},
