@@ -138,10 +138,10 @@
 							</nav>
 						</div>
 						<?php if ( $showInfoboxPreview ): ?>
-						<div class="module_content">
-							<p><?= wfMessage('infoboxpreview-entrypoint-message')->parse() ?></p>
-							<input type="button" id="infoboxPreview" value="<?= wfMessage('infoboxpreview-entrypoint-button')->escaped(); ?>"/>
-						</div>
+							<div class="module_content">
+								<p><?= wfMessage('infoboxpreview-entrypoint-message')->parse() ?></p>
+								<input type="button" id="infoboxPreview" value="<?= wfMessage('infoboxpreview-entrypoint-button')->escaped(); ?>"/>
+							</div>
 						<?php endif ?>
 					</div>
 				</div>

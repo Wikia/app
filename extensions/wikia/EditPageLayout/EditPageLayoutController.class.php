@@ -208,16 +208,11 @@ class EditPageLayoutController extends WikiaController {
 			? wfMessage( 'editpagelayout-notificationsLink-none' )->escaped()
 			: wfMessage( 'editpagelayout-notificationsLink', count( $this->notices ) )->parse();
 
-		$templateType = ( new UserTemplateClassificationService() )
-			->getType( $wgCityId, $this->title->getArticleID() );
+		// Does not work, but should
+		//$templateType = ( new UserTemplateClassificationService() )
+		//	->getType( $wgCityId, $this->title->getArticleID() );
 
-		var_dump($this->title->getArticleID());
-		var_dump($templateType);
-
-		$helper = EditPageLayoutHelper::getInstance();
-		$editPage = $helper->isCodePage( $this->title );
-
-		$this->showInfoboxPreview = $this->title->inNamespace( NS_TEMPLATE ) && $editPage;
+		$this->showInfoboxPreview = $this->title->inNamespace( NS_TEMPLATE );
 			//&& $templateType === TemplateClassificationService::TEMPLATE_INFOBOX;
 
 		// check if we're in read only mode
