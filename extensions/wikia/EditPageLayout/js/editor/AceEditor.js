@@ -180,8 +180,8 @@ define(
 	function launchEditorPreview(){
 		var editorValue = ace.getContent(),
 			wikiaDomain = mw.config.get('wgServer').split('://')[1],
-			templateName = mw.Title(mw.config.get('wgPageName'), 'Template').title,
-			infoboxPreviewURL = 'http://localhost:8080/', // TODO: add to config
+			templateName = (new mw.Title(mw.config.get('wgPageName'))).getMain(),
+			infoboxPreviewURL = mw.config.get('wgInfoboxPreviewURL'),
 			$form = $('<form>').attr({'action': infoboxPreviewURL, 'method': 'POST'});
 
 		$('<textarea>').val(editorValue).attr({'name': 'editor_value'}).appendTo($form);
