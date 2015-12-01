@@ -105,11 +105,9 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 		foreach ( $recognizedTemplates as $templateId => $type ) {
 			if ( $tcs->isInfoboxType( $type ) ) {
 				$title = Title::newFromID( $templateId );
-				if ( !$title instanceof Title ) {
-					continue;
-				}
-
-				if ( empty( PortableInfoboxDataService::newFromTitle( $title )->getData() ) ) {
+				if ( $title instanceof Title
+					&& empty( PortableInfoboxDataService::newFromTitle( $title )->getData() )
+				) {
 					$links = $title->getIndirectLinks();
 					$nonportableInfoboxes[] = [
 						$this->getName(),
