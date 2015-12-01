@@ -117,6 +117,7 @@ class BodyController extends WikiaController {
 		$ret = ($isUserPage && !$wgTitle->isSubpage() )
 				|| $wgTitle->isSpecial( 'Following' )
 				|| $wgTitle->isSpecial( 'Contributions' )
+				|| $wgTitle->isSpecial( 'UserActivity' )
 				|| (defined('NS_BLOG_LISTING') && $wgTitle->getNamespace() == NS_BLOG_LISTING)
 				|| (defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE);
 

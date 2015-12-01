@@ -1827,19 +1827,19 @@ $config['categoryselect_edit_js'] = array(
 
 /* FilePage */
 $config['wikia_file_page_js'] = array(
-	'type'=> AssetsManager::TYPE_JS,
+	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/FilePage/scripts/WikiaFilePage.js',
 	)
 );
 $config['file_page_tabbed_js'] = array(
-	'type'=> AssetsManager::TYPE_JS,
+	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/FilePage/scripts/FilePageTabbed.js',
 	)
 );
 $config['file_page_tabbed_css'] = array(
-	'type' =>AssetsManager::TYPE_SCSS,
+	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => array(
 		'//extensions/wikia/FilePage/css/FilePageTabbed.scss',
 	)
@@ -2536,6 +2536,13 @@ $config['template_draft'] = [
 		'//extensions/wikia/TemplateDraft/scripts/rightRailModule.js',
 		'//extensions/wikia/TemplateDraft/scripts/templateDraft.run.js',
 		'//extensions/wikia/TemplateDraft/scripts/templateDraftTracking.js'
+	]
+];
+
+$config['special_user_activity_css'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/UserActivity/styles/UserActivity.scss',
 	]
 ];
 
