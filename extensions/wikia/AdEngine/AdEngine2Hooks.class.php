@@ -322,6 +322,7 @@ changePay.init({
         console.log("canonical is: " + changePay.get_canonical_url());
     },
     paid: function(status_code, msg) {
+	$('wikia-ad').hide();
         console.log(status_code, "You are paid up, or no payment is required!");
     },
     unpaid: function(status_code, msg) {
