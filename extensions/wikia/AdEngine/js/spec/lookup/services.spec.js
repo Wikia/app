@@ -38,7 +38,7 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 		spyOn(mocks.amazon, 'wasCalled').and.returnValue(true);
 		spyOn(mocks.amazon, 'getSlotParams').and.returnValue({amznslots: ['a1x6p5', 'a3x2p9', 'a7x9p5']});
 
-		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock);
+		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock, 'RemnantGpt');
 		expect(slotTargetingMock).toEqual(expectedSlotTargeting);
 		expect(mocks.amazon.trackState).toHaveBeenCalled();
 	});
@@ -59,7 +59,7 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 		spyOn(mocks.oxBidder, 'wasCalled').and.returnValue(true);
 		spyOn(mocks.oxBidder, 'getSlotParams').and.returnValue({oxslots: ['ox1x6p5', 'ox3x2p9', 'ox7x9p5']});
 
-		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock);
+		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock, 'DirectGpt');
 		expect(slotTargetingMock).toEqual(expectedSlotTargeting);
 		expect(mocks.oxBidder.trackState).toHaveBeenCalled();
 	});

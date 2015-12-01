@@ -118,6 +118,13 @@ class UserPagesHeaderController extends WikiaController {
 					'data-id' => 'following',
 				);
 			}
+			if ( !empty( F::app()->wg->EnableUserActivityExt ) ) {
+				$tabs[] = [
+					'link' => Wikia::link( SpecialPage::getTitleFor( 'UserActivity' ), wfMessage( 'user-activity-tab' )->text() ),
+					'selected' => ( $wgTitle->isSpecial( 'UserActivity' ) ),
+					'data-id' => 'user-activity',
+				];
+			}
 
 			// avatar dropdown menu
 			$this->avatarMenu = array(

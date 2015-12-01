@@ -4,12 +4,13 @@
  */
 define('ext.wikia.adEngine.adContext', [
 	'wikia.abTest',
+	'wikia.cookies',
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.window',
 	'wikia.querystring'
-], function (abTest, doc, geo, instantGlobals, w, Querystring) {
+], function (abTest, cookies, doc, geo, instantGlobals, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -81,21 +82,14 @@ define('ext.wikia.adEngine.adContext', [
 				geo.isProperGeo(instantGlobals.wgAdDriverGoogleConsumerSurveysCountries);
 		}
 
-		// Showcase.*
-		if (isUrlParamSet('showcase')) {
+		// showcase.*
+		if (cookies.get('mock-ads') === 'NlfdjR5xC0') {
 			context.opts.showcase = true;
 		}
 
 		// Targeting by page categories
 		if (context.targeting.enablePageCategories) {
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
-		}
-
-		// Taboola integration
-		if (context.providers.taboola) {
-			context.providers.taboola = !!abTest.getGroup('TABOOLA_MODULES') &&
-				geo.isProperGeo(instantGlobals.wgAdDriverTaboolaCountries) &&
-				context.targeting.pageType === 'article';
 		}
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverTurtleCountries)) {

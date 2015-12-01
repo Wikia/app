@@ -70,15 +70,15 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		$title = null;
 
 		$realTitleText = isset($options['title']) ? $options['title'] : $titleText;
+		list( $titleText, $namespace ) = $this->parseTitle( $realTitleText );
 
-		if ( $options['type'] === 'script' ) {
-			return $this->createScriptTitle( $realTitleText, $options );
+		if ( $options['type'] === 'script' && $namespace != NS_USER && Wikia::isUsingSafeJs() ) {
+			return $this->createScriptTitle( $titleText, $options );
 		}
 
 		if ( !empty( $options['city_id'] ) && $wgCityId != $options['city_id'] ) {
-			list( $text, $namespace ) = $this->parseTitle($realTitleText);
-			if ( $text !== false ) {
-				$title = GlobalTitle::newFromTextCached($text, $namespace, $options['city_id']);
+			if ( $titleText !== false ) {
+				$title = GlobalTitle::newFromTextCached($titleText, $namespace, $options['city_id']);
 			}
 			$title = $this->resolveRedirect($title);
 		} else {
@@ -99,13 +99,11 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	 * @throws MWException
 	 */
 	private function createScriptTitle( $titleText, $options ) {
-		global $wgCityId, $wgUseSiteJs, $wgEnableContentReviewExt;
+		global $wgCityId;
 
 		$title = null;
 		$external = false;
 		$targetCityId = (int) $options['city_id'];
-
-		list( $titleText, $namespace ) = $this->parseTitle( $titleText );
 
 		if ( $targetCityId !== 0 && $wgCityId !== $targetCityId && $titleText !== false ) {
 			$external = true;
@@ -115,7 +113,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		}
 
 		// TODO: After scripts transition on dev wiki is done, remove this if statement (CE-3093)
-		if ( !empty( $wgUseSiteJs ) && !empty( $wgEnableContentReviewExt ) && $targetCityId === Wikia\ContentReview\Helper::DEV_WIKI_ID && ( !$title || !$title->exists() ) ) {
+		if ( $targetCityId === Wikia\ContentReview\Helper::DEV_WIKI_ID && ( !$title || !$title->exists() ) ) {
 			$title = $this->devWikiFallback( $titleText, $external );
 		}
 

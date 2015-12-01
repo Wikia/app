@@ -173,8 +173,8 @@ class WikiFactory {
 	 * getDomains
 	 *
 	 * get all domains defined in wiki.factory (city_domains table) or
-	 * all domains for given wiki ideintifier. Data from query is
-	 * stored in memcache for hour.
+	 * all domains for given wiki identifier. Data from query is
+	 * stored in memcache for an hour.
 	 *
 	 * @access public
 	 * @static
@@ -495,6 +495,30 @@ class WikiFactory {
 
 		wfProfileOut( __METHOD__ );
 		return $city_id;
+	}
+
+	/**
+	 * Given a wiki's dbName, return the wgServer value properly altered to reflect the current environment.
+	 *
+	 * @param int $dbName
+	 *
+	 * @return string
+	 */
+	public static function getHostByDbName( $dbName ) {
+		global $wgDevelEnvironment, $wgDevelEnvironmentName;
+
+		$cityId = \WikiFactory::DBtoID( $dbName );
+		$hostName = \WikiFactory::getVarValueByName( 'wgServer', $cityId );
+
+		if ( !empty( $wgDevelEnvironment ) ) {
+			if ( strpos( $hostName, "wikia.com" ) ) {
+				$hostName = str_replace( "wikia.com", "{$wgDevelEnvironmentName}.wikia-dev.com", $hostName );
+			} else {
+				$hostName = \WikiFactory::getLocalEnvURL( $hostName );
+			}
+		}
+
+		return rtrim( $hostName, '/' );
 	}
 
 	/**
@@ -1058,7 +1082,7 @@ class WikiFactory {
 	 * @param string $city_dbname	name of database
 	 * @param boolean $master	use master or slave connection
 	 *
-	 * @return id in city_list
+	 * @return integer The ID in city_list
 	 */
 	static public function DBtoID( $city_dbname, $master = false ) {
 
@@ -1173,7 +1197,8 @@ class WikiFactory {
 		} else {
 			$devbox = '';
 		}
-		$server = str_replace( $devbox . '.wikia-dev.com', '', $server );
+
+		$server = str_replace( '.' . $devbox . '.wikia-dev.com', '', $server );
 		$server = str_replace( '.wikia.com', '', $server );
 
 		// put the address back into shape and return
@@ -1327,7 +1352,7 @@ class WikiFactory {
 	 * @param string $city_dbname	name of database
 	 * @param boolean $master	use master or slave connection
 	 *
-	 * @return id in city_list
+	 * @return ResultWrapper|object The ID in city_list
 	 */
 	static public function getWikiByDB( $city_dbname, $master = false ) {
 

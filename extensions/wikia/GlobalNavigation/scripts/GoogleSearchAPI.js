@@ -27,17 +27,19 @@ $(function () {
 			$googleButton = $('.gsc-search-button'),
 			$selectElement = $('#searchSelect'),
 			$selectedOption = $selectElement.find('option:selected'),
-			currentUrlPath = window.location.pathname;
+			currentUrlPath = window.location.pathname,
+			fakeSearchParam = '&qInter=' + encodeURIComponent(searchQuery);
 
 		evt.preventDefault();
 
-		//get info of local or global and modify query scope
+		//get info of local or global search and modify query scope
 		if ($selectedOption.val() === 'local') {
+			fakeSearchParam = '&qIntra=' + encodeURIComponent(searchQuery);
 			searchQuery += ' site:' + window.location.hostname;
 		}
 
 		//Manually trigger page view
-		currentUrlPath += '?q=' + encodeURIComponent(searchQuery);
+		currentUrlPath += '?q=' + encodeURIComponent(searchQuery) + fakeSearchParam;
 		window.guaTrackPageview(currentUrlPath);
 
 		//Invoke google search

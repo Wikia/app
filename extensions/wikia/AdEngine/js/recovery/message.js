@@ -127,7 +127,7 @@ define('ext.wikia.adEngine.recovery.message', [
 		log('recoveredAdsMessage.recover - injecting top message', 'debug', logGroup);
 		createMessage('top', messageVariant).done(function (messageContainer) {
 			track('impression', win.Wikia.Tracker.ACTIONS.IMPRESSION);
-			$('#WikiaTopAds').before(messageContainer);
+			$('#WikiaPageHeader').append(messageContainer);
 		});
 	}
 
@@ -135,7 +135,7 @@ define('ext.wikia.adEngine.recovery.message', [
 		log('recoveredAdsMessage.recover - injecting right rail message', 'debug', logGroup);
 		createMessage('right-rail', messageVariant).done(function (messageContainer) {
 			track('impression', win.Wikia.Tracker.ACTIONS.IMPRESSION);
-			$('#WikiaRail').prepend(messageContainer);
+			$('#WikiaPageHeader').append(messageContainer);
 		});
 	}
 

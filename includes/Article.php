@@ -640,6 +640,10 @@ class Article extends Page {
 
 							$errortext = $error->getWikiText( false, 'view-pool-error' );
 							$wgOut->addWikiText( '<div class="errorbox">' . $errortext . '</div>' );
+						} else {
+							# PLATFORM-1355 (investigate blank pages)
+							\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' empty content PLAT1355',
+																		[ 'page_id' => $this->mPage->getID() ] );
 						}
 						# Connection or timeout error
 						wfProfileOut( __METHOD__ );
