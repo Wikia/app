@@ -87,8 +87,11 @@ class TemplateTypesParser {
 
 			if ( $title ) {
 				$type = self::getTemplateType( $title );
+				//$type = AutomaticTemplateTypes::TEMPLATE_INFOICON;
 				if ( $type == AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK ) {
 					$templateWikitext = ContextLinkTemplate::handle( $templateWikitext );
+				} else if ( $type == AutomaticTemplateTypes::TEMPLATE_INFOICON ) {
+					$templateWikitext = InfoiconTemplate::handle( $templateWikitext );
 				}
 			}
 		}
