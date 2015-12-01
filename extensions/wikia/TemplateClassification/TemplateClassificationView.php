@@ -6,6 +6,9 @@ use Swagger\Client\ApiException;
 
 class View {
 
+	const COMMAND_KEY = '⌘';
+	const CONTROL_KEY = 'Ctrl';
+
 	/**
 	 * Returns HTML with Template type.
 	 * If a user is logged in it returns also an entry point for edition.
@@ -67,6 +70,11 @@ class View {
 			$editButton = true;
 		}
 
+		$key = self::CONTROL_KEY;
+		if ( strpos( $_SERVER['HTTP_USER_AGENT'], 'Mac' ) !== false ) {
+			$key = self::COMMAND_KEY;
+		}
+
 		return \MustacheService::getInstance()->render(
 			__DIR__ . '/templates/TemplateClassificationViewPageEntryPoint.mustache',
 			[
@@ -74,7 +82,7 @@ class View {
 				'templateType' => $templateType,
 				'templateTypeName' => $templateTypeMessage,
 				'editButton' => $editButton,
-				'keyTip' => wfMessage( 'template-classification-open-modal-key-tip' )->plain(),
+				'keyTip' => wfMessage( 'template-classification-open-modal-key-tip', $key )->plain(),
 			]
 		);
 	}
