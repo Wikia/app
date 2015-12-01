@@ -45,7 +45,7 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'wikia.
 				callback: function () {
 					var notification = new BannerNotification(
 						mw.message('template-classification-edit-modal-success').escaped(),
-						'success'
+						'confirm'
 					);
 
 					notification.show();
