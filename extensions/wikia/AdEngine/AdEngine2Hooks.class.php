@@ -249,12 +249,22 @@ class AdEngine2Hooks {
     background: #005098;
     border: 4px solid #0b2443;
     color: #fff;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
     text-align: center;
 }
 .changepay-modal header {
     background: #0b2443;
     margin: -20px -20px 0;
     padding: 10px;
+}
+.changepay-modal h1 {
+    font-size: 36px;
+    font-weight: 500;
+    margin: 20px 0 10px;
+}
+.changepay-modal p {
+    font-size: 14px;
+    margin: 0 0 10px;
 }
 .changepay-modal .changepay-close {
     display: none;
