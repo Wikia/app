@@ -41,7 +41,7 @@ $messages['en'] = array(
 The recently submitted change to this JavaScript page (revision [$2 $3]) was rejected by the Wikia review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]]. --~~~~',
 	'content-review-status-link-text' => 'Review status',
 	'content-review-special-js-pages-title' => 'JavaScript pages',
-	'content-review-special-js-description' => 'This page lists the current [[Help:JavaScript review process review status]] of MediaWiki namespace scripts on this community.',
+	'content-review-special-js-description' => 'This page lists the current [[Help:JavaScript review process|review status]] of MediaWiki namespace scripts on this community.',
 	'content-review-special-js-importjs-description' => 'Note: you can add and remove local and dev.wikia.com script imports without the review process via [[MediaWiki:ImportJS]].',
 	'content-review-importjs-description' => 'Here, you can easily import scripts:
 * from your local wikia by article name - e.g. MyScript.js
@@ -385,7 +385,7 @@ The recently submitted change to this JavaScript page (revision [$2 $3]) was rej
 	'content-review-module-header-pagename' => 'Page name',
 	'content-review-module-header-actions' => 'Actions',
 	'content-review-module-jspages' => 'All JS pages',
-	'content-review-special-js-description' => 'This page lists the current [[Help:JavaScript review process review status]] of MediaWiki namespace scripts on this community.',
+	'content-review-special-js-description' => 'This page lists the current [[Help:JavaScript review process|review status]] of MediaWiki namespace scripts on this community.',
 	'content-review-special-js-importjs-description' => 'Note: you can add and remove local and dev.wikia.com script imports without the review process via [[MediaWiki:ImportJS]].',
 	'content-review-importjs-description' => 'Here, you can easily import scripts:
 * from your local wikia by article name - e.g. MyScript.js
