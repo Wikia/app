@@ -2539,13 +2539,6 @@ $config['template_draft'] = [
 	]
 ];
 
-$config['special_user_activity_css'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => [
-		'//extensions/wikia/UserActivity/styles/UserActivity.scss',
-	]
-];
-
 $config['content_review_module_monobook_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'monobook' ],
