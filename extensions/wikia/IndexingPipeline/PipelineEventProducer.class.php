@@ -120,12 +120,16 @@ class PipelineEventProducer {
 	 * @param Title $title The affected template's Title object
 	 * @return bool
 	 */
-	public static function onTemplateClassified( $pageId, $title ) {
-		$ns = self::preparePageNamespaceName( $title );
-		$revisionId = $title->getLatestRevID();
+	public static function onTemplateClassified( $wikiId, $pageId, $templateType ) {
+		$title = Title::newFromID( $pageId );
 
-		// there is purposedly no legacy (unflagged) event sent here
-		self::sendFlaggedSyntax( self::ACTION_UPDATE, $pageId, $revisionId, $ns );
+		if ( $title instanceof Title ) {
+			$ns = self::preparePageNamespaceName( $title );
+			$revisionId = $title->getLatestRevID();
+
+			// there is purposedly no legacy (unflagged) event sent here
+			self::sendFlaggedSyntax( self::ACTION_UPDATE, $pageId, $revisionId, $ns );
+		}
 
 		return true;
 	}
