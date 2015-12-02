@@ -10,6 +10,11 @@
  */
 
 ini_set( 'display_errors', 'stdout' );
+
+// This global array is used by commandLine.inc included below. Without this line,
+// arguments passed to this script are not processed correctly.
+$optionsWithArgs = [ 's', 'e' ];
+
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( 'commandLine.inc' );
 

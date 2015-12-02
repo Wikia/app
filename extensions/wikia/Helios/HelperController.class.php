@@ -1,11 +1,19 @@
 <?php
 namespace Wikia\Helios;
 
+use Email\Controller\EmailConfirmationController;
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Auth\AuthService;
+
 /**
  * A helper controller to provide end points exposing MediaWiki functionality to Helios.
  */
 class HelperController extends \WikiaController
 {
+
+	protected $authService;
+
+
 	/**
 	 * AntiSpoof: verify whether the name is legal for a new account.
 	 *
@@ -16,24 +24,24 @@ class HelperController extends \WikiaController
 		$this->response->setFormat( 'json' );
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 
-		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
+		if ( !$this->authenticateViaTheSchwartz() ) {
 			$this->response->setVal( 'allow', false );
-			$this->response->setVal( 'message', 'invalid secret' );
 			return;
 		}
 
-		$sName = $this->getVal( 'username' );
+		$username = $this->getVal( 'username' );
 
 		// Allow the given user name if the AntiSpoof extension is disabled.
 		if ( empty( $this->wg->EnableAntiSpoofExt ) ) {
-			return $this->response->setVal( 'allow', true );
+			$this->response->setVal( 'allow', true );
+			return;
 		}
 
-		$oSpoofUser = new \SpoofUser( $sName );
-		$aConflicts = $oSpoofUser->getConflicts();
+		$spoofUser = new \SpoofUser( $username );
 
 		// Allow the given user name if it is legal and does not conflict with other names.
-		return $this->response->setVal( 'allow', $oSpoofUser->isLegal() && ! $oSpoofUser->getConflicts() );
+		$this->response->setVal( 'allow', $spoofUser->isLegal() && ! $spoofUser->getConflicts() );
+		return;
 	}
 
 	/**
@@ -47,16 +55,16 @@ class HelperController extends \WikiaController
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 		$this->response->setVal( 'success', false );
 
-		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
-			$this->response->setVal( 'message', 'invalid secret' );
+		if ( !$this->authenticateViaTheSchwartz() ) {
 			return;
 		}
 
-		$sName = $this->getVal( 'username' );
+		$username = $this->getVal( 'username' );
 
 		if ( !empty( $this->wg->EnableAntiSpoofExt ) ) {
-			$oSpoofUser = new \SpoofUser( $sName );
-			return $this->response->setVal( 'success', $oSpoofUser->record() );
+			$spoofUser = new \SpoofUser( $username );
+			$this->response->setVal( 'success', $spoofUser->record() );
+			return;
 		}
 	}
 
@@ -69,8 +77,7 @@ class HelperController extends \WikiaController
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 		$this->response->setVal( 'success', false );
 
-		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
-			$this->response->setVal( 'message', 'invalid secret' );
+		if ( !$this->authenticateViaTheSchwartz() ) {
 			return;
 		}
 
@@ -79,51 +86,157 @@ class HelperController extends \WikiaController
 			return;
 		}
 
-		$sName = $this->getVal( 'username' );
+		$username = $this->getVal( 'username' );
 
-		$this->wf->WaitForSlaves( $this->wg->ExternalSharedDB );
-		$oUser = \User::newFromName( $sName );
+		wfWaitForSlaves( $this->wg->ExternalSharedDB );
+		$user = \User::newFromName( $username );
 
-		if ( ! $oUser instanceof \User ) {
+		if ( ! $user instanceof \User ) {
 			$this->response->setVal( 'message', 'unable to create a \User object from name' );
 			return;
 		}
 
-		if ( ! $oUser->getId() ) {
+		if ( ! $user->getId() ) {
 			$this->response->setVal( 'message', 'no such user' );
 			return;
 		}
 
-		if ( $oUser->isEmailConfirmed() ) {
+		if ( $user->isEmailConfirmed() ) {
 			$this->response->setVal( 'message', 'already confirmed' );
 			return;
 		}
 
-		$oUserLoginHelper = ( new \UserLoginHelper );
-		$sMemKey = $oUserLoginHelper->getMemKeyConfirmationEmailsSent( $oUser->getId() );
-		$iEmailSent = intval( $this->wg->Memc->get( $sMemKey ) );
+		$userLoginHelper = ( new \UserLoginHelper );
+		$memcKey = $userLoginHelper->getMemKeyConfirmationEmailsSent( $user->getId() );
+		$emailsSent = intval( $this->wg->Memc->get( $memcKey ) );
 
-		if ( $oUser->isEmailConfirmationPending() &&
-			strtotime( $oUser->mEmailTokenExpires ) - strtotime( '+6 days' ) > 0 &&
-			$iEmailSent >= \UserLoginHelper::LIMIT_EMAILS_SENT
+		if ( $user->isEmailConfirmationPending() &&
+			strtotime( $user->mEmailTokenExpires ) - strtotime( '+6 days' ) > 0 &&
+			$emailsSent >= \UserLoginHelper::LIMIT_EMAILS_SENT
 		) {
 			$this->response->setVal( 'message', 'confirmation emails limit reached' );
 			return;
 		}
 
-		if ( ! \Sanitizer::validateEmail( $oUser->getEmail() ) ) {
+		if ( ! \Sanitizer::validateEmail( $user->getEmail() ) ) {
 			$this->response->setVal( 'message', 'invalid email' );
 			return;
 		}
 
-		$sTemplate = $this->app->renderView( 'UserLogin', 'GeneralMail', [ 'language' => $oUser->getOption( 'language' ), 'type' => 'confirmation-email' ] );
-		$oResponse = $oUser->sendConfirmationMail( false, 'ConfirmationMail', 'usersignup-confirmation-email', true, $sTemplate );
+		$mailStatus = $user->sendConfirmationMail(
+			'created', EmailConfirmationController::TYPE, '', true, '', $this->getVal( 'langCode', 'en' ));
 
-		if ( ! $oResponse->isGood() ) {
+		if ( ! $mailStatus->isGood() ) {
 			$this->response->setVal( 'message', 'could not send an email message' );
 			return;
 		}
 
 		$this->response->setVal( 'success', true );
 	}
+
+	/**
+	 * UserLogin: send an email with temporary password
+	 */
+	public function sendTemporaryPasswordEmail() {
+		$this->response->setFormat( 'json' );
+		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
+		$this->response->setVal( 'success', false );
+
+		if ( !$this->authenticateViaTheSchwartz() ) {
+			return;
+		}
+
+		$username = $this->getFieldFromRequest( 'username', 'invalid username' );
+		if ( !isset( $username ) ) {
+			return;
+		}
+
+		$tempPassword = $this->getFieldFromRequest( 'password', 'invalid password' );
+		if ( !isset( $tempPassword ) ) {
+			return;
+		}
+
+		$user = \User::newFromName( $username );
+
+		if ( ! $user instanceof \User ) {
+			$this->response->setVal( 'message', 'unable to create a \User object from name' );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+			return;
+		}
+
+		if ( ! $user->getId() ) {
+			$this->response->setVal( 'message', 'no such user' );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+			return;
+		}
+
+		$resp = \F::app()->sendRequest( 'Email\Controller\ForgotPassword', 'handle', [
+			'targetUser' => $username,
+			'tempPass' => $tempPassword,
+		] );
+
+		$data = $resp->getData();
+		if ( !empty( $data['result'] ) && $data['result'] == 'ok' ) {
+			$this->response->setVal( 'success', true );
+		} else {
+			$this->response->setVal( 'message', 'could not send an email message' );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_NOT_FOUND );
+		}
+	}
+
+	public function isBlocked() {
+		$this->response->setFormat( 'json' );
+		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
+
+		if ( !$this->authenticateViaTheSchwartz() ) {
+			return;
+		}
+
+		$username = $this->getFieldFromRequest( 'username', 'invalid username' );
+		if ( !isset( $username ) ) {
+			return;
+		}
+
+		$blocked = $this->getAuthService()->isUsernameBlocked( $username );
+		if ( $blocked === null ) {
+			$this->response->setVal( 'message', 'user not found' );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_NOT_FOUND );
+			return;
+		}
+
+		$this->response->setData( array( 'blocked' => $blocked ) );
+	}
+
+	protected function getFieldFromRequest( $field, $failureMessage ) {
+		$fieldValue = $this->getVal( $field, null );
+		if ( !isset( $fieldValue ) ) {
+			$this->response->setVal( 'message', $failureMessage );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+		}
+
+		return $fieldValue;
+	}
+
+	protected function authenticateViaTheSchwartz() {
+		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
+			$this->response->setVal( 'message', 'invalid secret' );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_FORBIDDEN );
+			return false;
+		}
+
+		return true;
+	}
+
+	public function setAuthService( AuthService $authService ) {
+		$this->authService = $authService;
+	}
+
+	public function getAuthService() {
+		if (!isset($this->authService)) {
+			$this->authService = Injector::getInjector()->get(AuthService::class);
+		}
+
+		return $this->authService;
+	}
+
 }

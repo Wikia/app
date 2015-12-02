@@ -7,8 +7,10 @@
  *
  */
 class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
+	const WELCOME_EMAIL_CONTROLLER = Email\Controller\WelcomeController::class;
+
 	public function __construct() {
-		parent::__construct('WikiaConfirmEmail', '', false);
+		parent::__construct( 'WikiaConfirmEmail', '', false );
 	}
 
 	public function init() {
@@ -25,7 +27,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string errParam - error param
 	 */
 	public function index() {
-		$this->response->addAsset('extensions/wikia/UserLogin/css/UserLogin.scss');
+		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
 
 		// hide things in the skin
 		$this->wg->SuppressWikiHeader = false;
@@ -36,7 +38,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 
 		$this->getOutput()->disallowUserJs(); // just in case...
 
-		$this->wg->Out->setPageTitle( wfMessage('wikiaconfirmemail-heading')->plain() );
+		$this->wg->Out->setPageTitle( wfMessage( 'wikiaconfirmemail-heading' )->plain() );
 
 		$par = $this->request->getVal( 'par', '' );
 		$this->code = $this->request->getVal( 'code', $par );
@@ -78,7 +80,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 			}
 
 			$expUser = User::newFromConfirmationCode( $this->code );
-			if ( !is_object( $expUser ) ) {
+			if ( !$expUser instanceof User ) {
 				$this->result = 'error';
 				$this->msg = wfMessage( 'wikiaconfirmemail-error-invalid-code' )->escaped();
 				return;
@@ -86,6 +88,12 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 
 			// User - activate user, confirm email and redirect to user page or create new wiki
 			$user = User::newFromName( $this->username );
+			if ( !$user instanceof User ) {
+				$this->result = 'error';
+				$this->msg = wfMessage( 'userlogin-error-noname' )->escaped();
+				return;
+			}
+
 			if ( $user->getId() != $expUser->getId() ) {
 				$this->result = 'error';
 				$this->msg = wfMessage( 'wikiaconfirmemail-error-user-not-match' )->parse();
@@ -104,7 +112,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 			if ( $user->checkPassword( $this->password ) ) {
 				$this->wg->User = $user;
 
-				if ( $user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) != null ){// Signup confirm
+				if ( $user->getGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) != null ) {// Signup confirm
 					// Log user in manually
 					$this->wg->User->setCookies();
 					LoginForm::clearLoginToken();
@@ -116,22 +124,15 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 					$user->confirmEmail();
 
 					// Get and clear redirect page
-					$userSignupRedirect = $user->getOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
-					$user->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
+					$userSignupRedirect = $user->getGlobalAttribute( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
+					$user->setGlobalAttribute( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
 
 					$user->saveSettings();
 
 					$userLoginHelper->addNewUserLogEntry( $user );
 
 					// send welcome email
-					$emailParams = array(
-						'$USERNAME' => $user->getName(),
-						'$EDITPROFILEURL' => $user->getUserPage()->getFullURL(),
-						'$LEARNBASICURL' => 'http://community.wikia.com/wiki/Help:Wikia_Basics',
-						'$EXPLOREWIKISURL' => 'http://www.wikia.com',
-					);
-
-					$userLoginHelper->sendEmail( $user, 'WelcomeMail', 'usersignup-welcome-email-subject', 'usersignup-welcome-email-body', $emailParams, 'welcome-email', 'WelcomeMail' );
+					F::app()->sendRequest( self::WELCOME_EMAIL_CONTROLLER, 'handle' );
 
 					// redirect user
 					if ( !empty( $userSignupRedirect ) ) {// Redirect user to the point where he finished (when signup on create wiki)
@@ -150,12 +151,12 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 
 					$result = $response->getVal( 'result', '' );
 
-					$optionNewEmail = $this->wg->User->getOption( 'new_email' );
+					$optionNewEmail = $this->wg->User->getNewEmail();
 					if ( !empty( $optionNewEmail ) ) {
 						$user->setEmail( $optionNewEmail );
 					}
 					$user->confirmEmail();
-					$user->setOption( 'new_email', null );
+					$user->clearNewEmail();
 					$user->saveSettings();
 
 					// redirect user

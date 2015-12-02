@@ -1,0 +1,33 @@
+{
+	"@metadata": {
+		"authors": [
+			"Michawiki"
+		]
+	},
+	"semanticdrilldown-desc": "Interfejs za nawigaciju pśez semantiske daty",
+	"specialpages-group-sd_group": "Semantiska nawigacija",
+	"browsedata": "Daty se woglědaś",
+	"sd_browsedata_choosecategory": "Kategoriju wubraś",
+	"sd_browsedata_viewcategory": "kategoriju se woglědaś",
+	"sd_browsedata_docu": "Klikni na jaden zapisk abo někotare zapiski, aby zwuscył swóje wuslědki.",
+	"sd_browsedata_subcategory": "Pódkategorija",
+	"sd_browsedata_other": "Druge",
+	"sd_browsedata_none": "Žedne",
+	"sd_browsedata_filterbyvalue": "Pó toś tej gódnośe filtrowaś",
+	"sd_browsedata_filterbysubcategory": "Pó toś tej pódkategoriji filtrowaś",
+	"sd_browsedata_otherfilter": "Boki z drugeju gódnotu za toś ten filter pokazaś",
+	"sd_browsedata_nonefilter": "Boki bźez gódnoty za toś ten filter pokazaś",
+	"sd_browsedata_or": "abo",
+	"sd_browsedata_removefilter": "Toś ten filter wótpóraś",
+	"sd_browsedata_removesubcategoryfilter": "Toś ten filter za pódkategorije wótpóraś",
+	"sd_browsedata_resetfilters": "Filter slědk stajiś",
+	"sd_browsedata_addanothervalue": "Na šypku kliknuś, aby se druga gódnota pśidał",
+	"sd_browsedata_daterangestart": "Zachopjeńk:",
+	"sd_browsedata_daterangeend": "Kóńc:",
+	"sd_browsedata_novalues": "Za tós ten filter gódnoty njejsu",
+	"sd_createfilter_usepropertyvalues": "Wše gódnoty toś teje kakosći za filter wužywaś",
+	"sd_createfilter_usecategoryvalues": "Gódnoty za filter z toś teje kategorije wobstaraś:",
+	"sd_createfilter_requirefilter": "Nježli toś ten filter dajo se zwobrazniś, musyš drugi filter wubraś:",
+	"sd-pageschemas-filter": "Filter",
+	"sd-pageschemas-values": "Gódnoty"
+}

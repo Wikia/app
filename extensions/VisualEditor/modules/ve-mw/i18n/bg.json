@@ -5,7 +5,8 @@
 			"Hristofor.mirchev",
 			"MegaAlex",
 			"පසිඳු කාවින්ද",
-			"Mitzev"
+			"Mitzev",
+			"StanProg"
 		]
 	},
 	"tooltip-ca-createsource": "Създаване на изходния код на страницата",
@@ -15,8 +16,6 @@
 	"visualeditor-categories-tool": "Категории",
 	"visualeditor-dialog-beta-welcome-action-continue": "Продължаване",
 	"visualeditor-dialog-media-content-section": "Надпис",
-	"visualeditor-dialog-media-insert-button": "Вмъкване на мултимедия",
-	"visualeditor-dialog-media-insert-title": "Вмъкване на мултимедия",
 	"visualeditor-dialog-media-position-left": "Ляво",
 	"visualeditor-dialog-media-position-none": "Няма",
 	"visualeditor-dialog-media-position-right": "Дясно",
@@ -45,9 +44,9 @@
 	"visualeditor-dialog-reference-options-section": "Настройки",
 	"visualeditor-dialog-reference-title": "Източник",
 	"visualeditor-dialog-reference-useexisting-label": "Използване на съществуващ източник",
-	"visualeditor-dialog-referencelist-title": "Списък с източници",
+	"visualeditor-dialog-referenceslist-title": "Списък с източници",
 	"visualeditor-dialog-transclusion-add-content": "Добавяне на съдържание",
-	"visualeditor-dialog-transclusion-add-param": "Добавяне на параметър",
+	"visualeditor-dialog-transclusion-add-param": "Добавяне на повече информация",
 	"visualeditor-dialog-transclusion-add-template": "Добавяне на шаблон",
 	"visualeditor-dialog-transclusion-content": "Съдържание",
 	"visualeditor-dialog-transclusion-loading": "Зареждане...",
@@ -59,7 +58,7 @@
 	"visualeditor-dialogbutton-media-tooltip": "Медия",
 	"visualeditor-dialogbutton-meta-tooltip": "Настройки на страницата",
 	"visualeditor-dialogbutton-reference-tooltip": "Източник",
-	"visualeditor-dialogbutton-referencelist-tooltip": "Списък с източници",
+	"visualeditor-dialogbutton-referenceslist-tooltip": "Списък с източници",
 	"visualeditor-editnotices-tooltip": "Известия за редактиране",
 	"visualeditor-formatdropdown-format-mw-heading1": "Заглавие на страницата",
 	"visualeditor-formatdropdown-format-mw-heading2": "Заглавие",
@@ -75,14 +74,14 @@
 	"visualeditor-meta-tool": "Настройки на страницата",
 	"visualeditor-mwalienextensioninspector-title": "разширение за МедияУики",
 	"visualeditor-mwgalleryinspector-title": "Галерия",
-	"visualeditor-mwhieroinspector-title": "Йероглифи",
 	"visualeditor-pagemenu-tooltip": "Настройки на страницата",
+	"visualeditor-parameter-search-more": "Показване на {{PLURAL:$1|още едно поле|още $1 полета}}",
 	"visualeditor-savedialog-label-error": "Грешка",
 	"visualeditor-savedialog-label-save": "Съхраняване на страницата",
 	"visualeditor-savedialog-label-warning": "Предупреждение",
 	"visualeditor-savedialog-title-save": "Съхраняване на промените",
 	"visualeditor-saveerror": "Грешка при съхраняване на данните на сървъра: $1",
 	"visualeditor-serializeerror": "Грешка при зареждане на данните от сървъра: $1",
-	"visualeditor-toolbar-cancel": "Отказване",
-	"visualeditor-toolbar-savedialog": "Съхраняване на страницата"
+	"visualeditor-toolbar-savedialog": "Съхраняване на страницата",
+	"visualeditor-dialog-media-insert-title": "Вмъкване на мултимедия"
 }

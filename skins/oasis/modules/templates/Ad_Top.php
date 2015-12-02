@@ -5,7 +5,6 @@
 
 		<?= $app->renderView('Ad', 'Index', [
 			'slotName' => $leaderboardName,
-			'pageFairId' => isset($wg->AnalyticsProviderPageFairSlotIds['LEADERBOARD']) ? $wg->AnalyticsProviderPageFairSlotIds['LEADERBOARD'] : null,
 			'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads']
 		]); ?>
 

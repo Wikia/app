@@ -33,18 +33,20 @@ class AnalyticsEngine {
 
 	private static function getProvider($provider) {
 		switch ($provider) {
-			case 'GA_Urchin':
-				return new AnalyticsProviderGAS();
 			case 'QuantServe':
 				return new AnalyticsProviderQuantServe();
 			case 'Comscore':
 				return new AnalyticsProviderComscore();
 			case 'Exelate':
 				return new AnalyticsProviderExelate();
-			case 'GAS':
-				return new AnalyticsProviderGAS();
+			case 'GoogleUA':
+				return new AnalyticsProviderGoogleUA();
 			case 'AmazonMatch':
 				return new AnalyticsProviderAmazonMatch();
+			case 'OpenXBidder':
+				return new AnalyticsProviderOpenXBidder();
+			case 'RubiconFastlane':
+				return new AnalyticsProviderRubiconFastlane();
 			case 'DynamicYield':
 				return new AnalyticsProviderDynamicYield();
 			case 'IVW2':
@@ -53,12 +55,6 @@ class AnalyticsEngine {
 				return new AnalyticsProviderBlueKai();
 			case 'Datonics':
 				return new AnalyticsProviderDatonics();
-			case 'ClarityRay':
-				return new AnalyticsProviderClarityRay();
-			case 'PageFair':
-				return new AnalyticsProviderPageFair();
-			case 'RubiconRTP':
-				return new AnalyticsProviderRubiconRTP();
 		}
 
 		return null;

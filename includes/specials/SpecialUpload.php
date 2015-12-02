@@ -427,6 +427,14 @@ class SpecialUpload extends SpecialPage {
 			}
 		}
 
+		// This is as late as we can throttle, after expected issues have been handled
+		if ( UploadBase::isThrottled( $this->getUser() ) ) {
+			$this->showRecoverableUploadError(
+				$this->msg( 'actionthrottledtext' )->escaped()
+			);
+			return;
+		}
+
 		// Get the page text if this is not a reupload
 		if( !$this->mForReUpload ) {
 			$pageText = self::getInitialPageText( $this->mComment, $this->mLicense,
@@ -505,7 +513,7 @@ class SpecialUpload extends SpecialPage {
 	 * @return Bool|String
 	 */
 	protected function getWatchCheck() {
-		if( $this->getUser()->getOption( 'watchdefault' ) ) {
+		if( $this->getUser()->getGlobalPreference( 'watchdefault' ) ) {
 			// Watch all edits!
 			return true;
 		}
@@ -517,7 +525,7 @@ class SpecialUpload extends SpecialPage {
 			return $local->getTitle()->userIsWatching();
 		} else {
 			// New page should get watched if that's our option.
-			return $this->getUser()->getOption( 'watchcreations' );
+			return $this->getUser()->getGlobalPreference( 'watchcreations' );
 		}
 	}
 
@@ -953,7 +961,7 @@ class UploadForm extends HTMLForm {
 					? 'filereuploadsummary'
 					: 'fileuploadsummary',
 				'default' => $this->mComment,
-				'cols' => intval( $this->getUser()->getOption( 'cols' ) ),
+				'cols' => intval( $this->getUser()->getGlobalPreference( 'cols' ) ),
 				'rows' => 8,
 			)
 		);
@@ -1020,7 +1028,7 @@ class UploadForm extends HTMLForm {
 					'id' => 'wpWatchthis',
 					'label-message' => 'watchthisupload',
 					'section' => 'options',
-					'default' => $user->getOption( 'watchcreations' ),
+					'default' => $user->getGlobalPreference( 'watchcreations' ),
 				)
 			);
 		}

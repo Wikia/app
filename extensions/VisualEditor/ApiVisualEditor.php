@@ -8,36 +8,52 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-use \Wikia\Logger\WikiaLogger;
-
 class ApiVisualEditor extends ApiBase {
+
+	// Wikia change
+	/**
+	 * @protected
+	 * @description Simple helper to retrieve relevant api uri
+	 * @return String
+	 */
+	protected function getApiSource() {
+		return wfExpandUrl( wfScript( 'api' ) );
+	}
+
+	/**
+	 * @var Config
+	 */
+	protected $veConfig;
+
+	public function __construct( ApiMain $main, $name /*, Config $config */ ) {
+		parent::__construct( $main, $name );
+		// Wikia change
+		$this->veConfig = ConfigFactory::getDefaultInstance()->makeConfig( 'visualeditor' );
+	}
 
 	/**
 	 * Parsoid HTTP proxy configuration for MWHttpRequest
 	 */
 	protected function getProxyConf() {
-		global $wgVisualEditorParsoidHTTPProxy, $wgDevelEnvironment;
-		if ( $wgVisualEditorParsoidHTTPProxy ) {
-			return array( 'proxy' => $wgVisualEditorParsoidHTTPProxy );
+		global $wgDevelEnvironment;
+		$parsoidHTTPProxy = $this->veConfig->get( 'VisualEditorParsoidHTTPProxy' );
+		if ( $parsoidHTTPProxy ) {
+			return array( 'proxy' => $parsoidHTTPProxy );
 		} else {
 			return array( 'noProxy' => !empty( $wgDevelEnvironment ) );
 		}
 	}
 
 	protected function requestParsoid( $method, $title, $params ) {
-		global $wgVisualEditorParsoidURL,
-			$wgVisualEditorParsoidTimeout,
-			$wgVisualEditorParsoidForwardCookies;
-
-		$url = $wgVisualEditorParsoidURL . '/' .
+		// Wikia change
+		$url = $this->veConfig->get( 'VisualEditorParsoidURL' ) . '/' .
 			urlencode( $this->getApiSource() ) . '/' .
 			urlencode( $title->getPrefixedDBkey() );
-
 		$data = array_merge(
 			$this->getProxyConf(),
 			array(
 				'method' => $method,
-				'timeout' => $wgVisualEditorParsoidTimeout,
+				'timeout' => $this->veConfig->get( 'VisualEditorParsoidTimeout' ),
 			)
 		);
 
@@ -49,7 +65,9 @@ class ApiVisualEditor extends ApiBase {
 
 		$req = MWHttpRequest::factory( $url, $data );
 		// Forward cookies, but only if configured to do so and if there are read restrictions
-		if ( $wgVisualEditorParsoidForwardCookies && !User::isEveryoneAllowed( 'read' ) ) {
+		if ( $this->veConfig->get( 'VisualEditorParsoidForwardCookies' )
+			&& !User::isEveryoneAllowed( 'read' )
+		) {
 			$req->setHeader( 'Cookie', $this->getRequest()->getHeader( 'Cookie' ) );
 		}
 		$status = $req->execute();
@@ -58,20 +76,11 @@ class ApiVisualEditor extends ApiBase {
 			// served directly from Varnish, in  which case discard the value of the XPP header
 			// and use it to declare the cache hit instead.
 			$xCache = $req->getResponseHeader( 'X-Cache' );
-			if ( is_string( $xCache ) && strpos( strtolower( $xCache ), 'hit' ) !== false ) {
+			if ( is_string( $xCache ) && strpos( $xCache, 'hit' ) !== false ) {
 				$xpp = 'cached-response=true';
-				$hit = true;
 			} else {
 				$xpp = $req->getResponseHeader( 'X-Parsoid-Performance' );
-				$hit = false;
 			}
-
-			WikiaLogger::instance()->debug( 'ApiVisualEditor', array(
-				'hit' => $hit,
-				'method' => $method,
-				'url' => $url
-			) );
-
 			if ( $xpp !== null ) {
 				$resp = $this->getRequest()->response();
 				$resp->header( 'X-Parsoid-Performance: ' . $xpp );
@@ -86,7 +95,7 @@ class ApiVisualEditor extends ApiBase {
 			} else {
 				$message = 'MWHttpRequest error';
 			}
-			$this->dieUsage( $message, 'parsoidserver-' . $code );
+			$this->dieUsage( "$message: " . $req->getContent(), 'parsoidserver-' . $code );
 		}
 		// TODO pass through X-Parsoid-Performance header, merge with getHTML above
 		return $req->getContent();
@@ -137,14 +146,14 @@ class ApiVisualEditor extends ApiBase {
 	}
 
 	protected function storeInSerializationCache( $title, $oldid, $html ) {
-		global $wgMemc, $wgVisualEditorSerializationCacheTimeout;
+		global $wgMemc;
 		$content = $this->postHTML( $title, $html, array( 'oldid' => $oldid ) );
 		if ( $content === false ) {
 			return false;
 		}
 		$hash = md5( $content );
 		$key = wfMemcKey( 'visualeditor', 'serialization', $hash );
-		$wgMemc->set( $key, $content, $wgVisualEditorSerializationCacheTimeout );
+		$wgMemc->set( $key, $content, $this->veConfig->get( 'VisualEditorSerializationCacheTimeout' ) );
 		return $hash;
 	}
 
@@ -155,16 +164,25 @@ class ApiVisualEditor extends ApiBase {
 	}
 
 	protected function postHTML( $title, $html, $parserParams ) {
-		$postData = array( 'content' => $html );
-		if ( isset( $parserParams['oldwt'] ) ) {
-			$postData['oldwt'] = $parserParams['oldwt'];
-		} else {
-			if ( $parserParams['oldid'] === 0 ) {
-				$parserParams['oldid'] = '';
-			}
-			$postData['oldid'] = $parserParams['oldid'];
+		if ( $parserParams['oldid'] === 0 ) {
+			$parserParams['oldid'] = '';
 		}
-		return $this->requestParsoid( 'POST', $title, $postData );
+		return $this->requestParsoid( 'POST', $title,
+			array(
+				'content' => $html,
+				'oldid' => $parserParams['oldid'],
+			)
+		);
+	}
+
+	protected function pstWikitext( $title, $wikitext ) {
+		return ContentHandler::makeContent( $wikitext, $title )
+			->preSaveTransform(
+				$title,
+				$this->getUser(),
+				WikiPage::factory( $title )->makeParserOptions( $this->getContext() )
+			)
+			->serialize( 'text/x-wiki' );
 	}
 
 	protected function parseWikitextFragment( $title, $wikitext ) {
@@ -176,15 +194,12 @@ class ApiVisualEditor extends ApiBase {
 		);
 	}
 
-	protected function parseWikitext( $title, $skin = null ) {
+	protected function parseWikitext( $title ) {
 		$apiParams = array(
 			'action' => 'parse',
 			'page' => $title->getPrefixedDBkey(),
-			'prop' => 'text|revid|categorieshtml'
+			'prop' => 'text|revid|categorieshtml|displaytitle',
 		);
-		if ( !empty( $skin ) ) {
-			$apiParams['useskin'] = $skin;
-		}
 		$api = new ApiMain(
 			new DerivativeRequest(
 				$this->getRequest(),
@@ -202,16 +217,25 @@ class ApiVisualEditor extends ApiBase {
 		$links = isset( $result['parse']['links'] ) ? $result['parse']['links'] : array();
 		$revision = Revision::newFromId( $result['parse']['revid'] );
 		$timestamp = $revision ? $revision->getTimestamp() : wfTimestampNow();
+		$displaytitle = isset( $result['parse']['displaytitle'] ) ?
+			$result['parse']['displaytitle'] : false;
 
 		if ( $content === false || ( strlen( $content ) && $revision === null ) ) {
 			return false;
+		}
+
+		if ( $displaytitle !== false ) {
+			// Escape entities as in OutputPage::setPageTitle()
+			$displaytitle = Sanitizer::normalizeCharReferences(
+				Sanitizer::removeHTMLtags( $displaytitle ) );
 		}
 
 		return array(
 			'content' => $content,
 			'categorieshtml' => $categorieshtml,
 			'basetimestamp' => $timestamp,
-			'starttimestamp' => wfTimestampNow()
+			'starttimestamp' => wfTimestampNow(),
+			'displayTitleHtml' => $displaytitle
 		);
 	}
 
@@ -220,6 +244,7 @@ class ApiVisualEditor extends ApiBase {
 			'action' => 'query',
 			'prop' => 'revisions',
 			'titles' => $title->getPrefixedDBkey(),
+			//'rvdifftotext' => $this->pstWikitext( $title, $wikitext )
 			'rvdifftotext' => $wikitext
 		);
 		$api = new ApiMain(
@@ -277,25 +302,14 @@ class ApiVisualEditor extends ApiBase {
 			return false;
 		}
 		$langlinks = $result['query']['pages'][$title->getArticleID()]['langlinks'];
-		$langnames = Language::getLanguageNames();
+		$langnames = Language::fetchLanguageNames();
 		foreach ( $langlinks as $i => $lang ) {
 			$langlinks[$i]['langname'] = $langnames[$langlinks[$i]['lang']];
 		}
 		return $langlinks;
 	}
 
-	/**
-	 * @protected
-	 * @description Simple helper to retrieve relevant api uri
-	 * @return String
-	 */
-	protected function getApiSource() {
-		return wfExpandUrl( wfScript( 'api' ) );
-	}
-
 	public function execute() {
-		global $wgVisualEditorNamespaces, $wgVisualEditorParsoidURL, $wgVisualEditorParsoidTimeout, $wgDevelEnvironment;
-
 		$user = $this->getUser();
 		$params = $this->extractRequestParams();
 
@@ -303,48 +317,30 @@ class ApiVisualEditor extends ApiBase {
 		if ( !$page ) {
 			$this->dieUsageMsg( 'invalidtitle', $params['page'] );
 		}
-		if ( !in_array( $page->getNamespace(), $wgVisualEditorNamespaces ) ) {
+		if ( !in_array( $page->getNamespace(), $this->veConfig->get( 'VisualEditorNamespaces' ) ) ) {
 			$this->dieUsage( "VisualEditor is not enabled in namespace " .
 				$page->getNamespace(), 'novenamespace' );
 		}
 
 		$parserParams = array();
-		if ( isset( $params['oldwt'] ) ) {
-			$parserParams['oldwt'] = $params['oldwt'];
-		} else if ( isset( $params['oldid'] ) ) {
+		if ( isset( $params['oldid'] ) ) {
 			$parserParams['oldid'] = $params['oldid'];
 		}
 
+		$html = $params['html'];
+		if ( substr( $html, 0, 11 ) === 'rawdeflate,' ) {
+			$html = gzinflate( base64_decode( substr( $html, 11 ) ) );
+		}
+
+		wfDebugLog( 'visualeditor', "called on '$page' with paction: '{$params['paction']}'" );
 		switch ( $params['paction'] ) {
-			case 'parsewt':
-				// FIXME: Perhaps requestParsoid method should be used here
-				$postData = array(
-					'wt' => $params['wikitext']
-				);
-				$content = Http::post(
-					$wgVisualEditorParsoidURL . '/' . urlencode( $this->getApiSource() ).
-						'/' . urlencode( $page->getPrefixedDBkey() ),
-					array(
-						'postData' => $postData,
-						'timeout' => $wgVisualEditorParsoidTimeout,
-						'noProxy' => !empty( $wgDevelEnvironment )
-					)
-				);
-				$result = array(
-					'result' => 'success',
-					'content' => $content
-				);
-				break;
 			case 'parse':
 				$parsed = $this->getHTML( $page, $parserParams );
 				// Dirty hack to provide the correct context for edit notices
 				global $wgTitle; // FIXME NOOOOOOOOES
 				$wgTitle = $page;
 				RequestContext::getMain()->setTitle( $page );
-				// TODO: In MW 1.19.7 method getEditNotices does not exist so for now fallback to just an empty
-				// but in future figure out what's the proper backward compatibility solution.
-				// #back-compat
-				// $notices = $page->getEditNotices();
+				// Wikia change
 				$notices = array();
 				$anoneditwarning = false;
 				$anoneditwarningMessage = $this->msg( 'VisualEditor-anoneditwarning' );
@@ -352,6 +348,18 @@ class ApiVisualEditor extends ApiBase {
 					$notices[] = $anoneditwarningMessage->parseAsBlock();
 					$anoneditwarning = true;
 				}
+				/*
+				$notices = $page->getEditNotices();
+				if ( $user->isAnon() ) {
+					$notices[] = $this->msg(
+						'anoneditwarning',
+						// Log-in link
+						'{{fullurl:Special:UserLogin|returnto={{FULLPAGENAMEE}}}}',
+						// Sign-up link
+						'{{fullurl:Special:UserLogin/signup|returnto={{FULLPAGENAMEE}}}}'
+					)->parseAsBlock();
+				}
+				*/
 				if ( $parsed && $parsed['restoring'] ) {
 					$notices[] = $this->msg( 'editingold' )->parseAsBlock();
 				}
@@ -403,6 +411,12 @@ class ApiVisualEditor extends ApiBase {
 						$notice .= '</ul>';
 						$notices[] = $notice;
 					}
+				}
+
+				if ( !$page->userCan( 'create' ) && !$page->exists() ) {
+					$notices[] = $this->msg(
+						'permissionserrorstext-withaction', 1, $this->msg( 'action-createpage' )
+					) . "<br>" . $this->msg( 'nocreatetext' )->parse();
 				}
 
 				// Show notice when editing user / user talk page of a user that doesn't exist
@@ -477,8 +491,7 @@ class ApiVisualEditor extends ApiBase {
 							'notices' => $notices,
 							'checkboxes' => $checkboxes,
 							'links' => $links,
-							'protectedClasses' => implode( ' ', $protectedClasses ),
-							'anoneditwarning' => $anoneditwarning
+							'protectedClasses' => implode( ' ', $protectedClasses )
 						),
 						$parsed['result']
 					);
@@ -486,7 +499,11 @@ class ApiVisualEditor extends ApiBase {
 				break;
 
 			case 'parsefragment':
-				$content = $this->parseWikitextFragment( $page, $params['wikitext'] );
+				$wikitext = $params['wikitext'];
+				if ( $params['pst'] ) {
+					//$wikitext = $this->pstWikitext( $page, $wikitext );
+				}
+				$content = $this->parseWikitextFragment( $page, $wikitext );
 				if ( $content === false ) {
 					$this->dieUsage( 'Error contacting the Parsoid server', 'parsoidserver' );
 				} else {
@@ -507,7 +524,6 @@ class ApiVisualEditor extends ApiBase {
 					if ( $params['html'] === null ) {
 						$this->dieUsageMsg( 'missingparam', 'html' );
 					}
-					$html = $params['html'];
 					$content = $this->postHTML( $page, $html, $parserParams );
 					if ( $content === false ) {
 						$this->dieUsage( 'Error contacting the Parsoid server', 'parsoidserver' );
@@ -523,7 +539,7 @@ class ApiVisualEditor extends ApiBase {
 						$this->dieUsage( 'No cached serialization found with that key', 'badcachekey' );
 					}
 				} else {
-					$wikitext = $this->postHTML( $page, $params['html'], $parserParams );
+					$wikitext = $this->postHTML( $page, $html, $parserParams );
 					if ( $wikitext === false ) {
 						$this->dieUsage( 'Error contacting the Parsoid server', 'parsoidserver' );
 					}
@@ -538,7 +554,7 @@ class ApiVisualEditor extends ApiBase {
 				break;
 
 			case 'serializeforcache':
-				$key = $this->storeInSerializationCache( $page, $parserParams['oldid'], $params['html'] );
+				$key = $this->storeInSerializationCache( $page, $parserParams['oldid'], $html );
 				$result = array( 'result' => 'success', 'cachekey' => $key );
 				break;
 
@@ -560,7 +576,7 @@ class ApiVisualEditor extends ApiBase {
 	 *
 	 * @param $title Title
 	 * @param $types array|string
-	 * @returns string
+	 * @return string
 	 */
 	private function getLastLogEntry( $title, $types = '' ) {
 		$lp = new LogPager(
@@ -594,7 +610,6 @@ class ApiVisualEditor extends ApiBase {
 			'paction' => array(
 				ApiBase::PARAM_REQUIRED => true,
 				ApiBase::PARAM_TYPE => array(
-					'parsewt',
 					'parse',
 					'parsefragment',
 					'serialize',
@@ -608,8 +623,8 @@ class ApiVisualEditor extends ApiBase {
 			'starttimestamp' => null,
 			'oldid' => null,
 			'html' => null,
-			'oldwt' => null,
 			'cachekey' => null,
+			'pst' => false,
 		);
 	}
 
@@ -621,20 +636,25 @@ class ApiVisualEditor extends ApiBase {
 		return false;
 	}
 
+	public function isInternal() {
+		return true;
+	}
+
 	public function isWriteMode() {
 		return true;
 	}
 
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
-	}
-
+	/**
+	 * @deprecated since MediaWiki core 1.25
+	 */
 	public function getParamDescription() {
 		return array(
 			'page' => 'The page to perform actions on.',
 			'paction' => 'Action to perform',
 			'oldid' => 'The revision number to use (defaults to latest version).',
-			'html' => 'HTML to send to parsoid in exchange for wikitext',
+			'html' => 'HTML to send to Parsoid to convert to wikitext',
+			'wikitext' => 'Wikitext to send to Parsoid to convert to HTML (paction=parsefragment)',
+			'pst' => 'Pre-save transform wikitext before sending it to Parsoid (paction=parsefragment)',
 			'basetimestamp' => 'When saving, set this to the timestamp of the revision that was'
 				. ' edited. Used to detect edit conflicts.',
 			'starttimestamp' => 'When saving, set this to the timestamp of when the page was loaded.'
@@ -644,7 +664,15 @@ class ApiVisualEditor extends ApiBase {
 		);
 	}
 
+	/**
+	 * @deprecated since MediaWiki core 1.25
+	 */
 	public function getDescription() {
 		return 'Returns HTML5 for a page from the parsoid service.';
+	}
+
+	// Wikia change
+	public function getVersion() {
+		return __CLASS__ . ': $Id$';
 	}
 }

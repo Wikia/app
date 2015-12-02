@@ -1008,7 +1008,9 @@ class SMWSQLStore2 extends SMWStore {
 		global $smwgIP;
 		include_once( "$smwgIP/includes/storage/compatSQLStore/SMW_SQLStore2_Queries.php" );
 
-		$qe = new SMWSQLStore2QueryEngine( $this, wfGetDB( DB_SLAVE, 'smw' ) );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
+		$dbr->clearFlag( DBO_TRX );
+		$qe = new SMWSQLStore2QueryEngine( $this, $dbr );
 		$result = $qe->getQueryResult( $query );
 		wfProfileOut( 'SMWSQLStore2::getQueryResult (SMW)' );
 
@@ -1071,6 +1073,7 @@ class SMWSQLStore2 extends SMWStore {
 
 		wfProfileIn( "SMWSQLStore2::getUnusedPropertiesSpecial (SMW)" );
 		$db = wfGetDB( DB_SLAVE, 'smw' );
+		$db->clearFlag( DBO_TRX );
 
 		// we use a temporary table for executing this costly operation on the DB side
 		$smw_tmp_unusedprops = $db->tableName( 'smw_tmp_unusedprops' );
@@ -1662,7 +1665,7 @@ class SMWSQLStore2 extends SMWStore {
 
 		include_once( "$smwgIP/includes/storage/compatSQLStore/SMW_SQLStore2_Queries.php" );
 
-		$qe = new SMWSQLStore2QueryEngine( $this, wfGetDB( DB_MASTER ) );
+		$qe = new SMWSQLStore2QueryEngine( $this, wfGetDB( DB_MASTER, 'smw' ) );
 		$result = $qe->refreshConceptCache( $concept );
 
 		wfProfileOut( 'SMWSQLStore2::refreshConceptCache (SMW)' );
@@ -1681,7 +1684,7 @@ class SMWSQLStore2 extends SMWStore {
 
 		include_once( "$smwgIP/includes/storage/compatSQLStore/SMW_SQLStore2_Queries.php" );
 
-		$qe = new SMWSQLStore2QueryEngine( $this, wfGetDB( DB_MASTER ) );
+		$qe = new SMWSQLStore2QueryEngine( $this, wfGetDB( DB_MASTER, 'smw' ) );
 		$result = $qe->deleteConceptCache( $concept );
 
 		wfProfileOut( 'SMWSQLStore2::deleteConceptCache (SMW)' );

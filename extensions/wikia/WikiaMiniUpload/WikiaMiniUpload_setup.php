@@ -69,17 +69,28 @@ function WMU() {
 	// Overwrite configuration settings needed by image import functionality
 	$wgAllowCopyUploads = true;
 	$wgGroupPermissions['user']['upload_by_url']   = true;
-	$dir = dirname(__FILE__).'/';
-	require_once($dir.'WikiaMiniUpload_body.php');
 
 	$method = $wgRequest->getVal('method');
 	$wmu = new WikiaMiniUpload();
 
-	$html = $wmu->$method();
-	$ar = new AjaxResponse($html);
-	$ar->setContentType('text/html; charset=utf-8');
+	if ( method_exists( $wmu, $method ) ) {
+		$html = $wmu->$method();
+		$ar = new AjaxResponse( $html );
+		$ar->setContentType( 'text/html; charset=utf-8' );
+	} else {
+		$errorMessage = 'WMU::' . $method . ' does not exist';
+
+		\Wikia\Logger\WikiaLogger::instance()->error( $errorMessage );
+
+		$payload = json_encode( [ 'message' => $errorMessage ] );
+		$ar = new AjaxResponse( $payload );
+		$ar->setResponseCode( '501 Not implemented' );
+		$ar->setContentType( 'application/json; charset=utf-8' );
+	}
 	return $ar;
 }
+
+$wgAutoloadClasses['WikiaMiniUpload'] = __DIR__ . '/WikiaMiniUpload_body.php';
 
 $wgResourceModules['ext.wikia.WMU'] = array(
 	'scripts' => 'js/WMU.js',

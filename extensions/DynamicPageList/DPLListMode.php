@@ -1,17 +1,17 @@
 <?php
 
 class DPLListMode {
-	var $name;
-	var $sListStart = '';
-	var $sListEnd = '';
-	var $sHeadingStart = '';
-	var $sHeadingEnd = '';
-	var $sItemStart = '';
-	var $sItemEnd = '';
-	var $sInline = '';
-	var $sSectionTags = array();
-	var $aMultiSecSeparators = array();
-	var $iDominantSection = -1;
+	public $name;
+	public $sListStart = '';
+	public $sListEnd = '';
+	public $sHeadingStart = '';
+	public $sHeadingEnd = '';
+	public $sItemStart = '';
+	public $sItemEnd = '';
+	public $sInline = '';
+	public $sSectionTags = array();
+	public $aMultiSecSeparators = array();
+	public $iDominantSection = -1;
 	
 	function __construct($listmode, $secseparators, $multisecseparators, $inlinetext, $listattr = '', $itemattr = '',
 						  $listseparators, $iOffset, $dominantSection) {

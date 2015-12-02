@@ -1,8 +1,0 @@
-Extension to provide Assessment parsing and collection/filtering based on assessments for creating collections of articles. Used primarily for the Wikipedia Offline project.
-
-This is YuviPanda's GSoC 2011 Project. The extension works only on MySQL, with a proper engine that supports Transactions.
-
-This is intended to replace the WP1.0 bot [1] in use on the english wikipedia. The major aim is to make it easier to select and export article selections for various offline collections (Wikipedia 1.0 being such a collection).
-
-
-[1] http://en.wikipedia.org/wiki/User:WP_1.0_bot

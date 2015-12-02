@@ -6,7 +6,8 @@
 			"Shanmugamp7",
 			"மதனாஹரன்",
 			"கௌசிக் பிரபு",
-			"Kalyanasundar"
+			"Kalyanasundar",
+			"ElangoRamanujam"
 		]
 	},
 	"tooltip-ca-createsource": "இந்த பக்கத்தின் மூல நிரலை உருவாக்கவும்",
@@ -16,7 +17,6 @@
 	"visualeditor-ca-editsource": "மூலத்தைத் தொகு",
 	"visualeditor-ca-editsource-section": "மூலத்தைத் தொகு",
 	"visualeditor-dialog-beta-welcome-action-continue": "தொடரவும்",
-	"visualeditor-dialog-media-insert-button": "ஊடகத்தைச் செருகு",
 	"visualeditor-dialog-meta-categories-category": "பகுப்பு",
 	"visualeditor-dialog-meta-categories-data-label": "பகுப்புகள்",
 	"visualeditor-dialog-meta-categories-input-newcategorylabel": "புதிய பகுப்பு",
@@ -27,16 +27,17 @@
 	"visualeditor-dialog-meta-languages-section": "மொழிகள்",
 	"visualeditor-dialog-meta-settings-index-force": "ஆம்",
 	"visualeditor-dialog-meta-settings-label": "பக்க அமைப்புகள்",
-	"visualeditor-dialog-reference-insert-button": "மேற்கோளை உள்ளிடு",
-	"visualeditor-dialog-reference-insert-title": "மேற்கோளை உள்ளிடு",
 	"visualeditor-dialog-reference-options-group-label": "இந்தக் குழுவை பாவிக்கவும்",
 	"visualeditor-dialog-reference-title": "மேற்கோள்",
 	"visualeditor-dialog-transclusion-add-content": "உள்ளடக்கத்தை சேர்",
 	"visualeditor-dialog-transclusion-add-template": "வார்ப்புருவைச் சேர்",
 	"visualeditor-dialog-transclusion-content": "உள்ளடக்கம்",
-	"visualeditor-dialog-transclusion-placeholder": "புதிய வார்ப்புரு",
+	"visualeditor-dialog-transclusion-placeholder": "ஒரு வார்ப்புருவைச் சேர்க்கவும்",
 	"visualeditor-dialog-transclusion-remove-content": "உள்ளடக்கத்தை நீக்கு",
 	"visualeditor-dialog-transclusion-remove-template": "வார்ப்புருவை நீக்கு",
+	"visualeditor-dialog-transclusion-required-parameter-dialog-cancel": "பின் செல்லவும்",
+	"visualeditor-dialog-transclusion-required-parameter-dialog-ok": "எப்படியிருப்பினும் தொடர்க",
+	"visualeditor-dialog-transclusion-required-parameter-is-blank": "தாங்கள் நிச்சயமாக $1 {{PLURAL:$2|parameter|parameters}}ஐ நிரப்பாமல் தொடர விரும்புகிறீர்களா?",
 	"visualeditor-dialogbutton-media-tooltip": "ஊடகம்",
 	"visualeditor-dialogbutton-meta-tooltip": "பக்க அமைப்புகள்",
 	"visualeditor-dialogbutton-reference-tooltip": "மேற்கோள்",
@@ -54,5 +55,6 @@
 	"visualeditor-savedialog-label-error": "பிழை",
 	"visualeditor-savedialog-label-save": "பக்கத்தைச் சேமி",
 	"visualeditor-savedialog-label-warning": "எச்சரிக்கை",
-	"visualeditor-toolbar-savedialog": "பக்கத்தைச் சேமி"
+	"visualeditor-toolbar-savedialog": "பக்கத்தைச் சேமி",
+	"visualeditor-viewpage-savewarning-title": "உறுதியாகவா?"
 }

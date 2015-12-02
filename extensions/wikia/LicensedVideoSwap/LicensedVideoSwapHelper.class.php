@@ -357,7 +357,7 @@ SQL;
 		$helper = new VideoHandlerHelper();
 
 		// Get a list of what videos the user has already looked at
-		$visitedList = unserialize( $this->wg->User->getOption( LicensedVideoSwapHelper::USER_VISITED_LIST ) );
+		$visitedList = unserialize( $this->wg->User->getGlobalAttribute( LicensedVideoSwapHelper::USER_VISITED_LIST ) );
 
 		// Go through each video and add additional detail needed to display the video
 		$videos = array();
@@ -1271,7 +1271,7 @@ SQL;
 		if ( !is_array( $total ) || !array_key_exists( $userId, $total ) ) {
 			$statusNew = self::STATUS_NEW;
 			$pageStatus = WPP_LVS_STATUS;
-			$visitedDate = $this->wg->User->getOption( self::USER_VISITED_DATE );
+			$visitedDate = $this->wg->User->getGlobalAttribute( self::USER_VISITED_DATE );
 			if ( empty( $visitedDate ) ) {
 				$sqlJoin = '';
 			} else {

@@ -1,3 +1,4 @@
+[![devDependency Status](https://david-dm.org/wikimedia/mediawiki-extensions-VisualEditor/dev-status.svg)](https://david-dm.org/wikimedia/mediawiki-extensions-VisualEditor#info=devDependencies)
 # VisualEditor
 
 VisualEditor provides a visual editor for wiki pages. It is written in

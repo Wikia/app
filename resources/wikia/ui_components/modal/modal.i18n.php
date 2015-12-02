@@ -15,6 +15,7 @@ $messages['en'] = [
 	'styleguide-description-modal-alt-link' => "OPTIONAL alternative link data in a modal's footer",
 	'styleguide-description-modal-secondary-button' => "OPTIONAL secondary button in a modal's footer; result of UIComponent->render() method (HTML markup)",
 	'styleguide-description-modal-primary-button' => "OPTIONAL primary button in a modal's footer; result of UIComponent->render() method (HTML markup)",
+	'styleguide-description-modal-escape-to-close' => 'Whether or not pressing the escape button will close the modal. Default: true.',
 
 	// examples
 	'styleguide-example-modal-small-description' => "A small modal is centered horizontally and vertically. Its height equals 250px and width 400px. It should be use for rendering... As all modals please remember the title will have only one line.",

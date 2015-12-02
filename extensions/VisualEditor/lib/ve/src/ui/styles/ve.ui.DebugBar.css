@@ -1,0 +1,117 @@
+/*!
+ * VisualEditor Initialization Debug Bar styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.ve-ui-debugBar-commands {
+	font-size: 0.8em;
+}
+
+.ve-ui-debugBar-commands > .oo-ui-widget,
+.ve-ui-debugBar-commands-divider {
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 1em;
+}
+
+.ve-ui-debugBar-selectionLabel {
+	min-width: 20em;
+	font-family: monospace;
+	font-size: 1.2em;
+}
+
+.ve-ui-debugBar-commands-divider {
+	border-right: 1px solid #ddd;
+	padding-left: 0.2em;
+	width: 0;
+}
+
+.ve-ui-debugBar-dump {
+	font-size: 0.7em;
+	margin-top: 2em;
+	display: none;
+	background-color: #f3f3f3;
+	width: 100%;
+	border: 1px solid #ddd;
+	border-radius: 0;
+	border-top-right-radius: 0.25em;
+	border-top-left-radius: 0.25em;
+}
+
+.ve-ui-debugBar-dump td {
+	padding: 0.25em 1em;
+	background-color: #fff;
+	vertical-align: top;
+}
+
+.ve-ui-debugBar-dump-linmod-data,
+.ve-ui-debugBar-dump-linmod-metadata {
+	width: 27%;
+}
+
+.ve-ui-debugBar-dump th {
+	padding: 0.5em 1em;
+	color: #555;
+	text-shadow: 0 1px 1px #fff;
+}
+
+.ve-ui-debugBar-dump ol {
+	padding-left: 1.5em;
+	color: #999;
+}
+
+.ve-ui-debugBar-dump li > span {
+	display: inline-block;
+	background-color: #f3f3f3;
+	border-radius: 0.3em;
+	margin: 0.25em 0 0.25em 0;
+	padding: 0.125em 0.5em;
+	text-shadow: 0 1px 1px #fff;
+	color: #000;
+}
+
+.ve-ui-debugBar-dump li > span > span {
+	color: #aaa;
+	text-shadow: 0 1px 1px #fff;
+}
+
+.ve-ui-debugBar-dump li .ve-ui-debugBar-dump-undefined {
+	color: #aaa;
+}
+
+.ve-ui-debugBar-dump li .ve-ui-debugBar-dump-element {
+	background-color: #ddeeff;
+}
+
+.ve-ui-debugBar-dump li .ve-ui-debugBar-dump-char {
+	background-color: #ddffee;
+}
+
+.ve-ui-debugBar-dump li .ve-ui-debugBar-dump-achar {
+	background-color: #ffeedd;
+}
+
+.ve-ui-debugBar-filibuster {
+	font-size: 0.7em;
+	margin-top: 2em;
+	display: none;
+	background-color: #f3f3f3;
+	width: 100%;
+	border: 1px solid #ddd;
+	border-radius: 0;
+	border-top-right-radius: 0.25em;
+	border-top-left-radius: 0.25em;
+}
+
+.ve-ui-debugBar-filibuster td {
+	padding: 0.25em 1em;
+	background-color: #fff;
+	vertical-align: top;
+}
+
+.ve-ui-debugBar-filibuster th {
+	padding: 0.5em 1em;
+	color: #555;
+	text-shadow: 0 1px 1px #fff;
+}

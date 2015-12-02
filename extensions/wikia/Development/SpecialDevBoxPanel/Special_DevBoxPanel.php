@@ -47,7 +47,6 @@ if (!empty($wgRunningUnitTests) && $wgNoDBUnits) {
 }
 
 $wgHooks['WikiFactory::executeBeforeTransferToGlobals'][] = "wfDevBoxDisableWikiFactory";
-$wgHooks['PageRenderingHash'][] = 'wfDevBoxSeparateParserCache';
 $wgHooks['ResourceLoaderGetConfigVars'][] = 'wfDevBoxResourceLoaderGetConfigVars';
 $wgExceptionHooks['MWExceptionRaw'][] = "wfDevBoxLogExceptions";
 
@@ -127,7 +126,7 @@ class DevBoxPanel extends SpecialPage {
  * @return boolean true to allow the WikiFactoryLoader to do its other necessary initalization.
  */
 function wfDevBoxForceWiki(WikiFactoryLoader $wikiFactoryLoader){
-	global $wgDevelEnvironment, $wgWikiFactoryDB, $wgCommandLineMode, $wgDevboxDefaultWikiDomain;
+	global $wgDevelEnvironment, $wgExternalSharedDB, $wgCommandLineMode, $wgDevboxDefaultWikiDomain;
 	if($wgDevelEnvironment){
 		$forcedWikiDomain = getForcedWikiValue();
 		$cityId = WikiFactory::DomainToID($forcedWikiDomain);
@@ -151,7 +150,7 @@ function wfDevBoxForceWiki(WikiFactoryLoader $wikiFactoryLoader){
 				/**
 				 * find city_id by database name
 				 */
-				$dbr = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB );
+				$dbr = WikiFactory::db( DB_SLAVE );
 				$cityId = $dbr->selectField(
 					"city_list",
 					array( "city_id" ),
@@ -175,30 +174,28 @@ function wfDevBoxForceWiki(WikiFactoryLoader $wikiFactoryLoader){
 
 		// This section allows us to use c1 or c2 as a source for wiki databases
 		// Be aware that this means the database has to be loaded in the right cluster according to wikicities!
-		$db = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB );
-		$sql = 'SELECT city_cluster from city_list where city_id = ' . $cityId;
-		$result = $db->query( $sql, __METHOD__ );
-
-		$row = $result->fetchRow();
-		$wikiFactoryLoader->mVariables["wgDBcluster"] = $row['city_cluster'];
+		$db = WikiFactory::db( DB_SLAVE );
+		$cluster = $db->selectField( 'city_list', 'city_cluster', [ 'city_id' => $cityId ], __METHOD__ );
+		$wikiFactoryLoader->mVariables["wgDBcluster"] = $cluster;
 
 		// Final sanity check to make sure our database exists
 		if ($forcedWikiDomain != $wgDevboxDefaultWikiDomain) {
-			$dbname = WikiFactory::DomainToDB($forcedWikiDomain);
-			$db1 = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB . '_c1');
-			$db2 = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB . '_c2'); // lame
+			// check if the wiki exist on a cluster
+			wfDebug( __METHOD__ . ": checking if wiki #{$cityId} exists on {$cluster} cluster...\n" );
 
-			$devbox_dbs = array_merge(getDevBoxOverrideDatabases($db1), getDevBoxOverrideDatabases($db2));
-			if (array_search($dbname, $devbox_dbs) === false) {
-				header('HTTP/1.1 503');
-				die("<pre>Fatal Error: No local copy of database [$dbname] was found.</pre>");
+			$dbname = WikiFactory::DomainToDB($forcedWikiDomain);
+			$db = wfGetDB( DB_MASTER, [], $wgExternalSharedDB . '_' . $cluster ); // force master - @see PLATFORM-528
+
+			$res = $db->query( 'SHOW DATABASES ' . $db->buildLike($dbname), __METHOD__ ); // SHOW DATABASES LIKE 'muppet'
+
+			if ( $res->numRows() === 0 ) {
+				header( 'HTTP/1.1 503' );
+				header( 'X-Error: missing database' );
+				header( 'Content-Type: text/plain' );
+
+				die( "No local copy of database [$dbname] was found on {$cluster} cluster [using {$db->getServer()} DB]." );
 			}
 		}
-
-		// TODO: move this into the config file
-		global $wgReadOnly;
-		$wgReadOnly = false;
-
 	}
 	return true;
 } // end wfDevBoxForceWiki()
@@ -254,21 +251,6 @@ function wfDevBoxResourceLoaderGetConfigVars( &$vars ) {
 	return true;
 }
 
-/**
- * Modify parser cache key to be different on each devbox (BugId:24647)
- *
- * @param string $hash part of parser cache key to be modified
- * @param User $user current user instance
- * @return boolean true
- */
-function wfDevBoxSeparateParserCache(&$hash) {
-	global $wgDevelEnvironmentName;
-
-	$hash .= "!dev-{$wgDevelEnvironmentName}";
-	return true;
-}
-
-
 function wfDevBoxLogExceptions( $errorText ) {
 	Wikia::logBacktrace("wfDevBoxLogExceptions");
 	Wikia::log($errorText);
@@ -281,6 +263,7 @@ function wfDevBoxLogExceptions( $errorText ) {
  * Hostname scheme: override.developer.wikia-dev.com
  * Example: muppet.owen.wikia-dev.com -> muppet.wikia.com
  * Example: es.gta.owen.wikia-dev.com -> es.gta.wikia.com
+ * Example: muppet.wikia.com -> muppet.wikia.com
  */
 function getForcedWikiValue(){
 	global $wgDevelEnvironmentName;
@@ -289,13 +272,15 @@ function getForcedWikiValue(){
 		return '';
 	}
 
-	if (count(explode(".", $_SERVER['HTTP_HOST'])) == 3) {
-		return 'wikia.com';
+	// This is an attempt to match "devbox" host names
+	if (strpos($_SERVER['HTTP_HOST'], "wikia-dev.com") !== false){
+		$site = str_replace('.' . $wgDevelEnvironmentName . '.wikia-dev.com', '', $_SERVER['HTTP_HOST']);
+		return "$site.wikia.com";
 	}
 
-	$site = str_replace('.' . $wgDevelEnvironmentName . '.wikia-dev.com', '', $_SERVER['HTTP_HOST']);
+	// Otherwise assume it's a wiki and try it anyway
+	return $_SERVER['HTTP_HOST'];
 
-	return "$site.wikia.com";
 } // end getForcedWikiValue()
 
 
@@ -304,7 +289,7 @@ function getForcedWikiValue(){
  * @return array - databases which are available on this cluster
  *					  use the writable devbox server instead of the production slaves.
  */
-function getDevBoxOverrideDatabases(DatabaseMysql $db){
+function getDevBoxOverrideDatabases(DatabaseBase $db){
 
 	$IGNORE_DBS = array('information_schema', 'mysql', '#mysql50#lost+found', 'wikicities_c2');
 	$retval = array();
@@ -420,3 +405,25 @@ function getHtmlForInfo(){
 	return $html;
 } // end getHtmlForInfo()
 
+/**
+ * Vary memcache by devbox
+ *
+ * We append wfWikiID() here as wfMemcKey() uses
+ * $wgCachePrefix or wfWikiID() if the first one is not set
+ *
+ * Sessions are shared between devboxes
+ *
+ * E.g. memcached: get(dev-macbre-plpoznan:revisiontext:textid:96888)
+ *
+ * @author macbre
+ * @see PLATFORM-1401
+ * @see https://github.com/Wikia/app/pull/5842
+ */
+$wgHooks['WikiFactory::onExecuteComplete'][] = function() {
+	global $wgCachePrefix, $wgSharedKeyPrefix, $wgDevelEnvironmentName;
+
+	$wgCachePrefix = 'dev-' . $wgDevelEnvironmentName . '-' . wfWikiID(); // e.g. dev-macbre-muppet / dev-macbre-glee / ...
+	$wgSharedKeyPrefix = 'dev-' . $wgDevelEnvironmentName . '-' . $wgSharedKeyPrefix; // e.g. dev-macbre-wikicities
+
+	return true;
+};

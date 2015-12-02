@@ -6,7 +6,7 @@
  */
 
 /**
- * Dialog for inserting and editing MediaWiki transclusions.
+ * Dialog for inserting and editing MediaWiki citations.
  *
  * @class
  * @extends ve.ui.MWTemplateDialog
@@ -34,17 +34,6 @@ ve.ui.MWCitationDialog.static.name = 'citation';
 ve.ui.MWCitationDialog.static.icon = 'reference';
 
 /* Methods */
-
-/**
- * @inheritdoc
- */
-ve.ui.MWCitationDialog.prototype.getApplyButtonLabel = function () {
-	return ve.msg(
-		this.inserting ?
-			'visualeditor-dialog-citation-insert-citation' :
-			'visualeditor-dialog-action-apply'
-	);
-};
 
 /**
  * Get the reference node to be edited.
@@ -86,60 +75,12 @@ ve.ui.MWCitationDialog.prototype.getSelectedNode = function () {
 /**
  * @inheritdoc
  */
-ve.ui.MWCitationDialog.prototype.applyChanges = function () {
-	var item,
-		surfaceModel = this.getFragment().getSurface(),
-		doc = surfaceModel.getDocument(),
-		internalList = doc.getInternalList(),
-		obj = this.transclusionModel.getPlainObject();
-
-	if ( !this.referenceModel ) {
-		// Collapse returns a new fragment, so update this.fragment
-		this.fragment = this.getFragment().collapseRangeToEnd();
-		this.referenceModel = new ve.dm.MWReferenceModel();
-		this.referenceModel.insertInternalItem( surfaceModel );
-		this.referenceModel.insertReferenceNode( this.getFragment() );
-	}
-
-	item = this.referenceModel.findInternalItem( surfaceModel );
-	if ( item ) {
-		if ( this.selectedNode ) {
-			this.transclusionModel.updateTransclusionNode( surfaceModel, this.selectedNode );
-		} else if ( obj !== null ) {
-			this.transclusionModel.insertTransclusionNode(
-				// HACK: This is trying to place the cursor inside the first content branch node
-				// but this theoretically not a safe assumption - in practice, the citation dialog
-				// will only reach this code if we are inserting (not updating) a transclusion, so
-				// the referenceModel will have already initialized the internal node with a
-				// paragraph - getting the range of the item covers the entire paragraph so we have
-				// to get the range of it's first (and empty) child
-				this.getFragment().clone( item.getChildren()[0].getRange() )
-			);
-		}
-	}
-
-	// HACK: Scorch the earth - this is only needed because without it, the reference list won't
-	// re-render properly, and can be removed once someone fixes that
-	this.referenceModel.setDocument(
-		doc.cloneFromRange(
-			internalList.getItemNode( this.referenceModel.getListIndex() ).getRange()
-		)
-	);
-	this.referenceModel.updateInternalItem( surfaceModel );
-
-	// Grandparent method
-	return ve.ui.MWCitationDialog.super.super.prototype.applyChanges.call( this );
-};
-
-/**
- * @inheritdoc
- */
 ve.ui.MWCitationDialog.prototype.initialize = function ( data ) {
 	// Parent method
 	ve.ui.MWCitationDialog.super.prototype.initialize.call( this, data );
 
 	// HACK: Use the same styling as single-mode transclusion dialog - this should be generalized
-	this.frame.$content.addClass( 've-ui-mwTransclusionDialog-single' );
+	this.$content.addClass( 've-ui-mwTransclusionDialog-single' );
 };
 
 /**
@@ -157,6 +98,9 @@ ve.ui.MWCitationDialog.prototype.getSetupProcess = function ( data ) {
 					);
 				}
 			}
+			this.actions.forEach( { actions: 'insert' }, function ( action ) {
+				action.setLabel( ve.msg( 'visualeditor-dialog-action-insert' ) );
+			} );
 		}, this );
 };
 
@@ -165,7 +109,7 @@ ve.ui.MWCitationDialog.prototype.onTransclusionReady = function () {
 	ve.ui.MWCitationDialog.super.prototype.onTransclusionReady.call( this );
 
 	if ( !this.hasUsefulParameter() ) {
-		this.applyButton.setDisabled( true );
+		this.actions.setAbilities( { apply: false, insert: false } );
 	}
 };
 
@@ -173,21 +117,24 @@ ve.ui.MWCitationDialog.prototype.onTransclusionReady = function () {
  * @inheritdoc
  */
 ve.ui.MWCitationDialog.prototype.setPageByName = function ( param ) {
+	var hasUsefulParameter = this.hasUsefulParameter();
+
 	// Parent method
 	ve.ui.MWCitationDialog.super.prototype.setPageByName.call( this, param );
 
-	this.applyButton.setDisabled( !this.hasUsefulParameter() );
+	this.actions.setAbilities( { apply: hasUsefulParameter, insert: hasUsefulParameter } );
 };
 
 /**
  * @inheritdoc
  */
 ve.ui.MWCitationDialog.prototype.onAddParameterBeforeLoad = function ( page ) {
-	var citeDialog = this;
+	var hasUsefulParameter = this.hasUsefulParameter();
+
 	page.preLoad = true;
 	page.valueInput.on( 'change', function () {
-		citeDialog.applyButton.setDisabled( !citeDialog.hasUsefulParameter() );
-	} );
+		this.actions.setAbilities( { apply: hasUsefulParameter, insert: hasUsefulParameter } );
+	}.bind( this ) );
 };
 
 /**
@@ -211,9 +158,77 @@ ve.ui.MWCitationDialog.prototype.hasUsefulParameter = function () {
 /**
  * @inheritdoc
  */
+ve.ui.MWCitationDialog.prototype.getActionProcess = function ( action ) {
+	if ( action === 'apply' || action === 'insert' ) {
+		return new OO.ui.Process( function () {
+			var deferred = $.Deferred();
+			this.checkRequiredParameters().done( function () {
+				var item,
+					surfaceModel = this.getFragment().getSurface(),
+					doc = surfaceModel.getDocument(),
+					internalList = doc.getInternalList(),
+					obj = this.transclusionModel.getPlainObject();
+
+				if ( !this.referenceModel ) {
+					// Collapse returns a new fragment, so update this.fragment
+					this.fragment = this.getFragment().collapseToEnd();
+					this.referenceModel = new ve.dm.MWReferenceModel();
+					this.referenceModel.setDir( doc.getDir() );
+					this.referenceModel.setLang( doc.getLang() );
+					this.referenceModel.insertInternalItem( surfaceModel );
+					this.referenceModel.insertReferenceNode( this.getFragment() );
+				}
+
+				item = this.referenceModel.findInternalItem( surfaceModel );
+				if ( item ) {
+					if ( this.selectedNode ) {
+						this.transclusionModel.updateTransclusionNode(
+							surfaceModel, this.selectedNode
+						);
+					} else if ( obj !== null ) {
+						this.transclusionModel.insertTransclusionNode(
+							// HACK: This is trying to place the cursor inside the first content branch
+							// node but this theoretically not a safe assumption - in practice, the
+							// citation dialog will only reach this code if we are inserting (not
+							// updating) a transclusion, so the referenceModel will have already
+							// initialized the internal node with a paragraph - getting the range of the
+							// item covers the entire paragraph so we have to get the range of it's
+							// first (and empty) child
+							this.getFragment().clone(
+								new ve.dm.LinearSelection( doc, item.getChildren()[0].getRange() )
+							)
+						);
+					}
+				}
+
+				// HACK: Scorch the earth - this is only needed because without it, the references list
+				// won't re-render properly, and can be removed once someone fixes that
+				this.referenceModel.setDocument(
+					doc.cloneFromRange(
+						internalList.getItemNode( this.referenceModel.getListIndex() ).getRange()
+					)
+				);
+				this.referenceModel.updateInternalItem( surfaceModel );
+
+				this.close( { action: action } );
+			}.bind( this ) ).always( function () {
+				deferred.resolve();
+			} );
+
+			return deferred;
+		}, this );
+	}
+
+	// Parent method
+	return ve.ui.MWCitationDialog.super.prototype.getActionProcess.call( this, action );
+};
+
+/**
+ * @inheritdoc
+ */
 ve.ui.MWCitationDialog.prototype.getTeardownProcess = function ( data ) {
 	return ve.ui.MWCitationDialog.super.prototype.getTeardownProcess.call( this, data )
-		.next( function () {
+		.first( function () {
 			// Cleanup
 			this.referenceModel = null;
 			this.referenceNode = null;

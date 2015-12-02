@@ -1,0 +1,37 @@
+{
+	"@metadata": {
+		"authors": [
+			"Aotake",
+			"Fryed-peach",
+			"Hosiryuhosi",
+			"Shirayuki",
+			"Whym"
+		]
+	},
+	"semanticdrilldown-desc": "意味的データを閲覧するための絞り込みインターフェイス",
+	"specialpages-group-sd_group": "意味的ドリルダウン",
+	"browsedata": "データ閲覧",
+	"sd_browsedata_choosecategory": "カテゴリを選択",
+	"sd_browsedata_viewcategory": "カテゴリ表示",
+	"sd_browsedata_docu": "結果を絞り込むには、以下の項目を1つ以上クリックします。",
+	"sd_browsedata_subcategory": "下位カテゴリ",
+	"sd_browsedata_other": "その他",
+	"sd_browsedata_none": "なし",
+	"sd_browsedata_filterbyvalue": "この値で絞り込む",
+	"sd_browsedata_filterbysubcategory": "この下位カテゴリで絞り込む",
+	"sd_browsedata_otherfilter": "このフィルターの別の値を持つページを表示",
+	"sd_browsedata_nonefilter": "このフィルターの値を持たないページを表示",
+	"sd_browsedata_or": "または",
+	"sd_browsedata_removefilter": "このフィルターを除去",
+	"sd_browsedata_removesubcategoryfilter": "この下位カテゴリ条件を除去",
+	"sd_browsedata_resetfilters": "フィルターをリセット",
+	"sd_browsedata_addanothervalue": "矢印をクリックして別の値を追加できます",
+	"sd_browsedata_daterangestart": "始まり:",
+	"sd_browsedata_daterangeend": "終わり:",
+	"sd_browsedata_novalues": "このフィルターには値がありません",
+	"sd_createfilter_usepropertyvalues": "フィルターにこのプロパティのすべての値を使用",
+	"sd_createfilter_usecategoryvalues": "このカテゴリからフィルターの値を取得:",
+	"sd_createfilter_requirefilter": "このフィルターが表示される前に、別のフィルターを選択するのを必須にする:",
+	"sd-pageschemas-filter": "フィルター",
+	"sd-pageschemas-values": "値"
+}

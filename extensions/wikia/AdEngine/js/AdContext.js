@@ -1,66 +1,90 @@
-/*global define,require*/
+/*global define*/
 /**
  * The AMD module to hold all the context needed for the client-side scripts to run.
  */
 define('ext.wikia.adEngine.adContext', [
-	'wikia.window',
+	'wikia.abTest',
+	'wikia.cookies',
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
-	require.optional('wikia.abTest')
-], function (w, doc, geo, instantGlobals, abTest) {
+	'wikia.window',
+	'wikia.querystring'
+], function (abTest, cookies, doc, geo, instantGlobals, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
 
-	var context;
+	var context,
+		callbacks = [],
+		qs = new Querystring();
 
 	function getContext() {
 		return context;
 	}
 
 	function getMercuryCategories() {
-		var categoryDict;
-
-		try {
-			categoryDict = w.Wikia.article.article.categories;
-		} catch (e) {
+		if (!context.targeting.mercuryPageCategories) {
 			return;
 		}
 
-		return categoryDict.map(function (item) { return item.title; });
+		return context.targeting.mercuryPageCategories.map(function (item) { return item.title; });
+	}
+
+	function isUrlParamSet(param) {
+		return !!parseInt(qs.getVal(param, '0'), 10);
 	}
 
 	function setContext(newContext) {
+		var i,
+			len,
+			noExternals = w.wgNoExternals || isUrlParamSet('noexternals');
+
+		// Note: consider copying the value, not the reference
 		context = newContext;
 
 		// Always have objects in all categories
 		context.opts = context.opts || {};
+		context.slots = context.slots || {};
 		context.targeting = context.targeting || {};
 		context.providers = context.providers || {};
-		context.forceProviders = context.forceProviders || {};
+		context.forcedProvider = qs.getVal('forcead', null) || context.forcedProvider || null;
 
 		// Don't show ads when Sony requests the page
 		if (doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/)) {
 			context.opts.showAds = false;
 		}
 
-		// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
-		if (context.providers.sevenOneMedia) {
-			context.opts.usePostScribe = true;
+		// SourcePoint detection integration
+		if (!noExternals && context.opts.sourcePointDetectionUrl) {
+			context.opts.sourcePointDetection = isUrlParamSet('sourcepointdetection') ||
+				(context.targeting.skin === 'oasis' &&
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
+			context.opts.sourcePointDetectionMobile = isUrlParamSet('sourcepointdetection') ||
+				(context.targeting.skin === 'mercury' &&
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
 		}
 
-		// Always call DART in specific countries
-		// TODO: make mobile code compatible with desktop (currently one uses opts and the other providers)
-		var alwaysCallDartInCountries = instantGlobals.wgAdDriverAlwaysCallDartInCountries || [],
-			alwaysCallDartInCountriesMobile = instantGlobals.wgAdDriverAlwaysCallDartInCountriesMobile || [];
-
-		if (alwaysCallDartInCountries.indexOf(geo.getCountryCode()) > -1) {
-			context.opts.alwaysCallDart = true;
+		// SourcePoint recovery integration
+		if (context.opts.sourcePointDetection && context.opts.sourcePointRecoveryUrl) {
+			context.opts.sourcePointRecovery = isUrlParamSet('sourcepointrecovery') ||
+				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
 		}
 
-		if (alwaysCallDartInCountriesMobile.indexOf(geo.getCountryCode()) > -1) {
-			context.providers.remnantGptMobile = true;
+		// Recoverable ads message
+		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
+			context.opts.recoveredAdsMessage = geo.isProperGeo(instantGlobals.wgAdDriverAdsRecoveryMessageCountries);
+		}
+
+		// Google Consumer Surveys
+		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
+			context.opts.googleConsumerSurveys = abTest.getGroup('PROJECT_43') === 'GROUP_5' &&
+				geo.isProperGeo(instantGlobals.wgAdDriverGoogleConsumerSurveysCountries);
+		}
+
+		// showcase.*
+		if (cookies.get('mock-ads') === 'NlfdjR5xC0') {
+			context.opts.showcase = true;
 		}
 
 		// Targeting by page categories
@@ -68,27 +92,56 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
 		}
 
-		// Krux integration
-		if (instantGlobals.wgSitewideDisableKrux) {
-			context.targeting.enableKruxTargeting = false;
+		if (geo.isProperGeo(instantGlobals.wgAdDriverTurtleCountries)) {
+			context.providers.turtle = true;
 		}
 
-		// Taboola integration
-		if (context.providers.taboola) {
-			context.providers.taboola = abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES') &&
-			(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
+		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXCountries)) {
+			context.providers.openX = true;
 		}
+
+		// INVISIBLE_HIGH_IMPACT slot
+		context.slots.invisibleHighImpact = (
+			context.slots.invisibleHighImpact &&
+			geo.isProperGeo(instantGlobals.wgAdDriverHighImpactSlotCountries)
+		) || isUrlParamSet('highimpactslot');
+
+		// INCONTENT_PLAYER slot
+		context.slots.incontentPlayer = geo.isProperGeo(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
+			isUrlParamSet('incontentplayer');
+
+		context.opts.scrollHandlerConfig = instantGlobals.wgAdDriverScrollHandlerConfig;
+		context.opts.enableScrollHandler = geo.isProperGeo(instantGlobals.wgAdDriverScrollHandlerCountries) ||
+			isUrlParamSet('scrollhandler');
+
+		// Krux integration
+		context.targeting.enableKruxTargeting = !!(
+			context.targeting.enableKruxTargeting &&
+			geo.isProperGeo(instantGlobals.wgAdDriverKruxCountries) &&
+			!instantGlobals.wgSitewideDisableKrux &&
+			!context.targeting.wikiDirectedAtChildren &&
+			!noExternals
+		);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
 		if (w.ads && w.ads.context) {
 			w.ads.context = context;
 		}
+
+		for (i = 0, len = callbacks.length; i < len; i += 1) {
+			callbacks[i](context);
+		}
+	}
+
+	function addCallback(callback) {
+		callbacks.push(callback);
 	}
 
 	setContext(w.ads ? w.ads.context : {});
 
 	return {
+		addCallback: addCallback,
 		getContext: getContext,
 		setContext: setContext
 	};

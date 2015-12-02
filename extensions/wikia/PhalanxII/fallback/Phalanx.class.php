@@ -297,16 +297,16 @@ class PhalanxFallback {
 				Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 			}
 		} else {
-			global $wgStatsDB;
+			global $wgSpecialsDB;
 			$fields = array(
 				'ps_blocker_id' => $blockerId,
 				'ps_blocker_type' => $type,
 				'ps_timestamp' => wfTimestampNow(),
 				'ps_blocked_user' => $wgUser->getName(),
 				'ps_wiki_id' => $wgCityId,
-			);			
-			$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB );
-			$dbw->insert( '`specials`.`phalanx_stats`', $fields );
+			);
+			$dbw = wfGetDB( DB_MASTER, array(), $wgSpecialsDB );
+			$dbw->insert( 'phalanx_stats', $fields, __METHOD__ );
 		}
 
 		wfProfileOut( __METHOD__ );

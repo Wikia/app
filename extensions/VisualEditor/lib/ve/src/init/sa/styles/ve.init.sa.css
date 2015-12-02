@@ -1,0 +1,13 @@
+/*!
+ * VisualEditor Standalone Initialization styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.ve-ce-documentNode {
+	font-size: 0.8em;
+}
+
+.oo-ui-menuSelectWidget {
+	font-size: 0.9em;
+}

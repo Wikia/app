@@ -1,4 +1,6 @@
 <?php
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Renders page header (title, subtitle, comments chicklet button, history dropdown)
  *
@@ -136,6 +138,9 @@ class PageHeaderController extends WikiaController {
 		$actions = array_merge( $editActions,
 			array( 'history', 'move', 'protect', 'unprotect', 'delete', 'undelete', 'replace-file' ) );
 
+		// Enable to modify actions list on dropdown
+		wfRunHooks( 'PageHeaderDropdownActions', [ &$actions ] );
+
 		foreach ( $actions as $action ) {
 			if ( isset( $this->content_actions[$action] ) ) {
 				$ret[$action] = $this->content_actions[$action];
@@ -145,23 +150,14 @@ class PageHeaderController extends WikiaController {
 		return $ret;
 	}
 
-	private function isSearchInputDisplayed( $params ) {
-		global $wgEnableGlobalNavExt;
-		return !empty ( $params['showSearchBox'] ) && empty ( $wgEnableGlobalNavExt );
-	}
+	private function getCuratedContentButton() {
+		global $wgEnableCuratedContentExt;
 
-	public static function formatTimestamp( $stamp ) {
-
-		$diff = time() - strtotime( $stamp );
-
-		// show time difference if it's 14 or less days
-		if ( $diff < 15 * 86400 ) {
-			$ret = wfTimeFormatAgo( $stamp );
+		if ( !empty( $wgEnableCuratedContentExt ) ) {
+			return $this->app->sendRequest( 'CuratedContent', 'editButton' );
+		} else {
+			return null;
 		}
-		else {
-			$ret = '';
-		}
-		return $ret;
 	}
 
 	/**
@@ -171,7 +167,9 @@ class PageHeaderController extends WikiaController {
 	 *    key: showSearchBox (default: false)
 	 */
 	public function executeIndex( $params ) {
-		global $wgTitle, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix, $wgEnableWallExt;
+		global $wgTitle, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle,
+			$wgSuppressNamespacePrefix, $wgEnableWallExt;
+
 		wfProfileIn( __METHOD__ );
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
@@ -181,6 +179,8 @@ class PageHeaderController extends WikiaController {
 
 		// page namespace
 		$ns = $wgTitle->getNamespace();
+
+		$this->curatedContentToolButton = $this->getCuratedContentButton();
 
 		/** start of wikia changes @author nAndy */
 		$this->isWallEnabled = ( !empty( $wgEnableWallExt ) && $ns == NS_USER_WALL );
@@ -204,7 +204,9 @@ class PageHeaderController extends WikiaController {
 			wfRunHooks( 'PageHeaderIndexExtraButtons', array( $response ) );
 		} else {
 			// it happened on TimQ's devbox that $response was probably null fb#28747
-			Wikia::logBacktrace( __METHOD__ );
+			WikiaLogger::instance()->error('Response not an instance of WikiaResponse', [
+				'ex' => new Exception()
+			]);
 		}
 		/** end of wikia changes */
 
@@ -316,12 +318,6 @@ class PageHeaderController extends WikiaController {
 				// remove comments button (fix FB#3404 - Marooned)
 				$this->comments = false;
 
-				// FIXME: use PageHeaderIndexAfterExecute hook or $wgSupressPageSubtitle instead
-				if ( $wgTitle->isSpecial( 'PageLayoutBuilderForm' ) || $wgTitle->isSpecial( 'PageLayoutBuilder' ) ) {
-					$this->displaytitle = true;
-					$this->pageType = "";
-				}
-
 				if ( $wgTitle->isSpecial( 'Newimages' ) ) {
 					$this->isNewFiles = true;
 				}
@@ -346,6 +342,7 @@ class PageHeaderController extends WikiaController {
 				$this->pageType = wfMsg( 'oasis-page-header-subtitle-forum' );
 				break;
 		}
+		wfRunHooks( 'PageHeaderPageTypePrepared', [ $this, $this->getContext()->getTitle() ] );
 
 		// render subpage info
 		$this->pageSubject = $skin->subPageSubtitle();
@@ -370,10 +367,6 @@ class PageHeaderController extends WikiaController {
 			$this->pageType = $this->subtitle;
 			$this->subtitle = '';
 		}
-
-		// if page is rendered using one column layout, show search box as a part of page header
-		// if new global nav is enabled - disable search box
-		$this->showSearchBox = $this->isSearchInputDisplayed( $params );
 
 		if ( !empty( $wgSupressPageTitle ) ) {
 			$this->title = '';
@@ -618,7 +611,6 @@ class PageHeaderController extends WikiaController {
 	 * Render page header for Hubs
 	 *
 	 * @param: array $params
-	 *    key: showSearchBox (default: false)
 	 */
 	public function executeHubs( $params ) {
 		global $wgSupressPageTitle;
@@ -634,9 +626,6 @@ class PageHeaderController extends WikiaController {
 		// number of pages on this wiki
 		$this->tallyMsg = wfMessage( 'oasis-total-articles-mainpage', SiteStats::articles() )->parse();
 
-		// if page is rendered using one column layout, show search box as a part of page header
-		$this->showSearchBox = $this->isSearchInputDisplayed( $params );
-
 		if ( !empty( $wgSupressPageTitle ) ) {
 			$this->title = '';
 		}
@@ -650,4 +639,5 @@ class PageHeaderController extends WikiaController {
 		$wgMemc->delete( wfMemcKey( 'mOasisRecentRevisions2', $article->getTitle()->getArticleId() ) );
 		return true;
 	}
+
 }

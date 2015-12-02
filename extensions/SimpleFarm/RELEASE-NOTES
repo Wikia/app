@@ -1,7 +1,0 @@
- Changelog:
- ==========
- * (trunk) -- Version 0.1 (initial release)
-   - Automatic forwarding to one of several farm member wikis which are all using
-     the same physical MediaWiki installation.
-   - Maintenance script allowing to maintain several wikis at the same time.
-   - Object oriented classes, representing the farm itself as well as its members.

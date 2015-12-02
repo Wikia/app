@@ -1,8 +1,0 @@
-# PrefStats collects and displays statistics for when users have started/ended using certain options
-
-# Example LocalSettings.php additions
-
-require_once("$IP/extensions/UsabilityInitiative/PrefStats/PrefStats.php");
-$wgPrefStatsTrackPrefs = array( 'skin' => 'vector', 'usebetatoolbar' => 1 );
-$wgGroupPermissions['sysop']['prefstats'] = true;
-$wgPrefStatsTimeUnit = 60 * 60 * 24;

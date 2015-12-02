@@ -67,4 +67,31 @@ class ServerTest extends WikiaBaseTest
 				is_array( lw_getSearchResults( $query, $limit ) )
 		);
 	}
+
+	/**
+	 * @covers lw_getTitle
+	 */
+	public function test_lw_getTitle(){
+		$this->assertEquals(lw_getTitle("the who:baba o'riley"), "The_Who:Baba_O'Riley", "Capitalize the R in Irish stuff like O'Riley");
+		$this->assertEquals(lw_getTitle("the who:i'm cool"), "The_Who:I'm_Cool", "Don't capitalize the m in I'm");
+		$this->assertEquals(lw_getTitle("the who:don't"), "The_Who:Don't", "Don't capitalize the t in Don't");
+		$this->assertEquals(lw_getTitle("the who:cant skip apostrophes"), "The_Who:Can't_Skip_Apostrophes", "Automatically contracting 'cant'");
+	}
+
+	/**
+	 * @covers lw_fmtArtist
+	 */
+	public function test_lw_fmtArtist(){
+		$this->assertEquals(lw_fmtArtist("normal name"), "Normal_Name");
+		$this->assertEquals(lw_fmtArtist("with (parens)"), "With_(Parens)", "Testing capitalization related to parentheses");
+	}
+
+	/**
+	 * @covers lw_fmtSong
+	 */
+	public function test_lw_fmtSong(){
+		$this->assertEquals(lw_fmtSong("guitar%20man"), "Guitar_Man", "Testing URL decoding");
+		$this->assertEquals(lw_fmtSong("guitar (man)"), "Guitar_(Man)", "Testing various capitalization needs.");
+	}
+
 }

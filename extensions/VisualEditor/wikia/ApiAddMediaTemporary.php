@@ -21,12 +21,14 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 	}
 
 	private function executeImage() {
+		global $wgContLanguageCode, $wgDisableAnonymousEditing;
 		$duplicate = $this->getFileDuplicate( $this->mRequest->getFileTempName( 'file' ) );
 		if ( $duplicate ) {
-			return array(
+			return [
 				'title' => $duplicate->getTitle()->getText(),
-				'url' => $duplicate->getUrl()
-			);
+				'url' => $duplicate->getUrl(),
+				'article_id' => $duplicate->getTitle()->getArticleID()
+			];
 		} else {
 			// Check whether upload is enabled
 			if ( !UploadBase::isEnabled() ) {
@@ -37,14 +39,20 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 				$this->mRequest->getFileName( 'file' ),
 				$this->mRequest->getUpload( 'file' )
 			);
-			$this->checkPermissions();
+
+			// If wiki is Japanese content, then we check if anonymous edit is allowed. INT-158
+			// This condition will be changed as soon as Mercury has login for all wikis.
+			if ( $wgContLanguageCode != 'ja' || $wgDisableAnonymousEditing ) {
+				$this->checkPermissions();
+			}
+
 			$this->verifyUpload();
 			$tempFile = $this->createTempFile( $this->mRequest->getFileTempName( 'file' ) );
-			return array(
+			return [
 				'title' => $this->mUpload->getTitle()->getText(),
 				'tempUrl' => $tempFile->getUrl(),
 				'tempName' => $tempFile->getName()
-			);
+			];
 		}
 	}
 
@@ -100,6 +108,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			if ( !UploadBase::isEnabled() ) {
 				$this->dieUsageMsg( 'uploaddisabled' );
 			}
+			F::app()->wg->DisableProxy = true;
 			$this->mUpload = new UploadFromUrl();
 			$this->mUpload->initializeFromRequest( new FauxRequest(
 				array(

@@ -10,6 +10,8 @@
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
+use Wikia\Util\RequestId;
+
 class WikiaView {
 	/**
 	 * Response object
@@ -31,16 +33,12 @@ class WikiaView {
 	 * @param string $methodName
 	 * @param array $data
 	 * @param string $format
+	 *
+	 * @return WikiaView
 	 */
-	public static function newFromControllerAndMethodName( $controllerName, $methodName, Array $data = array(), $format = WikiaResponse::FORMAT_HTML ) {
-		$app = F::app();
+	public static function newFromControllerAndMethodName( $controllerName, $methodName, Array $data = [], $format = WikiaResponse::FORMAT_HTML ) {
 		// Service classes must be dispatched by full name otherwise we default to a controller.
-		$controllerBaseName = $app->getBaseName( $controllerName );
-		if ($app->isService($controllerName)) {
-			$controllerClassName = $app->getServiceClassName( $controllerBaseName );
-		} else {
-			$controllerClassName = $app->getControllerClassName( $controllerBaseName );
-		}
+		$controllerClassName = self::normalizeControllerClass( $controllerName );
 
 		$response = new WikiaResponse( $format );
 		$response->setControllerName( $controllerName );
@@ -97,16 +95,15 @@ class WikiaView {
 	/**
 	 * build template path for given controller and method name
 	 *
-	 * @param string $controllerName
+	 * @param string $controllerClass
 	 * @param string $methodName
 	 * @param bool $forceRebuild
+	 *
+	 * @throws WikiaException
 	 */
 	protected function buildTemplatePath( $controllerClass, $methodName, $forceRebuild = false ) {
 		wfProfileIn(__METHOD__);
-		if( ( $this->templatePath == null ) || $forceRebuild ) {
-			global $wgAutoloadClasses;
-			$app = F::app();
-
+		if ( ( $this->templatePath == null ) || $forceRebuild ) {
 			if ( !empty( $this->response ) ) {
 				$extension = $this->response->getTemplateEngine();
 			} else {
@@ -114,36 +111,143 @@ class WikiaView {
 			}
 
 			// Service classes must be dispatched by full name otherwise we default to a controller.
-			$controllerBaseName = $app->getBaseName( $controllerClass );
-			if ($app->isService($controllerClass)) {
-				$controllerClass = $app->getServiceClassName( $controllerBaseName );
-			} else {
-				$controllerClass = $app->getControllerClassName( $controllerBaseName );
+			$controllerBaseName = null;
+			$controllerClass = self::normalizeControllerClass( $controllerClass, $controllerBaseName );
+
+			$templateExists = false;
+			$templatePath = '';
+			$templates = $this->getTemplateOptions( $controllerClass, $methodName, $controllerBaseName );
+			$dirName = $this->getTemplateDir( $controllerClass );
+			foreach ( $templates as $templateName ) {
+				$templatePath = $dirName . '/' . $templateName . '.' . $extension;
+
+				if ( file_exists( $templatePath ) ) {
+					$templateExists = true;
+					break;
+				}
 			}
 
-			if( empty( $wgAutoloadClasses[$controllerClass] ) ) {
-				throw new WikiaException( "Invalid controller or service name: {$controllerClass}" );
-			}
-
-			// First we look for BaseName_MethodName
-			$dirName = dirname( $wgAutoloadClasses[$controllerClass] );
-			$basePath = "{$dirName}/templates/{$controllerBaseName}_{$methodName}";
-			$templatePath = "{$basePath}.$extension";
-			$templateExists = file_exists( $templatePath );
-
-			// Fall back to ControllerClass_MethodName
-			if( !$templateExists ) {
-				$templatePath = "{$dirName}/templates/{$controllerClass}_{$methodName}.$extension";
-				$templateExists = file_exists( $templatePath );
-			}
-
-			if( !$templateExists ) {
+			if ( !$templateExists ) {
 				throw new WikiaException( "Template file not found: {$templatePath}" );
 			}
 
 			$this->setTemplatePath( $templatePath );
 		}
 		wfProfileOut(__METHOD__);
+	}
+
+	/**
+	 * For legacy reasons we sometimes get a $controllerClass name that doesn't end with
+	 * 'Controller' or 'Service'.  Normalize to this form.
+	 *
+	 * @param string $controllerClass
+	 * @param string $controllerBaseName (out, optional) Controller class base name
+	 *
+	 * @return string
+	 *
+	 * @throws WikiaException
+	 */
+	private static function normalizeControllerClass( $controllerClass, &$controllerBaseName = null ) {
+		$app = F::app();
+		// @author: wladek
+		// Improve performance by providing the same behavior without calling external functions
+		/*
+		$controllerBaseName = $app->getBaseName( $controllerClass );
+		if ( $app->isService( $controllerClass ) ) {
+			$controllerClass = $app->getServiceClassName( $controllerBaseName );
+		} else {
+			$controllerClass = $app->getControllerClassName( $controllerBaseName );
+		}
+		*/
+		if ( substr( $controllerClass, -7 ) === 'Service' ) {
+			$controllerBaseName = substr( $controllerClass, 0, -7 );
+		} elseif ( substr( $controllerClass, -10 ) === 'Controller' ) {
+			$controllerBaseName = substr( $controllerClass, 0, -10 );
+		} else {
+			$controllerBaseName = $controllerClass;
+			$controllerClass .= 'Controller';
+		}
+
+		if ( empty( $app->wg->AutoloadClasses[$controllerClass] ) ) {
+			throw new WikiaException( "Invalid controller or service name: {$controllerClass}" );
+		}
+
+		return $controllerClass;
+	}
+
+	/**
+	 * Generates a list of possible template names ordered by preference
+	 *
+	 * @param string $controllerClass
+	 * @param string $methodName
+	 * @param string $controllerBaseName (optional) save cpu cycles by not
+	 *
+	 * @return array
+	 */
+	private function getTemplateOptions( $controllerClass, $methodName, $controllerBaseName = null ) {
+		$templates = [];
+
+		$fromAnnotation = $this->getTemplateAnnotation( $controllerClass, $methodName );
+		if ( !empty( $fromAnnotation ) ) {
+			$templates[] = $fromAnnotation;
+		}
+
+		// Add variations on the controller name
+		if ( $controllerBaseName === null ) {
+			$controllerBaseName = F::app()->getBaseName( $controllerClass );
+		}
+		$templates[] = "{$controllerBaseName}_{$methodName}";
+		if ( $controllerClass !== $controllerBaseName ) {
+			$templates[] = "{$controllerClass}_{$methodName}";
+		}
+
+		return $templates;
+	}
+
+	protected function getTemplateAnnotation( $controllerClass, $methodName ) {
+		static $annotations = [];
+		$cacheKey = $controllerClass . '-' . $methodName;
+
+		// Cache the result of this reflection code
+		if ( array_key_exists( $cacheKey, $annotations ) ) {
+			return $annotations[$cacheKey];
+		}
+
+		$template = null;
+
+		// Make sure this method exists, otherwise the call to getMethod crashes PHP
+		// so badly it can't even log that a problem occurred.
+		if ( method_exists( $controllerClass, $methodName ) ) {
+			// See if there is a @template annotation for the method we're generating a view for
+			$reflection = new ReflectionClass( $controllerClass );
+			$method = $reflection->getMethod( $methodName );
+
+			$comment = $method->getDocComment();
+			if ( preg_match( '/@template (\S+)/', $comment, $matches ) ) {
+				$template = $matches[1];
+			}
+		}
+
+		$annotations[$cacheKey] = $template;
+		return $template;
+	}
+
+	/**
+	 * See if the controller defines a custom template directory, otherwise use the default directory
+	 *
+	 * @param string $controllerClass
+	 *
+	 * @return string
+	 */
+	private function getTemplateDir( $controllerClass ) {
+		$dirName = call_user_func( [ $controllerClass, 'getTemplateDir' ] );
+
+		// If the above returns null or a non-existent directory, fallback to the default.
+		if ( empty( $dirName ) || !file_exists( $dirName ) ) {
+			$dirName = dirname( F::app()->wg->AutoloadClasses[$controllerClass] ) . '/templates';
+		}
+
+		return $dirName;
 	}
 
 	public function __toString() {
@@ -159,7 +263,9 @@ class WikiaView {
 
 	/**
 	 * render view
+	 *
 	 * @return string
+	 * @throws WikiaException
 	 */
 	public function render() {
 		if( empty( $this->response ) ) {
@@ -234,11 +340,28 @@ class WikiaView {
 	}
 
 	protected function renderJson() {
+		global $wgShowSQLErrors;
+
 		if( $this->response->hasException() ) {
 			$exception = $this->response->getException();
-			$output = array( 'exception' => array( 'message' => $exception->getMessage(), 'code' => $exception->getCode(), 'details' => '' ) );
+			$output = [
+				'exception' => [
+					'type' => get_class( $exception ),
+					'message' => $exception->getMessage(),
+					'code' => $exception->getCode(),
+					'details' => ''
+				],
+				// return RequestID for easier errors reporting
+				'request_id' => RequestId::instance()->getRequestId(),
+			];
+
 			if ( is_callable( [ $exception, 'getDetails' ] ) ) {
 				$output[ 'exception' ][ 'details' ] = $exception->getDetails();
+			}
+
+			// PLATFORM-1503: do not expose DB errors when $wgShowSQLErrors is set to false
+			if ( $wgShowSQLErrors === false && $exception instanceof DBError ) {
+				$output['exception']['message'] = '';
 			}
 		}
 		else {

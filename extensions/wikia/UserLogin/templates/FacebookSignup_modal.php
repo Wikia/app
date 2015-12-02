@@ -34,22 +34,23 @@ $signupForm = $baseForm;
 
 // Facebook may or may not provide the user's email
 if ( trim( $fbEmail ) == '' ) {
-	$signupForm['inputs'][] = [
+	$emailInput = [
 		'type' => 'email',
 		'name' => 'email',
 		'isRequired' => true,
 		'label' => wfMessage( 'email' )->escaped(),
 	];
+
+	// insert the email input after the username input for consistency with other forms.
+	array_splice( $signupForm['inputs'], 1, 0, [$emailInput] );
 } else {
 	$signupForm['inputs'][] = [
-		'type' => 'nirvana',
+		'type' => 'custom',
 		'class' => 'email',
-		'controller' => 'WikiaStyleGuideTooltipIconController',
-		'method' => 'index',
-		'params' => [
+		'output' => F::app()->renderView( 'WikiaStyleGuideTooltipIconController', 'index', [
 			'text' => wfMessage( 'email' )->escaped(),
 			'tooltipIconTitle' => wfMessage( 'usersignup-facebook-email-tooltip' )->text(),
-		],
+		]),
 	];
 
 	$signupForm['inputs'][] = [
@@ -80,7 +81,7 @@ $signupForm['inputs'][] = [
 $signupForm['inputs'][] = [
 	'type' => 'custom',
 	'class' => 'wikia-terms',
-	'output' => wfMessage('prefs-help-terms')->parse()
+	'output' => wfMessage( 'prefs-help-terms' )->parse()
 ];
 
 $signupForm['submits'] = [
@@ -96,10 +97,9 @@ $signupForm['submits'] = [
  */
 
 $loginForm['inputs'][] = [
-	'type' => 'nirvanaview',
-	'controller' => 'UserLogin',
-	'view' => 'forgotPasswordLink',
+	'type' => 'custom',
 	'class' => 'forgot-password-container',
+	'output' => F::app()->renderPartial( 'UserLogin', 'forgotPasswordLink' ),
 ];
 
 $loginForm['inputs'][] = [

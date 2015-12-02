@@ -36,7 +36,7 @@ require([
 		resourceTiming.reportToBucky('DomReady');
 	});
 
-	$(window).load(function () {
+	$(window).on('load', function () {
 		resourceTiming.reportToBucky('WindowLoad');
 
 		setTimeout(function () {

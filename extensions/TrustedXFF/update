@@ -1,9 +1,0 @@
-#!/bin/bash
-
-cd `dirname $0`
-mwscript extensions/TrustedXFF/generate.php aawiki ../../cache/trusted-xff.cdb
-bzip2 -kf ../../cache/trusted-xff.cdb
-if [ -x /usr/local/bin/sync-common-file ]; then
-	version="`readlink /home/wikipedia/common/php`"
-	sync-common-file "$version"/cache/trusted-xff.cdb
-fi

@@ -127,6 +127,7 @@ $Factory.Variable = {};
 
 var ajaxpath = wgServer + wgScript;
 $Factory.city_id = <?php echo $wiki->city_id ?>;
+$Factory.token = <?= Xml::encodeJsVar( F::app()->wg->User->getEditToken() ) ?>;
 
 
 $Factory.VariableCallback = {
@@ -192,6 +193,8 @@ $Factory.BusyCache = function (state) {
 $Factory.Domain.CRUD = function(mode, domain, addparams) {
 	$Factory.Busy(1);
 	var params = "&cityid=" + $Factory.city_id + "&domain=" + domain + addparams;
+	params += "&token=" + encodeURIComponent($Factory.token);
+
 	$.ajax({
     	type:"POST",
     	dataType: "json",
@@ -394,6 +397,7 @@ $Factory.Variable.submitChangeVariable = function ( e, data ) {
 
 	// For restoring to the original form afterwards.
     values += "&wiki=" + $Factory.city_id;
+    values += "&token=" + encodeURIComponent($Factory.token);
 
 	$.ajax({
     	type:"POST",
@@ -421,6 +425,8 @@ $Factory.Variable.filter = function ( e ) {
     values += "&wiki=" + $Factory.city_id;
 	values += "&string=" + $( "#wfOnlyWithString" ).val();
 
+	values += "&token=" + encodeURIComponent($Factory.token);
+
     $.ajax({
     	type:"POST",
     	dataType: "json",
@@ -442,6 +448,9 @@ $Factory.Variable.filter = function ( e ) {
 $Factory.Variable.clear = function ( e ) {
     $Factory.BusyCache(1);
     var params = "&cityid=" + $Factory.city_id;
+
+	params += "&token=" + encodeURIComponent($Factory.token);
+
 	$.ajax({
     	type:"POST",
     	dataType: "json",
@@ -462,6 +471,8 @@ $Factory.Variable.post = function (form, mode) {
 
    $Factory.Busy(1);
    var params = $("#" + form).serialize();
+
+	params += "&token=" + encodeURIComponent($Factory.token);
 
 	$.ajax({
 		type:"POST",
@@ -506,7 +517,7 @@ $Factory.Variable.tagCheck = function ( submitType ) {
 	 	  	type:"POST",
 	 	  	dataType: "json",
 	 	  	url: ajaxpath,
-	 	  	data: "action=ajax&rs=axWFactoryTagCheck&tagName="+tagName,
+			data: "action=ajax&rs=axWFactoryTagCheck&tagName="+tagName+"&token="+encodeURIComponent($Factory.token),
 			success: function( oResponse ) {
 				var data = oResponse;
 				if( data.wikiCount == 0 ) {
@@ -568,7 +579,8 @@ $(function() {
 					<th>database</th>
 					<th>cluster</th>
 					<th>language</th>
-					<th>hub</th>
+					<th>category(legacy)</th>
+					<th>vertical</th>
 					<th>status</th>
 				</tr>
 			</thead>
@@ -580,6 +592,11 @@ $(function() {
 				<td><?php
 					$wgHub = WikiFactory::getCategory( $wiki->city_id );
 					if ($wgHub) echo "<acronym title=\"id:{$wgHub->cat_id}\">{$wgHub->cat_name}</acronym>";
+				?></td>
+				<td><?php
+					$factory = new WikiFactoryHub();
+					$wgHub = $factory->getWikiVertical( $wiki->city_id );
+					if ($wgHub) echo "<acronym title=\"id:{$wgHub['id']}\">{$wgHub['name']}</acronym>";
 				?></td>
 				<td data-status="<?php echo $wiki->city_public; ?>"><?php echo "<acronym title=\"{$wiki->city_public}\">{$statuses[ $wiki->city_public ]}</acronym>" ?></td>
 			</tr>
@@ -624,9 +641,6 @@ $(function() {
 			</li>
 			<li <?php echo ( $tab === "clog" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "clog", $tab, $wiki->city_id ); ?>
-			</li>
-			<li <?php echo ( $tab === "google" ) ? 'class="selected"' : 'class="inactive"' ?> >
-				<?php echo WikiFactoryPage::showTab( "google", $tab, $wiki->city_id ); ?>
 			</li>
 			<li <?php echo ( $tab === "close" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "close", $tab, $wiki->city_id ); ?>
@@ -716,11 +730,6 @@ $(function() {
 
 			case "findtags":
 				include_once( "form-tags-find.tmpl.php" );
-				break;
-
-		# GOOGLE
-			case "google":
-				include_once( "form-google.tmpl.php" );
 				break;
 
 		# CLOSE

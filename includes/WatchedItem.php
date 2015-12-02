@@ -216,18 +216,38 @@ class WatchedItem {
 	 * @return bool
 	 */
 	private static function doDuplicateEntries( \Title $oldTitle, \Title $newTitle ) {
+		$oldNamespace = $oldTitle->getNamespace();
+		$newNamespace = $newTitle->getNamespace();
+		$oldDBKey = $oldTitle->getDBkey();
+		$newDBKey = $newTitle->getDBkey();
 
-		$db = wfGetDB( DB_MASTER );
-		( new WikiaSQL() )
-			->UPDATE( 'watchlist' )
-			->SET( 'wl_title', $newTitle->getDBkey() )
-			->SET( 'wl_namespace', $newTitle->getNamespace() )
-			->WHERE( 'wl_title' )->EQUAL_TO( $oldTitle->getDBkey() )
-			->AND_( 'wl_namespace' )->EQUAL_TO( $oldTitle->getNamespace() )
-			->run( $db );
+		$dbw = wfGetDB( DB_MASTER );
+		$res = $dbw->select( 'watchlist', 'wl_user',
+			array( 'wl_namespace' => $oldNamespace, 'wl_title' => $oldDBKey ),
+			__METHOD__, 'FOR UPDATE'
+		);
+		# Construct array to replace into the watchlist
+		$values = array();
+		foreach ( $res as $s ) {
+			$values[] = array(
+				'wl_user' => $s->wl_user,
+				'wl_namespace' => $newNamespace,
+				'wl_title' => $newDBKey
+			);
+		}
+
+		if( empty( $values ) ) {
+			// Nothing to do
+			return true;
+		}
+
+		# Perform replace
+		# Note that multi-row replace is very efficient for MySQL but may be inefficient for
+		# some other DBMSes, mostly due to poor simulation by us
+		$dbw->replace( 'watchlist', array( array( 'wl_user', 'wl_namespace', 'wl_title' ) ), $values, __METHOD__ );
 
 		wfRunHooks( 'WatchedItem::replaceWatch', [ $oldTitle, $newTitle ] );
-				
+
 		return true;
 	}
 }

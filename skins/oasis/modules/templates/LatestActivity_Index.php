@@ -1,5 +1,5 @@
 <section class="WikiaActivityModule module" id="<?= !empty( $userName ) ? 'WikiaRecentActivityUser' : 'WikiaRecentActivity'; ?>">
-	<h1 class="activity-heading"><?= $moduleHeader ?></h1>
+	<h2 class="activity-heading"><?= $moduleHeader ?></h2>
 	<ul>
 <?php
 	if(!empty($changeList)){

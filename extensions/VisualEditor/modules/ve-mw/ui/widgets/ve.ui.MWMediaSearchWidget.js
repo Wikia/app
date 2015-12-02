@@ -5,8 +5,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw*/
-
 /**
  * Creates an ve.ui.MWMediaSearchWidget object.
  *
@@ -18,20 +16,9 @@
  * @param {number} [size] Vertical size of thumbnails
  */
 ve.ui.MWMediaSearchWidget = function VeUiMWMediaSearchWidget( config ) {
-	var pageTitle = mw.config.get( 'wgTitle' ),
-		namespace = mw.config.get( 'wgNamespaceNumber' ),
-		namespacesWithSubpages = mw.config.get( 'wgVisualEditor' ).namespacesWithSubpages;
-
-	if ( namespacesWithSubpages[ namespace ] ) {
-		// If we are in a namespace that allows for subpages, strip the entire
-		// title except for the part after the last /
-		pageTitle = pageTitle.substr( pageTitle.lastIndexOf( '/' ) + 1 );
-	}
-
-	// Configuration intialization
+	// Configuration initialization
 	config = ve.extendObject( {
-		'placeholder': ve.msg( 'visualeditor-media-input-placeholder' ),
-		'value': pageTitle
+		placeholder: ve.msg( 'visualeditor-media-input-placeholder' )
 	}, config );
 
 	// Parent constructor
@@ -42,17 +29,17 @@ ve.ui.MWMediaSearchWidget = function VeUiMWMediaSearchWidget( config ) {
 	this.size = config.size || 150;
 	this.queryTimeout = null;
 	this.titles = {};
-	this.queryMediaSourcesCallback = ve.bind( this.queryMediaSources, this );
-
-	this.sourceCounter = 0;
+	this.queryMediaSourcesCallback = this.queryMediaSources.bind( this );
+	this.promises = [];
 
 	this.$noItemsMessage = this.$( '<div>' )
 		.addClass( 've-ui-mwMediaSearchWidget-noresults' )
 		.text( ve.msg( 'visualeditor-dialog-media-noresults' ) )
+		.hide()
 		.appendTo( this.$query );
 
 	// Events
-	this.$results.on( 'scroll', ve.bind( this.onResultsScroll, this ) );
+	this.$results.on( 'scroll', this.onResultsScroll.bind( this ) );
 
 	// Initialization
 	this.$element.addClass( 've-ui-mwMediaSearchWidget' );
@@ -113,62 +100,92 @@ ve.ui.MWMediaSearchWidget.prototype.onResultsScroll = function () {
  * @method
  */
 ve.ui.MWMediaSearchWidget.prototype.queryMediaSources = function () {
-	var i, len, source, url,
+	var i, len, source, request,
+		ajaxOptions = {},
 		value = this.query.getValue();
 
 	if ( value === '' ) {
 		return;
 	}
 
-	// Reset counter
-	this.sourceCounter = 0;
+	// HACK: fit four images in the screen
+	// The -45 is here because the way the container is aligned, it
+	// is pushed behind the scrollbar. When we calculate the new size
+	// of the image results, we need to account for a bit thinner than
+	// the actual (partially hidden) width.
+	// Note: This will be fixed in an upcoming rewrite of the image
+	// search results.
+	this.size = ( this.results.$element.innerWidth() - 45 ) / 4;
+
+	// Reset message
 	this.$noItemsMessage.hide();
+
+	// Abort previous promises if they are pending
+	this.resetPromises();
 
 	for ( i = 0, len = this.sources.length; i < len; i++ ) {
 		source = this.sources[i];
 		// If we don't have either 'apiurl' or 'scriptDirUrl'
 		// the source is invalid, and we will skip it
 		if ( source.apiurl || source.scriptDirUrl !== undefined ) {
-			if ( source.request ) {
-				source.request.abort();
-			}
 			if ( !source.gsroffset ) {
 				source.gsroffset = 0;
 			}
 			if ( source.local ) {
-				url = mw.util.wikiScript( 'api' );
+				ajaxOptions = {
+					url: mw.util.wikiScript( 'api' ),
+					// If the url is local use json
+					dataType: 'json'
+				};
 			} else {
-				// If 'apiurl' is set, use that. Otherwise, build the url
-				// from scriptDirUrl and /api.php suffix
-				url = source.apiurl || ( source.scriptDirUrl + '/api.php' );
+				ajaxOptions = {
+					// If 'apiurl' is set, use that. Otherwise, build the url
+					// from scriptDirUrl and /api.php suffix
+					url: source.apiurl || ( source.scriptDirUrl + '/api.php' ),
+					// If the url is not the same origin use jsonp
+					dataType: 'jsonp',
+					// JSON-P requests are not cached by default and get a &_=random trail.
+					// While setting cache=true will still bypass cache in most case due to the
+					// callback parameter, at least drop the &_=random trail which triggers
+					// an API warning (invalid parameter).
+					cache: true
+				};
 			}
 			this.query.pushPending();
-			source.request = ve.init.target.constructor.static.apiRequest( {
-				'action': 'query',
-				'generator': 'search',
-				'gsrsearch': value,
-				'gsrnamespace': 6,
-				'gsrlimit': 20,
-				'gsroffset': source.gsroffset,
-				'prop': 'imageinfo',
-				'iiprop': 'dimensions|url|mediatype',
-				'iiurlheight': this.size
-			}, {
-				'url': url,
-				// This request won't be cached since the JSON-P callback is unique. However make sure
-				// to allow jQuery to cache otherwise so it won't e.g. add "&_=(random)" which will
-				// trigger a MediaWiki API error for invalid parameter "_".
-				'cache': true,
-				// TODO: Only use JSON-P for cross-domain.
-				// jQuery has this logic built-in (if url is not same-origin ..)
-				// but isn't working for some reason.
-				'dataType': 'jsonp'
-			} )
-				.done( ve.bind( this.onMediaQueryDone, this, source ) )
-				.always( ve.bind( this.onMediaQueryAlways, this, source ) );
+			request = ve.init.target.constructor.static.apiRequest( {
+				action: 'query',
+				generator: 'search',
+				gsrsearch: value,
+				gsrnamespace: 6,
+				gsrlimit: 20,
+				gsroffset: source.gsroffset,
+				prop: 'imageinfo',
+				iiprop: 'dimensions|url|mediatype',
+				iiurlheight: this.size
+			}, ajaxOptions )
+				.done( this.onMediaQueryDone.bind( this, source ) );
 			source.value = value;
+			this.promises.push( request );
 		}
+
+		// When all sources are done, check to see if there are results
+		$.when.apply( $, this.promises ).done( this.onAllMediaQueriesDone.bind( this ) );
 	}
+};
+
+/**
+ * Abort all api search query promises
+ */
+ve.ui.MWMediaSearchWidget.prototype.resetPromises = function () {
+	var i;
+
+	for ( i = 0; i < this.promises.length; i++ ) {
+		this.promises[i].abort();
+		this.query.popPending();
+	}
+
+	// Empty the promise array
+	this.promises = [];
 };
 
 /**
@@ -177,24 +194,12 @@ ve.ui.MWMediaSearchWidget.prototype.queryMediaSources = function () {
  * @method
  * @param {Object} source Media query source
  */
-ve.ui.MWMediaSearchWidget.prototype.onMediaQueryAlways = function ( source ) {
-	source.request = null;
+ve.ui.MWMediaSearchWidget.prototype.onAllMediaQueriesDone = function () {
 	this.query.popPending();
 
-	// Count this source as done
-	this.sourceCounter++;
-
-	// Check if all sources are done
-	// TODO use $.when() instead (bug 65321)
-	if ( this.sourceCounter >= this.sources.length ) {
-		if ( this.results.getItems().length === 0 ) {
-			this.$noItemsMessage.show();
-		}
-	}
-
-	// Even if the whole list of sources didn't finish yet
-	// if there are results, make the message go away
-	if ( this.results.getItems().length > 0 ) {
+	if ( this.results.getItems().length === 0 ) {
+		this.$noItemsMessage.show();
+	} else {
 		this.$noItemsMessage.hide();
 	}
 };
@@ -230,13 +235,14 @@ ve.ui.MWMediaSearchWidget.prototype.onMediaQueryDone = function ( source, data )
 		// ve.ui.MWMediaResultWidget
 		if ( pages[page].imageinfo && pages[page].imageinfo.length > 0 ) {
 			title = new mw.Title( pages[page].title ).getMainText();
-			if ( !( title in this.titles ) ) {
+			if ( !Object.prototype.hasOwnProperty.call( this.titles, title ) ) {
 				this.titles[title] = true;
 				items.push(
-					new ve.ui.MWMediaResultWidget(
-						pages[page],
-						{ '$': this.$, 'size': this.size }
-					)
+					new ve.ui.MWMediaResultWidget( {
+						$: this.$,
+						data: pages[page],
+						size: this.size
+					} )
 				);
 			}
 		}

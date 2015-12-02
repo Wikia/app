@@ -11,7 +11,7 @@
  * @file SM_Settings.php
  * @ingroup SemanticMaps
  *
- * @licence GNU GPL v3
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 
@@ -40,6 +40,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	# Boolean. The default value for the showtitle parameter. Will hide the title in the marker pop-ups when set to true. 
 	# This value will only be used when the user does not provide one.
 	$smgQPShowTitle = true;
+
+	# Boolean. The default value for the hidenamespace parameter. Will hide the namespace in the marker pop-ups when set to true.
+	# This value will only be used when the user does not provide one.
+	$smgQPHideNamespace = false;
 	
 	# String or false. Allows you to define the content and it's layout of marker pop-ups via a template.
 	# This value will only be used when the user does not provide one.

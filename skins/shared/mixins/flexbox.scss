@@ -5,7 +5,6 @@
 	display: -ms-flexbox;
 
 	// new syntax
-	display: -moz-flex;
 	display: -webkit-flex;
 	display: flex;
 }
@@ -93,4 +92,28 @@
 	-webkit-box-pack: $old-syntax-type; // old syntax
 	-webkit-justify-content: $type;
 	justify-content: $type;
+}
+
+@mixin flex($value) {
+	-webkit-flex: $value;
+	-ms-flex: $value;
+	 flex: $value;
+}
+
+@mixin flex-wrap($value) {
+	-webkit-flex-wrap: $value;
+	-ms-flex-wrap: $value;
+	 flex-wrap: $value;
+}
+
+@mixin align-content($value) {
+	-webkit-align-content: $value;
+	-ms-align-content: $value;
+	 align-content: $value;
+}
+
+@mixin align-self($value) {
+	-webkit-align-self: $value;
+	-ms-align-self: $value;
+	 align-self: $value;
 }

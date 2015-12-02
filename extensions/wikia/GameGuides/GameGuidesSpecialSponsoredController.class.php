@@ -154,7 +154,7 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 							$handler = $vid->getHandler();
 
 							if ( $handler instanceof OoyalaVideoHandler ) {
-								$metadata = $handler->getMetadata( true );
+								$metadata = $handler->getVideoMetadata( true );
 
 								$video['video_id'] = $metadata['videoId'];
 								$video['duration'] = WikiaFileHelper::formatDuration( $metadata['duration'] );

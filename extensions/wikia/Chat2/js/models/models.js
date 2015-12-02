@@ -52,14 +52,6 @@ var STATUS_STATE_AWAY = 'away';
 		}
 	});
 
-	models.InitqueryCommand = models.Command.extend({
-		initialize: function(){
-			this.set({
-				command: 'initquery'
-			});
-		}
-	});
-
 	models.LogoutCommand = models.Command.extend({
 		initialize: function(){
 			this.set({
@@ -161,6 +153,7 @@ var STATUS_STATE_AWAY = 'away';
 			'temp': false //use for long time connection with private
 		}
 	});
+
 	/**
 	 * Inline alerts are a special type of ChatEntry which aren't from a user and should be displayed differently (like system messages basically).
 	 *

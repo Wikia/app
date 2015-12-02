@@ -15,10 +15,10 @@ ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget() {
 	this.$videoWrapper = null;
 
 	this.closeButton = new OO.ui.ButtonWidget( {
-		'$': this.$,
-		'title': ve.msg( 'visualeditor-dialog-action-close' ),
-		'icon': 'close',
-		'frameless': true
+		$: this.$,
+		title: ve.msg( 'visualeditor-dialog-action-close' ),
+		icon: 'close',
+		frameless: true
 	} );
 
 	this.$titlebar = this.$( '<div>' )
@@ -28,8 +28,8 @@ ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget() {
 		.addClass( 've-ui-wikiaMediaPreviewWidget-title' );
 
 	// Events
-	this.closeButton.connect( this, { 'click': 'close' } );
-	this.$element.on( 'click', ve.bind( this.close, this ) );
+	this.closeButton.connect( this, { click: 'close' } );
+	this.$element.on( 'click', this.close.bind( this ) );
 
 	// Initialization
 	this.closeButton.$element
@@ -80,7 +80,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.embedVideo = function ( embedCode ) {
 		.addClass( 've-ui-wikiaMediaPreviewWidget-videoWrapper' )
 		.appendTo( this.$element.show() );
 
-	require( ['wikia.videoBootstrap'], ve.bind( function ( VideoBootstrap ) {
+	require( ['wikia.videoBootstrap'], function ( VideoBootstrap ) {
 		this.videoInstance = new VideoBootstrap(
 			this.$videoWrapper[0],
 			window.JSON.parse( embedCode ),
@@ -89,7 +89,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.embedVideo = function ( embedCode ) {
 
 		this.verticallyAlign( this.$videoWrapper );
 
-	}, this ) );
+	}.bind( this ) );
 };
 
 /**
@@ -111,11 +111,12 @@ ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoDone = function ( data ) {
  * @method
  */
 ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoFail = function () {
-	mw.config.get( 'GlobalNotification' ).show(
+	var BannerNotification = mw.config.get('BannerNotification');
+	new BannerNotification(
 		ve.msg( 'wikia-visualeditor-notification-video-preview-not-available' ),
 		'error',
 		$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
-	);
+	).show();
 };
 
 /**
@@ -150,7 +151,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.openForImage = function ( title, url ) {
 	this.$image.attr( 'src', Vignette.getThumbURL( url, 'thumbnail-down', this.maxImgWidth, this.maxImgHeight ) );
 
 	this.$image
-		.load( ve.bind( this.verticallyAlign, this, this.$image ) )
+		.load( this.verticallyAlign.bind( this, this.$image ) )
 		.appendTo( this.$element );
 };
 
@@ -166,17 +167,17 @@ ve.ui.WikiaMediaPreviewWidget.prototype.openForVideo = function ( title, provide
 	this.displayOverlay( title );
 
 	$.ajax( {
-		'url': mw.util.wikiScript( 'api' ),
-		'data': {
-			'format': 'json',
-			'action': 'videopreview',
-			'title': title,
-			'provider': provider,
-			'videoId': videoId
+		url: mw.util.wikiScript( 'api' ),
+		data: {
+			format: 'json',
+			action: 'videopreview',
+			title: title,
+			provider: provider,
+			videoId: videoId
 		}
 	} )
-		.done( ve.bind( this.onRequestVideoDone, this ) )
-		.fail( ve.bind( this.onRequestVideoFail, this ) );
+		.done( this.onRequestVideoDone.bind( this ) )
+		.fail( this.onRequestVideoFail.bind( this ) );
 };
 
 /**

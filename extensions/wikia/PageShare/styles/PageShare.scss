@@ -1,0 +1,32 @@
+@import 'skins/shared/color';
+
+.page-share-container {
+	//Without height ul element is expanded on IE11
+	height: 30px;
+}
+
+.page-share-toolbar {
+	//Without height ul element is expanded on IE11
+	height: 30px;
+	line-height: 20px;
+	white-space: nowrap;
+
+	li {
+		display: inline;
+	}
+
+	svg {
+		fill: $color-links;
+		margin-left: 2px;
+		width: 24px;
+	}
+
+	a {
+		opacity: .7;
+
+		&:hover {
+			opacity: 1;
+			text-decoration: none;
+		}
+	}
+}

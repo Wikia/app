@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kaustubh"
+		]
+	},
+	"browsedata": "डाटा देखें",
+	"sd_browsedata_choosecategory": "एक श्रेणी चुनें",
+	"sd_browsedata_viewcategory": "श्रेणी देखें",
+	"sd_browsedata_subcategory": "उपश्रेणी",
+	"sd_browsedata_other": "अन्य",
+	"sd_browsedata_none": "बिल्कुल नहीं",
+	"sd_browsedata_filterbyvalue": "इस वैल्यू के अनुसार फ़िल्टर करें",
+	"sd_browsedata_filterbysubcategory": "इस उपश्रेणी के अनुसार फ़िल्टर करें",
+	"sd_browsedata_removefilter": "यह फ़िल्टर हटायें",
+	"sd_browsedata_removesubcategoryfilter": "यह उपश्रेणी फ़िल्टर हटायें",
+	"sd_browsedata_resetfilters": "फ़िल्टर रिसैट करें",
+	"sd_createfilter_usepropertyvalues": "इस फ़िल्टरके लिये इस गुणधर्मकी सभी वैल्यूओंका इस्तेमाल करें",
+	"sd_createfilter_usecategoryvalues": "इस फ़िल्टरके लिये इस श्रेणी से वैल्यू लें:"
+}

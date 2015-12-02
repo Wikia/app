@@ -275,6 +275,7 @@ class Interwiki {
 	 * @since 1.19
 	 */
 	protected static function getAllPrefixesDB( $local ) {
+		global $wgMemc, $wgInterwikiExpiry; // Wikia change
 		$db = wfGetDB( DB_SLAVE );
 
 		$where = array();
@@ -287,6 +288,17 @@ class Interwiki {
 			}
 		}
 
+		// Wikia change - begin
+		// cache all prefixes in memcache
+		// @see PLATFORM-1207
+		$key = wfMemcKey( 'interwiki', 'all_prefixes',  isset( $where['iw_local'] ) ? $where['iw_local'] : 'all' );
+
+		$retval = $wgMemc->get( $key );
+		if ( is_array( $retval ) ) {
+			return $retval;
+		}
+		// Wikia change - end
+
 		$res = $db->select( 'interwiki',
 			array( 'iw_prefix', 'iw_url', 'iw_api', 'iw_wikiid', 'iw_local', 'iw_trans' ),
 			$where, __METHOD__, array( 'ORDER BY' => 'iw_prefix' )
@@ -295,6 +307,8 @@ class Interwiki {
 		foreach ( $res as $row ) {
 			$retval[] = (array)$row;
 		}
+
+		$wgMemc->set( $key, $retval, $wgInterwikiExpiry ); // Wikia change
 		return $retval;
 	}
 

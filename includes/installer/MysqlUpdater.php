@@ -204,11 +204,8 @@ class MysqlUpdater extends DatabaseUpdater {
 	 * @param $patchFile String: path to the patch to correct the field
 	 */
 	protected function checkBin( $table, $field, $patchFile ) {
-		$tableName = $this->db->tableName( $table );
-		$res = $this->db->query( "SELECT $field FROM $tableName LIMIT 0", __METHOD__ );
-		$flags = explode( ' ', mysql_field_flags( $res->result, 0 ) );
-
-		if ( in_array( 'binary', $flags ) ) {
+		$fieldInfo = $this->db->fieldInfo( $table, $field );
+		if ( $fieldInfo->isBinary() ) {
 			$this->output( "...$table table has correct $field encoding.\n" );
 		} else {
 			$this->output( "Fixing $field encoding on $table table... " );

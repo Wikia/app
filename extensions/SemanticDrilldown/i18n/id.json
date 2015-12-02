@@ -1,0 +1,36 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bennylin",
+			"Irwangatot",
+			"IvanLanin",
+			"Rex",
+			"පසිඳු කාවින්ද"
+		]
+	},
+	"semanticdrilldown-desc": "Suatu antarmuka penelusuran untuk menyelami data semantik",
+	"specialpages-group-sd_group": "Penelusuran Semantik",
+	"browsedata": "Jelajahi data",
+	"sd_browsedata_choosecategory": "Pilih kategori",
+	"sd_browsedata_viewcategory": "lihat kategori",
+	"sd_browsedata_docu": "Klik satu atau lebih butir di bawah untuk mempersempit hasil pencarian.",
+	"sd_browsedata_subcategory": "Subkategori",
+	"sd_browsedata_other": "Lain-lain",
+	"sd_browsedata_none": "Tidak ada",
+	"sd_browsedata_filterbyvalue": "Filter menurut nilai ini",
+	"sd_browsedata_filterbysubcategory": "Filter menurut subkategori ini",
+	"sd_browsedata_otherfilter": "Tampilkan halaman dengan nilai lain dari filter ini",
+	"sd_browsedata_nonefilter": "Tampilkan halaman tanpa nilai dari filter ini",
+	"sd_browsedata_or": "atau",
+	"sd_browsedata_removefilter": "Hilangkan filter",
+	"sd_browsedata_removesubcategoryfilter": "Hilangkan filter subkategori ini",
+	"sd_browsedata_resetfilters": "Atur ulang filter",
+	"sd_browsedata_addanothervalue": "Klik tanda panah untuk menambahkan nilai lain",
+	"sd_browsedata_daterangestart": "Awal:",
+	"sd_browsedata_daterangeend": "Akhir:",
+	"sd_browsedata_novalues": "Tidak ada nilai untuk filter ini",
+	"sd_createfilter_usepropertyvalues": "Gunakan semua nilai dari properti ini untuk filter",
+	"sd_createfilter_usecategoryvalues": "Dapatkan nilai untuk filter dari kategori ini:",
+	"sd_createfilter_requirefilter": "Perlu memilih filter lain sebelum yang satu ini ditampilkan:",
+	"sd-pageschemas-filter": "Penyaring"
+}

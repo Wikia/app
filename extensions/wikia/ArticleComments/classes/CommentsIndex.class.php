@@ -37,7 +37,7 @@ class CommentsIndex extends WikiaModel {
 	}
 
 	public function __clone() {
-		return new CommentsIndex([
+		return new CommentsIndex( [
 			'parentPageId' =>  $this->parentPageId,
 			'commentId' => $this->commentId,
 			'parentCommentId' => $this->parentCommentId,
@@ -53,7 +53,7 @@ class CommentsIndex extends WikiaModel {
 			'lastRevId' => $this->lastRevId,
 			'lastTouched' => $this->lastTouched,
 			'namespace' => $this->namespace
-		]);
+		] );
 	}
 
 	/**
@@ -212,7 +212,7 @@ class CommentsIndex extends WikiaModel {
 	protected function updateDatabase( $updateValue ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( !wfReadOnly() && !empty($this->commentId) ) {
+		if ( !wfReadOnly() && !empty( $this->commentId ) ) {
 			$this->createTableCommentsIndex();
 
 			$db = $this->dbw ? $this->dbw : wfGetDB( DB_MASTER );
@@ -251,10 +251,10 @@ class CommentsIndex extends WikiaModel {
 		$this->createTableCommentsIndex();
 		$db = $this->dbw ? $this->dbw : wfGetDB( DB_MASTER );
 		$timestamp = $db->timestamp();
-		if ( empty($this->createdAt) ) {
+		if ( empty( $this->createdAt ) ) {
 			$this->createdAt = $timestamp;
 		}
-		if ( empty($this->lastTouched) ) {
+		if ( empty( $this->lastTouched ) ) {
 			$this->lastTouched = $timestamp;
 		}
 
@@ -262,7 +262,7 @@ class CommentsIndex extends WikiaModel {
 			$this->lastChildCommentId = $this->commentId;
 		}
 
-		//cache the new instance so we won't have to query the db when we need it again during this request
+		// cache the new instance so we won't have to query the db when we need it again during this request
 		$this->cache();
 
 		$status = $db->replace(
@@ -287,7 +287,7 @@ class CommentsIndex extends WikiaModel {
 			__METHOD__
 		);
 		if ( false === $status ) {
-			Wikia::log(__FUNCTION__, __LINE__, "WALL_COMMENTS_INDEX_ERROR Failed to create comments_index entry, parent_page_id={$this->parentPageId}, comment_id={$this->commentId}, parent_comment_id={$this->parentCommentId}", true);
+			Wikia::log( __FUNCTION__, __LINE__, "WALL_COMMENTS_INDEX_ERROR Failed to create comments_index entry, parent_page_id={$this->parentPageId}, comment_id={$this->commentId}, parent_comment_id={$this->parentCommentId}", true );
 		}
 
 		// if $dbw was passed, this is a part of some outside transaction, so we don't commit anything yet
@@ -307,8 +307,8 @@ class CommentsIndex extends WikiaModel {
 		if ( !wfReadOnly() ) {
 			$db = $this->dbw ? $this->dbw : wfGetDB( DB_MASTER );
 
-			if ( !$db->tableExists('comments_index') ) {
-				$source = dirname(__FILE__) . "/../patch-create-comments_index.sql";
+			if ( !$db->tableExists( 'comments_index' ) ) {
+				$source = dirname( __FILE__ ) . "/../patch-create-comments_index.sql";
 				$db->sourceFile( $source );
 			}
 		}
@@ -331,12 +331,12 @@ class CommentsIndex extends WikiaModel {
 			return null;
 		}
 		$sqlWhere = array( 'comment_id' => $commentId );
-		if ( !empty($parentPageId) ) {
+		if ( !empty( $parentPageId ) ) {
 			$sqlWhere['parent_page_id'] = $parentPageId;
 		} else {
 			// instances created during this requests are stored in the cache, so we don't call the db to fetch them
 			if ( isset( self::$objectCache[ $commentId ] ) ) {
-				Wikia::log(__FUNCTION__, __LINE__, "WALL_COMMENTS returning cached object for id " . $commentId, true);
+				Wikia::log( __FUNCTION__, __LINE__, "WALL_COMMENTS returning cached object for id " . $commentId, true );
 				$ci = clone self::$objectCache[ $commentId ];
 				$ci->setDB( $dbw );
 				wfProfileOut( __METHOD__ );
@@ -349,15 +349,15 @@ class CommentsIndex extends WikiaModel {
 
 		$row = self::selectRow( $db, $sqlWhere );
 
-		if( empty($row) ) {
+		if ( empty( $row ) ) {
 			$db = wfGetDB( DB_MASTER );
-			$row = self::selectRow( $db, $sqlWhere );	
+			$row = self::selectRow( $db, $sqlWhere );
 		}
 
 		if ( $row ) {
 			$comment = self::newFromRow( $row, $dbw );
 			// reset parent page id
-			if ( !empty($parentPageId) ) {
+			if ( !empty( $parentPageId ) ) {
 				$comment->parentPageId = $parentPageId;
 			}
 		} else {
@@ -368,19 +368,19 @@ class CommentsIndex extends WikiaModel {
 
 		return $comment;
 	}
-	
+
 	/**
 	 * just select the row form comment index
 	 */
-	 
-	 public static function selectRow($db, $sqlWhere) {
+
+	 public static function selectRow( $db, $sqlWhere ) {
 	 	$row = $db->selectRow(
 			'comments_index',
 			'*',
 			$sqlWhere,
 			__METHOD__,
 			array( 'LIMIT' => 1 )
-		);	
+		);
 		return $row;
 	 }
 
@@ -406,8 +406,8 @@ class CommentsIndex extends WikiaModel {
 			'lastRevId' => $row->last_rev_id,
 			'lastTouched' => $row->last_touched,
 		);
-		
-		$comment = new CommentsIndex($data, $dbw);
+
+		$comment = new CommentsIndex( $data, $dbw );
 
 		return $comment;
 	}
@@ -417,7 +417,7 @@ class CommentsIndex extends WikiaModel {
 	 * @return integer
 	 */
 	protected function getArticleLastRevId() {
-		$article = Article::newFromID($this->commentId);
+		$article = Article::newFromID( $this->commentId );
 		return $article->getRevIdFetched();
 	}
 
@@ -428,9 +428,9 @@ class CommentsIndex extends WikiaModel {
 	public function updateParentLastCommentId( $lastChildCommentId ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( !empty($this->parentCommentId) ) {
+		if ( !empty( $this->parentCommentId ) ) {
 			$data = array( 'commentId' => $this->parentCommentId );
-			$parent = new CommentsIndex($data, $this->dbw);
+			$parent = new CommentsIndex( $data, $this->dbw );
 			$parent->updateLastChildCommentId( $lastChildCommentId );
 		}
 
@@ -485,18 +485,18 @@ class CommentsIndex extends WikiaModel {
 	public function getParentCommentId() {
 		return $this->parentCommentId;
 	}
-	
+
 	/**
 	 *  fast moving of comment from one page to another
-	 */ 
-	public static function changeParent($from, $to, $parent_comment = null) {
+	 */
+	public static function changeParent( $from, $to, $parent_comment = null ) {
 		$db = wfGetDB( DB_MASTER );
 
-		if(!empty($parent_comment)) {
-			$where = array( "parent_comment_id = ". $parent_comment ." or comment_id = ". $parent_comment );
+		if ( !empty( $parent_comment ) ) {
+			$where = array( "parent_comment_id = " . $parent_comment . " or comment_id = " . $parent_comment );
 		} else {
 			$where = array( 'parent_page_id' => $from );
-			
+
 		}
 
 		$db->update(
@@ -505,7 +505,7 @@ class CommentsIndex extends WikiaModel {
 			$where,
 			__METHOD__
 		);
-		
+
 		$db->commit();
 	}
 
@@ -522,7 +522,7 @@ class CommentsIndex extends WikiaModel {
 		);
 
 		$type = $updater->getDB()->getType();
-		if( isset( $map[$type] ) ) {
+		if ( isset( $map[$type] ) ) {
 			$sql = dirname( __FILE__ ) . "/../" . $map[ $type ];
 			$updater->addExtensionTable( 'comments_index', $sql );
 		} else {
@@ -541,7 +541,7 @@ class CommentsIndex extends WikiaModel {
 	 * Store the information about new comment, so it can be used for creating CommentsIndex instances inside
 	 * MW transaction (ArticleDoEdit hook)
 	 */
-	static public function addCommentInfo($commentTitleText, $userPageTitle, $parentId) {
+	static public function addCommentInfo( $commentTitleText, $userPageTitle, $parentId ) {
 		$entry = new stdClass();
 		$entry->userPageTitle = $userPageTitle;
 		$entry->parentId = $parentId;
@@ -556,7 +556,7 @@ class CommentsIndex extends WikiaModel {
 	 * @param Revision $revision revision containig the lastest version of article comment
 	 * @param $flags Integer bitfield, the same as in WikiPage::doEdit method
 	 */
-	static public function onArticleDoEdit( $dbw, Title $title, Revision $revision, $flags) {
+	static public function onArticleDoEdit( $dbw, Title $title, Revision $revision, $flags ) {
 		global $wgEnableWallEngine;
 
 		if ( !empty( $wgEnableWallEngine ) && WallHelper::isWallNamespace( $title->getNamespace() ) ) {
@@ -567,7 +567,7 @@ class CommentsIndex extends WikiaModel {
 						'namespace' => self::$commentInfoData[ $titleText]->userPageTitle->getNamespace(),
 						'parentPageId' => self::$commentInfoData[ $titleText]->userPageTitle->getArticleID(),
 						'commentId' => $title->getArticleID(),
-						'parentCommentId' => intval(self::$commentInfoData[ $titleText]->parentId),
+						'parentCommentId' => intval( self::$commentInfoData[ $titleText]->parentId ),
 						'firstRevId' => $revision->getId(),
 						'lastRevId' => $revision->getId(),
 					);

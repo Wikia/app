@@ -84,7 +84,7 @@ class ApiOptions extends ApiBase {
 			}
 
 			if ( $validation === true ) {
-				$user->setOption( $key, $value );
+				$user->setGlobalPreference( $key, $value );
 				$changed = true;
 			} else {
 				$this->setWarning( "Validation error for '$key': $validation" );

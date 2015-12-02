@@ -281,7 +281,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 	padding-top: 10px;
 }
 
-@if ( $responsive-layout-enabled ) {
+@if ( $responsive-or-breakpoints-layout-enabled ) {
 	// TODO: To be changed when final proposal for new search placement for small screens layout will be decided
 	@media screen and (max-width: 1023px) {
 		.UserProfileMastheadSearch {

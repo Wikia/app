@@ -3,7 +3,8 @@
 		"authors": [
 			"Cekli829",
 			"Interfase",
-			"Jduranboger"
+			"Jduranboger",
+			"Wertuose"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Vizual redaktor]]",
@@ -12,5 +13,5 @@
 	"visualeditor-feedback-link": "Layihə:Vizual redaktor/Rəy",
 	"visualeditor-feedback-tool": "Rəy bildir",
 	"visualeditor-help-label": "İstifadəçinin bələdçisini oxu",
-	"visualeditor-help-title": "Redaktoru necə işlətmək haqqında istifadəçinin bələdçisini"
+	"visualeditor-help-title": "Redaktorun istifadəsinə dair bələdçi"
 }

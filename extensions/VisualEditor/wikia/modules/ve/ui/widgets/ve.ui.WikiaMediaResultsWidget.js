@@ -15,15 +15,15 @@ ve.ui.WikiaMediaResultsWidget = function VeUiWikiaMediaResultsWidget( config ) {
 	ve.ui.WikiaMediaResultsWidget.super.call( this, config );
 
 	// Properties
-	this.results = new ve.ui.WikiaMediaSelectWidget( { '$': this.$ } );
+	this.results = new ve.ui.WikiaMediaSelectWidget( { $: this.$ } );
 	this.size = config.size || 158;
 
 	// Events
 	this.results.connect( this, {
-		'highlight': 'onResultsHighlight',
-		'select': 'onResultsSelect'
+		highlight: 'onResultsHighlight',
+		select: 'onResultsSelect'
 	} );
-	this.$element.on( 'scroll', ve.bind( this.onResultsScroll, this ) );
+	this.$element.on( 'scroll', this.onResultsScroll.bind( this ) );
 
 	// Initialization
 	this.$element
@@ -98,11 +98,11 @@ ve.ui.WikiaMediaResultsWidget.prototype.addItems = function ( items ) {
 	var i, optionWidget,
 		results = [];
 	for ( i = 0; i < items.length; i++ ) {
-		optionWidget = ve.ui.WikiaMediaOptionWidget.newFromData( items[i], { '$': this.$, 'size': this.size } );
+		optionWidget = ve.ui.WikiaMediaOptionWidget.newFromData( { $: this.$, size: this.size, data: items[i] } );
 		optionWidget.connect( this, {
-			'check': 'onResultsCheck',
-			'metadata': 'onResultsMetadata',
-			'label': 'onResultsLabel'
+			check: 'onResultsCheck',
+			metadata: 'onResultsMetadata',
+			label: 'onResultsLabel'
 		} );
 		results.push(
 			optionWidget

@@ -1,4 +1,4 @@
-<h1 class="wordmark <?= $wordmarkSize ?> <?= $wordmarkType ?> <?= $wordmarkFontClass ?>">
+<h2 class="wordmark <?= $wordmarkSize ?> <?= $wordmarkType ?> <?= $wordmarkFontClass ?>">
 	<a accesskey="z" href="<?= htmlspecialchars($mainPageURL) ?>">
 		<? if (!empty($wordmarkUrl)) { ?>
 			<img src="<?= $wordmarkUrl ?>" alt="<?= htmlspecialchars($wordmarkText) ?>" <? if (!empty($wordmarkStyle)) { ?><?= $wordmarkStyle ?><? } ?>>
@@ -6,4 +6,4 @@
 			<?= htmlspecialchars($wordmarkText) ?>
 		<? } ?>
 	</a>
-</h1>
+</h2>

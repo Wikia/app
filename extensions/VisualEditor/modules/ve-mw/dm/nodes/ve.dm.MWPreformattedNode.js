@@ -28,7 +28,7 @@ OO.inheritClass( ve.dm.MWPreformattedNode, ve.dm.PreformattedNode );
 
 ve.dm.MWPreformattedNode.static.name = 'mwPreformatted';
 
-ve.dm.MWPreformattedNode.static.suggestedParentNodeTypes = [ 'document' ];
+ve.dm.MWPreformattedNode.static.suggestedParentNodeTypes = [ 'document', 'tableCell' ];
 
 /* Registration */
 

@@ -1,6 +1,5 @@
 @import "skins/shared/color";
 @import "skins/shared/mixins/box-shadow";
-@import "skins/shared/mixins/box-sizing";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/menus";
 
@@ -50,9 +49,9 @@
 
 		input[type=text],
 		textarea {
-			@include box-sizing;
 			background-color: $color-wall-input-new;
 			border: 0;
+			box-sizing: border-box;
 			color: $color-text;
 
 			// Chrome needs this to get rid of empty space below textarea
@@ -207,7 +206,6 @@
 		h4 a {
 			display: block;
 			font-weight: normal;
-			height: 22px;
 			margin: 0 0 5px;
 			overflow: hidden;
 			text-overflow: ellipsis;
@@ -289,14 +287,16 @@
 	border-bottom: 0;
 	margin: 0 10px 0 0;
 	padding-bottom: 0;
-	// DAR-1382 overwrite right padding to make place for larger forum tally
-	padding-right: 260px;
+	padding-right: 0;
 	position: relative;
 
+	h1 {
+		margin: 0;
+		word-break: normal;
+	}
+
 	.header-right {
-		position: absolute;
-		top: 0;
-		right: 0;
+		float: right;
 	}
 
 	.tally {
@@ -327,6 +327,9 @@
 
 .WikiaRail .ForumActivityModule,
 .WikiaRail .ForumParticipationModule {
+	h2 {
+		margin: 0;
+	}
 	em {
 		display: inherit;
 		overflow: hidden;
@@ -335,9 +338,6 @@
 		a {
 			white-space: nowrap;
 		}
-	}
-	h1 {
-		margin-bottom: 15px;
 	}
 	.avatar {
 		left: 0;

@@ -33,7 +33,7 @@ ve.dm.MWNoGalleryMetaItem.static.matchTagNames = [ 'meta' ];
 ve.dm.MWNoGalleryMetaItem.static.matchRdfaTypes = [ 'mw:PageProp/nogallery' ];
 
 ve.dm.MWNoGalleryMetaItem.static.toDataElement = function ( ) {
-	return { 'type': this.name };
+	return { type: this.name };
 };
 
 ve.dm.MWNoGalleryMetaItem.static.toDomElements = function ( dataElement, doc ) {

@@ -1,0 +1,355 @@
+/*!
+ * VisualEditor UserInterface icon styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+/*csslint duplicate-background-images:false */
+
+.oo-ui-icon-align-center {
+	/* @embed */
+	background-image: url(images/icons/align-center.svg);
+}
+
+.oo-ui-icon-align-float-left {
+	/* @embed */
+	background-image: url(images/icons/align-float-left.svg);
+}
+
+.oo-ui-icon-align-float-right {
+	/* @embed */
+	background-image: url(images/icons/align-float-right.svg);
+}
+
+.oo-ui-icon-bold-a {
+	/* @embed */
+	background-image: url(images/icons/bold-a.svg);
+}
+
+.oo-ui-icon-bold-b {
+	/* @embed */
+	background-image: url(images/icons/bold-b.svg);
+}
+
+.oo-ui-icon-bold-arab-ain {
+	/* @embed */
+	background-image: url(images/icons/bold-arab-ain.svg);
+}
+
+.oo-ui-icon-bold-arab-dad {
+	/* @embed */
+	background-image: url(images/icons/bold-arab-dad.svg);
+}
+
+.oo-ui-icon-bold-armn-to {
+	/* @embed */
+	background-image: url(images/icons/bold-armn-to.svg);
+}
+
+.oo-ui-icon-bold-cyrl-be {
+	/* @embed */
+	background-image: url(images/icons/bold-cyrl-be.svg);
+}
+
+.oo-ui-icon-bold-cyrl-te {
+	/* @embed */
+	background-image: url(images/icons/bold-cyrl-te.svg);
+}
+
+.oo-ui-icon-bold-cyrl-zhe {
+	/* @embed */
+	background-image: url(images/icons/bold-cyrl-zhe.svg);
+}
+
+.oo-ui-icon-bold-f {
+	/* @embed */
+	background-image: url(images/icons/bold-f.svg);
+}
+
+.oo-ui-icon-bold-g {
+	/* @embed */
+	background-image: url(images/icons/bold-g.svg);
+}
+
+.oo-ui-icon-bold-geor-man {
+	/* @embed */
+	background-image: url(images/icons/bold-geor-man.svg);
+}
+
+.oo-ui-icon-bold-l {
+	/* @embed */
+	background-image: url(images/icons/bold-l.svg);
+}
+
+.oo-ui-icon-bold-n {
+	/* @embed */
+	background-image: url(images/icons/bold-n.svg);
+}
+
+.oo-ui-icon-bold-v {
+	/* @embed */
+	background-image: url(images/icons/bold-v.svg);
+}
+
+.oo-ui-icon-bullet-list {
+	/* @embed */
+	background-image: url(images/icons/bullet-list-ltr.svg);
+}
+
+/* @noflip */
+.ve-ui-dir-block-rtl .oo-ui-icon-bullet-list {
+	/* @embed */
+	background-image: url(images/icons/bullet-list-rtl.svg);
+}
+
+/* @noflip */
+.ve-ui-dir-block-ltr .oo-ui-icon-bullet-list {
+	/* @embed */
+	background-image: url(images/icons/bullet-list-ltr.svg);
+}
+
+.oo-ui-icon-case-sensitive {
+	/* @embed */
+	background-image: url(images/icons/case-sensitive.svg);
+}
+
+.oo-ui-icon-find {
+	/* @embed */
+	background-image: url(images/icons/find-ltr.svg);
+}
+
+.oo-ui-icon-indent-list {
+	/* @embed */
+	background-image: url(images/icons/indent-list-ltr.svg);
+}
+
+/* @noflip */
+.ve-ui-dir-block-rtl .oo-ui-icon-indent-list {
+	/* @embed */
+	background-image: url(images/icons/indent-list-rtl.svg);
+}
+
+/* @noflip */
+.ve-ui-dir-block-ltr .oo-ui-icon-indent-list {
+	/* @embed */
+	background-image: url(images/icons/indent-list-ltr.svg);
+}
+
+.oo-ui-icon-insert {
+	/* @embed */
+	background-image: url(images/icons/insert.svg);
+}
+
+.oo-ui-icon-italic-a {
+	/* @embed */
+	background-image: url(images/icons/italic-a.svg);
+}
+
+.oo-ui-icon-italic-c {
+	/* @embed */
+	background-image: url(images/icons/italic-c.svg);
+}
+
+.oo-ui-icon-italic-d {
+	/* @embed */
+	background-image: url(images/icons/italic-d.svg);
+}
+
+.oo-ui-icon-italic-e {
+	/* @embed */
+	background-image: url(images/icons/italic-e.svg);
+}
+
+.oo-ui-icon-italic-s {
+	/* @embed */
+	background-image: url(images/icons/italic-s.svg);
+}
+
+.oo-ui-icon-italic-arab-meem {
+	/* @embed */
+	background-image: url(images/icons/italic-arab-meem.svg);
+}
+
+.oo-ui-icon-italic-arab-keheh-jeem {
+	/* @embed */
+	background-image: url(images/icons/italic-arab-keheh-jeem.svg);
+}
+
+.oo-ui-icon-italic-armn-sha {
+	/* @embed */
+	background-image: url(images/icons/italic-armn-sha.svg);
+}
+
+.oo-ui-icon-italic-geor-kan {
+	/* @embed */
+	background-image: url(images/icons/italic-geor-kan.svg);
+}
+
+.oo-ui-icon-italic-i {
+	/* @embed */
+	background-image: url(images/icons/italic-i.svg);
+}
+
+.oo-ui-icon-italic-k,
+.oo-ui-icon-italic-cyrl-ka {
+	/* Latin K and Cyrillic Ka use same glyph */
+	/* @embed */
+	background-image: url(images/icons/italic-k.svg);
+}
+
+.oo-ui-icon-language {
+	/* @embed */
+	background-image: url(images/icons/language.svg); }
+
+.oo-ui-icon-number-list {
+	/* @embed */
+	background-image: url(images/icons/number-list-ltr.svg);
+}
+
+/* @noflip */
+.ve-ui-dir-block-rtl .oo-ui-icon-number-list {
+	/* @embed */
+	background-image: url(images/icons/number-list-rtl.svg);
+}
+
+/* @noflip */
+.ve-ui-dir-block-ltr .oo-ui-icon-number-list {
+	/* @embed */
+	background-image: url(images/icons/number-list-ltr.svg);
+}
+
+.oo-ui-icon-outdent-list {
+	/* @embed */
+	background-image: url(images/icons/outdent-list-ltr.svg);
+}
+
+/* @noflip */
+.ve-ui-dir-block-rtl .oo-ui-icon-outdent-list {
+	/* @embed */
+	background-image: url(images/icons/outdent-list-rtl.svg);
+}
+
+/* @noflip */
+.ve-ui-dir-block-ltr .oo-ui-icon-outdent-list {
+	/* @embed */
+	background-image: url(images/icons/outdent-list-ltr.svg);
+}
+
+.oo-ui-icon-regular-expression {
+	/* @embed */
+	background-image: url(images/icons/regular-expression.svg);
+}
+
+.oo-ui-icon-special-character {
+	/* @embed */
+	background-image: url(images/icons/special-character.svg);
+}
+
+.oo-ui-icon-strikethrough-a {
+	/* @embed */
+	background-image: url(images/icons/strikethrough-a.svg);
+}
+
+.oo-ui-icon-strikethrough-s {
+	/* @embed */
+	background-image: url(images/icons/strikethrough-s.svg);
+}
+
+.oo-ui-icon-strikethrough-y {
+	/* @embed */
+	background-image: url(images/icons/strikethrough-y.svg);
+}
+
+.oo-ui-icon-subscript {
+	/* @embed */
+	background-image: url(images/icons/subscript.svg);
+}
+
+.oo-ui-icon-superscript {
+	/* @embed */
+	background-image: url(images/icons/superscript.svg);
+}
+
+/* @noflip */
+.oo-ui-icon-text-dir-ltr {
+	/* @embed */
+	background-image: url(images/icons/text-dir-ltr.svg);
+}
+
+/* @noflip */
+.oo-ui-icon-text-dir-rtl {
+	/* @embed */
+	background-image: url(images/icons/text-dir-rtl.svg);
+}
+
+.oo-ui-icon-text-style {
+	/* @embed */
+	background-image: url(images/icons/text-style.svg);
+}
+
+.oo-ui-icon-underline-a {
+	/* @embed */
+	background-image: url(images/icons/underline-a.svg);
+}
+
+.oo-ui-icon-underline-u {
+	/* @embed */
+	background-image: url(images/icons/underline-u.svg);
+}
+
+.oo-ui-icon-table-insert {
+	/* @embed */
+	background-image: url(images/icons/table-insert.svg);
+}
+
+.oo-ui-icon-table-insert-row-before {
+	background-image: url(images/icons/table-insert-row-before.svg);
+}
+
+.oo-ui-icon-table-insert-row-after {
+	/* @embed */
+	background-image: url(images/icons/table-insert-row-after.svg);
+}
+
+.oo-ui-icon-table-insert-column-before {
+	/* @embed */
+	background-image: url(images/icons/table-insert-column-ltr.svg);
+}
+
+/* @noflip */
+.ve-ui-dir-block-rtl .oo-ui-icon-table-insert-column-before {
+	/* @embed */
+	background-image: url(images/icons/table-insert-column-rtl.svg);
+}
+
+/* @noflip */
+.ve-ui-dir-block-ltr .oo-ui-icon-table-insert-column-before {
+	/* @embed */
+	background-image: url(images/icons/table-insert-column-ltr.svg);
+}
+
+.oo-ui-icon-table-insert-column-after {
+	/* @embed */
+	background-image: url(images/icons/table-insert-column-rtl.svg);
+}
+
+/* @noflip */
+.ve-ui-dir-block-rtl .oo-ui-icon-table-insert-column-after {
+	/* @embed */
+	background-image: url(images/icons/table-insert-column-ltr.svg);
+}
+
+/* @noflip */
+.ve-ui-dir-block-ltr .oo-ui-icon-table-insert-column-after {
+	/* @embed */
+	background-image: url(images/icons/table-insert-column-rtl.svg);
+}
+
+.oo-ui-icon-table-merge-cells {
+	/* @embed */
+	background-image: url(images/icons/table-merge-cells.svg);
+}
+
+.oo-ui-icon-table-caption {
+	/* @embed */
+	background-image: url(images/icons/table-caption.svg);
+}

@@ -25,7 +25,7 @@ class ImageReviewTask extends BaseTask {
 				continue;
 			}
 
-			$dbname = \WikiFactory::getWikisByID( $wikiId );
+			$dbname = \WikiFactory::getWikiByID( $wikiId );
 			if ( !$dbname ) {
 				$this->warning( 'did not find database', ['wiki_id' => $wikiId] );
 				continue;
@@ -119,7 +119,9 @@ class ImageReviewTask extends BaseTask {
 		];
 		$from = $recipients[0];
 
-		\UserMailer::send( $recipients, $from, $subject, $body );
+		foreach ( $recipients as $recipient ) {
+			\UserMailer::send( $recipient, $from, $subject, $body );
+		}
 
 		WikiaLogger::instance()->error( "ImageReviewLog", [
 			'method' => __METHOD__,

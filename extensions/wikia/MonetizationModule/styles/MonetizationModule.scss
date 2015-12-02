@@ -3,9 +3,14 @@
 @import 'skins/shared/mixins/box-shadow';
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/gradient';
+@import './mixins/sprite-monetization-module';
 
 .monetization-module {
 	clear: left;
+
+	.amazon-logo, .product-btn, .default-thumb, .rating-bar, .rating {
+		@include sprite-monetization-module-base();
+	}
 
 	&.adunit {
 		margin-bottom: 50px;
@@ -17,11 +22,6 @@
 		font-family: Helvetica,sans-serif;
 		line-height: 1.8em;
 		margin-bottom: 40px;
-
-		.default-thumb {
-			background-image: url('/extensions/wikia/MonetizationModule/images/no_image_commerce.png');
-			width: 100%;
-		}
 	}
 
 	&.amazon-video {
@@ -31,7 +31,7 @@
 		color: #fff;
 		font-family: Helvetica,sans-serif;
 		margin-bottom: 25px;
-		margin-top: 25px;
+		margin-top: 10px;
 
 		&.above-title {
 			margin-top: 0;
@@ -47,6 +47,10 @@
 
 		.product-name {
 			float: left;
+
+			span {
+				display: block;
+			}
 		}
 
 		.product-title {
@@ -64,10 +68,7 @@
 		}
 
 		.product-btn {
-			background-image: url('/extensions/wikia/MonetizationModule/images/watch-now-btn.png');
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: 178px 45px;
+			@include sprite-monetization-module('watch-now-btn');
 			display: block;
 			height: 45px;
 			width: 178px;
@@ -79,8 +80,9 @@
 		}
 
 		.default-thumb {
-			background-image: url('/extensions/wikia/MonetizationModule/images/no_image_video.png');
-			width: 170px;
+			@include sprite-monetization-module('no_image_video');
+			height: 122px;
+			width: 160px;
 		}
 	}
 
@@ -96,49 +98,21 @@
 
 	.ad-responsive {
 		height: 90px;
-		width: 728px;
+		width: 700px;
 	}
 
 	.ad-responsive-ic {
 		height: 90px;
-		width: 320px;
+		width: 360px;
 	}
 
-	@media(min-width: 850px) {
+	@media(min-width: 1576px) {
 		.ad-responsive-ic {
-			width: 418px;
-		}
-	}
-
-	@media(min-width: 1024px) {
-		.ad-responsive-ic {
-			width: 320px;
-		}
-
-		.ad-responsive {
-			width: 690px;
-		}
-	}
-
-	@media(min-width: 1440px) {
-		.ad-responsive-ic {
-			width: 418px;
+			width: 510px;
 		}
 
 		.ad-responsive {
 			width: 728px;
-		}
-	}
-
-	@media(min-width: 1665px) {
-		.ad-responsive-ic {
-			width: 630px;
-		}
-	}
-
-	@media(min-width: 1700px) {
-		.ad-responsive-ic {
-			width: 678px;
 		}
 	}
 
@@ -156,8 +130,6 @@
 
 
 	.default-thumb {
-		background-position: center;
-		background-repeat: no-repeat;
 		display: block;
 	}
 
@@ -175,13 +147,8 @@
 		text-align: center;
 	}
 
-	.amazon-logo {
-		background-repeat: no-repeat;
-		height: 34px;
-	}
-
 	.rating-bar {
-		background: url('/extensions/wikia/MonetizationModule/images/star-inactive.png');
+		@include sprite-monetization-module('star-inactive');
 		background-repeat: repeat-x;
 		height: 16px;
 		text-align: left;
@@ -189,7 +156,7 @@
 	}
 
 	.rating {
-		background: url('/extensions/wikia/MonetizationModule/images/star-active.png');
+		@include sprite-monetization-module('star-active');
 		background-repeat: repeat-x;
 		height: 16px;
 		width: 0;
@@ -235,6 +202,11 @@
 		width: 160px;
 	}
 
+	.default-thumb {
+		@include sprite-monetization-module('no_image_commerce', 0, 0, 0, 19px);
+		width: 160px;
+	}
+
 	.product-name {
 		border-bottom: 1px solid #ccc;
 		border-left: 1px solid #ccc;
@@ -265,13 +237,12 @@
 
 	.amazon-logo {
 		@if $is-dark-wiki {
-			background-image: url('/extensions/wikia/MonetizationModule/images/amazon-logo-white.png');
+			@include sprite-monetization-module('amazon-logo-white', 0, 0, 0, -3px);
 		} @else {
-			background-image: url('/extensions/wikia/MonetizationModule/images/amazon-logo-black.png');
+			@include sprite-monetization-module('amazon-logo-black', 0, 0, 0, -3px);
 		}
-		background-position: 0 -3px;
-		background-size: cover;
 		display: inline-block;
+		height: 38px;
 		margin-left: 6px;
 		vertical-align: top;
 		width: 160px;
@@ -327,6 +298,13 @@
 		}
 	}
 
+	.default-thumb {
+		@include sprite-monetization-module('no_image_commerce', 0, 0, 0, 29px);
+		height: 122px;
+		margin-left: 48px;
+		width: 160px;
+	}
+
 	.product-name {
 		font-size: 20px;
 		height: 80px;
@@ -360,10 +338,11 @@
 	}
 
 	.amazon-logo {
-		background-image: url('/extensions/wikia/MonetizationModule/images/amazon-logo-white.png');
+		background-image: url('/extensions/wikia/MonetizationModule/images/sprite-monetization-module/amazon-logo-white.png'); /* base64 */
 		background-position: center;
-		background-size: 160px 34px;
+		background-size: 160px 38px;
 		display: block;
+		height: 38px;
 	}
 }
 
@@ -380,10 +359,10 @@
 	}
 
 	.amazon-logo {
-		background-image: url('/extensions/wikia/MonetizationModule/images/amazon-logo-video.png');
-		background-position: center;
-		background-size: 139px 36px;
+		@include sprite-monetization-module('amazon-logo-video');
 		display: block;
+		height: 36px;
+		width: 139px;
 	}
 
 	.product-name {
@@ -446,12 +425,11 @@
 	}
 
 	.amazon-logo {
-		background-image: url('/extensions/wikia/MonetizationModule/images/amazon-logo-video-horz.png');
-		background-position: center;
-		background-size: 141px 20px;
+		@include sprite-monetization-module('amazon-logo-video-horz');
 		display: block;
 		height: 20px;
-		padding: 10px 0 11px;
+		margin: 10px 0 10px 18px;
+		width: 141px;
 	}
 
 	&.in-content {
@@ -476,11 +454,11 @@
 		}
 
 		.amazon-logo {
-			padding-top: 0;
+			margin-top: 0;
 		}
 
-		@media(max-width: 849px), (min-width: 1024px) and (max-width: 1439px) {
-			width: 290px;
+		@media(max-width: 1575px) {
+			width: 330px;
 
 			.product-name {
 				font-size: 14px;
@@ -498,11 +476,10 @@
 			}
 
 			.amazon-logo {
-				background-image: url('/extensions/wikia/MonetizationModule/images/amzon_no_iv.png');
-				background-position: center left;
-				background-size: 106px 35px;
+				@include sprite-monetization-module('amzon_no_iv');
 				float: left;
-				height: 25px;
+				height: 35px;
+				margin: 0;
 				width: 106px;
 			}
 
@@ -516,24 +493,12 @@
 			}
 		}
 
-		@media(min-width: 850px) and (max-width: 1023px), (min-width: 1440px) {
-			width: 388px;
+		@media(min-width: 1576px) {
+			width: 480px;
 
 			.product-name {
 				width: 50%;
 			}
-		}
-
-		@media(min-width: 1665px) {
-			width: 600px;
-
-			.product-name {
-				width: 70%;
-			}
-		}
-
-		@media(min-width: 1700px) {
-			width: 648px;
 		}
 	}
 }

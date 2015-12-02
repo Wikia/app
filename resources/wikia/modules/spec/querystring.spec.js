@@ -22,11 +22,6 @@ describe("Querystring", function () {
 		expect(typeof querystring).toBe('function', 'querystring');
 	});
 
-	xit('exposes itself to Wikia namespace', function() {
-		expect(window.Wikia.Querystring).toBeDefined();
-		expect(typeof window.Wikia.Querystring).toBe('function', 'Wikia.Querystring');
-	});
-
 	it('gives nice and clean API', function() {
 		var qs = new querystring();
 

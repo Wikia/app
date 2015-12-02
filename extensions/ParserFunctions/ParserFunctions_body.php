@@ -83,7 +83,10 @@ class ExtParserFunctions {
 		try {
 			return self::getExprParser()->doExpression( $expr );
 		} catch ( ExprError $e ) {
-			return $e->getMessage();
+			// begin wikia change
+			// VOLDEV-114
+			return '<strong class="error">' . htmlspecialchars( $e->getMessage() ) . '</strong>';
+			// end wikia change
 		}
 	}
 
@@ -106,7 +109,10 @@ class ExtParserFunctions {
 				return $else;
 			}
 		} catch ( ExprError $e ) {
-			return $e->getMessage();
+			// begin wikia change
+			// VOLDEV-114
+			return '<strong class="error">' . htmlspecialchars( $e->getMessage() ) . '</strong>';
+			// end wikia change
 		}
 	}
 

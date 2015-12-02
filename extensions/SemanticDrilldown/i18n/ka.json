@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"David1010",
+			"Malafaya"
+		]
+	},
+	"sd_browsedata_choosecategory": "კატეგორიის არჩევა",
+	"sd_browsedata_viewcategory": "კატეგორიის ხილვა",
+	"sd_browsedata_subcategory": "ქვეკატეგორია",
+	"sd_browsedata_other": "სხვა",
+	"sd_browsedata_none": "არა",
+	"sd_browsedata_or": "ან",
+	"sd_browsedata_removefilter": "ამ ფილტრის მოშორება",
+	"sd_browsedata_daterangestart": "დასაწყისი:",
+	"sd_browsedata_daterangeend": "დასასრული:",
+	"sd-pageschemas-filter": "ფილტრი",
+	"sd-pageschemas-values": "მნიშვნელობები"
+}

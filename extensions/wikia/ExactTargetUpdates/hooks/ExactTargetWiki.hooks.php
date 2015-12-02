@@ -55,12 +55,14 @@ class ExactTargetWikiHooks {
 	/**
 	 * Runs a method adding a DeleteWikiTask to the job queue
 	 * when a wiki is closed.
-	 * Executed on a WikiFactoryWikiClosed hook.
+	 * Executed on a WikiFactoryPublicStatusChanged hook.
 	 * @param  Array  $aParams Must contain a city_id key
 	 * @return true
 	 */
-	public function onWikiFactoryWikiClosed( Array $aParams ) {
-		$this->addTheDeleteWikiTask( $aParams );
+	public function onWikiFactoryPublicStatusChanged( &$city_public, &$city_id, $reason ) {
+		if ( $city_public <= 0 ) {
+			$this->addTheDeleteWikiTask( [ 'city_id' => $city_id ] );
+		}
 		return true;
 	}
 
@@ -83,7 +85,7 @@ class ExactTargetWikiHooks {
 	 */
 	private function addTheUpdateWikiTask( $iCityId ) {
 		$oTask = $this->getExactTargetUpdateWikiTask();
-		$oTask->call( 'updateWikiData', $iCityId );
+		$oTask->call( 'updateFallbackCreateWikiData', $iCityId );
 		$oTask->queue();
 	}
 

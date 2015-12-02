@@ -12,6 +12,9 @@
 	<testsuite name="Wikia Test Suite">
 		<directory>./unit/</directory>
 	</testsuite>
+	<testsuite name="Wikia Lib Test Suite">
+		<directory>../lib/Wikia/tests/</directory>
+	</testsuite>
 	<testsuite name="Wikia Includes Test Suite">
 		<directory>../includes/wikia/</directory>
 	</testsuite>

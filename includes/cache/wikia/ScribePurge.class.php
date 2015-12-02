@@ -65,7 +65,6 @@ class ScribePurge {
 	 * @return bool true - it's a hook
 	 */
 	static function onRestInPeace() {
-		global $wgCityId;
 
 		// don't process an empty queue
 		if ( empty( self::$urls ) ) {
@@ -86,7 +85,6 @@ class ScribePurge {
 
 				// debugging data to be sent to both sFlow (for monitoring) and Kibana (for debugging)
 				$context = [
-					'city' => $wgCityId,
 					'url' => $data['url'],
 					'method' => $data['method'],
 				];

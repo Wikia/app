@@ -9,31 +9,31 @@
  * @extends OO.ui.OptionWidget
  *
  * @constructor
- * @param {ve.dm.WikiaCartItem} model Cart item
+ * @param {Object} [config] Configuration options
  */
-ve.ui.WikiaCartItemWidget = function VeUiWikiaCartItemWidget( model ) {
+ve.ui.WikiaCartItemWidget = function VeUiWikiaCartItemWidget( config ) {
 	var size = 80, $image;
 
-	ve.ui.WikiaCartItemWidget.super.call( this, model.getId() );
+	ve.ui.WikiaCartItemWidget.super.call( this, config );
 
-	this.model = model;
+	this.model = config.model;
 	this.$element.addClass( 've-ui-texture-pending' );
 
 	$image = this.$( '<img>' )
 		.attr( {
-			'height': size,
-			'width': size
+			height: size,
+			width: size
 		} )
 		.addClass( 've-ui-wikiaCartImage' )
-		.load( ve.bind( function () {
+		.load( function () {
 			this.$element
 				.prepend( $image )
 				.removeClass( 've-ui-texture-pending' );
-		}, this ) );
+		}.bind( this ) );
 
-	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
+	require( ['wikia.thumbnailer'], function ( thumbnailer ) {
 		$image.attr( 'src', thumbnailer.getThumbURL( this.model.url, 'image', size, size ) );
-	}, this ) );
+	}.bind( this ) );
 };
 
 OO.inheritClass( ve.ui.WikiaCartItemWidget, OO.ui.OptionWidget );

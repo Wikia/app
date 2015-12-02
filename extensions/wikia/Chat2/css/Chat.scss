@@ -1,7 +1,6 @@
 @import "skins/shared/mixins/bodytext";
 @import "skins/shared/mixins/border-opacity";
 @import "skins/shared/mixins/box-shadow";
-@import "skins/shared/mixins/box-sizing";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/forms";
 @import "skins/shared/mixins/gradient";
@@ -297,9 +296,9 @@ a {
 		width: 100%;
 	}
 	.message {
-		@include box-sizing();
 		background-color: lighten($color-page, 5%);
 		border: 1px solid $color-page-border;
+		box-sizing: border-box;
 		height: 3.3em;
 		padding: 2px;
 		position: relative;

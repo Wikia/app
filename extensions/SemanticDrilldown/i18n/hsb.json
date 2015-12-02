@@ -1,0 +1,33 @@
+{
+	"@metadata": {
+		"authors": [
+			"Michawiki"
+		]
+	},
+	"semanticdrilldown-desc": "Interfejs Drilldown za nawigaciju znutřka semantiskich datow",
+	"specialpages-group-sd_group": "Semantiska nawigacija",
+	"browsedata": "Daty přepytać",
+	"sd_browsedata_choosecategory": "Wubjer kategoriju",
+	"sd_browsedata_viewcategory": "Kategoriju wobhladać",
+	"sd_browsedata_docu": "Klikń na jedyn zapisk abo na wjacore zapiski, zo by wuslědki zamjezował.",
+	"sd_browsedata_subcategory": "Podkategorija",
+	"sd_browsedata_other": "Druhe",
+	"sd_browsedata_none": "Žane",
+	"sd_browsedata_filterbyvalue": "Po tutej hódnoće filtrować",
+	"sd_browsedata_filterbysubcategory": "Po tutej podkategoriji filtorwać",
+	"sd_browsedata_otherfilter": "Strony z druhej hódnotu za tutón filter pokazać",
+	"sd_browsedata_nonefilter": "Strony bjez hódnoty za tutón filter pokazać",
+	"sd_browsedata_or": "abo",
+	"sd_browsedata_removefilter": "Tutón filter wotstronić",
+	"sd_browsedata_removesubcategoryfilter": "Tutón podkategorijny filter wotstronić",
+	"sd_browsedata_resetfilters": "Filtry wróćo stajić",
+	"sd_browsedata_addanothervalue": "Na šipk kliknyć, zo by so druha hódnota přidała",
+	"sd_browsedata_daterangestart": "Spočatk:",
+	"sd_browsedata_daterangeend": "Kónc:",
+	"sd_browsedata_novalues": "Za tutón filter hódnoty njejsu",
+	"sd_createfilter_usepropertyvalues": "Wužij wšě hódnoty tuteje kajkosće za filter",
+	"sd_createfilter_usecategoryvalues": "Wobstaraj hódnoty za filter z tuteje kategorije:",
+	"sd_createfilter_requirefilter": "Zo by tutón filter zwobrazniło, je druhi filter trjeba:",
+	"sd-pageschemas-filter": "Filter",
+	"sd-pageschemas-values": "Hódnoty"
+}

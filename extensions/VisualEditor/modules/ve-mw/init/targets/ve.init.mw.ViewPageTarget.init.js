@@ -9,8 +9,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
-
 /**
  * Platform preparation for the MediaWiki view page. This loads (when user needs it) the
  * actual MediaWiki integration and VisualEditor library.
@@ -20,7 +18,7 @@
  */
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
-		init, support, getTargetDeferred, enable, userPrefEnabled,
+		init, support, targetPromise, enable, userPrefEnabled,
 		plugins = [];
 
 	/**
@@ -28,19 +26,11 @@
 	 * @returns {jQuery.Promise}
 	 */
 	function getTarget() {
-		var loadTargetDeferred;
-		if ( !getTargetDeferred ) {
-			getTargetDeferred = $.Deferred();
-			loadTargetDeferred = $.Deferred()
-				.done( function () {
+		if ( !targetPromise ) {
+			targetPromise = mw.loader.using( 'ext.visualEditor.viewPageTarget' )
+				.then( function () {
 					var target = new ve.init.mw.ViewPageTarget();
-
-					// Tee tracked events to MediaWiki firehose, if available (1.23+).
-					if ( mw.track ) {
-						ve.trackSubscribeAll( function ( topic, data ) {
-							mw.track.call( null, 've.' + topic, data );
-						} );
-					}
+					$( '#content' ).append( target.$element );
 
 					// Transfer methods
 					ve.init.mw.ViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
@@ -48,27 +38,26 @@
 					// Add plugins
 					target.addPlugins( plugins );
 
-					getTargetDeferred.resolve( target );
-				} )
-				.fail( getTargetDeferred.reject );
-
-			mw.loader.using( 'ext.visualEditor.viewPageTarget', loadTargetDeferred.resolve, loadTargetDeferred.reject );
+					return target;
+				}, function ( e ) {
+					mw.log.warn( 'VisualEditor failed to load: ' + e );
+				} );
 		}
-		return getTargetDeferred.promise();
+		return targetPromise;
 	}
 
 	conf = mw.config.get( 'wgVisualEditorConfig' );
 	tabMessages = conf.tabMessages;
 	uri = new mw.Uri();
-	// BUG 49000: For special pages, no information about page existence is
-	// exposed to mw.config (see BUG 53774), so we assume it exists.
-	pageExists = !!mw.config.get( 'wgArticleId' ) || mw.config.get( 'wgNamespaceNumber' ) < 0;
+	pageExists = !!mw.config.get( 'wgRelevantArticleId' );
 	viewUri = new mw.Uri( mw.util.getUrl( mw.config.get( 'wgRelevantPageName' ) ) );
-	veEditUri = viewUri.clone().extend( { 'veaction': 'edit' } );
 	isViewPage = (
 		mw.config.get( 'wgIsArticle' ) &&
 		!( 'diff' in uri.query )
 	);
+	// On a view page, extend the current URI so parameters like oldid are carried over
+	// On a non-view page, use viewUri
+	veEditUri = ( isViewPage ? uri : viewUri ).clone().extend( { veaction: 'edit' } );
 
 	support = {
 		es5: !!(
@@ -86,7 +75,8 @@
 			String.prototype.trim &&
 			window.JSON &&
 			JSON.parse &&
-			JSON.stringify
+			JSON.stringify &&
+			Function.prototype.bind
 		),
 		contentEditable: 'contentEditable' in document.createElement( 'div' ),
 		svg: !!(
@@ -122,15 +112,15 @@
 		 *
 		 *     @example
 		 *     // Register ResourceLoader module
-		 *     ve.libs.mw.addPlugin( 'ext.gadget.foobar' );
+		 *     mw.libs.ve.addPlugin( 'ext.gadget.foobar' );
 		 *
 		 *     // Register a callback
-		 *     ve.libs.mw.addPlugin( function ( target ) {
+		 *     mw.libs.ve.addPlugin( function ( target ) {
 		 *         ve.dm.Foobar = .....
 		 *     } );
 		 *
 		 *     // Register a callback that loads another script
-		 *     ve.libs.mw.addPlugin( function () {
+		 *     mw.libs.ve.addPlugin( function () {
 		 *         return $.getScript( 'http://example.com/foobar.js' );
 		 *     } );
 		 *
@@ -290,7 +280,7 @@
 						$editLink
 							.attr( 'href', function ( i, val ) {
 								return new mw.Uri( veEditUri ).extend( {
-									'vesection': new mw.Uri( val ).query.section
+									vesection: new mw.Uri( val ).query.section
 								} );
 							} )
 							.addClass( 'mw-editsection-visualeditor' );
@@ -343,11 +333,28 @@
 				return;
 			}
 
+			init.showLoading();
+			ve.track( 'mwedit.init', { type: 'page', mechanism: 'click' } );
+
+			if ( history.pushState && uri.query.veaction !== 'edit' ) {
+				// Replace the current state with one that is tagged as ours, to prevent the
+				// back button from breaking when used to exit VE. FIXME: there should be a better
+				// way to do this. See also similar code in the ViewPageTarget constructor.
+				history.replaceState( { tag: 'visualeditor' }, document.title, uri );
+				// Set veaction to edit
+				history.pushState( { tag: 'visualeditor' }, document.title, veEditUri );
+				// Update mw.Uri instance
+				uri = veEditUri;
+			}
+
 			e.preventDefault();
 
 			getTarget().done( function ( target ) {
-				ve.track( 'Edit', { action: 'edit-link-click' } );
-				target.activate();
+				target.activate()
+					.done( function () {
+						ve.track( 'mwedit.ready' );
+					} )
+					.always( init.hideLoading );
 			} );
 		},
 
@@ -356,13 +363,42 @@
 				return;
 			}
 
+			init.showLoading();
+			ve.track( 'mwedit.init', { type: 'section', mechanism: 'click' } );
+
+			if ( history.pushState && uri.query.veaction !== 'edit' ) {
+				// Replace the current state with one that is tagged as ours, to prevent the
+				// back button from breaking when used to exit VE. FIXME: there should be a better
+				// way to do this. See also similar code in the ViewPageTarget constructor.
+				history.replaceState( { tag: 'visualeditor' }, document.title, uri );
+				// Change the state to the href of the section link that was clicked. This saves
+				// us from having to figure out the section number again.
+				history.pushState( { tag: 'visualeditor' }, document.title, this.href );
+			}
+
 			e.preventDefault();
 
 			getTarget().done( function ( target ) {
-				ve.track( 'Edit', { action: 'section-edit-link-click' } );
 				target.saveEditSection( $( e.target ).closest( 'h1, h2, h3, h4, h5, h6' ).get( 0 ) );
-				target.activate();
+				target.activate()
+					.done( function () {
+						ve.track( 'mwedit.ready' );
+					} )
+					.always( init.hideLoading );
 			} );
+		},
+
+		showLoading: function () {
+			if ( !init.$loading ) {
+				init.$loading = $( '<div class="mw-viewPageTarget-loading"></div>' );
+			}
+			$( '#firstHeading' ).prepend( init.$loading );
+		},
+
+		hideLoading: function () {
+			if ( init.$loading ) {
+				init.$loading.detach();
+			}
 		}
 	};
 
@@ -440,8 +476,16 @@
 	$( function () {
 		if ( init.isAvailable ) {
 			if ( isViewPage && uri.query.veaction === 'edit' ) {
+				var isSection = uri.query.vesection !== undefined;
+				init.showLoading();
+
+				ve.track( 'mwedit.init', { type: isSection ? 'section' : 'page', mechanism: 'url' } );
 				getTarget().done( function ( target ) {
-					target.activate();
+					target.activate()
+						.done( function () {
+							ve.track( 'mwedit.ready' );
+						} )
+						.always( init.hideLoading );
 				} );
 			}
 		}

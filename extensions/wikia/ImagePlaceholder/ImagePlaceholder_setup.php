@@ -362,9 +362,13 @@ function MediaPlaceholderMatch ( $text, $box = 0, $isVideo = false ) {
 
 	$placeholder = '(?:' . implode('|', array(
 			$ns_vid . ':' . $placeholder_msg,
+			$ns_vid . ':' . $en_placeholder_msg,
 			$ns_img . ':' . $placeholder_msg,
+			$ns_img . ':' . $en_placeholder_msg,
 			$en_ns_vid . ':' . $en_placeholder_msg,
-			$en_ns_img . ':' . $en_placeholder_msg)) . ')';
+			$en_ns_vid . ':' . $placeholder_msg,
+			$en_ns_img . ':' . $en_placeholder_msg,
+			$en_ns_img . ':' . $placeholder_msg)) . ')';
 
 	preg_match_all( '/\[\[' . $placeholder . '[^\]]*\]\]/si', $text, $matches, PREG_OFFSET_CAPTURE );
 

@@ -62,9 +62,9 @@ class SpecialScavengerHunt extends SpecialPage {
 
 		// check edit tokens
 		if ($this->request->wasPosted() && !$this->user->matchEditToken($this->request->getVal('wpEditToken'))) {
-			NotificationsController::addConfirmation(
+			BannerNotificationsController::addConfirmation(
 				wfMsg('scavengerhunt-edit-token-mismatch'),
-				NotificationsController::CONFIRMATION_ERROR
+				BannerNotificationsController::CONFIRMATION_ERROR
 			);
 			$this->out->redirect( $this->mTitle->getFullUrl() );
 			wfProfileOut(__METHOD__);
@@ -102,7 +102,7 @@ class SpecialScavengerHunt extends SpecialPage {
 				if (empty($errors['errors'])) {
 					$game->save();
 
-					NotificationsController::addConfirmation(
+					BannerNotificationsController::addConfirmation(
 						$enable
 						? wfMsg('scavengerhunt-game-has-been-enabled')
 						: wfMsg('scavengerhunt-game-has-been-disabled')
@@ -129,7 +129,7 @@ class SpecialScavengerHunt extends SpecialPage {
 
 							$game->save();
 
-							NotificationsController::addConfirmation(
+							BannerNotificationsController::addConfirmation(
 								$enabled
 								? wfMsg('scavengerhunt-game-has-been-enabled')
 								: wfMsg('scavengerhunt-game-has-been-disabled')
@@ -145,7 +145,7 @@ class SpecialScavengerHunt extends SpecialPage {
 
 						$game->delete();
 
-						NotificationsController::addConfirmation(
+						BannerNotificationsController::addConfirmation(
 							wfMsg('scavengerhunt-game-has-been-deleted')
 						);
 						$this->out->redirect( $this->mTitle->getFullUrl() );
@@ -163,7 +163,7 @@ class SpecialScavengerHunt extends SpecialPage {
 						$errors = $this->validateGame($game);
 						// save changes
 						if (empty($errors['errors']) && $game->save()) {
-							NotificationsController::addConfirmation(
+							BannerNotificationsController::addConfirmation(
 								$action == 'add'
 								? wfMsg('scavengerhunt-game-has-been-created')
 								: wfMsg('scavengerhunt-game-has-been-saved')
@@ -173,9 +173,9 @@ class SpecialScavengerHunt extends SpecialPage {
 							wfProfileOut(__METHOD__);
 							return;
 						} else {
-							NotificationsController::addConfirmation(
+							BannerNotificationsController::addConfirmation(
 								wfMsg('scavengerhunt-game-has-not-been-saved'),
-								NotificationsController::CONFIRMATION_NOTIFY
+								BannerNotificationsController::CONFIRMATION_NOTIFY
 							);
 						}
 					}

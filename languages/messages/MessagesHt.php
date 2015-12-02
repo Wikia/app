@@ -526,8 +526,9 @@ Rezon li bay yo se « ''$2'' ».",
 # Login and logout pages
 'logouttext'                 => "'''Ou dekonekte kounye a.'''
 
-Ou mèt kontinye itilize {{SITENAME}} san ou pa idantifye, oubyen ou ka [[Special:UserLogin|rekonekte]] w ankò ak menm non an oubyen yon lòt.
+Ou mèt kontinye itilize {{SITENAME}} san ou pa idantifye, oubyen ou ka $1 w ankò ak menm non an oubyen yon lòt.
 Note ke kèk paj gendwa afiche tankou ou te toujou konekte tank ou pa efase kach nan navigatè ou.",
+'logouttext-link-text'       => 'rekonekte',
 'welcomecreation'            => '== Byenvini, $1 ! ==
 
 Kont ou an kreye. Pa bliye pèsonalize l nan  [[Special:Preferences|preferans ou an sou paj sa {{SITENAME}}]].',
@@ -750,7 +751,7 @@ Se tèks ki nan pati anlè a sèlman k ap anrejistre toutbon lè ou klike sou «
 'storedversion'                    => 'Vèsyon ki anrejistre',
 'nonunicodebrowser'                => "'''Atansyon: Navigatè ou an pa ka mache ak Unicode lan.'''
 Nou fè yon jan pou pèmèt ou fè modifikasyon nan paj yo: karaktè ki pa nan ASCII yo pral ekri ak kòd ekzadesimal.",
-'editingold'                       => "'''Avètisman : Ou ap edite yon vye vèsyon paj sa a.''' 
+'editingold'                       => "'''Avètisman : Ou ap edite yon vye vèsyon paj sa a.'''
 Si ou anrejistre li, tout chanjman yo depi vèsyon sa a pral pèdi.",
 'yourdiff'                         => 'Diferans',
 'copyrightwarning'                 => "Tanpri sonje tout piblikasyon ki fèt nan {{SITENAME}} piblye anba kontra $2 an (wè $1 pou konnen plis). Si ou pa vle sa ou ekri pataje oubyen modifye, ou pa dwe soumèt yo isit.<br />
@@ -801,14 +802,14 @@ Sanble li te efase.',
 Li ekziste deja.',
 
 # Parser/template warnings
-'expensive-parserfunction-warning'        => "'''Atansyon:''' paj sa a gen ladan l twòp apèl ki chè pou fonksyon analizè. 
+'expensive-parserfunction-warning'        => "'''Atansyon:''' paj sa a gen ladan l twòp apèl ki chè pou fonksyon analizè.
 
 Li ta dwe gen mwens pase $2 {{PLURAL:$2|apèl|apèl yo}}, aloske kounye a li gen $1.",
 'expensive-parserfunction-category'       => 'Paj yo ki gen twòp apèl pou fonksyon analizè ki chè',
 'post-expand-template-inclusion-warning'  => "'''Atansyon:''' Genyen twòp modèl ki antre nan paj sa.
 Kèk modèl yo pap enkli.",
 'post-expand-template-inclusion-category' => 'Paj yo ki genyen twop modèl anndan yo',
-'post-expand-template-argument-warning'   => "'''Atansyon:''' Paj sa a gen ladan l omwens youn nan agiman modèl la ki gen yon gwosè ekspansyon ki twòp. 
+'post-expand-template-argument-warning'   => "'''Atansyon:''' Paj sa a gen ladan l omwens youn nan agiman modèl la ki gen yon gwosè ekspansyon ki twòp.
  Agiman sa yo pa t enkli.",
 'post-expand-template-argument-category'  => 'Paj ki genyen agiman pou modèl ki manke',
 'parser-template-loop-warning'            => 'Tounen an won te detekte nan modèl la: [[$1]]',

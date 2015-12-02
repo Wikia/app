@@ -46,7 +46,7 @@ define('specialVideos.mobile.views.index', [
 	 */
 	SpecialVideosIndexView.prototype.track = Tracker.buildTrackingFunction({
 		category: 'wikiamobile-special-videos',
-		trackingMethod: 'both'
+		trackingMethod: 'analytics'
 	});
 
 	/**

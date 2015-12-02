@@ -3,9 +3,7 @@
 class MercuryApi {
 
 	const MERCURY_SKIN_NAME = 'mercury';
-
 	const CACHE_TIME_TOP_CONTRIBUTORS = 2592000; // 30 days
-
 	const SITENAME_MSG_KEY = 'pagetitle-view-mainpage';
 
 	/**
@@ -27,7 +25,7 @@ class MercuryApi {
 		return $articleCommentList->getCountAll();
 	}
 
-	public static function getTopContributorsKey ( $articleId, $limit ){
+	public static function getTopContributorsKey ( $articleId, $limit ) {
 		return wfMemcKey( __CLASS__, __METHOD__, $articleId, $limit );
 	}
 
@@ -41,7 +39,7 @@ class MercuryApi {
 	public function topContributorsPerArticle( $articleId, $limit ) {
 		$key = self::getTopContributorsKey( $articleId, $limit );
 		$method = __METHOD__;
-		$contributions = WikiaDataAccess::cache($key, self::CACHE_TIME_TOP_CONTRIBUTORS,
+		$contributions = WikiaDataAccess::cache( $key, self::CACHE_TIME_TOP_CONTRIBUTORS,
 			function() use ( $articleId, $limit, $method ) {
 				// Log DB hit
 				Wikia::log( $method, false, sprintf( 'Cache for articleId: %d was empty', $articleId ) );
@@ -65,7 +63,7 @@ class MercuryApi {
 					]
 				);
 				$result = [];
-				while($row = $db->fetchObject($res)) {
+				while ( $row = $db->fetchObject( $res ) ) {
 					$result[ (int) $row->rev_user ] = (int) $row->cntr;
 				}
 				return $result;
@@ -106,39 +104,48 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function getWikiVariables() {
-		$wg = F::app()->wg;
+		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin, $wgDisableAnonymousEditing, $wgIsDarkTheme,
+			   $wgLanguageCode, $wgContLang, $wgCityId, $wgEnableNewAuth, $wgDisableAnonymousUploadForMercury,
+			   $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff, $wgDisableMobileSectionEditor;
+
 		return [
-			'cacheBuster' => (int) $wg->CacheBuster,
-			'dbName' => $wg->DBname,
-			'id' => (int) $wg->CityId,
+			'cacheBuster' => (int) $wgCacheBuster,
+			'dbName' => $wgDBname,
+			'defaultSkin' => $wgDefaultSkin,
+			'disableAnonymousEditing' => $wgDisableAnonymousEditing,
+			'disableAnonymousUploadForMercury' => $wgDisableAnonymousUploadForMercury,
+			'enableNewAuth' => $wgEnableNewAuth,
+			'homepage' => $this->getHomepageUrl(),
+			'id' => (int) $wgCityId,
+			'isCoppaWiki' => ( $wgWikiDirectedAtChildrenByFounder || $wgWikiDirectedAtChildrenByStaff ),
+			'isDarkTheme' => $wgIsDarkTheme,
+			'disableMobileSectionEditor' => $wgDisableMobileSectionEditor,
 			'language' => [
-				'user' => $wg->Lang->getCode(),
-				'userDir' => SassUtil::isRTL() ? 'rtl' : 'ltr',
-				'content' => $wg->LanguageCode,
-				'contentDir' => $wg->ContLang->getDir()
+				'content' => $wgLanguageCode,
+				'contentDir' => $wgContLang->getDir()
 			],
-			'namespaces' => $wg->ContLang->getNamespaces(),
-			'siteName' => $this->getSiteName(),
 			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
+			'namespaces' => $wgContLang->getNamespaces(),
+			'siteMessage' => $this->getSiteMessage(),
+			'siteName' => $wgSitename,
 			'theme' => SassUtil::getOasisSettings(),
-			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wg->CityId ),
+			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId )
 		];
 	}
 
 	/**
-	 * @desc Gets a wikia sitename either from the message or WF variable
+	 * @desc Gets a wikia site message
+	 * When message doesn't exist - return false
 	 *
-	 * @return null|String
+	 * @return Boolean|String
 	 */
-	public function getSiteName() {
-		$siteName = F::app()->wg->Sitename;
+	public function getSiteMessage() {
 		$msg = wfMessage( static::SITENAME_MSG_KEY )->inContentLanguage();
-
-		if( !$msg->isDisabled() ) {
-			$siteName = $msg->text();
+		if ( !$msg->isDisabled() ) {
+			$msgText = $msg->text();
 		}
 
-		return $siteName;
+		return !empty( $msgText ) ? htmlspecialchars( $msgText ) : false;
 	}
 
 	/**
@@ -208,7 +215,7 @@ class MercuryApi {
 	 * @param array $commentData - ArticleComment Data
 	 * @return string userName
 	 */
-	private function addUser(Array $commentData) {
+	private function addUser( Array $commentData ) {
 		$userName = trim( $commentData['author']->mName );
 		if ( !isset( $this->users[$userName] ) ) {
 			$this->users[$userName] = [
@@ -239,28 +246,198 @@ class MercuryApi {
 	}
 
 	/**
-	 * Get categories titles
+	 * Get homepage URL for given language.
 	 *
-	 * @param array $articleCategories
-	 * @return array
+	 * @return string homepage URL. Default is US homepage.
 	 */
-	private function getArticleCategoriesTitles( Array $articleCategories ) {
-		$categories = [];
-		foreach ( $articleCategories as $category ) {
-			$categories[] = $category[ 'title' ];
+	private function getHomepageUrl() {
+		global $wgLanguageCode;
+		if ( class_exists('WikiaLogoHelper') ) {
+			return ( new WikiaLogoHelper() )->getCentralUrlForLang( $wgLanguageCode );
 		}
-		return $categories;
+		return 'http://www.wikia.com'; //default homepage url
+	}
+
+
+	/**
+	 * Get ads context for Title. Return null if Ad Engine extension is not enabled
+	 *
+	 * @param Title $title Title object
+	 * @return array|null Article Ad context
+	 */
+	public function getAdsContext( Title $title ) {
+		global $wgEnableAdEngineExt;
+		if ( !empty( $wgEnableAdEngineExt ) ) {
+			$adContext = new AdEngine2ContextService();
+			return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
+		}
+		return null;
 	}
 
 	/**
-	 * Get ads context for Title
-	 * @param Title $title Title object
-	 * @param WikiaGlobalRegistry $wg Reference to the Global registry
-	 * @param array $articleCategories List of Categories
-	 * @return array Article Ad context
+	 * CuratedContent API returns data in a different format than we need.
+	 * Let's clean it up!
+	 *
+	 * @param $rawData
+	 * @return array|null
 	 */
-	public function getAdsContext( Title $title ) {
-		$adContext = new AdEngine2ContextService();
-		return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
+	public function processCuratedContent( $rawData ) {
+		if ( empty( $rawData ) ) {
+			return null;
+		}
+
+		$data = [];
+		$sections = $this->getCuratedContentSections( $rawData );
+		$items = $this->getCuratedContentItems( $rawData[ 'items' ] );
+		$featured = $this->getCuratedContentItems( $rawData[ 'featured' ] );
+
+		if ( !empty( $sections ) || !empty( $items ) ) {
+			$data[ 'items' ] = [];
+		}
+
+		if ( !empty( $sections ) ) {
+			$data[ 'items' ] = array_merge( $data[ 'items' ], $sections );
+		}
+
+		if ( !empty( $items ) ) {
+			$data[ 'items' ] = array_merge( $data[ 'items' ], $items );
+		}
+
+		if ( !empty( $featured ) ) {
+			$data[ 'featured' ] = $featured;
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Add `section` type to all sections from CuratedContent data
+	 *
+	 * @param array $data
+	 * @return array
+	 */
+	public function getCuratedContentSections( Array $data ) {
+		$sections = [];
+		if ( !empty( $data[ 'sections' ] ) ) {
+			foreach ( $data[ 'sections' ] as $section ) {
+				$section[ 'type' ] = 'section';
+				$sections[] = $section;
+			}
+		}
+		return $sections;
+	}
+
+	/**
+	 * Process CuratedContent items and sanitize when the item is an article
+	 *
+	 * @param $items
+	 * @return array
+	 */
+	public function getCuratedContentItems( $items ) {
+		$data = [];
+		if ( !empty( $items ) ) {
+			foreach ( $items as $item ) {
+				$processedItem = $this->processCuratedContentItem($item);
+				if ( !empty( $processedItem ) ) {
+					$data[] = $processedItem;
+				}
+			}
+		}
+		return $data;
+	}
+
+	/**
+	 * @desc Mercury can't open article using ID - we need to create a local link.
+	 * If article doesn't exist (Title is null) return null.
+	 * In other case return item with updated article_local_url.
+	 * TODO Implement cache for release version.
+	 * Platform Team is OK with hitting DB for MVP (10-15 wikis)
+	 *
+	 * @param $item
+	 * @return mixed
+	 */
+	public function processCuratedContentItem( $item ) {
+		if ( !empty( $item['article_id'] ) ) {
+			$title = Title::newFromID( $item['article_id'] );
+
+			if ( !empty( $title ) ) {
+				$item['article_local_url'] = $title->getLocalURL();
+				return $item;
+			}
+		} else if ( $item['article_id'] === 0 ) {
+			// Categories which don't have content have wgArticleID set to 0
+			// In order to generate link for them
+			// we can simply replace $1 inside /wiki/$1 to category title (Category:%name%)
+			global $wgArticlePath;
+			$item['article_local_url'] = str_replace( "$1",  $item['title'], $wgArticlePath );
+			return $item;
+		}
+		return null;
+	}
+
+	public function processTrendingArticlesData( $data ) {
+		$data = $data[ 'items' ];
+
+		if ( !isset( $data ) || !is_array( $data ) ) {
+			return null;
+		}
+
+		$items = [];
+
+		foreach ( $data as $item ) {
+			$processedItem = $this->processTrendingArticlesItem( $item );
+
+			if ( !empty( $processedItem ) ) {
+				$items[] = $processedItem;
+			}
+		}
+
+		return $items;
+	}
+
+	/**
+	 * @desc To save some bandwidth, the unnecessary params are stripped
+	 *
+	 * @param array $item
+	 * @return array
+	 */
+	public function processTrendingArticlesItem( $item ) {
+		$paramsToInclude = [ 'title', 'thumbnail', 'url' ];
+
+		$processedItem = [];
+
+		if ( !empty( $item ) && is_array( $item ) ) {
+			foreach ( $paramsToInclude as $param) {
+				if ( !empty( $item[ $param ] ) ) {
+					$processedItem[ $param ] = $item[ $param ];
+				}
+			}
+		}
+
+		return $processedItem;
+	}
+
+	public function processTrendingVideoData( $data ) {
+		$videosData = $data[ 'videos' ];
+
+		if ( !isset( $videosData ) || !is_array( $videosData ) ) {
+			return null;
+		}
+
+		$items = [];
+
+		foreach ( $videosData as $item ) {
+			$items[] = ArticleAsJson::createMediaObject(
+				WikiaFileHelper::getMediaDetail(
+					Title::newFromText( $item['title'], NS_FILE ),
+					[
+						'imageMaxWidth' => false
+					]
+				),
+				$item['title']
+			);
+		}
+
+		return $items;
 	}
 }

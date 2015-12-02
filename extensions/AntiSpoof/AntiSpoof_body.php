@@ -325,8 +325,8 @@ class AntiSpoof {
 			return array( "ERROR", wfMsg( 'antispoof-blacklisted' ) );
 		}
 
-		# Perform Unicode _compatibility_ decomposition
-		$testName = UtfNormal::toNFKD( $testName );
+		# Perform Unicode normalization
+		$testName = UtfNormal::toNFD( $testName );
 		$testChars = self::stringToList( $testName );
 
 		# Be paranoid: check again, just in case Unicode normalization code changes...
@@ -340,7 +340,7 @@ class AntiSpoof {
 		}
 
 		# Strip all combining characters in order to crudely strip accents
-		# Note: NFKD normalization should have decomposed all accented chars earlier
+		# Note: NFD normalization should have decomposed all accented chars earlier
 		$testChars = self::stripScript( $testChars, "SCRIPT_COMBINING_MARKS" );
 
 		$testScripts = array_unique( array_map( array( 'AntiSpoof', 'getScriptCode' ), $testChars ) );

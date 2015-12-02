@@ -6,6 +6,8 @@
 ve.dm.WikiaTemplateModel = function VeDmWikiaTemplateModel( transclusion, target ) {
 	// Parent constructor
 	ve.dm.WikiaTemplateModel.super.call( this, transclusion, target );
+
+	this.spec = transclusion.getIsInfobox() ? new ve.dm.WikiaInfoboxSpecModel( this ) : new ve.dm.MWTemplateSpecModel( this );
 };
 
 /* Inheritance */
@@ -37,7 +39,7 @@ ve.dm.WikiaTemplateModel.prototype.addUnusedParameters = function () {
 ve.dm.WikiaTemplateModel.prototype.serialize = function () {
 	var name,
 		template = ve.extendObject(
-			{}, this.originalData, { 'target': this.getTarget(), 'params': {} }
+			{}, this.originalData, { target: this.getTarget(), params: {} }
 		),
 		params = this.getParameters();
 
@@ -52,10 +54,10 @@ ve.dm.WikiaTemplateModel.prototype.serialize = function () {
 		if ( params[name].getValue() === '' && template.originalParams.indexOf( name ) === -1 ) {
 			continue;
 		}
-		template.params[params[name].getOriginalName()] = { 'wt': params[name].getValue() };
+		template.params[params[name].getOriginalName()] = { wt: params[name].getValue() };
 	}
 
-	return { 'template': template };
+	return { template: template };
 };
 
 /**

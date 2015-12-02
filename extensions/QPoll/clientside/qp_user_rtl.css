@@ -1,8 +1,0 @@
-.qpoll .attempts_counter { border: 1px solid gray; padding: 0.1em 0.5em 0.1em 0.5em; color: black; background-color: lightblue; margin-right: 1em; }
-.qpoll .question { margin-right:2em; }
-.qpoll .margin { padding-right:20px; }
-.qpoll .header .questionId {font-size: 1.1em; font-weight: bold; float: right;}
-.qpoll .header .questionId { *padding-left: 0.5em; } /* applies to IE7 and below */
-.qpoll a.input em { color:black; background-color:#DFDFDF; margin-left:1px; }
-.qpoll a.input input { padding-right:2px; border:0; }
-.qpoll .error_mark { border-right: 3px solid #D700D7; }

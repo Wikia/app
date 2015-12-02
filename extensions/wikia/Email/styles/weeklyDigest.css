@@ -1,0 +1,24 @@
+h3 {
+	font-family: Helvetica Neue, Arial, Sans-serif;
+	color: #3a3a3a;
+	margin: 0;
+}
+
+li {
+	list-style: none;
+	padding-top: 20px;
+}
+
+li a {
+	font-size: 14px;
+}
+
+td h3:not(:first-child) {
+	margin-top: 50px;
+}
+
+ul {
+	padding: 0;
+	margin: 0;
+}
+

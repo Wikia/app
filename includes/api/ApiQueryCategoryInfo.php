@@ -47,6 +47,14 @@ class ApiQueryCategoryInfo extends ApiQueryBase {
 					$this->getPageSet()->getMissingTitles();
 		$cattitles = array();
 		foreach ( $categories as $c ) {
+			// Wikia change - begin - @author: wladek
+			// PLATFORM-1065: categories redirecting to another category that is found in the set
+			// cause fatal errors during the call to getDBkey() as the title is a non-object in such case
+			// (is not returned as a good or missing title)
+			if ( !isset( $titles[$c] ) ) {
+				continue;
+			}
+			// Wikia change - end
 			$t = $titles[$c];
 			$cattitles[$c] = $t->getDBkey();
 		}

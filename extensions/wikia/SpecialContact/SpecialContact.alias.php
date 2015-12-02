@@ -25,3 +25,8 @@ $specialPageAliases['es'] = array(
 $specialPageAliases['pl'] = array(
 	'Contact' => array( 'Kontakt' ),
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'Contact' => array( 'お問い合わせ' ),
+);

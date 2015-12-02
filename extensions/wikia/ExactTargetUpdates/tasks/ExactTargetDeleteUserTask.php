@@ -18,13 +18,30 @@ class ExactTargetDeleteUserTask extends ExactTargetTask {
 	 * @param int $iUserId
 	 */
 	public function deleteSubscriber( $iUserId ) {
-		$oRetrieveUserHelper = $this->getRetrieveUserHelper();
-		$sUserEmail = $oRetrieveUserHelper->getUserEmail( $iUserId );
-		if ( !$this->isEmailInUse( $sUserEmail, $iUserId ) ) {
-			$oHelper = $this->getUserHelper();
-			$aApiParams = $oHelper->prepareSubscriberDeleteData( $sUserEmail );
-			$this->doDeleteSubscriber( $aApiParams );
+		$oRetrieveUserTask = $this->getRetrieveUserTask();
+		$sUserEmail = $oRetrieveUserTask->getUserEmail( $iUserId );
+
+		/* Skip deletion if no email found */
+		if ( empty( $sUserEmail ) ) {
+			$this->info(__METHOD__ . ": No email found for the user or there's no user record. Deletion skipped.");
+			return;
 		}
+
+		/* Skip deletion if email is used by other account */
+		if ( $this->isEmailInUse( $sUserEmail, $iUserId ) ) {
+			$this->info(__METHOD__ . ': Email in use by different account (record). Deletion skipped.');
+			return;
+		}
+
+		$oHelper = $this->getUserHelper();
+		$aApiParams = $oHelper->prepareSubscriberDeleteData( $sUserEmail );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
+
+		/* Delete subscriber */
+		$oDeleteSubscriberResult = $this->doDeleteSubscriber( $aApiParams );
+
+		$this->info( __METHOD__ . ' OverallStatus: ' . $oDeleteSubscriberResult->OverallStatus );
+		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oDeleteSubscriberResult ) );
 	}
 
 	/**
@@ -33,7 +50,7 @@ class ExactTargetDeleteUserTask extends ExactTargetTask {
 	 */
 	private function doDeleteSubscriber( array $aApiParams ) {
 		$oApiSubscriber = $this->getApiSubscriber();
-		$oApiSubscriber->deleteRequest( $aApiParams );
+		return $oApiSubscriber->deleteRequest( $aApiParams );
 	}
 
 	/**
@@ -44,8 +61,13 @@ class ExactTargetDeleteUserTask extends ExactTargetTask {
 	public function deleteUser( $iUserId ) {
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserDeleteParams( $iUserId );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 		$oApiDataExtension = $this->getApiDataExtension();
-		$oApiDataExtension->deleteRequest( $aApiParams );
+
+		$oDeleteUserResult = $oApiDataExtension->deleteRequest( $aApiParams );
+
+		$this->info( __METHOD__ . ' OverallStatus: ' . $oDeleteUserResult->OverallStatus );
+		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oDeleteUserResult ) );
 	}
 
 	/**
@@ -56,8 +78,13 @@ class ExactTargetDeleteUserTask extends ExactTargetTask {
 	public function deleteUserProperties( $iUserId ) {
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserPropertiesDeleteParams( $iUserId );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 		$oApiDataExtension = $this->getApiDataExtension();
-		$oApiDataExtension->deleteRequest( $aApiParams );
+
+		$oDeleteUserPropertiesResult = $oApiDataExtension->deleteRequest( $aApiParams );
+
+		$this->info( __METHOD__ . ' OverallStatus: ' . $oDeleteUserPropertiesResult->OverallStatus );
+		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oDeleteUserPropertiesResult ) );
 	}
 
 	/**
@@ -67,9 +94,9 @@ class ExactTargetDeleteUserTask extends ExactTargetTask {
 	 * @return bool
 	 */
 	public function isEmailInUse( $sEmail, $iSkipUserId = null ) {
-		$oRetrieveUserHelper = $this->getRetrieveUserHelper();
+		$oRetrieveUserTask = $this->getRetrieveUserTask();
 		/* @var stdClass $oUsersIds */
-		$oUsersIds = $oRetrieveUserHelper->retrieveUserIdsByEmail( $sEmail );
+		$oUsersIds = $oRetrieveUserTask->retrieveUserIdsByEmail( $sEmail );
 		$iUsersCount = count( $oUsersIds->Results );
 
 		// Email is in use when there are more than one user with email

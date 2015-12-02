@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Crazymadlover",
+			"Omnipaedista"
+		]
+	},
+	"browsedata": "Δεδομένα πλοηγήσεως",
+	"sd_browsedata_viewcategory": "ὁρᾶν κατηγορίαν",
+	"sd_browsedata_subcategory": "Ὑποκατηγορία",
+	"sd_browsedata_other": "Ἄλλον",
+	"sd_browsedata_none": "Οὐδεμία",
+	"sd_browsedata_or": "ἢ",
+	"sd_browsedata_daterangestart": "Ἐκκινεῖν:",
+	"sd_browsedata_daterangeend": "Τέλος:"
+}

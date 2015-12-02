@@ -6,7 +6,7 @@
  */
 
 /**
- * MediaWiki live extension inspector.
+ * Inspector for editing generic MediaWiki extensions with dynamic rendering.
  *
  * @class
  * @abstract
@@ -19,8 +19,8 @@ ve.ui.MWLiveExtensionInspector = function VeUiMWLiveExtensionInspector( config )
 	// Parent constructor
 	ve.ui.MWExtensionInspector.call( this, config );
 
-	// Late bind onChangeHanlder to a debounced updatePreview
-	this.onChangeHandler = ve.debounce( ve.bind( this.updatePreview, this ), 250 );
+	// Late bind onChangeHandler to a debounced updatePreview
+	this.onChangeHandler = ve.debounce( this.updatePreview.bind( this ), 250 );
 };
 
 /* Inheritance */
@@ -46,12 +46,12 @@ ve.ui.MWLiveExtensionInspector.static.mwName = null;
  */
 ve.ui.MWLiveExtensionInspector.prototype.getNewMwData = function () {
 	return {
-			'name': this.constructor.static.mwName || this.constructor.static.name,
-			'attrs': {},
-			'body': {
-				'extsrc': ''
-			}
-		};
+		name: this.constructor.static.mwName || this.constructor.static.name,
+		attrs: {},
+		body: {
+			extsrc: ''
+		}
+	};
 };
 
 /**
@@ -65,17 +65,17 @@ ve.ui.MWLiveExtensionInspector.prototype.getSetupProcess = function ( data ) {
 
 			if ( !this.node ) {
 				// Create a new node
-				// collapseRangeToEnd returns a new fragment
-				this.fragment = this.getFragment().collapseRangeToEnd().insertContent( [
+				// collapseToEnd returns a new fragment
+				this.fragment = this.getFragment().collapseToEnd().insertContent( [
 					{
-						'type': this.constructor.static.nodeModel.static.name,
-						'attributes': { 'mw': this.getNewMwData() }
+						type: this.constructor.static.nodeModel.static.name,
+						attributes: { mw: this.getNewMwData() }
 					},
-					{ 'type': '/' + this.constructor.static.nodeModel.static.name }
+					{ type: '/' + this.constructor.static.nodeModel.static.name }
 				] );
 				// Check if the node was inserted at a structural offset and wrapped in a paragraph
-				if ( this.getFragment().getRange().getLength() === 4 ) {
-					this.fragment = this.getFragment().adjustRange( 1, -1 );
+				if ( this.getFragment().getSelection().getRange().getLength() === 4 ) {
+					this.fragment = this.getFragment().adjustLinearSelection( 1, -1 );
 				}
 				this.getFragment().select();
 				this.node = this.getFragment().getSelectedNode();
@@ -91,8 +91,24 @@ ve.ui.MWLiveExtensionInspector.prototype.getTeardownProcess = function ( data ) 
 	return ve.ui.MWLiveExtensionInspector.super.prototype.getTeardownProcess.call( this, data )
 		.first( function () {
 			this.input.off( 'change', this.onChangeHandler );
-			this.getFragment().getSurface().applyStaging();
 		}, this );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.MWLiveExtensionInspector.prototype.insertOrUpdateNode = function () {
+	// No need to call parent method as changes have already been made
+	// to the model in staging, just need to apply them.
+	this.getFragment().getSurface().applyStaging();
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.MWLiveExtensionInspector.prototype.removeNode = function () {
+	this.getFragment().getSurface().popStaging();
+	ve.ui.MWLiveExtensionInspector.super.prototype.removeNode.call( this );
 };
 
 /**
@@ -104,6 +120,6 @@ ve.ui.MWLiveExtensionInspector.prototype.updatePreview = function () {
 	mwData.body.extsrc = this.input.getValue();
 
 	if ( this.visible ) {
-		this.getFragment().changeAttributes( { 'mw': mwData } );
+		this.getFragment().changeAttributes( { mw: mwData } );
 	}
 };

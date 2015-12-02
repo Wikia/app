@@ -599,7 +599,7 @@ class SMWSQLStore3QueryEngine {
 							$this->m_errors[] = wfMessage( 'smw_emptysubquery' )->text(); // not quite the right message, but this case is very rare; let us not make detailed messages for this
 						}
 					} else {
-						$this->m_errors[] = wfMessage( 'smw_concept_cache_miss', $description->getConcept()->getText() )->text();
+						$this->m_errors[] = wfMessage( 'smw_concept_cache_miss', $description->getConcept()->getTitle()->getText() )->text();
 					}
 				} // else: no cache, no description (this may happen); treat like empty concept
 			}

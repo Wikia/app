@@ -2,18 +2,15 @@
 @import "skins/oasis/css/core/responsive-variables";
 @import "skins/shared/mixins/transition";
 @import "skins/shared/mixins/blackout";
-@import "skins/shared/mixins/box-sizing-border-box";
 @import "skins/shared/mixins/box-shadow";
 @import "skins/shared/mixins/flexbox";
 @import "skins/shared/mixins/calc";
 @import "skins/shared/mixins/image-replacement";
 
 $close-image: '/resources/wikia/ui_components/modal/images/close-dark.svg';
-$modal-secondary-color: darken( $color-page, 10% );
 
 @if( $is-dark-wiki ) {
 	$close-image: '/resources/wikia/ui_components/modal/images/close-light.svg';
-	$modal-secondary-color: lighten( $color-page, 3% );
 }
 
 // modals dimensions
@@ -29,10 +26,10 @@ $large-modal-margin: 50px;
 	@include box-shadow( 1px, 2px, 5px, rgba(0, 0, 0, .7) );
 	@include flexbox();
 	@include flex-direction(column);
-	@include box-sizing-border-box;
 
 	background-color: $color-page;
 	border-radius: 2px;
+	box-sizing: border-box;
 	max-height: $modal-max-height;
 	min-height: $modal-min-height;
 	margin: 0;
@@ -44,7 +41,7 @@ $large-modal-margin: 50px;
 	> footer {
 		@include flex-grow(0);
 		@include flex-shrink(0);
-		background-color: $modal-secondary-color;
+		background-color: $color-unified-module-background;
 		height: $header-footer-height; // flex-basis is not supported on Safari 6 so fixed height is needed
 		padding: 13px 20px 18px;
 	}
@@ -52,7 +49,7 @@ $large-modal-margin: 50px;
 	> header,
 	> section,
 	> footer {
-		@include box-sizing-border-box;
+		box-sizing: border-box;
 	}
 
 	> section {
@@ -137,6 +134,10 @@ $large-modal-margin: 50px;
 	.buttons {
 		bottom: 15px;
 	}
+
+	&.no-scroll > section {
+		overflow-y: hidden;
+	}
 }
 
 .modal-blackout {
@@ -208,30 +209,21 @@ $large-modal-margin: 50px;
 
 // styles required to disable scrolling behind modal
 body.with-blackout {
-
 	&.background-dynamic {
-		position: static;
-
 		&:after,
 		&:before {
 			height: 100%;
 		}
 	}
 
-	&.skin-venus {
-		.global-navigation {
-			//GlobalNavigation height
-			margin-bottom: -57px;
-		}
-	}
-
 	.global-navigation {
-		position: static;
+		position: fixed;
 	}
 
 	.WikiaSiteWrapper {
 		position: fixed;
 		width: 100%;
+		z-index: 2;
 	}
 
 	.fake-scrollbar {

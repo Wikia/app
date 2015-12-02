@@ -127,7 +127,7 @@
 		},
 
 		init: function() {
-			if (window.wgIsCodePage) {
+			if (window.wgEnableCodePageEditor) {
 				this.initAceEditor();
 			} else {
 				this.initWikiaEditor();

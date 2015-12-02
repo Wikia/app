@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <g id="image-frameless" style="opacity:0.75;fill:white;">
+        <path id="mountains" d="M11.828 12.312l-1.312 1.094.875 1.032 4.109-3.438 2.5 2v3h-12v-2.5l3.5-3.5z"/>
+        <path id="sky" d="M12.562 11.016l2.938-2.016 2.5 2v-4h-12v5l3.516-4.156z"/>
+    </g>
+</svg>

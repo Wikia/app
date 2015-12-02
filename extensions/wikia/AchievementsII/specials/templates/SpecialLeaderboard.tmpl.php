@@ -1,35 +1,35 @@
 <div id="about-achievements">
-	<span class="hide"><?= wfMsg('leaderboard-intro-hide') ?></span>
-	<span class="open"><?= wfMsg('leaderboard-intro-open') ?></span>
-	<h1><?= wfMsg('leaderboard-intro-headline') ?></h1>
+	<span class="hide"><?= wfMessage( 'leaderboard-intro-hide' )->escaped(); ?></span>
+	<span class="open"><?= wfMessage( 'leaderboard-intro-open' )->escaped(); ?></span>
+	<h1><?= wfMessage( 'leaderboard-intro-headline' )->escaped(); ?></h1>
 	<div>
-		<?= wfMsgExt( 'leaderboard-intro', 'parse', $userpage ) ?>
+		<?= wfMessage( 'leaderboard-intro', $userpage )->parseAsBlock(); ?>
 		<ul>
 			<li class="bronze">
-				<?= wfMsg('achievements-bronze') ?>
-				<span><?= wfMsg('achievements-bronze-points') ?></span>
+				<?= wfMessage( 'achievements-bronze' )->escaped(); ?>
+				<span><?= wfMessage( 'achievements-bronze-points' )->parse(); ?></span>
 			</li>
 			<li class="silver">
-				<?= wfMsg('achievements-silver') ?>
-				<span><?= wfMsg('achievements-silver-points') ?></span>
+				<?= wfMessage( 'achievements-silver' )->escaped(); ?>
+				<span><?= wfMessage( 'achievements-silver-points' )->parse(); ?></span>
 			</li>
 			<li class="gold">
-				<?= wfMsg('achievements-gold') ?>
-				<span><?= wfMsg('achievements-gold-points') ?></span>
+				<?= wfMessage( 'achievements-gold' )->escaped(); ?>
+				<span><?= wfMessage( 'achievements-gold-points' )->parse(); ?></span>
 			</li>
 		</ul>
 	</div>
 </div>
 
-<h1 class="achievements-title"><?= wfMsg('leaderboard-title') ?></h1>
+<h2 class="achievements-title"><?= wfMessage( 'leaderboard-title' )->escaped(); ?></h2>
 
 <table id="LeaderboardTable" class="LeaderboardTable">
 	<thead>
 		<tr>
-			<th><?= wfMsg('achievements-leaderboard-rank-label'); ?></th>
-			<th><?= wfMsg('achievements-leaderboard-member-label'); ?></th>
-			<th><?= wfMsg('achievements-leaderboard-points-label'); ?></th>
-			<th><?= wfMsg('achievements-leaderboard-most-recently-earned-label'); ?></th>
+			<th><?= wfMessage( 'achievements-leaderboard-rank-label' )->escaped(); ?></th>
+			<th><?= wfMessage( 'achievements-leaderboard-member-label' )->escaped(); ?></th>
+			<th><?= wfMessage( 'achievements-leaderboard-points-label' )->escaped(); ?></th>
+			<th><?= wfMessage( 'achievements-leaderboard-most-recently-earned-label' )->escaped(); ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -64,18 +64,18 @@
 			</td>
 			<td class="tally">
 				<em><?=$wgLang->formatNum($userScore);?></em>
-				<span><?= wfMsg('achievements-leaderboard-points', $userScore) ?></span>
+				<span><?= wfMessage( 'achievements-leaderboard-points', $userScore )->escaped(); ?></span>
 			</td>
 			<td class="badge">
 				<div class="badges" style="position: relative;">
 					<div class="profile-hover<?= ( $badgeIsSponsored ) ? ' sponsored-hover' : null ;?>"<?= ( $badgeIsSponsored && !empty( $hoverTrackingUrl ) ) ? " data-hovertrackurl=\"{$hoverTrackingUrl}\"" : null ;?>>
 						<? if ( $badgeIsSponsored ) :?>
 							<img src="<?= $hoverUrl ;?>"/>
-							<p class="earned"><?= wfMsgExt('achievements-earned', array('parsemag'), $badgeEarnedBy) ?></p>
+							<p class="earned"><?= wfMessage( 'achievements-earned', $badgeEarnedBy )->escaped(); ?></p>
 						<? else :?>
 							<img src="<?=$badge->getPictureURL(90)?>" width="90" height="90" />
 							<div class="profile-hover-text">
-								<h3 class="badge-name"><?=$badge->getName()?></h3>
+								<h3 class="badge-name"><?= htmlspecialchars( $badge->getName() ); ?></h3>
 								<p><?=$badge->getDetails()?></p>
 							</div>
 						<? endif ;?>
@@ -89,7 +89,7 @@
 					<? if ( $badgeIsSponsored ) :?>
 						</a>
 					<? endif ;?>
-					<?=$badge->getName()?>
+					<?= htmlspecialchars( $badge->getName() ); ?>
 				</div>
 			</td>
 		</tr>

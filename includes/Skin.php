@@ -464,7 +464,7 @@ abstract class Skin extends ContextSource {
 
 		# Hidden categories
 		if ( isset( $allCats['hidden'] ) ) {
-			if ( $this->getUser()->getBoolOption( 'showhiddencats' ) ) {
+			if ( (bool)$this->getUser()->getGlobalPreference( 'showhiddencats' ) ) {
 				$class = ' mw-hidden-cats-user-shown';
 			} elseif ( $this->getTitle()->getNamespace() == NS_CATEGORY ) {
 				$class = ' mw-hidden-cats-ns-shown';
@@ -539,7 +539,7 @@ abstract class Skin extends ContextSource {
 
 		// Check what we're showing
 		$allCats = $out->getCategoryLinks();
-		$showHidden = $this->getUser()->getBoolOption( 'showhiddencats' ) ||
+		$showHidden = (bool)$this->getUser()->getGlobalPreference( 'showhiddencats' ) ||
 						$this->getTitle()->getNamespace() == NS_CATEGORY;
 
 		if ( empty( $allCats['normal'] ) && !( !empty( $allCats['hidden'] ) && $showHidden ) ) {
@@ -1587,12 +1587,11 @@ abstract class Skin extends ContextSource {
 	 * @return string Updated link markup
 	 */
 	protected function getWrappedEditSectionLink( $link, $langCode ) {
-		if ( $this->getSkinName() !== WikiaSkin::SKIN_VENUS ) {
-			// Wrap in brackets
-			$link = wfMessage( 'editsection-brackets', $link )
-				->inLanguage( $langCode )
-				->text();
-		}
+		// Wrap in brackets
+		$link = wfMessage( 'editsection-brackets' )
+			->rawParams( $link )
+			->inLanguage( $langCode )
+			->escaped();
 		return "<span class=\"editsection\">$link</span>";
 	}
 

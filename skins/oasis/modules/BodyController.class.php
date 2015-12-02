@@ -48,6 +48,10 @@ class BodyController extends WikiaController {
 	 * Returns if current layout should be applying gridlayout
 	 */
 	public static function isGridLayoutEnabled() {
+		if ( self::isOasisBreakpoints( ) ) {
+			return false;
+		}
+
 		$app = F::app();
 
 		// Don't enable when responsive layout is enabled
@@ -73,13 +77,30 @@ class BodyController extends WikiaController {
 	}
 
 	/**
+	 * @return Boolean
+	 */
+	public static function isOasisBreakpoints() {
+		global $wgOasisBreakpoints, $wgRequest;
+
+		$wgOasisBreakpoints = $wgRequest->getBool( 'oasisbreakpoints', $wgOasisBreakpoints ) !== false;
+		return !empty( $wgOasisBreakpoints );
+	}
+
+	/**
 	 * Decide on which pages responsive / liquid layout should be turned on.
 	 * @return Boolean
 	 */
 	public static function isResponsiveLayoutEnabled() {
 		global $wgOasisResponsive;
 
-		return !empty( $wgOasisResponsive );
+		return !self::isOasisBreakpoints() && !empty( $wgOasisResponsive );
+	}
+
+	public static function isOasisTypography() {
+		global $wgOasisTypography, $wgRequest;
+
+		$wgOasisTypography = $wgRequest->getBool( 'oasistypography', $wgOasisTypography ) !== false;
+		return !empty( $wgOasisTypography );
 	}
 
 	/**
@@ -132,28 +153,22 @@ class BodyController extends WikiaController {
 			$wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableWikiAnswers, $wgEnableHuluVideoPanel,
 			$wgEnableWallEngine, $wgRequest,
-			$wgEnableForumExt, $wgAnalyticsProviderPageFairSlotIds,
-			$wgEnableGlobalNavExt;
+			$wgEnableForumExt;
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
 
 		$railModuleList = array();
 
-		$latestPhotosKey = $wgUser->isAnon() ? 1300 : 1250;
 		$latestActivityKey = $wgUser->isAnon() ? 1250 : 1300;
 		$huluVideoPanelKey = $wgUser->isAnon() ? 1390 : 1280;
 
 		// Forum Extension
 		if ($wgEnableForumExt && ForumHelper::isForum()) {
 			$railModuleList = array (
-				1500 => array('Search', 'Index', null),
 				1202 => array('Forum', 'forumRelatedThreads', null),
 				1201 => array('Forum', 'forumActivityModule', null),
-				1490 => array('Ad', 'Index', [
-					'slotName' => 'TOP_RIGHT_BOXAD',
-					'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['MEDREC']) ? $wgAnalyticsProviderPageFairSlotIds['MEDREC'] : null
-				]),
+				1490 => array('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']),
 			);
 
 			// Include additional modules from other extensions (like chat)
@@ -173,7 +188,6 @@ class BodyController extends WikiaController {
 					$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 
 					if( empty( $wgEnableWikiAnswers ) ) {
-						$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
 						if ($wgEnableHuluVideoPanel) {
 							$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
 						}
@@ -181,13 +195,11 @@ class BodyController extends WikiaController {
 				}
 			} else if ($wgTitle->isSpecial('Leaderboard')) {
 				$railModuleList = array (
-					1500 => array('Search', 'Index', null),
 					$latestActivityKey => array('LatestActivity', 'Index', null),
 					1290 => array('LatestEarnedBadges', 'Index', null)
 				);
 			} else if ($wgTitle->isSpecial('WikiActivity')) {
 				$railModuleList = array (
-					1500 => array('Search', 'Index', null),
 					1102 => array('HotSpots', 'Index', null),
 					1101 => array('CommunityCorner', 'Index', null),
 				);
@@ -196,23 +208,16 @@ class BodyController extends WikiaController {
 				// intentional nothing here
 			} else if ($wgTitle->isSpecial('ThemeDesignerPreview') ) {
 				$railModuleList = array (
-					1500 => array('Search', 'Index', null),
 					$latestActivityKey => array('LatestActivity', 'Index', null),
 				);
 
 				$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 
 				if( empty( $wgEnableWikiAnswers ) ) {
-					$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
 					if ($wgEnableHuluVideoPanel) {
 						$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
 					}
 				}
-			} else if( $wgTitle->isSpecial('PageLayoutBuilderForm') ) {
-				$railModuleList = array (
-					1501 => array('Search', 'Index', null),
-					1500 => array('PageLayoutBuilderForm', 'Index', null)
-				);
 			} else {
 				// don't show any module for MW core special pages
 				$railModuleList = array();
@@ -220,12 +225,6 @@ class BodyController extends WikiaController {
 				wfProfileOut(__METHOD__);
 				return $railModuleList;
 			}
-		} else if ( !self::showUserPagesHeader() ) {
-			// ProfilePagesV3 renders its own search box.
-			// If this page is not a page with the UserPagesHeader on version 3, show search (majority case)
-			$railModuleList = array (
-				1500 => array('Search', 'Index', null),
-			);
 		}
 
 		// Content, category and forum namespaces.  FB:1280 Added file,video,mw,template
@@ -239,7 +238,6 @@ class BodyController extends WikiaController {
 			$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 
 			if( empty( $wgEnableWikiAnswers ) ) {
-				$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
 				if ($wgEnableHuluVideoPanel) {
 					$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
 				}
@@ -251,7 +249,7 @@ class BodyController extends WikiaController {
 			$page_owner = User::newFromName($wgTitle->getText());
 
 			if($page_owner) {
-				if ( !$page_owner->getOption('hidefollowedpages') ) {
+				if ( !$page_owner->getGlobalPreference('hidefollowedpages') ) {
 					$railModuleList[1101] = array('FollowedPages', 'Index', null);
 				}
 
@@ -262,7 +260,6 @@ class BodyController extends WikiaController {
 		}
 
 		if (self::isBlogPost() || self::isBlogListing()) {
-			$railModuleList[1500] = array('Search', 'Index', null);
 			$railModuleList[1250] = array('PopularBlogPosts', 'Index', null);
 		}
 
@@ -291,15 +288,9 @@ class BodyController extends WikiaController {
 			return array();
 		}
 
-		$railModuleList[1440] = array('Ad', 'Index', [
-			'slotName' => 'TOP_RIGHT_BOXAD',
-			'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['MEDREC']) ? $wgAnalyticsProviderPageFairSlotIds['MEDREC'] : null
-		]);
-		$railModuleList[1291] = array('Ad', 'Index', ['slotName' => 'MIDDLE_RIGHT_BOXAD']);
-		$railModuleList[1100] = array('Ad', 'Index', [
-			'slotName' => 'LEFT_SKYSCRAPER_2',
-			'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['SKYSCRAPER']) ? $wgAnalyticsProviderPageFairSlotIds['SKYSCRAPER'] : null
-		]);
+		$railModuleList[1440] = array('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']);
+		$railModuleList[1435] = array('AdEmptyContainer', 'Index', ['slotName' => 'NATIVE_TABOOLA_RAIL']);
+		$railModuleList[1100] = array('Ad', 'Index', ['slotName' => 'LEFT_SKYSCRAPER_2']);
 
 		unset($railModuleList[1450]);
 
@@ -418,11 +409,19 @@ class BodyController extends WikiaController {
 			OasisController::addBodyClass('wikia-grid');
 		}
 
+		if( $this->isOasisBreakpoints() ) {
+			OasisController::addBodyClass( 'oasis-breakpoints' );
+		}
+
+		//@TODO remove this check after deprecating responsive (July 2015)
+		if( $this->isResponsiveLayoutEnabled() ) {
+			OasisController::addBodyClass( 'oasis-responsive' );
+		}
+
 		// if we are on a special search page, pull in the css file and don't render a header
 		if($wgTitle && $wgTitle->isSpecial( 'Search' ) && !$this->wg->WikiaSearchIsDefault) {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/modules/SpecialSearch.scss"));
 			$this->headerModuleName = null;
-			$this->bodytext = F::app()->renderView('Search', "Index'") . $this->bodytext;
 		}
 
 		// Inter-wiki search
@@ -457,8 +456,15 @@ class BodyController extends WikiaController {
 
 		// MonetizationModule Extension
 		if ( !empty( $this->wg->EnableMonetizationModuleExt ) ) {
-			$this->monetizationModules = $this->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
-			$this->headerModuleParams['monetizationModules'] = $this->monetizationModules;
+			if ( empty( $this->wg->AdDriverUseMonetizationService ) ) {
+				$this->monetizationModules = $this->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
+				$this->headerModuleParams['monetizationModules'] = $this->monetizationModules;
+			} else {
+				$this->monetizationModules = [
+					MonetizationModuleHelper::SLOT_TYPE_IN_CONTENT => $this->app->renderView( 'Ad', 'Index', ['slotName' => 'MON_IN_CONTENT'] ),
+					MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY => $this->app->renderView( 'Ad', 'Index', ['slotName' => 'MON_BELOW_CATEGORY'] ),
+				];
+			}
 			$this->bodytext = MonetizationModuleHelper::insertIncontentUnit( $this->bodytext, $this->monetizationModules );
 		}
 

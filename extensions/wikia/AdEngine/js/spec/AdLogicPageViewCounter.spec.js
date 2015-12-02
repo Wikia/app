@@ -29,7 +29,8 @@ describe('AdLogicPageViewCounter', function () {
 			pvCounter = modules['ext.wikia.adEngine.adLogicPageViewCounter'](cacheMock, windowMock);
 
 			spyOn(cacheMock, 'set');
-			expect(pvCounter.increment()).toBe(expectedPv);
+			pvCounter.increment();
+			expect(pvCounter.get()).toBe(expectedPv);
 
 			expect(cacheMock.set).toHaveBeenCalled();
 			expect(cacheMock.set.calls.first().args[1]).toEqual({pvs: expectedPv, since: expectedSince});

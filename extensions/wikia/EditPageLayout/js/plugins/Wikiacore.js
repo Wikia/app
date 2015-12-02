@@ -5,8 +5,12 @@
 			'widemodemanager', 'railminimumheight', 'tracker', 'cssloadcheck', 'preloads',
 			'leaveconfirm', 'addfile', 'editorsurvey'];
 
-	if (window.wgEnableEditorSyntaxHighlighting === true) {
+	if (window.enableWikitextSyntaxHighlighting) {
 		requires.push('syntaxhighlighterqueueinit');
+	}
+
+	if (window.enableTemplateClassificationEditorPlugin) {
+		requires.push('templateclassificationeditorplugin');
 	}
 
 	/**

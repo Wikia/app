@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Octahedron80",
+			"Passawuth"
+		]
+	},
+	"sf_createtemplate_deletefield": "ลบ",
+	"sf_createform_add": "เพิ่ม",
+	"sf_formedit_none": "ไม่มี"
+}

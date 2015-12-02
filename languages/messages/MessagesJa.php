@@ -121,7 +121,7 @@ $specialPageAliases = array(
 	'Block'                     => array( '投稿ブロック', 'ブロック' ),
 	'Blockme'                   => array( '自己ブロック' ),
 	'Booksources'               => array( '文献資料' ),
-	'BrokenRedirects'           => array( '迷子のリダイレクト', '壊れたリダイレクト' ),
+	'BrokenRedirects'           => array( '壊れたリダイレクト', '壊れたリダイレクト' ),
 	'Categories'                => array( 'カテゴリ', 'カテゴリ一覧' ),
 	'ChangeEmail'               => array( 'メールアドレスの変更' ),
 	'ChangePassword'            => array( 'パスワードの変更', 'パスワード変更', 'パスワード再発行', 'パスワードの再発行' ),
@@ -143,12 +143,12 @@ $specialPageAliases = array(
 	'Invalidateemail'           => array( 'メール無効化', 'メール無効' ),
 	'BlockList'                 => array( 'ブロック一覧', 'ブロックの一覧' ),
 	'LinkSearch'                => array( '外部リンク検索' ),
-	'Listadmins'                => array( '管理者一覧' ),
+	'Listadmins'                => array( 'アドミン一覧' ),
 	'Listbots'                  => array( 'ボット一覧', 'Bot一覧' ),
 	'Listfiles'                 => array( 'ファイル一覧', 'ファイルリスト' ),
-	'Listgrouprights'           => array( '利用者グループ権限', '利用者グループの権限一覧', '利用者権限一覧' ),
+	'Listgrouprights'           => array( 'ユーザーグループ権限', 'ユーザーグループの権限一覧', 'ユーザーグループ権限一覧' ),
 	'Listredirects'             => array( 'リダイレクト一覧', 'リダイレクトの一覧', 'リダイレクトリスト' ),
-	'Listusers'                 => array( '登録利用者一覧', '登録利用者の一覧' ),
+	'Listusers'                 => array( 'ユーザー一覧', 'ユーザーの一覧' ),
 	'Lockdb'                    => array( 'データベースロック' ),
 	'Log'                       => array( 'ログ', '記録' ),
 	'Lonelypages'               => array( '孤立しているページ' ),
@@ -159,6 +159,7 @@ $specialPageAliases = array(
 	'Mostimages'                => array( '被リンクの多いファイル', '使用箇所の多いファイル' ),
 	'Mostlinked'                => array( '被リンクの多いページ' ),
 	'Mostlinkedcategories'      => array( '被リンクの多いカテゴリ' ),
+	'MostLinkedFilesInContent'  => array( 'コンテンツ内被リンク最多ファイル' ),
 	'Mostlinkedtemplates'       => array( '使用箇所の多いテンプレート', '被リンクの多いテンプレート' ),
 	'Mostrevisions'             => array( '編集履歴の多いページ', '版の多い項目', '版の多いページ' ),
 	'Movepage'                  => array( '移動', 'ページの移動' ),
@@ -183,6 +184,7 @@ $specialPageAliases = array(
 	'RevisionMove'              => array( '版移動' ),
 	'Search'                    => array( '検索' ),
 	'Shortpages'                => array( '短いページ' ),
+	'SiteWideMessages'          => array( 'サイトワイドメッセージ' ),
 	'Specialpages'              => array( '特別ページ一覧' ),
 	'Statistics'                => array( '統計' ),
 	'Tags'                      => array( 'タグ一覧' ),
@@ -201,10 +203,10 @@ $specialPageAliases = array(
 	'UploadStash'               => array( '未公開アップロード' ),
 	'Userlogin'                 => array( 'ログイン' ),
 	'Userlogout'                => array( 'ログアウト' ),
-	'Userrights'                => array( '利用者権限', '利用者権限の変更' ),
+	'Userrights'                => array( 'ユーザー権限', 'ユーザー権限の変更' ),
 	'Version'                   => array( 'バージョン情報', 'バージョン' ),
 	'Wantedcategories'          => array( '存在しないカテゴリへのリンク', '赤リンクカテゴリ' ),
-	'Wantedfiles'               => array( 'ファイルページが存在しないファイル', '赤リンクファイル' ),
+	'Wantedfiles'               => array( '存在しないファイルへのリンク', '赤リンクファイル' ),
 	'Wantedpages'               => array( '存在しないページへのリンク', '赤リンク' ),
 	'Wantedtemplates'           => array( '存在しないテンプレートへのリンク', '赤リンクテンプレート' ),
 	'Watchlist'                 => array( 'ウォッチリスト' ),
@@ -763,8 +765,9 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''ログアウトしました。'''
 
-このまま匿名で{{SITENAME}}を使い続けることができます。同じあるいは別の利用者として[[Special:UserLogin|もう一度ログインする]]こともできます。
+このまま匿名で{{SITENAME}}を使い続けることができます。同じあるいは別の利用者として$1こともできます。
 なお、ページによっては、ブラウザのキャッシュをクリアするまで、ログインしているかのように表示され続けることがあるので注意してください。",
+'logouttext-link-text'       => 'もう一度ログインする',
 'welcomecreation'            => '== ようこそ、$1さん！ ==
 アカウントが作成されました。
 [[Special:Preferences|{{SITENAME}}の個人設定]]の変更も忘れないようにしてください。',
@@ -815,7 +818,7 @@ $2',
 綴りが正しいことを再度確認してください。',
 'nouserspecified'            => '利用者名を指定してください。',
 'login-userblocked'          => 'この利用者はブロックされています。ログインは拒否されます。',
-'wrongpassword'              => 'パスワードが間違っています。 
+'wrongpassword'              => 'パスワードが間違っています。
 もう一度やり直してください。',
 'wrongpasswordempty'         => 'パスワードを空にすることはできません。
 もう一度やり直してください。',

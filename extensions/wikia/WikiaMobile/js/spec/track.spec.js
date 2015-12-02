@@ -34,7 +34,7 @@ describe('Track module', function () {
 			category: 'wikiamobile-CAT',
 			href: undefined,
 			label: undefined,
-			trackingMethod: 'ga',
+			trackingMethod: 'analytics',
 			value: undefined
 		});
 	});

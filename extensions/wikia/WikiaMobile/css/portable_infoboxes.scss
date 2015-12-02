@@ -1,0 +1,114 @@
+@import 'variables';
+
+$infobox-item-margin: 5px;
+
+// not using mixins for flexbox - for mobile traffic we only need -webkit- prefix for safari
+// our mixins will add a lot of other prefixes for browsers that we do not support on mobile skin
+
+.portable-infobox {
+	margin-bottom: $infobox-item-margin * 4;
+
+	figure {
+		margin: 0;
+	}
+}
+
+// ****** Common infobox elements styles ****** //
+
+.pi-item-spacing {
+		 padding: $infobox-item-margin $infobox-item-margin * 3 $infobox-item-margin * 2;
+	 }
+
+.pi-secondary-font {
+	font-size: 1rem;
+	font-weight: bold;
+	margin-top: 0;
+}
+
+.pi-title,
+.pi-header,
+.pi-hero-title,
+.pi-hero-caption {
+	border: 0;
+	margin: 0;
+}
+
+// ****** Individual infobox elements styles ****** //
+
+.pi-hero-caption {
+	font-size: inherit;
+	font-weight: normal;
+	line-height: inherit;
+	padding-top: $infobox-item-margin;
+}
+
+.pi-header {
+	padding-top: $infobox-item-margin * 2;
+}
+
+.pi-data:not(:last-of-type) {
+	border-bottom: 1px solid $border-color;
+}
+
+.pi-data-label {
+	margin: 0;
+	padding: 0;
+}
+
+.pi-data-value {
+	padding-left: $infobox-item-margin * 2;
+
+	// overwrite default article styles for UGC html inside <data> tag value
+	> * {
+		margin: 0;
+	}
+
+	ul,
+	ol {
+		list-style-position: inside;
+	}
+}
+
+.pi-navigation {
+	font-weight: normal;
+	padding: $infobox-item-margin * 2 $infobox-item-margin * 3;
+	text-align: center;
+}
+
+// ****** Styling for collapse / expand functionality ****** //
+
+.portable-infobox {
+	&.collapsed {
+		height: 450px;
+		overflow: hidden;
+		position: relative;
+
+		.pi-expand-button {
+			bottom: 0;
+			position: absolute;
+
+			.chevron {
+				border-color: $border-color transparent transparent;
+				top: 9px;
+
+				&:after {
+					border-color: $page-background-color transparent transparent;
+					bottom: -$chevron-size/2 - 1;
+				}
+			}
+		}
+	}
+}
+
+.pi-expand-button {
+	background-color: $page-background-color;
+	border: 1px solid $border-color;
+	box-sizing: border-box;
+	padding: $infobox-item-margin 0;
+	text-align: center;
+	width: 100%;
+
+	.chevron {
+		top: -4px;
+	}
+}

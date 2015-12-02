@@ -1,0 +1,22 @@
+/**
+ * CSS for SRF gridview plugin
+ * @see http://www.semantic-mediawiki.org/wiki/Help:Gridview
+ *
+ * @since 1.8
+ * @release 0.2
+ *
+ * @file
+ * @ingroup SRF
+ *
+ * @licence GNU GPL v2 or later
+ * @author mwjames
+ */
+/* Changes have to comply with UI_BASE */
+.srf-gridview-query-link {
+	font-size:12px;
+	font-weight: normal;
+	margin-top:4px;
+	margin-right:3px;
+	color:#ddd;
+	float:right;
+}

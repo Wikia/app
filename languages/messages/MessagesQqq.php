@@ -627,7 +627,7 @@ $1 is a filename, I think.',
 
 # Login and logout pages
 'logouttext'                 => 'Log out message',
-'welcomecreation'            => 'The welcome message users see after registering a user account. $1 is the username of the new user.',
+'welcomecreation'            => 'The welcome message users see after registering a user account.$1is the username of the new user.',
 'yourname'                   => "In user preferences
 
 <nowiki>{{</nowiki>[[Gender|GENDER]]<nowiki>}}</nowiki> is '''NOT''' supported.
@@ -3678,6 +3678,7 @@ There are no such extensions here, so look at [[wikipedia:Special:Version]] for 
 'version-license'                  => '{{Identical|License}}',
 'version-software-product'         => 'Shown in [[Special:Version]]',
 'version-software-version'         => '{{Identical|Version}}',
+'version-file-extensions-allowed'  => 'This message is a heading at [[Special:Version]] for file extensions that are allowed to be uploaded',
 
 # Special:FilePath
 'filepath'         => 'Legend of fieldset around input box in [[Special:FilePath]].',

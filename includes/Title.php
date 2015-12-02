@@ -26,13 +26,20 @@
  * @note This class can fetch various kinds of data from the database;
  *       however, it does so inefficiently.
  *
- * @internal documentation reviewed 15 Mar 2010
+ * internal documentation reviewed 15 Mar 2010
  */
 class Title {
 	/** @name Static cache variables */
 	// @{
 	static private $titleCache = array();
 	// @}
+
+	# Wikia change begins
+	/**
+	 * Traits
+	 */
+	use TitleTrait;
+	# Wikia change ends
 
 	/**
 	 * Title::newFromText maintains a cache to avoid expensive re-normalization of
@@ -875,7 +882,7 @@ class Title {
 	 * Is this in a namespace that allows actual pages?
 	 *
 	 * @return Bool
-	 * @internal note -- uses hardcoded namespace index instead of constants
+	 * internal note -- uses hardcoded namespace index instead of constants
 	 */
 	public function canExist() {
 		return $this->mNamespace >= NS_MAIN;
@@ -1151,7 +1158,12 @@ class Title {
 	 * @return Title the object for the talk page
 	 */
 	public function getTalkPage() {
-		return Title::makeTitle( MWNamespace::getTalk( $this->getNamespace() ), $this->getDBkey() );
+		// begin wikia change
+		// VOLDEV-66
+		$talkPageTitle = Title::makeTitle( MWNamespace::getTalk( $this->getNamespace() ), $this->getDBkey() );
+		wfRunHooks( 'GetTalkPage', [$this, &$talkPageTitle] );
+		return $talkPageTitle;
+		// end wikia change
 	}
 
 	/**
@@ -2141,6 +2153,7 @@ class Title {
 				$groups = [
 					'staff',
 					'vstf',
+					'helper',
 				];
 				$blockerGroups = $blocker->getEffectiveGroups();
 

@@ -1,6 +1,8 @@
 @import "skins/shared/color";
 @import "layout";
 
+$screen: 'only screen';
+
 // Layout
 $width-adskin: 170px;
 $width-adskins: $width-adskin * 2;
@@ -17,4 +19,9 @@ $breakpoint-fluid: $width-outside + $width-adskins;
 $breakpoint-max: $width-outside-max + $width-adskins;
 $breakpoint-min: $width-outside-min;
 $breakpoint-small: 1023px;
+
+//Ranges
+$small-range: "#{$screen} and (max-width: #{$breakpoint-small})";
+$medium-range: "#{$screen} and (min-width:#{$breakpoint-small + 1} and max-width: #{$breakpoint-fluid})";
+$large-range: "#{$screen} and (min-width:#{$breakpoint-fluid + 1})";
 

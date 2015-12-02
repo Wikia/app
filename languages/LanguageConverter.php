@@ -237,11 +237,11 @@ class LanguageConverter {
 		// Don't call this on stub objects because that causes infinite
 		// recursion during initialisation
 		if ( $wgUser->isLoggedIn() )  {
-			$ret = $wgUser->getOption( 'variant' );
+			$ret = $wgUser->getGlobalPreference( 'variant' );
 		} else {
 			// figure out user lang without constructing wgLang to avoid
 			// infinite recursion
-			$ret = $wgUser->getOption( 'language' );
+			$ret = $wgUser->getGlobalPreference( 'language' );
 		}
 
 		return $this->mUserVariant = $this->validateVariant( $ret );
@@ -730,7 +730,7 @@ class LanguageConverter {
 				 || $action == 'edit'
 				 || $action == 'submit'
 				 || $linkconvert == 'no'
-				 || $wgUser->getOption( 'noconvertlink' ) == 1 ) ) ) {
+				 || $wgUser->getGlobalPreference( 'noconvertlink' ) == 1 ) ) ) {
 			return;
 		}
 

@@ -97,7 +97,7 @@ require(['sloth', 'wikia.window', 'jquery'], function (sloth, w, $) {
 
 									tracker.track({
 										action: tracker.ACTIONS.CLICK,
-										trackingMethod: 'ga',
+										trackingMethod: 'analytics',
 										category: 'article',
 										label: 'related-pages'
 									});

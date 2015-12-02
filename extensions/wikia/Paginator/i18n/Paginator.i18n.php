@@ -59,8 +59,10 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author BroOk
+ * @author Unapersona
  */
 $messages['ca'] = array(
+	'paginator-desc' => 'Extensió de paginació',
 	'paginator-next' => 'Següent',
 	'paginator-back' => 'Enrere',
 );
@@ -73,9 +75,11 @@ $messages['ce'] = array(
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Dontlietome7
  */
 $messages['cs'] = array(
+	'paginator-desc' => 'Rozšíření Paginator',
 	'paginator-next' => 'Další',
 	'paginator-back' => 'Zpět',
 );
@@ -227,6 +231,14 @@ $messages['ksh'] = array(
 	'paginator-back' => 'Zeröck',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'paginator-next' => 'Pêşve',
+	'paginator-back' => 'Paşve',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  */
 $messages['lb'] = array(
@@ -234,7 +246,7 @@ $messages['lb'] = array(
 	'paginator-back' => 'Zréck',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -246,6 +258,7 @@ $messages['lrc'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'paginator-desc' => 'Додаток „Страничар“',
 	'paginator-next' => 'Следна',
 	'paginator-back' => 'Назад',
 );
@@ -299,7 +312,7 @@ $messages['oc'] = array(
 	'paginator-back' => 'Precedent',
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -370,8 +383,10 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'paginator-desc' => 'Tillägget Paginator',
 	'paginator-next' => 'Nästa',
 	'paginator-back' => 'Tillbaka',
 );

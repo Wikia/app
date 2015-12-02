@@ -2,7 +2,7 @@
 /*jshint camelcase:false*/
 var ads = (function (window, document) {
 	'use strict';
-	function noop() {}
+	function noop() { return; }
 
 	function defines() {
 		define('ext.wikia.adEngine.adLogicPageParams', function () {
@@ -10,35 +10,13 @@ var ads = (function (window, document) {
 			var hashParams = JSON.parse(document.location.hash.substr(1));
 
 			return {
-				getPageLevelParams: function() {
+				getPageLevelParams: function () {
 					return hashParams.adParams;
 				}
 			};
 		});
 
-		define('ext.wikia.adEngine.gptSlotConfig', function () {
-			var slotMapConfig = {
-				maps: {
-					MAPS_BUTTON: { size: '320x50,1x1' }
-				}
-			};
-
-			function getConfig(src) {
-				var undef;
-
-				if (src === undef) {
-					return slotMapConfig;
-				}
-
-				return slotMapConfig[src];
-			}
-
-			return {
-				getConfig: getConfig
-			};
-		});
-
-		define('ext.wikia.adEngine.wikiaGptAdDetect', function () {
+		define('ext.wikia.adEngine.provider.gpt.adDetect', function () {
 			function onAdLoad(slotname, gptEvent) {
 				var parentIframeContainer,
 					height = gptEvent.size && gptEvent.size[1];
@@ -63,7 +41,8 @@ var ads = (function (window, document) {
 
 	function fillAd() {
 		require(['ext.wikia.adEngine.provider.directGptMaps'], function (gpt) {
-			gpt.fillInSlot('MAPS_BUTTON', noop, noop);
+			var slotElement = document.getElementById('MAPS_BUTTON');
+			gpt.fillInSlot('MAPS_BUTTON', slotElement, noop, noop);
 		});
 	}
 

@@ -194,6 +194,13 @@ $messages['ia'] = array(
 	'userdata-no-wf' => 'WikiFactory non es activate in iste wiki. Impossibile alterar wgUserData.',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'userdata-no-wf' => '이 위키에서는 위키팩토리를 사용할 수 없습니다. wgUserData를 수정할 수 없습니다.',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -279,6 +286,22 @@ $messages['nl'] = array(
 	'userdata-not-updated' => 'Het bijwerken van wgUserData is mislukt.',
 	'userdata-wf-reason' => 'Waarde bijgewerkt via [[Special:UserData|Gebruikersgegevens]]',
 	'userdata-no-wf' => 'WikiFactory is niet ingeschakeld voor deze wiki. Het is niet mogelijk wgUserData aan te passen.',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'userdata' => "Obténer de donadas d'utilizaire",
+	'userdata-userid-label' => "Provesir l'ID utilizaire :",
+	'userdata-submit' => 'Obténer las donadas',
+	'specialuserdata-desc' => 'Provesís una interfàcia que permet de cambiar wgUserData per wiki.',
+	'userdata-header' => 'Aumentar wgUserData',
+	'userdata-value' => 'La valor actuala de wgUserData es « $1 ». Quichatz sul boton per la definir a la valor del timestamp actual.',
+	'userdata-updated' => 'wgUserData mes a jorn amb « $1 ».',
+	'userdata-not-updated' => 'Fracàs de la mesa a jorn de wgUserData.',
+	'userdata-wf-reason' => 'Valor mesa a jorn via [[Special:UserData|UserData]]',
+	'userdata-no-wf' => 'WikiFactory es pas activat sus aqueste wiki. Impossible de modificar wgUserData.',
 );
 
 /** Polish (polski)

@@ -1,0 +1,86 @@
+/*!
+ * VisualEditor ContentEditable TableNode styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.ve-ce-tableNode {
+	border-spacing: 0;
+	border-collapse: collapse;
+	cursor: default;
+}
+
+.ve-ce-tableCaptionNode:focus {
+	border: 1px dotted #ccc;
+	border-bottom: 0;
+	margin-top: -1px;
+	outline: none;
+}
+
+.ve-ce-tableCaptionNode {
+	cursor: text;
+}
+
+.ve-ce-tableNodeOverlay {
+	position: absolute;
+	pointer-events: none;
+}
+
+.ve-ce-tableNodeOverlay .ve-ui-tableContext {
+	pointer-events: auto;
+}
+
+.ve-ce-tableNodeOverlay-selection-box {
+	position: absolute;
+	border: solid 0 #6da9f7;
+	background: rgba(109, 169, 247, 0.3); /* #6da9f7 */
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	opacity: 0.6;
+}
+
+.ve-ce-tableNodeOverlay-selection-box-fullCol {
+	border-left-width: 2px;
+	border-right-width: 2px;
+}
+
+.ve-ce-tableNodeOverlay-selection-box-fullRow {
+	border-top-width: 2px;
+	border-bottom-width: 2px;
+}
+
+.ve-ce-tableNodeOverlay-selection-box-anchor {
+	position: absolute;
+	border: solid 1px #6da9f7;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.ve-ce-tableNodeOverlay-editing .ve-ce-tableNodeOverlay-selection-box {
+	border-width: 1px;
+	background: transparent;
+}
+
+.ve-ce-tableNodeOverlay-row-bracket,
+.ve-ce-tableNodeOverlay-column-bracket {
+	position: absolute;
+	border: solid 3px #6da9f7;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	opacity: 0.6;
+}
+
+.ve-ce-tableNodeOverlay-row-bracket {
+	left: -12px;
+	width: 6px;
+	border-right: 0;
+}
+
+.ve-ce-tableNodeOverlay-column-bracket {
+	top: -12px;
+	height: 6px;
+	border-bottom: 0;
+}

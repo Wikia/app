@@ -217,7 +217,7 @@ function(
 					track.event( 'special-videos', track.CLICK, {
 						label: 'thumbnail',
 						value: Array.prototype.indexOf.call( document.getElementsByClassName('media'), t ),
-						method: 'both'
+						method: 'analytics'
 					});
 				}
 
@@ -402,7 +402,10 @@ function(
 				} else {
 					//if caption is not a string and img.caption is set to true grab it from DOM
 					//and then cache it in media object
-					currentMedia.caption = cap = $( currentMedia.element ).parents( 'figure' ).find( '.thumbcaption' ).text();
+					//div here is used to escape html that is coming from caption
+					currentMedia.caption = cap = $('<div />').text(
+						$( currentMedia.element ).parents( 'figure' ).find( '.thumbcaption' ).text()
+					).html();
 				}
 			} else {
 				cap = '';

@@ -24,6 +24,9 @@ class WikiaDispatcher {
 	 */
 	protected function applyRouting( WikiaApp $app, WikiaResponse $response, $className, $methodName ) {
 
+		// PLATFORM-1527: sanitize method name
+		$methodName = basename( $methodName );
+
 		// Starting with requested or default method name which is passed in by dispatch
 		$response->setControllerName( $className );
 		$response->setMethodName( $methodName );
@@ -259,10 +262,16 @@ class WikiaDispatcher {
 
 		} while ( $controller && $controller->hasNext() );
 
-		if ( $request->isInternal() && $response->hasException() ) {
+		if ( $request->isInternal() && $response->hasException() && $request->getExceptionMode() !== WikiaRequest::EXCEPTION_MODE_RETURN ) {
 			Wikia::logBacktrace(__METHOD__ . '::exception');
 			wfProfileOut(__METHOD__);
-			throw new WikiaDispatchedException( "Internal Throw ({$response->getException()->getMessage()})", $response->getException() );
+			switch ( $request->getExceptionMode() ) {
+				case WikiaRequest::EXCEPTION_MODE_THROW:
+					throw $response->getException();
+				// case WikiaRequest::EXCEPTION_MODE_WRAP_AND_THROW:
+				default:
+					throw new WikiaDispatchedException( "Internal Throw ({$response->getException()->getMessage()})", $response->getException() );
+			}
 		}
 
 		wfProfileOut(__METHOD__);

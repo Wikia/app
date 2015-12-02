@@ -33,12 +33,12 @@ class SkinSimple extends SkinTemplate {
 		$rules = array();
 		$underline = "";
 
-		if ( $this->getUser()->getOption( 'underline' ) < 2 ) {
-			$underline = "text-decoration: " . $this->getUser()->getOption( 'underline' ) ? 'underline !important' : 'none' . ";";
+		if ( $this->getUser()->getGlobalPreference( 'underline' ) < 2 ) {
+			$underline = "text-decoration: " . $this->getUser()->getGlobalPreference( 'underline' ) ? 'underline !important' : 'none' . ";";
 		}
 
 		/* Also inherits from resourceloader */
-		if( !$this->getUser()->getOption( 'highlightbroken' ) ) {
+		if( !$this->getUser()->getGlobalPreference( 'highlightbroken' ) ) {
 			$rules[] = "a.new, a.stub { color: inherit; text-decoration: inherit;}";
 			$rules[] = "a.new:after { color: #CC2200; $underline;}";
 			$rules[] = "a.stub:after { $underline; }";

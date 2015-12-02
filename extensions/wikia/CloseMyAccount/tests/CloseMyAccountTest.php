@@ -14,10 +14,10 @@ class CloseMyAccountTest extends WikiaBaseTest {
 	 * @dataProvider getDaysUntilClosureProvider
 	 */
 	public function testGetDaysUntilClosure( $expected, $getOptionValue ) {
-		$userMock = $this->getMock( 'User', [ 'getOption' ] );
+		$userMock = $this->getMock( 'User', [ 'getGlobalAttribute' ] );
 
 		$userMock->expects( $this->once() )
-			->method( 'getOption' )
+			->method( 'getGlobalAttribute' )
 			->with( $this->equalTo( 'requested-closure-date'  ) )
 			->will( $this->returnValue( $getOptionValue ) );
 
@@ -129,12 +129,18 @@ class CloseMyAccountTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider isScheduledProvider
 	 */
-	public function testIsScheduledForClosure( $expected, $getOptionMap ) {
-		$userMock = $this->getMock( 'User', [ 'getOption' ] );
+	public function testIsScheduledForClosure( $expected, $requestedClosureMap, $requestedClosureDateMap ) {
+		$userMock = $this->getMock( 'User', [ 'getGlobalAttribute', 'getGlobalFlag' ] );
 
 		$userMock->expects( $this->any() )
-			->method( 'getOption' )
-			->will( $this->returnValueMap( $getOptionMap ) );
+			->method( 'getGlobalFlag' )
+			->with( 'requested-closure', false )
+			->willReturn( $requestedClosureMap );
+
+		$userMock->expects( $this->any() )
+			->method( 'getGlobalAttribute')
+			->with( 'requested-closure-date', false )
+			->willReturn( $requestedClosureDateMap );
 
 		$closeAccountHelper = new CloseMyAccountHelper();
 
@@ -145,26 +151,17 @@ class CloseMyAccountTest extends WikiaBaseTest {
 
 	public function isScheduledProvider() {
 		return [
-			[ true, [
-				[ 'requested-closure', false, false, 1 ],
-				[ 'requested-closure-date', false, false, wfTimestamp( TS_DB ) ],
-			] ],
-			[ false, [
-				[ 'requested-closure', false, false, 0 ],
-				[ 'requested-closure-date', false, false, wfTimestamp( TS_DB ) ],
-			] ],
-			[ false, [
-				[ 'requested-closure', false, false, 1 ],
-				[ 'requested-closure-date', false, false, false ],
-			] ],
+			[ true, 1, wfTimestamp( TS_DB ) ],
+			[ false, 0, wfTimestamp( TS_DB ) ],
+			[ false, 1, false ],
 		];
 	}
 
 	public function testIsClosed() {
-		$userMock = $this->getMock( 'User', [ 'getOption' ] );
+		$userMock = $this->getMock( 'User', [ 'getGlobalFlag' ] );
 
 		$userMock->expects( $this->exactly( 2 ) )
-			->method( 'getOption' )
+			->method( 'getGlobalFlag' )
 			->with( $this->equalTo( 'disabled' ) )
 			->will( $this->onConsecutiveCalls( 1, 0 ) );
 

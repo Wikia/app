@@ -11,6 +11,8 @@ class HAWelcomeTaskHookDispatcher {
 	use Loggable;
 	use IncludeMessagesTrait;
 
+	const WELCOME_SENT_FLAG = 'ha-welcome-msg-sent';
+
 	/** @type \Revision */
 	private $revisionObject = null;
 
@@ -24,10 +26,24 @@ class HAWelcomeTaskHookDispatcher {
 	private $currentUser = null;
 
 	protected function getLoggerContext() {
+		$userId = null;
+		$userEmail = null;
+		$userName = null;
+
+		if ( !empty( $this->currentUser ) ) {
+			$userId = $this->currentUser->getId();
+			$userEmail = $this->currentUser->getEmail();
+			$userName = $this->currentUser->getName();
+		}
+
 		return [
 			'task' => __CLASS__,
-			'hook' => 'onArticleSaveComplete'
-			];
+			'hook' => 'onArticleSaveComplete',
+			'wikiId' => $this->cityId,
+			'userId' => $userId,
+			'userEmail' => $userEmail,
+			'userName' => $userName,
+		];
 	}
 
 	public function dispatch() {
@@ -37,10 +53,11 @@ class HAWelcomeTaskHookDispatcher {
 			return true;
 		}
 
-		if ( $this->hasContributorBeenWelcomedRecently() ) {
-			$this->info( "aborting the welcome hook: user has been welcomed recently" );
+		if ( $this->currentUserHasBeenWelcomed() ) {
+			$this->info( "aborting the welcome hook: user has already been welcomed" );
 			return true;
 		}
+		$this->markCurrentUserAsWelcomed();
 
 		if ( $this->revisionObject->getRawUser() ) {
 			// we are working with an edit from a registered contributor
@@ -68,8 +85,12 @@ class HAWelcomeTaskHookDispatcher {
 		return true;
 	}
 
-	protected function hasContributorBeenWelcomedRecently() {
-		return $this->getMemcacheClient()->get( wfMemcKey( 'HAWelcome-isPosted', $this->revisionObject->getRawUserText() ) );
+	protected function currentUserHasBeenWelcomed() {
+		return $this->currentUser->getLocalFlag( self::WELCOME_SENT_FLAG );
+	}
+
+	protected function markCurrentUserAsWelcomed() {
+		$this->currentUser->setLocalFlag( self::WELCOME_SENT_FLAG, true );
 	}
 
 	protected function currentUserIsWelcomeExempt() {
@@ -96,12 +117,12 @@ class HAWelcomeTaskHookDispatcher {
 		$sender = $this->getWelcomeUserFromMessages();
 		if ( in_array( $sender, array( '@latest', '@sysop' ) ) ) {
 			// ... and take the opportunity to update admin activity variable.
-			$groupsArray =  $this->currentUser->getEffectiveGroups();
+			$groupsArray = $this->currentUser->getEffectiveGroups();
 
-			$currentUserIsInSysop  = in_array( 'sysop', $groupsArray );
+			$currentUserIsInSysop = in_array( 'sysop', $groupsArray );
 			$currentUserIsNotInBot = !in_array( 'bot' , $groupsArray );
 			if ( $currentUserIsInSysop && $currentUserIsNotInBot ) {
-				$this->memcacheClient->set( wfMemcKey( 'last-sysop-id' ),  $this->currentUser->getId() );
+				$this->memcacheClient->set( wfMemcKey( 'last-sysop-id' ), $this->currentUser->getId() );
 			}
 		}
 	}
@@ -157,7 +178,7 @@ class HAWelcomeTaskHookDispatcher {
 		return $this;
 	}
 
-	public function setMemcacheClient( \MemcachedPhpBagOStuff $memcacheClient ) {
+	public function setMemcacheClient( \BagOStuff $memcacheClient ) {
 		$this->memcacheClient = $memcacheClient;
 		return $this;
 	}

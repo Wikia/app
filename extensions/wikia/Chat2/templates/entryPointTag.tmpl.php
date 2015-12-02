@@ -1,9 +1,9 @@
-<section class="ChatModule <?=($isEntryPoint)?'ChatEntryPoint':'module'?> ChatModuleUninitialized">
+<section class="ChatModule <?=( $isEntryPoint ) ? 'ChatEntryPoint':'module'?> ChatModuleUninitialized">
 	<div class="chat-contents">
-		<h1 class="chat-headline">
+		<h2 class="chat-headline">
 			<span class="chat-live" data-msg-id="chat-live2"> </span>
 			<span class="chat-total"> </span>
-		</h1>
+		</h2>
 		<p class="chat-name"> </p>
 		<div class="chat-join">
 			<button type="button" onclick="ChatEntryPoint.onClickChatButton('<?= $linkToSpecialChat ?>')"> </button>
@@ -49,8 +49,11 @@
 			</div>
 		</div>
 	</div>
+	<? if ( wfMessage( 'chat-entry-point-guidelines' )->exists() ): ?>
+		<span class="more"><?= wfMessage( 'chat-entry-point-guidelines' )->parse() ?></span>
+	<? endif ?>
 </section>
-<?php if ($isEntryPoint): ?>
+<?php if ( $isEntryPoint ): ?>
 	<script language="javascript" type="text/javascript">if ( typeof ChatEntryPoint!=="undefined" ) ChatEntryPoint.init();</script>
-	<a class="ChatMonobookEntryPoint" href="<?= $linkToSpecialChat ?>"><?= wfMsg('chat-join-the-chat')?></a>
+	<a class="ChatMonobookEntryPoint" href="<?= $linkToSpecialChat ?>"><?= wfMsg( 'chat-join-the-chat' )?></a>
 <?php endif; ?>

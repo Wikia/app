@@ -1,4 +1,7 @@
 jQuery(function($) {
+	//Used by AjaxRC
+	window.Wikia = window.Wikia || {};
+	
 	var RecentChanges = {
 		init: function() {
 			this.$table = $('.mw-recentchanges-table');
@@ -41,4 +44,5 @@ jQuery(function($) {
 	};
 
 	RecentChanges.init();
+	window.Wikia.RecentChanges = RecentChanges; //needed for AjaxRC
 });

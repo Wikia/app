@@ -2,9 +2,9 @@
 	<?php // only display header block for the BlogListingBox
 	if (strpos($blogListingClass, 'WikiaBlogListingBox') !== false) { ?>
 	<?= Wikia::specialPageLink('CreateBlogPage', 'blog-create-post-label', 'wikia-button', 'blank.gif', 'blog-create-post-label', 'sprite blog') ?>
-	<h3>
+	<h2>
 		<?= $title ?>
-	</h3>
+	</h2>
 	<?php } // end BlogListingBox header ?>
 	<ul>
 		<?php
@@ -16,11 +16,11 @@
 
 				<?= $post['avatar'] ?>
 				<div class="author-details">
-					<h1><a href="<?= htmlspecialchars($title->getLocalUrl()) ?>"><?= htmlspecialchars(BlogTemplateClass::getSubpageText($title)) ?></a></h1>
+					<h2><a href="<?= htmlspecialchars($title->getLocalUrl()) ?>"><?= htmlspecialchars(BlogTemplateClass::getSubpageText($title)) ?></a></h2>
 					<span><?= wfMsg('blog-by', $post['date'], Xml::element('a', array('href' => htmlspecialchars($post['userpage'])), $post['username'], false)) ?></span>
 				</div>
 
-				<blockquote>
+				<div class='post-summary'>
 					<?php
 					// handle proper rendering of "read more"
 					$readMoreLink = Xml::openElement('span', array('class' => 'read-more')) .
@@ -36,7 +36,7 @@
 
 					echo $post['text'];
 					?>
-				</blockquote>
+				</div>
 			</li>
 <?php
 		}

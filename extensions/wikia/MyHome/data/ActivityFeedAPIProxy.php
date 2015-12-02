@@ -25,7 +25,7 @@ class ActivityFeedAPIProxy implements iAPIProxy {
 		$this->APIparams['rclimit'] = $limit;
 		$api = new ApiMain(new FauxRequest($this->APIparams));
 		$api->execute();
-		$res = &$api->GetResultData();
+		$res = $api->GetResultData();
 		$out = array();
 
 		if(isset($res['query']) && isset($res['query']['recentchanges'])) {

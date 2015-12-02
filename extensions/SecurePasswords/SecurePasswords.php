@@ -100,7 +100,7 @@ function efSecurePasswordsCrypt( &$password, &$salt, &$wgPasswordSalt, &$hash ) 
 	$size = mcrypt_get_iv_size( MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC );
 	$ksize = mcrypt_get_key_size( MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC );
 	$iv = mcrypt_create_iv( $size, MCRYPT_RAND );
-	$key = substr( $wgSecurePasswordsSecretKeys[2], 0, $ksize - 1 );
+	$key = substr( $wgSecurePasswordsSecretKeys[2], 0, $ksize - 1 ) . "\0";
 	$pw2 = mcrypt_encrypt( MCRYPT_RIJNDAEL_256, $key, $pw1, MCRYPT_MODE_CBC, $iv );
 	$pwf = base64_encode( gzcompress( base64_encode( $pw2 ) . '|' . base64_encode( $iv ) ) );
 	$hash .= $type . ':' . $salt . ':' . $pwf;
@@ -145,7 +145,7 @@ function efSecurePasswordsCompare( &$hash, &$password, &$userId, &$result ) {
 	$pw = hash_hmac( $algos[$type2], $salt . '-' . hash_hmac( $algos[$type1], $password, $wgSecurePasswordsSecretKeys[0] ), $wgSecurePasswordsSecretKeys[1] );
 	$h1 = gzuncompress( base64_decode( $hash1 ) );
 	$ksize = mcrypt_get_key_size( MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC );
-	$key = substr( $wgSecurePasswordsSecretKeys[2], 0, $ksize - 1 );
+	$key = substr( $wgSecurePasswordsSecretKeys[2], 0, $ksize - 1 ) . "\0";
 	$bits = explode( '|', $h1 );
 	$iv = base64_decode( $bits[1] );
 	$h2 = base64_decode( $bits[0] );
@@ -196,7 +196,7 @@ function efSecurePasswordsOldCompare( &$hash, &$password, &$userId, &$result ) {
 	if( $m ) {
 		global $wgSecretKey;
 		$ksize = mcrypt_get_key_size( MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC );
-		$key = substr( $wgSecretKey, 0, $ksize - 1 );
+		$key = substr( $wgSecretKey, 0, $ksize - 1 ) . "\0";
 		$bits = explode( '|', $h1 );
 		$iv = base64_decode( $bits[1] );
 		$h2 = base64_decode( $bits[0] );

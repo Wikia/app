@@ -372,8 +372,7 @@
 					var firstMenuValid = WikiHeader.firstMenuValidator(),
 						secondMenuValid = WikiHeader.secondMenuValidator(),
 						menuParseError = !!previewNode.find( 'nav > ul' ).attr( 'data-parse-errors' ),
-						errorMessages = [],
-						notifications = '';
+						errorMessages = [];
 
 					if ( menuParseError ) {
 						errorMessages.push( $.msg( 'oasis-navigation-v2-magic-word-validation' ) );
@@ -391,13 +390,13 @@
 
 					if ( errorMessages.length > 0 ) {
 						$( '#publish' ).remove();
-						// TODO: use mustache and promise pattern along with .getMessages
-						notifications =
-							'<div class="global-notification error">' +
-							'<div class="msg">' + errorMessages.join( '</br>' ) + '</div>' +
-							'</div>';
+						// TODO: use .getMessages
+						new window.BannerNotification(
+							errorMessages.join( '</br>' ),
+							'error',
+							$('.modalContent .ArticlePreview')
+						).show();
 
-						$( '.modalContent .ArticlePreview' ).prepend( notifications );
 					} else {
 						WikiHeader.editformSubmitAllowed = true;
 					}

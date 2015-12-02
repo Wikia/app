@@ -557,8 +557,9 @@ Administrator, kenž jo jen zastajił, jo toś tu pśicynu pódał: "$3".',
 # Login and logout pages
 'logouttext' => "'''Sy se něnto wótzjawił.'''
 
-Móžoš {{SITENAME}} anomymnje dalej wužywaś abo móžoš [[Special:UserLogin|se znowego pśizjawiś]] ako samski abo hynakšy wužywaŕ.
+Móžoš {{SITENAME}} anomymnje dalej wužywaś abo móžoš $1 ako samski abo hynakšy wužywaŕ.
 Źiwaj na to, až někotare boki se dalej tak zwobraznjuju ako by hyšći pśizjawjeny był, až njewuproznijoš cache swójego wobglědowaka.",
+'logouttext-link-text'       => 'se znowego pśizjawiś',
 'welcomecreation' => '== Witaj, $1! ==
 
 Twójo konto jo se załožyło. Njezabydni změniś swóje [[Special:Preferences|nastajenja {{SITENAME}}]].',
@@ -2009,7 +2010,7 @@ Glědaj teke [[Special:WantedCategories|póžedane kategorije]].',
 'linksearch-pat' => 'Pytański muster:',
 'linksearch-ns' => 'Mjenjowy rum:',
 'linksearch-ok' => 'Pytaś',
-'linksearch-text' => 'Jo móžno zastupne znamuška kaž "*.wikipedia.org" wužywaś. 
+'linksearch-text' => 'Jo móžno zastupne znamuška kaž "*.wikipedia.org" wužywaś.
 Jo nanejmjenjej głowna domena trěbna, na pśikład "*.org"<br />
 Pódpěrane protokole: <tt>$1</tt> (pšosym njepódaj je w swójom pytanju).',
 'linksearch-line' => '$1 wótkazany z $2',

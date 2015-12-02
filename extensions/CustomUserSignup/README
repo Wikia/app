@@ -1,8 +1,0 @@
-This extension lets you customize the messages seen in the user login process based on passing a "campaign" variable
-in to the Special:UserLogin page. 
-
-So, if you append "&campaign={campaign}" to the user login process, any message created in includes/templates/Userlogin.php can be
-overridden with MediaWiki:customusertemplate-{campaign}-{message}.
-
-ex: If you wanted to change the text seen at the end of the signup page (a message called 'signupend') for users signing up from
-the "foo" campaign, you would edit MediaWiki:customusertemplate-foo-signupend page, and this would be substituted

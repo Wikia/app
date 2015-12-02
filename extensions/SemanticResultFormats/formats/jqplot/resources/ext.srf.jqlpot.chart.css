@@ -1,0 +1,52 @@
+/**
+ * CSS for SRF jqplot module
+ * *
+ * @licence: GNU GPL v2 or later
+ * @author:  mwjames
+ *
+ * @release: 0.1
+ */
+.srf-jqplot-plot.tabs {
+	margin-bottom: 10px;
+}
+
+.srf-jqplot-text-adjust {
+ height: 10px;
+}
+
+.srf-jqplot-chart-adjust.tabs {
+ height: 20px;
+ width: 15px;
+}
+
+.srf-jqplot-table-adjust.tabs {
+ width: 20px;
+}
+
+.srf-jqplot-table-adjust.tabs.chrome {
+ width: 25px;
+}
+
+.srf-jqplot-table-adjust.tabs.firefox {
+ width: 35px;
+}
+
+.srf-jqplot-chart-text {
+	color:grey;
+	display:block;
+	position:relative;
+	font-size:90%;
+	margin-bottom: 10px;
+	margin-right: 10px;
+}
+
+.srf-jqplot-chart-text.tabs {
+	font-size:120%;
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+
+.srf-jqplot-chart-text.pie,
+.srf-jqplot-chart-text.donut {
+	margin-left: 10px;
+}

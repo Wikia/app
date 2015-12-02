@@ -466,7 +466,7 @@ Vinarliga fortel hetta fyri einum [[Special:ListUsers/sysop|administrator]], og 
 'unexpected' => 'Óvæntað virði: "$1"="$2".',
 'formerror' => 'Villa: Kundi ikki senda skránna.',
 'badarticleerror' => 'Hendan gerðin kann ikki fremjast á hesi síðu.',
-'cannotdelete' => 'Síðan ella fílan $1 kundi ikki strikast. 
+'cannotdelete' => 'Síðan ella fílan $1 kundi ikki strikast.
 Møguliga hevur onkur annar longu strikað hana.',
 'cannotdelete-title' => 'Kann ikki strika síðu "$1"',
 'badtitle' => 'Ógyldugt heiti',
@@ -508,8 +508,9 @@ Givin orsøk er "\'\'$2\'\'".',
 
 # Login and logout pages
 'logouttext' => "'''Tú hevur nú ritað út.'''
-Tú kanst halda fram at brúka {{SITENAME}} sum dulnevndur, ella kanst tú [[Special:UserLogin|logga á aftur]] sum sami ella sum annar brúkari. 
+Tú kanst halda fram at brúka {{SITENAME}} sum dulnevndur, ella kanst tú $1 sum sami ella sum annar brúkari.
 Legg til merkis, at summar síður framvegis vera vístar, sum um tú enn vart loggaður á, til tú hevur reinsa tín brovsara fyri \"cache\".",
+'logouttext-link-text'       => 'logga á aftur',
 'welcomecreation' => '== Vælkomin, $1! ==
 
 Tín konta er nú stovnað.
@@ -542,11 +543,11 @@ Gloym ikki at broyta tínar [[Special:Preferences|{{SITENAME}} innstillingar]].'
 Vinarliga vel eitt annað navn.',
 'loginerror' => 'Innritanarbrek',
 'createaccounterror' => 'Kundi ikki skapa kontu: $1',
-'nocookiesnew' => 'Brúkarakontan er nú gjørd, men tú ert ikki loggaður inn. 
+'nocookiesnew' => 'Brúkarakontan er nú gjørd, men tú ert ikki loggaður inn.
 {{SITENAME}} brúkar "cookies" fyri at innrita brúkarar.
 You hevur gjørt "cookies" óvirkið.
 Vinarliga ger "cookies" virkið á tínari teldu, rita síðan inn við tínum nýggja brúkaranavni og loyniorði.',
-'nocookieslogin' => '{{SITENAME}} brúkar cookies fyri at innrita brúkarar. 
+'nocookieslogin' => '{{SITENAME}} brúkar cookies fyri at innrita brúkarar.
 Tú hevur gjørt cookies óvirkið.
 Vinarliga ger tað virkið og royn aftur.',
 'nocookiesfornew' => 'Brúkarakontan var ikki upprættað, tí vit kundu ikki staðfesta kelduna.
@@ -554,7 +555,7 @@ Tryggja tær, at cookies eru virknar á tínari teldu, dagfør (reload) hesa sí
 'noname' => 'Tú hevur ikki skrivað eitt gyldugt brúkaranavn.',
 'loginsuccesstitle' => 'Innritan væleydnað',
 'loginsuccess' => "'''Tú hevur nú ritað inn í {{SITENAME}} sum \"\$1\".'''",
-'nosuchuser' => 'Eingin brúkari er við navninum "$1". 
+'nosuchuser' => 'Eingin brúkari er við navninum "$1".
 Brúkaranøvn eru følsom fyri stórum og lítlum bókstavum.
 Eftirkanna um tú hevur stavað rætt, ella [[Special:UserLogin/signup|stovna eina nýggja konto]].',
 'nosuchusershort' => 'Eingin brúkari er við navninum "$1". Kanna stavseting.',
@@ -567,11 +568,11 @@ Eftirkanna um tú hevur stavað rætt, ella [[Special:UserLogin/signup|stovna ei
 'password-login-forbidden' => 'Tað er ikki loyvt at brúka hetta brúkaranavnið og loyniorðið.',
 'mailmypassword' => 'Send mær eitt nýtt loyniorð við t-posti',
 'passwordremindertitle' => 'Nýtt fyribils loyniorð fyri {{SITENAME}}',
-'passwordremindertext' => 'Onkur (óivað tú, frá IP adressu $1) hevur umbiðið eitt nýtt loyniorð fyri {{SITENAME}}  $4. Eitt fyribils loyniorð fyri brúkara "$2" er nú gjørt og er sent til "$3". Um hetta var tað tú vildi, so mást tú rita inn og velja eitt nýtt loyniorð nú. 
+'passwordremindertext' => 'Onkur (óivað tú, frá IP adressu $1) hevur umbiðið eitt nýtt loyniorð fyri {{SITENAME}}  $4. Eitt fyribils loyniorð fyri brúkara "$2" er nú gjørt og er sent til "$3". Um hetta var tað tú vildi, so mást tú rita inn og velja eitt nýtt loyniorð nú.
 Títt fyribils loyniorð gongur út um {{PLURAL:$5|ein dag|$5 dagar}}.
 
 
-Um onkur annar hevur sent hesa umbønina, ella um tú nú minnist títt loyniorð, 
+Um onkur annar hevur sent hesa umbønina, ella um tú nú minnist títt loyniorð,
 og tú ikki longur ynskir at broyta tað, so skal tú síggja burtur frá hesum boðunum og halda fram við at brúka títt gamla loyniorð.',
 'noemail' => 'Tað er ongin t-post adressa skrásett fyri brúkara "$1".',
 'noemailcreate' => 'Tú mást geva eina galdandi t-post adressu',
@@ -649,8 +650,8 @@ sett í samband við hesa t-post adressu:
 $2
 
 {{PLURAL:$3|Hetta fyribils loyniorðið|Hesi fyribils loyniorðini}} ganga út um {{PLURAL:$5|ein dag|$5 dagar}}.
-Tú eigur at rita inn og velja eitt nýtt loyniorð nú. Um onkur annar hevur gjørt hesa 
-umbønina, ella um tú ert komin í tankar um títt uppruna loyniorð, og tú ikki longur 
+Tú eigur at rita inn og velja eitt nýtt loyniorð nú. Um onkur annar hevur gjørt hesa
+umbønina, ella um tú ert komin í tankar um títt uppruna loyniorð, og tú ikki longur
 ynskir at broyta tað, so kanst tú síggja burtur frá hesum boðum og halda fram at brúka títt gamla loyniorð.',
 'passwordreset-emailtext-user' => 'Brúkari $1 á {{SITENAME}} hevur biðið um eina áminning av tínum konto upplýsingum fyri {{SITENAME}}
 ($4). Fylgjandi brúkara {{PLURAL:$3|konta er|kontur eru}} settar í samband við hesa t-post adressuna:
@@ -658,8 +659,8 @@ ynskir at broyta tað, so kanst tú síggja burtur frá hesum boðum og halda fr
 $2
 
 {{PLURAL:$3|Hetta fyribils loyniorðið|Hesi fyribils loyniorðini}} ganga út um {{PLURAL:$5|ein dag|$5 dagar}}.
-Tú eigur at rita inn og velja eitt nýtt loyniorð nú. Um onkur annar hevur gjørt hesa 
-umbønina, ella um tú ert komin í tankar um títt uppruna loyniorð, og tú ikki longur 
+Tú eigur at rita inn og velja eitt nýtt loyniorð nú. Um onkur annar hevur gjørt hesa
+umbønina, ella um tú ert komin í tankar um títt uppruna loyniorð, og tú ikki longur
 ynskir at broyta tað, so kanst tú síggja burtur frá hesum boðum og halda fram at brúka títt gamla loyniorð.',
 'passwordreset-emailelement' => 'Brúkaranavn: $1
 Fyribils loyniorð: $2',
@@ -737,7 +738,7 @@ Vinarliga tak allir hesir upplýsingar við í einum hvørjum fyrispurningi ið 
 'confirmedittext' => 'Tú mást vátta tína teldupost adressu áðrenn tú rættar síður.
 Vinarliga skriva og vátta tína t-post adressu í tínum [[Special:Preferences|brúkara innstillingum]].',
 'nosuchsectiontitle' => 'Kann ikki finna brotið',
-'nosuchsectiontext' => 'Tú royndi at rætta eitt brot sum ikki er til. 
+'nosuchsectiontext' => 'Tú royndi at rætta eitt brot sum ikki er til.
 Tað kann vera flutt ella blivið strikað meðan tú hevur hugt at síðuni.',
 'loginreqtitle' => 'Innritan kravd',
 'loginreqlink' => 'rita inn',
@@ -749,7 +750,7 @@ Loyniorðið fyri hesa nýggju kontuna kann verða broytt á ''[[Special:ChangeP
 'newarticletext' => "Tú ert komin eftir eini slóð til eina síðu, ið ikki er til enn. Skriva í kassan niðanfyri, um tú vilt byrja uppá hesa síðuna.
 (Sí [[{{MediaWiki:Helppage}}|hjálparsíðuna]] um tú ynskir fleiri upplýsingar).
 Ert tú komin higar av einum mistaki, kanst tú trýsta á '''aftur'''-knøttin á kagaranum.",
-'anontalkpagetext' => "----''Hetta er ein kjaksíða hjá einum dulnevndum brúkara, sum ikki hevur stovnað eina kontu enn, ella ikki brúkar hana. 
+'anontalkpagetext' => "----''Hetta er ein kjaksíða hjá einum dulnevndum brúkara, sum ikki hevur stovnað eina kontu enn, ella ikki brúkar hana.
 Tí noyðast vit at brúka nummerisku IP-adressuna hjá honum ella henni.
 Ein slík IP-adressa kann verða brúkt av fleiri brúkarum.
 Ert tú ein dulnevndur brúkari, og meinar, at óviðkomandi viðmerkingar eru vendar til tín, so er best fyri teg at [[Special:UserLogin/signup|stovna eina kontu]] ella [[Special:UserLogin|rita inn]] fyri at sleppa undan samanblanding við aðrar dulnevndar brúkarar í framtíðini.''",
@@ -758,7 +759,7 @@ Tú kanst [[Special:Search/{{PAGENAME}}|leita eftir hesum síðu heitinum]] á �
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} leita í líknandi loggum],
 ella [{{fullurl:{{FULLPAGENAME}}|action=edit}} rætta hesa síðu]</span>.',
 'noarticletext-nopermission' => 'Tað er í løtuni ongin tekstur á hesi síðu.
-Tú kanst [[Special:Search/{{PAGENAME}}|leita eftir hesum síðu heiti]] á øðrum siðum, 
+Tú kanst [[Special:Search/{{PAGENAME}}|leita eftir hesum síðu heiti]] á øðrum siðum,
 ella <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} síggja viðkomandi logglistar]</span>.',
 'userpage-userdoesnotexist' => 'Brúkarakontan "$1" er ikki skrásett.
 Vinarliga umhugsa um tú ynskir at upprætta/rætta hesa síðu.',
@@ -816,7 +817,7 @@ Við at senda arbeiði títt inn, lovar tú, at tú hevur skrivað tað, ella at
 '''SEND IKKI UPPHAVSRÆTTARVART TILFAR UTTAN LOYVI!'''",
 'copyrightwarning2' => "Vinarliga legg til merkis at øll íkøst til {{SITENAME}} kunnu rættast í, verða broytt, ella flutt av øðrum skrivarum.
 Um tú ikki ynskir at tín skriving verður broytt miskunnarleyst, so skal tú ikki skriva nakað her.<br />
-Tú lovar okkum eisini, at tú sjálv/ur hevur skrivað hetta, ella at tú hevur avritað tað frá keldu sum er almenn ogn (public domain) ella frá líkandi fríum keldum (sí $1 fyri nærri upplýsingar). 
+Tú lovar okkum eisini, at tú sjálv/ur hevur skrivað hetta, ella at tú hevur avritað tað frá keldu sum er almenn ogn (public domain) ella frá líkandi fríum keldum (sí $1 fyri nærri upplýsingar).
 '''Tú mást ikki senda tilfar inn, sum er vart av upphavsrætti, uttan so at tú hevur fingið loyvi til tað!'''",
 'longpageerror' => "'''Feilur: Teksturin sum tú hevur sent inn er $1 kilobytes (kB) langur, sum er størri enn mest loyvda sum er $2 kilobytes.'''
 Teksturin kann tí ikki verða goymdur.",
@@ -850,10 +851,10 @@ Tað sær út til at hon er blivin strikað.',
 Síðan er longu til.',
 
 # Parser/template warnings
-'post-expand-template-inclusion-warning' => "'''Ávaring:''' Tað eru ov nógvar skabilónir á hesi síðu. 
+'post-expand-template-inclusion-warning' => "'''Ávaring:''' Tað eru ov nógvar skabilónir á hesi síðu.
 Nakrar skabilónir vera ikki vístar.",
 'post-expand-template-inclusion-category' => 'Síður sum innihalda ov nógvar skabilónir',
-'post-expand-template-argument-warning' => "'''Ávaring:''' Henda síðan inniheldur í minsta lagi eitt skabilón parametur (template argument), sum fyllir meira enn loyvdu støddina. 
+'post-expand-template-argument-warning' => "'''Ávaring:''' Henda síðan inniheldur í minsta lagi eitt skabilón parametur (template argument), sum fyllir meira enn loyvdu støddina.
 Hetta parametur er tí ikki tikið við.",
 'post-expand-template-argument-category' => 'Síður har skabilón parametur (template arguments) ikki eru tikin við',
 
@@ -899,7 +900,7 @@ $3 sigur orsøkina vera ''$2''",
 'history-feed-title' => 'Versjónssøga',
 'history-feed-description' => 'Versjónssøgan fyri hesa síðu á hesum wiki',
 'history-feed-item-nocomment' => '$1 hin $2',
-'history-feed-empty' => 'Umbidnað síðan er ikki til. 
+'history-feed-empty' => 'Umbidnað síðan er ikki til.
 Møguliga er hon blivin strikað frá wikinum, ella hevur fingið annað navn.
 Royn [[Special:Search|leiting á wiki]] fyri at síggja viðkomandi níggjar síður.',
 
@@ -1134,7 +1135,7 @@ Legg til merkis, at teirra innihaldsyvirlit av {{SITENAME}} kann vera gamalt og 
 'prefs-help-realname' => 'Veruligt navn er valfrítt.
 Um tú velur at skriva tað her, so verður tað nýtt til at geva tær æruna fyri títt arbeiði.',
 'prefs-help-email' => 'Tú velur sjálvur, um tú vil skriva tína t-post adressu her, men tað er brúk fyri henni til at nullstilla loyniorðið, um tað skuldi hent, at tú gloymir títt loyniorð.',
-'prefs-help-email-others' => 'Tú kanst eisini velja at lata onnur seta seg í samband við teg við telduposti gjøgnum eina leinkju á tínari brúkara ella kjak síðu. 
+'prefs-help-email-others' => 'Tú kanst eisini velja at lata onnur seta seg í samband við teg við telduposti gjøgnum eina leinkju á tínari brúkara ella kjak síðu.
 Tín t-post adressa verður ikki avdúkað, tá aðrir brúkarir seta seg í samband við teg.',
 'prefs-help-email-required' => 'T-post adressa er kravd.',
 'prefs-info' => 'Grundleggjandi kunning',
@@ -1298,7 +1299,7 @@ fyri at leggja fílur upp.',
 'upload-prohibited' => 'Ikki loyvd fílu sløg: $1.',
 'uploadlog' => 'fílu logg',
 'uploadlogpage' => 'Fílugerðabók',
-'uploadlogpagetext' => 'Her niðanfyri er ein listi við seinast uppløgdu fílum. 
+'uploadlogpagetext' => 'Her niðanfyri er ein listi við seinast uppløgdu fílum.
 Sí [[Special:NewFiles|myndasavn av nýggjum fílum]] fyri at fáa eitt meira visuelt yvirlit.',
 'filename' => 'Fílunavn',
 'filedesc' => 'Samandráttur',
@@ -1945,7 +1946,7 @@ Vinarliga vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] o
 'bydate' => 'eftir dato',
 
 # Bad image list
-'bad_image_list' => 'Støddin er soleiðis: 
+'bad_image_list' => 'Støddin er soleiðis:
 
 Bert innihaldið av listum (linjur sum byrja við *) verða brúkt.
 Fyrsta slóðin á linjuni má vera ein leinkja til eina óynskta mynd.
@@ -1953,7 +1954,7 @@ Fylgjandi slóðir á somu linju eru undantøk, tvs. síður har fílan kann fyr
 
 # Metadata
 'metadata' => 'Metadáta',
-'metadata-help' => 'Henda fíla inniheldur meiri kunning, sum oftast frá talgilta myndatólinum ella skannaranum, sum tú hevur brúkt til at skapa ella talgilda myndina. 
+'metadata-help' => 'Henda fíla inniheldur meiri kunning, sum oftast frá talgilta myndatólinum ella skannaranum, sum tú hevur brúkt til at skapa ella talgilda myndina.
 Um fílan er blivin broytt síðan upprunastøðuna, so kunnu nakrir upplýsingar hvørva.',
 'metadata-fields' => 'Mynda metadáta teigar sum eru listaðir í hesum boðunum verða víst á myndasíðuni tá metadáta talvan er er klappað saman.
 Onnur metadáta verða fjald sum standard.
@@ -2002,7 +2003,7 @@ tú trýsta á fylgjandi slóð í tínum kagara:
 
 $3
 
-Um tað *ikki* var tú sum stovnaði kontuna, fylg so hesi slóðini fyri at avlýsa t-post váttanina: 
+Um tað *ikki* var tú sum stovnaði kontuna, fylg so hesi slóðini fyri at avlýsa t-post váttanina:
 
 $5
 

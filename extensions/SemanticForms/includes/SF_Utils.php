@@ -12,9 +12,10 @@ class SFUtils {
 	/**
 	 * Creates a link to a special page, using that page's top-level description as the link text.
 	 */
-	public static function linkForSpecialPage( $skin, $specialPageName ) {
-		$specialPage = SpecialPage::getPage( $specialPageName );
-		return $skin->link( $specialPage->getTitle(), $specialPage->getDescription() );
+	public static function linkForSpecialPage( $specialPageName ) {
+		$specialPage = SpecialPageFactory::getPage( $specialPageName );
+		return Linker::link( $specialPage->getTitle(),
+			htmlspecialchars( $specialPage->getDescription() ) );
 	}
 
 	/**
@@ -53,47 +54,73 @@ class SFUtils {
 	}
 
 	/**
-	 * Helper function to handle getPropertyValues() in both SMW 1.6
-	 * and earlier versions.
+	 * Gets the text contents of a page with the passed-in Title object.
+	 */
+	public static function getPageText( $title ) {
+		if ( method_exists( 'WikiPage', 'getContent' ) ) {
+			// MW 1.21+
+			$wikiPage = new WikiPage( $title );
+			$content = $wikiPage->getContent();
+
+			if ( $content !== null ) {
+				return $content->getNativeData();
+			} else {
+				return null;
+			}
+		} else {
+			// MW <= 1.20
+			$article = new Article( $title );
+			return $article->getContent();
+		}
+	}
+
+	/**
+	 * Helper function to get the SMW data store for different versions
+	 * of SMW.
+	 */
+	public static function getSMWStore() {
+		if ( class_exists( '\SMW\StoreFactory' ) ) {
+			// SMW 1.9+
+			return \SMW\StoreFactory::getStore();
+		} elseif ( function_exists( 'smwfGetStore' ) ) {
+			return smwfGetStore();
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * Helper function to handle getPropertyValues().
 	 */
 	public static function getSMWPropertyValues( $store, $subject, $propID, $requestOptions = null ) {
-		// SMWDIProperty was added in SMW 1.6
-		if ( class_exists( 'SMWDIProperty' ) ) {
-			if ( is_null( $subject ) ) {
-				$page = null;
-			} else {
-				$page = SMWDIWikiPage::newFromTitle( $subject );
-			}
-			$property = SMWDIProperty::newFromUserLabel( $propID );
-			$res = $store->getPropertyValues( $page, $property, $requestOptions );
-			$values = array();
-			foreach ( $res as $value ) {
-				if ( $value instanceof SMWDIUri ) {
-					$values[] = $value->getURI();
-				} else {
-					// getSortKey() seems to return the
-					// correct value for all the other
-					// data types.
-					$values[] = str_replace( '_', ' ', $value->getSortKey() );
-				}
-			}
-			return $values;
-		} else {
-			$property = SMWPropertyValue::makeProperty( $propID );
-			$res = $store->getPropertyValues( $subject, $property, $requestOptions );
-			$values = array();
-			foreach ( $res as $value ) {
-				if ( method_exists( $value, 'getTitle' ) ) {
-					$valueTitle = $value->getTitle();
-					if ( !is_null( $valueTitle ) ) {
-						$values[] = $valueTitle->getText();
-					}
-				} else {
-					$values[] = str_replace( '_' , ' ', $value->getWikiValue() );
-				}
-			}
-			return array_unique( $values );
+		// If SMW is not installed, exit out.
+		if ( !class_exists( 'SMWDIWikiPage' ) ) {
+			return array();
 		}
+		if ( is_null( $subject ) ) {
+			$page = null;
+		} else {
+			$page = SMWDIWikiPage::newFromTitle( $subject );
+		}
+		$property = SMWDIProperty::newFromUserLabel( $propID );
+		$res = $store->getPropertyValues( $page, $property, $requestOptions );
+		$values = array();
+		foreach ( $res as $value ) {
+			if ( $value instanceof SMWDIUri ) {
+				$values[] = $value->getURI();
+			} elseif ( $value instanceof SMWDIWikiPage ) {
+				$realValue = str_replace( '_', ' ', $value->getDBKey() );
+				if ( $value->getNamespace() != 0 ) {
+					$realValue = MWNamespace::getCanonicalName($value->getNamespace()) . ":$realValue";
+				}
+				$values[] = $realValue;
+			} else {
+				// getSortKey() seems to return the correct
+				// value for all the other data types.
+				$values[] = str_replace( '_', ' ', $value->getSortKey() );
+			}
+		}
+		return $values;
 	}
 	/**
 	 * Helper function - gets names of categories for a page;
@@ -121,7 +148,7 @@ class SFUtils {
 		);
 		if ( $db->numRows( $res ) > 0 ) {
 			while ( $row = $db->fetchRow( $res ) ) {
-				$categories[] = $row[0];
+				$categories[] = $row['cl_to'];
 			}
 		}
 		$db->freeResult( $res );
@@ -221,7 +248,8 @@ END;
 		$form_body .= Html::hidden( 'wpSummary', $edit_summary );
 		$form_body .= Html::hidden( 'wpStarttime', $start_time );
 		$form_body .= Html::hidden( 'wpEdittime', $edit_time );
-		$form_body .= Html::hidden( 'wpEditToken', $wgUser->isLoggedIn() ? $wgUser->editToken() : EDIT_TOKEN_SUFFIX );
+
+		$form_body .= Html::hidden( 'wpEditToken', $wgUser->isLoggedIn() ? $wgUser->getEditToken() : EDIT_TOKEN_SUFFIX );
 		$form_body .= Html::hidden( $action, null );
 
 		if ( $is_minor_edit ) {
@@ -254,21 +282,15 @@ END;
 	}
 
 	/**
-	 * Javascript files to be added outside of the ResourceLoader.
+	 * Javascript files to be added outside of the ResourceLoader -
+	 * by default, there are none.
 	 */
 	public static function addJavascriptFiles( $parser ) {
-		global $wgOut, $wgFCKEditorDir, $wgScriptPath, $wgJsMimeType;
+		global $wgOut, $wgJsMimeType;
 
 		$scripts = array();
 
 		wfRunHooks( 'sfAddJavascriptFiles', array( &$scripts ) );
-
-		// The FCKeditor extension has no defined ResourceLoader
-		// modules yet, so we have to call the scripts directly.
-		// @TODO Move this code into the FCKeditor extension.
-		if ( $wgFCKEditorDir && class_exists( 'FCKEditor' ) ) {
-			$scripts[] = "$wgScriptPath/$wgFCKEditorDir/fckeditor.js";
-		}
 
 		foreach ( $scripts as $js ) {
 			if ( $parser ) {
@@ -296,16 +318,20 @@ END;
 			$output = $wgOut;
 		} else {
 			$output = $parser->getOutput();
-			self::addJavascriptFiles( $parser );
 		}
 
 		$output->addModules( 'ext.semanticforms.main' );
 		$output->addModules( 'ext.semanticforms.fancybox' );
+		$output->addModules( 'ext.semanticforms.dynatree' );
 		$output->addModules( 'ext.semanticforms.imagepreview' );
 		$output->addModules( 'ext.semanticforms.autogrow' );
 		$output->addModules( 'ext.semanticforms.submit' );
+		$output->addModules( 'ext.semanticforms.checkboxes' );
+		$output->addModules( 'ext.semanticforms.select2' );
 		$output->addModules( 'ext.smw.tooltips' );
 		$output->addModules( 'ext.smw.sorttable' );
+
+		self::addJavascriptFiles( $parser );
 	}
 
 	/**
@@ -339,7 +365,7 @@ END;
 		foreach ( $form_names as $form_name ) {
 			$select_body .= "\t" . Html::element( 'option', null, $form_name ) . "\n";
 		}
-		return "\t" . Html::rawElement( 'label', array( 'for' => 'formSelector' ), $form_label . wfMsg( 'colon-separator' ) ) . "\n" . Html::rawElement( 'select', array( 'id' => 'formSelector', 'name' => 'form' ), $select_body ) . "\n";
+		return "\t" . Html::rawElement( 'label', array( 'for' => 'formSelector' ), $form_label . wfMessage( 'colon-separator' )->escaped() ) . "\n" . Html::rawElement( 'select', array( 'id' => 'formSelector', 'name' => 'form' ), $select_body ) . "\n";
 	}
 
 	/**
@@ -351,11 +377,36 @@ END;
 	public static function getAllValuesForProperty( $property_name ) {
 		global $sfgMaxAutocompleteValues;
 
-		$store = smwfGetStore();
+		$store = SFUtils::getSMWStore();
+		if ( $store == null ) {
+			return array();
+		}
 		$requestoptions = new SMWRequestOptions();
 		$requestoptions->limit = $sfgMaxAutocompleteValues;
 		$values = self::getSMWPropertyValues( $store, null, $property_name, $requestoptions );
 		sort( $values );
+		return $values;
+	}
+
+	/**
+	 * Used with the Cargo extension
+	 */
+	public static function getAllValuesForCargoField( $tableName, $fieldName ) {
+		$limitStr = 200;
+		$sqlQuery = CargoSQLQuery::newFromValues( $tableName, $fieldName, $whereStr = null, $joinOnStr = null, $fieldName, $havingStr = null, $fieldName, $limitStr );
+		$queryResults = $sqlQuery->run();
+		$values = array();
+		// Field names starting with a '_' are special fields -
+		// all other fields will have had their underscores
+		// replaced with spaces in $queryResults.
+		if ( $fieldName[0] == '_' ) {
+			$fieldAlias = $fieldName;
+		} else {
+			$fieldAlias = str_replace( '_', ' ', $fieldName );
+		}
+		foreach ( $queryResults as $row ) {
+			$values[] = $row[$fieldAlias];
+		}
 		return $values;
 	}
 
@@ -390,26 +441,33 @@ END;
 					'SORT BY cl_sortkey' );
 				if ( $res ) {
 					while ( $res && $row = $db->fetchRow( $res ) ) {
-						if ( array_key_exists( 'page_title', $row ) ) {
-							$page_namespace = $row['page_namespace'];
-							if ( $page_namespace == NS_CATEGORY ) {
-								$new_category = $row[ 'page_title' ];
-								if ( !in_array( $new_category, $categories ) ) {
-									$newcategories[] = $new_category;
-								}
-							} else {
-								$cur_title = Title::makeTitleSafe( $row['page_namespace'], $row['page_title'] );
-								$cur_value = self::titleString( $cur_title );
-								if ( ! in_array( $cur_value, $pages ) ) {
-									$pages[] = $cur_value;
-								}
-								// return if we've reached the maximum number of allowed values
-								if ( count( $pages ) > $sfgMaxAutocompleteValues ) {
-									// Remove duplicates, and put in alphabetical order.
-									$pages = array_unique( $pages );
-									sort( $pages );
-									return $pages;
-								}
+						if ( !array_key_exists( 'page_title', $row ) ) {
+							continue;
+						}
+						$page_namespace = $row['page_namespace'];
+						$page_name = $row[ 'page_title' ];
+						if ( $page_namespace == NS_CATEGORY ) {
+							if ( !in_array( $page_name, $categories ) ) {
+								$newcategories[] = $page_name;
+							}
+						} else {
+							$cur_title = Title::makeTitleSafe( $page_namespace, $page_name );
+							if ( is_null( $cur_title ) ) {
+								// This can happen if it's
+								// a "phantom" page, in a
+								// namespace that no longer exists.
+								continue;
+							}
+							$cur_value = self::titleString( $cur_title );
+							if ( ! in_array( $cur_value, $pages ) ) {
+								$pages[] = $cur_value;
+							}
+							// return if we've reached the maximum number of allowed values
+							if ( count( $pages ) > $sfgMaxAutocompleteValues ) {
+								// Remove duplicates, and put in alphabetical order.
+								$pages = array_unique( $pages );
+								sort( $pages );
+								return $pages;
 							}
 						}
 					}
@@ -432,27 +490,27 @@ END;
 		return $pages;
 	}
 
-	public static function getAllPagesForConcept( $concept_name, $substring = null ) {
+	public static function getAllPagesForConcept( $conceptName, $substring = null ) {
 		global $sfgMaxAutocompleteValues, $sfgAutocompleteOnAllChars;
 
-		$store = smwfGetStore();
+		$store = SFUtils::getSMWStore();
+		if ( $store == null ) {
+			return array();
+		}
 
-		$concept = Title::makeTitleSafe( SMW_NS_CONCEPT, $concept_name );
+		$conceptTitle = Title::makeTitleSafe( SMW_NS_CONCEPT, $conceptName );
 
 		if ( !is_null( $substring ) ) {
 			$substring = strtolower( $substring );
 		}
 
-		// Escape if there's a problem.
-		if ( $concept == null ) {
-			return array();
+		// Escape if there's no such concept.
+		if ( $conceptTitle == null || !$conceptTitle->exists() ) {
+			return "Could not find concept: $conceptName";
 		}
 
-		if ( class_exists( 'SMWDIWikiPage' ) ) {
-			// SMW 1.6
-			$concept = SMWDIWikiPage::newFromTitle( $concept );
-		}
-		$desc = new SMWConceptDescription( $concept );
+		$conceptDI = SMWDIWikiPage::newFromTitle( $conceptTitle );
+		$desc = new SMWConceptDescription( $conceptDI );
 		$printout = new SMWPrintRequest( SMWPrintRequest::PRINT_THIS, "" );
 		$desc->addPrintRequest( $printout );
 		$query = new SMWQuery( $desc );
@@ -517,7 +575,7 @@ END;
 		}
 
 		if ( is_null( $matchingNamespaceCode ) ) {
-			return array();
+			return "Could not find namespace: $namespace_name";
 		}
 
 		$db = wfGetDB( DB_SLAVE );
@@ -551,7 +609,12 @@ END;
 
 		// The query depends on whether this is a property, category,
 		// concept or namespace.
-		if ( $source_type == 'property' ) {
+		if ( $source_type == 'cargo field' ) {
+			list( $table_name, $field_name ) = explode( '|', $source_name, 2 );
+			$names_array = self::getAllValuesForCargoField( $table_name, $field_name );
+			// Remove blank/null values from the array.
+			$names_array = array_values( array_filter( $names_array ) );
+		} elseif ( $source_type == 'property' ) {
 			$names_array = self::getAllValuesForProperty( $source_name );
 		} elseif ( $source_type == 'category' ) {
 			$names_array = self::getAllPagesForCategory( $source_name, 10 );
@@ -576,16 +639,113 @@ END;
 		}
 	}
 
+	/**
+	 * Helper function to get an array of labels from an array of values
+	 * given a mapping template.
+	 */
+	public static function getLabels( $values, $templateName ) {
+		global $wgParser;
+		$labels = array();
+		$title = Title::makeTitleSafe( NS_TEMPLATE, $templateName );
+		$templateExists = $title->exists();
+		foreach ( $values as $value ) {
+			if ( $templateExists ) {
+				$label = $wgParser->recursiveTagParse( '{{' . $templateName .
+					'|' . $value . '}}' );
+				if ( $label == '' ) {
+					$labels[$value] = $value;
+				} else {
+					$labels[$value] = $label;
+				}
+			} else {
+				$labels[$value] = $value;
+			}
+		}
+		asort($labels);
+		if ( count( $labels ) == count( array_unique( $labels ) ) ) {
+			return $labels;
+		}
+		$fixed_labels = array();
+		foreach ( $labels as $value => $label ) {
+			$fixed_labels[$value] = $labels[$value];
+		}
+		$counts = array_count_values( $fixed_labels );
+		foreach ( $counts as $current_label => $count ) {
+			if ( $count > 1 ) {
+				$matching_keys = array_keys( $labels, $current_label );
+				foreach ( $matching_keys as $key ) {
+					$fixed_labels[$key] .= ' (' . $key . ')';
+				}
+			}
+		}
+		if ( count( $fixed_labels ) == count( array_unique( $fixed_labels ) ) ) {
+			return $fixed_labels;
+		}
+		foreach ( $labels as $value => $label ) {
+			$labels[$value] .= ' (' . $value . ')';
+		}
+		return $labels;
+	}
+
+	/**
+	 * Helper function to use mapping template to turn label back into value
+	 */
+	public static function labelToValue( $label, $possible_values, $templateName ) {
+		$value = array_search( $label, $possible_values );
+		if ( $value === false ) {
+			return $label;
+		} else {
+			return $value;
+		}
+	}
+
+	/**
+	 * Helper function to map the current value with the mapping template, if the mapping template is set
+	 */
+	public static function valuesToLabels( $valueString, $templateName, $delimiter, $possible_values ) {
+		if ( !is_null($delimiter ) ) {
+			$values = array_map( 'trim', explode( $delimiter, $valueString ) );
+		} else {
+			$values = array( $valueString );
+		}
+		$labels = array();
+		foreach ( $values as $value ) {
+			if ( $value != '' ) {
+				if ( array_key_exists( $value, $possible_values ) ) {
+					$labels[] = $possible_values[$value];
+				} else {
+					$labels[] = $value;
+				}
+			}
+		}
+		if ( count( $labels ) > 1 ) {
+			return $labels;
+		} else {
+			return $labels[0];
+		}
+	}
+
 	public static function getValuesFromExternalURL( $external_url_alias, $substring ) {
 		global $sfgAutocompletionURLs;
-		if ( empty( $sfgAutocompletionURLs ) ) return array();
+		if ( empty( $sfgAutocompletionURLs ) ) {
+			return "No external URLs are specified for autocompletion on this wiki";
+		}
+		if ( ! array_key_exists( $external_url_alias, $sfgAutocompletionURLs ) ) {
+			return "Invalid external URL value";
+		}
 		$url = $sfgAutocompletionURLs[$external_url_alias];
-		if ( empty( $url ) ) return array();
-		$url = str_replace( '<substr>', $substring, $url );
+		if ( empty( $url ) ) {
+			return "Blank external URL value";
+		}
+		$url = str_replace( '<substr>', urlencode( $substring ), $url );
 		$page_contents = Http::get( $url );
-		if ( empty( $page_contents ) ) return array();
+		if ( empty( $page_contents ) ) {
+			return "External page contains no contents";
+		}
 		$data = json_decode( $page_contents );
-		if ( empty( $data ) ) return array();
+		if ( empty( $data ) ) {
+			return "Could not parse JSON in external page";
+		}
 		$return_values = array();
 		foreach ( $data->sfautocomplete as $val ) {
 			$return_values[] = (array)$val;
@@ -598,6 +758,42 @@ END;
 	 */
 	public static function convertBackToPipes( $s ) {
 		return str_replace( "\1", '|', $s );
+	}
+
+	/**
+	 * Splits the contents of a tag in a form definition based on pipes,
+	 * but does not split on pipes that are contained within additional
+	 * curly brackets, in case the tag contains any calls to parser
+	 * functions or templates.
+	 */
+	static function smartSplitFormTag( $string ) {
+		if ( $string == '' ) {
+			return array();
+		}
+
+		$delimiter = '|';
+		$returnValues = array();
+		$numOpenCurlyBrackets = 0;
+		$curReturnValue = '';
+
+		for ( $i = 0; $i < strlen( $string ); $i++ ) {
+			$curChar = $string{$i};
+			if ( $curChar == '{' ) {
+				$numOpenCurlyBrackets++;
+			} elseif ( $curChar == '}' ) {
+				$numOpenCurlyBrackets--;
+			}
+
+			if ( $curChar == $delimiter && $numOpenCurlyBrackets == 0 ) {
+				$returnValues[] = trim( $curReturnValue );
+				$curReturnValue = '';
+			} else {
+				$curReturnValue .= $curChar;
+			}
+		}
+		$returnValues[] = trim( $curReturnValue );
+
+		return $returnValues;
 	}
 
 	/**
@@ -614,7 +810,7 @@ END;
 		while ( preg_match( $pattern, $str, $matches ) ) {
 			$str = preg_replace( $pattern, "$1" . "\1" . "$2", $str );
 		}
-		return array_map( array( 'SFUtils', 'convertBackToPipes' ), explode( '|', $str ) );
+		return array_map( array( 'SFUtils', 'convertBackToPipes' ), self::smartSplitFormTag( $str ) );
 	}
 
 	/**
@@ -623,7 +819,7 @@ END;
 	 */
 	public static function getWordForYesOrNo( $isYes ) {
 		$wordsMsg = ( $isYes ) ? 'smw_true_words' : 'smw_false_words';
-		$possibleWords = explode( ',', wfMsgForContent( $wordsMsg ) );
+		$possibleWords = explode( ',', wfMessage( $wordsMsg )->inContentLanguage()->text() );
 		// Get the value in the series that tends to be "yes" or "no" -
 		// generally, that's the third word.
 		$preferredIndex = 2;
@@ -696,42 +892,48 @@ END;
 	}
 
 	public static function addToAdminLinks( &$admin_links_tree ) {
-		$data_structure_label = wfMsg( 'smw_adminlinks_datastructure' );
+		$data_structure_label = wfMessage( 'smw_adminlinks_datastructure' )->text();
 		$data_structure_section = $admin_links_tree->getSection( $data_structure_label );
 		if ( is_null( $data_structure_section ) ) {
-			return true;
+			$data_structure_section = new ALSection( wfMessage( 'sf-adminlinks-datastructure' )->text() );
+
+			// If we are here, it most likely means that SMW is
+			// not installed. Still, we'll refer to everything as
+			// SMW, to make the rest of the code more
+			// straightforward.
+			$smw_row = new ALRow( 'smw' );
+			$smw_row->addItem( ALItem::newFromSpecialPage( 'Categories' ) );
+			$data_structure_section->addRow( $smw_row );
+			$smw_admin_row = new ALRow( 'smw_admin' );
+			$data_structure_section->addRow( $smw_admin_row );
+
+			// If SMW is not installed, don't bother with a "links
+			// to the documentation" row - it would only have one
+			// link.
+			//$smw_docu_row = new ALRow( 'smw_docu' );
+			//$data_structure_section->addRow( $smw_docu_row );
+			$admin_links_tree->addSection( $data_structure_section, wfMessage( 'adminlinks_browsesearch' )->text() );
+		} else {
+			$smw_row = $data_structure_section->getRow( 'smw' );
+			$smw_admin_row = $data_structure_section->getRow( 'smw_admin' );
+			$smw_docu_row = $data_structure_section->getRow( 'smw_docu' );
 		}
-		$smw_row = $data_structure_section->getRow( 'smw' );
 		$smw_row->addItem( ALItem::newFromSpecialPage( 'Templates' ), 'Properties' );
 		$smw_row->addItem( ALItem::newFromSpecialPage( 'Forms' ), 'SemanticStatistics' );
-		$smw_admin_row = $data_structure_section->getRow( 'smw_admin' );
 		$smw_admin_row->addItem( ALItem::newFromSpecialPage( 'CreateClass' ), 'SMWAdmin' );
-		$smw_admin_row->addItem( ALItem::newFromSpecialPage( 'CreateProperty' ), 'SMWAdmin' );
+		if ( class_exists( 'SFCreateProperty' ) ) {
+			$smw_admin_row->addItem( ALItem::newFromSpecialPage( 'CreateProperty' ), 'SMWAdmin' );
+		}
 		$smw_admin_row->addItem( ALItem::newFromSpecialPage( 'CreateTemplate' ), 'SMWAdmin' );
 		$smw_admin_row->addItem( ALItem::newFromSpecialPage( 'CreateForm' ), 'SMWAdmin' );
 		$smw_admin_row->addItem( ALItem::newFromSpecialPage( 'CreateCategory' ), 'SMWAdmin' );
-		$smw_docu_row = $data_structure_section->getRow( 'smw_docu' );
-		$sf_name = wfMsg( 'specialpages-group-sf_group' );
-		$sf_docu_label = wfMsg( 'adminlinks_documentation', $sf_name );
-		$smw_docu_row->addItem( ALItem::newFromExternalLink( "http://www.mediawiki.org/wiki/Extension:Semantic_Forms", $sf_docu_label ) );
+		if ( isset( $smw_docu_row ) ) {
+			$sf_name = wfMessage( 'specialpages-group-sf_group' )->text();
+			$sf_docu_label = wfMessage( 'adminlinks_documentation', $sf_name )->text();
+			$smw_docu_row->addItem( ALItem::newFromExternalLink( "http://www.mediawiki.org/wiki/Extension:Semantic_Forms", $sf_docu_label ) );
+		}
 
 		return true;
-	}
-
-	/**
-	 * Compatibility helper function.
-	 * Since 1.18 SpecialPageFactory::getPage should be used.
-	 * SpecialPage::getPage is deprecated in 1.18.
-	 *
-	 * @since 2.3.3
-	 *
-	 * @param string $pageName
-	 *
-	 * @return SpecialPage|null
-	 */
-	public static function getSpecialPage( $pageName ) {
-		$hasFactory = class_exists( 'SpecialPageFactory' ) && method_exists( 'SpecialPageFactory', 'getPage' );
-		return $hasFactory ? SpecialPageFactory::getPage( $pageName ) : SpecialPage::getPage( $pageName );
 	}
 
 	/**
@@ -741,12 +943,15 @@ END;
 	* @return SQL condition for use in WHERE clause
 	*
 	* @author Ilmars Poikans
+	* @author Yaron Koren
 	*/
-	public static function getSQLConditionForAutocompleteInColumn( $column, $substring ) {
+	public static function getSQLConditionForAutocompleteInColumn( $column, $substring, $replaceSpaces = true ) {
 		global $sfgAutocompleteOnAllChars;
 
 		$column_value = "LOWER(CONVERT($column USING utf8))";
-		$substring = str_replace( ' ', '_', strtolower( $substring ) );
+		if ( $replaceSpaces ) {
+			$substring = str_replace( ' ', '_', strtolower( $substring ) );
+		}
 		$substring = str_replace( "'", "\'", $substring );
 		$substring = str_replace( '_', '\_', $substring );
 		$substring = str_replace( '%', '\%', $substring );
@@ -754,7 +959,8 @@ END;
 		if ( $sfgAutocompleteOnAllChars ) {
 			return "$column_value LIKE '%$substring%'";
 		} else {
-			return "$column_value LIKE '$substring%' OR $column_value LIKE '%\_$substring%'";
+			$spaceRepresentation = $replaceSpaces ? '\_' : ' ';
+			return "$column_value LIKE '$substring%' OR $column_value LIKE '%" . $spaceRepresentation . $substring . "%'";
 		}
 	}
 
@@ -771,61 +977,60 @@ END;
 	 * @return true
 	 */
 	public static function showFormPreview( EditPage $editpage, WebRequest $request ) {
-		global $wgOut, $sfgFormPrinter;
+		global $wgOut, $wgParser, $sfgFormPrinter;
 
 		wfDebug( __METHOD__ . ": enter.\n" );
-		wfProfileIn( __METHOD__ );
 
 		// Exit if we're not in preview mode.
 		if ( !$editpage->preview ) {
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 		// Exit if we aren't in the "Form" namespace.
 		if ( $editpage->getArticle()->getTitle()->getNamespace() != SF_NS_FORM ) {
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		$editpage->previewTextAfterContent .= Html::element( 'h2', null, wfMsg( 'sf-preview-header' ) ) . "\n" .
-			'<div class="previewnote" style="font-weight: bold">' . $wgOut->parse( wfMsg( 'sf-preview-note' ) ) . "</div>\n<hr />\n";
+		$editpage->previewTextAfterContent .= Html::element( 'h2', null, wfMessage( 'sf-preview-header' )->text() ) . "\n" .
+			'<div class="previewnote" style="font-weight: bold">' . $wgOut->parse( wfMessage( 'sf-preview-note' )->text() ) . "</div>\n<hr />\n";
 
 		$form_definition = StringUtils::delimiterReplace( '<noinclude>', '</noinclude>', '', $editpage->textbox1 );
 		list ( $form_text, $javascript_text, $data_text, $form_page_title, $generated_page_name ) =
 			$sfgFormPrinter->formHTML( $form_definition, null, false, null, null, "Semantic Forms form preview dummy title", null );
 
+		$parserOutput = $wgParser->getOutput();
+		if( method_exists( $wgOut, 'addParserOutputMetadata' ) ){
+			$wgOut->addParserOutputMetadata( $parserOutput );
+		} else {
+			$wgOut->addParserOutputNoText( $parserOutput );
+		}
+
 		SFUtils::addJavascriptAndCSS();
 		$editpage->previewTextAfterContent .=
 			'<div style="margin-top: 15px">' . $form_text . "</div>";
 
-		wfProfileOut( __METHOD__ );
-
 		return true;
 	}
 
-	static function createFormLink ( &$parser, $specialPageName, $params ) {
-		global $wgVersion;
-
+	static function createFormLink ( &$parser, $params, $parserFunctionName ) {
 		// Set defaults.
-		$inFormName = $inLinkStr = $inLinkType = $inTooltip =
-			$inQueryStr = $inTargetName = '';
-		if ( $specialPageName == 'RunQuery' ) {
-			$inLinkStr = wfMsg( 'runquery' );
+		$inFormName = $inLinkStr = $inExistingPageLinkStr = $inLinkType =
+			$inTooltip = $inQueryStr = $inTargetName = '';
+		if ( $parserFunctionName == 'queryformlink' ) {
+			$inLinkStr = wfMessage( 'runquery' )->text();
 		}
-		$classStr = "";
+		$classStr = '';
 		$inQueryArr = array();
-		
-		$positionalParameters = false;
-		
+		$targetWindow = '_self';
+
 		// assign params
 		// - support unlabelled params, for backwards compatibility
 		// - parse and sanitize all parameter values
 		foreach ( $params as $i => $param ) {
-			
+
 			$elements = explode( '=', $param, 2 );
 
 			// set param_name and value
-			if ( count( $elements ) > 1 && !$positionalParameters ) {
+			if ( count( $elements ) > 1 ) {
 				$param_name = trim( $elements[0] );
 
 				// parse (and sanitize) parameter values
@@ -841,6 +1046,8 @@ END;
 				$inFormName = $value;
 			} elseif ( $param_name == 'link text' ) {
 				$inLinkStr = $value;
+			} elseif ( $param_name == 'existing page link text' ) {
+				$inExistingPageLinkStr = $value;
 			} elseif ( $param_name == 'link type' ) {
 				$inLinkType = $value;
 			} elseif ( $param_name == 'query string' ) {
@@ -848,8 +1055,8 @@ END;
 				// URL-encoded ampersands, so that the string
 				// doesn't get split up on the '&'.
 				$inQueryStr = str_replace( '&amp;', '%26', $value );
-				
-				parse_str($inQueryStr, $arr);
+
+				parse_str( $inQueryStr, $arr );
 				$inQueryArr = self::array_merge_recursive_distinct( $inQueryArr, $arr );
 			} elseif ( $param_name == 'tooltip' ) {
 				$inTooltip = Sanitizer::decodeCharReferences( $value );
@@ -858,36 +1065,60 @@ END;
 			} elseif ( $param_name == null && $value == 'popup' ) {
 				self::loadScriptsForPopupForm( $parser );
 				$classStr = 'popupformlink';
-			} elseif ( $param_name !== null && !$positionalParameters ) {
-				$value = urlencode($value);
-				parse_str("$param_name=$value", $arr);
+			} elseif ( $param_name == null && $value == 'new window' ) {
+				$targetWindow = '_blank';
+			} elseif ( $param_name !== null ) {
+				$value = urlencode( $value );
+				parse_str( "$param_name=$value", $arr );
 				$inQueryArr = self::array_merge_recursive_distinct( $inQueryArr, $arr );
-			} elseif ( $i == 0 ) {
-				$inFormName = $value;
-				$positionalParameters = true;
-			} elseif ( $i == 1 ) {
-				$inLinkStr = $value;
-			} elseif ( $i == 2 ) {
-				$inLinkType = $value;
-			} elseif ( $i == 3 ) {
-				// Change HTML-encoded ampersands directly to
-				// URL-encoded ampersands, so that the string
-				// doesn't get split up on the '&'.
-				$inQueryStr = str_replace( '&amp;', '%26', $value );
-				
-				parse_str($inQueryStr, $arr);
-				$inQueryArr = self::array_merge_recursive_distinct( $inQueryArr, $arr );
-			} 
+			}
 		}
 
-		$ad = SFUtils::getSpecialPage( $specialPageName );
-		$link_url = $ad->getTitle()->getLocalURL() . "/$inFormName";
-		if ( ! empty( $inTargetName ) ) {
-			$link_url .= "/$inTargetName";
+		// Not the most graceful way to do this, but it is the
+		// easiest - if this is the #formredlink function, just
+		// ignore whatever values were passed in for these params.
+		if ( $parserFunctionName == 'formredlink' ) {
+			$inLinkType = $inTooltip = null;
 		}
-		$link_url = str_replace( ' ', '_', $link_url );
+
+		// If "red link only" was specified, and a target page was
+		// specified, and it exists, just link to the page.
+		if ( $inTargetName != '' ) {
+			$targetTitle = Title::newFromText( $inTargetName );
+			$targetPageExists = ( $targetTitle != '' && $targetTitle->exists() );
+		} else {
+			$targetPageExists = false;
+		}
+
+		if ( $parserFunctionName == 'formredlink' && $targetPageExists ) {
+			if ( $inExistingPageLinkStr == '' ) {
+				return Linker::link( $targetTitle );
+			} else {
+				return Linker::link( $targetTitle, $inExistingPageLinkStr );
+			}
+		}
+
+		if ( $parserFunctionName == 'queryformlink' ) {
+			$formSpecialPage = SpecialPageFactory::getPage( 'RunQuery' );
+		} else {
+			$formSpecialPage = SpecialPageFactory::getPage( 'FormEdit' );
+		}
+
+		if ( $inFormName == '' ) {
+			$query = array( 'target' => $inTargetName );
+			$link_url = $formSpecialPage->getTitle()->getLocalURL( $query );
+		} elseif ( strpos( $inFormName, '/' ) == true ) {
+			$query = array( 'form' => $inFormName, 'target' => $inTargetName );
+			$link_url = $formSpecialPage->getTitle()->getLocalURL( $query );
+		} else {
+			$link_url = $formSpecialPage->getTitle()->getLocalURL() . "/$inFormName";
+			if ( ! empty( $inTargetName ) ) {
+				$link_url .= "/$inTargetName";
+			}
+			$link_url = str_replace( ' ', '_', $link_url );
+		}
 		$hidden_inputs = "";
-		if ( ! empty($inQueryArr) ) {
+		if ( ! empty( $inQueryArr ) ) {
 			// Special handling for the buttons - query string
 			// has to be turned into hidden inputs.
 			if ( $inLinkType == 'button' || $inLinkType == 'post button' ) {
@@ -907,25 +1138,32 @@ END;
 		}
 		if ( $inLinkType == 'button' || $inLinkType == 'post button' ) {
 			$formMethod = ( $inLinkType == 'button' ) ? 'get' : 'post';
-			$str = Html::rawElement( 'form', array( 'action' => $link_url, 'method' => $formMethod, 'class' => $classStr ),
-				Html::rawElement( 'button', array( 'type' => 'submit', 'value' => $inLinkStr ), $inLinkStr ) .
+			$str = Html::rawElement( 'form', array( 'action' => $link_url, 'method' => $formMethod, 'class' => $classStr, 'target' => $targetWindow ),
+
+				// Html::rawElement() before MW 1.21 or so drops the type attribute
+				// do not use Html::rawElement() for buttons!
+				'<button ' . Html::expandAttributes( array( 'type' => 'submit', 'value' => $inLinkStr ) ) . '>' . $inLinkStr . '</button>' .
 				$hidden_inputs
 			);
 		} else {
 			// If a target page has been specified but it doesn't
 			// exist, make it a red link.
 			if ( ! empty( $inTargetName ) ) {
-				$targetTitle = Title::newFromText( $inTargetName );
-				if ( is_null( $targetTitle ) || !$targetTitle->exists() ) {
+				if ( !$targetPageExists ) {
 					$classStr .= " new";
 				}
+				// If no link string was specified, make it
+				// the name of the page.
+				if ( $inLinkStr == '' ) {
+					$inLinkStr = $inTargetName;
+				}
 			}
-			$str = Html::rawElement( 'a', array( 'href' => $link_url, 'class' => $classStr, 'title' => $inTooltip ), $inLinkStr );
+			$str = Html::rawElement( 'a', array( 'href' => $link_url, 'class' => $classStr, 'title' => $inTooltip, 'target' => $targetWindow ), $inLinkStr );
 		}
 
 		return $str;
-	}	
-	
+	}
+
 	static function loadScriptsForPopupForm( &$parser ) {
 		$parser->getOutput()->addModules( 'ext.semanticforms.popupformedit' );
 		return true;
@@ -966,8 +1204,35 @@ END;
 	}
 
 	/**
+	 * ResourceLoaderRegisterModules hook handler
+	 *
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/ResourceLoaderRegisterModules
+	 *
+	 * @param ResourceLoader &$resourceLoader The ResourceLoader object
+	 * @return bool Always true
+	 */
+	public static function registerModules( ResourceLoader &$resourceLoader ) {
+		if ( class_exists( 'WikiEditorHooks' ) ) {
+			$resourceLoader->register( array(
+				'ext.semanticforms.wikieditor' => array(
+					'localBasePath' => __DIR__ . '/..',
+					'remoteExtPath' => 'SemanticForms',
+					'scripts' => 'libs/SF_wikieditor.js',
+					'styles' => 'skins/SF_wikieditor.css',
+					'dependencies' => array(
+						'ext.semanticforms.main',
+						'jquery.wikiEditor',
+					),
+				),
+			) );
+		}
+
+		return true;
+	}
+
+	/**
 	 * Register the namespaces for Semantic Forms.
-	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/CanonicalNamespaces 
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/CanonicalNamespaces
 	 *
 	 * @since 2.4.1
 	 *
@@ -988,5 +1253,53 @@ END;
 
 		return true;
 	}
+
+	/**
+	 * returns an array of pages that are result of the semantic query
+	 * @param $rawQueryString string - the query string like [[Category:Trees]][[age::>1000]]
+	 * @return array of SMWDIWikiPage objects representing the result
+	 */
+	public static function getAllPagesForQuery( $rawQuery ) {
+		$rawQueryArray = array( $rawQuery );
+		SMWQueryProcessor::processFunctionParams( $rawQueryArray, $queryString, $processedParams, $printouts );
+		SMWQueryProcessor::addThisPrintout( $printouts, $processedParams );
+		$processedParams = SMWQueryProcessor::getProcessedParams( $processedParams, $printouts );
+		$queryObj = SMWQueryProcessor::createQuery( $queryString,
+			$processedParams,
+			SMWQueryProcessor::SPECIAL_PAGE, '', $printouts );
+		$res = SFUtils::getSMWStore()->getQueryResult( $queryObj );
+		$pages = $res->getResults();
+
+		return $pages;
+	}
+
+	/**
+	 * Returns a formatted (pseudo) random number
+	 *
+	 * @param number $numDigits the min width of the random number
+	 * @param boolean $hasPadding should the number should be padded with zeros instead of spaces?
+	 * @return number
+	 */
+	static function makeRandomNumber( $numDigits = 1, $hasPadding = false ) {
+		$maxValue = pow( 10, $numDigits ) - 1;
+		if ( $maxValue > getrandmax() ) {
+			$maxValue = getrandmax();
+		}
+		$value = rand( 0, $maxValue );
+		$format = '%' . ($hasPadding ? '0' : '') . $numDigits . 'd';
+		return trim( sprintf( $format, $value ) ); // trim needed, when $hasPadding == false
+	}
+
+	/**
+	 * Hook to add PHPUnit test cases.
+	 * From https://www.mediawiki.org/wiki/Manual:PHP_unit_testing/Writing_unit_tests_for_extensions
+	 *
+	 * @return boolean
+	 */
+	 public static function onUnitTestsList( &$files ) {
+		$testDir = dirname( __DIR__ ) . '/tests/phpunit/includes';
+		$files = array_merge( $files, glob( "$testDir/*Test.php" ) );
+		return true;
+	 }
 
 }

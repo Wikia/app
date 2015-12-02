@@ -49,7 +49,6 @@
 $wgAutoloadClasses['UserCommand'] = dirname(__FILE__) . '/usercommands/UserCommand.php';
 $wgAutoloadClasses['PageActionUserCommand'] = dirname(__FILE__) . '/usercommands/PageActionUserCommand.php';
 $wgAutoloadClasses['FollowUserCommand'] = dirname(__FILE__) . '/usercommands/FollowUserCommand.php';
-$wgAutoloadClasses['ShareUserCommand'] = dirname(__FILE__) . '/usercommands/ShareUserCommand.php';
 $wgAutoloadClasses['SpecialPageUserCommand'] = dirname(__FILE__) . '/usercommands/SpecialPageUserCommand.php';
 $wgAutoloadClasses['CustomizeToolbarUserCommand'] = dirname(__FILE__) . '/usercommands/CustomizeToolbarUserCommand.php';
 $wgAutoloadClasses['MenuUserCommand'] = dirname(__FILE__) . '/usercommands/MenuUserCommand.php';

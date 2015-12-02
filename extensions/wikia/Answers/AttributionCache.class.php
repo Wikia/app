@@ -168,7 +168,7 @@ class AttributionCache {
 					//ignore bots
 					continue;
 				}
-				if ($user->getBoolOption("hidefromattribution")) {
+				if ((bool)$user->getGlobalPreference("hidefromattribution")) {
 					//allow users to opt out from being shown on the attribution list
 					continue;
 				}

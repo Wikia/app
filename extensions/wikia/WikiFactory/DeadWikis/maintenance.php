@@ -23,9 +23,6 @@ $optionsWithArgs = array(
 
 require_once( "commandLine.inc" );
 
-// PEAR::Mail::mime
-require_once( "Mail/mime.php" );
-
 class AutomatedDeadWikisDeletionMaintenance {
 
 	const BATCH_SIZE = 100;
@@ -91,7 +88,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			),
 		)
 	);
-	static protected $FETCH_TIME_LIMIT = '-243 days';
+	static protected $FETCH_TIME_LIMIT = '-50 days';
 
 	protected $options = array();
 	protected $flags = array(

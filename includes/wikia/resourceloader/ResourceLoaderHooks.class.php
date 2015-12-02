@@ -16,7 +16,6 @@ class ResourceLoaderHooks {
 	static protected $assetsManagerGroups = array(
 //		'skins.oasis.blocking' => 'oasis_blocking',
 //		'skins.oasis.core' => 'oasis_shared_core',
-//		'wikia.ads.adengine2' => 'adengine2_js',
 	);
 
 	/**
@@ -173,6 +172,7 @@ class ResourceLoaderHooks {
 
 		// handle skin name changes
 		$skinName = $context->getSkin();
+
 		if ( isset( $wgResourceLoaderAssetsSkinMapping[$skinName] ) ) {
 			$mappedName = $wgResourceLoaderAssetsSkinMapping[$skinName];
 			$mapping = array(
@@ -184,10 +184,10 @@ class ResourceLoaderHooks {
 			$pages = Wikia::renameArrayKeys($pages,$mapping);
 		}
 
-		// Wikia doesn't include Mediawiki:Common.css in Oasis and Venus
+		// Wikia doesn't include Mediawiki:Common.css in Oasis
 		// lower-case skin name is returned by getSkin()
 		// TODO: Remove $wgOasisLoadCommonCSS after renaming it to $wgLoadCommonCSS in WF after release
-		if ( in_array($skinName, ['oasis', 'venus']) && empty( $wgOasisLoadCommonCSS ) && empty( $wgLoadCommonCSS ) ) {
+		if ( ( $skinName === 'oasis' ) && empty( $wgOasisLoadCommonCSS ) && empty( $wgLoadCommonCSS ) ) {
 			unset($pages['MediaWiki:Common.css']);
 		}
 
@@ -219,6 +219,7 @@ class ResourceLoaderHooks {
 			);
 			$pages = Wikia::renameArrayKeys($pages,$mapping);
 		}
+
 
 		// todo: add user-defined user scripts here
 
@@ -346,7 +347,7 @@ class ResourceLoaderHooks {
 		}
 		else {
 			$cb = $context->getRequest()->getVal('cb', false);
-			$ts = false;
+			$ts = 0;
 		}
 
 		// check if at least one of required modules serves dynamic content

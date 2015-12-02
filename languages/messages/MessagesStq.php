@@ -431,8 +431,9 @@ Ju Speere wuude truch [[User:$1|$1]] mäd ju Begruundenge ''$2'' ienroat.",
 # Login and logout pages
 'logouttext'                 => "'''Du bäst nu oumälded.'''
 
-Du koast {{SITENAME}} nu anonym fääre benutsje, of die fonnäien unner dänsälge of n uur Benutsernoome wier [[Special:UserLogin|anmäldje]].
+Du koast {{SITENAME}} nu anonym fääre benutsje, of die fonnäien unner dänsälge of n uur Benutsernoome wier $1.
 Beoachtje, dät eenige Sieden noch anwiese konnen, dät du oumälded bäst, soloange du nit din Browsercache loosmoaked hääst.",
+'logouttext-link-text'       => 'anmäldje',
 'welcomecreation'            => '== Wäilkuumen, $1 ==
 
 Dien Benutserkonto wuude iengjucht.
@@ -2206,7 +2207,7 @@ Reek dän Gruund foar ju Speere oun.',
 Hier foulget die Iendraach uut dät Unnerdrukkengs-Logbouk:',
 'blocklogentry'                   => '[[$1]] blokkierd foar n Tiedruum fon: $2 $3',
 'reblock-logentry'                => 'annerde ju Speere foar „[[$1]]“ foar dän Tiedruum: $2 $3',
-'blocklogtext'                    => 'Dit is n Logbouk fon Speerengen un Äntspeerengen fon Benutsere un IP-Adrässe. 
+'blocklogtext'                    => 'Dit is n Logbouk fon Speerengen un Äntspeerengen fon Benutsere un IP-Adrässe.
 Automatisk speerde IP-Adrässe sunt nit apnuumen.
 Sjuch ju [[Special:BlockList|Lieste fon de speerde IP-Adrässe un Benutsernoomen]] foar aal aktive Speeren.',
 'unblocklogentry'                 => 'Blokkade fon $1 aphieuwed',
@@ -2951,10 +2952,10 @@ uum ju E-Mail-Adräs-Bestäätigenge outoubreeken:
 $5
 
 Disse Bestäätigengskode is gultich bit $4',
-'confirmemail_body_set'     => 'Wäl mäd ju IP-Adresse $1, woarskienelk du sälwen, 
+'confirmemail_body_set'     => 'Wäl mäd ju IP-Adresse $1, woarskienelk du sälwen,
 häd ju E-Mail-Adresse fon dät Benutserkonto "$2" ap {{SITENAME}} tou disse E-Mail-Adresse annerd.
 
-Uum  tou bestäätigjen, dät dit Benutserkonto wuddelk tou die heert 
+Uum  tou bestäätigjen, dät dit Benutserkonto wuddelk tou die heert
 un uum do E-Mail-Funktione ap {{SITENAME}} tou reaktivierjen, eepenje dissen Link:
 
 $3

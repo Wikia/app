@@ -110,6 +110,10 @@ abstract class ApiWrapper {
 		return false;
 	}
 
+	public function videoExists() {
+		return true;
+	}
+
 	public function getNonemptyMetadata() {
 		$meta = $this->getMetadata();
 		// get rid of empty fields - no need to store them in db
@@ -138,7 +142,6 @@ abstract class ApiWrapper {
 		wfProfileIn( __METHOD__ );
 
 		$apiUrl = $this->getApiUrl();
-
 		// use URL's hash to avoid going beyond 250 characters limit of memcache key
 		$memcKey = wfMemcKey( static::$CACHE_KEY, md5($apiUrl), static::$CACHE_KEY_VERSION );
 		if ( empty($this->videoId) ){
@@ -157,8 +160,6 @@ abstract class ApiWrapper {
 				if ( empty( $response ) ) {
 					wfProfileOut( __METHOD__ );
 					throw new EmptyResponseException($apiUrl);
-				} else {
-
 				}
 			} else {
 				$this->checkForResponseErrors( $req->status, $req->getContent(), $apiUrl );
@@ -166,9 +167,7 @@ abstract class ApiWrapper {
 		}
 		$processedResponse = $this->processResponse( $response );
 		if ( $cacheMe ) F::app()->wg->memc->set( $memcKey, $response, static::$CACHE_EXPIRY );
-
 		wfProfileOut( __METHOD__ );
-
 		return $processedResponse;
 	}
 
@@ -200,7 +199,6 @@ abstract class ApiWrapper {
 	protected function processResponse( $response ){
 
 		wfProfileIn( __METHOD__ );
-
 		switch ( static::$RESPONSE_FORMAT ){
 			case self::RESPONSE_FORMAT_JSON :
 				 $return = json_decode( $response, true );
@@ -622,6 +620,7 @@ class NegativeResponseException extends Exception {
 class VideoIsPrivateException extends NegativeResponseException {}
 class VideoNotFoundException extends NegativeResponseException {}
 class VideoQuotaExceededException extends NegativeResponseException {}
+class VideoWrongApiCall extends NegativeResponseException {}
 
 class UnsuportedTypeSpecifiedException extends Exception {}
 class VideoNotFound extends Exception {}

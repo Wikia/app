@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 class ApiAddMediaPermanent extends ApiAddMedia {
 
 	public function __construct( $main, $action ) {
@@ -26,9 +28,7 @@ class ApiAddMediaPermanent extends ApiAddMedia {
 		);
 		$duplicate = $this->getFileDuplicate( $tempFile->getLocalRefPath() );
 		if ( $duplicate ) {
-			return array(
-				'title' => $duplicate->getTitle()->getText()
-			);
+			$file = $duplicate;
 		} else {
 			$title = $this->getUniqueTitle(
 				wfStripIllegalFilenameChars( $this->mParams['title'] )
@@ -38,10 +38,13 @@ class ApiAddMediaPermanent extends ApiAddMedia {
 			}
 			$file = new LocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
 			$file->upload( $tempFile->getPath(), '', $pageText ? $pageText : '' );
-			return array(
-				'title' => $file->getTitle()->getText()
-			);
 		}
+
+		return [
+			'title' => $file->getTitle()->getText(),
+			'url' => $file->getUrl(),
+			'article_id' => $file->getTitle()->getArticleID()
+		];
 	}
 
 	private function executeVideo() {
@@ -80,6 +83,12 @@ class ApiAddMediaPermanent extends ApiAddMedia {
 			$title = $uploader->getUniqueTitle(
 				wfStripIllegalFilenameChars( $this->mParams['title'] )
 			);
+
+			// https://wikia-inc.atlassian.net/browse/VE-1819
+			if ( !$title ) {
+				WikiaLogger::instance()->debug( 'ApiAddMediaPermanent', array( 'title' => $this->mParams['title'] ) );
+			}
+
 			$uploader->setProvider( $this->mParams['provider'] );
 			$uploader->setVideoId( $this->mParams['videoId'] );
 			$uploader->setTargetTitle( $title->getBaseText() );
@@ -91,8 +100,9 @@ class ApiAddMediaPermanent extends ApiAddMedia {
 	}
 
 	private function getUniqueTitle( $name ) {
-		$filename = pathinfo( $name, PATHINFO_FILENAME );
-		$extension = pathinfo( $name, PATHINFO_EXTENSION );
+		$pathinfo = mb_pathinfo( $name );
+		$filename = $pathinfo['filename'];
+		$extension = $pathinfo['extension'];
 		$title = Title::makeTitleSafe( NS_IMAGE, $filename . '.' . $extension );
 		if ( !empty( $title ) && $title->exists() ) {
 			for ( $i = 0; $i <= 3; $i++ ) {

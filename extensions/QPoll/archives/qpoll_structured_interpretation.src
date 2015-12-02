@@ -1,3 +1,0 @@
--- fields to store the interpretation results
-ALTER TABLE /*$wgDBprefix*/qp_users_polls
-  ADD COLUMN structured_interpretation text NOT NULL default '';

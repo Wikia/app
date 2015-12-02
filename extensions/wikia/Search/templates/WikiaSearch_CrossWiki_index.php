@@ -1,27 +1,11 @@
 <section class="Search all-wikia WikiaGrid clearfix search-tracking">
-	<? if ( empty( $wg->EnableGlobalNavExt ) ): ?>
-	<form class="WikiaSearch" id="search-v2-form" action="<?=$specialSearchUrl;?>">
-		<div class="SearchInput">
-			<p><?= wfMsg('wikiasearch2-global-search-headline') ?></p>
-			<input type="text" name="search" id="search-v2-input" value="<?=$query;?>" />
-			<input type="hidden" name="fulltext" value="Search" />
-			<? if ( !empty($hub) ): ?>
-				<input type="hidden" name="hub" value="<?=$hub?>" />
-			<? endif ?>
-			<? if ( !empty($resultsLang) ): ?>
-				<input type="hidden" name="resultsLang" value="<?=$resultsLang?>" />
-			<? endif ?>
-			<button type="submit" class="wikia-button" id="search-v2-button" value="<?= wfMsg( 'searchbutton' ); ?>"><img src="<?= $wg->BlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
-		</div>
-	</form>
-	<? endif ?>
 	<div class="results-wrapper">
 		<?php if (!empty($results)): ?>
 			<?php if ($resultsFound > 0): ?>
 
 				<p class="result-count subtle">
 					<?php if (empty($isOneResultsPageOnly)): ?>
-						<?= wfMsg('wikiasearch2-results-count', $resultsFoundTruncated, '<strong>' . $query . '</strong>'); ?>
+						<?= wfMessage('wikiasearch2-results-count', $resultsFoundTruncated, '<strong>' . $query . '</strong>')->text(); ?>
 					<?php else: ?>
 						<?= wfMsg('wikiasearch2-results-for', '<strong>' . $query . '</strong>'); ?>
 					<?php endif; ?>

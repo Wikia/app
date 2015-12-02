@@ -88,7 +88,7 @@ $messages['ce'] = array(
 	'wikifactoryreporter' => 'Хааманча WikiFactory',
 );
 
-/** Sorani Kurdish (کوردی)
+/** Central Kurdish (کوردیی ناوەندی)
  * @author Muhammed taha
  */
 $messages['ckb'] = array(
@@ -254,6 +254,13 @@ $messages['ka'] = array(
  */
 $messages['kn'] = array(
 	'wikifactoryreporter' => 'ವಿಕಿಫ಼್ಯಾಕ್ಟರಿ ವರದಿಗಾರ',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'wikifactoryreporter' => '위키팩토리 리포터',
 );
 
 /** Karachay-Balkar (къарачай-малкъар)
@@ -480,7 +487,7 @@ $messages['uk'] = array(
 	'wikifactoryreporter' => 'Звітник WikiFactory',
 );
 
-/** vèneto (vèneto)
+/** Venetian (vèneto)
  * @author Vajotwo
  */
 $messages['vec'] = array(

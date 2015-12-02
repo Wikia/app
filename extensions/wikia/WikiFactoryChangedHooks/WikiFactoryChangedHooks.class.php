@@ -8,16 +8,39 @@
 
 
 Class WikiFactoryChangedHooks {
-	static public function achievements($cv_name, $city_id, $value) {
+	static public function achievements( $cv_name, $city_id, $value ) {
 		wfProfileIn(__METHOD__);
 
-		if ($cv_name == 'wgEnableAchievementsExt' && $value == true) {
-
-			$wiki = WikiFactory::getWikiById($city_id);
+		if ( $cv_name == 'wgEnableAchievementsExt' && $value == true ) {
+			$wiki = WikiFactory::getWikiById( $city_id );
 
 			// Force WikiFactory::getWikiById() to query DB_MASTER if needed.
-			if (!is_object($wiki)) {
-				$wiki = WikiFactory::getWikiById($city_id, true);
+			if ( !is_object( $wiki ) ) {
+				$wiki = WikiFactory::getWikiById( $city_id, true );
+			}
+
+			$dbw = wfGetDB( DB_MASTER, 'wikifactory', $wiki->city_dbname );
+
+			if ( !$dbw->tableExists( 'ach_user_badges' ) ) {
+				$sqlPath = __DIR__ . '/../AchievementsII/schema_local.sql';
+				$logger = \Wikia\Logger\WikiaLogger::instance();
+
+				$logger->debug( "Setting up Achievements tables on {$wiki->city_dbname}", [ 'method' => __METHOD__ ] );
+
+				try {
+					$result = $dbw->sourceFile( __DIR__ . '/../AchievementsII/schema_local.sql' );
+
+					if ( $result !== true ) {
+						$logger->debug( "Error running {$sqlPath}: {$result}", [ 'method' => __METHOD__ ] );
+					}
+
+					$dbw->commit();
+
+					// We unfortunately need to do this so that the badge can be awarded below
+					wfWaitForSlaves( $wiki->city_dbname );
+				} catch ( Exception $e ) {
+					$logger->debug( "Error running {$sqlPath}: {$e->getMessage()}", [ 'method' => __METHOD__, 'exception' => $e ] );
+				}
 			}
 
 			$user = User::newFromId($wiki->city_founding_user);
@@ -190,6 +213,38 @@ Class WikiFactoryChangedHooks {
 			$task = (new \Wikia\Blogs\BlogTask())->wikiId($city_id);
 			$task->call('maintenance');
 			$task->queue();
+		}
+		return true;
+	}
+
+	static public function VisualEditor($cv_name, $wiki_id, $value) {
+		if ($cv_name == 'wgEnableNewVisualEditorExt') {
+			Wikia::log(__METHOD__, $wiki_id, "{$cv_name} = {$value}");
+			// parsed wiki URL
+			$wikiURL = parse_url( GlobalTitle::newFromText( 'Version', NS_SPECIAL, $wiki_id )->getFullURL() );
+			$getStartupURL = function($extraData = array()) use ($wikiURL) {
+				global $wgOut;
+				// get resource loader url
+				$link = $wgOut->makeResourceLoaderLink('startup', ResourceLoaderModule::TYPE_SCRIPTS, true, $extraData);
+				if ($link != null) {
+					// extract the url from the link src
+					preg_match("/\"(.*)\"/", $link, $matches);
+					if ( isset($matches[1]) ) {
+						$urls[]= $matches[1];
+					}
+				}
+				// parsed resource loader URL
+				$resourceLoaderURL = parse_url( $urls[0] );
+				// URL to purge (constructed from $resourceLoaderURL and $wikiURL)
+				return $wikiURL['scheme'] . '://' . $wikiURL['host'] . $resourceLoaderURL['path'];
+			};
+			// purge
+			$u = new SquidUpdate( [
+				$getStartupURL(),
+				$getStartupURL(array('ve'=>1)),
+				$getStartupURL(array('newve'=>1))
+			] );
+			$u->doUpdate();
 		}
 		return true;
 	}

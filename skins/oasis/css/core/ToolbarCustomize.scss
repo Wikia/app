@@ -2,7 +2,6 @@
 @import "skins/shared/color";
 
 // mixins
-@import "skins/shared/mixins/box-sizing-border-box";
 @import "skins/shared/mixins/calc";
 @import "skins/shared/mixins/gradient";
 @import "skins/shared/mixins/clearfix";
@@ -14,7 +13,7 @@
 		float: none;
 
 		input[type="text"] {
-			@include box-sizing-border-box;
+			box-sizing: border-box;
 			width: 100%;
 
 		}
@@ -50,7 +49,7 @@
 		}
 
 		input[type="text"] {
-			@include box-sizing-border-box;
+			box-sizing: border-box;
 			width: 100%;
 
 			&::-webkit-input-placeholder {
@@ -68,8 +67,8 @@
 	}
 
 	.autocomplete {
-		@include box-sizing-border-box;
 		@include menu-regular;
+		box-sizing: border-box;
 		margin-top: 2px;
 		overflow: auto;
 		overflow-x: hidden;

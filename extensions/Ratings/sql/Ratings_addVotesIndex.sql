@@ -1,1 +1,0 @@
-CREATE UNIQUE INDEX vote ON /*$wgDBprefix*/votes (vote_user_text, vote_page_id, vote_prop_id);

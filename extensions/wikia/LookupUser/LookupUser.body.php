@@ -42,7 +42,7 @@ class LookupUserPage extends SpecialPage {
 		$id = '';
 		$byIdInvalidUser = false;
 		if( $wgRequest->getText( 'mode' ) == 'by_id' ) {
-			$id = $target;
+			$id = (int)$target;
 			if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
 				$u = ExternalUser::newFromId( $id );
 				if ( is_object( $u ) && ( $u->getId() != 0 ) ) {
@@ -84,9 +84,10 @@ class LookupUserPage extends SpecialPage {
 	 */
 	function showForm( $target, $id = '', $email = '', $invalidUser = false ) {
 		global $wgScript, $wgOut;
-		$title = htmlspecialchars( $this->getTitle()->getPrefixedText() );
-		$action = htmlspecialchars( $wgScript );
-		$target = htmlspecialchars( $target );
+		$title = Sanitizer::encodeAttribute( $this->getTitle()->getPrefixedText() );
+		$action = Sanitizer::encodeAttribute( $wgScript );
+		$target = Sanitizer::encodeAttribute( $target );
+		$id = Sanitizer::encodeAttribute( $id );
 		$ok = wfMessage( 'go' )->escaped();
 		$username_label = wfMessage( 'username' )->escaped();
 		$email_label = wfMessage( 'email' )->escaped();
@@ -250,7 +251,7 @@ EOT
 			$optionsString .= "$name = $value <br />";
 		}
 		$name = $user->getName();
-		$email = $user->getEmail() ?: $user->getOption( 'disabled-user-email' );
+		$email = $user->getEmail() ?: $user->getGlobalAttribute( 'disabled-user-email' );
 		if( !empty( $email ) ) {
 			$email_output = wfMessage( 'lookupuser-email', $email, urlencode( $email ) )->text();
 		} else {
@@ -286,12 +287,12 @@ EOT
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-birthdate', $birthDate )->text() );
 
 
-		$newEmail = $user->getOption( 'new_email' );
+		$newEmail = $user->getNewEmail();
 		if ( !empty( $newEmail ) ) {
 			$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-email-change-requested', $newEmail )->plain() );
 		}
 
-		$allowedAdoption = $user->getOption( 'AllowAdoption', true );
+		$allowedAdoption = $user->getGlobalFlag( 'AllowAdoption', true );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-user' . ( !$allowedAdoption ? '-not' : '' ) . '-allowed-adoption' )->plain() );
 
 		//Begin: Small Stuff Week - adding table from Special:LookupContribs --nAndy

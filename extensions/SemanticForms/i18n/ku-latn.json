@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"George Animal"
+		]
+	},
+	"sf_createproperty_proptype": "Cure:",
+	"createtemplate": "Şablonekî çêke",
+	"sf_createtemplate_namelabel": "Navê şablonê:",
+	"sf_createtemplate_standardformat": "Tablo",
+	"sf_createtemplate_deletefield": "Jê bibe",
+	"sf_createform_template": "Şablon:",
+	"sf_createform_add": "Lê zêde bike",
+	"sf_createcategory_name": "Navê kategorîyê:",
+	"sf-autoedit-wait": "Bisekine..."
+}

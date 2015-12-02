@@ -30,8 +30,7 @@ ve.ce.MWBlockImageNode = function VeCeMWBlockImageNode( model, config ) {
 	this.typeToRdfa = this.getTypeToRdfa();
 
 	// DOM Hierarchy for BlockImageNode:
-	// <div> this.$element
-	//   <figure> this.$figure (ve-ce-mwBlockImageNode-{type})
+	//   <figure> this.$element (ve-ce-mwBlockImageNode-{type})
 	//     <a> this.$a
 	//       <img> this.$image
 	//     <figcaption> this.caption.view.$element
@@ -45,9 +44,14 @@ ve.ce.MWBlockImageNode = function VeCeMWBlockImageNode( model, config ) {
 		.attr( 'src', this.getResolvedAttribute( 'src' ) )
 		.appendTo( this.$a );
 
-	this.$figure = this.$( '<figure>' )
-		.appendTo( this.$element )
+	this.$element
 		.append( this.$a )
+		// The following classes can be used here:
+		// ve-ce-mwBlockImageNode-type-thumb
+		// ve-ce-mwBlockImageNode-type-frame
+		// ve-ce-mwBlockImageNode-type-frameless
+		// ve-ce-mwBlockImageNode-type-border
+		// ve-ce-mwBlockImageNode-type-none
 		.addClass( 've-ce-mwBlockImageNode ve-ce-mwBlockImageNode-type-' + type )
 		// 'typeof' should appear with the proper Parsoid-generated
 		// type. The model deals with converting it
@@ -58,7 +62,7 @@ ve.ce.MWBlockImageNode = function VeCeMWBlockImageNode( model, config ) {
 	this.updateSize();
 
 	// Mixin constructors
-	ve.ce.MWImageNode.call( this, this.$figure, this.$image );
+	ve.ce.MWImageNode.call( this, this.$element, this.$image );
 };
 
 /* Inheritance */
@@ -74,24 +78,24 @@ OO.mixinClass( ve.ce.MWBlockImageNode, ve.ce.MWImageNode );
 
 ve.ce.MWBlockImageNode.static.name = 'mwBlockImage';
 
-ve.ce.MWBlockImageNode.static.tagName = 'div';
+ve.ce.MWBlockImageNode.static.tagName = 'figure';
 
 ve.ce.MWBlockImageNode.static.renderHtmlAttributes = false;
 
 ve.ce.MWBlockImageNode.static.transition = false;
 
 ve.ce.MWBlockImageNode.static.cssClasses = {
-	'default': {
-		'left': 'mw-halign-left',
-		'right': 'mw-halign-right',
-		'center': 'mw-halign-center',
-		'none': 'mw-halign-none'
+	default: {
+		left: 'mw-halign-left',
+		right: 'mw-halign-right',
+		center: 'mw-halign-center',
+		none: 'mw-halign-none'
 	},
-	'none': {
-		'left': 'mw-halign-left',
-		'right': 'mw-halign-right',
-		'center': 'mw-halign-center',
-		'none': 'mw-halign-none'
+	none: {
+		left: 'mw-halign-left',
+		right: 'mw-halign-right',
+		center: 'mw-halign-center',
+		none: 'mw-halign-none'
 	}
 };
 
@@ -128,14 +132,14 @@ ve.ce.MWBlockImageNode.prototype.updateCaption = function () {
 		if ( !this.$caption ) {
 			model = this.model.children[0];
 			view = ve.ce.nodeFactory.create( model.getType(), model );
-			model.connect( this, { 'update': 'onModelUpdate' } );
+			model.connect( this, { update: 'onModelUpdate' } );
 			this.children.push( view );
 			view.attach( this );
 			if ( this.live !== view.isLive() ) {
 				view.setLive( this.live );
 			}
 			this.$caption = view.$element;
-			this.$figure.append( this.$caption );
+			this.$element.append( this.$caption );
 		}
 	}
 	if ( this.$caption ) {
@@ -156,7 +160,7 @@ ve.ce.MWBlockImageNode.prototype.updateClasses = function ( oldAlign ) {
 
 	if ( oldAlign && oldAlign !== align ) {
 		// Remove previous alignment
-		this.$figure
+		this.$element
 			.removeClass( this.getCssClass( 'none', oldAlign ) )
 			.removeClass( this.getCssClass( 'default', oldAlign ) );
 	}
@@ -164,16 +168,16 @@ ve.ce.MWBlockImageNode.prototype.updateClasses = function ( oldAlign ) {
 	if ( type !== 'none' && type !== 'frameless' ) {
 		alignClass = this.getCssClass( 'default', align );
 		this.$image.addClass( 've-ce-mwBlockImageNode-thumbimage' );
-		this.$figure.addClass( 've-ce-mwBlockImageNode-borderwrap' );
+		this.$element.addClass( 've-ce-mwBlockImageNode-borderwrap' );
 	} else {
 		alignClass = this.getCssClass( 'none', align );
 		this.$image.removeClass( 've-ce-mwBlockImageNode-thumbimage' );
-		this.$figure.removeClass( 've-ce-mwBlockImageNode-borderwrap' );
+		this.$element.removeClass( 've-ce-mwBlockImageNode-borderwrap' );
 	}
-	this.$figure.addClass( alignClass );
+	this.$element.addClass( alignClass );
 
 	// Border
-	this.$figure.toggleClass( 'mw-image-border', !!this.model.getAttribute( 'borderImage' ) );
+	this.$element.toggleClass( 'mw-image-border', !!this.model.getAttribute( 'borderImage' ) );
 
 	switch ( alignClass ) {
 		case 'mw-halign-right':
@@ -201,20 +205,20 @@ ve.ce.MWBlockImageNode.prototype.updateClasses = function ( oldAlign ) {
 ve.ce.MWBlockImageNode.prototype.updateSize = function ( dimensions ) {
 	if ( !dimensions ) {
 		dimensions = {
-			'width': this.model.getAttribute( 'width' ),
-			'height': this.model.getAttribute( 'height' )
+			width: this.model.getAttribute( 'width' ),
+			height: this.model.getAttribute( 'height' )
 		};
 	}
 
 	this.$image.css( dimensions );
 
-	// Make sure $figure is sharing the dimensions, otherwise 'middle' and 'none'
+	// Make sure $element is sharing the dimensions, otherwise 'middle' and 'none'
 	// positions don't work properly
-	this.$figure.css( {
-		'width': dimensions.width + ( this.captionVisible ? 2 : 0 ),
-		'height': this.captionVisible ? 'auto' : dimensions.height
+	this.$element.css( {
+		width: dimensions.width + ( this.captionVisible ? 2 : 0 ),
+		height: this.captionVisible ? 'auto' : dimensions.height
 	} );
-	this.$figure.toggleClass( 'mw-default-size', !!this.model.getAttribute( 'defaultSize' ) );
+	this.$element.toggleClass( 'mw-default-size', !!this.model.getAttribute( 'defaultSize' ) );
 };
 
 /**
@@ -227,7 +231,7 @@ ve.ce.MWBlockImageNode.prototype.getCssClass = function ( type, alignment ) {
 	// TODO use this.model.getAttribute( 'type' ) etc., see bug 52065
 	// Default is different between RTL and LTR wikis:
 	if ( type === 'default' && alignment === 'default' ) {
-		if ( this.$element.css( 'direction' ) === 'rtl' ) {
+		if ( this.getModel().getDocument().getDir() === 'rtl' ) {
 			return 'mw-halign-left';
 		} else {
 			return 'mw-halign-right';
@@ -268,18 +272,18 @@ ve.ce.MWBlockImageNode.prototype.onAttributeChange = function ( key, from, to ) 
 				break;
 			case 'width':
 				this.updateSize( {
-					'width': to,
-					'height': this.model.getAttribute( 'height' )
+					width: to,
+					height: this.model.getAttribute( 'height' )
 				} );
 				break;
 			case 'height':
 				this.updateSize( {
-					'width': this.model.getAttribute( 'width' ),
-					'height': to
+					width: this.model.getAttribute( 'width' ),
+					height: to
 				} );
 				break;
 			case 'type':
-				this.$figure
+				this.$element
 					.removeClass( 've-ce-mwBlockImageNode-type-' + from )
 					.addClass( 've-ce-mwBlockImageNode-type-' + to )
 					.attr( 'typeof', this.typeToRdfa[ to ] );
@@ -296,7 +300,7 @@ ve.ce.MWBlockImageNode.prototype.onAttributeChange = function ( key, from, to ) 
 				}
 				break;
 			case 'defaultSize':
-				this.$figure.toggleClass( 'mw-default-size', to );
+				this.$element.toggleClass( 'mw-default-size', to );
 				break;
 		}
 	}

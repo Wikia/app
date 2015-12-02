@@ -24,7 +24,7 @@ class WikiaDataAccessTest extends WikiaBaseTest {
 			->with( $this->equalTo( $key ), $this->equalTo( $value ), $this->equalTo( $ttl ) );
 
 		// Set the memc used to our mock object
-		F::app()->wg->Memc = $memc;
+		$this->mockGlobalVariable( 'wgMemc', $memc );
 
 		// Cache backed data access
 		$returnValue = WikiaDataAccess::cache( $key, $ttl, function () use ( $value ) { return $value; } );
@@ -51,7 +51,7 @@ class WikiaDataAccessTest extends WikiaBaseTest {
 			->method( 'set' );
 
 		// Set the memc used to our mock object
-		F::app()->wg->Memc = $memc;
+		$this->mockGlobalVariable( 'wgMemc', $memc );
 
 		// Cache backed data access
 		$returnValue = WikiaDataAccess::cache( $key, $ttl, function () use ( $value ) { return $value; } );

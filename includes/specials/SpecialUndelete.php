@@ -327,6 +327,12 @@ class PageArchive {
 	 */
 	function undelete( $timestamps, $comment = '', $fileVersions = array(), $unsuppress = false ) {
 		global $wgUser;
+
+		$permErrors = $this->title->getUserPermissionsErrors( 'undelete', $wgUser );
+		if ( count( $permErrors ) ) {
+			throw new PermissionsError( 'undelete', $permErrors );
+		}
+
 		// If both the set of text revisions and file revisions are empty,
 		// restore everything. Otherwise, just restore the requested items.
 		$restoreAll = empty( $timestamps ) && empty( $fileVersions );
@@ -376,7 +382,7 @@ class PageArchive {
 		if( trim( $comment ) != '' ) {
 			$reason .= wfMsgForContent( 'colon-separator' ) . $comment;
 		}
-		
+
 		/* Wikia change begin - @author: Andrzej 'nAndy' Lukaszewski */
 		$hookAddedLogEntry = false;
 		wfRunHooks('PageArchiveUndeleteBeforeLogEntry', array(&$this, &$log, &$this->title, $reason, &$hookAddedLogEntry));
@@ -629,7 +635,7 @@ class SpecialUndelete extends SpecialPage {
 		$this->mInvert = $request->getCheck( 'invert' ) && $posted;
 		$this->mPreview = $request->getCheck( 'preview' ) && $posted;
 		$this->mDiff = $request->getCheck( 'diff' );
-		$this->mDiffOnly = $request->getBool( 'diffonly', $this->getUser()->getOption( 'diffonly' ) );
+		$this->mDiffOnly = $request->getBool( 'diffonly', $this->getUser()->getGlobalPreference( 'diffonly' ) );
 		$this->mComment = $request->getText( 'wpComment' );
 		$this->mUnsuppress = $request->getVal( 'wpUnsuppress' ) && $user->isAllowed( 'suppressrevision' );
 		$this->mToken = $request->getVal( 'token' );
@@ -870,8 +876,8 @@ class SpecialUndelete extends SpecialPage {
 		$out->addHTML(
 			Xml::element( 'textarea', array(
 					'readonly' => 'readonly',
-					'cols' => intval( $user->getOption( 'cols' ) ),
-					'rows' => intval( $user->getOption( 'rows' ) ) ),
+					'cols' => intval( $user->getGlobalPreference( 'cols' ) ),
+					'rows' => intval( $user->getGlobalPreference( 'rows' ) ) ),
 				$rev->getText( Revision::FOR_THIS_USER, $user ) . "\n" ) .
 			Xml::openElement( 'div' ) .
 			Xml::openElement( 'form', array(

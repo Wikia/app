@@ -61,7 +61,11 @@ class Batchmove extends SpecialPage{
 		parent::__construct('Batchmove');
 	}
 
-	function execute() {
+	/**
+	 *
+	 * @param $par String subpage string, if one was specified
+	 */
+	function execute( $par ){
 		global $wgOut;
 		global $wgRequest, $wgUser;
 

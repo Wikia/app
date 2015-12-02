@@ -69,7 +69,7 @@ class ApiAsk extends ApiSMWQuery {
 		);
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array(
 			'api.php?action=ask&query=[[Modification%20date::%2B]]|%3FModification%20date|sort%3DModification%20date|order%3Ddesc',
 		);
@@ -77,6 +77,6 @@ class ApiAsk extends ApiSMWQuery {
 
 	public function getVersion() {
 		return __CLASS__ . '-' . SMW_VERSION;
-	}		
+	}
 
 }

@@ -395,7 +395,7 @@ CKEDITOR.plugins.add('rte-media', {
 						action: Wikia.Tracker.ACTIONS.CLICK,
 						category: 'image-placeholder',
 						label: 'edit-mode',
-						method: 'ga'
+						method: 'analytics'
 					}
 				});
 			});
@@ -413,7 +413,7 @@ CKEDITOR.plugins.add('rte-media', {
 						action: Wikia.Tracker.ACTIONS.CLICK,
 						category: 'video-placeholder',
 						label: 'edit-mode',
-						method: 'ga'
+						method: 'analytics'
 					}
 				});
 			});

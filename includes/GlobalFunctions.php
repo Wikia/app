@@ -1812,10 +1812,11 @@ function wfDebugBacktrace( $limit = 0 ) {
  *
  * @return string
  */
-function wfBacktrace() {
+function wfBacktrace( $forceCommandLineMode = false ) {
 	global $wgCommandLineMode;
 
-	if ( $wgCommandLineMode ) {
+	$commandLinemode = $wgCommandLineMode || $forceCommandLineMode;
+	if ( $commandLinemode ) {
 		$msg = '';
 	} else {
 		$msg = "<ul>\n";
@@ -1833,7 +1834,7 @@ function wfBacktrace() {
 		} else {
 			$line = '-';
 		}
-		if ( $wgCommandLineMode ) {
+		if ( $commandLinemode ) {
 			$msg .= "$file line $line calls ";
 		} else {
 			$msg .= '<li>' . $file . ' line ' . $line . ' calls ';
@@ -1843,13 +1844,13 @@ function wfBacktrace() {
 		}
 		$msg .= $call['function'] . '()';
 
-		if ( $wgCommandLineMode ) {
+		if ( $commandLinemode ) {
 			$msg .= "\n";
 		} else {
 			$msg .= "</li>\n";
 		}
 	}
-	if ( $wgCommandLineMode ) {
+	if ( $commandLinemode ) {
 		$msg .= "\n";
 	} else {
 		$msg .= "</ul>\n";
@@ -2321,13 +2322,6 @@ function wfSuppressWarnings( $end = false ) {
 		}
 	} else {
 		if ( !$suppressCount ) {
-			// E_DEPRECATED and E_USER_DEPRECATED are undefined in PHP 5.2
-			if( !defined( 'E_DEPRECATED' ) ) {
-				define( 'E_DEPRECATED', 8192 );
-			}
-			if( !defined( 'E_USER_DEPRECATED' ) ) {
-				define( 'E_USER_DEPRECATED', 16384 );
-			}
 			$originalLevel = error_reporting( E_ALL & ~( E_WARNING | E_NOTICE | E_USER_WARNING | E_USER_NOTICE | E_DEPRECATED | E_USER_DEPRECATED | E_STRICT ) );
 		}
 		++$suppressCount;
@@ -2967,19 +2961,20 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 	$output = ob_get_contents();
 	ob_end_clean();
 
-	if ( $retval == 127 ) {
-		wfDebugLog( 'exec', "Possibly missing executable file: $cmd\n" );
-	}
-
 	// Wikia change - begin
-	if ( $retval > 0 ) {
+	if ( $retval !== 0 ) {
 		Wikia\Logger\WikiaLogger::instance()->error( 'wfShellExec failed', [
 			'exception' => new Exception( $cmd, $retval ),
+			'caller' => wfGetCaller(),
 			'output' => $output,
 			'load_avg' => implode( ', ', sys_getloadavg() ),
 		]);
 	}
 	// Wikia change - end
+
+	if ( $retval == 127 ) {
+		wfDebugLog( 'exec', "Possibly missing executable file: $cmd\n" );
+	}
 
 	return $output;
 }
@@ -3441,16 +3436,30 @@ function wfFixSessionID() {
 	if ( !empty( $_COOKIE[ session_name() ] ) || session_id() ) {
 		return;
 	}
+	session_id( MWCryptRand::generateHex( 32 ) );
+}
 
-	global $wgSessionDebugData;
-	$sOldSessionId = session_id();
-	$sNewSessionId = MWCryptRand::generateHex( 32 );
-	$wgSessionDebugData[] = [
-		'event' => __METHOD__,
-		'old_session_id' => $sOldSessionId,
-		'new_session_id' => $sNewSessionId,
-	];
-	session_id( $sNewSessionId );
+/**
+ * Reset the session_id
+ *
+ * Backported from MW 1.22
+ */
+function wfResetSessionID() {
+	global $wgCookieSecure;
+	$oldSessionId = session_id();
+	$cookieParams = session_get_cookie_params();
+	if ( wfCheckEntropy() && $wgCookieSecure == $cookieParams['secure'] ) {
+		session_regenerate_id( true ); // Wikia - $delete_old_session = true
+	} else {
+		$tmp = $_SESSION;
+		session_destroy();
+		wfSetupSession( MWCryptRand::generateHex( 32 ) );
+		$_SESSION = $tmp;
+	}
+	$newSessionId = session_id();
+	Hooks::run( 'ResetSessionID', array( $oldSessionId, $newSessionId ) );
+
+	wfDebug( sprintf( "%s: new ID is '%s'\n", __METHOD__, $newSessionId ) );
 }
 
 /**
@@ -3460,8 +3469,7 @@ function wfFixSessionID() {
  */
 function wfSetupSession( $sessionId = false ) {
 	global $wgSessionsInMemcached, $wgCookiePath, $wgCookieDomain,
-			$wgCookieSecure, $wgCookieHttpOnly, $wgSessionHandler,
-			$wgSessionDebugData;
+			$wgCookieSecure, $wgCookieHttpOnly, $wgSessionHandler;
 
 	if( $wgSessionsInMemcached ) {
 		if ( !defined( 'MW_COMPILED' ) ) {
@@ -3500,6 +3508,16 @@ function wfSetupSession( $sessionId = false ) {
 	wfSuppressWarnings();
 	session_start();
 	wfRestoreWarnings();
+
+	// Wikia change - start
+	// log all sessions started with 1% sampling (PLATFORM-1266)
+	if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+			'caller' => wfGetAllCallers(),
+			'exception' => new Exception()
+		] );
+	}
+	// Wikia change - end
 }
 
 /**
@@ -3604,7 +3622,7 @@ function wfSplitWikiID( $wiki ) {
  * Note 2: use $this->getDB() in maintenance scripts that may be invoked by
  * updater to ensure that a proper database is being updated.
  *
- * @return DatabaseBase
+ * @return DatabaseMysqli
  */
 function &wfGetDB( $db, $groups = array(), $wiki = false ) {
 	// wikia change begin -- SMW DB separation project, @author Krzysztof Krzyżaniak (eloy)
@@ -3635,7 +3653,7 @@ function wfGetLB( $wiki = false ) {
 /**
  * Get the load balancer factory object
  *
- * @return LBFactory_Wikia
+ * @return LBFactory
  */
 function &wfGetLBFactory() {
 	return LBFactory::singleton();
@@ -3790,6 +3808,28 @@ function wfWaitForSlaves( $wiki = false ) {
 	// bug 27975 - Don't try to wait for slaves if there are none
 	// Prevents permission error when getting master position
 	if ( $lb->getServerCount() > 1 ) {
+		// Wikia change - begin
+		// PLATFORM-1489: check if we're using consul configuration for DB slave
+		if ( $lb->hasConsulConfig() ) {
+			// get the list of IP addresses of all slave nodes from consul
+			// so that we can check all of them explicitly
+			$consul = new Wikia\Consul\Client();
+
+			$slaveInfo = $lb->getServerInfo( 1 ); // e.g. slave.db-g.service.consul
+			$slaves = $consul->getNodesFromHostname( $slaveInfo['hostName'] );
+
+			// clone the loadbalancer and add all slaves that we've got from Consul
+			$lb = clone $lb;
+
+			for ( $i=0; $i < count( $slaves ); $i++ ) {
+				$entry = $slaveInfo;
+				$entry['host'] = $slaves[ $i ];
+
+				$lb->setServerInfo( $i+1, $entry );
+			}
+		}
+		// Wikia change - end
+
 		/* Wikia change - added array() and $wiki parameters to getConnection to be able to wait for various DBs */
 		$dbw = $lb->getConnection( DB_MASTER, array(), $wiki );
 		$pos = $dbw->getMasterPos();
@@ -3893,13 +3933,14 @@ function wfMemoryLimit() {
 /**
  * Converts shorthand byte notation to integer form
  *
- * @param $string String
+ * @param string $string
+ * @param int $default Returned if $string is empty
  * @return Integer
  */
-function wfShorthandToInteger( $string = '' ) {
+function wfShorthandToInteger( $string = '', $default = -1 ) {
 	$string = trim( $string );
-	if( $string === '' ) {
-		return -1;
+	if ( $string === '' ) {
+		return $default;
 	}
 	$last = $string[strlen( $string ) - 1];
 	$val = intval( $string );
@@ -4039,4 +4080,21 @@ function wfUnpack( $format, $data, $length=false ) {
 		throw new MWException( "unpack could not unpack binary data" );
 	}
 	return $result;
+}
+
+/**
+ * Get a random string containing a number of pseudo-random hex
+ * characters.
+ * @note This is not secure, if you are trying to generate some sort
+ *       of token please use MWCryptRand instead.
+ *
+ * @param int $length The length of the string to generate
+ * @return string
+ */
+function wfRandomString( $length = 32 ) {
+	$str = '';
+	for ( $n = 0; $n < $length; $n += 7 ) {
+		$str .= sprintf( '%07x', mt_rand() & 0xfffffff );
+	}
+	return substr( $str, 0, $length );
 }

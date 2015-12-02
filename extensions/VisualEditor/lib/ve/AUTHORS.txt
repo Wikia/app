@@ -1,14 +1,19 @@
 Principal Authors (major contributors, alphabetically)
 
+Alex Monk <krenair@wikimedia.org>
+Bartosz Dziewoński <matmarex@wikimedia.org>
 Christian Williams <christian@wikia-inc.com>
 David Chan <dchan@wikimedia.org>
 Ed Sanders <esanders@wikimedia.org>
 Inez Korczynski <inez@wikia-inc.com>
+James Forrester  <jforrester@wikimedia.org>
 Moriel Schottlender <mschottlender@wikimedia.org>
 Roan Kattouw <roan@wikimedia.org>
 Rob Moen <rmoen@wikimedia.org>
+Sucheta Ghoshal <sghoshal@wikimedia.org>
 Timo Tijhof <timo@wikimedia.org>
 Trevor Parscal <trevor@wikimedia.org>
+
 
 Patch Contributors (minor contributors, alphabetically)
 
@@ -16,12 +21,65 @@ Aaron Schulz <aschulz@wikimedia.org>
 Adam Wight <spam@ludd.net>
 Antoine Musso <hashar@free.fr>
 Audrey Tang <audreyt@audreyt.org>
-Bartosz Dziewoński <matma.rex@gmail.com>
 Brion Vibber <brion@wikimedia.org>
+C. Scott Ananian <cscott@cscott.net>
 Erik Moeller <erik@wikimedia.org>
 Gabriel Wicke <gwicke@wikimedia.org>
-James Forrester  <jforrester@wikimedia.org>
-Neil Kandalgaonkar <neilk@brevity.org>
+Juliusz Gonera <jgonera@gmail.com>
 Mark A. Hershberger <mah@everybody.org>
 Mark Holmquist <mtraceur@member.fsf.org>
+Neil Kandalgaonkar <neilk@brevity.org>
+Niklas Laxström <niklas.laxstrom@gmail.com>
+Oliver Buchtala <oliver.buchtala@gmail.com>
+Peter Coti <petercoti@gmail.com>
+Steven Zhang <cro0016@gmail.com>
 Subramanya Sastry <ssastry@wikimedia.org>
+Thalia Chan <thalia@cantorion.org>
+
+
+Libraries used (alphabetically)
+
+jQuery
+ – https://jquery.com/
+ – MIT license
+ – jQuery Foundation and other contributors
+
+jQuery i18n
+ – https://github.com/wikimedia/jquery.i18n
+ – MIT license (dual with GPL v2)
+ – Wikimedia Language Engineering Team and other contributors
+
+jQuery ULS
+ – https://github.com/wikimedia/jquery.uls
+ – MIT license (dual with GPL v2)
+ – Wikimedia Language Engineering Team and other contributors
+
+jsdifflib
+ – http://snowtide.com/jsdifflib
+ – BSD license
+ – Snowtide Informatics Systems, Inc.
+
+OOjs
+ – https://www.mediawiki.org/wiki/OOjs
+ – MIT license
+ – OOjs Team and other contributors
+
+OOjs UI
+ – https://www.mediawiki.org/wiki/OOjs_UI
+ – MIT license
+ – OOjs UI Team and other contributors
+
+PapaParse
+ – http://papaparse.com
+ – MIT license
+ – Matthew Holt and other contributors; fork by Ed Sanders
+
+RangeFix
+ – https://github.com/edg2s/rangefix
+ – MIT license
+ – Ed Sanders and other contributors
+
+UnicodeJS
+ – https://www.mediawiki.org/wiki/OOjs_UI
+ – MIT license
+ – UnicodeJS Team and other contributors

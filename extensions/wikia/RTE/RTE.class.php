@@ -396,7 +396,7 @@ HTML
 		   See Wikia issue VE-742 for more information. If editor is set to the Source
 		   editor, disable the RTE/CK editor.
 		 */
-		if ( $wgUser->getOption( PREFERENCE_EDITOR ) == EditorPreference::OPTION_EDITOR_SOURCE && empty( $forcedWysiwyg ) ) {
+		if ( $wgUser->getGlobalPreference( PREFERENCE_EDITOR ) == EditorPreference::OPTION_EDITOR_SOURCE && empty( $forcedWysiwyg ) ) {
 			RTE::log('editor is disabled because of user preferences');
 			self::disableEditor('userpreferences');
 		}
@@ -675,13 +675,18 @@ HTML
 	}
 
 	/**
-	 * Modify values returned by User::getOption() when wysiwyg is enabled
+	 * Modify values returned by User::getGlobalPreference() when wysiwyg is enabled
 	 */
 	static public function userGetOption($options, $name, &$value) {
+		global $wgRequest;
 		wfProfileIn(__METHOD__);
 
+		$useEditor = $wgRequest->getVal('useeditor', false);
+
 		// do not continue if user didn't turn on wysiwyg in preferences
-		if (empty($options['enablerichtext'])) {
+		if ( ( $options['editor'] === '1' && empty( $useEditor ) )
+				|| ( $useEditor === 'source' || $useEditor === 'mediawiki' )
+		) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}
@@ -702,6 +707,7 @@ HTML
 		if ( array_key_exists($name, $values) ) {
 			// don't continue when on Special:Preferences (actually only check namespace ID, it's faster)
 			global $wgTitle, $wgRTEDisablePreferencesChange;
+
 			if ( !empty($wgRTEDisablePreferencesChange) || !empty($wgTitle) && ($wgTitle->getNamespace() == NS_SPECIAL) ) {
 				wfProfileOut(__METHOD__);
 				return true;

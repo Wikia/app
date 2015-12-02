@@ -7,6 +7,21 @@ class NjordController extends WikiaController {
 
 	const MAINPAGE_PAGE = 'mainpage';
 
+	private static $wikiDataModel = null;
+
+	public function __construct() {
+		parent::__construct();
+
+		$this->initWikiDataModel();
+	}
+
+	private function initWikiDataModel() {
+		if (self::$wikiDataModel === null) {
+			self::$wikiDataModel = new WikiDataModel(Title::newMainPage()->getText());
+			self::$wikiDataModel->getFromProps();
+		}
+	}
+
 	public function getWikiMarkup() {
 		$articleWikiMarkup = '';
 		$articleTitle = $this->getRequest()->getVal( 'articleTitle' );
@@ -35,18 +50,11 @@ class NjordController extends WikiaController {
 
 	public function index() {
 		global $wgTitle, $wgUser, $wgBlankImgUrl;
-		$wikiDataModel = new WikiDataModel( Title::newMainPage()->getText() );
-		$wikiDataModel->getFromProps();
-		if ( !$wgUser->isLoggedIn() && $wikiDataModel->isEmpty() ) {
-			return $this->skipRendering();
-		}
+		$wikiDataModel = self::$wikiDataModel;
+
 		$this->wg->SupressPageTitle = true;
+
 		$this->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/NjordPrototype/css/Njord.scss' ) );
-		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/jquery-ui-1.10.4.js' );
-		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/jquery.caret.js' );
-		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/Njord.js' );
-//		$this->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/NjordPrototype/css/Mom.scss' ) );
-//		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/Mom.js' );
 
 		$wikiDataModel->imageSet = true;
 		if ( !isset( $wikiDataModel->imagePath ) ) {
@@ -54,6 +62,20 @@ class NjordController extends WikiaController {
 			$wikiDataModel->imagePath = $wgBlankImgUrl;
 			$wikiDataModel->originalImagePath = $wgBlankImgUrl;
 		}
+
+		// template vars
+		$this->wikiData = $wikiDataModel;
+		$this->isAllowedToEdit = $this->wg->user->isAllowed( 'njordeditmode' );
+	}
+
+	public function summary() {
+		global $wgUser;
+		$wikiDataModel = self::$wikiDataModel;
+
+		if ( !$wgUser->isLoggedIn() && $wikiDataModel->isEmpty() ) {
+			return $this->skipRendering();
+		}
+
 		// template vars
 		$this->wikiData = $wikiDataModel;
 		$this->isAllowedToEdit = $this->wg->user->isAllowed( 'njordeditmode' );
@@ -144,27 +166,20 @@ class NjordController extends WikiaController {
 		}
 	}
 
-	public function saveHeroTitle() {
-		$title = $this->getRequest()->getVal( 'title', false );
-		$success = false;
-
-		if ( $title ) {
-			$wikiDataModel = $this->getWikiData();
-			$wikiDataModel->title = $title;
-			$success = $this->setWikiData( $wikiDataModel );
-		}
-		$this->getResponse()->setVal( 'success', $success );
-		$this->getResponse()->setVal( 'wikiData', $wikiDataModel );
-	}
-
-	public function saveHeroDescription() {
+	public function saveTitleAndDescription() {
 		$description = $this->getRequest()->getVal( 'description', false );
+
 		$success = false;
 		$wikiDataModel = $this->getWikiData();
+
 		if ( $description ) {
 			$wikiDataModel->description = $description;
+		}
+
+		if ( $description ) {
 			$success = $this->setWikiData( $wikiDataModel );
 		}
+
 		$this->getResponse()->setVal( 'success', $success );
 		$this->getResponse()->setVal( 'wikiData', $wikiDataModel );
 	}

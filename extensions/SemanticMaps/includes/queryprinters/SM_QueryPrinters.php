@@ -6,7 +6,8 @@
  * @file SM_QueryPrinters.php
  * @ingroup SemanticMaps
  *
- * @author Jeroen De Dauw
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
@@ -21,17 +22,14 @@ final class SMQueryPrinters {
 	 * Initialization function for Maps query printer functionality.
 	 */
 	public static function initialize() {
-		global $wgAutoloadClasses;
+		global $wgAutoloadClasses, $egMapsDefaultServices;
 		
-		$wgAutoloadClasses['SMQueryHandler']	= dirname( __FILE__ ) . '/SM_QueryHandler.php';
-		$wgAutoloadClasses['SMMapper'] 			= dirname( __FILE__ ) . '/SM_Mapper.php';
-		$wgAutoloadClasses['SMMapPrinter'] 		= dirname( __FILE__ ) . '/SM_MapPrinter.php';
-		$wgAutoloadClasses['SMKMLPrinter'] 		= dirname( __FILE__ ) . '/SM_KMLPrinter.php';
+		$wgAutoloadClasses['SMQueryHandler']	= __DIR__ . '/SM_QueryHandler.php';
+		$wgAutoloadClasses['SMMapPrinter'] 		= __DIR__ . '/SM_MapPrinter.php';
+		$wgAutoloadClasses['SMKMLPrinter'] 		= __DIR__ . '/SM_KMLPrinter.php';
 		
 		self::initFormat( 'kml', 'SMKMLPrinter' );
 		
-		$hasQueryPrinters = false;
-
 		foreach ( MapsMappingServices::getServiceIdentifiers() as $serviceIdentifier ) {
 			$service = MapsMappingServices::getServiceInstance( $serviceIdentifier );	
 				
@@ -39,21 +37,21 @@ final class SMQueryPrinters {
 			$QPClass = $service->getFeature( 'qp' );
 			
 			// If the service has no QP, skipt it and continue with the next one.
-			if ( $QPClass === false ) continue;
-			
-			// At least one query printer will be enabled when this point is reached.
-			$hasQueryPrinters = true;
-			
+			if ( $QPClass === false ) {
+				continue;
+			}
+
 			// Initiate the format.
 			$aliases = $service->getAliases();
-			self::initFormat( $service->getName(), 'SMMapper' /* $QPClass */, $aliases );
+
+			// Add the 'map' result format if there are mapping services that have QP's loaded.
+			if ( $egMapsDefaultServices['qp'] == $serviceIdentifier ) {
+				$aliases[] = 'map';
+			}
+
+			self::initFormat( $service->getName(), 'SMMapPrinter', $aliases );
 		}
 
-		// Add the 'map' result format if there are mapping services that have QP's loaded.
-		if ( $hasQueryPrinters ) {
-			self::initFormat( 'map', 'SMMapper' );
-		}
-		
 		return true;
 	}
 	
@@ -65,36 +63,12 @@ final class SMQueryPrinters {
 	 * @param array $aliases
 	 */
 	private static function initFormat( $format, $formatClass, array $aliases = array() ) {
-		global $smwgResultAliases;
+		global $smwgResultAliases, $smwgResultFormats;
 
 		// Add the QP to SMW.
-		self::addFormatQP( $format, $formatClass );
+		$smwgResultFormats[$format] = $formatClass;
 
-		// If SMW supports aliasing, add the aliases to $smwgResultAliases.
-		if ( isset( $smwgResultAliases ) ) {
-			$smwgResultAliases[$format] = $aliases;
-		}
-		else { // If SMW does not support aliasing, add every alias as a format.
-			foreach ( $aliases as $alias ) self::addFormatQP( $alias, $formatClass );
-		}
+		$smwgResultAliases[$format] = $aliases;
 	}
 
-	/**
-	 * Adds a QP to SMW's $smwgResultFormats array or SMWQueryProcessor
-	 * depending on if SMW supports $smwgResultFormats.
-	 * 
-	 * @param string $format
-	 * @param string $class
-	 */
-	private static function addFormatQP( $format, $class ) {
-		global $smwgResultFormats;
-		
-		if ( isset( $smwgResultFormats ) ) {
-			$smwgResultFormats[$format] = $class;
-		}
-		else { // BC with some old SMW version
-			SMWQueryProcessor::$formats[$format] = $class;
-		}
-	}
-	
 }

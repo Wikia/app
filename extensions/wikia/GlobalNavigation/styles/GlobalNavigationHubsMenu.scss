@@ -1,10 +1,10 @@
-@import 'extensions/wikia/Venus/styles/variables';
-@import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/calc';
 @import 'skins/shared/mixins/chevron';
 @import 'skins/shared/mixins/columns';
 @import 'GlobalNavigationColors';
 @import 'GlobalNavigationMixins';
+@import 'GlobalNavigationVariables';
 
 $hub-menu-icon-width: 16px;
 $hub-menu-icon-arrow-space: 6px;
@@ -12,21 +12,27 @@ $hub-menu-icon-left-padding-small: 16px;
 $hub-menu-icon-left-padding-medium: 13px;
 $hub-menu-icon-left-padding-large: 8px;
 
+$hub-list-z-index: 1002;
+$more-z-index: 10000;
+
 @mixin hub-background-border-icon($color, $secondary-color, $hub-name) {
-	background: linear-gradient(to right, $color 99%, $hubsmenu-background-color);
+	.icon {
+		background-image: url('/extensions/wikia/GlobalNavigation/images/#{$hub-name}.svg'); /* inline */
+		background-color: $color;
+	}
 
 	&.active {
-		&:before {
+		&:before, .icon {
 			background-color: $secondary-color;
 		}
 
 		&:after {
 			border-left-color: $color;
 		}
-	}
 
-	.icon {
-		background-image: url('/extensions/wikia/GlobalNavigation/images/#{$hub-name}.svg'); /* inline */
+		.label {
+			background-color: $color;
+		}
 	}
 }
 
@@ -69,16 +75,19 @@ $hub-menu-icon-left-padding-large: 8px;
 	}
 }
 
+.hubs-menu-wrapper {
+	@include calc(top, "100% - 2px");
+
+	left: -108px;
+	position: absolute;
+}
+
 .hubs-menu {
 	background-color: $hubsmenu-background-color;
 	border: 1px solid $nav-border-color;
 	color: $nav-foreground-dark-color;
 	display: none;
-	height: 436px;
-	left: -1px;
-	position: absolute;
-	top: $global-navigation-height;
-	width: 768px;
+	position: relative;
 
 	a {
 		color: $nav-foreground-dark-color;
@@ -92,7 +101,7 @@ $hub-menu-icon-left-padding-large: 8px;
 
 	.hub-list {
 		float: left;
-		width: 256px;
+		width: 226px;
 
 		&.backface-off {
 			*, *:before, *:after {
@@ -104,21 +113,21 @@ $hub-menu-icon-left-padding-large: 8px;
 	.hub-link {
 		background-color: $global-wikia-background-color;
 		display: block;
-		height: 62px;
-		line-height: 62px;
+		font-size: 16px;
+		height: 50px;
+		line-height: 50px;
 		position: relative;
 
 		&.active {
 			color: $global-wikia-background-color;
-			font-weight: bold;
+			z-index: $hub-list-z-index;
 
 			&:before {
-				border-radius: 50%;
 				content: ' ';
 				height: 50px;
-				left: 16px;
+				left: 0;
 				position: absolute;
-				top: 6px;
+				top: 0;
 				width: 50px;
 			}
 
@@ -126,22 +135,14 @@ $hub-menu-icon-left-padding-large: 8px;
 				background-color: $hubsmenu-background-color;
 				border-color: transparent;
 				border-style: solid;
-				border-width: 31px 0 31px 12px;
+				border-width: 25px 0 25px 12px;
 				height: 0;
 				width: 0;
 			}
 
-			.icon {
-
-				&:after {
-					background-color: transparent;
-				}
-			}
-
 			.label {
-				background-color: transparent;
 				border: 0;
-				height: 62px;
+				color: #fff;
 			}
 		}
 
@@ -149,50 +150,59 @@ $hub-menu-icon-left-padding-large: 8px;
 			background-color: $hubsmenu-background-color;
 			content: ' ';
 			float: right;
-			height: 62px;
+			height: 50px;
 			width: 12px;
 		}
 
 		.icon {
-			background-position: 15px center;
+			background-position: center center;
 			background-repeat: no-repeat;
+			background-size: 40px;
 			display: inline-block;
 			float: left;
-			height: 62px;
+			height: 50px;
 			position: relative;
-			width: 102px;
-
-			&:after {
-				background-color: $global-wikia-background-color;
-				content: ' ';
-				display: inline-block;
-				float: right;
-				height: 62px;
-				width: 20px;
-			}
+			width: 50px;
 		}
 
 		.label {
 			background-color: $global-wikia-background-color;
 			border-bottom: 1px solid $hubsmenu-background-color;
+			color: $global-navigation-active-color;
 			display: inline-block;
 			float: left;
-			font-size: $font-size-base-big-screen;
-			height: 62px;
-			width: 142px;
+			font-size: 16px;
+			height: 50px;
+			padding-left: 20px;
+			width: 164px;
 		}
 	}
 
+	.hub-links {
+		background: $hubsmenu-background-color;
+		border-top: 1px solid $nav-border-color;
+		border-bottom: 1px solid $nav-border-color;
+		left: 214px;
+		position: absolute;
+		top: -1px;
+	}
+
 	.hub-menu-section {
-		@include column-count(2);
-		@include column-rule(1px solid $nav-border-color);
-		@include column-gap(36px);
-		@include font-size-s;
 		display: none;
 		float: left;
+		font-size: 14px;
 		line-height: 17px;
-		padding-left: 22px;
+		min-height: 409px;
+		padding-bottom: 60px;
+		padding-left: 20px;
+		padding-right: 20px;
+		position: relative;
 		width: 464px;
+
+		.hub-menu-columns {
+			@include column-count(2);
+			@include column-gap(40px);
+		}
 
 		&.active {
 			display: block;
@@ -200,32 +210,58 @@ $hub-menu-icon-left-padding-large: 8px;
 
 		ul {
 			display: inline-block;
+			margin-bottom: 30px;
 			width: 100%;
 		}
 
 		strong {
-			@include font-size-s;
+			color: $global-navigation-active-color;
 			display: inline-block;
 			font-weight: bold;
 			line-height: 17px;
 			margin: 0;
-			padding: 21px 0 5px;
+			padding: 20px 0 7px;
+			text-transform: uppercase;
 		}
 
 		a {
+			color: rgb(57, 66, 77);
 			display: block;
-			padding: 7px 0 6px;
+			padding: 8px 0 7px;
+
+			&:hover {
+				color: rgb(26, 94, 184);
+				text-decoration: none;
+
+				&:after {
+					color: rgb(26, 94, 184);
+				}
+			}
 
 			&.more {
-				@include right-chevron();
-				@include font-size-base;
-				bottom: 40px;
+				@include right-chevron($color: 'inherit');
+				border-top: 1px solid $nav-border-color;
+				bottom: 0;
 				font-weight: bold;
-				left: 278px;
+				height: 60px;
+				left: 0;
+				line-height: 60px;
+				padding: 0 20px;
 				position: absolute;
+				right: 0;
+				text-align: right;
+				z-index: $more-z-index;
 
 				&:after {
 					margin-left: 6px;
+				}
+
+				&:hover {
+					color: $global-navigation-active-color;
+
+					&:after {
+						border-color: $global-navigation-active-color;
+					}
 				}
 			}
 		}
@@ -261,66 +297,5 @@ $hub-menu-icon-left-padding-large: 8px;
 
 	.tv {
 		@include hub-background-border-icon($color-vertical-tv, $color-vertical-tv-secondary, 'tv');
-	}
-}
-
-@media #{$small-only} {
-	.hubs-container {
-		position: static;
-	}
-
-	.hubs-menu {
-		right: 0;
-		.hub-link {
-			&.active {
-				&:before {
-					left: 10px;
-				}
-			}
-
-			.icon {
-				background-position: 10px center;
-				width: 90px;
-			}
-
-			.label {
-				width: 154px;
-			}
-		}
-	}
-}
-
-@media #{$large-up} {
-	.hubs-menu {
-		width: 788px;
-
-		.hub-list {
-			width: 302px;
-		}
-
-		.hub-link {
-			&.active {
-				&:before {
-					left: 20px;
-				}
-			}
-
-			.icon {
-				background-position: 20px center;
-				width: 123px;
-
-				&:after {
-					width: 33px;
-				}
-			}
-
-			.label {
-				width: 167px;
-			}
-		}
-
-		.hub-menu-section a.more {
-			left: 324px;
-		}
 	}
 }

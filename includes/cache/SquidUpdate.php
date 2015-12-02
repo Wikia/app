@@ -120,6 +120,11 @@ class SquidUpdate {
 			return;
 		}
 
+		global $wgPurgeSquidViaCelery;
+		if ( $wgPurgeSquidViaCelery == true ) {
+			CeleryPurge::purge( $urlArr );
+			return;
+		}
 		// wikia change end
 
 		if ( $wgHTCPMulticastAddress && $wgHTCPPort ) {

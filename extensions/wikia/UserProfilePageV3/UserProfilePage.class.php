@@ -15,7 +15,7 @@ class UserProfilePage {
 	private $user = null;
 
 	public function __construct( User $user, WikiaApp $app = null ) {
-		if( is_null( $app ) ) {
+		if ( is_null( $app ) ) {
 			$app = F::app();
 		}
 		$this->app = $app;
@@ -38,16 +38,16 @@ class UserProfilePage {
 		$interviewQuestions = $interview->getQuestions();
 		$questionsNum = count( $interviewQuestions );
 
-		foreach( $interviewQuestions as $question ) {
+		foreach ( $interviewQuestions as $question ) {
 			$index++;
 			$question->setCaption( wfMsg( 'userprofilepage-question-caption', $index, $questionsNum ) );
-			if( isset( $answers[ $question->getId() ] ) ) {
+			if ( isset( $answers[ $question->getId() ] ) ) {
 				$question->setAnswerBody( $answers[ $question->getId() ] );
 			}
-			if( $answeredOnly && $question->hasAnswer() ) {
+			if ( $answeredOnly && $question->hasAnswer() ) {
 				$questions[] = $asArray ? $question->toArray() : $question;
 			}
-			else if( !$answeredOnly ) {
+			else if ( !$answeredOnly ) {
 				$questions[] = $asArray ? $question->toArray() : $question;
 			}
 		}
@@ -66,14 +66,14 @@ class UserProfilePage {
 		$decrCounters = array();
 
 		$answersXML = '';
-		foreach( $answers as $answer ) {
-			if( isset( $currentAnswers[ $answer->id ] ) ) {
-				if( empty( $answer->answerBody ) ) {
+		foreach ( $answers as $answer ) {
+			if ( isset( $currentAnswers[ $answer->id ] ) ) {
+				if ( empty( $answer->answerBody ) ) {
 					$decrCounters[] = $answer->id;
 				}
 			}
 			else {
-				if( !empty( $answer->answerBody ) ) {
+				if ( !empty( $answer->answerBody ) ) {
 					$incrCounters[] = $answer->id;
 				}
 			}
@@ -83,7 +83,7 @@ class UserProfilePage {
 
 		$interviewArticle = $this->getInterviewArticle();
 
-		if( $interviewArticle->exists() ) {
+		if ( $interviewArticle->exists() ) {
 			$editMode = EDIT_UPDATE;
 			$summaryMsg = 'userprofilepage-interview-edit-update-summary';
 		}
@@ -94,17 +94,17 @@ class UserProfilePage {
 
 		$status = $interviewArticle->doEdit( $articleContent , wfMsgForContent( $summaryMsg ), $editMode );
 
-		if( $status->isOK() ) {
+		if ( $status->isOK() ) {
 			// purge userpage content
 			$this->invalidateCache();
 
 			// update counters
-			foreach($incrCounters as $questionId) {
+			foreach ( $incrCounters as $questionId ) {
 				$question = new InterviewQuestion( $questionId );
 				$question->incrAnswersCount();
 			}
 
-			foreach($decrCounters as $questionId) {
+			foreach ( $decrCounters as $questionId ) {
 				$question = new InterviewQuestion( $questionId );
 				$question->decrAnswersCount();
 			}
@@ -121,15 +121,15 @@ class UserProfilePage {
 
 		$answers = array();
 
-		if( $interviewArticle->exists() ) {
+		if ( $interviewArticle->exists() ) {
 			$dom = new DOMDocument;
 			$dom->loadXML( $interviewArticle->getContent() );
 
 			$answerNodes = $dom->getElementsByTagName( 'interviewAnswer' );
-			foreach( $answerNodes as $answerNode ) {
-				$questionId = $answerNode->getElementsByTagName( 'questionId' )->item(0)->nodeValue;
-				$answerBody = $answerNode->getElementsByTagName( 'body' )->item(0)->nodeValue;
-				if( !empty( $questionId ) && !empty( $answerBody ) ) {
+			foreach ( $answerNodes as $answerNode ) {
+				$questionId = $answerNode->getElementsByTagName( 'questionId' )->item( 0 )->nodeValue;
+				$answerBody = $answerNode->getElementsByTagName( 'body' )->item( 0 )->nodeValue;
+				if ( !empty( $questionId ) && !empty( $answerBody ) ) {
 					$answers[ $questionId ] = $answerBody;
 				}
 			}

@@ -197,9 +197,7 @@ if ( $wgUseInstantCommons ) {
 	$wgForeignFileRepos[] = array(
 		'class'                  => 'ForeignAPIRepo',
 		'name'                   => 'wikimediacommons',
-		'apibase'                => WebRequest::detectProtocol() === 'https' ?
-			'https://commons.wikimedia.org/w/api.php' :
-		'http://commons.wikimedia.org/w/api.php',
+		'apibase'                => 'https://commons.wikimedia.org/w/api.php',
 		'hashLevels'             => 2,
 		'fetchDescription'       => true,
 		'descriptionCacheExpiry' => 43200,
@@ -268,6 +266,15 @@ $wgUseEnotif = $wgEnotifUserTalk || $wgEnotifWatchlist;
 if ( $wgMetaNamespace === false ) {
 	$wgMetaNamespace = str_replace( ' ', '_', $wgSitename );
 }
+
+// Ensure the minimum chunk size is less than PHP upload limits or the maximum
+// upload size.
+$wgMinUploadChunkSize = min(
+	$wgMinUploadChunkSize,
+	$wgMaxUploadSize,
+	wfShorthandToInteger( ini_get( 'upload_max_filesize' ), 1e100 ),
+	wfShorthandToInteger( ini_get( 'post_max_size' ), 1e100) - 1024 # Leave room for other parameters
+);
 
 /**
  * Definitions of the NS_ constants are in Defines.php
@@ -437,6 +444,8 @@ if ( $wgCommandLineMode ) {
 	}
 	wfDebug( "$debug\n" );
 }
+
+wfRunHooks('WebRequestInitialized', [ $wgRequest ] ); // Wikia change
 
 wfProfileOut( $fname . '-misc1' );
 wfProfileIn( $fname . '-memcached' );

@@ -129,7 +129,7 @@ class EditorPreference {
 	 */
 	public static function getPrimaryEditor() {
 		global $wgUser, $wgEnableVisualEditorUI, $wgEnableRTEExt, $wgVisualEditorNeverPrimary;
-		$selectedOption = (int)$wgUser->getOption( PREFERENCE_EDITOR );
+		$selectedOption = (int)$wgUser->getGlobalPreference( PREFERENCE_EDITOR );
 
 		if ( !$wgVisualEditorNeverPrimary && $selectedOption === self::OPTION_EDITOR_VISUAL ) {
 			return self::OPTION_EDITOR_VISUAL;
@@ -160,7 +160,7 @@ class EditorPreference {
 	 *
 	 * @return boolean True if VisualEditor is primary and false otherwise
 	 */
-	private static function isVisualEditorPrimary() {
+	public static function isVisualEditorPrimary() {
 		return self::getPrimaryEditor() === self::OPTION_EDITOR_VISUAL;
 	}
 

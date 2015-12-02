@@ -8,7 +8,7 @@
  * Dialog for inserting templates.
  *
  * @class
- * @extends ve.ui.Dialog
+ * @extends ve.ui.FragmentDialog
  *
  * @constructor
  * @param {Object} [config] Configuration options
@@ -16,21 +16,41 @@
 ve.ui.WikiaTemplateInsertDialog = function VeUiWikiaTemplateInsertDialog( config ) {
 	// Parent constructor
 	ve.ui.WikiaTemplateInsertDialog.super.call( this, config );
+
+	// Properties
+	this.surface = null;
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.WikiaTemplateInsertDialog, ve.ui.Dialog );
+OO.inheritClass( ve.ui.WikiaTemplateInsertDialog, ve.ui.FragmentDialog );
 
 /* Static Properties */
 
 ve.ui.WikiaTemplateInsertDialog.static.name = 'wikiaTemplateInsert';
 
-ve.ui.WikiaTemplateInsertDialog.static.icon = 'template';
-
 ve.ui.WikiaTemplateInsertDialog.static.title = OO.ui.deferMsg( 'wikia-visualeditor-dialog-template-insert-title' );
 
+ve.ui.WikiaTemplateInsertDialog.static.size = '800px';
+
 /* Methods */
+
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaTemplateInsertDialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.WikiaTemplateInsertDialog.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			this.surface = data.surface;
+		}, this );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaTemplateInsertDialog.prototype.getBodyHeight = function () {
+	return 600;
+};
 
 /**
  * @inheritdoc
@@ -41,17 +61,17 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 
 	// Properties
 	this.search = new ve.ui.WikiaTemplateSearchWidget( {
-		'placeholder': ve.msg( 'wikia-visualeditor-dialog-wikiatemplateinsert-search' ),
-		'clearable': true
+		placeholder: ve.msg( 'wikia-visualeditor-dialog-wikiatemplateinsert-search' ),
+		clearable: true
 	} );
 
 	// Events
 	this.search.connect( this, {
-		'select': 'onTemplateSelect'
+		select: 'onTemplateSelect'
 	} );
 
 	// Initialization
-	this.frame.$content.addClass( 've-ui-wikiaTemplateInsertDialog' );
+	this.$content.addClass( 've-ui-wikiaTemplateInsertDialog' );
 	this.$body.append( this.search.$element );
 };
 
@@ -71,14 +91,14 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onTemplateSelect = function ( itemData
 			this.transclusionModel, itemData.title
 		);
 		this.transclusionModel.addPart( template )
-			.done( ve.bind( this.insertTemplate, this ) );
+			.done( this.insertTemplate.bind( this ) );
 
 		// Track
 		ve.track( 'wikia', {
-			'action': ve.track.actions.ADD,
+			action: ve.track.actions.ADD,
 			// Only suggestions data have "uses" information - so use it to determine where
 			// insertion is coming from
-			'label': 'template-insert-from-' + ( 'uses' in itemData ? 'suggestions' : 'search' )
+			label: 'template-insert-from-' + ( 'uses' in itemData ? 'suggestions' : 'search' )
 		} );
 	}
 };
@@ -88,15 +108,15 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onTemplateSelect = function ( itemData
  */
 ve.ui.WikiaTemplateInsertDialog.prototype.insertTemplate = function () {
 	ve.init.target.constructor.static.apiRequest( {
-		'action': 'visualeditor',
-		'paction': 'parsefragment',
-		'page': mw.config.get( 'wgRelevantPageName' ),
-		'wikitext': this.transclusionModel.getWikitext()
-	}, { 'type': 'POST' } )
-		.done( ve.bind( this.onParseSuccess, this ) )
-		.fail( ve.bind( function () {
+		action: 'visualeditor',
+		paction: 'parsefragment',
+		page: mw.config.get( 'wgRelevantPageName' ),
+		wikitext: this.transclusionModel.getWikitext()
+	}, { type: 'POST' } )
+		.done( this.onParseSuccess.bind( this ) )
+		.fail( function () {
 			// TODO: Implement some proper handling, at least tracking
-		}, this ) );
+		}.bind( this ) );
 };
 
 /**
@@ -109,21 +129,21 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onParseSuccess = function ( response )
 	// method instead of having to do a code duplication. It's not a prefect approach
 	// and it is a subject to change - based on the future discussion.
 	var deferred = $.Deferred();
-	ve.ce.MWTransclusionNode.prototype.onParseSuccess( deferred, response );
-	deferred.done( ve.bind( function ( contents ) {
+	ve.ce.MWTransclusionNode.prototype.onParseSuccess.call( this, deferred, response );
+	deferred.done( function ( contents ) {
 		var isInline = this.constructor.static.isHybridInline( contents ),
 			type = isInline ? 'mwTransclusionInline' : 'mwTransclusionBlock',
 			linmod = [
 				{
-					'type': type,
-					'attributes': {
-						'mw': this.transclusionModel.getPlainObject()
+					type: type,
+					attributes: {
+						mw: this.transclusionModel.getPlainObject()
 					}
 				},
-				{ 'type': '/' + type }
+				{ type: '/' + type }
 			];
 
-		this.surface.getModel().getDocument().once( 'transact', ve.bind( this.onTransact, this ) );
+		this.surface.getModel().getDocument().once( 'transact', this.onTransact.bind( this ) );
 
 		// Fill out the cache so MWTransclusionNode does not have to send exact same
 		// parsefragment request.
@@ -133,10 +153,10 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onParseSuccess = function ( response )
 		);
 
 		this.fragment = this.getFragment()
-			.collapseRangeToEnd()
+			.collapseToEnd()
 			.setAutoSelect( true )
 			.insertContent( linmod );
-	}, this ) );
+	}.bind( this ) );
 };
 
 /**
@@ -166,18 +186,15 @@ ve.ui.WikiaTemplateInsertDialog.static.isHybridInline = function ( domElements )
  * We can ask the commandRegistry for the command for the node and execute it.
  */
 ve.ui.WikiaTemplateInsertDialog.prototype.onTransact = function () {
+	ve.track( 'wikia', {
+		action: ve.track.actions.ADD,
+		label: 'dialog-template-insert'
+	} );
 	this.$frame.stopThrobbing();
-	setTimeout( ve.bind( function () {
-		ve.ui.commandRegistry.getCommandForNode(
-			this.surface.getView().getFocusedNode()
-		).execute( this.surface );
-
-		ve.track( 'wikia', {
-			'action': ve.track.actions.ADD,
-			'label': 'dialog-template-insert'
-		} );
-
-	}, this ), 0 );
+	this.close();
+	setTimeout( function () {
+		ve.ui.commandRegistry.getCommandForNode( this.surface.getView().getFocusedNode() ).execute( this.surface );
+	}.bind( this ), 0 );
 };
 
 /**

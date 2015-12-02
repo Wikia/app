@@ -67,7 +67,7 @@ var WikiaPhotoGallerySlideshow = {
 				action: 'click',
 				category: 'article',
 				label: 'show-slideshow-' + linkType,
-				trackingMethod: 'both',
+				trackingMethod: 'analytics',
 				value: 0
 			}, {});
 		});

@@ -54,11 +54,9 @@ class CategoryDataService extends Service {
 
 		$db = wfGetDB( DB_SLAVE );
 
-		// Get a count of articles in a category.  Give at least a very small cache TTL
-		$query = (new WikiaSQL())->cache( 5 )
-			->SELECT( 'count(distinct page_title)' )->AS_( 'count' )
+		$query = (new WikiaSQL())
+			->SELECT()->COUNT('page_title')->AS_( 'count' )
 			->FROM( 'page' )
-				->LEFT_JOIN( 'revision' )->ON( 'rev_page', 'page_id' )
 				->JOIN( 'categorylinks' )->ON( 'cl_from', 'page_id' )
 			->WHERE( 'cl_to' )->EQUAL_TO( $sCategoryDBKey );
 

@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"ChrisPtDe"
+			"ChrisPtDe",
+			"Amire80"
 		]
 	},
 	"tooltip-ca-ve-edit": "Changiér ceta pâge avouéc VisualEditor",
@@ -14,9 +15,6 @@
 	"visualeditor-linkinspector-suggest-external-link": "Lim vouèbe",
 	"visualeditor-linkinspector-suggest-new-page": "Pâge novèla",
 	"visualeditor-mainnamespacepagelink": "Project:Èspâço de noms principâl",
-	"visualeditor-notification-created": "$1 est étâye fêta.",
-	"visualeditor-notification-restored": "$1 est étâye refêta.",
-	"visualeditor-notification-saved": "Voutros changements a $1 sont étâs encartâs.",
 	"visualeditor-savedialog-label-create": "Fâre la pâge",
 	"visualeditor-savedialog-label-report": "Signalar un problèmo",
 	"visualeditor-savedialog-label-restore": "Refâre la pâge",
@@ -24,6 +22,6 @@
 	"visualeditor-savedialog-label-save": "Encartar la pâge",
 	"visualeditor-savedialog-title-review": "Revêre voutros changements",
 	"visualeditor-savedialog-title-save": "Encartar voutros changements",
-	"visualeditor-toolbar-savedialog": "Revêre et pués encartar",
+	"visualeditor-toolbar-savedialog": "Sôvar la pâge",
 	"visualeditor-usernamespacepagelink": "Project:Èspâço de noms utilisator"
 }

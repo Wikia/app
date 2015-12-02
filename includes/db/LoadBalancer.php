@@ -137,16 +137,19 @@ class LoadBalancer {
 	 * @return bool|int|string
 	 */
 	function getRandomNonLagged( $loads, $wiki = false ) {
-		# Unset excessively lagged servers
-		$lags = $this->getLagTimes( $wiki );
-		foreach ( $lags as $i => $lag ) {
-			if ( $i != 0 ) {
-				if ( $lag === false ) {
-					wfDebugLog( 'replication', "Server #$i ({$this->mServers[$i]['host']}) is not replicating\n" );
-					unset( $loads[$i] );
-				} elseif ( isset( $this->mServers[$i]['max lag'] ) && $lag > $this->mServers[$i]['max lag'] ) {
-					wfDebugLog( 'replication', "Server #$i ({$this->mServers[$i]['host']}) is excessively lagged ($lag seconds)\n" );
-					unset( $loads[$i] );
+		// PLATFORM-1489: only check slave lags when we're not using consul (it performs its own healtchecks)
+		if ( !$this->hasConsulConfig() ) {
+			# Unset excessively lagged servers
+			$lags = $this->getLagTimes($wiki);
+			foreach ($lags as $i => $lag) {
+				if ($i != 0) {
+					if ($lag === false) {
+						wfDebugLog('replication', "Server #$i ({$this->mServers[$i]['host']}) is not replicating\n");
+						unset($loads[$i]);
+					} elseif (isset($this->mServers[$i]['max lag']) && $lag > $this->mServers[$i]['max lag']) {
+						wfDebugLog('replication', "Server #$i ({$this->mServers[$i]['host']}) is excessively lagged ($lag seconds)\n");
+						unset($loads[$i]);
+					}
 				}
 			}
 		}
@@ -248,6 +251,17 @@ class LoadBalancer {
 							'while the slave database servers catch up to the master';
 						$i = $this->pickRandom( $currentLoads );
 						$laggedSlaveMode = true;
+
+						// Wikia change - begin
+						global $wgDBname, $wgDBcluster;
+
+						Wikia\Logger\WikiaLogger::instance()->error( 'All slaves lagged', [
+							'exception' => new Exception(),
+							'group'     => $group,
+							'wiki'      => $wiki ?: $wgDBname, # $wiki = false means a local DB
+							'cluster'   => $wgDBcluster,
+						] );
+						// Wikia change - end
 					}
 				}
 
@@ -420,12 +434,28 @@ class LoadBalancer {
 			}
 		}
 
-		wfDebug( __METHOD__.": Waiting for slave #$index to catch up...\n" );
+		$then = microtime( true ); // Wikia change
+
+		wfDebug( __METHOD__.": Waiting for slave #$index ({$conn->getServer()}) to catch up...\n" );
 		$result = $conn->masterPosWait( $this->mWaitForPos, $this->mWaitTimeout );
 
 		if ( $result == -1 || is_null( $result ) ) {
 			# Timed out waiting for slave, use master instead
 			wfDebug( __METHOD__.": Timed out waiting for slave #$index pos {$this->mWaitForPos}\n" );
+
+			// Wikia change - begin
+			// log failed wfWaitForSlaves
+			// @see PLATFORM-1219
+			Wikia\Logger\WikiaLogger::instance()->error( 'LoadBalancer::doWait timed out', [
+				'exception' => new Exception(),
+				'db'        => $conn->getDBname(),
+				'host'      => $conn->getServer(),
+				'pos'       => (string) $this->mWaitForPos,
+				'result'    => $result,
+				'waited'    => microtime( true ) - $then,
+			] );
+			// Wikia change - end
+
 			return false;
 		} else {
 			wfDebug( __METHOD__.": Done\n" );
@@ -494,40 +524,9 @@ class LoadBalancer {
 			}
 		}
 
-		// Wikia change - begin
-		// check the status of selected master
-		if ( $i == $this->getWriterIndex() ) {
-			// will return an instance of MastersPoll when LBFactory_Wikia is used
-			$mastersPoll = wfGetLBFactory()->getMastersPoll();
-
-			if ( $mastersPoll instanceof \Wikia\MastersPoll && $mastersPoll->isMasterBroken( $this->mServers[0] ) ) {
-				// handle broken master - connect to a different master
-				$clusterInfo = $this->parentInfo()['id'];
-				$newMaster = $mastersPoll->getNextMasterForSection( $clusterInfo );
-
-				// replace the master in LoadBalancer config
-				if ( !empty( $newMaster ) ) {
-					$this->mServers[$i] = $newMaster;
-				}
-			}
-		}
-		// Wikia change - end
-
 		# Now we have an explicit index into the servers array
 		$conn = $this->openConnection( $i, $wiki );
 		if ( !$conn ) {
-			// Wikia change - begin
-			# master connection error handling
-			// will return an instance of MastersPoll when LBFactory_Wikia is used
-			$mastersPoll = wfGetLBFactory()->getMastersPoll();
-
-			if ( $i == $this->getWriterIndex() ) {
-				if ( $mastersPoll instanceof \Wikia\MastersPoll ) {
-					$mastersPoll->markMasterAsBroken( $this->mServers[$i] );
-				}
-			}
-			// Wikia change - end
-
 			$this->reportConnectionError( $this->mErrorConnection );
 		}
 
@@ -735,11 +734,6 @@ class LoadBalancer {
 			$db = $e->db;
 		}
 
-		if ( $db->isOpen() ) {
-			wfDebug( "Connected to $host $dbname.\n" );
-		} else {
-			wfDebug( "Connection failed to $host $dbname.\n" );
-		}
 		$db->setLBInfo( $server );
 		if ( isset( $server['fakeSlaveLag'] ) ) {
 			$db->setFakeSlaveLag( $server['fakeSlaveLag'] );
@@ -747,6 +741,17 @@ class LoadBalancer {
 		if ( isset( $server['fakeMaster'] ) ) {
 			$db->setFakeMaster( true );
 		}
+
+		// Wikia change - begin
+		if ( $db->getSampler()->shouldSample() ) {
+			$db->getWikiaLogger()->info( "LoadBalancer::reallyOpenConnection", [
+				'caller' => wfGetCallerClassMethod( __CLASS__ ),
+				'host'   => $server['hostName'], // eg. db-archive-s7
+				'dbname' => $dbname
+			] );
+		}
+		// Wikia change - end
+
 		return $db;
 	}
 
@@ -826,7 +831,7 @@ class LoadBalancer {
 	/**
 	 * Return the server info structure for a given index, or false if the index is invalid.
 	 * @param $i
-	 * @return bool
+	 * @return array|bool
 	 */
 	function getServerInfo( $i ) {
 		if ( isset( $this->mServers[$i] ) ) {
@@ -988,6 +993,7 @@ class LoadBalancer {
 		foreach ( $this->mConns as $conns2 ) {
 			foreach ( $conns2 as $conns3 ) {
 				foreach ( $conns3 as $conn ) {
+					/* @var DatabaseMysqlBase $conn */
 					if ( !$conn->ping() ) {
 						$success = false;
 					}
@@ -1102,5 +1108,16 @@ class LoadBalancer {
 	 */
 	function clearLagTimeCache() {
 		$this->mLagTimes = null;
+	}
+
+	/**
+	 * Wikia change: return true if this load balancer has slave nodes config powered by Consul
+	 *
+	 * @see PLATFORM-1489
+	 * @return bool
+	 */
+	function hasConsulConfig() {
+		$firstSlaveInfo = $this->getServerInfo( 1 ); // e.g. slave.db-g.service.consul
+		return is_array( $firstSlaveInfo ) && Wikia\Consul\Client::isConsulAddress( $firstSlaveInfo['hostName'] );
 	}
 }

@@ -2,7 +2,7 @@
 
 <?php
 if(count($data) == 5) {
-	echo "<h1>" .wfMsg('myhome-hot-spots-newest') ."</h1>";
+	echo "<h2>" .wfMsg('myhome-hot-spots-newest') ."</h2>";
 ?>
 <ul>
 <?php foreach($data as $item) { ?>
@@ -12,7 +12,7 @@ if(count($data) == 5) {
 <?php } ?>
 </ul>
 <?php } else if(count($data) == 2) {
-	echo "<h1>" .wfMsg('myhome-hot-spots-feed') ."</h1>";
+	echo "<h2>" .wfMsg('myhome-hot-spots-feed') ."</h2>";
 
 	echo '<p>'.wfMsg('myhome-hot-spots-definition', $data['interval']).'</p>';
 	$hotSpotSeverity = 1; //used to set background color heat level. 1 (hottest) - 5 (coolest).

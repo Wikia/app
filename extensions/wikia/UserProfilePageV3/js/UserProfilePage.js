@@ -11,6 +11,7 @@ var UserProfilePage = {
 	forceRedirect: false,
 	reloadUrl: false,
 	bucky: window.Bucky('UserProfilePage'),
+	bannerNotification: null,
 
 	// reference to modal UI component
 	modalComponent: {},
@@ -19,9 +20,11 @@ var UserProfilePage = {
 		'use strict';
 
 		var $userIdentityBoxEdit = $('#userIdentityBoxEdit');
-
 		UserProfilePage.userId = $('#user').val();
 		UserProfilePage.reloadUrl = $('#reloadUrl').val();
+		require(['BannerNotification'], function (BannerNotification) {
+			UserProfilePage.bannerNotification = new BannerNotification().setType('error');
+		});
 
 		if (UserProfilePage.reloadUrl === '' || UserProfilePage.reloadUrl === false) {
 			UserProfilePage.reloadUrl = window.wgScript + '?title=' + window.wgPageName;
@@ -239,8 +242,14 @@ var UserProfilePage = {
 		'use strict';
 
 		var $avatarUploadInput = modal.find('#UPPLightboxAvatar'),
+			$avatarUploadButton = modal.find('#UPPLightboxAvatarUpload'),
 			$avatarForm = modal.find('#usersAvatar'),
 			$sampleAvatars = modal.find('.sample-avatars');
+
+		// VOLDEV-83: Fix confusing file upload interface
+		$avatarUploadButton.on('click', function () {
+			$avatarUploadInput.click();
+		});
 
 		$avatarUploadInput.change(function () {
 			UserProfilePage.saveAvatarAIM($avatarForm);
@@ -296,7 +305,7 @@ var UserProfilePage = {
 							userId: UserProfilePage.userId
 						};
 						UserProfilePage.wasDataChanged = true;
-						window.GlobalNotification.hide();
+						UserProfilePage.bannerNotification.hide();
 					} else {
 						if (typeof (response.result.error) !== 'undefined') {
 							UserProfilePage.error(response.result.error);
@@ -379,7 +388,11 @@ var UserProfilePage = {
 			type: 'POST',
 			url: this.ajaxEntryPoint + '&method=saveUserData',
 			dataType: 'json',
-			data: {'userId': UserProfilePage.userId, 'data': JSON.stringify(userData)},
+			data: {
+				'userId': UserProfilePage.userId,
+				'data': JSON.stringify(userData),
+				'token': window.mw.user.tokens.get('editToken')
+			},
 			success: function (data) {
 				if (data.status === 'error') {
 					UserProfilePage.error(data.errMsg);
@@ -411,7 +424,7 @@ var UserProfilePage = {
 			msg = $.msg('oasis-generic-error');
 		}
 
-		window.GlobalNotification.show(msg, 'error');
+		UserProfilePage.bannerNotification.setContent(msg).show();
 	},
 
 	getFormData: function () {
@@ -424,6 +437,7 @@ var UserProfilePage = {
 				gender: null,
 				website: null,
 				twitter: null,
+				fbPage: null,
 				year: null,
 				month: null,
 				day: null
@@ -437,9 +451,8 @@ var UserProfilePage = {
 				userData[i] = userDataItem;
 			}
 		}
-		if (document.userData.hideEditsWikis.checked) {
-			userData.hideEditsWikis = 1;
-		}
+
+		userData.hideEditsWikis = document.userData.hideEditsWikis.checked ? 1 : 0;
 
 		return userData;
 	},

@@ -1,8 +1,7 @@
 require(
-	['wikia.scrollToLink', 'wikia.window', 'venus.layout', 'jquery', 'wikia.browserDetect'],
-	function(scrollToLink, win, layout, $, browserDetect) {
+	['wikia.scrollToLink', 'wikia.window', 'jquery', 'wikia.browserDetect'],
+	function(scrollToLink, win, $, browserDetect) {
 		'use strict';
-
 		var offset = 0;
 
 		/**
@@ -18,32 +17,39 @@ require(
 		}
 
 		/**
-		 * @desc Initialize: deal with hash passed as part of URL, bind handler for hash change event
-		 */
-		function initScrollToLink() {
-			// offset is negative - we want scroll BEFORE element's top offset
-			offset = -(win.document.getElementById('globalNavigation').offsetHeight +
-				layout.normalTextFontSize); // also scroll a bit, so element won't be sticked to GlobalNavigation
-
-			scrollToLink.disableBrowserJump();
-
-			// setTimeout after 1 second is needed here because of Chrome which sometimes scrolls to top on end of DOM load
-			win.setTimeout(function() {
-				scrollToLink.handleScrollTo(win.location.hash, offset);
-			}, 1000);
-
-			$(win).on('hashchange', hashChangeHandler);
-		}
-
-		/**
 		 * @desc Function for third party extensions - bleed it to window
 		 * @param {Element} element
 		 */
 		win.GlobalNavigationScrollToElement = function(element) {
-			scrollToLink.scrollToElement(element, offset)
+			scrollToLink.scrollToElement(element, offset);
 		};
 
 
-		// bind to DOMReady
-		$(initScrollToLink);
+		$(function() {
+			var $win = $(win),
+				spacingBelowGlobalNav = 10,
+				$globalNavigation = $('#globalNavigation'),
+				globalNavigationHeight = $globalNavigation.height();
+
+			//If location contains hash hide global navigation when page loads.
+			//top:0 hides global navigation because it has "margin-top:-47px".
+			if (win.location.hash) {
+				$globalNavigation.css({
+					top: 0
+				});
+
+				$win.on('load', function() {
+					win.setTimeout(function() {
+						win.scrollTo(0, win.scrollY + offset);
+						$globalNavigation.animate({top: globalNavigationHeight}, 500);
+					}, 0);
+				});
+			}
+
+			// offset is negative - we want scroll BEFORE element's top offset
+			// also scroll a bit, so element won't be sticked to GlobalNavigation
+			offset = -(globalNavigationHeight + spacingBelowGlobalNav);
+
+			$win.on('hashchange', hashChangeHandler)
+		});
 });

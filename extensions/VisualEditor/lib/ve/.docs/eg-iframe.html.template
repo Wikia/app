@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<title>VisualEditor Example</title>
 
-		<!-- STYLES -->
+<!-- STYLES -->
 
 		<!-- example styles -->
 		<style>
@@ -18,7 +18,7 @@
 		</style>
 	</head>
 	<body>
-		<!-- SCRIPTS -->
+<!-- SCRIPTS -->
 
 		<!-- example scripts -->
 		<script>

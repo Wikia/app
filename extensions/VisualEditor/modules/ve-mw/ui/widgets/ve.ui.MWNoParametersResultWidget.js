@@ -12,12 +12,11 @@
  * @extends OO.ui.OptionWidget
  *
  * @constructor
- * @param {Mixed} data Item data
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWNoParametersResultWidget = function VeUiMWNoParametersResultWidget( data, config ) {
+ve.ui.MWNoParametersResultWidget = function VeUiMWNoParametersResultWidget( config ) {
 	// Parent constructor
-	OO.ui.OptionWidget.call( this, data, config );
+	OO.ui.OptionWidget.call( this, config );
 
 	// Initialization
 	this.$element.addClass( 've-ui-mwNoParametersResultWidget' );

@@ -19,7 +19,7 @@
 ve.ui.MWTransclusionContentPage = function VeUiMWTransclusionContentPage( content, name, config ) {
 	// Configuration initialization
 	config = ve.extendObject( {
-		'scrollable': false
+		scrollable: false
 	}, config );
 
 	// Parent constructor
@@ -28,27 +28,27 @@ ve.ui.MWTransclusionContentPage = function VeUiMWTransclusionContentPage( conten
 	// Properties
 	this.content = content;
 	this.textInput = new OO.ui.TextInputWidget( {
-			'$': this.$,
-			'multiline': true,
-			'autosize': true,
-			'classes': [ 've-ui-mwTransclusionDialog-input' ]
-		} )
+		$: this.$,
+		multiline: true,
+		autosize: true,
+		classes: [ 've-ui-mwTransclusionDialog-input' ]
+	} )
 		.setValue( this.content.getValue() )
-		.connect( this, { 'change': 'onTextInputChange' } );
+		.connect( this, { change: 'onTextInputChange' } );
 	this.removeButton = new OO.ui.ButtonWidget( {
-			'$': this.$,
-			'frameless': true,
-			'icon': 'remove',
-			'title': ve.msg( 'visualeditor-dialog-transclusion-remove-content' ),
-			'flags': [ 'destructive' ],
-			'classes': [ 've-ui-mwTransclusionDialog-removeButton' ]
-		} )
-		.connect( this, { 'click': 'onRemoveButtonClick' } );
+		$: this.$,
+		framed: false,
+		icon: 'remove',
+		title: ve.msg( 'visualeditor-dialog-transclusion-remove-content' ),
+		flags: [ 'destructive' ],
+		classes: [ 've-ui-mwTransclusionDialog-removeButton' ]
+	} )
+		.connect( this, { click: 'onRemoveButtonClick' } );
 	this.valueFieldset = new OO.ui.FieldsetLayout( {
-		'$': this.$,
-		'label': ve.msg( 'visualeditor-dialog-transclusion-content' ),
-		'icon': 'source',
-		'$content': this.textInput.$element
+		$: this.$,
+		label: ve.msg( 'visualeditor-dialog-transclusion-content' ),
+		icon: 'source',
+		$content: this.textInput.$element
 	} );
 
 	// Initialization

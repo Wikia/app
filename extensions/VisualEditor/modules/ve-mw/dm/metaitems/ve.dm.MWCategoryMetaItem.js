@@ -38,13 +38,13 @@ ve.dm.MWCategoryMetaItem.static.toDataElement = function ( domElements ) {
 		matches = href.match( /^((?:\.\.?\/)*)(.*?)(?:#(.*))?$/ ),
 		rawSortkey = matches[3] || '';
 	return {
-		'type': this.name,
-		'attributes': {
-			'hrefPrefix': matches[1],
-			'category': decodeURIComponent( matches[2] ).replace( /_/g, ' ' ),
-			'origCategory': matches[2],
-			'sortkey': decodeURIComponent( rawSortkey ).replace( /_/g, ' ' ),
-			'origSortkey': rawSortkey
+		type: this.name,
+		attributes: {
+			hrefPrefix: matches[1],
+			category: decodeURIComponent( matches[2] ).replace( /_/g, ' ' ),
+			origCategory: matches[2],
+			sortkey: decodeURIComponent( rawSortkey ).replace( /_/g, ' ' ),
+			origSortkey: rawSortkey
 		}
 	};
 };
@@ -58,7 +58,7 @@ ve.dm.MWCategoryMetaItem.static.toDomElements = function ( dataElement, doc ) {
 		origCategory = dataElement.attributes.origCategory || '',
 		origSortkey = dataElement.attributes.origSortkey || '',
 		normalizedOrigCategory = decodeURIComponent( origCategory ).replace( /_/g, ' ' ),
-		normalizedOrigSortkey = decodeURIComponent( origSortkey );
+		normalizedOrigSortkey = decodeURIComponent( origSortkey ).replace( /_/g, ' ' );
 	if ( normalizedOrigSortkey === sortkey ) {
 		sortkey = origSortkey;
 	} else {

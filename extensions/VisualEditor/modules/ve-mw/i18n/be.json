@@ -3,7 +3,8 @@
 		"authors": [
 			"Чаховіч Уладзіслаў",
 			"Дзяніс Тутэйшы",
-			"Artificial123"
+			"Artificial123",
+			"Amire80"
 		]
 	},
 	"tooltip-ca-createsource": "Стварыць старонку ў рэдактары зыходнага тэксту",
@@ -37,7 +38,7 @@
 	"visualeditor-savedialog-title-save": "Захаваць змены",
 	"visualeditor-saveerror": "Памылка захавання дадзеных на сервер: $1.",
 	"visualeditor-serializeerror": "Памылка загрузкі дадзеных з сервера: $1.",
-	"visualeditor-toolbar-savedialog": "Праверыць і захаваць",
+	"visualeditor-toolbar-savedialog": "Захаваць старонку",
 	"visualeditor-usernamespacepagelink": "Project:Асабістая прастора",
 	"visualeditor-viewpage-savewarning": "Вы сапраўды жадаеце вярнуцца ў рэжым прагляду, не захаваўшы змены?",
 	"visualeditor-viewpage-savewarning-discard": "Адмяніць змены",

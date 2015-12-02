@@ -17,7 +17,7 @@ class CrunchyrollVideoHandler extends VideoHandler {
 	 * @inheritdoc
 	 */
 	public function getProviderDetailUrl() {
-		$metadata = $this->getMetadata( true );
+		$metadata = $this->getVideoMetadata( true );
 		$url = $metadata['videoUrl'];
 
 		return $url;

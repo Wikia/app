@@ -28,7 +28,10 @@
 		'pageType': window.wikiaPageType,
 		'isCorporatePage': (window.wikiaPageIsCorporate ? 'Yes' : 'No'),
 		'verticalName': window.verticalName,
-		'visitorType': window.visitorType
+		'visitorType': window.visitorType,
+		'isPowerUserAdmin': !!window.wikiaIsPowerUserAdmin,
+		'isPowerUserFrequent': !!window.wikiaIsPowerUserFrequent,
+		'isPowerUserLifetime': !!window.wikiaIsPowerUserLifetime
 	}]);
 
 	//This approach is hacky and we should use eventHandler provided by Qualaroo.

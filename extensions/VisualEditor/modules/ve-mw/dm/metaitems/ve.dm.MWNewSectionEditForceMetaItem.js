@@ -33,7 +33,7 @@ ve.dm.MWNewSectionEditForceMetaItem.static.matchTagNames = [ 'meta' ];
 ve.dm.MWNewSectionEditForceMetaItem.static.matchRdfaTypes = [ 'mw:PageProp/newsectionlink' ];
 
 ve.dm.MWNewSectionEditForceMetaItem.static.toDataElement = function ( ) {
-	return { 'type': this.name };
+	return { type: this.name };
 };
 
 ve.dm.MWNewSectionEditForceMetaItem.static.toDomElements = function ( dataElement, doc ) {

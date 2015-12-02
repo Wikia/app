@@ -21,7 +21,7 @@ ve.ui.WikiaTemplateSearchWidget = function VeUiWikiaTemplateSearchWidget( config
 	ve.ui.WikiaTemplateSearchWidget.super.call( this, config );
 
 	// Properties
-	this.suggestions = new OO.ui.SelectWidget( { '$': this.$ } );
+	this.suggestions = new OO.ui.SelectWidget( { $: this.$ } );
 	this.$suggestions = this.$( '<div>' );
 	this.request = null;
 	this.timeout = null;
@@ -29,11 +29,11 @@ ve.ui.WikiaTemplateSearchWidget = function VeUiWikiaTemplateSearchWidget( config
 	this.chunkedResults = 30;
 
 	// Events
-	this.$results.on( 'scroll', ve.bind( this.onResultsScroll, this ) );
-	this.$suggestions.on( 'scroll', ve.bind( this.onSuggestionsScroll, this ) );
+	this.$results.on( 'scroll', this.onResultsScroll.bind( this ) );
+	this.$suggestions.on( 'scroll', this.onSuggestionsScroll.bind( this ) );
 	this.suggestions.connect( this, {
-		'highlight': 'onSuggestionsHighlight',
-		'select': 'onSuggestionsSelect'
+		highlight: 'onSuggestionsHighlight',
+		select: 'onSuggestionsSelect'
 	} );
 
 	// Initialization
@@ -75,7 +75,7 @@ ve.ui.WikiaTemplateSearchWidget.prototype.onQueryChange = function () {
 
 	this.value = this.query.getValue();
 	if ( this.value.trim().length !== 0 ) {
-		this.timeout = setTimeout( ve.bind( this.requestSearch, this ), 200 );
+		this.timeout = setTimeout( this.requestSearch.bind( this ), 200 );
 		this.$suggestions.hide();
 		this.$results.show();
 	} else {
@@ -134,15 +134,12 @@ ve.ui.WikiaTemplateSearchWidget.prototype.getOptionsFromData = function ( data )
 
 	for ( i = 0; i < data.length; i++ ) {
 		options.push(
-			new ve.ui.WikiaTemplateOptionWidget(
-				data[i],
-				{
-					'$': this.$,
-					'icon': 'template-inverted',
-					'label': data[i].title,
-					'appears': data[i].uses || null
-				}
-			)
+			new ve.ui.WikiaTemplateOptionWidget( {
+				data: data[i],
+				$: this.$,
+				icon: 'template-inverted',
+				label: data[i].title
+			} )
 		);
 	}
 
@@ -155,15 +152,15 @@ ve.ui.WikiaTemplateSearchWidget.prototype.getOptionsFromData = function ( data )
 ve.ui.WikiaTemplateSearchWidget.prototype.requestSearch = function () {
 	this.query.pushPending();
 	this.request = $.ajax( {
-		'url': mw.util.wikiScript( 'api' ),
-		'data': {
-			'format': 'json',
-			'action': 'templatesearch',
-			'query': this.value
+		url: mw.util.wikiScript( 'api' ),
+		data: {
+			format: 'json',
+			action: 'templatesearch',
+			query: this.value
 		}
 	} )
-		.always( ve.bind( this.onRequestSearchAlways, this ) )
-		.done( ve.bind( this.onRequestSearchDone, this ) );
+		.always( this.onRequestSearchAlways.bind( this ) )
+		.done( this.onRequestSearchDone.bind( this ) );
 };
 
 /**
@@ -172,15 +169,15 @@ ve.ui.WikiaTemplateSearchWidget.prototype.requestSearch = function () {
 ve.ui.WikiaTemplateSearchWidget.prototype.requestSuggestions = function () {
 	this.suggestionsPending = true;
 	this.request = $.ajax( {
-		'url': mw.util.wikiScript( 'api' ),
-		'data': {
-			'format': 'json',
-			'action': 'templatesuggestions',
-			'offset': this.suggestionsOffset
+		url: mw.util.wikiScript( 'api' ),
+		data: {
+			format: 'json',
+			action: 'templatesuggestions',
+			offset: this.suggestionsOffset
 		}
 	} )
-		.always( ve.bind( this.onRequestSuggestionsAlways, this ) )
-		.done( ve.bind( this.onRequestSuggestionsDone, this ) );
+		.always( this.onRequestSuggestionsAlways.bind( this ) )
+		.done( this.onRequestSuggestionsDone.bind( this ) );
 };
 
 /**
@@ -205,14 +202,14 @@ ve.ui.WikiaTemplateSearchWidget.prototype.onRequestSearchDone = function ( data 
 
 	for ( i = 0; i < data.templates.length; i++ ) {
 		this.allResults.push( {
-			'title': data.templates[i]
+			title: data.templates[i]
 		} );
 	}
 
 	// Track
 	ve.track( 'wikia', {
-		'action': ve.track.actions.SUCCESS,
-		'label': 'template-insert-search'
+		action: ve.track.actions.SUCCESS,
+		label: 'template-insert-search'
 	} );
 
 	this.displayResults();

@@ -10,28 +10,28 @@ class WAMService extends Service {
 	const WAM_BLACKLIST_EXT_VAR_NAME = 'wgEnableContentWarningExt';
 	const WAM_EXCLUDE_FLAG_NAME = 'wgExcludeFromWAM';
 	const CACHE_DURATION = 86400; /* 24 hours */
-	const MEMCACHE_VER = '1.06';
+	const MEMCACHE_VER = '2';
 
 	protected $verticalIds = [
-		WikiFactoryHub::HUB_ID_OTHER,
-		WikiFactoryHub::HUB_ID_TV,
-		WikiFactoryHub::HUB_ID_VIDEO_GAMES,
-		WikiFactoryHub::HUB_ID_BOOKS,
-		WikiFactoryHub::HUB_ID_COMICS,
-		WikiFactoryHub::HUB_ID_LIFESTYLE,
-		WikiFactoryHub::HUB_ID_MUSIC,
-		WikiFactoryHub::HUB_ID_MOVIES,
+		WikiFactoryHub::VERTICAL_ID_OTHER,
+		WikiFactoryHub::VERTICAL_ID_TV,
+		WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES,
+		WikiFactoryHub::VERTICAL_ID_BOOKS,
+		WikiFactoryHub::VERTICAL_ID_COMICS,
+		WikiFactoryHub::VERTICAL_ID_LIFESTYLE,
+		WikiFactoryHub::VERTICAL_ID_MUSIC,
+		WikiFactoryHub::VERTICAL_ID_MOVIES,
 	];
 
 	protected static $verticalNames = [
-		WikiFactoryHub::HUB_ID_OTHER => 'Other',
-		WikiFactoryHub::HUB_ID_TV => 'TV',
-		WikiFactoryHub::HUB_ID_VIDEO_GAMES => 'Games',
-		WikiFactoryHub::HUB_ID_BOOKS => 'Books',
-		WikiFactoryHub::HUB_ID_COMICS => 'Comics',
-		WikiFactoryHub::HUB_ID_LIFESTYLE => 'Lifestyle',
-		WikiFactoryHub::HUB_ID_MUSIC => 'Music',
-		WikiFactoryHub::HUB_ID_MOVIES => 'Movies',
+		WikiFactoryHub::VERTICAL_ID_OTHER => 'Other',
+		WikiFactoryHub::VERTICAL_ID_TV => 'TV',
+		WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES => 'Games',
+		WikiFactoryHub::VERTICAL_ID_BOOKS => 'Books',
+		WikiFactoryHub::VERTICAL_ID_COMICS => 'Comics',
+		WikiFactoryHub::VERTICAL_ID_LIFESTYLE => 'Lifestyle',
+		WikiFactoryHub::VERTICAL_ID_MUSIC => 'Music',
+		WikiFactoryHub::VERTICAL_ID_MOVIES => 'Movies',
 	];
 
 	protected $defaultIndexOptions = array(
@@ -58,6 +58,10 @@ class WAMService extends Service {
 		$memKey = wfSharedMemcKey('datamart', self::MEMCACHE_VER, 'wam', $wikiId);
 
 		$getData = function () use ($wikiId) {
+			if ( $this->isDisabled() ) {
+				return 0;
+			}
+
 			$db = $this->getDB();
 
 			$result = $db->select(
@@ -112,6 +116,11 @@ class WAMService extends Service {
 			'wam_results_total' => 0
 		);
 
+		if ( $this->isDisabled() ) {
+			wfProfileOut( __METHOD__ );
+			return $wamIndex;
+		}
+
 		$db = $this->getDB();
 
 		$tables = $this->getWamIndexTables();
@@ -160,6 +169,10 @@ class WAMService extends Service {
 			'min_date' => null
 		);
 
+		if ( $this->isDisabled() ) {
+			return $dates;
+		}
+
 		wfProfileIn(__METHOD__);
 
 		$db = $this->getDB();
@@ -193,6 +206,10 @@ class WAMService extends Service {
 		$memKey = wfSharedMemcKey( 'wam-languages', self::MEMCACHE_VER, $date );
 
 		$getData = function () use ( $date ) {
+			if ( $this->isDisabled() ) {
+				return [];
+			}
+
 			$db = $this->getDB();
 			$result = $db->select(
 				[
@@ -302,6 +319,8 @@ class WAMService extends Service {
 			}
 		}
 
+		$conds[] = '(dw.url IS NOT NULL AND dw.title IS NOT NULL)';
+
 		return $conds;
 	}
 
@@ -406,5 +425,14 @@ class WAMService extends Service {
 		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
 		$db->clearFlag( DBO_TRX );
 		return $db;
+	}
+
+	/**
+	 * wgStatsDBEnabled can be used to disable queries to statsdb_mart database
+	 *
+	 * @return bool
+	 */
+	protected function isDisabled() {
+		return empty( F::app()->wg->StatsDBEnabled );
 	}
 }

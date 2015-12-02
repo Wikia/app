@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class AchAjaxService {
 
 	public static function editPlatinumBadge() {
@@ -85,7 +87,7 @@ class AchAjaxService {
 					$awardingService = new AchAwardingService();
 					$awardingService->awardCustomNotInTrackBadge($userToAward, $badge_type_id);
 
-					if($userToAward->getEmail() != null && !($userToAward->getOption('hidepersonalachievements'))) {
+					if($userToAward->getEmail() != null && !($userToAward->getGlobalPreference( 'hidepersonalachievements' ))) {
 						$bodyParams = array(
 							htmlspecialchars($userToAward->getName()),
 							wfMsgHtml($badgeNameKey),
@@ -111,7 +113,17 @@ class AchAjaxService {
 			if ( empty( $badgeImage ) ) {
 				$badgeImage = wfFindFile( AchConfig::getInstance()->getBadgePictureName( $badge_type_id ) );
 			}
-			
+
+			if ( $badgeImage instanceof File ) {
+				$badgeImageUrl = $badgeImage->createThumb( 90 ) . "?cb=" . rand();
+			} else {
+				$badgeImageUrl = "";
+				WikiaLogger::instance()->error( 'Error Reporter: Badge Image not found', [
+					'method' => __METHOD__,
+					'badge_type_id' => $badge_type_id
+				] );
+			}
+
 			if ( empty( $hoverImage ) ) {
 				$hoverImage = wfFindFile( AchConfig::getInstance()->getHoverPictureName( $badge_type_id ) );
 			}
@@ -120,7 +132,7 @@ class AchAjaxService {
 			$badge = array();
 			$badge['type_id'] = $badge_type_id;
 			$badge['enabled'] = $wgRequest->getBool('status');
-			$badge['thumb_url'] = $badgeImage->createThumb( 90 ) . "?cb=" . rand();
+			$badge['thumb_url'] = $badgeImageUrl;
 			$badge['awarded_users'] = AchPlatinumService::getAwardedUserNames($badge_type_id, true);
 			$badge[ 'is_sponsored' ] = $isSponsored;
 			$badge[ 'badge_tracking_url' ] = $wgRequest->getText( 'badge_impression_pixel_url' );

@@ -1,4 +1,4 @@
-<div id="UserLoginDropdown" class="UserLoginDropdown">
+<div id="UserLoginDropdown" class="UserLoginDropdown global-nav-dropdown">
 	<div class="ajaxRegisterContainer"><?= $registerLink ?></div>
 	<?
 	$tabIndex = 0;
@@ -44,9 +44,8 @@
 				'tabindex' => ++$tabIndex,
 			],
 			[
-				'type' => 'nirvanaview',
-				'controller' => 'UserLogin',
-				'view' => 'forgotPasswordLink',
+				'type' => 'custom',
+				'output' => F::app()->renderPartial( 'UserLogin', 'forgotPasswordLink' ),
 			],
 			[
 				'type' => 'checkbox',

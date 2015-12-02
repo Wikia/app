@@ -17,7 +17,7 @@ head {
 	color: $color-text;
 	padding-left: 6px;
 
-	@if ( $responsive-layout-enabled ) {
+	@if ( $responsive-or-breakpoints-layout-enabled ) {
 		padding: 0 10px;
 	}
 

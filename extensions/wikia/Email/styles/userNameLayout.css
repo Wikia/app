@@ -1,0 +1,35 @@
+.avatar-wrapper {
+	margin: 20px 0;
+	padding-right: 30px;
+}
+
+.avatar {
+	border-radius: 100%;
+}
+
+.avatar img {
+	height: 50px;
+	width: 50px;
+}
+
+.border {
+	border-top: 1px solid #e6ebf2;
+	border-bottom: 1px solid #e6ebf2;
+}
+
+.greeting p:last-child {
+	font-weight: bold;
+}
+
+.message {
+	margin: 20px 0;
+}
+
+.message p {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.username {
+	font-size: 12px;
+}

@@ -1,9 +1,12 @@
-/* global GlobalNotification, Modernizr */
+/* global Modernizr */
 
-(function (window, $) {
+(function (window, $, mw) {
 	'use strict';
 
-	var lockedFeatures = {};
+	var lockedFeatures = {},
+	    fadingFeatures = [
+		'wgEnableNjordExt'
+	    ];
 
 	function init() {
 		var $wikifeatures = $('#WikiFeatures'),
@@ -26,7 +29,8 @@
 				isEnabled = $el.hasClass('on');
 
 				if (isEnabled) {
-					modalTitle = $.msg('wikifeatures-deactivate-heading', feature.find('h3').contents(':first').text().trim());
+					modalTitle = $.msg('wikifeatures-deactivate-heading', feature.find('h3')
+                        .contents(':first').text().trim());
 
 					require(['wikia.ui.factory'], function (uiFactory) {
 						uiFactory.init(['modal']).then(function (uiModal) {
@@ -172,7 +176,8 @@
 							format: 'json',
 							feature: featureElem.data('name'),
 							category: modal.find('select[name=feedback] option:selected').val(),
-							message: comment.val()
+							message: comment.val(),
+							token: mw.user.tokens.get('editToken')
 						}, function (res) {
 							if (res.result === 'ok') {
 								clearTimeout(msgHandle);
@@ -187,7 +192,7 @@
 									statusMsg.fadeOut(1000);
 								}, 4000);
 							} else {
-								GlobalNotification.show('Something is wrong', 'error');
+								new window.BannerNotification('Something is wrong', 'error').show();
 							}
 						});
 					});
@@ -206,12 +211,16 @@
 			method: 'toggleFeature',
 			format: 'json',
 			feature: featureName,
-			enabled: enable
+			enabled: enable,
+			token: mw.user.tokens.get('editToken')
 		}, function (res) {
 			if (res.result === 'ok') {
 				lockedFeatures[featureName] = false;
+				if (fadingFeatures.indexOf(featureName) !== -1) {
+					$('.feature[data-name="' + featureName + '"]').addClass('faded');
+				}
 			} else {
-				GlobalNotification.show(res.error, 'error');
+				new window.BannerNotification(res.error, 'error').show();
 			}
 		});
 	}
@@ -220,4 +229,4 @@
 		init();
 	});
 
-})(window, jQuery);
+})(window, jQuery, mediaWiki);

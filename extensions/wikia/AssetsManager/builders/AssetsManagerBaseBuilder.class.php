@@ -34,6 +34,11 @@ class AssetsManagerBaseBuilder {
 		}
 	}
 
+	/**
+	 * @param float $processingTimeStart Unix timestamp in microseconds used for profiling (when profiling is forced)
+	 * @return string
+	 * @throws Exception
+	 */
 	public function getContent( $processingTimeStart = null ) {
 		$minifyTimeStart = null;
 
@@ -136,11 +141,14 @@ class AssetsManagerBaseBuilder {
 		unlink($tempInFile);
 
 		if ( $retval !== 0 ) {
+			$e = new Exception( 'JS minification failed', $retval );
+
 			\Wikia\Logger\WikiaLogger::instance()->error( 'AssetsManagerBaseBuilder::minifyJS failed', [
-				'exception' => new Exception()
+				'exception' => $e,
+				'output' => $out,
 			]);
 
-			throw new Exception( 'JS minification failed' );
+			throw $e;
 		}
 
 		wfProfileOut(__METHOD__);

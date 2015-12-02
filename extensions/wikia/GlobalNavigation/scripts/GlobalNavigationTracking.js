@@ -11,7 +11,7 @@ $(function ($) {
 	 */
 	track = Wikia.Tracker.buildTrackingFunction({
 		category: 'search',
-		trackingMethod: 'both',
+		trackingMethod: 'analytics',
 		action: Wikia.Tracker.ACTIONS.CLICK
 	});
 

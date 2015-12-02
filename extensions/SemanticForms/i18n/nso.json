@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Mohau"
+		]
+	},
+	"sf_createproperty_propname": "Leina:",
+	"sf_createproperty_proptype": "Mohuta:",
+	"sf_createtemplate_deletefield": "Phumula",
+	"sf_createform_add": "Lokela",
+	"sf_createcategory_name": "Leina la sehlopha:",
+	"sf_formedit_createtitle": "Hloma $1: $2",
+	"sf_formedit_edittitle": "Fetola $1: $2"
+}

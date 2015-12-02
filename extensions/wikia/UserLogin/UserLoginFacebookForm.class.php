@@ -55,9 +55,9 @@ class UserLoginFacebookForm extends UserLoginForm {
 	 * @return User A new user object
 	 */
 	public function addNewAccount() {
-		return UserLoginHelper::callWithCaptchaDisabled(function() {
+		return UserLoginHelper::callWithCaptchaDisabled( function() {
 			return $this->addNewAccountInternal();
-		});
+		} );
 	}
 
 	/**
@@ -67,25 +67,25 @@ class UserLoginFacebookForm extends UserLoginForm {
 	 * @param bool $autocreate
 	 * @return User
 	 */
-	public function initUser( User $user, $autocreate ) {
+	public function initUser( User &$user, $autocreate ) {
 
-		$user = parent::initUser( $user, $autocreate, $this->hasConfirmedEmail );
+		$ret = parent::initUser( $user, $autocreate, $this->hasConfirmedEmail );
 
-		if ( $user instanceof User ) {
+		if ( $ret ) {
 
 			$this->connectWithFacebook( $user );
 			$this->saveUserGender( $user );
 
 			if ( $this->hasConfirmedEmail ) {
 				$this->confirmUser( $user );
-				$user->setCookies();
+				UserLoginHelper::setCookiesForFacebookUser( $user, $this->getRequest()->response() );
 				$this->addNewUserToLog( $user );
 			} else {
 				$this->sendConfirmationEmail( $user );
 			}
 		}
 
-		return $user;
+		return $ret;
 	}
 
 	/**
@@ -111,7 +111,7 @@ class UserLoginFacebookForm extends UserLoginForm {
 		$fbUserInfo = FacebookClient::getInstance()->getUserInfo();
 		$gender = $fbUserInfo->getProperty( 'gender' );
 		if ( !is_null( $gender ) ) {
-			$user->setOption( 'gender', $gender );
+			$user->setGlobalAttribute( 'gender', $gender );
 			$user->saveSettings();
 		}
 	}

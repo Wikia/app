@@ -94,7 +94,7 @@ class WikiaPhotoGalleryHelper {
 
 		wfProfileIn( __METHOD__ );
 
-		if ( F::app()->checkSkin( ['oasis', 'venus'] ) ) {
+		if ( F::app()->checkSkin( [ 'oasis' ] ) ) {
 			$app->wg->Out->addScript("<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js\"></script>\n");
 
 			// load message for MW toolbar button tooltip
@@ -833,7 +833,7 @@ class WikiaPhotoGalleryHelper {
 				$editPage->summary = wfMsgForContent('wikiaPhotoGallery-edit-summary');
 
 				// watch all my edits / preserve watchlist (RT #59138)
-				if ($wgUser->getOption('watchdefault')) {
+				if ($wgUser->getGlobalPreference('watchdefault')) {
 					$editPage->watchthis = true;
 				}
 				else {

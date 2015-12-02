@@ -699,8 +699,9 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''Odjavili ste se.'''
 
-Možete nastaviti s korištenjem {{SITENAME}} neprijavljeni, ili se možete ponovo [[Special:UserLogin|prijaviti]] pod istim ili drugim imenom.
+Možete nastaviti s korištenjem {{SITENAME}} neprijavljeni, ili se možete ponovo $1 pod istim ili drugim imenom.
 Neke se stranice mogu prikazivati kao da ste još uvijek prijavljeni, sve dok ne očistite međuspremnik svog preglednika.",
+'logouttext-link-text'       => 'prijaviti',
 'welcomecreation'            => '== Dobrodošli, $1! ==
 Vaš je suradnički račun otvoren.
 
@@ -834,7 +835,7 @@ $2
 
 {{PLURAL:$3|Ova privremena lozinka|Ove privremene lozinke}} će isteći u {{PLURAL:$5|jedan dan|$5 dana}}.
 Trebate se prijaviti i odabrati novu lozinku. Ukoliko je netko drugi napravio ovaj
-zahtjev, ili ako ste sjeti Vaše izvorne lozinke, a vi je više ne želite promijeniti, 
+zahtjev, ili ako ste sjeti Vaše izvorne lozinke, a vi je više ne želite promijeniti,
 možete zanemariti ovu poruku i nastavite koristiti staru lozinku.',
 'passwordreset-emailtext-user'     => 'Suradnik $1 na {{SITENAME}} zatražio podsjetnik o pojedinostima vašeg računa za {{SITENAME}}
 ($4). Sljedeći {{PLURAL:$3|račun suradnika je|računi suradnika su}} povezani s ovom e-mail adresom:
@@ -843,7 +844,7 @@ $2
 
 {{PLURAL:$3|Ova privremena lozinka|Ove privremene lozinke}} će isteći u {{PLURAL:$5|jedan dan|$5 dana}}.
 Trebate se prijaviti i odabrati novu lozinku. Ukoliko je netko drugi napravio ovaj
-zahtjev, ili ako ste sjeti Vaše izvorne lozinke, a vi je više ne želite promijeniti, 
+zahtjev, ili ako ste sjeti Vaše izvorne lozinke, a vi je više ne želite promijeniti,
 možete zanemariti ovu poruku i nastavite koristiti staru lozinku.',
 'passwordreset-emailelement'       => 'Suradničko ime: $1
 Privremena lozinka: $2',
@@ -1725,7 +1726,7 @@ Ako još uvijek želite postaviti svoju datoteku, idite nazad i postavite ju pod
 'php-uploaddisabledtext'      => 'Postavljanja datoteka su onemogućena u PHP-u. Molimo provjerite postavke za postavljanje datoteka.',
 'uploadscripted'              => 'Ova datoteka sadrži HTML ili skriptu, što može dovesti do grešaka u web pregledniku.',
 'uploadvirus'                 => 'Datoteka sadrži virus! Podrobnije: $1',
-'uploadjava'                  => 'Datoteka je ZIP koja sadrži Java .class datotoeku. 
+'uploadjava'                  => 'Datoteka je ZIP koja sadrži Java .class datotoeku.
 Postavljanje Java datoteka nije dopušteno, jer mogu izazvati zaobilazak sigurnosnih ograničenja.',
 'upload-source'               => 'Izvorna datoteka',
 'sourcefilename'              => 'Ime datoteke na Vašem računalu:',
@@ -2627,16 +2628,16 @@ To znači: 1. ako pogriješite, možete opet preimenovati stranicu na stari nasl
 
 '''Upozorenje!'''
 Ovo može biti drastična i neočekivana promjena kad su u pitanju popularne stranice. Molimo dobro razmislite prije nego što preimenujete stranicu.",
-'movepagetext-noredirectfixer' => "Pomoću donjeg obrasca ćete preimenovati stranicu i premjestiti sve stare izmjene na novo ime. 
-Stari će se naslov pretvoriti u stranicu koja automatski preusmjerava na novi naslov. 
-Budite sigurni da ste provjerili [[Special:DoubleRedirects|dvostruka]] ili [[Special:BrokenRedirects|nevaljana preusmjeravanja]]. 
+'movepagetext-noredirectfixer' => "Pomoću donjeg obrasca ćete preimenovati stranicu i premjestiti sve stare izmjene na novo ime.
+Stari će se naslov pretvoriti u stranicu koja automatski preusmjerava na novi naslov.
+Budite sigurni da ste provjerili [[Special:DoubleRedirects|dvostruka]] ili [[Special:BrokenRedirects|nevaljana preusmjeravanja]].
 Vi ste odgovorni za to da poveznice i dalje povezuju tamo gdje treba.
 
-Imajte na umu da stranica '''neće''' biti premještena ako već postoji stranica s novim naslovom, osim u slučaju prazne stranice ili stranice za preusmjeravanje koja nema nikakvih starih izmjena. 
-To znači da stranicu možete preimenovati u prethodno ime ukoliko ste pogriješili te ne možete pisati preko postojeće stranice. 
+Imajte na umu da stranica '''neće''' biti premještena ako već postoji stranica s novim naslovom, osim u slučaju prazne stranice ili stranice za preusmjeravanje koja nema nikakvih starih izmjena.
+To znači da stranicu možete preimenovati u prethodno ime ukoliko ste pogriješili te ne možete pisati preko postojeće stranice.
 
-'''Upozorenje!''' 
-Ovo može biti drastična i neočekivana promjena kad su u pitanju popularne stranice; 
+'''Upozorenje!'''
+Ovo može biti drastična i neočekivana promjena kad su u pitanju popularne stranice;
 budite sigurni da razumijete posljedice ove akcije prije nastavka.",
 'movepagetalktext'             => "Stranica za razgovor, ako postoji, automatski će se premjestiti zajedno sa stranicom koju premještate. '''Stranica za razgovor neće se premjestiti ako:'''
 *premještate stranicu iz jednog prostora u drugi,
@@ -2769,7 +2770,7 @@ Transwiki uvoz stranica je zabilježen u [[Special:Log/import|evidenciji uvoza s
 'import-interwiki-namespace' => 'Odredišni imenski prostor:',
 'import-upload-filename'     => 'Ime datoteke:',
 'import-comment'             => 'Komentar:',
-'importtext'                 => 'Molimo izvezite datoteku iz izvorišnog wikija koristeći [[Special:Export|izvozno pomagalo]]. 
+'importtext'                 => 'Molimo izvezite datoteku iz izvorišnog wikija koristeći [[Special:Export|izvozno pomagalo]].
 Snimite je na svoje računalo i postavite je ovdje.',
 'importstart'                => 'Uvozim stranice...',
 'import-revision-count'      => '$1 {{PLURAL:$1|izmjena|izmjene|izmjena}}',
@@ -3476,12 +3477,12 @@ Valjanost ovog potvrdnog koda istječe $4.',
 'confirmemail_body_set'     => 'Netko, najvjerojatnije vi, s IP adrese $1,
 otvorio je suradnički račun pod imenom "$2" s ovom e-mail adresom na {{SITENAME}}.
 
-Kako biste potvrdili da je ovaj suradnički račun uistinu vaš i uključili 
+Kako biste potvrdili da je ovaj suradnički račun uistinu vaš i uključili
 e-mail naredbe na {{SITENAME}}, otvorite u vašem pregledniku sljedeću poveznicu:
 
 $3
 
-Ako ovaj suradnički račun *ne* pripada vama, slijedite ovaj link 
+Ako ovaj suradnički račun *ne* pripada vama, slijedite ovaj link
 kako biste poništili potvrdu e-mail adrese:
 
 $5

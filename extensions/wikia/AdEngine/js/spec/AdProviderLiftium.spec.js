@@ -1,15 +1,20 @@
-describe('AdProviderLiftium', function(){
-	it('canHandleSlot', function() {
-		var scriptWriterMock,
-			logMock = function() {},
+/*global describe, it, modules, expect*/
+describe('AdProviderLiftium', function () {
+	'use strict';
+	it('canHandleSlot', function () {
+		var scriptWriterMock = {},
+			logMock = function () { return; },
 			windowMock = {},
-			documentMock,
-			slotTweakerMock,
-			Liftium,
+			documentMock = {},
+			slotTweakerMock = {},
 			adProviderLiftium;
 
 		adProviderLiftium = modules['ext.wikia.adEngine.provider.liftium'](
-			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock
+			documentMock,
+			logMock,
+			scriptWriterMock,
+			windowMock,
+			slotTweakerMock
 		);
 
 		expect(adProviderLiftium.canHandleSlot(['foo'])).toBeFalsy('foo');

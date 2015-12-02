@@ -152,8 +152,8 @@ class SOTD extends SpecialPage
 		{
 			$user = User::newFromId( $userId );
 			$userLink = $user->getUserPage()->getPrefixedText();
-			$userText = $user->getOption('nickname');
-			if ( empty ( $userText ) || $user->getOption('fancysig') )
+			$userText = $user->getGlobalAttribute('nickname');
+			if ( empty ( $userText ) || $user->getGlobalAttribute('fancysig') )
 			{
 				$userText = $user->getName();
 			}

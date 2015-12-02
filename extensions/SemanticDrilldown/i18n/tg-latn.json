@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Liangent"
+		]
+	},
+	"browsedata": "Mururi doda",
+	"sd_browsedata_choosecategory": "Gurūhero intixob kuned",
+	"sd_browsedata_viewcategory": "nigaristan gurūh",
+	"sd_browsedata_subcategory": "Zergurūh",
+	"sd_browsedata_other": "Digar",
+	"sd_browsedata_none": "Heç",
+	"sd_browsedata_or": "jo",
+	"sd_browsedata_daterangestart": "Şurū':",
+	"sd_browsedata_daterangeend": "Oxir:",
+	"sd_createfilter_requirefilter": "Qabl az namoişi in jake, filtri digar bojad intixob şavad:"
+}

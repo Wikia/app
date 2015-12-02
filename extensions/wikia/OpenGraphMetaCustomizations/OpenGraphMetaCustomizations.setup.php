@@ -58,9 +58,5 @@ function egOgmcParserOutputApplyValues( OutputPage $out, ParserOutput $parserOut
 		$out->mDescription = $parserOutput->getProperty('description');
 	}
 
-	if ($page_id = Wikia::getFacebookDomainId()) {
-		$out->addMeta('property:fb:page_id', $page_id);
-	}
-
 	wfProfileOut(__METHOD__);
 } // end egOgmcParserOutputApplyValues()

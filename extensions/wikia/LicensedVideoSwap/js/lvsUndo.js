@@ -43,7 +43,7 @@ define('lvs.undo', [
 	function init($elem) {
 		$container = $elem;
 
-		$('body').on('click', '.global-notification .undo', function (e) {
+		$('body').on('click', '.banner-notification .undo', function (e) {
 			e.preventDefault();
 
 			videoControls.reset();

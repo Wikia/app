@@ -5,9 +5,10 @@ define(
 		'wikia.window',
 		'wikia.querystring',
 		'wikia.maps.config',
-		'wikia.maps.utils'
+		'wikia.maps.utils',
+		'BannerNotification'
 	],
-	function ($, w, qs, config, utils) {
+	function ($, w, qs, config, utils, BannerNotification) {
 		'use strict';
 		var mapId = $('iframe[name=wikia-interactive-map]').data('mapid');
 
@@ -16,7 +17,7 @@ define(
 		 * @param {string} error - error message
 		 */
 		function showError(error) {
-			w.GlobalNotification.show(error, 'error');
+			new BannerNotification(error, 'error').show();
 		}
 
 		function init() {

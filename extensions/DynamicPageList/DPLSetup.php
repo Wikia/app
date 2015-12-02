@@ -1229,6 +1229,7 @@ class ExtDynamicPageList {
                 'resetCategories' => false, 'resetImages' => false, 'resetdone' => false , 'elimdone' => false );
         }
 
+		if ( !defined( "MW_UPDATER" ) ) {
 		// make sure page "Template:Extension DPL" exists
         $title = Title::newFromText('Template:Extension DPL');
 		global $wgUser;
@@ -1240,7 +1241,7 @@ class ExtDynamicPageList {
 							  $title, EDIT_NEW | EDIT_FORCE_BOT );
 			die(header('Location: '.Title::newFromText('Template:Extension DPL')->getFullURL()));
 		}
-
+		}
         require_once( 'DPLVariables.php' );
 	}
 

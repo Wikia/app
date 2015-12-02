@@ -5,8 +5,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
-
 /**
  * ContentEditable MediaWiki transclusion node.
  *
@@ -27,9 +25,6 @@ ve.ce.MWTransclusionNode = function VeCeMWTransclusionNode( model, config ) {
 	// Mixin constructors
 	ve.ce.FocusableNode.call( this );
 	ve.ce.GeneratedContentNode.call( this );
-
-	// DOM changes
-	this.$element.addClass( 've-ce-mwTransclusionNode' );
 };
 
 /* Inheritance */
@@ -52,9 +47,28 @@ ve.ce.MWTransclusionNode.static.primaryCommandName = 'transclusion';
 /**
  * @inheritdoc
  */
-ve.ce.MWTransclusionNode.static.getDescription = function () {
-	// Wikia change: use "Edit" as context menu description
-	return ve.msg( 'wikia-visualeditor-context-transclusion-description' );
+ve.ce.MWTransclusionNode.static.getDescription = function ( model ) {
+	var i, len, part,
+		parts = model.getPartsList(),
+		words = [];
+
+	for ( i = 0, len = parts.length; i < len; i++ ) {
+		part = parts[i];
+		if ( part.template ) {
+			words.push( part.template );
+		}
+	}
+
+	return words
+		.map( function ( template ) {
+			var title = mw.Title.newFromText( template, mw.config.get( 'wgNamespaceIds' ).template );
+			if ( title ) {
+				return title.getRelativeText( 10 );
+			} else {
+				return template;
+			}
+		} )
+		.join( ve.msg( 'comma-separator' ) );
 };
 
 /* Methods */
@@ -63,13 +77,14 @@ ve.ce.MWTransclusionNode.static.getDescription = function () {
 ve.ce.MWTransclusionNode.prototype.generateContents = function ( config ) {
 	var xhr, deferred = $.Deferred();
 	xhr = ve.init.target.constructor.static.apiRequest( {
-		'action': 'visualeditor',
-		'paction': 'parsefragment',
-		'page': mw.config.get( 'wgRelevantPageName' ),
-		'wikitext': ( config && config.wikitext ) || this.model.getWikitext()
-	}, { 'type': 'POST' } )
-		.done( ve.bind( this.onParseSuccess, this, deferred ) )
-		.fail( ve.bind( this.onParseError, this, deferred ) );
+		action: 'visualeditor',
+		paction: 'parsefragment',
+		page: mw.config.get( 'wgRelevantPageName' ),
+		wikitext: ( config && config.wikitext ) || this.model.getWikitext(),
+		pst: 1
+	}, { type: 'POST' } )
+		.done( this.onParseSuccess.bind( this, deferred ) )
+		.fail( this.onParseError.bind( this, deferred ) );
 
 	return deferred.promise( { abort: xhr.abort } );
 };
@@ -87,7 +102,7 @@ ve.ce.MWTransclusionNode.prototype.onParseSuccess = function ( deferred, respons
 		return this.onParseError.call( this, deferred );
 	}
 
-	contentNodes = $.parseHTML( response.visualeditor.content );
+	contentNodes = $.parseHTML( response.visualeditor.content ); //, this.getModelHtmlDocument() );
 	// HACK: if $content consists of a single paragraph, unwrap it.
 	// We have to do this because the PHP parser wraps everything in <p>s, and inline templates
 	// will render strangely when wrapped in <p>s.
@@ -100,7 +115,7 @@ ve.ce.MWTransclusionNode.prototype.onParseSuccess = function ( deferred, respons
 	// be accessible to users (either to remove or edit)
 	if ( contentNodes.length === 0 ) {
 		$placeHolder = this.$( '<span>' )
-			.css( { 'display': 'block' } )
+			.css( { display: 'block' } )
 			// adapted from ve.ce.BranchNode.$blockSlugTemplate
 			// IE support may require using &nbsp;
 			.html( '&#xFEFF;' );
@@ -108,6 +123,27 @@ ve.ce.MWTransclusionNode.prototype.onParseSuccess = function ( deferred, respons
 		contentNodes.push( $placeHolder[0] );
 	}
 	deferred.resolve( contentNodes );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ce.MWTransclusionNode.prototype.getRenderedDomElements = function ( domElements ) {
+	var $elements = this.$( ve.ce.GeneratedContentNode.prototype.getRenderedDomElements.call( this, domElements ) ),
+		transclusionNode = this;
+	$elements
+		.find( 'a[href][rel="mw:WikiLink"]' ).addBack( 'a[href][rel="mw:WikiLink"]' )
+		.each( function () {
+			var targetData = ve.dm.MWInternalLinkAnnotation.static.getTargetDataFromHref(
+					this.href, transclusionNode.getModelHtmlDocument()
+				),
+				normalisedHref = decodeURIComponent( targetData.title );
+			if ( mw.Title.newFromText( normalisedHref ) ) {
+				normalisedHref = mw.Title.newFromText( normalisedHref ).getPrefixedText();
+			}
+			ve.init.platform.linkCache.styleElement( normalisedHref, $( this ) );
+		} );
+	return $elements.toArray();
 };
 
 /**
@@ -133,9 +169,6 @@ ve.ce.MWTransclusionNode.prototype.onParseError = function ( deferred ) {
 ve.ce.MWTransclusionBlockNode = function VeCeMWTransclusionBlockNode( model ) {
 	// Parent constructor
 	ve.ce.MWTransclusionNode.call( this, model );
-
-	// DOM changes
-	this.$element.addClass( 've-ce-mwTransclusionBlockNode' );
 };
 
 /* Inheritance */
@@ -159,9 +192,6 @@ ve.ce.MWTransclusionBlockNode.static.tagName = 'div';
 ve.ce.MWTransclusionInlineNode = function VeCeMWTransclusionInlineNode( model ) {
 	// Parent constructor
 	ve.ce.MWTransclusionNode.call( this, model );
-
-	// DOM changes
-	this.$element.addClass( 've-ce-mwTransclusionInlineNode' );
 };
 
 /* Inheritance */

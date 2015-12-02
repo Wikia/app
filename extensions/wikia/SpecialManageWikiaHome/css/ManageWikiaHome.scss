@@ -35,7 +35,7 @@
 	margin: 0 0 20px 10px;
 	padding-left: 10px;
 
-	@if ( $responsive-layout-enabled ) {
+	@if ( $responsive-or-breakpoints-layout-enabled ) {
 		@include width-calc('100% - 280px');
 		width: auto;
 

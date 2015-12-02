@@ -11,8 +11,6 @@
  *
  * @constructor
  * @param {Object} config Configuration options
- * @cfg {Object} surface Instance of parent dialog surface
- * @cfg {Object} frame Instance of parent dialog frame
  */
 ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget( config ) {
 	// Configuration initialization
@@ -20,13 +18,12 @@ ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget( config ) {
 
 	// Properties
 	this.$overlay = config.$overlay.find( '.oo-ui-window' );
-	this.$document = config.$document;
+	this.$frame = config.$frame;
 	this.fadeTimeout = null;
 
 	// Events
-	this.$document.on( 'dragenter dragover', ve.bind( this.onFileDrag, this ) );
-	this.$element.on( 'dragenter dragover', ve.bind( this.onFileDrag, this ) );
-	this.$element.on( 'drop', ve.bind( this.onFileDrop, this ) );
+	this.$frame.on( 'dragenter dragover', this.onFileDrag.bind( this ) );
+	this.$element.on( 'drop', this.onFileDrop.bind( this ) );
 
 	// Initialization
 	this.$element
@@ -66,9 +63,9 @@ ve.ui.WikiaDropTargetWidget.prototype.onFileDragEnd = function ( e ) {
 	if ( !this.$element.is( ':visible' ) ) {
 		return;
 	}
-	this.fadeTimeout = setTimeout( ve.bind( function () {
+	this.fadeTimeout = setTimeout( function () {
 		this.$element.fadeOut();
-	}, this ), 200 );
+	}.bind( this ), 200 );
 };
 
 /**
@@ -78,7 +75,7 @@ ve.ui.WikiaDropTargetWidget.prototype.onFileDragEnd = function ( e ) {
  */
 ve.ui.WikiaDropTargetWidget.prototype.onFileDrop = function ( event ) {
 	var transfer = event.originalEvent.dataTransfer,
-			files = transfer.files;
+		files = transfer.files;
 
 	event.preventDefault();
 
@@ -96,8 +93,8 @@ ve.ui.WikiaDropTargetWidget.prototype.onFileDrop = function ( event ) {
  * @method
  */
 ve.ui.WikiaDropTargetWidget.prototype.setup = function () {
-	this.$overlay.on( 'dragenter.dropTarget dragover.dropTarget', ve.bind( this.onFileDrag, this ) );
-	this.$overlay.on( 'dragleave.dropTarget dragend.dropTarget drop.dropTarget', ve.bind( this.onFileDragEnd, this ) );
+	this.$overlay.on( 'dragenter.dropTarget dragover.dropTarget', this.onFileDrag.bind( this ) );
+	this.$overlay.on( 'dragleave.dropTarget dragend.dropTarget drop.dropTarget', this.onFileDragEnd.bind( this ) );
 };
 
 /**

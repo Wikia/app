@@ -42,13 +42,44 @@ class EditPageLayoutController extends WikiaController {
 
 		// extra buttons
 		$this->buttons = $editPage->getControlButtons();
+
+		// Should show mobile preview icon
+		$this->showMobilePreview = $this->request->getVal('showMobilePreview');
 	}
 
 	/**
 	 * Render basic edit buttons for code pages (js, css, lua)
 	 * Extra buttons are not needed
 	 */
-	public function executeCodeButtons() {}
+	public function executeCodeButtons() {
+		$dropdown = [
+			[
+				'id' => 'wpDiff',
+				'accesskey' => wfMessage( 'accesskey-diff' )->escaped(),
+				'text' => wfMessage( 'showdiff' )->escaped()
+			]
+		];
+
+		$this->button = [
+			'action' => [
+				'text' => wfMessage( 'savearticle' )->escaped(),
+				'class' => 'codepage-publish-button',
+				'id' => 'wpSave',
+			],
+			'name' => 'submit',
+			'class' => 'primary',
+			'dropdown' => $dropdown
+		];
+
+		if ( $this->wg->EnableContentReviewExt ) {
+			$helper = EditPageLayoutHelper::getInstance();
+			$title = $helper->getEditPage()->getTitle();
+
+			if ( $title->isJsPage() && $this->wg->User->isAllowed( 'content-review' ) ) {
+				$this->approveCheckbox = true;
+			}
+		}
+	}
 
 	/**
 	 * Render template for <body> tag content
@@ -59,7 +90,7 @@ class EditPageLayoutController extends WikiaController {
 		$helper = EditPageLayoutHelper::getInstance();
 		$editPage = $helper->getEditPage();
 
-		$this->pagetype = 'editpage';
+		$this->showPreview = true;
 
 		if ( $helper->fullScreen ) {
 			$wgJsMimeType = $this->wg->JsMimeType;
@@ -68,12 +99,13 @@ class EditPageLayoutController extends WikiaController {
 			$this->wg->Out->addStyle( AssetsManager::getInstance()
 				->getSassCommonURL( 'extensions/wikia/EditPageLayout/css/EditPageLayout.scss' ) );
 
-			if ( $helper->isCodePage( $editPage->getTitle() ) ) {
-				$this->pagetype = 'codepage';
+			if ( $helper->isCodeSyntaxHighlightingEnabled( $editPage->getTitle() ) ) {
 				$this->wg->Out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"/resources/Ace/ace.js\"></script>" );
 				$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'ace_editor_js' );
 
 				OasisController::addBodyClass( 'codeeditor' );
+
+				$this->showPreview = $helper->isCodePageWithPreview( $editPage->getTitle() );
 			} else {
 				$packageName = 'epl';
 				if ( class_exists( 'RTE' ) && RTE::isEnabled() && !$editPage->isReadOnlyPage() ) {
@@ -94,11 +126,7 @@ class EditPageLayoutController extends WikiaController {
 		$this->wordmark = $response->getData();
 
 		// render global and user navigation
-		if ( !empty( $this->wg->EnableGlobalNavExt ) ) {
-			$this->header = F::app()->renderView( 'GlobalNavigation', 'index' );
-		} else {
-			$this->header = F::app()->renderView( 'GlobalHeader', 'Index' );
-		}
+		$this->header = F::app()->renderView( 'GlobalNavigation', 'index' );
 
 		// Editing [foo]
 		$this->title = $editPage->getEditedTitle();
@@ -114,6 +142,9 @@ class EditPageLayoutController extends WikiaController {
 
 		// Text for Edit summary label
 		$wpSummaryLabelText = 'editpagelayout-edit-summary-label';
+
+		// Should show mobile preview icon
+		$this->showMobilePreview = $helper->showMobilePreview( $editPage->getTitle() );
 
 		if ($section == 'new') {
 			$msgKey = 'editingcomment';
@@ -190,5 +221,12 @@ class EditPageLayoutController extends WikiaController {
 		wfRunHooks( 'EditPageLayoutExecute', array( $this ) );
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	public function addExtraHeaderHtml( $html ) {
+		if ( !isset( $this->extraHeaderHtml ) ) {
+			$this->extraHeaderHtml = '';
+		}
+		$this->extraHeaderHtml .= $html;
 	}
 }

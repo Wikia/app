@@ -9,7 +9,7 @@ $messages['en'] = array(
 	'categorygalleries-desc' => 'Shows a pages gallery on category pages',
 );
 
-/** Tunisian Spoken Arabic (   زَوُن)
+/** Tunisian Arabic (تونسي/Tûnsî)
  * @author Csisc
  */
 $messages['aeb'] = array(
@@ -105,6 +105,13 @@ $messages['de'] = array(
  */
 $messages['es'] = array(
 	'categorygalleries-desc' => 'Muestra una galería de páginas encima de las páginas de la categoría',
+);
+
+/** Persian (فارسی)
+ * @author Movyn
+ */
+$messages['fa'] = array(
+	'categorygalleries-desc' => 'نمایش صفحه گالری در صفحه رده',
 );
 
 /** Finnish (suomi)

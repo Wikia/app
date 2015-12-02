@@ -153,19 +153,20 @@
 			font-weight: normal;
 		}
 
-		h1 {
+		h2 {
+			border: 0;
 			font: {
 				size: 18px;
 				weight: bold;
 			}
 			margin: {
-				top: 0px;
+				top: 0;
 				bottom: 25px;
 			}
 			padding-left: 2px;
 		}
 
-		h2 {
+		h3 {
 			@extend h1;
 			clear: both;
 			padding-top: 15px;
@@ -245,14 +246,14 @@
 		font-size: 12px;
 		padding: 6px 3px 6px 30px;
 		position: relative;
+
 		&:first-child {
 			border: 0;
 		}
+
 		em {
-			display: inline-block;
 			font-size: 14px;
 			line-height: 17px;
-			width: 270px;
 		}
 	}
 	.sprite {

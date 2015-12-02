@@ -18,11 +18,14 @@ $basePath: "/extensions/VisualEditor";
 	@if $vendor == mw {
 		$vendorPath: "/modules/ve-mw/ui/styles/images/icons/";
 	} @elseif $vendor == oo {
-		$vendorPath: "/lib/ve/lib/oojs-ui/images/icons/";
+		//$vendorPath: "/lib/ve/lib/oojs-ui/themes/apex/images/icons/";
+		$vendorPath: "./../../resources/lib/oojs-ui/themes/apex/images/icons/";
 	} @elseif $vendor == oo-indicators {
-		$vendorPath: "/lib/ve/lib/oojs-ui/images/indicators/";
+		//$vendorPath: "/lib/ve/lib/oojs-ui/images/indicators/";
+		$vendorPath: "./../../resources/lib/oojs-ui/themes/apex/images/indicators/";
 	} @elseif $vendor == ve {
-		$vendorPath: "/lib/ve/modules/ve/ui/styles/images/icons/";
+		//$vendorPath: "/lib/ve/modules/ve/ui/styles/images/icons/";
+		$vendorPath: "/lib/ve/src/ui/styles/images/icons/";
 	} @elseif $vendor == wikia {
 		$vendorPath: "/wikia/modules/ve/ui/styles/images/icons/";
 	}

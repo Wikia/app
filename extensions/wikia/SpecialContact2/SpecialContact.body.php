@@ -13,6 +13,16 @@ class ContactForm extends SpecialPage {
 
 	private $mReferral;
 
+	private $securityIssueTypes = [
+		1 => 'specialcontact-security-issue-type-xss',
+		2 => 'specialcontact-security-issue-type-csrf',
+		3 => 'specialcontact-security-issue-type-sqli',
+		4 => 'specialcontact-security-issue-type-auth',
+		5 => 'specialcontact-security-issue-type-leak',
+		6 => 'specialcontact-security-issue-type-redirect',
+		7 => 'specialcontact-security-issue-type-other',
+	];
+
 	var $customForms = array(
 		'account-issue' => array(
 			'format' => "User reports a problem with his account (%s) on this wiki:\n%s\n\nDescription of issue:\n%s",
@@ -44,7 +54,13 @@ class ContactForm extends SpecialPage {
 			'format' => "User %s reports a problem with feature \"%s\".\n\nURL to problem page:\n%s\n\nDescription of issue:\n\n%s",
 			'vars' => array( 'wpUserName', 'wpFeature', 'wpContactWikiName', 'wpDescription' ),
 			'subject' => 'Bug report by %s at %s',
-		)
+		),
+
+		'security' => [
+			'format' => "User %s reports a security issue on Wikia.\n\nType of issue: %s\n\nURL to example of bug:\n%s\n\nDescription of the issue:\n\n%s",
+			'vars' => [ 'wpUserName', 'wpIssueType', 'wpUrl', 'wpDescription' ],
+			'subject' => 'Security report by %s at %s',
+		],
 	);
 
 	function  __construct() {
@@ -82,6 +98,9 @@ class ContactForm extends SpecialPage {
 		$this->mReferral = $request->getText( 'wpReferral', ( !empty( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : null ) );
 
 		if ( $request->wasPosted() ) {
+			if ( !$user->matchEditToken( $request->getVal( 'wpEditToken' ) ) ) {
+				$this->err[] = $this->msg( 'sessionfailure' )->escaped();
+			}
 
 			if( $user->isAnon() && class_exists( $wgCaptchaClass ) ) {
 				$captchaObj = new $wgCaptchaClass();
@@ -110,12 +129,23 @@ class ContactForm extends SpecialPage {
 				}
 
 				foreach ( $this->customForms[$par]['vars'] as $var ) {
-					$args[] = $request->getVal( $var );
+					if ( $par === 'security' && $var === 'wpIssueType' ) {
+						$issueType = $request->getInt( $var );
+						// We want the email to always be in English
+						if ( isset( $this->securityIssueTypes[$issueType] ) ) {
+							$args[] = wfMessage( $this->securityIssueTypes[$issueType] )->inLanguage( 'en' )->escaped();
+						} else {
+							// Default to 'other'
+							$args[] = wfMessage( 'specialcontact-security-issue-type-other' )->inLanguage( 'en' )->escaped();
+						}
+					} else {
+						$args[] = $request->getVal( $var );
+					}
 				}
 
 				if ( !empty( $this->customForms[$par]['markuser'] ) ) {
 					// notify relevant extension that a request has been made
-					$user->setOption( $this->customForms[$par]['markuser'], 1 );
+					$user->setGlobalFlag( $this->customForms[$par]['markuser'], 1 );
 					$user->saveSettings();
 				}
 
@@ -184,7 +214,8 @@ class ContactForm extends SpecialPage {
 				'captchaForm' => ($user->isAnon() && class_exists( $wgCaptchaClass )) ? (new $wgCaptchaClass())->getForm( $captchaErr ) : '',
 				'errMessages' => $this->err,
 				'errors' => $this->errInputs,
-				'referral' => $this->mReferral
+				'referral' => $this->mReferral,
+				'editToken' => $user->getEditToken(),
 			] );
 
 			$out->addHTML( $oTmpl->render( "mobile-form" ) );
@@ -227,7 +258,9 @@ class ContactForm extends SpecialPage {
 		$output->setArticleRelated( false );
 
 		//build common top of both emails
+		$uid = $user->getID();
 		$m_shared = '';
+		if( empty($uid) ) { $m_shared .= "USER IS NOT LOGGED IN\n"; }
 		$m_shared .= ( !empty( $this->mRealName ) ) ? ( $this->mRealName ) : ( ( ( !empty( $this->mUserName ) ) ? ( $this->mUserName ) : ('--') ) );
 		$m_shared .= " ({$this->mEmail})";
 		$m_shared .= " " . ( ( !empty($this->mUserName) ) ? $wgServer . "/wiki/User:" . urlencode(str_replace(" ", "_", $this->mUserName)) : $wgServer ) . "\n";
@@ -242,10 +275,9 @@ class ContactForm extends SpecialPage {
 		$items[] = 'IP:' . $request->getIP();
 
 		//if they are logged in, add the ID(and name) and their lang
-		$uid = $user->getID();
 		if( !empty($uid) ) {
 			$items[] = 'uID: ' . $uid . " (User:". $user->getName() .")";
-			$items[] = 'uLang: ' . $user->getOption( 'language' );
+			$items[] = 'uLang: ' . $user->getGlobalPreference( 'language' );
 		}
 
 		if ( !empty( $this->mReferral ) ) {
@@ -386,9 +418,12 @@ class ContactForm extends SpecialPage {
 
 				if ( $sub === 'close-account' && $closeMyAccountSupported ) {
 					$title = SpecialPage::getTitleFor( 'CloseMyAccount' );
+				} elseif ( $sub === 'dmca-request' ) {
+					$title = GlobalTitle::newFromText( 'DMCARequest', NS_SPECIAL, Wikia::COMMUNITY_WIKI_ID );
 				} else {
 					$title = SpecialPage::getTitleFor( 'Contact', $sub );
 				}
+
 				$msgKey = 'specialcontact-seclink-' . $msg;
 				$newsec['links'][] = $uskin->makeKnownLinkObj( $title, $this->msg( $msgKey )->escaped(), '', '', '', "class={$msgKey}" );
 			}
@@ -487,11 +522,11 @@ class ContactForm extends SpecialPage {
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'Contact' . '/' . $sub );
 		$action = $titleObj->escapeLocalUrl( $q );
 
-		$encName = htmlspecialchars( $this->mUserName );
-		$encEmail = htmlspecialchars( $this->mEmail );
-		$encRealName = htmlspecialchars( $this->mRealName );
-		$encProblem = htmlspecialchars( $this->mProblem );
-		$encProblemDesc = htmlspecialchars( $this->mProblemDesc );
+		$encName = Sanitizer::encodeAttribute( $this->mUserName );
+		$encEmail = Sanitizer::encodeAttribute( $this->mEmail );
+		$encRealName = Sanitizer::encodeAttribute( $this->mRealName );
+		$encProblem = Sanitizer::encodeAttribute( $this->mProblem );
+		$encProblemDesc = htmlspecialchars( $this->mProblemDesc, ENT_QUOTES );
 
 
 		//global this, for use with unlocking a field
@@ -524,6 +559,7 @@ class ContactForm extends SpecialPage {
 			'encProblem' => $encProblem,
 			'encProblemDesc' => $encProblemDesc,
 			'isLoggedIn' => $user->isLoggedIn(),
+			'editToken' => $user->getEditToken(),
 		);
 
 		if( $user->isLoggedIn() ) {
@@ -537,6 +573,10 @@ class ContactForm extends SpecialPage {
 			$vars[ 'captchaForm' ] = $wgCaptcha->getForm();
 		}
 
+		if ( $sub === 'security' ) {
+			$vars['issueTypes'] = $this->securityIssueTypes;
+		}
+
 		if( !empty( $this->err ) ) {
 			$vars['err'] = $this->formatError( $this->err );
 		}
@@ -548,7 +588,7 @@ class ContactForm extends SpecialPage {
 		} elseif ( $user->isAnon() && !empty( $this->secDat['reqlogin'] ) ) {
 			$out->showErrorPage( 'loginreqtitle', 'specialcontact-error-logintext' );
 			return;
-		} elseif ( $this->secDat['form'] === 'rename-account' && $user->getOption( 'wasRenamed', 0 ) ) {
+		} elseif ( $this->secDat['form'] === 'rename-account' && $user->getGlobalFlag( 'wasRenamed', 0 ) ) {
 			$out->showErrorPage( 'specialcontact-error-title', 'specialcontact-error-alreadyrenamed' );
 			return;
 		} else {

@@ -10,7 +10,7 @@
 		current: {
 			type: '', // image or video
 			title: '', // currently displayed file name
-			carouselType: '', // articleMedia or latestPhotos
+			carouselType: '', // articleMedia or videosModule
 			index: -1, // ex: LightboxLoader.cache[Lightbox.current.carouselType][Lightbox.current.index]
 			thumbs: [], // master list of thumbnails inside carousel; purged after closing the lightbox
 			placeholderIdx: -1
@@ -41,7 +41,7 @@
 			$(window).trigger('lightboxOpened');
 
 			// if we don't have latest photos in the DOM, request them from back end
-			Lightbox.includeLatestPhotos = !$('#LatestPhotosModule').find('.carousel-container').length;
+			Lightbox.includeLatestPhotos = true;
 			Lightbox.openModal = params.modal;
 
 			// If file doesn't exist, show the error modal
@@ -848,8 +848,7 @@
 		// order by priority position in carousel backfill
 		carouselTypes: [
 			'videosModule',
-			'articleMedia',
-			'latestPhotos'
+			'articleMedia'
 		],
 		setUpCarousel: function () {
 			// Load backfill content from DOM
@@ -1117,13 +1116,16 @@
 				if (window.wgUserName) {
 					doShareEmail(addresses);
 				} else {
-					UserLoginModal.show({
-						origin: 'image-lightbox',
-						callback: function () {
-							doShareEmail(addresses);
-							// see VID-473 - Reload page on lightbox close
-							LightboxLoader.reloadOnClose = true;
-						}
+					require(['AuthModal'], function (authModal) {
+						authModal.load({
+							url: '/signin?redirect=' + encodeURIComponent(window.location.href),
+							origin: 'image-lightbox',
+							onAuthSuccess: function () {
+								doShareEmail(addresses);
+								// see VID-473 - Reload page on lightbox close
+								LightboxLoader.reloadOnClose = true;
+							}
+						});
 					});
 				}
 			});
@@ -1234,61 +1236,6 @@
 						Lightbox.backfillCount += thumbArr.length;
 					}
 
-				}
-
-				// Add thumbs to current lightbox cache
-				Lightbox.current.thumbs = Lightbox.current.thumbs.concat(thumbArr);
-
-				Lightbox.addThumbsToCarousel(thumbArr, backfill);
-			},
-			// Get latest photos from DOM
-			latestPhotos: function (backfill) {
-				var cached = LightboxLoader.cache.latestPhotos,
-					thumbArr = [],
-					thumbs,
-					keys;
-
-				if (cached.length) {
-					thumbArr = cached;
-				} else {
-					thumbs = $('#LatestPhotosModule').find('.thumbimage');
-					// array to check for title dupes
-					keys = [];
-
-					thumbs.each(function () {
-						var $thisThumb = $(this),
-							thumbUrl = $thisThumb.data('src') || $thisThumb.attr('src'),
-							title = $thisThumb.attr('data-image-name'),
-							key = $thisThumb.attr('data-image-key');
-
-						if (!key) {
-							key = title && title.replace(/ /g, '_');
-						}
-
-						if (key) {
-							// Check for dupes
-							if ($.inArray(key, keys) > -1) {
-								return;
-							}
-							keys.push(key);
-
-							thumbArr.push({
-								thumbUrl: Lightbox.thumbParams(thumbUrl, 'image'),
-								key: key,
-								title: title,
-								type: 'image',
-								playButtonSpan: ''
-							});
-						}
-					});
-
-					// Fill latestPhotos cache
-					LightboxLoader.cache.latestPhotos = thumbArr;
-
-					// Count backfill items for progress bar
-					if (backfill) {
-						Lightbox.backfillCount += thumbArr.length;
-					}
 				}
 
 				// Add thumbs to current lightbox cache
@@ -1437,13 +1384,6 @@
 
 					carouselType = 'articleMedia';
 					trackingCarouselType = 'article';
-					break;
-
-				case 'LatestPhotosModule':
-					clickSource = clickSource || VPS.LP;
-
-					carouselType = 'latestPhotos';
-					trackingCarouselType = 'latest-photos';
 					break;
 
 				case 'videosModule':

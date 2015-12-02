@@ -1,6 +1,5 @@
 @import "skins/shared/color";
 @import "skins/shared/mixins/box-shadow";
-@import "skins/shared/mixins/box-sizing";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/menus";
 @import "skins/shared/mixins/transform";
@@ -16,11 +15,11 @@
 		margin-bottom: 5px;
 	}
 	input[type=text] {
-		@include box-sizing;
 		background-color: $color-wall-input-new;
 		border: 1px solid $color-page-border;
+		box-sizing: border-box;
 		color: $color-text;
-		
+
 		// Chrome needs this to get rid of empty space below textarea
 		display: block;
 		font-size: 13px;
@@ -73,7 +72,7 @@
 			opacity: .8;
 			padding-right: 15px;
 			position: relative;
-			
+
 			&:hover {
 				opacity: 1;
 				.remove-swatch {
@@ -87,7 +86,7 @@
 				}
 				@include transform(scale(0.8));
 				background-color: $color-remove-swatch;
-				background-image: url('/skins/oasis/images/icon_close.png'); /* $base64 */
+				background-image: url('/skins/oasis/images/icon_close.png'); /* inline */
 				background-position: -2px -2px;
 				cursor: pointer;
 				height: 12px;

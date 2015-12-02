@@ -89,7 +89,7 @@ function WidgetBookmark($id) {
 function WidgetBookmarkGetPages() {
 	global $wgUser;
 
-	$pages = unserialize( $wgUser->getOption('widget_bookmark_pages') );
+	$pages = unserialize( $wgUser->getGlobalPreference('widget_bookmark_pages') );
 
 	return $pages;
 }
@@ -100,7 +100,7 @@ function WidgetBookmarkSavePages($pages) {
 
 	global $wgUser;
 
-	$wgUser->setOption('widget_bookmark_pages', serialize($pages));
+	$wgUser->setGlobalPreference('widget_bookmark_pages', serialize($pages));
         $wgUser->saveSettings();
 
 	// commit UPDATE query

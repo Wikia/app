@@ -6,7 +6,7 @@
  */
 
 /**
- * MediaWiki UserInterface alien extension tool.
+ * Modeless dialog for inspecting unsupported MediaWiki extension nodes.
  *
  * @class
  * @extends ve.ui.InspectorTool

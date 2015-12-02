@@ -42,7 +42,7 @@ define('videosmodule.views.index', [
 		this.trackingCategory = options.trackingCategory;
 		this.trackImpression = Tracker.buildTrackingFunction({
 			category: options.trackingCategory,
-			trackingMethod: 'both',
+			trackingMethod: 'analytics',
 			action: Tracker.ACTIONS.IMPRESSION,
 			label: 'module-impression'
 		});

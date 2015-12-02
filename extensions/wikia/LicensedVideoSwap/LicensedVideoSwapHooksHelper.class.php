@@ -22,7 +22,7 @@ class LicensedVideoSwapHooksHelper {
 		if ( $app->wg->Title->getFullText() == 'Special:LicensedVideoSwap' ) {
 
 			// Get the user preference skin, not the current skin of the page
-			$skin = $app->wg->User->getOption( 'skin' );
+			$skin = $app->wg->User->getGlobalPreference( 'skin' );
 
 			// for monobook users, specify wikia skin in querystring
 			$query = "";
@@ -41,7 +41,8 @@ class LicensedVideoSwapHooksHelper {
 	}
 
 	/**
-	 * Hook: skip confirmation message in global notification when file page is deleted (set message to blank)
+	 * Hook: skip confirmation message in banner notification
+	 * when file page is deleted (set message to blank)
 	 * @param Title $title
 	 * @param string $message
 	 * @return true

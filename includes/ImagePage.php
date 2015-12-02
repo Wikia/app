@@ -102,7 +102,7 @@ class ImagePage extends Article {
 		 */
 
 		$diff = $wgRequest->getVal( 'diff' );
-		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getOption( 'diffonly' ) );
+		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getGlobalPreference( 'diffonly' ) );
 
 		if ( $this->getTitle()->getNamespace() != NS_FILE || ( isset( $diff ) && $diffOnly ) ) {
 			return parent::view();
@@ -352,7 +352,7 @@ class ImagePage extends Article {
 
 		$this->loadFile();
 
-		$sizeSel = intval( $wgUser->getOption( 'imagesize' ) );
+		$sizeSel = intval( $wgUser->getGlobalPreference( 'imagesize' ) );
 		if ( !isset( $wgImageLimits[$sizeSel] ) ) {
 			$sizeSel = User::getDefaultOption( 'imagesize' );
 

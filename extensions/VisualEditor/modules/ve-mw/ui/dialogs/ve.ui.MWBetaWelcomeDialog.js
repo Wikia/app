@@ -5,13 +5,11 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
-
 /**
- * Dialog for inserting MediaWiki media objects.
+ * Dialog for welcoming new users to VisualEditor.
  *
  * @class
- * @extends ve.ui.ActionDialog
+ * @extends OO.ui.MessageDialog
  *
  * @constructor
  * @param {Object} [config] Configuration options
@@ -23,52 +21,36 @@ ve.ui.MWBetaWelcomeDialog = function VeUiMWBetaWelcomeDialog( config ) {
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.MWBetaWelcomeDialog, ve.ui.ActionDialog );
+OO.inheritClass( ve.ui.MWBetaWelcomeDialog, OO.ui.MessageDialog );
 
 /* Static Properties */
 
 ve.ui.MWBetaWelcomeDialog.static.name = 'betaWelcome';
 
-ve.ui.MWBetaWelcomeDialog.static.title =
-	OO.ui.deferMsg( 'visualeditor-dialog-beta-welcome-title' );
+ve.ui.MWBetaWelcomeDialog.static.size = 'medium';
+
+ve.ui.MWBetaWelcomeDialog.static.verbose = true;
 
 ve.ui.MWBetaWelcomeDialog.static.icon = 'help';
 
-/* Methods */
+ve.ui.MWBetaWelcomeDialog.static.actions = [
+	{
+		label: OO.ui.deferMsg( 'visualeditor-dialog-beta-welcome-action-continue' ),
+		flags: [ 'progressive', 'primary' ]
+	}
+];
 
 /**
  * @inheritdoc
  */
-ve.ui.MWBetaWelcomeDialog.prototype.getTitle = function () {
-	// Send the MediaWiki username along with the message for {{GENDER:}} i18n support
-	return ve.msg( this.constructor.static.title, mw.user );
-};
+ve.ui.MWBetaWelcomeDialog.prototype.getSetupProcess = function ( data ) {
+	// Provide default title and message
+	data = $.extend( {
+		title: ve.msg( 'visualeditor-dialog-beta-welcome-title', mw.user ),
+		message: ve.msg( 'visualeditor-dialog-beta-welcome-content', $( '#ca-edit' ).text() )
+	}, data );
 
-/**
- * @inheritdoc
- */
-ve.ui.MWBetaWelcomeDialog.prototype.getApplyButtonLabel = function () {
-	return ve.msg( 'visualeditor-dialog-beta-welcome-action-continue' );
-};
-
-/**
- * @inheritdoc
- */
-ve.ui.MWBetaWelcomeDialog.prototype.initialize = function () {
-	// Parent method
-	ve.ui.MWBetaWelcomeDialog.super.prototype.initialize.call( this );
-
-	// Properties
-	this.contentPanel = new OO.ui.PanelLayout( {
-		'$': this.$,
-		'scrollable': true,
-		'padded': true,
-		'classes': [ 've-ui-mwBetaWelcomeDialog-content' ],
-		'text': ve.msg( 'visualeditor-dialog-beta-welcome-content', $( '#ca-edit' ).text() )
-	} );
-
-	// Initialization
-	this.panels.addItems( [ this.contentPanel ] );
+	return ve.ui.MWBetaWelcomeDialog.super.prototype.getSetupProcess.call( this, data );
 };
 
 /* Registration */

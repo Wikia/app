@@ -4,7 +4,8 @@
 			"Dj",
 			"Einstein2",
 			"Misibacsi",
-			"ViDam"
+			"ViDam",
+			"Tacsipacsi"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
@@ -14,5 +15,5 @@
 	"visualeditor-feedback-link": "Project:VisualEditor/Visszajelzés",
 	"visualeditor-feedback-tool": "Visszajelzés",
 	"visualeditor-help-label": "Felhasználói útmutató elolvasása",
-	"visualeditor-help-title": "Felhasználói útmutató a szerkesztő használatához"
+	"visualeditor-help-title": "Útmutató a szerkesztő használatához"
 }

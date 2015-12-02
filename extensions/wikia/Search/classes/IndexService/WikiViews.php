@@ -38,7 +38,7 @@ class WikiViews extends AbstractWikiService
 		
 		$stringKey = 'WikiaSearchPageViews';
 		$result = $this->service->getCacheResultFromString( $stringKey );
-		
+
 		if ( ( $result !== false ) && ( $result->weekly > 0 || $result->monthly > 0 ) ) {
 			wfProfileOut(__METHOD__);
 			$this->result = array(
@@ -69,8 +69,12 @@ class WikiViews extends AbstractWikiService
 				$row->monthly += $pview;
 			}
 		}
-	
-		$this->service->setCacheFromStringKey( $stringKey, $row, self::WIKIPAGES_CACHE_TTL ); 
+
+		$wrapper = new \Wikia\Util\GlobalStateWrapper(array('wgAllowMemcacheWrites' => true));
+		$wrapper->wrap(function () use ($stringKey, $row) {
+			$this->service->setCacheFromStringKey( $stringKey, $row, self::WIKIPAGES_CACHE_TTL );
+		});
+
 		$this->result = array(
 				'wikiviews_weekly' => (int) $row->weekly,
 				'wikiviews_monthly' => (int) $row->monthly, 

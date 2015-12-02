@@ -18,6 +18,17 @@
 		]
 	},
 	{
+		"name": "Upstream (MediaWiki)",
+		"groups": [
+			{
+				"name": "MediaWiki",
+				"classes": [
+					"mw.Title"
+				]
+			}
+		]
+	},
+	{
 		"name": "VisualEditor (core)",
 		"groups": [
 			{
@@ -26,6 +37,8 @@
 					"ve",
 					"ve.Range",
 					"ve.EventSequencer",
+					"ve.Filibuster",
+					"ve.TriggerListener",
 					"ve.Node",
 					"ve.BranchNode",
 					"ve.LeafNode",
@@ -57,6 +70,7 @@
 					"ve.dm.NodeFactory",
 					"ve.dm.Surface",
 					"ve.dm.SurfaceFragment",
+					"ve.dm.*Selection",
 					"ve.dm.Transaction",
 					"ve.dm.TransactionProcessor",
 					"ve.dm.TransactionProcessor.processors",
@@ -68,7 +82,10 @@
 					"ve.dm.Document*",
 					"ve.dm.*Node",
 					"ve.dm.*LinearData*",
-					"ve.dm.*Model"
+					"ve.dm.*Model",
+					"ve.dm.TableMatrix",
+					"ve.dm.TableMatrixCell",
+					"ve.dm.TableNodeCellIterator"
 				]
 			},
 			{
@@ -80,7 +97,7 @@
 					"ve.ce.NodeFactory",
 					"ve.ce.Surface",
 					"ve.ce.SurfaceObserver",
-					"ve.ce.DomRange",
+					"ve.ce.RangeState",
 					"ve.ce.*Annotation",
 					"ve.ce.Document",
 					"ve.ce.*Node"
@@ -90,26 +107,24 @@
 				"name": "User Interface",
 				"classes": [
 					"ve.ui",
-					"ve.ui.Surface",
-					"ve.ui.DesktopSurface",
-					"ve.ui.MobileSurface",
-					"ve.ui.Context",
-					"ve.ui.DesktopContext",
-					"ve.ui.MobileContext",
+					"ve.ui.*Surface",
+					"ve.ui.*Context",
+					"ve.ui.Overlay",
 					"ve.ui.Toolbar",
 					"ve.ui.TargetToolbar",
 					"ve.ui.DebugBar",
-					"ve.ui.WindowSet",
-					"ve.ui.Action",
 					"ve.ui.Trigger",
-					"ve.ui.Command",
+					"ve.ui.*FileDropHandler",
 					"ve.ui.*Action",
+					"ve.ui.*Command",
 					"ve.ui.*Factory",
 					"ve.ui.*Registry",
+					"ve.ui.*Sequence",
 					"ve.ui.*Tool",
-					"ve.ui.*Inspector",
 					"ve.ui.*Widget",
-					"ve.ui.*Dialog"
+					"ve.ui.*WindowManager",
+					"ve.ui.*Dialog",
+					"ve.ui.*Inspector"
 				]
 			},
 			{
@@ -144,26 +159,15 @@
 				"name": "General",
 				"classes": [
 					"OO.ui",
+					"OO.ui.ActionSet",
 					"OO.ui.Element",
-					"OO.ui.Process",
-					"OO.ui.Frame",
-					"OO.ui.Toolbar",
+					"OO.ui.Layout",
+					"OO.ui.Widget",
 					"OO.ui.Window",
-					"OO.ui.WindowSet",
 					"OO.ui.Dialog",
-					"OO.ui.ConfirmationDialog"
-				]
-			},
-			{
-				"name": "Factories",
-				"classes": [
-					"OO.ui.*Factory"
-				]
-			},
-			{
-				"name": "Tools",
-				"classes": [
-					"OO.ui.*Tool"
+					"OO.ui.WindowManager",
+					"OO.ui.Error",
+					"OO.ui.Process"
 				]
 			},
 			{
@@ -173,21 +177,41 @@
 				]
 			},
 			{
+				"name": "Tools",
+				"classes": [
+					"OO.ui.*Tool",
+					"OO.ui.Tool*Factory"
+				]
+			},
+			{
+				"name": "Toolbar and tool groups",
+				"classes": [
+					"OO.ui.Toolbar",
+					"OO.ui.*ToolGroup"
+				]
+			},
+			{
+				"name": "Dialogs",
+				"classes": [
+					"OO.ui.*Dialog"
+				]
+			},
+			{
 				"name": "Layouts",
 				"classes": [
 					"OO.ui.*Layout"
 				]
 			},
 			{
-				"name": "Tool groups",
-				"classes": [
-					"OO.ui.*ToolGroup"
-				]
-			},
-			{
 				"name": "Widgets",
 				"classes": [
 					"OO.ui.*Widget"
+				]
+			},
+			{
+				"name": "Themes",
+				"classes": [
+					"OO.ui.*Theme"
 				]
 			}
 		]

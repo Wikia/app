@@ -1,11 +1,11 @@
 /**
- * JavasSript for the Google Maps v3 form input of the Semantic Maps extension.
+ * JavaScript for the Google Maps v3 form input of the Semantic Maps extension.
  * @see http://www.mediawiki.org/wiki/Extension:Semantic_Maps
  * 
  * @since 1.0
  * @ingroup SemanticMaps
  * 
- * @licence GNU GPL v3
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw <jeroendedauw at gmail dot com>
  */
 
@@ -222,7 +222,7 @@
 					document.getElementById('matches').offsetTop;
 				selected = resultNum;
 			}
-		}
+		};
 			
 		for (var i = 0; i < results.length; i++) {
 			var icon = new google.maps.MarkerImage(

@@ -54,10 +54,6 @@ class Http {
 			}
 		}
 
-		// @author macbre
-		// pass Request ID to internal requests
-		$req->setHeader( Wikia\Util\RequestId::REQUEST_HEADER_NAME, Wikia\Util\RequestId::instance()->getRequestId() );
-
 		// Wikia change - end
 		if( isset( $options['userAgent'] ) ) {
 			$req->setUserAgent( $options['userAgent'] );
@@ -248,6 +244,17 @@ class MWHttpRequest {
 	protected $respStatus = "200 Ok";
 	protected $respHeaders = array();
 
+	// Wikia change - begin - @author: wladek
+	/**
+	 * Send X-Request-Id and X-Request-Origin-Host headers
+	 * @var bool
+	 */
+	protected $internalRequest = false;
+	// Wikia change - end
+
+	/**
+	 * @var Status
+	 */
 	public $status;
 
 	/**
@@ -278,6 +285,7 @@ class MWHttpRequest {
 		// Wikia change - @author: wladek - begin
 		// allow overriding of curl options
 		$members[] = "curlOptions";
+		$members[] = "internalRequest";
 		// Wikia change - end
 
 		foreach ( $members as $o ) {
@@ -478,6 +486,19 @@ class MWHttpRequest {
 		if ( !isset( $this->reqHeaders['User-Agent'] ) ) {
 			$this->setUserAgent( Http::userAgent() );
 		}
+
+		// @author macbre
+		// pass Request ID to internal requests
+		$this->setHeader( Wikia\Util\RequestId::REQUEST_HEADER_NAME, Wikia\Util\RequestId::instance()->getRequestId() );
+		// PLATFORM-1473: pass X-Wikia-Internal-Request
+		$this->setHeader( WebRequest::WIKIA_INTERNAL_REQUEST_HEADER, 'mediawiki' );
+
+		// Wikia change - begin - @author: wladek
+		// Append extra headers for internal requests, currently only X-Request-Origin-Host
+		if ( $this->internalRequest ) {
+			$this->setHeader( Wikia\Util\RequestId::REQUEST_HEADER_ORIGIN_HOST, wfHostname() );
+		}
+		// Wikia change - end
 	}
 
 	/**
@@ -736,6 +757,10 @@ class CurlHttpRequest extends MWHttpRequest {
 		return strlen( $content );
 	}
 
+	/**
+	 * @return Status
+	 * @throws MWException
+	 */
 	public function execute() {
 		parent::execute();
 
@@ -743,7 +768,19 @@ class CurlHttpRequest extends MWHttpRequest {
 			return $this->status;
 		}
 
-		$this->curlOptions[CURLOPT_PROXY] = $this->proxy;
+		// Wikia change PLATFORM-1298 michal@wikia-inc.com
+		if ( $this->parsedUrl['scheme'] == 'https' ) {
+			$this->proxy = null;
+		}
+
+		// PLATFORM-1317: only set when the proxy is not an empty value [macbre]
+		if ( $this->proxy && !$this->noProxy ) {
+			$this->curlOptions[CURLOPT_PROXY] = $this->proxy;
+
+			wfDebug( sprintf( "%s: setting a proxy to '%s'\n", __METHOD__, $this->proxy ) );
+		}
+		// End of Wikia change
+
 		$this->curlOptions[CURLOPT_TIMEOUT] = $this->timeout;
 		$this->curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0;
 		$this->curlOptions[CURLOPT_WRITEFUNCTION] = $this->callback;
@@ -795,9 +832,31 @@ class CurlHttpRequest extends MWHttpRequest {
 
 		$curlHandle = curl_init( $this->url );
 
-		if ( !curl_setopt_array( $curlHandle, $this->curlOptions ) ) {
-			throw new MWException( "Error setting curl options." );
+		// Wikia change - begin
+		/**
+		 * @author Michał Roszka <michal@wikia-inc.com>
+		 * @author macbre
+		 * @see PLATFORM-1317
+		 * @see PLATFORM-1308
+		 */
+		foreach ( $this->curlOptions as $option => $value ) {
+			if ( !curl_setopt( $curlHandle, $option, $value ) ) {
+				$e = new MWException( "Error setting curl options." );
+				if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
+					\Wikia\Logger\WikiaLogger::instance()->debug(
+						'PLATFORM-1317' ,
+						[
+							'option'     => $option,
+							'value'      => bin2hex( serialize( $value ) ),
+							'value_raw'  => $value,
+							'exception'  => $e
+						]
+					);
+				}
+				throw $e;
+			}
 		}
+		// Wikia change - end
 
 		if ( $this->followRedirects && $this->canFollowRedirects() ) {
 			wfSuppressWarnings();

@@ -160,7 +160,7 @@ abstract class ToolbarService {
 			return array();
 		}
 
-		$seenPromotions = $wgUser->getOption( $this->getPromotionsOptionName(), false );
+		$seenPromotions = $wgUser->getGlobalPreference( $this->getPromotionsOptionName() );
 		$seenPromotions = $seenPromotions ? unserialize( $seenPromotions ) : array();
 		$promotionsDiff = array_intersect( $this->getPromotions(), $seenPromotions );
 
@@ -170,7 +170,7 @@ abstract class ToolbarService {
 	protected function setSeenPromotions( $list ) {
 		global $wgUser;
 
-		$wgUser->setOption( $this->getPromotionsOptionName(), serialize( $list ) );
+		$wgUser->setGlobalPreference( $this->getPromotionsOptionName(), serialize( $list ) );
 		$wgUser->saveSettings();
 		return true;
 	}
@@ -223,7 +223,7 @@ abstract class ToolbarService {
 	protected function loadToolbarList() {
 		global $wgUser;
 		if ( !$wgUser->isAnon() ) {
-			$toolbar = $wgUser->getOption( $this->getToolbarOptionName(), null );
+			$toolbar = $wgUser->getGlobalPreference( $this->getToolbarOptionName() );
 			if ( is_string( $toolbar ) ) {
 				$toolbar = @unserialize( $toolbar );
 				if ( is_array( $toolbar ) ) {
@@ -251,7 +251,7 @@ abstract class ToolbarService {
 		}
 
 //			$list = $this->cleanList($list);
-		$wgUser->setOption( $this->getToolbarOptionName(), serialize( $list ) );
+		$wgUser->setGlobalPreference( $this->getToolbarOptionName(), serialize( $list ) );
 		$wgUser->saveSettings();
 		return true;
 	}
@@ -266,8 +266,8 @@ abstract class ToolbarService {
 
 	public function clear() {
 		global $wgUser, $wgMemc;
-		$wgUser->setOption( $this->getPromotionsOptionName(), null );
-		$wgUser->setOption( $this->getToolbarOptionName(), null );
+		$wgUser->setGlobalPreference( $this->getPromotionsOptionName(), null );
+		$wgUser->setGlobalPreference( $this->getToolbarOptionName(), null );
 		$wgUser->saveSettings(); ;
 
 		$wgMemc->delete( $this->getUpdatePromotionsKey() );

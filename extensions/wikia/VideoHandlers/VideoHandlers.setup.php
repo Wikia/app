@@ -164,10 +164,6 @@ $wgAutoloadClasses['MovieclipsVideoHandler'] =  $dir . '/handlers/MovieclipsVide
 $wgAutoloadClasses['MovieclipsApiWrapper'] =  $dir . '/apiwrappers/MovieclipsApiWrapper.class.php';
 $wgMediaHandlers['video/movieclips'] = 'MovieclipsVideoHandler';
 
-$wgAutoloadClasses['MyvideoVideoHandler'] =  $dir . '/handlers/MyvideoVideoHandler.class.php';
-$wgAutoloadClasses['MyvideoApiWrapper'] =  $dir . '/apiwrappers/MyvideoApiWrapper.class.php';
-$wgMediaHandlers['video/myvideo'] = 'MyvideoVideoHandler';
-
 // Uses Ooyala for video handler
 $wgAutoloadClasses['ScreenplayApiWrapper'] =  $dir . '/apiwrappers/ScreenplayApiWrapper.class.php';
 
@@ -215,10 +211,6 @@ $wgAutoloadClasses[ 'IvaVideoHandler'] =  $dir . '/handlers/IvaVideoHandler.clas
 $wgAutoloadClasses[ 'IvaApiWrapper'] =  $dir . '/apiwrappers/IvaApiWrapper.class.php' ;
 $wgMediaHandlers['video/iva'] = 'IvaVideoHandler';
 
-$wgAutoloadClasses[ 'SnappytvVideoHandler'] =  $dir . '/handlers/SnappytvVideoHandler.class.php' ;
-$wgAutoloadClasses[ 'SnappytvApiWrapper'] =  $dir . '/apiwrappers/SnappytvApiWrapper.class.php' ;
-$wgMediaHandlers['video/snappytv'] = 'SnappytvVideoHandler';
-
 $wgAutoloadClasses['UstreamVideoHandler'] =  $dir . '/handlers/UstreamVideoHandler.class.php';
 $wgAutoloadClasses['UstreamApiWrapper'] =  $dir . '/apiwrappers/UstreamApiWrapper.class.php';
 $wgMediaHandlers['video/ustream'] = 'UstreamVideoHandler';
@@ -264,7 +256,6 @@ $wgVideoMigrationProviderMap = array(
 	11 => 'Metacafe',
 	12 => 'Sevenload',
 	13 => 'Vimeo',
-	15 => 'Myvideo',
 	18 => 'Dailymotion',
 	19 => 'Viddler',
 	21 => 'Screenplay',
@@ -278,7 +269,6 @@ $wgVideoMigrationProviderMap = array(
 	27 => 'Twitchtv',
 	28 => 'Ooyala',
 	29 => 'Iva',
-	30 => 'Snappytv',
 	31 => 'Ustream',
 	32 => 'Youku'
 );

@@ -164,17 +164,18 @@ class WikiaMobileHooks {
 	 * @return bool
 	 */
 	static public function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, &$ret ){
+		global $wgArticleAsJson;
 		wfProfileIn( __METHOD__ );
 
 		if ( F::app()->checkSkin( 'wikiamobile', $skin ) ) {
-			//remove bold, italics, underline and anchor tags from section headings (also optimizes output size)
-			$text = preg_replace( '/<\/?(b|u|i|a|em|strong){1}(\s+[^>]*)*>/im', '', $text );
-
-            if ( F::app()->wg->User->isAnon() ) {
+			//retrieve section index from mw:editsection tag
+			preg_match( '#section="(.*?)"#', $link, $matches );
+			if ( $wgArticleAsJson || F::app()->wg->User->isAnon() ) {
 				$link = '';
 			}
-
-			$ret = "<h{$level} id='{$anchor}' {$attribs}{$text}{$link}</h{$level}>";
+			//remove bold, italics, underline and anchor tags from section headings (also optimizes output size)
+			$text = preg_replace( '/<\/?(b|u|i|a|em|strong){1}(\s+[^>]*)*>/im', '', $text );
+			$ret = "<h{$level} id='{$anchor}' section='{$matches[1]}' {$attribs}{$text}{$link}</h{$level}>";
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -250,12 +251,12 @@ class WikiaMobileHooks {
 
 			//this is going to be additional call but at least it won't be loaded on every page
 			foreach ( $scripts as $s ) {
-				$out->addScript( '<script src="' . $s . '"></script>' );
+				$out->addScript( '<script src="' . Sanitizer::encodeAttribute( $s ) . '"></script>' );
 			}
 
 			//set proper titles for a page
 			$out->setPageTitle( $text );
-			$out->setHTMLTitle( $text );
+			$out->setHTMLTitle( $title->getPrefixedText() );
 
 			//render lists: exhibition and alphabetical
 			$params = array( 'categoryPage' => $categoryPage );

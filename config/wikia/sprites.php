@@ -3,7 +3,7 @@
   Configuration file for automatically generated sprites.
 
   To regenerate the chosen sprite issue this command on your devbox (replace SPRITE_NAME with one of the configured below):
-    SERVER_ID=177 php /usr/wikia/source/wiki/maintenance/wikia/generateSprites.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php --sprite SPRITE_NAME
+    SERVER_ID=177 php /usr/wikia/source/wiki/maintenance/wikia/generateSprites.php --sprite SPRITE_NAME
   However if you skip the sprite parameter the script will go through entire configuration file and regenerate them.
 
 */
@@ -82,15 +82,6 @@ $config['EditPageLayout_mw_toolbar'] = array(
 	)
 );
 
-/*
-$config['PageLayoutEditor'] = array(
-	'name'   => 'page-layout-builder',
-	'source' => "$IP/extensions/wikia/PageLayoutBuilder/images/sprite-page-layout-builder/",
-	'sprite' => "$IP/extensions/wikia/PageLayoutBuilder/images/sprite-page-layout-builder.png",
-	'scss'   => "$IP/extensions/wikia/PageLayoutBuilder/css/_sprite-page-layout-builder.scss",
-);
-*/
-
 $config['MiniEditor'] = array(
 	'name'   => 'MiniEditor',
 	'source' => "$IP/extensions/wikia/MiniEditor/images/sprite-MiniEditor/",
@@ -120,9 +111,17 @@ $config['LicensedVideoSwap'] = array(
 );
 
 $config['VideoPageTool'] = array(
-	'name' => 'VideoPageTool',
+	'name'   => 'VideoPageTool',
 	'source' => "$IP/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/",
 	'sprite' => "$IP/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool.png",
 	'scss'   => "$IP/extensions/wikia/VideoPageTool/css/mixins/_sprite-VideoPageTool.scss"
+
+);
+
+$config['MonetizationModule'] = array(
+	'name'   => 'monetization-module',
+	'source' => "$IP/extensions/wikia/MonetizationModule/images/sprite-monetization-module/",
+	'sprite' => "$IP/extensions/wikia/MonetizationModule/images/sprite-monetization-module.png",
+	'scss'   => "$IP/extensions/wikia/MonetizationModule/styles/mixins/_sprite-monetization-module.scss"
 
 );

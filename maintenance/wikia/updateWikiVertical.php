@@ -123,7 +123,7 @@ foreach($csv as $line) {
 	foreach ($mapping as $name => $id) {
 		//echo "checking $name against $vertical_name\n";
 		//echo "result: " . var_dump(stristr($name, $vertical_name)) . "\n";
-		if (stristr($name, $vertical_name) !== false) {
+		if ($vertical_name && stristr($name, $vertical_name) !== false) {
 			$vertical_id = $id;
 			//echo "match: $id\n";
 			break;
@@ -133,10 +133,10 @@ foreach($csv as $line) {
 		//echo "checking $name against $cat1 $cat2\n";
 		//echo "result: " . var_dump(stristr($name, $cat1)) . "\n";
 		//echo "result: " . var_dump(stristr($name, $cat2)) . "\n";
-		if (stristr($name, $cat1) !== false) {
+		if ( !empty($cat1) && stristr($name, $cat1) !== false) {
 			$cat1_id = $id;
 		}
-		if (stristr($name, $cat2) !== false) {
+		if ( !empty($cat2) && stristr($name, $cat2) !== false) {
 			$cat2_id = $id;
 		}
 	}

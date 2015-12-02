@@ -1,4 +1,7 @@
 <?php
+
+use Wikia\Logger\WikiaLogger;
+
 class RelatedForumDiscussionController extends WikiaController {
 
 	/** Expiry time to use in cache requests */
@@ -24,28 +27,21 @@ class RelatedForumDiscussionController extends WikiaController {
 		// common data
 		$this->sectionHeading = wfMessage( 'forum-related-discussion-heading', $title->getText() )->escaped();
 		$this->newPostButton = wfMessage( 'forum-related-discussion-new-post-button' )->escaped();
-		$this->newPostUrl = $topicTitle->getFullUrl('openEditor=1');
+		$this->newPostUrl = $topicTitle->getFullUrl( 'openEditor=1' );
 		$this->newPostTooltip = wfMessage( 'forum-related-discussion-new-post-tooltip', $title->getText() )->escaped();
 		$this->blankImgUrl = wfBlankImgUrl();
 
 		$this->seeMoreUrl = $topicTitle->getFullUrl();
 		$this->seeMoreText = wfMessage( 'forum-related-discussion-see-more' )->escaped();
-
-		// TODO: move classes to template when Venus will be live on all wikis
-		$this->venusBtnClasses = '';
-		if ($this->app->checkSkin( 'venus' ) ) {
-			$this->venusBtnClasses = 'wikia-button secondary';
-			Wikia::addAssetsToOutput( 'related_forum_discussion_css' );
-		}
 	}
 
 	/**
 	 * @deprecated legacy entry point for cached JS requests
 	 */
 	public function checkData() {
-		$articleId = $this->getVal('articleId');
-		$title = Title::newFromId($articleId);
-		if(empty($articleId) || empty($title)) {
+		$articleId = $this->getVal( 'articleId' );
+		$title = Title::newFromId( $articleId );
+		if ( empty( $articleId ) || empty( $title ) ) {
 			$this->replace = false;
 			$this->articleId = $articleId;
 			return;
@@ -58,18 +54,18 @@ class RelatedForumDiscussionController extends WikiaController {
 		$this->lastupdate = $messages['lastupdate'];
 		$this->timediff = $timediff;
 
-		unset($messages['lastupdate']);
+		unset( $messages['lastupdate'] );
 
-		if($timediff < 24*60*60) {
+		if ( $timediff < 24 * 60 * 60 ) {
 			$this->replace = true;
-			$this->html = $this->app->renderView( "RelatedForumDiscussion", "relatedForumDiscussion", array('messages' => $messages) );
+			$this->html = $this->app->renderView( "RelatedForumDiscussion", "relatedForumDiscussion", array( 'messages' => $messages ) );
 		} else {
 			$this->replace = false;
 			$this->html = '';
 		}
 
-		$this->response->setFormat(WikiaResponse::FORMAT_JSON);
-		$this->response->setCacheValidity( 6*60*60, WikiaResponse::CACHE_DISABLED /* no caching in browser */ );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( 6 * 60 * 60, WikiaResponse::CACHE_DISABLED /* no caching in browser */ );
 	}
 
 	/**
@@ -77,14 +73,19 @@ class RelatedForumDiscussionController extends WikiaController {
 	 * @param int $threadId
 	 */
 	public static function purgeCache( $threadId ) {
-		$rm = new WallRelatedPages();
-		$ids = $rm->getMessagesRelatedArticleIds($threadId, 'order_index', DB_MASTER);
+		$relatedPages = new WallRelatedPages();
+		$ids = $relatedPages->getMessagesRelatedArticleIds( $threadId, 'order_index', DB_MASTER );
 
-		foreach($ids as $id) {
+		foreach ( $ids as $id ) {
 			$key = wfMemcKey( __CLASS__, 'getData', $id );
-			WikiaDataAccess::cachePurge($key);
+			WikiaDataAccess::cachePurge( $key );
 			// VOLDEV-46: Update module by purging page, not via AJAX
-			WikiPage::newFromID( $id )->doPurge();
+			$wikiaPage = WikiPage::newFromID( $id );
+			if ( $wikiaPage ) {
+				$wikiaPage->doPurge();
+			} else {
+				self::logError( "Found a null related wikipage on thread purge", [ "articleID" => $id, "threadID" => $threadId ] );
+			}
 		}
 	}
 
@@ -99,6 +100,10 @@ class RelatedForumDiscussionController extends WikiaController {
 			$wlp = new WallRelatedPages();
 			$messages = $wlp->getArticlesRelatedMessgesSnippet( $articleId, 2, 2 );
 			return $messages;
-		});
+		} );
+	}
+
+	private static function logError( $message, array $param = [] ) {
+		WikiaLogger::instance()->error( 'RelatedForumDiscussionController: ' . $message, $param );
 	}
 }

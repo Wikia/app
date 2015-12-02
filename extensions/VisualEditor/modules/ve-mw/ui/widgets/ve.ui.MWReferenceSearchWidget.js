@@ -15,9 +15,9 @@
  * @param {Object} [config] Configuration options
  */
 ve.ui.MWReferenceSearchWidget = function VeUiMWReferenceSearchWidget( config ) {
-	// Configuration intialization
+	// Configuration initialization
 	config = ve.extendObject( {
-		'placeholder': ve.msg( 'visualeditor-reference-input-placeholder' )
+		placeholder: ve.msg( 'visualeditor-reference-input-placeholder' )
 	}, config );
 
 	// Parent constructor
@@ -25,6 +25,8 @@ ve.ui.MWReferenceSearchWidget = function VeUiMWReferenceSearchWidget( config ) {
 
 	// Properties
 	this.index = [];
+	this.indexEmpty = true;
+	this.built = false;
 
 	// Initialization
 	this.$element.addClass( 've-ui-mwReferenceSearchWidget' );
@@ -81,15 +83,75 @@ ve.ui.MWReferenceSearchWidget.prototype.onResultsSelect = function ( item ) {
 };
 
 /**
- * Build a serchable index of references.
- *
- * @method
+ * Set the internal list and check if it contains any references
  * @param {ve.dm.InternalList} internalList Internal list
  */
-ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function ( internalList ) {
+ve.ui.MWReferenceSearchWidget.prototype.setInternalList = function ( internalList ) {
+	var i, iLen, groupNames, groupName, groups = internalList.getNodeGroups();
+
+	if ( this.results.getSelectedItem() ) {
+		this.results.getSelectedItem().setSelected( false );
+	}
+
+	this.internalList = internalList;
+	this.internalList.connect( this, { update: 'onInternalListUpdate' } );
+	this.internalList.getListNode().connect( this, { update: 'onListNodeUpdate' } );
+
+	groupNames = ve.getObjectKeys( groups );
+	for ( i = 0, iLen = groupNames.length; i < iLen; i++ ) {
+		groupName = groupNames[i];
+		if ( groupName.lastIndexOf( 'mwReference/' ) !== 0 ) {
+			continue;
+		}
+		if ( groups[groupName].indexOrder.length ) {
+			this.indexEmpty = false;
+			return;
+		}
+	}
+	this.indexEmpty = true;
+};
+
+/**
+ * Handle the updating of the InternalList object.
+ *
+ * This will occur after a document transaction.
+ *
+ * @method
+ * @param {string[]} groupsChanged A list of groups which have changed in this transaction
+ */
+ve.ui.MWReferenceSearchWidget.prototype.onInternalListUpdate = function ( groupsChanged ) {
+	for ( var i = 0, len = groupsChanged.length; i < len; i++ ) {
+		if ( groupsChanged[i].indexOf( 'mwReference/' ) === 0 ) {
+			this.built = false;
+			break;
+		}
+	}
+};
+
+/**
+ * Handle the updating of the InternalListNode.
+ *
+ * This will occur after changes to any InternalItemNode.
+ *
+ * @method
+ */
+ve.ui.MWReferenceSearchWidget.prototype.onListNodeUpdate = function () {
+	this.built = false;
+};
+
+/**
+ * Build a searchable index of references.
+ *
+ * @method
+ */
+ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function () {
+	if ( this.built ) {
+		return;
+	}
+
 	var i, iLen, j, jLen, ref, group, groupName, groupNames, view, text, firstNodes, indexOrder,
 		refGroup, refNode, matches, name, citation,
-		groups = internalList.getNodeGroups();
+		groups = this.internalList.getNodeGroups();
 
 	function extractAttrs() {
 		text += ' ' + this.getAttribute( 'href' );
@@ -109,7 +171,7 @@ ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function ( internalList ) {
 		for ( j = 0, jLen = indexOrder.length; j < jLen; j++ ) {
 			refNode = firstNodes[indexOrder[j]];
 			ref = ve.dm.MWReferenceModel.static.newFromReferenceNode( refNode );
-			view = new ve.ce.InternalItemNode( internalList.getItemNode( ref.getListIndex() ) );
+			view = new ve.ce.InternalItemNode( this.internalList.getItemNode( ref.getListIndex() ) );
 
 			// HACK: PHP parser doesn't wrap single lines in a paragraph
 			if ( view.$element.children().length === 1 && view.$element.children( 'p' ).length === 1 ) {
@@ -131,11 +193,11 @@ ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function ( internalList ) {
 			view.$element.find( 'a[href]' ).each( extractAttrs );
 
 			this.index.push( {
-				'$element': view.$element.clone().show(),
-				'text': text,
-				'reference': ref,
-				'citation': citation,
-				'name': name
+				$element: view.$element,
+				text: text,
+				reference: ref,
+				citation: citation,
+				name: name
 			} );
 			view.destroy();
 		}
@@ -143,15 +205,17 @@ ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function ( internalList ) {
 
 	// Re-populate
 	this.onQueryChange();
+
+	this.built = true;
 };
 
 /**
- * Check whether the index built by #buildIndex is empty. This will return true if
- * #buildIndex hasn't been called yet.
+ * Check whether buildIndex will create an empty index based on the current internalList.
+ *
  * @returns {boolean} Index is empty
  */
 ve.ui.MWReferenceSearchWidget.prototype.isIndexEmpty = function () {
-	return this.index.length === 0;
+	return this.indexEmpty;
 };
 
 /**
@@ -175,8 +239,10 @@ ve.ui.MWReferenceSearchWidget.prototype.addResults = function () {
 				.addClass( 've-ui-mwReferenceSearchWidget-name' )
 				.text( item.name );
 			items.push(
-				new ve.ui.MWReferenceResultWidget( i, {
-					'$': this.$, 'label': $citation.add( $name ).add( item.$element )
+				new ve.ui.MWReferenceResultWidget( {
+					$: this.$,
+					data: i,
+					label: $citation.add( $name ).add( item.$element )
 				} )
 			);
 		}

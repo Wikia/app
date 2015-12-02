@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Gazeb"
+		]
+	},
+	"sd_browsedata_choosecategory": "Выбрати катеґорію",
+	"sd_browsedata_viewcategory": "видїти катеґорію",
+	"sd_browsedata_subcategory": "Підкатегорія",
+	"sd_browsedata_other": "Інше",
+	"sd_browsedata_none": "Жадне"
+}

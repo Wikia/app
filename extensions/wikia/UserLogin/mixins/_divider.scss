@@ -1,11 +1,12 @@
-@import "skins/shared/color";
+@import 'skins/shared/color';
 
 @mixin divider {
-	border-top: solid 1px $color-page-border;
+	border-top: 0;
 	margin-top: 25px;
 	text-align: center;
+
 	> span {
-		background-color: $color-page;
+		background-color: inherit;
 		display: inline-block;
 		padding: 0 21px;
 		position: relative;

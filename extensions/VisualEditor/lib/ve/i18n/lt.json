@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"Audriusa",
+			"Eitvys200"
+		]
+	},
+	"visualeditor-aliennode-tooltip": "Atsiprašome, VisualEditor kol kas negali keisti šio elemento. Norėdami redaguoti, keiskite išeities kodą.",
+	"visualeditor-annotationbutton-bold-tooltip": "Paryškinti",
+	"visualeditor-annotationbutton-italic-tooltip": "Kursyvas",
+	"visualeditor-annotationbutton-language-tooltip": "Kalba",
+	"visualeditor-annotationbutton-link-tooltip": "Nuoroda",
+	"visualeditor-annotationbutton-strikethrough-tooltip": "Perbraukti",
+	"visualeditor-annotationbutton-subscript-tooltip": "Nuleisti",
+	"visualeditor-annotationbutton-superscript-tooltip": "Pakelti",
+	"visualeditor-annotationbutton-underline-tooltip": "Pabraukti",
+	"visualeditor-clearbutton-tooltip": "Pašalinti formatavimą",
+	"visualeditor-dialog-action-apply": "Taikyti pakeitimus",
+	"visualeditor-dialog-action-goback": "Grįžti",
+	"visualeditor-formatdropdown-format-heading1": "Antraštė 1",
+	"visualeditor-formatdropdown-format-paragraph": "Pastraipa",
+	"visualeditor-formatdropdown-format-preformatted": "Suformatuotos",
+	"visualeditor-formatdropdown-title": "Keisti formatą",
+	"visualeditor-historybutton-redo-tooltip": "Atkurti",
+	"visualeditor-historybutton-undo-tooltip": "Anuliuoti",
+	"visualeditor-indentationbutton-outdent-tooltip": "Mažinti įtrauką",
+	"visualeditor-inspector-close-tooltip": "Uždaryti",
+	"visualeditor-inspector-remove-tooltip": "Pašalinti",
+	"visualeditor-languageinspector-title": "Kalba",
+	"visualeditor-languageinspector-widget-changelang": "Keisti kalbą",
+	"visualeditor-languageinspector-widget-label-direction": "Kryptis",
+	"visualeditor-languageinspector-widget-label-langcode": "Kalbos kodas",
+	"visualeditor-languageinspector-widget-label-language": "Kalba",
+	"visualeditor-linkinspector-title": "Nuoroda"
+}

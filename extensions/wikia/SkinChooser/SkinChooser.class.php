@@ -14,7 +14,7 @@ class SkinChooser {
 		// hide default MediaWiki skin fieldset
 		unset( $defaultPreferences['skin'] );
 
-		$mSkin  = $user->getOption( 'skin' );
+		$mSkin  = $user->getGlobalPreference( 'skin' );
 
 		// hacks for Answers
 		if ( !empty( $wgEnableAnswers ) ) {
@@ -126,13 +126,13 @@ class SkinChooser {
 		global $wgUser, $wgEnableAnswers;
 		wfProfileIn( __METHOD__ );
 
-		$val = $wgUser->getOption( self::getUserOptionKey( $option ) );
+		$val = $wgUser->getGlobalPreference( self::getUserOptionKey( $option ) );
 
 		// fallback to non-answers option (RT #54087)
 		if ( !empty( $wgEnableAnswers ) &&  $val == '' ) {
 			wfDebug( __METHOD__ . ": '{$option}' fallbacked\n" );
 
-			$val = $wgUser->getOption( $option );
+			$val = $wgUser->getGlobalPreference( $option );
 		}
 
 		wfDebug( __METHOD__ . ": '{$option}' = {$val}\n" );
@@ -150,13 +150,13 @@ class SkinChooser {
 
 		$key = self::getUserOptionKey( $option );
 
-		$wgUser->setOption( $key, $value );
+		$wgUser->setGlobalPreference( $key, $value );
 		self::log( __METHOD__, "{$key} = {$value}" );
 
 		/* debugging skin leak, -uber */
 		if ( $key == 'skin' ) { # yes, i do mean to check key and not option here
 			global $wgCityId;
-			$wgUser->setOption( 'skin-set', implode( '|', array( 'SkinChooser', $wgCityId, time() ) ) );
+			$wgUser->setGlobalPreference( 'skin-set', implode( '|', array( 'SkinChooser', $wgCityId, time() ) ) );
 		}
 		/* end debug */
 
@@ -205,12 +205,21 @@ class SkinChooser {
 		if ( is_null( $useskin ) && function_exists( 'apache_request_headers' ) ) {
 			$headers = apache_request_headers();
 
-			if ( isset( $headers[ "X-Skin" ] ) && in_array( $headers[ "X-Skin" ], array( "monobook", "oasis", "venus",
-					"wikia", "wikiamobile", "uncyclopedia" ) ) ) {
-				$skin = Skin::newFromKey( $headers[ "X-Skin" ] );
+			if ( isset( $headers[ 'X-Skin' ] ) ) {
+				if ( in_array( $headers[ 'X-Skin' ], array( 'monobook', 'oasis', 'wikia', 'wikiamobile', 'uncyclopedia' ) ) ) {
+					$skin = Skin::newFromKey( $headers[ 'X-Skin' ] );
+				// X-Skin header fallback for Mercury which is actually not a MediaWiki skin but a separate application
+				} elseif ( $headers[ 'X-Skin' ] === 'mercury') {
+					$skin = Skin::newFromKey( 'wikiamobile' );
+				}
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
+		}
+
+		// useskin query param fallback for Mercury which is actually not a MediaWiki skin but a separate application
+		if ( $useskin === 'mercury' ) {
+			$useskin = 'wikiamobile';
 		}
 
 		if ( !( $title instanceof Title ) || in_array( self::getUserOption( 'skin' ), $wgSkipSkins ) ) {
@@ -223,6 +232,7 @@ class SkinChooser {
 		if ( $request->getVal( 'useskin' ) == 'wikia' ) {
 			$request->setVal( 'useskin', 'oasis' );
 		}
+
 		if ( !empty( $wgForceSkin ) ) {
 			$wgForceSkin = $request->getVal( 'useskin', $wgForceSkin );
 			$elems = explode( '-', $wgForceSkin );
@@ -271,7 +281,7 @@ class SkinChooser {
 				} else {
 					$userSkin = 'oasis';
 				}
-			} else if ( !empty( $wgAdminSkin ) && $userSkin != 'venus' && $userSkin != 'oasis' && $userSkin != 'monobook' && $userSkin != 'wowwiki' && $userSkin != 'lostbook' ) {
+			} else if ( !empty( $wgAdminSkin ) && $userSkin != 'oasis' && $userSkin != 'monobook' && $userSkin != 'wowwiki' && $userSkin != 'lostbook' ) {
 				$adminSkinArray = explode( '-', $wgAdminSkin );
 				$userSkin = isset( $adminSkinArray[0] ) ? $adminSkinArray[0] : null;
 				$userTheme = isset( $adminSkinArray[1] ) ? $adminSkinArray[1] : null;

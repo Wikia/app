@@ -52,7 +52,7 @@ class OoyalaAsset extends WikiaModel {
 		$req = MWHttpRequest::factory( $url, $options );
 		$status = $req->execute();
 		if ( $status->isGood() ) {
-			$result = json_decode( $req->getContent(), true );
+			$result = json_decode( iconv( "UTF-8", "UTF-8//IGNORE", $req->getContent() ), true );
 		} else {
 			$result = false;
 			print( "ERROR: problem downloading content (".$status->getMessage().").\n" );

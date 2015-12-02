@@ -5,8 +5,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw*/
-
 /**
  * DataModel MediaWiki transclusion node.
  *
@@ -14,6 +12,7 @@
  * @abstract
  * @extends ve.dm.LeafNode
  * @mixins ve.dm.GeneratedContentNode
+ * @mixins ve.dm.FocusableNode
  *
  * @constructor
  * @param {Object} [element] Reference to element in linear model
@@ -24,12 +23,13 @@ ve.dm.MWTransclusionNode = function VeDmMWTransclusionNode() {
 
 	// Mixin constructors
 	ve.dm.GeneratedContentNode.call( this );
+	ve.dm.FocusableNode.call( this );
 
 	// Properties
 	this.partsList = null;
 
 	// Events
-	this.connect( this, { 'attributeChange': 'onAttributeChange' } );
+	this.connect( this, { attributeChange: 'onAttributeChange' } );
 };
 
 /* Inheritance */
@@ -37,6 +37,8 @@ ve.dm.MWTransclusionNode = function VeDmMWTransclusionNode() {
 OO.inheritClass( ve.dm.MWTransclusionNode, ve.dm.LeafNode );
 
 OO.mixinClass( ve.dm.MWTransclusionNode, ve.dm.GeneratedContentNode );
+
+OO.mixinClass( ve.dm.MWTransclusionNode, ve.dm.FocusableNode );
 
 /* Static members */
 
@@ -67,6 +69,25 @@ ve.dm.MWTransclusionNode.static.getHashObject = function ( dataElement ) {
 	};
 };
 
+/**
+ * return the type to be assigned to given data element. If this is a portable infobox, the proper
+ * node type was already defined and named.
+ *
+ * @param domElements array of clicked elements
+ * @param converter Converter object
+ * @returns {string} type of Node
+ */
+ve.dm.MWTransclusionNode.static.getDataElementType = function ( domElements, converter ) {
+	var isInline = this.isHybridInline( domElements, converter);
+
+	if ( isInline ) {
+		return ve.dm.MWTransclusionInlineNode.static.name;
+	}
+	return this.name === ve.dm.WikiaInfoboxTransclusionBlockNode.static.name ?
+		ve.dm.WikiaInfoboxTransclusionBlockNode.static.name :
+		ve.dm.MWTransclusionBlockNode.static.name;
+};
+
 ve.dm.MWTransclusionNode.static.toDataElement = function ( domElements, converter ) {
 	if ( converter.isDomAllMetaOrWhitespace( domElements, ['mwTransclusion', 'mwTransclusionInline', 'mwTransclusionBlock'] ) ) {
 		return ve.dm.MWTransclusionMetaItem.static.toDataElement( domElements, converter );
@@ -75,15 +96,14 @@ ve.dm.MWTransclusionNode.static.toDataElement = function ( domElements, converte
 	var dataElement, index,
 		mwDataJSON = domElements[0].getAttribute( 'data-mw' ),
 		mwData = mwDataJSON ? JSON.parse( mwDataJSON ) : {},
-		isInline = this.isHybridInline( domElements, converter ),
-		type = isInline ? 'mwTransclusionInline' : 'mwTransclusionBlock';
+		type = this.getDataElementType( domElements, converter );
 
 	dataElement = {
-		'type': type,
-		'attributes': {
-			'mw': mwData,
-			'originalDomElements': ve.copy( domElements ),
-			'originalMw': mwDataJSON
+		type: type,
+		attributes: {
+			mw: mwData,
+			originalDomElements: ve.copy( domElements ),
+			originalMw: mwDataJSON
 		}
 	};
 
@@ -164,8 +184,8 @@ ve.dm.MWTransclusionNode.static.escapeParameter = function ( param ) {
 			output += input;
 			break;
 		}
-		output += input.substr( 0, match.index );
-		input = input.substr( match.index + match[0].length );
+		output += input.slice( 0, match.index );
+		input = input.slice( match.index + match[0].length );
 		if ( inNowiki ) {
 			if ( match[0] === '</nowiki>' ) {
 				inNowiki = false;
@@ -276,8 +296,8 @@ ve.dm.MWTransclusionNode.prototype.getPartsList = function () {
 			part = content.parts[i];
 			this.partsList.push(
 				part.template ?
-					{ 'template': part.template.target.wt } :
-					{ 'content': part }
+					{ template: part.template.target.wt } :
+					{ content: part }
 			);
 		}
 	}
@@ -298,7 +318,7 @@ ve.dm.MWTransclusionNode.prototype.getWikitext = function () {
 
 	// Normalize to multi template format
 	if ( content.params ) {
-		content = { 'parts': [ { 'template': content } ] };
+		content = { parts: [ { template: content } ] };
 	}
 	// Build wikitext from content
 	for ( i = 0, len = content.parts.length; i < len; i++ ) {

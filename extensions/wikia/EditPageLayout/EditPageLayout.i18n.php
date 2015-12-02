@@ -23,7 +23,7 @@ $messages['en'] = array(
 	'editpagelayout-pageControls-back' => 'Back to editor',
 	'editpagelayout-pageControls-changes' => 'Changes',
 	'editpagelayout-blocked-user' => 'Your user name or IP address has been blocked',
-	'editpagelayout-edit-summary-label' => 'Edit Summary',
+	'editpagelayout-edit-summary-label' => 'Edit summary',
 	'editpagelayout-subject-headline-label' => 'Subject/headline:',
 
 	'wikia-editor-media-image' => 'Photo',
@@ -98,6 +98,16 @@ $messages['en'] = array(
 	'tog-editwidth' => 'Widen the Source mode edit box to fill the entire screen',
 	'tog-minordefault' => 'Mark all edits as "minor" by default',
 	'tog-forceeditsummary' => 'Prompt me if I leave a blank edit summary',
+	'tog-disablesyntaxhighlighting' => 'Do not show syntax highlighting in Source mode',
+
+	// preview-related messages
+	'editpagelayout-preview-label-desktop' => 'Desktop',
+	'editpagelayout-preview-label-mobile' => 'Mobile',
+
+	'editpagelayout-preview-dropdown-item-mobile' => 'Mobile',
+	'editpagelayout-preview-dropdown-item-tablet' => 'Tablet Portrait',
+	'editpagelayout-preview-dropdown-item-desktop' => 'Desktop',
+	'editpagelayout-preview-dropdown-item-desktopxl' => 'Desktop XL'
 );
 
 /** Message documentation (Message documentation)
@@ -144,6 +154,20 @@ $messages['qqq'] = array(
 	'prefs-starting-an-edit' => 'This is a heading in Special:Preferences',
 	'prefs-editing-experience' => 'This is a heading in Special:Preferences',
 	'wikia-editor-preview-editSummary' => 'A text showed on the bottom of preview window when the edit summary was added, the parameter is the added summary',
+
+	'tog-editsection' => 'A label for checkbox to enable showing section edit links',
+	'tog-editwidth' => 'A label for checkbox to widen the Source mode edit box to fill the entire screen',
+	'tog-minordefault' => 'A label for checkbox to mark all edits as "minor" by default',
+	'tog-forceeditsummary' => 'A label for checkbox to prompt user if leave a blank edit summary',
+	'tog-disablesyntaxhighlighting' => 'A label for checkbox to dont show syntax highlighting in source mode',
+
+	'editpagelayout-preview-label-desktop' => 'A label shown under the desktop icon in the preview section of the edit interface, clicking changes the type of preview (toggle between mobile and desktop). Also displayed as a popup when the user hovers the desktop icon',
+	'editpagelayout-preview-label-mobile' => 'A label shown under the mobile icon in the preview section of the edit interface, clicking changes the type of preview (toggle between mobile and desktop). Also displayed as a popup when the user hovers over the mobile icon',
+
+	'editpagelayout-preview-dropdown-item-mobile' => 'An item in a dropdown menu near the top of the preview modal dialog, allows the user to select the type of preview they want to see',
+	'editpagelayout-preview-dropdown-item-tablet' => 'An item in a dropdown menu near the top of the preview modal dialog, allows the user to select the type of preview they want to see',
+	'editpagelayout-preview-dropdown-item-desktop' => 'An item in a dropdown menu near the top of the preview modal dialog, allows the user to select the type of preview they want to see',
+	'editpagelayout-preview-dropdown-item-desktopxl' => 'An item in a dropdown menu near the top of the preview modal dialog, allows the user to select the type of preview they want to see'
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -529,6 +553,10 @@ $messages['de'] = array(
 	'tog-editwidth' => 'Quelltext-Bearbeitungs-Fenster auf volle Breite',
 	'tog-minordefault' => 'Eigene Änderungen standardmäßig als geringfügig markieren',
 	'tog-forceeditsummary' => 'Warnen, sofern beim Speichern die Zusammenfassung fehlt',
+
+	// preview-related messages
+	'editpagelayout-preview-label-desktop' => 'Desktop',
+	'editpagelayout-preview-label-mobile' => 'Mobil',
 );
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
@@ -667,6 +695,10 @@ $messages['es'] = array(
 	'tog-editwidth' => 'Ampliar el cuadro de edición para llenar toda la pantalla',
 	'tog-minordefault' => 'Marcar todas las ediciones como menores por defecto',
 	'tog-forceeditsummary' => 'Alertar al grabar sin resumen de edición.',
+
+	// preview-related messages
+	'editpagelayout-preview-label-desktop' => 'Escritorio',
+	'editpagelayout-preview-label-mobile' => 'Móvil',
 );
 
 /** Persian (فارسی)
@@ -829,6 +861,10 @@ $messages['fr'] = array(
 	'tog-editwidth' => 'Élargir la zone de modification en mode source afin de remplir la totalité de l’écran',
 	'tog-minordefault' => 'Marquer mes modifications comme « mineures » par défaut',
 	'tog-forceeditsummary' => 'M’avertir si je n’ai laissé aucun résumé de modification',
+
+	// preview-related messages
+	'editpagelayout-preview-label-desktop' => 'Bureau',
+	'editpagelayout-preview-label-mobile' => 'Mobile',
 );
 
 /** Galician (galego)
@@ -1207,6 +1243,10 @@ $messages['it'] = array(
 	'tog-editwidth' => 'Estendi la finestra di modifica in modalità Codice sorgente allo schermo intero',
 	'tog-minordefault' => 'Contrassegna di default tutte le modifiche come "minori"',
 	'tog-forceeditsummary' => 'Avvisami se lascio vuoto il riassunto della modifica',
+
+	// preview-related messages
+	'editpagelayout-preview-label-desktop' => 'Desktop',
+	'editpagelayout-preview-label-mobile' => 'Mobile',
 );
 
 /** Japanese (日本語)
@@ -1279,6 +1319,10 @@ $messages['ja'] = array(
 	'tog-editwidth' => 'ソースモード時の編集ボックスを画面いっぱいに広げる',
 	'tog-minordefault' => '細部の編集を既定でチェックする',
 	'tog-forceeditsummary' => '要約欄が空欄の場合に警告する',
+
+	// preview-related messages
+	'editpagelayout-preview-label-desktop' => 'PC',
+	'editpagelayout-preview-label-mobile' => 'モバイル',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -1856,6 +1900,10 @@ $messages['pl'] = array(
 	'tog-editwidth' => 'Rozszerz ekran trybu źródłowego na cały ekran',
 	'tog-minordefault' => 'Wszystkie zmiany oznaczaj domyślnie jako drobne',
 	'tog-forceeditsummary' => 'Poinformuj mnie gdy zostawię puste pole opisu zmian',
+
+	// preview-related messages
+	'editpagelayout-preview-label-desktop' => 'Komputer',
+	'editpagelayout-preview-label-mobile' => 'Mobilny',
 );
 
 /** Piedmontese (Piemontèis)
@@ -2136,6 +2184,10 @@ $messages['pt-br'] = array(
 	'tog-editwidth' => 'Ampliar o modo de edição "Fonte" para encher toda a tela',
 	'tog-minordefault' => 'Marcar todas as edições como "menor" por padrão',
 	'tog-forceeditsummary' => 'Avisar-me se eu deixar um sumário em branco',
+
+	// preview-related messages
+	'editpagelayout-preview-label-desktop' => 'Computador',
+	'editpagelayout-preview-label-mobile' => 'Dispositivo Móvel',
 );
 
 /** tarandíne (tarandíne)
@@ -2237,6 +2289,10 @@ $messages['ru'] = array(
 	'tog-editwidth' => 'В режиме исходного кода расширить поле редактирования на весь экран',
 	'tog-minordefault' => 'Отметить все правки, как малые по умолчанию',
 	'tog-forceeditsummary' => 'Предупреждать, когда не заполнено поле описания правки',
+
+	// preview-related messages
+	'editpagelayout-preview-label-desktop' => 'Монитор ПК',
+	'editpagelayout-preview-label-mobile' => 'Мобильный',
 );
 
 /** Swedish (svenska)
@@ -2670,4 +2726,8 @@ $messages['zh-hans'] = array(
 	'tog-editwidth' => '扩宽源代码模式的编辑框填满整个屏幕',
 	'tog-minordefault' => '默认将所有编辑标为“小编辑”',
 	'tog-forceeditsummary' => '在我未填写编辑概要时提示我',
+
+	// preview-related messages
+	'editpagelayout-preview-label-desktop' => '桌面',
+	'editpagelayout-preview-label-mobile' => '行動裝置',
 );

@@ -101,7 +101,7 @@ class ExtDynamicFunctions
     {
         global $wgUser, $wgRequest;
         $parser->disableCache();
-        return $wgRequest->getVal('useskin', $wgUser->getOption('skin'));
+        return $wgRequest->getVal('useskin', $wgUser->getGlobalPreference('skin'));
     }
 }
 

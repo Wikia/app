@@ -35,9 +35,9 @@ ve.dm.MWDefaultSortMetaItem.static.matchRdfaTypes = [ 'mw:PageProp/categorydefau
 ve.dm.MWDefaultSortMetaItem.static.toDataElement = function ( domElements ) {
 	var content = domElements[0].getAttribute( 'content' );
 	return {
-		'type': this.name,
-		'attributes': {
-			'content': content
+		type: this.name,
+		attributes: {
+			content: content
 		}
 	};
 };
@@ -45,10 +45,7 @@ ve.dm.MWDefaultSortMetaItem.static.toDataElement = function ( domElements ) {
 ve.dm.MWDefaultSortMetaItem.static.toDomElements = function ( dataElement, doc ) {
 	var meta = doc.createElement( 'meta' );
 	meta.setAttribute( 'property', 'mw:PageProp/categorydefaultsort' );
-	if ( dataElement.attributes.content ) {
-		// TODO: Condition should be removed when Parsoid and VisualEditor are upstream synced.
-		meta.setAttribute( 'content', dataElement.attributes.content );
-	}
+	meta.setAttribute( 'content', dataElement.attributes.content );
 	return [ meta ];
 };
 

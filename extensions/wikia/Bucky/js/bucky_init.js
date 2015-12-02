@@ -1,14 +1,14 @@
-/* global Bucky */
+/* global Weppy */
 (function (context) {
 	'use strict';
 
 	context.Bucky = context.Weppy;
 
 	if (context.define && context.define.amd) {
-		context.define('bucky', [], function() {
+		context.define('bucky', [], function () {
 			return context.Weppy;
 		});
-		context.define('weppy', [], function() {
+		context.define('weppy', [], function () {
 			return context.Weppy;
 		});
 	}
@@ -18,9 +18,9 @@
 			'context': context.wgTransactionContext
 		});
 		Weppy.setOptions(config);
-		$(context).load(function () {
+		$(context).on('load', function () {
 			setTimeout(function () {
-				Weppy.sendPagePerformance(false);
+				Weppy.sendPagePerformance();
 			}, 0);
 		});
 	});

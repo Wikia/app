@@ -174,6 +174,15 @@ $messages['it'] = array(
 	'performancestat-cpu' => 'CPU: $1',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'performancestat-total' => '합계: $1초',
+	'performancestat-apache' => '아파치: $1초',
+	'performancestat-cpu' => 'CPU: $1초',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

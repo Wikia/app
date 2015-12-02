@@ -42,19 +42,19 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 	public function getDefaultOptions() {
 		$opts = new FormOptions();
 
-		$opts->add( 'days',  (int)$this->getUser()->getOption( 'rcdays' ) );
-		$opts->add( 'limit', (int)$this->getUser()->getOption( 'rclimit' ) );
+		$opts->add( 'days',  (int)$this->getUser()->getGlobalPreference( 'rcdays' ) );
+		$opts->add( 'limit', (int)$this->getUser()->getGlobalPreference( 'rclimit' ) );
 		$opts->add( 'from', '' );
 
-		$opts->add( 'hideminor',     $this->getUser()->getBoolOption( 'hideminor' ) );
+		$opts->add( 'hideminor',     (bool)$this->getUser()->getGlobalPreference( 'hideminor' ) );
 		$opts->add( 'hidebots',      true  );
 		$opts->add( 'hideanons',     false );
 		$opts->add( 'hideliu',       false );
-		$opts->add( 'hidepatrolled', $this->getUser()->getBoolOption( 'hidepatrolled' ) );
+		$opts->add( 'hidepatrolled', (bool)$this->getUser()->getGlobalPreference( 'hidepatrolled' ) );
 		$opts->add( 'hidemyself',    false );
 		// Wikia change - begin
 		// still needed?
-		$opts->add( 'hideenhanced', !$this->getUser()->getOption( 'usenewrc' ) );
+		$opts->add( 'hideenhanced', !$this->getUser()->getGlobalPreference( 'usenewrc' ) );
 		// Wikia change - end
 
 		$opts->add( 'namespace', '', FormOptions::INTNULL );
@@ -85,9 +85,9 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 
 		$opts->fetchValuesFromRequest( $this->getRequest() );
 
-		$user->setOption( 'usenewrc', !$opts['hideenhanced'] );
+		$user->setGlobalPreference( 'usenewrc', !$opts['hideenhanced'] );
 		if( $user->isLoggedIn() ) {
-			if( $user->getOption( 'usenewrc' ) != !$opts['hideenhanced'] ) {
+			if( $user->getGlobalPreference( 'usenewrc' ) != !$opts['hideenhanced'] ) {
 				$user->saveSettings();
 			}
 		}
@@ -527,7 +527,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 			$rows = $this->filterByCategories( $rows, $opts );
 		}
 
-		$showWatcherCount = $wgRCShowWatchingUsers && $this->getUser()->getOption( 'shownumberswatching' );
+		$showWatcherCount = $wgRCShowWatchingUsers && $this->getUser()->getGlobalPreference( 'shownumberswatching' );
 		$watcherCache = array();
 
 		$dbr = wfGetDB( DB_SLAVE );
@@ -590,7 +590,14 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 	 * @return String: XHTML
 	 */
 	public function doHeader( $opts ) {
-		global $wgScript;
+		global $wgScript, $wgLanguageCode;
+
+		// Wikia change begin
+		// Adding "Recent changes on Wikia" section - CE-3050
+		if ( $wgLanguageCode === 'en' ) {
+			$this->setRecentChangesOnWikia();
+		}
+		// Wikia change end
 
 		$this->setTopText( $opts );
 
@@ -638,9 +645,13 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		$form = Xml::tags( 'form', array( 'action' => $wgScript ), $out );
 		$panel[] = $form;
 		$panelString = implode( "\n", $panel );
+		$panelString = Html::rawElement( 'div', [ 'class' => 'rc-fieldset-content' ], $panelString );
 
 		$this->getOutput()->addHTML(
-			Xml::fieldset( wfMsg( 'recentchanges-legend' ), $panelString, array( 'class' => 'rcoptions' ) )
+			Xml::fieldset( wfMessage( 'recentchanges-legend' )->escaped(), $panelString, [
+				'class' => 'rcoptions collapsible collapsed',
+				'id' => 'recentchanges-options',
+			] )
 		);
 
 		$this->setBottomText( $opts );
@@ -668,6 +679,25 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 
 		wfRunHooks( 'SpecialRecentChangesPanel', array( &$extraOpts, $opts ) );
 		return $extraOpts;
+	}
+
+	function setRecentChangesOnWikia() {
+		$content = Html::rawElement( 'legend', [ 'id' => 'recentchanges-on-wikia' ],
+			wfMessage( 'recentchanges-on-wikia-title' )->escaped()
+		);
+		$content .= Html::rawElement( 'div', [ 'class' => 'rc-fieldset-content' ],
+			wfMessage( 'recentchanges-on-wikia-content' )->parse()
+		);
+
+		$this->getOutput()->addHTML(
+			Html::rawElement( 'fieldset',
+				[
+					'class' => 'collapsible',
+					'id' => 'recentchanges-on-wikia-box',
+				],
+				$content
+			)
+		);
 	}
 
 	/**

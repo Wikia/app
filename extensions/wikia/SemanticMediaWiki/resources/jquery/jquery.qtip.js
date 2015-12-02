@@ -11,10 +11,7 @@
 // Uses AMD or browser globals to create a jQuery plugin.
 (function( factory ) {
 	"use strict";
-	if(typeof define === 'function' && define.amd) {
-		define(['jquery'], factory);
-	}
-	else if(jQuery && !jQuery.fn.qtip) {
+	if (jQuery && !jQuery.fn.qtip) {
 		factory(jQuery);
 	}
 }
@@ -1209,8 +1206,8 @@ function QTip(target, options, id, attr)
 				}
 
 				// Adjust for position.fixed tooltips (and also iOS scroll bug in v3.2-4.0 & v4.3-4.3.2)
-				if((PLUGINS.iOS > 3.1 && PLUGINS.iOS < 4.1) || 
-					(PLUGINS.iOS >= 4.3 && PLUGINS.iOS < 4.33) || 
+				if((PLUGINS.iOS > 3.1 && PLUGINS.iOS < 4.1) ||
+					(PLUGINS.iOS >= 4.3 && PLUGINS.iOS < 4.33) ||
 					(!PLUGINS.iOS && fixed)
 				){
 					win = $(window);
@@ -1680,7 +1677,7 @@ PLUGINS = QTIP.plugins = {
 	/*
 	* iOS version detection
 	*/
-	iOS: parseFloat( 
+	iOS: parseFloat(
 		('' + (/CPU.*OS ([0-9_]{1,5})|(CPU like).*AppleWebKit.*Mobile/i.exec(navigator.userAgent) || [0,''])[1])
 		.replace('undefined', '3_2').replace('_', '.').replace('_', '')
 	) || FALSE,
@@ -1941,7 +1938,7 @@ function Ajax(api)
 
 			// Cancel old request
 			if(xhr && xhr.abort) { xhr.abort(); }
-			
+
 			// Check if user delcared a content selector like in .load()
 			if(hasSelector > -1) {
 				selector = url.substr(hasSelector);
@@ -1981,7 +1978,7 @@ function Ajax(api)
 						// inject the contents of the document in, removing the scripts
 						// to avoid any 'Permission Denied' errors in IE
 						.append(content.replace(rscript, ""))
-						
+
 						// Locate the specified elements
 						.find(selector);
 				}
@@ -2027,7 +2024,7 @@ function Ajax(api)
 PLUGINS.ajax = function(api)
 {
 	var self = api.plugins.ajax;
-	
+
 	return 'object' === typeof self ? self : (api.plugins.ajax = new Ajax(api));
 };
 
@@ -2057,7 +2054,7 @@ $.extend(TRUE, QTIP.defaults, {
 
 // Tip coordinates calculator
 function calculateTip(corner, width, height)
-{	
+{
 	var width2 = Math.ceil(width / 2), height2 = Math.ceil(height / 2),
 
 	// Define tip coordinates in terms of height and width values
@@ -2206,7 +2203,7 @@ function Tip(qTip, command)
 					pos.left -= adjust.left;
 					shift.left = FALSE;
 				}
-				
+
 				css[ offset.right !== undefined ? RIGHT : LEFT ] = shift.x;
 			}
 		}
@@ -2274,7 +2271,7 @@ function Tip(qTip, command)
 	/* border width calculator */
 	function parseWidth(corner, side, use) {
 		side = !side ? corner[corner.precedance] : side;
-		
+
 		var isTitleTop = elems.titlebar && corner.y === TOP,
 			elem = isTitleTop ? elems.titlebar : tooltip,
 			borderSide = 'border-' + side + '-width',
@@ -2327,11 +2324,11 @@ function Tip(qTip, command)
 		// Ensure tooltip is visible then...
 		whileVisible(function() {
 			// Attempt to detect the background colour from various elements, left-to-right precedance
-			color.fill = css(tip, bgColor) || css(colorElem, bgColor) || css(elems.content, bgColor) || 
+			color.fill = css(tip, bgColor) || css(colorElem, bgColor) || css(elems.content, bgColor) ||
 				css(tooltip, bgColor) || tip.css(bgColor);
 
 			// Attempt to detect the correct border side colour from various elements, left-to-right precedance
-			color.border = css(tip, borderSide, 'color') || css(colorElem, borderSide, 'color') || 
+			color.border = css(tip, borderSide, 'color') || css(colorElem, borderSide, 'color') ||
 				css(elems.content, borderSide, 'color') || css(tooltip, borderSide, 'color') || tooltip.css(borderSide);
 
 			// Reset background and border colours
@@ -2350,7 +2347,7 @@ function Tip(qTip, command)
 			bigHyp, ratio, result,
 
 		smallHyp = Math.sqrt( pow(base, 2) + pow(height, 2) ),
-		
+
 		hyp = [
 			(border / base) * smallHyp, (border / height) * smallHyp
 		];
@@ -2394,7 +2391,7 @@ function Tip(qTip, command)
 					});
 				}
 			}
-			
+
 			return enabled;
 		},
 
@@ -2635,7 +2632,7 @@ function Tip(qTip, command)
 			tip.css({ top: '', bottom: '', left: '', right: '', margin: '' }).css(position);
 			return position;
 		},
-		
+
 		destroy: function()
 		{
 			// Remove the tip element
@@ -2653,7 +2650,7 @@ function Tip(qTip, command)
 PLUGINS.tip = function(api)
 {
 	var self = api.plugins.tip;
-	
+
 	return 'object' === typeof self ? self : (api.plugins.tip = new Tip(api));
 };
 
@@ -2709,7 +2706,7 @@ function Modal(api)
 		'^show.modal.(on|blur)$': function() {
 			// Initialise
 			self.init();
-			
+
 			// Show the modal if not visible already and tooltip is visible
 			elems.overlay.toggle( tooltip.is(':visible') );
 		},
@@ -2763,7 +2760,7 @@ function Modal(api)
 
 			// Set z-index
 			.css('z-index', PLUGINS.modal.zindex + $(selector+'['+attr+']').length)
-			
+
 			// Remove previous bound events in globalNamespace
 			.unbind(globalNamespace).unbind(namespace)
 
@@ -2987,7 +2984,7 @@ PLUGINS.modal.initialize = 'render';
 
 // Setup sanitiztion rules
 PLUGINS.modal.sanitize = function(opts) {
-	if(opts.show) { 
+	if(opts.show) {
 		if(typeof opts.show.modal !== 'object') { opts.show.modal = { on: !!opts.show.modal }; }
 		else if(typeof opts.show.modal.on === 'undefined') { opts.show.modal.on = TRUE; }
 	}
@@ -3284,7 +3281,7 @@ PLUGINS.imagemap = function(api, area, corner, adjustMethod)
 };
 
 
-/* 
+/*
  * BGIFrame adaption (http://plugins.jquery.com/project/bgiframe)
  * Special thanks to Brandon Aaron
  */
@@ -3348,7 +3345,7 @@ PLUGINS.bgiframe = function(api)
 {
 	var browser = $.browser,
 		self = api.plugins.bgiframe;
-	
+
 		// Proceed only if the browser is IE6 and offending elements are present
 		if($('select, object').length < 1 || !(browser.msie && (''+browser.version).charAt(0) === '6')) {
 		return FALSE;

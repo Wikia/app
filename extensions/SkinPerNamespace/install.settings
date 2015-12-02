@@ -1,7 +1,0 @@
-require_once( "{{path}}/SkinPerNamespace.php" );
-
-# array of namespaces index mapping to skin names
-$wgSkinPerNamespace = array();
-
-# should it also be applied to logged in users ?
-$wgSkinPerNamespaceOverrideLoggedIn = true;

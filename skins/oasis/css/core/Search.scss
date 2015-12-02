@@ -1,6 +1,7 @@
 @import "skins/shared/color";
 @import "layout";
 @import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/calc";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/gradient";
 @import "skins/shared/mixins/forms";
@@ -67,9 +68,8 @@
 .wikinav2 {
 	.WikiaRail > .WikiaSearch,
 	.WikiaSearchHeader > .WikiaSearch {
-		padding-bottom: 0px;
+		padding-bottom: 0;
 		margin-bottom: 10px;
 	}
 }
 // WikiaNav - end
-

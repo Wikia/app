@@ -6,14 +6,16 @@
 	"--warnings": ["-nodoc(class,public)"],
 	"--builtin-classes": true,
 	"--warnings-exit-nonzero": true,
-	"--external": "HTMLDocument,Window,Node",
+	"--external": "HTMLDocument,Window,Node,Set,Range,Selection,ClientRect,File",
 	"--output": "../docs",
 	"--": [
 		"./external.js",
 		"../lib/ve/.docs/external.js",
 		"../lib/ve/lib/oojs",
 		"../lib/ve/lib/oojs-ui",
-		"../lib/ve/modules",
+		"../lib/ve/lib/unicodejs",
+		"../lib/ve/src",
+		"../lib/ve/tests",
 		"../modules/ve-mw"
 	]
 }

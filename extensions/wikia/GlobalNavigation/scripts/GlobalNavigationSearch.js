@@ -1,32 +1,18 @@
 require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], function ($, browserDetect, scrollFix) {
 	'use strict';
-	var $selectElement,
-		$searchInput,
-		$globalNav,
-		$inputResultLang,
-		$formElement,
-		isLocalSearchDisabled,
+	var $selectElement = $('#searchSelect'),
+		$searchInput = $('#searchInput'),
 		$autocompleteObj;
-
-	/**
-	 * Look up elements in global navigation's search form
-	 */
-	function setElements() {
-		$inputResultLang = $('#searchInputResultLang');
-		$formElement = $('#searchForm');
-		$selectElement = $('#searchSelect');
-		isLocalSearchDisabled = !!$selectElement.length;
-		$searchInput = $('#searchInput');
-		$globalNav = $('#globalNavigation');
-	}
 
 	/**
 	 * Set options on search form
 	 */
 	function setFormOptions() {
-		var $selectedOption = $selectElement.find('option:selected');
+		var $selectedOption = $selectElement.find('option:selected'),
+			isLocalSearchDisabled = !$selectElement.length;
+
 		$searchInput.attr('placeholder', $selectedOption.data('placeholder'));
-		$formElement.attr('action', $selectedOption.attr('data-search-url'));
+		$('#searchForm').attr('action', $selectedOption.attr('data-search-url'));
 		//Setting reference to jQuery search autocomplete object
 		$autocompleteObj = $autocompleteObj || $searchInput.data('autocomplete');
 		if ($selectedOption.val() === 'global' || isLocalSearchDisabled) {
@@ -41,7 +27,7 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 	 * @param {boolean} enable - should autocomplete be enabled and lang input disabled
 	 */
 	function setPropertiesOnInput(enable) {
-		$inputResultLang.prop('disabled', enable);
+		$('#searchInputResultLang').prop('disabled', enable);
 		if ($autocompleteObj) {
 			if (enable) {
 				$autocompleteObj.enable();
@@ -52,7 +38,15 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 	}
 
 	$(function () {
-		setElements();
+		var $globalNav = $('#globalNavigation'),
+			$searchForm = $('#searchForm');
+
+		//Checks whether the searchInput is empty and prevents any action if true
+		$searchForm.submit(function () {
+			if (!$searchInput.val()) {
+				return false;
+			}
+		})
 
 		if ($selectElement) {
 			setFormOptions();

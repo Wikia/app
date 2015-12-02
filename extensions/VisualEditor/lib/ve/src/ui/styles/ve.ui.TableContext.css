@@ -1,0 +1,44 @@
+/*!
+ * VisualEditor UserInterface Table Context styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.ve-ui-tableContext {
+	position: absolute;
+}
+
+.ve-ui-tableContext-menu {
+	font-size: 0.8em;
+}
+
+.ve-ui-tableContext-indicator {
+	display: block;
+	background-color: #d3e5fd;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	cursor: pointer;
+}
+
+.ve-ui-tableContext-colContext .ve-ui-tableContext-indicator {
+	width: 100%;
+	height: 0.8em;
+	/* Context height + 0.2em gap */
+	margin-top: -1em;
+	border-bottom: 0;
+}
+
+.ve-ui-tableContext-rowContext .ve-ui-tableContext-indicator {
+	width: 0.8em;
+	/* Context width + 0.2em gap */
+	margin-left: -1em;
+	border-right: 0;
+}
+
+/* Position the row context menu popup anchor below the center of the indicator */
+.ve-ui-tableContext-rowContext .oo-ui-popupWidget {
+	/* Gap + half context width: 0.2em + 0.8em/2 */
+	left: -0.6em;
+	top: 0.3em;
+}

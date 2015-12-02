@@ -19,13 +19,13 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 	}
 
 	private function getUsersForGroup() {
-		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
+		global $wgMemc, $wgSpecialsDB;
 		wfProfileIn( __METHOD__ );
 
 		$memkey = sprintf( "%s-%s-%d", __METHOD__, implode("-", (array)$this->params['group'] ), $this->mCityId );
 		$data = $wgMemc->get( $memkey );
-		if ( empty($data) && !empty( $wgStatsDBEnabled ) ) {
-			$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+		if ( empty($data) ) {
+			$db = wfGetDB(DB_SLAVE, array(), $wgSpecialsDB);
 
 			$group = isset($this->params['group'][0]) ? $this->params['group'][0] : '';
 
@@ -36,7 +36,7 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 
 			$this->profileDBIn();
 			$oRes = $db->select( 
-				'`specials`.`events_local_users`', 
+				'events_local_users',
 				array('user_id, all_groups as ug_groups'),	 
 				$where,
 				__METHOD__
@@ -116,9 +116,9 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 		return $this->mDB;
 	}
 	
-	protected function getExtDB() {
-		global $wgStatsDB;
-		$this->mDB = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+	protected function getSpecialsDB() {
+		global $wgSpecialsDB;
+		$this->mDB = wfGetDB(DB_SLAVE, array(), $wgSpecialsDB);
 		return $this->mDB;
 	}	
 
@@ -258,13 +258,9 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 	}
 
 	private function local_users() {
-		global $wgCityId, $wgStatsDBEnabled;
-		
-		if ( empty( $wgStatsDBEnabled ) ) {
-			return false;
-		}
-		
-		$db = $this->getExtDB();
+		global $wgCityId;
+
+		$db = $this->getSpecialsDB();
 		$params = $this->extractRequestParams();
 
 		# prop
@@ -274,7 +270,7 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 		}
 		
 		# table
-		$this->addTables('specials.events_local_users');	
+		$this->addTables('events_local_users');
 		$this->addWhere( 'user_is_closed = 0' );
 		
 		# limit

@@ -12,6 +12,8 @@
 	"tag-visualeditor-description": "Labots ar [[{{MediaWiki:visualeditor-descriptionpagelink}}|vizuālo redaktoru]]",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Vizuālais redaktors: pārbaudiet]]",
 	"tag-visualeditor-needcheck-description": "Labojums veikts ar [[{{MediaWiki:visualeditor-descriptionpagelink}}|vizuālo redaktoru]], un sistēma konstatēja iespējamas netīšas izmaiņas wikitext saturā.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Pārslēdzās]]",
+	"tag-visualeditor-switched-description": "Lietotājs sāka labot Vizuālajā redaktorā un pārslēdzās uz vikiteksta redaktoru.",
 	"visualeditor-feedback-link": "VizuālaisRedaktors/Atsauksmes",
 	"visualeditor-feedback-tool": "Atstāt atsauksmi",
 	"visualeditor-help-label": "Izlasiet lietotāja pamācību",

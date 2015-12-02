@@ -32,7 +32,7 @@ class Answer {
 		return false;
 	}
 
-	protected function setSpecialCategories() {
+	protected static function setSpecialCategories() {
 		self::$special_categories = array(
 			'unanswered' => wfMsgForContent("unanswered_category"),
 			'answered' => wfMsgForContent("answered_category")

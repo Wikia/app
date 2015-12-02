@@ -4,7 +4,7 @@ class DPLLogger {
 
 	static $loaded = true;
 	
-	var $iDebugLevel;
+	public $iDebugLevel;
 	
 	function __construct() {
 		$this->iDebugLevel = ExtDynamicPageList::$options['debug']['default'];

@@ -17,7 +17,7 @@ define('ext.wikia.adEngine.adDecoratorPageDimensions', [
 		return function (slot) {
 			log(['decorated', slot], 'debug', logGroup);
 
-			var slotname = slot[0];
+			var slotname = slot.slotName;
 
 			if (adLogicPageDimensions.isApplicable(slotname)) {
 				adLogicPageDimensions.addSlot(slotname, function () {

@@ -216,6 +216,11 @@ class LogEventsList {
 	}
 
 	public function getContext() {
+		if ( !is_object( $this->out ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'LogEventsList getContext not an object', [
+				'exception' => new Exception(),
+			]);
+		}
 		return $this->out->getContext();
 	}
 

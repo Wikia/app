@@ -5,8 +5,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw*/
-
 /**
  * MediaWiki template model.
  *
@@ -83,20 +81,24 @@ ve.dm.MWTemplateModel.newFromData = function ( transclusion, data ) {
  * namespace, using a leading colon to access other namespaces.
  *
  * @param {ve.dm.MWTransclusionModel} transclusion Transclusion template is in
- * @param {string} name Template name
- * @returns {ve.dm.MWTemplateModel} New template model
+ * @param {string|mw.Title} name Template name
+ * @returns {ve.dm.MWTemplateModel|null} New template model
  */
 ve.dm.MWTemplateModel.newFromName = function ( transclusion, name ) {
-	var href = name;
-
-	if ( href.charAt( 0 ) !== ':' ) {
-		href = mw.config.get( 'wgFormattedNamespaces' )[10] + ':' + href;
+	var href, title,
+		templateNs = mw.config.get( 'wgNamespaceIds' ).template;
+	if ( name instanceof mw.Title ) {
+		title = name;
+		name = title.getRelativeText( templateNs );
+	} else {
+		title = mw.Title.newFromText( name, templateNs );
+	}
+	if ( title !== null ) {
+		href = title.getPrefixedText();
+		return new ve.dm.WikiaTemplateModel( transclusion, { href: href, wt: name }, 'user' );
 	}
 
-	// TODO: Do we need to account for the title being invalid?
-	href = new mw.Title( href ).getPrefixedText();
-
-	return new ve.dm.WikiaTemplateModel( transclusion, { 'href': href, 'wt': name }, 'user' );
+	return null;
 };
 
 /* Methods */
@@ -229,7 +231,7 @@ ve.dm.MWTemplateModel.prototype.getParameterNames = function () {
 			// Two numbers
 			return a - b;
 		} );
-		this.sequence.push.apply( this.sequence, paramNames );
+		ve.batchPush( this.sequence, paramNames );
 	}
 	return this.sequence;
 };
@@ -263,7 +265,7 @@ ve.dm.MWTemplateModel.prototype.addParameter = function ( param ) {
 	this.sequence = null;
 	this.params[name] = param;
 	this.spec.fill();
-	param.connect( this, { 'change': [ 'emit', 'change' ] } );
+	param.connect( this, { change: [ 'emit', 'change' ] } );
 	this.emit( 'add', param );
 	this.emit( 'change' );
 };
@@ -288,9 +290,10 @@ ve.dm.MWTemplateModel.prototype.removeParameter = function ( param ) {
  * Add all non-existing required and suggested parameters, if any.
  *
  * @method
+ * @returns {number} Number of parameters added
  */
 ve.dm.MWTemplateModel.prototype.addPromptedParameters = function () {
-	var i, len,
+	var i, len, addedCount = 0,
 		spec = this.getSpec(),
 		names = spec.getParameterNames();
 
@@ -303,8 +306,11 @@ ve.dm.MWTemplateModel.prototype.addPromptedParameters = function () {
 				)
 			) {
 			this.addParameter( new ve.dm.MWParameterModel( this, names[i] ) );
+			addedCount++;
 		}
 	}
+
+	return addedCount;
 };
 
 /**
@@ -320,20 +326,29 @@ ve.dm.MWTemplateModel.prototype.setOriginalData = function ( data ) {
  * @inheritdoc
  */
 ve.dm.MWTemplateModel.prototype.serialize = function () {
-	var name,
-		template = ve.extendObject(
-			{}, this.originalData, { 'target': this.getTarget(), 'params': {} }
-		),
+	var name, origName,
+		origData = this.originalData || {},
+		origParams = origData.params || {},
+		template = { target: this.getTarget(), params: {} },
 		params = this.getParameters();
 
 	for ( name in params ) {
 		if ( name === '' ) {
 			continue;
 		}
-		template.params[params[name].getOriginalName()] = { 'wt': params[name].getValue() };
+		origName = params[name].getOriginalName();
+		template.params[origName] = ve.extendObject(
+			{},
+			origParams[origName],
+			{ wt: params[name].getValue() }
+		);
+
 	}
 
-	return { 'template': template };
+	// Performs a non-deep extend, so this won't reintroduce
+	// deleted parameters (bug 73134)
+	template = ve.extendObject( {}, origData, template );
+	return { template: template };
 };
 
 /**

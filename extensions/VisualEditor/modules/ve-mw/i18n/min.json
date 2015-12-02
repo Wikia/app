@@ -28,11 +28,8 @@
 	"visualeditor-descriptionpagelink": "Project:VisualEditor",
 	"visualeditor-dialog-beta-welcome-action-continue": "Lanjutkan",
 	"visualeditor-dialog-beta-welcome-title": "{{GENDER:$1|Salamaik datang}} di VisualEditor",
-	"visualeditor-dialog-citation-insert-citation": "Masuakan rujuakan",
 	"visualeditor-dialog-media-alttext-section": "Teks alternatif",
 	"visualeditor-dialog-media-content-section": "Katarangan",
-	"visualeditor-dialog-media-insert-button": "Masuakan media",
-	"visualeditor-dialog-media-insert-title": "Masuakan media",
 	"visualeditor-dialog-media-noresults": "Hasil indak basobok",
 	"visualeditor-dialog-media-page-advanced": "Pangaturan lanjuik",
 	"visualeditor-dialog-media-page-general": "Pangaturan umum",
@@ -115,8 +112,8 @@
 	"visualeditor-savedialog-title-save": "Simpan nan diubah",
 	"visualeditor-saveerror": "Kasalahan panyimpanan data dari server: $1.",
 	"visualeditor-serializeerror": "Kasalahan pamuatan data dari server: $1.",
-	"visualeditor-toolbar-cancel": "Batal",
 	"visualeditor-toolbar-savedialog": "Simpan laman",
 	"visualeditor-usernamespacepagelink": "Project:Ruangnamo pangguno",
-	"visualeditor-viewpage-savewarning": "Apo Sanak yakin nio baliak ka mode baco sabalun manyimpan?"
+	"visualeditor-viewpage-savewarning": "Apo Sanak yakin nio baliak ka mode baco sabalun manyimpan?",
+	"visualeditor-dialog-media-insert-title": "Masuakan media"
 }

@@ -1,5 +1,0 @@
-Once you have downloaded the code, place the 'Deployment' directory within your MediaWiki 'extensions' directory.
-Then add the following code to your LocalSettings.php file:
-
-# Distribution
-require_once( "$IP/extensions/Deployment/Deployment.php" );
