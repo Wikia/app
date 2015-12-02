@@ -13,11 +13,11 @@ class InfoiconTemplate {
 	public static function handle( $wikitext ) {
 		global $wgContLang;
 
-		$images = FileNamespaceSanitizeHelper::getInstance()->getFileMarkersFromWikitext( $wikitext, $wgContLang );
+		$images = FileNamespaceSanitizeHelper::getInstance()->getCleanFileMarkersFromWikitext( $wikitext, $wgContLang );
 
 		if ( $images ) {
 			$sizedImages = array_map( function( $img ) {
-				return substr( $img, 0, -2 ) . '|30px]]';
+				return '[[' . $img . '|30px]]';
 			}, $images );
 
 			$wikitext = implode( ' ', $sizedImages );

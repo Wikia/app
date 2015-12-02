@@ -88,12 +88,8 @@ class FileNamespaceSanitizeHelper {
 	private function extractFilename( $potentialFilename, $filePrefixRegex ) {
 		$trimmedFilename = trim( $potentialFilename, "[]" );
 		$unprefixedFilename = mb_ereg_replace( $filePrefixRegex, "", $trimmedFilename );
-		$filenameParts = explode( '|', $unprefixedFilename );
-		if ( !empty( $filenameParts[ 0 ] ) ) {
-			return urldecode( $filenameParts[0] );
-		}
 
-		return null;
+		return self::removeImageParams( $unprefixedFilename );
 	}
 
 	/**
@@ -111,17 +107,42 @@ class FileNamespaceSanitizeHelper {
 	}
 
 	/**
-	 * @desc for a given wikitext, return an array of images or files occurences
+	 * @desc for a given wikitext, return an array of images or files occurences,
+	 * without brackets and without any params
 	 *
 	 * @param string $wikitext to find images or files in
 	 * @param $lang
-	 * @return array of images ['[[File:sefes]]', '[[File:blabla]]']
+	 * @return array of images ['File:sefes', 'File:blabla']
 	 * or false if no images found
 	 */
-	public function getFileMarkersFromWikitext( $wikitext, $lang ) {
+	public function getCleanFileMarkersFromWikitext( $wikitext, $lang ) {
 		$filePrefixRegex = substr( $this->getFilePrefixRegex( $lang ), 1 );
 		preg_match_all( '/\[\[' . $filePrefixRegex .'.*\]\]/U', $wikitext, $images );
+		$cleanFileMarkers = false;
 
-		return count( $images[0] ) ? $images[0] : false;
+		if ( count( $images[0] ) ) {
+			$cleanFileMarkers = array_map( function ( $imageMarker ) {
+				$image = substr( $imageMarker, 2, -2 );
+				return self::removeImageParams( $image );
+			}, $images[0] );
+		}
+
+		return $cleanFileMarkers;
+	}
+
+	/**
+	 * @desc for given file wikitext without brackets, return it without any params
+	 * or null if empty string
+	 *
+	 * @param $fileWikitext
+	 * @return string | null
+	 */
+	public function removeImageParams( $fileWikitext ) {
+		$filenameParts = explode( '|', $fileWikitext );
+		if ( empty( $filenameParts[0] ) ) {
+			return null;
+		}
+
+		return urldecode( $filenameParts[0] );
 	}
 }
