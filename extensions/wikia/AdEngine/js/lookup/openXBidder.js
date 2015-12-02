@@ -101,7 +101,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 			eventName = 'lookupEnd';
 		}
 
-		adTracker.track(eventName + '/ox', data || '(unknown)', 0);
+		adTracker.track(eventName + '/ox_bidder', data || '(unknown)', 0);
 	}
 
 	function onResponse() {

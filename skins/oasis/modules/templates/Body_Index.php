@@ -19,6 +19,10 @@
 
 <?= $app->renderView( 'GlobalNavigation', 'index' ) ?>
 
+<?php if ( !empty( $wg->EnableEBS ) ) {
+	echo $app->renderView( 'EmergencyBroadcastSystem', 'index' );
+} ?>
+
 <?= $app->renderView( 'Ad', 'Top' ) ?>
 
 <?php if ( !empty( $wg->WikiaSeasonsPencilUnit ) ) {

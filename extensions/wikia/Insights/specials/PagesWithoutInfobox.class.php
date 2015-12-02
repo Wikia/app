@@ -91,7 +91,7 @@ class PagesWithoutInfobox extends PageQueryPage {
 	public function reallyDoQuery( $limit = false, $offset = false ) {
 		global $wgCityId, $wgContentNamespaces;
 
-		$tc = new TemplateClassificationService();
+		$tc = new UserTemplateClassificationService();
 
 		$infoboxTemplates = [];
 		foreach( $tc->getTemplatesOnWiki( $wgCityId ) as $pageId => $templateType ) {

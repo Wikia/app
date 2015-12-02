@@ -729,7 +729,7 @@ class LoginForm extends SpecialPage {
 			} else {
 				$retval = ( $this->mPassword  == '' ) ? self::EMPTY_PASS : self::WRONG_PASS;
 			}
-		} elseif ( $wgEnableHeliosExt && Wikia\Helios\User::wasResetPassAuth( $this->mUsername, $this->mPassword ) ) {
+		} elseif ( $wgEnableHeliosExt && Wikia\Helios\User::wasResetPassAuth( $u->getName(), $this->mPassword ) ) {
 			$retval = self::RESET_PASS;
 		} elseif ( $wgBlockDisablesLogin && $u->isBlocked() ) {
 			// If we've enabled it, make it so that a blocked user cannot login
@@ -738,8 +738,8 @@ class LoginForm extends SpecialPage {
 			$retval = self::SUCCESS;
 		}
 
-		if ( in_array( $retval, [ self::SUCCESS, self::RESET_PASS ] ) ) {
-			wfRunHooks( 'LoginSuccessModifyRetval', [ $u->getName(), $this->mPassword, &$retval ] );
+		if ( !in_array( $retval, [ self::SUCCESS, self::RESET_PASS ] ) ) {
+			wfRunHooks( 'LoginFormAuthenticateModifyRetval', [ $this, $u->getName(), $this->mPassword, &$retval ] );
 		}
 
 		switch ($retval) {

@@ -374,24 +374,31 @@ class PermissionsError extends ErrorPageError {
 	public $permission, $errors;
 
 	function __construct( $permission, $errors = array() ) {
-		global $wgLang;
-
 		$this->permission = $permission;
 
 		if ( !count( $errors ) ) {
-			$groups = array_map(
-				array( 'User', 'makeGroupLinkWiki' ),
-				User::getGroupsWithPermission( $this->permission )
-			);
-
-			if ( $groups ) {
-				$errors[] = array( 'badaccess-groups', $wgLang->commaList( $groups ), count( $groups ) );
-			} else {
-				$errors[] = array( 'badaccess-group0' );
-			}
+			$errors[] = self::prepareBadAccessErrorArray( $this->permission );
 		}
 
 		$this->errors = $errors;
+	}
+
+	/**
+	 * @param string $permission Name of action
+	 * @return array error message key and message params (optionally)
+	 */
+	public static function prepareBadAccessErrorArray( $permission ) {
+		global $wgLang;
+		$groups = array_map(
+			[ 'User', 'makeGroupLinkWiki' ],
+			User::getGroupsWithPermission( $permission )
+		);
+
+		if ( $groups ) {
+			return [ 'badaccess-groups', $wgLang->commaList( $groups ), count( $groups ) ];
+		}
+
+		return [ 'badaccess-group0' ];
 	}
 
 	function report() {

@@ -1,8 +1,5 @@
 <?php
 
-
-use Swagger\Client\ApiException;
-
 class TemplateClassificationApiController extends WikiaApiController {
 
 	private $templateClassificationService = null;
@@ -35,6 +32,7 @@ class TemplateClassificationApiController extends WikiaApiController {
 
 			$title = Title::newFromId( $pageId );
 			if ( $title instanceof Title ) {
+				wfRunHooks( 'TemplateClassification::TemplateClassified', [ $pageId, $title, $templateType ] );
 				$title->invalidateCache();
 			}
 		} catch ( InvalidArgumentException $e ) {
@@ -77,7 +75,7 @@ class TemplateClassificationApiController extends WikiaApiController {
 
 	private function getTemplateClassificationService() {
 		if ( is_null( $this->templateClassificationService ) ) {
-			$this->templateClassificationService = new TemplateClassificationService();
+			$this->templateClassificationService = new UserTemplateClassificationService();
 		}
 
 		return $this->templateClassificationService;

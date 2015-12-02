@@ -363,7 +363,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'mappedVerticalName' => $verticals['expectedMappedVertical']
 			],
 			'providers' => [
-				'taboola' => true
 			],
 			'slots' => [
 			],
@@ -384,6 +383,10 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 
 		foreach ( $expectedSlots as $var => $val ) {
 			$expected['slots'][$var] = $val;
+		}
+
+		if ($expected['targeting']['pageType'] === 'article') {
+			$expected['providers']['taboola'] = true;
 		}
 
 		// Check for SourcePoint URL

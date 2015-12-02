@@ -5,8 +5,9 @@
  * Provides two params in init method for handling save and providing selected type
  */
 define('TemplateClassificationModal',
-	['jquery', 'wikia.window', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.tracker', 'TemplateClassificationLabeling'],
-function ($, w, mw, loader, nirvana, tracker, labeling) {
+	['jquery', 'wikia.window', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.tracker', 'wikia.throbber',
+		'TemplateClassificationLabeling'],
+function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	'use strict';
 
 	var $classificationForm,
@@ -20,7 +21,8 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 			category: 'template-classification-dialog',
 			trackingMethod: 'analytics'
 		}),
-		$w = $(w);
+		$w = $(w),
+		$throbber = $('#tc-throbber');
 
 	/**
 	 * @param {function} typeGetterProvided Method that should return type in json format,
@@ -36,7 +38,7 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 
 		$w.on('keydown', openModalKeyboardShortcut);
 
-		$('.template-classification-edit').click(function (e) {
+		$('.template-classification-type-text').click(function (e) {
 			e.preventDefault();
 			openEditModal('editType');
 		});
@@ -58,6 +60,8 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 		if (!$classificationForm) {
 			classificationFormLoader = getTemplateClassificationEditForm;
 		}
+
+		throbber.show($throbber);
 
 		// Fetch all data and open modal
 		$.when(
@@ -157,6 +161,8 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 		/* Show the modal */
 		modalInstance.show();
 
+		throbber.remove($throbber);
+
 		// Make sure that focus is in the right place
 		$('#template-classification-' + mw.html.escape($preselectedType.val())).focus();
 	}
@@ -193,6 +199,7 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 	function updateEntryPointLabel(templateType) {
 		$typeLabel
 			.data('type', mw.html.escape(templateType))
+			.children('.template-classification-type-label')
 			.html(getTypeMessage(templateType).escaped());
 	}
 
@@ -239,7 +246,7 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 			vars: {
 				id: 'TemplateClassificationEditModal',
 				classes: ['template-classification-edit-modal'],
-				size: 'small', // size of the modal
+				size: 'medium', // size of the modal
 				content: content, // content
 				title: labeling.getTitle()
 			}

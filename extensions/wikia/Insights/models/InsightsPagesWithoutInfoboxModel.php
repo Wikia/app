@@ -29,10 +29,14 @@ class InsightsPagesWithoutInfoboxModel extends InsightsQueryPageModel {
 	 * @return array
 	 */
 	public function getUrlParams() {
-		return $this->getInsightParam();
+		return [];
 	}
 
 	public function hasAltAction() {
+		return false;
+	}
+
+	public function isItemFixed( Title $title ) {
 		return false;
 	}
 }

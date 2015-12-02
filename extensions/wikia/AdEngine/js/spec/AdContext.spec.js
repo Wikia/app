@@ -59,6 +59,9 @@ describe('AdContext', function () {
 			querystring: {
 				getVal: noop
 			},
+			wikiaCookies: {
+				get: noop
+			},
 			callback: noop
 		},
 		queryParams = [
@@ -70,6 +73,7 @@ describe('AdContext', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.adContext'](
 			mocks.abTesting,
+			mocks.wikiaCookies,
 			mocks.doc,
 			mocks.geo,
 			mocks.instantGlobals,
@@ -716,30 +720,6 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.recoveredAdsMessage).toBeFalsy();
 	});
 
-	it('enables scroll handler when country in instantGlobals.wgAdDriverScrollHandlerCountries', function () {
-		var adContext;
-		mocks.win = {
-			ads: {
-				context: {
-					providers: {
-						taboola: true
-					},
-					targeting: {
-						pageType: 'article'
-					}
-				}
-			}
-		};
-
-		mocks.instantGlobals = {wgAdDriverTaboolaCountries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.taboola).toBeTruthy();
-
-		mocks.instantGlobals = {wgAdDriverTaboolaCountries: ['YY']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.taboola).toBeFalsy();
-	});
-
 	it('enables google consumer surveys when country in instant var and abtest group is GROUP_5', function () {
 		mocks.win = {
 			ads: {
@@ -847,5 +827,25 @@ describe('AdContext', function () {
 		};
 
 		expect(getModule().getContext().opts.googleConsumerSurveys).toBeFalsy();
+	});
+
+	it('showcase is enabled if the cookie is set', function () {
+		mocks.wikiaCookies = {
+			get: function () {
+				return 'NlfdjR5xC0';
+			}
+		};
+
+		expect(getModule().getContext().opts.showcase).toBeTruthy();
+	});
+
+	it('showcase is disabled if cookie is not set', function () {
+		mocks.wikiaCookies = {
+			get: function () {
+				return false;
+			}
+		};
+
+		expect(getModule().getContext().opts.showcase).toBeFalsy();
 	});
 });

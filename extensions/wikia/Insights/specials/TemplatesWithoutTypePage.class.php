@@ -100,7 +100,7 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 		$templatesWithoutType = [];
 
 		$recognizedProvider = new RecognizedTemplatesProvider(
-			( new TemplateClassificationService() ),
+			( new UserTemplateClassificationService() ),
 			$wgCityId,
 			$wgContentNamespaces
 		);

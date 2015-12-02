@@ -391,4 +391,11 @@ class SwiftStorage {
 	public function getPathPrefix() {
 		return $this->pathPrefix;
 	}
+
+	/**
+	 * @return \CF_Connection
+	 */
+	public function getConnection() {
+		return $this->connection;
+	}
 }

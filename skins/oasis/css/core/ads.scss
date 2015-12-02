@@ -278,6 +278,11 @@ body >a >img[src$="noad.gif"] {
 			overflow: hidden;
 		}
 	}
+
+	> header .close-counter {
+		float: right;
+		font-size: 17px;
+	}
 }
 
 //@TODO remove .oasis-responsive after deprecating responsive (July 2015)
@@ -290,9 +295,10 @@ body >a >img[src$="noad.gif"] {
 
 // Recovered message
 .recovered-message {
+	margin: 0 auto;
+	position: relative;
 	text-align: center;
-	padding: 10px 0;
-	min-height: 100px;
+	padding-top: 10px;
 
 	.message {
 		background: #fff;
@@ -354,29 +360,28 @@ body >a >img[src$="noad.gif"] {
 		background: url(/skins/oasis/images/recovered_message_icon.png) no-repeat; /* $wgCdnStylePath */
 	}
 
-	&.recovered-message-top {
-		margin: 0 auto;
-		position: relative;
-		max-width: 728px;
-		z-index: $wikia-top-ads-index;
+	&.recovered-message-right-rail {
+		width: 300px;
+	}
 
-		.icon {
-			margin: 0;
-		}
+	&.recovered-message-top {
+		width: 600px;
 
 		.message {
-			max-width: 550px;
+			max-width: 425px;
 			display: inline-block;
 
 			.dialog-pointer {
-				top: 15px;
-				left: -10px;
-				@include transform-rotate(-45deg);
+				top: 60px;
+				left: auto;
+				right: -10px;
+				@include transform-rotate(135deg);
 			}
 		}
 
 		.icon {
-			float: left;
+			margin: 0;
+			float: right;
 		}
 	}
 }

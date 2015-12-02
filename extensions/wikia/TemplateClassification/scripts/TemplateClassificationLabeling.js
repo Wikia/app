@@ -71,7 +71,7 @@ define('TemplateClassificationLabeling',
 			function editType(content) {
 				var helpText = $('<p></p>').addClass('tc-instructions')
 					.html(mw.message('template-classification-edit-modal-help').parse())[0].outerHTML;
-				return helpText + content;
+				return addTargetBlankToLinks(helpText + content);
 			}
 
 			return {
@@ -80,6 +80,17 @@ define('TemplateClassificationLabeling',
 				addTypeBeforePublish: editType
 			};
 		})();
+
+		/**
+		 * Adds target="_blank" to all links in content
+		 * @param {string} content
+		 * @returns {string}
+		 */
+		function addTargetBlankToLinks(content) {
+			var $c = $('<div>').html(content);
+			$c.find('a').attr('target', '_blank');
+			return $c.html();
+		}
 
 		return {
 			init: init,
