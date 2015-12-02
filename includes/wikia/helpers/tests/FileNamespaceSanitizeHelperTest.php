@@ -231,4 +231,53 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 			]
 		];
 	}
+
+	/**
+	 * @param $wikitext
+	 * @param $lang
+	 * @param $expectedOutput
+	 *
+	 * @dataProvider testGetFileMarkersFromWikitextDataProvider
+	 */
+	public function testGetFileMarkersFromWikitext( $wikitext, $lang, $expectedOutput ) {
+		$language = new \Language();
+		$language->setCode( $lang );
+		$actualOutput = $this->fileNamespaceSanitizeHelper->getFileMarkersFromWikitext( $wikitext, $language );
+
+		$this->assertEquals( $expectedOutput, $actualOutput );
+	}
+
+	public function testGetFileMarkersFromWikitextDataProvider() {
+		return [
+			[
+				'His clothes are not the same as they were in The Sims 2.',
+				'en',
+				false
+			],
+			[
+				'His [[Image:image.jpg|300px|lorem ipsum|other param]]clothes are not the same as they were in The Sims 2[[File:image.jpg|300px|lorem ipsum]].',
+				'en',
+				[
+					'[[Image:image.jpg|300px|lorem ipsum|other param]]',
+					'[[File:image.jpg|300px|lorem ipsum]]'
+				]
+			],
+			[
+				'Der ehrgeizige Sim nimmt sich mehr vor, als seine Zeitgenossen und verfolgt seine Ziele mit eiserner Disziplin.[[Datei:Merkmal-Ehrgeizig.jpg|left]]',
+				'de',
+				[
+					'[[Datei:Merkmal-Ehrgeizig.jpg|left]]'
+				]
+			],
+			[
+				'[[Plik:Medina_Hoit.png]]Ma siwe włosy, ciemną skórę, [[Grafika:Medina_Hoit.png]]małe okulary oraz nosi białą koszulę i niebieskie spodnie. [[File:Merkmal-Ehrgeizig.jpg|left]]',
+				'pl',
+				[
+					'[[Plik:Medina_Hoit.png]]',
+					'[[Grafika:Medina_Hoit.png]]',
+					'[[File:Merkmal-Ehrgeizig.jpg|left]]'
+				]
+			]
+		];
+	}
 }
