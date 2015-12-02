@@ -33,7 +33,8 @@ class TemplateDraftController extends WikiaController {
 
 				wfRunHooks( 'TemplateClassification::TemplateClassified', [
 					$parentTitle->getArticleID(),
-					$parentTitle
+					$parentTitle,
+					TemplateClassificationService::TEMPLATE_INFOBOX,
 				] );
 
 			} catch ( Swagger\Client\ApiException $e ) {

@@ -151,7 +151,6 @@ class BodyController extends WikiaController {
 	 * @return bool
 	 */
 	public static function showUserPagesHeader() {
-		global $wgTitle;
 		$app = F::app();
 		$wgTitle = $app->wg->Title;
 
@@ -164,6 +163,7 @@ class BodyController extends WikiaController {
 		$ret = ( $isUserPage && !$wgTitle->isSubpage() ) ||
 				$wgTitle->isSpecial( 'Following' ) ||
 				$wgTitle->isSpecial( 'Contributions' ) ||
+				$wgTitle->isSpecial( 'UserActivity' ) ||
 				(
 					defined( 'NS_BLOG_LISTING' ) &&
 					$wgTitle->getNamespace() == NS_BLOG_LISTING
