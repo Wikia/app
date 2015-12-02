@@ -134,11 +134,15 @@ class InsightsHooks {
 	}
 
 
-	public static function onTemplateClassified( $pageId, \Title $title, $templateType ) {
+	public static function onTemplateClassified( $wikiId, $pageId, $templateType ) {
 		if ( !RecognizedTemplatesProvider::isUnrecognized( $templateType ) ) {
-			$model = new InsightsTemplatesWithoutTypeModel();
-			$model->removeFixedItem( TemplatesWithoutTypePage::TEMPLATES_WITHOUT_TYPE_TYPE, $title );
-			$model->updateInsightsCache( $pageId );
+			$title = Title::newFromID( $pageId );
+
+			if ( $title instanceof Title ) {
+				$model = new InsightsTemplatesWithoutTypeModel();
+				$model->removeFixedItem( TemplatesWithoutTypePage::TEMPLATES_WITHOUT_TYPE_TYPE, $title );
+				$model->updateInsightsCache( $pageId );
+			}
 		}
 		return true;
 	}

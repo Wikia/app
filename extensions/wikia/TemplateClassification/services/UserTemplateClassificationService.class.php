@@ -1,6 +1,11 @@
 <?php
 
+use Swagger\Client\ApiException;
+
 class UserTemplateClassificationService extends TemplateClassificationService {
+
+	const USER_PROVIDER = 'user';
+
 	/**
 	 * Allowed types of templates stored in an array to make a validation process easier.
 	 *
@@ -76,5 +81,24 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 		}
 
 		return $type;
+	}
+
+	/**
+	 * Verify template type before user classification
+	 *
+	 * @param int $wikiId
+	 * @param int $pageId
+	 * @param string $templateType
+	 * @param string $origin
+	 * @throws BadRequestApiException
+	 */
+	public function classifyTemplate( $wikiId, $pageId, $templateType, $origin ) {
+		if ( !in_array( $templateType, self::$templateTypes ) ) {
+			throw new ApiException( 'Bad request. Wrong template type value.', 400 );
+		}
+
+		parent::classifyTemplate( $wikiId, $pageId, $templateType, self::USER_PROVIDER, $origin );
+
+		wfRunHooks( 'UserTemplateClassification::TemplateClassified', [ $wikiId, $pageId, $templateType ] );
 	}
 }
