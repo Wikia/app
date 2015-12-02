@@ -111,21 +111,16 @@ class FileNamespaceSanitizeHelper {
 	}
 
 	/**
-	 * @desc for a given wikitext, if it contains images or files, leave only them.
-	 * If doesn't contain any images nor files, do not change wikitext.
+	 * @desc for a given wikitext, return an array of images or files occurences
 	 *
 	 * @param string $wikitext to find images or files in
 	 * @param $lang
-	 * @return string wikitext
+	 * @return array of images or ampty array
 	 */
 	public function getFileMarkerFromWikitext( $wikitext, $lang ) {
 		$filePrefixRegex = substr( $this->getFilePrefixRegex( $lang ), 1 );
 		preg_match_all( '/\[\[' . $filePrefixRegex .'.*\]\]/U', $wikitext, $images );
 
-		if ( count( $images[0]) > 0 ) {
-			$wikitext = implode( '', $images[0] );
-		}
-
-		return $wikitext;
+		return $images;
 	}
 }

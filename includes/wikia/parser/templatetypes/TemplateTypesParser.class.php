@@ -82,12 +82,11 @@ class TemplateTypesParser {
 	public static function onEndBraceSubstitution( $templateTitle, &$templateWikitext ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( ContextLinkTemplate::shouldTemplateBeProcessed( $templateWikitext ) ) {
+		if ( self::shouldTemplateBeParsed() && !empty( $templateWikitext ) && !TemplateArgsHelper::containsUnexpandedArgs( $templateWikitext ) ) {
 			$title = self::getValidTemplateTitle( $templateTitle );
 
 			if ( $title ) {
 				$type = self::getTemplateType( $title );
-				//$type = AutomaticTemplateTypes::TEMPLATE_INFOICON;
 				if ( $type == AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK ) {
 					$templateWikitext = ContextLinkTemplate::handle( $templateWikitext );
 				} else if ( $type == AutomaticTemplateTypes::TEMPLATE_INFOICON ) {
