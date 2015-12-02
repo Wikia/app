@@ -161,4 +161,13 @@ $messages = array_merge( $messages , array(
 'vertical-movies' => '映画',
 
 'tog-enableuserjs' => '個人用JavaScriptを有効にする（[[w:c:ja.community:ヘルプ:個人用CSSとJavaScript#JavaScript|詳細]]）',
+
+'recentchanges-on-wikia-title' => 'ウィキア全体における最近の変更',
+'recentchanges-on-wikia-content' => "「テンプレートの種類」をリリース — テンプレートを種類ごとに整理して、[[Special:Templates|テンプレートの管理]]をシンプル化したり、モバイル端末での表示を改善したりできます。[[ヘルプ:テンプ
+レートの種類|詳細]]をご覧になるか、'''[[Special:Insights/templateswithouttype|今すぐお試しください]]'''。
+
+[[Help:Infobox|ポータブル・インフォボックス]]にタブ付き画像や折りたたみ可能なグループの機能を追加しました。
+
+あなたのコンテンツはモバイル対応ですか？[[w:c:portability|Portability.wikia.com]]で未来対応型のコンテンツに関する詳細をご覧ください。",
+
 ));
