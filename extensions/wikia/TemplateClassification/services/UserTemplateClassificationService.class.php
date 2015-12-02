@@ -5,6 +5,8 @@ use Swagger\Client\ApiException;
 class UserTemplateClassificationService extends TemplateClassificationService {
 
 	const USER_PROVIDER = 'user';
+	const CLASSIFY_TEMPLATE_EXCEPTION_MESSAGE = 'Bad request. Wrong template type value.';
+	const CLASSIFY_TEMPLATE_EXCEPTION_CODE = 400;
 
 	/**
 	 * Allowed types of templates stored in an array to make a validation process easier.
@@ -94,7 +96,7 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 	 */
 	public function classifyTemplate( $wikiId, $pageId, $templateType, $origin ) {
 		if ( !in_array( $templateType, self::$templateTypes ) ) {
-			throw new ApiException( 'Bad request. Wrong template type value.', 400 );
+			throw new ApiException( self::CLASSIFY_TEMPLATE_EXCEPTION_MESSAGE, self::CLASSIFY_TEMPLATE_EXCEPTION_CODE );
 		}
 
 		parent::classifyTemplate( $wikiId, $pageId, $templateType, self::USER_PROVIDER, $origin );
