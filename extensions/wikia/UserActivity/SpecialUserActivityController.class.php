@@ -15,13 +15,11 @@ class SpecialController extends \WikiaSpecialPageController {
 	}
 
 	/**
-	 * Run before index. First make sure the user can access page, then set the title, disable
-	 * redirects, and add the css.
+	 * Run before index. Set the title and disable redirects.
 	 */
 	public function init() {
 		$this->disableRedirects();
 		$this->setTitle();
-		$this->addCss();
 	}
 
 	/**
@@ -39,13 +37,6 @@ class SpecialController extends \WikiaSpecialPageController {
 		$this->getContext()->getOutput()->setHTMLTitle( self::PAGE_TITLE );
 		$this->getContext()->getOutput()->setPageTitle( self::PAGE_TITLE );
 		$this->wg->SupressPageSubtitle = true;
-	}
-
-	/**
-	 * Adds stylesheet to output
-	 */
-	private function addCss() {
-		$this->response->addAsset( 'special_user_activity_css' );
 	}
 
 	/**
