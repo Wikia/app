@@ -260,10 +260,10 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 'tog-enableuserjs' => 'Włącz osobisty kod JavaScript ([[Pomoc:Osobiste_CSS_i_JS|Dowiedz się więcej]])',
 'wikia-pagetitle' => '$1 – Wikia',
 
-'recentchanges-on-wikia-title' => 'Mudanças recentes na Wikia',
-'recentchanges-on-wikia-content' => "Introduzindo tipos de predefinições — organize suas predefinições pelo tipo para [[Special:Predefinições|gerenciamento de predefinição]] torná-las mais simples e para melhorar como são exibidas em celulares. [[Ajuda:Tipos de predefinição|Saiba mais]] ou '''[[Special:Insights/predefiniçõessemtipo|Comece agora!]]'''
+'recentchanges-on-wikia-title' => 'Ostatnie zmiany na Wikii',
+'recentchanges-on-wikia-content' => "Przedstawiamy Typy Szablonów — Grupuj swoje szablony według typów i spraw by [[Special:Templates|zarządzanie szablonami]] było łatwiejsze co umożliwi lepsze ich wyświetlanie na urządzeniach mobilnych. [[Help:Template Types|Dowiedz się więcej]] lub '''[[Special:Insights/templateswithouttype|Zacznij teraz!]]'''
 
-Imagens com guias e grupos flexíveis estão disponíveis agora para [[Ajuda:Infobox|Infoboxes móveis]].
+Obrazy w zakładkach oraz rozwijane grupy są teraz dostępne dla [[Help:Infobox|Przenośnych infoboksów]].
 
-O seu conteúdo é móvel? Saiba mais sobre conteúdo em [[w:c:portability|Portability.wikia.com]].",
+Czy treści na twojej stronie są przyjazne dla urządzeń mobilnych? Dowiedz się jak zadbać, aby treści twoich stronach były w przyszłości przyjazne urządzeniom mobilnym na [[w:c:portability|Portability.wikia.com]].",
 ) );
