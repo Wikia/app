@@ -8,8 +8,7 @@ $messages = array_merge( $messages, array(
 'tog-enableuserjs' => '啟用個人JavaScript ([[Help:Personal_CSS_and_JS#JavaScript|了解更多]])',
 
 'recentchanges-on-wikia-title' => '最近在Wikia上的變化',
-'recentchanges-on-wikia-content' => "介紹模版類型－通過類型組織您的模版，讓[[Special:Templates|模版管理]]變得更簡單，以改善它們在手機上的顯示。 [[Help:Template Types|了解更多]]或'''[[Special:Insights/templateswithouttype|即
-刻就去體驗一下！]]'''
+'recentchanges-on-wikia-content' => "介紹模版類型－通過類型組織您的模版，讓[[Special:Templates|模版管理]]變得更簡單，以改善它們在手機上的顯示。 [[Help:Template Types|了解更多]]或'''[[Special:Insights/templateswithouttype|即刻就去體驗一下！]]'''
 
 標籤圖片和可折疊群組已經可以在[[Help:Infobox|移動化訊息框]]中使用。
 
