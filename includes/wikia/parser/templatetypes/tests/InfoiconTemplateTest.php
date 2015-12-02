@@ -10,7 +10,7 @@ class InfoiconTemplateTest extends WikiaBaseTest {
 	public function testHandle( $infoiconWikitext, $expectedTemplateWikiext ) {
 		$sanitizedTemplateWikiext = InfoiconTemplate::handle( $infoiconWikitext );
 
-		$this->assertEquals( $sanitizedTemplateWikiext, $expectedTemplateWikiext );
+		$this->assertEquals( $expectedTemplateWikiext, $sanitizedTemplateWikiext );
 	}
 
 	public function testHandleDataProvider() {
@@ -22,11 +22,11 @@ class InfoiconTemplateTest extends WikiaBaseTest {
 			[
 				'[[Tryndamere]]was the first champion with 100 [[Image:points]] in
 Attack Rating[[File:Spinning Slash]]!',
-				'[[Image:points]] [[File:Spinning Slash]]'
+				'[[Image:points|30px]] [[File:Spinning Slash|30px]]'
 			],
 			[
 				'[[Image:money]]',
-				'[[Image:money]]',
+				'[[Image:money|30px]]',
 			]
 		];
 	}

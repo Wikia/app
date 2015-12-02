@@ -16,7 +16,11 @@ class InfoiconTemplate {
 		$images = FileNamespaceSanitizeHelper::getInstance()->getFileMarkersFromWikitext( $wikitext, $wgContLang );
 
 		if ( $images ) {
-			$wikitext = implode( ' ', $images );
+			$sizedImages = array_map( function( $img ) {
+				return substr( $img, 0, -2 ) . '|30px]]';
+			}, $images );
+
+			$wikitext = implode( ' ', $sizedImages );
 		}
 
 		return $wikitext;
