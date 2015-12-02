@@ -82,7 +82,7 @@ class TemplateTypesParser {
 	public static function onEndBraceSubstitution( $templateTitle, &$templateWikitext ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( self::shouldTemplateBeParsed() && !empty( $templateWikitext ) && !TemplateArgsHelper::containsUnexpandedArgs( $templateWikitext ) ) {
+		if ( self::isSuitableForProcessing( $templateWikitext ) ) {
 			$title = self::getValidTemplateTitle( $templateTitle );
 
 			if ( $title ) {
@@ -127,6 +127,18 @@ class TemplateTypesParser {
 
 		return $wgEnableTemplateTypesParsing && $wgArticleAsJson;
 	}
+
+	/**
+	 * @desc check if template content is worth processing
+	 *
+	 * @param $wikitext
+	 * @return bool
+	 */
+	private static function isSuitableForProcessing( $wikitext ) {
+		return self::shouldTemplateBeParsed()
+			&& !empty( $wikitext )
+			&& !TemplateArgsHelper::containsUnexpandedArgs( $wikitext );
+		}
 
 	/**
 	 * @desc return a valid cached Title object for a given template title string

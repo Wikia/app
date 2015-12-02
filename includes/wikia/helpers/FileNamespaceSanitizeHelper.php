@@ -115,12 +115,13 @@ class FileNamespaceSanitizeHelper {
 	 *
 	 * @param string $wikitext to find images or files in
 	 * @param $lang
-	 * @return array of images or ampty array
+	 * @return array of images ['[[File:sefes]]', '[[File:blabla]]']
+	 * or false if no images found
 	 */
-	public function getFileMarkerFromWikitext( $wikitext, $lang ) {
+	public function getFileMarkersFromWikitext( $wikitext, $lang ) {
 		$filePrefixRegex = substr( $this->getFilePrefixRegex( $lang ), 1 );
 		preg_match_all( '/\[\[' . $filePrefixRegex .'.*\]\]/U', $wikitext, $images );
 
-		return $images;
+		return count( $images[0] ) ? $images[0] : false;
 	}
 }
