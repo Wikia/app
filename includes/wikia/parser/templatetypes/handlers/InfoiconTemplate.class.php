@@ -15,7 +15,7 @@ class InfoiconTemplate {
 
 		$images = FileNamespaceSanitizeHelper::getInstance()->getFileMarkersFromWikitext( $wikitext, $wgContLang );
 
-		if ( count( $images ) > 0 ) {
+		if ( $images ) {
 			$wikitext = implode( ' ', $images );
 		}
 
