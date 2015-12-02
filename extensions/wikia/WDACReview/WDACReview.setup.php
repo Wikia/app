@@ -29,8 +29,5 @@ $wgSpecialPages['WDACReview'] = 'WDACReviewSpecialController';
 $wgAvailableRights[] = 'wdacreview';
 $wgGroupPermissions['util']['wdacreview'] = true;
 
-$wgGroupPermissions['wdacreviewer']['wdacreview'] = true;
-$wgGroupPermissions['wdacreviewer']['edit'] = false;
-
 // i18n
 $wgExtensionMessagesFiles['WDACReview'] = $dir . 'WDACReview.i18n.php';
