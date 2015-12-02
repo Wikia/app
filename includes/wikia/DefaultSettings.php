@@ -1264,6 +1264,13 @@ $wgAdDriverRubiconFastlaneCountries = null;
 $wgAdDriverRubiconFastlaneCountriesMobile = null;
 
 /**
+ * @name $wgAdDriverRubiconFastlaneLifestyleOnly
+ * Enables RubiconFastlane only on lifestyle wiki
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRubiconFastlaneLifestyleOnly = true;
+
+/**
  * @name $wgAdPageLevelCategoryLangs
  * Enables DART category page param for these content languages
  * "Utility" var, don't change it here.

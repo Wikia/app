@@ -14,31 +14,31 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			oasis: {
 				TOP_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
-					targeting: { loc: 'top' }
+					targeting: {loc: 'top'}
 				},
 				TOP_RIGHT_BOXAD: {
 					sizes: [[300, 250], [300, 600]],
-					targeting: { loc: 'top' }
+					targeting: {loc: 'top'}
 				},
 				LEFT_SKYSCRAPER_2: {
 					sizes: [[160, 600]],
-					targeting: { loc: 'middle' }
+					targeting: {loc: 'middle'}
 				},
 				LEFT_SKYSCRAPER_3: {
 					sizes: [[160, 600]],
-					targeting: { loc: 'footer' }
+					targeting: {loc: 'footer'}
 				},
 				INCONTENT_BOXAD_1: {
 					sizes: [[300, 250]],
-					targeting: { loc: 'middle' }
+					targeting: {loc: 'middle'}
 				},
 				PREFOOTER_LEFT_BOXAD: {
 					sizes: [[300, 250]],
-					targeting: { loc: 'footer' }
+					targeting: {loc: 'footer'}
 				},
 				PREFOOTER_RIGHT_BOXAD: {
 					sizes: [[300, 250]],
-					targeting: { loc: 'footer' }
+					targeting: {loc: 'footer'}
 				}
 			},
 			mercury: {
@@ -189,7 +189,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		var rubicon = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		if (adLogicZoneParams.getSite() !== 'life') {
+		if (context.opts.rubiconFastlaneLifestyleOnly && adLogicZoneParams.getSite() !== 'life') {
 			log(['call', 'Not wka.life vertical'], 'debug', logGroup);
 			return;
 		}
