@@ -42,7 +42,7 @@ $messages['es'] = array(
 	'user-activity-table-lastedit' => 'Última edición',
 	'user-activity-table-rights' => 'Grupos del usuario',
 	'user-activity-tab' => 'Actividad del usuario',
-	'user-activity-edit-count' => '$1 {{PLURAL:$1|edit|edits}}',
+	'user-activity-edit-count' => '$1 {{PLURAL:$1|edición|ediciones}}',
 );
 
 $messages['fr'] = array(
@@ -75,7 +75,7 @@ $messages['ja'] = array(
 	'user-activity-table-lastedit' => '最終編集',
 	'user-activity-table-rights' => 'ユーザーグループ',
 	'user-activity-tab' => 'アクティビティ',
-	'user-activity-edit-count' => '{{PLURAL:$1|編集|編集}}$1件',
+	'user-activity-edit-count' => '$1 {{PLURAL:$1|編集|編集}}',
 );
 
 $messages['nl'] = array(
@@ -112,14 +112,14 @@ $messages['pt'] = array(
 );
 
 $messages['ru'] = array(
-	'user-activity-desc' => "Displays the current user's activity across all of Wikia",
-	'user-activity-page-description' => "This page lists all of Wikia's communities where your account has contributed! By default, the wikias are sorted by most recent contribution date.",
-	'user-activity-table-title' => 'Title',
-	'user-activity-table-edits' => '# of edits',
-	'user-activity-table-lastedit' => 'Last edited',
-	'user-activity-table-rights' => 'User groups',
-	'user-activity-tab' => 'User Activity',
-	'user-activity-edit-count' => '$1 {{PLURAL:$1|edit|edits}}',
+	'user-activity-desc' => 'Показывает участнику список вики, которые он редактировал',
+	'user-activity-page-description' => 'Эта страница содержит список отредактированных вами вики. По умолчанию, википроекты отсортированы по дате последней правки.',
+	'user-activity-table-title' => 'Название',
+	'user-activity-table-edits' => '# правок',
+	'user-activity-table-lastedit' => 'Последняя правка',
+	'user-activity-table-rights' => 'Права',
+	'user-activity-tab' => 'Активность участника',
+	'user-activity-edit-count' => '$1 {{PLURAL:$1|правка|правки|правок}}',
 );
 
 $messages['zh-hans'] = array(
@@ -141,6 +141,6 @@ $messages['zh-hant'] = array(
 	'user-activity-table-lastedit' => '上次編輯',
 	'user-activity-table-rights' => '用戶組',
 	'user-activity-tab' => '用户活動',
-	'user-activity-edit-count' => '$1{{PLURAL:$1|次編輯|次編輯}}',
+	'user-activity-edit-count' => '$1 {{PLURAL:$1|次編輯|次編輯}}',
 );
 
