@@ -99,10 +99,10 @@ class Hooks {
 		$context = \RequestContext::getMain();
 
 		if ( ( new Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $context->getTitle() ) ) {
-			$templateType = $this->getTemplateTypeForEdit( $editPage->getTitle(), $wgCityId );
+			$types = $this->getTemplateTypeForEdit( $editPage->getTitle(), $wgCityId );
 
-			$out->addHTML( \Html::hidden( 'templateClassificationTypeCurrent', $templateType ) );
-			$out->addHTML( \Html::hidden( 'templateClassificationTypeNew', '' ) );
+			$out->addHTML( \Html::hidden( 'templateClassificationTypeCurrent', $types['current'] ) );
+			$out->addHTML( \Html::hidden( 'templateClassificationTypeNew', $types['new'] ) );
 		}
 
 		return true;
@@ -199,28 +199,33 @@ class Hooks {
 	 * Has fallback to infobox when in template draft conversion process
 	 * @param \Title $title
 	 * @param int $wikiaId
-	 * @return string
+	 * @return array
 	 */
 	private function getTemplateTypeForEdit( \Title $title, $wikiaId ) {
 		global $wgEnableTemplateDraftExt;
 
+		$types = [
+			'current' => '',
+			'new' => ''
+		];
+
 		if ( !empty( $wgEnableTemplateDraftExt )
 			&& \TemplateDraftHelper::isInfoboxDraftConversion( $title )
 		) {
-			return \TemplateClassificationService::TEMPLATE_INFOBOX;
+			$types['new'] = \TemplateClassificationService::TEMPLATE_INFOBOX;
+		} else {
+			try {
+				$types['current'] = ( new \UserTemplateClassificationService() )->getType( $wikiaId, $title->getArticleID() );
+			} catch ( ApiException $e ) {
+				( new Logger() )->exception( $e );
+				/**
+				 * If the service is unreachable - fill the field with a not-available string
+				 * which instructs front-end tools to skip the classification part.
+				 */
+				$types['current'] = \TemplateClassificationService::NOT_AVAILABLE;
+			}
 		}
 
-		try {
-			$templateType = ( new \UserTemplateClassificationService() )->getType( $wikiaId, $title->getArticleID() );
-		} catch ( ApiException $e ) {
-			( new Logger() )->exception( $e );
-			/**
-			 * If the service is unreachable - fill the field with a not-available string
-			 * which instructs front-end tools to skip the classification part.
-			 */
-			$templateType = \TemplateClassificationService::NOT_AVAILABLE;
-		}
-
-		return $templateType;
+		return $types;
 	}
 }

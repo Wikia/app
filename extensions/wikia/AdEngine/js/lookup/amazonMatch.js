@@ -38,31 +38,49 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			'7x9': null,
 			'9x2': null
 		},
-		module;
+		module,
+		name = 'amazon';
 
-	function trackState(trackEnd) {
-		log(['trackState', amazonResponse], 'debug', logGroup);
+	function isSlotSupported(slotName) {
+		var key;
+		for (key in sizeMapping) {
+			if (sizeMapping.hasOwnProperty(key) && sizeMapping[key].indexOf(slotName) !== -1) {
+				return true;
+			}
+		}
 
-		var eventName,
-			data = {};
+		return false;
+	}
 
+	function trackState(providerName, slotName, params) {
+		log(['trackState', amazonResponse, providerName, slotName], 'debug', logGroup);
+		var category,
+			eventName = 'lookup_error',
+			prices;
+
+		if (!isSlotSupported(slotName)) {
+			log(['trackState', 'Not supported slot', slotName], 'debug', logGroup);
+			return;
+		}
 		if (amazonResponse) {
-			eventName = 'lookupSuccess';
-			Object.keys(sizeMapping).forEach(function (amazonSize) {
-				var pricePoint = bestPricePointForSize[amazonSize];
-				if (pricePoint) {
-					data['a' + amazonSize] = 'p' + pricePoint;
-				}
-			});
-		} else {
-			eventName = 'lookupError';
+			eventName = 'lookup_success';
 		}
-
-		if (trackEnd) {
-			eventName = 'lookupEnd';
+		category = name + '/' + eventName + '/' + providerName;
+		if (params.amznslots) {
+			prices = params.amznslots.join(';');
 		}
+		adTracker.track(category, slotName, 0, prices || 'nodata');
+	}
 
-		adTracker.track(eventName + '/amazon', data || '(unknown)', 0);
+	function trackLookupEnd() {
+		var data = {};
+		Object.keys(sizeMapping).forEach(function (amazonSize) {
+			var pricePoint = bestPricePointForSize[amazonSize];
+			if (pricePoint) {
+				data['a' + amazonSize] = 'p' + pricePoint;
+			}
+		});
+		adTracker.track(name + '/lookup_end', data || 'nodata', 0);
 	}
 
 	function onAmazonResponse() {
@@ -103,8 +121,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		});
 
 		log(['onAmazonResponse - end', bestPricePointForSize], 'debug', logGroup);
-
-		trackState(true);
+		trackLookupEnd();
 	}
 
 	function call() {
