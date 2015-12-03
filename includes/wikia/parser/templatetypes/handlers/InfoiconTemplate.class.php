@@ -8,21 +8,28 @@ class InfoiconTemplate {
 	 *
 	 * @param string $wikitext
 	 *
-	 * @return string wikitext with image(s) only
+	 * @return string wikitext containing strip markers. Each strip marker represents parsed markup of an infoicon
 	 */
-	public static function handle( $wikitext ) {
+	public static function handle( $wikitext, Parser $parser ) {
 		global $wgContLang;
 
 		$images = FileNamespaceSanitizeHelper::getInstance()->getCleanFileMarkersFromWikitext( $wikitext, $wgContLang );
 
-		if ( $images ) {
-			$sizedImages = array_map( function( $img ) {
-				return '[[' . $img . '|30px]]';
-			}, $images );
+		$output = '';
 
-			$wikitext = implode( ' ', $sizedImages );
+		foreach ( $images as $image ) {
+			$title = Title::newFromText( $image );
+			$file = wfFindFile( $title );
+			$output .= Linker::makeImageLink2(
+				$title,
+				$file,
+				[ 'thumbnail' => true ],
+				[ 'template-type' => AutomaticTemplateTypes::TEMPLATE_INFOICON ]
+			);
 		}
 
-		return $wikitext;
+		$stripMarker = $parser->insertStripItem( $output );
+
+		return $stripMarker;
 	}
 }
