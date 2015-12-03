@@ -63,11 +63,11 @@ if (getenv('wgDevelEnvironmentName')) {
 	$wgDevelEnvironmentName = getenv('wgDevelEnvironmentName');
 } else {
 	$host = gethostname();
-	$host = explode("-", $host);
-	if ( isset( $host[ 1 ] ) ) {
-		$wgDevelEnvironmentName = trim($host[1]);
+	$index = stripos($host, "-");
+	if($index > 0) {
+		$wgDevelEnvironmentName = trim(substr($host, $index + 1));
 	} else {
-		$wgDevelEnvironmentName = trim($host[0]);
+		$wgDevelEnvironmentName = trim($host);
 	}
 }
 
