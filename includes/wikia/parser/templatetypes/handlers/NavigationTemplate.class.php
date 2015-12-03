@@ -17,7 +17,7 @@ class NavigationTemplate {
 	 */
 	public static function handle( $text ) {
 		foreach ( self::$blockLevelElements as $blockElement ) {
-			if ( stripos( $text, $blockElement ) !== false ) {
+			if ( preg_match( "/{$blockElement}[>\s]+/i", $text ) ) {
 				return '';
 			}
 		}

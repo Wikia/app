@@ -18,7 +18,7 @@ class NavigationTemplateTest extends WikiaBaseTest {
 			[
 				'<a>This is a <strong>template</strong> <b>without</b> a <span>block</span> element</a>.',
 				'<a>This is a <strong>template</strong> <b>without</b> a <span>block</span> element</a>.',
-				'A template with a link, formatting tags and a span one should be shown.',
+				'A template with a link, formatting tags and a span one should be visible.',
 			],
 			[
 				'<span>This is a template with a div <div>element</div></span>.',
@@ -49,6 +49,12 @@ class NavigationTemplateTest extends WikiaBaseTest {
 				'<span>This is a template with a P <P>element</P></span>.',
 				'',
 				'A template with a P (uppercase) tag should be hidden.',
+			],
+
+			[
+				'<poem>This is a template with a poem tag. This is one is tricky and should not be matched as a p tag.</poem>.',
+				'<poem>This is a template with a poem tag. This is one is tricky and should not be matched as a p tag.</poem>.',
+				'A template with a poem tag should be visible.',
 			],
 		];
 	}
