@@ -117,17 +117,9 @@ class FileNamespaceSanitizeHelper {
 	 */
 	public function getCleanFileMarkersFromWikitext( $wikitext, $lang ) {
 		$filePrefixRegex = substr( $this->getFilePrefixRegex( $lang ), 1 );
-		preg_match_all( '/\[\[' . $filePrefixRegex .'.*\]\]/U', $wikitext, $images );
-		$cleanFileMarkers = false;
+		preg_match_all( '/\[\[(' . $filePrefixRegex .'[^|\]]*).*?\]\]/', $wikitext, $images );
 
-		if ( count( $images[0] ) ) {
-			$cleanFileMarkers = array_map( function ( $imageMarker ) {
-				$image = substr( $imageMarker, 2, -2 );
-				return self::removeImageParams( $image );
-			}, $images[0] );
-		}
-
-		return $cleanFileMarkers;
+		return count( $images[1] ) ? $images[1] : false;
 	}
 
 	/**
