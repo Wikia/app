@@ -1,6 +1,4 @@
 <?php
-use Wikia\PortableInfobox\Helpers\PortableInfoboxClassification;
-
 /**
  * Class InsightsNonportableInfoboxesModel
  * A class specific to a subpage with a list of pages

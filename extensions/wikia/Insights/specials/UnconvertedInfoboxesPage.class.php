@@ -1,5 +1,4 @@
 <?php
-use Wikia\PortableInfobox\Helpers\PortableInfoboxClassification;
 
 class UnconvertedInfoboxesPage extends PageQueryPage {
 	const LIMIT = 1000;
@@ -113,7 +112,7 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 						$this->getName(),
 						count( $links ),
 						NS_TEMPLATE,
-						$title->getText(),
+						$title->getDBkey(),
 					];
 				}
 			}

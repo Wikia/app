@@ -44,7 +44,7 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 	 * @throws \Swagger\Client\ApiException
 	 */
 	public function getType( $wikiId, $pageId ) {
-		return $this->getMappedType( parent::getType( $wikiId, $pageId ) );
+		return $this->mapType( parent::getType( $wikiId, $pageId ) );
 	}
 
 	/**
@@ -60,13 +60,13 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 		$templateTypes = [];
 
 		foreach ( $types as $type ) {
-			$templateTypes[$type->getPageId()] = $this->getMappedType( $type->getType() );
+			$templateTypes[$type->getPageId()] = $this->mapType( $type->getType() );
 		}
 
 		return $templateTypes;
 	}
 
-	private function getMappedType( $type ) {
+	private function mapType( $type ) {
 		if ( $this->isInfoboxType( $type ) ) {
 			return self::TEMPLATE_INFOBOX;
 		}
