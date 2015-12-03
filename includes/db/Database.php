@@ -905,7 +905,8 @@ abstract class DatabaseBase implements DatabaseType {
 				wfProfileOut( $totalProf );
 			}
 			WikiaLogger::instance()->error( 'DB readonly mode', [
-				'exception' => new Exception( $sql ),
+				'exception' => new WikiaException( $fname . ' called in read-only mode' ),
+				'sql'       => $sql,
 				'server'    => $this->mServer
 			] );
 			wfDebug( sprintf( "%s: DB read-only mode prevented the following query: %s\n", __METHOD__, $sql ) );

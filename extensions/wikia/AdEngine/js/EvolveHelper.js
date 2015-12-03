@@ -57,7 +57,7 @@ define('ext.wikia.adEngine.evolveHelper', [
 
 	function getKruxKeyValues() {
 		if (krux) {
-			return dartUrl.decorateParam('segments', krux.getSegments());
+			return dartUrl.decorateParam('ksgmnt', krux.getSegments());
 		}
 
 		return '';

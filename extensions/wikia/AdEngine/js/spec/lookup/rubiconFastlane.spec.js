@@ -217,5 +217,6 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		expect(slotParams.s0).toEqual('life');
 		expect(slotParams.s2).toEqual('article');
 		expect(slotParams.lang).toEqual('en');
+		expect(slotParams.passback).toEqual('fastlane');
 	});
 });
