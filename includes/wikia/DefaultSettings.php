@@ -1264,11 +1264,11 @@ $wgAdDriverRubiconFastlaneCountries = null;
 $wgAdDriverRubiconFastlaneCountriesMobile = null;
 
 /**
- * @name $wgAdDriverRubiconFastlaneLifestyleOnly
- * Enables RubiconFastlane only on lifestyle wiki
+ * @name $wgAdDriverRubiconFastlaneOnAllVerticals
+ * Enables RubiconFastlane on all verticals
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverRubiconFastlaneLifestyleOnly = true;
+$wgAdDriverRubiconFastlaneOnAllVerticals = false;
 
 /**
  * @name $wgAdPageLevelCategoryLangs

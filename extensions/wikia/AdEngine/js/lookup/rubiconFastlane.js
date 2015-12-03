@@ -189,7 +189,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		var rubicon = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		if (context.opts.rubiconFastlaneLifestyleOnly && adLogicZoneParams.getSite() !== 'life') {
+		if (!context.opts.rubiconFastlaneOnAllVerticals && adLogicZoneParams.getSite() !== 'life') {
 			log(['call', 'Not wka.life vertical'], 'debug', logGroup);
 			return;
 		}

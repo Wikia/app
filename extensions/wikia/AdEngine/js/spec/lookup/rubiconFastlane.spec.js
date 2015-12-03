@@ -97,7 +97,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 			pageType: 'article'
 		};
 		mocks.opts = {
-			rubiconFastlaneLifestyleOnly: true
+			rubiconFastlaneOnAllVerticals: false
 		};
 		mocks.adLogicZoneParams.getSite = function () {
 			return 'life';
@@ -226,7 +226,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		expect(slotParams.passback).toEqual('fastlane');
 	});
 
-	it('Fastlane should be enabled for life wiki with instantGlobals equals 1 on Oasis', function () {
+	it('Fastlane should be enabled for life wiki with rubiconFastlaneOnAllVerticals=0 on Oasis', function () {
 		var rubiconFastlane = getRubiconFastlane();
 
 		rubiconFastlane.call('oasis');
@@ -234,9 +234,9 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		expect(rubiconFastlane.wasCalled()).toEqual(true);
 	});
 
-	it('Fastlane should be enabled for life wiki with instantGlobals equals 0 on Oasis', function () {
+	it('Fastlane should be enabled for life wiki with rubiconFastlaneOnAllVerticals=1 on Oasis', function () {
 		mocks.opts = {
-			rubiconFastlaneLifestyleOnly: false
+			rubiconFastlaneOnAllVerticals: true
 		};
 
 		var rubiconFastlane = getRubiconFastlane();
@@ -246,7 +246,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		expect(rubiconFastlane.wasCalled()).toEqual(true);
 	});
 
-	it('Fastlane should be disabled for non-life wiki with instantGlobals equals 1 on Oasis', function () {
+	it('Fastlane should be disabled for non-life wiki with rubiconFastlaneOnAllVerticals=0 on Oasis', function () {
 		mocks.adLogicZoneParams.getSite = function () {
 			return 'ent';
 		};
@@ -258,9 +258,9 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		expect(rubiconFastlane.wasCalled()).toEqual(false);
 	});
 
-	it('Fastlane should be enabled for non-life wiki with instantGlobals equals 0 on Oasis', function () {
+	it('Fastlane should be enabled for non-life wiki with rubiconFastlaneOnAllVerticals=1 on Oasis', function () {
 		mocks.opts = {
-			rubiconFastlaneLifestyleOnly: false
+			rubiconFastlaneOnAllVerticals: true
 		};
 		mocks.adLogicZoneParams.getSite = function () {
 			return 'ent';
@@ -273,7 +273,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		expect(rubiconFastlane.wasCalled()).toEqual(true);
 	});
 
-	it('Fastlane should be enabled for life wiki with instantGlobals equals 1 on Mercury', function () {
+	it('Fastlane should be enabled for life wiki with rubiconFastlaneOnAllVerticals=0 on Mercury', function () {
 		var rubiconFastlane = getRubiconFastlane();
 
 		rubiconFastlane.call('mercury');
@@ -281,9 +281,9 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		expect(rubiconFastlane.wasCalled()).toEqual(true);
 	});
 
-	it('Fastlane should be enabled for life wiki with instantGlobals equals 0 on Mercury', function () {
+	it('Fastlane should be enabled for life wiki with rubiconFastlaneOnAllVerticals=1 on Mercury', function () {
 		mocks.opts = {
-			rubiconFastlaneLifestyleOnly: false
+			rubiconFastlaneOnAllVerticals: true
 		};
 
 		var rubiconFastlane = getRubiconFastlane();
@@ -293,7 +293,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		expect(rubiconFastlane.wasCalled()).toEqual(true);
 	});
 
-	it('Fastlane should be disabled for non-life wiki with instantGlobals equals 1 on Mercury', function () {
+	it('Fastlane should be disabled for non-life wiki with rubiconFastlaneOnAllVerticals=0 on Mercury', function () {
 		mocks.adLogicZoneParams.getSite = function () {
 			return 'ent';
 		};
@@ -305,9 +305,9 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		expect(rubiconFastlane.wasCalled()).toEqual(false);
 	});
 
-	it('Fastlane should be enabled for non-life wiki with instantGlobals equals 0 on Mercury', function () {
+	it('Fastlane should be enabled for non-life wiki with rubiconFastlaneOnAllVerticals=1 on Mercury', function () {
 		mocks.opts = {
-			rubiconFastlaneLifestyleOnly: false
+			rubiconFastlaneOnAllVerticals: true
 		};
 		mocks.adLogicZoneParams.getSite = function () {
 			return 'ent';
