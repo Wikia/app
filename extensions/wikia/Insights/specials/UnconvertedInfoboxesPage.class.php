@@ -105,6 +105,7 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 			if ( $tcs->isInfoboxType( $type ) ) {
 				$title = Title::newFromID( $templateId );
 				if ( $title instanceof Title
+					&& !$title->isRedirect()
 					&& empty( PortableInfoboxDataService::newFromTitle( $title )->getData() )
 				) {
 					$links = $title->getIndirectLinks();
