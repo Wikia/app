@@ -14,6 +14,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		$preselectedType,
 		$typeLabel,
 		modalConfig,
+		modalMode,
 		messagesLoaded,
 		saveHandler = falseFunction,
 		typeGetter = falseFunction,
@@ -38,7 +39,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 
 		$w.on('keydown', openModalKeyboardShortcut);
 
-		$('.template-classification-type-text').click(function (e) {
+		$typeLabel.click(function (e) {
 			e.preventDefault();
 			openEditModal('editType');
 		});
@@ -48,10 +49,12 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		var messagesLoader = falseFunction,
 			classificationFormLoader = falseFunction;
 
+		modalMode = modeProvided;
+
 		// Unbind modal opening keyboard shortcut while it's open
 		$w.unbind('keydown', openModalKeyboardShortcut);
 
-		labeling.init(modeProvided);
+		labeling.init(modalMode);
 
 		if (!messagesLoaded) {
 			messagesLoader = getMessages;
@@ -193,7 +196,11 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			});
 		}
 
-		modalInstance.trigger('close');
+		if (modalMode == 'addTypeBeforePublish' && newTemplateType) {
+			$('#wpSave').click();
+		} else {
+			modalInstance.trigger('close');
+		}
 	}
 
 	function updateEntryPointLabel(templateType) {
@@ -204,17 +211,6 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	}
 
 	function setupTemplateClassificationModal(content) {
-		/* Modal component configuration */
-		modalConfig = {
-			vars: {
-				id: 'TemplateClassificationEditModal',
-				classes: ['template-classification-edit-modal'],
-				size: 'small', // size of the modal
-				content: content, // content
-				title: labeling.getTitle()
-			}
-		};
-
 		var modalButtons = [
 			{
 				vars: {
