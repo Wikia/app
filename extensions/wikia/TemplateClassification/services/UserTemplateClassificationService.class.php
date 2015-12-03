@@ -70,7 +70,6 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 
 		parent::classifyTemplate( $wikiId, $pageId, $templateType, self::USER_PROVIDER, $origin );
 
-		$title = Title::newFromID( $pageId );
-		wfRunHooks( 'UserTemplateClassification::TemplateClassified', [ $pageId, $title, $templateType ] );
+		wfRunHooks( 'UserTemplateClassification::TemplateClassified', [ $wikiId, $pageId, $templateType ] );
 	}
 }
