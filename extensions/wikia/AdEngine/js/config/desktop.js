@@ -52,7 +52,7 @@ define('ext.wikia.adEngine.config.desktop', [
 			'TOP_BUTTON_WIDE.force': true
 		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
-		dartEnabled = !instantGlobals.wgSitewideDisableGpt;
+		gptEnabled = !instantGlobals.wgSitewideDisableGpt;
 
 	function getDecorators() {
 		return [adDecoratorPageDimensions];
@@ -131,12 +131,12 @@ define('ext.wikia.adEngine.config.desktop', [
 			providerList.push(adProviderEvolve2);
 		} else if (evolveCountry && adProviderEvolve.canHandleSlot(slotName)) {
 			providerList.push(adProviderEvolve);
-		} else if (dartEnabled) {
+		} else if (gptEnabled) {
 			providerList.push(adProviderDirectGpt);
 		}
 
 		// Second provider: Remnant GPT
-		if (dartEnabled) {
+		if (gptEnabled) {
 			providerList.push(adProviderRemnantGpt);
 		}
 

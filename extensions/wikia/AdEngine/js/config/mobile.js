@@ -22,7 +22,7 @@ define('ext.wikia.adEngine.config.mobile', [
 			'all_ads': true,
 			'corporate': true
 		},
-		dartEnabled = !instantGlobals || !instantGlobals.wgSitewideDisableGpt;
+		gptEnabled = !instantGlobals || !instantGlobals.wgSitewideDisableGpt;
 
 	function getProviderList(slotName) {
 		var context = adContext.getContext(),
@@ -56,11 +56,11 @@ define('ext.wikia.adEngine.config.mobile', [
 
 		if (context.providers.evolve2 && evolve2.canHandleSlot(slotName)) {
 			providerList.push(evolve2);
-		} else if (dartEnabled) {
+		} else if (gptEnabled) {
 			providerList.push(directGptMobile);
 		}
 
-		if (dartEnabled) {
+		if (gptEnabled) {
 			providerList.push(remnantGptMobile);
 		}
 
