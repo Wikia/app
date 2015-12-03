@@ -3,6 +3,7 @@
  * @author macbre
  * @group Integration
  * @group MediaFeatures
+ * @group Broken
  */
 class ImageServingCroppingTest extends WikiaBaseTest {
 
