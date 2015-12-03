@@ -13,7 +13,7 @@ $messages = array_merge( $messages, array(
 'recentchanges-on-wikia-title' => 'Cambiamenti recenti su Wikia',
 'recentchanges-on-wikia-content' => "Introduzione alle tipologie di template: organizza i tuoi template per tipo per rendere la [[Special:Templates|gestione dei template]] più semplice e per migliorare il loro layout sui dispositivi mobili. [[Help:Template Types|Per saperne di più]] o '''[[Special:Insights/templateswithouttype|Comincia subito!]]'''
 
-Immagini con schede e gruppi pieghevoli [[Help:Infobox|Infobox esportabili]].
+Immagini con schede e gruppi pieghevoli [[Aiuto:Infobox|Infobox esportabili]].
 
 Il tuo contenuto è esportabile? Per saperne di più dai un'occhiata a [[w:c:portability|Portability.wikia.com]].",
 
