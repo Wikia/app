@@ -28,6 +28,9 @@ class TemplateTypesParser {
 				case TemplateClassificationService::TEMPLATE_REFERENCES:
 					$text = ReferencesTemplate::handle();
 					break;
+				case TemplateClassificationService::TEMPLATE_NAV:
+					$text = NavigationTemplate::handle( $text );
+					break;
 			}
 		}
 

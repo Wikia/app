@@ -17,6 +17,7 @@ $wgAutoloadClasses['NoticeTemplate'] = __DIR__ . '/handlers/NoticeTemplate.class
 $wgAutoloadClasses['QuoteTemplate'] = __DIR__ . '/handlers/QuoteTemplate.class.php';
 $wgAutoloadClasses['ReferencesTemplate'] = __DIR__ . '/handlers/ReferencesTemplate.class.php';
 $wgAutoloadClasses['ScrollboxTemplate'] = __DIR__ . '/handlers/ScrollboxTemplate.class.php';
+$wgAutoloadClasses['NavigationTemplate'] = __DIR__ . '/handlers/NavigationTemplate.class.php';
 
 // hooks
 $wgHooks['Parser::FetchTemplateAndTitle'][] = 'TemplateTypesParser::onFetchTemplateAndTitle';
