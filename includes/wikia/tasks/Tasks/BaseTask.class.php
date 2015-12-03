@@ -146,6 +146,7 @@ abstract class BaseTask {
 	public function queue() {
 		$this->info( 'BaseTask::queue', [
 			'task' => get_class( $this ),
+			'caller' => wfGetCallerClassMethod( __CLASS__ ),
 			'backtrace' => new \Exception()
 		] );
 
