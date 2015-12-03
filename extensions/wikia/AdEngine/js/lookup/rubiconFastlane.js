@@ -145,6 +145,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		rubiconSlot.setFPI('s1', s1);
 		rubiconSlot.setFPI('s2', adLogicZoneParams.getPageType());
 		rubiconSlot.setFPI('lang', adLogicZoneParams.getLanguage());
+		rubiconSlot.setFPI('passback', 'fastlane');
 	}
 
 	function defineSingleSlot(slotName, slot, skin) {
