@@ -172,7 +172,7 @@ class CreateBlogPage extends SpecialBlogPage {
 
 		$token = $wgRequest->getVal( 'wpEditToken' );
 		if ( !$wgUser->matchEditToken( $token ) ) {
-			$this->mFormErrors[] = wfMessage( 'create-blog-cant-edit' )->text();
+			$this->mFormErrors[] = wfMessage( 'sessionfailure' )->escaped();
 			return;
 		}
 
