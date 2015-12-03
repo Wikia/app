@@ -263,7 +263,7 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 'recentchanges-on-wikia-title' => 'Ostatnie zmiany na Wikii',
 'recentchanges-on-wikia-content' => "Przedstawiamy Typy Szablonów — Grupuj swoje szablony według typów i spraw by [[Special:Templates|zarządzanie szablonami]] było łatwiejsze co umożliwi lepsze ich wyświetlanie na urządzeniach mobilnych. [[Help:Template Types|Dowiedz się więcej]] lub '''[[Special:Insights/templateswithouttype|Zacznij teraz!]]'''
 
-Obrazy w zakładkach oraz rozwijane grupy są teraz dostępne dla [[Help:Infobox|Przenośnych infoboksów]].
+Obrazy w zakładkach oraz rozwijane grupy są teraz dostępne dla [[Pomoc:Infoboksy|Przenośnych infoboksów]].
 
 Czy treści na twojej stronie są przyjazne dla urządzeń mobilnych? Dowiedz się jak zadbać, aby treści twoich stronach były w przyszłości przyjazne urządzeniom mobilnym na [[w:c:portability|Portability.wikia.com]].",
 ) );
