@@ -4,6 +4,8 @@
  * @group Integration
  * @group MediaFeatures
  * @group Broken
+ *
+ * TODO: Fix the test: https://wikia-inc.atlassian.net/browse/MAIN-6018
  */
 class ImageServingCroppingTest extends WikiaBaseTest {
 
