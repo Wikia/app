@@ -3,9 +3,9 @@
 class NavigationTemplate {
 
 	private static $blockLevelElements = [
-		'<div',
-		'<table',
-		'<p',
+		'div',
+		'table',
+		'p',
 	];
 
 	/**
@@ -16,10 +16,9 @@ class NavigationTemplate {
 	 * @return string
 	 */
 	public static function handle( $text ) {
-		foreach ( self::$blockLevelElements as $blockElement ) {
-			if ( preg_match( "/{$blockElement}[>\s]+/i", $text ) ) {
-				return '';
-			}
+		$regex = '/<(' . implode( '|', self::$blockLevelElements ) . ')[>\s]+/i';
+		if ( preg_match ( $regex, $text ) ) {
+			return '';
 		}
 
 		return $text;
