@@ -30,12 +30,6 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 	 *  	receives {string} selectedType as parameter
 	 */
 	function init(typeGetterProvided, saveHandlerProvided) {
-		var popoverConfig = {
-			delay: {
-				show: 500,
-				hide: 300
-			}
-		};
 		saveHandler = saveHandlerProvided;
 		typeGetter = typeGetterProvided;
 		$typeLabel = $('.template-classification-type-text');
@@ -45,7 +39,9 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 		$typeLabel.click(function (e) {
 			e.preventDefault();
 			openEditModal('editType');
-		}).popover(popoverConfig);
+		});
+
+		setupTooltip();
 	}
 
 	function openEditModal(modeProvided) {
@@ -255,6 +251,26 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 		};
 
 		modalConfig.vars.buttons = modalButtons;
+	}
+
+	function setupTooltip() {
+		if ($typeLabel.data('mode') === 'welcome') {
+			mw.loader.using(
+				['ext.wikia.TemplateClassification.ModalMessages', 'mediawiki.jqueryMsg'],
+				function showWelcomeTooltip() {
+					$typeLabel.tooltip({
+						title: mw.message(
+							'template-classification-entry-point-hint',
+							mw.config.get('wgUserName')
+						).parse()
+					}).tooltip('show');
+				}
+			);
+		} else {
+			$typeLabel.tooltip({
+				delay: {show: 500, hide: 300}
+			});
+		}
 	}
 
 	function getTemplateClassificationEditForm() {

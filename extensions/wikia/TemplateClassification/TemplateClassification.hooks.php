@@ -118,13 +118,16 @@ class Hooks {
 	 */
 	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		$title = $out->getTitle();
-		if ( ( new Permissions() )->shouldDisplayEntryPoint( $skin->getUser(), $title ) ) {
+		$user = $skin->getUser();
+		if ( ( new Permissions() )->shouldDisplayEntryPoint( $user, $title ) ) {
 			if ( $title->exists() && !$this->isEditPage() ) {
 				\Wikia::addAssetsToOutput( 'template_classification_in_view_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
+				$this->addWelcomeHintAssets( $out, $user );
 			} elseif ( $this->isEditPage() ) {
 				\Wikia::addAssetsToOutput( 'template_classification_in_edit_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
+				$this->addWelcomeHintAssets( $out, $user );
 			}
 		}
 		return true;
@@ -222,5 +225,11 @@ class Hooks {
 		}
 
 		return $templateType;
+	}
+
+	private function addWelcomeHintAssets( \OutputPage $out, \User $user ) {
+		if ( !$user->getGlobalPreference( \Wikia\TemplateClassification\View::HAS_SEEN_HINT ) ) {
+			$out->addModules( 'ext.wikia.TemplateClassification.ModalMessages' );
+		}
 	}
 }

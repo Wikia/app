@@ -8,6 +8,7 @@ class View {
 
 	const COMMAND_KEY = '⌘';
 	const CONTROL_KEY = 'Ctrl';
+	const HAS_SEEN_HINT = 'template-classification-has-seen-modal-hint';
 
 	/**
 	 * Returns HTML with Template type.
@@ -65,15 +66,12 @@ class View {
 		 */
 		$templateTypeMessage = wfMessage( "template-classification-type-{$templateType}" )->plain();
 
-		$editButton = flase;
+		$editButton = false;
 		if ( ( new Permissions() )->userCanChangeType( $user, $title ) ) {
 			$editButton = true;
 		}
 
-		$key = self::CONTROL_KEY;
-		if ( strpos( $_SERVER['HTTP_USER_AGENT'], 'Mac' ) !== false ) {
-			$key = self::COMMAND_KEY;
-		}
+		$hint = $this->prepareHint( $user );
 
 		return \MustacheService::getInstance()->render(
 			__DIR__ . '/templates/TemplateClassificationViewPageEntryPoint.mustache',
@@ -82,8 +80,27 @@ class View {
 				'templateType' => $templateType,
 				'templateTypeName' => $templateTypeMessage,
 				'editButton' => $editButton,
-				'keyTip' => wfMessage( 'template-classification-open-modal-key-tip', $key )->plain(),
+				'hint' => $hint,
 			]
 		);
+	}
+
+	private function prepareHint( \User $user ) {
+		if ( !$user->getGlobalPreference( self::HAS_SEEN_HINT ) ) {
+			return [
+				'mode' => 'welcome',
+				'msg' => '',
+				'trigger' => 'click'
+			];
+		}
+		$key = self::CONTROL_KEY;
+		if ( strpos( $_SERVER['HTTP_USER_AGENT'], 'Mac' ) !== false ) {
+			$key = self::COMMAND_KEY;
+		}
+		return [
+			'mode' => 'key',
+			'msg' => wfMessage( 'template-classification-open-modal-key-tip', $key )->plain(),
+			'trigger' => 'hover'
+		];
 	}
 }

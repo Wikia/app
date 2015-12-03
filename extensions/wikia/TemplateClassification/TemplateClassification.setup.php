@@ -76,3 +76,14 @@ JSMessages::registerPackage( 'TemplateClassificationModal', [
 JSMessages::registerPackage( 'TemplateClassificationTypes', [
 	'template-classification-type-*',
 ] );
+
+/**
+ * Resources Loader module
+ */
+$wgResourceModules['ext.wikia.TemplateClassification.ModalMessages'] = [
+	'messages' => [
+		'template-classification-entry-point-hint',
+	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/TemplateClassification'
+];
