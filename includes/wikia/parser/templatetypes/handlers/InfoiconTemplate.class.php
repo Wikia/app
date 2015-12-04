@@ -1,6 +1,6 @@
 <?php
 
-class InfoiconTemplate {
+class InfoIconTemplate {
 	/**
 	 * @desc sanitize infoicon template content, that is remove all non-images
 	 * from it's wikitext. They usually contain span with 'display: none' style

@@ -90,7 +90,7 @@ class TemplateTypesParser {
 				if ( $type == AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK ) {
 					$templateWikitext = ContextLinkTemplate::handle( $templateWikitext );
 				} else if ( $type == AutomaticTemplateTypes::TEMPLATE_INFOICON ) {
-					$templateWikitext = InfoiconTemplate::handle( $templateWikitext, $parser );
+					$templateWikitext = InfoIconTemplate::handle( $templateWikitext, $parser );
 				}
 			}
 		}
