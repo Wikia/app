@@ -81,10 +81,10 @@ class Lilly {
 			return $cachedValue;
 		}
 
-		$query = http_build_query( ['url' => $url] );
+		$query = http_build_query( [ 'url' => $url ] );
 		$lillyUrl = $wgLillyServiceUrl . self::API_V2_CLUSTER . '?' . $query;
 
-		$response = Http::get( $lillyUrl, self::HTTP_TIMEOUT, ['noProxy' => true] );
+		$response = Http::get( $lillyUrl, self::HTTP_TIMEOUT, [ 'noProxy' => true ] );
 		$linkMap = json_decode( $response, true /*assoc*/ );
 
 		if ( !is_array( $linkMap ) || count( $linkMap ) === 0 ) {
