@@ -91,12 +91,12 @@ class TemplateClassificationController extends WikiaController {
 	}
 
 	private function validateRequestForBulkEdit( $category, $templateType ) {
-		if ( !$this->wg->request->wasPosted() ) {
+		if ( !$this->request->wasPosted() ) {
 			throw new BadRequestApiException();
 		}
 
 		if ( !$this->wg->User->isAllowed( 'template-bulk-classification' )
-			|| !$this->wg->User->matchEditToken( $this->wg->request->getVal( 'editToken' ) )
+			|| !$this->wg->User->matchEditToken( $this->request->getVal( 'editToken' ) )
 		) {
 			throw new UnauthorizedException();
 		}
