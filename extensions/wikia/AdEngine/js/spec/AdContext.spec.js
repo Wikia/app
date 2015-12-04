@@ -590,6 +590,7 @@ describe('AdContext', function () {
 						showAds: true
 					},
 					targeting: {
+						pageType: 'article',
 						skin: 'oasis'
 					}
 				}
@@ -612,6 +613,7 @@ describe('AdContext', function () {
 						showAds: true
 					},
 					targeting: {
+						pageType: 'article',
 						skin: 'oasis'
 					}
 				}
@@ -634,6 +636,7 @@ describe('AdContext', function () {
 						showAds: true
 					},
 					targeting: {
+						pageType: 'article',
 						skin: 'oasis'
 					}
 				}
@@ -647,6 +650,29 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.recoveredAdsMessage).toBeTruthy();
 	});
 
+	it('disabled recoveredAdsMessage on non article page type', function () {
+		mocks.win = {
+			ads: {
+				context: {
+					opts: {
+						sourcePointDetectionUrl: '//foo.bar',
+						showAds: true
+					},
+					targeting: {
+						pageType: 'home',
+						skin: 'oasis'
+					}
+				}
+			}
+		};
+		mocks.instantGlobals = {
+			wgAdDriverSourcePointDetectionCountries: ['CURRENT_COUNTRY'],
+			wgAdDriverAdsRecoveryMessageCountries: ['CURRENT_COUNTRY-EE', 'CURRENT_COUNTRY']
+		};
+
+		expect(getModule().getContext().opts.recoveredAdsMessage).toBeFalsy();
+	});
+
 	it('disables recoveredAdsMessage when country and region in instant var and both are invalid', function () {
 		mocks.win = {
 			ads: {
@@ -655,6 +681,7 @@ describe('AdContext', function () {
 						sourcePointDetectionUrl: '//foo.bar'
 					},
 					targeting: {
+						pageType: 'article',
 						skin: 'oasis'
 					}
 				}
@@ -676,6 +703,7 @@ describe('AdContext', function () {
 						sourcePointDetectionUrl: '//foo.bar'
 					},
 					targeting: {
+						pageType: 'article',
 						skin: 'oasis'
 					}
 				}
@@ -698,6 +726,7 @@ describe('AdContext', function () {
 						showAds: false
 					},
 					targeting: {
+						pageType: 'article',
 						skin: 'oasis'
 					}
 				}
