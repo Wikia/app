@@ -49,7 +49,7 @@ The recently submitted change to this JavaScript page (revision [$2 $3]) was rej
 Names should not contain the MediaWiki namespace prefix. Write each script on a new line. See [[Help:Including additional CSS and JS]] for more information.
 ----
 ',
-	'content-review-user-badges-description' => 'To use this feature, you must import UserBadges.js from dev.wikia.com. [[w:c:dev:UserBadges.js/doc|Learn more]]
+	'content-review-user-badges-description' => 'To use this feature, you must import [[w:c:dev:UserBadges|UserBadges.js]] from dev.wikia.com. [[w:c:dev:UserBadges|Learn more]].
 
     Use this page to customize the badges that appear on user profiles. Separate usernames and badges by a colon. To display multiple badges for a user, separate each badge text with commas. Write each username on a new line.
 
