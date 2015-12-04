@@ -3752,8 +3752,8 @@ class Parser {
 		}
 
 		# wikia start
-		global $wgEnableContextLinkTemplateParsing;
-		if ( $wgEnableContextLinkTemplateParsing ) {
+		global $wgEnableContextLinkTemplateParsing, $wgEnableInfoIconTemplateParsing;
+		if ( $wgEnableContextLinkTemplateParsing || $wgEnableInfoIconTemplateParsing ) {
 			wfRunHooks( 'Parser::endBraceSubstitution', array( $originalTitle, &$ret['text'], &$this ) );
 		}
 		# wikia end
