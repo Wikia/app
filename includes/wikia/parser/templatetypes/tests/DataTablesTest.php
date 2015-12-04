@@ -12,6 +12,11 @@ class DataTablesTest extends WikiaBaseTest {
 		$this->globals = new GlobalStateWrapper( [ 'wgEnableDataTablesParsing' => true, 'wgArticleAsJson' => true ] );
 	}
 
+	public function tearDown() {
+		parent::tearDown();
+		libxml_clear_errors();
+	}
+
 	/**
 	 * @dataProvider wikitextProvider
 	 */
@@ -20,6 +25,21 @@ class DataTablesTest extends WikiaBaseTest {
 			DataTables::markTranscludedTables( $wt );
 		} );
 		$this->assertEquals( $expected, $wt );
+	}
+
+	/**
+	 * @dataProvider htmlTablesProvider
+	 */
+	public function testTablesMarking( $html, $expected ) {
+		$this->globals->wrap( function () use ( &$html ) {
+			DataTables::markDataTables( $html );
+		} );
+		$dom = new DOMDocument();
+		$dom->loadHTML( $html );
+		$xpath = new DOMXPath( $dom );
+		$result = $xpath->query( '*//table[@data-portable="true"]' )->length;
+
+		$this->assertEquals( $expected, $result );
 	}
 
 	public function wikitextProvider() {
@@ -80,6 +100,17 @@ class DataTablesTest extends WikiaBaseTest {
 |}',
 			  '{| data-portable="false" class="va-table va-table-center"
 |}' ]
+		];
+	}
+
+	public function htmlTablesProvider() {
+		return [
+			[ "", 0 ],
+			[ "<table></table>", 1 ],
+			[ "<table data-portable=\"false\"></table>", 0 ],
+			[ "<table data-portable=\"false\"></table><table data-portable=\"true\"></table>", 1 ],
+			[ "<table><tr><td colspan='1'>dsafsd</td></tr></table>", 0 ],
+			[ "<table><tr><td rowspan='1'>dsafsd</td></tr></table>", 0 ]
 		];
 	}
 }

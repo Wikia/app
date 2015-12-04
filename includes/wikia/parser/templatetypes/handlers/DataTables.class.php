@@ -50,23 +50,17 @@ class DataTables {
 						$table->setAttribute( 'data-portable', 'true' );
 					}
 				}
-
 				// strip <html> and <body> tags
 				$result = [ ];
 				$bodyElements = $xpath->query( '/html/body/*' );
 				for ( $i = 0; $i < $bodyElements->length; $i++ ) {
 					$result[] = $document->saveXML( $bodyElements->item( $i ) );
 				}
-
-				wfProfileOut( __METHOD__ );
-
 				$html = !empty( $result ) ? implode( "", $result ) : $html;
 			}
-
 			// clear user generated html parsing errors
 			libxml_clear_errors();
 		}
-
 		wfProfileOut( __METHOD__ );
 
 		return true;
