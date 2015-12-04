@@ -165,6 +165,12 @@ class PreferenceServiceImpl implements PreferenceService {
 		}
 
 		$prefs = $this->load( $userId );
+
+		// if the UserPreferences have been marked as read-only they should NOT be saved
+		if ( $prefs->isReadOnly() ) {
+			return false;
+		}
+
 		$prefsToSave = new UserPreferences();
 
 		foreach ( $prefs->getGlobalPreferences() as $pref ) {

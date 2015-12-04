@@ -147,11 +147,29 @@ class PreferenceServiceImplTest extends PHPUnit_Framework_TestCase {
 
 		$this->persistence->expects( $this->once() )
 			->method( 'get' )
-			->with( self::TEST_WIKI_ID )
+			->with( $this->userId )
 			->will( $this->throwException( new PersistenceException ) );
 
-		$prefs = $preferences->getPreferences( self::TEST_WIKI_ID );
+		$prefs = $preferences->getPreferences( $this->userId );
 		$this->assertTrue( $prefs->isReadOnly() );
+	}
+
+	public function testSaveShortCircuit() {
+		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, new UserPreferences(), [], [] );
+
+		$this->persistence->expects( $this->exactly( 1 ) )
+			->method( 'get' )
+			->with( $this->userId )
+			->will( $this->throwException( new PersistenceException ) );
+
+		$this->persistence->expects( $this->never() )
+			->method( 'save' )
+			->with( $this->userId, $this->isInstanceOf( UserPreferences::class ) );
+
+		$preferences->setGlobalPreference( $this->userId, "newpreference", "1" );
+		$prefs = $preferences->getPreferences( $this->userId );
+		$this->assertTrue( $prefs->isReadOnly() );
+		$this->assertFalse( $preferences->save( $this->userId ) );
 	}
 
 	protected function setupServiceExpects() {
