@@ -292,6 +292,13 @@ class User {
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function arePreferencesReadOnly() {
+		return $this->userPreferences()->getPreferences( $this->getId() )->isReadOnly();
+	}
+
+	/**
 	 * @return PreferenceCorrectionService
 	 */
 	private function preferenceCorrection() {
