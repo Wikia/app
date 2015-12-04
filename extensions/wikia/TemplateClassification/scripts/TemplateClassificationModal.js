@@ -191,7 +191,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			track({
 				action: tracker.ACTIONS.SUBMIT,
 				label: 'nochange',
-				value: oldTemplateType
+				value: preselectedType
 			});
 		}
 
