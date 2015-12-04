@@ -3,13 +3,6 @@
 class DataTables {
 	const DATA_PORTABLE_ATTRIBUTE = 'data-portable';
 
-
-	public static function shouldBeProcessed() {
-		global $wgEnableDataTablesParsing, $wgArticleAsJson;
-
-		return $wgEnableDataTablesParsing && $wgArticleAsJson;
-	}
-
 	/**
 	 * Mark wikitext tables coming from templates, so we can distinguish them on tables parse step
 	 *
@@ -77,6 +70,12 @@ class DataTables {
 		wfProfileOut( __METHOD__ );
 
 		return true;
+	}
+
+	private static function shouldBeProcessed() {
+		global $wgEnableDataTablesParsing, $wgArticleAsJson;
+
+		return $wgEnableDataTablesParsing && $wgArticleAsJson;
 	}
 
 	private static function markTable( $attributes, $portable = false ) {
