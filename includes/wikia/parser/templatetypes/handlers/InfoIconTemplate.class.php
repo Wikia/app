@@ -13,6 +13,11 @@ class InfoIconTemplate {
 	public static function handle( $wikitext, Parser $parser ) {
 		global $wgContLang;
 		$images = FileNamespaceSanitizeHelper::getInstance()->getCleanFileMarkersFromWikitext( $wikitext, $wgContLang );
+		
+		if ( !$images ) {
+			return $wikitext;
+		}
+		
 		$output = '';
 		foreach ( $images as $image ) {
 			$title = Title::newFromText( $image );
