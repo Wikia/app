@@ -11,7 +11,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	'use strict';
 
 	var $classificationForm,
-		$preselectedType,
+		preselectedType,
 		$typeLabel,
 		modalConfig,
 		messagesLoaded,
@@ -76,6 +76,8 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	}
 
 	function handleRequestsForModal(classificationForm, templateType, loaderRes) {
+		var $preselectedTypeInput;
+
 		if (loaderRes) {
 			mw.messages.set(loaderRes.messages);
 			messagesLoaded = true;
@@ -86,11 +88,12 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		}
 
 		// Mark selected type
-		$preselectedType = $classificationForm.find('#template-classification-' + templateType);
+		preselectedType = templateType;
+		$preselectedTypeInput = $classificationForm.find('#template-classification-' + preselectedType);
 
-		if ($preselectedType.length !== 0) {
+		if ($preselectedTypeInput.length !== 0) {
 			$classificationForm.find('input[checked="checked"]').removeAttr('checked');
-			$preselectedType.attr('checked', 'checked');
+			$preselectedTypeInput.attr('checked', 'checked');
 		}
 
 		// Set modal content
@@ -163,19 +166,18 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 
 		throbber.remove($throbber);
 
-		// Make sure that focus is in the right place
-		$('#template-classification-' + mw.html.escape($preselectedType.val())).focus();
+		// Make sure that focus is in the right place but scroll the modal window to the top
+
+		$('#template-classification-' + mw.html.escape(preselectedType)).focus();
+		if (preselectedType === 'unknown') {
+			modalInstance.scroll(0);
+		}
 	}
 
 	function processSave(modalInstance) {
-		var newTemplateType = $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val(),
-			oldTemplateType = '';
+		var newTemplateType = $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val();
 
-		if (!!$preselectedType) {
-			oldTemplateType = $preselectedType.val();
-		}
-
-		if (newTemplateType !== oldTemplateType) {
+		if (newTemplateType !== preselectedType) {
 			// Track - modal saved with changes
 			track({
 				action: tracker.ACTIONS.SUBMIT,
