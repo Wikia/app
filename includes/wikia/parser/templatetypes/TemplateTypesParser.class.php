@@ -61,7 +61,7 @@ class TemplateTypesParser {
 	 *
 	 * @return bool
 	 */
-	public static function onInternalParseBeforeLinks( &$parser, &$text, &$stripState ) {
+	public static function onAfterDoTableStuff( &$parser, &$text, &$stripState ) {
 		$text = DataTables::markDataTables( $text );
 
 		return true;
