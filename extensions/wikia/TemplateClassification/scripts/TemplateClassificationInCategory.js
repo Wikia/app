@@ -9,14 +9,10 @@ define('TemplateClassificationInCategory', ['jquery', 'mw', 'wikia.nirvana', 'wi
 	function ($, mw, nirvana, tracker, templateClassificationModal, BannerNotification) {
 		'use strict';
 
-		var $typeLabel;
-
 		function init() {
-
-			$typeLabel = $('.template-classification-type-text');
 			templateClassificationModal.init(getType, sendClassifyTemplatesRequest, 'bulkEditType');
 
-			$typeLabel.on('mousedown', function () {
+			$('.template-classification-type-text').on('mousedown', function () {
 				tracker.track({
 					trackingMethod: 'analytics',
 					category: 'template-classification-entry-point',
@@ -40,12 +36,10 @@ define('TemplateClassificationInCategory', ['jquery', 'mw', 'wikia.nirvana', 'wi
 					editToken: mw.user.tokens.get('editToken')
 				},
 				callback: function () {
-					var notification = new BannerNotification(
+					new BannerNotification(
 						mw.message('template-classification-edit-modal-success').escaped(),
 						'confirm'
-					);
-
-					notification.show();
+					).show();
 				},
 				onErrorCallback: function (error) {
 					var errorMessage, e;
@@ -57,17 +51,8 @@ define('TemplateClassificationInCategory', ['jquery', 'mw', 'wikia.nirvana', 'wi
 						errorMessage = mw.message('template-classification-edit-modal-error').escaped();
 					}
 
-					var notification = new BannerNotification(errorMessage, 'error');
-
-					notification.show();
+					new BannerNotification(errorMessage, 'error').show();
 				}
-			});
-		}
-
-		function animateOnError($element) {
-			$element.addClass('template-classification-error');
-			$element.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (e) {
-				$element.removeClass('template-classification-error');
 			});
 		}
 

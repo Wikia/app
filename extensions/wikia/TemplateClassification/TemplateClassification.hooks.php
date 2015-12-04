@@ -120,7 +120,9 @@ class Hooks {
 	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		$title = $out->getTitle();
 		$user = $skin->getUser();
-		if ( ( new Permissions() )->shouldDisplayEntryPoint( $user, $title ) ) {
+		$permissions = new Permissions();
+
+		if ( $permissions->shouldDisplayEntryPoint( $user, $title ) ) {
 			if ( $title->exists() && !$this->isEditPage() ) {
 				\Wikia::addAssetsToOutput( 'template_classification_in_view_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
@@ -128,7 +130,7 @@ class Hooks {
 				\Wikia::addAssetsToOutput( 'template_classification_in_edit_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
 			}
-		} elseif ( ( new Permissions() )->shouldDisplayBulkActions( $user, $title ) ) {
+		} elseif ( $permissions->shouldDisplayBulkActions( $user, $title ) ) {
 			\Wikia::addAssetsToOutput( 'template_classification_in_category_js' );
 			\Wikia::addAssetsToOutput( 'template_classification_scss' );
 		}
@@ -241,7 +243,7 @@ class Hooks {
 	 * @param $links
 	 * @return bool
 	 */
-	public static function onSkinTemplateNavigation( \Skin $skin, &$links ) {
+	public function onSkinTemplateNavigation( \Skin $skin, &$links ) {
 		if ( ( new Permissions() )->shouldDisplayBulkActions( $skin->getUser(), $skin->getTitle() ) ) {
 			$links['views']['bulk-classification'] = [
 				'href' => '#',
@@ -260,7 +262,7 @@ class Hooks {
 	 * @param array $actions
 	 * @return bool
 	 */
-	public static function onPageHeaderDropdownActions( array &$actions ) {
+	public function onPageHeaderDropdownActions( array &$actions ) {
 		$actions[] = 'bulk-classification';
 
 		return true;
