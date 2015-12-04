@@ -3,6 +3,13 @@
 class DataTables {
 	const DATA_PORTABLE_ATTRIBUTE = 'data-portable';
 
+
+	public static function shouldBeProcessed() {
+		global $wgEnableDataTablesParsing, $wgArticleAsJson;
+
+		return $wgEnableDataTablesParsing && $wgArticleAsJson;
+	}
+
 	/**
 	 * Mark wikitext tables coming from templates, so we can distinguish them on tables parse step
 	 *
@@ -14,7 +21,7 @@ class DataTables {
 	public static function markTranscludedTables( &$wikitext, &$finalTitle ) {
 		wfProfileIn( __METHOD__ );
 		//check for tables
-		if ( preg_match_all( "/\\{\\|(.*)/\n", $wikitext, $matches ) ) {
+		if ( static::shouldBeProcessed() && preg_match_all( "/\\{\\|(.*)/\n", $wikitext, $matches ) ) {
 			foreach ( $matches[ 1 ] as $key => $match ) {
 				$wikitext = str_replace( $matches[ 0 ][ $key ], static::markTable( $match ), $wikitext );
 			}
@@ -22,7 +29,7 @@ class DataTables {
 
 		wfProfileOut( __METHOD__ );
 
-		return $wikitext;
+		return true;
 	}
 
 	/**
@@ -35,31 +42,39 @@ class DataTables {
 	public static function markDataTables( &$html ) {
 		wfProfileIn( __METHOD__ );
 
-		$document = new DOMDocument();
-		$document->loadHTML( $html );
+		if ( static::shouldBeProcessed() ) {
+			$document = new DOMDocument();
+			//			$document->loadXML( $html );
+			$document->loadHTML( $html );
 
-		$tables = $document->getElementsByTagName( 'table' );
-		if ( $tables->length > 0 ) {
-			$xpath = new DOMXPath( $document );
-			/** @var DOMElement $table */
-			foreach ( $tables as $table ) {
-				if ( !$table->hasAttribute( static::DATA_PORTABLE_ATTRIBUTE ) &&
-					 $xpath->query( '*//*[@rowspan]|//*[@colspan]', $table )->length == 0
-				) {
-					$table->setAttribute( 'data-portable', 'true' );
+			$tables = $document->getElementsByTagName( 'table' );
+			if ( $tables->length > 0 ) {
+				$xpath = new DOMXPath( $document );
+				/** @var DOMElement $table */
+				foreach ( $tables as $table ) {
+					if ( !$table->hasAttribute( static::DATA_PORTABLE_ATTRIBUTE ) &&
+						 $xpath->query( '*//*[@rowspan]|//*[@colspan]', $table )->length == 0
+					) {
+						$table->setAttribute( 'data-portable', 'true' );
+					}
 				}
+
+				// strip <html> and <body> tags
+				$result = [ ];
+				$bodyElements = $xpath->query( '/html/body/*' );
+				for ( $i = 0; $i < $bodyElements->length; $i++ ) {
+					$result[] = $document->saveXML( $bodyElements->item( $i ) );
+				}
+
+				wfProfileOut( __METHOD__ );
+
+				$html = !empty( $result ) ? implode( "", $result ) : $html;
 			}
-			// strip <html> and <body> tags
-			preg_match( '/<body>(.*)<\\/body>/sU', $document->saveHTML(), $match );
-
-			wfProfileOut( __METHOD__ );
-
-			return isset( $match[ 1 ] ) ? $match[ 1 ] : $html;
 		}
 
 		wfProfileOut( __METHOD__ );
 
-		return $html;
+		return true;
 	}
 
 	private static function markTable( $attributes, $portable = false ) {
