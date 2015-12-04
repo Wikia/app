@@ -97,14 +97,7 @@ class UserPreferences {
 	/**
 	 * @return boolean the read only state
 	 */
-	public function getReadOnly() {
-		return $this->readOnly;
-	}
-
-	/**
-	 * @return boolean the read only state
-	 */
 	public function isReadOnly() {
-		return $this->getReadOnly();
+		return $this->readOnly;
 	}
 }

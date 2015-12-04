@@ -59,7 +59,6 @@ class UserPreferencesTest extends \PHPUnit_Framework_TestCase {
 		$prefs = ( new UserPreferences() )
 			->setReadOnly( true );
 		$this->assertTrue( $prefs->isReadOnly() );
-		$this->assertTrue( $prefs->getReadOnly() );
 
 		$this->assertTrue( $prefs->isEmpty() );
 
