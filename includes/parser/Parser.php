@@ -1159,7 +1159,7 @@ class Parser {
 			$out = '';
 		}
 
-		wfRunHooks( 'AfterDoTableStuff', [ &$out ] );
+		wfRunHooks( 'Parser::AfterDoTableStuff', [ &$out ] );
 
 		wfProfileOut( __METHOD__ );
 
