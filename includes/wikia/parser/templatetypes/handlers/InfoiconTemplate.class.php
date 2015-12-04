@@ -3,18 +3,18 @@
 class InfoIconTemplate {
 	/**
 	 * @desc sanitize infoicon template content, that is remove all non-images
-	 * from it's wikitext. They usually contain span with 'display: none' style
-	 * or other stuff we don't want on mobile.
+	 * from it's wikitext. Then, parse them and add to stripState with
+	 * handlerParams[template-type] set to TEMPLATE_INFOICON.
 	 *
 	 * @param string $wikitext
-	 *
+	 * @param \Parser $parser
 	 * @return string wikitext containing strip markers. Each strip marker represents parsed markup of an infoicon
+	 * @throws \MWException
 	 */
 	public static function handle( $wikitext, Parser $parser ) {
 		global $wgContLang;
 
 		$images = FileNamespaceSanitizeHelper::getInstance()->getCleanFileMarkersFromWikitext( $wikitext, $wgContLang );
-
 		$output = '';
 
 		foreach ( $images as $image ) {
