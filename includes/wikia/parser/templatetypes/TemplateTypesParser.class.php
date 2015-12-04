@@ -1,7 +1,8 @@
 <?php
 
 class TemplateTypesParser {
-	private static $cachedTemplateTitles = [];
+	private static $cachedTemplateTitles = [ ];
+
 	/**
 	 * @desc alters template raw text parser output based on template type
 	 *
@@ -37,6 +38,36 @@ class TemplateTypesParser {
 	}
 
 	/**
+	 *
+	 * @param string $text - template content
+	 * @param Title $finalTitle - template title object
+	 *
+	 * @return bool
+	 */
+	public static function onFetchTemplateAndTitleForTables( &$text, &$finalTitle ) {
+		wfProfileIn( __METHOD__ );
+		// do wiki tables markings
+		$text = DataTables::markTranscludedTables( $text );
+
+		wfProfileOut( __METHOD__ );
+
+		return true;
+	}
+
+	/**
+	 * @param $parser
+	 * @param $text
+	 * @param $stripState
+	 *
+	 * @return bool
+	 */
+	public static function onInternalParseBeforeLinks( &$parser, &$text, &$stripState ) {
+		$text = DataTables::markDataTables( $text );
+
+		return true;
+	}
+
+	/**
 	 * @desc alters template parser output based on its arguments and template type
 	 *
 	 * @param Title $title
@@ -59,8 +90,8 @@ class TemplateTypesParser {
 			}
 
 			if ( ( $type === AutomaticTemplateTypes::TEMPLATE_QUOTE ||
-				$type === TemplateClassificationService::TEMPLATE_QUOTE ) &&
-				$wgEnableQuoteTemplateParsing
+				   $type === TemplateClassificationService::TEMPLATE_QUOTE ) &&
+				 $wgEnableQuoteTemplateParsing
 			) {
 				$outputText = QuoteTemplate::execute( $templateArgs );
 			}
@@ -132,6 +163,7 @@ class TemplateTypesParser {
 	 * object or false if templateTitle invalid
 	 *
 	 * @param string $templateTitle
+	 *
 	 * @return Title | bool
 	 * @throws \MWException
 	 */
@@ -140,6 +172,7 @@ class TemplateTypesParser {
 			$title = Title::newFromText( $templateTitle, NS_TEMPLATE );
 			self::$cachedTemplateTitles[ $templateTitle ] = ( $title && $title->exists() ) ? $title : false;
 		}
+
 		return self::$cachedTemplateTitles[ $templateTitle ];
 	}
 }

@@ -1159,6 +1159,8 @@ class Parser {
 			$out = '';
 		}
 
+		wfRunHooks( 'AfterDoTableStuff', array( &$this, &$out, &$this->mStripState ) );
+
 		wfProfileOut( __METHOD__ );
 
 		return $out;
