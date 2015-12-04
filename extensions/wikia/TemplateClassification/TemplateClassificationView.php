@@ -71,7 +71,7 @@ class View {
 			$editButton = true;
 		}
 
-		$hint = $this->prepareHint( $user );
+		$hint = $this->prepareHint( $user, $title->getArticleID() );
 
 		return \MustacheService::getInstance()->render(
 			__DIR__ . '/templates/TemplateClassificationViewPageEntryPoint.mustache',
@@ -85,13 +85,21 @@ class View {
 		);
 	}
 
-	private function prepareHint( \User $user ) {
+	private function prepareHint( \User $user, $pageId ) {
+		global $wgCityId;
 		if ( !$user->getGlobalPreference( self::HAS_SEEN_HINT ) ) {
-			return [
-				'mode' => 'welcome',
-				'msg' => '',
-				'trigger' => 'click'
-			];
+
+			$type = ( new \UserTemplateClassificationService() )
+				->getType( $wgCityId, $pageId );
+
+			if ( \RecognizedTemplatesProvider::isUnrecognized( $type ) ) {
+				return [
+					'mode' => 'welcome',
+					'msg' => '', // Message generated in frontend as it contains html
+					'trigger' => 'click'
+				];
+
+			}
 		}
 		$key = self::CONTROL_KEY;
 		if ( strpos( $_SERVER['HTTP_USER_AGENT'], 'Mac' ) !== false ) {

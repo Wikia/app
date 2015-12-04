@@ -4,6 +4,8 @@
  * @author Adam Karmiński <adamk@wikia-inc.com>
  */
 
+use \Wikia\TemplateClassification\View;
+
 class TemplateClassificationController extends WikiaController {
 
 	/**
@@ -57,7 +59,7 @@ class TemplateClassificationController extends WikiaController {
 	public function dismissWelcomeHint() {
 		$user = $this->getContext()->getUser();
 		if ( !$user->isAnon() ) {
-			$user->setGlobalPreference(\Wikia\TemplateClassification\View::HAS_SEEN_HINT, true);
+			$user->setGlobalPreference( View::HAS_SEEN_HINT, true );
 			$user->saveSettings();
 		}
 	}

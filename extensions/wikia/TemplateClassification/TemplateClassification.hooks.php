@@ -228,8 +228,16 @@ class Hooks {
 	}
 
 	private function addWelcomeHintAssets( \OutputPage $out, \User $user ) {
+		global $wgCityId;
 		if ( !$user->getGlobalPreference( \Wikia\TemplateClassification\View::HAS_SEEN_HINT ) ) {
-			$out->addModules( 'ext.wikia.TemplateClassification.ModalMessages' );
+
+			$type = ( new \UserTemplateClassificationService() )
+				->getType( $wgCityId, $out->getContext()->getTitle()->getArticleID() );
+
+			if ( \RecognizedTemplatesProvider::isUnrecognized( $type ) ) {
+				$out->addModules( 'ext.wikia.TemplateClassification.ModalMessages' );
+			}
+
 		}
 	}
 }
