@@ -44,7 +44,6 @@ class DataTables {
 
 		if ( static::shouldBeProcessed() ) {
 			$document = new DOMDocument();
-			//			$document->loadXML( $html );
 			$document->loadHTML( $html );
 
 			$tables = $document->getElementsByTagName( 'table' );
@@ -70,6 +69,9 @@ class DataTables {
 
 				$html = !empty( $result ) ? implode( "", $result ) : $html;
 			}
+
+			// clear user generated html parsing errors
+			libxml_clear_errors();
 		}
 
 		wfProfileOut( __METHOD__ );
