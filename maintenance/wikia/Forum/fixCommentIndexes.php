@@ -162,40 +162,37 @@ class BrokenThread {
 
 		// Set the wall count immediately so that any comments made while executing renumberComments
 		// will get the correct index
-		$count = $this->setNewWallCount();
-		$lastIdx = $this->renumberComments();
-
-		// For edge cases where numbering didn't start from 2 as expected, adjust the wall count
-		// Example: http://glee.wikia.com/wiki/Thread:1144456
-		if ( $count < $lastIdx ) {
-			FixCommentIndexes::debug( "-- Adjusting wall count from $count to $lastIdx\n" );
-			$this->setNewWallCount( $lastIdx );
-		}
+		$this->setNewWallCount();
+		$this->renumberComments();
 	}
 
 	/**
 	 * Sets the new index to use whenever the next comment is made on the current thread
-	 *
-	 * @param null $idx
-	 *
-	 * @return int
 	 */
-	private function setNewWallCount( $idx = null ) {
-		$idx = $idx ? $idx : $this->getCommentCount() + 1;
+	private function setNewWallCount() {
+		$dbw = wfGetDB( DB_MASTER );
+
+		// Construct a statement that will return a PHP serialized integer count of comments
+		$countSQL = ( new WikiaSQL() )
+			->SELECT( "concat('i:', count(*)+1, ';')" )
+			->FROM( 'comments_index' )
+			->WHERE( 'parent_comment_id' )->EQUAL_TO( $this->threadId );
+
+		// Issue an update with the above sub-select included to atomically update page_wikia_props
+		$updateSQL = ( new WikiaSQL() )
+			->UPDATE( 'page_wikia_props' )
+			->SET_RAW( 'props', '('.$countSQL->__toString().')' )
+			->WHERE( 'page_id' )->EQUAL_TO( $this->threadId );
 
 		if ( !FixCommentIndexes::isTest() ) {
-			wfSetWikiaPageProp( WPP_WALL_COUNT, $this->threadId, $idx );
+			$updateSQL->run( $dbw );
 		}
-
-		return $idx;
 	}
 
 	/**
 	 * Update the comment number used for creating links to those comments.  It doesn't matter what they are
 	 * as long as each comment has a unique number, however ascending from 2 is how it works now and makes the
 	 * most sense.
-	 *
-	 * @return int The last index we assigned to a comment
 	 */
 	private function renumberComments() {
 		$comments = $this->getCommentIds();
@@ -205,26 +202,15 @@ class BrokenThread {
 		FixCommentIndexes::debug( "-- Found ".count($comments)." comments\n" );
 		FixCommentIndexes::debug( "-- Renumbering ... " );
 
-		$lastIdx = $commentIdx = 0;
-		$foundDuplicates = false;
+		$commentIdx = 2;
 
 		foreach ( $comments as $commentId ) {
-			$thisIdx = wfGetWikiaPageProp( WPP_WALL_COUNT, $commentId );
-
-			$foundDuplicates |= $thisIdx == $lastIdx;
-
-			if ( !$foundDuplicates ) {
-				$commentIdx = $lastIdx = $thisIdx;
-				continue;
-			}
-
 			if ( !FixCommentIndexes::isTest() ) {
-				wfSetWikiaPageProp( WPP_WALL_COUNT, $commentId, ++$commentIdx );
+				wfSetWikiaPageProp( WPP_WALL_COUNT, $commentId, $commentIdx++ );
 			}
 		}
 
-		FixCommentIndexes::debug( 'dupe at ' . $lastIdx . " ... done\n" );
-		return $commentIdx;
+		FixCommentIndexes::debug( " done\n" );
 	}
 
 	/**
@@ -257,26 +243,6 @@ class BrokenThread {
 
 		// Ensure that we're always sending an array back
 		return empty( $comments ) ? [] : $comments;
-	}
-
-	/**
-	 * Get the count of all comments on this thread
-	 *
-	 * @return int
-	 */
-	private function getCommentCount() {
-		$dbr = wfGetDB( DB_SLAVE );
-		$count = ( new WikiaSQL )
-			->SELECT( 'count(*) as cnt' )
-			->FROM( 'comments_index' )
-			->WHERE( 'parent_comment_id' )->EQUAL_TO( $this->threadId )
-			->run( $dbr, function ( ResultWrapper $result ) {
-				$row = $result->fetchObject();
-				return $row->cnt;
-			});
-
-		// Ensure that we're always sending an int back
-		return empty( $count ) ? 0 : $count;
 	}
 }
 
