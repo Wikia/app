@@ -140,7 +140,7 @@ class TemplateClassificationService {
 	 * @param TemplateTypeHolder[] $types
 	 * @return array
 	 */
-	private function prepareTypes( $types ) {
+	protected function prepareTypes( $types ) {
 		$templateTypes = [];
 
 		foreach ( $types as $type ) {

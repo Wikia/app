@@ -46,7 +46,6 @@ foreach ( $wgInfoboxParserNodes as $parserNode ) {
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\InfoboParamsValidator' ] = $dir . 'services/Helpers/InfoboParamsValidator.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag' ] = $dir . 'services/Helpers/PortableInfoboxDataBag.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper' ] = $dir . 'services/Helpers/PortableInfoboxRenderServiceHelper.php';
-$wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxClassification' ] = $dir . 'services/Helpers/PortableInfoboxClassification.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxTemplatesHelper' ] = $dir . 'services/Helpers/PortableInfoboxTemplatesHelper.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PagePropsProxy' ] = $dir . 'services/Helpers/PagePropsProxy.php';
 
