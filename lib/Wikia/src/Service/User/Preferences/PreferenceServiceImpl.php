@@ -129,6 +129,12 @@ class PreferenceServiceImpl implements PreferenceService {
 	}
 
 	public function deleteAllPreferences( $userId ) {
+		// if the preferences are marked as read-only DO NOT allow
+		// purging. this is to ensure we don't make a mistake after a failed read
+		if ( $this->load( $userId )->isReadOnly() ) {
+			return false;
+		}
+
 		try {
 			$deleted = $this->persistence->deleteAll( $userId );
 			if ( $deleted ) {

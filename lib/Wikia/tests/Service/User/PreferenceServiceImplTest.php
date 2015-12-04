@@ -172,6 +172,21 @@ class PreferenceServiceImplTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $preferences->save( $this->userId ) );
 	}
 
+	public function testDeleteAllShortCircuit() {
+		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, new UserPreferences(), [], [] );
+
+		$this->persistence->expects( $this->exactly( 1 ) )
+			->method( 'get' )
+			->with( $this->userId )
+			->will( $this->throwException( new PersistenceException ) );
+
+		$this->persistence->expects( $this->never() )
+			->method( 'deleteAll' )
+			->with( $this->userId );
+
+		$this->assertFalse( $preferences->deleteAllPreferences( $this->userId ) );
+	}
+
 	protected function setupServiceExpects() {
 		$this->persistence->expects( $this->once() )
 			->method( "get" )
