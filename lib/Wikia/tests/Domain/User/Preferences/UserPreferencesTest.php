@@ -54,4 +54,20 @@ class UserPreferencesTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertTrue( $prefs->isEmpty() );
 	}
+
+	public function testIsReadOnly() {
+		$prefs = ( new UserPreferences() )
+			->setReadOnly( true );
+		$this->assertTrue( $prefs->isReadOnly() );
+		$this->assertTrue( $prefs->getReadOnly() );
+
+		$this->assertTrue( $prefs->isEmpty() );
+
+		// in read-only mode preference setting should go on as usual
+		// this state is intended to prevent preferences from being saved
+		$prefs->setGlobalPreference( 'foo', '1' );
+		$this->assertEquals( '1', $prefs->getGlobalPreference( 'foo' ) );
+
+		$this->assertFalse( $prefs->isEmpty() );
+	}
 }
