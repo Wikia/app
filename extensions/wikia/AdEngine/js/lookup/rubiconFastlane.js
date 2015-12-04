@@ -59,6 +59,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		priceMap = {},
 		response = false,
 		rubiconSlots = [],
+		rubiconElementKey = 'rpfl_elemid',
 		rubiconTierKey = 'rpfl_7450',
 		rubiconLibraryUrl = '//ads.rubiconproject.com/header/7450.js',
 		slots = {},
@@ -212,7 +213,10 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		if (response && slots[slotName]) {
 			targeting = slots[slotName].getAdServerTargeting();
 			targeting.forEach(function (params) {
-				parameters[params.key] = params.values;
+				// exclude redundant rpfl_elemid parameter
+				if (params.key !== rubiconElementKey) {
+					parameters[params.key] = params.values;
+				}
 			});
 			log(['getSlotParams', slotName, parameters], 'debug', logGroup);
 			return parameters;

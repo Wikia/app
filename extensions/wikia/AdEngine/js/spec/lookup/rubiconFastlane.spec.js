@@ -59,10 +59,16 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 				},
 				setPosition: noop,
 				getAdServerTargeting: function () {
-					return [{
-						key: 'rpflKey',
-						values: ['1_tier', '3_tier']
-					}];
+					return [
+						{
+							key: 'rpflKey',
+							values: ['1_tier', '3_tier']
+						},
+						{
+							key: 'rpfl_elemid',
+							values: ['foo/bar']
+						}
+					];
 				}
 			},
 			win: {
