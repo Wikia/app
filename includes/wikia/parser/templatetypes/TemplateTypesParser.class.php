@@ -80,6 +80,7 @@ class TemplateTypesParser {
 	 * @return bool
 	 */
 	public static function onEndBraceSubstitution( $templateTitle, &$templateWikitext, &$parser ) {
+		global $wgEnableContextLinkTemplateParsing, $wgEnableInfoIconTemplateParsing;
 		wfProfileIn( __METHOD__ );
 
 		if ( self::isSuitableForProcessing( $templateWikitext ) ) {
@@ -87,9 +88,9 @@ class TemplateTypesParser {
 
 			if ( $title ) {
 				$type = self::getTemplateType( $title );
-				if ( $type == AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK ) {
+				if ( $wgEnableContextLinkTemplateParsing && $type == AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK ) {
 					$templateWikitext = ContextLinkTemplate::handle( $templateWikitext );
-				} else if ( $type == AutomaticTemplateTypes::TEMPLATE_INFOICON ) {
+				} else if ( $wgEnableInfoIconTemplateParsing && $type == AutomaticTemplateTypes::TEMPLATE_INFOICON ) {
 					$templateWikitext = InfoIconTemplate::handle( $templateWikitext, $parser );
 				}
 			}
