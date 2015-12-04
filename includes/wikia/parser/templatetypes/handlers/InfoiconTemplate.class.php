@@ -23,7 +23,7 @@ class InfoiconTemplate {
 			$output .= Linker::makeImageLink2(
 				$title,
 				$file,
-				[ 'thumbnail' => true ],
+				[],
 				[ 'template-type' => AutomaticTemplateTypes::TEMPLATE_INFOICON ]
 			);
 		}
