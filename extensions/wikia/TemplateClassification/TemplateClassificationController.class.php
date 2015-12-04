@@ -4,16 +4,21 @@
  * @author Adam Karmiński <adamk@wikia-inc.com>
  */
 
-class TemplateClassificationController extends WikiaController {
+namespace Wikia\TemplateClassification;
+
+use Swagger\Client\ApiException;
+
+class TemplateClassificationController extends \WikiaController {
 
 	/**
 	 * Renders a set of radio inputs used to classify a template.
 	 */
 	public function getTemplateClassificationEditForm() {
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		$templateTypes = [];
+		$this->response->setTemplateEngine( \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 		$this->overrideTemplate( 'editForm' );
 
-		foreach ( UserTemplateClassificationService::$templateTypes as $type ) {
+		foreach ( \UserTemplateClassificationService::$templateTypes as $type ) {
 			$templateTypes[] = [
 				'type' => $type,
 				/**
@@ -48,5 +53,77 @@ class TemplateClassificationController extends WikiaController {
 		}
 
 		$this->setVal( 'templateTypes', $templateTypes );
+	}
+
+	/**
+	 * Classify all templates with given category
+	 *
+	 * @requestParam string category category name
+	 * @requestParam string type template type name
+	 *
+	 * @throws ApiException
+	 * @throws \BadRequestApiException
+	 * @throws \InvalidParameterApiException
+	 * @throws \MWException
+	 * @throws \UnauthorizedException
+	 */
+	public function classifyTemplateByCategory() {
+		global $wgCityId;
+
+		$errors = [];
+		$category = $this->request->getVal( 'category', null );
+		$templateType = $this->request->getVal( 'type', null );
+		$userId = $this->wg->User->getId();
+
+		$this->validateRequestForBulkEdit( $this->wg->User, $this->request, $category, $templateType );
+
+		$templates = ( new Helper() )->getTemplatesByCategory( $category );
+		$utcs = new \UserTemplateClassificationService();
+
+		foreach ( $templates as $templateId => $templateTitle ) {
+			try {
+				$utcs->classifyTemplate($wgCityId, $templateId, $templateType, 'user', $userId );
+			} catch( ApiException $e ) {
+				$errors[] = \Title::newFromText( $templateTitle )->getText();
+			}
+		}
+
+		if ( !empty( $errors ) ) {
+			$this->prepareBulkActionError( $errors, $templates );
+		}
+	}
+
+	private function validateRequestForBulkEdit( \User $user, \WikiaRequest $request, $category, $templateType ) {
+		if ( !$request->wasPosted() ) {
+			throw new \BadRequestApiException();
+		}
+
+		if ( !$user->isAllowed( 'template-bulk-classification' )
+			|| !$user->matchEditToken( $request->getVal( 'editToken' ) )
+		) {
+			throw new \UnauthorizedException();
+		}
+
+		if ( empty( $category ) ) {
+			throw new \InvalidParameterApiException( 'category' );
+		}
+
+		if ( empty( $templateType ) ) {
+			throw new \InvalidParameterApiException( 'template type' );
+		}
+
+		return true;
+	}
+
+	private function prepareBulkActionError( Array $errors, Array $templates ) {
+		if ( count( $errors ) === count( $templates ) ) {
+			$errorMessage = wfMessage( 'template-classification-edit-modal-error' )->escaped();
+		} else {
+			$errorMessage = wfMessage(
+				'template-classification-edit-modal-bulk-error',
+				implode( ',', $errors )
+			)->escaped();
+		}
+		throw new ApiException( $errorMessage, 500 );
 	}
 }
