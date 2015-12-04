@@ -193,7 +193,7 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 				'[[File:Blaabla+2plus+.png|300px]]',
 				'en',
 				'Blaabla+2plus+.png',
-				'Link to filename with canonical namespace, width urlencoded character in the middle'
+				'Link to filename with canonical namespace, width and plus (+) characters'
 			],
 		];
 	}
