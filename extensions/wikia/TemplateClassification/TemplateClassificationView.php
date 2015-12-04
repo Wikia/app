@@ -8,7 +8,7 @@ class View {
 
 	const COMMAND_KEY = '⌘';
 	const CONTROL_KEY = 'Ctrl';
-	const HAS_SEEN_HINT = 'template-classification-has-seen-modal-hint';
+	const HAS_SEEN_HINT = 'SeenHintTemplateClassificationModalEntryPoint';
 
 	/**
 	 * Returns HTML with Template type.

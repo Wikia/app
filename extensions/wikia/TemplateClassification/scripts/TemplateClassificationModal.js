@@ -53,6 +53,8 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 
 		labeling.init(modeProvided);
 
+		dismissWelcomeHint();
+
 		if (!messagesLoaded) {
 			messagesLoader = getMessages;
 		}
@@ -269,6 +271,18 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 		} else {
 			$typeLabel.tooltip({
 				delay: {show: 500, hide: 300}
+			});
+		}
+	}
+
+	function dismissWelcomeHint() {
+		if ($typeLabel.data('mode') === 'welcome') {
+			$typeLabel.data('mode', ''); // TODO replace mode with key shortcut on hover
+			$typeLabel.tooltip('disable');
+			nirvana.sendRequest({
+				controller: 'TemplateClassification',
+				method: 'dismissWelcomeHint',
+				type: 'get'
 			});
 		}
 	}

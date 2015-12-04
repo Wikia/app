@@ -49,4 +49,16 @@ class TemplateClassificationController extends WikiaController {
 
 		$this->setVal( 'templateTypes', $templateTypes );
 	}
+
+	/**
+	 * Sets user property confirming that user has seen hint on TemplateClassification edit entry point,
+	 * so it won't show up again
+	 */
+	public function dismissWelcomeHint() {
+		$user = $this->getContext()->getUser();
+		if ( !$user->isAnon() ) {
+			$user->setGlobalPreference(\Wikia\TemplateClassification\View::HAS_SEEN_HINT, true);
+			$user->saveSettings();
+		}
+	}
 }
