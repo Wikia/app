@@ -7,10 +7,12 @@ class DataTables {
 	 * Mark wikitext tables coming from templates, so we can distinguish them on tables parse step
 	 *
 	 * @param $wikitext
+	 * @param $finalTitle
 	 *
 	 * @return mixed
 	 */
-	public static function markTranscludedTables( $wikitext ) {
+	public static function markTranscludedTables( &$wikitext, &$finalTitle ) {
+		wfProfileIn( __METHOD__ );
 		//check for tables
 		if ( preg_match_all( "/\\{\\|(.*)/\n", $wikitext, $matches ) ) {
 			foreach ( $matches[ 1 ] as $key => $match ) {
@@ -18,10 +20,19 @@ class DataTables {
 			}
 		}
 
+		wfProfileOut( __METHOD__ );
+
 		return $wikitext;
 	}
 
-	public static function markDataTables( $html ) {
+	/**
+	 * Mark data tables with data-portable attribute after parsing
+	 *
+	 * @param $html
+	 *
+	 * @return mixed
+	 */
+	public static function markDataTables( &$html ) {
 		wfProfileIn( __METHOD__ );
 
 		$document = new DOMDocument();
@@ -38,7 +49,7 @@ class DataTables {
 					$table->setAttribute( 'data-portable', 'true' );
 				}
 			}
-			// strip html and body tags
+			// strip <html> and <body> tags
 			preg_match( '/<body>(.*)<\\/body>/sU', $document->saveHTML(), $match );
 
 			wfProfileOut( __METHOD__ );

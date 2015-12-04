@@ -23,7 +23,7 @@ $wgAutoloadClasses['DataTables'] = __DIR__ . '/handlers/DataTables.class.php';
 
 // hooks
 $wgHooks['Parser::FetchTemplateAndTitle'][] = 'TemplateTypesParser::onFetchTemplateAndTitle';
-$wgHooks['Parser::FetchTemplateAndTitle'][] = 'TemplateTypesParser::onFetchTemplateAndTitleForTables';
+$wgHooks['Parser::FetchTemplateAndTitle'][] = 'DataTables::markTranscludedTables';
 $wgHooks['Parser::getTemplateDom'][] = 'TemplateTypesParser::onGetTemplateDom';
 $wgHooks['Parser::endBraceSubstitution'][] = 'TemplateTypesParser::onEndBraceSubstitution';
-$wgHooks['AfterDoTableStuff'][] = 'TemplateTypesParser::onAfterDoTableStuff';
+$wgHooks['AfterDoTableStuff'][] = 'DataTables::markDataTables';

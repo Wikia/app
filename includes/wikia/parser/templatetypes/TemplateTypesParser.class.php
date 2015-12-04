@@ -38,36 +38,6 @@ class TemplateTypesParser {
 	}
 
 	/**
-	 *
-	 * @param string $text - template content
-	 * @param Title $finalTitle - template title object
-	 *
-	 * @return bool
-	 */
-	public static function onFetchTemplateAndTitleForTables( &$text, &$finalTitle ) {
-		wfProfileIn( __METHOD__ );
-		// do wiki tables markings
-		$text = DataTables::markTranscludedTables( $text );
-
-		wfProfileOut( __METHOD__ );
-
-		return true;
-	}
-
-	/**
-	 * @param $parser
-	 * @param $text
-	 * @param $stripState
-	 *
-	 * @return bool
-	 */
-	public static function onAfterDoTableStuff( &$parser, &$text, &$stripState ) {
-		$text = DataTables::markDataTables( $text );
-
-		return true;
-	}
-
-	/**
 	 * @desc alters template parser output based on its arguments and template type
 	 *
 	 * @param Title $title
