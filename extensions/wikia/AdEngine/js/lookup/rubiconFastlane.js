@@ -14,31 +14,31 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			oasis: {
 				TOP_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
-					targeting: { loc: 'top' }
+					targeting: {loc: 'top'}
 				},
 				TOP_RIGHT_BOXAD: {
 					sizes: [[300, 250], [300, 600]],
-					targeting: { loc: 'top' }
+					targeting: {loc: 'top'}
 				},
 				LEFT_SKYSCRAPER_2: {
 					sizes: [[160, 600]],
-					targeting: { loc: 'middle' }
+					targeting: {loc: 'middle'}
 				},
 				LEFT_SKYSCRAPER_3: {
 					sizes: [[160, 600]],
-					targeting: { loc: 'footer' }
+					targeting: {loc: 'footer'}
 				},
 				INCONTENT_BOXAD_1: {
 					sizes: [[300, 250]],
-					targeting: { loc: 'middle' }
+					targeting: {loc: 'middle'}
 				},
 				PREFOOTER_LEFT_BOXAD: {
 					sizes: [[300, 250]],
-					targeting: { loc: 'footer' }
+					targeting: {loc: 'footer'}
 				},
 				PREFOOTER_RIGHT_BOXAD: {
 					sizes: [[300, 250]],
-					targeting: { loc: 'footer' }
+					targeting: {loc: 'footer'}
 				}
 			},
 			mercury: {
@@ -55,9 +55,11 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		},
 		context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.lookup.rubiconFastlane',
+		name = 'rubicon_fastlane',
 		priceMap = {},
 		response = false,
 		rubiconSlots = [],
+		rubiconElementKey = 'rpfl_elemid',
 		rubiconTierKey = 'rpfl_7450',
 		rubiconLibraryUrl = '//ads.rubiconproject.com/header/7450.js',
 		slots = {},
@@ -82,19 +84,30 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		return slots;
 	}
 
-	function trackState(trackEnd) {
-		log(['trackState', response], 'debug', logGroup);
-		var eventName = 'lookupError';
+	function encodeParamsForTracking(params) {
+		if (params[rubiconTierKey]) {
+			return params[rubiconTierKey].join(';');
+		}
+	}
 
+	function trackState(providerName, slotName, params) {
+		log(['trackState', response, providerName, slotName], 'debug', logGroup);
+		var category,
+			eventName = 'lookup_error';
+
+		if (!slots[slotName]) {
+			log(['trackState', 'Not supported slot', slotName], 'debug', logGroup);
+			return;
+		}
 		if (response) {
-			eventName = 'lookupSuccess';
+			eventName = 'lookup_success';
 		}
+		category = name + '/' + eventName + '/' + providerName;
+		adTracker.track(category, slotName, 0, encodeParamsForTracking(params) || 'nodata');
+	}
 
-		if (trackEnd) {
-			eventName = 'lookupEnd';
-		}
-
-		adTracker.track(eventName + '/rubicon_fastlane', priceMap || '(unknown)', 0);
+	function trackLookupEnd() {
+		adTracker.track(name + '/lookup_end', priceMap || 'nodata', 0);
 	}
 
 	function addSlotPrice(slotName, rubiconTargeting) {
@@ -117,8 +130,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		}
 		response = true;
 		log(['Rubicon Fastlane prices', priceMap], 'info', logGroup);
-
-		trackState(true);
+		trackLookupEnd();
 	}
 
 	function setTargeting(slotName, targeting, rubiconSlot, provider) {
@@ -134,22 +146,15 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		rubiconSlot.setFPI('s1', s1);
 		rubiconSlot.setFPI('s2', adLogicZoneParams.getPageType());
 		rubiconSlot.setFPI('lang', adLogicZoneParams.getLanguage());
+		rubiconSlot.setFPI('passback', 'fastlane');
 	}
 
 	function defineSingleSlot(slotName, slot, skin) {
 		var position = slotName.indexOf('TOP') !== -1 ? 'atf' : 'btf',
-			provider = skin === 'oasis' ? 'gpt' : 'mobile',
-			slotPath = [
-				'/5441',
-				'wka.' + adLogicZoneParams.getSite(),
-				adLogicZoneParams.getMappedVertical(),
-				'',
-				adLogicZoneParams.getPageType()
-			].join('/'),
-			unit = 'wikia_gpt' + slotPath + '/' + provider + '/' + slotName;
+			provider = skin === 'oasis' ? 'gpt' : 'mobile';
 
 		win.rubicontag.cmd.push(function () {
-			var rubiconSlot = win.rubicontag.defineSlot(unit, slot.sizes, unit);
+			var rubiconSlot = win.rubicontag.defineSlot(slotName, slot.sizes, slotName);
 			if (skin === 'oasis') {
 				rubiconSlot.setPosition(position);
 			}
@@ -177,7 +182,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		var rubicon = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		if (adLogicZoneParams.getSite() !== 'life') {
+		if (!context.opts.rubiconFastlaneOnAllVerticals && adLogicZoneParams.getSite() !== 'life') {
 			log(['call', 'Not wka.life vertical'], 'debug', logGroup);
 			return;
 		}
@@ -208,7 +213,10 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		if (response && slots[slotName]) {
 			targeting = slots[slotName].getAdServerTargeting();
 			targeting.forEach(function (params) {
-				parameters[params.key] = params.values;
+				// exclude redundant rpfl_elemid parameter
+				if (params.key !== rubiconElementKey) {
+					parameters[params.key] = params.values;
+				}
 			});
 			log(['getSlotParams', slotName, parameters], 'debug', logGroup);
 			return parameters;

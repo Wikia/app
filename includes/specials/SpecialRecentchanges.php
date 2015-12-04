@@ -590,13 +590,11 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 	 * @return String: XHTML
 	 */
 	public function doHeader( $opts ) {
-		global $wgScript, $wgLanguageCode;
+		global $wgScript;
 
 		// Wikia change begin
 		// Adding "Recent changes on Wikia" section - CE-3050
-		if ( $wgLanguageCode === 'en' ) {
-			$this->setRecentChangesOnWikia();
-		}
+		$this->setRecentChangesOnWikia();
 		// Wikia change end
 
 		$this->setTopText( $opts );

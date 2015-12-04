@@ -2,6 +2,7 @@
 
 class AutomaticTemplateTypes {
 	const TEMPLATE_CONTEXT_LINK = 'context-link';
+	const TEMPLATE_INFOICON = 'infoicon';
 	const TEMPLATE_NAVBOX = 'navbox';
 	const TEMPLATE_OTHER = 'other';
 	const TEMPLATE_QUOTE = 'quote';

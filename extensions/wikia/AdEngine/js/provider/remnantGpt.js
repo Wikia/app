@@ -37,6 +37,12 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 				slotTweaker.removeDefaultHeight(slotName);
 				slotTweaker.removeTopButtonIfNeeded(slotName);
 				slotTweaker.adjustLeaderboardSize(slotName);
+			},
+			overrideSizesPerCountry: {
+				JP: {
+					HOME_TOP_LEADERBOARD: '728x90',
+					TOP_LEADERBOARD: '728x90'
+				}
 			}
 		}
 	);

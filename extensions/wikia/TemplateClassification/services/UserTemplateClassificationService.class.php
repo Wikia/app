@@ -25,6 +25,15 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 	];
 
 	/**
+	 * Types mapped as infobox ones
+	 * @var array
+	 */
+	static $infoboxTypes = [
+		self::TEMPLATE_INFOBOX,
+		self::TEMPLATE_CUSTOM_INFOBOX,
+	];
+
+	/**
 	 * Fallback to the Unclassified string if a received type is not supported by
 	 * the user-facing tools.
 	 *
@@ -35,12 +44,37 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 	 * @throws \Swagger\Client\ApiException
 	 */
 	public function getType( $wikiId, $pageId ) {
-		$templateType = parent::getType( $wikiId, $pageId );
+		return $this->mapType( parent::getType( $wikiId, $pageId ) );
+	}
 
-		if ( !in_array( $templateType, self::$templateTypes ) ) {
-			$templateType = self::TEMPLATE_UNCLASSIFIED;
+	/**
+	 * Check if a given type is mapped as an infobox one.
+	 * @param string $type
+	 * @return bool
+	 */
+	public function isInfoboxType( $type ) {
+		return in_array( $type, self::$infoboxTypes );
+	}
+
+	protected function prepareTypes( $types ) {
+		$templateTypes = [];
+
+		foreach ( $types as $type ) {
+			$templateTypes[$type->getPageId()] = $this->mapType( $type->getType() );
 		}
 
-		return $templateType;
+		return $templateTypes;
+	}
+
+	private function mapType( $type ) {
+		if ( $this->isInfoboxType( $type ) ) {
+			return self::TEMPLATE_INFOBOX;
+		}
+
+		if ( !in_array( $type, self::$templateTypes ) ) {
+			return self::TEMPLATE_UNCLASSIFIED;
+		}
+
+		return $type;
 	}
 }

@@ -29,6 +29,7 @@ function renderVerbatim( $input ) {
 			&& in_array( $formattedInput, $wgVerbatimBlacklist ) )
 		|| preg_match( '!\.(?:css|js)$!u', $formattedInput )
 		|| startsWith( $formattedInput, Wikia::CUSTOM_INTERFACE_PREFIX, /* $case = */ false )
+		|| startsWith( $formattedInput, Wikia::EDITNOTICE_INTERFACE_PREFIX, /* $case = */ false )
 	) {
 		// Do not allow transclusion into Verbatim tags
 		return '';
