@@ -189,6 +189,12 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 				'Su-47_-iDOLM@STER_Miki-EX-.jpg',
 				'Link to filename with canonical namespace, width urlencoded character in the middle'
 			],
+			[
+				'[[File:Blaabla+2plus+.png|300px]]',
+				'en',
+				'Blaabla+2plus+.png',
+				'Link to filename with canonical namespace, width urlencoded character in the middle'
+			],
 		];
 	}
 

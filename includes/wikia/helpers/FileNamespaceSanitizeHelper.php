@@ -90,7 +90,7 @@ class FileNamespaceSanitizeHelper {
 		$unprefixedFilename = mb_ereg_replace( $filePrefixRegex, "", $trimmedFilename );
 		$filenameParts = explode( '|', $unprefixedFilename );
 		if ( !empty( $filenameParts[ 0 ] ) ) {
-			return urldecode( $filenameParts[0] );
+			return rawurldecode( $filenameParts[0] );
 		}
 
 		return null;
