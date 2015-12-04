@@ -1,12 +1,25 @@
 <?php
 
+use Wikia\Util\GlobalStateWrapper;
+
 class DataTablesTest extends WikiaBaseTest {
+
+	/** @var GlobalStateWrapper */
+	private $globals;
+
+	public function setUp() {
+		parent::setUp();
+		$this->globals = new GlobalStateWrapper( [ 'wgEnableDataTablesParsing' => true, 'wgArticleAsJson' => true ] );
+	}
 
 	/**
 	 * @dataProvider wikitextProvider
 	 */
 	public function testTemplateTablesMarking( $wt, $expected ) {
-		$this->assertEquals( $expected, DataTables::markTranscludedTables( $wt ) );
+		$this->globals->wrap( function () use ( &$wt ) {
+			DataTables::markTranscludedTables( $wt );
+		} );
+		$this->assertEquals( $expected, $wt );
 	}
 
 	public function wikitextProvider() {
@@ -38,7 +51,7 @@ class DataTablesTest extends WikiaBaseTest {
 | 10
 | {{common}}
 |}',
-				'{| data-portable="false" class="va-table va-table-center"
+				'{| data-portable="false"  class="va-table va-table-center"
 ! {{icon|pistol|big|tooltip=Weapon name}}
 ! {{Icon|damage|big|tooltip=Weapon damage}}
 ! {{Icon|merchant|big|tooltip=Weapon value}}
@@ -51,7 +64,7 @@ class DataTablesTest extends WikiaBaseTest {
 | {{common}}
 |}
 
-{| data-portable="false" class="va-table va-table-center"
+{| data-portable="false"  class="va-table va-table-center"
 ! {{icon|pistol|big|tooltip=Weapon name}}
 ! {{Icon|damage|big|tooltip=Weapon damage}}
 ! {{Icon|merchant|big|tooltip=Weapon value}}
