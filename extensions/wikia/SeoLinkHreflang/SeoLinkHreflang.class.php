@@ -51,7 +51,7 @@ class SeoLinkHreflang {
 	}
 
 	private static function getLillyLinks( $url ) {
-		$lilly = new LillyService();
+		$lilly = new Lilly();
 		//$url = str_replace( '.rychu.wikia-dev.com', '.wikia.com', $url );
 		return $lilly->getCluster( $url );
 	}
@@ -70,7 +70,7 @@ class SeoLinkHreflang {
 
 		if ( $wgEnableLillyExt ) {
 			$links = self::getLillyLinks( $title->getFullURL() );
-		} else if ( $out->getTitle()->isMainPage() ) {
+		} else if ( $title->isMainPage() ) {
 			$links = self::getMainPageLinks( $_SERVER['HTTP_HOST'] );
 		}
 

@@ -1,13 +1,18 @@
 <?php
 
-class LillyService {
-	const LILLY_API_V2_QUEUE = '/v2/queue';
-	const LILLY_API_V2_CLUSTER = '/v2/cluster';
-	const LILLY_TIMEOUT = 1; // 1 second timeout for lilly requests
-	const LILLY_CACHE_PERIOD = 432000; // 5 days
-	const LILLY_CACHE_CB = 1;
+/**
+ * Class Lilly
+ *
+ * This is the interface for lilly HTTP service
+ */
+class Lilly {
+	const API_V2_QUEUE = '/v2/queue';
+	const API_V2_CLUSTER = '/v2/cluster';
+	const HTTP_TIMEOUT = 1; // 1 second timeout for lilly requests
+	const CACHE_PERIOD = 432000; // 5 days
+	const CACHE_VERSION = 1;
 
-	const LILLY_DOMAINS = [
+	const ACCEPTED_DOMAINS = [
 		'starwars.wikia.com',
 		'bg.starwars.wikia.com',
 		'cs.starwars.wikia.com',
@@ -40,7 +45,10 @@ class LillyService {
 	];
 
 	private function getMemcacheKey( $url ) {
-		return wfSharedMemcKey( __CLASS__, self::LILLY_CACHE_CB, $url );
+		// Lilly and MediaWiki URL-encode different set of characters (for instance MediaWiki
+		// don't encode '(' and lilly does). That why we're decoding the URL before using it
+		// as a memcache key. URLs can be long, thus hashing.
+		return wfSharedMemcKey( __CLASS__, self::CACHE_VERSION, sha1( rawurldecode( $url ) ) );
 	}
 
 	private function isSupportedUrl( $url ) {
@@ -51,7 +59,7 @@ class LillyService {
 		$scheme = parse_url( $url, PHP_URL_SCHEME );
 		$host = parse_url( $url, PHP_URL_HOST );
 
-		return $scheme === 'http' && in_array( $host, self::LILLY_DOMAINS );
+		return $scheme === 'http' && in_array( $host, self::ACCEPTED_DOMAINS );
 	}
 
 	public function getCluster( $url ) {
@@ -59,7 +67,7 @@ class LillyService {
 
 		// No calls from Reston
 		if ( $wgWikiaDatacenter === WIKIA_DC_RES ) {
-			return;
+			return [];
 		}
 
 		if ( !$this->isSupportedUrl( $url ) ) {
@@ -74,19 +82,19 @@ class LillyService {
 		}
 
 		$query = http_build_query( ['url' => $url] );
-		$lillyUrl = $wgLillyServiceUrl . self::LILLY_API_V2_CLUSTER . '?' . $query;
+		$lillyUrl = $wgLillyServiceUrl . self::API_V2_CLUSTER . '?' . $query;
 
-		$response = Http::get( $lillyUrl, self::LILLY_TIMEOUT, ['noProxy' => true] );
+		$response = Http::get( $lillyUrl, self::HTTP_TIMEOUT, ['noProxy' => true] );
 		$linkMap = json_decode( $response, true /*assoc*/ );
 
 		if ( !is_array( $linkMap ) || count( $linkMap ) === 0 ) {
-			$wgMemc->set( $memcKey, [], self::LILLY_CACHE_PERIOD );
+			$wgMemc->set( $memcKey, [], self::CACHE_PERIOD );
 			return [];
 		}
 
 		// Cache the cluster for all URLs in the cluster
 		foreach ( $linkMap as $lang => $url ) {
-			$wgMemc->set( $this->getMemcacheKey( $url ), $linkMap, self::LILLY_CACHE_PERIOD );
+			$wgMemc->set( $this->getMemcacheKey( $url ), $linkMap, self::CACHE_PERIOD );
 		}
 
 		return $linkMap;
@@ -113,9 +121,9 @@ class LillyService {
 		}
 
 		// Post the link to Lilly
-		Http::post( $wgLillyServiceUrl . self::LILLY_API_V2_QUEUE, [
+		Http::post( $wgLillyServiceUrl . self::API_V2_QUEUE, [
 			'noProxy' => true,
-			'timeout' => self::LILLY_TIMEOUT,
+			'timeout' => self::HTTP_TIMEOUT,
 			'postData' => [
 				'source' => $sourceUrl,
 				'target' => $targetUrl,
