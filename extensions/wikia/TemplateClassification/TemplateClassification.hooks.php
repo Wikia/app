@@ -22,6 +22,8 @@ class Hooks {
 		\Hooks::register( 'EditPage::showEditForm:fields', [ $hooks, 'onEditPageShowEditFormFields' ] );
 		\Hooks::register( 'EditPageLayoutExecute', [ $hooks, 'onEditPageLayoutExecute' ] );
 		\Hooks::register( 'EditPageMakeGlobalVariablesScript', [ $hooks, 'onEditPageMakeGlobalVariablesScript' ] );
+		\Hooks::register( 'SkinTemplateNavigation', [ $hooks, 'onSkinTemplateNavigation' ] );
+		\Hooks::register( 'PageHeaderDropdownActions', [ $hooks, 'onPageHeaderDropdownActions' ] );
 	}
 
 	/**
@@ -117,7 +119,8 @@ class Hooks {
 	 */
 	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		$title = $out->getTitle();
-		if ( ( new Permissions() )->shouldDisplayEntryPoint( $skin->getUser(), $title ) ) {
+		$user = $skin->getUser();
+		if ( ( new Permissions() )->shouldDisplayEntryPoint( $user, $title ) ) {
 			if ( $title->exists() && !$this->isEditPage() ) {
 				\Wikia::addAssetsToOutput( 'template_classification_in_view_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
@@ -125,6 +128,9 @@ class Hooks {
 				\Wikia::addAssetsToOutput( 'template_classification_in_edit_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
 			}
+		} elseif ( ( new Permissions() )->shouldDisplayBulkActions( $user, $title ) ) {
+			\Wikia::addAssetsToOutput( 'template_classification_in_category_js' );
+			\Wikia::addAssetsToOutput( 'template_classification_scss' );
 		}
 		return true;
 	}
@@ -226,5 +232,37 @@ class Hooks {
 		}
 
 		return $types;
+	}
+
+	/**
+	 * Prepare bulk template classification action and adds to possible action links.
+	 *
+	 * @param \Skin $skin
+	 * @param $links
+	 * @return bool
+	 */
+	public static function onSkinTemplateNavigation( \Skin $skin, &$links ) {
+		if ( ( new Permissions() )->shouldDisplayBulkActions( $skin->getUser(), $skin->getTitle() ) ) {
+			$links['views']['bulk-classification'] = [
+				'href' => '#',
+				'text' => wfMessage( 'template-classification-edit-modal-title-bulk-types' )->escaped(),
+				'class' => 'template-classification-type-text',
+			];
+		}
+
+		return true;
+	}
+
+	/**
+	 * Add bulk template classification action to dropdown.
+	 * If this action not exists (@see onSkinTemplateNavigation) will be omitted.
+	 *
+	 * @param array $actions
+	 * @return bool
+	 */
+	public static function onPageHeaderDropdownActions( array &$actions ) {
+		$actions[] = 'bulk-classification';
+
+		return true;
 	}
 }
