@@ -8,6 +8,7 @@ use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_TestCase;
 use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Persistence\User\Preferences\PreferencePersistence;
+use Wikia\Service\PersistenceException;
 
 class PreferenceServiceImplTest extends PHPUnit_Framework_TestCase {
 	const TEST_WIKI_ID = 123;
@@ -139,6 +140,18 @@ class PreferenceServiceImplTest extends PHPUnit_Framework_TestCase {
 
 		$list = $preferences->findWikisWithLocalPreferenceValue( 'test-preference', '1' );
 		$this->assertEquals( $wikiList, $list );
+	}
+
+	public function testGetWithPersistenceExceptionReturnsReadOnly() {
+		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, new UserPreferences(), [], [] );
+
+		$this->persistence->expects( $this->once() )
+			->method( 'get' )
+			->with( self::TEST_WIKI_ID )
+			->will( $this->throwException( new PersistenceException ) );
+
+		$prefs = $preferences->getPreferences( self::TEST_WIKI_ID );
+		$this->assertTrue( $prefs->isReadOnly() );
 	}
 
 	protected function setupServiceExpects() {
