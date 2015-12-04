@@ -2245,10 +2245,10 @@ class WikiPage extends Page implements IDBAccessObject {
 
 		# Clear the cached article id so the interface doesn't act like we exist
 		$this->mTitle->resetArticleID( 0 );
-		
+
 		# Wikia change here
 		$this->setCachedLastEditTime( wfTimestampNow() );
-		# Wikia 
+		# Wikia
 	}
 
 	/**
@@ -3131,6 +3131,17 @@ class PoolWorkArticleView extends PoolCounterWork {
 		if ( $time > 3 ) {
 			wfDebugLog( 'slow-parse', sprintf( "%-5.2f %s", $time,
 				$this->page->getTitle()->getPrefixedDBkey() ) );
+		}
+
+		# PLATFORM-1355 (investigate blank pages)
+		# Check to see if Input exists but Output is just a Parser Performance dump with no other content
+		if ( !empty($text) && preg_match("/^\n<!-- \nNewPP/s", $this->parserOutput->mText) === 1) {
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				__METHOD__ . ' empty content PLAT1355',
+				[ 'stats' => $this->parserOutput->getPerformanceStats() ]
+			);
+			// In addition to logging, do this quick hack/fix for blank pages
+			$this->cacheable = false;
 		}
 
 		if ( $this->cacheable && $this->parserOutput->isCacheable() ) {
