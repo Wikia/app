@@ -5,11 +5,11 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 
 	var slotParams = {},
 		mocks = {
-			targeting: {},
 			adContext: {
 				getContext: function () {
 					return {
-						targeting: mocks.targeting
+						targeting: mocks.targeting,
+						opts: mocks.opts
 					};
 				}
 			},
@@ -95,6 +95,12 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		};
 		mocks.targeting = {
 			pageType: 'article'
+		};
+		mocks.opts = {
+			rubiconFastlaneOnAllVerticals: false
+		};
+		mocks.adLogicZoneParams.getSite = function () {
+			return 'life';
 		};
 		slotParams = {};
 	});
@@ -218,5 +224,99 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		expect(slotParams.s2).toEqual('article');
 		expect(slotParams.lang).toEqual('en');
 		expect(slotParams.passback).toEqual('fastlane');
+	});
+
+	it('Fastlane should be enabled for life wiki with rubiconFastlaneOnAllVerticals=0 on Oasis', function () {
+		var rubiconFastlane = getRubiconFastlane();
+
+		rubiconFastlane.call('oasis');
+
+		expect(rubiconFastlane.wasCalled()).toEqual(true);
+	});
+
+	it('Fastlane should be enabled for life wiki with rubiconFastlaneOnAllVerticals=1 on Oasis', function () {
+		mocks.opts = {
+			rubiconFastlaneOnAllVerticals: true
+		};
+
+		var rubiconFastlane = getRubiconFastlane();
+
+		rubiconFastlane.call('oasis');
+
+		expect(rubiconFastlane.wasCalled()).toEqual(true);
+	});
+
+	it('Fastlane should be disabled for non-life wiki with rubiconFastlaneOnAllVerticals=0 on Oasis', function () {
+		mocks.adLogicZoneParams.getSite = function () {
+			return 'ent';
+		};
+
+		var rubiconFastlane = getRubiconFastlane();
+
+		rubiconFastlane.call('oasis');
+
+		expect(rubiconFastlane.wasCalled()).toEqual(false);
+	});
+
+	it('Fastlane should be enabled for non-life wiki with rubiconFastlaneOnAllVerticals=1 on Oasis', function () {
+		mocks.opts = {
+			rubiconFastlaneOnAllVerticals: true
+		};
+		mocks.adLogicZoneParams.getSite = function () {
+			return 'ent';
+		};
+
+		var rubiconFastlane = getRubiconFastlane();
+
+		rubiconFastlane.call('oasis');
+
+		expect(rubiconFastlane.wasCalled()).toEqual(true);
+	});
+
+	it('Fastlane should be enabled for life wiki with rubiconFastlaneOnAllVerticals=0 on Mercury', function () {
+		var rubiconFastlane = getRubiconFastlane();
+
+		rubiconFastlane.call('mercury');
+
+		expect(rubiconFastlane.wasCalled()).toEqual(true);
+	});
+
+	it('Fastlane should be enabled for life wiki with rubiconFastlaneOnAllVerticals=1 on Mercury', function () {
+		mocks.opts = {
+			rubiconFastlaneOnAllVerticals: true
+		};
+
+		var rubiconFastlane = getRubiconFastlane();
+
+		rubiconFastlane.call('mercury');
+
+		expect(rubiconFastlane.wasCalled()).toEqual(true);
+	});
+
+	it('Fastlane should be disabled for non-life wiki with rubiconFastlaneOnAllVerticals=0 on Mercury', function () {
+		mocks.adLogicZoneParams.getSite = function () {
+			return 'ent';
+		};
+
+		var rubiconFastlane = getRubiconFastlane();
+
+		rubiconFastlane.call('mercury');
+
+		expect(rubiconFastlane.wasCalled()).toEqual(false);
+	});
+
+	it('Fastlane should be enabled for non-life wiki with rubiconFastlaneOnAllVerticals=1 on Mercury', function () {
+		mocks.opts = {
+			rubiconFastlaneOnAllVerticals: true
+		};
+		mocks.adLogicZoneParams.getSite = function () {
+			return 'ent';
+		};
+
+		var rubiconFastlane = getRubiconFastlane();
+
+		rubiconFastlane.call('mercury');
+
+		expect(rubiconFastlane.wasCalled()).toEqual(true);
 	});
 });

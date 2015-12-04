@@ -114,6 +114,8 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.enableScrollHandler = geo.isProperGeo(instantGlobals.wgAdDriverScrollHandlerCountries) ||
 			isUrlParamSet('scrollhandler');
 
+		context.opts.rubiconFastlaneOnAllVerticals = instantGlobals.wgAdDriverRubiconFastlaneOnAllVerticals;
+
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
 			context.targeting.enableKruxTargeting &&
