@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 /**
  * Oasis module for EditPageLayout
  *
@@ -208,8 +210,16 @@ class EditPageLayoutController extends WikiaController {
 			? wfMessage( 'editpagelayout-notificationsLink-none' )->escaped()
 			: wfMessage( 'editpagelayout-notificationsLink', count( $this->notices ) )->parse();
 
-		$templateType = ( new TemplateClassificationService() )
-			->getType( $wgCityId, $this->title->getArticleID() );
+		try {
+			$templateType = ( new TemplateClassificationService() )
+				->getType( $wgCityId, $this->title->getArticleID() );
+		} catch ( Exception $e ) {
+			$templateType = TemplateClassificationService::TEMPLATE_UNKNOWN;
+			WikiaLogger::instance()->error('TemplateClassificationService::getType() threw an exception', [
+				'ex' => $e
+			]);
+		}
+
 
 		$this->showInfoboxPreview = $templateType === TemplateClassificationService::TEMPLATE_INFOBOX
 			|| $templateType === TemplateClassificationService::TEMPLATE_CUSTOM_INFOBOX;

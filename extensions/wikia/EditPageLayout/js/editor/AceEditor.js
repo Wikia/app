@@ -49,7 +49,7 @@ define(
 	function beforeEditorInit() {
 		$('.loading-indicator').remove();
 		$('#wpSave').removeAttr('disabled');
-		$('#infoboxPreview').click(launchEditorPreview);
+		$('#InfoboxPreview').click(launchInfoboxPreview);
 		$editPage.addClass('editpage-sourcewidemode mode-source ' + narrowClassName);
 	}
 
@@ -177,17 +177,20 @@ define(
 		$('.editpage-widemode-trigger').click(editorModeChange);
 	}
 
-	function launchEditorPreview(){
+	function launchInfoboxPreview(){
 		var editorValue = ace.getContent(),
 			wikiaDomain = mw.config.get('wgServer').split('://')[1],
 			templateName = (new mw.Title(mw.config.get('wgPageName'))).getMain(),
-			infoboxPreviewURL = mw.config.get('wgInfoboxPreviewURL'),
-			$form = $('<form>').attr({'action': infoboxPreviewURL, 'method': 'POST', 'target': '_blank'});
+			infoboxPreviewURL = mw.config.get('wgInfoboxPreviewURL');
 
-		$('<textarea>').val(editorValue).attr({'name': 'editor_value'}).appendTo($form);
-		$('<input>').val(wikiaDomain).attr({'name': 'wikia_domain'}).appendTo($form);
-		$('<input>').val(templateName).attr({'name': 'template_name'}).appendTo($form);
-		$form.submit();
+		$('<form>')
+			.attr({'action': infoboxPreviewURL, 'method': 'POST', 'target': '_blank'})
+			.append(
+				$('<textarea>').val(editorValue).attr({'name': 'editor_value'}),
+				$('<input>').val(wikiaDomain).attr({'name': 'wikia_domain'}),
+				$('<input>').val(templateName).attr({'name': 'template_name'})
+			)
+			.submit();
 	}
 
 	return {
