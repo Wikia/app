@@ -46,7 +46,9 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		$typeLabel.click(function (e) {
 			e.preventDefault();
 			openEditModal(mode);
-		}).popover();
+		});
+
+		setupTooltip();
 	}
 
 	function openEditModal(modeProvided) {
@@ -59,6 +61,8 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		$w.unbind('keydown', openModalKeyboardShortcut);
 
 		labeling.init(modalMode);
+
+		dismissWelcomeHint();
 
 		if (!messagesLoaded) {
 			messagesLoader = getMessages;
@@ -259,6 +263,38 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		};
 
 		modalConfig.vars.buttons = modalButtons;
+	}
+
+	function setupTooltip() {
+		if ($typeLabel.data('mode') === 'welcome') {
+			mw.loader.using(
+				['ext.wikia.TemplateClassification.ModalMessages', 'mediawiki.jqueryMsg'],
+				function showWelcomeTooltip() {
+					$typeLabel.tooltip({
+						title: mw.message(
+							'template-classification-entry-point-hint',
+							mw.config.get('wgUserName')
+						).parse()
+					}).tooltip('show');
+				}
+			);
+		} else {
+			$typeLabel.tooltip({
+				delay: {show: 500, hide: 300}
+			});
+		}
+	}
+
+	function dismissWelcomeHint() {
+		if ($typeLabel.data('has-seen-welcome') === 0) {
+			$typeLabel.data('has-seen-welcome', 1);
+			$typeLabel.tooltip('disable');
+			nirvana.sendRequest({
+				controller: 'TemplateClassification',
+				method: 'dismissWelcomeHint',
+				type: 'get'
+			});
+		}
 	}
 
 	function getTemplateClassificationEditForm() {
