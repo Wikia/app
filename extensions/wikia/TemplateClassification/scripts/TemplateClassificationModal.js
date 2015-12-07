@@ -31,16 +31,18 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	 * @param {function} saveHandlerProvided Method that should handle modal save,
 	 *  	receives {string} selectedType as parameter
 	 */
-	function init(typeGetterProvided, saveHandlerProvided) {
+	function init(typeGetterProvided, saveHandlerProvided, mode) {
+		var mode = mode || 'editType';
+
 		saveHandler = saveHandlerProvided;
 		typeGetter = typeGetterProvided;
 		$typeLabel = $('.template-classification-type-text');
 
 		$w.on('keydown', openModalKeyboardShortcut);
 
-		$('.template-classification-type-text').click(function (e) {
+		$typeLabel.click(function (e) {
 			e.preventDefault();
-			openEditModal('editType');
+			openEditModal(mode);
 		});
 	}
 
