@@ -119,7 +119,7 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 		foreach ( $templates as $templateId => $templateTitle ) {
 			try {
 				$this->classifyTemplate( $wikiId, $templateId, $templateType, $userId );
-			} catch( ApiException $e ) {
+			} catch ( ApiException $e ) {
 				$errors[] = Title::newFromText( $templateTitle )->getText();
 			}
 		}
