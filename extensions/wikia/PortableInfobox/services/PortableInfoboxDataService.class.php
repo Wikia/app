@@ -89,7 +89,7 @@ class PortableInfoboxDataService {
 	private function getImageFromOneInfoboxData( $infoboxData ) {
 		$images = [];
 		foreach ( $infoboxData as $infoboxDataField ) {
-			if ( $infoboxDataField[ 'type' ] == self::IMAGE_FIELD_TYPE && isset( $infoboxDataField[ 'data' ] ) ) {
+			if ( $infoboxDataField[ 'type' ] === self::IMAGE_FIELD_TYPE && isset( $infoboxDataField[ 'data' ] ) ) {
 				$images = array_merge( $images, $this->getImagesFromOneNodeImageData( $infoboxDataField[ 'data' ] ) );
 			}
 		}
