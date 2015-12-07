@@ -12,6 +12,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 
 	var $classificationForm,
 		$preselectedType,
+		$saveBtn,
 		$typeLabel,
 		modalConfig,
 		modalMode,
@@ -151,7 +152,14 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			});
 		});
 
+		if (modalMode === 'addTypeBeforePublish') {
+			$saveBtn = modalInstance.$element.find('footer button.primary').attr('disabled','disabled');
+		}
+
 		modalInstance.$element.find('input:radio').change(function trackRadioChange(e) {
+			if (modalMode === 'addTypeBeforePublish') {
+				$saveBtn.removeAttr('disabled');
+			}
 			// Track - click to change a template's type
 			track({
 				action: tracker.ACTIONS.CLICK_LINK_TEXT,
