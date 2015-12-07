@@ -29,7 +29,7 @@ class Permissions {
 	public function shouldDisplayBulkActions( \User $user, \Title $title ) {
 		return $title->inNamespace( NS_CATEGORY )
 			&& $user->isAllowed( 'template-bulk-classification' )
-			&& ( new Helper() )->countTemplatesInCategory( $title->getText() );
+			&& ( new Helper() )->countTemplatesInCategory( $title->getDBkey() );
 	}
 
 	/**
