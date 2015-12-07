@@ -22,7 +22,7 @@ define('TemplateClassificationInCategory',
 				});
 			});
 
-			if ( !cookies.get('tc-bulk') && mw.config.get('wgUserLanguage') === 'en' ) {
+			if (!cookies.get('tc-bulk') && mw.config.get('wgUserLanguage') === 'en') {
 				showHint();
 			}
 		}
@@ -70,8 +70,6 @@ define('TemplateClassificationInCategory',
 		}
 
 		function showHint() {
-			var $hintTooltip;
-
 			$.when(
 				loader({
 					type: loader.MULTI,
@@ -79,7 +77,9 @@ define('TemplateClassificationInCategory',
 						messages: 'TemplateClassificationHints'
 					}
 				})
-			).done(function(res){
+			).done(function (res) {
+				var $hintTooltip;
+
 				mw.messages.set(res.messages);
 
 				$hintTooltip = $('#WikiaPageHeader').children('.wikia-menu-button')
@@ -90,16 +90,16 @@ define('TemplateClassificationInCategory',
 
 				$hintTooltip.tooltip('show');
 
-				$('body').on( 'click', '.close-bulk-hint', function(){
+				$('body').on('click', '.close-bulk-hint', function () {
 					$hintTooltip.tooltip('hide');
 					cookies.set('tc-bulk', 1);
-				} );
+				});
 			});
 		}
 
 		function createHintMessage() {
-			var closeHint = '<br/><a class="close-bulk-hint" href="#">'
-				+ mw.message('template-classification-bulk-classification-agreement').escaped() + '</a>';
+			var closeHint = '<br/><a class="close-bulk-hint" href="#">' +
+				mw.message('template-classification-bulk-classification-agreement').escaped() + '</a>';
 
 			return mw.message(
 					'template-classification-bulk-classification-hint', mw.config.get('wgUserName')
