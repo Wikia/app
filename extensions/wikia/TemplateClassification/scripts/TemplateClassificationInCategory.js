@@ -80,22 +80,21 @@ define('TemplateClassificationInCategory',
 					}
 				})
 			).done(function(res){
-					mw.messages.set(res.messages);
+				mw.messages.set(res.messages);
 
-					$hintTooltip = $('#WikiaPageHeader').children('.wikia-menu-button')
-						.tooltip({
-							placement: 'right',
-							title: createHintMessage()
-						});
+				$hintTooltip = $('#WikiaPageHeader').children('.wikia-menu-button')
+					.tooltip({
+						placement: 'right',
+						title: createHintMessage()
+					});
 
-					$hintTooltip.tooltip('show');
+				$hintTooltip.tooltip('show');
 
-					$('body').on( 'click', '.close-bulk-hint', function(){
-						$hintTooltip.tooltip('hide');
-						cookies.set('tc-bulk', 1);
-					} );
-				}
-			);
+				$('body').on( 'click', '.close-bulk-hint', function(){
+					$hintTooltip.tooltip('hide');
+					cookies.set('tc-bulk', 1);
+				} );
+			});
 		}
 
 		function createHintMessage() {
