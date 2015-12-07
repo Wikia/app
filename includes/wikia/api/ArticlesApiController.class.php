@@ -1052,7 +1052,8 @@ class ArticlesApiController extends WikiaApiController {
 			'content' => $content,
 			'media' => $articleContent->media,
 			'users' => $articleContent->users,
-			'categories' => $categories
+			'categories' => $categories,
+			'displayTitle' => $parsedArticle->getTitleText(),
 		];
 
 		$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
