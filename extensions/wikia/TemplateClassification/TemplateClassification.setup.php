@@ -27,6 +27,16 @@ $wgExtensionCredits['other'][] = [
 ];
 
 /**
+ * Groups and permissions
+ */
+$wgAvailableRights[] = 'template-bulk-classification';
+$wgGroupPermissions['*']['template-bulk-classification'] = false;
+$wgGroupPermissions['helper']['template-bulk-classification'] = true;
+$wgGroupPermissions['vstf']['template-bulk-classification'] = true;
+$wgGroupPermissions['staff']['template-bulk-classification'] = true;
+$wgGroupPermissions['sysop']['template-bulk-classification'] = true;
+
+/**
  * UserTemplateClassificationService
  */
 $wgAutoloadClasses['UserTemplateClassificationService'] = __DIR__ . '/services/UserTemplateClassificationService.class.php';
@@ -63,6 +73,8 @@ $wgAutoloadClasses['Wikia\TemplateClassification\View'] = __DIR__ . '/TemplateCl
  * Other
  */
 $wgAutoloadClasses['Wikia\TemplateClassification\Logger'] = __DIR__ . '/Logger.class.php';
+$wgAutoloadClasses['Wikia\TemplateClassification\Helper'] = __DIR__ . '/Helper.class.php';
+$wgAutoloadClasses['Wikia\TemplateClassification\TemplateBulkClassificationTask'] = __DIR__ . '/TemplateBulkClassificationTask.class.php';
 
 /**
  * Messages
@@ -75,5 +87,9 @@ JSMessages::registerPackage( 'TemplateClassificationModal', [
 ] );
 
 JSMessages::registerPackage( 'TemplateClassificationTypes', [
-	'template-classification-type-*',
+	'template-classification-type-*'
+] );
+
+JSMessages::registerPackage( 'TemplateClassificationHints', [
+	'template-classification-bulk-classification-*'
 ] );

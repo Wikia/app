@@ -10,7 +10,8 @@ define('TemplateClassificationLabeling',
 		var availableModes = [
 				'editType',
 				'addTemplate',
-				'addTypeBeforePublish'
+				'addTypeBeforePublish',
+				'bulkEditType'
 			],
 			mode = 'editType',
 			getTitleStrategy,
@@ -51,7 +52,8 @@ define('TemplateClassificationLabeling',
 			return {
 				addTemplate: addTemplate,
 				editType: editType,
-				addTypeBeforePublish: addTypeBeforePublish
+				addTypeBeforePublish: addTypeBeforePublish,
+				bulkEditType: editType
 			};
 		})();
 
@@ -64,10 +66,15 @@ define('TemplateClassificationLabeling',
 				return mw.message('template-classification-edit-modal-title-select-type').escaped();
 			}
 
+			function bulkEditType() {
+				return mw.message('template-classification-edit-modal-title-bulk-types').escaped();
+			}
+
 			return {
 				addTemplate: chooseType,
 				editType: editType,
-				addTypeBeforePublish: chooseType
+				addTypeBeforePublish: chooseType,
+				bulkEditType: bulkEditType
 			};
 		})();
 
@@ -81,7 +88,8 @@ define('TemplateClassificationLabeling',
 			return {
 				addTemplate: editType,
 				editType: editType,
-				addTypeBeforePublish: editType
+				addTypeBeforePublish: editType,
+				bulkEditType: editType
 			};
 		})();
 
