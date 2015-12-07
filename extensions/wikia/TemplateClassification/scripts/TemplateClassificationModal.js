@@ -11,7 +11,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	'use strict';
 
 	var $classificationForm,
-		$preselectedType,
+		preselectedType,
 		$typeLabel,
 		modalConfig,
 		messagesLoaded,
@@ -85,13 +85,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			$classificationForm = $(classificationForm[0]);
 		}
 
-		// Mark selected type
-		$preselectedType = $classificationForm.find('#template-classification-' + templateType);
-
-		if ($preselectedType.length !== 0) {
-			$classificationForm.find('input[checked="checked"]').removeAttr('checked');
-			$preselectedType.attr('checked', 'checked');
-		}
+		preselectedType = templateType;
 
 		// Set modal content
 		setupTemplateClassificationModal(
@@ -122,6 +116,8 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	 * One of sub-tasks for getting modal shown
 	 */
 	function processInstance(modalInstance) {
+		var $preselectedTypeInput;
+
 		/* Submit template type edit form on Done button click */
 		modalInstance.bind('done', function runSave(e) {
 			var label = e ? $(e.currentTarget).text() : 'keypress';
@@ -163,19 +159,22 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 
 		throbber.remove($throbber);
 
-		// Make sure that focus is in the right place
-		$('#template-classification-' + mw.html.escape($preselectedType.val())).focus();
+		// Make sure that focus is in the right place but scroll the modal window to the top
+		$preselectedTypeInput = modalInstance.$element.find('#template-classification-' + preselectedType);
+		if ($preselectedTypeInput.length !== 0) {
+			$classificationForm.find('input:checked').removeProp('checked');
+			$preselectedTypeInput.prop('checked', true).focus();
+		}
+
+		if (preselectedType === 'unknown') {
+			modalInstance.scroll(0);
+		}
 	}
 
 	function processSave(modalInstance) {
-		var newTemplateType = $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val(),
-			oldTemplateType = '';
+		var newTemplateType = $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val();
 
-		if (!!$preselectedType) {
-			oldTemplateType = $preselectedType.val();
-		}
-
-		if (newTemplateType !== oldTemplateType) {
+		if (newTemplateType !== preselectedType) {
 			// Track - modal saved with changes
 			track({
 				action: tracker.ACTIONS.SUBMIT,
@@ -189,7 +188,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			track({
 				action: tracker.ACTIONS.SUBMIT,
 				label: 'nochange',
-				value: oldTemplateType
+				value: preselectedType
 			});
 		}
 
