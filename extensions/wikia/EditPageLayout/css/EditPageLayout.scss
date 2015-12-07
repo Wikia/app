@@ -105,6 +105,11 @@ body {
 	width: $width-rail-epl;
 	z-index: 101; // and the loading status indicator (z-index: 100)
 
+	.InfoboxPreview {
+		margin: 10px auto 0;
+		display: block;
+	}
+
 	.rail-auto-height {
 		overflow: hidden;
 		position: relative; // IE 7 needs this
@@ -598,9 +603,4 @@ body {
 	&.large-typography {
 		@include breakpoints-large-typography;
 	}
-}
-
-#InfoboxPreview {
-	display: block;
-	margin: 10px auto 0 auto;
 }

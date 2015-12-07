@@ -49,7 +49,6 @@ define(
 	function beforeEditorInit() {
 		$('.loading-indicator').remove();
 		$('#wpSave').removeAttr('disabled');
-		$('#InfoboxPreview').click(launchInfoboxPreview);
 		$editPage.addClass('editpage-sourcewidemode mode-source ' + narrowClassName);
 	}
 
@@ -175,22 +174,6 @@ define(
 		}
 
 		$('.editpage-widemode-trigger').click(editorModeChange);
-	}
-
-	function launchInfoboxPreview(){
-		var editorValue = ace.getContent(),
-			wikiaDomain = mw.config.get('wgServer').split('://')[1],
-			templateName = (new mw.Title(mw.config.get('wgPageName'))).getMain(),
-			infoboxPreviewURL = mw.config.get('wgInfoboxPreviewURL');
-
-		$('<form>')
-			.attr({'action': infoboxPreviewURL, 'method': 'POST', 'target': '_blank'})
-			.append(
-				$('<textarea>').val(editorValue).attr({'name': 'editor_value'}),
-				$('<input>').val(wikiaDomain).attr({'name': 'wikia_domain'}),
-				$('<input>').val(templateName).attr({'name': 'template_name'})
-			)
-			.submit();
 	}
 
 	return {
