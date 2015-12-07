@@ -142,7 +142,9 @@ asdkjf kasjdflk [[asdfasdf]]
 			[ "<table data-portable=\"false\"></table>", 0 ],
 			[ "<table data-portable=\"false\"></table><table data-portable=\"true\"></table>", 1 ],
 			[ "<table><tr><td colspan='1'>dsafsd</td></tr></table>", 0 ],
-			[ "<table><tr><td rowspan='1'>dsafsd</td></tr></table>", 0 ]
+			[ "<table><tr><td rowspan='1'>dsafsd</td></tr></table>", 0 ],
+			[ "<table></table><table><tr><td rowspan='1'>dsafsd</td></tr></table>
+<table><tr><td colspan='1'>dsafsd</td></tr></table>", 1 ]
 		];
 	}
 }

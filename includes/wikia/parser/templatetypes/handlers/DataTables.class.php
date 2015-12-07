@@ -57,7 +57,7 @@ class DataTables {
 				/** @var DOMElement $table */
 				foreach ( $tables as $table ) {
 					if ( !$table->hasAttribute( static::DATA_PORTABLE_ATTRIBUTE ) &&
-						 $xpath->query( '*//*[@rowspan]|//*[@colspan]', $table )->length == 0
+						 $xpath->query( '*//*[@rowspan]|*//*[@colspan]', $table )->length == 0
 					) {
 						$table->setAttribute( 'data-portable', 'true' );
 					}
