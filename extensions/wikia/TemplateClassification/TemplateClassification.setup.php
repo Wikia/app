@@ -87,5 +87,9 @@ JSMessages::registerPackage( 'TemplateClassificationModal', [
 ] );
 
 JSMessages::registerPackage( 'TemplateClassificationTypes', [
-	'template-classification-type-*',
+	'template-classification-type-*'
+] );
+
+JSMessages::registerPackage( 'TemplateClassificationHints', [
+	'template-classification-bulk-classification-*'
 ] );

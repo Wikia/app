@@ -5,8 +5,9 @@
  *
  * Provides selected type for TemplateClassificationModal and handles type submit
  */
-define('TemplateClassificationInCategory', ['jquery', 'mw', 'wikia.nirvana', 'wikia.tracker', 'TemplateClassificationModal', 'BannerNotification'],
-	function ($, mw, nirvana, tracker, templateClassificationModal, BannerNotification) {
+define('TemplateClassificationInCategory',
+	['jquery', 'mw', 'wikia.nirvana', 'wikia.tracker', 'wikia.loader', 'wikia.cookies', 'TemplateClassificationModal', 'BannerNotification'],
+	function ($, mw, nirvana, tracker, loader, cookies, templateClassificationModal, BannerNotification) {
 		'use strict';
 
 		function init() {
@@ -20,6 +21,10 @@ define('TemplateClassificationInCategory', ['jquery', 'mw', 'wikia.nirvana', 'wi
 					label: 'category-view-page'
 				});
 			});
+
+			if ( !cookies.get('tc-bulk') && mw.config.get('wgUserLanguage') === 'en' ) {
+				showHint();
+			}
 		}
 
 		function getType() {
@@ -62,6 +67,44 @@ define('TemplateClassificationInCategory', ['jquery', 'mw', 'wikia.nirvana', 'wi
 					new BannerNotification(errorMessage, 'error').show();
 				}
 			});
+		}
+
+		function showHint() {
+			var $hintTooltip;
+
+			$.when(
+				loader({
+					type: loader.MULTI,
+					resources: {
+						messages: 'TemplateClassificationHints'
+					}
+				})
+			).done(function(res){
+					mw.messages.set(res.messages);
+
+					$hintTooltip = $('#WikiaPageHeader').children('.wikia-menu-button')
+						.tooltip({
+							placement: 'right',
+							title: createHintMessage()
+						});
+
+					$hintTooltip.tooltip('show');
+
+					$('body').on( 'click', '.close-bulk-hint', function(){
+						$hintTooltip.tooltip('hide');
+						cookies.set('tc-bulk', 1);
+					} );
+				}
+			);
+		}
+
+		function createHintMessage() {
+			var closeHint = '<br/><a class="close-bulk-hint" href="#">'
+				+ mw.message('template-classification-bulk-classification-agreement').escaped() + '</a>';
+
+			return mw.message(
+					'template-classification-bulk-classification-hint', mw.config.get('wgUserName')
+				).parse() + closeHint;
 		}
 
 		return {
