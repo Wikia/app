@@ -77,12 +77,14 @@ class PortableInfoboxDataService {
 		foreach ( $this->getData() as $infobox ) {
 			// ensure data array exists
 			$data = is_array( $infobox[ 'data' ] ) ? $infobox[ 'data' ] : [ ];
+
 			foreach ( $data as $field ) {
-				if ( $field[ 'type' ] == self::IMAGE_FIELD_TYPE &&
-					 isset( $field[ 'data' ] ) &&
-					 !empty( $field[ 'data' ][ 'key' ] )
-				) {
-					$images[ $field[ 'data' ][ 'key' ] ] = true;
+				if ( $field[ 'type' ] == self::IMAGE_FIELD_TYPE && isset( $field[ 'data' ] ) ) {
+					for ( $i = 0; $i < count( $field[ 'data' ] ); $i++ ) {
+						if ( !empty( $field[ 'data' ][ $i ] [ 'key' ] ) ) {
+							$images[ $field[ 'data' ][ $i ][ 'key' ] ] = true;
+						}
+					}
 				}
 			}
 		}
