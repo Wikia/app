@@ -4,12 +4,13 @@
  */
 define('ext.wikia.adEngine.adContext', [
 	'wikia.abTest',
+	'wikia.cookies',
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.window',
 	'wikia.querystring'
-], function (abTest, doc, geo, instantGlobals, w, Querystring) {
+], function (abTest, cookies, doc, geo, instantGlobals, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -72,7 +73,8 @@ define('ext.wikia.adEngine.adContext', [
 
 		// Recoverable ads message
 		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
-			context.opts.recoveredAdsMessage = geo.isProperGeo(instantGlobals.wgAdDriverAdsRecoveryMessageCountries);
+			context.opts.recoveredAdsMessage = context.targeting.pageType === 'article' &&
+				geo.isProperGeo(instantGlobals.wgAdDriverAdsRecoveryMessageCountries);
 		}
 
 		// Google Consumer Surveys
@@ -81,8 +83,8 @@ define('ext.wikia.adEngine.adContext', [
 				geo.isProperGeo(instantGlobals.wgAdDriverGoogleConsumerSurveysCountries);
 		}
 
-		// Showcase.*
-		if (isUrlParamSet('showcase')) {
+		// showcase.*
+		if (cookies.get('mock-ads') === 'NlfdjR5xC0') {
 			context.opts.showcase = true;
 		}
 
@@ -112,6 +114,8 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.scrollHandlerConfig = instantGlobals.wgAdDriverScrollHandlerConfig;
 		context.opts.enableScrollHandler = geo.isProperGeo(instantGlobals.wgAdDriverScrollHandlerCountries) ||
 			isUrlParamSet('scrollhandler');
+
+		context.opts.rubiconFastlaneOnAllVerticals = instantGlobals.wgAdDriverRubiconFastlaneOnAllVerticals;
 
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(

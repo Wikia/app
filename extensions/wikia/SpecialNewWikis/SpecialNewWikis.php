@@ -25,28 +25,17 @@ $wgExtensionCredits['specialpage'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialNewWikis'
 );
 
-$wgHooks['wgQueryPages'][] = 'wfSetupNewWikis';
-
 #--- messages file
 $wgExtensionMessagesFiles["Newwikis"] = __DIR__ . '/SpecialNewWikis.i18n.php';
 
-if ( !function_exists( 'extAddSpecialPage' ) ) {
-    require_once ( "$IP/extensions/ExtensionFunctions.php" );
-}
-
-extAddSpecialPage( dirname(__FILE__) . '/SpecialNewWikis_body.php', 'Newwikis', 'NewWikisSpecialPage' );
-
+#--- special pages
 $wgSpecialPageGroups['Newwikis'] = 'highuse';
+$wgSpecialPages['Newwikis'] = 'NewWikisSpecialPage';
+
+#--- classes autoloading
+$wgAutoloadClasses['NewWikisSpecialPage'] = __DIR__ . '/SpecialNewWikis_body.php';
+$wgAutoloadClasses['NewWikisPage'       ] = __DIR__ . '/SpecialNewWikis_body.php';
 
 $wgAvailableRights[] = 'newwikislist';
 $wgGroupPermissions['*']['newwikislist'] = false;
 $wgGroupPermissions['staff']['newwikislist'] = true;
-
-/**
- * @param array $queryPages
- * @return bool
- */
-function wfSetupNewWikis( &$queryPages ) {
-    $queryPages[] = array( 'NewWikisPage', 'Newwikis');
-    return true;
-}

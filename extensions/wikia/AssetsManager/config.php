@@ -1827,19 +1827,19 @@ $config['categoryselect_edit_js'] = array(
 
 /* FilePage */
 $config['wikia_file_page_js'] = array(
-	'type'=> AssetsManager::TYPE_JS,
+	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/FilePage/scripts/WikiaFilePage.js',
 	)
 );
 $config['file_page_tabbed_js'] = array(
-	'type'=> AssetsManager::TYPE_JS,
+	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/FilePage/scripts/FilePageTabbed.js',
 	)
 );
 $config['file_page_tabbed_css'] = array(
-	'type' =>AssetsManager::TYPE_SCSS,
+	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => array(
 		'//extensions/wikia/FilePage/css/FilePageTabbed.scss',
 	)
@@ -2665,6 +2665,16 @@ $config['template_classification_in_edit_js'] = [
 		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationLabeling.js',
 		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationModal.js',
 		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationModalForce.js',
+	]
+];
+
+$config['template_classification_in_category_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationInCategory.js',
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationLabeling.js',
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationModal.js',
 	]
 ];
 

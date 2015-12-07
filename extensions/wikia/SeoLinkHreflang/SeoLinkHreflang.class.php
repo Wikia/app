@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Add hreflang links to boost traffic on Japanese Star Wars wiki
+ * Add hreflang links to boost traffic on Star Wars wiki family
  *
  * Add hreflang links to main pages of selected wikis
  *
@@ -14,27 +14,6 @@
 class SeoLinkHreflang {
 	const SEO_LINK_SECTION_BEGIN = '<!-- Alternate languages begin -->';
 	const SEO_LINK_SECTION_END = '<!-- Alternate languages end -->';
-
-	/**
-	 * Link based on static array supplied in $mapping param
-	 *
-	 * @param OutputPage $out
-	 * @param array $mapping (keys used: langTo, urlPrefix and mapping)
-	 * @return array (key: lang, value: url)
-	 */
-	private static function getStaticMappingLinks( OutputPage $out, $mapping ) {
-		$articleMapping = $mapping[ 'mapping' ];
-		$langTo = $mapping[ 'langTo' ];
-		$urlPrefix = $mapping[ 'urlPrefix' ];
-
-		$dbKey = $out->getTitle()->getDBkey();
-
-		if ( !empty( $articleMapping[ $dbKey ] ) ) {
-			return [ $langTo => $urlPrefix . $articleMapping[ $dbKey ] ];
-		}
-
-		return [];
-	}
 
 	/**
 	 * Get links to the main pages of the same wiki in other languages
@@ -64,25 +43,40 @@ class SeoLinkHreflang {
 
 		$mapping = require __DIR__ . '/mainpages_mapping.php';
 
-		if ( !empty( $mapping[ $wiki ][ $lang ] ) ) {
-			unset( $mapping[ $wiki ][ $lang ] );
-			return $mapping[ $wiki ];
+		if ( !empty( $mapping[$wiki][$lang] ) ) {
+			return $mapping[$wiki];
 		}
 
 		return [];
 	}
 
+	private static function getLillyLinks( $url ) {
+		$lilly = new Lilly();
+		//$url = str_replace( '.rychu.wikia-dev.com', '.wikia.com', $url );
+		return $lilly->getCluster( $url );
+	}
+
 	private static function generateHreflangLinks( OutputPage $out ) {
-		global $wgDBname;
+		global $wgEnableLillyExt;
+
+		$title = $out->getTitle();
+
+		// No mapping for redirect pages
+		if ( $title->isRedirect() ) {
+			return [];
+		}
 
 		$links = [];
 
-		if ( $wgDBname === 'starwars' || $wgDBname === 'jastarwars' ) {
-			$mapping = require( __DIR__ . '/starwars_mapping.php' );
-			$links = self::getStaticMappingLinks( $out, $mapping[ $wgDBname ] );
-		} else if ( $out->getTitle()->isMainPage() ) {
+		if ( $wgEnableLillyExt ) {
+			$links = self::getLillyLinks( $title->getFullURL() );
+		} else if ( $title->isMainPage() ) {
 			$links = self::getMainPageLinks( $_SERVER['HTTP_HOST'] );
 		}
+
+		// Remove link to self
+		$lang = $out->getLanguage()->getCode();
+		unset( $links[$lang] );
 
 		return array_map( function ( $lang, $url ) {
 			return Html::element( 'link', [

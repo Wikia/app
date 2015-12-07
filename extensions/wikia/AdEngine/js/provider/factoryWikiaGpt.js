@@ -1,11 +1,22 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
-	'wikia.log',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.provider.gpt.helper',
+	'wikia.geo',
+	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.services')
-], function (log, adLogicPageParams, gptHelper, lookups) {
+], function (adLogicPageParams, gptHelper, geo, log, lookups) {
 	'use strict';
+	var country = geo.getCountryCode();
+
+	function overrideSizes(slotMap, newSizes) {
+		var slotName;
+		for (slotName in slotMap) {
+			if (slotMap.hasOwnProperty(slotName) && newSizes[slotName]) {
+				slotMap[slotName].size = newSizes[slotName];
+			}
+		}
+	}
 
 	/**
 	 * Creates GPT provider based on given params
@@ -23,6 +34,10 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	 */
 	function createProvider(logGroup, providerName, src, slotMap, extra) {
 		extra = extra || {};
+
+		if (extra.overrideSizesPerCountry && extra.overrideSizesPerCountry[country]) {
+			overrideSizes(slotMap, extra.overrideSizesPerCountry[country]);
+		}
 
 		function canHandleSlot(slotName) {
 			log(['canHandleSlot', slotName], 'debug', logGroup);
@@ -63,7 +78,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			slotTargeting.src = src;
 
 			if (lookups) {
-				lookups.extendSlotTargeting(slotName, slotTargeting);
+				lookups.extendSlotTargeting(slotName, slotTargeting, providerName);
 			}
 
 			gptHelper.pushAd(slotName, slotElement, slotPath, slotTargeting, extraParams);

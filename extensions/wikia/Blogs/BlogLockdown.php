@@ -110,11 +110,12 @@ class BlogLockdown {
 				break;
 
 			case "delete":
+			case "undelete":
 				if ( !$isArticle && $user->isAllowed( "blog-comments-delete" ) ) {
-					// this is a blog page and user have right to delete a comment let's move on
+					// this is a blog page and user have right to delete/undelete a comment let's move on
 					$result = true;
 				}
-				if ( $user->isAllowed( 'delete' ) ) {
+				if ( $user->isAllowed( $action ) ) {
 					$result = true;
 					$return = true;
 				}

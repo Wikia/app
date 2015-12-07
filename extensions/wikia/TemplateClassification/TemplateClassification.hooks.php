@@ -22,6 +22,8 @@ class Hooks {
 		\Hooks::register( 'EditPage::showEditForm:fields', [ $hooks, 'onEditPageShowEditFormFields' ] );
 		\Hooks::register( 'EditPageLayoutExecute', [ $hooks, 'onEditPageLayoutExecute' ] );
 		\Hooks::register( 'EditPageMakeGlobalVariablesScript', [ $hooks, 'onEditPageMakeGlobalVariablesScript' ] );
+		\Hooks::register( 'SkinTemplateNavigation', [ $hooks, 'onSkinTemplateNavigation' ] );
+		\Hooks::register( 'PageHeaderDropdownActions', [ $hooks, 'onPageHeaderDropdownActions' ] );
 	}
 
 	/**
@@ -54,11 +56,10 @@ class Hooks {
 		}
 
 		try {
-			( new \TemplateClassificationService() )->classifyTemplate(
+			( new \UserTemplateClassificationService() )->classifyTemplate(
 				$wgCityId,
 				$article->getId(),
 				$typeNew,
-				\TemplateClassificationService::USER_PROVIDER,
 				$user->getId()
 			);
 		} catch ( ApiException $e ) {
@@ -99,10 +100,10 @@ class Hooks {
 		$context = \RequestContext::getMain();
 
 		if ( ( new Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $context->getTitle() ) ) {
-			$templateType = $this->getTemplateTypeForEdit( $editPage->getTitle(), $wgCityId );
+			$types = $this->getTemplateTypeForEdit( $editPage->getTitle(), $wgCityId );
 
-			$out->addHTML( \Html::hidden( 'templateClassificationTypeCurrent', $templateType ) );
-			$out->addHTML( \Html::hidden( 'templateClassificationTypeNew', '' ) );
+			$out->addHTML( \Html::hidden( 'templateClassificationTypeCurrent', $types['current'] ) );
+			$out->addHTML( \Html::hidden( 'templateClassificationTypeNew', $types['new'] ) );
 		}
 
 		return true;
@@ -119,7 +120,9 @@ class Hooks {
 	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		$title = $out->getTitle();
 		$user = $skin->getUser();
-		if ( ( new Permissions() )->shouldDisplayEntryPoint( $user, $title ) ) {
+		$permissions = new Permissions();
+
+		if ( $permissions->shouldDisplayEntryPoint( $user, $title ) ) {
 			if ( $title->exists() && !$this->isEditPage() ) {
 				\Wikia::addAssetsToOutput( 'template_classification_in_view_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
@@ -129,6 +132,9 @@ class Hooks {
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
 				$this->addWelcomeHintAssets( $out, $user );
 			}
+		} elseif ( $permissions->shouldDisplayBulkActions( $user, $title ) ) {
+			\Wikia::addAssetsToOutput( 'template_classification_in_category_js' );
+			\Wikia::addAssetsToOutput( 'template_classification_scss' );
 		}
 		return true;
 	}
@@ -202,29 +208,66 @@ class Hooks {
 	 * Has fallback to infobox when in template draft conversion process
 	 * @param \Title $title
 	 * @param int $wikiaId
-	 * @return string
+	 * @return array
 	 */
 	private function getTemplateTypeForEdit( \Title $title, $wikiaId ) {
 		global $wgEnableTemplateDraftExt;
 
+		$types = [
+			'current' => '',
+			'new' => ''
+		];
+
 		if ( !empty( $wgEnableTemplateDraftExt )
 			&& \TemplateDraftHelper::isInfoboxDraftConversion( $title )
 		) {
-			return \TemplateClassificationService::TEMPLATE_INFOBOX;
+			$types['new'] = \TemplateClassificationService::TEMPLATE_INFOBOX;
+		} else {
+			try {
+				$types['current'] = ( new \UserTemplateClassificationService() )->getType( $wikiaId, $title->getArticleID() );
+			} catch ( ApiException $e ) {
+				( new Logger() )->exception( $e );
+				/**
+				 * If the service is unreachable - fill the field with a not-available string
+				 * which instructs front-end tools to skip the classification part.
+				 */
+				$types['current'] = \TemplateClassificationService::NOT_AVAILABLE;
+			}
 		}
 
-		try {
-			$templateType = ( new \UserTemplateClassificationService() )->getType( $wikiaId, $title->getArticleID() );
-		} catch ( ApiException $e ) {
-			( new Logger() )->exception( $e );
-			/**
-			 * If the service is unreachable - fill the field with a not-available string
-			 * which instructs front-end tools to skip the classification part.
-			 */
-			$templateType = \TemplateClassificationService::NOT_AVAILABLE;
+		return $types;
+	}
+
+	/**
+	 * Prepare bulk template classification action and adds to possible action links.
+	 *
+	 * @param \Skin $skin
+	 * @param $links
+	 * @return bool
+	 */
+	public function onSkinTemplateNavigation( \Skin $skin, &$links ) {
+		if ( ( new Permissions() )->shouldDisplayBulkActions( $skin->getUser(), $skin->getTitle() ) ) {
+			$links['views']['bulk-classification'] = [
+				'href' => '#',
+				'text' => wfMessage( 'template-classification-edit-modal-title-bulk-types' )->escaped(),
+				'class' => 'template-classification-type-text',
+			];
 		}
 
-		return $templateType;
+		return true;
+	}
+
+	/**
+	 * Add bulk template classification action to dropdown.
+	 * If this action not exists (@see onSkinTemplateNavigation) will be omitted.
+	 *
+	 * @param array $actions
+	 * @return bool
+	 */
+	public function onPageHeaderDropdownActions( array &$actions ) {
+		$actions[] = 'bulk-classification';
+
+		return true;
 	}
 
 	private function addWelcomeHintAssets( \OutputPage $out, \User $user ) {

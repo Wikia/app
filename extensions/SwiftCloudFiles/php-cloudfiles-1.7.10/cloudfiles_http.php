@@ -1510,7 +1510,7 @@ class CF_Http
 	// Wikia change - begin
 	// retry request in case of an error
 	const MAX_RETRIES = 5;
-	const RETRY_DELAY = 1000; // ms
+	const RETRY_DELAY = 250; // ms
 
 	private function _send_request($conn_type, $url_path, $hdrs=NULL, $method="GET", $force_new=False) {
 		$retriesLeft = self::MAX_RETRIES;

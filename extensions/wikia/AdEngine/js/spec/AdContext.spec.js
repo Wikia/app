@@ -40,15 +40,6 @@ describe('AdContext', function () {
 						return true;
 					}
 					return false;
-				},
-				isProperRegion: function () {
-					return false;
-				},
-				isProperContinent: function () {
-					return false;
-				},
-				isProperCountry: function () {
-					return false;
 				}
 			},
 			instantGlobals: {},
@@ -58,6 +49,9 @@ describe('AdContext', function () {
 			},
 			querystring: {
 				getVal: noop
+			},
+			wikiaCookies: {
+				get: noop
 			},
 			callback: noop
 		},
@@ -70,6 +64,7 @@ describe('AdContext', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.adContext'](
 			mocks.abTesting,
+			mocks.wikiaCookies,
 			mocks.doc,
 			mocks.geo,
 			mocks.instantGlobals,
@@ -595,6 +590,7 @@ describe('AdContext', function () {
 						showAds: true
 					},
 					targeting: {
+						pageType: 'article',
 						skin: 'oasis'
 					}
 				}
@@ -617,6 +613,7 @@ describe('AdContext', function () {
 						showAds: true
 					},
 					targeting: {
+						pageType: 'article',
 						skin: 'oasis'
 					}
 				}
@@ -639,6 +636,7 @@ describe('AdContext', function () {
 						showAds: true
 					},
 					targeting: {
+						pageType: 'article',
 						skin: 'oasis'
 					}
 				}
@@ -652,6 +650,29 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.recoveredAdsMessage).toBeTruthy();
 	});
 
+	it('disabled recoveredAdsMessage on non article page type', function () {
+		mocks.win = {
+			ads: {
+				context: {
+					opts: {
+						sourcePointDetectionUrl: '//foo.bar',
+						showAds: true
+					},
+					targeting: {
+						pageType: 'home',
+						skin: 'oasis'
+					}
+				}
+			}
+		};
+		mocks.instantGlobals = {
+			wgAdDriverSourcePointDetectionCountries: ['CURRENT_COUNTRY'],
+			wgAdDriverAdsRecoveryMessageCountries: ['CURRENT_COUNTRY-EE', 'CURRENT_COUNTRY']
+		};
+
+		expect(getModule().getContext().opts.recoveredAdsMessage).toBeFalsy();
+	});
+
 	it('disables recoveredAdsMessage when country and region in instant var and both are invalid', function () {
 		mocks.win = {
 			ads: {
@@ -660,6 +681,7 @@ describe('AdContext', function () {
 						sourcePointDetectionUrl: '//foo.bar'
 					},
 					targeting: {
+						pageType: 'article',
 						skin: 'oasis'
 					}
 				}
@@ -681,6 +703,7 @@ describe('AdContext', function () {
 						sourcePointDetectionUrl: '//foo.bar'
 					},
 					targeting: {
+						pageType: 'article',
 						skin: 'oasis'
 					}
 				}
@@ -703,6 +726,7 @@ describe('AdContext', function () {
 						showAds: false
 					},
 					targeting: {
+						pageType: 'article',
 						skin: 'oasis'
 					}
 				}
@@ -823,5 +847,25 @@ describe('AdContext', function () {
 		};
 
 		expect(getModule().getContext().opts.googleConsumerSurveys).toBeFalsy();
+	});
+
+	it('showcase is enabled if the cookie is set', function () {
+		mocks.wikiaCookies = {
+			get: function () {
+				return 'NlfdjR5xC0';
+			}
+		};
+
+		expect(getModule().getContext().opts.showcase).toBeTruthy();
+	});
+
+	it('showcase is disabled if cookie is not set', function () {
+		mocks.wikiaCookies = {
+			get: function () {
+				return false;
+			}
+		};
+
+		expect(getModule().getContext().opts.showcase).toBeFalsy();
 	});
 });

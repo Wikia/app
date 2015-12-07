@@ -8,6 +8,7 @@ use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_TestCase;
 use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Persistence\User\Preferences\PreferencePersistence;
+use Wikia\Service\PersistenceException;
 
 class PreferenceServiceImplTest extends PHPUnit_Framework_TestCase {
 	const TEST_WIKI_ID = 123;
@@ -139,6 +140,51 @@ class PreferenceServiceImplTest extends PHPUnit_Framework_TestCase {
 
 		$list = $preferences->findWikisWithLocalPreferenceValue( 'test-preference', '1' );
 		$this->assertEquals( $wikiList, $list );
+	}
+
+	public function testGetWithPersistenceExceptionReturnsReadOnly() {
+		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, new UserPreferences(), [], [] );
+
+		$this->persistence->expects( $this->once() )
+			->method( 'get' )
+			->with( $this->userId )
+			->will( $this->throwException( new PersistenceException ) );
+
+		$prefs = $preferences->getPreferences( $this->userId );
+		$this->assertTrue( $prefs->isReadOnly() );
+	}
+
+	public function testSaveShortCircuit() {
+		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, new UserPreferences(), [], [] );
+
+		$this->persistence->expects( $this->exactly( 1 ) )
+			->method( 'get' )
+			->with( $this->userId )
+			->will( $this->throwException( new PersistenceException ) );
+
+		$this->persistence->expects( $this->never() )
+			->method( 'save' )
+			->with( $this->userId, $this->isInstanceOf( UserPreferences::class ) );
+
+		$preferences->setGlobalPreference( $this->userId, "newpreference", "1" );
+		$prefs = $preferences->getPreferences( $this->userId );
+		$this->assertTrue( $prefs->isReadOnly() );
+		$this->assertFalse( $preferences->save( $this->userId ) );
+	}
+
+	public function testDeleteAllShortCircuit() {
+		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, new UserPreferences(), [], [] );
+
+		$this->persistence->expects( $this->exactly( 1 ) )
+			->method( 'get' )
+			->with( $this->userId )
+			->will( $this->throwException( new PersistenceException ) );
+
+		$this->persistence->expects( $this->never() )
+			->method( 'deleteAll' )
+			->with( $this->userId );
+
+		$this->assertFalse( $preferences->deleteAllPreferences( $this->userId ) );
 	}
 
 	protected function setupServiceExpects() {

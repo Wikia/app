@@ -27,7 +27,7 @@ table.TablePager { border: 1px solid gray;}
 <div class="wk-form-row">
  <ul>
  <li><label>Domain name</label></li>
- <li><input type="text" name="wpCityDomain" id="citydomain" value="<?php echo $domain ?>" size="24" maxlength="255" /></li>
+ <li><input type="text" name="wpCityDomain" id="citydomain" value="<?php echo $domain ?>" size="24" maxlength="255" autofocus></li>
  <li><button style="z-index:9002">Get configuration</button></li>
  </ul>
 </div>
