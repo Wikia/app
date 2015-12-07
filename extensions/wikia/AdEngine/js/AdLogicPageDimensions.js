@@ -21,6 +21,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			LEFT_SKYSCRAPER_2: 2400,
 			LEFT_SKYSCRAPER_3: 4000,
 			PREFOOTER_LEFT_BOXAD: preFootersThreshold,
+			PREFOOTER_MIDDLE_BOXAD: preFootersThreshold,
 			PREFOOTER_RIGHT_BOXAD: preFootersThreshold
 		},
 		pageHeight,

@@ -40,6 +40,11 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		}
 
 		function canHandleSlot(slotName) {
+
+			if (slotName === 'PREFOOTER_MIDDLE_BOXAD' && !extra.showMiddlePrefooter) {
+				return false;
+			}
+
 			log(['canHandleSlot', slotName], 'debug', logGroup);
 			var ret = !!slotMap[slotName];
 			log(['canHandleSlot', slotName, ret], 'debug', logGroup);

@@ -52,6 +52,9 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 				TOP_LEADERBOARD:         {size: '728x90,970x250,970x90', pos: 'top'},
 				TOP_RIGHT_BOXAD:         {size: '300x250,300x600', pos: 'top'},
 				LEFT_SKYSCRAPER_2:       {size: '160x600', pos: 'middle'},
+				PREFOOTER_LEFT_BOXAD:    {size: '300x250', loc: 'footer'},
+				PREFOOTER_MIDDLE_BOXAD:  {size: '300x250', loc: 'footer'},
+				PREFOOTER_RIGHT_BOXAD:   {size: '300x250', loc: 'footer'},
 				GPT_FLUSH:               {skipCall: true}
 			},
 			extra
@@ -142,5 +145,21 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		}).fillInSlot('TOP_LEADERBOARD');
 
 		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[3].size).toEqual('728x90,970x250,970x90');
+	});
+
+	it('Can handle middle prefooter', function () {
+		var provider = getProvider({
+			showMiddlePrefooter: true
+		});
+
+		expect(provider.canHandleSlot('PREFOOTER_MIDDLE_BOXAD')).toEqual(true);
+	});
+
+	it('Can not handle middle prefooter', function () {
+		var provider = getProvider({
+			showMiddlePrefooter: false
+		});
+
+		expect(provider.canHandleSlot('PREFOOTER_MIDDLE_BOXAD')).toEqual(false);
 	});
 });

@@ -38,6 +38,7 @@ define('ext.wikia.adEngine.slotTracker', [
 			LEFT_SKYSCRAPER_2:      'skyscraper',
 			LEFT_SKYSCRAPER_3:      'skyscraper',
 			PREFOOTER_LEFT_BOXAD:   'prefooter',
+			PREFOOTER_MIDDLE_BOXAD: 'prefooter',
 			PREFOOTER_RIGHT_BOXAD:  'prefooter',
 			TOP_BUTTON_WIDE:        'button',
 			TOP_LEADERBOARD:        'leaderboard',

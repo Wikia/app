@@ -72,24 +72,28 @@ describe('AdLogicPageDimensions', function () {
 		expect(adShown('LEFT_SKYSCRAPER_2', 1000)).toBeFalsy('height=1000 slot=LEFT_SKYSCRAPER_2 -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_3', 1000)).toBeFalsy('height=1000 slot=LEFT_SKYSCRAPER_3 -> ADS');
 		expect(adShown('PREFOOTER_LEFT_BOXAD', 1000)).toBeFalsy('height=1000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
+		expect(adShown('PREFOOTER_MIDDLE_BOXAD', 1000)).toBeFalsy('height=1000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
 		expect(adShown('PREFOOTER_RIGHT_BOXAD', 1000)).toBeFalsy('height=1000 slot=PREFOOTER_RIGHT_BOXAD -> ADS');
 
 		expect(adShown('foo', 2000)).toBeTruthy('height=2000 slot=foo -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 2000)).toBeFalsy('height=2000 slot=LEFT_SKYSCRAPER_2 -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_3', 2000)).toBeFalsy('height=2000 slot=LEFT_SKYSCRAPER_3 -> ADS');
 		expect(adShown('PREFOOTER_LEFT_BOXAD', 2000)).toBeTruthy('height=2000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
+		expect(adShown('PREFOOTER_MIDDLE_BOXAD', 2000)).toBeTruthy('height=2000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
 		expect(adShown('PREFOOTER_RIGHT_BOXAD', 2000)).toBeTruthy('height=2000 slot=PREFOOTER_RIGHT_BOXAD -> ADS');
 
 		expect(adShown('foo', 3000)).toBeTruthy('height=3000 slot=foo -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 3000)).toBeTruthy('height=3000 slot=LEFT_SKYSCRAPER_2 -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_3', 3000)).toBeFalsy('height=3000 slot=LEFT_SKYSCRAPER_3 -> NO ADS');
 		expect(adShown('PREFOOTER_LEFT_BOXAD', 3000)).toBeTruthy('height=3000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
+		expect(adShown('PREFOOTER_MIDDLE_BOXAD', 3000)).toBeTruthy('height=3000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
 		expect(adShown('PREFOOTER_RIGHT_BOXAD', 3000)).toBeTruthy('height=3000 slot=PREFOOTER_RIGHT_BOXAD -> ADS');
 
 		expect(adShown('foo', 5000)).toBeTruthy('height=5000 slot=foo -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 5000)).toBeTruthy('height=5000 slot=LEFT_SKYSCRAPER_2 -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_3', 5000)).toBeTruthy('height=5000 slot=LEFT_SKYSCRAPER_3 -> ADS');
 		expect(adShown('PREFOOTER_LEFT_BOXAD', 5000)).toBeTruthy('height=5000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
+		expect(adShown('PREFOOTER_MIDDLE_BOXAD', 5000)).toBeTruthy('height=5000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
 		expect(adShown('PREFOOTER_RIGHT_BOXAD', 5000)).toBeTruthy('height=5000 slot=PREFOOTER_RIGHT_BOXAD -> ADS');
 	});
 
@@ -98,24 +102,28 @@ describe('AdLogicPageDimensions', function () {
 		expect(adShown('LEFT_SKYSCRAPER_2', 1000, 'responsive', width2000)).toBeFalsy('height=1000 slot=LEFT_SKYSCRAPER_2 -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_3', 1000, 'responsive', width2000)).toBeFalsy('height=1000 slot=LEFT_SKYSCRAPER_3 -> ADS');
 		expect(adShown('PREFOOTER_LEFT_BOXAD', 1000, 'responsive', width2000)).toBeFalsy('height=1000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
+		expect(adShown('PREFOOTER_MIDDLE_BOXAD', 1000, 'responsive', width2000)).toBeFalsy('height=1000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
 		expect(adShown('PREFOOTER_RIGHT_BOXAD', 1000, 'responsive', width2000)).toBeFalsy('height=1000 slot=PREFOOTER_RIGHT_BOXAD -> ADS');
 
 		expect(adShown('foo', 2000, 'responsive', width2000)).toBeTruthy('height=2000 slot=foo -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 2000, 'responsive', width2000)).toBeFalsy('height=2000 slot=LEFT_SKYSCRAPER_2 -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_3', 2000, 'responsive', width2000)).toBeFalsy('height=2000 slot=LEFT_SKYSCRAPER_3 -> ADS');
 		expect(adShown('PREFOOTER_LEFT_BOXAD', 2000, 'responsive', width2000)).toBeTruthy('height=2000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
+		expect(adShown('PREFOOTER_MIDDLE_BOXAD', 2000, 'responsive', width2000)).toBeTruthy('height=2000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
 		expect(adShown('PREFOOTER_RIGHT_BOXAD', 2000, 'responsive', width2000)).toBeTruthy('height=2000 slot=PREFOOTER_RIGHT_BOXAD -> ADS');
 
 		expect(adShown('foo', 3000, 'responsive', width2000)).toBeTruthy('height=3000 slot=foo -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 3000, 'responsive', width2000)).toBeTruthy('height=3000 slot=LEFT_SKYSCRAPER_2 -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_3', 3000, 'responsive', width2000)).toBeFalsy('height=3000 slot=LEFT_SKYSCRAPER_3 -> NO ADS');
 		expect(adShown('PREFOOTER_LEFT_BOXAD', 3000, 'responsive', width2000)).toBeTruthy('height=3000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
+		expect(adShown('PREFOOTER_MIDDLE_BOXAD', 3000, 'responsive', width2000)).toBeTruthy('height=3000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
 		expect(adShown('PREFOOTER_RIGHT_BOXAD', 3000, 'responsive', width2000)).toBeTruthy('height=3000 slot=PREFOOTER_RIGHT_BOXAD -> ADS');
 
 		expect(adShown('foo', 5000, 'responsive', width2000)).toBeTruthy('height=5000 slot=foo -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 5000, 'responsive', width2000)).toBeTruthy('height=5000 slot=LEFT_SKYSCRAPER_2 -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_3', 5000, 'responsive', width2000)).toBeTruthy('height=5000 slot=LEFT_SKYSCRAPER_3 -> ADS');
 		expect(adShown('PREFOOTER_LEFT_BOXAD', 5000, 'responsive', width2000)).toBeTruthy('height=5000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
+		expect(adShown('PREFOOTER_MIDDLE_BOXAD', 5000, 'responsive', width2000)).toBeTruthy('height=5000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
 		expect(adShown('PREFOOTER_RIGHT_BOXAD', 5000, 'responsive', width2000)).toBeTruthy('height=5000 slot=PREFOOTER_RIGHT_BOXAD -> ADS');
 	});
 
