@@ -3135,11 +3135,9 @@ class PoolWorkArticleView extends PoolCounterWork {
 
 		# PLATFORM-1355 (investigate blank pages)
 		# Check to see if Input exists but Output is just a Parser Performance dump with no other content
-		$stats = $this->parserOutput->getPerformanceStats();
-		if ( $stats && !empty($text) && preg_match("/^\n<!-- \nNewPP/s", $this->parserOutput->mText) === 1) {
+		if ( !empty($text) && preg_match("/^\n<!-- \nNewPP/s", $this->parserOutput->mText) === 1) {
 			\Wikia\Logger\WikiaLogger::instance()->error(
-				__METHOD__ . ' empty content PLAT1355',
-				[ 'stats' => $stats ]
+				__METHOD__ . ' empty content PLAT1355'
 			);
 			// In addition to logging, do this quick hack/fix for blank pages
 			$this->cacheable = false;
