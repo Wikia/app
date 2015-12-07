@@ -71,7 +71,7 @@ class DataTablesTest extends WikiaBaseTest {
 | 10
 | {{common}}
 |}',
-				'{| data-portable="false"  class="va-table va-table-center"
+				'{| data-portable="false" class="va-table va-table-center"
 ! {{icon|pistol|big|tooltip=Weapon name}}
 ! {{Icon|damage|big|tooltip=Weapon damage}}
 ! {{Icon|merchant|big|tooltip=Weapon value}}
@@ -84,7 +84,7 @@ class DataTablesTest extends WikiaBaseTest {
 | {{common}}
 |}
 
-{| data-portable="false"  class="va-table va-table-center"
+{| data-portable="false" class="va-table va-table-center"
 ! {{icon|pistol|big|tooltip=Weapon name}}
 ! {{Icon|damage|big|tooltip=Weapon damage}}
 ! {{Icon|merchant|big|tooltip=Weapon value}}
@@ -99,7 +99,38 @@ class DataTablesTest extends WikiaBaseTest {
 			[ '{| data-portable="false" class="va-table va-table-center"
 |}',
 			  '{| data-portable="false" class="va-table va-table-center"
-|}' ]
+|}' ],
+			[ '<table></table>', '<table data-portable="false"></table>' ],
+			[ '{| class="va-table va-table-center"
+! {{icon|pistol|big|tooltip=Weapon name}}
+! {{Icon|damage|big|tooltip=Weapon damage}}
+! {{Icon|merchant|big|tooltip=Weapon value}}
+! {{icon|rarity|big|Tooltip=Weapon rarity}}
+
+|-
+| [[Rusty BB gun]]
+| 0-1
+| 10
+| {{common}}
+|}
+asdkjf kasjdflk [[asdfasdf]]
+<table><tr><td>asdfadsf</td></tr><tr><td>asdfadfasdf</td></tr></table>',
+			  '{| data-portable="false" class="va-table va-table-center"
+! {{icon|pistol|big|tooltip=Weapon name}}
+! {{Icon|damage|big|tooltip=Weapon damage}}
+! {{Icon|merchant|big|tooltip=Weapon value}}
+! {{icon|rarity|big|Tooltip=Weapon rarity}}
+
+|-
+| [[Rusty BB gun]]
+| 0-1
+| 10
+| {{common}}
+|}
+asdkjf kasjdflk [[asdfasdf]]
+<table data-portable="false"><tr><td>asdfadsf</td></tr><tr><td>asdfadfasdf</td></tr></table>' ],
+			[ '<table></table> sakjdflkjds k <table/>',
+			  '<table data-portable="false"></table> sakjdflkjds k <table data-portable="false"/>' ],
 		];
 	}
 

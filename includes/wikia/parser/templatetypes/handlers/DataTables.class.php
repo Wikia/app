@@ -14,9 +14,18 @@ class DataTables {
 	public static function markTranscludedTables( &$wikitext, &$finalTitle ) {
 		wfProfileIn( __METHOD__ );
 		//check for tables
-		if ( static::shouldBeProcessed() && preg_match_all( "/\\{\\|(.*)/\n", $wikitext, $matches ) ) {
-			foreach ( $matches[ 1 ] as $key => $match ) {
-				$wikitext = str_replace( $matches[ 0 ][ $key ], static::markTable( $match ), $wikitext );
+		if ( static::shouldBeProcessed() ) {
+			// marks wikitext tables
+			if ( preg_match_all( "/\\{\\|(.*)/\n", $wikitext, $matches ) ) {
+				for ( $i = 0; $i < count( $matches[ 0 ] ); $i++ ) {
+					$wikitext = static::markTable( $wikitext, $matches[ 0 ][ $i ], $matches[ 1 ][ $i ], '{|' );
+				}
+			}
+			if ( preg_match_all( "/<table(.*)(\\/?>)/sU", $wikitext, $htmlTables ) ) {
+				for ( $i = 0; $i < count( $htmlTables[ 0 ] ); $i++ ) {
+					$wikitext = static::markTable( $wikitext,
+						$htmlTables[ 0 ][ $i ], $htmlTables[ 1 ][ $i ], '<table', $htmlTables[ 2 ][ $i ] );
+				}
 			}
 		}
 
@@ -72,12 +81,15 @@ class DataTables {
 		return $wgEnableDataTablesParsing && $wgArticleAsJson;
 	}
 
-	private static function markTable( $attributes, $portable = false ) {
-		if ( mb_stripos( $attributes, self::DATA_PORTABLE_ATTRIBUTE ) !== false ) {
-			return "{|" . $attributes;
+	private static function markTable( $wikitext, $table, $attributes, $startTag = '', $endTag = '' ) {
+		if ( mb_stripos( $attributes, self::DATA_PORTABLE_ATTRIBUTE ) === false ) {
+			return str_replace(
+				$table,
+				$startTag . ' ' . trim( self::DATA_PORTABLE_ATTRIBUTE . "=\"false\" " . ltrim( $attributes ) ) . $endTag,
+				$wikitext
+			);
 		}
-		$p = $portable ? "true" : "false";
 
-		return "{| " . self::DATA_PORTABLE_ATTRIBUTE . "=\"{$p}\" " . $attributes;
+		return $wikitext;
 	}
 }
