@@ -79,6 +79,7 @@ class TemplateClassificationController extends WikiaController {
 
 		$this->validateRequestForBulkEdit( $category, $templateType );
 
+		$category = Title::newFromText( $category, NS_CATEGORY )->getDBkey();
 		$templates = ( new Helper() )->getTemplatesByCategory( $category );
 		$templatesCount = count( $templates );
 		$utcs = new UserTemplateClassificationService();

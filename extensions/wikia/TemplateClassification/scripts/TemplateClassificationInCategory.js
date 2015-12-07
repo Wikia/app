@@ -38,9 +38,7 @@ define('TemplateClassificationInCategory', ['jquery', 'mw', 'wikia.nirvana', 'wi
 				callback: function (response) {
 					var message;
 
-
-
-					if ( response.notification.length ) {
+					if (response.notification) {
 						message = response.notification;
 					} else {
 						message = mw.message('template-classification-edit-modal-success').escaped();
@@ -54,7 +52,7 @@ define('TemplateClassificationInCategory', ['jquery', 'mw', 'wikia.nirvana', 'wi
 				onErrorCallback: function (response) {
 					var errorMessage, e;
 
-					if (response.responseText.length) {
+					if (response.responseText) {
 						e = $.parseJSON(response.responseText);
 						errorMessage = e.exception.message;
 					} else {
