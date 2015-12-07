@@ -85,7 +85,8 @@ define('TemplateClassificationInCategory',
 				$hintTooltip = $('#WikiaPageHeader').children('.wikia-menu-button')
 					.tooltip({
 						placement: 'right',
-						title: createHintMessage()
+						title: createHintMessage(),
+						trigger: 'manual'
 					});
 
 				$hintTooltip.tooltip('show');
@@ -98,7 +99,7 @@ define('TemplateClassificationInCategory',
 		}
 
 		function createHintMessage() {
-			var closeHint = '<br/><a class="close-bulk-hint" href="#">' +
+			var closeHint = '<br/><br/><a class="close-bulk-hint" href="#">' +
 				mw.message('template-classification-bulk-classification-agreement').escaped() + '</a>';
 
 			return mw.message(
