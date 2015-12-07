@@ -49,6 +49,16 @@ The recently submitted change to this JavaScript page (revision [$2 $3]) was rej
 Names should not contain the MediaWiki namespace prefix. Write each script on a new line. See [[Help:Including additional CSS and JS]] for more information.
 ----
 ',
+	'content-review-user-badges-description' => 'To use this feature, you must import [[w:c:dev:UserBadges|UserBadges.js]] from dev.wikia.com. [[w:c:dev:UserBadges|Learn more]].
+
+Use this page to customize the badges that appear on user profiles. Separate usernames and badges by a colon. To display multiple badges for a user, separate each badge text with commas. Write each username on a new line.
+
+Examples:
+
+ ExampleUsername : Trainee, Newbie
+ ExampleUsername2 : Guru
+----
+',
 );
 
 $messages['qqq'] = array(
@@ -93,6 +103,11 @@ $messages['qqq'] = array(
 	'content-review-special-js-description' => 'Text with description of this special page that contains lists with all scripts in MediaWiki namespace on that community with their review statuses and linking to help page.',
 	'content-review-special-js-importjs-description' => 'Information that user can manage script imports from community or dev.wikia.com by editing  MediaWiki:ImportJS page.',
 	'content-review-importjs-description' => 'Information for user how to add scripts. For scripts from local wikia, user should only add article name and from dev.wikia.com should preceded them by "dev:". Also user should add MediaWiki namespace and should add each script in separate line.',
+	'content-review-user-badges-description' => 'Inform user that to use this feature user must import UserBadge.js script from dev.wikia.com. Then explain that user should use current page to customize user badges on their profiles by adding user name and badges separated by colon.
+	 If user wants to provide for than one badge for user should separate them by comma. Also each user name should be written in new line. Examples:
+
+    * ExampleUsername : Trainee, Newbie
+    * ExampleUsername2 : Guru'
 );
 
 $messages['de'] = array(
