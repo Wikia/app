@@ -160,7 +160,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		throbber.remove($throbber);
 
 		// Make sure that focus is in the right place but scroll the modal window to the top
-		$preselectedTypeInput = $('#template-classification-' + preselectedType);
+		$preselectedTypeInput = modalInstance.$element.find('#template-classification-' + preselectedType);
 		if ($preselectedTypeInput.length !== 0) {
 			$classificationForm.find('input:checked').removeProp('checked');
 			$preselectedTypeInput.prop('checked', true).focus();
