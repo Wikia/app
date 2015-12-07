@@ -9,8 +9,6 @@ use Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder;
 class TemplateClassificationService {
 
 	const SERVICE_NAME = 'template-classification-storage';
-	const USER_PROVIDER = 'user';
-	const AUTO_PROVIDER = 'auto';
 	
 	const TEMPLATE_CONTEXT_LINK = 'context-link';
 	const TEMPLATE_CUSTOM_INFOBOX = 'custom-infobox';

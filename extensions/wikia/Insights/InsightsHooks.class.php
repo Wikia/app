@@ -134,7 +134,7 @@ class InsightsHooks {
 	}
 
 
-	public static function onTemplateClassified( $pageId, \Title $title, $templateType ) {
+	public static function onTemplateClassified( $pageId, Title $title, $templateType ) {
 		if ( !RecognizedTemplatesProvider::isUnrecognized( $templateType ) ) {
 			$model = new InsightsTemplatesWithoutTypeModel();
 			$model->removeFixedItem( TemplatesWithoutTypePage::TEMPLATES_WITHOUT_TYPE_TYPE, $title );
