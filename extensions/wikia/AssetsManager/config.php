@@ -2668,6 +2668,16 @@ $config['template_classification_in_edit_js'] = [
 	]
 ];
 
+$config['template_classification_in_category_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationInCategory.js',
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationLabeling.js',
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationModal.js',
+	]
+];
+
 $config['template_classification_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],

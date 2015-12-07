@@ -1,6 +1,13 @@
 <?php
 
+use Swagger\Client\ApiException;
+
 class UserTemplateClassificationService extends TemplateClassificationService {
+
+	const USER_PROVIDER = 'user';
+	const CLASSIFY_TEMPLATE_EXCEPTION_MESSAGE = 'Bad request. Template type %s is not valid.';
+	const CLASSIFY_TEMPLATE_EXCEPTION_CODE = 400;
+
 	/**
 	 * Allowed types of templates stored in an array to make a validation process easier.
 	 *
@@ -25,6 +32,15 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 	];
 
 	/**
+	 * Types mapped as infobox ones
+	 * @var array
+	 */
+	static $infoboxTypes = [
+		self::TEMPLATE_INFOBOX,
+		self::TEMPLATE_CUSTOM_INFOBOX,
+	];
+
+	/**
 	 * Fallback to the Unclassified string if a received type is not supported by
 	 * the user-facing tools.
 	 *
@@ -35,12 +51,94 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 	 * @throws \Swagger\Client\ApiException
 	 */
 	public function getType( $wikiId, $pageId ) {
-		$templateType = parent::getType( $wikiId, $pageId );
+		return $this->mapType( parent::getType( $wikiId, $pageId ) );
+	}
 
-		if ( !in_array( $templateType, self::$templateTypes ) ) {
-			$templateType = self::TEMPLATE_UNCLASSIFIED;
+	/**
+	 * Check if a given type is mapped as an infobox one.
+	 * @param string $type
+	 * @return bool
+	 */
+	public function isInfoboxType( $type ) {
+		return in_array( $type, self::$infoboxTypes );
+	}
+
+	protected function prepareTypes( $types ) {
+		$templateTypes = [];
+
+		foreach ( $types as $type ) {
+			$templateTypes[$type->getPageId()] = $this->mapType( $type->getType() );
 		}
 
-		return $templateType;
+		return $templateTypes;
+	}
+
+	private function mapType( $type ) {
+		if ( $this->isInfoboxType( $type ) ) {
+			return self::TEMPLATE_INFOBOX;
+		}
+
+		if ( !in_array( $type, self::$templateTypes ) ) {
+			return self::TEMPLATE_UNCLASSIFIED;
+		}
+
+		return $type;
+	}
+
+	/**
+	 * Verify template type before user classification
+	 *
+	 * @param int $wikiId
+	 * @param int $pageId
+	 * @param string $templateType
+	 * @param string $origin
+	 * @throws BadRequestApiException
+	 */
+	public function classifyTemplate( $wikiId, $pageId, $templateType, $origin ) {
+		$this->checkTemplateType( $templateType );
+
+		parent::classifyTemplate( $wikiId, $pageId, $templateType, self::USER_PROVIDER, $origin );
+
+		$title = Title::newFromID( $pageId );
+		wfRunHooks( 'UserTemplateClassification::TemplateClassified', [ $pageId, $title, $templateType ] );
+	}
+
+	/**
+	 * Classify many templates with given type
+	 *
+	 * @param int $wikiId
+	 * @param array $templates
+	 * @param string $templateType
+	 * @param int $userId
+	 * @return array list of pages which failed during classification
+	 * @throws MWException
+	 */
+	public function classifyMultipleTemplates( $wikiId, Array $templates, $templateType, $userId ) {
+		$errors = [];
+
+		foreach ( $templates as $templateId => $templateTitle ) {
+			try {
+				$this->classifyTemplate( $wikiId, $templateId, $templateType, $userId );
+			} catch ( ApiException $e ) {
+				$errors[] = Title::newFromText( $templateTitle )->getText();
+			}
+		}
+
+		return $errors;
+	}
+
+	/**
+	 * Check if given template type is allowed
+	 *
+	 * @param string $templateType
+	 * @throws ApiException
+	 */
+	public function checkTemplateType( $templateType ) {
+		if ( !in_array( $templateType, self::$templateTypes ) ) {
+			throw new ApiException(
+				sprintf( self::CLASSIFY_TEMPLATE_EXCEPTION_MESSAGE, $templateType ),
+				self::CLASSIFY_TEMPLATE_EXCEPTION_CODE
+			);
+		}
 	}
 }

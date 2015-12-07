@@ -580,7 +580,7 @@ class CreateWikiLocalJob extends Job {
 	 * TheSchwartz will call api.php?method=awcreminder
 	 */
 	private function queueReminderMail() {
-		global $wgServer, $wgTheSchwartzSecretToken, $wgWikiaEnableFounderEmailsExt;
+		global $wgServer, $wgTheSchwartzSecretToken, $wgWikiaEnableFounderEmailsExt, $wgHTTPProxy;
 
 		if(!empty($wgWikiaEnableFounderEmailsExt)) {
 			// skip this step when FounderEmails extension is enabled
@@ -597,7 +597,7 @@ class CreateWikiLocalJob extends Job {
 				"theschwartz_run_after" => time() + self::REMINDER_DELAY,
 				"url" => $backurl
 			),
-			CURLOPT_PROXY => "127.0.0.1:6081",
+			CURLOPT_PROXY => $wgHTTPProxy,
 			'timeout' => 'default'
 		));
 	}

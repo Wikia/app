@@ -2,11 +2,8 @@
 	'use strict';
 
 	var ImageCollection = {
-		init: function() {
-			this.setupTabs();
-		},
-		setupTabs: function() {
-			var $imageCollections = $('.pi-image-collection');
+		init: function($content) {
+			var $imageCollections = $content.find('.pi-image-collection');
 
 			$imageCollections.each( function( index, collection ) {
 				var $collection = $imageCollections.eq(index),
@@ -28,8 +25,8 @@
 	};
 
 	var CollapsibleGroup = {
-		init: function() {
-			var $collapsibleGroups = $('.pi-collapse');
+		init: function($content) {
+			var $collapsibleGroups = $content.find('.pi-collapse');
 
 			$collapsibleGroups.each( function( index, group ) {
 				var $group = $collapsibleGroups.eq(index),
@@ -40,8 +37,10 @@
 				});
 			});
 		}
-	}
+	};
 
-	ImageCollection.init();
-	CollapsibleGroup.init();
+	mw.hook('wikipage.content').add(function($content) {
+		ImageCollection.init($content);
+		CollapsibleGroup.init($content);
+	});
 })(window, jQuery);

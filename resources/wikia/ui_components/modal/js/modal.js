@@ -390,6 +390,14 @@ define('wikia.ui.modal', [
 		this.$element.find('header h3').text(title);
 	};
 
+	/**
+	 * Scroll's modal content to a given offset
+	 * @param {int} offsetTop in pixels
+	 */
+	Modal.prototype.scroll = function (offsetTop) {
+		this.$element.find('section').scrollTop(offsetTop);
+	}
+
 	/** Public API */
 
 	return {

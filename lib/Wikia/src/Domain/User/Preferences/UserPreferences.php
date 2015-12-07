@@ -4,6 +4,9 @@ namespace Wikia\Domain\User\Preferences;
 
 class UserPreferences {
 
+	/** @var boolean */
+	private $readOnly = false;
+
 	/** @var GlobalPreference[] */
 	private $globalPreferences;
 
@@ -79,5 +82,22 @@ class UserPreferences {
 	 */
 	public function getLocalPreferences() {
 		return $this->localPreferences;
+	}
+
+	/**
+	 * This toggle is to flag the object as being not suitable for saving.
+	 *
+	 * @param boolean state true to set the preferences to read only
+	 */
+	public function setReadOnly( $state ) {
+		$this->readOnly = $state;
+		return $this;
+	}
+
+	/**
+	 * @return boolean the read only state
+	 */
+	public function isReadOnly() {
+		return $this->readOnly;
 	}
 }
