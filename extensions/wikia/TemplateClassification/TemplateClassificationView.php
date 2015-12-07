@@ -6,6 +6,10 @@ use Swagger\Client\ApiException;
 
 class View {
 
+	const COMMAND_KEY = '⌘';
+	const CONTROL_KEY = 'Ctrl';
+	const HAS_SEEN_HINT = 'SeenHintTemplateClassificationModalEntryPoint';
+
 	/**
 	 * Returns HTML with Template type.
 	 * If a user is logged in it returns also an entry point for edition.
@@ -62,10 +66,12 @@ class View {
 		 */
 		$templateTypeMessage = wfMessage( "template-classification-type-{$templateType}" )->plain();
 
-		$editButton = flase;
+		$editButton = false;
 		if ( ( new Permissions() )->userCanChangeType( $user, $title ) ) {
 			$editButton = true;
 		}
+
+		$hint = $this->prepareHint( $user, $title->getArticleID() );
 
 		return \MustacheService::getInstance()->render(
 			__DIR__ . '/templates/TemplateClassificationViewPageEntryPoint.mustache',
@@ -74,7 +80,39 @@ class View {
 				'templateType' => $templateType,
 				'templateTypeName' => $templateTypeMessage,
 				'editButton' => $editButton,
+				'hint' => $hint,
 			]
 		);
+	}
+
+	private function prepareHint( \User $user, $pageId ) {
+		global $wgCityId;
+
+		$hasSeen = $user->getGlobalPreference( self::HAS_SEEN_HINT, 0 );
+		if ( !$hasSeen ) {
+
+			$type = ( new \UserTemplateClassificationService() )
+				->getType( $wgCityId, $pageId );
+
+			if ( \RecognizedTemplatesProvider::isUnrecognized( $type ) ) {
+				return [
+					'mode' => 'welcome',
+					'msg' => '', // Message generated in frontend as it contains html
+					'trigger' => 'click',
+					'hasSeen' => $hasSeen
+				];
+
+			}
+		}
+		$key = self::CONTROL_KEY;
+		if ( strpos( $_SERVER['HTTP_USER_AGENT'], 'Mac' ) !== false ) {
+			$key = self::COMMAND_KEY;
+		}
+		return [
+			'mode' => 'key',
+			'msg' => wfMessage( 'template-classification-open-modal-key-tip', $key )->plain(),
+			'trigger' => 'hover',
+			'hasSeen' => $hasSeen
+		];
 	}
 }
