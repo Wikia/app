@@ -51,12 +51,12 @@ Names should not contain the MediaWiki namespace prefix. Write each script on a 
 ',
 	'content-review-user-badges-description' => 'To use this feature, you must import [[w:c:dev:UserBadges|UserBadges.js]] from dev.wikia.com. [[w:c:dev:UserBadges|Learn more]].
 
-Use this page to customize the badges that appear on user profiles. Separate usernames and badges by a colon. To display multiple badges for a user, separate each badge text with commas. Write each username on a new line.
+Use this page to customize the badges that appear on user profiles. Separate usernames and badges by a pipe ("|"). To display multiple badges for a user, separate each badge text with commas. Write each username on a new line.
 
 Examples:
 
- ExampleUsername : Trainee, Newbie
- ExampleUsername2 : Guru
+ ExampleUsername | Trainee, Newbie
+ ExampleUsername2 | Guru
 ----
 ',
 );
