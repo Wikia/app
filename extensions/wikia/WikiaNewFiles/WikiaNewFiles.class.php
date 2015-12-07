@@ -70,7 +70,6 @@ class WikiaNewFiles extends IncludableSpecialPage {
 		global $wgMemc;
 		$anchorLength = 60;
 
-		wfProfileIn( __METHOD__ );
 		$cacheKey = wfMemcKey( __METHOD__, md5( $image->img_name ) );
 		$data = $wgMemc->get( $cacheKey );
 		if ( !is_array( $data ) ) {
@@ -100,8 +99,6 @@ class WikiaNewFiles extends IncludableSpecialPage {
 				$links[] = Linker::link( $name, wfShortenText( $name, $anchorLength ), array( 'class' => 'wikia-gallery-item-posted' ) );
 			}
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return $links;
 	}
@@ -151,7 +148,9 @@ class WikiaNewFiles extends IncludableSpecialPage {
 				'until=' . $lastTimestamp . $botpar );
 		}
 
-		return '<p id="newfiles-nav">' . $botLink . ' ' . wfMessage( 'viewprevnext' )->rawParams( $prevLink, $nextLink, $dateLink )->escaped() . '</p>';
+		$pagination = wfMessage( 'viewprevnext' )->rawParams( $prevLink, $nextLink, $dateLink )->escaped();
+
+		return '<p id="newfiles-nav">' . $botLink . ' ' . $pagination . '</p>';
 	}
 
 	/**
