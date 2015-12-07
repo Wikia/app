@@ -72,6 +72,7 @@ $wgAutoloadClasses['Wikia\TemplateClassification\View'] = __DIR__ . '/TemplateCl
 /**
  * Other
  */
+$wgLogActionsHandlers['templateclassification/*'] = 'LogFormatter';
 $wgAutoloadClasses['Wikia\TemplateClassification\Logger'] = __DIR__ . '/Logger.class.php';
 $wgAutoloadClasses['Wikia\TemplateClassification\Helper'] = __DIR__ . '/Helper.class.php';
 $wgAutoloadClasses['Wikia\TemplateClassification\TemplateBulkClassificationTask'] = __DIR__ . '/TemplateBulkClassificationTask.class.php';
