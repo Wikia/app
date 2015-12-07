@@ -6,13 +6,8 @@
 
 use Swagger\Client\ApiException;
 use Wikia\TemplateClassification\Helper;
-use Wikia\Logger\Loggable;
 
 class TemplateClassificationController extends WikiaController {
-	use Loggable;
-
-	const INSTANT_CLASSIFICATION_LIMIT = 100;
-	const MAX_ERROR_PAGES = 20;
 
 	/**
 	 * Renders a set of radio inputs used to classify a template.
@@ -80,32 +75,19 @@ class TemplateClassificationController extends WikiaController {
 		$this->validateRequestForBulkEdit( $category, $templateType );
 
 		$templates = ( new Helper() )->getTemplatesByCategory( $category );
-		$templatesCount = count( $templates );
 		$utcs = new UserTemplateClassificationService();
 
-		$utcs->checkTemplateType( $templateType );
-
-		if ( count( $templates) > self::INSTANT_CLASSIFICATION_LIMIT ) {
-			$this->runBulkClassificationTask( $templates, $templateType, $userId, $category );
-			$this->setVal( 'notification', wfMessage( 'template-classification-edit-modal-bulk-task' )->escaped() );
-		} else {
-			$errors = $utcs->classifyMultipleTemplates( $this->wg->CityId, $templates, $templateType, $userId );
+		foreach ( $templates as $templateId => $templateTitle ) {
+			try {
+				$utcs->classifyTemplate( $this->wg->CityId, $templateId, $templateType, 'user', $userId );
+			} catch( ApiException $e ) {
+				$errors[] = Title::newFromText( $templateTitle )->getText();
+			}
 		}
 
 		if ( !empty( $errors ) ) {
-			$this->prepareBulkActionError( $errors, $templatesCount );
-			$this->logErrors( $templateType, $category, $errors, $templatesCount );
-		} else {
-			$this->logSuccess( $templateType, $category, $templatesCount );
+			$this->prepareBulkActionError( $errors, $templates );
 		}
-	}
-
-	private function runBulkClassificationTask( Array $templates, $templateType, $userId, $category ) {
-		$task = new \Wikia\TemplateClassification\TemplateBulkClassificationTask();
-		$task->wikiId( $this->wg->CityId );
-		$task->call( 'classifyTemplates', $templates, $templateType, $userId, $category );
-		$task->prioritize();
-		$task->queue();
 	}
 
 	private function validateRequestForBulkEdit( $category, $templateType ) {
@@ -130,48 +112,19 @@ class TemplateClassificationController extends WikiaController {
 		return true;
 	}
 
-	private function prepareBulkActionError( Array $errors, $templatesCount ) {
+	private function prepareBulkActionError( Array $errors, Array $templates ) {
 		$errorsCount = count( $errors );
 
-		if ( $errorsCount === $templatesCount ) {
+		if ( $errorsCount === count( $templates ) ) {
 			$errorMessage = wfMessage( 'template-classification-edit-modal-error' )->escaped();
-		} elseif ( $errorsCount > self::MAX_ERROR_PAGES ) {
-			$errorMessage = wfMessage( 'template-classification-edit-modal-bulk-error-limited',
-				$errorsCount,
-				$templatesCount
-			)->escaped();
 		} else {
-			$pages = $this->wg->Lang->listToText( $errors );
+			$pages = ( new Language() )->listToText( $errors );
 			$errorMessage = wfMessage(
 				'template-classification-edit-modal-bulk-error',
 				$errorsCount,
 				$pages
 			)->escaped();
 		}
-
 		throw new ApiException( $errorMessage, 500 );
-	}
-
-	private function logErrors( $templateType, $category, $errors, $templatesCount ) {
-		$this->error( 'bulkClassificationFailed', [
-			'wiki_id' => $this->wg->CityId,
-			'category' => $category,
-			'template_type' => $templateType,
-			'user_id' => $this->wg->User->getId(),
-			'bulk_type' => 'user',
-			'failed' => $errors,
-			'failed_ratio' => count( $errors ) . ' / ' . $templatesCount
-		] );
-	}
-
-	private function logSuccess( $templateType, $category, $templatesCount ) {
-		$this->info( 'bulkClassificationSuccess', [
-			'wiki_id' => $this->wg->CityId,
-			'category' => $category,
-			'template_type' => $templateType,
-			'user_id' => $this->wg->User->getId(),
-			'bulk_type' => 'user',
-			'templates_classified' => $templatesCount
-		] );
 	}
 }

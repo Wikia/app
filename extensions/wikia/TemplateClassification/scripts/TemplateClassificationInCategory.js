@@ -35,27 +35,17 @@ define('TemplateClassificationInCategory', ['jquery', 'mw', 'wikia.nirvana', 'wi
 					category: mw.config.get('wgTitle'),
 					editToken: mw.user.tokens.get('editToken')
 				},
-				callback: function (response) {
-					var message;
-
-
-
-					if ( response.notification.length ) {
-						message = response.notification;
-					} else {
-						message = mw.message('template-classification-edit-modal-success').escaped();
-					}
-
+				callback: function () {
 					new BannerNotification(
-						message,
+						mw.message('template-classification-edit-modal-success').escaped(),
 						'confirm'
 					).show();
 				},
-				onErrorCallback: function (response) {
+				onErrorCallback: function (error) {
 					var errorMessage, e;
 
-					if (response.responseText.length) {
-						e = $.parseJSON(response.responseText);
+					if (error.responseText.length) {
+						e = $.parseJSON(error.responseText);
 						errorMessage = e.exception.message;
 					} else {
 						errorMessage = mw.message('template-classification-edit-modal-error').escaped();
