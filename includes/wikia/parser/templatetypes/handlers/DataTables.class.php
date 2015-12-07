@@ -21,6 +21,7 @@ class DataTables {
 					$wikitext = static::markTable( $wikitext, $matches[ 0 ][ $i ], $matches[ 1 ][ $i ], '{|' );
 				}
 			}
+			// marks html tables
 			if ( preg_match_all( "/<table(.*)(\\/?>)/sU", $wikitext, $htmlTables ) ) {
 				for ( $i = 0; $i < count( $htmlTables[ 0 ] ); $i++ ) {
 					$wikitext = static::markTable( $wikitext,
