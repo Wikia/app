@@ -76,8 +76,6 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	}
 
 	function handleRequestsForModal(classificationForm, templateType, loaderRes) {
-		var $preselectedTypeInput;
-
 		if (loaderRes) {
 			mw.messages.set(loaderRes.messages);
 			messagesLoaded = true;
@@ -87,14 +85,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			$classificationForm = $(classificationForm[0]);
 		}
 
-		// Mark selected type
 		preselectedType = templateType;
-		$preselectedTypeInput = $classificationForm.find('#template-classification-' + preselectedType);
-
-		if ($preselectedTypeInput.length !== 0) {
-			$classificationForm.find('input:checked').removeAttr('checked');
-			$preselectedTypeInput.attr('checked', true);
-		}
 
 		// Set modal content
 		setupTemplateClassificationModal(
@@ -125,6 +116,8 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	 * One of sub-tasks for getting modal shown
 	 */
 	function processInstance(modalInstance) {
+		var $preselectedTypeInput;
+
 		/* Submit template type edit form on Done button click */
 		modalInstance.bind('done', function runSave(e) {
 			var label = e ? $(e.currentTarget).text() : 'keypress';
@@ -167,8 +160,12 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		throbber.remove($throbber);
 
 		// Make sure that focus is in the right place but scroll the modal window to the top
+		$preselectedTypeInput = $('#template-classification-' + preselectedType);
+		if ($preselectedTypeInput.length !== 0) {
+			$classificationForm.find('input:checked').removeProp('checked');
+			$preselectedTypeInput.prop('checked', true).focus();
+		}
 
-		$('#template-classification-' + mw.html.escape(preselectedType)).focus();
 		if (preselectedType === 'unknown') {
 			modalInstance.scroll(0);
 		}
