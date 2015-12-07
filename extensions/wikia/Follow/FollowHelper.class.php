@@ -148,7 +148,7 @@ class FollowHelper {
 	 * @return null|string
 	 */
 	private static function getTimeBoundary() {
-		$wg = \F::app();
+		$wg = \F::app()->wg;
 
 		// This only matters if we have the notification timeout feature enabled
 		if ( empty( $wg->EnableWatchlistNotificationTimeout ) ) {
