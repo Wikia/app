@@ -55,6 +55,4 @@ class Helper {
 
 		return $count;
 	}
-
-
 }
