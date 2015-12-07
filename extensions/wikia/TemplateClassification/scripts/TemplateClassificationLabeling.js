@@ -44,10 +44,14 @@ define('TemplateClassificationLabeling',
 				return mw.message('template-classification-edit-modal-save-button-text').escaped();
 			}
 
+			function addTypeBeforePublish() {
+				return mw.message('savearticle').escaped();
+			}
+
 			return {
 				addTemplate: addTemplate,
 				editType: editType,
-				addTypeBeforePublish: editType
+				addTypeBeforePublish: addTypeBeforePublish
 			};
 		})();
 

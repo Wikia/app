@@ -11,10 +11,13 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	'use strict';
 
 	var $classificationForm,
-		preselectedType,
+		$saveBtn,
 		$typeLabel,
-		modalConfig,
 		messagesLoaded,
+		modalConfig,
+		modalMode,
+		newTypeModes = ['addTemplate', 'addTypeBeforePublish'],
+		preselectedType,
 		saveHandler = falseFunction,
 		typeGetter = falseFunction,
 		track = tracker.buildTrackingFunction({
@@ -38,7 +41,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 
 		$w.on('keydown', openModalKeyboardShortcut);
 
-		$('.template-classification-type-text').click(function (e) {
+		$typeLabel.click(function (e) {
 			e.preventDefault();
 			openEditModal('editType');
 		});
@@ -48,10 +51,12 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		var messagesLoader = falseFunction,
 			classificationFormLoader = falseFunction;
 
+		modalMode = modeProvided;
+
 		// Unbind modal opening keyboard shortcut while it's open
 		$w.unbind('keydown', openModalKeyboardShortcut);
 
-		labeling.init(modeProvided);
+		labeling.init(modalMode);
 
 		if (!messagesLoaded) {
 			messagesLoader = getMessages;
@@ -144,7 +149,14 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			});
 		});
 
-		modalInstance.$element.find('input:radio').change(function trackRadioChange(e) {
+		if (newTypeModes.indexOf(modalMode) >= 0) {
+			$saveBtn = modalInstance.$element.find('footer button.primary').attr('disabled','disabled');
+		}
+
+		modalInstance.$element.find('input:radio').change(function handleRadioChange(e) {
+			if (newTypeModes.indexOf(modalMode) >= 0) {
+				$saveBtn.removeAttr('disabled');
+			}
 			// Track - click to change a template's type
 			track({
 				action: tracker.ACTIONS.CLICK_LINK_TEXT,
@@ -192,7 +204,11 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			});
 		}
 
-		modalInstance.trigger('close');
+		if (modalMode === 'addTypeBeforePublish' && newTemplateType) {
+			$('#wpSave').click();
+		} else {
+			modalInstance.trigger('close');
+		}
 	}
 
 	function updateEntryPointLabel(templateType) {
@@ -203,17 +219,6 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	}
 
 	function setupTemplateClassificationModal(content) {
-		/* Modal component configuration */
-		modalConfig = {
-			vars: {
-				id: 'TemplateClassificationEditModal',
-				classes: ['template-classification-edit-modal'],
-				size: 'small', // size of the modal
-				content: content, // content
-				title: labeling.getTitle()
-			}
-		};
-
 		var modalButtons = [
 			{
 				vars: {
