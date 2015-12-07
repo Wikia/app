@@ -11,7 +11,7 @@ use Wikia\Logger\Loggable;
 class TemplateClassificationController extends WikiaController {
 	use Loggable;
 
-	const INSTANT_CLASSIFICATION_LIMIT = 100;
+	const INSTANT_CLASSIFICATION_LIMIT = 150;
 	const MAX_ERROR_PAGES = 20;
 
 	/**
