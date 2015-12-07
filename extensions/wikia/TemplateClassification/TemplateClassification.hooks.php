@@ -229,7 +229,7 @@ class Hooks {
 
 	private function addWelcomeHintAssets( \OutputPage $out, \User $user ) {
 		global $wgCityId;
-		if ( !$user->getGlobalPreference( \Wikia\TemplateClassification\View::HAS_SEEN_HINT ) ) {
+		if ( !$user->getGlobalPreference( View::HAS_SEEN_HINT ) ) {
 
 			$type = ( new \UserTemplateClassificationService() )
 				->getType( $wgCityId, $out->getContext()->getTitle()->getArticleID() );

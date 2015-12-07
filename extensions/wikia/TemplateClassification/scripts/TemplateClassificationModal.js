@@ -276,8 +276,8 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 	}
 
 	function dismissWelcomeHint() {
-		if ($typeLabel.data('mode') === 'welcome') {
-			$typeLabel.data('mode', ''); // TODO replace mode with key shortcut on hover
+		if ($typeLabel.data('has-seen-welcome') === 0) {
+			$typeLabel.data('has-seen-welcome', 1);
 			$typeLabel.tooltip('disable');
 			nirvana.sendRequest({
 				controller: 'TemplateClassification',

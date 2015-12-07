@@ -87,7 +87,9 @@ class View {
 
 	private function prepareHint( \User $user, $pageId ) {
 		global $wgCityId;
-		if ( !$user->getGlobalPreference( self::HAS_SEEN_HINT ) ) {
+
+		$hasSeen = $user->getGlobalPreference( self::HAS_SEEN_HINT, 0 );
+		if ( $hasSeen === 0 ) {
 
 			$type = ( new \UserTemplateClassificationService() )
 				->getType( $wgCityId, $pageId );
@@ -96,7 +98,8 @@ class View {
 				return [
 					'mode' => 'welcome',
 					'msg' => '', // Message generated in frontend as it contains html
-					'trigger' => 'click'
+					'trigger' => 'click',
+					'hasSeen' => $hasSeen
 				];
 
 			}
@@ -108,7 +111,8 @@ class View {
 		return [
 			'mode' => 'key',
 			'msg' => wfMessage( 'template-classification-open-modal-key-tip', $key )->plain(),
-			'trigger' => 'hover'
+			'trigger' => 'hover',
+			'hasSeen' => $hasSeen
 		];
 	}
 }

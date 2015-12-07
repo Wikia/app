@@ -59,7 +59,7 @@ class TemplateClassificationController extends WikiaController {
 	public function dismissWelcomeHint() {
 		$user = $this->getContext()->getUser();
 		if ( !$user->isAnon() ) {
-			$user->setGlobalPreference( View::HAS_SEEN_HINT, true );
+			$user->setGlobalPreference( View::HAS_SEEN_HINT, 1 );
 			$user->saveSettings();
 		}
 	}
