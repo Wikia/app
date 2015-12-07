@@ -17,6 +17,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		modalConfig,
 		modalMode,
 		messagesLoaded,
+		newTypeModes = ['addTemplate', 'addTypeBeforePublish'],
 		saveHandler = falseFunction,
 		typeGetter = falseFunction,
 		track = tracker.buildTrackingFunction({
@@ -152,12 +153,12 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			});
 		});
 
-		if (modalMode === 'addTypeBeforePublish') {
+		if (newTypeModes.indexOf(modalMode) >= 0) {
 			$saveBtn = modalInstance.$element.find('footer button.primary').attr('disabled','disabled');
 		}
 
 		modalInstance.$element.find('input:radio').change(function trackRadioChange(e) {
-			if (modalMode === 'addTypeBeforePublish') {
+			if (newTypeModes.indexOf(modalMode) >= 0) {
 				$saveBtn.removeAttr('disabled');
 			}
 			// Track - click to change a template's type
