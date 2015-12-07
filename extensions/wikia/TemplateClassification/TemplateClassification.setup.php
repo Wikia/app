@@ -83,6 +83,7 @@ $wgExtensionMessagesFiles['TemplateClassification'] = __DIR__ . '/TemplateClassi
 
 JSMessages::registerPackage( 'TemplateClassificationModal', [
 	'template-classification-edit-modal-*',
+	'savearticle'
 ] );
 
 JSMessages::registerPackage( 'TemplateClassificationTypes', [

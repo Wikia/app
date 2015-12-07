@@ -3,7 +3,7 @@
 namespace Wikia\ContentReview;
 
 class ImportJS {
-	const IMPORT_SCRIPTS_ENTRYPOINT = 'ImportJS';
+	const MODULE_ENTRYPOINT = 'ImportJS';
 	const IMPORT_SCRIPTS_FUNCTION = 'importWikiaScriptPages';
 	const IMPORT_SCRIPTS_KEY = 'content-review-importjs';
 	const IMPORT_SCRIPTS_VERSION = '1.0';
@@ -19,7 +19,7 @@ class ImportJS {
 			2592000, // 30 days,
 			function() {
 				$importScripts = '';
-				$title = \Title::newFromText( self::IMPORT_SCRIPTS_ENTRYPOINT, NS_MEDIAWIKI );
+				$title = \Title::newFromText( self::MODULE_ENTRYPOINT, NS_MEDIAWIKI );
 
 				if ( $title instanceof \Title && $title->exists() ) {
 					$revision = \Revision::newFromTitle( $title );
@@ -100,7 +100,7 @@ class ImportJS {
 	 * @return bool
 	 */
 	static public function isImportJSPage( \Title $title ) {
-		return $title->inNamespace( NS_MEDIAWIKI ) && $title->getText() === self::IMPORT_SCRIPTS_ENTRYPOINT;
+		return $title->inNamespace( NS_MEDIAWIKI ) && $title->getText() === self::MODULE_ENTRYPOINT;
 	}
 
 	/**
