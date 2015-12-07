@@ -2,7 +2,7 @@
 
 class TemplateClassificationApiController extends WikiaApiController {
 
-	private $userTemplateClassificationService = null;
+	private $templateClassificationService = null;
 
 	/**
 	 * Classify template type
@@ -22,15 +22,17 @@ class TemplateClassificationApiController extends WikiaApiController {
 		$this->validateRequest( $this->wg->User, $this->request, $pageId );
 
 		try {
-			$this->getUserTemplateClassificationService()->classifyTemplate(
+			$this->getTemplateClassificationService()->classifyTemplate(
 				$this->wg->CityId,
 				$pageId,
 				$templateType,
+				TemplateClassificationService::USER_PROVIDER,
 				$userId
 			);
 
 			$title = Title::newFromId( $pageId );
 			if ( $title instanceof Title ) {
+				wfRunHooks( 'TemplateClassification::TemplateClassified', [ $pageId, $title, $templateType ] );
 				$title->invalidateCache();
 			}
 		} catch ( InvalidArgumentException $e ) {
@@ -71,11 +73,11 @@ class TemplateClassificationApiController extends WikiaApiController {
 		return true;
 	}
 
-	private function getUserTemplateClassificationService() {
-		if ( is_null( $this->userTemplateClassificationService ) ) {
-			$this->userTemplateClassificationService = new UserTemplateClassificationService();
+	private function getTemplateClassificationService() {
+		if ( is_null( $this->templateClassificationService ) ) {
+			$this->templateClassificationService = new UserTemplateClassificationService();
 		}
 
-		return $this->userTemplateClassificationService;
+		return $this->templateClassificationService;
 	}
 }

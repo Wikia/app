@@ -30,4 +30,4 @@ $wgAutoloadClasses['InsightsTemplatesWithoutTypeModel'] = __DIR__ . '/models/Ins
 /**
  * Hooks
  */
-$wgHooks['UserTemplateClassification::TemplateClassified'][] = 'InsightsHooks::onTemplateClassified';
+$wgHooks['TemplateClassification::TemplateClassified'][] = 'InsightsHooks::onTemplateClassified';

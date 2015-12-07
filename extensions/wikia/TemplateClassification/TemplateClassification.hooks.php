@@ -56,10 +56,11 @@ class Hooks {
 		}
 
 		try {
-			( new \UserTemplateClassificationService() )->classifyTemplate(
+			( new \TemplateClassificationService() )->classifyTemplate(
 				$wgCityId,
 				$article->getId(),
 				$typeNew,
+				\TemplateClassificationService::USER_PROVIDER,
 				$user->getId()
 			);
 		} catch ( ApiException $e ) {

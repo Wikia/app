@@ -120,7 +120,7 @@ class PipelineEventProducer {
 	 * @param Title $title The affected template's Title object
 	 * @return bool
 	 */
-	public static function onTemplateClassified( $pageId, Title $title, $templateType ) {
+	public static function onTemplateClassified( $pageId, $title ) {
 		$ns = self::preparePageNamespaceName( $title );
 		$revisionId = $title->getLatestRevID();
 

@@ -1,13 +1,6 @@
 <?php
 
-use Swagger\Client\ApiException;
-
 class UserTemplateClassificationService extends TemplateClassificationService {
-
-	const USER_PROVIDER = 'user';
-	const CLASSIFY_TEMPLATE_EXCEPTION_MESSAGE = 'Bad request. Template type %s is not valid.';
-	const CLASSIFY_TEMPLATE_EXCEPTION_CODE = 400;
-
 	/**
 	 * Allowed types of templates stored in an array to make a validation process easier.
 	 *
@@ -49,28 +42,5 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 		}
 
 		return $templateType;
-	}
-
-	/**
-	 * Verify template type before user classification
-	 *
-	 * @param int $wikiId
-	 * @param int $pageId
-	 * @param string $templateType
-	 * @param string $origin
-	 * @throws BadRequestApiException
-	 */
-	public function classifyTemplate( $wikiId, $pageId, $templateType, $origin ) {
-		if ( !in_array( $templateType, self::$templateTypes ) ) {
-			throw new ApiException(
-				sprintf( self::CLASSIFY_TEMPLATE_EXCEPTION_MESSAGE, $templateType ),
-				self::CLASSIFY_TEMPLATE_EXCEPTION_CODE
-			);
-		}
-
-		parent::classifyTemplate( $wikiId, $pageId, $templateType, self::USER_PROVIDER, $origin );
-
-		$title = Title::newFromID( $pageId );
-		wfRunHooks( 'UserTemplateClassification::TemplateClassified', [ $pageId, $title, $templateType ] );
 	}
 }
