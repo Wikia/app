@@ -46,11 +46,8 @@ class DataTables {
 	public static function markDataTables( $parser, &$html ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( static::shouldBeProcessed() ) {
+		if ( $html && static::shouldBeProcessed() ) {
 			$document = new DOMDocument();
-			$document->preserveWhiteSpace = true;
-			$document->formatOutput = false;
-			$document->validateOnParse = false;
 			//encode for correct load
 			$document->loadHTML( mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' ) );
 
