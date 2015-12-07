@@ -22,7 +22,7 @@ class DataTablesTest extends WikiaBaseTest {
 	 */
 	public function testTemplateTablesMarking( $wt, $expected ) {
 		$this->globals->wrap( function () use ( &$wt ) {
-			DataTables::markTranscludedTables( $wt );
+			DataTables::markTranscludedTables( $wt, $title );
 		} );
 		$this->assertEquals( $expected, $wt );
 	}
@@ -32,7 +32,7 @@ class DataTablesTest extends WikiaBaseTest {
 	 */
 	public function testTablesMarking( $html, $expected ) {
 		$this->globals->wrap( function () use ( &$html ) {
-			DataTables::markDataTables( $html );
+			DataTables::markDataTables( null, $html );
 		} );
 		$dom = new DOMDocument();
 		$dom->loadHTML( $html );
@@ -138,6 +138,7 @@ asdkjf kasjdflk [[asdfasdf]]
 		return [
 			[ "", 0 ],
 			[ "<table></table>", 1 ],
+			[ "<table></table><table></table>", 2 ],
 			[ "<table data-portable=\"false\"></table>", 0 ],
 			[ "<table data-portable=\"false\"></table><table data-portable=\"true\"></table>", 1 ],
 			[ "<table><tr><td colspan='1'>dsafsd</td></tr></table>", 0 ],

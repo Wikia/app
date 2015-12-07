@@ -38,16 +38,21 @@ class DataTables {
 	/**
 	 * Mark data tables with data-portable attribute after parsing
 	 *
+	 * @param Parser $parser
 	 * @param $html
 	 *
 	 * @return mixed
 	 */
-	public static function markDataTables( &$html ) {
+	public static function markDataTables( $parser, &$html ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( static::shouldBeProcessed() ) {
 			$document = new DOMDocument();
-			$document->loadHTML( $html );
+			$document->preserveWhiteSpace = true;
+			$document->formatOutput = false;
+			$document->validateOnParse = false;
+			//encode for correct load
+			$document->loadHTML( mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' ) );
 
 			$tables = $document->getElementsByTagName( 'table' );
 			if ( $tables->length > 0 ) {
@@ -62,10 +67,11 @@ class DataTables {
 				}
 				// strip <html> and <body> tags
 				$result = [ ];
-				$bodyElements = $xpath->query( '/html/body/*' );
-				for ( $i = 0; $i < $bodyElements->length; $i++ ) {
-					$result[] = $document->saveXML( $bodyElements->item( $i ) );
+				$body = $document->getElementsByTagName( 'body' )->item( 0 );
+				for ( $i = 0; $i < $body->childNodes->length; $i++ ) {
+					$result[] = $document->saveXML( $body->childNodes->item( $i ) );
 				}
+
 				$html = !empty( $result ) ? implode( "", $result ) : $html;
 			}
 			// clear user generated html parsing errors
@@ -82,11 +88,13 @@ class DataTables {
 		return $wgEnableDataTablesParsing && $wgArticleAsJson;
 	}
 
-	private static function markTable( $wikitext, $table, $attributes, $startTag = '', $endTag = '' ) {
+	private static function markTable( $wikitext, $table, $attributes, $startTag = '', $endTag = '', $portable = false ) {
 		if ( mb_stripos( $attributes, self::DATA_PORTABLE_ATTRIBUTE ) === false ) {
+			$p = $portable ? 'true' : 'false';
+
 			return str_replace(
 				$table,
-				$startTag . ' ' . trim( self::DATA_PORTABLE_ATTRIBUTE . "=\"false\" " . ltrim( $attributes ) ) . $endTag,
+				$startTag . ' ' . trim( self::DATA_PORTABLE_ATTRIBUTE . "=\"{$p}\" " . ltrim( $attributes ) ) . $endTag,
 				$wikitext
 			);
 		}
