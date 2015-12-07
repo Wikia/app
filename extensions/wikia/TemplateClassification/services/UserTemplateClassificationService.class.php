@@ -95,16 +95,50 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 	 * @throws BadRequestApiException
 	 */
 	public function classifyTemplate( $wikiId, $pageId, $templateType, $origin ) {
+		$this->checkTemplateType( $templateType );
+
+		parent::classifyTemplate( $wikiId, $pageId, $templateType, self::USER_PROVIDER, $origin );
+
+		$title = Title::newFromID( $pageId );
+		wfRunHooks( 'UserTemplateClassification::TemplateClassified', [ $pageId, $title, $templateType ] );
+	}
+
+	/**
+	 * Classify many templates with given type
+	 *
+	 * @param int $wikiId
+	 * @param array $templates
+	 * @param string $templateType
+	 * @param int $userId
+	 * @return array list of pages which failed during classification
+	 * @throws MWException
+	 */
+	public function classifyMultipleTemplates( $wikiId, Array $templates, $templateType, $userId ) {
+		$errors = [];
+
+		foreach ( $templates as $templateId => $templateTitle ) {
+			try {
+				$this->classifyTemplate( $wikiId, $templateId, $templateType, $userId );
+			} catch( ApiException $e ) {
+				$errors[] = Title::newFromText( $templateTitle )->getText();
+			}
+		}
+
+		return $errors;
+	}
+
+	/**
+	 * Check if given template type is allowed
+	 *
+	 * @param string $templateType
+	 * @throws ApiException
+	 */
+	public function checkTemplateType( $templateType ) {
 		if ( !in_array( $templateType, self::$templateTypes ) ) {
 			throw new ApiException(
 				sprintf( self::CLASSIFY_TEMPLATE_EXCEPTION_MESSAGE, $templateType ),
 				self::CLASSIFY_TEMPLATE_EXCEPTION_CODE
 			);
 		}
-
-		parent::classifyTemplate( $wikiId, $pageId, $templateType, self::USER_PROVIDER, $origin );
-
-		$title = Title::newFromID( $pageId );
-		wfRunHooks( 'UserTemplateClassification::TemplateClassified', [ $pageId, $title, $templateType ] );
 	}
 }
