@@ -28,6 +28,9 @@ class TemplateTypesParser {
 				case TemplateClassificationService::TEMPLATE_REFERENCES:
 					$text = ReferencesTemplate::handle();
 					break;
+				case TemplateClassificationService::TEMPLATE_NAV:
+					$text = NavigationTemplate::handle( $text );
+					break;
 			}
 		}
 
@@ -79,16 +82,19 @@ class TemplateTypesParser {
 	 *
 	 * @return bool
 	 */
-	public static function onEndBraceSubstitution( $templateTitle, &$templateWikitext ) {
+	public static function onEndBraceSubstitution( $templateTitle, &$templateWikitext, &$parser ) {
+		global $wgEnableContextLinkTemplateParsing, $wgEnableInfoIconTemplateParsing;
 		wfProfileIn( __METHOD__ );
 
-		if ( ContextLinkTemplate::shouldTemplateBeProcessed( $templateWikitext ) ) {
+		if ( self::isSuitableForProcessing( $templateWikitext ) ) {
 			$title = self::getValidTemplateTitle( $templateTitle );
 
 			if ( $title ) {
 				$type = self::getTemplateType( $title );
-				if ( $type == AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK ) {
+				if ( $wgEnableContextLinkTemplateParsing && $type == AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK ) {
 					$templateWikitext = ContextLinkTemplate::handle( $templateWikitext );
+				} else if ( $wgEnableInfoIconTemplateParsing && $type == AutomaticTemplateTypes::TEMPLATE_INFOICON ) {
+					$templateWikitext = InfoIconTemplate::handle( $templateWikitext, $parser );
 				}
 			}
 		}
@@ -125,6 +131,18 @@ class TemplateTypesParser {
 
 		return $wgEnableTemplateTypesParsing && $wgArticleAsJson;
 	}
+
+	/**
+	 * @desc check if template content is worth processing
+	 *
+	 * @param $wikitext
+	 * @return bool
+	 */
+	private static function isSuitableForProcessing( $wikitext ) {
+		return self::shouldTemplateBeParsed()
+			&& !empty( $wikitext )
+			&& !TemplateArgsHelper::containsUnexpandedArgs( $wikitext );
+		}
 
 	/**
 	 * @desc return a valid cached Title object for a given template title string

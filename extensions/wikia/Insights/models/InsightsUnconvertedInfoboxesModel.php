@@ -1,6 +1,4 @@
 <?php
-use Wikia\PortableInfobox\Helpers\PortableInfoboxClassification;
-
 /**
  * Class InsightsNonportableInfoboxesModel
  * A class specific to a subpage with a list of pages
@@ -90,8 +88,6 @@ class InsightsUnconvertedInfoboxesModel extends InsightsQueryPageModel {
 	 * @return bool
 	 */
 	public function isItemFixed( Title $title ) {
-		$titleText = $title->getText();
-		$contentText = ( new WikiPage( $title ) )->getText();
-		return !PortableInfoboxClassification::isTitleWithNonportableInfobox( $titleText, $contentText );
+		return !empty( PortableInfoboxDataService::newFromTitle( $title )->getData() );
 	}
 }

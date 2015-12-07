@@ -15,13 +15,11 @@ class SpecialController extends \WikiaSpecialPageController {
 	}
 
 	/**
-	 * Run before index. First make sure the user can access page, then set the title, disable
-	 * redirects, and add the css.
+	 * Run before index. Set the title and disable redirects.
 	 */
 	public function init() {
 		$this->disableRedirects();
 		$this->setTitle();
-		$this->addCss();
 	}
 
 	/**
@@ -39,13 +37,6 @@ class SpecialController extends \WikiaSpecialPageController {
 		$this->getContext()->getOutput()->setHTMLTitle( self::PAGE_TITLE );
 		$this->getContext()->getOutput()->setPageTitle( self::PAGE_TITLE );
 		$this->wg->SupressPageSubtitle = true;
-	}
-
-	/**
-	 * Adds stylesheet to output
-	 */
-	private function addCss() {
-		$this->response->addAsset( 'special_user_activity_css' );
 	}
 
 	/**
@@ -69,11 +60,11 @@ class SpecialController extends \WikiaSpecialPageController {
 		$data = $resp->getData();
 
 		$this->getResponse()->setData( [
-			'pageDescription' => wfMessage( 'user-activity-page-description' )->escaped(),
-			'tableTitle' => wfMessage( 'user-activity-table-title' )->escaped(),
-			'tableEdits' => wfMessage( 'user-activity-table-edits' )->escaped(),
-			'tableLastEdit' => wfMessage( 'user-activity-table-lastedit' )->escaped(),
-			'tableRights' => wfMessage( 'user-activity-table-rights' )->escaped(),
+			'pageDescription' => wfMessage( 'user-activity-page-description' )->text(),
+			'tableTitle' => wfMessage( 'user-activity-table-title' )->text(),
+			'tableEdits' => wfMessage( 'user-activity-table-edits' )->text(),
+			'tableLastEdit' => wfMessage( 'user-activity-table-lastedit' )->text(),
+			'tableRights' => wfMessage( 'user-activity-table-rights' )->text(),
 			'items' => $data['items'],
 			'username' => $this->app->wg->User->getName(),
 			'total' => $data['total'],
