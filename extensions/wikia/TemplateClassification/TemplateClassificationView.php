@@ -89,7 +89,7 @@ class View {
 		global $wgCityId;
 
 		$hasSeen = $user->getGlobalPreference( self::HAS_SEEN_HINT, 0 );
-		if ( $hasSeen === 0 ) {
+		if ( !$hasSeen ) {
 
 			$type = ( new \UserTemplateClassificationService() )
 				->getType( $wgCityId, $pageId );
