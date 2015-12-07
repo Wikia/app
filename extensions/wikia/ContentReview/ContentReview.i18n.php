@@ -106,8 +106,8 @@ $messages['qqq'] = array(
 	'content-review-user-badges-description' => 'Inform user that to use this feature user must import UserBadge.js script from dev.wikia.com. Then explain that user should use current page to customize user badges on their profiles by adding user name and badges separated by colon.
 	 If user wants to provide for than one badge for user should separate them by comma. Also each user name should be written in new line. Examples:
 
-    * ExampleUsername : Trainee, Newbie
-    * ExampleUsername2 : Guru',
+    * ExampleUsername | Trainee, Newbie
+    * ExampleUsername2 | Guru',
 );
 
 $messages['de'] = array(
@@ -164,8 +164,8 @@ Namen sollten nicht das Wikia-Namensräume-Präfix enthalten. Verwende für jede
 
     Beispiele:
 
-    * BeispielBenutzername : Praktikant, Newbie
-    * BeispielBenutzername2 : Guru
+    * BeispielBenutzername | Praktikant, Newbie
+    * BeispielBenutzername2 | Guru
 ----
 ',
 );
@@ -224,8 +224,8 @@ Los nombres no deben contener el prefijo del espacio para nombres de MediaWiki. 
 
     Ejemplos:
 
-    * EjemploNombredeusuario : Aprendiz, Novato
-    * EjemploNombredeusuario2 : Gurú
+    * EjemploNombredeusuario | Aprendiz, Novato
+    * EjemploNombredeusuario2 | Gurú
 ----
  
 ',
@@ -285,8 +285,8 @@ Les noms ne doivent pas comporter le préfixe d'espace de noms MediaWiki. Écriv
 
     Exemples :
 
-    * Nomutilisateur1 : Apprenti, Nouveau
-    * Nomutilisateur2 : Gourou
+    * Nomutilisateur1 | Apprenti, Nouveau
+    * Nomutilisateur2 | Gourou
 ----
 ",
 );
@@ -345,8 +345,8 @@ I nomi non devono contenere il prefisso dello spazio dei nomi MediaWiki. Scrivi 
 
     Esempi:
 
-    *ExampleUsername : Trainee; Newbie
-    *ExampleUsername2 : Guru
+    *ExampleUsername | Trainee; Newbie
+    *ExampleUsername2 | Guru
 ',
 );
 
@@ -404,8 +404,8 @@ MediaWikiの名前空間プレフィックスは名前に含めないでくだ�
 
     例：
 
-    * ユーザー名1 : 見習い, 新人
-    * ユーザー名2 : グル
+    * ユーザー名1 | 見習い, 新人
+    * ユーザー名2 | グル
 ----
 ',
 );
@@ -464,8 +464,8 @@ Names should not contain the MediaWiki namespace prefix. Write each script on a 
 
     Examples:
 
-    * ExampleUsername : Trainee, Newbie
-    * ExampleUsername2 : Guru
+    * ExampleUsername | Trainee, Newbie
+    * ExampleUsername2 | Guru
 ----
 ',
 );
@@ -524,8 +524,8 @@ Nazwy nie powinny zawierać przedrostka obszaru nazw MediaWiki. Każdy skrypt na
 
     Przykłady:
 
-    * PrzykładowaNazwaUżytkownika : Praktykant, Nowy
-    * PrzykładowaNazwaUżytkownika2 : Guru
+    * PrzykładowaNazwaUżytkownika | Praktykant, Nowy
+    * PrzykładowaNazwaUżytkownika2 | Guru
 ----
 ',
 );
@@ -641,8 +641,8 @@ $messages['ru'] = array(
 
 Пример:
 
-    * Участник1 : Новенький
-    * ОпытныйУчастник2 : Гуру, Мастер шаблонов
+    * Участник1 | Новенький
+    * ОпытныйУчастник2 | Гуру, Мастер шаблонов
 ----
 ',
 );
