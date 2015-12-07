@@ -92,8 +92,8 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		$preselectedTypeInput = $classificationForm.find('#template-classification-' + preselectedType);
 
 		if ($preselectedTypeInput.length !== 0) {
-			$classificationForm.find('input[checked="checked"]').removeAttr('checked');
-			$preselectedTypeInput.attr('checked', 'checked');
+			$classificationForm.find('input:checked').removeAttr('checked');
+			$preselectedTypeInput.attr('checked', true);
 		}
 
 		// Set modal content
