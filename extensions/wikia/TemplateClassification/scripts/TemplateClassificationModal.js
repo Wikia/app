@@ -295,7 +295,10 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			nirvana.sendRequest({
 				controller: 'TemplateClassification',
 				method: 'dismissWelcomeHint',
-				type: 'get'
+				type: 'post',
+				data: {
+					token: mw.user.tokens.get('editToken')
+				}
 			});
 		}
 	}
