@@ -1321,6 +1321,19 @@ $wgAdDriverUseGoogleConsumerSurveys = true;
 $wgAdDriverGoogleConsumerSurveysCountries = null;
 
 /**
+ * @name $wgAdDriverUseEvolve2
+ * Whether to enable AdProviderEvolve2 (true) or not (false)
+ */
+$wgAdDriverUseEvolve2 = false;
+
+/**
+ * @name $wgAdDriverEvolve2Countries
+ * List of countries with enabled Evolve2 module.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverEvolve2Countries = null;
+
+/**
  * @name $wgAdDriverUseTaboola
  * Whether to enable AdProviderTaboola (true) or not (false)
  */
