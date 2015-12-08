@@ -51,7 +51,7 @@ class PortableInfoboxDataService {
 	/**
 	 * Returns infobox data, chain terminator method
 	 *
-	 * @return array in format [ 'data' => [], 'sources' => [] ] or [] will be returned
+	 * @return array in format [ [ 'data' => [], 'sources' => [] ] or [] will be returned
 	 */
 	public function getData() {
 		if ( $this->title && $this->title->exists() && $this->title->inNamespace( NS_TEMPLATE ) ) {
@@ -67,27 +67,48 @@ class PortableInfoboxDataService {
 	}
 
 	/**
-	 * Get image list from infobox data, chain terminator method
+	 * Get image list from multiple infoboxes data
 	 *
 	 * @return array
 	 */
 	public function getImages() {
-		$images = [ ];
-
+		$images = [];
 		foreach ( $this->getData() as $infobox ) {
-			// ensure data array exists
-			$data = is_array( $infobox[ 'data' ] ) ? $infobox[ 'data' ] : [ ];
-			foreach ( $data as $field ) {
-				if ( $field[ 'type' ] == self::IMAGE_FIELD_TYPE &&
-					 isset( $field[ 'data' ] ) &&
-					 !empty( $field[ 'data' ][ 'key' ] )
-				) {
-					$images[ $field[ 'data' ][ 'key' ] ] = true;
-				}
+			if ( is_array( $infobox[ 'data' ] ) ) {
+				$images = array_merge( $images, $this->getImageFromOneInfoboxData( $infobox[ 'data' ] ) );
 			}
 		}
+		return array_unique( $images );
+	}
 
-		return array_keys( $images );
+	/**
+	 * Get image list from single infobox data
+	 *
+	 * @return array
+	 */
+	private function getImageFromOneInfoboxData( $infoboxData ) {
+		$images = [];
+		foreach ( $infoboxData as $infoboxDataField ) {
+			if ( $infoboxDataField[ 'type' ] === self::IMAGE_FIELD_TYPE && isset( $infoboxDataField[ 'data' ] ) ) {
+				$images = array_merge( $images, $this->getImagesFromOneNodeImageData( $infoboxDataField[ 'data' ] ) );
+			}
+		}
+		return $images;
+	}
+
+	/**
+	 * Get image list from single NodeImage data
+	 *
+	 * @return array
+	 */
+	private function getImagesFromOneNodeImageData( $nodeImageData ) {
+		$images = [];
+		for ( $i = 0; $i < count( $nodeImageData ); $i++ ) {
+			if ( !empty( $nodeImageData[ $i ] [ 'key' ] ) ) {
+				$images[] = $nodeImageData[ $i ][ 'key' ];
+			}
+		}
+		return $images;
 	}
 
 	/**

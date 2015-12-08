@@ -84,22 +84,23 @@ define('TemplateClassificationInCategory',
 
 				$hintTooltip = $('#WikiaPageHeader').children('.wikia-menu-button')
 					.tooltip({
-						placement: 'right',
-						title: createHintMessage()
+						placement: 'in right',
+						title: createHintMessage(),
+						trigger: 'manual'
 					});
 
 				$hintTooltip.tooltip('show');
 
 				$('body').on('click', '.close-bulk-hint', function () {
 					$hintTooltip.tooltip('hide');
-					cookies.set('tc-bulk', 1);
+					cookies.set('tc-bulk', 1, { expires: 'never', domain: 'wikia.com' });
 				});
 			});
 		}
 
 		function createHintMessage() {
-			var closeHint = '<br/><a class="close-bulk-hint" href="#">' +
-				mw.message('template-classification-bulk-classification-agreement').escaped() + '</a>';
+			var closeHint = '<br/><br/><div class="close-bulk-hint"><a href="#">'
+				+ mw.message('template-classification-bulk-classification-agreement').escaped() + '</a></div>';
 
 			return mw.message(
 					'template-classification-bulk-classification-hint', mw.config.get('wgUserName')

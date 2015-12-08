@@ -1,7 +1,8 @@
 <?php
 
 class TemplateTypesParser {
-	private static $cachedTemplateTitles = [];
+	private static $cachedTemplateTitles = [ ];
+
 	/**
 	 * @desc alters template raw text parser output based on template type
 	 *
@@ -61,9 +62,9 @@ class TemplateTypesParser {
 				$outputText = ScrollboxTemplate::getLongestElement( $templateArgs );
 			}
 
-			if ( ( $type === AutomaticTemplateTypes::TEMPLATE_QUOTE ||
-				$type === TemplateClassificationService::TEMPLATE_QUOTE ) &&
-				$wgEnableQuoteTemplateParsing
+			if ( ( $type === AutomaticTemplateTypes::TEMPLATE_QUOTE
+				   || $type === TemplateClassificationService::TEMPLATE_QUOTE )
+				 && $wgEnableQuoteTemplateParsing
 			) {
 				$outputText = QuoteTemplate::execute( $templateArgs );
 			}
@@ -150,6 +151,7 @@ class TemplateTypesParser {
 	 * object or false if templateTitle invalid
 	 *
 	 * @param string $templateTitle
+	 *
 	 * @return Title | bool
 	 * @throws \MWException
 	 */
@@ -158,6 +160,7 @@ class TemplateTypesParser {
 			$title = Title::newFromText( $templateTitle, NS_TEMPLATE );
 			self::$cachedTemplateTitles[ $templateTitle ] = ( $title && $title->exists() ) ? $title : false;
 		}
+
 		return self::$cachedTemplateTitles[ $templateTitle ];
 	}
 }

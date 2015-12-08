@@ -20,7 +20,12 @@ $wgAutoloadClasses['ReferencesTemplate'] = __DIR__ . '/handlers/ReferencesTempla
 $wgAutoloadClasses['ScrollboxTemplate'] = __DIR__ . '/handlers/ScrollboxTemplate.class.php';
 $wgAutoloadClasses['NavigationTemplate'] = __DIR__ . '/handlers/NavigationTemplate.class.php';
 
+// other handlers
+$wgAutoloadClasses['DataTables'] = __DIR__ . '/handlers/DataTables.class.php';
+
 // hooks
 $wgHooks['Parser::FetchTemplateAndTitle'][] = 'TemplateTypesParser::onFetchTemplateAndTitle';
+$wgHooks['Parser::FetchTemplateAndTitle'][] = 'DataTables::markTranscludedTables';
 $wgHooks['Parser::getTemplateDom'][] = 'TemplateTypesParser::onGetTemplateDom';
 $wgHooks['Parser::endBraceSubstitution'][] = 'TemplateTypesParser::onEndBraceSubstitution';
+$wgHooks['ParserAfterTidy'][] = 'DataTables::markDataTables';
