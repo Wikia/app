@@ -57,7 +57,6 @@ $messages['en'] = array(
 	'template-classification-special-type-header' => 'Template type',
 	'template-classification-special-exception' => 'We are sorry, but something went wrong on our side! Please try again.',
 	'special-templates' => 'Templates',
-	'logentry-templateclassification-tc-added' => "$1 classified $3 as $4.",
 	'logentry-templateclassification-tc-changed' => "$1 changed type of $3 from $5 to $4.",
 );
 

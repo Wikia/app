@@ -15,7 +15,6 @@ class Logger extends \ContextSource {
 	 * logentry-templateclassification-tc-changed
 	 */
 	const TC_LOG_TYPE = 'templateclassification';
-	const TC_LOG_ADDED = 'tc-added';
 	const TC_LOG_CHANGED = 'tc-changed';
 
 	const EXCEPTION_MESSAGE = 'TemplateClassification client exception';
@@ -28,7 +27,7 @@ class Logger extends \ContextSource {
 	 * @param string $oldType
 	 * @return bool
 	 */
-	public function logClassificationChange( $pageId, $newType, $oldType = '' ) {
+	public function logClassificationChange( $pageId, $newType, $oldType ) {
 		$log = new \LogPage( self::TC_LOG_TYPE, false );
 		$title = \Title::newFromID( $pageId );
 
@@ -36,16 +35,17 @@ class Logger extends \ContextSource {
 			return false;
 		}
 
-		$newType = wfMessage( "template-classification-type-{$newType}" )->inContentLanguage()->escaped();
-		$params = [ $newType ];
 		if ( \RecognizedTemplatesProvider::isUnrecognized( $oldType ) ) {
-			$action = self::TC_LOG_ADDED;
-		} else {
-			$action = self::TC_LOG_CHANGED;
-			$params[] = wfMessage( "template-classification-type-{$oldType}" )->inContentLanguage()->escaped();
+			$oldType = \TemplateClassificationService::TEMPLATE_UNKNOWN;
 		}
 
-		return $log->addEntry( $action, $title, '', $params, $this->getUser() );
+		return $log->addEntry( self::TC_LOG_CHANGED, $title, '',
+			[
+				wfMessage( "template-classification-type-{$newType}" )->inContentLanguage()->escaped(),
+				wfMessage( "template-classification-type-{$oldType}" )->inContentLanguage()->escaped(),
+			],
+			$this->getUser()
+		);
 	}
 
 	/**
