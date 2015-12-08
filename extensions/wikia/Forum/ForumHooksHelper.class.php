@@ -237,20 +237,31 @@ class ForumHooksHelper {
 	}
 
 	/**
-	 * override button on forum
+	 * Override button on archived forums (when Special:Forum is active)
+	 *
+	 * @param array $button 'Edit' button and dropdown
+	 * @return bool true
 	 */
-
-	static public function onPageHeaderIndexAfterActionButtonPrepared( $response, $ns, $skin ) {
+	static public function onPageHeaderIndexAfterActionButtonPrepared( array &$button ) {
 		$app = F::App();
 		$title = $app->wg->Title;
-
 		$ns = $title->getNamespace();
-		# check namespace(s)
+
+		// check namespace(s)
+
 		if ( $ns == NS_FORUM || $ns == NS_FORUM_TALK ) {
 			if ( !static::canEditOldForum( $app->wg->User ) ) {
-				$action = array( 'class' => '', 'text' => wfMessage( 'viewsource' )->escaped(), 'href' => $title->getLocalUrl( array( 'action' => 'edit' ) ), 'id' => 'ca-viewsource', 'primary' => 1 );
-				$response->setVal( 'actionImage', MenuButtonController::LOCK_ICON );
-				$response->setVal( 'action', $action );
+				$action = [
+					'class' => '',
+					'text' => wfMessage( 'viewsource' )->escaped(),
+					'href' => $title->getLocalUrl( [ 'action' => 'edit' ] ),
+					'id' => 'ca-viewsource',
+					'primary' => 1
+				];
+
+				$button['image'] = MenuButtonController::LOCK_ICON;
+				$button['action'] = $action;
+
 				return false;
 			}
 		}
