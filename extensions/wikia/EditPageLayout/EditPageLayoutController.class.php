@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 /**
  * Oasis module for EditPageLayout
  *
@@ -25,7 +27,7 @@ class EditPageLayoutController extends WikiaController {
 
 		// adding 'editor' class as a CSS helper
 		OasisController::addBodyClass('editor');
-		
+
 		// temporary grid transition code, remove after transition
 		OasisController::addBodyClass('WikiaGrid');
 
@@ -85,6 +87,8 @@ class EditPageLayoutController extends WikiaController {
 	 * Render template for <body> tag content
 	 */
 	public function executeEditPage() {
+		global $wgCityId, $wgEnableTemplateClassificationExt;
+
 		wfProfileIn( __METHOD__ );
 
 		$helper = EditPageLayoutHelper::getInstance();
@@ -205,6 +209,24 @@ class EditPageLayoutController extends WikiaController {
 			( count( $this->notices ) == 0 )
 			? wfMessage( 'editpagelayout-notificationsLink-none' )->escaped()
 			: wfMessage( 'editpagelayout-notificationsLink', count( $this->notices ) )->parse();
+
+		if ( $wgEnableTemplateClassificationExt ) {
+			try {
+				$templateType = ( new TemplateClassificationService() )
+					->getType( $wgCityId, $this->title->getArticleID() );
+			} catch ( Exception $e ) {
+				$templateType = null;
+				WikiaLogger::instance()->error('TemplateClassificationService::getType() threw an exception', [
+					'ex' => $e
+				]);
+			}
+		} else {
+			$templateType = null;
+		}
+
+		$this->showInfoboxPreview = !$wgEnableTemplateClassificationExt
+			|| $templateType === TemplateClassificationService::TEMPLATE_INFOBOX
+			|| $templateType === TemplateClassificationService::TEMPLATE_CUSTOM_INFOBOX;
 
 		// check if we're in read only mode
 		// disable edit form when in read-only mode

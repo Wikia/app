@@ -315,7 +315,9 @@
 $ve-overlay-color: rgba(0, 0, 0, .5);
 $vw-overlay-shadow-size: 1000vw; // IE does not support vmax
 body.ve {
-	pointer-events: none;
+	.WikiaSiteWrapper {
+		pointer-events: none;
+	}
 
 	.ve-ui-overlay {
 		pointer-events: all;

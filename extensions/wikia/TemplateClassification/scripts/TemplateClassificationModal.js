@@ -13,6 +13,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	var $classificationForm,
 		$saveBtn,
 		$typeLabel,
+		$typeWrapper,
 		messagesLoaded,
 		modalConfig,
 		modalMode,
@@ -34,8 +35,8 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	 * @param {function} saveHandlerProvided Method that should handle modal save,
 	 *  	receives {string} selectedType as parameter
 	 */
-	function init(typeGetterProvided, saveHandlerProvided, mode) {
-		var mode = mode || 'editType';
+	function init(typeGetterProvided, saveHandlerProvided, modeProvided) {
+		var mode = modeProvided || 'editType';
 
 		saveHandler = saveHandlerProvided;
 		typeGetter = typeGetterProvided;
@@ -47,6 +48,8 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			e.preventDefault();
 			openEditModal(mode);
 		});
+
+		setupTooltip();
 	}
 
 	function openEditModal(modeProvided) {
@@ -59,6 +62,8 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		$w.unbind('keydown', openModalKeyboardShortcut);
 
 		labeling.init(modalMode);
+
+		dismissWelcomeHint();
 
 		if (!messagesLoaded) {
 			messagesLoader = getMessages;
@@ -259,6 +264,43 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		};
 
 		modalConfig.vars.buttons = modalButtons;
+	}
+
+	function setupTooltip() {
+		$typeWrapper = $('.template-classification-type-wrapper');
+
+		if ($typeWrapper.data('mode') === 'welcome') {
+			mw.loader.using(
+				['ext.wikia.TemplateClassification.ModalMessages', 'mediawiki.jqueryMsg'],
+				function showWelcomeTooltip() {
+					$typeWrapper.tooltip({
+						title: mw.message(
+							'template-classification-entry-point-hint',
+							mw.config.get('wgUserName')
+						).parse()
+					}).tooltip('show');
+				}
+			);
+		} else {
+			$typeWrapper.tooltip({
+				delay: {show: 500, hide: 300}
+			});
+		}
+	}
+
+	function dismissWelcomeHint() {
+		if ($typeWrapper.data('has-seen-welcome') === 0) {
+			$typeWrapper.data('has-seen-welcome', 1);
+			$typeWrapper.tooltip('hide');
+			nirvana.sendRequest({
+				controller: 'TemplateClassification',
+				method: 'dismissWelcomeHint',
+				type: 'post',
+				data: {
+					token: mw.user.tokens.get('editToken')
+				}
+			});
+		}
 	}
 
 	function getTemplateClassificationEditForm() {
