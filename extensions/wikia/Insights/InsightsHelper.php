@@ -1,29 +1,37 @@
 <?php
 
 class InsightsHelper {
+
+	const MAX_DISPLAY_COUNT = 999;
+
 	/**
 	 * Used to create the following messages:
 	 *
-	 * 'insights-list-subtitle-uncategorizedpages',
-	 * 'insights-list-subtitle-withoutimages',
 	 * 'insights-list-subtitle-deadendpages',
+	 * 'insights-list-subtitle-flags',
+	 * 'insights-list-subtitle-templateswithouttype'
+	 * 'insights-list-subtitle-uncategorizedpages',
 	 * 'insights-list-subtitle-wantedpages'
+	 * 'insights-list-subtitle-withoutimages',
 	 */
 	const INSIGHT_SUBTITLE_MSG_PREFIX = 'insights-list-subtitle-';
 
 	/**
 	 * Used to create the following messages:
 	 *
-	 * 'insights-list-description-uncategorizedpages',
-	 * 'insights-list-description-withoutimages',
 	 * 'insights-list-description-deadendpages',
+	 * 'insights-list-description-flags',
+	 * 'insights-list-description-templateswithouttype',
+	 * 'insights-list-description-uncategorizedpages',
 	 * 'insights-list-description-wantedpages'
+	 * 'insights-list-description-withoutimages',
 	 */
 	const INSIGHT_DESCRIPTION_MSG_PREFIX = 'insights-list-description-';
 
 	/**
 	 * Used to create the following messages:
 	 *
+	 * 'insights-notification-message-inprogress-flags',
 	 * 'insights-notification-message-inprogress-uncategorizedpages',
 	 * 'insights-notification-message-inprogress-withoutimages',
 	 * 'insights-notification-message-inprogress-deadendpages',
@@ -34,18 +42,18 @@ class InsightsHelper {
 	/**
 	 * Used to create the following messages:
 	 *
-	 * 'insights-notification-message-fixed-uncategorizedpages',
-	 * 'insights-notification-message-fixed-withoutimages',
 	 * 'insights-notification-message-fixed-deadendpages',
-	 * 'insights-notification-message-fixed-wantedpages'
 	 * 'insights-notification-message-fixed-nonportableinfoboxes'
+	 * 'insights-notification-message-fixed-uncategorizedpages',
+	 * 'insights-notification-message-fixed-wantedpages'
+	 * 'insights-notification-message-fixed-withoutimages',
 	 */
 	const INSIGHT_FIXED_MSG_PREFIX = 'insights-notification-message-fixed-';
 
-	public static $insightsPages = [
+	private static $defaultInsights = [
 		InsightsUncategorizedModel::INSIGHT_TYPE	=> 'InsightsUncategorizedModel',
 		InsightsWithoutimagesModel::INSIGHT_TYPE	=> 'InsightsWithoutimagesModel',
-		InsightsDeadendModel::INSIGHT_TYPE		=> 'InsightsDeadendModel',
+		InsightsDeadendModel::INSIGHT_TYPE			=> 'InsightsDeadendModel',
 		InsightsWantedpagesModel::INSIGHT_TYPE		=> 'InsightsWantedpagesModel'
 	];
 
@@ -56,18 +64,55 @@ class InsightsHelper {
 	 * @return array
 	 */
 	public static function getInsightsPages() {
-		global $wgEnableInsightsInfoboxes;
+		global $wgEnableInsightsInfoboxes, $wgEnableFlagsExt, $wgEnableTemplateClassificationExt,
+			   $wgEnableInsightsPagesWithoutInfobox, $wgEnableInsightsTemplatesWithoutType;
 
-		if ( !empty( $wgEnableInsightsInfoboxes )
-			&& !isset( self::$insightsPages[InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE] )
-		) {
-			self::$insightsPages = array_merge(
-				[ InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE => 'InsightsUnconvertedInfoboxesModel' ],
-				self::$insightsPages
-			);
+		/* Order of inserting determines default order on insights entry points list */
+		$dynamicInsights = [];
+
+		/* Add TemplatesWithoutType insight */
+		if ( !empty( $wgEnableTemplateClassificationExt ) && !empty( $wgEnableInsightsTemplatesWithoutType ) ) {
+			$dynamicInsights[InsightsTemplatesWithoutTypeModel::INSIGHT_TYPE] = 'InsightsTemplatesWithoutTypeModel';
 		}
 
-		return self::$insightsPages;
+		/* Add Infoboxes insight */
+		if ( !empty( $wgEnableInsightsInfoboxes ) ) {
+			$dynamicInsights[InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE] = 'InsightsUnconvertedInfoboxesModel';
+		}
+
+		/* Add PagesWithoutInfobox insight */
+		if ( !empty( $wgEnableTemplateClassificationExt ) && !empty( $wgEnableInsightsPagesWithoutInfobox ) ) {
+			$dynamicInsights[InsightsPagesWithoutInfoboxModel::INSIGHT_TYPE] = 'InsightsPagesWithoutInfoboxModel';
+		}
+
+		/* Add Flags insight */
+		if ( !empty( $wgEnableFlagsExt ) ) {
+			$dynamicInsights[InsightsFlagsModel::INSIGHT_TYPE] = 'InsightsFlagsModel';
+		}
+
+
+		return array_merge( $dynamicInsights, self::$defaultInsights );
+	}
+
+	/**
+	 * Get list of insights which should be highlighted in insights list (should have red dot)
+	 *
+	 * @return array
+	 */
+	public static function getHighlightedInsights() {
+		global $wgEnableTemplateClassificationExt, $wgEnableInsightsInfoboxes, $wgEnableInsightsTemplatesWithoutType;
+
+		$highlightedInsights = [];
+
+		if ( !empty( $wgEnableInsightsInfoboxes ) ) {
+			$highlightedInsights[] = InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE;
+		}
+
+		if ( !empty( $wgEnableTemplateClassificationExt ) && !empty( $wgEnableInsightsTemplatesWithoutType ) ) {
+			$highlightedInsights[] = InsightsTemplatesWithoutTypeModel::INSIGHT_TYPE;
+		}
+
+		return $highlightedInsights;
 	}
 
 	/**
@@ -87,7 +132,7 @@ class InsightsHelper {
 	/**
 	 * Checks if a given subpage is known
 	 *
-	 * @param $subpage A slug of a subpage
+	 * @param $subpage string|null A slug of a subpage
 	 * @return bool
 	 */
 	public static function isInsightPage( $subpage ) {
@@ -116,7 +161,7 @@ class InsightsHelper {
 	 * Returns a specific subpage model
 	 * If it does not exist a user is redirected to the Special:Insights landing page
 	 *
-	 * @param $subpage A slug of a subpage
+	 * @param $subpage string|null A slug of a subpage
 	 * @return InsightsModel|null
 	 */
 	public static function getInsightModel( $subpage ) {
@@ -160,18 +205,30 @@ class InsightsHelper {
 	 * Returns an array of basic messages keys associated with slugs of subpages
 	 * (subtitle and description). Used mainly to generate navigation elements.
 	 *
+	 * @param int $limit Limit insights pages returned. No limit if 0.
 	 * @return array
 	 */
-	public static function getMessageKeys() {
-		$messageKeys = [];
+	public function prepareInsightsList( $limit = 0 ) {
+		$insightsList = [];
+
+		$insightsCountService = new InsightsCountService();
 		$insightsPages = self::getInsightsPages();
+
+		if ( $limit > 0 ) {
+			$insightsPages = array_slice( $insightsPages, 0, $limit );
+		}
+
+		$highlightedInsighs = self::getHighlightedInsights();
+
 		foreach ( $insightsPages as $key => $class ) {
-			$messageKeys[$key] = [
+			$insightsList[$key] = [
 				'subtitle' => self::INSIGHT_SUBTITLE_MSG_PREFIX . $key,
 				'description' => self::INSIGHT_DESCRIPTION_MSG_PREFIX . $key,
+				'count' => $this->prepareCountDisplay( $insightsCountService->getCount( $key ) ),
+				'highlighted' => in_array( $key, $highlightedInsighs )
 			];
 		}
-		return $messageKeys;
+		return $insightsList;
 	}
 
 	/**
@@ -189,5 +246,13 @@ class InsightsHelper {
 			$lastTimeId->modify( '-2 week' )->format( $format ),
 			$lastTimeId->modify( '-3 week' )->format( $format ),
 		];
+	}
+
+	private function prepareCountDisplay( $count ) {
+		if ( $count > self::MAX_DISPLAY_COUNT ) {
+			return self::MAX_DISPLAY_COUNT . '+';
+		}
+
+		return $count;
 	}
 }

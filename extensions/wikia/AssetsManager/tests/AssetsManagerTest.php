@@ -150,17 +150,6 @@ class AssetsManagerTest extends WikiaBaseTest {
 				'isSkinStrict' => false,
 				'expectedValue' => true,
 			],
-			// AssetsManager URLs - depends on whether the skin is strict
-			[
-				'url' => 'http://i2.macbre.wikia-dev.com/__am/123456/group/-/local_navigation_js',
-				'isSkinStrict' => true,
-				'expectedValue' => false,
-			],
-			[
-				'url' => 'http://i2.macbre.wikia-dev.com/__am/123456/group/-/local_navigation_js',
-				'isSkinStrict' => false,
-				'expectedValue' => true,
-			],
 		];
 	}
 
@@ -267,11 +256,8 @@ class AssetsManagerTest extends WikiaBaseTest {
 
 	public function getGroupsForSkin() {
 		return [
-			['oasis', ['oasis'], false, true],
-			['oasis', ['venus'], false, false],
-			['oasis', ['oasis', 'venus'], false, true],
-			['oasis', [], false, true],
-			['venus', [], true, false]
+			[ 'oasis', [ 'oasis' ], false, true ],
+			[ 'oasis', [], false, true ],
 		];
 	}
 }

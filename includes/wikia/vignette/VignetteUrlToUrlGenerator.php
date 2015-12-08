@@ -23,13 +23,13 @@ class VignetteUrlToUrlGenerator {
 		$this->asOriginal = $asOriginal;
 
 		if (!VignetteRequest::isVignetteUrl($url)) {
-			$this->reportError('invalid url');
+			$this->reportWarning('invalid url');
 		}
 	}
 
 	public function build() {
 		if (!$this->parseUrl()) {
-			$this->reportError('unable to parse url');
+			$this->reportWarning('unable to parse url');
 		}
 
 		$isArchive = $this->urlParts['revision'] != \Wikia\Vignette\UrlGenerator::REVISION_LATEST;
@@ -90,7 +90,7 @@ class VignetteUrlToUrlGenerator {
 
 		foreach (array_chunk($parts, 2) as $chunk) {
 			if (count($chunk) != 2) {
-				$this->reportError('invalid chunk');
+				$this->reportWarning('invalid chunk');
 			}
 
 			list($key, $val) = $chunk;
@@ -114,7 +114,7 @@ class VignetteUrlToUrlGenerator {
 					$generator->windowHeight($val);
 					break;
 				default:
-					$this->reportError('invalid key while building thumb mode', [
+					$this->reportWarning('invalid key while building thumb mode', [
 						'key' => $key,
 						'val' => $val,
 					]);
@@ -123,14 +123,17 @@ class VignetteUrlToUrlGenerator {
 		}
 	}
 
-	private function reportError($message, $context=[]) {
+	private function reportWarning($message, Array $context=[]) {
 		$exception = new InvalidArgumentException($message);
-		$this->error($message, $context);
+		$context['exception'] = $exception;
+
+		$this->warning($message, $context);
 		throw $exception;
 	}
 
 	protected function getLoggerContext() {
 		return [
+			'class' => __CLASS__,
 			'url' => $this->url,
 		];
 	}

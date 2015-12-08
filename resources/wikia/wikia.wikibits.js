@@ -31,7 +31,7 @@ var importArticle = (function() {
 			lang: mw.config.get( 'wgUserLanguage' ),
 			mode: 'articles',
 			skin: mw.config.get( 'skin' ),
-			missingCallback: 'importArticleMissing'
+			missingCallback: 'importNotifications.importArticleMissing'
 		},
 		loaded = {},
 		slice = [].slice;
@@ -62,6 +62,16 @@ var importArticle = (function() {
 				module.articles = module.articles.join( '|' );
 			}
 
+			if ( mw.config.get('wgContentReviewExtEnabled') ) {
+				if ( module.articles.search(/mediawiki:/i) != -1 ) {
+					if ( mw.config.get('wgContentReviewTestModeEnabled') ) {
+						module.current = mw.config.get('wgScriptsTimestamp');
+					} else {
+						module.reviewed = mw.config.get('wgReviewedScriptsTimestamp');
+					}
+				}
+			}
+
 			// These import methods are in /skins/common/wikibits.js
 			var importMethod;
 			if ( module.type == 'script' ) {
@@ -80,8 +90,9 @@ var importArticle = (function() {
 			module.only = module.type + 's';
 			delete module.type;
 
+			uri = baseUri + $.param( module );
+
 			// Make sure we don't load the same URI again
-			uri = baseUri + $.param( module )
 			if ( loaded[ uri ] ) {
 				continue;
 			}
@@ -99,54 +110,79 @@ var importArticle = (function() {
 /**
  * Notify users about missing user-supplied assets.
  * @author Wladyslaw Bodzek
+ * @author Kamil Koterba
  *
  * @param {Array} The names of the missing assets
  */
-var importArticleMissing = (function() {
+var importNotifications = (function() {
 	var reportMissing = ( $.isArray( window.wgUserGroups )
 			&& ( $.inArray( 'staff', window.wgUserGroups ) > -1
 			|| $.inArray( 'sysop', window.wgUserGroups ) > -1
 			|| $.inArray( 'bureaucrat', window.wgUserGroups ) > -1 ) ),
-		// TODO: i18n
 		missingText = {
-			single: '%1s was not found (requested by user-supplied javascript)',
-			multiple: '%1s %2s were not found (requested by user-supplied javascript)'
+			single:  'import-article-missing-single',
+			multiple: 'import-article-missing-multiple'
 		},
-		// TODO: i18n
 		moreText = {
-			single: '(and one more article)',
-			multiple: '(and %d more articles)'
+			single: 'import-article-missing-more-single',
+			multiple: 'import-article-missing-more-multiple'
+		},
+		notJsText = {
+			single:  'import-article-not-js-single',
+			multiple: 'import-article-not-js-multiple'
 		};
 
-	return function( missing ) {
+	function showBannerNotification(articles, baseText) {
 		var missingLength;
 
 		// Don't show notificaton for regular users
-		if ( !reportMissing ) {
+		if (!reportMissing) {
 			return;
 		}
 
-		if ( !$.isArray( missing ) ) {
-			missing = [ missing ];
+		if (!$.isArray(articles)) {
+			articles = [articles];
 		}
 
 		// Use BannerNotification to show the error to the user
-		if (window.BannerNotification && (missingLength = missing.length)) {
+		if (window.BannerNotification && (missingLength = articles.length)) {
 			var moreLength = missingLength - 1,
-				message = missingText[ missingLength < 2 ? 'single' : 'multiple' ],
-				more = moreText[ moreLength < 2 ? 'single' : 'multiple' ];
+				baseMessageName = baseText[ missingLength < 2 ? 'single' : 'multiple' ],
+				moreMessageName = moreText[ moreLength < 2 ? 'single' : 'multiple'],
+				message;
 
-			message = message
-				.replace( '%1s', '"' + missing[ 0 ] + '"' )
-				.replace( '%2s', more.replace( '%d', moreLength ) );
+			message = mw.message(baseMessageName).params([
+				'"' + articles[0] + '"',
+				mw.message(moreMessageName).params([moreLength]).escaped()
+			]).escaped();
 
-			new window.BannerNotification(message, 'error').show();
+			$(function () {
+				new window.BannerNotification(message, 'error').show();
+			});
 		}
 	}
+
+	function importArticleMissing(missing) {
+		showBannerNotification(missing, missingText);
+	}
+
+	function importNotJsFailed(missing) {
+		showBannerNotification(missing, notJsText);
+	}
+
+	return {
+		importArticleMissing: importArticleMissing,
+		importNotJsFailed: importNotJsFailed
+	};
 }());
+
 
 // Exports
 window.importArticle = window.importArticles = importArticle;
-window.importArticleMissing = importArticleMissing;
+window.importNotifications = importNotifications;
+
+require(['wikia.importScript', 'wikia.window'], function(importScript, window){
+	window.importWikiaScriptPages = importScript.importWikiaScriptPages;
+});
 
 })( this, jQuery );

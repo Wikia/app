@@ -331,7 +331,9 @@ class AsyncTaskList {
 			}
 
 			if ( $exception !== null ) {
-				WikiaLogger::instance()->critical( "Failed to queue task", [ 'error' => $exception->getMessage() ] );
+				WikiaLogger::instance()->critical( 'AsyncTaskList::queue', [
+					'exception' => $exception
+				] );
 				return null;
 			}
 		} else {
@@ -347,13 +349,30 @@ class AsyncTaskList {
 	 * @throws AMQPTimeoutException
 	 */
 	protected function connection() {
-		global $wgTaskBroker;
-
 		if ( $this->connection == null ) {
-			$this->connection = new AMQPConnection( $wgTaskBroker['host'], $wgTaskBroker['port'], $wgTaskBroker['user'], $wgTaskBroker['pass'] );
+			$this->connection = self::getConnection();
 		}
 
 		return $this->connection;
+	}
+
+	/**
+	 * A helper for getting an AMQP connection
+	 *
+	 * Throws AMQPRuntimeException when task broker is disabled in a cureent environment (PLATFORM-1740)
+	 *
+	 * @return AMQPConnection connection to message broker
+	 * @throws AMQPRuntimeException
+	 * @throws AMQPTimeoutException
+	 */
+	protected static function getConnection() {
+		global $wgTaskBroker;
+
+		if ( empty( $wgTaskBroker ) ) {
+			throw new AMQPRuntimeException( 'Task broker is disabled' );
+		}
+
+		return new AMQPConnection( $wgTaskBroker['host'], $wgTaskBroker['port'], $wgTaskBroker['user'], $wgTaskBroker['pass'] );
 	}
 
 	/**
@@ -392,18 +411,17 @@ class AsyncTaskList {
 	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
 	 */
 	public static function batch( $taskLists ) {
-		global $wgTaskBroker;
-
 		$logError = function( \Exception $e ) {
-			WikiaLogger::instance()->critical( 'Failed to queue task group', [
-				'error' => $e->getMessage(),
+			WikiaLogger::instance()->critical( 'AsyncTaskList::batch', [
+				'exception' => $e,
+				'caller' => wfGetCallerClassMethod( [ __CLASS__, 'Wikia\\Tasks\\Tasks\\BaseTask' ] ),
 			] );
 
 			return null;
 		};
 
 		try {
-			$connection = new AMQPConnection( $wgTaskBroker['host'], $wgTaskBroker['port'], $wgTaskBroker['user'], $wgTaskBroker['pass'] );
+			$connection = self::getConnection();
 		} catch ( AMQPRuntimeException $e ) {
 			return $logError( $e );
 		} catch ( AMQPTimeoutException $e ) {

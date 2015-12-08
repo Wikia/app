@@ -70,9 +70,10 @@
 <?= $quantServe ?>
 <?= $googleAnalytics ?>
 <?= $amazonMatch ?>
+<?= $openXBidder ?>
+<?= $rubiconFastlane ?>
 <?= $dynamicYield ?>
 <?= $ivw2 ?>
-<?= $rubiconRtp ?>
 <div class="WikiaSiteWrapper">
 	<?= $body ?>
 

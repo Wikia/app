@@ -150,6 +150,16 @@ class PageHeaderController extends WikiaController {
 		return $ret;
 	}
 
+	private function getCuratedContentButton() {
+		global $wgEnableCuratedContentExt;
+
+		if ( !empty( $wgEnableCuratedContentExt ) ) {
+			return $this->app->sendRequest( 'CuratedContent', 'editButton' );
+		} else {
+			return null;
+		}
+	}
+
 	/**
 	 * Render default page header (with edit dropdown, history dropdown, ...)
 	 *
@@ -157,7 +167,9 @@ class PageHeaderController extends WikiaController {
 	 *    key: showSearchBox (default: false)
 	 */
 	public function executeIndex( $params ) {
-		global $wgTitle, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix, $wgEnableWallExt;
+		global $wgTitle, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle,
+			$wgSuppressNamespacePrefix, $wgEnableWallExt;
+
 		wfProfileIn( __METHOD__ );
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
@@ -167,6 +179,8 @@ class PageHeaderController extends WikiaController {
 
 		// page namespace
 		$ns = $wgTitle->getNamespace();
+
+		$this->curatedContentToolButton = $this->getCuratedContentButton();
 
 		/** start of wikia changes @author nAndy */
 		$this->isWallEnabled = ( !empty( $wgEnableWallExt ) && $ns == NS_USER_WALL );
@@ -328,6 +342,7 @@ class PageHeaderController extends WikiaController {
 				$this->pageType = wfMsg( 'oasis-page-header-subtitle-forum' );
 				break;
 		}
+		wfRunHooks( 'PageHeaderPageTypePrepared', [ $this, $this->getContext()->getTitle() ] );
 
 		// render subpage info
 		$this->pageSubject = $skin->subPageSubtitle();
@@ -624,4 +639,5 @@ class PageHeaderController extends WikiaController {
 		$wgMemc->delete( wfMemcKey( 'mOasisRecentRevisions2', $article->getTitle()->getArticleId() ) );
 		return true;
 	}
+
 }

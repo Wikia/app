@@ -69,6 +69,25 @@ ve.dm.MWTransclusionNode.static.getHashObject = function ( dataElement ) {
 	};
 };
 
+/**
+ * return the type to be assigned to given data element. If this is a portable infobox, the proper
+ * node type was already defined and named.
+ *
+ * @param domElements array of clicked elements
+ * @param converter Converter object
+ * @returns {string} type of Node
+ */
+ve.dm.MWTransclusionNode.static.getDataElementType = function ( domElements, converter ) {
+	var isInline = this.isHybridInline( domElements, converter);
+
+	if ( isInline ) {
+		return ve.dm.MWTransclusionInlineNode.static.name;
+	}
+	return this.name === ve.dm.WikiaInfoboxTransclusionBlockNode.static.name ?
+		ve.dm.WikiaInfoboxTransclusionBlockNode.static.name :
+		ve.dm.MWTransclusionBlockNode.static.name;
+};
+
 ve.dm.MWTransclusionNode.static.toDataElement = function ( domElements, converter ) {
 	if ( converter.isDomAllMetaOrWhitespace( domElements, ['mwTransclusion', 'mwTransclusionInline', 'mwTransclusionBlock'] ) ) {
 		return ve.dm.MWTransclusionMetaItem.static.toDataElement( domElements, converter );
@@ -77,8 +96,7 @@ ve.dm.MWTransclusionNode.static.toDataElement = function ( domElements, converte
 	var dataElement, index,
 		mwDataJSON = domElements[0].getAttribute( 'data-mw' ),
 		mwData = mwDataJSON ? JSON.parse( mwDataJSON ) : {},
-		isInline = this.isHybridInline( domElements, converter ),
-		type = isInline ? 'mwTransclusionInline' : 'mwTransclusionBlock';
+		type = this.getDataElementType( domElements, converter );
 
 	dataElement = {
 		type: type,

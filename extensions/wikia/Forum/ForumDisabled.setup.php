@@ -15,7 +15,8 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname( __FILE__ ) . '/';
 
-include ($dir . '/Forum.namespace.setup.php');
+include ( $dir . '/Forum.namespace.setup.php' );
+include ( $dir . '/Forum.rights.setup.php' );
 
 $wgAutoloadClasses[ 'ForumNotificationPlugin'] =  $dir . 'ForumNotificationPlugin.class.php' ;
 

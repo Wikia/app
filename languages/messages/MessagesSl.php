@@ -580,8 +580,9 @@ Podani razlog je bil »''$2''«.",
 # Login and logout pages
 'logouttext'                 => "'''Odjavili ste se.'''
 
-{{GRAMMAR:tožilnik|{{SITENAME}}}} lahko zdaj uporabljate neprijavljeni ali pa se [[Special:UserLogin|ponovno prijavite]] kot enak ali drug uporabnik.
+{{GRAMMAR:tožilnik|{{SITENAME}}}} lahko zdaj uporabljate neprijavljeni ali pa se $1 kot enak ali drug uporabnik.
 Morda bodo nekatere strani še naprej prikazane, kot da ste prijavljeni, dokler ne boste izpraznili predpomnilnika brskalnika.",
+'logouttext-link-text'       => 'ponovno prijavite',
 'welcomecreation'            => '== Dobrodošli, $1! ==
 Ustvarili ste račun.
 Ne pozabite si prilagoditi vaših [[Special:Preferences|nastavitev {{GRAMMAR:rodilnik|{{SITENAME}}}}]].',

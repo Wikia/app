@@ -754,8 +754,9 @@ Le motif avancé est « ''$2'' ».",
 # Login and logout pages
 'logouttext'                 => "'''Vous êtes à présent déconnecté(e).'''
 
-Vous pouvez continuer à utiliser {{SITENAME}} de façon anonyme, [[Special:UserLogin|vous reconnecter]] sous le même nom ou un autre.
+Vous pouvez continuer à utiliser {{SITENAME}} de façon anonyme, $1 sous le même nom ou un autre.
 Notez que certaines pages peuvent être encore affichées comme si vous étiez toujours connecté(e), jusqu’à ce que vous effaciez le cache de votre navigateur.",
+'logouttext-link-text'       => 'vous reconnecter',
 'welcomecreation'            => '== Bienvenue, $1 ! ==
 
 Votre compte a été créé.
@@ -1731,7 +1732,7 @@ Voyez la [[Special:NewFiles|galerie des nouvelles images]] pour une présentatio
 'filetype-bad-ie-mime'        => 'Le fichier ne peut pas être importé parce qu’il serait détecté comme « $1 » par Internet Explorer, ce qui correspond à un type de fichier interdit car potentiellement dangereux.',
 'filetype-unwanted-type'      => "'''« .$1 »''' est un format de fichier non désiré.
 {{PLURAL:$3|Le type de fichier préconisé est|Les types de fichiers préconisés sont}} $2.",
-'filetype-banned-type'        => "''' « .$1 » '''{{PLURAL:$4|n’est pas un type de fichier autorisé|ne sont pas des types de fichiers autorisés}}. 
+'filetype-banned-type'        => "''' « .$1 » '''{{PLURAL:$4|n’est pas un type de fichier autorisé|ne sont pas des types de fichiers autorisés}}.
 {{PLURAL:$3|le type de fichier autorisé est |les types de fichiers autorisés sont}} $2.",
 'filetype-missing'            => 'Le fichier n’a aucune extension (comme « .jpg » par exemple).',
 'empty-file'                  => 'Le fichier que vous avez soumis était vide.',
@@ -1874,7 +1875,7 @@ Si le problème persiste, contactez un [[Special:ListUsers/sysop|administrateur]
 'zip-wrong-format'    => "Le fichier spécifié n'est pas un fichier ZIP.",
 'zip-bad'             => 'Le fichier est un fichier ZIP corrompu ou illisible.
 Il ne peut pas être correctement vérifié pour la sécurité.',
-'zip-unsupported'     => 'Le fichier est un fichier ZIP qui utilise ZIP non supportées par MediaWiki. 
+'zip-unsupported'     => 'Le fichier est un fichier ZIP qui utilise ZIP non supportées par MediaWiki.
 Il ne peut pas être correctement vérifé pour la sécurité.',
 
 # Special:UploadStash

@@ -2,7 +2,6 @@
 
 namespace Email;
 
-
 class SpecialSendEmailController extends \WikiaSpecialPageController {
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
@@ -62,15 +61,16 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	 * @template specialSendEmail
 	 */
 	public function index() {
-
-		if ( $this->wg->request->wasPosted() && $this->editTokenValidates() ) {
-			$result = $this->processForm();
-			$this->addBannerNotification( $result );
+		if ( $this->wg->request->wasPosted() ) {
+			if ( $this->editTokenValidates() ) {
+				$result = $this->processForm();
+				$this->addBannerNotificationFromResult( $result );
+			} else {
+				$this->addErrorBannerNotification( 'Invalid edit token' );
+			}
 		}
 
-		$this->response->setVal(
-			"forms", $this->getForms()
-		);
+		$this->response->setVal( 'forms', $this->getForms() );
 	}
 
 	/**
@@ -78,7 +78,7 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	 * @return bool
 	 */
 	private function editTokenValidates() {
-		return 	$this->wg->User->matchEditToken( $this->request->getVal( 'token' )  );
+		return $this->wg->User->matchEditToken( $this->request->getVal( 'token' ) );
 	}
 
 	/**
@@ -88,6 +88,9 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	private function processForm() {
 		$postedFormValues = $this->request->getParams();
 		$controllerName = $postedFormValues['emailController'];
+		if ( !preg_match( EmailController::EMAIL_CONTROLLER_REGEX, $controllerName ) ) {
+			throw new Fatal("Invalid email type: {$controllerName}");
+		}
 		return \F::app()->sendRequest( $controllerName, 'handle', $postedFormValues );
 	}
 
@@ -97,17 +100,27 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	 * add an error banner notification and output the error from the Email Controller.
 	 * @param \WikiaResponse $result
 	 */
-	private function addBannerNotification( $result ) {
+	private function addBannerNotificationFromResult( $result ) {
 		$responseData = $result->getData();
 		if ( $responseData['result'] == 'ok' ) {
-			\BannerNotificationsController::addConfirmation(
-				"Successfully sent email!",
-				\BannerNotificationsController::CONFIRMATION_CONFIRM );
+			$this->addSuccessBannerNotification( "Successfully sent email!" );
 		} else {
-			\BannerNotificationsController::addConfirmation(
-				"Errors: " . $responseData['msg'],
-				\BannerNotificationsController::CONFIRMATION_ERROR );
+			$this->addErrorBannerNotification( $responseData['msg'] );
 		}
+	}
+
+	private function addSuccessBannerNotification( $msg ) {
+		\BannerNotificationsController::addConfirmation(
+			$msg,
+			\BannerNotificationsController::CONFIRMATION_CONFIRM
+		);
+	}
+
+	private function addErrorBannerNotification( $msg ) {
+		\BannerNotificationsController::addConfirmation(
+			"Errors: " . $msg,
+			\BannerNotificationsController::CONFIRMATION_ERROR
+		);
 	}
 
 	/**
@@ -134,13 +147,23 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 		$emailControllerClasses = [];
 		foreach ( $allClasses as $className => $classPath ) {
 			if ( preg_match( EmailController::EMAIL_CONTROLLER_REGEX, $className, $matches ) ) {
-				if ( !$this->isClassAbstract( $className ) ) {
+				if ( !$this->isClassAbstract( $className ) && !$this->isControllerBlacklisted( $matches[1] ) ) {
 					$emailControllerClasses[] = $matches[0];
 				}
 			}
 		}
 
 		return $emailControllerClasses;
+	}
+
+	/**
+	 * Check if the controller is blacklisted
+	 *
+	 * @param $baseName string Base class name without namespace
+	 * @return bool
+	 */
+	private function isControllerBlacklisted( $baseName ) {
+		return in_array( $baseName, [ 'ForgotPassword', 'FacebookDisconnect' ] );
 	}
 
 	/**
@@ -204,5 +227,4 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 
 		return $form;
 	}
-
 }

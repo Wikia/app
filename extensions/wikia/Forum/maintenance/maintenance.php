@@ -4,10 +4,10 @@
 
 
 require_once( "helper.php" );
-ini_set( "include_path", dirname( __FILE__ )."/../../../../maintenance/" );
+ini_set( "include_path", dirname( __FILE__ ) . "/../../../../maintenance/" );
 require_once( "commandLine.inc" );
 
-if ( isset($options['help']) ) {
+if ( isset( $options['help'] ) ) {
 	die( "Usage: php maintenance.php [--dry-run] [--forum] [--wall] [--skip_reset] [--from_id=12345] [--to_id=12345] [--insert_data] [--help]
 		--dryrun			dry run
 		--forum				only forum
@@ -20,7 +20,7 @@ if ( isset($options['help']) ) {
 }
 
 $app = F::app();
-if ( empty($app->wg->CityId) ) {
+if ( empty( $app->wg->CityId ) ) {
 	die( "Error: Invalid wiki id." );
 }
 
@@ -28,13 +28,13 @@ if ( wfReadOnly() ) {
 	die( "Error: In read only mode." );
 }
 
-$isDryrun = ( isset($options['dryrun']) ) ? true : false ;
-$forumOnly = ( isset($options['forum']) ) ? true : false ;
-$wallOnly = ( isset($options['wall']) ) ? true : false ;
-$skipReset = ( isset($options['skip_reset']) ) ? true : false ;
-$insertDataOnly = ( isset($options['insert_data']) ) ? true : false ;
-$fromId = ( isset($options['from_id']) ) ? intval($options['from_id']) : null ;
-$toId = ( isset($options['to_id']) ) ? intval($options['to_id']) : null ;
+$isDryrun = ( isset( $options['dryrun'] ) ) ? true : false ;
+$forumOnly = ( isset( $options['forum'] ) ) ? true : false ;
+$wallOnly = ( isset( $options['wall'] ) ) ? true : false ;
+$skipReset = ( isset( $options['skip_reset'] ) ) ? true : false ;
+$insertDataOnly = ( isset( $options['insert_data'] ) ) ? true : false ;
+$fromId = ( isset( $options['from_id'] ) ) ? intval( $options['from_id'] ) : null ;
+$toId = ( isset( $options['to_id'] ) ) ? intval( $options['to_id'] ) : null ;
 
 echo "Wiki $wgCityId:\n";
 
@@ -42,7 +42,7 @@ $db = wfGetDB( DB_MASTER );
 
 if ( !$isDryrun && !$insertDataOnly ) {
 	// create table or patch table schema
-	$commentsIndex = (new CommentsIndex);
+	$commentsIndex = ( new CommentsIndex );
 
 	echo "Updated database schema for comment_index table.\n";
 
@@ -58,7 +58,7 @@ $cmdOptions = '';
 
 // set where clauses
 $sqlWhereBase = array(
-	'page.page_title '.$db->buildLike( $db->anyString(), sprintf( "/%s", ARTICLECOMMENT_PREFIX ), $db->anyString() ),
+	'page.page_title ' . $db->buildLike( $db->anyString(), sprintf( "/%s", ARTICLECOMMENT_PREFIX ), $db->anyString() ),
 	'page_latest > 0'	// BugId:22821
 );
 
@@ -75,7 +75,7 @@ if ( $forumOnly ) {
 
 // range just executs workers
 // get min/max comments
-if ( is_null($fromId) || is_null($toId) ) {
+if ( is_null( $fromId ) || is_null( $toId ) ) {
 	$row = $db->selectRow(
 	array( 'page' ),
 	array( 'min(page_id) min_id, max(page_id) max_id' ),
@@ -93,31 +93,31 @@ if ( is_null($fromId) || is_null($toId) ) {
 
 	echo "LOOP: From ID $fromId to ID $toId (To ID = $toId).\n";
 
-	$processes = array(); 
-	
+	$processes = array();
+
 	$jump = 200;
 
-	if( ($toId - $fromId)/$jump > 20 ) {
-		$jump = ceil(($toId - $fromId)/20);		
+	if ( ( $toId - $fromId ) / $jump > 20 ) {
+		$jump = ceil( ( $toId - $fromId ) / 20 );
 	}
 
-	echo "JUMP OF QUERY:".$jump."\n";
-	for( $i = $fromId; $i < $toId; $i += $jump ) { 
-		$cmd = 'SERVER_ID='.$app->wg->CityId.' php '.$IP.'/extensions/wikia/Forum/maintenance/maintenance.php '.
-			'--conf='.$app->wg->WikiaLocalSettingsPath.' --from_id='.$i.' --to_id='.($i + $jump).
-		$cmdOptions.' --insert_data';// > /tmp/forum'.$fromId.'_'.$toId.'.log ';
+	echo "JUMP OF QUERY:" . $jump . "\n";
+	for ( $i = $fromId; $i < $toId; $i += $jump ) {
+		$cmd = 'SERVER_ID=' . $app->wg->CityId . ' php ' . $IP . '/extensions/wikia/Forum/maintenance/maintenance.php ' .
+			'--conf=' . $app->wg->WikiaLocalSettingsPath . ' --from_id=' . $i . ' --to_id=' . ( $i + $jump ) .
+		$cmdOptions . ' --insert_data';// > /tmp/forum'.$fromId.'_'.$toId.'.log ';
 		echo "command: $cmd\n";
-		$handle = popen("$cmd 2>&1", 'r');
+		$handle = popen( "$cmd 2>&1", 'r' );
 		$processes[] = $handle;
-		echo "processes: ".count($processes)."\n";
+		echo "processes: " . count( $processes ) . "\n";
 	}
 
 	$working = true;
-	while($working) {
+	while ( $working ) {
 		$working = false;
-		foreach($processes as $handle) {
-			if(!feof($handle)) {
-				echo fgets($handle);
+		foreach ( $processes as $handle ) {
+			if ( !feof( $handle ) ) {
+				echo fgets( $handle );
 				$working = true;
 			}
 		}
@@ -132,8 +132,8 @@ $failed = 0;
 $range = 1000;
 
 $sqlWhere = array(
-	'page_id > '.$fromId,
-	'page_id <= '.$toId
+	'page_id > ' . $fromId,
+	'page_id <= ' . $toId
 );
 $sqlWhere = array_merge( $sqlWhereBase, $sqlWhere );
 
@@ -169,7 +169,7 @@ foreach ( $commentList as $comment ) {
 
 	// parent page id
 	$parentPageId = getParentPage( $articleComment );
-	if ( empty($parentPageId) ) {
+	if ( empty( $parentPageId ) ) {
 		echo ".....Parent page NOT found.\n";
 		$failed++;
 		continue;
@@ -190,7 +190,7 @@ foreach ( $commentList as $comment ) {
 	echo ".....DONE.\n";
 }
 
-WikiFactory::setVarByName("wgWallIndexed", $wgCityId, true );
+WikiFactory::setVarByName( "wgWallIndexed", $wgCityId, true );
 
-echo "TOTAL: ".$cnt.", SUCCESS: ".($cnt-$failed).", FAILED: $failed\n\n";
+echo "TOTAL: " . $cnt . ", SUCCESS: " . ( $cnt -$failed ) . ", FAILED: $failed\n\n";
 echo "#DONE !!!\n";

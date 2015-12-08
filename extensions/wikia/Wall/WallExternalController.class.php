@@ -7,6 +7,8 @@
  */
 
 class WallExternalController extends WikiaController {
+	use \Wikia\Logger\Loggable;
+
 	/**
 	 * @var $helper WallHelper
 	 */
@@ -186,7 +188,13 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function postNewMessage() {
-		wfProfileIn( __METHOD__ );
+		try {
+			$this->checkWriteRequest();
+		} catch ( \BadRequestException $bre ) {
+			$this->setTokenMismatchError();
+			return;
+		}
+
 		$relatedTopics = $this->request->getVal( 'relatedTopics', array() );
 
 		$this->response->setVal( 'status', true );
@@ -200,9 +208,7 @@ class WallExternalController extends WikiaController {
 
 		$body = $this->getConvertedContent( $this->request->getVal( 'body' ) );
 
-		/**
-		 * @var $helper WallHelper
-		 */
+		/** @var $helper WallHelper */
 		$helper = new WallHelper();
 
 		if ( empty( $titleMeta ) ) {
@@ -211,8 +217,7 @@ class WallExternalController extends WikiaController {
 
 		if ( empty( $body ) ) {
 			$this->response->setVal( 'status', false );
-			wfProfileOut( __METHOD__ );
-			return true;
+			return;
 		}
 
 		$ns = $this->request->getVal( 'pagenamespace' );
@@ -227,13 +232,11 @@ class WallExternalController extends WikiaController {
 		if ( $wallMessage === false ) {
 			error_log( 'WALL_NOAC_ON_POST' );
 			$this->response->setVal( 'status', false );
-			wfProfileOut( __METHOD__ );
-			return true;
+			return;
 		}
 
 		$wallMessage->load( true );
 		$this->response->setVal( 'message', $this->app->renderView( 'WallController', 'message', array( 'new' => true, 'comment' => $wallMessage ) ) );
-		wfProfileOut( __METHOD__ );
 	}
 
 	public function deleteMessage() {
@@ -461,9 +464,7 @@ class WallExternalController extends WikiaController {
 	public function editMessage() {
 		// TODO: remove call to ac !!!
 		$msgid = $this->request->getVal( 'msgid' );
-		/**
-		 * @var $mw WallMessage
-		 */
+		/** @var $mw WallMessage */
 		$mw =  WallMessage::newFromId( $msgid );
 
 		if ( empty( $mw ) ) {
@@ -473,7 +474,7 @@ class WallExternalController extends WikiaController {
 
 			$this->response->setVal( 'status', false );
 			$this->response->setVal( 'forcereload', true );
-			return true;
+			return;
 		}
 
 		$text = $mw->getRawText();
@@ -489,8 +490,6 @@ class WallExternalController extends WikiaController {
 
 		$this->response->setVal( 'htmlorwikitext', $text );
 		$this->response->setVal( 'status', true );
-
-		return true;
 	}
 
 	public function notifyEveryoneSave() {
@@ -514,9 +513,14 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function editMessageSave() {
-		/**
-		 * @var $helper WallHelper
-		 */
+		try {
+			$this->checkWriteRequest();
+		} catch ( \BadRequestException $bre ) {
+			$this->setTokenMismatchError();
+			return;
+		}
+
+		/** @var $helper WallHelper */
 		$helper = new WallHelper();
 
 		$msgid = $this->request->getVal( 'msgid' );
@@ -536,11 +540,9 @@ class WallExternalController extends WikiaController {
 			$this->response->setVal( 'status', false ) ;
 			$this->response->setVal( 'msgTitle', wfMsg( ' wall-delete-error-title' ) );
 			$this->response->setVal( 'msgContent', wfMsg( 'wall-deleted-msg-text' ) );
-			return true;
+			return;
 		}
-		/**
-		 * @var $wallMessage WallMessage
-		 */
+		/** @var $wallMessage WallMessage */
 		$wallMessage = WallMessage::newFromTitle( $title );
 
 		$wallMessage->load();
@@ -557,20 +559,25 @@ class WallExternalController extends WikiaController {
 
 		$this->response->setVal( 'userUrl', $editorUrl );
 
-		$query = array(
+		$query = [
 			'diff' => 'prev',
 			'oldid' => $wallMessage->getTitle()->getLatestRevID( Title::GAID_FOR_UPDATE ),
-		);
+		];
 
 		$this->response->setVal( 'historyUrl', $wallMessage->getTitle()->getFullUrl( $query ) );
-
 		$this->response->setVal( 'status', true );
-		$this->response->setVal( 'msgTitle', Xml::element( 'a', array( 'href' => $wallMessage->getMessagePageUrl() ), $newtitle ) );
+		$this->response->setVal( 'msgTitle', Xml::element( 'a', [ 'href' => $wallMessage->getMessagePageUrl() ], $newtitle ) );
 		$this->response->setVal( 'body', $text );
-		return true;
 	}
 
 	public function replyToMessage() {
+		try {
+			$this->checkWriteRequest();
+		} catch ( \BadRequestException $bre ) {
+			$this->setTokenMismatchError();
+			return;
+		}
+
 		$this->response->setVal( 'status', true );
 
 		$parentId = $this->request->getVal( 'parent' );
@@ -585,21 +592,23 @@ class WallExternalController extends WikiaController {
 
 		if ( empty( $parentTitle ) ) {
 			$this->response->setVal( 'status', false );
-			return true;
+			return;
 		}
 
-		Wikia::log( __METHOD__, false, 'Wall::replyToMessage for parent ' . $parentTitle->getFullUrl() . ' (parentId: ' . $parentId . ') ' . $debugParentDB, true );
+		$this->debug( 'Wall::replyToMessage called', [
+			'parentTitle' => $parentTitle->getFullUrl(),
+			'parentId' => $parentId,
+			'parentDb' => $debugParentDB,
+		] );
 
-		/**
-		 * @var $wallMessage WallMessage
-		 */
+		/** @var $wallMessage WallMessage */
 		$wallMessage = WallMessage::newFromTitle( $parentTitle );
 		$body = $this->getConvertedContent( $this->request->getVal( 'body' ) );
 		$reply = $wallMessage->addNewReply( $body, $this->wg->User );
 
 		if ( $reply === false ) {
 			$this->response->setVal( 'status', false );
-			return true;
+			return;
 		}
 
 		$quotedFrom = $this->request->getVal( 'quotedFrom' );
@@ -612,12 +621,13 @@ class WallExternalController extends WikiaController {
 
 		// after successfully posting a reply
 		// remove notification for this thread (if user is following it)
-		/**
-		 * @var $wn WallNotifications
-		 */
+		/** @var $wn WallNotifications */
 		$wn = new WallNotifications();
-		$wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $this->request->getVal( 'parent' ) );
-
+		$wn->markRead(
+			$this->wg->User->getId(),
+			$this->wg->CityId,
+			$this->request->getVal( 'parent' )
+		);
 	}
 
 	public function preview() {

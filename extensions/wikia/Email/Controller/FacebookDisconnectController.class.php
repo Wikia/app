@@ -2,9 +2,6 @@
 
 namespace Email\Controller;
 
-use Email\EmailController;
-use Email\Tracking\TrackingCategories;
-
 class FacebookDisconnectController extends ForgotPasswordController {
 	public function getSubject() {
 		return $this->getMessage( 'emailext-fbdisconnect-subject' )->text();

@@ -2,12 +2,16 @@
 
 $close-image: '/resources/wikia/ui_components/modal/images/close-light.svg';
 
-#ext-wikia-adEngine-template-footer {
+#ext-wikia-adEngine-template-floor {
 	bottom: 0;
 	display: block;
 	position: fixed;
 	width: 100%;
 	z-index: $zTop;
+
+	&.hidden {
+		bottom: 200%;
+	}
 
 	a.close {
 		background-color: #000;

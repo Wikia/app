@@ -1,5 +1,5 @@
 <? if ( $displayHeader ): ?>
-<h1><?= wfMsg( 'oasis-global-page-header' ); ?></h1>
+	<h2><?= wfMsg( 'oasis-global-page-header' ); ?></h2>
 <? endif; ?>
 <div class="skiplinkcontainer">
 <a class="skiplink" rel="nofollow" href="#WikiaArticle"><?= wfMsg( 'oasis-skip-to-content' ); ?></a>
@@ -11,6 +11,7 @@
 <div id="ad-skin" class="wikia-ad noprint"></div>
 
 <?= $app->renderView( 'GlobalNavigation', 'index' ) ?>
+<?= empty( $wg->EnableEBS ) ? '' : $app->renderView( 'EmergencyBroadcastSystem', 'index' ); ?>
 <?= $app->renderView( 'Ad', 'Top' ) ?>
 
 <?= empty( $wg->WikiaSeasonsPencilUnit ) ? '' : $app->renderView( 'WikiaSeasons', 'pencilUnit', array() ); ?>

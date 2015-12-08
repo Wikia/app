@@ -12,6 +12,7 @@ class MercuryApiController extends WikiaController {
 	const DEFAULT_PAGE = 1;
 
 	const WIKI_VARIABLES_CACHE_TTL = 60;
+	const WIKI_IMAGE_SIZE = 500;
 
 	private $mercuryApi = null;
 
@@ -173,8 +174,12 @@ class MercuryApiController extends WikiaController {
 	 *
 	 * @return array
 	 */
-	private function getNavigationData() {
-		return $this->sendRequest( 'NavigationApi', 'getData' )->getData();
+	private function getNavigation() {
+		$navData = $this->sendRequest( 'NavigationApi', 'getData' )->getData();
+		if ( isset( $navData['navigation']['wiki'] ) ) {
+			return $navData['navigation']['wiki'];
+		}
+		return [ ];
 	}
 
 	/**
@@ -212,12 +217,12 @@ class MercuryApiController extends WikiaController {
 		}
 
 		if ( empty( $articleId ) ) {
-			$title = Title::newFromText( $articleTitle, NS_MAIN );
+			$title = Title::newFromText( $articleTitle );
 		} else {
-			$title = Title::newFromId( $articleId, NS_MAIN );
+			$title = Title::newFromId( $articleId );
 		}
 
-		if ( !$title instanceof Title || !$title->isKnown() ) {
+		if ( !$title instanceof Title || !$title->isKnown() || !$title->isContentPage() ) {
 			$title = false;
 		}
 
@@ -269,22 +274,17 @@ class MercuryApiController extends WikiaController {
 	 *
 	 */
 	public function getWikiVariables() {
-		global $egFacebookAppId;
 
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
 
-		try {
-			$wikiVariables['navData'] = $this->getNavigationData();
-		} catch ( Exception $e ) {
+		$navigation = $this->getNavigation();
+		if ( empty( $navData ) ) {
 			\Wikia\Logger\WikiaLogger::instance()->error(
-				'Fallback to empty navigation',
-				[
-					'exception' => $e
-				]
+				'Fallback to empty navigation'
 			);
-			$wikiVariables['navData'] = [ ];
 		}
 
+		$wikiVariables['navigation'] = $navigation;
 		$wikiVariables['vertical'] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 		$wikiVariables['basePath'] = $this->wg->Server;
 
@@ -304,9 +304,19 @@ class MercuryApiController extends WikiaController {
 			$wikiVariables['smartBanner'] = $smartBannerConfig;
 		}
 
-		if ( !is_null( $egFacebookAppId ) ) {
-			$wikiVariables['facebookAppId'] = $egFacebookAppId;
+		$wikiImages = ( new WikiService() )->getWikiImages( [ $this->wg->CityId ], self::WIKI_IMAGE_SIZE );
+		if ( !empty( $wikiImages[$this->wg->CityId] ) ) {
+			$wikiVariables['image'] = $wikiImages[$this->wg->CityId];
 		}
+
+		$wikiVariables['specialRobotPolicy'] = null;
+		$robotPolicy = Wikia::getEnvironmentRobotPolicy( $this->getContext()->getRequest() );
+		if ( !empty( $robotPolicy ) ) {
+			$wikiVariables['specialRobotPolicy'] = $robotPolicy;
+		}
+
+		// template for non-main pages (use $1 for article name)
+		$wikiVariables['htmlTitleTemplate'] = ( new WikiaHtmlTitle() )->setParts( ['$1'] )->getTitle();
 
 		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
@@ -331,31 +341,54 @@ class MercuryApiController extends WikiaController {
 			$article = Article::newFromID( $articleId );
 
 			if ( $title->isRedirect() ) {
-				/* @var Title $title */
-				$title = $article->getRedirectTarget();
-				$article = Article::newFromID( $title->getArticleID() );
+				/* @var Title|null $redirectTargetTitle */
+				$redirectTargetTitle = $article->getRedirectTarget();
 				$data['redirected'] = true;
+				if ( $redirectTargetTitle instanceof Title && !empty( $redirectTargetTitle->getArticleID() ) ) {
+					$article = Article::newFromID( $redirectTargetTitle->getArticleID() );
+					$title = $redirectTargetTitle;
+				} else {
+					$data['redirectEmptyTarget'] = true;
+				}
+			}
+
+			if ( !$article instanceof Article ) {
+				\Wikia\Logger\WikiaLogger::instance()->error(
+					'$article should be an instance of an Article',
+					[
+						'$article' => $article,
+						'$articleId' => $articleId,
+						'$title' => $title
+					]
+				);
+
+				throw new NotFoundApiException( 'Article is empty' );
 			}
 
 			$data['details'] = $this->getArticleDetails( $article );
-			$data['topContributors'] = $this->getTopContributorsDetails(
-				$this->getTopContributorsPerArticle( $articleId )
-			);
+
 			$isMainPage = $title->isMainPage();
 			$data['isMainPage'] = $isMainPage;
+
+			$titleBuilder = new WikiaHtmlTitle();
 
 			if ( $isMainPage && !empty( $wgEnableMainPageDataMercuryApi ) && !empty( $wgWikiaCuratedContent ) ) {
 				$data['mainPageData'] = $this->getMainPageData();
 			} else {
 				$articleAsJson = $this->getArticleJson( $articleId, $title, $sections );
 				$data['article'] = $articleAsJson;
-			}
+				$data['topContributors'] = $this->getTopContributorsDetails(
+					$this->getTopContributorsPerArticle( $articleId )
+				);
+				$relatedPages = $this->getRelatedPages( $articleId );
 
-			$relatedPages = $this->getRelatedPages( $articleId );
-
-			if ( !empty( $relatedPages ) ) {
-				$data['relatedPages'] = $relatedPages;
+				if ( !empty( $relatedPages ) ) {
+					$data['relatedPages'] = $relatedPages;
+				}
+				$titleBuilder->setParts( [ $articleAsJson['displayTitle'] ] );
 			}
+			$data['htmlTitle'] = $titleBuilder->getTitle();
+
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 
@@ -439,7 +472,21 @@ class MercuryApiController extends WikiaController {
 			throw new NotFoundApiException( 'No members' );
 		}
 
-		$this->response->setVal( 'items', $data[ 'items' ] );
+		$this->response->setVal( 'items', $data['items'] );
+	}
+
+	public function getMainPageDetailsAndAdsContext() {
+		$mainPageTitle = Title::newMainPage();
+		$mainPageArticleID = $mainPageTitle->getArticleID();
+		$article = Article::newFromID( $mainPageArticleID );
+		$data = [ ];
+
+		$data['details'] = $this->getArticleDetails( $article );
+		$data['adsContext'] = $this->mercuryApi->getAdsContext( $mainPageTitle );
+
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		$this->response->setVal( 'data', $data );
 	}
 
 	public static function curatedContentDataMemcKey( $section = null ) {

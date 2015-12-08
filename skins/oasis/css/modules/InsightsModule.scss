@@ -1,39 +1,14 @@
+@import 'extensions/wikia/Insights/styles/insights-icons-mixin';
+@import 'extensions/wikia/Insights/styles/insights-red-dot-mixin';
+
 $insights-module-gray: #ccc;
 
 .insights-light {
-	.insights-icon-uncategorizedpages {
-		background-image: url('/extensions/wikia/Insights/images/uncategorized.svg'); /* inline */
-	}
-
-	.insights-icon-withoutimages {
-		background-image: url('/extensions/wikia/Insights/images/withoutimages.svg'); /* inline */
-	}
-
-	.insights-icon-deadendpages {
-		background-image: url('/extensions/wikia/Insights/images/deadendpages.svg'); /* inline */
-	}
-
-	.insights-icon-wantedpages {
-		background-image: url('/extensions/wikia/Insights/images/wantedpages.svg'); /* inline */
-	}
+	@include insights-icons-light();
 }
 
 .insights-dark {
-	.insights-icon-uncategorizedpages {
-		background-image: url('/extensions/wikia/Insights/images/uncategorized_dark.svg'); /* inline */
-	}
-
-	.insights-icon-withoutimages {
-		background-image: url('/extensions/wikia/Insights/images/withoutimages_dark.svg'); /* inline */
-	}
-
-	.insights-icon-deadendpages {
-		background-image: url('/extensions/wikia/Insights/images/deadendpages_dark.svg'); /* inline */
-	}
-
-	.insights-icon-wantedpages {
-		background-image: url('/extensions/wikia/Insights/images/wantedpages_dark.svg'); /* inline */
-	}
+	@include insights-icons-dark();
 }
 
 .insights-module-list {
@@ -41,6 +16,8 @@ $insights-module-gray: #ccc;
 }
 
 .insights-module-item {
+	@include insights-red-dot();
+
 	background-position: 5% 50%;
 	background-repeat: no-repeat;
 	background-size: auto 21px;
@@ -48,6 +25,7 @@ $insights-module-gray: #ccc;
 	list-style-type: none;
 	margin: 0;
 	padding: 5px 0;
+	position: relative;
 
 	&:last-child {
 		border-bottom: 0;

@@ -81,7 +81,6 @@ return array(
 		// Wikia change - begin
 		'skinScripts' => [
 			'default' => 'resources/jquery/jquery-' . AssetsConfig::JQUERY_VERSION . '.js',
-			'venus' => 'resources/jquery/jquery-2.1.1.js',
 		],
 		// Wikia change - end
 		'debugRaw' => false,
@@ -248,9 +247,6 @@ return array(
 				'resources/jquery.ui/themes/default/jquery.ui.core.css',
 				// TODO: use /skins/oasis/css/core/jquery.ui.autocomplete.scss SASS file here
 			),
-			'venus' => array(
-				'resources/jquery.ui/themes/default/jquery.ui.core.css',
-			)
 			// wikia change - end
 		),
 		'dependencies' => 'jquery',
@@ -956,7 +952,7 @@ return array(
 		),
 	),
 	'mediawiki.legacy.wikibits' => array(
-		// Wikia - change begin - @author: wladek
+		// Wikia - change begin - @author: wladek, kamil
 //		'scripts' => 'common/wikibits.js',
 //		'remoteBasePath' => $GLOBALS['wgStylePath'],
 //		'localBasePath' => $GLOBALS['wgStyleDirectory'],
@@ -964,9 +960,18 @@ return array(
 			'skins/common/wikibits.js',
 			'resources/wikia/wikia.wikibits.js',
 		),
+		'messages' => array(
+			'import-article-missing-single',
+			'import-article-missing-multiple',
+			'import-article-missing-more-single',
+			'import-article-missing-more-multiple',
+			'import-article-not-js-single',
+			'import-article-not-js-multiple',
+		),
 		// Wikia - change end
 		'dependencies' => array(
 			'mediawiki.util',
+			'wikia.importScript'
 		),
 		'position' => 'top',
 	),

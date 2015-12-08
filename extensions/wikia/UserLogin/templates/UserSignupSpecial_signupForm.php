@@ -25,13 +25,13 @@ $form = [
 			'name' => 'signupToken',
 			'value' => Sanitizer::encodeAttribute( $signupToken ),
 		],
-		[ //fake username field ( not in use )
+		[ // fake username field ( not in use )
 			'type' => 'hidden',
 			'name' => 'username',
 			'value' => '',
 			'label' => wfMessage( 'yourname' )->escaped(),
 		],
-		[ //actual username field
+		[ // actual username field
 			'type' => 'text',
 			'name' => 'userloginext01',
 			'value' => htmlspecialchars( $username ),
@@ -49,13 +49,13 @@ $form = [
 			'isInvalid' => ( !empty( $errParam ) && $errParam === 'email' ),
 			'errorMsg' => ( !empty( $msg ) ? $msg : '' )
 		],
-		[ //fake password field ( not in use )
+		[ // fake password field ( not in use )
 			'type' => 'hidden',
 			'name' => 'password',
 			'value' => '',
 			'label' => wfMessage( 'yourpassword' )->escaped(),
 		],
-		[ //actual password field
+		[ // actual password field
 			'type' => 'password',
 			'name' => 'userloginext02',
 			'value' => '',
@@ -70,22 +70,21 @@ $form = [
 			'value' => '',
 		],
 		[
-			'type' => 'nirvanaview',
-			'controller' => 'UserSignupSpecial',
-			'view' => 'birthday',
+			'type' => 'custom',
 			'isRequired' => true,
 			'isInvalid' => ( !empty( $errParam ) && $errParam === 'birthyear' ) || ( !empty( $errParam ) && $errParam === 'birthmonth' ) || ( !empty( $errParam ) && $errParam === 'birthday' ),
 			'errorMsg' => ( !empty( $msg ) ? $msg : '' ),
-			'params' => ['birthyear' => $birthyear, 'birthmonth' => $birthmonth, 'birthday' => $birthday, 'isEn' => $isEn ],
+			'output' => F::app()->renderPartial( 'UserSignupSpecial', 'birthday', [
+				'birthyear' => $birthyear, 'birthmonth' => $birthmonth, 'birthday' => $birthday, 'isEn' => $isEn
+			])
 		],
 		[
-			'type' => 'nirvana',
-			'controller' => 'UserSignupSpecial',
-			'method' => 'captcha',
+			'type' => 'custom',
 			'isRequired' => true,
 			'class' => 'captcha',
 			'isInvalid' => ( !empty( $errParam ) && $errParam === 'wpCaptchaWord' ),
-			'errorMsg' => ( !empty( $msg ) ? $msg : '' )
+			'errorMsg' => ( !empty( $msg ) ? $msg : '' ),
+			'output' => F::app()->renderView( 'UserSignupSpecial', 'captcha' ),
 		],
 		[
 			'class' => 'opt-in-container hidden',
@@ -94,11 +93,11 @@ $form = [
 			'label' => wfMessage( 'userlogin-opt-in-label' )->escaped(),
 		],
 		[
-			'type' => 'nirvanaview',
-			'controller' => 'UserSignupSpecial',
-			'view' => 'submit',
+			'type' => 'custom',
 			'class' => 'submit-pane error',
-			'params' => [ 'createAccountButtonLabel' => $createAccountButtonLabel ]
+			'output' => F::app()->renderPartial( 'UserSignupSpecial', 'submit', [
+				'createAccountButtonLabel' => $createAccountButtonLabel
+			]),
 		]
 	]
 ];
@@ -106,7 +105,7 @@ $form = [
 $form['isInvalid'] = !empty( $result ) && $result === 'error' && empty( $errParam );
 $form['errorMsg'] = $form['isInvalid'] ? $msg : '';
 
-if( !empty( $returnto ) ) {
+if ( !empty( $returnto ) ) {
 	$form['inputs'][] = [
 		'type' => 'hidden',
 		'name' => 'returnto',
@@ -114,7 +113,7 @@ if( !empty( $returnto ) ) {
 	];
 }
 
-if( !empty( $byemail ) ) {
+if ( !empty( $byemail ) ) {
 	$form['inputs'][] = [
 		'type' => 'hidden',
 		'name' => 'byemail',
@@ -143,12 +142,12 @@ if( !empty( $byemail ) ) {
 		<? endif; ?>
 		<?= F::app()->renderView( 'WikiaStyleGuideForm', 'index', [ 'form' => $form ] ) ?>
 	</div>
-	<? if( empty( $byemail ) ): ?>
+	<? if ( empty( $byemail ) ): ?>
 		<div class="marketing">
 			<h2><?= wfMessage( 'usersignup-marketing-benefits' )->escaped() ?></h2>
 			<div class="benefit">
 				<ul class="avatars">
-					<? foreach( $avatars as $avatar ) { ?>
+					<? foreach ( $avatars as $avatar ) { ?>
 					<li class="avatar"><img src="<?= $avatar ?>" width="30" height="30"></li>
 					<? } ?>
 				</ul>

@@ -379,7 +379,8 @@
 				rs: 'ArticleCommentsAjax',
 				title: wgPageName,
 				wpArticleComment: content,
-				useskin: window.skin
+				useskin: window.skin,
+				token: window.mw.user.tokens.get('editToken')
 			};
 
 			if (e.data.parentId) {
@@ -446,13 +447,11 @@
 						}
 					}
 
-					//readd events
+					//re-add events
 					ArticleComments.addHover();
-					//clear error box
-					$('#article-comm-info').html('');
 				} else {
-					//fill error box
-					$('#article-comm-info').html(json.msg);
+					// Show any API errors via a Banner Notification
+					new BannerNotification(json.msg, 'error').show();
 				}
 
 				$source.removeAttr('readonly');
@@ -636,7 +635,7 @@
 			}
 		},
 
-		showMoreComments: function() {
+		showMoreComments: function () {
 			var $nodesToHide = this.$wrapper.find('.comments').children().slice(3),
 				$pagination = $('.article-comments-pagination', this.$wrapper),
 				showMoreButton = this.$wrapper.find('.comments-show-more');
@@ -653,7 +652,7 @@
 			// ... and show the button
 			showMoreButton.css('display', 'block');
 
-			showMoreButton.click(function() {
+			showMoreButton.click(function () {
 				$nodesToHide.show();
 				$pagination.show();
 
@@ -677,15 +676,7 @@
 			hash = window.location.hash;
 			permalink = /^#comm-/.test(hash);
 
-			switch(window.skin) {
-				case 'venus':
-					styleAssets.push($.getSassCommonURL('extensions/wikia/Venus/styles/article/comments.scss'));
-					break;
-
-				case 'oasis':
-				default:
-					styleAssets.push($.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss'));
-			}
+			styleAssets.push($.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss'));
 
 			belowTheFold = function () {
 				return ArticleComments.$wrapper.offset().top >= ($window.scrollTop() + $window.height());
@@ -722,11 +713,6 @@
 
 					if (permalink) {
 						ArticleComments.scrollToElement(hash);
-					}
-
-					// "Show more comments" button for Venus
-					if (!permalink && window.skin === 'venus') {
-						ArticleComments.showMoreComments();
 					}
 
 					ArticleComments.bucky.timer.stop('loadAssets');

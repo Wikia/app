@@ -1,7 +1,10 @@
 <?php
 
 class CuratedContentSpecialController extends WikiaSpecialPageController {
+	private $helper;
+
 	public function __construct() {
+		$this->helper = new CuratedContentHelper();
 		parent::__construct( 'CuratedContent', '', false );
 	}
 
@@ -105,11 +108,13 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
 		$imageId = $this->request->getVal( 'image_id', 0 );
+		$imageCrop = $this->request->getArray( 'image_crop', [ ] );
 
 		$this->response->setVal( 'value', wfMessage( 'wikiacuratedcontent-featured-section-name' ) );
 		$this->response->setVal( 'image_id', $imageId );
+		$this->response->setVal( 'image_crop', $this->helper->encodeCrop( $imageCrop ) );
 		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $imageId ) );
-		if ( empty( $imageId ) ) {
+		if ( !empty( $imageId ) ) {
 			$this->response->setVal( 'image_set', true );
 		}
 	}
@@ -118,11 +123,13 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
 		$imageId = $this->request->getVal( 'image_id', 0 );
+		$imageCrop = $this->request->getArray( 'image_crop', [ ] );
 
 		$this->response->setVal( 'value', $this->request->getVal( 'value' , '' ) );
 		$this->response->setVal( 'image_id', $imageId );
+		$this->response->setVal( 'image_crop', $this->helper->encodeCrop( $imageCrop ) );
 		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $imageId ) );
-		if ( empty( $imageId ) ) {
+		if ( !empty( $imageId ) ) {
 			$this->response->setVal( 'image_set', true );
 		}
 
@@ -133,6 +140,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
 		$imageId = $this->request->getVal( 'image_id', 0 );
+		$imageCrop = $this->request->getArray( 'image_crop', [ ] );
 		$item = $this->request->getVal( 'item_value', '' );
 
 		$this->response->setVal( 'item_value', $item );
@@ -143,11 +151,14 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		if ( empty( $imageId ) && !empty( $item ) ) {
 			// $imageId is 0 - that means it should be taken from item
 			$imageId = CuratedContentHelper::findFirstImageTitleFromArticle( $item );
-		} else {
+			$imageCrop = [ ];
+		}
+		if ( !empty( $imageId ) ) {
 			$this->response->setVal( 'image_set', true );
 		}
 
 		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $imageId ) );
+		$this->response->setVal( 'image_crop', $this->helper->encodeCrop( $imageCrop ) );
 		$this->response->setVal( 'item_placeholder', wfMessage( 'wikiacuratedcontent-content-item' ) );
 		$this->response->setVal( 'name_placeholder', wfMessage( 'wikiacuratedcontent-content-name' ) );
 	}
@@ -161,18 +172,17 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setFormat( 'json' );
 
-		$helper = new CuratedContentHelper();
-
-		$sections = $helper->processSections( $this->request->getArray( 'sections', [] ) );
-		$errors = ( new CuratedContentValidator( $sections ) )->getErrors();
+		$sections = $this->helper->processSectionsFromSpecialPage( $this->request->getArray( 'sections', [ ] ) );
+		$errors = ( new CuratedContentSpecialPageValidator )->validateData( $sections );
 
 		if ( !empty( $errors ) ) {
 			$this->response->setVal( 'error', $errors );
+			$this->response->setVal( 'status', false );
 		} else {
 			$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $wgCityId, $sections );
 			$this->response->setVal( 'status', $status );
 
-			if ( $status ) {
+			if ( !empty( $status ) ) {
 				wfRunHooks( 'CuratedContentSave', [ $sections ] );
 			}
 		}
@@ -187,38 +197,19 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		}
 		$result .= $this->sendSelfRequest( $sectionTemplate, [
 			'value' => $section[ 'title' ],
-			'image_id' => $section[ 'image_id' ]
+			'image_id' => $section[ 'image_id' ],
+			'image_crop' => !empty( $section[ 'image_crop' ] ) ? $section[ 'image_crop' ] : [ ],
 		] );
 		if ( !empty( $section[ 'items' ] ) ) {
 			foreach ( $section[ 'items' ] as $item ) {
 				$result .= $this->sendSelfRequest( 'item', [
 					'item_value' => $item[ 'title' ],
 					'name_value' => !empty( $item[ 'label' ] ) ? $item[ 'label' ] : '',
-					'image_id' => $item[ 'image_id' ]
+					'image_id' => $item[ 'image_id' ],
+					'image_crop' => !empty( $item[ 'image_crop' ] ) ? $item[ 'image_crop' ] : [ ],
 				] );
 			}
 		}
 		return $result;
-	}
-
-	public function getImage() {
-		$file = $this->request->getVal( 'file' );
-		$url = '';
-		$imageId = 0;
-
-		if ( !empty( $file ) ) {
-			$imageTitle = Title::newFromText( $file );
-
-			if ( !empty( $imageTitle ) && $imageTitle instanceof Title && $imageTitle->exists() ) {
-				$imageId = $imageTitle->getArticleID();
-			}
-		}
-
-		if ( !empty( $imageId ) ) {
-			$url = CuratedContentHelper::getImageUrl( $imageId );
-		}
-
-		$this->response->setVal( 'url', $url );
-		$this->response->setVal( 'id', $imageId );
 	}
 }

@@ -93,10 +93,14 @@
 		} else {
 			form = this.form;
 
-			form.slideUp(duration, function () {
+			form.slideUp(duration, (function () {
+				var newForm = content.find('form');
 				form.replaceWith(content);
 				content.slideDown(duration);
-			});
+				newForm.on('submit', this.submitLoginAfterResetPass.bind(this));
+				this.wikiaForm = new WikiaForm(newForm);
+				this.inputs = this.wikiaForm.inputs;
+			}).bind(this));
 		}
 	};
 
@@ -130,6 +134,40 @@
 				}.bind(this)
 			);
 		}
+	};
+
+
+
+	/**
+	 * Handler for login form submit
+	 * @param {Object} e jQuery event object
+	 */
+	UserLoginAjaxForm.prototype.submitLoginAfterResetPass = function (e) {
+		this.submitButton.attr('disabled', 'disabled');
+		if (this.options.ajaxLogin) {
+			e.preventDefault();
+			this.ajaxLoginAfterResetPass();
+		}
+	};
+
+	/**
+	 * Make the call to the back end to log the user in via ajax
+	 */
+	UserLoginAjaxForm.prototype.ajaxLoginAfterResetPass = function () {
+		$.nirvana.postJson(
+			'UserLoginSpecial',
+			'loginForm',
+			{
+				loginToken: this.loginToken,
+				username: this.inputs.username.val(),
+				password: this.inputs.password.val(),
+				newpassword: this.inputs.newpassword.val(),
+				retype: this.inputs.retype.val(),
+				action: this.inputs.action.val(),
+				editToken: this.inputs.editToken.val()
+			},
+			this.submitLoginHandler.bind(this)
+		);
 	};
 
 	// Expose global

@@ -104,18 +104,23 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function getWikiVariables() {
-		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin,
-			   $wgLang, $wgLanguageCode, $wgContLang, $wgCityId, $wgEnableNewAuth;
+		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin, $wgDisableAnonymousEditing,
+			   $wgLanguageCode, $wgContLang, $wgCityId, $wgEnableNewAuth, $wgDisableAnonymousUploadForMercury,
+			   $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff, $wgDisableMobileSectionEditor;
 
 		return [
 			'cacheBuster' => (int) $wgCacheBuster,
 			'dbName' => $wgDBname,
 			'defaultSkin' => $wgDefaultSkin,
+			'disableAnonymousEditing' => $wgDisableAnonymousEditing,
+			'disableAnonymousUploadForMercury' => $wgDisableAnonymousUploadForMercury,
 			'enableNewAuth' => $wgEnableNewAuth,
+			'homepage' => $this->getHomepageUrl(),
 			'id' => (int) $wgCityId,
+			'isCoppaWiki' => ( $wgWikiDirectedAtChildrenByFounder || $wgWikiDirectedAtChildrenByStaff ),
+			'isDarkTheme' => SassUtil::isThemeDark(),
+			'disableMobileSectionEditor' => $wgDisableMobileSectionEditor,
 			'language' => [
-				'user' => $wgLang->getCode(),
-				'userDir' => SassUtil::isRTL() ? 'rtl' : 'ltr',
 				'content' => $wgLanguageCode,
 				'contentDir' => $wgContLang->getDir()
 			],
@@ -139,7 +144,8 @@ class MercuryApi {
 		if ( !$msg->isDisabled() ) {
 			$msgText = $msg->text();
 		}
-		return !empty( $msgText ) ? $msgText : false;
+
+		return !empty( $msgText ) ? htmlspecialchars( $msgText ) : false;
 	}
 
 	/**
@@ -238,6 +244,20 @@ class MercuryApi {
 	private function clearUsers() {
 		$this->users = [];
 	}
+
+	/**
+	 * Get homepage URL for given language.
+	 *
+	 * @return string homepage URL. Default is US homepage.
+	 */
+	private function getHomepageUrl() {
+		global $wgLanguageCode;
+		if ( class_exists('WikiaLogoHelper') ) {
+			return ( new WikiaLogoHelper() )->getCentralUrlForLang( $wgLanguageCode );
+		}
+		return 'http://www.wikia.com'; //default homepage url
+	}
+
 
 	/**
 	 * Get ads context for Title. Return null if Ad Engine extension is not enabled

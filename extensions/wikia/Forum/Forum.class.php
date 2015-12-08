@@ -9,7 +9,7 @@ class Forum extends Walls {
 	const ACTIVE_DAYS = 7;
 	const BOARD_MAX_NUMBER = 50;
 	const AUTOCREATE_USER = 'Wikia';
-	//controlling from outside if use can edit/create/delete board page
+	// controlling from outside if use can edit/create/delete board page
 	static $allowToEditBoard = false;
 
 	/**
@@ -25,29 +25,27 @@ class Forum extends Walls {
 	const LEN_TOO_BIG_ERR = -1;
 	const LEN_TOO_SMALL_ERR = -2;
 
-	public function getBoardList($db = DB_SLAVE) {
+	public function getBoardList( $db = DB_SLAVE ) {
 		$boardTitles = $this->getListTitles( $db, NS_WIKIA_FORUM_BOARD );
-		$titlesBatch = new TitleBatch($boardTitles);
-		$orderIndexes = $titlesBatch->getWikiaProperties(WPP_WALL_ORDER_INDEX,$db);
+		$titlesBatch = new TitleBatch( $boardTitles );
+		$orderIndexes = $titlesBatch->getWikiaProperties( WPP_WALL_ORDER_INDEX, $db );
 
-		$boards = array();
-		/** @var $title Title */
-		foreach($boardTitles as $title) {
+		$boards = [];
+		arsort( $orderIndexes );
+		foreach ( array_keys( $orderIndexes ) as $pageId ) {
+			$title = $boardTitles[$pageId];
+
 			/** @var $board ForumBoard */
-			$board = ForumBoard::newFromTitle($title);
+			$board = ForumBoard::newFromTitle( $title );
 			$title = $board->getTitle();
-			$id = $title->getArticleID();
 
 			$boardInfo = $board->getBoardInfo();
 			$boardInfo['id'] = $title->getArticleID();
 			$boardInfo['name'] = $title->getText();
 			$boardInfo['description'] = $board->getDescriptionWithoutTemplates();
 			$boardInfo['url'] = $title->getFullURL();
-			$orderIndex = $orderIndexes[$id];
-			$boards[$orderIndex] = $boardInfo;
+			$boards[] = $boardInfo;
 		}
-
-		krsort($boards);
 
 		return $boards;
 	}
@@ -70,7 +68,7 @@ class Forum extends Walls {
 			array()
 		);
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $result['cnt'];
 	}
 
@@ -156,7 +154,7 @@ class Forum extends Walls {
 			$result = $db->select( array( 'page' ), array( 'page_id' ), array( 'page_namespace' => $ns ), __METHOD__, array( 'LIMIT' => $count + 1 ) );
 
 			$rowCount = $db->numRows( $result );
-			//string value is a work around for false value problem in memc
+			// string value is a work around for false value problem in memc
 			if ( $rowCount > $count ) {
 				return "YES";
 			} else {
@@ -298,9 +296,9 @@ class Forum extends Walls {
 		$max = $this->getLengthLimits( 'max', $field );
 		$out = self::LEN_OK;
 
-		if( mb_strlen( $input ) < $min ) {
+		if ( mb_strlen( $input ) < $min ) {
 			$out = self::LEN_TOO_SMALL_ERR;
-		} else if( mb_strlen( $input ) > $max ) {
+		} else if ( mb_strlen( $input ) > $max ) {
 			$out = self::LEN_TOO_BIG_ERR;
 		}
 

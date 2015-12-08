@@ -171,7 +171,7 @@ class SwiftStorage {
 		$status = $req->execute();
 
 		if (!$status->isOK()) {
-			$this->error( 'SwiftStorage: unable to set ACL', [
+			$this->warning( 'SwiftStorage: unable to set ACL', [
 				'exception' => new \Exception( $status->getMessage(), $req->getStatus() ),
 				'url'       => $url,
 				'errors'    => $status->getErrorsArray(),
@@ -390,5 +390,12 @@ class SwiftStorage {
 
 	public function getPathPrefix() {
 		return $this->pathPrefix;
+	}
+
+	/**
+	 * @return \CF_Connection
+	 */
+	public function getConnection() {
+		return $this->connection;
 	}
 }

@@ -73,6 +73,15 @@ class RawAction extends FormlessAction {
 
 		$maxage = $request->getInt( 'maxage', $wgSquidMaxage );
 
+		if ( Wikia::isUsingSafeJs()
+			&& $contentType == $wgJsMimeType
+			&& $this->page->getTitle()->inNamespace( NS_MEDIAWIKI )
+			&& ( new \Wikia\ContentReview\Helper() )->isContentReviewTestModeEnabled()
+		) {
+			$maxage = 0;
+			$smaxage = 0;
+		}
+
 		$response = $request->response();
 
 		$response->header( 'Content-type: ' . $contentType . '; charset=UTF-8' );
@@ -145,9 +154,11 @@ class RawAction extends FormlessAction {
 			}
 		}
 
-		if ( $text !== false && $text !== '' && $request->getVal( 'templates' ) === 'expand' ) {
+		// Wikia change begin: author: lukaszk
+		if ( $text !== false && $text !== '' && $request->getVal( 'templates' ) === 'expand' && !$title->isJsPage() ) {
 			$text = $wgParser->preprocess( $text, $title, ParserOptions::newFromContext( $this->getContext() ) );
 		}
+		// Wikia change end;
 
 		return $text;
 	}

@@ -12,7 +12,7 @@ $specialPageAliases = array();
  * English (English)
  */
 $specialPageAliases['en'] = array(
-	'Forum' => array( 'Forum', 'Forums'),
+	'Forum' => array( 'Forum', 'Forums' ),
 );
 
 /**
@@ -55,4 +55,9 @@ $specialPageAliases['ru'] = array(
  */
 $specialPageAliases['vi'] = array(
 	'Forum' => array( 'Diễn_đàn' ),
+);
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'Forum' => array( 'フォーラム' )
 );

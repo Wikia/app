@@ -12,6 +12,7 @@ define('wikia.ui.modal', [
 	// constants for modal component
 	var BLACKOUT_ID = 'blackout',
 		BLACKOUT_VISIBLE_CLASS = 'visible',
+		BLACKOUT_HIDDEN_CLASS = 'hidden',
 		BODY_WITH_BLACKOUT_CLASS = 'with-blackout',
 		FAKE_SCROLLBAR_CLASS = 'fake-scrollbar',
 		CLOSE_CLASS = 'close',
@@ -30,7 +31,8 @@ define('wikia.ui.modal', [
 			vars: {
 				closeText: $.msg('close'),
 				escapeToClose: true
-			}
+			},
+			confirmCloseModal: false
 		},
 		// default modal buttons rendering params
 		btnConfig = {
@@ -178,7 +180,7 @@ define('wikia.ui.modal', [
 		/** ATTACHING EVENT HANDLERS TO MODAL */
 
 		// trigger custom buttons events based on button 'data-event' attribute
-		this.$element.on('click', 'button, a.modalEvent', $.proxy(function (event) {
+		this.$element.on('click', 'button, .modalEvent', $.proxy(function (event) {
 			var $target = $(event.currentTarget),
 				modalEventName = $target.data('event');
 
@@ -221,20 +223,22 @@ define('wikia.ui.modal', [
 		this.listeners = {
 			'close': [
 				function () {
-					self.trigger('beforeClose').then($.proxy(function () {
-						// number of active modals on page
-						var activeModalsNumb = $body.children('.modal-blackout').length;
+					if ((typeof params.confirmCloseModal === 'function') ? params.confirmCloseModal() : true) {
+						self.trigger('beforeClose').then($.proxy(function () {
+							// number of active modals on page
+							var activeModalsNumb = $body.children('.modal-blackout').length;
 
-						self.$blackout.remove();
+							self.$blackout.remove();
 
-						// unblock background scrolling only if this is the only if it's last active modal on page
-						if (activeModalsNumb === 1) {
-							unblockPageScrolling();
-						}
+							// unblock background scrolling only if this is the only if it's last active modal on page
+							if (activeModalsNumb === 1) {
+								unblockPageScrolling();
+							}
 
-						// Remove any event listeners for this modal
-						$(window).unbind('.modal' + id);
-					}, self));
+							// Remove any event listeners for this modal
+							$(window).unbind('.modal' + id);
+						}, self));
+					}
 				}
 			]
 		};
@@ -251,7 +255,7 @@ define('wikia.ui.modal', [
 			blockPageScrolling();
 		}
 
-		this.$blackout.addClass(BLACKOUT_VISIBLE_CLASS);
+		this.$blackout.addClass(BLACKOUT_VISIBLE_CLASS).removeClass(BLACKOUT_HIDDEN_CLASS);
 
 		// IE flex-box fallback for small and medium modals
 		if (browserDetect.isIE()) {
@@ -385,6 +389,14 @@ define('wikia.ui.modal', [
 	Modal.prototype.setTitle = function (title) {
 		this.$element.find('header h3').text(title);
 	};
+
+	/**
+	 * Scroll's modal content to a given offset
+	 * @param {int} offsetTop in pixels
+	 */
+	Modal.prototype.scroll = function (offsetTop) {
+		this.$element.find('section').scrollTop(offsetTop);
+	}
 
 	/** Public API */
 

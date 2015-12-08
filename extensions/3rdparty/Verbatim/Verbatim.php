@@ -18,5 +18,23 @@ function wfVerbatimExtension( $parser ) {
 
 // The callback function for converting the input text to HTML output
 function renderVerbatim( $input ) {
+	global $wgEditInterfaceWhitelist, $wgVerbatimBlacklist;
+
+	$formattedInput = ucfirst( trim( $input ) );
+	// Begin wikia change
+	if (
+		( !empty( $wgEditInterfaceWhitelist )
+			&& in_array( $formattedInput, $wgEditInterfaceWhitelist ) )
+		|| ( !empty( $wgVerbatimBlacklist )
+			&& in_array( $formattedInput, $wgVerbatimBlacklist ) )
+		|| preg_match( '!\.(?:css|js)$!u', $formattedInput )
+		|| startsWith( $formattedInput, Wikia::CUSTOM_INTERFACE_PREFIX, /* $case = */ false )
+		|| startsWith( $formattedInput, Wikia::EDITNOTICE_INTERFACE_PREFIX, /* $case = */ false )
+	) {
+		// Do not allow transclusion into Verbatim tags
+		return '';
+	}
+	// End wikia change
+
     return str_replace("\n",'',wfMsg(trim($input)));
 }

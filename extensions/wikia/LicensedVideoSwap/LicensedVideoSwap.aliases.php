@@ -55,3 +55,8 @@ $specialPageAliases['pl'] = array(
 $specialPageAliases['vi'] = array(
 	'LicensedVideoSwap' => array( 'Cấp_phép_trao_đổi_đoạn_phim' ),
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'LicensedVideoSwap' => array( 'ライセンス済みビデオ差し替え' )
+);

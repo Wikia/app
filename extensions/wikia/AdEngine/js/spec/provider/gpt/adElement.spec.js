@@ -46,8 +46,17 @@ describe('ext.wikia.adEngine.provider.gpt.adElement', function () {
 		var element = new AdElement('TOP_RIGHT_BOXAD', '/ELEMENT_SLOTPATH', slotTargeting);
 
 		expect(element.getId()).toEqual('wikia_gpt/ELEMENT_SLOTPATH');
+		expect(element.getSlotName()).toEqual('TOP_RIGHT_BOXAD');
 		expect(element.getSlotPath()).toEqual('/ELEMENT_SLOTPATH');
 		expect(element.getNode().id).toEqual('wikia_gpt/ELEMENT_SLOTPATH');
+	});
+
+	it('Set slotName overrides previous slotName', function () {
+		var element = new AdElement('TOP_RIGHT_BOXAD', '/ELEMENT_SLOTPATH', slotTargeting);
+
+		expect(element.getSlotName()).toEqual('TOP_RIGHT_BOXAD');
+		element.setSlotName('NEW_SLOT_NAME');
+		expect(element.getSlotName()).toEqual('NEW_SLOT_NAME');
 	});
 
 	it('Set sizes and add as json to attribute', function () {

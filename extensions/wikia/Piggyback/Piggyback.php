@@ -23,7 +23,7 @@ $dir = dirname(__FILE__) . '/';
 
 $wgAutoloadClasses['Piggyback'] = $dir . 'Piggyback_body.php'; # Tell MediaWiki to load the extension body.
 $wgAutoloadClasses['PBLoginForm']  = $dir . 'Piggyback_body.php'; # Tell MediaWiki to load the extension body.
-$wgAutoloadClasses['PiggybackTemplate'] = $dir . 'Piggyback_form.php'; # Tell MediaWiki to load the extension body.
+$wgAutoloadClasses['PBHooks']  = $dir . 'Piggyback_body.php';
 
 $wgExtensionMessagesFiles['Piggyback'] = $dir . 'Piggyback.i18n.php';
 $wgExtensionMessagesFiles['PiggybackAliases'] = $dir . 'Piggyback.alias.php';
@@ -37,6 +37,9 @@ $wgLogTypes[] = 'piggyback';
 //permissions
 $wgAvailableRights[] = 'piggyback';
 $wgGroupPermissions['util']['piggyback'] = true;
+
+$wgHooks['LoginFormAuthenticateModifyRetval'][] = 'PBHooks::onLoginFormAuthenticateModifyRetval';
+$wgHooks['UserSetCookies'][] = 'PBHooks::onUserSetCookies';
 
 /*
  * event for logout (back to parent user)
@@ -68,14 +71,5 @@ function efPiggybackAddToolLinks( $id, $nt, &$tools ) {
 		'Piggyback'
 	);
 
-	return true;
-}
-
-$wgHooks['RequestContextOverrideUser'][] = 'efPiggybackRequestContextOverrideUser';
-function efPiggybackRequestContextOverrideUser( &$user, $request ) {
-	if ( PBLoginForm::isPiggyback() ) {
-		$user = User::newFromSession( $request );
-		return false;
-	}
 	return true;
 }

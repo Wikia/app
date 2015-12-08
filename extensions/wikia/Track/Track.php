@@ -12,7 +12,6 @@ $wgHooks['WikiaSkinTopScripts'][] = 'Track::onWikiaSkinTopScripts';
 
 class Track {
 	const BASE_URL = 'http://a.wikia-beacon.com/__track';
-	const HEADER_MIRRORED_REQUEST = 'x-mirrored-request';
 
 	private static function getURL ($type=null, $name=null, $param=null, $for_html=true) {
 		global $wgStyleVersion, $wgCityId, $wgContLanguageCode, $wgDBname, $wgDBcluster, $wgUser, $wgArticle, $wgTitle, $wgAdServerTest;
@@ -66,6 +65,7 @@ class Track {
 		window.beacon_id = result[1];
 	} else {
 		// something went terribly wrong
+		document.write('<img src="http://logs-01.loggly.com/inputs/88a88e56-77c6-49cc-af41-6f44f83fe7fe.gif?message=wikia_beacon_id%20is%20empty"/>');
 	}
 
 	var utma = RegExp("__utma=([0-9\.]+)").exec(document.cookie);
@@ -112,7 +112,7 @@ SCRIPT1;
 	protected static function shouldTrackEvents() {
 		// Check request headers to make sure this is not a mirrored
 		// request, which could result in duplicate tracking events
-		return F::app()->wg->request->getHeader( self::HEADER_MIRRORED_REQUEST ) === false;
+		return F::app()->wg->request->isWikiaInternalRequest() === false;
 	}
 
 	/**

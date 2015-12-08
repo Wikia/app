@@ -5,7 +5,7 @@
  * A class specific to a subpage with a list of pages
  * that do not exist and have been referred to.
  */
-class InsightsWantedpagesModel extends InsightsQuerypageModel {
+class InsightsWantedpagesModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'wantedpages';
 
 	public function getDataProvider() {
@@ -26,11 +26,16 @@ class InsightsWantedpagesModel extends InsightsQuerypageModel {
 
 				$title = Title::newFromText( $row->title, $row->namespace );
 				if ( $title === null ) {
+					$this->error( 'WantedPagesModel received reference to non existent page' );
 					continue;
 				}
 
 				$article['link'] = InsightsHelper::getTitleLink( $title, $params );
-				$article['metadata']['wantedBy'] = $this->makeWlhLink( $title, $row );
+				$article['metadata']['wantedBy'] = [
+					'message' => $this->wlhLinkMessage(),
+					'value' => (int)$row->value,
+					'url' => $this->getWlhUrl( $title ),
+				];
 
 				$data[] = $article;
 			}

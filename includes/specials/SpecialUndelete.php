@@ -327,6 +327,12 @@ class PageArchive {
 	 */
 	function undelete( $timestamps, $comment = '', $fileVersions = array(), $unsuppress = false ) {
 		global $wgUser;
+
+		$permErrors = $this->title->getUserPermissionsErrors( 'undelete', $wgUser );
+		if ( count( $permErrors ) ) {
+			throw new PermissionsError( 'undelete', $permErrors );
+		}
+
 		// If both the set of text revisions and file revisions are empty,
 		// restore everything. Otherwise, just restore the requested items.
 		$restoreAll = empty( $timestamps ) && empty( $fileVersions );
@@ -376,7 +382,7 @@ class PageArchive {
 		if( trim( $comment ) != '' ) {
 			$reason .= wfMsgForContent( 'colon-separator' ) . $comment;
 		}
-		
+
 		/* Wikia change begin - @author: Andrzej 'nAndy' Lukaszewski */
 		$hookAddedLogEntry = false;
 		wfRunHooks('PageArchiveUndeleteBeforeLogEntry', array(&$this, &$log, &$this->title, $reason, &$hookAddedLogEntry));

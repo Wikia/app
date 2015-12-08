@@ -614,8 +614,9 @@ $1',
 # Login and logout pages
 'logouttext'                 => "'''你而家已經登出咗。'''
 
-你重可以用匿名身份用{{SITENAME}}，又或者[[Special:UserLogin|重新登入]]。
+你重可以用匿名身份用{{SITENAME}}，又或者$1。
 但係留意某啲頁面可能會繼續話你未登入，除非等你清除瀏覽器嘅快取儲存。",
+'logouttext-link-text'       => '重新登入',
 'welcomecreation'            => '== 歡迎， $1！ ==
 
 你個戶口已經起好。唔好唔記得去改改你嘅[[Special:Preferences|{{SITENAME}}喜好設定]]喎。',

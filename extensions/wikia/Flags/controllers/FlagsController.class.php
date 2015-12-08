@@ -9,7 +9,6 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-use Flags\FlagsCache;
 use Flags\FlagsHelper;
 use Flags\Views\FlagView;
 use Wikia\Logger\Loggable;
@@ -111,6 +110,15 @@ class FlagsController extends WikiaController {
 			throw new MissingParameterApiException( 'page_id' );
 		}
 
+		$title = Title::newFromID( $pageId );
+		if ( $title === null ) {
+			throw new InvalidParameterApiException( 'page_id' );
+		}
+
+		if ( !$title->userCan( 'edit' , $this->wg->User ) ) {
+			throw new PermissionsException( 'edit' );
+		}
+
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
 		/**
@@ -191,6 +199,10 @@ class FlagsController extends WikiaController {
 				throw new InvalidParameterApiException( 'page_id' );
 			}
 
+			if ( !$title->userCan( 'edit', $this->wg->User ) ) {
+				throw new PermissionsException( 'edit' );
+			}
+
 			/**
 			 * Get the current status to compare
 			 */
@@ -239,8 +251,7 @@ class FlagsController extends WikiaController {
 				wfMessage( 'flags-edit-modal-post-exception' )
 					->params( $exception->getText() )
 					->parse(),
-				BannerNotificationsController::CONFIRMATION_ERROR,
-				true
+				BannerNotificationsController::CONFIRMATION_ERROR
 			);
 
 			$pageUrl = $title->getFullURL();
@@ -464,7 +475,7 @@ class FlagsController extends WikiaController {
 		return $this->helper;
 	}
 
-	private function logResponseException( Exception $e, WikiaRequest $request ) {
+	private function logResponseException( \Exception $e, \WikiaRequest $request ) {
 		$this->error(
 			'FlagsLog Exception',
 			[

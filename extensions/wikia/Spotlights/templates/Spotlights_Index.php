@@ -1,7 +1,7 @@
 <? if (!$wg->NoExternals && !$wg->SuppressSpotlights) { ?>
 <section>
 	<div class="header-container">
-		<h1><?= wfMsg('oasis-spotlights-footer-title') ?></h1>
+		<h2><?= wfMsg('oasis-spotlights-footer-title') ?></h2>
 		<?= F::app()->renderView('RandomWiki', 'Index') ?>
 	</div>
 	<script type='text/javascript'>

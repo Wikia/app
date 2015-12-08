@@ -264,7 +264,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	public function getUnconfirmedUserRedirectUrl() {
 		$title = Title::newFromText( 'UserSignup', NS_SPECIAL );
 		$params = [
-			'method' => 'sendConfirmationEmail',
+			'sendConfirmationEmail' => true,
 			'username' => $this->getVal( 'username' ),
 			'uselang' => $this->getVal( 'uselang' ),
 		];
@@ -427,7 +427,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					/*
 					 * Remove when SOC-217 ABTest is finished
 					 */
-					$this->wg->User->getGlobalAttribute( self::NOT_CONFIRMED_LOGIN_OPTION_NAME ) !== self::NOT_CONFIRMED_LOGIN_ALLOWED
+					$this->wg->User->getGlobalPreference( self::NOT_CONFIRMED_LOGIN_OPTION_NAME ) !== self::NOT_CONFIRMED_LOGIN_ALLOWED
 					/*
 					 * end remove
 					 */
@@ -615,7 +615,18 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		/// Get a temporary password
+		if ( !empty( array_intersect( $this->wg->AccountAdminGroups, $user->getGroups() ) )
+			|| in_array( $user->getName(), $this->wg->AccountAdmins )
+		) {
+			\Wikia\Logger\WikiaLogger::instance()->warning(
+				sprintf( "Junior helper cannot change account info - user: %s", $user->getName() )
+			);
+
+			$this->setErrorResponse( 'userlogin-account-admin-error' );
+			return;
+		}
+
+		// / Get a temporary password
 		$userService = new \UserService();
 		$tempPass = $userService->resetPassword( $user );
 
@@ -675,7 +686,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	private function setResponseGeneric( $key, $params, $result = 'ok', $postProcess = 'escaped' ) {
 		$msg = wfMessage( $key, $params )->$postProcess();
 
-		$this->response->setData([
+		$this->response->setData( [
 			'result' => $result,
 			'msg' => $msg,
 		] );

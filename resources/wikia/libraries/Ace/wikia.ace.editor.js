@@ -2,6 +2,7 @@ define( 'wikia.ace.editor', ['wikia.window', 'jquery'], function(win, $){
 	'use strict';
 
 	var ace = win.ace, editorInstance, editorSession,
+		$editPage = $('#EditPage'),
 		$editor, $window = $(win), $input,
 		editorMinHeight = 300,
 		$wikiaBar = $('#WikiaBarWrapper'),
@@ -26,6 +27,8 @@ define( 'wikia.ace.editor', ['wikia.window', 'jquery'], function(win, $){
 		editorInstance = ace.edit( editorId );
 		$editor = $('#' + editorId);
 		editorSession = editorInstance.getSession();
+
+		$editor.msg = editorMessage;
 	}
 
 	/**
@@ -169,6 +172,28 @@ define( 'wikia.ace.editor', ['wikia.window', 'jquery'], function(win, $){
 		$window.resize(resizeEditor);
 	}
 
+	/** Overwrite Wikia Editor function **/
+
+	/**
+	 * Translate message
+	 *
+	 * @param {String} msg message name
+	 * @returns {String}
+	 */
+	function editorMessage(msg) {
+		return $.msg('wikia-editor-' + msg);
+	}
+
+	/**
+	 * Get element by data attribute ('data-space-type')
+	 *
+	 * @param {String} name
+	 * @returns {Element}
+	 */
+	function getSpace(name) {
+		return $editPage.find('[data-space-type=' + name + ']') || false;
+	}
+
 	/**
 	 * Public API
 	 */
@@ -178,6 +203,7 @@ define( 'wikia.ace.editor', ['wikia.window', 'jquery'], function(win, $){
 		getEditor: getEditor,
 		getEditorInstance: getEditorInstance,
 		getInput: getInput,
+		getSpace: getSpace,
 		setTheme: setTheme,
 		setMode: setMode,
 		setOptions: setOptions,

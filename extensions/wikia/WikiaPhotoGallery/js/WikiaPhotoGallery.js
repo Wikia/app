@@ -2206,7 +2206,7 @@
 			// get full height available (RT #55203)
 			var height = parseInt($(window).height() - 125);
 
-			if (skin == 'oasis' || skin == 'venus') {
+			if (skin == 'oasis') {
 				height -= 150;
 				width = 740;
 			}
@@ -2271,7 +2271,7 @@
 					$('#WikiaPhotoGalleryEditorLoader').remove();
 
 					// mark editor dialog title node
-					if (skin == 'oasis' || skin == 'venus') {
+					if (skin == 'oasis') {
 						$('#WikiaPhotoGalleryEditor').children('h1').attr('id', 'WikiaPhotoGalleryEditorTitle');
 					}
 					else {

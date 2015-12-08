@@ -3,6 +3,7 @@
  * @author macbre
  * @group Integration
  * @group MediaFeatures
+ * @group ImageServing
  */
 class ImageServingCroppingTest extends WikiaBaseTest {
 
@@ -15,6 +16,7 @@ class ImageServingCroppingTest extends WikiaBaseTest {
 		parent::setUp();
 
 		$this->mockGlobalVariable('wgEnableVignette', true);
+		$this->mockGlobalVariable('wgUploadPath', 'http://images.wikia.com/firefly/images');
 	}
 
 	public function testCropping() {

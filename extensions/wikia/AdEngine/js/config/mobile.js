@@ -5,9 +5,8 @@ define('ext.wikia.adEngine.config.mobile', [
 	'ext.wikia.adEngine.provider.openX',
 	'ext.wikia.adEngine.provider.paidAssetDrop',
 	'ext.wikia.adEngine.provider.remnantGptMobile',
-	require.optional('ext.wikia.adEngine.provider.taboola'),
 	require.optional('wikia.instantGlobals')
-], function (adContext, directGptMobile, openX, paidAssetDrop, remnantGptMobile, taboola, instantGlobals) {
+], function (adContext, directGptMobile, openX, paidAssetDrop, remnantGptMobile, instantGlobals) {
 	'use strict';
 
 	var pageTypesWithAdsOnMobile = {
@@ -36,10 +35,6 @@ define('ext.wikia.adEngine.config.mobile', [
 
 		if (!context.slots.invisibleHighImpact && slotName === 'INVISIBLE_HIGH_IMPACT') {
 			return [];
-		}
-
-		if (context.providers.taboola && taboola && taboola.canHandleSlot(slotName)) {
-			return [taboola];
 		}
 
 		if (paidAssetDrop.canHandleSlot(slotName)) {

@@ -490,6 +490,8 @@ class MWHttpRequest {
 		// @author macbre
 		// pass Request ID to internal requests
 		$this->setHeader( Wikia\Util\RequestId::REQUEST_HEADER_NAME, Wikia\Util\RequestId::instance()->getRequestId() );
+		// PLATFORM-1473: pass X-Wikia-Internal-Request
+		$this->setHeader( WebRequest::WIKIA_INTERNAL_REQUEST_HEADER, 'mediawiki' );
 
 		// Wikia change - begin - @author: wladek
 		// Append extra headers for internal requests, currently only X-Request-Origin-Host
@@ -755,6 +757,10 @@ class CurlHttpRequest extends MWHttpRequest {
 		return strlen( $content );
 	}
 
+	/**
+	 * @return Status
+	 * @throws MWException
+	 */
 	public function execute() {
 		parent::execute();
 
@@ -764,9 +770,14 @@ class CurlHttpRequest extends MWHttpRequest {
 
 		// Wikia change PLATFORM-1298 michal@wikia-inc.com
 		if ( $this->parsedUrl['scheme'] == 'https' ) {
-			$this->curlOptions[CURLOPT_PROXY] = null;
-		} else {
+			$this->proxy = null;
+		}
+
+		// PLATFORM-1317: only set when the proxy is not an empty value [macbre]
+		if ( $this->proxy && !$this->noProxy ) {
 			$this->curlOptions[CURLOPT_PROXY] = $this->proxy;
+
+			wfDebug( sprintf( "%s: setting a proxy to '%s'\n", __METHOD__, $this->proxy ) );
 		}
 		// End of Wikia change
 
@@ -824,15 +835,26 @@ class CurlHttpRequest extends MWHttpRequest {
 		// Wikia change - begin
 		/**
 		 * @author Michał Roszka <michal@wikia-inc.com>
+		 * @author macbre
 		 * @see PLATFORM-1317
 		 * @see PLATFORM-1308
 		 */
-		if ( !curl_setopt_array( $curlHandle, $this->curlOptions ) ) {
-			$e = new MWException( "Error setting curl options." );
-			if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
-				\Wikia\Logger\WikiaLogger::instance()->debug( 'PLATFORM-1317' , [ 'curl_options' => serialize( $this->curlOptions ), 'exception' => $e ]  );
+		foreach ( $this->curlOptions as $option => $value ) {
+			if ( !curl_setopt( $curlHandle, $option, $value ) ) {
+				$e = new MWException( "Error setting curl options." );
+				if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
+					\Wikia\Logger\WikiaLogger::instance()->debug(
+						'PLATFORM-1317' ,
+						[
+							'option'     => $option,
+							'value'      => bin2hex( serialize( $value ) ),
+							'value_raw'  => $value,
+							'exception'  => $e
+						]
+					);
+				}
+				throw $e;
 			}
-			throw $e;
 		}
 		// Wikia change - end
 

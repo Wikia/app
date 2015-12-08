@@ -203,24 +203,68 @@ class RequestContext implements IContextSource {
 	public function getUser() {
 		// Wikia change - begin - @author: Michał Roszka
 		global $wgEnableHeliosExt;
+		$authPath = [];
+
 		if ( $this->user === null && $wgEnableHeliosExt ) {
 			$this->user = \Wikia\Helios\User::newFromToken( $this->getRequest() );
+			$authPath['helios'] = ($this->user !== null ? 'OK' : 'FAIL');
+			if ( $this->user !== null && $this->user instanceof User ) {
+				wfRunHooks( 'UserLoadFromHeliosToken', array( $this->user ) );
+			}
 		}
 		// Wikia change - end
 		// Wikia change - begin - @author: wladek
 		global $wgUserForceAnon;
 		if ( $this->user === null && $wgUserForceAnon ) {
 			$this->user = new User();
+			$authPath['force_anon'] = 'OK';
 		}
 
 		if ( $this->user === null ) {
 		// Wikia change - end
 			$this->user = User::newFromSession( $this->getRequest() );
+			$authPath['media_wiki'] = ($this->user !== null ? 'OK' : 'FAIL');
 		}
 
-		// Replace the user object according to the context, e.g. Piggyback.
-		wfRunHooks( 'RequestContextOverrideUser', [ &$this->user, $this->getRequest() ] );
+		$this->logAuthenticationMethod($this->user, $authPath);
+
 		return $this->user;
+	}
+
+	/**
+	 * @param $user User
+	 * @param $authSource array
+	 */
+	private function logAuthenticationMethod($user, $authSource) {
+		if ( $user === null || !$user->isLoggedIn() ) {
+			return;
+		}
+
+		$sampler = new \Wikia\Util\Statistics\BernoulliTrial( 0.25 );
+
+		// send every 4-th request to InfluxDb
+		if ( $sampler->shouldSample() ) {
+			\Transaction::addEvent( \Transaction::EVENT_USER_AUTH, $authSource );
+		}
+
+		// now we sample logging at 5%
+		$sampler->setProbability( 0.05 );
+
+		if ( !$sampler->shouldSample() ) {
+			return;
+		}
+
+		\Wikia\Logger\WikiaLogger::instance()->info(
+			'AUTHENTICATION_FALLBACK',
+			[
+				'auth'			=> $authSource,
+				'ip'			=> $this->getRequest()->getIP(),
+				'session_id'	=> session_id(),
+				'from'			=> $user->mFrom,
+				'user_id'		=> $user->getId(),
+				'user_name'		=> $user->getName(),
+			]
+		);
 	}
 
 	/**

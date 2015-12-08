@@ -78,8 +78,10 @@ class InsightsHooks {
 	public static function onGetRailModuleList( Array &$railModuleList ) {
 		global $wgTitle, $wgUser;
 
-		if ( $wgTitle->isSpecial( 'WikiActivity' ) && $wgUser->isPowerUser() ) {
-			$railModuleList[1501] = [ 'InsightsModule', 'Index', null ];
+		if ( ( $wgTitle->isSpecial( 'WikiActivity' ) && $wgUser->isLoggedIn() )
+				|| ( $wgTitle->inNamespace( NS_MAIN ) && $wgUser->isPowerUser() )
+		) {
+			$railModuleList[1207] = [ 'InsightsModule', 'Index', null ];
 		}
 
 		return true;
@@ -91,7 +93,23 @@ class InsightsHooks {
 	 * @return bool
 	 */
 	public static function onwgQueryPages( Array &$wgQueryPages ) {
-		$wgQueryPages[] = [ 'UnconvertedInfoboxesPage', 'Nonportableinfoboxes' ];
+		global $wgEnableInsightsInfoboxes, $wgEnableTemplateClassificationExt,
+			   $wgEnableInsightsPagesWithoutInfobox, $wgEnableInsightsTemplatesWithoutType;
+
+		if ( !empty( $wgEnableInsightsInfoboxes ) ) {
+			$wgQueryPages[] = [ 'UnconvertedInfoboxesPage', 'Nonportableinfoboxes' ];
+		}
+
+		if ( !empty( $wgEnableTemplateClassificationExt ) ) {
+			if ( !empty( $wgEnableInsightsPagesWithoutInfobox ) ) {
+				$wgQueryPages[] = [ 'PagesWithoutInfobox', 'Pageswithoutinfobox' ];
+			}
+
+			if ( !empty( $wgEnableInsightsTemplatesWithoutType ) ) {
+				$wgQueryPages[] = [ 'TemplatesWithoutTypePage', 'Templateswithouttype' ];
+			}
+		}
+
 		return true;
 	}
 
@@ -106,11 +124,23 @@ class InsightsHooks {
 
 		$model = InsightsHelper::getInsightModel( $queryPageName );
 
-		if ( $model instanceof InsightsQuerypageModel && $model->purgeCacheAfterUpdateTask() ) {
+		if ( $model instanceof InsightsQueryPageModel && $model->purgeCacheAfterUpdateTask() ) {
 			$model->purgeInsightsCache();
+			$model->initModel( [] );
 			$model->getContent( [] );
 		}
 
 		return true;
 	}
+
+
+	public static function onTemplateClassified( $pageId, Title $title, $templateType ) {
+		if ( !RecognizedTemplatesProvider::isUnrecognized( $templateType ) ) {
+			$model = new InsightsTemplatesWithoutTypeModel();
+			$model->removeFixedItem( TemplatesWithoutTypePage::TEMPLATES_WITHOUT_TYPE_TYPE, $title );
+			$model->updateInsightsCache( $pageId );
+		}
+		return true;
+	}
+
 } 

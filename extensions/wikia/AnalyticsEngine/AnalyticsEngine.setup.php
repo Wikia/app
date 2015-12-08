@@ -20,7 +20,8 @@ $wgAutoloadClasses['AnalyticsProviderDynamicYield'] = __DIR__ . '/AnalyticsProvi
 $wgAutoloadClasses['AnalyticsProviderIVW2'] = __DIR__ . '/AnalyticsProviderIVW2.php';
 $wgAutoloadClasses['AnalyticsProviderBlueKai'] = __DIR__ . '/AnalyticsProviderBlueKai.php';
 $wgAutoloadClasses['AnalyticsProviderDatonics'] = __DIR__ . '/AnalyticsProviderDatonics.php';
-$wgAutoloadClasses['AnalyticsProviderRubiconRTP'] = __DIR__ . '/AnalyticsProviderRubiconRTP.php';
+$wgAutoloadClasses['AnalyticsProviderOpenXBidder'] = __DIR__ . '/AnalyticsProviderOpenXBidder.php';
+$wgAutoloadClasses['AnalyticsProviderRubiconFastlane'] = __DIR__ . '/AnalyticsProviderRubiconFastlane.php';
 $wgAutoloadClasses['AnalyticsProviderGoogleUA'] = __DIR__ . '/AnalyticsProviderGoogleUA.php';
 
 //hooks

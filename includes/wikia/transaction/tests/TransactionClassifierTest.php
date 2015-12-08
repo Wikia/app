@@ -4,6 +4,7 @@
  * Unit tests for TransactionClassifier
  *
  * @author macbre
+ * @group TransactionClassifier
  */
 class TransactionClassifierTest extends WikiaBaseTest {
 
@@ -92,7 +93,98 @@ class TransactionClassifierTest extends WikiaBaseTest {
 					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_NIRVANA,
 					Transaction::PARAM_CONTROLLER => 'Places',
 				],
-				'expectedName' => 'api/nirvana/other'
+				'expectedName' => 'api/nirvana/Places'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_NIRVANA,
+					Transaction::PARAM_CONTROLLER => 'ImageServing',
+					Transaction::PARAM_METHOD => 'getImages',
+				],
+				'expectedName' => 'api/nirvana/ImageServing'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => NS_MAIN,
+					Transaction::PARAM_ACTION => 'diff',
+					Transaction::PARAM_SKIN => 'foo-skin',
+				],
+				'expectedName' => 'page/main/diff'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_MAINTENANCE,
+				],
+				'expectedName' => 'maintenance'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_MAINTENANCE,
+					Transaction::PARAM_MAINTENANCE_SCRIPT => 'EventsCleanup',
+				],
+				'expectedName' => 'maintenance/EventsCleanup'
+			],
+			# Wall / Forum
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => TransactionClassifier::NS_USER_WALL,
+				],
+				'expectedName' => 'page/message_wall'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => TransactionClassifier::NS_WIKIA_FORUM_BOARD,
+				],
+				'expectedName' => 'page/forum'
+			],
+			# User pages
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => NS_USER,
+				],
+				'expectedName' => 'page/user'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => NS_USER_TALK,
+				],
+				'expectedName' => 'page/user_talk'
+			],
+			# MW API
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_API,
+					Transaction::PARAM_API_ACTION => 'query',
+				],
+				'expectedName' => 'api/api/query'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_API,
+					Transaction::PARAM_API_ACTION => 'query',
+					Transaction::PARAM_API_LIST => 'users',
+				],
+				'expectedName' => 'api/api/query/users'
+			],
+			# blogs
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => TransactionClassifier::NS_BLOG_ARTICLE,
+				],
+				'expectedName' => 'page/blog'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => TransactionClassifier::NS_BLOG_LISTING,
+				],
+				'expectedName' => 'page/blog'
 			],
 		];
 	}

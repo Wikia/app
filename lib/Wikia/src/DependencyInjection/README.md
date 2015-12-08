@@ -26,15 +26,19 @@ During tests, you can set up the global injector to return mock instances:
 use Wikia\DependencyInjection\Injector;
 use Wikia\DependencyInjection\InjectorBuilder;
 
+/** @var Container */
+private $container;
+
 class MyTest extends PHPUnit_Framework_TestCase {
   public function setUp() {
-    Injector::setInjector(
+    $this->container =
       (new InjectorBuilder())
-        ->bind(PreferenceService::class)->to(new MockPreferenceService()));
+        ->bind(PreferenceService::class)->to(new MockPreferenceService())
+        ->build();
   }
   
   public function testSomething() {
-    $class = Injector::getInjector()->get(SomethingThatUsesPreferences::class)
+    $class = $this->container->get(SomethingThatUsesPreferences::class)
     $class->doSomething();
   }
 }

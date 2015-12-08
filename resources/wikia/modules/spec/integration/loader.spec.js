@@ -1,4 +1,4 @@
-/*global describe, getBody, spyOn*/
+/*global describe, getBody, spyOn, modules*/
 describe('Loader Module', function () {
 	'use strict';
 
@@ -6,15 +6,17 @@ describe('Loader Module', function () {
 			document: window.document,
 			wgCdnRootUrl: '',
 			wgAssetsManagerQuery: '/__am/%4$d/%1$s/%3$s/%2$s',
+			wgUserLanguage: 'ja',
 			wgStyleVersion: ~~(Math.random() * 99999)
 		},
 		mwMock,
 		nirvanaMock = {},
-		logMock = function () {};
+		logMock = function () {},
+		fbLocale = modules['wikia.fbLocale']();
 
 	logMock.levels = {};
 
-	var loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock);
+	var loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock, fbLocale);
 
 	it('registers itself', function () {
 		expect(typeof loader).toBe('function');
@@ -108,7 +110,7 @@ describe('Loader Module', function () {
 					}
 				}
 			},
-			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock);
+			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock, fbLocale);
 
 		// check calls to this function
 		spyOn(mwMock.loader, 'use').and.callThrough();
@@ -126,9 +128,10 @@ describe('Loader Module', function () {
 	it('Facebook library is properly initialized when lazy loaded', function (done) {
 		var windowMock = {
 				document: window.document,
+				wgUserLanguage: 'ja',
 				onFBloaded: function () {}
 			},
-			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock);
+			loader = modules['wikia.loader'](windowMock, mwMock, nirvanaMock, jQuery, logMock, fbLocale);
 
 		document.head.appendChild = function (script) {
 			script.onload();

@@ -364,8 +364,9 @@ De Sperre wurde durch [[User:$1|$1]] miet der Begrindung ''„$2“'' eigerichte
 # Login and logout pages
 'logouttext'                 => "'''Du best nun obgemeldet.'''
 
-Du koast {{SITENAME}} jitz anonym wetter nutzen, oder diech erneut under damm selba oder a'm andern Nutzernoama [[Special:UserLogin|oamelda]].
+Du koast {{SITENAME}} jitz anonym wetter nutzen, oder diech erneut under damm selba oder a'm andern Nutzernoama $1.
 Beachte, doas einige Seyta noo oazeiga kinna, doas du oagemeldet best, sulange du ne denn Browsercache gelaart host.",
+'logouttext-link-text'       => 'oamelda',
 'welcomecreation'            => '== Willkumma, $1! ==
 
 Dei Benutzerkonto wurde eigerichtet.
@@ -1465,7 +1466,7 @@ Wiki: $PAGEEDITOR_WIKI
 
 Is waan sulange kenne wettera Benachrichtigungs-E-Mails gesendet, bis du de Seite wieder besucht host. Uff denner Beobachtungsliste koast du olle Benachrichtigungsmarker zusomma zerrickesetza.
 
-             Dei freindliches {{SITENAME}}-Benoachrichtigungssystem 
+             Dei freindliches {{SITENAME}}-Benoachrichtigungssystem
 
 --
 Im de Einstellunga denner Beobachtungsliste oazupoaßa, besuche: {{canonicalurl:{{#special:EditWatchlist}}}}
@@ -1670,7 +1671,7 @@ Bitte gib dann Grund fier de Sperre oa.",
 ** Eenfiega foalscher Informationen
 ** Laara vu Seita
 ** Fiegt massenweise externe Links a
-** Einstalla unsinniger Inhalte ei Seita 
+** Einstalla unsinniger Inhalte ei Seita
 ** bedrohliches Verhaala/Belästigung
 ** Missbrauch durch mehrere Nutzerkonten
 ** Ungeeigneter Nutzernoame',

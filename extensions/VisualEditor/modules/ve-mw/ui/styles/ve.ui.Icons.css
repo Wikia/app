@@ -156,3 +156,8 @@
 	/* @embed */
 	background-image: url(images/icons/template.svg);
 }
+
+.oo-ui-icon-infobox {
+    /* @embed */
+    background-image: url(images/icons/infobox.svg);
+}

@@ -1,11 +1,10 @@
 <?php
-
 /**
  * Class InsightsNonportableInfoboxesModel
  * A class specific to a subpage with a list of pages
  * without categories.
  */
-class InsightsUnconvertedInfoboxesModel extends InsightsQuerypageModel {
+class InsightsUnconvertedInfoboxesModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'nonportableinfoboxes';
 
 	public $loopNotificationConfig = [
@@ -89,8 +88,6 @@ class InsightsUnconvertedInfoboxesModel extends InsightsQuerypageModel {
 	 * @return bool
 	 */
 	public function isItemFixed( Title $title ) {
-		$titleText = $title->getText();
-		$contentText = ( new WikiPage( $title ) )->getText();
-		return !UnconvertedInfoboxesPage::isTitleWithNonportableInfobox( $titleText, $contentText );
+		return !empty( PortableInfoboxDataService::newFromTitle( $title )->getData() );
 	}
 }

@@ -267,6 +267,12 @@ ___________________________________________________________
 ',
 'rcshowhideenhanced' => '$1 enhanced recent changes',
 'prefsnologintext'	=> 'You must be <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} logged in]</span> to set user preferences.',
+'recentchanges-on-wikia-title' => 'Recent changes across Wikia',
+'recentchanges-on-wikia-content' => "Introducing Template Types — Organize your templates by type to make [[Special:Templates|template management]] simpler and to improve how they display on mobile phones. [[Help:Template Types|Learn more]] or '''[[Special:Insights/templateswithouttype|Get started now!]]'''
+
+Tabbed images and collapsible groups are now available for [[Help:Infobox|Portable Infoboxes]].
+
+Is your content portable? Learn more about future-proofing content at [[w:c:portability|Portability.wikia.com]].",
 'recentchangestext' => '<div style="border:solid 3px #e9e9e9; margin-bottom:0.3em;">
 <div style="padding-left:0.5em; padding-right:0.5em;">
 This special page lets you track the most recent changes to the wiki.
@@ -1037,4 +1043,17 @@ hu',
 
 'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]',
 
-));
+'usesitejs-disabled-warning' => 'Custom JavaScript is disabled on this wikia.',
+'tog-enableuserjs' => 'Enable personal JavaScript ([[Help:Personal_CSS_and_JS#JavaScript|Learn more]])',
+
+# wikia.wikibits.js mesages for import scripts notifications
+'import-article-missing-single' => '$1 was not found (requested by user-supplied javascript)',
+'import-article-missing-multiple' => '$1 $2 were not found (requested by user-supplied javascript)',
+'import-article-missing-more-single' => '(and one more article)',
+'import-article-missing-more-multiple' => '(and $1 more articles)',
+'import-article-not-js-single' => '$1 was not loaded as it\'s not a JS page (requested by user-supplied javascript). Please make sure the article title has .js extension.',
+'import-article-not-js-multiple' => '$1 $2 were not loaded as they\'re not JS pages (requested by user-supplied javascript). Please make sure the articles titles have .js extension.',
+
+'wikia-pagetitle-brand' => 'Wikia',
+'wikia-pagetitle-sitename' => '{{SITENAME}}',
+) );

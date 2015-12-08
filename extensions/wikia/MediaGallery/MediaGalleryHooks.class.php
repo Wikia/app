@@ -30,21 +30,6 @@ class MediaGalleryHooks {
 	}
 
 	/**
-	 * Adds MediaGallery JS to main Venus asset group
-	 *
-	 * @param Array $jsHeadGroups
-	 * @param Array $jsBodyGroups
-	 * @param Array $cssGroups
-	 * @return bool
-	 */
-	public static function onVenusAssetsPackages( Array &$jsHeadGroups, Array &$jsBodyGroups, Array &$cssGroups ) {
-		if ( !empty( F::app()->wg->EnableMediaGalleryExt ) ) {
-			$jsBodyGroups[] = 'media_gallery_js';
-		}
-		return true;
-	}
-
-	/**
 	 * Add extension enabled flag to JS
 	 * @param array $vars
 	 * @return bool

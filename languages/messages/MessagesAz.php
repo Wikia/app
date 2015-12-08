@@ -401,7 +401,7 @@ Mövcud xüsusi səhifələrin siyahısı: [[Special:SpecialPages|Xüsusi səhif
 'databaseerror'        => 'Verilənlər bazası xətası',
 'dberrortext'          => 'Verilənlər bazası sorğusunda sintaksis xətası yarandı.
 Bu proqram təminatındakı xəta ilə əlaqədar ola bilər.
-Verilənlər bazasına sonuncu sorğu "<tt>$2</tt>" funksiyasından 
+Verilənlər bazasına sonuncu sorğu "<tt>$2</tt>" funksiyasından
 yaranan <blockquote><tt>$1</tt></blockquote>.
 Verilənlər bazasının göstərdiyi xəta "<tt>$3: $4</tt>".',
 'dberrortextcl'        => 'Verilənlər bazası sorğusunda sintaksis xətası yarandı.
@@ -474,7 +474,8 @@ Göstərilən səbəb: "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Sistemdən çıxdınız.'''
 
-Siz {{SITENAME}} saytını anonim olaraq istifadə etməyə davam edə bilər və ya eyni, yaxud başqa istifadəçi adı ilə [[Special:UserLogin|yenidən daxil ola]] bilərsiniz. Veb-brauzerin keş yaddaşını təmizləyənədək bəzi səhifələr hələ də sistemdə imişsiniz kimi görünə bilər.",
+Siz {{SITENAME}} saytını anonim olaraq istifadə etməyə davam edə bilər və ya eyni, yaxud başqa istifadəçi adı ilə $1 bilərsiniz. Veb-brauzerin keş yaddaşını təmizləyənədək bəzi səhifələr hələ də sistemdə imişsiniz kimi görünə bilər.",
+'logouttext-link-text'       => 'yenidən daxil ola',
 'welcomecreation'            => '== $1, xoş gəlmişsiniz! ==
 Hesabınız yaradıldı.
 [[Special:Preferences|{{SITENAME}} nizamlamalarınızı]] dəyişdirməyi unutmayın.',
@@ -1316,7 +1317,7 @@ Lütfən '''<tt>[[:$1]]</tt>''' keçidini yoxlayın və bu faylı yükləmək is
 'copyuploaddisabled'         => 'URL-dən yükləmə baş tutmadı.',
 'uploadfromurl-queued'       => 'Yükləməniz növbə gözləyir',
 'uploaddisabledtext'         => 'Fayl yüklənməsi baş tutmadı.',
-'uploadvirus'                => 'Faylda virus var! 
+'uploadvirus'                => 'Faylda virus var!
 Detallar: $1',
 'upload-source'              => 'Mənbə faylı',
 'sourcefilename'             => 'Fayl adı mənbələri',

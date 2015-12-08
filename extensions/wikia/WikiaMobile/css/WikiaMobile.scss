@@ -17,6 +17,10 @@
 @import "page_header";
 @import 'chevrons';
 @import "infobox";
+/* @TODO DAT-3079 Remove portable_infoboxes_before_simplification and portable_infoboxes_colors_before_simplification
+ * once all articles will be purged after release; @see DAT-3009 purging ticket */
+@import "portable_infoboxes_before_simplification";
+@import "portable_infoboxes_colors_before_simplification";
 @import "portable_infoboxes";
 @import "portable_infoboxes_colors";
 @import "sections";

@@ -52,6 +52,7 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 
 Transaction::setEntryPoint(Transaction::ENTRY_POINT_API);
 Transaction::setAttribute(Transaction::PARAM_API_ACTION, $wgRequest->getVal('action',null));
+Transaction::setAttribute(Transaction::PARAM_API_LIST, $wgRequest->getVal('list',null));
 
 wfProfileIn( 'api.php' );
 $starttime = microtime( true );

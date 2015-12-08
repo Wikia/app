@@ -1,16 +1,16 @@
 <nav class="BreadCrumbs" itemprop="breadcrumb">
-	<? $total = count($path) - 1 ?>
-	<? foreach($path as $index => $val): ?>
-		<? if (!empty($val['url'])): ?>
+	<? $total = count( $path ) - 1 ?>
+	<? foreach ( $path as $index => $val ): ?>
+		<? if ( !empty( $val['url'] ) ): ?>
 			<a href="<?= $val['url'] ?>" title="<?= $val['title'] ?>"><?= $val['title'] ?></a>
-		<? else: ?>
+		<? else : ?>
 			<?= $val['title'] ?>
 		<? endif ?>
-		<? if ($index < $total): ?>
+		<? if ( $index < $total ): ?>
 			<span class="separator">&gt;</span>
 		<? endif ?>
 	<? endforeach ?>
-	<? if (!empty($isRemoved) || !empty($isAdminDeleted)): ?>
+	<? if ( !empty( $isRemoved ) || !empty( $isAdminDeleted ) ): ?>
 		<span class="removed"><?= '(' . wfMessage( 'wall-thread-' . ( $isAdminDeleted ? 'deleted' : 'removed' ) )->escaped() . ')' ?></span>
 	<? endif ?>
 </nav>

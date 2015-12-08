@@ -132,8 +132,8 @@
 				if (returnToURL) {
 					returnToQuery = pageUrl.getVal('returntoquery');
 				} else {
-					returnToURL = encodeURIComponent(window.wgPageName);
-					returnToQuery = encodeURIComponent(window.location.search.substring(1));
+					returnToURL = window.wgPageName;
+					returnToQuery = window.location.search.substring(1);
 				}
 
 				// now check FB account (is it connected with Wikia account?)

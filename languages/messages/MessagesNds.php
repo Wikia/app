@@ -438,7 +438,7 @@ $messages = array(
 'jumpto'            => 'Wesseln na:',
 'jumptonavigation'  => 'Navigatschoon',
 'jumptosearch'      => 'Söök',
-'view-pool-error'   => "Dat deit uns leed, man de Servers sünd in'n Momang överladen. 
+'view-pool-error'   => "Dat deit uns leed, man de Servers sünd in'n Momang överladen.
 To vele Brukers versöökt, düsse Siet to besöken.
 Bitte tööv en poor Minuten, ehrder du dat nochmal versöchst.
 
@@ -607,8 +607,9 @@ As Grund is angeven: ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Du büst nu afmellt.'''
 
-Du kannst {{SITENAME}} nu anonym wiederbruken oder di ünner dissen oder en annern Brukernaam wedder [[Special:UserLogin|anmellen]].
+Du kannst {{SITENAME}} nu anonym wiederbruken oder di ünner dissen oder en annern Brukernaam wedder $1.
 Denk dor an, dat welk Sieden ünner Ümstänn noch jümmer so wiest warrn köönt, as wenn du anmellt weerst. Dat ännert sik, wenn du den Cache vun dien Browser leddig maakst.",
+'logouttext-link-text'       => 'anmellen',
 'welcomecreation'            => '== Willkamen, $1! ==
 Dien Brukerkonto is nu inricht.
 Vergeet nich, de Sied för di persönlich [[Special:Preferences|intostellen]].',
@@ -2580,7 +2581,7 @@ Wat denn noch an Lenken kummt in de Reeg, dat sünd Utnahmen, bi de dat Bild lie
 'metadata-help'     => 'Disse Datei bargt noch mehr Informatschonen, de mehrsttiets vun de Digitalkamera oder den Scanner kaamt. Dör Afännern vun de Originaldatei köönt welk Details nich mehr ganz to dat Bild passen.',
 'metadata-expand'   => 'Wies mehr Details',
 'metadata-collapse' => 'Wies minner Details',
-'metadata-fields'   => 'De folgen Fehlers vun de EXIF-Metadaten, de in disse MediaWiki-Systemtext indragen sünd, warrt op Bildbeschrievenssieden mit inklappte Metadatentabell anwiest. 
+'metadata-fields'   => 'De folgen Fehlers vun de EXIF-Metadaten, de in disse MediaWiki-Systemtext indragen sünd, warrt op Bildbeschrievenssieden mit inklappte Metadatentabell anwiest.
 Wiedere warrt standardmatig nich anwiest:
 * make
 * model

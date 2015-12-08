@@ -45,7 +45,7 @@ $wgQueryPages = array(
 	[ 'WantedFilesPage',               'Wantedfiles'                   ],
 	[ 'WantedPagesPage',               'Wantedpages'                   ],
 	[ 'WantedTemplatesPage',           'Wantedtemplates'               ],
-	[ 'UnwatchedPagesPage',            'Unwatchedpages'                ],
+	[ 'UnwatchedpagesPage',            'Unwatchedpages'                ],
 	[ 'UnusedtemplatesPage',           'Unusedtemplates'               ],
 	[ 'WithoutInterwikiPage',          'Withoutinterwiki'              ],
 );
@@ -292,6 +292,16 @@ abstract class QueryPage extends SpecialPage {
 		# Do query
 		$res = $this->reallyDoQuery( $limit, false );
 		$num = false;
+
+		/**
+		 * Wikia change begin
+		 * @author <adamk@wikia-inc.com>
+		 */
+		wfRunHooks( 'QueryPageUseResultsBeforeRecache', [ $this, $dbr, $res ] );
+		/**
+		 * Wikia change end
+		 */
+
 		if ( $res ) {
 			$num = $dbr->numRows( $res );
 			# Fetch results

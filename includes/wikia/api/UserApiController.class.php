@@ -25,6 +25,7 @@ class UserApiController extends WikiaApiController {
 		wfProfileIn( __METHOD__ );
 		$ids =  $this->request->getVal( 'ids' );
 		if ( empty( $ids ) ) {
+			wfProfileOut( __METHOD__ );
 			throw new InvalidParameterApiException( 'ids' );
 		}
 		$ids = explode( ',', trim( $ids ) );
@@ -60,6 +61,7 @@ class UserApiController extends WikiaApiController {
 			);
 
 		} else {
+			wfProfileOut( __METHOD__ );
 			throw new NotFoundApiException();
 		}
 		wfProfileOut( __METHOD__ );

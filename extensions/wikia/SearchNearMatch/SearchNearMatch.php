@@ -19,13 +19,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::allCapitalOneLower';
 $wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::fullCapitalAndLowerMix';
 
-/**
- * only when dataware is available
- */
-if( !empty( $wgEnableExternalStorage ) ) {
-	$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::allCapitalOneLowerFromDB';
-}
-
 class SearchNearMatch {
 	/**
 	 * @see SearchEngine::getNearMatch
@@ -80,61 +73,6 @@ class SearchNearMatch {
 
 		$result = self::checkGuesses($guesses, $title);
 		return $result;
-	}
-
-
-	/**
-	 * @input  'ala ma kota'
-	 * @output  array('Ala Ma kota', 'Ala ma Kota')
-	 *
-	 * @see Language::ucwordbreaks etc.
-	 */
-	public static function allCapitalOneLowerFromDB($term, &$title) {
-		global $wgMemc, $wgCityId, $wgExternalDatawareDB;
-
-		wfProfileIn(__METHOD__);
-
-		$word = strtolower(str_replace(" ", "_", $term));
-		$memkey = wfMemcKey( "searchnearmatch", md5($word) );
-		$searchTitleId = $wgMemc->get( $memkey );
-
-		if (empty($searchTitleId)) {
-			// from DB
-			$pages = array();
-			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
-			$res = $dbr->select(
-				array( 'pages' ),
-				array( 'page_id', 'page_namespace' ),
-				array(
-					'page_wikia_id' => $wgCityId,
-					'page_title_lower' => $word,
-					'page_status' => 0
-				),
-				__METHOD__
-			);
-			while ( $row = $dbr->fetchObject( $res ) ) {
-				$pages[$row->page_namespace] = $row->page_id;
-			}
-			$dbr->freeResult( $res );
-
-			if ( !empty($pages) ) {
-				ksort($pages, SORT_STRING);
-				list($searchTitleId) = array_slice($pages, 0, 1);
-			}
-			$wgMemc->set( $memkey, $searchTitleId, 60*60*24 );
-		}
-
-		$not_exists = true;
-		if (!empty($searchTitleId)) {
-			$searchTitleObj = Title::newFromId($searchTitleId);
-			if ($searchTitleObj && $searchTitleObj->exists()) {
-				$title = $searchTitleObj;
-				$not_exists = false;
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-		return $not_exists;
 	}
 
 	/**

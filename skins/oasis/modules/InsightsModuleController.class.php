@@ -2,14 +2,16 @@
 
 class InsightsModuleController extends WikiaController {
 
+	const ITEMS_LIMIT = 4;
+
 	public function executeIndex( $params ) {
 		wfProfileIn( __METHOD__ );
 
-		// add CSS for this module
-		$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( "skins/oasis/css/modules/InsightsModule.scss" ) );
+		Wikia::addAssetsToOutput( 'insights_module_scss' );
+		Wikia::addAssetsToOutput( 'insights_module_js' );
 
 		$this->themeClass = SassUtil::isThemeDark() ? 'insights-dark' : 'insights-light';
-		$this->messageKeys = InsightsHelper::getMessageKeys();
+		$this->insightsList = ( new InsightsHelper() )->prepareInsightsList( self::ITEMS_LIMIT );
 
 		wfProfileOut(__METHOD__);
 	}
