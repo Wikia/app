@@ -10,6 +10,10 @@ $tc-name-color-checked: $color-links;
 	$tc-modal-text-color: lighten($color-text, 20);
 }
 
+.template-classification-type-wrapper {
+	position: relative;
+}
+
 .template-classification-type-text {
 	cursor: pointer;
 	.edit {
@@ -108,4 +112,19 @@ $tc-name-color-checked: $color-links;
 .template-classification-error {
 	background-color: $color-error;
 	animation: fadeBackground 1s linear;
+}
+
+.template-classification-type-wrapper .tooltip,
+.wikia-page-header .tooltip {
+	color: $color-text;
+	white-space: normal;
+	width: 220px;
+
+	a {
+		color: $color-links;
+	}
+
+	.close-bulk-hint {
+		text-align: right;
+	}
 }

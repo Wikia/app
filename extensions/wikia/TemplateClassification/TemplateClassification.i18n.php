@@ -42,7 +42,8 @@ $messages['en'] = array(
 	'template-classification-edit-modal-bulk-error-limited' => 'Unfortunately we were not able to classify $1 of $2 pages. Would you mind trying again?',
 	'template-classification-edit-modal-bulk-task' => 'Due to the size of this category we are running this bulk edit as a background task. As a result, it may take a little while for the changes to become active. Thanks for your patience!',
 	'template-classification-entry-point-hint' => 'Hi $1! Help us organize this template. Click here and choose one of the types. [[Help:Template Types|Learn more]].',
-	'template-classification-bulk-classification-hint' => 'Hi $1! Help us organize templates in this category. Click "Bulk edit template type" and choose one of the types. [[Help:Template Types|Learn more]].',
+	'template-classification-bulk-classification-hint' => 'Hi $1! Help us organize templates in this category. Click "Bulk edit template type" and choose one of the types.
+[[Help:Template Types|Learn more]].',
 	'template-classification-bulk-classification-agreement' => 'I understand',
 	'template-classification-indicator' => 'Template type:',
 	'template-classification-notification-error-retry' => 'Something went wrong and we could not save the template type. Could you retry it using the link under the page title?',
