@@ -47,41 +47,7 @@ class DataTables {
 		wfProfileIn( __METHOD__ );
 
 		if ( $html && static::shouldBeProcessed() ) {
-			$document = new DOMDocument();
-			//encode for correct load
-			$document->loadHTML( mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' ) );
-
-			$tables = $document->getElementsByTagName( 'table' );
-			if ( $tables->length > 0 ) {
-				$xpath = new DOMXPath( $document );
-				/** @var DOMElement $table */
-				foreach ( $tables as $table ) {
-					$nestedTables = $xpath->query( './/table', $table );
-					// mark nested tables and parent table as not portable
-					if ( $nestedTables->length > 0 ) {
-						$table->setAttribute( self::DATA_PORTABLE_ATTRIBUTE, 'false' );
-						// mark nested tables as not portable
-						/** @var DOMElement $nestedTable */
-						foreach ( $nestedTables as $nestedTable ) {
-							$nestedTable->setAttribute( self::DATA_PORTABLE_ATTRIBUTE, 'false' );
-						}
-					} elseif ( !$table->hasAttribute( static::DATA_PORTABLE_ATTRIBUTE ) &&
-							   $xpath->query( '*//*[@rowspan]|*//*[@colspan]', $table )->length == 0
-					) {
-						$table->setAttribute( self::DATA_PORTABLE_ATTRIBUTE, 'true' );
-					}
-				}
-				// strip <html> and <body> tags
-				$result = [ ];
-				$body = $document->getElementsByTagName( 'body' )->item( 0 );
-				for ( $i = 0; $i < $body->childNodes->length; $i++ ) {
-					$result[] = $document->saveXML( $body->childNodes->item( $i ) );
-				}
-
-				$html = !empty( $result ) ? implode( "", $result ) : $html;
-			}
-			// clear user generated html parsing errors
-			libxml_clear_errors();
+			$html = self::processTables( $html );
 		}
 		wfProfileOut( __METHOD__ );
 
@@ -106,5 +72,50 @@ class DataTables {
 		}
 
 		return $wikitext;
+	}
+
+	private static function processTables( $html ) {
+		$result = "";
+		$document = new DOMDocument();
+		//encode for correct load
+		$document->loadHTML( mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' ) );
+
+		$tables = $document->getElementsByTagName( 'table' );
+		if ( $tables->length > 0 ) {
+			$xpath = new DOMXPath( $document );
+			/** @var DOMElement $table */
+			foreach ( $tables as $table ) {
+				$nestedTables = $xpath->query( './/table', $table );
+				// mark nested tables and parent table as not portable
+				if ( $nestedTables->length > 0 ) {
+					$table->setAttribute( self::DATA_PORTABLE_ATTRIBUTE, 'false' );
+					// mark nested tables as not portable
+					/** @var DOMElement $nestedTable */
+					foreach ( $nestedTables as $nestedTable ) {
+						$nestedTable->setAttribute( self::DATA_PORTABLE_ATTRIBUTE, 'false' );
+					}
+				} elseif ( !$table->hasAttribute( static::DATA_PORTABLE_ATTRIBUTE ) &&
+						   $xpath->query( '*//*[@rowspan]|*//*[@colspan]', $table )->length == 0
+				) {
+					$table->setAttribute( self::DATA_PORTABLE_ATTRIBUTE, 'true' );
+				}
+			}
+			$result = self::getBodyHtml( $document );
+		}
+		// clear user generated html parsing errors
+		libxml_clear_errors();
+
+		return !empty( $result ) ? $result : $html;
+	}
+
+	private static function getBodyHtml( DOMDocument $dom ) {
+		// strip <html> and <body> tags
+		$result = [ ];
+		$body = $dom->getElementsByTagName( 'body' )->item( 0 );
+		for ( $i = 0; $i < $body->childNodes->length; $i++ ) {
+			$result[] = $dom->saveXML( $body->childNodes->item( $i ) );
+		}
+
+		return implode( "", $result );
 	}
 }
