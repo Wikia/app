@@ -41,8 +41,8 @@ class Logger extends \ContextSource {
 
 		return $log->addEntry( self::TC_LOG_CHANGED, $title, '',
 			[
-				wfMessage( "template-classification-type-{$newType}" )->inContentLanguage()->escaped(),
-				wfMessage( "template-classification-type-{$oldType}" )->inContentLanguage()->escaped(),
+				wfMessage( "template-classification-type-{$newType}" )->inContentLanguage()->plain(),
+				wfMessage( "template-classification-type-{$oldType}" )->inContentLanguage()->plain(),
 			],
 			$this->getUser()
 		);
