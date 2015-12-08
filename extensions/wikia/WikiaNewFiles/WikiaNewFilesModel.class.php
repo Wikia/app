@@ -15,7 +15,7 @@ class WikiaNewFilesModel extends WikiaModel {
 	 * @param bool $hideBots Whether to hide images uploaded by bots or not
 	 */
 	public function __construct( $hideBots ) {
-		$this->dbr = $this->dbr = wfGetDB( DB_SLAVE );
+		$this->dbr = wfGetDB( DB_SLAVE );
 		if ( $hideBots ) {
 			$this->hideBots();
 		}
