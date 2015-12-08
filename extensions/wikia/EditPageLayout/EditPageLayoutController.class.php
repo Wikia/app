@@ -87,7 +87,7 @@ class EditPageLayoutController extends WikiaController {
 	 * Render template for <body> tag content
 	 */
 	public function executeEditPage() {
-		global $wgCityId;
+		global $wgCityId, $wgEnableTemplateClassificationExt;
 
 		wfProfileIn( __METHOD__ );
 
@@ -210,17 +210,22 @@ class EditPageLayoutController extends WikiaController {
 			? wfMessage( 'editpagelayout-notificationsLink-none' )->escaped()
 			: wfMessage( 'editpagelayout-notificationsLink', count( $this->notices ) )->parse();
 
-		try {
-			$templateType = ( new TemplateClassificationService() )
-				->getType( $wgCityId, $this->title->getArticleID() );
-		} catch ( Exception $e ) {
+		if ( $wgEnableTemplateClassificationExt ) {
+			try {
+				$templateType = ( new TemplateClassificationService() )
+					->getType( $wgCityId, $this->title->getArticleID() );
+			} catch ( Exception $e ) {
+				$templateType = null;
+				WikiaLogger::instance()->error('TemplateClassificationService::getType() threw an exception', [
+					'ex' => $e
+				]);
+			}
+		} else {
 			$templateType = null;
-			WikiaLogger::instance()->error('TemplateClassificationService::getType() threw an exception', [
-				'ex' => $e
-			]);
 		}
 
-		$this->showInfoboxPreview = $templateType === TemplateClassificationService::TEMPLATE_INFOBOX
+		$this->showInfoboxPreview = !$wgEnableTemplateClassificationExt
+			|| $templateType === TemplateClassificationService::TEMPLATE_INFOBOX
 			|| $templateType === TemplateClassificationService::TEMPLATE_CUSTOM_INFOBOX;
 
 		// check if we're in read only mode
