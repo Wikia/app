@@ -56,8 +56,17 @@ class DataTables {
 				$xpath = new DOMXPath( $document );
 				/** @var DOMElement $table */
 				foreach ( $tables as $table ) {
-					if ( !$table->hasAttribute( static::DATA_PORTABLE_ATTRIBUTE ) &&
-						 $xpath->query( '*//*[@rowspan]|*//*[@colspan]', $table )->length == 0
+					$nestedTables = $xpath->query( './/table', $table );
+					// mark nested tables and parent table as not portable
+					if ( $nestedTables->length > 0 ) {
+						$table->setAttribute( 'data-portable', 'false' );
+						// mark nested tables as not portable
+						/** @var DOMElement $nestedTable */
+						foreach ( $nestedTables as $nestedTable ) {
+							$nestedTable->setAttribute( 'data-portable', 'false' );
+						}
+					} elseif ( !$table->hasAttribute( static::DATA_PORTABLE_ATTRIBUTE ) &&
+							   $xpath->query( '*//*[@rowspan]|*//*[@colspan]', $table )->length == 0
 					) {
 						$table->setAttribute( 'data-portable', 'true' );
 					}
