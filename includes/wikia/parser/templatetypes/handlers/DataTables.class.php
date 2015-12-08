@@ -59,16 +59,16 @@ class DataTables {
 					$nestedTables = $xpath->query( './/table', $table );
 					// mark nested tables and parent table as not portable
 					if ( $nestedTables->length > 0 ) {
-						$table->setAttribute( 'data-portable', 'false' );
+						$table->setAttribute( self::DATA_PORTABLE_ATTRIBUTE, 'false' );
 						// mark nested tables as not portable
 						/** @var DOMElement $nestedTable */
 						foreach ( $nestedTables as $nestedTable ) {
-							$nestedTable->setAttribute( 'data-portable', 'false' );
+							$nestedTable->setAttribute( self::DATA_PORTABLE_ATTRIBUTE, 'false' );
 						}
 					} elseif ( !$table->hasAttribute( static::DATA_PORTABLE_ATTRIBUTE ) &&
 							   $xpath->query( '*//*[@rowspan]|*//*[@colspan]', $table )->length == 0
 					) {
-						$table->setAttribute( 'data-portable', 'true' );
+						$table->setAttribute( self::DATA_PORTABLE_ATTRIBUTE, 'true' );
 					}
 				}
 				// strip <html> and <body> tags
