@@ -140,6 +140,13 @@
 					$('<input>').val(templateName).attr({'name': 'template_name'})
 				)
 				.submit();
+
+			window.Wikia.Tracker.track({
+				action: window.Wikia.Tracker.ACTIONS.CLICK,
+				category: 'editor-mw',
+				label: 'infobox-preview-button',
+				trackingMethod: 'analytics'
+			});
 		},
 
 		init: function() {
