@@ -87,7 +87,7 @@ class EditPageLayoutController extends WikiaController {
 	 * Render template for <body> tag content
 	 */
 	public function executeEditPage() {
-		global $wgCityId, $wgEnableTemplateClassificationExt;
+		global $wgCityId, $wgUser, $wgEnableTemplateClassificationExt, $wgInfoboxPreviewEnabled, $wgInfoboxPreviewSupportedLanuages;
 
 		wfProfileIn( __METHOD__ );
 
@@ -227,6 +227,10 @@ class EditPageLayoutController extends WikiaController {
 		$this->showInfoboxPreview = !$wgEnableTemplateClassificationExt
 			|| $templateType === TemplateClassificationService::TEMPLATE_INFOBOX
 			|| $templateType === TemplateClassificationService::TEMPLATE_CUSTOM_INFOBOX;
+
+		if ( !$wgInfoboxPreviewEnabled || !in_array( strtolower( $wgUser->getGlobalPreference( 'language' ) ), $wgInfoboxPreviewSupportedLanuages ) ) {
+			$this->showInfoboxPreview = false;
+		}
 
 		// check if we're in read only mode
 		// disable edit form when in read-only mode
