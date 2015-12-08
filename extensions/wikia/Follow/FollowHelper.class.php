@@ -57,20 +57,21 @@ class FollowHelper {
 			return;
 		}
 
-		$watcherSQL = self::getWatcherSQL( $user->getId(), $namespace, $list );
+		$watcherSQL = self::getWatcherSQL( $user->getId(), $namespace, $list, $action );
 		$watcherSets = self::getWatcherSets( $watcherSQL );
 
 		if ( empty( $watcherSets ) ) {
 			return;
 		}
 
+		$wg = \F::app()->wg;
 		foreach ( $watcherSets as $watchers ) {
 			$task = new FollowEmailTask();
 			$task->title( $childTitle );
-			$task->wikiId( F::app()->wg->CityId );
+			$task->wikiId( $wg->CityId );
 			$task->call(
 				'emailFollowNotifications',
-				F::app()->wg->User->getId(),
+				$wg->User->getId(),
 				$watchers,
 				$user->getId(),
 				$namespace,
@@ -119,21 +120,35 @@ class FollowHelper {
 	 *
 	 * @return WikiaSQL
 	 */
-	private static function getWatcherSQL( $userId, $namespace, $list) {
+	private static function getWatcherSQL( $userId, $namespace, $list, $action ) {
+		/** @var WikiaSQL $watcherSQL */
 		$watcherSQL = ( new WikiaSQL() )
 			->SELECT( 'wl_user', 'wl_title' )
 			->FROM( 'watchlist' )
 			->WHERE( 'wl_user' )->NOT_EQUAL_TO( $userId )
 			->AND_( 'wl_namespace' )->EQUAL_TO( $namespace )
-			->AND_( 'wl_title' )->IN( $list )
-			->AND_( 'wl_notificationtimestamp' )->IS_NULL();
+			->AND_( 'wl_title' )->IN( $list );
+
+		self::addAnyTimeStampCondition( $watcherSQL, $action );
+
+		return $watcherSQL;
+	}
+
+	private static function addAnyTimeStampCondition( WikiaSQL $watcherSQL, $action ) {
+		// Skip any timestamp checking if this is a blog post
+		if ( $action == self::LOG_ACTION_BLOG_POST ) {
+			return;
+		}
 
 		$timeAgo = self::getTimeBoundary();
 		if ( !empty( $timeAgo ) ) {
-			$watcherSQL->OR_( 'wl_notificationtimestamp' )->LESS_THAN( $timeAgo );
+			$orCondition = "(wl_notificationtimestamp IS NULL OR wl_notificationtimestamp < '$timeAgo')";
+			$watcherSQL->AND_( $orCondition );
+		} else {
+			$watcherSQL->AND_( 'wl_notificationtimestamp' )->IS_NULL();
 		}
 
-		return $watcherSQL;
+		return;
 	}
 
 	/**
