@@ -164,8 +164,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 					HUB_TOP_LEADERBOARD: '728x90',
 					TOP_LEADERBOARD: '728x90'
 				}
-			},
-			showMiddlePrefooter: context.targeting.pageType === 'home'
+			}
 		}
 	);
 

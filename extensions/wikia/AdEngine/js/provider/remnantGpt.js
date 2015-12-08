@@ -1,12 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.remnantGpt', [
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
 	'ext.wikia.adEngine.slotTweaker'
-], function (adContext, factory, slotTweaker) {
+], function (factory, slotTweaker) {
 	'use strict';
-
-	var context = adContext.getContext();
 
 	return factory.createProvider(
 		'ext.wikia.adEngine.provider.remnantGpt',
@@ -47,8 +44,7 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 					HOME_TOP_LEADERBOARD: '728x90',
 					TOP_LEADERBOARD: '728x90'
 				}
-			},
-			showMiddlePrefooter: context.targeting.pageType === 'home'
+			}
 		}
 	);
 });

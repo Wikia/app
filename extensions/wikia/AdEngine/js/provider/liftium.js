@@ -1,17 +1,15 @@
 /*global define, require, Liftium*/
 /*jshint maxparams:false*/
 define('ext.wikia.adEngine.provider.liftium', [
-	'ext.wikia.adEngine.adContext',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('wikia.instantGlobals')
-], function (adContext, doc, log, win, slotTweaker, instantGlobals) {
+], function (doc, log, win, slotTweaker, instantGlobals) {
 	'use strict';
 
-	var context = adContext.getContext(),
-		logGroup = 'ext.wikia.adEngine.provider.liftium',
+	var logGroup = 'ext.wikia.adEngine.provider.liftium',
 		slotMap,
 		canHandleSlot,
 		fillInSlot;
@@ -45,10 +43,6 @@ define('ext.wikia.adEngine.provider.liftium', [
 
 		if (instantGlobals && instantGlobals.wgSitewideDisableLiftium) {
 			log('Liftium disabled through InstantGlobals', 'error', logGroup);
-			return false;
-		}
-
-		if (slotname === 'PREFOOTER_MIDDLE_BOXAD' && context.targeting.pageType !== 'home') {
 			return false;
 		}
 
