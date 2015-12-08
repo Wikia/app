@@ -107,7 +107,7 @@ $wgAutoloadClasses[ 'UploadAchievementsFromFile' ] = "{$dir}UploadAchievementsFr
 $wgAutoloadClasses[ 'WikiaPhotoGalleryUpload' ] = "{$dir}../WikiaPhotoGallery/WikiaPhotoGalleryUpload.class.php";
 
 // I18N
-$wgExtensionMessagesFiles['AchievementsII'] = $dir.'i18n/AchievementsII.i18n.php';
+$wgExtensionMessagesFiles['AchievementsII'] = $dir.'AchievementsII.i18n.php';
 $wgExtensionMessagesFiles['AchievementsIIAliases'] = $dir.'AchievementsII.alias.php' ;
 
 // Michał Roszka (Mix) <michal@wikia-inc.com>
