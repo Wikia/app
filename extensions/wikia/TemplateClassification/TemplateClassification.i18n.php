@@ -116,7 +116,6 @@ $messages['qqq'] = array(
 	'template-classification-special-type-header' => 'Table column header describing template type.',
 	'template-classification-special-exception' => 'Message shown when fetching data was impossible and informing user that something went wrong and ask to try again.',
 	'special-templates' => 'Name of special page containing all templates on wiki with types.',
-	'logentry-templateclassification-tc-added' => "A message that is saved to a user-facing log if a template is classified and the previous type was Unknown. Parameters are: $1 - User's name, $3 - A link to a target page, $4 - Name of the new type of the template.",
 	'logentry-templateclassification-tc-changed' => "A message that is saved to a user-facing log if a type of a template is changed to another one. Parameters are: $1 - User's name, $3 - A link to a target page, $4 - New type of the template, $5 - Old type of the template.",
 );
 
