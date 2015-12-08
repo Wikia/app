@@ -291,7 +291,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	function dismissWelcomeHint() {
 		if ($typeWrapper.data('has-seen-welcome') === 0) {
 			$typeWrapper.data('has-seen-welcome', 1);
-			$typeWrapper.tooltip('disable');
+			$typeWrapper.tooltip('hide');
 			nirvana.sendRequest({
 				controller: 'TemplateClassification',
 				method: 'dismissWelcomeHint',
