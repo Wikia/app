@@ -83,16 +83,28 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		}
 	}
 
+	function assertSlotSizes(provider, slotName, expectedSizes) {
+		provider.fillInSlot(slotName, {}, noop, noop);
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[3].size)
+			.toBe(expectedSizes, provider.name + '.' + slotName + ' sizes');
+	}
+
+	function assertIfSlotIsSupported(provider, slotName) {
+		expect(provider.canHandleSlot(slotName)).toBeTruthy('Can handle ' + provider.name + '.' + slotName);
+	}
+
+	function assertIfSlotIsNotSupported(provider, slotName) {
+		expect(provider.canHandleSlot(slotName)).toBeFalsy('Cannot handle ' + provider.name + '.' + slotName);
+	}
+
 	function assertProviderSlotMap(provider, expectedSizes) {
 		spyOn(mocks.gptHelper, 'pushAd');
 		Object.keys(expectedSizes).forEach(function (slotName) {
 			if (expectedSizes[slotName]) {
-				provider.fillInSlot(slotName, {}, noop, noop);
-				expect(provider.canHandleSlot(slotName)).toBeTruthy('Can handle ' + provider.name + '.' + slotName);
-				expect(mocks.gptHelper.pushAd.calls.mostRecent().args[3].size)
-					.toBe(expectedSizes[slotName], provider.name + '.' + slotName + ' sizes');
+				assertIfSlotIsSupported(provider, slotName);
+				assertSlotSizes(provider, slotName, expectedSizes[slotName]);
 			} else {
-				expect(provider.canHandleSlot(slotName)).toBeFalsy('Cannot handle ' + provider.name + '.' + slotName);
+				assertIfSlotIsNotSupported(provider, slotName);
 			}
 		});
 	}
