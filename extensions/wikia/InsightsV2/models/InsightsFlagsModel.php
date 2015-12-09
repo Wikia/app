@@ -64,9 +64,8 @@ class InsightsFlagsModel extends InsightsPageModel {
 	 * @return array
 	 */
 	public function fetchArticlesData() {
-		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
-
-		$articlesData = WikiaDataAccess::cache( $cacheKey, self::INSIGHTS_MEMC_TTL, function () {
+		$cacheKey = ( new InsightsCache() )->getMemcKey( InsightsCache::INSIGHTS_MEMC_ARTICLES_KEY, $this->getInsightType(), $this->getInsightCacheParams() );
+		$articlesData = WikiaDataAccess::cache( $cacheKey, InsightsCache::INSIGHTS_MEMC_TTL, function () {
 			$articlesData = [];
 
 			$flaggedPages = $this->getPagesByFlagType();
@@ -75,9 +74,7 @@ class InsightsFlagsModel extends InsightsPageModel {
 				$articlesData = $this->prepareData( $flaggedPages );
 
 				if ( $this->arePageViewsRequired() ) {
-					$articlesIds = array_keys( $articlesData );
-					$pageViewsData = $this->getPageViewsData( $articlesIds );
-					$articlesData = $this->assignPageViewsData( $articlesData, $pageViewsData );
+					$articlesData = ( new InsightsPageViews() )->assignPageViewsData( $articlesData );
 				}
 			}
 

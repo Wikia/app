@@ -131,15 +131,6 @@ class InsightsHelper {
 	}
 
 	/**
-	 * Get Special:Insights full url
-	 *
-	 * @return string
-	 */
-	private function getSpecialInsightsUrl( $subpage = false, $params = [] ) {
-		return $this->specialPage->getTitle( $subpage )->getFullURL( $params );
-	}
-
-	/**
 	 * Checks if a given subpage is known
 	 *
 	 * @param $subpage string|null A slug of a subpage
@@ -148,23 +139,6 @@ class InsightsHelper {
 	public static function isInsightPage( $subpage ) {
 		$insightsPages = self::getInsightsPages();
 		return !empty( $subpage ) && isset( $insightsPages[$subpage] );
-	}
-
-	/**
-	 * Get param to show proper editor based on user preferences
-	 *
-	 * @return mixed
-	 */
-	public static function getEditUrlParams() {
-		global $wgUser;
-
-		if ( EditorPreference::isVisualEditorPrimary() && $wgUser->isLoggedIn() ) {
-			$param['veaction'] = 'edit';
-		} else {
-			$param['action'] = 'edit';
-		}
-
-		return $param;
 	}
 
 	/**
@@ -184,31 +158,6 @@ class InsightsHelper {
 		}
 
 		return null;
-	}
-
-	/**
-	 * Prepare a data to create a link element
-	 *
-	 * @param Title $title A target article's Title object
-	 * @param $params
-	 * @return array
-	 */
-	public static function getTitleLink( Title $title, $params ) {
-		$prefixedTitle = $title->getPrefixedText();
-
-		$data = [
-			'text' => $prefixedTitle,
-			'url' => $title->getFullURL( $params ),
-			'title' => $prefixedTitle,
-			'classes' => '',
-		];
-
-		if ( !$title->exists() ) {
-			$data['classes'] = 'new';
-			$data['title'] = wfMessage( 'red-link-title', $prefixedTitle )->escaped();
-		}
-
-		return $data;
 	}
 
 	/**
@@ -239,23 +188,6 @@ class InsightsHelper {
 			];
 		}
 		return $insightsList;
-	}
-
-	/**
-	 * Returns an array of datetime entries for the last four Sundays
-	 * (page views data is currently updated on every Sunday)
-	 *
-	 * @return array An array with dates of the last four Sundays
-	 */
-	public static function getLastFourTimeIds() {
-		$lastTimeId = ( new DateTime() )->modify( 'last Sunday' );
-		$format = 'Y-m-d H:i:s';
-		return [
-			$lastTimeId->format( $format ),
-			$lastTimeId->modify( '-1 week' )->format( $format ),
-			$lastTimeId->modify( '-2 week' )->format( $format ),
-			$lastTimeId->modify( '-3 week' )->format( $format ),
-		];
 	}
 
 	private function prepareCountDisplay( $count ) {

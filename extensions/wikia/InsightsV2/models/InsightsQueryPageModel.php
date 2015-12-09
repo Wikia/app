@@ -70,9 +70,7 @@ abstract class InsightsQueryPageModel extends InsightsPageModel {
 				$articlesData = $this->prepareData( $res );
 
 				if ( $this->arePageViewsRequired() ) {
-					$articlesIds = array_keys( $articlesData );
-					$pageViewsData = $this->getPageViewsData( $articlesIds );
-					$articlesData = $this->assignPageViewsData( $articlesData, $pageViewsData );
+					$articlesData = ( new InsightsPageViews() )->assignPageViewsData( $articlesData );
 				}
 			}
 

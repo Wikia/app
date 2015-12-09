@@ -99,33 +99,6 @@ abstract class InsightsPageModel extends InsightsModel {
 	}
 
 	/**
-	 * Fetches page views data for a given set of articles. The data includes
-	 * number of views for the last four time ids (data points).
-	 *
-	 * @param array $articlesIds An array of IDs of articles to fetch views for
-	 * @return array An array with views for the last four time ids
-	 */
-	public function getPageViewsData( array $articlesIds ) {
-		global $wgCityId;
-
-		$pvData = [];
-		if ( empty( $articlesIds ) ) {
-			return $pvData;
-		}
-
-		/**
-		 * Get pv for the last 4 Sundays
-		 */
-		$pvTimes = InsightsHelper::getLastFourTimeIds();
-
-		foreach ( $pvTimes as $timeId ) {
-			$pvData[] = DataMartService::getPageViewsForArticles( $articlesIds, $timeId, $wgCityId );
-		}
-
-		return $pvData;
-	}
-
-	/**
 	 * Prepares all data in a format that is easy to use for display.
 	 *
 	 * @param $res Results to display
@@ -135,6 +108,8 @@ abstract class InsightsPageModel extends InsightsModel {
 	public function prepareData( $res ) {
 		$data = [];
 		$dbr = wfGetDB( DB_SLAVE );
+		$itemData = new InsightsItemData();
+
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			if ( $row->title ) {
 				$article = [];
@@ -147,18 +122,13 @@ abstract class InsightsPageModel extends InsightsModel {
 				}
 				$article['link'] = InsightsHelper::getTitleLink( $title, $params );
 
-				$lastRev = $title->getLatestRevID();
-				$rev = Revision::newFromId( $lastRev );
-
-				if ( $rev ) {
-					$article['metadata']['lastRevision'] = $this->prepareRevisionData( $rev );
-				}
+				$article['metadata']['lastRevision'] = $itemData->prepareRevisionData( $title->getLatestRevID() );
 
 				if ( $this->isWlhLinkRequired() ) {
 					$article['metadata']['wantedBy'] = [
 						'message' => $this->wlhLinkMessage(),
 						'value' => (int)$row->value,
-						'url' => $this->getWlhUrl( $title ),
+						'url' => $itemData->getWlhUrl( $title ),
 					];
 				}
 
@@ -177,93 +147,6 @@ abstract class InsightsPageModel extends InsightsModel {
 		}
 
 		return $data;
-	}
-
-	/**
-	 * Calculates desirable results and aggregates them in an array.
-	 * Then, it modifies the articles data array and returns it
-	 * with the values assigned to the articles.
-	 *
-	 * For now the values are:
-	 * * PVs from the last week
-	 * * PVs from the last 4 weeks
-	 * * Views growth from a penultimate week
-	 *
-	 * @param $articlesData
-	 * @param $pageViewsData
-	 * @return mixed
-	 */
-	public function assignPageViewsData( $articlesData, $pageViewsData ) {
-		$sortingData = [];
-
-		foreach ( $articlesData as $articleId => $data ) {
-
-			$articlePV = [];
-
-			foreach ( $pageViewsData as $dataPoint ) {
-				if ( isset( $dataPoint[ $articleId ] ) ) {
-					$articlePV[] = intval( $dataPoint[ $articleId ] );
-				} else {
-					$articlePV[] = 0;
-				}
-			}
-
-			$pv28 = array_sum( $articlePV );
-			if ( $articlePV[1] != 0 ) {
-				$pvDiff = ( $articlePV[0] - $articlePV[1] ) / $articlePV[1];
-				$pvDiff = round( $pvDiff, 2 ) * 100;
-				$pvDiff .= '%';
-			} else {
-				$pvDiff = 'N/A';
-			}
-
-			$sortingData['pv7'][ $articleId ] = $articlePV[0];
-			$articlesData[ $articleId ]['metadata']['pv7'] = $articlePV[0];
-
-			$sortingData['pv28'][ $articleId ] = $pv28;
-			$articlesData[ $articleId ]['metadata']['pv28'] = $pv28;
-
-			$sortingData['pvDiff'][ $articleId ] = $pvDiff;
-			$articlesData[ $articleId ]['metadata']['pvDiff'] = $pvDiff;
-
-		}
-
-		//( new InsightsSorting() )->createSortingArrays();
-
-		return $articlesData;
-	}
-
-	/**
-	 * Get data about revision
-	 * Who and when made last edition
-	 *
-	 * @param Revision $rev
-	 * @return mixed
-	 */
-	public function prepareRevisionData( Revision $rev ) {
-		$data['timestamp'] = wfTimestamp( TS_UNIX, $rev->getTimestamp() );
-
-		$user = $rev->getUserText();
-
-		if ( $rev->getUser() ) {
-			$userpage = Title::newFromText( $user, NS_USER )->getFullURL();
-		} else {
-			$userpage = SpecialPage::getTitleFor( 'Contributions', $user )->getFullUrl();
-		}
-
-		$data['username'] = $user;
-		$data['userpage'] = $userpage;
-
-		return $data;
-	}
-
-	/**
-	 * Returns a link to a WhatLinksHere page for the given Title.
-	 * @param Title $title The target article's title object
-	 * @return string
-	 */
-	public function getWlhUrl( Title $title ) {
-		return SpecialPage::getTitleFor( 'Whatlinkshere', $title->getPrefixedText() )->getFullUrl();
 	}
 
 	/**
