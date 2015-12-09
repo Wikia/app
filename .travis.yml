@@ -1,6 +1,10 @@
 language: node_js
 node_js:
+  - 5
+  - 4
+  - 0.12
   - 0.10
+sudo: false
 before_install: 
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/
   - npm install grunt-cli
