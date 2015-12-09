@@ -28,9 +28,9 @@ $messages['de'] = array(
 
 $messages['es'] = array(
 	'wikia-in-your-lang-description' => "Displays a notification if a wikia is available in a user's native language. The check is based on Geo cookie and a browser's language.",
-	'wikia-in-your-lang-available' => '$1 también está disponible en Español. ¡Échale un vistazo! [$2 $3]',
-	'wikia-in-your-lang-article-available' => 'Esta página también está disponible en Español. ¡Échale un vistazo! [$2 $3]',
-	'wikia-in-your-lang-available-for-mobile' => '$1 también está disponible en Español. ¡Échale un vistazo! [$2 $3]',
+	'wikia-in-your-lang-available' => '$1 también está disponible en español. ¡Échale un vistazo! [$2 $3]',
+	'wikia-in-your-lang-article-available' => 'Esta página también está disponible en español. ¡Échale un vistazo! [$2 $3]',
+	'wikia-in-your-lang-available-for-mobile' => '$1 también está disponible en español. ¡Échale un vistazo! [$2 $3]',
 );
 
 $messages['fi'] = array(
@@ -55,9 +55,9 @@ $messages['it'] = array(
 );
 
 $messages['ja'] = array(
-	'wikia-in-your-lang-available' => '$1は日本語でもご利用いただけます。ぜひご覧ください。[$2 $3]',
-	'wikia-in-your-lang-article-available' => 'このページは日本語でもご利用いただけます。ぜひご覧ください。[$2 $3]',
-	'wikia-in-your-lang-available-for-mobile' => '$1は日本語でもご利用いただけます。ぜひご覧ください。[$2 $3]',
+	'wikia-in-your-lang-available' => '$1の日本語版もあります！ 今すぐチェックして編集に参加しよう！[$2 $3]',
+	'wikia-in-your-lang-article-available' => 'このページの日本語版もあります！今すぐチェックして編集に参加しよう！[$2 $3]',
+	'wikia-in-your-lang-available-for-mobile' => '$1の日本語版もあります！ 今すぐチェックして編集に参加しよう！[$2 $3]',
 	'wikia-in-your-lang-description' => "Displays a notification if a wikia is available in a user's native language. The check is based on Geo cookie and a browser's language.",
 );
 
@@ -71,8 +71,8 @@ $messages['ko'] = array(
 $messages['nl'] = array(
 	'wikia-in-your-lang-description' => "Displays a notification if a wikia is available in a user's native language. The check is based on Geo cookie and a browser's language.",
 	'wikia-in-your-lang-available' => '$1 is ook beschikbaar in het Nederlands. Neem een kijkje! [$2 $3]',
-	'wikia-in-your-lang-article-available' => 'This page is also available in English. Check it out! [$2 $3]',
-	'wikia-in-your-lang-available-for-mobile' => '$1 is also available in English. Check it out! [$2 $3]',
+	'wikia-in-your-lang-article-available' => 'Deze pagina is ook beschikbaar in het Nederlands. Neem een kijkje! [$2 $3]',
+	'wikia-in-your-lang-available-for-mobile' => '$1 is ook beschikbaar in het Nederlands. Neem een kijkje! [$2 $3]',
 );
 
 $messages['pl'] = array(
@@ -91,9 +91,9 @@ $messages['pt'] = array(
 
 $messages['ru'] = array(
 	'wikia-in-your-lang-description' => "Displays a notification if a wikia is available in a user's native language. The check is based on Geo cookie and a browser's language.",
-	'wikia-in-your-lang-available' => '$1 также доступна на русском языке. Проверьте [$2 $3]!',
-	'wikia-in-your-lang-article-available' => 'Эта страница также доступна на русском языке. Проверьте [$2 $3]!',
-	'wikia-in-your-lang-available-for-mobile' => '$1 также доступна на русском языке. Проверьте [$2 $3]!',
+	'wikia-in-your-lang-available' => '$1 также доступна на русском языке. Посмотрите! [$2 $3]',
+	'wikia-in-your-lang-article-available' => 'Эта страница также доступна на русском языке. Посмотрите! [$2 $3]',
+	'wikia-in-your-lang-available-for-mobile' => '$1 также доступна на русском языке. Посмотрите! [$2 $3]',
 );
 
 $messages['vi'] = array(
