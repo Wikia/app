@@ -102,7 +102,7 @@ class FollowHelper {
 				$watcherSets[$currentPage][$title][] = $user;
 
 				$watcherCount++;
-				if ( ( $watcherCount % self::MAX_WATCHERS_PER_JOB ) == 0 ) {
+				if ( ( $watcherCount % self::MAX_WATCHERS_PER_JOB ) === 0 ) {
 					$currentPage++;
 				}
 			}
