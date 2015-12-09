@@ -7,31 +7,8 @@ use Wikia\Logger\Loggable;
 abstract class InsightsPageModel extends InsightsModel {
 	use Loggable;
 
-	const
-		INSIGHTS_MEMC_PREFIX = 'insights',
-		INSIGHTS_MEMC_VERSION = '1.4',
-		INSIGHTS_MEMC_TTL = 259200, // Cache for 3 days
-		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData',
-		INSIGHTS_DEFAULT_SORTING = 'pv7';
-
-	public
-		$sorting = [
-			'pv7' => [
-				'sortType' => SORT_NUMERIC,
-			],
-			'pv28' => [
-				'sortType' => SORT_NUMERIC,
-			],
-			'pvDiff' => [
-				'sortType' => SORT_NUMERIC,
-				'metadata' => 'pv7',
-			]
-		];
-
-	private
-		$template = 'subpageList',
-		$sortingArray;
-
+	private $template = 'subpageList';
+	private $insightsSorting;
 
 	public function getPaginationUrlParams() {
 		return [];
@@ -42,10 +19,6 @@ abstract class InsightsPageModel extends InsightsModel {
 	 */
 	public function getTemplate() {
 		return $this->template;
-	}
-
-	public function getDefaultSorting() {
-		return self::INSIGHTS_DEFAULT_SORTING;
 	}
 
 	/**
@@ -96,7 +69,7 @@ abstract class InsightsPageModel extends InsightsModel {
 	 * @return array
 	 */
 	public function getContent( $params, $offset, $limit ) {
-		global $wgMemc;
+
 
 		$content = [];
 
@@ -110,15 +83,9 @@ abstract class InsightsPageModel extends InsightsModel {
 			/**
 			 * 2. Slice a sorting table to retrieve a page
 			 */
-			$this->prepareParams( $params );
-			if ( !isset( $this->sortingArray ) ) {
-				if ( $this->arePageViewsRequired() ) {
-					$this->sortingArray = $wgMemc->get($this->getMemcKey( self::INSIGHTS_DEFAULT_SORTING ) );
-				} else {
-					$this->sortingArray = array_keys( $articlesData );
-				}
-			}
-			$ids = array_slice( $this->sortingArray, $offset, $limit, true );
+
+			$data = ( new InsightsSorting() )->getSortedData( $articlesData, $params );
+			$ids = array_slice( $data, $offset, $limit, true );
 
 			/**
 			 * 3. Populate $content array with data for each article id
@@ -129,19 +96,6 @@ abstract class InsightsPageModel extends InsightsModel {
 		}
 
 		return $content;
-	}
-
-	/**
-	 * Overrides the default values used for sorting and pagination
-	 *
-	 * @param $params An array of URL parameters
-	 */
-	protected function prepareParams( $params ) {
-		global $wgMemc;
-
-		if ( isset( $params['sort'] ) && isset( $this->sorting[ $params['sort'] ] ) ) {
-			$this->sortingArray = $wgMemc->get( $this->getMemcKey( $params['sort'] ) );
-		}
 	}
 
 	/**
@@ -274,34 +228,9 @@ abstract class InsightsPageModel extends InsightsModel {
 
 		}
 
-		foreach ( $this->sorting as $key => $item ) {
-			if ( isset( $sortingData[$key] ) ) {
-				$this->createSortingArray( $sortingData[ $key ], $key );
-			}
-		}
+		//( new InsightsSorting() )->createSortingArrays();
 
 		return $articlesData;
-	}
-
-	/**
-	 * Sorts an array and sets it as a value in memcache. Article IDs are
-	 * keys in the array.
-	 *
-	 * @param $sortingArray The input array with
-	 * @param string $key Memcache key
-	 */
-	public function createSortingArray( $sortingArray, $key ) {
-		global $wgMemc;
-
-		if ( isset( $this->sorting[ $key ]['sortFunction'] ) ) {
-			usort( $sortingArray, $this->sorting[ $key ]['sortFunction'] );
-		} else {
-			arsort( $sortingArray, $this->sorting[ $key ]['sortType'] );
-		}
-
-		$cacheKey = $this->getMemcKey( $key );
-
-		$wgMemc->set( $cacheKey, array_keys( $sortingArray ), self::INSIGHTS_MEMC_TTL );
 	}
 
 	/**
@@ -356,78 +285,5 @@ abstract class InsightsPageModel extends InsightsModel {
 	 */
 	public function getInProgressNotificationParams() {
 		return '';
-	}
-
-	/**
-	 * Updates the cached articleData and sorting array
-	 *
-	 * @param int $articleId
-	 */
-	public function updateInsightsCache( $articleId ) {
-		$this->updateArticleDataCache( $articleId );
-		$this->updateSortingCache( $articleId );
-	}
-
-	/**
-	 * Removes a fixed article from the articleData array
-	 *
-	 * @param int $articleId
-	 */
-	private function updateArticleDataCache( $articleId ) {
-		global $wgMemc;
-
-		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
-		$articleData = $wgMemc->get( $cacheKey );
-
-		if ( isset( $articleData[$articleId] ) ) {
-			unset( $articleData[$articleId] );
-			$wgMemc->set( $cacheKey, $articleData, self::INSIGHTS_MEMC_TTL );
-		}
-	}
-
-	/**
-	 * Removes a fixed article from the sorting arrays
-	 *
-	 * @param int $articleId
-	 */
-	private function updateSortingCache( $articleId ) {
-		global $wgMemc;
-
-		foreach ( $this->sorting as $key => $item ) {
-			$cacheKey = $this->getMemcKey( $key );
-			$sortingArray = $wgMemc->get( $cacheKey );
-			if ( is_array( $sortingArray ) ) {
-				$key = array_search( $articleId, $sortingArray );
-
-				if ( $key !== false && $key !== null ) {
-					unset( $sortingArray[$key] );
-					$wgMemc->set( $cacheKey, $sortingArray, self::INSIGHTS_MEMC_TTL );
-				}
-			}
-		}
-	}
-
-	public function purgeInsightsCache() {
-		global $wgMemc;
-
-		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
-
-		$wgMemc->delete( $cacheKey );
-	}
-
-	/**
-	 * Get memcache key for insights
-	 *
-	 * @param String $params
-	 * @return String
-	 */
-	protected function getMemcKey( $params ) {
-		return wfMemcKey(
-			self::INSIGHTS_MEMC_PREFIX,
-			$this->getInsightType(),
-			$this->getInsightCacheParams(),
-			$params,
-			self::INSIGHTS_MEMC_VERSION
-		);
 	}
 }

@@ -60,8 +60,8 @@ abstract class InsightsQueryPageModel extends InsightsPageModel {
 	 * @return Mixed|null An array with data of articles i.e. title, url, metadata etc.
 	 */
 	public function fetchArticlesData() {
-		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
-		$articlesData = WikiaDataAccess::cache( $cacheKey, self::INSIGHTS_MEMC_TTL, function () {
+		$cacheKey = ( new InsightsCache() )->getMemcKey( InsightsCache::INSIGHTS_MEMC_ARTICLES_KEY, $this->getInsightType(), $this->getInsightCacheParams() );
+		$articlesData = WikiaDataAccess::cache( $cacheKey, InsightsCache::INSIGHTS_MEMC_TTL, function () {
 			$articlesData = [];
 
 			$res = $this->queryPageInstance->doQuery();
@@ -80,13 +80,6 @@ abstract class InsightsQueryPageModel extends InsightsPageModel {
 		} );
 
 		return $articlesData;
-	}
-
-	/**
-	 * Function for sorting list alphabetical
-	 */
-	public function sortInsightsAlphabetical( $a, $b ) {
-		return strcasecmp( $a['link']['text'], $b['link']['text'] );
 	}
 
 	/**

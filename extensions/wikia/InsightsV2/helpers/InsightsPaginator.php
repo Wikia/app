@@ -64,12 +64,6 @@ class InsightsPaginator {
 		$itemsPerPage = $this->getLimit();
 		$params = array_merge( $this->getParams(), [ 'page' => '%s' ] );
 
-		/*$sorting = $this->request->getVal( 'sort', null );
-		if ( $sorting ) {
-			$params['sort'] = $sorting;
-		}
-		*/
-
 		if( $total > $itemsPerPage ) {
 			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage, 3, false, '',  $this->getLimit() );
 			$paginator->setActivePage( $this->getPage() );

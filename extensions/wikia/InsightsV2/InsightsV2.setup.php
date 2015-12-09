@@ -36,6 +36,8 @@ $wgAutoloadClasses['InsightsController'] = $dir . 'InsightsController.class.php'
  */
 $wgAutoloadClasses['InsightsHelper'] = $dir . 'InsightsHelper.php';
 $wgAutoloadClasses['InsightsPaginator'] = $dir . 'helpers/InsightsPaginator.php';
+$wgAutoloadClasses['InsightsSorting'] = $dir . 'helpers/InsightsSorting.php';
+$wgAutoloadClasses['InsightsCache'] = $dir . 'helpers/InsightsCache.php';
 
 /**
  * Special pages
