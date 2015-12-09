@@ -2716,3 +2716,39 @@ $config['templates_hq_scss'] = [
 		'//extensions/wikia/TemplateClassification/styles/SpecialTemplates.scss',
 	]
 ];
+
+$config['curated_tour_planning'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/CuratedTour/scripts/planTour.run.js',
+		'//extensions/wikia/CuratedTour/scripts/editBox.js',
+		'//extensions/wikia/CuratedTour/scripts/tourManager.js',
+		'//extensions/wikia/CuratedTour/scripts/grabElement.js',
+		'//extensions/wikia/CuratedTour/scripts/hoverIntent.js',
+		'//extensions/wikia/CuratedTour/scripts/sortable.js',
+		'//extensions/wikia/CuratedTour/scripts/stepProjector.js',
+	],
+];
+$config['curated_tour_planning_css'] = [
+	'type' => AssetsManager::TYPE_CSS,
+	'assets' => [
+		'//extensions/wikia/CuratedTour/styles/bootstrap.css',
+	],
+];
+$config['curated_tour_special_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/CuratedTour/styles/specialCuratedTour.scss',
+	],
+];
+$config['curated_tour_play'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/CuratedTour/scripts/playTour.run.js',
+		'//extensions/wikia/CuratedTour/scripts/tourGuide.js',
+		'//extensions/wikia/CuratedTour/scripts/tourManager.js',
+		'//extensions/wikia/CuratedTour/scripts/tourNavigator.js',
+		'//extensions/wikia/CuratedTour/scripts/navigatorBox.js',
+		'//extensions/wikia/CuratedTour/scripts/stepProjector.js',
+	],
+];
