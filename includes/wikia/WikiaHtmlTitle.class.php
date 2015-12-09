@@ -83,7 +83,8 @@ class WikiaHtmlTitle {
 	 */
 	public function getAllParts() {
 		$parts = array_merge(
-			[$this->environment],
+			// MAIN-6048
+			//[$this->environment],
 			$this->parts,
 			[$this->siteName, $this->brandName]
 		);
