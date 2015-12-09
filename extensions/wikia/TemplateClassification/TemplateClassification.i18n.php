@@ -172,6 +172,10 @@ $messages['de'] = array(
 	'template-classification-edit-modal-bulk-task' => 'Aufgrund der Größe dieser Kategorie läuft diese Massenbearbeitung im Hintergrund ab. Daher kann es etwas dauern, bis die Änderungen aktiv sind. Vielen Dank für deine Geduld!',
 	'template-classification-entry-point-hint' => 'Hallo $1! Hilf uns bitte dabei, diese Vorlage zu organisieren. Klicke hier und wähle einen Typ aus. [[Hilfe:Vorlagenklassifizierung|Erfahre mehr]].',
 	'template-classification-open-modal-key-tip' => 'Klassifizierungsdialog öffnen ($1+Umschalt+K)',
+	'template-classification-bulk-classification-hint' => 'Hallo $1! Hilf uns dabei, die Vorlagen in dieser Kategorie zu ordnen. Klicke auf „Massenbearbeitung des Vorlagentyps" und wählen einen Typen aus.
+[[Hilfe:Vorlagenklassifizierung|Erfahre mehr]].',
+	'template-classification-bulk-classification-agreement' => 'Ich verstehe',
+	'logentry-templateclassification-tc-changed' => '$1 hat den Typ von $3 von $5 in $4 geändert.',
 );
 
 $messages['es'] = array(
@@ -228,6 +232,10 @@ $messages['es'] = array(
 	'template-classification-edit-modal-bulk-task' => 'Debido al tamaño de esta categoría estamos corriendo esta edición múltiple como una tarea de segundo plano. Como resultado, puede tomar un poco de tiempo para que los cambios se activen. ¡Gracias por su paciencia!',
 	'template-classification-entry-point-hint' => '¡Hola $1! Ayúdanos a organizar esta plantilla. Has click aquí y elige uno de estos tipos. [[w:es:Ayuda:Clasificación de plantillas|Clasificación de plantillas]].',
 	'template-classification-open-modal-key-tip' => 'Abrir diálogo de clasificación ($1+Shift+K)',
+	'template-classification-bulk-classification-hint' => '¡Hola $1! Ayúdanos a organizar las plantillas en esta categoría. Haz clic en "Edición múltiple de tipo de plantilla" y elige uno de los tipos.
+[[Ayuda:Tipo de Plantilla|Conoce más]].',
+	'template-classification-bulk-classification-agreement' => 'Entiendo',
+	'logentry-templateclassification-tc-changed' => '$1 cambió el tipo de $3 de $5 a $4.',
 );
 
 $messages['fr'] = array(
@@ -284,6 +292,10 @@ $messages['fr'] = array(
 	'template-classification-edit-modal-bulk-task' => "En raison de la taille de cette catégorie, la classification des modèles va se faire en arrière-plan. Les changements risquent donc de prendre un certain temps avant d'apparaître. Nous vous remercions de votre patience !",
 	'template-classification-entry-point-hint' => "Bonjour $1! Aidez-nous à organiser ce modèle. Cliquez ici et choisissez l'un de ces types. [[w:c:fr:Aide:Classification des modèles|En savoir plus]].",
 	'template-classification-open-modal-key-tip' => 'Ouvrir le dialogue de classification ($1+Shift+K)',
+	'template-classification-bulk-classification-hint' => "Bonjour $1! Aidez-nous à organiser les modèles de cette catégorie. Cliquez sur Modifier le type de plusieurs modèles et choisissez l'un de ces types. 
+[[w:c:fr:Aide:Classification des modèles|En savoir plus]].",
+	'template-classification-bulk-classification-agreement' => 'Je comprends',
+	'logentry-templateclassification-tc-changed' => '$1 a modifié le type de $3 : de $5 à $4.',
 );
 
 $messages['it'] = array(
@@ -317,7 +329,7 @@ $messages['it'] = array(
 	'template-classification-edit-modal-cancel-button-text' => 'Annulla',
 	'template-classification-edit-modal-title-edit-type' => 'Modifica la tipologia del template',
 	'template-classification-edit-modal-title-select-type' => 'Scegli la tipologia del template',
-	'template-classification-edit-modal-help' => 'Per ulteriori informazioni su ogni tipologia di template, esempi inclusi, visita [[w:it:Aiuto:Tipologie di template]].',
+	'template-classification-edit-modal-help' => 'Per ulteriori informazioni su ogni tipologia di template, esempi inclusi, visita [[w:it:Aiuto:Tipologie di template|Aiuto:Tipologie di template]].',
 	'template-classification-edit-modal-success' => 'La nuova tipologia del template è stata salvata. Grazie!',
 	'template-classification-edit-modal-error' => 'Purtroppo non siamo riusciti a salvare la tipologia di questo template. Potresti riprovare?',
 	'template-classification-indicator' => 'Tipo di template:',
@@ -340,6 +352,10 @@ $messages['it'] = array(
 	'template-classification-edit-modal-bulk-task' => "A causa delle dimensioni di questa categoria stiamo eseguendo la modifica in massa come operazione in background. Di conseguenza potrebbe volerci un po' prima che le modifiche abbiano effetto. Grazie della pazienza!",
 	'template-classification-entry-point-hint' => 'Ciao $1! Aiutaci ad organizzare questo template. Clicca qui e scegli una delle tipologie disponibili. [[w:it:Aiuto:Tipologie di template|Scopri di più]].',
 	'template-classification-open-modal-key-tip' => 'Apri la finestra di dialogo per la classificazione ($1+Shift+K)',
+	'template-classification-bulk-classification-hint' => 'Ciao $1! Aiutaci ad organizzare i template in questa categoria. Clicca su "Modifica in massa la tipologia dei template" e scegli una delle opzioni.
+[[w:it:Aiuto:Tipologie di template|Per saperne di più]].',
+	'template-classification-bulk-classification-agreement' => 'Ho capito',
+	'logentry-templateclassification-tc-changed' => '$1 ha cambiato la tipologia di $3 da $5 a $4.',
 );
 
 $messages['ja'] = array(
@@ -396,6 +412,10 @@ $messages['ja'] = array(
 	'template-classification-edit-modal-bulk-task' => 'このカテゴリのページ数が多すぎるため、バックグラウンド・タスクとして一括編集を実行しています。そのため、変更が反映されるまで少し時間がかかる場合があります。もうしばらくお待ちください。',
 	'template-classification-entry-point-hint' => 'こんにちは、$1さん。このテンプレートを整理してみましょう。ここをクリックしていずれかの種類をお選びください。詳しくは、[[ヘルプ:テンプレートの種類|こちら]]をご覧ください。',
 	'template-classification-open-modal-key-tip' => '分類ダイアログを開く（$1+Shift+K）',
+	'template-classification-bulk-classification-hint' => 'こんにちは、$1さん。このカテゴリのテンプレートを整理してみましょう。「テンプレートの種類を一括編集」をクリックして、いずれかの種類をお選びください。
+詳しくは、[[w:c:ja:ヘルプ:テンプレートの種類|こちら]]をご覧ください。',
+	'template-classification-bulk-classification-agreement' => 'OK',
+	'logentry-templateclassification-tc-changed' => '$1さんが$3の種類を「$5」から「$4」に変更しました。',
 );
 
 $messages['nl'] = array(
@@ -452,6 +472,10 @@ $messages['nl'] = array(
 	'template-classification-edit-modal-bulk-task' => 'Due to the size of this category we are running this bulk edit as a background task. As a result, it may take a little while for the changes to become active. Thanks for your patience!',
 	'template-classification-entry-point-hint' => 'Hi $1! Help us organize this template. Click here and choose one of the types. [[Help:Template Types|Learn more]].',
 	'template-classification-open-modal-key-tip' => 'Open classification dialog ($1+Shift+K)',
+	'template-classification-bulk-classification-hint' => 'Hi $1! Help us organize templates in this category. Click "Bulk edit template type" and choose one of the types.
+[[Help:Template Types|Learn more]].',
+	'template-classification-bulk-classification-agreement' => 'I understand',
+	'logentry-templateclassification-tc-changed' => '$1 changed type of $3 from $5 to $4.',
 );
 
 $messages['pl'] = array(
@@ -508,6 +532,9 @@ $messages['pl'] = array(
 	'template-classification-edit-modal-bulk-task' => 'Ze względu na wielkość tej kategorii ta edycja jest uruchomiona jako zadanie w tle. W rezultacie, może zająć to trochę czasu zanim zmiany staną się aktywne. Dziękujemy za cierpliwość!',
 	'template-classification-entry-point-hint' => 'Cześć $1! Pomóż nam zaklasyfikować ten szablon. Kliknij tutaj i wybierz jeden z typów.[[w:c:pl.c:Pomoc:Typy_szablonów| Dowiedz się więcej]].',
 	'template-classification-open-modal-key-tip' => 'Otwórz okno dialogowe klasyfikacji ($1+Shift+K)',
+	'template-classification-bulk-classification-hint' => 'Cześć $1! Pomóż nam zorganizować szablony w tej kategorii. Kliknij "Edycja zbiorcza typu szablonu" i wybierz jeden z typów. [[Help:Template Types| Dowiedz się więcej]].',
+	'template-classification-bulk-classification-agreement' => 'Rozumiem',
+	'logentry-templateclassification-tc-changed' => 'Użytkownik $1 zmienił $3 z $5 na $4.',
 );
 
 $messages['pt'] = array(
@@ -564,6 +591,9 @@ $messages['pt'] = array(
 	'template-classification-edit-modal-bulk-task' => 'Devido ao tamanho desta categoria, estamos executando esta edição múltipla em segundo plano. Como resultado, pode demorar um pouco para que as alterações tornem-se ativas. Obrigado por sua paciência!',
 	'template-classification-entry-point-hint' => 'Olá $1! Ajude-nos a organizar esta predefinição. Clique aqui e escolha um dos tipos. [[http://comunidade.wikia.com/wiki/Ajuda:Tipos_de_predefinição|Saiba mais]].',
 	'template-classification-open-modal-key-tip' => 'Abrir o diálogo de classificação ($1+Shift+K)',
+	'template-classification-bulk-classification-hint' => 'Olá $1! Ajude-nos a organizar as predefinições nesta categoria. Clique em "Edição múltipla dos tipos de predefinição" e escolha um dos tipos. [[Ajuda:Tipos de predefinição|Saiba mais]].',
+	'template-classification-bulk-classification-agreement' => 'Eu entendo',
+	'logentry-templateclassification-tc-changed' => '$1 alterou o tipo de $3 de $5 para $4.',
 );
 
 $messages['ru'] = array(
@@ -618,8 +648,11 @@ $messages['ru'] = array(
 	'template-classification-edit-modal-bulk-error' => 'К сожалению, мы не смогли классифицировать {{PLURAL:$1|эту страницу|эти страницы}}: $2. Пожалуйста, попробуйте снова.',
 	'template-classification-edit-modal-bulk-error-limited' => 'К сожалению мы не смогли классифицировать $1 из $2 страниц. Пожалуйста, попробуйте снова.',
 	'template-classification-edit-modal-bulk-task' => 'Из-за размеров этой категории массовая классификация будет поставлена в очередь. Это означает, что классификация займет немного больше времени, чем обычно.',
-	'template-classification-entry-point-hint' => 'Привет, $1! Помогите нам классифицировать этот шаблон. Откройте меню классификации и выберите один из типов. [[Справка:Классификация шаблонов|Подробнее о классификации шаблонов]].',
+	'template-classification-entry-point-hint' => 'Привет, $1! Помогите нам классифицировать этот шаблон. Откройте меню классификации и выберите подходящий тип шаблонов. [[Справка:Классификация шаблонов|Подробнее о классификации шаблонов]].',
 	'template-classification-open-modal-key-tip' => 'Открыть окно классификации ($1+Shift+K)',
+	'template-classification-bulk-classification-hint' => 'Привет, $1! Помогите нам классифицировать шаблоны в этой категории. Нажмите кнопку "Массовое изменение типов шаблонов" и выберите подходящий тип шаблонов. [[Справка:Классификация шаблонов|Подробнее о классификации шаблонов]].',
+	'template-classification-bulk-classification-agreement' => 'Хорошо',
+	'logentry-templateclassification-tc-changed' => '$1 изменил(а) тип шаблона $3 с $5 на $4.',
 );
 
 $messages['zh-hans'] = array(
@@ -676,6 +709,9 @@ $messages['zh-hans'] = array(
 	'template-classification-edit-modal-bulk-task' => '由于类别的大小，我们正在使用后台任务运行这些批量编辑。因此，它可能需要一段时间才会生成变化。感谢您的耐心等待!',
 	'template-classification-entry-point-hint' => '你好，$1！请帮助我们优化此模板。单击此处选择一种模版类型。[[Help:模板類型|点击了解更多]]。',
 	'template-classification-open-modal-key-tip' => '打开分类对话框($1+Shift+K)',
+	'template-classification-bulk-classification-hint' => '你好，$1！请帮助我们组织这一类别中的模板。单击"批量编辑模板类型"选择一种类型。[[Help:Template Types|点击这里了解更多]]。',
+	'template-classification-bulk-classification-agreement' => '我明白。',
+	'logentry-templateclassification-tc-changed' => '$1将$3中的类型从 $5更改为$4。',
 );
 
 $messages['zh-hant'] = array(
@@ -732,5 +768,8 @@ $messages['zh-hant'] = array(
 	'template-classification-edit-modal-bulk-task' => '由於類別的大小，我們正在使用背景任務運行這些大量編輯。因此，它可能需要一段時間才會生成變化。感謝您的耐心等待！',
 	'template-classification-entry-point-hint' => '你好，$1！請幫助我們優化此模板。按一下此處選擇一種模版類型。[[Help:模板類型|點擊查閱更多]]。',
 	'template-classification-open-modal-key-tip' => '打開分類對話框($1+Shift+K)',
+	'template-classification-bulk-classification-hint' => '你好，$1！ 請幫助我們組織這一類別中的模板。 按一下"大量編輯模板類型"選擇一種類型。[[Help:Template Types|點擊這裡查看更多]]。',
+	'template-classification-bulk-classification-agreement' => '我明白。',
+	'logentry-templateclassification-tc-changed' => '$1將$3中的類型從$5更改為$4。',
 );
 
