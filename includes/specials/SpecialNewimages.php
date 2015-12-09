@@ -1,8 +1,4 @@
 <?php
-
-// NOTE: This file is not in use. See WikiaNewFiles.class.php instead
-
-
 /**
  * Implements Special:Newimages
  *
@@ -31,13 +27,6 @@ class SpecialNewFiles extends IncludableSpecialPage {
 	}
 
 	public function execute( $par ){
-		// Wikia change - begin
-		global $wgUseWikiaNewFiles, $wgEnableWikiaPhotoGalleryExt;
-		if ($wgUseWikiaNewFiles && $wgEnableWikiaPhotoGalleryExt) {
-			return wfSpecialWikiaNewFiles( $par, $specialPage );
-		}
-		// Wikia change - end
-
 		$this->setHeaders();
 		$this->outputHeader();
 
