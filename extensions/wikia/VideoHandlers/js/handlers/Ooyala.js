@@ -91,14 +91,6 @@ define('wikia.videohandler.ooyala', [
 			createParams.vast = {
 				tagUrl: tagUrl
 			};
-
-			createParams.vastAds = [{
-				first_shown: 0,
-				frequency: 1,
-				type: 'vast',
-				time: 0,
-				url: tagUrl
-			}];
 		}
 
 		// log any errors from failed script loading (VID-976)
