@@ -3,20 +3,10 @@
 	<?= $copyRightAndAuthorList ?>
 	<?= $versionLicenseInfoMessage ?>
 </div>
-<h2 id='mw-version-software'><?= $versionSoftwareMessage ?></h2>
-<table class="wikitable" id="sv-software">
-	<tr>
-		<th><?= $versionSoftwareProductMessage ?></th>
-		<th><?= $versionSoftwareVersionMessage ?></th>
-	</tr>
 
-	<? foreach ( $versionSoftwareList as $name => $version ) : ?>
-	<tr>
-		<td><?= $name ?></td>
-		<td dir="ltr"><?= $version ?></td>
-	</tr>
-	<? endforeach; ?>
-</table>
+<iframe data-url="/main/edit?useskin=wikiamobile" id="CuratedContentToolIframe"' +
+'class="curated-content-tool" name="curated-content-tool" ></iframe>
+
 <?= $extensionCredit ?>
 <!-- visited from <?= $ip ?> -->
 <span style='display:none'>visited from <?= $ip ?></span>

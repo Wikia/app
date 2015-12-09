@@ -1,27 +1,15 @@
 <?php
 
-/**
- * Controller for Wikia's Special:Version page
- * We use a custom extension for this because we deploy via package, not via repo.
- * @author relwell
- *
- */
 class ImageReviewMercuryController extends WikiaSpecialPageController {
-	/**
-	 * The special page class
-	 * @var $version ImageReviewMercury
-	 */
-	protected $version;
 
 	/**
-	 * Constructor method. Overrides the original Special:Version page.
+	 * Constructor method. Overrides the original Special:ImageReviewMercury page.
 	 */
 	public function __construct() {
-		$this->version = (new ImageReviewMercury);
-
-		parent::__construct( 'Version' );
+		parent::__construct( 'ImageReviewMercury' );
 	}
 
+	// Copied from Version extension
 	public function index() {
 		$title = Title::newFromText( 'Version', NS_SPECIAL );
 		$popts = ParserOptions::newFromContext( RequestContext::getMain() );
@@ -49,5 +37,14 @@ class ImageReviewMercuryController extends WikiaSpecialPageController {
 		$this->setVal( 'versionSoftwareVersionMessage', wfMessage( 'version-software-version' )->escaped() );
 		$this->setVal( 'versionSoftwareList', $softwareListPrepped );
 
+	}
+
+	function urlHandler () {
+		$this->response->addAsset( 'fooandbar_js' );
+		$this->response->addAsset( 'fooandbar_scss' );
+		$this->response->addAsset( 'fooandbar_css' );
+
+		// Data to be used in FooAndBarController_urlhandler.php template
+		$this->templateValue = 'foo';
 	}
 }
