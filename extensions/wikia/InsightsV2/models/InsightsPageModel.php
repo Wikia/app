@@ -12,7 +12,6 @@ abstract class InsightsPageModel extends InsightsModel {
 		INSIGHTS_MEMC_VERSION = '1.4',
 		INSIGHTS_MEMC_TTL = 259200, // Cache for 3 days
 		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData',
-		INSIGHTS_LIST_MAX_LIMIT = 100,
 		INSIGHTS_DEFAULT_SORTING = 'pv7';
 
 	public
@@ -31,32 +30,8 @@ abstract class InsightsPageModel extends InsightsModel {
 
 	private
 		$template = 'subpageList',
-		/** @var int Counted shift based on pagination page number and limit of items per page */
-		$offset = 0,
-		/** @var int Number of items per pagination page */
-		$limit = self::INSIGHTS_LIST_MAX_LIMIT,
-		/** @var int Number of all items in model - used for pagination */
-		$total = 0,
-		/** @var int Number of current pagination page */
-		$page = 0,
 		$sortingArray;
 
-
-	public function getTotalResultsNum() {
-		return $this->total;
-	}
-
-	public function getLimitResultsNum() {
-		return $this->limit;
-	}
-
-	public function getOffset() {
-		return $this->offset;
-	}
-
-	public function getPage() {
-		return $this->page;
-	}
 
 	public function getPaginationUrlParams() {
 		return [];
@@ -67,14 +42,6 @@ abstract class InsightsPageModel extends InsightsModel {
 	 */
 	public function getTemplate() {
 		return $this->template;
-	}
-
-	/**
-	 * Set size of full data set of model
-	 * @param int $total
-	 */
-	public function setTotal( $total) {
-		$this->total = $total;
 	}
 
 	public function getDefaultSorting() {
@@ -128,7 +95,7 @@ abstract class InsightsPageModel extends InsightsModel {
 	 *
 	 * @return array
 	 */
-	public function getContent( $params ) {
+	public function getContent( $params, $offset, $limit ) {
 		global $wgMemc;
 
 		$content = [];
@@ -139,7 +106,6 @@ abstract class InsightsPageModel extends InsightsModel {
 		$articlesData = $this->fetchArticlesData();
 
 		if ( !empty( $articlesData ) ) {
-			$this->setTotal( count( $articlesData ) );
 
 			/**
 			 * 2. Slice a sorting table to retrieve a page
@@ -152,7 +118,7 @@ abstract class InsightsPageModel extends InsightsModel {
 					$this->sortingArray = array_keys( $articlesData );
 				}
 			}
-			$ids = array_slice( $this->sortingArray, $this->getOffset(), $this->getLimitResultsNum(), true );
+			$ids = array_slice( $this->sortingArray, $offset, $limit, true );
 
 			/**
 			 * 3. Populate $content array with data for each article id
@@ -175,29 +141,6 @@ abstract class InsightsPageModel extends InsightsModel {
 
 		if ( isset( $params['sort'] ) && isset( $this->sorting[ $params['sort'] ] ) ) {
 			$this->sortingArray = $wgMemc->get( $this->getMemcKey( $params['sort'] ) );
-		}
-
-		$this->preparePaginationParams( $params );
-	}
-
-	/**
-	 * Overrides the default values used for pagination
-	 *
-	 * @param $params An array of URL parameters
-	 */
-	protected function preparePaginationParams( $params ) {
-		if ( isset( $params['limit'] ) ) {
-			if ( $params['limit'] <= self::INSIGHTS_LIST_MAX_LIMIT ) {
-				$this->limit = intval( $params['limit'] );
-			} else {
-				$this->limit = self::INSIGHTS_LIST_MAX_LIMIT;
-			}
-		}
-
-		if ( isset( $params['page'] ) ) {
-			$page = intval( $params['page'] );
-			$this->page = --$page;
-			$this->offset = $this->page * $this->limit;
 		}
 	}
 

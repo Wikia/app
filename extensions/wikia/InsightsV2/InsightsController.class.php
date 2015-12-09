@@ -36,7 +36,7 @@ class InsightsController extends WikiaSpecialPageController {
 		if ( InsightsHelper::isInsightPage( $this->subpage ) ) {
 			$this->renderSubpage();
 		} elseif ( !empty( $this->subpage ) ) {
-			$this->response->redirect( $this->getSpecialInsightsUrl() );
+			$this->response->redirect( InsightsHelper::getSubpageLocalUrl() );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -67,10 +67,15 @@ class InsightsController extends WikiaSpecialPageController {
 		 * - getTemplate() - returning an overriding template
 		 */
 		if ( $this->model instanceof InsightsPageModel ) {
-			$params = $this->request->getParams();
+			$params = $this->filterParams( $this->request->getParams() );
 			$this->model->initModel( $params );
-			$this->setVal( 'content', $this->model->getContent( $params ) );
-			$this->preparePagination();
+
+			$paginator = new InsightsPaginator( $this->subpage, $params );
+			$this->paginatorBar = $paginator->getPagination();
+
+			$content = $this->model->getContent( $params, $paginator->getOffset(), $paginator->getLimit() );
+			$this->setVal( 'content', $content );
+
 			$this->prepareSortingData();
 			$this->renderFlagsFiltering();
 			$this->setVal( 'data', $this->model->getViewData() );
@@ -280,7 +285,7 @@ class InsightsController extends WikiaSpecialPageController {
 	public function getInsightListLinkParams( $subpage ) {
 		return [
 			'insightsPageText' => wfMessage( 'insights-notification-list-button' )->plain(),
-			'insightsPageLink' => $this->getSpecialInsightsUrl( $subpage )
+			'insightsPageLink' => InsightsHelper::getSubpageLocalUrl( $subpage )
 		];
 	}
 
@@ -290,29 +295,8 @@ class InsightsController extends WikiaSpecialPageController {
 	private function getInsightLinkParams() {
 		return [
 			'insightsPageText' => wfMessage( 'insights-notification-see-more' )->plain(),
-			'insightsPageLink' => $this->getSpecialInsightsUrl()
+			'insightsPageLink' => InsightsHelper::getSubpageLocalUrl()
 		];
-	}
-
-	/**
-	 * Prepare pagination
-	 */
-	private function preparePagination() {
-		$total = $this->model->getTotalResultsNum();
-		$itemsPerPage = $this->model->getLimitResultsNum();
-		$params = array_merge( $this->model->getPaginationUrlParams(), [ 'page' => '%s' ] );
-
-		$sorting = $this->request->getVal( 'sort', null );
-		if ( $sorting ) {
-			$params['sort'] = $sorting;
-		}
-
-		if( $total > $itemsPerPage ) {
-			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage, 3, false, '',  InsightsPageModel::INSIGHTS_LIST_MAX_LIMIT );
-			$paginator->setActivePage( $this->model->getPage() );
-			$url = urldecode( $this->getSpecialInsightsUrl( $this->subpage, $params ) );
-			$this->paginatorBar = $paginator->getBarHTML( $url );
-		}
 	}
 
 	/**
@@ -350,12 +334,14 @@ class InsightsController extends WikiaSpecialPageController {
 		$this->response->addAsset( '/extensions/wikia/InsightsV2/scripts/InsightsPage.js' );
 	}
 
-	/**
-	 * Get Special:Insights full url
-	 *
-	 * @return string
-	 */
-	private function getSpecialInsightsUrl( $subpage = false, $params = [] ) {
-		return $this->specialPage->getTitle( $subpage )->getFullURL( $params );
+
+	/** new methods **/
+	private function filterParams( $params ) {
+		unset( $params['title'] );
+		unset( $params['controller'] );
+		unset( $params['method'] );
+		unset( $params['par'] );
+
+		return $params;
 	}
 }

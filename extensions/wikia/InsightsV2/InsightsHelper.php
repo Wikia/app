@@ -117,16 +117,26 @@ class InsightsHelper {
 
 	/**
 	 * Returns a full URL for a known subpage and a NULL for an unknown one.
-	 * @param $subpage A slug of subpage
-	 * @return String|null
+	 * @param string $subpage slug of subpage
+	 * @param array $params params
+	 * @return string|null
 	 */
-	public static function getSubpageLocalUrl( $subpage ) {
+	public static function getSubpageLocalUrl( $subpage = false, Array $params = [] ) {
 		$insightsPages = self::getInsightsPages();
 
 		if ( isset( $insightsPages[$subpage] ) ) {
-			return SpecialPage::getTitleFor( 'Insights', $subpage )->getLocalURL();
+			return SpecialPage::getTitleFor( 'Insights', $subpage )->getLocalURL( $params );
 		}
 		return null;
+	}
+
+	/**
+	 * Get Special:Insights full url
+	 *
+	 * @return string
+	 */
+	private function getSpecialInsightsUrl( $subpage = false, $params = [] ) {
+		return $this->specialPage->getTitle( $subpage )->getFullURL( $params );
 	}
 
 	/**
