@@ -2,7 +2,7 @@
 
 namespace Wikia\ContentReview\Models;
 
-use Wikia\ContentReview\Helper,
+use FluentSql\Exception\SqlException,
 	Wikia\ContentReview\ContentReviewStatusesService;
 
 class ReviewModel extends ContentReviewBaseModel {
@@ -88,7 +88,7 @@ class ReviewModel extends ContentReviewBaseModel {
 		$affectedRows = $db->affectedRows();
 
 		if ( $affectedRows === 0 ) {
-			throw new \FluentSql\Exception\SqlException( 'The INSERT operation failed.' );
+			throw new SqlException( 'The INSERT operation failed.' );
 		}
 
 		$db->commit( __METHOD__ );
@@ -128,7 +128,7 @@ class ReviewModel extends ContentReviewBaseModel {
 		$affectedRows = $db->affectedRows();
 
 		if ( $affectedRows === 0 ) {
-			throw new \FluentSql\Exception\SqlException( 'The DELETE and UPDATE operation failed.' );
+			throw new SqlException( 'The DELETE and UPDATE operation failed.' );
 		}
 
 		$db->commit( __METHOD__ );
@@ -152,7 +152,7 @@ class ReviewModel extends ContentReviewBaseModel {
 		$affectedRows = $db->affectedRows();
 
 		if ( $affectedRows === 0 ) {
-			throw new \FluentSql\Exception\SqlException( 'The UPDATE operation failed.' );
+			throw new SqlException( 'The UPDATE operation failed.' );
 		}
 
 		return $status;
@@ -175,6 +175,24 @@ class ReviewModel extends ContentReviewBaseModel {
 			} );
 
 		return $content;
+	}
+
+	public function getAllReviewsOfPage( $wikiId, $pageId ) {
+		$db = $this->getDatabaseForRead();
+
+		$reviews = ( new \WikiaSQL() )
+			->SELECT( 'revision_id', 'status' )
+			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->AND_( 'page_id' )->EQUAL_TO( $pageId )
+			->runLoop( $db, function ( &$reviews, $row ) {
+				$reviews[] = [
+					'revision_id' => (int)$row->revision_id,
+					'status' => (int)$row->status,
+				];
+			} );
+
+		return $reviews;
 	}
 
 	/**
@@ -244,5 +262,36 @@ class ReviewModel extends ContentReviewBaseModel {
 		}
 
 		return $statusName;
+	}
+
+	/**
+	 * Deletes all reviews information on a given page.
+	 * Used for cleaning up data on deleted articles.
+	 * @param $wikiId
+	 * @param $pageId
+	 * @return bool|mixed
+	 */
+	public function deleteReviewsOfPage( $wikiId, $pageId ) {
+		$reviews = $this->getAllReviewsOfPage( $wikiId, $pageId );
+
+		// Quit early if there are no reviews to delete.
+		if ( empty( $reviews ) ) {
+			return true;
+		}
+
+		$db = $this->getDatabaseForWrite();
+
+		$result = ( new \WikiaSQL() )
+			->DELETE()
+			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->AND_( 'page_id' )->EQUAL_TO( $pageId )
+			->run( $db );
+
+		if ( $result ) {
+			$db->commit();
+		}
+
+		return $result;
 	}
 }
