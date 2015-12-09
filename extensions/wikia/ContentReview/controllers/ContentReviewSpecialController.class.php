@@ -122,6 +122,14 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 				 * should be removed from ContentReview
 				 */
 				$this->getContentReviewService()->deletePageData( $wikiId, $pageId );
+
+				/**
+				 * Log the situation to monitor the situation and preferably - get rid of this else clause.
+				 */
+				Wikia\Logger\WikiaLogger::instance()->warning( 'Deleted page in the ContentReview tool', [
+					'wikiId' => $wikiId,
+					'pageId' => $pageId,
+				] );
 			}
 		}
 
