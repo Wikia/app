@@ -34,6 +34,8 @@
 	<div id=wkMdlCnt></div>
 	<div id=wkMdlFtr></div>
 </div>
+// This is quick hacky fix for P2
+// Ticket https://wikia-inc.atlassian.net/browse/XW-825
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
 		// Replace widget scripts with iframes
