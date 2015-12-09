@@ -81,4 +81,17 @@ class CurrentRevisionModel extends ContentReviewBaseModel {
 
 		return $revisionData;
 	}
+
+	public function deleteCurrentRevisionOfPage( $wikiId, $pageId ) {
+		$db = $this->getDatabaseForWrite();
+
+		$result = ( new \WikiaSQL() )
+			->DELETE()
+			->FROM( self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->AND_( 'page_id' )->EQUAL_TO( $pageId )
+			->run( $db );
+
+		return $result;
+	}
 }

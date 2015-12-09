@@ -2,7 +2,7 @@
 
 namespace Wikia\ContentReview\Models;
 
-use Wikia\ContentReview\Helper,
+use FluentSql\Exception\SqlException,
 	Wikia\ContentReview\ContentReviewStatusesService;
 
 class ReviewModel extends ContentReviewBaseModel {
@@ -88,7 +88,7 @@ class ReviewModel extends ContentReviewBaseModel {
 		$affectedRows = $db->affectedRows();
 
 		if ( $affectedRows === 0 ) {
-			throw new \FluentSql\Exception\SqlException( 'The INSERT operation failed.' );
+			throw new SqlException( 'The INSERT operation failed.' );
 		}
 
 		$db->commit( __METHOD__ );
@@ -128,7 +128,7 @@ class ReviewModel extends ContentReviewBaseModel {
 		$affectedRows = $db->affectedRows();
 
 		if ( $affectedRows === 0 ) {
-			throw new \FluentSql\Exception\SqlException( 'The DELETE and UPDATE operation failed.' );
+			throw new SqlException( 'The DELETE and UPDATE operation failed.' );
 		}
 
 		$db->commit( __METHOD__ );
@@ -152,7 +152,7 @@ class ReviewModel extends ContentReviewBaseModel {
 		$affectedRows = $db->affectedRows();
 
 		if ( $affectedRows === 0 ) {
-			throw new \FluentSql\Exception\SqlException( 'The UPDATE operation failed.' );
+			throw new SqlException( 'The UPDATE operation failed.' );
 		}
 
 		return $status;
@@ -244,5 +244,18 @@ class ReviewModel extends ContentReviewBaseModel {
 		}
 
 		return $statusName;
+	}
+
+	public function deleteReviewsOfPage( $wikiId, $pageId ) {
+		$db = $this->getDatabaseForWrite();
+
+		$result = ( new \WikiaSQL() )
+			->DELETE()
+			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->AND_( 'page_id' )->EQUAL_TO( $pageId )
+			->run( $db );
+
+		return $result;
 	}
 }

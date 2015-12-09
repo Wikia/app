@@ -17,7 +17,7 @@ class ContentReviewService extends \WikiaService {
 	/**
 	 * This is a shortcut method for the users entitled to be reviewers. Instead of submitting a revision
 	 * and manually approving it they are able to do so automatically.
-	 * zoma
+	 *
 	 * @param \User $user
 	 * @param int $wikiId
 	 * @param int $pageId
@@ -53,5 +53,22 @@ class ContentReviewService extends \WikiaService {
 			'review_start' => $now,
 		];
 		$reviewLogModel->backupCompletedReview( $logData, ReviewModel::CONTENT_REVIEW_STATUS_AUTOAPPROVED, $submitUserId );
+	}
+
+	/**
+	 * Removes all data on a given page from the Content Review database.
+	 * USE ONLY FOR DELETED PAGES!
+	 *
+	 * @param $wikiId
+	 * @param $pageId
+	 */
+	public function deletePageData( $wikiId, $pageId ) {
+		var_dump( $wikiId );
+		var_dump( $pageId );
+		$reviewModel = new ReviewModel();
+		$reviewModel->deleteReviewsOfPage( $wikiId, $pageId );
+
+		$currentRevisionModel = new CurrentRevisionModel();
+		$currentRevisionModel->deleteCurrentRevisionOfPage( $wikiId, $pageId );
 	}
 }
