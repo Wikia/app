@@ -23,7 +23,7 @@ $wgExtensionCredits['specialpage'][] = [
 		'Kamil Koterba',
 	],
 	'version' => 1.0,
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Insights',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/InsightsV2',
 ];
 
 /**

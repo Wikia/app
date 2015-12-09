@@ -165,7 +165,7 @@ class InsightsController extends WikiaSpecialPageController {
 	 */
 	private function setMustacheParams( $params, $isFixed, $type ) {
 		$html = MustacheService::getInstance()->render(
-			'extensions/wikia/Insights/templates/Insights_loopNotification.mustache',
+			'extensions/wikia/InsightsV2/templates/Insights_loopNotification.mustache',
 			$params
 		);
 
@@ -346,8 +346,8 @@ class InsightsController extends WikiaSpecialPageController {
 	}
 
 	private function addAssets() {
-		$this->response->addAsset( '/extensions/wikia/Insights/styles/insights-lists.scss' );
-		$this->response->addAsset( '/extensions/wikia/Insights/scripts/InsightsPage.js' );
+		$this->response->addAsset( '/extensions/wikia/InsightsV2/styles/insights-lists.scss' );
+		$this->response->addAsset( '/extensions/wikia/InsightsV2/scripts/InsightsPage.js' );
 	}
 
 	/**
