@@ -13,6 +13,7 @@ $wgExtensionCredits['twittercards'][] = [
 $dir = dirname( __FILE__ ) . '/';
 
 // Classes
+$wgAutoloadClasses['TwitterCards'] = $dir . 'TwitterCards.class.php';
 $wgAutoloadClasses['TwitterCardsHooks'] = $dir . 'TwitterCardsHooks.class.php';
 
 // Hooks
