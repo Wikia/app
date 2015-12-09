@@ -1,4 +1,8 @@
 <?php
+
+// NOTE: This file is not in use. See WikiaNewFiles.class.php instead
+
+
 /**
  * Implements Special:Newimages
  *
