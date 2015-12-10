@@ -217,16 +217,18 @@ class WikiaMobileService extends WikiaService {
 	}
 
 	private function isArticleView() {
-		$action = $this->wg->Request->getVal( 'action', 'view' );
-		$nameSpace = $this->wg->Title->getNamespace();;
+		global $wgRequest, $wgTitle;
 
-		return ( ( $action == 'view' || $action == 'ajax' ) &&
-			$this->wg->Title->getArticleId() != 0 &&
-			( $nameSpace !== 2 && $nameSpace !== 500 ) // skip user profile and user blog pages
+		$action = $wgRequest->getVal( 'action', 'view' );
+		$namespace = $wgTitle->getNamespace();;
+
+		return ( ( $action === 'view' || $action === 'ajax' ) &&
+			$wgTitle->getArticleId() !== 0 &&
+			( $namespace !== NS_USER && $namespace !== NS_BLOG_ARTICLE ) // skip user profile and user blog pages
 		);
 	}
 
-	private function handleToc(){
+	private function handleToc() {
 		$toc = '';
 
 		//Enable TOC only on view action and on real articles and preview
