@@ -27,6 +27,7 @@ class View {
 		}
 
 		$templateType = '';
+		$isAutoClassifiedType = false;
 
 		// Fallback to infobox on template draft for not existent classification
 		if ( !empty( $wgEnableTemplateDraftExt )
@@ -47,6 +48,11 @@ class View {
 		// Fallback to unknown for not existent classification
 		if ( $templateType === '' ) {
 			$templateType = \TemplateClassificationService::TEMPLATE_UNKNOWN;
+		}
+
+		// checks if template was classified by automated classification
+		if ( !in_array( $templateType, \UserTemplateClassificationService::$templateTypes ) ) {
+			$isAutoClassifiedType = true;
 		}
 
 		if ( $templateTypeLabel === null ) {
@@ -81,6 +87,7 @@ class View {
 				'templateTypeName' => $templateTypeMessage,
 				'editButton' => $editButton,
 				'hint' => $hint,
+				'isAutoClassifiedType' => $isAutoClassifiedType
 			]
 		);
 	}
