@@ -30,6 +30,7 @@ $wgExtensionCredits['specialpage'][] = [
  * The main classes
  */
 $wgAutoloadClasses['InsightsController'] = $dir . 'InsightsController.class.php';
+$wgAutoloadClasses['InsightsLoopController'] = $dir . 'InsightsLoopController.class.php';
 
 /**
  * Config

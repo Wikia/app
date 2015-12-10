@@ -84,7 +84,7 @@ require(
 
 		initNotification = function() {
 			$.nirvana.sendRequest({
-				controller: 'Insights',
+				controller: 'InsightsLoop',
 				method: 'loopNotification',
 				type: 'POST',
 				data: {
