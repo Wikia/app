@@ -216,17 +216,21 @@ class WikiaMobileService extends WikiaService {
 		wfProfileOut( __METHOD__ );
 	}
 
+	private function isArticleView() {
+		$action = $this->wg->Request->getVal( 'action', 'view' );
+		$nameSpace = $this->wg->Title->getNamespace();;
+
+		return ( ( $action == 'view' || $action == 'ajax' ) &&
+			$this->wg->Title->getArticleId() != 0 &&
+			( $nameSpace !== 2 && $nameSpace !== 500 ) // skip user profile and user blog pages
+		);
+	}
+
 	private function handleToc(){
 		$toc = '';
 
-		$action = $this->wg->Request->getVal( 'action', 'view' );
-        $nameSpace = $this->wg->Title->getNamespace();;
-
 		//Enable TOC only on view action and on real articles and preview
-		if ( ( $action == 'view' || $action == 'ajax' ) &&
-			$this->wg->Title->getArticleId() != 0 &&
-            ( $nameSpace !== 2 && $nameSpace !== 500 ) // skip user profile and user blog pages
-		) {
+		if ( $this->isArticleView() ) {
 			$this->jsExtensionPackages[] = 'wikiamobile_js_toc';
 			$this->scssPackages[] = 'wikiamobile_scss_toc';
 
@@ -234,6 +238,12 @@ class WikiaMobileService extends WikiaService {
 		}
 
 		$this->response->setVal( 'toc', $toc );
+	}
+
+	private function handleWikiaWidgets() {
+		if ( $this->isArticleView() ) {
+			$this->jsExtensionPackages[] = 'wikiamobile_widget_iframe_wrapper';
+		}
 	}
 
 	private function disableSiteCSS() {
@@ -250,6 +260,7 @@ class WikiaMobileService extends WikiaService {
 		$this->handleContent();
 		$this->handleAds();
 		$this->handleToc();
+		$this->handleWikiaWidgets();
 		$this->handleAssets();
 		$this->handleTracking();
 
@@ -278,6 +289,7 @@ class WikiaMobileService extends WikiaService {
 		$this->handleMessages();
 		$this->handleToc();
 		$this->handleContent( $content );
+		$this->handleWikiaWidgets();
 		$this->handleAssets( 'preview' );
 
 		$this->response->setVal( 'jsClassScript', '<script>document.documentElement.className = "js";</script>' );

@@ -14,6 +14,7 @@ $wgAutoloadClasses['PolldaddyTagValidator'] = __DIR__ . '/PolldaddyTagValidator.
 
 // Hooks
 $wgHooks['ParserFirstCallInit'][] = 'PolldaddyTagController::onParserFirstCallInit';
+$wgHooks['WikiaMobileAssetsPackages'][] = 'PolldaddyTagController::onWikiaMobileAssetsPackages';
 
 // i18n
 $wgExtensionMessagesFiles['PolldaddyTag'] = __DIR__ . '/PolldaddyTag.i18n.php';
