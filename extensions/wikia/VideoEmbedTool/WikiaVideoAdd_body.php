@@ -73,6 +73,7 @@ class WikiaVideoAddForm extends SpecialPage {
 			'out' => $wgOut,
 			'action' => $action,
 			'name' => $name,
+			'token' => $this->getUser()->getEditToken(),
 			'errors' => $errors,
 			'wpWikiaVideoAddName' => $wpWikiaVideoAddName,
 			'wpWikiaVideoAddUrl' => $wpWikiaVideoAddUrl,
@@ -93,6 +94,12 @@ class WikiaVideoAddForm extends SpecialPage {
 			if ( $this->mName != '' ) {
 				$replaced = true;
 			}
+		}
+
+		if ( !$this->getRequest()->wasPosted() || !$this->getUser()->matchEditToken( $this->getRequest()->getVal( 'token' ) ) ) {
+			$errors['videoUrl'] = wfMessage( 'wva-failure' )->text();
+			$this->showForm($errors);
+			return;
 		}
 
 		if ( $this->mUrl == '' ) {

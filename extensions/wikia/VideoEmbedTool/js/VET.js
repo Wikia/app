@@ -369,6 +369,7 @@ define('wikia.vet', [
 
 		params.push('id=' + $('#VideoEmbedId').val());
 		params.push('provider=' + $('#VideoEmbedProvider').val());
+		params.push('token=' + encodeURIComponent( mw.user.tokens.get('editToken') ));
 
 		if ($metadataInput.length) {
 			metadata = $metadataInput.val().split(',');
