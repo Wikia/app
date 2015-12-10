@@ -736,11 +736,11 @@ $config['wikiamobile_tables_js'] = array(
 	)
 );
 
-$config['wikiamobile_widget_iframe_wrapper'] = [
+$config['wikiamobile_widget_iframe_unwrapper'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => [
-		'//extensions/wikia/WikiaMobile/js/widget_iframe_wrapper.js'
+		'//extensions/wikia/WikiaMobile/js/widget_iframe_unwrapper.js'
 	]
 ];
 

@@ -242,7 +242,7 @@ class WikiaMobileService extends WikiaService {
 
 	private function handleWikiaWidgets() {
 		if ( $this->isArticleView() ) {
-			$this->jsExtensionPackages[] = 'wikiamobile_widget_iframe_wrapper';
+			$this->jsExtensionPackages[] = 'wikiamobile_widget_iframe_unwrapper';
 		}
 	}
 
