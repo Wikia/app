@@ -55,6 +55,7 @@ class RecognizedTemplatesProvider {
 	public static function isUnrecognized( $type ) {
 		return in_array( $type, [
 			TemplateClassificationService::TEMPLATE_UNKNOWN,
+			TemplateClassificationService::TEMPLATE_DIRECTLY_USED,
 			AutomaticTemplateTypes::TEMPLATE_UNCLASSIFIED,
 			AutomaticTemplateTypes::TEMPLATE_OTHER
 		] );
