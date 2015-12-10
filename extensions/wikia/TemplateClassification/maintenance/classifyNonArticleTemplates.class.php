@@ -5,7 +5,6 @@ require_once( $mainDir . '/maintenance/Maintenance.php' );
 
 class ClassifyNonArticleTemplates extends Maintenance {
 
-	const TEMPLATE_TYPE_DIRECTLY_USED = 'directlyused';
 	const NONARTICLE_MAINTENANCE_PROVIDER = 'usage_classifier';
 
 	private $dryRun, $quiet, $logFile, $wikiaLogger;
