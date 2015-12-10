@@ -8,12 +8,12 @@
 class InsightsWithoutimagesModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'withoutimages';
 
-	public function getDataProvider() {
-		return new WithoutimagesPage();
+	public function __construct() {
+		$this->config = new InsightsConfig( self::INSIGHT_TYPE );
 	}
 
-	public function getInsightType() {
-		return self::INSIGHT_TYPE;
+	public function getDataProvider() {
+		return new WithoutimagesPage();
 	}
 
 	/**

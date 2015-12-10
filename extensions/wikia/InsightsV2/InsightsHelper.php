@@ -145,15 +145,15 @@ class InsightsHelper {
 	 * Returns a specific subpage model
 	 * If it does not exist a user is redirected to the Special:Insights landing page
 	 *
-	 * @param $subpage string|null A slug of a subpage
+	 * @param $type string|null A slug of a subpage
 	 * @return InsightsModel|null
 	 */
-	public static function getInsightModel( $subpage ) {
-		if ( self::isInsightPage( $subpage ) ) {
+	public static function getInsightModel( $type, $subpage ) {
+		if ( self::isInsightPage( $type ) ) {
 			$insightsPages = self::getInsightsPages();
-			$modelName = $insightsPages[$subpage];
+			$modelName = $insightsPages[$type];
 			if ( class_exists( $modelName ) ) {
-				return new $modelName();
+				return new $modelName( $subpage );
 			}
 		}
 

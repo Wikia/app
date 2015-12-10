@@ -8,7 +8,8 @@ abstract class InsightsPageModel extends InsightsModel {
 	use Loggable;
 
 	private $template = 'subpageList';
-	private $insightsSorting;
+	protected $config;
+	protected $subtype;
 
 	public function getPaginationUrlParams() {
 		return [];
@@ -21,31 +22,20 @@ abstract class InsightsPageModel extends InsightsModel {
 		return $this->template;
 	}
 
-	/**
-	 * @return bool
-	 */
-	public function arePageViewsRequired() {
-		return true;
-	}
-
-	public function hasAltAction() {
-		return false;
-	}
-
 	public function getAltAction( Title $title ) {
 		return [];
 	}
 
-	/**
-	 * Tells whether link to Special:WhatLinksHere should be displayed for insight type
-	 * @return bool
-	 */
-	public function isWlhLinkRequired() {
-		return false;
-	}
-
 	public function purgeCacheAfterUpdateTask() {
 		return true;
+	}
+
+	public function getInsightParam() {
+		$type = $this->getConfig()->getInsightType();
+
+		return [
+			self::INSIGHTS_FLOW_URL_PARAM => $type
+		];
 	}
 
 	/**
@@ -57,8 +47,8 @@ abstract class InsightsPageModel extends InsightsModel {
 	 */
 	public function getViewData() {
 		$data['display'] = [
-			'pageviews'	=> $this->arePageViewsRequired(),
-			'altaction'	=> $this->hasAltAction(),
+			'pageviews'	=> $this->getConfig()->showPageViews(),
+			'altaction'	=> $this->getConfig()->hasActions(),
 		];
 		return $data;
 	}
@@ -69,8 +59,6 @@ abstract class InsightsPageModel extends InsightsModel {
 	 * @return array
 	 */
 	public function getContent( $params, $offset, $limit ) {
-
-
 		$content = [];
 
 		/**
@@ -83,8 +71,7 @@ abstract class InsightsPageModel extends InsightsModel {
 			/**
 			 * 2. Slice a sorting table to retrieve a page
 			 */
-
-			$data = ( new InsightsSorting() )->getSortedData( $articlesData, $params );
+			$data = ( new InsightsSorting( $this->getConfig() ) )->getSortedData( $articlesData, $params );
 			$ids = array_slice( $data, $offset, $limit, true );
 
 			/**
@@ -120,25 +107,25 @@ abstract class InsightsPageModel extends InsightsModel {
 					$this->error( 'InsightsPageModel received reference to non existent page' );
 					continue;
 				}
-				$article['link'] = InsightsHelper::getTitleLink( $title, $params );
+				$article['link'] = $itemData->getTitleLink( $title, $params );
 
 				$article['metadata']['lastRevision'] = $itemData->prepareRevisionData( $title->getLatestRevID() );
 
-				if ( $this->isWlhLinkRequired() ) {
+				if ( $this->getConfig()->showWhatLinksHere() ) {
 					$article['metadata']['wantedBy'] = [
-						'message' => $this->wlhLinkMessage(),
+						'message' => $this->getConfig()->getWhatLinksHereMessage(),
 						'value' => (int)$row->value,
 						'url' => $itemData->getWlhUrl( $title ),
 					];
 				}
 
-				if ( $this->arePageViewsRequired() ) {
+				if ( $this->getConfig()->showPageViews() ) {
 					$article['metadata']['pv7'] = 0;
 					$article['metadata']['pv28'] = 0;
 					$article['metadata']['pvDiff'] = 0;
 				}
 
-				if ( $this->hasAltAction() ) {
+				if ( $this->getConfig()->hasActions() ) {
 					$article['altaction'] = $this->getAltAction( $title );
 				}
 
@@ -155,7 +142,7 @@ abstract class InsightsPageModel extends InsightsModel {
 	 */
 	public function getUrlParams() {
 		$params = array_merge(
-			InsightsHelper::getEditUrlParams(),
+			InsightsItemData::getEditUrlParams(),
 			$this->getInsightParam()
 		);
 
@@ -168,5 +155,12 @@ abstract class InsightsPageModel extends InsightsModel {
 	 */
 	public function getInProgressNotificationParams() {
 		return '';
+	}
+
+	/**
+	 * @return InsightsConfig
+	 */
+	public function getConfig() {
+		return $this->config;
 	}
 }

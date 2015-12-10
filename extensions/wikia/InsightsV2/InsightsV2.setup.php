@@ -32,6 +32,11 @@ $wgExtensionCredits['specialpage'][] = [
 $wgAutoloadClasses['InsightsController'] = $dir . 'InsightsController.class.php';
 
 /**
+ * Config
+ */
+$wgAutoloadClasses['InsightsConfig'] = $dir . 'helpers/InsightsConfig.php';
+
+/**
  * Helpers
  */
 $wgAutoloadClasses['InsightsHelper'] = $dir . 'InsightsHelper.php';

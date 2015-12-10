@@ -41,10 +41,10 @@
 				<table class="insights-list" data-type="<?= Sanitizer::encodeAttribute( $subpage ) ?>">
 					<tr>
 						<th class="insights-list-header insights-list-first-column"><?= wfMessage( 'insights-list-header-page' )->escaped() ?></th>
-						<?php if ( $data['display']['altaction'] ) : ?>
+						<?php if ( $hasActions ) : ?>
 							<th class="insights-list-header insights-list-header-altaction"><?= wfMessage( "insights-list-header-altaction" )->escaped() ?></th>
 						<?php endif; ?>
-						<?php if ( $data['display']['pageviews'] ) : ?>
+						<?php if ( $showPageViews ) : ?>
 							<th class="insights-list-header insights-list-header-pageviews"><?= wfMessage( 'insights-list-header-pageviews' )->escaped() ?></th>
 						<?php endif; ?>
 					</tr>
@@ -82,14 +82,14 @@
 									</p>
 								<?php endif; ?>
 							</td>
-							<?php if ( !empty( $item['altaction'] ) ) : ?>
+							<?php if ( $hasActions ) : ?>
 							<td class="insights-list-cell insights-list-cell-altaction">
 								<a class="wikia-button <?= $item['altaction']['class'] ?>" href="<?= $item['altaction']['url'] ?>" target="_blank">
 									<?= $item['altaction']['text'] ?>
 								</a>
 							</td>
 							<?php endif; ?>
-							<?php if ( $data['display']['pageviews'] ) : ?>
+							<?php if ( $showPageViews ) : ?>
 								<td class="insights-list-item-pageviews insights-list-cell">
 									<?= $wg->Lang->formatNum( $item['metadata'][$metadata] ); ?>
 								</td>

@@ -8,12 +8,12 @@
 class InsightsUncategorizedModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'uncategorizedpages';
 
-	public function getDataProvider() {
-		return new UncategorizedPagesPage();
+	public function __construct() {
+		$this->config = new InsightsConfig( self::INSIGHT_TYPE );
 	}
 
-	public function getInsightType() {
-		return self::INSIGHT_TYPE;
+	public function getDataProvider() {
+		return new UncategorizedPagesPage();
 	}
 
 	/**

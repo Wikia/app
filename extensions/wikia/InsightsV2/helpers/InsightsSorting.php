@@ -4,9 +4,10 @@ class InsightsSorting {
 	const INSIGHTS_DEFAULT_SORTING = 'pv7';
 
 	private $insightsCache;
+	private $config;
 	private $data;
 
-	public
+	public static
 		$sorting = [
 		'pv7' => [
 			'sortType' => SORT_NUMERIC,
@@ -20,8 +21,9 @@ class InsightsSorting {
 		]
 	];
 
-	public function __construct() {
-		$this->insightsCache = new InsightsCache();
+	public function __construct( InsightsConfig $config ) {
+		$this->config = $config;
+		$this->insightsCache = new InsightsCache( $this->config );
 	}
 
 	public function getDefaultSorting() {
@@ -35,7 +37,7 @@ class InsightsSorting {
 	 * @return array
 	 */
 	public function getSortedData( $articleData, $params ) {
-		if ( isset( $params['sort'] ) && isset( $this->sorting[ $params['sort'] ] ) ) {
+		if ( isset( $params['sort'] ) && isset( self::$sorting[ $params['sort'] ] ) ) {
 			$this->data = $this->insightsCache->get( $params['sort'] );
 		} else {
 			$this->getData( $articleData );
@@ -45,7 +47,7 @@ class InsightsSorting {
 	}
 
 	private function getData( $articlesData ) {
-		if ( 0 /*$this->arePageViewsRequired()*/ ) {
+		if ( $this->config->showPageViews() ) {
 			$this->data = $this->insightsCache->get( self::INSIGHTS_DEFAULT_SORTING );
 		} else {
 			$this->data = array_keys( $articlesData );
@@ -53,7 +55,7 @@ class InsightsSorting {
 	}
 
 	public function createSortingArrays( $sortingData ) {
-		foreach ( $this->sorting as $key => $item ) {
+		foreach ( self::$sorting as $key => $item ) {
 			if ( isset( $sortingData[$key] ) ) {
 				$this->createSortingArray( $sortingData[ $key ], $key );
 			}
@@ -68,12 +70,16 @@ class InsightsSorting {
 	 * @param string $key Memcache key
 	 */
 	public function createSortingArray( $sortingArray, $key ) {
-		if ( isset( $this->sorting[ $key ]['sortFunction'] ) ) {
-			usort( $sortingArray, $this->sorting[ $key ]['sortFunction'] );
+		if ( isset( self::$sorting[ $key ]['sortFunction'] ) ) {
+			usort( $sortingArray, self::$sorting[ $key ]['sortFunction'] );
 		} else {
-			arsort( $sortingArray, $this->sorting[ $key ]['sortType'] );
+			arsort( $sortingArray, self::$sorting[ $key ]['sortType'] );
 		}
 
 		$this->insightsCache->set( $key, array_keys( $sortingArray ) );
+	}
+
+	public static function getSortingTypes() {
+		return self::$sorting;
 	}
 }

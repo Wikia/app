@@ -1,7 +1,7 @@
 <div class="insights-header-sorting">
 	<form class="insights-sorting-form" method="GET">
 		<label for="sort"><?= wfMessage( 'insights-flags-filter-label' )->escaped(); ?></label>
-		<select class="insights-sorting" name="flagTypeId" onchange="this.form.submit()">
+		<select class="insights-sorting" name="subtype" onchange="this.form.submit()">
 			<?php
 				foreach ( $flagTypes as $flagType ):
 				$selected = ( $flagType['flag_type_id'] == $selectedFlagTypeId );

@@ -2,6 +2,12 @@
 
 class InsightsPageViews {
 
+	private $config;
+
+	public function __construct( InsightsConfig $config ) {
+		$this->config = $config;
+	}
+
 	/**
 	 * Calculates desirable results and aggregates them in an array.
 	 * Then, it modifies the articles data array and returns it
@@ -52,7 +58,7 @@ class InsightsPageViews {
 
 		}
 
-		//( new InsightsSorting() )->createSortingArrays();
+		( new InsightsSorting( $this->config ) )->createSortingArrays( $sortingData );
 
 		return $articlesData;
 	}

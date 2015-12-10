@@ -7,17 +7,23 @@
  */
 class InsightsWantedpagesModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'wantedpages';
+	private static $insightConfig = [
+		'pageviews' => false,
+		'whatlinksheremessage' => 'insights-wanted-by'
+	];
+
+	public function __construct() {
+		$this->config = new InsightsConfig( self::INSIGHT_TYPE, self::$insightConfig );
+	}
 
 	public function getDataProvider() {
 		return new WantedPagesPage();
 	}
 
-	public function arePageViewsRequired() {
-		return false;
-	}
-
 	public function prepareData( $res ) {
 		$data = [];
+		$itemData = new InsightsItemData();
+
 		$dbr = wfGetDB( DB_SLAVE );
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			if ( $row->title ) {
@@ -30,21 +36,17 @@ class InsightsWantedpagesModel extends InsightsQueryPageModel {
 					continue;
 				}
 
-				$article['link'] = InsightsHelper::getTitleLink( $title, $params );
+				$article['link'] = $itemData->getTitleLink( $title, $params );
 				$article['metadata']['wantedBy'] = [
-					'message' => $this->wlhLinkMessage(),
+					'message' => $this->getConfig()->getWhatLinksHereMessage(),
 					'value' => (int)$row->value,
-					'url' => $this->getWlhUrl( $title ),
+					'url' => $itemData->getWlhUrl( $title ),
 				];
 
 				$data[] = $article;
 			}
 		}
 		return $data;
-	}
-
-	public function getInsightType() {
-		return self::INSIGHT_TYPE;
 	}
 
 	/**

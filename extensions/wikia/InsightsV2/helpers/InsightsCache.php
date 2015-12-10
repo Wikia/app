@@ -3,15 +3,17 @@
 class InsightsCache {
 	const
 		INSIGHTS_MEMC_PREFIX = 'insights',
-		INSIGHTS_MEMC_VERSION = '1.4',
+		INSIGHTS_MEMC_VERSION = '1.5',
 		INSIGHTS_MEMC_TTL = 259200, // Cache for 3 days
 		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData';
 
 	private $memc;
+	private $config;
 
-	public function __construct() {
+	public function __construct( InsightsConfig $config ) {
 		global $wgMemc;
 		$this->memc = $wgMemc;
+		$this->config = $config;
 	}
 
 	public function get( $params ) {
@@ -79,11 +81,11 @@ class InsightsCache {
 	 * @param String $params
 	 * @return String
 	 */
-	public function getMemcKey( $params, $type = '', $cacheParams = '' ) {
+	public function getMemcKey( $params ) {
 		return wfMemcKey(
 			self::INSIGHTS_MEMC_PREFIX,
-			$type,
-			$cacheParams,
+			$this->config->getInsightType(),
+			$this->config->getInsightSubType(),
 			$params,
 			self::INSIGHTS_MEMC_VERSION
 		);

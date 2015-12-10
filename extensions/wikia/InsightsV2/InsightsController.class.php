@@ -26,16 +26,17 @@ class InsightsController extends WikiaSpecialPageController {
 		/**
 		 * @var A slug of a subpage
 		 */
-		$this->subpage = $this->getPar();
+		$this->type = $this->getPar();
+		$this->subtype = $this->request->getVal( 'subtype', null );
 		$this->themeClass = SassUtil::isThemeDark() ? 'insights-dark' : 'insights-light';
 
 		/**
 		 * Check if a user requested a subpage. If the requested subpage
 		 * is unknown redirect them to the landing page.
 		 */
-		if ( InsightsHelper::isInsightPage( $this->subpage ) ) {
+		if ( InsightsHelper::isInsightPage( $this->type ) ) {
 			$this->renderSubpage();
-		} elseif ( !empty( $this->subpage ) ) {
+		} elseif ( !empty( $this->type ) ) {
 			$this->response->redirect( InsightsHelper::getSubpageLocalUrl() );
 		}
 
@@ -59,7 +60,7 @@ class InsightsController extends WikiaSpecialPageController {
 	private function renderSubpage() {
 		$helper = new InsightsHelper();
 
-		$this->model = $helper->getInsightModel( $this->subpage );
+		$this->model = $helper->getInsightModel( $this->type, $this->subtype );
 		/**
 		 * A model for insights should implement at least 3 methods:
 		 * - getContent() - returning all the visible data
@@ -68,17 +69,16 @@ class InsightsController extends WikiaSpecialPageController {
 		 */
 		if ( $this->model instanceof InsightsPageModel ) {
 			$params = $this->filterParams( $this->request->getParams() );
-			$this->model->initModel( $params );
 
-			$paginator = new InsightsPaginator( $this->subpage, $params );
+			$paginator = new InsightsPaginator( $this->type, $params );
 			$this->paginatorBar = $paginator->getPagination();
-
 			$content = $this->model->getContent( $params, $paginator->getOffset(), $paginator->getLimit() );
 			$this->setVal( 'content', $content );
 
 			$this->prepareSortingData();
 			$this->renderFlagsFiltering();
-			$this->setVal( 'data', $this->model->getViewData() );
+			$this->setVal( 'showPageViews', $this->model->getConfig()->showPageViews() );
+			$this->setVal( 'hasActions', $this->model->getConfig()->hasActions() );
 			$this->setVal( 'insightsList', $helper->prepareInsightsList() );
 			$this->overrideTemplate( $this->model->getTemplate() );
 		} else {
@@ -95,7 +95,7 @@ class InsightsController extends WikiaSpecialPageController {
 			return;
 		}
 		if ( $this->model instanceof InsightsFlagsModel ) {
-			$flagTypeId = $this->request->getVal( 'flagTypeId' );
+			$flagTypeId = $this->request->getVal( InsightsConfig::SUBTYPE );
 
 			$params = [ 'flag_targeting' => \Flags\Models\FlagType::FLAG_TARGETING_CONTRIBUTORS ];
 			$flagTypes = $this->app->sendRequest( 'FlagsApiController', 'getFlagTypes', $params )->getData()['data'];
@@ -193,7 +193,7 @@ class InsightsController extends WikiaSpecialPageController {
 		$params = $this->getInsightListLinkParams( $subpage );
 		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . $subpage )->plain();
 
-		if ( $model->getLoopNotificationConfig( 'displayFixItMessage' ) ) {
+		if ( $model->getConfig()->displayFix() ) {
 			$params['fixItMessage'] = wfMessage( 'insights-notification-message-fixit' )->plain();
 		}
 
@@ -211,7 +211,7 @@ class InsightsController extends WikiaSpecialPageController {
 	private function getNotFixedNotificationParams( $subpage, Title $title, InsightsQueryPageModel $model ) {
 		$params = $this->getInsightListLinkParams( $subpage );
 
-		if ( $model->getLoopNotificationConfig( 'displayFixItMessage' ) ) {
+		if ( $model->getConfig()->displayFix() ) {
 			$params = array_merge( $params, $this->getInsightFixItParams( $title, $model ) );
 		}
 
@@ -305,8 +305,10 @@ class InsightsController extends WikiaSpecialPageController {
 	private function prepareSortingData() {
 		$dropdown = [];
 
-		if( $this->model->arePageViewsRequired() ) {
-			$sort = $this->request->getVal( 'sort', $this->model->getDefaultSorting() );
+		if( $this->model->getConfig()->showPageViews() ) {
+			$sort = $this->request->getVal( 'sort', ( new InsightsSorting( $this->model->getConfig() ) )->getDefaultSorting() );
+
+			$sortingTypes = InsightsSorting::$sorting;
 
 			/**
 			 * Used to create the following messages:
@@ -316,13 +318,13 @@ class InsightsController extends WikiaSpecialPageController {
 			 * 'insights-list-pvDiff',
 			 * 'insights-list-title'
 			 */
-			foreach ( $this->model->sorting as $key => $sorting ) {
+			foreach ( $sortingTypes as $key => $sorting ) {
 				$dropdown[ $key ] = wfMessage( 'insights-sort-' . $key )->escaped();
 			}
 
 			$this->current = $sort;
-			$this->metadata = isset( $this->model->sorting[ $sort ]['metadata'] )
-				? $this->model->sorting[ $sort ]['metadata']
+			$this->metadata = isset( $sortingTypes[ $sort ]['metadata'] )
+				? $sortingTypes[ $sort ]['metadata']
 				: $sort;
 		}
 

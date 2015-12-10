@@ -5,52 +5,23 @@
  */
 abstract class InsightsQueryPageModel extends InsightsPageModel {
 
-	protected
-		$queryPageInstance;
-
-	public
-		$loopNotificationConfig = [
-			'displayFixItMessage' => true,
-		];
+	protected $queryPageInstance;
 
 	abstract function getDataProvider();
-
-	public function getInsightCacheParams() {
-		return null;
-	}
 
 	/**
 	 * @return QueryPage An object of a QueryPage's child class
 	 */
 	protected function getQueryPageInstance() {
-		return $this->queryPageInstance;
-	}
+		if ( empty( $this->queryPageInstance ) ) {
+			$this->queryPageInstance = $this->getDataProvider();
+		}
 
-	public function wlhLinkMessage() {
-		return 'insights-wanted-by';
+		return $this->queryPageInstance;
 	}
 
 	public function purgeCacheAfterUpdateTask() {
 		return true;
-	}
-
-	public function initModel( $params ) {
-		$this->queryPageInstance = $this->getDataProvider();
-	}
-
-	/**
-	 * Returns a whole config for loop notification mechanism or its single property
-	 * @param string $singleProperty
-	 * @return string|array
-	 */
-	public function getLoopNotificationConfig( $singleProperty = '' ) {
-		if ( !empty( $singleProperty )
-			&& isset( $this->loopNotificationConfig[$singleProperty] )
-		) {
-			return $this->loopNotificationConfig[$singleProperty];
-		}
-
-		return $this->loopNotificationConfig;
 	}
 
 	/**
@@ -60,17 +31,17 @@ abstract class InsightsQueryPageModel extends InsightsPageModel {
 	 * @return Mixed|null An array with data of articles i.e. title, url, metadata etc.
 	 */
 	public function fetchArticlesData() {
-		$cacheKey = ( new InsightsCache() )->getMemcKey( InsightsCache::INSIGHTS_MEMC_ARTICLES_KEY, $this->getInsightType(), $this->getInsightCacheParams() );
+		$cacheKey = ( new InsightsCache( $this->getConfig() ) )->getMemcKey( InsightsCache::INSIGHTS_MEMC_ARTICLES_KEY );
 		$articlesData = WikiaDataAccess::cache( $cacheKey, InsightsCache::INSIGHTS_MEMC_TTL, function () {
 			$articlesData = [];
 
-			$res = $this->queryPageInstance->doQuery();
+			$res = $this->getQueryPageInstance()->doQuery();
 
 			if ( $res->numRows() > 0 ) {
 				$articlesData = $this->prepareData( $res );
 
-				if ( $this->arePageViewsRequired() ) {
-					$articlesData = ( new InsightsPageViews() )->assignPageViewsData( $articlesData );
+				if ( $this->getConfig()->showPageViews() ) {
+					$articlesData = ( new InsightsPageViews( $this->getConfig() ) )->assignPageViewsData( $articlesData );
 				}
 			}
 

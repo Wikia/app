@@ -70,7 +70,6 @@ class InsightsCountService extends WikiaService {
 		 * Use a regular fetchArticleData method from a given class
 		 */
 		$subpageModel = new $className;
-		$subpageModel->initModel( [] );
 		return count( $subpageModel->fetchArticlesData() );
 	}
 
