@@ -36,9 +36,9 @@ class InfoIconTemplate {
 	private static function makeIconLink( $image ) {
 		$link = '';
 		$title = Title::newFromText( $image );
-		if ( $title ) {
+		if ( $title && $title->exists() ) {
 			$file = wfFindFile( $title );
-			if ( $file ) {
+			if ( $file && $file->exists() ) {
 				$link = Linker::makeImageLink2(
 					$title,
 					$file,
