@@ -79,10 +79,6 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 			return self::TEMPLATE_INFOBOX;
 		}
 
-		if ( !in_array( $type, self::$templateTypes ) ) {
-			return self::TEMPLATE_UNCLASSIFIED;
-		}
-
 		return $type;
 	}
 
