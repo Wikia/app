@@ -41,16 +41,13 @@ class Factory
 		$service = (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\Search\MediaWikiService' );
 
 		$host = $service->getGlobalWithDefault( 'SolrHost', 'localhost' );
-		$port = $service->getGlobalWithDefault( 'SolrPort', 8180 );
-
-		if ( $forceMaster ) {
-			$host = "search-master.service.sjc.consul";
-		}
+		$masterHost = $service->getGlobalWithDefault( 'SolrMaster', 'localhost' );
+		$port = $service->getGlobalWithDefault( 'SolrPort', 8983 );
 
 		$solariumConfig = [
 			'adapter' => 'Solarium_Client_Adapter_Curl',
 			'adapteroptions' => [
-				'host'    => $host,
+				'host'    => $forceMaster ? $masterHost : $host,
 				'port'    => $port,
 				'path'    => '/solr/',
 			]
