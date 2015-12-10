@@ -23,6 +23,7 @@ class TemplateClassificationService {
 	const TEMPLATE_QUOTE = 'quote';
 	const TEMPLATE_REFERENCES = 'reference';
 	const TEMPLATE_UNKNOWN = 'unknown';
+	const TEMPLATE_DIRECTLY_USED = 'directlyused';
 	const TEMPLATE_UNCLASSIFIED = '' ;
 
 	const NOT_AVAILABLE = 'not-available';

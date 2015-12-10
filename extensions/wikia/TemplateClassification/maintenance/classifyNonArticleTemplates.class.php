@@ -83,7 +83,7 @@ class ClassifyNonArticleTemplates extends Maintenance {
 
 			if ( $isFirstLevel ) {
 				$this->out( "{$templateTitle} - First level inclusion found in {$pageId}!" );
-				$type = self::TEMPLATE_TYPE_DIRECTLY_USED;
+				$type = TemplateClassificationService::TEMPLATE_DIRECTLY_USED;
 			} else {
 				$this->out( "{$templateTitle} is just a nested template! Classify it as nonarticle!" );
 				$type = TemplateClassificationService::TEMPLATE_NOT_ART;
