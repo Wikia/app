@@ -19,6 +19,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		modalMode,
 		newTypeModes = ['addTemplate', 'addTypeBeforePublish'],
 		preselectedType,
+		isAutoClassified,
 		saveHandler = falseFunction,
 		typeGetter = falseFunction,
 		track = tracker.buildTrackingFunction({
@@ -31,7 +32,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	/**
 	 * @param {function} typeGetterProvided Method that should return type in json format,
 	 *  	also can return a promise that will return type
-	 *  	eg. return from typeGetterProvided [{type:'exampletype'}]
+	 *  	eg. return from typeGetterProvided [{type:'exampletype', isAutoClassified: bool}]
 	 * @param {function} saveHandlerProvided Method that should handle modal save,
 	 *  	receives {string} selectedType as parameter
 	 */
@@ -97,7 +98,8 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			$classificationForm = $(classificationForm[0]);
 		}
 
-		preselectedType = templateType;
+		preselectedType = templateType.type;
+		isAutoClassified = templateType.isAutoClassified || false;
 
 		// Set modal content
 		setupTemplateClassificationModal(
