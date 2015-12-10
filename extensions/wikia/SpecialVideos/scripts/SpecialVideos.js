@@ -65,6 +65,7 @@ $(function () {
 							'addVideo',
 							// data
 							{
+								token: mw.user.tokens.get('editToken'),
 								url: url
 							},
 							// success callback

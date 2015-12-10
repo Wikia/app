@@ -9,6 +9,8 @@ class VideosController extends WikiaController {
 	 * @responseParam string error - error message
 	 */
 	public function addVideo( ) {
+		$this->checkWriteRequest();
+
 		if ( !$this->wg->User->isLoggedIn() ) {
 			$this->error = wfMsg( 'videos-error-not-logged-in' );
 			return;
