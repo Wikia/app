@@ -10,6 +10,7 @@ class InsightsConfig {
 	private $actions = [];
 	private $type;
 	private $subtype;
+	private $subtypes = [];
 
 	public function __construct( $type, $config = [] ) {
 		$this->type = $type;
@@ -69,5 +70,17 @@ class InsightsConfig {
 
 	public function getInsightSubType() {
 		return $this->subtype;
+	}
+
+	public function hasSubtypes() {
+		return !empty( $this->subtypes );
+	}
+
+	public function setSubtypes( Array $subtypes ) {
+		$this->subtypes = $subtypes;
+	}
+
+	public function getSubtypes() {
+		return $this->subtypes;
 	}
 }

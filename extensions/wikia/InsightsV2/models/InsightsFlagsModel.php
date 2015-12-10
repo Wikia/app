@@ -19,8 +19,9 @@ class InsightsFlagsModel extends InsightsPageModel {
 		}
 
 		self::$insightConfig[InsightsConfig::SUBTYPE] = $subtype;
-
 		$this->config = new InsightsConfig( self::INSIGHT_TYPE, self::$insightConfig );
+
+		$this->config->setSubtypes( $this->getSubTypes() );
 	}
 
 	/**
@@ -97,7 +98,6 @@ class InsightsFlagsModel extends InsightsPageModel {
 	 */
 	private function getPagesByFlagType() {
 		$app = F::app();
-
 		$subtype = $this->getConfig()->getInsightSubType();
 
 		/* Select first type id by default */
@@ -118,6 +118,20 @@ class InsightsFlagsModel extends InsightsPageModel {
 		)->getData()['data'];
 
 		return $flaggedPages;
+	}
+
+	private function getSubTypes() {
+		$subtypes = [];
+		$app = F::app();
+
+		$params = [ 'flag_targeting' => \Flags\Models\FlagType::FLAG_TARGETING_CONTRIBUTORS ];
+		$flagTypes = $app->sendRequest( 'FlagsApiController', 'getFlagTypes', $params )->getData()['data'];
+
+		foreach ( $flagTypes as $type ) {
+			$subtypes[$type['flag_type_id']] = $type['flag_name'];
+		}
+
+		return $subtypes;
 	}
 
 	/**

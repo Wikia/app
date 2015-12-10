@@ -58,7 +58,6 @@ class InsightsLoopController extends WikiaController {
 						$this->setMustacheParams( $params, $isFixed, $type );
 					}
 				}
-
 			}
 		}
 	}

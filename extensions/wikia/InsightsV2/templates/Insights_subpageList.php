@@ -30,8 +30,20 @@
 						<?php endforeach ?>
 					</select>
 				</div>
-				<?php if ( !empty( $flagTypes ) ): // Flags filter dropdown ?>
-					<?= $app->renderView( 'Insights', 'flagsFiltering', [ 'selectedFlagTypeId' => $selectedFlagTypeId, 'flagTypes' => $flagTypes ] ); ?>
+				<?php if ( !empty( $subtypes ) ): // Flags filter dropdown ?>
+					<div class="insights-header-sorting">
+						<form class="insights-sorting-form" method="GET">
+							<label for="sort"><?= wfMessage( 'insights-flags-filter-label' )->escaped(); ?></label>
+							<select class="insights-sorting" name="subtype" onchange="this.form.submit()">
+								<?php
+								foreach ( $subtypes as $id => $type ): ?>
+									<option value="<?= Sanitizer::encodeAttribute( $id ); ?>" <?= $id == $subtype ? 'selected="selected"' : ''; ?>><?= htmlspecialchars( $type ) ?></option>
+									<?php
+								endforeach;
+								?>
+							</select>
+						</form>
+					</div>
 				<?php endif ?>
 			</form>
 		<?php endif ?>

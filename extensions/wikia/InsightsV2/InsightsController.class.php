@@ -39,11 +39,8 @@ class InsightsController extends WikiaSpecialPageController {
 	/**
 	 * Entry point for rendering UI for filtering flags
 	 */
-	public function flagsFiltering() {
-		$selectedFlagTypeId = $this->request->getVal( 'selectedFlagTypeId' );
-		$flagTypes = $this->request->getVal( 'flagTypes' );
-		$this->setVal( 'flagTypes', $flagTypes );
-		$this->setVal( 'selectedFlagTypeId', $selectedFlagTypeId );
+	public function prepareSubtypes() {
+		$this->setVal( 'subtypes', $this->model->getConfig()->getSubtypes() );
 	}
 
 	/**
@@ -69,32 +66,15 @@ class InsightsController extends WikiaSpecialPageController {
 			$this->setVal( 'content', $content );
 
 			$this->prepareSortingData();
-			$this->renderFlagsFiltering();
+			if ( $this->model->getConfig()->hasSubtypes() ) {
+				$this->prepareSubtypes();
+			}
 			$this->setVal( 'showPageViews', $this->model->getConfig()->showPageViews() );
 			$this->setVal( 'hasActions', $this->model->getConfig()->hasActions() );
 			$this->setVal( 'insightsList', $helper->prepareInsightsList() );
 			$this->overrideTemplate( $this->model->getTemplate() );
 		} else {
 			throw new MWException( 'An Insights subpage should implement the InsightsQueryPageModel interface.' );
-		}
-	}
-
-	/**
-	 * Add flags filter to layout
-	 */
-	private function renderFlagsFiltering() {
-		global $wgEnableFlagsExt;
-		if ( !$wgEnableFlagsExt ) {
-			return;
-		}
-		if ( $this->model instanceof InsightsFlagsModel ) {
-			$flagTypeId = $this->request->getVal( InsightsConfig::SUBTYPE );
-
-			$params = [ 'flag_targeting' => \Flags\Models\FlagType::FLAG_TARGETING_CONTRIBUTORS ];
-			$flagTypes = $this->app->sendRequest( 'FlagsApiController', 'getFlagTypes', $params )->getData()['data'];
-			
-			$this->setVal( 'selectedFlagTypeId', $flagTypeId );
-			$this->setVal( 'flagTypes', $flagTypes );
 		}
 	}
 
