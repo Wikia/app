@@ -20,7 +20,7 @@ class InfoIconTemplate {
 		
 		$output = '';
 		foreach ( $images as $image ) {
-					$output .= self::makeIconLink( $image );
+			$output .= self::makeIconLink( $image );
 		}
 		$stripMarker = $parser->insertStripItem( $output );
 		return $stripMarker;
