@@ -26,7 +26,10 @@ define('TemplateClassificationInView', ['jquery', 'mw', 'wikia.nirvana', 'wikia.
 		}
 
 		function getType() {
-			return $typeLabel.data('type');
+			return {
+				type: $typeLabel.data('type'),
+				isAutoClassified: $typeLabel.data('autoclassified')
+			};
 		}
 
 		function sendClassifyTemplateRequest(selectedTemplateType) {
