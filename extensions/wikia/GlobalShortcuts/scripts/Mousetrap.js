@@ -20,7 +20,7 @@
  * @version 1.5.3
  * @url craig.is/killing/mice
  */
-(function(window, document, undefined) {
+define('Mousetrap', ['wikia.window', 'wikia.document'], function (window, document) {
 
 	/**
 	 * mapping of special keycodes to their corresponding keys
@@ -1004,18 +1004,5 @@
 
 	Mousetrap.init();
 
-	// expose mousetrap to the global object
-	window.Mousetrap = Mousetrap;
-
-	// expose as a common js module
-	if (typeof module !== 'undefined' && module.exports) {
-		module.exports = Mousetrap;
-	}
-
-	// expose mousetrap as an AMD module
-	if (typeof define === 'function' && define.amd) {
-		define(function() {
-			return Mousetrap;
-		});
-	}
-}) (window, document);
+	return Mousetrap;
+});
