@@ -18,7 +18,8 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
 	'ext.wikia.adEngine.provider.turtle',
-	require.optional('ext.wikia.adEngine.provider.taboola')
+	require.optional('ext.wikia.adEngine.provider.taboola'),
+	require.optional('ext.wikia.adEngine.lookup.dfpSniffer')
 ], function (
 	// regular dependencies
 	log,
@@ -38,7 +39,9 @@ define('ext.wikia.adEngine.config.desktop', [
 	adProviderRemnantGpt,
 	adProviderSevenOneMedia,
 	adProviderTurtle,
-	adProviderTaboola
+	adProviderTaboola,
+
+	dfpSniffer
 ) {
 	'use strict';
 
@@ -59,7 +62,8 @@ define('ext.wikia.adEngine.config.desktop', [
 	}
 
 	function getProviderList(slotName) {
-		var providerList = [];
+		var providerList = [],
+			hasCampaign = dfpSniffer && dfpSniffer.hasCampaign();
 
 		log('getProvider', 5, logGroup);
 		log(slotName, 5, logGroup);
@@ -125,11 +129,11 @@ define('ext.wikia.adEngine.config.desktop', [
 		}
 
 		// First provider: Turtle, Evolve or Direct GPT?
-		if (context.providers.turtle && adProviderTurtle.canHandleSlot(slotName)) {
+		if (!hasCampaign && context.providers.turtle && adProviderTurtle.canHandleSlot(slotName)) {
 			providerList.push(adProviderTurtle);
-		} else if (context.providers.evolve2 && adProviderEvolve2.canHandleSlot(slotName)) {
+		} else if (!hasCampaign && context.providers.evolve2 && adProviderEvolve2.canHandleSlot(slotName)) {
 			providerList.push(adProviderEvolve2);
-		} else if (evolveCountry && adProviderEvolve.canHandleSlot(slotName)) {
+		} else if (!hasCampaign && evolveCountry && adProviderEvolve.canHandleSlot(slotName)) {
 			providerList.push(adProviderEvolve);
 		} else if (gptEnabled) {
 			providerList.push(adProviderDirectGpt);
