@@ -671,35 +671,35 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'isWikiaMobile' => true,
 				'wgPortableInfoboxCustomImageWidth' => null,
 				'result' => [
-					'height' => 500,
+					'height' => 250,
 					'width' => 270
 				],
 				'description' => 'Regular thumbnail image on mobile with no custom width; logical size = physical size'
 			],
 			[
 				'thumbnailSizes' => [
-					'height' => 250,
+					'height' => 360,
 					'width' => 270
 
 				],
 				'isWikiaMobile' => true,
 				'wgPortableInfoboxCustomImageWidth' => 540,
 				'result' => [
-					'height' => 500,
+					'height' => 360,
 					'width' => 270
 				],
 				'description' => 'Regular thumbnail image on mobile with double custom width; portrait; logical size = physical size'
 			],
 			[
 				'thumbnailSizes' => [
-					'height' => 250,
-					'width' => 270
+					'height' => 270,
+					'width' => 360
 				],
 				'isWikiaMobile' => true,
 				'wgPortableInfoboxCustomImageWidth' => 540,
 				'result' => [
-					'height' => 250,
-					'width' => 270
+					'height' => 270,
+					'width' => 360
 				],
 				'description' => 'Regular thumbnail image on desktop with double custom width; landscape; logical size = physical size'
 			]
