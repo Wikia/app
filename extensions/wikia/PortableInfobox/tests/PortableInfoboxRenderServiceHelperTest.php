@@ -21,7 +21,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 		$fileWidth = isset( $input[ 'fileWidth' ] ) ? $input[ 'fileWidth' ] : null;
 		$fileHeight = isset( $input[ 'fileHeight' ] ) ? $input[ 'fileHeight' ] : null;
 
-		$fileMock = $this->getMockBuilder('File')
+		$fileMock = $this->getMockBuilder( 'File' )
 			->setConstructorArgs( [ 'TestFile' ] )
 			->setMethods( [ 'getWidth', 'getHeight' ] )
 			->getMock();
@@ -35,6 +35,23 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 		$this->mockStaticMethod( 'WikiaFileHelper', 'getFileFromTitle', $fileMock );
 
 		return $fileMock;
+	}
+
+	private function getThumbnailMock( $thumbnailSizes ) {
+		$thumbnailWidth = isset( $thumbnailSizes[ 'width' ] ) ? $thumbnailSizes[ 'width' ] : null;
+		$thumbnailHeight = isset( $thumbnailSizes[ 'height' ] ) ? $thumbnailSizes[ 'height' ] : null;
+
+		$thumbnailMock = $this->getMockBuilder( 'ThumbnailImage' )
+			->setMethods( [ 'getWidth', 'getHeight' ] )
+			->getMock();
+		$thumbnailMock->expects($this->any())
+			->method( 'getWidth' )
+			->will( $this->returnValue( $thumbnailWidth ) );
+		$thumbnailMock->expects($this->any())
+			->method( 'getHeight' )
+			->will( $this->returnValue( $thumbnailHeight ) );
+
+		return $thumbnailMock;
 	}
 
 	/**
@@ -574,6 +591,118 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				],
 				'description' => 'Big image on mobile with custom image width'
 			],
+		];
+	}
+
+	/**
+	 * @desc test getImageSizesToDisplay function. It should return the logical size used to define HTML width and
+	 * height in the output. This allows to differentiate between physical size and logical size, allowing
+	 * to achieve high pereived quality on for example Retina displays.
+	 *
+	 * @param $thumbnailSizes
+	 * @param $isWikiaMobile
+	 * @param $wgPortableInfoboxCustomImageWidth
+	 * @param $result
+	 * @param $description
+	 * @dataProvider testGetImageSizesToDisplayDataProvider
+	 */
+	public function testGetImageSizesToDisplay( $thumbnailSizes, $isWikiaMobile, $wgPortableInfoboxCustomImageWidth, $result, $description ) {
+		$this->mockGlobalVariable('wgPortableInfoboxCustomImageWidth', $wgPortableInfoboxCustomImageWidth);
+		$mock = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper' )
+			->setMethods( [ 'isWikiaMobile' ] )
+			->getMock();
+		$mock->expects( $this->any() )->method( 'isWikiaMobile' )->will( $this->returnValue( $isWikiaMobile ) );
+
+		$thumbnailMock = $this->getThumbnailMock( $thumbnailSizes );
+
+		$this->assertEquals(
+			$result,
+			$mock->getImageSizesToDisplay( $thumbnailMock ),
+			$description
+		);
+	}
+
+	public function testGetImageSizesToDisplayDataProvider() {
+		return [
+			[
+				'thumbnailSizes' => [
+					'height' => 500,
+					'width' => 270
+				],
+				'isWikiaMobile' => false,
+				'wgPortableInfoboxCustomImageWidth' => null,
+				'result' => [
+					'height' => 500,
+					'width' => 270
+				],
+				'description' => 'Regular thumbnail image on desktop with no custom width; logical size = physical size'
+			],
+			[
+				'thumbnailSizes' => [
+					'height' => 1000,
+					'width' => 540
+				],
+				'isWikiaMobile' => false,
+				'wgPortableInfoboxCustomImageWidth' => 540,
+				'result' => [
+					'height' => 500,
+					'width' => 270
+				],
+				'description' => 'Regular thumbnail image on desktop with double custom width; portrait'
+			],
+			[
+				'thumbnailSizes' => [
+					'height' => 500,
+					'width' => 540
+				],
+				'isWikiaMobile' => false,
+				'wgPortableInfoboxCustomImageWidth' => 540,
+				'result' => [
+					'height' => 250,
+					'width' => 270
+				],
+				'description' => 'Regular thumbnail image on desktop with double custom width; landscape'
+			],
+			[
+				'thumbnailSizes' => [
+					'height' => 250,
+					'width' => 270
+				],
+				'isWikiaMobile' => true,
+				'wgPortableInfoboxCustomImageWidth' => null,
+				'result' => [
+					'height' => 500,
+					'width' => 270
+				],
+				'description' => 'Regular thumbnail image on mobile with no custom width; logical size = physical size'
+			],
+			[
+				'thumbnailSizes' => [
+					'height' => 250,
+					'width' => 270
+
+				],
+				'isWikiaMobile' => true,
+				'wgPortableInfoboxCustomImageWidth' => 540,
+				'result' => [
+					'height' => 500,
+					'width' => 270
+				],
+				'description' => 'Regular thumbnail image on mobile with double custom width; portrait; logical size = physical size'
+			],
+			[
+				'thumbnailSizes' => [
+					'height' => 250,
+					'width' => 270
+				],
+				'isWikiaMobile' => true,
+				'wgPortableInfoboxCustomImageWidth' => 540,
+				'result' => [
+					'height' => 250,
+					'width' => 270
+				],
+				'description' => 'Regular thumbnail image on desktop with double custom width; landscape; logical size = physical size'
+			]
 		];
 	}
 }
