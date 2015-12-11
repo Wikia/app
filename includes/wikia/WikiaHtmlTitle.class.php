@@ -19,10 +19,10 @@ class WikiaHtmlTitle {
 	/** @var array - Environment like dev-rychu, sandbox-s4, etc */
 	private $environment;
 
-	/** @var string - The site name to include in the title */
+	/** @var Message|null - The site name to include in the title */
 	private $siteName;
 
-	/** @var string - The brand name to include in the title */
+	/** @var Message - The brand name to include in the title */
 	private $brandName;
 
 	public function __construct() {
@@ -45,7 +45,7 @@ class WikiaHtmlTitle {
 	 * @return String
 	 */
 	public function getBrandName() {
-		return $this->brandName->inContentLanguage()->text();
+		return $this->brandName->inContentLanguage()->escaped();
 	}
 
 	/**
@@ -54,7 +54,7 @@ class WikiaHtmlTitle {
 	 */
 	public function getSiteName() {
 		if ( $this->siteName instanceof Message ) {
-			return $this->siteName->inContentLanguage()->text();
+			return $this->siteName->inContentLanguage()->escaped();
 		}
 
 		return '';
@@ -85,7 +85,7 @@ class WikiaHtmlTitle {
 
 		foreach ( $parts as $part ) {
 			if ( $part instanceof Message ) {
-				$newParts[] = $part->inContentLanguage()->text();
+				$newParts[] = $part->inContentLanguage()->escaped();
 			}
 			if ( is_string( $part ) ) {
 				$newParts[] = $part;

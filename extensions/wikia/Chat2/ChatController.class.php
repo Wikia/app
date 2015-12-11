@@ -28,7 +28,7 @@ class ChatController extends WikiaController {
 
 		// we overwrite here data from redis since it causes a bug DAR-1532
 		$roomName = $wgSitename;
-		$roomTopic = wfMessage( 'chat-default-topic', $wgSitename )->text();
+		$roomTopic = wfMessage( 'chat-default-topic', $wgSitename )->escaped();
 		$this->pageTitle = ( new WikiaHtmlTitle() )->appendBrandName( "$roomName: $roomTopic" );
 
 		$this->chatkey = Chat::echoCookies();
