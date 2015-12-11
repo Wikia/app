@@ -192,6 +192,14 @@ $config['adengine2_amazon_match_js'] = array(
 	),
 );
 
+$config['adengine2_dfp_sniffer_js'] = array(
+	'skin' => [ 'oasis' ],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/lookup/dfpSniffer.js',
+	),
+);
+
 $config['adengine2_ox_bidder_js'] = array(
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,

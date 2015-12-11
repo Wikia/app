@@ -6,6 +6,7 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_ADENGINE_DESKTOP = 'adengine2_desktop_js';
 	const ASSET_GROUP_OASIS_IN_CONTENT_ADS = 'adengine2_oasis_in_content_ads_js';
 	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
+	const ASSET_GROUP_ADENGINE_DFP_SNIFFER = 'adengine2_dfp_sniffer_js';
 	const ASSET_GROUP_ADENGINE_OPENX_BIDDER = 'adengine2_ox_bidder_js';
 	const ASSET_GROUP_ADENGINE_RUBICON_FASTLANE = 'adengine2_rubicon_fastlane_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
@@ -166,6 +167,10 @@ class AdEngine2Hooks {
 
 		if ( AnalyticsProviderAmazonMatch::isEnabled() ) {
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE_AMAZON_MATCH;
+		}
+
+		if ( AnalyticsProviderDfpSniffer::isEnabled() ) {
+			$jsAssets[] = self::ASSET_GROUP_ADENGINE_DFP_SNIFFER;
 		}
 
 		if ( AnalyticsProviderOpenXBidder::isEnabled() ) {
