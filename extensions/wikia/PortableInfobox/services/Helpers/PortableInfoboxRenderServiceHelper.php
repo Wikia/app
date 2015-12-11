@@ -242,6 +242,15 @@ class PortableInfoboxRenderServiceHelper {
 		return [ 'height' => $height, 'width' => $width ];
 	}
 
+	/**
+	 * @desc if it's not a request from mobile skin and wgPortableInfoboxCustomImageWidth
+	 * is set, the $thumbnail->getWidth() can return some big value - we need
+	 * to adjust it to DESKTOP_THUMBNAIL_WIDTH to look good in the infobox.
+	 * Also, the $height have to be adjusted here to make image look good in infobox.
+	 * @param $thumbnail
+	 * @return array width and height which will be displayed i.e. in the width
+	 * and height properties of the img tag
+	 */
 	private function getImageSizesToDisplay( $thumbnail ) {
 		global $wgPortableInfoboxCustomImageWidth;
 
