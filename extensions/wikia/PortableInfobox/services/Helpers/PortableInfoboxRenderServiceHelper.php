@@ -112,11 +112,12 @@ class PortableInfoboxRenderServiceHelper {
 		}
 
 		wfRunHooks( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$ref ] );
+		$dimensions = self::getImageSizesToDisplay( $thumbnail );
 
 		$data[ 'ref' ] = $ref;
-		$data[ 'height' ] = $thumbnail->getHeight();
-		$data[ 'width' ] = $thumbnail->getWidth();
-		$data[ 'thumbnail' ] = $this->getPhysicalSizeThumbUrl( $thumbnail );
+		$data[ 'height' ] = $dimensions[ 'height' ];
+		$data[ 'width' ] = $dimensions[ 'width' ];
+		$data[ 'thumbnail' ] = $thumbnail->getUrl();
 		$data[ 'key' ] = urlencode( $data[ 'key' ] );
 		$data[ 'media-type' ] = $data[ 'isVideo' ] ? 'video' : 'image';
 
@@ -214,40 +215,42 @@ class PortableInfoboxRenderServiceHelper {
 	}
 
 	/**
-	 * @desc return physicalsize thumbnail URL
-	 * @todo Special case for starwars.wikia.com,
-	 * @todo rethink approach to images as a part of https://wikia-inc.atlassian.net/browse/DAT-3075
-	 * @param $thumbnail \MediaTransformOutput
-	 * @return string thumbnail URL
-	 */
-	private function getPhysicalSizeThumbUrl( $thumbnail ) {
-		global $wgPortableInfoboxCustomImageWidth;
-
-		if ( !empty( $wgPortableInfoboxCustomImageWidth ) ) {
-			$file = $thumbnail->file;
-			$height = min( self::MAX_DESKTOP_THUMBNAIL_HEIGHT, $file->getHeight() );
-
-			return $file->createThumb( $wgPortableInfoboxCustomImageWidth, $height );
-
-		} else {
-			return $thumbnail->getUrl();
-		}
-	}
-
-	/**
-	 * @desc get image size according to the width and height limitations:
+	 * @desc get image size to be passed to a thumbnailer.
+	 *
+	 * Return size according to the width and height limitations:
 	 * Height on desktop cannot be bigger than 500px
 	 * Width have to be adjusted to const for mobile or desktop infobox
+	 * if $wgPortableInfoboxCustomImageWidth is set, do not change max height
+	 * and set width to $wgPortableInfoboxCustomImageWidth.
 	 * @param $image
 	 * @return array width and height
 	 */
 	public function getAdjustedImageSize( $image ) {
+		global $wgPortableInfoboxCustomImageWidth;
+
 		if ( $this->isWikiaMobile() ) {
 			$width = self::MOBILE_THUMBNAIL_WIDTH;
 			$height = null;
-		} else {
+		} else if ( empty( $wgPortableInfoboxCustomImageWidth ) ) {
 			$height = min( self::MAX_DESKTOP_THUMBNAIL_HEIGHT, $image->getHeight() );
 			$width = self::DESKTOP_THUMBNAIL_WIDTH;
+		} else {
+			$height = $image->getHeight();
+			$width = $wgPortableInfoboxCustomImageWidth;
+		}
+
+		return [ 'height' => $height, 'width' => $width ];
+	}
+
+	private function getImageSizesToDisplay( $thumbnail ) {
+		global $wgPortableInfoboxCustomImageWidth;
+
+		if ( !$this->isWikiaMobile() && !empty( $wgPortableInfoboxCustomImageWidth ) ) {
+			$width = min( self::DESKTOP_THUMBNAIL_WIDTH, $thumbnail->getWidth() );
+			$height = min( self::MAX_DESKTOP_THUMBNAIL_HEIGHT, $width * $thumbnail->getHeight() / $thumbnail->getWidth());
+		} else {
+			$width = $thumbnail->getWidth();
+			$height = $thumbnail->getHeight();
 		}
 
 		return [ 'height' => $height, 'width' => $width ];
