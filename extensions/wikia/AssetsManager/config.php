@@ -2744,6 +2744,7 @@ $config['globalshortcuts_js'] = [
 		'//extensions/wikia/GlobalShortcuts/scripts/Mousetrap.js',
 		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcuts.js',
 		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcutsHelp.js',
+		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcutsHelpEntryPoint.js',
 	]
 ];
 

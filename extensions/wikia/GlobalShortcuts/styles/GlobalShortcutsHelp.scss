@@ -67,6 +67,16 @@
 
 .global-shortcuts-help-entry-point {
 	box-sizing: content-box;
-	display: inline-block;
+	display: none;
+	padding: 0;
 	vertical-align: middle;
+	width: 23px;
+}
+
+.global-shortcuts-help-entry-point-throbber {
+	display: inline-block;
+	height: 23px;
+	position: relative;
+	vertical-align: middle;
+	width: 25px;
 }
