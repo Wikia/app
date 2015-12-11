@@ -76,8 +76,8 @@ define('PageActions', ['mw'], function (mw) {
 	});
 
 	return {
-		add: add,
 		all: all,
+		add: add,
 		find: find
 	}
 });
