@@ -1226,6 +1226,12 @@ $wgAmazonMatchCountries = null;
 $wgAmazonMatchCountriesMobile = null;
 
 /**
+ * @name $wgAdDriverEnableDfpSniffer
+ * Enables DFP Sniffer
+ */
+$wgAdDriverEnableDfpSniffer = true;
+
+/**
  * @name $wgAdDriverEnableOpenXBidder
  * Enables OpenX bidder
  */

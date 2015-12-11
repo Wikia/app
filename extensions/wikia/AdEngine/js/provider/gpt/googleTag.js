@@ -61,6 +61,13 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	GoogleTag.prototype.init = function (onLoadCallback) {
 		log('init', 'debug', logGroup);
+		window.googletag = window.googletag || {};
+		window.googletag.cmd = window.googletag.cmd || [];
+
+		if (window.googletag.apiReady) {
+			this.initialized = true;
+			this.enableServices();
+		}
 
 		var gads = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
@@ -77,9 +84,6 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		log('Appending GPT script to head', 'debug', logGroup);
 		node.parentNode.insertBefore(gads, node);
-
-		window.googletag = window.googletag || {};
-		window.googletag.cmd = window.googletag.cmd || [];
 
 		this.initialized = true;
 		this.enableServices();

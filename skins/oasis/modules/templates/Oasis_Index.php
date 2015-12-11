@@ -69,6 +69,7 @@
 <?= $comScore ?>
 <?= $quantServe ?>
 <?= $googleAnalytics ?>
+<?= $dfpSniffer ?>
 <?= $amazonMatch ?>
 <?= $openXBidder ?>
 <?= $rubiconFastlane ?>

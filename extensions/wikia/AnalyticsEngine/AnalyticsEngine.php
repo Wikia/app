@@ -43,6 +43,8 @@ class AnalyticsEngine {
 				return new AnalyticsProviderGoogleUA();
 			case 'AmazonMatch':
 				return new AnalyticsProviderAmazonMatch();
+			case 'DfpSniffer':
+				return new AnalyticsProviderDfpSniffer();
 			case 'OpenXBidder':
 				return new AnalyticsProviderOpenXBidder();
 			case 'RubiconFastlane':
