@@ -251,7 +251,7 @@ class PortableInfoboxRenderServiceHelper {
 	 * @return array width and height which will be displayed i.e. in the width
 	 * and height properties of the img tag
 	 */
-	private function getImageSizesToDisplay( $thumbnail ) {
+	public function getImageSizesToDisplay( $thumbnail ) {
 		global $wgPortableInfoboxCustomImageWidth;
 
 		if ( !$this->isWikiaMobile() && !empty( $wgPortableInfoboxCustomImageWidth ) ) {
