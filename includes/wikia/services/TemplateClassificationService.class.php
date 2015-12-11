@@ -79,12 +79,12 @@ class TemplateClassificationService {
 	 * @param int $wikiId
 	 * @param int $pageId
 	 * @param string $templateType
+	 * @param string $origin
 	 * @param string $provider
-	 * @param int $origin
 	 * @throws Exception
 	 * @throws \Swagger\Client\ApiException
 	 */
-	public function classifyTemplate( $wikiId, $pageId, $templateType, $provider, $origin ) {
+	public function classifyTemplate( $wikiId, $pageId, $templateType, $origin, $provider ) {
 		$details = [
 			'provider' => $provider,
 			'origin' => $origin,

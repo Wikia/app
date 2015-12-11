@@ -94,8 +94,8 @@ class ClassifyNonArticleTemplates extends Maintenance {
 						$wgCityId,
 						$templateId,
 						$type,
-						self::NONARTICLE_MAINTENANCE_PROVIDER,
-						$origin
+						$origin,
+						self::NONARTICLE_MAINTENANCE_PROVIDER
 					);
 				} catch ( \Swagger\Client\ApiException $e ) {
 					$this->out( 'Classification failed!' );
