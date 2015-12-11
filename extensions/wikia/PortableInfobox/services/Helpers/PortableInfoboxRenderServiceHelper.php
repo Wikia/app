@@ -116,7 +116,7 @@ class PortableInfoboxRenderServiceHelper {
 		$data[ 'ref' ] = $ref;
 		$data[ 'height' ] = $thumbnail->getHeight();
 		$data[ 'width' ] = $thumbnail->getWidth();
-		$data[ 'thumbnail' ] = $thumbnail->getUrl();
+		$data[ 'thumbnail' ] = $this->getPhysicalSizeThumbUrl( $thumbnail );
 		$data[ 'key' ] = urlencode( $data[ 'key' ] );
 		$data[ 'media-type' ] = $data[ 'isVideo' ] ? 'video' : 'image';
 
@@ -211,6 +211,27 @@ class PortableInfoboxRenderServiceHelper {
 		}
 
 		return false;
+	}
+
+	/**
+	 * @desc return physicalsize thumbnail URL
+	 * @todo Special case for starwars.wikia.com,
+	 * @todo rethink approach to images as a part of https://wikia-inc.atlassian.net/browse/DAT-3075
+	 * @param $thumbnail \MediaTransformOutput
+	 * @return string thumbnail URL
+	 */
+	private function getPhysicalSizeThumbUrl( $thumbnail ) {
+		global $wgPortableInfoboxCustomImageWidth;
+
+		if ( !empty( $wgPortableInfoboxCustomImageWidth ) ) {
+			$file = $thumbnail->file;
+			$height = min( self::MAX_DESKTOP_THUMBNAIL_HEIGHT, $file->getHeight() );
+
+			return $file->createThumb( $wgPortableInfoboxCustomImageWidth, $height );
+
+		} else {
+			return $thumbnail->getUrl();
+		}
 	}
 
 	/**
