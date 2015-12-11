@@ -2746,6 +2746,8 @@ $config['globalshortcuts_js'] = [
 		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcuts.js',
 		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcutsHelp.js',
 		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcutsHelpEntryPoint.js',
+		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcutsSuggestions.js',
+		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcutsSearch.js',
 	]
 ];
 
@@ -2754,5 +2756,6 @@ $config['globalshortcuts_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/GlobalShortcuts/styles/GlobalShortcutsHelp.scss',
+		'//extensions/wikia/GlobalShortcuts/styles/GlobalShortcutsSearch.scss',
 	]
 ];

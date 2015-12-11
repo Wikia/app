@@ -17,7 +17,8 @@ define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions'], function (Mousetra
 			recentChanges: ['g r'],
 			// Local navigation / focus
 			help: ['?'],
-			search: [ 'g s', '/' ]
+			search: [ 'g s', '/' ],
+			actionSearch: [ '.' ]
 		};
 
 	function initShortcut( actionId, key ) {

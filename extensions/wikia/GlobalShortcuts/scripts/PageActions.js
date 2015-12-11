@@ -62,16 +62,24 @@ define('PageActions', ['mw'], function (mw) {
 			$('[accesskey=h]')[0].click();
 		}],
 		'insights': [ 'Open Wikia Insights', function() {
-			e.preventDefault();
 			window.location.href = globalShortcutsConfig.insights;
 		}],
 		'recentChanges': [ 'Recent changes list', function(){
-			e.preventDefault();
 			window.location.href = globalShortcutsConfig.recentChanges;
 		}],
+		'help': [ 'Keyboard shortcuts help', function () {
+			require(['GlobalShortcutsHelp'], function(help) {
+				help.open();
+			});
+		}],
 		'search': [ 'Search for a page', function(){
-			e.preventDefault();
 			$('#searchInput')[0].focus();
+		}],
+		'actionSearch': [ 'Action explorer', function(){
+			require(['GlobalShortcutsSearch'], function(GlobalShortcutsSearch){
+				var searchModal = new GlobalShortcutsSearch();
+				searchModal.open();
+			});
 		}]
 	});
 

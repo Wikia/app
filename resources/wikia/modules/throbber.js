@@ -16,7 +16,7 @@ define('wikia.throbber', ['jquery'], function ($) {
 			elm.find('.wikiaThrobber').remove();
 		},
 		cover: function () {
-			if (!!!$body) {
+			if (!$body) {
 				$body = $('body');
 			}
 			if (!!$body) {
