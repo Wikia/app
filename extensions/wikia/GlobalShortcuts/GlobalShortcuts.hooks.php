@@ -37,4 +37,9 @@ class Hooks {
 		];
 		return true;
 	}
+
+	public function onWikiaHeaderButtons( &$buttons ) {
+		$buttons[] = \F::app()->renderView( 'GlobalShortcuts', 'renderHelpEntryPoint' );
+		return true;
+	}
 }
