@@ -112,10 +112,11 @@ class PortableInfoboxRenderServiceHelper {
 		}
 
 		wfRunHooks( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$ref ] );
+		$dimensions = self::getImageSizesToDisplay( $thumbnail );
 
 		$data[ 'ref' ] = $ref;
-		$data[ 'height' ] = $thumbnail->getHeight();
-		$data[ 'width' ] = $thumbnail->getWidth();
+		$data[ 'height' ] = $dimensions[ 'height' ];
+		$data[ 'width' ] = $dimensions[ 'width' ];
 		$data[ 'thumbnail' ] = $thumbnail->getUrl();
 		$data[ 'key' ] = urlencode( $data[ 'key' ] );
 		$data[ 'media-type' ] = $data[ 'isVideo' ] ? 'video' : 'image';
@@ -202,7 +203,7 @@ class PortableInfoboxRenderServiceHelper {
 		$file = \WikiaFileHelper::getFileFromTitle( $title );
 
 		if ( $file ) {
-			$size = $this->getAdjustedImageSize( $file );
+			$size = $this->getImageSizesForThumbnailer( $file );
 			$thumb = $file->transform( $size );
 
 			if ( !is_null( $thumb ) && !$thumb->isError() ) {
@@ -214,19 +215,51 @@ class PortableInfoboxRenderServiceHelper {
 	}
 
 	/**
-	 * @desc get image size according to the width and height limitations:
+	 * @desc get image size to be passed to a thumbnailer.
+	 *
+	 * Return size according to the width and height limitations:
 	 * Height on desktop cannot be bigger than 500px
 	 * Width have to be adjusted to const for mobile or desktop infobox
+	 * if $wgPortableInfoboxCustomImageWidth is set, do not change max height
+	 * and set width to $wgPortableInfoboxCustomImageWidth.
 	 * @param $image
 	 * @return array width and height
 	 */
-	public function getAdjustedImageSize( $image ) {
+	public function getImageSizesForThumbnailer( $image ) {
+		global $wgPortableInfoboxCustomImageWidth;
+
 		if ( $this->isWikiaMobile() ) {
 			$width = self::MOBILE_THUMBNAIL_WIDTH;
 			$height = null;
-		} else {
+		} else if ( empty( $wgPortableInfoboxCustomImageWidth ) ) {
 			$height = min( self::MAX_DESKTOP_THUMBNAIL_HEIGHT, $image->getHeight() );
 			$width = self::DESKTOP_THUMBNAIL_WIDTH;
+		} else {
+			$height = $image->getHeight();
+			$width = $wgPortableInfoboxCustomImageWidth;
+		}
+
+		return [ 'height' => $height, 'width' => $width ];
+	}
+
+	/**
+	 * @desc if it's not a request from mobile skin and wgPortableInfoboxCustomImageWidth
+	 * is set, the $thumbnail->getWidth() can return some big value - we need
+	 * to adjust it to DESKTOP_THUMBNAIL_WIDTH to look good in the infobox.
+	 * Also, the $height have to be adjusted here to make image look good in infobox.
+	 * @param $thumbnail
+	 * @return array width and height which will be displayed i.e. in the width
+	 * and height properties of the img tag
+	 */
+	public function getImageSizesToDisplay( $thumbnail ) {
+		global $wgPortableInfoboxCustomImageWidth;
+
+		if ( !$this->isWikiaMobile() && !empty( $wgPortableInfoboxCustomImageWidth ) ) {
+			$width = min( self::DESKTOP_THUMBNAIL_WIDTH, $thumbnail->getWidth() );
+			$height = min( self::MAX_DESKTOP_THUMBNAIL_HEIGHT, $width * $thumbnail->getHeight() / $thumbnail->getWidth());
+		} else {
+			$width = $thumbnail->getWidth();
+			$height = $thumbnail->getHeight();
 		}
 
 		return [ 'height' => $height, 'width' => $width ];
