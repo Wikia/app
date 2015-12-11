@@ -20,6 +20,10 @@ $wgExtensionCredits['other'][] = [
 	'descriptionmsg'    => 'global-shortcuts-description',
 ];
 
+/**
+ * Controllers
+ */
+$wgAutoloadClasses['GlobalShortcutsController'] = __DIR__ . '/GlobalShortcutsController.class.php';
 
 /**
  * Hooks

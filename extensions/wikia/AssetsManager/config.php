@@ -2743,5 +2743,14 @@ $config['globalshortcuts_js'] = [
 	'assets' => [
 		'//extensions/wikia/GlobalShortcuts/scripts/Mousetrap.js',
 		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcuts.js',
+		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcutsHelp.js',
+	]
+];
+
+$config['globalshortcuts_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/GlobalShortcuts/styles/GlobalShortcutsHelp.scss',
 	]
 ];

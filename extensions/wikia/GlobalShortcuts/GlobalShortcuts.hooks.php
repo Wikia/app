@@ -23,6 +23,7 @@ class Hooks {
 	 */
 	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		\Wikia::addAssetsToOutput( 'globalshortcuts_js' );
+		\Wikia::addAssetsToOutput( 'globalshortcuts_scss' );
 		return true;
 	}
 

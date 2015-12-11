@@ -15,10 +15,18 @@ define('GlobalShortcuts', ['Mousetrap', 'mw'], function (Mousetrap, mw) {
 		insights: 'g i',
 		recentChanges: 'g r',
 		// Local navigation / focus
+		help: '?',
 		search: 'g s',
 		search1: '/'
 	};
 	function Init() {
+		var globalShortcutsConfig = mw.config.get('globalShortcutsConfig');
+		// Help
+		Mousetrap.bind(shortcuts.help, function () {
+			require(['GlobalShortcutsHelp'],function (help) {
+				help.open();
+			});
+		});
 		// Actions
 		Mousetrap.bind(shortcuts.edit, function () {
 			$('#ca-edit')[0].click();
@@ -61,11 +69,11 @@ define('GlobalShortcuts', ['Mousetrap', 'mw'], function (Mousetrap, mw) {
 		});
 		Mousetrap.bind(shortcuts.insights, function (e) {
 			e.preventDefault();
-			window.location.href = mw.config.get('globalshortcuts').insights;
+			window.location.href = globalShortcutsConfig.insights;
 		});
 		Mousetrap.bind(shortcuts.recentChanges, function (e) {
 			e.preventDefault();
-			window.location.href = mw.config.get('globalshortcuts').recentChanges;
+			window.location.href = globalShortcutsConfig.recentChanges;
 		});
 	}
 	return new Init();
