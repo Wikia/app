@@ -9,6 +9,8 @@
 	<? if ( $displayHeaderButtons ) : ?>
 		<div class="buttons">
 			<?= $app->renderView( 'ContributeMenu', 'Index' ) ?>
+			<?= // TODO Add only when GlobalShortcuts enabled
+			$app->renderView( 'GlobalShortcuts', 'renderHelpEntryPoint' ) ?>
 		</div>
 	<? endif ?>
 	<div class="hiddenLinks">

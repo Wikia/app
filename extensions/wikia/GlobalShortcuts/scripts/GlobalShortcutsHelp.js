@@ -71,7 +71,10 @@ define('GlobalShortcutsHelp', ['mw', 'wikia.nirvana'], function (mw, nirvana) {
 	return new Init();
 });
 
-require(['jquery', 'GlobalShortcuts'], function ($, gs) {
+require(['GlobalShortcutsHelp'], function (gs) {
 	'use strict';
-	$(gs);
+	function oneTimeInit() {
+		$('.global-shortcuts-help-entry-point').click(gs.open);
+	}
+	$(oneTimeInit);
 });
