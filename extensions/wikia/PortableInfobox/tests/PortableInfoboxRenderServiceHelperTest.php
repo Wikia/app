@@ -389,7 +389,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @desc test getAdjustedImageSize function. It should return the sizes we pass to transform function,
+	 * @desc test getImageSizesForThumbnailer function. It should return the sizes we pass to transform function,
 	 * not the sizes we want image to have. transform adjusts the correct sizes,
 	 * that is creates thumbnail with sizes not bigger than passed, keeping the original aspect ratio.
 	 *
@@ -398,9 +398,9 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	 * @param $wgPortableInfoboxCustomImageWidth
 	 * @param $result
 	 * @param $description
-	 * @dataProvider testGetAdjustedImageSizeDataProvider
+	 * @dataProvider testGetImageSizesForThumbnailerDataProvider
 	 */
-	public function testGetAdjustedImageSize( $mockParams, $isWikiaMobile, $wgPortableInfoboxCustomImageWidth, $result, $description ) {
+	public function testGetImageSizesForThumbnailer( $mockParams, $isWikiaMobile, $wgPortableInfoboxCustomImageWidth, $result, $description ) {
 		$this->mockGlobalVariable('wgPortableInfoboxCustomImageWidth', $wgPortableInfoboxCustomImageWidth);
 		$mock = $this->getMockBuilder( 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper' )
 			->setMethods( [ 'isWikiaMobile' ] )
@@ -411,12 +411,12 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 
 		$this->assertEquals(
 			$result,
-			$mock->getAdjustedImageSize( $file ),
+			$mock->getImageSizesForThumbnailer( $file ),
 			$description
 		);
 	}
 
-	public function testGetAdjustedImageSizeDataProvider() {
+	public function testGetImageSizesForThumbnailerDataProvider() {
 		return [
 			[
 				'mockParams' => [

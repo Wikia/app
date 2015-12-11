@@ -203,7 +203,7 @@ class PortableInfoboxRenderServiceHelper {
 		$file = \WikiaFileHelper::getFileFromTitle( $title );
 
 		if ( $file ) {
-			$size = $this->getAdjustedImageSize( $file );
+			$size = $this->getImageSizesForThumbnailer( $file );
 			$thumb = $file->transform( $size );
 
 			if ( !is_null( $thumb ) && !$thumb->isError() ) {
@@ -225,7 +225,7 @@ class PortableInfoboxRenderServiceHelper {
 	 * @param $image
 	 * @return array width and height
 	 */
-	public function getAdjustedImageSize( $image ) {
+	public function getImageSizesForThumbnailer( $image ) {
 		global $wgPortableInfoboxCustomImageWidth;
 
 		if ( $this->isWikiaMobile() ) {
