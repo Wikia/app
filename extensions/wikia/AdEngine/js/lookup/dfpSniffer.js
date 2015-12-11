@@ -24,6 +24,8 @@ define('ext.wikia.adEngine.lookup.dfpSniffer', [
 			slotDiv.setAttribute('data-gpt-creative-id', ad.creativeId || 'null');
 			if (hasCampaign()) {
 				log('DFP campaign detected', 'info', logGroup);
+			} else {
+				log('DFP campaign NOT detected', 'info', logGroup);
 			}
 		}
 	}
@@ -58,21 +60,21 @@ define('ext.wikia.adEngine.lookup.dfpSniffer', [
 
 	function defineSlot() {
 		var adUnitId = [
-			'/5441',
-			'wka.' + params.getSite(),
-			params.getMappedVertical(),
-			'',
-			params.getPageType(),
-			'gpt',
-			slotName
-		].join('/');
+				'/5441',
+				'wka.' + params.getSite(),
+				params.getMappedVertical(),
+				'',
+				params.getPageType(),
+				'gpt',
+				slotName
+			].join('/');
 
 		win.googletag.cmd.push(function () {
 			var slot = win.googletag.defineOutOfPageSlot(adUnitId, slotName);
 
 			slot.addService(pubAds);
-			slot.setTargeting('s1', '_adtest');
-			slot.setTargeting('artid', '2135');
+			slot.setTargeting('s1', params.getMappedVertical());
+			slot.setTargeting('artid', win.ads.context.targeting.pageArticleId);
 			slot.setTargeting('src', 'sniffer');
 			win.googletag.display(slotName);
 			pubAds.refresh([slot]);
