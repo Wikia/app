@@ -66,7 +66,7 @@ class ThemeDesignerController extends WikiaController {
 
 		$this->globalVariablesScript = $ret;
 
-		$pageTitle = wfMsg( 'themedesigner-title' );
+		$pageTitle = wfMessage( 'themedesigner-title' );
 		$this->pageTitle = ( new WikiaHtmlTitle() )->setParts( [ $pageTitle ] )->getTitle();
 
 		wfProfileOut( __METHOD__ );
