@@ -2736,3 +2736,12 @@ $config['polldaddy_tag_wikiamobile'] = [
 		'//extensions/wikia/PolldaddyTag/scripts/wikiamobile.js'
 	]
 ];
+
+$config['globalshortcuts_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/GlobalShortcuts/scripts/Mousetrap.js',
+		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcuts.js',
+	]
+];
