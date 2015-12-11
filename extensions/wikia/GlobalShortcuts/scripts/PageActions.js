@@ -1,4 +1,4 @@
-define('PageActions', ['wikia.mw'], function (mw) {
+define('PageActions', ['mw'], function (mw) {
 	'use strict';
 
 	var globalShortcutsConfig = mw.config.get('globalShortcutsConfig');
@@ -13,7 +13,7 @@ define('PageActions', ['wikia.mw'], function (mw) {
 	}
 
 	function add( id, caption, action ) {
-		var o = new PageAction(id,caption,weight,action);
+		var o = new PageAction(id,caption,action);
 		if (id in byId) {
 			throw new Error('Could not register more than one action with the same ID: ' + id);
 		}
@@ -35,13 +35,13 @@ define('PageActions', ['wikia.mw'], function (mw) {
 
 	// default actions
 	addMany({
-		'delete': ['Delete page', LOW, function(){
+		'delete': ['Delete page', function(){
 			$('[accesskey=d]')[0].click();
 		}],
-		'edit': ['Edit page', HIGH, function(){
+		'edit': ['Edit page', function(){
 			$('#ca-edit')[0].click();
 		}],
-		'flag': ['Change page flags', HIGH, function(){
+		'flag': ['Change page flags', function(){
 			$('#ca-flags')[0].click();
 		}],
 		'move': [ 'Move page', function() {

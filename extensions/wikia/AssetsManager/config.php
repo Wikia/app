@@ -2742,6 +2742,7 @@ $config['globalshortcuts_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/GlobalShortcuts/scripts/Mousetrap.js',
+		'//extensions/wikia/GlobalShortcuts/scripts/PageActions.js',
 		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcuts.js',
 		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcutsHelp.js',
 		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcutsHelpEntryPoint.js',
