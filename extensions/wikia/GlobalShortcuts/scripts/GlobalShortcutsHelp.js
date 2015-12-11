@@ -2,11 +2,10 @@ define('GlobalShortcutsHelp', ['mw', 'wikia.nirvana', 'wikia.throbber'], functio
 	'use strict';
 
 	function Init() {
-		var modalConfig,
-			$body = $('body');
+		var modalConfig;
 
 		function open() {
-			throbber.cover($body);
+			throbber.cover();
 			$.when(
 				getHelp()
 			).done(handleRequestsForModal);
@@ -49,7 +48,7 @@ define('GlobalShortcutsHelp', ['mw', 'wikia.nirvana', 'wikia.throbber'], functio
 		function processInstance(modalInstance) {
 			/* Show the modal */
 			modalInstance.show();
-			throbber.remove($body);
+			throbber.uncover();
 		}
 
 		function setupTemplateClassificationModal(content) {
