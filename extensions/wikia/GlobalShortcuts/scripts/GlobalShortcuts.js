@@ -2,21 +2,44 @@ define('GlobalShortcuts', ['Mousetrap', 'mw'], function (Mousetrap, mw) {
 	'use strict';
 
 	var shortcuts = {
-		recentChanges: 'g r',
-		insights: 'g i',
+		// Actions
+		delete: 'd',
 		edit: 'e',
+		flag: 'f',
+		move: 'm',
 		startWikia: 's',
+		classify: 'k',
+		// Global navigation
+		discussions: 'g d',
+		history: 'g h',
+		insights: 'g i',
+		recentChanges: 'g r',
+		// Local navigation / focus
 		search: 'g s',
 		search1: '/'
 	};
 	function Init() {
 		// Actions
 		Mousetrap.bind(shortcuts.edit, function () {
-			console.log('Mousetrap');
 			$('#ca-edit')[0].click();
+		});
+		Mousetrap.bind(shortcuts.flag, function () {
+			$('#ca-flags')[0].click();
+		});
+		Mousetrap.bind(shortcuts.delete, function () {
+			$('[accesskey=' + shortcuts.delete + ']')[0].click();
+		});
+		Mousetrap.bind(shortcuts.move, function () {
+			$('[accesskey=' + shortcuts.move + ']')[0].click();
 		});
 		Mousetrap.bind(shortcuts.startWikia, function () {
 			$('[data-id=start-wikia]')[0].click();
+		});
+		// TODO add conditional shortcuts
+		Mousetrap.bind(shortcuts.classify, function () {
+			require(['TemplateClassificationModal'], function shortcutOpenTemplateClassification(tc) {
+				tc.open();
+			});
 		});
 
 		// Local navigation / focus
@@ -30,6 +53,12 @@ define('GlobalShortcuts', ['Mousetrap', 'mw'], function (Mousetrap, mw) {
 		});
 
 		// Global navigation
+		Mousetrap.bind(shortcuts.discussions, function () {
+			window.location.href = mw.config.get('location').origin + '/d';
+		});
+		Mousetrap.bind(shortcuts.history, function () {
+			$('[accesskey=h]')[0].click();
+		});
 		Mousetrap.bind(shortcuts.insights, function (e) {
 			e.preventDefault();
 			window.location.href = mw.config.get('globalshortcuts').insights;
