@@ -247,7 +247,7 @@ class PortableInfoboxRenderServiceHelper {
 	 * is set, the $thumbnail->getWidth() can return some big value - we need
 	 * to adjust it to DESKTOP_THUMBNAIL_WIDTH to look good in the infobox.
 	 * Also, the $height have to be adjusted here to make image look good in infobox.
-	 * @param $thumbnail
+	 * @param $thumbnail \MediaTransformOutput
 	 * @return array width and height which will be displayed i.e. in the width
 	 * and height properties of the img tag
 	 */
@@ -255,13 +255,30 @@ class PortableInfoboxRenderServiceHelper {
 		global $wgPortableInfoboxCustomImageWidth;
 
 		if ( !$this->isWikiaMobile() && !empty( $wgPortableInfoboxCustomImageWidth ) ) {
-			$width = min( self::DESKTOP_THUMBNAIL_WIDTH, $thumbnail->getWidth() );
-			$height = min( self::MAX_DESKTOP_THUMBNAIL_HEIGHT, $width * $thumbnail->getHeight() / $thumbnail->getWidth());
+			if ( $this->isThumbAboveMaxAspectRatio( $thumbnail ) ) {
+				$height = min( self::MAX_DESKTOP_THUMBNAIL_HEIGHT, $thumbnail->getHeight() );
+				$width = min( self::DESKTOP_THUMBNAIL_WIDTH, $height * $thumbnail->getWidth() /
+						$thumbnail->getHeight() );
+			} else {
+				$width = min( self::DESKTOP_THUMBNAIL_WIDTH, $thumbnail->getWidth() );
+				$height = min( self::MAX_DESKTOP_THUMBNAIL_HEIGHT, $width * $thumbnail->getHeight() /
+						$thumbnail->getWidth() );
+			}
 		} else {
 			$width = $thumbnail->getWidth();
 			$height = $thumbnail->getHeight();
 		}
 
 		return [ 'height' => $height, 'width' => $width ];
+	}
+
+	/**
+	 * @desc checks if thumbnail aspect ratio is bigger than max aspect ratio (tall and thin images)
+	 * @param $thumbnail \MediaTransformOutput
+	 * @return bool
+	 */
+	private function isThumbAboveMaxAspectRatio( $thumbnail ) {
+		return $thumbnail->getHeight() / $thumbnail->getWidth() > self::MAX_DESKTOP_THUMBNAIL_HEIGHT /
+			self::DESKTOP_THUMBNAIL_WIDTH;
 	}
 }
