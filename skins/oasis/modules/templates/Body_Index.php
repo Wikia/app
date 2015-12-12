@@ -150,6 +150,8 @@
 					</div>
 				<?php } ?>
 
+				<?= empty( $wg->EnableInternalLinkingExt ) ? '' : $app->renderView( 'InternalLinking', 'Index' ); ?>
+
 				<?php
 				if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
 					if ( !empty( $wg->AdDriverUseMonetizationService ) ) {
