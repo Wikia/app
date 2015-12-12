@@ -1,7 +1,6 @@
 define('GlobalShortcutsSuggestions', ['mw', 'wikia.nirvana', 'PageActions', 'GlobalShortcuts'], function (mw, nirvana, PageActions, GlobalShortcuts) {
 	'use strict';
 
-
 	function GlobalShortcutsSuggestions( $el, closeCb ) {
 		this.$el = $el;
 		this.closeCb = closeCb;
@@ -9,12 +8,15 @@ define('GlobalShortcutsSuggestions', ['mw', 'wikia.nirvana', 'PageActions', 'Glo
 	}
 
 	GlobalShortcutsSuggestions.prototype.suggestions = function() {
-		var ret = { suggestions: [], data: [] };
+		var ret = { suggestions: [], data: [] },
+			formatShortcuts = this.formatShortcuts;
 		PageActions.all.forEach(function(pageAction){
+			var shortcuts = GlobalShortcuts.find(pageAction.id);
 			ret.suggestions.push(pageAction.caption);
 			ret.data.push({
 				actionId: pageAction.id,
-				shortcuts: GlobalShortcuts.find(pageAction.id)
+				shortcuts: shortcuts,
+				html: formatShortcuts(shortcuts)
 			});
 		});
 		console.log('suggestions',ret);
@@ -61,7 +63,7 @@ define('GlobalShortcutsSuggestions', ['mw', 'wikia.nirvana', 'PageActions', 'Glo
 						value.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>') +
 						'</span>';
 					if (data.shortcuts) {
-						out += this.formatShortcuts(data.shortcuts);
+						out += data.html;
 					}
 					console.log(out);
 					return out;
