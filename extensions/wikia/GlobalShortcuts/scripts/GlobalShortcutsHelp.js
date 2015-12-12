@@ -1,34 +1,82 @@
-define('GlobalShortcutsHelp', ['mw', 'wikia.nirvana', 'wikia.throbber'], function (mw, nirvana, throbber) {
-	'use strict';
+define('GlobalShortcutsHelp',
+	['mw', 'wikia.nirvana', 'wikia.mustache', 'wikia.throbber', 'GlobalShortcuts', 'PageActions'],
+	function (mw, nirvana, mustache, throbber, GlobalShortcuts, PageActions) {
+		'use strict';
 
-	function Init() {
-		var modalConfig;
+		var modalConfig,
+			templates = {};
 
 		function open() {
 			throbber.cover();
+
 			$.when(
-				getHelp()
+				loadTemplates()
 			).done(handleRequestsForModal);
 		}
 
-		function getHelp() {
-			return nirvana.sendRequest({
-				controller: 'GlobalShortcuts',
-				method: 'getHelp',
-				type: 'get',
-				format: 'html'
-			});
+		function loadTemplates() {
+			return templates.keyCombination || $.Deferred(function (dfd) {
+					Wikia.getMultiTypePackage({
+						mustache: 'extensions/wikia/GlobalShortcuts/templates/KeyCombination.mustache,' +
+							'extensions/wikia/GlobalShortcuts/templates/GlobalShortcutsController_help.mustache',
+						callback: function (pkg) {
+							templates.keyCombination = pkg.mustache[0];
+							templates.help = pkg.mustache[1];
+							dfd.resolve(templates);
+						}
+					});
+					return dfd.promise();
+				});
 		}
 
-		function handleRequestsForModal(help) {
+		function handleRequestsForModal() {
+			var data = prepareData();
+
 			// Set modal content
 			setupTemplateClassificationModal(
-				help
+				mustache.render(templates.help, {actions: data})
 			);
 			require(['wikia.ui.factory'], function (uiFactory) {
 				/* Initialize the modal component */
 				uiFactory.init(['modal']).then(createComponent);
 			});
+		}
+
+		function prepareData() {
+			var data = [],
+				i = 0;
+			for (var id in GlobalShortcuts.all) {
+					data[i] = {
+						keyCombination: parseShortcut(GlobalShortcuts.all[id]),
+						label: PageActions.find(id).caption
+					};
+				i++;
+			}
+			return data;
+		}
+
+		function parseShortcut(combos) {
+			var comboNum = 0,
+				combosCount,
+				keyCombination = [],
+				keyCombinationHtml = '',
+				keysCount;
+
+			combosCount = combos.length;
+			for (var id in combos) {
+				keyCombination[id] = {combo: combos[id].split(' ')};
+				keysCount = keyCombination[id].combo.length;
+				for (var j = 0; j < keysCount; j++) {
+					keyCombination[id].combo[j] = {
+						'key': keyCombination[id].combo[j],
+						'space': j < keysCount - 1 ? 1 : 0
+					};
+				}
+				keyCombination[id].combo[j - 1].or = comboNum < combosCount - 1 ? 1 : 0;
+				comboNum++;
+			}
+			keyCombinationHtml = mustache.render(templates.keyCombination, {keyCombination:keyCombination});
+			return keyCombinationHtml;
 		}
 
 		/**
@@ -68,7 +116,4 @@ define('GlobalShortcutsHelp', ['mw', 'wikia.nirvana', 'wikia.throbber'], functio
 			open: open
 		};
 	}
-
-	return new Init();
-});
-
+);
