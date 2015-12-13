@@ -97,6 +97,11 @@
 	  	box-sizing: border-box;
 	  	width: 100%;
 	}
+
+	.separate {
+		display: inline-block;
+		padding: 0 10px;
+	}
 }
 
 .global-shortcuts-search-entry-point {

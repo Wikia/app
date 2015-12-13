@@ -2748,6 +2748,7 @@ $config['globalshortcuts_js'] = [
 		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcutsHelpEntryPoint.js',
 		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcutsSuggestions.js',
 		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcutsSearch.js',
+		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcutsRenderKeys.js',
 	]
 ];
 
