@@ -10,14 +10,17 @@ define('GlobalShortcutsSuggestions',
 		}
 
 		GlobalShortcutsSuggestions.prototype.suggestions = function() {
-			var ret = { suggestions: [], data: [] };
+			var ret = [];
 			PageActions.all.forEach(function(pageAction){
 				var shortcuts = GlobalShortcuts.find(pageAction.id);
-				ret.suggestions.push(pageAction.caption);
-				ret.data.push({
-					actionId: pageAction.id,
-					shortcuts: shortcuts,
-					html: RenderKeys.getHtml(shortcuts)
+				ret.push({
+					value: pageAction.caption,
+					data: {
+						actionId: pageAction.id,
+						shortcuts: shortcuts,
+						html: RenderKeys.getHtml(shortcuts),
+						category: pageAction.category
+					}
 				});
 			});
 			return ret;
@@ -26,40 +29,42 @@ define('GlobalShortcutsSuggestions',
 		GlobalShortcutsSuggestions.prototype.init = function() {
 			var autocompleteReEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')',
 					'[', ']', '{', '}', '\\'].join('|\\') + ')', 'g');
-			$.when(
-				mw.loader.use('jquery.autocomplete')
-			).then(function() {
-				this.$el.autocomplete({
-					lookup: this.suggestions(),
-					onSelect: function(value, data, event) {
-						console.log(arguments);
-						var actionId = data.actionId;
-						this.closeCb();
-						PageActions.find(actionId).action();
-					}.bind(this),
-					appendTo: this.$el.parent().next(),
-					maxHeight: 320,
-					selectedClass: 'selected',
-					width: '100%',
-					matchFromStart: false,
-					// Add span around every autocomplete result
-					fnFormatResult: function(value, data, currentInput) {
-						console.log(arguments);
-						var out = '',
-							pattern = '(' + currentInput.replace(autocompleteReEscape, '\\$1') + ')';
-						out += '<span class="label-in-suggestions">' +
-							value.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>') +
-							'</span>';
-						if (data.shortcuts) {
-							out += data.html;
-						}
-						console.log(out);
-						return out;
-					}.bind(this),
-					// BugId:4625 - always send the request even if previous one returned no suggestions
-					skipBadQueries: true
-				});
-			}.bind(this));
+			this.$el.autocomplete2({
+				lookup: this.suggestions(),
+				onSelect: function(suggestion) {
+					console.log(arguments);
+					var actionId = suggestion.data.actionId;
+					this.closeCb();
+					PageActions.find(actionId).action();
+				}.bind(this),
+				onHide: function() {
+					this.onCloseCb();
+				}.bind(this),
+				groupBy: 'category',
+				appendTo: this.$el.parent().next(),
+				maxHeight: 320,
+				minChars: 0,
+				selectedClass: 'selected',
+				width: '100%',
+				preserveInput: true,
+				formatResult: function(suggestion, currentValue) {
+					console.log(arguments);
+					var out = '',
+						pattern = '(' + currentValue.replace(autocompleteReEscape, '\\$1') + ')';
+					out += '<span class="label-in-suggestions">' +
+						suggestion.value.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>') +
+						'</span>';
+					if (suggestion.data.shortcuts) {
+						out += suggestion.data.html;
+					}
+					console.log(out);
+					return out;
+				}.bind(this),
+				// BugId:4625 - always send the request even if previous one returned no suggestions
+				skipBadQueries: true
+			})
+			//	.autocomplete2('getSuggestions','')
+			;
 		};
 
 		return GlobalShortcutsSuggestions;

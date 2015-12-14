@@ -6,10 +6,11 @@ define('PageActions', ['mw'], function (mw) {
 	var all = [],
 		byId = {};
 
-	function PageAction( id, caption, action ) {
+	function PageAction( id, caption, action, category ) {
 		this.id = id;
 		this.caption = caption;
 		this.action = action;
+		this.category = category || 'Other';
 	}
 
 	function add( id, caption, action ) {
