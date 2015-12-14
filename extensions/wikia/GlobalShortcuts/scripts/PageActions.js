@@ -13,6 +13,11 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 
 	function PageAction(id, caption, fn, category, weight) {
 		this.id = id;
+		this.caption = '';
+		this.fn = $.noop;
+		this.category = 'Other';
+		this.categoryWeight = this._calculateCategoryWeight();
+		this.weight = 500;
 		this.update({
 			caption: caption,
 			fn: fn,
@@ -32,23 +37,17 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 		if (!value) {
 			return;
 		}
-		var updateWeight = false;
 		if (key === 'caption') {
 			this.caption = value;
 		} else if (key === 'fn') {
 			this.fn = value;
 		} else if (key === 'category') {
 			this.category = value;
-			updateWeight = true;
+			this.categoryWeight = this._calculateCategoryWeight();
 		} else if (key === 'weight') {
-			this.actionWeight = value;
-			updateWeight = true;
+			this.weight = value;
 		} else {
 			throw new Error('Invalid property for PageAction: ' + key);
-		}
-
-		if (updateWeight) {
-			this.weight = this.actionWeight + this.categoryWeight();
 		}
 	};
 
@@ -56,7 +55,7 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 		this.fn.call(window);
 	};
 
-	PageAction.prototype.categoryWeight = function() {
+	PageAction.prototype._calculateCategoryWeight = function() {
 		if (this.category in CATEGORY_WEIGHTS) {
 			return CATEGORY_WEIGHTS[this.category] * 1000;
 		}
@@ -131,7 +130,7 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 
 	function sortList(pageActions) {
 		var items = pageActions.map(function(pageAction) {
-			return [[pageAction.weight, pageAction.category, pageAction.caption], pageAction];
+			return [[pageAction.categoryWeight, pageAction.category, pageAction.weight, pageAction.caption], pageAction];
 		});
 		items.sort(function(a, b) {
 			for (var i = 0; i < a[0].length; i++) {

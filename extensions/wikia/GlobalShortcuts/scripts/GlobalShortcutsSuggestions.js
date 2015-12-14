@@ -42,7 +42,7 @@ define('GlobalShortcutsSuggestions',
 					PageActions.find(actionId).execute();
 				}.bind(this),
 				onHide: function() {
-					this.close();
+					//this.close();
 				}.bind(this),
 				groupBy: 'category',
 				appendTo: this.$el.parent().next(),
