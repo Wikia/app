@@ -31,6 +31,13 @@ class Hooks {
 	 * Add global JS variables for GlobalShortcuts
 	 */
 	public function onMakeGlobalVariablesScript( array &$vars ) {
+		$actions = [];
+		$this->addDefaultActions($actions);
+
+		wfRunHooks('PageGetActions', [&$actions]);
+		$vars['wgWikiaPageActions'] = $actions;
+
+
 		$vars['globalShortcutsConfig'] = [
 			'insights' => \SpecialPage::getTitleFor( 'Insights' )->getLocalURL(),
 			'recentChanges' => \SpecialPage::getTitleFor( 'RecentChanges' )->getLocalURL()
@@ -42,4 +49,37 @@ class Hooks {
 		$buttons[] = \F::app()->renderView( 'GlobalShortcuts', 'renderHelpEntryPoint' );
 		return true;
 	}
+
+	private function addDefaultActions( &$actions ) {
+		$context = \RequestContext::getMain();
+		$pages = \SpecialPageFactory::getUsablePages( $context->getUser() );
+
+		$groups = [];
+		foreach ( $pages as $page ) {
+			if ( $page->isListed() ) {
+				$group = \SpecialPageFactory::getGroup( $page );
+
+				$groups[$group][] = [
+					'id' => 'special:' . $page->getName(),
+					'caption' => $page->getDescription(),
+					'href' => $page->getTitle()->getFullURL(),
+				];
+			}
+		}
+
+		foreach ($groups as $group => $entries) {
+			$groupName = wfMessage("specialpages-group-$group")->plain();
+			$category = "Special Pages > $groupName";
+			foreach ($entries as $entry) {
+				$actions[] = array_merge($entry,[
+					'category' => $category,
+					]);
+			}
+		}
+
+
+		return true;
+	}
+
+
 }

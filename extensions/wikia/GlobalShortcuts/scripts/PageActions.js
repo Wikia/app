@@ -13,13 +13,32 @@ define('PageActions', ['mw'], function (mw) {
 		this.category = category || 'Other';
 	}
 
-	function add( id, caption, action ) {
-		var o = new PageAction(id,caption,action);
+	function add( id, caption, action, category ) {
+		var o = new PageAction(id,caption,action,category);
 		if (id in byId) {
 			throw new Error('Could not register more than one action with the same ID: ' + id);
 		}
 		all.push(o);
 		byId[id] = o;
+	}
+
+	function addFromDesc( desc ) {
+		var id = desc.id,
+			caption = desc.caption,
+			category = desc.category,
+			action;
+		if (!id||!caption) {
+			console.error('Invalid action description - missing id and/or caption: ',desc);
+		}
+		if (desc.href) {
+			action = function() {
+				window.location.href = desc.href;
+			}
+		}
+		if (!action) {
+			console.error('Invalid action description - missing action specifier: ',desc);
+		}
+		add(id,caption,action,category);
 	}
 
 	function addMany( o ) {
@@ -62,12 +81,6 @@ define('PageActions', ['mw'], function (mw) {
 		'history': [ 'Open page history', function() {
 			$('[accesskey=h]')[0].click();
 		}],
-		'insights': [ 'Open Wikia Insights', function() {
-			window.location.href = globalShortcutsConfig.insights;
-		}],
-		'recentChanges': [ 'Recent changes list', function(){
-			window.location.href = globalShortcutsConfig.recentChanges;
-		}],
 		'help': [ 'Keyboard shortcuts help', function () {
 			require(['GlobalShortcutsHelp'], function(help) {
 				help.open();
@@ -82,6 +95,10 @@ define('PageActions', ['mw'], function (mw) {
 				searchModal.open();
 			});
 		}]
+	});
+
+	(window.wgWikiaPageActions||[]).forEach(function(actionDesc){
+		addFromDesc(actionDesc);
 	});
 
 	return {

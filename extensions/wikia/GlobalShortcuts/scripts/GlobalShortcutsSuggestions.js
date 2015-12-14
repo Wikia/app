@@ -9,6 +9,10 @@ define('GlobalShortcutsSuggestions',
 			this.init();
 		}
 
+		GlobalShortcutsSuggestions.prototype.close = function() {
+			this.closeCb && this.closeCb();
+		};
+
 		GlobalShortcutsSuggestions.prototype.suggestions = function() {
 			var ret = [];
 			PageActions.all.forEach(function(pageAction){
@@ -34,11 +38,11 @@ define('GlobalShortcutsSuggestions',
 				onSelect: function(suggestion) {
 					console.log(arguments);
 					var actionId = suggestion.data.actionId;
-					this.closeCb();
+					this.close();
 					PageActions.find(actionId).action();
 				}.bind(this),
 				onHide: function() {
-					this.onCloseCb();
+					this.close();
 				}.bind(this),
 				groupBy: 'category',
 				appendTo: this.$el.parent().next(),
@@ -48,7 +52,7 @@ define('GlobalShortcutsSuggestions',
 				width: '100%',
 				preserveInput: true,
 				formatResult: function(suggestion, currentValue) {
-					console.log(arguments);
+					//console.log(arguments);
 					var out = '',
 						pattern = '(' + currentValue.replace(autocompleteReEscape, '\\$1') + ')';
 					out += '<span class="label-in-suggestions">' +
@@ -57,7 +61,7 @@ define('GlobalShortcutsSuggestions',
 					if (suggestion.data.shortcuts) {
 						out += suggestion.data.html;
 					}
-					console.log(out);
+					//console.log(out);
 					return out;
 				}.bind(this),
 				// BugId:4625 - always send the request even if previous one returned no suggestions

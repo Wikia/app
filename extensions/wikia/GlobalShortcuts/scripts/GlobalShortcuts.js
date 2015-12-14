@@ -13,8 +13,8 @@ define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions'], function (Mousetra
 			// Global navigation
 			discussions: ['g d'],
 			history: ['g h'],
-			insights: ['g i'],
-			recentChanges: ['g r'],
+			'special:Insights': ['g i'],
+			'special:Recentchanges': ['g r'],
 			// Local navigation / focus
 			help: ['?'],
 			search: [ 'g s', '/' ],
