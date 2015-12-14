@@ -10,6 +10,7 @@
 // register classes
 $wgAutoloadClasses['Wikia\\Security\\CSRFDetector'] = __DIR__ . '/classes/CSRFDetector.class.php';
 $wgAutoloadClasses['Wikia\\Security\\Exception'] = __DIR__ . '/classes/Exception.class.php';
+$wgAutoloadClasses['Wikia\\Security\\Utils'] = __DIR__ . '/classes/Utils.class.php';
 
 // set per-request flags
 $wgHooks['UserMatchEditToken'][] = 'Wikia\\Security\\CSRFDetector::onUserMatchEditToken';
