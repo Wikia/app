@@ -17,16 +17,20 @@ define('ext.wikia.adEngine.lookup.dfpSniffer', [
 
 	function renderEnded(ad) {
 		var slotDiv;
-		if (!ad.isEmpty && ad.slot && ad.slot.getSlotElementId() === slotName) {
-			isCampaignEnabled = !ad.isEmpty && win.campaign && win.campaign.enabled;
+		if (!ad.slot || ad.slot.getSlotElementId() !== slotName) {
+			return;
+		}
+
+		if (!ad.isEmpty) {
+			isCampaignEnabled = win.campaign && win.campaign.enabled;
 			slotDiv = doc.getElementById(slotName);
 			slotDiv.setAttribute('data-gpt-line-item-id', ad.lineItemId || 'null');
 			slotDiv.setAttribute('data-gpt-creative-id', ad.creativeId || 'null');
-			if (hasCampaign()) {
-				log('DFP campaign detected', 'info', logGroup);
-			} else {
-				log('DFP campaign NOT detected', 'info', logGroup);
-			}
+		}
+		if (hasCampaign()) {
+			log('DFP campaign detected', 'info', logGroup);
+		} else {
+			log('DFP campaign NOT detected', 'info', logGroup);
 		}
 	}
 
