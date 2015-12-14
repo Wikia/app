@@ -27,9 +27,9 @@ class ChatController extends WikiaController {
 		$this->roomId = (int) NodeApiClient::getDefaultRoomId();
 
 		// we overwrite here data from redis since it causes a bug DAR-1532
-		$roomName = $wgSitename;
-		$roomTopic = wfMessage( 'chat-default-topic', $wgSitename )->escaped();
-		$this->pageTitle = ( new WikiaHtmlTitle() )->appendBrandName( "$roomName: $roomTopic" );
+		$pageTitle = new WikiaHtmlTitle();
+		$pageTitle->setParts( [ wfMessage( 'chat' ) ] );
+		$this->pageTitle = $pageTitle->getTitle();
 
 		$this->chatkey = Chat::echoCookies();
 		// Set the hostname of the node server that the page will connect to.
