@@ -8,7 +8,7 @@ class SpecialPageViewsController extends WikiaSpecialPageController {
 
 	function __construct() {
 		parent::__construct( self::SPECIALPAGE_NAME );
-		$this->getOutput()->addModules( 'ext.SpecialPageViews' );
+//		$this->getOutput()->addModules( 'ext.SpecialPageViews' );
 	}
 
 	public function execute() {

@@ -15,7 +15,7 @@ define('GlobalShortcutsSuggestions',
 
 		GlobalShortcutsSuggestions.prototype.suggestions = function() {
 			var ret = [];
-			PageActions.all.forEach(function(pageAction){
+			PageActions.sortList(PageActions.all).forEach(function(pageAction){
 				var shortcuts = GlobalShortcuts.find(pageAction.id);
 				ret.push({
 					value: pageAction.caption,
@@ -39,7 +39,7 @@ define('GlobalShortcutsSuggestions',
 					console.log(arguments);
 					var actionId = suggestion.data.actionId;
 					this.close();
-					PageActions.find(actionId).action();
+					PageActions.find(actionId).execute();
 				}.bind(this),
 				onHide: function() {
 					this.close();

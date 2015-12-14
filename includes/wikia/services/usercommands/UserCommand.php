@@ -37,6 +37,14 @@
 			return $this->enabled;
 		}
 
+		public function getCaption() {
+			return $this->caption;
+		}
+
+		public function getHref() {
+			return $this->href;
+		}
+
 		protected $overflow = true;
 		protected $defaultRenderType = 'link';
 

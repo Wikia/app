@@ -4,28 +4,28 @@ define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions'], function (Mousetra
 	var all = {},
 		INITIAL_SHORTCUTS = {
 			// Actions
-			delete: ['d'],
-			edit: ['e'],
-			flag: ['f'],
-			move: ['m'],
-			startWikia: ['s'],
-			classify: ['k'],
+			'page:Delete': ['d'],
+			'page:Edit': ['e'],
+			'page:Flag': ['f'],
+			'page:Move': ['m'],
+			'general:StartWikia': ['s'],
+			'page:Classify': ['k'],
 			// Global navigation
-			discussions: ['g d'],
-			history: ['g h'],
+			'page:Discussions': ['g d'],
+			'page:History': ['g h'],
 			'special:Insights': ['g i'],
 			'special:Recentchanges': ['g r'],
 			// Local navigation / focus
-			help: ['?'],
-			search: [ 'g s', '/' ],
-			actionSearch: [ '.' ]
+			'help:Keyboard': ['?'],
+			'wikia:Search': [ 'g s', '/' ],
+			'help:Actions': [ '.' ]
 		};
 
 	function initShortcut( actionId, key ) {
 		console.log('Installing shortcut "' + key + '" for ' + actionId);
 		Mousetrap.bind(key,function(){
 			console.log('Triggered shortcut "' + key + '" for ' + actionId);
-			PageActions.find(actionId).action();
+			PageActions.find(actionId).execute();
 		});
 	}
 

@@ -32,7 +32,8 @@ class Hooks {
 	 */
 	public function onMakeGlobalVariablesScript( array &$vars ) {
 		$actions = [];
-		$this->addDefaultActions($actions);
+		$this->addCurrentPageActions($actions);
+		$this->addSpecialPageActions($actions);
 
 		wfRunHooks('PageGetActions', [&$actions]);
 		$vars['wgWikiaPageActions'] = $actions;
@@ -50,11 +51,11 @@ class Hooks {
 		return true;
 	}
 
-	private function addDefaultActions( &$actions ) {
+	private function addSpecialPageActions( &$actions ) {
 		$context = \RequestContext::getMain();
 		$pages = \SpecialPageFactory::getUsablePages( $context->getUser() );
 
-		$groups = [];
+		$groups = [ ];
 		foreach ( $pages as $page ) {
 			if ( $page->isListed() ) {
 				$group = \SpecialPageFactory::getGroup( $page );
@@ -67,16 +68,42 @@ class Hooks {
 			}
 		}
 
-		foreach ($groups as $group => $entries) {
-			$groupName = wfMessage("specialpages-group-$group")->plain();
+		foreach ( $groups as $group => $entries ) {
+			$groupName = wfMessage( "specialpages-group-$group" )->plain();
 			$category = "Special Pages > $groupName";
-			foreach ($entries as $entry) {
-				$actions[] = array_merge($entry,[
+			foreach ( $entries as $entry ) {
+				$actions[] = array_merge( $entry, [
 					'category' => $category,
-					]);
+				] );
 			}
 		}
 
+		return true;
+	}
+
+	private function addCurrentPageActions( &$actions ) {
+		$commands = [
+			'page:Follow' => 'PageAction:Follow',
+			'page:History' => 'PageAction:History',
+			'page:Move' => 'PageAction:Move',
+			'page:Delete' => 'PageAction:Delete',
+			'page:Edit' => 'PageAction:Edit',
+			'page:Protect' => 'PageAction:Protect',
+			'page:Whatlinkshere' => 'PageAction:Whatlinkshere',
+		];
+
+		foreach ($commands as $actionId => $command) {
+			$userCommandService = new \UserCommandsService();
+			$pageAction = $userCommandService->get($command);
+			if ($pageAction->isAvailable()) {
+				$actions[] = [
+					'id' => $actionId,
+					'caption' => $pageAction->getCaption(),
+					'href' => $pageAction->getHref(),
+					'category' => 'Current page',
+				];
+			}
+		}
 
 		return true;
 	}
