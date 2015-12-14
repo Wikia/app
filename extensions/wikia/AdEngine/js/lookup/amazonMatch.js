@@ -205,6 +205,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			log('fake getSlotParams - module is not supported in IE8', 'debug', logGroup);
 			return {};
 		},
+		isPrecious: function () {},
 		trackState: function () {
 			log('fake trackState - module is not supported in IE8', 'debug', logGroup);
 		},

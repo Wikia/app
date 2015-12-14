@@ -56,7 +56,18 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.lookup.rubiconFastlane',
 		name = 'rubicon_fastlane',
+		preciousSlots = [],
 		priceMap = {},
+		priceConfig = [
+			{
+				regex: /tier(\d+)$/,
+	 			greaterOrEqual: 500
+			},
+			{
+				regex: /tier(\d+)deals$/,
+				greaterOrEqual: 200
+			}
+		],
 		response = false,
 		rubiconSlots = [],
 		rubiconElementKey = 'rpfl_elemid',
@@ -110,10 +121,25 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		adTracker.track(name + '/lookup_end', priceMap || 'nodata', 0);
 	}
 
+	function checkIfPrecious(slotName, values) {
+		var matches,
+			price;
+		values.forEach(function (value) {
+			priceConfig.forEach(function (config) {
+				matches = value.match(config.regex);
+				price = matches && parseInt(matches[1], 10);
+				if (price >= config.greaterOrEqual) {
+					preciousSlots.push(slotName);
+				}
+			});
+		});
+	}
+
 	function addSlotPrice(slotName, rubiconTargeting) {
 		rubiconTargeting.forEach(function (params) {
 			if (params.key === rubiconTierKey) {
 				priceMap[slotName] = params.values.join(',');
+				checkIfPrecious(slotName, params.values);
 			}
 		});
 	}
@@ -224,9 +250,14 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		return {};
 	}
 
+	function isPrecious(slotName) {
+		return preciousSlots.indexOf(slotName) !== -1;
+	}
+
 	return {
 		call: call,
 		getSlotParams: getSlotParams,
+		isPrecious: isPrecious,
 		trackState: trackState,
 		wasCalled: wasCalled
 	};

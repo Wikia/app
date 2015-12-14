@@ -188,6 +188,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 	return {
 		call: call,
 		getSlotParams: getSlotParams,
+		isPrecious: function () {},
 		trackState: trackState,
 		wasCalled: wasCalled
 	};
