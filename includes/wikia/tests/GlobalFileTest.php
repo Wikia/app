@@ -4,6 +4,7 @@
  * Set of unit tests for GlobalFile class
  *
  * @author macbre
+ * @group GlobalFile
  */
 class GlobalFileTest extends WikiaBaseTest {
 
@@ -45,6 +46,9 @@ class GlobalFileTest extends WikiaBaseTest {
 					return $this->getCurrentInvocation()->callOriginal();
 				}
 			}));
+
+		$this->mockGlobalVariable('wgCityId', $cityId);
+		$this->mockGlobalVariable('wgUploadPath', "http://images.wikia.com/{$path}/images");
 
 		$file = GlobalFile::newFromText('Gzik.jpg', $cityId);
 		$title = $file->getTitle();

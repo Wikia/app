@@ -15,7 +15,7 @@ define('ext.wikia.adEngine.provider.taboola', [
 	'use strict';
 
 	var abGroups = {
-			recovery: abTest.getGroup('PROJECT_43') === 'GROUP_6',
+			recovery: abTest.getGroup('PROJECT_43_TABOOLA') === 'YES',
 			regular: abTest.getGroup('NATIVE_ADS_TABOOLA') === 'YES'
 		},
 		config = instantGlobals.wgAdDriverTaboolaConfig || {},

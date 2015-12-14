@@ -56,7 +56,8 @@ class RecognizedTemplatesProvider {
 		return in_array( $type, [
 			TemplateClassificationService::TEMPLATE_UNKNOWN,
 			TemplateClassificationService::TEMPLATE_UNCLASSIFIED,
-			TemplateClassificationService::TEMPLATE_OTHER
+			TemplateClassificationService::TEMPLATE_OTHER,
+			TemplateClassificationService::TEMPLATE_DIRECTLY_USED,
 		] );
 	}
 

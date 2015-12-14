@@ -737,6 +737,14 @@ $config['wikiamobile_tables_js'] = array(
 	)
 );
 
+$config['wikiamobile_widget_iframe_unwrapper'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => [
+		'//extensions/wikia/WikiaMobile/js/widget_iframe_unwrapper.js'
+	]
+];
+
 $config['mobile_base_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
@@ -2718,5 +2726,13 @@ $config['templates_hq_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/TemplateClassification/styles/SpecialTemplates.scss',
+	]
+];
+
+$config['polldaddy_tag_wikiamobile'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => [
+		'//extensions/wikia/PolldaddyTag/scripts/wikiamobile.js'
 	]
 ];

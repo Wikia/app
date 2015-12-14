@@ -26,6 +26,7 @@ class TemplateClassificationService {
 	const LEGACY_TEMPLATE_REFERENCES = 'reference'; // TODO remove DAT-3568
 	const TEMPLATE_REFERENCES = 'references';
 	const TEMPLATE_SCROLLBOX = 'scrollbox';
+	const TEMPLATE_DIRECTLY_USED = 'directlyused';
 	const TEMPLATE_UNCLASSIFIED = '' ;
 	const TEMPLATE_UNKNOWN = 'unknown';
 
@@ -93,12 +94,12 @@ class TemplateClassificationService {
 	 * @param int $wikiId
 	 * @param int $pageId
 	 * @param string $templateType
+	 * @param string $origin
 	 * @param string $provider
-	 * @param int $origin
 	 * @throws Exception
 	 * @throws \Swagger\Client\ApiException
 	 */
-	public function classifyTemplate( $wikiId, $pageId, $templateType, $provider, $origin ) {
+	public function classifyTemplate( $wikiId, $pageId, $templateType, $origin, $provider ) {
 		$details = [
 			'provider' => $provider,
 			'origin' => $origin,

@@ -86,9 +86,7 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 				] );
 				$review['title'] = $title->getText();
 				$review['wiki'] = $wiki->city_title;
-				$review['wikiArchiveUrl'] = $this->getContext()->getTitle()->getFullURL( [
-					self::PAR => $wikiId,
-				] );
+				$review['wikiArchiveUrl'] = $this->specialPage->getTitle( $wikiId )->getFullURL();
 
 				$review['user'] = User::newFromId( $review['submit_user_id'] )->getName();
 				$review['diff'] = $title->getFullURL( [

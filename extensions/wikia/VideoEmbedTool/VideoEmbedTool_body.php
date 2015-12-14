@@ -190,6 +190,8 @@ class VideoEmbedTool {
 	function insertFinalVideo() {
 		global $wgRequest, $wgContLang;
 
+		$this->checkWriteRequest();
+
 		$id = $wgRequest->getVal( 'id' );
 		$provider = $wgRequest->getVal( 'provider' );
 		$name = urldecode( $wgRequest->getVal( 'name' ) );
@@ -350,5 +352,15 @@ class VideoEmbedTool {
 		$oUploader->setTargetTitle( $videoName );
 
 		return $oUploader->upload( $oTitle );
+	}
+
+	private function checkWriteRequest() {
+		global $wgRequest, $wgUser;
+
+		if ( !$wgRequest->wasPosted()
+			|| !$wgUser->matchEditToken( $wgRequest->getVal( 'token' ) )
+		) {
+			throw new BadRequestException( 'Request must be POSTed and provide a valid edit token.' );
+		}
 	}
 }
