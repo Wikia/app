@@ -45,7 +45,21 @@ define('ext.wikia.adEngine.lookup.services', [
 		addParameters(providerName, slotName, slotTargeting);
 	}
 
+	function isPrecious(slotName) {
+		var i;
+		for (i = 0; i < bidders.length; i += 1) {
+			if (bidders[i] && bidders[i].wasCalled() && bidders[i].isPrecious(slotName)) {
+				log(['isPrecious', slotName, true], 'debug', logGroup);
+				return true;
+			}
+		}
+
+		log(['isPrecious', slotName, false], 'debug', logGroup);
+		return false;
+	}
+
 	return {
-		extendSlotTargeting: extendSlotTargeting
+		extendSlotTargeting: extendSlotTargeting,
+		isPrecious: isPrecious
 	};
 });
