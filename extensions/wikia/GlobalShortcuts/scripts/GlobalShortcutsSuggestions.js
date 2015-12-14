@@ -17,10 +17,9 @@ define('GlobalShortcutsSuggestions',
 				ret.data.push({
 					actionId: pageAction.id,
 					shortcuts: shortcuts,
-					html: RenderKeys.formatShortcuts(shortcuts)
+					html: RenderKeys.getHtml(shortcuts)
 				});
 			});
-			console.log('suggestions',ret);
 			return ret;
 		};
 

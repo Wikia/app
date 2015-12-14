@@ -4,7 +4,7 @@ define('GlobalShortcuts.RenderKeys',
 		'use strict';
 
 		var templates = {},
-			orSeparator = {combo:{or:1}};
+			orSeparator = {or:1};
 
 		function loadTemplates() {
 			return templates.keyCombination || $.Deferred(function (dfd) {
@@ -18,6 +18,8 @@ define('GlobalShortcuts.RenderKeys',
 					return dfd.promise();
 				});
 		}
+		// TODO possible race condition here between require this module
+		// and using getHTML before template is loaded
 		loadTemplates();
 
 		function insertBetween(arr, elem) {
@@ -32,12 +34,20 @@ define('GlobalShortcuts.RenderKeys',
 			return newArr;
 		}
 
-		function formatShortcuts (keyCombinations) {
-			var data = insertBetween(splitKeys(keyCombinations), orSeparator);
+		function getHtml (keyCombinations) {
+			var data;
+			keyCombinations = keyCombinations.map(wrapToArr);
+			// Split combos by or
+			data = insertBetween(keyCombinations, orSeparator);
+			// Split each combo by space
+			data = splitCombosBySpace(data);
+			// Split each combo by plus
+			data = splitCombosByPlus(data);
 
+			data = wrapCombos(data);
 			// Prapare object for mustache
 			for (var key in data) {
-				if (!!data[key].combo[0]) {
+				if (data[key].combo[0]) {
 					data[key].combo = data[key].combo.map(function (key) {
 						switch (key) {
 							case ' ':
@@ -57,22 +67,36 @@ define('GlobalShortcuts.RenderKeys',
 			});
 		}
 
-		function splitKeys(keyCombinations) {
-			return keyCombinations.map(splitComboBySpace);
+		function wrapToArr(item) {
+			return [].concat(item);
 		}
 
-		function splitComboBySpace(singleCombo) {
-			var comboBySpace,
-				comboBySpaceAndPlus;
-			comboBySpace = insertBetween(singleCombo.split(' '), ' ');
-			comboBySpaceAndPlus = splitComboByPlus(comboBySpace);
-
-			// Return object prepared for mustache
-			return {combo: comboBySpaceAndPlus};
+		function splitCombosBySpace(keyCombinations) {
+			var comboBySpaceAndPlus = [];
+			keyCombinations.forEach(function (keys, ind) {
+				if (!keys[0]) {
+					comboBySpaceAndPlus[ind] = keys;
+					return;
+				}
+				comboBySpaceAndPlus[ind] = keys.map(splitComboBySpaceMap);
+			});
+			comboBySpaceAndPlus = flattenOneLevNest(comboBySpaceAndPlus);
+			return comboBySpaceAndPlus;
 		}
 
-		function splitComboByPlus(comboBySpace) {
-			var comboBySpaceAndPlus = comboBySpace.map(splitComboByPlusMap);
+		function splitComboBySpaceMap(singleCombo) {
+			return insertBetween(singleCombo.split(' '), ' ');
+		}
+
+		function splitCombosByPlus(keyCombinations) {
+			var comboBySpaceAndPlus = [];
+			keyCombinations.forEach(function (keys, ind) {
+				if (!keys[0]) {
+					comboBySpaceAndPlus[ind] = keys;
+					return;
+				}
+				comboBySpaceAndPlus[ind] = keys.map(splitComboByPlusMap);
+			});
 			comboBySpaceAndPlus = flattenOneLevNest(comboBySpaceAndPlus);
 			return comboBySpaceAndPlus;
 		}
@@ -80,12 +104,20 @@ define('GlobalShortcuts.RenderKeys',
 			return insertBetween(singleCombo.split('+'), '+');
 		}
 
+		function wrapCombos(combos) {
+			return combos.map(wrapCombo);
+		}
+
+		function wrapCombo(combo) {
+			return {combo:combo};
+		}
+
 		function flattenOneLevNest(arr) {
 			return arr.concat.apply([], arr);
 		}
 
 		return {
-			formatShortcuts: formatShortcuts
+			getHtml: getHtml
 		};
 	}
 );
