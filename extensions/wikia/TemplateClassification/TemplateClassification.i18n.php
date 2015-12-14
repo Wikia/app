@@ -62,7 +62,7 @@ $messages['en'] = array(
 	'template-classification-special-type-header' => 'Template type',
 	'template-classification-special-exception' => 'We are sorry, but something went wrong on our side! Please try again.',
 	'special-templates' => 'Templates',
-	'logentry-templateclassification-tc-changed' => "$1 changed type of $3 from $5 to $4.",
+	'logentry-templateclassification-tc-changed' => '$1 changed type of $3 from $5 to $4.',
 );
 
 $messages['qqq'] = array(
@@ -183,9 +183,13 @@ $messages['de'] = array(
 	'template-classification-entry-point-hint' => 'Hallo $1! Hilf uns bitte dabei, diese Vorlage zu organisieren. Klicke hier und wähle einen Typ aus. [[Hilfe:Vorlagenklassifizierung|Erfahre mehr]].',
 	'template-classification-open-modal-key-tip' => 'Klassifizierungsdialog öffnen ($1+Umschalt+K)',
 	'template-classification-bulk-classification-hint' => 'Hallo $1! Hilf uns dabei, die Vorlagen in dieser Kategorie zu ordnen. Klicke auf „Massenbearbeitung des Vorlagentyps" und wählen einen Typen aus.
-[[Hilfe:Vorlagenklassifizierung|Erfahre mehr]].',
+[[w:c:de:Hilfe:Vorlagenklassifizierung|Erfahre mehr]].',
 	'template-classification-bulk-classification-agreement' => 'Ich verstehe',
 	'logentry-templateclassification-tc-changed' => '$1 hat den Typ von $3 von $5 in $4 geändert.',
+	'template-classification-type-scrollbox' => 'Scrollbox',
+	'template-classification-description-scrollbox' => 'In dieser Vorlage werden die Inhalte in einem scrollbaren Feld angezeigt.',
+	'template-classification-type-infoicon' => 'Infosymbol',
+	'template-classification-description-infoicon' => 'Diese Vorlage wird verwendet, um einen Link mit einem kleinen Symbol zu erzeugen.',
 );
 
 $messages['es'] = array(
@@ -243,9 +247,13 @@ $messages['es'] = array(
 	'template-classification-entry-point-hint' => '¡Hola $1! Ayúdanos a organizar esta plantilla. Has click aquí y elige uno de estos tipos. [[w:es:Ayuda:Clasificación de plantillas|Clasificación de plantillas]].',
 	'template-classification-open-modal-key-tip' => 'Abrir diálogo de clasificación ($1+Shift+K)',
 	'template-classification-bulk-classification-hint' => '¡Hola $1! Ayúdanos a organizar las plantillas en esta categoría. Haz clic en "Edición múltiple de tipo de plantilla" y elige uno de los tipos.
-[[Ayuda:Tipo de Plantilla|Conoce más]].',
+[[w:es:Ayuda:Clasificación de plantillas|Clasificación de plantillas]].',
 	'template-classification-bulk-classification-agreement' => 'Entiendo',
 	'logentry-templateclassification-tc-changed' => '$1 cambió el tipo de $3 de $5 a $4.',
+	'template-classification-type-scrollbox' => 'Cuadro de desplazamiento',
+	'template-classification-description-scrollbox' => 'Esta plantilla muestra su contenido en un cuadro de desplazamiento.',
+	'template-classification-type-infoicon' => 'Icono de información',
+	'template-classification-description-infoicon' => 'Esta plantilla se utiliza para crear un enlace con un pequeño icono.',
 );
 
 $messages['fr'] = array(
@@ -306,6 +314,10 @@ $messages['fr'] = array(
 [[w:c:fr:Aide:Classification des modèles|En savoir plus]].",
 	'template-classification-bulk-classification-agreement' => 'Je comprends',
 	'logentry-templateclassification-tc-changed' => '$1 a modifié le type de $3 : de $5 à $4.',
+	'template-classification-type-scrollbox' => 'Scrollbox',
+	'template-classification-description-scrollbox' => "Ce modèle affiche le contenu dans une zone que l'on peut faire défiler.",
+	'template-classification-type-infoicon' => 'Icône Info',
+	'template-classification-description-infoicon' => 'Ce modèle est utilisé pour créer un lien avec une petite icône.',
 );
 
 $messages['it'] = array(
@@ -366,6 +378,10 @@ $messages['it'] = array(
 [[w:it:Aiuto:Tipologie di template|Per saperne di più]].',
 	'template-classification-bulk-classification-agreement' => 'Ho capito',
 	'logentry-templateclassification-tc-changed' => '$1 ha cambiato la tipologia di $3 da $5 a $4.',
+	'template-classification-type-scrollbox' => 'Riquadro scorrevole',
+	'template-classification-description-scrollbox' => 'Questo template visualizza i propri contenuti in un riquadro scorrevole.',
+	'template-classification-type-infoicon' => 'Icona info',
+	'template-classification-description-infoicon' => "Questo template è usato per creare un link con un'icona di piccole dimensioni.",
 );
 
 $messages['ja'] = array(
@@ -426,6 +442,10 @@ $messages['ja'] = array(
 詳しくは、[[w:c:ja:ヘルプ:テンプレートの種類|こちら]]をご覧ください。',
 	'template-classification-bulk-classification-agreement' => 'OK',
 	'logentry-templateclassification-tc-changed' => '$1さんが$3の種類を「$5」から「$4」に変更しました。',
+	'template-classification-type-scrollbox' => 'スクロール・ボックス',
+	'template-classification-description-scrollbox' => 'このテンプレートを使用すると、スクロール可能なボックス内にコンテンツを表示できます。',
+	'template-classification-type-infoicon' => 'インフォ・アイコン',
+	'template-classification-description-infoicon' => 'このテンプレートを使用すると、小さいアイコン付きのリンクを作成できます。',
 );
 
 $messages['nl'] = array(
@@ -486,6 +506,10 @@ $messages['nl'] = array(
 [[Help:Template Types|Learn more]].',
 	'template-classification-bulk-classification-agreement' => 'I understand',
 	'logentry-templateclassification-tc-changed' => '$1 changed type of $3 from $5 to $4.',
+	'template-classification-type-scrollbox' => 'Scrollbox',
+	'template-classification-description-scrollbox' => "This template displays it's contents in a scrollable box.",
+	'template-classification-type-infoicon' => 'Infoicon',
+	'template-classification-description-infoicon' => 'This template is used for creating a link with a small icon.',
 );
 
 $messages['pl'] = array(
@@ -542,9 +566,13 @@ $messages['pl'] = array(
 	'template-classification-edit-modal-bulk-task' => 'Ze względu na wielkość tej kategorii ta edycja jest uruchomiona jako zadanie w tle. W rezultacie, może zająć to trochę czasu zanim zmiany staną się aktywne. Dziękujemy za cierpliwość!',
 	'template-classification-entry-point-hint' => 'Cześć $1! Pomóż nam zaklasyfikować ten szablon. Kliknij tutaj i wybierz jeden z typów.[[w:c:pl.c:Pomoc:Typy_szablonów| Dowiedz się więcej]].',
 	'template-classification-open-modal-key-tip' => 'Otwórz okno dialogowe klasyfikacji ($1+Shift+K)',
-	'template-classification-bulk-classification-hint' => 'Cześć $1! Pomóż nam zorganizować szablony w tej kategorii. Kliknij "Edycja zbiorcza typu szablonu" i wybierz jeden z typów. [[Help:Template Types| Dowiedz się więcej]].',
+	'template-classification-bulk-classification-hint' => 'Cześć $1! Pomóż nam zorganizować szablony w tej kategorii. Kliknij "Edycja zbiorcza typu szablonu" i wybierz jeden z typów. [[w:c:pl:Pomoc:Szablony|Dowiedz się więcej]].',
 	'template-classification-bulk-classification-agreement' => 'Rozumiem',
 	'logentry-templateclassification-tc-changed' => 'Użytkownik $1 zmienił $3 z $5 na $4.',
+	'template-classification-type-scrollbox' => 'Scrollbox',
+	'template-classification-description-scrollbox' => 'Ten szablon wyświetla treść wewnątrz przewijanego elementu.',
+	'template-classification-type-infoicon' => 'Infoikona',
+	'template-classification-description-infoicon' => 'Tego szablonu używa się do tworzenia odnośnika z małą ikoną.',
 );
 
 $messages['pt'] = array(
@@ -601,9 +629,14 @@ $messages['pt'] = array(
 	'template-classification-edit-modal-bulk-task' => 'Devido ao tamanho desta categoria, estamos executando esta edição múltipla em segundo plano. Como resultado, pode demorar um pouco para que as alterações tornem-se ativas. Obrigado por sua paciência!',
 	'template-classification-entry-point-hint' => 'Olá $1! Ajude-nos a organizar esta predefinição. Clique aqui e escolha um dos tipos. [[http://comunidade.wikia.com/wiki/Ajuda:Tipos_de_predefinição|Saiba mais]].',
 	'template-classification-open-modal-key-tip' => 'Abrir o diálogo de classificação ($1+Shift+K)',
-	'template-classification-bulk-classification-hint' => 'Olá $1! Ajude-nos a organizar as predefinições nesta categoria. Clique em "Edição múltipla dos tipos de predefinição" e escolha um dos tipos. [[Ajuda:Tipos de predefinição|Saiba mais]].',
+	'template-classification-bulk-classification-hint' => 'Olá $1! Ajude-nos a organizar as predefinições nesta categoria. Clique em "Edição múltipla dos tipos de predefinição" e escolha um dos tipos. 
+[[w:c:pt:Ajuda:Tipos de predefinição|Saiba mais]].',
 	'template-classification-bulk-classification-agreement' => 'Eu entendo',
 	'logentry-templateclassification-tc-changed' => '$1 alterou o tipo de $3 de $5 para $4.',
+	'template-classification-type-scrollbox' => 'Caixa rolável',
+	'template-classification-description-scrollbox' => 'Esta predefinição exibe conteúdo em uma caixa rolável.',
+	'template-classification-type-infoicon' => 'Ícone de informação',
+	'template-classification-description-infoicon' => 'Esta predefinição é usada para criar um link com um ícone pequeno.',
 );
 
 $messages['ru'] = array(
@@ -654,15 +687,20 @@ $messages['ru'] = array(
 	'template-classification-special-type-header' => 'Тип шаблона',
 	'template-classification-special-exception' => 'Произошла ошибка. Пожалуйста, попробуйте ещё раз.',
 	'special-templates' => 'Шаблоны',
-	'template-classification-edit-modal-title-bulk-types' => 'Массовое изменение типов шаблонов',
+	'template-classification-edit-modal-title-bulk-types' => 'Массовое изменение типа шаблонов',
 	'template-classification-edit-modal-bulk-error' => 'К сожалению, мы не смогли классифицировать {{PLURAL:$1|эту страницу|эти страницы}}: $2. Пожалуйста, попробуйте снова.',
 	'template-classification-edit-modal-bulk-error-limited' => 'К сожалению мы не смогли классифицировать $1 из $2 страниц. Пожалуйста, попробуйте снова.',
 	'template-classification-edit-modal-bulk-task' => 'Из-за размеров этой категории массовая классификация будет поставлена в очередь. Это означает, что классификация займет немного больше времени, чем обычно.',
-	'template-classification-entry-point-hint' => 'Привет, $1! Помогите нам классифицировать этот шаблон. Откройте меню классификации и выберите подходящий тип шаблонов. [[Справка:Классификация шаблонов|Подробнее о классификации шаблонов]].',
+	'template-classification-entry-point-hint' => 'Привет, $1! Помогите нам классифицировать этот шаблон. Откройте меню классификации и выберите подходящий тип шаблона. [[Справка:Классификация шаблонов|Подробнее о классификации шаблонов]].',
 	'template-classification-open-modal-key-tip' => 'Открыть окно классификации ($1+Shift+K)',
-	'template-classification-bulk-classification-hint' => 'Привет, $1! Помогите нам классифицировать шаблоны в этой категории. Нажмите кнопку "Массовое изменение типов шаблонов" и выберите подходящий тип шаблонов. [[Справка:Классификация шаблонов|Подробнее о классификации шаблонов]].',
+	'template-classification-bulk-classification-hint' => 'Привет, $1! Помогите нам классифицировать шаблоны в этой категории. Нажмите кнопку "Массовое изменение типов шаблонов" и выберите подходящий тип шаблонов. 
+[[w:c:ru:Справка:Классификация шаблонов|Подробнее о классификации шаблонов]].',
 	'template-classification-bulk-classification-agreement' => 'Хорошо',
 	'logentry-templateclassification-tc-changed' => '$1 изменил(а) тип шаблона $3 с $5 на $4.',
+	'template-classification-type-scrollbox' => 'Скроллбоксы',
+	'template-classification-description-scrollbox' => 'Эти шаблоны предназначены для размещения контента в поля с прокруткой.',
+	'template-classification-type-infoicon' => 'Пиктограммы',
+	'template-classification-description-infoicon' => 'Эти шаблоны используются для создания информационных иконок на страницах.',
 );
 
 $messages['zh-hans'] = array(
@@ -722,6 +760,10 @@ $messages['zh-hans'] = array(
 	'template-classification-bulk-classification-hint' => '你好，$1！请帮助我们组织这一类别中的模板。单击"批量编辑模板类型"选择一种类型。[[Help:Template Types|点击这里了解更多]]。',
 	'template-classification-bulk-classification-agreement' => '我明白。',
 	'logentry-templateclassification-tc-changed' => '$1将$3中的类型从 $5更改为$4。',
+	'template-classification-type-scrollbox' => '滑动框',
+	'template-classification-description-scrollbox' => '此模板的内容显示在滑动框中。',
+	'template-classification-type-infoicon' => '信息图标',
+	'template-classification-description-infoicon' => '此模板通过使用一个小图标进行创建链接。',
 );
 
 $messages['zh-hant'] = array(
@@ -778,8 +820,12 @@ $messages['zh-hant'] = array(
 	'template-classification-edit-modal-bulk-task' => '由於類別的大小，我們正在使用背景任務運行這些大量編輯。因此，它可能需要一段時間才會生成變化。感謝您的耐心等待！',
 	'template-classification-entry-point-hint' => '你好，$1！請幫助我們優化此模板。按一下此處選擇一種模版類型。[[Help:模板類型|點擊查閱更多]]。',
 	'template-classification-open-modal-key-tip' => '打開分類對話框($1+Shift+K)',
-	'template-classification-bulk-classification-hint' => '你好，$1！ 請幫助我們組織這一類別中的模板。 按一下"大量編輯模板類型"選擇一種類型。[[Help:Template Types|點擊這裡查看更多]]。',
+	'template-classification-bulk-classification-hint' => '你好，$1！ 請幫助我們組織這一類別中的模板。 按一下"大量編輯模板類型"選擇一種類型。[[w:c:zh:Help:Template Types|點擊這裡查看更多]]。',
 	'template-classification-bulk-classification-agreement' => '我明白。',
 	'logentry-templateclassification-tc-changed' => '$1將$3中的類型從$5更改為$4。',
+	'template-classification-type-scrollbox' => '滑動框',
+	'template-classification-description-scrollbox' => '此模板的內容將在滑動框中顯示。',
+	'template-classification-type-infoicon' => '訊息圖示',
+	'template-classification-description-infoicon' => '此模板通過使用一個小圖示進行創建連結。',
 );
 
