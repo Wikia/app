@@ -27,10 +27,15 @@
 			clear: both;
 		}
 		#global_shortcuts_search_field {
-		  	box-sizing: border-box;
-		  	width: 100%;
-		  	padding: 4px;
-		  	border: 0;
+			background-image: url('/extensions/wikia/GlobalShortcuts/images/keyboard.svg')!important; /* inline */
+			background-position: 0px -9px;
+			background-repeat: no-repeat;
+			background-size: 33px;
+			border: 0;
+			box-sizing: border-box;
+			outline: 0;
+			padding: 8px 8px 8px 37px;
+			width: 100%;
 		}
 	}
 	
@@ -89,13 +94,15 @@
 	.autocomplete2-suggestions {
 		box-sizing: border-box;
 		overflow-y: auto;
+		padding-right: 8px;
+		width: 100%!important;
 
 		strong {
 			font-weight: bold;
 		}
 	}
 	.autocomplete2-group {
-		margin: 0;
+		margin: 20px 0 15px 0;
 		padding: 4px 4px;
 	}
 	.autocomplete2-suggestion {

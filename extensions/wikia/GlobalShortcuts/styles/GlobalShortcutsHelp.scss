@@ -19,7 +19,16 @@
 	}
 	
 	footer {
-		display: none;
+		height: auto;
+		padding: 10px 20px;
+		position: static;
+		text-align: right;
+
+		.key {
+			height: 25px;
+			vertical-align: middle;
+			margin: 0;
+		}
 	}
 
 	h2 {
@@ -71,6 +80,14 @@
 	padding: 0;
 	vertical-align: middle;
 	width: 23px;
+	background-image: url('/extensions/wikia/GlobalShortcuts/images/keyboard.svg')!important; /* inline */
+	background-size: 29px!important;
+	background-color: #fff!important;
+	background-position: 50% -12px !important;
+	border:1px solid #fff!important;
+	&:hover {
+		border-color: rgb(204, 204, 204)!important;
+	}
 }
 
 .global-shortcuts-help-entry-point-throbber {

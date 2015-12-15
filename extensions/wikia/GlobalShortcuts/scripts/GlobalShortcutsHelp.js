@@ -97,6 +97,9 @@ define('GlobalShortcutsHelp',
 			/* Show the modal */
 			modalInstance.show();
 			throbber.uncover();
+			// Add footer hint
+			modalInstance.$element.find('footer')
+				.html('Press <span class="key">.</span> to explore shortcuts.');
 		}
 
 		function setupTemplateClassificationModal(content) {
