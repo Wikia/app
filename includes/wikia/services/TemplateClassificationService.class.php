@@ -23,6 +23,7 @@ class TemplateClassificationService {
 	const TEMPLATE_QUOTE = 'quote';
 	const TEMPLATE_REFERENCES = 'reference';
 	const TEMPLATE_UNKNOWN = 'unknown';
+	const TEMPLATE_DIRECTLY_USED = 'directlyused';
 	const TEMPLATE_UNCLASSIFIED = '' ;
 
 	const NOT_AVAILABLE = 'not-available';
@@ -78,12 +79,12 @@ class TemplateClassificationService {
 	 * @param int $wikiId
 	 * @param int $pageId
 	 * @param string $templateType
+	 * @param string $origin
 	 * @param string $provider
-	 * @param int $origin
 	 * @throws Exception
 	 * @throws \Swagger\Client\ApiException
 	 */
-	public function classifyTemplate( $wikiId, $pageId, $templateType, $provider, $origin ) {
+	public function classifyTemplate( $wikiId, $pageId, $templateType, $origin, $provider ) {
 		$details = [
 			'provider' => $provider,
 			'origin' => $origin,
