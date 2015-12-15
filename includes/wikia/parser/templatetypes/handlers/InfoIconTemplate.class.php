@@ -36,16 +36,14 @@ class InfoIconTemplate {
 	private static function makeIconLink( $image ) {
 		$link = '';
 		$title = Title::newFromText( $image );
-		if ( $title && $title->exists() ) {
-			$file = wfFindFile( $title );
-			if ( $file && $file->exists() ) {
-				$link = Linker::makeImageLink2(
-					$title,
-					$file,
-					[],
-					[ 'template-type' => AutomaticTemplateTypes::TEMPLATE_INFOICON ]
-				);
-			}
+		$file = wfFindFile( $title );
+		if ( $file && $file->exists() ) {
+			$link = Linker::makeImageLink2(
+				$title,
+				$file,
+				[],
+				[ 'template-type' => AutomaticTemplateTypes::TEMPLATE_INFOICON ]
+			);
 		}
 
 		return $link;
