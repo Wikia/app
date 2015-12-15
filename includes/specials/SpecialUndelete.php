@@ -451,6 +451,26 @@ class PageArchive {
 			$previousTimestamp = 0;
 		}
 
+		// Wikia change - begin -@author: wladek
+		$beforeRevisionCount = !empty($pageId) ? $dbw->selectField('revision','count(*)',[
+			'rev_page' => $page->page_id,
+		],__METHOD__) : 0;
+		$beforeArchiveCount = $dbw->selectField('archive','count(*)',[
+			'ar_namespace' => $this->title->getNamespace(),
+			'ar_title'     => $this->title->getDBkey(),
+		],__METHOD__);
+		\Wikia\Logger\WikiaLogger::instance()->debug(
+			'RevisionAudit - before undelete revisions',[
+				'exception' => new Exception(),
+				'page_namespace' => $this->title->getNamespace(),
+				'page_title' => $this->title->getDBkey(),
+				'page_id' => !empty($pageId) ? $pageId : 0,
+				'rev_count_before' => $beforeRevisionCount,
+				'ar_count_before' => $beforeArchiveCount,
+			]
+		);
+		// Wikia change - end
+
 		if( $restoreAll ) {
 			$oldones = '1 = 1'; # All revisions...
 		} else {
@@ -548,6 +568,28 @@ class PageArchive {
 				'ar_title' => $this->title->getDBkey(),
 				$oldones ),
 			__METHOD__ );
+
+		// Wikia change - begin -@author: wladek
+		$afterRevisionCount = $dbw->selectField('revision','count(*)',[
+			'rev_page' => $pageId,
+		],__METHOD__);
+		$afterArchiveCount = $dbw->selectField('archive','count(*)',[
+			'ar_namespace' => $this->title->getNamespace(),
+			'ar_title'     => $this->title->getDBkey(),
+		],__METHOD__);
+		\Wikia\Logger\WikiaLogger::instance()->debug(
+			'RevisionAudit - after undelete revisions',[
+				'exception' => new Exception(),
+				'page_namespace' => $this->title->getNamespace(),
+				'page_title' => $this->title->getDBkey(),
+				'page_id' => !empty($pageId) ? $pageId : 0,
+				'rev_count_before' => $beforeRevisionCount,
+				'ar_count_before' => $beforeArchiveCount,
+				'rev_count_after' => $afterRevisionCount,
+				'ar_count_after' => $afterArchiveCount,
+			]
+		);
+		// Wikia change - end
 
 		// Was anything restored at all?
 		if ( $restored == 0 ) {
