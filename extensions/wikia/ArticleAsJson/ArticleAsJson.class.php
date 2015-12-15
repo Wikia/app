@@ -320,6 +320,6 @@ class ArticleAsJson extends WikiaService {
 	}
 
 	private static function isInfoIcon( $templateType ) {
-		return $templateType == AutomaticTemplateTypes::TEMPLATE_INFOICON;
+		return $templateType == TemplateClassificationService::TEMPLATE_INFOICON;
 	}
 }
