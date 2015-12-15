@@ -11,10 +11,12 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 		$this->mRequest = $this->getMain()->getRequest();
 		$this->mUser = $this->getUser();
 
-		if ( $this->mRequest->wasPosted() ) {
+		if ( $this->mParams['type'] === 'video' ) {
+			$result = $this->executeVideo();
+		} else if ( $this->mParams['type'] === 'image' ) {
 			$result = $this->executeImage();
 		} else {
-			$result = $this->executeVideo();
+			$this->dieUsage( 'Invalid type', 'bad_type' );
 		}
 
 		$this->getResult()->addValue( null, $this->getModuleName(), $result );
@@ -163,9 +165,14 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 
 	public function getAllowedParams() {
 		return array(
+			'token' => null,
 			'url' => array(
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => false
+			),
+			'type' => array(
+				ApiBase::PARAM_TYPE => 'string',
+				ApiBase::PARAM_REQUIRED => true
 			)
 		);
 	}

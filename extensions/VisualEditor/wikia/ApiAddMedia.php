@@ -20,4 +20,19 @@ abstract class ApiAddMedia extends ApiBase {
 		return null;
 	}
 
+	public function isWriteMode() {
+		return true;
+	}
+
+	public function mustBePosted() {
+		return true;
+	}
+
+	public function needsToken() {
+		return true;
+	}
+
+	public function getTokenSalt() {
+		return '';
+	}
 }
