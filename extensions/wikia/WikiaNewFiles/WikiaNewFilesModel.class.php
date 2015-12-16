@@ -9,124 +9,115 @@ class WikiaNewFilesModel extends WikiaModel {
 	/**
 	 * @var string
 	 */
-	private $hideBotsSql = '';
+	private $hideBots = false;
+
+	/**
+	 * Extend the SQL query so that bot-uploaded images are removed
+	 *
+	 * @param WikiaSQL $sql
+	 */
+	private function applyBotExclusion( WikiaSQL $sql ) {
+//		if ( !$this->hideBots ) {
+//			return;
+//		}
+//
+//		$botGroups = User::getGroupsWithPermission( 'bot' );
+//		if ( !count( $botGroups ) ) {
+//			return;
+//		}
+//
+//		// FluentSQL doesn't allow compound conditions in ON clause so we're doing some old school MW here
+//		// what we get is: user_groups.ug_group IN ('bot','bot-global')
+//		$onlyBotGroups = $this->dbr->makeList( [ 'user_groups.ug_group' => $botGroups ], LIST_AND );
+//
+//		$sql->LEFT_JOIN( 'user_groups' )
+//			->ON( 'image.img_user = user_groups.ug_user AND ' . $onlyBotGroups )
+//			->WHERE( 'user_groups.ug_group' )->IS_NULL();
+	}
 
 	/**
 	 * @param bool $hideBots Whether to hide images uploaded by bots or not
 	 */
 	public function __construct( $hideBots ) {
 		$this->dbr = wfGetDB( DB_SLAVE );
-		if ( $hideBots ) {
-			$this->hideBots();
-		}
+		$this->hideBots = $hideBots;
 	}
 
 	/**
-	 * Get SQL fragment (a LEFT JOIN) for filtering images to those not uploaded by bots
-	 *
-	 * This LEFT JOIN, in conjunction with "WHERE ug_group IS NULL", returns
-	 * only those rows from IMAGE where the uploading user is not a member of
-	 * a group which has the 'bot' permission set.
-	 *
-	 * @return string the SQL fragment to include (may be empty if there are no bot groups)
+	 * Get the total number of images
+	 * @return int number of images on current page
 	 */
-	private function hideBots() {
-		# Make a list of group names which have the 'bot' flag set.
-		$botconds = array();
-		foreach ( User::getGroupsWithPermission( 'bot' ) as $groupname ) {
-			$botconds[] = 'ug_group = ' . $this->dbr->addQuotes( $groupname );
-		}
+	public function getImageCount() {
+		$sql = ( new WikiaSQL() )
+			->SELECT()
+			->COUNT( '*' )->AS_( 'count' )
+			->FROM( 'image' );
 
-		if ( $botconds ) {
-			$isbotmember = $this->dbr->makeList( $botconds, LIST_OR );
+		$this->applyBotExclusion( $sql );
 
-			$ug = $this->dbr->tableName( 'user_groups' );
-			$this->hideBotsSql = " LEFT JOIN $ug ON img_user=ug_user AND ($isbotmember)";
-		}
+		$count = $sql->run( $this->dbr, function ( ResultWrapper $result ) {
+			return $result->current()->count;
+		} );
+
+		return intval( $count );
 	}
 
 	/**
-	 * Query the database to find out what is the timestamp of the newest image uploaded
+	 * Get the specific page of images
 	 *
-	 * @return string the timestamp of the newest image in MediaWiki format (YmdHis)
+	 * @param $limit      images per page
+	 * @param $pageNumber page number (1-indexed)
+	 * @return array array of images on current page
 	 */
-	public function getLatestTS() {
-		$image = $this->dbr->tableName( 'image' );
+	public function getImagesPage( $limit, $pageNumber ) {
+		$sql = ( new WikiaSQL() )
+			->SELECT( 'img_size', 'img_name', 'img_user', 'img_user_text', 'img_description', 'img_timestamp' )
+			->FROM( 'image' )
+			->ORDER_BY( [ 'img_timestamp', 'DESC' ] )
+			->LIMIT( $limit )
+			->OFFSET( ( $pageNumber - 1 ) * $limit );
 
-		$sql = "SELECT img_timestamp from $image";
-		if ( $this->hideBotsSql ) {
-			$sql .= $this->hideBotsSql . ' WHERE ug_group IS NULL';
-		}
-		$sql .= ' ORDER BY img_timestamp DESC LIMIT 1';
-		$res = $this->dbr->query( $sql, __FUNCTION__ );
-		$row = $this->dbr->fetchRow( $res );
-		if ( $row !== false ) {
-			$ts = $row[0];
-		} else {
-			$ts = false;
-		}
-		$this->dbr->freeResult( $res );
+		$this->applyBotExclusion( $sql );
 
-		return wfTimestamp( TS_MW, $ts );
+		return $sql->runLoop( $this->dbr, function ( &$data, $row ) {
+			$data[] = $row;
+		} );
 	}
 
-	/**
-	 * Get the images (limit + 1) from the database
-	 *
-	 * TODO: extract until and from to params
-	 *
-	 * @param string $from only show images newer than this
-	 * @param string $until only show images older than this
-	 * @param int $limit how many images to fetch
-	 * @param Title $nt Title object for the image search query
-	 *
-	 * @return array the fetched images as array
-	 */
-	public function getImages( $from, $until, $limit ) {
-		$image = $this->dbr->tableName( 'image' );
+	public function getLinkedFiles( $image ) {
+		global $wgMemc;
+		$anchorLength = 60;
 
-		$where = array();
+		$cacheKey = wfMemcKey( __METHOD__, md5( $image->img_name ) );
+		$data = $wgMemc->get( $cacheKey );
+		if ( !is_array( $data ) ) {
+			// The ORDER BY ensures we get NS_MAIN pages first
+			$dbr = wfGetDB( DB_SLAVE );
+			$res = $dbr->select(
+				array( 'imagelinks', 'page' ),
+				array( 'page_namespace', 'page_title' ),
+				array( 'il_to' => $image->img_name, 'il_from = page_id' ),
+				__METHOD__,
+				array( 'LIMIT' => 2, 'ORDER BY' => 'page_namespace ASC' )
+			);
 
-		$invertSort = false;
-		if ( $until ) {
-			$where[] = "img_timestamp < '" . $this->dbr->timestamp( $until ) . "'";
-		}
-		if ( $from ) {
-			$where[] = "img_timestamp >= '" . $this->dbr->timestamp( $from ) . "'";
-			$invertSort = true;
-		}
-		$sql = 'SELECT img_size, img_name, img_user, img_user_text,' .
-			"img_description,img_timestamp FROM $image";
+			while ( $s = $res->fetchObject() ) {
+				$data[] = array( 'ns' => $s->page_namespace, 'title' => $s->page_title );
+			}
+			$dbr->freeResult( $res );
 
-		if ( $this->hideBotsSql ) {
-			$sql .= $this->hideBotsSql;
-			$where[] = 'ug_group IS NULL';
+			$wgMemc->set( $cacheKey, $data, 60 * 15 );
 		}
 
-		// hook by Wikia, Bartek Lapinski 26.03.2009, for videos and stuff
-		wfRunHooks( 'SpecialNewImages::beforeQuery', array( &$where ) );
+		$links = array();
 
-		if ( count( $where ) ) {
-			$sql .= ' WHERE ' . $this->dbr->makeList( $where, LIST_AND );
-		}
-		$sql .= ' ORDER BY img_timestamp ' . ( $invertSort ? '' : ' DESC' );
-		$sql .= ' LIMIT ' . ( $limit + 1 );
-
-		$res = $this->dbr->query( $sql, __FUNCTION__ );
-
-		/**
-		 * We have to flip things around to get the last N after a certain date
-		 */
-		$images = array();
-		while ( $s = $this->dbr->fetchObject( $res ) ) {
-			if ( $invertSort ) {
-				array_unshift( $images, $s );
-			} else {
-				array_push( $images, $s );
+		if ( !empty( $data ) ) {
+			foreach ( $data as $row ) {
+				$name = Title::makeTitle( $row['ns'], $row['title'] );
+				$links[] = Linker::link( $name, wfShortenText( $name, $anchorLength ), array( 'class' => 'wikia-gallery-item-posted' ) );
 			}
 		}
-		$this->dbr->freeResult( $res );
 
-		return $images;
+		return $links;
 	}
 }
