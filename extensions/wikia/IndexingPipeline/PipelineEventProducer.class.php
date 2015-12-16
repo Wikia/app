@@ -1,8 +1,9 @@
 <?php
 
-class PipelineEventProducer {
+namespace Wikia\IndexingPipeline;
+
+class PipelineEventProducer extends EventProducer {
 	const ARTICLE_MESSAGE_PREFIX = 'article';
-	const PRODUCER_NAME = 'MWEventsProducer';
 	const NS_CONTENT = 'content';
 	const ROUTE_ACTION_KEY = '_action';
 	const ROUTE_NAMESPACE_KEY = '_namespace';
@@ -10,17 +11,18 @@ class PipelineEventProducer {
 	const ACTION_CREATE = 'create';
 	const ACTION_UPDATE = 'update';
 	const ACTION_DELETE = 'delete';
-	/** @var PipelineConnectionBase */
-	protected static $pipe;
+
+	public function __construct() {}
 
 	/**
 	 * @desc Send event to pipeline in old format (message with params inside).
 	 *
-	 * @param $eventName
 	 * @param $pageId
+	 * @param null $revisionId
+	 * @param null $eventName
 	 * @param array $params
 	 */
-	public static function send( $eventName, $pageId, $revisionId, $params = [ ] ) {
+	public static function send( $pageId, $revisionId, $eventName, $params = [ ] ) {
 		self::publish( implode( '.', [ self::ARTICLE_MESSAGE_PREFIX, $eventName ] ),
 			self::prepareMessage( $pageId, $revisionId, $params ) );
 	}
@@ -118,9 +120,10 @@ class PipelineEventProducer {
 	 *
 	 * @param integer $pageId The affected template's pageId
 	 * @param Title $title The affected template's Title object
+	 * @param $templateType
 	 * @return bool
 	 */
-	public static function onTemplateClassified( $pageId, Title $title, $templateType ) {
+	public static function onTemplateClassified ( $pageId, Title $title, $templateType ) {
 		$ns = self::preparePageNamespaceName( $title );
 		$revisionId = $title->getLatestRevID();
 
@@ -140,6 +143,7 @@ class PipelineEventProducer {
 	 * @param $pageId
 	 * @param $revisionId
 	 *
+	 * @param $params
 	 * @return \stdClass
 	 */
 	protected static function prepareMessage( $pageId, $revisionId, $params ) {
@@ -184,18 +188,6 @@ class PipelineEventProducer {
 		$route = implode( '.', $routeData );
 
 		return $route;
-	}
-
-	/**
-	 * @param $key
-	 * @param $data
-	 */
-	protected static function publish( $key, $data ) {
-		try {
-			self::getPipeline()->publish( $key, $data );
-		} catch ( Exception $e ) {
-			\Wikia\Logger\WikiaLogger::instance()->error( $e->getMessage() );
-		}
 	}
 
 	/** @return PipelineConnectionBase */

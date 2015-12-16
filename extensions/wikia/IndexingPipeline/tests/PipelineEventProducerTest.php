@@ -1,15 +1,47 @@
 <?php
 
+//use Wikia\IndexingPipeline;
+
 class PipelineEventProducerTest extends WikiaBaseTest {
 	private $pipelineEventProducer;
 
 	protected function setUp() {
-		$this->setupFile = dirname( __FILE__ ) . '/../PipelineEventProducer.setup.php';
-		$this->pipelineEventProducer = new PipelineEventProducer();
 		parent::setUp();
+
+		$this->setupFile = dirname( __FILE__ ) . '/../IndexingPipeline.setup.php';
+		$this->pipelineEventProducer = new \Wikia\IndexingPipeline\PipelineEventProducer();
 	}
 
-	/** @test
+	/**
+	 * @param $inputData
+	 * @param $expectedOutput
+	 * @param $description
+	 *
+	 * @dataProvider testprepareRouteTestDataProvider
+	 */
+	public function testprepareRouteTest($inputData, $expectedOutput, $description) {
+		$actualOutput = $this->pipelineEventProducer->prepareRoute( $inputData['action'], $inputData['ns'], $inputData['data'] );
+
+		$this->assertEquals( $expectedOutput, $actualOutput, $description );
+	}
+
+	public function testprepareRouteTestDataProvider() {
+		global $wgCanonicalNamespaceNames;
+
+		return [
+			[
+				'data' => [
+					'action' => 'create',
+					'ns' => strtolower( $wgCanonicalNamespaceNames[ NS_TEMPLATE ] ),
+					'data' => [ ]
+				],
+				'expect' => 'MWEventsProducer._action:create._namespace:template',
+				'description' => 'Create template action'
+			]
+		];
+	}
+
+	/**
 	 * @param $inputData
 	 * @param $expectedOutput
 	 * @param $description
@@ -26,7 +58,7 @@ class PipelineEventProducerTest extends WikiaBaseTest {
 		return [
 			[
 				'data' => [
-					'action' => PipelineEventProducer::ACTION_CREATE,
+					'action' => \Wikia\IndexingPipeline\PipelineEventProducer::ACTION_CREATE,
 					'ns' => strtolower( $wgCanonicalNamespaceNames[ NS_TEMPLATE ] ),
 					'data' => []
 				],
@@ -35,8 +67,8 @@ class PipelineEventProducerTest extends WikiaBaseTest {
 			],
 			[
 				'data' => [
-					'action' => PipelineEventProducer::ACTION_UPDATE,
-					'ns' => PipelineEventProducer::NS_CONTENT,
+					'action' => \Wikia\IndexingPipeline\PipelineEventProducer::ACTION_UPDATE,
+					'ns' => \Wikia\IndexingPipeline\PipelineEventProducer::NS_CONTENT,
 					'data' => [
 						'isNew' => false,
 						'otherParam' => "other_value",
@@ -48,8 +80,8 @@ class PipelineEventProducerTest extends WikiaBaseTest {
 			],
 			[
 				'data' => [
-					'action' => PipelineEventProducer::ACTION_UPDATE,
-					'ns' => PipelineEventProducer::NS_CONTENT,
+					'action' => \Wikia\IndexingPipeline\PipelineEventProducer::ACTION_UPDATE,
+					'ns' => \Wikia\IndexingPipeline\PipelineEventProducer::NS_CONTENT,
 					'data' => [ 'redirectId' => 578437 ]
 				],
 				'expect' => 'MWEventsProducer._action:update._namespace:content._content:redirectId',
@@ -58,7 +90,7 @@ class PipelineEventProducerTest extends WikiaBaseTest {
 			,
 			[
 				'data' => [
-					'action' => PipelineEventProducer::ACTION_DELETE,
+					'action' => \Wikia\IndexingPipeline\PipelineEventProducer::ACTION_DELETE,
 					'ns' => strtolower( $wgCanonicalNamespaceNames[ NS_USER_TALK ] ),
 					'data' => []
 				],
@@ -67,7 +99,7 @@ class PipelineEventProducerTest extends WikiaBaseTest {
 			],
 			[
 				'data' => [
-					'action' => PipelineEventProducer::ACTION_CREATE,
+					'action' => \Wikia\IndexingPipeline\PipelineEventProducer::ACTION_CREATE,
 					'ns' => strtolower( $wgCanonicalNamespaceNames[ NS_TEMPLATE ] ),
 					'data' => null
 				],
@@ -76,7 +108,7 @@ class PipelineEventProducerTest extends WikiaBaseTest {
 			],
 			[
 				'data' => [
-					'action' => PipelineEventProducer::ACTION_CREATE,
+					'action' => \Wikia\IndexingPipeline\PipelineEventProducer::ACTION_CREATE,
 					'ns' => strtolower( $wgCanonicalNamespaceNames[ NS_TEMPLATE ] ),
 					'data' => 5453
 				],
@@ -85,7 +117,7 @@ class PipelineEventProducerTest extends WikiaBaseTest {
 			],
 			[
 				'data' => [
-					'action' => PipelineEventProducer::ACTION_CREATE,
+					'action' => \Wikia\IndexingPipeline\PipelineEventProducer::ACTION_CREATE,
 					'ns' => strtolower( $wgCanonicalNamespaceNames[ NS_TEMPLATE ] )
 				],
 				'expect' => 'MWEventsProducer._action:create._namespace:template',
