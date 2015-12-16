@@ -8,7 +8,7 @@
  * to MySqlMetricWorker
  */
 
-require_once( dirname( __FILE__ ) . '../../Maintenance.php' );
+require_once( dirname( __FILE__ ) . '../../../Maintenance.php' );
 
 class updateMainPageFilterInMetricProcessor extends Maintenance {
 	private $mySQLEventProducer;
