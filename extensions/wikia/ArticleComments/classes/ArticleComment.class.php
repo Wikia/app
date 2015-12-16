@@ -49,6 +49,9 @@ class ArticleComment {
 
 	protected $minRevIdFromSlave;
 
+	/** @var bool */
+	private $isLoaded = false;
+
 	/**
 	 * @param Title $title
 	 */
@@ -130,7 +133,10 @@ class ArticleComment {
 	}
 
 	/**
-	 * Used to store extra data in comment contend
+	 * Used to store extra data in comment content
+	 *
+	 * @param string $key
+	 * @param mixed $val
 	 */
 	public function setMetadata( $key, $val ) {
 		$this->mMetadata[$key] = $val;
@@ -161,7 +167,7 @@ class ArticleComment {
 	 */
 	static public function newFromId( $id ) {
 		$title = Title::newFromID( $id );
-		if ( ! $title ) {
+		if ( !$title ) {
 			/**
 			 * maybe from Master?
 			 */
@@ -186,13 +192,17 @@ class ArticleComment {
 	 * @return bool
 	 */
 	public function load( $master = false ) {
+		if ( $this->isLoaded ) {
+			return true;
+		}
+
 		// Get revision IDs
 		if ( !$this->loadFirstRevId( $master ) || !$this->loadLastRevId( $master ) ) {
 			WikiaLogger::instance()->warning( 'Unable to load revision IDs', [
 				'issue' => 'SOC-1540',
 				'firstRevId' => $this->mFirstRevId,
 				'lastRevId' => $this->mLastRevId,
-				'title' => print_r( $this->mTitle, true),
+				'title' => print_r( $this->mTitle, true ),
 			] );
 			return false;
 		}
@@ -203,7 +213,7 @@ class ArticleComment {
 				'issue' => 'SOC-1540',
 				'firstRevId' => $this->mFirstRevId,
 				'lastRevId' => $this->mLastRevId,
-				'title' => print_r( $this->mTitle, true),
+				'title' => print_r( $this->mTitle, true ),
 			] );
 			return false;
 		}
@@ -215,6 +225,7 @@ class ArticleComment {
 		$rawText = $this->mLastRevision->getText();
 		$this->parseText( $rawText );
 
+		$this->isLoaded = true;
 		return true;
 	}
 
@@ -346,12 +357,9 @@ class ArticleComment {
 	 * @return int
 	 */
 	private function getFirstRevID( $db_conn ) {
-		wfProfileIn( __METHOD__ );
-
 		$id = false;
 
 		if ( $db_conn == DB_SLAVE && isset( $this->minRevIdFromSlave ) ) {
-			wfProfileOut( __METHOD__ );
 			return $this->minRevIdFromSlave;
 		}
 
@@ -365,8 +373,6 @@ class ArticleComment {
 			);
 		}
 
-		wfProfileOut( __METHOD__ );
-
 		return $id;
 	}
 
@@ -378,7 +384,6 @@ class ArticleComment {
 
 	/**
 	 * getTitle -- getter/accessor
-	 *
 	 */
 	public function getTitle() {
 		return $this->mTitle;
@@ -419,7 +424,7 @@ class ArticleComment {
 			return false;
 		}
 
-		$sig = ( $this->mUser->isAnon() )
+		$sig = $this->mUser->isAnon()
 			? AvatarService::renderLink( $this->mUser->getName() )
 			: Xml::element( 'a', array ( 'href' => $this->mUser->getUserPage()->getFullUrl() ), $this->mUser->getName() );
 
@@ -453,7 +458,7 @@ class ArticleComment {
 
 		// due to slave lag canEdit() can return false negative - we are hiding it by CSS and force showing by JS
 		if ( $wgUser->isLoggedIn() && $commentingAllowed ) {
-			$display = $this->canEdit() ? 'test=' : ' style="display:none"';
+			$display = $this->canEdit() ? '' : ' style="display:none"';
 			$img = '<img class="edit-pencil sprite" alt="" src="' . $wgBlankImgUrl . '" width="16" height="16" />';
 			$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $commentId . '" class="article-comm-edit actionButton" id="comment' . $commentId . '">' . wfMsg( 'article-comments-edit' ) . '</a></span>';
 
@@ -875,8 +880,13 @@ class ArticleComment {
 			}
 			// FB#2875 (log data for further debugging)
 			if ( is_null( $parentArticle ) ) {
-				$debugTitle = !empty( $title ) ? $title->getText() : '--EMPTY--'; // BugId:2646
-				Wikia::log( __FUNCTION__, __LINE__, "Failed to create Article object, ID=$parentId, title={$debugTitle}, user={$user->getName()}", true );
+				$debugTitle = empty( $title ) ? '--EMPTY--' : $title->getText(); // BugId:2646
+				WikiaLogger::instance()->warning( 'Failed to create Article object', [
+					'method' => __METHOD__,
+					'parentId' => $parentId,
+					'title' => $debugTitle,
+					'user' => $user->getName(),
+				] );
 
 				return false;
 			}
@@ -894,8 +904,12 @@ class ArticleComment {
 
 		if ( !( $commentTitle instanceof Title ) ) {
 			if ( !empty( $parentId ) ) {
-				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId .
-					") - failed to create commentTitle from " . $commentTitleText, true );
+				WikiaLogger::instance()->warning( 'Failed to create commentTitle', [
+					'method' => __METHOD__,
+					'parentId' => $parentId,
+					'commentTitleText' => $commentTitleText
+
+				] );
 			}
 
 			return false;
@@ -906,23 +920,26 @@ class ArticleComment {
 
 		CommentsIndex::addCommentInfo( $commentTitleText, $title, $parentId );
 
-		$retval = self::doSaveAsArticle( $text, $article, $user, $metadata );
+		$retVal = self::doSaveAsArticle( $text, $article, $user, $metadata );
 
-		if ( $retval->value == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
+		if ( $retVal->value == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
 			$commentsIndex = CommentsIndex::newFromId( $article->getID() );
 			if ( empty( $commentsIndex ) ) {
-				Wikia::log( __METHOD__, false, "ERROR ArticleComment::doPost (reply to " . $parentId .
-					") - empty commentsIndex for " . $commentTitleText, true );
+				WikiaLogger::instance()->warning( 'Empty commentsIndex', [
+					'method' => __METHOD__,
+					'parentId' => $parentId,
+					'commentTitleText' => $commentTitleText,
+				] );
 			} else {
 				wfRunHooks( 'EditCommentsIndex', [ $article->getTitle(), $commentsIndex ] );
 			}
 		}
 
-		$res = ArticleComment::doAfterPost( $retval, $article, $parentId );
+		$res = ArticleComment::doAfterPost( $retVal, $article, $parentId );
 
 		ArticleComment::doPurge( $title, $commentTitle );
 
-		return [ $retval, $article, $res ];
+		return [ $retVal, $article, $res ];
 	}
 
 	/**
@@ -1037,12 +1054,14 @@ class ArticleComment {
 				break;
 			default:
 				$userId = $wgUser->getId();
-				Wikia::log( __METHOD__, 'error', "No article created. Status: {$status->value}; DB: {$wgDBname}; User: {$userId}" );
 				$text  = false;
 				$error = true;
 				$message = wfMsg( 'article-comments-error' );
 
 				WikiaLogger::instance()->error( 'PLATFORM-1311', [
+					'method' => __METHOD__,
+					'status' => $status->value,
+					'dbName' => $wgDBname,
 					'reason' => 'article-comments-error',
 					'name' => $article->getTitle()->getPrefixedDBkey(),
 					'page_id' => $commentId,
@@ -1204,7 +1223,11 @@ class ArticleComment {
 		$task->call( 'move', $taskParams );
 		$submit_id = $task->queue();
 
-		Wikia::log( __METHOD__, 'deletecomment', "Added move task ($submit_id) for {$taskParams['page']} page" );
+		WikiaLogger::instance()->debug( 'Added move task', [
+			'method' => __METHOD__,
+			'taskId' => $submit_id,
+			'page' => $taskParams['page'],
+		] );
 
 		return true;
 	}
@@ -1283,10 +1306,12 @@ class ArticleComment {
 				# move comment level #1
 				$error = self::moveComment( $oCommentTitle, $oNewTitle, $form->reason );
 				if ( $error !== true ) {
-					Wikia::log( __METHOD__, 'movepage',
-						'cannot move blog comments: old comment: ' . $oCommentTitle->getPrefixedText() . ', ' .
-						'new comment: ' . $oNewTitle->getPrefixedText() . ', error: ' . @implode( ', ', $error )
-					);
+					WikiaLogger::instance()->warning( 'Cannot move level 1 blog comments', [
+						'method' => __METHOD__,
+						'oldCommentTitle' => $oCommentTitle->getPrefixedText(),
+						'newCommentTitle' => $oNewTitle->getPrefixedText(),
+						'error' => $error,
+					] );
 				} else {
 					$moved++;
 				}
@@ -1302,10 +1327,12 @@ class ArticleComment {
 						# move comment level #2
 						$error = self::moveComment( $oCommentTitle, $oNewTitle, $form->reason );
 						if ( $error !== true ) {
-							Wikia::log( __METHOD__, 'movepage',
-								'cannot move blog comments: old comment: ' . $oCommentTitle->getPrefixedText() . ', ' .
-								'new comment: ' . $oNewTitle->getPrefixedText() . ', error: ' . @implode( ', ', $error )
-							);
+							WikiaLogger::instance()->warning( 'Cannot move level 2 blog comments', [
+								'method' => __METHOD__,
+								'oldCommentTitle' => $oCommentTitle->getPrefixedText(),
+								'newCommentTitle' => $oNewTitle->getPrefixedText(),
+								'error' => $error,
+							] );
 						} else {
 							$moved++;
 						}
@@ -1346,7 +1373,10 @@ class ArticleComment {
 			$listing = ArticleCommentList::newFromTitle( $oNewTitle );
 			$listing->purge();
 		} else {
-			Wikia::log( __METHOD__, 'movepage', 'cannot move article comments, because no comments: ' . $oOldTitle->getPrefixedText() );
+			WikiaLogger::instance()->warning( 'Cannot move article comments; no comments found', [
+				'method' => __METHOD__,
+				'oldTitle' => $oOldTitle->getPrefixedText(),
+			] );
 		}
 
 		return true;
@@ -1541,7 +1571,7 @@ class ArticleComment {
 	}
 
 	/**
-	 * @desc Checks if $errors array have badaccess-groups or badaccess-group0 string
+	 * Checks if $errors array have badaccess-groups or badaccess-group0 string
 	 *
 	 * @param array $errors
 	 *
