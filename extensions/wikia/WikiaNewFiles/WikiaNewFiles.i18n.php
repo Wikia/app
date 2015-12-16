@@ -292,7 +292,6 @@ $messages['ru'] = [
  * @author John Reid
  */
 $messages['sco'] = [
-	'wikianewfiles-title' => 'New files oan this wiki',
 	'wikianewfiles-desc' => 'Extends ae [[Special:NewFiles|byordinair page]] tae owerride some o the heider formattin',
 	'wikianewfiles-uploadby' => 'bi {{GENDER:$2|$1}}',
 	'wikianewfiles-postedin' => 'Posted in',

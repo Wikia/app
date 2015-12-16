@@ -94,10 +94,6 @@ $specialPageAliases['ru'] = [
 	'Images' => [ 'Изображения' ],
 ];
 
-$specialPageAliases['sco'] = [
-	'Images' => [ 'New files oan this wiki' ],
-];
-
 $specialPageAliases['sr-ec'] = [
 	'Images' => [ 'Слике' ],
 ];
