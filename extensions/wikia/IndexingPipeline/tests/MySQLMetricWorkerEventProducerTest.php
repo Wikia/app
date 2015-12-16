@@ -23,7 +23,7 @@ class MySQLMetricEventProducerTest extends WikiaBaseTest {
 		$this->mockGlobalVariable('wgCityId', $wgCityId);
 		$this->assertEquals(
 			$expectedOutput,
-			$this->eventProducer->prepareMessage( $pageId, null, 42442 )
+			$this->eventProducer->prepareMessage( $pageId, null, null )
 		);
 	}
 

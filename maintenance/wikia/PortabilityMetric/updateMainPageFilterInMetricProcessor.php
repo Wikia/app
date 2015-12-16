@@ -2,6 +2,10 @@
 
 /**
  * @ingroup Maintenance
+ *
+ * @desc For current wiki, find an ID of it's Main Page
+ * and push an event marking it as a main page (mainpagefilter_b = 1)
+ * to MySqlMetricWorker
  */
 
 require_once( dirname( __FILE__ ) . '../../Maintenance.php' );
@@ -28,7 +32,7 @@ class updateMainPageFilterInMetricProcessor extends Maintenance {
 
 		$this->mySQLEventProducer->send( $mainPageID, null, null );
 
-		$this->output( "\nUpdating data for wiki_id: " . $wgCityId ." done!" );
+		$this->output( sprintf( "%sUpdating data for wiki_id: %d done!%s", PHP_EOL, $wgCityId, PHP_EOL ) );
 		return true;
 	}
 }
