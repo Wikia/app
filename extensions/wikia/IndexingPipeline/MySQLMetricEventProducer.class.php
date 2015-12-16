@@ -3,6 +3,7 @@
 namespace Wikia\IndexingPipeline;
 
 class MySQLMetricEventProducer extends EventProducer {
+	const ROUTE = 'mainpage._output._warehouse';
 
 	public static function send( $pageId, $revisionId, $eventName, $params = [ ] ) {
 		self::publish(
@@ -33,12 +34,16 @@ class MySQLMetricEventProducer extends EventProducer {
 		return $msg;
 	}
 
+	/**
+	 * @return string
+	 */
 	public static function prepareRoute() {
-		$route = 'MySqlMetricWorker.1.1.mainpage._output._warehouse';
-
-		return $route;
+		return self::ROUTE;
 	}
 
+	/**
+	 * @return \Wikia\IndexingPipeline\MySQLMetricWorkerConnectionBase
+	 */
 	protected static function getPipeline() {
 		if ( !isset( self::$pipe ) ) {
 			self::$pipe = new MySQLMetricWorkerConnectionBase();
