@@ -76,7 +76,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 		{input: ['a1x6p14'], expected: {skyscraper: ['a1x6p14']}},
 		{input: ['a3x2p14'], expected: {medrec: ['a3x2p14'], mobileincontent: ['a3x2p14']}},
 		{input: ['a3x5p14'], expected: {mobileleaderboard: ['a3x5p14']}},
-		{input: ['a3x6p14'], expected: {medrec: ['a3x6p14']}},
+		{input: ['a3x6p14'], expected: {medrec: ['a3x6p14'], skyscraper: ['a3x6p14']}},
 		{input: ['a7x9p14'], expected: {leaderboard: ['a7x9p14']}},
 
 		// Pick the lowest price point (single size)
@@ -86,7 +86,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 		// Medrec should get both 3x2 and 3x6 sizes
 		{
 			input: ['a3x2p12', 'a3x2p13', 'a3x6p14', 'a3x6p5'],
-			expected: {medrec: ['a3x2p12', 'a3x6p5'], mobileincontent: ['a3x2p12']}
+			expected: {medrec: ['a3x2p12', 'a3x6p5'], mobileincontent: ['a3x2p12'], skyscraper: ['a3x6p5']}
 		},
 
 		// More complete example
@@ -108,7 +108,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 			],
 			expected: {
 				leaderboard: ['a7x9p4'],
-				skyscraper: ['a1x6p3'],
+				skyscraper: ['a1x6p3', 'a3x6p8'],
 				medrec: ['a3x2p5', 'a3x6p8'],
 				mobileleaderboard: ['a3x5p14'],
 				mobileincontent: ['a3x2p5']

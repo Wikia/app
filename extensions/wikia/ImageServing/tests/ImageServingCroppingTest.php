@@ -3,9 +3,7 @@
  * @author macbre
  * @group Integration
  * @group MediaFeatures
- * @group Broken
- *
- * TODO: Fix the test: https://wikia-inc.atlassian.net/browse/MAIN-6018
+ * @group ImageServing
  */
 class ImageServingCroppingTest extends WikiaBaseTest {
 
@@ -18,6 +16,7 @@ class ImageServingCroppingTest extends WikiaBaseTest {
 		parent::setUp();
 
 		$this->mockGlobalVariable('wgEnableVignette', true);
+		$this->mockGlobalVariable('wgUploadPath', 'http://images.wikia.com/firefly/images');
 	}
 
 	public function testCropping() {

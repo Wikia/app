@@ -19,10 +19,10 @@ class WikiaHtmlTitle {
 	/** @var array - Environment like dev-rychu, sandbox-s4, etc */
 	private $environment;
 
-	/** @var string - The site name to include in the title */
+	/** @var Message|null - The site name to include in the title */
 	private $siteName;
 
-	/** @var string - The brand name to include in the title */
+	/** @var Message - The brand name to include in the title */
 	private $brandName;
 
 	public function __construct() {
@@ -38,6 +38,26 @@ class WikiaHtmlTitle {
 		if ( WikiaPageType::isWikiaHomePage() ) {
 			$this->siteName = null;
 		}
+	}
+
+	/**
+	 * Get brand name
+	 * @return String
+	 */
+	public function getBrandName() {
+		return $this->brandName->inContentLanguage()->escaped();
+	}
+
+	/**
+	 * Get site name
+	 * @return String
+	 */
+	public function getSiteName() {
+		if ( $this->siteName instanceof Message ) {
+			return $this->siteName->inContentLanguage()->escaped();
+		}
+
+		return '';
 	}
 
 	/**
@@ -65,7 +85,7 @@ class WikiaHtmlTitle {
 
 		foreach ( $parts as $part ) {
 			if ( $part instanceof Message ) {
-				$newParts[] = $part->inContentLanguage()->text();
+				$newParts[] = $part->inContentLanguage()->escaped();
 			}
 			if ( is_string( $part ) ) {
 				$newParts[] = $part;
@@ -109,4 +129,14 @@ class WikiaHtmlTitle {
 	public function getTitle() {
 		return join( $this->getSeparator(), $this->getAllParts() );
 	}
+
+	/**
+	 * Append brand name to the title
+	 * @param string $title
+	 * @return string
+	 */
+	public function appendBrandName( $title ) {
+		return join( $this->getSeparator(), [ $title, $this->getBrandName() ] );
+	}
+
 }

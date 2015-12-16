@@ -21,11 +21,11 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 					targeting: {loc: 'top'}
 				},
 				LEFT_SKYSCRAPER_2: {
-					sizes: [[160, 600]],
+					sizes: [[160, 600], [300, 600]],
 					targeting: {loc: 'middle'}
 				},
 				LEFT_SKYSCRAPER_3: {
-					sizes: [[160, 600]],
+					sizes: [[160, 600], [300, 600]],
 					targeting: {loc: 'footer'}
 				},
 				INCONTENT_BOXAD_1: {

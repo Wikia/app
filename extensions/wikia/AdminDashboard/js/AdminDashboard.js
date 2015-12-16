@@ -41,7 +41,10 @@ var AdminDashboard = {
 						// method
 						'addVideo',
 						// data
-						{ url: url },
+						{
+							token: mw.user.tokens.get('editToken'),
+							url: url
+						},
 						// success callback
 						function( formRes ) {
 							if ( formRes.error ) {

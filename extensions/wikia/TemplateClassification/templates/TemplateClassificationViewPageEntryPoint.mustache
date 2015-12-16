@@ -1,6 +1,7 @@
 {{templateTypeLabel}}
-{{#editButton}}<a href="#" class="template-classification-type-text" data-type="{{templateType}}" data-toggle="popover" data-placement="bottom" data-trigger="{{hint.trigger}}" data-mode="{{hint.mode}}" data-has-seen-welcome="{{hint.hasSeen}}" title="{{hint.msg}}">
+{{#editButton}}<span class="template-classification-type-wrapper" data-toggle="popover" data-placement="in bottom" data-trigger="{{hint.trigger}}" data-mode="{{hint.mode}}" data-has-seen-welcome="{{hint.hasSeen}}" title="{{hint.msg}}">
+<a href="#" class="template-classification-type-text" data-type="{{templateType}}">
 	<span class="template-classification-type-label">{{templateTypeName}}</span><span class="sprite-small edit"></span>
-</a>
+</a></span>
 {{/editButton}}
 <span id="tc-throbber"></span>

@@ -267,18 +267,24 @@ class Hooks {
 	}
 
 	/**
-	 * Purges JS pages data
+	 * Purges JS pages data and removes data on a deleted page from the database
 	 *
 	 * @param \WikiPage $article
 	 * @param \User $user
 	 * @param $reason
 	 * @param $id
+	 * @return bool
 	 */
 	public function onArticleDeleteComplete( \WikiPage &$article, \User &$user, $reason, $id ) {
+		global $wgCityId;
+
 		$title = $article->getTitle();
 
 		if ( !is_null( $title )	) {
 			if ( $title->isJsPage() ) {
+				$service = new ContentReviewService();
+				$service->deletePageData( $wgCityId, $id );
+
 				$this->purgeContentReviewData();
 			}
 
