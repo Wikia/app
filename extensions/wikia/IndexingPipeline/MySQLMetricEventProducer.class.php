@@ -5,7 +5,7 @@ namespace Wikia\IndexingPipeline;
 class MySQLMetricEventProducer extends EventProducer {
 	const ROUTE = 'mainpage._output._warehouse';
 
-	public static function send( $pageId, $revisionId, $eventName, $params = [ ] ) {
+	public static function send( $eventName, $pageId, $revisionId, $params = [ ] ) {
 		self::publish(
 			self::prepareRoute(),
 			self::prepareMessage( $pageId )

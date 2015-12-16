@@ -35,7 +35,7 @@ class updateMainPageFilterInMetricProcessor extends Maintenance {
 	public function updateMainPageFilter( $mainPageID ) {
 		global $wgCityId;
 
-		$this->mySQLEventProducer->send( $mainPageID, null, null );
+		$this->mySQLEventProducer->send( null, $mainPageID, null );
 
 		$this->output( sprintf( "%sUpdating data for wiki_id: %d done!%s", PHP_EOL, $wgCityId, PHP_EOL ) );
 		return true;

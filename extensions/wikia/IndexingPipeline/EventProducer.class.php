@@ -6,7 +6,7 @@ abstract class EventProducer {
 	const PRODUCER_NAME = 'MWEventsProducer';
 	protected static $pipe;
 
-	abstract public static function send( $pageId, $revisionId, $eventName, $params = [ ] );
+	abstract public static function send( $eventName, $pageId, $revisionId, $params = [ ] );
 	abstract protected static function getPipeline();
 
 	/**

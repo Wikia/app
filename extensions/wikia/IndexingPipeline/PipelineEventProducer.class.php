@@ -22,7 +22,7 @@ class PipelineEventProducer extends EventProducer {
 	 * @param null $eventName
 	 * @param array $params
 	 */
-	public static function send( $pageId, $revisionId, $eventName, $params = [ ] ) {
+	public static function send( $eventName, $pageId, $revisionId, $params = [ ] ) {
 		self::publish( implode( '.', [ self::ARTICLE_MESSAGE_PREFIX, $eventName ] ),
 			self::prepareMessage( $pageId, $revisionId, $params ) );
 	}
