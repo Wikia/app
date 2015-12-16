@@ -1,18 +1,14 @@
 <?php
 
 class WikiaNewFilesGallery extends WikiaPhotoGallery {
-	/**
-	 * @var WikiaNewFilesModel
-	 */
-	private $model;
+	const ANCHOR_LENGTH = 60;
 
 	/**
 	 * Generate WikiaPhotoGallery object from the images array
 	 *
-	 * @param WikiaNewFilesModel $model
-	 * @param Skin               $skin
+	 * @param Skin $skin
 	 */
-	public function __construct( WikiaNewFilesModel $model, Skin $skin ) {
+	public function __construct( Skin $skin ) {
 		$this->parseParams( array(
 			"rowdivider" => true,
 			"hideoverflow" => true
@@ -21,8 +17,6 @@ class WikiaNewFilesGallery extends WikiaPhotoGallery {
 		if ( $skin->getSkinName() === 'oasis' ) {
 			$this->setWidths( 212 );
 		}
-
-		$this->model = $model;
 	}
 
 	public function addImages( array $images ) {
@@ -34,11 +28,17 @@ class WikiaNewFilesGallery extends WikiaPhotoGallery {
 			$ul = Linker::link( Title::makeTitle( NS_USER, $ut ), $ut, array( 'class' => 'wikia-gallery-item-user' ) );
 			$timeago = wfTimeFormatAgo( $s->img_timestamp );
 
+			$links = [];
+			foreach ( $s->linkingArticles as $row ) {
+				$name = Title::makeTitle( $row['ns'], $row['title'] );
+				$links[] = Linker::link(
+					$name,
+					wfShortenText( $name, self::ANCHOR_LENGTH ),
+					[ 'class' => 'wikia-gallery-item-posted' ]
+				);
+			}
 
-			$links = $this->model->getLinkedFiles( $s );
-
-			// If there are more than two files, remove the 2nd and link to the
-			// image page
+			// If there are more than two files, remove the 2nd and link to the image page
 			if ( count( $links ) == 2 ) {
 				array_splice( $links, 1 );
 				$moreFiles = true;

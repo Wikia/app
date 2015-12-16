@@ -7,40 +7,10 @@ class WikiaNewFilesModel extends WikiaModel {
 	private $dbr;
 
 	/**
-	 * @var string
-	 */
-	private $hideBots = false;
-
-	/**
-	 * Extend the SQL query so that bot-uploaded images are removed
-	 *
-	 * @param WikiaSQL $sql
-	 */
-	private function applyBotExclusion( WikiaSQL $sql ) {
-//		if ( !$this->hideBots ) {
-//			return;
-//		}
-//
-//		$botGroups = User::getGroupsWithPermission( 'bot' );
-//		if ( !count( $botGroups ) ) {
-//			return;
-//		}
-//
-//		// FluentSQL doesn't allow compound conditions in ON clause so we're doing some old school MW here
-//		// what we get is: user_groups.ug_group IN ('bot','bot-global')
-//		$onlyBotGroups = $this->dbr->makeList( [ 'user_groups.ug_group' => $botGroups ], LIST_AND );
-//
-//		$sql->LEFT_JOIN( 'user_groups' )
-//			->ON( 'image.img_user = user_groups.ug_user AND ' . $onlyBotGroups )
-//			->WHERE( 'user_groups.ug_group' )->IS_NULL();
-	}
-
-	/**
 	 * @param bool $hideBots Whether to hide images uploaded by bots or not
 	 */
-	public function __construct( $hideBots ) {
+	public function __construct() {
 		$this->dbr = wfGetDB( DB_SLAVE );
-		$this->hideBots = $hideBots;
 	}
 
 	/**
@@ -52,8 +22,6 @@ class WikiaNewFilesModel extends WikiaModel {
 			->SELECT()
 			->COUNT( '*' )->AS_( 'count' )
 			->FROM( 'image' );
-
-		$this->applyBotExclusion( $sql );
 
 		$count = $sql->run( $this->dbr, function ( ResultWrapper $result ) {
 			return $result->current()->count;
@@ -77,16 +45,14 @@ class WikiaNewFilesModel extends WikiaModel {
 			->LIMIT( $limit )
 			->OFFSET( ( $pageNumber - 1 ) * $limit );
 
-		$this->applyBotExclusion( $sql );
-
 		return $sql->runLoop( $this->dbr, function ( &$data, $row ) {
+			$this->addLinkingArticles( $row );
 			$data[] = $row;
 		} );
 	}
 
-	public function getLinkedFiles( $image ) {
+	private function addLinkingArticles( $image ) {
 		global $wgMemc;
-		$anchorLength = 60;
 
 		$cacheKey = wfMemcKey( __METHOD__, md5( $image->img_name ) );
 		$data = $wgMemc->get( $cacheKey );
@@ -109,15 +75,6 @@ class WikiaNewFilesModel extends WikiaModel {
 			$wgMemc->set( $cacheKey, $data, 60 * 15 );
 		}
 
-		$links = array();
-
-		if ( !empty( $data ) ) {
-			foreach ( $data as $row ) {
-				$name = Title::makeTitle( $row['ns'], $row['title'] );
-				$links[] = Linker::link( $name, wfShortenText( $name, $anchorLength ), array( 'class' => 'wikia-gallery-item-posted' ) );
-			}
-		}
-
-		return $links;
+		$image->linkingArticles = $data;
 	}
 }
