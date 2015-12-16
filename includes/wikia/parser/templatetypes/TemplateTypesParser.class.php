@@ -24,7 +24,6 @@ class TemplateTypesParser {
 				case TemplateClassificationService::TEMPLATE_FLAG:
 					$text = NoticeTemplate::handleNoticeTemplate();
 					break;
-				case TemplateClassificationService::LEGACY_TEMPLATE_REFERENCES:
 				case TemplateClassificationService::TEMPLATE_REFERENCES:
 					$text = ReferencesTemplate::handle();
 					break;
