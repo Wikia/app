@@ -25,7 +25,11 @@ class WikiaNewFilesGallery extends WikiaPhotoGallery {
 			$ut = $s->img_user_text;
 
 			$nt = Title::newFromText( $name, NS_FILE );
-			$ul = Linker::link( Title::makeTitle( NS_USER, $ut ), $ut, array( 'class' => 'wikia-gallery-item-user' ) );
+			$ul = Linker::link(
+				Title::makeTitle( NS_USER, $ut ),
+				$ut,
+				[ 'class' => 'wikia-gallery-item-user' ]
+			);
 			$timeago = wfTimeFormatAgo( $s->img_timestamp );
 
 			$links = [];
@@ -46,8 +50,8 @@ class WikiaNewFilesGallery extends WikiaPhotoGallery {
 				$moreFiles = false;
 			}
 
-			$caption = wfMessage( 'wikianewfiles-uploadby' )->rawParams( $ul )->params( $ut )->escaped() . "<br />\n" .
-				"<i>$timeago</i><br />\n";
+			$caption = wfMessage( 'wikianewfiles-uploadby' )->rawParams( $ul )->params( $ut )->escaped();
+			$caption .= "<br />\n<i>$timeago</i><br />\n";
 
 			if ( count( $links ) ) {
 				$caption .= wfMessage( 'wikianewfiles-postedin' )->escaped() . "&nbsp;" . $links[0];
