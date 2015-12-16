@@ -145,10 +145,9 @@ class RTEParser extends Parser {
 	 */
 	function doHeadings($text) {
 		wfProfileIn(__METHOD__);
-		for ( $i = 6; $i >= 1; --$i ) {
-			$h = str_repeat( '=', $i );
-			$text = preg_replace( "/^$h(.+)$h(\\s*)$/m",
-				"<h$i>\\1</h$i>\\2", $text );
+		if (preg_match('/^(={1,5}).*/m', $text, $m)) {
+		    $n = strlen($m[1]);
+		    $text = preg_replace( "/^{$m[1]}(.+){$m[1]}(\\s*)$/", "<h$n>\\1</h$n>\\2", $text );
 		}
 		wfProfileOut(__METHOD__);
 		return $text;
