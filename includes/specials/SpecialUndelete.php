@@ -545,6 +545,17 @@ class PageArchive {
 				$exists = $dbw->selectField( 'revision', '1',
 					array( 'rev_id' => $row->ar_rev_id ), __METHOD__ );
 				if( $exists ) {
+					// Wikia change - begin - @author: wladek
+					\Wikia\Logger\WikiaLogger::instance()->debug(
+						'RevisionAudit - undeleted revision exists',[
+							'exception' => new Exception(),
+							'page_namespace' => $this->title->getNamespace(),
+							'page_title' => $this->title->getDBkey(),
+							'page_id' => $pageId,
+							'rev_id' => $row->ar_rev_id,
+						]
+					);
+					// Wikia change - end
 					continue; // don't throw DB errors
 				}
 			}
