@@ -3,7 +3,7 @@
 class InsightsCache {
 	const
 		INSIGHTS_MEMC_PREFIX = 'insights',
-		INSIGHTS_MEMC_VERSION = '1.5',
+		INSIGHTS_MEMC_VERSION = '1.6',
 		INSIGHTS_MEMC_TTL = 259200, // Cache for 3 days
 		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData';
 

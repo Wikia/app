@@ -3,7 +3,7 @@
 /**
  * Abstract class that defines necessary set of methods for Insights QueryPage models
  */
-abstract class InsightsQueryPageModel extends InsightsPageModel {
+abstract class InsightsQueryPageModel extends InsightsModel {
 
 	protected $queryPageInstance;
 
@@ -31,22 +31,12 @@ abstract class InsightsQueryPageModel extends InsightsPageModel {
 	 * @return Mixed|null An array with data of articles i.e. title, url, metadata etc.
 	 */
 	public function fetchArticlesData() {
-		$cacheKey = ( new InsightsCache( $this->getConfig() ) )->getMemcKey( InsightsCache::INSIGHTS_MEMC_ARTICLES_KEY );
-		$articlesData = WikiaDataAccess::cache( $cacheKey, InsightsCache::INSIGHTS_MEMC_TTL, function () {
-			$articlesData = [];
+		$articlesData = [];
+		$res = $this->getQueryPageInstance()->doQuery();
 
-			$res = $this->getQueryPageInstance()->doQuery();
-
-			if ( $res->numRows() > 0 ) {
-				$articlesData = $this->prepareData( $res );
-
-				if ( $this->getConfig()->showPageViews() ) {
-					$articlesData = ( new InsightsPageViews( $this->getConfig() ) )->assignPageViewsData( $articlesData );
-				}
-			}
-
-			return $articlesData;
-		} );
+		if ( $res->numRows() > 0 ) {
+			$articlesData = $this->createTitles( $res );
+		}
 
 		return $articlesData;
 	}
@@ -106,5 +96,29 @@ abstract class InsightsQueryPageModel extends InsightsPageModel {
 		}
 
 		return $next;
+	}
+
+	private function createTitles( $res ) {
+		$pages = [];
+		$dbr = wfGetDB( DB_SLAVE );
+
+		while ( $row = $dbr->fetchObject( $res ) ) {
+			if ( $row->title ) {
+				$title = Title::newFromText( $row->title, $row->namespace );
+
+				$data = [
+					'pageId' => $title->getArticleID(),
+					'title' => $title
+				];
+
+				if ( $this->getConfig()->showWhatLinksHere() ) {
+					$data['value'] = $row->value;
+				}
+
+				$pages[] = $data;
+			}
+		}
+
+		return $pages;
 	}
 }

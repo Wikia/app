@@ -27,7 +27,6 @@ class InsightsPageViews {
 		$pageViewsData = $this->getPageViewsData( array_keys( $articlesData ) );
 
 		foreach ( $articlesData as $articleId => $data ) {
-
 			$articlePV = [];
 
 			foreach ( $pageViewsData as $dataPoint ) {

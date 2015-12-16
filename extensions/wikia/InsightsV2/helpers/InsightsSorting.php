@@ -26,7 +26,7 @@ class InsightsSorting {
 		$this->insightsCache = new InsightsCache( $this->config );
 	}
 
-	public function getDefaultSorting() {
+	public static function getDefaultSorting() {
 		return self::INSIGHTS_DEFAULT_SORTING;
 	}
 

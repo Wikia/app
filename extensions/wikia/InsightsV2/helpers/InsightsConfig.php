@@ -7,7 +7,7 @@ class InsightsConfig {
 	private $whatLinksHere = false;
 	private $whatLinksHereMessage = 'insights-used-on';
 	private $displayFix = true;
-	private $actions = [];
+	private $action = false;
 	private $type;
 	private $subtype;
 	private $subtypes = [];
@@ -31,8 +31,8 @@ class InsightsConfig {
 			$this->displayFix = $config['displayfix'];
 		}
 
-		if ( isset( $config['actions'] ) ) {
-			$this->actions = $config['actions'];
+		if ( isset( $config['action'] ) ) {
+			$this->action = $config['action'];
 		}
 
 		if ( isset( $config[self::SUBTYPE] ) ) {
@@ -56,12 +56,8 @@ class InsightsConfig {
 		return $this->displayFix;
 	}
 
-	public function hasActions() {
-		return !empty( $this->actions );
-	}
-
-	public function getActions() {
-		return $this->actions;
+	public function hasAction() {
+		return $this->action;
 	}
 
 	public function getInsightType() {

@@ -1,6 +1,24 @@
 <?php
 
 class InsightsItemData {
+	private $config;
+	private $params;
+
+	public function __construct( InsightsConfig $config, $params ) {
+		$this->config = $config;
+		$this->params = $params;
+	}
+
+	public function getArticleData( Title $title ) {
+		$article['link'] = $this->getTitleLink( $title, $this->params );
+		$article['metadata']['lastRevision'] = $this->prepareRevisionData( $title->getLatestRevID() );
+
+		if ( $this->config->showPageViews() ) {
+			$article['metadata'] = array_merge( $article['metadata'], $this->initPageViews() );
+		}
+
+		return $article;
+	}
 	/**
 	 * Get data about revision
 	 * Who and when made last edition
@@ -81,4 +99,19 @@ class InsightsItemData {
 		return SpecialPage::getTitleFor( 'Whatlinkshere', $title->getPrefixedText() )->getFullUrl();
 	}
 
+	public function getWhatLinksHereData( $title, $value ) {
+		return  [
+			'message' => $this->config->getWhatLinksHereMessage(),
+			'value' => (int)$value,
+			'url' => $this->getWlhUrl( $title ),
+		];
+	}
+
+	private function initPageViews() {
+		return [
+			'pv7' => 0,
+			'pv28' => 0,
+			'pvDiff' => 0
+		];
+	}
 }

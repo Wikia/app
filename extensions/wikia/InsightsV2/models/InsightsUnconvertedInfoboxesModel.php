@@ -7,12 +7,13 @@
 class InsightsUnconvertedInfoboxesModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'nonportableinfoboxes';
 	private static $insightConfig = [
-		'displayFixItMessage', false,
-		'pageviews', false,
-		'whatlinksherelink' => true,
+		'displayFixItMessage' => false,
+		'pageviews' => false,
+		'whatlinkshere' => true
 	];
 
 	public function __construct() {
+		self::$insightConfig['action'] = class_exists( 'TemplateConverter' );
 		$this->config = new InsightsConfig( self::INSIGHT_TYPE, self::$insightConfig );
 	}
 
@@ -28,12 +29,7 @@ class InsightsUnconvertedInfoboxesModel extends InsightsQueryPageModel {
 		return $this->getInsightParam();
 	}
 
-	// TODO !!!!
-	public function hasAltAction() {
-		return class_exists( 'TemplateConverter' );
-	}
-
-	public function getAltAction( Title $title ) {
+	public function getAction( Title $title ) {
 		$subpage = Title::newFromText( $title->getText() . "/" . wfMessage('templatedraft-subpage')->escaped() , NS_TEMPLATE );
 
 		if ( !$subpage instanceof Title ) {

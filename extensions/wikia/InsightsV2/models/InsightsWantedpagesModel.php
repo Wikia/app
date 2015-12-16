@@ -20,35 +20,6 @@ class InsightsWantedpagesModel extends InsightsQueryPageModel {
 		return new WantedPagesPage();
 	}
 
-	public function prepareData( $res ) {
-		$data = [];
-		$itemData = new InsightsItemData();
-
-		$dbr = wfGetDB( DB_SLAVE );
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			if ( $row->title ) {
-				$article = [];
-				$params = $this->getUrlParams();
-
-				$title = Title::newFromText( $row->title, $row->namespace );
-				if ( $title === null ) {
-					$this->error( 'WantedPagesModel received reference to non existent page' );
-					continue;
-				}
-
-				$article['link'] = $itemData->getTitleLink( $title, $params );
-				$article['metadata']['wantedBy'] = [
-					'message' => $this->getConfig()->getWhatLinksHereMessage(),
-					'value' => (int)$row->value,
-					'url' => $itemData->getWlhUrl( $title ),
-				];
-
-				$data[] = $article;
-			}
-		}
-		return $data;
-	}
-
 	/**
 	 * Checks if a given article has been fixed by a user
 	 * inside a productivity loop.

@@ -18,6 +18,8 @@ class InsightsPaginator {
 		$this->subpage = $subpage;
 		$this->params = $params;
 		$this->total = ( new InsightsCountService() )->getCount( $this->subpage );
+
+		$this->preparePaginationParams();
 	}
 
 	public function getTotal() {
@@ -57,8 +59,6 @@ class InsightsPaginator {
 	 */
 	public function getPagination() {
 		$paginatorBar = '';
-
-		$this->preparePaginationParams();
 
 		$total = $this->getTotal();
 		$itemsPerPage = $this->getLimit();

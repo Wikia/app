@@ -31,6 +31,7 @@ $wgExtensionCredits['specialpage'][] = [
  */
 $wgAutoloadClasses['InsightsController'] = $dir . 'InsightsController.class.php';
 $wgAutoloadClasses['InsightsLoopController'] = $dir . 'InsightsLoopController.class.php';
+$wgAutoloadClasses['InsightsContext'] = $dir . 'InsightsContext.class.php';
 
 /**
  * Config
@@ -63,7 +64,6 @@ $wgGroupPermissions['*']['insights'] = true;
  * Models
  */
 $wgAutoloadClasses['InsightsModel'] = $dir . 'models/InsightsModel.php';
-$wgAutoloadClasses['InsightsPageModel'] = $dir . 'models/InsightsPageModel.php';
 $wgAutoloadClasses['InsightsQueryPageModel'] = $dir . 'models/InsightsQueryPageModel.php';
 $wgAutoloadClasses['InsightsDeadendModel'] = $dir . 'models/InsightsDeadendModel.php';
 $wgAutoloadClasses['InsightsUncategorizedModel'] = $dir . 'models/InsightsUncategorizedModel.php';

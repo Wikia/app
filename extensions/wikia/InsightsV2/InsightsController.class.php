@@ -1,8 +1,6 @@
 <?php
 
 class InsightsController extends WikiaSpecialPageController {
-	private $model;
-
 	public function __construct() {
 		parent::__construct( 'Insights', 'insights', true );
 	}
@@ -16,9 +14,6 @@ class InsightsController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle( wfMessage( 'insights' )->escaped() );
 		$this->addAssets();
 
-		/**
-		 * @var A slug of a subpage
-		 */
 		$this->type = $this->getPar();
 		$this->subtype = $this->request->getVal( 'subtype', null );
 		$this->themeClass = SassUtil::isThemeDark() ? 'insights-dark' : 'insights-light';
@@ -37,77 +32,71 @@ class InsightsController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Entry point for rendering UI for filtering flags
-	 */
-	public function prepareSubtypes() {
-		$this->setVal( 'subtypes', $this->model->getConfig()->getSubtypes() );
-	}
-
-	/**
 	 * Collects all necessary data used for rendering a subpage
 	 * @throws MWException
 	 */
 	private function renderSubpage() {
 		$helper = new InsightsHelper();
 
-		$this->model = $helper->getInsightModel( $this->type, $this->subtype );
-		/**
-		 * A model for insights should implement at least 3 methods:
-		 * - getContent() - returning all the visible data
-		 * - getData() - returning all the helping data
-		 * - getTemplate() - returning an overriding template
-		 */
-		if ( $this->model instanceof InsightsPageModel ) {
-			$params = $this->filterParams( $this->request->getParams() );
+		$model = $helper->getInsightModel( $this->type, $this->subtype );
+		$params = $this->filterParams( $this->request->getParams() );
 
-			$paginator = new InsightsPaginator( $this->type, $params );
-			$this->paginatorBar = $paginator->getPagination();
-			$content = $this->model->getContent( $params, $paginator->getOffset(), $paginator->getLimit() );
-			$this->setVal( 'content', $content );
+		$this->setTemplateValues( $model, $params );
+		$this->overrideTemplate( $model->getTemplate() );
+	}
 
-			$this->prepareSortingData();
-			if ( $this->model->getConfig()->hasSubtypes() ) {
-				$this->prepareSubtypes();
-			}
-			$this->setVal( 'showPageViews', $this->model->getConfig()->showPageViews() );
-			$this->setVal( 'hasActions', $this->model->getConfig()->hasActions() );
-			$this->setVal( 'insightsList', $helper->prepareInsightsList() );
-			$this->overrideTemplate( $this->model->getTemplate() );
-		} else {
-			throw new MWException( 'An Insights subpage should implement the InsightsQueryPageModel interface.' );
-		}
+	public function insightsList() {
+		$helper = new InsightsHelper();
+		$this->setVal( 'type', $this->getVal( 'type', null ) );
+		$this->setVal( 'insightsList', $helper->prepareInsightsList() );
 	}
 
 	/**
 	 * Prepare data needed to sort list
 	 */
-	private function prepareSortingData() {
+	public function pageViews() {
 		$dropdown = [];
 
-		if( $this->model->getConfig()->showPageViews() ) {
-			$sort = $this->request->getVal( 'sort', ( new InsightsSorting( $this->model->getConfig() ) )->getDefaultSorting() );
+		$sort = $this->request->getVal( 'sort', InsightsSorting::getDefaultSorting() );
 
-			$sortingTypes = InsightsSorting::$sorting;
+		$sortingTypes = InsightsSorting::$sorting;
 
-			/**
-			 * Used to create the following messages:
-			 *
-			 * 'insights-list-pv7',
-			 * 'insights-list-pv28',
-			 * 'insights-list-pvDiff',
-			 * 'insights-list-title'
-			 */
-			foreach ( $sortingTypes as $key => $sorting ) {
-				$dropdown[ $key ] = wfMessage( 'insights-sort-' . $key )->escaped();
-			}
-
-			$this->current = $sort;
-			$this->metadata = isset( $sortingTypes[ $sort ]['metadata'] )
-				? $sortingTypes[ $sort ]['metadata']
-				: $sort;
+		/**
+		 * Used to create the following messages:
+		 *
+		 * 'insights-list-pv7',
+		 * 'insights-list-pv28',
+		 * 'insights-list-pvDiff',
+		 * 'insights-list-title'
+		 */
+		foreach ( $sortingTypes as $key => $sorting ) {
+			$dropdown[ $key ] = wfMessage( 'insights-sort-' . $key )->escaped();
 		}
 
-		$this->dropdown = $dropdown;
+		$this->setVal( 'current', $sort );
+		$this->setVal( 'dropdown', $dropdown );
+	}
+
+	private function setTemplateValues( $model, $params ) {
+		$insightsContext = new InsightsContext( $model, $this->type, $params );
+
+		$sort = $this->request->getVal( 'sort', InsightsSorting::getDefaultSorting() );
+		$sortingTypes = InsightsSorting::$sorting;
+
+		$metadata = isset( $sortingTypes[ $sort ]['metadata'] )	? $sortingTypes[ $sort ]['metadata'] : $sort;
+
+		$this->response->setData( [
+			'content' => $insightsContext->getContent(),
+			'pagination' => $insightsContext->getPagination(),
+			'subtypes' => $model->getConfig()->getSubtypes(),
+			'showPageViews' => $model->getConfig()->showPageViews(),
+			'hasActions' => $model->getConfig()->hasAction(),
+			'type' => $this->type,
+			'subtype' => $this->subtype,
+			'themeClass' => $this->themeClass,
+			'sort' => $sort,
+			'metadata' => $metadata
+		] );
 	}
 
 	private function addAssets() {
@@ -115,8 +104,6 @@ class InsightsController extends WikiaSpecialPageController {
 		$this->response->addAsset( '/extensions/wikia/InsightsV2/scripts/InsightsPage.js' );
 	}
 
-
-	/** new methods **/
 	private function filterParams( $params ) {
 		unset( $params['title'] );
 		unset( $params['controller'] );
