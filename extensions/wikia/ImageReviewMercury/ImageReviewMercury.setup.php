@@ -17,7 +17,7 @@ $wgAutoloadClasses['ImageReviewMercuryController'] =  $dir . 'ImageReviewMercury
 /**
  * special pages
  */
-$wgSpecialPages['Version'] = 'ImageReviewMercuryController';
+$wgSpecialPages['ImageReviewMercury'] = 'ImageReviewMercuryController';
 
 /**
  * message files
@@ -26,7 +26,7 @@ $wgExtensionMessagesFiles['ImageReviewMercury'] = $dir . 'ImageReviewMercury.i18
 
 $wgExtensionCredits['other'][] = array(
 	'name'				=> 'Wikia Special:ImageReviewMercury',
-	'version'			=> '1.1',
+	'version'			=> '0.1',
 	'author'			=> 'Rafal Wilinski',
 	'descriptionmsg'	=> 'image-review embedded from mercury',
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ImageReviewMercury'
