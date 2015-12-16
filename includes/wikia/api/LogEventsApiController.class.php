@@ -35,17 +35,9 @@ class LogEventsApiController extends WikiaApiController {
 		$comment = $this->request->getVal( 'comment' );
 		$params = json_decode( $this->request->getVal( 'params', '[]' ) );
 
-		try {
-			$entry = new LogPage( $type );
-			$id = $entry->addEntry( $action, $wgTitle, $comment, $params, $wgUser );
-		}
-		catch ( DBQueryError $e ) {
-			// 1048 Column 'log_type' cannot be null
-			throw new BadRequestException( $e->getMessage() );
-		}
-		catch ( Exception $e ) {
-			throw $e;
-		}
+		// exceptions thrown by addEntry() will be handled by Nirvana API dispatcher
+		$entry = new LogPage( $type );
+		$id = $entry->addEntry( $action, $wgTitle, $comment, $params, $wgUser );
 
 		$this->response->setCode( WikiaResponse::RESPONSE_CODE_CREATED );
 		$this->response->setData( [ 'id' => $id ] );
