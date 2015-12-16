@@ -35,7 +35,9 @@ class MySQLMetricEventProducerTest extends WikiaBaseTest {
 				'expect' => (object)array(
 					"id" => "1000_453",
 					"update" => (object)array(
-						'mainpagefilter_b' => '1'
+						'matches_mv' => (object)array(
+							'mainpagefilter_b' => '1'
+						)
 					)
 				)
 			],
@@ -45,7 +47,9 @@ class MySQLMetricEventProducerTest extends WikiaBaseTest {
 				'expect' => (object)array(
 					"id" => "333_111",
 					"update" => (object)array(
-						'mainpagefilter_b' => '1'
+						'matches_mv' => (object)array(
+							'mainpagefilter_b' => '1'
+						)
 					)
 				)
 			]

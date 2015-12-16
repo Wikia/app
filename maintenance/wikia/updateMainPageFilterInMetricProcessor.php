@@ -1,13 +1,13 @@
 <?php
 
 /**
- *
  * @ingroup Maintenance
  */
 
 require_once( dirname( __FILE__ ) . '../../Maintenance.php' );
 
 class updateMainPageFilterInMetricProcessor extends Maintenance {
+	private $mySQLEventProducer;
 
 	/**
 	 * Set script options
@@ -18,27 +18,15 @@ class updateMainPageFilterInMetricProcessor extends Maintenance {
 	}
 
 	public function execute() {
+		$this->mySQLEventProducer = new \Wikia\IndexingPipeline\MySQLMetricEventProducer();
 		$mainPageID = (new Wikia\Search\MediaWikiService)->getMainPageArticleId();
 		$this->updateMainPageFilter( $mainPageID );
 	}
 
 	public function updateMainPageFilter( $mainPageID ) {
-		global $wgCityId, $wgPortableMetricDB;
+		global $wgCityId;
 
-		$db = wfGetDB( DB_MASTER, [], $wgPortableMetricDB );
-		$result = ( new \WikiaSQL() )
-			->UPDATE( 'articlestats' )
-			->SET('mainpagefilter_b', 1)
-			->WHERE( 'wiki_id' )->EQUAL_TO( $wgCityId )
-			->AND_('page_id')->EQUAL_TO( $mainPageID )
-			->run( $db );
-
-		$affectedRows = $db->affectedRows();
-
-		if ( $affectedRows === 0 ) {
-			print 'Operation failed for wiki_id: ' . $wgCityId;
-			return false;
-		}
+		$this->mySQLEventProducer->send( $mainPageID, null, null );
 
 		$this->output( "\nUpdating data for wiki_id: " . $wgCityId ." done!" );
 		return true;

@@ -5,33 +5,36 @@ namespace Wikia\IndexingPipeline;
 class MySQLMetricEventProducer extends EventProducer {
 
 	public static function send( $pageId, $revisionId, $eventName, $params = [ ] ) {
-		self::publish( self::prepareRoute(),
-			self::prepareMessage( $pageId, $revisionId, $params ) );
+		self::publish(
+			self::prepareRoute(),
+			self::prepareMessage( $pageId )
+		);
 	}
 
 	/**
-	 * @desc create message with cityId and pageId fields
+	 * @desc create message with cityId, pageId and
+	 * updated mainpagefilter_b
 	 *
 	 * @param $pageId
-	 * @param $revisionId - not used
-	 * @param $params - not used
 	 * @return \stdClass
 	 */
-	public static function prepareMessage( $pageId, $revisionId, $params ) {
+	public static function prepareMessage( $pageId ) {
 		global $wgCityId;
 		$msg = new \stdClass();
 		$msg->id = sprintf( '%s_%s', $wgCityId, $pageId );
 
 		$update = new \stdClass();
-		$update->mainpagefilter_b = "1";
+		$matches_mv = new \stdClass();
+		$matches_mv->mainpagefilter_b = "1";
 
+		$update->matches_mv = $matches_mv;
 		$msg->update = $update;
 
 		return $msg;
 	}
 
 	public static function prepareRoute() {
-		$route = 'MySqlMetricWorker.1.1.#portable._output._warehouse';
+		$route = 'MySqlMetricWorker.1.1.mainpage._output._warehouse';
 
 		return $route;
 	}
