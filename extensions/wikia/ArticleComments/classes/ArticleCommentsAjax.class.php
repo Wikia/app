@@ -49,7 +49,7 @@ class ArticleCommentsAjax {
 
 		// Return with error if we can't create a new article comment
 		$comment = ArticleComment::newFromId( $commentId );
-		if ( $comment ) {
+		if ( empty( $comment ) ) {
 			return $errorResult;
 		}
 
