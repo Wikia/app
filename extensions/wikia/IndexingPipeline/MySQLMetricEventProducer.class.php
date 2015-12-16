@@ -17,12 +17,12 @@ class MySQLMetricEventProducer extends EventProducer {
 	 * @param $params - not used
 	 * @return \stdClass
 	 */
-	protected static function prepareMessage( $pageId, $revisionId, $params ) {
+	public static function prepareMessage( $pageId, $revisionId, $params ) {
 		global $wgCityId;
-		$msg = new stdClass();
+		$msg = new \stdClass();
 		$msg->id = sprintf( '%s_%s', $wgCityId, $pageId );
 
-		$update = new stdClass();
+		$update = new \stdClass();
 		$update->mainpagefilter_b = "1";
 
 		$msg->update = $update;
