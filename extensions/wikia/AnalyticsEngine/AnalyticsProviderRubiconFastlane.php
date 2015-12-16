@@ -23,7 +23,7 @@ class AnalyticsProviderRubiconFastlane implements iAnalyticsProvider {
 		require.optional($moduleName)
 	], function (geo, instantGlobals, rubiconFastlane) {
 		if (geo.isProperGeo(instantGlobals[$instantGlobalName])) {
-			rubiconFastlane.call('oasis');
+			rubiconFastlane.call();
 		};
 	});
 CODE;
