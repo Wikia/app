@@ -3,8 +3,13 @@
 
 	$( document ).ready( function() {
 		function saveUserResponse( val ) {
+			var data = {
+				val: val,
+				token: mw.user.tokens.get('editToken')
+			};
+
 			$( '.ebs-container' ).hide();
-			return $.nirvana.postJson( 'EmergencyBroadcastSystemController', 'saveUserResponse', { val: val } );
+			return $.nirvana.postJson( 'EmergencyBroadcastSystemController', 'saveUserResponse', data );
 		}
 
 		$( '.ebs-primary-action' ).click( function(){
