@@ -2,6 +2,11 @@
 
 class WikiaNewFilesModel extends WikiaModel {
 	/**
+	 * Cache TTL for the list of articles linking to an image
+	 */
+	const CACHE_LINKING_ARTICLES_TTL = 60 * 15;
+
+	/**
 	 * @var Database
 	 */
 	private $dbr;
@@ -52,29 +57,22 @@ class WikiaNewFilesModel extends WikiaModel {
 	}
 
 	private function addLinkingArticles( $image ) {
-		global $wgMemc;
+		$sql = ( new WikiaSQL() )
+			->SELECT( 'page.page_namespace', 'page.page_title' )
+			->FROM( 'imagelinks' )
+			->JOIN( 'page' )->ON( 'imagelinks.il_from', 'page.page_id' )
+			->WHERE( 'imagelinks.il_to' )->EQUAL_TO( $image->img_name )
+			// Get the NS_MAIN first
+			->ORDER_BY( 'page.page_namespace ASC' )
+			->LIMIT( 2 );
 
-		$cacheKey = wfMemcKey( __METHOD__, md5( $image->img_name ) );
-		$data = $wgMemc->get( $cacheKey );
-		if ( !is_array( $data ) ) {
-			// The ORDER BY ensures we get NS_MAIN pages first
-			$dbr = wfGetDB( DB_SLAVE );
-			$res = $dbr->select(
-				array( 'imagelinks', 'page' ),
-				array( 'page_namespace', 'page_title' ),
-				array( 'il_to' => $image->img_name, 'il_from = page_id' ),
-				__METHOD__,
-				array( 'LIMIT' => 2, 'ORDER BY' => 'page_namespace ASC' )
-			);
+		$sql->cache( self::CACHE_LINKING_ARTICLES_TTL, null, true /* cache empty */ );
 
-			while ( $s = $res->fetchObject() ) {
-				$data[] = array( 'ns' => $s->page_namespace, 'title' => $s->page_title );
-			}
-			$dbr->freeResult( $res );
-
-			$wgMemc->set( $cacheKey, $data, 60 * 15 );
-		}
-
-		$image->linkingArticles = $data;
+		$image->linkingArticles = $sql->runLoop( $this->dbr, function ( &$data, $row ) {
+			$data[] = [
+				'ns' => $row->page_namespace,
+				'title' => $row->page_title,
+			];
+		} );
 	}
 }
