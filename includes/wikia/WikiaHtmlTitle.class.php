@@ -49,18 +49,6 @@ class WikiaHtmlTitle {
 	}
 
 	/**
-	 * Get site name
-	 * @return String
-	 */
-	public function getSiteName() {
-		if ( $this->siteName instanceof Message ) {
-			return $this->siteName->inContentLanguage()->escaped();
-		}
-
-		return '';
-	}
-
-	/**
 	 * Set the HTML title parts
 	 *
 	 * You can pass an empty array: the generated title will be wiki name + brand name
@@ -129,14 +117,4 @@ class WikiaHtmlTitle {
 	public function getTitle() {
 		return join( $this->getSeparator(), $this->getAllParts() );
 	}
-
-	/**
-	 * Append brand name to the title
-	 * @param string $title
-	 * @return string
-	 */
-	public function appendBrandName( $title ) {
-		return join( $this->getSeparator(), [ $title, $this->getBrandName() ] );
-	}
-
 }
