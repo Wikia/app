@@ -10,7 +10,7 @@ php:
   - nightly
 
 install:
-  - travis_retry composer update --no-progress --prefer-dist --profile
+  - travis_retry composer update --no-progress --prefer-dist --profile -v
 
 before_script: 
   - export CHROME_BIN=chromium-browser
