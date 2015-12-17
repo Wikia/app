@@ -4,12 +4,12 @@
  * @ingroup Maintenance
  *
  * @desc For current wiki, find an ID of it's Main Page
- * and push an event marking it as a main page (mainpagefilter_b = 1)
+ * and push an event marking it as a main page (mainpage_b = 1)
  * to MySqlMetricWorker
  * 
- * note: before running this script make sure column mainpagefilter_b is
+ * note: before running this script make sure column mainpage_b is
  * totally clean - it'll help us avoid a situation where Main Page
- * as been moved and we have two pages having mainpagefilter_b = 1
+ * as been moved and we have two pages having mainpage_b = 1
  * on the same wikia
  */
 
