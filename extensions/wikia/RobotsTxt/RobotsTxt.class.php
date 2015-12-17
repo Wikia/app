@@ -44,6 +44,8 @@ class RobotsTxt {
 	/**
 	 * Disallow given namespace
 	 *
+	 * It emits both the Disallow and Noindex directive
+	 *
 	 * If you block NS_SPECIAL, you can still allow specific special pages by allowSpecialPage
 	 *
 	 * Multiple ways of accessing the special pages are blocked:
@@ -75,6 +77,8 @@ class RobotsTxt {
 
 	/**
 	 * Disallow a specific path
+	 *
+	 * It emits both the Disallow and Noindex directive
 	 *
 	 * @param $path the path prefix to block (some robots accept wildcards)
 	 */
