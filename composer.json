@@ -32,10 +32,12 @@
 			"npm test"
 		],
 		"post-install-cmd": [
-			"npm install"
+			"npm install",
+			"npm install grunt-cli"
 		],
 		"post-update-cmd": [
-			"npm install"
+			"npm install",
+			"npm install grunt-cli"
 		]
 	}
 }
