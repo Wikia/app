@@ -28,14 +28,7 @@
 	},
 	"scripts": {
 		"test": [
-			"parallel-lint . --exclude extensions/VisualEditor/lib/ve/ --exclude vendor",
-			"npm test"
-		],
-		"post-install-cmd": [
-			"npm install"
-		],
-		"post-update-cmd": [
-			"npm install"
+			"parallel-lint . --exclude vendor"
 		]
 	}
 }
