@@ -14,10 +14,15 @@ before_install:
   - npm install grunt-cli
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/lib/ve/
   - npm install grunt-cli
-
 install:
+  - cd $TRAVIS_BUILD_DIR/
   - travis_retry composer update --no-progress --prefer-dist --profile -v
-
+  - cd $TRAVIS_BUILD_DIR/
+  - npm install
+  - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/
+  - npm install
+  - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/lib/ve/
+  - npm install
 before_script: 
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
@@ -26,6 +31,12 @@ before_script:
   - grunt build
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/lib/ve/
   - grunt build
-
 script:
+  - cd $TRAVIS_BUILD_DIR/
   - composer test
+  - cd $TRAVIS_BUILD_DIR/
+  - npm test
+  - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/
+  - npm test
+  - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/lib/ve/
+  - npm test
