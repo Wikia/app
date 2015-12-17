@@ -28,16 +28,14 @@
 	},
 	"scripts": {
 		"test": [
-			"parallel-lint . --exclude vendor",
+			"parallel-lint . --exclude extensions/VisualEditor/lib/ve/ --exclude vendor",
 			"npm test"
 		],
 		"post-install-cmd": [
-			"npm install",
-			"npm install grunt-cli"
+			"npm install"
 		],
 		"post-update-cmd": [
-			"npm install",
-			"npm install grunt-cli"
+			"npm install"
 		]
 	}
 }
