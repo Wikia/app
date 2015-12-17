@@ -14,7 +14,7 @@ class MySQLMetricEventProducer extends EventProducer {
 
 	/**
 	 * @desc create message with cityId, pageId and
-	 * updated mainpagefilter_b
+	 * updated mainpage_b
 	 *
 	 * @param $pageId
 	 * @return \stdClass
@@ -26,7 +26,7 @@ class MySQLMetricEventProducer extends EventProducer {
 
 		$update = new \stdClass();
 		$matches_mv = new \stdClass();
-		$matches_mv->mainpagefilter_b = "1";
+		$matches_mv->mainpage_b = "1";
 
 		$update->matches_mv = $matches_mv;
 		$msg->update = $update;
