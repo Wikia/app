@@ -26,7 +26,7 @@ class MySQLMetricEventProducer extends EventProducer {
 
 		$update = new \stdClass();
 		$matches_mv = new \stdClass();
-		$matches_mv->mainpage_b = "1";
+		$matches_mv->mainpage_b = "true";
 
 		$update->matches_mv = $matches_mv;
 		$msg->update = $update;
