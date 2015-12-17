@@ -8,7 +8,7 @@ before_install:
   - npm install grunt-cli
 install:
   - cd $TRAVIS_BUILD_DIR/
-  - travis_retry composer update --no-progress --prefer-dist --profile
+  - composer update --no-progress --prefer-dist --profile
   - cd $TRAVIS_BUILD_DIR/
   - npm install
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/
