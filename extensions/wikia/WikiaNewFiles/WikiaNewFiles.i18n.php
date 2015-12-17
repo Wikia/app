@@ -153,6 +153,25 @@ $messages['hu'] = [
 	'wikianewfiles-title' => 'Képek',
 ];
 
+/** Italian
+ * @author http://messaging.wikia.com/
+ */
+$messages['it'] = [
+	'wikianewfiles-title' => 'Immagini',
+	'wikianewfiles-uploadby' => 'caricato da $1',
+	'wikianewfiles-postedin' => 'Pubblicato in',
+	'wikianewfiles-more' => 'altre…',
+];
+
+/** Japanese
+ * @author http://messaging.wikia.com/
+ */
+$messages['ja'] = [
+	'wikianewfiles-title' => '画像',
+	'wikianewfiles-postedin' => '次のページでアップロード:',
+	'wikianewfiles-more' => 'さらに見る…',
+];
+
 /** Georgian (ქართული)
  * @author DevaMK
  */
@@ -343,7 +362,7 @@ $messages['vi'] = [
  * @author Liuxinyu970226
  */
 $messages['zh-hans'] = [
-	'wikianewfiles-title' => '照片',
+	'wikianewfiles-title' => '图片',
 	'wikianewfiles-desc' => '扩充[[Special:NewFiles|特殊页面]]以重写一些页顶格式',
 	'wikianewfiles-uploadby' => '由{{GENDER:$2|$1}}',
 	'wikianewfiles-postedin' => '发布于',
