@@ -1,5 +1,7 @@
 language: node_js
 node_js:
+  - 4
+  - 0.12
   - 0.10
 before_install: 
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/
@@ -28,3 +30,5 @@ script:
   - npm test
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/lib/ve/
   - npm test
+
+sudo: false
