@@ -8,7 +8,9 @@ php:
   - 5.3
   - hhvm
   - nightly
-sudo:false
+
+sudo: false
+
 before_install: 
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/
   - npm install grunt-cli
