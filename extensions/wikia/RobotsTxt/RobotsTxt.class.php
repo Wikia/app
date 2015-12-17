@@ -147,11 +147,19 @@ class RobotsTxt {
 			$this->disallowed
 		);
 
+		$noIndexSection = array_map(
+			function ( $prefix ) {
+				return 'Noindex: ' . $this->encodeUri( $prefix );
+			} ,
+			$this->disallowed
+		);
+
 		if ( count( $allowSection ) || count( $disallowSection ) ) {
 			return array_merge(
 				['User-agent: *'],
 				$allowSection,
 				$disallowSection,
+				$noIndexSection,
 				['']
 			);
 		}
