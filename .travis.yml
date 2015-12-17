@@ -9,6 +9,12 @@ php:
   - hhvm
   - nightly
 
+before_install: 
+  - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/
+  - npm install grunt-cli
+  - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/lib/ve/
+  - npm install grunt-cli
+
 install:
   - travis_retry composer update --no-progress --prefer-dist --profile -v
 
