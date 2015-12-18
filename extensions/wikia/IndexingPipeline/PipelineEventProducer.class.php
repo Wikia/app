@@ -54,7 +54,7 @@ class PipelineEventProducer extends EventProducer {
 	 *  - article rename
 	 * @return bool
 	 */
-	public static function onNewRevisionFromEditComplete( $article, Revision $rev, $baseID, User $user ) {
+	public static function onNewRevisionFromEditComplete( $article, \Revision $rev, $baseID, \User $user ) {
 		$ns = self::preparePageNamespaceName( $article->getTitle() );
 		$action = $rev->getPrevious() === null ? self::ACTION_CREATE : self::ACTION_UPDATE;
 		$pageId = $article->getId();
@@ -87,7 +87,7 @@ class PipelineEventProducer extends EventProducer {
 	 * Send ACTION_CREATE as an article with new ID is created
 	 * @return bool
 	 */
-	public static function onArticleUndelete( Title &$oTitle, $isNew = false ) {
+	public static function onArticleUndelete( \Title &$oTitle, $isNew = false ) {
 		$ns = self::preparePageNamespaceName( $oTitle );
 		$revisionId = $oTitle->getLatestRevID();
 
@@ -119,11 +119,11 @@ class PipelineEventProducer extends EventProducer {
 	 *  - successful classification of parent template during draft creation
 	 *
 	 * @param integer $pageId The affected template's pageId
-	 * @param Title $title The affected template's Title object
+	 * @param \Title $title The affected template's Title object
 	 * @param $templateType
 	 * @return bool
 	 */
-	public static function onTemplateClassified ( $pageId, Title $title, $templateType ) {
+	public static function onTemplateClassified ( $pageId, \Title $title, $templateType ) {
 		$ns = self::preparePageNamespaceName( $title );
 		$revisionId = $title->getLatestRevID();
 
@@ -148,7 +148,7 @@ class PipelineEventProducer extends EventProducer {
 	 */
 	protected static function prepareMessage( $pageId, $revisionId, $params ) {
 		global $wgCityId;
-		$msg = new stdClass();
+		$msg = new \stdClass();
 		$msg->cityId = $wgCityId;
 		$msg->pageId = $pageId;
 		$msg->revisionId = $revisionId;
@@ -214,7 +214,7 @@ class PipelineEventProducer extends EventProducer {
 		if ( in_array( $namespaceID, $wgContentNamespaces ) ) {
 			$pageNamespace = self::NS_CONTENT;
 		} else {
-			$pageNamespace = strtolower( MWNamespace::getCanonicalName( $namespaceID ) );
+			$pageNamespace = strtolower( \MWNamespace::getCanonicalName( $namespaceID ) );
 		}
 
 		return $pageNamespace;

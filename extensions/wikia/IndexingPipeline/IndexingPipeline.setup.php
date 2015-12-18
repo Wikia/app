@@ -19,8 +19,8 @@ $wgAutoloadClasses['Wikia\IndexingPipeline\PipelineEventProducer'] =  $dir . '/P
 $wgAutoloadClasses['Wikia\IndexingPipeline\MySQLMetricWorkerConnectionBase'] =  $dir . '/MySQLMetricWorkerConnectionBase.class.php';
 $wgAutoloadClasses['Wikia\IndexingPipeline\MySQLMetricEventProducer'] =  $dir . '/MySQLMetricEventProducer.class.php';
 
-$wgHooks['NewRevisionFromEditComplete'][] = 'PipelineEventProducer::onNewRevisionFromEditComplete';
-$wgHooks['ArticleDeleteComplete'][] = 'PipelineEventProducer::onArticleDeleteComplete';
-$wgHooks['ArticleUndelete'][] = 'PipelineEventProducer::onArticleUndelete';
-$wgHooks['TitleMoveComplete'][] = 'PipelineEventProducer::onTitleMoveComplete';
-$wgHooks['UserTemplateClassification::TemplateClassified'][] = 'PipelineEventProducer::onTemplateClassified';
+$wgHooks['NewRevisionFromEditComplete'][] = '\Wikia\IndexingPipeline\PipelineEventProducer::onNewRevisionFromEditComplete';
+$wgHooks['ArticleDeleteComplete'][] = '\Wikia\IndexingPipeline\PipelineEventProducer::onArticleDeleteComplete';
+$wgHooks['ArticleUndelete'][] = '\Wikia\IndexingPipeline\PipelineEventProducer::onArticleUndelete';
+$wgHooks['TitleMoveComplete'][] = '\Wikia\IndexingPipeline\PipelineEventProducer::onTitleMoveComplete';
+$wgHooks['UserTemplateClassification::TemplateClassified'][] = '\Wikia\IndexingPipeline\PipelineEventProducer::onTemplateClassified';
