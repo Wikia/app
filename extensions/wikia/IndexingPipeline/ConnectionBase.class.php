@@ -40,7 +40,7 @@ class ConnectionBase {
 		$channel = $this->getChannel();
 		try {
 			$channel->basic_publish(
-				new \AMQPMessage( json_encode( $body ), [
+				new AMQPMessage( json_encode( $body ), [
 					'delivery_mode' => self::DURABLE_MESSAGE,
 					'expiration' => self::MESSAGE_TTL
 				] ),
@@ -48,7 +48,7 @@ class ConnectionBase {
 				$routingKey
 			);
 		} catch ( \Exception $e ) {
-			\WikiaLogger::instance()->error( $e->getMessage() );
+			\Wikia\Logger\WikiaLogger::instance()->error( $e->getMessage() );
 		}
 	}
 

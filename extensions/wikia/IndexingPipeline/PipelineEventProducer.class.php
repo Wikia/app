@@ -24,8 +24,10 @@ class PipelineEventProducer {
 	 * @param array $params
 	 */
 	public static function send( $eventName, $pageId, $revisionId, $params = [ ] ) {
-		self::getPipeline()->publish( implode( '.', [ self::ARTICLE_MESSAGE_PREFIX, $eventName ] ),
-			self::prepareMessage( $pageId, $revisionId, $params ) );
+		self::getPipeline()->publish(
+			implode( '.', [ self::ARTICLE_MESSAGE_PREFIX, $eventName ] ),
+			self::prepareMessage( $pageId, $revisionId, $params )
+		);
 	}
 
 	/**
