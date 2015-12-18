@@ -7,7 +7,7 @@ class MySQLMetricEventProducer {
 	const ROUTE = 'mainpage._output._warehouse';
 
 	public static function send( $pageId ) {
-		self::publish(
+		self::getPipeline()->publish(
 			self::prepareRoute(),
 			self::prepareMessage( $pageId )
 		);
