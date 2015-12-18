@@ -2,7 +2,7 @@
 
 namespace Wikia\IndexingPipeline;
 
-class PipelineEventProducer extends EventProducer {
+class PipelineEventProducer {
 	const ARTICLE_MESSAGE_PREFIX = 'article';
 	const NS_CONTENT = 'content';
 	const ROUTE_ACTION_KEY = '_action';
@@ -12,7 +12,8 @@ class PipelineEventProducer extends EventProducer {
 	const ACTION_UPDATE = 'update';
 	const ACTION_DELETE = 'delete';
 
-	public function __construct() {}
+	const PRODUCER_NAME = 'MWEventsProducer';
+	protected static $pipe;
 
 	/**
 	 * @desc Send event to pipeline in old format (message with params inside).
@@ -23,7 +24,7 @@ class PipelineEventProducer extends EventProducer {
 	 * @param array $params
 	 */
 	public static function send( $eventName, $pageId, $revisionId, $params = [ ] ) {
-		self::publish( implode( '.', [ self::ARTICLE_MESSAGE_PREFIX, $eventName ] ),
+		self::getPipeline()->publish( implode( '.', [ self::ARTICLE_MESSAGE_PREFIX, $eventName ] ),
 			self::prepareMessage( $pageId, $revisionId, $params ) );
 	}
 
@@ -38,7 +39,7 @@ class PipelineEventProducer extends EventProducer {
 	 * @param array $data
 	 */
 	public static function sendFlaggedSyntax( $action, $pageId, $revisionId, $ns = self::NS_CONTENT, $data = [ ] ) {
-		self::publish( self::prepareRoute( $action, $ns, $data ), self::prepareMessage( $pageId, $revisionId, $data ) );
+		self::getPipeline()->publish( self::prepareRoute( $action, $ns, $data ), self::prepareMessage( $pageId, $revisionId, $data ) );
 	}
 
 	/*
@@ -190,10 +191,12 @@ class PipelineEventProducer extends EventProducer {
 		return $route;
 	}
 
-	/** @return PipelineConnectionBase */
+	/** @return ConnectionBase */
 	protected static function getPipeline() {
+		global $wgIndexingPipeline;
+
 		if ( !isset( self::$pipe ) ) {
-			self::$pipe = new PipelineConnectionBase();
+			self::$pipe = new ConnectionBase( $wgIndexingPipeline );
 		}
 
 		return self::$pipe;

@@ -19,7 +19,8 @@ class PipelineConnectionBaseTest extends WikiaBaseTest {
 			'exchange' => 'test-exchange',
 			'deadExchange' => 'test-dead',
 		];
-		$pipe = new \Wikia\IndexingPipeline\PipelineConnectionBase();
+
+		$pipe = new \Wikia\IndexingPipeline\ConnectionBase( $wgIndexingPipeline );
 		$this->assertAttributeEquals($wgIndexingPipeline['host'], 'host', $pipe);
 		$this->assertAttributeEquals($wgIndexingPipeline['port'], 'port', $pipe);
 		$this->assertAttributeEquals($wgIndexingPipeline['user'], 'user', $pipe);

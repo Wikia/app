@@ -5,7 +5,7 @@ namespace Wikia\IndexingPipeline;
 use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
-abstract class ConnectionBase {
+class ConnectionBase {
 	const DURABLE_MESSAGE = 2;
 	const MESSAGE_TTL = 57600000; //16h
 
@@ -22,18 +22,34 @@ abstract class ConnectionBase {
 	/** @var  \PhpAmqpLib\Channel\AMQPChannel Holds anon channel for publishing */
 	protected $channel;
 
-	abstract public function __construct();
+	public function __construct( $wgConnectionCredentials ) {
+		$this->host = $wgConnectionCredentials[ 'host' ];
+		$this->port = $wgConnectionCredentials[ 'port' ];
+		$this->user = $wgConnectionCredentials[ 'user' ];
+		$this->pass = $wgConnectionCredentials[ 'pass' ];
+		$this->vhost = $wgConnectionCredentials[ 'vhost' ];
+		$this->exchange = $wgConnectionCredentials[ 'exchange' ];
+		$this->deadExchange = $wgConnectionCredentials[ 'deadExchange' ];
+	}
 
+	/**
+	 * @param $routingKey
+	 * @param $body
+	 */
 	public function publish( $routingKey, $body ) {
 		$channel = $this->getChannel();
-		$channel->basic_publish(
-			new AMQPMessage( json_encode( $body ), [
-				'delivery_mode' => self::DURABLE_MESSAGE,
-				'expiration' => self::MESSAGE_TTL
-			] ),
-			$this->exchange,
-			$routingKey
-		);
+		try {
+			$channel->basic_publish(
+				new AMQPMessage( json_encode( $body ), [
+					'delivery_mode' => self::DURABLE_MESSAGE,
+					'expiration' => self::MESSAGE_TTL
+				] ),
+				$this->exchange,
+				$routingKey
+			);
+		} catch ( Exception $e ) {
+			WikiaLogger::instance()->error( $e->getMessage() );
+		}
 	}
 
 	protected function getChannel() {
