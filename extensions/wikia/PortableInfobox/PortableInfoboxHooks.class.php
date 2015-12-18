@@ -93,19 +93,6 @@ class PortableInfoboxHooks {
 	}
 
 	/**
-	 * Make sure infoboxes page property (PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME)
-	 * calculated during infobox render process is saved on article view parse.
-	 * @param \Article $article
-	 * @param \ParserOutput $output
-	 */
-	public static function onArticleViewAfterParser( \Article $article, \ParserOutput $output ) {
-		if ( $output->getProperty(PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ) ) {
-			( new LinksUpdate( $article->getTitle(), $output ) )->doUpdate();
-		}
-		return true;
-	}
-
-	/**
 	 * Purge articles memcache when template is edited
 	 *
 	 * @param $articles Array of Titles

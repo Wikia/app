@@ -70,7 +70,6 @@ $wgHooks[ 'wgQueryPages' ][] = 'PortableInfoboxHooks::onWgQueryPages';
 $wgHooks[ 'AllInfoboxesQueryRecached' ][] = 'PortableInfoboxHooks::onAllInfoboxesQueryRecached';
 $wgHooks[ 'ArticlePurge' ][] = 'PortableInfoboxHooks::onArticlePurge';
 $wgHooks[ 'ArticleSave' ][] = 'PortableInfoboxHooks::onArticleSave';
-$wgHooks[ 'ArticleViewAfterParser' ][] = 'PortableInfoboxHooks::onArticleViewAfterParser';
 $wgHooks[ 'BacklinksPurge' ][] = 'PortableInfoboxHooks::onBacklinksPurge';
 
 // special pages
