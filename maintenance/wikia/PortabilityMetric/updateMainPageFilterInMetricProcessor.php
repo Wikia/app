@@ -4,7 +4,7 @@
  * @ingroup Maintenance
  *
  * @desc For current wiki, find an ID of it's Main Page
- * and push an event marking it as a main page (mainpage_b = 1)
+ * and push an event marking it as a main page (mainpage_b = true)
  * to MySqlMetricWorker
  * 
  * note: before running this script make sure column mainpage_b is

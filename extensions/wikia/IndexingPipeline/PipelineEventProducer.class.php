@@ -41,7 +41,10 @@ class PipelineEventProducer {
 	 * @param array $data
 	 */
 	public static function sendFlaggedSyntax( $action, $pageId, $revisionId, $ns = self::NS_CONTENT, $data = [ ] ) {
-		self::getPipeline()->publish( self::prepareRoute( $action, $ns, $data ), self::prepareMessage( $pageId, $revisionId, $data ) );
+		self::getPipeline()->publish(
+			self::prepareRoute( $action, $ns, $data ),
+			self::prepareMessage( $pageId, $revisionId, $data )
+		);
 	}
 
 	/*
