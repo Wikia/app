@@ -14,17 +14,21 @@ class TemplateClassificationService {
 	const TEMPLATE_CUSTOM_INFOBOX = 'custom-infobox';
 	const TEMPLATE_DATA = 'data';
 	const TEMPLATE_DESIGN = 'design';
-	const TEMPLATE_INFOBOX = 'infobox';
-	const TEMPLATE_MEDIA = 'media';
-	const TEMPLATE_NAVBOX = 'navbox';
-	const TEMPLATE_NAV = 'navigation';
-	const TEMPLATE_NOT_ART = 'nonarticle';
 	const TEMPLATE_FLAG = 'notice';
+	const TEMPLATE_INFOBOX = 'infobox';
+	const TEMPLATE_INFOICON = 'infoicon';
+	const TEMPLATE_MEDIA = 'media';
+	const TEMPLATE_NAV = 'navigation';
+	const TEMPLATE_NAVBOX = 'navbox';
+	const TEMPLATE_NOT_ART = 'nonarticle';
+	const TEMPLATE_OTHER = 'other';
 	const TEMPLATE_QUOTE = 'quote';
-	const TEMPLATE_REFERENCES = 'reference';
-	const TEMPLATE_UNKNOWN = 'unknown';
+	const LEGACY_TEMPLATE_REFERENCES = 'reference'; // TODO remove DAT-3568
+	const TEMPLATE_REFERENCES = 'references';
+	const TEMPLATE_SCROLLBOX = 'scrollbox';
 	const TEMPLATE_DIRECTLY_USED = 'directlyused';
 	const TEMPLATE_UNCLASSIFIED = '' ;
+	const TEMPLATE_UNKNOWN = 'unknown';
 
 	const NOT_AVAILABLE = 'not-available';
 
@@ -46,10 +50,21 @@ class TemplateClassificationService {
 
 		$type = $this->getApiClient()->getTemplateType( $wikiId, $pageId );
 		if ( !is_null( $type ) ) {
-			$templateType = $type->getType();
+			$templateType = $this->fallbackLegacy( $type->getType() );
 		}
 
 		return $templateType;
+	}
+
+	/**
+	 * 'reference' was changed to 'references' to be aligned with auto classification
+	 * TODO remove once strings are updated in service DAT-3568
+	 */
+	private function fallbackLegacy( $type ) {
+		if ( $type === self::LEGACY_TEMPLATE_REFERENCES ) {
+			return self::TEMPLATE_REFERENCES;
+		}
+		return $type;
 	}
 
 	/**

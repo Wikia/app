@@ -113,7 +113,7 @@ class DataTables {
 		$result = [ ];
 		$body = $dom->getElementsByTagName( 'body' )->item( 0 );
 		for ( $i = 0; $i < $body->childNodes->length; $i++ ) {
-			$result[] = $dom->saveXML( $body->childNodes->item( $i ) );
+			$result[] = $dom->saveHTML( $body->childNodes->item( $i ) );
 		}
 
 		return implode( "", $result );
