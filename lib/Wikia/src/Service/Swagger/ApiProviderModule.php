@@ -12,7 +12,6 @@ class ApiProviderModule implements Module {
 	const SAMPLE_RATE = 0.1;
 
 	public function configure(InjectorBuilder $builder) {
-		$builder
-				->bind(self::API_CLIENT_LOG_SAMPLER)->to(new BernoulliTrial(self::SAMPLE_RATE));
+		$builder->bind(self::API_CLIENT_LOG_SAMPLER)->to(new BernoulliTrial(self::SAMPLE_RATE));
 	}
 }
