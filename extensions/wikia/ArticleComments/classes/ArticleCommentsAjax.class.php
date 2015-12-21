@@ -124,8 +124,8 @@ class ArticleCommentsAjax {
 
 		$result['emptyMsg'] = wfMessage(
 			'article-comments-empty-comment',
-			$comment->getTitle()->getLocalUrl( 'redirect=no&action=delete' )
-		)->text();
+			$comment->getTitle()->getCanonicalURL( 'redirect=no&action=delete' )
+		)->parse();
 
 		return $result;
 	}
@@ -230,7 +230,7 @@ class ArticleCommentsAjax {
 		if ( F::app()->checkskin( 'wikiamobile' ) ) {
 			$result['counterMessage'] = wfMessage( 'wikiamobile-article-comments-counter' )
 				->params( $countAll )
-				->text();
+				->escaped();
 		}
 
 		if ( $parentId ) {
