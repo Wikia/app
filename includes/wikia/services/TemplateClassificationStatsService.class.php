@@ -1,5 +1,6 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
 use Wikia\Service\Gateway\ConsulUrlProvider;
 use Wikia\Service\Swagger\ApiProvider;
 use Swagger\Client\TemplateClassification\Storage\Api\TCSStatsApi;
@@ -107,9 +108,8 @@ class TemplateClassificationStatsService {
 	 * @return TCSStatsApi
 	 */
 	private function createApiClient() {
-		global $wgConsulUrl, $wgConsulServiceTag;
-		$urlProvider = new ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag );
-		$apiProvider = new ApiProvider( $urlProvider );
+		/** @var ApiProvider $apiProvider */
+		$apiProvider = Injector::getInjector()->get(ApiProvider::class);
 		return $apiProvider->getApi( TemplateClassificationService::SERVICE_NAME, TCSStatsApi::class );
 	}
 

@@ -1,5 +1,6 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
 use Wikia\Service\Gateway\ConsulUrlProvider;
 use Wikia\Service\Swagger\ApiProvider;
 use Swagger\Client\User\Avatars\Api\UserAvatarsApi;
@@ -103,11 +104,8 @@ class UserAvatarsService {
 	 * @return UserAvatarsApi
 	 */
 	private function getApiClient() {
-		global $wgConsulUrl, $wgConsulServiceTag;
-
-		$urlProvider = new ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag );
-		$apiProvider = new ApiProvider( $urlProvider );
-
+		/** @var ApiProvider $apiProvider */
+		$apiProvider = Injector::getInjector()->get(ApiProvider::class);
 		return $apiProvider->getAuthenticatedApi( self::SERVICE_NAME, $this->mUserId, UserAvatarsApi::class );
 	}
 
