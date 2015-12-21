@@ -261,7 +261,7 @@ class LookupContribsCore {
 
 	private function getActivityCount( DatabaseBase $dbr, Array $where ) {
 		$res = $dbr->select(
-			'events'
+			'events',
 			[ 'count(distinct wiki_id) as num' ],
 			$where,
 			__METHOD__
