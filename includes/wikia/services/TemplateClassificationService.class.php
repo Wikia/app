@@ -23,7 +23,6 @@ class TemplateClassificationService {
 	const TEMPLATE_NOT_ART = 'nonarticle';
 	const TEMPLATE_OTHER = 'other';
 	const TEMPLATE_QUOTE = 'quote';
-	const LEGACY_TEMPLATE_REFERENCES = 'reference'; // TODO remove DAT-3568
 	const TEMPLATE_REFERENCES = 'references';
 	const TEMPLATE_SCROLLBOX = 'scrollbox';
 	const TEMPLATE_DIRECTLY_USED = 'directlyused';
@@ -50,21 +49,10 @@ class TemplateClassificationService {
 
 		$type = $this->getApiClient()->getTemplateType( $wikiId, $pageId );
 		if ( !is_null( $type ) ) {
-			$templateType = $this->fallbackLegacy( $type->getType() );
+			$templateType = $type->getType();
 		}
 
 		return $templateType;
-	}
-
-	/**
-	 * 'reference' was changed to 'references' to be aligned with auto classification
-	 * TODO remove once strings are updated in service DAT-3568
-	 */
-	private function fallbackLegacy( $type ) {
-		if ( $type === self::LEGACY_TEMPLATE_REFERENCES ) {
-			return self::TEMPLATE_REFERENCES;
-		}
-		return $type;
 	}
 
 	/**
