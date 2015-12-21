@@ -37,8 +37,14 @@ class FileNamespaceSanitizeHelper {
 					$fileNamespaces [] = $alias;
 				}
 			}
+
+			$fileNamespaces = array_map(function( $namespace ) {
+				return str_replace('_', '(_|\ )', $namespace);
+			}, $fileNamespaces);
+
 			$this->filePrefixRegex[ $langCode ] = '^(' . implode( '|', $fileNamespaces ) . '):';
 		}
+
 
 		return $this->filePrefixRegex[ $langCode ];
 	}

@@ -189,6 +189,12 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 				'Su-47_-iDOLM@STER_Miki-EX-.jpg',
 				'Link to filename with canonical namespace, width urlencoded character in the middle'
 			],
+			[
+				'[[Tập tin:Naruto-Opening01_222.jpg|200px]]',
+				'vi',
+				'Naruto-Opening01_222.jpg',
+				'File namespace that include a space'
+			],
 		];
 	}
 
