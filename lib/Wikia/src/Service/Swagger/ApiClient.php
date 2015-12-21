@@ -26,7 +26,6 @@ class ApiClient extends \Swagger\Client\ApiClient {
 	public function callApi($resourcePath, $method, $queryParams, $postData, $headerParams, $responseType=null) {
 		$start = microtime(true);
 		$response = $exception = null;
-		$reqUrl = "http://".$this->getConfig()->getHost()."/${resourcePath}";
 		$code = 200;
 
 		try {
@@ -38,10 +37,9 @@ class ApiClient extends \Swagger\Client\ApiClient {
 
 		if ($this->logSampler->shouldSample()) {
 			$this->info("Http request", [
-				'serviceName' => $this->serviceName,
 				'statusCode' => $code,
 				'reqMethod' => $method,
-				'reqUrl' => $reqUrl,
+				'reqUrl' => "http://".$this->getConfig()->getHost().$resourcePath,
 				'isOk' => $exception == null,
 				'requestTimeMS' => (int)((microtime(true) - $start) * 1000.0)
 			]);
@@ -56,7 +54,6 @@ class ApiClient extends \Swagger\Client\ApiClient {
 
 	protected function getLoggerContext() {
 		return [
-			'host' => $this->getConfig()->getHost(),
 			'service' => $this->serviceName,
 		];
 	}
