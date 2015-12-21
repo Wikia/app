@@ -44,9 +44,9 @@ $messages['de'] = array(
 	'emailext-founder-digest-views-description-1' => 'Wir freuen uns, wenn du auch weiterhin so gute Arbeit leistest, interessante Artikel verfasst, zu Diskussionen beiträgst und Fotos und Videos für die Community bereitstellst.',
 	'emailext-founder-digest-views-description-2' => 'Füge auch weiterhin neue Sachen hinzu und werbe für dein Wikia, damit es mehr Leute lesen, Beiträge dafür schreiben und es bekannter machen. Deine Community sieht super aus!',
 	'emailext-founder-digest-edits-header' => '$1 Beiträge erstellt',
-	'emailext-founder-digest-edits-description' => 'Zufriedene Community-Mitglieder erstellen tolle Wikias. Vergiß nicht, den Mitgliedern für ihre Beiträge zu danken!',
+	'emailext-founder-digest-edits-description' => 'Zufriedene Community-Mitglieder erstellen tolle Wikias. Vergiss nicht, ihnen für ihre Beiträge zu danken!',
 	'emailext-founder-digest-users-header' => '$1 neue Wikianer',
-	'emailext-founder-digest-users-description' => 'Heiße neue Leute in deinem Wikia willkommen! Lasse sie an der tollen Fan-Community tielhaben, die du erschaffen hast.',
+	'emailext-founder-digest-users-description' => 'Heiße neue Leute in deinem Wikia willkommen! Lasse sie an der tollen Fan-Community teilhaben, die du erschaffen hast.',
 );
 
 $messages['es'] = array(
@@ -146,35 +146,35 @@ $messages['pl'] = array(
 );
 
 $messages['pt'] = array(
-	'emailext-founder-activity-digest-subject' => 'As últimas atividades na $1',
-	'emailext-founder-views-digest-subject' => 'Visualizações de hoje na $1',
-	'emailext-founder-digest-summary' => 'É hora de sua dose diária de atividade da $1.',
+	'emailext-founder-activity-digest-subject' => 'The latest activity on $1',
+	'emailext-founder-views-digest-subject' => "Today's views on $1",
+	'emailext-founder-digest-summary' => "It's time for your daily dose of activity from $1.",
 	'emailext-founder-activity-digest-link-label' => 'Atividade recente da Wikia',
-	'emailext-founder-activity-digest-footer' => 'Obter mais dicas sobre como construir sua wikia e fazer perguntas na [http://comunidade.wikia.com Central da Comunidade].',
+	'emailext-founder-activity-digest-footer' => 'Get more tips on building your wikia and ask questions on [http://community.wikia.com Community Central].',
 	'emailext-founder-views-digest-link-label' => 'Adicionar páginas',
-	'emailext-founder-digest-views-header' => '$1 páginas visualizadas',
+	'emailext-founder-digest-views-header' => '$1 Pages Viewed',
 	'emailext-founder-digest-views-description-1' => 'Continue o excelente trabalho adicionando artigos interessantes, discussões, fotos e vídeos para as pessoas desfrutarem.',
 	'emailext-founder-digest-views-description-2' => 'Continue adicionando coisas novas e promovendo sua wikia para encorajar mais pessoas a ler, contribuir e divulgar as novas. Sua comunidade está ficando ótima!',
-	'emailext-founder-digest-edits-header' => '$1 de contribuições feitas',
+	'emailext-founder-digest-edits-header' => '$1 Contributions Made',
 	'emailext-founder-digest-edits-description' => 'Membros da comunidade felizes fazem wikias ótimas. Certifique-se de agradecer a todos aqueles que contribuem para que eles se sintam apreciados!',
-	'emailext-founder-digest-users-header' => '$1 Novos Wikianos',
+	'emailext-founder-digest-users-header' => '$1 New Wikians',
 	'emailext-founder-digest-users-description' => 'Dê as boas-vindas a novas pessoas em sua wikia! Envolva-as na grande comunidade de fãs que você criou.',
 );
 
 $messages['ru'] = array(
 	'emailext-founder-activity-digest-subject' => 'Последняя активность на $1',
 	'emailext-founder-views-digest-subject' => 'Просмотры $1 за сегодня',
-	'emailext-founder-digest-summary' => 'Пора ознакомиться с подборкой новостей с $1 за сегодня.',
+	'emailext-founder-digest-summary' => 'Подборка новостей с $1 за сегодня.',
 	'emailext-founder-activity-digest-link-label' => 'Недавняя вики-деятельность',
 	'emailext-founder-activity-digest-footer' => 'Вы можете получить советы по созданию вики и задать вопросы на [http://ru.community.wikia.com Вики Сообщества].',
 	'emailext-founder-views-digest-link-label' => 'Добавить страницы',
-	'emailext-founder-digest-views-header' => 'Страниц просмотрено: $1',
-	'emailext-founder-digest-views-description-1' => 'Продолжайте добавлять интересные статьи, обсуждения, фотографии и видео для фанатов.',
-	'emailext-founder-digest-views-description-2' => 'Продолжайте добавлять новые материалы, чтобы привлечь больше людей к чтению, участию и распространению информации о вашей вики. Вы создали потрясающее сообщество фанатов!',
-	'emailext-founder-digest-edits-header' => 'Сделано $1 правок',
-	'emailext-founder-digest-edits-description' => 'Счастливые участники сообщества создают отличные вики. Обязательно поблагодарите участников и покажите им свою признательность!',
-	'emailext-founder-digest-users-header' => '$1 новых участников',
-	'emailext-founder-digest-users-description' => 'Поприветствуйте новых участников своей вики! Дайте им почувствовать себя полезными созданному вами сообществу фанатов.',
+	'emailext-founder-digest-views-header' => 'Просмотренных страниц: $1',
+	'emailext-founder-digest-views-description-1' => 'Продолжайте добавлять интересные статьи, обсуждения, изображения и видео.',
+	'emailext-founder-digest-views-description-2' => 'Продолжайте добавлять новые материалы, чтобы привлечь больше читателей и активных участников. Расскажите о своей вики другим. Ваше сообщество уже выглядит отлично!',
+	'emailext-founder-digest-edits-header' => 'Сделанных правок: $1',
+	'emailext-founder-digest-edits-description' => 'Когда участники довольны сообществом, они стараются сделать его лучше. Всегда благодарите участников за помощь!',
+	'emailext-founder-digest-users-header' => 'Новых участников: $1',
+	'emailext-founder-digest-users-description' => 'Поддерживайте новых участников. Дайте им почувствовать себя полезными вашему сообществу.',
 );
 
 $messages['zh-hans'] = array(
@@ -191,6 +191,22 @@ $messages['zh-hans'] = array(
 	'emailext-founder-digest-edits-description' => '快乐的社区成员打造令人快乐的维基。千万别忘了一定要感谢那些贡献者，让他们感受到爱哦！',
 	'emailext-founder-digest-users-header' => '$1个新的维基用户',
 	'emailext-founder-digest-users-description' => '欢迎新用户访问您的维基！让他们也参与到您创建的精彩粉丝社区之中。',
+);
+
+$messages['zh-hant'] = array(
+	'emailext-founder-activity-digest-subject' => 'The latest activity on $1',
+	'emailext-founder-views-digest-subject' => "Today's views on $1",
+	'emailext-founder-digest-summary' => "It's time for your daily dose of activity from $1.",
+	'emailext-founder-activity-digest-link-label' => 'Wikia的最新活動',
+	'emailext-founder-activity-digest-footer' => 'Get more tips on building your wikia and ask questions on [http://community.wikia.com Community Central].',
+	'emailext-founder-views-digest-link-label' => '添加頁面',
+	'emailext-founder-digest-views-header' => '$1 Pages Viewed',
+	'emailext-founder-digest-views-description-1' => '繼續添加有趣的文章、 討論、 照片和視頻供大家欣賞。',
+	'emailext-founder-digest-views-description-2' => '不斷添加新的東西、宣傳你的維基，這樣可以鼓勵更多的人來閱讀、貢獻，並讓更多的人知道它。你的社區看起來棒極了!',
+	'emailext-founder-digest-edits-header' => '$1 Contributions Made',
+	'emailext-founder-digest-edits-description' => '快樂社區成員打造讓人快樂的維基。千萬別忘了一定要感謝那些貢獻者，讓他們感受到愛哦！',
+	'emailext-founder-digest-users-header' => '$1 New Wikians',
+	'emailext-founder-digest-users-description' => '歡迎新用戶訪問你的維基！讓他們也參與到你創建的精彩粉絲社區之中。',
 );
 
 $messages['zh-tw'] = array(
