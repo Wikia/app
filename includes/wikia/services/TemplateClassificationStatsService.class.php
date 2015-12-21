@@ -1,9 +1,8 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Gateway\ConsulUrlProvider;
-use Wikia\Service\Swagger\ApiProvider;
 use Swagger\Client\TemplateClassification\Storage\Api\TCSStatsApi;
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\Swagger\ApiProvider;
 
 class TemplateClassificationStatsService {
 

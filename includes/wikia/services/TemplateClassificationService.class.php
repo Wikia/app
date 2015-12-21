@@ -1,11 +1,10 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Gateway\ConsulUrlProvider;
-use Wikia\Service\Swagger\ApiProvider;
 use Swagger\Client\TemplateClassification\Storage\Api\TCSApi;
-use Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider;
 use Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder;
+use Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider;
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\Swagger\ApiProvider;
 
 class TemplateClassificationService {
 

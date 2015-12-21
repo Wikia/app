@@ -1,10 +1,9 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Gateway\ConsulUrlProvider;
-use Wikia\Service\Swagger\ApiProvider;
-use Swagger\Client\User\Avatars\Api\UserAvatarsApi;
 use Swagger\Client\ApiException;
+use Swagger\Client\User\Avatars\Api\UserAvatarsApi;
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\Swagger\ApiProvider;
 
 /**
  * A simple wrapper for user avatars service API
