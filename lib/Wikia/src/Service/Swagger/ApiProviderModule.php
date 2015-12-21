@@ -9,7 +9,7 @@ use Wikia\Util\Statistics\BernoulliTrial;
 class ApiProviderModule implements Module {
 
 	const API_CLIENT_LOG_SAMPLER = "api_client_log_sampler";
-	const SAMPLE_RATE = 0.2;
+	const SAMPLE_RATE = 0.1;
 
 	public function configure(InjectorBuilder $builder) {
 		$builder
