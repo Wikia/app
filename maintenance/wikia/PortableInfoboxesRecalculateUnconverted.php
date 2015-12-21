@@ -13,19 +13,30 @@ class PortableInfoboxesRecalculateUnconverted extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgParser;
+		global $wgParser, $wgEnableInsightsExt, $wgEnableInsightsInfoboxes, $wgEnablePortableInfoboxExt;
+
+		if ( empty( $wgEnableInsightsExt )
+			|| empty( $wgEnableInsightsInfoboxes )
+			|| empty( $wgEnablePortableInfoboxExt )
+		) {
+			return;
+		}
+
 		$ui = new InsightsUnconvertedInfoboxesModel();
 		$articles = $ui->fetchArticlesData();
-		foreach ( $articles as $id => $article ) {
-			$article = Article::newFromID($id);
+
+		foreach ( $articles as $id => $articleData ) {
+			$article = Article::newFromID( $id );
 			$parserOptions = $article->getParserOptions();
 			$title = $article->getTitle();
 			$output = $wgParser->parse( $article->getContent(), $title, $parserOptions );
 			( new LinksUpdate(  $title, $output ) )->doUpdate();
 		}
+
 		$uip = new UnconvertedInfoboxesPage();
 		$uip->recache();
 		$ui->purgeInsightsCache();
+
 	}
 }
 
