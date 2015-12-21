@@ -20,10 +20,6 @@ abstract class InsightsQueryPageModel extends InsightsModel {
 		return $this->queryPageInstance;
 	}
 
-	public function purgeCacheAfterUpdateTask() {
-		return true;
-	}
-
 	/**
 	 * The main method that assembles all data on articles that should be displayed
 	 * on a given Insights subpage

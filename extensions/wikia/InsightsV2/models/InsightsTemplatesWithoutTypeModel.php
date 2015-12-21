@@ -5,6 +5,7 @@
  */
 class InsightsTemplatesWithoutTypeModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'templateswithouttype';
+
 	private static $insightConfig = [
 		'displayFixItMessage' => false,
 		'pageviews' => false,
@@ -34,7 +35,7 @@ class InsightsTemplatesWithoutTypeModel extends InsightsQueryPageModel {
 	 * @return bool
 	 */
 	public function isItemFixed( Title $title ) {
-		// @TODO add logic once loop is added for tis insight
+		// @TODO add logic once loop is added for this insight
 		return false;
 	}
 }

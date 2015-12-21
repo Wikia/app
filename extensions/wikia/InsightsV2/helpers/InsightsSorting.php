@@ -30,6 +30,10 @@ class InsightsSorting {
 		return self::INSIGHTS_DEFAULT_SORTING;
 	}
 
+	public static function getSortingTypes() {
+		return self::$sorting;
+	}
+
 	/**
 	 * Overrides the default values used for sorting and pagination
 	 *
@@ -44,14 +48,6 @@ class InsightsSorting {
 		}
 
 		return $this->data;
-	}
-
-	private function getData( $articlesData ) {
-		if ( $this->config->showPageViews() ) {
-			$this->data = $this->insightsCache->get( self::INSIGHTS_DEFAULT_SORTING );
-		} else {
-			$this->data = array_keys( $articlesData );
-		}
 	}
 
 	public function createSortingArrays( $sortingData ) {
@@ -79,7 +75,11 @@ class InsightsSorting {
 		$this->insightsCache->set( $key, array_keys( $sortingArray ) );
 	}
 
-	public static function getSortingTypes() {
-		return self::$sorting;
+	private function getData( $articlesData ) {
+		if ( $this->config->showPageViews() ) {
+			$this->data = $this->insightsCache->get( self::INSIGHTS_DEFAULT_SORTING );
+		} else {
+			$this->data = array_keys( $articlesData );
+		}
 	}
 }

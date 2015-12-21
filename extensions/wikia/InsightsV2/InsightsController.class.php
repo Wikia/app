@@ -77,7 +77,7 @@ class InsightsController extends WikiaSpecialPageController {
 		$this->setVal( 'dropdown', $dropdown );
 	}
 
-	private function setTemplateValues( $model, $params ) {
+	private function setTemplateValues( InsightsModel $model, $params ) {
 		$insightsContext = new InsightsContext( $model, $this->type, $params );
 
 		$sort = $this->request->getVal( 'sort', InsightsSorting::getDefaultSorting() );

@@ -18,9 +18,8 @@ class InsightsPageViews {
 	 * * PVs from the last 4 weeks
 	 * * Views growth from a penultimate week
 	 *
-	 * @param $articlesData
-	 * @param $pageViewsData
-	 * @return mixed
+	 * @param array $articlesData
+	 * @return array
 	 */
 	public function assignPageViewsData( $articlesData ) {
 		$sortingData = [];
@@ -57,7 +56,12 @@ class InsightsPageViews {
 
 		}
 
+		$start = microtime(true);
+
 		( new InsightsSorting( $this->config ) )->createSortingArrays( $sortingData );
+
+		$end = microtime(true) - $start;
+		var_dump($end);
 
 		return $articlesData;
 	}

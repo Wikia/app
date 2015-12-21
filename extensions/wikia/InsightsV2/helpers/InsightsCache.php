@@ -28,14 +28,34 @@ class InsightsCache {
 		$this->memc->delete( $this->getMemcKey( $params ) );
 	}
 
+	public function purgeInsightsCache() {
+		$this->delete( self::INSIGHTS_MEMC_ARTICLES_KEY );
+	}
+
 	/**
 	 * Updates the cached articleData and sorting array
 	 *
 	 * @param int $articleId
 	 */
-	public function updateInsightsCache( $sorting, $articleId ) {
+	public function updateInsightsCache( $articleId ) {
 		$this->updateArticleDataCache( $articleId );
-		$this->updateSortingCache( $sorting, $articleId );
+		$this->updateSortingCache( $articleId );
+	}
+
+	/**
+	 * Get memcache key for insights
+	 *
+	 * @param string $params
+	 * @return string
+	 */
+	public function getMemcKey( $params ) {
+		return wfMemcKey(
+			self::INSIGHTS_MEMC_PREFIX,
+			$this->config->getInsightType(),
+			$this->config->getInsightSubType(),
+			$params,
+			self::INSIGHTS_MEMC_VERSION
+		);
 	}
 
 	/**
@@ -57,7 +77,9 @@ class InsightsCache {
 	 *
 	 * @param int $articleId
 	 */
-	private function updateSortingCache( $sorting, $articleId ) {
+	private function updateSortingCache( $articleId ) {
+		$sorting = InsightsSorting::getSortingTypes();
+
 		foreach ( $sorting as $key => $item ) {
 			$sortingArray = $this->get( $key );
 			if ( is_array( $sortingArray ) ) {
@@ -69,25 +91,5 @@ class InsightsCache {
 				}
 			}
 		}
-	}
-
-	public function purgeInsightsCache() {
-		$this->delete( self::INSIGHTS_MEMC_ARTICLES_KEY );
-	}
-
-	/**
-	 * Get memcache key for insights
-	 *
-	 * @param String $params
-	 * @return String
-	 */
-	public function getMemcKey( $params ) {
-		return wfMemcKey(
-			self::INSIGHTS_MEMC_PREFIX,
-			$this->config->getInsightType(),
-			$this->config->getInsightSubType(),
-			$params,
-			self::INSIGHTS_MEMC_VERSION
-		);
 	}
 }

@@ -22,10 +22,6 @@ abstract class InsightsModel {
 		return $this->template;
 	}
 
-	public function getAltAction( Title $title ) {
-		return [];
-	}
-
 	public function purgeCacheAfterUpdateTask() {
 		return true;
 	}

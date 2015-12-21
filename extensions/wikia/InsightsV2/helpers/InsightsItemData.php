@@ -9,6 +9,12 @@ class InsightsItemData {
 		$this->params = $params;
 	}
 
+	/**
+	 * Get common article data
+	 *
+	 * @param Title $title
+	 * @return array
+	 */
 	public function getArticleData( Title $title ) {
 		$article['link'] = $this->getTitleLink( $title, $this->params );
 		$article['metadata']['lastRevision'] = $this->prepareRevisionData( $title->getLatestRevID() );
@@ -20,11 +26,10 @@ class InsightsItemData {
 		return $article;
 	}
 	/**
-	 * Get data about revision
-	 * Who and when made last edition
+	 * Get data about article revision
 	 *
 	 * @param int $rev
-	 * @return mixed
+	 * @return array
 	 */
 	public function prepareRevisionData( $revId ) {
 		$data = [];
@@ -52,7 +57,7 @@ class InsightsItemData {
 	 * Prepare a data to create a link element
 	 *
 	 * @param Title $title A target article's Title object
-	 * @param $params
+	 * @param array $params
 	 * @return array
 	 */
 	public static function getTitleLink( Title $title, $params ) {
@@ -76,7 +81,7 @@ class InsightsItemData {
 	/**
 	 * Get param to show proper editor based on user preferences
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public static function getEditUrlParams() {
 		global $wgUser;
