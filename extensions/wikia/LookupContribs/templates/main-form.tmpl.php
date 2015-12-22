@@ -28,7 +28,7 @@ $(document).ready(function() {
 			"sLengthMenu": "<?= wfMessage( 'table_pager_limit', '_MENU_' )->escaped() ?>",
 			"sZeroRecords": "<?= wfMessage( 'table_pager_empty' )->escaped() ?>",
 			"sEmptyTable": "<?= wfMessage( 'table_pager_empty' )->escaped() ?>",
-			"sInfo": "fuckity fuck fuck <?= wfMessage('lookupcontribsrecordspager', '_START_', '_END_', '_TOTAL_' )->parse() ?>",
+			"sInfo": "<?= wfMessage('lookupcontribsrecordspager', '_START_', '_END_', '_TOTAL_' )->parse() ?>",
 			"sInfoEmpty": "<?= wfMessage( 'lookupcontribsrecordspager', '0', '0', '0' )->parse() ?>",
 			"sInfoFiltered": "",
 			"sSearch": "<?= wfMessage( 'search' )->escaped() ?>",
