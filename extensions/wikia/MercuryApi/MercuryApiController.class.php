@@ -385,7 +385,9 @@ class MercuryApiController extends WikiaController {
 				if ( !empty( $relatedPages ) ) {
 					$data['relatedPages'] = $relatedPages;
 				}
-				$titleBuilder->setParts( [ $articleAsJson['displayTitle'] ] );
+				if ( !$isMainPage ) {
+					$titleBuilder->setParts( [ $articleAsJson['displayTitle'] ] );
+				}
 			}
 			$data['htmlTitle'] = $titleBuilder->getTitle();
 
