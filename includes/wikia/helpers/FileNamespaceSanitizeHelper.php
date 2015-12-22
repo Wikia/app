@@ -39,12 +39,11 @@ class FileNamespaceSanitizeHelper {
 			}
 
 			$fileNamespaces = array_map(function( $namespace ) {
-				return str_replace('_', '(_|\ )', $namespace);
+				return mb_ereg_replace('_', '(_|\ )', $namespace);
 			}, $fileNamespaces);
 
 			$this->filePrefixRegex[ $langCode ] = '^(' . implode( '|', $fileNamespaces ) . '):';
 		}
-
 
 		return $this->filePrefixRegex[ $langCode ];
 	}
