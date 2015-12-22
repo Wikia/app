@@ -27,6 +27,16 @@ $wgExtensionCredits['other'][] = [
 ];
 
 /**
+ * Groups and permissions
+ */
+$wgAvailableRights[] = 'template-bulk-classification';
+$wgGroupPermissions['*']['template-bulk-classification'] = false;
+$wgGroupPermissions['helper']['template-bulk-classification'] = true;
+$wgGroupPermissions['vstf']['template-bulk-classification'] = true;
+$wgGroupPermissions['staff']['template-bulk-classification'] = true;
+$wgGroupPermissions['sysop']['template-bulk-classification'] = true;
+
+/**
  * UserTemplateClassificationService
  */
 $wgAutoloadClasses['UserTemplateClassificationService'] = __DIR__ . '/services/UserTemplateClassificationService.class.php';
@@ -60,9 +70,19 @@ $wgSpecialPages['Templates'] = 'TemplatesSpecialController';
 $wgAutoloadClasses['Wikia\TemplateClassification\View'] = __DIR__ . '/TemplateClassificationView.php';
 
 /**
+ * Logs
+ */
+$wgLogTypes[] = 'templateclassification';
+$wgLogNames['templateclassification'] = 'template-classification-type-header';
+$wgLogHeaders['templateclassification'] = 'template-classification-edit-modal-help';
+$wgLogActionsHandlers['templateclassification/*'] = 'LogFormatter';
+
+/**
  * Other
  */
 $wgAutoloadClasses['Wikia\TemplateClassification\Logger'] = __DIR__ . '/Logger.class.php';
+$wgAutoloadClasses['Wikia\TemplateClassification\Helper'] = __DIR__ . '/Helper.class.php';
+$wgAutoloadClasses['Wikia\TemplateClassification\TemplateBulkClassificationTask'] = __DIR__ . '/TemplateBulkClassificationTask.class.php';
 
 /**
  * Messages
@@ -71,8 +91,24 @@ $wgExtensionMessagesFiles['TemplateClassification'] = __DIR__ . '/TemplateClassi
 
 JSMessages::registerPackage( 'TemplateClassificationModal', [
 	'template-classification-edit-modal-*',
+	'savearticle'
 ] );
 
 JSMessages::registerPackage( 'TemplateClassificationTypes', [
-	'template-classification-type-*',
+	'template-classification-type-*'
 ] );
+
+JSMessages::registerPackage( 'TemplateClassificationHints', [
+	'template-classification-bulk-classification-*'
+] );
+
+/**
+ * Resources Loader module
+ */
+$wgResourceModules['ext.wikia.TemplateClassification.ModalMessages'] = [
+	'messages' => [
+		'template-classification-entry-point-hint',
+	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/TemplateClassification'
+];

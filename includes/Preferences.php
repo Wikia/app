@@ -54,6 +54,10 @@ class Preferences {
 	 * @return array|null
 	 */
 	static function getPreferences( $user, IContextSource $context ) {
+		if ( $user->arePreferencesReadOnly() ) {
+			throw new MWException("Error, preferences are read-only.");
+		}
+
 		if ( self::$defaultPreferences ) {
 			return self::$defaultPreferences;
 		}

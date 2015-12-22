@@ -316,7 +316,7 @@ class MercuryApiController extends WikiaController {
 		}
 
 		// template for non-main pages (use $1 for article name)
-		$wikiVariables['htmlTitleTemplate'] = WikiaHtmlTitle::getPageTitle( '$1', false );
+		$wikiVariables['htmlTitleTemplate'] = ( new WikiaHtmlTitle() )->setParts( ['$1'] )->getTitle();
 
 		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
@@ -370,6 +370,8 @@ class MercuryApiController extends WikiaController {
 			$isMainPage = $title->isMainPage();
 			$data['isMainPage'] = $isMainPage;
 
+			$titleBuilder = new WikiaHtmlTitle();
+
 			if ( $isMainPage && !empty( $wgEnableMainPageDataMercuryApi ) && !empty( $wgWikiaCuratedContent ) ) {
 				$data['mainPageData'] = $this->getMainPageData();
 			} else {
@@ -383,9 +385,10 @@ class MercuryApiController extends WikiaController {
 				if ( !empty( $relatedPages ) ) {
 					$data['relatedPages'] = $relatedPages;
 				}
+				$titleBuilder->setParts( [ $articleAsJson['displayTitle'] ] );
 			}
+			$data['htmlTitle'] = $titleBuilder->getTitle();
 
-			$data['htmlTitle'] = WikiaHtmlTitle::getPageTitle( $title->getPrefixedText(), $title->isMainPage() );
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 

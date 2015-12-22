@@ -243,4 +243,78 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 			]
 		];
 	}
+
+	/**
+	 * @param $wikitext
+	 * @param $lang
+	 * @param $expectedOutput
+	 *
+	 * @dataProvider testGetCleanFileMarkersFromWikitextDataProvider
+	 */
+	public function testGetCleanFileMarkersFromWikitext( $wikitext, $lang, $expectedOutput ) {
+		$language = new \Language();
+		$language->setCode( $lang );
+		$actualOutput = $this->fileNamespaceSanitizeHelper->getCleanFileMarkersFromWikitext( $wikitext, $language );
+
+		$this->assertEquals( $expectedOutput, $actualOutput );
+	}
+
+	public function testGetCleanFileMarkersFromWikitextDataProvider() {
+		return [
+			[
+				'His clothes are not the same as they were in The Sims 2.',
+				'en',
+				false
+			],
+			[
+				'His [[Image:image.jpg|300px|lorem ipsum|other param]]clothes are not the same as they were in The Sims 2[[File:image.jpg|300px|lorem ipsum]].',
+				'en',
+				[
+					'Image:image.jpg',
+					'File:image.jpg'
+				]
+			],
+			[
+				'Der ehrgeizige Sim nimmt sich mehr vor, als seine Zeitgenossen und verfolgt seine Ziele mit eiserner Disziplin.[[Datei:Merkmal-Ehrgeizig.jpg|left]]',
+				'de',
+				[
+					'Datei:Merkmal-Ehrgeizig.jpg'
+				]
+			],
+			[
+				'[[Plik:Medina_Hoit.png]]Ma siwe włosy, ciemną skórę, [[Grafika:Medina_Hoit.png]]małe okulary oraz nosi białą koszulę i niebieskie spodnie. [[File:Merkmal-Ehrgeizig.jpg|left]]',
+				'pl',
+				[
+					'Plik:Medina_Hoit.png',
+					'Grafika:Medina_Hoit.png',
+					'File:Merkmal-Ehrgeizig.jpg'
+				]
+			]
+		];
+	}
+
+	/**
+	* @param $wikitext
+	* @param $expectedOutput
+	*
+	* @dataProvider testRemoveImageParamsDataProvider
+	*/
+	public function testRemoveImageParams( $wikitext, $expectedOutput ) {
+		$actualOutput = $this->fileNamespaceSanitizeHelper->removeImageParams( $wikitext );
+
+		$this->assertEquals( $expectedOutput, $actualOutput );
+	}
+
+	public function testRemoveImageParamsDataProvider() {
+		return [
+			[
+				'File:image.jpg|300px|lorem ipsum',
+				'File:image.jpg',
+			],
+			[
+				'File:image.jpg|300px',
+				'File:image.jpg',
+			],
+		];
+	}
 }

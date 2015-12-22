@@ -9,23 +9,25 @@ use Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder;
 class TemplateClassificationService {
 
 	const SERVICE_NAME = 'template-classification-storage';
-	const USER_PROVIDER = 'user';
-	const AUTO_PROVIDER = 'auto';
-	
+
 	const TEMPLATE_CONTEXT_LINK = 'context-link';
 	const TEMPLATE_CUSTOM_INFOBOX = 'custom-infobox';
 	const TEMPLATE_DATA = 'data';
 	const TEMPLATE_DESIGN = 'design';
-	const TEMPLATE_INFOBOX = 'infobox';
-	const TEMPLATE_MEDIA = 'media';
-	const TEMPLATE_NAVBOX = 'navbox';
-	const TEMPLATE_NAV = 'navigation';
-	const TEMPLATE_NOT_ART = 'nonarticle';
 	const TEMPLATE_FLAG = 'notice';
+	const TEMPLATE_INFOBOX = 'infobox';
+	const TEMPLATE_INFOICON = 'infoicon';
+	const TEMPLATE_MEDIA = 'media';
+	const TEMPLATE_NAV = 'navigation';
+	const TEMPLATE_NAVBOX = 'navbox';
+	const TEMPLATE_NOT_ART = 'nonarticle';
+	const TEMPLATE_OTHER = 'other';
 	const TEMPLATE_QUOTE = 'quote';
-	const TEMPLATE_REFERENCES = 'reference';
-	const TEMPLATE_UNKNOWN = 'unknown';
+	const TEMPLATE_REFERENCES = 'references';
+	const TEMPLATE_SCROLLBOX = 'scrollbox';
+	const TEMPLATE_DIRECTLY_USED = 'directlyused';
 	const TEMPLATE_UNCLASSIFIED = '' ;
+	const TEMPLATE_UNKNOWN = 'unknown';
 
 	const NOT_AVAILABLE = 'not-available';
 
@@ -80,12 +82,12 @@ class TemplateClassificationService {
 	 * @param int $wikiId
 	 * @param int $pageId
 	 * @param string $templateType
+	 * @param string $origin
 	 * @param string $provider
-	 * @param int $origin
 	 * @throws Exception
 	 * @throws \Swagger\Client\ApiException
 	 */
-	public function classifyTemplate( $wikiId, $pageId, $templateType, $provider, $origin ) {
+	public function classifyTemplate( $wikiId, $pageId, $templateType, $origin, $provider ) {
 		$details = [
 			'provider' => $provider,
 			'origin' => $origin,

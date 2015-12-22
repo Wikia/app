@@ -1,6 +1,14 @@
 <?php
 
+use Swagger\Client\ApiException;
+use Wikia\TemplateClassification\Logger;
+
 class UserTemplateClassificationService extends TemplateClassificationService {
+
+	const USER_PROVIDER = 'user';
+	const CLASSIFY_TEMPLATE_EXCEPTION_MESSAGE = 'Bad request. Template type %s is not valid.';
+	const CLASSIFY_TEMPLATE_EXCEPTION_CODE = 400;
+
 	/**
 	 * Allowed types of templates stored in an array to make a validation process easier.
 	 *
@@ -15,6 +23,8 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 		self::TEMPLATE_NAVBOX,
 		self::TEMPLATE_FLAG,
 		self::TEMPLATE_CONTEXT_LINK,
+		self::TEMPLATE_INFOICON,
+		self::TEMPLATE_SCROLLBOX,
 		self::TEMPLATE_REFERENCES,
 		self::TEMPLATE_MEDIA,
 		self::TEMPLATE_DATA,
@@ -76,5 +86,67 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 		}
 
 		return $type;
+	}
+
+	/**
+	 * Verify template type before user classification
+	 *
+	 * @param int $wikiId
+	 * @param int $pageId
+	 * @param string $templateType
+	 * @param string $origin
+	 * @param string $provider
+	 * @throws ApiException
+	 */
+	public function classifyTemplate( $wikiId, $pageId, $templateType, $origin, $provider = self::USER_PROVIDER ) {
+		$this->checkTemplateType( $templateType );
+
+		$oldType = $this->getType( $wikiId, $pageId );
+
+		parent::classifyTemplate( $wikiId, $pageId, $templateType, $origin, $provider );
+
+		( new Logger() )->logClassificationChange( $pageId, $templateType, $oldType );
+
+		$title = Title::newFromID( $pageId );
+		wfRunHooks( 'UserTemplateClassification::TemplateClassified', [ $pageId, $title, $templateType ] );
+	}
+
+	/**
+	 * Classify many templates with given type
+	 *
+	 * @param int $wikiId
+	 * @param array $templates
+	 * @param string $templateType
+	 * @param int $userId
+	 * @return array list of pages which failed during classification
+	 * @throws MWException
+	 */
+	public function classifyMultipleTemplates( $wikiId, Array $templates, $templateType, $userId ) {
+		$errors = [];
+
+		foreach ( $templates as $templateId => $templateTitle ) {
+			try {
+				$this->classifyTemplate( $wikiId, $templateId, $templateType, $userId );
+			} catch ( ApiException $e ) {
+				$errors[] = Title::newFromText( $templateTitle )->getText();
+			}
+		}
+
+		return $errors;
+	}
+
+	/**
+	 * Check if given template type is allowed
+	 *
+	 * @param string $templateType
+	 * @throws ApiException
+	 */
+	public function checkTemplateType( $templateType ) {
+		if ( !in_array( $templateType, self::$templateTypes ) ) {
+			throw new ApiException(
+				sprintf( self::CLASSIFY_TEMPLATE_EXCEPTION_MESSAGE, $templateType ),
+				self::CLASSIFY_TEMPLATE_EXCEPTION_CODE
+			);
+		}
 	}
 }

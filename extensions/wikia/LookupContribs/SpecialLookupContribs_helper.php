@@ -162,7 +162,6 @@ class LookupContribsCore {
 				$where = [
 					'user_id' => $this->mUserId,
 					'event_type' => [ 1, 2 ],
-					'wiki_id = city_id',
 				];
 
 				if ( !empty( $excludedWikis ) && is_array( $excludedWikis ) ) {
@@ -182,7 +181,7 @@ class LookupContribsCore {
 				}
 
 				$res = $dbr->select(
-					[ 'events', 'wikicities.city_list' ],
+					'events',
 					[
 						'wiki_id',
 						'count(*) as edits',
@@ -260,11 +259,12 @@ class LookupContribsCore {
 		}
 	}
 
-	private function getActivityCount( DatabaseBase $dbr, $where ) {
+	private function getActivityCount( DatabaseBase $dbr, Array $where ) {
 		$res = $dbr->select(
-			[ 'events', 'wikicities.city_list' ],
+			'events',
 			[ 'count(distinct wiki_id) as num' ],
-			$where
+			$where,
+			__METHOD__
 		);
 
 		$row = $dbr->fetchObject( $res );

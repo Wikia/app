@@ -50,7 +50,7 @@ class EditPageLayoutHelper {
 	 * @author macbre
 	 */
 	function setupEditPage( Article $editedArticle, $fullScreen = true, $class = false ) {
-		global $wgHooks;
+		global $wgHooks, $wgInfoboxPreviewURL;
 
 		wfProfileIn( __METHOD__ );
 
@@ -127,6 +127,9 @@ class EditPageLayoutHelper {
 
 		// copyright warning for notifications (BugId:7951)
 		$this->addJsVariable( 'wgCopywarn', $this->editPage->getCopyrightNotice() );
+
+		// infobox preview url
+		$this->addJsVariable( 'wgInfoboxPreviewURL', $wgInfoboxPreviewURL );
 
 		// extra hooks for edit page
 		$wgHooks['MakeGlobalVariablesScript'][] = 'EditPageLayoutHooks::onMakeGlobalVariablesScript';

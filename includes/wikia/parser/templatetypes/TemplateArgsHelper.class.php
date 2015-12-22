@@ -21,4 +21,15 @@ class TemplateArgsHelper {
 
 		return $templateArgs;
 	}
+
+	/**
+	 * @desc If curly brackets found, means that template contain some not yet
+	 * expanded templates and arguments.
+	 *
+	 * @param $wikitext
+	 * @return bool
+	 */
+	public static function containsUnexpandedArgs( $wikitext ) {
+		return preg_match( '/{{.+}}/', $wikitext );
+	}
 }

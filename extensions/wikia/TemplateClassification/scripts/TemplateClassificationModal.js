@@ -11,10 +11,14 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	'use strict';
 
 	var $classificationForm,
-		$preselectedType,
+		$saveBtn,
 		$typeLabel,
-		modalConfig,
+		$typeWrapper,
 		messagesLoaded,
+		modalConfig,
+		modalMode,
+		newTypeModes = ['addTemplate', 'addTypeBeforePublish'],
+		preselectedType,
 		saveHandler = falseFunction,
 		typeGetter = falseFunction,
 		track = tracker.buildTrackingFunction({
@@ -31,27 +35,35 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	 * @param {function} saveHandlerProvided Method that should handle modal save,
 	 *  	receives {string} selectedType as parameter
 	 */
-	function init(typeGetterProvided, saveHandlerProvided) {
+	function init(typeGetterProvided, saveHandlerProvided, modeProvided) {
+		var mode = modeProvided || 'editType';
+
 		saveHandler = saveHandlerProvided;
 		typeGetter = typeGetterProvided;
 		$typeLabel = $('.template-classification-type-text');
 
 		$w.on('keydown', openModalKeyboardShortcut);
 
-		$('.template-classification-type-text').click(function (e) {
+		$typeLabel.click(function (e) {
 			e.preventDefault();
-			openEditModal('editType');
+			openEditModal(mode);
 		});
+
+		setupTooltip();
 	}
 
 	function openEditModal(modeProvided) {
 		var messagesLoader = falseFunction,
 			classificationFormLoader = falseFunction;
 
+		modalMode = modeProvided;
+
 		// Unbind modal opening keyboard shortcut while it's open
 		$w.unbind('keydown', openModalKeyboardShortcut);
 
-		labeling.init(modeProvided);
+		labeling.init(modalMode);
+
+		dismissWelcomeHint();
 
 		if (!messagesLoaded) {
 			messagesLoader = getMessages;
@@ -85,13 +97,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			$classificationForm = $(classificationForm[0]);
 		}
 
-		// Mark selected type
-		$preselectedType = $classificationForm.find('#template-classification-' + templateType);
-
-		if ($preselectedType.length !== 0) {
-			$classificationForm.find('input[checked="checked"]').removeAttr('checked');
-			$preselectedType.attr('checked', 'checked');
-		}
+		preselectedType = templateType;
 
 		// Set modal content
 		setupTemplateClassificationModal(
@@ -122,6 +128,8 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	 * One of sub-tasks for getting modal shown
 	 */
 	function processInstance(modalInstance) {
+		var $preselectedTypeInput;
+
 		/* Submit template type edit form on Done button click */
 		modalInstance.bind('done', function runSave(e) {
 			var label = e ? $(e.currentTarget).text() : 'keypress';
@@ -148,7 +156,14 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			});
 		});
 
-		modalInstance.$element.find('input:radio').change(function trackRadioChange(e) {
+		if (newTypeModes.indexOf(modalMode) >= 0) {
+			$saveBtn = modalInstance.$element.find('footer button.primary').attr('disabled','disabled');
+		}
+
+		modalInstance.$element.find('input:radio').change(function handleRadioChange(e) {
+			if (newTypeModes.indexOf(modalMode) >= 0) {
+				$saveBtn.removeAttr('disabled');
+			}
 			// Track - click to change a template's type
 			track({
 				action: tracker.ACTIONS.CLICK_LINK_TEXT,
@@ -163,19 +178,22 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 
 		throbber.remove($throbber);
 
-		// Make sure that focus is in the right place
-		$('#template-classification-' + mw.html.escape($preselectedType.val())).focus();
+		// Make sure that focus is in the right place but scroll the modal window to the top
+		$preselectedTypeInput = modalInstance.$element.find('#template-classification-' + preselectedType);
+		if ($preselectedTypeInput.length !== 0) {
+			$classificationForm.find('input:checked').removeProp('checked');
+			$preselectedTypeInput.prop('checked', true).focus();
+		}
+
+		if (preselectedType === 'unknown') {
+			modalInstance.scroll(0);
+		}
 	}
 
 	function processSave(modalInstance) {
-		var newTemplateType = $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val(),
-			oldTemplateType = '';
+		var newTemplateType = $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val();
 
-		if (!!$preselectedType) {
-			oldTemplateType = $preselectedType.val();
-		}
-
-		if (newTemplateType !== oldTemplateType) {
+		if (newTemplateType !== preselectedType) {
 			// Track - modal saved with changes
 			track({
 				action: tracker.ACTIONS.SUBMIT,
@@ -189,11 +207,15 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			track({
 				action: tracker.ACTIONS.SUBMIT,
 				label: 'nochange',
-				value: oldTemplateType
+				value: preselectedType
 			});
 		}
 
-		modalInstance.trigger('close');
+		if (modalMode === 'addTypeBeforePublish' && newTemplateType) {
+			$('#wpSave').click();
+		} else {
+			modalInstance.trigger('close');
+		}
 	}
 
 	function updateEntryPointLabel(templateType) {
@@ -204,17 +226,6 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	}
 
 	function setupTemplateClassificationModal(content) {
-		/* Modal component configuration */
-		modalConfig = {
-			vars: {
-				id: 'TemplateClassificationEditModal',
-				classes: ['template-classification-edit-modal'],
-				size: 'small', // size of the modal
-				content: content, // content
-				title: labeling.getTitle()
-			}
-		};
-
 		var modalButtons = [
 			{
 				vars: {
@@ -253,6 +264,43 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		};
 
 		modalConfig.vars.buttons = modalButtons;
+	}
+
+	function setupTooltip() {
+		$typeWrapper = $('.template-classification-type-wrapper');
+
+		if ($typeWrapper.data('mode') === 'welcome') {
+			mw.loader.using(
+				['ext.wikia.TemplateClassification.ModalMessages', 'mediawiki.jqueryMsg'],
+				function showWelcomeTooltip() {
+					$typeWrapper.tooltip({
+						title: mw.message(
+							'template-classification-entry-point-hint',
+							mw.config.get('wgUserName')
+						).parse()
+					}).tooltip('show');
+				}
+			);
+		} else {
+			$typeWrapper.tooltip({
+				delay: {show: 500, hide: 300}
+			});
+		}
+	}
+
+	function dismissWelcomeHint() {
+		if ($typeWrapper.data('has-seen-welcome') === 0) {
+			$typeWrapper.data('has-seen-welcome', 1);
+			$typeWrapper.tooltip('hide');
+			nirvana.sendRequest({
+				controller: 'TemplateClassification',
+				method: 'dismissWelcomeHint',
+				type: 'post',
+				data: {
+					token: mw.user.tokens.get('editToken')
+				}
+			});
+		}
 	}
 
 	function getTemplateClassificationEditForm() {

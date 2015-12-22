@@ -8,6 +8,7 @@ use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Logger\Loggable;
 use Wikia\Persistence\User\Preferences\PreferencePersistence;
 use Wikia\Util\WikiaProfiler;
+use Wikia\Service\PersistenceException;
 
 class PreferenceServiceImpl implements PreferenceService {
 
@@ -128,6 +129,12 @@ class PreferenceServiceImpl implements PreferenceService {
 	}
 
 	public function deleteAllPreferences( $userId ) {
+		// if the preferences are marked as read-only DO NOT allow
+		// purging. this is to ensure we don't make a mistake after a failed read
+		if ( $this->load( $userId )->isReadOnly() ) {
+			return false;
+		}
+
 		try {
 			$deleted = $this->persistence->deleteAll( $userId );
 			if ( $deleted ) {
@@ -164,6 +171,12 @@ class PreferenceServiceImpl implements PreferenceService {
 		}
 
 		$prefs = $this->load( $userId );
+
+		// if the UserPreferences have been marked as read-only they should NOT be saved
+		if ( $prefs->isReadOnly() ) {
+			return false;
+		}
+
 		$prefsToSave = new UserPreferences();
 
 		foreach ( $prefs->getGlobalPreferences() as $pref ) {
@@ -228,6 +241,11 @@ class PreferenceServiceImpl implements PreferenceService {
 			if ( !$preferences ) {
 				try {
 					$preferences = $this->persistence->get( $userId );
+				} catch ( PersistenceException $e ) {
+					$this->error( $e->getMessage() . ": setting preferences in read-only mode",
+						['user' => $userId] );
+					$preferences = ( new UserPreferences() )
+						->setReadOnly( true );
 				} catch ( \Exception $e ) {
 					$this->error( $e->getMessage(), ['user' => $userId] );
 					throw $e;

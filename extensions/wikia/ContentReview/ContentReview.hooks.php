@@ -39,7 +39,13 @@ class Hooks {
 		$title = $out->getTitle();
 
 		if ( $title->exists() ) {
-			$content = $this->getImportJSContent( $title, $content );
+			if ( ImportJS::isImportJSPage( $title ) ) {
+				$message = ImportJS::getImportJSDescriptionMessage();
+				$content = $this->prepareContent( $title, $content, $message );
+			} elseif ( UserBadges::isUserBadgesPage( $title ) ) {
+				$message = UserBadges::getUserBadgesDescriptionMessage();
+				$content = $this->prepareContent( $title, $content, $message );
+			}
 		}
 
 		return true;
@@ -53,7 +59,15 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onArticleNonExistentPage( \Article $article, \OutputPage $out, &$content ) {
-		$content = $this->getImportJSContent( $article->getTitle(), $content, false );
+		$title = $article->getTitle();
+
+		if ( ImportJS::isImportJSPage( $title ) ) {
+			$message = ImportJS::getImportJSDescriptionMessage();
+			$content = $this->prepareContent( $title, $content, $message, false );
+		} elseif ( UserBadges::isUserBadgesPage( $title ) ) {
+			$message = UserBadges::getUserBadgesDescriptionMessage();
+			$content = $this->prepareContent( $title, $content, $message, false );
+		}
 
 		return true;
 	}
@@ -253,18 +267,24 @@ class Hooks {
 	}
 
 	/**
-	 * Purges JS pages data
+	 * Purges JS pages data and removes data on a deleted page from the database
 	 *
 	 * @param \WikiPage $article
 	 * @param \User $user
 	 * @param $reason
 	 * @param $id
+	 * @return bool
 	 */
 	public function onArticleDeleteComplete( \WikiPage &$article, \User &$user, $reason, $id ) {
+		global $wgCityId;
+
 		$title = $article->getTitle();
 
 		if ( !is_null( $title )	) {
 			if ( $title->isJsPage() ) {
+				$service = new ContentReviewService();
+				$service->deletePageData( $wgCityId, $id );
+
 				$this->purgeContentReviewData();
 			}
 
@@ -355,15 +375,12 @@ class Hooks {
 		ContentReviewStatusesService::purgeJsPagesCache();
 	}
 
-	private function getImportJSContent( \Title $title, $content, $parse = true ) {
-		if ( ImportJS::isImportJSPage( $title ) ) {
-			$isViewPage = empty( \RequestContext::getMain()->getRequest()->getVal( 'action' ) );
+	private function prepareContent( \Title $title, $content, \Message $message, $parse = true ) {
+		$isViewPage = empty( \RequestContext::getMain()->getRequest()->getVal( 'action' ) );
 
-			if ( $isViewPage ) {
-				$message = ImportJS::getImportJSDescriptionMessage();
-				$text = $parse ? $message->parse() : $message->escaped();
-				$content = $text . '<pre>' . trim( strip_tags( $content ) ) . '</pre>';
-			}
+		if ( $isViewPage ) {
+			$text = $parse ? $message->parse() : $message->escaped();
+			$content = $text . '<pre>' . trim( strip_tags( $content ) ) . '</pre>';
 		}
 
 		return $content;

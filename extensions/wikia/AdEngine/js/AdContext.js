@@ -73,7 +73,8 @@ define('ext.wikia.adEngine.adContext', [
 
 		// Recoverable ads message
 		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
-			context.opts.recoveredAdsMessage = geo.isProperGeo(instantGlobals.wgAdDriverAdsRecoveryMessageCountries);
+			context.opts.recoveredAdsMessage = context.targeting.pageType === 'article' &&
+				geo.isProperGeo(instantGlobals.wgAdDriverAdsRecoveryMessageCountries);
 		}
 
 		// Google Consumer Surveys
@@ -90,6 +91,11 @@ define('ext.wikia.adEngine.adContext', [
 		// Targeting by page categories
 		if (context.targeting.enablePageCategories) {
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
+		}
+
+		// Evolve2 integration
+		if (context.providers.evolve2) {
+			context.providers.evolve2 = geo.isProperGeo(instantGlobals.wgAdDriverEvolve2Countries);
 		}
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverTurtleCountries)) {

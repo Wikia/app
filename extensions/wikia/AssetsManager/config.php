@@ -115,6 +115,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve.js',
+		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 		'//extensions/wikia/AdEngine/js/provider/liftium.js',
 		'//extensions/wikia/AdEngine/js/provider/monetizationService.js',
 		'//extensions/wikia/AdEngine/js/provider/sevenOneMedia.js',
@@ -736,6 +737,14 @@ $config['wikiamobile_tables_js'] = array(
 	)
 );
 
+$config['wikiamobile_widget_iframe_unwrapper'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => [
+		'//extensions/wikia/WikiaMobile/js/widget_iframe_unwrapper.js'
+	]
+];
+
 $config['mobile_base_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
@@ -750,7 +759,9 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
+		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
+		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
@@ -761,6 +772,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/lookup/rubiconFastlane.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
+		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adDetect.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adElement.js',
@@ -2668,6 +2680,16 @@ $config['template_classification_in_edit_js'] = [
 	]
 ];
 
+$config['template_classification_in_category_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationInCategory.js',
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationLabeling.js',
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationModal.js',
+	]
+];
+
 $config['template_classification_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
@@ -2704,5 +2726,13 @@ $config['templates_hq_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/TemplateClassification/styles/SpecialTemplates.scss',
+	]
+];
+
+$config['polldaddy_tag_wikiamobile'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => [
+		'//extensions/wikia/PolldaddyTag/scripts/wikiamobile.js'
 	]
 ];

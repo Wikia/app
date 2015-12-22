@@ -9,7 +9,7 @@ $specialPageAliases = [];
  * English (en)
  */
 $specialPageAliases['en'] = [
-	'Insights' => [ 'Insights' ],
+	'Insights' => [ 'Insights', 'Top', 'WikiStats' ],
 ];
 
 /**

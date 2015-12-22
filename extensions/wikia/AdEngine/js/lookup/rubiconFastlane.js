@@ -21,11 +21,11 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 					targeting: {loc: 'top'}
 				},
 				LEFT_SKYSCRAPER_2: {
-					sizes: [[160, 600]],
+					sizes: [[160, 600], [300, 600]],
 					targeting: {loc: 'middle'}
 				},
 				LEFT_SKYSCRAPER_3: {
-					sizes: [[160, 600]],
+					sizes: [[160, 600], [300, 600]],
 					targeting: {loc: 'footer'}
 				},
 				INCONTENT_BOXAD_1: {
@@ -59,6 +59,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		priceMap = {},
 		response = false,
 		rubiconSlots = [],
+		rubiconElementKey = 'rpfl_elemid',
 		rubiconTierKey = 'rpfl_7450',
 		rubiconLibraryUrl = '//ads.rubiconproject.com/header/7450.js',
 		slots = {},
@@ -150,18 +151,10 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 
 	function defineSingleSlot(slotName, slot, skin) {
 		var position = slotName.indexOf('TOP') !== -1 ? 'atf' : 'btf',
-			provider = skin === 'oasis' ? 'gpt' : 'mobile',
-			slotPath = [
-				'/5441',
-				'wka.' + adLogicZoneParams.getSite(),
-				adLogicZoneParams.getMappedVertical(),
-				'',
-				adLogicZoneParams.getPageType()
-			].join('/'),
-			unit = 'wikia_gpt' + slotPath + '/' + provider + '/' + slotName;
+			provider = skin === 'oasis' ? 'gpt' : 'mobile';
 
 		win.rubicontag.cmd.push(function () {
-			var rubiconSlot = win.rubicontag.defineSlot(unit, slot.sizes, unit);
+			var rubiconSlot = win.rubicontag.defineSlot(slotName, slot.sizes, slotName);
 			if (skin === 'oasis') {
 				rubiconSlot.setPosition(position);
 			}
@@ -220,7 +213,10 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		if (response && slots[slotName]) {
 			targeting = slots[slotName].getAdServerTargeting();
 			targeting.forEach(function (params) {
-				parameters[params.key] = params.values;
+				// exclude redundant rpfl_elemid parameter
+				if (params.key !== rubiconElementKey) {
+					parameters[params.key] = params.values;
+				}
 			});
 			log(['getSlotParams', slotName, parameters], 'debug', logGroup);
 			return parameters;

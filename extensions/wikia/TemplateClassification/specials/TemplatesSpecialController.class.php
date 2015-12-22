@@ -95,6 +95,7 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 			->WHERE( 'qc_type' )->EQUAL_TO( 'Mostlinkedtemplates' )
 			->AND_( 'qc_namespace' )->EQUAL_TO( NS_TEMPLATE )
 			->AND_( 'page_namespace' )->EQUAL_TO( NS_TEMPLATE )
+			->AND_( 'page_is_redirect' )->EQUAL_TO( 0 )
 			->ORDER_BY( ['qc_value', 'DESC'] )
 			->runLoop( $db, function( &$templates, $row ) {
 				$templates[$row->page_id] = [
