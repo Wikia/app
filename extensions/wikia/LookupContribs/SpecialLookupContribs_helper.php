@@ -33,7 +33,6 @@ class LookupContribsCore {
 	private $mOffset;
 	private $mOrder = self::SORT_BY_LAST_EDIT;
 	private $mOrderDirection = 'asc';
-	private $mIncludeEditCount = false;
 
 	private $mWikiID;
 	private $mWikia;
@@ -78,35 +77,11 @@ class LookupContribsCore {
 		$this->mOffset = $offset;
 	}
 
-	/**
-	 * Sets the sort order for returned rows.  If 'edits' are selected, then edit counts
-	 * are automatically enabled.
-	 *
-	 * @param string $order An ordering specified as COLUMN:DIRECTION, e.g. url:desc
-	 */
 	public function setOrder( $order ) {
 		list( $orderType, $orderDirection ) = explode( ':', $order );
 
-		if ( $orderType === self::SORT_BY_EDITS ) {
-			$this->enableEditCounts();
-		}
-
 		$this->mOrder = $orderType;
 		$this->mOrderDirection = $orderDirection;
-	}
-
-	/**
-	 * Set whether to include edit counts in the results.  If the sort order is set to 'edits'
-	 * and this value is disabled (set to false) then change the sort order to 'id' instead.
-	 *
-	 * @param bool $value
-	 */
-	public function enableEditCounts( $value = true ) {
-		$this->mIncludeEditCount = $value;
-
-		if ( empty( $this->mIncludeEditCount ) && $this->mOrder === self::SORT_BY_EDITS ) {
-			$this->mOrder = self::SORT_BY_LAST_EDIT;
-		}
 	}
 
 	public function setNamespaces( $ns = false ) {
@@ -267,10 +242,7 @@ class LookupContribsCore {
 	}
 
 	private function getUserActivityMemKey() {
-		return wfSharedMemcKey(
-			$this->mUserId,
-			$this->mIncludeEditCount ? 'dataWithEdits' : 'data'
-		);
+		return wfSharedMemcKey( $this->mUserId, 'data' );
 	}
 
 	private function orderData( $userActivity ) {

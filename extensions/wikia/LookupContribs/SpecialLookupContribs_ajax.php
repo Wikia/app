@@ -60,14 +60,13 @@ class LookupContribsAjax {
 			$oLC->setLimit( $limit );
 			$oLC->setOffset( $offset );
 			$oLC->setOrder( $order );
-			$oLC->enableEditCounts( $lookupUser );
 			$activity = $oLC->getUserActivity();
-
+gbug("ACTIVITY: ", $activity);
 			if ( !empty( $activity ) ) {
 				$result['iTotalRecords'] = intval( $limit );
 				$result['iTotalDisplayRecords'] = intval( $activity['cnt'] );
 
-				if ( $lookupUser === true ) {
+				if ( $lookupUser ) {
 					$result['sColumns'] = 'id,title,url,lastedit,edits,userrights,blocked';
 					$result['aaData'] = LookupContribsAjax::prepareLookupUserData( $activity['data'], $username );
 				} else {
@@ -125,7 +124,7 @@ class LookupContribsAjax {
 				$row['dbname'], // wiki dbname
 				$row['title'], // wiki title
 				$row['url'], // wiki url
-				F::app()->wg->Lang->timeanddate( wfTimestamp( TS_MW, $row['last_edit'] ), true ), // last edited
+				F::app()->wg->Lang->timeanddate( wfTimestamp( TS_MW, $row['lastedit'] ), true ), // last edited
 				'' // options
 			];
 		}
@@ -149,8 +148,8 @@ class LookupContribsAjax {
 				$row['id'], // wiki Id
 				$row['title'], // wiki title
 				$row['url'], // wiki url
-				$wg->Lang->timeanddate( wfTimestamp( TS_MW, $row['last_edit'] ), true ), // last edited
-				$wg->ContLang->formatNum( $row['editcount'] ),
+				$wg->Lang->timeanddate( wfTimestamp( TS_MW, $row['lastedit'] ), true ), // last edited
+				$wg->ContLang->formatNum( $row['edits'] ),
 				LookupUserPage::getUserData( $username, $row['id'], $row['url'] ), // user rights
 				LookupUserPage::getUserData( $username, $row['id'], $row['url'], true ), // blocked
 			];

@@ -39,7 +39,6 @@ class Controller extends \WikiaController {
 		$contribs->setLimit( $limit );
 		$contribs->setOffset( $offset );
 		$contribs->setOrder( $order );
-		$contribs->enableEditCounts();
 
 		$activity = $contribs->getUserActivity();
 
@@ -55,16 +54,16 @@ class Controller extends \WikiaController {
 	protected function formatItems( $items ) {
 		$flattened = [];
 		foreach ( $items as $sortKey => $contribItem ) {
-			$lastEditTS = wfTimestamp( TS_MW, $contribItem[ 'last_edit' ] );
+			$lastEditTS = wfTimestamp( TS_MW, $contribItem[ 'lastedit' ] );
+			unset($contribItem['lastedit']);
+
 			$localizedDate = \F::app()->wg->Lang->timeanddate( $lastEditTS, $localTZ = true );
 			$contribItem['lastEdit'] = $localizedDate;
-			unset($contribItem['last_edit']);
 
-			$editCount = $contribItem['editcount'];
+			$editCount = $contribItem['edits'];
+			unset($contribItem['edits']);
 			$editString = wfMessage( 'user-activity-edit-count', $editCount )->text();
 			$contribItem['editString'] = $editString;
-			$contribItem['editCount'] = $editCount;
-			unset($contribItem['editcount']);
 
 			$dbName = $contribItem['dbname'];
 			$contribItem['groups'] = implode(', ', $this->getGroups( $dbName ) );
