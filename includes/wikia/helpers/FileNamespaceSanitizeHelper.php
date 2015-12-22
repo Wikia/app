@@ -37,7 +37,8 @@ class FileNamespaceSanitizeHelper {
 					$fileNamespaces [] = $alias;
 				}
 			}
-
+			
+			//be able to match user-provided file namespaces that may contain both underscores and spaces
 			$fileNamespaces = array_map(function( $namespace ) {
 				return mb_ereg_replace('_', '(_|\ )', $namespace);
 			}, $fileNamespaces);
