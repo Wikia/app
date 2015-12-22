@@ -102,6 +102,44 @@
 <?= $bottomScripts ?>
 
 <?= $nielsen ?>
+
+<script type="text/javascript">
+	console.log('== Qualaroo experiment enabled ==');
+
+	var wgQualarooKruxMapping = {
+		'all': {
+			'Xbox One': 'p9jqe7dyz',
+			'Playstation 3': 'p9jqe7dyz',
+			'Playstation 4': 'p9jqe7dyz'
+		},
+		'152278': {
+			'Xbox One': 'p9jp8yb4b',
+			'Playstation 3': 'p9jp8yb4b',
+			'Playstation 4': 'p9jp8yb4b'
+		}
+	};
+
+	function sendKruxRequest(segment) {
+		console.log('http://apiservices.krxd.net/audience_segments/add_user?pubid=unknown&seg_id=' + segment);
+	}
+
+	function findAndSendKruxRequest(fieldsList, nudgeId) {
+		var answer = fieldsList[0]['answer'];
+
+		if(wgQualarooKruxMapping[nudgeId] && wgQualarooKruxMapping[nudgeId][answer]) {
+			sendKruxRequest(wgQualarooKruxMapping[nudgeId][answer]);
+		} else if(wgQualarooKruxMapping['all'][answer]) {
+			sendKruxRequest(wgQualarooKruxMapping['all'][answer]);
+		} else {
+			console.log('Qualaroo-Krux mapping: no segment found for the answer');
+		}
+	}
+
+	window._kiq.push(['eventHandler', 'submit', function(field_list, nudge_id, node_id){
+		findAndSendKruxRequest(field_list, nudge_id);
+	}]);
+</script>
+
 </body>
 
 <?= wfReportTime() . "\n" ?>
