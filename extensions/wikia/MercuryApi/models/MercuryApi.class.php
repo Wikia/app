@@ -104,18 +104,25 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function getWikiVariables() {
-		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin,
-			   $wgLang, $wgLanguageCode, $wgContLang, $wgCityId, $wgEnableNewAuth;
+		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin, $wgDisableAnonymousEditing,
+			   $wgLanguageCode, $wgContLang, $wgCityId, $wgEnableNewAuth, $wgDisableAnonymousUploadForMercury,
+			   $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff, $wgDisableMobileSectionEditor,
+			   $wgEnableDiscussions;
 
 		return [
 			'cacheBuster' => (int) $wgCacheBuster,
 			'dbName' => $wgDBname,
 			'defaultSkin' => $wgDefaultSkin,
+			'disableAnonymousEditing' => $wgDisableAnonymousEditing,
+			'disableAnonymousUploadForMercury' => $wgDisableAnonymousUploadForMercury,
+			'enableDiscussions' => $wgEnableDiscussions,
 			'enableNewAuth' => $wgEnableNewAuth,
+			'homepage' => $this->getHomepageUrl(),
 			'id' => (int) $wgCityId,
+			'isCoppaWiki' => ( $wgWikiDirectedAtChildrenByFounder || $wgWikiDirectedAtChildrenByStaff ),
+			'isDarkTheme' => SassUtil::isThemeDark(),
+			'disableMobileSectionEditor' => $wgDisableMobileSectionEditor,
 			'language' => [
-				'user' => $wgLang->getCode(),
-				'userDir' => SassUtil::isRTL() ? 'rtl' : 'ltr',
 				'content' => $wgLanguageCode,
 				'contentDir' => $wgContLang->getDir()
 			],
@@ -139,7 +146,8 @@ class MercuryApi {
 		if ( !$msg->isDisabled() ) {
 			$msgText = $msg->text();
 		}
-		return !empty( $msgText ) ? $msgText : false;
+
+		return !empty( $msgText ) ? htmlspecialchars( $msgText ) : false;
 	}
 
 	/**
@@ -240,6 +248,20 @@ class MercuryApi {
 	}
 
 	/**
+	 * Get homepage URL for given language.
+	 *
+	 * @return string homepage URL. Default is US homepage.
+	 */
+	private function getHomepageUrl() {
+		global $wgLanguageCode;
+		if ( class_exists('WikiaLogoHelper') ) {
+			return ( new WikiaLogoHelper() )->getCentralUrlForLang( $wgLanguageCode );
+		}
+		return 'http://www.wikia.com'; //default homepage url
+	}
+
+
+	/**
 	 * Get ads context for Title. Return null if Ad Engine extension is not enabled
 	 *
 	 * @param Title $title Title object
@@ -293,10 +315,10 @@ class MercuryApi {
 	/**
 	 * Add `section` type to all sections from CuratedContent data
 	 *
-	 * @param $data
+	 * @param array $data
 	 * @return array
 	 */
-	private function getCuratedContentSections( $data ) {
+	public function getCuratedContentSections( Array $data ) {
 		$sections = [];
 		if ( !empty( $data[ 'sections' ] ) ) {
 			foreach ( $data[ 'sections' ] as $section ) {
@@ -313,7 +335,7 @@ class MercuryApi {
 	 * @param $items
 	 * @return array
 	 */
-	private function getCuratedContentItems( $items ) {
+	public function getCuratedContentItems( $items ) {
 		$data = [];
 		if ( !empty( $items ) ) {
 			foreach ( $items as $item ) {
@@ -336,7 +358,7 @@ class MercuryApi {
 	 * @param $item
 	 * @return mixed
 	 */
-	private function processCuratedContentItem( $item ) {
+	public function processCuratedContentItem( $item ) {
 		if ( !empty( $item['article_id'] ) ) {
 			$title = Title::newFromID( $item['article_id'] );
 
@@ -355,7 +377,7 @@ class MercuryApi {
 		return null;
 	}
 
-	public function processTrendingArticlesData( $data, $paramsToInclude = [] ) {
+	public function processTrendingArticlesData( $data ) {
 		$data = $data[ 'items' ];
 
 		if ( !isset( $data ) || !is_array( $data ) ) {
@@ -365,7 +387,7 @@ class MercuryApi {
 		$items = [];
 
 		foreach ( $data as $item ) {
-			$processedItem = $this->processTrendingDataItem( $item, $paramsToInclude );
+			$processedItem = $this->processTrendingArticlesItem( $item );
 
 			if ( !empty( $processedItem ) ) {
 				$items[] = $processedItem;
@@ -373,6 +395,28 @@ class MercuryApi {
 		}
 
 		return $items;
+	}
+
+	/**
+	 * @desc To save some bandwidth, the unnecessary params are stripped
+	 *
+	 * @param array $item
+	 * @return array
+	 */
+	public function processTrendingArticlesItem( $item ) {
+		$paramsToInclude = [ 'title', 'thumbnail', 'url' ];
+
+		$processedItem = [];
+
+		if ( !empty( $item ) && is_array( $item ) ) {
+			foreach ( $paramsToInclude as $param) {
+				if ( !empty( $item[ $param ] ) ) {
+					$processedItem[ $param ] = $item[ $param ];
+				}
+			}
+		}
+
+		return $processedItem;
 	}
 
 	public function processTrendingVideoData( $data ) {
@@ -397,30 +441,5 @@ class MercuryApi {
 		}
 
 		return $items;
-	}
-
-	/**
-	 * @desc To save some bandwidth, the unnecessary params are stripped
-	 *
-	 * @param $item array
-	 * @param $paramsToInclude array: leave empty to return all params
-	 * @return array
-	 */
-	private function processTrendingDataItem( $item, $paramsToInclude = [] ) {
-		if ( empty( $paramsToInclude ) ) {
-			return $item;
-		}
-
-		$processedItem = [];
-
-		if ( !empty( $item ) && is_array( $item ) && is_array( $paramsToInclude ) ) {
-			foreach ( $paramsToInclude as $param) {
-				if ( !empty( $item[ $param ] ) ) {
-					$processedItem[ $param ] = $item[ $param ];
-				}
-			}
-		}
-
-		return $processedItem;
 	}
 }

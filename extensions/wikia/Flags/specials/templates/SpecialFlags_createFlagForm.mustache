@@ -1,0 +1,74 @@
+<form class="flags-special-form" data-flag-type-id="{{values.flagTypeId}}">
+	<fieldset>
+		<table class="flags-special-form-table">
+			<tr>
+				<td class="flags-special-form-label">
+					<label for="flags-special-form-name">
+						{{messages.flags-special-create-form-name}}
+					</label>
+				</td>
+				<td class="flags-special-form-input">
+					<input type="text" id="flags-special-form-name" value="{{values.name}}" data-flag-name="{{values.name}}">
+				</td>
+			</tr>
+			<tr>
+				<td class="flags-special-form-label">
+					<label for="flags-special-form-template">
+						{{messages.flags-special-create-form-template}}
+					</label>
+				</td>
+				<td class="flags-special-form-input">
+					<input type="text" id="flags-special-form-template" value="{{values.template}}"><br/>
+					<a class="form-template-params" href="#">{{messages.flags-special-create-form-fetch-params}}</a>
+				</td>
+			</tr>
+			<tr>
+				<td class="flags-special-form-label">
+					<label for="flags-special-form-group">
+						{{messages.flags-special-create-form-group}}
+					</label>
+				</td>
+				<td class="flags-special-form-input">
+					<select id="flags-special-form-group">
+						{{#values.groups}}
+							<option value="{{value}}" {{#selected}}selected{{/selected}}>{{name}}</option>
+						{{/values.groups}}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="flags-special-form-label">
+					<label for="flags-special-form-targeting">
+						{{messages.flags-special-create-form-targeting}}
+					</label>
+				</td>
+				<td class="flags-special-form-input">
+					<select id="flags-special-form-targeting">
+						{{#values.targeting}}
+							<option value="{{value}}" {{#selected}}selected{{/selected}}>{{name}}</option>
+						{{/values.targeting}}
+					</select>
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+	<fieldset>
+		<legend class="flags-special-form-legend">{{messages.flags-special-create-form-parameters}}</legend>
+		<table class="flags-special-form-table flags-special-form-params">
+			<thead>
+				<th class="flags-special-form-params-th">{{messages.flags-special-create-form-parameters-name}}</th>
+				<th class="flags-special-form-params-th">{{messages.flags-special-create-form-parameters-description}}</th>
+			</thead>
+			<tbody class="flags-special-form-params-tbody">
+				{{#values.params}}
+					{{>createFormParam}}
+				{{/values.params}}
+			</tbody>
+		</table>
+		<div class="flags-special-form-params-new">
+			<a class="wikia-button primary flags-special-form-params-new-link" href="#">
+				{{messages.flags-special-create-form-parameters-add}}
+			</a>
+		</div>
+	</fieldset>
+</form>

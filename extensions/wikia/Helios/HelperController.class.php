@@ -1,13 +1,19 @@
 <?php
 namespace Wikia\Helios;
 
-use Wikia\Util\GlobalStateWrapper;
+use Email\Controller\EmailConfirmationController;
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Auth\AuthService;
 
 /**
  * A helper controller to provide end points exposing MediaWiki functionality to Helios.
  */
 class HelperController extends \WikiaController
 {
+
+	protected $authService;
+
+
 	/**
 	 * AntiSpoof: verify whether the name is legal for a new account.
 	 *
@@ -18,9 +24,8 @@ class HelperController extends \WikiaController
 		$this->response->setFormat( 'json' );
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 
-		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
+		if ( !$this->authenticateViaTheSchwartz() ) {
 			$this->response->setVal( 'allow', false );
-			$this->response->setVal( 'message', 'invalid secret' );
 			return;
 		}
 
@@ -50,8 +55,7 @@ class HelperController extends \WikiaController
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 		$this->response->setVal( 'success', false );
 
-		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
-			$this->response->setVal( 'message', 'invalid secret' );
+		if ( !$this->authenticateViaTheSchwartz() ) {
 			return;
 		}
 
@@ -73,8 +77,7 @@ class HelperController extends \WikiaController
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 		$this->response->setVal( 'success', false );
 
-		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
-			$this->response->setVal( 'message', 'invalid secret' );
+		if ( !$this->authenticateViaTheSchwartz() ) {
 			return;
 		}
 
@@ -120,28 +123,8 @@ class HelperController extends \WikiaController
 			return;
 		}
 
-		$langCode = $this->getVal( 'langCode', 'en' );
-		$mailTemplate = $this->app->renderView(
-			'UserLogin',
-			'GeneralMail',
-			[
-				'language' => $langCode,
-				'type' => 'confirmation-email'
-			]
-		);
-
-		$lang = \Language::factory($langCode);
-		$mailStatus = (new GlobalStateWrapper(['wgLang' => $lang]))
-			->wrap(function() use ($user, $mailTemplate, $langCode) {
-				return $user->sendConfirmationMail(
-					false,
-					'ConfirmationMail',
-					'usersignup-confirmation-email',
-					true,
-					$mailTemplate,
-					$langCode
-				);
-			});
+		$mailStatus = $user->sendConfirmationMail(
+			'created', EmailConfirmationController::TYPE, '', true, '', $this->getVal( 'langCode', 'en' ));
 
 		if ( ! $mailStatus->isGood() ) {
 			$this->response->setVal( 'message', 'could not send an email message' );
@@ -150,4 +133,110 @@ class HelperController extends \WikiaController
 
 		$this->response->setVal( 'success', true );
 	}
+
+	/**
+	 * UserLogin: send an email with temporary password
+	 */
+	public function sendTemporaryPasswordEmail() {
+		$this->response->setFormat( 'json' );
+		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
+		$this->response->setVal( 'success', false );
+
+		if ( !$this->authenticateViaTheSchwartz() ) {
+			return;
+		}
+
+		$username = $this->getFieldFromRequest( 'username', 'invalid username' );
+		if ( !isset( $username ) ) {
+			return;
+		}
+
+		$tempPassword = $this->getFieldFromRequest( 'password', 'invalid password' );
+		if ( !isset( $tempPassword ) ) {
+			return;
+		}
+
+		$user = \User::newFromName( $username );
+
+		if ( ! $user instanceof \User ) {
+			$this->response->setVal( 'message', 'unable to create a \User object from name' );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+			return;
+		}
+
+		if ( ! $user->getId() ) {
+			$this->response->setVal( 'message', 'no such user' );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+			return;
+		}
+
+		$resp = \F::app()->sendRequest( 'Email\Controller\ForgotPassword', 'handle', [
+			'targetUser' => $username,
+			'tempPass' => $tempPassword,
+		] );
+
+		$data = $resp->getData();
+		if ( !empty( $data['result'] ) && $data['result'] == 'ok' ) {
+			$this->response->setVal( 'success', true );
+		} else {
+			$this->response->setVal( 'message', 'could not send an email message' );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_NOT_FOUND );
+		}
+	}
+
+	public function isBlocked() {
+		$this->response->setFormat( 'json' );
+		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
+
+		if ( !$this->authenticateViaTheSchwartz() ) {
+			return;
+		}
+
+		$username = $this->getFieldFromRequest( 'username', 'invalid username' );
+		if ( !isset( $username ) ) {
+			return;
+		}
+
+		$blocked = $this->getAuthService()->isUsernameBlocked( $username );
+		if ( $blocked === null ) {
+			$this->response->setVal( 'message', 'user not found' );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_NOT_FOUND );
+			return;
+		}
+
+		$this->response->setData( array( 'blocked' => $blocked ) );
+	}
+
+	protected function getFieldFromRequest( $field, $failureMessage ) {
+		$fieldValue = $this->getVal( $field, null );
+		if ( !isset( $fieldValue ) ) {
+			$this->response->setVal( 'message', $failureMessage );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+		}
+
+		return $fieldValue;
+	}
+
+	protected function authenticateViaTheSchwartz() {
+		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
+			$this->response->setVal( 'message', 'invalid secret' );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_FORBIDDEN );
+			return false;
+		}
+
+		return true;
+	}
+
+	public function setAuthService( AuthService $authService ) {
+		$this->authService = $authService;
+	}
+
+	public function getAuthService() {
+		if (!isset($this->authService)) {
+			$this->authService = Injector::getInjector()->get(AuthService::class);
+		}
+
+		return $this->authService;
+	}
+
 }

@@ -447,8 +447,9 @@ Alasan nang dibariakan adalah ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Pian parhatan ini sudah kaluar log.'''
 
-Pian kawa manyambung hagan mamuruk {{SITENAME}} kada bangaran, atawa Pian kawa [[Special:UserLogin|babuat log pulang]] sawagai pamuruk nang sama atawa sawagai pamuruk balain.
+Pian kawa manyambung hagan mamuruk {{SITENAME}} kada bangaran, atawa Pian kawa $1 sawagai pamuruk nang sama atawa sawagai pamuruk balain.
 Catatan bahwasa babarapa tungkaran pinanya masih ha tarus manampaiakan Pian masih babuat log, sampai Pian mahabisakan timbuluk panjalajah web Pian.",
+'logouttext-link-text'       => 'babuat log pulang',
 'welcomecreation'            => '==Salamat datang, $1!==
 Akun Pian sudah diulah.
 Jangan kada ingat hagan maubah [[Special:Preferences|preferensi {{SITENAME}}]] Pian.',
@@ -658,7 +659,7 @@ Alasannya ''$2''.
 * Tujuan pamblukiran: $7
 
 Pian kawa mangiwau $1 atawa nang lain [[{{MediaWiki:Grouppage-sysop}}|pambakal]] hagan mamandirakan pamblukiran nangini.
-Pian kada kawa mamuruk pitur 'surili pamuruk ini' amun kadada sabuah alamat suril nang sah nang diajukan dalam [[Special:Preferences|kakatujuan akun]] Pian wan  Pian kada lagi diblukir mamuruk nangini. 
+Pian kada kawa mamuruk pitur 'surili pamuruk ini' amun kadada sabuah alamat suril nang sah nang diajukan dalam [[Special:Preferences|kakatujuan akun]] Pian wan  Pian kada lagi diblukir mamuruk nangini.
 Alamat IP Pian parhatan ini $3, wan ID nang diblukir adalah $5.
 Muhun sampaiakan samunyaan rarinci di atas dalam parmintaan nag Pian ulah.",
 'autoblockedtext'                  => "Alamat IP Pian sudah utumatis diblukir karana dipuruk ulih pamuruk lain, nang diblukir ulih $1.
@@ -670,7 +671,7 @@ Alasannya: ''$2''.
 
 Pian kawa mangiwau $1 atawa nang lain [[{{MediaWiki:Grouppage-sysop}}|pambakal]] hagan mamandirakan pamblukiran nangini.
 
-Catatan Pian kada kawa mamuruk pitur 'surili pamuruk ini' amun kadada sabuah alamat suril nang sah nang tadaptar dalam [[Special:Preferences|kakatujuan akun]] Pian wan  Pian kada lagi diblukir mamuruk nangini. 
+Catatan Pian kada kawa mamuruk pitur 'surili pamuruk ini' amun kadada sabuah alamat suril nang sah nang tadaptar dalam [[Special:Preferences|kakatujuan akun]] Pian wan  Pian kada lagi diblukir mamuruk nangini.
 
 Alamat IP Pian parhatan ini $3, wan ID nang diblukir adalah $5.
 Muhun sampaiakan samunyaan rarinci di atas dalam parmintaan nag Pian ulah.",
@@ -2462,7 +2463,7 @@ Pian batanggung jawab gasan mamastiakan tautan-tautan tatarusan manuju ka mana n
 Catatan bahwasanya tungkaran '''kada''' akan tapindah amun sudah ada tungkaran nang bangaran hanyar ngitu, kacuali amun tungkaran itu puang atawa sabuah paugahan wan kadada halam babakan.
 
 '''Paringatan!'''
-Ini kawa maakibatakan parubahan kada taduga wan drastis gasan sabuah tungkaran rami; 
+Ini kawa maakibatakan parubahan kada taduga wan drastis gasan sabuah tungkaran rami;
 muhun mamastiakan Pian paham akibatnya sabalum manarusakan.",
 'movepagetalktext'             => "Tungkaran pamandiran tarait akan langsung dipindahakan baimbai wan ini '''kacuali amun:'''
 *Sabuah tungkaran pamandiran nang kada puang sudah baisi awan judul hanyar, atawa

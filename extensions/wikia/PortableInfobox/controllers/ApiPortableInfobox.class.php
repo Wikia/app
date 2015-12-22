@@ -13,12 +13,50 @@ class ApiPortableInfobox extends ApiBase {
 		if ( $arguments === null ) {
 			$this->getResult()->setWarning( "Arguments json format incorect or empty" );
 		}
-		$parser = new Parser();
-		$parser->startExternalParse( Title::newFromText( $title ), new ParserOptions(), 'text', true );
-		$frame = $parser->getPreprocessor()->newCustomFrame( $arguments );
+
+		/*
+		This commented block is an another/alternative approach to the same problem. Potentially
+		it is better because it parses wikitext in a way identical to how it is parser for article
+		view - however it is not able to throw exception if the passed text is not a valid infobox.
+		I'm keeping it here because I think it is a great approach and in the future I'm planning
+		to create an separated API that uses this approach. - Inez Korczyński
+
+		$fakeTemplate = 'FakeTemplate' . wfRandomString( 4 );
+		$fakeTemplateTitle = Title::newFromText( $fakeTemplate, NS_TEMPLATE );
+
+		$parametersWT = '';
+		foreach( $arguments as $key => $value ) {
+			$parametersWT .= '|' . $key . '=' . $value;
+		}
+		$callWT = '{{' . $fakeTemplate . $parametersWT . '}}';
+
+		global $wgParser;
+		$popts = ParserOptions::newFromContext( $this->getContext() );
+		$popts->setTemplateCallback( function ( $title, $parser = false ) use ( $fakeTemplateTitle, $text ) {
+			if ( $title->equals( $fakeTemplateTitle ) ) {
+				return array( 'text' => $text );
+			} else {
+				return Parser::statelessFetchTemplate( $title, $parser );
+			}
+		} );
+		$output = $wgParser->parse( $callWT, Title::newFromText( $title ), $popts )->getText();
+		$this->getResult()->addValue( null, $this->getModuleName(), [ 'text' => [ '*' => $output ] ] );
+		*/
+
+		global $wgParser;
+		$wgParser->firstCallInit();
+		$wgParser->startExternalParse( Title::newFromText( $title ), ParserOptions::newFromContext( $this->getContext() ), Parser::OT_HTML, true );
+
+		if ( is_array( $arguments ) ) {
+			foreach( $arguments as $key => &$value ) {
+				$value =  $wgParser->replaceVariables( $value );
+			}
+		}
+
+		$frame = $wgParser->getPreprocessor()->newCustomFrame( $arguments );
 
 		try {
-			$output = PortableInfoboxParserTagController::getInstance()->render( $text, $parser, $frame );
+			$output = PortableInfoboxParserTagController::getInstance()->render( $text, $wgParser, $frame );
 			$this->getResult()->addValue( null, $this->getModuleName(), [ 'text' => [ '*' => $output ] ] );
 		} catch ( \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException $e ) {
 			$this->dieUsage( wfMessage( 'unimplemented-infobox-tag', [ $e->getMessage() ] )->escaped(), "notimplemented" );

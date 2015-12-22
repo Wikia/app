@@ -376,8 +376,9 @@ La razón es la siguienti: ''$2''.",
 
 # Login and logout pages
 'logouttext'                 => "'''Cuenta afechá corretamenti.'''<br />
-Pueis acontinal gastandu {{SITENAME}} de holma anónima, u [[Special:UserLogin|entral ena tu cuenta]] con el mesmu ussuáriu, u con otru.
+Pueis acontinal gastandu {{SITENAME}} de holma anónima, u $1 con el mesmu ussuáriu, u con otru.
 Dati cuenta que hata que nu esborris el caché del tu escrucaol pué paecel que la tu cuenta acontina abierta n'angunas páginas.",
+'logouttext-link-text'       => 'entral ena tu cuenta',
 'welcomecreation'            => "== Bienviniu, $1! ==
 
 La tu cuenta d'ussuáriu á siu criá.

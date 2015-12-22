@@ -1,5 +1,8 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Auth\CookieHelper;
+
 /**
  * User Login Helper
  * @author Hyun
@@ -238,7 +241,7 @@ class UserLoginHelper extends WikiaModel {
 			$result['msg'] = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
 			return $result;
 		} else {
-			if ( !$user->getGlobalFlag(UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) && $user->isEmailConfirmed() ) {
+			if ( !$user->getGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) && $user->isEmailConfirmed() ) {
 				// User already confirmed on signup
 				$result['result'] = 'confirmed';
 				$result['msg'] = wfMessage( 'usersignup-error-confirmed-user', $username, $user->getUserPage()->getFullURL() )->parse();
@@ -303,7 +306,7 @@ class UserLoginHelper extends WikiaModel {
 		$user->mId = 0;
 		$user->mEmail = $email;
 
-		$result = $user->sendReConfirmationMail( $type );
+		$result = $user->sendReConfirmationMail();
 
 		$user->mId = $userId;
 		$user->mEmail = $userEmail;
@@ -431,6 +434,16 @@ class UserLoginHelper extends WikiaModel {
 	}
 
 	/**
+	 * Read a login token, DO NOT init if it doesn't exist
+	 *
+	 * @return string loginToken|null
+	 */
+	public static function readLoginToken() {
+		$loginToken = LoginForm::getLoginToken();
+		return !empty( $loginToken ) ? $loginToken : null;
+	}
+
+	/**
 	 * Get a login token
 	 *
 	 * @return string loginToken
@@ -470,7 +483,7 @@ class UserLoginHelper extends WikiaModel {
 	public function showRequestFormConfirmEmail( EmailConfirmation $pageObj ) {
 		$user = $pageObj->getUser(); /* @var $user User */
 		$out = $pageObj->getOutput(); /* @var $out OutputPage */
-		$optionNewEmail = $user->getGlobalAttribute( 'new_email' );
+		$optionNewEmail = $user->getNewEmail();
 		if ( $pageObj->getRequest()->wasPosted() && $user->matchEditToken( $pageObj->getRequest()->getText( 'token' ) ) ) {
 			// Wikia change -- only allow one email confirmation attempt per hour
 			if ( strtotime( $user->mEmailTokenExpires ) - strtotime( "+6 days 23 hours" ) > 0 ) {
@@ -602,4 +615,44 @@ class UserLoginHelper extends WikiaModel {
 
 		return $result;
 	}
+
+	public function getNewAuthUrl( $page = '/join' ) {
+		if ( $this->app->wg->title->isSpecial( 'Userlogout' ) ) {
+			$requestUrl = Title::newMainPage()->getLocalURL();
+		}
+		else {
+			$requestUrl = $this->app->wg->request->getRequestURL();
+		}
+
+		return $page . '?redirect='
+			. urlencode ( wfExpandUrl ( $requestUrl ) )
+			. $this->getUselangParam();
+	}
+
+	/**
+	 * Returns string with uselang param to append to login url if Wikia language is different than default
+	 * @return string
+	 */
+	private function getUselangParam() {
+		$lang = $this->wg->ContLang->mCode;
+		return $lang == 'en' ? '' : '&uselang=' . $lang;
+	}
+
+	/**
+	 * Set the cookies for the newly connected user.
+	 *
+	 * @param User the user that has been authenticated via facebook.
+	 */
+	public static function setCookiesForFacebookUser( \User $user, \Wikia\HTTP\Response $response ) {
+		$user->setCookies();
+		self::getCookieHelper()->setAuthenticationCookieWithUserId( $user->getId(), $response );
+	}
+
+	/**
+	 * @return \Wikia\Service\User\Auth\CookieHelper
+	 */
+	private static function getCookieHelper() {
+		return Injector::getInjector()->get(CookieHelper::class);
+	}
+
 }

@@ -42,6 +42,9 @@ $wgLogActions['editaccnt/realnamechange'] = 'editaccount-log-entry-realname';
 $wgLogActions['editaccnt/closeaccnt'] = 'editaccount-log-entry-close';
 $wgLogRestrictions['editaccnt'] = 'editaccount';
 
+// Log user email changes
+$wgHooks['BeforeUserSetEmail'][] = 'EditAccount::logEmailChanges';
+
 // Set up the new special page
 $wgExtensionMessagesFiles['EditAccount'] = __DIR__ . '/SpecialEditAccount.i18n.php';
 $wgAutoloadClasses['EditAccount'] = __DIR__ . '/SpecialEditAccount_body.php';

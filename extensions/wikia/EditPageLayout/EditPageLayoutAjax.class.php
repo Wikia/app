@@ -50,12 +50,6 @@ class EditPageLayoutAjax {
 							} else {
 								$res['html'] = $html;
 							}
-						} elseif ( F::app()->checkSkin( 'venus' ) ) {
-							if ( $type === 'full' ) {
-								$res['html'] = F::app()->renderView( 'VenusController', 'preview', [ 'content' => $html, 'section' => $section ] );
-							} else {
-								$res['html'] = $html;
-							}
 						} else {
 							// add page title when not in section edit mode
 							if ($section === '') {

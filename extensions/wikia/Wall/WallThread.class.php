@@ -112,6 +112,7 @@ class WallThread {
 
 		$lastId = end( $list );
 
+		// TODO: add pagination or a limit here because this will return all replies
 		return empty( $lastId ) ? $list :
 			array_merge( $list, $this->getReplyIdsFromDB( $dbr, $lastId ) );
 	}

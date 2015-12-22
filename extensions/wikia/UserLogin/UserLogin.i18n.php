@@ -115,7 +115,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'userlogin-loginreqlink' => 'log in',
 	'userlogin-changepassword-needlogin' => 'You need to $1 to change your password.',
 
-	//WikiaMobile skin
+	// WikiaMobile skin
 	'wikiamobile-sendpassword-label' => 'Send new password',
 	'wikiamobile-facebook-connect-fail' => 'Sorry, your Facebook account is not currently linked with a Wikia account.',
 

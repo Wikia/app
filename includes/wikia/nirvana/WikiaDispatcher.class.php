@@ -24,6 +24,9 @@ class WikiaDispatcher {
 	 */
 	protected function applyRouting( WikiaApp $app, WikiaResponse $response, $className, $methodName ) {
 
+		// PLATFORM-1527: sanitize method name
+		$methodName = basename( $methodName );
+
 		// Starting with requested or default method name which is passed in by dispatch
 		$response->setControllerName( $className );
 		$response->setMethodName( $methodName );

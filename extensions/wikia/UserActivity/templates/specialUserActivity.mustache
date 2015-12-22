@@ -1,0 +1,16 @@
+<br />
+<p>{{pageDescription}}</p>
+<table width="100%" class="article-table" id="useractivity-table">
+	<thead>
+		<tr><th>{{tableTitle}}</th><th>{{tableEdits}}</th><th>{{tableLastEdit}}</th><th>{{tableRights}}</th>
+	</thead>
+	{{#items}}
+	<tr>
+		<td><strong><a href="{{url}}">{{title}}</a></strong></td>
+		<td><a href="{{url}}wiki/Special:Contributions/{{username}}">{{editString}}</a></td>
+		<td>{{lastEdit}}</td>
+		<td>{{groups}}</td>
+	</tr>
+	{{/items}}
+</table>
+{{{pagination}}}

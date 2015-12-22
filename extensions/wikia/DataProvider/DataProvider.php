@@ -470,7 +470,8 @@ class DataProvider {
 				$fname,
 				[
 					'LIMIT' => self::TOP_USERS_MAX_LIMIT * 4,
-					'ORDER BY' => 'edits DESC'
+					'ORDER BY' => 'edits DESC',
+					'USE INDEX' => 'PRIMARY', # mysql in Reston wants to use a different key (PLATFORM-1648)
 				]
 			);
 

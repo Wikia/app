@@ -4,10 +4,10 @@
 
 $(document).ready(function() {
 	var baseurl = wgScript + "?action=ajax&rs=LookupContribsAjax::axData";
-	var username = '<?=$username?>';
-	var mode = '<?=$mode?>';
-	var wiki = '<?=$wiki?>';
-	var nspace = '<?=$nspace?>';
+	var username = '<?= Xml::escapeJsString( $username ) ?>';
+	var mode = '<?= Xml::escapeJsString( $mode ) ?>';
+	var wiki = '<?= Xml::escapeJsString( $wiki ) ?>';
+	var nspace = '<?=  Xml::escapeJsString( $nspace ) ?>';
 
 	if ( !username && !mode && !wiki ) {
 		return;
@@ -16,19 +16,19 @@ $(document).ready(function() {
 	var oTable = $('#lc-table').dataTable( {
 		bAutoWidth: false,
 		"oLanguage": {
-			"sLengthMenu": "<?=wfMsg('table_pager_limit', '_MENU_');?>",
-			"sZeroRecords": "<?=wfMsg('table_pager_empty');?>",
-			"sEmptyTable": "<?=wfMsg('table_pager_empty');?>",
-			"sInfo": "<?=wfMsgExt('lookupcontribsrecordspager',  array('parseinline'), '_START_', '_END_', '_TOTAL_');?>",
-			"sInfoEmpty": "<?=wfMsgExt('lookupcontribsrecordspager', array('parseinline'), '0', '0', '0');?>",
+			"sLengthMenu": "<?= wfMessage('table_pager_limit', '_MENU_')->escaped() ?>",
+			"sZeroRecords": "<?= wfMessage('table_pager_empty')->escaped() ?>",
+			"sEmptyTable": "<?= wfMessage('table_pager_empty')->escaped() ?>",
+			"sInfo": "<?= wfMessage( 'lookupcontribsrecordspager' )->parse() ?>",
+			"sInfoEmpty": "<?= wfMessage( 'lookupcontribsrecordspager' )->parse() ?>",
 			"sInfoFiltered": "",
-			"sSearch": "<?=wfMsg('search')?>",
-			"sProcessing": "<img src='" + stylepath + "/common/images/ajax.gif' /> <?=wfMsg('livepreview-loading')?>",
+			"sSearch": "<?= wfMessage( 'search' )->escaped() ?>",
+			"sProcessing": "<img src='" + mw.html.escape(stylepath) + "/common/images/ajax.gif' /> <?= wfMessage( 'livepreview-loading' )->escaped() ?>",
 			"oPaginate" : {
-				"sFirst": "<?=wfMsg('table_pager_first')?>",
-				"sPrevious": "<?=wfMsg('table_pager_prev')?>",
-				"sNext": "<?=wfMsg('table_pager_next')?>",
-				"sLast": "<?=wfMsg('table_pager_last')?>"
+				"sFirst": "<?= wfMessage( 'table_pager_first' )->escaped() ?>",
+				"sPrevious": "<?= wfMessage( 'table_pager_prev' )->escaped() ?>",
+				"sNext": "<?= wfMessage( 'table_pager_next' )->escaped() ?>",
+				"sLast": "<?= wfMessage( 'table_pager_last' )->escaped() ?>"
 			}
 		},
 		"aaSorting" : [],
@@ -82,8 +82,8 @@ $(document).ready(function() {
 				"url": sSource,
 				"data": [
 					{ 'name' : 'username',	'value' : username },
-					{ 'name' : 'mode', 		'value' : ( $('#lc-mode').exists() ) ? $('#lc-mode').val() : mode },
-					{ 'name' : 'ns',		'value' : ( $('#lc-nspace').exists() ) ? $('#lc-nspace').val() : -1 },
+					{ 'name' : 'mode', 		'value' : ( $('#lc-mode').exists() ) ? mw.html.escape($('#lc-mode').val()) : mode },
+					{ 'name' : 'ns',		'value' : ( $('#lc-nspace').exists() ) ? mw.html.escape($('#lc-nspace').val()) : -1 },
 					{ 'name' : 'wiki', 		'value' : wiki },
 					{ 'name' : 'limit', 	'value' : limit },
 					{ 'name' : 'offset',	'value' : offset },
@@ -97,24 +97,24 @@ $(document).ready(function() {
 	} );
 
 	var toolbar = '<div class="lc_toolbar">';
-	//toolbar += '<span class="lc_toolbar lc_first"><?=wfMsg('show')?>:</span>';
+	//toolbar += '<span class="lc_toolbar lc_first"><?= wfMessage( 'show' )->escaped() ?>:</span>';
 	toolbar += '<span class="lc_filter"><select name="lc-mode" id="lc-mode" class="small">';
 <? foreach ( $modes as $mode => $modeName ) : ?>
-	toolbar += '<option ' + ((mode == '<?=$mode?>')?'selected="true"':'') + ' value="<?=$mode?>"><?=$modeName?></option>';
+	toolbar += '<option ' + ((mode == '<?= $mode ?>') ? 'selected' : '') + ' value="<?= Sanitizer::encodeAttribute( $mode ) ?>"><?= htmlspecialchars( $modeName ) ?></option>';
 <? endforeach ?>
 	toolbar += '</select></span>';
 
 	toolbar += '<span class="lc_filter"><select id="lc-nspace" class="small">';
-	toolbar += '<option value="-1"><?=wfMsg('allpages')?></option>';
-	toolbar += '<option value="-2"><?=wfMsgExt('lookupcontribsshowpages', array(), wfMsg('lookupcontribscontent') )?></option>';
-	toolbar += '<optgroup label="<?=wfMsgExt('allinnamespace', array(), "")?>">';
-<? if ( !empty($nspaces) ) foreach ($nspaces as $id => $nspace) : if ( $id < 0 ) continue; ?>
-	toolbar += '<option ' + ((nspace == <?=$id?>)?'selected="true"':'') + ' value="<?=$id?>"><?=( $id != 0 ) ? $nspace : wfMsg('nstab-main')?></option>';
+	toolbar += '<option value="-1"><?= wfMessage( 'allpages' )->escaped() ?></option>';
+	toolbar += '<option value="-2"><?= wfMessage( 'lookupcontribsshowpages' )->params( wfMessage( 'lookupcontribscontent' )->escaped() ) ?></option>';
+	toolbar += '<optgroup label="<?= wfMessage( 'allinnamespace' )->escaped() ?>">';
+<? if ( !empty( $nspaces ) ) foreach ( $nspaces as $id => $nspace ) : if ( $id < 0 ) continue; ?>
+	toolbar += '<option ' + ((nspace == <?=$id?>) ? 'selected' : '') + ' value="<?= Sanitizer::encodeAttribute( $id ) ?>"><?= ( $id != 0 ) ? $nspace : wfMessage( 'nstab-main' )->escaped() ?></option>';
 <? endforeach ?>
 	toolbar += '</optgroup></select>';
 	toolbar += '</span>';
 
-	toolbar += '<span class="lc_filter"><input type="button" value="<?=wfMsg('show')?>" id="lc-showdata"></span></div>';
+	toolbar += '<span class="lc_filter"><input type="button" value="<?= wfMessage( 'show' )->escaped() ?>" id="lc-showdata"></span></div>';
 
 	$("div.dttoolbar").html( toolbar );
 	$('#lc-showdata').click( function() { oTable.fnDraw(); } );
@@ -127,9 +127,9 @@ $(document).ready(function() {
 <div>
 <form method="post" action="<?=$action?>" id="lc-form">
 <div class="lc_filter">
-	<span class="lc_filter lc_first"><?= wfMsg('lookupcontribsselectuser') ?></span>
-	<input type="text" name="target" id="lc_search" size="50" value="<?= htmlentities($username); ?>"></span>
-	<span class="lc_filter"><input type="button" value="<?=wfMsg('lookupcontribsgo')?>" id="lc-showuser" onclick="submit();"></span>
+	<span class="lc_filter lc_first"><?= wfMessage( 'lookupcontribsselectuser' )->escaped() ?></span>
+	<input type="text" name="target" id="lc_search" size="50" value="<?= Sanitizer::encodeAttribute( $username ) ?>"></span>
+	<span class="lc_filter"><input type="button" value="<?= wfMessage( 'lookupcontribsgo' )->escaped() ?>" id="lc-showuser" onclick="submit();"></span>
 </div>
 </form>
 </div>
@@ -138,9 +138,9 @@ $(document).ready(function() {
 	<thead>
 		<tr>
 			<th width="2%">#</th>
-			<th width="58%"><?= wfMessage( 'lookupcontribswikititle' )->parse() ?></th>
-			<th width="20%"><?= wfMessage( 'lookupcontribswikioptions' )->parse() ?></th>
-			<th width="20%" style="white-space:nowrap"><?= wfMessage( 'lookupcontribslastedited' )->parse() ?></th>
+			<th width="58%"><?= wfMessage( 'lookupcontribswikititle' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupcontribswikioptions' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupcontribslastedited' )->escaped() ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -151,9 +151,9 @@ $(document).ready(function() {
 	<tfoot>
 		<tr>
 			<th width="2%">#</th>
-			<th><?= wfMessage( 'lookupcontribswikititle' )->parse() ?></th>
-			<th><?= wfMessage( 'lookupcontribswikioptions' )->parse() ?></th>
-			<th style="white-space:nowrap"><?= wfMessage( 'lookupcontribslastedited' )->parse() ?></th>
+			<th><?= wfMessage( 'lookupcontribswikititle' )->escaped() ?></th>
+			<th><?= wfMessage( 'lookupcontribswikioptions' )->escaped() ?></th>
+			<th><?= wfMessage( 'lookupcontribslastedited' )->escaped() ?></th>
 		</tr>
 	</tfoot>
 </table>

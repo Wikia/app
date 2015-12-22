@@ -1,7 +1,7 @@
 require([
 	'jquery',
-	'sloth',
-	require.optional('ext.wikia.adEngine.slot.interactiveMaps')
+	'sloth'
+	//require.optional('ext.wikia.adEngine.slot.interactiveMaps')
 ], function ($, sloth, mapAds) {
 	'use strict';
 

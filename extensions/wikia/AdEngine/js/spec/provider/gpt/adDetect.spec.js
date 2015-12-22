@@ -19,6 +19,12 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 							targeting: {}
 						};
 					}
+				},
+				messageListener: {},
+				adSlot: {
+					getShortSlotName: function (slotName) {
+						return slotName;
+					}
 				}
 			};
 
@@ -29,7 +35,13 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 				}
 			};
 
-			gptHop = modules['ext.wikia.adEngine.provider.gpt.adDetect'](mocks.log, mocks.window, mocks.adContext);
+			gptHop = modules['ext.wikia.adEngine.provider.gpt.adDetect'](
+				mocks.log,
+				mocks.window,
+				mocks.adContext,
+				mocks.messageListener,
+				mocks.adSlot
+			);
 
 			spyOn(mocks, 'success');
 			spyOn(mocks, 'hop');
@@ -63,6 +75,12 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 							}
 						};
 					}
+				},
+				messageListener: {},
+				adSlot: {
+					getShortSlotName: function (slotName) {
+						return slotName;
+					}
 				}
 			};
 
@@ -81,7 +99,13 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 			mocks.iframeDoc.querySelector = specialAd ? returnObj : noop;
 			mocks.iframeDoc.querySelectorAll = function () { return []; };
 
-			gptHop = modules['ext.wikia.adEngine.provider.gpt.adDetect'](mocks.log, mocks.window, mocks.adContext);
+			gptHop = modules['ext.wikia.adEngine.provider.gpt.adDetect'](
+				mocks.log,
+				mocks.window,
+				mocks.adContext,
+				mocks.messageListener,
+				mocks.adSlot
+			);
 
 			spyOn(mocks, 'success');
 			spyOn(mocks, 'hop');

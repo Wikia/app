@@ -8,6 +8,9 @@ class NodeGroup extends Node {
 	const LAYOUT_HORIZONTAL_OPTION = 'horizontal';
 	const SHOW_DEFAULT_OPTION = 'default';
 	const SHOW_INCOMPLETE_OPTION = 'incomplete';
+	const COLLAPSE_ATTR_NAME = 'collapse';
+	const COLLAPSE_OPEN_OPTION = 'open';
+	const COLLAPSE_CLOSED_OPTION = 'closed';
 
 	private $supportedGroupLayouts = [
 		self::LAYOUT_DEFAULT_OPTION,
@@ -19,10 +22,18 @@ class NodeGroup extends Node {
 		self::SHOW_INCOMPLETE_OPTION
 	];
 
+	private $supportedGroupCollapses = [
+		self::COLLAPSE_OPEN_OPTION,
+		self::COLLAPSE_CLOSED_OPTION
+	];
+
 	public function getData() {
 		if ( !isset( $this->data ) ) {
-			$this->data = [ 'value' => $this->getDataForChildren(),
-							'layout' => $this->getLayout() ];
+			$this->data = [
+				'value' => $this->getDataForChildren(),
+				'layout' => $this->getLayout(),
+				'collapse' => $this->getCollapse()
+			];
 		}
 
 		return $this->data;
@@ -42,7 +53,8 @@ class NodeGroup extends Node {
 			'type' => $this->getType(),
 			'data' => [
 				'value' => $value,
-				'layout' => $this->getLayout()
+				'layout' => $this->getLayout(),
+				'collapse' => $this->getCollapse()
 			],
 		];
 	}
@@ -71,6 +83,11 @@ class NodeGroup extends Node {
 
 		return ( isset( $show ) && in_array( strtolower( $show ), $this->supportedGroupDisplays ) ) ? $show
 			: self::SHOW_DEFAULT_OPTION;
+	}
+
+	protected function getCollapse() {
+		$layout = $this->getXmlAttribute( $this->xmlNode, self::COLLAPSE_ATTR_NAME );
+		return ( isset( $layout ) && in_array( $layout, $this->supportedGroupCollapses ) ) ? $layout : null;
 	}
 
 	protected function getLayout() {

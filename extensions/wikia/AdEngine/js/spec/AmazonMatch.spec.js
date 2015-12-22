@@ -17,21 +17,10 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 		);
 	}
 
-	function initAndTestAmazon(amazonMatch, input) {
-		var callback;
-
-		// Call Amazon integration
-		// Expect the winMock.amznads.updateAds to be populated with the callback
-		// Expect a script tag to be appended to body
-		spyOn(mocks.document.body, 'appendChild');
+	function init(amazonMatch, tokens) {
+		spyOn(mocks.window.amznads, 'getTokens').and.returnValue(tokens);
 		amazonMatch.call();
-		expect(typeof mocks.window.amznads.updateAds).toBe('function');
 		expect(typeof mocks.window.amznads.renderAd).toBe('function');
-		expect(mocks.document.body.appendChild).toHaveBeenCalled();
-		callback = mocks.window.amznads.updateAds;
-
-		// Call back what Amazon would call
-		callback({ads: input, status: 'ok'});
 	}
 
 	mocks = {
@@ -49,14 +38,33 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 			track: noop
 		},
 		document: {
-			createElement: function () { return {}; },
-			write: noop,
-			body: {
-				appendChild: noop
+			createElement: function () {
+				return {
+					addEventListener: function (eventName, callback) {
+						callback();
+					}
+				};
+			},
+			getElementsByTagName: function () {
+				return [
+					{
+						parentNode: {
+							insertBefore: noop
+						}
+					}
+				];
 			}
 		},
 		log: noop,
-		window: {}
+		window: {
+			amznads: {
+				getAdsCallback: function (id, callback) {
+					callback();
+				},
+				renderAd: noop,
+				getTokens: noop
+			}
+		}
 	};
 
 	testCases = [
@@ -65,42 +73,42 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 		{input: ['invalid-input'], expected: {}},
 
 		// Single values
-		{input: {'a1x6p14': 1}, expected: {skyscraper: ['a1x6p14']}},
-		{input: {'a3x2p14': 1}, expected: {medrec: ['a3x2p14'], mobileincontent: ['a3x2p14']}},
-		{input: {'a3x5p14': 1}, expected: {mobileleaderboard: ['a3x5p14']}},
-		{input: {'a3x6p14': 1}, expected: {medrec: ['a3x6p14']}},
-		{input: {'a7x9p14': 1}, expected: {leaderboard: ['a7x9p14']}},
+		{input: ['a1x6p14'], expected: {skyscraper: ['a1x6p14']}},
+		{input: ['a3x2p14'], expected: {medrec: ['a3x2p14'], mobileincontent: ['a3x2p14']}},
+		{input: ['a3x5p14'], expected: {mobileleaderboard: ['a3x5p14']}},
+		{input: ['a3x6p14'], expected: {medrec: ['a3x6p14'], skyscraper: ['a3x6p14']}},
+		{input: ['a7x9p14'], expected: {leaderboard: ['a7x9p14']}},
 
 		// Pick the lowest price point (single size)
-		{input: {'a1x6p14': 1, 'a1x6p5': 1, 'a1x6p12': 1}, expected: {skyscraper: ['a1x6p5']}},
-		{input: {'a3x2p12': 1, 'a3x2p10': 1}, expected: {medrec: ['a3x2p10'], mobileincontent: ['a3x2p10']}},
+		{input: ['a1x6p14', 'a1x6p5', 'a1x6p12'], expected: {skyscraper: ['a1x6p5']}},
+		{input: ['a3x2p12', 'a3x2p10'], expected: {medrec: ['a3x2p10'], mobileincontent: ['a3x2p10']}},
 
 		// Medrec should get both 3x2 and 3x6 sizes
 		{
-			input: {'a3x2p12': 1, 'a3x2p13': 1, 'a3x6p14': 1, 'a3x6p5': 1},
-			expected: {medrec: ['a3x2p12', 'a3x6p5'], mobileincontent: ['a3x2p12']}
+			input: ['a3x2p12', 'a3x2p13', 'a3x6p14', 'a3x6p5'],
+			expected: {medrec: ['a3x2p12', 'a3x6p5'], mobileincontent: ['a3x2p12'], skyscraper: ['a3x6p5']}
 		},
 
 		// More complete example
 		{
-			input: {
-				'a1x6p14': 1,
-				'a1x6p3': 1,
-				'a7x9p12': 1,
-				'a7x9p4': 1,
-				'a7x9p14': 1,
-				'a3x2p5': 1,
-				'a3x2p8': 1,
-				'a3x2p6': 1,
-				'a3x5p14': 1,
-				'a3x6p10': 1,
-				'a3x6p8': 1,
-				'a3x6p12': 1,
-				'xxx': 17
-			},
+			input: [
+				'a1x6p14',
+				'a1x6p3',
+				'a7x9p12',
+				'a7x9p4',
+				'a7x9p14',
+				'a3x2p5',
+				'a3x2p8',
+				'a3x2p6',
+				'a3x5p14',
+				'a3x6p10',
+				'a3x6p8',
+				'a3x6p12',
+				'xxx'
+			],
 			expected: {
 				leaderboard: ['a7x9p4'],
-				skyscraper: ['a1x6p3'],
+				skyscraper: ['a1x6p3', 'a3x6p8'],
 				medrec: ['a3x2p5', 'a3x6p8'],
 				mobileleaderboard: ['a3x5p14'],
 				mobileincontent: ['a3x2p5']
@@ -113,7 +121,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 			var amazonMatch = getModule(),
 				testCase = testCases[k];
 
-			initAndTestAmazon(amazonMatch, testCases[k].input);
+			init(amazonMatch, testCases[k].input);
 
 			expect(amazonMatch.getSlotParams('TOP_LEADERBOARD').amznslots).toEqual(testCase.expected.leaderboard);
 			expect(amazonMatch.getSlotParams('HOME_TOP_LEADERBOARD').amznslots).toEqual(testCase.expected.leaderboard);
@@ -135,7 +143,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 	it('returns empty amznslots when already rendered', function () {
 		var amazonMatch = getModule();
 
-		initAndTestAmazon(amazonMatch, {'a3x5p14': 1});
+		init(amazonMatch, ['a3x5p14']);
 		expect(amazonMatch.getSlotParams('MOBILE_TOP_LEADERBOARD').amznslots).toEqual(['a3x5p14']);
 		mocks.window.amznads.renderAd(mocks.document);
 		expect(amazonMatch.getSlotParams('MOBILE_TOP_LEADERBOARD').amznslots).toEqual(undefined);
@@ -144,7 +152,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 	it('switch the flag when response from Amazon recieved', function () {
 		var amazonMatch = getModule();
 
-		initAndTestAmazon(amazonMatch, {'a3x5p14': 1});
+		init(amazonMatch, ['a3x5p14']);
 		expect(amazonMatch.hasResponse()).toEqual(true);
 	});
 });

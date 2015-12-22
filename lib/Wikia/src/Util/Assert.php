@@ -16,15 +16,17 @@ class Assert {
 	/**
 	 * @param mixed $check
 	 * @param string|null $message
+	 * @param array $context additional fields to be pushed to logstash as context
 	 * @return bool true if the check passes
 	 * @throws AssertionException if the check fails
 	 */
-	public static function true( $check, $message = 'Assert::true failed' ) {
+	public static function true( $check, $message = 'Assert::true failed', Array $context = [] ) {
 		if ( !$check ) {
 			$exception = new AssertionException( $message );
-			WikiaLogger::instance()->error( $message, [
+			$context = array_merge($context, [
 				'exception' => $exception,
 			] );
+			WikiaLogger::instance()->error( $message, $context );
 			throw $exception;
 		}
 

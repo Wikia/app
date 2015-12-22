@@ -35,3 +35,8 @@ $specialPageAliases['pl'] = array(
 $specialPageAliases['vi'] = array(
 	'UnusedVideos' => array( 'Phim_chưa_dùng' ),
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'UnusedVideos' => array( '使われていないビデオ' )
+);

@@ -5,10 +5,9 @@ namespace Wikia\Service\Swagger;
 use Swagger\Client\ApiClient;
 use Swagger\Client\Configuration;
 use Wikia\Service\Gateway\UrlProvider;
+use Wikia\Service\Constants;
 
 class ApiProvider {
-	const AUTH_KEY = 'X-Wikia-UserId';
-
 	/** @var UrlProvider */
 	private $urlProvider;
 
@@ -23,7 +22,7 @@ class ApiProvider {
 
 	public function getAuthenticatedApi($serviceName, $userId, $apiClass) {
 		$apiClient = $this->getApiClient($serviceName);
-		$apiClient->getConfig()->setApiKey(self::AUTH_KEY, $userId);
+		$apiClient->getConfig()->setApiKey(Constants::HELIOS_AUTH_HEADER, $userId);
 
 		return new $apiClass($apiClient);
 	}

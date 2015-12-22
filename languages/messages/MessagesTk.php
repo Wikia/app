@@ -421,8 +421,9 @@ Görkezilen sebäp: ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Sessiýany ýapdyňyz.'''
 
-Indi anonim ýagdaýda {{SITENAME}} saýtyny ulanyp bilersiňiz, ýa-da şol bir ýa-da başga bir at bilen [[Special:UserLogin|sessiýany ýaňadan]] açyp bilersiňiz.
+Indi anonim ýagdaýda {{SITENAME}} saýtyny ulanyp bilersiňiz, ýa-da şol bir ýa-da başga bir at bilen $1 açyp bilersiňiz.
 Web brauzeriňiziň keşini arassalaýançaňyz käbir sahypalar sessiýaňyzyň açyk wagtkysy ýaly görünip biler.",
+'logouttext-link-text'       => 'sessiýany ýaňadan',
 'welcomecreation'            => '== Hoş geldiňiz, $1! ==
 
 Hasabyňyz açyldy.
@@ -568,7 +569,7 @@ Parolyňyzy eýýäm şowlulyk bilen üýtgeden ýa-da täze wagtlaýyn parol ta
 'missingsummary'                   => "'''Ýatlatma:''' Redaktirleme mazmunyny ýazmadyňyz.
 Sahypany ýazdyr düwmesine ýene bir gezek bassaňyz, özgerdişiňiz mazmunsyz ýazdyrylar.",
 'missingcommenttext'               => 'Aşakda teswir ýazmagyňyzy haýyş edýäris.',
-'missingcommentheader'             => "'''Ýatladyjy:''' Bu teswir üçin tema/setirbaş görkezmediňiz. 
+'missingcommentheader'             => "'''Ýatladyjy:''' Bu teswir üçin tema/setirbaş görkezmediňiz.
 Eger \"{{int:savearticle}}\" düwmesine gaýtadan bassaňyz, özgerdişiňiz temasyz/setirbaşsyz ýazdyrylar.",
 'summary-preview'                  => 'Deslapky synyň mazmuny:',
 'subject-preview'                  => 'Temanyň/adyň deslapky syny:',
@@ -2996,8 +2997,8 @@ At aýyrmak üçin gapdalyndaky gutujygy belläp, "{{int:Watchlistedit-normal-su
 'watchlistedit-normal-done'    => '{{PLURAL:$1|1 sany at|$1 sany at}} gözegçilik sanawyndan aýyryldy:',
 'watchlistedit-raw-title'      => 'Işlenmedik gözegçilik sanawyny redaktirle',
 'watchlistedit-raw-legend'     => 'Işlenmedik gözegçilik sanawyny redaktirle',
-'watchlistedit-raw-explain'    => 'Gözegçilik sanawyňyzdaky atlar aşakda görkezilýär. Her setirde bir at goşmak ýa-da aýyrmak arkaly sanawy üýtgedip bilersiňiz. 
-Bolanyňyzdan soňra "{{int:Watchlistedit-raw-submit}}" düwmesine basyň. 
+'watchlistedit-raw-explain'    => 'Gözegçilik sanawyňyzdaky atlar aşakda görkezilýär. Her setirde bir at goşmak ýa-da aýyrmak arkaly sanawy üýtgedip bilersiňiz.
+Bolanyňyzdan soňra "{{int:Watchlistedit-raw-submit}}" düwmesine basyň.
 Şeýle-de siz  [[Special:EditWatchlist|adaty usuldan]] hem peýdalanyp bilersiňiz.',
 'watchlistedit-raw-titles'     => 'Atlar:',
 'watchlistedit-raw-submit'     => 'Gözegçilik sanawyny täzele',
@@ -3034,7 +3035,7 @@ Bolanyňyzdan soňra "{{int:Watchlistedit-raw-submit}}" düwmesine basyň.
 'version-poweredby-others'      => 'beýlekiler',
 'version-license-info'          => 'MediaWiki erkin programmadyr; MediaWiki-ni Erkin programma fondy tarapyndan çazp edilen GNU General Public License lisenziýasynyň ikini wersiýasynyň ýa-da (islegiňize görä) has täzeki bir wersiýasynyň şertlerine laýyklykda täzeden paýlap we/ýa-da üýtgedip bilersiňiz.
 
-MediaWiki programmasy peýdaly bolar diýen umyt bilen paýlanylýar, emma onuň üçin hatda TÄJIRÇILIK GYMMATY ýa-da KESGITLENILEN MAKSADA ÝARAMLYLYK boýunça hem hiç hili KEPILLIK BERILMEÝÄR. Has giňişleýin maglumat üçin GNU General Public License lisenziýasyna serediň. 
+MediaWiki programmasy peýdaly bolar diýen umyt bilen paýlanylýar, emma onuň üçin hatda TÄJIRÇILIK GYMMATY ýa-da KESGITLENILEN MAKSADA ÝARAMLYLYK boýunça hem hiç hili KEPILLIK BERILMEÝÄR. Has giňişleýin maglumat üçin GNU General Public License lisenziýasyna serediň.
 
 Bu programmanyň ýany bilen siz [{{SERVER}}{{SCRIPTPATH}}/COPYING GNU General Public License lisenziýasynyň bir nusgasyny] hem edinen bolmaly. Eger edinmedik bolsaňyz, onda Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA adresine ýazyň ýa-da  [//www.gnu.org/licenses/old-licenses/gpl-2.0.html lisenziýasyny onlaýn okaň].',
 'version-software'              => 'Gurlan programma üpjünçiligi',

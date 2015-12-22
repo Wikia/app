@@ -4,6 +4,8 @@
  * ArticleComment is article, this class is used for manipulation on
  */
 
+use Wikia\Logger\WikiaLogger;
+
 class ArticleComment {
 
 	const MOVE_USER = 'WikiaBot';
@@ -24,7 +26,7 @@ class ArticleComment {
 
 	/** @var array */
 	public $mMetadata;
-	
+
 	public $mText;
 	public $mRawtext;
 	public $mHeadItems;
@@ -109,7 +111,7 @@ class ArticleComment {
 		$latest = ( new WikiaSQL() )
 			->SELECT( 'page_id' )
 			->FROM( 'page' )
-			->WHERE( 'page_title' )->LIKE( $prefix.'%' )
+			->WHERE( 'page_title' )->LIKE( $prefix . '%' )
 			->AND_( 'page_namespace' )->EQUAL_TO( $commentNamespace )
 			->ORDER_BY( 'page_id' )->DESC()
 			->LIMIT( 1 )
@@ -994,12 +996,12 @@ class ArticleComment {
 
 	/**
 	 * @static
-	 * @param $status
+	 * @param Status $status
 	 * @param $article WikiPage
 	 * @param int $parentId
 	 * @return array
 	 */
-	static public function doAfterPost( $status, $article, $parentId = 0 ) {
+	static public function doAfterPost( Status $status, $article, $parentId = 0 ) {
 		global $wgUser, $wgDBname;
 
 		wfRunHooks( 'ArticleCommentAfterPost', [ $status, &$article ] );
@@ -1015,8 +1017,6 @@ class ArticleComment {
 
 				if ( $app->checkSkin( 'wikiamobile' ) ) {
 					$viewName = 'WikiaMobileComment';
-				} elseif ( $app->checkSkin( 'venus' ) ) {
-					$viewName = 'VenusComment';
 				} else {
 					$viewName = 'Comment';
 				}
@@ -1048,6 +1048,14 @@ class ArticleComment {
 				$text  = false;
 				$error = true;
 				$message = wfMsg( 'article-comments-error' );
+
+				WikiaLogger::instance()->error( 'PLATFORM-1311', [
+					'reason' => 'article-comments-error',
+					'name' => $article->getTitle()->getPrefixedDBkey(),
+					'page_id' => $commentId,
+					'user_id' => $userId,
+					'exception' => new Exception( 'article-comments-error', $status->value )
+				] );
 		}
 
 		$res = [
@@ -1528,7 +1536,7 @@ class ArticleComment {
 	 */
 	static public function isMiniEditorEnabled() {
 		$app = F::app();
-		return $app->wg->EnableMiniEditorExtForArticleComments && $app->checkSkin( [ 'oasis', 'venus' ] );
+		return $app->wg->EnableMiniEditorExtForArticleComments && $app->checkSkin( [ 'oasis' ] );
 	}
 
 	/**

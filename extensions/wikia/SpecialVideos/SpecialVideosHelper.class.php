@@ -149,6 +149,7 @@ class SpecialVideosHelper extends WikiaModel {
 			$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
 			if ( !empty( $videoDetail ) ) {
 				$byUserMsg = WikiaFileHelper::getByUserMsg( $videoDetail['userName'], $videoDetail['timestamp'] );
+				// FIXME: this isn't shown to users b/c it's buggy (CONSF-51)
 				$viewTotal = wfMessage( 'videohandler-video-views', $this->wg->Lang->formatNum( $videoDetail['viewsTotal'] ) )->text();
 
 				$videos[] = [
@@ -245,30 +246,39 @@ class SpecialVideosHelper extends WikiaModel {
 
 	/**
 	 * Get pagination (HTML)
+	 *
+	 * Return pagination bar under "body" key.
+	 * Return head item (with <link rel="next/prev">) under "head" key
+	 *
 	 * @param array $videoParams
 	 *   [ array( 'sort' => string, 'page' => int, 'category' => string, 'provider' => string ) ]
 	 * @param int $addVideo
-	 * @return string $pagination
+	 * @return array $pagination
+	 *   [ array( 'body' => string, 'head' => string ) ]
 	 */
 	public function getPagination( $videoParams, &$addVideo  ) {
 		wfProfileIn( __METHOD__ );
 
-		$pagination = '';
-		$linkToSpecialPage = SpecialPage::getTitleFor( "Videos" )->escapeLocalUrl();
+		$body = '';
+		$head = '';
 		$totalVideos = $this->getTotalVideos( $videoParams );
+
 		if ( $totalVideos > self::VIDEOS_PER_PAGE ) {
 			// Paginator::newFromArray allows array and integer param
 			$pages = Paginator::newFromArray( $totalVideos, self::VIDEOS_PER_PAGE );
 			$pages->setActivePage( $videoParams['page'] - 1 );
 
-			$queryString = '';
+			$urlTemplate = SpecialPage::getTitleFor( 'Videos' )->escapeLocalUrl();
+			$urlTemplate .= '?page=%s';
 			foreach( [ 'sort', 'category', 'provider'] as $key ) {
 				if ( !empty( $videoParams[$key] ) ) {
-					$queryString .= "&$key=" . urlencode( $videoParams[$key] );
+					$urlTemplate .= "&$key=" . urlencode( $videoParams[$key] );
 				}
 			}
 
-			$pagination = $pages->getBarHTML( $linkToSpecialPage.'?page=%s'.$queryString );
+			$body = $pages->getBarHTML( $urlTemplate );
+			$head = $pages->getHeadItem( $urlTemplate );
+
 			// check if we're on the last page
 			if ( $videoParams['page'] < $pages->getPagesCount() ) {
 				// we're not so don't show the add video placeholder
@@ -278,7 +288,10 @@ class SpecialVideosHelper extends WikiaModel {
 
 		wfProfileOut( __METHOD__ );
 
-		return $pagination;
+		return [
+			'body' => $body,
+			'head' => $head,
+		];
 	}
 
 }

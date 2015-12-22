@@ -205,7 +205,7 @@ class CF_Http
 
     # Uses separate cURL connection to authenticate
     #
-    public function authenticate( $user, $pass, $host = NULL ) {
+    private function do_authenticate( $user, $pass, $host = NULL ) {
 		$path = array( );
 		$headers = array(
 			sprintf( "%s: %s", AUTH_USER_HEADER, $user ),
@@ -240,7 +240,43 @@ class CF_Http
 		return array( $this->response_status, $this->response_reason,
 			$this->storage_url, $this->cdnm_url, $this->auth_token );
 	}
-	
+
+	// Wikia change - begin
+	// retry auth request in case of an error (PLATFORM-1659)
+	public function authenticate( $user, $pass, $host = NULL ) {
+		$retriesLeft = self::MAX_RETRIES;
+		$res = false;
+
+		wfDebug( __METHOD__ . "\n" );
+
+		while( $retriesLeft >= 0 ) {
+			list( $status, $reason, $surl, $curl, $atoken ) = $this->do_authenticate( $user, $pass, $host );
+
+			# PLATFORM-1659 - retry all HTTP 50x responses
+			if ( ($status >= 200 && $status <= 299) ) {
+				wfDebug( __METHOD__ . ": ok\n" );
+				break;
+			}
+
+			# PLATFORM-1521 - report an error only when there are no retries left
+			$level = ( $retriesLeft === 0 ) ? 'error' : 'warning';
+
+			Wikia\Logger\WikiaLogger::instance()->$level( 'SwiftStorage: authentication retry', array(
+				'exception'    => new SwiftRetryException( $reason, is_numeric($status) ? $status : 0 ),
+				'retries-left' => $retriesLeft,
+			) );
+
+			wfDebug( sprintf( "%s : retrying as I got '%s' (%d retries left)\n", __METHOD__ , trim( $reason ), $retriesLeft ) );
+
+			// wait a bit before retrying the request
+			usleep( self::RETRY_DELAY * 1000 );
+			$retriesLeft--;
+		}
+
+		return array( $status, $reason, $surl, $curl, $atoken );
+	}
+	// Wikia change - end
+
     # (CDN) GET /v1/Account
     #
     function list_cdn_containers($enabled_only)
@@ -1474,7 +1510,7 @@ class CF_Http
 	// Wikia change - begin
 	// retry request in case of an error
 	const MAX_RETRIES = 5;
-	const RETRY_DELAY = 1000; // ms
+	const RETRY_DELAY = 250; // ms
 
 	private function _send_request($conn_type, $url_path, $hdrs=NULL, $method="GET", $force_new=False) {
 		$retriesLeft = self::MAX_RETRIES;
@@ -1483,13 +1519,16 @@ class CF_Http
 		while( $retriesLeft >= 0 ) {
 			$res = $this->_do_send_request( $conn_type, $url_path, $hdrs, $method, $force_new );
 
-			if ( !in_array( $res, [ 500, 503, false ] ) ) {
-				// request was successful, return
+			# PLATFORM-1059 - retry all HTTP 50x responses
+			if ( $res !== false && $res < 500 ) {
 				break;
 			}
 
-			Wikia\Logger\WikiaLogger::instance()->error( 'SwiftStorage: retry', [
-				'exception'    => new Exception( $this->error_str, is_numeric($res) ? $res : 0 ),
+			# PLATFORM-1521 - report an error only when there are no retries left
+			$level = ( $retriesLeft === 0 ) ? 'error' : 'warning';
+
+			Wikia\Logger\WikiaLogger::instance()->$level( 'SwiftStorage: retry', [
+				'exception'    => new SwiftRetryException( $this->error_str, is_numeric($res) ? $res : 0 ),
 				'retries-left' => $retriesLeft,
 				'headers'      => $hdrs,
 				'conn-type'    => $conn_type,

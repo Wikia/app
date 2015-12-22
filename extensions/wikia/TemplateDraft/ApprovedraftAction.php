@@ -22,9 +22,10 @@
  */
 
 class ApprovedraftAction extends FormlessAction {
+	const ACTION_NAME = 'approvedraft';
 
 	public function getName() {
-		return 'approvedraft';
+		return self::ACTION_NAME;
 	}
 
 	protected function getDescription() {
@@ -33,13 +34,20 @@ class ApprovedraftAction extends FormlessAction {
 
 	public function onView() {
 		$title = $this->getTitle();
+		$request = $this->getRequest();
 
 		$redirectParams = wfArrayToCGI( array_diff_key(
 			$this->getRequest()->getQueryValues(),
-			[ 'title' => null, 'action' => null ]
-		));
+			[ 'title' => null, 'action' => null, 'token' => null ]
+		) );
 
-		if ( !$title->exists() ) {
+		// Must have valid token for this action/title
+		$salt = [ $this->getName(), $title->getDBkey() ];
+
+		if ( !$this->getUser()->matchEditToken( $request->getVal( 'token' ), $salt ) ) {
+			$this->addBannerNotificationMessage( 'sessionfailure' );
+			$redirectTitle = $title;
+		} elseif ( !$title->exists() ) {
 
 			$this->addBannerNotificationMessage( 'templatedraft-approval-no-page-error' );
 			$redirectTitle = $title;
@@ -62,25 +70,49 @@ class ApprovedraftAction extends FormlessAction {
 	}
 
 	/**
+	 * Get token to approve a draft page for a user.
+	 *
+	 * @param Title $title Title object of the draft page to approve
+	 * @param User $user User for whom the action is going to be performed
+	 * @return string Token
+	 */
+	public static function getApproveToken( Title $title, User $user ) {
+		$salt = [ self::ACTION_NAME, $title->getDBkey() ];
+
+		// This token stronger salted
+		// It's title/action specific because index.php is GET and API is POST
+		return $user->getEditToken( $salt );
+	}
+
+	/**
 	 * Overrides content of parent page with contents of draft page
 	 * @param Title $draftTitle Title object of sub page (draft)
 	 * @throws PermissionsException
 	 */
 	private function approveDraft( Title $draftTitle ) {
+		global $wgEnableInsightsInfoboxes;
+
 		// Get Title object of parent page
-		$helper = new TemplateDraftHelper();
-		$parentTitle = $helper->getParentTitle( $draftTitle );
+		$parentTitle = TemplateDraftHelper::getParentTitle( $draftTitle );
 
 		// Check edit rights
-		if ( !$parentTitle->userCan( 'templatedraft' ) ) {
-			throw new PermissionsException( 'edit' );
+		if ( !$parentTitle->userCan( 'templatedraft' ) || !$parentTitle->userCan( 'edit' ) ) {
+			throw new ErrorPageError( 'badaccess', 'templatedraft-protect-edit' );
 		}
 
 		// Get contents of draft page
 		$article = Article::newFromId( $draftTitle->getArticleID() );
 		$draftContent = $article->getContent();
+
+		// update the draft to show a preview of the correct page
+		$draftContent = str_replace(
+			$draftTitle->getText(),
+			$draftTitle->getBaseText(),
+			$draftContent
+		);
+
 		// Get WikiPage object of parent page
-		$page = WikiPage::newFromID( $parentTitle->getArticleID() );
+		$page = WikiPage::factory( $parentTitle );
 		// Save to parent page
 		$page->doEdit( $draftContent, wfMessage( 'templatedraft-approval-summary' )->inContentLanguage()->plain() );
 
@@ -88,11 +120,16 @@ class ApprovedraftAction extends FormlessAction {
 		$draftPage = WikiPage::newFromID( $draftTitle->getArticleID() );
 		$draftPage->doDeleteArticle( wfMessage( 'templatedraft-draft-removal-summary' )->inContentLanguage()->plain() );
 
+		// Update Infoboxes Insights list if enabled
+		if ( $wgEnableInsightsInfoboxes ) {
+			$model = new InsightsUnconvertedInfoboxesModel();
+			$model->updateInsightsCache( $parentTitle->getArticleID() );
+		}
+
 		// Show a confirmation message to a user after redirect
 		BannerNotificationsController::addConfirmation(
 			wfMessage( 'templatedraft-approval-success-confirmation' )->escaped(),
-			BannerNotificationsController::CONFIRMATION_CONFIRM,
-			true
+			BannerNotificationsController::CONFIRMATION_CONFIRM
 		);
 	}
 

@@ -405,8 +405,9 @@ Sasabab no do "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Baino nakalabus log ko noh.'''
 
-Milo ko do monilombus mongoguno {{SITENAME}} poinlisok, toi [[Special:UserLogin|sumuang log koh kawagu]] miagal ngaran di tiinu toi mongoguno ngaran suai.
+Milo ko do monilombus mongoguno {{SITENAME}} poinlisok, toi $1 miagal ngaran di tiinu toi mongoguno ngaran suai.
 Birio do kipipiro bolikon popokito do maso poinsuang log koh poh gisom no do opugas nu dangkob do pogigihumnu.",
+'logouttext-link-text'       => 'sumuang log koh kawagu',
 'welcomecreation'            => '== Kopiwosian, $1! ==
 Nowonsoi no takaunnu.
 Soroho no do mongolon [[Special:Preferences|{{SITENAME}} komoisoonnu]].',
@@ -1224,7 +1225,7 @@ Milo ko nogi do mongolon tingkat tingolig diti, nga ingaa it kosimbanon montok t
 'movepagetext'     => "Momoguno do poom id siriba diti kopongolon do ngaran bolikon om popoundalih oinsanan susuyan data dau in ngaran kawawagu.
 Tuluhon dau mantad potilombuson id nokoolihon tuluhon bolikon  kawawagu.
 Milo ko nogi do mongodoropi di nokoolihon di momoguno do tuluhon antad maya do kangkaraja oporian.
-Mada ko nopo do momili dilo, simakon no poingonop it [[Special:DoubleRedirects|nosugut]] toi 
+Mada ko nopo do momili dilo, simakon no poingonop it [[Special:DoubleRedirects|nosugut]] toi
 [[Special:BrokenRedirects|lombuson naraag]].
 Kitonggungan ko do momorisa di noputan do pointopot ot korikoton.
 

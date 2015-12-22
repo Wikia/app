@@ -8,18 +8,18 @@
 global $wgHooks;
 
 /* Run after user really saved an article, and only if we _use_ memcache */
-if (!LOOKUPCONTRIBS_NO_CACHE) {
+if ( !LOOKUPCONTRIBS_NO_CACHE ) {
 	$wgHooks['ArticleSaveComplete'][] = 'LookupContribsHooks::ArticleSaveComplete';
 }
 $wgHooks['ContributionsToolLinks'][] = 'LookupContribsHooks::ContributionsToolLinks';
 
 class LookupContribsHooks {
-	static public function ArticleSaveComplete ($article, User $user) {
+	static public function ArticleSaveComplete ( $article, User $user ) {
 		global $wgDBname, $wgMemc, $wgSharedDB, $wgUser ;
 		/* unset the key for this user on this database */
 		$username = $user->getName () ;
-		$wgMemc->delete ("$wgSharedDB:LookupContribs:normal:$username:$wgDBname") ;
-		$wgMemc->delete ("$wgSharedDB:LookupContribs:final:$username:$wgDBname") ;
+		$wgMemc->delete ( "$wgSharedDB:LookupContribs:normal:$username:$wgDBname" ) ;
+		$wgMemc->delete ( "$wgSharedDB:LookupContribs:final:$username:$wgDBname" ) ;
 		return true ;
 	}
 
@@ -32,10 +32,10 @@ class LookupContribsHooks {
 	 */
 	static public function ContributionsToolLinks( $id, $nt, &$links ) {
 		global $wgUser;
-		if( $id != 0 && $wgUser->isAllowed( 'lookupcontribs' ) ) {
+		if ( $id != 0 && $wgUser->isAllowed( 'lookupcontribs' ) ) {
 			$attribs = array(
 				'href' => 'http://community.wikia.com/wiki/Special:LookupContribs?target=' . urlencode( $nt->getText() ),
-				'title' => wfMsg('right-lookupcontribs')
+				'title' => wfMsg( 'right-lookupcontribs' )
 			);
 			$links[] = Xml::openElement( 'a', $attribs ) . wfMsg( 'lookupcontribs' ) . Xml::closeElement( 'a' );
 		}

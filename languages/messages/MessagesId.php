@@ -724,8 +724,9 @@ Alasan yang diberikan adalah ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Anda telah keluar log dari sistem.'''
 
-Anda dapat terus menggunakan {{SITENAME}} secara anonim, atau Anda dapat [[Special:UserLogin|masuk log lagi]] sebagai pengguna yang sama atau pengguna yang lain.
+Anda dapat terus menggunakan {{SITENAME}} secara anonim, atau Anda dapat $1 sebagai pengguna yang sama atau pengguna yang lain.
 Perhatikan bahwa beberapa halaman mungkin masih terus menunjukkan bahwa Anda masih masuk log sampai Anda membersihkan singgahan penjelajah web Anda",
+'logouttext-link-text'       => 'masuk log lagi',
 'welcomecreation'            => '== Selamat datang, $1! ==
 
 Akun Anda telah dibuat. Jangan lupa mengatur konfigurasi [[Special:Preferences|preferensi {{SITENAME}}]] Anda.',
@@ -1686,7 +1687,7 @@ Untuk menampilkan atau menyertakan berkas di dalam suatu halaman, gunakan pranal
 'upload-prohibited'           => 'Jenis berkas yang dilarang: $1.',
 'uploadlog'                   => 'log pengunggahan',
 'uploadlogpage'               => 'Log pengunggahan',
-'uploadlogpagetext'           => 'Berikut adalah daftar unggahan berkas terbaru. 
+'uploadlogpagetext'           => 'Berikut adalah daftar unggahan berkas terbaru.
 Lihat [[Special:NewFiles|galeri berkas baru]] untuk tampilan visual.',
 'filename'                    => 'Nama berkas',
 'filedesc'                    => 'Ringkasan',
@@ -1804,7 +1805,7 @@ Silakan hubungi salah seorang [[Special:ListUsers/sysop|pengurus]].',
 'zip-wrong-format'    => 'Berkas yang diberikan bukanlah berkas ZIP.',
 'zip-bad'             => 'Berkas adalah berkas ZIP yang rusak atau tidak terbaca.
 Berkas tersebut tidak dapat diperiksa keamanannya dengan baik.',
-'zip-unsupported'     => 'Berkas ini adalah berkas ZIP yang menggunakan fitur ZIP yang tidak didukung oleh MediaWiki. 
+'zip-unsupported'     => 'Berkas ini adalah berkas ZIP yang menggunakan fitur ZIP yang tidak didukung oleh MediaWiki.
 Berkas tersebut tidak dapat diperiksa keamanannya dengan baik.',
 
 # Special:UploadStash

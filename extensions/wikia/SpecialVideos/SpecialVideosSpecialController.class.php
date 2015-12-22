@@ -114,7 +114,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$videos = $response->getVal( 'videos', [] );
 
 		$message = '';
-		$pagination = '';
+		$paginationBar = '';
 		if ( $isMobile ) {
 			if ( empty( $videos ) ) {
 				$message = wfMessage( 'specialvideos-no-videos' )->escaped();
@@ -123,10 +123,12 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 			}
 		} else {
 			$pagination = $helper->getPagination( $params, $addVideo );
+			$paginationBar = $pagination[ 'body' ];
+			$this->wg->Out->addHeadItem( 'Pagination', $pagination[ 'head' ] );
 		}
 
 		$this->addVideo = $addVideo;
-		$this->pagination = $pagination;
+		$this->pagination = $paginationBar;
 		$this->sortMsg = $sortingOptions[$sortKey]; // selected sorting option to display in drop down
 		$this->sortingOptions = $sortingOptions; // populate the drop down
 		$this->videos = $videos;

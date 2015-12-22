@@ -1587,13 +1587,11 @@ abstract class Skin extends ContextSource {
 	 * @return string Updated link markup
 	 */
 	protected function getWrappedEditSectionLink( $link, $langCode ) {
-		if ( $this->getSkinName() !== WikiaSkin::SKIN_VENUS ) {
-			// Wrap in brackets
-			$link = wfMessage( 'editsection-brackets' )
-				->rawParams( $link )
-				->inLanguage( $langCode )
-				->escaped();
-		}
+		// Wrap in brackets
+		$link = wfMessage( 'editsection-brackets' )
+			->rawParams( $link )
+			->inLanguage( $langCode )
+			->escaped();
 		return "<span class=\"editsection\">$link</span>";
 	}
 

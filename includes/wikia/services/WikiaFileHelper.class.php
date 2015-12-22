@@ -592,15 +592,15 @@ class WikiaFileHelper extends Service {
 	 * @return boolean $isAdded
 	 */
 	public static function isAdded( $file ) {
-		$isAdded = true;
-		if ( $file instanceof File && !$file->isLocal()
-			&& F::app()->wg->WikiaVideoRepoDBName == $file->getRepo()->getWiki() ) {
-			$info = VideoInfo::newFromTitle( $file->getTitle()->getDBkey() );
-			if ( empty( $info ) ) {
-				$isAdded = false;
-			}
+		if ( $file instanceof File && !$file->isLocal() ) {
+			$repo = $file->getRepo();
+			// When repo is an instance of ForeignAPIRepo
+			// file comes from MediaWiki and isn't stored on any wikia.
+			return !( $repo instanceof ForeignAPIRepo ||
+				F::app()->wg->WikiaVideoRepoDBName == $repo->getWiki() &&
+				empty( VideoInfo::newFromTitle( $file->getTitle()->getDBkey() ) ) );
 		}
-		return $isAdded;
+		return true;
 	}
 
 	/**

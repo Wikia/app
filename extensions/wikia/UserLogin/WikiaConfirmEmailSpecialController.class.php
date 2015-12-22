@@ -7,6 +7,8 @@
  *
  */
 class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
+	const WELCOME_EMAIL_CONTROLLER = Email\Controller\WelcomeController::class;
+
 	public function __construct() {
 		parent::__construct( 'WikiaConfirmEmail', '', false );
 	}
@@ -110,7 +112,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 			if ( $user->checkPassword( $this->password ) ) {
 				$this->wg->User = $user;
 
-				if ( $user->getGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) != null ){// Signup confirm
+				if ( $user->getGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) != null ) {// Signup confirm
 					// Log user in manually
 					$this->wg->User->setCookies();
 					LoginForm::clearLoginToken();
@@ -130,14 +132,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 					$userLoginHelper->addNewUserLogEntry( $user );
 
 					// send welcome email
-					$emailParams = array(
-						'$USERNAME' => $user->getName(),
-						'$EDITPROFILEURL' => $user->getUserPage()->getFullURL(),
-						'$LEARNBASICURL' => 'http://community.wikia.com/wiki/Help:Wikia_Basics',
-						'$EXPLOREWIKISURL' => 'http://www.wikia.com',
-					);
-
-					$userLoginHelper->sendEmail( $user, 'WelcomeMail', 'usersignup-welcome-email-subject', 'usersignup-welcome-email-body', $emailParams, 'welcome-email', 'WelcomeMail' );
+					F::app()->sendRequest( self::WELCOME_EMAIL_CONTROLLER, 'handle' );
 
 					// redirect user
 					if ( !empty( $userSignupRedirect ) ) {// Redirect user to the point where he finished (when signup on create wiki)
@@ -156,12 +151,12 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 
 					$result = $response->getVal( 'result', '' );
 
-					$optionNewEmail = $this->wg->User->getGlobalAttribute( 'new_email' );
+					$optionNewEmail = $this->wg->User->getNewEmail();
 					if ( !empty( $optionNewEmail ) ) {
 						$user->setEmail( $optionNewEmail );
 					}
 					$user->confirmEmail();
-					$user->setGlobalAttribute( 'new_email', null );
+					$user->clearNewEmail();
 					$user->saveSettings();
 
 					// redirect user

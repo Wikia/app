@@ -206,7 +206,7 @@ class SkinChooser {
 			$headers = apache_request_headers();
 
 			if ( isset( $headers[ 'X-Skin' ] ) ) {
-				if ( in_array( $headers[ 'X-Skin' ], array( 'monobook', 'oasis', 'venus', 'wikia', 'wikiamobile', 'uncyclopedia' ) ) ) {
+				if ( in_array( $headers[ 'X-Skin' ], array( 'monobook', 'oasis', 'wikia', 'wikiamobile', 'uncyclopedia' ) ) ) {
 					$skin = Skin::newFromKey( $headers[ 'X-Skin' ] );
 				// X-Skin header fallback for Mercury which is actually not a MediaWiki skin but a separate application
 				} elseif ( $headers[ 'X-Skin' ] === 'mercury') {
@@ -281,7 +281,7 @@ class SkinChooser {
 				} else {
 					$userSkin = 'oasis';
 				}
-			} else if ( !empty( $wgAdminSkin ) && $userSkin != 'venus' && $userSkin != 'oasis' && $userSkin != 'monobook' && $userSkin != 'wowwiki' && $userSkin != 'lostbook' ) {
+			} else if ( !empty( $wgAdminSkin ) && $userSkin != 'oasis' && $userSkin != 'monobook' && $userSkin != 'wowwiki' && $userSkin != 'lostbook' ) {
 				$adminSkinArray = explode( '-', $wgAdminSkin );
 				$userSkin = isset( $adminSkinArray[0] ) ? $adminSkinArray[0] : null;
 				$userTheme = isset( $adminSkinArray[1] ) ? $adminSkinArray[1] : null;

@@ -65,12 +65,7 @@ class VideosModuleHooks {
 
 		JSMessages::enqueuePackage( 'VideosModule', JSMessages::EXTERNAL );
 
-		if ( $app->checkSkin( 'venus' ) ) {
-			Wikia::addAssetsToOutput( 'videos_module_venus_js' );
-			Wikia::addAssetsToOutput( 'videos_module_venus_scss' );
-		} else {
-			Wikia::addAssetsToOutput( 'videos_module_js' );
-		}
+		Wikia::addAssetsToOutput( 'videos_module_js' );
 
 		$app->wg->VideosModuleAssetsLoaded = true;
 

@@ -1,19 +1,13 @@
 <?php
-// @author: Inez
+/**
+ * Set restrictions on editing JS pages.
+ *
+ * @author Inez
+ * @author grunny
+ */
 
-$wgHooks['AlternateEdit'][] = 'ProtectSiteJS_handler';
-$wgHooks['ArticleSave'][] = 'ProtectSiteJS_handler';
-$wgHooks['EditPage::attemptSave'][] = 'ProtectSiteJS_handler';
-function ProtectSiteJS_handler() {
-	global $wgTitle, $wgUser, $wgOut;
-	if ( strtoupper( substr( $wgTitle->getText(), -3 ) ) === '.JS' ) {
-		$groups = $wgUser->getEffectiveGroups();
-		if( !in_array( 'staff', $groups ) ) {
-			$wgOut->addHTML( '<div class="errorbox" style="width:92%;">' );
-			$wgOut->addWikiMsg( 'actionthrottledtext' );
-			$wgOut->addHTML( '</div>' );
-			return false;
-		}
-	}
-	return true;
-}
+$wgHooks['AlternateEdit'][] = 'ProtectSiteJS::handler';
+$wgHooks['ArticleSave'][] = 'ProtectSiteJS::handler';
+$wgHooks['EditPage::attemptSave'][] = 'ProtectSiteJS::handler';
+
+$wgAutoloadClasses['ProtectSiteJS'] =  __DIR__ . '/ProtectSiteJS.class.php';

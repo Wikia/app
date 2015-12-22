@@ -754,7 +754,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $skin instanceof SkinMonoBook ) {
 		    $this->response->addAsset ('extensions/wikia/Search/monobook/monobook.scss' );
 		}
-		if ( $skin instanceof SkinOasis || $skin instanceof SkinVenus ) {
+		if ( $skin instanceof SkinOasis ) {
 		    $this->response->addAsset( 'extensions/wikia/Search/css/WikiaSearch.scss' );
 		}
 		if ( $skin instanceof SkinWikiaMobile ) {

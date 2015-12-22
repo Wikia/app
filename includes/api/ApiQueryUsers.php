@@ -84,6 +84,19 @@ class ApiQueryUsers extends ApiQueryBase {
 		$users = (array)$params['users'];
 		$goodNames = $done = array();
 		$result = $this->getResult();
+
+		// Wikia change - begin
+		// @see PLATFORM-1561
+		$ids = (array)$params['ids'];
+
+		foreach( $ids as $id ) {
+			$u = User::newFromId( $id );
+			if ( !$u->isAnon() ) { # do not add anons as IP addresses
+				$users[] = $u->getName();
+			}
+		}
+		// Wikia change - end
+
 		// Canonicalize user names
 		foreach ( $users as $u ) {
 			$n = User::getCanonicalName( $u );
@@ -107,22 +120,17 @@ class ApiQueryUsers extends ApiQueryBase {
 
 		if ( count( $goodNames ) ) {
 			$this->addTables( 'user' );
-			$this->addFields( '*' );
+			$this->addFields( 'user_id' );
 			$this->addWhereFld( 'user_name', $goodNames );
 
-			if ( isset( $this->prop['groups'] ) || isset( $this->prop['rights'] ) ) {
-				$this->addTables( 'user_groups' );
-				$this->addJoinConds( array( 'user_groups' => array( 'LEFT JOIN', 'ug_user=user_id' ) ) );
-				$this->addFields( 'ug_group' );
-			}
-
-			$this->showHiddenUsersAddBlockInfo( isset( $this->prop['blockinfo'] ) );
+			// Wikia: there's no point in querying a per-cluster user table for IP blocks
+			#$this->showHiddenUsersAddBlockInfo( isset( $this->prop['blockinfo'] ) );
 
 			$data = array();
 			$res = $this->select( __METHOD__ );
 
 			foreach ( $res as $row ) {
-				$user = User::newFromRow( $row );
+				$user = User::newFromId( $row->user_id );
 				$name = $user->getName();
 
 				$data[$name]['userid'] = $user->getId();
@@ -137,14 +145,7 @@ class ApiQueryUsers extends ApiQueryBase {
 				}
 
 				if ( isset( $this->prop['groups'] ) ) {
-					if ( !isset( $data[$name]['groups'] ) ) {
-						$data[$name]['groups'] = self::getAutoGroups( $user );
-					}
-
-					if ( !is_null( $row->ug_group ) ) {
-						// This row contains only one group, others will be added from other rows
-						$data[$name]['groups'][] = $row->ug_group;
-					}
+					$data[$name]['groups'] = $user->getEffectiveGroups();
 				}
 
 				if ( isset( $this->prop['implicitgroups'] ) && !isset( $data[$name]['implicitgroups'] ) ) {
@@ -152,22 +153,17 @@ class ApiQueryUsers extends ApiQueryBase {
 				}
 
 				if ( isset( $this->prop['rights'] ) ) {
-					if ( !isset( $data[$name]['rights'] ) ) {
-						$data[$name]['rights'] = User::getGroupPermissions( $user->getAutomaticGroups() );
-					}
-
-					if ( !is_null( $row->ug_group ) ) {
-						$data[$name]['rights'] = array_unique( array_merge( $data[$name]['rights'],
-							User::getGroupPermissions( array( $row->ug_group ) ) ) );
-					}
+					$data[$name]['rights'] = $user->getRights();
 				}
 				if ( $row->ipb_deleted ) {
 					$data[$name]['hidden'] = '';
 				}
-				if ( isset( $this->prop['blockinfo'] ) && !is_null( $row->ipb_by_text ) ) {
-					$data[$name]['blockedby'] = $row->ipb_by_text;
-					$data[$name]['blockreason'] = $row->ipb_reason;
-					$data[$name]['blockexpiry'] = $row->ipb_expiry;
+				if ( isset( $this->prop['blockinfo'] ) && $user->isBlocked() ) {
+					$blockInfo = $user->getBlock();
+
+					$data[$name]['blockedby'] = $blockInfo->getByName();
+					$data[$name]['blockreason'] = $blockInfo->mReason;
+					$data[$name]['blockexpiry'] = $blockInfo->getExpiry();
 				}
 
 				if ( isset( $this->prop['emailable'] ) && $user->canReceiveEmail() ) {
@@ -288,6 +284,9 @@ class ApiQueryUsers extends ApiQueryBase {
 			'users' => array(
 				ApiBase::PARAM_ISMULTI => true
 			),
+			'ids' => array(
+				ApiBase::PARAM_ISMULTI => true
+			),
 			'token' => array(
 				ApiBase::PARAM_TYPE => array_keys( $this->getTokenFunctions() ),
 				ApiBase::PARAM_ISMULTI => true
@@ -308,7 +307,8 @@ class ApiQueryUsers extends ApiQueryBase {
 				'  emailable      - Tags if the user can and wants to receive e-mail through [[Special:Emailuser]]',
 				'  gender         - Tags the gender of the user. Returns "male", "female", or "unknown"',
 			),
-			'users' => 'A list of users to obtain the same information for',
+			'users' => 'A list of user names to obtain the same information for',
+			'ids' => 'A list of user IDs to obtain the same information for',
 			'token' => 'Which tokens to obtain for each user',
 		);
 	}
@@ -318,7 +318,10 @@ class ApiQueryUsers extends ApiQueryBase {
 	}
 
 	public function getExamples() {
-		return 'api.php?action=query&list=users&ususers=brion|TimStarling&usprop=groups|editcount|gender';
+		return [
+			'api.php?action=query&list=users&ususers=brion|TimStarling&usprop=groups|editcount|gender',
+			'api.php?action=query&list=users&usids=1|2&usprop=groups|editcount|gender',
+		];
 	}
 
 	public function getHelpUrls() {

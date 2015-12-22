@@ -50,7 +50,7 @@ class EditPageLayoutHelper {
 	 * @author macbre
 	 */
 	function setupEditPage( Article $editedArticle, $fullScreen = true, $class = false ) {
-		global $wgHooks;
+		global $wgHooks, $wgInfoboxPreviewURL;
 
 		wfProfileIn( __METHOD__ );
 
@@ -128,6 +128,9 @@ class EditPageLayoutHelper {
 		// copyright warning for notifications (BugId:7951)
 		$this->addJsVariable( 'wgCopywarn', $this->editPage->getCopyrightNotice() );
 
+		// infobox preview url
+		$this->addJsVariable( 'wgInfoboxPreviewURL', $wgInfoboxPreviewURL );
+
 		// extra hooks for edit page
 		$wgHooks['MakeGlobalVariablesScript'][] = 'EditPageLayoutHooks::onMakeGlobalVariablesScript';
 		$wgHooks['SkinGetPageClasses'][] = 'EditPageLayoutHooks::onSkinGetPageClasses';
@@ -165,19 +168,28 @@ class EditPageLayoutHelper {
 
 	/**
 	 * Check if edited page is a code page
-	 * (page to edit CSS, JS or Lua code)
+	 * (page to edit CSS, JS, Lua code or an infobox template)
 	 *
 	 * @param Title $articleTitle page title
 	 * @return bool
 	 */
 	static public function isCodePage( Title $articleTitle ) {
-		$namespace = $articleTitle->getNamespace();
+		global $wgCityId, $wgEnableTemplateClassificationExt, $wgEnableTemplateDraftExt;
 
-		return ( $articleTitle->isCssOrJsPage()
-			|| $articleTitle->isCssJsSubpage()
-			|| $namespace === NS_MODULE
-			|| self::isInfoboxTemplate( $articleTitle )
-		);
+		if ( $articleTitle->inNamespace( NS_MODULE ) ) {
+			return true;
+		} elseif ( $articleTitle->inNamespace( NS_TEMPLATE ) ) {
+			// Is template being converted to a portable infobox?
+			if ( $wgEnableTemplateDraftExt && TemplateConverter::isConversion()	) {
+				return true;
+			} elseif ( $wgEnableTemplateClassificationExt ) {
+				$templateType = ( new UserTemplateClassificationService() )
+					->getType( $wgCityId, $articleTitle->getArticleID() );
+				return $templateType === TemplateClassificationService::TEMPLATE_INFOBOX;
+			}
+		}
+
+		return $articleTitle->isCssOrJsPage() || $articleTitle->isCssJsSubpage();
 	}
 
 	/**
@@ -187,20 +199,17 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	static public function isCodeSyntaxHighlightingEnabled( Title $articleTitle ) {
-		global $wgEnableEditorSyntaxHighlighting;
+		global $wgEnableEditorSyntaxHighlighting, $wgUser;
 
-		return self::isCodePage( $articleTitle ) && $wgEnableEditorSyntaxHighlighting;
+		return self::isCodePage( $articleTitle )
+			&& $wgEnableEditorSyntaxHighlighting
+			&& !$wgUser->getGlobalPreference( 'disablesyntaxhighlighting' );
 	}
 
-	static public function isInfoboxTemplate( Title $title ) {
-		$namespace = $title->getNamespace();
+	static public function isTemplateDraft( $title ) {
+		global $wgEnableTemplateDraftExt;
 
-		if ( $namespace === NS_TEMPLATE && class_exists( 'TemplateClassificationController' ) ) {
-			$tc = new TemplateClassificationController( $title );
-			return $tc->isType( $tc::TEMPLATE_INFOBOX ) || TemplateDraftHelper::isTitleDraft( $title );
-		}
-
-		return false;
+		return !empty( $wgEnableTemplateDraftExt ) && TemplateDraftHelper::isTitleDraft( $title );
 	}
 
 	/**
@@ -228,15 +237,23 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	public function showMobilePreview( Title $title ) {
-		$blacklistedPage = self::isCodePage( $title )
-				|| $title->isMainPage()
-				|| NavigationModel::isWikiNavMessage( $title );
+		$blacklistedPage = ( self::isCodePage( $title )
+				&& !self::isCodePageWithPreview( $title ) )
+			|| $title->isMainPage()
+			|| NavigationModel::isWikiNavMessage( $title );
 
 		return !$blacklistedPage;
 	}
 
+	/**
+	 * This method checks if the $title comes from one of whitelisted code pages with
+	 * a preview enabled for them. DO NOT check for self::isCodePage, it makes no sense if
+	 * by definition you include only code pages here.
+	 * @param Title $title
+	 * @return bool
+	 */
 	public static function isCodePageWithPreview( Title $title ) {
-		return self::isCodePage( $title ) && self::isInfoboxTemplate( $title );
+		return $title->inNamespace( NS_TEMPLATE );
 	}
 
 	/**
@@ -248,12 +265,12 @@ class EditPageLayoutHelper {
 		$namespace = $title->getNamespace();
 		$type = '';
 
-		$aceUrl = AssetsManager::getInstance()->getOneCommonURL( '/resources/Ace' );
+		$aceUrl = AssetsManager::getInstance()->getOneCommonURL( 'resources/Ace' );
 		$aceUrlParts = parse_url( $aceUrl );
 		$this->addJsVariable( 'aceScriptsPath', $aceUrlParts['path'] );
 
 		$this->addJsVariable( 'wgEnableCodePageEditor', true );
-		$this->addJsVariable( 'showPagePreview', self::showMobilePreview( $title ));
+		$this->addJsVariable( 'showPagePreview', self::showMobilePreview( $title ) );
 
 		if ( $namespace === NS_MODULE ) {
 			$type = 'lua';
@@ -261,7 +278,8 @@ class EditPageLayoutHelper {
 			$type = 'css';
 		} elseif ( $title->isJsPage() || $title->isJsSubpage() ) {
 			$type = 'javascript';
-		} elseif ( self::isInfoboxTemplate( $title ) ) {
+		} else {
+			// default to XML since most templates use HTML tags or infobox markup
 			$type = 'xml';
 		}
 
@@ -320,6 +338,7 @@ class EditPageLayoutHelper {
 			'extensions/wikia/EditPageLayout/js/plugins/Noticearea.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Railminimumheight.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Sizechangedevent.js',
+			'extensions/wikia/EditPageLayout/js/plugins/TemplateClassificationEditorPlugin.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Wikiacore.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Widescreen.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Preloads.js',

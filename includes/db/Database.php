@@ -204,6 +204,9 @@ abstract class DatabaseBase implements DatabaseType {
 	// @const log 1% of queries
 	const QUERY_SAMPLE_RATE = 0.01;
 
+	// @const log queries that took more than 15 seconds
+	const SLOW_QUERY_LOG_THRESHOLD = 15;
+
 	protected $sampler = null;
 
 # ------------------------------------------------------------------------------
@@ -839,7 +842,8 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @return bool
 	 */
 	function isWriteQuery( $sql ) {
-		return !preg_match( '/^(?:SELECT|BEGIN|COMMIT|SET|SHOW|\(SELECT)\b/i', $sql );
+		return !preg_match( '/^(?:SELECT|BEGIN|ROLLBACK|COMMIT|SET|SHOW|EXPLAIN|\(SELECT)\b/i', ltrim( $sql ) ) && // PLATFORM-1417 (ltrim)
+			!preg_match('/(FOR UPDATE|LOCK IN SHARE MODE)$/i', rtrim( $sql ) ); // MAIN-5810 (rtrim)
 	}
 
 	/**
@@ -901,7 +905,8 @@ abstract class DatabaseBase implements DatabaseType {
 				wfProfileOut( $totalProf );
 			}
 			WikiaLogger::instance()->error( 'DB readonly mode', [
-				'exception' => new Exception( $sql ),
+				'exception' => new WikiaException( $fname . ' called in read-only mode' ),
+				'sql'       => $sql,
 				'server'    => $this->mServer
 			] );
 			wfDebug( sprintf( "%s: DB read-only mode prevented the following query: %s\n", __METHOD__, $sql ) );
@@ -919,6 +924,18 @@ abstract class DatabaseBase implements DatabaseType {
 			$userName = str_replace( '/', '', $userName );
 		} else {
 			$userName = '';
+
+			# Wikia change - if the user object is not ready yet, show the client IP (see PLATFORM-1671 for examples)
+			global $wgRequest;
+			if ( $wgRequest instanceof WebRequest ) {
+				$userName = $wgRequest->getIP();
+			}
+		}
+
+		# Wikia change - log the name of the maintenance class that run this query (instead of 127.0.0.1)
+		global $maintClass;
+		if ( !empty( $maintClass ) ) {
+			$userName = str_replace( '/', '', $maintClass );
 		}
 
 		# Wikia change - begin
@@ -937,10 +954,22 @@ abstract class DatabaseBase implements DatabaseType {
 		if ( strpos( $sql, ' ' ) === false ) {
 			$commentedSql = "{$sql} /* {$fname} {$userName} */";
 		}
+
+		// PLATFORM-1311: log deletes on `revision` table
+		if ( startsWith( $sql, 'DELETE ' ) && strpos( $sql, '`revision`' ) !== false ) {
+			WikiaLogger::instance()->warning( 'PLATFORM-1311', [
+				'reason' => 'SQL DELETE',
+				'fname' => $fname,
+				'sql' => $sql,
+				'exception' => new Exception(),
+			] );
+		}
+		// Wikia change- end
+
 		# Wikia change - end
 
 		# If DBO_TRX is set, start a transaction
-		if ( ( $this->mFlags & DBO_TRX ) && !$this->trxLevel() &&
+		if ( $isMaster && ( $this->mFlags & DBO_TRX ) && !$this->trxLevel() &&
 			$sql != 'BEGIN' && $sql != 'COMMIT' && $sql != 'ROLLBACK' ) {
 			# avoid establishing transactions for SHOW and SET statements too -
 			# that would delay transaction initializations to once connection
@@ -3706,17 +3735,25 @@ abstract class DatabaseBase implements DatabaseType {
 			$num_rows = false;
 		}
 
+		$context = [
+			'method'      => $fname,
+			'elapsed'     => $elapsedTime,
+			'num_rows'    => $num_rows,
+			'cluster'     => $wgDBcluster,
+			'server'      => $this->mServer,
+			'server_role' => $isMaster ? 'master' : 'slave',
+			'db_name'     => $this->mDBname,
+			'exception'   => new Exception(), // log the backtrace
+		];
+
 		if ( $this->getSampler()->shouldSample() ) {
-			$this->getWikiaLogger()->info( "SQL $sql", [
-				'method'      => $fname,
-				'elapsed'     => $elapsedTime,
-				'num_rows'    => $num_rows,
-				'cluster'     => $wgDBcluster,
-				'server'      => $this->mServer,
-				'server_role' => $isMaster ? 'master' : 'slave',
-				'db_name'     => $this->mDBname,
-				'exception'   => new Exception(), // log the backtrace
-			] );
+			$this->getWikiaLogger()->info( "SQL {$sql}", $context );
+		}
+
+		# PLATFORM-1648: 1% sampling does not really catch spikes of slow DB queries
+		# e.g. queries on events_local_users via DataProvider::GetTopFiveUsers
+		if ( $elapsedTime > self::SLOW_QUERY_LOG_THRESHOLD ) {
+			$this->getWikiaLogger()->info( "Slow query {$sql}", $context );
 		}
 	}
 

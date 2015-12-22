@@ -137,23 +137,25 @@ class JsonFormatTest extends WikiaBaseTest {
 	}
 
 	protected function getParsedOutput( $wikitext ) {
-		global $wgOut;
-		if ( !isset( $this->parser ) ) {
-			$this->parser = new Parser();
-		}
-		$htmlOutput = $this->parser->parse( $wikitext, new Title(), $wgOut->parserOptions() );
+		return $this->memCacheDisabledSection(function() use ($wikitext) {
+			global $wgOut;
+			if (!isset($this->parser)) {
+				$this->parser = new Parser();
+			}
+			$htmlOutput = $this->parser->parse($wikitext, new Title(), $wgOut->parserOptions());
 
-		//check for empty result
-		if ( !empty( $wikitext ) ) {
-			$this->assertNotEmpty( $htmlOutput->getText(), 'Provided WikiText could not be parsed.' );
-		}
+			//check for empty result
+			if (!empty($wikitext)) {
+				$this->assertNotEmpty($htmlOutput->getText(), 'Provided WikiText could not be parsed.');
+			}
 
-		if ( !isset( $this->htmlParser ) ) {
-			$this->htmlParser = new \Wikia\JsonFormat\HtmlParser();
-		}
-		$jsonOutput = $this->htmlParser->parse( $htmlOutput->getText() );
+			if (!isset($this->htmlParser)) {
+				$this->htmlParser = new \Wikia\JsonFormat\HtmlParser();
+			}
+			$jsonOutput = $this->htmlParser->parse($htmlOutput->getText());
 
-		return $jsonOutput;
+			return $jsonOutput;
+		});
 	}
 
 	/* Test providers */

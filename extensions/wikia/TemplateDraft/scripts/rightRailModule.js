@@ -16,11 +16,12 @@ define(
 			$('.templatedraft-module').hide();
 
 			$.nirvana.sendRequest({
-				controller: 'TemplateDraftController',
-				method: 'markTemplateAsNotInfobox',
+				controller: 'TemplateClassificationApiController',
+				method: 'classifyTemplate',
 				data: {
-					'pageId': mw.config.get('wgArticleId'),
-					'editToken': mw.user.tokens.get('editToken')
+					pageId: mw.config.get('wgArticleId'),
+					type: 'unknown',
+					editToken: mw.user.tokens.get('editToken')
 				}
 			});
 		}

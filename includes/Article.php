@@ -15,13 +15,14 @@
  * Note: edit user interface and cache support functions have been
  * moved to separate EditPage and HTMLFileCache classes.
  *
- * @internal documentation reviewed 15 Mar 2010
+ * internal documentation reviewed 15 Mar 2010
  *
  * //Wikia Change Start - helping PHP lint
  * @property Title mTitle
  * @method exists
  * @method getID
  * @method getRedirectTarget
+ * @method loadPageData
  * //Wikia Change End
  */
 class Article extends Page {
@@ -104,8 +105,8 @@ class Article extends Page {
 	/**
 	 * Create an Article object of the appropriate class for the given page.
 	 *
-	 * @param Title $title
-	 * @param IContextSource $context
+	 * @param $title Title
+	 * @param $context IContextSource
 	 * @return Article object
 	 */
 	public static function newFromTitle( $title, IContextSource $context ) {
@@ -693,12 +694,12 @@ class Article extends Page {
 		# tents of 'pagetitle-view-mainpage' instead of the default (if
 		# that's not empty).
 		# This message always exists because it is in the i18n files
+		# Wikia change - begin
 		if ( $this->getTitle()->isMainPage() ) {
-			$msg = wfMessage( 'pagetitle-view-mainpage' )->inContentLanguage();
-			if ( !$msg->isDisabled() ) {
-				$wgOut->setHTMLTitle( $msg->title( $this->getTitle() )->text() );
-			}
+			// The wiki name and brand name are added to all titles
+			$wgOut->setHTMLTitle( '' );
 		}
+		# Wikia change - end
 
 		# Check for any __NOINDEX__ tags on the page using $pOutput
 		$policy = $this->getRobotPolicy( 'view', $pOutput );
@@ -730,6 +731,8 @@ class Article extends Page {
 	 */
 	public function showDiffPage() {
 		global $wgRequest, $wgUser;
+
+		Transaction::setAttribute( Transaction::PARAM_ACTION, 'diff' ); # Wikia change
 
 		$diff = $wgRequest->getVal( 'diff' );
 		$rcid = $wgRequest->getVal( 'rcid' );

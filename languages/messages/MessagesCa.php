@@ -580,8 +580,9 @@ Els seus motius han estat: «''$2''».",
 # Login and logout pages
 'logouttext'                 => "'''Heu finalitzat la vostra sessió.'''
 
-Podeu continuar utilitzant {{SITENAME}} de forma anònima, o podeu [[Special:UserLogin|iniciar una sessió una altra vegada]] amb el mateix o un altre usuari.
+Podeu continuar utilitzant {{SITENAME}} de forma anònima, o podeu $1 amb el mateix o un altre usuari.
 Tingueu en compte que algunes pàgines poden continuar mostrant-se com si encara estiguéssiu en una sessió, fins que buideu la memòria cau del vostre navegador.",
+'logouttext-link-text'       => 'iniciar una sessió una altra vegada',
 'welcomecreation'            => "== Us donem la benvinguda, $1! ==
 
 S'ha creat el vostre compte.
@@ -2560,16 +2561,16 @@ Això significa que podeu reanomenar de nou una pàgina al seu títol original s
 
 '''ADVERTÈNCIA!'''
 Açò pot ser un canvi dràstic i inesperat en una pàgina que sigui popular; assegureu-vos d'entendre les conseqüències que comporta abans de seguir endavant.",
-'movepagetext-noredirectfixer' => "El títol anterior es convertirà en un redireccionament al nou títol. 
+'movepagetext-noredirectfixer' => "El títol anterior es convertirà en un redireccionament al nou títol.
 
 Assegureu-vos de verificar els redireccionaments [[Special:DoubleRedirects|doble]]s i els [[Special:BrokenRedirects|trencat]]s.
 
-Sigueu responsable de fer que els enllaços continuen apuntant cap a on se suposa que han d'anar. 
+Sigueu responsable de fer que els enllaços continuen apuntant cap a on se suposa que han d'anar.
 
-Tingueu en compte que la pàgina '''no''' serà traslladada si ja existeix una pàgina amb el títol nou proposat, tret del cas que la pàgina és buida o no n'hi ha un historial de redireccionaments. 
+Tingueu en compte que la pàgina '''no''' serà traslladada si ja existeix una pàgina amb el títol nou proposat, tret del cas que la pàgina és buida o no n'hi ha un historial de redireccionaments.
 
 Això significa que si reanomeneu per equivocació una pàgina amb el seu nom anterior no ho podreu fer, ja que no es pot sobreescriure una pàgina existent.
- 
+
 '''Avís:''' Això pot ser un canvi dràstic i inesperat per una pàgina popular; si us plau, assegureu-vos que sabeu el que féu abans de continuar.",
 'movepagetalktext'             => "La pàgina de discussió associada, si existeix, serà traslladada automàticament '''tret dels següents casos''':
 * Ja hi existeix una pàgina de discussió no buida amb el nou nom, o si
@@ -3428,15 +3429,15 @@ per a cancel·lar la confirmació d\'adreça de correu:
 $5
 
 Aquest codi de confirmació expirarà el $4.',
-'confirmemail_body_set'     => "Algú, probablement vós, des de l'adreça IP $1, 
-ha establert aquesta adreça de correu electrònic com la del compte «$2» del lloc {{SITENAME}}. 
+'confirmemail_body_set'     => "Algú, probablement vós, des de l'adreça IP $1,
+ha establert aquesta adreça de correu electrònic com la del compte «$2» del lloc {{SITENAME}}.
 
-Per confirmar que aquest compte realment us pertany i reactivar 
+Per confirmar que aquest compte realment us pertany i reactivar
 les facilitats de correu electrònic a {{SITENAME}}, cal que obriu al navegador aquest enllaç:
 
 $3
 
-Si el compte *no* us pertany, canceŀleu l'adreça de correu electrònic seguint aquest enllaç: 
+Si el compte *no* us pertany, canceŀleu l'adreça de correu electrònic seguint aquest enllaç:
 
 $5
 
@@ -3557,7 +3558,7 @@ També podeu [[Special:EditWatchlist|utilitzar l'editor estàndard]].",
 'version-license'               => 'Llicència',
 'version-poweredby-credits'     => "El wiki funciona gràcies a '''[//www.mediawiki.org/ MediaWiki]''', copyright © 2001-$1 $2.",
 'version-poweredby-others'      => 'altres',
-'version-license-info'          => "MediaWiki és programari lliure, podeu redistribuir-lo i/o modificar-lo sota els termes de la Llicència Pública General GNU publicada per la Free Software Foundation, ja sigui de la seva versió 2 o (a elecció vostra) qualsevol versió posterior. 
+'version-license-info'          => "MediaWiki és programari lliure, podeu redistribuir-lo i/o modificar-lo sota els termes de la Llicència Pública General GNU publicada per la Free Software Foundation, ja sigui de la seva versió 2 o (a elecció vostra) qualsevol versió posterior.
 
 MediaWiki es distribueix en l'esperança de ser d'utilitat, però SENSE CAP GARANTIA; ni tan sols la garantia implícita de COMERCIALITZACIÓ o ADEQUACIÓ A UNA FINALITAT DETERMINADA. En trobareu més detalls a  la Llicència Pública General GNU.
 

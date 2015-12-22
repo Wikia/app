@@ -9,6 +9,7 @@ $messages['en'] = array(
 	'emailext-forum-reply-summary' => "'''[$2 $1] on [{{SERVER}} {{SITENAME}}] has new replies.'''",
 	'emailext-forum-reply-link-label' => 'Read the reply',
 	'emailext-forum-reply-view-all' => '[$1 See the entire discussion.]',
+	'emailext-forumreply-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow [$2 this discussion] on [{{SERVER}} {{SITENAME}}].',
 );
 
 $messages['qqq'] = array(
@@ -19,6 +20,7 @@ $messages['qqq'] = array(
 	'emailext-forum-reply-summary' => 'Information about the new replies in thread. $1 is the thread subject.',
 	'emailext-forum-reply-link-label' => 'Link to the post, permalink.',
 	'emailext-forum-reply-view-all' => 'Link to the thread page.',
+	'emailext-forumreply-unfollow-text' => 'Asks the user if they want to stop following this discussion and provides a link to unfollow the discussion. $1 -> unfollow url, $2 discussion url',
 );
 
 $messages['de'] = array(
@@ -29,6 +31,7 @@ $messages['de'] = array(
 	'emailext-forum-reply-summary' => "'''Zu [$2 $1] auf der Seite [{{SERVER}} {{SITENAME}}] wurden neue Antworten eingestellt.'''",
 	'emailext-forum-reply-link-label' => 'Antwort lesen',
 	'emailext-forum-reply-view-all' => '[$1 Gesamte Diskussion ansehen.]',
+	'emailext-forumreply-unfollow-text' => 'Du möchtest diese Updates nicht mehr erhalten? Klicke [$1 hier], um [$2 dieser Diskussion] auf der Seite {[{{SERVER}} {{SITENAME}}] nicht mehr zu folgen.',
 );
 
 $messages['es'] = array(
@@ -39,6 +42,7 @@ $messages['es'] = array(
 	'emailext-forum-reply-summary' => "'''[$2 $1] en [{{SERVER}} {{SITENAME}}] tiene respuestas nuevas.'''",
 	'emailext-forum-reply-link-label' => 'Leer la respuesta',
 	'emailext-forum-reply-view-all' => '[$1 Ver la discusión completa.]',
+	'emailext-forumreply-unfollow-text' => '¿Ya no tienes interés en recibir estas actualizaciones? Haz clic [$1 aquí] para dejar de seguir [$2 esta] discusión sobre [{{SERVER}} {{SITENAME}}].',
 );
 
 $messages['fr'] = array(
@@ -49,6 +53,7 @@ $messages['fr'] = array(
 	'emailext-forum-reply-summary' => "'''[$2 $1] sur [{{SERVER}} {{SITENAME}}] a de nouvelles réponses.'''",
 	'emailext-forum-reply-link-label' => 'Lire les réponses',
 	'emailext-forum-reply-view-all' => '[$1 Afficher toute la discussion]',
+	'emailext-forumreply-unfollow-text' => 'Vous ne souhaitez plus être informé de ces mises à jour ? Cliquez [$1 ici] pour ne plus suivre [$2 cette discussion] sur [{{SERVER}} {{SITENAME}}].',
 );
 
 $messages['it'] = array(
@@ -59,6 +64,7 @@ $messages['it'] = array(
 	'emailext-forum-reply-summary' => "'''[$2 $1] su [{{SERVER}} {{SITENAME}}] ha delle nuove risposte.'''",
 	'emailext-forum-reply-link-label' => 'Leggi le risposte',
 	'emailext-forum-reply-view-all' => "[$1 Vedi l'intera discussione.]",
+	'emailext-forumreply-unfollow-text' => "Non t'interessa più ricevere questi aggiornamenti? Clicca [$1 qui] per smettere di seguire [$2 questa discussione] su [{{SERVER}} {{SITENAME}}].",
 );
 
 $messages['ja'] = array(
@@ -69,6 +75,7 @@ $messages['ja'] = array(
 	'emailext-forum-reply-summary' => "'''[{{SERVER}} {{SITENAME}}]の[$2 $1]に新しい返信があります。'''",
 	'emailext-forum-reply-link-label' => '返信を読む',
 	'emailext-forum-reply-view-all' => '[$1 スレッド全体を見る]',
+	'emailext-forumreply-unfollow-text' => 'このような更新情報の受信をご希望でない場合は、[$1 こちら]をクリックして[{{SERVER}} {{SITENAME}}]の[$2 このスレッド]のフォローを解除してください。',
 );
 
 $messages['nl'] = array(
@@ -79,6 +86,7 @@ $messages['nl'] = array(
 	'emailext-forum-reply-summary' => "'''[$2 $1] on [{{SERVER}} {{SITENAME}}] has new replies.'''",
 	'emailext-forum-reply-link-label' => 'Read the reply',
 	'emailext-forum-reply-view-all' => '[$1 See the entire discussion.]',
+	'emailext-forumreply-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow [$2 this discussion] on [{{SERVER}} {{SITENAME}}].',
 );
 
 $messages['pl'] = array(
@@ -89,6 +97,7 @@ $messages['pl'] = array(
 	'emailext-forum-reply-summary' => "'''Pojawiły się nowe odpowiedzi w [$2 $1] na [{{SERVER}} {{SITENAME}}].'''",
 	'emailext-forum-reply-link-label' => 'Przeczytaj odpowiedź',
 	'emailext-forum-reply-view-all' => '[$1 Zobacz pełną dyskusję.]',
+	'emailext-forumreply-unfollow-text' => 'Nie jesteś już zainteresowany otrzymywaniem powiadomień? Kliknij [$1 tutaj], aby przestać śledzić  [$2 tą dyskusję] na [{{SERVER}} {{SITENAME}}].',
 );
 
 $messages['pt'] = array(
@@ -99,6 +108,7 @@ $messages['pt'] = array(
 	'emailext-forum-reply-summary' => "''' [$2 $1] na [{{SERVER}} {{SITENAME}}] tem novas respostas.'''",
 	'emailext-forum-reply-link-label' => 'Leia a resposta',
 	'emailext-forum-reply-view-all' => '[$1 Ver toda a discussão.]',
+	'emailext-forumreply-unfollow-text' => 'Você não deseja mais receber essas atualizações? Clique [$1 aqui] para deixar de seguir [$2 esta discussão] na [{{SERVER}} {{SITENAME}}].',
 );
 
 $messages['ru'] = array(
@@ -109,6 +119,7 @@ $messages['ru'] = array(
 	'emailext-forum-reply-summary' => "'''В теме [$2 $1] на [{{SERVER}} {{SITENAME}}] появились новые ответы.'''",
 	'emailext-forum-reply-link-label' => 'Прочитать ответ',
 	'emailext-forum-reply-view-all' => '[$1 Просмотреть обсуждение полностью.]',
+	'emailext-forumreply-unfollow-text' => 'Не хотите больше получать эти сообщения? Нажмите [$1 здесь], чтобы перестать следить за [$2 обсуждением] на [{{SERVER}} {{SITENAME}}].',
 );
 
 $messages['zh-hans'] = array(
@@ -119,6 +130,7 @@ $messages['zh-hans'] = array(
 	'emailext-forum-reply-summary' => "'''[{{SERVER}} {{SITENAME}}]上的[$2 $1]有新的回复。'''",
 	'emailext-forum-reply-link-label' => '阅读回复',
 	'emailext-forum-reply-view-all' => '[$1 查看完整讨论]',
+	'emailext-forumreply-unfollow-text' => '不想再收到这类更新？点击[$1 这里]取消关注[{{SERVER}} {{SITENAME}}]网站上的[$2 这个讨论]。',
 );
 
 $messages['zh-tw'] = array(
@@ -129,5 +141,6 @@ $messages['zh-tw'] = array(
 	'emailext-forum-reply-summary' => "'''[{{SERVER}} {{SITENAME}}]的[$2 $1]有新的回覆郵件。'''",
 	'emailext-forum-reply-link-label' => '閲讀回覆郵件',
 	'emailext-forum-reply-view-all' => '[$1 查看整個討論內容]',
+	'emailext-forumreply-unfollow-text' => '不想再收到這類更新通知？按一下[$1 這裡] 取消對[{{SERVER}} {{SITENAME}}]上[$2 這個討論]的關注。',
 );
 

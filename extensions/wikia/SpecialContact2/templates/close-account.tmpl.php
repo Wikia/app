@@ -11,6 +11,7 @@ echo wfMessage( 'specialcontact-intro-close-account' )->parseAsBlock();
 <form id="contactform" method="post" action="">
 <input name="wpEmail" type="hidden" value="<?= $encEmail ?>" />
 <input name="wpUserName" type="hidden" value="<?= $encName ?>" />
+<input name="wpEditToken" type="hidden" value="<?= Sanitizer::encodeAttribute( $editToken ) ?>" />
 
 <?= wfMessage( 'specialcontact-logged-in-as', $encName )->parseAsBlock() ?>
 
@@ -28,6 +29,6 @@ echo wfMessage( 'specialcontact-intro-close-account' )->parseAsBlock();
 
 <input type="submit" value="<?= wfMessage( 'specialcontact-mail' )->escaped() ?>" />
 
-<input type="hidden" id="wpBrowser" name="wpBrowser" value="<?php echo $_SERVER['HTTP_USER_AGENT']; ?>" />
+<input type="hidden" id="wpBrowser" name="wpBrowser" value="<?= Sanitizer::encodeAttribute( $_SERVER['HTTP_USER_AGENT'] ); ?>" />
 <input type="hidden" id="wpAbTesting" name="wpAbTesting" value="[unknown]" />
 </form>

@@ -544,6 +544,7 @@ SQL;
 		$this->providerUrl = $this->getVal( 'providerUrl' );
 		$this->expireDate = $expireDate;
 		$this->regionalRestrictions = $regionalRestrictions;
+		// FIXME: this isn't shown to users b/c it's buggy (CONSF-51)
 		$this->viewCount = $this->getVal( 'views' );
 
 		wfProfileOut( __METHOD__ );

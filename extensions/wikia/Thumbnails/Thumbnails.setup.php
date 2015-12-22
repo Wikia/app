@@ -19,7 +19,6 @@ $dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['ThumbnailVideo'] = $dir . 'ThumbnailVideo.class.php';
 $wgAutoloadClasses['ThumbnailController'] = $dir . 'ThumbnailController.class.php';
 $wgAutoloadClasses['ThumbnailHooks'] = $dir . 'ThumbnailHooks.class.php';
-$wgAutoloadClasses['ThumbnailImageController'] = $dir . 'ThumbnailImageController.class.php';
 $wgAutoloadClasses['ThumbnailHelper'] = $dir . 'ThumbnailHelper.class.php';
 
 // Hooks

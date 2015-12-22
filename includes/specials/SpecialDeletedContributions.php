@@ -354,7 +354,7 @@ class DeletedContributionsPage extends SpecialPage {
 			$tools[] = Linker::link( $talk, $this->msg( 'sp-contributions-talk' )->escaped() );
 			if( ( $id !== null ) || ( $id === null && IP::isIPAddress( $nt->getText() ) ) ) {
 				if( $this->getUser()->isAllowed( 'block' ) ) { # Block / Change block / Unblock links
-					if ( $userObj->isBlocked() ) {
+					if ( $userObj->isBlocked() && $userObj->getBlock()->getType() !== Block::TYPE_AUTO ) {
 						$tools[] = Linker::linkKnown( # Change block link
 							SpecialPage::getTitleFor( 'Block', $nt->getDBkey() ),
 							$this->msg( 'change-blocklink' )->escaped()

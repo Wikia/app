@@ -2,18 +2,27 @@
 define('ext.wikia.adEngine.config.mobile', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.directGptMobile',
+	'ext.wikia.adEngine.provider.evolve2',
 	'ext.wikia.adEngine.provider.openX',
 	'ext.wikia.adEngine.provider.paidAssetDrop',
 	'ext.wikia.adEngine.provider.remnantGptMobile',
-	require.optional('ext.wikia.adEngine.provider.taboola'),
 	require.optional('wikia.instantGlobals')
-], function (adContext, directGptMobile, openX, paidAssetDrop, remnantGptMobile, taboola, instantGlobals) {
+], function (
+	adContext,
+	directGptMobile,
+	evolve2,
+	openX,
+	paidAssetDrop,
+	remnantGptMobile,
+	instantGlobals
+) {
 	'use strict';
 
 	var pageTypesWithAdsOnMobile = {
 			'all_ads': true,
 			'corporate': true
-		};
+		},
+		gptEnabled = !instantGlobals || !instantGlobals.wgSitewideDisableGpt;
 
 	function getProviderList(slotName) {
 		var context = adContext.getContext(),
@@ -30,24 +39,28 @@ define('ext.wikia.adEngine.config.mobile', [
 			return [];
 		}
 
-		if (context.forcedProvider === 'openx') {
-			return [openX];
+		switch (context.forcedProvider) {
+			case 'evolve2':
+				return [evolve2];
+			case 'openx':
+				return [openX];
 		}
 
 		if (!context.slots.invisibleHighImpact && slotName === 'INVISIBLE_HIGH_IMPACT') {
 			return [];
 		}
 
-		if (context.providers.taboola && taboola && taboola.canHandleSlot(slotName)) {
-			return [taboola];
-		}
-
 		if (paidAssetDrop.canHandleSlot(slotName)) {
 			return [paidAssetDrop];
 		}
 
-		if (!instantGlobals || !instantGlobals.wgSitewideDisableGpt) {
+		if (context.providers.evolve2 && evolve2.canHandleSlot(slotName)) {
+			providerList.push(evolve2);
+		} else if (gptEnabled) {
 			providerList.push(directGptMobile);
+		}
+
+		if (gptEnabled) {
 			providerList.push(remnantGptMobile);
 		}
 
