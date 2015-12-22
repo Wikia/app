@@ -38,13 +38,10 @@ class Controller extends \WikiaController {
 
 		$contribs->setLimit( $limit );
 		$contribs->setOffset( $offset );
+		$contribs->setOrder( $order );
+		$contribs->enableEditCounts();
 
-		$activity = $contribs->checkUserActivity(
-			$addEditCount = true,
-			$order,
-			$limit,
-			$offset
-		);
+		$activity = $contribs->getUserActivity();
 
 		if ( !empty( $activity ) ) {
 			$result['items'] = $this->formatItems( $activity['data'] );

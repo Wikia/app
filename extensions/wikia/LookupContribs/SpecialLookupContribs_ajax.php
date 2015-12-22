@@ -59,7 +59,10 @@ class LookupContribsAjax {
 		if ( empty( $mode ) ) {
 			$oLC->setLimit( $limit );
 			$oLC->setOffset( $offset );
-			$activity = $oLC->checkUserActivity( $lookupUser, $order );
+			$oLC->setOrder( $order );
+			$oLC->enableEditCounts( $lookupUser );
+			$activity = $oLC->getUserActivity();
+
 			if ( !empty( $activity ) ) {
 				$result['iTotalRecords'] = intval( $limit );
 				$result['iTotalDisplayRecords'] = intval( $activity['cnt'] );
@@ -110,7 +113,7 @@ class LookupContribsAjax {
 	/**
 	 * Generates row data for user if ajax call was sent from Special:LookupContribs
 	 *
-	 * @param array $activityData data retrieved from LookupContribsCore::checkUserActivity()
+	 * @param array $activityData data retrieved from LookupContribsCore::getUserActivity()
 	 *
 	 * @return array
 	 */
@@ -133,7 +136,7 @@ class LookupContribsAjax {
 	/**
 	 * Generates row data for user if ajax call was sent from Special:LookupUser
 	 *
-	 * @param array $activityData data retrieved from LookupContribsCore::checkUserActivity()
+	 * @param array $activityData data retrieved from LookupContribsCore::getUserActivity()
 	 *
 	 * @return array
 	 */

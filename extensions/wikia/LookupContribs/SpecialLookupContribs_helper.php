@@ -16,32 +16,42 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 class LookupContribsCore {
-	const CONTRIB_CACHE_TTL = 15 * 60;
-	const ACTIVITY_CACHE_TTL = 10 * 60;
+	const CONTRIB_CACHE_TTL = 900; // 900 == 15min
+	const ACTIVITY_CACHE_TTL = 600; // 600 == 10min
 
-	var $mUsername;
-	var $mUserId;
-	var $mMode;
-	var $mDBname;
-	var $mLimit;
-	var $mOffset;
-	var $mWikiID;
-	var $mWikia;
-	var $mNamespaces;
-	var $mNumRecords;
-	var $oUser;
+	const SORT_BY_TITLE = 'title';
+	const SORT_BY_URL = 'url';
+	const SORT_BY_LAST_EDIT = 'lastedit';
+	const SORT_BY_EDITS = 'edits';
+
+	private $mUsername;
+	private $mUserId;
+	private $mMode;
+	private $mDBname;
+
+	private $mLimit;
+	private $mOffset;
+	private $mOrder = self::SORT_BY_LAST_EDIT;
+	private $mOrderDirection = 'asc';
+	private $mIncludeEditCount = false;
+
+	private $mWikiID;
+	private $mWikia;
+	private $mNamespaces;
+	private $mNumRecords = 0;
+
+	/** @var User */
+	private $oUser;
 
 	public function __construct( $username, $mode = 0, $dbName = '', $ns = false ) {
 		$this->mUsername = $username;
 		$this->oUser = User::newFromName( $this->mUsername );
 		if ( $this->oUser instanceof User ) {
 			$this->mUserId = $this->oUser->getId();
-//			$this->mUserId = 22224;
 		}
 		$this->setMode( $mode );
 		$this->setDBname( $dbName );
 		$this->setNamespaces( $ns );
-		$this->setNumRecords();
 	}
 
 	public function setDBname( $dbname = '' ) {
@@ -66,6 +76,37 @@ class LookupContribsCore {
 
 	public function setOffset( $offset = 0 ) {
 		$this->mOffset = $offset;
+	}
+
+	/**
+	 * Sets the sort order for returned rows.  If 'edits' are selected, then edit counts
+	 * are automatically enabled.
+	 *
+	 * @param string $order An ordering specified as COLUMN:DIRECTION, e.g. url:desc
+	 */
+	public function setOrder( $order ) {
+		list( $orderType, $orderDirection ) = explode( ':', $order );
+
+		if ( $orderType === self::SORT_BY_EDITS ) {
+			$this->enableEditCounts();
+		}
+
+		$this->mOrder = $orderType;
+		$this->mOrderDirection = $orderDirection;
+	}
+
+	/**
+	 * Set whether to include edit counts in the results.  If the sort order is set to 'edits'
+	 * and this value is disabled (set to false) then change the sort order to 'id' instead.
+	 *
+	 * @param bool $value
+	 */
+	public function enableEditCounts( $value = true ) {
+		$this->mIncludeEditCount = $value;
+
+		if ( empty( $this->mIncludeEditCount ) && $this->mOrder === self::SORT_BY_EDITS ) {
+			$this->mOrder = self::SORT_BY_LAST_EDIT;
+		}
 	}
 
 	public function setNamespaces( $ns = false ) {
@@ -131,18 +172,12 @@ class LookupContribsCore {
 	/**
 	 * Gets data for AJAX request for data to user contribution table
 	 *
-	 * @param boolean $addEditCount added in 20.07.2011 during SSW is a flag; will add additional array element
-	 * with user's edits on a wiki plus will sort whole array by this value
-	 * @param string $order
-	 *
-	 * @param int $limit
-	 * @param int $offset
-	 *
 	 * @return array
+	 *
 	 * @throws DBUnexpectedError
 	 * @throws MWException
 	 */
-	public function checkUserActivity( $addEditCount = false, $order = null, $limit = null, $offset = null ) {
+	public function getUserActivity() {
 		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
 
 		$userActivity = [
@@ -150,7 +185,7 @@ class LookupContribsCore {
 			'cnt' => 0
 		];
 
-		$memKey = $this->getUserActivityMemKey( $addEditCount );
+		$memKey = $this->getUserActivityMemKey();
 		$data = $wgMemc->get( $memKey );
 
 		if ( ( !is_array( $data ) || LOOKUPCONTRIBS_NO_CACHE ) && !empty( $wgStatsDBEnabled ) ) {
@@ -173,13 +208,6 @@ class LookupContribsCore {
 					'ORDER BY' => 'last_edit DESC',
 				];
 
-				if ( $limit ) {
-					// If we have a limit/offset, make sure we get the total count another way
-					$userActivity['cnt'] = $this->getActivityCount( $dbr, $where );
-					$options['LIMIT'] = $limit;
-					$options['OFFSET'] = $offset;
-				}
-
 				$res = $dbr->select(
 					'events',
 					[
@@ -195,20 +223,15 @@ class LookupContribsCore {
 				$wikiaIds = [];
 				while ( $row = $dbr->fetchObject( $res ) ) {
 					$aItem = [
-						'id'        => $row->wiki_id,
-						'last_edit' => $row->last_edit,
-						'editcount' => $row->edits,
+						'id' => $row->wiki_id,
+						'lastedit' => $row->last_edit,
+						'edits' => $row->edits,
 					];
 					$wikiaIds[] = $row->wiki_id;
 
 					$userActivity['data'][] = $aItem;
 				}
 
-//				// Commented out because its slow if the user has a lot of edits.  Leaving in as
-//				// a starting point if we want to make this performant and add this in
-//				if ( $addEditCount ) {
-//					$this->addEditCounts( $wikiaIds, $userActivity );
-//				}
 				$this->addWikiaInfo( $wikiaIds, $userActivity );
 
 				$dbr->freeResult( $res );
@@ -220,23 +243,7 @@ class LookupContribsCore {
 			$userActivity = $data;
 		}
 
-		if ( $limit ) {
-			return $userActivity;
-		} else {
-			return $this->orderData( $userActivity, $order, $addEditCount );
-		}
-	}
-
-	private function addEditCounts( $wikiaIds, &$userActivity ) {
-		$wikiaEdits = $this->getEditCount( $wikiaIds );
-		foreach ( $userActivity['data'] as &$item ) {
-			$wikiaId = $item['id'];
-			if ( empty( $wikiaEdits[$wikiaId] ) ) {
-				$item[ 'editcount' ] = 0;
-			} else {
-				$item[ 'editcount' ] = $wikiaEdits[ $wikiaId ]->edits;
-			}
-		}
+		return $this->orderData( $userActivity );
 	}
 
 	private function addWikiaInfo( $wikiaIds, &$userActivity ) {
@@ -259,129 +266,54 @@ class LookupContribsCore {
 		}
 	}
 
-	private function getActivityCount( DatabaseBase $dbr, Array $where ) {
-		$res = $dbr->select(
-			'events',
-			[ 'count(distinct wiki_id) as num' ],
-			$where,
-			__METHOD__
+	private function getUserActivityMemKey() {
+		return wfSharedMemcKey(
+			$this->mUserId,
+			$this->mIncludeEditCount ? 'dataWithEdits' : 'data'
 		);
-
-		$row = $dbr->fetchObject( $res );
-		return $row->num;
 	}
 
-	private function getUserActivityMemKey( $addEditCount ) {
-		return wfSharedMemcKey( $this->mUserId, ( $addEditCount ? 'dataWithEdits' : 'data' ) );
+	private function orderData( $userActivity ) {
+		$data = $userActivity['data'];
+
+		if ( empty( $data ) || !is_array( $data ) ) {
+			return $userActivity;
+		}
+
+		usort( $data, [ $this, 'sortUserActivity' ] );
+
+		return [
+			'cnt' => count( $data ),
+			'data' => array_slice( $data, $this->mOffset, $this->mLimit ),
+		];
 	}
 
-	private function orderData( &$data, $order, $edits ) {
-		$aTemp = [];
-		$aMatches = [];
-		if ( !$order ) {
-			$order = ( $edits ? 'edits:desc' : 'lastedit:desc' );
-		}
-		if ( isset( $data['data'] ) && is_array( $data['data'] ) ) {
+	private function sortUserActivity( $a, $b ) {
+		$key = $this->mOrder;
 
-			// order by title
-			if ( preg_match( '/^title:(asc|desc)$/', $order, $aMatches ) ) {
-				foreach ( $data['data'] as $aItem ) {
-					$aTemp[$aItem['title']] = $aItem;
-				}
-			}
-
-			// order by url
-			elseif ( preg_match( '/^url:(asc|desc)$/', $order, $aMatches ) ) {
-				foreach ( $data['data'] as $aItem ) {
-					$aTemp[$aItem['url']] = $aItem;
-				}
-			}
-
-			// order by last edit
-			elseif ( preg_match( '/^lastedit:(asc|desc)$/', $order, $aMatches ) ) {
-				foreach ( $data['data'] as $aItem ) {
-					// added URL part since last edits are ints and might not be unique
-					$aTemp["{$aItem['last_edit']}-{$aItem['url']}"] = $aItem;
-				}
-			}
-
-			// order by edits
-			elseif ( preg_match( '/^edits:(asc|desc)$/', $order, $aMatches ) && $edits ) {
-				foreach ( $data['data'] as $aItem ) {
-					// added leading zeros and URL part since edits are ints and might not be unique
-					$aTemp[ sprintf( '%010d-%s', $aItem['editcount'], $aItem['url'] ) ] = $aItem;
-				}
-			}
-
-			// order if necessary
-			if ( !empty( $aTemp ) ) {
-
-				// descending order
-				if ( isset( $aMatches[1] ) && 'desc' == $aMatches[1] ) {
-					krsort( $aTemp );
-
-				// ascending order
-				} else {
-					ksort( $aTemp );
-				}
-
-				// records count
-				$data['cnt'] = count( $aTemp );
-				// reindex and apply offset and limit
-				$data['data'] = array_slice( $aTemp, $this->mOffset, $this->mLimit, false );
-			}
-		}
-		return $data;
-	}
-
-	/**
-	 * Gets an array with wikis' ids and user's editcount on those wikis
-	 *
-	 * @param array $wikisIds reference to a string variable which will be overwritten with an array of wikis' ids
-	 *
-	 * @return array
-	 */
-	function getEditCount( &$wikisIds ) {
-		global $wgSpecialsDB;
-
-		$dbr = wfGetDB( DB_SLAVE, 'stats', $wgSpecialsDB );
-
-		$res = $dbr->select(
-			[ 'events_local_users' ],
-			[ 'wiki_id', 'edits' ],
-			[ 'user_id' => $this->mUserId, 'edits <> 0' ],
-			__METHOD__,
-			[
-				'ORDER BY' => 'edits DESC'
-			]
-		);
-
-		$wikiEdits = [];
-		$wikisIds = [];
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			// second condition !in_array() added because of bugId:6196
-			if ( !isset( $wikiEdits[$row->wiki_id] ) && !in_array( $row->wiki_id, $this->getExclusionList() ) ) {
-				$wikiEdits[$row->wiki_id] = $row;
-				$wikisIds[] = $row->wiki_id;
-			}
+		if ( $a[$key] === $b[$key] ) {
+			return 0;
 		}
 
-		$dbr->freeResult( $res );
-
-		return $wikiEdits;
+		if ( $this->mOrderDirection === 'asc' ) {
+			return $a[$key] > $b[$key];
+		} else {
+			return $a[$key] < $b[$key];
+		}
 	}
 
 	function getExclusionList() {
 		global $wgLookupContribsExcluded;
 
-		$result = [];
-
-		/* grumble grumble _precautions_ cough */
-		if ( !isset( $wgLookupContribsExcluded ) || ( !is_array( $wgLookupContribsExcluded ) ) || ( empty( $wgLookupContribsExcluded ) )  ) {
-						return [];
+		// Make sure there are exclusions defined
+		if ( empty( $wgLookupContribsExcluded ) || !is_array( $wgLookupContribsExcluded ) ) {
+			return [];
 		}
 
-		$result[] = 0;
+		// Start off by ignoring rows that have the undefined wiki ID of zero
+		$result = [ 0 ];
+
+		// Add any other wikis we want to exclude
 		foreach ( $wgLookupContribsExcluded as $excluded ) {
 			$result[] = intval( WikiFactory::DBtoID( $excluded ) );
 		}
@@ -760,7 +692,7 @@ class LookupContribsCore {
 	}
 
 	/* a customized version of makeKnownLinkObj - hardened'n'modified for all those non-standard wikia out there */
-	private function produceLink ( Title $nt, $text, $query, $url, $sk, $wiki_meta, $namespace, $article_id ) {
+	private function produceLink ( Title $nt, $text, $query, $url, $namespace, $article_id ) {
 		global $wgMetaNamespace;
 
 		$str = htmlspecialchars( $nt->getLocalURL( $query ) );
@@ -817,34 +749,32 @@ class LookupContribsCore {
 	}
 
 	public function produceLine( $row ) {
-		$sk = RequestContext::getMain()->getSkin();
-
 		if ( $row->page_remove == 1 ) {
 			$pageContribs = Title::makeTitle ( NS_SPECIAL, "Log" );
 		} else {
 			$pageContribs = Title::makeTitle ( NS_SPECIAL, "Contributions/{$this->mUsername}" );
 		}
-		$meta = strtr( $row->rc_city_title, ' ', '_' );
+
 		$page = Title::makeTitle ( $row->rc_namespace, $row->rc_title );
 
 		if ( $row->page_remove == 1 ) {
-			$contrib = '(' . $this->produceLink ( $pageContribs, wfMsg( 'lookupcontribslog' ), "page=$page", $row->rc_url, $sk, $meta, $row->rc_namespace, $row->page_id ) . ')';
+			$contrib = '(' . $this->produceLink ( $pageContribs, wfMsg( 'lookupcontribslog' ), "page=$page", $row->rc_url, $row->rc_namespace, $row->page_id ) . ')';
 		} else {
-			$contrib = '(' . $this->produceLink ( $pageContribs, wfMsg( 'lookupcontribscontribs' ), '', $row->rc_url, $sk, $meta, $row->rc_namespace, $row->page_id ) . ')';
+			$contrib = '(' . $this->produceLink ( $pageContribs, wfMsg( 'lookupcontribscontribs' ), '', $row->rc_url, $row->rc_namespace, $row->page_id ) . ')';
 		}
 
-		$link = $this->produceLink ( $page, $page->getFullText(), '', $row->rc_url, $sk, $meta, $row->rc_namespace, $row->page_id ) . ( $row->log_comment ? " <small>($row->log_comment)</small>" : "" );
+		$link = $this->produceLink ( $page, $page->getFullText(), '', $row->rc_url, $row->rc_namespace, $row->page_id ) . ( $row->log_comment ? " <small>($row->log_comment)</small>" : "" );
 		if ( $row->page_remove == 1 ) {
 			$link = wfMsg( 'lookupcontribspageremoved' ) . wfMsg( 'word-separator' ) . $link;
 		}
 		$time = F::app()->wg->Lang->timeanddate( wfTimestamp( TS_MW, $row->timestamp ), true );
 		if ( $row->page_remove == 1 ) {
 			$pageUndelete = Title::makeTitle( NS_SPECIAL, "Undelete" );
-			$diff = '(' . $this->produceLink ( $pageUndelete, wfMsg( 'lookupcontribsrestore' ), "target={$page}&diff=prev&timestamp={$row->timestamp}", $row->rc_url, $sk, $meta, $row->rc_namespace, $row->page_id ) . ')';
+			$diff = '(' . $this->produceLink ( $pageUndelete, wfMsg( 'lookupcontribsrestore' ), "target={$page}&diff=prev&timestamp={$row->timestamp}", $row->rc_url, $row->rc_namespace, $row->page_id ) . ')';
 			$hist = '';
 		} else {
-			$diff = '(' . $this->produceLink ( $page, wfMsg( 'lookupcontribsdiff' ), 'diff=prev&oldid=' . $row->rev_id, $row->rc_url, $sk, $meta, $row->rc_namespace, $row->page_id ) . ')';
-			$hist = '(' . $this->produceLink ( $page, wfMsg( 'lookupcontribshist' ), 'action=history', $row->rc_url, $sk, $meta, $row->rc_namespace, $row->page_id ) . ')';
+			$diff = '(' . $this->produceLink ( $page, wfMsg( 'lookupcontribsdiff' ), 'diff=prev&oldid=' . $row->rev_id, $row->rc_url, $row->rc_namespace, $row->page_id ) . ')';
+			$hist = '(' . $this->produceLink ( $page, wfMsg( 'lookupcontribshist' ), 'action=history', $row->rc_url, $row->rc_namespace, $row->page_id ) . ')';
 		}
 
 		$result = [
@@ -859,4 +789,3 @@ class LookupContribsCore {
 		return $result;
 	}
 }
-
