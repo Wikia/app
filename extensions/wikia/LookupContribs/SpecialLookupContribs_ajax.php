@@ -61,7 +61,7 @@ class LookupContribsAjax {
 			$oLC->setOffset( $offset );
 			$oLC->setOrder( $order );
 			$activity = $oLC->getUserActivity();
-gbug("ACTIVITY: ", $activity);
+
 			if ( !empty( $activity ) ) {
 				$result['iTotalRecords'] = intval( $limit );
 				$result['iTotalDisplayRecords'] = intval( $activity['cnt'] );
