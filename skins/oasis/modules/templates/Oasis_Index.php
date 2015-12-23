@@ -106,8 +106,7 @@
 <script type="text/javascript">
 	console.log('== Qualaroo experiment enabled ==');
 
-	var wgQualarooUrl = '//s3.amazonaws.com/ki.js/52510/egy.js',
-		wgQualarooKruxMapping = {
+	var wgQualarooKruxMapping = {
 			'all': {
 				'Xbox One': 'p9jqe7dyz',
 				'Playstation 3': 'p9jqe7dyz',
@@ -127,20 +126,30 @@
 	}
 
 	function sendKruxRequest(segment) {
-		var r = new XMLHttpRequest();
-		r.open("GET", "http://apiservices.krxd.net/audience_segments/add_user?pubid=" + wgKruxPubId + "&seg_id=" + segment, true);
-		r.onreadystatechange = function () {
-			if (r.readyState != 4 || r.status != 200) return;
-			sentSegments[segment] = true;
-			console.log("Qualaroo-Krux integration: request to Krux sent.");
-		};
-		r.send();
+		if(!hasSegmentBeenSent(segment)) {
+			$.ajax({
+				url: 'http://cdn.krxd.net/userdata/add',
+				type: "POST",
+				async: true,
+				dataType: 'jsonp',
+				data: {
+					pub: wgKruxPubId,
+					seg: segment
+				},
+				success: function() {
+					sentSegments[segment] = true;
+					console.log("Qualaroo-Krux integration: request to Krux sent (" + segment + ")");
+				}
+			});
+		} else {
+			console.log("Qualaroo-Krux integration: segment already added (" + segment + ")");
+		}
 	}
 
 	function matchSegmentsAndSendRequests(nudgeId, answer) {
-		if(wgQualarooKruxMapping[nudgeId] && wgQualarooKruxMapping[nudgeId][answer] && !hasSegmentBeenSent(wgQualarooKruxMapping[nudgeId][answer])) {
+		if(wgQualarooKruxMapping[nudgeId] && wgQualarooKruxMapping[nudgeId][answer]) {
 			sendKruxRequest(wgQualarooKruxMapping[nudgeId][answer]);
-		} else if(wgQualarooKruxMapping['all'][answer] && !hasSegmentBeenSent(wgQualarooKruxMapping['all'][answer])) {
+		} else if(wgQualarooKruxMapping['all'][answer]) {
 			sendKruxRequest(wgQualarooKruxMapping['all'][answer]);
 		} else {
 			console.log('Qualaroo-Krux integration: no segment found for the answer');
@@ -152,12 +161,12 @@
 			answers;
 
 		if(!Object.keys) {
-			console.log('Qualaroo-Krux integration: unsupported browser...');
+			console.log('Qualaroo-Krux integration: unsupported browser');
 			return;
 		}
 
 		if(!fieldsList[0]['answer']) {
-			console.log('Qualaroo-Krux integration: no answers found...');
+			console.log('Qualaroo-Krux integration: no answers found');
 			return;
 		}
 
