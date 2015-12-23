@@ -119,32 +119,61 @@
 				'Playstation 4': 'p9jp28ur3'
 			}
 		},
-		wgKruxPubId = '<?= $wg->KruxPubId; ?>';
+		wgKruxPubId = '<?= $wg->KruxPubId; ?>',
+		sentSegments = {};
+
+	function hasSegmentBeenSent(segment) {
+		return !!sentSegments[segment];
+	}
 
 	function sendKruxRequest(segment) {
 		var r = new XMLHttpRequest();
 		r.open("GET", "http://apiservices.krxd.net/audience_segments/add_user?pubid=" + wgKruxPubId + "&seg_id=" + segment, true);
 		r.onreadystatechange = function () {
 			if (r.readyState != 4 || r.status != 200) return;
-			console.log("Request to Krux sent.");
+			sentSegments[segment] = true;
+			console.log("Qualaroo-Krux integration: request to Krux sent.");
 		};
 		r.send();
 	}
 
-	function findAndSendKruxRequest(fieldsList, nudgeId) {
-		var answer = fieldsList[0]['answer'];
-
-		if(wgQualarooKruxMapping[nudgeId] && wgQualarooKruxMapping[nudgeId][answer]) {
+	function matchSegmentsAndSendRequests(nudgeId, answer) {
+		if(wgQualarooKruxMapping[nudgeId] && wgQualarooKruxMapping[nudgeId][answer] && !hasSegmentBeenSent(wgQualarooKruxMapping[nudgeId][answer])) {
 			sendKruxRequest(wgQualarooKruxMapping[nudgeId][answer]);
-		} else if(wgQualarooKruxMapping['all'][answer]) {
+		} else if(wgQualarooKruxMapping['all'][answer] && !hasSegmentBeenSent(wgQualarooKruxMapping['all'][answer])) {
 			sendKruxRequest(wgQualarooKruxMapping['all'][answer]);
 		} else {
-			console.log('Qualaroo-Krux mapping: no segment found for the answer');
+			console.log('Qualaroo-Krux integration: no segment found for the answer');
+		}
+	}
+
+	function validateAndSendKruxRequests(fieldsList, nudgeId) {
+		var answer = '',
+			answers;
+
+		if(!Object.keys) {
+			console.log('Qualaroo-Krux integration: unsupported browser...');
+			return;
+		}
+
+		if(!fieldsList[0]['answer']) {
+			console.log('Qualaroo-Krux integration: no answers found...');
+			return;
+		}
+
+		answers = fieldsList[0]['answer'];
+
+		if(typeof answers === 'string') {
+			matchSegmentsAndSendRequests(nudgeId, answers);
+		} else {
+			Object.keys(answers).forEach(function(i) {
+				matchSegmentsAndSendRequests(nudgeId, answers[i]);
+			});
 		}
 	}
 
 	window._kiq.push(['eventHandler', 'submit', function(field_list, nudge_id, node_id){
-		findAndSendKruxRequest(field_list, nudge_id);
+		validateAndSendKruxRequests(field_list, nudge_id);
 	}]);
 </script>
 
