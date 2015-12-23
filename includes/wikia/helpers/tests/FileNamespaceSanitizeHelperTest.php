@@ -250,6 +250,20 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 				'Naruto-Opening01_222.jpg',
 				'File namespace that include a space'
 			],
+			[
+				'[[File:Blaabla+2plus+.png|300px]]',
+				'en',
+				null,
+				'Blaabla+2plus+.png',
+				'Link to filename with canonical namespace, width and plus (+) characters'
+			],
+			[
+				'[[File:Luke+1.jpg]]',
+				'en',
+				null,
+				'Luke+1.jpg',
+				'Link to filename with canonical namespace, width and plus (+) characters'
+			],
 		];
 	}
 
