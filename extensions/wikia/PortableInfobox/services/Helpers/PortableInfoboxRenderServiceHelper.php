@@ -45,59 +45,6 @@ class PortableInfoboxRenderServiceHelper {
 	}
 
 	/**
-	 * check if infobox item is a title, title inside the hero module or a label
-	 * and if so, remove from it HTML tags.
-	 * If data - label after sanitization became empty because contained only image
-	 * - do not sanitize it.
-	 *
-	 * @param string $type type of infobox item
-	 * @param array $data infobox item data
-	 * @return array infobox $data with sanitized title param if needed
-	 */
-	public function sanitizeInfoboxFields( $type, $data ) {
-		if ( $type === 'data' ) {
-			$sanitizedLabel = $this->sanitizeElementData( $data[ 'label' ], '<a>' );
-
-			if ( !empty( $sanitizedLabel) ) {
-				$data[ 'label' ] = $sanitizedLabel;
-			}
-		} else if ( $type === 'horizontal-group-content' ) {
-			foreach ( $data[ 'labels' ] as $key => $label ) {
-				$sanitizedLabel = $this->sanitizeElementData( $label, '<a>' );
-				if ( !empty( $sanitizedLabel ) ) {
-					$data[ 'labels' ][ $key ] = $sanitizedLabel;
-				}
-			}
-		} else if ( $type === 'title' ) {
-			$data[ 'value' ] = $this->sanitizeElementData( $data[ 'value' ] );
-		} else if ( $type === 'image' ) {
-
-			$data[ 'caption' ] = $this->sanitizeElementData( $data[ 'caption' ], '<a>' );
-		} else if ( $type === 'hero-mobile' && !empty( $data[ 'title' ][ 'value' ] ) ) {
-			$data[ 'title' ][ 'value' ] = $this->sanitizeElementData( $data[ 'title' ][ 'value' ] );
-		}
-
-		return $data;
-	}
-
-	/**
-	 * process single title or label
-	 *
-	 * @param $elementText
-	 * @param string $allowedTags
-	 * @return string
-	 */
-	private function sanitizeElementData( $elementText, $allowedTags = null ) {
-		$elementTextAfterTrim = trim( strip_tags( $elementText, $allowedTags ) );
-
-		if ( $elementTextAfterTrim !== $elementText ) {
-			WikiaLogger::instance()->info( 'Striping HTML tags from infobox element' );
-			$elementText = $elementTextAfterTrim;
-		}
-		return $elementText;
-	}
-
-	/**
 	 * extends image data
 	 *
 	 * @param array $data

@@ -22,10 +22,13 @@ class PortableInfoboxRenderService extends WikiaService {
 		'image-collection-mobile' => 'PortableInfoboxItemImageCollectionMobile.mustache'
 	];
 	private $templateEngine;
+	private $nodeSanitizer;
 
 	function __construct() {
 		$this->templateEngine = ( new Wikia\Template\MustacheEngine )
 			->setPrefix( self::getTemplatesDir() );
+
+		$this->nodeSanitizer = new NodeSanitizer();
 	}
 
 	public static function getTemplatesDir() {
@@ -173,7 +176,7 @@ class PortableInfoboxRenderService extends WikiaService {
 			for ( $i = 0; $i < count($data); $i++ ) {
 				$data[$i][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
 				$data[$i] = $helper->extendImageData( $data[$i] );
-				$data[$i] = $helper->sanitizeInfoboxFields( $type, $data[$i] );
+				$data[$i] = $this->nodeSanitizer->sanitizeInfoboxFields( $type, $data[$i] );
 
 				if ( !!$data[$i] ) {
 					$images[] = $data[$i];
@@ -199,7 +202,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		if ( $helper->isWikiaMobile() ) {
-			$data = $helper->sanitizeInfoboxFields( $type, $data );
+			$data = $this->nodeSanitizer->sanitizeInfoboxFields( $type, $data );
 		}
 
 		return $this->templateEngine->clearData()
