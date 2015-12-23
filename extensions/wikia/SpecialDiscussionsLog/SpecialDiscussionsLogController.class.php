@@ -23,14 +23,12 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		$this->setHeaders();
 		$this->wg->Out->setPageTitle( wfMessage( 'discussionslog-pagetitle' )->plain() );
 
-		$userId = null;
-		if ( $this->wg->request->wasPosted() ) {
-			$userId = $this->wg->request->getInt( 'userid', null );
-		}
-
 		$output = $this->getInputForm();
-		if ( $userId > 0 ) {
-			$output .= $this->getUserLog( $userId );
+
+		$userName = null;
+		if ( $this->wg->request->wasPosted() ) {
+			$userName = $this->wg->request->getVal( 'username', null );
+			$output .= $this->getUserLog( $userName );
 		}
 
 		$this->wg->Out->clearHTML();
@@ -39,8 +37,8 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 
 	private function getInputForm() {
 		return '<form method="post">
-<label for="userid">UserId</label>
-<input id="userid" name="userid" type="number">
+<label for="username">Username: </label>
+<input id="username" name="username" type="text">
 <input type="submit" value="View Logs"></form><br>';
 	}
 
@@ -49,14 +47,32 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		return self::KIBANA_BASEURL . '/logstash-' . date( 'Y.m.d', $date ) . '/_search';
 	}
 
-	private function getUserLog( $userId ) {
-		if ( empty( $userId ) ) {
-			return '';
+	private function getUserIdByUsername( $userName ) {
+		$userName = trim( $userName );
+		if ( $userName === '' ) {
+			return 0;
 		}
 
-		//todo: $userName = User::whoIs( $userId );
-		$userName = '';
+		$dbr = wfGetDB( DB_SLAVE );
+		$id = $dbr->selectField( 'user', 'user_id', [ 'user_name' => $userName ], __METHOD__ );
+		if ( $id === false ) {
+			$id = 0;
+		}
+
+		return $id;
+	}
+
+	private function getUserLog( $userName ) {
+		if ( !User::isValidUserName( $userName ) ) {
+			return '<p>Please try a valid username.</p>';
+		}
+
+		$userId = $this->getUserIdByUsername( $userName );
 		$userLogRecords = $this->aggregateLogSearches( $userId, $userName );
+		if ( count( $userLogRecords ) == 0 ) {
+			return "<p>No mobile app activity by $userName in the past two weeks!</p>";
+		}
+
 		$resultHtml = "<p>Log data for user \"$userName\" (ID: $userId)</p>";
 		$resultHtml .= '<table>
   <thead>
