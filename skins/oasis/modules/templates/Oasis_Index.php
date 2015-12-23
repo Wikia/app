@@ -121,7 +121,13 @@
 		wgKruxPubId = '<?= $wg->KruxPubId; ?>';
 
 	function sendKruxRequest(segment) {
-		console.log('http://apiservices.krxd.net/audience_segments/add_user?pubid=' + wgKruxPubId + '&seg_id=' + segment);
+		var r = new XMLHttpRequest();
+		r.open("GET", "http://apiservices.krxd.net/audience_segments/add_user?pubid=" + wgKruxPubId + "&seg_id=" + segment, true);
+		r.onreadystatechange = function () {
+			if (r.readyState != 4 || r.status != 200) return;
+			console.log("Request to Krux sent.");
+		};
+		r.send();
 	}
 
 	function findAndSendKruxRequest(fieldsList, nudgeId) {
