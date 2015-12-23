@@ -1,18 +1,5 @@
 <?php
 
-/**
- * @package MediaWiki
- * @subpackage SpecialPage
- * @author Piotr Molski <moli@wikia.com> for Wikia.com
- * @author Andrzej 'nAndy' Łukaszewski
- * @version: $Id$
- */
-
-if ( !defined( 'MEDIAWIKI' ) ) {
-	echo "This is MediaWiki extension and cannot be used standalone.\n";
-	exit( 1 ) ;
-}
-
 class LookupContribsAjax {
 
 	function axData() {

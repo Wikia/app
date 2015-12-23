@@ -2736,3 +2736,17 @@ $config['polldaddy_tag_wikiamobile'] = [
 		'//extensions/wikia/PolldaddyTag/scripts/wikiamobile.js'
 	]
 ];
+
+$config['special_user_activity_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/UserActivity/js/UserActivity.js',
+	],
+];
+
+$config['special_user_activity_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/UserActivity/css/UserActivity.scss',
+	],
+];

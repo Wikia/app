@@ -1,23 +1,9 @@
 <?php
 
-/**
- * @package MediaWiki
- * @subpackage LookupContribs
- * @author Bartek Lapinski <bartek@wikia.com>
- * @author Piotr Molski <moli@wikia.com> for Wikia.com
- * @author Andrzej 'nAndy' Łukaszewski <nandy (at) wikia-inc.com>
- *
- * helper classes & functions
- */
-
-if ( !defined( 'MEDIAWIKI' ) ) {
-	echo "This is MediaWiki extension named LookupContribs.\n";
-	exit( 1 );
-}
-
 class LookupContribsCore {
 	const CONTRIB_CACHE_TTL = 900; // 900 == 15min
 	const ACTIVITY_CACHE_TTL = 600; // 600 == 10min
+	const DEFAULT_LIMIT = 25;
 
 	const SORT_BY_TITLE = 'title';
 	const SORT_BY_URL = 'url';
@@ -62,14 +48,14 @@ class LookupContribsCore {
 	}
 
 	public function getDBname() {
-		return LC_TEST ? F::app()->wg->DBname : $this->mDBname;
+		return $this->mDBname;
 	}
 
 	public function setMode( $mode = 0 ) {
 		$this->mMode = $mode;
 	}
 
-	public function setLimit( $limit = LC_LIMIT ) {
+	public function setLimit( $limit = self::DEFAULT_LIMIT ) {
 		$this->mLimit = $limit;
 	}
 
@@ -155,68 +141,73 @@ class LookupContribsCore {
 	public function getUserActivity() {
 		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
 
+		$memKey = $this->getUserActivityMemKey();
+		$data = $wgMemc->get( $memKey );
+
+		if ( !empty( $data ) && is_array( $data ) ) {
+			return $this->orderData( $data );
+		}
+
 		$userActivity = [
 			'data' => [],
 			'cnt' => 0
 		];
 
-		$memKey = $this->getUserActivityMemKey();
-		$data = $wgMemc->get( $memKey );
-
-		if ( ( !is_array( $data ) || LOOKUPCONTRIBS_NO_CACHE ) && !empty( $wgStatsDBEnabled ) ) {
-			$dbr = wfGetDB( DB_SLAVE, "stats", $wgStatsDB );
-			if ( !is_null( $dbr ) ) {
-				// bugId:6196
-				$excludedWikis = $this->getExclusionList();
-
-				$where = [
-					'user_id' => $this->mUserId,
-					'event_type' => [ 1, 2 ],
-				];
-
-				if ( !empty( $excludedWikis ) && is_array( $excludedWikis ) ) {
-					$where[] = 'wiki_id NOT IN (' . $dbr->makeList( $excludedWikis ) . ')';
-				}
-
-				$options = [
-					'GROUP BY' => 'wiki_id',
-					'ORDER BY' => 'last_edit DESC',
-				];
-
-				$res = $dbr->select(
-					'events',
-					[
-						'wiki_id',
-						'count(*) as edits',
-						'max(unix_timestamp(rev_timestamp)) as last_edit'
-					],
-					$where,
-					__METHOD__,
-					$options
-				);
-
-				$wikiaIds = [];
-				while ( $row = $dbr->fetchObject( $res ) ) {
-					$aItem = [
-						'id' => $row->wiki_id,
-						'lastedit' => $row->last_edit,
-						'edits' => $row->edits,
-					];
-					$wikiaIds[] = $row->wiki_id;
-
-					$userActivity['data'][] = $aItem;
-				}
-
-				$this->addWikiaInfo( $wikiaIds, $userActivity );
-
-				$dbr->freeResult( $res );
-				if ( !LOOKUPCONTRIBS_NO_CACHE ) {
-					$wgMemc->set( $memKey, $userActivity, self::ACTIVITY_CACHE_TTL );
-				}
-			}
-		} else {
-			$userActivity = $data;
+		if ( empty( $wgStatsDBEnabled ) ) {
+			return $userActivity;
 		}
+
+		$dbr = wfGetDB( DB_SLAVE, 'stats', $wgStatsDB );
+		if ( is_null( $dbr ) ) {
+			return $userActivity;
+		}
+
+		// bugId:6196
+		$excludedWikis = $this->getExclusionList();
+
+		$where = [
+			'user_id' => $this->mUserId,
+			'event_type' => [ 1, 2 ],
+		];
+
+		if ( !empty( $excludedWikis ) && is_array( $excludedWikis ) ) {
+			$where[] = 'wiki_id NOT IN (' . $dbr->makeList( $excludedWikis ) . ')';
+		}
+
+		$options = [
+			'GROUP BY' => 'wiki_id',
+			'ORDER BY' => 'last_edit DESC',
+		];
+
+		$res = $dbr->select(
+			'events',
+			[
+				'wiki_id',
+				'count(*) as edits',
+				'max(unix_timestamp(rev_timestamp)) as last_edit'
+			],
+			$where,
+			__METHOD__,
+			$options
+		);
+
+		$wikiaIds = [];
+		while ( $row = $dbr->fetchObject( $res ) ) {
+			$aItem = [
+				'id' => $row->wiki_id,
+				'lastedit' => $row->last_edit,
+				'edits' => $row->edits,
+			];
+			$wikiaIds[] = $row->wiki_id;
+
+			$userActivity['data'][] = $aItem;
+		}
+
+		$this->addWikiaInfo( $wikiaIds, $userActivity );
+
+		$dbr->freeResult( $res );
+
+		$wgMemc->set( $memKey, $userActivity, self::ACTIVITY_CACHE_TTL );
 
 		return $this->orderData( $userActivity );
 	}
@@ -559,7 +550,7 @@ class LookupContribsCore {
 		$memKey = $this->getContribsMemKey();
 		$data = $memc->get( $memKey );
 
-		if ( is_array( $data ) && !LOOKUPCONTRIBS_NO_CACHE ) {
+		if ( is_array( $data ) ) {
 			/* get that data from memcache */
 			$this->mNumRecords = count( $data );
 			return $data;
@@ -645,9 +636,8 @@ class LookupContribsCore {
 				unset( $res );
 			}
 		}
-		if ( !LOOKUPCONTRIBS_NO_CACHE ) {
-			$memc->set( $memKey, $fetched_data, self::CONTRIB_CACHE_TTL );
-		}
+
+		$memc->set( $memKey, $fetched_data, self::CONTRIB_CACHE_TTL );
 
 		return $fetched_data;
 	}
