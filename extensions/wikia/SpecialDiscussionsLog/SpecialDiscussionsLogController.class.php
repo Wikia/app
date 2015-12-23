@@ -20,7 +20,13 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 
 	public function execute( $subpage ) {
 
+		if ( !$this->checkAccess() ) {
+			return;
+		}
+
 		$this->setHeaders();
+
+		$this->wg->Out->clearHTML();
 		$this->wg->Out->setPageTitle( wfMessage( 'discussionslog-pagetitle' )->plain() );
 
 		$output = $this->getInputForm();
@@ -31,7 +37,6 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 			$output .= $this->getUserLog( $userName );
 		}
 
-		$this->wg->Out->clearHTML();
 		$this->wg->Out->addHtml( $output );
 	}
 
@@ -183,4 +188,16 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 JSON_BODY;
 	}
 
+	private function checkAccess() {
+		if ( !$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed( 'forumadmin' ) ) {
+
+			$this->wg->Out->clearHTML();
+			$this->wg->Out->setPageTitle( wfMessage( 'badaccess' )->plain() );
+			$this->wg->Out->addHTML( wfMessage( 'badaccess' )->parse() );
+
+			return false;
+		}
+
+		return true;
+	}
 }
