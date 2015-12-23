@@ -106,7 +106,8 @@
 <script type="text/javascript">
 	console.log('== Qualaroo experiment enabled ==');
 
-	var wgQualarooKruxMapping = {
+	var wgQualarooUrl = '//s3.amazonaws.com/ki.js/52510/egy.js',
+		wgQualarooKruxMapping = {
 			'all': {
 				'Xbox One': 'p9jqe7dyz',
 				'Playstation 3': 'p9jqe7dyz',
