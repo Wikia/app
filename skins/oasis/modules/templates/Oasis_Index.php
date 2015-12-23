@@ -107,20 +107,21 @@
 	console.log('== Qualaroo experiment enabled ==');
 
 	var wgQualarooKruxMapping = {
-		'all': {
-			'Xbox One': 'p9jqe7dyz',
-			'Playstation 3': 'p9jqe7dyz',
-			'Playstation 4': 'p9jqe7dyz'
+			'all': {
+				'Xbox One': 'p9jqe7dyz',
+				'Playstation 3': 'p9jqe7dyz',
+				'Playstation 4': 'p9jqe7dyz'
+			},
+			'152278': {
+				'Xbox One': 'p9jp8yb4b',
+				'Playstation 3': 'p9jp28ur3',
+				'Playstation 4': 'p9jp28ur3'
+			}
 		},
-		'152278': {
-			'Xbox One': 'p9jp8yb4b',
-			'Playstation 3': 'p9jp8yb4b',
-			'Playstation 4': 'p9jp8yb4b'
-		}
-	};
+		wgKruxPubId = '<?= $wg->KruxPubId; ?>';
 
 	function sendKruxRequest(segment) {
-		console.log('http://apiservices.krxd.net/audience_segments/add_user?pubid=unknown&seg_id=' + segment);
+		console.log('http://apiservices.krxd.net/audience_segments/add_user?pubid=' + wgKruxPubId + '&seg_id=' + segment);
 	}
 
 	function findAndSendKruxRequest(fieldsList, nudgeId) {
