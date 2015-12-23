@@ -13,8 +13,6 @@ class PortableInfoboxRenderServiceHelper {
 	const MINIMAL_HERO_IMG_WIDTH = 300;
 	const MAX_DESKTOP_THUMBNAIL_HEIGHT = 500;
 
-	function __construct() {}
-
 	/**
 	 * creates special data structure for horizontal group from group data
 	 *
@@ -49,7 +47,7 @@ class PortableInfoboxRenderServiceHelper {
 	/**
 	 * check if infobox item is a title, title inside the hero module or a label
 	 * and if so, remove from it HTML tags.
-	 * If label after sanitization is empty- contain only image- do not
+	 * If label after sanitization is empty- contains only image- do not
 	 * sanitize it.
 	 *
 	 * @param string $type type of infobox item
@@ -86,7 +84,7 @@ class PortableInfoboxRenderServiceHelper {
 	 * @param string $allowedTags
 	 * @return string
 	 */
-	private function sanitizeElementData( $elementText, $allowedTags = null ) {
+	public function sanitizeElementData( $elementText, $allowedTags = null ) {
 		$elementTextAfterTrim = trim( strip_tags( $elementText, $allowedTags ) );
 
 		if ( $elementTextAfterTrim !== $elementText ) {

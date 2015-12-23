@@ -100,7 +100,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 */
 	private function renderGroup( $groupData ) {
 		$cssClasses = [];
-		$helper = new PortableInfoboxRenderServiceHelper();;
+		$helper = new PortableInfoboxRenderServiceHelper();
 		$groupHTMLContent = '';
 		$dataItems = $groupData[ 'value' ];
 		$layout = $groupData[ 'layout' ];
