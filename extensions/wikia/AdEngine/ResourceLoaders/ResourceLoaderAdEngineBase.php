@@ -93,7 +93,7 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 	protected function getData() {
 		global $wgMemc;
 
-		if (static::$localCache[get_class($this)]) {
+		if ( !empty( static::$localCache[get_class($this)] ) ) {
 			return static::$localCache[get_class($this)];
 		}
 
