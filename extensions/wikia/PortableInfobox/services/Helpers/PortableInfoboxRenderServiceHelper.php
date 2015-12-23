@@ -47,8 +47,8 @@ class PortableInfoboxRenderServiceHelper {
 	/**
 	 * check if infobox item is a title, title inside the hero module or a label
 	 * and if so, remove from it HTML tags.
-	 * If label after sanitization is empty- contains only image- do not
-	 * sanitize it.
+	 * If data - label after sanitization became empty because contained only image
+	 * - do not sanitize it.
 	 *
 	 * @param string $type type of infobox item
 	 * @param array $data infobox item data
@@ -70,6 +70,9 @@ class PortableInfoboxRenderServiceHelper {
 			}
 		} else if ( $type === 'title' ) {
 			$data[ 'value' ] = $this->sanitizeElementData( $data[ 'value' ] );
+		} else if ( $type === 'image' ) {
+
+			$data[ 'caption' ] = $this->sanitizeElementData( $data[ 'caption' ], '<a>' );
 		} else if ( $type === 'hero-mobile' && !empty( $data[ 'title' ][ 'value' ] ) ) {
 			$data[ 'title' ][ 'value' ] = $this->sanitizeElementData( $data[ 'title' ][ 'value' ] );
 		}
@@ -84,7 +87,7 @@ class PortableInfoboxRenderServiceHelper {
 	 * @param string $allowedTags
 	 * @return string
 	 */
-	public function sanitizeElementData( $elementText, $allowedTags = null ) {
+	private function sanitizeElementData( $elementText, $allowedTags = null ) {
 		$elementTextAfterTrim = trim( strip_tags( $elementText, $allowedTags ) );
 
 		if ( $elementTextAfterTrim !== $elementText ) {

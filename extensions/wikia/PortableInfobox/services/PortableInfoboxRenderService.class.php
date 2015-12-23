@@ -169,13 +169,17 @@ class PortableInfoboxRenderService extends WikiaService {
 
 		if ( $type === 'image' ) {
 			$images = array();
+
 			for ( $i = 0; $i < count($data); $i++ ) {
 				$data[$i][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
 				$data[$i] = $helper->extendImageData( $data[$i] );
+				$data[$i] = $helper->sanitizeInfoboxFields( $type, $data[$i] );
+
 				if ( !!$data[$i] ) {
 					$images[] = $data[$i];
 				}
 			}
+
 			if ( count ( $images ) === 0 ) {
 				return false;
 			} else if ( count ( $images ) === 1 ) {
@@ -186,6 +190,7 @@ class PortableInfoboxRenderService extends WikiaService {
 				$data = array( 'images' => $images );
 				$templateName = 'image-collection';
 			}
+
 			if ( $helper->isWikiaMobile() ) {
 				$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX;
 			}
