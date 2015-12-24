@@ -13,6 +13,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	const PAGINATION_SIZE = 50;
 	const DAYS_RANGE = 15;
 	const HTTP_STATUS_OK = 200;
+	const NO_USER_MATCH_ERROR = "Provided username did not match any user";
 
 	public function __construct() {
 		parent::__construct( 'DiscussionsLog' );
@@ -43,7 +44,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	private function getInputForm() {
 		return '<form method="post">
 <label for="username">Username: </label>
-<input id="username" name="username" type="text">
+<input id="username" name="username" type="text" required>
 <input type="submit" value="View Logs"></form><br>';
 	}
 
@@ -55,16 +56,15 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	private function getUserIdByUsername( $userName ) {
 		$userName = trim( $userName );
 		if ( $userName === '' ) {
-			return 0;
+			throw new InvalidArgumentException( self::NO_USER_MATCH_ERROR );
 		}
 
-		$dbr = wfGetDB( DB_SLAVE );
-		$id = $dbr->selectField( 'user', 'user_id', [ 'user_name' => $userName ], __METHOD__ );
-		if ( $id === false ) {
-			$id = 0;
+		$user = User::newFromName( $userName );
+		if ( !$user ) {
+			throw new InvalidArgumentException( self::NO_USER_MATCH_ERROR );
 		}
 
-		return $id;
+		return $user->getId();
 	}
 
 	private function getUserLog( $userName ) {
@@ -72,7 +72,11 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 			return '<p>Please try a valid username.</p>';
 		}
 
-		$userId = $this->getUserIdByUsername( $userName );
+		try {
+			$userId = $this->getUserIdByUsername( $userName );
+		} catch ( Exception $e ) {
+			return "<p>{$e->getMessage()}</p>";
+		}
 		$userLogRecords = $this->aggregateLogSearches( $userId, $userName );
 		if ( count( $userLogRecords ) == 0 ) {
 			return "<p>No mobile app activity by $userName in the past two weeks!</p>";
