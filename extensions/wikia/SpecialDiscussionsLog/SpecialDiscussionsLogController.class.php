@@ -54,13 +54,12 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	}
 
 	private function getUserIdByUsername( $userName ) {
-		$userName = trim( $userName );
-		if ( $userName === '' ) {
+		if ( empty( $userName ) ) {
 			throw new InvalidArgumentException( self::NO_USER_MATCH_ERROR );
 		}
 
 		$user = User::newFromName( $userName );
-		if ( !$user ) {
+		if ( !$user || empty( $user->getId() ) ) {
 			throw new InvalidArgumentException( self::NO_USER_MATCH_ERROR );
 		}
 
@@ -68,10 +67,6 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	}
 
 	private function getUserLog( $userName ) {
-		if ( !User::isValidUserName( $userName ) ) {
-			return '<p>Please try a valid username.</p>';
-		}
-
 		try {
 			$userId = $this->getUserIdByUsername( $userName );
 		} catch ( Exception $e ) {
