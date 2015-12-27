@@ -580,7 +580,7 @@ class MercuryApiController extends WikiaController {
 		}
 
 		$url = $title->getFullURL();
-		$url = str_replace( '.rychu.wikia-dev.com', '.wikia.com', $url );
+		//$url = str_replace( '.rychu.wikia-dev.com', '.wikia.com', $url );
 
 		$lilly = new Lilly();
 		$links = $lilly->getCluster( $url );
