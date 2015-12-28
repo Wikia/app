@@ -6,7 +6,7 @@ class NodeHeroImageSanitizerTest extends WikiaBaseTest {
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../../PortableInfobox.setup.php';
 
-		$this->sanitizer = new NodeHeroImageSanitizer();
+		$this->sanitizer = SanitizerBuilder::createFromType('hero-mobile');
 		parent::setUp();
 	}
 

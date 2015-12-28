@@ -2,32 +2,8 @@
 
 use Wikia\Logger\WikiaLogger;
 
-class NodeSanitizer {
+abstract class NodeSanitizer {
 	private $uniqTag = 'uniq';
-
-	/**
-	 * @desc call proper for given type sanitizer class
-	 *
-	 * @param $type
-	 * @param $data
-	 * @return mixed
-	 */
-	public function sanitizeInfoboxFields( $type, $data ) {
-		switch ( $type ) {
-			case 'data':
-				return ( new NodeDataSanitizer() )->sanitize( $data );
-			case 'horizontal-group-content':
-				return ( new NodeHorizontalGroupSanitizer() )->sanitize( $data );
-			case 'title':
-				return ( new NodeTitleSanitizer() )->sanitize( $data );
-			case 'image':
-				return ( new NodeImageSanitizer() )->sanitize( $data );
-			case 'hero-mobile':
-				return ( new NodeHeroImageSanitizer() )->sanitize( $data );
-		}
-
-		return $data;
-	}
 
 	/**
 	 * process single title or label

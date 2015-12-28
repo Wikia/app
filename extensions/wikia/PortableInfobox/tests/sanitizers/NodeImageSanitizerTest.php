@@ -6,7 +6,7 @@ class NodeImageSanitizerTest extends WikiaBaseTest {
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../../PortableInfobox.setup.php';
 
-		$this->sanitizer = new NodeImageSanitizer();
+		$this->sanitizer = SanitizerBuilder::createFromType('image');
 		parent::setUp();
 	}
 

@@ -50,7 +50,9 @@ $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxTemplatesHelpe
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PagePropsProxy' ] = $dir . 'services/Helpers/PagePropsProxy.php';
 
 //sanitizers
+$wgAutoloadClasses[ 'SanitizerBuilder' ] = $dir . 'services/Sanitizers/SanitizerBuilder.php';
 $wgAutoloadClasses[ 'NodeSanitizer' ] = $dir . 'services/Sanitizers/NodeSanitizer.php';
+$wgAutoloadClasses[ 'PassThroughSanitizer' ] = $dir . 'services/Sanitizers/PassThroughSanitizer.php';
 $wgAutoloadClasses[ 'NodeTypeSanitizerInterface' ] = $dir . 'services/Sanitizers/NodeTypeSanitizerInterface.php';
 $wgAutoloadClasses[ 'NodeDataSanitizer' ] = $dir . 'services/Sanitizers/NodeDataSanitizer.php';
 $wgAutoloadClasses[ 'NodeHeroImageSanitizer' ] = $dir . 'services/Sanitizers/NodeHeroImageSanitizer.php';

@@ -6,7 +6,7 @@ class NodeDataSanitizerTest extends WikiaBaseTest {
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../../PortableInfobox.setup.php';
 
-		$this->sanitizer = new NodeDataSanitizer();
+		$this->sanitizer = SanitizerBuilder::createFromType('data');
 		parent::setUp();
 	}
 
