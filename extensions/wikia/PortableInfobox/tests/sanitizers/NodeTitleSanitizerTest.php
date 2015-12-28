@@ -34,7 +34,8 @@ class NodeTitleSanitizerTest extends WikiaBaseTest {
 			],
 			[
 				['value' => 'Test Title <img src=\'data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D\' class=\'article-media\' data-ref=\'1\' width=\'400\' height=\'100\' /> ' ],
-				['value' =>  'Test Title']],
+				['value' =>  'Test Title']
+			],
 			[
 				['value' => 'Test Title <a href="example.com">with link</a>'],
 				[ 'value' =>  'Test Title with link']

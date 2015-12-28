@@ -12,4 +12,8 @@ class NodeImageSanitizer extends NodeSanitizer implements NodeTypeSanitizerInter
 
 		return $data;
 	}
+
+	protected function sanitizeElementData( $elementText, $allowedTags = null ) {
+		return $this->stripUnneededElements( parent::sanitizeElementData( $elementText, $allowedTags ) );
+	}
 }
