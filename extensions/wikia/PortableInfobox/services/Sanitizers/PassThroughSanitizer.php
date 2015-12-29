@@ -1,6 +1,6 @@
 <?php
 
-class PassThroughSanitizer extends NodeSanitizer implements NodeTypeSanitizerInterface {
+class PassThroughSanitizer extends NodeSanitizer {
 	/**
 	 * @param $data
 	 * @return mixed

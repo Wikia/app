@@ -2,7 +2,7 @@
 
 use Wikia\Logger\WikiaLogger;
 
-abstract class NodeSanitizer {
+abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 	private $uniqTag = 'uniq';
 
 	/**

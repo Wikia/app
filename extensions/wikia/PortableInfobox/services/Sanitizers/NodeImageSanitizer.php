@@ -1,6 +1,6 @@
 <?php
 
-class NodeImageSanitizer extends NodeSanitizer implements NodeTypeSanitizerInterface {
+class NodeImageSanitizer extends NodeSanitizer {
 	/**
 	 * @desc sanitize infobox image caption allowing only for links inside it
 	 *

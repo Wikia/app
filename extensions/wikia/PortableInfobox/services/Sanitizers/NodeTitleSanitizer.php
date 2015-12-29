@@ -1,6 +1,6 @@
 <?php
 
-class NodeTitleSanitizer extends NodeSanitizer implements NodeTypeSanitizerInterface {
+class NodeTitleSanitizer extends NodeSanitizer {
 	/**
 	 * @param $data
 	 * @return mixed

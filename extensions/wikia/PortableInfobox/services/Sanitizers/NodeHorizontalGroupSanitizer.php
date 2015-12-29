@@ -1,6 +1,6 @@
 <?php
 
-class NodeHorizontalGroupSanitizer extends NodeSanitizer implements NodeTypeSanitizerInterface {
+class NodeHorizontalGroupSanitizer extends NodeSanitizer {
 	/**
 	 * @param $data
 	 * @return mixed

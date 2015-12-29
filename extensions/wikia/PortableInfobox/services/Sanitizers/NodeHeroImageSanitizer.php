@@ -1,6 +1,6 @@
 <?php
 
-class NodeHeroImageSanitizer extends NodeSanitizer implements NodeTypeSanitizerInterface {
+class NodeHeroImageSanitizer extends NodeSanitizer {
 	/**
 	 * @param $data
 	 * @return mixed

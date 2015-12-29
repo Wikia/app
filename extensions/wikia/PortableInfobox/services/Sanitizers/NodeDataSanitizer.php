@@ -1,6 +1,6 @@
 <?php
 
-class NodeDataSanitizer extends NodeSanitizer implements NodeTypeSanitizerInterface {
+class NodeDataSanitizer extends NodeSanitizer {
 	/**
 	 * @desc remove all HTML tags but links from data labels.
 	 * If label after sanitization became empty because contained only image
