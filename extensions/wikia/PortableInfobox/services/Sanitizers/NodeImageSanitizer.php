@@ -1,6 +1,9 @@
 <?php
 
 class NodeImageSanitizer extends NodeSanitizer {
+	protected $fullyAllowedTags = [ 'sup[@class="reference"]' ];
+	protected $fullyRemovedTags = [ 'script', 'span[@itemprop="duration"]' ];
+
 	/**
 	 * @desc sanitize infobox image caption allowing only for links inside it
 	 *
@@ -8,12 +11,8 @@ class NodeImageSanitizer extends NodeSanitizer {
 	 * @return mixed
 	 */
 	public function sanitize( $data ) {
-		$data[ 'caption' ] = $this->sanitizeElementData( $data[ 'caption' ], '<a>' );
+		$data[ 'caption' ] = $this->sanitizeElementData( $data[ 'caption' ], [ 'a' ] );
 
 		return $data;
-	}
-
-	protected function sanitizeElementData( $elementText, $allowedTags = null ) {
-		return $this->stripUnneededElements( parent::sanitizeElementData( $elementText, $allowedTags ) );
 	}
 }

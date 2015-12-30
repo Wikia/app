@@ -10,7 +10,7 @@ class NodeDataSanitizer extends NodeSanitizer {
 	 * @return mixed
 	 */
 	public function sanitize( $data ) {
-		$sanitizedLabel = $this->sanitizeElementData( $data[ 'label' ], '<a>' );
+		$sanitizedLabel = $this->sanitizeElementData( $data[ 'label' ], [ 'a' ] );
 
 		if ( !empty( $sanitizedLabel) ) {
 			$data[ 'label' ] = $sanitizedLabel;
