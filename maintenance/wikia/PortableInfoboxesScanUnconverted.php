@@ -1,7 +1,6 @@
 <?php
 
-//require_once __DIR__ . '/../Maintenance.php';
-require_once __DIR__ . '/../../usr/wikia/slot1/current/src/maintenance/Maintenance.php';
+require_once __DIR__ . '/../Maintenance.php';
 
 /**
  * @author Kamil Koterba <kamil@wikia-inc.com>
