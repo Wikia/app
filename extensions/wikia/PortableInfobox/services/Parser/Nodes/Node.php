@@ -197,7 +197,7 @@ class Node {
 	protected function extractDataFromSource( \SimpleXMLElement $xmlNode ) {
 		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
 
-		return ( !empty( $source ) ) ? $this->getInfoboxData( $source )
+		return ( !empty( $source ) || $source == '0' ) ? $this->getInfoboxData( $source )
 			: null;
 	}
 
