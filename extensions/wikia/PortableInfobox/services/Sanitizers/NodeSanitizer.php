@@ -3,26 +3,28 @@
 use Wikia\Logger\WikiaLogger;
 
 abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
-	private $rootNodeTag = 'root';
-	protected $alwaysValidTags = [ '#text' ];
-	protected $fullyAllowedTags = [ ];
-	protected $fullyRemovedTags = [ ];
-	protected $allNodesXPath = '';
-
-
-	public function __construct() {
-		$this->allNodesXPath = sprintf('//%s/* | //%s//text()', $this->rootNodeTag, $this->rootNodeTag);
-	}
+	private $rootNodeTag = 'body';
 
 	/**
-	 * process single title or label
+	 * Sanitizer configuration
+	 * Can be overridden by child classes
+	 */
+	protected $validNodeNames = [ '#text' ];
+	protected $selectorsWrappingAllowedFeatures = [ ];
+	protected $selectorsForFullRemoval = [ ];
+
+	/**
+	 * Sanitize a single text element, i.e. title or label
 	 *
 	 * @param $elementText
-	 * @param string $allowedTags
+	 * @param string $allowedTags array of tags, i.e. [ 'a', 'em' ]
 	 * @return string
 	 */
 	protected function sanitizeElementData( $elementText, $allowedTags = [] ) {
-		$elementTextAfterTrim = trim( $this->cleanUpMarkup( $elementText, $allowedTags ) );
+		$dom = new \DOMDocument();
+		$dom->loadHTML( $this->wrapTextInRootNode( $elementText ) );
+		$elementTextAfterTrim = trim( $this->cleanUpDOM( $dom, $allowedTags ) );
+		libxml_clear_errors();
 
 		if ( $elementTextAfterTrim !== $elementText ) {
 			WikiaLogger::instance()->info(
@@ -40,25 +42,57 @@ abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 	/**
 	 * Removes nodes that do not need to remain in the resulting output. By default leaves only text nodes
 	 *
-	 * @param $elementText
-	 * @param $allowedTags array of tags, i.e. [ 'a', 'em' ]
+	 * @param $dom DOMDocument
+	 * @param $allowedTags array
 	 * @return string
 	 */
-	protected function cleanUpMarkup( $elementText, $allowedTags = [] ) {
-		$dom = new \DOMDocument();
-		$dom->loadHTML( $this->wrapTextInRootNode( $elementText ) );
+	protected function cleanUpDOM( $dom, $allowedTags = [] ) {
 		$xpath = new \DOMXPath( $dom );
+		$this->removeNodesBySelector( $xpath, $this->selectorsForFullRemoval );
+		$nodes = $this->extractNeededNodes( $xpath, $allowedTags );
 
-		$this->removeUnneededTagNodes( $xpath );
-		$nodes = $this->extractNeededNodes( $allowedTags, $xpath );
-		$result = $this->generateHTML( $nodes, $dom );
+		return $this->generateHTML( $nodes, $dom );
+	}
 
-		libxml_clear_errors();
-		return $result;
+
+	/**
+	 * @param $elementText
+	 * @return string
+	 */
+	protected function wrapTextInRootNode( $elementText ) {
+		$wrappedText = \Xml::openElement( $this->rootNodeTag ) . $elementText . \Xml::closeElement( $this->rootNodeTag );
+		return $wrappedText;
 	}
 
 	/**
-	 * @param $DOMnode \DOMNode
+	 * Produces sanitized HTML markup from DOMNode array
+	 *
+	 * @param $nodes array of DOMNode
+	 * @param $dom DOMDocument
+	 * @return string
+	 */
+	protected function generateHTML( $nodes, $dom ) {
+		$result = [];
+		foreach ( $nodes as $node ) {
+			/*
+			 * store the result; As the input text is already escaped, we make sure that
+			 * our output will be escaped too
+			 */
+			$result[] = ( $node->nodeName === '#text' ) ? htmlspecialchars( $dom->saveHTML( $node ), ENT_QUOTES ) : $dom->saveHTML( $node );
+		}
+		return implode( '', $result );
+	}
+
+	/**
+	 * Returns xpath string covering all legal tag and text nodes concerning the sanitizer
+	 * @return string
+	 */
+	protected function getAllNodesXpath() {
+		return sprintf('//%s/* | //%s//text()', $this->rootNodeTag, $this->rootNodeTag);
+	}
+
+	/**
+	 * @param $DOMnode DOMNode
 	 * @return bool
 	 */
 	protected function shouldNodeBeRemoved( $DOMnode ) {
@@ -66,14 +100,14 @@ abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 	}
 
 	/**
-	 * @param $node
+	 *
+	 * @param $node DOMNode
 	 * @param $allowedTags
-	 * @param $xpath
 	 * @return bool
 	 */
-	protected function isAllowedTagNode( $node, $allowedTags, $xpath ) {
+	protected function isNodeAllowedByTag( $node, $allowedTags ) {
 		// tags that are explicitly allowed
-		if ( in_array( $node->nodeName, array_merge( $this->alwaysValidTags, $allowedTags ), true ) ) {
+		if ( in_array( $node->nodeName, array_merge( $this->validNodeNames, $allowedTags ), true ) ) {
 			return true;
 		}
 
@@ -81,15 +115,56 @@ abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 	}
 
 	/**
-	 * @param $node
+	 * Removes nodes specified by tag completely
+	 * @param $xpath DOMXPath
+	 * @param $selectorsToRemove array
+	 */
+	protected function removeNodesBySelector( $xpath, $selectorsToRemove = [] ) {
+		foreach ( $selectorsToRemove as $selector ) {
+			$nodesToRemove = $xpath->query( sprintf( '//%s//%s', $this->rootNodeTag, $selector ) );
+			foreach ( $nodesToRemove as $node ) {
+				$node->parentNode->removeChild( $node );
+			}
+		}
+	}
+
+	/**
+	 * @param $xpath DOMXPath
 	 * @param $allowedTags
-	 * @param $xpath
+	 * @return array
+	 */
+	protected function extractNeededNodes( $xpath, $allowedTags ) {
+		$nodes = [ ];
+		$featureNodes = [ ];
+		$remainingNodes = $xpath->query( $this->getAllNodesXpath() );
+
+		foreach ( $remainingNodes as $node ) {
+			if ( (
+					$this->isNodeAllowedByTag( $node, $allowedTags )
+					|| $this->isAllowedFeatureNode( $node, $xpath, $this->selectorsWrappingAllowedFeatures  ) )
+				&& !$this->shouldNodeBeRemoved( $node )
+				&& !$this->isDescendantOfValidFeatureNode( $node, $nodes, $featureNodes )
+			) {
+				if ( $this->isAllowedFeatureNode( $node, $xpath, $allowedTags ) ) {
+					$featureNodes [] = $node;
+				}
+				$nodes [] = $node;
+			}
+		}
+		return $nodes;
+	}
+
+	/**
+	 * Checks if current node is a wrapping tag for a feature
+	 *
+	 * @param $node DOMNode
+	 * @param $xpath DOMXPath
+	 * @param $validFeatureNodeSelectors
 	 * @return bool
 	 */
-	protected function isFullyAllowedFeatureNode( $node, $allowedTags, $xpath ) {
-		// specific structures that are explicitly allowed
-		foreach ( $this->fullyAllowedTags as $allowedTag ) {
-			$nodeQueryResult = $xpath->query( sprintf( '//root//%s', $allowedTag ), $node );
+	protected function isAllowedFeatureNode( $node, $xpath, $validFeatureNodeSelectors = [] ) {
+		foreach ( $validFeatureNodeSelectors as $selector ) {
+			$nodeQueryResult = $xpath->query( sprintf( '//%s//%s', $this->rootNodeTag, $selector ), $node );
 			if ( $nodeQueryResult->length ) {
 				return true;
 			}
@@ -98,12 +173,14 @@ abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 	}
 
 	/**
+	 * Used for skipping processing on subnodes of feature nodes (i.e. citation)
+	 *
 	 * @param $node DOMNode
 	 * @param $nodes
 	 * @param $featureNodes
 	 * @return bool
 	 */
-	protected function doesProcessedAncestorPreventProcessing( $node, $nodes, $featureNodes ) {
+	protected function isDescendantOfValidFeatureNode( $node, $nodes, $featureNodes ) {
 		if ( in_array( $node->parentNode, $nodes, true ) && $node->parentNode->childNodes->length === 1 ) {
 			return true;
 		}
@@ -118,63 +195,4 @@ abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 
 		return false;
 	}
-
-	/**
-	 * @param $xpath
-	 */
-	protected function removeUnneededTagNodes( $xpath ) {
-		foreach ( $this->fullyRemovedTags as $filteredTag ) {
-			$nodesToRemove = $xpath->query( sprintf( '//root//%s', $filteredTag ) );
-			foreach ( $nodesToRemove as $node ) {
-				$node->parentNode->removeChild( $node );
-			}
-		}
-	}
-
-	/**
-	 * @param $nodes
-	 * @param $dom
-	 * @param $result
-	 * @return array
-	 */
-	protected function generateHTML( $nodes, $dom, $result ) {
-		foreach ( $nodes as $node ) {
-			/*
-			 * store the result; As the input text is already escaped, we make sure that
-			 * our output will be escaped too
-			 */
-			$result[] = ( $node->nodeName === '#text' ) ? htmlspecialchars( $dom->saveHTML( $node ), ENT_QUOTES ) : $dom->saveHTML( $node );
-		}
-		return implode( '', $result );
-	}
-
-	/**
-	 * @param $allowedTags
-	 * @param $xpath
-	 * @return array
-	 */
-	protected function extractNeededNodes( $allowedTags, $xpath ) {
-		$nodes = [ ];
-		$featureNodes = [ ];
-		$remainingNodes = $xpath->query( $this->allNodesXPath );
-		foreach ( $remainingNodes as $node ) {
-			if ( ( $this->isAllowedTagNode( $node, $allowedTags, $xpath ) || $this->isFullyAllowedFeatureNode( $node, $allowedTags, $xpath ) ) && !$this->shouldNodeBeRemoved( $node ) && !$this->doesProcessedAncestorPreventProcessing( $node, $nodes, $featureNodes ) ) {
-				if ( $this->isFullyAllowedFeatureNode( $node, $allowedTags, $xpath ) ) {
-					$featureNodes [] = $node;
-				}
-				$nodes [] = $node;
-			}
-		}
-		return $nodes;
-	}
-
-	/**
-	 * @param $elementText
-	 * @return string
-	 */
-	protected function wrapTextInRootNode( $elementText ) {
-		$wrappedText = \Xml::openElement( $this->rootNodeTag ) . $elementText . \Xml::closeElement( $this->rootNodeTag );
-		return $wrappedText;
-	}
-
 }
