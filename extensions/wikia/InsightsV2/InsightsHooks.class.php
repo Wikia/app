@@ -122,12 +122,13 @@ class InsightsHooks {
 	public static function onAfterUpdateSpecialPages( $queryPage ) {
 		$queryPageName = strtolower( $queryPage->getName() );
 
-		$model = InsightsHelper::getInsightModel( $queryPageName );
+		$model = InsightsHelper::getInsightModel( $queryPageName, null );
 
 		if ( $model instanceof InsightsQueryPageModel && $model->purgeCacheAfterUpdateTask() ) {
-			$model->purgeInsightsCache();
-			$model->initModel( [] );
-			$model->getContent( [] );
+			( new InsightsCache( $model->getConfig() ) )->purgeInsightsCache();
+			$class = get_class( $model );
+			$insightsContext = new InsightsContext( $model, $class::INSIGHT_TYPE, [] );
+			$insightsContext->getContent();
 		}
 
 		return true;
