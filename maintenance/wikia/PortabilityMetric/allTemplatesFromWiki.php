@@ -5,7 +5,7 @@
  * @ingroup Maintenance
  */
 
-require_once( dirname( __FILE__ ) . '../../Maintenance.php' );
+require_once( dirname( __FILE__ ) . '../../../Maintenance.php' );
 
 class allTemplatesFromWiki extends Maintenance {
 	const TEMPLATE_MESSAGE_PREFIX = 'initialClassification._action:update._namespace:template';

@@ -260,13 +260,13 @@ class BackupDumper {
 	 * @return DatabaseBase
 	 */
 	function backupDb() {
-		global $wgLBFactoryConf, $wgDBbackenduser, $wgDBbackendpassword;
+		global $wgLBFactoryConf, $wgDBadminuser, $wgDBadminpassword;
 
 		LBFactory::destroyInstance();
 
-		if ( !empty( $wgDBbackenduser ) && !empty( $wgDBbackendpassword ) ) {
-			$wgLBFactoryConf['serverTemplate']['user'] = $wgDBbackenduser;
-			$wgLBFactoryConf['serverTemplate']['password'] = $wgDBbackendpassword;
+		if ( !empty( $wgDBadminuser ) && !empty( $wgDBadminpassword ) ) {
+			$wgLBFactoryConf['serverTemplate']['user'] = $wgDBadminuser;
+			$wgLBFactoryConf['serverTemplate']['password'] = $wgDBadminpassword;
 		}
 
 		$this->lb = wfGetLBFactory()->newMainLB();

@@ -23,6 +23,8 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 		self::TEMPLATE_NAVBOX,
 		self::TEMPLATE_FLAG,
 		self::TEMPLATE_CONTEXT_LINK,
+		self::TEMPLATE_INFOICON,
+		self::TEMPLATE_SCROLLBOX,
 		self::TEMPLATE_REFERENCES,
 		self::TEMPLATE_MEDIA,
 		self::TEMPLATE_DATA,
@@ -93,14 +95,15 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 	 * @param int $pageId
 	 * @param string $templateType
 	 * @param string $origin
+	 * @param string $provider
 	 * @throws ApiException
 	 */
-	public function classifyTemplate( $wikiId, $pageId, $templateType, $origin ) {
+	public function classifyTemplate( $wikiId, $pageId, $templateType, $origin, $provider = self::USER_PROVIDER ) {
 		$this->checkTemplateType( $templateType );
 
 		$oldType = $this->getType( $wikiId, $pageId );
 
-		parent::classifyTemplate( $wikiId, $pageId, $templateType, self::USER_PROVIDER, $origin );
+		parent::classifyTemplate( $wikiId, $pageId, $templateType, $origin, $provider );
 
 		( new Logger() )->logClassificationChange( $pageId, $templateType, $oldType );
 

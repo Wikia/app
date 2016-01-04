@@ -91,6 +91,6 @@ class ContextLinkTemplate {
 	 * @return string
 	 */
 	private static function wrapContextLink( $wikitext ) {
-		return sprintf( '<div class="%s">%s</div>', AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK, $wikitext );
+		return sprintf( '<div class="%s">%s</div>', TemplateClassificationService::TEMPLATE_CONTEXT_LINK, $wikitext );
 	}
 }

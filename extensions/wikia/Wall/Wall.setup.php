@@ -275,7 +275,12 @@ $wgAddGroups['bureaucrat'][] = 'threadmoderator';
 $wgRemoveGroups['bureaucrat'][] = 'threadmoderator';
 $wgAddGroups['sysop'][] = 'threadmoderator';
 $wgRemoveGroups['sysop'][] = 'threadmoderator';
-$wgAddGroups['staff'][] = 'threadmoderator';
-$wgRemoveGroups['staff'][] = 'threadmoderator';
 $wgAddGroups['helper'][] = 'threadmoderator';
 $wgRemoveGroups['helper'][] = 'threadmoderator';
+
+if ( is_array( $wgAddGroups['staff'] ) ) {
+	$wgAddGroups[ 'staff' ][] = 'threadmoderator';
+}
+if ( is_array( $wgRemoveGroups[ 'staff' ] ) ) {
+	$wgRemoveGroups[ 'staff' ][] = 'threadmoderator';
+}

@@ -21,6 +21,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			LEFT_SKYSCRAPER_2: 2400,
 			LEFT_SKYSCRAPER_3: 4000,
 			PREFOOTER_LEFT_BOXAD: preFootersThreshold,
+			PREFOOTER_MIDDLE_BOXAD: preFootersThreshold,
 			PREFOOTER_RIGHT_BOXAD: preFootersThreshold
 		},
 		pageHeight,
@@ -43,12 +44,14 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			HOME_TOP_RIGHT_BOXAD:    'oneColumn',
 			LEFT_SKYSCRAPER_2:       'oneColumn',
 			LEFT_SKYSCRAPER_3:       'oneColumn',
-			INCONTENT_BOXAD_1:       'oneColumn'
+			INCONTENT_BOXAD_1:       'oneColumn',
+			PREFOOTER_MIDDLE_BOXAD:  'noMiddlePrefooter'
 		},
 		mediaQueriesToCheck = {
 			twoColumns: 'screen and (min-width: 1024px)',
 			oneColumn: 'screen and (max-width: 1023px)',
-			noTopButton: 'screen and (max-width: 1063px)'
+			noTopButton: 'screen and (max-width: 1063px)',
+			noMiddlePrefooter: 'screen and (max-width: 1083px)'
 		},
 		mediaQueriesMet,
 		matchMedia;
