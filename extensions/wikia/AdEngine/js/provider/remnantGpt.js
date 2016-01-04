@@ -25,6 +25,7 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 			LEFT_SKYSCRAPER_2: {size: '160x600,300x600', loc: 'middle'},
 			LEFT_SKYSCRAPER_3: {size: '160x600,300x600', loc: 'footer'},
 			PREFOOTER_LEFT_BOXAD: {size: '300x250', loc: 'footer'},
+			PREFOOTER_MIDDLE_BOXAD: {size: '300x250', loc: 'footer'},
 			PREFOOTER_RIGHT_BOXAD: {size: '300x250', loc: 'footer'},
 			TOP_LEADERBOARD: {
 				size: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',

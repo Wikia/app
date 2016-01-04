@@ -2466,10 +2466,7 @@ $config['portable_infobox_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/PortableInfobox/styles/PortableInfobox.scss',
-		/* @TODO DAT-3079 Remove PortableInfobox_beforeSimplification.scss
-		 * once all articles will be purged after release; @see DAT-3009 purging ticket */
-		'//extensions/wikia/PortableInfobox/styles/PortableInfobox_beforeSimplification.scss'
+		'//extensions/wikia/PortableInfobox/styles/PortableInfobox.scss'
 	]
 ];
 
@@ -2478,10 +2475,7 @@ $config['portable_infobox_monobook_scss'] = [
 	'skin' => ['monobook'],
 	'assets' => [
 		'#group_portable_infobox_scss',
-		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook.scss',
-		/* @TODO DAT-3079 Remove PortableInfoboxMonobook_beforeSimplification.scss
-		 * once all articles will be purged after release; @see DAT-3009 purging ticket */
-		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook_beforeSimplification.scss'
+		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook.scss'
 	]
 ];
 

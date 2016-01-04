@@ -75,7 +75,7 @@ class SeoLinkHreflang {
 		}
 
 		// Remove link to self
-		$lang = $out->getLanguage()->getCode();
+		$lang = $title->getPageLanguage()->getCode();
 		unset( $links[$lang] );
 
 		return array_map( function ( $lang, $url ) {

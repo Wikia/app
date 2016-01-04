@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Util\GlobalStateWrapper;
+
 class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 	private $fileNamespaceSanitizeHelper;
 
@@ -7,20 +9,41 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 		require_once( __DIR__ . '/../FileNamespaceSanitizeHelper.php' );
 		parent::setUp();
 
+		$class = new ReflectionClass("FileNamespaceSanitizeHelper");
+		$instance = $class->getProperty('instance');
+		$instance->setAccessible(true);
+		$filePrefixRegex = $class->getProperty('filePrefixRegex');
+		$filePrefixRegex->setAccessible(true);
+
 		$this->fileNamespaceSanitizeHelper = FileNamespaceSanitizeHelper::getInstance();
+		$instance->setValue($this->fileNamespaceSanitizeHelper, null);
+		$filePrefixRegex->setValue($this->fileNamespaceSanitizeHelper, null);
 	}
 
 	/**
 	 * @param $inputFileName
 	 * @param $contentLanguageCode
+	 * @param $fileNamespaceAlias
 	 * @param $expectedOutput
 	 * @param $description
 	 * @dataProvider testSanitizeFilenameDataProvider
 	 */
-	public function testSanitizeFilename( $inputFileName, $contentLanguageCode, $expectedOutput, $description ) {
+	public function testSanitizeFilename( $inputFileName, $contentLanguageCode, $fileNamespaceAlias, $expectedOutput, $description ) {
 		$language = new \Language();
 		$language->setCode( $contentLanguageCode );
-		$actualOutput = $this->fileNamespaceSanitizeHelper->sanitizeImageFileName( $inputFileName, $language );
+		$actualOutput = '';
+
+		if ( isset( $fileNamespaceAlias ) ) {
+			$wrapper = new GlobalStateWrapper( [
+				'wgNamespaceAliases' => [ $fileNamespaceAlias => NS_FILE ],
+			] );
+
+			$actualOutput = $wrapper->wrap( function() use ( $inputFileName, $language ) {
+				return $this->fileNamespaceSanitizeHelper->sanitizeImageFileName( $inputFileName, $language );
+			});
+		} else {
+			$actualOutput = $this->fileNamespaceSanitizeHelper->sanitizeImageFileName( $inputFileName, $language );
+		}
 
 		$this->assertEquals( $expectedOutput, $actualOutput, $description );
 	}
@@ -30,66 +53,77 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 			[
 				'filename.jpg',
 				'en',
+				null,
 				'filename.jpg',
 				'Plain filename'
 			],
 			[
 				'File:filename.jpg',
 				'en',
+				null,
 				'filename.jpg',
 				'Filename with namespace'
 			],
 			[
 				'Plik:filename.jpg',
 				'pl',
+				null,
 				'filename.jpg',
 				'Filename with localized namespace'
 			],
 			[
 				'Grafika:filename.jpg',
 				'pl',
+				null,
 				'filename.jpg',
 				'Filename with localized namespace alias'
 			],
 			[
 				'File:filename.jpg|300px',
 				'en',
+				null,
 				'filename.jpg',
 				'Filename with namespace and width'
 			],
 			[
 				'[[File:filename.jpg|300px|lorem ipsum]]',
 				'en',
+				null,
 				'filename.jpg',
 				'Link to filename with namespace, width and caption'
 			],
 			[
 				'[[File:filename.jpg|lorem ipsum]]',
 				'en',
+				null,
 				'filename.jpg',
 				'Link to filename with namespace and caption'
 			],
 			[
 				'{{File:filename.jpg|lorem ipsum}}',
 				'en',
+				null,
 				'{{File:filename.jpg',
 				'Non-file string; sanitized, though useless'
 			],
 			[
 				'',
 				'en',
+				null,
 				'',
 				'Empty file name'
 			],
 			[
 				'[[File:image.jpg|300px|lorem ipsum]]',
 				'es',
+				null,
 				'image.jpg',
 				'Link to filename with canonical namespace, width and caption on a non-EN wiki'
 			],
 			[
 				'[[File:image.jpg|lorem ipsum]]',
 				'es',
+				null,
 				'image.jpg',
 				'Link to filename with canonical namespace and caption on a non-EN wiki'
 			],
@@ -97,18 +131,21 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 				'<gallery>' . PHP_EOL .
 				'</gallery>' . PHP_EOL,
 				'en',
+				null,
 				'',
 				'Empty gallery'
 			],
 			[
 				'<gallery></gallery>',
 				'en',
+				null,
 				'',
 				'Empty gallery'
 			],
 			[
 				'<gallery />',
 				'en',
+				null,
 				'',
 				'Empty gallery'
 			],
@@ -117,6 +154,7 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 				'image.jpg' . PHP_EOL .
 				'</gallery>' . PHP_EOL,
 				'en',
+				null,
 				'image.jpg',
 				'Gallery with one image'
 			],
@@ -125,6 +163,7 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 				'File:image.jpg' . PHP_EOL .
 				'</gallery>' . PHP_EOL,
 				'en',
+				null,
 				'image.jpg',
 				'Gallery with one image with canonical namespace',
 			],
@@ -135,6 +174,7 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 				'Image009.jpg' . PHP_EOL .
 				'</gallery>' . PHP_EOL,
 				'en',
+				null,
 				'文件名óśłżźćńę?.jpg',
 				'Gallery with diacritics and UTF characters'
 			],
@@ -142,12 +182,14 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 				PHP_EOL .
 				PHP_EOL,
 				'en',
+				null,
 				'',
 				'Content of empty gallery with newlines'
 			],
 			[
 				'',
 				'en',
+				null,
 				'',
 				'Content of empty gallery'
 			],
@@ -156,6 +198,7 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 				'image.jpg' . PHP_EOL .
 				PHP_EOL,
 				'en',
+				null,
 				'image.jpg',
 				'Content of gallery with one image'
 			],
@@ -164,6 +207,7 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 				'File:image.jpg' . PHP_EOL .
 				PHP_EOL,
 				'en',
+				null,
 				'image.jpg',
 				'Content of gallery with one image with canonical namespace',
 			],
@@ -174,20 +218,51 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 				'Image009.jpg' . PHP_EOL .
 				PHP_EOL,
 				'en',
+				null,
 				'文件名óśłżźćńę?.jpg',
 				'Content of gallery with diacritics and UTF characters'
 			],
 			[
 				'Image:filename.jpg',
 				'en',
+				null,
 				'filename.jpg',
 				'Filename with alias to namespace'
 			],
 			[
 				'[[File:Su-47_-iDOLM%40STER_Miki-EX-.jpg|300px]]',
 				'en',
+				null,
 				'Su-47_-iDOLM@STER_Miki-EX-.jpg',
 				'Link to filename with canonical namespace, width urlencoded character in the middle'
+			],
+			[
+				'[[Tập tin:Naruto-Opening01_222.jpg|200px]]',
+				'vi',
+				null,
+				'Naruto-Opening01_222.jpg',
+				'File namespace that include a space'
+			],
+			[
+				'[[いくつかのファイ ルテスト:Naruto-Opening01_222.jpg|200px]]',
+				'en',
+				"いくつかのファイ_ルテスト",
+				'Naruto-Opening01_222.jpg',
+				'File namespace that include a space'
+			],
+			[
+				'[[File:Blaabla+2plus+.png|300px]]',
+				'en',
+				null,
+				'Blaabla+2plus+.png',
+				'Link to filename with canonical namespace, width and plus (+) characters'
+			],
+			[
+				'[[File:Luke+1.jpg]]',
+				'en',
+				null,
+				'Luke+1.jpg',
+				'Link to filename with canonical namespace, width and plus (+) characters'
 			],
 		];
 	}
@@ -202,6 +277,7 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 	public function testStripFilesFromWikitext( $wikitext, $contentLanguageCode, $expectedOutput ) {
 		$language = new \Language();
 		$language->setCode( $contentLanguageCode );
+
 		$actualOutput = $this->fileNamespaceSanitizeHelper->stripFilesFromWikitext( $wikitext, $language );
 
 		$this->assertEquals( $expectedOutput, $actualOutput );
