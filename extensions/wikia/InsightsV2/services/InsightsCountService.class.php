@@ -45,10 +45,14 @@ class InsightsCountService extends WikiaService {
 	 * Init list with insights without count
 	 */
 	private function initExcludedFromCountList() {
-		global $wgEnableFlagsExt;
+		global $wgEnableInsightsPopularPages, $wgEnableFlagsExt;
 
 		if ( !empty( $wgEnableFlagsExt ) ) {
 			self::$excludedFromCount[] = InsightsFlagsModel::INSIGHT_TYPE;
+		}
+
+		if ( !empty( $wgEnableInsightsPopularPages ) ) {
+			self::$excludedFromCount[] = InsightsPopularPagesModel::INSIGHT_TYPE;
 		}
 	}
 
