@@ -1,6 +1,8 @@
 <?php
 
 class NodeDataSanitizer extends NodeSanitizer {
+	protected $allowedTags = [ 'a' ];
+
 	/**
 	 * @desc remove all HTML tags but links from data labels.
 	 * If label after sanitization became empty because contained only image
@@ -10,7 +12,7 @@ class NodeDataSanitizer extends NodeSanitizer {
 	 * @return mixed
 	 */
 	public function sanitize( $data ) {
-		$sanitizedLabel = $this->sanitizeElementData( $data[ 'label' ], [ 'a' ] );
+		$sanitizedLabel = $this->sanitizeElementData( $data[ 'label' ] );
 
 		if ( !empty( $sanitizedLabel) ) {
 			$data[ 'label' ] = $sanitizedLabel;
