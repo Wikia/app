@@ -215,10 +215,14 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 
 		$result = [ ];
 		$xpath = $this->getXPath( $output );
+		// get all data nodes from parsed infobox
 		$dataNodes = $xpath->query( '//aside/div[contains(@class,\'pi-data\')]' );
 		for ( $i = 0; $i < $dataNodes->length; $i++ ) {
-			$result[ $xpath->query( 'h3[contains(@class, \'pi-data-label\')]', $dataNodes->item( $i ) )->item( 0 )->nodeValue ] =
-				$xpath->query( 'div[contains(@class, \'pi-data-value\')]', $dataNodes->item( $i ) )->item( 0 )->nodeValue;
+			// get map of label => value from parsed data node
+			$result[ $xpath->query( 'h3[contains(@class, \'pi-data-label\')]', $dataNodes->item( $i ) )
+				->item( 0 )->nodeValue ] =
+				$xpath->query( 'div[contains(@class, \'pi-data-value\')]', $dataNodes->item( $i ) )
+					->item( 0 )->nodeValue;
 		}
 
 		$this->assertEquals( $expected, $result );
