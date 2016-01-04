@@ -6,6 +6,7 @@
 class WikiaNewFilesSpecialController extends WikiaSpecialPageController {
 	const DEFAULT_LIMIT = 48;
 	const PAGE_PARAM = 'page';
+	const PAGINATOR_URL = '?page=%s';
 
 	public function __construct() {
 		parent::__construct( 'Newimages', '', false );
@@ -13,10 +14,12 @@ class WikiaNewFilesSpecialController extends WikiaSpecialPageController {
 
 	public function index() {
 		$this->setHeaders();
-		$this->getContext()->getOutput()->setPageTitle( wfMessage( 'wikianewfiles-title' ) );
-		$this->wg->SupressPageSubtitle = true;
 
+		$output = $this->getContext()->getOutput();
 		$request = $this->getRequest();
+
+		$output->setPageTitle( wfMessage( 'wikianewfiles-title' ) );
+		$this->wg->SupressPageSubtitle = true;
 
 		Wikia::addAssetsToOutput( 'upload_photos_dialog_js' );
 		Wikia::addAssetsToOutput( 'upload_photos_dialog_scss' );
@@ -30,10 +33,9 @@ class WikiaNewFilesSpecialController extends WikiaSpecialPageController {
 		$imageCount = $newFilesModel->getImageCount();
 
 		// Pagination
-		$paginatorUrl = '?page=%s';
 		$paginator = Paginator::newFromArray( $imageCount, self::DEFAULT_LIMIT );
 		$paginator->setActivePage( $pageNumber - 1 );
-		$this->getOutput()->addHeadItem( 'Paginator', $paginator->getHeadItem( $paginatorUrl ) );
+		$output->addHeadItem( 'Paginator', $paginator->getHeadItem( self::PAGINATOR_URL ) );
 
 		// Hook for ContentFeeds::specialNewImagesHook
 		wfRunHooks( 'SpecialNewImages::beforeDisplay', array( $images ) );
@@ -43,10 +45,11 @@ class WikiaNewFilesSpecialController extends WikiaSpecialPageController {
 		$gallery->addImages( $images );
 
 		// View
-		$this->setVal( 'gallery', $gallery );
-		$this->setVal( 'showUi', !$this->including() );
-		$this->setVal( 'noImages', !$imageCount );
-		$this->setVal( 'emptyPage', count( $images ) === 0 );
-		$this->setVal( 'pagination', $paginator->getBarHTML( $paginatorUrl ) );
+		$this->response->setValues( [
+			'gallery' => $gallery,
+			'noImages' => !$imageCount,
+			'emptyPage' => count( $images ) === 0,
+			'pagination' => $paginator->getBarHTML( self::PAGINATOR_URL ),
+		] );
 	}
 }

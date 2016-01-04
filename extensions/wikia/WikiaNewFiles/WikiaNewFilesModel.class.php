@@ -11,9 +11,6 @@ class WikiaNewFilesModel extends WikiaModel {
 	 */
 	private $dbr;
 
-	/**
-	 * @param bool $hideBots Whether to hide images uploaded by bots or not
-	 */
 	public function __construct() {
 		$this->dbr = wfGetDB( DB_SLAVE );
 	}
@@ -38,15 +35,15 @@ class WikiaNewFilesModel extends WikiaModel {
 	/**
 	 * Get the specific page of images
 	 *
-	 * @param $limit      images per page
-	 * @param $pageNumber page number (1-indexed)
+	 * @param int $limit      images per page
+	 * @param int $pageNumber page number (1-indexed)
 	 * @return array array of images on current page
 	 */
 	public function getImagesPage( $limit, $pageNumber ) {
 		$sql = ( new WikiaSQL() )
 			->SELECT( 'img_size', 'img_name', 'img_user', 'img_user_text', 'img_description', 'img_timestamp' )
 			->FROM( 'image' )
-			->ORDER_BY( [ 'img_timestamp', 'DESC' ] )
+			->ORDER_BY( 'img_timestamp' )->DESC()
 			->LIMIT( $limit )
 			->OFFSET( ( $pageNumber - 1 ) * $limit );
 
@@ -63,7 +60,7 @@ class WikiaNewFilesModel extends WikiaModel {
 			->JOIN( 'page' )->ON( 'imagelinks.il_from', 'page.page_id' )
 			->WHERE( 'imagelinks.il_to' )->EQUAL_TO( $image->img_name )
 			// Get the NS_MAIN first
-			->ORDER_BY( 'page.page_namespace ASC' )
+			->ORDER_BY( 'page.page_namespace' )
 			->LIMIT( 2 );
 
 		$sql->cache( self::CACHE_LINKING_ARTICLES_TTL, null, true /* cache empty */ );

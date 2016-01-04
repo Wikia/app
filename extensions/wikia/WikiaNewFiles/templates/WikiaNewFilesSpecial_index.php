@@ -4,6 +4,6 @@
 	<?= $gallery->toHTML(); ?>
 <? endif; ?>
 
-<?php if ( $showUi && !$noImages ): ?>
+<?php if ( !$noImages ): ?>
 	<?= $pagination; ?>
 <? endif ?>
