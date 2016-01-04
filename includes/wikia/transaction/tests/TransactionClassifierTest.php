@@ -21,7 +21,6 @@ class TransactionClassifierTest extends WikiaBaseTest {
 		$this->assertEquals($expectedName, $classifier->getName(), 'The transaction name should match');
 	}
 
-	// TODO: Władek to update the test cases (2014-09-18)
 	public function buildDataProvider() {
 		return [
 			[
