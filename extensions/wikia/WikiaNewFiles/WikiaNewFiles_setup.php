@@ -19,15 +19,11 @@ $wgExtensionCredits['specialpage'][] = array(
 
 // Translations
 $wgExtensionMessagesFiles['WikiaNewFiles'] =  __DIR__ . '/WikiaNewFiles.i18n.php';
-$wgExtensionMessagesFiles['WikiaNewFilesAliases'] = __DIR__ . '/WikiaNewFiles.alias.php';
 
 // Autoloaded classes
 $wgAutoloadClasses['WikiaNewFilesSpecialController'] = __DIR__ . '/WikiaNewFilesSpecialController.class.php';
 $wgAutoloadClasses['WikiaNewFilesGallery'] = __DIR__ . '/WikiaNewFilesGallery.class.php';
 $wgAutoloadClasses['WikiaNewFilesModel'] = __DIR__ . '/WikiaNewFilesModel.class.php';
-
-// Special page registration
-$wgSpecialPages['Images'] = 'WikiaNewFilesSpecialController';
 
 // Redirect from the old special page (Special:NewFiles)
 $wgSpecialPages['Newimages'] = 'WikiaNewFilesSpecialController';

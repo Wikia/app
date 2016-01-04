@@ -8,7 +8,7 @@ class WikiaNewFilesSpecialController extends WikiaSpecialPageController {
 	const PAGE_PARAM = 'page';
 
 	public function __construct() {
-		parent::__construct( 'Images', '', false );
+		parent::__construct( 'Newimages', '', false );
 	}
 
 	public function index() {
