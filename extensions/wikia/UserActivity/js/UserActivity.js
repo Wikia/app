@@ -6,17 +6,10 @@ require([
 	'use strict';
 
 	$(function () {
-		var orderMatch = /order=([^:]+):(desc|asc)/i,
-			queryMatches,
-			curOrder = 'lastedit',
-			curDirection = 'desc',
-			curLocation = window.location;
-
-		queryMatches = curLocation.search.match(orderMatch);
-		if (queryMatches) {
-			curOrder = queryMatches[1] || 'lastedit';
-			curDirection = queryMatches[2] || 'desc';
-		}
+		var qs = Wikia.Querystring(),
+			order = (qs.getVal('order') || '').split(':'),
+			curColumn = order[0] || 'lastedit',
+			curDirection = order[1] || 'desc';
 
 		$('#title-header')
 			.addClass(function () {
@@ -41,7 +34,7 @@ require([
 			});
 
 		function updateHighlightFor(column) {
-			if (curOrder === column) {
+			if (curColumn === column) {
 				return curDirection === 'asc' ? 'selected up' : 'selected down';
 			}
 
@@ -49,24 +42,19 @@ require([
 		}
 
 		function updateOrderFor(column) {
-			var newURL,
-				orderParam;
+			var newVal;
 
-			if (curOrder === column) {
+			if (curColumn === column) {
+				// Toggle sort order if same column is clicked
 				curDirection = curDirection === 'asc' ? 'desc' : 'asc';
 			} else {
-				// Default to ascending for title, descending for everything else
+				// Sort on new column, defaulting to ascending for title, descending otherwise
 				curDirection = column === 'title' ? 'asc' : 'desc';
 			}
 
-			orderParam = 'order=' + column + ':' + curDirection;
-
-			if (queryMatches) {
-				newURL = curLocation.href.replace(orderMatch, orderParam);
-			} else {
-				newURL = curLocation.href + (curLocation.href.indexOf('?') === -1 ? '?' : '&') + orderParam;
-			}
-			window.location.assign(newURL);
+			newVal = column + ':' + curDirection;
+			qs.setVal('order', newVal, true);
+			qs.goTo();
 		}
 	});
 });
