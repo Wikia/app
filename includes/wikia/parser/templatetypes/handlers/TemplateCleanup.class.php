@@ -23,8 +23,10 @@ class TemplateCleanup {
 				for ( $i = 0; $i < $hs->length; $i++ ) {
 					$current = $hs->item( $i );
 					//skip empty text nodes (spaces and new lines)
+					$emptySiblings = [ ];
 					$next = $current->nextSibling;
 					while ( $next && $next->nodeType == XML_TEXT_NODE && empty( trim( $next->nodeValue ) ) ) {
+						$emptySiblings[] = $next;
 						$next = $next->nextSibling;
 					}
 					//remove if next node is header of same or higher level, or last node
@@ -32,6 +34,11 @@ class TemplateCleanup {
 						 || $next === null
 					) {
 						$current->parentNode->removeChild( $current );
+						//remove empty siblings as well
+						/** @var DOMNode $empty */
+						foreach ( $emptySiblings as $empty ) {
+							$empty->parentNode->removeChild( $empty );
+						}
 					}
 				}
 			}
@@ -45,6 +52,8 @@ class TemplateCleanup {
 
 	private static function shouldBeProcessed() {
 		global $wgEnableEmptySectionsCleanup, $wgArticleAsJson;
+
+		return true;
 
 		return $wgEnableEmptySectionsCleanup && $wgArticleAsJson;
 	}
