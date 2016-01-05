@@ -1,18 +1,13 @@
-/* This css is currently applied to the paginator extension template 
- * as well as the search results extension pagination template. 
- * TODO: Make search extension use paginator extension template. 
- */
-
 @import "skins/shared/color";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/arrow";
 
 .wikia-paginator {
-	
+
 	height: 30px;
 
 	ul {
-		
+
 		list-style: none;
 		margin: 0px auto 10px auto;
 		padding: 0px;
@@ -64,10 +59,10 @@
 		.no-border {
 			border: none;
 		}
-		
+
 		.paginator-next, .paginator-prev{
 			span {
-				display: none; // This is so we can display some text for MonoBook and Web Accessibility  
+				display: none; // This is so we can display some text for MonoBook and Web Accessibility
 			}
 		}
 		.paginator-next {
@@ -79,7 +74,7 @@
 				@include arrow(5px, $color-buttons, 'right');
 			}
 			&.disabled:after {
-				@include arrow(5px, $color-secondary-button-border, 'right');			
+				@include arrow(5px, $color-secondary-button-border, 'right');
 			}
 		}
 		.paginator-prev {
@@ -89,10 +84,10 @@
 				margin-top: -2px;
 				content: "";
 				display: inline-block;
-				@include arrow(5px, $color-buttons, 'left');										
+				@include arrow(5px, $color-buttons, 'left');
 			}
 			&.disabled:after {
-				@include arrow(5px, $color-secondary-button-border, 'left');			
+				@include arrow(5px, $color-secondary-button-border, 'left');
 			}
 		}
 	}

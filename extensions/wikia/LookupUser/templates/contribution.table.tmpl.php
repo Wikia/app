@@ -109,12 +109,12 @@ $(document).ready(function() {
 				type: "POST",
 				url: sSource,
 				data: [
-					{ name: 'username', value: ( $('#lu_name').exists() ) ? mw.html.escape( $('#lu_name').val() ) : '' },
+					{ name: 'username', value: ( $('#lu_name').length ) ? $('#lu_name').val() : '' },
 					{ name: 'limit', value: limit },
 					{ name: 'offset', value: offset },
 					{ name: 'loop', value: loop },
 					{ name: 'numOrder', value: sortingCols },
-					{ name: 'order', value: mw.html.escape( order ) }
+					{ name: 'order', value: order }
 				],
 				success: function(json) {
 					fnCallback(json);

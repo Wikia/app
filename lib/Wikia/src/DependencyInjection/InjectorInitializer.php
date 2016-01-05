@@ -4,6 +4,7 @@ namespace Wikia\DependencyInjection;
 
 use Doctrine\Common\Cache\CacheProvider;
 use Wikia\Service\Gateway\ConsulUrlProviderModule;
+use Wikia\Service\Swagger\ApiProviderModule;
 use Wikia\Service\User\Preferences\Migration\PreferenceMigrationModule;
 use Wikia\Service\User\Preferences\PreferenceModule;
 use Wikia\Service\User\Attributes\AttributesModule;
@@ -19,6 +20,7 @@ class InjectorInitializer {
 				->addModule(new AttributesModule())
 				->addModule(new AuthModule())
 				->addModule(new ConsulUrlProviderModule())
+				->addModule(new ApiProviderModule())
 				->build());
 	}
 }

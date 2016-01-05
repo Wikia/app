@@ -2,131 +2,74 @@
 
 class WikiaNewFilesModel extends WikiaModel {
 	/**
+	 * Cache TTL for the list of articles linking to an image
+	 */
+	const CACHE_LINKING_ARTICLES_TTL = 60 * 15;
+
+	/**
 	 * @var Database
 	 */
 	private $dbr;
 
-	/**
-	 * @var string
-	 */
-	private $hideBotsSql = '';
-
-	/**
-	 * @param bool $hideBots Whether to hide images uploaded by bots or not
-	 */
-	public function __construct( $hideBots ) {
+	public function __construct() {
 		$this->dbr = wfGetDB( DB_SLAVE );
-		if ( $hideBots ) {
-			$this->hideBots();
-		}
 	}
 
 	/**
-	 * Get SQL fragment (a LEFT JOIN) for filtering images to those not uploaded by bots
-	 *
-	 * This LEFT JOIN, in conjunction with "WHERE ug_group IS NULL", returns
-	 * only those rows from IMAGE where the uploading user is not a member of
-	 * a group which has the 'bot' permission set.
-	 *
-	 * @return string the SQL fragment to include (may be empty if there are no bot groups)
+	 * Get the total number of images
+	 * @return int number of images on current page
 	 */
-	private function hideBots() {
-		# Make a list of group names which have the 'bot' flag set.
-		$botconds = array();
-		foreach ( User::getGroupsWithPermission( 'bot' ) as $groupname ) {
-			$botconds[] = 'ug_group = ' . $this->dbr->addQuotes( $groupname );
-		}
+	public function getImageCount() {
+		$sql = ( new WikiaSQL() )
+			->SELECT()
+			->COUNT( '*' )->AS_( 'count' )
+			->FROM( 'image' );
 
-		if ( $botconds ) {
-			$isbotmember = $this->dbr->makeList( $botconds, LIST_OR );
+		$count = $sql->run( $this->dbr, function ( ResultWrapper $result ) {
+			return $result->current()->count;
+		} );
 
-			$ug = $this->dbr->tableName( 'user_groups' );
-			$this->hideBotsSql = " LEFT JOIN $ug ON img_user=ug_user AND ($isbotmember)";
-		}
+		return intval( $count );
 	}
 
 	/**
-	 * Query the database to find out what is the timestamp of the newest image uploaded
+	 * Get the specific page of images
 	 *
-	 * @return string the timestamp of the newest image in MediaWiki format (YmdHis)
+	 * @param int $limit      images per page
+	 * @param int $pageNumber page number (1-indexed)
+	 * @return array array of images on current page
 	 */
-	public function getLatestTS() {
-		$image = $this->dbr->tableName( 'image' );
+	public function getImagesPage( $limit, $pageNumber ) {
+		$sql = ( new WikiaSQL() )
+			->SELECT( 'img_size', 'img_name', 'img_user', 'img_user_text', 'img_description', 'img_timestamp' )
+			->FROM( 'image' )
+			->ORDER_BY( 'img_timestamp' )->DESC()
+			->LIMIT( $limit )
+			->OFFSET( ( $pageNumber - 1 ) * $limit );
 
-		$sql = "SELECT img_timestamp from $image";
-		if ( $this->hideBotsSql ) {
-			$sql .= $this->hideBotsSql . ' WHERE ug_group IS NULL';
-		}
-		$sql .= ' ORDER BY img_timestamp DESC LIMIT 1';
-		$res = $this->dbr->query( $sql, __FUNCTION__ );
-		$row = $this->dbr->fetchRow( $res );
-		if ( $row !== false ) {
-			$ts = $row[0];
-		} else {
-			$ts = false;
-		}
-		$this->dbr->freeResult( $res );
-
-		return wfTimestamp( TS_MW, $ts );
+		return $sql->runLoop( $this->dbr, function ( &$data, $row ) {
+			$this->addLinkingArticles( $row );
+			$data[] = $row;
+		} );
 	}
 
-	/**
-	 * Get the images (limit + 1) from the database
-	 *
-	 * TODO: extract until and from to params
-	 *
-	 * @param string $from only show images newer than this
-	 * @param string $until only show images older than this
-	 * @param int $limit how many images to fetch
-	 * @param Title $nt Title object for the image search query
-	 *
-	 * @return array the fetched images as array
-	 */
-	public function getImages( $from, $until, $limit ) {
-		$image = $this->dbr->tableName( 'image' );
+	private function addLinkingArticles( $image ) {
+		$sql = ( new WikiaSQL() )
+			->SELECT( 'page.page_namespace', 'page.page_title' )
+			->FROM( 'imagelinks' )
+			->JOIN( 'page' )->ON( 'imagelinks.il_from', 'page.page_id' )
+			->WHERE( 'imagelinks.il_to' )->EQUAL_TO( $image->img_name )
+			// Get the NS_MAIN first
+			->ORDER_BY( 'page.page_namespace' )
+			->LIMIT( 2 );
 
-		$where = array();
+		$sql->cache( self::CACHE_LINKING_ARTICLES_TTL, null, true /* cache empty */ );
 
-		$invertSort = false;
-		if ( $until ) {
-			$where[] = "img_timestamp < '" . $this->dbr->timestamp( $until ) . "'";
-		}
-		if ( $from ) {
-			$where[] = "img_timestamp >= '" . $this->dbr->timestamp( $from ) . "'";
-			$invertSort = true;
-		}
-		$sql = 'SELECT img_size, img_name, img_user, img_user_text,' .
-			"img_description,img_timestamp FROM $image";
-
-		if ( $this->hideBotsSql ) {
-			$sql .= $this->hideBotsSql;
-			$where[] = 'ug_group IS NULL';
-		}
-
-		// hook by Wikia, Bartek Lapinski 26.03.2009, for videos and stuff
-		wfRunHooks( 'SpecialNewImages::beforeQuery', array( &$where ) );
-
-		if ( count( $where ) ) {
-			$sql .= ' WHERE ' . $this->dbr->makeList( $where, LIST_AND );
-		}
-		$sql .= ' ORDER BY img_timestamp ' . ( $invertSort ? '' : ' DESC' );
-		$sql .= ' LIMIT ' . ( $limit + 1 );
-
-		$res = $this->dbr->query( $sql, __FUNCTION__ );
-
-		/**
-		 * We have to flip things around to get the last N after a certain date
-		 */
-		$images = array();
-		while ( $s = $this->dbr->fetchObject( $res ) ) {
-			if ( $invertSort ) {
-				array_unshift( $images, $s );
-			} else {
-				array_push( $images, $s );
-			}
-		}
-		$this->dbr->freeResult( $res );
-
-		return $images;
+		$image->linkingArticles = $sql->runLoop( $this->dbr, function ( &$data, $row ) {
+			$data[] = [
+				'ns' => $row->page_namespace,
+				'title' => $row->page_title,
+			];
+		} );
 	}
 }
