@@ -2539,7 +2539,6 @@ $config['sitemap_page_css'] = array(
 $config['template_draft'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/TemplateDraft/scripts/rightRailModule.js',
 		'//extensions/wikia/TemplateDraft/scripts/templateDraft.run.js',
 		'//extensions/wikia/TemplateDraft/scripts/templateDraftTracking.js'
 	]
