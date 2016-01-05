@@ -59,7 +59,7 @@ abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 		$this->removeNodesBySelector( $xpath, $this->selectorsForFullRemoval );
 		$nodes = $this->extractNeededNodes( $xpath );
 
-		return $this->generateHTML( $nodes, $dom );
+		return $this->normalizeWhitespace( $this->generateHTML( $nodes, $dom ) );
 	}
 
 	/**
@@ -78,7 +78,18 @@ abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 			 */
 			$result[] = ( $node->nodeName === '#text' ) ? htmlspecialchars( $dom->saveHTML( $node ), ENT_QUOTES ) : $dom->saveHTML( $node );
 		}
-		return implode( '', $result );
+		return implode( ' ', $result );
+	}
+
+	/**
+	 * Replaces multiple whitespaces with single ones.
+	 * Transparent from non-preformatted HTML point of view
+	 *
+	 * @param $text string
+	 * @return string
+	 */
+	protected function normalizeWhitespace( $text ) {
+		return mbereg_replace( "\s+", " ", $text );
 	}
 
 	/**

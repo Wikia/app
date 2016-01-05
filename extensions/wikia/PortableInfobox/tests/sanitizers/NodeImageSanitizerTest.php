@@ -43,6 +43,21 @@ class NodeImageSanitizerTest extends WikiaBaseTest {
 			[
 				[ 'caption' => '<script>JSSnippetsStack.push({dependencies:[{"url":"http://i3.marzjan.wikia-dev.com/__am/1451462348/group/-/wikia_photo_gallery_js","type":"js"},{"url":"http://i2.marzjan.wikia-dev.com/__am/1451462348/sass/background-dynamic%3D1%26background-image%3D%26background-image-height%3D1185%26background-image-width%3D1600%26color-body%3D%2523bacdd8%26color-body-middle%3D%2523bacdd8%26color-buttons%3D%2523006cb0%26color-header%3D%25233a5766%26color-links%3D%2523006cb0%26color-page%3D%2523ffffff%26oasisTypography%3D1%26page-opacity%3D100%26widthType%3D0/extensions/wikia/WikiaPhotoGallery/css/gallery.scss","type":"css"}],callback:function(json){WikiaPhotoGalleryView.init(json)},id:"WikiaPhotoGalleryView.init"})</script>' ],
 				[ 'caption' => '' ]
+			],
+			[
+				[ 'caption' => '<ul><li>1
+</li><li>2
+</li><li>3
+</li></ul>' ],
+				[ 'caption' => '1 2 3' ]
+			],
+			[
+				[ 'caption' => '<ol><li>1
+</li><li>2
+<ol><li>2.1
+</li></ol>
+</li></ol>' ],
+				[ 'caption' => '1 2 2.1' ]
 			]
 		];
 	}
