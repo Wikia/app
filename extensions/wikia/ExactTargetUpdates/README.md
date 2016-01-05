@@ -1,5 +1,5 @@
 #Purpose the extension
-We need to synchronize ExactTarget with fresh data about our users. Hence there's ExactTargetUpdates extension in our codebase. It sends push updates to ExactTarget external database via it's API.
+We need to synchronize ExactTarget with fresh data about our users. Hence there's ExactTargetUpdates extension in our codebase. It sends pushes updates to ExactTarget external database via it's API.
 
 #What's ExactTarget?
 [ExactTarget](http://www.exacttarget.com/) is external mailing tool - a platform for sending marketing emails to users.
