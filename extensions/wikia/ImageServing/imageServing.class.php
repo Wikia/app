@@ -398,6 +398,10 @@ class ImageServing {
 			$this->proportion['w'] = (float)$width * $this->proportion['h'] / $height;
 		}
 
+		// make sure that these also are numeric and nonzero (PLATFORM-1725)
+		$this->proportion['w'] = max(1, intval($this->proportion['w']));
+		$this->proportion['h'] = max(1, intval($this->proportion['h']));
+
 		$pHeight = round( ( $width ) * ( $this->proportion['h'] / $this->proportion['w'] ) );
 
 		if( $pHeight >= $height ) {
