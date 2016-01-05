@@ -53,8 +53,6 @@ class TemplateCleanup {
 	private static function shouldBeProcessed() {
 		global $wgEnableEmptySectionsCleanup, $wgArticleAsJson;
 
-		return true;
-
 		return $wgEnableEmptySectionsCleanup && $wgArticleAsJson;
 	}
 
