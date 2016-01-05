@@ -1,20 +1,21 @@
 require([
-	'jquery'
+	'jquery',
+	'wikia.querystring'
 ], function ($) {
 
 	'use strict';
 
 	$(function () {
 		var orderMatch = /order=([^:]+):(desc|asc)/i,
-			results,
-			curOrder,
-			curDirection,
+			queryMatches,
+			curOrder = 'lastedit',
+			curDirection = 'desc',
 			curLocation = window.location;
 
-		results = curLocation.href.match(orderMatch);
-		if (results) {
-			curOrder = results[1] || 'lastedit';
-			curDirection = results[2] || 'desc';
+		queryMatches = curLocation.search.match(orderMatch);
+		if (queryMatches) {
+			curOrder = queryMatches[1] || 'lastedit';
+			curDirection = queryMatches[2] || 'desc';
 		}
 
 		$('#title-header')
@@ -29,24 +30,22 @@ require([
 				return updateHighlightFor('edits');
 			})
 			.click(function () {
-			updateOrderFor('edits');
-		});
+				updateOrderFor('edits');
+			});
 		$('#last-edit-header')
 			.addClass(function () {
 				return updateHighlightFor('lastedit');
 			})
 			.click(function () {
-			updateOrderFor('lastedit');
-		});
+				updateOrderFor('lastedit');
+			});
 
 		function updateHighlightFor(column) {
-			if (typeof curOrder === 'undefined' && column === 'lastedit') {
-				return 'selected down';
-			} else if (curOrder === column) {
+			if (curOrder === column) {
 				return curDirection === 'asc' ? 'selected up' : 'selected down';
-			} else {
-				return '';
 			}
+
+			return '';
 		}
 
 		function updateOrderFor(column) {
@@ -62,10 +61,10 @@ require([
 
 			orderParam = 'order=' + column + ':' + curDirection;
 
-			if (typeof curOrder === 'undefined') {
-				newURL = curLocation.href + (curLocation.href.indexOf('?') === -1 ? '?' : '&') + orderParam;
-			} else {
+			if (queryMatches) {
 				newURL = curLocation.href.replace(orderMatch, orderParam);
+			} else {
+				newURL = curLocation.href + (curLocation.href.indexOf('?') === -1 ? '?' : '&') + orderParam;
 			}
 			window.location.assign(newURL);
 		}
