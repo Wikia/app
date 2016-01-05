@@ -232,6 +232,14 @@ class LookupContribsCore {
 		}
 	}
 
+	/**
+	 * Clear the data cached by method getUserActivity
+	 */
+	public function clearUserActivityCache() {
+		$memKey = $this->getUserActivityMemKey();
+		F::app()->wg->Memc->delete( $memKey );
+	}
+
 	private function getUserActivityMemKey() {
 		return wfSharedMemcKey( $this->mUserId, 'data' );
 	}
