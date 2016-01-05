@@ -594,7 +594,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 
 		// Wikia change begin
 		// Adding "Recent changes on Wikia" section - CE-3050
-		$this->setRecentChangesOnWikia();
+		//$this->setRecentChangesOnWikia();
 		// Wikia change end
 
 		$this->setTopText( $opts );
