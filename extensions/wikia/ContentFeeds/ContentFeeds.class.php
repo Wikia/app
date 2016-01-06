@@ -219,13 +219,13 @@ class ContentFeeds {
 		return "Życie..";
 	}
 
-	public static function specialNewImagesHook( $images ) {
+	public static function specialNewImagesHook( $images, $gallery, $limit ) {
 		global $wgRequest;
 
 		if( $wgRequest->getVal('feed') == 'rss' ) {
 			//filter images and get the file url
 			$filteredImages = array();
-			foreach( $images as $image ) {
+			foreach( array_slice( $images, 0, $limit ) as $image ) {
 				$imageFile = wfFindFile( $image->img_name );
 				if( is_object( $imageFile ) ) {
 					/* @var $imageFile LocalFile */
