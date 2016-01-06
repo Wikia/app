@@ -93,14 +93,8 @@ class Paginator extends Service{
 		return ( $this->pagesCount >= 1 );
 	}
 
-	/**
-	 * Set the currently active page. This is 0-indexed, so you may need to
-	 * set the value to $this->getRequest()->getInt( 'page' ) - 1
-	 *
-	 * @param int $pageNumber
-	 */
-	public function setActivePage( $pageNumber ){
-		$this->activePage = $pageNumber;
+	public function setActivePage( $iPageNumber ){
+		$this->activePage = $iPageNumber;
 	}
 
 	public function getPage( $iPageNumber, $bSetToActive = false ){
