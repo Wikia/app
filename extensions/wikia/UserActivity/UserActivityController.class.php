@@ -54,21 +54,22 @@ class Controller extends \WikiaController {
 	protected function formatItems( $items ) {
 		$flattened = [];
 		foreach ( $items as $sortKey => $contribItem ) {
-			$lastEditTS = wfTimestamp( TS_MW, $contribItem[ 'lastedit' ] );
-			unset($contribItem['lastedit']);
-
+			$lastEditTS = wfTimestamp( TS_MW, $contribItem['lastedit'] );
 			$localizedDate = \F::app()->wg->Lang->timeanddate( $lastEditTS, $localTZ = true );
-			$contribItem['lastEdit'] = $localizedDate;
 
 			$editCount = $contribItem['edits'];
-			unset($contribItem['edits']);
 			$editString = wfMessage( 'user-activity-edit-count', $editCount )->text();
-			$contribItem['editString'] = $editString;
 
 			$dbName = $contribItem['dbname'];
-			$contribItem['groups'] = implode(', ', $this->getGroups( $dbName ) );
+			$groups = implode(', ', $this->getGroups( $dbName ) );
 
-			$flattened[] = $contribItem;
+			$flattened[] = [
+				'lastEdit' => $localizedDate,
+				'editString' => $editString,
+				'groups' => $groups,
+				'url' => $contribItem['url'],
+				'title' => $contribItem['title'],
+			];
 		}
 
 		return $flattened;
