@@ -11,7 +11,7 @@ class InsightsController extends WikiaSpecialPageController {
 	 */
 	public function index() {
 		wfProfileIn( __METHOD__ );
-		$this->wg->Out->setPageTitle( wfMessage( 'insights' )->escaped() );
+		$this->getContext()->getOutput()->setPageTitle( wfMessage( 'insights' )->plain() );
 		$this->addAssets();
 
 		$this->type = $this->getPar();
