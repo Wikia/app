@@ -50,6 +50,17 @@ class InsightsHelper {
 	 */
 	const INSIGHT_FIXED_MSG_PREFIX = 'insights-notification-message-fixed-';
 
+	/**
+	 * Used to create the following messages:
+	 *
+	 * 'insights-notification-next-item-deadendpages',
+	 * 'insights-notification-next-item-nonportableinfoboxes'
+	 * 'insights-notification-next-item-uncategorizedpages',
+	 * 'insights-notification-next-item-wantedpages'
+	 * 'insights-notification-next-item-withoutimages',
+	 */
+	const INSIGHT_NEXT_MSG_PREFIX = 'insights-notification-next-item-';
+
 	private static $defaultInsights = [
 		InsightsUncategorizedModel::INSIGHT_TYPE	=> 'InsightsUncategorizedModel',
 		InsightsWithoutimagesModel::INSIGHT_TYPE	=> 'InsightsWithoutimagesModel',

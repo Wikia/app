@@ -154,7 +154,7 @@ class InsightsLoopController extends WikiaController {
 	 */
 	private function getInsightNextLinkParams( $subpage, $next ) {
 		return [
-			'nextArticleText' => wfMessage( 'insights-notification-next-item-' . $subpage )->plain(),
+			'nextArticleText' => wfMessage( InsightsHelper::INSIGHT_NEXT_MSG_PREFIX . $subpage )->plain(),
 			'nextArticleTitle' => $next['link']['text'],
 			'nextArticleLink' => $next['link']['url']
 		];
