@@ -121,7 +121,7 @@ class InsightsHelper {
 	 * @param array $params params
 	 * @return string|null
 	 */
-	public static function getSubpageLocalUrl( $subpage = false, Array $params = [] ) {
+	public static function getSubpageLocalUrl( $subpage, Array $params = [] ) {
 		$insightsPages = self::getInsightsPages();
 
 		if ( isset( $insightsPages[$subpage] ) ) {
