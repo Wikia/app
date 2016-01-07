@@ -226,6 +226,7 @@ class AsyncTaskList {
 			'call_order' => $this->calls,
 			'task_list' => $taskList,
 			'created_by' => $this->createdBy,
+			'created_at' => microtime( true ),
 		]];
 	}
 
