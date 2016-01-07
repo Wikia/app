@@ -42,8 +42,8 @@ class Hooks {
 			if ( ImportJS::isImportJSPage( $title ) ) {
 				$message = ImportJS::getImportJSDescriptionMessage();
 				$content = $this->prepareContent( $title, $content, $message );
-			} elseif ( UserBadges::isUserBadgesPage( $title ) ) {
-				$message = UserBadges::getUserBadgesDescriptionMessage();
+			} elseif ( ProfileTags::isProfileTagsPage( $title ) ) {
+				$message = ProfileTags::getProfileTagsDescriptionMessage();
 				$content = $this->prepareContent( $title, $content, $message );
 			}
 		}
@@ -64,8 +64,8 @@ class Hooks {
 		if ( ImportJS::isImportJSPage( $title ) ) {
 			$message = ImportJS::getImportJSDescriptionMessage();
 			$content = $this->prepareContent( $title, $content, $message, false );
-		} elseif ( UserBadges::isUserBadgesPage( $title ) ) {
-			$message = UserBadges::getUserBadgesDescriptionMessage();
+		} elseif ( ProfileTags::isProfileTagsPage( $title ) ) {
+			$message = ProfileTags::getProfileTagsDescriptionMessage();
 			$content = $this->prepareContent( $title, $content, $message, false );
 		}
 
