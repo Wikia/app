@@ -32,10 +32,10 @@ class Hooks {
 	 */
 	public function onMakeGlobalVariablesScript( array &$vars ) {
 		$actions = [];
-		$this->addCurrentPageActions($actions);
-		$this->addSpecialPageActions($actions);
+		$this->addCurrentPageActions( $actions );
+		$this->addSpecialPageActions( $actions );
 
-		wfRunHooks('PageGetActions', [&$actions]);
+		wfRunHooks( 'PageGetActions', [ &$actions ] );
 		$vars['wgWikiaPageActions'] = $actions;
 
 
@@ -92,10 +92,10 @@ class Hooks {
 			'page:Whatlinkshere' => 'PageAction:Whatlinkshere',
 		];
 
-		foreach ($commands as $actionId => $command) {
+		foreach ( $commands as $actionId => $command ) {
 			$userCommandService = new \UserCommandsService();
-			$pageAction = $userCommandService->get($command);
-			if ($pageAction->isAvailable()) {
+			$pageAction = $userCommandService->get( $command );
+			if ( $pageAction->isAvailable() ) {
 				$actions[] = [
 					'id' => $actionId,
 					'caption' => $pageAction->getCaption(),

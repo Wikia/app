@@ -21,7 +21,7 @@ define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions'], function (Mousetra
 			'help:Actions': [ '.' ]
 		};
 
-	function initShortcut( actionId, key ) {
+	function initShortcut(actionId, key) {
 		console.log('Installing shortcut "' + key + '" for ' + actionId);
 		Mousetrap.bind(key,function(){
 			console.log('Triggered shortcut "' + key + '" for ' + actionId);
@@ -29,12 +29,12 @@ define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions'], function (Mousetra
 		});
 	}
 
-	function add( actionId, key ) {
+	function add(actionId, key) {
 		if (!PageActions.find(actionId)) {
 			throw new Error('Unknown action: ' + actionId);
 		}
 		var current = (actionId in all) ? all[actionId] : [];
-		if (current.indexOf(key)==-1) {
+		if (current.indexOf(key) === -1) {
 			current.push(key);
 			all[actionId] = current;
 			initShortcut(actionId,key);

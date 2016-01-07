@@ -46,10 +46,10 @@ define('GlobalShortcutsHelp',
 			var data = [],
 				i = 0;
 			for (var id in GlobalShortcuts.all) {
-					data[i] = {
-						keyCombination: parseShortcut(GlobalShortcuts.all[id]),
-						label: PageActions.find(id).caption
-					};
+				data[i] = {
+					keyCombination: parseShortcut(GlobalShortcuts.all[id]),
+					label: PageActions.find(id).caption
+				};
 				i++;
 			}
 			return data;

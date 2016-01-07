@@ -1,11 +1,12 @@
 <?php
 
 class GlobalShortcutsController extends WikiaController {
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+
 	public function getHelp() {
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 		$this->overrideTemplate( 'help' );
 	}
+
 	public function renderHelpEntryPoint() {
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 }
