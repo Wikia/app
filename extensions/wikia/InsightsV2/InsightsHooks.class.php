@@ -5,10 +5,8 @@ class InsightsHooks {
 	/**
 	 * Check if article is in insights flow and init script to show banner with message and next steps
 	 */
-	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-		global $wgRequest;
-
-		$subpage = $wgRequest->getVal( 'insights', null );
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+		$subpage = $out->getRequest()->getVal( 'insights', null );
 
 		// Load scripts for pages in insights loop
 		if ( InsightsHelper::isInsightPage( $subpage ) ) {
