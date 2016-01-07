@@ -9,7 +9,7 @@ class ArticleHTMLCleanupTest extends WikiaBaseTest {
 	public function setUp() {
 		parent::setUp();
 		$this->globals = new GlobalStateWrapper(
-			[ 'wgEnableEmptySectionsCleanup' => true, 'wgArticleAsJson' => true ] );
+			[ 'wgEnableMercuryHtmlCleanup' => true, 'wgArticleAsJson' => true ] );
 	}
 
 	/**
