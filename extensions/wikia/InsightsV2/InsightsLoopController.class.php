@@ -93,7 +93,7 @@ class InsightsLoopController extends WikiaController {
 		$params = $this->getInsightListLinkParams( $subpage );
 		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . $subpage )->plain();
 
-		if ( $model->getConfig()->displayFix() ) {
+		if ( $model->getConfig()->displayFixItMessage() ) {
 			$params['fixItMessage'] = wfMessage( 'insights-notification-message-fixit' )->plain();
 		}
 
@@ -111,7 +111,7 @@ class InsightsLoopController extends WikiaController {
 	private function getNotFixedNotificationParams( $subpage, Title $title, InsightsQueryPageModel $model ) {
 		$params = $this->getInsightListLinkParams( $subpage );
 
-		if ( $model->getConfig()->displayFix() ) {
+		if ( $model->getConfig()->displayFixItMessage() ) {
 			$params = array_merge( $params, $this->getInsightFixItParams( $title, $model ) );
 		}
 

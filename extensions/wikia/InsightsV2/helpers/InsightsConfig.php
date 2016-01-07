@@ -10,7 +10,7 @@ class InsightsConfig {
 	// message to create "what links here" link
 	private $whatLinksHereMessage = 'insights-used-on';
 	// should display notification fix message
-	private $displayFix = true;
+	private $displayFixItMessage = true;
 	// does insight has additional action
 	private $action = false;
 	// insights type
@@ -35,8 +35,8 @@ class InsightsConfig {
 			$this->whatLinksHereMessage = $config['whatlinksheremessage'];
 		}
 
-		if ( isset( $config['displayfix'] ) ) {
-			$this->displayFix = $config['displayfix'];
+		if ( isset( $config['displayFixItMessage'] ) ) {
+			$this->displayFixItMessage = $config['displayFixItMessage'];
 		}
 
 		if ( isset( $config['action'] ) ) {
@@ -60,8 +60,8 @@ class InsightsConfig {
 		return $this->whatLinksHereMessage;
 	}
 
-	public function displayFix() {
-		return $this->displayFix;
+	public function displayFixItMessage() {
+		return $this->displayFixItMessage;
 	}
 
 	public function hasAction() {
