@@ -99,11 +99,10 @@ class InsightsController extends WikiaSpecialPageController {
 				'metadata' => $metadata
 			] );
 		} catch ( WikiaHttpException $e ) {
-			$this->setVal( 'errorDetails', $e->getDetails() );
-			$this->overrideTemplate( 'error' );
+			$this->setErrorTemplate( $e->getDetails() );
+		} catch ( Exception $e ) {
+			$this->setErrorTemplate( $e->getMessage() );
 		}
-
-
 	}
 
 	private function addAssets() {
@@ -118,5 +117,10 @@ class InsightsController extends WikiaSpecialPageController {
 		unset( $params['par'] );
 
 		return $params;
+	}
+
+	private function setErrorTemplate( $message ) {
+		$this->setVal( 'errorDetails', $message );
+		$this->overrideTemplate( 'error' );
 	}
 }

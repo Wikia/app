@@ -82,7 +82,13 @@ class InsightsFlagsModel extends InsightsModel {
 		$app = F::app();
 
 		$params = [ 'flag_targeting' => \Flags\Models\FlagType::FLAG_TARGETING_CONTRIBUTORS ];
-		$flagTypes = $app->sendRequest( 'FlagsApiController', 'getFlagTypes', $params )->getData()['data'];
+		$flagTypes = $app->sendRequest(
+			'FlagsApiController',
+			'getFlagTypes',
+			$params,
+			true,
+			WikiaRequest::EXCEPTION_MODE_THROW
+		)->getData()['data'];
 
 		foreach ( $flagTypes as $type ) {
 			$subtypes[$type['flag_type_id']] = $type['flag_name'];
