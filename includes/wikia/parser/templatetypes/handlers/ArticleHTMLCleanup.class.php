@@ -15,32 +15,7 @@ class ArticleHTMLCleanup {
 		wfProfileIn( __METHOD__ );
 
 		if ( $html && static::shouldBeProcessed() ) {
-			$dom = HtmlHelper::createDOMDocumentFromText( $html );
-
-			$xpath = new DOMXPath( $dom );
-			foreach ( self::$headersList as $h ) {
-				$hs = $xpath->query( "//{$h}" );
-				for ( $i = 0; $i < $hs->length; $i++ ) {
-					$current = $hs->item( $i );
-					// skip empty text nodes (spaces and new lines)
-					$emptySiblings = [ ];
-					$next = $current->nextSibling;
-					while ( self::isEmptyTextNode( $next ) ) {
-						$emptySiblings[] = $next;
-						$next = $next->nextSibling;
-					}
-					// remove if next node is header of same or higher level, or a last node
-					if ( ( in_array( $next->nodeName, self::$headersList )
-						   && $current->nodeName[ 1 ] >= $next->nodeName[ 1 ] )
-						 || $next === null
-					) {
-						// remove empty siblings as well
-						HtmlHelper::removeNodes( array_merge( [ $current ], $emptySiblings ) );
-					}
-				}
-			}
-
-			$html = HtmlHelper::getBodyHtml( $dom );
+			$html = self::processHtml( $html );
 		}
 		wfProfileOut( __METHOD__ );
 
@@ -51,6 +26,35 @@ class ArticleHTMLCleanup {
 		global $wgEnableMercuryHtmlCleanup, $wgArticleAsJson;
 
 		return $wgEnableMercuryHtmlCleanup && $wgArticleAsJson;
+	}
+
+	private static function processHtml( $html ) {
+		$dom = HtmlHelper::createDOMDocumentFromText( $html );
+
+		$xpath = new DOMXPath( $dom );
+		foreach ( self::$headersList as $h ) {
+			$hs = $xpath->query( "//{$h}" );
+			for ( $i = 0; $i < $hs->length; $i++ ) {
+				$current = $hs->item( $i );
+				// skip empty text nodes (spaces and new lines)
+				$emptySiblings = [ ];
+				$next = $current->nextSibling;
+				while ( self::isEmptyTextNode( $next ) ) {
+					$emptySiblings[] = $next;
+					$next = $next->nextSibling;
+				}
+				// remove if next node is header of same or higher level, or a last node
+				if ( ( in_array( $next->nodeName, self::$headersList )
+					   && $current->nodeName[ 1 ] >= $next->nodeName[ 1 ] )
+					 || $next === null
+				) {
+					// remove empty siblings as well
+					HtmlHelper::removeNodes( array_merge( [ $current ], $emptySiblings ) );
+				}
+			}
+		}
+
+		return HtmlHelper::getBodyHtml( $dom );
 	}
 
 	private static function isEmptyTextNode( $next ) {
