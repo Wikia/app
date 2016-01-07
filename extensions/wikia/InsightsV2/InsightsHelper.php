@@ -53,7 +53,7 @@ class InsightsHelper {
 	private static $defaultInsights = [
 		InsightsUncategorizedModel::INSIGHT_TYPE	=> 'InsightsUncategorizedModel',
 		InsightsWithoutimagesModel::INSIGHT_TYPE	=> 'InsightsWithoutimagesModel',
-		InsightsDeadendModel::INSIGHT_TYPE			=> 'InsightsDeadendModel',
+		InsightsDeadendModel::INSIGHT_TYPE		=> 'InsightsDeadendModel',
 		InsightsWantedpagesModel::INSIGHT_TYPE		=> 'InsightsWantedpagesModel'
 	];
 
