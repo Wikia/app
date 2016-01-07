@@ -1,3 +1,7 @@
+/**
+ * Module keeps list of shortcut keys and provides interface to add new ones or find existing ones.
+ * It also initiates bind between key combination and function that handles it
+ */
 define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions'], function (Mousetrap, mw, PageActions) {
 	'use strict';
 
@@ -9,7 +13,6 @@ define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions'], function (Mousetra
 			'page:Flag': ['f'],
 			'page:Move': ['m'],
 			'general:StartWikia': ['s'],
-			'page:Classify': ['k'],
 			// Global navigation
 			'page:Discussions': ['g d'],
 			'page:History': ['g h'],
@@ -17,13 +20,13 @@ define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions'], function (Mousetra
 			'special:Recentchanges': ['g r'],
 			// Local navigation / focus
 			'help:Keyboard': ['?'],
-			'wikia:Search': [ 'g s', '/' ],
-			'help:Actions': [ '.' ]
+			'wikia:Search': ['g s', '/'],
+			'help:Actions': ['.']
 		};
 
 	function initShortcut(actionId, key) {
 		console.log('Installing shortcut "' + key + '" for ' + actionId);
-		Mousetrap.bind(key,function(){
+		Mousetrap.bind(key,function () {
 			console.log('Triggered shortcut "' + key + '" for ' + actionId);
 			PageActions.find(actionId).execute();
 		});
@@ -45,8 +48,8 @@ define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions'], function (Mousetra
 		return (actionId in all) ? all[actionId] : [];
 	}
 
-	Object.keys(INITIAL_SHORTCUTS).forEach(function(id){
-		INITIAL_SHORTCUTS[id].forEach(function(key){
+	Object.keys(INITIAL_SHORTCUTS).forEach(function (id) {
+		INITIAL_SHORTCUTS[id].forEach(function (key) {
 			add(id,key);
 		});
 	});
@@ -56,7 +59,4 @@ define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions'], function (Mousetra
 		add: add,
 		find: find
 	};
-});
-
-require(['GlobalShortcuts'], function (gs) {
 });

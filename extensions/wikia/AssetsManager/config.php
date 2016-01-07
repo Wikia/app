@@ -2666,6 +2666,7 @@ $config['template_classification_in_view_js'] = [
 		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationInView.js',
 		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationLabeling.js',
 		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationModal.js',
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationGlobalShortcuts.js',
 	]
 ];
 
@@ -2687,6 +2688,7 @@ $config['template_classification_in_category_js'] = [
 		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationInCategory.js',
 		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationLabeling.js',
 		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationModal.js',
+		'//extensions/wikia/TemplateClassification/scripts/TemplateClassificationGlobalShortcuts.js',
 	]
 ];
 

@@ -1,7 +1,11 @@
-define('PageActions', ['mw', 'jquery'], function(mw, $) {
+/**
+ * Module contains list of actions that can be performed.
+ * (actions doesn't necessarily need to have shortcut keys assigned,
+ * but if they have it can be found in GlobalShortcuts module)
+ * Keeps references on functions that handles actions
+ */
+define('PageActions', ['mw', 'jquery'], function (mw, $) {
 	'use strict';
-
-	var globalShortcutsConfig = mw.config.get('globalShortcutsConfig');
 
 	var CATEGORY_WEIGHTS = {
 			'Current page': 10,
@@ -9,7 +13,8 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 			'Other': 1000
 		},
 		all = [],
-		byId = {};
+		byId = {},
+		globalShortcutsConfig = mw.config.get('globalShortcutsConfig');
 
 	function PageAction(id, caption, fn, category, weight) {
 		this.id = id;
@@ -26,9 +31,9 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 		});
 	}
 
-	PageAction.prototype.update = function(key, value) {
+	PageAction.prototype.update = function (key, value) {
 		if (typeof key !== 'string') {
-			Object.keys(key).forEach(function(k) {
+			Object.keys(key).forEach(function (k) {
 				this.update(k, key[k]);
 			}.bind(this));
 			return;
@@ -51,11 +56,11 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 		}
 	};
 
-	PageAction.prototype.execute = function() {
+	PageAction.prototype.execute = function () {
 		this.fn.call(window);
 	};
 
-	PageAction.prototype._calculateCategoryWeight = function() {
+	PageAction.prototype._calculateCategoryWeight = function () {
 		if (this.category in CATEGORY_WEIGHTS) {
 			return CATEGORY_WEIGHTS[this.category] * 1000;
 		}
@@ -67,7 +72,7 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 			throw new Error('Invalid argument - requires PageAction instance');
 		}
 		if (!canReplace && (pageAction.id in byId)) {
-			throw new Error('Could not register more than one action with the same ID: ' + id);
+			throw new Error('Could not register more than one action with the same ID: ' + pageAction.id);
 		}
 		all.push(pageAction);
 		byId[pageAction.id] = pageAction;
@@ -82,9 +87,9 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 			console.error('Invalid action description - missing id and/or caption: ', desc);
 		}
 		if (desc.href) {
-			fn = function() {
+			fn = function () {
 				window.location.href = desc.href;
-			}
+			};
 		}
 		if (desc.fn) {
 			fn = desc.fn;
@@ -97,7 +102,7 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 	}
 
 	function addMany(many) {
-		many.forEach(function(one) {
+		many.forEach(function (one) {
 			add(one);
 		});
 	}
@@ -105,7 +110,7 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 	function addOrOverride(desc, propertiesToOverride) {
 		var upd = {};
 		if (propertiesToOverride && (desc.id in byId)) {
-			propertiesToOverride.forEach(function(property) {
+			propertiesToOverride.forEach(function (property) {
 				upd[property] = desc[property];
 			});
 			find(desc.id).update(upd);
@@ -115,7 +120,7 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 	}
 
 	function addOrOverrideMany(many) {
-		many.forEach(function(one) {
+		many.forEach(function (one) {
 			var override;
 			one = $.extend({}, one);
 			override = one.override || [];
@@ -129,30 +134,36 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 	}
 
 	function sortList(pageActions) {
-		var items = pageActions.map(function(pageAction) {
-			return [[pageAction.categoryWeight, pageAction.category, pageAction.weight, pageAction.caption], pageAction];
+		var items = pageActions.map(function (pageAction) {
+			return [
+				[pageAction.categoryWeight, pageAction.category, pageAction.weight, pageAction.caption],
+				pageAction
+			];
 		});
-		items.sort(function(a, b) {
+		items.sort(function (a, b) {
 			for (var i = 0; i < a[0].length; i++) {
-				if (a[0][i] < b[0][i]) return -1;
-				else if (a[0][i] > b[0][i]) return 1;
+				if (a[0][i] < b[0][i]) {
+					return -1;
+				} else if (a[0][i] > b[0][i]) {
+					return 1;
+				}
 			}
 			return 0;
 		});
-		return items.map(function(item) {
+		return items.map(function (item) {
 			return item[1];
 		});
 	}
 
 	// default actions
-	(window.wgWikiaPageActions || []).forEach(function(actionDesc) {
+	(window.wgWikiaPageActions || []).forEach(function (actionDesc) {
 		add(actionDesc);
 	});
 
 	addOrOverrideMany([{
 		id: 'page:Delete',
 		caption: 'Delete page',
-		fn: function() {
+		fn: function () {
 			$('[accesskey=d]')[0].click();
 		},
 		category: 'Current page',
@@ -161,7 +172,7 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 	}, {
 		id: 'page:Edit',
 		caption: 'Edit page',
-		fn: function() {
+		fn: function () {
 			$('#ca-edit')[0].click();
 		},
 		category: 'Current page',
@@ -170,7 +181,7 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 	}, {
 		id: 'page:Move',
 		caption: 'Move page',
-		fn: function() {
+		fn: function () {
 			$('[accesskey=m]')[0].click();
 		},
 		category: 'Current page',
@@ -179,7 +190,7 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 	}, {
 		id: 'page:History',
 		caption: 'Open page history',
-		fn: function() {
+		fn: function () {
 			$('[accesskey=h]')[0].click();
 		},
 		category: 'Current page',
@@ -187,7 +198,7 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 	}, {
 		id: 'page:Flag',
 		caption: 'Change page flags',
-		fn: function() {
+		fn: function () {
 			$('#ca-flags')[0].click();
 		},
 		weight: 110,
@@ -195,24 +206,14 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 	}, {
 		id: 'general:StartWikia',
 		caption: 'Start a new wikia',
-		fn: function() {
+		fn: function () {
 			$('[data-id=start-wikia]')[0].click();
 		},
 		category: 'Global'
 	}, {
-		id: 'page:Classify',
-		caption: 'Classify page',
-		fn: function() {
-			require(['TemplateClassificationModal'], function shortcutOpenTemplateClassification(tc) {
-				tc.open();
-			});
-		},
-		weight: 120,
-		category: 'Current page'
-	}, {
 		id: 'page:Discussions',
 		caption: 'Open discussions',
-		fn: function() {
+		fn: function () {
 			window.location.href = mw.config.get('location').origin + '/d';
 		},
 		weight: 600,
@@ -220,8 +221,8 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 	}, {
 		id: 'help:Keyboard',
 		caption: 'Keyboard shortcuts help',
-		fn: function() {
-			require(['GlobalShortcutsHelp'], function(help) {
+		fn: function () {
+			require(['GlobalShortcutsHelp'], function (help) {
 				help.open();
 			});
 		},
@@ -229,15 +230,15 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 	}, {
 		id: 'wikia:Search',
 		caption: 'Search for a page',
-		fn: function() {
+		fn: function () {
 			$('#searchInput')[0].focus();
 		},
 		category: 'Current wikia'
 	}, {
 		id: 'help:Actions',
 		caption: 'Action list',
-		fn: function() {
-			require(['GlobalShortcutsSearch'], function(GlobalShortcutsSearch) {
+		fn: function () {
+			require(['GlobalShortcutsSearch'], function (GlobalShortcutsSearch) {
 				var searchModal = new GlobalShortcutsSearch();
 				searchModal.open();
 			});
@@ -245,16 +246,15 @@ define('PageActions', ['mw', 'jquery'], function(mw, $) {
 		category: 'Help'
 	}]);
 
-
 	return {
 		all: all,
 		add: add,
 		find: find,
 		sortList: sortList
-	}
+	};
 });
 
-require(['jquery', 'GlobalShortcuts'], function($, gs) {
+require(['jquery', 'GlobalShortcuts'], function ($, gs) {
 	'use strict';
 	$(gs);
 });
