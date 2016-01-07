@@ -126,8 +126,7 @@ class InsightsHooks {
 
 		if ( $model instanceof InsightsQueryPageModel && $model->purgeCacheAfterUpdateTask() ) {
 			( new InsightsCache( $model->getConfig() ) )->purgeInsightsCache();
-			$class = get_class( $model );
-			$insightsContext = new InsightsContext( $model, $class::INSIGHT_TYPE, [] );
+			$insightsContext = new InsightsContext( $model );
 			$insightsContext->getContent();
 		}
 

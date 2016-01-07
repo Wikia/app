@@ -25,7 +25,7 @@ class InsightsController extends WikiaSpecialPageController {
 		if ( InsightsHelper::isInsightPage( $this->type ) ) {
 			$this->renderSubpage();
 		} elseif ( !empty( $this->type ) ) {
-			$this->response->redirect( InsightsHelper::getSubpageLocalUrl() );
+			$this->response->redirect( SpecialPage::getTitleFor( 'Insights' ) );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -78,7 +78,7 @@ class InsightsController extends WikiaSpecialPageController {
 	}
 
 	private function setTemplateValues( InsightsModel $model, $params ) {
-		$insightsContext = new InsightsContext( $model, $this->type, $params );
+		$insightsContext = new InsightsContext( $model, $params );
 
 		$sort = $this->request->getVal( 'sort', InsightsSorting::getDefaultSorting() );
 		$sortingTypes = InsightsSorting::$sorting;
