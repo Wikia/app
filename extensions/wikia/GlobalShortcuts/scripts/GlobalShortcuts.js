@@ -10,7 +10,6 @@ define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions'], function (Mousetra
 			// Actions
 			'page:Delete': ['d'],
 			'page:Edit': ['e'],
-			'page:Flag': ['f'],
 			'page:Move': ['m'],
 			'general:StartWikia': ['s'],
 			// Global navigation

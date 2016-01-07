@@ -196,14 +196,6 @@ define('PageActions', ['mw', 'jquery'], function (mw, $) {
 		category: 'Current page',
 		override: ['caption', 'fn']
 	}, {
-		id: 'page:Flag',
-		caption: 'Change page flags',
-		fn: function () {
-			$('#ca-flags')[0].click();
-		},
-		weight: 110,
-		category: 'Current page'
-	}, {
 		id: 'general:StartWikia',
 		caption: 'Start a new wikia',
 		fn: function () {
