@@ -39,9 +39,7 @@ class ArticleHTMLCleanup {
 				// skip empty text nodes (spaces and new lines), br nodes and empty paragraphs
 				$emptySiblings = [ ];
 				$next = $current->nextSibling;
-				while ( self::isEmptyTextNode( $next )
-						|| self::isBrNode( $next )
-						|| self::isEmptyParagraphNode( $next ) ) {
+				while ( self::containsVisibleElements( $next ) ) {
 					$emptySiblings[] = $next;
 					$next = $next->nextSibling;
 				}
@@ -80,9 +78,7 @@ class ArticleHTMLCleanup {
 			for ( $i = 0; $i < $node->childNodes->length; $i++ ) {
 				// all child nodes should be either empty text nodes, br nodes or empty paragraphs nodes
 				$child = $node->childNodes->item( $i );
-				$result &= self::isEmptyTextNode( $child )
-						   || self::isBrNode( $child )
-						   || self::isEmptyParagraphNode( $child );
+				$result &= self::containsVisibleElements( $child );
 			}
 
 			return $result;
@@ -98,6 +94,19 @@ class ArticleHTMLCleanup {
 	 */
 	private static function isBrNode( $node ) {
 		return $node && $node->nodeType == XML_ELEMENT_NODE && $node->nodeName === 'br';
+	}
+
+	/**
+	 * Check if node is empty or contains no visible elements
+	 *
+	 * @param $next
+	 *
+	 * @return bool
+	 */
+	private static function containsVisibleElements( $next ) {
+		return self::isEmptyTextNode( $next )
+			   || self::isBrNode( $next )
+			   || self::isEmptyParagraphNode( $next );
 	}
 
 }

@@ -36,7 +36,7 @@ class ArticleHTMLCleanupTest extends WikiaBaseTest {
 			  "<p>test</p>\n<h2>1</h2>\n<p>asdf</p>\n<h2>sd</h2>\n<h3>aksdjflk</h3>\n<p>asdkfjlkadjf</p>" ],
 			// you should be aware of that
 			[ "<ul><li> 1\n</li><li> 2\n</li><li> 3\n</li></ul>", "<ul>\n<li> 1\n</li>\n<li> 2\n</li>\n<li> 3\n</li>\n</ul>" ],
-			[ "<h1>1</h1><h2>2</h2><h3>3</h3><h4>4</h4>", "" ],
+			[ "<h1>1</h1><h2>2</h2><h3>3</h3><h4>4</h4><h2>5</h2>", "" ],
 			[ "<h2>1</h2>\n<p> </p>\n<h2>2</h2>\n<p><br/></p>\n<h2>3</h2>\n<p>asdfdf</p>", "<h2>3</h2>\n<p>asdfdf</p>" ],
 		];
 	}
