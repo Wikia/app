@@ -4,7 +4,7 @@
  * Insights - Pages without an infobox
  *
  * CAUTION
- * BELOW CLASSES HAVE DEPENDENCIES ON CLASSES FROM InsightsV2.setup.php - remember to load them as well
+ * BELOW CLASSES HAVE DEPENDENCIES ON CLASSES FROM Insights.setup.php - remember to load them as well
  *
  * This is subset config for Pages without an Infobox Insights subpage
  * @author Adam Karminski

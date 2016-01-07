@@ -4,7 +4,7 @@
  * Insights - Unconverted Infoboxes
  *
  * CAUTION
- * BELOW CLASSES HAVE DEPENDENCIES ON CLASSES FROM InsightsV2.setup.php - remember to load them as well
+ * BELOW CLASSES HAVE DEPENDENCIES ON CLASSES FROM Insights.setup.php - remember to load them as well
  *
  * This is subset config for Unconverted Infoboxes Insight subpage
  *
