@@ -94,14 +94,8 @@ $wgHooks['GetRailModuleList'][] = 'InsightsHooks::onGetRailModuleList';
 $wgHooks['wgQueryPages'][] = 'InsightsHooks::onwgQueryPages';
 $wgHooks['AfterUpdateSpecialPages'][] = 'InsightsHooks::onAfterUpdateSpecialPages';
 
-$wgExtensionFunctions[] = 'wfInsightsSetup';
-function wfInsightsSetup() {
-	global $wgRequest, $wgHooks;
+$wgExtensionFunctions[] = 'InsightsHooks::init';
 
-	if ( !empty( $wgRequest->getVal( 'insights', null ) ) ) {
-		$wgHooks['GetLocalURL'][] = 'InsightsHooks::onGetLocalURL';
-	}
-}
 
 /**
  * Message files

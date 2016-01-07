@@ -2,6 +2,14 @@
 
 class InsightsHooks {
 
+	public static function init() {
+		global $wgRequest;
+
+		if ( !empty( $wgRequest->getVal( 'insights', null ) ) ) {
+			Hooks::register( 'GetLocalURL', [ new self(), 'onGetLocalURL' ] );
+		}
+	}
+
 	/**
 	 * Check if article is in insights flow and init script to show banner with message and next steps
 	 */
