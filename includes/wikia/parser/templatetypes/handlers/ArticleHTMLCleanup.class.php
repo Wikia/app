@@ -1,6 +1,7 @@
 <?php
 
-class TemplateCleanup {
+class ArticleHTMLCleanup {
+	private static $headersList = [ 'h6', 'h5', 'h4', 'h3', 'h2', 'h1' ];
 
 	/**
 	 * This method will remove empty sections headers from article content
@@ -17,28 +18,24 @@ class TemplateCleanup {
 			$dom = HtmlHelper::createDOMDocumentFromText( $html );
 
 			$xpath = new DOMXPath( $dom );
-			$headers = [ 'h6', 'h5', 'h4', 'h3', 'h2', 'h1' ];
-			foreach ( $headers as $h ) {
+			foreach ( self::$headersList as $h ) {
 				$hs = $xpath->query( "//{$h}" );
 				for ( $i = 0; $i < $hs->length; $i++ ) {
 					$current = $hs->item( $i );
-					//skip empty text nodes (spaces and new lines)
+					// skip empty text nodes (spaces and new lines)
 					$emptySiblings = [ ];
 					$next = $current->nextSibling;
-					while ( $next && $next->nodeType == XML_TEXT_NODE && empty( trim( $next->nodeValue ) ) ) {
+					while ( self::isEmptyTextNode( $next ) ) {
 						$emptySiblings[] = $next;
 						$next = $next->nextSibling;
 					}
-					//remove if next node is header of same or higher level, or last node
-					if ( in_array( $next->nodeName, $headers ) && $current->nodeName[ 1 ] >= $next->nodeName[ 1 ]
+					// remove if next node is header of same or higher level, or a last node
+					if ( ( in_array( $next->nodeName, self::$headersList )
+						   && $current->nodeName[ 1 ] >= $next->nodeName[ 1 ] )
 						 || $next === null
 					) {
-						$current->parentNode->removeChild( $current );
-						//remove empty siblings as well
-						/** @var DOMNode $empty */
-						foreach ( $emptySiblings as $empty ) {
-							$empty->parentNode->removeChild( $empty );
-						}
+						// remove empty siblings as well
+						HtmlHelper::removeNodes( array_merge( [ $current ], $emptySiblings ) );
 					}
 				}
 			}
@@ -54,6 +51,10 @@ class TemplateCleanup {
 		global $wgEnableEmptySectionsCleanup, $wgArticleAsJson;
 
 		return $wgEnableEmptySectionsCleanup && $wgArticleAsJson;
+	}
+
+	private static function isEmptyTextNode( $next ) {
+		return $next && $next->nodeType == XML_TEXT_NODE && empty( trim( $next->nodeValue ) );
 	}
 
 }

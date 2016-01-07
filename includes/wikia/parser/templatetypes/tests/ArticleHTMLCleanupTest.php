@@ -1,7 +1,7 @@
 <?php
 use Wikia\Util\GlobalStateWrapper;
 
-class TemplateCleanupTest extends WikiaBaseTest {
+class ArticleHTMLCleanupTest extends WikiaBaseTest {
 
 	/** @var GlobalStateWrapper */
 	private $globals;
@@ -17,7 +17,7 @@ class TemplateCleanupTest extends WikiaBaseTest {
 	 */
 	public function testEmptyHeadersCleaner( $html, $expected ) {
 		$this->globals->wrap( function () use ( &$html ) {
-			TemplateCleanup::doCleanup( null, $html );
+			ArticleHTMLCleanup::doCleanup( null, $html );
 		} );
 
 		$this->assertEquals( $expected, $html );
@@ -34,6 +34,8 @@ class TemplateCleanupTest extends WikiaBaseTest {
 			  "<h2>test kjl</h2>\n<p>testing paragraph</p>" ],
 			[ "<p>test</p>\n<h2>1</h2>\n<p>asdf</p>\n<h2>sd</h2>\n<h3>asdkfjlks</h3>\n<h3>aksdjflk</h3>\n<p>asdkfjlkadjf</p>",
 			  "<p>test</p>\n<h2>1</h2>\n<p>asdf</p>\n<h2>sd</h2>\n<h3>aksdjflk</h3>\n<p>asdkfjlkadjf</p>" ],
+			// you should be aware of that
+			[ "<ul><li> 1\n</li><li> 2\n</li><li> 3\n</li></ul>", "<ul>\n<li> 1\n</li>\n<li> 2\n</li>\n<li> 3\n</li>\n</ul>" ]
 		];
 	}
 }

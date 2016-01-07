@@ -18,7 +18,7 @@ $wgAutoloadClasses[ 'QuoteTemplate' ] = __DIR__ . '/handlers/QuoteTemplate.class
 $wgAutoloadClasses[ 'ReferencesTemplate' ] = __DIR__ . '/handlers/ReferencesTemplate.class.php';
 $wgAutoloadClasses[ 'ScrollboxTemplate' ] = __DIR__ . '/handlers/ScrollboxTemplate.class.php';
 $wgAutoloadClasses[ 'NavigationTemplate' ] = __DIR__ . '/handlers/NavigationTemplate.class.php';
-$wgAutoloadClasses[ 'TemplateCleanup' ] = __DIR__ . '/handlers/TemplateCleanup.class.php';
+$wgAutoloadClasses[ 'ArticleHTMLCleanup' ] = __DIR__ . '/handlers/ArticleHTMLCleanup.class.php';
 
 // other handlers
 $wgAutoloadClasses[ 'DataTables' ] = __DIR__ . '/handlers/DataTables.class.php';
@@ -32,4 +32,4 @@ $wgHooks[ 'Parser::FetchTemplateAndTitle' ][] = 'DataTables::markTranscludedTabl
 $wgHooks[ 'Parser::getTemplateDom' ][] = 'TemplateTypesParser::onGetTemplateDom';
 $wgHooks[ 'Parser::endBraceSubstitution' ][] = 'TemplateTypesParser::onEndBraceSubstitution';
 $wgHooks[ 'ParserAfterTidy' ][] = 'DataTables::markDataTables';
-$wgHooks[ 'ParserAfterTidy' ][] = 'TemplateCleanup::doCleanup';
+$wgHooks[ 'ParserAfterTidy' ][] = 'ArticleHTMLCleanup::doCleanup';
