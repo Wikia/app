@@ -48,9 +48,9 @@ class ArticleHTMLCleanup {
 	}
 
 	private static function shouldBeProcessed() {
-		global $wgEnableEmptySectionsCleanup, $wgArticleAsJson;
+		global $wgEnableMercuryHtmlCleanup, $wgArticleAsJson;
 
-		return $wgEnableEmptySectionsCleanup && $wgArticleAsJson;
+		return $wgEnableMercuryHtmlCleanup && $wgArticleAsJson;
 	}
 
 	private static function isEmptyTextNode( $next ) {
