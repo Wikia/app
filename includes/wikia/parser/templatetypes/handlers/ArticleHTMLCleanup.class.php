@@ -36,10 +36,12 @@ class ArticleHTMLCleanup {
 			$hs = $xpath->query( "//{$h}" );
 			for ( $i = 0; $i < $hs->length; $i++ ) {
 				$current = $hs->item( $i );
-				// skip empty text nodes (spaces and new lines)
+				// skip empty text nodes (spaces and new lines), br nodes and empty paragraphs
 				$emptySiblings = [ ];
 				$next = $current->nextSibling;
-				while ( self::isEmptyTextNode( $next ) ) {
+				while ( self::isEmptyTextNode( $next )
+						|| self::isBrNode( $next )
+						|| self::isEmptyParagraphNode( $next ) ) {
 					$emptySiblings[] = $next;
 					$next = $next->nextSibling;
 				}
@@ -57,8 +59,45 @@ class ArticleHTMLCleanup {
 		return HtmlHelper::getBodyHtml( $dom );
 	}
 
-	private static function isEmptyTextNode( $next ) {
-		return $next && $next->nodeType == XML_TEXT_NODE && empty( trim( $next->nodeValue ) );
+	/**
+	 * @param DOMNode|null $node
+	 *
+	 * @return bool
+	 */
+	private static function isEmptyTextNode( $node ) {
+		return $node && $node->nodeType == XML_TEXT_NODE && empty( trim( $node->nodeValue ) );
+	}
+
+	/**
+	 * @param DOMNode|null $node
+	 *
+	 * @return bool
+	 */
+	private static function isEmptyParagraphNode( $node ) {
+		if ( $node && $node->nodeType == XML_ELEMENT_NODE && $node->nodeName === 'p' ) {
+			$result = true;
+			/** @var DOMNode $child */
+			for ( $i = 0; $i < $node->childNodes->length; $i++ ) {
+				// all child nodes should be either empty text nodes, br nodes or empty paragraphs nodes
+				$child = $node->childNodes->item( $i );
+				$result &= self::isEmptyTextNode( $child )
+						   || self::isBrNode( $child )
+						   || self::isEmptyParagraphNode( $child );
+			}
+
+			return $result;
+		}
+
+		return false;
+	}
+
+	/**
+	 * @param DOMNode|null $node
+	 *
+	 * @return bool
+	 */
+	private static function isBrNode( $node ) {
+		return $node && $node->nodeType == XML_ELEMENT_NODE && $node->nodeName === 'br';
 	}
 
 }
