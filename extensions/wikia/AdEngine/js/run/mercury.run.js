@@ -37,10 +37,10 @@ require([
 
 	mercuryListener.onLoad(function () {
 		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesMobile)) {
-			oxBidder.call();
+			oxBidder.call('mercury');
 		}
 		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountriesMobile)) {
-			rubiconFastlane.call();
+			rubiconFastlane.call('mercury');
 		}
 	});
 });
