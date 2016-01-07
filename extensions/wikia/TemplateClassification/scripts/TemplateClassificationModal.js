@@ -305,8 +305,8 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 
 	function getTemplateClassificationEditForm() {
 		return nirvana.sendRequest({
-			controller: 'GlobalShortcuts',
-			method: 'getHelp',
+			controller: 'TemplateClassification',
+			method: 'getTemplateClassificationEditForm',
 			type: 'get',
 			format: 'html'
 		});
