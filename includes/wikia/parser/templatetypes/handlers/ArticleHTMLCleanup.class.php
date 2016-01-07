@@ -39,7 +39,7 @@ class ArticleHTMLCleanup {
 				// skip empty text nodes (spaces and new lines), br nodes and empty paragraphs
 				$emptySiblings = [ ];
 				$next = $current->nextSibling;
-				while ( self::containsVisibleElements( $next ) ) {
+				while ( self::containsInvisibleElementsOnly( $next ) ) {
 					$emptySiblings[] = $next;
 					$next = $next->nextSibling;
 				}
@@ -78,7 +78,7 @@ class ArticleHTMLCleanup {
 			for ( $i = 0; $i < $node->childNodes->length; $i++ ) {
 				// all child nodes should be either empty text nodes, br nodes or empty paragraphs nodes
 				$child = $node->childNodes->item( $i );
-				$result &= self::containsVisibleElements( $child );
+				$result &= self::containsInvisibleElementsOnly( $child );
 			}
 
 			return $result;
@@ -103,7 +103,7 @@ class ArticleHTMLCleanup {
 	 *
 	 * @return bool
 	 */
-	private static function containsVisibleElements( $next ) {
+	private static function containsInvisibleElementsOnly( $next ) {
 		return self::isEmptyTextNode( $next )
 			   || self::isBrNode( $next )
 			   || self::isEmptyParagraphNode( $next );
