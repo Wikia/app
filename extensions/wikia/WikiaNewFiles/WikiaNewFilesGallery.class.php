@@ -7,8 +7,9 @@ class WikiaNewFilesGallery extends WikiaPhotoGallery {
 		parent::__construct();
 
 		$this->parseParams( array(
-			"rowdivider" => true,
-			"hideoverflow" => true
+			'rowdivider' => true,
+			'hideoverflow' => true,
+			'position' => 'center',
 		) );
 
 		if ( $skin->getSkinName() === 'oasis' ) {

@@ -25,6 +25,8 @@ class WikiaNewFilesModel extends WikiaModel {
 			->COUNT( '*' )->AS_( 'count' )
 			->FROM( 'image' );
 
+		$this->filterImages( $sql );
+
 		$count = $sql->run( $this->dbr, function ( ResultWrapper $result ) {
 			return $result->current()->count;
 		} );
@@ -47,10 +49,22 @@ class WikiaNewFilesModel extends WikiaModel {
 			->LIMIT( $limit )
 			->OFFSET( ( $pageNumber - 1 ) * $limit );
 
+		$this->filterImages( $sql );
+
 		return $sql->runLoop( $this->dbr, function ( &$data, $row ) {
 			$this->addLinkingArticles( $row );
 			$data[] = $row;
 		} );
+	}
+
+	/**
+	 * Filter videos and other non-wanted media out
+	 *
+	 * @param WikiaSQL $sql
+	 */
+	private function filterImages( WikiaSQL $sql ) {
+		$sql->WHERE( 'img_media_type' )->NOT_IN( [ 'VIDEO', 'swf' ] )
+			->AND_( 'img_major_mime' )->NOT_EQUAL_TO( 'video' );
 	}
 
 	private function addLinkingArticles( $image ) {
