@@ -65,7 +65,7 @@ class InsightsHelper {
 	 */
 	public static function getInsightsPages() {
 		global $wgEnableInsightsInfoboxes, $wgEnableFlagsExt, $wgEnableTemplateClassificationExt,
-			   $wgEnableInsightsPagesWithoutInfobox, $wgEnableInsightsTemplatesWithoutType;
+			   $wgEnableInsightsPagesWithoutInfobox, $wgEnableInsightsPopularPages, $wgEnableInsightsTemplatesWithoutType;
 
 		/* Order of inserting determines default order on insights entry points list */
 		$dynamicInsights = [];
@@ -88,6 +88,11 @@ class InsightsHelper {
 		/* Add Flags insight */
 		if ( !empty( $wgEnableFlagsExt ) ) {
 			$dynamicInsights[InsightsFlagsModel::INSIGHT_TYPE] = 'InsightsFlagsModel';
+		}
+
+		/* Add PopularPages insight */
+		if ( !empty( $wgEnableInsightsPopularPages ) ) {
+			$dynamicInsights[InsightsPopularPagesModel::INSIGHT_TYPE] = 'InsightsPopularPagesModel';
 		}
 
 
