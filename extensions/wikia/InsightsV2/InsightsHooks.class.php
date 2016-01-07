@@ -20,7 +20,7 @@ class InsightsHooks {
 	/**
 	 * Add insight param to keep information about flow after edit
 	 */
-	public static function AfterActionBeforeRedirect( Article $article, &$sectionanchor, &$extraQuery ) {
+	public static function onAfterActionBeforeRedirect( Article $article, &$sectionanchor, &$extraQuery ) {
 		global $wgRequest;
 
 		$subpage = $wgRequest->getVal( 'insights', null );
