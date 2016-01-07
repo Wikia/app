@@ -49,9 +49,6 @@ $messages = array(
 'mytalk'     => 'Haaku tutala',
 'navigation' => 'Navikati',
 
-# Cologne Blue skin
-'qbedit'         => 'Fakahakohako',
-'qbspecialpages' => 'Tau Lau Mahuiga',
 
 'help'             => 'Lagomatai',
 'search'           => 'Kumi',
