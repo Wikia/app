@@ -41,8 +41,8 @@ class InsightsController extends WikiaSpecialPageController {
 		$model = $helper->getInsightModel( $this->type, $this->subtype );
 		$params = $this->filterParams( $this->request->getParams() );
 
-		$this->setTemplateValues( $model, $params );
 		$this->overrideTemplate( $model->getTemplate() );
+		$this->setTemplateValues( $model, $params );
 	}
 
 	public function insightsList() {
@@ -85,18 +85,25 @@ class InsightsController extends WikiaSpecialPageController {
 
 		$metadata = isset( $sortingTypes[ $sort ]['metadata'] )	? $sortingTypes[ $sort ]['metadata'] : $sort;
 
-		$this->response->setData( [
-			'content' => $insightsContext->getContent(),
-			'pagination' => $insightsContext->getPagination(),
-			'subtypes' => $model->getConfig()->getSubtypes(),
-			'showPageViews' => $model->getConfig()->showPageViews(),
-			'hasActions' => $model->getConfig()->hasAction(),
-			'type' => $this->type,
-			'subtype' => $this->subtype,
-			'themeClass' => $this->themeClass,
-			'sort' => $sort,
-			'metadata' => $metadata
-		] );
+		try {
+			$this->response->setData( [
+				'content' => $insightsContext->getContent(),
+				'pagination' => $insightsContext->getPagination(),
+				'subtypes' => $model->getConfig()->getSubtypes(),
+				'showPageViews' => $model->getConfig()->showPageViews(),
+				'hasActions' => $model->getConfig()->hasAction(),
+				'type' => $this->type,
+				'subtype' => $this->subtype,
+				'themeClass' => $this->themeClass,
+				'sort' => $sort,
+				'metadata' => $metadata
+			] );
+		} catch ( WikiaHttpException $e ) {
+			$this->setVal( 'errorDetails', $e->getDetails() );
+			$this->overrideTemplate( 'error' );
+		}
+
+
 	}
 
 	private function addAssets() {

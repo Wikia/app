@@ -62,7 +62,9 @@ class InsightsFlagsModel extends InsightsModel {
 		$flaggedPages = $app->sendRequest(
 			'FlaggedPagesApiController',
 			'getFlaggedPages',
-			[ 'flag_type_id' => $subtype ]
+			[ 'flag_type_id' => $subtype ],
+			true,
+			WikiaRequest::EXCEPTION_MODE_THROW
 		)->getData()['data'];
 
 		foreach ( $flaggedPages as $pageId ) {
