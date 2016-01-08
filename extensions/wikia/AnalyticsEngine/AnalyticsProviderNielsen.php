@@ -57,8 +57,8 @@ EOT;
 	}
 
 	private function isEnabled() {
-		global $wgEnableNielsen, $wgNoExternals;
+		global $wgEnableNielsen;
 
-		return $wgEnableNielsen && !$wgNoExternals;
+		return $wgEnableNielsen;
 	}
 }
