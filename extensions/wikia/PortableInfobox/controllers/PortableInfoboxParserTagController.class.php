@@ -67,7 +67,8 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @throws InvalidInfoboxParamsException when unsupported attributes exist in params array
 	 */
 	public function render( $markup, Parser $parser, PPFrame $frame, $params = null ) {
-		$infoboxNode = Nodes\NodeFactory::newFromXML( $markup, $frame->getArguments() );
+		$frameArguments = $frame->getArguments();
+		$infoboxNode = Nodes\NodeFactory::newFromXML( $markup, $frameArguments ? $frameArguments : [ ] );
 		$infoboxNode->setExternalParser( new Wikia\PortableInfobox\Parser\MediaWikiParserService( $parser, $frame ) );
 
 		//get params if not overridden
