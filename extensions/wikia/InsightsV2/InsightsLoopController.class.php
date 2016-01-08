@@ -184,7 +184,7 @@ class InsightsLoopController extends WikiaController {
 	private function getInsightLinkParams() {
 		return [
 			'insightsPageText' => wfMessage( 'insights-notification-see-more' )->plain(),
-			'insightsPageLink' => SpecialPage::getTitleFor( 'Insights' )
+			'insightsPageLink' => SpecialPage::getTitleFor( 'Insights' )->getFullURL()
 		];
 	}
 
