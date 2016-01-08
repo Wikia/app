@@ -6,8 +6,6 @@ use Swagger\Client\ApiException;
 
 class View {
 
-	const COMMAND_KEY = '⌘';
-	const CONTROL_KEY = 'Ctrl';
 	const HAS_SEEN_HINT = 'SeenHintTemplateClassificationModalEntryPoint';
 
 	/**
@@ -104,13 +102,9 @@ class View {
 
 			}
 		}
-		$key = self::CONTROL_KEY;
-		if ( strpos( $_SERVER['HTTP_USER_AGENT'], 'Mac' ) !== false ) {
-			$key = self::COMMAND_KEY;
-		}
 		return [
 			'mode' => 'key',
-			'msg' => wfMessage( 'template-classification-open-modal-key-tip', $key )->plain(),
+			'msg' => wfMessage( 'template-classification-open-modal-key-tip' )->plain(),
 			'trigger' => 'hover',
 			'hasSeen' => $hasSeen
 		];
