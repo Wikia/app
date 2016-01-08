@@ -6,38 +6,16 @@
 class InsightsTemplatesWithoutTypeModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'templateswithouttype';
 
-	public $loopNotificationConfig = [
-		'displayFixItMessage' => false,
+	private static $insightConfig = [
+		InsightsConfig::WHATLINKSHERE => true,
 	];
+
+	public function __construct() {
+		$this->config = new InsightsConfig( self::INSIGHT_TYPE, self::$insightConfig );
+	}
 
 	public function getDataProvider() {
 		return new TemplatesWithoutTypePage();
-	}
-
-	public function getInsightType() {
-		return self::INSIGHT_TYPE;
-	}
-
-	/**
-	 * Should a number of referring pages be displayed next to each list item?
-	 *
-	 * @return bool
-	 */
-	public function isWlhLinkRequired() {
-		return true;
-	}
-
-	/**
-	 * A key of a message that wraps the number of pages referring to each item of the list.
-	 *
-	 * @return string
-	 */
-	public function wlhLinkMessage() {
-		return 'insights-used-on';
-	}
-
-	public function arePageViewsRequired() {
-		return false;
 	}
 
 	/**
@@ -48,10 +26,6 @@ class InsightsTemplatesWithoutTypeModel extends InsightsQueryPageModel {
 		return [];
 	}
 
-	public function hasAltAction() {
-		return false;
-	}
-
 	/**
 	 * Checks if a given article has been fixed by a user
 	 * inside a productivity loop.
@@ -59,7 +33,7 @@ class InsightsTemplatesWithoutTypeModel extends InsightsQueryPageModel {
 	 * @return bool
 	 */
 	public function isItemFixed( Title $title ) {
-		// @TODO add logic once loop is added for tis insight
+		// @TODO add logic once loop is added for this insight
 		return false;
 	}
 }

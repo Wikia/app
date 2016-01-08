@@ -1,50 +1,44 @@
 <div class="insights-container-nav <?= $themeClass ?>">
-	<ul class="insights-nav-list">
-		<? foreach( $insightsList as $key => $insight ) : ?>
-			<?php $subpage == $key ? $class = 'active' : $class = '' ?>
-			<li class="insights-nav-item insights-icon-<?= $key ?> <?= $class ?>">
-				<a href="<?= InsightsHelper::getSubpageLocalUrl( $key ) ?>" class="insights-nav-link">
-					<?php if ( $insight['count'] ): ?>
-						<div class="insights-red-dot<?php if ( $insight['highlighted'] ):?> highlighted<?php endif ?>"><div class="insights-red-dot-count"><?= $insight['count'] ?></div></div>
-					<?php endif ?>
-
-					<?= wfMessage(  $insight['subtitle'] )->escaped() ?>
-				</a>
-			</li>
-		<? endforeach; ?>
-	</ul>
+	<?= $app->renderView( 'Insights', 'insightsList', [ 'type' => $type ] ) ?>
 </div>
 <div class="insights-container-main <?= $themeClass ?>">
 	<div class="insights-container-main-inner">
-		<div class="insights-header insights-icon-<?= Sanitizer::encodeAttribute( $subpage ) ?> clearfix">
-			<h2 class="insights-header-subtitle"><?= wfMessage( InsightsHelper::INSIGHT_SUBTITLE_MSG_PREFIX . $subpage )->escaped() ?></h2>
-			<p class="insights-header-description"><?= wfMessage( InsightsHelper::INSIGHT_DESCRIPTION_MSG_PREFIX . $subpage )->parse() ?></p>
+		<div class="insights-header insights-icon-<?= Sanitizer::encodeAttribute( $type ) ?> clearfix">
+			<h2 class="insights-header-subtitle"><?= wfMessage( InsightsHelper::INSIGHT_SUBTITLE_MSG_PREFIX . $type )->escaped() ?></h2>
+			<p class="insights-header-description"><?= wfMessage( InsightsHelper::INSIGHT_DESCRIPTION_MSG_PREFIX . $type )->parse() ?></p>
 		</div>
-		<?php if ( !empty( $dropdown ) ): ?>
+		<?php if ( !empty( $showPageViews ) || !empty( $subtypes ) ): ?>
 			<form class="insights-sorting-form" method="GET">
-				<div class="insights-header-sorting">
-					<label for="sort"><?= wfMessage( 'insights-sort-label' )->escaped() ?></label>
-					<select class="insights-sorting" name="sort">
-						<?php foreach( $dropdown as $sortType => $sortLabel ): ?>
-							<option value="<?= Sanitizer::encodeAttribute( $sortType ) ?>" <?php if ( $sortType == $current ): ?>selected<?php endif ?>><?= htmlspecialchars( $sortLabel ) ?></option>
-						<?php endforeach ?>
-					</select>
-				</div>
-				<?php if ( !empty( $flagTypes ) ): // Flags filter dropdown ?>
-					<?= $app->renderView( 'Insights', 'flagsFiltering', [ 'selectedFlagTypeId' => $selectedFlagTypeId, 'flagTypes' => $flagTypes ] ); ?>
+				<?php if ( !empty( $showPageViews ) ): ?>
+					<?= $app->renderView( 'Insights', 'pageViews', [ 'sort' => $sort ] ) ?>
+				<?php endif ?>
+				<?php if ( !empty( $subtypes ) ): ?>
+					<div class="insights-header-sorting">
+
+							<label for="sort"><?= wfMessage( 'insights-flags-filter-label' )->escaped(); ?></label>
+							<select class="insights-sorting" name="subtype" onchange="this.form.submit()">
+								<?php
+								foreach ( $subtypes as $id => $type ): ?>
+									<option value="<?= Sanitizer::encodeAttribute( $id ); ?>" <?= $id == $subtype ? 'selected="selected"' : ''; ?>><?= htmlspecialchars( $type ) ?></option>
+									<?php
+								endforeach;
+								?>
+							</select>
+
+					</div>
 				<?php endif ?>
 			</form>
 		<?php endif ?>
 
 		<div class="insights-content">
 			<?php if ( !empty( $content ) ) : ?>
-				<table class="insights-list" data-type="<?= Sanitizer::encodeAttribute( $subpage ) ?>">
+				<table class="insights-list" data-type="<?= Sanitizer::encodeAttribute( $type ) ?>">
 					<tr>
 						<th class="insights-list-header insights-list-first-column"><?= wfMessage( 'insights-list-header-page' )->escaped() ?></th>
-						<?php if ( $data['display']['altaction'] ) : ?>
+						<?php if ( $hasActions ) : ?>
 							<th class="insights-list-header insights-list-header-altaction"><?= wfMessage( "insights-list-header-altaction" )->escaped() ?></th>
 						<?php endif; ?>
-						<?php if ( $data['display']['pageviews'] ) : ?>
+						<?php if ( $showPageViews ) : ?>
 							<th class="insights-list-header insights-list-header-pageviews"><?= wfMessage( 'insights-list-header-pageviews' )->escaped() ?></th>
 						<?php endif; ?>
 					</tr>
@@ -54,7 +48,7 @@
 								<a class="insights-list-item-title <?= Sanitizer::encodeAttribute( $item['link']['classes'] ) ?>" title="<?= Sanitizer::encodeAttribute( $item['link']['title'] ) ?>" href="<?= Sanitizer::cleanUrl( $item['link']['url'] ) ?>"><?= Sanitizer::escapeHtmlAllowEntities( $item['link']['text'] ) ?></a>
 								<?php if ( isset( $item['metadata'] ) ) : ?>
 									<p class="insights-list-item-metadata">
-										<?php if ( isset( $item['metadata']['lastRevision'] ) ) : ?>
+										<?php if ( !empty( $item['metadata']['lastRevision'] ) ) : ?>
 											<?php $revision = $item['metadata']['lastRevision'] ?>
 											<?= wfMessage( 'insights-last-edit' )->rawParams(
 												Html::element( 'a',
@@ -68,7 +62,7 @@
 										<?php endif; ?>
 									</p>
 									<p class="insights-list-item-metadata">
-										<?php if ( isset( $item['metadata']['wantedBy'] ) ) : ?>
+										<?php if ( !empty( $item['metadata']['wantedBy'] ) ) : ?>
 											<?php $wantedBy = $item['metadata']['wantedBy']; ?>
 											<?=
 												Html::element( 'a',
@@ -82,14 +76,14 @@
 									</p>
 								<?php endif; ?>
 							</td>
-							<?php if ( !empty( $item['altaction'] ) ) : ?>
+							<?php if ( $hasActions ) : ?>
 							<td class="insights-list-cell insights-list-cell-altaction">
 								<a class="wikia-button <?= $item['altaction']['class'] ?>" href="<?= $item['altaction']['url'] ?>" target="_blank">
 									<?= $item['altaction']['text'] ?>
 								</a>
 							</td>
 							<?php endif; ?>
-							<?php if ( $data['display']['pageviews'] ) : ?>
+							<?php if ( $showPageViews ) : ?>
 								<td class="insights-list-item-pageviews insights-list-cell">
 									<?= $wg->Lang->formatNum( $item['metadata'][$metadata] ); ?>
 								</td>
@@ -97,8 +91,8 @@
 						</tr>
 					<?php endforeach; ?>
 				</table>
-				<?php if ( $paginatorBar ) : ?>
-					<?= $paginatorBar ?>
+				<?php if ( $pagination ) : ?>
+					<?= $pagination ?>
 				<?php endif ?>
 			<?php elseif (!empty( $flagTypes ) ) : ?>
 				<p>

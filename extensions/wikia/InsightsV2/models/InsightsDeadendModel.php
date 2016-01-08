@@ -8,14 +8,18 @@
 class InsightsDeadendModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'deadendpages';
 
+	private static $insightConfig = [
+		InsightsConfig::DISPLAYFIXITMSG => true,
+		InsightsConfig::PAGEVIEWS => true
+	];
+
+	public function __construct() {
+		$this->config = new InsightsConfig( self::INSIGHT_TYPE, self::$insightConfig );
+	}
+
 	public function getDataProvider() {
 		return new DeadendPagesPage();
 	}
-
-	public function getInsightType() {
-		return self::INSIGHT_TYPE;
-	}
-
 
 	/**
 	 * Checks if a given article has been fixed by a user

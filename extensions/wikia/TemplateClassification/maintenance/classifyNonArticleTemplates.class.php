@@ -5,7 +5,6 @@ require_once( $mainDir . '/maintenance/Maintenance.php' );
 
 class ClassifyNonArticleTemplates extends Maintenance {
 
-	const TEMPLATE_TYPE_DIRECTLY_USED = 'directlyused';
 	const NONARTICLE_MAINTENANCE_PROVIDER = 'usage_classifier';
 
 	private $dryRun, $quiet, $logFile, $wikiaLogger;
@@ -83,7 +82,7 @@ class ClassifyNonArticleTemplates extends Maintenance {
 
 			if ( $isFirstLevel ) {
 				$this->out( "{$templateTitle} - First level inclusion found in {$pageId}!" );
-				$type = self::TEMPLATE_TYPE_DIRECTLY_USED;
+				$type = TemplateClassificationService::TEMPLATE_DIRECTLY_USED;
 			} else {
 				$this->out( "{$templateTitle} is just a nested template! Classify it as nonarticle!" );
 				$type = TemplateClassificationService::TEMPLATE_NOT_ART;
@@ -95,8 +94,8 @@ class ClassifyNonArticleTemplates extends Maintenance {
 						$wgCityId,
 						$templateId,
 						$type,
-						self::NONARTICLE_MAINTENANCE_PROVIDER,
-						$origin
+						$origin,
+						self::NONARTICLE_MAINTENANCE_PROVIDER
 					);
 				} catch ( \Swagger\Client\ApiException $e ) {
 					$this->out( 'Classification failed!' );

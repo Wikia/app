@@ -115,6 +115,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve.js',
+		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 		'//extensions/wikia/AdEngine/js/provider/liftium.js',
 		'//extensions/wikia/AdEngine/js/provider/monetizationService.js',
 		'//extensions/wikia/AdEngine/js/provider/sevenOneMedia.js',
@@ -176,10 +177,11 @@ $config['adengine2_tracking_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis', 'wikiamobile' ],
 	'assets' => array(
-		'//extensions/wikia/AdEngine/js/AdTracker.js',
 		'//extensions/wikia/AdEngine/js/AdContext.js',
+		'//extensions/wikia/AdEngine/js/AdTracker.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
+		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js'
 	),
 );
 
@@ -736,6 +738,14 @@ $config['wikiamobile_tables_js'] = array(
 	)
 );
 
+$config['wikiamobile_widget_iframe_unwrapper'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => [
+		'//extensions/wikia/WikiaMobile/js/widget_iframe_unwrapper.js'
+	]
+];
+
 $config['mobile_base_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
@@ -750,17 +760,21 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
+		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
+		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/config/mobile.js',
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
+		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubiconFastlane.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
+		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adDetect.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adElement.js',
@@ -2454,10 +2468,7 @@ $config['portable_infobox_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/PortableInfobox/styles/PortableInfobox.scss',
-		/* @TODO DAT-3079 Remove PortableInfobox_beforeSimplification.scss
-		 * once all articles will be purged after release; @see DAT-3009 purging ticket */
-		'//extensions/wikia/PortableInfobox/styles/PortableInfobox_beforeSimplification.scss'
+		'//extensions/wikia/PortableInfobox/styles/PortableInfobox.scss'
 	]
 ];
 
@@ -2466,10 +2477,7 @@ $config['portable_infobox_monobook_scss'] = [
 	'skin' => ['monobook'],
 	'assets' => [
 		'#group_portable_infobox_scss',
-		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook.scss',
-		/* @TODO DAT-3079 Remove PortableInfoboxMonobook_beforeSimplification.scss
-		 * once all articles will be purged after release; @see DAT-3009 purging ticket */
-		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook_beforeSimplification.scss'
+		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook.scss'
 	]
 ];
 
@@ -2533,7 +2541,6 @@ $config['sitemap_page_css'] = array(
 $config['template_draft'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/TemplateDraft/scripts/rightRailModule.js',
 		'//extensions/wikia/TemplateDraft/scripts/templateDraft.run.js',
 		'//extensions/wikia/TemplateDraft/scripts/templateDraftTracking.js'
 	]
@@ -2714,5 +2721,13 @@ $config['templates_hq_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/TemplateClassification/styles/SpecialTemplates.scss',
+	]
+];
+
+$config['polldaddy_tag_wikiamobile'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => [
+		'//extensions/wikia/PolldaddyTag/scripts/wikiamobile.js'
 	]
 ];

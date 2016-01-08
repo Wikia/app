@@ -8,20 +8,16 @@
 class InsightsPagesWithoutInfoboxModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'pageswithoutinfobox';
 
-	public $loopNotificationConfig = [
-		'displayFixItMessage' => false,
+	private static $insightConfig = [
+		InsightsConfig::PAGEVIEWS => true
 	];
+
+	public function __construct() {
+		$this->config = new InsightsConfig( self::INSIGHT_TYPE, self::$insightConfig );
+	}
 
 	public function getDataProvider() {
 		return new PagesWithoutInfobox();
-	}
-
-	public function getInsightType() {
-		return self::INSIGHT_TYPE;
-	}
-
-	public function arePageViewsRequired() {
-		return true;
 	}
 
 	/**
@@ -30,10 +26,6 @@ class InsightsPagesWithoutInfoboxModel extends InsightsQueryPageModel {
 	 */
 	public function getUrlParams() {
 		return [];
-	}
-
-	public function hasAltAction() {
-		return false;
 	}
 
 	public function isItemFixed( Title $title ) {

@@ -16,7 +16,7 @@ class OoyalaVideoHandler extends VideoHandler {
 		$playerId = 'ooyalaplayer-'.$this->videoId.'-'.intval($isAjax);
 
 		$ooyalaPlayerId = F::app()->wg->OoyalaApiConfig['playerId'];
-		$jsFile = 'http://player.ooyala.com/v3/'.$ooyalaPlayerId.'?platform=html5-priority';
+		$jsFile = 'http://player.ooyala.com/v3/'.$ooyalaPlayerId;
 
 		$autoPlayStr = ( $autoplay ) ? 'true' : 'false';
 

@@ -2,18 +2,24 @@
 
 class InsightsHooks {
 
+	public static function init() {
+		global $wgRequest;
+
+		if ( !empty( $wgRequest->getVal( 'insights', null ) ) ) {
+			Hooks::register( 'GetLocalURL', [ new self(), 'onGetLocalURL' ] );
+		}
+	}
+
 	/**
 	 * Check if article is in insights flow and init script to show banner with message and next steps
 	 */
-	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-		global $wgRequest;
-
-		$subpage = $wgRequest->getVal( 'insights', null );
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+		$subpage = $out->getRequest()->getVal( 'insights', null );
 
 		// Load scripts for pages in insights loop
 		if ( InsightsHelper::isInsightPage( $subpage ) ) {
-			$out->addScriptFile('/extensions/wikia/Insights/scripts/LoopNotification.js');
-			$out->addScriptFile('/extensions/wikia/Insights/scripts/InsightsLoopNotificationTracking.js');
+			$out->addScriptFile('/extensions/wikia/InsightsV2/scripts/LoopNotification.js');
+			$out->addScriptFile('/extensions/wikia/InsightsV2/scripts/InsightsLoopNotificationTracking.js');
 		}
 
 		return true;
@@ -22,7 +28,7 @@ class InsightsHooks {
 	/**
 	 * Add insight param to keep information about flow after edit
 	 */
-	public static function AfterActionBeforeRedirect( Article $article, &$sectionanchor, &$extraQuery ) {
+	public static function onAfterActionBeforeRedirect( Article $article, &$sectionanchor, &$extraQuery ) {
 		global $wgRequest;
 
 		$subpage = $wgRequest->getVal( 'insights', null );
@@ -122,12 +128,12 @@ class InsightsHooks {
 	public static function onAfterUpdateSpecialPages( $queryPage ) {
 		$queryPageName = strtolower( $queryPage->getName() );
 
-		$model = InsightsHelper::getInsightModel( $queryPageName );
+		$model = InsightsHelper::getInsightModel( $queryPageName, null );
 
 		if ( $model instanceof InsightsQueryPageModel && $model->purgeCacheAfterUpdateTask() ) {
-			$model->purgeInsightsCache();
-			$model->initModel( [] );
-			$model->getContent( [] );
+			( new InsightsCache( $model->getConfig() ) )->purgeInsightsCache();
+			$insightsContext = new InsightsContext( $model );
+			$insightsContext->getContent();
 		}
 
 		return true;

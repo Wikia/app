@@ -8,43 +8,18 @@
 class InsightsWantedpagesModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'wantedpages';
 
+	private static $insightConfig = [
+		InsightsConfig::DISPLAYFIXITMSG => true,
+		InsightsConfig::WHATLINKSHERE => true,
+		InsightsConfig::WHATLINKSHEREMSG => 'insights-wanted-by'
+	];
+
+	public function __construct() {
+		$this->config = new InsightsConfig( self::INSIGHT_TYPE, self::$insightConfig );
+	}
+
 	public function getDataProvider() {
 		return new WantedPagesPage();
-	}
-
-	public function arePageViewsRequired() {
-		return false;
-	}
-
-	public function prepareData( $res ) {
-		$data = [];
-		$dbr = wfGetDB( DB_SLAVE );
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			if ( $row->title ) {
-				$article = [];
-				$params = $this->getUrlParams();
-
-				$title = Title::newFromText( $row->title, $row->namespace );
-				if ( $title === null ) {
-					$this->error( 'WantedPagesModel received reference to non existent page' );
-					continue;
-				}
-
-				$article['link'] = InsightsHelper::getTitleLink( $title, $params );
-				$article['metadata']['wantedBy'] = [
-					'message' => $this->wlhLinkMessage(),
-					'value' => (int)$row->value,
-					'url' => $this->getWlhUrl( $title ),
-				];
-
-				$data[] = $article;
-			}
-		}
-		return $data;
-	}
-
-	public function getInsightType() {
-		return self::INSIGHT_TYPE;
 	}
 
 	/**

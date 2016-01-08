@@ -3,54 +3,21 @@
 /**
  * Abstract class that defines necessary set of methods for Insights QueryPage models
  */
-abstract class InsightsQueryPageModel extends InsightsPageModel {
+abstract class InsightsQueryPageModel extends InsightsModel {
 
-	protected
-		$queryPageInstance;
-
-	public
-		$loopNotificationConfig = [
-			'displayFixItMessage' => true,
-		];
+	protected $queryPageInstance;
 
 	abstract function getDataProvider();
-
-	public function getInsightCacheParams() {
-		return null;
-	}
 
 	/**
 	 * @return QueryPage An object of a QueryPage's child class
 	 */
 	protected function getQueryPageInstance() {
-		return $this->queryPageInstance;
-	}
-
-	public function wlhLinkMessage() {
-		return 'insights-wanted-by';
-	}
-
-	public function purgeCacheAfterUpdateTask() {
-		return true;
-	}
-
-	public function initModel( $params ) {
-		$this->queryPageInstance = $this->getDataProvider();
-	}
-
-	/**
-	 * Returns a whole config for loop notification mechanism or its single property
-	 * @param string $singleProperty
-	 * @return string|array
-	 */
-	public function getLoopNotificationConfig( $singleProperty = '' ) {
-		if ( !empty( $singleProperty )
-			&& isset( $this->loopNotificationConfig[$singleProperty] )
-		) {
-			return $this->loopNotificationConfig[$singleProperty];
+		if ( empty( $this->queryPageInstance ) ) {
+			$this->queryPageInstance = $this->getDataProvider();
 		}
 
-		return $this->loopNotificationConfig;
+		return $this->queryPageInstance;
 	}
 
 	/**
@@ -60,33 +27,14 @@ abstract class InsightsQueryPageModel extends InsightsPageModel {
 	 * @return Mixed|null An array with data of articles i.e. title, url, metadata etc.
 	 */
 	public function fetchArticlesData() {
-		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
-		$articlesData = WikiaDataAccess::cache( $cacheKey, self::INSIGHTS_MEMC_TTL, function () {
-			$articlesData = [];
+		$articlesData = [];
+		$res = $this->getQueryPageInstance()->doQuery();
 
-			$res = $this->queryPageInstance->doQuery();
-
-			if ( $res->numRows() > 0 ) {
-				$articlesData = $this->prepareData( $res );
-
-				if ( $this->arePageViewsRequired() ) {
-					$articlesIds = array_keys( $articlesData );
-					$pageViewsData = $this->getPageViewsData( $articlesIds );
-					$articlesData = $this->assignPageViewsData( $articlesData, $pageViewsData );
-				}
-			}
-
-			return $articlesData;
-		} );
+		if ( $res->numRows() > 0 ) {
+			$articlesData = $this->createTitles( $res );
+		}
 
 		return $articlesData;
-	}
-
-	/**
-	 * Function for sorting list alphabetical
-	 */
-	public function sortInsightsAlphabetical( $a, $b ) {
-		return strcasecmp( $a['link']['text'], $b['link']['text'] );
 	}
 
 	/**
@@ -140,9 +88,33 @@ abstract class InsightsQueryPageModel extends InsightsPageModel {
 			$row = $dbr->fetchObject( $res );
 
 			$title = Title::newFromText( $row->qc_title );
-			$next['link'] = InsightsHelper::getTitleLink( $title, self::getUrlParams() );
+			$next['link'] = InsightsItemData::getTitleLink( $title, self::getUrlParams() );
 		}
 
 		return $next;
+	}
+
+	private function createTitles( $res ) {
+		$pages = [];
+		$dbr = wfGetDB( DB_SLAVE );
+
+		while ( $row = $dbr->fetchObject( $res ) ) {
+			if ( $row->title ) {
+				$title = Title::newFromText( $row->title, $row->namespace );
+
+				$data = [
+					'pageId' => $title->getArticleID(),
+					'title' => $title
+				];
+
+				if ( $this->getConfig()->showWhatLinksHere() ) {
+					$data['value'] = $row->value;
+				}
+
+				$pages[] = $data;
+			}
+		}
+
+		return $pages;
 	}
 }

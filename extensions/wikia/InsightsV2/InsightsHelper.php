@@ -50,10 +50,21 @@ class InsightsHelper {
 	 */
 	const INSIGHT_FIXED_MSG_PREFIX = 'insights-notification-message-fixed-';
 
+	/**
+	 * Used to create the following messages:
+	 *
+	 * 'insights-notification-next-item-deadendpages',
+	 * 'insights-notification-next-item-nonportableinfoboxes'
+	 * 'insights-notification-next-item-uncategorizedpages',
+	 * 'insights-notification-next-item-wantedpages'
+	 * 'insights-notification-next-item-withoutimages',
+	 */
+	const INSIGHT_NEXT_MSG_PREFIX = 'insights-notification-next-item-';
+
 	private static $defaultInsights = [
 		InsightsUncategorizedModel::INSIGHT_TYPE	=> 'InsightsUncategorizedModel',
 		InsightsWithoutimagesModel::INSIGHT_TYPE	=> 'InsightsWithoutimagesModel',
-		InsightsDeadendModel::INSIGHT_TYPE			=> 'InsightsDeadendModel',
+		InsightsDeadendModel::INSIGHT_TYPE		=> 'InsightsDeadendModel',
 		InsightsWantedpagesModel::INSIGHT_TYPE		=> 'InsightsWantedpagesModel'
 	];
 
@@ -117,14 +128,15 @@ class InsightsHelper {
 
 	/**
 	 * Returns a full URL for a known subpage and a NULL for an unknown one.
-	 * @param $subpage A slug of subpage
-	 * @return String|null
+	 * @param string $subpage slug of subpage
+	 * @param array $params params
+	 * @return string|null
 	 */
-	public static function getSubpageLocalUrl( $subpage ) {
+	public static function getSubpageLocalUrl( $subpage, Array $params = [] ) {
 		$insightsPages = self::getInsightsPages();
 
 		if ( isset( $insightsPages[$subpage] ) ) {
-			return SpecialPage::getTitleFor( 'Insights', $subpage )->getLocalURL();
+			return SpecialPage::getTitleFor( 'Insights', $subpage )->getLocalURL( $params );
 		}
 		return null;
 	}
@@ -141,64 +153,22 @@ class InsightsHelper {
 	}
 
 	/**
-	 * Get param to show proper editor based on user preferences
-	 *
-	 * @return mixed
-	 */
-	public static function getEditUrlParams() {
-		global $wgUser;
-
-		if ( EditorPreference::isVisualEditorPrimary() && $wgUser->isLoggedIn() ) {
-			$param['veaction'] = 'edit';
-		} else {
-			$param['action'] = 'edit';
-		}
-
-		return $param;
-	}
-
-	/**
 	 * Returns a specific subpage model
 	 * If it does not exist a user is redirected to the Special:Insights landing page
 	 *
-	 * @param $subpage string|null A slug of a subpage
+	 * @param $type string|null A slug of a subpage
 	 * @return InsightsModel|null
 	 */
-	public static function getInsightModel( $subpage ) {
-		if ( self::isInsightPage( $subpage ) ) {
+	public static function getInsightModel( $type, $subpage ) {
+		if ( self::isInsightPage( $type ) ) {
 			$insightsPages = self::getInsightsPages();
-			$modelName = $insightsPages[$subpage];
+			$modelName = $insightsPages[$type];
 			if ( class_exists( $modelName ) ) {
-				return new $modelName();
+				return new $modelName( $subpage );
 			}
 		}
 
 		return null;
-	}
-
-	/**
-	 * Prepare a data to create a link element
-	 *
-	 * @param Title $title A target article's Title object
-	 * @param $params
-	 * @return array
-	 */
-	public static function getTitleLink( Title $title, $params ) {
-		$prefixedTitle = $title->getPrefixedText();
-
-		$data = [
-			'text' => $prefixedTitle,
-			'url' => $title->getFullURL( $params ),
-			'title' => $prefixedTitle,
-			'classes' => '',
-		];
-
-		if ( !$title->exists() ) {
-			$data['classes'] = 'new';
-			$data['title'] = wfMessage( 'red-link-title', $prefixedTitle )->escaped();
-		}
-
-		return $data;
 	}
 
 	/**
@@ -229,23 +199,6 @@ class InsightsHelper {
 			];
 		}
 		return $insightsList;
-	}
-
-	/**
-	 * Returns an array of datetime entries for the last four Sundays
-	 * (page views data is currently updated on every Sunday)
-	 *
-	 * @return array An array with dates of the last four Sundays
-	 */
-	public static function getLastFourTimeIds() {
-		$lastTimeId = ( new DateTime() )->modify( 'last Sunday' );
-		$format = 'Y-m-d H:i:s';
-		return [
-			$lastTimeId->format( $format ),
-			$lastTimeId->modify( '-1 week' )->format( $format ),
-			$lastTimeId->modify( '-2 week' )->format( $format ),
-			$lastTimeId->modify( '-3 week' )->format( $format ),
-		];
 	}
 
 	private function prepareCountDisplay( $count ) {

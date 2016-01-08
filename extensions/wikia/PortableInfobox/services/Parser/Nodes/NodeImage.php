@@ -1,6 +1,7 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
+use Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
 use WikiaFileHelper;
 
 class NodeImage extends Node {
@@ -133,6 +134,14 @@ class NodeImage extends Node {
 		return $tabberItems;
 	}
 
+	/**
+	 * @desc prepare infobox image node data.
+	 *
+	 * @param $title
+	 * @param $alt
+	 * @param $caption
+	 * @return array
+	 */
 	private function getImageData( $title, $alt, $caption ) {
 		$titleObj = $this->getImageAsTitleObject( $title );
 		$fileObj = $this->getFilefromTitle( $titleObj );

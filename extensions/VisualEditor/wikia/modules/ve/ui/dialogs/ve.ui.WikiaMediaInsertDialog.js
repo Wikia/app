@@ -718,7 +718,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.convertTemporaryToPermanent = function ( 
 		data = {
 			action: 'addmediapermanent',
 			format: 'json',
-			title: cartItem.title
+			title: cartItem.title,
+			token: mw.user.tokens.get( 'editToken' )
 		};
 	if ( cartItem.provider ) {
 		data.provider = cartItem.provider;
@@ -727,13 +728,10 @@ ve.ui.WikiaMediaInsertDialog.prototype.convertTemporaryToPermanent = function ( 
 		data.license = cartItem.license;
 		data.tempName = cartItem.temporaryFileName;
 	}
-	$.ajax( {
-		url: mw.util.wikiScript( 'api' ),
-		data: data,
-		success: function ( data ) {
+	$.post( mw.util.wikiScript( 'api' ), data )
+		.then( function ( data ) {
 			deferred.resolve( data.addmediapermanent.title );
-		}
-	} );
+		} );
 
 	return deferred.promise();
 };

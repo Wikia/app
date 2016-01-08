@@ -5,29 +5,23 @@
  * Note: Flags insights are are fetching flags only targeted at contributors
  */
 
-class InsightsFlagsModel extends InsightsPageModel {
+class InsightsFlagsModel extends InsightsModel {
 
 	const INSIGHT_TYPE = 'flags';
 
-	public
-		$flagTypeId,
-		$loopNotificationConfig = [
-			'displayFixItMessage' => false,
-		];
+	private static $insightConfig = [
+		InsightsConfig::PAGEVIEWS => true
+	];
 
-	public function getInsightType() {
-		return self::INSIGHT_TYPE;
-	}
-
-	public function getInsightCacheParams() {
-		return $this->flagTypeId;
-	}
-
-	public function getPaginationUrlParams() {
-		if ( $this->flagTypeId ) {
-			return [ 'flagTypeId' => $this->flagTypeId ];
+	public function __construct( $subtype = null ) {
+		if ( is_null( $subtype ) ) {
+			$subtype = $this->getDefaultType();
 		}
-		return [];
+
+		self::$insightConfig[InsightsConfig::SUBTYPE] = $subtype;
+		$this->config = new InsightsConfig( self::INSIGHT_TYPE, self::$insightConfig );
+
+		$this->config->setSubtypes( $this->getSubTypes() );
 	}
 
 	/**
@@ -39,91 +33,11 @@ class InsightsFlagsModel extends InsightsPageModel {
 	}
 
 	/**
-	 * A key of a message that wraps the number of pages referring to each item of the list.
-	 *
-	 * @return string
-	 */
-	public function wlhLinkMessage() {
-		return 'insights-used-on';
-	}
-
-	public function arePageViewsRequired() {
-		return true;
-	}
-
-	public function initModel( $params ) {
-		if ( !isset( $params['flagTypeId'] ) ) {
-			$this->setDefaultType();
-		} else {
-			$this->flagTypeId = $params['flagTypeId'];
-		}
-	}
-
-	/**
 	 * Prepare data of articles - title, last revision, link etc.
 	 * @return array
 	 */
 	public function fetchArticlesData() {
-		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
-
-		$articlesData = WikiaDataAccess::cache( $cacheKey, self::INSIGHTS_MEMC_TTL, function () {
-			$articlesData = [];
-
-			$flaggedPages = $this->getPagesByFlagType();
-
-			if ( count( $flaggedPages ) > 0 ) {
-				$articlesData = $this->prepareData( $flaggedPages );
-
-				if ( $this->arePageViewsRequired() ) {
-					$articlesIds = array_keys( $articlesData );
-					$pageViewsData = $this->getPageViewsData( $articlesIds );
-					$articlesData = $this->assignPageViewsData( $articlesData, $pageViewsData );
-				}
-			}
-
-			return $articlesData;
-		});
-
-		return $articlesData;
-	}
-
-	/**
-	 * @param array $pagesIds Array of pages Ids
-	 * @return array
-	 * e.g. result
-	 * [
-	 * 	{page_id} => [
-	 * 		'link' => {link_to_page},
-	 * 		'metadata' => ['lastRevision'=>{array_with_revision_data} ] @see \InsightsPageModel::prepareRevisionData
-	 * 	]
-	 * ]
-	 * @throws MWException
-	 */
-	public function prepareData( $pagesIds ) {
-		$data = [];
-
-		foreach ( $pagesIds as $pageId ) {
-			$article = [];
-
-			$title = Title::newFromID( $pageId );
-
-			if ( $title === null ) {
-				$this->error( 'Flags Insights received reference to non existent page' );
-				continue;
-			}
-
-			$params = $this->getUrlParams();
-			$article['link'] = InsightsHelper::getTitleLink( $title, $params );
-
-			$lastRev = $title->getLatestRevID();
-			$rev = Revision::newFromId( $lastRev );
-			if ( $rev ) {
-				$article['metadata']['lastRevision'] = $this->prepareRevisionData( $rev );
-			}
-
-			$data[ $title->getArticleID() ] = $article;
-		}
-		return $data;
+		return $this->getPagesByFlagType();
 	}
 
 	/**
@@ -131,14 +45,16 @@ class InsightsFlagsModel extends InsightsPageModel {
 	 */
 	private function getPagesByFlagType() {
 		$app = F::app();
+		$pages = [];
+		$subtype = $this->getConfig()->getInsightSubType();
 
 		/* Select first type id by default */
-		if ( empty( $this->flagTypeId ) ) {
-			$this->setDefaultType();
+		if ( empty( $subtype ) ) {
+			$subtype = $this->getDefaultType();
 		}
 
 		/* If still empty (no flag types on wikia) return empty list */
-		if ( empty( $this->flagTypeId ) ) {
+		if ( empty( $subtype ) ) {
 			return [];
 		}
 
@@ -146,20 +62,55 @@ class InsightsFlagsModel extends InsightsPageModel {
 		$flaggedPages = $app->sendRequest(
 			'FlaggedPagesApiController',
 			'getFlaggedPages',
-			[ 'flag_type_id' => $this->flagTypeId ]
+			[ 'flag_type_id' => $subtype ],
+			true,
+			WikiaRequest::EXCEPTION_MODE_THROW
 		)->getData()['data'];
 
-		return $flaggedPages;
+		foreach ( $flaggedPages as $pageId ) {
+			$pages[] = [
+				'pageId' => $pageId,
+				'title' => Title::newFromID( $pageId )
+			];
+		}
+
+		return $pages;
+	}
+
+	private function getSubTypes() {
+		$subtypes = [];
+		$app = F::app();
+
+		$params = [ 'flag_targeting' => \Flags\Models\FlagType::FLAG_TARGETING_CONTRIBUTORS ];
+		$flagTypes = $app->sendRequest(
+			'FlagsApiController',
+			'getFlagTypes',
+			$params,
+			true,
+			WikiaRequest::EXCEPTION_MODE_THROW
+		)->getData()['data'];
+
+		foreach ( $flagTypes as $type ) {
+			$subtypes[$type['flag_type_id']] = $type['flag_name'];
+		}
+
+		return $subtypes;
 	}
 
 	/**
 	 * Select first type ID and use as default
 	 */
-	private function setDefaultType() {
+	private function getDefaultType() {
 		$app = F::app();
 		$params = [ 'flag_targeting' => \Flags\Models\FlagType::FLAG_TARGETING_CONTRIBUTORS ];
-		$flagTypes = $app->sendRequest( 'FlagsApiController', 'getFlagTypes' , $params )->getData()['data'];
-		$this->flagTypeId = current( $flagTypes )['flag_type_id'];
+		$flagTypes = $app->sendRequest(
+			'FlagsApiController',
+			'getFlagTypes',
+			$params,
+			true,
+			WikiaRequest::EXCEPTION_MODE_THROW
+		)->getData()['data'];
+		return current( $flagTypes )['flag_type_id'];
 	}
 
 	/**

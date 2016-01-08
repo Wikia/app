@@ -78,16 +78,9 @@ $messages = array(
 'navigation' => 'Navigazione',
 'and'        => '&#32;è',
 
-# Cologne Blue skin
 'qbpageoptions'  => 'Issa pagina',
 'qbpageinfo'     => 'Cuntestu',
-'qbmyoptions'    => 'E mo pagine',
-'qbspecialpages' => 'Pagine spiciale',
 
-# Vector skin
-'vector-action-delete'  => 'Supprimà',
-'vector-action-protect' => 'Pruteghje',
-'vector-view-edit'      => 'Mudificà',
 
 'errorpagetitle'   => 'Errore',
 'returnto'         => 'Vultà à $1.',
@@ -108,10 +101,8 @@ $messages = array(
 'newpage'          => 'Pagina nova',
 'talkpagelinktext' => 'discussione',
 'specialpage'      => 'Pagina speciale',
-'articlepage'      => "Vede l'articulu",
 'talk'             => 'Discussione',
 'toolbox'          => 'Stuvigli',
-'userpage'         => 'Vede a pagina di utilizatore',
 'otherlanguages'   => 'In altri lingui',
 'lastmodifiedat'   => 'Ultima mudifica di ista pagina u $1 à e $2.',
 'protectedpage'    => 'Pagina prutetta',
