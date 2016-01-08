@@ -19,12 +19,12 @@ class SimpleSeleniumTestCase extends SeleniumTestCase {
 
 	/**
 	 * All this test really does is verify that a global var was set.
-	 * It depends on $wgDefaultSkin = 'chick'; being set
+	 * It depends on $wgDefaultSkin = 'monobook'; being set
 	 */
 	public function testGlobalVariableForDefaultSkin() {
 		$this->open( $this->getUrl() . '/index.php' );
 		$bodyClass = $this->getAttribute( "//body/@class" );
-		$this-> assertContains('skin-chick', $bodyClass, 'Chick skin not set');
+		$this-> assertContains('skin-monobook', $bodyClass, 'Monobook skin not set');
 	}
 
 	/**

@@ -646,8 +646,6 @@ include_once( "$IP/extensions/wikia/Security/Security.setup.php" );
 $wgSkipSkins = array(
 		'armchairgm',
 		'cars',
-		'chick',
-		'cologneblue_view',
 		'corporate',
 		'corporatebase',
 		'corporatehome',
@@ -665,7 +663,6 @@ $wgSkipSkins = array(
 		'lyricsminimal',
 		'memalpha',
 		'music',
-		'nostalgia',
 		'politics',
 		'psn',
 		'restaurants',
@@ -680,21 +677,8 @@ $wgSkipSkins = array(
 		'smartphone',
 		'efmonaco',
 		'answers',
-		'vector',
 		'campfire',
 		'wikiamobile'
-);
-/**
- * @name wgSkipOldSkins
- *
- * Remove them only from SkinChooser but let use it if in prefs or ?useskin
- */
-$wgSkipOldSkins = array(
-		'cologneblue',
-		'modern',
-		'myskin',
-		'simple',
-		'standard',
 );
 
 /**

@@ -450,30 +450,12 @@ $messages = array(
 'navigation'    => 'Navegação',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Procurar',
 'qbbrowse'       => 'Navegar',
-'qbedit'         => 'Editar',
 'qbpageoptions'  => 'Esta página',
 'qbpageinfo'     => 'Contexto',
-'qbmyoptions'    => 'Minhas páginas',
-'qbspecialpages' => 'Páginas especiais',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Adicionar&nbsp;tópico',
-'vector-action-delete'           => 'Eliminar',
-'vector-action-move'             => 'Mover',
-'vector-action-protect'          => 'Proteger',
-'vector-action-undelete'         => 'Restaurar',
-'vector-action-unprotect'        => 'Alterar protecção',
-'vector-simplesearch-preference' => 'Activar sugestões de busca melhoradas (apenas no tema Vector)',
-'vector-view-create'             => 'Criar',
-'vector-view-edit'               => 'Editar',
-'vector-view-history'            => 'Ver histórico',
-'vector-view-view'               => 'Ler',
-'vector-view-viewsource'         => 'Ver fonte',
 'actions'                        => 'Acções',
 'namespaces'                     => 'Espaços nominais',
 'variants'                       => 'Variantes',
@@ -496,7 +478,6 @@ $messages = array(
 'edit'              => 'Editar',
 'create'            => 'Criar',
 'editthispage'      => 'Editar esta página',
-'create-this-page'  => 'Criar/iniciar esta página',
 'delete'            => 'Eliminar',
 'deletethispage'    => 'Eliminar esta página',
 'undelete_short'    => 'Restaurar {{PLURAL:$1|uma edição|$1 edições}}',
@@ -511,19 +492,9 @@ $messages = array(
 'talkpagelinktext'  => 'discussão',
 'specialpage'       => 'Página especial',
 'personaltools'     => 'Ferramentas pessoais',
-'postcomment'       => 'Nova secção',
-'articlepage'       => 'Ver página de conteúdo',
 'talk'              => 'Discussão',
 'views'             => 'Vistas',
 'toolbox'           => 'Ferramentas',
-'userpage'          => 'Ver página de utilizador',
-'projectpage'       => 'Ver página de projecto',
-'imagepage'         => 'Ver página de ficheiro',
-'mediawikipage'     => 'Ver página de mensagens',
-'templatepage'      => 'Ver página de predefinições',
-'viewhelppage'      => 'Ver página de ajuda',
-'categorypage'      => 'Ver página de categorias',
-'viewtalkpage'      => 'Ver discussão',
 'otherlanguages'    => 'Noutras línguas',
 'redirectedfrom'    => '(Redireccionado de $1)',
 'redirectpagesub'   => 'Página de redireccionamento',
@@ -987,7 +958,6 @@ Este ainda não foi gravado!",
 '''Ele ainda não foi gravado!'''",
 'sitejspreview'                    => "'''Lembre-se de que está apenas a antever este código JavaScript.'''
 '''Ele ainda não foi gravado!'''",
-'userinvalidcssjstitle'            => "'''Aviso:''' Não existe um tema \"\$1\". Lembre-se que as páginas .css e  .js têm um título em minúsculas, exemplo: {{ns:user}}:Alguém/vector.css em vez de {{ns:user}}:Alguém/Vector.css.",
 'updated'                          => '(Actualizado)',
 'note'                             => "'''Nota:'''",
 'previewnote'                      => "'''Lembre-se que esta é apenas uma antevisão do resultado.'''
@@ -1348,14 +1318,6 @@ Tente usar o prefixo ''all:'' para pesquisar todo o conteúdo (incluindo página
 Entretanto, pode realizar pesquisas através do Google.
 Note, no entanto, que a indexação da {{SITENAME}} neste motor de busca pode estar desactualizada.',
 
-# Quickbar
-'qbsettings'                => 'Barra Rápida',
-'qbsettings-none'           => 'Nenhuma',
-'qbsettings-fixedleft'      => 'Fixa à esquerda',
-'qbsettings-fixedright'     => 'Fixa à direita',
-'qbsettings-floatingleft'   => 'Flutuante à esquerda',
-'qbsettings-floatingright'  => 'Flutuante à direita',
-'qbsettings-directionality' => 'Fixado, a dependener da direccionalidade do script da sua língua',
 
 # Preferences page
 'preferences'                   => 'Preferências',
@@ -2995,29 +2957,13 @@ Permite colocar uma justificação no resumo da edição.',
 
 # Stylesheets
 'common.css'      => '/* Código CSS colocado aqui será aplicado a todos os temas */',
-'standard.css'    => '/* Código CSS colocado aqui afectará os utilizadores do tema Clássico */',
-'nostalgia.css'   => '/* Código CSS colocado aqui afectará os utilizadores do tema Nostalgia */',
-'cologneblue.css' => '/* Código CSS colocado aqui afectará os utilizadores do tema Azul colonial */',
 'monobook.css'    => '/* Código CSS colocado aqui afectará os utilizadores do tema Monobook */',
-'myskin.css'      => '/* Código CSS colocado aqui afectará os utilizadores do tema MySkin */',
-'chick.css'       => '/* Código CSS colocado aqui afectará os utilizadores do tema Chique */',
-'simple.css'      => '/* Código CSS colocado aqui afectará os utilizadores do tema Simples */',
-'modern.css'      => '/* Código CSS colocado aqui afectará os utilizadores do tema Moderno */',
-'vector.css'      => '/* Código CSS colocado aqui afectará os utilizadores do tema Vector */',
 'print.css'       => '/* Código CSS colocado aqui afectará as impressões */',
 'handheld.css'    => '/* Código CSS colocado aqui afectará dispositivos móveis baseados no tema configurado em $wgHandheldStyle */',
 
 # Scripts
 'common.js'      => '/* Código Javascript colocado aqui será carregado para todos os utilizadores em cada carregamento de página */',
-'standard.js'    => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Clássico */',
-'nostalgia.js'   => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Nostalgia */',
-'cologneblue.js' => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Azul colonial */',
 'monobook.js'    => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Monobook */',
-'myskin.js'      => '/* Código Javascript colocado aqui será carregado para utilizadores do tema MySkin */',
-'chick.js'       => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Chick */',
-'simple.js'      => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Simples */',
-'modern.js'      => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Moderno */',
-'vector.js'      => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Vector */',
 
 # Metadata
 'notacceptable' => 'O servidor não pode fornecer os dados num formato que o seu cliente possa ler.',
@@ -3057,15 +3003,7 @@ Este bloqueio foi provavelmente causado por um link para um site externo que con
 'pageinfo-viewsperedit'     => 'Visitas por edição',
 
 # Skin names
-'skinname-standard'    => 'Clássico',
-'skinname-nostalgia'   => 'Nostalgia',
-'skinname-cologneblue' => 'Azul colonial',
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'MySkin',
-'skinname-chick'       => 'Chique',
-'skinname-simple'      => 'Simples',
-'skinname-modern'      => 'Moderno',
-'skinname-vector'      => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marcar como patrulhada',

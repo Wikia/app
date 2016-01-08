@@ -3,15 +3,13 @@
 class WikiaNewFilesGallery extends WikiaPhotoGallery {
 	const ANCHOR_LENGTH = 60;
 
-	/**
-	 * Generate WikiaPhotoGallery object from the images array
-	 *
-	 * @param Skin $skin
-	 */
 	public function __construct( Skin $skin ) {
+		parent::__construct();
+
 		$this->parseParams( array(
-			"rowdivider" => true,
-			"hideoverflow" => true
+			'rowdivider' => true,
+			'hideoverflow' => true,
+			'position' => 'center',
 		) );
 
 		if ( $skin->getSkinName() === 'oasis' ) {
@@ -58,7 +56,7 @@ class WikiaNewFilesGallery extends WikiaPhotoGallery {
 			}
 
 			if ( $moreFiles ) {
-				$caption .= ", " . '<a href="' . $nt->getLocalUrl() .
+				$caption .= ", " . '<a href="' . htmlspecialchars( $nt->getLocalUrl() ) .
 					'#filelinks" class="wikia-gallery-item-more">' .
 					wfMessage( 'wikianewfiles-more' )->escaped() . '</a>';
 			}

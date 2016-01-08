@@ -8,9 +8,17 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 		return;
 	}
 
+	function getFactory() {
+		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
+			mocks.adContext,
+			mocks.adTracker,
+			mocks.log
+		);
+	}
+
 	function getModule() {
 		return modules['ext.wikia.adEngine.lookup.amazonMatch'](
-			mocks.adTracker,
+			getFactory(),
 			mocks.document,
 			mocks.log,
 			mocks.window
@@ -24,6 +32,14 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 	}
 
 	mocks = {
+		targeting: noop,
+		adContext: {
+			getContext: function () {
+				return {
+					targeting: mocks.targeting
+				};
+			}
+		},
 		adTracker: {
 			measureTime: function () {
 				return {
@@ -69,28 +85,30 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 
 	testCases = [
 		// Empty
-		{input: [], expected: {}},
-		{input: ['invalid-input'], expected: {}},
+		{skin: 'oasis', input: [], expected: {}},
+		{skin: 'oasis', input: ['invalid-input'], expected: {}},
 
 		// Single values
-		{input: ['a1x6p14'], expected: {skyscraper: ['a1x6p14']}},
-		{input: ['a3x2p14'], expected: {medrec: ['a3x2p14'], mobileincontent: ['a3x2p14']}},
-		{input: ['a3x5p14'], expected: {mobileleaderboard: ['a3x5p14']}},
-		{input: ['a3x6p14'], expected: {medrec: ['a3x6p14'], skyscraper: ['a3x6p14']}},
-		{input: ['a7x9p14'], expected: {leaderboard: ['a7x9p14']}},
+		{skin: 'oasis', input: ['a1x6p14'], expected: {skyscraper: ['a1x6p14']}},
+		{skin: 'mercury', input: ['a3x2p14'], expected: {mobileprefooter: ['a3x2p14'], mobileincontent: ['a3x2p14']}},
+		{skin: 'mercury', input: ['a3x5p14'], expected: {mobileleaderboard: ['a3x5p14']}},
+		{skin: 'oasis', input: ['a3x6p14'], expected: {medrec: ['a3x6p14'], skyscraper: ['a3x6p14']}},
+		{skin: 'oasis', input: ['a7x9p14'], expected: {leaderboard: ['a7x9p14']}},
 
 		// Pick the lowest price point (single size)
-		{input: ['a1x6p14', 'a1x6p5', 'a1x6p12'], expected: {skyscraper: ['a1x6p5']}},
-		{input: ['a3x2p12', 'a3x2p10'], expected: {medrec: ['a3x2p10'], mobileincontent: ['a3x2p10']}},
+		{skin: 'oasis', input: ['a1x6p14', 'a1x6p5', 'a1x6p12'], expected: {skyscraper: ['a1x6p5']}},
+		{skin: 'mercury', input: ['a3x2p12', 'a3x2p10'], expected: {mobileprefooter: ['a3x2p10'], mobileincontent: ['a3x2p10']}},
 
 		// Medrec should get both 3x2 and 3x6 sizes
 		{
-			input: ['a3x2p12', 'a3x2p13', 'a3x6p14', 'a3x6p5'],
-			expected: {medrec: ['a3x2p12', 'a3x6p5'], mobileincontent: ['a3x2p12'], skyscraper: ['a3x6p5']}
+			skin: 'oasis',
+			input: ['a3x2p12', 'a3x2p13', 'a3x6p5', 'a7x9p5'],
+			expected: {medrec: ['a3x2p12', 'a3x6p5'], leaderboard: ['a7x9p5'], skyscraper: ['a3x6p5']}
 		},
 
 		// More complete example
 		{
+			skin: 'oasis',
 			input: [
 				'a1x6p14',
 				'a1x6p3',
@@ -110,8 +128,6 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 				leaderboard: ['a7x9p4'],
 				skyscraper: ['a1x6p3', 'a3x6p8'],
 				medrec: ['a3x2p5', 'a3x6p8'],
-				mobileleaderboard: ['a3x5p14'],
-				mobileincontent: ['a3x2p5']
 			}
 		}
 	];
@@ -121,7 +137,9 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 			var amazonMatch = getModule(),
 				testCase = testCases[k];
 
-			init(amazonMatch, testCases[k].input);
+			mocks.targeting.skin = testCase.skin;
+
+			init(amazonMatch, testCase.input);
 
 			expect(amazonMatch.getSlotParams('TOP_LEADERBOARD').amznslots).toEqual(testCase.expected.leaderboard);
 			expect(amazonMatch.getSlotParams('HOME_TOP_LEADERBOARD').amznslots).toEqual(testCase.expected.leaderboard);
@@ -133,17 +151,19 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 			expect(amazonMatch.getSlotParams('LEFT_SKYSCRAPER_3').amznslots).toEqual(testCase.expected.skyscraper);
 			expect(amazonMatch.getSlotParams('INVISIBLE_SKIN').amznslots).toEqual(undefined);
 			expect(amazonMatch.getSlotParams('INCONTENT_1').amznslots).toEqual(undefined);
-			expect(
-				amazonMatch.getSlotParams('MOBILE_TOP_LEADERBOARD').amznslots
-			).toEqual(testCase.expected.mobileleaderboard);
+			expect(amazonMatch.getSlotParams('MOBILE_TOP_LEADERBOARD').amznslots)
+				.toEqual(testCase.expected.mobileleaderboard);
 			expect(amazonMatch.getSlotParams('MOBILE_IN_CONTENT').amznslots).toEqual(testCase.expected.mobileincontent);
+			expect(amazonMatch.getSlotParams('MOBILE_PREFOOTER').amznslots).toEqual(testCase.expected.mobileprefooter);
 		});
 	});
 
 	it('returns empty amznslots when already rendered', function () {
 		var amazonMatch = getModule();
 
+		mocks.targeting.skin = 'mercury';
 		init(amazonMatch, ['a3x5p14']);
+
 		expect(amazonMatch.getSlotParams('MOBILE_TOP_LEADERBOARD').amznslots).toEqual(['a3x5p14']);
 		mocks.window.amznads.renderAd(mocks.document);
 		expect(amazonMatch.getSlotParams('MOBILE_TOP_LEADERBOARD').amznslots).toEqual(undefined);
@@ -151,7 +171,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 
 	it('switch the flag when response from Amazon recieved', function () {
 		var amazonMatch = getModule();
-
+		mocks.targeting.skin = 'oasis';
 		init(amazonMatch, ['a3x5p14']);
 		expect(amazonMatch.hasResponse()).toEqual(true);
 	});

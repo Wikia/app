@@ -476,30 +476,12 @@ $messages = array(
 'navigation'    => 'Navigasi',
 'and'           => '&#32;dan',
 
-# Cologne Blue skin
 'qbfind'         => 'Pencarian',
 'qbbrowse'       => 'Navigasi',
-'qbedit'         => 'Sunting',
 'qbpageoptions'  => 'Halaman ini',
 'qbpageinfo'     => 'Konteks halaman',
-'qbmyoptions'    => 'Halaman saya',
-'qbspecialpages' => 'Halaman istimewa',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Bagian baru',
-'vector-action-delete'           => 'Hapus',
-'vector-action-move'             => 'Pindahkan',
-'vector-action-protect'          => 'Lindungi',
-'vector-action-undelete'         => 'Pembatalan penghapusan',
-'vector-action-unprotect'        => 'Ubah perlindungan',
-'vector-simplesearch-preference' => 'Aktifkan pencarian saran yang disempurnakan (hanya kulit Vector)',
-'vector-view-create'             => 'Buat',
-'vector-view-edit'               => 'Sunting',
-'vector-view-history'            => 'Versi terdahulu',
-'vector-view-view'               => 'Baca',
-'vector-view-viewsource'         => 'Lihat sumber',
 'actions'                        => 'Tindakan',
 'namespaces'                     => 'Ruang nama',
 'variants'                       => 'Varian',
@@ -522,7 +504,6 @@ $messages = array(
 'edit'              => 'Sunting',
 'create'            => 'Buat',
 'editthispage'      => 'Sunting halaman ini',
-'create-this-page'  => 'Buat halaman ini',
 'delete'            => 'Hapus',
 'deletethispage'    => 'Hapus halaman ini',
 'undelete_short'    => 'Batal hapus $1 {{PLURAL:$1|suntingan|suntingan}}',
@@ -537,19 +518,9 @@ $messages = array(
 'talkpagelinktext'  => 'Bicara',
 'specialpage'       => 'Halaman istimewa',
 'personaltools'     => 'Peralatan pribadi',
-'postcomment'       => 'Bagian baru',
-'articlepage'       => 'Lihat halaman isi',
 'talk'              => 'Pembicaraan',
 'views'             => 'Tampilan',
 'toolbox'           => 'Kotak peralatan',
-'userpage'          => 'Lihat halaman pengguna',
-'projectpage'       => 'Lihat halaman proyek',
-'imagepage'         => 'Lihat halaman berkas',
-'mediawikipage'     => 'Lihat halaman pesan sistem',
-'templatepage'      => 'Lihat halaman templat',
-'viewhelppage'      => 'Lihat halaman bantuan',
-'categorypage'      => 'Lihat halaman kategori',
-'viewtalkpage'      => 'Lihat halaman pembicaran',
 'otherlanguages'    => 'Bahasa lain',
 'redirectedfrom'    => '(Dialihkan dari $1)',
 'redirectpagesub'   => 'Halaman pengalihan',
@@ -994,7 +965,6 @@ Pratayang ini belum disimpan!'''",
 '''Perubahan belum disimpan!'''",
 'sitejspreview'                    => "'''Ingatlah bahwa Anda hanya menampilkan pratayang dari kode JavaScript ini.'''
 '''Perubahan belum disimpan!'''",
-'userinvalidcssjstitle'            => "'''Peringatan:''' Kulit \"\$1\" tidak ditemukan. Harap diingat bahwa halaman .css dan .js menggunakan huruf kecil, contoh {{ns:user}}:Foo/vector.css dan bukannya {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Diperbarui)',
 'note'                             => "'''Catatan:'''",
 'previewnote'                      => "'''Ingatlah bahwa ini hanyalah pratayang yang belum disimpan!'''",
@@ -1338,14 +1308,6 @@ Pastikan bahwa perubahan ini tetap mempertahankan kontinuitas versi terdahulu ha
 Anda dapat mencari melalui Google untuk sementara waktu.
 Perlu diingat bahwa indeks Google untuk konten {{SITENAME}} mungkin belum mencakup perubahan-perubahan terakhir.',
 
-# Quickbar
-'qbsettings'                => 'Pengaturan bar pintas',
-'qbsettings-none'           => 'Tidak ada',
-'qbsettings-fixedleft'      => 'Tetap sebelah kiri',
-'qbsettings-fixedright'     => 'Tetap sebelah kanan',
-'qbsettings-floatingleft'   => 'Mengambang sebelah kiri',
-'qbsettings-floatingright'  => 'Mengambang sebelah kanan',
-'qbsettings-directionality' => 'Tetap, tergantung pada bentuk skrip dari bahasa Anda',
 
 # Preferences page
 'preferences'                   => 'Preferensi',
@@ -2893,29 +2855,13 @@ Simpan ke komputer Anda lalu muatkan di sini.',
 
 # Stylesheets
 'common.css'      => '/* CSS yang ada di sini akan diterapkan untuk semua kulit. */',
-'standard.css'    => '/* CSS yang ada di sini akan diterapkan untuk kulit Standard. */',
-'nostalgia.css'   => '/* CSS yang ada di sini akan diterapkan untuk kulit Nostalgia. */',
-'cologneblue.css' => '/* CSS yang ada di sini akan diterapkan untuk kulit Cologne Blue. */',
 'monobook.css'    => '/* CSS yang ada di sini akan diterapkan untuk kulit Monobook. */',
-'myskin.css'      => '/* CSS yang ada di sini akan diterapkan untuk kulit MySkin. */',
-'chick.css'       => '/* CSS yang ada di sini akan diterapkan untuk kulit Chick. */',
-'simple.css'      => '/* CSS yang ada di sini akan diterapkan untuk kulit Simple. */',
-'modern.css'      => '/* CSS yang ada di sini akan diterapkan untuk kulit Modern. */',
-'vector.css'      => '/* CSS yang ada di sini akan diterapkan untuk kulit Vector. */',
 'print.css'       => '/* CSS yang ada di sini akan diterapkan untuk tampilan cetak. */',
 'handheld.css'    => '/* CSS yang ada di sini akan diterapkan untuk tampilan piranti genggam yang dikonfigurasi di $wgHandheldStyle. */',
 
 # Scripts
 'common.js'      => '/* JavaScript yang ada di sini akan diterapkan untuk semua kulit. */',
-'standard.js'    => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit Standard */',
-'nostalgia.js'   => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit Nostalgia */',
-'cologneblue.js' => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit Cologne Blue */',
 'monobook.js'    => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit MonoBook */',
-'myskin.js'      => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit MySkin */',
-'chick.js'       => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit Chick */',
-'simple.js'      => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit Simple */',
-'modern.js'      => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit Modern */',
-'vector.js'      => '/* Semua JavaScript di sini akan dimuatkan untuk para pengguna yang menggunakan kulit Vector */',
 
 # Metadata
 'notacceptable' => 'Server wiki tidak dapat menyediakan data dalam format yang dapat dibaca oleh client Anda.',
@@ -2955,8 +2901,6 @@ Ini mungkin disebabkan oleh pranala ke situs luar yang termasuk dalam daftar hit
 'pageinfo-viewsperedit'     => 'Jumlah penampilan per suntingan',
 
 # Skin names
-'skinname-standard' => 'Klasik',
-'skinname-simple'   => 'Sederhana',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Tandai telah dipatroli',

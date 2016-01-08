@@ -123,18 +123,8 @@ $messages = array(
 'mytalk'        => 'Oqalliffikka',
 'navigation'    => 'Sumiissusersiuut',
 
-# Cologne Blue skin
 'qbfind' => 'Naniuk',
-'qbedit' => 'Aaqqissoruk',
 
-# Vector skin
-'vector-action-addsection' => 'Imm. nutaaq',
-'vector-action-move'       => 'Nuuguk',
-'vector-view-create'       => 'Pilersiguk',
-'vector-view-edit'         => 'Aaqqissoruk',
-'vector-view-history'      => 'Oqalutt.',
-'vector-view-view'         => 'Takuuk',
-'vector-view-viewsource'   => 'Toqqavia takuuk',
 
 'errorpagetitle'   => 'Kukkuneq',
 'returnto'         => '$1 -mut uterit',

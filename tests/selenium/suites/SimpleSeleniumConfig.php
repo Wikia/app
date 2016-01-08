@@ -15,7 +15,7 @@ class SimpleSeleniumConfig {
 			'wgMemCachedServers'=> array(),
 			'wgLanguageCode'    => 'en',
 			'wgSitename'        => 'test_wiki',
-			'wgDefaultSkin'     => 'chick'
+			'wgDefaultSkin'     => 'monobook'
 		);
 		$resources = array(
 			'db' => "$IP/tests/selenium/data/SimpleSeleniumTestDB.sql",

@@ -227,8 +227,7 @@ window.updateTooltipAccessKeys = function( nodeList ) {
 		// containers which contain the relevant links. This is really just an
 		// optimization technique.
 		var linkContainers = [
-			'column-one', // Monobook and Modern
-			'mw-head', 'mw-panel', 'p-logo' // Vector
+			'column-one', 'p-logo', // Monobook and Modern
 		];
 		for ( var i in linkContainers ) {
 			var linkContainer = document.getElementById( linkContainers[i] );
