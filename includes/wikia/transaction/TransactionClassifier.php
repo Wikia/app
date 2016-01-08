@@ -48,6 +48,7 @@ class TransactionClassifier {
 		'Chat',
 		'Newimages',
 		'Videos',
+		'Contributions',
 	);
 
 	protected static $FILTER_AJAX_FUNCTIONS = array(

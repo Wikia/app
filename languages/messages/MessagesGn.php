@@ -103,10 +103,7 @@ $messages = array(
 'mytalk'     => 'Che myangekõi',
 'navigation' => 'Kundaharã',
 
-# Cologne Blue skin
 'qbfind'         => 'Heka',
-'qbedit'         => 'Jehaijey',
-'qbspecialpages' => 'Kuatiarogue hekochĩchĩva',
 
 'tagline'          => '{{SITENAME}}megua',
 'help'             => 'Pytyvõhára',
@@ -124,12 +121,9 @@ $messages = array(
 'talkpagelinktext' => "ñe'ẽ",
 'specialpage'      => "Kuatiarogue mba'echĩchĩ",
 'personaltools'    => 'Tapicha rembipuru',
-'postcomment'      => "Emoĩ ne remimo'ã",
 'talk'             => 'Myangekõi',
 'views'            => 'Techakuéra',
 'toolbox'          => 'Tembiporu',
-'mediawikipage'    => 'Hecha kuatiarogue marandu',
-'viewtalkpage'     => 'Hecha myangekõi',
 'otherlanguages'   => "Ambue ñe'ẽ",
 'redirectedfrom'   => '(Oñembohapejeýva $1)',
 'lastmodifiedat'   => 'Ko kuatiarogue oñemoambuejeýkuri: $2, $1.',
@@ -226,7 +220,6 @@ $messages = array(
 'newarticletext'        => "Rehapykuehókuri peteĩ joaju peteĩ kuatiarogue ndaipórivape.
 Nde remoheñoisérõ ko kuatiarogue, eñepyrũkatu ehai.
 Reikotevẽvérõ marandu, emoñe'ẽ kuatiarogue ñepytyvõ rehegua. Oiméramo reikereínte térã rejavyhaguére, upéicharõ terehojey [[{{MediaWiki:Helppage}}|kuatiarogue mboyveguápe]].",
-'userinvalidcssjstitle' => "'''Aviso:''' No existe la piel \"\$1\". Recuerda que las páginas personalizadas .css y .js tienen un título en minúsculas, p.e. Usuario:Foo/vector.css en vez de  Usuario:Foo/Vector.css.",
 'editing'               => 'Ojehaihína $1',
 'editingsection'        => 'Ojehaihína $1 (vore)',
 'editingcomment'        => 'Ojehaihína $1 (comentario)',

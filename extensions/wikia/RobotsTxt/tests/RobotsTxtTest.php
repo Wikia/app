@@ -83,6 +83,7 @@ class RobotsTxtTest extends WikiaBaseTest {
 		$this->assertEquals( [
 			'User-agent: *',
 			'Disallow: /*?*someparam=',
+			'Noindex: /*?*someparam=',
 			'',
 		], $robots->getContents() );
 	}
@@ -104,6 +105,10 @@ class RobotsTxtTest extends WikiaBaseTest {
 			'Disallow: /some-path:%C4%85%C5%9B%C4%87',
 			'Disallow: /some-path:%E3%82%B5%E3%82%A4%E3%83%88%E3%83%9E%E3%83%83%E3%83%97',
 			'Disallow: /*/*%25$',
+			'Noindex: /some-path',
+			'Noindex: /some-path:%C4%85%C5%9B%C4%87',
+			'Noindex: /some-path:%E3%82%B5%E3%82%A4%E3%83%88%E3%83%9E%E3%83%83%E3%83%97',
+			'Noindex: /*/*%25$',
 			'',
 		], $robots->getContents() );
 	}
@@ -121,6 +126,9 @@ class RobotsTxtTest extends WikiaBaseTest {
 			'Disallow: /wiki/File:',
 			'Disallow: /*?*title=File:',
 			'Disallow: /index.php/File:',
+			'Noindex: /wiki/File:',
+			'Noindex: /*?*title=File:',
+			'Noindex: /index.php/File:',
 			'',
 		], $robots->getContents() );
 	}
@@ -142,6 +150,12 @@ class RobotsTxtTest extends WikiaBaseTest {
 			'Disallow: /wiki/File:',
 			'Disallow: /*?*title=File:',
 			'Disallow: /index.php/File:',
+			'Noindex: /wiki/Datei:',
+			'Noindex: /*?*title=Datei:',
+			'Noindex: /index.php/Datei:',
+			'Noindex: /wiki/File:',
+			'Noindex: /*?*title=File:',
+			'Noindex: /index.php/File:',
 			'',
 		], $robots->getContents() );
 	}
@@ -178,6 +192,7 @@ class RobotsTxtTest extends WikiaBaseTest {
 			'Allow: /wiki/Special:Random',
 			'Allow: /wiki/Special:RandomPage',
 			'Disallow: /abc',
+			'Noindex: /abc',
 			'',
 			'Sitemap: http://www.my-site.com/sitemap.xml',
 		], $robots->getContents() );

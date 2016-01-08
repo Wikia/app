@@ -1,8 +1,9 @@
 <?php
 
+namespace Wikia\IndexingPipeline;
+
 class PipelineEventProducer {
 	const ARTICLE_MESSAGE_PREFIX = 'article';
-	const PRODUCER_NAME = 'MWEventsProducer';
 	const NS_CONTENT = 'content';
 	const ROUTE_ACTION_KEY = '_action';
 	const ROUTE_NAMESPACE_KEY = '_namespace';
@@ -10,19 +11,23 @@ class PipelineEventProducer {
 	const ACTION_CREATE = 'create';
 	const ACTION_UPDATE = 'update';
 	const ACTION_DELETE = 'delete';
-	/** @var PipelineConnectionBase */
+
+	const PRODUCER_NAME = 'MWEventsProducer';
 	protected static $pipe;
 
 	/**
 	 * @desc Send event to pipeline in old format (message with params inside).
 	 *
-	 * @param $eventName
 	 * @param $pageId
+	 * @param null $revisionId
+	 * @param null $eventName
 	 * @param array $params
 	 */
 	public static function send( $eventName, $pageId, $revisionId, $params = [ ] ) {
-		self::publish( implode( '.', [ self::ARTICLE_MESSAGE_PREFIX, $eventName ] ),
-			self::prepareMessage( $pageId, $revisionId, $params ) );
+		self::getPipeline()->publish(
+			implode( '.', [ self::ARTICLE_MESSAGE_PREFIX, $eventName ] ),
+			self::prepareMessage( $pageId, $revisionId, $params )
+		);
 	}
 
 	/**
@@ -36,7 +41,10 @@ class PipelineEventProducer {
 	 * @param array $data
 	 */
 	public static function sendFlaggedSyntax( $action, $pageId, $revisionId, $ns = self::NS_CONTENT, $data = [ ] ) {
-		self::publish( self::prepareRoute( $action, $ns, $data ), self::prepareMessage( $pageId, $revisionId, $data ) );
+		self::getPipeline()->publish(
+			self::prepareRoute( $action, $ns, $data ),
+			self::prepareMessage( $pageId, $revisionId, $data )
+		);
 	}
 
 	/*
@@ -52,7 +60,7 @@ class PipelineEventProducer {
 	 *  - article rename
 	 * @return bool
 	 */
-	public static function onNewRevisionFromEditComplete( $article, Revision $rev, $baseID, User $user ) {
+	public static function onNewRevisionFromEditComplete( $article, \Revision $rev, $baseID, \User $user ) {
 		$ns = self::preparePageNamespaceName( $article->getTitle() );
 		$action = $rev->getPrevious() === null ? self::ACTION_CREATE : self::ACTION_UPDATE;
 		$pageId = $article->getId();
@@ -85,7 +93,7 @@ class PipelineEventProducer {
 	 * Send ACTION_CREATE as an article with new ID is created
 	 * @return bool
 	 */
-	public static function onArticleUndelete( Title &$oTitle, $isNew = false ) {
+	public static function onArticleUndelete( \Title &$oTitle, $isNew = false ) {
 		$ns = self::preparePageNamespaceName( $oTitle );
 		$revisionId = $oTitle->getLatestRevID();
 
@@ -117,10 +125,11 @@ class PipelineEventProducer {
 	 *  - successful classification of parent template during draft creation
 	 *
 	 * @param integer $pageId The affected template's pageId
-	 * @param Title $title The affected template's Title object
+	 * @param \Title $title The affected template's Title object
+	 * @param $templateType
 	 * @return bool
 	 */
-	public static function onTemplateClassified( $pageId, Title $title, $templateType ) {
+	public static function onTemplateClassified ( $pageId, \Title $title, $templateType ) {
 		$ns = self::preparePageNamespaceName( $title );
 		$revisionId = $title->getLatestRevID();
 
@@ -140,11 +149,12 @@ class PipelineEventProducer {
 	 * @param $pageId
 	 * @param $revisionId
 	 *
+	 * @param $params
 	 * @return \stdClass
 	 */
 	protected static function prepareMessage( $pageId, $revisionId, $params ) {
 		global $wgCityId;
-		$msg = new stdClass();
+		$msg = new \stdClass();
 		$msg->cityId = $wgCityId;
 		$msg->pageId = $pageId;
 		$msg->revisionId = $revisionId;
@@ -186,22 +196,12 @@ class PipelineEventProducer {
 		return $route;
 	}
 
-	/**
-	 * @param $key
-	 * @param $data
-	 */
-	protected static function publish( $key, $data ) {
-		try {
-			self::getPipeline()->publish( $key, $data );
-		} catch ( Exception $e ) {
-			\Wikia\Logger\WikiaLogger::instance()->error( $e->getMessage() );
-		}
-	}
-
-	/** @return PipelineConnectionBase */
+	/** @return ConnectionBase */
 	protected static function getPipeline() {
+		global $wgIndexingPipeline;
+
 		if ( !isset( self::$pipe ) ) {
-			self::$pipe = new PipelineConnectionBase();
+			self::$pipe = new ConnectionBase( $wgIndexingPipeline );
 		}
 
 		return self::$pipe;
@@ -222,7 +222,7 @@ class PipelineEventProducer {
 		if ( in_array( $namespaceID, $wgContentNamespaces ) ) {
 			$pageNamespace = self::NS_CONTENT;
 		} else {
-			$pageNamespace = strtolower( MWNamespace::getCanonicalName( $namespaceID ) );
+			$pageNamespace = strtolower( \MWNamespace::getCanonicalName( $namespaceID ) );
 		}
 
 		return $pageNamespace;

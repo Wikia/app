@@ -415,30 +415,12 @@ $messages = array(
 'navigation'    => 'Navigazzjoni',
 'and'           => '&#32;u',
 
-# Cologne Blue skin
 'qbfind'         => 'Fittex',
 'qbbrowse'       => 'Qalleb',
-'qbedit'         => 'Immodifika',
 'qbpageoptions'  => 'Din il-paġna',
 'qbpageinfo'     => 'Kuntest',
-'qbmyoptions'    => 'Il-paġni tiegħi',
-'qbspecialpages' => 'Paġni speċjali',
 'faq'            => 'Mistoqsijiet komuni',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Żid diskussjoni',
-'vector-action-delete'           => 'Ħassar',
-'vector-action-move'             => 'Mexxi',
-'vector-action-protect'          => 'Ipproteġi',
-'vector-action-undelete'         => 'Irkupra',
-'vector-action-unprotect'        => 'Biddel il-protezzjoni',
-'vector-simplesearch-preference' => 'Ippermetti suġġerimenti għat-tfittxija avvanzata (disponibbli biss għall-aspett grafiku Vector)',
-'vector-view-create'             => 'Oħloq',
-'vector-view-edit'               => 'Editja',
-'vector-view-history'            => 'Ara l-kronoloġija',
-'vector-view-view'               => 'Aqra',
-'vector-view-viewsource'         => 'Ara s-sors',
 'actions'                        => 'Azzjonijiet',
 'namespaces'                     => 'Spazji tal-isem',
 'variants'                       => 'Varjanti',
@@ -461,7 +443,6 @@ $messages = array(
 'edit'              => 'Editja',
 'create'            => 'Oħloq',
 'editthispage'      => 'Immodifika din il-paġna',
-'create-this-page'  => 'Oħloq din il-paġna',
 'delete'            => 'Ħassar',
 'deletethispage'    => 'Ħassar din il-paġna',
 'undelete_short'    => 'Irkupra {{PLURAL:$1|modifika waħda|$1 modifiki}}',
@@ -476,19 +457,9 @@ $messages = array(
 'talkpagelinktext'  => 'Diskussjoni',
 'specialpage'       => 'Paġna speċjali',
 'personaltools'     => 'Għodda personali',
-'postcomment'       => 'Sezzjoni ġdida',
-'articlepage'       => 'Ara l-artiklu',
 'talk'              => 'Diskussjoni',
 'views'             => 'Veduti',
 'toolbox'           => 'Għodda',
-'userpage'          => 'Ara l-paġna tal-utent',
-'projectpage'       => 'Ara l-paġna tal-proġett',
-'imagepage'         => 'Ara l-paġna tal-fajl',
-'mediawikipage'     => 'Ara l-paġna tal-messaġġ',
-'templatepage'      => 'Ara l-mudell',
-'viewhelppage'      => 'Ara l-paġna tal-għajnuna',
-'categorypage'      => 'Ara l-kategorija',
-'viewtalkpage'      => 'Ara d-diskussjoni',
 'otherlanguages'    => "F'lingwi oħrajn",
 'redirectedfrom'    => '(Riindirizzat minn $1)',
 'redirectpagesub'   => "Paġna ta' rindirizz",
@@ -1278,14 +1249,6 @@ Ipprova għamel prefiss għall-inkjesta tiegħek ma' ''all:'' sabiex tfittex il-
 Sadanittant, tista' tipprova tfittex bil-Google.
 Innota però li l-werreja tal-kontenut ta' {{SITENAME}} f'dawn is-siti, jistgħu ma jkunux aġġornati.",
 
-# Quickbar
-'qbsettings'                => "''Quickbar''",
-'qbsettings-none'           => 'Xejn',
-'qbsettings-fixedleft'      => 'Mehmuż fix-xellug',
-'qbsettings-fixedright'     => 'Mehmuż fil-lemin',
-'qbsettings-floatingleft'   => "''Floating'' lejn ix-xellug",
-'qbsettings-floatingright'  => "''Floating'' lejn il-lemin",
-'qbsettings-directionality' => 'Fiss, skont id-direzzjoni tat-test fil-lingwa tiegħek',
 
 # Preferences page
 'preferences'                   => 'Preferenzi',
@@ -2844,25 +2807,11 @@ Kull azzjonijiet ta' importazzjoni tal-transwiki jiġu reġistrati fil-[[Special
 
 # Stylesheets
 'common.css'      => '/* CSS li tpoġġa hawnhekk irrid jiġi applikat fl-iskins kollha */',
-'standard.css'    => '/* CSS li tpoġġa hawnhekk se jaffetwa l-utenti li jagħmlu użu mill-iskin Standard */',
-'nostalgia.css'   => '/* CSS li tpoġġa hawnhekk se jaffetwa l-utenti li jagħmlu użu mill-aspett grafiku Nostalgia */',
-'cologneblue.css' => '/* CSS li tpoġġa hawnhekk se jaffetwa dawk l-utenti li jagħmlu użu mill-aspett grafiku Cologne Blue */',
 'monobook.css'    => "/* CSS li tpoġġa hawnhekk se jaffetwa dawk l-utenti li jagħmlu użu mill-iskin ''Monobook'' */",
-'myskin.css'      => "/* CSS li tpoġġa hawnhekk se jaffetwa dawk l-utenti li jagħmlu użu mill-iskin ''L-Iskin tiegħi'' */",
-'chick.css'       => '/* CSS li tpoġġa hawnhekk se jaffetwa dawk l-utenti li jagħmlu użu mill-aspett grafiku Ckick */',
-'simple.css'      => '/* CSS li tpoġġa hawnhekk se jaffetwa dawk l-utenti li jagħmlu użu mill-aspett grafiku Simple */',
-'modern.css'      => '/* CSS li tpoġġa hawnhekk se jaffetwa dawk l-utenti li jagħmlu użu mill-aspett grafiku Modern */',
 
 # Scripts
 'common.js'      => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal kull utent f'kull tniżżil ta' paġna. */",
-'standard.js'    => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''Standard'' */",
-'nostalgia.js'   => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''Nostalgia'' */",
-'cologneblue.js' => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''Cologne Blue'' */",
 'monobook.js'    => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''Monobook'' */",
-'myskin.js'      => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''MySkin'' */",
-'chick.js'       => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''Chick'' */",
-'simple.js'      => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''Simple'' */",
-'modern.js'      => "/* Kull ''JavaScript'' hawnhekk jiġi mniżżel għal dawk l-utenti li qegħdin jagħmlu użu mill-iskin ''Modern''*/",
 
 # Metadata
 'notacceptable' => "Is-Server tal-wiki m'għandux format li l-klijent tiegħek ikun jista' jaqra.",
@@ -2901,14 +2850,7 @@ Kull azzjonijiet ta' importazzjoni tal-transwiki jiġu reġistrati fil-[[Special
 'pageinfo-viewsperedit'     => 'Viżti kull modifika',
 
 # Skin names
-'skinname-standard'    => 'Classic',
-'skinname-nostalgia'   => 'Nostalgia',
-'skinname-cologneblue' => 'Cologne Blue',
 'skinname-monobook'    => 'Monobook',
-'skinname-myskin'      => 'MySkin',
-'skinname-chick'       => 'Chick',
-'skinname-simple'      => 'Simple',
-'skinname-modern'      => 'Modern',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marka l-modifiki bħalha verifikati',

@@ -18,6 +18,8 @@ class EmergencyBroadcastSystemController extends WikiaController {
 	}
 
 	public function saveUserResponse() {
+		$this->checkWriteRequest();
+
 		$user = $this->context->getUser();
 		$val = $this->request->getInt( 'val', null );
 

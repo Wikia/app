@@ -63,15 +63,10 @@ $messages = array(
 'anontalk'      => 'Vulavula na IP leyi',
 'and'           => '&#32;nakambe',
 
-# Cologne Blue skin
 'qbfind'         => 'Kuma',
-'qbedit'         => 'Lulamisa',
 'qbpageoptions'  => 'Tluka leri',
 'qbpageinfo'     => 'mongo',
-'qbmyoptions'    => 'Matluka ya mina',
-'qbspecialpages' => 'Matluka yohlawuleka',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
 'errorpagetitle'   => 'Xihoxo',
 'returnto'         => 'Thlelela e $1.',
@@ -87,7 +82,6 @@ $messages = array(
 'edit'             => 'Lulamisa',
 'create'           => 'Tumbuluxa',
 'editthispage'     => 'Lulamisa Tluka leri',
-'create-this-page' => 'Tumbuluxa tluka leri',
 'delete'           => 'Sula',
 'deletethispage'   => 'Sula tluka leri',
 'protect'          => 'Sirhelela',

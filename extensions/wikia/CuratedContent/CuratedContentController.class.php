@@ -440,51 +440,6 @@ class CuratedContentController extends WikiaController {
 		}
 	}
 
-	//@TODO Remove this method in XW-700
-	public function setData( ) {
-		global $wgCityId, $wgUser;
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		// TODO: CONCF-961 Set more restrictive header
-		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
-		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
-			$data = $this->request->getArray( 'data', [ ] );
-			$status = false;
-			// strip excessive data used in mercury interface (added in self::getData method)
-			foreach ( $data as &$section ) {
-				unset( $section['node_type'] );
-				unset( $section['image_url'] );
-				if ( empty( $section['label'] ) && !empty( $section['featured'] ) ) {
-					$section['title'] = wfMessage( 'wikiacuratedcontent-featured-section-name' )->text();
-				} else {
-					$section['title'] = $section['label'];
-				}
-				unset( $section['label'] );
-				if ( !empty( $section['items'] ) && is_array( $section['items'] ) ) {
-					foreach ( $section['items'] as &$item ) {
-						unset( $item['node_type'] );
-						unset( $item['image_url'] );
-					}
-				}
-			}
-			$helper = new CuratedContentHelper();
-			$sections = $helper->processSectionsFromSpecialPage( $data );
-			$errors = ( new CuratedContentSpecialPageValidator() )->validateData( $sections );
-			if ( !empty( $errors ) ) {
-				$this->response->setVal( 'error', $errors );
-			} else {
-				$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $wgCityId, $sections );
-				wfWaitForSlaves();
-				if ( !empty( $status ) ) {
-					wfRunHooks( 'CuratedContentSave', [ $sections ] );
-				}
-			}
-			$this->response->setVal( 'status', $status );
-		} else {
-			$this->response->setCode( \Wikia\Service\ForbiddenException::CODE );
-			$this->response->setVal( 'message', 'No permissions to save curated content' );
-		}
-	}
-
 	public function setCuratedContentData( ) {
 		global $wgCityId, $wgUser, $wgRequest;
 		
