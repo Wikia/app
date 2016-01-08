@@ -62,7 +62,7 @@ $messages['en'] = array(
 	'insights-flags-filter-label' => 'Filter pages by flag type',
 	'insights-notification-message-inprogress-flags' => 'This page is flagged.',
 	'insights-notification-message-set-flags' => 'Set flags for this page',
-	'insights-error' => 'Something went wrong ($1). Please try again.'
+	'insights-error' => 'Something went wrong. Please try again.'
 );
 
 $messages['qqq'] = array(

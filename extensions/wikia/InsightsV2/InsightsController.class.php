@@ -1,6 +1,10 @@
 <?php
 
+use Wikia\Logger\Loggable;
+
 class InsightsController extends WikiaSpecialPageController {
+	use Loggable;
+
 	public function __construct() {
 		parent::__construct( 'Insights', 'insights', true );
 	}
@@ -99,9 +103,9 @@ class InsightsController extends WikiaSpecialPageController {
 				'metadata' => $metadata
 			] );
 		} catch ( WikiaHttpException $e ) {
-			$this->setErrorTemplate( $e->getDetails() );
+			$this->setErrorTemplate( $e->getDetails(), $e );
 		} catch ( Exception $e ) {
-			$this->setErrorTemplate( $e->getMessage() );
+			$this->setErrorTemplate( $e->getMessage(), $e );
 		}
 	}
 
@@ -119,8 +123,10 @@ class InsightsController extends WikiaSpecialPageController {
 		return $params;
 	}
 
-	private function setErrorTemplate( $message ) {
+	private function setErrorTemplate( $message, $exception ) {
 		$this->setVal( 'errorDetails', $message );
 		$this->overrideTemplate( 'error' );
+
+		$this->error( 'Insights Exception', [ 'exception' => $exception, 'type' => $this->type ] );
 	}
 }
