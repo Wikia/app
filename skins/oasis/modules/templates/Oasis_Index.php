@@ -148,9 +148,23 @@
 
 	function matchSegmentsAndSendRequests(nudgeId, answer) {
 		if(wgQualarooKruxMapping[nudgeId] && wgQualarooKruxMapping[nudgeId][answer]) {
+			// 1st method which probably doesn't work
 			sendKruxRequest(wgQualarooKruxMapping[nudgeId][answer]);
+
+			// 2nd method using Krux events
+			if( Krux ) {
+				Krux('admEvent','KSBbroTm', {response: answer});
+				console.log("Qualaroo-Krux integration: fired a Krux event (" + answer + ")");
+			}
 		} else if(wgQualarooKruxMapping['all'][answer]) {
+			// 1st method which probably doesn't work
 			sendKruxRequest(wgQualarooKruxMapping['all'][answer]);
+
+			// 2nd method using Krux events
+			if( Krux ) {
+				Krux('admEvent','KSBbroTm', {response: answer});
+				console.log("Qualaroo-Krux integration: fired a Krux event (" + answer + ")");
+			}
 		} else {
 			console.log('Qualaroo-Krux integration: no segment found for the answer');
 		}
