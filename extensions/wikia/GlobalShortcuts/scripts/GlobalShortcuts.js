@@ -15,7 +15,6 @@ define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions'], function (Mousetra
 			// Global navigation
 			'page:Discussions': ['g d'],
 			'page:History': ['g h'],
-			'special:Insights': ['g i'],
 			'special:Recentchanges': ['g r'],
 			// Local navigation / focus
 			'help:Keyboard': ['?'],

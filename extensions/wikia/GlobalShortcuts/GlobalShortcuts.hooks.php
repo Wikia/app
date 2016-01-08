@@ -40,7 +40,6 @@ class Hooks {
 
 
 		$vars['globalShortcutsConfig'] = [
-			'insights' => \SpecialPage::getTitleFor( 'Insights' )->getLocalURL(),
 			'recentChanges' => \SpecialPage::getTitleFor( 'RecentChanges' )->getLocalURL()
 		];
 		return true;

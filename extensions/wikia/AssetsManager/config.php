@@ -2724,6 +2724,14 @@ $config['insights_module_js'] = [
 	],
 ];
 
+$config['insights_globalshortcuts_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/Insights/scripts/InsightsGlobalShortcuts.js',
+	],
+];
+
 $config['templates_hq_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],

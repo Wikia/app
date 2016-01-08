@@ -8,6 +8,8 @@ class InsightsHooks {
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
 		global $wgRequest;
 
+		\Wikia::addAssetsToOutput( 'insights_globalshortcuts_js' );
+
 		$subpage = $wgRequest->getVal( 'insights', null );
 
 		// Load scripts for pages in insights loop
