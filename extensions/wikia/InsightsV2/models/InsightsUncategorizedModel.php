@@ -9,8 +9,8 @@ class InsightsUncategorizedModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'uncategorizedpages';
 
 	private static $insightConfig = [
-		'displayFixItMessage' => true,
-		'pageviews' => true
+		InsightsConfig::DISPLAYFIXITMSG => true,
+		InsightsConfig::PAGEVIEWS => true
 	];
 
 	public function __construct() {
