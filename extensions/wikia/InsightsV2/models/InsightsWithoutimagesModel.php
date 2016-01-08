@@ -8,8 +8,13 @@
 class InsightsWithoutimagesModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'withoutimages';
 
+	private static $insightConfig = [
+		'displayFixItMessage' => true,
+		'pageviews' => true
+	];
+
 	public function __construct() {
-		$this->config = new InsightsConfig( self::INSIGHT_TYPE );
+		$this->config = new InsightsConfig( self::INSIGHT_TYPE, self::$insightConfig );
 	}
 
 	public function getDataProvider() {

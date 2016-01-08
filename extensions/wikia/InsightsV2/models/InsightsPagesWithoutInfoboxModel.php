@@ -9,7 +9,7 @@ class InsightsPagesWithoutInfoboxModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'pageswithoutinfobox';
 
 	private static $insightConfig = [
-		'displayFixItMessage' => false
+		'pageviews' => true
 	];
 
 	public function __construct() {

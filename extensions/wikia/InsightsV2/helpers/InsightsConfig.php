@@ -4,13 +4,13 @@ class InsightsConfig {
 	const SUBTYPE = 'subtype';
 
 	// should display page views data
-	private $pageViews = true;
+	private $pageViews = false;
 	// should display link to "what links here" page
 	private $whatLinksHere = false;
 	// message to create "what links here" link
 	private $whatLinksHereMessage = 'insights-used-on';
 	// should display notification fix message
-	private $displayFixItMessage = true;
+	private $displayFixItMessage = false;
 	// does insight has additional action
 	private $action = false;
 	// insights type

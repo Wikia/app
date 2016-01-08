@@ -7,8 +7,6 @@ class InsightsTemplatesWithoutTypeModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'templateswithouttype';
 
 	private static $insightConfig = [
-		'displayFixItMessage' => false,
-		'pageviews' => false,
 		'whatlinkshere' => true,
 	];
 

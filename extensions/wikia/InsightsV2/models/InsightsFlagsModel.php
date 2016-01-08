@@ -10,7 +10,7 @@ class InsightsFlagsModel extends InsightsModel {
 	const INSIGHT_TYPE = 'flags';
 
 	private static $insightConfig = [
-		'displayFixItMessage' => false
+		'pageviews' => true
 	];
 
 	public function __construct( $subtype = null ) {

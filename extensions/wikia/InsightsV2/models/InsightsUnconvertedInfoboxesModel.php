@@ -8,8 +8,6 @@ class InsightsUnconvertedInfoboxesModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'nonportableinfoboxes';
 
 	private static $insightConfig = [
-		'displayFixItMessage' => false,
-		'pageviews' => false,
 		'whatlinkshere' => true
 	];
 
