@@ -71,6 +71,7 @@
 <?= $amazonMatch ?>
 <?= $openXBidder ?>
 <?= $rubiconFastlane ?>
+<?= $nielsen ?>
 <?= $dynamicYield ?>
 <?= $ivw2 ?>
 <div class="WikiaSiteWrapper">
