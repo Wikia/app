@@ -48,7 +48,7 @@ class TaskRunner {
 	}
 
 	function run() {
-		$this->startTime = $this->endTime = time();
+		$this->startTime = $this->endTime = microtime( true );
 		if ( $this->exception ) {
 			$this->results [] = $this->exception;
 			return;
@@ -89,9 +89,12 @@ class TaskRunner {
 			}
 		}
 
-		$this->endTime = time();
+		$this->endTime = microtime( true );
 	}
 
+	/**
+	 * @return float
+	 */
 	public function runTime() {
 		return $this->endTime - $this->startTime;
 	}
