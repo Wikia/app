@@ -58,6 +58,14 @@ class NodeImageSanitizerTest extends WikiaBaseTest {
 </li></ol>
 </li></ol>' ],
 				[ 'caption' => '1 2 2.1' ]
+			],
+			[
+				[ 'caption' => 'Próxima' ],
+				[ 'caption' => 'Próxima' ]
+			],
+			[
+				[ 'caption' => 'Música de' ],
+				[ 'caption' => 'Música de' ]
 			]
 		];
 	}

@@ -21,8 +21,9 @@ abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 	 * @return string
 	 */
 	protected function sanitizeElementData( $elementText  ) {
-		$dom = new \DOMDocument();
-		$dom->loadHTML( $this->wrapTextInRootNode( $elementText ) );
+		$dom = new \DOMDocument( );
+		$dom->loadHTML( $this->prepareValidXML( $elementText ) );
+
 		$elementTextAfterTrim = trim( $this->cleanUpDOM( $dom ) );
 		libxml_clear_errors();
 
@@ -40,11 +41,18 @@ abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 	}
 
 	/**
+	 * Wraps text in root node and prefixes with XML header providing explicit encoding
+	 *
 	 * @param $elementText
 	 * @return string
 	 */
-	protected function wrapTextInRootNode( $elementText ) {
-		$wrappedText = \Xml::openElement( $this->rootNodeTag ) . $elementText . \Xml::closeElement( $this->rootNodeTag );
+	protected function prepareValidXML( $elementText ) {
+		$wrappedText = implode('',[
+			'<?xml encoding="utf-8" ?>',
+			\Xml::openElement( $this->rootNodeTag ),
+			$elementText,
+			\Xml::closeElement( $this->rootNodeTag )
+		]);
 		return $wrappedText;
 	}
 
