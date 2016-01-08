@@ -381,15 +381,16 @@ class ImageServing {
 	}
 
 	private function getCutParams($width, $height, $align="center", $issvg=false) {
+		// make sure these are numeric and nonzero (BugId:20644, BugId:25965)
+		$width = max(1, intval($width));
+		$height = max(1, intval($height));
+		
 		//rescale of png always use width 512;
 		if( $issvg ) {
 			$height = round( ( 512 * $height) / $width );
 			$width = 512;
 		}
 
-		// make sure these are numeric and nonzero (BugId:20644, BugId:25965)
-		$width = max(1, intval($width));
-		$height = max(1, intval($height));
 		// in case we're missing some proportions, maintain the original aspect ratio
 		if (empty($this->proportion['h']) && !empty($this->proportion['w'])) {
 			$this->proportion['h'] = (float)$height * $this->proportion['w'] / $width;
