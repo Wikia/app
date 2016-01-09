@@ -45,18 +45,11 @@ class NodeImageSanitizerTest extends WikiaBaseTest {
 				[ 'caption' => '' ]
 			],
 			[
-				[ 'caption' => '<ul><li>1
-</li><li>2
-</li><li>3
-</li></ul>' ],
+				[ 'caption' => '<ul><li>1</li><li>2</li><li>3</li></ul>' ],
 				[ 'caption' => '1 2 3' ]
 			],
 			[
-				[ 'caption' => '<ol><li>1
-</li><li>2
-<ol><li>2.1
-</li></ol>
-</li></ol>' ],
+				[ 'caption' => '<ol><li>1</li><li>2<ol><li>2.1</li></ol></li></ol>' ],
 				[ 'caption' => '1 2 2.1' ]
 			],
 			[
@@ -66,6 +59,14 @@ class NodeImageSanitizerTest extends WikiaBaseTest {
 			[
 				[ 'caption' => 'Música de' ],
 				[ 'caption' => 'Música de' ]
+			],
+			[
+				[ 'caption' => 'A <b>Kuruma</b> in <i><a href="/wiki/Grand_Theft_Auto_Online" title="Grand Theft Auto Online">Grand Theft Auto Online</a></i>.' ],
+				[ 'caption' => 'A Kuruma in <a href="/wiki/Grand_Theft_Auto_Online" title="Grand Theft Auto Online">Grand Theft Auto Online</a>.' ]
+			],
+			[
+				[ 'caption' => '<a href="/wiki/User:Idradm" class="new" title="User:Idradm (page does not exist)">Idradm</a> (<a href="/wiki/User_talk:Idradm" title="User talk:Idradm (page does not exist)">talk</a>) 15:34, January 4, 2016 (UTC)' ],
+				[ 'caption' => '<a href="/wiki/User:Idradm" class="new" title="User:Idradm (page does not exist)">Idradm</a> (<a href="/wiki/User_talk:Idradm" title="User talk:Idradm (page does not exist)">talk</a>) 15:34, January 4, 2016 (UTC)' ]
 			]
 		];
 	}
