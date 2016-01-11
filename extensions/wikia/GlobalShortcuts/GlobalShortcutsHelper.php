@@ -17,15 +17,16 @@ class Helper {
 		'page:Edit' => [ 'e' ],
 		'page:History' => [ 'g h' ],
 		'page:Move' => [ 'm' ],
+		'special:Recentchanges' => [ 'g r' ],
 	];
 
 	/**
 	 * Adds page actions available for user on current page and shortcut keys if available
 	 * Not all actions needs to have shortcut key assigned
-	 * @param $actions
-	 * @param $shortcuts
+	 * @param array $actions
+	 * @param array $shortcuts
 	 */
-	public function addCurrentPageActions( &$actions, &$shortcuts ) {
+	public function addCurrentPageActions( array &$actions, array &$shortcuts ) {
 		foreach ( $this->pageCommands as $actionId => $command ) {
 			$userCommandService = new \UserCommandsService();
 			$pageAction = $userCommandService->get( $command );
@@ -41,7 +42,12 @@ class Helper {
 		}
 	}
 
-	private function addShortcutKeys( $actionId , &$shortcuts ) {
+	/**
+	 * Add shortcut keys to provided $shortcuts array for provided actionId if available
+	 * @param string $actionId
+	 * @param array $shortcuts
+	 */
+	public function addShortcutKeys( $actionId , array &$shortcuts ) {
 		 if ( isset( $this->shortcutKeys[$actionId] ) ) {
 			 $shortcuts[$actionId] = $this->shortcutKeys[$actionId];
 		 }

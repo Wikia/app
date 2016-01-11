@@ -6,16 +6,6 @@ define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions'], function (Mousetra
 	'use strict';
 
 	var all = {},
-		INITIAL_SHORTCUTS = {
-			// Actions
-			'general:StartWikia': ['s'],
-			// Global navigation
-			'special:Recentchanges': ['g r'],
-			// Local navigation / focus
-			'help:Keyboard': ['?'],
-			'wikia:Search': ['g s', '/'],
-			'help:Actions': ['.']
-		},
 		wgWikiaShortcutKeys = mw.config.get('wgWikiaShortcutKeys');
 
 	function initShortcut(actionId, key) {
@@ -43,13 +33,6 @@ define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions'], function (Mousetra
 	}
 
 	function init() {
-		// Add default shortcuts
-		Object.keys(INITIAL_SHORTCUTS).forEach(function (id) {
-			INITIAL_SHORTCUTS[id].forEach(function (key) {
-				add(id, key);
-			});
-		});
-
 		// Add shortcuts provided by backend
 		Object.keys(wgWikiaShortcutKeys).forEach(function (id) {
 			wgWikiaShortcutKeys[id].forEach(function (key) {

@@ -39,7 +39,7 @@ class Hooks {
 		$shortcuts = [];
 		$helper = new Helper();
 		$helper->addCurrentPageActions( $actions, $shortcuts );
-		$this->addSpecialPageActions( $actions );
+		$this->addSpecialPageActions( $actions, $shortcuts );
 
 		wfRunHooks( 'PageGetActions', [ &$actions, &$shortcuts ] );
 		$vars['wgWikiaPageActions'] = $actions;
@@ -53,20 +53,24 @@ class Hooks {
 		return true;
 	}
 
-	private function addSpecialPageActions( &$actions ) {
+	private function addSpecialPageActions( &$actions, &$shortcuts ) {
 		$context = \RequestContext::getMain();
 		$pages = \SpecialPageFactory::getUsablePages( $context->getUser() );
+		$helper = new Helper();
 
 		$groups = [ ];
 		foreach ( $pages as $page ) {
 			if ( $page->isListed() ) {
 				$group = \SpecialPageFactory::getGroup( $page );
+				$actionId = 'special:' . $page->getName();
 
 				$groups[$group][] = [
-					'id' => 'special:' . $page->getName(),
+					'id' => $actionId,
 					'caption' => $page->getDescription(),
 					'href' => $page->getTitle()->getFullURL(),
 				];
+
+				$helper->addShortcutKeys( $actionId, $shortcuts );
 			}
 		}
 

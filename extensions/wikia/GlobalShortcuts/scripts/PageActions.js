@@ -100,34 +100,6 @@ define('PageActions', ['mw', 'jquery'], function (mw, $) {
 		register(pageAction, canReplace);
 	}
 
-	function addMany(many) {
-		many.forEach(function (one) {
-			add(one);
-		});
-	}
-
-	function addOrOverride(desc, propertiesToOverride) {
-		var upd = {};
-		if (propertiesToOverride && (desc.id in byId)) {
-			propertiesToOverride.forEach(function (property) {
-				upd[property] = desc[property];
-			});
-			find(desc.id).update(upd);
-		} else {
-			add(desc);
-		}
-	}
-
-	function addOrOverrideMany(many) {
-		many.forEach(function (one) {
-			var override;
-			one = $.extend({}, one);
-			override = one.override || [];
-			delete one.override;
-			addOrOverride(one, override);
-		});
-	}
-
 	function find(id) {
 		return byId[id];
 	}
@@ -158,41 +130,6 @@ define('PageActions', ['mw', 'jquery'], function (mw, $) {
 	(window.wgWikiaPageActions || []).forEach(function (actionDesc) {
 		add(actionDesc);
 	});
-
-	addOrOverrideMany([{
-		id: 'general:StartWikia',
-		caption: 'Start a new wikia',
-		fn: function () {
-			$('[data-id=start-wikia]')[0].click();
-		},
-		category: 'Global'
-	}, {
-		id: 'help:Keyboard',
-		caption: 'Keyboard shortcuts help',
-		fn: function () {
-			require(['GlobalShortcutsHelp'], function (help) {
-				help.open();
-			});
-		},
-		category: 'Help'
-	}, {
-		id: 'wikia:Search',
-		caption: 'Search for a page',
-		fn: function () {
-			$('#searchInput')[0].focus();
-		},
-		category: 'Current wikia'
-	}, {
-		id: 'help:Actions',
-		caption: 'Action list',
-		fn: function () {
-			require(['GlobalShortcutsSearch'], function (GlobalShortcutsSearch) {
-				var searchModal = new GlobalShortcutsSearch();
-				searchModal.open();
-			});
-		},
-		category: 'Help'
-	}]);
 
 	return {
 		all: all,
