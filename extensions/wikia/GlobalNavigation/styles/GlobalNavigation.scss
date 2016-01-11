@@ -91,5 +91,15 @@
 	display: none;
 }
 
+.global-navigation-2016 {
+	.explore-wikia-dropdown {
+		display: none;
+	}
+
+	.inline-link {
+		display: inline-block;
+	}
+}
+
 @import 'breakpoints-GlobalNavigation';
 @import 'responsive-GlobalNavigation';

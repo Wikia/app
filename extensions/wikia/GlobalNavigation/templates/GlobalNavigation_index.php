@@ -47,14 +47,29 @@
 				<a href = "<?= htmlspecialchars( $centralUrl ) ?>"
 					class="wikia-logo"
 					rel = "nofollow"
-					data - id = "wikia-logo" >
+					data-id = "wikia-logo" >
 					<img src = "<?= $wg->BlankImgUrl ?>"
 						height = "24"
 						width = "91"
 						alt = "<?= wfMessage( 'oasis-global-page-header' )->escaped() ?>"
 						title = "<?= wfMessage( 'oasis-global-page-header' )->escaped() ?>" >
-				</a >
-			</div >
+				</a>
+			</div>
+			<div class="table-cell">
+				<a class="inline-link" href="http://gameshub.wikia.com/wiki/Games_Hub">Games</a>
+				<a class="inline-link" href="http://movieshub.wikia.com/wiki/Movies_Hub">Movies</a>
+				<a class="inline-link" href="http://tvhub.wikia.com/wiki/TV_Hub">TV</a>
+				<div class="inline-link" id="exploreWikiaEntryPoint">
+					<a>Explore Wikia</a>
+					<ul class="explore-wikia-dropdown" id="exploreWikiaDropdown">
+						<li><a href="http://gameshub.wikia.com/wiki/Games_Hub">Games</a></li>
+						<li><a href="http://movieshub.wikia.com/wiki/Movies_Hub">Movies</a></li>
+						<li><a href="http://tvhub.wikia.com/wiki/TV_Hub">TV</a></li>
+						<li><a href="#">Top Communities</a></li>
+						<li><a href="#">Community Central</a></li>
+					</ul>
+				</div>
+			</div>
 			<div class="search-container table-cell">
 				<?= $app->renderView('GlobalNavigation', 'searchIndex'); ?>
 			</div>
