@@ -161,19 +161,10 @@ $messages = array(
 'navigation'    => 'Hatudu-dalan',
 'and'           => '&#32;ho',
 
-# Cologne Blue skin
 'qbfind'         => 'Hetan',
-'qbedit'         => 'Edita',
 'qbpageoptions'  => "Pájina ne'e",
-'qbmyoptions'    => "Ha'u-nia pájina sira",
-'qbspecialpages' => 'Pájina espesiál sira',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-view-create'  => 'Kria',
-'vector-view-edit'    => 'Edita',
-'vector-view-history' => 'Haree istória',
 
 'errorpagetitle'    => 'Sala',
 'returnto'          => 'Fali ba $1.',
@@ -191,7 +182,6 @@ $messages = array(
 'edit'              => 'Edita',
 'create'            => 'Kria',
 'editthispage'      => "Edita pájina ne'e",
-'create-this-page'  => "Kria pájina ne'e",
 'delete'            => 'Halakon',
 'deletethispage'    => "Halakon pájina ne'e",
 'undelete_short'    => 'Restaurar {{PLURAL:$1|versaun ida|versaun $1}}',
@@ -204,16 +194,8 @@ $messages = array(
 'talkpage'          => "Diskusaun kona-ba pájina ne'e",
 'talkpagelinktext'  => 'Diskusaun',
 'specialpage'       => 'Pájina espesiál',
-'postcomment'       => 'Seksaun foun',
 'talk'              => 'Diskusaun',
 'toolbox'           => 'Kaixa besi nian',
-'userpage'          => "Haree pájina uza-na'in",
-'projectpage'       => 'Haree pájina projetu nian',
-'imagepage'         => 'Haree pájina imajen nian',
-'mediawikipage'     => 'Haree pájina mensajen nian',
-'viewhelppage'      => 'Haree pájina ajuda',
-'categorypage'      => 'Haree pájina kategoría nian',
-'viewtalkpage'      => 'Haree diskusaun',
 'otherlanguages'    => 'Iha lian seluk',
 'lastmodifiedat'    => "Mudansa ba dala ikus pájina ne'e nian iha $1, $2.",
 'protectedpage'     => 'Pájina maka ema ruma proteje tiha',
@@ -831,10 +813,6 @@ Check your spelling, ka [[Special:UserLogin/signup|kria konta foun]].',
 'siteusers'        => "{{PLURAL:$2|uza-na'in|uza-na'in}} {{SITENAME}} nian $1",
 
 # Skin names
-'skinname-standard'    => 'Klásiku',
-'skinname-cologneblue' => 'Kolónia azúl',
-'skinname-myskin'      => 'MySkin',
-'skinname-chick'       => 'Manu',
 
 # Browsing diffs
 'previousdiff' => '←Versaun molok',

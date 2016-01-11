@@ -19,18 +19,19 @@ class Starters {
 	 * "*" is default
 	 */
 	static private $mStarters = [
-		"*"  => "aastarter",
-		"de" => "destarter",
-		"en" => "starter",
-		"es" => "esstarter",
-		"fi" => "fistarter",
-		"fr" => "starterbeta",
-		"it" => "italianstarter",
-		"ja" => "jastarter",
-		"ko" => "starterko",
-		"nl" => "nlstarter",
-		"pl" => "plstarter",
-		"ru" => "rustarter",
+		'*'  => 'aastarter',
+		'de' => 'destarter',
+		'en' => 'starter',
+		'es' => 'esstarter',
+		'fi' => 'fistarter',
+		'fr' => 'starterbeta',
+		'it' => 'italianstarter',
+		'ja' => 'jastarter',
+		'ko' => 'starterko',
+		'nl' => 'nlstarter',
+		'pl' => 'plstarter',
+		'ru' => 'rustarter',
+		'zh' => 'zhstarter',
 	];
 
 	/**
@@ -42,7 +43,7 @@ class Starters {
 	public static function getStarterByLanguage( $lang ) {
 		return ( isset( self::$mStarters[ $lang ] ) )
 			? self::$mStarters[ $lang ]
-			: self::$mStarters[ "*" ];
+			: self::$mStarters[ '*' ];
 	}
 
 	/**

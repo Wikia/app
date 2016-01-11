@@ -1,10 +1,10 @@
 <?php
 
-use Wikia\Service\Gateway\ConsulUrlProvider;
-use Wikia\Service\Swagger\ApiProvider;
 use Swagger\Client\TemplateClassification\Storage\Api\TCSApi;
-use Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider;
 use Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder;
+use Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider;
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\Swagger\ApiProvider;
 
 class TemplateClassificationService {
 
@@ -171,9 +171,8 @@ class TemplateClassificationService {
 	 * @return TCSApi
 	 */
 	private function createApiClient() {
-		global $wgConsulUrl, $wgConsulServiceTag;
-		$urlProvider = new ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag );
-		$apiProvider = new ApiProvider( $urlProvider );
+		/** @var ApiProvider $apiProvider */
+		$apiProvider = Injector::getInjector()->get(ApiProvider::class);
 		$api = $apiProvider->getApi( self::SERVICE_NAME, TCSApi::class );
 
 		// default CURLOPT_TIMEOUT for API client is set to 0 which means no timeout.

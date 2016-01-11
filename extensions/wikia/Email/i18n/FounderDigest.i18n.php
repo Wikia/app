@@ -44,9 +44,9 @@ $messages['de'] = array(
 	'emailext-founder-digest-views-description-1' => 'Wir freuen uns, wenn du auch weiterhin so gute Arbeit leistest, interessante Artikel verfasst, zu Diskussionen beiträgst und Fotos und Videos für die Community bereitstellst.',
 	'emailext-founder-digest-views-description-2' => 'Füge auch weiterhin neue Sachen hinzu und werbe für dein Wikia, damit es mehr Leute lesen, Beiträge dafür schreiben und es bekannter machen. Deine Community sieht super aus!',
 	'emailext-founder-digest-edits-header' => '$1 Beiträge erstellt',
-	'emailext-founder-digest-edits-description' => 'Zufriedene Community-Mitglieder erstellen tolle Wikias. Vergiß nicht, den Mitgliedern für ihre Beiträge zu danken!',
+	'emailext-founder-digest-edits-description' => 'Zufriedene Community-Mitglieder erstellen tolle Wikias. Vergiss nicht, ihnen für ihre Beiträge zu danken!',
 	'emailext-founder-digest-users-header' => '$1 neue Wikianer',
-	'emailext-founder-digest-users-description' => 'Heiße neue Leute in deinem Wikia willkommen! Lasse sie an der tollen Fan-Community tielhaben, die du erschaffen hast.',
+	'emailext-founder-digest-users-description' => 'Heiße neue Leute in deinem Wikia willkommen! Lasse sie an der tollen Fan-Community teilhaben, die du erschaffen hast.',
 );
 
 $messages['es'] = array(

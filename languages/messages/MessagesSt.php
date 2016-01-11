@@ -50,7 +50,6 @@ $messages = array(
 'mytalk'     => 'Leqephe la ka la moqoqo',
 'navigation' => 'Eya ho',
 
-# Cologne Blue skin
 'faq' => 'Dipotso-mehla',
 
 'returnto'       => 'Kgutlela ho $1.',
@@ -61,7 +60,6 @@ $messages = array(
 'newpage'        => 'Leqephe le letjha',
 'talkpage'       => 'Qoqa ka leqephe lena',
 'talk'           => 'Moqoqo',
-'categorypage'   => 'Mpontshe leqephe la mekga',
 'otherlanguages' => 'Ka maleme a mang',
 'jumptosearch'   => 'phuputso',
 
