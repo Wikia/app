@@ -30,7 +30,7 @@ class TemplateTypesParser {
 					break;
 				case TemplateClassificationService::TEMPLATE_FLAG:
 					if ( $wgEnableNoticeTemplateParsing ) {
-						$text = NoticeTemplate::handleNoticeTemplate();
+						$text = NoticeTemplate::handle();
 					}
 					break;
 				case TemplateClassificationService::TEMPLATE_REFERENCES:
