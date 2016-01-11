@@ -70,6 +70,14 @@
 						<li><a class="cell-link" href="<?= wfMessage( 'global-navigation-tv-hub-link' )->inContentLanguage()->text()?>"><?= wfMessage( 'global-navigation-tv-hub-link-label' )->inContentLanguage()->text()?></a></li>
 						<li><a href="#">Top Communities</a></li>
 						<li><a href="#">Community Central</a></li>
+						<li>
+							<a href="<?= htmlspecialchars( $createWikiUrl ) ?>"
+								class="start-wikia"
+								title="<?= wfMessage( 'global-navigation-create-wiki' )->escaped(); ?>"
+								data-id="start-wikia">
+								<span><?= ( wfMessage( 'global-navigation-create-wiki' )->escaped() ); ?></span>
+							</a>
+						</li>
 					</ul>
 				</div>
 			</div>
