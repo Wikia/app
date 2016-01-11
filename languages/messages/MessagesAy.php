@@ -124,13 +124,10 @@ $messages = array(
 'navigation'    => 'Wampuña',
 'and'           => '&#32;-mpi',
 
-# Cologne Blue skin
 'qbfind'        => 'Thaqaña',
 'qbbrowse'      => 'Wampuña',
-'qbedit'        => 'Turkaña',
 'qbpageoptions' => 'Uñstawitaki ajllita',
 'qbpageinfo'    => "Uñstawxat uñt'ayawi",
-'qbmyoptions'   => 'Ajllitanakaja',
 
 'errorpagetitle'    => 'Pantja',
 'help'              => 'Yanapaña',
@@ -143,7 +140,6 @@ $messages = array(
 'edit'              => 'Turkaña',
 'create'            => 'Uñstayaña',
 'editthispage'      => 'Aka uñstawi turkaña',
-'create-this-page'  => 'Aka uñstawi uñstayaña',
 'delete'            => 'Pichaña',
 'deletethispage'    => 'Aka uñstawi phiskhuraña',
 'undelete_short'    => "{{PLURAL:$1|mayaskiptawi|$1 askiptanakawi}} kutt'ayxaña",

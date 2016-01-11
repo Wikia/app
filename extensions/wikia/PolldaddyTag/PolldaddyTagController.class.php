@@ -23,6 +23,11 @@ class PolldaddyTagController extends WikiaController {
 		return true;
 	}
 
+	public static function onWikiaMobileAssetsPackages( Array &$jsBodyPackages, Array &$jsExtensionPackages, Array &$scssPackages ) {
+		$jsExtensionPackages[] = 'polldaddy_tag_wikiamobile';
+		return true;
+	}
+
 	public function renderTag( $input, array $args, Parser $parser, PPFrame $frame ) {
 		$isValid = $this->validator->validateAttributes( $args );
 

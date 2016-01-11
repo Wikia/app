@@ -83,8 +83,10 @@ $wikia-top-ads-index: 2;
 #LEFT_SKYSCRAPER_3 {
 	clear: both;
 	position: absolute;
-	right: 70px;
-	top: -640px;
+	right: 0;
+	text-align: center;
+	top: -600px;
+	width: 300px;
 }
 
 /** Box ads **/
@@ -127,7 +129,7 @@ $wikia-top-ads-index: 2;
 	height: 250px;
 }
 
-#PREFOOTER_LEFT_BOXAD, #PREFOOTER_RIGHT_BOXAD {
+#PREFOOTER_LEFT_BOXAD, #PREFOOTER_MIDDLE_BOXAD, #PREFOOTER_RIGHT_BOXAD {
 	float: left;
 	margin: 0 15px;
 

@@ -3,13 +3,6 @@ class VideoHandlerHooks {
 
 	const VIDEO_WIKI = 298117;
 
-	static public function WikiaVideoNewImagesBeforeQuery( &$where ) {
-		$where[] = 'img_media_type != \'VIDEO\'';
-		$where[] = 'img_major_mime != \'video\'';
-		$where[] = 'img_media_type != \'swf\'';
-		return true;
-	}
-
 	static public function WikiaVideo_isMovable( $result, $index ) {
 		return true;
 	}

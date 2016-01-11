@@ -103,18 +103,7 @@ $messages = array(
 'mytalk'        => 'Myn discuusjeblad',
 'and'           => '&#32;en',
 
-# Cologne Blue skin
-'qbedit'         => 'Bewerkn',
-'qbspecialpages' => 'Specioale bloadn',
 
-# Vector skin
-'vector-action-delete'   => 'Wegdoen',
-'vector-action-move'     => 'Ernoemn',
-'vector-view-create'     => 'Anmoakn',
-'vector-view-edit'       => 'Bewerkn',
-'vector-view-history'    => 'Geschiedenisse bekykn',
-'vector-view-view'       => 'Leezn',
-'vector-view-viewsource' => 'Brontekst bekykn',
 
 'tagline'           => 'Van {{SITENAME}}',
 'help'              => 'Ulpe',
@@ -128,7 +117,6 @@ $messages = array(
 'edit'              => "Bewerk'n",
 'create'            => 'Anmoakn',
 'editthispage'      => 'Da blad ier bewerkn',
-'create-this-page'  => 'Da blad ier anmoakn',
 'delete'            => 'Wegdoen',
 'deletethispage'    => 'Da blad ier verwydern',
 'undelete_short'    => '{{PLURAL:$1|êen bewerkinge|$1 bewerkingn}} werekêern',

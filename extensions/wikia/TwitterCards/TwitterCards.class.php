@@ -22,7 +22,7 @@ class TwitterCards extends WikiaModel {
 		$meta['twitter:card'] = 'summary';
 		$meta['twitter:site'] = $this->wg->TwitterAccount;
 		$meta['twitter:url'] = $title->getFullURL();
-		$meta['twitter:title'] = $this->getPageTitle( $title );
+		$meta['twitter:title'] = $this->getPageTitle( $output );
 
 		// add description
 		$description = $this->getDescription( $output );
@@ -35,16 +35,20 @@ class TwitterCards extends WikiaModel {
 
 	/**
 	 * Get page title
-	 * @param Title $title
+	 * @param OutputPage $output
 	 * @return string
 	 */
-	protected function getPageTitle( $title ) {
+	protected function getPageTitle( $output ) {
+		$title = $output->getTitle();
+		$namespace = $title->getNamespace();
 		if ( $title->isMainPage() ) {
 			$pageTitle = $this->wg->Sitename;
 		} else if ( !empty( $this->wg->EnableBlogArticles )
-			&& ( $title->getNamespace() == NS_BLOG_ARTICLE || $title->getNamespace() == NS_BLOG_ARTICLE_TALK ) )
+			&& ( $namespace == NS_BLOG_ARTICLE || $namespace == NS_BLOG_ARTICLE_TALK ) )
 		{
 			$pageTitle = $title->getSubpageText();
+		} else if ( !empty( $this->wg->EnableWallExt ) && $namespace == NS_USER_WALL_MESSAGE ) {
+			$pageTitle = $output->getPageTitle();
 		} else {
 			$pageTitle = $title->getText();
 		}

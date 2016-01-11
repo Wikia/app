@@ -13,8 +13,11 @@
 class WikiaResponse {
 	/**
 	 * Response codes
+	 *
+	 * @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
 	 */
 	const RESPONSE_CODE_OK = 200;
+	const RESPONSE_CODE_CREATED = 201;
 	const RESPONSE_CODE_ERROR = 501;
 	const RESPONSE_CODE_BAD_REQUEST = 400;
 	const RESPONSE_CODE_FORBIDDEN = 403;

@@ -140,23 +140,10 @@ $messages = array(
 'navigation'    => 'Ol bikpela pes',
 'and'           => '&#32;na',
 
-# Cologne Blue skin
 'qbfind'         => 'Painim',
 'qbbrowse'       => 'Lukim',
-'qbedit'         => 'Senisim',
 'qbpageoptions'  => 'Dispela pes',
-'qbmyoptions'    => 'Ol pes bilong mi',
-'qbspecialpages' => 'Ol sipesol pes',
 
-# Vector skin
-'vector-action-delete'   => 'Rausim',
-'vector-action-move'     => 'Surikim',
-'vector-action-protect'  => 'Tambuim',
-'vector-view-create'     => 'Kirapim',
-'vector-view-edit'       => 'Senisim',
-'vector-view-history'    => 'Ol senis',
-'vector-view-view'       => 'Rit',
-'vector-view-viewsource' => 'Lukim as tok',
 
 'errorpagetitle'   => 'Samting i kranki',
 'returnto'         => 'Go bek long $1',
@@ -172,7 +159,6 @@ $messages = array(
 'edit'             => 'Senisim',
 'create'           => 'Kirapim',
 'editthispage'     => 'Senisim dispela pes',
-'create-this-page' => 'Kirapim dispela pes',
 'delete'           => 'Rausim',
 'deletethispage'   => 'Rausim dispela pes',
 'protect'          => 'Tambuim',
@@ -182,18 +168,9 @@ $messages = array(
 'talkpagelinktext' => 'Toktok',
 'specialpage'      => 'Sipesol pes',
 'personaltools'    => 'Ol pes bilong mi',
-'postcomment'      => 'Nupela hap bilong pes',
 'talk'             => 'Toktok',
 'views'            => 'Ol lukluk',
 'toolbox'          => 'Sipesol bokis',
-'userpage'         => 'Lukim pes bilong yusa',
-'projectpage'      => 'Lukim pes bilong projek',
-'imagepage'        => 'Lukim pes bilong fail',
-'mediawikipage'    => 'Lukim pes bilong toksave',
-'templatepage'     => 'Lukim templet pes',
-'viewhelppage'     => 'Lukim pes long halivim',
-'categorypage'     => 'Lukim pes bilong grup',
-'viewtalkpage'     => 'Lukim toktok',
 'otherlanguages'   => 'Long ol narapela tokples',
 'redirectedfrom'   => '(Nupela rot i pinis long $1)',
 'redirectpagesub'  => 'Nupela rot',
@@ -362,8 +339,6 @@ Na tu yu tok tru nau olsem yu raitim dispela yu yet, o yu kisim long wanpela hap
 'powersearch-toggleall'          => 'Olgeta',
 'powersearch-togglenone'         => 'I nogat wanpela',
 
-# Quickbar
-'qbsettings-none' => 'I nogat wanpela',
 
 # Preferences page
 'preferences'               => 'Ol laik',

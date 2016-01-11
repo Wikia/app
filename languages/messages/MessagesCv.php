@@ -167,26 +167,12 @@ $messages = array(
 'navigation'    => 'Меню',
 'and'           => '&#32;тата',
 
-# Cologne Blue skin
 'qbfind'         => 'Шырав',
 'qbbrowse'       => 'Курăм',
-'qbedit'         => 'Тӳрлет',
 'qbpageoptions'  => 'Страница ĕнерлевĕсем',
 'qbpageinfo'     => 'Страница çинчен',
-'qbmyoptions'    => 'Сирĕн ĕнĕрлевсем',
-'qbspecialpages' => 'Ятарлӑ страницӑсем',
 'faq'            => 'ЫйХу',
-'faqpage'        => 'Project:ЫйХу',
 
-# Vector skin
-'vector-action-addsection' => 'Тема хуш',
-'vector-action-delete'     => 'Кăларса пăрах',
-'vector-action-move'       => 'Ятне улăштар',
-'vector-action-protect'    => 'Хӳтĕле',
-'vector-view-create'       => 'Çĕннине ту',
-'vector-view-edit'         => 'Тӳрлет',
-'vector-view-history'      => 'Кун-çул',
-'vector-view-view'         => 'Вула',
 
 'errorpagetitle'    => 'Йăнăш',
 'returnto'          => '$1 страницăна таврăн.',
@@ -205,7 +191,6 @@ $messages = array(
 'edit'              => 'Тӳрлетӳ',
 'create'            => 'Çĕннине ту',
 'editthispage'      => 'Страницăна тӳрлетесси',
-'create-this-page'  => 'Ку страницăна хатĕрле',
 'delete'            => 'Кăларса пăрахасси',
 'deletethispage'    => 'Хурат ăна',
 'undelete_short'    => '$1 тӳрлетӳсене каялла тавăр',
@@ -219,19 +204,9 @@ $messages = array(
 'talkpagelinktext'  => 'Сӳтсе яв',
 'specialpage'       => 'Ятарлă страницă',
 'personaltools'     => 'Ман хатĕрсем',
-'postcomment'       => 'Хуравла',
-'articlepage'       => 'Статьяна пăх',
 'talk'              => 'Сӳтсе явасси',
 'views'             => 'Пурĕ пăхнă',
 'toolbox'           => 'Ĕç хатĕрĕсем',
-'userpage'          => 'Хутшăнакан страницине пăх',
-'projectpage'       => 'Проект страницине пăх',
-'imagepage'         => 'Ӳкерчĕк страницине пăх',
-'mediawikipage'     => 'Пĕлтерӳ страницине кăтарт',
-'templatepage'      => 'Шаблонăн страницине пăх',
-'viewhelppage'      => 'Справка страницине пăх',
-'categorypage'      => 'Категори страницине пăх',
-'viewtalkpage'      => 'Сӳтсе явнине тишкер',
 'otherlanguages'    => 'Урăх чěлхесем',
 'redirectedfrom'    => '($1 çинчен куçарнă)',
 'redirectpagesub'   => 'Куçаракан страница',
@@ -590,8 +565,6 @@ $1 хутшăнакан патне, е ытти [[{{MediaWiki:Grouppage-sysop}}|
 'powersearch'        => 'Анлă шырав',
 'powersearch-legend' => 'Анлă шырав',
 
-# Quickbar
-'qbsettings' => 'Навигаци хăми',
 
 # Preferences page
 'preferences'               => 'Ĕнерлевсем',

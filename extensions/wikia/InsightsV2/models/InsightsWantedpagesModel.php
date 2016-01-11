@@ -9,8 +9,9 @@ class InsightsWantedpagesModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'wantedpages';
 
 	private static $insightConfig = [
-		'pageviews' => false,
-		'whatlinksheremessage' => 'insights-wanted-by'
+		InsightsConfig::DISPLAYFIXITMSG => true,
+		InsightsConfig::WHATLINKSHERE => true,
+		InsightsConfig::WHATLINKSHEREMSG => 'insights-wanted-by'
 	];
 
 	public function __construct() {

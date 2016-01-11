@@ -106,33 +106,11 @@ $messages = array(
 'navigation'    => 'Faahre-Gnepp',
 'and'           => '&#32;unn',
 
-# Cologne Blue skin
 'qbfind'         => 'Finne',
-'qbedit'         => 'Ennere',
 'qbpageoptions'  => 'Des Blatt',
 'qbpageinfo'     => 'Daade vun dem Blatt',
-'qbmyoptions'    => 'Mei Bledder',
-'qbspecialpages' => 'Besunnere Bledder',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-delete'      => 'Lösche',
-'vector-action-move'        => 'Ziehe',
-'vector-action-protect'     => 'Schitze',
-'vector-namespace-category' => 'Abdeeling',
-'vector-namespace-help'     => 'Hilfblatt',
-'vector-namespace-image'    => 'Feil',
-'vector-namespace-main'     => 'Blatt',
-'vector-namespace-project'  => 'Project-Blatt',
-'vector-namespace-special'  => 'Besunneres Blatt',
-'vector-namespace-talk'     => 'Dischbedutt',
-'vector-namespace-template' => 'Moddel',
-'vector-namespace-user'     => 'Yuuser-Blatt',
-'vector-view-create'        => 'Schtaerte',
-'vector-view-edit'          => 'Ennere',
-'vector-view-history'       => 'Gschicht zeige',
-'vector-view-view'          => 'Lese',
 'namespaces'                => 'Blatznaame',
 
 'errorpagetitle'   => 'Mischteek',
@@ -152,7 +130,6 @@ $messages = array(
 'edit'             => 'Ennere/Tscheensche',
 'create'           => 'Schtaerte',
 'editthispage'     => 'Des Blatt ennere',
-'create-this-page' => 'Blatt schtaerte',
 'delete'           => 'Lösche',
 'deletethispage'   => 'Des Blatt lösche',
 'protect'          => 'Schitze',
@@ -163,15 +140,9 @@ $messages = array(
 'talkpagelinktext' => 'Gschwetz',
 'specialpage'      => 'Besunneres Blatt',
 'personaltools'    => 'Paerseenlich Gscharr',
-'articlepage'      => 'Inhalt vun dem Blatt aagucke',
 'talk'             => 'Dischbedutt',
 'views'            => 'Aasichte',
 'toolbox'          => 'Gscharr',
-'userpage'         => 'Yuuserblatt zeige',
-'imagepage'        => 'Feils zeige',
-'templatepage'     => 'Moddle zeige',
-'categorypage'     => 'Abeelingsblatt zeige',
-'viewtalkpage'     => 'Dischbedutt zeige',
 'otherlanguages'   => 'Annere Schprooche',
 'redirectedfrom'   => '(Weiterleitung vun $1)',
 'redirectpagesub'  => 'Weiderleiding',
@@ -378,8 +349,6 @@ Wenns des net iss, hoscht verleicht en Fehler in de Daadebank gfunne. Bitte meld
 'powersearch-togglenone'         => 'Ken',
 'search-external'                => 'Guck im Gewebb',
 
-# Quickbar
-'qbsettings-none' => 'Ken',
 
 # Preferences page
 'preferences'              => 'paerseenlich Profil',

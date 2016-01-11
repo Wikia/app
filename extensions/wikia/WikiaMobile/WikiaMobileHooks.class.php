@@ -129,6 +129,29 @@ class WikiaMobileHooks {
 				'',
 				$text
 			);
+
+			//Remove "In other languages" section from starwars wikis that looks like this:
+			//
+			//<div id="p-lang" class="portlet">
+			//<div>In other languages</div>
+			//<div class="pBody">
+			//<ul>
+			//<li class="interwiki-bg plainlinks" title="bg:Чубака"><a class="text" href=" [...]</ul>
+			//</div>
+			//</div>
+			//
+			//There's code in Mercury to generate the section based on links from Lilly
+
+			if ( F::app()->wg->EnableLillyExt ) {
+				$regex = '<div id="p-lang" class="portlet">\s*'
+					. '<div>[^<>]*</div>\s*'
+					. '<div class="pBody">\s*'
+					. '<ul>\s*'
+					. '([^<>]+|<li\s[^<>]*>|</li>|<a\s[^<>]*>|</a>)*</ul>\s*'
+					. '</div>\s*'
+					. '</div>';
+				$text = preg_replace(":$regex:im", '',	$text);
+			}
 		}
 
 		wfProfileOut( __METHOD__ );

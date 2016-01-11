@@ -159,22 +159,8 @@ $messages = array(
 'navigation'    => 'плаваниѥ',
 'and'           => '&#32;и',
 
-# Cologne Blue skin
-'qbedit'         => 'исправи',
 'qbpageoptions'  => 'си страни́ца',
-'qbmyoptions'    => 'моꙗ страницѧ',
-'qbspecialpages' => 'нарочьнꙑ страницѧ',
 
-# Vector skin
-'vector-action-delete'    => 'поничьжєниѥ',
-'vector-action-move'      => 'прѣимєнованиѥ',
-'vector-action-protect'   => 'ꙁабранѥниѥ',
-'vector-action-unprotect' => 'поущєниѥ',
-'vector-view-create'      => 'сътворѥниѥ',
-'vector-view-edit'        => 'исправи',
-'vector-view-history'     => 'їсторїꙗ',
-'vector-view-view'        => 'чьтѥниѥ',
-'vector-view-viewsource'  => 'страницѧ источьнъ обраꙁъ',
 'actions'                 => 'дѣиства',
 'namespaces'              => 'имєнъ просторꙑ',
 
@@ -193,7 +179,6 @@ $messages = array(
 'edit'              => 'исправи',
 'create'            => 'сътворѥниѥ',
 'editthispage'      => 'си страницѧ исправлѥниѥ',
-'create-this-page'  => 'си страницѧ сътворѥниѥ',
 'delete'            => 'поничьжєниѥ',
 'deletethispage'    => 'си страницѧ поничьжєниѥ',
 'protect'           => 'ꙁабранѥниѥ',
@@ -205,7 +190,6 @@ $messages = array(
 'talkpagelinktext'  => 'бєсѣда',
 'specialpage'       => 'нарочьна страница',
 'personaltools'     => 'моꙗ орѫдиꙗ',
-'postcomment'       => 'нова чѧсть',
 'talk'              => 'бєсѣда',
 'toolbox'           => 'орѫдиꙗ',
 'otherlanguages'    => 'дроугꙑ ѩꙁꙑкꙑ',

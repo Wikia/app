@@ -38,7 +38,7 @@ $messages['en'] = array(
 	'article-comments-next-page' => 'Next',
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'The parent article / parent comment has been deleted.',
-	'article-comments-empty-comment' => "You can't post an empty comment. <a href='$1'>Delete it instead?</a>",
+	'article-comments-empty-comment' => "You can't post an empty comment. [$1 Delete it instead?]",
 	'article-comments-show-more' => 'Show more comments',
 	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|Comment|Comments}}',
 	'wikiamobile-article-comments-header' => 'Comments',

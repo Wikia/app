@@ -102,7 +102,6 @@ $messages = array(
 'mytalk'     => 'हमरॊ बात',
 'navigation' => 'भ्रमण',
 
-# Cologne Blue skin
 'qbfind' => 'खोजॊ',
 
 'errorpagetitle'   => 'त्रुटि',

@@ -3,15 +3,13 @@
 class InsightsContext {
 	private $strategy = null;
 	private $config = null;
-	private $type = null;
 	private $articlesData = [];
 	private $params = [];
 	private $paginator = null;
 
-	public function __construct( InsightsModel $strategy, $type, $params ) {
+	public function __construct( InsightsModel $strategy, $params = [] ) {
 		$this->strategy = $strategy;
 		$this->config = $strategy->getConfig();
-		$this->type = $type;
 		$this->params = $params;
 	}
 

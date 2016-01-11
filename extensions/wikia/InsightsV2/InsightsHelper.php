@@ -50,10 +50,21 @@ class InsightsHelper {
 	 */
 	const INSIGHT_FIXED_MSG_PREFIX = 'insights-notification-message-fixed-';
 
+	/**
+	 * Used to create the following messages:
+	 *
+	 * 'insights-notification-next-item-deadendpages',
+	 * 'insights-notification-next-item-nonportableinfoboxes'
+	 * 'insights-notification-next-item-uncategorizedpages',
+	 * 'insights-notification-next-item-wantedpages'
+	 * 'insights-notification-next-item-withoutimages',
+	 */
+	const INSIGHT_NEXT_MSG_PREFIX = 'insights-notification-next-item-';
+
 	private static $defaultInsights = [
 		InsightsUncategorizedModel::INSIGHT_TYPE	=> 'InsightsUncategorizedModel',
 		InsightsWithoutimagesModel::INSIGHT_TYPE	=> 'InsightsWithoutimagesModel',
-		InsightsDeadendModel::INSIGHT_TYPE			=> 'InsightsDeadendModel',
+		InsightsDeadendModel::INSIGHT_TYPE		=> 'InsightsDeadendModel',
 		InsightsWantedpagesModel::INSIGHT_TYPE		=> 'InsightsWantedpagesModel'
 	];
 
@@ -124,7 +135,7 @@ class InsightsHelper {
 	 * @param array $params params
 	 * @return string|null
 	 */
-	public static function getSubpageLocalUrl( $subpage = false, Array $params = [] ) {
+	public static function getSubpageLocalUrl( $subpage, Array $params = [] ) {
 		$insightsPages = self::getInsightsPages();
 
 		if ( isset( $insightsPages[$subpage] ) ) {

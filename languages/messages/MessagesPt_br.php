@@ -453,30 +453,12 @@ $messages = array(
 'navigation' => 'Navegação',
 'and' => '&#32;e',
 
-# Cologne Blue skin
 'qbfind' => 'Procurar',
 'qbbrowse' => 'Navegar',
-'qbedit' => 'Editar',
 'qbpageoptions' => 'Esta página',
 'qbpageinfo' => 'Contexto',
-'qbmyoptions' => 'Minhas páginas',
-'qbspecialpages' => 'Páginas especiais',
 'faq' => 'FAQ',
-'faqpage' => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection' => 'Adicionar tópico',
-'vector-action-delete' => 'Eliminar',
-'vector-action-move' => 'Mover',
-'vector-action-protect' => 'Proteger',
-'vector-action-undelete' => 'Restaurar',
-'vector-action-unprotect' => 'Alterar a proteção',
-'vector-simplesearch-preference' => 'Ativar sugestões de busca melhoradas (apenas no tema Vector)',
-'vector-view-create' => 'Criar',
-'vector-view-edit' => 'Editar',
-'vector-view-history' => 'Ver histórico',
-'vector-view-view' => 'Ler',
-'vector-view-viewsource' => 'Ver código-fonte',
 'actions' => 'Ações',
 'namespaces' => 'Espaços nominais',
 'variants' => 'Variantes',
@@ -499,7 +481,6 @@ $messages = array(
 'edit' => 'Editar',
 'create' => 'Criar',
 'editthispage' => 'Editar esta página',
-'create-this-page' => 'Iniciar esta página',
 'delete' => 'Eliminar',
 'deletethispage' => 'Eliminar esta página',
 'undelete_short' => 'Restaurar {{PLURAL:$1|uma edição|$1 edições}}',
@@ -514,19 +495,9 @@ $messages = array(
 'talkpagelinktext' => 'disc',
 'specialpage' => 'Página especial',
 'personaltools' => 'Ferramentas pessoais',
-'postcomment' => 'Nova seção',
-'articlepage' => 'Ver página de conteúdo',
 'talk' => 'Discussão',
 'views' => 'Visualizações',
 'toolbox' => 'Ferramentas',
-'userpage' => 'Ver página de usuário',
-'projectpage' => 'Ver página de projeto',
-'imagepage' => 'Ver página do arquivo',
-'mediawikipage' => 'Ver página de mensagens',
-'templatepage' => 'Ver página de predefinições',
-'viewhelppage' => 'Ver página de ajuda',
-'categorypage' => 'Ver página de categorias',
-'viewtalkpage' => 'Ver discussão',
 'otherlanguages' => 'Em outros idiomas',
 'redirectedfrom' => '(Redirecionado de $1)',
 'redirectpagesub' => 'Página de redirecionamento',
@@ -986,7 +957,6 @@ O registro de bloqueio mais recente é fornecido abaixo, para referência:',
 '''Ele ainda não foi salvo!'''",
 'sitejspreview' => "''Lembre-se de que você está apenas previsualizando este código JavaScript.'''
 '''Ele ainda não foi salvo!'''",
-'userinvalidcssjstitle' => "'''Aviso:''' Não existe um tema \"\$1\". Lembre-se que as páginas .css e  .js utilizam um título em minúsculas, exemplo: {{ns:user}}:Alguém/vector.css aposto a {{ns:user}}:Alguém/Vector.css.",
 'updated' => '(Atualizado)',
 'note' => "'''Nota:'''",
 'previewnote' => "'''Lembre-se de que isto é apenas uma previsão.'''
@@ -1341,14 +1311,6 @@ Tente utilizar o prefixo ''all:'' em sua busca, para pesquisar por todos os cont
 Você poderá pesquisar através do Google enquanto isso.
 Note que os índices do sistema de busca externo poderão conter referências desatualizadas a {{SITENAME}}.',
 
-# Quickbar
-'qbsettings' => 'Configurações da Barra Rápida',
-'qbsettings-none' => 'Nenhuma',
-'qbsettings-fixedleft' => 'Fixo à esquerda',
-'qbsettings-fixedright' => 'Fixo à direita',
-'qbsettings-floatingleft' => 'Flutuando à esquerda',
-'qbsettings-floatingright' => 'Flutuando à direita',
-'qbsettings-directionality' => 'Fixado, dependendo da direcionalidade do seu alfabeto e da sua língua',
 
 # Preferences page
 'preferences' => 'Preferências',
@@ -3018,15 +2980,7 @@ Permite colocar uma justificativa no sumário da edição.',
 
 # Scripts
 'common.js' => '/* Códigos JavaScript aqui colocados serão carregados por todos aqueles que acessarem alguma página deste wiki */',
-'standard.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Clássico */',
-'nostalgia.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Nostalgia */',
-'cologneblue.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Azul colonial */',
 'monobook.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin MonoBook */',
-'myskin.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin MySkin */',
-'chick.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Chique */',
-'simple.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Simples */',
-'modern.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Moderno */',
-'vector.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Vector */',
 
 # Metadata
 'notacceptable' => 'O servidor não pode fornecer os dados em um formato que o seu cliente possa ler.',
@@ -3067,14 +3021,7 @@ Tal bloqueio foi provavelmente causado por uma ligação para um ''website'' ext
 'pageinfo-viewsperedit' => 'Visitas por edição',
 
 # Skin names
-'skinname-standard' => 'Clássico',
-'skinname-nostalgia' => 'Nostalgia',
-'skinname-cologneblue' => 'Azul colonial',
 'skinname-monobook' => 'MonoBook',
-'skinname-myskin' => 'MySkin',
-'skinname-chick' => 'Chique',
-'skinname-simple' => 'Simples',
-'skinname-modern' => 'Moderno',
 
 # Patrolling
 'markaspatrolleddiff' => 'Marcar como patrulhada',

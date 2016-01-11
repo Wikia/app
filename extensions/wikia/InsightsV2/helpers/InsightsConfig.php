@@ -1,16 +1,21 @@
 <?php
 
 class InsightsConfig {
+	const ACTION = 'action';
+	const DISPLAYFIXITMSG = 'displayfixitmessage';
+	const PAGEVIEWS = 'pageviews';
 	const SUBTYPE = 'subtype';
+	const WHATLINKSHERE = 'whatlinkshere';
+	const WHATLINKSHEREMSG = 'whatlinksheremessage';
 
 	// should display page views data
-	private $pageViews = true;
+	private $pageViews = false;
 	// should display link to "what links here" page
 	private $whatLinksHere = false;
 	// message to create "what links here" link
 	private $whatLinksHereMessage = 'insights-used-on';
 	// should display notification fix message
-	private $displayFix = true;
+	private $displayFixItMessage = false;
 	// does insight has additional action
 	private $action = false;
 	// insights type
@@ -23,24 +28,24 @@ class InsightsConfig {
 	public function __construct( $type, $config = [] ) {
 		$this->type = $type;
 
-		if ( isset( $config['pageviews'] ) ) {
-			$this->pageViews = $config['pageviews'];
+		if ( isset( $config[self::PAGEVIEWS] ) ) {
+			$this->pageViews = $config[self::PAGEVIEWS];
 		}
 
-		if ( isset( $config['whatlinkshere'] ) ) {
-			$this->whatLinksHere = $config['whatlinkshere'];
+		if ( isset( $config[self::WHATLINKSHERE] ) ) {
+			$this->whatLinksHere = $config[self::WHATLINKSHERE];
 		}
 
-		if ( isset( $config['whatlinksheremessage'] ) ) {
-			$this->whatLinksHereMessage = $config['whatlinksheremessage'];
+		if ( isset( $config[self::WHATLINKSHEREMSG] ) ) {
+			$this->whatLinksHereMessage = $config[self::WHATLINKSHEREMSG];
 		}
 
-		if ( isset( $config['displayfix'] ) ) {
-			$this->displayFix = $config['displayfix'];
+		if ( isset( $config[self::DISPLAYFIXITMSG] ) ) {
+			$this->displayFixItMessage = $config[self::DISPLAYFIXITMSG];
 		}
 
-		if ( isset( $config['action'] ) ) {
-			$this->action = $config['action'];
+		if ( isset( $config[self::ACTION] ) ) {
+			$this->action = $config[self::ACTION];
 		}
 
 		if ( isset( $config[self::SUBTYPE] ) ) {
@@ -60,8 +65,8 @@ class InsightsConfig {
 		return $this->whatLinksHereMessage;
 	}
 
-	public function displayFix() {
-		return $this->displayFix;
+	public function displayFixItMessage() {
+		return $this->displayFixItMessage;
 	}
 
 	public function hasAction() {

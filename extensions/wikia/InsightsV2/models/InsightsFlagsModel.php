@@ -10,7 +10,7 @@ class InsightsFlagsModel extends InsightsModel {
 	const INSIGHT_TYPE = 'flags';
 
 	private static $insightConfig = [
-		'displayFixItMessage' => false
+		InsightsConfig::PAGEVIEWS => true
 	];
 
 	public function __construct( $subtype = null ) {
@@ -62,7 +62,9 @@ class InsightsFlagsModel extends InsightsModel {
 		$flaggedPages = $app->sendRequest(
 			'FlaggedPagesApiController',
 			'getFlaggedPages',
-			[ 'flag_type_id' => $subtype ]
+			[ 'flag_type_id' => $subtype ],
+			true,
+			WikiaRequest::EXCEPTION_MODE_THROW
 		)->getData()['data'];
 
 		foreach ( $flaggedPages as $pageId ) {
@@ -80,7 +82,13 @@ class InsightsFlagsModel extends InsightsModel {
 		$app = F::app();
 
 		$params = [ 'flag_targeting' => \Flags\Models\FlagType::FLAG_TARGETING_CONTRIBUTORS ];
-		$flagTypes = $app->sendRequest( 'FlagsApiController', 'getFlagTypes', $params )->getData()['data'];
+		$flagTypes = $app->sendRequest(
+			'FlagsApiController',
+			'getFlagTypes',
+			$params,
+			true,
+			WikiaRequest::EXCEPTION_MODE_THROW
+		)->getData()['data'];
 
 		foreach ( $flagTypes as $type ) {
 			$subtypes[$type['flag_type_id']] = $type['flag_name'];
@@ -95,7 +103,13 @@ class InsightsFlagsModel extends InsightsModel {
 	private function getDefaultType() {
 		$app = F::app();
 		$params = [ 'flag_targeting' => \Flags\Models\FlagType::FLAG_TARGETING_CONTRIBUTORS ];
-		$flagTypes = $app->sendRequest( 'FlagsApiController', 'getFlagTypes' , $params )->getData()['data'];
+		$flagTypes = $app->sendRequest(
+			'FlagsApiController',
+			'getFlagTypes',
+			$params,
+			true,
+			WikiaRequest::EXCEPTION_MODE_THROW
+		)->getData()['data'];
 		return current( $flagTypes )['flag_type_id'];
 	}
 
