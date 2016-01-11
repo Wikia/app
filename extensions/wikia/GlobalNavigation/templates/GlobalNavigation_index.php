@@ -55,20 +55,20 @@
 						title = "<?= wfMessage( 'oasis-global-page-header' )->escaped() ?>" >
 				</a >
 			</div >
-		<div class="search-container table-cell">
-			<?= $app->renderView('GlobalNavigation', 'searchIndex'); ?>
-		</div>
-		<div class="account-navigation-container table-cell">
-			<?= $app->renderView('GlobalNavigationAccountNavigation', 'index') ?>
-		</div>
-		<?php if (!$isAnon && $notificationsEnabled): ?>
-			<div class="notifications-container table-cell" id="notificationsEntryPoint">
-				<?= $app->renderView('GlobalNavigationWallNotifications', 'Index'); ?>
+			<div class="search-container table-cell">
+				<?= $app->renderView('GlobalNavigation', 'searchIndex'); ?>
 			</div>
-		<?php endif; ?>
-		<? if ($isGameStarLogoEnabled): ?>
-			<a class="gamestar-logo" href="http://gamestar.de/"></a>
-		<? endif; ?>
+			<div class="account-navigation-container table-cell">
+				<?= $app->renderView('GlobalNavigationAccountNavigation', 'index') ?>
+			</div>
+			<?php if (!$isAnon && $notificationsEnabled): ?>
+				<div class="notifications-container table-cell" id="notificationsEntryPoint">
+					<?= $app->renderView('GlobalNavigationWallNotifications', 'Index'); ?>
+				</div>
+			<?php endif; ?>
+			<? if ($isGameStarLogoEnabled): ?>
+				<a class="gamestar-logo" href="http://gamestar.de/"></a>
+			<? endif; ?>
 		</div>
 	</nav>
 <? endif; ?>
