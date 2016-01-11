@@ -39,11 +39,17 @@ class FileNamespaceSanitizeHelper {
 			}
 			
 			//be able to match user-provided file namespaces that may contain both underscores and spaces
-			$fileNamespaces = array_map(function( $namespace ) {
-				return mb_ereg_replace('_', '(_|\ )', $namespace);
-			}, $fileNamespaces);
+			$fileNamespaces = array_map( function( $namespace ) {
+				return mb_ereg_replace( '_', '(_|\ )', $namespace );
+			}, $fileNamespaces );
 
-			$this->filePrefixRegex[ $langCode ] = '^(' . implode( '|', $fileNamespaces ) . '):';
+			//be able to match both upper- and lowercase first letters of the namespace
+			$lowercaseFileNamespaces = array_map( function( $namespace ) {
+				return mb_convert_case( $namespace, MB_CASE_LOWER, "UTF-8" );
+			}, $fileNamespaces );
+
+			$namespaces = array_merge( $fileNamespaces, $lowercaseFileNamespaces );
+			$this->filePrefixRegex[ $langCode ] = '^(' . implode( '|', $namespaces ) . '):';
 		}
 
 		return $this->filePrefixRegex[ $langCode ];

@@ -1199,6 +1199,7 @@ $config['chat_js2'] = array(
 	'assets' => array(
 		'#group_oasis_jquery',
 		'#group_oasis_shared_core_js',
+		'//skins/shared/scripts/onScroll.js',
 
 		// shared libraries
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
