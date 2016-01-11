@@ -57,17 +57,17 @@
 				</a >
 			</div >
 			<div class="table-cell" data-visibility="desktop">
-				<a class="cell-link" href="http://gameshub.wikia.com/wiki/Games_Hub">Games</a>
-				<a class="cell-link" href="http://movieshub.wikia.com/wiki/Movies_Hub">Movies</a>
-				<a class="cell-link" href="http://tvhub.wikia.com/wiki/TV_Hub">TV</a>
+				<a class="cell-link" href="<?= wfMessage( 'global-navigation-games-hub-link' )->inContentLanguage()->text()?>"><?= wfMessage( 'global-navigation-games-hub-link-label' )->inContentLanguage()->text()?></a>
+				<a class="cell-link" href="<?= wfMessage( 'global-navigation-movies-hub-link' )->inContentLanguage()->text()?>"><?= wfMessage( 'global-navigation-movies-hub-link-label' )->inContentLanguage()->text()?></a>
+				<a class="cell-link" href="<?= wfMessage( 'global-navigation-tv-hub-link' )->inContentLanguage()->text()?>"><?= wfMessage( 'global-navigation-tv-hub-link-label' )->inContentLanguage()->text()?></a>
 			</div>
 			<div class="table-cell">
 				<div class="explore-wikia-entry-point" id="exploreWikiaEntryPoint">
 					<a class="cell-link" href="#">Explore Wikia</a>
 					<ul class="explore-wikia-dropdown" id="exploreWikiaDropdown">
-						<li data-visibility="tablet"><a href="http://gameshub.wikia.com/wiki/Games_Hub">Games</a></li>
-						<li data-visibility="tablet"><a href="http://movieshub.wikia.com/wiki/Movies_Hub">Movies</a></li>
-						<li data-visibility="tablet"><a href="http://tvhub.wikia.com/wiki/TV_Hub">TV</a></li>
+						<li><a class="cell-link" href="<?= wfMessage( 'global-navigation-games-hub-link' )->inContentLanguage()->text()?>"><?= wfMessage( 'global-navigation-games-hub-link-label' )->inContentLanguage()->text()?></a></li>
+						<li><a class="cell-link" href="<?= wfMessage( 'global-navigation-movies-hub-link' )->inContentLanguage()->text()?>"><?= wfMessage( 'global-navigation-movies-hub-link-label' )->inContentLanguage()->text()?></a></li>
+						<li><a class="cell-link" href="<?= wfMessage( 'global-navigation-tv-hub-link' )->inContentLanguage()->text()?>"><?= wfMessage( 'global-navigation-games-tv-link-label' )->inContentLanguage()->text()?></a></li>
 						<li><a href="#">Top Communities</a></li>
 						<li><a href="#">Community Central</a></li>
 					</ul>
