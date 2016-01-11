@@ -21,11 +21,14 @@ abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 	 * @return string
 	 */
 	protected function sanitizeElementData( $elementText  ) {
+		// silent loadHTML errors as libxml treats <figure> as invalid tag
+		$error_setting = libxml_use_internal_errors( true );
 		$dom = new \DOMDocument( );
 		$dom->loadHTML( $this->prepareValidXML( $elementText ) );
 
 		$elementTextAfterTrim = trim( $this->cleanUpDOM( $dom ) );
 		libxml_clear_errors();
+		libxml_use_internal_errors( $error_setting );
 
 		if ( $elementTextAfterTrim !== $elementText ) {
 			WikiaLogger::instance()->info(
