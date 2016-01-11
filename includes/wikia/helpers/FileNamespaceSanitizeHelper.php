@@ -44,12 +44,12 @@ class FileNamespaceSanitizeHelper {
 			}, $fileNamespaces );
 
 			//be able to match both upper- and lowercase first letters of the namespace
-			foreach ( $fileNamespaces as $namespace ) {
-				$namespace_lowercase = mb_convert_case( $namespace, MB_CASE_LOWER, "UTF-8" );
-				$fileNamespaces[] = $namespace_lowercase;
-			}
+			$lowercaseFileNamespaces = array_map( function( $namespace ) {
+				return mb_convert_case( $namespace, MB_CASE_LOWER, "UTF-8" );
+			}, $fileNamespaces );
 
-			$this->filePrefixRegex[ $langCode ] = '^(' . implode( '|', $fileNamespaces ) . '):';
+			$namespaces = array_merge( $fileNamespaces, $lowercaseFileNamespaces );
+			$this->filePrefixRegex[ $langCode ] = '^(' . implode( '|', $namespaces ) . '):';
 		}
 
 		return $this->filePrefixRegex[ $langCode ];

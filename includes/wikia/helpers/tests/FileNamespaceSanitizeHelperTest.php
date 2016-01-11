@@ -284,6 +284,13 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 				null,
 				'filE:Luke+1.jpg',
 				'Handle case insensivity only for the first char'
+			],
+			[
+				'[[file:luke+1.jpg]]',
+				'en',
+				null,
+				'luke+1.jpg',
+				'Link to filename with lower case letters'
 			]
 		];
 	}
