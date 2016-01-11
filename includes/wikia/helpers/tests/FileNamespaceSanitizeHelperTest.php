@@ -265,7 +265,7 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 				'Link to filename with canonical namespace, width and plus (+) characters'
 			],
 			[
-				'[[filE:Luke+1.jpg]]',
+				'[[file:Luke+1.jpg]]',
 				'en',
 				null,
 				'Luke+1.jpg',
@@ -276,14 +276,14 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 				'ru',
 				null,
 				'Luke+1.jpg',
-				'Link to filename with upper and lower case multibyte letters in namespace'
+				'Link to filename with lower case multibyte letter in namespace'
 			],
 			[
-				'[[źD- źbŁO:Luke+1.jpg]]',
+				'[[filE:Luke+1.jpg]]',
 				'en',
-				'Źd- źbło',
-				'Luke+1.jpg',
-				'Link to filename with upper and lower case multibyte letters in custom namespace'
+				null,
+				'filE:Luke+1.jpg',
+				'Handle case insensivity only for the first char'
 			]
 		];
 	}
