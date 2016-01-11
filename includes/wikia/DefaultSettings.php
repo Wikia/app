@@ -1312,7 +1312,7 @@ $wgAdDriverGoogleConsumerSurveysCountries = null;
  * @name $wgAdDriverUseEvolve2
  * Whether to enable AdProviderEvolve2 (true) or not (false)
  */
-$wgAdDriverUseEvolve2 = false;
+$wgAdDriverUseEvolve2 = true;
 
 /**
  * @name $wgAdDriverEvolve2Countries
