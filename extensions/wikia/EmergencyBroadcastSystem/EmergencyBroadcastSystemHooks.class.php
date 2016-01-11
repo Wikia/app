@@ -2,7 +2,7 @@
 
 class EmergencyBroadcastSystemHooks extends WikiaController {
 
-	public function onBeforePageDisplay( OutputPage $out, $skin ) {
+	public static function onBeforePageDisplay( OutputPage $out, $skin ) {
 		global $wgUser;
 
 		if ( F::app()->checkSkin( 'oasis' ) && $wgUser->isPowerUser() ) {

@@ -56,12 +56,7 @@ class InsightsPageViews {
 
 		}
 
-		$start = microtime(true);
-
 		( new InsightsSorting( $this->config ) )->createSortingArrays( $sortingData );
-
-		$end = microtime(true) - $start;
-		var_dump($end);
 
 		return $articlesData;
 	}

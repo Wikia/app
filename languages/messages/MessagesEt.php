@@ -427,30 +427,12 @@ $messages = array(
 'navigation' => 'Navigeerimine',
 'and' => '&#32;ja',
 
-# Cologne Blue skin
 'qbfind' => 'Otsi',
 'qbbrowse' => 'Sirvi',
-'qbedit' => 'Redigeeri',
 'qbpageoptions' => 'Lehekülje suvandid',
 'qbpageinfo' => 'Lehekülje andmed',
-'qbmyoptions' => 'Minu suvandid',
-'qbspecialpages' => 'Erileheküljed',
 'faq' => 'KKK',
-'faqpage' => 'Project:KKK',
 
-# Vector skin
-'vector-action-addsection' => 'Lisa teema',
-'vector-action-delete' => 'Kustuta',
-'vector-action-move' => 'Teisalda',
-'vector-action-protect' => 'Kaitse',
-'vector-action-undelete' => 'Taasta',
-'vector-action-unprotect' => 'Muuda kaitset',
-'vector-simplesearch-preference' => 'Luba täiustatud otsinguvihjed (ainult Vektori-kujunduses)',
-'vector-view-create' => 'Loo',
-'vector-view-edit' => 'Redigeeri',
-'vector-view-history' => 'Näita ajalugu',
-'vector-view-view' => 'Vaata',
-'vector-view-viewsource' => 'Vaata lähteteksti',
 'actions' => 'Toimingud',
 'namespaces' => 'Nimeruumid',
 'variants' => 'Variandid',
@@ -473,7 +455,6 @@ $messages = array(
 'edit' => 'Redigeeri',
 'create' => 'Loo',
 'editthispage' => 'Redigeeri seda lehekülge',
-'create-this-page' => 'Loo see lehekülg',
 'delete' => 'Kustuta',
 'deletethispage' => 'Kustuta see lehekülg',
 'undelete_short' => 'Taasta {{PLURAL:$1|üks muudatus|$1 muudatust}}',
@@ -488,19 +469,9 @@ $messages = array(
 'talkpagelinktext' => 'arutelu',
 'specialpage' => 'Erilehekülg',
 'personaltools' => 'Personaalsed tööriistad',
-'postcomment' => 'Uus alaosa',
-'articlepage' => 'Artiklilehekülg',
 'talk' => 'Arutelu',
 'views' => 'vaatamisi',
 'toolbox' => 'Tööriistad',
-'userpage' => 'Kasutajalehekülg',
-'projectpage' => 'Vaata projektilehekülge',
-'imagepage' => 'Vaata faililehekülge',
-'mediawikipage' => 'Vaata sõnumite lehekülge',
-'templatepage' => 'Mallilehekülg',
-'viewhelppage' => 'Vaata abilehekülge',
-'categorypage' => 'Kategoorialehekülg',
-'viewtalkpage' => 'Arutelulehekülg',
 'otherlanguages' => 'Teistes keeltes',
 'redirectedfrom' => '(Ümber suunatud leheküljelt $1)',
 'redirectpagesub' => 'Ümbersuunamisleht',
@@ -1311,14 +1282,6 @@ päringu ees prefiksit ''all:''. Konkreetsest nimeruumist otsimiseks kasuta pref
 Vahepeal saad otsimiseks Google'it kasutada.
 Pane tähele, et Google'is talletatud {{GRAMMAR:genitive|{{SITENAME}}}} sisu võib olla iganenud.",
 
-# Quickbar
-'qbsettings' => 'Kiirriba sätted',
-'qbsettings-none' => 'Ei_ole',
-'qbsettings-fixedleft' => 'Püsivalt_vasakul',
-'qbsettings-fixedright' => 'Püsivalt paremal',
-'qbsettings-floatingleft' => 'Ujuvalt vasakul',
-'qbsettings-floatingright' => 'Ujuvalt paremal',
-'qbsettings-directionality' => 'Fikseeritud, tulenevalt sinu keeles kasutatava kirja suunast',
 
 # Preferences page
 'preferences' => 'Eelistused',
@@ -2968,7 +2931,6 @@ Samuti võimaldab see resümee reale põhjenduse lisamist.',
 
 # Stylesheets
 'common.css' => '/* Siin olevat CSS-i kasutavad kõik kujundused. */',
-'standard.css' => '/* Siin olev CSS puudutab Standard-kujunduse kasutajaid. */',
 
 # Scripts
 'common.js' => '/* Siinne JavaScript laaditakse igale kasutajatele igal laaditud leheküljel. */',
@@ -3012,15 +2974,7 @@ See on ilmselt põhjustatud linkimisest mustas nimekirjas olevasse välisvõrguk
 'pageinfo-viewsperedit' => 'Vaatamisi redaktsiooni kohta',
 
 # Skin names
-'skinname-standard' => 'Algeline',
-'skinname-nostalgia' => 'Nostalgia',
-'skinname-cologneblue' => 'Kölni sinine',
 'skinname-monobook' => 'MonoBook',
-'skinname-myskin' => 'Minu kujundus',
-'skinname-chick' => 'Tibu',
-'skinname-simple' => 'Lihtne',
-'skinname-modern' => 'Uudne',
-'skinname-vector' => 'Vektor',
 
 # Patrolling
 'markaspatrolleddiff' => 'Märgi kui kontrollitud',

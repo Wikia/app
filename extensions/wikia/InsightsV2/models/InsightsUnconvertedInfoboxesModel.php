@@ -8,13 +8,11 @@ class InsightsUnconvertedInfoboxesModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'nonportableinfoboxes';
 
 	private static $insightConfig = [
-		'displayFixItMessage' => false,
-		'pageviews' => false,
-		'whatlinkshere' => true
+		InsightsConfig::WHATLINKSHERE => true
 	];
 
 	public function __construct() {
-		self::$insightConfig['action'] = class_exists( 'TemplateConverter' );
+		self::$insightConfig[InsightsConfig::ACTION] = class_exists( 'TemplateConverter' );
 		$this->config = new InsightsConfig( self::INSIGHT_TYPE, self::$insightConfig );
 	}
 

@@ -62,6 +62,7 @@ $messages['en'] = array(
 	'insights-flags-filter-label' => 'Filter pages by flag type',
 	'insights-notification-message-inprogress-flags' => 'This page is flagged.',
 	'insights-notification-message-set-flags' => 'Set flags for this page',
+	'insights-error' => 'Something went wrong. Please try again.'
 );
 
 $messages['qqq'] = array(
@@ -122,6 +123,7 @@ $messages['qqq'] = array(
 	'insights-flags-filter-label' => 'Label for select dropdown on flags insights page explaining purpose of it',
 	'insights-notification-message-inprogress-flags' => 'Message displayed on notification banner informing user that this page is flagged.',
 	'insights-notification-message-set-flags' => 'Text of a button that opens a modal window with a form for editing flags.',
+	'insights-error' => 'Information for user that something went wrong and ask to try again.'
 );
 
 $messages['de'] = array(

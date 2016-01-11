@@ -23,10 +23,9 @@ require([
 	win
 ) {
 	'use strict';
-	var skin = 'mercury';
 
 	messageListener.init();
-	scrollHandler.init(skin);
+	scrollHandler.init('mercury');
 
 	// Custom ads (skins, footer, etc)
 	win.loadCustomAd = customAdsLoader.loadCustomAd;
@@ -37,10 +36,10 @@ require([
 
 	mercuryListener.onLoad(function () {
 		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesMobile)) {
-			oxBidder.call(skin);
+			oxBidder.call();
 		}
 		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountriesMobile)) {
-			rubiconFastlane.call(skin);
+			rubiconFastlane.call();
 		}
 	});
 });

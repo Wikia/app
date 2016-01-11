@@ -88,7 +88,7 @@ abstract class InsightsQueryPageModel extends InsightsModel {
 			$row = $dbr->fetchObject( $res );
 
 			$title = Title::newFromText( $row->qc_title );
-			$next['link'] = InsightsHelper::getTitleLink( $title, self::getUrlParams() );
+			$next['link'] = InsightsItemData::getTitleLink( $title, self::getUrlParams() );
 		}
 
 		return $next;

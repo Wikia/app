@@ -217,30 +217,12 @@ $messages = array(
 'navigation'    => 'வழிசெலுத்தல்',
 'and'           => '&#32;மற்றும்',
 
-# Cologne Blue skin
 'qbfind'         => 'கண்டுபிடி',
 'qbbrowse'       => 'உலவு',
-'qbedit'         => 'தொகு',
 'qbpageoptions'  => 'பக்க விருப்பத் தேர்வுகள்',
 'qbpageinfo'     => 'பக்கத் தகவல்கள்',
-'qbmyoptions'    => 'என் விருப்பத்தேர்வுகள்',
-'qbspecialpages' => 'சிறப்புப் பக்கங்கள்',
 'faq'            => 'அடிக்கடி கேட்கப்படும் கேள்விகள்',
-'faqpage'        => 'Project:அடிக்கடி கேட்கப்படும் கேள்விகள்',
 
-# Vector skin
-'vector-action-addsection'       => 'தலைப்பைச் சேர்',
-'vector-action-delete'           => 'நீக்குக',
-'vector-action-move'             => 'நகர்த்தவும்',
-'vector-action-protect'          => 'காக்கவும்',
-'vector-action-undelete'         => 'நீக்கத்தை நிறுத்து',
-'vector-action-unprotect'        => 'காப்பை மாற்று',
-'vector-simplesearch-preference' => 'மேம்பட்ட தேடுதல் முடிவுகளைச் செயல்படுத்தவும் (Vector தோல் மட்டும்)',
-'vector-view-create'             => 'உருவாக்கவும்',
-'vector-view-edit'               => 'தொகு',
-'vector-view-history'            => 'வரலாற்றைக் காட்டவும்',
-'vector-view-view'               => 'படிக்கவும்',
-'vector-view-viewsource'         => 'மூலத்தைக் காட்டவும்',
 'actions'                        => 'செயல்கள்',
 'namespaces'                     => 'பெயர்வெளிகள்',
 'variants'                       => 'மாற்றுக்கள்
@@ -265,7 +247,6 @@ $messages = array(
 'edit'              => 'தொகு',
 'create'            => 'உருவாக்கு',
 'editthispage'      => 'இப்பக்கத்தைத் தொகு',
-'create-this-page'  => 'இப்பக்கத்தை உருவாக்கு',
 'delete'            => 'நீக்கவும்',
 'deletethispage'    => 'இப்பக்கத்தை நீக்கு',
 'undelete_short'    => '{{PLURAL:$1|ஒரு தொகுப்பை|$1 தொகுப்புக்களை}} மீட்டெடு',
@@ -280,19 +261,9 @@ $messages = array(
 'talkpagelinktext'  => 'பேச்சு',
 'specialpage'       => 'சிறப்புப் பக்கம்',
 'personaltools'     => 'தனிப்பட்ட பயன்பாட்டுக் கருவிகள்',
-'postcomment'       => 'புதிய பகுதி',
-'articlepage'       => 'உள்ளடக்கப் பக்கத்தைப் பார்',
 'talk'              => 'உரையாடல்',
 'views'             => 'பார்வைகள்',
 'toolbox'           => 'கருவிப் பெட்டி',
-'userpage'          => 'பயனர் பக்கத்தைப் பார்',
-'projectpage'       => 'திட்டப் பக்கத்தைப் பார்',
-'imagepage'         => 'கோப்புப் பக்கத்தை நோக்க',
-'mediawikipage'     => 'தகவல் பக்கத்தைப் பார்',
-'templatepage'      => 'வார்ப்புரு பக்கத்தைப் பார்',
-'viewhelppage'      => 'உதவிப் பக்கத்தைக் காண்க',
-'categorypage'      => 'பகுப்புப் பக்கத்தைப் பார்',
-'viewtalkpage'      => 'கலந்துரையாடல்களைப் பார்',
 'otherlanguages'    => 'ஏனைய மொழிகள்',
 'redirectedfrom'    => '($1 இலிருந்து வழிமாற்றப்பட்டது)',
 'redirectpagesub'   => 'பக்கவழிமாற்றுப் பக்கம்',
@@ -725,7 +696,6 @@ or <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}}
 '''இது இன்னமும் சேமிக்கப்படவில்லை!'''",
 'sitejspreview'                    => "'''நீங்கள் மட்டுமே இந்த JavaScript code இன் முன் தோற்றத்தை காண்கிறீர்கள் என்பதை நினைவில் கொள்ளவும்.'''
 '''இது இன்னமும் சேமிக்கப்படவில்லை!'''",
-'userinvalidcssjstitle'            => "'''எச்சரிக்கை:'''  \"\$1\" என்றப் பெயரில் தோல்லொறுக் கிடையாது. சி.எஸ்.எஸ் மற்றும் ஜெ.எஸ். பக்கங்கள் ஆங்கில கீழ் வரிசைப் பெயர்களைக் கொண்டிருக்க வேண்டும் என்பதைக் கவனிக்கவும். எ+கா: {{ns:user}}:Foo/vector.css என்பது சரியான வடிவம் {{ns:user}}:Foo/Vector.css என்பது பிழையான வடிவம்.",
 'updated'                          => '(இற்றைப்படுத்தப்பட்டது)',
 'note'                             => "'''குறிப்பு:'''",
 'previewnote'                      => "'''இது ஒரு முன்தோற்றம் மட்டுமே, உங்கள் மாற்றங்கள் இன்னும் சேமிக்கப்படவில்லை!'''",
@@ -1070,13 +1040,6 @@ $1",
 'search-external'                  => 'வெளித்தேடல்',
 'searchdisabled'                   => '{{SITENAME}} தளத்தின் தேடல் வசதிகள் தற்காலிகமாக முடக்கப்பட்டுள்ளது. அதுவரை நீங்கள் கீழேயுள்ள கூகிள் தேடலைப் பயன்படுத்தலாம். இது சில சமயம் இற்றைப்படுத்தப்படாததாய் இருக்கக்கூடும்.',
 
-# Quickbar
-'qbsettings'               => 'விரைவுச் சட்ட அமைவுகள்',
-'qbsettings-none'          => 'எதுவுமில்லை',
-'qbsettings-fixedleft'     => 'நிலைத்த இடது',
-'qbsettings-fixedright'    => 'நிலைத்த வலது',
-'qbsettings-floatingleft'  => 'மிதப்பு இடது',
-'qbsettings-floatingright' => 'மிதப்பு வலது',
 
 # Preferences page
 'preferences'                   => 'விருப்பங்கள்',
@@ -2667,9 +2630,6 @@ $1',
 'pageinfo-viewsperedit'     => 'திருத்தந்களுக்கான காட்சிகள்',
 
 # Skin names
-'skinname-standard'    => 'இயல்பான',
-'skinname-nostalgia'   => 'பசுமை நினைவு (Nostalgia)',
-'skinname-cologneblue' => 'கொலோன் (Cologne) நீலம் Blue',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'ரோந்திட்டதாக குறி',

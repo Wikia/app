@@ -70,10 +70,7 @@ $messages = array(
 'mytalk'     => 'Amsawal inu',
 'navigation' => 'Tagriwa',
 
-# Cologne Blue skin
 'qbfind'         => 'Af',
-'qbedit'         => 'Ẓṛeg',
-'qbspecialpages' => 'Tudmawin Special',
 
 'errorpagetitle'   => 'Anezri',
 'returnto'         => 'Dwl ghar $1.',

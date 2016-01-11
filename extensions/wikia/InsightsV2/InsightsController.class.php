@@ -1,6 +1,10 @@
 <?php
 
+use Wikia\Logger\Loggable;
+
 class InsightsController extends WikiaSpecialPageController {
+	use Loggable;
+
 	public function __construct() {
 		parent::__construct( 'Insights', 'insights', true );
 	}
@@ -11,7 +15,7 @@ class InsightsController extends WikiaSpecialPageController {
 	 */
 	public function index() {
 		wfProfileIn( __METHOD__ );
-		$this->wg->Out->setPageTitle( wfMessage( 'insights' )->escaped() );
+		$this->getContext()->getOutput()->setPageTitle( wfMessage( 'insights' )->plain() );
 		$this->addAssets();
 
 		$this->type = $this->getPar();
@@ -25,7 +29,7 @@ class InsightsController extends WikiaSpecialPageController {
 		if ( InsightsHelper::isInsightPage( $this->type ) ) {
 			$this->renderSubpage();
 		} elseif ( !empty( $this->type ) ) {
-			$this->response->redirect( InsightsHelper::getSubpageLocalUrl() );
+			$this->response->redirect( SpecialPage::getTitleFor( 'Insights' ) );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -41,8 +45,8 @@ class InsightsController extends WikiaSpecialPageController {
 		$model = $helper->getInsightModel( $this->type, $this->subtype );
 		$params = $this->filterParams( $this->request->getParams() );
 
-		$this->setTemplateValues( $model, $params );
 		$this->overrideTemplate( $model->getTemplate() );
+		$this->setTemplateValues( $model, $params );
 	}
 
 	public function insightsList() {
@@ -78,25 +82,31 @@ class InsightsController extends WikiaSpecialPageController {
 	}
 
 	private function setTemplateValues( InsightsModel $model, $params ) {
-		$insightsContext = new InsightsContext( $model, $this->type, $params );
+		$insightsContext = new InsightsContext( $model, $params );
 
 		$sort = $this->request->getVal( 'sort', InsightsSorting::getDefaultSorting() );
 		$sortingTypes = InsightsSorting::$sorting;
 
 		$metadata = isset( $sortingTypes[ $sort ]['metadata'] )	? $sortingTypes[ $sort ]['metadata'] : $sort;
 
-		$this->response->setData( [
-			'content' => $insightsContext->getContent(),
-			'pagination' => $insightsContext->getPagination(),
-			'subtypes' => $model->getConfig()->getSubtypes(),
-			'showPageViews' => $model->getConfig()->showPageViews(),
-			'hasActions' => $model->getConfig()->hasAction(),
-			'type' => $this->type,
-			'subtype' => $this->subtype,
-			'themeClass' => $this->themeClass,
-			'sort' => $sort,
-			'metadata' => $metadata
-		] );
+		try {
+			$this->response->setData( [
+				'content' => $insightsContext->getContent(),
+				'pagination' => $insightsContext->getPagination(),
+				'subtypes' => $model->getConfig()->getSubtypes(),
+				'showPageViews' => $model->getConfig()->showPageViews(),
+				'hasActions' => $model->getConfig()->hasAction(),
+				'type' => $this->type,
+				'subtype' => $this->subtype,
+				'themeClass' => $this->themeClass,
+				'sort' => $sort,
+				'metadata' => $metadata
+			] );
+		} catch ( WikiaHttpException $e ) {
+			$this->setErrorTemplate( $e->getDetails(), $e );
+		} catch ( Exception $e ) {
+			$this->setErrorTemplate( $e->getMessage(), $e );
+		}
 	}
 
 	private function addAssets() {
@@ -111,5 +121,12 @@ class InsightsController extends WikiaSpecialPageController {
 		unset( $params['par'] );
 
 		return $params;
+	}
+
+	private function setErrorTemplate( $message, $exception ) {
+		$this->setVal( 'errorDetails', $message );
+		$this->overrideTemplate( 'error' );
+
+		$this->error( 'Insights Exception', [ 'exception' => $exception, 'type' => $this->type ] );
 	}
 }

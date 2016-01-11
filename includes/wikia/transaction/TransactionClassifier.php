@@ -48,6 +48,7 @@ class TransactionClassifier {
 		'Chat',
 		'Newimages',
 		'Videos',
+		'Contributions',
 	);
 
 	protected static $FILTER_AJAX_FUNCTIONS = array(
@@ -66,6 +67,8 @@ class TransactionClassifier {
 		'opensearch',
 		'parse',
 		'lyrics',
+		'visualeditor',
+		'visualeditoredit',
 	);
 
 	protected static $MAP_ARTICLE_NAMESPACES = array(

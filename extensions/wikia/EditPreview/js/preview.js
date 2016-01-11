@@ -43,14 +43,8 @@ define('wikia.preview', [
 			callback: function () {
 				var $editPageDialog = $('#EditPageDialog'),
 					$contentNode = $editPageDialog.find('.ArticlePreviewInner'),
-					$previewMsgNode = $editPageDialog.find('.preview-modal-msg-wrapper'),
-					modalHeight = options.height,
+					modalHeight = options.height || $(window).height() - 250,
 					modalHeightModifier = 0;
-
-				if (!modalHeight) {
-					modalHeightModifier = -250 -($previewMsgNode.outerHeight() || 0);
-					modalHeight = $(window).height() + modalHeightModifier;
-				}
 
 				// block all clicks
 				$contentNode.on('click', function (ev) {
@@ -62,15 +56,6 @@ define('wikia.preview', [
 					'height': modalHeight,
 					'overflow': 'auto',
 					'overflow-x': 'hidden'
-				});
-
-				$previewMsgNode.on('click', 'a', function () {
-					tracker.track({
-						action: Wikia.Tracker.ACTIONS.CLICK,
-						category: 'edit-preview',
-						label: 'button-best-practices',
-						trackingMethod: 'analytics'
-					});
 				});
 
 				if (typeof callback === 'function') {
@@ -86,29 +71,7 @@ define('wikia.preview', [
 			window.stylepath +
 			'/common/images/ajax.gif" class="loading"></div></div>';
 
-		$.when(
-			loader({
-				type: loader.MULTI,
-				resources: {
-					mustache: 'extensions/wikia/EditPreview/templates/preview_best_practices.mustache'
-				}
-			}),
-			msg.getForContent('EditPreviewInContLang')
-		).done(function(response){
-			var params = {
-					bestPracticesMsg: $.htmlentities(msg('wikia-editor-preview-best-practices-notice')),
-					bestPracticesLinkText: $.htmlentities(msg('wikia-editor-preview-best-practices-button')),
-					bestPracticesLinkUrl:  window.wgArticlePath.replace(
-						'$1', $.htmlentities(msg('wikia-editor-preview-best-practices-button-link'))
-					)
-				},
-
-				template = response.mustache[0],
-				html = mustache.render(template, params);
-
-			content = html+content;
-			$.showCustomModal(title, content, options);
-		});
+		$.showCustomModal(title, content, options);
 	}
 
 	/**
@@ -177,7 +140,7 @@ define('wikia.preview', [
 				}
 
 				if (currentTypeName) {
-					var articleWidth = breakpointsLayout.getArticleWidth(currentTypeName ,isWidePage);
+					var articleWidth = breakpointsLayout.getArticleWidth(currentTypeName, isWidePage);
 					$article.width(articleWidth);
 				}
 			}

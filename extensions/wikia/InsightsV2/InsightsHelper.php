@@ -50,10 +50,21 @@ class InsightsHelper {
 	 */
 	const INSIGHT_FIXED_MSG_PREFIX = 'insights-notification-message-fixed-';
 
+	/**
+	 * Used to create the following messages:
+	 *
+	 * 'insights-notification-next-item-deadendpages',
+	 * 'insights-notification-next-item-nonportableinfoboxes'
+	 * 'insights-notification-next-item-uncategorizedpages',
+	 * 'insights-notification-next-item-wantedpages'
+	 * 'insights-notification-next-item-withoutimages',
+	 */
+	const INSIGHT_NEXT_MSG_PREFIX = 'insights-notification-next-item-';
+
 	private static $defaultInsights = [
 		InsightsUncategorizedModel::INSIGHT_TYPE	=> 'InsightsUncategorizedModel',
 		InsightsWithoutimagesModel::INSIGHT_TYPE	=> 'InsightsWithoutimagesModel',
-		InsightsDeadendModel::INSIGHT_TYPE			=> 'InsightsDeadendModel',
+		InsightsDeadendModel::INSIGHT_TYPE		=> 'InsightsDeadendModel',
 		InsightsWantedpagesModel::INSIGHT_TYPE		=> 'InsightsWantedpagesModel'
 	];
 
@@ -68,34 +79,38 @@ class InsightsHelper {
 			   $wgEnableInsightsPagesWithoutInfobox, $wgEnableInsightsPopularPages, $wgEnableInsightsTemplatesWithoutType;
 
 		/* Order of inserting determines default order on insights entry points list */
-		$dynamicInsights = [];
+		$insightsPages = [];
 
 		/* Add TemplatesWithoutType insight */
 		if ( !empty( $wgEnableTemplateClassificationExt ) && !empty( $wgEnableInsightsTemplatesWithoutType ) ) {
-			$dynamicInsights[InsightsTemplatesWithoutTypeModel::INSIGHT_TYPE] = 'InsightsTemplatesWithoutTypeModel';
+			$insightsPages[InsightsTemplatesWithoutTypeModel::INSIGHT_TYPE] = 'InsightsTemplatesWithoutTypeModel';
 		}
 
 		/* Add Infoboxes insight */
 		if ( !empty( $wgEnableInsightsInfoboxes ) ) {
-			$dynamicInsights[InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE] = 'InsightsUnconvertedInfoboxesModel';
-		}
-
-		/* Add PagesWithoutInfobox insight */
-		if ( !empty( $wgEnableTemplateClassificationExt ) && !empty( $wgEnableInsightsPagesWithoutInfobox ) ) {
-			$dynamicInsights[InsightsPagesWithoutInfoboxModel::INSIGHT_TYPE] = 'InsightsPagesWithoutInfoboxModel';
+			$insightsPages[InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE] = 'InsightsUnconvertedInfoboxesModel';
 		}
 
 		/* Add PopularPages insight */
 		if ( !empty( $wgEnableInsightsPopularPages ) ) {
-			$dynamicInsights[InsightsPopularPagesModel::INSIGHT_TYPE] = 'InsightsPopularPagesModel';
+			$insightsPages[InsightsPopularPagesModel::INSIGHT_TYPE] = 'InsightsPopularPagesModel';
 		}
 
 		/* Add Flags insight */
 		if ( !empty( $wgEnableFlagsExt ) ) {
-			$dynamicInsights[InsightsFlagsModel::INSIGHT_TYPE] = 'InsightsFlagsModel';
+			$insightsPages[InsightsFlagsModel::INSIGHT_TYPE] = 'InsightsFlagsModel';
 		}
 
-		return array_merge( $dynamicInsights, self::$defaultInsights );
+		/* Add default insights */
+		$insightsPages = array_merge( $insightsPages, self::$defaultInsights );
+
+		/* Add PagesWithoutInfobox insight */
+		if ( !empty( $wgEnableTemplateClassificationExt ) && !empty( $wgEnableInsightsPagesWithoutInfobox ) ) {
+			$insightsPages[InsightsPagesWithoutInfoboxModel::INSIGHT_TYPE] = 'InsightsPagesWithoutInfoboxModel';
+		}
+
+		return $insightsPages;
+
 	}
 
 	/**
@@ -125,7 +140,7 @@ class InsightsHelper {
 	 * @param array $params params
 	 * @return string|null
 	 */
-	public static function getSubpageLocalUrl( $subpage = false, Array $params = [] ) {
+	public static function getSubpageLocalUrl( $subpage, Array $params = [] ) {
 		$insightsPages = self::getInsightsPages();
 
 		if ( isset( $insightsPages[$subpage] ) ) {

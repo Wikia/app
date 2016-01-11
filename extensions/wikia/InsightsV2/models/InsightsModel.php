@@ -13,6 +13,23 @@ abstract class InsightsModel {
 	protected $config;
 	protected $subtype;
 
+	/**
+	 * Should return not cached list with basic page data in format:
+	 *
+	 * [
+	 * 		[
+	 * 			'pageId' => article id,
+	 * 			'title' => Title object
+	 * 			== optional ==
+	 * 			'value' => number of pages link to this article (if 'whatlinkshere' in model config is set to true)
+	 * 		],
+	 * 		[
+	 * 			...
+	 * 		]
+	 * ]
+	 *
+	 * @return array
+	 */
 	abstract public function fetchArticlesData();
 
 	/**

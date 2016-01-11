@@ -96,13 +96,17 @@ abstract class BaseTask {
 			throw new \InvalidArgumentException;
 		}
 
-		$this->info( 'BaseTask::execute' );
+		$then = microtime( true );
 
 		try {
 			$result = call_user_func_array( [$this, $method], $args );
 		} catch ( \Exception $e ) {
 			$result = $e;
 		}
+
+		$this->info( 'BaseTask::execute', [
+			'took' => microtime( true ) - $then, // [sec]
+		] );
 
 		return $result;
 	}

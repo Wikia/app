@@ -14,48 +14,50 @@ class InsightsLoopController extends WikiaController {
 		$subpage = $this->request->getVal( 'insight', null );
 		if ( InsightsHelper::isInsightPage( $subpage ) ) {
 			$model = InsightsHelper::getInsightModel( $subpage );
-			if ( $model instanceof InsightsQueryPageModel ) {
-				$params = [];
-				$type = '';
-				$isFixed = false;
-				$articleName = $this->getVal( 'article', null );
-				$title = Title::newFromText( $articleName );
-				$next = $model->getNextItem( $model->getInsightType(), $articleName );
+			if ( $model->getConfig()->displayFixItMessage() ) {
+				if ( $model instanceof InsightsQueryPageModel ) {
+					$params = [ ];
+					$type = '';
+					$isFixed = false;
+					$articleName = $this->getVal( 'article', null );
+					$title = Title::newFromText( $articleName );
+					$next = $model->getNextItem( $model->getConfig()->getInsightType(), $articleName );
 
-				$isEdit = $this->request->getBool( 'isEdit', false );
+					$isEdit = $this->request->getBool( 'isEdit', false );
 
-				if( !$isEdit ) {
-					$isFixed = $model->isItemFixed( $title );
-					if ( $isFixed ) {
-						$model->updateInsightsCache( $title->getArticleId() );
+					if ( !$isEdit ) {
+						$isFixed = $model->isItemFixed( $title );
+						if ( $isFixed ) {
+							$model->updateInsightsCache( $title->getArticleId() );
+						}
 					}
-				}
 
-				if ( $isEdit ) {
-					$params = $this->getInProgressNotificationParams( $subpage, $model );
-					$type = self::FLOW_STATUS_INPROGRESS;
-				} elseif ( !$isFixed ) {
-					$params = $this->getNotFixedNotificationParams( $subpage, $title, $model );
-					$type = self::FLOW_STATUS_NOTFIXED;
-				} elseif ( $isFixed && empty( $next ) ) {
-					$params = $this->getCongratulationsNotificationParams();
-					$type = self::FLOW_STATUS_ALLDONE;
-				} elseif ( $isFixed ) {
-					$params = $this->getInsightFixedNotificationParams( $subpage, $next );
-					$type = self::FLOW_STATUS_FIXED;
-				}
-
-				$this->setMustacheParams( $params, $isFixed, $type );
-
-			} elseif ( $model instanceof InsightsPageModel ) {
-				$isFixed = false;
-				$isEdit = $this->request->getBool( 'isEdit', false );
-				/* Show in progress notification when in view mode of article */
-				if ( !$isEdit ) {
-					$params = $model->getInProgressNotificationParams();
-					if ( is_array( $params ) ) {
+					if ( $isEdit ) {
+						$params = $this->getInProgressNotificationParams( $subpage, $model );
+						$type = self::FLOW_STATUS_INPROGRESS;
+					} elseif ( !$isFixed ) {
+						$params = $this->getNotFixedNotificationParams( $subpage, $title, $model );
 						$type = self::FLOW_STATUS_NOTFIXED;
-						$this->setMustacheParams( $params, $isFixed, $type );
+					} elseif ( $isFixed && empty( $next ) ) {
+						$params = $this->getCongratulationsNotificationParams();
+						$type = self::FLOW_STATUS_ALLDONE;
+					} elseif ( $isFixed ) {
+						$params = $this->getInsightFixedNotificationParams( $subpage, $next );
+						$type = self::FLOW_STATUS_FIXED;
+					}
+
+					$this->setMustacheParams( $params, $isFixed, $type );
+
+				} elseif ( $model instanceof InsightsPageModel ) {
+					$isFixed = false;
+					$isEdit = $this->request->getBool( 'isEdit', false );
+					/* Show in progress notification when in view mode of article */
+					if ( !$isEdit ) {
+						$params = $model->getInProgressNotificationParams();
+						if ( is_array( $params ) ) {
+							$type = self::FLOW_STATUS_NOTFIXED;
+							$this->setMustacheParams( $params, $isFixed, $type );
+						}
 					}
 				}
 			}
@@ -93,7 +95,7 @@ class InsightsLoopController extends WikiaController {
 		$params = $this->getInsightListLinkParams( $subpage );
 		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . $subpage )->plain();
 
-		if ( $model->getConfig()->displayFix() ) {
+		if ( $model->getConfig()->displayFixItMessage() ) {
 			$params['fixItMessage'] = wfMessage( 'insights-notification-message-fixit' )->plain();
 		}
 
@@ -111,7 +113,7 @@ class InsightsLoopController extends WikiaController {
 	private function getNotFixedNotificationParams( $subpage, Title $title, InsightsQueryPageModel $model ) {
 		$params = $this->getInsightListLinkParams( $subpage );
 
-		if ( $model->getConfig()->displayFix() ) {
+		if ( $model->getConfig()->displayFixItMessage() ) {
 			$params = array_merge( $params, $this->getInsightFixItParams( $title, $model ) );
 		}
 
@@ -154,7 +156,7 @@ class InsightsLoopController extends WikiaController {
 	 */
 	private function getInsightNextLinkParams( $subpage, $next ) {
 		return [
-			'nextArticleText' => wfMessage( 'insights-notification-next-item-' . $subpage )->plain(),
+			'nextArticleText' => wfMessage( InsightsHelper::INSIGHT_NEXT_MSG_PREFIX . $subpage )->plain(),
 			'nextArticleTitle' => $next['link']['text'],
 			'nextArticleLink' => $next['link']['url']
 		];
@@ -182,7 +184,7 @@ class InsightsLoopController extends WikiaController {
 	private function getInsightLinkParams() {
 		return [
 			'insightsPageText' => wfMessage( 'insights-notification-see-more' )->plain(),
-			'insightsPageLink' => InsightsHelper::getSubpageLocalUrl()
+			'insightsPageLink' => SpecialPage::getTitleFor( 'Insights' )->getFullURL()
 		];
 	}
 

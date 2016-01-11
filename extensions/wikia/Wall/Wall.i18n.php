@@ -315,8 +315,8 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-topic-edit-save' => 'Save',
 	'wall-topic-edit-cancel' => 'Cancel',
 
-	'group-threadmoderator' => 'Moderators',
-	'group-threadmoderator-member' => 'Moderator',
+	'group-threadmoderator' => 'Discussions Moderators',
+	'group-threadmoderator-member' => 'Discussions Moderator',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
 );
 

@@ -68,10 +68,6 @@ $messages = array(
 'article'    => 'Parau pāpa’i',
 'navigation' => 'Arata’i',
 
-# Cologne Blue skin
-'qbedit'         => 'Fa’ahuru ’ē',
-'qbmyoptions'    => 'ta’u ’api',
-'qbspecialpages' => 'Te mau ’api ta’a ’ē',
 
 'help'             => 'Tauturu',
 'search'           => 'Roromā’imi',

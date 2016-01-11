@@ -132,13 +132,9 @@ $messages = array(
 'mytalk'    => "'E mmie chiacchieriàte",
 'anontalk'  => 'Chiacchierate pe chisto IP',
 
-# Cologne Blue skin
 'qbfind'         => 'Truòva',
-'qbedit'         => 'Càgna',
 'qbpageoptions'  => 'Chesta paggena',
 'qbpageinfo'     => "Nfrummazzione ncopp'â paggena",
-'qbmyoptions'    => "'E ppaggene mie",
-'qbspecialpages' => 'Pàggene speciàle',
 
 'errorpagetitle'    => 'Sbaglio',
 'returnto'          => 'Torna a $1.',
@@ -164,7 +160,6 @@ $messages = array(
 'specialpage'       => 'Paggena speciàle',
 'talk'              => 'Chiàcchiera',
 'toolbox'           => 'Strumiente',
-'imagepage'         => 'Paggena fiùra',
 'otherlanguages'    => 'Ate léngue',
 'redirectedfrom'    => "(Redirect 'a $1)",
 'lastmodifiedat'    => "Urdema cagnamiénto pe' a paggena: $2, $1.",

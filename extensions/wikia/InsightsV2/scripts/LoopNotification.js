@@ -69,17 +69,15 @@ require(
 		getMessageType = function() {
 			if (isEdit || !isFixed) {
 				return 'warn';
-			} else {
-				return 'confirm';
 			}
+			return 'confirm';
 		};
 
 		getParent = function() {
 			if (window.wgIsEditPage) {
 				return $('#WikiaMainContent');
-			} else {
-				return null;
 			}
+			return null;
 		};
 
 		initNotification = function() {

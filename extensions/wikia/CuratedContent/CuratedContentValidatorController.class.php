@@ -7,31 +7,12 @@ class CuratedContentValidatorMethodNotAllowedException extends MethodNotAllowedE
 class CuratedContentValidatorController extends WikiaController {
 
 	private $validator;
-	private $specialPageDataValidator;
 	private $helper;
 
 	public function __construct() {
 		parent::__construct();
-		$this->specialPageDataValidator = new CuratedContentSpecialPageValidator();
 		$this->validator = new CuratedContentValidator();
 		$this->helper = new CuratedContentHelper();
-	}
-
-	//@TODO this function should be removed in XW-700
-	public function validateSection() {
-		global $wgRequest;
-		if ( !$wgRequest->wasPosted() ) {
-			throw new CuratedContentValidatorMethodNotAllowedException();
-		}
-		$section = $this->request->getVal( 'item' );
-		if ( empty( $section ) ) {
-			$this->respondWithErrors();
-		} else {
-			$section['title'] = $section['label'];
-			unset( $section['label'] );
-			$this->specialPageDataValidator->validateSection( $section );
-			$this->respond( $this->specialPageDataValidator->getErrors() );
-		}
 	}
 
 	public function validateCuratedContentSection() {
@@ -53,32 +34,6 @@ class CuratedContentValidatorController extends WikiaController {
 		}
 	}
 
-	//@TODO XW-700 this function should be removed
-	public function validateSectionWithItems() {
-		global $wgRequest;
-		if ( !$wgRequest->wasPosted() ) {
-			throw new CuratedContentValidatorMethodNotAllowedException();
-		}
-		$section = $this->request->getVal( 'item' );
-		if ( empty( $section ) ) {
-			$this->respondWithErrors();
-		} else {
-			$section['title'] = $section['label'];
-			unset( $section['label'] );
-			$section = $this->helper->processLogicForSectionSpecialPage( $section );
-			if ( !empty( $section['featured'] ) ) {
-				$this->specialPageDataValidator->validateItems( $section, true );
-			} else {
-				$this->specialPageDataValidator->validateSection( $section );
-				$this->specialPageDataValidator->validateItemsExist( $section );
-				$this->specialPageDataValidator->validateItems( $section );
-				$this->specialPageDataValidator->validateItemsTypes( $section );
-			}
-			$this->specialPageDataValidator->validateDuplicatedLabels();
-			$this->respond( $this->specialPageDataValidator->getErrors() );
-		}
-	}
-
 	public function validateCuratedContentSectionWithItems() {
 		global $wgRequest;
 		if ( !$wgRequest->wasPosted() ) {
@@ -97,26 +52,6 @@ class CuratedContentValidatorController extends WikiaController {
 			$errors = $this->validator->validateSectionWithItems( $section );
 
 			$this->respond( $errors );
-		}
-	}
-
-	//@TODO XW-700 this function should be removed
-	public function validateItem() {
-		global $wgRequest;
-		if ( !$wgRequest->wasPosted() ) {
-			throw new CuratedContentValidatorMethodNotAllowedException();
-		}
-		$item = $this->request->getVal( 'item' );
-		$isFeatured = $this->request->getBool( 'isFeaturedItem', false );
-		if ( empty( $item ) ) {
-			$this->respondWithErrors();
-		} else {
-			$this->helper->fillItemInfo( $item );
-			$this->specialPageDataValidator->validateItem( $item, $isFeatured );
-			if ( !$isFeatured ) {
-				$this->specialPageDataValidator->validateItemType( $item );
-			}
-			$this->respond( $this->specialPageDataValidator->getErrors() );
 		}
 	}
 
