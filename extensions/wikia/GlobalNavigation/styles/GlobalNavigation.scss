@@ -111,10 +111,26 @@
 	}
 
 	.explore-wikia-dropdown {
-		display: none;
 		background-color: $global-wikia-background-color;
+		display: none;
 		position: absolute;
+		transition-duration: .5s;
+		transition-property: background-color;
 		z-index: 5000100;
+
+		a {
+			color: $global-navigation-text-color;
+			display: block;
+			font-size: 14px;
+			padding: 12px;
+			text-decoration: none;
+			width: 100%;
+
+			&:hover {
+				background-color: #e6ebf2;
+				text-decoration: none;
+			}
+		}
 	}
 
 	.explore-wikia-entry-point.active {
@@ -140,6 +156,19 @@
 	&.inverse {
 		.wikia-logo__subtitle {
 			color: #ddd;
+		}
+
+		.explore-wikia-dropdown {
+			background-color: rgba(0,0,0,.65);
+
+			a {
+				color: #fff;
+
+				&:hover {
+					color: $global-navigation-text-color;
+					background-color: #ddd;
+				}
+			}
 		}
 
 		.cell-link {
