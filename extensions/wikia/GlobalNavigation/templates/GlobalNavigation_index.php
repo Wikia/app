@@ -62,7 +62,7 @@
 				<a class="cell-link" href="http://tvhub.wikia.com/wiki/TV_Hub">TV</a>
 			</div>
 			<div class="table-cell">
-				<div id="exploreWikiaEntryPoint">
+				<div class="explore-wikia-entry-point" id="exploreWikiaEntryPoint">
 					<a class="cell-link" href="#">Explore Wikia</a>
 					<ul class="explore-wikia-dropdown" id="exploreWikiaDropdown">
 						<li><a href="http://gameshub.wikia.com/wiki/Games_Hub">Games</a></li>
