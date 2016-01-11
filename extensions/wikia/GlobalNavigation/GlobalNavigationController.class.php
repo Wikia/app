@@ -29,17 +29,14 @@ class GlobalNavigationController extends WikiaController {
 		Wikia::addAssetsToOutput( 'global_navigation_scss' );
 		Wikia::addAssetsToOutput( 'global_navigation_js' );
 
-		//Lang for centralUrl and CNW should be the same as user language not content language
-		//That's why $wgLang global is used
-		$lang = $wgLang->getCode();
-		$centralUrl = $this->wikiaLogoHelper->getCentralUrlForLang( $lang );
-		$createWikiUrl = $this->helper->getCreateNewWikiUrl( $lang );
+		$mainCorpPageUrl = $this->wikiaLogoHelper->getMainCorpPageURL();
+		$createWikiUrl = $this->helper->getCreateNewWikiUrl( $wgLang->getCode() );
 		$userCanRead = $wgUser->isAllowed( 'read' );
 
-		$this->response->setVal( 'centralUrl', $centralUrl );
+		$this->response->setVal( 'centralUrl', $mainCorpPageUrl );
 		$this->response->setVal( 'createWikiUrl', $createWikiUrl );
-		$this->response->setVal( 'notificationsEnabled', !empty($userCanRead));
-		$this->response->setVal( 'isAnon', $wgUser->isAnon());
+		$this->response->setVal( 'notificationsEnabled', !empty( $userCanRead ) );
+		$this->response->setVal( 'isAnon', $wgUser->isAnon() );
 
 		$isGameStarLogoEnabled = $this->isGameStarLogoEnabled();
 		$this->response->setVal( 'isGameStarLogoEnabled', $isGameStarLogoEnabled );
@@ -63,13 +60,13 @@ class GlobalNavigationController extends WikiaController {
 		);
 		if ( WikiaPageType::isCorporatePage() && !WikiaPageType::isWikiaHub() ) {
 			$this->response->setVal( 'disableLocalSearchOptions', true );
-			$this->response->setVal( 'defaultSearchPlaceholder', wfMessage( 'global-navigation-global-search')->escaped() );
+			$this->response->setVal( 'defaultSearchPlaceholder', wfMessage( 'global-navigation-global-search' )->escaped() );
 			$this->response->setVal( 'defaultSearchUrl', $globalSearchUrl );
 		} else {
 			$this->response->setVal( 'globalSearchUrl', $globalSearchUrl );
 			$this->response->setVal( 'localSearchUrl', $localSearchUrl );
-			$this->response->setVal( 'localSearchPlaceholder', $localSearchPlaceholder);
-			$this->response->setVal( 'defaultSearchPlaceholder',  $localSearchPlaceholder);
+			$this->response->setVal( 'localSearchPlaceholder', $localSearchPlaceholder );
+			$this->response->setVal( 'defaultSearchPlaceholder',  $localSearchPlaceholder );
 			$this->response->setVal( 'defaultSearchUrl', $localSearchUrl );
 		}
 

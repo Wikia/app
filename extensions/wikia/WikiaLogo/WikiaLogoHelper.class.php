@@ -2,6 +2,8 @@
 
 class WikiaLogoHelper {
 	const DEFAULT_LANG = 'en';
+	const FANDOM_LANG = 'en';
+	const FANDOM_URL = 'http://fandom.wikia.com/';
 
 	/**
 	 * @var WikiaCorporateModel
@@ -49,6 +51,20 @@ class WikiaLogoHelper {
 			return GlobalTitle::newMainPage( $this->wikiCorporateModel->getCorporateWikiIdByLang( $lang ) );
 		} catch ( Exception $ex ) {
 			return false;
+		}
+	}
+
+	public function getMainCorpPageURL() {
+		global $wgEnableGlobalNav2016, $wgLang, $wgLanguageCode;
+
+		if ( empty( $wgEnableGlobalNav2016 ) ) {
+			return $this->getCentralUrlForLang( $wgLang->getCode() );
+		} else {
+			if ( $wgLanguageCode === self::FANDOM_LANG ) {
+				return self::FANDOM_URL;
+			} else {
+				return $this->getCentralUrlForLang( $wgLang->getCode() );
+			}
 		}
 	}
 }

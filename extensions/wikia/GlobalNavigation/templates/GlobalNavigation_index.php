@@ -1,8 +1,8 @@
-<?php if (!$wg->EnableGlobalNav2016): ?>
+<?php if ( !$wg->EnableGlobalNav2016 ): ?>
 	<nav class="global-navigation" id="globalNavigation">
 		<div class="global-navigation-container">
 			<div class="wikia-logo-container table-cell">
-				<a href="<?= htmlspecialchars( $centralUrl ) ?>"
+				<a href="<?= htmlspecialchars( $mainCorpPageUrl ) ?>"
 					class="wikia-logo"
 					rel="nofollow"
 					data-id="wikia-logo">
@@ -40,7 +40,7 @@
 	<? endif; ?>
 	</div>
 	</nav>
-<?php else: //wgEnableGlobalNav2016 ?>
+<?php else : // wgEnableGlobalNav2016 ?>
 	<nav class="global-navigation global-navigation-2016" id="globalNavigation">
 		<div class="global-navigation-container">
 			<div class="wikia-logo-container table-cell">
@@ -82,17 +82,17 @@
 				</div>
 			</div>
 			<div class="search-container table-cell">
-				<?= $app->renderView('GlobalNavigation', 'searchIndex'); ?>
+				<?= $app->renderView( 'GlobalNavigation', 'searchIndex' ); ?>
 			</div>
 			<div class="account-navigation-container table-cell">
-				<?= $app->renderView('GlobalNavigationAccountNavigation', 'index') ?>
+				<?= $app->renderView( 'GlobalNavigationAccountNavigation', 'index' ) ?>
 			</div>
-			<?php if (!$isAnon && $notificationsEnabled): ?>
+			<?php if ( !$isAnon && $notificationsEnabled ): ?>
 				<div class="notifications-container table-cell" id="notificationsEntryPoint">
-					<?= $app->renderView('GlobalNavigationWallNotifications', 'Index'); ?>
+					<?= $app->renderView( 'GlobalNavigationWallNotifications', 'Index' ); ?>
 				</div>
 			<?php endif; ?>
-			<? if ($isGameStarLogoEnabled): ?>
+			<? if ( $isGameStarLogoEnabled ): ?>
 				<a class="gamestar-logo" href="http://gamestar.de/"></a>
 			<? endif; ?>
 		</div>
