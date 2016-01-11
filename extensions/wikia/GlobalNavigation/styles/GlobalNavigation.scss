@@ -112,8 +112,17 @@
 		display: none;
 	}
 
-	.inline-link {
+	.cell-link {
+		color: $global-navigation-text-color;
 		display: inline-block;
+		font-size: 14px;
+		line-height: 30px;
+		padding: 8px;
+
+		&:hover {
+			background-color: #e6ebf2;
+			text-decoration: none;
+		}
 	}
 }
 

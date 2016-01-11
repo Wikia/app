@@ -57,11 +57,13 @@
 				</a >
 			</div >
 			<div class="table-cell">
-				<a class="inline-link" href="http://gameshub.wikia.com/wiki/Games_Hub">Games</a>
-				<a class="inline-link" href="http://movieshub.wikia.com/wiki/Movies_Hub">Movies</a>
-				<a class="inline-link" href="http://tvhub.wikia.com/wiki/TV_Hub">TV</a>
-				<div class="inline-link" id="exploreWikiaEntryPoint">
-					<a>Explore Wikia</a>
+				<a class="cell-link" href="http://gameshub.wikia.com/wiki/Games_Hub">Games</a>
+				<a class="cell-link" href="http://movieshub.wikia.com/wiki/Movies_Hub">Movies</a>
+				<a class="cell-link" href="http://tvhub.wikia.com/wiki/TV_Hub">TV</a>
+			</div>
+			<div class="table-cell">
+				<div id="exploreWikiaEntryPoint">
+					<a class="cell-link" href="#">Explore Wikia</a>
 					<ul class="explore-wikia-dropdown" id="exploreWikiaDropdown">
 						<li><a href="http://gameshub.wikia.com/wiki/Games_Hub">Games</a></li>
 						<li><a href="http://movieshub.wikia.com/wiki/Movies_Hub">Movies</a></li>
