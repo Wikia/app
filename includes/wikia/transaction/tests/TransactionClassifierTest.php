@@ -170,6 +170,20 @@ class TransactionClassifierTest extends WikiaBaseTest {
 				],
 				'expectedName' => 'api/api/query/users'
 			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_API,
+					Transaction::PARAM_API_ACTION => 'visualeditoredit',
+				],
+				'expectedName' => 'api/api/visualeditoredit'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_API,
+					Transaction::PARAM_API_ACTION => 'foo',
+				],
+				'expectedName' => 'api/api/other'
+			],
 			# blogs
 			[
 				'attributes' => [
