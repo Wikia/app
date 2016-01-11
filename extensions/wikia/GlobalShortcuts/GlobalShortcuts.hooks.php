@@ -32,16 +32,15 @@ class Hooks {
 	 */
 	public function onMakeGlobalVariablesScript( array &$vars ) {
 		$actions = [];
-		$this->addCurrentPageActions( $actions );
+		$shortcuts = [];
+		$helper = new Helper();
+		$helper->addCurrentPageActions( $actions, $shortcuts );
 		$this->addSpecialPageActions( $actions );
 
-		wfRunHooks( 'PageGetActions', [ &$actions ] );
+		wfRunHooks( 'PageGetActions', [ &$actions, &$shortcuts ] );
 		$vars['wgWikiaPageActions'] = $actions;
+		$vars['wgWikiaShortcutKeys'] = $shortcuts;
 
-
-		$vars['globalShortcutsConfig'] = [
-			'recentChanges' => \SpecialPage::getTitleFor( 'RecentChanges' )->getLocalURL()
-		];
 		return true;
 	}
 
@@ -79,33 +78,5 @@ class Hooks {
 
 		return true;
 	}
-
-	private function addCurrentPageActions( &$actions ) {
-		$commands = [
-			'page:Follow' => 'PageAction:Follow',
-			'page:History' => 'PageAction:History',
-			'page:Move' => 'PageAction:Move',
-			'page:Delete' => 'PageAction:Delete',
-			'page:Edit' => 'PageAction:Edit',
-			'page:Protect' => 'PageAction:Protect',
-			'page:Whatlinkshere' => 'PageAction:Whatlinkshere',
-		];
-
-		foreach ( $commands as $actionId => $command ) {
-			$userCommandService = new \UserCommandsService();
-			$pageAction = $userCommandService->get( $command );
-			if ( $pageAction->isAvailable() ) {
-				$actions[] = [
-					'id' => $actionId,
-					'caption' => $pageAction->getCaption(),
-					'href' => $pageAction->getHref(),
-					'category' => 'Current page',
-				];
-			}
-		}
-
-		return true;
-	}
-
 
 }

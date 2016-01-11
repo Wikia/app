@@ -13,8 +13,7 @@ define('PageActions', ['mw', 'jquery'], function (mw, $) {
 			'Other': 1000
 		},
 		all = [],
-		byId = {},
-		globalShortcutsConfig = mw.config.get('globalShortcutsConfig');
+		byId = {};
 
 	function PageAction(id, caption, fn, category, weight) {
 		this.id = id;
@@ -161,41 +160,6 @@ define('PageActions', ['mw', 'jquery'], function (mw, $) {
 	});
 
 	addOrOverrideMany([{
-		id: 'page:Delete',
-		caption: 'Delete page',
-		fn: function () {
-			$('[accesskey=d]')[0].click();
-		},
-		category: 'Current page',
-		weight: 900,
-		override: ['caption', 'fn', 'weight']
-	}, {
-		id: 'page:Edit',
-		caption: 'Edit page',
-		fn: function () {
-			$('#ca-edit')[0].click();
-		},
-		category: 'Current page',
-		weight: 100,
-		override: ['caption', 'fn', 'weight']
-	}, {
-		id: 'page:Move',
-		caption: 'Move page',
-		fn: function () {
-			$('[accesskey=m]')[0].click();
-		},
-		category: 'Current page',
-		weight: 900,
-		override: ['caption', 'fn', 'weight']
-	}, {
-		id: 'page:History',
-		caption: 'Open page history',
-		fn: function () {
-			$('[accesskey=h]')[0].click();
-		},
-		category: 'Current page',
-		override: ['caption', 'fn']
-	}, {
 		id: 'general:StartWikia',
 		caption: 'Start a new wikia',
 		fn: function () {
