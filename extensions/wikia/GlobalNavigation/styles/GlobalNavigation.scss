@@ -115,11 +115,11 @@
 		background-color: $global-wikia-background-color;
 		position: absolute;
 		z-index: 5000100;
+	}
 
-		&.active {
-			.explore-wikia-dropdown {
-				display: block;
-			}
+	.explore-wikia-entry-point.active {
+		.explore-wikia-dropdown {
+			display: block;
 		}
 	}
 
