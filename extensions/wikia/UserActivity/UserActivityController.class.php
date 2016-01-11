@@ -52,9 +52,6 @@ class Controller extends \WikiaController {
 	}
 
 	protected function formatItems( $items ) {
-
-		\F::app()->wg->User->getPreference('foo');
-
 		$flattened = [];
 		foreach ( $items as $sortKey => $contribItem ) {
 			$lastEditTS = wfTimestamp( TS_MW, $contribItem['lastedit'] );
