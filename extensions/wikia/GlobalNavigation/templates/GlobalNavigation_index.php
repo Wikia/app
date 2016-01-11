@@ -53,7 +53,7 @@
 						width="91"
 						alt="<?= wfMessage( 'oasis-global-page-header' )->escaped() ?>"
 						title="<?= wfMessage( 'oasis-global-page-header' )->escaped() ?>">
-					<span class="wikia-logo__subtitle">The Home Of Fandom</span>
+					<span class="wikia-logo__subtitle"><?= wfMessage( 'global-navigation-home-of-fandom' )->escaped() ?></span>
 				</a >
 			</div >
 			<div class="search-container table-cell">
