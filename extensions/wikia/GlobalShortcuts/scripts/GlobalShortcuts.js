@@ -10,7 +10,6 @@ define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions'], function (Mousetra
 			// Actions
 			'general:StartWikia': ['s'],
 			// Global navigation
-			'page:Discussions': ['g d'],
 			'special:Recentchanges': ['g r'],
 			// Local navigation / focus
 			'help:Keyboard': ['?'],

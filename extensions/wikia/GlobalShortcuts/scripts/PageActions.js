@@ -167,14 +167,6 @@ define('PageActions', ['mw', 'jquery'], function (mw, $) {
 		},
 		category: 'Global'
 	}, {
-		id: 'page:Discussions',
-		caption: 'Open discussions',
-		fn: function () {
-			window.location.href = mw.config.get('location').origin + '/d';
-		},
-		weight: 600,
-		category: 'Current page'
-	}, {
 		id: 'help:Keyboard',
 		caption: 'Keyboard shortcuts help',
 		fn: function () {

@@ -2764,6 +2764,14 @@ $config['globalshortcuts_js'] = [
 	]
 ];
 
+$config['globalshortcuts_discussions_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/GlobalShortcuts/scripts/AddDiscussionsShortcuts.js',
+	]
+];
+
 $config['globalshortcuts_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
