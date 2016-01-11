@@ -76,7 +76,7 @@ class ApiVisualEditor extends ApiBase {
 			// served directly from Varnish, in  which case discard the value of the XPP header
 			// and use it to declare the cache hit instead.
 			$xCache = $req->getResponseHeader( 'X-Cache' );
-			if ( is_string( $xCache ) && strpos( $xCache, 'hit' ) !== false ) {
+			if ( is_string( $xCache ) && strpos( $xCache, 'HIT' ) !== false ) {
 				$xpp = 'cached-response=true';
 			} else {
 				$xpp = $req->getResponseHeader( 'X-Parsoid-Performance' );
