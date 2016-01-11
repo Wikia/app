@@ -325,7 +325,7 @@ class TemplateTypesParserTest extends WikiaBaseTest {
 				],
 				self::TEST_TEMPLATE_TEXT,
 				self::TEST_TEMPLATE_TEXT
-			],
+			]
 		];
 	}
 }
