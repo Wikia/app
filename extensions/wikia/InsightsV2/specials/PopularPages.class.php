@@ -91,7 +91,7 @@ class PopularPages extends PageQueryPage {
 	public function reallyDoQuery( $limit = false, $offset = false ) {
 		global $wgContentNamespaces;
 
-		$dbr = wfGetDB( DB_SLAVE, [ $this->getName(), __METHOD__, 'vslow' ] );
+		$dbr = wfGetDB( DB_SLAVE, [ $this->getName(), __METHOD__ ] );
 
 		$contentPages = ( new WikiaSQL() )
 			->SELECT( 'page_id', 'page_title', 'page_namespace' )
