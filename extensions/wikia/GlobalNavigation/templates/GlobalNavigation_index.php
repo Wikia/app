@@ -67,7 +67,7 @@
 					<ul class="explore-wikia-dropdown" id="exploreWikiaDropdown">
 						<li><a class="cell-link" href="<?= wfMessage( 'global-navigation-games-hub-link' )->inContentLanguage()->text()?>"><?= wfMessage( 'global-navigation-games-hub-link-label' )->inContentLanguage()->text()?></a></li>
 						<li><a class="cell-link" href="<?= wfMessage( 'global-navigation-movies-hub-link' )->inContentLanguage()->text()?>"><?= wfMessage( 'global-navigation-movies-hub-link-label' )->inContentLanguage()->text()?></a></li>
-						<li><a class="cell-link" href="<?= wfMessage( 'global-navigation-tv-hub-link' )->inContentLanguage()->text()?>"><?= wfMessage( 'global-navigation-games-tv-link-label' )->inContentLanguage()->text()?></a></li>
+						<li><a class="cell-link" href="<?= wfMessage( 'global-navigation-tv-hub-link' )->inContentLanguage()->text()?>"><?= wfMessage( 'global-navigation-tv-hub-link-label' )->inContentLanguage()->text()?></a></li>
 						<li><a href="#">Top Communities</a></li>
 						<li><a href="#">Community Central</a></li>
 					</ul>
