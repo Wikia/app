@@ -56,7 +56,7 @@
 					<span class="wikia-logo__subtitle"><?= wfMessage( 'global-navigation-home-of-fandom' )->escaped() ?></span>
 				</a >
 			</div >
-			<div class="table-cell">
+			<div class="table-cell" data-visibility="desktop">
 				<a class="cell-link" href="http://gameshub.wikia.com/wiki/Games_Hub">Games</a>
 				<a class="cell-link" href="http://movieshub.wikia.com/wiki/Movies_Hub">Movies</a>
 				<a class="cell-link" href="http://tvhub.wikia.com/wiki/TV_Hub">TV</a>
@@ -65,9 +65,9 @@
 				<div class="explore-wikia-entry-point" id="exploreWikiaEntryPoint">
 					<a class="cell-link" href="#">Explore Wikia</a>
 					<ul class="explore-wikia-dropdown" id="exploreWikiaDropdown">
-						<li><a href="http://gameshub.wikia.com/wiki/Games_Hub">Games</a></li>
-						<li><a href="http://movieshub.wikia.com/wiki/Movies_Hub">Movies</a></li>
-						<li><a href="http://tvhub.wikia.com/wiki/TV_Hub">TV</a></li>
+						<li data-visibility="tablet"><a href="http://gameshub.wikia.com/wiki/Games_Hub">Games</a></li>
+						<li data-visibility="tablet"><a href="http://movieshub.wikia.com/wiki/Movies_Hub">Movies</a></li>
+						<li data-visibility="tablet"><a href="http://tvhub.wikia.com/wiki/TV_Hub">TV</a></li>
 						<li><a href="#">Top Communities</a></li>
 						<li><a href="#">Community Central</a></li>
 					</ul>

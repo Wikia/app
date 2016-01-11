@@ -182,5 +182,17 @@
 	}
 }
 
+@media #{$breakpoint-below-small-plus} {
+	[data-visibility=desktop] {
+		display: none !important;
+	}
+}
+@media #{$breakpoint-small-plus-up} {
+	[data-visibility=tablet] {
+		display: none !important;
+	}
+}
+
+
 @import 'breakpoints-GlobalNavigation';
 @import 'responsive-GlobalNavigation';
