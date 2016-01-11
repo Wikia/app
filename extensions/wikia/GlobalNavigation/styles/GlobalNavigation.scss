@@ -97,6 +97,7 @@
 		align-items: flex-end;
 		text-decoration: none !important;
 	}
+
 	.wikia-logo__subtitle {
 		border-bottom: 1px solid;
 		border-top: 1px solid;
@@ -107,6 +108,10 @@
 		line-height: 16px;
 		margin-left: 8px;
 		text-transform: uppercase;
+	}
+
+	&.inverse .wikia-logo__subtitle {
+		color: #ddd;
 	}
 
 	.explore-wikia-dropdown {
@@ -132,6 +137,15 @@
 		&:hover {
 			background-color: #e6ebf2;
 			text-decoration: none;
+		}
+	}
+
+	&.inverse .cell-link {
+		color: #fff;
+
+		&:hover {
+			color: $global-navigation-text-color;
+			background-color: #ddd;
 		}
 	}
 }
