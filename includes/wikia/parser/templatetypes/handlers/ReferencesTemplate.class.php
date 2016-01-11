@@ -7,15 +7,9 @@ class ReferencesTemplate {
 	 * @return string
 	 */
 	public static function handle( $text ) {
-		$error_setting = libxml_use_internal_errors( true );
-
-		$dom = new DOMDocument();
-		$dom->loadHTML( '<body>' . $text . '</body>');
-		$xpath = new DOMXPath($dom);
-		$references = $xpath->query('//references');
-
-		libxml_clear_errors();
-		libxml_use_internal_errors( $error_setting );
+		$dom = HtmlHelper::createDOMDocumentFromText( $text );
+		$xpath = new DOMXPath( $dom );
+		$references = $xpath->query( '//references' );
 
 		if ( $references->length > 0 ) {
 			return '<references />';
