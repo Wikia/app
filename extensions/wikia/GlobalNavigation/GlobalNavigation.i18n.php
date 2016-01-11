@@ -222,6 +222,7 @@ $messages['en'] = array(
 	'global-navigation-local-search-placeholder' => 'Search within $1...',
 	'global-navigation-local-search' => 'Search this wikia',
 	'global-navigation-global-search' => 'Search all of Wikia',
+	'global-navigation-home-of-fandom' => 'The Home of Fandom'
 );
 
 $messages['qqq'] = array(
