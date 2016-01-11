@@ -106,6 +106,57 @@ class TemplateTypesParserTest extends WikiaBaseTest {
 					'templateType' => 'notice',
 					'globals' => [
 						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => false,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => true
+					]
+				],
+				self::TEST_TEMPLATE_TEXT,
+				self::TEST_TEMPLATE_TEXT
+			],
+			[
+				[
+					'templateId' => 6,
+					'templateType' => 'notice',
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => true,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => false
+					]
+				],
+				self::TEST_TEMPLATE_TEXT,
+				self::TEST_TEMPLATE_TEXT
+			],
+			[
+				[
+					'templateId' => 7,
+					'templateType' => 'notice',
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => true,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => false,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => true
+					]
+				],
+				self::TEST_TEMPLATE_TEXT,
+				self::TEST_TEMPLATE_TEXT
+			],
+			[
+				[
+					'templateId' => 8,
+					'templateType' => 'notice',
+					'globals' => [
+						'wgCityId' => 12345,
 						'wgEnableTemplateTypesParsing' => true,
 						'wgEnableNavboxTemplateParsing' => true,
 						'wgEnableNavigationTemplateParsing' => true,
@@ -119,7 +170,61 @@ class TemplateTypesParserTest extends WikiaBaseTest {
 			],
 			[
 				[
-					'templateId' => 6,
+					'templateId' => 9,
+					'templateType' => 'references',
+					'wgCityId' => 12345,
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => false,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => true
+					]
+				],
+				'<div class="wrapped-references"><references /></div>',
+				'<div class="wrapped-references"><references /></div>'
+			],
+			[
+				[
+					'templateId' => 10,
+					'templateType' => 'references',
+					'wgCityId' => 12345,
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => true,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => false
+					]
+				],
+				'<div class="wrapped-references"><references /></div>',
+				'<div class="wrapped-references"><references /></div>'
+			],
+			[
+				[
+					'templateId' => 11,
+					'templateType' => 'references',
+					'wgCityId' => 12345,
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => true,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => false,
+						'wgArticleAsJson' => true
+					]
+				],
+				'<div class="wrapped-references"><references /></div>',
+				'<div class="wrapped-references"><references /></div>'
+			],
+			[
+				[
+					'templateId' => 12,
 					'templateType' => 'references',
 					'wgCityId' => 12345,
 					'globals' => [
@@ -137,7 +242,7 @@ class TemplateTypesParserTest extends WikiaBaseTest {
 			],
 			[
 				[
-					'templateId' => 7,
+					'templateId' => 13,
 					'templateType' => 'references',
 					'globals' => [
 						'wgCityId' => 12345,
@@ -154,7 +259,7 @@ class TemplateTypesParserTest extends WikiaBaseTest {
 			],
 			[
 				[
-					'templateId' => 8,
+					'templateId' => 14,
 					'templateType' => 'references',
 					'globals' => [
 						'wgCityId' => 12345,
@@ -169,6 +274,57 @@ class TemplateTypesParserTest extends WikiaBaseTest {
 				'<div class="wrapped-references"><references /></div>',
 				'<div class="wrapped-references"><references /></div>',
 				'References should not be parsed under wgEnableReferencesTemplateParsing disabled'
+			],
+			[
+				[
+					'templateId' => 15,
+					'templateType' => 'navigation',
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => false,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => true
+					]
+				],
+				self::TEST_TEMPLATE_TEXT,
+				self::TEST_TEMPLATE_TEXT
+			],
+			[
+				[
+					'templateId' => 16,
+					'templateType' => 'navigation',
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => true,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => false
+					]
+				],
+				self::TEST_TEMPLATE_TEXT,
+				self::TEST_TEMPLATE_TEXT
+			],
+			[
+				[
+					'templateId' => 16,
+					'templateType' => 'navigation',
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => true,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => false,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => true
+					]
+				],
+				self::TEST_TEMPLATE_TEXT,
+				self::TEST_TEMPLATE_TEXT
 			],
 		];
 	}
