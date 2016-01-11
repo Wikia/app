@@ -93,7 +93,7 @@ class FileNamespaceSanitizeHelper {
 	 */
 	private function extractFilename( $potentialFilename, $filePrefixRegex ) {
 		$trimmedFilename = trim( $potentialFilename, "[]" );
-		$unprefixedFilename = mb_ereg_replace( $filePrefixRegex, "", $trimmedFilename );
+		$unprefixedFilename = mb_eregi_replace( $filePrefixRegex, "", $trimmedFilename );
 		$filenameParts = explode( '|', $unprefixedFilename );
 
 		if ( !empty( $filenameParts[0] ) ) {
