@@ -85,16 +85,15 @@ class InsightsHelper {
 			$dynamicInsights[InsightsPagesWithoutInfoboxModel::INSIGHT_TYPE] = 'InsightsPagesWithoutInfoboxModel';
 		}
 
-		/* Add Flags insight */
-		if ( !empty( $wgEnableFlagsExt ) ) {
-			$dynamicInsights[InsightsFlagsModel::INSIGHT_TYPE] = 'InsightsFlagsModel';
-		}
-
 		/* Add PopularPages insight */
 		if ( !empty( $wgEnableInsightsPopularPages ) ) {
 			$dynamicInsights[InsightsPopularPagesModel::INSIGHT_TYPE] = 'InsightsPopularPagesModel';
 		}
 
+		/* Add Flags insight */
+		if ( !empty( $wgEnableFlagsExt ) ) {
+			$dynamicInsights[InsightsFlagsModel::INSIGHT_TYPE] = 'InsightsFlagsModel';
+		}
 
 		return array_merge( $dynamicInsights, self::$defaultInsights );
 	}
