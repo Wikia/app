@@ -40,19 +40,20 @@
 	<? endif; ?>
 	</div>
 	</nav>
-<?php else: ?>
-	<nav class="global-navigation-2016 global-navigation" id = "globalNavigation" >
-		<div class="global-navigation-container" >
-			<div class="wikia-logo-container table-cell" >
-				<a href = "<?= htmlspecialchars( $centralUrl ) ?>"
+<?php else: //wgEnableGlobalNav2016 ?>
+	<nav class="global-navigation global-navigation-2016" id="globalNavigation">
+		<div class="global-navigation-container">
+			<div class="wikia-logo-container table-cell">
+				<a href="<?= htmlspecialchars( $centralUrl ) ?>"
 					class="wikia-logo"
-					rel = "nofollow"
-					data - id = "wikia-logo" >
-					<img src = "<?= $wg->BlankImgUrl ?>"
-						height = "24"
-						width = "91"
-						alt = "<?= wfMessage( 'oasis-global-page-header' )->escaped() ?>"
-						title = "<?= wfMessage( 'oasis-global-page-header' )->escaped() ?>" >
+					rel="nofollow"
+					data-id="wikia-logo">
+					<img src="<?= $wg->BlankImgUrl ?>"
+						height="24"
+						width="91"
+						alt="<?= wfMessage( 'oasis-global-page-header' )->escaped() ?>"
+						title="<?= wfMessage( 'oasis-global-page-header' )->escaped() ?>">
+					<span class="wikia-logo__subtitle">The Home Of Fandom</span>
 				</a >
 			</div >
 			<div class="search-container table-cell">
