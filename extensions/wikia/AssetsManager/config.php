@@ -2,7 +2,7 @@
 
 $config = array();
 
-/******** Shared libraries and assets *******/
+/********* Shared libraries and assets ********/
 
 $config['oasis_shared_core_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
