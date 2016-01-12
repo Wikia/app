@@ -67,4 +67,26 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 		header( "X-Redirected-By: Our404Handler" );
 		header( sprintf( "Location: %s", $oTitle->getFullURL( $query ) ), true, 301 );
 	}
+
+	/**
+	 * This hook is called when about to force a redirect to a canonical URL
+	 * for a title when we have no other parameters on the URL.
+	 *
+	 * Return false when we want to prevent the redirect to the canonical URL
+	 * for Our404Handler special page (for non-English wikis)
+	 *
+	 * @see PLATFORM-811, SEO-217
+	 *
+	 * @param WebRequest $request
+	 * @param Title $title
+	 * @param OutputPage $output
+	 * @return bool
+	 */
+	public static function onTestCanonicalRedirect( WebRequest $request, Title $title, OutputPage $output) {
+		if ( $title->isSpecial( self::NAME ) ) {
+			return false;
+		}
+
+		return true;
+	}
 }
