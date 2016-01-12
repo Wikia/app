@@ -56,7 +56,7 @@ class GlobalNavigationController extends WikiaController {
 		$fulltext = $wgUser->getGlobalPreference( 'enableGoSearch' ) ? 0 : 'Search';
 		$query = $wgRequest->getVal( 'search', $wgRequest->getVal( 'query', '' ) );
 		$localSearchPlaceholder = html_entity_decode(
-			wfMessage( 'global-navigation-local-search-placeholder', $wgSitename )->parse()
+			wfMessage( 'global-navigation-search-wikia', $wgSitename )->parse()
 		);
 		if ( WikiaPageType::isCorporatePage() && !WikiaPageType::isWikiaHub() ) {
 			$this->response->setVal( 'disableLocalSearchOptions', true );

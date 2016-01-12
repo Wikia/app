@@ -226,6 +226,7 @@ $messages['en'] = array(
 ***http://lifestylehub.wikia.com/wiki/Lifestyle_Hub|More...
 ",
 	'global-navigation-local-search-placeholder' => 'Search within $1...',
+	'global-navigation-search-wikia' => 'Search $1...',
 	'global-navigation-local-search' => 'Search this wikia',
 	'global-navigation-global-search' => 'Search all of Wikia',
 	'global-navigation-home-of-fandom' => 'The Home of Fandom'
@@ -248,6 +249,7 @@ $messages['qqq'] = array(
 	'global-navigation-local-search-placeholder' => 'Placeholder in search input in global nav',
 	'global-navigation-local-search' => 'Local search value in search dropdown',
 	'global-navigation-global-search' => 'Local search value in search dropdown',
+	'global-navigation-search-wikia' => 'Placeholder inside search input in Global Navigation 2016',
 );
 
 $messages['de'] = array(
