@@ -7,15 +7,10 @@ require(
 
 		var $entryPoint;
 
-		function onDropdownOpen() {
-		}
-
 		$(function () {
 			$entryPoint = $('#exploreWikiaEntryPoint');
 
-			dropdowns.attachDropdown($entryPoint, {
-				onOpen: onDropdownOpen
-			});
+			dropdowns.attachDropdown($entryPoint);
 
 			delayedHover.attach(
 				$entryPoint.get(0), {
