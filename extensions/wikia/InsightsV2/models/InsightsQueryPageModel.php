@@ -1,9 +1,11 @@
 <?php
 
+use Wikia\Logger\Loggable;
 /**
  * Abstract class that defines necessary set of methods for Insights QueryPage models
  */
 abstract class InsightsQueryPageModel extends InsightsModel {
+	use Loggable;
 
 	protected $queryPageInstance;
 
@@ -113,6 +115,8 @@ abstract class InsightsQueryPageModel extends InsightsModel {
 					}
 
 					$pages[] = $data;
+				} else {
+					$this->error( 'Insights Bad Data', [ 'bad_title' => $row->title, 'namespace' => $row->namespace ] );
 				}
 			}
 		}
