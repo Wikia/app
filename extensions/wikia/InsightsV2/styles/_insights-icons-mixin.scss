@@ -19,9 +19,12 @@
 		background-image: url('/extensions/wikia/InsightsV2/images/wantedpages_dark.svg'); /* inline */
 	}
 
+	.insights-icon-popularpages {
+		background-image: url('/extensions/wikia/InsightsV2/images/trending_dark.svg'); /* inline */
+	}
+
 	.insights-icon-nonportableinfoboxes,
 	.insights-icon-pageswithoutinfobox,
-	.insights-icon-popularpages,
 	.insights-icon-templateswithouttype {
 		background-image: url('/extensions/wikia/InsightsV2/images/genericinsights_dark.svg'); /* inline */
 	}
@@ -48,11 +51,13 @@
 		background-image: url('/extensions/wikia/InsightsV2/images/wantedpages.svg'); /* inline */
 	}
 
+	.insights-icon-popularpages {
+		background-image: url('/extensions/wikia/InsightsV2/images/trending.svg'); /* inline */
+	}
+
 	.insights-icon-nonportableinfoboxes,
 	.insights-icon-pageswithoutinfobox,
-	.insights-icon-popularpages,
 	.insights-icon-templateswithouttype {
 		background-image: url('/extensions/wikia/InsightsV2/images/genericinsights.svg'); /* inline */
 	}
 }
-
