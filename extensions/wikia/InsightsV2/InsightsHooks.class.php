@@ -144,9 +144,9 @@ class InsightsHooks {
 		if ( !RecognizedTemplatesProvider::isUnrecognized( $templateType ) ) {
 			$model = new InsightsTemplatesWithoutTypeModel();
 			$model->removeFixedItem( TemplatesWithoutTypePage::TEMPLATES_WITHOUT_TYPE_TYPE, $title );
-			$model->updateInsightsCache( $pageId );
+			( new InsightsCache( $model->getConfig() ) )->updateInsightsCache( $pageId );
 		}
 		return true;
 	}
 
-} 
+}
