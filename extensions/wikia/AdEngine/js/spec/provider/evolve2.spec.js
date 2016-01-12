@@ -1,33 +1,41 @@
 /*global beforeEach, describe, it, modules, expect, spyOn*/
-describe('OpenX Provider targeting', function () {
+describe('Evolve2 Provider targeting', function () {
 	'use strict';
 
 	var evolve2,
 		noop = function () {},
 		mocks = {
-			evolveHelper: {
-				getSect: function () {
-					return 'foo_section';
-				}
-			},
 			gptHelper: {
 				pushAd: noop
 			},
 			log: noop,
-			slotTweaker: {}
+			slotTweaker: {},
+			vertical: 'foo_vertical',
+			mappedVertical: 'bar_vertical',
+			zoneParams: {
+				getSite: function () {
+					return mocks.mappedVertical;
+				},
+				getVertical: function () {
+					return mocks.vertical;
+				}
+			}
 		};
 
 	function getEvolve2Provider() {
 		return modules['ext.wikia.adEngine.provider.evolve2'](
-			mocks.evolveHelper,
 			mocks.gptHelper,
 			mocks.slotTweaker,
+			mocks.zoneParams,
 			mocks.log
 		);
 	}
 
 	beforeEach(function () {
 		evolve2 = getEvolve2Provider();
+
+		mocks.vertical = 'foo_vertical';
+		mocks.mappedVertical = 'bar_vertical';
 		spyOn(mocks.gptHelper, 'pushAd');
 	});
 
@@ -40,7 +48,7 @@ describe('OpenX Provider targeting', function () {
 	});
 
 	it('Should push ad to helper with proper ad unit id', function () {
-		var expectedAdUnit = '/4403/ev/wikia_intl/foo_section/TOP_LEADERBOARD';
+		var expectedAdUnit = '/4403/ev/wikia_intl/ros/TOP_LEADERBOARD';
 
 		evolve2.fillInSlot('TOP_LEADERBOARD');
 
@@ -51,13 +59,49 @@ describe('OpenX Provider targeting', function () {
 		var expectedTargeting = {
 				size: '728x90,970x250,970x300,970x90',
 				pos: 'a',
-				sect: 'foo_section',
+				sect: 'ros',
 				site: 'wikia_intl'
 			};
 
 		evolve2.fillInSlot('TOP_LEADERBOARD');
 
 		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[3]).toEqual(expectedTargeting);
+	});
+
+	it('Should push ad to helper with proper vertical', function () {
+		var expectedSection = 'tv';
+
+		mocks.vertical = 'tv';
+		evolve2.fillInSlot('LEFT_SKYSCRAPER_2');
+
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[3].sect).toEqual(expectedSection);
+	});
+
+	it('Should push ad to helper with proper vertical', function () {
+		var expectedSection = 'movies';
+
+		mocks.vertical = 'movies';
+		evolve2.fillInSlot('LEFT_SKYSCRAPER_2');
+
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[3].sect).toEqual(expectedSection);
+	});
+
+	it('Should push ad to helper with proper mapped vertical', function () {
+		var expectedSection = 'gaming';
+
+		mocks.mappedVertical = 'gaming';
+		evolve2.fillInSlot('LEFT_SKYSCRAPER_2');
+
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[3].sect).toEqual(expectedSection);
+	});
+
+	it('Should push ad to helper with proper mapped vertical', function () {
+		var expectedSection = 'entertainment';
+
+		mocks.mappedVertical = 'ent';
+		evolve2.fillInSlot('LEFT_SKYSCRAPER_2');
+
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[3].sect).toEqual(expectedSection);
 	});
 
 	it('Should increment pos tageting value for the same size slots', function () {
