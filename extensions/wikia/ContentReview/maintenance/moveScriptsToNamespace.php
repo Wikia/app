@@ -3,6 +3,8 @@
 $dir = __DIR__ . "/../../../../";
 require_once( $dir . 'maintenance/Maintenance.php' );
 
+use Wikia\Util\GlobalStateWrapper;
+
 class MoveScripts extends Maintenance {
 
 	const JS_FILE_EXTENSION = '.js';
@@ -27,43 +29,50 @@ class MoveScripts extends Maintenance {
 		$reason = $this->getOption( 'reason', '' );
 
 		if ( !empty( $wgEnableContentReviewExt ) ) {
+			$f = fopen( 'move.log', 'w+' );
 			$this->output( "Processing wiki id: {$wgCityId}\n" );
 
-			$titles = [];
 			$helper = new \Wikia\ContentReview\Helper();
 			$jsPages = $helper->getJsPages( NS_MAIN );
+
+			$wrapper = new GlobalStateWrapper( [
+				'wgUser' => $this->getWikiaUser()
+			] );
 
 			foreach ( $jsPages as $jsPage ) {
 				if ( !empty( $jsPage['page_id'] ) && !empty( $jsPage['page_latest'] ) ) {
 					$title = Title::newFromText( $jsPage['page_title'] );
 					$newTitle = Title::newFromText( $jsPage['page_title'], $namespace );
 					if ( $title->exists() ) {
-						$title->moveTo( $newTitle, false, $reason, false );
-						$titles[] = [
-							'title' => $title,
-							'new' => $newTitle
-						];
+						$status = $wrapper->wrap( function() use ( $title, $newTitle, $reason ) {
+							return $title->moveTo( $newTitle, true, $reason, false );
+						});
 
-						try {
-							$this->getContentReviewService()->automaticallyApproveRevision(
-								$this->getWikiaUser(),
-								$wgCityId,
-								$jsPage['page_id'],
-								$jsPage['page_latest']
-							);
-							$this->output( "Added revision id for page {$jsPage['page_title']} (ID: {$jsPage['page_id']})\n" );
-						} catch ( FluentSql\Exception\SqlException $e ) {
-							$this->output( $e->getMessage() . "\n" );
+						if ( $status ) {
+							RepoGroup::singleton()->clearCache( $newTitle );
+							$newTitle = Title::newFromID( $jsPage['page_id'] );
+
+							$latestRev =  $newTitle->getLatestRevID();
+							$this->output( "{$jsPage['page_title']} was moved to {$namespace} namespace\n" );
+							fwrite( $f, "{$jsPage['page_title']} was moved to {$namespace} namespace\n" );
+							try {
+								$this->getContentReviewService()->automaticallyApproveRevision(
+									$this->getWikiaUser(),
+									$wgCityId,
+									$jsPage['page_id'],
+									$latestRev
+								);
+								$this->output( "Added revision ({$latestRev}/{$jsPage['page_latest']}) id for page {$jsPage['page_title']} (ID: {$jsPage['page_id']})\n" );
+								fwrite( $f, "Added revision ({$latestRev}/{$jsPage['page_latest']}) id for page {$jsPage['page_title']} (ID: {$jsPage['page_id']})\n" );
+							} catch ( FluentSql\Exception\SqlException $e ) {
+								$this->output( $e->getMessage() . "\n" );
+							}
 						}
 					}
 				}
 			}
 
-			foreach ( $titles as $title ) {
-				if ( $title['title']->hasSubpages() ) {
-					$title['title']->moveSubpages( $title['new'], true, $reason );
-				}
-			}
+			fclose( $f );
 
 			$helper->purgeReviewedJsPagesTimestamp();
 			Wikia\ContentReview\ContentReviewStatusesService::purgeJsPagesCache();
