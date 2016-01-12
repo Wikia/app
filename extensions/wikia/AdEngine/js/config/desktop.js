@@ -18,6 +18,7 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
 	'ext.wikia.adEngine.provider.turtle',
+	'ext.wikia.adEngine.provider.recirculation',
 	require.optional('ext.wikia.adEngine.provider.taboola')
 ], function (
 	// regular dependencies
@@ -38,6 +39,7 @@ define('ext.wikia.adEngine.config.desktop', [
 	adProviderRemnantGpt,
 	adProviderSevenOneMedia,
 	adProviderTurtle,
+	adProviderRecirculation,
 	adProviderTaboola
 ) {
 	'use strict';
@@ -91,6 +93,10 @@ define('ext.wikia.adEngine.config.desktop', [
 		if (context.forcedProvider === 'liftium') {
 			log(['getProvider', slotName, 'Liftium (wgAdDriverForcedProvider)'], 'info', logGroup);
 			return [adProviderLiftium];
+		}
+
+		if (adProviderRecirculation && adProviderRecirculation.canHandleSlot(slotName)) {
+			return [adProviderRecirculation];
 		}
 
 		// SevenOne Media
