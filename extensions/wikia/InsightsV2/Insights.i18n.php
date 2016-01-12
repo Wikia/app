@@ -34,6 +34,8 @@ $messages['en'] = array(
 	'insights-notification-message-inprogress-wantedpages' => 'This page needs to be created. ',
 	'insights-notification-message-fixed-wantedpages' => 'Thanks for making this page!',
 	'insights-notification-next-item-wantedpages' => 'Create another article.',
+	'insights-list-subtitle-popularpages' => 'Popular pages',
+	'insights-list-description-popularpages' => 'These pages are gaining traction with your readers! Make sure they are up to your standards and have all the latest images and information.',
 	'insights-list-subtitle-nonportableinfoboxes' => 'Non-portable infoboxes',
 	'insights-list-description-nonportableinfoboxes' => "The following infoboxes are built with tables or divs, and should be converted to use the new [[Help:PortableInfoboxes|infobox markup]] so they render appropriately to all visitors.
 
@@ -98,6 +100,8 @@ $messages['qqq'] = array(
 	'insights-notification-message-inprogress-wantedpages' => 'Message displayed on notification banner informing user that page should be created',
 	'insights-notification-message-fixed-wantedpages' => 'Message displayed on notification banner informing user that page was created',
 	'insights-notification-next-item-wantedpages' => 'Link text to redirect to next not existing page',
+	'insights-list-subtitle-popularpages' => 'A title of a subpage with a list of popular pages',
+	'insights-list-description-popularpages' => 'A description for a subpage with a list of popular pages',
 	'insights-list-subtitle-nonportableinfoboxes' => 'A title of list of pages with old (unconverted, non-portable) infoboxes',
 	'insights-list-description-nonportableinfoboxes' => 'The description of what the list of old infoboxes is.',
 	'insights-notification-message-inprogress-nonportableinfoboxes' => 'A hint that is displayed if a currently visited page needs conversion of an infobox.',
