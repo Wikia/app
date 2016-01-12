@@ -133,6 +133,13 @@ define('ext.wikia.adEngine.adContext', [
 			!noExternals
 		);
 
+		// Floating medrec
+		context.opts.floatingMedrec = !!(
+			context.opts.showAds && context.opts.adsInContent &&
+			(context.targeting.pageType === 'article' || context.targeting.pageType === 'search') &&
+			!context.targeting.wikiIsCorporate
+		);
+
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
 		if (w.ads && w.ads.context) {

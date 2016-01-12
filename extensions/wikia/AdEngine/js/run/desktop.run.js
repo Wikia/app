@@ -123,8 +123,9 @@ require([
 	'wikia.document',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.slot.exitstitial'),
-	require.optional('ext.wikia.adEngine.slot.inContentDesktop')
-], function (inContentPlayer, skyScraper3, doc, win, exitstitial, inContentDesktop) {
+	require.optional('ext.wikia.adEngine.slot.inContentDesktop'),
+	require.optional('ext.wikia.adEngine.slot.floatingMedrec')
+], function (inContentPlayer, skyScraper3, doc, win, exitstitial, inContentDesktop, floatingMedrec) {
 	'use strict';
 
 	function initDesktopSlots() {
@@ -137,6 +138,10 @@ require([
 
 		if (exitstitial) {
 			exitstitial.init();
+		}
+
+		if (floatingMedrec) {
+			win.wgAfterContentAndJS.push(floatingMedrec.init);
 		}
 	}
 
