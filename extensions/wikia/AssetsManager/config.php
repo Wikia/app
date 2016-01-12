@@ -2,7 +2,7 @@
 
 $config = array();
 
-/******** Shared libraries and assets *******/
+/********* Shared libraries and assets ********/
 
 $config['oasis_shared_core_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
@@ -2731,4 +2731,18 @@ $config['polldaddy_tag_wikiamobile'] = [
 	'assets' => [
 		'//extensions/wikia/PolldaddyTag/scripts/wikiamobile.js'
 	]
+];
+
+$config['special_user_activity_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/UserActivity/js/UserActivity.js',
+	],
+];
+
+$config['special_user_activity_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/UserActivity/css/UserActivity.scss',
+	],
 ];
