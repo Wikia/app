@@ -53,11 +53,25 @@ class PipelineRoutingBuilderTest extends WikiaBaseTest {
 		);
 	}
 
-	public function testWrongActionAndType() {
+	/**
+	 * @expectedException RuntimeException
+	 */
+	public function testWrongAction() {
 		$expected = "test";
 		$this->assertEquals( $expected, PipelineRoutingBuilder::create()
 			->addName( "test" )
 			->addAction( "test" )
+			->build()
+		);
+	}
+
+	/**
+	 * @expectedException RuntimeException
+	 */
+	public function testWrongType() {
+		$expected = "test";
+		$this->assertEquals( $expected, PipelineRoutingBuilder::create()
+			->addName( "test" )
 			->addType( "test" )
 			->build()
 		);

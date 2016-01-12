@@ -13,10 +13,10 @@ class PipelineRoutingBuilder {
 	const TYPE_ARTICLE = 'article';
 	const TYPE_WIKIA = 'wikia';
 
-	protected $keys;
-	protected $name;
+	private $keys;
+	private $name;
 
-	protected function __construct() {
+	private function __construct() {
 		$this->keys = [ ];
 	}
 
@@ -42,8 +42,10 @@ class PipelineRoutingBuilder {
 	}
 
 	public function addType( $type ) {
-		if ( in_array( $type, [ self::TYPE_ARTICLE, self::TYPE_WIKIA ] ) ) {
+		if ( $this->isAllowedType( $type ) ) {
 			$this->keys[ self::ROUTE_TYPE_KEY ] = $type;
+		} else {
+			throw new \RuntimeException( "Wrong \"{$type}\" type routing key provided" );
 		}
 
 		return $this;
@@ -57,8 +59,10 @@ class PipelineRoutingBuilder {
 	 * @return PipelineRoutingBuilder $this
 	 */
 	public function addAction( $action ) {
-		if ( in_array( $action, [ self::ACTION_CREATE, self::ACTION_DELETE, self::ACTION_UPDATE ] ) ) {
+		if ( $this->isAllowedAction( $action ) ) {
 			$this->keys[ self::ROUTE_ACTION_KEY ] = $action;
+		} else {
+			throw new \RuntimeException( "Wrong \"{$action}\" action routing key provided" );
 		}
 
 		return $this;
@@ -102,7 +106,7 @@ class PipelineRoutingBuilder {
 	 *
 	 * @return string lowercase english namespace
 	 */
-	protected static function preparePageNamespaceName( $namespaceId ) {
+	private static function preparePageNamespaceName( $namespaceId ) {
 		global $wgContentNamespaces;
 
 		if ( in_array( $namespaceId, $wgContentNamespaces ) ) {
@@ -110,5 +114,13 @@ class PipelineRoutingBuilder {
 		}
 
 		return strtolower( \MWNamespace::getCanonicalName( $namespaceId ) );
+	}
+
+	private function isAllowedAction( $action ) {
+		return in_array( $action, [ self::ACTION_CREATE, self::ACTION_DELETE, self::ACTION_UPDATE ] );
+	}
+
+	private function isAllowedType( $type ) {
+		return in_array( $type, [ self::TYPE_ARTICLE, self::TYPE_WIKIA ] );
 	}
 }
