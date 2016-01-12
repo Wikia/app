@@ -3,8 +3,9 @@ define('ext.wikia.adEngine.provider.recirculation', [
 	'wikia.document',
 	'wikia.log',
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.taboolaHelper',
 	require.optional('ext.wikia.recirculation.recirculation')
-], function (doc, log, adContext, recirculation, ) {
+], function (doc, log, adContext, taboolaHelper, recirculation) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.recirculation',
@@ -13,13 +14,14 @@ define('ext.wikia.adEngine.provider.recirculation', [
 	function canHandleSlot(slotName) {
 		var properSlot = slotName === recirculationSlot;
 		log(['canHandleSlot', slotName, (properSlot && recirculation)], 'debug', logGroup);
+
 		return (properSlot && recirculation);
 	}
 
 	function fillInSlot(slotName, slotElement, success, hop) {
-		var pageType = adContext.getContext().targeting.pageType;
 		log(['fillInSlot', slotName, slotElement], 'debug', logGroup);
 
+		taboolaHelper.loadTaboola();
 		recirculation.injectRecirculationModule(slotElement);
 	}
 
