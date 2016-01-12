@@ -30,19 +30,24 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		priceMap = {},
 		slots = [];
 
+	function configureHomePageSlots() {
+		var slotName;
+		for (slotName in slots) {
+			if (slots.hasOwnProperty(slotName) && slotName.indexOf('TOP') > -1) {
+				slots['HOME_' + slotName] = slots[slotName];
+				delete slots[slotName];
+			}
+		}
+		slots.PREFOOTER_MIDDLE_BOXAD = '300x250';
+	}
+
 	function getSlots(skin) {
 		var context = adContext.getContext(),
-			pageType = context.targeting.pageType,
-			slotName;
+			pageType = context.targeting.pageType;
 
 		slots = config[skin];
 		if (skin === 'oasis' && pageType === 'home') {
-			for (slotName in slots) {
-				if (slots.hasOwnProperty(slotName) && slotName.indexOf('TOP') > -1) {
-					slots['HOME_' + slotName] = slots[slotName];
-					delete slots[slotName];
-				}
-			}
+			configureHomePageSlots();
 		}
 
 		return slots;
