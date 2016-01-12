@@ -173,7 +173,6 @@ class PortableInfoboxRenderService extends WikiaService {
 			for ( $i = 0; $i < count($data); $i++ ) {
 				$data[$i][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
 				$data[$i] = $helper->extendImageData( $data[$i] );
-				$data[$i] = SanitizerBuilder::createFromType( $type )->sanitize( $data[$i] );
 
 				if ( !!$data[$i] ) {
 					$images[] = $data[$i];
@@ -198,6 +197,9 @@ class PortableInfoboxRenderService extends WikiaService {
 			$templateName = $type;
 		}
 
+		/**
+		 * Currently, based on business decision, sanitization happens ONLY on Mercury
+		 */
 		if ( $helper->isWikiaMobile() ) {
 			$data = SanitizerBuilder::createFromType( $type )->sanitize( $data );
 		}

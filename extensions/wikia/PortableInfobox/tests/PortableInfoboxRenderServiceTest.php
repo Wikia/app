@@ -572,7 +572,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				'output' => '<aside class="portable-infobox pi-background">
 								<div class="pi-item pi-hero">
 									<hgroup class="pi-hero-title-wrapper pi-item-spacing">
-										<h2 class="pi-hero-title">Test Title</h2>
+										<h2 class="pi-hero-title">Test <a href="example.com">Title</a></h2>
 									</hgroup>
 									<img
 									src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="thumbnail.jpg" class="pi-image-thumbnail lazy media article-media" alt="" data-image-key="test1" data-image-name="test1" data-ref="44" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\'/>
