@@ -36,6 +36,13 @@ class ArticleCommentsAjax {
 
 		$errorResult = [ 'error' => 1 ];
 
+		try {
+			$wgRequest->isValidWriteRequest( $wgUser );
+		} catch ( \BadRequestException $bre ) {
+			$errorResult['msg'] = wfMessage( 'sessionfailure' )->escaped();
+			return $errorResult;
+		}
+
 		// Return with error if we can't find the article
 		$title = Title::newFromID( $articleId );
 		if ( !$title ) {
