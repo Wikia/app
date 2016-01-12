@@ -63,7 +63,10 @@
 			</div>
 			<div class="table-cell">
 				<div class="explore-wikia-entry-point" id="exploreWikiaEntryPoint">
-					<a class="cell-link" href="#">Explore Wikia</a>
+					<a class="cell-link" href="#">
+						Explore Wikia
+						<img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
+					</a>
 					<ul class="explore-wikia-dropdown" id="exploreWikiaDropdown">
 						<li><a class="cell-link" data-visibility="tablet" href="<?= wfMessage( 'global-navigation-games-hub-link' )->inContentLanguage()->text()?>"><?= wfMessage( 'global-navigation-games-hub-link-label' )->inContentLanguage()->text()?></a></li>
 						<li><a class="cell-link" data-visibility="tablet" href="<?= wfMessage( 'global-navigation-movies-hub-link' )->inContentLanguage()->text()?>"><?= wfMessage( 'global-navigation-movies-hub-link-label' )->inContentLanguage()->text()?></a></li>
