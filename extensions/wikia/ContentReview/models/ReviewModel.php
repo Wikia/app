@@ -14,7 +14,14 @@ class ReviewModel extends ContentReviewBaseModel {
 			CONTENT_REVIEW_STATUS_IN_REVIEW = 2,
 			CONTENT_REVIEW_STATUS_APPROVED = 3,
 			CONTENT_REVIEW_STATUS_REJECTED = 4,
-			CONTENT_REVIEW_STATUS_AUTOAPPROVED = 5;
+			CONTENT_REVIEW_STATUS_AUTOAPPROVED = 5,
+			CONTENT_REVIEW_STATUS_ESCALATED = 6;
+
+	public static $unreviewedStatuses = [
+		self::CONTENT_REVIEW_STATUS_UNREVIEWED,
+		self::CONTENT_REVIEW_STATUS_IN_REVIEW,
+		self::CONTENT_REVIEW_STATUS_ESCALATED,
+	];
 
 	public function getPagesStatuses( $wikiId ) {
 		$db = $this->getDatabaseForRead();
@@ -167,7 +174,7 @@ class ReviewModel extends ContentReviewBaseModel {
 			->LEFT_JOIN( self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE )
 			->ON( self::CONTENT_REVIEW_STATUS_TABLE . '.wiki_id', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE . '.wiki_id' )
 				->AND_( self::CONTENT_REVIEW_STATUS_TABLE . '.page_id', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE . '.page_id' )
-			->WHERE( 'status' )->IN( self::CONTENT_REVIEW_STATUS_UNREVIEWED, self::CONTENT_REVIEW_STATUS_IN_REVIEW )
+			->WHERE( 'status' )->IN( self::$unreviewedStatuses )
 			->ORDER_BY( ['submit_time', 'asc'], ['status', 'desc'] )
 			->runLoop( $db, function ( &$content, $row ) {
 				$key = implode( ':', [ $row->wiki_id, $row->page_id, $row->status ] );

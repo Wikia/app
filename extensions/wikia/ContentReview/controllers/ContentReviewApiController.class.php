@@ -110,6 +110,10 @@ class ContentReviewApiController extends WikiaApiController {
 		$model = new ReviewModel();
 		$model->updateRevisionStatus( $wikiId, $pageId, $oldStatus, $status, $reviewerId );
 
+		if ( $status === ReviewModel::CONTENT_REVIEW_STATUS_ESCALATED ) {
+			$service = new ContentReviewStatusesService();
+		}
+
 		ContentReviewStatusesService::purgeJsPagesCache();
 	}
 

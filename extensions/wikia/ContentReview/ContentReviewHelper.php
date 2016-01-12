@@ -275,7 +275,8 @@ class Helper extends \ContextSource {
 				return true;
 			}
 
-			return ( $status === ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW );
+			return $status === ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW
+				|| $status === ReviewModel::CONTENT_REVIEW_STATUS_ESCALATED;
 		}
 
 		return false;
@@ -290,22 +291,25 @@ class Helper extends \ContextSource {
 	public function getToolbarTemplate( $revisionId ) {
 		global $wgCityId;
 
-		return \MustacheService::getInstance()->render(
-			self::CONTENT_REVIEW_TOOLBAR_TEMPLATE_PATH,
-			[
-				'toolbarTitle' => wfMessage( 'content-review-diff-toolbar-title' )->plain(),
-				'wikiId' => $wgCityId,
-				'pageId' => $this->getTitle()->getArticleID(),
-				'approveStatus' => ReviewModel::CONTENT_REVIEW_STATUS_APPROVED,
-				'buttonApproveText' => wfMessage( 'content-review-diff-approve' )->plain(),
-				'rejectStatus' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED,
-				'buttonRejectText' => wfMessage( 'content-review-diff-reject' )->plain(),
-				'talkpageUrl' => $this->prepareProvideFeedbackLink( $this->getTitle(), $revisionId ),
-				'talkpageLinkText' => wfMessage( 'content-review-diff-toolbar-talkpage' )->plain(),
-				'guidelinesUrl' => wfMessage( 'content-review-diff-toolbar-guidelines-url' )->useDatabase( false )->plain(),
-				'guidelinesLinkText' => wfMessage( 'content-review-diff-toolbar-guidelines' )->plain(),
-			]
-		);
+		$params = [
+			'toolbarTitle' => wfMessage( 'content-review-diff-toolbar-title' )->plain(),
+			'wikiId' => $wgCityId,
+			'pageId' => $this->getTitle()->getArticleID(),
+			'approveStatus' => ReviewModel::CONTENT_REVIEW_STATUS_APPROVED,
+			'buttonApproveText' => wfMessage( 'content-review-diff-approve' )->plain(),
+			'rejectStatus' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED,
+			'buttonRejectText' => wfMessage( 'content-review-diff-reject' )->plain(),
+			'escalateStatus' => ReviewModel::CONTENT_REVIEW_STATUS_ESCALATED,
+			'buttonEscalateText' => wfMessage( 'content-review-diff-escalate' )->plain(),
+			'talkpageUrl' => $this->prepareProvideFeedbackLink( $this->getTitle(), $revisionId ),
+			'talkpageLinkText' => wfMessage( 'content-review-diff-toolbar-talkpage' )->plain(),
+			'guidelinesUrl' => wfMessage( 'content-review-diff-toolbar-guidelines-url' )->useDatabase( false )->plain(),
+			'guidelinesLinkText' => wfMessage( 'content-review-diff-toolbar-guidelines' )->plain(),
+		];
+
+
+
+		return \MustacheService::getInstance()->render( self::CONTENT_REVIEW_TOOLBAR_TEMPLATE_PATH, $params );
 	}
 
 	/**
