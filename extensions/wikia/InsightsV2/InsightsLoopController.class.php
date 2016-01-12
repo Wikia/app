@@ -28,7 +28,7 @@ class InsightsLoopController extends WikiaController {
 					if ( !$isEdit ) {
 						$isFixed = $model->isItemFixed( $title );
 						if ( $isFixed ) {
-							$model->updateInsightsCache( $title->getArticleId() );
+							( new InsightsCache( $model->getConfig() ) )->updateInsightsCache( $title->getArticleId() );
 						}
 					}
 
