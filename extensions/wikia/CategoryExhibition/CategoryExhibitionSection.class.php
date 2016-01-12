@@ -140,8 +140,11 @@ class CategoryExhibitionSection {
 
 		if ( in_array( $sortType, $this->allowedSortOptions ) ) {
 			if ( !$wgUser->isAnon() ) {
-				$wgUser->setGlobalPreference('CategoryExhibitionSortType', $sortType );
-				$wgUser->saveSettings();
+				# PLATFORM-1801: only update the preference when needed - i.e. we do change the value and it's not a default one
+				if ( $wgUser->getGlobalPreference('CategoryExhibitionSortType', $this->allowedSortOptions[0] ) !== $sortType ) {
+					$wgUser->setGlobalPreference('CategoryExhibitionSortType', $sortType );
+					$wgUser->saveSettings();
+				}
 			}
 			$this->sortOption = $sortType;
 		}
@@ -176,8 +179,11 @@ class CategoryExhibitionSection {
 		global $wgUser;
 		if ( in_array( $displayType, $this->allowedDisplayOptions ) ) {
 			if ( !$wgUser->isAnon() ) {
-				$wgUser->setGlobalPreference('CategoryExhibitionDisplayType', $displayType );
-				$wgUser->saveSettings();
+				# PLATFORM-1801: only update the preference when needed - i.e. we do change the value and it's not a default one
+				if ( $wgUser->getGlobalPreference('CategoryExhibitionDisplayType', $this->allowedDisplayOptions[0] ) !== $displayType ) {
+					$wgUser->setGlobalPreference('CategoryExhibitionDisplayType', $displayType);
+					$wgUser->saveSettings();
+				}
 			}
 			$this->displayOption = $displayType;
 		}
