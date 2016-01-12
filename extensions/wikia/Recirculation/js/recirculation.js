@@ -16,12 +16,12 @@ define('ext.wikia.recirculation.recirculation', [
 
 	function injectTaboola( element ) {
 		win._taboola = win._taboola || [];
-	  win._taboola.push({
-	    mode: 'thumbnails-rr2',
-	    container: element.id,
-	    placement: 'Right Rail Thumbnails 3rd',
-	    target_type: 'mix'
-	  });
+		win._taboola.push({
+			mode: 'thumbnails-rr2',
+			container: element.id,
+			placement: 'Right Rail Thumbnails 3rd',
+			target_type: 'mix'
+		});
 	}
 
 	function injectRecirculationModule ( element ) {

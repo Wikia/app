@@ -8,9 +8,8 @@ define('videosmodule.controllers.rail',[
 	'videosmodule.models.videos',
 	'videosmodule.templates.mustache',
 	'wikia.mustache',
-	'wikia.document',
 	'bucky'
-], function (RailModule, VideoData, templates, Mustache, doc, bucky) {
+], function (RailModule, VideoData, templates, Mustache, bucky) {
 	'use strict';
 
 	var $rail = $('#WikiaRail');
