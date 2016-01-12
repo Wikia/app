@@ -250,7 +250,7 @@ class FavoriteWikisModel extends WikiaModel {
 	/**
 	 * Clears hidden wikis: the field of this class, DB and memcached data
 	 */
-	public function clearHiddenTopWikis() {
+	private function clearHiddenTopWikis() {
 		global $wgExternalSharedDB, $wgMemc;
 
 		$hiddenWikis = [];
