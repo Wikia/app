@@ -6,7 +6,7 @@ class NoticeTemplate {
 	 *
 	 * @return string
 	 */
-	public static function handleNoticeTemplate() {
+	public static function handle() {
 		return '';
 	}
 }

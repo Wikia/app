@@ -10,11 +10,13 @@ class HtmlHelper {
 	 * @return DOMDocument
 	 */
 	public static function createDOMDocumentFromText( $html ) {
+		$error_setting = libxml_use_internal_errors( true );
 		$document = new DOMDocument();
 		//encode for correct load
 		$document->loadHTML( mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' ) );
 		// clear user generated html parsing errors
 		libxml_clear_errors();
+		libxml_use_internal_errors( $error_setting );
 
 		return $document;
 	}
