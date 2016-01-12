@@ -9,9 +9,15 @@ abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 	 * Sanitizer configuration
 	 * Can be overridden by child classes
 	 */
+	// these are selectors for explicitly allowed tags, like 'a'
 	protected $allowedTags = [ ];
+	// these are valid 'internal' node names (per libxml convention, i.e. a, #text, etc)
 	protected $validNodeNames = [ '#text' ];
+	// these are selectors that describe nodes containing text that should be padded with whitespace
+	protected $selectorsWrappingTextToPad = [ ];
+	// these are selectors that describe root nodes of known features that should not be sanitized
 	protected $selectorsWrappingAllowedFeatures = [ ];
+	// these are selectors that describe nodes for full removal
 	protected $selectorsForFullRemoval = [ ];
 
 	/**
@@ -20,8 +26,8 @@ abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 	 * @param $elementText
 	 * @return string
 	 */
-	protected function sanitizeElementData( $elementText  ) {
-		$dom = new \DOMDocument( );
+	protected function sanitizeElementData( $elementText ) {
+		$dom = new \DOMDocument();
 		$dom->loadHTML( $this->prepareValidXML( $elementText ) );
 
 		$elementTextAfterTrim = trim( $this->cleanUpDOM( $dom ) );
@@ -65,6 +71,7 @@ abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 	protected function cleanUpDOM( $dom ) {
 		$xpath = new \DOMXPath( $dom );
 		$this->removeNodesBySelector( $xpath, $this->selectorsForFullRemoval );
+
 		$nodes = $this->extractNeededNodes( $xpath );
 
 		return $this->normalizeWhitespace( $this->generateHTML( $nodes, $dom ) );
@@ -78,15 +85,22 @@ abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 	 * @return string
 	 */
 	protected function generateHTML( $nodes, $dom ) {
-		$result = [];
+		$result = [ ];
 		foreach ( $nodes as $node ) {
-			/*
-			 * store the result; As the input text is already escaped, we make sure that
-			 * our output will be escaped too
-			 */
-			$result[] = ( $node->nodeName === '#text' ) ? htmlspecialchars( $dom->saveHTML( $node ), ENT_QUOTES ) : $dom->saveHTML( $node );
+			$outputHtml = $rawHtml = $dom->saveHTML( $node );
+			if ( $node->nodeName === '#text' ) {
+				// As the input text is already escaped, we make sure that our output will be escaped too
+				$outputHtml = htmlspecialchars( $rawHtml, ENT_QUOTES );
+			}
+			if ( $node->parentNode && in_array( $node->parentNode->nodeName, $this->selectorsWrappingTextToPad ) ) {
+				$outputHtml = sprintf( ' %s ', $rawHtml );
+			}
+
+			$result[] = $outputHtml;
+
+
 		}
-		return implode( ' ', $result );
+		return implode( '', $result );
 	}
 
 	/**
@@ -105,7 +119,16 @@ abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 	 * @return string
 	 */
 	protected function getAllNodesXPath() {
-		return sprintf('//%s/* | //%s//text()', $this->rootNodeTag, $this->rootNodeTag);
+		$xpathExpressions = [ ];
+		foreach ( $this->selectorsWrappingAllowedFeatures as $selector ) {
+			$xpathExpressions [] = sprintf( '//%s//%s', $this->rootNodeTag, $selector );
+		}
+		foreach ( $this->allowedTags as $selector ) {
+			$xpathExpressions [] = sprintf( '//%s//%s', $this->rootNodeTag, $selector );
+		}
+		$xpathExpressions [] = sprintf( '//%s//text()', $this->rootNodeTag );
+
+		return implode( ' | ', $xpathExpressions );
 	}
 
 	/**
@@ -135,7 +158,7 @@ abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 	 * @param $xpath DOMXPath
 	 * @param $selectorsToRemove array
 	 */
-	protected function removeNodesBySelector( $xpath, $selectorsToRemove = [] ) {
+	protected function removeNodesBySelector( $xpath, $selectorsToRemove = [ ] ) {
 		foreach ( $selectorsToRemove as $selector ) {
 			$nodesToRemove = $xpath->query( sprintf( '//%s//%s', $this->rootNodeTag, $selector ) );
 			foreach ( $nodesToRemove as $node ) {
