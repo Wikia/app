@@ -118,7 +118,7 @@ class InsightsFlagsModel extends InsightsModel {
 	 * @return array
 	 */
 	public function getInProgressNotificationParams() {
-		$controller = new InsightsController();
+		$controller = new InsightsLoopController();
 		$notificationMessageKey = InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . self::INSIGHT_TYPE;
 		$params = [
 			'notificationMessage' => wfMessage( $notificationMessageKey )->plain(),
