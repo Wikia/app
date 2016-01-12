@@ -33,7 +33,8 @@ $(function() {
 
 			if ($('.global-navigation').hasClass('global-navigation-2016')) {
 				width = parseInt($('.search-container').css('padding-left'), 10) +
-					$('.account-navigation-container').width();
+					$('.account-navigation-container').width() +
+					$('.notifications-container').width();
 			}
 
 			return '-' + width + 'px';
