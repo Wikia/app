@@ -3,7 +3,8 @@
 class HtmlHelper {
 
 	/**
-	 * Creates properly encoded DOMDocument
+	 * Creates properly encoded DOMDocument. Silent loadHTML errors
+	 * as libxml treats for example <figure> as invalid tag
 	 *
 	 * @param $html
 	 *

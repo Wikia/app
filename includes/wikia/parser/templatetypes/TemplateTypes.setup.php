@@ -23,9 +23,6 @@ $wgAutoloadClasses[ 'ArticleHTMLCleanup' ] = __DIR__ . '/handlers/ArticleHTMLCle
 // other handlers
 $wgAutoloadClasses[ 'DataTables' ] = __DIR__ . '/handlers/DataTables.class.php';
 
-// helpers
-$wgAutoloadClasses[ 'HtmlHelper' ] = __DIR__ . '/helpers/HtmlHelper.class.php';
-
 // hooks
 $wgHooks[ 'Parser::FetchTemplateAndTitle' ][] = 'TemplateTypesParser::onFetchTemplateAndTitle';
 $wgHooks[ 'Parser::FetchTemplateAndTitle' ][] = 'DataTables::markTranscludedTables';
