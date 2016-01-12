@@ -55,15 +55,25 @@ class WikiaLogoHelper {
 	}
 
 	public function getMainCorpPageURL() {
-		global $wgEnableGlobalNav2016, $wgLang, $wgLanguageCode;
+		global $wgLang;
 
-		if ( empty( $wgEnableGlobalNav2016 ) ) {
+		if (empty($this->isFandomExposed())) {
 			return $this->getCentralUrlForLang( $wgLang->getCode() );
 		} else {
+			return self::FANDOM_URL;
+		}
+	}
+
+	public function isFandomExposed() {
+		global $wgEnableGlobalNav2016, $wgLanguageCode;
+
+		if ( empty( $wgEnableGlobalNav2016 ) ) {
+			return false;
+		} else {
 			if ( $wgLanguageCode === self::FANDOM_LANG ) {
-				return self::FANDOM_URL;
+				return true;
 			} else {
-				return $this->getCentralUrlForLang( $wgLang->getCode() );
+				return false;
 			}
 		}
 	}

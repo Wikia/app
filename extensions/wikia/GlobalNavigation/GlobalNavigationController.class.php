@@ -40,6 +40,7 @@ class GlobalNavigationController extends WikiaController {
 
 		$isGameStarLogoEnabled = $this->isGameStarLogoEnabled();
 		$this->response->setVal( 'isGameStarLogoEnabled', $isGameStarLogoEnabled );
+		$this->response->setVal( 'isFandomExposed', $this->wikiaLogoHelper->isFandomExposed() );
 		if ( $isGameStarLogoEnabled ) {
 			$this->response->addAsset( 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationGameStar.scss' );
 		}

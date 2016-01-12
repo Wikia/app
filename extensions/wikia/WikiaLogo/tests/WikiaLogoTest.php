@@ -65,36 +65,25 @@ class WikiaLogoTest extends WikiaBaseTest
 	}
 
 	/**
-	 * @dataProvider getMainCorpPageURLDataProvider
+	 * @dataProvider isFandomExposedDataProvider
 	 * @param $wgEnableGlobalNav2016Value
-	 * @param $wgLangValue
 	 * @param $wgLanguageCodeValue
 	 * @param $expectedResult
 	 */
-	public function testGetMainCorpPageURL($wgEnableGlobalNav2016Value, $wgLangValue, $wgLanguageCodeValue, $expectedResult)
+	public function testIsFandomExposed($wgEnableGlobalNav2016Value, $wgLanguageCodeValue, $expectedResult)
 	{
-		global $wgLang;
-
 		$this->mockGlobalVariable('wgEnableGlobalNav2016', $wgEnableGlobalNav2016Value);
-		$wgLang = Language::factory( $wgLangValue );
 		$this->mockGlobalVariable('wgLanguageCode', $wgLanguageCodeValue);
 
-		$wikiaLogoHelperMock = $this->getMock(
-			'WikiaLogoHelper', ['getCentralUrlForLang']
-		);
-		$wikiaLogoHelperMock->expects($this->any())
-			->method('getCentralUrlForLang')
-			->will($this->returnValue(self::CORP_PAGE_URL));
-
-		$this->assertEquals($wikiaLogoHelperMock->getMainCorpPageURL(), $expectedResult);
+		$this->assertEquals((new WikiaLogoHelper())->isFandomExposed(), $expectedResult);
 	}
 
-	public function getMainCorpPageURLDataProvider() {
+	public function isFandomExposedDataProvider() {
 		return [
-			[false, 'en', WikiaLogoHelper::FANDOM_LANG, self::CORP_PAGE_URL],
-			[true, 'en', 'de', self::CORP_PAGE_URL],
-			[true, 'de', WikiaLogoHelper::FANDOM_LANG, self::FANDOM_URL],
-			[true, 'de', 'de', self::CORP_PAGE_URL]
+			[false, WikiaLogoHelper::FANDOM_LANG, false],
+			[false, 'de', false],
+			[true, 'de', false],
+			[true, WikiaLogoHelper::FANDOM_LANG, true]
 		];
 	}
 }

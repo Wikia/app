@@ -53,7 +53,9 @@
 						width="91"
 						alt="<?= wfMessage( 'oasis-global-page-header' )->escaped() ?>"
 						title="<?= wfMessage( 'oasis-global-page-header' )->escaped() ?>">
-					<span class="wikia-logo__subtitle"><?= wfMessage( 'global-navigation-home-of-fandom' )->escaped() ?></span>
+					<? if ( $isFandomExposed ): ?>
+						<span class="wikia-logo__subtitle"><?= wfMessage( 'global-navigation-home-of-fandom' )->escaped() ?></span>
+					<? endif; ?>
 				</a >
 			</div >
 			<div class="table-cell" data-visibility="desktop">
@@ -64,7 +66,7 @@
 			<div class="table-cell">
 				<div class="explore-wikia-entry-point" id="exploreWikiaEntryPoint">
 					<a class="cell-link" href="#">
-						Explore Wikia
+						<?= wfMessage( 'global-navigation-explore-wikia' )->text() ?>
 						<img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
 					</a>
 					<ul class="explore-wikia-dropdown" id="exploreWikiaDropdown">
