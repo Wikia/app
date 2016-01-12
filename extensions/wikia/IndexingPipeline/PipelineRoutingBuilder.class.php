@@ -16,7 +16,7 @@ class PipelineRoutingBuilder {
 	protected $keys;
 	protected $name;
 
-	protected function PipelineRoutingBuilder() {
+	protected function __construct() {
 		$this->keys = [ ];
 	}
 
@@ -75,7 +75,9 @@ class PipelineRoutingBuilder {
 		if ( is_numeric( $ns ) ) {
 			$ns = static::preparePageNamespaceName( $ns );
 		}
-		$this->keys[ self::ROUTE_NAMESPACE_KEY ] = $ns;
+		if ( !empty( $ns ) ) {
+			$this->keys[ self::ROUTE_NAMESPACE_KEY ] = $ns;
+		}
 
 		return $this;
 	}
@@ -87,7 +89,7 @@ class PipelineRoutingBuilder {
 	public function build() {
 		$keys = array_map( function ( $key, $value ) {
 			return "{$key}:{$value}";
-		}, $this->keys );
+		}, array_keys( $this->keys ), $this->keys );
 
 		return implode( ".", array_merge( [ $this->name ], $keys ) );
 	}
@@ -104,7 +106,7 @@ class PipelineRoutingBuilder {
 		global $wgContentNamespaces;
 
 		if ( in_array( $namespaceId, $wgContentNamespaces ) ) {
-			return $pageNamespace = self::NS_CONTENT;
+			return self::NS_CONTENT;
 		}
 
 		return strtolower( \MWNamespace::getCanonicalName( $namespaceId ) );

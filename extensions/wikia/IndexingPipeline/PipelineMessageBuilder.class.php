@@ -6,7 +6,7 @@ class PipelineMessageBuilder {
 
 	protected $msg;
 
-	protected function PipelineMessageBuilder() {
+	protected function __construct() {
 		$this->msg = new \stdClass();
 	}
 
