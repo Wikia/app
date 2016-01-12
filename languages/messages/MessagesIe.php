@@ -261,28 +261,11 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Constatar',
-'qbedit'         => 'Redacter',
 'qbpageoptions'  => 'Págine de optiones',
 'qbpageinfo'     => 'Págine de information',
-'qbmyoptions'    => 'Mi optiones',
-'qbspecialpages' => 'Págines special',
 'faq'            => 'FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Adjunter tema',
-'vector-action-delete'           => 'Deleter',
-'vector-action-move'             => 'Mover',
-'vector-action-protect'          => 'Gardar',
-'vector-action-undelete'         => 'Restituer',
-'vector-action-unprotect'        => 'Desgardar',
-'vector-simplesearch-preference' => 'Premisser suggestiones de sercha argumentat (pelle Vector solmen)',
-'vector-view-create'             => 'Crear',
-'vector-view-edit'               => 'Redacter',
-'vector-view-history'            => 'Vider historie',
-'vector-view-view'               => 'Leer',
-'vector-view-viewsource'         => 'Vider fonte',
 'actions'                        => 'Actiones',
 'namespaces'                     => 'Spacies de nómine',
 'variants'                       => 'Variantes',
@@ -316,17 +299,9 @@ $messages = array(
 'talkpagelinktext'  => 'Discussion',
 'specialpage'       => 'Págine special',
 'personaltools'     => 'Utensiles personal',
-'postcomment'       => 'Nov division',
-'articlepage'       => 'Vider li articul',
 'talk'              => 'Discussion',
 'views'             => 'Vistas',
 'toolbox'           => 'Buxe de utensiles',
-'userpage'          => 'Vider págine del usator',
-'projectpage'       => 'Vider págine de projecte',
-'imagepage'         => 'Vider li págine de figura',
-'templatepage'      => 'Vider li págine de avise',
-'viewhelppage'      => 'Vider págine de auxilie',
-'viewtalkpage'      => 'Vider discussion',
 'otherlanguages'    => 'Altri lingues',
 'redirectedfrom'    => '(Redirectet de $1)',
 'redirectpagesub'   => 'Págine de redirecterion',
@@ -657,8 +632,6 @@ Vider li [[Special:IPBlockList|liste de bloc de IP]] por li liste de bloces e ba
 'search-nonefound'                 => 'Ne esset constatat resultates por li question.',
 'powersearch'                      => 'Serchar avansat',
 
-# Quickbar
-'qbsettings' => 'Personalisation del barre de utensiles',
 
 # Preferences page
 'preferences'               => 'Preferenties',
@@ -1257,10 +1230,8 @@ Pleser fuse les manualmen.'''",
 'tooltip-summary'                 => 'Intrar un summarium curt',
 
 # Stylesheets
-'vector.css' => '/* CSS colocat ci va afectar usatores de pelle Vector */',
 
 # Scripts
-'vector.js' => '/* Alquel JavaScript ci va esser cargat por usatores que usa li pelle Vector */',
 
 # Browsing diffs
 'previousdiff' => '← Redaction anteriori',

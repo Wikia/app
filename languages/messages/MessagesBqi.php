@@ -132,11 +132,8 @@ $messages = array(
 'cancel'    => 'لغو',
 'mytalk'    => 'صحبت مو',
 
-# Cologne Blue skin
 'qbfind'  => 'پیدا کردن',
-'qbedit'  => 'اصلاح',
 'faq'     => 'اف ای کیو',
-'faqpage' => 'Project:اف ای کیو',
 
 'errorpagetitle'   => 'خطا',
 'returnto'         => 'بازگشت به $1.',
@@ -158,20 +155,10 @@ $messages = array(
 'talkpagelinktext' => 'صحبت',
 'specialpage'      => 'صفحه مخصوص',
 'personaltools'    => 'ابزارهای شخصی',
-'postcomment'      => 'ارسال یک توضیح',
-'articlepage'      => 'دیدن صفحه محتوا',
 'talk'             => 'بحث',
 'views'            => 'مشاهدات',
 'toolbox'          => '
 جعبه ابزار',
-'userpage'         => 'دیدن صفحه کاربر',
-'projectpage'      => 'دیدن صفحه پروژه',
-'imagepage'        => 'دیدن صفحه مدیا',
-'mediawikipage'    => 'دیدن صفحه پیام',
-'templatepage'     => 'دیدن صفحه قالب',
-'viewhelppage'     => 'دیدن صفحه کمک',
-'categorypage'     => 'دیدن صفحه طبقه بندی',
-'viewtalkpage'     => 'دیدن بحث ها',
 'otherlanguages'   => 'درزبانهای دیگر',
 'redirectedfrom'   => '(تصحیح مجدداز$1)',
 'redirectpagesub'  => 'صفحه تصحیح وهدایت مجدد',

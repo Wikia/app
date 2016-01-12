@@ -65,6 +65,7 @@ class AdminDashboardLogic {
 				'Following',
 				'Forum',
 				'ImageReview',
+				'Images',
 				'Insights',
 				'Invalidateemail',
 				'LandingPageSmurfs',

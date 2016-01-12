@@ -2,8 +2,6 @@
 
 // override some variables
 $wgDefaultSkin = 'oasis';
-$wgForceSkin = 'oasis';
-$wgUseNewAnswersSkin = false;
 
 // ask a question box
 $wgAutoloadClasses['WikiAnswersController'] = dirname( __FILE__ ) . '/WikiAnswersController.class.php';

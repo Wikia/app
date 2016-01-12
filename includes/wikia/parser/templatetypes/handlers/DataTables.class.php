@@ -76,9 +76,7 @@ class DataTables {
 
 	private static function processTables( $html ) {
 		$result = "";
-		$document = new DOMDocument();
-		//encode for correct load
-		$document->loadHTML( mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' ) );
+		$document = HtmlHelper::createDOMDocumentFromText( $html );
 
 		$tables = $document->getElementsByTagName( 'table' );
 		if ( $tables->length > 0 ) {
@@ -100,22 +98,9 @@ class DataTables {
 					$table->setAttribute( self::DATA_PORTABLE_ATTRIBUTE, 'true' );
 				}
 			}
-			$result = self::getBodyHtml( $document );
+			$result = HtmlHelper::getBodyHtml( $document );
 		}
-		// clear user generated html parsing errors
-		libxml_clear_errors();
 
 		return !empty( $result ) ? $result : $html;
-	}
-
-	private static function getBodyHtml( DOMDocument $dom ) {
-		// strip <html> and <body> tags
-		$result = [ ];
-		$body = $dom->getElementsByTagName( 'body' )->item( 0 );
-		for ( $i = 0; $i < $body->childNodes->length; $i++ ) {
-			$result[] = $dom->saveHTML( $body->childNodes->item( $i ) );
-		}
-
-		return implode( "", $result );
 	}
 }

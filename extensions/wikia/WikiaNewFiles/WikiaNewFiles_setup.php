@@ -9,17 +9,22 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'WikiaNewFiles',
-	'author'         => 'Garth Webb',
+	'author'         => [
+		'Garth Webb <garth@wikia-inc.com>',
+		'Piotr Gabryjeluk <rychu@wikia-inc.com>'
+	],
 	'descriptionmsg' => 'wikianewfiles-desc',
 	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaNewFiles',
 );
 
 // Translations
-$wgExtensionMessagesFiles['WikiaNewFiles'] =  __DIR__ . '/SpecialNewFiles.i18n.php';
-$wgExtensionMessagesFiles['WikiaNewFilesAliases'] = __DIR__ . '/SpecialNewFiles.alias.php';
+$wgExtensionMessagesFiles['WikiaNewFiles'] =  __DIR__ . '/WikiaNewFiles.i18n.php';
 
 // Autoloaded classes
-$wgAutoloadClasses['WikiaNewFiles'] = __DIR__ . '/WikiaNewFiles.class.php';
+$wgAutoloadClasses['WikiaNewFilesSpecialController'] = __DIR__ . '/WikiaNewFilesSpecialController.class.php';
+$wgAutoloadClasses['WikiaNewFilesGallery'] = __DIR__ . '/WikiaNewFilesGallery.class.php';
 $wgAutoloadClasses['WikiaNewFilesModel'] = __DIR__ . '/WikiaNewFilesModel.class.php';
 
-$wgSpecialPages['Newimages'] = 'WikiaNewFiles';
+// Redirect from the old special page (Special:NewFiles)
+$wgSpecialPages['Newimages'] = 'WikiaNewFilesSpecialController';
+

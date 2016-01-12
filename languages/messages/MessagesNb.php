@@ -445,30 +445,12 @@ $messages = array(
 'navigation'    => 'Navigasjon',
 'and'           => '&#32;og',
 
-# Cologne Blue skin
 'qbfind'         => 'Finn',
 'qbbrowse'       => 'Bla gjennom',
-'qbedit'         => 'Rediger',
 'qbpageoptions'  => 'Sideinnstillinger',
 'qbpageinfo'     => 'Sideinformasjon',
-'qbmyoptions'    => 'Egne innstillinger',
-'qbspecialpages' => 'Spesialsider',
 'faq'            => 'Ofte stilte spørsmål',
-'faqpage'        => 'Project:Ofte stilte spørsmål',
 
-# Vector skin
-'vector-action-addsection'       => 'Nytt emne',
-'vector-action-delete'           => 'Slett',
-'vector-action-move'             => 'Flytt',
-'vector-action-protect'          => 'Beskytt',
-'vector-action-undelete'         => 'Gjenopprett',
-'vector-action-unprotect'        => 'Endre beskyttelse',
-'vector-simplesearch-preference' => 'Aktiver forbedrede søkeforslag (kun for drakten Vector)',
-'vector-view-create'             => 'Opprett',
-'vector-view-edit'               => 'Rediger',
-'vector-view-history'            => 'Vis historikk',
-'vector-view-view'               => 'Les',
-'vector-view-viewsource'         => 'Vis kilden',
 'actions'                        => 'Handlinger',
 'namespaces'                     => 'Navnerom',
 'variants'                       => 'Varianter',
@@ -491,7 +473,6 @@ $messages = array(
 'edit'              => 'Rediger',
 'create'            => 'Opprett',
 'editthispage'      => 'Rediger siden',
-'create-this-page'  => 'Opprett denne siden',
 'delete'            => 'Slett',
 'deletethispage'    => 'Slett denne siden',
 'undelete_short'    => 'Gjenopprett {{PLURAL:$1|én revisjon|$1 revisjoner}}',
@@ -506,19 +487,9 @@ $messages = array(
 'talkpagelinktext'  => 'Diskusjon',
 'specialpage'       => 'Spesialside',
 'personaltools'     => 'Personlige verktøy',
-'postcomment'       => 'Ny seksjon',
-'articlepage'       => 'Vis innholdsside',
 'talk'              => 'Diskusjon',
 'views'             => 'Visninger',
 'toolbox'           => 'Verktøy',
-'userpage'          => 'Vis brukerside',
-'projectpage'       => 'Vis prosjektside',
-'imagepage'         => 'Vis filside',
-'mediawikipage'     => 'Vis beskjedside',
-'templatepage'      => 'Vis mal',
-'viewhelppage'      => 'Vis hjelpeside',
-'categorypage'      => 'Vis kategoriside',
-'viewtalkpage'      => 'Vis diskusjon',
 'otherlanguages'    => 'På andre språk',
 'redirectedfrom'    => '(Omdirigert fra $1)',
 'redirectpagesub'   => 'Omdirigeringsside',
@@ -979,7 +950,6 @@ Siste blokkeringsloggelement kan sees nedenfor.',
 '''Den har ikke blitt lagret ennå!'''",
 'sitejspreview'                    => "'''Husk at du bare forhåndsviser denne JavaScript-koden.'''
 '''Den har ikke blitt lagret ennå!'''",
-'userinvalidcssjstitle'            => "'''Advarsel:''' Det finnes ikke noe utseende ved navn «$1». Husk at .css- og .js-sider bruker titler i små bokstaver, for eksempel {{ns:user}}:Eksempel/vector.css, ikke {{ns:user}}:Eksempel/Vector.css",
 'updated'                          => '(Oppdatert)',
 'note'                             => "'''Merk:'''",
 'previewnote'                      => "'''Husk at dette bare er en forhåndsvisning.'''
@@ -1326,14 +1296,6 @@ For å søke i alle, bruk prefikset ''all:'' (inkluderer diskusjonssider, maler,
 'search-external'                  => 'Eksternt søk',
 'searchdisabled'                   => 'Søkefunksjonen er slått av. Du kan søke via Google i mellomtiden. Merk at Googles indeksering av {{SITENAME}} muligens er utdatert.',
 
-# Quickbar
-'qbsettings'                => 'Brukerinnstillinger for hurtigmeny.',
-'qbsettings-none'           => 'Ingen',
-'qbsettings-fixedleft'      => 'Fast venstre',
-'qbsettings-fixedright'     => 'Fast høyre',
-'qbsettings-floatingleft'   => 'Flytende venstre',
-'qbsettings-floatingright'  => 'Flytende til høyre',
-'qbsettings-directionality' => '"Låst", f. eks. i posisjon "låst til venstre eller til høyre". For venstre-mot-høyre-språk vil hurtigvelgeren være satt til venstre, for høyre-mot-venstre-språk til høyre.',
 
 # Preferences page
 'preferences'                   => 'Innstillinger',
@@ -2962,25 +2924,11 @@ Du kan se på kildeteksten',
 
 # Stylesheets
 'common.css'      => '/* CSS plassert i denne fila vil gjelde for alle utseender. */',
-'standard.css'    => '/* CSS i denne fila vil gjelde alle som bruker drakta Standard */',
-'nostalgia.css'   => '/* CSS i denne fila vil gjelde alle som bruker drakta Nostalgia */',
-'cologneblue.css' => '/* CSS i denne fila vil gjelde alle som bruker drakta Kølnerblå */',
 'monobook.css'    => '/* CSS i denne fila vil gjelde alle som bruker drakta Monobook */',
-'myskin.css'      => '/* CSS i denne fila vil gjelde alle som bruker drakta MySkin */',
-'chick.css'       => '/* CSS i denne fila vil gjelde alle som bruker drakta Chick */',
-'simple.css'      => '/* CSS i denne fila vil gjelde alle som bruker drakta Simple */',
-'modern.css'      => '/* CSS i denne fila vil gjelde alle som bruker drakta Modern */',
 
 # Scripts
 'common.js'      => '/* Javascript i denne fila vil gjelde for alle drakter. */',
-'standard.js'    => '/* Javascript i denne fila vil gjelde for brukere av drakta Standard */',
-'nostalgia.js'   => '/* Javascript i denne fila vil gjelde for brukere av drakta Nostalgia */',
-'cologneblue.js' => '/* Javascript i denne fila vil gjelde for brukere av drakta Kølnerblå */',
 'monobook.js'    => '/* Javascript i denne fila vil gjelde for brukere av drakta Monobook */',
-'myskin.js'      => '/* Javascript i denne fila vil gjelde for brukere av drakta MySkin */',
-'chick.js'       => '/* Javascript i denne fila vil gjelde for brukere av drakta Chick */',
-'simple.js'      => '/* Javascript i denne fila vil gjelde for brukere av drakta Simple */',
-'modern.js'      => '/* Javascript i denne fila vil gjelde for brukere av drakta Modern */',
 
 # Metadata
 'notacceptable' => 'Tjeneren har ingen mulige måter å vise data i din nettleser.',
@@ -3020,13 +2968,7 @@ Dette er sannsynligvis forårsaket av en lenke til et svartelistet eksternt nett
 'pageinfo-viewsperedit'     => 'Visninger per redigering',
 
 # Skin names
-'skinname-standard'    => 'Standard',
-'skinname-nostalgia'   => 'Nostalgi',
-'skinname-cologneblue' => 'Kølnerblå',
 'skinname-monobook'    => 'Monobook',
-'skinname-myskin'      => 'Eget utseende',
-'skinname-simple'      => 'Enkel',
-'skinname-modern'      => 'Moderne',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Godkjenn endringen',
