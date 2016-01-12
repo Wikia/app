@@ -93,6 +93,13 @@
 }
 
 .global-navigation-2016 {
+	.global-nav-search-input-wrapper .autocomplete-container,
+	.notifications-container .notifications-container,
+	.account-navigation-container .user-menu,
+	.AccountNavigation .UserLoginDropdown {
+		margin-top: 1px;
+	}
+
 	.wikia-logo {
 		display: flex;
 		align-items: flex-end;
