@@ -329,7 +329,6 @@ Your account has been created. Don't forget to change your {{SITENAME}} [[Specia
 
 'group-content-moderator' => 'Content Moderators',
 'group-content-moderator-member' => 'Content Moderator',
-#'grouppage-content-moderator' => 'w:c:dev:Content_Moderator',
 
 #new registration aka LoginFriction aka Signup
 
