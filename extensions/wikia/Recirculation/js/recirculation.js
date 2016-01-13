@@ -1,10 +1,21 @@
 /*global define*/
 define('ext.wikia.recirculation.recirculation', [
+	'jquery',
 	'wikia.abTest',
+	'wikia.tracker',
 	'videosmodule.controllers.rail',
 	'ext.wikia.adEngine.taboolaHelper'
-], function (abTest, videosModule, taboolaHelper) {
+], function ($, abTest, tracker, videosModule, taboolaHelper) {
 	'use strict';
+
+	function trackClick ( e ) {
+		tracker.track({
+			action: tracker.ACTIONS.CLICK,
+			category: 'recirculation',
+			label: 'rail',
+			trackingMethod: 'analytics'
+		});
+	}
 
 	function injectRecirculationModule ( element ) {
 		var group = abTest.getGroup('RECIRCULATION_RAIL');
@@ -23,6 +34,8 @@ define('ext.wikia.recirculation.recirculation', [
 				videosModule(element);
 				break;
 		}
+
+		$(element).on('click', 'a', trackClick);
 	}
 
 	return {
