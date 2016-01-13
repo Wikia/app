@@ -14,10 +14,9 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 
 	function init() {
 		var context = adContext.getContext(),
-			positionFixed = false,
-			threshold = 10,
+			margin = 10,
 			slotName = 'INCONTENT_BOXAD_1',
-			$slot = $('<div class="wikia-ad" style="position: relative;"></div>').attr('id', slotName),
+			$slot = $('<div class="wikia-ad"></div>').attr('id', slotName),
 			$placeHolder = $('#WikiaAdInContentPlaceHolder'),
 			$footer = $('#WikiaFooter'),
 			$leftSkyscraper3 = $('#LEFT_SKYSCRAPER_3'),
@@ -25,6 +24,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			lastAdHeight,
 			startPosition,
 			stopPosition,
+			stopPoint,
 			globalNavigationHeight;
 
 		if (!context.opts.floatingMedrec || !win.wgIsContentNamespace || !$placeHolder.length) {
@@ -37,11 +37,14 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 		globalNavigationHeight = $globalNavigation.height();
 		lastAdHeight = $slot.height();
 
-		startPosition = parseInt($placeHolder.offset().top, 10) - globalNavigationHeight - threshold;
+		startPosition = parseInt($placeHolder.offset().top, 10) - globalNavigationHeight - margin;
 
-		stopPosition = Math.min(
-			parseInt($footer.offset().top, 10),
-			parseInt($leftSkyscraper3.offset().top, 10)) - globalNavigationHeight - 2 * threshold - lastAdHeight;
+		stopPoint = parseInt($footer.offset().top, 10);
+		if ($leftSkyscraper3.length && parseInt($leftSkyscraper3.offset().top, 10) < stopPoint) {
+			stopPoint = parseInt($leftSkyscraper3.offset().top, 10);
+		}
+
+		stopPosition = stopPoint - globalNavigationHeight - 2 * margin - lastAdHeight;
 
 		function update() {
 			if (lastAdHeight !== $slot.height()) {
@@ -49,20 +52,18 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				lastAdHeight = $slot.height();
 			}
 
-			if (positionFixed && win.scrollY <= startPosition) {
+			if (win.scrollY <= startPosition) {
 				$slot.css({
 					position: 'relative',
 					top: '0px'
 				});
-				positionFixed = false;
 			}
 
 			if (win.scrollY > startPosition && win.scrollY < stopPosition) {
 				$slot.css({
 					position: 'fixed',
-					top: globalNavigationHeight + threshold + 'px'
+					top: globalNavigationHeight + margin + 'px'
 				});
-				positionFixed = true;
 			}
 
 			if (win.scrollY >= stopPosition) {
@@ -70,7 +71,6 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 					position: 'absolute',
 					top: stopPosition - startPosition + 'px'
 				});
-				positionFixed = false;
 			}
 		}
 
@@ -78,6 +78,8 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 		win.addEventListener('resize', adHelper.throttle(update));
 
 		win.adslots2.push(slotName);
+
+		update();
 	}
 
 	return {

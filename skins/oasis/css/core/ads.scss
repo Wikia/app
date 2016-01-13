@@ -228,9 +228,12 @@ body >a >img[src$="noad.gif"] {
 	}
 }
 
-// Floating medrec place holder
+// Floating medrec
 #WikiaAdInContentPlaceHolder {
 	position: absolute;
+	#INCONTENT_BOXAD_1 {
+		position: relative;
+	}
 }
 
 #NATIVE_TABOOLA_ARTICLE {

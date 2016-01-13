@@ -79,10 +79,6 @@ $(function () {
 						Wikia.initRailTracking();
 					}
 
-					if (window.AIC2) {
-						window.AIC2.init();
-					}
-
 					if (window.wgEnableLightboxExt) {
 						window.LightboxLoader.init();
 					}
