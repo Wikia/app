@@ -70,11 +70,7 @@ class WikiaLogoHelper {
 		if ( empty( $wgEnableGlobalNav2016 ) ) {
 			return false;
 		} else {
-			if ( $wgLanguageCode === self::FANDOM_LANG ) {
-				return true;
-			} else {
-				return false;
-			}
+			return $wgLanguageCode === self::FANDOM_LANG;
 		}
 	}
 }
