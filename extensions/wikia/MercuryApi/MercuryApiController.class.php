@@ -291,6 +291,7 @@ class MercuryApiController extends WikiaController {
 			$wikiVariables['hubsLinks'] = $navigationNodes['hubs'];
 			$wikiVariables['explore'] = $navigationNodes['explore'];
 			$wikiVariables['localNav'] = $navigation;
+			$wikiVariables['enableGlobalNav2016'] = $wgEnableGlobalNav2016;
 		}
 
 
