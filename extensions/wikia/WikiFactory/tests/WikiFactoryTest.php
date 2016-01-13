@@ -196,4 +196,18 @@ EOT;
 
 		$this->assertEquals( $expectedRender, WikiFactory::renderValue( $variable ) );
 	}
+
+	public function testRenderValueOfAssociativeArrayVariable2() {
+		$variable = new stdClass();
+		$variable->cv_value = serialize( array( 1 => "foo", 15 => "bar" ) );
+		$variable->cv_variable_type = "array";
+		$expectedRender = <<<EOT
+array (
+  1 => 'foo',
+  15 => 'bar',
+)
+EOT;
+
+		$this->assertEquals( $expectedRender, WikiFactory::renderValue( $variable ) );
+	}
 }
