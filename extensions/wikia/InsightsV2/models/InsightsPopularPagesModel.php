@@ -7,7 +7,8 @@ class InsightsPopularPagesModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'popularpages';
 
 	private static $insightConfig = [
-		'displayFixItMessage' => false
+		InsightsConfig::DISPLAYFIXITMSG => false,
+		InsightsConfig::PAGEVIEWS => true
 	];
 
 	public function __construct() {

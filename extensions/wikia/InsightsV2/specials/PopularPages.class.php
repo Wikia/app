@@ -89,23 +89,28 @@ class PopularPages extends PageQueryPage {
 	 * @return array
 	 */
 	public function reallyDoQuery( $limit = false, $offset = false ) {
-		global $wgContentNamespaces;
+		global $wgCityId;
 
-		$dbr = wfGetDB( DB_SLAVE, [ $this->getName(), __METHOD__ ] );
+		$topArticles = DataMartService::getTopArticlesByPageview(
+			$wgCityId,
+			null,
+			null,
+			false,
+			self::LIMIT
+		);
 
-		$contentPages = ( new WikiaSQL() )
-			->SELECT( 'page_id', 'page_title', 'page_namespace' )
-			->FROM( 'page' )
-			->WHERE( 'page_namespace' )->IN( $wgContentNamespaces )
-			->runLoop( $dbr, function ( &$contentPages, $row ) {
-				$contentPages[$row->page_id] = [
+		$topArticlesFormatted = [];
+		foreach ( $topArticles as $pageId => $pageViewsData ) {
+			$title = Title::newFromID( $pageId );
+			if ( $title instanceof Title ) {
+				$topArticlesFormatted[$pageId] = [
 					$this->getName(),
-					$row->page_id,
-					$row->page_namespace,
-					$row->page_title,
+					$pageId,
+					$pageViewsData['namespace_id'],
+					$title->getDBkey(),
 				];
-			} );
-
-		return $contentPages;
+			}
+		}
+		return $topArticlesFormatted;
 	}
 }
