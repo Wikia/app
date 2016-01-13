@@ -24,7 +24,7 @@ class RecirculationHooks {
 		$app = F::App();
 		$pos = $app->wg->User->isAnon() ? 1305 : 1285;
 
-		$modules[$pos] = array('AdEmptyContainer', 'Index', ['slotName' => 'RECIRCULATION_RAIL']);
+		$modules[$pos] = array('AdEmptyContainer', 'Index', ['slotName' => 'RECIRCULATION_RAIL', 'pageTypes' => ['*', 'no_ads']]);
 
 		wfProfileOut(__METHOD__);
 

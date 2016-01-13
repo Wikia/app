@@ -66,6 +66,11 @@ define('ext.wikia.adEngine.config.desktop', [
 		log('getProvider', 5, logGroup);
 		log(slotName, 5, logGroup);
 
+		// Recirculation is not advertising, even if we're using AdEngine. So we show it even if $wgShowAds is false
+		if (adProviderRecirculation && adProviderRecirculation.canHandleSlot(slotName)) {
+			return [adProviderRecirculation];
+		}
+
 		// If wgShowAds set to false, hide slots
 		if (!context.opts.showAds) {
 			return [];
@@ -93,10 +98,6 @@ define('ext.wikia.adEngine.config.desktop', [
 		if (context.forcedProvider === 'liftium') {
 			log(['getProvider', slotName, 'Liftium (wgAdDriverForcedProvider)'], 'info', logGroup);
 			return [adProviderLiftium];
-		}
-
-		if (adProviderRecirculation && adProviderRecirculation.canHandleSlot(slotName)) {
-			return [adProviderRecirculation];
 		}
 
 		// SevenOne Media
