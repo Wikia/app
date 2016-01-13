@@ -46,7 +46,12 @@
 				<?php endif; ?>
 			</td>
 			<td><a href="<?= Sanitizer::cleanUrl( $template['wlh'] ) ?>"><?= Sanitizer::escapeHtmlAllowEntities( $template['count'] ); ?></a></td>
-			<td><?= $groupName ?></td>
+			<td>
+				<?= $groupName ?>
+				<?php if( !empty( $template['subgroup'] ) ): ?>
+					(<?= $template['subgroup'] ?>)
+				<?php endif ?>
+			</td>
 		</tr>
 	<?php endforeach ?>
 </table>
