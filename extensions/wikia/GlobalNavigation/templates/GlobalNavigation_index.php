@@ -59,7 +59,7 @@
 				</a >
 			</div >
 			<?php if ( !empty( $menuContents['hubs']) && is_array( $menuContents['hubs'] ) ): ?>
-				<div class="table-cell" data-visibility="desktop">
+				<div class="table-cell hubs-links" data-visibility="desktop">
 					<?php foreach( $menuContents['hubs'] as $hub ): ?>
 						<a class="cell-link" href="<?= $hub['href']; ?>"><?= $hub['textEscaped']; ?></a>
 					<?php endforeach; ?>
