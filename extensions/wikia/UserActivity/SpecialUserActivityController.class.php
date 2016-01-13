@@ -20,6 +20,7 @@ class SpecialController extends \WikiaSpecialPageController {
 	public function init() {
 		$this->disableRedirects();
 		$this->setTitle();
+		$this->addAssets();
 	}
 
 	/**
@@ -37,6 +38,11 @@ class SpecialController extends \WikiaSpecialPageController {
 		$this->getContext()->getOutput()->setHTMLTitle( self::PAGE_TITLE );
 		$this->getContext()->getOutput()->setPageTitle( self::PAGE_TITLE );
 		$this->wg->SupressPageSubtitle = true;
+	}
+
+	private function addAssets() {
+		$this->response->addAsset( 'special_user_activity_js' );
+		$this->response->addAsset( 'special_user_activity_scss' );
 	}
 
 	/**

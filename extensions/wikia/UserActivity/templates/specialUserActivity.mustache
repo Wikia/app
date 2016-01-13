@@ -1,8 +1,13 @@
 <br />
 <p>{{pageDescription}}</p>
-<table width="100%" class="article-table" id="useractivity-table">
+<table width="100%" class="article-table">
 	<thead>
-		<tr><th>{{tableTitle}}</th><th>{{tableEdits}}</th><th>{{tableLastEdit}}</th><th>{{tableRights}}</th>
+		<tr class="useractivity-header">
+			<th id="title-header" class="sortable">{{tableTitle}}</th>
+			<th id="edits-header" class="sortable">{{tableEdits}}</th>
+			<th id="last-edit-header" class="sortable">{{tableLastEdit}}</th>
+			<th id="rights-header">{{tableRights}}</th>
+		</tr>
 	</thead>
 	{{#items}}
 	<tr>

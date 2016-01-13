@@ -28,7 +28,7 @@ class InsightsLoopController extends WikiaController {
 					if ( !$isEdit ) {
 						$isFixed = $model->isItemFixed( $title );
 						if ( $isFixed ) {
-							$model->updateInsightsCache( $title->getArticleId() );
+							( new InsightsCache( $model->getConfig() ) )->updateInsightsCache( $title->getArticleId() );
 						}
 					}
 
@@ -48,7 +48,7 @@ class InsightsLoopController extends WikiaController {
 
 					$this->setMustacheParams( $params, $isFixed, $type );
 
-				} elseif ( $model instanceof InsightsPageModel ) {
+				} elseif ( $model instanceof InsightsModel ) {
 					$isFixed = false;
 					$isEdit = $this->request->getBool( 'isEdit', false );
 					/* Show in progress notification when in view mode of article */
@@ -170,7 +170,7 @@ class InsightsLoopController extends WikiaController {
 	 * @return array
 	 */
 	private function getInsightFixItParams( Title $title, InsightsQueryPageModel $model ) {
-		$link = InsightsHelper::getTitleLink( $title, $model->getUrlParams() );
+		$link = InsightsItemData::getTitleLink( $title, $model->getUrlParams() );
 
 		return [
 			'editPageText' => wfMessage( 'insights-notification-message-fixit' )->plain(),

@@ -79,30 +79,33 @@ class InsightsHelper {
 			   $wgEnableInsightsPagesWithoutInfobox, $wgEnableInsightsTemplatesWithoutType;
 
 		/* Order of inserting determines default order on insights entry points list */
-		$dynamicInsights = [];
+		$insightsPages = [];
 
 		/* Add TemplatesWithoutType insight */
 		if ( !empty( $wgEnableTemplateClassificationExt ) && !empty( $wgEnableInsightsTemplatesWithoutType ) ) {
-			$dynamicInsights[InsightsTemplatesWithoutTypeModel::INSIGHT_TYPE] = 'InsightsTemplatesWithoutTypeModel';
+			$insightsPages[InsightsTemplatesWithoutTypeModel::INSIGHT_TYPE] = 'InsightsTemplatesWithoutTypeModel';
 		}
 
 		/* Add Infoboxes insight */
 		if ( !empty( $wgEnableInsightsInfoboxes ) ) {
-			$dynamicInsights[InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE] = 'InsightsUnconvertedInfoboxesModel';
-		}
-
-		/* Add PagesWithoutInfobox insight */
-		if ( !empty( $wgEnableTemplateClassificationExt ) && !empty( $wgEnableInsightsPagesWithoutInfobox ) ) {
-			$dynamicInsights[InsightsPagesWithoutInfoboxModel::INSIGHT_TYPE] = 'InsightsPagesWithoutInfoboxModel';
+			$insightsPages[InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE] = 'InsightsUnconvertedInfoboxesModel';
 		}
 
 		/* Add Flags insight */
 		if ( !empty( $wgEnableFlagsExt ) ) {
-			$dynamicInsights[InsightsFlagsModel::INSIGHT_TYPE] = 'InsightsFlagsModel';
+			$insightsPages[InsightsFlagsModel::INSIGHT_TYPE] = 'InsightsFlagsModel';
 		}
 
+		/* Add default insights */
+		$insightsPages = array_merge( $insightsPages, self::$defaultInsights );
 
-		return array_merge( $dynamicInsights, self::$defaultInsights );
+		/* Add PagesWithoutInfobox insight */
+		if ( !empty( $wgEnableTemplateClassificationExt ) && !empty( $wgEnableInsightsPagesWithoutInfobox ) ) {
+			$insightsPages[InsightsPagesWithoutInfoboxModel::INSIGHT_TYPE] = 'InsightsPagesWithoutInfoboxModel';
+		}
+
+		return $insightsPages;
+
 	}
 
 	/**
@@ -156,10 +159,11 @@ class InsightsHelper {
 	 * Returns a specific subpage model
 	 * If it does not exist a user is redirected to the Special:Insights landing page
 	 *
-	 * @param $type string|null A slug of a subpage
+	 * @param $type string|null A slug of a type
+	 * @param $subpage string|null A slug of a subpage
 	 * @return InsightsModel|null
 	 */
-	public static function getInsightModel( $type, $subpage ) {
+	public static function getInsightModel( $type, $subpage = null ) {
 		if ( self::isInsightPage( $type ) ) {
 			$insightsPages = self::getInsightsPages();
 			$modelName = $insightsPages[$type];

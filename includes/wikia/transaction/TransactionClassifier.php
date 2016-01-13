@@ -67,6 +67,8 @@ class TransactionClassifier {
 		'opensearch',
 		'parse',
 		'lyrics',
+		'visualeditor',
+		'visualeditoredit',
 	);
 
 	protected static $MAP_ARTICLE_NAMESPACES = array(

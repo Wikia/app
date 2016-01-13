@@ -327,6 +327,9 @@ Your account has been created. Don't forget to change your {{SITENAME}} [[Specia
 'group-voldev-member' => 'Volunteer Developer',
 'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
 
+'group-content-moderator' => 'Content Moderators',
+'group-content-moderator-member' => 'Content Moderator',
+
 #new registration aka LoginFriction aka Signup
 
 'signup-password' => 'Password - ',

@@ -26,9 +26,9 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 	 * @param $fileNamespaceAlias
 	 * @param $expectedOutput
 	 * @param $description
-	 * @dataProvider testSanitizeFilenameDataProvider
+	 * @dataProvider testSanitizeImageFilenameDataProvider
 	 */
-	public function testSanitizeFilename( $inputFileName, $contentLanguageCode, $fileNamespaceAlias, $expectedOutput, $description ) {
+	public function testSanitizeImageFilename( $inputFileName, $contentLanguageCode, $fileNamespaceAlias, $expectedOutput, $description ) {
 		$language = new \Language();
 		$language->setCode( $contentLanguageCode );
 		$actualOutput = '';
@@ -48,7 +48,7 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedOutput, $actualOutput, $description );
 	}
 
-	public function testSanitizeFilenameDataProvider() {
+	public function testSanitizeImageFilenameDataProvider() {
 		return [
 			[
 				'filename.jpg',
@@ -264,6 +264,34 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 				'Luke+1.jpg',
 				'Link to filename with canonical namespace, width and plus (+) characters'
 			],
+			[
+				'[[file:Luke+1.jpg]]',
+				'en',
+				null,
+				'Luke+1.jpg',
+				'Link to filename with upper and lower case letters in namespace'
+			],
+			[
+				'[[файл:Luke+1.jpg]]',
+				'ru',
+				null,
+				'Luke+1.jpg',
+				'Link to filename with lower case multibyte letter in namespace'
+			],
+			[
+				'[[filE:Luke+1.jpg]]',
+				'en',
+				null,
+				'filE:Luke+1.jpg',
+				'Handle case insensivity only for the first char'
+			],
+			[
+				'[[file:luke+1.jpg]]',
+				'en',
+				null,
+				'luke+1.jpg',
+				'Link to filename with lower case letters'
+			]
 		];
 	}
 
