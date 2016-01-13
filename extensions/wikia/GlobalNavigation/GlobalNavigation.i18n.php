@@ -12,7 +12,7 @@ $messages['en'] = array(
 *http://movieshub.wikia.com/wiki/Movies_Hub|Movies|movies
 *http://gameshub.wikia.com/wiki/TV_Hub|TV|tv',
 	'global-navigation-menu-explore' => '*#|Explore Wikia
-**#|Top Communities
+**http://wikia.com/WAM|Top Communities
 **#|Community Central',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
