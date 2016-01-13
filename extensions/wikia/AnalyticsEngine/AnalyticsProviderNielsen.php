@@ -2,7 +2,7 @@
 
 class AnalyticsProviderNielsen implements iAnalyticsProvider {
 
-	private static $apid = 'XXXXXXXXXX-XXXX-XXXX-XXXXXXXXXX';
+	private static $apid = 'T26086A07-C7FB-4124-A679-8AC404198BA7';
 	private static $clientId = 'Wikia';
 	private static $libraryUrl = 'http://secure-dcr-cert.imrworldwide.com/novms/js/2/ggcmb500.js';
 
