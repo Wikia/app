@@ -274,9 +274,9 @@ class MercuryApiController extends WikiaController {
 	 *
 	 */
 	public function getWikiVariables() {
+		global $wgEnableGlobalNav2016;
 
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
-
 		$navigation = $this->getNavigation();
 		if ( empty( $navData ) ) {
 			\Wikia\Logger\WikiaLogger::instance()->error(
@@ -284,7 +284,16 @@ class MercuryApiController extends WikiaController {
 			);
 		}
 
-		$wikiVariables['navigation'] = $navigation;
+		if (empty($wgEnableGlobalNav2016)) {
+			$wikiVariables['navigation'] = $navigation;
+		} else {
+			$navigationNodes = (new GlobalNavigationHelper())->getMenuNodes2016();
+			$wikiVariables['hubsLinks'] = $navigationNodes['hubs'];
+			$wikiVariables['explore'] = $navigationNodes['explore'];
+			$wikiVariables['localNav'] = $navigation;
+		}
+
+
 		$wikiVariables['vertical'] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 		$wikiVariables['basePath'] = $this->wg->Server;
 

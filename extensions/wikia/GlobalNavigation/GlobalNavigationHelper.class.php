@@ -94,4 +94,24 @@ class GlobalNavigationHelper {
 			WikiService::WIKIAGLOBAL_CITY_ID
 		)->getFullURL();
 	}
+
+	public function getMenuNodes2016() {
+		$hubsNodes = ( new NavigationModel( true /* useSharedMemcKey */ ) )->getTree(
+			NavigationModel::TYPE_MESSAGE,
+			'global-navigation-menu-hubs',
+			[3] // max 3 links
+		);
+		$exploreNodes = ( new NavigationModel( true /* useSharedMemcKey */ ) )->getTree(
+			NavigationModel::TYPE_MESSAGE,
+			'global-navigation-menu-explore',
+			[1, 3] // max 1 entry with 3 links
+		);
+
+		$menuNodes = [
+			'hubs' => $hubsNodes,
+			'explore' => $exploreNodes[0], // always one node - explore the wikia
+		];
+
+		return $menuNodes;
+	}
 }

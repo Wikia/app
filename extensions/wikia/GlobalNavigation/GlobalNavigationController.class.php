@@ -50,7 +50,7 @@ class GlobalNavigationController extends WikiaController {
 		if ( $isGameStarLogoEnabled ) {
 			$this->response->addAsset( 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationGameStar.scss' );
 		}
-		$this->response->setVal( 'menuContents', $this->getMenuNodes2016() );
+		$this->response->setVal( 'menuContents', $this->helper->getMenuNodes2016() );
 	}
 
 	public function searchIndex() {
@@ -117,26 +117,6 @@ class GlobalNavigationController extends WikiaController {
 		$this->overrideTemplate( 'hubsMenuSections' );
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
-	}
-
-	public function getMenuNodes2016() {
-		$hubsNodes = ( new NavigationModel( true /* useSharedMemcKey */ ) )->getTree(
-			NavigationModel::TYPE_MESSAGE,
-			'global-navigation-menu-hubs',
-			[3] // max 3 links
-		);
-		$exploreNodes = ( new NavigationModel( true /* useSharedMemcKey */ ) )->getTree(
-			NavigationModel::TYPE_MESSAGE,
-			'global-navigation-menu-explore',
-			[1, 3] // max 1 entry with 3 links
-		);
-
-		$menuNodes = [
-			'hubs' => $hubsNodes,
-			'explore' => $exploreNodes[0], // always one node - explore the wikia
-		];
-
-		return $menuNodes;
 	}
 
 	private function getMenuNodes() {
