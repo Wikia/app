@@ -58,34 +58,45 @@
 					<? endif; ?>
 				</a >
 			</div >
-			<div class="table-cell" data-visibility="desktop">
-				<a class="cell-link" href="<?= wfMessage( 'global-navigation-games-hub-link' )->inContentLanguage()->text()?>"><?= wfMessage( 'global-navigation-games-hub-link-label' )->inContentLanguage()->text()?></a>
-				<a class="cell-link" href="<?= wfMessage( 'global-navigation-movies-hub-link' )->inContentLanguage()->text()?>"><?= wfMessage( 'global-navigation-movies-hub-link-label' )->inContentLanguage()->text()?></a>
-				<a class="cell-link" href="<?= wfMessage( 'global-navigation-tv-hub-link' )->inContentLanguage()->text()?>"><?= wfMessage( 'global-navigation-tv-hub-link-label' )->inContentLanguage()->text()?></a>
-			</div>
-			<div class="table-cell">
-				<div class="explore-wikia-entry-point" id="exploreWikiaEntryPoint">
-					<a class="cell-link" href="#">
-						<?= wfMessage( 'global-navigation-explore-wikia' )->text() ?>
-						<img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
-					</a>
-					<ul class="explore-wikia-dropdown" id="exploreWikiaDropdown">
-						<li><a class="cell-link" data-visibility="tablet" href="<?= wfMessage( 'global-navigation-games-hub-link' )->inContentLanguage()->text()?>"><?= wfMessage( 'global-navigation-games-hub-link-label' )->inContentLanguage()->text()?></a></li>
-						<li><a class="cell-link" data-visibility="tablet" href="<?= wfMessage( 'global-navigation-movies-hub-link' )->inContentLanguage()->text()?>"><?= wfMessage( 'global-navigation-movies-hub-link-label' )->inContentLanguage()->text()?></a></li>
-						<li><a class="cell-link" data-visibility="tablet" href="<?= wfMessage( 'global-navigation-tv-hub-link' )->inContentLanguage()->text()?>"><?= wfMessage( 'global-navigation-tv-hub-link-label' )->inContentLanguage()->text()?></a></li>
-						<li><a href="#">Top Communities</a></li>
-						<li><a href="#">Community Central</a></li>
-						<li>
-							<a href="<?= htmlspecialchars( $createWikiUrl ) ?>"
-								class="start-wikia"
-								title="<?= wfMessage( 'global-navigation-create-wiki' )->escaped(); ?>"
-								data-id="start-wikia">
-								<span><?= ( wfMessage( 'global-navigation-create-wiki' )->escaped() ); ?></span>
-							</a>
-						</li>
-					</ul>
+			<?php if ( !empty( $menuContents['hubs']) && is_array( $menuContents['hubs'] ) ): ?>
+				<div class="table-cell" data-visibility="desktop">
+					<?php foreach( $menuContents['hubs'] as $hub ): ?>
+						<a class="cell-link" href="<?= $hub['href']; ?>"><?= $hub['textEscaped']; ?></a>
+					<?php endforeach; ?>
 				</div>
-			</div>
+			<?php endif; ?>
+			<?php if ( !empty( $menuContents['explore']) ): ?>
+				<div class="table-cell">
+					<div class="explore-wikia-entry-point" id="exploreWikiaEntryPoint">
+						<a class="cell-link" href="#">
+							<?= $menuContents['explore']['text'] ?>
+							<img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
+						</a>
+						<ul class="explore-wikia-dropdown" id="exploreWikiaDropdown">
+							<?php if ( !empty( $menuContents['hubs']) && is_array( $menuContents['hubs'] ) ): ?>
+								<?php foreach( $menuContents['hubs'] as $hub ): ?>
+									<li>
+										<a class="cell-link" data-visibility="tablet" href="<?= $hub['href']; ?>"><?= $hub['textEscaped']; ?></a>
+									</li>
+								<?php endforeach; ?>
+							<?php endif; ?>
+							<?php foreach( $menuContents['explore']['children'] as $exploreLink ): ?>
+								<li>
+									<a class="cell-link" href="<?= $exploreLink['href']; ?>"><?= $exploreLink['textEscaped']; ?></a>
+								</li>
+							<?php endforeach; ?>
+							<li>
+								<a href="<?= htmlspecialchars( $createWikiUrl ) ?>"
+									class="start-wikia"
+									title="<?= wfMessage( 'global-navigation-create-wiki' )->escaped(); ?>"
+									data-id="start-wikia">
+									<span><?= ( wfMessage( 'global-navigation-create-wiki' )->escaped() ); ?></span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			<?php endif; ?>
 			<div class="search-container table-cell">
 				<?= $app->renderView( 'GlobalNavigation', 'searchIndex' ); ?>
 			</div>

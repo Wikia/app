@@ -8,12 +8,6 @@ $messages['en'] = array(
 	'global-navigation-register' => 'Register',
 	'global-navigation-sign-in' => 'Sign In',
 	'global-navigation-account-navigation-options' => '$1 or $2',
-	'global-navigation-games-hub-link' => "http://gameshub.wikia.com/wiki/Games_Hub",
-	'global-navigation-games-hub-link-label' => "Games",
-	'global-navigation-movies-hub-link' => "http://movieshub.wikia.com/wiki/Movies_Hub",
-	'global-navigation-movies-hub-link-label' => "Movies",
-	'global-navigation-tv-hub-link' => "http://http://tvhub.wikia.com/wiki/TV_Hub",
-	'global-navigation-tv-hub-link-label' => "TV",
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
@@ -230,7 +224,12 @@ $messages['en'] = array(
 	'global-navigation-local-search' => 'Search this wikia',
 	'global-navigation-global-search' => 'Search all of Wikia',
 	'global-navigation-home-of-fandom' => 'The Home of Fandom',
-	'global-navigation-explore-wikia' => 'Explore Wikia'
+	'global-navigation-menu-hubs' => '*http://gameshub.wikia.com/wiki/Games_Hub|Games|games
+*http://movieshub.wikia.com/wiki/Movies_Hub|Movies|movies
+*http://gameshub.wikia.com/wiki/TV_Hub|TV|tv',
+	'global-navigation-menu-explore' => '*#|Explore Wikia
+**#|Top Communities
+**#|Community Central',
 );
 
 $messages['qqq'] = array(
