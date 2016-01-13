@@ -13,5 +13,8 @@ $messages = array_merge( $messages, array(
 標籤圖片和可折疊群組已經可以在[[Help:Infobox|移動化訊息框]]中使用。
 
 您的內容移動化嗎？ 請點擊[[w:c:portability| Portability.wikia.com]]了解更多詳細內容。",
+'group-content-moderator' => '內容版主',
+'group-content-moderator-member' => '內容版主',
+'group-threadmoderator' => '話題版主',
+'group-threadmoderator-member' => '話題版主',
 ) );
-

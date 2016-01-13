@@ -144,4 +144,6 @@ Les images en onglets et les groupes réductibles sont désormais disponibles po
 Votre contenu est-il adapté aux appareils mobiles ? Pour savoir comment vous en assurer à l'avenir, consultez le site [[w:c:portability|Portability.wikia.com]].",
 'group-content-moderator' => 'Modérateurs de contenu',
 'group-content-moderator-member' => 'Modérateur de contenu',
+'group-threadmoderator' => 'Modérateurs de discussions',
+'group-threadmoderator-member' => 'Modérateur de discussions',
 ) );
