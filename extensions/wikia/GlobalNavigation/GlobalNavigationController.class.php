@@ -24,10 +24,16 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 	public function index() {
-		global $wgLang, $wgUser;
+		global $wgLang, $wgUser, $wgEnableGlobalNav2016;
 
 		Wikia::addAssetsToOutput( 'global_navigation_scss' );
 		Wikia::addAssetsToOutput( 'global_navigation_js' );
+
+		if ( $wgEnableGlobalNav2016 ) {
+			Wikia::addAssetsToOutput( 'global_navigation_2016_js' );
+		} else {
+			Wikia::addAssetsToOutput( 'global_navigation_2015_js' );
+		}
 
 		$mainCorpPageUrl = $this->wikiaLogoHelper->getMainCorpPageURL();
 		$createWikiUrl = $this->helper->getCreateNewWikiUrl( $wgLang->getCode() );
