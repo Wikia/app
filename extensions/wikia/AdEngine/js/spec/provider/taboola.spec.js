@@ -20,8 +20,8 @@ describe('Taboola ', function () {
 				show: noop
 			},
 			taboolaHelper: {
-				loadTaboola: function () {
-					mocks.window._taboola = [];
+				initializeWidget: function ( widget ) {
+					mocks.window._taboola = [widget];
 				}
 			},
 			abTest: {

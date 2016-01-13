@@ -18,11 +18,13 @@ define('ext.wikia.adEngine.provider.recirculation', [
 		return (properSlot && recirculation);
 	}
 
-	function fillInSlot(slotName, slotElement, success, hop) {
+	function fillInSlot(slotName, slotElement, success) {
 		log(['fillInSlot', slotName, slotElement], 'debug', logGroup);
 
 		taboolaHelper.loadTaboola();
 		recirculation.injectRecirculationModule(slotElement);
+
+		success();
 	}
 
 	return {

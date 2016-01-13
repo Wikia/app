@@ -83,11 +83,11 @@ define('ext.wikia.adEngine.provider.taboola', [
 		if (slotName === 'NATIVE_TABOOLA_ARTICLE') {
 			readMoreDiv.parentNode.removeChild(readMoreDiv);
 		}
-		taboolaHelper.loadTaboola();
+
 		container.id = slot.id;
 		slotElement.appendChild(container);
 
-		window._taboola.push({
+		taboolaHelper.initializeWidget({
 			mode: slot.mode,
 			container: container.id,
 			placement: slot.label + getVerticalName(),

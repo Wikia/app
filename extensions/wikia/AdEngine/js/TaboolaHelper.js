@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.taboolaHelper', [
 	'ext.wikia.adEngine.adContext',
-	'wikia.document'
-], function (adContext, document) {
+	'wikia.document',
+	'wikia.window'
+], function (adContext, document, win) {
 	'use strict';
 
 	var context = adContext.getContext(),
@@ -20,9 +21,9 @@ define('ext.wikia.adEngine.taboolaHelper', [
 		}
 
 		taboolaInit[pageType] = 'auto';
-		window._taboola = window._taboola || [];
-		window._taboola.push(taboolaInit);
-		window._taboola.push({flush: true});
+		win._taboola = win._taboola || [];
+		win._taboola.push(taboolaInit);
+		win._taboola.push({flush: true});
 
 		taboolaScript = document.createElement('script');
 		taboolaScript.async = true;
@@ -33,8 +34,16 @@ define('ext.wikia.adEngine.taboolaHelper', [
 		libraryLoaded = true;
 	}
 
+	function initializeWidget ( widget ) {
+		if (!libraryLoaded) {
+			loadTaboola();
+		}
+
+		win._taboola.push( widget );
+	}
+
 	return {
-		libraryLoaded: libraryLoaded,
+		initializeWidget: initializeWidget,
 		loadTaboola: loadTaboola
 	};
 });
