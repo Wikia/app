@@ -83,11 +83,7 @@ class FavoriteWikisModel extends WikiaModel {
 		];
 	}
 
-	private function getTopWikisQuery( $limit = null ) {
-		if ( is_null( $limit ) ) {
-			$limit = self::MAX_FAV_WIKIS;
-		}
-
+	private function getTopWikisQuery( $limit = self::MAX_FAV_WIKIS ) {
 		$query = (new WikiaSQL())
 			->SELECT()
 				->FIELD( 'wiki_id' )
@@ -120,11 +116,9 @@ class FavoriteWikisModel extends WikiaModel {
 		}
 
 		$memKey = $this->getTopWikisMemKey();
-		$savedWikis = $this->wg->Memc->get( $memKey );
-		if ( empty( $savedWikis ) ) {
-			$savedWikis = $this->getTopWikisFromDb();
-			$this->wg->Memc->set( $memKey, $savedWikis, self::SAVED_WIKIS_TTL );
-		}
+		$savedWikis = WikiaDataAccess::cache( $memKey, self::SAVED_WIKIS_TTL, function() {
+			return $this->getTopWikisFromDb();
+		});
 
 		$wikis = array_merge( $savedWikis, $this->getEditsWikis() );
 
