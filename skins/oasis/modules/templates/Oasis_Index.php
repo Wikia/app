@@ -71,7 +71,6 @@
 <?= $amazonMatch ?>
 <?= $openXBidder ?>
 <?= $rubiconFastlane ?>
-<?= $nielsen ?>
 <?= $dynamicYield ?>
 <?= $ivw2 ?>
 <div class="WikiaSiteWrapper">
@@ -102,6 +101,7 @@
 <?php } ?>
 <?= $bottomScripts ?>
 
+<?= $nielsen ?>
 </body>
 
 <?= wfReportTime() . "\n" ?>
