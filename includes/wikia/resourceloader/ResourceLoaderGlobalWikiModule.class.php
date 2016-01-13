@@ -65,14 +65,14 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	}
 
 	protected function createTitle( $titleText, $options = array() ) {
-		global $wgCityId;
+		global $wgCityId, $wgEnableContentReviewExt;
 		wfProfileIn(__METHOD__);
 		$title = null;
 
 		$realTitleText = isset($options['title']) ? $options['title'] : $titleText;
 		list( $titleText, $namespace ) = $this->parseTitle( $realTitleText );
 
-		if ( $options['type'] === 'script' && $namespace != NS_USER && Wikia::isUsingSafeJs() ) {
+		if ( $options['type'] === 'script' && $namespace != NS_USER && !empty( $wgEnableContentReviewExt ) ) {
 			return $this->createScriptTitle( $titleText, $options );
 		}
 
@@ -102,40 +102,15 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		global $wgCityId;
 
 		$title = null;
-		$external = false;
 		$targetCityId = (int) $options['city_id'];
 
 		if ( $targetCityId !== 0 && $wgCityId !== $targetCityId && $titleText !== false ) {
-			$external = true;
 			$title = GlobalTitle::newFromTextCached( $titleText, NS_MEDIAWIKI, $targetCityId );
 		} else {
 			$title = Title::newFromText( $titleText, NS_MEDIAWIKI );
 		}
 
-		// TODO: After scripts transition on dev wiki is done, remove this if statement (CE-3093)
-		if ( $targetCityId === Wikia\ContentReview\Helper::DEV_WIKI_ID && ( !$title || !$title->exists() ) ) {
-			$title = $this->devWikiFallback( $titleText, $external );
-		}
-
 		$title = $this->resolveRedirect( $title );
-
-		return $title;
-	}
-
-	/**
-	 * While scripts on dev.wikia.com will be moved to NS_MEDIAWIKI we need this fallback till transition is completed.
-	 *
-	 * @param string $titleText
-	 * @param bool|false $external
-	 * @return Title
-	 * @throws MWException
-	 */
-	private function devWikiFallback( $titleText, $external = false ) {
-		if ( $external ) {
-			$title = GlobalTitle::newFromTextCached( $titleText, NS_MAIN, Wikia\ContentReview\Helper::DEV_WIKI_ID );
-		} else {
-			$title = Title::newFromText( $titleText );
-		}
 
 		return $title;
 	}
@@ -154,27 +129,17 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			$revisionId = $this->getScriptReviewedRevisionId( $title );
 		}
 
-		if ( $title instanceof GlobalTitle ) {
-			// todo: think of pages like NS_MAIN:Test/code.js that are pulled
-			// from dev.wikia.com
-			/*
-			if ( !$title->isCssJsSubpage() && !$title->isCssOrJsPage() ) {
-				return null;
+		if ( $title instanceof GlobalTitle && WikiFactory::isWikiPrivate( $title->getCityId() ) == false ) {
+			if ( !is_null( $revisionId ) ) {
+				if ( $revisionId === 0 ) {
+					$content = '';
+				} else {
+					$content = $title->getRevisionText( $revisionId );
+				}
 			}
-			*/
 
-			if ( WikiFactory::isWikiPrivate( $title->getCityId() ) == false ) {
-				if ( !is_null( $revisionId ) ) {
-					if ( $revisionId === 0 ) {
-						$content = '';
-					} else {
-						$content = $title->getRevisionText( $revisionId );
-					}
-				}
-
-				if ( is_null( $content ) ) {
-					$content = $title->getContent();
-				}
+			if ( is_null( $content ) ) {
+				$content = $title->getContent();
 			}
 
 		// Try to load the contents of an article before falling back to a message (BugId:45352)
