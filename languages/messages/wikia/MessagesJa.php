@@ -168,5 +168,8 @@ $messages = array_merge( $messages , array(
 [[ヘルプ:ポータブル・インフォボックス|ポータブル・インフォボックス]]にタブ付き画像や折りたたみ可能なグループの機能を追加しました。
 
 あなたのコンテンツはモバイル対応ですか？[[w:c:portability|Portability.wikia.com]]で未来対応型のコンテンツに関する詳細をご覧ください。",
-
+'group-content-moderator' => 'コンテンツ・モデレーター',
+'group-content-moderator-member' => 'コンテンツ・モデレーター',
+'group-threadmoderator' => 'トーク・モデレーター',
+'group-threadmoderator-member' => 'トーク・モデレーター',
 ));

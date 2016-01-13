@@ -47,4 +47,8 @@ $messages = array_merge( $messages, array(
 Для [[Справка:Инфобоксы|модульных инфобоксов]] теперь доступны табберы для изображений и сворачиваемые группы.
 
 Как смотрится ваш контент на разных устройствах? Узнайте об этом на [[w:c:portability|Portability.wikia.com]].",
+'group-content-moderator' => 'Модераторы контента',
+'group-content-moderator-member' => 'Модератор контента',
+'group-threadmoderator' => 'Модераторы обсуждений',
+'group-threadmoderator-member' => 'Модератор обсуждений',
 ) );
