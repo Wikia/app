@@ -56,9 +56,9 @@ EOT;
 		}
 	}
 
-	private function isEnabled() {
-		global $wgEnableNielsen;
+	static public function isEnabled() {
+		global $wgEnableNielsen, $wgNoExternals;
 
-		return $wgEnableNielsen;
+		return $wgEnableNielsen && !$wgNoExternals;
 	}
 }
