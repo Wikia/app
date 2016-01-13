@@ -8,6 +8,12 @@ $messages['en'] = array(
 	'global-navigation-register' => 'Register',
 	'global-navigation-sign-in' => 'Sign In',
 	'global-navigation-account-navigation-options' => '$1 or $2',
+	'global-navigation-menu-hubs' => '*http://gameshub.wikia.com/wiki/Games_Hub|Games|games
+*http://movieshub.wikia.com/wiki/Movies_Hub|Movies|movies
+*http://gameshub.wikia.com/wiki/TV_Hub|TV|tv',
+	'global-navigation-menu-explore' => '*#|Explore Wikia
+**#|Top Communities
+**#|Community Central',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
@@ -224,12 +230,6 @@ $messages['en'] = array(
 	'global-navigation-local-search' => 'Search this wikia',
 	'global-navigation-global-search' => 'Search all of Wikia',
 	'global-navigation-home-of-fandom' => 'The Home of Fandom',
-	'global-navigation-menu-hubs' => '*http://gameshub.wikia.com/wiki/Games_Hub|Games|games
-*http://movieshub.wikia.com/wiki/Movies_Hub|Movies|movies
-*http://gameshub.wikia.com/wiki/TV_Hub|TV|tv',
-	'global-navigation-menu-explore' => '*#|Explore Wikia
-**#|Top Communities
-**#|Community Central',
 );
 
 $messages['qqq'] = array(
@@ -239,12 +239,8 @@ $messages['qqq'] = array(
 	'global-navigation-register' => 'Text on the link that shows registration modal',
 	'global-navigation-sign-in' => 'Text on the link that shows sign-in modal',
 	'global-navigation-account-navigation-options' => 'Sentence that says to register or sign-in, $1 is an anchor with "global-navigation-register" title, $2 is an anchor with "global-navigation-sign-in" title',
-	'global-navigation-games-hub-link' => "Link to Games Hub in Global Navigation",
-	'global-navigation-movies-hub-link' => "Link to Movies Hub in Global Navigation",
-	'global-navigation-tv-hub-link' => "Link to TV Hub in Global Navigation",
-	'global-navigation-games-hub-label' => "Label for Link to Games Hub in Global Navigation",
-	'global-navigation-movies-hub-label' => "Label for Link to Movies Hub in Global Navigation",
-	'global-navigation-tv-hub-label' => "Label for Link to TV Hub in Global Navigation",
+	'global-navigation-menu-hubs' => 'Global Navigation Hubs/Links Menu structure - For example see English translation.',
+	'global-navigation-menu-explore' => 'Global Navigation Explore Wikia Menu structure - For example see English translation.',
 	'global-navigation-hubs-menu' => 'Global Navigation Hubs Menu structure. For example see English translation.',
 	'global-navigation-local-search-placeholder' => 'Placeholder in search input in global nav',
 	'global-navigation-local-search' => 'Local search value in search dropdown',
@@ -259,12 +255,9 @@ $messages['de'] = array(
 	'global-navigation-register' => 'registrieren',
 	'global-navigation-sign-in' => 'Anmelden',
 	'global-navigation-account-navigation-options' => '$1 oder $2',
-	'global-navigation-games-hub-link' => "http://de.videospielehub.wikia.com/wiki/Videospiele_Hub",
-	'global-navigation-movies-hub-link' => "http://de.filmhub.wikia.com/wiki/Film_Hub",
-	'global-navigation-tv-hub-link' => "http://de.tvhub.wikia.com/wiki/TV_Hub",
-	'global-navigation-games-hub-link-label' => "Videospiele",
-	'global-navigation-movies-hub-link-label' => "Filme",
-	'global-navigation-tv-hub-link-label' => "TV",
+	'global-navigation-menu-hubs' => '*http://de.videospielehub.wikia.com/wiki/Videospiele_Hub|Videospiele|games
+*http://de.filmhub.wikia.com/wiki/Film_Hub|Filme|movies
+*http://de.tvhub.wikia.com/wiki/TV_Hub|TV|tv',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
@@ -484,12 +477,9 @@ $messages['de'] = array(
 $messages['es'] = array(
 	'global-navigation-create-wiki' => 'Crear un wiki',
 	'global-navigation-hubs-menu-more-of' => 'Más $1',
-	'global-navigation-games-hub-link' => "http://es.gameshub.wikia.com/wiki/Wiki_Videojuegos_Hub",
-	'global-navigation-movies-hub-link' => "http://es.filmhub.wikia.com/wiki/Wiki_Películas_Hub",
-	'global-navigation-tv-hub-link' => "http://es.tvhub.wikia.com/wiki/Wiki_TV_Hub",
-	'global-navigation-games-hub-link-label' => "Juegos",
-	'global-navigation-movies-hub-link-label' => "Películas",
-	'global-navigation-tv-hub-link-label' => "TV",
+	'global-navigation-menu-hubs' => '*http://es.gameshub.wikia.com/wiki/Wiki_Videojuegos_Hub|Juegos|games
+*http://es.filmhub.wikia.com/wiki/Wiki_Películas_Hub|Películas|movies
+*http://es.tvhub.wikia.com/wiki/Wiki_TV_Hub|TV|tv',
 	'global-navigation-hubs-menu' => "*http://es.comicshub.wikia.com/wiki/Wiki_Cómics_Hub|Cómics|comics
 
 **#|Lo último
@@ -717,12 +707,9 @@ $messages['fr'] = array(
 	'global-navigation-register' => "s'inscrire",
 	'global-navigation-sign-in' => 'Se connecter',
 	'global-navigation-account-navigation-options' => '$1 ou $2',
-	'global-navigation-games-hub-link' => "http://portail-divertissement.wikia.com/wiki/Portail_divertissement",
-	'global-navigation-movies-hub-link' => "http://portail-divertissement.wikia.com/wiki/Portail_divertissement",
-	'global-navigation-tv-hub-link' => "http://portail-divertissement.wikia.com/wiki/Portail_divertissement",
-	'global-navigation-games-hub-link-label' => "Jeux vidéo",
-	'global-navigation-movies-hub-link-label' => "Cinéma",
-	'global-navigation-tv-hub-link-label' => "Télévision",
+	'global-navigation-menu-hubs' => '*http://portail-divertissement.wikia.com/wiki/Portail_divertissement|Jeux vidéo|games
+*http://portail-divertissement.wikia.com/wiki/Portail_divertissement|Cinéma|movies
+*http://portail-divertissement.wikia.com/wiki/Portail_divertissement|Télévision|tv',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
@@ -946,12 +933,9 @@ $messages['it'] = array(
 	'global-navigation-register' => 'Iscriviti',
 	'global-navigation-sign-in' => 'Accedi',
 	'global-navigation-account-navigation-options' => '$1 o $2',
-	'global-navigation-games-hub-link' => "http://it.community.wikia.com/wiki/Categoria:Videogiochi",
-	'global-navigation-movies-hub-link' => "http://it.community.wikia.com/wiki/Categoria:Cinema",
-	'global-navigation-tv-hub-link' => "http://it.community.wikia.com/wiki/Categoria:Televisione",
-	'global-navigation-games-hub-link-label' => "Giochi",
-	'global-navigation-movies-hub-link-label' => "Cinema",
-	'global-navigation-tv-hub-link-label' => "TV",
+	'global-navigation-menu-hubs' => '*http://it.community.wikia.com/wiki/Categoria:Videogiochi|Giochi|games
+*http://it.community.wikia.com/wiki/Categoria:Cinema|Cinema|movies
+*http://it.community.wikia.com/wiki/Categoria:Televisione|TV|tv',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
@@ -1175,12 +1159,9 @@ $messages['ja'] = array(
 	'global-navigation-register' => '登録',
 	'global-navigation-sign-in' => 'ログイン',
 	'global-navigation-account-navigation-options' => '$1または$2',
-	'global-navigation-games-hub-link' => "http://ja.videogameshub.wikia.com/wiki/ビデオゲームハブ_Wiki",
-	'global-navigation-movies-hub-link' => "http://ja.entertainmenthub.wikia.com/wiki/エンターテイメントハブ_Wiki",
-	'global-navigation-tv-hub-link' => "http://ja.entertainmenthub.wikia.com/wiki/エンターテイメントハブ_Wiki",
-	'global-navigation-games-hub-link-label' => "ゲーム",
-	'global-navigation-movies-hub-link-label' => "映画",
-	'global-navigation-tv-hub-link-label' => "テレビ",
+	'global-navigation-menu-hubs' => '*http://ja.videogameshub.wikia.com/wiki/ビデオゲームハブ_Wiki|ゲーム|games
+*http://ja.entertainmenthub.wikia.com/wiki/エンターテイメントハブ_Wiki|映画|movies
+*http://ja.entertainmenthub.wikia.com/wiki/エンターテイメントハブ_Wiki|テレビ|tv',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
@@ -1404,12 +1385,9 @@ $messages['nl'] = array(
 	'global-navigation-register' => 'Register',
 	'global-navigation-sign-in' => 'Sign In',
 	'global-navigation-account-navigation-options' => '$1 or $2',
-	'global-navigation-games-hub-link' => "http://nl.community.wikia.com/wiki/Centrale_Wikia_community",
-	'global-navigation-movies-hub-link' => "http://nl.community.wikia.com/wiki/Centrale_Wikia_community",
-	'global-navigation-tv-hub-link' => "http://nl.community.wikia.com/wiki/Centrale_Wikia_community",
-	'global-navigation-games-hub-link-label' => "Games",
-	'global-navigation-movies-hub-link-label' => "Films",
-	'global-navigation-tv-hub-link-label' => "TV",
+	'global-navigation-menu-hubs' => '*http://nl.community.wikia.com/wiki/Centrale_Wikia_community|Games|games
+*http://nl.community.wikia.com/wiki/Centrale_Wikia_community|Films|movies
+*http://nl.community.wikia.com/wiki/Centrale_Wikia_community|TV|tv',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
@@ -1633,12 +1611,9 @@ $messages['pl'] = array(
 	'global-navigation-register' => 'Zarejestruj się',
 	'global-navigation-sign-in' => 'Zaloguj się',
 	'global-navigation-account-navigation-options' => '$1 lub $2',
-	'global-navigation-games-hub-link' => "http://gryhub.wikia.com/wiki/Gry",
-	'global-navigation-movies-hub-link' => "http://rozrywkahub.wikia.com/wiki/Rozrywka",
-	'global-navigation-tv-hub-link' => "http://rozrywkahub.wikia.com/wiki/Rozrywka",
-	'global-navigation-games-hub-link-label' => "Gry",
-	'global-navigation-movies-hub-link-label' => "Filmy",
-	'global-navigation-tv-hub-link-label' => "TV",
+	'global-navigation-menu-hubs' => '*http://gryhub.wikia.com/wiki/Gry|Gry|games
+*http://rozrywkahub.wikia.com/wiki/Rozrywka|Filmy|movies
+*http://rozrywkahub.wikia.com/wiki/Rozrywka|TV|tv',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
@@ -1862,10 +1837,8 @@ $messages['pt'] = array(
 	'global-navigation-register' => 'Registre-se',
 	'global-navigation-sign-in' => 'Iniciar sessão',
 	'global-navigation-account-navigation-options' => '$1 ou $2',
-	'global-navigation-games-hub-link' => "http://pt.videogameshub.wikia.com/wiki/Wiki_Videogameshub",
-	'global-navigation-movies-hub-link' => "http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento",
-	'global-navigation-games-hub-link-label' => "Jogos",
-	'global-navigation-movies-hub-link-label' => "Entretenimento",
+	'global-navigation-menu-hubs' => '*http://pt.videogameshub.wikia.com/wiki/Wiki_Videogameshub|Jogos|games
+*http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento|Entretenimento|movies',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
@@ -2089,12 +2062,9 @@ $messages['ru'] = array(
 	'global-navigation-register' => 'Зарегистрироваться',
 	'global-navigation-sign-in' => 'Войти',
 	'global-navigation-account-navigation-options' => '$1 или $2',
-	'global-navigation-games-hub-link' => "http://ru.gameshub.wikia.com/wiki/%D0%9F%D0%BE%D1%80%D1%82%D0%B0%D0%BB_%D0%92%D0%B8%D0%B4%D0%B5%D0%BE%D0%B8%D0%B3%D1%80%D1%8B",
-	'global-navigation-movies-hub-link' => "http://ru.movieshub.wikia.com/wiki/%D0%9F%D0%BE%D1%80%D1%82%D0%B0%D0%BB_%D0%9A%D0%B8%D0%BD%D0%BE",
-	'global-navigation-tv-hub-link' => "http://ru.tvhub.wikia.com/wiki/%D0%9F%D0%BE%D1%80%D1%82%D0%B0%D0%BB_%D0%A2%D0%B5%D0%BB%D0%B5%D0%B2%D0%B8%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5",
-	'global-navigation-games-hub-link-label' => "Видеоигры",
-	'global-navigation-movies-hub-link-label' => "Кино",
-	'global-navigation-tv-hub-link-label' => "TV",
+	'global-navigation-menu-hubs' => '*http://ru.gameshub.wikia.com/wiki/%D0%9F%D0%BE%D1%80%D1%82%D0%B0%D0%BB_%D0%92%D0%B8%D0%B4%D0%B5%D0%BE%D0%B8%D0%B3%D1%80%D1%8B|Видеоигры|games
+*http://ru.movieshub.wikia.com/wiki/%D0%9F%D0%BE%D1%80%D1%82%D0%B0%D0%BB_%D0%9A%D0%B8%D0%BD%D0%BE|Кино|movies
+*http://ru.tvhub.wikia.com/wiki/%D0%9F%D0%BE%D1%80%D1%82%D0%B0%D0%BB_%D0%A2%D0%B5%D0%BB%D0%B5%D0%B2%D0%B8%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5|TV|tv',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
@@ -2318,10 +2288,8 @@ $messages['zh-hans'] = array(
 	'global-navigation-register' => '注册',
 	'global-navigation-sign-in' => '登入',
 	'global-navigation-account-navigation-options' => '$1或$2',
-	'global-navigation-games-hub-link' => "http://zh.gameshub.wikia.com",
-	'global-navigation-tv-hub-link' => "http://zh.entertainmenthub.wikia.com",
-	'global-navigation-games-hub-link-label' => "游戏",
-	'global-navigation-tv-hub-link-label' => "影视",
+	'global-navigation-menu-hubs' => '*http://zh.gameshub.wikia.com|游戏|games
+*http://zh.entertainmenthub.wikia.com|影视|tv',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
@@ -2545,10 +2513,8 @@ $messages['zh-hant'] = array(
 	'global-navigation-register' => '註冊',
 	'global-navigation-sign-in' => '登入',
 	'global-navigation-account-navigation-options' => '$1或$2',
-	'global-navigation-games-hub-link' => "http://zh-tw.gameshub.wikia.com",
-	'global-navigation-tv-hub-link' => "http://zh-tw.entertainmenthub.wikia.com",
-	'global-navigation-games-hub-link-label' => "遊戲",
-	'global-navigation-tv-hub-link-label' => "影視",
+	'global-navigation-menu-hubs' => '*http://zh-tw.gameshub.wikia.com|遊戲|games
+*http://zh-tw.entertainmenthub.wikia.com|影視|tv',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
