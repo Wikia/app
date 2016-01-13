@@ -43,6 +43,10 @@ class DataTablesTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * Verifies if there is no CDATA inserted inside of widget script tag
+	 * as it would break widgets on Mercury
+	 *
+	 * @see http://wikia-inc.atlassian.net/browse/MAIN-6066
 	 * @dataProvider noCDATAProvider
 	 */
 	public function testNoCDATA( $html, $expected ) {
