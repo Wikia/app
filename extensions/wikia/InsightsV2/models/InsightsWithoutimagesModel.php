@@ -7,6 +7,7 @@
  */
 class InsightsWithoutimagesModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'withoutimages';
+	const INSIGHT_USAGE = InsightsModel::INSIGHTS_USAGE_ACTIONABLE;
 
 	private static $insightConfig = [
 		InsightsConfig::DISPLAYFIXITMSG => true,

@@ -198,7 +198,9 @@ class InsightsHelper {
 			$insightsList[$key] = [
 				'subtitle' => self::INSIGHT_SUBTITLE_MSG_PREFIX . $key,
 				'description' => self::INSIGHT_DESCRIPTION_MSG_PREFIX . $key,
-				'count' => $this->prepareCountDisplay( $insightsCountService->getCount( $key ) ),
+				'count' => $class::INSIGHT_USAGE == InsightsModel::INSIGHTS_USAGE_ACTIONABLE
+					? $this->prepareCountDisplay( $insightsCountService->getCount( $key ) )
+					: false,
 				'highlighted' => in_array( $key, $highlightedInsighs )
 			];
 		}
