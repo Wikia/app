@@ -62,8 +62,8 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		slots = {};
 
 	function compareTiers(a,b) {
-		var aMatches = /^(\d+)_/g.exec(a),
-			bMatches = /^(\d+)_/g.exec(b);
+		var aMatches = /^(\d+)/.exec(a),
+			bMatches = /^(\d+)/.exec(b);
 
 		if (aMatches && bMatches) {
 			return parseInt(aMatches[1], 10) > parseInt(bMatches[1], 10) ? 1 : -1;
