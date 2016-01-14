@@ -45,7 +45,7 @@ class FavoriteWikisModel extends WikiaModel {
 	 *
 	 * @return array
 	 */
-	private function getTopWikisFromDb( $limit = null ) {
+	private function getTopWikisFromDb( $limit = self::MAX_FAV_WIKIS ) {
 		global $wgCityId, $wgSpecialsDB;
 
 		if ( empty( $wgCityId ) ) {
@@ -83,7 +83,7 @@ class FavoriteWikisModel extends WikiaModel {
 		];
 	}
 
-	private function getTopWikisQuery( $limit = self::MAX_FAV_WIKIS ) {
+	private function getTopWikisQuery( $limit ) {
 		$query = (new WikiaSQL())
 			->SELECT()
 				->FIELD( 'wiki_id' )
