@@ -29,12 +29,12 @@ class GlobalNavigationController extends WikiaController {
 		Wikia::addAssetsToOutput( 'global_navigation_scss' );
 		Wikia::addAssetsToOutput( 'global_navigation_js' );
 
-		if ( $wgEnableGlobalNav2016 ) {
+		if ( !empty( $wgEnableGlobalNav2016 ) ) {
 			Wikia::addAssetsToOutput( 'global_navigation_2016_js' );
-		} else {
-			Wikia::addAssetsToOutput( 'global_navigation_2015_js' );
 			$this->response->setVal( 'menuContents', $this->helper->getMenuNodes2016() );
 			$this->response->setVal( 'isFandomExposed', $this->wikiaLogoHelper->isFandomExposed() );
+		} else {
+			Wikia::addAssetsToOutput( 'global_navigation_2015_js' );
 		}
 
 		$createWikiUrl = $this->helper->getCreateNewWikiUrl( $wgLang->getCode() );
@@ -48,7 +48,7 @@ class GlobalNavigationController extends WikiaController {
 		$isGameStarLogoEnabled = $this->isGameStarLogoEnabled();
 		$this->response->setVal( 'isGameStarLogoEnabled', $isGameStarLogoEnabled );
 		if ( $isGameStarLogoEnabled ) {
-			$this->response->addAsset('extensions/wikia/GlobalNavigation/styles/GlobalNavigationGameStar.scss');
+			$this->response->addAsset( 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationGameStar.scss' );
 		}
 	}
 
