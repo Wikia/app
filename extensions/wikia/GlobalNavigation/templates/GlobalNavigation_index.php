@@ -61,14 +61,14 @@
 			<?php if ( !empty( $menuContents['hubs']) && is_array( $menuContents['hubs'] ) ): ?>
 				<div class="table-cell hubs-links" data-visibility="desktop">
 					<?php foreach( $menuContents['hubs'] as $hub ): ?>
-						<a class="cell-link" href="<?= $hub['href']; ?>"><?= $hub['textEscaped']; ?></a>
+						<a class="cell-link top-level" href="<?= $hub['href']; ?>"><?= $hub['textEscaped']; ?></a>
 					<?php endforeach; ?>
 				</div>
 			<?php endif; ?>
 			<?php if ( !empty( $menuContents['explore']) ): ?>
 				<div class="table-cell">
 					<div class="explore-wikia-entry-point" id="exploreWikiaEntryPoint">
-						<a class="cell-link" href="<?= $menuContents['explore']['href']?>">
+						<a class="cell-link top-level" href="<?= $menuContents['explore']['href']?>">
 							<?= $menuContents['explore']['text'] ?>
 							<img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
 						</a>
