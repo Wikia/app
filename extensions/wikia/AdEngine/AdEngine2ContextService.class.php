@@ -83,6 +83,7 @@ class AdEngine2ContextService {
 					'sevenOneMedia' => $wg->AdDriverUseSevenOneMedia,
 					'sevenOneMediaCombinedUrl' => $sevenOneMediaCombinedUrl,
 					'taboola' => $wg->AdDriverUseTaboola && $pageType === 'article',
+					'evolve2' => $wg->AdDriverUseEvolve2,
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
 					'exitstitial' => $wg->EnableOutboundScreenExt,

@@ -162,4 +162,8 @@ $messages = array_merge( $messages , array(
 
 'tog-enableuserjs' => '個人用JavaScriptを有効にする（[[w:c:ja.community:ヘルプ:個人用CSSとJavaScript#JavaScript|詳細]]）',
 
+'group-content-moderator' => 'コンテンツ・モデレーター',
+'group-content-moderator-member' => 'コンテンツ・モデレーター',
+'group-threadmoderator' => 'トーク・モデレーター',
+'group-threadmoderator-member' => 'トーク・モデレーター',
 ));

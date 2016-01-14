@@ -107,7 +107,7 @@ $wgAutoloadClasses[ 'UploadAchievementsFromFile' ] = "{$dir}UploadAchievementsFr
 $wgAutoloadClasses[ 'WikiaPhotoGalleryUpload' ] = "{$dir}../WikiaPhotoGallery/WikiaPhotoGalleryUpload.class.php";
 
 // I18N
-$wgExtensionMessagesFiles['AchievementsII'] = $dir.'i18n/AchievementsII.i18n.php';
+$wgExtensionMessagesFiles['AchievementsII'] = $dir.'AchievementsII.i18n.php';
 $wgExtensionMessagesFiles['AchievementsIIAliases'] = $dir.'AchievementsII.alias.php' ;
 
 // Michał Roszka (Mix) <michal@wikia-inc.com>
@@ -270,23 +270,23 @@ function Ach_TakeRankingSnapshot($force = false) {
 	global $wgCityId;
 	$dbw = WikiFactory::db( DB_MASTER );
 
-	$res = $dbw->select('ach_ranking_snapshots', array('date'), array('wiki_id' => $wgCityId));
+	$res = $dbw->select('ach_ranking_snapshots', array('date'), array('wiki_id' => $wgCityId), __METHOD__);
 	$rankingService = new AchRankingService();
 
 	if($row = $dbw->fetchObject($res)) {
 		if(strtotime($row->date) <= (time() - (60*60*24)) || $force) {
-			$dbw->update('ach_ranking_snapshots', array('date' => date('Y-m-d H:i:s'), 'data' => $rankingService->serialize()), array('wiki_id' => $wgCityId));
+			$dbw->update('ach_ranking_snapshots', array('date' => date('Y-m-d H:i:s'), 'data' => $rankingService->serialize()), array('wiki_id' => $wgCityId), __METHOD__);
 			echo("\t* Snapshot for the wiki with ID {$wgCityId} has been updated\n");
-			$dbw->commit();
+			$dbw->commit(__METHOD__);
 		}
 			else {
 			echo("\t* A user ranking snapshot already exists for the wiki with ID {$wgCityId} and is still valid (taken on {$row->date})\n");
 		}
 	}
 	else {
-		$dbw->insert('ach_ranking_snapshots', array('wiki_id' => $wgCityId, 'date' => date('Y-m-d H:m:s'), 'data' => $rankingService->serialize()));
+		$dbw->insert('ach_ranking_snapshots', array('wiki_id' => $wgCityId, 'date' => date('Y-m-d H:m:s'), 'data' => $rankingService->serialize()), __METHOD__);
 		echo("\t* Snapshot for the wiki with ID {$wgCityId} has been taken\n");
-		$dbw->commit();
+		$dbw->commit(__METHOD__);
 	}
 
 	$dbw->freeResult($res);

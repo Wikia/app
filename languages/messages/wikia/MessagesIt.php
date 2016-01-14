@@ -10,4 +10,8 @@ $messages = array_merge( $messages, array(
 
 'tog-enableuserjs' => 'Abilita il tuo JavaScript ([[Help:Personal_CSS_and_JS#JavaScript|Per saperne di più]])',
 
+'group-content-moderator' => 'Moderatori di contenuti',
+'group-content-moderator-member' => 'Moderatore di contenuti',
+'group-threadmoderator' => 'Moderatori di discussioni',
+'group-threadmoderator-member' => 'Moderatore di discussioni',
 ) );

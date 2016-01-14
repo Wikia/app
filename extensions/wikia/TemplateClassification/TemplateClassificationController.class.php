@@ -107,6 +107,7 @@ class TemplateClassificationController extends WikiaController {
 	 * so it won't show up again
 	 */
 	public function dismissWelcomeHint() {
+		$this->checkWriteRequest();
 		$user = $this->getContext()->getUser();
 		if ( !$user->isAnon() ) {
 			$user->setGlobalPreference( View::HAS_SEEN_HINT, 1 );

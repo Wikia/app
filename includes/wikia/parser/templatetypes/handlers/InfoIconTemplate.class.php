@@ -20,16 +20,32 @@ class InfoIconTemplate {
 		
 		$output = '';
 		foreach ( $images as $image ) {
-			$title = Title::newFromText( $image );
-			$file = wfFindFile( $title );
-			$output .= Linker::makeImageLink2(
-				$title,
-				$file,
-				[],
-				[ 'template-type' => AutomaticTemplateTypes::TEMPLATE_INFOICON ]
-			);
+			$output .= self::makeIconLink( $image );
 		}
 		$stripMarker = $parser->insertStripItem( $output );
 		return $stripMarker;
+	}
+
+	/**
+	 * @desc for a given wikitext image mark, create imagelink
+	 *
+	 * @param $image
+	 * @return String
+	 * @throws \MWException
+	 */
+	private static function makeIconLink( $image ) {
+		$link = '';
+		$title = Title::newFromText( $image );
+		$file = wfFindFile( $title );
+		if ( $file && $file->exists() ) {
+			$link = Linker::makeImageLink2(
+				$title,
+				$file,
+				[],
+				[ 'template-type' => TemplateClassificationService::TEMPLATE_INFOICON ]
+			);
+		}
+
+		return $link;
 	}
 }

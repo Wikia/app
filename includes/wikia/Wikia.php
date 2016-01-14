@@ -66,6 +66,7 @@ $wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsU
 
 $wgHooks['BeforePageDisplay'][] = 'Wikia::onBeforePageDisplay';
 $wgHooks['GetPreferences'][] = 'Wikia::onGetPreferences';
+$wgHooks['WikiaSkinTopScripts'][] = 'Wikia::onWikiaSkinTopScripts';
 
 # handle internal requests - PLATFORM-1473
 $wgHooks['WebRequestInitialized'][] = 'Wikia::onWebRequestInitialized';
@@ -1493,7 +1494,7 @@ class Wikia {
 	 * @return bool true
 	 */
 	static public function recentChangesSave( $oRC ) {
-		global $wgCityId, $wgDBname, $wgEnableScribeReport;
+		global $wgCityId, $wgDBname, $wgEnableScribeReport, $wgRequest;
 
 		if ( empty( $wgEnableScribeReport ) ) {
 			return true;
@@ -1505,6 +1506,15 @@ class Wikia {
 
 		$rc_ip = $oRC->getAttribute( 'rc_ip' );
 		if ( is_null( $rc_ip ) ) {
+			return true;
+		}
+
+		if ( !User::isIP( $rc_ip ) ) {
+			// PLATFORM-1770: prevent multilookup.ml_ip column being set to zero (as INET_ATON fails to decode the IP)
+			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - rc_ip not valid', [
+				'rc_ip' => $rc_ip,
+				'request_ip' => $wgRequest->getIP()
+			] );
 			return true;
 		}
 
@@ -2483,5 +2493,15 @@ class Wikia {
 		global $wgUseSiteJs, $wgEnableContentReviewExt;
 
 		return !empty( $wgUseSiteJs ) && !empty( $wgEnableContentReviewExt );
+	}
+
+	public static function onWikiaSkinTopScripts( &$vars, &$scripts, Skin $skin ) {
+		global $wgWikiDirectedAtChildrenByFounder;
+
+		if ( !empty( $wgWikiDirectedAtChildrenByFounder ) ) {
+			$vars['wgWikiDirectedAtChildrenByFounder'] = $wgWikiDirectedAtChildrenByFounder;
+		}
+
+		return true;
 	}
 }

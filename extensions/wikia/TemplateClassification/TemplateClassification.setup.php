@@ -70,6 +70,14 @@ $wgSpecialPages['Templates'] = 'TemplatesSpecialController';
 $wgAutoloadClasses['Wikia\TemplateClassification\View'] = __DIR__ . '/TemplateClassificationView.php';
 
 /**
+ * Logs
+ */
+$wgLogTypes[] = 'templateclassification';
+$wgLogNames['templateclassification'] = 'template-classification-type-header';
+$wgLogHeaders['templateclassification'] = 'template-classification-edit-modal-help';
+$wgLogActionsHandlers['templateclassification/*'] = 'LogFormatter';
+
+/**
  * Other
  */
 $wgAutoloadClasses['Wikia\TemplateClassification\Logger'] = __DIR__ . '/Logger.class.php';

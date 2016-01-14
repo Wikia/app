@@ -172,4 +172,8 @@ Auf dieser Spezialseite kannst Du die '''letzten Änderungen''' in diesem Wiki n
 'tog-enableuserjs' => 'Persönliches JavaScript aktivieren. ([[Hilfe:Persönliches_CSS_und_JS|Mehr dazu hier]])',
 'wikia-pagetitle' => '$1 – Wikia',
 
+'group-content-moderator' => 'Inhaltsmoderatoren',
+'group-content-moderator-member' => 'Inhaltsmoderator',
+'group-threadmoderator' => 'Diskussionsmoderatoren',
+'group-threadmoderator-member' => 'Diskussionsmoderator',
 ) );

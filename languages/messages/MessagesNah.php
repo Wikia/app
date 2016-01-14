@@ -197,26 +197,12 @@ $messages = array(
 'navigation'    => 'Nènemòwalistli',
 'and'           => '&#32;īhuān',
 
-# Cologne Blue skin
 'qbfind'         => 'Tlatēmōz',
 'qbbrowse'       => 'Titlatēmōz',
-'qbedit'         => 'Ticpatlāz',
 'qbpageoptions'  => 'Inīn zāzanilli',
 'qbpageinfo'     => 'Tlahcuilōltechcopa',
-'qbmyoptions'    => 'Nozāzanil',
-'qbspecialpages' => 'Nònkuâkìskàtlaìxtlapaltìn',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-delete'   => 'Ticpolōz',
-'vector-action-move'     => 'Ticzacāz',
-'vector-action-protect'  => 'Ticquīxtīz',
-'vector-view-create'     => 'Ticchīhuāz',
-'vector-view-edit'       => 'Ticpatlāz',
-'vector-view-history'    => 'Tlahcuilōlli tlahcuilōlloh',
-'vector-view-view'       => 'Tāmapōhuaz',
-'vector-view-viewsource' => 'Tiquittāz in mēyalli',
 'actions'                => 'Āyiliztli',
 'namespaces'             => 'Tòkâyeyàntìn',
 
@@ -238,7 +224,6 @@ $messages = array(
 'edit'              => 'Ticpatlāz',
 'create'            => 'Ticchīhuāz',
 'editthispage'      => 'Ticpatlāz inīn zāzanilli',
-'create-this-page'  => 'Ticchīhuāz inīn zāzanilli',
 'delete'            => 'Ticpolōz',
 'deletethispage'    => 'Ticpolōz inīn zāzanilli',
 'undelete_short'    => 'Ahticpolōz {{PLURAL:$1|cē tlapatlaliztli|$1 tlapatlaliztli}}',
@@ -253,19 +238,9 @@ $messages = array(
 'talkpagelinktext'  => 'Tèìxnàmikilistli',
 'specialpage'       => 'Nònkuâkìskàtlaìxtlapalli',
 'personaltools'     => 'In tlein nitēquitiltilia',
-'postcomment'       => 'Yancuīc xeliuhcāyōtl',
-'articlepage'       => 'Xiquittaz in tlahcuilōlli',
 'talk'              => 'tēixnāmiquiliztli',
 'views'             => 'Tlachiyaliztli',
 'toolbox'           => 'In tlein motequitiltia',
-'userpage'          => 'Xiquitta tlatequitiltilīlli zāzanilli',
-'projectpage'       => 'Xiquitta tlachīhualiztli zāzanilli',
-'imagepage'         => 'Tiquittaz in zāzanilli īāma',
-'mediawikipage'     => 'Xiquitta tlahcuilōltzin zāzanilli',
-'templatepage'      => 'Tiquittāz nemachiyōtīlli zāzanilli',
-'viewhelppage'      => 'Xiquitta tēpalēhuiliztli zāzanilli',
-'categorypage'      => 'Mà mỏta in tlaìxmatkàtlàlilòtlaìxtlapalli',
-'viewtalkpage'      => 'Xiquitta tēixnāmiquiliztli zāzanilli',
 'otherlanguages'    => 'Occequīntīn tlahtōlcopa',
 'redirectedfrom'    => '(Ōmotlacuep īhuīcpa $1)',
 'redirectpagesub'   => 'Ōmotlacuep zāzanilli',
@@ -629,8 +604,6 @@ Hueliz ōmopolo huiqui nozo ōmozacac.
 'powersearch-togglenone'           => 'Ahtlein',
 'search-external'                  => 'Tlatēmotiliztli calāmpa',
 
-# Quickbar
-'qbsettings-none' => 'Ahtlein',
 
 # Preferences page
 'preferences'               => 'Tlaēlēhuiliztli',

@@ -33,7 +33,7 @@ class SpecialEmailTest extends UnlistedSpecialPage {
 		wfProfileIn( __METHOD__ );
 
 		// Don't allow just anybody to use this
-		if ($this->mChallengeToken != $wgRequest->getVal('challenge')) {
+		if ( !Wikia\Security\Utils::matchToken( $this->mChallengeToken, $wgRequest->getVal('challenge') ) ) {
 			header("Status: 400");
 			header("Content-type: text/plain");
 			print("Challenge incorrect");

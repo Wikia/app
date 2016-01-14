@@ -385,9 +385,16 @@ class MercuryApiController extends WikiaController {
 				if ( !empty( $relatedPages ) ) {
 					$data['relatedPages'] = $relatedPages;
 				}
-				$titleBuilder->setParts( [ $articleAsJson['displayTitle'] ] );
+				if ( !$isMainPage ) {
+					$titleBuilder->setParts( [ $articleAsJson['displayTitle'] ] );
+				}
 			}
 			$data['htmlTitle'] = $titleBuilder->getTitle();
+
+			$otherLanguages = $this->getOtherLanguages( $title );
+			if ( !empty( $otherLanguages ) ) {
+				$data['otherLanguages'] = $otherLanguages;
+			}
 
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
@@ -563,5 +570,46 @@ class MercuryApiController extends WikiaController {
 		$wikiDetails = $service->getWikiDetails( $wgCityId );
 
 		return $wikiDetails['stats'];
+	}
+
+	private function getOtherLanguages( Title $title ) {
+		global $wgEnableLillyExt;
+
+		if ( empty( $wgEnableLillyExt ) ) {
+			return null;
+		}
+
+		$url = $title->getFullURL();
+		//$url = str_replace( '.rychu.wikia-dev.com', '.wikia.com', $url );
+
+		$lilly = new Lilly();
+		$links = $lilly->getCluster( $url );
+		if ( !count( $links ) ) {
+			return null;
+		}
+
+		// Remove link to self
+		$langCode = $title->getPageLanguage()->getCode();
+		unset( $links[$langCode] );
+
+		// Construct the structure for Mercury
+		$langMap = array_map( function ( $langCode, $url ) {
+			$urlPath = parse_url( $url, PHP_URL_PATH );
+			$articleTitle = preg_replace( '|^/(wiki/)?|', '', rawurldecode( $urlPath ) );
+			return [
+				'languageCode' => $langCode,
+				'languageName' => Language::getLanguageName( $langCode ),
+				'articleTitle' => str_replace( '_', ' ', $articleTitle ),
+				'url' => $url,
+			];
+		}, array_keys( $links ), array_values( $links ) );
+
+		// Sort by localized language name
+		$c = Collator::create( 'en_US.UTF-8' );
+		usort( $langMap, function ( $lang1, $lang2 ) use ( $c ) {
+			return $c->compare( $lang1['languageName'], $lang2['languageName'] );
+		} );
+
+		return $langMap;
 	}
 }

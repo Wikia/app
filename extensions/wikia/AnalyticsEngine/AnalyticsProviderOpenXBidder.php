@@ -27,7 +27,7 @@ class AnalyticsProviderOpenXBidder implements iAnalyticsProvider {
 			qs = new Querystring();
 
 		if (geo.isProperGeo(ac) || qs.getVal('oxbidder', '0') === '1') {
-			oxBidder.call('oasis');
+			oxBidder.call();
 		};
 	});
 CODE;

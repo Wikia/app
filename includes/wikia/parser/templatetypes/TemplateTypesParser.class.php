@@ -1,7 +1,8 @@
 <?php
 
 class TemplateTypesParser {
-	private static $cachedTemplateTitles = [];
+	private static $cachedTemplateTitles = [ ];
+
 	/**
 	 * @desc alters template raw text parser output based on template type
 	 *
@@ -11,25 +12,36 @@ class TemplateTypesParser {
 	 * @return bool
 	 */
 	public static function onFetchTemplateAndTitle( &$text, &$finalTitle ) {
+		global $wgEnableReferencesTemplateParsing,
+			   $wgEnableNavboxTemplateParsing,
+			   $wgEnableNoticeTemplateParsing,
+			   $wgEnableNavigationTemplateParsing;
+
 		wfProfileIn( __METHOD__ );
 
 		if ( self::shouldTemplateBeParsed() ) {
 			$type = self::getTemplateType( $finalTitle );
 
 			switch ( $type ) {
-				case AutomaticTemplateTypes::TEMPLATE_NAVBOX:
 				case TemplateClassificationService::TEMPLATE_NAVBOX:
-					$text = NavboxTemplate::handle();
+					if ( $wgEnableNavboxTemplateParsing ) {
+						$text = NavboxTemplate::handle();
+					}
 					break;
 				case TemplateClassificationService::TEMPLATE_FLAG:
-					$text = NoticeTemplate::handleNoticeTemplate();
+					if ( $wgEnableNoticeTemplateParsing ) {
+						$text = NoticeTemplate::handle();
+					}
 					break;
-				case AutomaticTemplateTypes::TEMPLATE_REFERENCES:
 				case TemplateClassificationService::TEMPLATE_REFERENCES:
-					$text = ReferencesTemplate::handle();
+					if ( $wgEnableReferencesTemplateParsing ) {
+						$text = ReferencesTemplate::handle( $text );
+					}
 					break;
 				case TemplateClassificationService::TEMPLATE_NAV:
-					$text = NavigationTemplate::handle( $text );
+					if ( $wgEnableNavigationTemplateParsing ) {
+						$text = NavigationTemplate::handle( $text );
+					}
 					break;
 			}
 		}
@@ -57,13 +69,13 @@ class TemplateTypesParser {
 			$type = self::getTemplateType( $title );
 			$templateArgs = TemplateArgsHelper::getTemplateArgs( $args, $frame );
 
-			if ( $type === AutomaticTemplateTypes::TEMPLATE_SCROLLBOX && $wgEnableScrollboxTemplateParsing ) {
+			if ( $type === TemplateClassificationService::TEMPLATE_SCROLLBOX && $wgEnableScrollboxTemplateParsing ) {
 				$outputText = ScrollboxTemplate::getLongestElement( $templateArgs );
 			}
 
-			if ( ( $type === AutomaticTemplateTypes::TEMPLATE_QUOTE ||
-				$type === TemplateClassificationService::TEMPLATE_QUOTE ) &&
-				$wgEnableQuoteTemplateParsing
+			if ( ( $type === TemplateClassificationService::TEMPLATE_QUOTE
+				   || $type === TemplateClassificationService::TEMPLATE_QUOTE )
+				 && $wgEnableQuoteTemplateParsing
 			) {
 				$outputText = QuoteTemplate::execute( $templateArgs );
 			}
@@ -91,9 +103,9 @@ class TemplateTypesParser {
 
 			if ( $title ) {
 				$type = self::getTemplateType( $title );
-				if ( $wgEnableContextLinkTemplateParsing && $type == AutomaticTemplateTypes::TEMPLATE_CONTEXT_LINK ) {
+				if ( $wgEnableContextLinkTemplateParsing && $type == TemplateClassificationService::TEMPLATE_CONTEXT_LINK ) {
 					$templateWikitext = ContextLinkTemplate::handle( $templateWikitext );
-				} else if ( $wgEnableInfoIconTemplateParsing && $type == AutomaticTemplateTypes::TEMPLATE_INFOICON ) {
+				} else if ( $wgEnableInfoIconTemplateParsing && $type == TemplateClassificationService::TEMPLATE_INFOICON ) {
 					$templateWikitext = InfoIconTemplate::handle( $templateWikitext, $parser );
 				}
 			}
@@ -150,6 +162,7 @@ class TemplateTypesParser {
 	 * object or false if templateTitle invalid
 	 *
 	 * @param string $templateTitle
+	 *
 	 * @return Title | bool
 	 * @throws \MWException
 	 */
@@ -158,6 +171,7 @@ class TemplateTypesParser {
 			$title = Title::newFromText( $templateTitle, NS_TEMPLATE );
 			self::$cachedTemplateTitles[ $templateTitle ] = ( $title && $title->exists() ) ? $title : false;
 		}
+
 		return self::$cachedTemplateTitles[ $templateTitle ];
 	}
 }

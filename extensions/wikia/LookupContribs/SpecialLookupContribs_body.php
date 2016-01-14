@@ -1,14 +1,4 @@
 <?php
-/**
- * @package MediaWiki
- * @subpackage SpecialPage
- * @author Bartek Lapinski <bartek@wikia.com>, Piotr Molski <moli@wikia.com> for Wikia.com
- * @version: 1.0
- */
-
-if ( !defined( 'MEDIAWIKI' ) ) {
-	echo "This is MediaWiki extension and cannot be used standalone.\n"; exit( 1 ) ;
-}
 
 class LookupContribsPage extends SpecialPage {
 	private $mTitle, $mUsername, $mMode, $mModeText, $mView, $mModes, $mViewModes, $mNSpace;
