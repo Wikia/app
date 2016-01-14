@@ -63,7 +63,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 					return [
 						{
 							key: 'rpflKey',
-							values: ['1_tier', '3_tier']
+							values: mocks.tiers
 						},
 						{
 							key: 'rpfl_elemid',
@@ -72,6 +72,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 					];
 				}
 			},
+			tiers: [],
 			win: {
 				rubicontag: {
 					cmd: [],
@@ -117,6 +118,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		mocks.adLogicZoneParams.getSite = function () {
 			return 'life';
 		};
+		mocks.tiers = ['1_tier', '3_tier'];
 		slotParams = {};
 	});
 
@@ -202,6 +204,18 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 
 		expect(rubiconFastlane.getSlotParams('MOBILE_TOP_LEADERBOARD')).toEqual({
 			rpflKey: ['1_tier', '3_tier']
+		});
+	});
+
+	it('Returns parameters list on defined slot with sorted values', function () {
+		var rubiconFastlane = getRubiconFastlane();
+		mocks.tiers = ['10_tier', '9_tier', '13_tier', '4_tier'];
+		mocks.targeting.skin = 'mercury';
+
+		rubiconFastlane.call();
+
+		expect(rubiconFastlane.getSlotParams('MOBILE_TOP_LEADERBOARD')).toEqual({
+			rpflKey: ['4_tier', '9_tier', '10_tier', '13_tier']
 		});
 	});
 
