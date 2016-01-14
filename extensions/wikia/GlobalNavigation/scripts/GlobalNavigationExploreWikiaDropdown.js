@@ -9,19 +9,21 @@ require(
 			$exploreLink;
 
 		/**
-		 * @desc Handle click on entry point for logged in users.
+		 * Handle click on entry point for logged in users.
 		 * Second click on entry point for logged in users is redirecting to user profile page.
 		 * This method should be removed after we unify the ux for anon and logged in.
 		 * @param {Event} event
 		 */
 		function onEntryPointClick(event) {
 			var $this = $(event.target);
+
 			event.preventDefault();
 			event.stopImmediatePropagation();
-			if (this.$entryPoint.hasClass('active')) {
+
+			if ($entryPoint.hasClass('active')) {
 				w.location = $this.attr('href');
 			} else {
-				dropdowns.openDropdown.call(this.$entryPoint.get(0));
+				dropdowns.openDropdown.call($entryPoint.get(0));
 			}
 		}
 

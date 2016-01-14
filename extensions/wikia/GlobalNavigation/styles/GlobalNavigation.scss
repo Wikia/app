@@ -101,8 +101,8 @@
 	}
 
 	.wikia-logo {
-		display: flex;
 		align-items: flex-end;
+		display: flex;
 		text-decoration: none !important;
 	}
 
@@ -138,7 +138,7 @@
 			width: 100%;
 
 			&:hover {
-				background-color: #e6ebf2;
+				background-color: $global-navigation-cell-hover-color;
 				text-decoration: none;
 			}
 
@@ -165,8 +165,8 @@
 
 	.explore-wikia-entry-point {
 		> a {
-			position: relative;
 			padding-right: 18px;
+			position: relative;
 		}
 
 		.chevron {
@@ -191,7 +191,7 @@
 		padding: 8px;
 
 		&:hover {
-			background-color: #e6ebf2;
+			background-color: $global-navigation-cell-hover-color;
 			text-decoration: none;
 		}
 	}

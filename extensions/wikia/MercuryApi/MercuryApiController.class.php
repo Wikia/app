@@ -294,7 +294,6 @@ class MercuryApiController extends WikiaController {
 			$wikiVariables['enableGlobalNav2016'] = $wgEnableGlobalNav2016;
 		}
 
-
 		$wikiVariables['vertical'] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 		$wikiVariables['basePath'] = $this->wg->Server;
 

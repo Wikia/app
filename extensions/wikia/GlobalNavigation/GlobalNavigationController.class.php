@@ -33,24 +33,23 @@ class GlobalNavigationController extends WikiaController {
 			Wikia::addAssetsToOutput( 'global_navigation_2016_js' );
 		} else {
 			Wikia::addAssetsToOutput( 'global_navigation_2015_js' );
+			$this->response->setVal( 'menuContents', $this->helper->getMenuNodes2016() );
+			$this->response->setVal( 'isFandomExposed', $this->wikiaLogoHelper->isFandomExposed() );
 		}
 
-		$mainCorpPageUrl = $this->wikiaLogoHelper->getMainCorpPageURL();
 		$createWikiUrl = $this->helper->getCreateNewWikiUrl( $wgLang->getCode() );
 		$userCanRead = $wgUser->isAllowed( 'read' );
 
-		$this->response->setVal( 'centralUrl', $mainCorpPageUrl );
+		$this->response->setVal( 'centralUrl', $this->wikiaLogoHelper->getMainCorpPageURL() );
 		$this->response->setVal( 'createWikiUrl', $createWikiUrl );
 		$this->response->setVal( 'notificationsEnabled', !empty( $userCanRead ) );
 		$this->response->setVal( 'isAnon', $wgUser->isAnon() );
 
 		$isGameStarLogoEnabled = $this->isGameStarLogoEnabled();
 		$this->response->setVal( 'isGameStarLogoEnabled', $isGameStarLogoEnabled );
-		$this->response->setVal( 'isFandomExposed', $this->wikiaLogoHelper->isFandomExposed() );
 		if ( $isGameStarLogoEnabled ) {
-			$this->response->addAsset( 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationGameStar.scss' );
+			$this->response->addAsset('extensions/wikia/GlobalNavigation/styles/GlobalNavigationGameStar.scss');
 		}
-		$this->response->setVal( 'menuContents', $this->helper->getMenuNodes2016() );
 	}
 
 	public function searchIndex() {
