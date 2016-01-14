@@ -68,7 +68,7 @@
 			<?php if ( !empty( $menuContents['explore']) ): ?>
 				<div class="table-cell">
 					<div class="explore-wikia-entry-point" id="exploreWikiaEntryPoint">
-						<a class="cell-link" href="#">
+						<a class="cell-link" href="<?= $menuContents['explore']['href']?>">
 							<?= $menuContents['explore']['text'] ?>
 							<img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
 						</a>
