@@ -30,7 +30,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 				getSite: function () {
 					return 'life';
 				},
-				getMappedVertical: function () {
+				getName: function () {
 					return '_dragonball';
 				},
 				getPageType: function () {
