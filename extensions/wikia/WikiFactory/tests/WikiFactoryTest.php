@@ -180,7 +180,7 @@ class WikiFactoryTest extends WikiaBaseTest {
 		$variable->cv_value = serialize( array( "a", "b", "c" ) );
 		$variable->cv_variable_type = "array";
 
-		$this->assertEquals( '["a","b","c"]', WikiFactory::renderValue( $variable ) );
+		$this->assertEquals( '[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]', WikiFactory::renderValue( $variable ) );
 	}
 
 	public function testRenderValueOfAssociativeArrayVariable() {
@@ -189,8 +189,8 @@ class WikiFactoryTest extends WikiaBaseTest {
 		$variable->cv_variable_type = "array";
 		$expectedRender = <<<EOT
 array (
-  'foo' => 'bar',
-  0 => 'c',
+  'foo' =&gt; 'bar',
+  0 =&gt; 'c',
 )
 EOT;
 
@@ -203,8 +203,8 @@ EOT;
 		$variable->cv_variable_type = "array";
 		$expectedRender = <<<EOT
 array (
-  1 => 'foo',
-  15 => 'bar',
+  1 =&gt; 'foo',
+  15 =&gt; 'bar',
 )
 EOT;
 

@@ -3344,14 +3344,16 @@ class WikiFactory {
 		global $$name;
 		global $preWFValues;
 
+		$value = "";
+
 		if( isset( $preWFValues[$name] ) ) {
 			// was modified, spit out saved default
-			return self::parseValue( $preWFValues[$name], $type );
+			$value = self::parseValue( $preWFValues[$name], $type );
 		} elseif( isset( $$name ) ) {
 			// was not modified, spit out actual value
-			return self::parseValue( $$name, $type );
+			$value = self::parseValue( $$name, $type );
 		}
-		return "";
+		return htmlspecialchars( $value );
 	}
 
 	/**
@@ -3368,8 +3370,8 @@ class WikiFactory {
 		if ( !isset( $variable->cv_value ) ) {
 			return "";
 		}
-
-		return self::parseValue( unserialize( $variable->cv_value ), $variable->cv_variable_type );
+		$value = self::parseValue( unserialize( $variable->cv_value ), $variable->cv_variable_type );
+		return htmlspecialchars( $value );
 	}
 
 	/**
