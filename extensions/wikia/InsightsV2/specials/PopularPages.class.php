@@ -37,24 +37,13 @@ class PopularPages extends PageQueryPage {
 	public function recache( $limit = false, $ignoreErrors = true ) {
 		$dbw = wfGetDB( DB_MASTER );
 
-		/**
-		 * 1. Get the new data first
-		 */
-		$popularPages = $this->reallyDoQuery();
-		$dbw->begin();
-
-		/**
-		 * 2. Delete the existing records
-		 */
 		( new WikiaSQL() )
 			->DELETE( 'querycache' )
 			->WHERE( 'qc_type' )->EQUAL_TO( $this->getName() )
 			->run( $dbw );
 
-		/**
-		 * 3. Insert the new records if the $popularPages array is not empty
-		 */
 		$num = 0;
+		$popularPages = $this->reallyDoQuery();
 		if ( !empty( $popularPages ) ) {
 
 			( new WikiaSQL() )
@@ -67,13 +56,9 @@ class PopularPages extends PageQueryPage {
 				->VALUES( $popularPages )
 				->run( $dbw );
 
+			wfWaitForSlaves();
 			$num = $dbw->affectedRows();
-			if ( $num === 0 ) {
-				$dbw->rollback();
-				$num = false;
-			} else {
-				$dbw->commit();
-			}
+
 		}
 
 		wfRunHooks( 'PopularPagesQueryRecached' );
