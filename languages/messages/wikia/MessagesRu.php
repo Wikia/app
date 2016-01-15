@@ -49,6 +49,4 @@ $messages = array_merge( $messages, array(
 Как смотрится ваш контент на разных устройствах? Узнайте об этом на [[w:c:portability|Portability.wikia.com]].",
 'group-content-moderator' => 'Модераторы контента',
 'group-content-moderator-member' => 'Модератор контента',
-'group-threadmoderator' => 'Модераторы обсуждений',
-'group-threadmoderator-member' => 'Модератор обсуждений',
 ) );

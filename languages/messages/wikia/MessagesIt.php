@@ -18,6 +18,4 @@ Immagini con schede e gruppi pieghevoli [[Aiuto:Infobox|Infobox esportabili]].
 Il tuo contenuto è esportabile? Per saperne di più dai un'occhiata a [[w:c:portability|Portability.wikia.com]].",
 'group-content-moderator' => 'Moderatori di contenuti',
 'group-content-moderator-member' => 'Moderatore di contenuti',
-'group-threadmoderator' => 'Moderatori di discussioni',
-'group-threadmoderator-member' => 'Moderatore di discussioni',
 ) );

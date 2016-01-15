@@ -268,6 +268,4 @@ Obrazy w zakładkach oraz rozwijane grupy są teraz dostępne dla [[Pomoc:Infobo
 Czy treści na twojej stronie są przyjazne dla urządzeń mobilnych? Dowiedz się jak zadbać, aby treści twoich stronach były w przyszłości przyjazne urządzeniom mobilnym na [[w:c:portability|Portability.wikia.com]].",
 'group-content-moderator' => 'Moderatorzy treści',
 'group-content-moderator-member' => 'Moderator treści',
-'group-threadmoderator' => 'Moderatorzy dyskusji',
-'group-threadmoderator-member' => 'Moderator dyskusji',
 ) );
