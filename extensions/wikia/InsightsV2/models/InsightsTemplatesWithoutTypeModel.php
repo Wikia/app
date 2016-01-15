@@ -5,7 +5,6 @@
  */
 class InsightsTemplatesWithoutTypeModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'templateswithouttype';
-	const INSIGHT_USAGE = InsightsModel::INSIGHTS_USAGE_ACTIONABLE;
 
 	private static $insightConfig = [
 		InsightsConfig::WHATLINKSHERE => true
