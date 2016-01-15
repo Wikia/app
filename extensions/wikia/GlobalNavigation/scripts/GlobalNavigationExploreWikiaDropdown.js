@@ -9,9 +9,10 @@ require(
 			$exploreLink;
 
 		/**
-		 * Handle click on entry point for logged in users.
-		 * Second click on entry point for logged in users is redirecting to user profile page.
-		 * This method should be removed after we unify the ux for anon and logged in.
+		 * First click on touch devices opens the dropdown.
+		 * First click on non-touch screens redirects to the link
+		 * Second click on entry point on touch devices redirects to link.
+		 * This works because on hover (non-touch screens) class active is added - this way first click redirects to URL
 		 * @param {Event} event
 		 */
 		function onEntryPointClick(event) {
@@ -31,10 +32,12 @@ require(
 			$entryPoint = $('#exploreWikiaEntryPoint');
 			$exploreLink = $entryPoint.children('a.cell-link');
 
-			dropdowns.attachDropdown($entryPoint, {
-				onClick: onEntryPointClick.bind({$entryPoint: $entryPoint}),
-				onClickTarget: $exploreLink.get(0)
-			});
+			dropdowns.attachDropdown($entryPoint,
+				{
+					onClick: onEntryPointClick.bind({$entryPoint: $entryPoint}),
+					onClickTarget: $exploreLink.get(0)
+				}
+			);
 
 			delayedHover.attach(
 				$entryPoint.get(0), {

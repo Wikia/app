@@ -175,11 +175,27 @@ class MercuryApiController extends WikiaController {
 	 * @return array
 	 */
 	private function getNavigation() {
+		global $wgEnableGlobalNav2016;
+
 		$navData = $this->sendRequest( 'NavigationApi', 'getData' )->getData();
-		if ( isset( $navData['navigation']['wiki'] ) ) {
-			return $navData['navigation']['wiki'];
+
+		if ( !isset( $navData['navigation']['wiki'] ) ) {
+			$localNavigation = [];
+		} else {
+			$localNavigation = $navData['navigation']['wiki'];
 		}
-		return [ ];
+
+		if ( empty( $wgEnableGlobalNav2016 ) ) {
+			return $localNavigation;
+		} else {
+			$navigationNodes = ( new GlobalNavigationHelper() )->getMenuNodes2016();
+
+			return [
+				'hubsLinks' => $navigationNodes['hubs'],
+				'explore' => $navigationNodes['explore'],
+				'localNav' => $localNavigation
+			];
+		}
 	}
 
 	/**
@@ -274,7 +290,6 @@ class MercuryApiController extends WikiaController {
 	 *
 	 */
 	public function getWikiVariables() {
-		global $wgEnableGlobalNav2016;
 
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
 		$navigation = $this->getNavigation();
@@ -284,16 +299,7 @@ class MercuryApiController extends WikiaController {
 			);
 		}
 
-		if ( empty( $wgEnableGlobalNav2016 ) ) {
-			$wikiVariables['navigation'] = $navigation;
-		} else {
-			$navigationNodes = ( new GlobalNavigationHelper() )->getMenuNodes2016();
-			$wikiVariables['hubsLinks'] = $navigationNodes['hubs'];
-			$wikiVariables['explore'] = $navigationNodes['explore'];
-			$wikiVariables['localNav'] = $navigation;
-			$wikiVariables['enableGlobalNav2016'] = $wgEnableGlobalNav2016;
-		}
-
+		$wikiVariables['navigation'] = $navigation;
 		$wikiVariables['vertical'] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 		$wikiVariables['basePath'] = $this->wg->Server;
 

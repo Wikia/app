@@ -32,10 +32,10 @@ class GlobalNavigationHelper {
 	public function getCentralUrlFromGlobalTitle( $lang ) {
 		$out = '/';
 
-		$title = $this->wikiaLogoHelper->getCentralWikiUrlForLangIfExists($lang);
-		if ($title) {
+		$title = $this->wikiaLogoHelper->getCentralWikiUrlForLangIfExists( $lang );
+		if ( $title ) {
 			$out = $title->getServer();
-		} else if ( $title =$this->wikiaLogoHelper->getCentralWikiUrlForLangIfExists( self::DEFAULT_LANG ) ) {
+		} else if ( $title = $this->wikiaLogoHelper->getCentralWikiUrlForLangIfExists( self::DEFAULT_LANG ) ) {
 			$out = $title->getServer();
 		}
 
@@ -79,8 +79,8 @@ class GlobalNavigationHelper {
 	public function getLangForSearchResults() {
 		global $wgLanguageCode, $wgRequest;
 
-		$resultsLang = $wgRequest->getVal('resultsLang');
-		if (!empty($resultsLang)) {
+		$resultsLang = $wgRequest->getVal( 'resultsLang' );
+		if ( !empty( $resultsLang ) ) {
 			return $resultsLang;
 		} else {
 			return $wgLanguageCode;
@@ -107,11 +107,9 @@ class GlobalNavigationHelper {
 			[1, 3] // max 1 entry with 3 links
 		);
 
-		$menuNodes = [
+		return [
 			'hubs' => $hubsNodes,
 			'explore' => $exploreNodes[0], // always one node - explore the wikia
 		];
-
-		return $menuNodes;
 	}
 }

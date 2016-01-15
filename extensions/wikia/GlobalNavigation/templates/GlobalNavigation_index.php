@@ -58,14 +58,14 @@
 					<? endif; ?>
 				</a >
 			</div >
-			<?php if ( !empty( $menuContents['hubs']) && is_array( $menuContents['hubs'] ) ): ?>
+			<?php if ( !empty( $menuContents['hubs'] ) && is_array( $menuContents['hubs'] ) ): ?>
 				<div class="table-cell hubs-links" data-visibility="desktop">
-					<?php foreach( $menuContents['hubs'] as $hub ): ?>
+					<?php foreach ( $menuContents['hubs'] as $hub ): ?>
 						<a class="cell-link top-level" href="<?= $hub['href']; ?>"><?= $hub['textEscaped']; ?></a>
 					<?php endforeach; ?>
 				</div>
 			<?php endif; ?>
-			<?php if ( !empty( $menuContents['explore']) ): ?>
+			<?php if ( !empty( $menuContents['explore'] ) ): ?>
 				<div class="table-cell">
 					<div class="explore-wikia-entry-point" id="exploreWikiaEntryPoint">
 						<a class="cell-link top-level" href="<?= $menuContents['explore']['href']?>">
@@ -73,14 +73,14 @@
 							<img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
 						</a>
 						<ul class="explore-wikia-dropdown" id="exploreWikiaDropdown">
-							<?php if ( !empty( $menuContents['hubs']) && is_array( $menuContents['hubs'] ) ): ?>
-								<?php foreach( $menuContents['hubs'] as $hub ): ?>
+							<?php if ( !empty( $menuContents['hubs'] ) && is_array( $menuContents['hubs'] ) ): ?>
+								<?php foreach ( $menuContents['hubs'] as $hub ): ?>
 									<li>
 										<a class="cell-link" data-visibility="tablet" href="<?= $hub['href']; ?>"><?= $hub['textEscaped']; ?></a>
 									</li>
 								<?php endforeach; ?>
 							<?php endif; ?>
-							<?php foreach( $menuContents['explore']['children'] as $exploreLink ): ?>
+							<?php foreach ( $menuContents['explore']['children'] as $exploreLink ): ?>
 								<li>
 									<a class="cell-link" href="<?= $exploreLink['href']; ?>"><?= $exploreLink['textEscaped']; ?></a>
 								</li>
@@ -90,7 +90,7 @@
 									class="start-wikia"
 									title="<?= wfMessage( 'global-navigation-create-wiki' )->escaped(); ?>"
 									data-id="start-wikia">
-									<span><?= ( wfMessage( 'global-navigation-create-wiki' )->escaped() ); ?></span>
+									<span><?= wfMessage( 'global-navigation-create-wiki' )->escaped(); ?></span>
 								</a>
 							</li>
 						</ul>
