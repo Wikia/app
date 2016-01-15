@@ -13,6 +13,4 @@ $messages = array_merge( $messages, array(
 您的内容便携吗？请点击[[w:c:portability|Portability.wikia.com]]了解更多详细内容。",
 'group-content-moderator' => '内容版主',
 'group-content-moderator-member' => '内容版主',
-'group-threadmoderator' => '话题版主',
-'group-threadmoderator-member' => '话题版主',
 ) );

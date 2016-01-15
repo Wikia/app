@@ -31,6 +31,4 @@ $messages = array_merge( $messages, array(
 'addnewtalksection-link' => 'Nieuw kopje toevoegen',
 'group-content-moderator' => 'Inhoudmoderatoren',
 'group-content-moderator-member' => 'Inhoudmoderator',
-'group-threadmoderator' => 'Discussiemoderatoren',
-'group-threadmoderator-member' => 'Discussiemoderator',
 ) );

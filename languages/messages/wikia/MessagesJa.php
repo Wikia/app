@@ -170,6 +170,4 @@ $messages = array_merge( $messages , array(
 あなたのコンテンツはモバイル対応ですか？[[w:c:portability|Portability.wikia.com]]で未来対応型のコンテンツに関する詳細をご覧ください。",
 'group-content-moderator' => 'コンテンツ・モデレーター',
 'group-content-moderator-member' => 'コンテンツ・モデレーター',
-'group-threadmoderator' => 'トーク・モデレーター',
-'group-threadmoderator-member' => 'トーク・モデレーター',
 ));

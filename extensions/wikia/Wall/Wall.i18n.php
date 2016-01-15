@@ -2100,8 +2100,8 @@ Der Original-Post und deine Zusammenfassung bleiben in der Wiki-Historie sichtba
 	'wall-topic-edit' => 'Themen bearbeiten',
 	'wall-topic-edit-save' => 'Speichern',
 	'wall-topic-edit-cancel' => 'Abbrechen',
-	'group-threadmoderator' => 'Moderatoren',
-	'group-threadmoderator-member' => 'Moderator',
+	'group-threadmoderator' => 'Diskussionsmoderatoren',
+	'group-threadmoderator-member' => 'Diskussionsmoderator',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderatoren',
 );
 
@@ -2516,8 +2516,8 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wall-topic-edit' => 'Editar temas',
 	'wall-topic-edit-save' => 'Guardar',
 	'wall-topic-edit-cancel' => 'Cancelar',
-	'group-threadmoderator' => 'Moderadores',
-	'group-threadmoderator-member' => 'Moderador',
+	'group-threadmoderator' => 'Moderadores de discusiones',
+	'group-threadmoderator-member' => 'Moderador de discusiones',
 	'grouppage-threadmoderator' => 'w:c:comunidad:Ayuda:Moderadores',
 );
 
@@ -3142,8 +3142,8 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-topic-edit' => 'Modifier les rubriques',
 	'wall-topic-edit-save' => 'Enregistrer',
 	'wall-topic-edit-cancel' => 'Annuler',
-	'group-threadmoderator' => 'Modérateurs',
-	'group-threadmoderator-member' => 'Modérateur',
+	'group-threadmoderator' => 'Modérateurs de discussions',
+	'group-threadmoderator-member' => 'Modérateur de discussions',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
 );
 
@@ -3934,6 +3934,8 @@ $messages['it'] = array(
 	'wall-message-notifyeveryone' => 'Evidenzia questa discussione',
 	'wall-message-unnotifyeveryone' => 'Non evidenziare più questa discussione',
 	'wall-message-notifyeveryone-tooltip' => 'Tutti gli utenti loggati in questa wiki riceveranno le notifiche per questa discussione la prossima volta che visiteranno la wiki',
+	'group-threadmoderator' => 'Moderatori di discussioni',
+	'group-threadmoderator-member' => 'Moderatore di discussioni',
 );
 
 /** Japanese (日本語)
@@ -4189,7 +4191,8 @@ $messages['ja'] = array(
 	'wall-topic-edit' => 'タグを編集',
 	'wall-topic-edit-save' => '保存',
 	'wall-topic-edit-cancel' => '中止',
-	'group-threadmoderator' => 'モデレーター',
+	'group-threadmoderator' => 'トーク・モデレーター',
+	'group-threadmoderator-member' => 'トーク・モデレーター',
 );
 
 /** Georgian (ქართული)
@@ -5519,8 +5522,8 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'wall-topic-edit' => 'Onderwerpen bewerken',
 	'wall-topic-edit-save' => 'Opslaan',
 	'wall-topic-edit-cancel' => 'Annuleren',
-	'group-threadmoderator' => 'Moderators',
-	'group-threadmoderator-member' => 'Moderator',
+	'group-threadmoderator' => 'Discussiemoderatoren',
+	'group-threadmoderator-member' => 'Discussiemoderator',
 );
 
 /** Norwegian Nynorsk (norsk nynorsk)
@@ -5874,8 +5877,8 @@ Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 	'wall-topic-edit' => 'Edytuj tematy',
 	'wall-topic-edit-save' => 'Zapisz zmiany',
 	'wall-topic-edit-cancel' => 'Anuluj',
-	'group-threadmoderator' => 'Moderatorzy',
-	'group-threadmoderator-member' => 'Moderator',
+	'group-threadmoderator' => 'Moderatorzy dyskusji',
+	'group-threadmoderator-member' => 'Moderator dyskusji',
 );
 
 /** Pashto (پښتو)
@@ -6192,7 +6195,8 @@ A publicação original e o teu sumário ainda serão visíveis no histórico da
 	'wall-topic-edit' => 'Editar tópicos',
 	'wall-topic-edit-save' => 'Gravar',
 	'wall-topic-edit-cancel' => 'Cancelar',
-	'group-threadmoderator' => 'Moderadores',
+	'group-threadmoderator' => 'Moderadores de discussões',
+	'group-threadmoderator-member' => 'Moderador de discussões',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -6710,8 +6714,8 @@ $messages['ru'] = array(
 	'wall-topic-edit' => 'Edit Topics',
 	'wall-topic-edit-save' => 'Сохранить',
 	'wall-topic-edit-cancel' => 'Отмена',
-	'group-threadmoderator' => 'Модераторы',
-	'group-threadmoderator-member' => 'Модератор',
+	'group-threadmoderator' => 'Модераторы обсуждений',
+	'group-threadmoderator-member' => 'Модератор обсуждений',
 );
 
 /** Scots (Scots)
@@ -8464,8 +8468,8 @@ $messages['zh-hans'] = array(
 	'wall-topic-edit' => '编辑主题',
 	'wall-topic-edit-save' => '保存',
 	'wall-topic-edit-cancel' => '取消',
-	'group-threadmoderator' => '版主',
-	'group-threadmoderator-member' => '版主',
+	'group-threadmoderator' => '话题版主',
+	'group-threadmoderator-member' => '话题版主',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
 );
 
@@ -8722,4 +8726,6 @@ $messages['zh-hant'] = array(
 	'wall-topic-edit' => '編輯主題',
 	'wall-topic-edit-save' => '儲存',
 	'wall-topic-edit-cancel' => '取消',
+	'group-threadmoderator' => '話題版主',
+	'group-threadmoderator-member' => '話題版主',
 );
