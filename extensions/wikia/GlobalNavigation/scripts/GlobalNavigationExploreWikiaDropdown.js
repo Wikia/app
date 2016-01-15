@@ -22,7 +22,7 @@ require(
 			event.stopImmediatePropagation();
 
 			if ($entryPoint.hasClass('active')) {
-				w.location = $this.attr('href');
+				w.location = $this.closest('a').attr('href');
 			} else {
 				dropdowns.openDropdown.call($entryPoint.get(0));
 			}
