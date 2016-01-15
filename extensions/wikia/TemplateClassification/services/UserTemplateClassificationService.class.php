@@ -23,6 +23,8 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 		self::TEMPLATE_NAVBOX,
 		self::TEMPLATE_FLAG,
 		self::TEMPLATE_CONTEXT_LINK,
+		self::TEMPLATE_INFOICON,
+		self::TEMPLATE_SCROLLBOX,
 		self::TEMPLATE_REFERENCES,
 		self::TEMPLATE_MEDIA,
 		self::TEMPLATE_DATA,
@@ -106,7 +108,9 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 		( new Logger() )->logClassificationChange( $pageId, $templateType, $oldType );
 
 		$title = Title::newFromID( $pageId );
-		wfRunHooks( 'UserTemplateClassification::TemplateClassified', [ $pageId, $title, $templateType ] );
+		if ( $title instanceof Title ) {
+			wfRunHooks( 'UserTemplateClassification::TemplateClassified', [ $pageId, $title, $templateType ] );
+		}
 	}
 
 	/**

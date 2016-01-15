@@ -6,7 +6,6 @@ use Swagger\Client\ApiException;
 
 class View {
 
-	const HAS_SEEN_HINT = 'SeenHintTemplateClassificationModalEntryPoint';
 
 	/**
 	 * Returns HTML with Template type.
@@ -69,7 +68,7 @@ class View {
 			$editButton = true;
 		}
 
-		$hint = $this->prepareHint( $user, $title->getArticleID() );
+		$hint = $this->prepareHint();
 
 		return \MustacheService::getInstance()->render(
 			__DIR__ . '/templates/TemplateClassificationViewPageEntryPoint.mustache',
@@ -83,30 +82,7 @@ class View {
 		);
 	}
 
-	private function prepareHint( \User $user, $pageId ) {
-		global $wgCityId;
-
-		$hasSeen = $user->getGlobalPreference( self::HAS_SEEN_HINT, 0 );
-		if ( !$hasSeen ) {
-
-			$type = ( new \UserTemplateClassificationService() )
-				->getType( $wgCityId, $pageId );
-
-			if ( \RecognizedTemplatesProvider::isUnrecognized( $type ) ) {
-				return [
-					'mode' => 'welcome',
-					'msg' => '', // Message generated in frontend as it contains html
-					'trigger' => 'click',
-					'hasSeen' => $hasSeen
-				];
-
-			}
-		}
-		return [
-			'mode' => 'key',
-			'msg' => wfMessage( 'template-classification-open-modal-key-tip' )->plain(),
-			'trigger' => 'hover',
-			'hasSeen' => $hasSeen
-		];
+	private function prepareHint() {
+		return wfMessage( 'template-classification-open-modal-key-tip' )->plain();
 	}
 }

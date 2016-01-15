@@ -46,5 +46,6 @@ $messages = array_merge( $messages, array(
 Imagens com guias e grupos flexíveis estão disponíveis agora para [[Ajuda:Infobox|Infoboxes móveis]].
 
 O seu conteúdo é móvel? Saiba mais sobre conteúdo em [[w:c:portability|Portability.wikia.com]].",
-
+'group-content-moderator' => 'Moderadores de conteúdo',
+'group-content-moderator-member' => 'Moderador de conteúdo',
 ) );

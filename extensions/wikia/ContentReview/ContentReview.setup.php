@@ -68,7 +68,7 @@ $wgAutoloadClasses['Wikia\ContentReview\ContentReviewStatusesService'] = __DIR__
  */
 $wgAutoloadClasses['Wikia\ContentReview\Helper'] = __DIR__ . '/ContentReviewHelper.php';
 $wgAutoloadClasses['Wikia\ContentReview\ImportJS'] = __DIR__ . '/jsmodules/ImportJS.php';
-$wgAutoloadClasses['Wikia\ContentReview\UserBadges'] = __DIR__ . '/jsmodules/UserBadges.php';
+$wgAutoloadClasses['Wikia\ContentReview\ProfileTags'] = __DIR__ . '/jsmodules/ProfileTags.php';
 
 /**
  * Hooks

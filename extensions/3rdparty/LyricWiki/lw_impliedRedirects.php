@@ -33,8 +33,14 @@ function wfImpliedRedirects(){
 // Given a title, gives us a chance to create an article for it before MediaWiki takes its normal approach.
 ////
 function wfImpliedRedirects_articleFromTitle(Title &$title, &$article){
+	$action = F::app()->wg->Request->getVal('action', 'view');
+
+	
 	// We only want to mess with titles for pages that don't already exist.
-	if(!$title->exists() && ($title->getNamespace() == NS_MAIN)){
+	//
+	// MAIN-5845: Due to some changes in when this hook gets called, we need to explicitly ignore this functionality
+	// when action=submit so that we can create/edit pages that have implied redirects elsewhere.
+	if(!$title->exists() && ($title->getNamespace() == NS_MAIN) && ($action !== "submit")){
 		$origTitle = $title->getDBkey(); // this format has the characters as we need them already
 
 		// If there is more than one colon, the vast majority of the time it seems to be in the name of the song rather than the artist so we

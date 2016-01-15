@@ -147,15 +147,9 @@ $messages = array(
 'navigation'    => 'Tšwelotšo',
 'and'           => '&#32;le',
 
-# Cologne Blue skin
 'qbfind'         => 'Humana',
-'qbedit'         => 'Fetola',
 'qbpageoptions'  => 'Letlakala le',
-'qbmyoptions'    => 'Matlakala a ka',
-'qbspecialpages' => 'Matlakala a itšego',
 
-# Vector skin
-'vector-namespace-main' => 'Letlakala',
 
 'errorpagetitle'    => 'Phošo',
 'returnto'          => 'Boela go $1.',
@@ -174,7 +168,6 @@ $messages = array(
 'edit'              => 'Fetola',
 'create'            => 'Tlhoma',
 'editthispage'      => 'Fetola letlakala  le',
-'create-this-page'  => 'Tlhoma letlakala le',
 'delete'            => 'Phumula',
 'deletethispage'    => 'Phumula letlakala le',
 'protect'           => 'Lota',
@@ -187,19 +180,9 @@ $messages = array(
 'talkpagelinktext'  => 'Bolela',
 'specialpage'       => 'Matlaka a itšeng',
 'personaltools'     => "Dithulusu tša gago (''personal'')",
-'postcomment'       => 'Sekgao se sempsha',
-'articlepage'       => 'Nyakoretša letlakala la mateng',
 'talk'              => 'Poledišano',
 'views'             => 'Dinyakorêtšo',
 'toolbox'           => 'Lepokisi la dithulusu',
-'userpage'          => 'Nyakorela letlakala la mošomiši',
-'projectpage'       => 'Nyakoretša letlakala la tirotherwa',
-'imagepage'         => "Nyakoretša letlakala la ''file''",
-'mediawikipage'     => 'Nyakoretša letlakala la melaetša',
-'templatepage'      => "Nyakoretša letlakala la ''template''",
-'viewhelppage'      => 'Nyakoretša letlakala la thušo',
-'categorypage'      => 'Nyakoretša letlakala la sehlopha',
-'viewtalkpage'      => 'Nyakoretša dipoledišano',
 'otherlanguages'    => 'Ka dipolelo tše dingwe',
 'redirectedfrom'    => "(''Redirect'' go tšwa $1)",
 'redirectpagesub'   => "''Redirect'' letlakala",

@@ -295,29 +295,12 @@ $messages = array(
 'navigation'    => 'ګرځښت',
 'and'           => '&#32;او',
 
-# Cologne Blue skin
 'qbfind'         => 'موندل',
 'qbbrowse'       => 'سپړل',
-'qbedit'         => 'سمول',
 'qbpageoptions'  => 'همدا مخ',
 'qbpageinfo'     => 'متن',
-'qbmyoptions'    => 'زما پاڼې',
-'qbspecialpages' => 'ځانګړي مخونه',
 'faq'            => 'ډ-ځ-پ',
-'faqpage'        => 'Project:ډ-ځ-پ',
 
-# Vector skin
-'vector-action-addsection' => 'سرليکونه ورګډول',
-'vector-action-delete'     => 'ړنګول',
-'vector-action-move'       => 'لېږدول',
-'vector-action-protect'    => 'پروژه',
-'vector-action-undelete'   => 'ناړنګول',
-'vector-action-unprotect'  => 'ژغورنه بدلول',
-'vector-view-create'       => 'جوړول',
-'vector-view-edit'         => 'سمول',
-'vector-view-history'      => 'پېښليک کتل',
-'vector-view-view'         => 'لوستل',
-'vector-view-viewsource'   => 'سرچينه کتل',
 'actions'                  => 'کړنې',
 'namespaces'               => 'نوم-تشيالونه',
 
@@ -339,7 +322,6 @@ $messages = array(
 'edit'              => 'سمول',
 'create'            => 'جوړول',
 'editthispage'      => 'همدا مخ سمول',
-'create-this-page'  => 'همدا مخ ليکل',
 'delete'            => 'ړنګول',
 'deletethispage'    => 'دا مخ ړنګ کړه',
 'undelete_short'    => '{{PLURAL:$1|يو سمون|$1 سمونې}} ناړنګول',
@@ -354,19 +336,9 @@ $messages = array(
 'talkpagelinktext'  => 'خبرې اترې',
 'specialpage'       => 'ځانګړې پاڼه',
 'personaltools'     => 'شخصي اوزار',
-'postcomment'       => 'نوې برخه',
-'articlepage'       => 'د مخ مېنځپانګه ښکاره کول',
 'talk'              => 'خبرې اترې',
 'views'             => 'کتنې',
 'toolbox'           => 'اوزاربکس',
-'userpage'          => 'د کارن پاڼه کتل',
-'projectpage'       => 'د پروژې مخ کتل',
-'imagepage'         => 'د دوتنې مخ کتل',
-'mediawikipage'     => 'د پيغامونو مخ کتل',
-'templatepage'      => 'د کينډۍ مخ کتل',
-'viewhelppage'      => 'د لارښود مخ کتل',
-'categorypage'      => 'د وېشنيزې مخ کتل',
-'viewtalkpage'      => 'خبرې اترې کتل',
 'otherlanguages'    => 'په نورو ژبو کې',
 'redirectedfrom'    => '(له $1 نه مخ ګرځېدلی)',
 'redirectpagesub'   => 'د مخ ګرځونې مخ',
@@ -955,13 +927,6 @@ $1',
 'powersearch-togglenone'           => 'هېڅ',
 'search-external'                  => 'باندنۍ پلټنه',
 
-# Quickbar
-'qbsettings'               => 'چټک پټه',
-'qbsettings-none'          => 'هېڅ',
-'qbsettings-fixedleft'     => 'ثابته کيڼ',
-'qbsettings-fixedright'    => 'ثابته ښي',
-'qbsettings-floatingleft'  => 'کيڼه لامبا',
-'qbsettings-floatingright' => 'ښي لامبا',
 
 # Preferences page
 'preferences'                   => 'غوره توبونه',
@@ -2044,14 +2009,7 @@ $UNWATCHURL  نه ليدنه وکړۍ
 'pageinfo-views'            => 'د کتنو شمېر',
 
 # Skin names
-'skinname-standard'    => 'کلاسيک',
-'skinname-nostalgia'   => 'نوستالژي',
-'skinname-cologneblue' => 'شين کلون',
 'skinname-monobook'    => 'مونوبوک',
-'skinname-myskin'      => 'زمابڼه',
-'skinname-chick'       => 'شيک',
-'skinname-simple'      => 'ساده',
-'skinname-modern'      => 'نوی',
 
 # Patrolling
 'markaspatrolledtext' => 'دا مخ څارل شوی په نخښه کول',

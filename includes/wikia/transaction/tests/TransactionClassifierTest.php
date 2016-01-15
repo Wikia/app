@@ -21,7 +21,6 @@ class TransactionClassifierTest extends WikiaBaseTest {
 		$this->assertEquals($expectedName, $classifier->getName(), 'The transaction name should match');
 	}
 
-	// TODO: Władek to update the test cases (2014-09-18)
 	public function buildDataProvider() {
 		return [
 			[
@@ -171,6 +170,20 @@ class TransactionClassifierTest extends WikiaBaseTest {
 				],
 				'expectedName' => 'api/api/query/users'
 			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_API,
+					Transaction::PARAM_API_ACTION => 'visualeditoredit',
+				],
+				'expectedName' => 'api/api/visualeditoredit'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_API,
+					Transaction::PARAM_API_ACTION => 'foo',
+				],
+				'expectedName' => 'api/api/other'
+			],
 			# blogs
 			[
 				'attributes' => [
@@ -185,6 +198,21 @@ class TransactionClassifierTest extends WikiaBaseTest {
 					Transaction::PARAM_NAMESPACE => TransactionClassifier::NS_BLOG_LISTING,
 				],
 				'expectedName' => 'page/blog'
+			],
+			# special pages
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_SPECIAL_PAGE,
+					Transaction::PARAM_SPECIAL_PAGE_NAME => 'Contributions',
+				],
+				'expectedName' => 'special_page/Contributions'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_SPECIAL_PAGE,
+					Transaction::PARAM_SPECIAL_PAGE_NAME => 'foo',
+				],
+				'expectedName' => 'special_page/other'
 			],
 		];
 	}

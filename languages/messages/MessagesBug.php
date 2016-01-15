@@ -68,23 +68,12 @@ $messages = array(
 'navigation' => 'Navigasi',
 'and'        => '&#32;na',
 
-# Cologne Blue skin
 'qbfind'         => 'Assapparang',
 'qbbrowse'       => 'Berowoso',
-'qbedit'         => 'Padécéŋ',
 'qbpageoptions'  => 'Édé leppa',
 'qbpageinfo'     => 'Konteks',
-'qbmyoptions'    => "Leppana iya'",
-'qbspecialpages' => 'Leppa spésiala',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-move'     => "Paléccé'",
-'vector-view-create'     => 'Ebbu',
-'vector-view-edit'       => 'Padéccéng',
-'vector-view-view'       => 'Baca',
-'vector-view-viewsource' => 'Ita sumber',
 
 'errorpagetitle'   => 'Asalaŋ',
 'returnto'         => 'Lisu ri $1.',
@@ -100,7 +89,6 @@ $messages = array(
 'edit'             => 'Padécéŋ',
 'create'           => 'Ebbu',
 'editthispage'     => 'Padécéŋiki iyé leppa',
-'create-this-page' => 'Ebbuiki leppa iyé',
 'delete'           => 'Peddé',
 'deletethispage'   => 'Peddé iyé leppa',
 'protect'          => 'Accalinruŋi',
@@ -112,17 +100,8 @@ $messages = array(
 'talkpagelinktext' => 'Bicara',
 'specialpage'      => 'Leppa spésiala',
 'personaltools'    => 'Tool sialé-alé',
-'articlepage'      => 'Ita lontara',
 'talk'             => 'Bicara',
 'toolbox'          => 'Toolbox',
-'userpage'         => 'Ita leppa papaké',
-'projectpage'      => 'Ita leppa proyék',
-'imagepage'        => 'Ita leppa rapaŋ',
-'mediawikipage'    => 'Ita leppa méséje',
-'templatepage'     => 'Ita leppa templata',
-'viewhelppage'     => 'Ita leppa panginriŋ',
-'categorypage'     => 'Ita leppa kategori',
-'viewtalkpage'     => 'Ita leppa bicara',
 'redirectedfrom'   => '(Riredirect polé $1)',
 'redirectpagesub'  => 'Leppa redirect',
 'jumpto'           => 'Luppe lao:',
@@ -249,8 +228,6 @@ $messages = array(
 'search-result-size'    => '$1 ({{PLURAL:$2|1 ada|$2 ada}})',
 'search-redirect'       => '(redirect $1)',
 
-# Quickbar
-'qbsettings-none' => 'Dégaga',
 
 # Preferences page
 'mypreferences'     => 'Bérékkeŋeŋna iyya',

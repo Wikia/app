@@ -178,5 +178,6 @@ Auf dieser Spezialseite kannst Du die '''letzten Änderungen''' in diesem Wiki n
 In [[Hilfe:Infoboxen|portablen Infoboxen]] können jetzt Bilder in Reitern und zusammenklappbare Gruppen verwendet werden.
 
 Sind deine Inhalte portabel? Unter [[w:c:portability|Portability.wikia.com]] erfährst du mehr dazu, wie du deine Inhalte zukunftssicher gestalten kannst.",
-
+'group-content-moderator' => 'Inhaltsmoderatoren',
+'group-content-moderator-member' => 'Inhaltsmoderator',
 ) );

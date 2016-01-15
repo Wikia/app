@@ -54,9 +54,6 @@ $messages = array(
 'mypage'     => 'Mening beti',
 'navigation' => 'Körüsh',
 
-# Cologne Blue skin
-'qbedit'         => 'Uzgartish',
-'qbspecialpages' => 'Alahida tor batleri',
 
 'help'             => 'Yardem',
 'search'           => 'Izdash',

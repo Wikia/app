@@ -120,6 +120,7 @@ class ApiAddMediaPermanent extends ApiAddMedia {
 
 	public function getAllowedParams() {
 		return array(
+			'token' => null,
 			'license' => array(
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => false
