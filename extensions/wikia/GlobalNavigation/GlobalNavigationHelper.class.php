@@ -5,6 +5,7 @@ class GlobalNavigationHelper {
 	const DEFAULT_LANG = 'en';
 	const USE_LANG_PARAMETER = '?uselang=';
 	const CENTRAL_WIKI_SEARCH = '/wiki/Special:Search';
+	const WAM_LANG_CODE_PARAMETER = '?langCode=';
 
 	/**
 	 * @var WikiaCorporateModel
@@ -96,20 +97,47 @@ class GlobalNavigationHelper {
 	}
 
 	public function getMenuNodes2016() {
+		global $wgLang;
+
+		$exploreDropdownLinks = [];
+
+		$WAMLinkAndLabel = wfMessage( 'global-navigation-wam-link-label' );
+
 		$hubsNodes = ( new NavigationModel( true /* useSharedMemcKey */ ) )->getTree(
 			NavigationModel::TYPE_MESSAGE,
 			'global-navigation-menu-hubs',
 			[3] // max 3 links
 		);
+
+		// Link to WAM - Top Communities
+		$exploreDropdownLinks[] = [
+			'text' => $WAMLinkAndLabel->plain(),
+			'textEscaped' => $WAMLinkAndLabel->escaped(),
+			'href' => $this->getWAMLinkForLang( $wgLang->getCode() )
+		];
+
 		$exploreNodes = ( new NavigationModel( true /* useSharedMemcKey */ ) )->getTree(
 			NavigationModel::TYPE_MESSAGE,
 			'global-navigation-menu-explore',
 			[1, 3] // max 1 entry with 3 links
 		);
 
+		$exploreNodes[] = $WAMLinkAndLabel;
+
 		return [
 			'hubs' => $hubsNodes,
 			'explore' => $exploreNodes[0], // always one node - explore the wikia
 		];
+	}
+
+	public function getWAMLinkForLang( $lang ) {
+		$wamService = new WAMService();
+		$wamDates = $wamService->getWamIndexDates();
+
+		if ( $lang === 'en' || empty( $wamService->getWAMLanguages( $wamDates['max_date'] )[$lang] ) ) {
+			return WAMService::WAM_LINK;
+		} else {
+			return WAMService::WAM_LINK . self::WAM_LANG_CODE_PARAMETER . $lang;
+		}
 	}
 }

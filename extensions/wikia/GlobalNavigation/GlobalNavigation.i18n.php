@@ -12,8 +12,8 @@ $messages['en'] = array(
 *http://movieshub.wikia.com/wiki/Movies_Hub|Movies|movies
 *http://gameshub.wikia.com/wiki/TV_Hub|TV|tv',
 	'global-navigation-menu-explore' => '*#|Explore Wikia
-**http://wikia.com/WAM|Top Communities
 **#|Community Central',
+	'global-navigation-wam-link-label' => 'Top Communities',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
@@ -241,6 +241,7 @@ $messages['qqq'] = array(
 	'global-navigation-account-navigation-options' => 'Sentence that says to register or sign-in, $1 is an anchor with "global-navigation-register" title, $2 is an anchor with "global-navigation-sign-in" title',
 	'global-navigation-menu-hubs' => 'Global Navigation Hubs/Links Menu structure - For example see English translation.',
 	'global-navigation-menu-explore' => 'Global Navigation Explore Wikia Menu structure - For example see English translation.',
+	'global-navigation-wam-link-label' => 'Label for "Top Communities" link to WAM in Global Navigation',
 	'global-navigation-hubs-menu' => 'Global Navigation Hubs Menu structure. For example see English translation.',
 	'global-navigation-local-search-placeholder' => 'Placeholder in search input in global nav',
 	'global-navigation-local-search' => 'Local search value in search dropdown',

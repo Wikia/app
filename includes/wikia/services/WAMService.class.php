@@ -11,6 +11,7 @@ class WAMService extends Service {
 	const WAM_EXCLUDE_FLAG_NAME = 'wgExcludeFromWAM';
 	const CACHE_DURATION = 86400; /* 24 hours */
 	const MEMCACHE_VER = '2';
+	const WAM_LINK = 'http://www.wikia.com/WAM';
 
 	protected $verticalIds = [
 		WikiFactoryHub::VERTICAL_ID_OTHER,
