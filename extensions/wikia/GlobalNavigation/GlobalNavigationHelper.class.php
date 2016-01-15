@@ -101,7 +101,9 @@ class GlobalNavigationHelper {
 
 		$exploreDropdownLinks = [];
 
-		$WAMLinkAndLabel = wfMessage( 'global-navigation-wam-link-label' );
+		$WAMLinkLabel = wfMessage( 'global-navigation-wam-link-label' );
+		$CommunityLinkLabel = wfMessage( 'global-navigation-community-link-label');
+		$exploreWikiaLabel = wfMessage( 'global-navigation-explore-wikia-link-label');
 
 		$hubsNodes = ( new NavigationModel( true /* useSharedMemcKey */ ) )->getTree(
 			NavigationModel::TYPE_MESSAGE,
@@ -111,22 +113,26 @@ class GlobalNavigationHelper {
 
 		// Link to WAM - Top Communities
 		$exploreDropdownLinks[] = [
-			'text' => $WAMLinkAndLabel->plain(),
-			'textEscaped' => $WAMLinkAndLabel->escaped(),
+			'text' => $WAMLinkLabel->plain(),
+			'textEscaped' => $WAMLinkLabel->escaped(),
 			'href' => $this->getWAMLinkForLang( $wgLang->getCode() )
 		];
 
-		$exploreNodes = ( new NavigationModel( true /* useSharedMemcKey */ ) )->getTree(
-			NavigationModel::TYPE_MESSAGE,
-			'global-navigation-menu-explore',
-			[1, 3] // max 1 entry with 3 links
-		);
-
-		$exploreNodes[0]['children'][] = $exploreDropdownLinks[0];
+		//Link to Community Central
+		$exploreDropdownLinks[] = [
+			'text' => $CommunityLinkLabel->plain(),
+			'textEscaped' => $CommunityLinkLabel->escaped(),
+			'href' => wfMessage('global-navigation-community-link')->plain()
+		];
 
 		return [
 			'hubs' => $hubsNodes,
-			'explore' => $exploreNodes[0], // always one node - explore the wikia
+			'exploreDropdown' => $exploreDropdownLinks,
+			'exploreWikia' => [
+				'text' => $exploreWikiaLabel->plain(),
+				'textEscaped' => $exploreWikiaLabel->escaped(),
+				'href' => wfMessage('global-navigation-explore-wikia-link')->plain()
+			]
 		];
 	}
 

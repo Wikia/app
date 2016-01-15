@@ -192,7 +192,8 @@ class MercuryApiController extends WikiaController {
 
 			return [
 				'hubsLinks' => $navigationNodes['hubs'],
-				'explore' => $navigationNodes['explore'],
+				'exploreWikia' => $navigationNodes['exploreWikia'],
+				'exploreWikiaMenu' => $navigationNodes['exploreDropdown'],
 				'localNav' => $localNavigation
 			];
 		}

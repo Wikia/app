@@ -8,11 +8,13 @@ $messages['en'] = array(
 	'global-navigation-register' => 'Register',
 	'global-navigation-sign-in' => 'Sign In',
 	'global-navigation-account-navigation-options' => '$1 or $2',
+	'global-navigation-community-link' => 'http://community.wikia.com',
+	'global-navigation-community-link-label' => 'Community Central',
+	'global-navigation-explore-wikia-link' => '#',
+	'global-navigation-explore-wikia-link-label' => 'Explore Wikia',
 	'global-navigation-menu-hubs' => '*http://gameshub.wikia.com/wiki/Games_Hub|Games|games
 *http://movieshub.wikia.com/wiki/Movies_Hub|Movies|movies
 *http://gameshub.wikia.com/wiki/TV_Hub|TV|tv',
-	'global-navigation-menu-explore' => '*#|Explore Wikia
-**#|Community Central',
 	'global-navigation-wam-link-label' => 'Top Communities',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
@@ -240,13 +242,16 @@ $messages['qqq'] = array(
 	'global-navigation-sign-in' => 'Text on the link that shows sign-in modal',
 	'global-navigation-account-navigation-options' => 'Sentence that says to register or sign-in, $1 is an anchor with "global-navigation-register" title, $2 is an anchor with "global-navigation-sign-in" title',
 	'global-navigation-menu-hubs' => 'Global Navigation Hubs/Links Menu structure - For example see English translation.',
-	'global-navigation-menu-explore' => 'Global Navigation Explore Wikia Menu structure - For example see English translation.',
 	'global-navigation-wam-link-label' => 'Label for "Top Communities" link to WAM in Global Navigation',
+	'global-navigation-community-link' => 'Link to Community Central in Global Navigation',
+	'global-navigation-community-link-label' => 'Label for Community Central link in Global Navigation',
 	'global-navigation-hubs-menu' => 'Global Navigation Hubs Menu structure. For example see English translation.',
 	'global-navigation-local-search-placeholder' => 'Placeholder in search input in global nav',
 	'global-navigation-local-search' => 'Local search value in search dropdown',
 	'global-navigation-global-search' => 'Local search value in search dropdown',
 	'global-navigation-search-wikia' => 'Placeholder inside search input in Global Navigation 2016',
+	'global-navigation-explore-wikia-link' => 'Link to fandom in Global Navigation which is also entry point to dropdown',
+	'global-navigation-explore-link-label' => 'Label for fandom link in Global Navigation which is also entry point to dropdown',
 );
 
 $messages['de'] = array(
@@ -256,6 +261,8 @@ $messages['de'] = array(
 	'global-navigation-register' => 'registrieren',
 	'global-navigation-sign-in' => 'Anmelden',
 	'global-navigation-account-navigation-options' => '$1 oder $2',
+	'global-navigation-community-link' => 'http://de.community.wikia.com',
+	'global-navigation-community-link-label' => 'Community',
 	'global-navigation-menu-hubs' => '*http://de.videospielehub.wikia.com/wiki/Videospiele_Hub|Videospiele|games
 *http://de.filmhub.wikia.com/wiki/Film_Hub|Filme|movies
 *http://de.tvhub.wikia.com/wiki/TV_Hub|TV|tv',
@@ -478,6 +485,8 @@ $messages['de'] = array(
 $messages['es'] = array(
 	'global-navigation-create-wiki' => 'Crear un wiki',
 	'global-navigation-hubs-menu-more-of' => 'Más $1',
+	'global-navigation-community-link' => 'http://comunidad.wikia.com',
+	'global-navigation-community-link-label' => 'Comunidad Central',
 	'global-navigation-menu-hubs' => '*http://es.gameshub.wikia.com/wiki/Wiki_Videojuegos_Hub|Juegos|games
 *http://es.filmhub.wikia.com/wiki/Wiki_Películas_Hub|Películas|movies
 *http://es.tvhub.wikia.com/wiki/Wiki_TV_Hub|TV|tv',
@@ -708,6 +717,8 @@ $messages['fr'] = array(
 	'global-navigation-register' => "s'inscrire",
 	'global-navigation-sign-in' => 'Se connecter',
 	'global-navigation-account-navigation-options' => '$1 ou $2',
+	'global-navigation-community-link' => 'http://communaute.wikia.com',
+	'global-navigation-community-link-label' => 'Centre des communautés',
 	'global-navigation-menu-hubs' => '*http://portail-divertissement.wikia.com/wiki/Portail_divertissement|Jeux vidéo|games
 *http://portail-divertissement.wikia.com/wiki/Portail_divertissement|Cinéma|movies
 *http://portail-divertissement.wikia.com/wiki/Portail_divertissement|Télévision|tv',
@@ -934,6 +945,7 @@ $messages['it'] = array(
 	'global-navigation-register' => 'Iscriviti',
 	'global-navigation-sign-in' => 'Accedi',
 	'global-navigation-account-navigation-options' => '$1 o $2',
+	'global-navigation-community-link' => 'http://it.community.wikia.com',
 	'global-navigation-menu-hubs' => '*http://it.community.wikia.com/wiki/Categoria:Videogiochi|Giochi|games
 *http://it.community.wikia.com/wiki/Categoria:Cinema|Cinema|movies
 *http://it.community.wikia.com/wiki/Categoria:Televisione|TV|tv',
@@ -1160,6 +1172,8 @@ $messages['ja'] = array(
 	'global-navigation-register' => '登録',
 	'global-navigation-sign-in' => 'ログイン',
 	'global-navigation-account-navigation-options' => '$1または$2',
+	'global-navigation-community-link' => 'http://ja.community.wikia.com',
+	'global-navigation-community-link-label' => 'コミュニティセントラル',
 	'global-navigation-menu-hubs' => '*http://ja.videogameshub.wikia.com/wiki/ビデオゲームハブ_Wiki|ゲーム|games
 *http://ja.entertainmenthub.wikia.com/wiki/エンターテイメントハブ_Wiki|映画|movies
 *http://ja.entertainmenthub.wikia.com/wiki/エンターテイメントハブ_Wiki|テレビ|tv',
@@ -1386,6 +1400,7 @@ $messages['nl'] = array(
 	'global-navigation-register' => 'Register',
 	'global-navigation-sign-in' => 'Sign In',
 	'global-navigation-account-navigation-options' => '$1 or $2',
+	'global-navigation-community-link' => 'http://nl.community.wikia.com',
 	'global-navigation-menu-hubs' => '*http://nl.community.wikia.com/wiki/Centrale_Wikia_community|Games|games
 *http://nl.community.wikia.com/wiki/Centrale_Wikia_community|Films|movies
 *http://nl.community.wikia.com/wiki/Centrale_Wikia_community|TV|tv',
@@ -1612,6 +1627,8 @@ $messages['pl'] = array(
 	'global-navigation-register' => 'Zarejestruj się',
 	'global-navigation-sign-in' => 'Zaloguj się',
 	'global-navigation-account-navigation-options' => '$1 lub $2',
+	'global-navigation-community-link' => 'http://spolecznosc.wikia.com',
+	'global-navigation-community-link-label' => 'Centrum Społeczności',
 	'global-navigation-menu-hubs' => '*http://gryhub.wikia.com/wiki/Gry|Gry|games
 *http://rozrywkahub.wikia.com/wiki/Rozrywka|Filmy|movies
 *http://rozrywkahub.wikia.com/wiki/Rozrywka|TV|tv',
@@ -1838,6 +1855,8 @@ $messages['pt'] = array(
 	'global-navigation-register' => 'Registre-se',
 	'global-navigation-sign-in' => 'Iniciar sessão',
 	'global-navigation-account-navigation-options' => '$1 ou $2',
+	'global-navigation-community-link' => 'http://comunidade.wikia.com',
+	'global-navigation-community-link-label' => 'Central da comunidade',
 	'global-navigation-menu-hubs' => '*http://pt.videogameshub.wikia.com/wiki/Wiki_Videogameshub|Jogos|games
 *http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento|Entretenimento|movies',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
@@ -2063,6 +2082,8 @@ $messages['ru'] = array(
 	'global-navigation-register' => 'Зарегистрироваться',
 	'global-navigation-sign-in' => 'Войти',
 	'global-navigation-account-navigation-options' => '$1 или $2',
+	'global-navigation-community-link' => 'http://ru.community.wikia.com',
+	'global-navigation-community-link-label' => 'Центральная Вики',
 	'global-navigation-menu-hubs' => '*http://ru.gameshub.wikia.com/wiki/%D0%9F%D0%BE%D1%80%D1%82%D0%B0%D0%BB_%D0%92%D0%B8%D0%B4%D0%B5%D0%BE%D0%B8%D0%B3%D1%80%D1%8B|Видеоигры|games
 *http://ru.movieshub.wikia.com/wiki/%D0%9F%D0%BE%D1%80%D1%82%D0%B0%D0%BB_%D0%9A%D0%B8%D0%BD%D0%BE|Кино|movies
 *http://ru.tvhub.wikia.com/wiki/%D0%9F%D0%BE%D1%80%D1%82%D0%B0%D0%BB_%D0%A2%D0%B5%D0%BB%D0%B5%D0%B2%D0%B8%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5|TV|tv',
@@ -2289,6 +2310,8 @@ $messages['zh-hans'] = array(
 	'global-navigation-register' => '注册',
 	'global-navigation-sign-in' => '登入',
 	'global-navigation-account-navigation-options' => '$1或$2',
+	'global-navigation-community-link' => 'http://zh.community.wikia.com',
+	'global-navigation-community-link-label' => '使用条款',
 	'global-navigation-menu-hubs' => '*http://zh.gameshub.wikia.com|游戏|games
 *http://zh.entertainmenthub.wikia.com|影视|tv',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
@@ -2514,6 +2537,8 @@ $messages['zh-hant'] = array(
 	'global-navigation-register' => '註冊',
 	'global-navigation-sign-in' => '登入',
 	'global-navigation-account-navigation-options' => '$1或$2',
+	'global-navigation-community-link' => 'http://zh.community.wikia.com',
+	'global-navigation-community-link-label' => '使用条款',
 	'global-navigation-menu-hubs' => '*http://zh-tw.gameshub.wikia.com|遊戲|games
 *http://zh-tw.entertainmenthub.wikia.com|影視|tv',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
@@ -2732,3 +2757,17 @@ $messages['zh-hant'] = array(
 	'global-navigation-global-search' => '搜索所有維基',
 );
 
+$messages['fi'] = [
+	'global-navigation-community-link' => 'http://yhteiso.wikia.com/',
+	'global-navigation-community-link-label' => 'Yhteisöwiki',
+];
+
+$messages['vi'] = [
+	'global-navigation-community-link' => 'http://congdong.wikia.com',
+	'global-navigation-community-link-label' => 'Cộng đồng Wikia tiếng Việt',
+];
+
+$messages['vi'] = [
+	'global-navigation-community-link' => 'http://ko.community.wikia.com',
+	'global-navigation-community-link-label' => '중앙 커뮤니티',
+];

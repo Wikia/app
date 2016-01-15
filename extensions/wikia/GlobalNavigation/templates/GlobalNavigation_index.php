@@ -65,38 +65,36 @@
 					<?php endforeach; ?>
 				</div>
 			<?php endif; ?>
-			<?php if ( !empty( $menuContents['explore'] ) ): ?>
-				<div class="table-cell">
-					<div class="explore-wikia-entry-point" id="exploreWikiaEntryPoint">
-						<a class="cell-link top-level" href="<?= $menuContents['explore']['href']?>">
-							<?= $menuContents['explore']['text'] ?>
-							<img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
-						</a>
-						<ul class="explore-wikia-dropdown" id="exploreWikiaDropdown">
-							<?php if ( !empty( $menuContents['hubs'] ) && is_array( $menuContents['hubs'] ) ): ?>
-								<?php foreach ( $menuContents['hubs'] as $hub ): ?>
-									<li>
-										<a class="cell-link" data-visibility="tablet" href="<?= $hub['href']; ?>"><?= $hub['textEscaped']; ?></a>
-									</li>
-								<?php endforeach; ?>
-							<?php endif; ?>
-							<?php foreach ( $menuContents['explore']['children'] as $exploreLink ): ?>
+			<div class="table-cell">
+				<div class="explore-wikia-entry-point" id="exploreWikiaEntryPoint">
+					<a class="cell-link top-level" href="<?= $menuContents['exploreWikia']['href']?>">
+						<?= $menuContents['exploreWikia']['textEscaped'] ?>
+						<img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
+					</a>
+					<ul class="explore-wikia-dropdown" id="exploreWikiaDropdown">
+						<?php if ( !empty( $menuContents['hubs'] ) && is_array( $menuContents['hubs'] ) ): ?>
+							<?php foreach ( $menuContents['hubs'] as $hub ): ?>
 								<li>
-									<a class="cell-link" href="<?= $exploreLink['href']; ?>"><?= $exploreLink['textEscaped']; ?></a>
+									<a class="cell-link" data-visibility="tablet" href="<?= $hub['href']; ?>"><?= $hub['textEscaped']; ?></a>
 								</li>
 							<?php endforeach; ?>
+						<?php endif; ?>
+						<?php foreach ( $menuContents['exploreDropdown'] as $exploreLink ): ?>
 							<li>
-								<a href="<?= htmlspecialchars( $createWikiUrl ) ?>"
-									class="start-wikia"
-									title="<?= wfMessage( 'global-navigation-create-wiki' )->escaped(); ?>"
-									data-id="start-wikia">
-									<span><?= wfMessage( 'global-navigation-create-wiki' )->escaped(); ?></span>
-								</a>
+								<a class="cell-link" href="<?= $exploreLink['href']; ?>"><?= $exploreLink['textEscaped']; ?></a>
 							</li>
-						</ul>
-					</div>
+						<?php endforeach; ?>
+						<li>
+							<a href="<?= htmlspecialchars( $createWikiUrl ) ?>"
+								class="start-wikia"
+								title="<?= wfMessage( 'global-navigation-create-wiki' )->escaped(); ?>"
+								data-id="start-wikia">
+								<span><?= wfMessage( 'global-navigation-create-wiki' )->escaped(); ?></span>
+							</a>
+						</li>
+					</ul>
 				</div>
-			<?php endif; ?>
+			</div>
 			<div class="search-container table-cell">
 				<?= $app->renderView( 'GlobalNavigation', 'searchIndex' ); ?>
 			</div>
