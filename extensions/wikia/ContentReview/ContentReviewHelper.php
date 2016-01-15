@@ -8,7 +8,6 @@ use Wikia\ContentReview\Models\ReviewModel;
 
 class Helper extends \ContextSource {
 
-	const CONTENT_REVIEW_TOOLBAR_TEMPLATE_PATH = 'extensions/wikia/ContentReview/templates/ContentReviewToolbar.mustache';
 	const CONTENT_REVIEW_PARAM = 'contentreview';
 	const CONTENT_REVIEW_MEMC_VER = '1.0';
 	const CONTENT_REVIEW_REVIEWED_KEY = 'reviewed-js-pages';
@@ -17,6 +16,7 @@ class Helper extends \ContextSource {
 
 	const DEV_WIKI_ID = 7931;
 
+	public static $pageToStatus = [];
 
 	/**
 	 * Returns data about all approved revisions (of JS pages) for current wiki
@@ -237,117 +237,6 @@ class Helper extends \ContextSource {
 	public function hasPageApprovedId( CurrentRevisionModel $model, $wikiId, $pageId, $oldid ) {
 		$currentData = $model->getLatestReviewedRevision( $wikiId, $pageId );
 		return ( !empty( $currentData ) && (int)$currentData['revision_id'] === $oldid );
-	}
-
-	public function shouldDisplayReviewerToolbar() {
-		global $wgCityId;
-
-		$title = $this->getTitle();
-		$contentReviewRequest = $this->getRequest()->getBool( self::CONTENT_REVIEW_PARAM );
-
-		if ( $title->inNamespace( NS_MEDIAWIKI )
-			&& $contentReviewRequest
-			&& $title->isJsPage()
-			&& $title->userCan( 'content-review' )
-		) {
-			$reviewModel = new ReviewModel();
-
-			$diffRevisionId = $this->getRequest()->getInt( 'diff' );
-			$articleId = $title->getArticleID();
-			$diffRevisionInfo = $reviewModel->getRevisionInfo(
-				$wgCityId,
-				$articleId,
-				$diffRevisionId
-			);
-
-			$status = (int)$diffRevisionInfo['status'];
-
-			// Always make sure it's in review if this is a content review request
-			if ( $status === ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED ) {
-				$reviewerId = $this->getUser()->getId();
-				try {
-					$reviewModel->updateRevisionStatus( $wgCityId, $articleId, $status,
-						ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW, $reviewerId );
-				} catch ( \FluentSql\Exception\SqlException $e ) {
-					// Master-slave replication has not finished, ignore
-				}
-
-				return true;
-			}
-
-			return $status === ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW
-				|| $status === ReviewModel::CONTENT_REVIEW_STATUS_ESCALATED;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Returns an HTML with a toolbar displayed to reviewers.
-	 * @param int $revisionId An ID of the revision that is currently being reviewed
-	 * @return string
-	 * @throws \Exception
-	 */
-	public function getToolbarTemplate( $revisionId ) {
-		global $wgCityId;
-
-		$params = [
-			'toolbarTitle' => wfMessage( 'content-review-diff-toolbar-title' )->plain(),
-			'wikiId' => $wgCityId,
-			'pageId' => $this->getTitle()->getArticleID(),
-			'approveStatus' => ReviewModel::CONTENT_REVIEW_STATUS_APPROVED,
-			'buttonApproveText' => wfMessage( 'content-review-diff-approve' )->plain(),
-			'rejectStatus' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED,
-			'buttonRejectText' => wfMessage( 'content-review-diff-reject' )->plain(),
-			'escalateStatus' => ReviewModel::CONTENT_REVIEW_STATUS_ESCALATED,
-			'buttonEscalateText' => wfMessage( 'content-review-diff-escalate' )->plain(),
-			'talkpageUrl' => $this->prepareProvideFeedbackLink( $this->getTitle(), $revisionId ),
-			'talkpageLinkText' => wfMessage( 'content-review-diff-toolbar-talkpage' )->plain(),
-			'guidelinesUrl' => wfMessage( 'content-review-diff-toolbar-guidelines-url' )->useDatabase( false )->plain(),
-			'guidelinesLinkText' => wfMessage( 'content-review-diff-toolbar-guidelines' )->plain(),
-		];
-
-
-
-		return \MustacheService::getInstance()->render( self::CONTENT_REVIEW_TOOLBAR_TEMPLATE_PATH, $params );
-	}
-
-	/**
-	 * Link for adding new section on script talk page. Prefilled with standard explanation of rejection.
-	 * @param \Title $title Title object of JS page
-	 * @param int $revisionId
-	 * @return string full link to edit page
-	 */
-	public function prepareProvideFeedbackLink( \Title $title, $revisionId = 0 ) {
-		$params = [
-			'action' => 'edit',
-			'section' => 'new',
-			'useMessage' => 'content-review-rejection-explanation',
-		];
-
-		if ( (int)$revisionId !== 0 ) {
-			$params['messageParams'] = [
-				1 => wfMessage( 'content-review-rejection-explanation-title' )->params( $revisionId )->escaped(),
-				2 => $title->getFullURL( "oldid={$revisionId}" ),
-				3 => $revisionId,
-			];
-		}
-
-		return $title->getTalkPage()->getFullURL( $params );
-	}
-
-	/**
-	 * Returns an ID of a revision that is currently being reviewed. It is either a value of
-	 * `diff` URL parameter or `oldid` if `diff` is not present.
-	 * @param IRequest $request An object of a class implementing the IRequest interface
-	 * @return null|int
-	 */
-	public function getCurrentlyReviewedRevisionId( IRequest $request ) {
-		$revisionId = $request->getVal( 'diff' );
-		if ( $revisionId === null ) {
-			$revisionId = $request->getVal( 'oldid' );
-		}
-		return $revisionId;
 	}
 
 	public function purgeReviewedJsPagesTimestamp() {

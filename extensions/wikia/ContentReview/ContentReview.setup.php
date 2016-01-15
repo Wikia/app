@@ -43,6 +43,7 @@ $wgGroupPermissions['user']['content-review-test-mode'] = true;
  */
 $wgAutoloadClasses['ContentReviewApiController'] = __DIR__ . '/controllers/ContentReviewApiController.class.php';
 $wgAutoloadClasses['JSPagesSpecialController'] = __DIR__ . '/controllers/JSPagesSpecialController.class.php';
+$wgAutoloadClasses['Wikia\ContentReview\ContentReviewDiffPage'] = __DIR__ . '/controllers/ContentReviewDiffPage.class.php';
 
 /**
  * Special page

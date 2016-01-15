@@ -85,6 +85,7 @@ class ContentReviewService extends \WikiaService {
 	}
 
 	public function escalateReview( $wikiId, $pageId, $revisionId ) {
-
+		$reviewModel = new ReviewModel();
+		return $reviewModel->escalateReview( $wikiId, $pageId, $revisionId );
 	}
 }

@@ -33,8 +33,10 @@ $messages['en'] = [
 	'content-review-diff-approve' => 'Approve',
 	'content-review-diff-reject' => 'Reject',
 	'content-review-diff-escalate' => 'Escalate!',
+	'content-review-diff-revision-escalated' => '(escalated)',
 	'content-review-diff-approve-confirmation' => 'Reviewed code has been approved. Go back to [[w:c:dev:Special:ContentReview|Special:ContentReview]]',
 	'content-review-diff-reject-confirmation' => 'Reviewed code has been rejected. [$1 Provide feedback] or go back to [[w:c:dev:Special:ContentReview|Special:ContentReview]]',
+	'content-review-diff-escalate-confirmation' => 'The review has been escalated and developers were notified. You can monitor the #js-review-tool Slack channel.',
 	'content-review-diff-page-error' => 'Something went wrong. Please try again later.',
 	'content-review-diff-already-done' => 'You are trying to make changes to the revision that isn\'t in review anymore.',
 

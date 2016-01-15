@@ -14,13 +14,11 @@ class ReviewModel extends ContentReviewBaseModel {
 			CONTENT_REVIEW_STATUS_IN_REVIEW = 2,
 			CONTENT_REVIEW_STATUS_APPROVED = 3,
 			CONTENT_REVIEW_STATUS_REJECTED = 4,
-			CONTENT_REVIEW_STATUS_AUTOAPPROVED = 5,
-			CONTENT_REVIEW_STATUS_ESCALATED = 6;
+			CONTENT_REVIEW_STATUS_AUTOAPPROVED = 5;
 
 	public static $unreviewedStatuses = [
 		self::CONTENT_REVIEW_STATUS_UNREVIEWED,
 		self::CONTENT_REVIEW_STATUS_IN_REVIEW,
-		self::CONTENT_REVIEW_STATUS_ESCALATED,
 	];
 
 	public function getPagesStatuses( $wikiId ) {
@@ -242,6 +240,7 @@ class ReviewModel extends ContentReviewBaseModel {
 					'wikiId' => (int)$row->wiki_id,
 					'pageId' => (int)$row->page_id,
 					'status' => (int)$row->status,
+					'escalated' => (bool)$row->escalated,
 				];
 			} );
 
@@ -293,6 +292,31 @@ class ReviewModel extends ContentReviewBaseModel {
 			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
 			->AND_( 'page_id' )->EQUAL_TO( $pageId )
+			->run( $db );
+
+		if ( $result ) {
+			$db->commit();
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Sets the `escalated` flag to true for a given revision.
+	 * @param $wikiId
+	 * @param $pageId
+	 * @param $revisionId
+	 * @return bool|mixed
+	 */
+	public function escalateReview( $wikiId, $pageId, $revisionId ) {
+		$db = $this->getDatabaseForWrite();
+
+		$result = ( new \WikiaSQL() )
+			->UPDATE( self::CONTENT_REVIEW_STATUS_TABLE )
+			->SET( 'escalated', 1 )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->AND_( 'page_id' )->EQUAL_TO( $pageId )
+			->AND_( 'revision_id' )->EQUAL_TO( $revisionId )
 			->run( $db );
 
 		if ( $result ) {

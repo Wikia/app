@@ -13,7 +13,6 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		ReviewModel::CONTENT_REVIEW_STATUS_APPROVED => 'content-review-status-approved',
 		ReviewModel::CONTENT_REVIEW_STATUS_REJECTED => 'content-review-status-rejected',
 		ReviewModel::CONTENT_REVIEW_STATUS_AUTOAPPROVED => 'content-review-status-autoapproved',
-		ReviewModel::CONTENT_REVIEW_STATUS_ESCALATED => 'content-review-status-escalated',
 		/**
 		 * The `live` index is introduced this way deliberately since it is not an actual status
 		 * of a review, it is used only for presentational purposes.
@@ -51,7 +50,7 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 
 		$this->getOutput()->setPageTitle( wfMessage( 'content-review-special-title' )->plain() );
 
-		Wikia::addAssetsToOutput( 'content_review_special_page_scssdev.' );
+		Wikia::addAssetsToOutput( 'content_review_special_page_scss' );
 
 		$wikiId = $this->getPar();
 
@@ -113,9 +112,7 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 
 				$review['hide'] = $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
 					&& isset( $reviewsRaw[$reviewKey] );
-				$review['escalated'] = $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_ESCALATED;
-
-
+				$review['escalated'] = (bool)$review['escalated'];
 				$reviews[$wikiId][] = $review;
 			} else {
 				/**
