@@ -7,10 +7,10 @@
 
 class InsightsFlagsModel extends InsightsModel {
 	const INSIGHT_TYPE = 'flags';
-	const INSIGHT_USAGE = InsightsModel::INSIGHTS_USAGE_INFORMATIVE;
 
 	private static $insightConfig = [
-		InsightsConfig::PAGEVIEWS => true
+		InsightsConfig::PAGEVIEWS => true,
+		InsightsConfig::USAGE => InsightsModel::INSIGHTS_USAGE_INFORMATIVE
 	];
 
 	public function __construct( $subtype = null ) {

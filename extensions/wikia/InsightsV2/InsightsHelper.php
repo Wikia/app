@@ -195,14 +195,19 @@ class InsightsHelper {
 		$highlightedInsighs = self::getHighlightedInsights();
 
 		foreach ( $insightsPages as $key => $class ) {
-			$insightsList[$key] = [
-				'subtitle' => self::INSIGHT_SUBTITLE_MSG_PREFIX . $key,
-				'description' => self::INSIGHT_DESCRIPTION_MSG_PREFIX . $key,
-				'count' => $class::INSIGHT_USAGE == InsightsModel::INSIGHTS_USAGE_ACTIONABLE
+			if ( class_exists( $class ) ) {
+				$insightModel =  new $class();
+				$count = $insightModel->getConfig()->getInsightUsage() == InsightsModel::INSIGHTS_USAGE_ACTIONABLE
 					? $this->prepareCountDisplay( $insightsCountService->getCount( $key ) )
-					: false,
-				'highlighted' => in_array( $key, $highlightedInsighs )
-			];
+					: false;
+
+				$insightsList[$key] = [
+					'subtitle' => self::INSIGHT_SUBTITLE_MSG_PREFIX . $key,
+					'description' => self::INSIGHT_DESCRIPTION_MSG_PREFIX . $key,
+					'count' => $count,
+					'highlighted' => in_array( $key, $highlightedInsighs )
+				];
+			}
 		}
 		return $insightsList;
 	}

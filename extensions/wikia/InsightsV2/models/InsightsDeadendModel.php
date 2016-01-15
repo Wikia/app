@@ -7,7 +7,6 @@
  */
 class InsightsDeadendModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'deadendpages';
-	const INSIGHT_USAGE = InsightsModel::INSIGHTS_USAGE_ACTIONABLE;
 
 	private static $insightConfig = [
 		InsightsConfig::DISPLAYFIXITMSG => true,

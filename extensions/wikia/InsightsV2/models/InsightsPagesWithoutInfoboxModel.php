@@ -7,7 +7,6 @@
  */
 class InsightsPagesWithoutInfoboxModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'pageswithoutinfobox';
-	const INSIGHT_USAGE = InsightsModel::INSIGHTS_USAGE_ACTIONABLE;
 
 	private static $insightConfig = [
 		InsightsConfig::PAGEVIEWS => true

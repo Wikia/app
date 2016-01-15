@@ -7,7 +7,6 @@
  */
 class InsightsWantedpagesModel extends InsightsQueryPageModel {
 	const INSIGHT_TYPE = 'wantedpages';
-	const INSIGHT_USAGE = InsightsModel::INSIGHTS_USAGE_ACTIONABLE;
 
 	private static $insightConfig = [
 		InsightsConfig::DISPLAYFIXITMSG => true,
