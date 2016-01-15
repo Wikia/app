@@ -15,30 +15,30 @@
 			</div>
 			<div class="hubs-container table-cell" id="hubsEntryPoint">
 				<?= $app->renderView( 'GlobalNavigation', 'hubsMenu' ) ?>
-	</div>
-	<div class="search-container table-cell">
-		<?= $app->renderView( 'GlobalNavigation', 'searchIndex' ); ?>
-	</div>
-	<div class="account-navigation-container table-cell">
-		<?= $app->renderView( 'GlobalNavigationAccountNavigation', 'index' ) ?>
-	</div>
-	<?php if ( !$isAnon && $notificationsEnabled ): ?>
-		<div class="notifications-container table-cell" id="notificationsEntryPoint">
-			<?= $app->renderView( 'GlobalNavigationWallNotifications', 'Index' ); ?>
+			</div>
+			<div class="search-container table-cell">
+				<?= $app->renderView( 'GlobalNavigation', 'searchIndex' ); ?>
+			</div>
+			<div class="account-navigation-container table-cell">
+				<?= $app->renderView( 'GlobalNavigationAccountNavigation', 'index' ) ?>
+			</div>
+			<?php if ( !$isAnon && $notificationsEnabled ): ?>
+				<div class="notifications-container table-cell" id="notificationsEntryPoint">
+					<?= $app->renderView( 'GlobalNavigationWallNotifications', 'Index' ); ?>
+				</div>
+			<?php endif; ?>
+			<div class="start-wikia-container table-cell">
+				<a href="<?= htmlspecialchars( $createWikiUrl ) ?>"
+					class="start-wikia"
+					title="<?= wfMessage( 'global-navigation-create-wiki' )->escaped(); ?>"
+					data-id="start-wikia">
+					<span><?= ( wfMessage( 'global-navigation-create-wiki' )->escaped() ); ?></span>
+				</a>
+			</div>
+			<? if ( $isGameStarLogoEnabled ): ?>
+				<a class="gamestar-logo" href="http://gamestar.de/"></a>
+			<? endif; ?>
 		</div>
-	<?php endif; ?>
-	<div class="start-wikia-container table-cell">
-		<a href="<?= htmlspecialchars( $createWikiUrl ) ?>"
-		   class="start-wikia"
-		   title="<?= wfMessage( 'global-navigation-create-wiki' )->escaped(); ?>"
-		   data-id="start-wikia">
-			<span><?= ( wfMessage( 'global-navigation-create-wiki' )->escaped() ); ?></span>
-		</a>
-	</div>
-	<? if ( $isGameStarLogoEnabled ): ?>
-		<a class="gamestar-logo" href="http://gamestar.de/"></a>
-	<? endif; ?>
-	</div>
 	</nav>
 <?php else : // wgEnableGlobalNav2016 ?>
 	<nav class="global-navigation global-navigation-2016" id="globalNavigation">
