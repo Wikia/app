@@ -176,14 +176,8 @@ class ContentReviewApiController extends WikiaApiController {
 		$diff = $this->request->getInt( 'diff' );
 		$oldid = $this->request->getInt( 'oldid' );
 
-		if ( $diff === 0 ) {
-			$revisionId = $oldid;
-		} else {
-			$revisionId = $diff;
-		}
-
 		$service = new ContentReviewService();
-		if ( $service->escalateReview( $wikiId, $pageId, $revisionId ) ) {
+		if ( $service->escalateReview( $wikiId, $pageId, $diff, $oldid ) ) {
 			$this->notification = wfMessage( 'content-review-diff-escalate-confirmation' )->escaped();
 		}
 	}

@@ -8,7 +8,8 @@
 
 namespace Wikia\ContentReview;
 
-use Wikia\ContentReview\Models\ReviewModel,
+use Wikia\ContentReview\Integrations\SlackIntegration,
+	Wikia\ContentReview\Models\ReviewModel,
 	Wikia\ContentReview\Models\ReviewLogModel,
 	Wikia\ContentReview\Models\CurrentRevisionModel;
 
@@ -84,8 +85,52 @@ class ContentReviewService extends \WikiaService {
 		}
 	}
 
-	public function escalateReview( $wikiId, $pageId, $revisionId ) {
+	public function escalateReview( $wikiId, $pageId, $diff, $oldid ) {
+		$title = \GlobalTitle::newFromId( $pageId, $wikiId );
+		if ( !$title instanceof \GlobalTitle ) {
+			return false;
+		}
+
+		if ( $diff === 0 ) {
+			$revisionId = $oldid;
+		} else {
+			$revisionId = $diff;
+		}
+
 		$reviewModel = new ReviewModel();
-		return $reviewModel->escalateReview( $wikiId, $pageId, $revisionId );
+		$sqlStatus = $reviewModel->escalateReview( $wikiId, $pageId, $revisionId );
+
+		if ( !$sqlStatus ) {
+			return false;
+		} else {
+			$revisionURL = $title->getFullURL( [
+				'diff' => $diff,
+				'oldid' => $oldid,
+				Helper::CONTENT_REVIEW_PARAM => 1,
+			] );
+
+			$wikiRow = \WikiFactory::getWikiByID( $wikiId );
+			$slackIntegration = new SlackIntegration();
+			$data = [
+				'fallback' => 'A review was escalated. Please, visit Special:ContentReview to help with it.',
+				'pretext' => "Attention <!here>! A JS change has just been escalated!\nTo review the revision follow <{$revisionURL}|this link>.",
+				'color' => 'warning',
+				'fields' => [
+					[
+						'title' => 'Wiki name',
+						'value' => $wikiRow->city_title,
+						'short' => true,
+					],
+					[
+						'title' => 'Page title',
+						'value' => "<{$title->getFullURL()}|{$title->getPrefixedText()}>",
+						'short' => true,
+					],
+				],
+			];
+			$slackResponse = $slackIntegration->sendMessage( $data );
+
+			return $slackResponse->getStatus() === 200;
+		}
 	}
 }

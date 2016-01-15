@@ -65,6 +65,11 @@ $wgAutoloadClasses['Wikia\ContentReview\ContentReviewService'] = __DIR__ . '/ser
 $wgAutoloadClasses['Wikia\ContentReview\ContentReviewStatusesService'] = __DIR__ . '/services/ContentReviewStatusesService.class.php';
 
 /**
+ * Integrations
+ */
+$wgAutoloadClasses['Wikia\ContentReview\Integrations\SlackIntegration'] = __DIR__ . '/integrations/SlackIntegration.class.php';
+
+/**
  * Helpers
  */
 $wgAutoloadClasses['Wikia\ContentReview\Helper'] = __DIR__ . '/ContentReviewHelper.php';
