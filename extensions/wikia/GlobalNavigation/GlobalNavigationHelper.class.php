@@ -122,7 +122,7 @@ class GlobalNavigationHelper {
 			[1, 3] // max 1 entry with 3 links
 		);
 
-		$exploreNodes[] = $WAMLinkAndLabel;
+		$exploreNodes[0]['children'][] = $exploreDropdownLinks[0];
 
 		return [
 			'hubs' => $hubsNodes,
@@ -134,7 +134,7 @@ class GlobalNavigationHelper {
 		$wamService = new WAMService();
 		$wamDates = $wamService->getWamIndexDates();
 
-		if ( $lang === 'en' || empty( $wamService->getWAMLanguages( $wamDates['max_date'] )[$lang] ) ) {
+		if ( $lang === 'en' || !in_array( $lang, $wamService->getWAMLanguages( $wamDates['max_date'] ) ) ) {
 			return WAMService::WAM_LINK;
 		} else {
 			return WAMService::WAM_LINK . self::WAM_LANG_CODE_PARAMETER . $lang;
