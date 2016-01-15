@@ -61,10 +61,21 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		rubiconLibraryUrl = '//ads.rubiconproject.com/header/7450.js',
 		slots = {};
 
+	function compareTiers(a,b) {
+		var aMatches = /^(\d+)/.exec(a),
+			bMatches = /^(\d+)/.exec(b);
+
+		if (aMatches && bMatches) {
+			return parseInt(aMatches[1], 10) > parseInt(bMatches[1], 10) ? 1 : -1;
+		}
+
+		return 0;
+	}
+
 	function addSlotPrice(slotName, rubiconTargeting) {
 		rubiconTargeting.forEach(function (params) {
 			if (params.key === rubiconTierKey) {
-				priceMap[slotName] = params.values.join(',');
+				priceMap[slotName] = params.values.sort(compareTiers).join(',');
 			}
 		});
 	}
@@ -137,11 +148,16 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 
 	function getSlotParams(slotName) {
 		var targeting,
+			values,
 			parameters = {};
 
 		targeting = slots[slotName].getAdServerTargeting();
 		targeting.forEach(function (params) {
 			if (params.key !== rubiconElementKey) {
+				values = params.values;
+				if (typeof values.sort === 'function') {
+					values.sort(compareTiers);
+				}
 				parameters[params.key] = params.values;
 			}
 		});
