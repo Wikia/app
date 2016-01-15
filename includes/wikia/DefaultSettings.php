@@ -1246,13 +1246,6 @@ $wgAdDriverEnableRubiconFastlane = true;
 $wgAdDriverRubiconFastlaneCountries = null;
 
 /**
- * @name $wgAdDriverRubiconFastlaneCountriesMobile
- * Enables RubiconFastlane on mobile in these countries (given wgAdDriverEnableRubiconFastlane is also true).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverRubiconFastlaneCountriesMobile = null;
-
-/**
  * @name $wgAdPageLevelCategoryLangs
  * Enables DART category page param for these content languages
  * "Utility" var, don't change it here.
