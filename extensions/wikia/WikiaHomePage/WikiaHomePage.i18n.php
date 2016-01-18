@@ -92,6 +92,9 @@ Be Original.',
 
 $messages['de'] = array(
 	'wikiahome-page-header-heading' => 'Erschaffe. Mach mit. Sei kreativ.',
+	'wikiahome-page-header-heading-mobile' => 'Erschaffe.
+Mach mit.
+Sei kreativ.',
 	'wikiahome-page-header-subheading' => 'Teile, was du kennst und liebst.',
 	'wikiahome-page-header-create-wiki-button' => 'Starte ein Wiki',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=de',
@@ -161,6 +164,9 @@ $messages['de'] = array(
 
 $messages['es'] = array(
 	'wikiahome-page-header-heading' => 'Crea. Colabora. Sé original.',
+	'wikiahome-page-header-heading-mobile' => 'Crea.
+Colabora.
+Sé original.',
 	'wikiahome-page-header-subheading' => 'Comparte tus conocimientos y lo que te gusta',
 	'wikiahome-page-header-create-wiki-button' => 'Crea un wiki',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=es',
@@ -236,6 +242,9 @@ $messages['es'] = array(
 
 $messages['fr'] = array(
 	'wikiahome-page-header-heading' => 'Créez. Collaborez. Soyez original.',
+	'wikiahome-page-header-heading-mobile' => 'Créez.
+Collaborez.
+Soyez original.',
 	'wikiahome-page-header-subheading' => 'Partagez ce que vous savez et aimez.',
 	'wikiahome-page-header-create-wiki-button' => 'Commencer un wiki',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=fr',
@@ -290,6 +299,9 @@ $messages['fr'] = array(
 
 $messages['pl'] = array(
 	'wikiahome-page-header-heading' => 'Twórz. Współpracuj. Bądź oryginalny.',
+	'wikiahome-page-header-heading-mobile' => 'Twórz.
+Współpracuj.
+Bądź oryginalny.',
 	'wikiahome-page-header-subheading' => 'Podziel się swoją wiedzą o tym, co kochasz. ',
 	'wikiahome-page-header-create-wiki-button' => 'Utwórz wiki',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=pl',
@@ -367,6 +379,9 @@ $messages['pl'] = array(
 
 $messages['ja'] = array(
 	'wikiahome-page-header-heading' => '作成。合作。独創的にする。',
+	'wikiahome-page-header-heading-mobile' => '作成。
+合作。
+独創的にする。',
 	'wikiahome-page-header-subheading' => 'あなたの知っていること、好きなことをシェアしよう',
 	'wikiahome-page-header-create-wiki-button' => 'ウィキアを始める',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=ja',
@@ -435,6 +450,7 @@ $messages['ja'] = array(
 $messages['qqq'] = array(
 	'wikiahome-desc' => '{{desc}}',
 	'wikiahome-page-header-heading' => 'The page title text in H1 tag on the top of the page',
+	'wikiahome-page-header-heading-mobile' => 'The page title text in H1 tag on the top of the page on the mobile skin.',
 	'wikiahome-page-header-subheading' => 'The page subtitle text in H4 tag below H1 tag',
 	'wikiahome-page-header-create-wiki-button' => 'A button label',
 	'wikiahome-page-header-create-wiki-button-destination' => 'URL for Special:CreateNewWiki on the language specific corporate wiki',
