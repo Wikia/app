@@ -48,8 +48,49 @@ class Helper {
 	 * @param array $shortcuts
 	 */
 	public function addShortcutKeys( $actionId , array &$shortcuts ) {
-		 if ( isset( $this->shortcutKeys[$actionId] ) ) {
-			 $shortcuts[$actionId] = $this->shortcutKeys[$actionId];
-		 }
-	 }
+		if ( isset( $this->shortcutKeys[$actionId] ) ) {
+			$shortcuts[$actionId] = $this->shortcutKeys[$actionId];
+		}
+	}
+
+	/**
+	 * Adds usable Special Pages from SpecialPageFactory and shortcut keys if available.
+	 * Not all actions needs to have shortcut key assigned.
+	 * @param array $actions
+	 * @param array $shortcuts
+	 * @return bool
+	 */
+	public function addSpecialPageActions( array &$actions, array &$shortcuts ) {
+		$context = \RequestContext::getMain();
+		$pages = \SpecialPageFactory::getUsablePages( $context->getUser() );
+		$helper = new Helper();
+
+		$groups = [ ];
+		foreach ( $pages as $page ) {
+			if ( $page->isListed() ) {
+				$group = \SpecialPageFactory::getGroup( $page );
+				$actionId = 'special:' . $page->getName();
+
+				$groups[$group][] = [
+					'id' => $actionId,
+					'caption' => $page->getDescription(),
+					'href' => $page->getTitle()->getFullURL(),
+				];
+
+				$helper->addShortcutKeys( $actionId, $shortcuts );
+			}
+		}
+
+		foreach ( $groups as $group => $entries ) {
+			$groupName = wfMessage( "specialpages-group-$group" )->plain();
+			$category = "Special Pages > $groupName";
+			foreach ( $entries as $entry ) {
+				$actions[] = array_merge( $entry, [
+					'category' => $category,
+				] );
+			}
+		}
+
+		return true;
+	}
  }

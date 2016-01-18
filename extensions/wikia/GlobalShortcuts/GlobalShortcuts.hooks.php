@@ -39,7 +39,7 @@ class Hooks {
 		$shortcuts = [];
 		$helper = new Helper();
 		$helper->addCurrentPageActions( $actions, $shortcuts );
-		$this->addSpecialPageActions( $actions, $shortcuts );
+		$helper->addSpecialPageActions( $actions, $shortcuts );
 
 		wfRunHooks( 'PageGetActions', [ &$actions, &$shortcuts ] );
 		$vars['wgWikiaPageActions'] = $actions;
@@ -50,40 +50,6 @@ class Hooks {
 
 	public function onWikiaHeaderButtons( &$buttons ) {
 		$buttons[] = \F::app()->renderView( 'GlobalShortcuts', 'renderHelpEntryPoint' );
-		return true;
-	}
-
-	private function addSpecialPageActions( &$actions, &$shortcuts ) {
-		$context = \RequestContext::getMain();
-		$pages = \SpecialPageFactory::getUsablePages( $context->getUser() );
-		$helper = new Helper();
-
-		$groups = [ ];
-		foreach ( $pages as $page ) {
-			if ( $page->isListed() ) {
-				$group = \SpecialPageFactory::getGroup( $page );
-				$actionId = 'special:' . $page->getName();
-
-				$groups[$group][] = [
-					'id' => $actionId,
-					'caption' => $page->getDescription(),
-					'href' => $page->getTitle()->getFullURL(),
-				];
-
-				$helper->addShortcutKeys( $actionId, $shortcuts );
-			}
-		}
-
-		foreach ( $groups as $group => $entries ) {
-			$groupName = wfMessage( "specialpages-group-$group" )->plain();
-			$category = "Special Pages > $groupName";
-			foreach ( $entries as $entry ) {
-				$actions[] = array_merge( $entry, [
-					'category' => $category,
-				] );
-			}
-		}
-
 		return true;
 	}
 
