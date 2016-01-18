@@ -250,8 +250,7 @@ $messages['qqq'] = array(
 	'global-navigation-local-search' => 'Local search value in search dropdown',
 	'global-navigation-global-search' => 'Local search value in search dropdown',
 	'global-navigation-search-wikia' => 'Placeholder inside search input in Global Navigation 2016',
-	'global-navigation-explore-wikia-link' => 'Link to fandom in Global Navigation which is also entry point to dropdown',
-	'global-navigation-explore-link-label' => 'Label for fandom link in Global Navigation which is also entry point to dropdown',
+	'global-navigation-explore-wikia-link-label' => 'Label for "Explore Wikia" link in Global Navigation which is also entry point to dropdown',
 );
 
 $messages['de'] = array(

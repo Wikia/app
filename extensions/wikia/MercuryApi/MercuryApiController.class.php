@@ -194,7 +194,9 @@ class MercuryApiController extends WikiaController {
 				'hubsLinks' => $navigationNodes['hubs'],
 				'exploreWikia' => $navigationNodes['exploreWikia'],
 				'exploreWikiaMenu' => $navigationNodes['exploreDropdown'],
-				'localNav' => $localNavigation
+				'localNav' => $localNavigation,
+				//@TODO this should be removed after XW-922 & XW-923 are released and old version is not cached
+				'navigation' => $localNavigation
 			];
 		}
 	}
