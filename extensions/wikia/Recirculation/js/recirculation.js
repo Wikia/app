@@ -18,7 +18,7 @@ define('ext.wikia.recirculation.recirculation', [
 		});
 	}
 
-	function fandomPosts(type, element) {
+	function injectFandomPosts(type, element) {
 		nirvana.sendRequest({
 			controller: 'Recirculation',
 			method: 'index',
@@ -38,10 +38,10 @@ define('ext.wikia.recirculation.recirculation', [
 
 		switch (group) {
 			case 'POPULAR':
-				fandomPosts('popular', element);
+				injectFandomPosts('popular', element);
 				break;
 			case 'SHARES':
-				fandomPosts('shares', element);
+				injectFandomPosts('shares', element);
 				break;
 			case 'TABOOLA':
 				taboolaHelper.initializeWidget({
