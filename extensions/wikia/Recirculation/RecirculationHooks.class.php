@@ -6,7 +6,7 @@
 class RecirculationHooks {
 
 	/**
-	 * Insert the VideosModule on to the right rail
+	 * Insert Recirculation on to the right rail
 	 * @param array $modules
 	 * @return bool
 	 */
@@ -28,6 +28,11 @@ class RecirculationHooks {
 
 		wfProfileOut(__METHOD__);
 
+		return true;
+	}
+
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+		Wikia::addAssetsToOutput( 'recirculation_scss' );
 		return true;
 	}
 

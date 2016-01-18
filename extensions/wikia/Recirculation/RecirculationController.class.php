@@ -17,10 +17,13 @@ class RecirculationController extends WikiaController {
 	public function index() {
 		$fandomDataService = FandomDataService::getInstance();
 
-		$posts = $fandomDataService->getData( $this->type );
+		$posts = $fandomDataService->getPosts( $this->type );
 
 		if (count($posts) > 0) {
-			$this->response->setVal( 'posts', $posts );
+			$this->response->setData( [
+				'title'	=> wfMessage( 'recirculation-fandom-title' )->plain(),
+				'posts' => $posts
+			] );
 			return true;
 		} else {
 			return false;

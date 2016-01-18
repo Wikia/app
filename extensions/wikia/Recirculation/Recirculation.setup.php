@@ -13,6 +13,7 @@ $wgAutoloadClasses['RecirculationController'] =  __DIR__ . '/RecirculationContro
 $wgAutoloadClasses['RecirculationHooks'] =  __DIR__ . '/RecirculationHooks.class.php';
 $wgHooks['GetRailModuleList'][] = 'RecirculationHooks::onGetRailModuleList';
 $wgHooks['OasisSkinAssetGroups'][] = 'RecirculationHooks::onOasisSkinAssetGroups';
+$wgHooks['BeforePageDisplay'][] = 'RecirculationHooks::onBeforePageDisplay';
 
 // i18n
 $wgExtensionMessagesFiles['Recirculation'] = __DIR__ . '/Recirculation.i18n.php';

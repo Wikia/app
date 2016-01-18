@@ -29,7 +29,7 @@ class FandomDataService {
 	 * @param string $type
 	 * @return an array of posts
 	 */
-	public function getData( $type ) {
+	public function getPosts( $type ) {
 		$memcKey = wfMemcKey(__METHOD__, $type, self::MCACHE_VER);
 
 		$data = WikiaDataAccess::cache(

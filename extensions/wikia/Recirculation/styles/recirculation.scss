@@ -1,0 +1,21 @@
+@import 'skins/shared/color';
+
+.WikiaRail .recirculation-rail {
+	.title-thumbnail {
+		margin-bottom: 15px;
+	}
+
+	.image-thumbnail {
+		margin-bottom: 7px;
+	}
+
+	.title a {
+		color: $color-text;
+		display: block;
+		font-size: 15px;
+
+		&:hover {
+			color: $color-links;
+		}
+	}
+}
