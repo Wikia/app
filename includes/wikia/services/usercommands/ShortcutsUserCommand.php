@@ -8,10 +8,12 @@ class ShortcutsUserCommand extends UserCommand {
 	protected $defaultRenderType = 'link';
 
 	protected function buildData() {
-		$loggedIn = F::app()->wg->user->isLoggedIn();
+		global $wgEnableGlobalShortcutsExt;
 
-		$this->available = $loggedIn;
-		$this->enabled = $loggedIn;
+		$isEnabled = F::app()->wg->user->isLoggedIn() && !empty( $wgEnableGlobalShortcutsExt );
+
+		$this->available = $isEnabled;
+		$this->enabled = $isEnabled;
 		$this->caption = wfMessage( 'global-shortcuts-name' )->escaped();
 	}
 
