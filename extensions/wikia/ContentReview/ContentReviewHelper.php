@@ -16,8 +16,6 @@ class Helper extends \ContextSource {
 
 	const DEV_WIKI_ID = 7931;
 
-	public static $pageToStatus = [];
-
 	/**
 	 * Returns data about all approved revisions (of JS pages) for current wiki
 	 *
