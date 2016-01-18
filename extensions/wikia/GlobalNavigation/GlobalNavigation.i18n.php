@@ -15,7 +15,7 @@ $messages['en'] = array(
 	'global-navigation-menu-hubs' => '*http://gameshub.wikia.com/wiki/Games_Hub|Games|games
 *http://movieshub.wikia.com/wiki/Movies_Hub|Movies|movies
 *http://gameshub.wikia.com/wiki/TV_Hub|TV|tv',
-	'global-navigation-wam-link-label' => 'Top Communities',
+	'global-navigation-wam-link-label' => 'Trending Wikias',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
@@ -242,7 +242,7 @@ $messages['qqq'] = array(
 	'global-navigation-sign-in' => 'Text on the link that shows sign-in modal',
 	'global-navigation-account-navigation-options' => 'Sentence that says to register or sign-in, $1 is an anchor with "global-navigation-register" title, $2 is an anchor with "global-navigation-sign-in" title',
 	'global-navigation-menu-hubs' => 'Global Navigation Hubs/Links Menu structure - For example see English translation.',
-	'global-navigation-wam-link-label' => 'Label for "Top Communities" link to WAM in Global Navigation',
+	'global-navigation-wam-link-label' => 'Label for "Trending Wikias" link to WAM in Global Navigation',
 	'global-navigation-community-link' => 'Link to Community Central in Global Navigation',
 	'global-navigation-community-link-label' => 'Label for Community Central link in Global Navigation',
 	'global-navigation-hubs-menu' => 'Global Navigation Hubs Menu structure. For example see English translation.',
