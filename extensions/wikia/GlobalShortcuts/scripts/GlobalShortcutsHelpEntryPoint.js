@@ -1,11 +1,7 @@
 require(['GlobalShortcutsHelp'], function (gs) {
 	'use strict';
 	function init() {
-		var $throbber = $('.global-shortcuts-help-entry-point-throbber');
-		if ($throbber.length > 0) {
-			$('.global-shortcuts-help-entry-point').show().click(gs.open);
-			$throbber.remove();
-		}
+		$('#WikiaBar .tools').on('click', 'a[data-name="global-shortcuts-help-entry-point"]', gs.open);
 	}
 	$(init);
 });

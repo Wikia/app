@@ -1,14 +1,12 @@
 define('GlobalShortcutsHelp',
-	['mw', 'wikia.nirvana', 'wikia.mustache', 'wikia.throbber', 'GlobalShortcuts', 'PageActions'],
-	function (mw, nirvana, mustache, throbber, GlobalShortcuts, PageActions) {
+	['mw', 'wikia.nirvana', 'wikia.mustache', 'GlobalShortcuts', 'PageActions'],
+	function (mw, nirvana, mustache, GlobalShortcuts, PageActions) {
 		'use strict';
 
 		var modalConfig,
 			templates = {};
 
 		function open() {
-			throbber.cover();
-
 			$.when(
 				loadTemplates()
 			).done(handleRequestsForModal);
@@ -96,7 +94,6 @@ define('GlobalShortcutsHelp',
 		function processInstance(modalInstance) {
 			/* Show the modal */
 			modalInstance.show();
-			throbber.uncover();
 			// Add footer hint
 			modalInstance.$element.find('footer')
 				.html('Press <span class="key">.</span> to explore shortcuts.');

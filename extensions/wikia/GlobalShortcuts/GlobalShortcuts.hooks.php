@@ -48,11 +48,6 @@ class Hooks {
 		return true;
 	}
 
-	public function onWikiaHeaderButtons( &$buttons ) {
-		$buttons[] = \F::app()->renderView( 'GlobalShortcuts', 'renderHelpEntryPoint' );
-		return true;
-	}
-
 	private function addSpecialPageActions( &$actions, &$shortcuts ) {
 		$context = \RequestContext::getMain();
 		$pages = \SpecialPageFactory::getUsablePages( $context->getUser() );

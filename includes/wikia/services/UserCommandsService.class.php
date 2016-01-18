@@ -11,11 +11,6 @@
 			$this->cache = array();
 		}
 
-		/**
-		 * @param string $name Command ID
-		 * @param array $options (optional)
-		 * @return UserCommand
-		 */
 		public function get( $name, $options = array() ) {
 			$hash = $name . ($options ? serialize($options) : '');
 			if (empty($this->cache[$hash])) {
@@ -34,7 +29,7 @@
 						}
 						break;
 					case "Action":
-						if (in_array($data,array("CustomizeToolbar", "DevInfo"))) {
+						if (in_array($data,array("CustomizeToolbar", "DevInfo", "Shortcuts"))) {
 							$className = "{$data}UserCommand";
 						}
 						break;
@@ -59,3 +54,4 @@ $wgAutoloadClasses['CustomizeToolbarUserCommand'] = dirname(__FILE__) . '/userco
 $wgAutoloadClasses['MenuUserCommand'] = dirname(__FILE__) . '/usercommands/MenuUserCommand.php';
 // Developer Info a.k.a. PerformanceStats (BugId:5497)
 $wgAutoloadClasses['DevInfoUserCommand'] = dirname( __FILE__ ) . '/usercommands/DevInfoUserCommand.php';
+$wgAutoloadClasses['ShortcutsUserCommand'] = dirname( __FILE__ ) . '/usercommands/ShortcutsUserCommand.php';
