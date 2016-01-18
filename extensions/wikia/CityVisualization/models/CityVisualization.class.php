@@ -373,16 +373,18 @@ class CityVisualization extends WikiaModel {
 		return $row['city_flags'];
 	}
 
-	public function removeFlag($wikiId, $langCode, $flag) {
-		wfProfileIn(__METHOD__);
-		$mdb = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
-
-		$sql = 'update ' . self::CITY_VISUALIZATION_TABLE_NAME . ' set city_flags = (city_flags & ~' . $flag . ') where city_id = ' . $wikiId. ' and city_lang_code = "' . $langCode . '"';;
-
-		$result = $mdb->query($sql);
-		$mdb->commit(__METHOD__);
-
-		wfProfileOut(__METHOD__);
+	public function removeFlag( $wikiId, $langCode, $flag ) {
+		wfProfileIn( __METHOD__ );
+		$mdb = wfGetDB( DB_MASTER, [], $this->wg->ExternalSharedDB );
+		$result = $mdb->update( self::CITY_VISUALIZATION_TABLE_NAME,
+			[ "city_flags = {$mdb->bitAnd( 'city_flags', $mdb->bitNot( $flag ) )}" ],
+			[
+				'city_id' => $wikiId,
+				'city_lang_code' => $langCode,
+			]
+		);
+		$mdb->commit( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $result;
 	}
 
