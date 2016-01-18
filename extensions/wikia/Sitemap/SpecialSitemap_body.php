@@ -195,7 +195,6 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		$out = "";
 		$out .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-		$out .= sprintf( "<!-- generated on fly by %s -->\n", $this->mTitle->getFullURL() );
 		$out .= "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
 
 		header( "Content-type: application/xml; charset=UTF-8" );
