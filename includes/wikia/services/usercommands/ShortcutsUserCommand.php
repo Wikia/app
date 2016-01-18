@@ -1,11 +1,6 @@
 <?php
 /*
- * @author Michał "Mix" Roszka <michal(at)wikia-inc.com>
- * @date 2011-05-23
- * 
- * Displays performance stats (ShowPerformaceStats extension written by Sean)
- * as an Oasis Toolbar Service so users can turn the stats on or off via
- * Customize dialog.
+ * Displays Global Shortcuts in toolbar
  */
 class ShortcutsUserCommand extends UserCommand {
     
