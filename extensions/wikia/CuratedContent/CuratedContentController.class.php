@@ -505,46 +505,75 @@ class CuratedContentController extends WikiaController {
 		}
 	}
 
-	public function getData( ) {
-		global $wgWikiaCuratedContent, $wgUser;
+	public function getWithWikiaMetadata() {
+		global $wgUser;
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		// TODO: CONCF-961 Set more restrictive header
 		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 
 		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
-			$data = [];
-			if ( !empty( $wgWikiaCuratedContent ) && is_array( $wgWikiaCuratedContent ) ) {
-				foreach ( $wgWikiaCuratedContent as $section ) {
-					// update information about node type
-					$section['node_type'] = 'section';
+			$curatedContentData = $this->prepareCuratedContentSections();
+			$wikiaMetadata = [
+					'node_type' => 'wikia_description',
+					'description' => 'my awesome wikia',
+					'image_url'=> 'www.lol.com'
+			];
+			$this->response->setVal( 'data', $curatedContentData );
+			$this->response->setVal( 'metadata', $wikiaMetadata );
+		} else {
+			$this->response->setCode( \Wikia\Service\ForbiddenException::CODE );
+			$this->response->setVal( 'message', 'No permissions to access curated content' );
+		}
+	}
 
-					// rename $section['title'] to $section['label']
-					$section['label'] = $section['title'];
-					unset( $section['title'] );
+	public function getData( ) {
+		global $wgUser;
 
-					if ( !empty( $section['label'] ) && empty( $section['featured'] ) ) {
-						// load image for curated content sections (not optional, not featured)
-						$section['image_url'] = CuratedContentHelper::findImageUrl( $section['image_id'] );
-					}
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		// TODO: CONCF-961 Set more restrictive header
+		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 
-					foreach ( $section['items'] as $i => $item ) {
-						// load image for all items
-						$section['items'][$i]['image_url'] = CuratedContentHelper::findImageUrl( $item['image_id'] );
-
-						// update information about node type
-						$section['items'][$i]['node_type'] = 'item';
-					}
-
-					$data[] = $section;
-				}
-			}
-
+		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
+			$data = $this->prepareCuratedContentSections();
 			$this->response->setVal( 'data', $data );
 		} else {
 			$this->response->setCode( \Wikia\Service\ForbiddenException::CODE );
 			$this->response->setVal( 'message', 'No permissions to access curated content' );
 		}
+	}
+
+	private function prepareCuratedContentSections() {
+		global $wgWikiaCuratedContent;
+
+		$data = [];
+		if ( !empty( $wgWikiaCuratedContent ) && is_array( $wgWikiaCuratedContent ) ) {
+			foreach ( $wgWikiaCuratedContent as $section ) {
+				// update information about node type
+				$section['node_type'] = 'section';
+
+				// rename $section['title'] to $section['label']
+				$section['label'] = $section['title'];
+				unset( $section['title'] );
+
+				if ( !empty( $section['label'] ) && empty( $section['featured'] ) ) {
+					// load image for curated content sections (not optional, not featured)
+					$section['image_url'] = CuratedContentHelper::findImageUrl( $section['image_id'] );
+				}
+
+				foreach ( $section['items'] as $i => $item ) {
+					// load image for all items
+					$section['items'][$i]['image_url'] = CuratedContentHelper::findImageUrl( $item['image_id'] );
+
+					// update information about node type
+					$section['items'][$i]['node_type'] = 'item';
+				}
+
+				$data[] = $section;
+			}
+		}
+
+		return $data;
 	}
 
 	private function getCuratedContentForWiki( $wikiID ) {
