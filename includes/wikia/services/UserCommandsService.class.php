@@ -2,13 +2,10 @@
 
 	class UserCommandsService {
 		
-		protected $cache = array();
-		
-		public function __construct() {
-		}
+		protected $cache = [];
 		
 		public function clearCache() {
-			$this->cache = array();
+			$this->cache = [];
 		}
 
 		/**
@@ -16,25 +13,25 @@
 		 * @param array $options (optional)
 		 * @return UserCommand
 		 */
-		public function get( $name, $options = array() ) {
-			$hash = $name . ($options ? serialize($options) : '');
-			if (empty($this->cache[$hash])) {
-				list($type,$data) = explode(':',$name,2);
+		public function get( $name, $options = [] ) {
+			$hash = $name . ( $options ? serialize( $options ) : '' );
+			if ( empty( $this->cache[$hash] ) ) {
+				list( $type, $data ) = explode( ':', $name, 2 );
                                 
 				$className = false;
-				switch ($type) {
-					case "SpecialPage":
-						$className = "SpecialPageUserCommand";
+				switch ( $type ) {
+					case 'SpecialPage':
+						$className = 'SpecialPageUserCommand';
 						break;
-					case "PageAction":
-						if (in_array($data,array("Share","Follow"))) {
+					case 'PageAction':
+						if ( in_array( $data, ['Share','Follow' ] ) ) {
 							$className = "{$data}UserCommand";
 						} else {
-							$className = "PageActionUserCommand";
+							$className = 'PageActionUserCommand';
 						}
 						break;
-					case "Action":
-						if (in_array($data,array("CustomizeToolbar", "DevInfo", "Shortcuts"))) {
+					case 'Action':
+						if ( in_array( $data, ['CustomizeToolbar', 'DevInfo', 'Shortcuts'] ) ) {
 							$className = "{$data}UserCommand";
 						}
 						break;
@@ -45,7 +42,7 @@
 			return $this->cache[$hash];
 		}
 		
-		public function createMenu( $id, $caption, $options = array() ) {
+		public function createMenu( $id, $caption, $options = [] ) {
 			return new MenuUserCommand( $id, $caption, $options );
 		}
 		
