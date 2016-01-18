@@ -194,9 +194,7 @@ class MercuryApiController extends WikiaController {
 				'hubsLinks' => $navigationNodes['hubs'],
 				'exploreWikia' => $navigationNodes['exploreWikia'],
 				'exploreWikiaMenu' => $navigationNodes['exploreDropdown'],
-				'localNav' => $localNavigation,
-				//@TODO this should be removed after XW-922 & XW-923 are released and old version is not cached
-				'navigation' => $localNavigation
+				'localNav' => $localNavigation
 			];
 		}
 	}
@@ -293,6 +291,7 @@ class MercuryApiController extends WikiaController {
 	 *
 	 */
 	public function getWikiVariables() {
+		global $wgEnableGlobalNav2016;
 
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
 		$navigation = $this->getNavigation();
@@ -302,7 +301,13 @@ class MercuryApiController extends WikiaController {
 			);
 		}
 
-		$wikiVariables['navigation'] = $navigation;
+		if ( !empty( $wgEnableGlobalNav2016 ) ) {
+			$wikiVariables['navigation'] = $navigation['localNav'];
+			$wikiVariables['navigation2016'] = $navigation;
+		} else {
+			$wikiVariables['navigation'] = $navigation;
+		}
+
 		$wikiVariables['vertical'] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 		$wikiVariables['basePath'] = $this->wg->Server;
 
