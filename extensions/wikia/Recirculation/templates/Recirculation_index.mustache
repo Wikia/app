@@ -1,0 +1,15 @@
+<section id="videosModule" class="videos-module-rail module">
+	<h2>Trending Fandom Articles</h2>
+	<ul class="thumbnails">
+		{{#posts}}
+			<li class="title-thumbnail" style="margin-bottom: 15px;">
+				<a href="{{ url }}" class="video video-thumbnail image fluid small">
+					<img src="{{ image_url }}" alt="{{ title }}" class="" itemprop="thumbnail">
+				</a>
+				<div class="title" title="{{ title }}" style="height: auto;">
+					<a href="{{ url }}" style="white-space: normal;">{{ title }}</a>
+				</div>
+			</li>
+		{{/posts}}
+	</ul>
+</section>

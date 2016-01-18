@@ -3,9 +3,10 @@ define('ext.wikia.recirculation.recirculation', [
 	'jquery',
 	'wikia.abTest',
 	'wikia.tracker',
+	'wikia.nirvana',
 	'videosmodule.controllers.rail',
 	'ext.wikia.adEngine.taboolaHelper'
-], function ($, abTest, tracker, videosModule, taboolaHelper) {
+], function ($, abTest, tracker, nirvana, videosModule, taboolaHelper) {
 	'use strict';
 
 	function trackClick ( e ) {
@@ -17,10 +18,28 @@ define('ext.wikia.recirculation.recirculation', [
 		});
 	}
 
+	function fandomPosts ( type, element ) {
+		nirvana.sendRequest({
+			controller: 'Recirculation',
+			method: 'index',
+			data: {
+				type: type
+			},
+			format: 'html',
+			type: 'get',
+			callback: function (response) {
+				$(element).append(response);
+			}
+		});
+	}
+
 	function injectRecirculationModule ( element ) {
 		var group = abTest.getGroup('RECIRCULATION_RAIL');
 
 		switch (group) {
+			case 'POPULAR':
+				fandomPosts( 'popular', element );
+				break;
 			case 'TABOOLA':
 				taboolaHelper.initializeWidget({
 					mode: 'thumbnails-rr2',
