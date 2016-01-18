@@ -100,10 +100,14 @@ class InsightsHooks {
 	 */
 	public static function onwgQueryPages( Array &$wgQueryPages ) {
 		global $wgEnableInsightsInfoboxes, $wgEnableTemplateClassificationExt,
-			   $wgEnableInsightsPagesWithoutInfobox, $wgEnableInsightsTemplatesWithoutType;
+			   $wgEnableInsightsPagesWithoutInfobox, $wgEnableInsightsPopularPages, $wgEnableInsightsTemplatesWithoutType;
 
 		if ( !empty( $wgEnableInsightsInfoboxes ) ) {
 			$wgQueryPages[] = [ 'UnconvertedInfoboxesPage', 'Nonportableinfoboxes' ];
+		}
+
+		if ( !empty( $wgEnableInsightsPopularPages ) ) {
+			$wgQueryPages[] = [ 'PopularPages', 'Popularpages' ];
 		}
 
 		if ( !empty( $wgEnableTemplateClassificationExt ) ) {
