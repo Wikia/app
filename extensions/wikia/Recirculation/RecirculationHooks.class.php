@@ -6,7 +6,7 @@
 class RecirculationHooks {
 
 	/**
-	 * Insert Recirculation on to the right rail
+	 * Insert Recirculation to the right rail
 	 * @param array $modules
 	 * @return bool
 	 */

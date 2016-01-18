@@ -40,6 +40,9 @@ define('ext.wikia.recirculation.recirculation', [
 			case 'POPULAR':
 				fandomPosts( 'popular', element );
 				break;
+			case 'SHARES':
+				fandomPosts( 'shares', element );
+				break;
 			case 'TABOOLA':
 				taboolaHelper.initializeWidget({
 					mode: 'thumbnails-rr2',
