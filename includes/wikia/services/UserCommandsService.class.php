@@ -11,6 +11,11 @@
 			$this->cache = array();
 		}
 
+		/**
+		 * @param string $name Command ID
+		 * @param array $options (optional)
+		 * @return UserCommand
+		 */
 		public function get( $name, $options = array() ) {
 			$hash = $name . ($options ? serialize($options) : '');
 			if (empty($this->cache[$hash])) {
