@@ -1,13 +1,13 @@
 /**
  * A module for adding shortcut key to GlobalShortcuts extension for opening discussions page
  */
-require(['GlobalShortcuts', 'PageActions'],
-	function (GlobalShortcuts, PageActions) {
+require(['GlobalShortcuts', 'PageActions', 'mw', 'wikia.window'],
+	function (GlobalShortcuts, PageActions, mw, w) {
 		'use strict';
 
-		var actionId = 'page:Classify',
+		var actionId = 'page:Discussions',
 			actionDescription = {
-				id: 'page:Discussions',
+				id: actionId,
 				caption: 'Open discussions',
 				fn: openDiscussions,
 				weight: 600,
@@ -18,7 +18,7 @@ require(['GlobalShortcuts', 'PageActions'],
 		GlobalShortcuts.add(actionId, 'g d');
 
 		function openDiscussions() {
-			window.location.href = mw.config.get('location').origin + '/d';
+			w.location.href = mw.config.get('location').origin + '/d';
 		}
 	}
 );
