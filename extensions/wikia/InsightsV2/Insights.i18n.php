@@ -3,7 +3,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'insights' => 'Insights',
-	'insights-desc' => 'Insights description',
+	'insights-desc' => 'Introduces the [[Special:Insights]] special page and subpages which list articles or templates that require attention from contributors.',
 	'insights-landing-title' => 'Welcome to Insights',
 	'insights-landing-lead' => 'Spend your time efficiently and make informed decisions about which articles you should edit with these insights.',
 	'insights-list-no-items' => 'Great work! There are no articles in this queue that need attention.',
@@ -70,7 +70,7 @@ $messages['en'] = array(
 
 $messages['qqq'] = array(
 	'insights' => 'Name of the insights page',
-	'insights-desc' => 'Insights description',
+	'insights-desc' => 'Insights description shown on Special:Version',
 	'insights-landing-title' => 'A title of the Insights landing page appearing as an h1 element.',
 	'insights-landing-lead' => 'A lead for the Insights special page with a general description, appearing below the title.',
 	'insights-list-no-items' => 'A message that is shown for types that are actionable when there are no items to work on left on a list',
