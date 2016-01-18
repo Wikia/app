@@ -10,20 +10,6 @@ class FandomDataService {
 
 	const MCACHE_VER = '1.0';
 
-	protected function __construct() {
-	}
-
-	/**
-	 * get class instance
-	 * @return FandomDataService
-	 */
-	static public function getInstance() {
-		if ( FandomDataService::$instance == null ) {
-			FandomDataService::$instance = new FandomDataService();
-		}
-		return FandomDataService::$instance;
-	}
-
 	/**
 	 * Get posts for a specific type. Uses cache if available
 	 * @param string $type

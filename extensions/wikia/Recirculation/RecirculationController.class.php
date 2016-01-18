@@ -15,7 +15,7 @@ class RecirculationController extends WikiaController {
 	}
 
 	public function index() {
-		$fandomDataService = FandomDataService::getInstance();
+		$fandomDataService = new FandomDataService();
 
 		$posts = $fandomDataService->getPosts( $this->type );
 
