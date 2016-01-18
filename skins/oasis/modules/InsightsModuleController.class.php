@@ -2,7 +2,7 @@
 
 class InsightsModuleController extends WikiaController {
 
-	const ITEMS_LIMIT = 4;
+	const ITEMS_LIMIT = 3;
 
 	public function executeIndex( $params ) {
 		wfProfileIn( __METHOD__ );
