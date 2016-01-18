@@ -8,7 +8,8 @@ class InsightsPopularPagesModel extends InsightsQueryPageModel {
 
 	private static $insightConfig = [
 		InsightsConfig::DISPLAYFIXITMSG => false,
-		InsightsConfig::PAGEVIEWS => true
+		InsightsConfig::PAGEVIEWS => true,
+		InsightsConfig::USAGE => InsightsModel::INSIGHTS_USAGE_INFORMATIVE
 	];
 
 	public function __construct() {
