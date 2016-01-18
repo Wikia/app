@@ -1,10 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.evolve2', [
-	'ext.wikia.adEngine.evolveHelper',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'wikia.log'
-], function (evolveHelper, gptHelper, slotTweaker, log) {
+], function (gptHelper, slotTweaker, zoneParams, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.evolve2',
@@ -17,7 +17,6 @@ define('ext.wikia.adEngine.provider.evolve2', [
 			'320x50,320x100,300x250': 'a',
 			'300x250': 'a'
 		},
-		section = evolveHelper.getSect(),
 		site = 'wikia_intl',
 		slotMap = {
 			HOME_TOP_LEADERBOARD:     {size: '728x90,970x250,970x300,970x90'},
@@ -33,6 +32,26 @@ define('ext.wikia.adEngine.provider.evolve2', [
 			MOBILE_PREFOOTER:         {size: '300x250'}
 		};
 
+	function getSection() {
+		var vertical = zoneParams.getVertical(),
+			mappedVertical = zoneParams.getSite();
+
+		switch (vertical) {
+			case 'movies':
+			case 'tv':
+				return vertical;
+		}
+
+		switch (mappedVertical) {
+			case 'gaming':
+				return 'gaming';
+			case 'ent':
+				return 'entertainment';
+		}
+
+		return 'ros';
+	}
+
 	function nextChar(char) {
 		return String.fromCharCode(char.charCodeAt(0) + 1);
 	}
@@ -41,7 +60,6 @@ define('ext.wikia.adEngine.provider.evolve2', [
 		var position = posTargetingValue[slot.size];
 
 		slot.pos = position;
-		slot.sect = section;
 		slot.site = site;
 
 		// Increment pos value
@@ -58,8 +76,10 @@ define('ext.wikia.adEngine.provider.evolve2', [
 
 	function fillInSlot(slotName, slotElement, success, hop) {
 		log(['fillInSlot', slotName, slotElement, success, hop], 'debug', logGroup);
-		var slotCopy = JSON.parse(JSON.stringify(slotMap[slotName]));
+		var section = getSection(),
+			slotCopy = JSON.parse(JSON.stringify(slotMap[slotName]));
 
+		slotCopy.sect = section;
 		setTargeting(slotCopy);
 		gptHelper.pushAd(
 			slotName,

@@ -5,6 +5,7 @@ class InsightsConfig {
 	const DISPLAYFIXITMSG = 'displayfixitmessage';
 	const PAGEVIEWS = 'pageviews';
 	const SUBTYPE = 'subtype';
+	const USAGE = 'usage';
 	const WHATLINKSHERE = 'whatlinkshere';
 	const WHATLINKSHEREMSG = 'whatlinksheremessage';
 
@@ -18,6 +19,8 @@ class InsightsConfig {
 	private $displayFixItMessage = false;
 	// does insight has additional action
 	private $action = false;
+	// insights usage
+	private $usage = InsightsModel::INSIGHTS_USAGE_ACTIONABLE;
 	// insights type
 	private $type;
 	// insights subtype (if exists)
@@ -48,6 +51,10 @@ class InsightsConfig {
 			$this->action = $config[self::ACTION];
 		}
 
+		if ( isset( $config[self::USAGE] ) ) {
+			$this->usage = $config[self::USAGE];
+		}
+
 		if ( isset( $config[self::SUBTYPE] ) ) {
 			$this->subtype = $config[self::SUBTYPE];
 		}
@@ -71,6 +78,10 @@ class InsightsConfig {
 
 	public function hasAction() {
 		return $this->action;
+	}
+
+	public function getInsightUsage() {
+		return $this->usage;
 	}
 
 	public function getInsightType() {

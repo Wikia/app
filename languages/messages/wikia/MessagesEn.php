@@ -267,12 +267,6 @@ ___________________________________________________________
 ',
 'rcshowhideenhanced' => '$1 enhanced recent changes',
 'prefsnologintext'	=> 'You must be <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} logged in]</span> to set user preferences.',
-'recentchanges-on-wikia-title' => 'Recent changes across Wikia',
-'recentchanges-on-wikia-content' => "Introducing Template Types — Organize your templates by type to make [[Special:Templates|template management]] simpler and to improve how they display on mobile phones. [[Help:Template Types|Learn more]] or '''[[Special:Insights/templateswithouttype|Get started now!]]'''
-
-Tabbed images and collapsible groups are now available for [[Help:Infobox|Portable Infoboxes]].
-
-Is your content portable? Learn more about future-proofing content at [[w:c:portability|Portability.wikia.com]].",
 'recentchangestext' => '<div style="border:solid 3px #e9e9e9; margin-bottom:0.3em;">
 <div style="padding-left:0.5em; padding-right:0.5em;">
 This special page lets you track the most recent changes to the wiki.
@@ -326,6 +320,9 @@ Your account has been created. Don't forget to change your {{SITENAME}} [[Specia
 'group-voldev' => 'Volunteer Developers',
 'group-voldev-member' => 'Volunteer Developer',
 'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+
+'group-content-moderator' => 'Content Moderators',
+'group-content-moderator-member' => 'Content Moderator',
 
 #new registration aka LoginFriction aka Signup
 

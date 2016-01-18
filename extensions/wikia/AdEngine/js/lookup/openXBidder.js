@@ -60,7 +60,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 			slotPath = [
 				'/5441',
 				'wka.' + adLogicZoneParams.getSite(),
-				adLogicZoneParams.getMappedVertical(),
+				adLogicZoneParams.getName(),
 				'',
 				adLogicZoneParams.getPageType()
 			].join('/');

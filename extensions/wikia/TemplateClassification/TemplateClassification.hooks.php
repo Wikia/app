@@ -126,11 +126,9 @@ class Hooks {
 			if ( $title->exists() && !$this->isEditPage() ) {
 				\Wikia::addAssetsToOutput( 'template_classification_in_view_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
-				$this->addWelcomeHintAssets( $out, $user );
 			} elseif ( $this->isEditPage() ) {
 				\Wikia::addAssetsToOutput( 'template_classification_in_edit_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
-				$this->addWelcomeHintAssets( $out, $user );
 			}
 		} elseif ( $permissions->shouldDisplayBulkActions( $user, $title ) ) {
 			\Wikia::addAssetsToOutput( 'template_classification_in_category_js' );
@@ -268,19 +266,5 @@ class Hooks {
 		$actions[] = 'bulk-classification';
 
 		return true;
-	}
-
-	private function addWelcomeHintAssets( \OutputPage $out, \User $user ) {
-		global $wgCityId;
-		if ( !$user->getGlobalPreference( View::HAS_SEEN_HINT ) ) {
-
-			$type = ( new \UserTemplateClassificationService() )
-				->getType( $wgCityId, $out->getContext()->getTitle()->getArticleID() );
-
-			if ( \RecognizedTemplatesProvider::isUnrecognized( $type ) ) {
-				$out->addModules( 'ext.wikia.TemplateClassification.ModalMessages' );
-			}
-
-		}
 	}
 }

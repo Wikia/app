@@ -125,9 +125,9 @@
 	background-color: $color-insights-highlight;
 	border-bottom: $border-insights-default;
 	border-top: $border-insights-default;
+	line-height: 1;
 	padding: 5px 10px;
 	text-align: left;
-	white-space: nowrap;
 }
 
 .insights-list-header-altaction {
@@ -136,7 +136,7 @@
 
 .insights-list-header-pageviews {
 	border-left: $border-insights-default;
-	text-align: center;
+	text-align: right;
 	width: $width-insights-pageviews-column;
 }
 

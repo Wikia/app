@@ -172,11 +172,6 @@ Auf dieser Spezialseite kannst Du die '''letzten Änderungen''' in diesem Wiki n
 'tog-enableuserjs' => 'Persönliches JavaScript aktivieren. ([[Hilfe:Persönliches_CSS_und_JS|Mehr dazu hier]])',
 'wikia-pagetitle' => '$1 – Wikia',
 
-'recentchanges-on-wikia-title' => 'Neueste Änderungen bei Wikia',
-'recentchanges-on-wikia-content' => "Wir möchten dir die Vorlagentypen vorstellen — Du kannst deine Vorlagen nach Typ sortieren, damit wird das [[Special:Templates|Vorlagenmanagement]] einfacher und die Anzeige auf Mobilgeräten wird verbessert. Hier kannst du [[Hilfe:Vorlagenklassifizierung|mehr darüber erfahren]] oder '''[[Special:Insights/templateswithouttype|gleich anfangen!]]'''
-
-In [[Hilfe:Infoboxen|portablen Infoboxen]] können jetzt Bilder in Reitern und zusammenklappbare Gruppen verwendet werden.
-
-Sind deine Inhalte portabel? Unter [[w:c:portability|Portability.wikia.com]] erfährst du mehr dazu, wie du deine Inhalte zukunftssicher gestalten kannst.",
-
+'group-content-moderator' => 'Inhaltsmoderatoren',
+'group-content-moderator-member' => 'Inhaltsmoderator',
 ) );

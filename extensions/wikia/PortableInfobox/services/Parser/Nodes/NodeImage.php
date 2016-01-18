@@ -1,7 +1,7 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
-use Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
+use HtmlHelper;
 use WikiaFileHelper;
 
 class NodeImage extends Node {
@@ -51,10 +51,7 @@ class NodeImage extends Node {
 	public static function getTabberData( $html ) {
 		global $wgArticleAsJson;
 		$data = array();
-		$doc = new \DOMDocument();
-		libxml_use_internal_errors( true );
-		$doc->loadHTML( $html );
-		libxml_use_internal_errors( false );
+		$doc = HtmlHelper::createDOMDocumentFromText( $html );
 		$sxml = simplexml_import_dom( $doc );
 		$divs = $sxml->xpath( '//div[@class=\'tabbertab\']' );
 		foreach ( $divs as $div ) {
