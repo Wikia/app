@@ -11,12 +11,12 @@ class RecirculationHooks {
 	 * @return bool
 	 */
 	static public function onGetRailModuleList( &$modules ) {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		// Check if we're on a page where we want to show the Videos Module.
 		// If we're not, stop right here.
 		if ( !self::canShowVideosModule() ) {
-			wfProfileOut(__METHOD__);
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -24,9 +24,9 @@ class RecirculationHooks {
 		$app = F::App();
 		$pos = $app->wg->User->isAnon() ? 1305 : 1285;
 
-		$modules[$pos] = array('AdEmptyContainer', 'Index', ['slotName' => 'RECIRCULATION_RAIL', 'pageTypes' => ['*', 'no_ads']]);
+		$modules[$pos] = array( 'AdEmptyContainer', 'Index', ['slotName' => 'RECIRCULATION_RAIL', 'pageTypes' => ['*', 'no_ads']] );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 
 		return true;
 	}

@@ -9,7 +9,7 @@ define('ext.wikia.recirculation.recirculation', [
 ], function ($, abTest, tracker, nirvana, videosModule, taboolaHelper) {
 	'use strict';
 
-	function trackClick ( e ) {
+	function trackClick() {
 		tracker.track({
 			action: tracker.ACTIONS.CLICK,
 			category: 'recirculation',
@@ -18,7 +18,7 @@ define('ext.wikia.recirculation.recirculation', [
 		});
 	}
 
-	function fandomPosts ( type, element ) {
+	function fandomPosts(type, element) {
 		nirvana.sendRequest({
 			controller: 'Recirculation',
 			method: 'index',
@@ -33,15 +33,15 @@ define('ext.wikia.recirculation.recirculation', [
 		});
 	}
 
-	function injectRecirculationModule ( element ) {
+	function injectRecirculationModule(element) {
 		var group = abTest.getGroup('RECIRCULATION_RAIL');
 
 		switch (group) {
 			case 'POPULAR':
-				fandomPosts( 'popular', element );
+				fandomPosts('popular', element);
 				break;
 			case 'SHARES':
-				fandomPosts( 'shares', element );
+				fandomPosts('shares', element);
 				break;
 			case 'TABOOLA':
 				taboolaHelper.initializeWidget({

@@ -7,7 +7,7 @@ class RecirculationController extends WikiaController {
 
 	public function init() {
 		$type = $this->getVal( 'type' );
-		if (in_array($type, self::ALLOWED_TYPES)) {
+		if ( in_array( $type, self::ALLOWED_TYPES ) ) {
 			$this->type = $type;
 		} else {
 			$this->type = self::DEFAULT_TYPE;
@@ -19,7 +19,7 @@ class RecirculationController extends WikiaController {
 
 		$posts = $fandomDataService->getPosts( $this->type );
 
-		if (count($posts) > 0) {
+		if ( count( $posts ) > 0 ) {
 			$this->response->setData( [
 				'title'	=> wfMessage( 'recirculation-fandom-title' )->plain(),
 				'posts' => $posts

@@ -1,7 +1,7 @@
 <?php
 $wgExtensionCredits['other'][] = [
 	'name' => 'Recirculation',
-	'author' => array('Paul Oslund'),
+	'author' => array( 'Paul Oslund' ),
 	'descriptionmsg' => 'recirculation-desc',
 	'version' => '0.2',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Recirculation',

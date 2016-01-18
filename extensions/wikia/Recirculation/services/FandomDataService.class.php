@@ -30,7 +30,7 @@ class FandomDataService {
 	 * @return an array of posts
 	 */
 	public function getPosts( $type ) {
-		$memcKey = wfMemcKey(__METHOD__, $type, self::MCACHE_VER);
+		$memcKey = wfMemcKey( __METHOD__, $type, self::MCACHE_VER );
 
 		$data = WikiaDataAccess::cache(
 			$memcKey,
@@ -49,7 +49,7 @@ class FandomDataService {
 	 * @return an array of posts
 	 */
 	private function apiRequest( $type ) {
-		switch ($type) {
+		switch ( $type ) {
 			case 'shares':
 				$endpoint = 'shares/posts';
 				break;
@@ -62,7 +62,7 @@ class FandomDataService {
 		$url = $this->buildUrl( $endpoint );
 		$data = Http::get( $url );
 
-		$obj = json_decode($data);
+		$obj = json_decode( $data );
 		return $obj->data;
 	}
 
@@ -82,7 +82,7 @@ class FandomDataService {
 			'sort' => self::PARSELY_API_SORT
 		];
 
-		$url = self::PARSELY_API_BASE . $endpoint . '?' . http_build_query($params);
+		$url = self::PARSELY_API_BASE . $endpoint . '?' . http_build_query( $params );
 
 		return $url;
 	}
