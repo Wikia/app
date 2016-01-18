@@ -48,7 +48,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 					sizes: [[300, 250]]
 				},
 				MOBILE_TOP_LEADERBOARD: {
-					sizes: [[320, 50]]
+					sizes: [[320, 50], [300, 250]]
 				}
 			}
 		},
