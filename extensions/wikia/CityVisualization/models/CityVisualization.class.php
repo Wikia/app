@@ -344,9 +344,7 @@ class CityVisualization extends WikiaModel {
 		$mdb = wfGetDB( DB_MASTER, [], $this->wg->ExternalSharedDB );
 
 		$result = $mdb->update( self::CITY_VISUALIZATION_TABLE_NAME,
-			[
-				'city_flags' => "(city_flags | {$flag})",
-			],
+			[ "city_flags = {$mdb->bitOr( 'city_flags', $flag )}" ],
 			[
 				'city_id' => $wikiId,
 				'city_lang_code' => $langCode,
