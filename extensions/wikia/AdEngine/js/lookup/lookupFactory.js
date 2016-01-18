@@ -40,7 +40,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			module.calculatePrices();
 			response = true;
 
-			adTracker.track(module.name + '/lookup_end', module.getPrices(), 0);
+			adTracker.track(module.name + '/lookup_end', module.getPrices(), 0, 'nodata');
 		}
 
 		function wasCalled() {
