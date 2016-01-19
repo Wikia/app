@@ -14,7 +14,7 @@ $messages['en'] = array(
 	'global-navigation-explore-wikia-link-label' => 'Explore Wikia',
 	'global-navigation-menu-hubs' => '*http://gameshub.wikia.com/wiki/Games_Hub|Games|games
 *http://movieshub.wikia.com/wiki/Movies_Hub|Movies|movies
-*http://gameshub.wikia.com/wiki/TV_Hub|TV|tv',
+*http://tvhub.wikia.com/wiki/TV_Hub|TV|tv',
 	'global-navigation-wam-link-label' => 'Trending Wikias',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
