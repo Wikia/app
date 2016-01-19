@@ -9,6 +9,7 @@ class FandomDataService {
 	const PARSELY_API_SORT = '_hits';
 
 	const MCACHE_VER = '1.0';
+	const MCACHE_TIME = 900; // 15 minutes
 
 	/**
 	 * Get posts for a specific type. Uses cache if available
@@ -20,7 +21,7 @@ class FandomDataService {
 
 		$data = WikiaDataAccess::cache(
 			$memcKey,
-			WikiaResponse::CACHE_STANDARD, // 24 hours
+			self::MCACHE_TIME,
 			function() use ( $type ) {
 				return $this->apiRequest( $type );
 			}
@@ -35,17 +36,20 @@ class FandomDataService {
 	 * @return an array of posts
 	 */
 	private function apiRequest( $type ) {
+		$options = [];
 		switch ( $type ) {
 			case 'shares':
+				$options['days'] = 5;
 				$endpoint = 'shares/posts';
 				break;
 			case 'popular':
 			default:
+				$options['sort'] = self::PARSELY_API_SORT;
 				$endpoint = 'analytics/posts';
 				break;
 		}
 
-		$url = $this->buildUrl( $endpoint );
+		$url = $this->buildUrl( $endpoint, $options );
 		$data = Http::get( $url );
 
 		$obj = json_decode( $data );
@@ -55,18 +59,20 @@ class FandomDataService {
 	/**
 	 * Build a complete url to the parsely API
 	 * @param string $endpoint
+	 * @param array $options
 	 * @return string
 	 */
-	private function buildUrl( $endpoint ) {
+	private function buildUrl( $endpoint, $options ) {
 		global $wgParselyApiKey, $wgParselyApiSecret;
 
-		$params = [
+		$defaultParams = [
 			'apikey' => $wgParselyApiKey,
 			'secret' => $wgParselyApiSecret,
 			'page' => self::PARSELY_API_PAGE,
-			'limit' => self::PARSELY_API_LIMIT,
-			'sort' => self::PARSELY_API_SORT
+			'limit' => self::PARSELY_API_LIMIT
 		];
+
+		$params = array_merge($defaultParams, $options);
 
 		$url = self::PARSELY_API_BASE . $endpoint . '?' . http_build_query( $params );
 
