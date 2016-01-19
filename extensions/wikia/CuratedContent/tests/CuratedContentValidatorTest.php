@@ -232,6 +232,145 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 			[
 				[],
 				[]
+			],
+			[
+				[
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'featured' => true, 'title' => 'foo', 'image_id' => 0]],
+				[]
+			],
+			[
+				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => '', 'image_id' => 0]],
+				[]
+			],
+			[ //empty article_id
+				'featured' => [
+					'items' => [
+						'article_id' => null,
+						'image_id' => 195822,
+						'label' => "The Muppets on ABC in 2015",
+						'title' => "The Muppets (2015)",
+						'type' => "article",
+					]
+				],
+				[CuratedContentValidator::ERR_OTHER_ERROR]
+			],
+			[ //invalid image_id
+				'featured' => [
+					'items' => [
+						'article_id' => 633436,
+						'image_id' => '',
+						'label' => "The Muppets on ABC in 2015",
+						'title' => "The Muppets (2015)",
+						'type' => "article",
+					]
+				],
+				[CuratedContentValidator::ERR_OTHER_ERROR]
+			],
+			[ //invalid item title
+				'featured' => [
+					'items' => [
+						'article_id' => 633436,
+						'image_id' => 644833,
+						'label' => "The Muppets on ABC in 2015",
+						'title' => null,
+						'type' => "article",
+					]
+				],
+				[CuratedContentValidator::ERR_OTHER_ERROR]
+			],
+			[
+				'curated' => [
+					'items' => [
+						'article_id' => 633436,
+						'image_id' => 644833,
+						'label' => "The Muppets on ABC in 2015",
+						'title' => 'Some title',
+						'type' => "article",
+					]
+				],
+				[CuratedContentValidator::ERR_OTHER_ERROR]
+			],
+			[
+				[['title' => '', 'image_id' => 0]],
+				[CuratedContentValidator::ERR_OTHER_ERROR]
+			],
+			[
+				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'video']], 'featured' => true, 'title' => 'foo', 'image_id' => 0]],
+				[CuratedContentValidator::ERR_OTHER_ERROR]
+			],
+			[
+				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'video']], 'title' => '', 'image_id' => 0]],
+				[CuratedContentValidator::ERR_OTHER_ERROR]
+			],
+			[
+				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => 'foo', 'image_id' => 9]],
+				[]
+			],
+			[
+				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'notSupported']], 'title' => 'foo', 'image_id' => 0]],
+				[CuratedContentValidator::ERR_OTHER_ERROR]
+			],
+			[
+				[
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => 'foo', 'image_id' => 9],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => 'bar', 'image_id' => 9]
+				],
+				[]
+			],
+			[
+				[
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => 'foo', 'image_id' => 9],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => 'foo', 'image_id' => 9]
+				],
+				[CuratedContentValidator::ERR_DUPLICATED_LABEL]
+			],
+			[
+				[
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => '', 'image_id' => 9],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => '', 'image_id' => 9]
+				],
+				[CuratedContentValidator::ERR_DUPLICATED_LABEL]
+			],
+			[
+				[
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'featured' => true, 'title' => 'foo', 'image_id' => 0],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => 'section', 'image_id' => 9],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => '', 'image_id' => 0]
+				],
+				[]
+			],
+			[
+				[
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'featured' => true, 'title' => 'foo', 'image_id' => 0],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category'], ['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => 'section', 'image_id' => 9],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => '', 'image_id' => 0]
+				],
+				[]
+			],
+			[
+				[
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'featured' => true, 'title' => 'foo', 'image_id' => 0],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category'], ['article_id' => 9, 'image_id' => 9, 'label' => 'bar', 'type' => 'category']], 'title' => 'section', 'image_id' => 9],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => '', 'image_id' => 0]
+				],
+				[]
+			],
+			[
+				[
+					// Section with title 0 is incorrect -> image_id can't be 0
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => 0, 'image_id' => 0],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => '', 'image_id' => 0]
+				],
+				[CuratedContentValidator::ERR_OTHER_ERROR]
+			],
+		];
+	}
+
+	public function validateDataDataProviderOLD() {
+		return [
+			[
+				[],
+				[]
 			], [
 				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'featured' => true, 'title' => 'foo', 'image_id' => 0]],
 				[]

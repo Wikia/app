@@ -12,8 +12,6 @@ class CuratedContentController extends WikiaController {
 	const LIMIT = 25;
 	const CURATED_CONTENT_WG_VAR_ID_PROD = 1460;
 
-	const NEW_API_VERSION = 1;
-
 	const ASSETS_PATH = '/extensions/wikia/CuratedContent/assets/CuratedContentAssets.json';
 
 	/**
@@ -21,10 +19,12 @@ class CuratedContentController extends WikiaController {
 	 */
 	private $mModel = null;
 	private $mPlatform = null;
+	private $communityDataService = null;
 
 	// Make sure this is updated as in CuratedContent.js
-
 	function init() {
+		global $wgCityId;
+
 		$requestedVersion = $this->request->getInt( 'ver', self::API_VERSION );
 		$requestedRevision = $this->request->getInt( 'rev', self::API_REVISION );
 
@@ -34,6 +34,7 @@ class CuratedContentController extends WikiaController {
 
 		$this->mModel = new CuratedContentModel();
 		$this->mPlatform = $this->request->getVal( 'os' );
+		$this->communityDataService = new CommunityDataService( $wgCityId );
 	}
 
 	/**
@@ -185,227 +186,29 @@ class CuratedContentController extends WikiaController {
 	}
 
 	public function getList() {
-		global $wgWikiaCuratedContent;
-
 		wfProfileIn( __METHOD__ );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-
-		if ( empty( $wgWikiaCuratedContent ) ) {
-			$this->getCategories();
-		} else {
-			$section = $this->request->getVal( 'section' );
-
-			//new markup
-			if ( $this->isAssociativeArray( $wgWikiaCuratedContent ) ) {
-
-				if ( empty( $section ) ) {
-					//TODO: refactor
-					//$this->setSectionsInResponse( $wgWikiaCuratedContent );
-					//$this->setFeaturedContentInResponse( $wgWikiaCuratedContent );
-				} else {
-					//TODO: refactor
-					//$this->setSectionItemsInResponse( $wgWikiaCuratedContent, $section );
-				}
-
-			} else { //old markup
-
-				if ( empty( $section ) ) {
-					$this->setSectionsInResponse( $wgWikiaCuratedContent );
-					$this->setFeaturedContentInResponse( $wgWikiaCuratedContent );
-				} else {
-					$this->setSectionItemsInResponse( $wgWikiaCuratedContent, $section );
-				}
-			}
-
-			$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
-		}
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 *
-	 * Returns list of categories on a wiki in batches by self::LIMIT
-	 *
-	 * @requestParam Integer limit
-	 * @requestParam String offset
-	 *
-	 * @response items
-	 * @response offset
-	 */
-	private function getCategories() {
-		wfProfileIn( __METHOD__ );
-
+		$section = $this->request->getVal( 'section' );
 		$limit = $this->request->getVal( 'limit', self::LIMIT * 2 );
 		$offset = $this->request->getVal( 'offset', '' );
 
-		$items = WikiaDataAccess::cache(
-			wfMemcKey( __METHOD__, $offset, $limit, self::NEW_API_VERSION ),
-			WikiaResponse::CACHE_SHORT,
-			function () use ( $limit, $offset ) {
-				return ApiService::call(
-					[
-						'action' => 'query',
-						'list' => 'allcategories',
-						'redirects' => true,
-						'aclimit' => $limit,
-						'acfrom' => $offset,
-						'acprop' => 'id|size',
-						// We don't want empty items to show up
-						'acmin' => 1
-					]
-				);
-			}
-		);
+		$response = $this->communityDataService->getList( $section, $limit, $offset );
 
-		$allCategories = $items['query']['allcategories'];
-		if ( !empty( $allCategories ) ) {
-
-			$ret = [ ];
-			$app = F::app();
-			$categoryName = $app->wg->contLang->getNsText( NS_CATEGORY );
-
-			foreach ( $allCategories as $value ) {
-				if ( $value['size'] - $value['files'] > 0 ) {
-					$ret[] = $this::getJsonItem(
-						$value['*'],
-						$categoryName,
-						isset( $value['pageid'] ) ? (int) $value['pageid'] : 0
-					);
-				}
-			}
-
-			$this->response->setVal( 'items', $ret );
-
-			if ( !empty( $items['query-continue'] ) ) {
-				$this->response->setVal( 'offset', $items['query-continue']['allcategories']['acfrom'] );
-			}
-		} else {
-			wfProfileOut( __METHOD__ );
-			throw new NotFoundApiException( 'No Curated Content' );
+		//TODO: can we remove it from here?
+		// OR AT LEAST USE ARRAY MAP
+		foreach ( $response as $sectionName => $sectionContent ) {
+			$this->response->setVal( $sectionName, $sectionContent );
 		}
 
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function setSectionItemsInResponse( $content, $requestSection ) {
-		$sectionItems = $this->getSectionItems( $content, $requestSection );
-		if ( !empty( $sectionItems ) ) {
-			$this->setSectionItemsResponse( 'items', $sectionItems );
-		} else if ( $requestSection !== '' ) {
-			throw new CuratedContentSectionNotFoundException( $requestSection );
-		}
-	}
-
-	private function getSectionItems( $content, $requestSection ) {
-		$return = [ ];
-
-		foreach ( $content as $section ) {
-			if ( $requestSection == $section['title'] && empty( $section['featured'] ) ) {
-				$return = $section['items'];
-			}
-		}
-
-		return $return;
-	}
-
-	private function setFeaturedContentInResponse( $content ) {
-		$ret = $this->getFeaturedSection( $content );
-		if ( !empty( $ret ) ) {
-			$this->setSectionItemsResponse( 'featured', $ret );
-		}
-	}
-
-	private function getFeaturedSection( $content ) {
-		$return = [ ];
-		foreach ( $content as $section ) {
-			if ( $section['featured'] ) {
-				$return = $section['items'];
-			}
-		}
-
-		return $return;
-	}
-
-	/**
-	 * @param $sectionName
-	 * @param $ret
-	 *
-	 * @return mixed
-	 */
-	private function setSectionItemsResponse( $sectionName, $ret ) {
-		foreach ( $ret as &$value ) {
-			list( $imageId, $imageUrl ) = CuratedContentHelper::findImageIdAndUrl(
-				$value['image_id'],
-				$value['article_id']
-			);
-			$value['image_id'] = $imageId;
-			$value['image_url'] = $imageUrl;
-		}
-		$this->response->setVal( $sectionName, $ret );
-	}
-
-	/**
-	 * @param $content Array content of a wgWikiaCuratedContent
-	 *
-	 * @responseReturn Array sections List of sections on a wiki
-	 * @responseReturn See getSectionItems
-	 */
-	private function setSectionsInResponse( $content ) {
-		wfProfileIn( __METHOD__ );
-		$this->response->setVal(
-			'sections',
-			$this->getSections( $content )
-		);
-
-		// there also might be some categories without SECTION, lets find them as well (optional section)
-		$optionalSections = $this->getSectionItems( $content, '' );
-		$this->setSectionItemsResponse( 'items', $optionalSections );
-		wfProfileOut( __METHOD__ );
-	}
-
-	private function getSections( $content ) {
-		wfProfileIn( __METHOD__ );
-		$sections = array_reduce(
-			$content,
-			function ( $ret, $item ) {
-				if ( $item['title'] !== '' && empty( $item['featured'] ) ) {
-					$imageId = $item['image_id'] != 0 ? $item['image_id'] : null;
-					$val = [
-						'title' => $item['title'],
-						'image_id' => $item['image_id'] != 0 ? $item['image_id'] : null,
-						'image_url' => CuratedContentHelper::findImageUrl( $imageId )
-					];
-
-					if ( !empty( $item['image_id'] ) && array_key_exists( 'image_crop', $item ) ) {
-						$val['image_crop'] = $item['image_crop'];
-					}
-
-					$ret[] = $val;
-				}
-
-				return $ret;
-			}
-		);
-
-		wfProfileOut( __METHOD__ );
-
-		return $sections;
-	}
-
+	//wrapper in case some external app is using it.
+	//TODO: check if it's used and remove if not
 	function getJsonItem( $titleName, $ns, $pageId ) {
-		$title = Title::makeTitle( $ns, $titleName );
-		list( $imageId, $imageUrl ) = CuratedContentHelper::findImageIdAndUrl( null, $pageId );
-
-		return [
-			'title' => $ns . ':' . $title->getFullText(),
-			'label' => $title->getFullText(),
-			'image_id' => $imageId,
-			'article_id' => $pageId,
-			'type' => 'category',
-			'image_url' => $imageUrl
-		];
+		return $this->communityDataService->getJsonItem( $titleName, $ns, $pageId );
 	}
 
 	public function getCuratedContentQuality() {
@@ -457,7 +260,7 @@ class CuratedContentController extends WikiaController {
 	}
 
 	public function setCuratedContentData( ) {
-		global $wgCityId, $wgUser, $wgRequest;
+		global $wgUser, $wgRequest;
 		
 		if ( !$wgRequest->wasPosted() ) {
 			throw new CuratedContentValidatorMethodNotAllowedException();
@@ -469,52 +272,12 @@ class CuratedContentController extends WikiaController {
 
 		//if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
 		if (true) {
-			$data = $this->request->getArray( 'data', [ ] );
-			$properData = [];
-			$status = false;
-
-			// strip excessive data used in mercury interface (added in self::getData method)
-			foreach ( $data as $section ) {
-
-				// strip node_type and image_url from section
-				unset( $section['node_type'] );
-				unset( $section['image_url'] );
-
-				// fill label for featured and rename section.title to section.label
-				if ( empty( $section['label'] ) && !empty( $section['featured'] ) ) {
-					$section['title'] = wfMessage( 'wikiacuratedcontent-featured-section-name' )->text();
-				} else {
-					$section['title'] = $section['label'];
-					unset( $section['label'] );
-				}
-
-				// strip node_type and image_url from items inside section and add it to new data
-				if ( is_array( $section['items'] ) && !empty( $section['items'] ) ) {
-					// strip node_type and image_url
-					foreach ( $section['items'] as &$item ) {
-						unset( $item['node_type'] );
-						unset( $item['image_url'] );
-					}
-
-					$properData[] = $section;
-				}
-			}
-
-			$helper = new CuratedContentHelper();
-			$sections = $helper->processSections( $properData );
-			$errors = ( new CuratedContentValidator )->validateData( $sections );
+			$result = $this->communityDataService->setCuratedContent();
+			$errors = $result['errors'];
+			$status = $result['status'];
 
 			if ( !empty( $errors ) ) {
 				$this->response->setVal( 'errors', $errors );
-			} else {
-				//TODO: save new format of data
-				$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $wgCityId, $sections );
-				wfWaitForSlaves();
-
-				if ( !empty( $status ) ) {
-					//TODO: refactor
-					wfRunHooks( 'CuratedContentSave', [ $sections ] );
-				}
 			}
 			$this->response->setVal( 'status', $status );
 
@@ -533,7 +296,7 @@ class CuratedContentController extends WikiaController {
 
 		//if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
 		if (true) {
-			$data = $this->prepareCuratedContentSections();
+			$data = $this->communityDataService->getCuratedContentWithData();
 			$this->response->setVal( 'data', $data );
 		} else {
 			$this->response->setCode( \Wikia\Service\ForbiddenException::CODE );
@@ -541,96 +304,8 @@ class CuratedContentController extends WikiaController {
 		}
 	}
 
-	private function isAssociativeArray( $curatedContent ) {
-		return ( array_values( $curatedContent ) !== $curatedContent );
-	}
-
-	private function prepareCuratedContentSections() {
-		global $wgWikiaCuratedContent;
-
-		$wgWikiaCuratedContent = [
-			'curated' => [
-				'items' => [
-					'item1' => 'costam',
-					'item2' => 'cos innego'
-				]
-			],
-			'featured' => []
-		];
-
-		$data = [];
-
-
-		if ( !empty( $wgWikiaCuratedContent ) && is_array( $wgWikiaCuratedContent ) ) {
-
-			//new markup
-			if ( $this->isAssociativeArray( $wgWikiaCuratedContent ) ) {
-				var_dump("is Assoc!");die;
-				return $wgWikiaCuratedContent;
-			}
-
-			//old markup
-			foreach ( $wgWikiaCuratedContent as $section ) {
-				// update information about node type
-				$section['node_type'] = 'section';
-
-				// rename $section['title'] to $section['label']
-				$section['label'] = $section['title'];
-				unset( $section['title'] );
-
-				if ( !empty( $section['label'] ) && empty( $section['featured'] ) ) {
-					// load image for curated content sections (not optional, not featured)
-					$section['image_url'] = CuratedContentHelper::findImageUrl( $section['image_id'] );
-				}
-
-				foreach ( $section['items'] as $i => $item ) {
-					// load image for all items
-					$section['items'][$i]['image_url'] = CuratedContentHelper::findImageUrl( $item['image_id'] );
-
-					// update information about node type
-					$section['items'][$i]['node_type'] = 'item';
-				}
-
-				$data[] = $section;
-			}
-		}
-
-		return $data;
-	}
-
-	private function getCuratedContentForWiki( $wikiID ) {
-		$curatedContent = [ ];
-		$value = WikiFactory::getVarValueByName( 'wgWikiaCuratedContent', $wikiID );
-
-		//new markup
-		if ( $this->isAssociativeArray( $value ) ) {
-			var_dump("is Assoc!");die;
-			return $value;
-		}
-
-		$curatedContent['sections'] = $this->getSections( $value );
-		$curatedContent['optional'] = $this->getSectionItems( $value, '' );
-		$curatedContent['featured'] = $this->getFeaturedSection( $value );
-		$curatedContent['categories'] = $this->getItemsFromSections( $value, $curatedContent['sections'] );
-
-		return $curatedContent;
-	}
-
-	private function getItemsFromSections( $content, $sections ) {
-		$items = [ ];
-		if ( is_array( $sections ) ) {
-			foreach ( $sections as $section ) {
-				$categoriesForSection = $this->getSectionItems( $content, $section['title'] );
-				foreach ( $categoriesForSection as $category ) {
-					$items[] = $category;
-				}
-			}
-		}
-		return $items;
-	}
-
 	private function getCuratedContentQualityForWiki( $wikiID ) {
-		$curatedContent = $this->getCuratedContentForWiki( $wikiID );
+		$curatedContent = ( new CuratedContentController( $wikiID ) )->getCuratedContent();
 		$tooLongTitleCount = 0;
 		$missingImagesCount = 0;
 		$totalNumberOfItems = 0;
