@@ -86,8 +86,6 @@ Be Original.',
 	'wikiahome-preview-user-member-since' => "Member since $1",
 
 	'wikiahome-import-script-no-description' => 'No description given',
-
-	'wikiahome-hub-current-day' => '{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
 );
 
 $messages['de'] = array(
@@ -236,8 +234,6 @@ Sé original.',
 	'wikiahome-preview-user-member-since' => "Miembro desde el $1",
 
 	'wikiahome-import-script-no-description' => 'No se ha dado una descripción',
-
-	'wikiahome-hub-current-day' => '{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
 );
 
 $messages['fr'] = array(
@@ -294,7 +290,6 @@ Soyez original.',
 	'wikiahome-preview-error' => 'Erreur interstitielle',
 	'wikiahome-preview-user-member-since' => 'Membre depuis $1',
 	'wikiahome-import-script-no-description' => 'Aucune description renseignée',
-	'wikiahome-hub-current-day' => '{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
 );
 
 $messages['pl'] = array(
@@ -373,8 +368,6 @@ Bądź oryginalny.',
 	'wikiahome-preview-user-member-since' => "Edytuje od $1",
 
 	'wikiahome-import-script-no-description' => 'Brak opisu',
-
-	'wikiahome-hub-current-day' => '{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
 );
 
 $messages['ja'] = array(
@@ -442,8 +435,6 @@ $messages['ja'] = array(
 	'wikiahome-preview-user-member-since' => " $1 からメンバー",
 
 	'wikiahome-import-script-no-description' => '詳細はありません',
-
-	'wikiahome-hub-current-day' => '{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
 );
 
 
@@ -514,6 +505,4 @@ $messages['qqq'] = array(
 	'wikiahome-preview-user-member-since' => 'Member since date',
 	
 	'wikiahome-import-script-no-description' => 'This message should be used only when an edge case occurs and there is no wiki description on wikis list used in importing process. This message will be place in wiki description in Interstitial if original description is not provided.',
-	
-	'wikiahome-hub-current-day' => 'Date in format "day monthname year" using templates: {{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
 );
