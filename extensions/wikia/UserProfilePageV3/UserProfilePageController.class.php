@@ -958,6 +958,8 @@ class UserProfilePageController extends WikiaController {
 
 	public function removeavatar() {
 		wfProfileIn( __METHOD__ );
+		$this->checkWriteRequest();
+
 		$this->setVal( 'status', false );
 
 		// macbre: avatars operations are disabled during maintenance
