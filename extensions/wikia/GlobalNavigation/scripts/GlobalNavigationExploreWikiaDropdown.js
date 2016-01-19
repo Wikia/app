@@ -6,7 +6,12 @@ require(
 		'use strict';
 
 		var $entryPoint,
-			$exploreLink;
+			$exploreLink,
+			track = Wikia.Tracker.buildTrackingFunction({
+				category: 'top-nav',
+				trackingMethod: 'analytics',
+				action: Wikia.Tracker.ACTIONS.CLICK
+			});
 
 		/**
 		 * First click on touch devices opens the dropdown.
@@ -17,12 +22,17 @@ require(
 		 */
 		function onEntryPointClick(event) {
 			var $this = $(event.target),
-				href = $this.closest('a').attr('href');
+				$a = $this.closest('a'),
+				href = $a.attr('href');
 
 			event.preventDefault();
 			event.stopImmediatePropagation();
 
 			if ($entryPoint.hasClass('active') && href !== '#') {
+				track({
+					label: $a.data('tracking-label')
+				});
+
 				w.location = href;
 			} else {
 				dropdowns.openDropdown.call($entryPoint.get(0));

@@ -61,13 +61,18 @@
 			<?php if ( !empty( $menuContents['hubs'] ) && is_array( $menuContents['hubs'] ) ): ?>
 				<div class="table-cell hubs-links" data-visibility="desktop">
 					<?php foreach ( $menuContents['hubs'] as $hub ): ?>
-						<a class="cell-link top-level" href="<?= $hub['href']; ?>"><?= $hub['textEscaped']; ?></a>
+						<a class="cell-link top-level" href="<?= $hub['href']; ?>"
+						   data-tracking-label="hub-<?= $hub['specialAttr']; ?>">
+							<?= $hub['textEscaped']; ?>
+						</a>
 					<?php endforeach; ?>
 				</div>
 			<?php endif; ?>
 			<div class="table-cell">
 				<div class="explore-wikia-entry-point" id="exploreWikiaEntryPoint">
-					<a class="cell-link top-level" href="<?= $isFandomExposed ? $menuContents['exploreWikia']['href'] : '#' ?>">
+					<a class="cell-link top-level"
+					   href="<?= $isFandomExposed ? $menuContents['exploreWikia']['href'] : '#' ?>"
+					   data-tracking-label="<?= $exploreLink['trackingLabel']; ?>">
 						<?= $menuContents['exploreWikia']['textEscaped'] ?>
 						<img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
 					</a>
@@ -75,13 +80,22 @@
 						<?php if ( !empty( $menuContents['hubs'] ) && is_array( $menuContents['hubs'] ) ): ?>
 							<?php foreach ( $menuContents['hubs'] as $hub ): ?>
 								<li>
-									<a class="cell-link" data-visibility="tablet" href="<?= $hub['href']; ?>"><?= $hub['textEscaped']; ?></a>
+									<a class="cell-link"
+									   data-visibility="tablet"
+									   href="<?= $hub['href']; ?>"
+									   data-tracking-label="hub-<?= $hub['specialAttr']; ?>">
+										<?= $hub['textEscaped']; ?>
+									</a>
 								</li>
 							<?php endforeach; ?>
 						<?php endif; ?>
 						<?php foreach ( $menuContents['exploreDropdown'] as $exploreLink ): ?>
 							<li>
-								<a class="cell-link" href="<?= $exploreLink['href']; ?>"><?= $exploreLink['textEscaped']; ?></a>
+								<a class="cell-link"
+								   href="<?= $exploreLink['href']; ?>"
+								   data-tracking-label="<?= $exploreLink['trackingLabel']; ?>">
+									<?= $exploreLink['textEscaped']; ?>
+								</a>
 							</li>
 						<?php endforeach; ?>
 						<li>

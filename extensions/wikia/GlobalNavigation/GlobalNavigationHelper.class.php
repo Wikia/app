@@ -115,14 +115,16 @@ class GlobalNavigationHelper {
 		$exploreDropdownLinks[] = [
 			'text' => $WAMLinkLabel->plain(),
 			'textEscaped' => $WAMLinkLabel->escaped(),
-			'href' => $this->getWAMLinkForLang( $wgLang->getCode() )
+			'href' => $this->getWAMLinkForLang( $wgLang->getCode() ),
+			'trackingLabel' => 'top-communities',
 		];
 
 		//Link to Community Central
 		$exploreDropdownLinks[] = [
 			'text' => $CommunityLinkLabel->plain(),
 			'textEscaped' => $CommunityLinkLabel->escaped(),
-			'href' => wfMessage('global-navigation-community-link')->plain()
+			'href' => wfMessage('global-navigation-community-link')->plain(),
+			'trackingLabel' => 'community-central',
 		];
 
 		return [
@@ -131,7 +133,8 @@ class GlobalNavigationHelper {
 			'exploreWikia' => [
 				'text' => $exploreWikiaLabel->plain(),
 				'textEscaped' => $exploreWikiaLabel->escaped(),
-				'href' => wfMessage('global-navigation-explore-wikia-link')->plain()
+				'href' => wfMessage('global-navigation-explore-wikia-link')->plain(),
+				'trackingLabel' => 'explore-wikia',
 			]
 		];
 	}
