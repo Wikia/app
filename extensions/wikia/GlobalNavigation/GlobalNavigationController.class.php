@@ -32,7 +32,7 @@ class GlobalNavigationController extends WikiaController {
 		if ( !empty( $wgEnableGlobalNav2016 ) ) {
 			Wikia::addAssetsToOutput( 'global_navigation_2016_js' );
 			$this->response->setVal( 'menuContents', $this->helper->getMenuNodes2016() );
-			$this->response->setVal( 'isFandomExposed', $this->wikiaLogoHelper->isFandomExposed() );
+			$this->response->setVal( 'isFandomExposed', $this->wikiaLogoHelper->isFandomExposed( $wgLang->getCode() ) );
 		} else {
 			Wikia::addAssetsToOutput( 'global_navigation_2015_js' );
 		}

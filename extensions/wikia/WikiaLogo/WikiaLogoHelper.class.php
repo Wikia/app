@@ -57,20 +57,20 @@ class WikiaLogoHelper {
 	public function getMainCorpPageURL() {
 		global $wgLang;
 
-		if ( empty( $this->isFandomExposed() ) ) {
+		if ( empty( $this->isFandomExposed( $wgLang->getCode() ) ) ) {
 			return $this->getCentralUrlForLang( $wgLang->getCode() );
 		} else {
 			return self::FANDOM_URL;
 		}
 	}
 
-	public function isFandomExposed() {
-		global $wgEnableGlobalNav2016, $wgLanguageCode;
+	public function isFandomExposed( $lang ) {
+		global $wgEnableGlobalNav2016;
 
 		if ( empty( $wgEnableGlobalNav2016 ) ) {
 			return false;
 		} else {
-			return $wgLanguageCode === self::FANDOM_LANG;
+			return $lang === self::FANDOM_LANG;
 		}
 	}
 }
