@@ -16,13 +16,14 @@ require(
 		 * @param {Event} event
 		 */
 		function onEntryPointClick(event) {
-			var $this = $(event.target);
+			var $this = $(event.target),
+				href = $this.closest('a').attr('href');
 
 			event.preventDefault();
 			event.stopImmediatePropagation();
 
-			if ($entryPoint.hasClass('active')) {
-				w.location = $this.closest('a').attr('href');
+			if ($entryPoint.hasClass('active') && href !== '#') {
+				w.location = href;
 			} else {
 				dropdowns.openDropdown.call($entryPoint.get(0));
 			}

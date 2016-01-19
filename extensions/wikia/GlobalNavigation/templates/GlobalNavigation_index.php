@@ -67,7 +67,7 @@
 			<?php endif; ?>
 			<div class="table-cell">
 				<div class="explore-wikia-entry-point" id="exploreWikiaEntryPoint">
-					<a class="cell-link top-level" href="<?= $menuContents['exploreWikia']['href']?>">
+					<a class="cell-link top-level" href="<?= $isFandomExposed ? $menuContents['exploreWikia']['href'] : '#' ?>">
 						<?= $menuContents['exploreWikia']['textEscaped'] ?>
 						<img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
 					</a>
