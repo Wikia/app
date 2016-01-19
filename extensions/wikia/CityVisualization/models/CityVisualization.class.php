@@ -338,24 +338,13 @@ class CityVisualization extends WikiaModel {
 		$mdb->commit();
 	}
 
-
-	public function setFlag( $wikiId, $langCode, $flag ) {
-		wfProfileIn( __METHOD__ );
-		$mdb = wfGetDB( DB_MASTER, [], $this->wg->ExternalSharedDB );
-
-		$result = $mdb->update( self::CITY_VISUALIZATION_TABLE_NAME,
-			[ "city_flags = {$mdb->bitOr( 'city_flags', $flag )}" ],
-			[
-				'city_id' => $wikiId,
-				'city_lang_code' => $langCode,
-			]
-		);
-		$mdb->commit( __METHOD__ );
-
-		wfProfileOut( __METHOD__ );
-		return $result;
-	}
-
+	/**
+	 * Returns an integer representing flags set for a given wiki
+	 * @param $wikiId
+	 * @param $langCode
+	 * @return mixed
+	 * @throws DBUnexpectedError
+	 */
 	public function getFlag($wikiId, $langCode) {
 		wfProfileIn(__METHOD__);
 		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
@@ -373,16 +362,61 @@ class CityVisualization extends WikiaModel {
 		return $row['city_flags'];
 	}
 
+	/**
+	 * A public wrapper for adding a flag to a wiki.
+	 * Makes use of the more universal doUpdateFlag() method.
+	 * @param $wikiId
+	 * @param $langCode
+	 * @param $flag
+	 * @return bool
+	 */
+	public function addFlag($wikiId, $langCode, $flag ) {
+		return $this->doUpdateFlag( 'add', $wikiId, $langCode, $flag );
+	}
+
+	/**
+	 * A public wrapper for removing a flag from a wiki.
+	 * Makes use of the more universal doUpdateFlag() method.
+	 * @param $wikiId
+	 * @param $langCode
+	 * @param $flag
+	 * @return bool
+	 */
 	public function removeFlag( $wikiId, $langCode, $flag ) {
+		return $this->doUpdateFlag( 'remove', $wikiId, $langCode, $flag );
+	}
+
+	/**
+	 * Updates flags in the `city_visualization` table in the shared DB for a given wiki.
+	 * @param $action
+	 * @param $wikiId
+	 * @param $langCode
+	 * @param $flag
+	 * @return bool
+	 */
+	private function doUpdateFlag( $action, $wikiId, $langCode, $flag ) {
 		wfProfileIn( __METHOD__ );
 		$mdb = wfGetDB( DB_MASTER, [], $this->wg->ExternalSharedDB );
+
+		switch ( $action ) {
+			case 'add':
+				$operation = $mdb->bitOr( 'city_flags', $flag );
+				break;
+			case 'remove':
+				$operation = $mdb->bitAnd( 'city_flags', $mdb->bitNot( $flag ) );
+				break;
+			default:
+				return false;
+		}
+
 		$result = $mdb->update( self::CITY_VISUALIZATION_TABLE_NAME,
-			[ "city_flags = {$mdb->bitAnd( 'city_flags', $mdb->bitNot( $flag ) )}" ],
+			[ "city_flags = {$operation}" ],
 			[
 				'city_id' => $wikiId,
 				'city_lang_code' => $langCode,
 			]
 		);
+
 		$mdb->commit( __METHOD__ );
 		wfProfileOut( __METHOD__ );
 		return $result;

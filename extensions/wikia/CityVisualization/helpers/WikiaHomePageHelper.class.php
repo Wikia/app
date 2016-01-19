@@ -751,7 +751,7 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		/* @var $visualization CityVisualization */
 		$visualization = new CityVisualization();
-		$result = $visualization->setFlag($wikiId, $langCode, $flag);
+		$result = $visualization->addFlag($wikiId, $langCode, $flag);
 
 		if ($result === true) {
 			//purge cache
