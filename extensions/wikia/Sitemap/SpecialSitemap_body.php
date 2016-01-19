@@ -256,7 +256,6 @@ class SitemapPage extends UnlistedSpecialPage {
 		$dbr = wfGetDB( DB_SLAVE, "vslow" );
 
 		$out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-		$out .= sprintf( "<!-- generated on the fly by %s -->\n", $this->mTitle->getFullURL() );
 
 		$scope = array( 'page_namespace' => $this->mNamespace );
 		$index = is_array( $sitemapIndex ) ? $sitemapIndex : $wgMemc->get( wfMemcKey( "sitemap-index") );
