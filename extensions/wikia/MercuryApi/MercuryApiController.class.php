@@ -175,7 +175,7 @@ class MercuryApiController extends WikiaController {
 	 * @return array
 	 */
 	private function getNavigation() {
-		global $wgEnableGlobalNav2016;
+		global $wgEnableGlobalNav2016, $wgLang;
 
 		$navData = $this->sendRequest( 'NavigationApi', 'getData' )->getData();
 
@@ -189,6 +189,16 @@ class MercuryApiController extends WikiaController {
 			return $localNavigation;
 		} else {
 			$navigationNodes = ( new GlobalNavigationHelper() )->getMenuNodes2016();
+
+			// Add link to explore wikia only for EN language
+			if ( $wgLang->getCode() === WikiaLogoHelper::FANDOM_LANG ) {
+				$navigationNodes['exploreDropdown'][] = [
+					'text' => wfMessage( 'global-navigation-explore-wikia-mercury-link-label' )->plain(),
+					'textEscaped' => wfMessage( 'global-navigation-explore-wikia-mercury-link-label' )->escaped(),
+					'href' => wfMessage( 'global-navigation-explore-wikia-link' )->plain(),
+					'trackingLabel' => 'explore-wikia'
+				];
+			}
 
 			return [
 				'hubsLinks' => $navigationNodes['hubs'],
