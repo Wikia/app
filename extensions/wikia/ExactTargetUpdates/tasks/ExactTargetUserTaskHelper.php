@@ -10,7 +10,7 @@ class ExactTargetUserTaskHelper {
 	 * @param array $aFilterValues possible values to filter
 	 * @return array
 	 */
-	public function prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues ) {
+	public function prepareUserRetrieveParams( array $aProperties, $sFilterProperty, array $aFilterValues ) {
 		/* Get Customer Keys specific for production or development */
 		$aCustomerKeys = $this->getCustomerKeys();
 

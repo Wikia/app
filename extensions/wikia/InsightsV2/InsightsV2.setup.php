@@ -17,12 +17,12 @@ $dir = __DIR__ . '/';
 $wgExtensionCredits['specialpage'][] = [
 	'name' => 'Insights',
 	'descriptionmsg' => 'insights-desc',
-	'authors' => [
+	'author' => [
 		'Łukasz Konieczny',
 		'Adam Karminski <adamk@wikia-inc.com>',
 		'Kamil Koterba',
-	],
-	'version' => 1.0,
+		],
+	'version' => '2.0',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/InsightsV2',
 ];
 

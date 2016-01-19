@@ -1,9 +1,11 @@
 <?php
 
 $messages['en'] = [
-	'reciculation-desc' => 'Handles recirculating content',
+	'recirculation-desc' => 'Handles recirculating content',
+	'recirculation-fandom-title' => 'Trending Fandom Articles'
 ];
 
 $messages['qqq'] = [
-	'reciculation-desc' => 'Extension description',
+	'recirculation-desc' => 'Extension description',
+	'recirculation-fandom-title' => 'Title to display at the top of the Fandom recirculation module'
 ];

@@ -48,7 +48,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 					sizes: [[300, 250]]
 				},
 				MOBILE_TOP_LEADERBOARD: {
-					sizes: [[320, 50]]
+					sizes: [[320, 50], [300, 250]]
 				}
 			}
 		},
@@ -198,10 +198,6 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		defineSlots(skin, onResponse);
 	}
 
-	function isEnabled() {
-		return context.opts.rubiconFastlaneOnAllVerticals || adLogicZoneParams.getSite() === 'life';
-	}
-
 	function getPrices() {
 		return priceMap;
 	}
@@ -213,7 +209,6 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	return factory.create({
 		logGroup: logGroup,
 		name: 'rubicon_fastlane',
-		isEnabled: isEnabled,
 		call: call,
 		calculatePrices: calculatePrices,
 		getPrices: getPrices,
