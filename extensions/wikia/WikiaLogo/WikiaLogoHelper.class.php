@@ -3,7 +3,7 @@
 class WikiaLogoHelper {
 	const DEFAULT_LANG = 'en';
 	const FANDOM_LANG = 'en';
-	const FANDOM_URL = 'http://wikia.com/fandom';
+	const FANDOM_URL = 'http://www.wikia.com/fandom';
 
 	/**
 	 * @var WikiaCorporateModel
