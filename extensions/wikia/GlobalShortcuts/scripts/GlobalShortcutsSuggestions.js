@@ -1,6 +1,6 @@
 define('GlobalShortcutsSuggestions',
-	['mw', 'wikia.nirvana', 'PageActions', 'GlobalShortcuts', 'GlobalShortcuts.RenderKeys'],
-	function (mw, nirvana, PageActions, GlobalShortcuts, RenderKeys) {
+	['mw', 'wikia.nirvana', 'PageActions', 'GlobalShortcuts', 'GlobalShortcuts.RenderKeys', 'GlobalShortcutsTracking'],
+	function (mw, nirvana, PageActions, GlobalShortcuts, RenderKeys, tracker) {
 		'use strict';
 
 		function GlobalShortcutsSuggestions( $el, closeCb ) {
@@ -39,6 +39,7 @@ define('GlobalShortcutsSuggestions',
 					console.log(arguments);
 					var actionId = suggestion.data.actionId;
 					this.close();
+					tracker.trackClick(actionId);
 					PageActions.find(actionId).execute();
 				}.bind(this),
 				onHide: function() {

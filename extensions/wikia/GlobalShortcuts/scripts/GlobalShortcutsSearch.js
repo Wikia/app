@@ -46,7 +46,6 @@ define('GlobalShortcutsSearch', ['mw', 'wikia.nirvana', 'wikia.throbber', 'Globa
 			});
 			$el.focus();
 			console.log(suggestions);
-			//console.log(modalInstance);
 		}
 
 		function setupModalConfig(content) {
