@@ -10,7 +10,7 @@ $messages['en'] = array(
 	'global-navigation-account-navigation-options' => '$1 or $2',
 	'global-navigation-community-link' => 'http://community.wikia.com',
 	'global-navigation-community-link-label' => 'Community Central',
-	'global-navigation-explore-wikia-link' => '#',
+	'global-navigation-explore-wikia-link' => 'http://www.wikia.com/explore',
 	'global-navigation-explore-wikia-link-label' => 'Explore Wikia',
 	'global-navigation-menu-hubs' => '*http://gameshub.wikia.com/wiki/Games_Hub|Games|games
 *http://movieshub.wikia.com/wiki/Movies_Hub|Movies|movies

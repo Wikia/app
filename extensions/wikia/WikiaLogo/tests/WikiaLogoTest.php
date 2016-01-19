@@ -2,8 +2,6 @@
 class WikiaLogoTest extends WikiaBaseTest
 {
 
-	const FANDOM_URL = WikiaLogoHelper::FANDOM_URL;
-
 	public function setUp()
 	{
 		$this->setupFile = __DIR__ . '/../WikiaLogo.setup.php';
