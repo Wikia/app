@@ -30,14 +30,6 @@
 					$pos = 0;
 					foreach ($results as $result) {
 						$pos++;
-//						echo $app->getView('WikiaSearch', 'CrossWiki_result', array(
-//							'result' => $result,
-//							'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
-//							'query' => $query,
-//							'hub' => $hub,
-//							'corporateWikiId' => $corporateWikiId,
-//							'wgExtensionsPath' => $wgExtensionsPath
-//						));
 						echo $app->getView('WikiaSearch', 'CrossWiki_result',
 							\Wikia\Search\Result\ResultHelper::extendResult($result, $pos + (($currentPage - 1) * $resultsPerPage), 60));
 					}
