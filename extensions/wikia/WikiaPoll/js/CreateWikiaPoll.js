@@ -106,8 +106,6 @@ var CreateWikiaPoll = {
 	onSave: function(event) {
 		var formData = $("#CreateWikiaPoll").find("form").serialize();
 
-		formData += '&token=' + encodeURIComponent(mw.user.tokens.get('editToken'));
-
 		event.preventDefault();
 		
 		if ($("#CreateWikiaPoll").data('pollId')) {
