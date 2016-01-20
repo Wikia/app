@@ -125,7 +125,7 @@ class InfoboxesService
 	/**
 	 * Lazy-loading DI
 	 * @todo replace this with some kind of trait
-	 * @return Wikkia\Search\MediaWikiService
+	 * @return Wikia\Search\MediaWikiService
 	 */
 	protected function getMwService() {
 		if ( $this->mwService === null ) {
