@@ -95,7 +95,7 @@ class InsightsController extends WikiaSpecialPageController {
 
 			try {
 				$this->response->setData( [
-					'content' => $insightsContext->getContent(),
+					'content' => $content,
 					'pagination' => $insightsContext->getPagination(),
 					'subtypes' => $model->getConfig()->getSubtypes(),
 					'showPageViews' => $model->getConfig()->showPageViews(),
