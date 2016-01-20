@@ -45,7 +45,7 @@
 		<div class="global-navigation-container">
 			<div class="wikia-logo-container table-cell">
 				<a href="<?= htmlspecialchars( $centralUrl ) ?>"
-					class="wikia-logo"
+					class="wikia-logo final-url"
 					rel="nofollow"
 					data-id="wikia-logo">
 					<img src="<?= $wg->BlankImgUrl ?>"
@@ -70,7 +70,7 @@
 			<?php endif; ?>
 			<div class="table-cell">
 				<div class="explore-wikia-entry-point" id="exploreWikiaEntryPoint">
-					<a class="cell-link top-level"
+					<a class="cell-link top-level final-url"
 					   href="<?= $isFandomExposed ? $menuContents['exploreWikia']['href'] : '#' ?>"
 					   data-tracking-label="<?= $exploreLink['trackingLabel']; ?>">
 						<?= $menuContents['exploreWikia']['textEscaped'] ?>

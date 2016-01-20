@@ -15,7 +15,7 @@ if ( window.wgStagingEnvironment ) {
 			href = links[i].getAttribute('href');
 
 			pattern.lastIndex = 0;
-			if ( href && href.indexOf( stagingURLPart ) === -1 && pattern.test(href)) {
+			if ( href && !links[i].classList.contains('final-url') && href.indexOf( stagingURLPart ) === -1 && pattern.test(href)) {
 				links[i].setAttribute( 'href', href.replace( '://', stagingURLPart ) );
 			}
 
