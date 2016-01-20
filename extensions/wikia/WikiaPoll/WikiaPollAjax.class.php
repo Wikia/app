@@ -59,9 +59,11 @@ class WikiaPollAjax {
 	 * @param wgRequest pollId
 	 */
 	static public function update() {
+		global $wgUser;
 		wfProfileIn(__METHOD__);
 
 		$wg = F::app()->wg;
+		$wg->Request->isValidWriteRequest( $wgUser );
 
 		$pollId = $wg->Request->getInt ('pollId');
 		$answers = $wg->Request->getArray ('answer');  // array
