@@ -1370,7 +1370,7 @@ $wgSitewideDisableIVW2 = false;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  */
-$wgSitewideDisableIVW3 = true;
+$wgSitewideDisableIVW3 = false;
 
 /**
  * @name $wgSitewideDisableLiftium
