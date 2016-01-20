@@ -239,10 +239,12 @@ class WikiaPageType {
 	/**
 	 * Check if current page is Wikia hub main page ( for hubs v3 )
 	 *
+	 * @param Title|null $title optional title to perform a check for (instead of wgTitle as it's not always set - see SUS-11)
 	 * @return bool
+	 * @throws \Wikia\Util\AssertionException
 	 */
-	public static function isWikiaHubMain() {
-		$title = self::getTitle();
+	public static function isWikiaHubMain( $title = null ) {
+		$title = $title ?: self::getTitle();
 
 		Assert::true( $title instanceof Title, __METHOD__ ); // SUS-11
 
