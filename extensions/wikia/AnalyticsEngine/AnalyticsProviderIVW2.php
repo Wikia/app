@@ -38,6 +38,7 @@ class AnalyticsProviderIVW2 implements iAnalyticsProvider {
 					"sv" => "ke"      // FRABO-Tag deaktiviert
 				];
 
+				// iam.js library loaded in AnalyticsProviderIVW3
 				$ivwScriptTag = '<script>iom.c(' . json_encode($iamData) . ', 2);</script>';
 				$ivwScriptTagEscaped = json_encode($ivwScriptTag);
 
