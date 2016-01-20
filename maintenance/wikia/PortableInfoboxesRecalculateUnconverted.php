@@ -22,15 +22,9 @@ class PortableInfoboxesRecalculateUnconverted extends Maintenance {
 			return;
 		}
 
-		$insightsCountService = new InsightsCountService();
-		$count = $insightsCountService->getCount( InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE );
-
-		if ( empty( $count ) ) {
-			return;
-		}
-
 		$ui = new InsightsUnconvertedInfoboxesModel();
-		$articles = ( new InsightsContext( $ui ) )->fetchData();
+		$ui->initModel( null );
+		$articles = $ui->fetchArticlesData();
 		\Wikia\Logger\WikiaLogger::instance()->debug( 'Templates with unconverted infoboxes', [ 'list_of_templates' => json_encode($articles) ] );
 
 		foreach ( $articles as $id => $articleData ) {
@@ -50,7 +44,7 @@ class PortableInfoboxesRecalculateUnconverted extends Maintenance {
 
 		$uip = new UnconvertedInfoboxesPage();
 		$uip->recache();
-		( new InsightsCache( $ui->getConfig() ) )->purgeInsightsCache();
+		$ui->purgeInsightsCache();
 
 	}
 }
