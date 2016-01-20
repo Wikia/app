@@ -2,11 +2,12 @@
 
 class AnalyticsProviderIVW3 implements iAnalyticsProvider {
 
+	private static $instantGlobalsVariable = 'wgAnalyticsIVW3Countries';
 	private static $libraryUrl = 'https://script.ioam.de/iam.js';
 
 	static public function onInstantGlobalsGetVariables( array &$vars )
 	{
-		$vars[] = 'wgAnalyticsIVW3Countries';
+		$vars[] = self::$instantGlobalsVariable;
 
 		return true;
 	}
@@ -19,9 +20,11 @@ class AnalyticsProviderIVW3 implements iAnalyticsProvider {
 		global $wgCityId;
 
 		$url = self::$libraryUrl;
+		$countries = self::$instantGlobalsVariable;
 		$vertical = HubService::getVerticalNameForComscore( $wgCityId );
 
 		$code = <<<CODE
+<!-- Begin IVW3 Tag -->
 <script type="text/javascript" src="{$url}"></script>
 <script type="text/javascript">
 	require([
@@ -34,11 +37,12 @@ class AnalyticsProviderIVW3 implements iAnalyticsProvider {
 			sv: 'ke'
 		};
 
-		if (geo.isProperGeo(instantGlobals.wgAnalyticsIVW3Countries)) {
-			iom.c(iamData);
+		if (geo.isProperGeo(instantGlobals['{$countries}'])) {
+			iom.c(iamData, 2);
 		};
 	});
 </script>
+<!-- End IVW3 Tag -->
 CODE;
 
 		switch ($event) {
