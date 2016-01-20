@@ -14,12 +14,10 @@ class ResultHelper {
 
 		//TODO: Remove after DAT-3642 is done
 		if (empty($imageURL)) {
-			$imageFileName = PromoImage::fromPathname($result['image_s'])->ensureCityIdIsSet($result['id'])->getPathname();
+			$imageFileName = (new PromoImage(PromoImage::MAIN))->setCityId($result['id'])->getPathname();
 			$imageURL = ImagesService::getImageSrcByTitle( $result['id'], $imageFileName,
 				-		WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_WIDTH, WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT );
-			if (! empty( $imageOriginalURL ) ) {
-				$imageURL = ImagesService::overrideThumbnailFormat($imageOriginalURL, ImagesService::EXT_JPG);
-			}
+
 		}//TODO: end
 
 		if ( empty( $imageURL ) ) {
