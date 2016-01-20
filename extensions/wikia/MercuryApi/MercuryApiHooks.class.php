@@ -126,8 +126,8 @@ class MercuryApiHooks {
 		$urls = [ ];
 		WikiaDataAccess::cachePurge( MercuryApiController::curatedContentDataMemcKey() );
 
-		foreach ( $sections as $section ) {
-			if ( !empty( $section['featured'] ) ) {
+		foreach ( $sections as $key => $section ) {
+			if ( $key == 'featured' ) {
 				continue;
 			}
 

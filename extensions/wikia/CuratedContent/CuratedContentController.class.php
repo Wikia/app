@@ -188,6 +188,9 @@ class CuratedContentController extends WikiaController {
 	public function getList() {
 		wfProfileIn( __METHOD__ );
 
+		global $wgWikiaCuratedContent;
+		//var_dump( $wgWikiaCuratedContent );die;
+
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$section = $this->request->getVal( 'section' );
 		$limit = $this->request->getVal( 'limit', self::LIMIT * 2 );
