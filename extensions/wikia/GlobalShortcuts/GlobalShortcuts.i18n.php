@@ -1,6 +1,6 @@
 <?php
 $messages['en'] = array(
-	'global-shortcuts-caption-action-list' => 'Actions list (Actions explorer)',
+	'global-shortcuts-caption-action-list' => 'Actions explorer',
 	'global-shortcuts-caption-keyboard-shortcuts-help' => 'Keyboard shortcuts help',
 	'global-shortcuts-caption-open-discussions' => 'Open discussions',
 	'global-shortcuts-caption-search-for-a-page' => 'Search for a page',
@@ -11,16 +11,14 @@ $messages['en'] = array(
 	'global-shortcuts-category-help' => 'Help',
 	'global-shortcuts-key-or' => 'or',
 	'global-shortcuts-key-then' => 'then',
-	'global-shortcuts-title-action-explorer' => 'Action explorer',
 	'global-shortcuts-title-help-entry-point' => 'Open keyboard shortcuts help dialog (?)',
 	'global-shortcuts-title-keyboard-shortcuts' => 'Keyboard shortcuts',
 	'template-class-global-shortcuts-caption-classify-page' => 'Classify page',
-	'template-class-global-shortcuts-category-current-page' => 'Current page',
 	'template-class-global-shortcuts-press-to-explore-shortcuts' => 'Press $1 to explore shortcuts',
 );
 
 $messages['qqq'] = array(
-	'global-shortcuts-caption-action-list' => 'This shortcut redirects to the action explorer - list of all actions with and without keyboard shortcuts.',
+	'global-shortcuts-caption-action-list' => "This shortcut redirects to the action explorer - list of all actions with and without keyboard shortcuts. It's used as a description of shortcut key and title of actions explorer modal.",
 	'global-shortcuts-caption-keyboard-shortcuts-help' => 'This shortcut redirects to the modal with actions that contains keyboard shortcuts.',
 	'global-shortcuts-caption-open-discussions' => 'This shortcut redirects to the discussion page.',
 	'global-shortcuts-caption-search-for-a-page' => 'This shortcut redirects to the search box where users might search something on wikia.',
@@ -31,8 +29,7 @@ $messages['qqq'] = array(
 	'global-shortcuts-category-help' => 'Name of a category in actions explorer that contains actions list and keyboard shortcuts help.',
 	'global-shortcuts-key-or' => 'It is related to two possible different keyboard shorcuts, so the user uses one shortcut OR another one.',
 	'global-shortcuts-key-then' => 'It appears between two keys so the user press first one and THEN the second one.',
-	'global-shortcuts-title-action-explorer' => 'The title of an action explorer that contains all shortcuts.',
-	'global-shortcuts-title-help-entry-point' => 'Hint that will appear when you indicate the entry point of shortcuts help dialog.',
+	'global-shortcuts-title-help-entry-point' => 'Hint that will appear when you indicate the entry point of shortcuts help dialog. Question mark in brackets informs about shortcut key to open the dialog.',
 	'global-shortcuts-title-keyboard-shortcuts' => 'The title of a keyboard shorcuts modal.',
 	'template-class-global-shortcuts-caption-classify-page' => 'This shortcut redirects users to the page where they can classify the template; it appears on template page.',
 	'template-class-global-shortcuts-press-to-explore-shortcuts' => '$1 is an html of . key. This sentence appears at the bottom of a keyboard shortcut help and it indicates that whenever user press a . key the actions explorer will appear.',
