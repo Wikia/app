@@ -586,8 +586,4 @@ class CommunityDataService
 		$data = $this->curatedContentData();
 		return isset( $data['community_data']['image_id']) ? $data['community_data']['image_id'] : 0;
 	}
-
-	public function getCommunityDescription() {
-		return "some description";
-	}
 }

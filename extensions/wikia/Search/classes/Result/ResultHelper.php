@@ -1,7 +1,7 @@
 <?php
 namespace Wikia\Search\Result;
 
-use Wikia\Search\MediaWikiService, Wikia\Search\Utilities, CommunityDataService, ImagesService, WikiaSearchController;
+use Wikia\Search\MediaWikiService, Wikia\Search\Utilities, CommunityDataService, ImagesService, WikiaSearchController, PromoImage;
 class ResultHelper {
 
 	public static function extendResult($result, $pos, $descWordLimit) {
@@ -11,6 +11,13 @@ class ResultHelper {
 		$commData = new CommunityDataService($result['id']);
 		$imageURL = ImagesService::getImageSrc($result['id'], $commData->getCommunityImageId(),
 			WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_WIDTH, WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT )['src'];
+
+		//TODO: Remove after DAT-3642 is done
+		if (empty($imageURL)) {
+			$imageFileName = PromoImage::fromPathname($result['image_s'])->ensureCityIdIsSet($result['id'])->getPathname();
+			$imageURL = ImagesService::getImageSrcByTitle( $result['id'], $imageFileName,
+				-		WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_WIDTH, WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT );
+		}//TODO: end
 
 		if ( empty( $imageURL ) ) {
 			// display placeholder image if no thumbnail
