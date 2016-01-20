@@ -29,5 +29,3 @@ $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['Our404Handler'] = $dir . 'SpecialOur404Handler.i18n.php';
 $wgAutoloadClasses['Our404HandlerPage'] = $dir. 'SpecialOur404Handler_body.php';
 $wgSpecialPages['Our404Handler'] = 'Our404HandlerPage';
-
-$wgHooks['TestCanonicalRedirect'][] = 'Our404HandlerPage::onTestCanonicalRedirect';

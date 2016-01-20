@@ -310,30 +310,12 @@ $messages = array(
 'navigation'    => 'Navigatioun',
 'and'           => '&#32;an',
 
-# Cologne Blue skin
 'qbfind'         => 'Fannen',
 'qbbrowse'       => 'Duerchsichen',
-'qbedit'         => 'Änneren',
 'qbpageoptions'  => 'Säitenoptiounen',
 'qbpageinfo'     => 'Kontext',
-'qbmyoptions'    => 'Meng Säiten',
-'qbspecialpages' => 'Spezialsäiten',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Sujet derbäisetzen',
-'vector-action-delete'           => 'Läschen',
-'vector-action-move'             => 'Réckelen',
-'vector-action-protect'          => 'Spären',
-'vector-action-undelete'         => 'Restauréieren',
-'vector-action-unprotect'        => 'Spär änneren',
-'vector-simplesearch-preference' => 'Verbessert Sichvirschléi aktiviéieren (nëmme beim Ausgesinn Vector)',
-'vector-view-create'             => 'Uleeën',
-'vector-view-edit'               => 'Änneren',
-'vector-view-history'            => 'Versioune weisen',
-'vector-view-view'               => 'Liesen',
-'vector-view-viewsource'         => 'Quellcode weisen',
 'actions'                        => 'Aktiounen',
 'namespaces'                     => 'Nummraim',
 'variants'                       => 'Varianten',
@@ -356,7 +338,6 @@ $messages = array(
 'edit'              => 'Änneren',
 'create'            => 'Uleeën',
 'editthispage'      => 'Dës Säit änneren',
-'create-this-page'  => 'Dës Säit uleeën',
 'delete'            => 'Läschen',
 'deletethispage'    => 'Dës Säit läschen',
 'undelete_short'    => '$1 {{PLURAL:$1|Versioun|Versioune}} restauréieren',
@@ -371,19 +352,9 @@ $messages = array(
 'talkpagelinktext'  => 'Diskussioun',
 'specialpage'       => 'Spezialsäit',
 'personaltools'     => 'Perséinlech Tools',
-'postcomment'       => 'Neien Abschnitt',
-'articlepage'       => 'Säit',
 'talk'              => 'Diskussioun',
 'views'             => 'Affichagen',
 'toolbox'           => 'Geschirkëscht',
-'userpage'          => 'Benotzersäit',
-'projectpage'       => 'Meta-Text',
-'imagepage'         => 'Billersäit kucken',
-'mediawikipage'     => 'Säit mat de Message weisen',
-'templatepage'      => 'Schabloune(säit) weisen',
-'viewhelppage'      => 'Hëllefssäit weisen',
-'categorypage'      => 'Kategoriesäit weisen',
-'viewtalkpage'      => 'Diskussioun weisen',
 'otherlanguages'    => 'An anere Sproochen',
 'redirectedfrom'    => '(Virugeleet vu(n) $1)',
 'redirectpagesub'   => 'Viruleedungssäit',
@@ -1164,14 +1135,6 @@ Denkt w.e.g drunn datt d'Navigatiounslinken d'Wiel vun de Versiounen nees zréck
 'search-external'                  => 'Extern sichen',
 'searchdisabled'                   => "D'Sichfunktioun op {{SITENAME}} ass ausgeschalt. Dir kënnt iwwerdeems mat Hëllef vu Google sichen. Bedenkt awer, datt deenen hire  Sichindex fir {{SITENAME}} eventuell net dem aktuellste Stand entsprecht.",
 
-# Quickbar
-'qbsettings'                => 'Geschirläischt',
-'qbsettings-none'           => 'Keen',
-'qbsettings-fixedleft'      => 'Lénks, fest',
-'qbsettings-fixedright'     => 'Riets, fest',
-'qbsettings-floatingleft'   => 'schwiewt lenks',
-'qbsettings-floatingright'  => 'Schwiewt riets',
-'qbsettings-directionality' => 'Fix, ofhängeg vun der Schreiwrichtung vun Ärer Sprooch',
 
 # Preferences page
 'preferences'                   => 'Astellungen',
@@ -2788,14 +2751,7 @@ Erlaabt et e Grond an de Resumé derbäizesetzen.',
 
 # Stylesheets
 'common.css'      => "/* Dës CSS huet nëmmen Afloss op de Skin ''Chick''  */",
-'standard.css'    => "/* Dës CSS huet nëmmen Afloss op de Skin ''Klassesch''  */",
-'nostalgia.css'   => "/* Dës CSS huet nëmmen Afloss op de Skin ''Nostalgie''  */",
-'cologneblue.css' => "/* Dës CSS huet nëmmen Afloss op de Skin ''Köln Blo''  */",
 'monobook.css'    => "/* Dës CSS huet nëmmen Afloss op de Skin ''Monobook''  */",
-'myskin.css'      => "/* Dës CSS huet nëmmen Afloss op de Skin ''MySkin''  */",
-'chick.css'       => '/* Dës CSS huet nëmmen Afloss op de Skin "Chick" */',
-'simple.css'      => "/* Dës CSS huet nëmmen Afloss op de Skin ''Einfach''  */",
-'modern.css'      => "/* Dës CSS huet nëmmen Afloss op de Skin ''Modern''  */",
 
 # Scripts
 'common.js' => '/* All JavaScript hei gëtt fir all Benotzer beim Luede vun all Säit gelueden. */',
@@ -2838,14 +2794,7 @@ Dëst warscheinlech duerch en externe Link den op der schwaarzer Lëscht (blackl
 'pageinfo-viewsperedit'     => 'Affichage pro Ännerung',
 
 # Skin names
-'skinname-standard'    => 'Klassesch',
-'skinname-nostalgia'   => 'Nostalgie',
-'skinname-cologneblue' => 'Köln Blo',
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'MySkin',
-'skinname-chick'       => 'Chick',
-'skinname-simple'      => 'Einfach',
-'skinname-modern'      => 'Modern',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Als nogekuckt markéieren',

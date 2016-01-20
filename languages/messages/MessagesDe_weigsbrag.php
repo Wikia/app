@@ -34,14 +34,7 @@ $namespaceNames = array(
 );
 
 $skinNames = array(
-	'standard'      => 'Klassik',
-	'nostalgia'     => 'Nostalgie',
-	'cologneblue'   => 'Kölnisch Blau',
 	'monobook'      => 'MonoBook',
-	'myskin'        => 'MySkin',
-	'chick'         => 'Küken',
-	'simple'        => 'Einfach',
-	'modern'        => 'Modern'
 );
 
 $bookstoreList = array(
@@ -313,11 +306,8 @@ $messages = array(
 'cancel'         => 'Abbrug',
 'qbfind'         => 'Wend',
 'qbbrowse'       => 'Blädd',
-'qbedit'         => 'änd',
 'qbpageoptions'  => 'Seidesobsiones',
 'qbpageinfo'     => 'Seidesdades',
-'qbmyoptions'    => 'Meines Seides',
-'qbspecialpages' => 'Schbesialseides',
 'moredotdotdot'  => 'Mehr …',
 'mypage'         => 'Eigenes Seid',
 'mytalk'         => 'Eigenes Disgusion',
@@ -346,7 +336,6 @@ $messages = array(
 'edit'              => 'Bearbeid',
 'create'            => 'Erschdel',
 'editthispage'      => 'Seid bearbeid',
-'create-this-page'  => 'Seid erschdel',
 'delete'            => 'Lösch',
 'deletethispage'    => 'Dose Seid lösch',
 'undelete_short'    => '{{PLURAL:$1|1 Wersion|$1 Wersiones}} wiedherschdel',
@@ -360,19 +349,9 @@ $messages = array(
 'talkpagelinktext'  => 'Disgusion',
 'specialpage'       => 'Schbesialseid',
 'personaltools'     => 'Bersönliges Wergseuges',
-'postcomment'       => 'Senw dasugeb',
-'articlepage'       => 'Seid',
 'talk'              => 'Disgusion',
 'views'             => 'Ansigdes',
 'toolbox'           => 'Wergseuges',
-'userpage'          => 'Benudsesseid',
-'projectpage'       => 'Meda-Degsd',
-'imagepage'         => 'Dadeiseid',
-'mediawikipage'     => 'Inhaldsseid anseig',
-'templatepage'      => 'Worlagesseid anseig',
-'viewhelppage'      => 'Hilwseid anseig',
-'categorypage'      => 'Gadegoräseid anseig',
-'viewtalkpage'      => 'Disgusion',
 'otherlanguages'    => 'Anderes Sbrages',
 'redirectedfrom'    => '(Weidleid won $1)',
 'redirectpagesub'   => 'Weidleid',
@@ -398,7 +377,6 @@ $messages = array(
 'edithelp'             => 'Bearbeidhilw',
 'edithelppage'         => 'Help:Bearbeidhilw',
 'faq'                  => 'FAQ',
-'faqpage'              => 'Project:FAQ',
 'helppage'             => 'Help:Hilw',
 'mainpage'             => 'Haubdseid',
 'mainpage-description' => 'Haubdseid',
@@ -407,7 +385,6 @@ $messages = array(
 'portal-url'           => 'Project:Bordal',
 'privacy'              => 'Dadesschuds',
 'privacypage'          => 'Project:Dadesschuds',
-'sitesupport'          => 'Schbendes',
 'sitesupport-url'      => 'Project:Schbendes',
 
 'badaccess'        => 'Noggs ausreigendes Regdes',
@@ -992,12 +969,6 @@ Wan ausgen mid dose Dhem, gön ja dose Seid „[[$1]]“ selb schreib, od.",
 'prefsnologin'             => 'Noggs angemeldedes',
 'prefsnologintext'         => 'Musdar [[Special:Userlogin|angemeldedes]] sei, das gön dose Einschdeles änd.',
 'prefsreset'               => 'Dose Eingabes haddar werwerw, haddar noggs schbeig dose.',
-'qbsettings'               => 'Seidesleisd',
-'qbsettings-none'          => 'Noggs',
-'qbsettings-fixedleft'     => 'Linges, wigses',
-'qbsettings-fixedright'    => 'Regdes, wigses',
-'qbsettings-floatingleft'  => 'Linges, schwebendes',
-'qbsettings-floatingright' => 'Regdes, schwebendes',
 'changepassword'           => 'Basword änd',
 'skin'                     => 'Sgin',
 'math'                     => 'TeX',
@@ -2139,9 +2110,6 @@ Ales Dranswigi-Imbord-Agsiones in dose [[Special:Log/import|Imbord-Logbug]] brod
 
 # Stylesheets
 'common.css'      => '/* CSS an dose Schdel auw ales Sgins auswirg */',
-'standard.css'    => '/* CSS an dose Schdel auw dose Klassik-Sgin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */',
-'nostalgia.css'   => '/* CSS an dose Schdel auw dose Nostalgie-Skin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */',
-'cologneblue.css' => '/* CSS an dose Schdel auw dose Kölnisch Blau-Skin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */',
 'monobook.css'    => '/* CSS an dose Schdel auw dose Monobook-Skin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */
 /* Gleinschreib noggs erswing */
 .portlet h5,
@@ -2150,21 +2118,10 @@ Ales Dranswigi-Imbord-Agsiones in dose [[Special:Log/import|Imbord-Logbug]] brod
 #p-cactions li a {
 	text-transform: none;
 }',
-'myskin.css'      => '/* CSS an dose Schdel auw dose MySkin-Skin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */',
-'chick.css'       => '/* CSS an dose Schdel auw dose Küken-Skin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */',
-'simple.css'      => '/* CSS an dose Schdel auw dose Einfach-Skin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */',
-'modern.css'      => '/* CSS an dose Schdel auw dose MySkin-Skin auswirg. Wür algemeinesgüldiges Sgin-Anbases bid dose [[MediaWiki:Common.css]] bearbeid. */',
 
 # Scripts
 'common.js'      => '/* Dose wolgendes JawaSgribd wür ales Benudses lad. */',
-'standard.js'    => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Klassik-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
-'nostalgia.js'   => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Nostalgie-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
-'cologneblue.js' => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Kölnisch Blau-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
 'monobook.js'    => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Monobook-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
-'myskin.js'      => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Myskin-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
-'chick.js'       => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose KükenSgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
-'simple.js'      => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Einfach-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
-'modern.js'      => '/* Dose wolgendes JawaSgribd wür dose Benudses lad, wo dose Modern-Sgin werwend. Algemeinesgüldiges JawaSgribd bid in dose [[MediaWiki:Common.js]] eindrag. */',
 
 # Metadata
 'nodublincore'      => 'Dublin-Core-RDF-Medadades wür dose Sörw deagdiwärdes sei.',

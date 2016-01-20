@@ -25,9 +25,6 @@ class ArticleCommentsAjax {
 	/**
 	 * axSave -- static hook/entry for ajax request save comment
 	 *
-	 * @static
-	 * @access public
-	 *
 	 * @return String -- json-ized array
 	 */
 	static public function axSave() {
@@ -37,43 +34,50 @@ class ArticleCommentsAjax {
 		$commentId = $wgRequest->getVal( 'id', false );
 		$parentId = $wgRequest->getVal( 'parentId', 0 );
 
-		$result = array(
-			'error' => 1
-		);
+		$errorResult = [ 'error' => 1 ];
 
+		// Return with error if we can't find the article
 		$title = Title::newFromID( $articleId );
 		if ( !$title ) {
-			return $result;
+			return $errorResult;
 		}
 
+		// Return with error if we can't comment on the current title (wgTitle)
 		if ( !ArticleComment::canComment() ) {
-			return $result;
+			return $errorResult;
 		}
 
+		// Return with error if we can't create a new article comment
 		$comment = ArticleComment::newFromId( $commentId );
-		if ( $comment ) {
-			$comment->load( true );
-			if ( $comment->canEdit() ) {
-				$text = self::getConvertedContent( $wgRequest->getVal( 'wpArticleComment' ) );
-				$commentId = $wgRequest->getText( 'id', false );
-				$response = $comment->doSaveComment( $text, $wgUser, $title, $commentId );
-				if ( $response !== false ) {
-					$status = $response[0];
-					$article = $response[1];
-
-					return ArticleComment::doAfterPost( $status, $article, $parentId );
-				}
-			}
+		if ( empty( $comment ) ) {
+			return $errorResult;
 		}
 
-		return $result;
+		// Return with error if we can't load the data for this comment
+		if ( !$comment->load( true ) ) {
+			return $errorResult;
+		}
+
+		// Return with error if we can't edit this comment
+		if ( !$comment->canEdit() ) {
+			return $errorResult;
+		}
+
+		$text = self::getConvertedContent( $wgRequest->getVal( 'wpArticleComment' ) );
+		$commentId = $wgRequest->getText( 'id', false );
+		$response = $comment->doSaveComment( $text, $wgUser, $title, $commentId );
+		if ( $response === false ) {
+			return $errorResult;
+		}
+
+		$status = $response[0];
+		$article = $response[1];
+
+		return ArticleComment::doAfterPost( $status, $article, $parentId );
 	}
 
 	/**
 	 * axEdit -- static hook/entry for ajax request post -- edit comment
-	 *
-	 * @static
-	 * @access public
 	 *
 	 * @return String -- html -> textarea
 	 */
@@ -83,48 +87,51 @@ class ArticleCommentsAjax {
 		$articleId = $wgRequest->getVal( 'article', false );
 		$commentId = $wgRequest->getVal( 'id', false );
 
-		$result = array(
+		$result = [
 			'error'	=> 1,
 			'id'	=> $commentId,
 			'show'	=> false,
 			'text'	=> ''
-		);
+		];
 
-		/**
-		 * check owner of article
-		 */
+		// Check owner of article
 		$title = Title::newFromID( $articleId );
 		if ( !$title ) {
 			return $result;
 		}
 
-		/**
-		 * edit comment
-		 */
+		// Edit comment
 		$comment = ArticleComment::newFromId( $commentId );
-		if ( $comment ) {
-			$comment->load( true );
-			if ( $comment->canEdit() ) {
-				$result['error'] = 0;
-				$result['show'] = true;
-				$result['text'] = $comment->editPage();
-
-				if ( ArticleComment::isMiniEditorEnabled() ) {
-					$result['edgeCases'] = MiniEditorHelper::getEdgeCases();
-				}
-
-				$result['emptyMsg'] = wfMsg( 'article-comments-empty-comment', $comment->getTitle()->getLocalUrl( 'redirect=no&action=delete' ) );
-			}
+		if ( empty( $comment ) ) {
+			return $result;
 		}
+
+		if ( !$comment->load( true ) ) {
+			return $result;
+		}
+
+		if ( !$comment->canEdit() ) {
+			return $result;
+		}
+
+		$result['error'] = 0;
+		$result['show'] = true;
+		$result['text'] = $comment->editPage();
+
+		if ( ArticleComment::isMiniEditorEnabled() ) {
+			$result['edgeCases'] = MiniEditorHelper::getEdgeCases();
+		}
+
+		$result['emptyMsg'] = wfMessage(
+			'article-comments-empty-comment',
+			$comment->getTitle()->getCanonicalURL( 'redirect=no&action=delete' )
+		)->parse();
 
 		return $result;
 	}
 
 	/**
 	 * axReply -- static hook/entry for ajax request post -- reply a comment
-	 *
-	 * @static
-	 * @access public
 	 *
 	 * @return String -- html -> textarea
 	 */
@@ -133,7 +140,7 @@ class ArticleCommentsAjax {
 
 		$articleId = $wgRequest->getVal( 'article', false );
 		$commentId = $wgRequest->getVal( 'id', false );
-		$result = array( 'id' => $commentId );
+		$result = [ 'id' => $commentId ];
 
 		$title = Title::newFromID( $articleId );
 		if ( !$title ) {
@@ -144,13 +151,11 @@ class ArticleCommentsAjax {
 		$canComment = ArticleCommentInit::userCanComment( $result, $title );
 
 		if ( $canComment == true ) {
-			$articleId = $wgRequest->getVal( 'article', false );
-
-			$vars = array (
+			$vars = [
 				'commentId' => $commentId,
 				'isMiniEditorEnabled' => ArticleComment::isMiniEditorEnabled(),
 				'stylePath' => $wgStylePath
-			);
+			];
 
 			$result['html'] = F::app()->getView( 'ArticleComments', 'Reply', $vars )->render();
 		}
@@ -160,9 +165,6 @@ class ArticleCommentsAjax {
 
 	/**
 	 * axPost -- static hook/entry for ajax request post
-	 *
-	 * @static
-	 * @access public
 	 *
 	 * @return String -- json-ized array`
 	 */
@@ -198,36 +200,41 @@ class ArticleCommentsAjax {
 
 		$response = ArticleComment::doPost( self::getConvertedContent( $wgRequest->getVal( 'wpArticleComment' ) ), $wgUser, $title, $parentId );
 
-		if ( $response !== false ) {
-			if (
-				$title->getNamespace() == NS_USER_TALK &&
-				$response[0] == EditPage::AS_SUCCESS_NEW_ARTICLE &&
-				$title->getText() != $wgUser->getName()
-			) {
-				$user = User::newFromName( $title->getText() );
-
-				if ( $user ) {
-					$user->setNewtalk( true );
-				}
-			}
-
-			$listing = ArticleCommentList::newFromTitle( $title );
-			$countAll = $wgLang->formatNum( $listing->getCountAllNested() );
-			$commentsHTML = $response[2]['text'];
-
-			$result = array( 'text' => $commentsHTML, 'counter' => $countAll );
-
-			if ( F::app()->checkskin( 'wikiamobile' ) ) {
-				$result['counterMessage'] = wfMessage( 'wikiamobile-article-comments-counter' )
-					->params( $countAll )
-					->text();
-			}
-
-			if ( $parentId ) {
-				$result['parentId'] = $parentId;
-			}
-
+		if ( $response === false ) {
 			return $result;
+		}
+
+		if (
+			$title->getNamespace() == NS_USER_TALK &&
+			$response[0] == EditPage::AS_SUCCESS_NEW_ARTICLE &&
+			$title->getText() != $wgUser->getName()
+		) {
+			$user = User::newFromName( $title->getText() );
+
+			if ( $user ) {
+				$user->setNewtalk( true );
+			}
+		}
+
+		$listing = ArticleCommentList::newFromTitle( $title );
+
+		/** @var Language $wgLang */
+		$countAll = $wgLang->formatNum( $listing->getCountAllNested() );
+		$commentsHTML = $response[2]['text'];
+
+		$result = [
+			'text' => $commentsHTML,
+			'counter' => $countAll
+		];
+
+		if ( F::app()->checkskin( 'wikiamobile' ) ) {
+			$result['counterMessage'] = wfMessage( 'wikiamobile-article-comments-counter' )
+				->params( $countAll )
+				->escaped();
+		}
+
+		if ( $parentId ) {
+			$result['parentId'] = $parentId;
 		}
 
 		return $result;
@@ -236,12 +243,9 @@ class ArticleCommentsAjax {
 	/**
 	 * axGetComments -- static hook/entry for ajax request for pagination
 	 *
-	 * @static
-	 * @access public
-	 *
 	 * @return String - HTML
 	 */
-	static function axGetComments() {
+	static public function axGetComments() {
 		global $wgRequest, $wgTitle;
 
 		$page = $wgRequest->getVal( 'page', false );
@@ -275,7 +279,8 @@ class ArticleCommentsAjax {
 	/**
 	 * Handles converting wikitext to richtext and vice versa.
 	 *
-	 * @param string $text - the text to convert
+	 * @param string $content - the text to convert
+	 *
 	 * @return string - the converted text
 	 */
 	static public function getConvertedContent( $content = '' ) {

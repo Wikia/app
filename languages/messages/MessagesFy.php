@@ -278,28 +278,12 @@ $messages = array(
 'navigation'    => 'Navigaasje',
 'and'           => '&#32;en',
 
-# Cologne Blue skin
 'qbfind'         => 'Sykje',
 'qbbrowse'       => 'Blêdzje',
-'qbedit'         => 'Bewurkje',
 'qbpageoptions'  => 'Side-opsjes',
 'qbpageinfo'     => 'Side-ynfo',
-'qbmyoptions'    => 'Myn Opsjes',
-'qbspecialpages' => 'Bysûndere siden',
 'faq'            => 'FAQ (faak stelde fragen)',
-'faqpage'        => 'Project:Faak stelde fragen',
 
-# Vector skin
-'vector-action-delete'    => 'Fuortsmite',
-'vector-action-move'      => 'Werneam',
-'vector-action-protect'   => 'Beskermje',
-'vector-action-undelete'  => 'Tebeksette',
-'vector-action-unprotect' => 'Beskerming fuorthelje',
-'vector-view-create'      => 'Oanmeitsje',
-'vector-view-edit'        => 'Wizigje',
-'vector-view-history'     => 'Skiednis sjen litte',
-'vector-view-view'        => 'Lês',
-'vector-view-viewsource'  => 'Besjoch de boarne',
 'namespaces'              => 'Nammeromten',
 'variants'                => 'Farianten',
 
@@ -320,7 +304,6 @@ $messages = array(
 'edit'              => 'Wizigje',
 'create'            => 'Oanmeitsje',
 'editthispage'      => 'Side bewurkje',
-'create-this-page'  => 'Dizze side oanmeitsje',
 'delete'            => 'Wiskje',
 'deletethispage'    => 'Side wiskje',
 'undelete_short'    => '$1 {{PLURAL:$1|ferzje|ferzjes}} weromsette',
@@ -334,19 +317,9 @@ $messages = array(
 'talkpagelinktext'  => 'Oerlis',
 'specialpage'       => 'Bysûndere side',
 'personaltools'     => 'Persoanlike ynstellings',
-'postcomment'       => 'Skriuw in opmerking',
-'articlepage'       => 'Side lêze',
 'talk'              => 'Oerlis',
 'views'             => 'Aspekten/aksjes',
 'toolbox'           => 'Arkkiste',
-'userpage'          => 'Meidoggerside',
-'projectpage'       => 'Metaside',
-'imagepage'         => 'Besjoch triemside',
-'mediawikipage'     => 'Berjochtside sjen litte',
-'templatepage'      => 'Berjochtside lêze',
-'viewhelppage'      => 'Helpside sjen litte',
-'categorypage'      => 'Besjoch kategoryside',
-'viewtalkpage'      => 'Oerlisside',
 'otherlanguages'    => 'Oare talen',
 'redirectedfrom'    => '(Trochwiisd fan "$1")',
 'redirectpagesub'   => 'Trochferwiis-side',
@@ -687,7 +660,6 @@ Kontrolearje oft jo dizze side wol oanmeitsje/bewurkje wolle.',
 'userjsyoucanpreview'              => "'''Tip:''' Brûk de knop 'Earst oerlêze' om jo nije JS te testen foar it fêstlizzen.",
 'usercsspreview'                   => "'''Dit is allinne mar it oerlêzen fan jo persoanlike CSS. Hy is noch net fêstlein!'''",
 'userjspreview'                    => "'''Tink derom: jo besjogge no jo persoanlike JavaScript. De side is net fêstlein!'''",
-'userinvalidcssjstitle'            => "'''Warskôging:''' der is gjin skin \"\$1\". Tink derom: jo eigen .css- en .js-siden begjinne mei in lytse letter, bygelyks {{ns:user}}:Namme/vector.css ynsté fan {{ns:user}}:Namme/Vector.css.",
 'updated'                          => '(Bewurke)',
 'note'                             => "'''Opmerking:'''",
 'previewnote'                      => "'''Tink der om dat dizze side noch net fêstlein is!'''",
@@ -970,13 +942,6 @@ Jo kinne ek in nammerûmte as foarheaksel brûke.",
 'search-external'                  => 'Utwindich sykje',
 'searchdisabled'                   => '<p>Op it stuit stiet it trochsykjen fan tekst út omdat dizze funksje tefolle kompjûterkapasiteit ferget. As we nije apparatuer krije, en dy is ûnderweis, dan wurdt dizze funksje wer aktyf. Oant salang kinne jo sykje fia Google:</p>',
 
-# Quickbar
-'qbsettings'               => 'Menu',
-'qbsettings-none'          => 'Ut',
-'qbsettings-fixedleft'     => 'Lofts fêst',
-'qbsettings-fixedright'    => 'Rjochts fêst',
-'qbsettings-floatingleft'  => 'Lofts sweevjend',
-'qbsettings-floatingright' => 'Rjochts sweevjend',
 
 # Preferences page
 'preferences'               => 'Ynstellings',
@@ -2131,8 +2096,6 @@ Sjoch: [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation], [//transl
 'spamprotectionmatch' => 'De neikommende tekst hat it spam filter aktivearre: $1',
 
 # Skin names
-'skinname-standard'  => 'Standert',
-'skinname-nostalgia' => 'Nostalgy',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Markearje as kontroleare',

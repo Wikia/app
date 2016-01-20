@@ -136,12 +136,12 @@ $(document).ready(function() {
 				"type": "POST",
 				"url": sSource,
 				"data": [
-					{ 'name' : 'username',	'value' : ( $('#lc_search').exists() ) ? mw.html.escape( $('#lc_search').val() ) : '' },
+					{ 'name' : 'username',	'value' : ( $('#lc_search').length ) ? $('#lc_search').val() : '' },
 					{ 'name' : 'limit', 	'value' : limit },
 					{ 'name' : 'offset',	'value' : offset },
 					{ 'name' : 'loop',      'value' : loop },
 					{ 'name' : 'numOrder',	'value' : sortingCols },
-					{ 'name' : 'order',     'value' : mw.html.escape( order ) }
+					{ 'name' : 'order',     'value' : order }
 				],
 				"success": fnCallback
 			} );

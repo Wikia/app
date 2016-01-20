@@ -35,11 +35,7 @@ $messages = array(
 'mytalk'     => 'Karere mōku',
 'navigation' => 'Huarahi',
 
-# Cologne Blue skin
-'qbspecialpages' => 'Whārangi motuhake',
 
-# Vector skin
-'vector-view-view' => 'Rīti',
 
 'help'             => 'Whakamārama',
 'search'           => 'Rapua',

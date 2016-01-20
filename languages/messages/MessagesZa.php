@@ -78,21 +78,9 @@ $messages = array(
 'mytalk'     => 'Gaeq gou gangj',
 'navigation' => 'Dazzaeuh',
 
-# Cologne Blue skin
 'qbfind'         => 'Ra',
-'qbedit'         => 'Gaij',
-'qbmyoptions'    => 'Yieb gou',
-'qbspecialpages' => 'Doenghmae daegxsei',
 'faq'            => 'Cam caeuq dap',
-'faqpage'        => 'Project:Cam caeuq dap',
 
-# Vector skin
-'vector-action-delete'  => 'Ca',
-'vector-action-move'    => 'Daen',
-'vector-action-protect' => 'Bauj',
-'vector-view-create'    => 'Laeb',
-'vector-view-edit'      => 'gaij',
-'vector-view-history'   => 'Cazyawj lizsij',
 
 'errorpagetitle'   => 'Loengloek',
 'tagline'          => 'okcih {{SITENAME}}',

@@ -100,16 +100,9 @@ $messages = array(
 'navigation'    => 'Goxtima',
 'and'           => '&#32;do',
 
-# Cologne Blue skin
 'qbfind'         => 'Koz*iri',
-'qbedit'         => 'Doktiri',
 'qbpageoptions'  => 'Am sayfa',
-'qbmyoptions'    => 'Çkimi sayfape',
-'qbspecialpages' => 'Doxmeli sayfape',
 
-# Vector skin
-'vector-action-delete' => 'Jili',
-'vector-view-edit'     => 'Doktiri',
 
 'errorpagetitle'   => 'Çilata',
 'returnto'         => '$1 butʼkʼaşa goikti.',

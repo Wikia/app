@@ -56,6 +56,14 @@ class SkinLyricsMinimal extends SkinTemplate {
 		wfProfileIn(__METHOD__);
 		global $wgHooks, $wgCityId;
 
+		# PLATFORM-1652 Remove legacy skins
+		# Michał 'Mix' Roszka <mix@wikia.com>
+		# Is this skin ever used?
+		# I log therefore I am.
+		if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.1 ) )->shouldSample() ) {
+			Wikia\Logger\WikiaLogger::instance()->info( 'PLATFORM-1652 LyricsMinimal' );
+		}
+
 		SkinTemplate::initPage($out);
 
 		$this->skinname  = 'lyricsminimal';
@@ -227,9 +235,8 @@ EOS;
 		// <script type="text/javascript" src="URL"></script>
 		// load them using WSL and remove from $wgOut->mScripts
 		//
-		// macbre: Perform only for Monaco skin! New Answers skin does not use WikiaScriptLoader
-		if ((get_class($this) == 'SkinMonaco') || (get_class($this) == 'SkinAnswers')
-			|| (get_class($this) == 'SkinLyricsMinimal')) {
+		// macbre: Perform only for Monaco skin!
+		if ((get_class($this) == 'SkinMonaco') || (get_class($this) == 'SkinLyricsMinimal')) {
 			global $wgJsMimeType;
 
 			$headScripts = $tpl->data['headscripts'];
