@@ -19,6 +19,10 @@
 		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-no-thumb"';
 	}
 
+	$description = isset($commData->getCommunityData()['description'])
+		? $commData->getCommunityData()['description']
+		: $result->getText( Wikia\Search\Utilities::field( 'description' ), $isOnWikiMatch ? 16 : 60);
+
 	$service = new Wikia\Search\MediaWikiService();
 
 	$pagesMsg = $service->shortnumForMsg( $result['articles_i']?:0, 'wikiasearch2-pages' );
@@ -45,7 +49,7 @@
 		</h1>
 
 		<p class="hub subtle"><?= strtoupper($result->getHub()); ?></p>
-		<p class="description"><?= $result->getText( Wikia\Search\Utilities::field( 'description' ), $isOnWikiMatch ? 16 : 60 ); ?></p>
+		<p class="description"><?= $description; ?></p>
 
 		<ul class="wiki-statistics subtle">
 			<li><?= $pagesMsg ?></li>

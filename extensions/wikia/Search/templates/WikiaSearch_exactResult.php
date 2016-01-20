@@ -13,6 +13,10 @@ if ( empty( $imageURL ) ) {
 	$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-no-thumb"';
 }
 
+$description = isset($commData->getCommunityData()['description'])
+	? $commData->getCommunityData()['description']
+	: $result->getText( Wikia\Search\Utilities::field( 'description' ), 16 );
+
 $service = new Wikia\Search\MediaWikiService();
 
 $pagesMsg = $service->shortnumForMsg( $result['articles_i']?:0, 'wikiasearch2-pages' );
@@ -44,7 +48,7 @@ $url = $result->getText( 'url' );
 			</h1>
 
 			<p class="hub subtle"><?= strtoupper($result->getHub()); ?></p>
-			<p class="description"><?= $result->getText( Wikia\Search\Utilities::field( 'description' ), 16 ); ?></p>
+			<p class="description"><?= $description; ?></p>
 
 			<ul class="wiki-statistics subtle">
 				<li><?= $pagesMsg ?></li>
