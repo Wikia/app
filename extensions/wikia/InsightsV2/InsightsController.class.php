@@ -83,35 +83,29 @@ class InsightsController extends WikiaSpecialPageController {
 
 	private function setTemplateValues( InsightsModel $model, $params ) {
 		$insightsContext = new InsightsContext( $model, $params );
-		$content = $insightsContext->getContent();
 
-		if ( empty( $content ) ) {
-			$this->setEmptyTemplate( $model );
-		} else {
-			$sort = $this->request->getVal( 'sort', InsightsSorting::getDefaultSorting() );
-			$sortingTypes = InsightsSorting::$sorting;
+		$sort = $this->request->getVal( 'sort', InsightsSorting::getDefaultSorting() );
+		$sortingTypes = InsightsSorting::$sorting;
 
-			$metadata = isset( $sortingTypes[$sort]['metadata'] ) ? $sortingTypes[$sort]['metadata'] : $sort;
+		$metadata = isset( $sortingTypes[ $sort ]['metadata'] )	? $sortingTypes[ $sort ]['metadata'] : $sort;
 
-			try {
-				$this->response->setData( [
-					'content' => $content,
-					'pagination' => $insightsContext->getPagination(),
-					'subtypes' => $model->getConfig()->getSubtypes(),
-					'showPageViews' => $model->getConfig()->showPageViews(),
-					'hasActions' => $model->getConfig()->hasAction(),
-					'usage' => $model->getConfig()->getInsightUsage(),
-					'type' => $this->type,
-					'subtype' => $this->subtype,
-					'themeClass' => $this->themeClass,
-					'sort' => $sort,
-					'metadata' => $metadata
-				] );
-			} catch ( WikiaHttpException $e ) {
-				$this->setErrorTemplate( $e->getDetails(), $e );
-			} catch ( Exception $e ) {
-				$this->setErrorTemplate( $e->getMessage(), $e );
-			}
+		try {
+			$this->response->setData( [
+				'content' => $insightsContext->getContent(),
+				'pagination' => $insightsContext->getPagination(),
+				'subtypes' => $model->getConfig()->getSubtypes(),
+				'showPageViews' => $model->getConfig()->showPageViews(),
+				'hasActions' => $model->getConfig()->hasAction(),
+				'type' => $this->type,
+				'subtype' => $this->subtype,
+				'themeClass' => $this->themeClass,
+				'sort' => $sort,
+				'metadata' => $metadata
+			] );
+		} catch ( WikiaHttpException $e ) {
+			$this->setErrorTemplate( $e->getDetails(), $e );
+		} catch ( Exception $e ) {
+			$this->setErrorTemplate( $e->getMessage(), $e );
 		}
 	}
 
@@ -134,14 +128,5 @@ class InsightsController extends WikiaSpecialPageController {
 		$this->overrideTemplate( 'error' );
 
 		$this->error( 'Insights Exception', [ 'exception' => $exception, 'type' => $this->type ] );
-	}
-
-	private function setEmptyTemplate( InsightsModel $model ) {
-		$message = $model->getConfig()->getInsightUsage() === InsightsModel::INSIGHTS_USAGE_ACTIONABLE
-			? wfMessage( 'insights-list-no-items' )->escaped()
-			: wfMessage( 'insights-list-no-items-informative' )->escaped();
-
-		$this->setVal( 'emptyMessage', $message );
-		$this->overrideTemplate( 'empty' );
 	}
 }
