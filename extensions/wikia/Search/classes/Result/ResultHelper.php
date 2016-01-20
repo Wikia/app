@@ -14,7 +14,7 @@ class ResultHelper {
 
 		//TODO: Remove after DAT-3642 is done
 		if (empty($imageURL)) {
-			$imageFileName = (new PromoImage(PromoImage::MAIN))->setCityId($result['id'])->getPathname();
+			$imageFileName = PromoImage::fromPathname($result['image_s'])->ensureCityIdIsSet($result['id'])->getPathname();
 			$imageURL = ImagesService::getImageSrcByTitle( $result['id'], $imageFileName,
 						WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_WIDTH, WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT );
 			if (! empty( $imageOriginalURL ) ) {
