@@ -38,7 +38,6 @@ class SharedToolbarService extends ToolbarService {
 
 		$data = array(
 			$this->buildListItem( 'PageAction:Follow' ),
-			$this->buildListItem( 'Action:Shortcuts' ),
 		);
 
 		if ( !$wgUser->isAnon() ) {
@@ -159,8 +158,7 @@ class SharedToolbarService extends ToolbarService {
 			'SpecialPage:Statistics',
 			'SpecialPage:WikiFactory',
 			'SpecialPage:WikiFeatures',
-			'Action:DevInfo', // a.k.a. PerformanceStats, BugId:5497
-			'Action:Shortcuts'
+			'Action:DevInfo' // a.k.a. PerformanceStats, BugId:5497
 		);
 	}
 
@@ -179,7 +177,6 @@ class SharedToolbarService extends ToolbarService {
 			'SpecialPage:Upload',
 			'PageAction:Whatlinkshere',
 			'SpecialPage:WikiActivity',
-			'Action:Shortcuts'
 		);
 	}
 

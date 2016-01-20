@@ -2,10 +2,13 @@
 
 	class UserCommandsService {
 		
-		protected $cache = [];
+		protected $cache = array();
+		
+		public function __construct() {
+		}
 		
 		public function clearCache() {
-			$this->cache = [];
+			$this->cache = array();
 		}
 
 		/**
@@ -13,25 +16,25 @@
 		 * @param array $options (optional)
 		 * @return UserCommand
 		 */
-		public function get( $name, $options = [] ) {
-			$hash = $name . ( $options ? serialize( $options ) : '' );
-			if ( empty( $this->cache[$hash] ) ) {
-				list( $type, $data ) = explode( ':', $name, 2 );
+		public function get( $name, $options = array() ) {
+			$hash = $name . ($options ? serialize($options) : '');
+			if (empty($this->cache[$hash])) {
+				list($type,$data) = explode(':',$name,2);
                                 
 				$className = false;
-				switch ( $type ) {
-					case 'SpecialPage':
-						$className = 'SpecialPageUserCommand';
+				switch ($type) {
+					case "SpecialPage":
+						$className = "SpecialPageUserCommand";
 						break;
-					case 'PageAction':
-						if ( in_array( $data, ['Share','Follow' ] ) ) {
+					case "PageAction":
+						if (in_array($data,array("Share","Follow"))) {
 							$className = "{$data}UserCommand";
 						} else {
-							$className = 'PageActionUserCommand';
+							$className = "PageActionUserCommand";
 						}
 						break;
-					case 'Action':
-						if ( in_array( $data, ['CustomizeToolbar', 'DevInfo', 'Shortcuts'] ) ) {
+					case "Action":
+						if (in_array($data,array("CustomizeToolbar", "DevInfo"))) {
 							$className = "{$data}UserCommand";
 						}
 						break;
@@ -42,7 +45,7 @@
 			return $this->cache[$hash];
 		}
 		
-		public function createMenu( $id, $caption, $options = [] ) {
+		public function createMenu( $id, $caption, $options = array() ) {
 			return new MenuUserCommand( $id, $caption, $options );
 		}
 		
@@ -56,4 +59,3 @@ $wgAutoloadClasses['CustomizeToolbarUserCommand'] = dirname(__FILE__) . '/userco
 $wgAutoloadClasses['MenuUserCommand'] = dirname(__FILE__) . '/usercommands/MenuUserCommand.php';
 // Developer Info a.k.a. PerformanceStats (BugId:5497)
 $wgAutoloadClasses['DevInfoUserCommand'] = dirname( __FILE__ ) . '/usercommands/DevInfoUserCommand.php';
-$wgAutoloadClasses['ShortcutsUserCommand'] = dirname( __FILE__ ) . '/usercommands/ShortcutsUserCommand.php';
