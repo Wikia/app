@@ -422,6 +422,8 @@ class CreateWiki {
 
 		wfDebugLog( "createwiki", __METHOD__ . ": Local maintenance task added as {$task_id}\n", true );
 
+		wfRunHooks( "AfterWikiCreated", [ $this->mNewWiki->city_id, $this->sDbStarter ] );
+
 		$this->info( __METHOD__ . ': done', [
 			'task_id' => $task_id,
 			'took' => microtime( true ) - $then,

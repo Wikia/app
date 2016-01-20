@@ -53,8 +53,8 @@ describe('AdLogicPageParams', function () {
 			getSite: function () {
 				return 'zone_site';
 			},
-			getMappedVertical: function () {
-				return 'zone_mapped_vertical';
+			getName: function () {
+				return 'zone_name';
 			},
 			getPageType: function () {
 				return 'zone_page_type';
@@ -125,7 +125,7 @@ describe('AdLogicPageParams', function () {
 		expect(params.s0).toBe('zone_site');
 		expect(params.s0v).toBe('zone_vertical');
 		expect(params.s0c).toEqual(['zone_wiki_category']);
-		expect(params.s1).toBe('zone_mapped_vertical');
+		expect(params.s1).toBe('zone_name');
 		expect(params.s2).toBe('zone_page_type');
 		expect(params.cat).toEqual(['zone_page_category']);
 		expect(params.dmn).toBe('zone_domain');

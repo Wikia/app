@@ -27,11 +27,9 @@ abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 	 * @return string
 	 */
 	protected function sanitizeElementData( $elementText ) {
-		$dom = new \DOMDocument();
-		$dom->loadHTML( $this->prepareValidXML( $elementText ) );
+		$dom = HtmlHelper::createDOMDocumentFromText( $this->prepareValidXML( $elementText ) );
 
 		$elementTextAfterTrim = trim( $this->cleanUpDOM( $dom ) );
-		libxml_clear_errors();
 
 		if ( $elementTextAfterTrim !== $elementText ) {
 			WikiaLogger::instance()->info(
@@ -54,7 +52,6 @@ abstract class NodeSanitizer implements NodeTypeSanitizerInterface {
 	 */
 	protected function prepareValidXML( $elementText ) {
 		$wrappedText = implode('',[
-			'<?xml encoding="utf-8" ?>',
 			\Xml::openElement( $this->rootNodeTag ),
 			$elementText,
 			\Xml::closeElement( $this->rootNodeTag )

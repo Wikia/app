@@ -6,11 +6,11 @@
  */
 
 class InsightsFlagsModel extends InsightsModel {
-
 	const INSIGHT_TYPE = 'flags';
 
 	private static $insightConfig = [
-		InsightsConfig::PAGEVIEWS => true
+		InsightsConfig::PAGEVIEWS => true,
+		InsightsConfig::USAGE => InsightsModel::INSIGHTS_USAGE_INFORMATIVE
 	];
 
 	public function __construct( $subtype = null ) {
@@ -118,7 +118,7 @@ class InsightsFlagsModel extends InsightsModel {
 	 * @return array
 	 */
 	public function getInProgressNotificationParams() {
-		$controller = new InsightsController();
+		$controller = new InsightsLoopController();
 		$notificationMessageKey = InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . self::INSIGHT_TYPE;
 		$params = [
 			'notificationMessage' => wfMessage( $notificationMessageKey )->plain(),

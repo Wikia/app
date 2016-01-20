@@ -100,10 +100,14 @@ class InsightsHooks {
 	 */
 	public static function onwgQueryPages( Array &$wgQueryPages ) {
 		global $wgEnableInsightsInfoboxes, $wgEnableTemplateClassificationExt,
-			   $wgEnableInsightsPagesWithoutInfobox, $wgEnableInsightsTemplatesWithoutType;
+			   $wgEnableInsightsPagesWithoutInfobox, $wgEnableInsightsPopularPages, $wgEnableInsightsTemplatesWithoutType;
 
 		if ( !empty( $wgEnableInsightsInfoboxes ) ) {
 			$wgQueryPages[] = [ 'UnconvertedInfoboxesPage', 'Nonportableinfoboxes' ];
+		}
+
+		if ( !empty( $wgEnableInsightsPopularPages ) ) {
+			$wgQueryPages[] = [ 'PopularPages', 'Popularpages' ];
 		}
 
 		if ( !empty( $wgEnableTemplateClassificationExt ) ) {
@@ -128,7 +132,7 @@ class InsightsHooks {
 	public static function onAfterUpdateSpecialPages( $queryPage ) {
 		$queryPageName = strtolower( $queryPage->getName() );
 
-		$model = InsightsHelper::getInsightModel( $queryPageName, null );
+		$model = InsightsHelper::getInsightModel( $queryPageName );
 
 		if ( $model instanceof InsightsQueryPageModel && $model->purgeCacheAfterUpdateTask() ) {
 			( new InsightsCache( $model->getConfig() ) )->purgeInsightsCache();

@@ -169,7 +169,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			s0: zoneParams.getSite(),
 			s0v: zoneParams.getVertical(),
 			s0c: zoneParams.getWikiCategories(),
-			s1: zoneParams.getMappedVertical(),
+			s1: zoneParams.getName(),
 			s2: zoneParams.getPageType(),
 			ab: getAb(),
 			ar: getAspectRatio(),
