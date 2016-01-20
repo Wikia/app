@@ -956,6 +956,10 @@ class UserProfilePageController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * @throws BadRequestException
+	 * @return bool
+	 */
 	public function removeavatar() {
 		wfProfileIn( __METHOD__ );
 		$this->checkWriteRequest();
