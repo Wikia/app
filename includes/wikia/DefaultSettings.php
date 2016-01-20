@@ -1333,13 +1333,6 @@ $wgAdDriverTaboolaConfig = null;
  */
 $wgAdDriverUseTopInContentBoxad = true;
 
-/**
- * @name $wgAnalyticsIVW3Countries
- * List of countries with enabled IVW3 Analytics pixel
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global
- */
-$wgAnalyticsIVW3Countries = null;
-
 /** @name $wgSitewideDisableAdsOnMercury
  * Disable ads on Mercury if set to true.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1367,6 +1360,17 @@ $wgSitewideDisableGpt = false;
  * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  */
 $wgSitewideDisableIVW2 = false;
+
+/**
+ * @name $wgSitewideDisableIVW3
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableIVW3
+ *
+ * Disable IVW3 Analytics pixel sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisableIVW3 = true;
 
 /**
  * @name $wgSitewideDisableLiftium

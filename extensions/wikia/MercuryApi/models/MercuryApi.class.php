@@ -133,8 +133,9 @@ class MercuryApi {
 			'theme' => SassUtil::getOasisSettings(),
 			'enableGlobalNav2016' => $wgEnableGlobalNav2016,
 			'tracking' => [
+				'ivw3' => AnalyticsProviderIVW3::isEnabled(),
+				'nielsen' => AnalyticsProviderNielsen::isEnabled(),
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
-				'nielsen' => AnalyticsProviderNielsen::isEnabled()
 			],
 			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId )
 		];
