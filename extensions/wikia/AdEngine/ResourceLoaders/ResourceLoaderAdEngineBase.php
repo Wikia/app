@@ -23,7 +23,7 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 	 * @return bool|MWHttpRequest|string
 	 */
 	protected function fetchRemoteScript( $url ) {
-		return Http::get( $url );
+		return Http::get( $url, 'default', [ 'noProxy' => true ] );
 	}
 
 	/**
