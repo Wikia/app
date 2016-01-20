@@ -49,7 +49,8 @@ class ResultHelper {
 	}
 
 	public static function limitTextLength($text, $wordLimit = null) {
-		$wordsExploded = explode( ' ', $text );
+		$textAsString = is_array( $text ) ? implode( " ", $text ) : $text;
+		$wordsExploded = explode( ' ', $textAsString );
 		if ($wordLimit == null && count($wordsExploded) > $wordLimit) {
 			$textLimited = implode( ' ', array_slice( $wordsExploded, 0, $wordLimit ) );
 			$textLimited .= "...";
