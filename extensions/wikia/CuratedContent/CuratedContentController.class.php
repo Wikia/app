@@ -197,18 +197,13 @@ class CuratedContentController extends WikiaController {
 
 		//TODO: can we remove it from here?
 		// OR AT LEAST USE ARRAY MAP
-		foreach ( $response as $sectionName => $sectionContent ) {
-			$this->response->setVal( $sectionName, $sectionContent );
-		}
+//		foreach ( $response as $sectionName => $sectionContent ) {
+//			$this->response->setVal( $sectionName, $sectionContent );
+//		}
+		$this->response->setValues( $response );
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		wfProfileOut( __METHOD__ );
-	}
-
-	//wrapper in case some external app is using it.
-	//TODO: check if it's used and remove if not
-	function getJsonItem( $titleName, $ns, $pageId ) {
-		return $this->communityDataService->getJsonItem( $titleName, $ns, $pageId );
 	}
 
 	public function getCuratedContentQuality() {
