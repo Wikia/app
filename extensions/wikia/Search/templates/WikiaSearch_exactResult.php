@@ -48,7 +48,7 @@
 				<a href="<?= $url ?>" <?=$trackingData;?> ><?= $title ?></a>
 			</h1>
 
-			<p class="hub subtle"><?= strtoupper($result->getHub()); ?></p>
+			<p class="hub subtle"><?= strtoupper($hub); ?></p>
 			<p class="description"><?= $description; ?></p>
 
 			<ul class="wiki-statistics subtle">
