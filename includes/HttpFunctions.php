@@ -82,11 +82,18 @@ class Http {
 				'isOk' => $isOk,
 				'requestTimeMS' => $requestTime,
 				'backendTimeMS' => intval( 1000 * $backendTime),
+				'responseHeaders' => $req->getResponseHeaders(),
 			];
 			if ( !$isOk ) {
-				$params[ 'statusMessage' ] = $status->getMessage();
+				$params[ 'statusMessage' ] = $status;
+				$params[ 'exception' ] = new WikiaException( "{$caller} - HTTP request failed", $req->getStatus() );
+				$level = 'error';
 			}
-			\Wikia\Logger\WikiaLogger::instance()->debug( 'Http request' , $params );
+			else {
+				$level = 'debug';
+			}
+
+			\Wikia\Logger\WikiaLogger::instance()->$level( 'Http request' , $params );
 		}
 
 		// Wikia change - @author: nAndy - begin
