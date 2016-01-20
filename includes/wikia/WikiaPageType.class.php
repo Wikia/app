@@ -248,10 +248,17 @@ class WikiaPageType {
 
 		Assert::true( $title instanceof Title, __METHOD__ ); // SUS-11
 
-		$mainPageName = trim( str_replace( '_', ' ', wfMessage( 'mainpage' )->inContentLanguage()->text() ) );
+		$mainPageName = self::getMainPageName();
 		$isMainPage = ( strcasecmp( $mainPageName, $title->getText() ) === 0 ) && $title->getNamespace() === NS_MAIN;
 
 		return ( self::isWikiaHub() && $isMainPage );
+	}
+
+	/**
+	 * @return string
+	 */
+	public static function getMainPageName() {
+		return trim( str_replace( '_', ' ', wfMessage( 'mainpage' )->inContentLanguage()->text() ) );
 	}
 
 	/**

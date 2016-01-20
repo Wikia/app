@@ -34,6 +34,7 @@ class WikiaPageTypeTest extends WikiaBaseTest {
 	}
 
 	public function testIsWikiaHubMain() {
+		/* @var Title $title */
 		$title = $this->mockClassWithMethods( 'Title', [
 			'getText' => 'Foo_Article',
 			'getNamespace' => NS_MAIN,
@@ -48,6 +49,10 @@ class WikiaPageTypeTest extends WikiaBaseTest {
 		// test passing a "custom" title
 		$this->mockGlobalVariable( 'wgTitle', null );
 		$this->assertEquals( false, WikiaPageType::isWikiaHubMain( $title ) );
+
+		// now mock the main page title and assert that our title is the main page
+		$this->mockStaticMethod( 'WikiaPageType', 'getMainPageName', $title->getText() );
+		$this->assertEquals( true, WikiaPageType::isWikiaHubMain( $title ) );
 	}
 
 	/**
