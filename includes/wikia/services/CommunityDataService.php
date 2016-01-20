@@ -8,97 +8,6 @@ class CommunityDataService {
 		$this->cityId = $cityId;
 	}
 
-	private $wgWikiaCuratedContent = [
-		'curated' => [
-			[
-				'label' => 'lol',
-				'image_id' => 54434,
-				'items' => [
-					'item1' => 'costam',
-					'item2' => 'cos innego'
-				]
-			],
-			[
-				'label' => 'lol2',
-				'image_id' => 54434,
-				'items' => [
-					'item1' => [
-						'article_id' => 195822,
-						'image_id' => 195822,
-						'items' => "",
-						'label' => "The Muppets on ABC in 2015",
-						'title' => "The Muppets (2015)",
-						'type' => "article",
-						'node_type' => "item"
-					],
-					'item2' => [
-						'article_id' => 195822,
-						'image_id' => 195822,
-						'items' => "",
-						'label' => "The Muppets on ABC in 2015",
-						'title' => "The Muppets (2015)",
-						'type' => "article",
-						'node_type' => "item"
-					],
-				]
-			]
-		],
-		'featured' => [
-			'label' => 'some another featured label',
-			'items' => [
-				[
-					'label' => 'featured lol',
-					'image_id' => 54434,
-					'items' => [
-						'item1' => 'costam',
-						'item2' => 'cos innego'
-					]
-				],
-				[
-					'label' => 'optional lol2',
-					'image_id' => 54434,
-					'items' => [
-						'item1' => 'costam',
-						'item2' => 'cos innego'
-					]
-				]
-			]
-		],
-		'optional' => [
-			'label' => 'some label',
-			'items' => [
-				[
-					'label' => 'optional lol',
-					'image_id' => 54434,
-					'items' => [
-						'item1' => 'costam',
-						'item2' => 'cos innego'
-					]
-				],
-				[
-					'label' => 'optional lol2',
-					'image_id' => 54434,
-					'items' => [
-						'item1' => 'costam',
-						'item2' => 'cos innego'
-					]
-				]
-			]
-		],
-		'community_data' => [
-			'description' => '',
-			'image_id' => 162219,
-			'image_crop' => [
-				'square' => [
-					'x' => 0,
-					'y' => 0,
-					'width' => 512,
-					'height' => 512
-				]
-			]
-		]
-	];
-
 	private function curatedContentData() {
 		if ( empty( $this->curatedContentData ) ) {
 			$raw = WikiFactory::getVarValueByName( 'wgWikiaCuratedContent', $this->cityId );
@@ -233,17 +142,19 @@ class CommunityDataService {
 	private function prepareGGData() {
 		$response = [ ];
 
-		if ( $this->wgWikiaCuratedContent[ 'optional' ][ 'items' ] ) {
-			$response[ 'sections' ] = $this->getSectionItemsDetails( $this->wgWikiaCuratedContent[ 'optional' ][ 'items' ] );
+		$data = $this->curatedContentData();
+
+		if ( $data[ 'optional' ][ 'items' ] ) {
+			$response[ 'sections' ] = $this->getSectionItemsDetails( $data[ 'optional' ][ 'items' ] );
 		}
 
 		// there also might be some curated content items (optionally)
-		if ( $this->wgWikiaCuratedContent[ 'curated' ] ) {
-			$response[ 'items' ] = $this->wgWikiaCuratedContent[ 'curated' ];
+		if ( $data[ 'curated' ] ) {
+			$response[ 'items' ] = $data[ 'curated' ];
 		}
 
-		if ( isset( $this->wgWikiaCuratedContent[ 'featured' ][ 'items' ] ) ) {
-			$response[ 'featured' ] = $this->wgWikiaCuratedContent[ 'featured' ][ 'items' ];
+		if ( isset( $data[ 'featured' ][ 'items' ] ) ) {
+			$response[ 'featured' ] = $data[ 'featured' ][ 'items' ];
 		}
 
 		return $response;
@@ -343,19 +254,10 @@ class CommunityDataService {
 	private function getSectionItemsByTitle( $sectionTitle ) {
 		$return = [ ];
 
-		foreach ( $this->wgWikiaCuratedContent[ 'curated' ] as $section ) {
+		$data = $this->curatedContentData();
+
+		foreach ( $data[ 'curated' ] as $section ) {
 			if ( $sectionTitle == $section[ 'label' ] ) {
-				$return = $section[ 'items' ];
-			}
-		}
-
-		return $return;
-	}
-
-	private function getFeaturedSection() {
-		$return = [ ];
-		foreach ( $this->wgWikiaCuratedContent as $section ) {
-			if ( $section[ 'featured' ] ) {
 				$return = $section[ 'items' ];
 			}
 		}
