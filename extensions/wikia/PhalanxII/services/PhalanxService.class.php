@@ -1,11 +1,13 @@
 <?php
-use \Wikia\Logger\WikiaLogger;
 
 /**
  * @method setLimit
  * @method setUser
  */
 class PhalanxService extends Service {
+
+	use \Wikia\Logger\Loggable;
+
 	/* limit of blocks */
 	private $limit = 1;
 	/* @var User */
@@ -18,6 +20,12 @@ class PhalanxService extends Service {
 
 	const PHALANX_SERVICE_TRIES_LIMIT = 3; // number of retries for phalanx POST requests
 	const PHALANX_SERVICE_TRY_USLEEP = 20000; // delay between retries - 0.2s
+
+	protected function getLoggerContext() {
+		return [
+			'class' => __CLASS__
+		];
+	}
 
 	/**
 	 * @param $name
@@ -168,10 +176,10 @@ class PhalanxService extends Service {
 					$parameters[ 'user' ][] = $this->user->getName();
 				} else {
 					if ( ( new \Wikia\Util\Statistics\BernoulliTrial( 0.001 ) )->shouldSample() ) {
-						\Wikia\Logger\WikiaLogger::instance()->debug(
+						$this->error(
 							'PLATFORM-1387',
 							[
-								'exception'    => new Exception,
+								'exception'    => new Exception(),
 								'block_params' => $parameters,
 								'user_name'    => F::app()->wg->User->getName()
 							]
@@ -222,15 +230,23 @@ class PhalanxService extends Service {
 			/* service doesn't work */
 			$res = false;
 
-			WikiaLogger::instance()->debug( "Phalanx service error", [ "phalanxUrl" => $url, 'requestTime' => $requestTime,
-				'postParams' => json_encode( $loggerPostParams ), 'tries' => $tries ] );
+			$this->error( "Phalanx service error", [
+				"phalanxUrl" => $url,
+				'requestTime' => $requestTime,
+				'postParams' => json_encode( $loggerPostParams ),
+				'tries' => $tries,
+				'exception' => new Exception( $action ),
+			] );
 
 			wfDebug( __METHOD__ . " - response failed!\n" );
 		} else {
 			wfDebug( __METHOD__ . " - received '{$response}'\n" );
 
-			WikiaLogger::instance()->debug( "Phalanx service success", ["phalanxUrl" => $url, 'requestTime' => $requestTime,
-				'tries' => $tries ] );
+			$this->debug( "Phalanx service success", [
+				"phalanxUrl" => $url,
+				'requestTime' => $requestTime,
+				'tries' => $tries
+			] );
 
 			switch ( $action ) {
 				case "stats":
