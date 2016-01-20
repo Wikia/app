@@ -94,18 +94,7 @@
 				<?php if ( $pagination ) : ?>
 					<?= $pagination ?>
 				<?php endif ?>
-			<?php else: ?>
-				<?php if ( $usage == InsightsModel::INSIGHTS_USAGE_ACTIONABLE ): ?>
-					<p>
-						<?= wfMessage( 'insights-list-no-items' )->escaped(); ?>
-					</p>
-				<?php else: ?>
-					<p>
-						<?= wfMessage( 'insights-list-no-items-informative' )->escaped(); ?>
-					</p>
-				<?php endif ?>
 			<?php endif; ?>
-
 		</div>
 	</div>
 </div>
