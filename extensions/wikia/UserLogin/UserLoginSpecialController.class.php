@@ -652,8 +652,10 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * @throws BadRequestException
 	 */
 	public function checkWriteRequest() {
-		if ( !$this->request->wasPosted() || !Wikia\Security\Utils::matchToken( UserLoginHelper::getLoginToken(), $this->wg->request->getVal( 'token' ) ) ) {
-			throw new BadRequestException( 'Request must be POSTed and provide a valid login token.' );
+		if ( !$this->request->isInternal() ) {
+			if (!$this->request->wasPosted() || !Wikia\Security\Utils::matchToken(UserLoginHelper::getLoginToken(), $this->wg->request->getVal('token'))) {
+				throw new BadRequestException('Request must be POSTed and provide a valid login token.');
+			}
 		}
 	}
 
