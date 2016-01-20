@@ -318,8 +318,8 @@ class PageHeaderController extends WikiaController {
 				// remove comments button (fix FB#3404 - Marooned)
 				$this->comments = false;
 
-				if ( $wgTitle->isSpecial( 'Newimages' ) ) {
-					$this->isNewFiles = true;
+				if ( $wgTitle->isSpecial( 'Images' ) ) {
+					$this->isSpecialImages = true;
 				}
 
 				if ( $wgTitle->isSpecial( 'Videos' ) ) {
