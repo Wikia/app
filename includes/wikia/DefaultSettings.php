@@ -1333,6 +1333,13 @@ $wgAdDriverTaboolaConfig = null;
  */
 $wgAdDriverUseTopInContentBoxad = true;
 
+/**
+ * @name $wgAnalyticsIVW3Countries
+ * List of countries with enabled IVW3 Analytics pixel
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global
+ */
+$wgAnalyticsIVW3Countries = null;
+
 /** @name $wgSitewideDisableAdsOnMercury
  * Disable ads on Mercury if set to true.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
