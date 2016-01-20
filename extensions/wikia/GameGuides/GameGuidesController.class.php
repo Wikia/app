@@ -272,7 +272,7 @@ class GameGuidesController extends WikiaController {
 	static function onTitleGetSquidURLs( $title, &$urls ) {
 
 		if ( !in_array( $title->getNamespace(), self::$disabledNamespaces ) ) {
-			$urls[] = self::getUrl( 'getPage', array(
+			$urls[ ] = self::getUrl( 'getPage', array(
 				'page' => $title->getPrefixedText()
 			) );
 		}
@@ -365,10 +365,10 @@ class GameGuidesController extends WikiaController {
 	 * otherwise take content from GameGuide Content
 	 */
 	private function getContentSource() {
-		global $wgCityId;
 		$content = null;
 		if ( $this->wg->EnableCuratedContentExt ) {
-			$wikiaCuratedContent = ( new CommunityDataService( $wgCityId ) )->getCuratedContent( true );
+			global $wgCityId;
+			$wikiaCuratedContent = ( new CommunityDataService( $wgCityId ) )->getCuratedContent();
 			$content = $this->curatedContentToGameGuides( empty( $wikiaCuratedContent ) ? [ ] : $wikiaCuratedContent );
 		} else {
 			$content = $this->wg->WikiaGameGuidesContent;
@@ -381,27 +381,23 @@ class GameGuidesController extends WikiaController {
 	 * @return array
 	 */
 	public function curatedContentToGameGuides( array $wikiaCuratedContent ) {
-		$gameGuideContent = [ ];
-		foreach ( $wikiaCuratedContent as $CCTag ) {
-			if ( !empty( $CCTag ) && empty( $CCTag[ 'featured' ] ) ) {
-				$GGTag = [ ];
-				$GGTag[ 'title' ] = $CCTag[ 'title' ];
-				$GGTag[ 'image_id' ] = $CCTag[ 'image_id' ];
-				if ( !empty( $CCTag[ 'items' ] ) ) {
-					$GGItems = [ ];
-					foreach ( $CCTag[ 'items' ] as $CCItem ) {
-						if ( $this->isValidItem( $CCItem )
-						) {
-							$GGCategory = $this->createGGItem( $CCItem );
-							array_push( $GGItems, $GGCategory );
+		array_push( $wikiaCuratedContent[ 'curated' ], $wikiaCuratedContent[ 'optional' ] );
+		$gameGuideContent = array_map( function ( $CCTag ) {
+			return [
+				'title' => $CCTag[ 'label' ],
+				'image_id' => $CCTag[ 'image_id' ],
+				'categories' => array_map(
+					function ( $CCItem ) {
+						return $this->createGGItem( $CCItem );
+					}, array_filter( $CCTag[ 'items' ],
+						function ( $CCItem ) {
+							return $this->isValidItem( $CCItem );
 						}
-					}
-					$GGTag[ 'categories' ] = $GGItems;
-				}
-				array_push( $gameGuideContent, $GGTag );
-			}
-		}
-		return $gameGuideContent;
+					)
+				)
+			];
+		}, $wikiaCuratedContent[ 'curated' ] );
+		return isset( $gameGuideContent ) ? $gameGuideContent : [ ];
 	}
 
 	/**
