@@ -334,7 +334,7 @@ body.ve {
 	}
 
 	.WikiaMainContent {
-		box-shadow: 0 0 $vw-overlay-shadow-size $vw-overlay-shadow-size $ve-overlay-color;
+		box-shadow: 0 0 0 $vw-overlay-shadow-size $ve-overlay-color;
 		padding: 0;
 		pointer-events: all;
 		z-index: $zTop;

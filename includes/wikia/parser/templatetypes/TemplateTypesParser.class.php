@@ -12,6 +12,11 @@ class TemplateTypesParser {
 	 * @return bool
 	 */
 	public static function onFetchTemplateAndTitle( &$text, &$finalTitle ) {
+		global $wgEnableReferencesTemplateParsing,
+			   $wgEnableNavboxTemplateParsing,
+			   $wgEnableNoticeTemplateParsing,
+			   $wgEnableNavigationTemplateParsing;
+
 		wfProfileIn( __METHOD__ );
 
 		if ( self::shouldTemplateBeParsed() ) {
@@ -19,16 +24,24 @@ class TemplateTypesParser {
 
 			switch ( $type ) {
 				case TemplateClassificationService::TEMPLATE_NAVBOX:
-					$text = NavboxTemplate::handle();
+					if ( $wgEnableNavboxTemplateParsing ) {
+						$text = NavboxTemplate::handle();
+					}
 					break;
 				case TemplateClassificationService::TEMPLATE_FLAG:
-					$text = NoticeTemplate::handleNoticeTemplate();
+					if ( $wgEnableNoticeTemplateParsing ) {
+						$text = NoticeTemplate::handle();
+					}
 					break;
 				case TemplateClassificationService::TEMPLATE_REFERENCES:
-					$text = ReferencesTemplate::handle();
+					if ( $wgEnableReferencesTemplateParsing ) {
+						$text = ReferencesTemplate::handle( $text );
+					}
 					break;
 				case TemplateClassificationService::TEMPLATE_NAV:
-					$text = NavigationTemplate::handle( $text );
+					if ( $wgEnableNavigationTemplateParsing ) {
+						$text = NavigationTemplate::handle( $text );
+					}
 					break;
 			}
 		}

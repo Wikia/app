@@ -40,7 +40,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			module.calculatePrices();
 			response = true;
 
-			adTracker.track(module.name + '/lookup_end', module.getPrices(), 0);
+			adTracker.track(module.name + '/lookup_end', module.getPrices(), 0, 'nodata');
 		}
 
 		function wasCalled() {
@@ -51,6 +51,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 		function trackState(providerName, slotName, params) {
 			log(['trackState', response, providerName, slotName], 'debug', module.logGroup);
 			var category,
+				encodedParams,
 				eventName;
 
 			if (!module.isSlotSupported(slotName)) {
@@ -60,8 +61,9 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 
 			eventName = response ? 'lookup_success' : 'lookup_error';
 			category = module.name + '/' + eventName + '/' + providerName;
+			encodedParams = module.encodeParamsForTracking(params) || 'nodata';
 
-			adTracker.track(category, slotName, 0, module.encodeParamsForTracking(params));
+			adTracker.track(category, slotName, 0, encodedParams);
 		}
 
 		function getSlotParams(slotName) {

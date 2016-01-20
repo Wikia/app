@@ -9,7 +9,7 @@ class WikiaNewFilesSpecialController extends WikiaSpecialPageController {
 	const PAGINATOR_URL = '?page=%s';
 
 	public function __construct() {
-		parent::__construct( 'Newimages', '', false );
+		parent::__construct( 'Images', '', false );
 	}
 
 	public function index() {

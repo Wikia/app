@@ -4,99 +4,327 @@ class TemplateTypesParserTest extends WikiaBaseTest {
 	const TEST_TEMPLATE_TEXT = 'test-template-test';
 
 	/**
-	 * @param int $templateId
-	 * @param $enableTemplateTypesParsing
-	 * @param $wgArticleAsJson
+	 * @param $config array
+	 * @param $templateText string
+	 * @param $expectedValue string
 	 *
-	 * @dataProvider shouldNotChangeTemplateParsingDataProvider
+	 * @dataProvider TemplateParsingDataProvider
 	 */
-	public function testShouldNotChangeTemplateParsing( $templateId, $enableTemplateTypesParsing, $wgArticleAsJson ) {
-		$text = self::TEST_TEMPLATE_TEXT;
-
+	public function testTemplateParsing( $config, $templateText, $expectedValue, $message ) {
 		$this->mockClassWithMethods(
 			'Title',
-			[ 'getArticleId' => $templateId ]
-		);
-		$this->mockClassWithMethods(
-			'TemplateClassificationService',
-			[ 'getType' => '' ]
-		);
-
-		$this->mockGlobalVariable( 'wgCityId', '12345' );
-		$this->mockGlobalVariable( 'wgEnableTemplateTypesParsing', $enableTemplateTypesParsing );
-		$this->mockGlobalVariable( 'wgArticleAsJson', $wgArticleAsJson );
-
-
-		TemplateTypesParser::onFetchTemplateAndTitle( $text, $title );
-
-		$this->assertEquals( $text, self::TEST_TEMPLATE_TEXT );
-	}
-
-	/**
-	 * @param int $templateId
-	 * @param string $type
-	 * @param string $changedTemplateText
-	 *
-	 * @dataProvider shouldChangeTemplateParsingDataProvider
-	 */
-	public function testShouldChangeTemplateParsing( $templateId, $type, $changedTemplateText ) {
-		$text = self::TEST_TEMPLATE_TEXT;
-
-		$this->mockClassWithMethods(
-				'Title',
-				[ 'getArticleId' => $templateId ]
+			[ 'getArticleId' => $config[ 'templateId' ] ]
 		);
 
 		$this->mockClassWithMethods(
 			'TemplateClassificationService',
-			[ 'getType' => $type ]
+			[ 'getType' => $config[ 'templateType' ] ]
 		);
 
-		$this->mockGlobalVariable( 'wgCityId', '12345' );
-		$this->mockGlobalVariable( 'wgEnableTemplateTypesParsing', true );
-		$this->mockGlobalVariable( 'wgArticleAsJson', true );
+		foreach($config['globals'] as $globalVarName => $globalVarValue) {
+			$this->mockGlobalVariable( $globalVarName, $globalVarValue );
+		}
 
-		TemplateTypesParser::onFetchTemplateAndTitle( $text, new Title );
+		TemplateTypesParser::onFetchTemplateAndTitle( $templateText, new Title );
 
-		$this->assertEquals( $text, $changedTemplateText );
+		$this->assertEquals( $expectedValue, $templateText, $message );
 	}
 
-	public function shouldNotChangeTemplateParsingDataProvider() {
+	public function TemplateParsingDataProvider() {
 		return [
 			[
-				1,
-				false,
-				false
+				[
+					'templateId' => 1,
+					'templateType' => 'navbox',
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => false,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => false
+					]
+				],
+				self::TEST_TEMPLATE_TEXT,
+				self::TEST_TEMPLATE_TEXT
 			],
 			[
-				2,
-				true,
-				false
+				[
+					'templateId' => 2,
+					'templateType' => 'navbox',
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => true,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => false
+					]
+				],
+				self::TEST_TEMPLATE_TEXT,
+				self::TEST_TEMPLATE_TEXT
 			],
 			[
-				3,
-				false,
-				true
-			]
-		];
-	}
-
-	public function shouldChangeTemplateParsingDataProvider() {
-		return [
+				[
+					'templateId' => 3,
+					'templateType' => 'navbox',
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => false,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => true
+					]
+				],
+				self::TEST_TEMPLATE_TEXT,
+				self::TEST_TEMPLATE_TEXT
+			],
 			[
-				4,
-				'navbox',
+				[
+					'templateId' => 4,
+					'templateType' => 'navbox',
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => true,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => true
+					]
+				],
+				'navbox text',
 				''
 			],
 			[
-				5,
-				'notice',
+				[
+					'templateId' => 5,
+					'templateType' => 'notice',
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => false,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => true
+					]
+				],
+				self::TEST_TEMPLATE_TEXT,
+				self::TEST_TEMPLATE_TEXT
+			],
+			[
+				[
+					'templateId' => 6,
+					'templateType' => 'notice',
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => true,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => false
+					]
+				],
+				self::TEST_TEMPLATE_TEXT,
+				self::TEST_TEMPLATE_TEXT
+			],
+			[
+				[
+					'templateId' => 7,
+					'templateType' => 'notice',
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => true,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => false,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => true
+					]
+				],
+				self::TEST_TEMPLATE_TEXT,
+				self::TEST_TEMPLATE_TEXT
+			],
+			[
+				[
+					'templateId' => 8,
+					'templateType' => 'notice',
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => true,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => true
+					]
+				],
+				'notice text',
 				''
 			],
 			[
-				6,
-				'references',
+				[
+					'templateId' => 9,
+					'templateType' => 'references',
+					'wgCityId' => 12345,
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => false,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => true
+					]
+				],
+				'<div class="wrapped-references"><references /></div>',
+				'<div class="wrapped-references"><references /></div>'
+			],
+			[
+				[
+					'templateId' => 10,
+					'templateType' => 'references',
+					'wgCityId' => 12345,
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => true,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => false
+					]
+				],
+				'<div class="wrapped-references"><references /></div>',
+				'<div class="wrapped-references"><references /></div>'
+			],
+			[
+				[
+					'templateId' => 11,
+					'templateType' => 'references',
+					'wgCityId' => 12345,
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => true,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => false,
+						'wgArticleAsJson' => true
+					]
+				],
+				'<div class="wrapped-references"><references /></div>',
+				'<div class="wrapped-references"><references /></div>'
+			],
+			[
+				[
+					'templateId' => 12,
+					'templateType' => 'references',
+					'wgCityId' => 12345,
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => true,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => true
+					]
+				],
+				'<div class="wrapped-references"><references /></div>',
 				'<references />'
+			],
+			[
+				[
+					'templateId' => 13,
+					'templateType' => 'references',
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => true,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => true
+					]
+				],
+				'<div class="wrapped-references">NOT A REFERENCE LIST</div>',
+				'<div class="wrapped-references">NOT A REFERENCE LIST</div>'
+			],
+			[
+				[
+					'templateId' => 14,
+					'templateType' => 'references',
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => true,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => false,
+						'wgArticleAsJson' => true
+					]
+				],
+				'<div class="wrapped-references"><references /></div>',
+				'<div class="wrapped-references"><references /></div>',
+				'References should not be parsed under wgEnableReferencesTemplateParsing disabled'
+			],
+			[
+				[
+					'templateId' => 15,
+					'templateType' => 'navigation',
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => false,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => true
+					]
+				],
+				self::TEST_TEMPLATE_TEXT,
+				self::TEST_TEMPLATE_TEXT
+			],
+			[
+				[
+					'templateId' => 16,
+					'templateType' => 'navigation',
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => true,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => true,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => false
+					]
+				],
+				self::TEST_TEMPLATE_TEXT,
+				self::TEST_TEMPLATE_TEXT
+			],
+			[
+				[
+					'templateId' => 16,
+					'templateType' => 'navigation',
+					'globals' => [
+						'wgCityId' => 12345,
+						'wgEnableTemplateTypesParsing' => true,
+						'wgEnableNavboxTemplateParsing' => true,
+						'wgEnableNavigationTemplateParsing' => false,
+						'wgEnableNoticeTemplateParsing' => true,
+						'wgEnableReferencesTemplateParsing' => true,
+						'wgArticleAsJson' => true
+					]
+				],
+				self::TEST_TEMPLATE_TEXT,
+				self::TEST_TEMPLATE_TEXT
 			]
 		];
 	}

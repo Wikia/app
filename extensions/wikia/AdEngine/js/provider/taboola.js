@@ -5,13 +5,14 @@ define('ext.wikia.adEngine.provider.taboola', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.recovery.helper',
 	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.taboolaHelper',
 	'wikia.abTest',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window',
 	'wikia.document'
-], function (adContext, recoveryHelper, slotTweaker, abTest, geo, instantGlobals, log, window, document) {
+], function (adContext, recoveryHelper, slotTweaker, taboolaHelper, abTest, geo, instantGlobals, log, window, document) {
 	'use strict';
 
 	var abGroups = {
@@ -20,7 +21,6 @@ define('ext.wikia.adEngine.provider.taboola', [
 		},
 		config = instantGlobals.wgAdDriverTaboolaConfig || {},
 		context = adContext.getContext(),
-		libraryLoaded = false,
 		logGroup = 'ext.wikia.adEngine.provider.taboola',
 		mappedVerticals = {
 			tv: 'Television',
@@ -31,7 +31,6 @@ define('ext.wikia.adEngine.provider.taboola', [
 			music: 'Music',
 			movies: 'Movies'
 		},
-		pageType = context.targeting.pageType,
 		readMoreDiv = document.getElementById('RelatedPagesModuleWrapper'),
 		slots = {
 			'NATIVE_TABOOLA_ARTICLE': {
@@ -76,29 +75,6 @@ define('ext.wikia.adEngine.provider.taboola', [
 		return false;
 	}
 
-	function loadTaboola() {
-		var taboolaInit = {},
-			taboolaScript,
-			url = '//cdn.taboola.com/libtrc/wikia-network/loader.js';
-
-		if (libraryLoaded) {
-			return;
-		}
-
-		taboolaInit[pageType] = 'auto';
-		window._taboola = window._taboola || [];
-		window._taboola.push(taboolaInit);
-		window._taboola.push({flush: true});
-
-		taboolaScript = document.createElement('script');
-		taboolaScript.async = true;
-		taboolaScript.src = url;
-		taboolaScript.id = logGroup;
-		document.getElementsByTagName('body')[0].appendChild(taboolaScript);
-
-		libraryLoaded = true;
-	}
-
 	function fillInSlot(slotName, slotElement, success) {
 		var container = document.createElement('div'),
 			slot = slots[slotName];
@@ -107,11 +83,11 @@ define('ext.wikia.adEngine.provider.taboola', [
 		if (slotName === 'NATIVE_TABOOLA_ARTICLE') {
 			readMoreDiv.parentNode.removeChild(readMoreDiv);
 		}
-		loadTaboola();
+
 		container.id = slot.id;
 		slotElement.appendChild(container);
 
-		window._taboola.push({
+		taboolaHelper.initializeWidget({
 			mode: slot.mode,
 			container: container.id,
 			placement: slot.label + getVerticalName(),
