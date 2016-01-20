@@ -27,7 +27,7 @@ $messages['en'] = array(
 	'template-classification-type-nonarticle' => 'Non-article',
 	'template-classification-description-nonarticle' => 'This template is not used on article pages.',
 	'template-classification-type-scrollbox' => 'Scrollbox',
-	'template-classification-description-scrollbox' => "This template displays its contents in a scrollable box.",
+	'template-classification-description-scrollbox' => 'This template displays its contents in a scrollable box.',
 	'template-classification-type-infoicon' => 'Infoicon',
 	'template-classification-description-infoicon' => 'This template is used for creating a link with a small icon.',
 	'template-classification-type-unknown' => 'Unknown',
@@ -61,6 +61,8 @@ $messages['en'] = array(
 	'template-classification-special-type-header' => 'Template type',
 	'template-classification-special-exception' => 'We are sorry, but something went wrong on our side! Please try again.',
 	'special-templates' => 'Templates',
+	'special-templates-portable-infobox' => 'Portable',
+	'special-templates-non-portable-infobox' => 'Non-portable',
 	'logentry-templateclassification-tc-changed' => '$1 changed type of $3 from $5 to $4.',
 );
 
@@ -123,6 +125,8 @@ $messages['qqq'] = array(
 	'template-classification-special-type-header' => 'Table column header describing template type.',
 	'template-classification-special-exception' => 'Message shown when fetching data was impossible and informing user that something went wrong and ask to try again.',
 	'special-templates' => 'Name of special page containing all templates on wiki with types.',
+	'special-templates-portable-infobox' => 'Inform that given infobox is portable',
+	'special-templates-non-portable-infobox' => 'Inform that given infobox is non-portable',
 	'logentry-templateclassification-tc-changed' => "A message that is saved to a user-facing log if a type of a template is changed to another one. Parameters are: $1 - User's name, $3 - A link to a target page, $4 - New type of the template, $5 - Old type of the template.",
 );
 
@@ -187,6 +191,8 @@ $messages['de'] = array(
 	'template-classification-description-scrollbox' => 'In dieser Vorlage werden die Inhalte in einem scrollbaren Feld angezeigt.',
 	'template-classification-type-infoicon' => 'Infosymbol',
 	'template-classification-description-infoicon' => 'Diese Vorlage wird verwendet, um einen Link mit einem kleinen Symbol zu erzeugen.',
+	'special-templates-portable-infobox' => 'Portabel',
+	'special-templates-non-portable-infobox' => 'Nicht portabel',
 );
 
 $messages['es'] = array(
@@ -250,6 +256,8 @@ $messages['es'] = array(
 	'template-classification-description-scrollbox' => 'Esta plantilla muestra su contenido en un cuadro de desplazamiento.',
 	'template-classification-type-infoicon' => 'Icono de información',
 	'template-classification-description-infoicon' => 'Esta plantilla se utiliza para crear un enlace con un pequeño icono.',
+	'special-templates-portable-infobox' => 'Portable',
+	'special-templates-non-portable-infobox' => 'No-portable',
 );
 
 $messages['fr'] = array(
@@ -313,6 +321,8 @@ $messages['fr'] = array(
 	'template-classification-description-scrollbox' => "Ce modèle affiche le contenu dans une zone que l'on peut faire défiler.",
 	'template-classification-type-infoicon' => 'Icône Info',
 	'template-classification-description-infoicon' => 'Ce modèle est utilisé pour créer un lien avec une petite icône.',
+	'special-templates-portable-infobox' => 'Portable',
+	'special-templates-non-portable-infobox' => 'Non-portable',
 );
 
 $messages['it'] = array(
@@ -376,6 +386,8 @@ $messages['it'] = array(
 	'template-classification-description-scrollbox' => 'Questo template visualizza i propri contenuti in un riquadro scorrevole.',
 	'template-classification-type-infoicon' => 'Icona info',
 	'template-classification-description-infoicon' => "Questo template è usato per creare un link con un'icona di piccole dimensioni.",
+	'special-templates-portable-infobox' => 'Esportabile',
+	'special-templates-non-portable-infobox' => 'Non esportabile',
 );
 
 $messages['ja'] = array(
@@ -439,6 +451,8 @@ $messages['ja'] = array(
 	'template-classification-description-scrollbox' => 'このテンプレートを使用すると、スクロール可能なボックス内にコンテンツを表示できます。',
 	'template-classification-type-infoicon' => 'インフォ・アイコン',
 	'template-classification-description-infoicon' => 'このテンプレートを使用すると、小さいアイコン付きのリンクを作成できます。',
+	'special-templates-portable-infobox' => 'ポータブル',
+	'special-templates-non-portable-infobox' => '非ポータブル',
 );
 
 $messages['nl'] = array(
@@ -499,9 +513,11 @@ $messages['nl'] = array(
 	'template-classification-bulk-classification-agreement' => 'I understand',
 	'logentry-templateclassification-tc-changed' => '$1 changed type of $3 from $5 to $4.',
 	'template-classification-type-scrollbox' => 'Scrollbox',
-	'template-classification-description-scrollbox' => "This template displays it's contents in a scrollable box.",
+	'template-classification-description-scrollbox' => 'This template displays its contents in a scrollable box.',
 	'template-classification-type-infoicon' => 'Infoicon',
 	'template-classification-description-infoicon' => 'This template is used for creating a link with a small icon.',
+	'special-templates-portable-infobox' => 'Portable',
+	'special-templates-non-portable-infobox' => 'Non-portable',
 );
 
 $messages['pl'] = array(
@@ -564,6 +580,8 @@ $messages['pl'] = array(
 	'template-classification-description-scrollbox' => 'Ten szablon wyświetla treść wewnątrz przewijanego elementu.',
 	'template-classification-type-infoicon' => 'Infoikona',
 	'template-classification-description-infoicon' => 'Tego szablonu używa się do tworzenia odnośnika z małą ikoną.',
+	'special-templates-portable-infobox' => 'Przenośne',
+	'special-templates-non-portable-infobox' => 'Nieprzenośne',
 );
 
 $messages['pt'] = array(
@@ -627,6 +645,8 @@ $messages['pt'] = array(
 	'template-classification-description-scrollbox' => 'Esta predefinição exibe conteúdo em uma caixa rolável.',
 	'template-classification-type-infoicon' => 'Ícone de informação',
 	'template-classification-description-infoicon' => 'Esta predefinição é usada para criar um link com um ícone pequeno.',
+	'special-templates-portable-infobox' => 'Portátil',
+	'special-templates-non-portable-infobox' => 'Não-portátil',
 );
 
 $messages['ru'] = array(
@@ -637,11 +657,11 @@ $messages['ru'] = array(
 	'template-classification-type-navbox' => 'Навбоксы',
 	'template-classification-description-navbox' => 'Отображают список ссылок на другие похожие статьи и предназначены для навигации по страницам. Обычно расположены в нижней части страницы.',
 	'template-classification-type-quote' => 'Цитаты',
-	'template-classification-description-quote' => 'Выделяют важные части текста, например, тексты песен, части диалога или чьи-то высказывания.',
+	'template-classification-description-quote' => 'Выделяют важные части текста, например тексты песен, части диалога или чьи-то высказывания.',
 	'template-classification-type-notice' => 'Информационные шаблоны',
-	'template-classification-description-notice' => 'Также известные как "плашки", эти шаблоны используются, чтобы сообщить о важной информации о статье — например, указать на то, что она не завершена, или предупредить о спойлерах.',
+	'template-classification-description-notice' => 'Также известные как «плашки», эти шаблоны используются, чтобы сообщить о важной информации о статье — например, указать на то, что она не завершена, или предупредить о спойлерах.',
 	'template-classification-type-references' => 'Примечания',
-	'template-classification-description-references' => 'Позволяют добавить примечания к статье, например - ссылки на внешние источники информации.',
+	'template-classification-description-references' => 'Позволяют добавить примечания к статье, например ссылки на внешние источники информации.',
 	'template-classification-type-media' => 'Изображения, видео или галереи',
 	'template-classification-description-media' => 'Эти шаблоны используются для приведения изображений, видео и других визуальных элементов на странице к стандартному виду или размеру.',
 	'template-classification-type-data' => 'Данные',
@@ -682,7 +702,7 @@ $messages['ru'] = array(
 	'template-classification-edit-modal-bulk-error-limited' => 'К сожалению мы не смогли классифицировать $1 из $2 страниц. Пожалуйста, попробуйте снова.',
 	'template-classification-edit-modal-bulk-task' => 'Из-за размеров этой категории массовая классификация будет поставлена в очередь. Это означает, что классификация займет немного больше времени, чем обычно.',
 	'template-classification-open-modal-key-tip' => 'Открыть окно классификации ($1+Shift+K)',
-	'template-classification-bulk-classification-hint' => 'Привет, $1! Помогите нам классифицировать шаблоны в этой категории. Нажмите кнопку "Массовое изменение типов шаблонов" и выберите подходящий тип шаблонов. 
+	'template-classification-bulk-classification-hint' => 'Привет, $1! Помогите нам классифицировать шаблоны в этой категории. Нажмите кнопку «Массовое изменение типов шаблонов» и выберите подходящий тип шаблонов. 
 [[w:c:ru:Справка:Классификация шаблонов|Подробнее о классификации шаблонов]].',
 	'template-classification-bulk-classification-agreement' => 'Хорошо',
 	'logentry-templateclassification-tc-changed' => '$1 изменил(а) тип шаблона $3 с $5 на $4.',
@@ -690,6 +710,8 @@ $messages['ru'] = array(
 	'template-classification-description-scrollbox' => 'Эти шаблоны предназначены для размещения контента в поля с прокруткой.',
 	'template-classification-type-infoicon' => 'Пиктограммы',
 	'template-classification-description-infoicon' => 'Эти шаблоны используются для создания информационных иконок на страницах.',
+	'special-templates-portable-infobox' => 'Модульный инфобокс',
+	'special-templates-non-portable-infobox' => 'Классический инфобокс',
 );
 
 $messages['zh-hans'] = array(
@@ -752,6 +774,8 @@ $messages['zh-hans'] = array(
 	'template-classification-description-scrollbox' => '此模板的内容显示在滑动框中。',
 	'template-classification-type-infoicon' => '信息图标',
 	'template-classification-description-infoicon' => '此模板通过使用一个小图标进行创建链接。',
+	'special-templates-portable-infobox' => '便携式',
+	'special-templates-non-portable-infobox' => '非便携式',
 );
 
 $messages['zh-hant'] = array(
@@ -814,5 +838,7 @@ $messages['zh-hant'] = array(
 	'template-classification-description-scrollbox' => '此模板的內容將在滑動框中顯示。',
 	'template-classification-type-infoicon' => '訊息圖示',
 	'template-classification-description-infoicon' => '此模板通過使用一個小圖示進行創建連結。',
+	'special-templates-portable-infobox' => '可擕式',
+	'special-templates-non-portable-infobox' => '非可擕式',
 );
 
