@@ -11,9 +11,11 @@ class WikiaPollAjax {
 	 *	  *question 2\n
 	 */
 	static public function create() {
+		global $wgUser;
 		wfProfileIn(__METHOD__);
 
 		$app = F::app();
+		$app->wg->Request->isValidWriteRequest( $wgUser );
 
 		$title = $app->wg->Request->getVal ('question');
 		$answers = $app->wg->Request->getArray ('answer');  // array
