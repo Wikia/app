@@ -8,13 +8,12 @@ class AchAjaxService {
 	 * @return string
 	 * @throws BadRequestException
 	 * @throws MWException
+	 * @throws BadRequestException
 	 */
 	public static function editPlatinumBadge() {
 		global $wgRequest, $wgSitename, $wgServer, $wgScriptPath, $wgUser;
 
-		if ( !$wgRequest->wasPosted() || !$wgUser->matchEditToken( $wgRequest->getVal( 'token' ) ) ) {
-			throw new BadRequestException( 'Request must be POSTed and provide a valid edit token.' );
-		}
+		$wgRequest->isValidWriteRequest( $wgUser );
 
 		$badge_type_id = $wgRequest->getVal('type_id');
 		$ret = array('errors' => null, 'typeId' => $badge_type_id);
