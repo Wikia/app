@@ -32,4 +32,29 @@ class WikiaPageTypeTest extends WikiaBaseTest {
 
 		$this->assertTrue(WikiaPageType::isCorporatePage());
 	}
+
+	public function testIsWikiaHubMain() {
+		$title = $this->mockClassWithMethods( 'Title', [
+			'getText' => 'Foo_Article',
+			'getNamespace' => NS_MAIN,
+		] );
+
+		$this->mockGlobalVariable( 'wgEnableWikiaHubsV3Ext', true );
+
+		// test the default behavior: using wgTitle
+		$this->mockGlobalVariable( 'wgTitle', $title );
+		$this->assertEquals( false, WikiaPageType::isWikiaHubMain() );
+
+		// test passing a "custom" title
+		$this->mockGlobalVariable( 'wgTitle', null );
+		$this->assertEquals( false, WikiaPageType::isWikiaHubMain( $title ) );
+	}
+
+	/**
+	 * @expectedException Wikia\Util\AssertionException
+	 */
+	public function testIsWikiaHubMainFailedAssert() {
+		$this->mockGlobalVariable( 'wgTitle', null );
+		$this->assertEquals( false, WikiaPageType::isWikiaHubMain() );
+	}
 }
