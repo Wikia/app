@@ -2,6 +2,7 @@
 class CommunityDataService
 {
 	const NEW_API_VERSION = 1;
+	private $curatedContentData = null;
 
 	function __construct( $cityId ) {
 		$this->cityId = $cityId;
@@ -21,11 +22,27 @@ class CommunityDataService
 				'label' => 'lol2',
 				'image_id' => 54434,
 				'items' => [
-					'item1' => 'costam',
-					'item2' => 'cos innego'
-					]
+					'item1' => [
+						'article_id' => 195822,
+						'image_id' => 195822,
+						'items' => "",
+						'label' => "The Muppets on ABC in 2015",
+						'title' => "The Muppets (2015)",
+						'type' => "article",
+						'node_type' => "item"
+					],
+					'item2' => [
+						'article_id' => 195822,
+						'image_id' => 195822,
+						'items' => "",
+						'label' => "The Muppets on ABC in 2015",
+						'title' => "The Muppets (2015)",
+						'type' => "article",
+						'node_type' => "item"
+					],
 				]
-			],
+			]
+		],
 		'featured' => [
 			'label' => 'some another featured label',
 			'items' => [
@@ -82,9 +99,16 @@ class CommunityDataService
 		]
 	];
 
-	public function getCuratedContent() {
-		$value = WikiFactory::getVarValueByName( 'wgWikiaCuratedContent', $this->cityId );
+	private function curatedContentData() {
+		if ( empty( $this->curatedContentData ) ) {
+			$this->curatedContentData = WikiFactory::getVarValueByName( 'wgWikiaCuratedContent', $this->cityId );
+		}
 
+		return $this->curatedContentData;
+
+	}
+	public function getCuratedContent() {
+		$value = $this->curatedContentData();
 		var_dump($value);
 
 		//new markup
@@ -93,7 +117,7 @@ class CommunityDataService
 			return $value;
 		}
 
-		$curatedContent['sections'] = $this->getSections( $value );
+		$curatedContent['sections'] = $this->getSectionsOld( $value );
 		$curatedContent['optional'] = $this->getSectionItemsOld( $value, '' );
 		$curatedContent['featured'] = $this->getFeaturedSection( $value );
 		$curatedContent['categories'] = $this->getItemsFromSections( $value, $curatedContent['sections'] );
@@ -176,6 +200,30 @@ class CommunityDataService
 		}
 
 		wfProfileOut( __METHOD__ );
+
+		return $response;
+	}
+
+	/**
+	 * This is an adapter which prepares the CuratedContent data
+	 * format to be aligned with what the mobile apps are expecting
+	 * @return array
+	 */
+	private function prepareGGData() {
+		$response = [];
+
+		if ( $this->wgWikiaCuratedContent['optional']['items'] ) {
+			$response['sections'] = $this->getSectionItemsDetails( $this->wgWikiaCuratedContent['optional']['items'] );
+		}
+
+		// there also might be some curated content items (optionally)
+		if ( $this->wgWikiaCuratedContent['curated'] ) {
+			$response['items'] = $this->wgWikiaCuratedContent['curated'];
+		}
+
+		if ( isset( $this->wgWikiaCuratedContent['featured']['items'] ) ) {
+			$response['featured'] = $this->wgWikiaCuratedContent['featured']['items'];
+		}
 
 		return $response;
 	}
@@ -270,11 +318,39 @@ class CommunityDataService
 		return $data;
 	}
 
+	private function getSectionItemsDetails( $tems ) {
+		wfProfileIn( __METHOD__ );
+
+		$detailedItems = array_map( function( $item ) {
+			$imageId = $item['image_id'] != 0 ? $item['image_id'] : null;
+			$val = [
+				'title' => $item['label'],
+				'image_id' => $item['image_id'] != 0 ? $item['image_id'] : null,
+				'image_url' => CuratedContentHelper::findImageUrl( $imageId )
+			];
+
+			if ( !empty( $item['image_id'] ) && array_key_exists( 'image_crop', $item ) ) {
+				$val['image_crop'] = $item['image_crop'];
+			}
+
+			return $val;
+		}, $tems );
+
+		wfProfileOut( __METHOD__ );
+
+		return $detailedItems;
+	}
+
 	/**
 	 * Old functions supporting old format of wgWikiaCuratedContent variable.
 	 * To be removed as soon as all wikias will be migrated to use new format.
 	 */
 
+	 /**
+	 * @param $content
+	 * @param $sections
+	 * @return array
+	 */
 	private function getItemsFromSections( $content, $sections ) {
 		$items = [ ];
 		if ( is_array( $sections ) ) {
@@ -332,7 +408,7 @@ class CommunityDataService
 		return $return;
 	}
 
-	private function getSections( $content ) {
+	private function getSectionsOld( $content ) {
 		var_dump($content);die;
 		wfProfileIn( __METHOD__ );
 		$sections = array_reduce(
@@ -395,7 +471,6 @@ class CommunityDataService
 			$value['image_id'] = $imageId;
 			$value['image_url'] = $imageUrl;
 		}
-		//$this->response->setVal( $sectionName, $ret );
 
 		return $ret;
 	}
@@ -408,7 +483,7 @@ class CommunityDataService
 	 */
 	private function setSectionsInResponse( $content ) {
 		wfProfileIn( __METHOD__ );
-		$response['sections'] = $this->getSections( $content );
+		$response['sections'] = $this->getSectionsOld( $content );
 
 		// there also might be some categories without SECTION, lets find them as well (optional section)
 		$response['items'] = $this->getSectionItemsOld( $content, '' );
@@ -459,7 +534,7 @@ class CommunityDataService
 
 			foreach ( $allCategories as $value ) {
 				if ( $value['size'] - $value['files'] > 0 ) {
-					$ret[] = $this::getJsonItem(
+					$ret[] = $this->getJsonItem(
 						$value['*'],
 						$categoryName,
 						isset( $value['pageid'] ) ? (int) $value['pageid'] : 0
@@ -482,6 +557,7 @@ class CommunityDataService
 		return $response;
 	}
 
+	//TODO: public?
 	function getJsonItem( $titleName, $ns, $pageId ) {
 		$title = Title::makeTitle( $ns, $titleName );
 		list( $imageId, $imageUrl ) = CuratedContentHelper::findImageIdAndUrl( null, $pageId );
@@ -497,17 +573,18 @@ class CommunityDataService
 	}
 
 	public function getCommunityData() {
-		return isset( $wgWikiaCuratedContent['community_data'] ) ? $wgWikiaCuratedContent['community_data'] : [];
+		$data = $this->curatedContentData();
+		return isset( $data['community_data'] ) ? $data['community_data'] : [];
+	}
+
+	public function getCommunityDescription() {
+		$data = $this->curatedContentData();
+		return isset( $data['community_data']['description'] ) ? $data['community_data']['description'] : [];
 	}
 
 	public function getCommunityImageId() {
-		if ( isset($this->wgWikiaCuratedContent['community_data']['image_id'])) {
-			return $this->wgWikiaCuratedContent['community_data']['image_id'];
-		} else {
-			//get image from the old source!!
-		}
-
-		return 195822;
+		$data = $this->curatedContentData();
+		return isset( $data['community_data']['image_id']) ? $data['community_data']['image_id'] : 0;
 	}
 
 	public function getCommunityDescription() {
