@@ -96,6 +96,7 @@ class InsightsController extends WikiaSpecialPageController {
 				'subtypes' => $model->getConfig()->getSubtypes(),
 				'showPageViews' => $model->getConfig()->showPageViews(),
 				'hasActions' => $model->getConfig()->hasAction(),
+				'usage' => $model->getConfig()->getInsightUsage(),
 				'type' => $this->type,
 				'subtype' => $this->subtype,
 				'themeClass' => $this->themeClass,
