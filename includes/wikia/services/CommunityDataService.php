@@ -509,4 +509,8 @@ class CommunityDataService
 
 		return 195822;
 	}
+
+	public function getCommunityDescription() {
+		return "some description";
+	}
 }

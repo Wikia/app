@@ -19,8 +19,9 @@
 		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-no-thumb"';
 	}
 
-	$description = isset($commData->getCommunityData()['description'])
-		? $commData->getCommunityData()['description']
+	$description = $commData->getCommunityDescription();
+	$description = !empty($description)
+		? $description
 		: $result->getText( Wikia\Search\Utilities::field( 'description' ), $isOnWikiMatch ? 16 : 60);
 
 	$service = new Wikia\Search\MediaWikiService();
