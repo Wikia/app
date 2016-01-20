@@ -16,7 +16,7 @@ class ResultHelper {
 		if (empty($imageURL)) {
 			$imageFileName = (new PromoImage(PromoImage::MAIN))->setCityId($result['id'])->getPathname();
 			$imageURL = ImagesService::getImageSrcByTitle( $result['id'], $imageFileName,
-				-		WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_WIDTH, WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT );
+						WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_WIDTH, WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT );
 
 		}//TODO: end
 
@@ -26,7 +26,7 @@ class ResultHelper {
 			$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-no-thumb"';
 		}
 
-		$description = $commData->getCommunityDescription();
+		$description = ResultHelper::limitTextLength($commData->getCommunityDescription(), $descWordLimit);
 		$description = !empty($description)
 			? $description
 			: $result->getText( Utilities::field( 'description' ), $descWordLimit );
@@ -46,5 +46,15 @@ class ResultHelper {
 			'hub' => $result->getHub(),
 			'pos' => $pos
 		];
+	}
+
+	public static function limitTextLength($text, $wordLimit = null) {
+		$wordsExploded = explode( ' ', $text );
+		if ($wordLimit == null && count($wordsExploded) > $wordLimit) {
+			$textLimited = implode( ' ', array_slice( $wordsExploded, 0, $wordLimit ) );
+			$textLimited .= "...";
+			return $textLimited;
+		}
+		return $text;
 	}
 }
