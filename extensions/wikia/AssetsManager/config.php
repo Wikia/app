@@ -2735,7 +2735,7 @@ $config['insights_globalshortcuts_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/Insights/scripts/InsightsGlobalShortcuts.js',
+		'//extensions/wikia/InsightsV2/scripts/InsightsGlobalShortcuts.js',
 	],
 ];
 

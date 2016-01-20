@@ -14,6 +14,12 @@ class InsightsHooks {
 	 * Check if article is in insights flow and init script to show banner with message and next steps
 	 */
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+		global $wgEnableGlobalShortcutsExt;
+
+		if ( !empty( $wgEnableGlobalShortcutsExt ) ) {
+			\Wikia::addAssetsToOutput( 'insights_globalshortcuts_js' );
+		}
+
 		$subpage = $out->getRequest()->getVal( 'insights', null );
 
 		// Load scripts for pages in insights loop
