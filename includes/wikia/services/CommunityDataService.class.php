@@ -48,14 +48,16 @@ class CommunityDataService extends WikiaService {
 		$result = [ ];
 		foreach ( $data as $section ) {
 			$extended = [
-				'label' => $section[ 'title' ],
-				'image_id' => $section[ 'image_id' ],
-				'items' => $section[ 'items' ]
+				'label' => isset( $section[ 'title' ] ) ? $section[ 'title' ] : '',
+				'image_id' => isset( $section[ 'image_id' ] ) ? $section[ 'image_id' ] : 0,
+				'items' => isset( $section[ 'items' ] ) ? $section[ 'items' ] : []
 			];
 
 			//figure out what type of section it is
 			if ( $section[ 'featured' ] ) {
 				$result[ 'featured' ] = $extended;
+			} elseif ( $section[ 'community_data' ] ) {
+				$result[ 'community_data' ] = $section;
 			} elseif ( empty( $section[ 'title' ] ) ) {
 				$result[ 'optional' ] = $extended;
 			} else {

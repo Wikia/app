@@ -499,6 +499,11 @@ class CuratedContentController extends WikiaController {
 			if ( !empty( $errors ) ) {
 				$this->response->setVal( 'errors', $errors );
 			} else {
+				$community_data = $this->request->getArray( 'community_data', [ ] );
+				if ( $community_data ) {
+					$sections[] = $community_data;
+				}
+
 				$status = ( new CommunityDataService( $wgCityId ) )->setCuratedContent( $sections );
 
 				if ( !empty( $status ) ) {
@@ -526,24 +531,26 @@ class CuratedContentController extends WikiaController {
 			$data = [ ];
 			if ( !empty( $curatedContent ) && is_array( $curatedContent ) ) {
 				foreach ( $curatedContent as $section ) {
-					// update information about node type
-					$section[ 'node_type' ] = 'section';
-
-					// rename $section['title'] to $section['label']
-					$section[ 'label' ] = $section[ 'title' ];
-					unset( $section[ 'title' ] );
-
-					if ( !empty( $section[ 'label' ] ) && empty( $section[ 'featured' ] ) ) {
-						// load image for curated content sections (not optional, not featured)
-						$section[ 'image_url' ] = CuratedContentHelper::findImageUrl( $section[ 'image_id' ] );
-					}
-
-					foreach ( $section[ 'items' ] as $i => $item ) {
-						// load image for all items
-						$section[ 'items' ][ $i ][ 'image_url' ] = CuratedContentHelper::findImageUrl( $item[ 'image_id' ] );
-
+					if ( !$section[ 'community_data' ] ) {
 						// update information about node type
-						$section[ 'items' ][ $i ][ 'node_type' ] = 'item';
+						$section[ 'node_type' ] = 'section';
+
+						// rename $section['title'] to $section['label']
+						$section[ 'label' ] = $section[ 'title' ];
+						unset( $section[ 'title' ] );
+
+						if ( !empty( $section[ 'label' ] ) && empty( $section[ 'featured' ] ) ) {
+							// load image for curated content sections (not optional, not featured)
+							$section[ 'image_url' ] = CuratedContentHelper::findImageUrl( $section[ 'image_id' ] );
+						}
+
+						foreach ( $section[ 'items' ] as $i => $item ) {
+							// load image for all items
+							$section[ 'items' ][ $i ][ 'image_url' ] = CuratedContentHelper::findImageUrl( $item[ 'image_id' ] );
+
+							// update information about node type
+							$section[ 'items' ][ $i ][ 'node_type' ] = 'item';
+						}
 					}
 
 					$data[] = $section;
