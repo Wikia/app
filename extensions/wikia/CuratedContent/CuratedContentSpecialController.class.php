@@ -15,7 +15,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	public function index() {
 		global $wgUser;
 
-		$curatedContent = $this->communityDataService->getCuratedContent( true );
+		$curatedContent = $this->communityDataService->getCuratedContentLegacyFormat();
 		if ( !$wgUser->isAllowed( 'curatedcontent' ) ) {
 			$this->displayRestrictionError();
 			return false; // skip rendering

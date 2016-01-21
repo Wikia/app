@@ -194,7 +194,7 @@ class CuratedContentController extends WikiaController {
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		$curatedContent = $this->communityDataService->getCuratedContent( true );
+		$curatedContent = $this->communityDataService->getCuratedContentLegacyFormat();
 
 		if ( empty( $curatedContent ) ) {
 			$this->getCategories();
@@ -520,7 +520,7 @@ class CuratedContentController extends WikiaController {
 		// TODO: CONCF-961 Set more restrictive header
 		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 
-		$curatedContent = $this->communityDataService->getCuratedContent( true );
+		$curatedContent = $this->communityDataService->getCuratedContentLegacyFormat();
 
 		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
 			$data = [ ];
@@ -559,7 +559,7 @@ class CuratedContentController extends WikiaController {
 
 	private function getCuratedContentForWiki( $wikiID ) {
 		$curatedContent = [ ];
-		$value = ( new CommunityDataService( $wikiID ) )->getCuratedContent( true );
+		$value = ( new CommunityDataService( $wikiID ) )->getCuratedContentLegacyFormat();
 		$curatedContent[ 'sections' ] = $this->getSections( $value );
 		$curatedContent[ 'optional' ] = $this->getSectionItems( $value, '' );
 		$curatedContent[ 'featured' ] = $this->getFeaturedSection( $value );

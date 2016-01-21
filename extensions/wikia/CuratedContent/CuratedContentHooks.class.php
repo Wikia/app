@@ -11,7 +11,7 @@ class CuratedContentHooks {
 		global $wgServer, $wgCityId;;
 
 		( new SquidUpdate( array_unique( array_reduce(
-			( new CommunityDataService( $wgCityId ) )->getCuratedContent( true ),
+			( new CommunityDataService( $wgCityId ) )->getCuratedContentLegacyFormat(),
 			function ( $urls, $item ) use ( $wgServer ) {
 				if ( $item[ 'title' ] !== '' && empty( $item[ 'featured' ] ) ) {
 					// Purge section URLs using urlencode() (standard for MediaWiki), which uses implements RFC 1738

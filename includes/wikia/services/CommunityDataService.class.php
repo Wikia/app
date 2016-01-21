@@ -20,9 +20,12 @@ class CommunityDataService extends WikiaService {
 		return $status;
 	}
 
-	public function getCuratedContent( $useLegacyFormat = false ) {
-		$data = $this->curatedContentData();
-		return $useLegacyFormat ? $this->toOld( $data ) : $data;
+	public function getCuratedContent() {
+		return $this->curatedContentData();
+	}
+
+	public function getCuratedContentLegacyFormat() {
+		return $this->toOld( $this->curatedContentData() );
 	}
 
 	private function curatedContentData() {
@@ -86,10 +89,6 @@ class CommunityDataService extends WikiaService {
 	 */
 	private function isOldFormat( $curatedContent ) {
 		return ( array_values( $curatedContent ) === $curatedContent );
-	}
-
-	public function getData() {
-		return $this->curatedContentData();
 	}
 
 	public function getCommunityData() {

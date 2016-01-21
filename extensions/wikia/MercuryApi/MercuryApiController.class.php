@@ -332,7 +332,7 @@ class MercuryApiController extends WikiaController {
 	public function getArticle() {
 		global $wgEnableMainPageDataMercuryApi, $wgCityId;
 
-		$curatedContent = ( new CommunityDataService( $wgCityId ) )->getCuratedContent( true );
+		$curatedContent = ( new CommunityDataService( $wgCityId ) )->getCuratedContentLegacyFormat();
 		try {
 			$title = $this->getTitleFromRequest();
 			$articleId = $title->getArticleId();
