@@ -16,8 +16,8 @@ class CommunityDataService {
 				$this->curatedContentData = [];
 			} else {
 				// transformation for transition phase
-				$this->curatedContentData = $this->isOldFormat( $this->curatedContentData ) ?
-					$this->translateOldFormatToNew( $this->curatedContentData ) : $raw;
+				$this->curatedContentData = $this->isOldFormat( $raw ) ?
+					$this->translateOldFormatToNew( $raw ) : $raw;
 			}
 		}
 
@@ -76,16 +76,20 @@ class CommunityDataService {
 			'errors' => [ ],
 			'status' => [ ]
 		];
-
+		$results[ 'sections' ] = $data;
 		$status = false;
 		//TODO: move to constructor and private field
 		$helper = new CuratedContentHelper();
 		//TODO: check if it's still valid to use after data model changed
-		$sections = $helper->processSections( $data );
-		$errors = ( new CuratedContentValidator )->validateData( $sections );
+		//$sections = $helper->processSections( $data );
+
+		$sections = $data;
+
+		//$errors = ( new CuratedContentValidator )->validateData( $sections );
 
 		if ( !empty( $errors ) ) {
 			$results[ 'errors' ][] = $errors;
+			$results[ 'errors' ][] = $data;
 		}
 		else {
 			$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $wgCityId, $sections );
@@ -174,6 +178,7 @@ class CommunityDataService {
 	public function getCuratedContentWithData() {
 		$curatedContent = $this->curatedContentData();
 		$data = [ ];
+
 
 		if ( !empty( $curatedContent ) && is_array( $curatedContent ) ) {
 			$data = $curatedContent;
@@ -266,8 +271,6 @@ class CommunityDataService {
 	}
 
 	private function getSectionsOld( $content ) {
-		var_dump( $content );
-		die;
 		wfProfileIn( __METHOD__ );
 		$sections = array_reduce(
 			$content,

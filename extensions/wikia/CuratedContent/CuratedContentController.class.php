@@ -197,12 +197,6 @@ class CuratedContentController extends WikiaController {
 		$offset = $this->request->getVal( 'offset', '' );
 
 		$response = $this->communityDataService->getList( $section, $limit, $offset );
-
-		//TODO: can we remove it from here?
-		// OR AT LEAST USE ARRAY MAP
-//		foreach ( $response as $sectionName => $sectionContent ) {
-//			$this->response->setVal( $sectionName, $sectionContent );
-//		}
 		$this->response->setValues( $response );
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
@@ -270,7 +264,9 @@ class CuratedContentController extends WikiaController {
 
 		//if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
 		if (true) {
-			$result = $this->communityDataService->setCuratedContent();
+			$data = $this->request->getArray( 'data', [ ] );
+			$result = $this->communityDataService->setCuratedContent( $data );
+			$this->response->setVal( 'otrzymana data', $this->request->getParams() );
 			$errors = $result['errors'];
 			$status = $result['status'];
 
@@ -278,6 +274,7 @@ class CuratedContentController extends WikiaController {
 				$this->response->setVal( 'errors', $errors );
 			}
 			$this->response->setVal( 'status', $status );
+			$this->response->setVal( 'sections ktore zostaly zapisane w zmiennej', $result['sections'] );
 
 		} else {
 			$this->response->setCode( \Wikia\Service\ForbiddenException::CODE );
