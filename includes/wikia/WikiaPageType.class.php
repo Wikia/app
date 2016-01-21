@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Util\Assert;
+
 /**
  * Utility class to check types of currently rendered page
  */
@@ -241,6 +243,9 @@ class WikiaPageType {
 	 */
 	public static function isWikiaHubMain() {
 		$title = self::getTitle();
+
+		Assert::true( $title instanceof Title, __METHOD__ ); // SUS-11
+
 		$mainPageName = trim( str_replace( '_', ' ', wfMessage( 'mainpage' )->inContentLanguage()->text() ) );
 		$isMainPage = ( strcasecmp( $mainPageName, $title->getText() ) === 0 ) && $title->getNamespace() === NS_MAIN;
 

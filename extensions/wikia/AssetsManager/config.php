@@ -135,6 +135,14 @@ $config['recirculation_js'] = array(
 	),
 );
 
+$config['recirculation_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => array(
+		'//extensions/wikia/Recirculation/styles/recirculation.scss',
+	),
+);
+
 $config['spotlights_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(

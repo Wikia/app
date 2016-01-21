@@ -33,7 +33,8 @@ define('lvs.swapkeep', [
 		data = {
 			videoTitle: currTitle,
 			sort: qs.getVal('sort', 'recent'),
-			currentPage: qs.getVal('currentPage', 1)
+			currentPage: qs.getVal('currentPage', 1),
+			token: mw.user.tokens.get('editToken')
 		};
 
 		// if @params are explicitly passed through, extend our object with them

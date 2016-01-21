@@ -76,7 +76,7 @@ class InsightsHelper {
 	 */
 	public static function getInsightsPages() {
 		global $wgEnableInsightsInfoboxes, $wgEnableFlagsExt, $wgEnableTemplateClassificationExt,
-			   $wgEnableInsightsPagesWithoutInfobox, $wgEnableInsightsTemplatesWithoutType;
+			   $wgEnableInsightsPagesWithoutInfobox, $wgEnableInsightsPopularPages, $wgEnableInsightsTemplatesWithoutType;
 
 		/* Order of inserting determines default order on insights entry points list */
 		$insightsPages = [];
@@ -89,6 +89,11 @@ class InsightsHelper {
 		/* Add Infoboxes insight */
 		if ( !empty( $wgEnableInsightsInfoboxes ) ) {
 			$insightsPages[InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE] = 'InsightsUnconvertedInfoboxesModel';
+		}
+
+		/* Add PopularPages insight */
+		if ( !empty( $wgEnableInsightsPopularPages ) ) {
+			$insightsPages[InsightsPopularPagesModel::INSIGHT_TYPE] = 'InsightsPopularPagesModel';
 		}
 
 		/* Add Flags insight */
@@ -195,12 +200,19 @@ class InsightsHelper {
 		$highlightedInsighs = self::getHighlightedInsights();
 
 		foreach ( $insightsPages as $key => $class ) {
-			$insightsList[$key] = [
-				'subtitle' => self::INSIGHT_SUBTITLE_MSG_PREFIX . $key,
-				'description' => self::INSIGHT_DESCRIPTION_MSG_PREFIX . $key,
-				'count' => $this->prepareCountDisplay( $insightsCountService->getCount( $key ) ),
-				'highlighted' => in_array( $key, $highlightedInsighs )
-			];
+			if ( class_exists( $class ) ) {
+				$insightModel =  new $class();
+				$count = $insightModel->getConfig()->getInsightUsage() == InsightsModel::INSIGHTS_USAGE_ACTIONABLE
+					? $this->prepareCountDisplay( $insightsCountService->getCount( $key ) )
+					: false;
+
+				$insightsList[$key] = [
+					'subtitle' => self::INSIGHT_SUBTITLE_MSG_PREFIX . $key,
+					'description' => self::INSIGHT_DESCRIPTION_MSG_PREFIX . $key,
+					'count' => $count,
+					'highlighted' => in_array( $key, $highlightedInsighs )
+				];
+			}
 		}
 		return $insightsList;
 	}

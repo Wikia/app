@@ -38,7 +38,7 @@ require([
 		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesMobile)) {
 			oxBidder.call();
 		}
-		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountriesMobile)) {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries)) {
 			rubiconFastlane.call();
 		}
 	});

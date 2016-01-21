@@ -3,9 +3,9 @@ JSON_OUT=./rql_docs.json
 
 YAML_FILES=$(shell find $(YAML_DIR) -name '*.yaml')
 
-SRCIPTS=scripts
-JSON_CONVERT=$(SRCIPTS)/json_convert.py
-VALIDATE_SCRIPT=$(SRCIPTS)/validate_examples.py
+SCRIPTS=scripts
+JSON_CONVERT=$(SCRIPTS)/json_convert.py
+VALIDATE_SCRIPT=$(SCRIPTS)/validate_examples.py
 HEADER=header.json
 
 $(JSON_OUT): $(JSON_CONVERT) $(YAML_FILES) $(HEADER)

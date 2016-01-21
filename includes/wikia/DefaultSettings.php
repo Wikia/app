@@ -1193,6 +1193,12 @@ $wgWikiaHubsFileRepoPath = 'http://corp.wikia.com/';
 $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 
 /**
+ * @name $wgEnableNielsen
+ * Enables Nielsen Digital Content Ratings
+ */
+$wgEnableNielsen = false;
+
+/**
  * @name $wgEnableAmazonMatch
  * Enables AmazonMatch new integration (id=3115)
  */
@@ -1244,20 +1250,6 @@ $wgAdDriverEnableRubiconFastlane = true;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverRubiconFastlaneCountries = null;
-
-/**
- * @name $wgAdDriverRubiconFastlaneCountriesMobile
- * Enables RubiconFastlane on mobile in these countries (given wgAdDriverEnableRubiconFastlane is also true).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverRubiconFastlaneCountriesMobile = null;
-
-/**
- * @name $wgAdDriverRubiconFastlaneOnAllVerticals
- * Enables RubiconFastlane on all verticals
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverRubiconFastlaneOnAllVerticals = false;
 
 /**
  * @name $wgAdPageLevelCategoryLangs
