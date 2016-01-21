@@ -6,8 +6,4 @@ class GlobalShortcutsController extends WikiaController {
 	public function getHelp() {
 		$this->overrideTemplate( 'help' );
 	}
-
-	public function renderHelpEntryPoint() {
-		$this->setVal( 'hint', wfMessage( 'global-shortcuts-title-help-entry-point' )->plain() );
-	}
 }

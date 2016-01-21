@@ -43,7 +43,7 @@ require(['GlobalShortcuts', 'PageActions', 'mw', 'wikia.loader'],
 								searchModal.open();
 							});
 						},
-						category: 'Help'
+						category: mw.message('global-shortcuts-category-help').escaped()
 					}
 				},
 				'help:Keyboard': {
@@ -56,7 +56,7 @@ require(['GlobalShortcuts', 'PageActions', 'mw', 'wikia.loader'],
 								help.open();
 							});
 						},
-						category: 'Help'
+						category: mw.message('global-shortcuts-category-help').escaped()
 					}
 				},
 				'wikia:Search': {
