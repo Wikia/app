@@ -12,7 +12,7 @@ $messages['en'] = array(
 	'global-navigation-community-link-label' => 'Community Central',
 	'global-navigation-explore-wikia-link' => 'http://www.wikia.com/explore',
 	'global-navigation-explore-wikia-link-label' => 'Explore Wikia',
-	'global-navigation-explore-wikia-mercury-link-label' => 'WE DONT HAVE MESSAGE',
+	'global-navigation-explore-wikia-mercury-link-label' => 'Top Communities',
 	'global-navigation-menu-hubs' => '*http://gameshub.wikia.com/wiki/Games_Hub|Games|games
 *http://movieshub.wikia.com/wiki/Movies_Hub|Movies|movies
 *http://tvhub.wikia.com/wiki/TV_Hub|TV|tv',
