@@ -2367,8 +2367,8 @@ $messages['zh-hans'] = array(
 	'global-navigation-community-link' => 'http://zh.community.wikia.com',
 	'global-navigation-community-link-label' => '社区中心',
 	'global-navigation-menu-hubs' => '*http://zh.gameshub.wikia.com|游戏|games
-*http://zh.entertainmenthub.wikia.com/wiki/娱乐中心|娱乐|tv
-	*http://zh.lifestylehub.wikia.com/wiki/生活中心|生活|lifestyle',
+*http://zh.entertainmenthub.wikia.com|影视|entertainment
+*http://zh.lifestylehub.wikia.com/wiki/生活中心|生活|lifestyle',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
@@ -2600,7 +2600,7 @@ $messages['zh-hant'] = array(
 	'global-navigation-community-link' => 'http://zh.community.wikia.com',
 	'global-navigation-community-link-label' => '社區中心',
 	'global-navigation-menu-hubs' => '*http://zh-tw.gameshub.wikia.com/wiki/遊戲中心|遊戲|games
-*http://zh-tw.entertainmenthub.wikia.com/wiki/娛樂中心|娛樂|tv
+*http://zh-tw.entertainmenthub.wikia.com/wiki/娛樂中心|娛樂|entertainment
 *http://zh-tw.lifestylehub.wikia.com/wiki/生活中心|生活|lifestyle',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 

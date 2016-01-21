@@ -25,17 +25,21 @@ require(
 				$a = $this.closest('a'),
 				href = $a.attr('href');
 
-			event.preventDefault();
-			event.stopImmediatePropagation();
+			//Stop immediate propagation only for the first anchor inside entryPoint
+			//This link points to /explore
+			if ($a.parent().attr('id') === $entryPoint.attr('id')) {
+				event.preventDefault();
+				event.stopImmediatePropagation();
 
-			if ($entryPoint.hasClass('active') && href !== '#') {
-				track({
-					label: $a.data('tracking-label')
-				});
+				if ($entryPoint.hasClass('active') && href !== '#') {
+					track({
+						label: $a.data('tracking-label')
+					});
 
-				w.location = href;
-			} else {
-				dropdowns.openDropdown.call($entryPoint.get(0));
+					w.location = href;
+				} else {
+					dropdowns.openDropdown.call($entryPoint.get(0));
+				}
 			}
 		}
 
