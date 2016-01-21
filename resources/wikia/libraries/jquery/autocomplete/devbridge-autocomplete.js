@@ -1,20 +1,16 @@
 /**
- *  Ajax Autocomplete2 for jQuery, version %version%
+ *  Ajax Autocomplete for jQuery, version 1.2.24
  *  (c) 2015 Tomas Kirda
  *
- *  Ajax Autocomplete2 for jQuery is freely distributable under the terms of an MIT-style license.
- *  For details, see the web site: https://github.com/devbridge/jQuery-Autocomplete2
+ *  Ajax Autocomplete for jQuery is freely distributable under the terms of an MIT-style license.
+ *  For details, see the web site: https://github.com/devbridge/jQuery-Autocomplete
  */
 
 /*jslint  browser: true, white: true, plusplus: true, vars: true */
 /*global define, window, document, jQuery, exports, require */
 
 // Expose plugin as an AMD module if AMD loader is present:
-(function (factory) {
-	'use strict';
-	// Browser globals
-	factory(jQuery);
-}(function ($) {
+define('devbridge.autocomplete', ['jquery'], function($){
 	'use strict';
 
 	var
@@ -43,7 +39,7 @@
 			DOWN: 40
 		};
 
-	function Autocomplete2(el, options) {
+	function Autocomplete(el, options) {
 		var noop = function () { },
 			that = this,
 			defaults = {
@@ -58,7 +54,7 @@
 				maxHeight: 300,
 				deferRequestBy: 0,
 				params: {},
-				formatResult: Autocomplete2.formatResult,
+				formatResult: Autocomplete.formatResult,
 				delimiter: null,
 				zIndex: 9999,
 				type: 'GET',
@@ -67,7 +63,7 @@
 				onSearchComplete: noop,
 				onSearchError: noop,
 				preserveInput: false,
-				containerClass: 'autocomplete2-suggestions',
+				containerClass: 'autocomplete-suggestions',
 				tabDisabled: false,
 				dataType: 'text',
 				currentRequest: null,
@@ -102,8 +98,8 @@
 		that.noSuggestionsContainer = null;
 		that.options = $.extend({}, defaults, options);
 		that.classes = {
-			selected: 'autocomplete2-selected',
-			suggestion: 'autocomplete2-suggestion'
+			selected: 'autocomplete-selected',
+			suggestion: 'autocomplete-suggestion'
 		};
 		that.hint = null;
 		that.hintValue = '';
@@ -114,11 +110,11 @@
 		that.setOptions(options);
 	}
 
-	Autocomplete2.utils = utils;
+	Autocomplete.utils = utils;
 
-	$.Autocomplete2 = Autocomplete2;
+	$.Autocomplete = Autocomplete;
 
-	Autocomplete2.formatResult = function (suggestion, currentValue) {
+	Autocomplete.formatResult = function (suggestion, currentValue) {
 		// Do not replace anything if there current value is empty
 		if (!currentValue) {
 			return suggestion.value;
@@ -135,7 +131,7 @@
 			.replace(/&lt;(\/?strong)&gt;/g, '<$1>');
 	};
 
-	Autocomplete2.prototype = {
+	Autocomplete.prototype = {
 
 		killerFn: null,
 
@@ -146,8 +142,8 @@
 				options = that.options,
 				container;
 
-			// Remove autocomplete2 attribute to prevent native suggestions:
-			that.element.setAttribute('autocomplete2', 'off');
+			// Remove autocomplete attribute to prevent native suggestions:
+			that.element.setAttribute('autocomplete', 'off');
 
 			that.killerFn = function (e) {
 				if ($(e.target).closest('.' + that.options.containerClass).length === 0) {
@@ -157,10 +153,10 @@
 			};
 
 			// html() deals with many types: htmlString or Element or Array or jQuery
-			that.noSuggestionsContainer = $('<div class="autocomplete2-no-suggestion"></div>')
+			that.noSuggestionsContainer = $('<div class="autocomplete-no-suggestion"></div>')
 				.html(this.options.noSuggestionNotice).get(0);
 
-			that.suggestionsContainer = Autocomplete2.utils.createNode(options.containerClass);
+			that.suggestionsContainer = Autocomplete.utils.createNode(options.containerClass);
 
 			container = $(that.suggestionsContainer);
 
@@ -172,18 +168,18 @@
 			}
 
 			// Listen for mouse over event on suggestions list:
-			container.on('mouseover.autocomplete2', suggestionSelector, function () {
+			container.on('mouseover.autocomplete', suggestionSelector, function () {
 				that.activate($(this).data('index'));
 			});
 
 			// Deselect active element when mouse leaves suggestions container:
-			container.on('mouseout.autocomplete2', function () {
+			container.on('mouseout.autocomplete', function () {
 				that.selectedIndex = -1;
 				container.children('.' + selected).removeClass(selected);
 			});
 
 			// Listen for click event on suggestions list:
-			container.on('click.autocomplete2', suggestionSelector, function () {
+			container.on('click.autocomplete', suggestionSelector, function () {
 				that.select($(this).data('index'));
 			});
 
@@ -193,14 +189,14 @@
 				}
 			};
 
-			$(window).on('resize.autocomplete2', that.fixPositionCapture);
+			$(window).on('resize.autocomplete', that.fixPositionCapture);
 
-			that.el.on('keydown.autocomplete2', function (e) { that.onKeyPress(e); });
-			that.el.on('keyup.autocomplete2', function (e) { that.onKeyUp(e); });
-			that.el.on('blur.autocomplete2', function () { that.onBlur(); });
-			that.el.on('focus.autocomplete2', function () { that.onFocus(); });
-			that.el.on('change.autocomplete2', function (e) { that.onKeyUp(e); });
-			that.el.on('input.autocomplete2', function (e) { that.onKeyUp(e); });
+			that.el.on('keydown.autocomplete', function (e) { that.onKeyPress(e); });
+			that.el.on('keyup.autocomplete', function (e) { that.onKeyUp(e); });
+			that.el.on('blur.autocomplete', function () { that.onBlur(); });
+			that.el.on('focus.autocomplete', function () { that.onFocus(); });
+			that.el.on('change.autocomplete', function (e) { that.onKeyUp(e); });
+			that.el.on('input.autocomplete', function (e) { that.onKeyUp(e); });
 		},
 
 		onFocus: function () {
@@ -333,12 +329,12 @@
 
 		enableKillerFn: function () {
 			var that = this;
-			$(document).on('click.autocomplete2', that.killerFn);
+			$(document).on('click.autocomplete', that.killerFn);
 		},
 
 		disableKillerFn: function () {
 			var that = this;
-			$(document).off('click.autocomplete2', that.killerFn);
+			$(document).off('click.autocomplete', that.killerFn);
 		},
 
 		killSuggestions: function () {
@@ -657,7 +653,7 @@
 
 					category = currentCategory;
 
-					return '<div class="autocomplete2-group"><strong>' + category + '</strong></div>';
+					return '<div class="autocomplete-group"><strong>' + category + '</strong></div>';
 				};
 
 			if (options.triggerSelectOnValidInput && that.isExactMatch(value)) {
@@ -941,16 +937,17 @@
 
 		dispose: function () {
 			var that = this;
-			that.el.off('.autocomplete2').removeData('autocomplete2');
+			that.el.off('.autocomplete').removeData('autocomplete');
 			that.disableKillerFn();
-			$(window).off('resize.autocomplete2', that.fixPositionCapture);
+			$(window).off('resize.autocomplete', that.fixPositionCapture);
 			$(that.suggestionsContainer).remove();
 		}
 	};
 
 	// Create chainable jQuery plugin:
-	$.fn.autocomplete2 = $.fn.devbridgeAutocomplete2 = function (options, args) {
-		var dataKey = 'autocomplete2';
+	//$.fn.autocomplete = $.fn.devbridgeAutocomplete = function (options, args) {
+	function autocomplete(options, args) {
+		var dataKey = 'autocomplete';
 		// If function invoked without argument return
 		// instance of the first matched element:
 		if (arguments.length === 0) {
@@ -970,9 +967,13 @@
 				if (instance && instance.dispose) {
 					instance.dispose();
 				}
-				instance = new Autocomplete2(this, options);
+				instance = new Autocomplete(this, options);
 				inputElement.data(dataKey, instance);
 			}
 		});
-	};
-}));
+	}
+
+	return {
+		autocomplete: autocomplete
+	}
+});

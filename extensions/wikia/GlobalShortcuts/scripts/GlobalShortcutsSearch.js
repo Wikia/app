@@ -40,12 +40,9 @@ define('GlobalShortcutsSearch', ['mw', 'wikia.nirvana', 'wikia.throbber', 'Globa
 			modalInstance.show();
 			throbber.uncover();
 
-			var $el = $('#global_shortcuts_search_field');
-			suggestions = new GlobalShortcutsSuggestions($el,function(){
+			suggestions = new GlobalShortcutsSuggestions($('#global_shortcuts_search_field'), function(){
 				modalInstance.trigger('close');
 			});
-			$el.focus();
-			console.log(suggestions);
 		}
 
 		function setupModalConfig(content) {
