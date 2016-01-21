@@ -2735,7 +2735,7 @@ $config['insights_globalshortcuts_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/Insights/scripts/InsightsGlobalShortcuts.js',
+		'//extensions/wikia/InsightsV2/scripts/InsightsGlobalShortcuts.js',
 	],
 ];
 
@@ -2769,6 +2769,7 @@ $config['globalshortcuts_js'] = [
 		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcutsSearch.js',
 		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcutsRenderKeys.js',
 		'//extensions/wikia/GlobalShortcuts/scripts/AddDefaultShortcuts.js',
+		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcutsTracking.js',
 	]
 ];
 

@@ -2,7 +2,7 @@
  * Module keeps list of shortcut keys and provides interface to add new ones or find existing ones.
  * It also initiates bind between key combination and function that handles it
  */
-define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions'], function (Mousetrap, mw, PageActions) {
+define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions', 'GlobalShortcutsTracking'], function (Mousetrap, mw, PageActions, tracker) {
 	'use strict';
 
 	var all = {},
@@ -12,6 +12,7 @@ define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions'], function (Mousetra
 		console.log('Installing shortcut "' + key + '" for ' + actionId);
 		Mousetrap.bind(key,function () {
 			console.log('Triggered shortcut "' + key + '" for ' + actionId);
+			tracker.trackKey(actionId);
 			PageActions.find(actionId).execute();
 		});
 	}

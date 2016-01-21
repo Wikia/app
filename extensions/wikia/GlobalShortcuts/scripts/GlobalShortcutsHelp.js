@@ -1,12 +1,14 @@
 define('GlobalShortcutsHelp',
-	['mw', 'wikia.nirvana', 'wikia.mustache', 'GlobalShortcuts', 'PageActions'],
-	function (mw, nirvana, mustache, GlobalShortcuts, PageActions) {
+	['mw', 'wikia.nirvana', 'wikia.mustache', 'GlobalShortcuts', 'PageActions', 'GlobalShortcutsTracking'],
+	function (mw, nirvana, mustache, GlobalShortcuts, PageActions, tracker) {
 		'use strict';
 
 		var modalConfig,
 			templates = {};
 
 		function open() {
+			tracker.trackClick('help:Keyboard');
+
 			$.when(
 				loadTemplates()
 			).done(handleRequestsForModal);
