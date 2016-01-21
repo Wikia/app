@@ -3205,10 +3205,10 @@ class PoolWorkArticleView extends PoolCounterWork {
 		if ( !empty($text) &&
 			 in_array ( $this->page->getTitle()->getNamespace(), $wgContentNamespaces ) &&
 			 preg_match("/^\n<!-- \nNewPP/s", $this->parserOutput->mText) === 1 ) {
-
-			\Wikia\Logger\WikiaLogger::instance()->error(
-				__METHOD__ . ' empty content PLAT1355'
-			);
+			global $wgArticleAsJson;
+			\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' empty content PLAT1355', [
+				'wgArticleAsJson' => empty($wgArticleAsJson) ? 'no' : 'yes'
+			] );
 			// In addition to logging, do this quick hack/fix for blank pages
 			$this->cacheable = false;
 		}
