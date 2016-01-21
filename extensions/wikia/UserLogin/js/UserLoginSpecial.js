@@ -5,7 +5,8 @@ $(function() {
 		formError = form.find('.error-msg'),
 		formGeneralError = form.find('.general-errors'),
 		formGeneralErrorMsg = null,
-		formUserName = form.find('input[name=username]');
+		formUserName = form.find('input[name=username]'),
+		formLoginToken = form.find('input[name=loginToken]');
 
 	$('.forgot-password').on('click', function(e) {
 		formGroup.removeClass('error');
@@ -14,7 +15,8 @@ $(function() {
 			controller: 'UserLoginSpecial',
 			method: 'mailPassword',
 			data: {
-				username: formUserName.val()
+				username: formUserName.val(),
+				token: formLoginToken.val()
 			},
 			type: 'post',
 			format: 'json',
