@@ -1,5 +1,5 @@
 <?php
-global $wgScriptPath;
+global $wgScriptPath, $wgUser;
 $badgeName = wfMsgForContent(AchConfig::getInstance()->getBadgeNameKey($type_id));
 $badgeAwardedFor = wfMsgForContent(AchConfig::getInstance()->getBadgeDescKey($type_id));
 $badgeHowToEarn = wfMsgForContent(AchConfig::getInstance()->getBadgeToGetKey($type_id));
@@ -7,6 +7,7 @@ $badgeHowToEarn = wfMsgForContent(AchConfig::getInstance()->getBadgeToGetKey($ty
 <form class="clearfix" action="<?=$wgScriptPath;?>/index.php?action=ajax&amp;rs=AchAjax&amp;method=editPlatinumBadge" method="POST" onsubmit="return SpecialCustomizePlatinum.editSubmit(this);"   enctype="multipart/form-data">
 	<fieldset class="customize-platinum-badge readonly">
 		<input type="hidden" name="type_id" value="<?= $type_id ?>"/>
+		<input type="hidden" name="token" value="<?= Sanitizer::encodeAttribute( $wgUser->getEditToken() ) ?>"/>
 		<legend>
 			<!-- toggle group -->
 			<input name="badge_name" type="text" class="dark_text_2" value="<?= $badgeName; ?>" />
