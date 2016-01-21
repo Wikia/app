@@ -237,6 +237,28 @@ class Helper extends \ContextSource {
 		return ( !empty( $currentData ) && (int)$currentData['revision_id'] === $oldid );
 	}
 
+	/**
+	 * Link for adding new section on script talk page. Prefilled with standard explanation of rejection.
+	 * @param \Title $title Title object of JS page
+	 * @param int $revisionId
+	 * @return string full link to edit page
+	 */
+	public function prepareProvideFeedbackLink( \Title $title, $revisionId = 0 ) {
+		$params = [
+			'action' => 'edit',
+			'section' => 'new',
+			'useMessage' => 'content-review-rejection-explanation',
+		];
+
+		$params['messageParams'] = [
+			1 => wfMessage( 'content-review-rejection-explanation-title' )->params( $revisionId )->escaped(),
+			2 => $title->getFullURL( "oldid={$revisionId}" ),
+			3 => $revisionId,
+		];
+
+		return $title->getTalkPage()->getFullURL( $params );
+	}
+
 	public function purgeReviewedJsPagesTimestamp() {
 		\WikiaDataAccess::cachePurge( $this->getMemcKey( self::CONTENT_REVIEW_REVIEWED_KEY ) );
 	}

@@ -107,7 +107,7 @@ class ContentReviewDiffPage extends \ContextSource {
 			'buttonApproveText' => $this->msg( 'content-review-diff-approve' )->plain(),
 			'rejectStatus' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED,
 			'buttonRejectText' => $this->msg( 'content-review-diff-reject' )->plain(),
-			'talkpageUrl' => $this->prepareProvideFeedbackLink( $this->title, $this->revisionId ),
+			'talkpageUrl' => ( new Helper() )->prepareProvideFeedbackLink( $this->title, $this->revisionId ),
 			'talkpageLinkText' => $this->msg( 'content-review-diff-toolbar-talkpage' )->plain(),
 			'guidelinesUrl' => $this->msg( 'content-review-diff-toolbar-guidelines-url' )->useDatabase( false )->plain(),
 			'guidelinesLinkText' => $this->msg( 'content-review-diff-toolbar-guidelines' )->plain(),
@@ -120,26 +120,6 @@ class ContentReviewDiffPage extends \ContextSource {
 		}
 
 		return \MustacheService::getInstance()->render( self::CONTENT_REVIEW_TOOLBAR_TEMPLATE_PATH, $params );
-	}
-
-	/**
-	 * Link for adding new section on script talk page. Prefilled with standard explanation of rejection.
-	 * @return string full link to edit page
-	 */
-	public function prepareProvideFeedbackLink() {
-		$params = [
-			'action' => 'edit',
-			'section' => 'new',
-			'useMessage' => 'content-review-rejection-explanation',
-		];
-
-		$params['messageParams'] = [
-			1 => $this->msg( 'content-review-rejection-explanation-title' )->params( $this->revisionId )->escaped(),
-			2 => $this->title->getFullURL( "oldid={$this->revisionId}" ),
-			3 => $this->revisionId,
-		];
-
-		return $this->title->getTalkPage()->getFullURL( $params );
 	}
 
 	/**
