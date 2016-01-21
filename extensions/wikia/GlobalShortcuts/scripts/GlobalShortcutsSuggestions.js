@@ -6,7 +6,12 @@ define('GlobalShortcutsSuggestions',
 		function GlobalShortcutsSuggestions( $el, closeCb ) {
 			this.$el = $el;
 			this.closeCb = closeCb;
-			this.init();
+
+			require(['devbridge.autocomplete'], $.proxy(function(Autocomplete) {
+				$.fn.suggestionsAutocomplete = Autocomplete.autocomplete;
+
+				this.init();
+			}, this));
 		}
 
 		GlobalShortcutsSuggestions.prototype.close = function() {
@@ -33,17 +38,14 @@ define('GlobalShortcutsSuggestions',
 		GlobalShortcutsSuggestions.prototype.init = function() {
 			var autocompleteReEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')',
 					'[', ']', '{', '}', '\\'].join('|\\') + ')', 'g');
-			this.$el.autocomplete2({
+
+			this.$el.suggestionsAutocomplete({
 				lookup: this.suggestions(),
 				onSelect: function(suggestion) {
-					console.log(arguments);
 					var actionId = suggestion.data.actionId;
 					this.close();
 					tracker.trackClick(actionId);
 					PageActions.find(actionId).execute();
-				}.bind(this),
-				onHide: function() {
-					//this.close();
 				}.bind(this),
 				groupBy: 'category',
 				appendTo: this.$el.parent().next(),
@@ -53,7 +55,6 @@ define('GlobalShortcutsSuggestions',
 				width: '100%',
 				preserveInput: true,
 				formatResult: function(suggestion, currentValue) {
-					//console.log(arguments);
 					var out = '',
 						pattern = '(' + currentValue.replace(autocompleteReEscape, '\\$1') + ')';
 					out += '<span class="label-in-suggestions">' +
@@ -62,14 +63,12 @@ define('GlobalShortcutsSuggestions',
 					if (suggestion.data.shortcuts) {
 						out += suggestion.data.html;
 					}
-					//console.log(out);
 					return out;
 				}.bind(this),
-				// BugId:4625 - always send the request even if previous one returned no suggestions
 				skipBadQueries: true
-			})
-			//	.autocomplete2('getSuggestions','')
-			;
+			});
+
+			this.$el.focus();
 		};
 
 		return GlobalShortcutsSuggestions;

@@ -1,13 +1,12 @@
 define('GlobalShortcutsHelp',
-	['mw', 'wikia.nirvana', 'wikia.mustache', 'wikia.throbber', 'GlobalShortcuts', 'PageActions', 'GlobalShortcutsTracking'],
-	function (mw, nirvana, mustache, throbber, GlobalShortcuts, PageActions, tracker) {
+	['mw', 'wikia.nirvana', 'wikia.mustache', 'GlobalShortcuts', 'PageActions', 'GlobalShortcutsTracking'],
+	function (mw, nirvana, mustache, GlobalShortcuts, PageActions, tracker) {
 		'use strict';
 
 		var modalConfig,
 			templates = {};
 
 		function open() {
-			throbber.cover();
 			tracker.trackClick('help:Keyboard');
 
 			$.when(
@@ -106,7 +105,6 @@ define('GlobalShortcutsHelp',
 			var dotKey = '<span class="key">.</span>';
 			/* Show the modal */
 			modalInstance.show();
-			throbber.uncover();
 			// Add footer hint
 			modalInstance.$element.find('footer')
 				.html(mw.message('template-class-global-shortcuts-press-to-explore-shortcuts', dotKey).parse());

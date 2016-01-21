@@ -73,27 +73,3 @@
 		width: 50%;
 	}
 }
-
-.global-shortcuts-help-entry-point {
-	box-sizing: content-box;
-	display: none;
-	padding: 0;
-	vertical-align: middle;
-	width: 23px;
-	background-image: url('/extensions/wikia/GlobalShortcuts/images/keyboard.svg')!important; /* inline */
-	background-size: 29px!important;
-	background-color: #fff!important;
-	background-position: 50% -12px !important;
-	border:1px solid #fff!important;
-	&:hover {
-		border-color: rgb(204, 204, 204)!important;
-	}
-}
-
-.global-shortcuts-help-entry-point-throbber {
-	display: inline-block;
-	height: 23px;
-	position: relative;
-	vertical-align: middle;
-	width: 25px;
-}

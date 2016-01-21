@@ -3329,4 +3329,75 @@ class WikiFactory {
 		$wgMemc->prefetch($keys);
 	}
 
+	/**
+	 * Renders community's value of given variable
+	 *
+	 * @access public
+	 * @static
+	 *
+	 * @param string $name name of wg variable
+	 * @param string $type type of variable ($variable->cv_variable_type)
+	 *
+	 * @return string
+	 */
+	static public function renderValueOnCommunity( $name, $type ) {
+		global $$name;
+		global $preWFValues;
+
+		$value = "";
+
+		if( isset( $preWFValues[$name] ) ) {
+			// was modified, spit out saved default
+			$value = self::parseValue( $preWFValues[$name], $type );
+		} elseif( isset( $$name ) ) {
+			// was not modified, spit out actual value
+			$value = self::parseValue( $$name, $type );
+		}
+		return htmlspecialchars( $value );
+	}
+
+	/**
+	 * Renders wg variable
+	 *
+	 * @access public
+	 * @static
+	 *
+	 * @param object $variable parameter passed to variable.tmpl.php
+	 *
+	 * @return string
+	 */
+	static public function renderValue( $variable ) {
+		if ( !isset( $variable->cv_value ) ) {
+			return "";
+		}
+		$value = self::parseValue( unserialize( $variable->cv_value ), $variable->cv_variable_type );
+		return htmlspecialchars( $value );
+	}
+
+	/**
+	 * Returns printable value based on type
+	 *
+	 * @access private
+	 * @static
+	 *
+	 * @param mixed  $value
+	 * @param string $type
+	 *
+	 * @return string
+	 */
+	static private function parseValue( $value, $type ) {
+		if ( $type == "string" || $type == "integer"  ) {
+			return $value;
+		}
+
+		if ( $type == "array" ) {
+			$json = json_encode ( $value );
+			if ( !preg_match_all( "/\".*\":/U", $json ) ) {
+				return $json;
+			}
+		}
+
+		return var_export( $value, true );
+	}
+
 };

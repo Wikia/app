@@ -10,6 +10,7 @@ class Hooks {
 		$hooks = new self();
 		\Hooks::register( 'BeforePageDisplay', [ $hooks, 'onBeforePageDisplay' ] );
 		\Hooks::register( 'MakeGlobalVariablesScript', [ $hooks, 'onMakeGlobalVariablesScript' ] );
+		\Hooks::register( 'BeforeToolbarMenu', [ $hooks, 'onBeforeToolbarMenu' ] );
 	}
 
 
@@ -22,12 +23,17 @@ class Hooks {
 	 * @return true
 	 */
 	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		global $wgEnableDiscussion;
-		if ( !empty( $wgEnableDiscussion ) ) {
-			\Wikia::addAssetsToOutput( 'globalshortcuts_discussions_js' );
+		global $wgEnableDiscussion, $wgEnableGlobalShortcutsExt;
+
+		if ( !empty( $wgEnableGlobalShortcutsExt ) ) {
+			if ( !empty( $wgEnableDiscussion ) ) {
+				\Wikia::addAssetsToOutput( 'globalshortcuts_discussions_js' );
+			}
+
+			\Wikia::addAssetsToOutput( 'globalshortcuts_js' );
+			\Wikia::addAssetsToOutput( 'globalshortcuts_scss' );
 		}
-		\Wikia::addAssetsToOutput( 'globalshortcuts_js' );
-		\Wikia::addAssetsToOutput( 'globalshortcuts_scss' );
+
 		return true;
 	}
 
@@ -48,9 +54,27 @@ class Hooks {
 		return true;
 	}
 
-	public function onWikiaHeaderButtons( &$buttons ) {
-		$buttons[] = \F::app()->renderView( 'GlobalShortcuts', 'renderHelpEntryPoint' );
+	public function onBeforeToolbarMenu( &$items ) {
+		global $wgEnableGlobalShortcutsExt;
+		$user = \RequestContext::getMain()->getUser();
+
+		if ( $user->isLoggedIn() && !empty( $wgEnableGlobalShortcutsExt ) ) {
+			$html = \HTML::rawElement(
+				'a',
+				[
+					'href' => '#',
+					'class' => 'global-shortcuts-help-entry-point',
+					'title' => wfMessage( 'global-shortcuts-title-help-entry-point' )->escaped()
+				],
+				wfMessage( 'global-shortcuts-name' )->escaped()
+			);
+
+			$items[] = [
+				'type' => 'html',
+				'html' => $html
+			];
+		}
+
 		return true;
 	}
-
 }

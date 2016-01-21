@@ -427,9 +427,10 @@ class DataMartService extends Service {
 		$date = date( 'Y-m-d' ) . ' 00:00:01';
 		do {
 			$date = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-				->SELECT( 'max(time_id) as t' )
+				->SELECT( 'time_id as t' )
 				->FROM( 'rollup_wiki_article_pageviews' )
 				->WHERE( 'time_id' )->LESS_THAN( $date )
+				->ORDER_BY( 'time_id' )->DESC()
 				->LIMIT( 1 )
 				->cache( self::CACHE_TOP_ARTICLES )
 				->run( $db, function ( ResultWrapper $result ) {

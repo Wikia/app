@@ -63,7 +63,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 					return [
 						{
 							key: 'rpflKey',
-							values: ['1_tier', '3_tier']
+							values: mocks.tiers
 						},
 						{
 							key: 'rpfl_elemid',
@@ -72,6 +72,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 					];
 				}
 			},
+			tiers: [],
 			win: {
 				rubicontag: {
 					cmd: [],
@@ -114,9 +115,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		mocks.opts = {
 			rubiconFastlaneOnAllVerticals: false
 		};
-		mocks.adLogicZoneParams.getSite = function () {
-			return 'life';
-		};
+		mocks.tiers = ['1_tier', '3_tier'];
 		slotParams = {};
 	});
 
@@ -205,6 +204,18 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		});
 	});
 
+	it('Returns parameters list on defined slot with sorted values', function () {
+		var rubiconFastlane = getRubiconFastlane();
+		mocks.tiers = ['10_tier', '9_tier', '13_tier', '4_tier'];
+		mocks.targeting.skin = 'mercury';
+
+		rubiconFastlane.call();
+
+		expect(rubiconFastlane.getSlotParams('MOBILE_TOP_LEADERBOARD')).toEqual({
+			rpflKey: ['4_tier', '9_tier', '10_tier', '13_tier']
+		});
+	});
+
 	it('Sets FPI.src to mobile on mercury', function () {
 		var rubiconFastlane = getRubiconFastlane();
 		mocks.targeting.skin = 'mercury';
@@ -251,107 +262,5 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		expect(slotParams.s2).toEqual('article');
 		expect(slotParams.lang).toEqual('en');
 		expect(slotParams.passback).toEqual('fastlane');
-	});
-
-	it('Fastlane should be enabled for life wiki with rubiconFastlaneOnAllVerticals=0 on Oasis', function () {
-		var rubiconFastlane = getRubiconFastlane();
-		mocks.targeting.skin = 'oasis';
-
-		rubiconFastlane.call();
-
-		expect(rubiconFastlane.wasCalled()).toEqual(true);
-	});
-
-	it('Fastlane should be enabled for life wiki with rubiconFastlaneOnAllVerticals=1 on Oasis', function () {
-		mocks.opts = {
-			rubiconFastlaneOnAllVerticals: true
-		};
-
-		var rubiconFastlane = getRubiconFastlane();
-		mocks.targeting.skin = 'oasis';
-
-		rubiconFastlane.call();
-
-		expect(rubiconFastlane.wasCalled()).toEqual(true);
-	});
-
-	it('Fastlane should be disabled for non-life wiki with rubiconFastlaneOnAllVerticals=0 on Oasis', function () {
-		mocks.adLogicZoneParams.getSite = function () {
-			return 'ent';
-		};
-
-		var rubiconFastlane = getRubiconFastlane();
-		mocks.targeting.skin = 'oasis';
-
-		rubiconFastlane.call();
-
-		expect(rubiconFastlane.wasCalled()).toEqual(false);
-	});
-
-	it('Fastlane should be enabled for non-life wiki with rubiconFastlaneOnAllVerticals=1 on Oasis', function () {
-		mocks.opts = {
-			rubiconFastlaneOnAllVerticals: true
-		};
-		mocks.adLogicZoneParams.getSite = function () {
-			return 'ent';
-		};
-
-		var rubiconFastlane = getRubiconFastlane();
-		mocks.targeting.skin = 'oasis';
-
-		rubiconFastlane.call();
-
-		expect(rubiconFastlane.wasCalled()).toEqual(true);
-	});
-
-	it('Fastlane should be enabled for life wiki with rubiconFastlaneOnAllVerticals=0 on Mercury', function () {
-		var rubiconFastlane = getRubiconFastlane();
-		mocks.targeting.skin = 'mercury';
-
-		rubiconFastlane.call();
-
-		expect(rubiconFastlane.wasCalled()).toEqual(true);
-	});
-
-	it('Fastlane should be enabled for life wiki with rubiconFastlaneOnAllVerticals=1 on Mercury', function () {
-		mocks.opts = {
-			rubiconFastlaneOnAllVerticals: true
-		};
-
-		var rubiconFastlane = getRubiconFastlane();
-		mocks.targeting.skin = 'mercury';
-
-		rubiconFastlane.call();
-
-		expect(rubiconFastlane.wasCalled()).toEqual(true);
-	});
-
-	it('Fastlane should be disabled for non-life wiki with rubiconFastlaneOnAllVerticals=0 on Mercury', function () {
-		mocks.adLogicZoneParams.getSite = function () {
-			return 'ent';
-		};
-
-		var rubiconFastlane = getRubiconFastlane();
-		mocks.targeting.skin = 'mercury';
-
-		rubiconFastlane.call();
-
-		expect(rubiconFastlane.wasCalled()).toEqual(false);
-	});
-
-	it('Fastlane should be enabled for non-life wiki with rubiconFastlaneOnAllVerticals=1 on Mercury', function () {
-		mocks.opts = {
-			rubiconFastlaneOnAllVerticals: true
-		};
-		mocks.adLogicZoneParams.getSite = function () {
-			return 'ent';
-		};
-
-		var rubiconFastlane = getRubiconFastlane();
-		mocks.targeting.skin = 'mercury';
-
-		rubiconFastlane.call();
-
-		expect(rubiconFastlane.wasCalled()).toEqual(true);
 	});
 });

@@ -207,7 +207,10 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 *                             a valid edit token.
 	 */
 	public function checkWriteRequest() {
-		$this->request->isValidWriteRequest( $this->wg->User );
+		// skip internal requests, write access should be checked when direct user interaction happen
+		if ( !$this->request->isInternal() ) {
+			$this->request->isValidWriteRequest( $this->wg->User );
+		}
 	}
 
 	protected function setTokenMismatchError() {

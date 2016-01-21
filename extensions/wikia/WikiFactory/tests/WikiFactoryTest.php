@@ -144,4 +144,70 @@ class WikiFactoryTest extends WikiaBaseTest {
 			]
 		];
 	}
+
+	public function testRenderValueOfVariableWithoutValue() {
+		$variable = new stdClass();
+
+		$this->assertEquals( "", WikiFactory::renderValue( $variable ) );
+	}
+
+	public function testRenderValueOfStringVariable() {
+		$variable = new stdClass();
+		$variable->cv_value = serialize( "foo" );
+		$variable->cv_variable_type = "string";
+
+		$this->assertEquals( "foo", WikiFactory::renderValue( $variable ) );
+	}
+
+	public function testRenderValueOfIntegerVariable() {
+		$variable = new stdClass();
+		$variable->cv_value = serialize( 15 );
+		$variable->cv_variable_type = "integer";
+
+		$this->assertEquals( 15, WikiFactory::renderValue( $variable ) );
+	}
+
+	public function testRenderValueOfFloatVariable() {
+		$variable = new stdClass();
+		$variable->cv_value = serialize( 5.234 );
+		$variable->cv_variable_type = "float";
+
+		$this->assertEquals( 5.234, WikiFactory::renderValue( $variable ) );
+	}
+
+	public function testRenderValueOfArrayVariable() {
+		$variable = new stdClass();
+		$variable->cv_value = serialize( array( "a", "b", "c" ) );
+		$variable->cv_variable_type = "array";
+
+		$this->assertEquals( '[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]', WikiFactory::renderValue( $variable ) );
+	}
+
+	public function testRenderValueOfAssociativeArrayVariable() {
+		$variable = new stdClass();
+		$variable->cv_value = serialize( array( "foo" => "bar", "0" => "c" ) );
+		$variable->cv_variable_type = "array";
+		$expectedRender = <<<EOT
+array (
+  'foo' =&gt; 'bar',
+  0 =&gt; 'c',
+)
+EOT;
+
+		$this->assertEquals( $expectedRender, WikiFactory::renderValue( $variable ) );
+	}
+
+	public function testRenderValueOfAssociativeArrayVariable2() {
+		$variable = new stdClass();
+		$variable->cv_value = serialize( array( 1 => "foo", 15 => "bar" ) );
+		$variable->cv_variable_type = "array";
+		$expectedRender = <<<EOT
+array (
+  1 =&gt; 'foo',
+  15 =&gt; 'bar',
+)
+EOT;
+
+		$this->assertEquals( $expectedRender, WikiFactory::renderValue( $variable ) );
+	}
 }

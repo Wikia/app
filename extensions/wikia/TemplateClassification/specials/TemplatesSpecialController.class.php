@@ -1,8 +1,5 @@
 <?php
 
-use Wikia\ContentReview\ContentReviewStatusesService;
-use Wikia\ContentReview\Helper;
-
 class TemplatesSpecialController extends WikiaSpecialPageController {
 
 	const ITEMS_PER_PAGE = 20;
@@ -201,6 +198,12 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 			$template['wlh'] = SpecialPage::getTitleFor( 'Whatlinkshere', $title->getPrefixedText() )->getLocalURL();
 			$template['revision'] = $this->getRevisionData( $title );
 			$template['count'] = $this->wg->Lang->formatNum( $template['count'] );
+
+			if ( ( new UserTemplateClassificationService() )->isInfoboxType( $this->type ) ) {
+				$template['subgroup'] = !empty( PortableInfoboxDataService::newFromTitle( $title )->getData() ) ?
+					wfMessage( 'special-templates-portable-infobox' )->escaped() :
+					wfMessage( 'special-templates-non-portable-infobox' )->escaped();
+			}
 		}
 
 		return $template;

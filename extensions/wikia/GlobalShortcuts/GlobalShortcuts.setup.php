@@ -32,8 +32,6 @@ $wgAutoloadClasses['GlobalShortcutsController'] = __DIR__ . '/GlobalShortcutsCon
 $wgAutoloadClasses['Wikia\GlobalShortcuts\Hooks'] = __DIR__ . '/GlobalShortcuts.hooks.php';
 $wgExtensionFunctions[] = 'Wikia\GlobalShortcuts\Hooks::register';
 
-$wgHooks['WikiaHeaderButtons'][] = 'Wikia\\GlobalShortcuts\\Hooks::onWikiaHeaderButtons';
-
 /**
  * Helper
  */

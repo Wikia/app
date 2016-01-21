@@ -92,7 +92,7 @@
 	  	border-bottom: 1px solid #bbbbbb;
 	}
 
-	.autocomplete2-suggestions {
+	.autocomplete-suggestions {
 		box-sizing: border-box;
 		overflow-y: auto;
 		padding-right: 8px;
@@ -102,11 +102,11 @@
 			font-weight: bold;
 		}
 	}
-	.autocomplete2-group {
+	.autocomplete-group {
 		margin: 20px 0 15px 0;
 		padding: 4px 4px;
 	}
-	.autocomplete2-suggestion {
+	.autocomplete-suggestion {
 		cursor: pointer;
 		border: 0;
 		box-shadow: none;
@@ -114,7 +114,7 @@
 		font-size: 14px;
 		line-height: 25px;
 	}
-	.autocomplete2-selected {
+	.autocomplete-selected {
 		background-color: $color-menu-highlight;
 	}
 

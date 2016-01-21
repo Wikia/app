@@ -40,12 +40,6 @@ $messages = array_merge( $messages, array(
 
 'tog-enableuserjs' => 'Autorizar JavaScript pessoal ([[Ajuda:CSS_e_JS_pessoal|Saiba mais]])',
 
-'recentchanges-on-wikia-title' => 'Mudanças recentes na Wikia',
-'recentchanges-on-wikia-content' => "Introduzindo tipos de predefinições — organize suas predefinições pelo tipo para [[Special:Templates|gerenciamento de predefinição]] torná-las mais simples e para melhorar como são exibidas em celulares. [[Ajuda:Tipos de predefinição|Saiba mais]] ou '''[[Special:Insights/predefiniçõessemtipo|Comece agora!]]'''
-
-Imagens com guias e grupos flexíveis estão disponíveis agora para [[Ajuda:Infobox|Infoboxes móveis]].
-
-O seu conteúdo é móvel? Saiba mais sobre conteúdo em [[w:c:portability|Portability.wikia.com]].",
 'group-content-moderator' => 'Moderadores de conteúdo',
 'group-content-moderator-member' => 'Moderador de conteúdo',
 ) );
