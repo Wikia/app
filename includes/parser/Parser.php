@@ -441,7 +441,7 @@ class Parser {
 		wfRunHooks( 'ParserBeforeTidy', array( &$this, &$text ) );
 		$lengthAfterBeforeTidy = strlen( $text );
 		if ( $lengthBeforeBeforeTidy !== $lengthAfterBeforeTidy ) {
-			\Wikia\Logger\WikiaLogger::instance()->error( 'PLATFORM-1355-ParserBeforeTidy', [
+			\Wikia\Logger\WikiaLogger::instance()->info( 'PLATFORM-1355-ParserBeforeTidy', [
 				'lengthBeforeBeforeTidy' => $lengthBeforeBeforeTidy,
 				'lengthAfterBeforeTidy' => $lengthAfterBeforeTidy
 			] );
@@ -490,7 +490,7 @@ class Parser {
 		wfRunHooks( 'ParserAfterTidy', array( &$this, &$text ) );
 		$lengthAfterAfterTidy = strlen( $text );
 		if ( $lengthBeforeAfterTidy !== $lengthAfterAfterTidy ) {
-			\Wikia\Logger\WikiaLogger::instance()->error( 'PLATFORM-1355-ParserAfterTidy', [
+			\Wikia\Logger\WikiaLogger::instance()->info( 'PLATFORM-1355-ParserAfterTidy', [
 				'lengthBeforeAfterTidy' => $lengthBeforeAfterTidy,
 				'lengthAfterAfterTidy' => $lengthAfterAfterTidy
 			] );
