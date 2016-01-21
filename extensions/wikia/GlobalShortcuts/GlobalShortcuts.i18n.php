@@ -2,6 +2,7 @@
 $messages['en'] = array(
 	'global-shortcuts-name' => 'Shortcuts',
 	'global-shortcuts-category-current-page' => 'Current page',
+	'global-shortcuts-title-help-entry-point' => 'Open keyboard shortcuts help dialog (?)',
 );
 
 $messages['qqq'] = array(
