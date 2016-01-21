@@ -27,7 +27,7 @@ define(
 
 		function removeCompletedAndUpdateLogs() {
 			var	$button = $(this),
-				$parent = $($button.parent()),
+				$parent = $button.parent(),
 				data = {
 					wikiId: parseInt($parent.data('wiki-id')),
 					pageId: parseInt($parent.data('page-id')),
@@ -41,8 +41,7 @@ define(
 		}
 
 		function escalateReview() {
-			var	$button = $(this),
-				$parent = $($button.parent()),
+			var	$parent = $(this).parent(),
 				data = {
 					wikiId: parseInt($parent.data('wiki-id')),
 					pageId: parseInt($parent.data('page-id')),

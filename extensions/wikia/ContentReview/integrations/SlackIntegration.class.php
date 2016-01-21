@@ -1,11 +1,10 @@
-<?
+<?php
 
 namespace Wikia\ContentReview\Integrations;
 
 class SlackIntegration {
 
-	private
-		$webhook;
+	private $webhook;
 
 	function __construct() {
 		global $wgContentReviewSlackWebhook;

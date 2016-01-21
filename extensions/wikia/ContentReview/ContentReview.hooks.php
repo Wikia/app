@@ -141,7 +141,7 @@ class Hooks {
 		$title = $output->getTitle();
 		$diffPage = new ContentReviewDiffPage( $title );
 
-		if ( $diffPage->initReviewerToolbar() ) {
+		if ( $diffPage->shouldDisplayToolbar() ) {
 			$diffPage->addToolbarToOutput( $output );
 		}
 

@@ -14,7 +14,6 @@ class ContentReviewDiffPage extends \ContextSource {
 		$revisionId,
 		$status,
 		$title,
-		$toolbarHtml,
 		$wikiId;
 
 	public function __construct( \Title $title ) {
@@ -27,49 +26,21 @@ class ContentReviewDiffPage extends \ContextSource {
 	}
 
 	/**
-	 * Tries to initiate and render the toolbar. Triggers checks if for conditions
-	 * for displaying the toolbar being fulfilled. If not - it returns false.
-	 * Sets toolbarHtml, prepares assets and returns true otherwise.
-	 * @return bool
-	 */
-	public function initReviewerToolbar() {
-		if ( $this->shouldDisplayToolbar() ) {
-			$this->toolbarHtml = $this->renderToolbar();
-			$this->prepareAssets();
-			return true;
-		}
-		return false;
-	}
-
-	/**
 	 * Prepends a rendered toolbar to a given output.
 	 * @param \OutputPage $outputPage
 	 */
 	public function addToolbarToOutput( \OutputPage $outputPage ) {
-		if ( isset( $this->toolbarHtml ) ) {
-			$outputPage->prependHTML( $this->toolbarHtml );
-		}
-	}
+		$this->prepareAssets();
 
-	/**
-	 * Returns an ID of a revision that is currently being reviewed. It is either a value of
-	 * `diff` URL parameter or `oldid` if `diff` is not present.
-	 * @return null|int
-	 */
-	private function getCurrentlyReviewedRevisionId() {
-		$request = $this->getRequest();
-		$revisionId = $request->getInt( 'diff' );
-		if ( $revisionId === 0 ) {
-			$revisionId = $request->getInt( 'oldid' );
-		}
-		return $revisionId;
+		$toolbarHtml = $this->renderToolbar();
+		$outputPage->prependHTML( $toolbarHtml );
 	}
 
 	/**
 	 * Runs all conditions to check if a reviewer's toolbar should be displayed for the context page.
 	 * @return bool
 	 */
-	private function shouldDisplayToolbar() {
+	public function shouldDisplayToolbar() {
 		if ( $this->revisionId !== 0
 			&& $this->getRequest()->getBool( Helper::CONTENT_REVIEW_PARAM )
 			&& $this->title->inNamespace( NS_MEDIAWIKI )
@@ -109,29 +80,43 @@ class ContentReviewDiffPage extends \ContextSource {
 	}
 
 	/**
+	 * Returns an ID of a revision that is currently being reviewed. It is either a value of
+	 * `diff` URL parameter or `oldid` if `diff` is not present.
+	 * @return null|int
+	 */
+	private function getCurrentlyReviewedRevisionId() {
+		$request = $this->getRequest();
+		$revisionId = $request->getInt( 'diff' );
+		if ( $revisionId === 0 ) {
+			$revisionId = $request->getInt( 'oldid' );
+		}
+		return $revisionId;
+	}
+
+	/**
 	 * Returns an HTML with a toolbar displayed to reviewers.
 	 * @return string
 	 * @throws \Exception
 	 */
 	private function renderToolbar() {
 		$params = [
-			'toolbarTitle' => wfMessage( 'content-review-diff-toolbar-title' )->plain(),
+			'toolbarTitle' => $this->msg( 'content-review-diff-toolbar-title' )->plain(),
 			'wikiId' => $this->wikiId,
 			'pageId' => $this->pageId,
 			'approveStatus' => ReviewModel::CONTENT_REVIEW_STATUS_APPROVED,
-			'buttonApproveText' => wfMessage( 'content-review-diff-approve' )->plain(),
+			'buttonApproveText' => $this->msg( 'content-review-diff-approve' )->plain(),
 			'rejectStatus' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED,
-			'buttonRejectText' => wfMessage( 'content-review-diff-reject' )->plain(),
+			'buttonRejectText' => $this->msg( 'content-review-diff-reject' )->plain(),
 			'talkpageUrl' => $this->prepareProvideFeedbackLink( $this->title, $this->revisionId ),
-			'talkpageLinkText' => wfMessage( 'content-review-diff-toolbar-talkpage' )->plain(),
-			'guidelinesUrl' => wfMessage( 'content-review-diff-toolbar-guidelines-url' )->useDatabase( false )->plain(),
-			'guidelinesLinkText' => wfMessage( 'content-review-diff-toolbar-guidelines' )->plain(),
+			'talkpageLinkText' => $this->msg( 'content-review-diff-toolbar-talkpage' )->plain(),
+			'guidelinesUrl' => $this->msg( 'content-review-diff-toolbar-guidelines-url' )->useDatabase( false )->plain(),
+			'guidelinesLinkText' => $this->msg( 'content-review-diff-toolbar-guidelines' )->plain(),
 		];
 
 		if ( $this->escalated ) {
-			$params['escalatedTitle'] = wfMessage( 'content-review-diff-revision-escalated' )->plain();
+			$params['escalatedTitle'] = $this->msg( 'content-review-diff-revision-escalated' )->plain();
 		} else {
-			$params['buttonEscalateText'] = wfMessage( 'content-review-diff-escalate' )->plain();
+			$params['buttonEscalateText'] = $this->msg( 'content-review-diff-escalate' )->plain();
 		}
 
 		return \MustacheService::getInstance()->render( self::CONTENT_REVIEW_TOOLBAR_TEMPLATE_PATH, $params );
@@ -149,7 +134,7 @@ class ContentReviewDiffPage extends \ContextSource {
 		];
 
 		$params['messageParams'] = [
-			1 => wfMessage( 'content-review-rejection-explanation-title' )->params( $this->revisionId )->escaped(),
+			1 => $this->msg( 'content-review-rejection-explanation-title' )->params( $this->revisionId )->escaped(),
 			2 => $this->title->getFullURL( "oldid={$this->revisionId}" ),
 			3 => $this->revisionId,
 		];
