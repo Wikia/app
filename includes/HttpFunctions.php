@@ -481,7 +481,8 @@ class MWHttpRequest {
 		}
 
 		if ( is_object( $wgTitle ) && !isset( $this->reqHeaders['Referer'] ) ) {
-			$this->setReferer( wfExpandUrl( $wgTitle->getFullURL(), PROTO_CURRENT ) );
+			$referer = ( $wgTitle->isLocal() ) ? $wgTitle->getFullURL() : $_SERVER['REQUEST_URI'];
+			$this->setReferer( wfExpandUrl( $referer, PROTO_CURRENT ) );
 		}
 
 		if ( !$this->noProxy ) {
