@@ -60,13 +60,9 @@ class Result extends ReadWrite {
 	public function getText( $field = 'text', $wordLimit = null ) {
 		$text = isset( $this->_fields[$field] ) ? $this->_fields[$field] : '';
 		$textAsString = is_array( $text ) ? implode( " ", $text ) : $text;
-		if ( $wordLimit !== null ) {
-			$wordsExploded = explode( ' ', $textAsString );
-			$textAsString = implode( ' ', array_slice( $wordsExploded, 0, $wordLimit ) );
-			if ( count( $wordsExploded ) > $wordLimit ) {
-				$textAsString = $this->fixSnippeting( $textAsString, true );
-			}
-		}
+
+		$textAsString = $this->limitTextLength( $textAsString, $wordLimit );
+
 		// if title and description both start with the same File: prefix, remove the prefix from description
 		$textAsString = $this->removePrefix($this->findFilePrefix($this->getTitle(false)), $textAsString);
 		return $textAsString;
@@ -348,5 +344,23 @@ class Result extends ReadWrite {
 	        # Yes, leave it escaped
 	        return $matches[0];
 	    }
+	}
+
+	/**
+	 * @param $textAsString
+	 * @param $wordLimit
+	 * @return mixed|string
+	 */
+	public function limitTextLength( $textAsString, $wordLimit ) {
+		if ( $wordLimit !== null ) {
+			$wordsExploded = explode( ' ', $textAsString );
+			$textAsString = implode( ' ', array_slice( $wordsExploded, 0, $wordLimit ) );
+			if ( count( $wordsExploded ) > $wordLimit ) {
+				$textAsString = $this->fixSnippeting( $textAsString, true );
+				return $textAsString;
+			}
+			return $textAsString;
+		}
+		return $textAsString;
 	}
 }

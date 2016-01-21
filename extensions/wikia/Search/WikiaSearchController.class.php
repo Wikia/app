@@ -4,6 +4,7 @@
  */
 
 use \Wikia\Logger\WikiaLogger;
+use \Wikia\Search\Result\ResultHelper;
 
 /**
  * Responsible for handling search requests.
@@ -711,7 +712,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$matchResult['onWikiMatch'] = true;
 			$this->setVal(
 					'wikiMatch',
-					$this->getApp()->getView( 'WikiaSearch', 'exactResult', \Wikia\Search\Result\ResultHelper::extendResult($matchResult, 'wiki', 16) )
+					$this->getApp()->getView( 'WikiaSearch', 'exactResult', ResultHelper::extendResult($matchResult, 'wiki', ResultHelper::MAX_WORD_COUNT_EXACT_MATCH) )
 					);
 			$this->resultsFound++;
 		}

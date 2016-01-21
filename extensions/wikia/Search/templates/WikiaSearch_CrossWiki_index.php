@@ -31,7 +31,12 @@
 					foreach ($results as $result) {
 						$pos++;
 						echo $app->getView('WikiaSearch', 'CrossWiki_result',
-							\Wikia\Search\Result\ResultHelper::extendResult($result, $pos + (($currentPage - 1) * $resultsPerPage), 60));
+							\Wikia\Search\Result\ResultHelper::extendResult(
+								$result,
+								$pos + (($currentPage - 1) * $resultsPerPage),
+								\Wikia\Search\Result\ResultHelper::MAX_WORD_COUNT_XWIKI_RESULT
+							)
+						);
 					}
 					?>
 				</ul>

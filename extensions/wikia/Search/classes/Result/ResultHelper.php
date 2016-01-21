@@ -2,22 +2,39 @@
 namespace Wikia\Search\Result;
 
 use Wikia\Search\MediaWikiService, Wikia\Search\Utilities, CommunityDataService, ImagesService, WikiaSearchController, PromoImage;
-class ResultHelper {
 
-	public static function extendResult($result, $pos, $descWordLimit) {
+class ResultHelper {
+	const MAX_WORD_COUNT_EXACT_MATCH = 16;
+	const MAX_WORD_COUNT_XWIKI_RESULT = 60;
+
+	/**
+	 * Extends search result with additional data from outside search index, like description and image
+	 *
+	 * @param $result
+	 * @param $pos
+	 * @param $descWordLimit
+	 * @return array
+	 */
+	public static function extendResult( $result, $pos, $descWordLimit ) {
 
 		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-thumb"';
 
-		$commData = new CommunityDataService($result['id']);
-		$imageURL = ImagesService::getImageSrc($result['id'], $commData->getCommunityImageId(),
-			WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_WIDTH, WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT )['src'];
+		$commData = new CommunityDataService( $result['id'] );
+		$imageURL = ImagesService::getImageSrc(
+			$result['id'],
+			$commData->getCommunityImageId(),
+			WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_WIDTH,
+			WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT )['src'];
 
 		//Fallback: if Curated Mainpage is inaccessible, try to use Special:Promote
 		//TODO: Remove after DAT-3642 is done
-		if (empty($imageURL)) {
-			$imageFileName = PromoImage::fromPathname($result['image_s'])->ensureCityIdIsSet($result['id'])->getPathname();
-			$imageURL = ImagesService::getImageSrcByTitle( (new \CityVisualization)->getTargetWikiId( $result['lang_s'] ), $imageFileName,
-						WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_WIDTH, WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT );
+		if ( empty( $imageURL ) ) {
+			$imageFileName = PromoImage::fromPathname( $result['image_s'] )->ensureCityIdIsSet( $result['id'] )->getPathname();
+			$imageURL = ImagesService::getImageSrcByTitle(
+				( new \CityVisualization )->getTargetWikiId( $result['lang_s'] ),
+				$imageFileName,
+				WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_WIDTH,
+				WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT );
 		}//TODO: end
 
 		if ( empty( $imageURL ) ) {
@@ -26,8 +43,8 @@ class ResultHelper {
 			$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-no-thumb"';
 		}
 
-		$description = ResultHelper::limitTextLength($commData->getCommunityDescription(), $descWordLimit);
-		$description = !empty($description)
+		$description = $result->limitTextLength( $commData->getCommunityDescription(), $descWordLimit );
+		$description = !empty( $description )
 			? $description
 			: $result->getText( Utilities::field( 'description' ), $descWordLimit );
 
@@ -46,16 +63,5 @@ class ResultHelper {
 			'hub' => $result->getHub(),
 			'pos' => $pos
 		];
-	}
-
-	public static function limitTextLength($text, $wordLimit = null) {
-		$textAsString = is_array( $text ) ? implode( " ", $text ) : $text;
-		$wordsExploded = explode( ' ', $textAsString );
-		if ($wordLimit == null && count($wordsExploded) > $wordLimit) {
-			$textLimited = implode( ' ', array_slice( $wordsExploded, 0, $wordLimit ) );
-			$textLimited .= "...";
-			return $textLimited;
-		}
-		return $text;
 	}
 }
