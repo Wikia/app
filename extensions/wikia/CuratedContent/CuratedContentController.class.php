@@ -499,8 +499,7 @@ class CuratedContentController extends WikiaController {
 			if ( !empty( $errors ) ) {
 				$this->response->setVal( 'errors', $errors );
 			} else {
-				$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $wgCityId, $sections );
-				wfWaitForSlaves();
+				$status = ( new CommunityDataService( $wgCityId ) )->setCuratedContent( $sections );
 
 				if ( !empty( $status ) ) {
 					wfRunHooks( 'CuratedContentSave', [ $sections ] );
@@ -560,7 +559,7 @@ class CuratedContentController extends WikiaController {
 
 	private function getCuratedContentForWiki( $wikiID ) {
 		$curatedContent = [ ];
-		$value = WikiFactory::getVarValueByName( 'wgWikiaCuratedContent', $wikiID );
+		$value = ( new CommunityDataService( $wikiID ) )->getCuratedContent( true );
 		$curatedContent[ 'sections' ] = $this->getSections( $value );
 		$curatedContent[ 'optional' ] = $this->getSectionItems( $value, '' );
 		$curatedContent[ 'featured' ] = $this->getFeaturedSection( $value );
