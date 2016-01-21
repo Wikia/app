@@ -43,17 +43,6 @@ require(['GlobalShortcuts', 'PageActions'],
 					},
 					category: 'Help'
 				}
-			},
-			'wikia:Search': {
-				shortcuts: ['g s', '/'],
-				actionParams: {
-					id: 'wikia:Search',
-					caption: 'Search for a page',
-					fn: function () {
-						$('#searchInput')[0].focus();
-					},
-					category: 'Current wikia'
-				}
 			}
 		};
 
