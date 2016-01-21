@@ -29,7 +29,7 @@ class CuratedContentToGameGuidesRegressionTest extends WikiaBaseTest {
 					'curated' =>
 						[
 							[
-								'title' => 'awfaw',
+								'label' => 'awfaw',
 								'image_id' => 7,
 								'items' =>
 									[
@@ -67,7 +67,7 @@ class CuratedContentToGameGuidesRegressionTest extends WikiaBaseTest {
 									],
 							],
 							[
-								'title' => '',
+								'label' => '',
 								'image_id' => 0,
 								'items' =>
 									[
@@ -84,7 +84,7 @@ class CuratedContentToGameGuidesRegressionTest extends WikiaBaseTest {
 						],
 					'featured' =>
 						[
-							'title' => 'features',
+							'label' => 'features',
 							'image_id' => 2344,
 							'items' =>
 								[
@@ -100,7 +100,7 @@ class CuratedContentToGameGuidesRegressionTest extends WikiaBaseTest {
 						],
 					'optional' =>
 						[
-							'title' => '',
+							'label' => '',
 							'image_id' => 0,
 							'items' => [ ],
 						]
