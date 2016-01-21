@@ -6,7 +6,7 @@ var UploadPhotos = {
 	status: false,
 	libinit: false,
 	init: function() {
-		$(".mw-special-Newimages").on('click', '.upphotos', $.proxy(this.loginBeforeShowDialog, this));
+		$(".mw-special-Images").on('click', '.upphotos', $.proxy(this.loginBeforeShowDialog, this));
 	},
 	loginBeforeShowDialog: function(evt) {
 		var UserLoginModal = window.UserLoginModal;

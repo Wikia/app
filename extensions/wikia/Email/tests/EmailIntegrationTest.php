@@ -11,7 +11,6 @@ class EmailIntegrationTest extends WikiaBaseTest {
 
 	function setUp() {
 		$this->setupFile = __DIR__ . '/../Email.setup.php';
-		include_once( __DIR__ . '/../../../../includes/HttpFunctions.php');
 		parent::setUp();
 	}
 
@@ -26,7 +25,7 @@ class EmailIntegrationTest extends WikiaBaseTest {
 		foreach ( Email\ImageHelper::getIconInfo() as $iconInfo ) {
 			$url = $iconInfo['url'];
 			$name = $iconInfo['name'];
-			$response = HTTP::get( $url );
+			$response = HTTP::get( $url, 'default', [ 'noProxy' => true ] ); // noProxy: we want to connect to production
 			$this->assertTrue( $response !== false, "{$name} should return HTTP 200 -- {$url}" );
 		}
 	}
@@ -38,5 +37,6 @@ class EmailIntegrationTest extends WikiaBaseTest {
 	 */
 	private function setVignetteEnvToProd() {
 		$this->mockGlobalVariable('wgVignetteUrl', self::VIGNETTE_BASE_URL_PROD);
+		$this->mockGlobalVariable('wgUploadPath', "http://images.wikia.com/wikianewsletter/images"); // see Wikia::NEWSLETTER_WIKI_ID
 	}
 }

@@ -452,6 +452,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	public function changeFlag() {
 		wfProfileIn(__METHOD__);
 
+		$this->checkWriteRequest();
+
 		if( !$this->checkAccess() ) {
 			$this->status = false;
 		} else {

@@ -131,8 +131,12 @@ class MercuryApi {
 			'siteMessage' => $this->getSiteMessage(),
 			'siteName' => $wgSitename,
 			'theme' => SassUtil::getOasisSettings(),
-			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
-			'enableGlobalNav2016' => $wgEnableGlobalNav2016
+			'enableGlobalNav2016' => $wgEnableGlobalNav2016,
+			'tracking' => [
+				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
+				'nielsen' => AnalyticsProviderNielsen::isEnabled()
+			],
+			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId )
 		];
 	}
 

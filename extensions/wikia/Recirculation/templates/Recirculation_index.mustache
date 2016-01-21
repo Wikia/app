@@ -1,0 +1,15 @@
+<section class="recirculation-rail module">
+	<h2>{{ title }}</h2>
+	<ul class="thumbnails">
+		{{#posts}}
+			<li class="title-thumbnail">
+				<a href="{{ url }}" class="image image-thumbnail fluid small">
+					<img src="{{ image_url }}" alt="{{ title }}" itemprop="thumbnail">
+				</a>
+				<div class="title" title="{{ title }}">
+					<a href="{{ url }}">{{ title }}</a>
+				</div>
+			</li>
+		{{/posts}}
+	</ul>
+</section>

@@ -631,7 +631,8 @@ var UserProfilePage = {
 				method: 'removeavatar',
 				format: 'json',
 				data: {
-					avUser: name
+					avUser: name,
+					token: mw.user.tokens.get('editToken')
 				},
 				callback: function (data) {
 					if (data.status === 'ok') {

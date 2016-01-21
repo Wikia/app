@@ -389,20 +389,27 @@ abstract class BaseTask {
 	/**
 	 * queue a set of BaseTask objects
 	 *
-	 * @param array $tasks
+	 * @param BaseTask[] $tasks
 	 * @return array task ids
 	 */
 	public static function batch( array $tasks ) {
+		if ( count( $tasks ) === 0 ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'BaseTask::batch', [
+				'exception' => new \Exception('Tasks list is empty')
+			] );
+
+			return [];
+		}
+
 		$taskLists = [];
 
 		foreach ( $tasks as $task ) {
-			/** @var BaseTask $task $taskLists */
 			$taskLists = array_merge( $taskLists, $task->convertToTaskLists() );
 		}
 
 		\Wikia\Logger\WikiaLogger::instance()->info( 'BaseTask::batch', [
-			'count' => count( $tasks ),
-			'task' => get_class( reset( $tasks ) ),
+			'count' => count( $taskLists ),
+			'task' => get_class( reset( $taskLists ) ),
 			'backtrace' => new \Exception()
 		] );
 

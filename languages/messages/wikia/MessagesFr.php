@@ -136,14 +136,6 @@ $messages = array_merge( $messages, array(
 
 'tog-enableuserjs' => 'Activer le code javascript personnel ([[Aide:CSS_et_JS_avancés|En savoir plus]])',
 
-'recentchanges-on-wikia-title' => "Modifications récentes sur l'ensemble de Wikia",
-'recentchanges-on-wikia-content' => "Les types de modèles sont arrivés : organisez vos modèles par type afin de faciliter leur [[Special:Templates|gestion]] et d'améliorer leur affichage sur les smartphones. [[Aide:Types_de_modèles|Cliquez ici]] pour en savoir plus ou '''[[Special:Insights/templateswithouttype|commencez dès maintenant !]]'''
-
-Les images en onglets et les groupes réductibles sont désormais disponibles pour les [[Aide:Infobox|infoboxes portables]].
-
-Votre contenu est-il adapté aux appareils mobiles ? Pour savoir comment vous en assurer à l'avenir, consultez le site [[w:c:portability|Portability.wikia.com]].",
 'group-content-moderator' => 'Modérateurs de contenu',
 'group-content-moderator-member' => 'Modérateur de contenu',
-'group-threadmoderator' => 'Modérateurs de discussions',
-'group-threadmoderator-member' => 'Modérateur de discussions',
 ) );

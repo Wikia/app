@@ -162,14 +162,6 @@ $messages = array_merge( $messages , array(
 
 'tog-enableuserjs' => '個人用JavaScriptを有効にする（[[w:c:ja.community:ヘルプ:個人用CSSとJavaScript#JavaScript|詳細]]）',
 
-'recentchanges-on-wikia-title' => 'ウィキア全体における最近の変更',
-'recentchanges-on-wikia-content' => "「テンプレートの種類」をリリース — テンプレートを種類ごとに整理して、[[特別:Templates|テンプレートの管理]]をシンプル化したり、モバイル端末での表示を改善したりできます。[[ヘルプ:テンプレ>ートの種類|詳細]]をご覧になるか、'''[[特別:インサイト/templateswithouttype|今すぐお試しください]]'''。
-
-[[ヘルプ:ポータブル・インフォボックス|ポータブル・インフォボックス]]にタブ付き画像や折りたたみ可能なグループの機能を追加しました。
-
-あなたのコンテンツはモバイル対応ですか？[[w:c:portability|Portability.wikia.com]]で未来対応型のコンテンツに関する詳細をご覧ください。",
 'group-content-moderator' => 'コンテンツ・モデレーター',
 'group-content-moderator-member' => 'コンテンツ・モデレーター',
-'group-threadmoderator' => 'トーク・モデレーター',
-'group-threadmoderator-member' => 'トーク・モデレーター',
 ));

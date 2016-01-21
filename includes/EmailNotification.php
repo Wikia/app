@@ -86,8 +86,10 @@ class EmailNotification {
 	 * Also updates wl_notificationtimestamp.
 	 *
 	 * May be deferred via the job queue.
+	 *
+	 * @param array $watchers If a list of watchers is passed, use these rather than querying the DB
 	 */
-	public function notifyOnPageChange() {
+	public function notifyOnPageChange( array $watchers = [] ) {
 
 		if ( $this->title->getNamespace() < 0 ) {
 			return;
@@ -103,15 +105,19 @@ class EmailNotification {
 		}
 
 		// Build a list of users to notify
-		$watchers = [];
 		if ( F::app()->wg->EnotifWatchlist || F::app()->wg->ShowUpdatedMarker ) {
 			$notificationTimeoutSql = $this->getTimeOutSql();
-			$watchers = $this->getWatchersToNotify( $notificationTimeoutSql );
+
+			if ( empty( $watchers ) ) {
+				$watchers = $this->getWatchersToNotify( $notificationTimeoutSql );
+			}
+
 			if ( $watchers ) {
 				$this->updateWatchedItem( $watchers );
 			}
 			wfRunHooks( 'NotifyOnSubPageChange', [ $watchers, $this->title, $this->editor, $notificationTimeoutSql ] );
 		}
+
 		if ( $this->shouldSendEmail( $watchers ) ) {
 			$this->actuallyNotifyOnPageChange( $watchers );
 		}

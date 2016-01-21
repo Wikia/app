@@ -42,6 +42,20 @@ class DataTablesTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $result );
 	}
 
+	/**
+	 * Verifies if there is no CDATA inserted inside of widget script tag
+	 * as it would break widgets on Mercury
+	 *
+	 * @see http://wikia-inc.atlassian.net/browse/MAIN-6066
+	 * @dataProvider noCDATAProvider
+	 */
+	public function testNoCDATA( $html, $expected ) {
+		$this->globals->wrap( function () use ( &$html ) {
+			DataTables::markDataTables( null, $html );
+		} );
+		$this->assertEquals( $expected, $html );
+	}
+
 	public function wikitextProvider() {
 		return [
 			[ "", "" ],
@@ -133,6 +147,26 @@ asdkjf kasjdflk [[asdfasdf]]
 			  '<table data-portable="false"></table> sakjdflkjds k <table data-portable="false"/>' ],
 		];
 	}
+
+	public function noCDATAProvider() {
+		return [
+			[
+				'<table cellspacing="5" style="margin:auto">
+
+<tr valign="middle">
+<td><img src=\'//:0\' class=\'article-media\' data-ref=\'0\' />
+				</td><td><img src=\'//:0\' class=\'article-media\' data-ref=\'1\' />
+</td></tr></table>
+<center><script type="x-wikia-widget"><iframe data-wikia-widget="pollsnack" scrolling="no" frameborder="0" allowtransparency="true" seamless="" width="300" height="500" src="http://files.quizsnack.com/iframe/embed.html?hash=qh3f6pud&amp;width=&amp;height=500&amp;bgcolor=%23000000"></iframe></script></center>',
+				'<table cellspacing="5" style="margin:auto" data-portable="true"><tr valign="middle">
+<td><img src="//:0" class="article-media" data-ref="0"></td>
+<td><img src="//:0" class="article-media" data-ref="1"></td>
+</tr></table>
+<center><script type="x-wikia-widget"><iframe data-wikia-widget="pollsnack" scrolling="no" frameborder="0" allowtransparency="true" seamless="" width="300" height="500" src="http://files.quizsnack.com/iframe/embed.html?hash=qh3f6pud&amp;width=&amp;height=500&amp;bgcolor=%23000000"></script></center>'
+]
+		];
+	}
+
 
 	public function htmlTablesProvider() {
 		return [
