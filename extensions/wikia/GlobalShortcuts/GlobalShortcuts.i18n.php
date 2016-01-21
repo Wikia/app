@@ -13,6 +13,7 @@ $messages['en'] = array(
 	'global-shortcuts-key-then' => 'then',
 	'global-shortcuts-title-help-entry-point' => 'Open keyboard shortcuts help dialog (?)',
 	'global-shortcuts-title-keyboard-shortcuts' => 'Keyboard shortcuts',
+	'global-shortcuts-welcome-hint' => 'Introducing our new-and-improved Keyboard Shortcuts.',
 	'template-class-global-shortcuts-caption-classify-page' => 'Classify page',
 	'template-class-global-shortcuts-press-to-explore-shortcuts' => 'Press $1 to explore shortcuts',
 );
@@ -31,6 +32,7 @@ $messages['qqq'] = array(
 	'global-shortcuts-key-then' => 'It appears between two keys so the user press first one and THEN the second one.',
 	'global-shortcuts-title-help-entry-point' => 'Hint that will appear when you indicate the entry point of shortcuts help dialog. Question mark in brackets informs about shortcut key to open the dialog.',
 	'global-shortcuts-title-keyboard-shortcuts' => 'The title of a keyboard shorcuts modal.',
+	'global-shortcuts-welcome-hint' => 'One time hint shown tooltip above entrypoint to shortcuts help modal.',
 	'template-class-global-shortcuts-caption-classify-page' => 'This shortcut redirects users to the page where they can classify the template; it appears on template page.',
 	'template-class-global-shortcuts-press-to-explore-shortcuts' => '$1 is an html of . key. This sentence appears at the bottom of a keyboard shortcut help and it indicates that whenever user press a . key the actions explorer will appear.',
 );
