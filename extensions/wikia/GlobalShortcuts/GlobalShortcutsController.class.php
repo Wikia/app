@@ -8,5 +8,6 @@ class GlobalShortcutsController extends WikiaController {
 	}
 
 	public function renderHelpEntryPoint() {
+		$this->setVal( 'hint', wfMessage( 'global-shortcuts-title-help-entry-point' )->plain() );
 	}
 }

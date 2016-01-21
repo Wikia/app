@@ -81,9 +81,25 @@ class Helper {
 			}
 		}
 
+		$specialPagesMsg = wfMessage( 'specialpages' )->plain();
+
 		foreach ( $groups as $group => $entries ) {
+			/*
+			 * 'specialpages-group-maintenance'
+			 * 'specialpages-group-other'
+			 * 'specialpages-group-login'
+			 * 'specialpages-group-changes'
+			 * 'specialpages-group-media'
+			 * 'specialpages-group-users'
+			 * 'specialpages-group-highuse'
+			 * 'specialpages-group-pages'
+			 * 'specialpages-group-pagetools'
+			 * 'specialpages-group-wiki'
+			 * 'specialpages-group-redirects'
+			 * 'specialpages-group-spam'
+			 */
 			$groupName = wfMessage( "specialpages-group-$group" )->plain();
-			$category = "Special Pages > $groupName";
+			$category = "$specialPagesMsg > $groupName";
 			foreach ( $entries as $entry ) {
 				$actions[] = array_merge( $entry, [
 					'category' => $category,

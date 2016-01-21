@@ -8,7 +8,8 @@ define('GlobalShortcutsSearch', ['mw', 'wikia.nirvana', 'wikia.throbber', 'Globa
 			throbber.cover();
 			var html = [
 				'<div class="full-width global-shortcuts-field-wrapper">',
-					'<input type="text" placeholder="Type to search..." id="global_shortcuts_search_field" />',
+					'<input type="text" placeholder="' + mw.message('global-shortcuts-search-placeholder').escaped() +
+					'" id="global_shortcuts_search_field" />',
 				'</div>',
 				'<div class="full-width global-shortcuts-autocomplete-wrapper">',
 				'</div>'
@@ -41,7 +42,7 @@ define('GlobalShortcutsSearch', ['mw', 'wikia.nirvana', 'wikia.throbber', 'Globa
 			throbber.uncover();
 
 			var $el = $('#global_shortcuts_search_field');
-			suggestions = new GlobalShortcutsSuggestions($el,function(){
+			suggestions = new GlobalShortcutsSuggestions($el,function () {
 				modalInstance.trigger('close');
 			});
 			$el.focus();

@@ -26,7 +26,7 @@ require(['GlobalShortcuts', 'PageActions', 'mw', 'wikia.loader', 'wikia.window']
 					caption: mw.message('global-shortcuts-caption-open-discussions').escaped(),
 					fn: openDiscussions,
 					weight: 600,
-					category: 'Current wikia'
+					category: mw.message('global-shortcuts-category-current-wikia').escaped()
 				};
 
 			PageActions.add(actionDescription);

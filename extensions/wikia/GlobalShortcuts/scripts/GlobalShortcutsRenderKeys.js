@@ -10,7 +10,9 @@ define('GlobalShortcuts.RenderKeys',
 			return templates.keyCombination || $.Deferred(function (dfd) {
 					Wikia.getMultiTypePackage({
 						mustache: 'extensions/wikia/GlobalShortcuts/templates/KeyCombination2.mustache',
+						messages: 'GlobalShortcuts',
 						callback: function (pkg) {
+							mw.messages.set(pkg.messages);
 							templates.keyCombination = pkg.mustache[0];
 							dfd.resolve(templates);
 						}
@@ -63,7 +65,9 @@ define('GlobalShortcuts.RenderKeys',
 
 			return mustache.render(templates.keyCombination, {
 				keyCombination: data,
-				class: 'key-combination-in-suggestions'
+				class: 'key-combination-in-suggestions',
+				orMsg: mw.message('global-shortcuts-key-or').plain(),
+				thenMsg: mw.message('global-shortcuts-key-then').plain()
 			});
 		}
 

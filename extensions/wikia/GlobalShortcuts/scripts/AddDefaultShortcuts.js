@@ -29,7 +29,7 @@ require(['GlobalShortcuts', 'PageActions', 'mw', 'wikia.loader'],
 						fn: function () {
 							$('[data-id=start-wikia]')[0].click();
 						},
-						category: 'Global'
+						category: mw.message('global-shortcuts-category-global').escaped()
 					}
 				},
 				'help:Actions': {
@@ -67,7 +67,7 @@ require(['GlobalShortcuts', 'PageActions', 'mw', 'wikia.loader'],
 						fn: function () {
 							$('#searchInput')[0].focus();
 						},
-						category: 'Current wikia'
+						category: mw.message('global-shortcuts-category-current-wikia').escaped()
 					}
 				}
 			};

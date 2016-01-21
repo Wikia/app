@@ -101,3 +101,8 @@ JSMessages::registerPackage( 'TemplateClassificationTypes', [
 JSMessages::registerPackage( 'TemplateClassificationHints', [
 	'template-classification-bulk-classification-*'
 ] );
+
+JSMessages::registerPackage( 'TemplateClassificationGlobalShortcuts', [
+	'template-class-global-shortcuts-caption-classify-page',
+	'template-class-global-shortcuts-press-to-explore-shortcuts',
+] );
