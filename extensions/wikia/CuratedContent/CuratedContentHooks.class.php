@@ -1,4 +1,5 @@
 <?php
+
 class CuratedContentHooks {
 	/**
 	 * @brief Whenever data is saved in Curated Content Management Tool
@@ -7,24 +8,24 @@ class CuratedContentHooks {
 	 * @return bool
 	 */
 	static function onCuratedContentSave() {
-		global $wgServer, $wgWikiaCuratedContent;
+		global $wgServer, $wgCityId;;
 
 		( new SquidUpdate( array_unique( array_reduce(
-			$wgWikiaCuratedContent,
+			( new CommunityDataService( $wgCityId ) )->getCuratedContent( true ),
 			function ( $urls, $item ) use ( $wgServer ) {
-				if ( $item['title'] !== '' && empty( $item['featured'] ) ) {
+				if ( $item[ 'title' ] !== '' && empty( $item[ 'featured' ] ) ) {
 					// Purge section URLs using urlencode() (standard for MediaWiki), which uses implements RFC 1738
 					// https://tools.ietf.org/html/rfc1738#section-2.2 - spaces encoded as `+`.
 					// iOS apps use this variant.
-					$urls[] = CuratedContentController::getUrl( 'getList' ) . '&section=' . urlencode( $item['title'] );
+					$urls[] = CuratedContentController::getUrl( 'getList' ) . '&section=' . urlencode( $item[ 'title' ] );
 					// Purge section URLs using rawurlencode(), which uses implements RFC 3986
 					// https://tools.ietf.org/html/rfc3986#section-2.1 - spaces encoded as `%20`.
 					// Android apps use this variant.
-					$urls[] = CuratedContentController::getUrl( 'getList' ) . '&section=' . rawurlencode( $item['title'] );
+					$urls[] = CuratedContentController::getUrl( 'getList' ) . '&section=' . rawurlencode( $item[ 'title' ] );
 				}
 
 				return $urls;
-			} ,
+			},
 			// Purge all sections list getter URL - no additional params
 			[ CuratedContentController::getUrl( 'getList' ), CuratedContentController::getUrl( 'getData' ) ]
 		) ) ) )->doUpdate();

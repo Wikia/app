@@ -2,14 +2,20 @@
 
 class CuratedContentSpecialController extends WikiaSpecialPageController {
 	private $helper;
+	private $communityDataService;
 
 	public function __construct() {
+		global $wgCityId;
+
 		$this->helper = new CuratedContentHelper();
+		$this->communityDataService = new CommunityDataService( $wgCityId );
 		parent::__construct( 'CuratedContent', '', false );
 	}
 
 	public function index() {
-		global $wgWikiaCuratedContent, $wgUser;
+		global $wgUser;
+
+		$curatedContent = $this->communityDataService->getCuratedContent( true );
 		if ( !$wgUser->isAllowed( 'curatedcontent' ) ) {
 			$this->displayRestrictionError();
 			return false; // skip rendering
@@ -77,10 +83,10 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			'sectionTemplate' => $sectionTemplate
 		] );
 
-		if ( !empty( $wgWikiaCuratedContent ) ) {
+		if ( !empty( $curatedContent ) ) {
 			$list = '';
 
-			foreach ( $wgWikiaCuratedContent as $section ) {
+			foreach ( $curatedContent as $section ) {
 				if ( isset( $section[ 'featured' ] ) && $section[ 'featured' ] ) {
 					$featuredSection = $this->buildSection( $section );
 				} else {
@@ -125,7 +131,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$imageId = $this->request->getVal( 'image_id', 0 );
 		$imageCrop = $this->request->getArray( 'image_crop', [ ] );
 
-		$this->response->setVal( 'value', $this->request->getVal( 'value' , '' ) );
+		$this->response->setVal( 'value', $this->request->getVal( 'value', '' ) );
 		$this->response->setVal( 'image_id', $imageId );
 		$this->response->setVal( 'image_crop', $this->helper->encodeCrop( $imageCrop ) );
 		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $imageId ) );
