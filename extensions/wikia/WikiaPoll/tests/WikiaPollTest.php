@@ -29,11 +29,14 @@ class WikiaPollTest extends WikiaBaseTest {
 
 		$this->mockClass('Article', $mockArticle);
 
-		$wgRequest = $this->getMock('WebRequest', array('getVal', 'getArray'));
+		$wgRequest = $this->getMock('WebRequest', [ 'getVal', 'getArray', 'isValidWriteRequest' ] );
 		$wgRequest->expects($this->any())
 				->method('getArray')
 				->with($this->equalTo('answer'))
 				->will($this->returnValue(array("One", "Two", "Three")));
+		$wgRequest->expects( $this->exactly( 2 ) )
+			->method( 'isValidWriteRequest' )
+			->willReturn( true );
 		$this->mockGlobalVariable('wgRequest', $wgRequest);
 
 		$this->mockMessage('wikiapoll-error-invalid-title', 'Question text is invalid');
@@ -95,7 +98,7 @@ class WikiaPollTest extends WikiaBaseTest {
 	public function testWikiaPollAjaxUpdate() {
 		// Third part of test is to update the poll we've got and see if that works too
 
-		$wgRequest = $this->getMock('WebRequest', array('getInt', 'getArray'));
+		$wgRequest = $this->getMock('WebRequest', [ 'getInt', 'getArray', 'isValidWriteRequest' ] );
 		$wgRequest->expects($this->any())
 				->method('getInt')
 				->with($this->equalTo('pollId'))
@@ -104,7 +107,9 @@ class WikiaPollTest extends WikiaBaseTest {
 				->method('getArray')
 				->with($this->equalTo('answer'))
 				->will($this->returnValue(array("One", "Two", "Three")));
-
+		$wgRequest->expects( $this->once() )
+			->method( 'isValidWriteRequest' )
+			->willReturn( true );
 		$this->mockGlobalVariable('wgRequest', $wgRequest);
 
 		$mockPoll = $this->getMock("WikiaPoll", array('exists'), array(9999));
@@ -199,6 +204,13 @@ class WikiaPollTest extends WikiaBaseTest {
 		$this->mockClassWithMethods('Title', array(
 			'exists' => true
 		), 'newFromText');
+
+		$wgRequest = $this->getMock( 'WebRequest', [ 'isValidWriteRequest' ] );
+		$wgRequest->expects( $this->once() )
+			->method( 'isValidWriteRequest' )
+			->willReturn( true );
+
+		$this->mockGlobalVariable( 'wgRequest', $wgRequest );
 
 		// If the poll exists, it's a dupe
 		$result = $poll->create();
