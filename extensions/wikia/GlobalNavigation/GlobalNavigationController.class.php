@@ -24,22 +24,26 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 	public function index() {
-		global $wgLang, $wgUser;
+		global $wgLang, $wgUser, $wgEnableGlobalNav2016;
 
 		Wikia::addAssetsToOutput( 'global_navigation_scss' );
 		Wikia::addAssetsToOutput( 'global_navigation_js' );
 
-		//Lang for centralUrl and CNW should be the same as user language not content language
-		//That's why $wgLang global is used
-		$lang = $wgLang->getCode();
-		$centralUrl = $this->wikiaLogoHelper->getCentralUrlForLang( $lang );
-		$createWikiUrl = $this->helper->getCreateNewWikiUrl( $lang );
+		if ( !empty( $wgEnableGlobalNav2016 ) ) {
+			Wikia::addAssetsToOutput( 'global_navigation_2016_js' );
+			$this->response->setVal( 'menuContents', $this->helper->getMenuNodes2016() );
+			$this->response->setVal( 'isFandomExposed', $this->wikiaLogoHelper->isFandomExposed( $wgLang->getCode() ) );
+		} else {
+			Wikia::addAssetsToOutput( 'global_navigation_2015_js' );
+		}
+
+		$createWikiUrl = $this->helper->getCreateNewWikiUrl( $wgLang->getCode() );
 		$userCanRead = $wgUser->isAllowed( 'read' );
 
-		$this->response->setVal( 'centralUrl', $centralUrl );
+		$this->response->setVal( 'centralUrl', $this->wikiaLogoHelper->getMainCorpPageURL() );
 		$this->response->setVal( 'createWikiUrl', $createWikiUrl );
-		$this->response->setVal( 'notificationsEnabled', !empty($userCanRead));
-		$this->response->setVal( 'isAnon', $wgUser->isAnon());
+		$this->response->setVal( 'notificationsEnabled', !empty( $userCanRead ) );
+		$this->response->setVal( 'isAnon', $wgUser->isAnon() );
 
 		$isGameStarLogoEnabled = $this->isGameStarLogoEnabled();
 		$this->response->setVal( 'isGameStarLogoEnabled', $isGameStarLogoEnabled );
@@ -59,17 +63,17 @@ class GlobalNavigationController extends WikiaController {
 		$fulltext = $wgUser->getGlobalPreference( 'enableGoSearch' ) ? 0 : 'Search';
 		$query = $wgRequest->getVal( 'search', $wgRequest->getVal( 'query', '' ) );
 		$localSearchPlaceholder = html_entity_decode(
-			wfMessage( 'global-navigation-local-search-placeholder', $wgSitename )->parse()
+			wfMessage( 'global-navigation-search-wikia', $wgSitename )->parse()
 		);
 		if ( WikiaPageType::isCorporatePage() && !WikiaPageType::isWikiaHub() ) {
 			$this->response->setVal( 'disableLocalSearchOptions', true );
-			$this->response->setVal( 'defaultSearchPlaceholder', wfMessage( 'global-navigation-global-search')->escaped() );
+			$this->response->setVal( 'defaultSearchPlaceholder', wfMessage( 'global-navigation-global-search' )->escaped() );
 			$this->response->setVal( 'defaultSearchUrl', $globalSearchUrl );
 		} else {
 			$this->response->setVal( 'globalSearchUrl', $globalSearchUrl );
 			$this->response->setVal( 'localSearchUrl', $localSearchUrl );
-			$this->response->setVal( 'localSearchPlaceholder', $localSearchPlaceholder);
-			$this->response->setVal( 'defaultSearchPlaceholder',  $localSearchPlaceholder);
+			$this->response->setVal( 'localSearchPlaceholder', $localSearchPlaceholder );
+			$this->response->setVal( 'defaultSearchPlaceholder',  $localSearchPlaceholder );
 			$this->response->setVal( 'defaultSearchUrl', $localSearchUrl );
 		}
 

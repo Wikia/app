@@ -2288,7 +2288,6 @@ $config[ 'global_navigation_js' ] = [
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationScrollToLink.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationTracking.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationLazyLoad.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationHubsMenu.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationSearch.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GoogleSearchAPI.js',
 		'//extensions/wikia/GlobalNavigation/scripts/SearchSuggestions.js',
@@ -2297,6 +2296,22 @@ $config[ 'global_navigation_js' ] = [
 		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
 		'//resources/wikia/libraries/bootstrap/tooltip.js'
+	]
+];
+
+$config[ 'global_navigation_2015_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationHubsMenu.js',
+	]
+];
+
+$config[ 'global_navigation_2016_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationExploreWikiaDropdown.js',
 	]
 ];
 

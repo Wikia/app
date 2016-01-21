@@ -2,6 +2,8 @@
 
 class WikiaLogoHelper {
 	const DEFAULT_LANG = 'en';
+	const FANDOM_LANG = 'en';
+	const FANDOM_URL = 'http://www.wikia.com/fandom';
 
 	/**
 	 * @var WikiaCorporateModel
@@ -21,7 +23,7 @@ class WikiaLogoHelper {
 	 * @param string $lang - language
 	 * @return string - Corporate Wikia Domain for given language
 	 */
-	public function getCentralUrlForLang($lang) {
+	public function getCentralUrlForLang( $lang ) {
 			global $wgLangToCentralMap;
 			$centralUrl = '/';
 
@@ -30,7 +32,7 @@ class WikiaLogoHelper {
 				$centralUrl = $title->getServer();
 			} else if ( !empty( $wgLangToCentralMap[ $lang ] ) ) {
 				$centralUrl = $wgLangToCentralMap[ $lang ];
-			} else if ($title = $this->getCentralWikiUrlForLangIfExists( self::DEFAULT_LANG ) ) {
+			} else if ( $title = $this->getCentralWikiUrlForLangIfExists( self::DEFAULT_LANG ) ) {
 				$centralUrl = $title->getServer();
 			}
 
@@ -49,6 +51,26 @@ class WikiaLogoHelper {
 			return GlobalTitle::newMainPage( $this->wikiCorporateModel->getCorporateWikiIdByLang( $lang ) );
 		} catch ( Exception $ex ) {
 			return false;
+		}
+	}
+
+	public function getMainCorpPageURL() {
+		global $wgLang;
+
+		if ( empty( $this->isFandomExposed( $wgLang->getCode() ) ) ) {
+			return $this->getCentralUrlForLang( $wgLang->getCode() );
+		} else {
+			return self::FANDOM_URL;
+		}
+	}
+
+	public function isFandomExposed( $lang ) {
+		global $wgEnableGlobalNav2016;
+
+		if ( empty( $wgEnableGlobalNav2016 ) ) {
+			return false;
+		} else {
+			return $lang === self::FANDOM_LANG;
 		}
 	}
 }
