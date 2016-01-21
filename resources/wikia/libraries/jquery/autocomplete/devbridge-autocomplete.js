@@ -945,7 +945,6 @@ define('devbridge.autocomplete', ['jquery'], function($){
 	};
 
 	// Create chainable jQuery plugin:
-	//$.fn.autocomplete = $.fn.devbridgeAutocomplete = function (options, args) {
 	function autocomplete(options, args) {
 		var dataKey = 'autocomplete';
 		// If function invoked without argument return
