@@ -497,10 +497,10 @@ class SkinTemplate extends Skin {
 		// This is a temporary code meant to help with debugging PLATFORM-1355 issue
 		$bodyTextTrimmed = trim( $out->mBodytext );
 		if ( startsWith( $bodyTextTrimmed, "<!-- \nNewPP" ) || startsWith( $bodyTextTrimmed, "<!-- Saved" ) ) {
-			// Check if wikitext length is greater than 50 to eliminate noise of reporting pages
+			// Check if wikitext length is greater than 300 to eliminate noise of reporting pages
 			// which contains only categories. It won't eliminate all the noise, because there
-			// could be categories wikitext longer than 50, but should take care of most of it.
-			if ( $title->exists() && $title->isContentPage() && $title->getLength() > 50 ) {
+			// could be categories wikitext longer than 300, but should take care of most of it.
+			if ( $title->exists() && $title->isContentPage() && $title->getLength() > 300 ) {
 				\Wikia\Logger\WikiaLogger::instance()->error( 'PLATFORM-1355' );
 			}
 		}
