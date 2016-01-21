@@ -10,76 +10,127 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 
 	var logGroup = 'ext.wikia.adEngine.slot.floatingMedrec';
 
-	log('load', 'debug', logGroup);
-
 	function init() {
 		var context = adContext.getContext(),
+			isEnoughSpace = false,
+			enabled = false,
+			pushed = false,
+			globalNavigationHeight = $('#globalNavigation').height(),
 			margin = 10,
+			minDistance = 800,
 			slotName = 'INCONTENT_BOXAD_1',
-			$slot = $('<div class="wikia-ad"></div>').attr('id', slotName),
-			$placeHolder = $('#WikiaAdInContentPlaceHolder'),
+			startPosition,
+			stopPoint,
+			stopPosition,
+			$adSlot = $('<div class="wikia-ad"></div>').attr('id', slotName),
 			$footer = $('#WikiaFooter'),
 			$leftSkyscraper3 = $('#LEFT_SKYSCRAPER_3'),
-			$globalNavigation = $('#globalNavigation'),
-			lastAdHeight,
-			startPosition,
-			stopPosition,
-			stopPoint,
-			globalNavigationHeight;
+			$placeHolder = $('#WikiaAdInContentPlaceHolder');
 
-		if (!context.opts.floatingMedrec || !win.wgIsContentNamespace || !$placeHolder.length) {
-			log(['init', 'Floating medrec disabled'], 'debug', logGroup);
-			return;
+		function getStartPosition(placeHolder) {
+			return parseInt(placeHolder.offset().top, 10) - globalNavigationHeight - margin;
 		}
 
-		$placeHolder.append($slot);
+		function getStopPosition(ad, footer, leftSkyscraper3) {
+			stopPoint = parseInt(footer.offset().top, 10);
 
-		globalNavigationHeight = $globalNavigation.height();
-		lastAdHeight = $slot.height();
-
-		startPosition = parseInt($placeHolder.offset().top, 10) - globalNavigationHeight - margin;
-
-		stopPoint = parseInt($footer.offset().top, 10);
-		if ($leftSkyscraper3.length && parseInt($leftSkyscraper3.offset().top, 10) < stopPoint) {
-			stopPoint = parseInt($leftSkyscraper3.offset().top, 10);
-		}
-
-		stopPosition = stopPoint - globalNavigationHeight - 2 * margin - lastAdHeight;
-
-		function update() {
-			if (lastAdHeight !== $slot.height()) {
-				stopPosition -= $slot.height() - lastAdHeight;
-				lastAdHeight = $slot.height();
+			if (leftSkyscraper3.length && parseInt(leftSkyscraper3.height(), 10) !== 0) {
+				stopPoint = parseInt(leftSkyscraper3.offset().top, 10);
 			}
 
+			return stopPoint - globalNavigationHeight - 2 * margin - ad.height();
+		}
+
+		function update() {
 			if (win.scrollY <= startPosition) {
-				$slot.css({
+				$adSlot.css({
 					position: 'relative',
-					top: '0px'
+					top: '0px',
+					visibility: 'visible'
 				});
 			}
 
 			if (win.scrollY > startPosition && win.scrollY < stopPosition) {
-				$slot.css({
+				$adSlot.css({
 					position: 'fixed',
-					top: globalNavigationHeight + margin + 'px'
+					top: globalNavigationHeight + margin + 'px',
+					visibility: 'visible'
 				});
 			}
 
 			if (win.scrollY >= stopPosition) {
-				$slot.css({
+				$adSlot.css({
 					position: 'absolute',
-					top: stopPosition - startPosition + 'px'
+					top: stopPosition - startPosition + 'px',
+					visibility: 'visible'
 				});
 			}
 		}
 
-		win.addEventListener('scroll', adHelper.throttle(update, 100));
-		win.addEventListener('resize', adHelper.throttle(update));
+		function handleFloatingMedrec() {
+			startPosition = getStartPosition($placeHolder);
+			stopPosition = getStopPosition($adSlot, $footer, $leftSkyscraper3);
+			isEnoughSpace = stopPosition - startPosition > minDistance;
 
-		win.adslots2.push(slotName);
+			if (!enabled && !isEnoughSpace) {
+				log(['handleFloatingMedrec',
+					 'Floating medrec disabled: not enough space in right rail'], 'debug', logGroup);
+			}
 
-		update();
+			if (enabled && !isEnoughSpace) {
+				log(['handleFloatingMedrec',
+					 'Disabling floating medrec: not enough space in right rail'], 'debug', logGroup);
+
+				win.removeEventListener('scroll', update);
+				win.removeEventListener('resize', update);
+
+				$adSlot.css({
+					visibility: 'hidden'
+				});
+
+				enabled = false;
+			}
+
+			if (!enabled && isEnoughSpace) {
+				log(['handleFloatingMedrec', 'Enabling floating medrec'], 'debug', logGroup);
+
+				win.addEventListener('scroll', update);
+				win.addEventListener('resize', update);
+
+				enabled = true;
+
+				if (!pushed) {
+					win.adslots2.push(slotName);
+					pushed = true;
+				}
+			}
+		}
+
+		function start() {
+			if (!context.opts.floatingMedrec) {
+				log(['init', 'Floating medrec disabled: ad context returns false'], 'debug', logGroup);
+				return;
+			}
+
+			if (!win.wgIsContentNamespace) {
+				log(['init', 'Floating medrec disabled: $wgIsContentNamespace equals false'], 'debug', logGroup);
+				return;
+			}
+
+			if (!$placeHolder.length) {
+				log(['init', 'Floating medrec disabled: no placeHolder'], 'debug', logGroup);
+				return;
+			}
+
+			$placeHolder.append($adSlot);
+
+			win.addEventListener('scroll', adHelper.throttle(handleFloatingMedrec));
+			win.addEventListener('resize', adHelper.throttle(handleFloatingMedrec));
+
+			handleFloatingMedrec();
+		}
+
+		start();
 	}
 
 	return {
