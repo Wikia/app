@@ -254,9 +254,8 @@ class MercuryApi {
 	 * @return string homepage URL. Default is US homepage.
 	 */
 	private function getHomepageUrl() {
-		global $wgLanguageCode;
 		if ( class_exists( 'WikiaLogoHelper' ) ) {
-			return ( new WikiaLogoHelper() )->getCentralUrlForLang( $wgLanguageCode );
+			return ( new WikiaLogoHelper() )->getMainCorpPageURL();
 		}
 		return 'http://www.wikia.com'; // default homepage url
 	}
