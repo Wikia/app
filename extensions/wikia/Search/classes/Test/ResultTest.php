@@ -555,6 +555,22 @@ class ResultTest extends BaseTest {
 				$result['infoboxes_txt']
 		);
 	}
-	
-	
+
+	/**
+	 * @dataProvider limitTextLengthProvider
+	 */
+	public function testLimitTextLength( $text, $limit, $expected ) {
+		$result = new Result( [] );
+		$this->assertEquals( $expected, $result->limitTextLength( $text, $limit ) );
+	}
+
+	public function limitTextLengthProvider() {
+		return [
+			[ '', 2, '' ],
+			[ 'word1 word2 word3 word4', 2, 'word1 word2&hellip;' ],
+			[ 'word1 word2 word3 word4', null, 'word1 word2 word3 word4' ],
+			[ 'word1 word2', 2, 'word1 word2' ],
+			[ 'word1 word2', 4, 'word1 word2' ],
+		];
+	}
 }
