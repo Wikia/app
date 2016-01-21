@@ -1,4 +1,5 @@
-define('GlobalShortcutsSearch', ['mw', 'wikia.nirvana', 'wikia.throbber', 'GlobalShortcutsSuggestions'], function (mw, nirvana, throbber, GlobalShortcutsSuggestions) {
+define('GlobalShortcutsSearch', ['mw', 'wikia.loader', 'wikia.nirvana', 'wikia.throbber', 'GlobalShortcutsSuggestions'],
+	function (mw, loader, nirvana, throbber, GlobalShortcutsSuggestions) {
 	'use strict';
 
 	function Init() {
@@ -6,10 +7,25 @@ define('GlobalShortcutsSearch', ['mw', 'wikia.nirvana', 'wikia.throbber', 'Globa
 
 		function open() {
 			throbber.cover();
+
+			$.when(
+				loader({
+					type: loader.MULTI,
+					resources: {
+						messages: 'GlobalShortcuts'
+					}
+				})
+			).done(function (res) {
+				mw.messages.set(res.messages);
+				processOpen();
+			});
+		}
+
+		function processOpen() {
 			var html = [
 				'<div class="full-width global-shortcuts-field-wrapper">',
-					'<input type="text" placeholder="' + mw.message('global-shortcuts-search-placeholder').escaped() +
-					'" id="global_shortcuts_search_field" />',
+				'<input type="text" placeholder="' + mw.message('global-shortcuts-search-placeholder').escaped() +
+				'" id="global_shortcuts_search_field" />',
 				'</div>',
 				'<div class="full-width global-shortcuts-autocomplete-wrapper">',
 				'</div>'
