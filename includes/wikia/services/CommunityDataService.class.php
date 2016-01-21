@@ -101,7 +101,7 @@ class CommunityDataService extends WikiaService {
 	public function getCommunityDescription() {
 		$data = $this->curatedContentData();
 
-		return isset( $data[ 'community_data' ][ 'description' ] ) ? $data[ 'community_data' ][ 'description' ] : [ ];
+		return isset( $data[ 'community_data' ][ 'description' ] ) ? $data[ 'community_data' ][ 'description' ] : "";
 	}
 
 	public function getCommunityImageId() {
