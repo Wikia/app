@@ -82,6 +82,9 @@ $messages['qqq'] = [
 	'content-review-diff-reject-confirmation' => 'A message shown in a Banner Notification after click reject button if everything went well.',
 	'content-review-diff-page-error' => 'A message shown in a Banner Notification when something go wrong on diff page.',
 	'content-review-diff-already-done' => 'A message shown to reviewers if they try to review an already reviewed revision.',
+	'content-review-diff-escalate' => 'The text of the button to escalate a given revision for further review.',
+	'content-review-diff-revision-escalated' => 'Text that shown when a given revision has been escalated.',
+	'content-review-diff-escalate-confirmation' => 'The message shown in a Banner Notification after clicking the escalate button if everything went well.',
 
 	'content-review-diff-toolbar-title' => 'A title of a toolbar that enables a reviewer to approve or reject a revision.',
 	'content-review-diff-toolbar-talkpage' => 'A text of a link to a talk page of a page that is being reviewed.',
