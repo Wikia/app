@@ -2759,8 +2759,8 @@ $config['globalshortcuts_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
+		'//resources/wikia/libraries/jquery/autocomplete/devbridge-autocomplete.js',
 		'//extensions/wikia/GlobalShortcuts/scripts/Mousetrap.js',
-		'//extensions/wikia/GlobalShortcuts/scripts/devbridge-autocomplete2.js',
 		'//extensions/wikia/GlobalShortcuts/scripts/PageActions.js',
 		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcuts.js',
 		'//extensions/wikia/GlobalShortcuts/scripts/GlobalShortcutsHelp.js',

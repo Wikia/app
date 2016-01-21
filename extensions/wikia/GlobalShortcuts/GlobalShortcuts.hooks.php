@@ -23,12 +23,17 @@ class Hooks {
 	 * @return true
 	 */
 	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		global $wgEnableDiscussion;
-		if ( !empty( $wgEnableDiscussion ) ) {
-			\Wikia::addAssetsToOutput( 'globalshortcuts_discussions_js' );
+		global $wgEnableDiscussion, $wgEnableGlobalShortcutsExt;
+
+		if ( !empty( $wgEnableGlobalShortcutsExt ) ) {
+			if ( !empty( $wgEnableDiscussion ) ) {
+				\Wikia::addAssetsToOutput( 'globalshortcuts_discussions_js' );
+			}
+
+			\Wikia::addAssetsToOutput( 'globalshortcuts_js' );
+			\Wikia::addAssetsToOutput( 'globalshortcuts_scss' );
 		}
-		\Wikia::addAssetsToOutput( 'globalshortcuts_js' );
-		\Wikia::addAssetsToOutput( 'globalshortcuts_scss' );
+
 		return true;
 	}
 
