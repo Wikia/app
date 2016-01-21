@@ -437,7 +437,15 @@ class Parser {
 
 		$text = $this->mStripState->unstripNoWiki( $text );
 
+		$lengthBeforeBeforeTidy = strlen( $text );
 		wfRunHooks( 'ParserBeforeTidy', array( &$this, &$text ) );
+		$lengthAfterBeforeTidy = strlen( $text );
+		if ( $lengthBeforeBeforeTidy !== $lengthAfterBeforeTidy ) {
+			\Wikia\Logger\WikiaLogger::instance()->info( 'PLATFORM-1355-ParserBeforeTidy', [
+				'lengthBeforeBeforeTidy' => $lengthBeforeBeforeTidy,
+				'lengthAfterBeforeTidy' => $lengthAfterBeforeTidy
+			] );
+		}
 
 		$text = $this->replaceTransparentTags( $text );
 		$text = $this->mStripState->unstripGeneral( $text );
@@ -478,10 +486,26 @@ class Parser {
 			$this->limitationWarn( 'expensive-parserfunction', $this->mExpensiveFunctionCount, $wgExpensiveParserFunctionLimit );
 		}
 
+		$lengthBeforeAfterTidy = strlen( $text );
 		wfRunHooks( 'ParserAfterTidy', array( &$this, &$text ) );
+		$lengthAfterAfterTidy = strlen( $text );
+		if ( $lengthBeforeAfterTidy !== $lengthAfterAfterTidy ) {
+			\Wikia\Logger\WikiaLogger::instance()->info( 'PLATFORM-1355-ParserAfterTidy', [
+				'lengthBeforeAfterTidy' => $lengthBeforeAfterTidy,
+				'lengthAfterAfterTidy' => $lengthAfterAfterTidy
+			] );
+		}
+
 		// Wikia change begin - @author: wladek
 		$this->recordPerformanceStats( $wikitextSize, strlen($text) );
 		// Wikia change end
+
+		// There was "a lot" of wikitext but ultimately no content was created out of it
+		if ( $wikitextSize > 500 && trim($text) === '' ) {
+			\Wikia\Logger\WikiaLogger::instance()->info( 'PLATFORM-1355-somethingToNothing', [
+				'exception'   => new Exception() // log the backtrace
+			] );
+		}
 
 		# Information on include size limits, for the benefit of users who try to skirt them
 		if ( $this->mOptions->getEnableLimitReport() ) {
