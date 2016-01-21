@@ -85,15 +85,17 @@ class Http {
 				'responseHeaders' => $req->getResponseHeaders(),
 			];
 			if ( !$isOk ) {
-				$params[ 'statusMessage' ] = $status;
-				$params[ 'exception' ] = new WikiaException( "{$caller} - HTTP request failed", $req->getStatus() );
+				$params[ 'reqStatus' ] = $status;
+				$params[ 'exception' ] = new Exception( $url, $req->getStatus() );
 				$level = 'error';
+				$message = "HTTP request failed - {$caller}";
 			}
 			else {
 				$level = 'debug';
+				$message = 'Http request';
 			}
 
-			\Wikia\Logger\WikiaLogger::instance()->$level( 'Http request' , $params );
+			\Wikia\Logger\WikiaLogger::instance()->$level( $message, $params );
 		}
 
 		// Wikia change - @author: nAndy - begin
