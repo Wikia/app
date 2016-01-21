@@ -498,6 +498,7 @@ class SkinTemplate extends Skin {
 		$bodyTextTrimmed = trim( $out->mBodytext );
 		if ( startsWith( $bodyTextTrimmed, "<!-- \nNewPP" ) || startsWith( $bodyTextTrimmed, "<!-- Saved" ) ) {
 			if ( $title->exists() && $title->isContentPage() && $title->getLength() > 50 ) {
+				// We use 50 because 50 is a magic number.
 				\Wikia\Logger\WikiaLogger::instance()->error( 'PLATFORM-1355' );
 			}
 		}
