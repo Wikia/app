@@ -82,9 +82,9 @@ class Http {
 				'isOk' => $isOk,
 				'requestTimeMS' => $requestTime,
 				'backendTimeMS' => intval( 1000 * $backendTime),
-				'responseHeaders' => $req->getResponseHeaders(),
 			];
 			if ( !$isOk ) {
+				$params[ 'responseHeaders' ] = $req->getResponseHeaders();
 				$params[ 'reqStatus' ] = $status;
 				$params[ 'exception' ] = new Exception( $url, $req->getStatus() );
 				$level = 'error';
