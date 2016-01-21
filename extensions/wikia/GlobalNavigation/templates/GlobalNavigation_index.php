@@ -72,7 +72,7 @@
 				<div class="explore-wikia-entry-point" id="exploreWikiaEntryPoint">
 					<a class="cell-link top-level final-url"
 						href="<?= $isFandomExposed ? $menuContents['exploreWikia']['href'] : '#' ?>"
-						data-tracking-label="<?= $exploreLink['trackingLabel']; ?>">
+						data-tracking-label="<?=  $menuContents['exploreWikia']['trackingLabel']; ?>">
 						<?= $menuContents['exploreWikia']['textEscaped'] ?>
 						<img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
 					</a>
