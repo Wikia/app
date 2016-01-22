@@ -1666,9 +1666,9 @@ $messages['pl'] = array(
 	'global-navigation-account-navigation-options' => '$1 lub $2',
 	'global-navigation-community-link' => 'http://spolecznosc.wikia.com',
 	'global-navigation-community-link-label' => 'Centrum Społeczności',
-	'global-navigation-menu-hubs' => '* http://gryhub.wikia.com/wiki/Gry|Gry|games
-* http://filmyhub.wikia.com/wiki/Filmy|Filmy|movies
-* http://pl.tvhub.wikia.com/wiki/TV|TV|tv',
+	'global-navigation-menu-hubs' => '*http://gryhub.wikia.com/wiki/Gry|Gry|games
+*http://filmyhub.wikia.com/wiki/Filmy|Filmy|movies
+*http://pl.tvhub.wikia.com/wiki/TV|TV|tv',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
