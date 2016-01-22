@@ -46,11 +46,20 @@ require(
 		}
 
 		// Per request we should unify dialects like pt and pt-br
+		// Feature is enabled only for languages in targetLanguageFilter
 		// @see CE-1220
+		// @see INT-302
 		function shouldShowWikiaInYourLangWithTargetAndContentLanguage(targetLanguage, contentLanguage) {
 			var targetLanguageLangCode = targetLanguage.split('-')[0],
-			    contentLanguageLangCode = contentLanguage.split('-')[0];
-			return targetLanguageLangCode !== contentLanguageLangCode;
+				contentLanguageLangCode = contentLanguage.split('-')[0],
+				targetLanguageFilter = [ 'zh', 'ko', 'vi', 'ru', 'ja'];
+
+			if (targetLanguageFilter.indexOf(targetLanguageLangCode) === -1) {
+				return false;
+			}
+			else {
+				return targetLanguageLangCode !== contentLanguageLangCode;
+			}
 		}
 
 		function getTargetLanguage() {
