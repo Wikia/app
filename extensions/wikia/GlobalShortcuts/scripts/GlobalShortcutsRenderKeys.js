@@ -7,7 +7,11 @@ define('GlobalShortcuts.RenderKeys',
 			orSeparator = {or:1};
 
 		function loadTemplates() {
-			return templates.keyCombination || $.Deferred(function (dfd) {
+			return $.Deferred(function (dfd) {
+					if (templates.keyCombination) {
+						dfd.resolve(templates);
+						return dfd.promise();
+					}
 					Wikia.getMultiTypePackage({
 						mustache: 'extensions/wikia/GlobalShortcuts/templates/KeyCombination2.mustache',
 						messages: 'GlobalShortcuts',
@@ -20,9 +24,6 @@ define('GlobalShortcuts.RenderKeys',
 					return dfd.promise();
 				});
 		}
-		// TODO possible race condition here between require this module
-		// and using getHTML before template is loaded
-		loadTemplates();
 
 		function insertBetween(arr, elem) {
 			var len = arr.length,
@@ -37,6 +38,10 @@ define('GlobalShortcuts.RenderKeys',
 		}
 
 		function getHtml (keyCombinations) {
+			if (!templates.keyCombination) {
+				throw new Error('Required template is not loaded yet. ' +
+				'Please call loadTemplates method before and wait for resolution.');
+			}
 			var data;
 			keyCombinations = keyCombinations.map(wrapToArr);
 			// Split combos by or
@@ -121,7 +126,8 @@ define('GlobalShortcuts.RenderKeys',
 		}
 
 		return {
-			getHtml: getHtml
+			getHtml: getHtml,
+			loadTemplates: loadTemplates
 		};
 	}
 );

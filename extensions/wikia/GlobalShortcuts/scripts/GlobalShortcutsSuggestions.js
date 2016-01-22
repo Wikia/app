@@ -3,24 +3,28 @@ define('GlobalShortcutsSuggestions',
 	function (mw, nirvana, PageActions, GlobalShortcuts, RenderKeys, tracker) {
 		'use strict';
 
-		function GlobalShortcutsSuggestions( $el, closeCb ) {
+		function GlobalShortcutsSuggestions($el, closeCb) {
 			this.$el = $el;
 			this.closeCb = closeCb;
+			RenderKeys.loadTemplates().done(
+				$.proxy(function () {
+					require(['devbridge.autocomplete'], $.proxy(function (Autocomplete) {
+						$.fn.suggestionsAutocomplete = Autocomplete.autocomplete;
 
-			require(['devbridge.autocomplete'], $.proxy(function(Autocomplete) {
-				$.fn.suggestionsAutocomplete = Autocomplete.autocomplete;
+						this.init();
+					}, this));
 
-				this.init();
-			}, this));
+				}, this)
+			);
 		}
 
-		GlobalShortcutsSuggestions.prototype.close = function() {
+		GlobalShortcutsSuggestions.prototype.close = function () {
 			this.closeCb && this.closeCb();
 		};
 
-		GlobalShortcutsSuggestions.prototype.suggestions = function() {
+		GlobalShortcutsSuggestions.prototype.suggestions = function () {
 			var ret = [];
-			PageActions.sortList(PageActions.all).forEach(function(pageAction){
+			PageActions.sortList(PageActions.all).forEach(function (pageAction) {
 				var shortcuts = GlobalShortcuts.find(pageAction.id);
 				ret.push({
 					value: pageAction.caption,
@@ -35,13 +39,13 @@ define('GlobalShortcutsSuggestions',
 			return ret;
 		};
 
-		GlobalShortcutsSuggestions.prototype.init = function() {
+		GlobalShortcutsSuggestions.prototype.init = function () {
 			var autocompleteReEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')',
 					'[', ']', '{', '}', '\\'].join('|\\') + ')', 'g');
 
 			this.$el.suggestionsAutocomplete({
 				lookup: this.suggestions(),
-				onSelect: function(suggestion) {
+				onSelect: function (suggestion) {
 					var actionId = suggestion.data.actionId;
 					this.close();
 					tracker.trackClick(actionId);
@@ -54,7 +58,7 @@ define('GlobalShortcutsSuggestions',
 				selectedClass: 'selected',
 				width: '100%',
 				preserveInput: true,
-				formatResult: function(suggestion, currentValue) {
+				formatResult: function (suggestion, currentValue) {
 					var out = '',
 						pattern = '(' + currentValue.replace(autocompleteReEscape, '\\$1') + ')';
 					out += '<span class="label-in-suggestions">' +
