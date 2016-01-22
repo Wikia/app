@@ -19,7 +19,7 @@ define('GlobalShortcutsHelp',
 					Wikia.getMultiTypePackage({
 						mustache: 'extensions/wikia/GlobalShortcuts/templates/KeyCombination.mustache,' +
 							'extensions/wikia/GlobalShortcuts/templates/GlobalShortcutsController_help.mustache',
-						messages: 'GlobalShortcuts',
+						messages: 'GlobalShortcuts,TemplateClassificationGlobalShortcuts',
 						callback: function (pkg) {
 							mw.messages.set(pkg.messages);
 							templates.keyCombination = pkg.mustache[0];
@@ -80,8 +80,8 @@ define('GlobalShortcutsHelp',
 			}
 			templateParams = {
 				keyCombination: keyCombination,
-				orMsg: mw.message('global-shortcuts-key-then').plain(),
-				thenMsg: mw.message('global-shortcuts-key-or').plain()
+				orMsg: mw.message('global-shortcuts-key-or').plain(),
+				thenMsg: mw.message('global-shortcuts-key-then').plain()
 			};
 			keyCombinationHtml = mustache.render(templates.keyCombination, templateParams);
 			return keyCombinationHtml;
