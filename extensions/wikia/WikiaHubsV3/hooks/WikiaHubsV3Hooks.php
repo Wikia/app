@@ -3,7 +3,7 @@
 class WikiaHubsV3Hooks {
 	/**
 	 * @param Title $title
-	 * @param Page $article
+	 * @param Page $article passed as a reference, is modified inside the hook
 	 *
 	 * @return true because it's a hook
 	 */
