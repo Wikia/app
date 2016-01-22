@@ -21,43 +21,6 @@ class UserRights {
 	private static $globalGroups = [];
 
 	/**
-	 * data provider
-	 *
-	 * @param User $user
-	 * @return array list of global groups
-	 */
-	static function getGlobalGroups( User $user ) {
-		if ( $user->isAnon() ) {
-			return [];
-		}
-
-		$fname = __METHOD__;
-		$userId = $user->getId();
-
-		if ( !isset( self::$globalGroups[$userId] ) ) {
-			$globalGroups = WikiaDataAccess::cache(
-				self::getMemcKey( $user ),
-				WikiaResponse::CACHE_LONG,
-				function() use ( $userId, $fname ) {
-					$dbr = self::getDB( DB_MASTER );
-
-					return $dbr->selectFieldValues(
-						'user_groups',
-						'ug_group',
-						[ 'ug_user' => $userId ],
-						$fname
-					);
-				}
-			);
-
-			global $wgWikiaGlobalUserGroups;
-			self::$globalGroups[$userId] = array_intersect( $globalGroups, $wgWikiaGlobalUserGroups );
-		}
-
-		return self::$globalGroups[$userId];
-	}
-
-	/**
 	 * Get group data for the user object.
 	 * Global groups are always loaded here.
 	 * We filter them out for the add/remove hooks so that global groups can't be edited from local wikis.
@@ -136,16 +99,6 @@ class UserRights {
 					'ug_group' => $group,
 				],
 			__METHOD__
-		);
-		// Remember that the user was in this group
-		$dbw->insert( 'user_former_groups',
-				[
-					'ufg_user'  => $user->getID(),
-					'ufg_group' => $group,
-				],
-				__METHOD__,
-				// ignore duplicate key error which happens when removing a group from a user twice
-				[ 'IGNORE' ]
 		);
 
 		wfRunHooks( 'AfterUserRemoveGlobalGroup', [ $user, $group ] );

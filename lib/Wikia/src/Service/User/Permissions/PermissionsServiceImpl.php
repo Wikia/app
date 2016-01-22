@@ -11,108 +11,88 @@ class PermissionsServiceImpl implements PermissionsService {
 
 	use Loggable;
 
-	/** @var LocalGroup[string][string] - key is the city id, then user id */
-	private $localExplicitGroups = [];
+	/** @var string[string][string] - key is the city id, then user id */
+	private $localExplicitUserGroups = [];
 
-	/** @var GlobalGroup[string] - key is the user id */
-	private $globalExplicitGroups = [];
+	/** @var string[string] - key is the user id */
+	private $globalExplicitUserGroups = [];
 
-	/** @var LocalGroup[string][string] - key is the user id */
-	private $implicitGroups = [];
+	/** @var string[string][string] - key is the user id */
+	private $implicitUserGroups = [];
 
 	/** @var string[] - global groups to which a user can be assigned */
-	private $availableGlobalGroups = [];
+	private $globalGroups = [];
 
 	public function __construct() {
-		$this->availableGlobalGroups[] = 'content-reviewer';
-		$this->availableGlobalGroups[] = 'staff';
-		$this->availableGlobalGroups[] = 'helper';
-		$this->availableGlobalGroups[] = 'vstf'; //rt#27789
-		$this->availableGlobalGroups[] = 'beta';
-		$this->availableGlobalGroups[] = 'bot-global';
-		$this->availableGlobalGroups[] = 'util';
-		$this->availableGlobalGroups[] = 'reviewer';
-		$this->availableGlobalGroups[] = 'poweruser';
-		$this->availableGlobalGroups[] = 'translator';
-		$this->availableGlobalGroups[] = 'wikifactory';
-		$this->availableGlobalGroups[] = 'restricted-login';
+		$this->globalGroups[] = 'content-reviewer';
+		$this->globalGroups[] = 'staff';
+		$this->globalGroups[] = 'helper';
+		$this->globalGroups[] = 'vstf'; //rt#27789
+		$this->globalGroups[] = 'beta';
+		$this->globalGroups[] = 'bot-global';
+		$this->globalGroups[] = 'util';
+		$this->globalGroups[] = 'reviewer';
+		$this->globalGroups[] = 'poweruser';
+		$this->globalGroups[] = 'translator';
+		$this->globalGroups[] = 'wikifactory';
+		$this->globalGroups[] = 'restricted-login';
 	}
 
 	private function getLocalUserGroups( $cityId, $userId ) {
-		if ( !isset( $this->localExplicitGroups[$cityId] ) || !isset( $this->localExplicitGroups[$cityId][$userId] ) ) {
+		if ( !isset( $this->localExplicitUserGroups[$cityId] ) || !isset( $this->localExplicitUserGroups[$cityId][$userId] ) ) {
 			return false;
 		}
-		return $this->localExplicitGroups[$cityId][$userId];
+		return $this->localExplicitUserGroups[$cityId][$userId];
 	}
 
 	private function setLocalUserGroups( $cityId, $userId, $groups ) {
-		if ( !isset( $this->localExplicitGroups[$cityId] ) ) {
-			$this->localExplicitGroups[$cityId] = [];
+		if ( !isset( $this->localExplicitUserGroups[$cityId] ) ) {
+			$this->localExplicitUserGroups[$cityId] = [];
 		}
-		$this->localExplicitGroups[$cityId][$userId] = $groups;
+		$this->localExplicitUserGroups[$cityId][$userId] = $groups;
 	}
 
 	private function getImplicitUserGroups( $userId ) {
-		if ( !isset( $this->implicitGroups[$userId] ) ) {
+		if ( !isset( $this->implicitUserGroups[$userId] ) ) {
 			return false;
 		}
-		return $this->implicitGroups[$userId];
+		return $this->implicitUserGroups[$userId];
 	}
 
 	private function setImplicitUserGroups( $userId, $groups ) {
-		$this->implicitGroups[$userId] = $groups;
+		$this->implicitUserGroups[$userId] = $groups;
 	}
 
 	private function getGlobalUserGroups( $userId ) {
-		if ( !isset( $this->globalExplicitGroups[$userId] ) ) {
+		if ( !isset( $this->globalExplicitUserGroups[$userId] ) ) {
 			return false;
 		}
-		return $this->globalExplicitGroups[$userId];
+		return $this->globalExplicitUserGroups[$userId];
 	}
 
 	private function setGlobalUserGroups( $userId, $groups ) {
-		$this->globalExplicitGroups[$userId] = $groups;
+		$this->globalExplicitUserGroups[$userId] = $groups;
 	}
 
-	public function getExplicitUserGroups( $cityId, \User $user ) {
-		$this->loadLocalGroups( $cityId, $user->getId() );
-		$this->loadGlobalGroups( $user->getId() );
-
-		$groupNames = [];
-		$localGroups = $this->getLocalUserGroups( $cityId, $user->getId() );
-		$globalGroups = $this->getGlobalUserGroups( $user->getId() );
-
-		if ( $localGroups != false) {
-			foreach ( $localGroups as $localGroup ) {
-				$groupNames[] = $localGroup->getName();
-			}
-		}
-
-		if ( $globalGroups != false) {
-			foreach ( $globalGroups as $globalGroup ) {
-				$groupNames[] = $globalGroup->getName();
-			}
-		}
-
-		return array_unique( $groupNames );
+	public function getGlobalGroups() {
+		return $this->globalGroups;
 	}
 
-	private function loadLocalGroups( $cityId, $userId ) {
-		$userLocalGroups = $this->getLocalUserGroups( $cityId, $userId );
+	public function getExplicitUserGroups( $cityId, $userId ) {
+		return array_unique( array_merge (
+			$this->getExplicitLocalUserGroups( $cityId, $userId ),
+			$this->getExplicitGlobalUserGroups( $userId )
+		) );
+	}
 
-		if ( $userLocalGroups == false ) {
-			$dbr = wfGetDB( DB_MASTER );
-			$res = $dbr->select( 'user_groups',
-				array( 'ug_group' ),
-				array( 'ug_user' => $userId ),
-				__METHOD__ );
-			$userLocalGroups = [];
-			foreach ( $res as $row ) {
-				$userLocalGroups[] = new LocalGroup($row->ug_group, $cityId);
-			}
-		}
+	public function getExplicitLocalUserGroups( $cityId, $userId ) {
+		$this->loadLocalGroups( $cityId, $userId );
+		return $this->getLocalUserGroups( $cityId, $userId );
+	}
 
-		$this->setLocalUserGroups( $cityId, $userId, $userLocalGroups);
+	public function getExplicitGlobalUserGroups( $userId ) {
+		$this->loadGlobalGroups( $userId );
+		return $this->getGlobalUserGroups( $userId );
 	}
 
 	/**
@@ -126,49 +106,13 @@ class PermissionsServiceImpl implements PermissionsService {
 	}
 
 	/**
-	 * @param int $db DB_SLAVE or DB_MASTER
-	 * @return DatabaseBase
-	 */
-	static private function getSharedDB( $db = DB_SLAVE ) {
-		global $wgExternalSharedDB;
-		return wfGetDB( $db, [], $wgExternalSharedDB );
-	}
-
-	private function loadGlobalGroups( $userId ) {
-		if ( !empty( $userId ) && $this->getGlobalUserGroups( $userId ) == false ) {
-
-			$fname = __METHOD__;
-			$globalGroupNames = \WikiaDataAccess::cache(
-				self::getMemcKey( $userId ),
-				\WikiaResponse::CACHE_LONG,
-				function() use ( $userId, $fname ) {
-					$dbr = self::getSharedDB( DB_MASTER );
-					return $dbr->selectFieldValues(
-						'user_groups',
-						'ug_group',
-						[ 'ug_user' => $userId ],
-						$fname
-					);
-				}
-			);
-
-			$globalGroupNames = array_intersect( $globalGroupNames, $this->availableGlobalGroups );
-			$globalGroups = [];
-			foreach ( $globalGroupNames as $groupName ) {
-				$globalGroups[] = new GlobalGroup($groupName);
-			}
-			$this->setGlobalUserGroups( $userId, $globalGroups );
-		}
-	}
-
-	/**
 	 * Get the list of implicit group memberships this user has.
 	 * This includes 'user' if logged in, '*' for all accounts,
 	 * and autopromoted groups
 	 * @return Array of String internal group names
 	 */
-	public function getAutomaticUserGroups( \User $user, $reCacheGroups = false ) {
-		if ( $reCacheGroups || $this->getImplicitUserGroups( $user->getId() ) == false ) {
+	public function getAutomaticUserGroups( \User $user, $reCacheAutomaticGroups = false ) {
+		if ( $reCacheAutomaticGroups || $this->getImplicitUserGroups( $user->getId() ) == false ) {
 			$implicitGroups = array( '*' );
 			if ( $user->getId() ) {
 				$implicitGroups[] = 'user';
@@ -191,9 +135,66 @@ class PermissionsServiceImpl implements PermissionsService {
 	 * @return Array of String internal group names
 	 */
 	public function getEffectiveUserGroups( $cityId, \User $user, $reCacheAutomaticGroups = false ) {
+
 		return array_unique( array_merge(
-			$this->getExplicitUserGroups( $cityId, $user ),
+			$this->getExplicitUserGroups( $cityId, $user->getId() ),
 			$this->getAutomaticUserGroups( $user, $reCacheAutomaticGroups )
 		) );
+	}
+
+
+	//These function will need to go to the external service eventually.
+
+	private function loadLocalGroups( $cityId, $userId ) {
+		$userLocalGroups = $this->getLocalUserGroups( $cityId, $userId );
+
+		if ( $userLocalGroups == false ) {
+			$dbr = wfGetDB( DB_MASTER );
+			$res = $dbr->select( 'user_groups',
+				array( 'ug_group' ),
+				array( 'ug_user' => $userId ),
+				__METHOD__ );
+			$userLocalGroups = [];
+			foreach ( $res as $row ) {
+				$userLocalGroups[] = $row->ug_group;
+			}
+			$this->setLocalUserGroups( $cityId, $userId, $userLocalGroups);
+		}
+	}
+
+	/**
+	 * @param int $db DB_SLAVE or DB_MASTER
+	 * @return DatabaseBase
+	 */
+	static private function getSharedDB( $db = DB_SLAVE ) {
+		global $wgExternalSharedDB;
+		return wfGetDB( $db, [], $wgExternalSharedDB );
+	}
+
+	private function loadGlobalGroups( $userId ) {
+		if ( $this->getGlobalUserGroups( $userId ) == false ) {
+
+			if ( empty( $userId ) ) {
+				$this->setGlobalUserGroups( $userId, [] );
+			} else {
+				$fname = __METHOD__;
+				$globalGroups = \WikiaDataAccess::cache(
+					self::getMemcKey( $userId ),
+					\WikiaResponse::CACHE_LONG,
+					function() use ( $userId, $fname ) {
+						$dbr = self::getSharedDB( DB_MASTER );
+						return $dbr->selectFieldValues(
+							'user_groups',
+							'ug_group',
+							[ 'ug_user' => $userId ],
+							$fname
+						);
+					}
+				);
+
+				$globalGroups = array_intersect( $globalGroups, $this->globalGroups );
+				$this->setGlobalUserGroups( $userId, $globalGroups );
+			}
+		}
 	}
 }

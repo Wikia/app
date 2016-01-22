@@ -3674,31 +3674,6 @@ $wgAutopromote = array(
 );
 
 /**
- * Automatically add a usergroup to any user who matches certain conditions.
- * Does not add the user to the group again if it has been removed.
- * Also, does not remove the group if the user no longer meets the criteria.
- *
- * The format is
- *	array( event => criteria, ... )
- * where event is
- *	'onEdit' (when user edits) or 'onView' (when user views the wiki)
- * and criteria has the same format as $wgAutopromote
- *
- * @see $wgAutopromote
- * @since 1.18
- */
-$wgAutopromoteOnce = array(
-	'onEdit' => array(),
-	'onView' => array()
-);
-
-/**
- * Put user rights log entries for autopromotion in recent changes?
- * @since 1.18
- */
-$wgAutopromoteOnceLogInRC = true;
-
-/**
  * $wgAddGroups and $wgRemoveGroups can be used to give finer control over who
  * can assign which groups at Special:Userrights.  Example configuration:
  *

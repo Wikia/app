@@ -56,7 +56,7 @@ class UserPermissionsIntegrationTest extends \PHPUnit_Framework_TestCase {
 	function testShouldReturnStaffExplicitGroup() {
 		\WikiaDataAccess::cachePurge( PermissionsServiceImpl::getMemcKey( $this->testUserId ) );
 
-		$groups = $this->permissionsService->getExplicitUserGroups( $this->testCityId, $this->staffUser );
+		$groups = $this->permissionsService->getExplicitUserGroups( $this->testCityId, $this->testUserId );
 		$this->assertContains("staff", $groups);
 		$this->assertTrue(count($groups) == 1);
 	}
@@ -69,7 +69,7 @@ class UserPermissionsIntegrationTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue(count($groups) == 3);
 	}
 
-	function testShouldReturnAutomaticAndExplicitGroups() {
+	function testShouldReturnEffectiveGroups() {
 		$groups = $this->permissionsService->getEffectiveUserGroups( $this->testCityId, $this->staffUser, true );
 		$this->assertContains("user", $groups);
 		$this->assertContains("staff", $groups);
@@ -78,7 +78,7 @@ class UserPermissionsIntegrationTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue(count($groups) == 4);
 	}
 
-	function testShouldReturnAutomaticAndExplicitGroupsForAnon() {
+	function testShouldReturnEffectiveGroupsForAnon() {
 		$groups = $this->permissionsService->getEffectiveUserGroups( $this->testCityId, $this->anonUser, true );
 		$this->assertContains("*", $groups);
 		$this->assertTrue(count($groups) == 1);

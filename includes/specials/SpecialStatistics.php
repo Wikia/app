@@ -21,6 +21,10 @@
  * @ingroup SpecialPage
  */
 
+
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Permissions\PermissionsService;
+
 /**
  * Special page lists various statistics, including the contents of
  * `site_stats`, plus page view details if enabled
@@ -32,8 +36,24 @@ class SpecialStatistics extends SpecialPage {
 	private $views, $edits, $good, $images, $total, $users,
 			$activeUsers = 0;
 
+	/**
+	 * @var UserPermissions
+	 */
+	private $permissionsService;
+
 	public function __construct() {
 		parent::__construct( 'Statistics' );
+	}
+
+	/**
+	 * @return UserPermissions
+	 */
+	private function userPermissions() {
+		if ( is_null( $this->permissionsService ) ) {
+			$this->permissionsService = Injector::getInjector()->get( PermissionsService::class );
+		}
+
+		return $this->permissionsService;
 	}
 
 	public function execute( $par ) {
@@ -223,8 +243,7 @@ class SpecialStatistics extends SpecialPage {
 			$countUsers = SiteStats::numberingroup( $groupname );
 			if( $countUsers == 0 ) {
 				// wikia change start
-				global $wgWikiaGlobalUserGroups;
-				if( is_array( $wgWikiaGlobalUserGroups ) && in_array( $groupname, $wgWikiaGlobalUserGroups ) ) {
+				if( in_array( $groupname, $this->userPermissions()->getGlobalGroups() ) ) {
 					//rt#57322 hide our effective global groups
 					continue;
 				}

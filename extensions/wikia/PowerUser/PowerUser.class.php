@@ -12,6 +12,8 @@
 namespace Wikia\PowerUser;
 
 use Wikia\Logger\Loggable;
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Permissions\PermissionsService;
 
 class PowerUser {
 	use Loggable;
@@ -69,6 +71,22 @@ class PowerUser {
 	}
 
 	/**
+	 * @var UserPermissions
+	 */
+	private $permissionsService;
+
+	/**
+	 * @return UserPermissions
+	 */
+	private function userPermissions() {
+		if ( is_null( $this->permissionsService ) ) {
+			$this->permissionsService = Injector::getInjector()->get( PermissionsService::class );
+		}
+
+		return $this->permissionsService;
+	}
+
+	/**
 	 * Gets current PowerUser types for a user
 	 *
 	 * @return array
@@ -122,7 +140,7 @@ class PowerUser {
 	public function addPowerUserAddGroup( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUserProperties )
 			&& $this->bUseGroups
-			&& !in_array( self::GROUP_NAME, \UserRights::getGlobalGroups( $this->oUser ) )
+			&& !in_array( self::GROUP_NAME, $this->userPermissions()->getExplicitGlobalUserGroups( $this->oUser->getId() ) )
 		) {
 				\UserRights::addGlobalGroup( $this->oUser, self::GROUP_NAME );
 				$this->logSuccess( $sProperty, self::ACTION_ADD_GROUP );
@@ -196,7 +214,7 @@ class PowerUser {
 				return false;
 			}
 		}
-		return in_array( self::GROUP_NAME, \UserRights::getGlobalGroups( $this->oUser ) );
+		return in_array( self::GROUP_NAME, $this->userPermissions()->getExplicitGlobalUserGroups( $this->oUser->getId() ) );
 	}
 
 	/**

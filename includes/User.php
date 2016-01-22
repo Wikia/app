@@ -4726,32 +4726,6 @@ class User {
 		return $this->mRights;
 	}
 
-	//JCEL only used in autopromote need to figure why
-
-	/**
-	 * Returns the groups the user has belonged to.
-	 *
-	 * The user may still belong to the returned groups. Compare with getGroups().
-	 *
-	 * The function will not return groups the user had belonged to before MW 1.17
-	 *
-	 * @return array Names of the groups the user has belonged to.
-	 */
-	public function getFormerGroups() {
-		if( is_null( $this->mFormerGroups ) ) {
-			$dbr = wfGetDB( DB_MASTER );
-			$res = $dbr->select( 'user_former_groups',
-				array( 'ufg_group' ),
-				array( 'ufg_user' => $this->mId ),
-				__METHOD__ );
-			$this->mFormerGroups = array();
-			foreach( $res as $row ) {
-				$this->mFormerGroups[] = $row->ufg_group;
-			}
-		}
-		return $this->mFormerGroups;
-	}
-
 	//JCEL needs rewriting to the new service. Hook handles global shared gropus, and some special case with
 	//content review where the addition of a group is disallowed.
 	//However hook after adding group of shared user starts a job 'addUserGroup' from ExactTargetUser
@@ -4804,14 +4778,6 @@ class User {
 					'ug_user'  => $this->getID(),
 					'ug_group' => $group,
 				), __METHOD__ );
-			// Remember that the user was in this group
-			$dbw->insert( 'user_former_groups',
-				array(
-					'ufg_user'  => $this->getID(),
-					'ufg_group' => $group,
-				),
-				__METHOD__,
-				array( 'IGNORE' ) );
 
 			$this->loadGroups();
 			$this->mGroups = array_diff( $this->mGroups, array( $group ) );
@@ -5102,47 +5068,6 @@ class User {
 		# Use strict parameter to avoid matching numeric 0 accidentally inserted
 		# by misconfiguration: 0 == 'foo'
 		return in_array( $action, $this->getRights(), true );
-	}
-
-	//JCEL what is autopromote?
-
-	/**
-	 * Add the user to the group if he/she meets given criteria.
-	 *
-	 * Contrary to autopromotion by \ref $wgAutopromote, the group will be
-	 *   possible to remove manually via Special:UserRights. In such case it
-	 *   will not be re-added automatically. The user will also not lose the
-	 *   group if they no longer meet the criteria.
-	 *
-	 * @param $event String key in $wgAutopromoteOnce (each one has groups/criteria)
-	 *
-	 * @return array Array of groups the user has been promoted to.
-	 *
-	 * @see $wgAutopromoteOnce
-	 */
-	public function addAutopromoteOnceGroups( $event ) {
-		global $wgAutopromoteOnceLogInRC;
-
-		$toPromote = array();
-		if ( $this->getId() ) {
-			$toPromote = Autopromote::getAutopromoteOnceGroups( $this, $event );
-			if ( count( $toPromote ) ) {
-				$oldGroups = $this->getGroups(); // previous groups
-				foreach ( $toPromote as $group ) {
-					$this->addGroup( $group );
-				}
-				$newGroups = array_merge( $oldGroups, $toPromote ); // all groups
-
-				$log = new LogPage( 'rights', $wgAutopromoteOnceLogInRC /* in RC? */ );
-				$log->addEntry( 'autopromote',
-					$this->getUserPage(),
-					'', // no comment
-					// These group names are "list to texted"-ed in class LogPage.
-					array( implode( ', ', $oldGroups ), implode( ', ', $newGroups ) )
-				);
-			}
-		}
-		return $toPromote;
 	}
 
 	//JCEL delete after rest is moved
