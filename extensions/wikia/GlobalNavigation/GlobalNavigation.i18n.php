@@ -966,9 +966,9 @@ $messages['it'] = array(
 	'global-navigation-sign-in' => 'Accedi',
 	'global-navigation-account-navigation-options' => '$1 o $2',
 	'global-navigation-community-link' => 'http://it.community.wikia.com/',
-	'global-navigation-menu-hubs' => 'http://it.community.wikia.com/wiki/Categoria:Videogiochi|Videogiochi|games
-http://it.community.wikia.com/wiki/Categoria:Cinema|Cinema|movies
-http://it.community.wikia.com/wiki/Categoria:Televisione|Televisione|tv',
+	'global-navigation-menu-hubs' => '*http://it.community.wikia.com/wiki/Categoria:Videogiochi|Videogiochi|games
+*http://it.community.wikia.com/wiki/Categoria:Cinema|Cinema|movies
+*http://it.community.wikia.com/wiki/Categoria:Televisione|Televisione|tv',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
