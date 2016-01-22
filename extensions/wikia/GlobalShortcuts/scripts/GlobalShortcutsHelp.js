@@ -19,7 +19,7 @@ define('GlobalShortcutsHelp',
 					Wikia.getMultiTypePackage({
 						mustache: 'extensions/wikia/GlobalShortcuts/templates/KeyCombination.mustache,' +
 							'extensions/wikia/GlobalShortcuts/templates/GlobalShortcutsController_help.mustache',
-						messages: 'GlobalShortcuts,TemplateClassificationGlobalShortcuts',
+						messages: 'GlobalShortcuts',
 						callback: function (pkg) {
 							mw.messages.set(pkg.messages);
 							templates.keyCombination = pkg.mustache[0];
