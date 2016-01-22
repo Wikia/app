@@ -486,11 +486,6 @@ class ParserOptions {
 			$confstr .= '!' . ( $this->mNumberHeadings ? '1' : '' );
 		} else {
 			$confstr .= '!*';
-			if ( $title === null || ( $title->exists() && $title->isContentPage() ) ) {
-				\Wikia\Logger\WikiaLogger::instance()->info( 'PLATFORM-1355-no-numberheadings', [
-					'exception'   => new Exception() // log the backtrace
-				] );
-			}
 		}
 
 		if ( in_array( 'userlang', $forOptions ) ) {
