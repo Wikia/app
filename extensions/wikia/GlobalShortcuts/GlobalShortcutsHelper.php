@@ -81,7 +81,7 @@ class Helper {
 			}
 		}
 
-		$specialPagesMsg = wfMessage( 'specialpages' )->plain();
+		$specialPagesMsg = wfMessage( 'specialpages' )->escaped();
 
 		foreach ( $groups as $group => $entries ) {
 			/*
@@ -98,7 +98,7 @@ class Helper {
 			 * 'specialpages-group-redirects'
 			 * 'specialpages-group-spam'
 			 */
-			$groupName = wfMessage( "specialpages-group-$group" )->plain();
+			$groupName = wfMessage( "specialpages-group-$group" )->escaped();
 			$category = "$specialPagesMsg > $groupName";
 			foreach ( $entries as $entry ) {
 				$actions[] = array_merge( $entry, [
