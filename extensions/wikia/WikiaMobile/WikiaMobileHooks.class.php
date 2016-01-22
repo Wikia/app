@@ -127,6 +127,9 @@ class WikiaMobileHooks {
 			$attributesToStrip = [ 'style', 'color', 'bgcolor', 'border', 'align', 'cellspacing', 'cellpadding', 'hspace', 'vspace' ];
 			$text = HtmlHelper::stripAttributes( $text, $attributesToStrip );
 
+			//don't let the article content be an empty space
+			$text = trim( $text );
+
 			//Remove "In other languages" section from starwars wikis that looks like this:
 			//
 			//<div id="p-lang" class="portlet">
