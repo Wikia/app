@@ -1,4 +1,44 @@
 <?php
+// This is a very temporary code to help track https://wikia-inc.atlassian.net/browse/PLATFORM-1355
+// @author: Inez
+class SomethingToNothingLogger {
+
+	var $active = false;
+	var $wt;
+
+	public function __construct( $wt, $title ) {
+		if ( ! ( $title && $title->exists() && $title->isContentPage() ) ) {
+			return;
+		}
+		$wtTrimmed = trim( $wt );
+		// only if there is "decent" amount of wikitext
+		if ( strlen( $wtTrimmed ) < 200 ) {
+			return;
+		}
+		// ignore if it looks like wikitext with categories only
+		if ( startsWith( $wtTrimmed, '[[' ) && endsWith( $wtTrimmed, ']]' ) ) {
+			return;
+		}
+		$this->active = true;
+		$this->wt = $wt;
+	}
+
+	public function logIfEmpty( $wt ) {
+		if ( !$this->active ) {
+			return;
+		}
+
+		if ( trim( $wt ) === '' ) {
+			$this->active = false; // just so we log once
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'SomethingToNothingLogger-v1', [
+				'exception' => new Exception(), // log the backtrace
+				'wt' => substring( $this->wt, 0, 100 ), // log a little bit of original wikitext,
+				'SCRIPT_URI' => $_SERVER[ 'SCRIPT_URI' ]
+			] );
+		}
+	}
+
+}
 /**
  * @defgroup Parser Parser
  *
@@ -347,6 +387,7 @@ class Parser {
 		wfProfileIn( __METHOD__ );
 		wfProfileIn( $fname );
 
+		$stnLogger = new SomethingToNothingLogger( $text, $title );
 		// Wikia change begin - @author: wladek
 		$wikitextSize = strlen($text);
 		// Wikia change end
@@ -367,9 +408,12 @@ class Parser {
 		wfRunHooks( 'ParserBeforeStrip', array( &$this, &$text, &$this->mStripState ) );
 		# No more strip!
 		wfRunHooks( 'ParserAfterStrip', array( &$this, &$text, &$this->mStripState ) );
-		$text = $this->internalParse( $text );
+		$stnLogger->logIfEmpty( $text );
+		$text = $this->internalParse( $text, true, false, $stnLogger );
+		$stnLogger->logIfEmpty( $text );
 
 		$text = $this->mStripState->unstripGeneral( $text );
+		$stnLogger->logIfEmpty( $text );
 
 		# Clean up special characters, only run once, next-to-last before doBlockLevels
 		$fixtags = array(
@@ -390,7 +434,9 @@ class Parser {
 		/* Wikia change end */
 
 		$text = $this->doBlockLevels( $text, $linestart );
+		$stnLogger->logIfEmpty( $text );
 		$this->replaceLinkHolders( $text );
+		$stnLogger->logIfEmpty( $text );
 
 		/**
 		 * The input doesn't get language converted if
@@ -436,16 +482,21 @@ class Parser {
 		}
 
 		$text = $this->mStripState->unstripNoWiki( $text );
+		$stnLogger->logIfEmpty( $text );
 
 		wfRunHooks( 'ParserBeforeTidy', array( &$this, &$text ) );
 
 		$text = $this->replaceTransparentTags( $text );
+		$stnLogger->logIfEmpty( $text );
 		$text = $this->mStripState->unstripGeneral( $text );
+		$stnLogger->logIfEmpty( $text );
 
 		$text = Sanitizer::normalizeCharReferences( $text );
+		$stnLogger->logIfEmpty( $text );
 
 		if ( ( $wgUseTidy && $this->mOptions->getTidy() ) || $wgAlwaysUseTidy ) {
 			$text = MWTidy::tidy( $text );
+			$stnLogger->logIfEmpty( $text );
 		} else {
 			# attempt to sanitize at least some nesting problems
 			# (bug #2702 and quite a few others)
@@ -472,6 +523,7 @@ class Parser {
 				array_keys( $tidyregs ),
 				array_values( $tidyregs ),
 				$text );
+			$stnLogger->logIfEmpty( $text );
 		}
 		global $wgExpensiveParserFunctionLimit;
 		if ( $this->mExpensiveFunctionCount > $wgExpensiveParserFunctionLimit ) {
@@ -1186,13 +1238,16 @@ class Parser {
 	 *
 	 * @return string
 	 */
-	function internalParse( $text, $isMain = true, $frame = false ) {
+	function internalParse( $text, $isMain = true, $frame = false, $stnLogger = null ) {
 		wfProfileIn( __METHOD__ );
 
 		$origText = $text;
 
 		# Hook to suspend the parser in this state
 		if ( !wfRunHooks( 'ParserBeforeInternalParse', array( &$this, &$text, &$this->mStripState ) ) ) {
+			if ( $stnLogger !== null ) {
+				$stnLogger->logIfEmpty( $text );
+			}
 			wfProfileOut( __METHOD__ );
 			return $text ;
 		}
@@ -1208,39 +1263,84 @@ class Parser {
 			}
 			$dom = $this->preprocessToDom( $text, $flag );
 			$text = $frame->expand( $dom );
+			if ( $stnLogger !== null ) {
+				$stnLogger->logIfEmpty( $text );
+			}
 		} else {
 			# if $frame is not provided, then use old-style replaceVariables
 			$text = $this->replaceVariables( $text );
+			if ( $stnLogger !== null ) {
+				$stnLogger->logIfEmpty( $text );
+			}
 		}
 
 		$text = Sanitizer::removeHTMLtags( $text, array( &$this, 'attributeStripCallback' ), false, array_keys( $this->mTransparentTagHooks ) );
+		if ( $stnLogger !== null ) {
+			$stnLogger->logIfEmpty( $text );
+		}
 		wfRunHooks( 'InternalParseBeforeLinks', array( &$this, &$text, &$this->mStripState ) );
+		if ( $stnLogger !== null ) {
+			$stnLogger->logIfEmpty( $text );
+		}
 
 		# Tables need to come after variable replacement for things to work
 		# properly; putting them before other transformations should keep
 		# exciting things like link expansions from showing up in surprising
 		# places.
 		$text = $this->doTableStuff( $text );
+		if ( $stnLogger !== null ) {
+			$stnLogger->logIfEmpty( $text );
+		}
 
 		$text = preg_replace( '/(^|\n)-----*/', '\\1<hr />', $text );
+		if ( $stnLogger !== null ) {
+			$stnLogger->logIfEmpty( $text );
+		}
 
 		$text = $this->doDoubleUnderscore( $text );
+		if ( $stnLogger !== null ) {
+			$stnLogger->logIfEmpty( $text );
+		}
 
 		$text = $this->doHeadings( $text );
+		if ( $stnLogger !== null ) {
+			$stnLogger->logIfEmpty( $text );
+		}
 		if ( $this->mOptions->getUseDynamicDates() ) {
 			$df = DateFormatter::getInstance();
 			$text = $df->reformat( $this->mOptions->getDateFormat(), $text );
+			if ( $stnLogger !== null ) {
+				$stnLogger->logIfEmpty( $text );
+			}
 		}
 		$text = $this->replaceInternalLinks( $text );
+		if ( $stnLogger !== null ) {
+			$stnLogger->logIfEmpty( $text );
+		}
 		$text = $this->doAllQuotes( $text );
+		if ( $stnLogger !== null ) {
+			$stnLogger->logIfEmpty( $text );
+		}
 		$text = $this->replaceExternalLinks( $text );
+		if ( $stnLogger !== null ) {
+			$stnLogger->logIfEmpty( $text );
+		}
 
 		# replaceInternalLinks may sometimes leave behind
 		# absolute URLs, which have to be masked to hide them from replaceExternalLinks
 		$text = str_replace( $this->mUniqPrefix.'NOPARSE', '', $text );
+		if ( $stnLogger !== null ) {
+			$stnLogger->logIfEmpty( $text );
+		}
 
 		$text = $this->doMagicLinks( $text );
+		if ( $stnLogger !== null ) {
+			$stnLogger->logIfEmpty( $text );
+		}
 		$text = $this->formatHeadings( $text, $origText, $isMain );
+		if ( $stnLogger !== null ) {
+			$stnLogger->logIfEmpty( $text );
+		}
 
 		wfProfileOut( __METHOD__ );
 		return $text;
