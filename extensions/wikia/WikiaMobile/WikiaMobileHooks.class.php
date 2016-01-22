@@ -140,7 +140,7 @@ class WikiaMobileHooks {
 
 			//remove inline styling to avoid weird results and optimize the output size
 			$attributesToStrip = [ 'style', 'color', 'bgcolor', 'border', 'align', 'cellspacing', 'cellpadding', 'hspace', 'vspace' ];
-			$text = WikiaMobileHooks::stripAttributes( $text, $attributesToStrip );
+			$text = stripAttributes( $text, $attributesToStrip );
 
 			//Remove "In other languages" section from starwars wikis that looks like this:
 			//
