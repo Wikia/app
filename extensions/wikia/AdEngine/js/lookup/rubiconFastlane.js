@@ -167,7 +167,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 
 	function encodeParamsForTracking(params) {
 		if (!params[rubiconTierKey]) {
-			return {};
+			return;
 		}
 
 		return params[rubiconTierKey].join(';');

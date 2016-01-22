@@ -26,7 +26,7 @@ class PhalanxUserModel extends PhalanxModel {
 		$this->user->mBlock->setBlocker( User::newFromID( $this->block->authorId ) );
 		// public
 		$this->user->mBlock->mExpiry = ( isset( $this->block->expires ) && !empty( $this->block->expires ) ) ? $this->block->expires : 'infinity';
-		$this->user->mBlock->mTimestamp = wfTimestampNow();
+		$this->user->mBlock->mTimestamp = ( isset( $this->block->timestamp ) ? $this->block->timestamp : wfTimestampNow() );
 		$this->user->mBlock->mAddress = $this->block->text;
 
 		if ( $type == 'ip' ) {
