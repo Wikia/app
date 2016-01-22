@@ -31,9 +31,7 @@ class SomethingToNothingLogger {
 		if ( trim( $wt ) === '' ) {
 			$this->active = false; // just so we log once
 			\Wikia\Logger\WikiaLogger::instance()->debug( 'SomethingToNothingLogger-v1', [
-				'exception' => new Exception(), // log the backtrace
-				'wt' => substring( $this->wt, 0, 100 ), // log a little bit of original wikitext,
-				'SCRIPT_URI' => $_SERVER[ 'SCRIPT_URI' ]
+				'exception' => new Exception() // log the backtrace
 			] );
 		}
 	}
