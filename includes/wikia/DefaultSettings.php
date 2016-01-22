@@ -1373,6 +1373,13 @@ $wgSitewideDisableIVW2 = false;
 $wgSitewideDisableIVW3 = false;
 
 /**
+ * @name $wgAnalyticsDriverIVW3Countries
+ *
+ * List of countries with enabled IVW3 tracking
+ */
+$wgAnalyticsDriverIVW3Countries = ['AT', 'CH', 'DE'];
+
+/**
  * @name $wgSitewideDisableLiftium
  * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableLiftium

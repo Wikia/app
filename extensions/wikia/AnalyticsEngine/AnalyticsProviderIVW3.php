@@ -35,8 +35,9 @@ class AnalyticsProviderIVW3 implements iAnalyticsProvider {
 	}
 
 	private function trackPageView() {
-		global $wgCityId;
+		global $wgCityId, $wgAnalyticsDriverIVW3Countries;
 
+		$countries = json_encode( $wgAnalyticsDriverIVW3Countries );
 		$vertical = HubService::getVerticalNameForComscore( $wgCityId );
 		$url = self::$libraryUrl;
 		$iamData = json_encode( [
@@ -54,7 +55,7 @@ CODE;
 		return <<<CODE
 <!-- Begin IVW3 Tag -->
 <script type="text/javascript">
-	if (window.Wikia && window.Wikia.geo.isProperGeo(['DE', 'AT', 'CH'])) {
+	if (window.Wikia && window.Wikia.geo.isProperGeo({$countries})) {
 		window.ivw3Initialized = true;
 		document.write({$ivwScriptTagEscaped});
 	}

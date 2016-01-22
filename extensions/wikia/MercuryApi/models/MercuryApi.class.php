@@ -107,7 +107,7 @@ class MercuryApi {
 		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin, $wgDisableAnonymousEditing,
 			   $wgLanguageCode, $wgContLang, $wgCityId, $wgEnableNewAuth, $wgDisableAnonymousUploadForMercury,
 			   $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff, $wgDisableMobileSectionEditor,
-			   $wgEnableDiscussions, $wgEnableGlobalNav2016;
+			   $wgEnableDiscussions, $wgAnalyticsDriverIVW3Countries, $wgEnableGlobalNav2016;
 
 		return [
 			'cacheBuster' => (int) $wgCacheBuster,
@@ -133,9 +133,14 @@ class MercuryApi {
 			'theme' => SassUtil::getOasisSettings(),
 			'enableGlobalNav2016' => $wgEnableGlobalNav2016,
 			'tracking' => [
-				'ivw3' => AnalyticsProviderIVW3::isEnabled(),
-				'nielsen' => AnalyticsProviderNielsen::isEnabled(),
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
+				'ivw3' => [
+					'enabled' => AnalyticsProviderIVW3::isEnabled(),
+					'countries' => $wgAnalyticsDriverIVW3Countries,
+				],
+				'nielsen' => [
+					'enabled' => AnalyticsProviderNielsen::isEnabled(),
+				]
 			],
 			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId )
 		];
