@@ -3,6 +3,8 @@
 class AnalyticsProviderIVW3 implements iAnalyticsProvider {
 
 	private static $libraryUrl = 'https://script.ioam.de/iam.js';
+	private static $siteId = 'wikia';
+	private static $template = 'extensions/wikia/AnalyticsEngine/templates/ivw3.mustache';
 
 	static public function onInstantGlobalsGetVariables( array &$vars )
 	{
@@ -29,38 +31,22 @@ class AnalyticsProviderIVW3 implements iAnalyticsProvider {
 	}
 
 	static public function isEnabled() {
-		global $wgSitewideDisableIVW3, $wgNoExternals;
+		global $wgSitewideDisableIVW3, $wgNoExternals, $wgAnalyticsDriverIVW3Countries;
 
-		return !$wgSitewideDisableIVW3 && !$wgNoExternals;
+		return !$wgSitewideDisableIVW3 && !$wgNoExternals && !empty( $wgAnalyticsDriverIVW3Countries );
 	}
 
 	private function trackPageView() {
 		global $wgCityId, $wgAnalyticsDriverIVW3Countries;
 
-		$countries = json_encode( $wgAnalyticsDriverIVW3Countries );
-		$vertical = HubService::getVerticalNameForComscore( $wgCityId );
-		$url = self::$libraryUrl;
-		$iamData = json_encode( [
-				'st' => 'wikia',
-				'cp' => $vertical,
-				'sv' => 'ke',
-		] );
-
-		$ivwScriptTag = <<<CODE
-<script type="text/javascript" src="{$url}"></script>
-<script type="text/javascript">window.iom.c({$iamData}, 2);</script>
-CODE;
-		$ivwScriptTagEscaped = json_encode($ivwScriptTag);
-
-		return <<<CODE
-<!-- Begin IVW3 Tag -->
-<script type="text/javascript">
-	if (window.Wikia && window.Wikia.geo.isProperGeo({$countries})) {
-		window.ivw3Initialized = true;
-		document.write({$ivwScriptTagEscaped});
-	}
-</script>
-<!-- End IVW3 Tag -->
-CODE;
+		return \MustacheService::getInstance()->render(
+			self::$template,
+			[
+				'countries' => json_encode( $wgAnalyticsDriverIVW3Countries ),
+				'siteId' => self::$siteId,
+				'url' => self::$libraryUrl,
+				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
+			]
+		);
 	}
 }
