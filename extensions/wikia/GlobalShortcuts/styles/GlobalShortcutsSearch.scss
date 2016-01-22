@@ -1,10 +1,10 @@
 @import "skins/shared/color";
 
 #GlobalShortcutsSearch.global-shortcuts-search {
-	font-size: 14px;
-
 	border: 0;
+	font-size: 14px;
 	height: 400px;
+
 	> header {
 		display: none;
 	}
@@ -12,6 +12,7 @@
 	> section {
 		height: 100%;
 		overflow: auto;
+
 		.col {
 			box-sizing: border-box;
 			float: left;
@@ -27,6 +28,7 @@
 		    position: relative;
 			clear: both;
 		}
+
 		#global_shortcuts_search_field {
 			background-image: url('/extensions/wikia/GlobalShortcuts/images/keyboard.svg')!important; /* inline */
 			background-position: 0px -9px;
@@ -48,17 +50,19 @@
 		border-bottom: 1px solid #cacaca;
 		margin-bottom: 20px;
 	}
+
 	.key-list {
 		list-style: none;
 		overflow: hidden;
 	}
-  	.key-combination {
-	  	margin-bottom: 8px;
-		width: 50%;
+
+	.key-combination {
 		line-height: 22px;
+		margin-bottom: 8px;
+		width: 50%;
 	}
 	.key-combination, .key-combination-in-suggestions {
-	  	float: right;
+		float: right;
 		text-align: left;
 	}
 	.key {
@@ -77,7 +81,7 @@
 		width: 20px;
 	}
 
-  	.label {
+	.label {
 		clear: both;
 		float: left;
 		margin-bottom: 8px;
@@ -88,8 +92,8 @@
 		color: #545454;
 	}
 
-  	.global-shortcuts-field-wrapper{
-	  	border-bottom: 1px solid #bbbbbb;
+	.global-shortcuts-field-wrapper{
+		border-bottom: 1px solid #bbbbbb;
 	}
 
 	.autocomplete-suggestions {
@@ -102,18 +106,21 @@
 			font-weight: bold;
 		}
 	}
+
 	.autocomplete-group {
 		margin: 20px 0 15px 0;
 		padding: 4px 4px;
 	}
+
 	.autocomplete-suggestion {
-		cursor: pointer;
 		border: 0;
 		box-shadow: none;
-		padding: 4px 4px;
+		cursor: pointer;
 		font-size: 14px;
 		line-height: 25px;
+		padding: 4px 4px;
 	}
+
 	.autocomplete-selected {
 		background-color: $color-menu-highlight;
 	}

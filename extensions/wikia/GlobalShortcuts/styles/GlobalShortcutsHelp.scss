@@ -26,8 +26,8 @@
 
 		.key {
 			height: 25px;
-			vertical-align: middle;
 			margin: 0;
+			vertical-align: middle;
 		}
 	}
 
@@ -41,10 +41,10 @@
 	}
 	.key-combination {
 		float: right;
+		line-height: 22px;
+		margin-bottom: 8px;
 		text-align: left;
 		width: 50%;
-		margin-bottom: 8px;
-		line-height: 22px;
 
 	}
 	.key {
