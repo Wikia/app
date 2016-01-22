@@ -359,6 +359,42 @@ class MercuryApiController extends WikiaController {
 		$this->response->setCacheValidity( self:: WIKI_VARIABLES_CACHE_TTL );
 	}
 
+	public function getArticleFromWikitext() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+
+		$data = [
+			'details' => [
+				'id' => 666,
+				'title' => 'diana',
+				'ns' => 0
+			],
+			'isMainPage' => false,
+			'article' => [
+				'content' => '<div class="context-link">For a list of unique weapon locations in Fallout 4,
+					see <a href="/wiki/Fallout_4_unique_weapons" title="Fallout 4 unique weapons">Fallout 4 unique weapons
+					</a>.For a list of legendary effects for weapons, see <a href="/wiki/Legendary_weapon_effects"
+					title="Legendary weapon effects">Legendary weapon effects</a>.</div> <p><br></p> <p>Unlike previous
+					installments, in Fallout 4, weapons fall under three classifications: Normal, Legendary, and Unique.
+					Normal weapons have no special statistics on them whatsoever. Legendary weapons come with random
+					bonuses applied to them, and are only dropped by Legendary Enemies. Unique weapons are weapons
+					that are already named and will always retain the same special bonus. Uniques are typically either
+					bought off of merchants or quest rewards. </p> <p>All stats are given with standard weapon modifications.',
+				'media' => [],
+				'users' => [],
+				'categories' => [],
+				'displayTitle' => 'Fallout 4 weapons'
+			],
+			'topContributors' => [],
+			'htmlTitle' => 'Fallout 4 weapons - Fallout Wiki - Wikia',
+			'adsContext' => [
+				'opts' => []
+			]
+		];
+
+		$this->response->setVal( 'data', $data );
+	}
+
 	/**
 	 * @throws NotFoundApiException
 	 * @throws BadRequestApiException
