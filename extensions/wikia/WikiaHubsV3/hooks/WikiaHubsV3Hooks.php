@@ -7,7 +7,7 @@ class WikiaHubsV3Hooks {
 	 *
 	 * @return true because it's a hook
 	 */
-	static public function onArticleFromTitle(Title $title, $article) {
+	static public function onArticleFromTitle(Title $title, &$article) {
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 
