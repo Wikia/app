@@ -101,6 +101,7 @@
 <?php } ?>
 <?= $bottomScripts ?>
 
+<?= $nielsen ?>
 </body>
 
 <?= wfReportTime() . "\n" ?>

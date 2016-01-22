@@ -5,6 +5,7 @@ class GlobalNavigationHelper {
 	const DEFAULT_LANG = 'en';
 	const USE_LANG_PARAMETER = '?uselang=';
 	const CENTRAL_WIKI_SEARCH = '/wiki/Special:Search';
+	const WAM_LANG_CODE_PARAMETER = '?langCode=';
 
 	/**
 	 * @var WikiaCorporateModel
@@ -32,10 +33,10 @@ class GlobalNavigationHelper {
 	public function getCentralUrlFromGlobalTitle( $lang ) {
 		$out = '/';
 
-		$title = $this->wikiaLogoHelper->getCentralWikiUrlForLangIfExists($lang);
-		if ($title) {
+		$title = $this->wikiaLogoHelper->getCentralWikiUrlForLangIfExists( $lang );
+		if ( $title ) {
 			$out = $title->getServer();
-		} else if ( $title =$this->wikiaLogoHelper->getCentralWikiUrlForLangIfExists( self::DEFAULT_LANG ) ) {
+		} else if ( $title = $this->wikiaLogoHelper->getCentralWikiUrlForLangIfExists( self::DEFAULT_LANG ) ) {
 			$out = $title->getServer();
 		}
 
@@ -79,8 +80,8 @@ class GlobalNavigationHelper {
 	public function getLangForSearchResults() {
 		global $wgLanguageCode, $wgRequest;
 
-		$resultsLang = $wgRequest->getVal('resultsLang');
-		if (!empty($resultsLang)) {
+		$resultsLang = $wgRequest->getVal( 'resultsLang' );
+		if ( !empty( $resultsLang ) ) {
 			return $resultsLang;
 		} else {
 			return $wgLanguageCode;
@@ -93,5 +94,59 @@ class GlobalNavigationHelper {
 			NS_SPECIAL,
 			WikiService::WIKIAGLOBAL_CITY_ID
 		)->getFullURL();
+	}
+
+	public function getMenuNodes2016() {
+		global $wgLang;
+
+		$exploreDropdownLinks = [];
+
+		$WAMLinkLabel = wfMessage( 'global-navigation-wam-link-label' );
+		$CommunityLinkLabel = wfMessage( 'global-navigation-community-link-label');
+		$exploreWikiaLabel = wfMessage( 'global-navigation-explore-wikia-link-label');
+
+		$hubsNodes = ( new NavigationModel( true /* useSharedMemcKey */ ) )->getTree(
+			NavigationModel::TYPE_MESSAGE,
+			'global-navigation-menu-hubs',
+			[3] // max 3 links
+		);
+
+		// Link to WAM - Top Communities
+		$exploreDropdownLinks[] = [
+			'text' => $WAMLinkLabel->plain(),
+			'textEscaped' => $WAMLinkLabel->escaped(),
+			'href' => $this->getWAMLinkForLang( $wgLang->getCode() ),
+			'trackingLabel' => 'top-communities',
+		];
+
+		//Link to Community Central
+		$exploreDropdownLinks[] = [
+			'text' => $CommunityLinkLabel->plain(),
+			'textEscaped' => $CommunityLinkLabel->escaped(),
+			'href' => wfMessage('global-navigation-community-link')->plain(),
+			'trackingLabel' => 'community-central',
+		];
+
+		return [
+			'hubs' => $hubsNodes,
+			'exploreDropdown' => $exploreDropdownLinks,
+			'exploreWikia' => [
+				'text' => $exploreWikiaLabel->plain(),
+				'textEscaped' => $exploreWikiaLabel->escaped(),
+				'href' => wfMessage('global-navigation-explore-wikia-link')->plain(),
+				'trackingLabel' => 'explore-wikia',
+			]
+		];
+	}
+
+	public function getWAMLinkForLang( $lang ) {
+		$wamService = new WAMService();
+		$wamDates = $wamService->getWamIndexDates();
+
+		if ( $lang === 'en' || !in_array( $lang, $wamService->getWAMLanguages( $wamDates['max_date'] ) ) ) {
+			return WAMService::WAM_LINK;
+		} else {
+			return WAMService::WAM_LINK . self::WAM_LANG_CODE_PARAMETER . $lang;
+		}
 	}
 }

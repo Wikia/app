@@ -125,6 +125,11 @@ abstract class PhalanxModel extends WikiaObject {
 		$fallback = "{$method}_{$type}_old";
 		$ret = false;
 		if ( method_exists( $this, $fallback ) ) {
+			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+				'method' => $method,
+				'exception' => new Exception( 'Phalanx fallback triggered' )
+			] );
+
 			Wikia::log( __METHOD__, __LINE__, "Call method from previous version of Phalanx - check Phalanx service!\n" );
 			$ret = call_user_func( array( $this, $fallback ) );
 		}

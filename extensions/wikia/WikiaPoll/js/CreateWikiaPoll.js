@@ -104,11 +104,13 @@ var CreateWikiaPoll = {
 	},
 
 	onSave: function(event) {
+		var formData = $("#CreateWikiaPoll").find("form").serialize();
+
 		event.preventDefault();
 		
 		if ($("#CreateWikiaPoll").data('pollId')) {
 			// editing existing poll
-			$.get(wgScript + '?action=ajax&rs=WikiaPollAjax&method=update', $("#CreateWikiaPoll").find("form").serialize(), function(data) {
+			$.post(wgScript + '?action=ajax&rs=WikiaPollAjax&method=update', formData, function(data) {
 				if ($("#CreateWikiaPoll").closest(".modalWrapper").exists()) { // in modal
 					if (data.success) {
 						$("#CreateWikiaPoll").closest(".modalWrapper").closeModal();
@@ -123,7 +125,7 @@ var CreateWikiaPoll = {
 			});
 		} else {
 			// saving new poll
-			$.get(wgScript + '?action=ajax&rs=WikiaPollAjax&method=create', $("#CreateWikiaPoll").find("form").serialize(), function(data) {
+			$.post(wgScript + '?action=ajax&rs=WikiaPollAjax&method=create', formData, function(data) {
 				if ($("#CreateWikiaPoll").closest(".modalWrapper").exists()) { // in modal
 					if (data.success) {
 						RTE.mediaEditor._add("[[" + data.question + "]]");
