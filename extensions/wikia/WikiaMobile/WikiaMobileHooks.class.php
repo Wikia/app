@@ -124,11 +124,8 @@ class WikiaMobileHooks {
 		//cleanup page output from unwanted stuff
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 			//remove inline styling to avoid weird results and optimize the output size
-			$text = preg_replace(
-				'/\s+(style|color|bgcolor|border|align|cellspacing|cellpadding|hspace|vspace)=(\'|")[^"\']*(\'|")/im',
-				'',
-				$text
-			);
+			$attributesToStrip = [ 'style', 'color', 'bgcolor', 'border', 'align', 'cellspacing', 'cellpadding', 'hspace', 'vspace' ];
+			$text = HtmlHelper::stripAttributes( $text, $attributesToStrip );
 
 			//Remove "In other languages" section from starwars wikis that looks like this:
 			//
@@ -152,6 +149,9 @@ class WikiaMobileHooks {
 					. '</div>';
 				$text = preg_replace(":$regex:im", '',	$text);
 			}
+
+			//don't let the article content be an empty space
+			$text = trim( $text );
 		}
 
 		wfProfileOut( __METHOD__ );
