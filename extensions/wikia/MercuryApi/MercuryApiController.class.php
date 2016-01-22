@@ -204,7 +204,8 @@ class MercuryApiController extends WikiaController {
 				'hubsLinks' => $navigationNodes['hubs'],
 				'exploreWikia' => $navigationNodes['exploreWikia'],
 				'exploreWikiaMenu' => $navigationNodes['exploreDropdown'],
-				'localNav' => $localNavigation
+				'localNav' => $localNavigation,
+				'fandomLabel' => wfMessage( 'global-navigation-home-of-fandom' )->escaped()
 			];
 		}
 	}
