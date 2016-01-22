@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 		var context = adContext.getContext(),
 			isEnoughSpace = false,
 			enabled = false,
-			pushed = false,
+			adPushed = false,
 			globalNavigationHeight = $('#globalNavigation').height(),
 			margin = 10,
 			minDistance = 800,
@@ -86,7 +86,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				enabled = false;
 			}
 
-			if (!enabled && isEnoughSpace) {
+			if (!enabled && isEnoughSpace && win.scrollY > startPosition) {
 				log(['handleFloatingMedrec', 'Enabling floating medrec'], 'debug', logGroup);
 
 				win.addEventListener('scroll', update);
@@ -94,9 +94,10 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 
 				enabled = true;
 
-				if (!pushed) {
+				if (!adPushed) {
+					$placeHolder.append($adSlot);
 					win.adslots2.push(slotName);
-					pushed = true;
+					adPushed = true;
 				}
 			}
 		}
@@ -117,12 +118,8 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				return;
 			}
 
-			$placeHolder.append($adSlot);
-
 			win.addEventListener('scroll', adHelper.throttle(handleFloatingMedrec));
 			win.addEventListener('resize', adHelper.throttle(handleFloatingMedrec));
-
-			handleFloatingMedrec();
 		}
 
 		start();
