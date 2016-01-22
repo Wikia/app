@@ -5,6 +5,7 @@ class SomethingToNothingLogger {
 
 	var $active = false;
 	var $wt;
+	var $prev = '';
 
 	public function __construct( $wt, $title ) {
 		if ( ! ( $title && $title->exists() && $title->isContentPage() ) ) {
@@ -30,10 +31,14 @@ class SomethingToNothingLogger {
 
 		if ( trim( $wt ) === '' ) {
 			$this->active = false; // just so we log once
-			\Wikia\Logger\WikiaLogger::instance()->debug( 'SomethingToNothingLogger-v1', [
-				'exception' => new Exception() // log the backtrace
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'SomethingToNothingLogger-v2', [
+				'exception' => new Exception(), // log the backtrace
+				'prev' => substr($this->prev, 0, 1000),
+				'wt' => substr($this->wt, 0, 1000)
 			] );
 		}
+
+		$this->prev = $wt;
 	}
 
 }
