@@ -54,6 +54,18 @@ class HtmlHelperTest extends WikiaBaseTest {
 				'Strips attributes from successive tags'
 			],
 			[
+				'<div style="color: black"><a href="#">text</a></div>',
+				[ 'href', 'style' ],
+				'<div><a>text</a></div>',
+				'Strips attributes from nested tags'
+			],
+			[
+				'<a href=#>text</a>',
+				[ 'href' ],
+				'<a>text</a>',
+				'Strips attributes that have value not wrapped in quotes'
+			],
+			[
 				'<a href="#">text</a>',
 				[],
 				'<a href="#">text</a>',
