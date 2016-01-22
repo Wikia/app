@@ -35,7 +35,7 @@ define('GlobalShortcutsHelp',
 			var data = prepareData();
 
 			// Set modal content
-			setupTemplateClassificationModal(
+			setupModal(
 				mustache.render(templates.help, {actions: data})
 			);
 			require(['wikia.ui.factory'], function (uiFactory) {
@@ -110,7 +110,7 @@ define('GlobalShortcutsHelp',
 				.html(mw.message('template-class-global-shortcuts-press-to-explore-shortcuts', dotKey).parse());
 		}
 
-		function setupTemplateClassificationModal(content) {
+		function setupModal(content) {
 			/* Modal component configuration */
 			modalConfig = {
 				vars: {
