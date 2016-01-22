@@ -16,7 +16,7 @@ class SomethingToNothingLogger {
 			return;
 		}
 		// ignore if it looks like wikitext with categories only
-		if ( startsWith( $wtTrimmed, '[[' ) && startsWith( $endsWith, ']]' ) ) {
+		if ( startsWith( $wtTrimmed, '[[' ) && endsWith( $wtTrimmed, ']]' ) ) {
 			return;
 		}
 		$this->active = true;
