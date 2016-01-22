@@ -27,6 +27,7 @@ use Wikia\Logger\Loggable;
 use Wikia\Service\User\Attributes\UserAttributes;
 use Wikia\Service\User\Preferences\Migration\PreferenceCorrectionService;
 use Wikia\Service\User\Preferences\PreferenceService;
+use Wikia\Service\User\Permissions\PermissionsService;
 use Wikia\Util\Statistics\BernoulliTrial;
 use Wikia\Service\Helios\HeliosClient;
 
@@ -256,6 +257,11 @@ class User {
 	private $attributeService;
 
 	/**
+	 * @var UserPermissions
+	 */
+	private $permissionsService;
+
+	/**
 	 * Lightweight constructor for an anonymous user.
 	 * Use the User::newFrom* factory functions for other kinds of users.
 	 *
@@ -314,6 +320,17 @@ class User {
 		}
 
 		return $this->attributeService;
+	}
+
+	/**
+	 * @return UserPermissions
+	 */
+	private function userPermissions() {
+		if ( is_null( $this->permissionsService ) ) {
+			$this->permissionsService = Injector::getInjector()->get( PermissionsService::class );
+		}
+
+		return $this->permissionsService;
 	}
 
 	/**
@@ -1321,63 +1338,6 @@ class User {
 		foreach ( self::$mCacheVars as $var ) {
 			$this->$var = $user->$var;
 		}
-	}
-
-	/**
-	 * Load the groups from the database if they aren't already loaded.
-	 */
-	private function loadGroups() {
-		if ( is_null( $this->mGroups ) ) {
-			$dbr = wfGetDB( DB_MASTER );
-			$res = $dbr->select( 'user_groups',
-				array( 'ug_group' ),
-				array( 'ug_user' => $this->mId ),
-				__METHOD__ );
-			$this->mGroups = array();
-			foreach ( $res as $row ) {
-				$this->mGroups[] = $row->ug_group;
-			}
-		}
-		wfRunHooks( 'UserLoadGroups', array( $this ) );
-	}
-
-	/**
-	 * Add the user to the group if he/she meets given criteria.
-	 *
-	 * Contrary to autopromotion by \ref $wgAutopromote, the group will be
-	 *   possible to remove manually via Special:UserRights. In such case it
-	 *   will not be re-added automatically. The user will also not lose the
-	 *   group if they no longer meet the criteria.
-	 *
-	 * @param $event String key in $wgAutopromoteOnce (each one has groups/criteria)
-	 *
-	 * @return array Array of groups the user has been promoted to.
-	 *
-	 * @see $wgAutopromoteOnce
-	 */
-	public function addAutopromoteOnceGroups( $event ) {
-		global $wgAutopromoteOnceLogInRC;
-
-		$toPromote = array();
-		if ( $this->getId() ) {
-			$toPromote = Autopromote::getAutopromoteOnceGroups( $this, $event );
-			if ( count( $toPromote ) ) {
-				$oldGroups = $this->getGroups(); // previous groups
-				foreach ( $toPromote as $group ) {
-					$this->addGroup( $group );
-				}
-				$newGroups = array_merge( $oldGroups, $toPromote ); // all groups
-
-				$log = new LogPage( 'rights', $wgAutopromoteOnceLogInRC /* in RC? */ );
-				$log->addEntry( 'autopromote',
-					$this->getUserPage(),
-					'', // no comment
-					// These group names are "list to texted"-ed in class LogPage.
-					array( implode( ', ', $oldGroups ), implode( ', ', $newGroups ) )
-				);
-			}
-		}
-		return $toPromote;
 	}
 
 	/**
@@ -2935,105 +2895,6 @@ class User {
 	}
 
 	/**
-	 * Get the permissions this user has.
-	 * @return Array of String permission names
-	 */
-	public function getRights() {
-		if ( is_null( $this->mRights ) ) {
-			$this->mRights = self::getGroupPermissions( $this->getEffectiveGroups() );
-			wfRunHooks( 'UserGetRights', array( $this, &$this->mRights ) );
-			// Force reindexation of rights when a hook has unset one of them
-			$this->mRights = array_values( $this->mRights );
-		}
-		return $this->mRights;
-	}
-
-	/**
-	 * Get the list of explicit group memberships this user has.
-	 * The implicit * and user groups are not included.
-	 * @return Array of String internal group names
-	 */
-	public function getGroups() {
-		$this->load();
-		$this->loadGroups();
-		return $this->mGroups;
-	}
-
-	/**
-	 * Get the list of implicit group memberships this user has.
-	 * This includes all explicit groups, plus 'user' if logged in,
-	 * '*' for all accounts, and autopromoted groups
-	 * @param $recache Bool Whether to avoid the cache
-	 * @return Array of String internal group names
-	 */
-	public function getEffectiveGroups( $recache = false ) {
-		if ( $recache || is_null( $this->mEffectiveGroups ) ) {
-			wfProfileIn( __METHOD__ );
-			$this->mEffectiveGroups = array_unique( array_merge(
-				$this->getGroups(), // explicit groups
-				$this->getAutomaticGroups( $recache ) // implicit groups
-			) );
-			# Hook for additional groups
-			wfRunHooks( 'UserEffectiveGroups', array( &$this, &$this->mEffectiveGroups ) );
-			wfProfileOut( __METHOD__ );
-		}
-		return $this->mEffectiveGroups;
-	}
-
-	/**
-	 * Get the list of implicit group memberships this user has.
-	 * This includes 'user' if logged in, '*' for all accounts,
-	 * and autopromoted groups
-	 * @param $recache Bool Whether to avoid the cache
-	 * @return Array of String internal group names
-	 */
-	public function getAutomaticGroups( $recache = false ) {
-		if ( $recache || is_null( $this->mImplicitGroups ) ) {
-			wfProfileIn( __METHOD__ );
-			$this->mImplicitGroups = array( '*' );
-			if ( $this->getId() ) {
-				$this->mImplicitGroups[] = 'user';
-
-				$this->mImplicitGroups = array_unique( array_merge(
-					$this->mImplicitGroups,
-					Autopromote::getAutopromoteGroups( $this )
-				) );
-			}
-			if ( $recache ) {
-				# Assure data consistency with rights/groups,
-				# as getEffectiveGroups() depends on this function
-				$this->mEffectiveGroups = null;
-			}
-			wfProfileOut( __METHOD__ );
-		}
-		return $this->mImplicitGroups;
-	}
-
-	/**
-	 * Returns the groups the user has belonged to.
-	 *
-	 * The user may still belong to the returned groups. Compare with getGroups().
-	 *
-	 * The function will not return groups the user had belonged to before MW 1.17
-	 *
-	 * @return array Names of the groups the user has belonged to.
-	 */
-	public function getFormerGroups() {
-		if( is_null( $this->mFormerGroups ) ) {
-			$dbr = wfGetDB( DB_MASTER );
-			$res = $dbr->select( 'user_former_groups',
-				array( 'ufg_group' ),
-				array( 'ufg_user' => $this->mId ),
-				__METHOD__ );
-			$this->mFormerGroups = array();
-			foreach( $res as $row ) {
-				$this->mFormerGroups[] = $row->ufg_group;
-			}
-		}
-		return $this->mFormerGroups;
-	}
-
-	/**
 	 * Get the user's edit count.
 	 * @return Int
 	 */
@@ -3074,70 +2935,6 @@ class User {
 	}
 
 	/**
-	 * Add the user to the given group.
-	 * This takes immediate effect.
-	 * @param $group String Name of the group to add
-	 */
-	public function addGroup( $group ) {
-		if( wfRunHooks( 'UserAddGroup', array( $this, &$group )) ) {
-			$dbw = wfGetDB( DB_MASTER );
-			if( $this->getId() ) {
-				$dbw->insert( 'user_groups',
-					array(
-						'ug_user'  => $this->getID(),
-						'ug_group' => $group,
-					),
-					__METHOD__,
-					array( 'IGNORE' ) );
-			}
-
-			$this->loadGroups();
-			$this->mGroups[] = $group;
-			$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
-
-			$this->invalidateCache();
-
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Remove the user from the given group.
-	 * This takes immediate effect.
-	 * @param $group String Name of the group to remove
-	 */
-	public function removeGroup( $group ) {
-		$this->load();
-		if( wfRunHooks( 'UserRemoveGroup', array( $this, &$group ) ) ) {
-			$dbw = wfGetDB( DB_MASTER );
-			$dbw->delete( 'user_groups',
-				array(
-					'ug_user'  => $this->getID(),
-					'ug_group' => $group,
-				), __METHOD__ );
-			// Remember that the user was in this group
-			$dbw->insert( 'user_former_groups',
-				array(
-					'ufg_user'  => $this->getID(),
-					'ufg_group' => $group,
-				),
-				__METHOD__,
-				array( 'IGNORE' ) );
-
-			$this->loadGroups();
-			$this->mGroups = array_diff( $this->mGroups, array( $group ) );
-			$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
-
-			$this->invalidateCache();
-
-			return true;
-		}
-		return false;
-	}
-
-	/**
 	 * Get whether the user is logged in
 	 * @return Bool
 	 */
@@ -3164,67 +2961,6 @@ class User {
 	 */
 	public function equals( User $user ) {
 		return $this->getName() === $user->getName();
-	}
-
-	/**
-	 * Whether this user is Wikia staff or not
-	 * @return bool
-	 */
-	public function isStaff() {
-		return in_array( 'staff', $this->getEffectiveGroups() );
-	}
-
-	/**
-	 * Check if user is allowed to access a feature / make an action
-	 *
-	 * internal param \String $varargs permissions to test
-	 * @return Boolean: True if user is allowed to perform *any* of the given actions
-	 *
-	 * @return bool
-	 */
-	public function isAllowedAny( /*...*/ ){
-		$permissions = func_get_args();
-		foreach( $permissions as $permission ){
-			if( $this->isAllowed( $permission ) ){
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 *
-	 * internal param $varargs string
-	 * @return bool True if the user is allowed to perform *all* of the given actions
-	 */
-	public function isAllowedAll( /*...*/ ){
-		$permissions = func_get_args();
-		foreach( $permissions as $permission ){
-			if( !$this->isAllowed( $permission ) ){
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * Internal mechanics of testing a permission
-	 * @param $action String
-	 * @return bool
-	 */
-	public function isAllowed( $action = '' ) {
-		if ( $action === '' ) {
-			return true; // In the spirit of DWIM
-		}
-		# Patrolling may not be enabled
-		if( $action === 'patrol' || $action === 'autopatrol' ) {
-			global $wgUseRCPatrol, $wgUseNPPatrol;
-			if( !$wgUseRCPatrol && !$wgUseNPPatrol )
-				return false;
-		}
-		# Use strict parameter to avoid matching numeric 0 accidentally inserted
-		# by misconfiguration: 0 == 'foo'
-		return in_array( $action, $this->getRights(), true );
 	}
 
 	/**
@@ -4441,281 +4177,6 @@ class User {
 	}
 
 	/**
-	 * Get the permissions associated with a given list of groups
-	 *
-	 * @param $groups Array of Strings List of internal group names
-	 * @return Array of Strings List of permission key names for given groups combined
-	 */
-	public static function getGroupPermissions( $groups ) {
-		global $wgGroupPermissions, $wgRevokePermissions;
-		$rights = array();
-		// grant every granted permission first
-		foreach( $groups as $group ) {
-			if( isset( $wgGroupPermissions[$group] ) ) {
-				$rights = array_merge( $rights,
-					// array_filter removes empty items
-					array_keys( array_filter( $wgGroupPermissions[$group] ) ) );
-			}
-		}
-		// now revoke the revoked permissions
-		foreach( $groups as $group ) {
-			if( isset( $wgRevokePermissions[$group] ) ) {
-				$rights = array_diff( $rights,
-					array_keys( array_filter( $wgRevokePermissions[$group] ) ) );
-			}
-		}
-		return array_unique( $rights );
-	}
-
-	/**
-	 * Get all the groups who have a given permission
-	 *
-	 * @param $role String Role to check
-	 * @return Array of Strings List of internal group names with the given permission
-	 */
-	public static function getGroupsWithPermission( $role ) {
-		global $wgGroupPermissions;
-		$allowedGroups = array();
-		foreach ( $wgGroupPermissions as $group => $rights ) {
-			if ( isset( $rights[$role] ) && $rights[$role] ) {
-				$allowedGroups[] = $group;
-			}
-		}
-		return $allowedGroups;
-	}
-
-	/**
-	 * Get the localized descriptive name for a group, if it exists
-	 *
-	 * @param $group String Internal group name
-	 * @return String Localized descriptive group name
-	 */
-	public static function getGroupName( $group ) {
-		$msg = wfMessage( "group-$group" );
-		return $msg->isBlank() ? $group : $msg->text();
-	}
-
-	/**
-	 * Get the localized descriptive name for a member of a group, if it exists
-	 *
-	 * @param $group String Internal group name
-	 * @param $username String Username for gender (since 1.19)
-	 * @return String Localized name for group member
-	 */
-	public static function getGroupMember( $group, $username = '#' ) {
-		$msg = wfMessage( "group-$group-member", $username );
-		return $msg->isBlank() ? $group : $msg->text();
-	}
-
-	/**
-	 * Return the set of defined explicit groups.
-	 * The implicit groups (by default *, 'user' and 'autoconfirmed')
-	 * are not included, as they are defined automatically, not in the database.
-	 * @return Array of internal group names
-	 */
-	public static function getAllGroups() {
-		global $wgGroupPermissions, $wgRevokePermissions;
-		return array_diff(
-			array_merge( array_keys( $wgGroupPermissions ), array_keys( $wgRevokePermissions ) ),
-			self::getImplicitGroups()
-		);
-	}
-
-	/**
-	 * Get a list of all available permissions.
-	 * @return Array of permission names
-	 */
-	public static function getAllRights() {
-		if ( self::$mAllRights === false ) {
-			global $wgAvailableRights;
-			if ( count( $wgAvailableRights ) ) {
-				self::$mAllRights = array_unique( array_merge( self::$mCoreRights, $wgAvailableRights ) );
-			} else {
-				self::$mAllRights = self::$mCoreRights;
-			}
-			wfRunHooks( 'UserGetAllRights', array( &self::$mAllRights ) );
-		}
-		return self::$mAllRights;
-	}
-
-	/**
-	 * Get a list of implicit groups
-	 * @return Array of Strings Array of internal group names
-	 */
-	public static function getImplicitGroups() {
-		global $wgImplicitGroups;
-		$groups = $wgImplicitGroups;
-		wfRunHooks( 'UserGetImplicitGroups', array( &$groups ) );	#deprecated, use $wgImplictGroups instead
-		return $groups;
-	}
-
-	/**
-	 * Get the title of a page describing a particular group
-	 *
-	 * @param $group String Internal group name
-	 * @return Title|Bool Title of the page if it exists, false otherwise
-	 */
-	public static function getGroupPage( $group ) {
-		$msg = wfMessage( 'grouppage-' . $group )->inContentLanguage();
-		if( $msg->exists() ) {
-			$title = Title::newFromText( $msg->text() );
-			if( is_object( $title ) )
-				return $title;
-		}
-		return false;
-	}
-
-	/**
-	 * Create a link to the group in HTML, if available;
-	 * else return the group name.
-	 *
-	 * @param $group String Internal name of the group
-	 * @param $text String The text of the link
-	 * @return String HTML link to the group
-	 */
-	public static function makeGroupLinkHTML( $group, $text = '' ) {
-		if( $text == '' ) {
-			$text = self::getGroupName( $group );
-		}
-		$title = self::getGroupPage( $group );
-		if( $title ) {
-			return Linker::link( $title, htmlspecialchars( $text ) );
-		} else {
-			return $text;
-		}
-	}
-
-	/**
-	 * Create a link to the group in Wikitext, if available;
-	 * else return the group name.
-	 *
-	 * @param $group String Internal name of the group
-	 * @param $text String The text of the link
-	 * @return String Wikilink to the group
-	 */
-	public static function makeGroupLinkWiki( $group, $text = '' ) {
-		if( $text == '' ) {
-			$text = self::getGroupName( $group );
-		}
-		$title = self::getGroupPage( $group );
-		if( $title ) {
-			$page = $title->getPrefixedText();
-			return "[[$page|$text]]";
-		} else {
-			return $text;
-		}
-	}
-
-	/**
-	 * Returns an array of the groups that a particular group can add/remove.
-	 *
-	 * @param $group String: the group to check for whether it can add/remove
-	 * @return Array array( 'add' => array( addablegroups ),
-	 *     'remove' => array( removablegroups ),
-	 *     'add-self' => array( addablegroups to self),
-	 *     'remove-self' => array( removable groups from self) )
-	 */
-	public static function changeableByGroup( $group ) {
-		global $wgAddGroups, $wgRemoveGroups, $wgGroupsAddToSelf, $wgGroupsRemoveFromSelf;
-
-		$groups = array( 'add' => array(), 'remove' => array(), 'add-self' => array(), 'remove-self' => array() );
-		if( empty( $wgAddGroups[$group] ) ) {
-			// Don't add anything to $groups
-		} elseif( $wgAddGroups[$group] === true ) {
-			// You get everything
-			$groups['add'] = self::getAllGroups();
-		} elseif( is_array( $wgAddGroups[$group] ) ) {
-			$groups['add'] = $wgAddGroups[$group];
-		}
-
-		// Same thing for remove
-		if( empty( $wgRemoveGroups[$group] ) ) {
-		} elseif( $wgRemoveGroups[$group] === true ) {
-			$groups['remove'] = self::getAllGroups();
-		} elseif( is_array( $wgRemoveGroups[$group] ) ) {
-			$groups['remove'] = $wgRemoveGroups[$group];
-		}
-
-		// Re-map numeric keys of AddToSelf/RemoveFromSelf to the 'user' key for backwards compatibility
-		if( empty( $wgGroupsAddToSelf['user']) || $wgGroupsAddToSelf['user'] !== true ) {
-			foreach( $wgGroupsAddToSelf as $key => $value ) {
-				if( is_int( $key ) ) {
-					$wgGroupsAddToSelf['user'][] = $value;
-				}
-			}
-		}
-
-		if( empty( $wgGroupsRemoveFromSelf['user']) || $wgGroupsRemoveFromSelf['user'] !== true ) {
-			foreach( $wgGroupsRemoveFromSelf as $key => $value ) {
-				if( is_int( $key ) ) {
-					$wgGroupsRemoveFromSelf['user'][] = $value;
-				}
-			}
-		}
-
-		// Now figure out what groups the user can add to him/herself
-		if( empty( $wgGroupsAddToSelf[$group] ) ) {
-		} elseif( $wgGroupsAddToSelf[$group] === true ) {
-			// No idea WHY this would be used, but it's there
-			$groups['add-self'] = User::getAllGroups();
-		} elseif( is_array( $wgGroupsAddToSelf[$group] ) ) {
-			$groups['add-self'] = $wgGroupsAddToSelf[$group];
-		}
-
-		if( empty( $wgGroupsRemoveFromSelf[$group] ) ) {
-		} elseif( $wgGroupsRemoveFromSelf[$group] === true ) {
-			$groups['remove-self'] = User::getAllGroups();
-		} elseif( is_array( $wgGroupsRemoveFromSelf[$group] ) ) {
-			$groups['remove-self'] = $wgGroupsRemoveFromSelf[$group];
-		}
-
-		return $groups;
-	}
-
-	/**
-	 * Returns an array of groups that this user can add and remove
-	 * @return Array array( 'add' => array( addablegroups ),
-	 *  'remove' => array( removablegroups ),
-	 *  'add-self' => array( addablegroups to self),
-	 *  'remove-self' => array( removable groups from self) )
-	 */
-	public function changeableGroups() {
-		if( $this->isAllowed( 'userrights' ) ) {
-			// This group gives the right to modify everything (reverse-
-			// compatibility with old "userrights lets you change
-			// everything")
-			// Using array_merge to make the groups reindexed
-			$all = array_merge( User::getAllGroups() );
-			return array(
-				'add' => $all,
-				'remove' => $all,
-				'add-self' => array(),
-				'remove-self' => array()
-			);
-		}
-
-		// Okay, it's not so simple, we will have to go through the arrays
-		$groups = array(
-			'add' => array(),
-			'remove' => array(),
-			'add-self' => array(),
-			'remove-self' => array()
-		);
-		$addergroups = $this->getEffectiveGroups();
-
-		foreach( $addergroups as $addergroup ) {
-			$groups = array_merge_recursive(
-				$groups, $this->changeableByGroup( $addergroup )
-			);
-			$groups['add']    = array_unique( $groups['add'] );
-			$groups['remove'] = array_unique( $groups['remove'] );
-			$groups['add-self'] = array_unique( $groups['add-self'] );
-			$groups['remove-self'] = array_unique( $groups['remove-self'] );
-		}
-		return $groups;
-	}
-
-	/**
 	 * Increment the user's edit-count field.
 	 * Will have no effect for anonymous users.
 	 */
@@ -4754,18 +4215,6 @@ class User {
 		}
 		// edit count in user cache too
 		$this->invalidateCache();
-	}
-
-	/**
-	 * Get the description of a given right
-	 *
-	 * @param $right String Right to query
-	 * @return String Localized description of the right
-	 */
-	public static function getRightDescription( $right ) {
-		$key = "right-$right";
-		$msg = wfMessage( $key );
-		return $msg->isBlank() ? $right : $msg->text();
 	}
 
 	/**
@@ -5222,4 +4671,602 @@ class User {
 			]);
 	}
 
+
+
+	// User Permissions related functionality
+
+	/**
+	 * Get the list of explicit group memberships this user has.
+	 * The implicit * and user groups are not included.
+	 * @return Array of String internal group names
+	 */
+	public function getGroups() {
+		global $wgCityId;
+		return $this->userPermissions()->getExplicitUserGroups( $wgCityId, $this->getId() );
+	}
+
+	/**
+	 * Get the list of implicit group memberships this user has.
+	 * This includes all explicit groups, plus 'user' if logged in,
+	 * '*' for all accounts, and autopromoted groups
+	 * @param $recache Bool Whether to avoid the cache
+	 * @return Array of String internal group names
+	 */
+	public function getEffectiveGroups( $recache = false ) {
+		global $wgCityId;
+		return $this->userPermissions()->getEffectiveUserGroups( $wgCityId, $this, $recache );
+	}
+
+	/**
+	 * Get the list of implicit group memberships this user has.
+	 * This includes 'user' if logged in, '*' for all accounts,
+	 * and autopromoted groups
+	 * @param $recache Bool Whether to avoid the cache
+	 * @return Array of String internal group names
+	 */
+	public function getAutomaticGroups( $recache = false ) {
+		return $this->userPermissions()->getAutomaticUserGroups( $this, $recache );
+	}
+
+	//JCEL used in a few places, basically can stay as is.
+	//The hook is called in assets manager and top lists to add permissions and in top lists to remove one.
+	//For starters I'd assume the hooks can stay as is although they change permissions
+
+	/**
+	 * Get the permissions this user has.
+	 * @return Array of String permission names
+	 */
+	public function getRights() {
+		if ( is_null( $this->mRights ) ) {
+			$this->mRights = self::getGroupPermissions( $this->getEffectiveGroups() );
+			wfRunHooks( 'UserGetRights', array( $this, &$this->mRights ) );
+			// Force reindexation of rights when a hook has unset one of them
+			$this->mRights = array_values( $this->mRights );
+		}
+		return $this->mRights;
+	}
+
+	//JCEL only used in autopromote need to figure why
+
+	/**
+	 * Returns the groups the user has belonged to.
+	 *
+	 * The user may still belong to the returned groups. Compare with getGroups().
+	 *
+	 * The function will not return groups the user had belonged to before MW 1.17
+	 *
+	 * @return array Names of the groups the user has belonged to.
+	 */
+	public function getFormerGroups() {
+		if( is_null( $this->mFormerGroups ) ) {
+			$dbr = wfGetDB( DB_MASTER );
+			$res = $dbr->select( 'user_former_groups',
+				array( 'ufg_group' ),
+				array( 'ufg_user' => $this->mId ),
+				__METHOD__ );
+			$this->mFormerGroups = array();
+			foreach( $res as $row ) {
+				$this->mFormerGroups[] = $row->ufg_group;
+			}
+		}
+		return $this->mFormerGroups;
+	}
+
+	//JCEL needs rewriting to the new service. Hook handles global shared gropus, and some special case with
+	//content review where the addition of a group is disallowed.
+	//However hook after adding group of shared user starts a job 'addUserGroup' from ExactTargetUser
+
+
+	/**
+	 * Add the user to the given group.
+	 * This takes immediate effect.
+	 * @param $group String Name of the group to add
+	 */
+	public function addGroup( $group ) {
+		if( wfRunHooks( 'UserAddGroup', array( $this, &$group )) ) {
+			$dbw = wfGetDB( DB_MASTER );
+			if( $this->getId() ) {
+				$dbw->insert( 'user_groups',
+					array(
+						'ug_user'  => $this->getID(),
+						'ug_group' => $group,
+					),
+					__METHOD__,
+					array( 'IGNORE' ) );
+			}
+
+			$this->loadGroups();
+			$this->mGroups[] = $group;
+			$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
+
+			$this->invalidateCache();
+
+			return true;
+		}
+
+		return false;
+	}
+
+	//JCEL needs rewriting to the new service. Hook handles global shared gropus
+	//However hook after adding group of shared user starts a job 'removeUserGroup' from ExactTargetUser
+
+	/**
+	 * Remove the user from the given group.
+	 * This takes immediate effect.
+	 * @param $group String Name of the group to remove
+	 */
+	public function removeGroup( $group ) {
+		$this->load();
+		if( wfRunHooks( 'UserRemoveGroup', array( $this, &$group ) ) ) {
+			$dbw = wfGetDB( DB_MASTER );
+			$dbw->delete( 'user_groups',
+				array(
+					'ug_user'  => $this->getID(),
+					'ug_group' => $group,
+				), __METHOD__ );
+			// Remember that the user was in this group
+			$dbw->insert( 'user_former_groups',
+				array(
+					'ufg_user'  => $this->getID(),
+					'ufg_group' => $group,
+				),
+				__METHOD__,
+				array( 'IGNORE' ) );
+
+			$this->loadGroups();
+			$this->mGroups = array_diff( $this->mGroups, array( $group ) );
+			$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
+
+			$this->invalidateCache();
+
+			return true;
+		}
+		return false;
+	}
+
+
+	//JCEL can stay as is
+
+	/**
+	 * Get the permissions associated with a given list of groups
+	 *
+	 * @param $groups Array of Strings List of internal group names
+	 * @return Array of Strings List of permission key names for given groups combined
+	 */
+	public static function getGroupPermissions( $groups ) {
+		global $wgGroupPermissions, $wgRevokePermissions;
+		$rights = array();
+		// grant every granted permission first
+		foreach( $groups as $group ) {
+			if( isset( $wgGroupPermissions[$group] ) ) {
+				$rights = array_merge( $rights,
+					// array_filter removes empty items
+					array_keys( array_filter( $wgGroupPermissions[$group] ) ) );
+			}
+		}
+		// now revoke the revoked permissions
+		foreach( $groups as $group ) {
+			if( isset( $wgRevokePermissions[$group] ) ) {
+				$rights = array_diff( $rights,
+					array_keys( array_filter( $wgRevokePermissions[$group] ) ) );
+			}
+		}
+		return array_unique( $rights );
+	}
+
+	//JCEL can stay as is
+
+	/**
+	 * Get all the groups who have a given permission
+	 *
+	 * @param $role String Role to check
+	 * @return Array of Strings List of internal group names with the given permission
+	 */
+	public static function getGroupsWithPermission( $role ) {
+		global $wgGroupPermissions;
+		$allowedGroups = array();
+		foreach ( $wgGroupPermissions as $group => $rights ) {
+			if ( isset( $rights[$role] ) && $rights[$role] ) {
+				$allowedGroups[] = $group;
+			}
+		}
+		return $allowedGroups;
+	}
+
+	//JCEL can stay as is
+
+	/**
+	 * Return the set of defined explicit groups.
+	 * The implicit groups (by default *, 'user' and 'autoconfirmed')
+	 * are not included, as they are defined automatically, not in the database.
+	 * @return Array of internal group names
+	 */
+	public static function getAllGroups() {
+		global $wgGroupPermissions, $wgRevokePermissions;
+		return array_diff(
+			array_merge( array_keys( $wgGroupPermissions ), array_keys( $wgRevokePermissions ) ),
+			self::getImplicitGroups()
+		);
+	}
+
+	//JCEL needs to be moved to new service. Hook isn't used.
+
+	/**
+	 * Get a list of all available permissions.
+	 * @return Array of permission names
+	 */
+	public static function getAllRights() {
+		if ( self::$mAllRights === false ) {
+			global $wgAvailableRights;
+			if ( count( $wgAvailableRights ) ) {
+				self::$mAllRights = array_unique( array_merge( self::$mCoreRights, $wgAvailableRights ) );
+			} else {
+				self::$mAllRights = self::$mCoreRights;
+			}
+			wfRunHooks( 'UserGetAllRights', array( &self::$mAllRights ) );
+		}
+		return self::$mAllRights;
+	}
+
+	//JCel can stay as is/moved to service. Hook isn't used.
+
+	/**
+	 * Get a list of implicit groups
+	 * @return Array of Strings Array of internal group names
+	 */
+	public static function getImplicitGroups() {
+		global $wgImplicitGroups;
+		$groups = $wgImplicitGroups;
+		wfRunHooks( 'UserGetImplicitGroups', array( &$groups ) );	#deprecated, use $wgImplictGroups instead
+		return $groups;
+	}
+
+	//JCEL needs to be moved to new service, better understood.
+
+	/**
+	 * Returns an array of the groups that a particular group can add/remove.
+	 *
+	 * @param $group String: the group to check for whether it can add/remove
+	 * @return Array array( 'add' => array( addablegroups ),
+	 *     'remove' => array( removablegroups ),
+	 *     'add-self' => array( addablegroups to self),
+	 *     'remove-self' => array( removable groups from self) )
+	 */
+	public static function changeableByGroup( $group ) {
+		global $wgAddGroups, $wgRemoveGroups, $wgGroupsAddToSelf, $wgGroupsRemoveFromSelf;
+
+		$groups = array( 'add' => array(), 'remove' => array(), 'add-self' => array(), 'remove-self' => array() );
+		if( empty( $wgAddGroups[$group] ) ) {
+			// Don't add anything to $groups
+		} elseif( $wgAddGroups[$group] === true ) {
+			// You get everything
+			$groups['add'] = self::getAllGroups();
+		} elseif( is_array( $wgAddGroups[$group] ) ) {
+			$groups['add'] = $wgAddGroups[$group];
+		}
+
+		// Same thing for remove
+		if( empty( $wgRemoveGroups[$group] ) ) {
+		} elseif( $wgRemoveGroups[$group] === true ) {
+			$groups['remove'] = self::getAllGroups();
+		} elseif( is_array( $wgRemoveGroups[$group] ) ) {
+			$groups['remove'] = $wgRemoveGroups[$group];
+		}
+
+		// Re-map numeric keys of AddToSelf/RemoveFromSelf to the 'user' key for backwards compatibility
+		if( empty( $wgGroupsAddToSelf['user']) || $wgGroupsAddToSelf['user'] !== true ) {
+			foreach( $wgGroupsAddToSelf as $key => $value ) {
+				if( is_int( $key ) ) {
+					$wgGroupsAddToSelf['user'][] = $value;
+				}
+			}
+		}
+
+		if( empty( $wgGroupsRemoveFromSelf['user']) || $wgGroupsRemoveFromSelf['user'] !== true ) {
+			foreach( $wgGroupsRemoveFromSelf as $key => $value ) {
+				if( is_int( $key ) ) {
+					$wgGroupsRemoveFromSelf['user'][] = $value;
+				}
+			}
+		}
+
+		// Now figure out what groups the user can add to him/herself
+		if( empty( $wgGroupsAddToSelf[$group] ) ) {
+		} elseif( $wgGroupsAddToSelf[$group] === true ) {
+			// No idea WHY this would be used, but it's there
+			$groups['add-self'] = User::getAllGroups();
+		} elseif( is_array( $wgGroupsAddToSelf[$group] ) ) {
+			$groups['add-self'] = $wgGroupsAddToSelf[$group];
+		}
+
+		if( empty( $wgGroupsRemoveFromSelf[$group] ) ) {
+		} elseif( $wgGroupsRemoveFromSelf[$group] === true ) {
+			$groups['remove-self'] = User::getAllGroups();
+		} elseif( is_array( $wgGroupsRemoveFromSelf[$group] ) ) {
+			$groups['remove-self'] = $wgGroupsRemoveFromSelf[$group];
+		}
+
+		return $groups;
+	}
+
+
+	//JCEL can stay as is
+
+	/**
+	 * Whether this user is Wikia staff or not
+	 * @return bool
+	 */
+	public function isStaff() {
+		return in_array( 'staff', $this->getEffectiveGroups() );
+	}
+
+	//JCEL needs to be moved to new service, better understood.
+
+	/**
+	 * Returns an array of groups that this user can add and remove
+	 * @return Array array( 'add' => array( addablegroups ),
+	 *  'remove' => array( removablegroups ),
+	 *  'add-self' => array( addablegroups to self),
+	 *  'remove-self' => array( removable groups from self) )
+	 */
+	public function changeableGroups() {
+		if( $this->isAllowed( 'userrights' ) ) {
+			// This group gives the right to modify everything (reverse-
+			// compatibility with old "userrights lets you change
+			// everything")
+			// Using array_merge to make the groups reindexed
+			$all = array_merge( User::getAllGroups() );
+			return array(
+				'add' => $all,
+				'remove' => $all,
+				'add-self' => array(),
+				'remove-self' => array()
+			);
+		}
+
+		// Okay, it's not so simple, we will have to go through the arrays
+		$groups = array(
+			'add' => array(),
+			'remove' => array(),
+			'add-self' => array(),
+			'remove-self' => array()
+		);
+		$addergroups = $this->getEffectiveGroups();
+
+		foreach( $addergroups as $addergroup ) {
+			$groups = array_merge_recursive(
+				$groups, $this->changeableByGroup( $addergroup )
+			);
+			$groups['add']    = array_unique( $groups['add'] );
+			$groups['remove'] = array_unique( $groups['remove'] );
+			$groups['add-self'] = array_unique( $groups['add-self'] );
+			$groups['remove-self'] = array_unique( $groups['remove-self'] );
+		}
+		return $groups;
+	}
+
+	//JCEL can stay as is
+
+	/**
+	 * Check if user is allowed to access a feature / make an action
+	 *
+	 * internal param \String $varargs permissions to test
+	 * @return Boolean: True if user is allowed to perform *any* of the given actions
+	 *
+	 * @return bool
+	 */
+	public function isAllowedAny( /*...*/ ){
+		$permissions = func_get_args();
+		foreach( $permissions as $permission ){
+			if( $this->isAllowed( $permission ) ){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	//JCEL can stay as is
+
+	/**
+	 *
+	 * internal param $varargs string
+	 * @return bool True if the user is allowed to perform *all* of the given actions
+	 */
+	public function isAllowedAll( /*...*/ ){
+		$permissions = func_get_args();
+		foreach( $permissions as $permission ){
+			if( !$this->isAllowed( $permission ) ){
+				return false;
+			}
+		}
+		return true;
+	}
+
+	//JCEL can stay as is. What is $wgUseNPPatrol?
+
+	/**
+	 * Internal mechanics of testing a permission
+	 * @param $action String
+	 * @return bool
+	 */
+	public function isAllowed( $action = '' ) {
+		if ( $action === '' ) {
+			return true; // In the spirit of DWIM
+		}
+		# Patrolling may not be enabled
+		if( $action === 'patrol' || $action === 'autopatrol' ) {
+			global $wgUseRCPatrol, $wgUseNPPatrol;
+			if( !$wgUseRCPatrol && !$wgUseNPPatrol )
+				return false;
+		}
+		# Use strict parameter to avoid matching numeric 0 accidentally inserted
+		# by misconfiguration: 0 == 'foo'
+		return in_array( $action, $this->getRights(), true );
+	}
+
+	//JCEL what is autopromote?
+
+	/**
+	 * Add the user to the group if he/she meets given criteria.
+	 *
+	 * Contrary to autopromotion by \ref $wgAutopromote, the group will be
+	 *   possible to remove manually via Special:UserRights. In such case it
+	 *   will not be re-added automatically. The user will also not lose the
+	 *   group if they no longer meet the criteria.
+	 *
+	 * @param $event String key in $wgAutopromoteOnce (each one has groups/criteria)
+	 *
+	 * @return array Array of groups the user has been promoted to.
+	 *
+	 * @see $wgAutopromoteOnce
+	 */
+	public function addAutopromoteOnceGroups( $event ) {
+		global $wgAutopromoteOnceLogInRC;
+
+		$toPromote = array();
+		if ( $this->getId() ) {
+			$toPromote = Autopromote::getAutopromoteOnceGroups( $this, $event );
+			if ( count( $toPromote ) ) {
+				$oldGroups = $this->getGroups(); // previous groups
+				foreach ( $toPromote as $group ) {
+					$this->addGroup( $group );
+				}
+				$newGroups = array_merge( $oldGroups, $toPromote ); // all groups
+
+				$log = new LogPage( 'rights', $wgAutopromoteOnceLogInRC /* in RC? */ );
+				$log->addEntry( 'autopromote',
+					$this->getUserPage(),
+					'', // no comment
+					// These group names are "list to texted"-ed in class LogPage.
+					array( implode( ', ', $oldGroups ), implode( ', ', $newGroups ) )
+				);
+			}
+		}
+		return $toPromote;
+	}
+
+	//JCEL delete after rest is moved
+
+	private function loadGroups() {
+		if ( is_null( $this->mGroups ) ) {
+			$dbr = wfGetDB( DB_MASTER );
+			$res = $dbr->select( 'user_groups',
+				array( 'ug_group' ),
+				array( 'ug_user' => $this->mId ),
+				__METHOD__ );
+			$this->mGroups = array();
+			foreach ( $res as $row ) {
+				$this->mGroups[] = $row->ug_group;
+			}
+		}
+		wfRunHooks( 'UserLoadGroups', array( $this ) );
+	}
+
+
+
+	//Static permission functions that we can leave as is for now
+
+	//JCEL can stay as is
+
+	/**
+	 * Get the localized descriptive name for a group, if it exists
+	 *
+	 * @param $group String Internal group name
+	 * @return String Localized descriptive group name
+	 */
+	public static function getGroupName( $group ) {
+		$msg = wfMessage( "group-$group" );
+		return $msg->isBlank() ? $group : $msg->text();
+	}
+
+	//JCEL can stay as is
+
+	/**
+	 * Get the localized descriptive name for a member of a group, if it exists
+	 *
+	 * @param $group String Internal group name
+	 * @param $username String Username for gender (since 1.19)
+	 * @return String Localized name for group member
+	 */
+	public static function getGroupMember( $group, $username = '#' ) {
+		$msg = wfMessage( "group-$group-member", $username );
+		return $msg->isBlank() ? $group : $msg->text();
+	}
+
+	//JCEL can stay as is
+
+	/**
+	 * Get the title of a page describing a particular group
+	 *
+	 * @param $group String Internal group name
+	 * @return Title|Bool Title of the page if it exists, false otherwise
+	 */
+	public static function getGroupPage( $group ) {
+		$msg = wfMessage( 'grouppage-' . $group )->inContentLanguage();
+		if( $msg->exists() ) {
+			$title = Title::newFromText( $msg->text() );
+			if( is_object( $title ) )
+				return $title;
+		}
+		return false;
+	}
+
+	//JCEL can stay as is
+
+	/**
+	 * Create a link to the group in HTML, if available;
+	 * else return the group name.
+	 *
+	 * @param $group String Internal name of the group
+	 * @param $text String The text of the link
+	 * @return String HTML link to the group
+	 */
+	public static function makeGroupLinkHTML( $group, $text = '' ) {
+		if( $text == '' ) {
+			$text = self::getGroupName( $group );
+		}
+		$title = self::getGroupPage( $group );
+		if( $title ) {
+			return Linker::link( $title, htmlspecialchars( $text ) );
+		} else {
+			return $text;
+		}
+	}
+
+	//JCEL can stay as is
+
+	/**
+	 * Create a link to the group in Wikitext, if available;
+	 * else return the group name.
+	 *
+	 * @param $group String Internal name of the group
+	 * @param $text String The text of the link
+	 * @return String Wikilink to the group
+	 */
+	public static function makeGroupLinkWiki( $group, $text = '' ) {
+		if( $text == '' ) {
+			$text = self::getGroupName( $group );
+		}
+		$title = self::getGroupPage( $group );
+		if( $title ) {
+			$page = $title->getPrefixedText();
+			return "[[$page|$text]]";
+		} else {
+			return $text;
+		}
+	}
+
+	//JCEL can stay as is
+
+	/**
+	 * Get the description of a given right
+	 *
+	 * @param $right String Right to query
+	 * @return String Localized description of the right
+	 */
+	public static function getRightDescription( $right ) {
+		$key = "right-$right";
+		$msg = wfMessage( $key );
+		return $msg->isBlank() ? $right : $msg->text();
+	}
 }
