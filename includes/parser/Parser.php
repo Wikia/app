@@ -1246,7 +1246,7 @@ class Parser {
 		# Hook to suspend the parser in this state
 		if ( !wfRunHooks( 'ParserBeforeInternalParse', array( &$this, &$text, &$this->mStripState ) ) ) {
 			if ( $stnLogger !== null ) {
-				$stnLogger->logIfEmpty($text);
+				$stnLogger->logIfEmpty( $text );
 			}
 			wfProfileOut( __METHOD__ );
 			return $text ;
@@ -1264,23 +1264,23 @@ class Parser {
 			$dom = $this->preprocessToDom( $text, $flag );
 			$text = $frame->expand( $dom );
 			if ( $stnLogger !== null ) {
-				$stnLogger->logIfEmpty($text);
+				$stnLogger->logIfEmpty( $text );
 			}
 		} else {
 			# if $frame is not provided, then use old-style replaceVariables
 			$text = $this->replaceVariables( $text );
 			if ( $stnLogger !== null ) {
-				$stnLogger->logIfEmpty($text);
+				$stnLogger->logIfEmpty( $text );
 			}
 		}
 
 		$text = Sanitizer::removeHTMLtags( $text, array( &$this, 'attributeStripCallback' ), false, array_keys( $this->mTransparentTagHooks ) );
 		if ( $stnLogger !== null ) {
-			$stnLogger->logIfEmpty($text);
+			$stnLogger->logIfEmpty( $text );
 		}
 		wfRunHooks( 'InternalParseBeforeLinks', array( &$this, &$text, &$this->mStripState ) );
 		if ( $stnLogger !== null ) {
-			$stnLogger->logIfEmpty($text);
+			$stnLogger->logIfEmpty( $text );
 		}
 
 		# Tables need to come after variable replacement for things to work
@@ -1289,57 +1289,57 @@ class Parser {
 		# places.
 		$text = $this->doTableStuff( $text );
 		if ( $stnLogger !== null ) {
-			$stnLogger->logIfEmpty($text);
+			$stnLogger->logIfEmpty( $text );
 		}
 
 		$text = preg_replace( '/(^|\n)-----*/', '\\1<hr />', $text );
 		if ( $stnLogger !== null ) {
-			$stnLogger->logIfEmpty($text);
+			$stnLogger->logIfEmpty( $text );
 		}
 
 		$text = $this->doDoubleUnderscore( $text );
 		if ( $stnLogger !== null ) {
-			$stnLogger->logIfEmpty($text);
+			$stnLogger->logIfEmpty( $text );
 		}
 
 		$text = $this->doHeadings( $text );
 		if ( $stnLogger !== null ) {
-			$stnLogger->logIfEmpty($text);
+			$stnLogger->logIfEmpty( $text );
 		}
 		if ( $this->mOptions->getUseDynamicDates() ) {
 			$df = DateFormatter::getInstance();
 			$text = $df->reformat( $this->mOptions->getDateFormat(), $text );
 			if ( $stnLogger !== null ) {
-				$stnLogger->logIfEmpty($text);
+				$stnLogger->logIfEmpty( $text );
 			}
 		}
 		$text = $this->replaceInternalLinks( $text );
 		if ( $stnLogger !== null ) {
-			$stnLogger->logIfEmpty($text);
+			$stnLogger->logIfEmpty( $text );
 		}
 		$text = $this->doAllQuotes( $text );
 		if ( $stnLogger !== null ) {
-			$stnLogger->logIfEmpty($text);
+			$stnLogger->logIfEmpty( $text );
 		}
 		$text = $this->replaceExternalLinks( $text );
 		if ( $stnLogger !== null ) {
-			$stnLogger->logIfEmpty($text);
+			$stnLogger->logIfEmpty( $text );
 		}
 
 		# replaceInternalLinks may sometimes leave behind
 		# absolute URLs, which have to be masked to hide them from replaceExternalLinks
 		$text = str_replace( $this->mUniqPrefix.'NOPARSE', '', $text );
 		if ( $stnLogger !== null ) {
-			$stnLogger->logIfEmpty($text);
+			$stnLogger->logIfEmpty( $text );
 		}
 
 		$text = $this->doMagicLinks( $text );
 		if ( $stnLogger !== null ) {
-			$stnLogger->logIfEmpty($text);
+			$stnLogger->logIfEmpty( $text );
 		}
 		$text = $this->formatHeadings( $text, $origText, $isMain );
 		if ( $stnLogger !== null ) {
-			$stnLogger->logIfEmpty($text);
+			$stnLogger->logIfEmpty( $text );
 		}
 
 		wfProfileOut( __METHOD__ );
