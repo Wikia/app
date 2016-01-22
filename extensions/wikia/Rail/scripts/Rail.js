@@ -79,6 +79,13 @@ $(function () {
 						Wikia.initRailTracking();
 					}
 
+					require([
+						'ext.wikia.adEngine.slot.floatingMedrec',
+						'wikia.window'
+					], function (floatingMedrec, win) {
+						win.wgAfterContentAndJS.push(floatingMedrec.init);
+					});
+
 					if (window.wgEnableLightboxExt) {
 						window.LightboxLoader.init();
 					}

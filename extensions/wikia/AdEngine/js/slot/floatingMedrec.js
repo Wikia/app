@@ -18,13 +18,13 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			globalNavigationHeight = $('#globalNavigation').height(),
 			margin = 10,
 			minDistance = 800,
+			leftSkyscraper3Selector = '#LEFT_SKYSCRAPER_3',
 			slotName = 'INCONTENT_BOXAD_1',
 			startPosition,
 			stopPoint,
 			stopPosition,
 			$adSlot = $('<div class="wikia-ad"></div>').attr('id', slotName),
 			$footer = $('#WikiaFooter'),
-			$leftSkyscraper3 = $('#LEFT_SKYSCRAPER_3'),
 			$placeHolder = $('#WikiaAdInContentPlaceHolder');
 
 		function getStartPosition(placeHolder) {
@@ -69,13 +69,8 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 
 		function handleFloatingMedrec() {
 			startPosition = getStartPosition($placeHolder);
-			stopPosition = getStopPosition($adSlot, $footer, $leftSkyscraper3);
+			stopPosition = getStopPosition($adSlot, $footer, $(leftSkyscraper3Selector));
 			isEnoughSpace = stopPosition - startPosition > minDistance;
-
-			if (!enabled && !isEnoughSpace) {
-				log(['handleFloatingMedrec',
-					 'Floating medrec disabled: not enough space in right rail'], 'debug', logGroup);
-			}
 
 			if (enabled && !isEnoughSpace) {
 				log(['handleFloatingMedrec',
