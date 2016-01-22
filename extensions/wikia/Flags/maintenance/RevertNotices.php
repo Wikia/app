@@ -1,0 +1,30 @@
+<?php
+
+$dir = dirname( __FILE__ ) . "/../../../../";
+require_once( $dir . 'maintenance/Maintenance.php' );
+
+use Flags\Models\Flag;
+
+class RevertNotices extends Maintenance {
+	public function __construct() {
+		parent::__construct();
+	}
+
+	public function execute() {
+		global $IP;
+
+		$flagModel = new Flag();
+		$wikiIds = $flagModel->getWikisWithFlags();
+
+		foreach ( $wikiIds as $wikiId ) {
+			$cmd = "SERVER_ID=$wikiId /usr/bin/php {$IP}/extensions/wikia/Flags/maintenance/RevertNotice.php";
+			$this->output("Run cmd: $cmd\n");
+			$output = wfShellExec( $cmd );
+
+			$this->output( $output . "\n" );
+		}
+	}
+}
+
+$maintClass = 'RevertNotices';
+require_once( RUN_MAINTENANCE_IF_MAIN );
