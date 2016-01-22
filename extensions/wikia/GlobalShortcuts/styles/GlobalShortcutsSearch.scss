@@ -1,4 +1,5 @@
 @import "skins/shared/color";
+@import "extensions/wikia/GlobalShortcuts/styles/GlobalShortcutsMixins";
 
 #GlobalShortcutsSearch.global-shortcuts-search {
 	border: 0;
@@ -14,15 +15,9 @@
 		overflow: auto;
 
 		.col {
-			box-sizing: border-box;
-			float: left;
-			padding: 0 25px 0 0;
-			width: 50%;
-
-			&:nth-child(2n) {
-				padding: 0 0 0 25px;
-			}
+			@include gs-modal-column;
 		}
+
 		.full-width {
 			box-sizing: border-box;
 		    position: relative;
@@ -47,47 +42,28 @@
 	}
 
 	h2 {
-		border-bottom: 1px solid #cacaca;
-		margin-bottom: 20px;
+		@include gs-modal-heading;
 	}
 
 	.key-list {
-		list-style: none;
-		overflow: hidden;
+		@include gs-key-list;
 	}
 
 	.key-combination {
-		line-height: 22px;
-		margin-bottom: 8px;
-		width: 50%;
+		@include gs-key-combination;
 	}
 	.key-combination, .key-combination-in-suggestions {
 		float: right;
 		text-align: left;
 	}
 	.key {
-		/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,e0e0e0+100 */
-		background: #ffffff; /* Old browsers */
-		background: -moz-linear-gradient(top, #ffffff 0%, #ECECEC 100%); /* FF3.6-15 */
-		background: -webkit-linear-gradient(top, #ffffff 0%,#ECECEC 100%); /* Chrome10-25,Safari5.1-6 */
-		background: linear-gradient(to bottom, #ffffff 0%,#ECECEC 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ECECEC',GradientType=0 ); /* IE6-9 */
-		border: 1px solid #cacaca;
-		border-bottom-width: 2px;
-		border-radius: 3px;
-		display: inline-block;
-		padding: 0 5px;
-		text-align: center;
-		width: 20px;
+		@include gs-key;
 	}
 
 	.label {
-		clear: both;
-		float: left;
-		margin-bottom: 8px;
-		padding-top: 6px;
-		width: 50%;
+		@include gs-key-label;
 	}
+
 	.label, .label-in-suggestions {
 		color: #545454;
 	}
