@@ -40,7 +40,10 @@ define('GlobalShortcutsHelp',
 			);
 			require(['wikia.ui.factory'], function (uiFactory) {
 				/* Initialize the modal component */
-				uiFactory.init(['modal']).then(createComponent);
+				$.when(
+					uiFactory.init(['modal']),
+					mw.loader.using(['mediawiki.jqueryMsg'])
+				).then(createComponent);
 			});
 		}
 
