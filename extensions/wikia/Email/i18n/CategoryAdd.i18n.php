@@ -95,6 +95,13 @@ $messages['zh-hans'] = array(
 	'emailext-categoryadd-see-all-pages' => '查看[$1 $2]类别页面上的所有页面。',
 );
 
+$messages['zh-hant'] = array(
+	'emailext-categoryadd-subject' => '$1已添加到{{SITENAME}}上的$2類別頁面上！',
+	'emailext-categoryadd-details' => '標題為[$1 $2]的文章已添加到[{{SERVER}} {{SITENAME}}]上的[$3 $4]類中。',
+	'emailext-categoryadd-see-article' => '參閲文章',
+	'emailext-categoryadd-see-all-pages' => '參閲[$1 $2]類別頁面上的所有頁面。',
+);
+
 $messages['zh-tw'] = array(
 	'emailext-categoryadd-subject' => '$1已添加到{{SITENAME}}上的$2類別頁面上！',
 	'emailext-categoryadd-details' => '標題為[$1 $2]的文章已添加到[{{SERVER}} {{SITENAME}}]上的[$3 $4]類中。',
