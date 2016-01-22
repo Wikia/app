@@ -6,7 +6,7 @@
 		sv: 'ke'
 	};
 
-	if (window.Wikia && window.Wikia.geo.isProperGeo({{{countries}}})) {
+	if (window.Wikia && !window.Wikia.InstantGlobals.wgSitewideDisableIVW3 && window.Wikia.geo.isProperGeo({{{countries}}})) {
 		window.ivw3Initialized = true;
 		document.write('<script type="text/javascript" src="{{url}}"><\/script>');
 		document.write('<script type="text/javascript">window.iom.c(iamData, 2);<\/script>');
