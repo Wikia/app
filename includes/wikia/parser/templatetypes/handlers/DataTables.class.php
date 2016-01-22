@@ -16,7 +16,7 @@ class DataTables {
 		//check for tables
 		if ( static::shouldBeProcessed() ) {
 			// marks wikitext tables
-			if ( preg_match_all( "/\^\(\{\+\)\[\|\]\(\.\*\)/\n", $wikitext, $wikiTables ) ) {
+			if ( preg_match_all( "/^(\\{+)[\\|](.*)/\n", $wikitext, $wikiTables ) ) {
 				for ( $i = 0; $i < count( $wikiTables[ 0 ] ); $i++ ) {
 					$wikitext = static::markTable( $wikitext, $wikiTables[ 0 ][ $i ], $wikiTables[ 1 ][ $i ], '{|' );
 				}
