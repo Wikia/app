@@ -9,7 +9,6 @@
 	<? if ( $displayHeaderButtons ) : ?>
 		<div class="buttons">
 			<?= $app->renderView( 'ContributeMenu', 'Index' ) ?>
-			<? foreach ($headerButtons as $headerButton) echo $headerButton; ?>
 		</div>
 	<? endif ?>
 	<div class="hiddenLinks">

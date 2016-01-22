@@ -37,10 +37,6 @@ class WikiHeaderController extends WikiaController {
 		$this->displaySearch = !empty($this->wg->EnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this, $this->wg->Title);
 		$this->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
 		$this->displayHeaderButtons = !WikiaPageType::isWikiaHubMain();
-
-		$headerButtons = [];
-		wfRunHooks('WikiaHeaderButtons', array( &$headerButtons ) );
-		$this->headerButtons = $headerButtons;
 	}
 
 	public function executeWordmark() {
