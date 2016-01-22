@@ -106,75 +106,29 @@
 <script type="text/javascript">
 	console.log('== Qualaroo experiment enabled ==');
 
-	var wgQualarooKruxMapping = {
-			'all': {
-				'Xbox One': 'p9jqe7dyz',
-				'Playstation 3': 'p9jqe7dyz',
-				'Playstation 4': 'p9jqe7dyz'
-			},
-			'152278': {
-				'Xbox One': 'p9jp8yb4b',
-				'Playstation 3': 'p9jp28ur3',
-				'Playstation 4': 'p9jp28ur3'
-			}
-		},
-		wgKruxPubId = '<?= $wg->KruxPubId; ?>',
-		sentSegments = {};
+	var wgQualarooKruxSurveys = [ '152278' ],
+		wgKruxEventId = 'KTW2yYJt';
 
-	function hasSegmentBeenSent(segment) {
-		return !!sentSegments[segment];
-	}
+	function fireKruxEvent(answer) {
+		var sanitizedAnswer = '';
 
-	function sendKruxRequest(segment) {
-		if(!hasSegmentBeenSent(segment)) {
-			$.ajax({
-				url: 'http://cdn.krxd.net/userdata/add',
-				type: "POST",
-				async: true,
-				dataType: 'jsonp',
-				data: {
-					pub: wgKruxPubId,
-					seg: segment
-				},
-				success: function() {
-					sentSegments[segment] = true;
-					console.log("Qualaroo-Krux integration: request to Krux sent (" + segment + ")");
-				}
-			});
+		if( Krux ) {
+			sanitizedAnswer = answer.toLowerCase();
+			Krux('admEvent', wgKruxEventId, {'answer': sanitizedAnswer});
+			console.log("Qualaroo-Krux integration: fired a Krux event (" + sanitizedAnswer + ")");
 		} else {
-			console.log("Qualaroo-Krux integration: segment already added (" + segment + ")");
-		}
-	}
-
-	function matchSegmentsAndSendRequests(nudgeId, answer) {
-		if(wgQualarooKruxMapping[nudgeId] && wgQualarooKruxMapping[nudgeId][answer]) {
-			var escapedAnswer = encodeURI(answer);
-
-			// 1st method which probably doesn't work
-			sendKruxRequest(wgQualarooKruxMapping[nudgeId][answer]);
-
-			// 2nd method using Krux events
-			if( Krux ) {
-				Krux('admEvent','KSBbroTm', {response: escapedAnswer});
-				console.log("Qualaroo-Krux integration: fired a Krux event (" + escapedAnswer + ")");
-			}
-		} else if(wgQualarooKruxMapping['all'][answer]) {
-			// 1st method which probably doesn't work
-			sendKruxRequest(wgQualarooKruxMapping['all'][answer]);
-
-			// 2nd method using Krux events
-			if( Krux ) {
-				Krux('admEvent','KSBbroTm', {response: escapedAnswer});
-				console.log("Qualaroo-Krux integration: fired a Krux event (" + escapedAnswer + ")");
-			}
-		} else {
-			console.log('Qualaroo-Krux integration: no segment found for the answer');
+			console.log("Qualaroo-Krux integration: no Krux available. Event not sent for: " + sanitizedAnswer);
 		}
 	}
 
 	function validateAndSendKruxRequests(fieldsList, nudgeId) {
 		var answer = '',
 			answers;
+
+		if(wgQualarooKruxSurveys.indexOf(nudgeId) === -1) {
+			console.log('Qualaroo-Krux integration: integration disabled for this survey (' + nudgeId + ')');
+			return;
+		}
 
 		if(!Object.keys) {
 			console.log('Qualaroo-Krux integration: unsupported browser');
@@ -189,10 +143,10 @@
 		answers = fieldsList[0]['answer'];
 
 		if(typeof answers === 'string') {
-			matchSegmentsAndSendRequests(nudgeId, answers);
+			fireKruxEvent(answers);
 		} else {
 			Object.keys(answers).forEach(function(i) {
-				matchSegmentsAndSendRequests(nudgeId, answers[i]);
+				fireKruxEvent(answers[i]);
 			});
 		}
 	}
