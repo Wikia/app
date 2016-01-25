@@ -367,7 +367,12 @@ class MercuryApiController extends WikiaController {
 	}
 
 	public function getArticleFromMarkup() {
-		global $wgParser, $wgUser;
+		global $wgParser, $wgUser, $wgRequest;
+
+		//TODO: maybe it should be POST as well?
+//		if ( !$wgRequest->wasPosted() ) {
+//			throw new BadRequestApiException();
+//		}
 
 		$out = '';
 		$titleText = $this->getVal( 'title' );
@@ -379,13 +384,13 @@ class MercuryApiController extends WikiaController {
 		$wikitext = $this->getVal( 'wikitext' );
 		$CKmarkup = $this->getVal( 'CKmarkup' );
 
-		if ( isset( $wikitext ) ) {
-			$wrapper->wrap( function () use ( &$out, $wgParser, $wikitext, $title, $parserOptions ) {
-				$out = $wgParser->parse( $wikitext, $title, $parserOptions )->getText();
-			});
-		} else if ( isset( $CKmarkup ) ) {
-			$out = 'dupa';
+		if ( isset( $CKmarkup ) ) {
+			$wikitext = RTE::HtmlToWikitext( $CKmarkup );
 		}
+
+		$wrapper->wrap( function () use ( &$out, $wgParser, $wikitext, $title, $parserOptions ) {
+			$out = $wgParser->parse( $wikitext, $title, $parserOptions )->getText();
+		});
 
 		$articleAsJson = $this->getArticleJson( $articleId, $title );
 		$data['article'] = $articleAsJson;
@@ -396,7 +401,7 @@ class MercuryApiController extends WikiaController {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		$this->response->setVal( 'wikiVariables', $wikiVariables );
-		$this->response->setVal( 'parserOutput', $data );
+		$this->response->setVal( 'data', $data );
 	}
 
 	/**
