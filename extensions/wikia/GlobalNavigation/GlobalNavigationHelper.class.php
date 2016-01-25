@@ -144,9 +144,9 @@ class GlobalNavigationHelper {
 		$wamDates = $wamService->getWamIndexDates();
 
 		if ( $lang === 'en' || !in_array( $lang, $wamService->getWAMLanguages( $wamDates['max_date'] ) ) ) {
-			return WAMService::WAM_LINK;
+			return wfMessage('global-navigation-wam-link')->plain();
 		} else {
-			return WAMService::WAM_LINK . self::WAM_LANG_CODE_PARAMETER . $lang;
+			return wfMessage('global-navigation-wam-link')->plain() . self::WAM_LANG_CODE_PARAMETER . $lang;
 		}
 	}
 }

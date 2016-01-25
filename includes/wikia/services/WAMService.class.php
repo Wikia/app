@@ -12,6 +12,7 @@ class WAMService extends Service {
 	const CACHE_DURATION = 86400; /* 24 hours */
 	const MEMCACHE_VER = '2';
 	const WAM_LINK = 'http://www.wikia.com/WAM';
+	const ENABLE_WAM_WG_VAR_PROD = 1281;
 
 	protected $verticalIds = [
 		WikiFactoryHub::VERTICAL_ID_OTHER,
