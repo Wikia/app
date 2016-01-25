@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\Logger\WikiaLogger;
+use Wikia\Util\GlobalStateWrapper;
 
 class MercuryApiController extends WikiaController {
 
@@ -365,14 +366,37 @@ class MercuryApiController extends WikiaController {
 		$this->response->setCacheValidity( self:: WIKI_VARIABLES_CACHE_TTL );
 	}
 
-	public function getArticleFromWikitext() {
+	public function getArticleFromMarkup() {
+		global $wgParser, $wgUser;
+
+		$out = '';
+		$titleText = $this->getVal( 'title' );
+		$title = Title::newFromText( $titleText );
+		$articleId = $title->getArticleId();
+		$parserOptions = new ParserOptions( $wgUser );
+		$wrapper = new GlobalStateWrapper( ['wgArticleAsJson' => true] );
+
+		$wikitext = $this->getVal( 'wikitext' );
+		$CKmarkup = $this->getVal( 'CKmarkup' );
+
+		if ( isset( $wikitext ) ) {
+			$wrapper->wrap( function () use ( &$out, $wgParser, $wikitext, $title, $parserOptions ) {
+				$out = $wgParser->parse( $wikitext, $title, $parserOptions )->getText();
+			});
+		} else if ( isset( $CKmarkup ) ) {
+			$out = 'dupa';
+		}
+
+		$articleAsJson = $this->getArticleJson( $articleId, $title );
+		$data['article'] = $articleAsJson;
+		$data['article']['content'] = $out;
 
 		$wikiVariables = $this->prepareWikiVariables();
 
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		$this->response->setVal( 'wikiVariables', $wikiVariables );
-
-		return $this->getArticle();
-
+		$this->response->setVal( 'parserOutput', $data );
 	}
 
 	/**
