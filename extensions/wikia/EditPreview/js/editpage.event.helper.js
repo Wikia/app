@@ -1,4 +1,4 @@
-define('editpage.event.helper', ['wikia.window'], function(window, ace){
+define('editpage.event.helper', ['wikia.window'], function (window, ace){
 	'use strict';
 
 	// get editor's content (either wikitext or HTML)
@@ -9,7 +9,7 @@ define('editpage.event.helper', ['wikia.window'], function(window, ace){
 			content = '';
 
 		if (window.wgEnableCodePageEditor) {
-			require(['wikia.ace.editor'], function(ace){
+			require(['wikia.ace.editor'], function (ace){
 				content = ace.getContent();
 				dfd.resolve(content);
 			});
@@ -24,7 +24,7 @@ define('editpage.event.helper', ['wikia.window'], function(window, ace){
 					break;
 			}
 
-			dfd.resolve(content);
+			dfd.resolve(content, mode);
 		}
 
 		return dfd.promise();

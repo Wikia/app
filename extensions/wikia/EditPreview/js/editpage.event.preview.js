@@ -1,4 +1,4 @@
-define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.window'], function(helper, $, window){
+define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.window', 'wikia.querystring'], function (helper, $, window, qs){
 	'use strict';
 
 
@@ -21,6 +21,32 @@ define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.wind
 		if (editor) {
 			editor.track('preview-mobile');
 		}
+	}
+
+	function iframeform(url) {
+		var object = this;
+		object.time = new Date().getTime();
+		object.form = $('<form action="' + url + '" target="iframe' + object.time + '" style="display:none" method="post" id="form' + object.time + '" name="form' + object.time + '"></form>');
+
+		object.addParameter = function (parameter, value) {
+			$("<input type='hidden' />")
+				.attr("name", parameter)
+				.attr("value", value)
+				.appendTo(object.form);
+		};
+
+		object.send = function (frameRoot, callback) {
+			var iframe = $('<iframe data-time="' + object.time + '" style="display:block; width:320px; height:480px; margin: 0 auto;" name="iframe' + object.time + '" id="iframe' + object.time + '"></iframe>');
+			$(frameRoot).append(iframe);
+			$(frameRoot).append(object.form);
+
+			iframe.load(function () {
+				$('#form' + $(this).data('time')).remove();
+				callback();
+			});
+
+			object.form.submit();
+		};
 	}
 
 	// render "Preview" modal
@@ -93,7 +119,7 @@ define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.wind
 				getPreviewContent: function (callback, skin) {
 					$.when(
 						helper.getContent()
-					).done(function(content){
+					).done(function (content, mode) {
 						preparePreviewContent(content, extraData, callback, skin);
 					});
 				}
@@ -137,9 +163,27 @@ define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.wind
 			extraData.categories = categories.val();
 		}
 
-		helper.ajax('preview', extraData, function (data) {
-			callback(data);
-		}, skin);
+		if (skin === 'wikiamobile') {
+			var previewFrame = new iframeform(qs(window.wgEditPageMercuryPreviewHandler).addCb());
+
+			previewFrame.addParameter('title', encodeURIComponent(window.wgEditedTitle));
+			$.when(
+				helper.getContent()
+			).done(function (content, mode) {
+				previewFrame.addParameter(mode === 'mw' ? 'wikitext' : 'CKmarkup', encodeURIComponent(content));
+
+				$().log('Preparing to send');
+				previewFrame.send($('.ArticlePreviewInner'), function (data) {
+					callback();
+					$().log('Received');
+				});
+				$().log('Sent');
+			});
+		} else {
+			helper.ajax('preview', extraData, function (data) {
+				callback(data);
+			}, skin);
+		}
 	}
 
 	function getSummary() {

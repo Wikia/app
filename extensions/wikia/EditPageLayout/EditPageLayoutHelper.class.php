@@ -103,6 +103,8 @@ class EditPageLayoutHelper {
 			? $formCustomHandler->getLocalUrl( 'wpTitle=$1' )
 			: $this->app->getGlobal( 'wgScript' ) . '?action=ajax&rs=EditPageLayoutAjax&title=$1' );
 
+		$this->addJsVariable( 'wgEditPageMercuryPreviewHandler', '/editorPreview/' );
+
 		$this->addJsVariable( 'wgEditPagePopularTemplates', TemplateService::getPromotedTemplates() );
 		$this->addJsVariable( 'wgEditPageIsWidePage', $this->isWidePage() );
 		$this->addJsVariable( 'wgIsDarkTheme', SassUtil::isThemeDark() );
