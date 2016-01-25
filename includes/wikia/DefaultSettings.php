@@ -1362,6 +1362,24 @@ $wgSitewideDisableGpt = false;
 $wgSitewideDisableIVW2 = false;
 
 /**
+ * @name $wgSitewideDisableIVW3
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableIVW3
+ *
+ * Disable IVW3 Analytics pixel sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisableIVW3 = false;
+
+/**
+ * @name $wgAnalyticsDriverIVW3Countries
+ *
+ * List of countries with enabled IVW3 tracking
+ */
+$wgAnalyticsDriverIVW3Countries = ['AT', 'CH', 'DE'];
+
+/**
  * @name $wgSitewideDisableLiftium
  * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableLiftium
