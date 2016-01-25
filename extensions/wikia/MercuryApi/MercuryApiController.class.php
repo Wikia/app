@@ -366,6 +366,13 @@ class MercuryApiController extends WikiaController {
 		$this->response->setCacheValidity( self:: WIKI_VARIABLES_CACHE_TTL );
 	}
 
+	/**
+	 * @desc for classic or CK editor markup return
+	 * wikitext ready to process and display in Mercury skin
+	 *
+	 * @throws \BadRequestApiException
+	 * @throws \MWException
+	 */
 	public function getArticleFromMarkup() {
 		global $wgParser, $wgUser, $wgRequest;
 
@@ -374,7 +381,7 @@ class MercuryApiController extends WikiaController {
 //			throw new BadRequestApiException();
 //		}
 
-		$out = '';
+		$parsedWikitext = '';
 		$titleText = $this->getVal( 'title' );
 		$title = Title::newFromText( $titleText );
 		$articleId = $title->getArticleId();
@@ -384,17 +391,19 @@ class MercuryApiController extends WikiaController {
 		$wikitext = $this->getVal( 'wikitext' );
 		$CKmarkup = $this->getVal( 'CKmarkup' );
 
-		if ( isset( $CKmarkup ) ) {
+		if ( !!$CKmarkup ) {
 			$wikitext = RTE::HtmlToWikitext( $CKmarkup );
 		}
 
-		$wrapper->wrap( function () use ( &$out, $wgParser, $wikitext, $title, $parserOptions ) {
-			$out = $wgParser->parse( $wikitext, $title, $parserOptions )->getText();
+		$wrapper->wrap( function () use ( &$parsedWikitext, $wikitext, $title, $parserOptions ) {
+			$parsedWikitext = ParserPool::create()->parse( $wikitext, $title, $parserOptions )->getText();
+
 		});
 
+		//TODO: change this to make getAsJson basing on current markup
 		$articleAsJson = $this->getArticleJson( $articleId, $title );
 		$data['article'] = $articleAsJson;
-		$data['article']['content'] = $out;
+		$data['article']['content'] = $parsedWikitext;
 
 		$wikiVariables = $this->prepareWikiVariables();
 
