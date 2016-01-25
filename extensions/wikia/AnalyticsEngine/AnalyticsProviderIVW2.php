@@ -47,8 +47,8 @@ class AnalyticsProviderIVW2 implements iAnalyticsProvider {
 if (!(window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableIVW2)) {
 	if (!window.ivw3Initialized) {
 		document.write($ivwScriptTag);
+		document.write($ivwTrackTag);
 	}
-	document.write($ivwTrackTag);
 }
 </script>
 SCRIPT;
