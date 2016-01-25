@@ -1671,9 +1671,9 @@ $messages['pl'] = array(
 	'global-navigation-community-link' => 'http://spolecznosc.wikia.com',
 	'global-navigation-community-link-label' => 'Centrum Społeczności',
 	'global-navigation-wam-link' => 'http://pl.wikia.com/WAM',
-	'global-navigation-menu-hubs' => '* http://gryhub.wikia.com/wiki/Gry|Gry|games
-* http://rozrywkahub.wikia.com/wiki/Rozrywka|Rozrywka|entertainment
-* http://pl.lifestylehub.wikia.com/wiki/Lifestyle|Lifestyle|lifestyle',
+	'global-navigation-menu-hubs' => '*http://gryhub.wikia.com/wiki/Gry|Gry|games
+*http://rozrywkahub.wikia.com/wiki/Rozrywka|Rozrywka|entertainment
+*http://pl.lifestylehub.wikia.com/wiki/Lifestyle|Lifestyle|lifestyle',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
