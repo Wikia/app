@@ -83,4 +83,13 @@ class UserPermissionsIntegrationTest extends \PHPUnit_Framework_TestCase {
 		$this->assertContains("*", $groups);
 		$this->assertTrue(count($groups) == 1);
 	}
+
+	function testShouldReturnImplicitGroups() {
+		$groups = $this->permissionsService->getImplicitGroups();
+		$this->assertContains("*", $groups);
+		$this->assertContains("user", $groups);
+		$this->assertContains("autoconfirmed", $groups);
+		$this->assertContains("poweruser", $groups);
+		$this->assertTrue(count($groups) == 4);
+	}
 }

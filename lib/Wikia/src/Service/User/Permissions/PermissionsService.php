@@ -5,6 +5,8 @@ namespace Wikia\Service\User\Permissions;
 interface PermissionsService {
 	public function getGlobalGroups();
 
+	public function getImplicitGroups();
+
 	public function getExplicitUserGroups( $cityId, $userId );
 
 	public function getExplicitGlobalUserGroups( $userId );

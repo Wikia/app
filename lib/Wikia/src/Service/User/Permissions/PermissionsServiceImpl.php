@@ -23,6 +23,9 @@ class PermissionsServiceImpl implements PermissionsService {
 	/** @var string[] - global groups to which a user can be assigned */
 	private $globalGroups = [];
 
+	/** @var string[] - global groups to which a user can be assigned */
+	private $implicitGroups = [];
+
 	public function __construct() {
 		$this->globalGroups[] = 'content-reviewer';
 		$this->globalGroups[] = 'staff';
@@ -36,6 +39,12 @@ class PermissionsServiceImpl implements PermissionsService {
 		$this->globalGroups[] = 'translator';
 		$this->globalGroups[] = 'wikifactory';
 		$this->globalGroups[] = 'restricted-login';
+
+		$this->implicitGroups[] = '*';
+		$this->implicitGroups[] = 'user';
+		$this->implicitGroups[] = 'autoconfirmed';
+		$this->implicitGroups[] = 'poweruser';
+
 	}
 
 	private function getLocalUserGroups( $cityId, $userId ) {
@@ -76,6 +85,10 @@ class PermissionsServiceImpl implements PermissionsService {
 
 	public function getGlobalGroups() {
 		return $this->globalGroups;
+	}
+
+	public function getImplicitGroups() {
+		return $this->implicitGroups;
 	}
 
 	public function getExplicitUserGroups( $cityId, $userId ) {

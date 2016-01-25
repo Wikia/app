@@ -207,11 +207,11 @@ class SpecialStatistics extends SpecialPage {
 	}
 
 	private function getGroupStats() {
-		global $wgGroupPermissions, $wgImplicitGroups;
+		global $wgGroupPermissions;
 		$text = '';
 		foreach( $wgGroupPermissions as $group => $permissions ) {
 			# Skip generic * and implicit groups
-			if ( in_array( $group, $wgImplicitGroups ) || $group == '*' ) {
+			if ( in_array( $group, $this->permissionsService()->getImplicitGroups() ) || $group == '*' ) {
 				continue;
 			}
 			$groupname = htmlspecialchars( $group );

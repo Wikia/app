@@ -3553,11 +3553,6 @@ $wgGroupPermissions['bureaucrat']['noratelimit'] = true;
 $wgRevokePermissions = array();
 
 /**
- * Implicit groups, aren't shown on Special:Listusers or somewhere else
- */
-$wgImplicitGroups = array( '*', 'user', 'autoconfirmed' );
-
-/**
  * A map of group names that the user is in, to group names that those users
  * are allowed to add or revoke.
  *

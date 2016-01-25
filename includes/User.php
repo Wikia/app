@@ -226,7 +226,7 @@ class User {
 	 * Lazy-initialized variables, invalidated with clearInstanceCache
 	 */
 	var $mNewtalk, $mDatePreference, $mBlockedby, $mHash, $mRights,
-		$mBlockreason, $mEffectiveGroups, $mImplicitGroups, $mFormerGroups, $mBlockedGlobally,
+		$mBlockreason, $mBlockedGlobally,
 		$mLocked, $mHideName, $mOptions;
 
 	/**
@@ -259,7 +259,7 @@ class User {
 	/**
 	 * @var UserPermissions
 	 */
-	private $permissionsService;
+	private static $permissionsService;
 
 	/**
 	 * Lightweight constructor for an anonymous user.
@@ -325,12 +325,12 @@ class User {
 	/**
 	 * @return UserPermissions
 	 */
-	private function userPermissions() {
-		if ( is_null( $this->permissionsService ) ) {
-			$this->permissionsService = Injector::getInjector()->get( PermissionsService::class );
+	private static function userPermissions() {
+		if ( is_null( self::$permissionsService ) ) {
+			self::$permissionsService = Injector::getInjector()->get( PermissionsService::class );
 		}
 
-		return $this->permissionsService;
+		return self::$permissionsService;
 	}
 
 	/**
@@ -1352,8 +1352,6 @@ class User {
 		$this->mBlockedby = -1; # Unset
 		$this->mHash = false;
 		$this->mRights = null;
-		$this->mEffectiveGroups = null;
-		$this->mImplicitGroups = null;
 		$this->mOptions = null;
 		$this->mOptionOverrides = null;
 		$this->mOptionsLoaded = false;
@@ -4682,7 +4680,7 @@ class User {
 	 */
 	public function getGroups() {
 		global $wgCityId;
-		return $this->userPermissions()->getExplicitUserGroups( $wgCityId, $this->getId() );
+		return self::userPermissions()->getExplicitUserGroups( $wgCityId, $this->getId() );
 	}
 
 	/**
@@ -4694,7 +4692,7 @@ class User {
 	 */
 	public function getEffectiveGroups( $recache = false ) {
 		global $wgCityId;
-		return $this->userPermissions()->getEffectiveUserGroups( $wgCityId, $this, $recache );
+		return self::userPermissions()->getEffectiveUserGroups( $wgCityId, $this, $recache );
 	}
 
 	/**
@@ -4705,7 +4703,15 @@ class User {
 	 * @return Array of String internal group names
 	 */
 	public function getAutomaticGroups( $recache = false ) {
-		return $this->userPermissions()->getAutomaticUserGroups( $this, $recache );
+		return self::userPermissions()->getAutomaticUserGroups( $this, $recache );
+	}
+
+	/**
+	 * Get a list of implicit groups
+	 * @return Array of Strings Array of internal group names
+	 */
+	public static function getImplicitGroups() {
+		return self::userPermissions()->getImplicitGroups();
 	}
 
 	//JCEL used in a few places, basically can stay as is.
@@ -4872,19 +4878,6 @@ class User {
 			wfRunHooks( 'UserGetAllRights', array( &self::$mAllRights ) );
 		}
 		return self::$mAllRights;
-	}
-
-	//JCel can stay as is/moved to service. Hook isn't used.
-
-	/**
-	 * Get a list of implicit groups
-	 * @return Array of Strings Array of internal group names
-	 */
-	public static function getImplicitGroups() {
-		global $wgImplicitGroups;
-		$groups = $wgImplicitGroups;
-		wfRunHooks( 'UserGetImplicitGroups', array( &$groups ) );	#deprecated, use $wgImplictGroups instead
-		return $groups;
 	}
 
 	//JCEL needs to be moved to new service, better understood.

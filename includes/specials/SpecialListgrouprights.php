@@ -31,17 +31,33 @@
 class SpecialListGroupRights extends SpecialPage {
 
 	/**
+	 * @var UserPermissions
+	 */
+	private $permissionsService;
+
+	/**
 	 * Constructor
 	 */
 	function __construct() {
 		parent::__construct( 'Listgrouprights' );
 	}
 
+
+	/**
+	 * @return UserPermissions
+	 */
+	private function userPermissions() {
+		if ( is_null( $this->permissionsService ) ) {
+			$this->permissionsService = Injector::getInjector()->get( PermissionsService::class );
+		}
+
+		return $this->permissionsService;
+	}
+
 	/**
 	 * Show the special page
 	 */
 	public function execute( $par ) {
-		global $wgImplicitGroups;
 		global $wgGroupPermissions, $wgRevokePermissions, $wgAddGroups, $wgRemoveGroups;
 		global $wgGroupsAddToSelf, $wgGroupsRemoveFromSelf;
 
@@ -101,7 +117,7 @@ class SpecialListGroupRights extends SpecialPage {
 					SpecialPage::getTitleFor( 'Listusers' ),
 					wfMsgHtml( 'listgrouprights-members' )
 				);
-			} elseif ( !in_array( $group, $wgImplicitGroups ) ) {
+			} elseif ( !in_array( $group, $this->permissionsService()->getImplicitGroups() ) ) {
 				$grouplink = '<br />' . Linker::linkKnown(
 					SpecialPage::getTitleFor( 'Listusers' ),
 					wfMsgHtml( 'listgrouprights-members' ),
