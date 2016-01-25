@@ -53,29 +53,29 @@ $messages['qqq'] = array(
 
 $messages['de'] = array(
 	'global-shortcuts-description' => '
-Improve your browsing and editing experience using shortcut keys on Wikia.
+Einfacheres Browsen und Bearbeiten auf Wikia mithilfe von Tastenkombinationen.
 
-This extension provides some key shortcuts and an actions explorer to help users navigate to important pages or perform certain actions.
+Mit dieser Erweiterung kannst du einige Tastenkombinationen sowie einen Actions Explorer nutzen, was das Erreichen wichtiger Seiten oder Ausführen bestimmter Aktionen erleichtert.
 ',
-	'global-shortcuts-caption-action-list' => 'Actions explorer',
-	'global-shortcuts-caption-keyboard-shortcuts-help' => 'Keyboard shortcuts help',
-	'global-shortcuts-caption-open-discussions' => 'Open discussions',
-	'global-shortcuts-caption-search-for-a-page' => 'Search for a page',
-	'global-shortcuts-caption-start-a-new-wikia' => 'Start a new wikia',
-	'global-shortcuts-category-current-page' => 'Current page',
-	'global-shortcuts-category-current-wikia' => 'Current wikia',
+	'global-shortcuts-caption-action-list' => 'Actions Explorer',
+	'global-shortcuts-caption-keyboard-shortcuts-help' => 'Hilfe Tastenkombinationen',
+	'global-shortcuts-caption-open-discussions' => 'Diskussionen öffnen',
+	'global-shortcuts-caption-search-for-a-page' => 'Seite suchen',
+	'global-shortcuts-caption-start-a-new-wikia' => 'Ein neues Wikia starten',
+	'global-shortcuts-category-current-page' => 'Aktuelle Seite',
+	'global-shortcuts-category-current-wikia' => 'Aktuelles Wikia',
 	'global-shortcuts-category-global' => 'Global',
-	'global-shortcuts-category-help' => 'Help',
+	'global-shortcuts-category-help' => 'Hilfe',
 	'global-shortcuts-category-other' => 'Andere',
-	'global-shortcuts-key-or' => 'or',
-	'global-shortcuts-key-then' => 'then',
-	'global-shortcuts-name' => 'Shortcuts',
-	'global-shortcuts-search-placeholder' => 'Type to search...',
-	'global-shortcuts-title-help-entry-point' => 'Open keyboard shortcuts help dialog (?)',
-	'global-shortcuts-title-keyboard-shortcuts' => 'Keyboard shortcuts',
-	'global-shortcuts-welcome-hint' => 'Introducing our new-and-improved Keyboard Shortcuts.',
-	'template-class-global-shortcuts-caption-classify-page' => 'Classify page',
-	'template-class-global-shortcuts-press-to-explore-shortcuts' => 'Press $1 to explore shortcuts',
+	'global-shortcuts-key-or' => 'oder',
+	'global-shortcuts-key-then' => 'dann',
+	'global-shortcuts-name' => 'Tastenkombinationen',
+	'global-shortcuts-search-placeholder' => 'Suchtext eingeben',
+	'global-shortcuts-title-help-entry-point' => 'Hilfedialog für Tastenkombinationen öffnen (?)',
+	'global-shortcuts-title-keyboard-shortcuts' => 'Tastenkombinationen',
+	'global-shortcuts-welcome-hint' => 'Unsere neuen und verbesserten Tastenkombinationen.',
+	'template-class-global-shortcuts-caption-classify-page' => 'Klassifizierungsseite',
+	'template-class-global-shortcuts-press-to-explore-shortcuts' => 'Drücke auf $1, um die Tastenkombinationen anzusehen',
 );
 
 $messages['es'] = array(
@@ -188,6 +188,29 @@ $messages['ja'] = array(
 
 $messages['pl'] = array(
 	'global-shortcuts-category-other' => 'Pozostałe',
+	'global-shortcuts-description' => '
+Spraw, aby przeglądanie i edytowanie było łatwiejsze dzięki wykorzystaniu skrótów klawiaturowych na portalu Wikia.
+
+To rozszerzenie pozwala wykorzystać eksplorator działań oraz niektóre skróty, aby ułatwić użytkownikom nawigację pomiędzy ważnymi stronami oraz wykonywanie niektórych działań.
+',
+	'global-shortcuts-caption-action-list' => 'Eksplorator działań',
+	'global-shortcuts-caption-keyboard-shortcuts-help' => 'Pomoc skrótów klawiaturowych',
+	'global-shortcuts-caption-open-discussions' => 'Otwarte dyskusje',
+	'global-shortcuts-caption-search-for-a-page' => 'Wyszukaj stronę',
+	'global-shortcuts-caption-start-a-new-wikia' => 'Utwórz nową wikię',
+	'global-shortcuts-category-current-page' => 'Obecna strona',
+	'global-shortcuts-category-current-wikia' => 'Obecna wikia',
+	'global-shortcuts-category-global' => 'Globalna',
+	'global-shortcuts-category-help' => 'Pomoc',
+	'global-shortcuts-key-or' => 'lub',
+	'global-shortcuts-key-then' => 'następnie',
+	'global-shortcuts-name' => 'Skróty',
+	'global-shortcuts-search-placeholder' => 'Napisz, aby wyszukać...',
+	'global-shortcuts-title-help-entry-point' => 'Otwórz okno pomocy skrótów klawiaturowych (?)',
+	'global-shortcuts-title-keyboard-shortcuts' => 'Skróty klawiaturowe',
+	'global-shortcuts-welcome-hint' => 'Przedstawiamy nowe i ulepszone Skróty Klawiaturowe.',
+	'template-class-global-shortcuts-caption-classify-page' => 'Zaklasyfikuj stronę',
+	'template-class-global-shortcuts-press-to-explore-shortcuts' => 'Wybierz $1, aby poznać skróty',
 );
 
 $messages['pt'] = array(
@@ -210,7 +233,7 @@ $messages['pt'] = array(
 	'global-shortcuts-description' => '
 Melhore a navegação e a edição usando teclas de atalho na Wikia.
 
-Esta extensão fornece alguns atalhos chaves e um explorador de ações para ajudar os usuários a navegar para páginas importantes ou executar determinadas ações.
+Esta extensão fornece alguns atalhos chaves e um explorador de ações para ajudar os usuários a navegar para páginas importantes ou executar determinadas ações. 
 ',
 	'global-shortcuts-name' => 'Atalhos',
 	'global-shortcuts-search-placeholder' => 'Digite para buscar...',
@@ -219,6 +242,29 @@ Esta extensão fornece alguns atalhos chaves e um explorador de ações para aju
 
 $messages['ru'] = array(
 	'global-shortcuts-category-other' => 'Прочее',
+	'global-shortcuts-description' => '
+Improve your browsing and editing experience using shortcut keys on Wikia.
+
+This extension provides some key shortcuts and an actions explorer to help users navigate to important pages or perform certain actions.
+',
+	'global-shortcuts-caption-action-list' => 'Actions explorer',
+	'global-shortcuts-caption-keyboard-shortcuts-help' => 'Keyboard shortcuts help',
+	'global-shortcuts-caption-open-discussions' => 'Open discussions',
+	'global-shortcuts-caption-search-for-a-page' => 'Search for a page',
+	'global-shortcuts-caption-start-a-new-wikia' => 'Start a new wikia',
+	'global-shortcuts-category-current-page' => 'Current page',
+	'global-shortcuts-category-current-wikia' => 'Current wikia',
+	'global-shortcuts-category-global' => 'Global',
+	'global-shortcuts-category-help' => 'Help',
+	'global-shortcuts-key-or' => 'or',
+	'global-shortcuts-key-then' => 'then',
+	'global-shortcuts-name' => 'Shortcuts',
+	'global-shortcuts-search-placeholder' => 'Type to search...',
+	'global-shortcuts-title-help-entry-point' => 'Open keyboard shortcuts help dialog (?)',
+	'global-shortcuts-title-keyboard-shortcuts' => 'Keyboard shortcuts',
+	'global-shortcuts-welcome-hint' => 'Introducing our new-and-improved Keyboard Shortcuts.',
+	'template-class-global-shortcuts-caption-classify-page' => 'Classify page',
+	'template-class-global-shortcuts-press-to-explore-shortcuts' => 'Press $1 to explore shortcuts',
 );
 
 $messages['zh-hans'] = array(
@@ -270,3 +316,4 @@ $messages['zh-hant'] = array(
 	'global-shortcuts-search-placeholder' => '輸入進行搜索...',
 	'global-shortcuts-welcome-hint' => '介紹一些新改善的鍵盤快速方式。',
 );
+
