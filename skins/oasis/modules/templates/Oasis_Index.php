@@ -106,8 +106,7 @@
 <script type="text/javascript">
 	console.log('== Qualaroo experiment enabled ==');
 
-	var wgQualarooKruxSurveys = [ '152278' ],
-		wgKruxEventId = 'KTW2yYJt';
+	var wgKruxEventId = 'KTW2yYJt';
 
 	function fireKruxEvent(answer) {
 		var sanitizedAnswer = '';
@@ -124,11 +123,6 @@
 	function validateAndSendKruxRequests(fieldsList, nudgeId) {
 		var answer = '',
 			answers;
-
-		if(wgQualarooKruxSurveys.indexOf(nudgeId) === -1) {
-			console.log('Qualaroo-Krux integration: integration disabled for this survey (' + nudgeId + ')');
-			return;
-		}
 
 		if(!Object.keys) {
 			console.log('Qualaroo-Krux integration: unsupported browser');
