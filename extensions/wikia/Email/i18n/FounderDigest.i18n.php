@@ -146,19 +146,19 @@ $messages['pl'] = array(
 );
 
 $messages['pt'] = array(
-	'emailext-founder-activity-digest-subject' => 'As últimas atividades na $1',
+	'emailext-founder-activity-digest-subject' => 'Atividade recente na $1',
 	'emailext-founder-views-digest-subject' => 'Visualizações de hoje na $1',
-	'emailext-founder-digest-summary' => 'É hora de sua dose diária de atividade da $1.',
-	'emailext-founder-activity-digest-link-label' => 'Atividade recente da Wikia',
-	'emailext-founder-activity-digest-footer' => 'Obter mais dicas sobre como construir sua wikia e fazer perguntas na [http://community.wikia.com Central da Comunidade].',
-	'emailext-founder-views-digest-link-label' => 'Adicionar páginas',
+	'emailext-founder-digest-summary' => 'É hora da sua dose diária de atividade na $1.',
+	'emailext-founder-activity-digest-link-label' => 'Atividade recente da wikia',
+	'emailext-founder-activity-digest-footer' => 'Obtenha mais dicas sobre como construir sua wikia e fazer perguntas na [http://comunidade.wikia.com Central da Comunidade].',
+	'emailext-founder-views-digest-link-label' => 'Adicione páginas',
 	'emailext-founder-digest-views-header' => '$1 páginas visualizadas',
 	'emailext-founder-digest-views-description-1' => 'Continue o excelente trabalho adicionando artigos interessantes, discussões, fotos e vídeos para as pessoas desfrutarem.',
-	'emailext-founder-digest-views-description-2' => 'Continue adicionando coisas novas e promovendo sua wikia para encorajar mais pessoas a ler, contribuir e divulgar as novas. Sua comunidade está ficando ótima!',
-	'emailext-founder-digest-edits-header' => '$1 de contribuições feitas',
-	'emailext-founder-digest-edits-description' => 'Membros da comunidade felizes fazem wikias ótimas. Certifique-se de agradecer a todos aqueles que contribuem para que eles se sintam apreciados!',
-	'emailext-founder-digest-users-header' => '$1 Novos Wikianos',
-	'emailext-founder-digest-users-description' => 'Dê as boas-vindas a novas pessoas em sua wikia! Envolva-as na grande comunidade de fãs que você criou.',
+	'emailext-founder-digest-views-description-2' => 'Continue adicionando coisas novas e promovendo sua wikia para encorajar mais pessoas a ler, contribuir e divulgar. Sua comunidade está ficando ótima!',
+	'emailext-founder-digest-edits-header' => '$1 contribuições feitas',
+	'emailext-founder-digest-edits-description' => 'Membros felizes constroem wikias felizes. Não esqueça de agradecer a todos que contribuem para que eles se sintam valorizados!',
+	'emailext-founder-digest-users-header' => '$1 wikianos novos',
+	'emailext-founder-digest-users-description' => 'Dê boas-vindas às novas pessoas na sua wikia! Envolva-as na grande comunidade de fãs que você criou.',
 );
 
 $messages['ru'] = array(
@@ -182,7 +182,7 @@ $messages['zh-hans'] = array(
 	'emailext-founder-views-digest-subject' => '$1的今日访问量',
 	'emailext-founder-digest-summary' => '又到了您参加$1上每日活动的时间了。',
 	'emailext-founder-activity-digest-link-label' => 'Wikia的最新活动',
-	'emailext-founder-activity-digest-footer' => '获取如何创建维基的小诀窍、并在[http://zh.community.wikia.com 社区中心]提问。',
+	'emailext-founder-activity-digest-footer' => '获取如何创建维基的小诀窍，请在[http://zh.community.wikia.com 社区中心]提问。',
 	'emailext-founder-views-digest-link-label' => '添加页面',
 	'emailext-founder-digest-views-header' => '已查看$1个页面',
 	'emailext-founder-digest-views-description-1' => '继续添加有趣的文章、讨论、照片和视频供大家欣赏。',
@@ -198,7 +198,7 @@ $messages['zh-hant'] = array(
 	'emailext-founder-views-digest-subject' => '$1的今日訪問量',
 	'emailext-founder-digest-summary' => '又到了您參加$1上每日活動的時間了。',
 	'emailext-founder-activity-digest-link-label' => 'Wikia的最新活動',
-	'emailext-founder-activity-digest-footer' => '獲取如何創建維基的小訣竅，並在[http://zh.community.wikia.com 社區中心]上提問。',
+	'emailext-founder-activity-digest-footer' => '獲取如何創建維基的小訣竅，請在[http://zh.community.wikia.com 社區中心]上提問。',
 	'emailext-founder-views-digest-link-label' => '添加頁面',
 	'emailext-founder-digest-views-header' => '已查看$1個頁面',
 	'emailext-founder-digest-views-description-1' => '繼續添加有趣的文章、 討論、 照片和視頻供大家欣賞。',
