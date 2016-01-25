@@ -94,7 +94,8 @@ define('ext.wikia.adEngine.provider.evolve2', [
 
 					success(adInfo);
 				},
-				error: hop
+				error: hop,
+				forcedAdType: 'evolve2'
 			}
 		);
 
