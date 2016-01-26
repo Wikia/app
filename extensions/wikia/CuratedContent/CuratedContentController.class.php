@@ -365,7 +365,12 @@ class CuratedContentController extends WikiaController {
 					return $section;
 				}, $curated );
 
-				$data[] = $this->communityDataService->getCommunityData();
+				$community = $this->communityDataService->getCommunityData();
+				if ( !empty( $community ) ) {
+					$community[ 'community_data' ] = 'true';
+					$data[] = $community;
+				}
+
 			}
 
 			$this->response->setVal( 'data', $data );
