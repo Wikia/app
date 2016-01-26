@@ -123,8 +123,7 @@
 	}
 
 	function validateAndSendKruxRequests(fieldsList, nudgeId) {
-		var answer = '',
-			answers;
+		var answers;
 
 		if(!Object.keys) {
 			console.log('Qualaroo-Krux integration: unsupported browser');
