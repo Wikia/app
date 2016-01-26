@@ -113,6 +113,8 @@
 
 		if( Krux ) {
 			sanitizedAnswer = answer.toLowerCase();
+			
+			// It will not be sent if Krux is not enabled on the wiki
 			Krux('admEvent', wgKruxEventId, {'answer': sanitizedAnswer});
 			console.log("Qualaroo-Krux integration: fired a Krux event (" + sanitizedAnswer + ")");
 		} else {
