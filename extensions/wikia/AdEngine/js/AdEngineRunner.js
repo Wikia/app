@@ -13,10 +13,20 @@ define('ext.wikia.adEngine.adEngineRunner', [
 		supportedBidders = [amazonMatch, rubiconFastlane],
 		timeout = 2000;
 
+	/**
+	 * Delay running AdEngine by bidder responses or by configured timeout
+	 *
+	 * @param {function} runAdEngine
+	 */
 	function delayRun(runAdEngine) {
 		var enabledBidders = [],
 			biddersQueue = [];
 
+		/**
+		 * Mark bidder as responded and trigger run if all bidders already responded
+		 *
+		 * @param {string} name
+		 */
 		function markBidder(name) {
 			log(name + ' responded', 'debug', logGroup);
 			if (biddersQueue.indexOf(name) === -1) {
@@ -28,6 +38,9 @@ define('ext.wikia.adEngine.adEngineRunner', [
 			}
 		}
 
+		/**
+		 * Add bidder listener to mark bidder on response
+		 */
 		function registerBidders() {
 			log(['Register bidders', enabledBidders], 'debug', logGroup);
 			enabledBidders.forEach(function (bidder) {
@@ -56,9 +69,20 @@ define('ext.wikia.adEngine.adEngineRunner', [
 		}
 	}
 
+	/**
+	 * Decide whether AdEngine should be delayed and run slots queue
+	 *
+	 * @param {object} config - ext.wikia.adEngine.config.*
+	 * @param {array} slots - slot names to fill in
+	 * @param {string} queueName
+	 * @param {boolean} delayEnabled
+	 */
 	function run(config, slots, queueName, delayEnabled) {
 		var engineStarted = false;
 
+		/**
+		 * Run AdEngine once and track it
+		 */
 		function runAdEngine() {
 			if (engineStarted) {
 				return;
