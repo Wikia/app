@@ -388,16 +388,15 @@ class MercuryApiController extends WikiaController {
 		$parserOptions = new ParserOptions( $wgUser );
 		$wrapper = new GlobalStateWrapper( ['wgArticleAsJson' => true] );
 
-		$wikitext = $this->getVal( 'wikitext' );
-		$CKmarkup = $this->getVal( 'CKmarkup' );
+		$wikitext = $this->getVal( 'wikitext', '' );
+		$CKmarkup = $this->getVal( 'CKmarkup', '' );
 
-		if ( !!$CKmarkup ) {
+		if ( !empty( $CKmarkup) ) {
 			$wikitext = RTE::HtmlToWikitext( $CKmarkup );
 		}
 
 		$wrapper->wrap( function () use ( &$parsedWikitext, $wikitext, $title, $parserOptions ) {
 			$parsedWikitext = ParserPool::create()->parse( $wikitext, $title, $parserOptions )->getText();
-
 		});
 
 		//TODO: change this to make getAsJson basing on current markup
