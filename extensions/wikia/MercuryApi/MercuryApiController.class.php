@@ -332,7 +332,6 @@ class MercuryApiController extends WikiaController {
 	public function getArticle() {
 		global $wgEnableMainPageDataMercuryApi, $wgCityId;
 
-		$curatedContent = ( new CommunityDataService( $wgCityId ) )->getCuratedContentLegacyFormat();
 		try {
 			$title = $this->getTitleFromRequest();
 			$articleId = $title->getArticleId();
@@ -373,7 +372,9 @@ class MercuryApiController extends WikiaController {
 
 			$titleBuilder = new WikiaHtmlTitle();
 
-			if ( $isMainPage && !empty( $wgEnableMainPageDataMercuryApi ) && !empty( $curatedContent ) ) {
+			if ( $isMainPage && !empty( $wgEnableMainPageDataMercuryApi ) &&
+				 ( new CommunityDataService( $wgCityId ) )->hasCuratedContent()
+			) {
 				$data[ 'mainPageData' ] = $this->getMainPageData();
 			} else {
 				$articleAsJson = $this->getArticleJson( $articleId, $title, $sections );

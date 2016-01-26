@@ -25,7 +25,7 @@ class CuratedContentController extends WikiaController {
 	private $communityDataService;
 
 	// Make sure this is updated as in CuratedContent.js
-	function init() {
+	public function init() {
 		global $wgCityId;
 		$requestedVersion = $this->request->getInt( 'ver', self::API_VERSION );
 		$requestedRevision = $this->request->getInt( 'rev', self::API_REVISION );
@@ -231,103 +231,6 @@ class CuratedContentController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function extendItemsWithImages( array $items ) {
-		return array_map( [ $this, 'extendWithImageData' ], $items );
-	}
-
-	private function extendWithImageData( $item ) {
-		list( $item[ 'image_id' ], $item[ 'image_url' ] ) = CuratedContentHelper::findImageIdAndUrl(
-			$item[ 'image_id' ],
-			$item[ 'article_id' ]
-		);
-		return $item;
-	}
-
-	private function extractItemsFromSections( array $sections ) {
-		return array_reduce( $sections, function ( $result, $item ) {
-			return array_merge( $result, $item[ 'items' ] );
-		}, [ ] );
-	}
-
-	/**
-	 *
-	 * Returns list of categories on a wiki in batches by self::LIMIT
-	 *
-	 * @requestParam Integer limit
-	 * @requestParam String offset
-	 *
-	 * @response items
-	 * @response offset
-	 */
-	private function getCategories() {
-		wfProfileIn( __METHOD__ );
-
-		$limit = $this->request->getVal( 'limit', self::LIMIT * 2 );
-		$offset = $this->request->getVal( 'offset', '' );
-
-		$items = WikiaDataAccess::cache(
-			wfMemcKey( __METHOD__, $offset, $limit, self::NEW_API_VERSION ),
-			WikiaResponse::CACHE_SHORT,
-			function () use ( $limit, $offset ) {
-				return ApiService::call(
-					[
-						'action' => 'query',
-						'list' => 'allcategories',
-						'redirects' => true,
-						'aclimit' => $limit,
-						'acfrom' => $offset,
-						'acprop' => 'id|size',
-						// We don't want empty items to show up
-						'acmin' => 1
-					]
-				);
-			}
-		);
-
-		$allCategories = $items[ 'query' ][ 'allcategories' ];
-		if ( !empty( $allCategories ) ) {
-
-			$ret = [ ];
-			$app = F::app();
-			$categoryName = $app->wg->contLang->getNsText( NS_CATEGORY );
-
-			foreach ( $allCategories as $value ) {
-				if ( $value[ 'size' ] - $value[ 'files' ] > 0 ) {
-					$ret[] = $this::getJsonItem(
-						$value[ '*' ],
-						$categoryName,
-						isset( $value[ 'pageid' ] ) ? (int)$value[ 'pageid' ] : 0
-					);
-				}
-			}
-
-			$this->response->setVal( 'items', $ret );
-
-			if ( !empty( $items[ 'query-continue' ] ) ) {
-				$this->response->setVal( 'offset', $items[ 'query-continue' ][ 'allcategories' ][ 'acfrom' ] );
-			}
-		} else {
-			wfProfileOut( __METHOD__ );
-			throw new NotFoundApiException( 'No Curated Content' );
-		}
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	function getJsonItem( $titleName, $ns, $pageId ) {
-		$title = Title::makeTitle( $ns, $titleName );
-		list( $imageId, $imageUrl ) = CuratedContentHelper::findImageIdAndUrl( null, $pageId );
-
-		return [
-			'title' => $ns . ':' . $title->getFullText(),
-			'label' => $title->getFullText(),
-			'image_id' => $imageId,
-			'article_id' => $pageId,
-			'type' => 'category',
-			'image_url' => $imageUrl
-		];
-	}
-
 	public function getCuratedContentQuality() {
 		$wikiID = $this->request->getInt( 'wikiID', null );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
@@ -408,6 +311,7 @@ class CuratedContentController extends WikiaController {
 
 			$helper = new CuratedContentHelper();
 			$sections = $helper->processSections( $properData );
+			//TODO: refactor validator
 			$errors = ( new CuratedContentValidator )->validateData( $sections );
 
 			if ( !empty( $errors ) ) {
@@ -439,36 +343,33 @@ class CuratedContentController extends WikiaController {
 		// TODO: CONCF-961 Set more restrictive header
 		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
 
-		$curatedContent = $this->communityDataService->getCuratedContentLegacyFormat();
-
 		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
 			$data = [ ];
-			if ( !empty( $curatedContent ) && is_array( $curatedContent ) ) {
-				foreach ( $curatedContent as $section ) {
-					if ( !$section[ 'community_data' ] ) {
-						// update information about node type
-						$section[ 'node_type' ] = 'section';
+			if ( $this->communityDataService->hasCuratedContent() ) {
+				// extend images
+				$curated = array_map( function ( $section ) {
+					$section[ 'image_url' ] = CuratedContentHelper::findImageUrl( $section[ 'image_id' ] );
+					return $section;
+				}, $this->communityDataService->getCurated() );
 
-						// rename $section['title'] to $section['label']
-						$section[ 'label' ] = $section[ 'title' ];
-						unset( $section[ 'title' ] );
-
-						if ( !empty( $section[ 'label' ] ) && empty( $section[ 'featured' ] ) ) {
-							// load image for curated content sections (not optional, not featured)
-							$section[ 'image_url' ] = CuratedContentHelper::findImageUrl( $section[ 'image_id' ] );
-						}
-
-						foreach ( $section[ 'items' ] as $i => $item ) {
-							// load image for all items
-							$section[ 'items' ][ $i ][ 'image_url' ] = CuratedContentHelper::findImageUrl( $item[ 'image_id' ] );
-
-							// update information about node type
-							$section[ 'items' ][ $i ][ 'node_type' ] = 'item';
-						}
-					}
-
-					$data[] = $section;
+				$featured = $this->communityDataService->getFeatured();
+				if ( !empty( $featured ) && !empty( $curated ) ) {
+					$featured[ 'featured' ] = 'true';
+					$curated[] = $featured;
 				}
+				$optional = $this->communityDataService->getOptional();
+				if ( !empty( $optional ) && !empty( $curated ) ) {
+					$curated[] = $optional;
+				}
+
+				$data = array_map( function ( $section ) {
+					$section[ 'node_type' ] = 'section';
+					$section[ 'items' ] = $this->extendItemsWithImages( $section[ 'items' ] );
+					$section[ 'items' ] = $this->extendItemsWithType( $section[ 'items' ] );
+					return $section;
+				}, $curated );
+
+				$data[] = $this->communityDataService->getCommunityData();
 			}
 
 			$this->response->setVal( 'data', $data );
@@ -476,6 +377,159 @@ class CuratedContentController extends WikiaController {
 			$this->response->setCode( \Wikia\Service\ForbiddenException::CODE );
 			$this->response->setVal( 'message', 'No permissions to access curated content' );
 		}
+	}
+
+	public function getWikisWithCuratedContent() {
+		$wikisList = WikiFactory::getListOfWikisWithVar(
+			self::CURATED_CONTENT_WG_VAR_ID_PROD, 'array', '!=', [ ]
+		);
+
+		$this->response->setVal( 'ids_list', $wikisList );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+	}
+
+	public function getImage() {
+		$titleName = $this->request->getVal( 'title' );
+		$imageSize = $this->request->getInt( 'size', 50 );
+		$url = null;
+		$imageId = 0;
+
+		if ( !empty( $titleName ) ) {
+			$title = Title::newFromText( $titleName );
+
+			if ( !empty( $title ) && $title instanceof Title && $title->exists() ) {
+				$imageId = $title->getArticleID();
+			}
+		}
+
+		if ( !empty( $imageId ) ) {
+			$url = CuratedContentHelper::getImageUrl( $imageId, $imageSize );
+		}
+
+		$this->response->setValues( [
+			'url' => $url,
+			'id' => $imageId
+		] );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
+		// TODO: CONCF-961 Set more restrictive header
+		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
+	}
+
+	public function editButton() {
+		if ( CuratedContentHelper::shouldDisplayToolButton() ) {
+			$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+			$this->response->setVal(
+				'editMobileMainPageMessage', wfMessage( 'wikiacuratedcontent-edit-mobile-main-page' )->text()
+			);
+		} else {
+			return false; // skip rendering
+		}
+	}
+
+	private function extractItemsFromSections( array $sections ) {
+		return array_reduce( $sections, function ( $result, $item ) {
+			return array_merge( $result, $item[ 'items' ] );
+		}, [ ] );
+	}
+
+	private function extendItemsWithImages( array $items ) {
+		return array_map( [ $this, 'extendWithImageData' ], $items );
+	}
+
+	private function extendWithImageData( $item ) {
+		list( $item[ 'image_id' ], $item[ 'image_url' ] ) = CuratedContentHelper::findImageIdAndUrl(
+			$item[ 'image_id' ],
+			$item[ 'article_id' ]
+		);
+		return $item;
+	}
+
+	/**
+	 *
+	 * Returns list of categories on a wiki in batches by self::LIMIT
+	 *
+	 * @requestParam Integer limit
+	 * @requestParam String offset
+	 *
+	 * @response items
+	 * @response offset
+	 */
+	private function getCategories() {
+		wfProfileIn( __METHOD__ );
+
+		$limit = $this->request->getVal( 'limit', self::LIMIT * 2 );
+		$offset = $this->request->getVal( 'offset', '' );
+
+		$items = WikiaDataAccess::cache(
+			wfMemcKey( __METHOD__, $offset, $limit, self::NEW_API_VERSION ),
+			WikiaResponse::CACHE_SHORT,
+			function () use ( $limit, $offset ) {
+				return ApiService::call(
+					[
+						'action' => 'query',
+						'list' => 'allcategories',
+						'redirects' => true,
+						'aclimit' => $limit,
+						'acfrom' => $offset,
+						'acprop' => 'id|size',
+						// We don't want empty items to show up
+						'acmin' => 1
+					]
+				);
+			}
+		);
+
+		$allCategories = $items[ 'query' ][ 'allcategories' ];
+		if ( !empty( $allCategories ) ) {
+
+			$ret = [ ];
+			$app = F::app();
+			$categoryName = $app->wg->contLang->getNsText( NS_CATEGORY );
+
+			foreach ( $allCategories as $value ) {
+				if ( $value[ 'size' ] - $value[ 'files' ] > 0 ) {
+					$ret[] = $this::getJsonItem(
+						$value[ '*' ],
+						$categoryName,
+						isset( $value[ 'pageid' ] ) ? (int)$value[ 'pageid' ] : 0
+					);
+				}
+			}
+
+			$this->response->setVal( 'items', $ret );
+
+			if ( !empty( $items[ 'query-continue' ] ) ) {
+				$this->response->setVal( 'offset', $items[ 'query-continue' ][ 'allcategories' ][ 'acfrom' ] );
+			}
+		} else {
+			wfProfileOut( __METHOD__ );
+			throw new NotFoundApiException( 'No Curated Content' );
+		}
+
+		wfProfileOut( __METHOD__ );
+	}
+
+	private function getJsonItem( $titleName, $ns, $pageId ) {
+		$title = Title::makeTitle( $ns, $titleName );
+		list( $imageId, $imageUrl ) = CuratedContentHelper::findImageIdAndUrl( null, $pageId );
+
+		return [
+			'title' => $ns . ':' . $title->getFullText(),
+			'label' => $title->getFullText(),
+			'image_id' => $imageId,
+			'article_id' => $pageId,
+			'type' => 'category',
+			'image_url' => $imageUrl
+		];
+	}
+
+	private function extendItemsWithType( $items ) {
+		return array_map( function ( $item ) {
+			$item[ 'node_type' ] = 'item';
+			return $item;
+		}, $items );
 	}
 
 	private function getCuratedContentQualityForWiki( $wikiID ) {
@@ -532,55 +586,6 @@ class CuratedContentController extends WikiaController {
 			}
 			return $accu;
 		}, [ 'tooLongTitlesCount' => 0, 'missingImagesCount' => 0, 'totalNumberOfItems' => 0 ] );
-	}
-
-	public function getWikisWithCuratedContent() {
-		$wikisList = WikiFactory::getListOfWikisWithVar(
-			self::CURATED_CONTENT_WG_VAR_ID_PROD, 'array', '!=', [ ]
-		);
-
-		$this->response->setVal( 'ids_list', $wikisList );
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
-	}
-
-	public function getImage() {
-		$titleName = $this->request->getVal( 'title' );
-		$imageSize = $this->request->getInt( 'size', 50 );
-		$url = null;
-		$imageId = 0;
-
-		if ( !empty( $titleName ) ) {
-			$title = Title::newFromText( $titleName );
-
-			if ( !empty( $title ) && $title instanceof Title && $title->exists() ) {
-				$imageId = $title->getArticleID();
-			}
-		}
-
-		if ( !empty( $imageId ) ) {
-			$url = CuratedContentHelper::getImageUrl( $imageId, $imageSize );
-		}
-
-		$this->response->setValues( [
-			'url' => $url,
-			'id' => $imageId
-		] );
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
-		// TODO: CONCF-961 Set more restrictive header
-		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
-	}
-
-	public function editButton() {
-		if ( CuratedContentHelper::shouldDisplayToolButton() ) {
-			$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-			$this->response->setVal(
-				'editMobileMainPageMessage', wfMessage( 'wikiacuratedcontent-edit-mobile-main-page' )->text()
-			);
-		} else {
-			return false; // skip rendering
-		}
 	}
 }
 

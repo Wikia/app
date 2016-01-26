@@ -15,7 +15,6 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	public function index() {
 		global $wgUser;
 
-		$curatedContent = $this->communityDataService->getCuratedContentLegacyFormat();
 		if ( !$wgUser->isAllowed( 'curatedcontent' ) ) {
 			$this->displayRestrictionError();
 			return false; // skip rendering
@@ -83,15 +82,12 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			'sectionTemplate' => $sectionTemplate
 		] );
 
-		if ( !empty( $curatedContent ) ) {
+		if ( $this->communityDataService->hasCuratedContent() ) {
 			$list = '';
 
-			foreach ( $curatedContent as $section ) {
-				if ( isset( $section[ 'featured' ] ) && $section[ 'featured' ] ) {
-					$featuredSection = $this->buildSection( $section );
-				} else {
-					$list .= $this->buildSection( $section );
-				}
+			$featuredSection = $this->buildSection( $this->communityDataService->getFeatured() );
+			foreach ( $this->communityDataService->getNonFeaturedSections() as $section ) {
+				$list .= $this->buildSection( $section );
 			}
 			if ( !isset( $featuredSection ) ) {
 				// add featured section if not yet exists
@@ -202,7 +198,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$sectionTemplate = 'featuredSection';
 		}
 		$result .= $this->sendSelfRequest( $sectionTemplate, [
-			'value' => $section[ 'title' ],
+			'value' => $section[ 'label' ],
 			'image_id' => $section[ 'image_id' ],
 			'image_crop' => !empty( $section[ 'image_crop' ] ) ? $section[ 'image_crop' ] : [ ],
 		] );

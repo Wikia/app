@@ -16,16 +16,13 @@ class CommunityDataService extends WikiaService {
 		$status = WikiFactory::setVarByName( self::CURATED_CONTENT_VAR_NAME, $this->cityId, $ready );
 		if ( $status ) {
 			wfWaitForSlaves();
+			$this->curatedContentData = $ready;
 		}
 		return $status;
 	}
 
 	public function getCuratedContent() {
 		return $this->curatedContentData();
-	}
-
-	public function getCuratedContentLegacyFormat() {
-		return $this->toOld( $this->curatedContentData() );
 	}
 
 	public function hasCuratedContent() {
@@ -138,32 +135,6 @@ class CommunityDataService extends WikiaService {
 		}
 
 		return $result;
-	}
-
-	private function toOld( $data ) {
-		$result = [ ];
-		if ( !empty( $data[ 'featured' ] ) ) {
-			$data[ 'featured' ][ 'featured' ] = 'true';
-			$result[] = $data[ 'featured' ];
-		}
-		//		if ( !empty( $data[ 'community_data' ] ) ) {
-		//			$data[ 'community_data' ][ 'community_data' ] = 'true';
-		//			$result[] = $data[ 'community_data' ];
-		//		}
-		if ( !empty( $data[ 'curated' ] ) ) {
-			$result = array_merge( $result, $data[ 'curated' ] );
-		}
-		if ( !empty( $data[ 'optional' ] ) ) {
-			$result[] = $data[ 'optional' ];
-		}
-
-		return array_map( function ( $section ) {
-			if ( isset( $section[ 'label' ] ) ) {
-				$section[ 'title' ] = $section[ 'label' ];
-				unset( $section[ 'label' ] );
-			}
-			return $section;
-		}, $result );
 	}
 
 	/**
