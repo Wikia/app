@@ -1,4 +1,4 @@
-v<?php
+<?php
 /**
  * Base class for template-based skins
  *
