@@ -49,15 +49,14 @@ class SomethingToNothingLogger {
 		if ( !$this->active ) {
 			return;
 		}
-
 		if ( trim( $wt ) === '' ) {
 			$this->active = false; // just so we log once
 
 			global $wgArticleAsJson;
 
 			\Wikia\Logger\WikiaLogger::instance()->debug( 'SomethingToNothingLoggerV1', [
-				'originalWikitext' => substring( $this->originalWikitext, 0, 1000 ),
-				'previousWikitext' => substring( $this->previousWikitext, 0, 1000 ),
+				'originalWikitext' => substr( $this->originalWikitext, 0, 1000 ),
+				'previousWikitext' => substr( $this->previousWikitext, 0, 1000 ),
 				'marker' => $marker,
 				'wgArticleAsJson' => $wgArticleAsJson
 			] );
@@ -573,7 +572,7 @@ class Parser {
 		// There was "a lot" of wikitext but ultimately no content was created out of it
 		if ( $wikitextSize > 500 && trim($text) === '' ) {
 			if ( $title && $title->exists() && $title->isContentPage() ) {
-				\Wikia\Logger\WikiaLogger::instance()->info( 'PLATFORM-1355-somethingToNothing', [
+				\Wikia\Logger\WikiaLogger::instance()->info( 'PLATFORM-1355-V1', [
 					'exception'   => new Exception() // log the backtrace
 				] );
 			}
