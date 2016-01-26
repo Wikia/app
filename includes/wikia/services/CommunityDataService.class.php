@@ -12,7 +12,7 @@ class CommunityDataService extends WikiaService {
 	}
 
 	public function setCuratedContent( $data ) {
-		$ready = $this->isOldFormat( $data ) ? $this->toNew( $data ) : $data;
+		$ready = $this->isLegacyFormat( $data ) ? $this->toNew( $data ) : $data;
 		$status = WikiFactory::setVarByName( self::CURATED_CONTENT_VAR_NAME, $this->cityId, $ready );
 		if ( $status ) {
 			wfWaitForSlaves();
@@ -105,7 +105,7 @@ class CommunityDataService extends WikiaService {
 				$this->curatedContentData = [ ];
 			} else {
 				// transformation for transition phase
-				$this->curatedContentData = $this->isOldFormat( $raw ) ?
+				$this->curatedContentData = $this->isLegacyFormat( $raw ) ?
 					$this->toNew( $raw ) : $raw;
 			}
 		}
@@ -117,7 +117,10 @@ class CommunityDataService extends WikiaService {
 		$result = [ ];
 		foreach ( $data as $section ) {
 			$extended = [
-				'label' => isset( $section[ 'title' ] ) ? $section[ 'title' ] : '',
+				// use title if set
+				'label' => isset( $section[ 'title' ] ) ? $section[ 'title' ]
+					// or label
+					: ( isset( $section[ 'label' ] ) ? $section[ 'label' ] : "" ),
 				'image_id' => isset( $section[ 'image_id' ] ) ? $section[ 'image_id' ] : 0,
 				'items' => isset( $section[ 'items' ] ) ? $section[ 'items' ] : [ ]
 			];
@@ -125,9 +128,12 @@ class CommunityDataService extends WikiaService {
 			//figure out what type of section it is
 			if ( $section[ 'featured' ] ) {
 				$result[ 'featured' ] = $extended;
-			} elseif ( $section[ 'community_data' ] ) {
-				$result[ 'community_data' ] = $section;
-			} elseif ( empty( $section[ 'title' ] ) ) {
+			} elseif ( $section[ 'community_data' ] == 'true' ) {
+				$result[ 'community_data' ] = [
+					'description' => $section[ 'description' ],
+					'image_id' => isset( $section[ 'image_id' ] ) ? $section[ 'image_id' ] : 0
+				];
+			} elseif ( empty( $extended[ 'label' ] ) ) {
 				$result[ 'optional' ] = $extended;
 			} else {
 				$result[ 'curated' ][] = $extended;
@@ -144,7 +150,7 @@ class CommunityDataService extends WikiaService {
 	 * @param $curatedContent array
 	 * @return bool true if wgWikiaCuratedContent has old format
 	 */
-	private function isOldFormat( $curatedContent ) {
+	private function isLegacyFormat( $curatedContent ) {
 		return ( array_values( $curatedContent ) === $curatedContent );
 	}
 }

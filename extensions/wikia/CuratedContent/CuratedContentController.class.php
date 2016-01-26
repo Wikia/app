@@ -315,6 +315,7 @@ class CuratedContentController extends WikiaController {
 			} else {
 				$community_data = $this->request->getArray( 'community_data', [ ] );
 				if ( $community_data ) {
+					$community_data[ 'community_data' ] = 'true';
 					$sections[] = $community_data;
 				}
 
