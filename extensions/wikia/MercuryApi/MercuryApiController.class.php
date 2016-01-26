@@ -380,14 +380,8 @@ class MercuryApiController extends WikiaController {
 			throw new BadRequestApiException();
 		}
 
-		$parsedWikitext = '';
 		$titleText = $this->getVal( 'title' );
 		$title = Title::newFromText( $titleText );
-		if ( $title->exists() ) {
-			$articleId = $title->getArticleId();
-		} else {
-			$articleId = '5454'; //TODO: handle preview of new article
-		}
 		$parserOptions = new ParserOptions( $wgUser );
 		$wrapper = new GlobalStateWrapper( ['wgArticleAsJson' => true] );
 
