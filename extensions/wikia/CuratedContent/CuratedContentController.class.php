@@ -194,7 +194,7 @@ class CuratedContentController extends WikiaController {
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		if ( !$this->communityDataService->hasCuratedContent() ) {
+		if ( !$this->communityDataService->hasData() ) {
 			$this->getCategories();
 		} else {
 			$section = $this->request->getVal( 'section' );
@@ -217,7 +217,7 @@ class CuratedContentController extends WikiaController {
 					$this->extendItemsWithImages( $this->communityDataService->getFeaturedItems() ) );
 			} else {
 				$filteredSectionItems = $this->extendItemsWithImages(
-					$this->extractItemsFromSections( $this->communityDataService->getSection( $section ) ) );
+					$this->extractItemsFromSections( $this->communityDataService->getNonFeaturedSection( $section ) ) );
 				if ( !empty( $filteredSectionItems ) ) {
 					$this->response->setVal( 'items', $filteredSectionItems );
 				} else {
@@ -342,7 +342,7 @@ class CuratedContentController extends WikiaController {
 
 		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
 			$data = [ ];
-			if ( $this->communityDataService->hasCuratedContent() ) {
+			if ( $this->communityDataService->hasData() ) {
 				// extend images
 				$curated = array_map( function ( $section ) {
 					$section[ 'image_url' ] = CuratedContentHelper::findImageUrl( $section[ 'image_id' ] );

@@ -21,12 +21,18 @@ class CommunityDataService extends WikiaService {
 		return $status;
 	}
 
-	public function getCuratedContent() {
-		return $this->curatedContentData();
+	/**
+	 * Returns all curated content sections
+	 * @return array
+	 */
+	public function getAllSections() {
+		$data = $this->curatedContentData();
+		unset( $data[ 'community_data' ] );
+		return $data;
 	}
 
-	public function hasCuratedContent() {
-		return !empty( $this->getCuratedContent() );
+	public function hasData() {
+		return !empty( $this->curatedContentData() );
 	}
 
 	/**
@@ -47,7 +53,7 @@ class CommunityDataService extends WikiaService {
 	 * @param string $section
 	 * @return array
 	 */
-	public function getSection( $section ) {
+	public function getNonFeaturedSection( $section ) {
 		return array_filter( $this->getNonFeaturedSections(),
 			function ( $s ) use ( $section ) {
 				return $s[ 'label' ] == $section;
@@ -55,7 +61,7 @@ class CommunityDataService extends WikiaService {
 	}
 
 	public function getOptional() {
-		$data = $this->getCuratedContent();
+		$data = $this->curatedContentData();
 		return isset( $data[ 'optional' ] ) ? $data[ 'optional' ] : [ ];
 	}
 
@@ -65,12 +71,12 @@ class CommunityDataService extends WikiaService {
 	}
 
 	public function getCurated() {
-		$data = $this->getCuratedContent();
+		$data = $this->curatedContentData();
 		return isset( $data[ 'curated' ] ) ? $data[ 'curated' ] : [ ];
 	}
 
 	public function getFeatured() {
-		$data = $this->getCuratedContent();
+		$data = $this->curatedContentData();
 		return isset( $data[ 'featured' ] ) ? $data[ 'featured' ] : [ ];
 	}
 
@@ -86,13 +92,13 @@ class CommunityDataService extends WikiaService {
 	}
 
 	public function getCommunityDescription() {
-		$data = $this->getCommunityData();
+		$data = $this->curatedContentData();
 
 		return isset( $data[ 'description' ] ) ? $data[ 'description' ] : "";
 	}
 
 	public function getCommunityImageId() {
-		$data = $this->getCommunityData();
+		$data = $this->curatedContentData();
 
 		return isset( $data[ 'image_id' ] ) ? $data[ 'image_id' ] : 0;
 	}

@@ -407,7 +407,7 @@ class MercuryApiController extends WikiaController {
 			$titleBuilder = new WikiaHtmlTitle();
 
 			if ( $isMainPage && !empty( $wgEnableMainPageDataMercuryApi ) &&
-				 ( new CommunityDataService( $wgCityId ) )->hasCuratedContent()
+				 ( new CommunityDataService( $wgCityId ) )->hasData()
 			) {
 				$data[ 'mainPageData' ] = $this->getMainPageData();
 			} else {

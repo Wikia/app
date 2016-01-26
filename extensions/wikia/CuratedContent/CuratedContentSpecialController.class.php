@@ -82,7 +82,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			'sectionTemplate' => $sectionTemplate
 		] );
 
-		if ( $this->communityDataService->hasCuratedContent() ) {
+		if ( $this->communityDataService->hasData() ) {
 			$list = '';
 
 			$featuredSection = $this->buildSection( $this->communityDataService->getFeatured() );
