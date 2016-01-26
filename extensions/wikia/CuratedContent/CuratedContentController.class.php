@@ -289,12 +289,9 @@ class CuratedContentController extends WikiaController {
 				unset( $section[ 'node_type' ] );
 				unset( $section[ 'image_url' ] );
 
-				// fill label for featured and rename section.title to section.label
+				// fill label for featured
 				if ( empty( $section[ 'label' ] ) && !empty( $section[ 'featured' ] ) ) {
-					$section[ 'title' ] = wfMessage( 'wikiacuratedcontent-featured-section-name' )->text();
-				} else {
-					$section[ 'title' ] = $section[ 'label' ];
-					unset( $section[ 'label' ] );
+					$section[ 'label' ] = wfMessage( 'wikiacuratedcontent-featured-section-name' )->text();
 				}
 
 				// strip node_type and image_url from items inside section and add it to new data
@@ -311,8 +308,7 @@ class CuratedContentController extends WikiaController {
 
 			$helper = new CuratedContentHelper();
 			$sections = $helper->processSections( $properData );
-			//TODO: refactor validator
-			$errors = ( new CuratedContentValidator )->validateData( $sections );
+			$errors = CuratedContentValidator::validateData( $sections );
 
 			if ( !empty( $errors ) ) {
 				$this->response->setVal( 'errors', $errors );
@@ -539,10 +535,7 @@ class CuratedContentController extends WikiaController {
 			foreach ( $curatedContent as $curatedContentModule => $items ) {
 				$stats = array_merge( $stats, array_map( function ( $item ) use ( $curatedContentModule ) {
 					return [
-						'tooLongTitlesCount' =>
-						//TODO: this check should be moved to validator class
-							strlen( $item[ 'label' ] ) > CuratedContentValidator::LABEL_MAX_LENGTH ? 1 : 0,
-						//TODO: same here
+						'tooLongTitlesCount' => CuratedContentValidator::hasValidLabel( $item ) ? 1 : 0,
 						'missingImagesCount' => empty( $item[ 'image_id' ] ) ? 1 : 0,
 						'totalNumberOfItems' => 1
 					];
