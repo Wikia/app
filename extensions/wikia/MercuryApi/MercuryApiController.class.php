@@ -374,17 +374,20 @@ class MercuryApiController extends WikiaController {
 	 * @throws \MWException
 	 */
 	public function getArticleFromMarkup() {
-		global $wgParser, $wgUser, $wgRequest;
+		global $wgUser, $wgRequest;
 
-		//TODO: maybe it should be POST as well?
-//		if ( !$wgRequest->wasPosted() ) {
-//			throw new BadRequestApiException();
-//		}
+		if ( !$wgRequest->wasPosted() ) {
+			throw new BadRequestApiException();
+		}
 
 		$parsedWikitext = '';
 		$titleText = $this->getVal( 'title' );
 		$title = Title::newFromText( $titleText );
-		$articleId = $title->getArticleId();
+		if ( $title->exists() ) {
+			$articleId = $title->getArticleId();
+		} else {
+			$articleId = '5454'; //TODO: handle preview of new article
+		}
 		$parserOptions = new ParserOptions( $wgUser );
 		$wrapper = new GlobalStateWrapper( ['wgArticleAsJson' => true] );
 
