@@ -58,7 +58,8 @@ class SomethingToNothingLogger {
 				'originalWikitext' => substr( $this->originalWikitext, 0, 1000 ),
 				'previousWikitext' => substr( $this->previousWikitext, 0, 1000 ),
 				'marker' => $marker,
-				'wgArticleAsJson' => $wgArticleAsJson
+				'articleAsJson' => $wgArticleAsJson ? 'yes' : 'no',
+				'preg_last_error' => preg_last_error()
 			] );
 		}
 
