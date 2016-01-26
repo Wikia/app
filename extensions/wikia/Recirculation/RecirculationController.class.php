@@ -4,6 +4,7 @@ class RecirculationController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const ALLOWED_TYPES = ['popular', 'shares'];
 	const DEFAULT_TYPE = 'popular';
+	const CACHE_DURATION = 900; // 15 minutes
 
 	public function init() {
 		$type = $this->getVal( 'type' );
@@ -20,6 +21,7 @@ class RecirculationController extends WikiaController {
 		$posts = $fandomDataService->getPosts( $this->type );
 
 		if ( count( $posts ) > 0 ) {
+			$this->response->setCacheValidity( self::CACHE_DURATION );
 			$this->response->setData( [
 				'title'	=> wfMessage( 'recirculation-fandom-title' )->plain(),
 				'posts' => $posts
@@ -29,5 +31,4 @@ class RecirculationController extends WikiaController {
 			return false;
 		}
 	}
-
 }
