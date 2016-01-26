@@ -1409,6 +1409,11 @@ class Parser {
 					[0-9Xx]                 # check digit
 					\b)
 			)!xu', array( &$this, 'magicLinkCallback' ), $text );
+		if ( $text === null ) {
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'PLATFORM-1355-LOG4-V1', [
+				'preg_last_error' => array_flip( get_defined_constants( true )[ 'pcre' ])[ preg_last_error() ]
+			] );
+		}
 		wfProfileOut( __METHOD__ );
 		return $text;
 	}
