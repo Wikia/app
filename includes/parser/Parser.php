@@ -1,4 +1,72 @@
 <?php
+// This is a very temporary code to help track https://wikia-inc.atlassian.net/browse/PLATFORM-1355
+// @author: Inez
+class SomethingToNothingLogger {
+
+	var $active = false;
+	var $originalWikitext = '';
+	var $previousWikitext = '';
+
+	public function __construct( $originalWikitext, $title ) {
+		global $wgRequest;
+
+		if ( ! ( $title && $title->exists() && $title->isContentPage() ) ) {
+			// log only for existing content pages
+			return;
+		}
+
+		if ( $wgRequest->getVal( 'oldid', null ) !== null || $wgRequest->getVal( 'action', null ) !== null ) {
+			return;
+		}
+
+		if ( strlen( $originalWikitext ) < 100 ) {
+			// ignore if it's a very short article
+			return;
+		}
+
+		if ( strpos( $originalWikitext, "\n\n" ) === false ) {
+			// average article usually have few paragraphs - ignore otherwise
+			return;
+		}
+
+		$originalWikitextTrimmed = trim( $originalWikitext );
+
+		if ( startsWith( $originalWikitextTrimmed, '[[' ) && endsWith( $originalWikitextTrimmed, ']]' ) ) {
+			// ignore if it looks like wikitext contains categories only
+			return;
+		}
+
+		if ( startsWith( $originalWikitextTrimmed, '<!--' ) && endsWith( $originalWikitextTrimmed, '-->' ) ) {
+			// ignore if it looks like wikitext contains comment only
+			return;
+		}
+
+		$this->active = true;
+		$this->originalWikitext = $originalWikitext;
+	}
+
+	public function logIfEmpty( $wt, $marker = '' ) {
+		if ( !$this->active ) {
+			return;
+		}
+		if ( trim( $wt ) === '' ) {
+			$this->active = false; // just so we log once
+
+			global $wgArticleAsJson;
+
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'SomethingToNothingLoggerV1', [
+				'originalWikitext' => substr( $this->originalWikitext, 0, 1000 ),
+				'previousWikitext' => substr( $this->previousWikitext, 0, 1000 ),
+				'marker' => $marker,
+				'wgArticleAsJson' => $wgArticleAsJson
+			] );
+		}
+
+		$this->previousWikitext = $wt;
+	}
+
+}
+
 /**
  * @defgroup Parser Parser
  *
@@ -351,6 +419,8 @@ class Parser {
 		$wikitextSize = strlen($text);
 		// Wikia change end
 
+		$stn = new SomethingToNothingLogger( $text, $title );
+
 		$this->startParse( $title, $options, self::OT_HTML, $clearState );
 
 		$oldRevisionId = $this->mRevisionId;
@@ -365,11 +435,15 @@ class Parser {
 		}
 
 		wfRunHooks( 'ParserBeforeStrip', array( &$this, &$text, &$this->mStripState ) );
+		$stn->logIfEmpty( $text, 'ParserBeforeStrip' );
 		# No more strip!
 		wfRunHooks( 'ParserAfterStrip', array( &$this, &$text, &$this->mStripState ) );
-		$text = $this->internalParse( $text );
+		$stn->logIfEmpty( $text, 'ParserAfterStrip' );
+		$text = $this->internalParse( $text, true, false, $stn );
+		$stn->logIfEmpty( $text, 'internalParse' );
 
 		$text = $this->mStripState->unstripGeneral( $text );
+		$stn->logIfEmpty( $text, 'unstripGeneral' );
 
 		# Clean up special characters, only run once, next-to-last before doBlockLevels
 		$fixtags = array(
@@ -390,7 +464,9 @@ class Parser {
 		/* Wikia change end */
 
 		$text = $this->doBlockLevels( $text, $linestart );
+		$stn->logIfEmpty( $text, 'doBlockLevels' );
 		$this->replaceLinkHolders( $text );
+		$stn->logIfEmpty( $text, 'replaceLinkHolders' );
 
 		/**
 		 * The input doesn't get language converted if
@@ -410,6 +486,7 @@ class Parser {
 				# assumes that the links are all replaced and the only thing left
 				# is the <nowiki> mark.
 				$text = $this->getConverterLanguage()->convert( $text );
+				$stn->logIfEmpty( $text, 'getConverterLanguage->convert' );
 			}
 		}
 
@@ -436,16 +513,22 @@ class Parser {
 		}
 
 		$text = $this->mStripState->unstripNoWiki( $text );
+		$stn->logIfEmpty( $text, 'unstripNoWiki' );
 
 		wfRunHooks( 'ParserBeforeTidy', array( &$this, &$text ) );
+		$stn->logIfEmpty( $text, 'ParserBeforeTidy' );
 
 		$text = $this->replaceTransparentTags( $text );
+		$stn->logIfEmpty( $text, 'replaceTransparentTags' );
 		$text = $this->mStripState->unstripGeneral( $text );
+		$stn->logIfEmpty( $text, 'unstripGeneral' );
 
 		$text = Sanitizer::normalizeCharReferences( $text );
+		$stn->logIfEmpty( $text, 'normalizeCharReferences' );
 
 		if ( ( $wgUseTidy && $this->mOptions->getTidy() ) || $wgAlwaysUseTidy ) {
 			$text = MWTidy::tidy( $text );
+			$stn->logIfEmpty( $text, 'MWTidy::tidy' );
 		} else {
 			# attempt to sanitize at least some nesting problems
 			# (bug #2702 and quite a few others)
@@ -472,6 +555,7 @@ class Parser {
 				array_keys( $tidyregs ),
 				array_values( $tidyregs ),
 				$text );
+			$stn->logIfEmpty( $text, '!MWTidy::tidy' );
 		}
 		global $wgExpensiveParserFunctionLimit;
 		if ( $this->mExpensiveFunctionCount > $wgExpensiveParserFunctionLimit ) {
@@ -479,6 +563,7 @@ class Parser {
 		}
 
 		wfRunHooks( 'ParserAfterTidy', array( &$this, &$text ) );
+		$stn->logIfEmpty( $text, 'ParserAfterTidy' );
 
 		// Wikia change begin - @author: wladek
 		$this->recordPerformanceStats( $wikitextSize, strlen($text) );
@@ -487,7 +572,7 @@ class Parser {
 		// There was "a lot" of wikitext but ultimately no content was created out of it
 		if ( $wikitextSize > 500 && trim($text) === '' ) {
 			if ( $title && $title->exists() && $title->isContentPage() ) {
-				\Wikia\Logger\WikiaLogger::instance()->info( 'PLATFORM-1355-somethingToNothing-v1', [
+				\Wikia\Logger\WikiaLogger::instance()->info( 'PLATFORM-1355-V1', [
 					'exception'   => new Exception() // log the backtrace
 				] );
 			}
@@ -1186,15 +1271,21 @@ class Parser {
 	 *
 	 * @return string
 	 */
-	function internalParse( $text, $isMain = true, $frame = false ) {
+	function internalParse( $text, $isMain = true, $frame = false, $stn = null ) {
 		wfProfileIn( __METHOD__ );
 
 		$origText = $text;
 
 		# Hook to suspend the parser in this state
 		if ( !wfRunHooks( 'ParserBeforeInternalParse', array( &$this, &$text, &$this->mStripState ) ) ) {
+			if( $stn ) {
+				$stn->logIfEmpty( $text, '!ParserBeforeInternalParse' );
+			}
 			wfProfileOut( __METHOD__ );
 			return $text ;
+		}
+		if( $stn ) {
+			$stn->logIfEmpty( $text, 'ParserBeforeInternalParse' );
 		}
 
 		# if $frame is provided, then use $frame for replacing any variables
@@ -1208,39 +1299,84 @@ class Parser {
 			}
 			$dom = $this->preprocessToDom( $text, $flag );
 			$text = $frame->expand( $dom );
+			if( $stn ) {
+				$stn->logIfEmpty( $text, 'expand' );
+			}
 		} else {
 			# if $frame is not provided, then use old-style replaceVariables
 			$text = $this->replaceVariables( $text );
+			if( $stn ) {
+				$stn->logIfEmpty( $text, 'replaceVariables' );
+			}
 		}
 
 		$text = Sanitizer::removeHTMLtags( $text, array( &$this, 'attributeStripCallback' ), false, array_keys( $this->mTransparentTagHooks ) );
+		if( $stn ) {
+			$stn->logIfEmpty( $text, 'removeHTMLtags' );
+		}
 		wfRunHooks( 'InternalParseBeforeLinks', array( &$this, &$text, &$this->mStripState ) );
+		if( $stn ) {
+			$stn->logIfEmpty( $text, 'InternalParseBeforeLinks' );
+		}
 
 		# Tables need to come after variable replacement for things to work
 		# properly; putting them before other transformations should keep
 		# exciting things like link expansions from showing up in surprising
 		# places.
 		$text = $this->doTableStuff( $text );
+		if( $stn ) {
+			$stn->logIfEmpty( $text, 'doTableStuff' );
+		}
 
 		$text = preg_replace( '/(^|\n)-----*/', '\\1<hr />', $text );
+		if( $stn ) {
+			$stn->logIfEmpty( $text, 'preg_replace' );
+		}
 
 		$text = $this->doDoubleUnderscore( $text );
+		if( $stn ) {
+			$stn->logIfEmpty( $text, 'doDoubleUnderscore' );
+		}
 
 		$text = $this->doHeadings( $text );
+		if( $stn ) {
+			$stn->logIfEmpty( $text, 'doHeadings' );
+		}
 		if ( $this->mOptions->getUseDynamicDates() ) {
 			$df = DateFormatter::getInstance();
 			$text = $df->reformat( $this->mOptions->getDateFormat(), $text );
+			if( $stn ) {
+				$stn->logIfEmpty( $text, 'reformat' );
+			}
 		}
 		$text = $this->replaceInternalLinks( $text );
+		if( $stn ) {
+			$stn->logIfEmpty( $text, 'replaceInternalLinks' );
+		}
 		$text = $this->doAllQuotes( $text );
+		if( $stn ) {
+			$stn->logIfEmpty( $text, 'doAllQuotes' );
+		}
 		$text = $this->replaceExternalLinks( $text );
+		if( $stn ) {
+			$stn->logIfEmpty( $text, 'replaceExternalLinks' );
+		}
 
 		# replaceInternalLinks may sometimes leave behind
 		# absolute URLs, which have to be masked to hide them from replaceExternalLinks
 		$text = str_replace( $this->mUniqPrefix.'NOPARSE', '', $text );
+		if( $stn ) {
+			$stn->logIfEmpty( $text, 'str_replace NOPARSE' );
+		}
 
 		$text = $this->doMagicLinks( $text );
+		if( $stn ) {
+			$stn->logIfEmpty( $text, 'doMagicLinks' );
+		}
 		$text = $this->formatHeadings( $text, $origText, $isMain );
+		if( $stn ) {
+			$stn->logIfEmpty( $text, 'formatHeadings' );
+		}
 
 		wfProfileOut( __METHOD__ );
 		return $text;
