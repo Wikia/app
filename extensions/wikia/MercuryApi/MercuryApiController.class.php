@@ -140,12 +140,6 @@ class MercuryApiController extends WikiaController {
 			]
 		)->getData();
 
-		$articleType = WikiaPageType::getArticleType( $title );
-
-		if ( !empty( $articleType ) ) {
-			$articleAsJson['type'] = $articleType;
-		}
-
 		return $articleAsJson;
 	}
 
@@ -447,6 +441,7 @@ class MercuryApiController extends WikiaController {
 			$title = $this->wg->Title;
 		}
 
+		$data['articleType'] = WikiaPageType::getArticleType( $title );
 		$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
