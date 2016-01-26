@@ -49,13 +49,9 @@ if ( !$path ) {
 	WikiaLogger::instance()->warning( '404 redirector: malformed URI', $logContext );
 }
 
-$forbiddenChars = [ '%', '<', '>', '[', ']', '{', '}' ];
-foreach ( $forbiddenChars as $char ) {
-	if ( in_string( $char, $path ) ) {
-		WikiaLogger::instance()->warning( '404 redirector: forbidden char in URI', $logContext );
-		$path = str_replace( $forbiddenChars, '_', $path );
-		break;
-	}
+$path = str_replace( [ '%', '<', '>', '[', ']', '{', '}' ], '_', $path, $count );
+if ( $count ) {
+	WikiaLogger::instance()->warning( '404 redirector: forbidden char in URI', $logContext );
 }
 
 $title = Title::newFromText( $path );
