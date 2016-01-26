@@ -2,9 +2,7 @@
 
 namespace Wikia\Service\User\Permissions;
 
-use Doctrine\Common\Cache\VoidCache;
 use Wikia\DependencyInjection\Injector;
-use Wikia\Persistence\User\Preferences\PreferencePersistence;
 use PHPUnit_Framework_TestCase;
 
 class UserPermissionsIntegrationTest extends \PHPUnit_Framework_TestCase {
@@ -25,12 +23,12 @@ class UserPermissionsIntegrationTest extends \PHPUnit_Framework_TestCase {
 	protected $permissionsService;
 
 	/**
-	 * @var User
+	 * @var \User
 	 */
 	protected $staffUser;
 
 	/**
-	 * @var User
+	 * @var \User
 	 */
 	protected $anonUser;
 
@@ -58,7 +56,7 @@ class UserPermissionsIntegrationTest extends \PHPUnit_Framework_TestCase {
 
 		$groups = $this->permissionsService->getExplicitUserGroups( $this->testCityId, $this->testUserId );
 		$this->assertContains("staff", $groups);
-		$this->assertTrue(count($groups) == 1);
+		$this->assertEquals(1, count($groups));
 	}
 
 	function testShouldReturnAutomaticGroups() {
@@ -66,7 +64,7 @@ class UserPermissionsIntegrationTest extends \PHPUnit_Framework_TestCase {
 		$this->assertContains("user", $groups);
 		$this->assertContains("autoconfirmed", $groups);
 		$this->assertContains("*", $groups);
-		$this->assertTrue(count($groups) == 3);
+		$this->assertEquals(3, count($groups));
 	}
 
 	function testShouldReturnEffectiveGroups() {
@@ -75,13 +73,13 @@ class UserPermissionsIntegrationTest extends \PHPUnit_Framework_TestCase {
 		$this->assertContains("staff", $groups);
 		$this->assertContains("autoconfirmed", $groups);
 		$this->assertContains("*", $groups);
-		$this->assertTrue(count($groups) == 4);
+		$this->assertEquals(4, count($groups));
 	}
 
 	function testShouldReturnEffectiveGroupsForAnon() {
 		$groups = $this->permissionsService->getEffectiveUserGroups( $this->testCityId, $this->anonUser, true );
 		$this->assertContains("*", $groups);
-		$this->assertTrue(count($groups) == 1);
+		$this->assertEquals(1, count($groups));
 	}
 
 	function testShouldReturnImplicitGroups() {
@@ -90,6 +88,124 @@ class UserPermissionsIntegrationTest extends \PHPUnit_Framework_TestCase {
 		$this->assertContains("user", $groups);
 		$this->assertContains("autoconfirmed", $groups);
 		$this->assertContains("poweruser", $groups);
-		$this->assertTrue(count($groups) == 4);
+		$this->assertEquals(4, count($groups));
+	}
+
+	function testShouldReturnGroupPermissions() {
+		global $wgGroupPermissions, $wgRevokePermissions;
+
+		# Data for regular $wgGroupPermissions test
+		$wgGroupPermissions['unittesters'] = array(
+			'test' => true,
+			'runtest' => true,
+			'writetest' => false,
+			'nukeworld' => false,
+		);
+		$wgGroupPermissions['testwriters'] = array(
+			'test' => true,
+			'writetest' => true,
+			'modifytest' => true,
+		);
+		# Data for regular $wgRevokePermissions test
+		$wgRevokePermissions['formertesters'] = array(
+			'runtest' => true,
+		);
+
+		$permissions = $this->permissionsService->getGroupPermissions( array( 'unittesters' ) );
+		$this->assertContains( 'runtest', $permissions );
+		$this->assertNotContains( 'writetest', $permissions );
+		$this->assertNotContains( 'modifytest', $permissions );
+		$this->assertNotContains( 'nukeworld', $permissions );
+
+		$permissions = $this->permissionsService->getGroupPermissions( array( 'unittesters', 'testwriters' ) );
+		$this->assertContains( 'runtest', $permissions );
+		$this->assertContains( 'writetest', $permissions );
+		$this->assertContains( 'modifytest', $permissions );
+		$this->assertNotContains( 'nukeworld', $permissions );
+	}
+
+	public function testShouldReturnGroupPermissionsIncludingRevoked() {
+		global $wgGroupPermissions, $wgRevokePermissions;
+
+		# Data for regular $wgGroupPermissions test
+		$wgGroupPermissions['unittesters'] = array(
+			'test' => true,
+			'runtest' => true,
+			'writetest' => false,
+			'nukeworld' => false,
+		);
+		$wgGroupPermissions['testwriters'] = array(
+			'test' => true,
+			'writetest' => true,
+			'modifytest' => true,
+		);
+		# Data for regular $wgRevokePermissions test
+		$wgRevokePermissions['formertesters'] = array(
+			'runtest' => true,
+		);
+
+		$permissions = $this->permissionsService->getGroupPermissions( array( 'unittesters', 'formertesters' ) );
+		$this->assertNotContains( 'runtest', $permissions );
+		$this->assertNotContains( 'writetest', $permissions );
+		$this->assertNotContains( 'modifytest', $permissions );
+		$this->assertNotContains( 'nukeworld', $permissions );
+	}
+
+	function testShouldReturnGroupsWithPermission() {
+		global $wgGroupPermissions, $wgRevokePermissions;
+
+		# Data for regular $wgGroupPermissions test
+		$wgGroupPermissions['unittesters'] = array(
+			'test' => true,
+			'runtest' => true,
+			'writetest' => false,
+			'nukeworld' => false,
+		);
+		$wgGroupPermissions['testwriters'] = array(
+			'test' => true,
+			'writetest' => true,
+			'modifytest' => true,
+		);
+		# Data for regular $wgRevokePermissions test
+		$wgRevokePermissions['formertesters'] = array(
+			'runtest' => true,
+		);
+
+		$groups = $this->permissionsService->getGroupsWithPermission( 'test' );
+		$this->assertContains( 'unittesters', $groups );
+		$this->assertContains( 'testwriters', $groups );
+		$this->assertEquals(2, count($groups));
+
+		$groups = $this->permissionsService->getGroupsWithPermission( 'runtest' );
+		$this->assertContains( 'unittesters', $groups );
+		$this->assertEquals(1, count($groups));
+
+		$groups = $this->permissionsService->getGroupsWithPermission( 'nosuchright' );
+		$this->assertEquals(0, count($groups));
+	}
+
+	public function testShouldReturnUserPermissions() {
+		$permissions = $this->permissionsService->getUserPermissions( $this->testCityId, $this->staffUser );
+		$this->assertContains( 'setadminskin', $permissions );
+		$this->assertContains( 'delete', $permissions );
+		$this->assertContains( 'block', $permissions );
+	}
+
+	public function testShouldReturnPermissionsNotDuplicated() {
+		$permissions = $this->permissionsService->getPermissions();
+		$this->assertContains( 'move', $permissions );
+		$this->assertContains( 'oversight', $permissions );
+
+		$permissionCount = [];
+		foreach ( $permissions as $permission ) {
+			if ( array_key_exists( $permission, $permissionCount ) ) {
+				$permissionCount[ $permission ] = $permissionCount[ $permission ] + 1;
+			} else {
+				$permissionCount[ $permission ] = 1;
+			}
+		}
+		foreach ( $permissionCount as $permissionName => $permissionCount ) {
+			$this->assertEquals( 1, $permissionCount, "Duplicated permission ".$permissionName );
+		}
 	}
 }

@@ -34,7 +34,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SiteWideMessages'
 );
 //Allow group STAFF to use this extension.
-$wgAvailableRights[] = 'messagetool';
 $wgGroupPermissions['*']['messagetool'] = false;
 $wgGroupPermissions['staff']['messagetool'] = true;
 $wgGroupPermissions['util']['messagetool'] = true;

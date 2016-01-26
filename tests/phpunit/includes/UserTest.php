@@ -55,65 +55,12 @@ class UserTest extends MediaWikiTestCase {
 		$GLOBALS['wgRevokePermissions'] = $this->savedRevokedPermissions;
 	}
 
-	public function testGroupPermissions() {
-		$rights = User::getGroupPermissions( array( 'unittesters' ) );
-		$this->assertContains( 'runtest', $rights );
-		$this->assertNotContains( 'writetest', $rights );
-		$this->assertNotContains( 'modifytest', $rights );
-		$this->assertNotContains( 'nukeworld', $rights );
-
-		$rights = User::getGroupPermissions( array( 'unittesters', 'testwriters' ) );
-		$this->assertContains( 'runtest', $rights );
-		$this->assertContains( 'writetest', $rights );
-		$this->assertContains( 'modifytest', $rights );
-		$this->assertNotContains( 'nukeworld', $rights );
-	}
-	public function testRevokePermissions() {
-		$rights = User::getGroupPermissions( array( 'unittesters', 'formertesters' ) );
-		$this->assertNotContains( 'runtest', $rights );
-		$this->assertNotContains( 'writetest', $rights );
-		$this->assertNotContains( 'modifytest', $rights );
-		$this->assertNotContains( 'nukeworld', $rights );
-	}
-
 	public function testUserPermissions() {
 		$rights = $this->user->getRights();
 		$this->assertContains( 'runtest', $rights );
 		$this->assertNotContains( 'writetest', $rights );
 		$this->assertNotContains( 'modifytest', $rights );
 		$this->assertNotContains( 'nukeworld', $rights );
-	}
-
-	/**
-	 * @dataProvider provideGetGroupsWithPermission
-	 */
-	public function testGetGroupsWithPermission( $expected, $right ) {
-		$result = User::getGroupsWithPermission( $right );
-		sort( $result );
-		sort( $expected );
-
-		$this->assertEquals( $expected, $result, "Groups with permission $right" );
-	}
-
-	public function provideGetGroupsWithPermission() {
-		return array(
-			array(
-				array( 'unittesters', 'testwriters' ),
-				'test'
-			),
-			array(
-				array( 'unittesters' ),
-				'runtest'
-			),
-			array(
-				array( 'testwriters' ),
-				'writetest'
-			),
-			array(
-				array( 'testwriters' ),
-				'modifytest'
-			),
-		);
 	}
 
 	/**

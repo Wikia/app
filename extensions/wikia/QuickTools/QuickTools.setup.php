@@ -24,8 +24,6 @@ $wgAutoloadClasses[ 'QuickToolsHelper'] =  __DIR__ . '/QuickToolsHelper.class.ph
 $wgAutoloadClasses[ 'QuickToolsHooksHelper'] =  __DIR__ . '/QuickToolsHooksHelper.class.php';
 
 // rights
-$wgAvailableRights[] = 'quicktools';
-$wgAvailableRights[] = 'quickadopt';
 $wgGroupPermissions['util']['quicktools'] = true;
 $wgGroupPermissions['vstf']['quicktools'] = true;
 $wgGroupPermissions['util']['quickadopt'] = true;

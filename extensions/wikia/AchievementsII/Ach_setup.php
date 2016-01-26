@@ -54,23 +54,19 @@ if( !empty( $wgEnableAchievementsExt ) ) {
 }
 
 // RIGHTS
-$wgAvailableRights[] = 'platinum';
 $wgGroupPermissions['*']['platinum'] = false;
 $wgGroupPermissions['staff']['platinum'] = true;
 $wgGroupPermissions['helper']['platinum'] = true;
 
-$wgAvailableRights[] = 'sponsored-achievements';
 $wgGroupPermissions['*']['sponsored-achievements'] = false;
 $wgGroupPermissions['staff']['sponsored-achievements'] = true;
 
-$wgAvailableRights[] = 'achievements-exempt';
 $wgGroupPermissions['*']['achievements-exempt'] = false;
 $wgGroupPermissions['helper']['achievements-exempt'] = true;
 $wgGroupPermissions['staff']['achievements-exempt'] = true;
 $wgGroupPermissions['vstf']['achievements-exempt'] = true;
 
 // overrides acievements-exempt
-$wgAvailableRights[] = 'achievements-explicit';
 $wgGroupPermissions['*']['achievements-explicit'] = false;
 $wgGroupPermissions['sysop']['achievements-explicit'] = true;
 $wgGroupPermissions['bureaucrat']['achievements-explicit'] = true;

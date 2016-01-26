@@ -32,11 +32,9 @@ $wgExtensionMessagesFiles['CreateNewWiki'] = $dir . 'CreateNewWiki.i18n.php';
 $wgExtensionMessagesFiles['CreateNewWikiAlias'] = $dir . 'CreateNewWiki.alias.php';
 
 // permissions
-$wgAvailableRights[] = 'createnewwiki';
 $wgGroupPermissions['*']['createnewwiki'] = true;
 $wgGroupPermissions['staff']['createnewwiki'] = true;
 
-$wgAvailableRights[] = 'createwikilimitsexempt'; // user not bound by creation throttle
 $wgGroupPermissions['staff']['createwikilimitsexempt'] = true;
 
 // setup functions

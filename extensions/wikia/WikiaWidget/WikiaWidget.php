@@ -24,7 +24,6 @@ $wgExtensionMessagesFiles['WikiaWidget'] = $dir . '/WikiaWidget.i18n.php';
 /**
  * permissions
  */
-$wgAvailableRights[] = 'wikiawidget';
 $wgGroupPermissions['staff']['wikiawidget'] = true;
 $wgGroupPermissions['sysop']['wikiawidget'] = true;
 $wgGroupPermissions['wikiawidget']['wikiawidget'] = true;

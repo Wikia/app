@@ -144,5 +144,3 @@ $wgLogActions['phalanx/delete']     	= 'phalanx-rule-log-delete';
 $wgLogActions['phalanxemail/add']   	= 'phalanx-rule-log-add';
 $wgLogActions['phalanxemail/edit']  	= 'phalanx-rule-log-edit';
 $wgLogActions['phalanxemail/delete'] 	= 'phalanx-rule-log-delete';
-
-$wgAvailableRights[] = 'phalanxexempt';

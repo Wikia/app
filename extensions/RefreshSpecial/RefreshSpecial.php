@@ -25,8 +25,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'refreshspecial-desc',
 );
 
-// New user right, required to use Special:RefreshSpecial
-$wgAvailableRights[] = 'refreshspecial';
 $wgGroupPermissions['bureaucrat']['refreshspecial'] = true;
 
 // Set up the new special page

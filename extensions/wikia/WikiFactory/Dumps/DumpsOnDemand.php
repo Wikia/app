@@ -8,7 +8,6 @@
 $wgHooks[ "CustomSpecialStatistics" ][] = "DumpsOnDemand::customSpecialStatistics";
 $wgExtensionMessagesFiles[ "DumpsOnDemand" ] =  __DIR__ . '/DumpsOnDemand.i18n.php';
 
-$wgAvailableRights[] = 'dumpsondemand';
 $wgGroupPermissions['*']['dumpsondemand'] = false;
 $wgGroupPermissions['staff']['dumpsondemand'] = true;
 $wgGroupPermissions['sysop']['dumpsondemand'] = true;

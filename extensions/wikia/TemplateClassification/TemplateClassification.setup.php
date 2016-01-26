@@ -29,7 +29,6 @@ $wgExtensionCredits['other'][] = [
 /**
  * Groups and permissions
  */
-$wgAvailableRights[] = 'template-bulk-classification';
 $wgGroupPermissions['*']['template-bulk-classification'] = false;
 $wgGroupPermissions['helper']['template-bulk-classification'] = true;
 $wgGroupPermissions['vstf']['template-bulk-classification'] = true;

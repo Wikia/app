@@ -26,7 +26,6 @@ $dir = dirname( __FILE__ );
 $wgAutoloadClasses[ 'AbuseFilterBypass' ] = "{$dir}/AbuseFilterBypass.class.php";
 
 // perms
-$wgAvailableRights[ ] = 'abusefilter-bypass';
 $wgGroupPermissions[ '*' ][ 'abusefilter-bypass' ] = false;
 $wgGroupPermissions[ 'staff' ][ 'abusefilter-bypass' ] = true;
 

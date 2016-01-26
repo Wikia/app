@@ -57,7 +57,6 @@ $wgSpecialPageGroups['Insights'] = 'wikia';
 /**
  * Permissions
  */
-$wgAvailableRights[] = 'insights';
 $wgGroupPermissions['*']['insights'] = true;
 
 /**

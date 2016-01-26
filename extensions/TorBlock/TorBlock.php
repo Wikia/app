@@ -48,7 +48,6 @@ define('APCOND_TOR', 'tor'); // Numbers won't work, we'll get collisions
  * Array of permission keys.
  */
 $wgTorBypassPermissions = array( 'torunblocked', /*'autoconfirmed', 'proxyunbannable'*/ );
-$wgAvailableRights[] = 'torunblocked';
 
 $wgGroupPermissions['user']['torunblocked'] = true;
 

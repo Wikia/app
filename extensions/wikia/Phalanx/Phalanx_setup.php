@@ -15,9 +15,6 @@ $wgExtensionCredits['other'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Phalanx'
 );
 
-// users immune to Phalanx
-$wgAvailableRights[] = 'phalanxexempt';
-
 define( "PHALANX_VERSION",  1 );
 
 $dir = dirname(__FILE__) . '/';

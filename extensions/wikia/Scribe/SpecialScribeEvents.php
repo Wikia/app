@@ -29,7 +29,6 @@ $wgExtensionMessagesFiles["Scribeevents"] = dirname(__FILE__) . '/SpecialScribeE
 $wgExtensionMessagesFiles['ScribeeventsAliases'] = __DIR__ . '/SpecialScribeEvents.aliases.php';
 
 $permname = "scribeevents";
-$wgAvailableRights[] = $permname;
 $wgGroupPermissions['staff'][$permname] = true;
 $wgGroupPermissions['helper'][$permname] = true;
 $wgGroupPermissions['vstf'][$permname] = true;

@@ -26,7 +26,6 @@ $wgExtensionCredits['specialpage'][] = array(
 #--- messages file
 $wgExtensionMessagesFiles["RegexBlock"] = dirname(__FILE__) . '/RegexBlock.i18n.php';
 
-$wgAvailableRights[] = 'regexblock';
 $wgGroupPermissions['staff']['regexblock'] = true;
 
 #--- helper file

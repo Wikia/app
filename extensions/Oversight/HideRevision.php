@@ -25,9 +25,6 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-$wgAvailableRights[] = 'hiderevision';
-$wgAvailableRights[] = 'oversight';
-
 // The 'hiderevision' permission allows use of revision hiding.
 $wgGroupPermissions['*']['hiderevision'] = false;
 $wgGroupPermissions['oversight']['hiderevision'] = true;

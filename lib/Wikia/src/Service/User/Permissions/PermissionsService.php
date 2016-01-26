@@ -7,6 +7,10 @@ interface PermissionsService {
 
 	public function getImplicitGroups();
 
+	public function getExplicitGroups();
+
+	public function getPermissions();
+
 	public function getExplicitUserGroups( $cityId, $userId );
 
 	public function getExplicitGlobalUserGroups( $userId );
@@ -17,4 +21,9 @@ interface PermissionsService {
 
 	public function getAutomaticUserGroups( \User $user, $reCacheAutomaticGroups = false );
 
+	public function getGroupPermissions( $groups );
+
+	public function getGroupsWithPermission( $role );
+
+	public function getUserPermissions( $cityId, \User $user );
 }

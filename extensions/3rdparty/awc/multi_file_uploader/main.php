@@ -2,7 +2,6 @@
 
 $wgExtensionFunctions[] = "wfExtensionAWCMultiFileUploader";
 
-$wgAvailableRights[] = 'MultiFileUploader';
 $wgGroupPermissions[ 'user' ][ 'MultiFileUploader' ] = true;
 
 function wfExtensionAWCMultiFileUploader() {

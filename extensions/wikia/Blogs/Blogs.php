@@ -59,13 +59,6 @@ $wgExtensionMessagesFiles['BlogsMagic'] = __DIR__ . '/Blogs.i18n.magic.php';
 /**
  * permissions (eventually will be moved to CommonSettings.php)
  */
-$wgAvailableRights[] = 'blog-comments-toggle';
-$wgAvailableRights[] = 'blog-comments-delete';
-$wgAvailableRights[] = 'blog-articles-edit';
-$wgAvailableRights[] = 'blog-articles-move';
-$wgAvailableRights[] = 'blog-articles-protect';
-$wgAvailableRights[] = 'blog-auto-follow';
-
 $wgGroupPermissions['*'][ 'blog-comments-toggle' ] = false;
 $wgGroupPermissions['sysop'][ 'blog-comments-toggle' ] = true;
 $wgGroupPermissions['staff'][ 'blog-comments-toggle' ] = true;

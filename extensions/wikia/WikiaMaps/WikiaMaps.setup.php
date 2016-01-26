@@ -95,9 +95,6 @@ JSMessages::registerPackage( 'WikiaMapsEmbedMapCode', [
 	'wikia-interactive-maps-embed-map-code-*'
 ] );
 
-// Rights
-$wgAvailableRights[] = 'canremovemap';
-
 // Permissions
 // canremove -- give it to users who can remove maps
 $wgGroupPermissions['*']['canremovemap'] = false;

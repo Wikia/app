@@ -121,75 +121,6 @@ class User {
 		'mOptionOverrides',
 	);
 
-	/**
-	 * Array of Strings Core rights.
-	 * Each of these should have a corresponding message of the form
-	 * "right-$right".
-	 * @showinitializer
-	 */
-	static $mCoreRights = array(
-		'apihighlimits',
-		'autoconfirmed',
-		'autopatrol',
-		'bigdelete',
-		'block',
-		'blockemail',
-		'bot',
-		'browsearchive',
-		'createaccount',
-		'createpage',
-		'createtalk',
-		'delete',
-		'deletedhistory',
-		'deletedtext',
-		'deleterevision',
-		'edit',
-		'editinterface',
-		'editmyoptions',
-		'editusercssjs', #deprecated
-		'editusercss',
-		'edituserjs',
-		'hideuser',
-		'import',
-		'importupload',
-		'ipblock-exempt',
-		'markbotedits',
-		'mergehistory',
-		'minoredit',
-		'move',
-		'movefile',
-		'move-rootuserpages',
-		'move-subpages',
-		'nominornewtalk',
-		'noratelimit',
-		'override-export-depth',
-		'patrol',
-		'protect',
-		'proxyunbannable',
-		'purge',
-		'read',
-		'reupload',
-		'reupload-shared',
-		'rollback',
-		'sendemail',
-		'siteadmin',
-		'suppressionlog',
-		'suppressredirect',
-		'suppressrevision',
-		'unblockself',
-		'undelete',
-		'unwatchedpages',
-		'upload',
-		'upload_by_url',
-		'userrights',
-		'userrights-interwiki',
-		'writeapi',
-	);
-	/**
-	 * String Cached results of getAllRights()
-	 */
-	static $mAllRights = false;
-
 	/** @name Cache variables */
 	//@{
 	var $mId, $mName, $mRealName, $mPassword, $mNewpassword, $mNewpassTime,
@@ -4714,22 +4645,51 @@ class User {
 		return self::userPermissions()->getImplicitGroups();
 	}
 
-	//JCEL used in a few places, basically can stay as is.
-	//The hook is called in assets manager and top lists to add permissions and in top lists to remove one.
-	//For starters I'd assume the hooks can stay as is although they change permissions
+	/**
+	 * Return the set of defined explicit groups.
+	 * The implicit groups (by default *, 'user' and 'autoconfirmed')
+	 * are not included, as they are defined automatically, not in the database.
+	 * @return Array of internal group names
+	 */
+	public static function getAllGroups() {
+		return self::userPermissions()->getExplicitGroups();
+	}
+
+	/**
+	 * Get the permissions associated with a given list of groups
+	 *
+	 * @param $groups Array of Strings List of internal group names
+	 * @return Array of Strings List of permission key names for given groups combined
+	 */
+	public static function getGroupPermissions( $groups ) {
+		return self::userPermissions()->getGroupPermissions( $groups );
+	}
+
+	/**
+	 * Get all the groups who have a given permission
+	 *
+	 * @param $role String Role to check
+	 * @return Array of Strings List of internal group names with the given permission
+	 */
+	public static function getGroupsWithPermission( $role ) {
+		return self::userPermissions()->getGroupsWithPermission( $role );
+	}
 
 	/**
 	 * Get the permissions this user has.
 	 * @return Array of String permission names
 	 */
 	public function getRights() {
-		if ( is_null( $this->mRights ) ) {
-			$this->mRights = self::getGroupPermissions( $this->getEffectiveGroups() );
-			wfRunHooks( 'UserGetRights', array( $this, &$this->mRights ) );
-			// Force reindexation of rights when a hook has unset one of them
-			$this->mRights = array_values( $this->mRights );
-		}
-		return $this->mRights;
+		global $wgCityId;
+		return self::userPermissions()->getUserPermissions( $wgCityId, $this );
+	}
+
+	/**
+	 * Get a list of all available permissions.
+	 * @return Array of permission names
+	 */
+	public static function getAllRights() {
+		return self::userPermissions()->getPermissions();
 	}
 
 	//JCEL needs rewriting to the new service. Hook handles global shared gropus, and some special case with
@@ -4794,90 +4754,6 @@ class User {
 			return true;
 		}
 		return false;
-	}
-
-
-	//JCEL can stay as is
-
-	/**
-	 * Get the permissions associated with a given list of groups
-	 *
-	 * @param $groups Array of Strings List of internal group names
-	 * @return Array of Strings List of permission key names for given groups combined
-	 */
-	public static function getGroupPermissions( $groups ) {
-		global $wgGroupPermissions, $wgRevokePermissions;
-		$rights = array();
-		// grant every granted permission first
-		foreach( $groups as $group ) {
-			if( isset( $wgGroupPermissions[$group] ) ) {
-				$rights = array_merge( $rights,
-					// array_filter removes empty items
-					array_keys( array_filter( $wgGroupPermissions[$group] ) ) );
-			}
-		}
-		// now revoke the revoked permissions
-		foreach( $groups as $group ) {
-			if( isset( $wgRevokePermissions[$group] ) ) {
-				$rights = array_diff( $rights,
-					array_keys( array_filter( $wgRevokePermissions[$group] ) ) );
-			}
-		}
-		return array_unique( $rights );
-	}
-
-	//JCEL can stay as is
-
-	/**
-	 * Get all the groups who have a given permission
-	 *
-	 * @param $role String Role to check
-	 * @return Array of Strings List of internal group names with the given permission
-	 */
-	public static function getGroupsWithPermission( $role ) {
-		global $wgGroupPermissions;
-		$allowedGroups = array();
-		foreach ( $wgGroupPermissions as $group => $rights ) {
-			if ( isset( $rights[$role] ) && $rights[$role] ) {
-				$allowedGroups[] = $group;
-			}
-		}
-		return $allowedGroups;
-	}
-
-	//JCEL can stay as is
-
-	/**
-	 * Return the set of defined explicit groups.
-	 * The implicit groups (by default *, 'user' and 'autoconfirmed')
-	 * are not included, as they are defined automatically, not in the database.
-	 * @return Array of internal group names
-	 */
-	public static function getAllGroups() {
-		global $wgGroupPermissions, $wgRevokePermissions;
-		return array_diff(
-			array_merge( array_keys( $wgGroupPermissions ), array_keys( $wgRevokePermissions ) ),
-			self::getImplicitGroups()
-		);
-	}
-
-	//JCEL needs to be moved to new service. Hook isn't used.
-
-	/**
-	 * Get a list of all available permissions.
-	 * @return Array of permission names
-	 */
-	public static function getAllRights() {
-		if ( self::$mAllRights === false ) {
-			global $wgAvailableRights;
-			if ( count( $wgAvailableRights ) ) {
-				self::$mAllRights = array_unique( array_merge( self::$mCoreRights, $wgAvailableRights ) );
-			} else {
-				self::$mAllRights = self::$mCoreRights;
-			}
-			wfRunHooks( 'UserGetAllRights', array( &self::$mAllRights ) );
-		}
-		return self::$mAllRights;
 	}
 
 	//JCEL needs to be moved to new service, better understood.
@@ -4946,17 +4822,6 @@ class User {
 		}
 
 		return $groups;
-	}
-
-
-	//JCEL can stay as is
-
-	/**
-	 * Whether this user is Wikia staff or not
-	 * @return bool
-	 */
-	public function isStaff() {
-		return in_array( 'staff', $this->getEffectiveGroups() );
 	}
 
 	//JCEL needs to be moved to new service, better understood.
@@ -5082,7 +4947,15 @@ class User {
 
 
 
-	//Static permission functions that we can leave as is for now
+	//Mostly static permission functions that we can leave as is for now
+
+	/**
+	 * Whether this user is Wikia staff or not
+	 * @return bool
+	 */
+	public function isStaff() {
+		return in_array( 'staff', $this->getEffectiveGroups() );
+	}
 
 	//JCEL can stay as is
 

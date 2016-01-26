@@ -24,7 +24,6 @@ $wgExtensionCredits['specialpage'][] = array(
 $wgExtensionMessagesFiles["Multiwikiedit"] = dirname(__FILE__) . '/MultiTasks.i18n.php';
 $wgExtensionMessagesFiles['MultiwikieditAliases'] = __DIR__ . '/MultiTasks.aliases.php';
 
-$wgAvailableRights[] = 'multiwikiedit';
 $wgGroupPermissions['staff']['multiwikiedit'] = true;
 $wgGroupPermissions['helper']['multiwikiedit'] = true;
 

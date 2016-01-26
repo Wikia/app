@@ -36,12 +36,10 @@ extAddBatchTask( $dir ."/Tasks/UpdateSpecialPagesTask.php", "update_special_page
 /**
  * permissions
  */
-$wgAvailableRights[] = 'taskmanager';
 $wgGroupPermissions['vstf']['taskmanager'] = true;
 $wgGroupPermissions['helper']['taskmanager'] = true;
 $wgGroupPermissions['staff']['taskmanager'] = true;
 
-$wgAvailableRights[] = 'taskmanager-action';
 $wgGroupPermissions['util']['taskmanager'] = true;
 $wgGroupPermissions['util']['taskmanager-action'] = true;
 

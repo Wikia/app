@@ -35,7 +35,6 @@ $wgLogRestrictions['piggyback'] = 'piggyback';
 $wgLogTypes[] = 'piggyback';
 
 //permissions
-$wgAvailableRights[] = 'piggyback';
 $wgGroupPermissions['util']['piggyback'] = true;
 
 $wgHooks['LoginFormAuthenticateModifyRetval'][] = 'PBHooks::onLoginFormAuthenticateModifyRetval';

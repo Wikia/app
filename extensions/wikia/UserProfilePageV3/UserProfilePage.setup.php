@@ -105,7 +105,6 @@ $wgLogActions[AVATAR_LOG_NAME . '/avatar_chn'] = 'blog-avatar-changed-log';
 $wgLogActions[AVATAR_LOG_NAME . '/avatar_rem'] = 'blog-avatar-removed-log';
 
 # --- permissions
-$wgAvailableRights[] = 'removeavatar';
 $wgGroupPermissions['staff']['removeavatar'] = true;
 # $wgGroupPermissions['sysop']['removeavatar'] = true;
 $wgGroupPermissions['helper']['removeavatar'] = true;

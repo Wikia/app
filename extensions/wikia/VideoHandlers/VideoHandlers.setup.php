@@ -124,10 +124,7 @@ if ( !empty($wgVideoHandlersVideosMigrated) ) {
 }
 
 // permissions
-$wgAvailableRights[] = 'specialvideohandler';
 $wgGroupPermissions['staff']['specialvideohandler'] = true;
-
-$wgAvailableRights[] = 'uploadpremiumvideo';
 $wgGroupPermissions['*']['uploadpremiumvideo'] = false;
 $wgGroupPermissions['staff']['uploadpremiumvideo'] = true;
 

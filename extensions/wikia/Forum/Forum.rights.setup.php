@@ -4,9 +4,6 @@
  *
  * @see PLATFORM-1664
  */
-$wgAvailableRights[] = 'forum';
-$wgAvailableRights[] = 'boardedit';
-$wgAvailableRights[] = 'forumadmin';
 
 $wgGroupPermissions['*']['forum'] = false;
 $wgGroupPermissions['staff']['forum'] = true;

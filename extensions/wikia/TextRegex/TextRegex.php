@@ -20,7 +20,6 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 // New user right
-$wgAvailableRights[] = 'textregex';
 $wgGroupPermissions['staff']['textregex'] = true;
 
 // Set up the new special page

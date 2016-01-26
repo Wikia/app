@@ -89,6 +89,5 @@ JSMessages::registerPackage('PlacesGeoLocationModal', array( 'places-geolocation
 /*
  * user rights
  */
-$wgAvailableRights[] = 'places-enable-category-geolocation';
 $wgGroupPermissions['*']['places-enable-category-geolocation'] = false;
 $wgGroupPermissions['sysop']['places-enable-category-geolocation'] = true;

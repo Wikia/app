@@ -22,9 +22,6 @@ $wgAutoloadClasses['NjordController'] =  $dir . '/NjordController.class.php';
 $wgHooks['WikiFeatures::onToggleFeature'][] = 'NjordHooks::purgeMainPage';
 $wgHooks[ 'SkinAfterBottomScripts' ][] = 'NjordHooks::onSkinAfterBottomScripts';
 
-
-$wgAvailableRights[] = 'njordeditmode';
-
 $wgGroupPermissions[ '*' ][ 'njordeditmode' ] = false;
 $wgGroupPermissions[ 'staff' ][ 'njordeditmode' ] = true;
 $wgGroupPermissions[ 'sysop' ][ 'njordeditmode' ] = true;

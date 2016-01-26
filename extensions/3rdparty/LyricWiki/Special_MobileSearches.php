@@ -9,7 +9,6 @@
 if(!defined('MEDIAWIKI')) die();
 
 // Allows anyone to view the page.
-$wgAvailableRights[] = 'mobilesearches';
 $wgGroupPermissions['*']['mobilesearches'] = true;
 $wgGroupPermissions['user']['mobilesearches'] = true;
 $wgGroupPermissions['sysop']['mobilesearches'] = true;

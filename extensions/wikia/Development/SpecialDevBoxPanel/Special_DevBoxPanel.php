@@ -27,7 +27,6 @@ if(!defined('MEDIAWIKI')) die("Not a valid entry point.");
 
 // TODO: DETERMINE THE CORRECT PERMISSIONS... IS THERE A "DEVELOPERS" GROUP THAT WE ALL ACTUALLY BELONG TO?  WILL WE BE ON ALL WIKIS?
 // Permissions
-$wgAvailableRights[] = 'devboxpanel';
 $wgGroupPermissions['*']['devboxpanel'] = false;
 $wgGroupPermissions['user']['devboxpanel'] = false;
 $wgGroupPermissions['staff']['devboxpanel'] = true;

@@ -37,7 +37,6 @@ $wgHooks['ContributionsToolLinks'][] = 'LookupContribsHooks::ContributionsToolLi
 /**
  * rights
  */
-$wgAvailableRights[] = 'lookupcontribs';
 $wgGroupPermissions['staff']['lookupcontribs'] = true;
 
 $wgAjaxExportList[] = "LookupContribsAjax::axData";

@@ -57,7 +57,6 @@ $wgGroupPermissions['user'         ]['skipcaptcha'] = false;
 $wgGroupPermissions['autoconfirmed']['skipcaptcha'] = false;
 $wgGroupPermissions['bot'          ]['skipcaptcha'] = true; // registered bots
 $wgGroupPermissions['sysop'        ]['skipcaptcha'] = true;
-$wgAvailableRights[] = 'skipcaptcha';
 
 /**
  * List of IP ranges to allow to skip the captcha, similar to the group setting:

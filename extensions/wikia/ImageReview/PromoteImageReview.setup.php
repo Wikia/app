@@ -41,20 +41,15 @@ $wgHooks['WikiFactory::onPostChangesApplied'][] = 'CityVisualization::onWikiData
 $wgHooks['CreatePromoImageReviewTask'][] = 'PromoteImageReviewHelper::onCreatePromoteImageReviewTask';
 
 // rights
-$wgAvailableRights[] = 'promoteimagereview';
 $wgGroupPermissions['util']['promoteimagereview'] = true;
 $wgGroupPermissions['vstf']['promoteimagereview'] = true;
 
-$wgAvailableRights[] = 'promoteimagereviewquestionableimagereview';
 $wgGroupPermissions['util']['promoteimagereviewquestionableimagereview'] = true;
 
-$wgAvailableRights[] = 'promoteimagereviewrejectedimagereview';
 $wgGroupPermissions['util']['promoteimagereviewrejectedimagereview'] = true;
 
-$wgAvailableRights[] = 'promoteimagereviewstats';
 $wgGroupPermissions['util']['promoteimagereviewstats'] = true;
 
-$wgAvailableRights[] = 'promoteimagereviewcontrols';
 $wgGroupPermissions['util']['promoteimagereviewcontrols'] = true;
 
 // i18n

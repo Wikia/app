@@ -12,7 +12,6 @@
 if(!defined('MEDIAWIKI')) die();
 
 // Allows anyone to view the page.
-//$wgAvailableRights[] = 'artistredirects';
 //$wgGroupPermissions['*']['artistredirects'] = true;
 //$wgGroupPermissions['user']['artistredirects'] = true;
 //$wgGroupPermissions['sysop']['artistredirects'] = true;

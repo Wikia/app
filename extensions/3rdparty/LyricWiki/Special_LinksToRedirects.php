@@ -18,7 +18,6 @@
 if(!defined('MEDIAWIKI')) die();
 
 // Allows anyone to view the page.
-$wgAvailableRights[] = 'linkstoredirects';
 $wgGroupPermissions['*']['linkstoredirects'] = true;
 $wgGroupPermissions['user']['linkstoredirects'] = true;
 $wgGroupPermissions['sysop']['linkstoredirects'] = true;

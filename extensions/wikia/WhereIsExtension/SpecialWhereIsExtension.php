@@ -29,7 +29,6 @@ $wgExtensionCredits[ 'specialpage' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WhereIsExtension',
 );
 
-$wgAvailableRights[] = 'WhereIsExtension';
 $wgGroupPermissions['staff']['WhereIsExtension'] = true;
 $wgGroupPermissions['util']['WhereIsExtension'] = true;
 

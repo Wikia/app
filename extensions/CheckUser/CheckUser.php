@@ -33,11 +33,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'checkuser-desc',
 );
 
-// New user rights
-// 'checkuser' right is required to query IPs/users through Special:CheckUser
-// 'checkuser-log' is required to view the private log of checkuser checks
-$wgAvailableRights[] = 'checkuser';
-$wgAvailableRights[] = 'checkuser-log';
 $wgGroupPermissions['checkuser']['checkuser'] = true;
 $wgGroupPermissions['checkuser']['checkuser-log'] = true;
 

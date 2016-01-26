@@ -38,7 +38,6 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 // New user right
-$wgAvailableRights[] = 'spamregex';
 $wgGroupPermissions['staff']['spamregex'] = true;
 
 /* return the proper db key for Memc */

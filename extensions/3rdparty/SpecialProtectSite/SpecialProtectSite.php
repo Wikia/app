@@ -19,9 +19,6 @@ if(defined('MEDIAWIKI'))
   /* Set the group access permissions */
   $wgGroupPermissions['bureaucrat']['protectsite'] = true;
 
-  /* Register the new user rights level */
-  $wgAvailableRights[] = 'protectsite';
-
   /* Add this Special page to the Special page listing array */
   $wgSpecialPages['Protectsite'] = array('SpecialPage','Protectsite','protectsite');
 

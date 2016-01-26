@@ -37,9 +37,6 @@ $wgAutoloadClasses['PhalanxAjax'] = $dir.'PhalanxAjax.class.php';
 
 $wgSpecialPageGroups['Phalanx'] = 'wikia';
 
-$wgAvailableRights[] = 'phalanx';
-$wgAvailableRights[] = 'phalanxemailblock';
-
 // Ajax dispatcher
 $wgAjaxExportList[] = 'PhalanxAjax';
 function PhalanxAjax() {

@@ -36,7 +36,6 @@ $wgSpecialPages['UserRenameTool'] = 'SpecialRenameuser';
 $wgSpecialPageGroups['UserRenameTool'] = 'users';
 
 // rights
-$wgAvailableRights[] = 'renameuser';
 $wgGroupPermissions['*']['renameuser'] = false;
 $wgGroupPermissions['staff']['renameuser'] = true;
 

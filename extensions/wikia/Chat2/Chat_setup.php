@@ -20,7 +20,6 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname( __FILE__ );
 
 // rights
-$wgAvailableRights[] = 'chatmoderator';
 $wgGroupPermissions['*']['chatmoderator'] = false;
 $wgGroupPermissions['sysop']['chatmoderator'] = true;
 $wgGroupPermissions['staff']['chatmoderator'] = true;
@@ -34,7 +33,6 @@ $wgGroupPermissions['staff']['chatstaff'] = true;
 $wgGroupPermissions['*']['chatadmin'] = false;
 $wgGroupPermissions['sysop']['chatadmin'] = true;
 
-$wgAvailableRights[] = 'chat';
 $wgGroupPermissions['*']['chat'] = false;
 $wgGroupPermissions['staff']['chat'] = true;
 $wgGroupPermissions['user']['chat'] = true;

@@ -32,7 +32,6 @@
 if(!defined('MEDIAWIKI')) die();
 
 // Allows anyone to view the page.
-$wgAvailableRights[] = 'soapfailures';
 $wgGroupPermissions['*']['soapfailures'] = true;
 $wgGroupPermissions['user']['soapfailures'] = true;
 $wgGroupPermissions['sysop']['soapfailures'] = true;

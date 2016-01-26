@@ -27,7 +27,6 @@ $wgExtensionMessagesFiles['ThemeDesigner'] = "$dir/ThemeDesigner.i18n.php";
 $wgExtensionMessagesFiles['ThemeDesignerAliases'] = "$dir/ThemeDesigner.alias.php";
 
 // Ability to access ThemeDesigner.
-$wgAvailableRights[] = 'themedesigner';
 $wgGroupPermissions['*']['themedesigner'] = false;
 $wgGroupPermissions['sysop']['themedesigner'] = true;
 $wgGroupPermissions['helper']['themedesigner'] = true;

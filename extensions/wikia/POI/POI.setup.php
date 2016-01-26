@@ -15,7 +15,6 @@ $wgAutoloadClasses['QuestDetailsSolrHelper'] = $searchDir . "QuestDetails/QuestD
 
 $wgSpecialPages['Metadata']		= 'MetadataSpecialController';
 
-$wgAvailableRights[] = 'metadata';
 $wgGroupPermissions['*']['metadata'] = false;
 $wgGroupPermissions['staff']['metadata'] = true;
 

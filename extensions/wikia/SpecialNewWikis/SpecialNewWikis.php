@@ -36,6 +36,5 @@ $wgSpecialPages['Newwikis'] = 'NewWikisSpecialPage';
 $wgAutoloadClasses['NewWikisSpecialPage'] = __DIR__ . '/SpecialNewWikis_body.php';
 $wgAutoloadClasses['NewWikisPage'       ] = __DIR__ . '/SpecialNewWikis_body.php';
 
-$wgAvailableRights[] = 'newwikislist';
 $wgGroupPermissions['*']['newwikislist'] = false;
 $wgGroupPermissions['staff']['newwikislist'] = true;

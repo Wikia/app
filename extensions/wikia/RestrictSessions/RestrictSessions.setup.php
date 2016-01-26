@@ -24,7 +24,6 @@ $wgAutoloadClasses['RestrictSessions\RestrictSessionsHooks'] =  __DIR__ . '/Rest
 
 $wgExtensionMessagesFiles['RestrictSessions'] = __DIR__ . '/RestrictSessions.i18n.php' ;
 
-$wgAvailableRights[] = 'restrictsession';
 $wgGroupPermissions['staff']['restrictsession'] = true;
 $wgGroupPermissions['util']['restrictsession'] = true;
 
