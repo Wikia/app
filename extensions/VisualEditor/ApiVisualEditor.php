@@ -97,6 +97,10 @@ class ApiVisualEditor extends ApiBase {
 				$resp->header( 'X-Parsoid-Performance: ' . $xpp );
 			}
 		} elseif ( $status->isGood() ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'ApiVisualEditor_requestParsoid', [
+				'method' => $method,
+				'error' => 'parsoidserver-http-' . $req->getStatus()
+			] );
 			$this->dieUsage( $req->getContent(), 'parsoidserver-http-' . $req->getStatus() );
 		} elseif ( $errors = $status->getErrorsByType( 'error' ) ) {
 			$error = $errors[0];
@@ -106,6 +110,10 @@ class ApiVisualEditor extends ApiBase {
 			} else {
 				$message = 'MWHttpRequest error';
 			}
+			\Wikia\Logger\WikiaLogger::instance()->error( 'ApiVisualEditor_requestParsoid', [
+				'method' => $method,
+				'error' => 'parsoidserver-' . $code
+			] );
 			$this->dieUsage( "$message: " . $req->getContent(), 'parsoidserver-' . $code );
 		}
 		// TODO pass through X-Parsoid-Performance header, merge with getHTML above

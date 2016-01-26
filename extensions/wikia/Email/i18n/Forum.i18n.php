@@ -133,6 +133,17 @@ $messages['zh-hans'] = array(
 	'emailext-forumreply-unfollow-text' => '不想再收到这类更新？点击[$1 这里]取消关注[{{SERVER}} {{SITENAME}}]网站上的[$2 这个讨论]。',
 );
 
+$messages['zh-hant'] = array(
+	'emailext-forum-subject' => '在{{SITENAME}}網站的$1論壇上,大家正在對一個新的話題進行討論。',
+	'emailext-forum-summary' => "'''在[{{SERVER}} {{SITENAME}}]網站的[$1 $2]網頁，大家正在對一個新的話題進行討論。'''",
+	'emailext-forum-button-label' => '查看討論',
+	'emailext-forum-reply-subject' => '{{SITENAME}}的$1有新的回覆郵件。',
+	'emailext-forum-reply-summary' => "'''[{{SERVER}} {{SITENAME}}]的[$2 $1]有新的回覆郵件。'''",
+	'emailext-forum-reply-link-label' => '閲讀回覆郵件',
+	'emailext-forum-reply-view-all' => '[$1 查看整個討論內容]',
+	'emailext-forumreply-unfollow-text' => '不想再收到這類更新通知？按一下[$1 這裡] 取消對[{{SERVER}} {{SITENAME}}]上[$2 這個討論]的關注。',
+);
+
 $messages['zh-tw'] = array(
 	'emailext-forum-subject' => '在{{SITENAME}}網站的$1論壇上,大家正在對一個新的話題進行討論。',
 	'emailext-forum-summary' => "'''在[{{SERVER}} {{SITENAME}}]網站的[$1 $2]網頁，大家正在對一個新的話題進行討論。'''",

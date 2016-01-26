@@ -102,8 +102,8 @@ $messages['pt'] = array(
 );
 
 $messages['ru'] = array(
-	'emailext-blogpost-user-subject' => '$1 сделал(а) новую запись: $2',
-	'emailext-blogpost-list-subject' => '$1 сделал(а) новую запись в $2: $3',
+	'emailext-blogpost-user-subject' => '$1 создал(а) новую запись: $2',
+	'emailext-blogpost-list-subject' => '$1 создал(а) новую запись в $2: $3',
 	'emailext-blogpost-user-summary' => 'В блоге [$1 участника $2] на [{{SERVER}} {{SITENAME}}] появилась новая запись. Посмотрите.',
 	'emailext-blogpost-list-summary' => 'В блоге [$1 $2] на [{{SERVER}} {{SITENAME}}] появилась новая запись. Посмотрите.',
 	'emailext-blogpost-link-label' => 'Прочитать запись полностью',
@@ -112,13 +112,23 @@ $messages['ru'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'emailext-blogpost-user-subject' => '$1撰写了一个标题为$2的新帖子',
-	'emailext-blogpost-list-subject' => '$1在$2页面撰写了一个标题为$3的新帖子',
-	'emailext-blogpost-user-summary' => '在[{{SERVER}} {{SITENAME}}]网站上的[$1 $2的博客]页面有一个新帖子。快来查看吧！',
-	'emailext-blogpost-list-summary' => '在[{{SERVER}} {{SITENAME}}]网站上的[$1 $2]页面有一个新帖子。快来查看吧！',
+	'emailext-blogpost-user-subject' => '$1 撰写了标题为“$2”的新文章。',
+	'emailext-blogpost-list-subject' => '$1在$2页面撰写了标题为“$3”的新文章',
+	'emailext-blogpost-user-summary' => '在[{{SERVER}} {{SITENAME}}]的[$1 $2的博客]页面有一篇新文章。快来看看吧！',
+	'emailext-blogpost-list-summary' => '在[{{SERVER}} {{SITENAME}}]的 [$1 $2]頁面有一篇新文章。快來看看吧！',
 	'emailext-blogpost-link-label' => '阅读全文',
-	'emailext-blogpost-view-all' => '[$1 最近$2的博客中所有帖子]',
-	'emailext-blogpost-unfollow-text' => '不想再接收这类更新内容？点击[$1 这里]取消对{{SITENAME}}上$2页面的关注。',
+	'emailext-blogpost-view-all' => '[$1 最近在$2的所有博客文章]',
+	'emailext-blogpost-unfollow-text' => '不想再收到这类更新内容？点击[$1 这里]取消对{{SITENAME}}上$2页面的关注。',
+);
+
+$messages['zh-hant'] = array(
+	'emailext-blogpost-user-subject' => '$1 撰寫了標題為「$2」的新文章。',
+	'emailext-blogpost-list-subject' => '$1在$2頁面撰寫了標題為「$3」的新文章',
+	'emailext-blogpost-user-summary' => '在[{{SERVER}} {{SITENAME}}]的[$1 $2的網誌]頁面有一篇新文章。快來看看吧！',
+	'emailext-blogpost-list-summary' => '在[{{SERVER}} {{SITENAME}}]的 [$1 $2]頁面有一篇新文章。快來看看吧！',
+	'emailext-blogpost-link-label' => '閱讀全文',
+	'emailext-blogpost-view-all' => '[$1 最近在$2的所有網誌文章]',
+	'emailext-blogpost-unfollow-text' => '不想再收到這類更新内容？點擊[$1 這裡]取消對{{SITENAME}}上$2頁面的關注。',
 );
 
 $messages['zh-tw'] = array(

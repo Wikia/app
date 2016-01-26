@@ -148,13 +148,17 @@ class ChatAjax {
 	}
 
 	/**
- 	 * Ajax endpoint for blocking privata chat with user.
+	 * Ajax endpoint for blocking private chat with user.
+	 *
+	 * @throws BadRequestException
 	 */
-
 	static public function blockOrBanChat() {
 		ChatHelper::info( __METHOD__ . ': Method called' );
 		global $wgRequest, $wgUser;
 		wfProfileIn( __METHOD__ );
+
+		// MAIN-6290  server.js needs to pass edit token for this to work
+		// $wgRequest->isValidWriteRequest( $wgUser );
 
 		$kickingUser = $wgUser;
 

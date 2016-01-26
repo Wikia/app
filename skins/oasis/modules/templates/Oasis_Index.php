@@ -72,6 +72,7 @@
 <?= $openXBidder ?>
 <?= $rubiconFastlane ?>
 <?= $dynamicYield ?>
+<?= $ivw3 ?>
 <?= $ivw2 ?>
 <div class="WikiaSiteWrapper">
 	<?= $body ?>

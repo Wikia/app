@@ -28,6 +28,18 @@ $(function() {
 			trackingMethod: 'internal'
 		});
 
+		function getPositionRightValue() {
+			var width = 0;
+
+			if ($('.global-navigation').hasClass('global-navigation-2016')) {
+				width = parseInt($('.search-container').css('padding-left'), 10) +
+					$('.account-navigation-container').width() +
+					$('.notifications-container').width();
+			}
+
+			return '-' + width + 'px';
+		}
+
 		// download necessary dependencies (AutoComplete plugin) and initialize search suggest feature for #search_field
 		WikiaSearchApp.prototype.initSuggest = function() {
 			var autocompleteReEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')',
@@ -67,6 +79,7 @@ $(function() {
 						maxHeight: 1000,
 						selectedClass: 'selected',
 						width: '100%',
+						positionRight: getPositionRightValue(),
 						// Add span around every autocomplete result
 						fnFormatResult: function(value, data, currentValue) {
 							var pattern = '(' + currentValue.replace(autocompleteReEscape, '\\$1') + ')';

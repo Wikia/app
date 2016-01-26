@@ -46,6 +46,7 @@ class OasisController extends WikiaController {
 		$this->rubiconFastlane = null;
 		$this->dynamicYield = null;
 		$this->ivw2 = null;
+		$this->ivw3 = null;
 
 		wfProfileOut(__METHOD__);
 	}
@@ -221,6 +222,7 @@ class OasisController extends WikiaController {
 			$this->rubiconFastlane = AnalyticsEngine::track('RubiconFastlane', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->ivw3 = AnalyticsEngine::track('IVW3', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
 
 		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {

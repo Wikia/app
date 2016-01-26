@@ -1643,7 +1643,9 @@ class OutputPage extends ContextSource {
 	function addParserOutput( &$parserOutput ) {
 		$this->addParserOutputNoText( $parserOutput );
 		$text = $parserOutput->getText();
+
 		wfRunHooks( 'OutputPageBeforeHTML', array( &$this, &$text ) );
+
 		$this->addHTML( $text );
 	}
 
