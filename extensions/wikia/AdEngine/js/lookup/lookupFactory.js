@@ -88,6 +88,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			return module.name;
 		}
 
+		// needed only for selenium tests
 		function hasResponse() {
 			log(['hasResponse', response], 'debug', module.logGroup);
 			return response;

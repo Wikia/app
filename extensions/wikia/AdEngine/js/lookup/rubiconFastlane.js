@@ -195,6 +195,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		rubicon.src = rubiconLibraryUrl;
 
 		node.parentNode.insertBefore(rubicon, node);
+		context = adContext.getContext();
 		defineSlots(skin, onResponse);
 	}
 
