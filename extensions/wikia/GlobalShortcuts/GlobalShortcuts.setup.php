@@ -2,8 +2,8 @@
 /**
  * Wikia GlobalShortcuts Extension
  *
- * Increase your browsing and editing experience using shortcut keys on Wikia.
- * Extension provides some key shortcuts to navigate to important pages or to perform certain actions.
+ * Improve your browsing and editing experience using shortcut keys on Wikia.
+ * This extension provides some key shortcuts and an actions explorer to help users navigate to important pages or perform certain actions.
  *
  * @author Kamil Koterba <kamil@wikia-inc.com>
  * @copyright (c) 2015 Wikia, Inc.
@@ -11,13 +11,14 @@
  */
 
 $wgExtensionCredits['other'][] = [
-	'name'				=> 'Global Shortcuts',
-	'version'			=> '1.0',
-	'author'			=> [
+	'name' => 'Global Shortcuts',
+	'version' => '1.0',
+	'author' => [
 		'Kamil Koterba',
+		'Władysław Bodzek',
 	],
-	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/GlobalShortcuts',
-	'descriptionmsg'    => 'global-shortcuts-description',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/GlobalShortcuts',
+	'descriptionmsg' => 'global-shortcuts-description',
 ];
 
 /**
@@ -40,3 +41,20 @@ $wgAutoloadClasses['Wikia\GlobalShortcuts\Helper'] = __DIR__ . '/GlobalShortcuts
  * Messages
  */
 $wgExtensionMessagesFiles['GlobalShortcuts'] = __DIR__ . '/GlobalShortcuts.i18n.php';
+
+JSMessages::registerPackage( 'GlobalShortcuts', [
+	'global-shortcuts-caption-*',
+	'global-shortcuts-category-*',
+	'global-shortcuts-key-*',
+	'global-shortcuts-search-placeholder',
+	'global-shortcuts-title-keyboard-shortcuts',
+	// TODO remove template-class- prefix once messages come back from translations, as it's wrong naming
+	'template-class-global-shortcuts-press-to-explore-shortcuts',
+] );
+
+/*
+ * TODO move this block and message used below to TemplateClassification ext
+ */
+JSMessages::registerPackage( 'TemplateClassificationGlobalShortcuts', [
+	'template-class-global-shortcuts-caption-classify-page',
+] );

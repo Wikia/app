@@ -7,25 +7,26 @@
 define('PageActions', ['mw', 'jquery'], function (mw, $) {
 	'use strict';
 
-	var CATEGORY_WEIGHTS = {
-			'Current page': 10,
-			'Current wikia': 20,
-			'Other': 1000
-		},
+	var CATEGORY_WEIGHTS = {},
+		categoryOtherName = mw.message('global-shortcuts-category-other').escaped(),
 		all = [],
 		byId = {};
+
+	CATEGORY_WEIGHTS[mw.message('global-shortcuts-category-current-page').escaped()] = 10;
+	CATEGORY_WEIGHTS[mw.message('global-shortcuts-category-current-wikia').escaped()] = 20;
+	CATEGORY_WEIGHTS[categoryOtherName] = 1000;
 
 	function PageAction(id, caption, fn, category, weight) {
 		this.id = id;
 		this.caption = '';
 		this.fn = $.noop;
-		this.category = 'Other';
+		this.category = categoryOtherName;
 		this.categoryWeight = this._calculateCategoryWeight();
 		this.weight = 500;
 		this.update({
 			caption: caption,
 			fn: fn,
-			category: category || 'Other',
+			category: category || categoryOtherName,
 			weight: weight || 500
 		});
 	}

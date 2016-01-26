@@ -6,7 +6,4 @@ class GlobalShortcutsController extends WikiaController {
 	public function getHelp() {
 		$this->overrideTemplate( 'help' );
 	}
-
-	public function renderHelpEntryPoint() {
-	}
 }

@@ -19,7 +19,9 @@ define('GlobalShortcutsHelp',
 					Wikia.getMultiTypePackage({
 						mustache: 'extensions/wikia/GlobalShortcuts/templates/KeyCombination.mustache,' +
 							'extensions/wikia/GlobalShortcuts/templates/GlobalShortcutsController_help.mustache',
+						messages: 'GlobalShortcuts',
 						callback: function (pkg) {
+							mw.messages.set(pkg.messages);
 							templates.keyCombination = pkg.mustache[0];
 							templates.help = pkg.mustache[1];
 							dfd.resolve(templates);
@@ -33,12 +35,15 @@ define('GlobalShortcutsHelp',
 			var data = prepareData();
 
 			// Set modal content
-			setupTemplateClassificationModal(
+			setupModal(
 				mustache.render(templates.help, {actions: data})
 			);
 			require(['wikia.ui.factory'], function (uiFactory) {
 				/* Initialize the modal component */
-				uiFactory.init(['modal']).then(createComponent);
+				$.when(
+					uiFactory.init(['modal']),
+					mw.loader.using(['mediawiki.jqueryMsg'])
+				).then(createComponent);
 			});
 		}
 
@@ -60,7 +65,8 @@ define('GlobalShortcutsHelp',
 				combosCount,
 				keyCombination = [],
 				keyCombinationHtml = '',
-				keysCount;
+				keysCount,
+				templateParams;
 
 			combosCount = combos.length;
 			for (var id in combos) {
@@ -75,7 +81,12 @@ define('GlobalShortcutsHelp',
 				keyCombination[id].combo[j - 1].or = comboNum < combosCount - 1 ? 1 : 0;
 				comboNum++;
 			}
-			keyCombinationHtml = mustache.render(templates.keyCombination, {keyCombination:keyCombination});
+			templateParams = {
+				keyCombination: keyCombination,
+				orMsg: mw.message('global-shortcuts-key-or').plain(),
+				thenMsg: mw.message('global-shortcuts-key-then').plain()
+			};
+			keyCombinationHtml = mustache.render(templates.keyCombination, templateParams);
 			return keyCombinationHtml;
 		}
 
@@ -94,14 +105,15 @@ define('GlobalShortcutsHelp',
 		 * One of sub-tasks for getting modal shown
 		 */
 		function processInstance(modalInstance) {
+			var dotKey = '<span class="key">.</span>';
 			/* Show the modal */
 			modalInstance.show();
 			// Add footer hint
 			modalInstance.$element.find('footer')
-				.html('Press <span class="key">.</span> to explore shortcuts.');
+				.html(mw.message('template-class-global-shortcuts-press-to-explore-shortcuts', dotKey).parse());
 		}
 
-		function setupTemplateClassificationModal(content) {
+		function setupModal(content) {
 			/* Modal component configuration */
 			modalConfig = {
 				vars: {
@@ -109,7 +121,7 @@ define('GlobalShortcutsHelp',
 					classes: ['global-shortcuts-help'],
 					size: 'medium', // size of the modal
 					content: content, // content
-					title: 'Keyboard shortcuts'
+					title: mw.message('global-shortcuts-title-keyboard-shortcuts').escaped()
 				}
 			};
 		}

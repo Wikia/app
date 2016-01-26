@@ -9,9 +9,7 @@ define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions', 'GlobalShortcutsTra
 		wgWikiaShortcutKeys = mw.config.get('wgWikiaShortcutKeys');
 
 	function initShortcut(actionId, key) {
-		console.log('Installing shortcut "' + key + '" for ' + actionId);
 		Mousetrap.bind(key,function () {
-			console.log('Triggered shortcut "' + key + '" for ' + actionId);
 			tracker.trackKey(actionId);
 			PageActions.find(actionId).execute();
 		});
