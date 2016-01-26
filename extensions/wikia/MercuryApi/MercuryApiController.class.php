@@ -395,14 +395,16 @@ class MercuryApiController extends WikiaController {
 			$wikitext = RTE::HtmlToWikitext( $CKmarkup );
 		}
 
-		$wrapper->wrap( function () use ( &$parsedWikitext, $wikitext, $title, $parserOptions ) {
-			$parsedWikitext = ParserPool::create()->parse( $wikitext, $title, $parserOptions )->getText();
+		$wrapper->wrap( function () use ( &$articleAsJson, $wikitext, $title, $parserOptions ) {
+			// explicit revisionId of -1 passed to ensure proper behavior on ArticleAsJson end
+			$articleAsJson = json_decode(ParserPool::create()->parse( $wikitext, $title, $parserOptions, true, true, -1 )->getText());
 		});
 
-		//TODO: change this to make getAsJson basing on current markup
-		$articleAsJson = $this->getArticleJson( $articleId, $title );
-		$data['article'] = $articleAsJson;
-		$data['article']['content'] = $parsedWikitext;
+		$data['article'] = [
+			'content' => $articleAsJson->content,
+			'media' => $articleAsJson->media,
+			'users' => [] // explicitly empty in this context
+		];
 
 		$wikiVariables = $this->prepareWikiVariables();
 
