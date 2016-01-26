@@ -1,0 +1,52 @@
+@import "extensions/wikia/GlobalShortcuts/styles/GlobalShortcutsMixins";
+
+.global-shortcuts-help {
+	font-size: 14px;
+
+	section {
+		overflow: auto;
+		.col {
+			@include gs-modal-column;
+		}
+		.full-width {
+			clear: both;
+		}
+	}
+	
+	footer {
+		height: auto;
+		padding: 10px 20px;
+		position: static;
+		text-align: right;
+
+		.key {
+			height: 25px;
+			margin: 0;
+			vertical-align: middle;
+		}
+	}
+
+	h2 {
+		@include gs-modal-heading;
+	}
+
+	.key-list {
+		@include gs-key-list;
+	}
+
+	.key-combination {
+		@include gs-key-combination;
+		float: right;
+		text-align: left;
+
+	}
+	.key {
+		@include gs-key;
+		margin: 0 5px 5px;
+	}
+
+	.label {
+		@include gs-key-label;
+		color: #545454;
+	}
+}

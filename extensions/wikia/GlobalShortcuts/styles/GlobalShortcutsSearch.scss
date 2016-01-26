@@ -1,0 +1,124 @@
+@import "skins/shared/color";
+@import "extensions/wikia/GlobalShortcuts/styles/GlobalShortcutsMixins";
+
+#GlobalShortcutsSearch.global-shortcuts-search {
+	border: 0;
+	font-size: 14px;
+	height: 400px;
+
+	> header {
+		display: none;
+	}
+
+	> section {
+		height: 100%;
+		overflow: auto;
+
+		.col {
+			@include gs-modal-column;
+		}
+
+		.full-width {
+			box-sizing: border-box;
+		    position: relative;
+			clear: both;
+		}
+
+		#global_shortcuts_search_field {
+			background-image: url('/extensions/wikia/GlobalShortcuts/images/keyboard.svg')!important; /* inline */
+			background-position: 0px -9px;
+			background-repeat: no-repeat;
+			background-size: 33px;
+			border: 0;
+			box-sizing: border-box;
+			outline: 0;
+			padding: 8px 8px 8px 37px;
+			width: 100%;
+		}
+	}
+	
+	footer {
+		display: none;
+	}
+
+	h2 {
+		@include gs-modal-heading;
+	}
+
+	.key-list {
+		@include gs-key-list;
+	}
+
+	.key-combination {
+		@include gs-key-combination;
+	}
+	.key-combination, .key-combination-in-suggestions {
+		float: right;
+		text-align: left;
+	}
+	.key {
+		@include gs-key;
+	}
+
+	.label {
+		@include gs-key-label;
+	}
+
+	.label, .label-in-suggestions {
+		color: #545454;
+	}
+
+	.global-shortcuts-field-wrapper{
+		border-bottom: 1px solid #bbbbbb;
+	}
+
+	.autocomplete-suggestions {
+		box-sizing: border-box;
+		overflow-y: auto;
+		padding-right: 8px;
+		width: 100%!important;
+
+		strong {
+			font-weight: bold;
+		}
+	}
+
+	.autocomplete-group {
+		margin: 20px 0 15px 0;
+		padding: 4px 4px;
+	}
+
+	.autocomplete-suggestion {
+		border: 0;
+		box-shadow: none;
+		cursor: pointer;
+		font-size: 14px;
+		line-height: 25px;
+		padding: 4px 4px;
+	}
+
+	.autocomplete-selected {
+		background-color: $color-menu-highlight;
+	}
+
+	.separate {
+		display: inline-block;
+		padding: 0 10px;
+	}
+}
+
+.global-shortcuts-search-entry-point {
+	box-sizing: content-box;
+	display: none;
+	padding: 0;
+	vertical-align: middle;
+	width: 23px;
+}
+
+.global-shortcuts-search-entry-point-throbber {
+	display: inline-block;
+	height: 23px;
+	position: relative;
+	vertical-align: middle;
+	width: 25px;
+}

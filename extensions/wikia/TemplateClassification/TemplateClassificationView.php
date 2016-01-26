@@ -6,8 +6,6 @@ use Swagger\Client\ApiException;
 
 class View {
 
-	const COMMAND_KEY = '⌘';
-	const CONTROL_KEY = 'Ctrl';
 
 	/**
 	 * Returns HTML with Template type.
@@ -85,11 +83,6 @@ class View {
 	}
 
 	private function prepareHint() {
-		$key = self::CONTROL_KEY;
-		if ( strpos( $_SERVER['HTTP_USER_AGENT'], 'Mac' ) !== false ) {
-			$key = self::COMMAND_KEY;
-		}
-
-		return wfMessage( 'template-classification-open-modal-key-tip', $key )->plain();
+		return wfMessage( 'template-classification-open-modal-key-tip' )->plain();
 	}
 }
