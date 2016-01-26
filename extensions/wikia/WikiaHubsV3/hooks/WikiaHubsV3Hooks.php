@@ -3,15 +3,15 @@
 class WikiaHubsV3Hooks {
 	/**
 	 * @param Title $title
-	 * @param Page $article
+	 * @param Page $article passed as a reference, is modified inside the hook
 	 *
 	 * @return true because it's a hook
 	 */
-	static public function onArticleFromTitle(&$title, &$article) {
+	static public function onArticleFromTitle(Title $title, &$article) {
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 
-		if( WikiaPageType::isWikiaHubMain() || $title->isSubpageOf(Title::newMainPage()) ) {
+		if( WikiaPageType::isWikiaHubMain($title) || $title->isSubpageOf(Title::newMainPage()) ) {
 			$model = new WikiaHubsV3HooksModel();
 
 			$dbKeyName = $title->getDBKey();

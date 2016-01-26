@@ -42,16 +42,16 @@ $logContext = [
 	'ex' => new Exception(),
 	// To verify if Kibana trims the strings:
 	'uri' => $_SERVER['REQUEST_URI'],
-	'uriLen' => count( $_SERVER['REQUEST_URI'] ),
+	'uriLen' => strlen( $_SERVER['REQUEST_URI'] ),
 ];
 
 if ( !$path ) {
 	WikiaLogger::instance()->warning( '404 redirector: malformed URI', $logContext );
 }
 
-if ( in_string( '%', $path ) || in_string( '<', $path ) || in_string( '>', $path ) ) {
+$path = str_replace( [ '%', '<', '>', '[', ']', '{', '}' ], '_', $path, $count );
+if ( $count ) {
 	WikiaLogger::instance()->warning( '404 redirector: forbidden char in URI', $logContext );
-	$path = str_replace( ['%', '<', '>'], '_', $path );
 }
 
 $title = Title::newFromText( $path );

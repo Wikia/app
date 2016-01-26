@@ -13,6 +13,7 @@ $messages['en'] = array(
 	'global-navigation-explore-wikia-link' => 'http://www.wikia.com/explore',
 	'global-navigation-explore-wikia-link-label' => 'Explore Wikia',
 	'global-navigation-explore-wikia-mercury-link-label' => 'Top Communities',
+	'global-navigation-wam-link' => 'http://www.wikia.com/WAM',
 	'global-navigation-menu-hubs' => '*http://gameshub.wikia.com/wiki/Games_Hub|Games|games
 *http://movieshub.wikia.com/wiki/Movies_Hub|Movies|movies
 *http://tvhub.wikia.com/wiki/TV_Hub|TV|tv',
@@ -263,6 +264,7 @@ $messages['de'] = array(
 	'global-navigation-account-navigation-options' => '$1 oder $2',
 	'global-navigation-community-link' => 'http://de.community.wikia.com/',
 	'global-navigation-community-link-label' => 'Community Deutschland',
+	'global-navigation-wam-link' => 'http://de.wikia.com/WAM',
 	'global-navigation-menu-hubs' => '*http://de.videospielehub.wikia.com/wiki/Videospiele_Hub|Videospiele|games
 *http://de.filmhub.wikia.com/wiki/Film_Hub|Filme|movies
 *http://de.tvhub.wikia.com/wiki/TV_Hub|TV|tv',
@@ -492,6 +494,7 @@ $messages['es'] = array(
 	'global-navigation-hubs-menu-more-of' => 'Más $1',
 	'global-navigation-community-link' => 'http://comunidad.wikia.com',
 	'global-navigation-community-link-label' => 'Comunidad Central',
+	'global-navigation-wam-link' => 'http://es.wikia.com/WAM',
 	'global-navigation-menu-hubs' => '*http://es.gameshub.wikia.com|Juegos|games
 *http://es.filmhub.wikia.com|Películas|movies
 *http://es.tvhub.wikia.com|TV|tv',
@@ -734,6 +737,7 @@ $messages['fr'] = array(
 	'global-navigation-account-navigation-options' => '$1 ou $2',
 	'global-navigation-community-link' => 'http://communaute.wikia.com',
 	'global-navigation-community-link-label' => 'Centre des communautés',
+	'global-navigation-wam-link' => 'http://fr.wikia.com/WAM',
 	'global-navigation-menu-hubs' => '*http://portail-jeuxvideo.wikia.com/wiki/Portail_jeux_vidéo|Jeux vidéo|games
 *http://portail-divertissement.wikia.com/wiki/Portail_divertissement|Divertissement|movies
 *http://portail-modedevie.wikia.com/wiki/Portail_mode_de_vie|Mode de vie|tv',
@@ -1198,11 +1202,11 @@ $messages['ja'] = array(
 	'global-navigation-register' => '登録',
 	'global-navigation-sign-in' => 'ログイン',
 	'global-navigation-account-navigation-options' => '$1または$2',
+	'global-navigation-wam-link' => 'http://ja.wikia.com/WAM',
 	'global-navigation-community-link' => 'http://ja.community.wikia.com',
 	'global-navigation-community-link-label' => 'コミュニティセントラル',
 	'global-navigation-menu-hubs' => '*http://ja.videogameshub.wikia.com/wiki/ビデオゲームハブ_Wiki|ゲーム|games
-*http://ja.entertainmenthub.wikia.com/wiki/エンターテイメントハブ_Wiki|エンターテインメント|entertainment
-*http://lifestylehub.wikia.com/wiki/Lifestyle_Hub|Lifestyle|lifestyle',
+*http://ja.entertainmenthub.wikia.com/wiki/エンターテイメントハブ_Wiki|エンターテインメント|entertainment',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
@@ -1666,9 +1670,10 @@ $messages['pl'] = array(
 	'global-navigation-account-navigation-options' => '$1 lub $2',
 	'global-navigation-community-link' => 'http://spolecznosc.wikia.com',
 	'global-navigation-community-link-label' => 'Centrum Społeczności',
+	'global-navigation-wam-link' => 'http://pl.wikia.com/WAM',
 	'global-navigation-menu-hubs' => '*http://gryhub.wikia.com/wiki/Gry|Gry|games
-*http://filmyhub.wikia.com/wiki/Filmy|Filmy|movies
-*http://pl.tvhub.wikia.com/wiki/TV|TV|tv',
+*http://rozrywkahub.wikia.com/wiki/Rozrywka|Rozrywka|entertainment
+*http://pl.lifestylehub.wikia.com/wiki/Lifestyle|Lifestyle|lifestyle',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
@@ -1899,6 +1904,7 @@ $messages['pt'] = array(
 	'global-navigation-account-navigation-options' => '$1 ou $2',
 	'global-navigation-community-link' => 'http://comunidade.wikia.com',
 	'global-navigation-community-link-label' => 'Central da Comunidade',
+	'global-navigation-wam-link' => 'http://pt.wikia.com/WAM',
 	'global-navigation-menu-hubs' => '*http://pt.videogameshub.wikia.com/wiki/Wiki_Videogameshub|Jogos|games
 *http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento|Entretenimento|entertainment
 *http://pt.estilodevida.wikia.com/wiki/Wiki_Estilo_de_Vida|Estilo de Vida|lifestyle',
@@ -2352,7 +2358,7 @@ $messages['ru'] = array(
 	'global-navigation-explore-wikia-link' => '#',
 	'global-navigation-explore-wikia-link-label' => 'Исследуйте Викия',
 	'global-navigation-wam-link-label' => 'Популярные вики',
-	'global-navigation-search-wikia' => 'Поиск внутри $1...',
+	'global-navigation-search-wikia' => 'Поиск внутри: $1...',
 	'global-navigation-home-of-fandom' => 'Твой фэндом',
 );
 

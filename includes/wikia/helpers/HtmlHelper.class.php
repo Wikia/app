@@ -67,4 +67,28 @@ class HtmlHelper {
 
 		return $output;
 	}
+
+	/**
+	 * Strips given attributes from HTML string
+	 * For example it can convert `<a style="color: black">1</a>` to `<a>1</a>`
+	 *
+	 * @param string $html
+	 * @param array $attribs
+	 *
+	 * @return string
+	 */
+	public static function stripAttributes( $html, $attribs ) {
+		$dom = new simple_html_dom();
+		$dom->load( $html );
+
+		foreach ( $attribs as $attrib ) {
+			foreach ( $dom->find( "*[$attrib]" ) as $e ) {
+				$e->$attrib = null;
+			}
+		}
+
+		$dom->load( $dom->save() );
+
+		return $dom->save();
+	}
 }
