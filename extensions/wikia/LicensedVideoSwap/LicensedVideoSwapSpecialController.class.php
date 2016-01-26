@@ -625,7 +625,7 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$user = $this->getUser();
 		$visitedList = $user->getGlobalAttribute( LicensedVideoSwapHelper::USER_VISITED_LIST );
 		if ( $visitedList ) {
-			$visitedList = unserialize( $visitedList );
+			$visitedList = Wikia\Util\Serialize::safeUnserialize( $visitedList );
 		} else {
 			$visitedList = [];
 		}

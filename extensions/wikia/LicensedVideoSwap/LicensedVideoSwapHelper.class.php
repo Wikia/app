@@ -357,7 +357,7 @@ SQL;
 		$helper = new VideoHandlerHelper();
 
 		// Get a list of what videos the user has already looked at
-		$visitedList = unserialize( $this->wg->User->getGlobalAttribute( LicensedVideoSwapHelper::USER_VISITED_LIST ) );
+		$visitedList = Wikia\Util\Serialize::safeUnserialize( $this->wg->User->getGlobalAttribute( LicensedVideoSwapHelper::USER_VISITED_LIST ) );
 
 		// Go through each video and add additional detail needed to display the video
 		$videos = array();
