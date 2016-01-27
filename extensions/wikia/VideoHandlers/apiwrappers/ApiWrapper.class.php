@@ -216,7 +216,7 @@ abstract class ApiWrapper {
 				}
 			break;
 			case self::RESPONSE_FORMAT_PHP :
-				$return = unserialize( $response );
+				$return = Wikia\Util\Serialize::safeUnserialize( $response );
 			break;
 			default: throw new UnsuportedTypeSpecifiedException();
 		}
