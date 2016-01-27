@@ -52,7 +52,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 				}
 			}
 		},
-		context = adContext.getContext(),
+		context,
 		logGroup = 'ext.wikia.adEngine.lookup.rubiconFastlane',
 		priceMap = {},
 		rubiconSlots = [],
@@ -195,6 +195,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		rubicon.src = rubiconLibraryUrl;
 
 		node.parentNode.insertBefore(rubicon, node);
+		context = adContext.getContext();
 		defineSlots(skin, onResponse);
 	}
 

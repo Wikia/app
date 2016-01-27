@@ -55,6 +55,10 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.showAds = false;
 		}
 
+		if (geo.isProperGeo(instantGlobals.wgAdDriverDelayCountries)) {
+			context.opts.delayEngine = true;
+		}
+
 		// SourcePoint detection integration
 		if (!noExternals && context.opts.sourcePointDetectionUrl) {
 			context.opts.sourcePointDetection = isUrlParamSet('sourcepointdetection') ||
@@ -66,7 +70,7 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// SourcePoint recovery integration
-		if (context.opts.sourcePointDetection && context.opts.sourcePointRecoveryUrl) {
+		if (!context.opts.delayEngine && context.opts.sourcePointDetection && context.opts.sourcePointRecoveryUrl) {
 			context.opts.sourcePointRecovery = isUrlParamSet('sourcepointrecovery') ||
 				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
 		}
