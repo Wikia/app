@@ -26,7 +26,7 @@ class CommunityDataService extends WikiaService {
 	}
 
 	/**
-	 * Returns both curated and optional sections merged together
+	 * Returns curated content sections extended with optional section (if exists)
 	 * @return array
 	 */
 	public function getNonFeaturedSections() {
