@@ -21,16 +21,6 @@ class CommunityDataService extends WikiaService {
 		return $status;
 	}
 
-	/**
-	 * Returns all curated content sections
-	 * @return array
-	 */
-	public function getAllSections() {
-		$data = $this->curatedContentData();
-		unset( $data[ 'community_data' ] );
-		return $data;
-	}
-
 	public function hasData() {
 		return !empty( $this->curatedContentData() );
 	}
@@ -45,7 +35,7 @@ class CommunityDataService extends WikiaService {
 		if ( !empty( $optional ) ) {
 			$curated[] = $optional;
 		}
-		return $curated;
+		return is_array( $curated ) ? $curated : [ ];
 	}
 
 	/**

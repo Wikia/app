@@ -272,7 +272,7 @@ class GameGuidesController extends WikiaController {
 	static function onTitleGetSquidURLs( $title, &$urls ) {
 
 		if ( !in_array( $title->getNamespace(), self::$disabledNamespaces ) ) {
-			$urls[ ] = self::getUrl( 'getPage', array(
+			$urls[] = self::getUrl( 'getPage', array(
 				'page' => $title->getPrefixedText()
 			) );
 		}
@@ -368,8 +368,8 @@ class GameGuidesController extends WikiaController {
 		$content = null;
 		if ( $this->wg->EnableCuratedContentExt ) {
 			global $wgCityId;
-			$wikiaCuratedContent = ( new CommunityDataService( $wgCityId ) )->getAllSections();
-			$content = $this->curatedContentToGameGuides( empty( $wikiaCuratedContent ) ? [ ] : $wikiaCuratedContent );
+			$wikiaCuratedContent = ( new CommunityDataService( $wgCityId ) )->getNonFeaturedSections();
+			$content = $this->curatedContentToGameGuides( $wikiaCuratedContent );
 		} else {
 			$content = $this->wg->WikiaGameGuidesContent;
 		}
@@ -381,7 +381,6 @@ class GameGuidesController extends WikiaController {
 	 * @return array
 	 */
 	public function curatedContentToGameGuides( array $wikiaCuratedContent ) {
-		array_push( $wikiaCuratedContent[ 'curated' ], $wikiaCuratedContent[ 'optional' ] );
 		$gameGuideContent = array_map( function ( $CCTag ) {
 			return [
 				'title' => $CCTag[ 'label' ],
@@ -396,7 +395,7 @@ class GameGuidesController extends WikiaController {
 					)
 				)
 			];
-		}, $wikiaCuratedContent[ 'curated' ] );
+		}, $wikiaCuratedContent );
 		return isset( $gameGuideContent ) ? $gameGuideContent : [ ];
 	}
 
@@ -627,22 +626,19 @@ class GameGuidesController extends WikiaController {
 	private function getTags( $content ) {
 		wfProfileIn( __METHOD__ );
 
-		$this->response->setVal(
-			'tags',
-			array_reduce(
-				$content,
-				function ( $ret, $item ) {
-					if ( $item[ 'title' ] !== '' ) {
-						$ret[] = array(
-							'title' => $item[ 'title' ],
-							'id' => isset( $item[ 'image_id' ] ) ? $item[ 'image_id' ] : 0
-						);
-					}
-
-					return $ret;
+		$this->response->setVal( 'tags', array_reduce(
+			$content,
+			function ( $ret, $item ) {
+				if ( $item[ 'title' ] !== '' ) {
+					$ret[] = array(
+						'title' => $item[ 'title' ],
+						'id' => isset( $item[ 'image_id' ] ) ? $item[ 'image_id' ] : 0
+					);
 				}
-			)
-		);
+
+				return $ret;
+			}
+		) );
 
 		//there also might be some categories without TAG, lets find them as well
 		$this->getTagCategories( $content, '' );
