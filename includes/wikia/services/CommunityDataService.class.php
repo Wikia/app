@@ -82,13 +82,13 @@ class CommunityDataService extends WikiaService {
 	}
 
 	public function getCommunityDescription() {
-		$data = $this->curatedContentData();
+		$data = $this->getCommunityData();
 
 		return isset( $data[ 'description' ] ) ? $data[ 'description' ] : "";
 	}
 
 	public function getCommunityImageId() {
-		$data = $this->curatedContentData();
+		$data = $this->getCommunityData();
 
 		return isset( $data[ 'image_id' ] ) ? $data[ 'image_id' ] : 0;
 	}
