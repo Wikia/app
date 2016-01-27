@@ -560,41 +560,39 @@ class GameGuidesController extends WikiaController {
 					usort( $ret, function ( $a, $b ) {
 						return strcasecmp( $a[ 'title' ], $b[ 'title' ] );
 					} );
-				} else {
-					if ( $sort == 'hot' ) {
-						$hot = array_keys(
-							DataMartService::getTopArticlesByPageview(
-								$this->wg->CityId,
-								array_reduce( $ret, function ( $ret, $item ) {
-									$ret[] = $item[ 'id' ];
-									return $ret;
-								} ),
-								null,
-								false,
-								//I need all of them basically
-								count( $ret )
-							)
-						);
+				} elseif ( $sort == 'hot' ) {
+					$hot = array_keys(
+						DataMartService::getTopArticlesByPageview(
+							$this->wg->CityId,
+							array_reduce( $ret, function ( $ret, $item ) {
+								$ret[] = $item[ 'id' ];
+								return $ret;
+							} ),
+							null,
+							false,
+							//I need all of them basically
+							count( $ret )
+						)
+					);
 
-						$sorted = [ ];
-						$left = [ ];
-						foreach ( $ret as $value ) {
-							$key = array_search( $value[ 'id' ], $hot );
+					$sorted = [ ];
+					$left = [ ];
+					foreach ( $ret as $value ) {
+						$key = array_search( $value[ 'id' ], $hot );
 
-							if ( $key === false ) {
-								$left[] = $value;
-							} else {
-								$sorted[ $key ] = $value;
-							}
+						if ( $key === false ) {
+							$left[] = $value;
+						} else {
+							$sorted[ $key ] = $value;
 						}
-
-						ksort( $sorted );
-
-						$ret = array_merge( $sorted, $left );
-					} else {
-						wfProfileOut( __METHOD__ );
-						throw new InvalidParameterApiException( 'sort' );
 					}
+
+					ksort( $sorted );
+
+					$ret = array_merge( $sorted, $left );
+				} else {
+					wfProfileOut( __METHOD__ );
+					throw new InvalidParameterApiException( 'sort' );
 				}
 			}
 
@@ -607,11 +605,9 @@ class GameGuidesController extends WikiaController {
 			}
 
 			$this->response->setVal( 'items', $ret );
-		} else {
-			if ( $requestTag !== '' ) {
-				wfProfileOut( __METHOD__ );
-				throw new InvalidParameterApiException( 'tag' );
-			}
+		} elseif ( $requestTag !== '' ) {
+			wfProfileOut( __METHOD__ );
+			throw new InvalidParameterApiException( 'tag' );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -675,12 +671,10 @@ class GameGuidesController extends WikiaController {
 		if ( !empty( $languages ) ) {
 			if ( array_key_exists( $lang, $languages ) ) {
 				$this->response->setVal( 'items', $languages[ $lang ] );
+			} elseif ( $lang == 'list' ) {
+				$this->response->setVal( 'items', array_keys( $languages ) );
 			} else {
-				if ( $lang == 'list' ) {
-					$this->response->setVal( 'items', array_keys( $languages ) );
-				} else {
-					throw new NotFoundApiException( 'No data found for \'' . $lang . '\' language' );
-				}
+				throw new NotFoundApiException( 'No data found for \'' . $lang . '\' language' );
 			}
 
 		} else {
