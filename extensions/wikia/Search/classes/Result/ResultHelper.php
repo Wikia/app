@@ -51,7 +51,6 @@ class ResultHelper
 
 		return [
 			'isOnWikiMatch' => isset($result['onWikiMatch']) && $result['onWikiMatch'],
-			'thumbTracking' => $thumbTracking,
 			'imageURL' => $imageURL,
 			'description' => $description,
 			'pagesMsg' => $service->shortnumForMsg($result['articles_i'] ?: 0, 'wikiasearch2-pages'),
