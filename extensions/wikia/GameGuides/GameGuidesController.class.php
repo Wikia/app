@@ -272,7 +272,7 @@ class GameGuidesController extends WikiaController {
 	static function onTitleGetSquidURLs( $title, &$urls ) {
 
 		if ( !in_array( $title->getNamespace(), self::$disabledNamespaces ) ) {
-			$urls[ ] = self::getUrl( 'getPage', array(
+			$urls[] = self::getUrl( 'getPage', array(
 				'page' => $title->getPrefixedText()
 			) );
 		}
@@ -367,8 +367,8 @@ class GameGuidesController extends WikiaController {
 	private function getContentSource() {
 		$content = null;
 		if ( $this->wg->EnableCuratedContentExt ) {
-			$wikiaCuratedContent = $this->wg->WikiaCuratedContent;
-			$content = $this->curatedContentToGameGuides( empty( $wikiaCuratedContent ) ? [ ] : $wikiaCuratedContent );
+			global $wgCityId;
+			$content = $this->curatedContentToGameGuides( ( new CommunityDataService( $wgCityId ) )->getData() );
 		} else {
 			$content = $this->wg->WikiaGameGuidesContent;
 		}
@@ -380,27 +380,23 @@ class GameGuidesController extends WikiaController {
 	 * @return array
 	 */
 	public function curatedContentToGameGuides( array $wikiaCuratedContent ) {
-		$gameGuideContent = [ ];
-		foreach ( $wikiaCuratedContent as $CCTag ) {
-			if ( !empty( $CCTag ) && empty( $CCTag[ 'featured' ] ) ) {
-				$GGTag = [ ];
-				$GGTag[ 'title' ] = $CCTag[ 'title' ];
-				$GGTag[ 'image_id' ] = $CCTag[ 'image_id' ];
-				if ( !empty( $CCTag[ 'items' ] ) ) {
-					$GGItems = [ ];
-					foreach ( $CCTag[ 'items' ] as $CCItem ) {
-						if ( $this->isValidItem( $CCItem )
-						) {
-							$GGCategory = $this->createGGItem( $CCItem );
-							array_push( $GGItems, $GGCategory );
+		array_push( $wikiaCuratedContent[ 'curated' ], $wikiaCuratedContent[ 'optional' ] );
+		$gameGuideContent = array_map( function ( $CCTag ) {
+			return [
+				'title' => $CCTag[ 'title' ],
+				'image_id' => $CCTag[ 'image_id' ],
+				'categories' => array_map(
+					function ( $CCItem ) {
+						return $this->createGGItem( $CCItem );
+					}, array_filter( $CCTag[ 'items' ],
+						function ( $CCItem ) {
+							return $this->isValidItem( $CCItem );
 						}
-					}
-					$GGTag[ 'categories' ] = $GGItems;
-				}
-				array_push( $gameGuideContent, $GGTag );
-			}
-		}
-		return $gameGuideContent;
+					)
+				)
+			];
+		}, $wikiaCuratedContent[ 'curated' ] );
+		return isset( $gameGuideContent ) ? $gameGuideContent : [ ];
 	}
 
 	/**
@@ -409,8 +405,8 @@ class GameGuidesController extends WikiaController {
 	 */
 	private function isValidItem( $CCItem ) {
 		return ( !empty( $CCItem[ 'title' ] )
-			&& is_string( $CCItem[ 'title' ] )
-			&& $CCItem[ 'type' ] === 'category' );
+				 && is_string( $CCItem[ 'title' ] )
+				 && $CCItem[ 'type' ] === 'category' );
 	}
 
 	/**
@@ -515,7 +511,7 @@ class GameGuidesController extends WikiaController {
 			foreach ( $allCategories as $value ) {
 				if ( $value[ 'size' ] - $value[ 'files' ] > 0 ) {
 
-					$ret[ ] = array(
+					$ret[] = array(
 						'title' => $value[ '*' ],
 						'id' => isset( $value[ 'pageid' ] ) ? (int)$value[ 'pageid' ] : 0
 					);
@@ -564,39 +560,41 @@ class GameGuidesController extends WikiaController {
 					usort( $ret, function ( $a, $b ) {
 						return strcasecmp( $a[ 'title' ], $b[ 'title' ] );
 					} );
-				} else if ( $sort == 'hot' ) {
-					$hot = array_keys(
-						DataMartService::getTopArticlesByPageview(
-							$this->wg->CityId,
-							array_reduce( $ret, function ( $ret, $item ) {
-								$ret[ ] = $item[ 'id' ];
-								return $ret;
-							} ),
-							null,
-							false,
-							//I need all of them basically
-							count( $ret )
-						)
-					);
-
-					$sorted = [ ];
-					$left = [ ];
-					foreach ( $ret as $value ) {
-						$key = array_search( $value[ 'id' ], $hot );
-
-						if ( $key === false ) {
-							$left[ ] = $value;
-						} else {
-							$sorted[ $key ] = $value;
-						}
-					}
-
-					ksort( $sorted );
-
-					$ret = array_merge( $sorted, $left );
 				} else {
-					wfProfileOut( __METHOD__ );
-					throw new InvalidParameterApiException( 'sort' );
+					if ( $sort == 'hot' ) {
+						$hot = array_keys(
+							DataMartService::getTopArticlesByPageview(
+								$this->wg->CityId,
+								array_reduce( $ret, function ( $ret, $item ) {
+									$ret[] = $item[ 'id' ];
+									return $ret;
+								} ),
+								null,
+								false,
+								//I need all of them basically
+								count( $ret )
+							)
+						);
+
+						$sorted = [ ];
+						$left = [ ];
+						foreach ( $ret as $value ) {
+							$key = array_search( $value[ 'id' ], $hot );
+
+							if ( $key === false ) {
+								$left[] = $value;
+							} else {
+								$sorted[ $key ] = $value;
+							}
+						}
+
+						ksort( $sorted );
+
+						$ret = array_merge( $sorted, $left );
+					} else {
+						wfProfileOut( __METHOD__ );
+						throw new InvalidParameterApiException( 'sort' );
+					}
 				}
 			}
 
@@ -609,9 +607,11 @@ class GameGuidesController extends WikiaController {
 			}
 
 			$this->response->setVal( 'items', $ret );
-		} else if ( $requestTag !== '' ) {
-			wfProfileOut( __METHOD__ );
-			throw new InvalidParameterApiException( 'tag' );
+		} else {
+			if ( $requestTag !== '' ) {
+				wfProfileOut( __METHOD__ );
+				throw new InvalidParameterApiException( 'tag' );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -632,7 +632,7 @@ class GameGuidesController extends WikiaController {
 				$content,
 				function ( $ret, $item ) {
 					if ( $item[ 'title' ] !== '' ) {
-						$ret[ ] = array(
+						$ret[] = array(
 							'title' => $item[ 'title' ],
 							'id' => isset( $item[ 'image_id' ] ) ? $item[ 'image_id' ] : 0
 						);
@@ -678,10 +678,12 @@ class GameGuidesController extends WikiaController {
 		if ( !empty( $languages ) ) {
 			if ( array_key_exists( $lang, $languages ) ) {
 				$this->response->setVal( 'items', $languages[ $lang ] );
-			} else if ( $lang == 'list' ) {
-				$this->response->setVal( 'items', array_keys( $languages ) );
 			} else {
-				throw new NotFoundApiException( 'No data found for \'' . $lang . '\' language' );
+				if ( $lang == 'list' ) {
+					$this->response->setVal( 'items', array_keys( $languages ) );
+				} else {
+					throw new NotFoundApiException( 'No data found for \'' . $lang . '\' language' );
+				}
 			}
 
 		} else {
@@ -706,7 +708,7 @@ class GameGuidesController extends WikiaController {
 		];
 
 		foreach ( $languages as $lang ) {
-			$variants[ ] = [
+			$variants[] = [
 				'lang' => $lang
 			];
 		}

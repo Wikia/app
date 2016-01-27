@@ -21,8 +21,8 @@ class CuratedContentHelper {
 		$processedSections = [ ];
 
 		if ( is_array( $sections ) ) {
-			foreach ( $sections as $section ) {
-				$processedSections[] = $this->processLogicForSection( $section );
+			foreach ( $sections as $sectionKey => $sectionContent ) {
+				$processedSections[] = $this->processLogicForSection( $sectionContent );
 			}
 		}
 
