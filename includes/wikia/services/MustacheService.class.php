@@ -157,7 +157,17 @@ class MustacheService {
 		} else {
 			$mustache = new MustachePHP();
 		}
-		return $mustache->render($template,$data,$partials);
+		// Temporary change to track cause of PLATFORM-1355
+		$out = $mustache->render($template,$data,$partials);
+		if ( isset( $data[ 'title' ] ) ) {
+			preg_replace_callback( "/test/u", function( $matches ) { return ''; }, $out );
+			if ( preg_last_error() === 4 ) {
+				\Wikia\Logger\WikiaLogger::instance()->debug( 'PLATFORM-1355-LOG5-V1', [
+					'title' => base64_encode( $data[ 'title' ] )
+				] );
+			}
+		}
+		return $out;
 	}
 
 	/**

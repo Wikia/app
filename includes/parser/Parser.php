@@ -576,7 +576,7 @@ class Parser {
 		// There was "a lot" of wikitext but ultimately no content was created out of it
 		if ( $wikitextSize > 500 && trim($text) === '' ) {
 			if ( $title && $title->exists() && $title->isContentPage() ) {
-				\Wikia\Logger\WikiaLogger::instance()->debug( 'PLATFORM-1355-LOG3-V2' );
+				//\Wikia\Logger\WikiaLogger::instance()->debug( 'PLATFORM-1355-LOG3-V2' );
 			}
 		}
 

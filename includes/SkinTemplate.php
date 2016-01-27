@@ -501,7 +501,7 @@ class SkinTemplate extends Skin {
 			// which contains only categories. It won't eliminate all the noise, because there
 			// could be categories wikitext longer than 500, but should take care of most of it.
 			if ( $title->exists() && $title->isContentPage() && $title->getLength() > 500 ) {
-				\Wikia\Logger\WikiaLogger::instance()->error( 'PLATFORM-1355-LOG1-V2' );
+				//\Wikia\Logger\WikiaLogger::instance()->error( 'PLATFORM-1355-LOG1-V2' );
 			}
 		}
 		// Wikia change end
