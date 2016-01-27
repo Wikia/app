@@ -66,3 +66,11 @@ $wgResourceModules['ext.wikia.Phalanx'] = array(
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/PhalanxII'
 );
+
+$wgResourceModules['ext.wikia.PhalanxStats'] = [
+	'styles' => [
+		'css/PhalanxStats.css',
+	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/PhalanxII',
+];
