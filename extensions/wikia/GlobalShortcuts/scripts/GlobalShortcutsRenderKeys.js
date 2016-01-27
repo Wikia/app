@@ -16,7 +16,6 @@ define('GlobalShortcuts.RenderKeys',
 						mustache: 'extensions/wikia/GlobalShortcuts/templates/KeyCombination2.mustache',
 						messages: 'GlobalShortcuts',
 						callback: function (pkg) {
-							mw.messages.set(pkg.messages);
 							templates.keyCombination = pkg.mustache[0];
 							dfd.resolve(templates);
 						}
