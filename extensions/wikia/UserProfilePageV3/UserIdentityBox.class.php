@@ -577,11 +577,11 @@ class UserIdentityBox {
 				$option = self::USER_PROPERTIES_PREFIX . $option;
 			}
 			$this->user->setGlobalAttribute( $option, null );
-
-			$this->user->saveSettings();
-			$wgMemc->delete( $this->getMemcUserIdentityDataKey() );
-			Wikia::invalidateUser( $this->user );
 		}
+
+		$this->user->saveSettings();
+		$wgMemc->delete( $this->getMemcUserIdentityDataKey() );
+		Wikia::invalidateUser( $this->user );
 	}
 
 	/**
