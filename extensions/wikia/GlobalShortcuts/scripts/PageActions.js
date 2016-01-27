@@ -129,7 +129,11 @@ define('PageActions', ['mw', 'jquery'], function (mw, $) {
 	}
 
 	function closeModals() {
-		$('.modal-blackout').remove();
+		var modals = $('.modal-blackout');
+
+		if (modals.length) {
+			modals.remove();
+		}
 	}
 
 	// default actions
