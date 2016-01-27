@@ -147,6 +147,8 @@ asdkjf kasjdflk [[asdfasdf]]
 			  '<table data-portable="false"></table> sakjdflkjds k <table data-portable="false"/>' ],
 			[ '{{{{{|safesubst:}}}#replace:{{{1}}}|a|b}}',
 			  '{{{{{|safesubst:}}}#replace:{{{1}}}|a|b}}'],
+			[ '{{{| (quote) }}}',
+			  '{{{| (quote) }}}']
 		];
 	}
 
