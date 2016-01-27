@@ -3,9 +3,9 @@
 	<?php
 	$suffix = $result['exactWikiMatch'] ? "match" : "wiki";
 	$trackingData = 'class="result-link" data-pos="' . $pos . '" data-event="search_click_' . $suffix . '"';
+	$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-thumb"';
 	?>
-	<a href="<?= $url ?>" title="<?= $title ?>" <?=
-	$thumbTracking ?>>
+	<a href="<?= $url ?>" title="<?= $title ?>" <?= $thumbTracking ?>>
 		<img src="<?= $imageURL; ?>" alt="<?= $title ?>" class="wikiPromoteThumbnail"
 			/>
 	</a>

@@ -18,9 +18,6 @@ class ResultHelper
 	 * +     */
 	public static function extendResult($result, $pos, $descWordLimit)
 	{
-
-		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-thumb"';
-
 		$commData = new CommunityDataService($result['id']);
 		$imageURL = ImagesService::getImageSrc(
 			$result['id'],
