@@ -9,10 +9,10 @@ define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions', 'GlobalShortcutsTra
 		wgWikiaShortcutKeys = mw.config.get('wgWikiaShortcutKeys');
 
 	function initShortcut(actionId, key) {
-		Mousetrap.bind(key,function () {
+		Mousetrap.bind(key, function () {
 			tracker.trackKey(actionId);
 			PageActions.find(actionId).execute();
-		});
+		}, 'keyup');
 	}
 
 	function add(actionId, key) {
