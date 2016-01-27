@@ -58,6 +58,7 @@ define('PageActions', ['mw', 'jquery'], function (mw, $) {
 
 	PageAction.prototype.execute = function () {
 		this.fn.call(window);
+		closeModals();
 	};
 
 	PageAction.prototype._calculateCategoryWeight = function () {
@@ -125,6 +126,10 @@ define('PageActions', ['mw', 'jquery'], function (mw, $) {
 		return items.map(function (item) {
 			return item[1];
 		});
+	}
+
+	function closeModals() {
+		$('.modal-blackout').remove();
 	}
 
 	// default actions
