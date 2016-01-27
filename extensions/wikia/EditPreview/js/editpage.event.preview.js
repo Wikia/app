@@ -166,11 +166,11 @@ define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.wind
 		if (skin === 'wikiamobile') {
 			var previewFrame = new iframeform(qs(window.wgEditPageMercuryPreviewHandler).addCb());
 
-			previewFrame.addParameter('title', encodeURIComponent(window.wgEditedTitle));
+			previewFrame.addParameter('title', window.wgEditedTitle);
 			$.when(
 				helper.getContent()
 			).done(function (content, mode) {
-				previewFrame.addParameter(mode === 'mw' ? 'wikitext' : 'CKmarkup', encodeURIComponent(content));
+				previewFrame.addParameter(mode === 'mw' ? 'wikitext' : 'CKmarkup', content);
 
 				$().log('Preparing to send');
 				previewFrame.send($('.ArticlePreviewInner'), function (data) {
