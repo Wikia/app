@@ -28,6 +28,7 @@ class UserIdentityBox {
 
 	public $optionsArray = array(
 		'location',
+		'bio',
 		'occupation',
 		'birthday',
 		'gender',
@@ -582,6 +583,11 @@ class UserIdentityBox {
 		Wikia::invalidateUser( $this->user );
 		$this->user->saveSettings();
 		$wgMemc->delete( $this->getMemcUserIdentityDataKey() );
+
+		// Delete both the avatar from the user's attributes (above),
+		// as well as from disk.
+		$avatarService = new UserAvatarsService( $this->user->getId() );
+		$avatarService->remove();
 	}
 
 	/**
