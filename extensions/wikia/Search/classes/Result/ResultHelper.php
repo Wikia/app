@@ -25,6 +25,7 @@ class ResultHelper
 			WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_WIDTH,
 			WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT)['src'];
 
+		$thumbTracking = "thumb";
 		//Fallback: if Curated Mainpage is inaccessible, try to use Special:Promote
 		//TODO: Remove after DAT-3642 is done
 		if (empty($imageURL)) {
@@ -39,7 +40,7 @@ class ResultHelper
 		if (empty($imageURL)) {
 			// display placeholder image if no thumbnail
 			$imageURL = \F::app()->wg->ExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png';
-			$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-no-thumb"';
+			$thumbTracking = "no-thumb";
 		}
 
 		$description = $result->limitTextLength($commData->getCommunityDescription(), $descWordLimit);
@@ -59,7 +60,8 @@ class ResultHelper
 			'title' => ($sn = $result->getText('sitename_txt')) ? $sn : $result->getText('headline_txt'),
 			'url' => $result->getText('url'),
 			'hub' => $result->getHub(),
-			'pos' => $pos
+			'pos' => $pos,
+			'thumbTracking' => $thumbTracking
 		];
 	}
 }

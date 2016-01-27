@@ -6,7 +6,7 @@
 
 	<div class="result">
 
-		<a href="<?= $url ?>" title="<?= $title ?>" class="wiki-thumb-tracking" data-pos="<?=$pos?>" data-event="search_click_wiki-thumb">
+		<a href="<?= $url ?>" title="<?= $title ?>" class="wiki-thumb-tracking" data-pos="<?=$pos?>" data-event="search_click_wiki-<?=$thumbTracking?>">
 			<img src="<?= $imageURL ?>" alt="<?= $title ?>" class="wikiPromoteThumbnail" />
 		</a>
 		<div class="result-description">
