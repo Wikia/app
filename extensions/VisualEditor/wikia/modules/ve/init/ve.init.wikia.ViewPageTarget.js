@@ -32,45 +32,91 @@ OO.inheritClass( ve.init.wikia.ViewPageTarget, ve.init.mw.ViewPageTarget );
 
 /* Static Properties */
 
-ve.init.wikia.ViewPageTarget.static.toolbarGroups = [
-	// History
-	{ include: [ 'undo' ] },
-	// Format
-	{
-		type: 'menu',
-		indicator: 'down',
-		title: OO.ui.deferMsg( 'visualeditor-toolbar-format-tooltip' ),
-		include: [ { group: 'format' } ],
-		promote: [ 'paragraph' ],
-		demote: [ 'preformatted' ],
-		exclude: [ 'heading1' ]
-	},
-	// Style
-	{ include: [ 'bold', 'italic', 'link' ] },
-	{
-		type: 'list',
-		icon: 'text-style',
-		indicator: 'down',
-		title: OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
-		include: [ 'subscript', 'superscript', 'strikethrough', 'underline', 'indent', 'outdent', 'clear' ]
-	},
-	// Insert
-	{
-		type: 'list',
-		label: OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
-		indicator: 'down',
-		include: [ 'wikiaMediaInsert', 'wikiaSingleMedia', 'wikiaInfoboxInsert', 'number', 'bullet', 'wikiaMapInsert', 'wikiaTemplateInsert', 'reference', 'referencesList', 'insertTable' ]
-	},
-	// Table
-	{
-		header: OO.ui.deferMsg( 'visualeditor-toolbar-table' ),
-		type: 'list',
-		icon: 'table-insert',
-		indicator: 'down',
-		include: [ { group: 'table' } ],
-		demote: [ 'deleteTable' ]
-	}
-];
+if (ve.init.wikia.ToolbarABTestVariantNumber() === 1) {
+	// INT-322 A/B test: Image / Video upload for toolbar
+	ve.init.wikia.ViewPageTarget.static.toolbarGroups = [
+		// History
+		{ include: [ 'undo' ] },
+		// Format
+		{
+			type: 'menu',
+			indicator: 'down',
+			title: OO.ui.deferMsg( 'visualeditor-toolbar-format-tooltip' ),
+			include: [ { group: 'format' } ],
+			promote: [ 'paragraph' ],
+			demote: [ 'preformatted' ],
+			exclude: [ 'heading1' ]
+		},
+		// Style
+		{ include: [ 'bold', 'italic', 'link' ] },
+		{
+			type: 'list',
+			icon: 'text-style',
+			indicator: 'down',
+			title: OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
+			include: [ 'subscript', 'superscript', 'strikethrough', 'underline', 'indent', 'outdent', 'clear' ]
+		},
+		// Insert
+		{ include: [ 'wikiaImageInsert', 'wikiaVideoInsert'] },
+		{
+			type: 'list',
+			label: OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
+			indicator: 'down',
+			include: [ 'wikiaSingleMedia', 'wikiaInfoboxInsert', 'number', 'bullet', 'wikiaMapInsert', 'wikiaTemplateInsert', 'reference', 'referencesList', 'insertTable' ]
+		},
+		// Table
+		{
+			header: OO.ui.deferMsg( 'visualeditor-toolbar-table' ),
+			type: 'list',
+			icon: 'table-insert',
+			indicator: 'down',
+			include: [ { group: 'table' } ],
+			demote: [ 'deleteTable' ]
+		}
+	];
+}
+else {
+	// Original toolbar configuration
+	ve.init.wikia.ViewPageTarget.static.toolbarGroups = [
+		// History
+		{ include: [ 'undo' ] },
+		// Format
+		{
+			type: 'menu',
+			indicator: 'down',
+			title: OO.ui.deferMsg( 'visualeditor-toolbar-format-tooltip' ),
+			include: [ { group: 'format' } ],
+			promote: [ 'paragraph' ],
+			demote: [ 'preformatted' ],
+			exclude: [ 'heading1' ]
+		},
+		// Style
+		{ include: [ 'bold', 'italic', 'link' ] },
+		{
+			type: 'list',
+			icon: 'text-style',
+			indicator: 'down',
+			title: OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
+			include: [ 'subscript', 'superscript', 'strikethrough', 'underline', 'indent', 'outdent', 'clear' ]
+		},
+		// Insert
+		{
+			type: 'list',
+			label: OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
+			indicator: 'down',
+			include: [ 'wikiaMediaInsert', 'wikiaSingleMedia', 'wikiaInfoboxInsert', 'number', 'bullet', 'wikiaMapInsert', 'wikiaTemplateInsert', 'reference', 'referencesList', 'insertTable' ]
+		},
+		// Table
+		{
+			header: OO.ui.deferMsg( 'visualeditor-toolbar-table' ),
+			type: 'list',
+			icon: 'table-insert',
+			indicator: 'down',
+			include: [ { group: 'table' } ],
+			demote: [ 'deleteTable' ]
+		}
+	];
+}
 
 ve.init.wikia.ViewPageTarget.static.actionsToolbarConfig = [
 	{

@@ -37,9 +37,13 @@ require( ['wikia.tracker'], function ( tracker ) {
 				};
 			},
 			'mwtiming.performance.system.activation': function ( data ) {
+				// INT-322 A/B test: Image / Video upload for toolbar
+				var label = (ve.init.wikia.ToolbarABTestVariantNumber() === 1) ?
+					'edit-page-ready-toolbartest' : 'edit-page-ready';
+
 				return {
 					action: actions.IMPRESSION,
-					label: 'edit-page-ready',
+					label: label,
 					value: normalizeDuration( data.duration )
 				};
 			},
@@ -190,6 +194,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 	function handleFunnel( data ) {
 		var funnelEvents = [
 			'edit-page-ready/impression',
+			'edit-page-ready-toolbartest/impression',
 			'button-publish/enable',
 			'button-cancel/click',
 			'button-publish/click',

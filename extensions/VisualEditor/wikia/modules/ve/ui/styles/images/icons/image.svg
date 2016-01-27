@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="17px" height="15px" viewBox="0 0 17 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4.4 (17249) - http://www.bohemiancoding.com/sketch -->
+    <title>Image</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="VE-simpleVersion-Copy" sketch:type="MSArtboardGroup" transform="translate(-600.000000, -492.000000)" fill="#333333">
+            <g id="02-copy-14" sketch:type="MSLayerGroup" transform="translate(273.000000, 476.000000)">
+                <g id="Toolset" sketch:type="MSShapeGroup">
+                    <g id="Image" transform="translate(327.996000, 16.000000)">
+                        <path d="M14.6666667,7.91 L11.76,5.488 C11.4793333,5.25533333 11.0646667,5.28933333 10.8273333,5.56666667 L7.24666667,9.744 L4.41666667,7.47933333 C4.17266667,7.28533333 3.82733333,7.28533333 3.58333333,7.47933333 L1.33333333,9.27933333 L1.33333333,1.33333333 L14.6666667,1.33333333 L14.6666667,7.91 Z M15.3333333,0 L0.666666667,0 C0.298666667,0 0,0.298666667 0,0.666666667 L0,14 C0,14.3686667 0.298666667,14.6666667 0.666666667,14.6666667 L15.3333333,14.6666667 C15.7013333,14.6666667 16,14.3686667 16,14 L16,0.666666667 C16,0.298666667 15.7013333,0 15.3333333,0 L15.3333333,0 Z" id="Fill-1011"></path>
+                        <path d="M6.26666667,7.2 C7.36933333,7.2 8.26666667,6.30266667 8.26666667,5.2 C8.26666667,4.09733333 7.36933333,3.2 6.26666667,3.2 C5.164,3.2 4.26666667,4.09733333 4.26666667,5.2 C4.26666667,6.30266667 5.164,7.2 6.26666667,7.2" id="Fill-1012"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
