@@ -2646,6 +2646,13 @@ $config['content_review_diff_page_scss'] = [
 	]
 ];
 
+$config['content_review_special_page_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/ContentReview/styles/ContentReviewSpecialPage.scss'
+	],
+];
+
 $config['auth_modal_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
