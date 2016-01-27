@@ -15,7 +15,7 @@ use Wikia\Logger\WikiaLogger;
 class Serialize {
 	const MAX_SERIALIZED_INPUT_LENGTH = 4096;
 	const MAX_SERIALIZED_ARRAY_LENGTH = 256;
-	const MAX_SERIALIZED_ARRAY_DEPTH = 3;
+	const MAX_SERIALIZED_ARRAY_DEPTH = 8;
 
 	/**
 	 * Wrapper for _safe_serialize() that handles exceptions and multibyte encoding issue
