@@ -43,6 +43,8 @@ class AnalyticsEngine {
 				return new AnalyticsProviderGoogleUA();
 			case 'AmazonMatch':
 				return new AnalyticsProviderAmazonMatch();
+			case 'Nielsen':
+				return new AnalyticsProviderNielsen();
 			case 'OpenXBidder':
 				return new AnalyticsProviderOpenXBidder();
 			case 'RubiconFastlane':
@@ -51,6 +53,8 @@ class AnalyticsEngine {
 				return new AnalyticsProviderDynamicYield();
 			case 'IVW2':
 				return new AnalyticsProviderIVW2();
+			case 'IVW3':
+				return new AnalyticsProviderIVW3();
 			case 'BlueKai':
 				return new AnalyticsProviderBlueKai();
 			case 'Datonics':

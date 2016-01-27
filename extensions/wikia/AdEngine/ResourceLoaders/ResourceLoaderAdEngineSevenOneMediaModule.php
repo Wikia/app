@@ -1,7 +1,7 @@
 <?php
 
 class ResourceLoaderAdEngineSevenOneMediaModule extends ResourceLoaderAdEngineBase {
-	const CACHE_BUSTER = 13;    // increase this any time the local files change
+	const CACHE_BUSTER = 15;    // increase this any time the local files change
 
 	/**
 	 * Configure scripts that should be loaded into one package

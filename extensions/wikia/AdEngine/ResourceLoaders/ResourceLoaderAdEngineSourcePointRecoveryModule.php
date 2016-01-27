@@ -3,7 +3,7 @@
 class ResourceLoaderAdEngineSourcePointRecoveryModule extends ResourceLoaderAdEngineBase {
 	const TTL_SCRIPTS = 86400;   // one day for fresh scripts from SourcePoint
 	const TTL_GRACE = 3600; // one hour for old scripts (served if we fail to fetch fresh scripts)
-	const CACHE_BUSTER = 14;     // increase this any time the local files change
+	const CACHE_BUSTER = 15;     // increase this any time the local files change
 	const REQUEST_TIMEOUT = 30;
 	const SCRIPT_DELIVERY_URL = 'https://api.sourcepoint.com/script/delivery?delivery=bundle';
 

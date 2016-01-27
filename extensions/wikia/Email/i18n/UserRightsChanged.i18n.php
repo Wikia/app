@@ -73,6 +73,12 @@ $messages['zh-hans'] = array(
 	'emailext-user-rights-changed-button-text' => '全文摘要',
 );
 
+$messages['zh-hant'] = array(
+	'emailext-user-rights-changed-subject' => '你在{{SITENAME}}網站的用戶權限已經被更改。',
+	'emailext-user-rights-changed-subject-follower' => '$1在{{SITENAME}}網站的用戶權限已經被更改。',
+	'emailext-user-rights-changed-button-text' => '全文摘要',
+);
+
 $messages['zh-tw'] = array(
 	'emailext-user-rights-changed-subject' => '你在{{SITENAME}}網站的用戶權限已經被更改。',
 	'emailext-user-rights-changed-subject-follower' => '$1在{{SITENAME}}網站的用戶權限已經被更改。',

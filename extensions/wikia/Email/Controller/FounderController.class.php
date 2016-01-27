@@ -552,8 +552,6 @@ class FounderTipsController extends EmailController {
 
 class FounderTipsThreeDaysController extends FounderTipsController {
 
-	const WAM_LINK = "http://www.wikia.com/WAM";
-
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-founder-3-days-subject', $this->wikiName )->text();
 	}
@@ -597,9 +595,9 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 			],
 			[
 				"iconSrc" => Email\ImageHelper::getFileUrl( "Get-inspired.png" ),
-				"iconLink" => self::WAM_LINK,
+				"iconLink" => \WAMService::WAM_LINK,
 				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-wam-header" )->text(),
-				"details" => $this->getMessage( "emailext-founder-3-days-wam-details", self::WAM_LINK )->parse()
+				"details" => $this->getMessage( "emailext-founder-3-days-wam-details", \WAMService::WAM_LINK )->parse()
 			]
 		];
 	}

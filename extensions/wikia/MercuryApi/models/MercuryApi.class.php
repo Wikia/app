@@ -107,7 +107,7 @@ class MercuryApi {
 		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin, $wgDisableAnonymousEditing,
 			   $wgLanguageCode, $wgContLang, $wgCityId, $wgEnableNewAuth, $wgDisableAnonymousUploadForMercury,
 			   $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff, $wgDisableMobileSectionEditor,
-			   $wgEnableDiscussions;
+			   $wgEnableDiscussions, $wgAnalyticsDriverIVW3Countries, $wgEnableGlobalNav2016;
 
 		return [
 			'cacheBuster' => (int) $wgCacheBuster,
@@ -131,6 +131,16 @@ class MercuryApi {
 			'siteMessage' => $this->getSiteMessage(),
 			'siteName' => $wgSitename,
 			'theme' => SassUtil::getOasisSettings(),
+			'enableGlobalNav2016' => $wgEnableGlobalNav2016,
+			'tracking' => [
+				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
+				'ivw3' => [
+					'countries' => $wgAnalyticsDriverIVW3Countries,
+				],
+				'nielsen' => [
+					'enabled' => AnalyticsProviderNielsen::isEnabled(),
+				]
+			],
 			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId )
 		];
 	}
@@ -253,11 +263,10 @@ class MercuryApi {
 	 * @return string homepage URL. Default is US homepage.
 	 */
 	private function getHomepageUrl() {
-		global $wgLanguageCode;
-		if ( class_exists('WikiaLogoHelper') ) {
-			return ( new WikiaLogoHelper() )->getCentralUrlForLang( $wgLanguageCode );
+		if ( class_exists( 'WikiaLogoHelper' ) ) {
+			return ( new WikiaLogoHelper() )->getMainCorpPageURL();
 		}
-		return 'http://www.wikia.com'; //default homepage url
+		return 'http://www.wikia.com'; // default homepage url
 	}
 
 
@@ -339,7 +348,7 @@ class MercuryApi {
 		$data = [];
 		if ( !empty( $items ) ) {
 			foreach ( $items as $item ) {
-				$processedItem = $this->processCuratedContentItem($item);
+				$processedItem = $this->processCuratedContentItem( $item );
 				if ( !empty( $processedItem ) ) {
 					$data[] = $processedItem;
 				}
@@ -409,7 +418,7 @@ class MercuryApi {
 		$processedItem = [];
 
 		if ( !empty( $item ) && is_array( $item ) ) {
-			foreach ( $paramsToInclude as $param) {
+			foreach ( $paramsToInclude as $param ) {
 				if ( !empty( $item[ $param ] ) ) {
 					$processedItem[ $param ] = $item[ $param ];
 				}
