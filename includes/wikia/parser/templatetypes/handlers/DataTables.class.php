@@ -15,7 +15,7 @@ class DataTables {
 		wfProfileIn( __METHOD__ );
 		//check for tables
 		if ( static::shouldBeProcessed() ) {
-			// marks wikitext tables
+			// marks wikitext tables, omits {{{{{|subst:}}} cases by checking if there is only one '{' before '|'
 			if ( preg_match_all( "/^(.*[^\\{])?\\{\\|(.*)/\n", $wikitext, $wikiTables ) ) {
 				for ( $i = 0; $i < count( $wikiTables[ 0 ] ); $i++ ) {
 					$wikitext = static::markTable( $wikitext, $wikiTables[ 0 ][ $i ], $wikiTables[ 2 ][ $i ], '{|' );
