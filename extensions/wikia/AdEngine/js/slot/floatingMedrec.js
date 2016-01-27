@@ -25,7 +25,8 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			stopPosition,
 			$adSlot = $('<div class="wikia-ad"></div>').attr('id', slotName),
 			$footer = $('#WikiaFooter'),
-			$placeHolder = $('#WikiaAdInContentPlaceHolder');
+			$placeHolder = $('#WikiaAdInContentPlaceHolder'),
+			$win = $(win);
 
 		function getStartPosition(placeHolder) {
 			return parseInt(placeHolder.offset().top, 10) - globalNavigationHeight - margin;
@@ -42,7 +43,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 		}
 
 		function update() {
-			if (win.scrollY <= startPosition) {
+			if ($win.scrollTop() <= startPosition) {
 				$adSlot.css({
 					position: 'relative',
 					top: '0px',
@@ -50,7 +51,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				});
 			}
 
-			if (win.scrollY > startPosition && win.scrollY < stopPosition) {
+			if ($win.scrollTop() > startPosition && $win.scrollTop() < stopPosition) {
 				$adSlot.css({
 					position: 'fixed',
 					top: globalNavigationHeight + margin + 'px',
@@ -58,7 +59,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				});
 			}
 
-			if (win.scrollY >= stopPosition) {
+			if ($win.scrollTop() >= stopPosition) {
 				$adSlot.css({
 					position: 'absolute',
 					top: stopPosition - startPosition + 'px',
@@ -86,7 +87,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 				enabled = false;
 			}
 
-			if (!enabled && isEnoughSpace && win.scrollY > startPosition) {
+			if (!enabled && isEnoughSpace && $win.scrollTop() > startPosition) {
 				log(['handleFloatingMedrec', 'Enabling floating medrec'], 'debug', logGroup);
 
 				win.addEventListener('scroll', update);
