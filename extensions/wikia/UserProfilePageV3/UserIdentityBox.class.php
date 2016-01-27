@@ -579,9 +579,9 @@ class UserIdentityBox {
 			$this->user->setGlobalAttribute( $option, null );
 		}
 
+		Wikia::invalidateUser( $this->user );
 		$this->user->saveSettings();
 		$wgMemc->delete( $this->getMemcUserIdentityDataKey() );
-		Wikia::invalidateUser( $this->user );
 	}
 
 	/**
