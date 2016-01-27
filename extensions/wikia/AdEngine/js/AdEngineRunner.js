@@ -20,7 +20,8 @@ define('ext.wikia.adEngine.adEngineRunner', [
 	 */
 	function delayRun(runAdEngine) {
 		var enabledBidders = [],
-			biddersQueue = [];
+			biddersQueue = [],
+			startedByBidders = false;
 
 		/**
 		 * Mark bidder as responded and trigger run if all bidders already responded
@@ -34,6 +35,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 			}
 			if (biddersQueue.length === enabledBidders.length) {
 				log('All bidders responded', 'info', logGroup);
+				startedByBidders = true;
 				runAdEngine();
 			}
 		}
@@ -42,7 +44,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 		 * Add bidder listener to mark bidder on response
 		 */
 		function registerBidders() {
-			log(['Register bidders', enabledBidders], 'debug', logGroup);
+			log(['Register bidders', enabledBidders.length], 'debug', logGroup);
 			enabledBidders.forEach(function (bidder) {
 				var name = bidder.getName();
 				bidder.addResponseListener(function () {
@@ -63,7 +65,9 @@ define('ext.wikia.adEngine.adEngineRunner', [
 		} else {
 			registerBidders();
 			win.setTimeout(function () {
-				log('Timeout exceeded', 'info', logGroup);
+				if (!startedByBidders) {
+					log('Timeout exceeded', 'info', logGroup);
+				}
 				runAdEngine();
 			}, timeout);
 		}

@@ -1,5 +1,5 @@
 /*global beforeEach, describe, it, modules, expect, spyOn*/
-describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
+describe('ext.wikia.adEngine.adEngineRunner', function () {
 	'use strict';
 	function noop() {
 	}
