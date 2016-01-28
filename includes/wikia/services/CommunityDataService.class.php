@@ -113,10 +113,10 @@ class CommunityDataService extends WikiaService {
 		$result = [ ];
 		foreach ( $data as $section ) {
 			$extended = [
-				// use title if set
-				'label' => isset( $section[ 'title' ] ) ? $section[ 'title' ]
-					// or label
-					: ( isset( $section[ 'label' ] ) ? $section[ 'label' ] : "" ),
+				// use label if set
+				'label' => isset( $section[ 'label' ] ) ? $section[ 'label' ]
+					// or title as fallback
+					: ( isset( $section[ 'title' ] ) ? $section[ 'title' ] : "" ),
 				'image_id' => isset( $section[ 'image_id' ] ) ? $section[ 'image_id' ] : 0,
 				'items' => isset( $section[ 'items' ] ) ? $section[ 'items' ] : [ ]
 			];
