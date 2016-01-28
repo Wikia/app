@@ -137,6 +137,7 @@ $messages['ia'] = array(
  */
 $messages['it'] = array(
 	'imageserving-desc' => 'Seleziona le immagini da una lista specificata di pagine basata sulle esigenze visive',
+	'mostlinkedfilesincontent' => 'File più richiamati in pagine di contenuto',
 );
 
 /** Japanese (日本語)

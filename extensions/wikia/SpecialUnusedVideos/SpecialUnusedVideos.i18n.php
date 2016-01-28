@@ -17,3 +17,7 @@ $messages['qqq'] = array(
 	'unusedvideos' => 'This is the h1 (header) text for Special:UnusedVideos page',
 	'unusedvideostext' => 'This is the description for Special:UnusedVideos page',
 );
+
+$messages['it'] = array(
+	'unusedvideos' => 'Video inutilizzati',
+);
