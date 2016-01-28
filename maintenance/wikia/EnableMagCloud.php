@@ -22,7 +22,7 @@ while($row = $dbr->fetchObject($res)) {
 
 	echo ".\n";
 
-	$config = unserialize($user->getGlobalPreference('widgets'));
+	$config = Wikia\Util\Serialize::safeUnserialize($user->getGlobalPreference('widgets'));
 
 	if(!empty($config) && is_array($config)) {
 		if(empty($config[1]) && !is_array($config[1])) {

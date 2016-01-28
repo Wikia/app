@@ -2,14 +2,19 @@
 
 class CuratedContentSpecialController extends WikiaSpecialPageController {
 	private $helper;
+	private $communityDataService;
 
 	public function __construct() {
+		global $wgCityId;
+
 		$this->helper = new CuratedContentHelper();
+		$this->communityDataService = new CommunityDataService( $wgCityId );
 		parent::__construct( 'CuratedContent', '', false );
 	}
 
 	public function index() {
-		global $wgWikiaCuratedContent, $wgUser;
+		global $wgUser;
+
 		if ( !$wgUser->isAllowed( 'curatedcontent' ) ) {
 			$this->displayRestrictionError();
 			return false; // skip rendering
@@ -77,15 +82,12 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			'sectionTemplate' => $sectionTemplate
 		] );
 
-		if ( !empty( $wgWikiaCuratedContent ) ) {
+		if ( $this->communityDataService->hasData() ) {
 			$list = '';
 
-			foreach ( $wgWikiaCuratedContent as $section ) {
-				if ( isset( $section[ 'featured' ] ) && $section[ 'featured' ] ) {
-					$featuredSection = $this->buildSection( $section );
-				} else {
-					$list .= $this->buildSection( $section );
-				}
+			$featuredSection = $this->buildSection( $this->communityDataService->getFeatured() );
+			foreach ( $this->communityDataService->getNonFeaturedSections() as $section ) {
+				$list .= $this->buildSection( $section );
 			}
 			if ( !isset( $featuredSection ) ) {
 				// add featured section if not yet exists
@@ -125,7 +127,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$imageId = $this->request->getVal( 'image_id', 0 );
 		$imageCrop = $this->request->getArray( 'image_crop', [ ] );
 
-		$this->response->setVal( 'value', $this->request->getVal( 'value' , '' ) );
+		$this->response->setVal( 'value', $this->request->getVal( 'value', '' ) );
 		$this->response->setVal( 'image_id', $imageId );
 		$this->response->setVal( 'image_crop', $this->helper->encodeCrop( $imageCrop ) );
 		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $imageId ) );
@@ -179,7 +181,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$this->response->setVal( 'error', $errors );
 			$this->response->setVal( 'status', false );
 		} else {
-			$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $wgCityId, $sections );
+			$status = ( new CommunityDataService( $wgCityId ) )->setCuratedContent( $sections );
 			$this->response->setVal( 'status', $status );
 
 			if ( !empty( $status ) ) {
@@ -196,7 +198,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$sectionTemplate = 'featuredSection';
 		}
 		$result .= $this->sendSelfRequest( $sectionTemplate, [
-			'value' => $section[ 'title' ],
+			'value' => $section[ 'label' ],
 			'image_id' => $section[ 'image_id' ],
 			'image_crop' => !empty( $section[ 'image_crop' ] ) ? $section[ 'image_crop' ] : [ ],
 		] );

@@ -241,30 +241,30 @@ Esta extensão fornece alguns atalhos chaves e um explorador de ações para aju
 );
 
 $messages['ru'] = array(
-	'global-shortcuts-category-other' => 'Прочее',
+	'global-shortcuts-category-other' => 'Прочие',
 	'global-shortcuts-description' => '
-Improve your browsing and editing experience using shortcut keys on Wikia.
+Поднимите комфорт просмотра и редактирования Викия на новый уровень с помощью новых клавиатурных сочетаний. 
 
-This extension provides some key shortcuts and an actions explorer to help users navigate to important pages or perform certain actions.
+Это расширение подключает ряд новых сочетаний клавиш, и открывает доступ к странице просмотра действий, которая поможет освоить новые сочетания и с лёгкостью перемещаться к важным страницам Викия и/или выполнять некоторые действия.
 ',
-	'global-shortcuts-caption-action-list' => 'Actions explorer',
-	'global-shortcuts-caption-keyboard-shortcuts-help' => 'Keyboard shortcuts help',
-	'global-shortcuts-caption-open-discussions' => 'Open discussions',
-	'global-shortcuts-caption-search-for-a-page' => 'Search for a page',
-	'global-shortcuts-caption-start-a-new-wikia' => 'Start a new wikia',
-	'global-shortcuts-category-current-page' => 'Current page',
-	'global-shortcuts-category-current-wikia' => 'Current wikia',
-	'global-shortcuts-category-global' => 'Global',
-	'global-shortcuts-category-help' => 'Help',
-	'global-shortcuts-key-or' => 'or',
-	'global-shortcuts-key-then' => 'then',
-	'global-shortcuts-name' => 'Shortcuts',
-	'global-shortcuts-search-placeholder' => 'Type to search...',
-	'global-shortcuts-title-help-entry-point' => 'Open keyboard shortcuts help dialog (?)',
-	'global-shortcuts-title-keyboard-shortcuts' => 'Keyboard shortcuts',
-	'global-shortcuts-welcome-hint' => 'Introducing our new-and-improved Keyboard Shortcuts.',
-	'template-class-global-shortcuts-caption-classify-page' => 'Classify page',
-	'template-class-global-shortcuts-press-to-explore-shortcuts' => 'Press $1 to explore shortcuts',
+	'global-shortcuts-caption-action-list' => 'Просмотр действий',
+	'global-shortcuts-caption-keyboard-shortcuts-help' => 'О сочетаниях клавиш',
+	'global-shortcuts-caption-open-discussions' => 'Переход к обсуждениям',
+	'global-shortcuts-caption-search-for-a-page' => 'Поиск страниц',
+	'global-shortcuts-caption-start-a-new-wikia' => 'Создание новой вики',
+	'global-shortcuts-category-current-page' => 'Текущая страница',
+	'global-shortcuts-category-current-wikia' => 'Текущая вики',
+	'global-shortcuts-category-global' => 'Глобальные',
+	'global-shortcuts-category-help' => 'Справка',
+	'global-shortcuts-key-or' => 'или',
+	'global-shortcuts-key-then' => 'затем',
+	'global-shortcuts-name' => 'Сочетания клавиш',
+	'global-shortcuts-search-placeholder' => 'Поиск...',
+	'global-shortcuts-title-help-entry-point' => 'Открыть справочный диалог по клавиатурным сочетаниям (?)',
+	'global-shortcuts-title-keyboard-shortcuts' => 'Сочетания клавиш',
+	'global-shortcuts-welcome-hint' => 'Представляем наши новые, улучшенные сочетания клавиш.',
+	'template-class-global-shortcuts-caption-classify-page' => 'Классифицировать страницу',
+	'template-class-global-shortcuts-press-to-explore-shortcuts' => 'Нажмите $1, чтобы просмотреть имеющиеся клавиатурные сочетания',
 );
 
 $messages['zh-hans'] = array(

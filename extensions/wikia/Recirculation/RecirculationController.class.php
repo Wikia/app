@@ -20,6 +20,7 @@ class RecirculationController extends WikiaController {
 		$posts = $fandomDataService->getPosts( $this->type );
 
 		if ( count( $posts ) > 0 ) {
+			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 			$this->response->setData( [
 				'title'	=> wfMessage( 'recirculation-fandom-title' )->plain(),
 				'posts' => $posts
@@ -29,5 +30,4 @@ class RecirculationController extends WikiaController {
 			return false;
 		}
 	}
-
 }

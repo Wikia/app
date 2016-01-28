@@ -1904,7 +1904,6 @@ $messages['pt'] = array(
 	'global-navigation-account-navigation-options' => '$1 ou $2',
 	'global-navigation-community-link' => 'http://comunidade.wikia.com',
 	'global-navigation-community-link-label' => 'Central da Comunidade',
-	'global-navigation-wam-link' => 'http://pt.wikia.com/WAM',
 	'global-navigation-menu-hubs' => '*http://pt.videogameshub.wikia.com/wiki/Wiki_Videogameshub|Jogos|games
 *http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento|Entretenimento|entertainment
 *http://pt.estilodevida.wikia.com/wiki/Wiki_Estilo_de_Vida|Estilo de Vida|lifestyle',

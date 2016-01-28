@@ -25,12 +25,14 @@
 		}
 
 		#global_shortcuts_search_field {
+			background-color: $color-page;
 			background-image: url('/extensions/wikia/GlobalShortcuts/images/keyboard.svg')!important; /* inline */
 			background-position: 0px -9px;
 			background-repeat: no-repeat;
 			background-size: 33px;
 			border: 0;
 			box-sizing: border-box;
+			color: $color-text;
 			outline: 0;
 			padding: 8px 8px 8px 37px;
 			width: 100%;
@@ -62,10 +64,6 @@
 
 	.label {
 		@include gs-key-label;
-	}
-
-	.label, .label-in-suggestions {
-		color: #545454;
 	}
 
 	.global-shortcuts-field-wrapper{

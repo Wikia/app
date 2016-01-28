@@ -35,6 +35,10 @@ define('ext.wikia.adEngine.adContext', [
 		return !!parseInt(qs.getVal(param, '0'), 10);
 	}
 
+	function isPageType(pageType) {
+		return context.targeting.pageType === pageType;
+	}
+
 	function setContext(newContext) {
 		var i,
 			len,
@@ -55,6 +59,10 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.showAds = false;
 		}
 
+		if (geo.isProperGeo(instantGlobals.wgAdDriverDelayCountries)) {
+			context.opts.delayEngine = true;
+		}
+
 		// SourcePoint detection integration
 		if (!noExternals && context.opts.sourcePointDetectionUrl) {
 			context.opts.sourcePointDetection = isUrlParamSet('sourcepointdetection') ||
@@ -66,14 +74,14 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// SourcePoint recovery integration
-		if (context.opts.sourcePointDetection && context.opts.sourcePointRecoveryUrl) {
+		if (!context.opts.delayEngine && context.opts.sourcePointDetection && context.opts.sourcePointRecoveryUrl) {
 			context.opts.sourcePointRecovery = isUrlParamSet('sourcepointrecovery') ||
 				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
 		}
 
 		// Recoverable ads message
 		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
-			context.opts.recoveredAdsMessage = context.targeting.pageType === 'article' &&
+			context.opts.recoveredAdsMessage = isPageType('article') &&
 				geo.isProperGeo(instantGlobals.wgAdDriverAdsRecoveryMessageCountries);
 		}
 
@@ -127,6 +135,13 @@ define('ext.wikia.adEngine.adContext', [
 			!instantGlobals.wgSitewideDisableKrux &&
 			!context.targeting.wikiDirectedAtChildren &&
 			!noExternals
+		);
+
+		// Floating medrec
+		context.opts.floatingMedrec = !!(
+			context.opts.showAds && context.opts.adsInContent &&
+			(isPageType('article') || isPageType('search')) &&
+			!context.targeting.wikiIsCorporate
 		);
 
 		// Export the context back to ads.context

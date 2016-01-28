@@ -493,6 +493,19 @@ class SkinTemplate extends Skin {
 			$realBodyAttribs['class'] = 'mw-content-'.$pageLang->getDir().' mw-content-text';
 		}
 
+		// Wikia change begin - Inez
+		// This is a temporary code meant to help with debugging PLATFORM-1355 issue
+		$bodyTextTrimmed = trim( $out->mBodytext );
+		if ( startsWith( $bodyTextTrimmed, "<!-- \nNewPP" ) || startsWith( $bodyTextTrimmed, "<!-- Saved" ) ) {
+			// Check if wikitext length is greater than 500 to eliminate noise of reporting pages
+			// which contains only categories. It won't eliminate all the noise, because there
+			// could be categories wikitext longer than 500, but should take care of most of it.
+			if ( $title->exists() && $title->isContentPage() && $title->getLength() > 500 ) {
+				//\Wikia\Logger\WikiaLogger::instance()->error( 'PLATFORM-1355-LOG1-V2' );
+			}
+		}
+		// Wikia change end
+
 		$out->mBodytext = Html::rawElement( 'div', $realBodyAttribs, $out->mBodytext );
 		$tpl->setRef( 'bodytext', $out->mBodytext );
 

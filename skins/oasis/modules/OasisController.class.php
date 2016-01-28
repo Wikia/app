@@ -91,13 +91,26 @@ class OasisController extends WikiaController {
 	}
 
 	public function executeIndex($params) {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgEnableAdminDashboardExt, $wgOasisThemeSettings;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgEnableAdminDashboardExt, $wgOasisThemeSettings,
+		$wgWikiaMobileSmartBannerConfig;
 
 		wfProfileIn(__METHOD__);
 
-		//Add Smart banner for My Wikia App
-		//See: https://wikia-inc.atlassian.net/browse/MOB-167
-		$wgOut->addHeadItem('My Wikia Smart Banner', '<meta name="apple-itunes-app" content="app-id=623705389">');
+		//Add Smart banner for Wikia dedicated App
+		//Or fallback to My Wikia App
+		if (
+			!empty( $wgWikiaMobileSmartBannerConfig ) &&
+			is_array( $wgWikiaMobileSmartBannerConfig['meta'] ) &&
+			!empty( $wgWikiaMobileSmartBannerConfig['meta']['apple-itunes-app'] )
+		) {
+			$appId= $wgWikiaMobileSmartBannerConfig['meta']['apple-itunes-app'];
+			$wgOut->addHeadItem(
+				'Wikia App Smart Banner',
+				sprintf('<meta name="apple-itunes-app" content="%s, app-arguments=%s">', $appId, $wgRequest->getFullRequestURL())
+			);
+		} else {
+			$wgOut->addHeadItem('My Wikia Smart Banner', '<meta name="apple-itunes-app" content="app-id=623705389">');
+		}
 
 		/* set the grid if passed in, otherwise, respect the default */
 		$grid = $wgRequest->getVal('wikiagrid', '');
