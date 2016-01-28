@@ -45,7 +45,7 @@ class InsightsItemData {
 				$userpage = Title::newFromText( $user, NS_USER );
 			}
 
-			if ( !is_null( $userpage ) ) {
+			if ( $userpage instanceof Title ) {
 				$userpageUrl = $userpage->getFullURL();
 			} else {
 				$userpageUrl = SpecialPage::getTitleFor( 'Contributions', $user )->getFullUrl();
