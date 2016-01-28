@@ -64,6 +64,7 @@ $messages['en'] = array(
 	'special-templates-portable-infobox' => 'Portable',
 	'special-templates-non-portable-infobox' => 'Non-portable',
 	'logentry-templateclassification-tc-changed' => '$1 changed type of $3 from $5 to $4.',
+	'templates' => 'Templates on wikia'
 );
 
 $messages['qqq'] = array(
@@ -128,6 +129,7 @@ $messages['qqq'] = array(
 	'special-templates-portable-infobox' => 'Inform that given infobox is portable',
 	'special-templates-non-portable-infobox' => 'Inform that given infobox is non-portable',
 	'logentry-templateclassification-tc-changed' => "A message that is saved to a user-facing log if a type of a template is changed to another one. Parameters are: $1 - User's name, $3 - A link to a target page, $4 - New type of the template, $5 - Old type of the template.",
+	'templates' => 'Describe that Special:Templates page contains templates on wikia.'
 );
 
 $messages['de'] = array(

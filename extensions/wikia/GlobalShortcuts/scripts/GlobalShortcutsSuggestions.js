@@ -39,7 +39,7 @@ define('GlobalShortcutsSuggestions',
 
 		GlobalShortcutsSuggestions.prototype.init = function () {
 			var autocompleteReEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')',
-					'[', ']', '{', '}', '\\'].join('|\\') + ')', 'g');
+					'[', ']', '{', '}', '\\'].join('|\\') + ')', 'gi');
 
 			this.suggestionsAsync().done(function (suggestions) {
 				this.$el.suggestionsAutocomplete({
