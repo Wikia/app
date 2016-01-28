@@ -122,31 +122,22 @@ class MercuryApiController extends WikiaController {
 	 * @desc returns an article in simplified json structure
 	 *
 	 * @param int $articleId
-	 * @param Title $title
 	 * @param string $sections List of section numbers or 'all'
 	 *
 	 * @return array
 	 */
-	private function getArticleJson( $articleId, Title $title, $sections = '' ) {
+	private function getArticleJson( $articleId, $sections = '' ) {
 		$redirect = $this->request->getVal( 'redirect' );
 
-		$articleAsJson = $this->sendRequest(
-			'ArticlesApi',
-			'getAsJson',
-			[
-				'id' => $articleId,
-				'redirect' => $redirect,
-				'sections' => $sections
-			]
-		)->getData();
-
-		$articleType = WikiaPageType::getArticleType( $title );
-
-		if ( !empty( $articleType ) ) {
-			$articleAsJson[ 'type' ] = $articleType;
-		}
-
-		return $articleAsJson;
+		return $this->sendRequest(
+				'ArticlesApi',
+				'getAsJson',
+				[
+					'id' => $articleId,
+					'redirect' => $redirect,
+					'sections' => $sections
+				]
+			)->getData();
 	}
 
 
@@ -411,7 +402,7 @@ class MercuryApiController extends WikiaController {
 			) {
 				$data[ 'mainPageData' ] = $this->getMainPageData();
 			} else {
-				$articleAsJson = $this->getArticleJson( $articleId, $title, $sections );
+				$articleAsJson = $this->getArticleJson( $articleId, $sections );
 				$data[ 'article' ] = $articleAsJson;
 				$data[ 'topContributors' ] = $this->getTopContributorsDetails(
 					$this->getTopContributorsPerArticle( $articleId )
@@ -449,6 +440,7 @@ class MercuryApiController extends WikiaController {
 			$title = $this->wg->Title;
 		}
 
+		$data[ 'articleType' ] = WikiaPageType::getArticleType( $title );
 		$data[ 'adsContext' ] = $this->mercuryApi->getAdsContext( $title );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
