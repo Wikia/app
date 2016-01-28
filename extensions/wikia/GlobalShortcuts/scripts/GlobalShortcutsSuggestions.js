@@ -69,7 +69,7 @@ define('GlobalShortcutsSuggestions',
 						return out;
 					}.bind(this),
 					skipBadQueries: true,
-					autoSelectFirst: true,
+					autoSelectFirst: true
 				});
 
 				this.$el.focus();
