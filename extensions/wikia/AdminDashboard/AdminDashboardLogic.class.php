@@ -72,7 +72,6 @@ class AdminDashboardLogic {
 				'LayoutBuilder',
 				'LayoutBuilderForm',
 				'Leaderboard',
-				'LicensedVideoSwap',
 				'LookupContribs',
 				'LookupUser',
 				'ManageWikiaHome',
