@@ -39,6 +39,7 @@ class CuratedContentValidator {
 		}
 
 		foreach ( $data as $section ) {
+			$section = self::migrateLegacyFormat( $section );
 			if ( !empty( $section[ 'featured' ] ) ) {
 				if ( !self::validateItemsInFeatured( $section ) ) {
 					$errors[] = self::ERR_OTHER_ERROR;
@@ -112,6 +113,7 @@ class CuratedContentValidator {
 
 	public static function validateSection( $section ) {
 		$errors = [ ];
+		$section = self::migrateLegacyFormat( $section );
 
 		if ( empty( $section[ 'label' ] ) ) {
 			$errors[] = self::ERR_EMPTY_LABEL;
@@ -227,5 +229,18 @@ class CuratedContentValidator {
 
 	private static function isSupportedProvider( $provider ) {
 		return ( $provider === 'youtube' ) || ( startsWith( $provider, 'ooyala' ) );
+	}
+
+	/**
+	 * @param $section
+	 * @return mixed
+	 */
+	//TODO: remove this after migrating mercury to new format
+	private static function migrateLegacyFormat( $section ) {
+		if ( isset( $section[ 'title' ] ) ) {
+			$section[ 'label' ] = $section[ 'title' ];
+			return $section;
+		}
+		return $section;
 	}
 }
