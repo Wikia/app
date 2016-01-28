@@ -212,14 +212,16 @@ class WikiDetailsService extends WikiService {
 
 	protected function getFromCommunityData( $wikiId ) {
 		$result = [ ];
-		$provider = new CommunityDataService( $wikiId );
-		$desc = $provider->getCommunityDescription();
-		if ( !empty( $desc ) ) {
-			$result = [ 'desc' => $desc ];
-		}
-		$image = GlobalTitle::newFromId( $provider->getCommunityImageId(), $wikiId );
-		if ( $image && $image->exists() ) {
-			$result[ 'image' ] = [ 'community' => true, 'title' => $image->getText() ];
+		if ( !empty( $wikiId ) ) {
+			$provider = new CommunityDataService( $wikiId );
+			$desc = $provider->getCommunityDescription();
+			if ( !empty( $desc ) ) {
+				$result = [ 'desc' => $desc ];
+			}
+			$image = GlobalTitle::newFromId( $provider->getCommunityImageId(), $wikiId );
+			if ( $image && $image->exists() ) {
+				$result[ 'image' ] = [ 'community' => true, 'title' => $image->getText() ];
+			}
 		}
 		return $result;
 	}
