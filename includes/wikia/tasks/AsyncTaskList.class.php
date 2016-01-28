@@ -349,6 +349,7 @@ class AsyncTaskList {
 			'task_type' => $this->taskType,
 			'task_work_id' => $workIdHash,
 			'task_args' => substr($argsJson,0,3000) . (strlen($argsJson)>3000 ? '...' : ''),
+			'task_queue' => $this->getQueue()->name(),
 		]);
 
 		return $id;
