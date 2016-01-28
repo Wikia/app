@@ -28,7 +28,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 					targeting: {loc: 'footer'}
 				},
 				INCONTENT_BOXAD_1: {
-					sizes: [[300, 250]],
+					sizes: [[300, 250], [300, 600]],
 					targeting: {loc: 'middle'}
 				},
 				PREFOOTER_LEFT_BOXAD: {

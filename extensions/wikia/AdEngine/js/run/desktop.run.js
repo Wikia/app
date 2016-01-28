@@ -123,7 +123,7 @@ require([
 	'wikia.document',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.slot.exitstitial'),
-	require.optional('ext.wikia.adEngine.slot.inContentDesktop')
+	require.optional('ext.wikia.adEngine.slot.inContentDesktop'),
 ], function (inContentPlayer, skyScraper3, doc, win, exitstitial, inContentDesktop) {
 	'use strict';
 

@@ -35,6 +35,10 @@ define('ext.wikia.adEngine.adContext', [
 		return !!parseInt(qs.getVal(param, '0'), 10);
 	}
 
+	function isPageType(pageType) {
+		return context.targeting.pageType === pageType;
+	}
+
 	function setContext(newContext) {
 		var i,
 			len,
@@ -77,7 +81,7 @@ define('ext.wikia.adEngine.adContext', [
 
 		// Recoverable ads message
 		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
-			context.opts.recoveredAdsMessage = context.targeting.pageType === 'article' &&
+			context.opts.recoveredAdsMessage = isPageType('article') &&
 				geo.isProperGeo(instantGlobals.wgAdDriverAdsRecoveryMessageCountries);
 		}
 
@@ -131,6 +135,13 @@ define('ext.wikia.adEngine.adContext', [
 			!instantGlobals.wgSitewideDisableKrux &&
 			!context.targeting.wikiDirectedAtChildren &&
 			!noExternals
+		);
+
+		// Floating medrec
+		context.opts.floatingMedrec = !!(
+			context.opts.showAds && context.opts.adsInContent &&
+			(isPageType('article') || isPageType('search')) &&
+			!context.targeting.wikiIsCorporate
 		);
 
 		// Export the context back to ads.context
