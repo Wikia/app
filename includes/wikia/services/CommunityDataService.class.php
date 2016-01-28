@@ -120,6 +120,9 @@ class CommunityDataService extends WikiaService {
 				'image_id' => isset( $section[ 'image_id' ] ) ? $section[ 'image_id' ] : 0,
 				'items' => isset( $section[ 'items' ] ) ? $section[ 'items' ] : [ ]
 			];
+			if ( isset( $section[ 'image_crop' ] ) ) {
+				$extended[ 'image_crop' ] = $section[ 'image_crop' ];
+			}
 
 			//figure out what type of section it is
 			if ( $section[ 'featured' ] ) {
