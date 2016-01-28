@@ -192,7 +192,7 @@ class AsyncTaskList {
 
 	/**
 	 * Lets us set the task type so that we can use other tasks in celery-workers lib
-	 * @param str $type
+	 * @param string $type
 	 * @return $this
 	 */
 	public function taskType( $type ) {
@@ -285,13 +285,14 @@ class AsyncTaskList {
 		}
 
 		$id = $this->generateId();
+		$workIdHash = sha1( json_encode( $this->workId ) );
 		$payload = (object) [
 			'id' => $id,
 			'task' => $this->taskType,
 			'args' => $this->payloadArgs(),
 			'kwargs' => (object) [
 				'created_ts' => time(),
-				'work_id' => sha1( json_encode( $this->workId ) ),
+				'work_id' => $workIdHash,
 				'force' => !$this->dupCheck,
 				'executor' => $this->getExecutor()
 			]
@@ -340,6 +341,16 @@ class AsyncTaskList {
 		} else {
 			$channel->batch_basic_publish( $message, '', $this->getQueue()->name() );
 		}
+
+		$argsJson = json_encode($this->payloadArgs());
+		WikiaLogger::instance()->info( 'AsyncTaskList::queue ' . $id, [
+			'exception' => new \Exception(),
+			'task_id' => $id,
+			'task_type' => $this->taskType,
+			'task_work_id' => $workIdHash,
+			'task_args' => substr($argsJson,0,3000) . (strlen($argsJson)>3000 ? '...' : ''),
+			'task_queue' => $this->getQueue()->name(),
+		]);
 
 		return $id;
 	}
