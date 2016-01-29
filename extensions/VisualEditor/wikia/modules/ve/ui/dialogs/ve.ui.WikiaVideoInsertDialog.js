@@ -236,5 +236,4 @@ ve.ui.WikiaVideoInsertDialog.prototype.insertPermanentMediaCallback = function (
 	} );
 };
 
-
 ve.ui.windowFactory.register( ve.ui.WikiaVideoInsertDialog );

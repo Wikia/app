@@ -74,8 +74,7 @@ if (ve.init.wikia.ToolbarABTestVariantNumber() === 1) {
 			demote: [ 'deleteTable' ]
 		}
 	];
-}
-else {
+} else {
 	// Original toolbar configuration
 	ve.init.wikia.ViewPageTarget.static.toolbarGroups = [
 		// History
