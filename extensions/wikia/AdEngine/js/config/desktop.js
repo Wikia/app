@@ -65,7 +65,7 @@ define('ext.wikia.adEngine.config.desktop', [
 		log(slotName, 5, logGroup);
 
 		// Recirculation is not advertising, even if we're using AdEngine. So we show it even if $wgShowAds is false
-		if (adProviderRecirculation && adProviderRecirculation.canHandleSlot(slotName)) {
+		if (adProviderRecirculation && adProviderRecirculation.canHandleSlot(slotName) && !context.opts.noExternals) {
 			return [adProviderRecirculation];
 		}
 
