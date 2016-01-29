@@ -63,6 +63,15 @@ class ProtectSiteJS {
 		return false;
 	}
 
+	/**
+	 * Allow moving js pages to Mediawiki or User namespace only for staff users
+	 *
+	 * @param Title $title
+	 * @param User $user
+	 * @param string $action
+	 * @param array $result
+	 * @return bool
+	 */
 	public static function onGetUserPermissionsErrors( \Title $title, \User $user, $action, &$result ) {
 		if ( $action === 'move' && ( $title->isJsPage() || $title->isJsSubpage() ) && !$user->isStaff() ) {
 			$result = ['badaccess-groups', \User::getGroupName( 'staff' ), 1];
