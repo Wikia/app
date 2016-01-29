@@ -52,7 +52,7 @@ class Hooks {
 		return true;
 	}
 
-	public function onBeforeToolbarMenu( &$items ) {
+	public function onBeforeToolbarMenu( &$items, $type ) {
 		global $wgEnableGlobalShortcutsExt;
 		$user = \RequestContext::getMain()->getUser();
 
@@ -62,15 +62,17 @@ class Hooks {
 				[
 					'href' => '#',
 					'class' => 'global-shortcuts-help-entry-point',
-					'title' => wfMessage( 'global-shortcuts-title-help-entry-point' )->escaped()
+					'title' => wfMessage( 'global-shortcuts-title-help-entry-point' )->plain()
 				],
 				wfMessage( 'global-shortcuts-name' )->escaped()
 			);
 
-			$items[] = [
-				'type' => 'html',
-				'html' => $html
-			];
+			if ( $type == 'main' ) {
+				$items[] = [
+					'type' => 'html',
+					'html' => $html
+				];
+			}
 		}
 
 		return true;

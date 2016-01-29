@@ -37,11 +37,6 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 				return;
 			}
 
-			if (typeof module.isEnabled === 'function' && !module.isEnabled()) {
-				log(['call', 'Module is not enabled', module.name], 'debug', module.logGroup);
-				return;
-			}
-
 			timing = adTracker.measureTime(module.name, {}, 'start');
 			timing.track();
 

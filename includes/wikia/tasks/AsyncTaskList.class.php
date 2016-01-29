@@ -345,11 +345,11 @@ class AsyncTaskList {
 		$argsJson = json_encode($this->payloadArgs());
 		WikiaLogger::instance()->info( 'AsyncTaskList::queue ' . $id, [
 			'exception' => new \Exception(),
-			'task_id' => $id,
-			'task_type' => $this->taskType,
-			'task_work_id' => $workIdHash,
-			'task_args' => substr($argsJson,0,3000) . (strlen($argsJson)>3000 ? '...' : ''),
-			'task_queue' => $this->getQueue()->name(),
+			'spawn_task_id' => $id,
+			'spawn_task_type' => $this->taskType,
+			'spawn_task_work_id' => $workIdHash,
+			'spawn_task_args' => substr($argsJson,0,3000) . (strlen($argsJson)>3000 ? '...' : ''),
+			'spawn_task_queue' => $this->getQueue()->name(),
 		]);
 
 		return $id;

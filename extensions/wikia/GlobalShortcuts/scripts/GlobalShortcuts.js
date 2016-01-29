@@ -12,7 +12,8 @@ define('GlobalShortcuts', ['Mousetrap', 'mw', 'PageActions', 'GlobalShortcutsTra
 		Mousetrap.bind(key, function () {
 			tracker.trackKey(actionId);
 			PageActions.find(actionId).execute();
-		}, 'keyup');
+			return false;
+		});
 	}
 
 	function add(actionId, key) {

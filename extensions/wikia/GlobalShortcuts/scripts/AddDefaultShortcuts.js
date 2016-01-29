@@ -25,7 +25,7 @@ require(['GlobalShortcuts', 'PageActions', 'mw', 'wikia.loader'],
 					shortcuts: ['s'],
 					actionParams: {
 						id: 'general:StartWikia',
-						caption: mw.message('global-shortcuts-caption-start-a-new-wikia').escaped(),
+						caption: mw.message('global-shortcuts-caption-start-a-new-wikia').plain(),
 						fn: function () {
 							$('[data-id=start-wikia]')[0].click();
 						},
@@ -36,7 +36,7 @@ require(['GlobalShortcuts', 'PageActions', 'mw', 'wikia.loader'],
 					shortcuts: ['.'],
 					actionParams: {
 						id: 'help:Actions',
-						caption: mw.message('global-shortcuts-caption-action-list').escaped(),
+						caption: mw.message('global-shortcuts-caption-action-list').plain(),
 						fn: function () {
 							require(['GlobalShortcutsSearch'], function (GlobalShortcutsSearch) {
 								var searchModal = new GlobalShortcutsSearch();
@@ -50,7 +50,7 @@ require(['GlobalShortcuts', 'PageActions', 'mw', 'wikia.loader'],
 					shortcuts: ['?'],
 					actionParams: {
 						id: 'help:Keyboard',
-						caption: mw.message('global-shortcuts-caption-keyboard-shortcuts-help').escaped(),
+						caption: mw.message('global-shortcuts-caption-keyboard-shortcuts-help').plain(),
 						fn: function () {
 							require(['GlobalShortcutsHelp'], function (help) {
 								help.open();
@@ -63,7 +63,7 @@ require(['GlobalShortcuts', 'PageActions', 'mw', 'wikia.loader'],
 					shortcuts: ['g s', '/'],
 					actionParams: {
 						id: 'wikia:Search',
-						caption: mw.message('global-shortcuts-caption-search-for-a-page').escaped(),
+						caption: mw.message('global-shortcuts-caption-search-for-a-page').plain(),
 						fn: function () {
 							$('#searchInput')[0].focus();
 						},
