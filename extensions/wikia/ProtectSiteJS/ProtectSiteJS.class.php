@@ -74,7 +74,7 @@ class ProtectSiteJS {
 	 */
 	public static function onGetUserPermissionsErrors( \Title $title, \User $user, $action, &$result ) {
 		if ( $action === 'move' && ( $title->isJsPage() || $title->isJsSubpage() ) && !$user->isStaff() ) {
-			$result = ['badaccess-groups', \User::getGroupName( 'staff' ), 1];
+			$result = [ 'badaccess-groups', \User::getGroupName( 'staff' ), 1 ];
 			return false;
 		}
 
