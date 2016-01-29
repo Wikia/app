@@ -6,6 +6,8 @@
 
 class VideoEmbedTool {
 
+	use Wikia\Logger\Loggable;
+
 	function loadMain( $error = false ) {
 		global $wgContLanguageCode, $wgVETNonEnglishPremiumSearch, $wgUser;
 
@@ -149,13 +151,28 @@ class VideoEmbedTool {
 				return wfMessage( 'vet-bad-url' )->plain();
 			}
 
+			/**
+			 * Check if it's a video file - return an error if not and log an error.
+			 */
+			$handler = $file->getHandler();
+			if ( !$handler instanceof VideoHandler ) {
+				header( 'X-screen-type: error' );
+				$this->error( __CLASS__ . ': Invalid media type supplied.', [
+					'mimeType' => $file->getMimeType(),
+					'handlerClass' => get_class( $handler ),
+					'fileUrl' => $file->getFullUrl(),
+				] );
+				wfProfileOut( __METHOD__ );
+				return wfMessage( 'vet-error-invalid-file-type' )->escaped();
+			}
+
 			// Loading this to deal with video descriptions
 			$vHelper = new VideoHandlerHelper();
 
 			$embedCode = $file->getEmbedCode( VIDEO_PREVIEW, $embedOptions );
 
 			$props['provider'] = 'FILE';
-			$props['id'] = $file->getHandler()->getVideoId();
+			$props['id'] = $handler->getVideoId();
 			$props['vname'] = $file->getTitle()->getText();
 			$props['code'] = json_encode( $embedCode );
 			$props['metadata'] = '';
