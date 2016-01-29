@@ -26,6 +26,9 @@
 			// Trying to access storage with cookies disabled can throw
 			// security exceptions in some browsers like Firefox (BugId:94924)
 			try {
+				window.localStorage.setItem('foo', 'bar');
+				window.localStorage.getItem('foo');
+
 				localStorage = window.localStorage;
 			} catch ( e ) {
 				localStorage = {};
