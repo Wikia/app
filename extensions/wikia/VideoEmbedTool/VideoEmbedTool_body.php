@@ -214,8 +214,9 @@ class VideoEmbedTool {
 			}
 
 			$nameFile = VideoFileUploader::sanitizeTitle( $name );
-         	$titleFile = VideoFileUploader::getUniqueTitle( $nameFile );
-         	if ( empty( $titleFile ) ) {
+			$uploader = new VideoFileUploader();
+			$titleFile = $uploader->getUniqueTitle( $nameFile );
+			if ( empty( $titleFile ) ) {
 				header( 'X-screen-type: error' );
 				return wfMessage( 'vet-name-incorrect' )->plain();
 			}
