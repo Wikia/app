@@ -62,7 +62,7 @@ class Hooks {
 				[
 					'href' => '#',
 					'class' => 'global-shortcuts-help-entry-point',
-					'title' => wfMessage( 'global-shortcuts-title-help-entry-point' )->escaped()
+					'title' => wfMessage( 'global-shortcuts-title-help-entry-point' )->plain()
 				],
 				wfMessage( 'global-shortcuts-name' )->escaped()
 			);
