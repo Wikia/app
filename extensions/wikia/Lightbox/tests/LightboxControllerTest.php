@@ -183,7 +183,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 		        ->with( 'isInline', false )
 		        ->will( $this->returnValue( false ) );
 
-		$userMock = $this->getMock( 'stdClass', [ 'isItemLoaded' ] );
+		$userMock = $this->getMock( 'User', [ 'isItemLoaded' ] );
 		$userMock->expects( $this->any() )
 		         ->method( 'isItemLoaded' )
 		         ->with( $this->anything() )
@@ -192,7 +192,9 @@ class LightboxControllerTest extends WikiaBaseTest {
 
 		$lightboxController = new \LightboxController();
 		$lightboxController->setRequest( $request );
-		$this->assertNull( $lightboxController->getMediaDetail() );
+		$lightboxController->setResponse( new WikiaResponse( 'json' ) );
+
+		$this->assertEmpty( $lightboxController->getMediaDetail() );
 	}
 
 	public function testGetMediaDetail_read() {
@@ -210,7 +212,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 		        ->with( 'isInline', false )
 		        ->will( $this->returnValue( false ) );
 
-		$userMock = $this->getMock( 'stdClass', [ 'isAllowed', 'isItemLoaded' ] );
+		$userMock = $this->getMock( 'User', [ 'isAllowed', 'isItemLoaded' ] );
 		$userMock->expects( $this->once() )
 		         ->method( 'isAllowed' )
 		         ->with( 'read' )
@@ -223,7 +225,9 @@ class LightboxControllerTest extends WikiaBaseTest {
 
 		$lightboxController = new \LightboxController();
 		$lightboxController->setRequest( $request );
-		$this->assertNull( $lightboxController->getMediaDetail() );
+		$lightboxController->setResponse( new WikiaResponse( 'json' ) );
+
+		$this->assertEmpty( $lightboxController->getMediaDetail() );
 	}
 
 	public function testGetMediaDetail() {
@@ -254,7 +258,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 			->with( 'width', $this->anything() )
 			->will( $this->returnValue( \LightboxController::CONTEXT_DEFAULT_WIDTH ) );
 
-		$userMock = $this->getMock( 'stdClass', [ 'isAnon', 'isAllowed', 'isItemLoaded', 'getOption', 'getStubThreshold' ] );
+		$userMock = $this->getMock( 'User', [ 'isAnon', 'isAllowed', 'isItemLoaded', 'getOption', 'getStubThreshold' ] );
 		$userMock->expects( $this->any() )
 		     ->method( 'isAnon' )
 		     ->will( $this->returnValue( false ) );
