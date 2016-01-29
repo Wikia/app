@@ -68,7 +68,8 @@ define('GlobalShortcutsSuggestions',
 						}
 						return out;
 					}.bind(this),
-					skipBadQueries: true
+					skipBadQueries: true,
+					autoSelectFirst: true
 				});
 
 				this.$el.focus();
