@@ -110,10 +110,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.turtle = true;
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXCountries)) {
-			context.providers.openX = true;
-		}
-
 		// INVISIBLE_HIGH_IMPACT slot
 		context.slots.invisibleHighImpact = (
 			context.slots.invisibleHighImpact &&

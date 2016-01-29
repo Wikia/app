@@ -14,7 +14,6 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.provider.evolve2',
 	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.monetizationService',
-	'ext.wikia.adEngine.provider.openX',
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
 	'ext.wikia.adEngine.provider.turtle',
@@ -35,7 +34,6 @@ define('ext.wikia.adEngine.config.desktop', [
 	adProviderEvolve2,
 	adProviderLiftium,
 	adProviderMonetizationService,
-	adProviderOpenX,
 	adProviderRemnantGpt,
 	adProviderSevenOneMedia,
 	adProviderTurtle,
@@ -86,12 +84,6 @@ define('ext.wikia.adEngine.config.desktop', [
 		if (context.forcedProvider === 'evolve2') {
 			log(['getProvider', slotName, 'Evolve (wgAdDriverForcedProvider)'], 'info', logGroup);
 			return [adProviderEvolve2];
-		}
-
-		// Force OpenX
-		if (context.forcedProvider === 'openx') {
-			log(['getProvider', slotName, 'OpenX (wgAdDriverForcedProvider)'], 'info', logGroup);
-			return [adProviderOpenX];
 		}
 
 		// Force Liftium
@@ -147,12 +139,8 @@ define('ext.wikia.adEngine.config.desktop', [
 			providerList.push(adProviderRemnantGpt);
 		}
 
-		// Last resort provider: OpenX or Liftium
-		if (context.providers.openX && adProviderOpenX.canHandleSlot(slotName)) {
-			providerList.push(adProviderOpenX);
-		} else {
-			providerList.push(adProviderLiftium);
-		}
+		// Last resort provider: Liftium
+		providerList.push(adProviderLiftium);
 
 		return providerList;
 	}
