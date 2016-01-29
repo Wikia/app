@@ -26,7 +26,6 @@ class Hooks {
 		\Hooks::register( 'SkinAfterBottomScripts', [ $hooks, 'onSkinAfterBottomScripts' ] );
 		\Hooks::register( 'ArticleNonExistentPage', [ $hooks, 'onArticleNonExistentPage' ] );
 		\Hooks::register( 'OutputPageBeforeHTML', [ $hooks, 'onOutputPageBeforeHTML' ] );
-		\Hooks::register( 'getUserPermissionsErrors', [ $hooks, 'onGetUserPermissionsErrors' ] );
 	}
 
 	/**
@@ -356,15 +355,6 @@ class Hooks {
 		global $wgUser;
 
 		if ( $group === 'content-reviewer' && ( !$wgUser->isAllowed( 'content-review' ) || !$wgUser->isStaff() ) ) {
-			return false;
-		}
-
-		return true;
-	}
-
-	public function onGetUserPermissionsErrors( \Title $title, \User $user, $action, &$result ) {
-		if ( $action === 'move' && ( $title->isJsPage() || $title->isJsSubpage() ) && !$user->isStaff() ) {
-			$result = ['badaccess-groups', \User::getGroupName( 'staff' ), 1];
 			return false;
 		}
 
