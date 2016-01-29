@@ -35,13 +35,13 @@ class Helper extends \ContextSource {
 	 *
 	 * @return bool|mixed
 	 */
-	public function getJsPages() {
+	public function getJsPages( $ns = NS_MEDIAWIKI ) {
 		$db = wfGetDB( DB_SLAVE );
 
 		$jsPages = ( new \WikiaSQL() )
 			->SELECT( 'page_id', 'page_title', 'page_touched', 'page_latest' )
 			->FROM( 'page' )
-			->WHERE( 'page_namespace' )->EQUAL_TO( NS_MEDIAWIKI )
+			->WHERE( 'page_namespace' )->EQUAL_TO( $ns )
 			->AND_( 'LOWER (page_title)' )->LIKE( '%' . self::JS_FILE_EXTENSION )
 			->runLoop( $db, function ( &$jsPages, $row ) {
 				$jsPages[$row->page_id] = get_object_vars( $row );
