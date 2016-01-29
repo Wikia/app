@@ -11,6 +11,14 @@ $messages['en'] = array(
 	'withoutimages' => 'Pages without images',
 );
 
+$messages['fr'] = array(
+	'withoutimages' => 'Pages sans images',
+);
+
 $messages['it'] = array(
 	'withoutimages' => 'Pagine prive di immagini',
+);
+
+$messages['ru'] = array(
+	'withoutimages' => 'Страницы без изображений',
 );

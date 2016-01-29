@@ -133,6 +133,7 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
+	'templates' => 'Vorlagen auf Wikia',
 	'template-classification-description' => 'Schnittstelle zur Klassifizierung von Vorlagen, um Inhalte besser zu verstehen.',
 	'template-classification-type-unclassified' => 'Nicht klassifiziert',
 	'template-classification-type-infobox' => 'Infobox',
@@ -198,6 +199,7 @@ $messages['de'] = array(
 );
 
 $messages['es'] = array(
+	'templates' => 'Plantillas en la wikia',
 	'template-classification-description' => 'Interfaz para clasificar plantillas para entender mejor el contenido.',
 	'template-classification-type-unclassified' => 'No clasificado',
 	'template-classification-type-infobox' => 'Infobox',
@@ -652,6 +654,7 @@ $messages['pt'] = array(
 );
 
 $messages['ru'] = array(
+	'templates' => 'Шаблоны на вики',
 	'template-classification-description' => 'Интерфейс классификации шаблонов для лучшего понимания их содержимого.',
 	'template-classification-type-unclassified' => 'Неклассифицированные',
 	'template-classification-type-infobox' => 'Инфобоксы',
