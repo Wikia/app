@@ -15,14 +15,21 @@ class ArticleAsJson extends WikiaService {
 	const MEDIA_CONTEXT_GALLERY_IMAGE = 'gallery-image';
 	const MEDIA_CONTEXT_ICON = 'icon';
 
-	private static function createMarker( $width = 0, $height = 0, $isGallery = false ){
+	private static function createMarker( $media, $isGallery = false ){
 		$blankImgUrl = '//:0';
 		$id = count( self::$media ) - 1;
-		$classes = 'article-media' . ($isGallery ? ' gallery' : '');
-		$width = !empty( $width ) ? " width='{$width}'" : '';
-		$height = !empty( $height ) ? " height='{$height}'": '';
+		$classes = 'article-media' . ( $isGallery ? ' gallery' : '' );
+		$width = !empty( $media['width'] ) ? " width='{$media['width']}'" : '';
+		$height = !empty( $media['height'] ) ? " height='{$media['height']}'" : '';
 
-		return "<img src='{$blankImgUrl}' class='{$classes}' data-ref='{$id}'{$width}{$height} />";
+		if ( $isGallery ) {
+			// Mercury isn't ready yet for galleries
+			return "<img src='{$blankImgUrl}' class='{$classes}' data-ref='{$id}'{$width}{$height} />";
+		} else {
+			$componentAttributes = htmlspecialchars( json_encode( $media ) );
+
+			return "<img src='{$blankImgUrl}' class='{$classes}' data-component='image-media' data-attrs='{$componentAttributes}'{$width}{$height} />";
+		}
 	}
 
 	public static function createMediaObject( $details, $imageName, $caption = null, $link = null ) {
@@ -167,11 +174,12 @@ class ArticleAsJson extends WikiaService {
 			//information for mobile skins how they should display small icons
 			$details['context'] = self::isIconImage( $details, $handlerParams ) ? self::MEDIA_CONTEXT_ICON : self::MEDIA_CONTEXT_ARTICLE_IMAGE;
 
-			self::$media[] = self::createMediaObject( $details, $title->getText(), $frameParams['caption'], $linkHref );
+			$media = self::createMediaObject( $details, $title->getText(), $frameParams['caption'], $linkHref );
+			self::$media[] = $media;
 
 			self::addUserObj($details);
 
-			$res = self::createMarker( $details['width'], $details['height'] );
+			$res = self::createMarker( $media );
 
 			wfProfileOut( __METHOD__ );
 			return false;
