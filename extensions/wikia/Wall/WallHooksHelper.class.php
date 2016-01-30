@@ -694,10 +694,10 @@ class WallHooksHelper {
 	 * @return bool true because it is a hook
 	 */
 	static public function onRecentChangeBeforeSave( RecentChange &$rc ) {
-		$app = F::app();
+		$wg = F::app()->wg;
 
 		if ( MWNamespace::isTalk( $rc->getAttribute( 'rc_namespace' ) ) &&
-			in_array( MWNamespace::getSubject( $rc->getAttribute( 'rc_namespace' )), $app->wg->WallNS )
+			in_array( MWNamespace::getSubject( $rc->getAttribute( 'rc_namespace' ) ), $wg->WallNS )
 		) {
 			$wm = new WallMessage( $rc->getTitle() );
 			$wm->load();
@@ -1503,7 +1503,11 @@ class WallHooksHelper {
 	 * @return bool
 	 */
 	static public function onAllowNotifyOnPageChange( User $editor, Title $title ) {
-		if ( in_array( MWNamespace::getSubject( $title->getNamespace() ), F::app()->wg->WallNS ) || $title->getNamespace() == NS_USER_WALL_MESSAGE_GREETING ) {
+		if ( in_array( MWNamespace::getSubject( $title->getNamespace() ), F::app()->wg->WallNS ) ) {
+			return false;
+		}
+
+		if ( $title->getNamespace() == NS_USER_WALL_MESSAGE_GREETING ) {
 			return false;
 		}
 		return true;
