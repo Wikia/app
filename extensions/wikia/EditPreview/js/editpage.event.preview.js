@@ -36,7 +36,7 @@ define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.wind
 		};
 
 		object.send = function (frameRoot, callback) {
-			var iframe = $('<iframe data-time="' + object.time + '" style="display:block; width:320px; height:480px; margin: 0 auto;" name="iframe' + object.time + '" id="iframe' + object.time + '"></iframe>');
+			var iframe = $('<iframe data-time="' + object.time + '" style="display:block; width:320px; height:100%; margin: 0 auto;" name="iframe' + object.time + '" id="iframe' + object.time + '"></iframe>');
 			$(frameRoot).append(iframe);
 			$(frameRoot).append(object.form);
 
@@ -120,7 +120,7 @@ define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.wind
 					$.when(
 						helper.getContent()
 					).done(function (content, mode) {
-						preparePreviewContent(content, extraData, callback, skin);
+						preparePreviewContent(content, mode, extraData, callback, skin);
 					});
 				}
 			};
@@ -143,7 +143,7 @@ define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.wind
 
 	// internal method, based on the editor content and some extraData, prepare a preview markup for the
 	// preview dialog and pass it to the callback
-	function preparePreviewContent(content, extraData, callback, skin) {
+	function preparePreviewContent(content, mode, extraData, callback, skin) {
 		var categories = helper.getCategories();
 
 		// add section name when adding new section (BugId:7658)
@@ -167,17 +167,10 @@ define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.wind
 			var previewFrame = new iframeform(qs(window.wgEditPageMercuryPreviewHandler).addCb());
 
 			previewFrame.addParameter('title', window.wgEditedTitle);
-			$.when(
-				helper.getContent()
-			).done(function (content, mode) {
-				previewFrame.addParameter(mode === 'mw' ? 'wikitext' : 'CKmarkup', content);
+			previewFrame.addParameter(mode === 'source' ? 'wikitext' : 'CKmarkup', content);
 
-				$().log('Preparing to send');
-				previewFrame.send($('.ArticlePreviewInner'), function (data) {
-					callback();
-					$().log('Received');
-				});
-				$().log('Sent');
+			previewFrame.send($('.ArticlePreviewInner'), function (data) {
+				callback(data);
 			});
 		} else {
 			helper.ajax('preview', extraData, function (data) {
