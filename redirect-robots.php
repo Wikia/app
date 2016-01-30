@@ -8,6 +8,13 @@ $wgDBadminuser = $wgDBadminpassword = $wgDBserver = $wgDBname = $wgEnableProfile
 define( 'MW_NO_SETUP', 1 );
 require_once( dirname(__FILE__) . '/includes/WebStart.php' );
 require_once( dirname(__FILE__) . '/includes/Setup.php' );
+
+// SEO-98 Roll back to the old robots, cannot do from WikiFactory, because it's locked
+//if ( !empty( $wgEnableRobotsTxtExt ) ) {
+//	require( __DIR__ . '/wikia-robots-txt.php' );
+//	exit;
+//}
+
 require_once( dirname(__FILE__) . '/includes/StreamFile.php' );
 require_once( dirname(__FILE__) . '/includes/SpecialPage.php' );
 require_once( dirname(__FILE__) . '/languages/Language.php' );
@@ -278,18 +285,14 @@ function deny( ) {
 }
 
 /**
- * check for preview & verify
+ * check for staging machines (for example: preview or verify)
  */
 $headers = function_exists('apache_request_headers') ? apache_request_headers() : array();
 
-$isdeny = !empty( $headers[ "X-Staging" ] ) &&
-	preg_match("@^(sandbox|preview$|verify$)@", $headers["X-Staging"])
-	? true
-	: false;
+$isdeny = !empty( $headers[ "X-Staging" ] );
 
 if( $isdeny ) {
 	deny();
-}
-else{
+} else {
 	newrobots();
 }

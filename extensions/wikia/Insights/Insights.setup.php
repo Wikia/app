@@ -68,13 +68,22 @@ $wgAutoloadClasses['InsightsHooks'] = $dir . 'InsightsHooks.class.php';
 $wgHooks['BeforePageDisplay'][] = 'InsightsHooks::onBeforePageDisplay';
 $wgHooks['ArticleUpdateBeforeRedirect'][] = 'InsightsHooks::AfterActionBeforeRedirect';
 $wgHooks['ArticleCreateBeforeRedirect'][] = 'InsightsHooks::AfterActionBeforeRedirect';
-$wgHooks['GetLocalURL'][] = 'InsightsHooks::onGetLocalURL';
 $wgHooks['MakeGlobalVariablesScript'][] = 'InsightsHooks::onMakeGlobalVariablesScript';
 $wgHooks['GetRailModuleList'][] = 'InsightsHooks::onGetRailModuleList';
 $wgHooks['wgQueryPages'][] = 'InsightsHooks::onwgQueryPages';
 $wgHooks['AfterUpdateSpecialPages'][] = 'InsightsHooks::onAfterUpdateSpecialPages';
 
+$wgExtensionFunctions[] = 'wfInsightsSetup';
+function wfInsightsSetup() {
+	global $wgRequest, $wgHooks;
+
+	if ( !empty( $wgRequest->getVal( 'insights', null ) ) ) {
+		$wgHooks['GetLocalURL'][] = 'InsightsHooks::onGetLocalURL';
+	}
+}
+
 /**
  * Message files
  */
 $wgExtensionMessagesFiles['Insights'] = $dir . 'Insights.i18n.php';
+$wgExtensionMessagesFiles['InsightsAliases'] = $dir . 'Insights.alias.php';

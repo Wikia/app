@@ -804,7 +804,7 @@
 			/*** Wordmark Tab ***/
 			// style wordmark preview
 			$('#wordmark').removeClass().addClass(ThemeDesigner.settings['wordmark-font'])
-				.addClass(ThemeDesigner.settings['wordmark-font-size']).html(ThemeDesigner.settings['wordmark-text']);
+				.addClass(ThemeDesigner.settings['wordmark-font-size']).text(ThemeDesigner.settings['wordmark-text']);
 
 			// populate wordmark editor
 			$('#wordmark-edit').find('input[type="text"]')

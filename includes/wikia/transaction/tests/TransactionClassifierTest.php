@@ -4,6 +4,7 @@
  * Unit tests for TransactionClassifier
  *
  * @author macbre
+ * @group TransactionClassifier
  */
 class TransactionClassifierTest extends WikiaBaseTest {
 
@@ -92,7 +93,15 @@ class TransactionClassifierTest extends WikiaBaseTest {
 					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_NIRVANA,
 					Transaction::PARAM_CONTROLLER => 'Places',
 				],
-				'expectedName' => 'api/nirvana/other'
+				'expectedName' => 'api/nirvana/Places'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_NIRVANA,
+					Transaction::PARAM_CONTROLLER => 'ImageServing',
+					Transaction::PARAM_METHOD => 'getImages',
+				],
+				'expectedName' => 'api/nirvana/ImageServing'
 			],
 		];
 	}

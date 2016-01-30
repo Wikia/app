@@ -45,7 +45,7 @@ $wgQueryPages = array(
 	[ 'WantedFilesPage',               'Wantedfiles'                   ],
 	[ 'WantedPagesPage',               'Wantedpages'                   ],
 	[ 'WantedTemplatesPage',           'Wantedtemplates'               ],
-	[ 'UnwatchedPagesPage',            'Unwatchedpages'                ],
+	[ 'UnwatchedpagesPage',            'Unwatchedpages'                ],
 	[ 'UnusedtemplatesPage',           'Unusedtemplates'               ],
 	[ 'WithoutInterwikiPage',          'Withoutinterwiki'              ],
 );

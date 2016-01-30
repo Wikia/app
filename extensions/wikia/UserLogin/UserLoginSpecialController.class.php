@@ -427,7 +427,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					/*
 					 * Remove when SOC-217 ABTest is finished
 					 */
-					$this->wg->User->getGlobalAttribute( self::NOT_CONFIRMED_LOGIN_OPTION_NAME ) !== self::NOT_CONFIRMED_LOGIN_ALLOWED
+					$this->wg->User->getGlobalPreference( self::NOT_CONFIRMED_LOGIN_OPTION_NAME ) !== self::NOT_CONFIRMED_LOGIN_ALLOWED
 					/*
 					 * end remove
 					 */
@@ -612,6 +612,13 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		if ( $user->isPasswordReminderThrottled() ) {
 			$throttleTTL = round( $this->wg->PasswordReminderResendTime, 3 );
 			$this->setErrorResponse( 'userlogin-error-throttled-mailpassword', $throttleTTL );
+			return;
+		}
+
+		if ( !empty( array_intersect( F::app()->wg->AccountAdminGroups, $user->getGroups() ) ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->warning("Junior helper cannot change account info");
+
+			$this->setErrorResponse( 'userlogin-account-admin-error' );
 			return;
 		}
 

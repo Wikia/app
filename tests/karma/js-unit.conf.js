@@ -51,6 +51,7 @@ module.exports = function (config) {
 			'resources/wikia/modules/imageServing.js',
 			'resources/wikia/modules/krux.js',
 			'resources/wikia/modules/lazyqueue.js',
+			'resources/wikia/modules/facebookLocale.js',
 			'resources/wikia/modules/loader.js',
 			'resources/wikia/modules/nirvana.js',
 			'resources/wikia/modules/querystring.js',
@@ -65,6 +66,9 @@ module.exports = function (config) {
 
 			//helper modules
 			'resources/wikia/modules/dom.js',
+
+			// Import Scripts
+			'resources/wikia/modules/importScriptHelper.js',
 
 			// Performance
 			'extensions/wikia/Bucky/js/spec/bucky.mock.js',
@@ -192,11 +196,7 @@ module.exports = function (config) {
 
 			// PageShare
 			'extensions/wikia/PageShare/scripts/PageShare.js',
-			'extensions/wikia/PageShare/scripts/spec/PageShare.spec.js',
-
-			//AuthComponent tests
-			'extensions/wikia/AuthModal/js/AuthComponent.js',
-			'extensions/wikia/AuthModal/js/spec/AuthComponent.js'
+			'extensions/wikia/PageShare/scripts/spec/PageShare.spec.js'
 		]
 	});
 };

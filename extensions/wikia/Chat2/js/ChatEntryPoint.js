@@ -91,7 +91,7 @@ var ChatEntryPoint = {
 		// process i18n the messages
 		$t.find('[data-msg-id]').each(function() {
 			var $e = $(this);
-			$e.html($.msg($e.data('msg-id'), $e.data('msg-param')));
+			$e.text($.msg($e.data('msg-id'), $e.data('msg-param')));
 		});
 	},
 
@@ -165,10 +165,13 @@ var ChatEntryPoint = {
 		if ( window.wgUserName ) {
 			window.open( linkToSpecialChat, 'wikiachat', window.wgWikiaChatWindowFeatures );
 		} else {
-			UserLoginModal.show( {
-				origin: 'chat',
-				callback: ChatEntryPoint.onSuccessfulLogin
-			} );
+			require(['AuthModal'], function (authModal) {
+				authModal.load({
+					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
+					origin: 'chat',
+					onAuthSuccess: ChatEntryPoint.onSuccessfulLogin
+				});
+			});
 		}
 	},
 
@@ -191,7 +194,7 @@ var ChatEntryPoint = {
 							id: 'JoinChatModal',
 							size: 'small',
 							content: html,
-							title: $.msg( 'chat-start-a-chat' )
+							title: mw.html.escape($.msg( 'chat-start-a-chat' ))
 						}
 					};
 				uiModal.createComponent( joinModalConfig, function ( joinModal ) {

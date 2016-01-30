@@ -30,6 +30,18 @@ class ForgotPasswordController extends EmailController {
 		parent::assertCanAccessController();
 	}
 
+	/**
+	 * A redefinition of our parent's assertCanEmail which removes assertions:
+	 *
+	 * - assertUserWantsEmail : Even if a user says they don't want email, they should get this
+	 * - assertUserNotBlocked : Even if a user is blocked they should still get these emails
+	 *
+	 * @throws \Email\Fatal
+	 */
+	public function assertCanEmail() {
+		$this->assertUserHasEmail();
+	}
+
 	public function initEmail() {
 		$userService = new \UserService();
 		$this->tempPass = $this->request->getVal( 'tempPass' );

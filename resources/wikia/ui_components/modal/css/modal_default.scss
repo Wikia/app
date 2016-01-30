@@ -209,10 +209,7 @@ $large-modal-margin: 50px;
 
 // styles required to disable scrolling behind modal
 body.with-blackout {
-
 	&.background-dynamic {
-		position: static;
-
 		&:after,
 		&:before {
 			height: 100%;
@@ -227,12 +224,13 @@ body.with-blackout {
 	}
 
 	.global-navigation {
-		position: static;
+		position: fixed;
 	}
 
 	.WikiaSiteWrapper {
 		position: fixed;
 		width: 100%;
+		z-index: 2;
 	}
 
 	.fake-scrollbar {

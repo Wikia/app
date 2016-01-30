@@ -372,7 +372,8 @@ describe('Modal buttons', function () {
 						},
 						'<button>'
 					]
-				}
+				},
+				confirmCloseModal: false
 			};
 
 		spyOn(jQuery.fn, 'append');

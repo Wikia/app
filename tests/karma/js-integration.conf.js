@@ -60,6 +60,7 @@ module.exports = function (config) {
 			'resources/wikia/modules/geo.js',
 			'resources/wikia/modules/history.js',
 			'resources/wikia/modules/lazyqueue.js',
+			'resources/wikia/modules/facebookLocale.js',
 			'resources/wikia/modules/loader.js',
 			'resources/wikia/modules/nirvana.js',
 			'resources/wikia/modules/nodeFinder.js',

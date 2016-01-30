@@ -97,7 +97,7 @@ class UserPreferencesApi
      * Returns all the global user preferences for a user
      *
      * @param int $user_id The id of the user to list the preferences (required)
-     * @return \Swagger\Client\User\Preferences\Models\Preference[]
+     * @return \Swagger\Client\User\Preferences\Models\UserPreferences
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
     public function getUserPreferences($user_id)
@@ -162,12 +162,12 @@ class UserPreferencesApi
             list($response, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath, $method,
                 $queryParams, $httpBody,
-                $headerParams, '\Swagger\Client\User\Preferences\Models\Preference[]'
+                $headerParams, '\Swagger\Client\User\Preferences\Models\UserPreferences'
             );
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
             case 200:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\User\Preferences\Models\Preference[]', $httpHeader);
+                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\User\Preferences\Models\UserPreferences', $httpHeader);
                 $e->setResponseObject($data);
                 break;
             case 404:
@@ -183,26 +183,26 @@ class UserPreferencesApi
             return null;
         }
   
-        return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\User\Preferences\Models\Preference[]');
+        return $this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\User\Preferences\Models\UserPreferences');
         
     }
     
     /**
-     * updateUserPreferences
+     * setUserPreferences
      *
-     * Update more than one user preference
+     * set a user's preferences. note - this deletes preferences not in the provided list.
      *
-     * @param int $user_id The id of the user to list the preferences (required)
-     * @param \Swagger\Client\User\Preferences\Models\Preference[] $updated_user_preferences An array of user preference objects (optional)
+     * @param int $user_id The id of the user whose preferences are to be set (required)
+     * @param \Swagger\Client\User\Preferences\Models\UserPreferences $user_preferences The user&#39;s preferences (optional)
      * @return void
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function updateUserPreferences($user_id, $updated_user_preferences=null)
+    public function setUserPreferences($user_id, $user_preferences=null)
     {
         
         // verify the required parameter 'user_id' is set
         if ($user_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling updateUserPreferences');
+            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling setUserPreferences');
         }
   
         // parse inputs
@@ -213,7 +213,7 @@ class UserPreferencesApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
+        $_header_accept = ApiClient::selectHeaderAccept(array('application/v2+json'));
         if (!is_null($_header_accept)) {
             $headerParams['Accept'] = $_header_accept;
         }
@@ -232,8 +232,8 @@ class UserPreferencesApi
         
         // body params
         $_tempBody = null;
-        if (isset($updated_user_preferences)) {
-            $_tempBody = $updated_user_preferences;
+        if (isset($user_preferences)) {
+            $_tempBody = $user_preferences;
         }
   
         // for model (json/xml)
@@ -279,32 +279,26 @@ class UserPreferencesApi
     }
     
     /**
-     * updateUserPreference
+     * deleteUserPreferences
      *
-     * Update one user preference
+     * deletes all of a user's preferences
      *
-     * @param int $user_id The id of the user whose preference is to be updated/created (required)
-     * @param string $preference_name The preference name to update/create (required)
-     * @param string $updated_value the preference value (optional)
+     * @param int $user_id The id of the uesr whose preferences are to be deleted (required)
      * @return void
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function updateUserPreference($user_id, $preference_name, $updated_value=null)
+    public function deleteUserPreferences($user_id)
     {
         
         // verify the required parameter 'user_id' is set
         if ($user_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling updateUserPreference');
-        }
-        // verify the required parameter 'preference_name' is set
-        if ($preference_name === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $preference_name when calling updateUserPreference');
+            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling deleteUserPreferences');
         }
   
         // parse inputs
-        $resourcePath = "/{userId}/{preferenceName}";
+        $resourcePath = "/{userId}";
         $resourcePath = str_replace("{format}", "json", $resourcePath);
-        $method = "PUT";
+        $method = "DELETE";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -324,20 +318,9 @@ class UserPreferencesApi
                 $this->apiClient->getSerializer()->toPathValue($user_id),
                 $resourcePath
             );
-        }// path params
-        if ($preference_name !== null) {
-            $resourcePath = str_replace(
-                "{" . "preferenceName" . "}",
-                $this->apiClient->getSerializer()->toPathValue($preference_name),
-                $resourcePath
-            );
         }
         
-        // body params
-        $_tempBody = null;
-        if (isset($updated_value)) {
-            $_tempBody = $updated_value;
-        }
+        
   
         // for model (json/xml)
         if (isset($_tempBody)) {
@@ -370,10 +353,6 @@ class UserPreferencesApi
             );
         } catch (ApiException $e) {
             switch ($e->getCode()) { 
-            case 400:
-                $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\User\Preferences\Models\Problem', $httpHeader);
-                $e->setResponseObject($data);
-                break;
             }
   
             throw $e;

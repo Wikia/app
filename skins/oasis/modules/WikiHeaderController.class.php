@@ -37,6 +37,10 @@ class WikiHeaderController extends WikiaController {
 		$this->displaySearch = !empty($this->wg->EnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this, $this->wg->Title);
 		$this->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
 		$this->displayHeaderButtons = !WikiaPageType::isWikiaHubMain();
+
+		if ( $this->wg->EnableSeoTestingExt ) {
+			$this->setVal( 'seoTestOneH1', SeoTesting::getGroup('One_H1') === 2 );
+		}
 	}
 
 	public function executeWordmark() {
@@ -69,5 +73,9 @@ class WikiHeaderController extends WikiaController {
 		}
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
+
+		if ( $this->wg->EnableSeoTestingExt ) {
+			$this->setVal( 'seoTestOneH1', SeoTesting::getGroup('One_H1') === 2 );
+		}
 	}
 }

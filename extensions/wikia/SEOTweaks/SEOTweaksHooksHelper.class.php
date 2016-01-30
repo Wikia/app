@@ -13,7 +13,7 @@ class SEOTweaksHooksHelper {
 	/**
 	 * List of hosts associated with external sharing services
 	 */
-	const SHARING_HOSTS_REGEX = '/\.(facebook)|(twitter)|(google)\./is';
+	const SHARING_HOSTS_REGEX = '/\.(facebook|twitter|google)\./is';
 
 	/**
 	 * @author mech
@@ -27,9 +27,6 @@ class SEOTweaksHooksHelper {
 		}
 		if ( !empty( $wgSEOGooglePlusLink ) ) {
 			$out->addLink( array( 'href' => $wgSEOGooglePlusLink, 'rel' => 'publisher' ) );
-		}
-		if ( WikiaPageType::isMainPage() ) {
-			$out->addLink( [ 'rel' => 'alternate', 'href' => $wgServer, 'media' => 'only screen and (max-width: 640px)' ] );
 		}
 		return true;
 	}
@@ -130,16 +127,23 @@ class SEOTweaksHooksHelper {
 	 */
 	static public function onArticleViewHeader( &$article, &$outputDone, &$pcache ) {
 		$title = $article->getTitle();
-		if ( ( ! $title->exists() )
-			&& ( isset( $_SERVER['HTTP_REFERER'] ) )
-			&& preg_match( self::SHARING_HOSTS_REGEX, parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_HOST ) )
-		    ) {
+		if ( !$title->exists()
+				&& $title->isContentPage()
+				&& isset( $_SERVER['HTTP_REFERER'] )
+				&& preg_match( self::SHARING_HOSTS_REGEX, parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_HOST ) )
+		) {
+			$namespace = $title->getNamespace();
 			$dbr = wfGetDB( DB_SLAVE );
-			$result = $dbr->query( sprintf( 'SELECT page_title FROM page WHERE page_title %s LIMIT 1', $dbr->buildLike( $title->getDBKey(), $dbr->anyString() ) ), __METHOD__ );
+			$query = sprintf(
+				'SELECT page_title FROM page WHERE page_title %s AND page_namespace = %d LIMIT 1',
+				$dbr->buildLike( $title->getDBKey(), $dbr->anyString() ),
+				$namespace
+			);
+			$result = $dbr->query( $query, __METHOD__ );
 			if ( $row = $dbr->fetchObject( $result ) ) {
-				$title = Title::newFromText( $row->page_title );
+				$title = Title::newFromText( $row->page_title, $namespace );
 				F::app()->wg->Out->redirect( $title->getFullUrl() );
-			    $outputDone = true;
+				$outputDone = true;
 			}
 		}
 		return true;

@@ -87,7 +87,6 @@ $wgAPIListModules['semanticwatchlist'] = 'ApiQuerySemanticWatchlist';
 $wgHooks['LoadExtensionSchemaUpdates'][] = 'SWLHooks::onSchemaUpdate';
 $wgHooks['SMWStore::updateDataBefore'][] = 'SWLHooks::onDataUpdate';
 $wgHooks['GetPreferences'][] = 'SWLHooks::onGetPreferences';
-$wgHooks['UserSetPreferences'][] = 'SWLHooks::onUserSaveOptions';
 $wgHooks['UserSaveOptions'][] = 'SWLHooks::onUserSaveOptions';
 $wgHooks['AdminLinks'][] = 'SWLHooks::addToAdminLinks';
 $wgHooks['PersonalUrls'][] = 'SWLHooks::onPersonalUrls';

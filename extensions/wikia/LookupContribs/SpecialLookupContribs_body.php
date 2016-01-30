@@ -68,8 +68,8 @@ class LookupContribsPage extends SpecialPage {
 		if ($this->mUsername != '') {
 			$sk = RequestContext::getMain()->getSkin();
 			$this->mUserPage = Title::makeTitle (NS_USER, $this->mUsername);
-			$this->mUserLink = $sk->makeKnownLinkObj ($this->mUserPage, $this->mUsername);
-			$this->mModeText = ($this->mMode == 'normal') ? wfMsg('lookupcontribsrecentcontributions', $this->mUserLink) : wfMsg('lookupcontribsfinalcontributions', $this->mUserLink);
+			$this->mUserLink = $sk->makeKnownLinkObj( $this->mUserPage, htmlspecialchars( $this->mUsername, ENT_QUOTES ) );
+			$this->mModeText = ($this->mMode == 'normal') ? wfMessage( 'lookupcontribsrecentcontributions' )->rawParams( $this->mUserLink )->escaped() : wfMessage( 'lookupcontribsfinalcontributions' )->rawParams( $this->mUserLink )->escaped();
 			$wgOut->setSubtitle ($this->mModeText);
 		}
 
@@ -155,20 +155,20 @@ class LookupContribsPage extends SpecialPage {
 
 		/* no list when user does not exist - may be a typo */
 		if ($this->mCore->checkUser() === false) {
-			$wgOut->addHTML( wfMsg('lookupcontribsinvaliduser', $this->mUsername) );
+			$wgOut->addHTML( wfMessage( 'lookupcontribsinvaliduser', $this->mUsername )->parse() );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		/* run a check against possible modes */
 		if (!in_array($this->mView, $this->mViewModes)) {
-			$wgOut->addHTML( wfMsg('lookupcontribsinvalidviewmode', $this->mView) );
+			$wgOut->addHTML( wfMessage( 'lookupcontribsinvalidviewmode', $this->mView )->parse() );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		if (!in_array($this->mMode, array_keys($this->mModes))) {
-			$wgOut->addHTML( wfMsg('lookupcontribsinvalidmode', $this->mMode) ) ;
+			$wgOut->addHTML( wfMessage( 'lookupcontribsinvalidmode', $this->mMode )->parse() ) ;
 			wfProfileOut( __METHOD__ );
 			return false;
 		}

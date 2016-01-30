@@ -31,7 +31,7 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 		$founderEmailObj = FounderEmails::getInstance();
 		// Get list of founders with digest mode turned on (defined in FounderEmailsEvent)
 		if ( empty( $events ) ) {
-			$cityList = $founderEmailObj->getFoundersWithPreference( 'founderemails-complete-digest' );
+			$cityList = $founderEmailObj->getWikisWithFounderPreference( 'founderemails-complete-digest' );
 		} else {
 			$cityList = $events;
 		}

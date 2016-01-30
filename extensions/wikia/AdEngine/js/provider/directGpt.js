@@ -44,6 +44,10 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			TOP_LEADERBOARD:            {size: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150', loc: 'top'},
 			TOP_RIGHT_BOXAD:            {size: '300x250,300x600,300x1050', loc: 'top'}
 		},
+		recoverableSlots = [
+			'TOP_LEADERBOARD',
+			'TOP_RIGHT_BOXAD'
+		],
 		atfSlots = [
 			'CORP_TOP_LEADERBOARD',
 			'CORP_TOP_RIGHT_BOXAD',
@@ -138,7 +142,8 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				log(['beforeHop', slotName], 'debug', logGroup);
 				onSlotResponse(slotName);
 			},
-			sraEnabled: true
+			sraEnabled: true,
+			recoverableSlots: recoverableSlots
 		}
 	);
 

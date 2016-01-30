@@ -343,7 +343,6 @@ class CreateWiki {
 		 * destroy connection to newly created database
 		 */
 		$this->waitForSlaves( __METHOD__ );
-
 		$wgSharedDB = $tmpSharedDB;
 
 

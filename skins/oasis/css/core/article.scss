@@ -402,12 +402,8 @@
 	}
 
   	// BugId:9262
-	.diff-article-content {
-		margin-right: 340px;
-
-		body.mainpage & {
-			margin-right: 0;
-		}
+	.diff-article-content body.mainpage & {
+		margin-right: 0;
 	}
 
 	.fbconnect-synced-profile {

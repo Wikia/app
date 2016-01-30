@@ -13,6 +13,16 @@ class ContactForm extends SpecialPage {
 
 	private $mReferral;
 
+	private $securityIssueTypes = [
+		1 => 'specialcontact-security-issue-type-xss',
+		2 => 'specialcontact-security-issue-type-csrf',
+		3 => 'specialcontact-security-issue-type-sqli',
+		4 => 'specialcontact-security-issue-type-auth',
+		5 => 'specialcontact-security-issue-type-leak',
+		6 => 'specialcontact-security-issue-type-redirect',
+		7 => 'specialcontact-security-issue-type-other',
+	];
+
 	var $customForms = array(
 		'account-issue' => array(
 			'format' => "User reports a problem with his account (%s) on this wiki:\n%s\n\nDescription of issue:\n%s",
@@ -44,7 +54,13 @@ class ContactForm extends SpecialPage {
 			'format' => "User %s reports a problem with feature \"%s\".\n\nURL to problem page:\n%s\n\nDescription of issue:\n\n%s",
 			'vars' => array( 'wpUserName', 'wpFeature', 'wpContactWikiName', 'wpDescription' ),
 			'subject' => 'Bug report by %s at %s',
-		)
+		),
+
+		'security' => [
+			'format' => "User %s reports a security issue on Wikia.\n\nType of issue: %s\n\nURL to example of bug:\n%s\n\nDescription of the issue:\n\n%s",
+			'vars' => [ 'wpUserName', 'wpIssueType', 'wpUrl', 'wpDescription' ],
+			'subject' => 'Security report by %s at %s',
+		],
 	);
 
 	function  __construct() {
@@ -110,7 +126,18 @@ class ContactForm extends SpecialPage {
 				}
 
 				foreach ( $this->customForms[$par]['vars'] as $var ) {
-					$args[] = $request->getVal( $var );
+					if ( $par === 'security' && $var === 'wpIssueType' ) {
+						$issueType = $request->getInt( $var );
+						// We want the email to always be in English
+						if ( isset( $this->securityIssueTypes[$issueType] ) ) {
+							$args[] = wfMessage( $this->securityIssueTypes[$issueType] )->inLanguage( 'en' )->escaped();
+						} else {
+							// Default to 'other'
+							$args[] = wfMessage( 'specialcontact-security-issue-type-other' )->inLanguage( 'en' )->escaped();
+						}
+					} else {
+						$args[] = $request->getVal( $var );
+					}
 				}
 
 				if ( !empty( $this->customForms[$par]['markuser'] ) ) {
@@ -491,11 +518,11 @@ class ContactForm extends SpecialPage {
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'Contact' . '/' . $sub );
 		$action = $titleObj->escapeLocalUrl( $q );
 
-		$encName = htmlspecialchars( $this->mUserName );
-		$encEmail = htmlspecialchars( $this->mEmail );
-		$encRealName = htmlspecialchars( $this->mRealName );
-		$encProblem = htmlspecialchars( $this->mProblem );
-		$encProblemDesc = htmlspecialchars( $this->mProblemDesc );
+		$encName = Sanitizer::encodeAttribute( $this->mUserName );
+		$encEmail = Sanitizer::encodeAttribute( $this->mEmail );
+		$encRealName = Sanitizer::encodeAttribute( $this->mRealName );
+		$encProblem = Sanitizer::encodeAttribute( $this->mProblem );
+		$encProblemDesc = htmlspecialchars( $this->mProblemDesc, ENT_QUOTES );
 
 
 		//global this, for use with unlocking a field
@@ -539,6 +566,10 @@ class ContactForm extends SpecialPage {
 			#anon
 			$wgCaptcha = new $wgCaptchaClass();
 			$vars[ 'captchaForm' ] = $wgCaptcha->getForm();
+		}
+
+		if ( $sub === 'security' ) {
+			$vars['issueTypes'] = $this->securityIssueTypes;
 		}
 
 		if( !empty( $this->err ) ) {

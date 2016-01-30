@@ -51,19 +51,29 @@
 								<?php if ( isset( $item['metadata'] ) ) : ?>
 									<p class="insights-list-item-metadata">
 										<?php if ( isset( $item['metadata']['lastRevision'] ) ) : ?>
+											<?php $revision = $item['metadata']['lastRevision'] ?>
 											<?= wfMessage( 'insights-last-edit' )->rawParams(
-											Xml::element( 'a', [
-													'href' => $item['metadata']['lastRevision']['userpage']
-												],
-													$item['metadata']['lastRevision']['username']
+												Html::element( 'a',
+													[
+														'href' => $revision['userpage']
+													],
+													$revision['username']
 												),
-											date( 'F j, Y', $item['metadata']['lastRevision']['timestamp'] )
+												$wg->Lang->userDate( $revision['timestamp'], $wg->User )
 											)->escaped() ?>
 										<?php endif; ?>
 									</p>
 									<p class="insights-list-item-metadata">
 										<?php if ( isset( $item['metadata']['wantedBy'] ) ) : ?>
-											<?= $item['metadata']['wantedBy'] ?>
+											<?php $wantedBy = $item['metadata']['wantedBy']; ?>
+											<?=
+												Html::element( 'a',
+													[
+														'href' => $wantedBy['url'],
+													],
+													wfMessage( $wantedBy['message'] )->numParams( $wantedBy['value'] )->escaped()
+												);
+											?>
 										<?php endif; ?>
 									</p>
 								<?php endif; ?>

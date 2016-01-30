@@ -24,6 +24,10 @@ class VisualEditorWikiaHooks {
 				've/tests/ce/ve.ce.WikiaBlockVideoNode.test.js',
 				've/tests/ce/ve.ce.WikiaBlockImageNode.test.js',
 				've/tests/ce/ve.ce.WikiaInlineVideoNode.test.js',
+
+				//ui
+				've/tests/ui/ve.ui.wikiaExample.js',
+				've/tests/ui/ve.ui.WikiaInfoboxInsertDialog.test.js',
 			),
 			'dependencies' => array(
 				'ext.visualEditor.test',

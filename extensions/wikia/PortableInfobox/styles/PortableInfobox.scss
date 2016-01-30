@@ -94,6 +94,11 @@
 	border-bottom-width: 1px;
 }
 
+.pi-data:last-of-type + .pi-group {
+	border-top-style: solid;
+	border-top-width: 1px;
+}
+
 .pi-data {
 	@include flexbox;
 	@include flex-direction(row);

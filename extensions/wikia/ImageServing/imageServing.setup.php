@@ -20,6 +20,7 @@ $wgAutoloadClasses['ImageServingDriverMainNS'] =  $dir . 'drivers/ImageServingDr
 $wgAutoloadClasses['ImageServingDriverCategoryNS'] =  $dir . 'drivers/ImageServingDriverCategoryNS.class.php';
 $wgAutoloadClasses['ImageServingDriverUserNS'] =  $dir . 'drivers/ImageServingDriverUserNS.class.php';
 $wgAutoloadClasses['ImageServingDriverFileNS'] =  $dir . 'drivers/ImageServingDriverFileNS.class.php';
+$wgAutoloadClasses['ImageServingDriverInfoboxImageNS'] =  $dir . 'drivers/ImageServingDriverInfoboxImageNS.class.php';
 $wgAutoloadClasses['ImageServingController'] =  $dir . 'ImageServingController.class.php';
 
 $wgImageServingDrivers = array(

@@ -17,7 +17,10 @@ class PipelineEventProducer {
 		try {
 			self::getPipeline()->publish( implode( '.', [ self::ARTICLE_MESSAGE_PREFIX, $eventName ] ), $msg );
 		} catch ( Exception $e ) {
-			\Wikia\Logger\WikiaLogger::instance()->error( $e->getMessage() );
+			\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+				'exception' => $e,
+				'event_name' => $eventName
+			] );
 		}
 	}
 

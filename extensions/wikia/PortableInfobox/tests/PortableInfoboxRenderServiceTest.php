@@ -432,12 +432,61 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									</table>
 								</section>
 							</aside>',
-				'description' => 'Infobox with title and horizontal group',
+				'description' => 'Infobox with horizontal group',
 				'mockParams' => [
 					'createHorizontalGroupData' => [
 						'header' => 'Test header',
 						'labels' => ['test label', 'test label'],
 						'values' => ['test value', 'test value'],
+						'renderLabels' => true
+					]
+				]
+			],
+			[
+				'input' => [
+					[
+						'type' => 'group',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => '',
+										'value' => 'test value'
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => '',
+										'value' => 'test value'
+									]
+								]
+							],
+							'layout' => 'horizontal'
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox pi-background">
+								<section class="pi-item pi-group pi-border-color">
+									<table class="pi-horizontal-group">
+										<tbody>
+											<tr>
+												<td
+												class="pi-horizontal-group-item pi-data-value pi-font pi-border-color pi-item-spacing">test value</td>
+												<td
+												class="pi-horizontal-group-item pi-data-value pi-font pi-border-color pi-item-spacing">test value</td>
+											</tr>
+										</tbody>
+									</table>
+								</section>
+							</aside>',
+				'description' => 'Infobox with horizontal group without header and labels',
+				'mockParams' => [
+					'createHorizontalGroupData' => [
+						'labels' => ['', ''],
+						'values' => ['test value', 'test value'],
+						'renderLabels' => false
 					]
 				]
 			],

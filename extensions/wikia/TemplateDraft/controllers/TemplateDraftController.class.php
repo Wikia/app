@@ -5,7 +5,7 @@ class TemplateDraftController extends WikiaController {
 	/**
 	 * Converts the content of the template according to the given type.
 	 * @param Title $title
-	 * @param sting $content
+	 * @param string $content
 	 * @param string $type One of types specified in the TemplateClassificationController
 	 * @return string
 	 * @throws MWException

@@ -3,20 +3,18 @@
 class ResourceLoaderAdEngineSourcePointModule extends ResourceLoaderAdEngineBase {
 	const TTL_SCRIPTS = 86400;   // one day for fresh scripts from SourcePoint
 	const TTL_GRACE = 3600; // one hour for old scripts (served if we fail to fetch fresh scripts)
-	const CACHE_BUSTER = 12;     // increase this any time the local files change
+	const CACHE_BUSTER = 14;     // increase this any time the local files change
 	const REQUEST_TIMEOUT = 30;
-	const SCRIPT_DELIVERY_URL = 'https://api.getsentinel.com/script/delivery?delivery=bundle';
-	const SCRIPT_RECOVERY_URL = 'https://api.sourcepoint.com/script/recovery?delivery=bundle';
+	const SCRIPT_DELIVERY_URL = 'https://api.sourcepoint.com/script/delivery?delivery=bundle';
 
 	/**
 	 * Configure scripts that should be loaded into one package
 	 * @return array of ResourceLoaderScript
 	 */
 	protected function getScripts() {
-		$scripts = [];
-		$scripts[] = (new ResourceLoaderScript())->setTypeRemote()->setValue(self::SCRIPT_RECOVERY_URL);
-		$scripts[] = (new ResourceLoaderScript())->setTypeRemote()->setValue(self::SCRIPT_DELIVERY_URL);
-		return $scripts;
+		return [
+			(new ResourceLoaderScript())->setTypeRemote()->setValue(self::SCRIPT_DELIVERY_URL)
+		];
 	}
 
 	/**
@@ -24,9 +22,9 @@ class ResourceLoaderAdEngineSourcePointModule extends ResourceLoaderAdEngineBase
 	 * @return array ["script" => '', "modTitme" => '', "ttl" => '']
 	 */
 	protected function getFallbackDataWhenRequestFails() {
-		$scripts = [];
-		$scripts[] = (new ResourceLoaderScript())->setTypeLocal()->setValue(__DIR__ . '/../SourcePoint/recovery.js');
-		$scripts[] = (new ResourceLoaderScript())->setTypeLocal()->setValue(__DIR__ . '/../SourcePoint/delivery.js');
+		$scripts = [
+			(new ResourceLoaderScript())->setTypeLocal()->setValue(__DIR__ . '/../SourcePoint/delivery.js')
+		];
 		$data = [
 			'script' => $this->generateData( $scripts ),
 			'modTime' => $this->getCurrentTimestamp(),

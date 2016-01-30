@@ -914,6 +914,9 @@ $wgAutoloadLocalClasses = array(
 	'UploadStashWrongOwnerException' => 'includes/upload/UploadStash.php',
 	'UploadStashNoSuchKeyException' => 'includes/upload/UploadStash.php',
 
+	# includes/wikia/interfaces
+	'Wikia\Interfaces\IRequest' => 'includes/wikia/interfaces/IRequest.php',
+
 	# languages
 	'FakeConverter' => 'languages/Language.php',
 	'Language' => 'languages/Language.php',

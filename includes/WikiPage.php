@@ -910,7 +910,7 @@ class WikiPage extends Page {
 		if ( $wgUseSquid ) {
 			// Commit the transaction before the purge is sent
 			$dbw = wfGetDB( DB_MASTER );
-			$dbw->commit();
+			$dbw->commit( __METHOD__ );
 
 			// Send purge
 			$update = SquidUpdate::newSimplePurge( $this->mTitle );
@@ -996,6 +996,22 @@ class WikiPage extends Page {
 			# An extra check against threads stepping on each other
 			$conditions['page_latest'] = $lastRevision;
 		}
+
+		// Wikia change - begin
+		/**
+		 * PLATFORM-1311: page_latest can be set to zero only during page creation
+		 *
+		 * https://www.mediawiki.org/wiki/Manual:Page_table#page_latest says the following:
+		 *
+		 * WikiPage::updateRevisionOn() should set it to a non-zero value.
+		 * It needs to link to a revision with a valid revision.rev_page.
+		 */
+		Wikia\Util\Assert::true( $revision->getId() > 0 , 'PLATFORM-1311', [
+			'reason' => __METHOD__ . ' tried to set page_latest to zero',
+			'page_id' => $this->getId(),
+			'name' => $this->getTitle()->getPrefixedDBkey(),
+		] );
+		// Wikia change - end
 
 		$now = wfTimestampNow();
 		$dbw->update( 'page',
@@ -1360,6 +1376,8 @@ class WikiPage extends Page {
 						'reason' => 'ArticleDoEdit rollback - updateRevisionOn failed',
 						'exception' => new Exception(),
 						'name' => $this->mTitle->getPrefixedDBkey(),
+						'rev_id' => $revisionId,
+						'page_id' => $this->getId(),
 					]);
 
 					$revisionId = 0;

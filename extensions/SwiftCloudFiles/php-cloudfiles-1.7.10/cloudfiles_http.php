@@ -1483,12 +1483,15 @@ class CF_Http
 		while( $retriesLeft >= 0 ) {
 			$res = $this->_do_send_request( $conn_type, $url_path, $hdrs, $method, $force_new );
 
-			if ( !in_array( $res, [ 500, 503, false ] ) ) {
-				// request was successful, return
+			# PLATFORM-1059 - retry all HTTP 50x responses
+			if ( $res !== false && $res < 500 ) {
 				break;
 			}
 
-			Wikia\Logger\WikiaLogger::instance()->error( 'SwiftStorage: retry', [
+			# PLATFORM-1521 - report an error only when there are no retries left
+			$level = ( $retriesLeft === 0 ) ? 'error' : 'warning';
+
+			Wikia\Logger\WikiaLogger::instance()->$level( 'SwiftStorage: retry', [
 				'exception'    => new Exception( $this->error_str, is_numeric($res) ? $res : 0 ),
 				'retries-left' => $retriesLeft,
 				'headers'      => $hdrs,

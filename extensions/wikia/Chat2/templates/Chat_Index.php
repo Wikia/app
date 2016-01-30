@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<title><?= $roomName ?>: <?= $roomTopic ?></title>
+	<title><?= wfMessage( "wikia-pagetitle", "$roomName: $roomTopic" )->text() ?></title>
 	<link rel="shortcut icon" href="<?= $wg->Favicon ?>">
 
 	<!-- Make IE recognize HTML5 tags. -->

@@ -1,4 +1,4 @@
-/*global document, describe, it, expect, modules, spyOn, beforeEach*/
+/*global describe, it, expect, modules, spyOn, beforeEach*/
 describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	'use strict';
 
@@ -9,10 +9,11 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		mocks = {
 			log: noop,
 			googleTag: function () {},
+			context: { opts: {} },
 			adContext: {
 				addCallback: noop,
 				getContext: function () {
-					return { opts: {} };
+					return mocks.context;
 				}
 			},
 			adDetect: {},
@@ -21,9 +22,18 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 					return [];
 				}
 			},
+			recoveryHelper: {
+				addSlotToRecover: noop,
+				createSourcePointTag: noop,
+				recoverSlots: noop,
+				isBlocking: noop,
+				isRecoverable: noop,
+				isRecoveryEnabled: noop
+			},
 			slotTweaker: {
 				show: noop,
-				hide: noop
+				hide: noop,
+				removeDefaultHeight: noop
 			},
 			slotElement: {
 				appendChild: noop
@@ -57,8 +67,8 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.adDetect,
 			AdElement,
 			mocks.googleTag,
+			mocks.recoveryHelper,
 			mocks.slotTweaker,
-			mocks.sourcePointTag,
 			mocks.sraHelper
 		);
 	}
@@ -76,11 +86,9 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		AdElement.prototype.updateDataParams = noop;
 
-		spyOn(document, 'getElementById').and.returnValue({
-			appendChild: noop
-		});
-
 		callbacks = [];
+
+		mocks.context = { opts: {} };
 	});
 
 	it('Initialize googletag when module is not initialized yet', function () {
@@ -145,5 +153,44 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		getModule().pushAd('TOP_RIGHT_BOXAD', mocks.slotElement, '/foo/slot/path', {}, {});
 
 		expect(callbacks.length).toEqual(1);
+	});
+
+	it('Prevent push/flush when slot is not recoverable and pageview is blocked and recovery is enabled', function () {
+		mocks.recoveryHelper.isBlocking = function () {
+			return true;
+		};
+
+		mocks.recoveryHelper.isRecoverable = function () {
+			return false;
+		};
+
+		spyOn(mocks.googleTag.prototype, 'push');
+		spyOn(mocks.googleTag.prototype, 'flush');
+
+		getModule().pushAd('TOP_RIGHT_BOXAD', mocks.slotElement, '/foo/slot/path', {}, { sraEnabled: true });
+
+		expect(mocks.googleTag.prototype.push).not.toHaveBeenCalled();
+		expect(mocks.googleTag.prototype.flush).not.toHaveBeenCalled();
+	});
+
+	it('Should push/flush when slot is recoverable', function () {
+		mocks.recoveryHelper.isBlocking = function () {
+			return true;
+		};
+
+		mocks.recoveryHelper.isRecoverable = function () {
+			return true;
+		};
+
+		spyOn(mocks.googleTag.prototype, 'push');
+		spyOn(mocks.googleTag.prototype, 'flush');
+
+		getModule().pushAd('TOP_RIGHT_BOXAD', mocks.slotElement, '/foo/slot/path', {}, {
+			sraEnabled: true,
+			recoverableSlots: ['TOP_RIGHT_BOXAD']
+		});
+
+		expect(mocks.googleTag.prototype.push).toHaveBeenCalled();
+		expect(mocks.googleTag.prototype.flush).toHaveBeenCalled();
 	});
 });

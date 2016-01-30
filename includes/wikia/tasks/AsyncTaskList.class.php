@@ -331,7 +331,9 @@ class AsyncTaskList {
 			}
 
 			if ( $exception !== null ) {
-				WikiaLogger::instance()->critical( "Failed to queue task", [ 'error' => $exception->getMessage() ] );
+				WikiaLogger::instance()->critical( 'AsyncTaskList::queue', [
+					'exception' => $exception
+				] );
 				return null;
 			}
 		} else {
@@ -395,8 +397,8 @@ class AsyncTaskList {
 		global $wgTaskBroker;
 
 		$logError = function( \Exception $e ) {
-			WikiaLogger::instance()->critical( 'Failed to queue task group', [
-				'error' => $e->getMessage(),
+			WikiaLogger::instance()->critical( 'AsyncTaskList::batch', [
+				'exception' => $e
 			] );
 
 			return null;

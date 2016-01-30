@@ -218,6 +218,12 @@ class Article extends Page {
 			return $text;
 		} else {
 			$this->fetchContent();
+			// Wikia: Temporary Investigation for PLATFORM-1355
+			if(empty($this->mContent)) {
+					Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' empty content PLAT1355', [
+						'page_id' => $this->mPage->getID()
+				] );
+			}
 			wfProfileOut( __METHOD__ );
 
 			return $this->mContent;
@@ -693,12 +699,15 @@ class Article extends Page {
 		# tents of 'pagetitle-view-mainpage' instead of the default (if
 		# that's not empty).
 		# This message always exists because it is in the i18n files
-		if ( $this->getTitle()->isMainPage() ) {
-			$msg = wfMessage( 'pagetitle-view-mainpage' )->inContentLanguage();
-			if ( !$msg->isDisabled() ) {
-				$wgOut->setHTMLTitle( $msg->title( $this->getTitle() )->text() );
-			}
-		}
+		# Wikia change - begin
+		# This logic is moved to OutputPage::setHTMLTitle
+		#if ( $this->getTitle()->isMainPage() ) {
+		#	$msg = wfMessage( 'pagetitle-view-mainpage' )->inContentLanguage();
+		#	if ( !$msg->isDisabled() ) {
+		#		$wgOut->setHTMLTitle( $msg->title( $this->getTitle() )->text() );
+		#	}
+		#}
+		# Wikia change - end
 
 		# Check for any __NOINDEX__ tags on the page using $pOutput
 		$policy = $this->getRobotPolicy( 'view', $pOutput );

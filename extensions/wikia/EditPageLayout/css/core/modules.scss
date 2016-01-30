@@ -99,6 +99,11 @@ $color-icon: mix($color-text, #fff, 90%);
 			@include clearfix;
 		}
 
+		.approve-changes-label {
+			display: block;
+			margin: 10px 0;
+		}
+
 		#wpPreview {
 			text-align: center;
 		}

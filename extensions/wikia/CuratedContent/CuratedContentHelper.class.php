@@ -9,22 +9,12 @@ class CuratedContentHelper {
 	const STR_CATEGORY = 'category';
 	const STR_VIDEO = 'video';
 
-	//TODO: Temporary, remove with CONCF-1095
-	private static $buttonEnabled = false;
-	private static function isAllowedWikia() {
-		$host = RequestContext::getMain()->getRequest()->getHeader('HOST');
-
-		return (bool) preg_match(
-			'/creepypasta|glee|castle-clash|clashofclans|mobileregressiontesting|concf/i',
-			$host
-		);
-	}
-
 	public static function shouldDisplayToolButton() {
 		global $wgEnableCuratedContentExt, $wgUser;
 
-		return self::$buttonEnabled && WikiaPageType::isMainPage() && self::isAllowedWikia()
-			&& !empty( $wgEnableCuratedContentExt ) && $wgUser->isAllowed( 'curatedcontent' );
+		return WikiaPageType::isMainPage() &&
+			!empty( $wgEnableCuratedContentExt ) &&
+			$wgUser->isAllowed( 'curatedcontent' );
 	}
 
 	public function processSections( $sections ) {

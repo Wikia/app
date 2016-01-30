@@ -14,6 +14,7 @@ use Wikia\Service\Helios\HeliosClient;
 class User {
 
 	const ACCESS_TOKEN_COOKIE_NAME = 'access_token';
+	const ACCESS_TOKEN_HEADER_NAME = 'X-Wikia-AccessToken';
 	const AUTH_METHOD_NAME = 'auth_method';
 	const MERCURY_ACCESS_TOKEN_COOKIE_NAME = 'sid';
 	const AUTH_TYPE_FAILED = 0;
@@ -57,14 +58,7 @@ class User {
 
 		// No access token in the cookie, try the HTTP header.
 		if ( ! $token ) {
-			$header = $request->getHeader( 'AUTHORIZATION' );
-
-			$matches = [];
-			preg_match( '/^Bearer\s*(\S*)$/', $header, $matches );
-
-			if ( ! empty( $matches[1] ) ) {
-				$token = $matches[1];
-			}
+			$token = $request->getHeader( self::ACCESS_TOKEN_HEADER_NAME );
 		}
 
 		// Normalize the value so the method returns a non-empty string or null.
@@ -84,19 +78,12 @@ class User {
 	 */
 	public static function newFromToken( \WebRequest $request ) {
 		// Extract access token from HTTP request data.
+		wfProfileIn(__METHOD__);
 		$token = self::getAccessToken( $request );
 
 		// Authenticate with the token, if present.
 		if ( $token ) {
 			$heliosClient = self::getHeliosClient();
-
-			// start the session if there's none so far
-			// the code is borrowed from SpecialUserlogin
-			// @see PLATFORM-1261
-			if ( session_id() == '' ) {
-				wfSetupSession();
-				WikiaLogger::instance()->debug( __METHOD__ . '::startSession' );
-			}
 
 			try {
 				$tokenInfo = $heliosClient->info( $token );
@@ -107,9 +94,24 @@ class User {
 					// @see SERVICES-459
 					if ( (bool)$user->getGlobalFlag( 'disabled' ) ) {
 						self::clearAccessTokenCookie();
+						wfProfileOut(__METHOD__);
 						return null;
 					}
+
+					// start the session if there's none so far
+					// the code is borrowed from SpecialUserlogin
+					// @see PLATFORM-1261
+					if ( session_id() == '' ) {
+						wfSetupSession();
+						WikiaLogger::instance()->debug( __METHOD__ . '::startSession' );
+
+						// Update mTouched on user when he starts new MW session
+						// @see SOC-1326
+						$user->invalidateCache();
+					}
+
 					// return a MediaWiki's User object
+					wfProfileOut(__METHOD__);
 					return $user;
 				}
 			}
@@ -119,6 +121,7 @@ class User {
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return null;
 	}
 
@@ -237,9 +240,13 @@ class User {
 	 * Call helios invalidate token.
 	 */
 	private static function invalidateAccessTokenInHelios() {
+		global $wgUser;
 		$request = \RequestContext::getMain()->getRequest();
 		$heliosClient = self::getHeliosClient();
-		$heliosClient->invalidateToken( self::getAccessToken( $request ) );
+		$accessToken = self::getAccessToken( $request );
+		if ( !empty( $accessToken ) ) {
+			$heliosClient->invalidateToken( $accessToken, $wgUser->getId() );
+		}
 	}
 
 	/**

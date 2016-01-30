@@ -31,7 +31,8 @@ define('wikia.ui.modal', [
 			vars: {
 				closeText: $.msg('close'),
 				escapeToClose: true
-			}
+			},
+			confirmCloseModal: false
 		},
 		// default modal buttons rendering params
 		btnConfig = {
@@ -222,20 +223,22 @@ define('wikia.ui.modal', [
 		this.listeners = {
 			'close': [
 				function () {
-					self.trigger('beforeClose').then($.proxy(function () {
-						// number of active modals on page
-						var activeModalsNumb = $body.children('.modal-blackout').length;
+					if ((typeof params.confirmCloseModal === 'function') ? params.confirmCloseModal() : true) {
+						self.trigger('beforeClose').then($.proxy(function () {
+							// number of active modals on page
+							var activeModalsNumb = $body.children('.modal-blackout').length;
 
-						self.$blackout.remove();
+							self.$blackout.remove();
 
-						// unblock background scrolling only if this is the only if it's last active modal on page
-						if (activeModalsNumb === 1) {
-							unblockPageScrolling();
-						}
+							// unblock background scrolling only if this is the only if it's last active modal on page
+							if (activeModalsNumb === 1) {
+								unblockPageScrolling();
+							}
 
-						// Remove any event listeners for this modal
-						$(window).unbind('.modal' + id);
-					}, self));
+							// Remove any event listeners for this modal
+							$(window).unbind('.modal' + id);
+						}, self));
+					}
 				}
 			]
 		};

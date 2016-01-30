@@ -4,6 +4,8 @@ use Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper;
 
 class PortableInfoboxRenderService extends WikiaService {
 	const MOBILE_TEMPLATE_POSTFIX = '-mobile';
+	const MEDIA_CONTEXT_INFOBOX_HERO_IMAGE = 'infobox-hero-image';
+	const MEDIA_CONTEXT_INFOBOX = 'infobox';
 
 	private static $templates = [
 		'wrapper' => 'PortableInfoboxWrapper.mustache',
@@ -98,7 +100,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		$dataItems = $groupData[ 'value' ];
 		$layout = $groupData[ 'layout' ];
 
-		if ( $layout === 'horizontal' && !$helper->isWikiaMobile() ) {
+		if ( $layout === 'horizontal' ) {
 			$groupHTMLContent .= $this->renderItem(
 				'horizontal-group-content',
 				$helper->createHorizontalGroupData( $dataItems )
@@ -127,6 +129,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		$helper = new PortableInfoboxRenderServiceHelper();
 
 		if ( array_key_exists( 'image', $data ) ) {
+			$data[ 'image' ][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX_HERO_IMAGE;
 			$data[ 'image' ] = $helper->extendImageData( $data[ 'image' ] );
 			$markup = $this->renderItem( 'hero-mobile', $data );
 		} else {
@@ -149,7 +152,9 @@ class PortableInfoboxRenderService extends WikiaService {
 		$helper = new PortableInfoboxRenderServiceHelper();
 
 		if ( $type === 'image' ) {
+			$data[ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
 			$data = $helper->extendImageData( $data );
+
 			if ( !$data ) {
 				return false;
 			}

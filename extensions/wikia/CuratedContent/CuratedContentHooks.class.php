@@ -62,4 +62,11 @@ class CuratedContentHooks {
 		}
 		return true;
 	}
+
+	public static function onOutputPageBeforeHTML() {
+		if ( CuratedContentHelper::shouldDisplayToolButton() ) {
+			JSMessages::enqueuePackage( 'CuratedContentModal', JSMessages::INLINE );
+		}
+		return true;
+	}
 }

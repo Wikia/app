@@ -23,14 +23,12 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 	 *                      array element.
 	 */
 	public function process ( Array $events ) {
-		global $wgTitle;
-		wfProfileIn( __METHOD__ );
 		$founderEmailObj = FounderEmails::getInstance();
 
-		$wgTitle = Title::newMainPage();
+		F::app()->wg->Title = Title::newMainPage();
 		// Get list of founders with digest mode turned on
 		if ( empty( $events ) ) {
-			$cityList = $founderEmailObj->getFoundersWithPreference( 'founderemails-complete-digest' );
+			$cityList = $founderEmailObj->getWikisWithFounderPreference( 'founderemails-complete-digest' );
 		} else {
 			$cityList = $events;
 		}
@@ -40,14 +38,22 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 		foreach ( $cityList as $cityID ) {
 			Wikia::initAsyncRequest( $cityID );
 			$userIds = $wikiService->getWikiAdminIds( $cityID );
+			$views = $founderEmailObj->getPageViews( $cityID );
+
+			// Don't bother sending this email if there are no page views for this period
+			if ( empty( $views ) ) {
+				continue;
+			}
+
 			$emailParams = [
-				'pageViews' => $founderEmailObj->getPageViews( $cityID )
+				'pageViews' => $views,
+				'wikiId' => $cityID,
 			];
 
 			foreach ( $userIds as $userId ) {
 				$user = User::newFromId( $userId );
 
-				// skip if not enable
+				// skip if not enabled
 				if ( !$this->enabled( $user, $cityID ) ) {
 					continue;
 				}
@@ -56,6 +62,5 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 				F::app()->sendRequest( self::EMAIL_CONTROLLER, 'handle', $emailParams );
 			}
 		}
-		wfProfileOut( __METHOD__ );
 	}
 }

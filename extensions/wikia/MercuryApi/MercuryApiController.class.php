@@ -174,8 +174,12 @@ class MercuryApiController extends WikiaController {
 	 *
 	 * @return array
 	 */
-	private function getNavigationData() {
-		return $this->sendRequest( 'NavigationApi', 'getData' )->getData();
+	private function getNavigation() {
+		$navData = $this->sendRequest( 'NavigationApi', 'getData' )->getData();
+		if ( isset( $navData['navigation']['wiki'] ) ) {
+			return $navData['navigation']['wiki'];
+		}
+		return [ ];
 	}
 
 	/**
@@ -273,18 +277,14 @@ class MercuryApiController extends WikiaController {
 
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
 
-		try {
-			$wikiVariables['navData'] = $this->getNavigationData();
-		} catch ( Exception $e ) {
+		$navigation = $this->getNavigation();
+		if ( empty( $navData ) ) {
 			\Wikia\Logger\WikiaLogger::instance()->error(
-				'Fallback to empty navigation',
-				[
-					'exception' => $e
-				]
+				'Fallback to empty navigation'
 			);
-			$wikiVariables['navData'] = [ ];
 		}
 
+		$wikiVariables['navigation'] = $navigation;
 		$wikiVariables['vertical'] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 		$wikiVariables['basePath'] = $this->wg->Server;
 
@@ -307,6 +307,12 @@ class MercuryApiController extends WikiaController {
 		$wikiImages = ( new WikiService() )->getWikiImages( [ $this->wg->CityId ], self::WIKI_IMAGE_SIZE );
 		if ( !empty( $wikiImages[$this->wg->CityId] ) ) {
 			$wikiVariables['image'] = $wikiImages[$this->wg->CityId];
+		}
+
+		$wikiVariables['specialRobotPolicy'] = null;
+		$robotPolicy = Wikia::getEnvironmentRobotPolicy( $this->getContext()->getRequest() );
+		if ( !empty( $robotPolicy ) ) {
+			$wikiVariables['specialRobotPolicy'] = $robotPolicy;
 		}
 
 		$this->response->setVal( 'data', $wikiVariables );
@@ -332,16 +338,21 @@ class MercuryApiController extends WikiaController {
 			$article = Article::newFromID( $articleId );
 
 			if ( $title->isRedirect() ) {
-				/* @var Title $title */
-				$title = $article->getRedirectTarget();
-				$article = Article::newFromID( $title->getArticleID() );
+				/* @var Title|null $redirectTargetTitle */
+				$redirectTargetTitle = $article->getRedirectTarget();
 				$data['redirected'] = true;
+				if ( $redirectTargetTitle instanceof Title && !empty( $redirectTargetTitle->getArticleID() ) ) {
+					$article = Article::newFromID( $redirectTargetTitle->getArticleID() );
+					$title = $redirectTargetTitle;
+				} else {
+					$data['redirectEmptyTarget'] = true;
+				}
 			}
 
-			//CONCF-855: $article is null sometimes, fix added
-			//I add logging as well to be sure that this not happen anymore
-			//TODO: Remove after 2 weeks: CONCF-1012
-			if ( !$article instanceof Article) {
+			// CONCF-855: $article is null sometimes, fix added
+			// I add logging as well to be sure that this not happen anymore
+			// TODO: Remove after 2 weeks: CONCF-1012
+			if ( !$article instanceof Article ) {
 				\Wikia\Logger\WikiaLogger::instance()->error(
 					'$article should be an instance of an Article',
 					[
@@ -351,7 +362,7 @@ class MercuryApiController extends WikiaController {
 					]
 				);
 
-				throw new NotFoundApiException('Article is empty');
+				throw new NotFoundApiException( 'Article is empty' );
 			}
 
 			$data['details'] = $this->getArticleDetails( $article );

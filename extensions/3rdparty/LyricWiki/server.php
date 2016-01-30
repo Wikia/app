@@ -1028,25 +1028,14 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 					lw_soapStats_logHit($resultFound, $reqType);
 				}
 
-				// SWC 20101209 - Now we allow our own apps to get full lyrics, but the request has to be cryptographically signed so that others can't do the same thing.
-				// NOTE: The value of the fullApiAuth param for the request must be the md5 hash of the concatenation of wgFullLyricWikiApiToken, the artist, and the song.
-				$fullApiAuth = $wgRequest->getVal("fullApiAuth");
-				if(!empty($fullApiAuth)){
-					global $wgFullLyricWikiApiToken;
-					print (!$debug?"":"Comparing token against artist: $artist\n");
-					print (!$debug?"":"Comparing token against song: $song\n");
-
-					$expectedSig = md5($wgFullLyricWikiApiToken . "$origArtist$origSong");
-					if($expectedSig == $fullApiAuth){
-						$allowFullLyrics = true;
-					}
-				}
-
 				// Determine if this result was from the takedown list (must be done before truncating to a snippet, below).
 				$retVal['isOnTakedownList'] = (0 < preg_match("/\{\{(gracenote|lyricfind)[ _]takedown\}\}/", $retVal['lyrics']));
 
 				// SWC 20090802 - Neuter the actual lyrics :( - return an explanation with a link to the LyricWiki page.
 				// SWC 20091021 - Gil has determined that up to 17% of the lyrics can be returned as fair-use - we'll stick with 1/7th (about 14.3%) of the characters for safety.
+				// SWC 20151006 - allowFullLyrics is not likely to be true anymore. That was a previous feature to allow the original LyricWiki app (from 2010) to access
+				// lyrics. The newer LyricWiki app (Lyrically) does NOT use this feature, it uses its own API. To see the code which handled the signature, roll back the commit
+				// in which this comment appeared.
 				if(!$allowFullLyrics){
 					if(($retVal['lyrics'] != $defaultLyrics) && ($retVal['lyrics'] != $instrumental) && ($retVal['lyrics'] != "")){
 						$urlLink = "\n\n<a href='".$retVal['url']."'>".$retVal['artist'].":".$retVal['song']."</a>";

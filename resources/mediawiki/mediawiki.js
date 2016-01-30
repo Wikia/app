@@ -9,7 +9,7 @@ var mw = ( function ( $, undefined ) {
 
 	var hasOwn = Object.prototype.hasOwnProperty,
 		slice = Array.prototype.slice;
-	
+
 	/* Object constructors */
 
 	/**
@@ -187,12 +187,30 @@ var mw = ( function ( $, undefined ) {
 		 * The primary override is in mediawiki.jqueryMsg.
 		 *
 		 * This function will not be called for nonexistent messages.
+		 *
+		 * @param {string} messageContent - message content
+		 * @param {boolean} insertRaw (default: false) - Raw params are stored separately and should be put in place
+		 * after message escaping happen. This param is flag which decided which params should be inserted normal vs raw
 		 */
-		parser: function () {
+		parser: function ( messageContent, insertRaw ) {
+			messageContent = typeof messageContent !== 'undefined' ? messageContent : this.map.get( this.key );
+			insertRaw = typeof insertRaw !== 'undefined' ? insertRaw: false;
+
 			var parameters = this.parameters;
-			return this.map.get( this.key ).replace( /\$(\d+)/g, function ( str, match ) {
-				var index = parseInt( match, 10 ) - 1;
-				return parameters[index] !== undefined ? parameters[index] : '$' + match;
+			return messageContent.replace( /\$(\d+)/g, function ( str, match ) {
+				var index = parseInt( match, 10 ) - 1,
+					defaultOut = '$' + match;
+
+				if (parameters[index] !== undefined) {
+					// Decide if raw params should be inserted at this point
+					if (typeof(parameters[index]) === 'object' && parameters[index].hasOwnProperty('raw')) {
+						return insertRaw ? parameters[index].raw : defaultOut;
+					} else {
+						return parameters[index];
+					}
+				} else {
+					return defaultOut;
+				}
 			} );
 		},
 
@@ -206,6 +224,21 @@ var mw = ( function ( $, undefined ) {
 			var i;
 			for ( i = 0; i < parameters.length; i += 1 ) {
 				this.parameters.push( parameters[i] );
+			}
+			return this;
+		},
+
+		/**
+		 * Appends (does not replace) raw parameters (they won't be escaped when using escaped format) for replacement
+		 * to the .parameters property.
+		 *
+		 * @param {Array} parameters
+		 * @chainable
+		 */
+		rawParams: function ( parameters ) {
+			var i;
+			for ( i = 0; i < parameters.length; i += 1 ) {
+				this.parameters.push( { raw: parameters[i] } );
 			}
 			return this;
 		},
@@ -227,14 +260,13 @@ var mw = ( function ( $, undefined ) {
 				return '<' + this.key + '>';
 			}
 
-			if ( this.format === 'plain' || this.format === 'text' || this.format === 'parse' ) {
-				text = this.parser();
-			}
+			text = this.parser( this.map.get( this.key ), false );
 
 			if ( this.format === 'escaped' ) {
-				text = this.parser();
 				text = mw.html.escape( text );
 			}
+
+			text = this.parser( text, true );
 
 			return text;
 		},
@@ -284,7 +316,7 @@ var mw = ( function ( $, undefined ) {
 		 * Changes the format to 'escaped' and converts message to string
 		 *
 		 * This is equivalent to using the 'text' format (see text method), then
-		 * HTML-escaping the output.
+		 * HTML-escaping the output, then inserting raw params defined by .rawParams() method.
 		 *
 		 * @return {string} String form of html escaped message
 		 */
@@ -312,7 +344,7 @@ var mw = ( function ( $, undefined ) {
 		 * emulates console.log in console-less environments.
 		 */
 		log: function() { },
-	
+
 		/**
 		 * @var constructor Make the Map constructor publicly available.
 		 */
@@ -322,7 +354,7 @@ var mw = ( function ( $, undefined ) {
 		 * @var constructor Make the Message constructor publicly available.
 		 */
 		Message: Message,
-	
+
 		/**
 		 * List of configuration values
 		 *
@@ -331,25 +363,25 @@ var mw = ( function ( $, undefined ) {
 		 * in the global window object.
 		 */
 		config: null,
-	
+
 		/**
 		 * @var object
 		 *
 		 * Empty object that plugins can be installed in.
 		 */
 		libs: {},
-	
+
 		/* Extension points */
-	
+
 		legacy: {},
-	
+
 		/**
 		 * Localization system
 		 */
 		messages: new Map(),
-	
+
 		/* Public Methods */
-	
+
 		/**
 		 * Get a message object.
 		 *
@@ -384,9 +416,9 @@ var mw = ( function ( $, undefined ) {
 		 * Client-side module loader which integrates with the MediaWiki ResourceLoader
 		 */
 		loader: ( function() {
-	
+
 			/* Private Members */
-	
+
 			/**
 			 * Mapping of registered modules
 			 *
@@ -436,13 +468,13 @@ var mw = ( function ( $, undefined ) {
 				$marker = null;
 
 			/* Cache document ready status */
-	
+
 			$(document).ready( function () {
 				ready = true;
 			} );
-	
+
 			/* Private methods */
-	
+
 			function getMarker() {
 				// Cached ?
 				if ( $marker ) {
@@ -457,7 +489,7 @@ var mw = ( function ( $, undefined ) {
 					return $marker;
 				}
 			}
-			
+
 			function addInlineCSS( css, media ) {
 				var	$style = getMarker().prev(),
 					$newStyle,
@@ -466,7 +498,7 @@ var mw = ( function ( $, undefined ) {
 					// There's already a dynamic <style> tag present, append to it
 					// This recycling of <style> tags is for bug 31676 (can't have
 					// more than 32 <style> tags in IE)
-					
+
 					// Also, calling .append() on a <style> tag explodes with a JS error in IE,
 					// so if the .append() fails we fall back to building a new <style> tag and
 					// replacing the existing one
@@ -491,7 +523,7 @@ var mw = ( function ( $, undefined ) {
 					getMarker().before( $style );
 				}
 			}
-	
+
 			function compare( a, b ) {
 				var i;
 				if ( a.length !== b.length ) {
@@ -509,7 +541,7 @@ var mw = ( function ( $, undefined ) {
 				}
 				return true;
 			}
-	
+
 			/**
 			 * Generates an ISO8601 "basic" string from a UNIX timestamp
 			 */
@@ -524,13 +556,13 @@ var mw = ( function ( $, undefined ) {
 					pad( d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds() ), 'Z'
 				].join( '' );
 			}
-	
+
 			/**
 			 * Recursively resolves dependencies and detects circular references
 			 */
 			function recurse( module, resolved, unresolved ) {
 				var n, deps, len;
-	
+
 				if ( registry[module] === undefined ) {
 					throw new Error( 'Unknown dependency: ' + module );
 				}
@@ -563,7 +595,7 @@ var mw = ( function ( $, undefined ) {
 				}
 				resolved[resolved.length] = module;
 			}
-	
+
 			/**
 			 * Gets a list of module names that a module depends on in their proper dependency order
 			 *
@@ -573,7 +605,7 @@ var mw = ( function ( $, undefined ) {
 			 */
 			function resolve( module ) {
 				var modules, m, deps, n, resolved;
-	
+
 				// Allow calling with an array of module names
 				if ( $.isArray( module ) ) {
 					modules = [];
@@ -591,7 +623,7 @@ var mw = ( function ( $, undefined ) {
 				}
 				throw new Error( 'Invalid module argument: ' + module );
 			}
-	
+
 			/**
 			 * Narrows a list of module names down to those matching a specific
 			 * state (see comment on top of this scope for a list of valid states).
@@ -605,7 +637,7 @@ var mw = ( function ( $, undefined ) {
 			 */
 			function filter( states, modules ) {
 				var list, module, s, m;
-	
+
 				// Allow states to be given as a string
 				if ( typeof states === 'string' ) {
 					states = [states];
@@ -638,7 +670,7 @@ var mw = ( function ( $, undefined ) {
 				}
 				return list;
 			}
-	
+
 			/**
 			 * Automatically executes jobs and modules which are pending with satistifed dependencies.
 			 *
@@ -646,7 +678,7 @@ var mw = ( function ( $, undefined ) {
 			 */
 			function handlePending( module ) {
 				var j, r;
-	
+
 				try {
 					// Run jobs whose dependencies have just been met
 					for ( j = 0; j < jobs.length; j += 1 ) {
@@ -687,7 +719,7 @@ var mw = ( function ( $, undefined ) {
 					throw e;
 				}
 			}
-	
+
 			/**
 			 * Adds a script tag to the DOM, either using document.write or low-level DOM manipulation,
 			 * depending on whether document-ready has occured yet and whether we are in async mode.
@@ -707,7 +739,7 @@ var mw = ( function ( $, undefined ) {
 					if ( $.isFunction( callback ) ) {
 						// Attach handlers for all browsers (based on jQuery.ajax)
 						script.onload = script.onreadystatechange = function() {
-	
+
 							if (
 								!done
 								&& (
@@ -715,11 +747,11 @@ var mw = ( function ( $, undefined ) {
 									|| /loaded|complete/.test( script.readyState )
 								)
 							) {
-	
+
 								done = true;
-	
+
 								callback();
-	
+
 								// Handle memory leak in IE. This seems to fail in
 								// IE7 sometimes (Permission Denied error when
 								// accessing script.parentNode) so wrap it in
@@ -729,14 +761,14 @@ var mw = ( function ( $, undefined ) {
 									if ( script.parentNode ) {
 										script.parentNode.removeChild( script );
 									}
-		
+
 									// Dereference the script
 									script = undefined;
 								} catch ( e ) { }
 							}
 						};
 					}
-					
+
 					if ( window.opera ) {
 						// Appending to the <head> blocks rendering completely in Opera,
 						// so append to the <body> after document ready. This means the
@@ -761,7 +793,7 @@ var mw = ( function ( $, undefined ) {
 					}
 				}
 			}
-	
+
 			/**
 			 * Executes a loaded module, making it ready to use
 			 *
@@ -769,7 +801,7 @@ var mw = ( function ( $, undefined ) {
 			 */
 			function execute( module, callback ) {
 				var style, media, i, script, markModuleReady, nestedAddScript;
-	
+
 				if ( registry[module] === undefined ) {
 					throw new Error( 'Module has not been registered yet: ' + module );
 				} else if ( registry[module].state === 'registered' ) {
@@ -779,7 +811,7 @@ var mw = ( function ( $, undefined ) {
 				} else if ( registry[module].state === 'ready' ) {
 					throw new Error( 'Module has already been loaded: ' + module );
 				}
-	
+
 				// Add styles
 				if ( $.isPlainObject( registry[module].style ) ) {
 					for ( media in registry[module].style ) {
@@ -820,12 +852,12 @@ var mw = ( function ( $, undefined ) {
 							callback();
 							return;
 						}
-	
+
 						addScript( arr[i], function() {
 							nestedAddScript( arr, callback, async, i + 1 );
 						}, async );
 					};
-	
+
 					if ( $.isArray( script ) ) {
 						registry[module].state = 'loading';
 						nestedAddScript( script, markModuleReady, registry[module].async, 0 );
@@ -842,7 +874,7 @@ var mw = ( function ( $, undefined ) {
 					registry[module].state = 'error';
 				}
 			}
-	
+
 			/**
 			 * Adds a dependencies to the queue with optional callbacks to be run
 			 * when the dependencies are ready or fail
@@ -855,7 +887,7 @@ var mw = ( function ( $, undefined ) {
 			 */
 			function request( dependencies, ready, error, async ) {
 				var regItemDeps, regItemDepLen, n;
-	
+
 				// Allow calling by single module name
 				if ( typeof dependencies === 'string' ) {
 					dependencies = [dependencies];
@@ -894,7 +926,7 @@ var mw = ( function ( $, undefined ) {
 				// Work the queue
 				mw.loader.work();
 			}
-	
+
 			function sortQuery(o) {
 				var sorted = {}, key, a = [];
 				for ( key in o ) {
@@ -908,7 +940,7 @@ var mw = ( function ( $, undefined ) {
 				}
 				return sorted;
 			}
-	
+
 			/**
 			 * Converts a module map of the form { foo: [ 'bar', 'baz' ], bar: [ 'baz, 'quux' ] }
 			 * to a query string of the form foo.bar,baz|bar.baz,quux
@@ -921,7 +953,7 @@ var mw = ( function ( $, undefined ) {
 				}
 				return arr.join( '|' );
 			}
-	
+
 			/**
 			 * Asynchronously append a script tag to the end of the body
 			 * that invokes load.php
@@ -954,7 +986,7 @@ var mw = ( function ( $, undefined ) {
 				// Append &* to avoid triggering the IE6 extension check
 				addScript( sourceLoadScript + '?' + $.param( request ) + '&*', null, async );
 			}
-	
+
 			/* Public Methods */
 			return {
 				/**
@@ -965,7 +997,7 @@ var mw = ( function ( $, undefined ) {
 						source, group, g, i, modules, maxVersion, sourceLoadScript,
 						currReqBase, currReqBaseLength, moduleMap, l,
 						lastDotIndex, prefix, suffix, bytesAdded, async;
-		
+
 					// Build a list of request parameters common to all requests.
 					reqBase = {
 						skin: mw.config.get( 'skin' ),
@@ -975,7 +1007,7 @@ var mw = ( function ( $, undefined ) {
 					// Split module batch by source and by group.
 					splits = {};
 					maxQueryLength = mw.config.get( 'wgResourceLoaderMaxQueryLength', -1 );
-		
+
 					// Appends a list of modules from the queue to the batch
 					for ( q = 0; q < queue.length; q += 1 ) {
 						// Only request modules which are registered
@@ -992,14 +1024,14 @@ var mw = ( function ( $, undefined ) {
 					if ( !batch.length ) {
 						return;
 					}
-		
+
 					// The queue has been processed into the batch, clear up the queue.
 					queue = [];
-		
+
 					// Always order modules alphabetically to help reduce cache
 					// misses for otherwise identical content.
 					batch.sort();
-		
+
 					// Split batch by source and by group.
 					for ( b = 0; b < batch.length; b += 1 ) {
 						bSource = registry[batch[b]].source;
@@ -1013,24 +1045,24 @@ var mw = ( function ( $, undefined ) {
 						bSourceGroup = splits[bSource][bGroup];
 						bSourceGroup[bSourceGroup.length] = batch[b];
 					}
-		
+
 					// Clear the batch - this MUST happen before we append any
 					// script elements to the body or it's possible that a script
 					// will be locally cached, instantly load, and work the batch
 					// again, all before we've cleared it causing each request to
 					// include modules which are already loaded.
 					batch = [];
-		
+
 					for ( source in splits ) {
-		
+
 						sourceLoadScript = sources[source].loadScript;
-		
+
 						for ( group in splits[source] ) {
-		
+
 							// Cache access to currently selected list of
 							// modules for this group from this source.
 							modules = splits[source][group];
-		
+
 							// Calculate the highest timestamp
 							maxVersion = 0;
 							for ( g = 0; g < modules.length; g += 1 ) {
@@ -1038,7 +1070,7 @@ var mw = ( function ( $, undefined ) {
 									maxVersion = registry[modules[g]].version;
 								}
 							}
-		
+
 							currReqBase = $.extend( { 'version': formatVersionNumber( maxVersion ) }, reqBase );
 							// Wikia change - begin - @author: wladek
 							// PER-58: add style version
@@ -1051,7 +1083,7 @@ var mw = ( function ( $, undefined ) {
 							// We may need to split up the request to honor the query string length limit,
 							// so build it piece by piece.
 							l = currReqBaseLength + 9; // '&modules='.length == 9
-		
+
 							moduleMap = {}; // { prefix: [ suffixes ] }
 
 							// Wikia - change begin - @author: wladek
@@ -1064,7 +1096,7 @@ var mw = ( function ( $, undefined ) {
 								wikiaSassParams['sass_'+k] = v;
 							});
 							// Wikia - change end - @author: wladek
-		
+
 							for ( i = 0; i < modules.length; i += 1 ) {
 								// Determine how many bytes this module would add to the query string
 								lastDotIndex = modules[i].lastIndexOf( '.' );
@@ -1123,7 +1155,7 @@ var mw = ( function ( $, undefined ) {
 						}
 					}
 				},
-		
+
 				/**
 				 * Register a source.
 				 *
@@ -1141,16 +1173,16 @@ var mw = ( function ( $, undefined ) {
 						}
 						return true;
 					}
-		
+
 					if ( sources[id] !== undefined ) {
 						throw new Error( 'source already registered: ' + id );
 					}
-		
+
 					sources[id] = props;
-		
+
 					return true;
 				},
-		
+
 				/**
 				 * Registers a module, letting the system know about it and its
 				 * properties. Startup modules contain calls to this function.
@@ -1255,7 +1287,7 @@ var mw = ( function ( $, undefined ) {
 						execute( module );
 					}
 				},
-		
+
 				/**
 				 * Executes a function as soon as one or more required modules are ready
 				 *
@@ -1265,10 +1297,17 @@ var mw = ( function ( $, undefined ) {
 				 * @param error {Function} callback to execute when if dependencies have a errors (optional)
 				 */
 				using: function ( dependencies, ready, error ) {
+					var deferred = $.Deferred();
 					var tod = typeof dependencies;
 					// Validate input
 					if ( tod !== 'object' && tod !== 'string' ) {
 						throw new Error( 'dependencies must be a string or an array, not a ' + tod );
+					}
+					if ( ready ) {
+						deferred.done( ready );
+					}
+					if ( error ) {
+						deferred.fail( error );
 					}
 					// Allow calling with a single dependency as a string
 					if ( tod === 'string' ) {
@@ -1278,23 +1317,22 @@ var mw = ( function ( $, undefined ) {
 					dependencies = resolve( dependencies );
 					// If all dependencies are met, execute ready immediately
 					if ( compare( filter( ['ready'], dependencies ), dependencies ) ) {
-						if ( $.isFunction( ready ) ) {
-							ready();
-						}
+						deferred.resolve();
 					}
 					// If any dependencies have errors execute error immediately
 					else if ( filter( ['error'], dependencies ).length ) {
-						if ( $.isFunction( error ) ) {
-							error( new Error( 'one or more dependencies have state "error"' ),
-								dependencies );
-						}
+						deferred.reject(
+							new Error( 'One or more dependencies failed to load' ),
+							dependencies
+						);
 					}
 					// Since some dependencies are not yet ready, queue up a request
 					else {
-						request( dependencies, ready, error );
+						request( dependencies, deferred.resolve, deferred.reject );
 					}
+					return deferred.promise();
 				},
-		
+
 				/**
 				 * Loads an external script or one or more modules for future use
 				 *
@@ -1368,7 +1406,7 @@ var mw = ( function ( $, undefined ) {
 						return;
 					}
 				},
-		
+
 				/**
 				 * Changes the state of a module
 				 *
@@ -1388,7 +1426,7 @@ var mw = ( function ( $, undefined ) {
 					}
 					registry[module].state = state;
 				},
-		
+
 				/**
 				 * Gets the version of a module
 				 *
@@ -1400,14 +1438,14 @@ var mw = ( function ( $, undefined ) {
 					}
 					return null;
 				},
-		
+
 				/**
 				 * @deprecated since 1.18 use mw.loader.getVersion() instead
 				 */
 				version: function () {
 					return mw.loader.getVersion.apply( mw.loader, arguments );
 				},
-		
+
 				/**
 				 * Gets the state of a module
 				 *
@@ -1419,7 +1457,7 @@ var mw = ( function ( $, undefined ) {
 					}
 					return null;
 				},
-		
+
 				/**
 				 * Get names of all registered modules.
 				 *
@@ -1445,7 +1483,7 @@ var mw = ( function ( $, undefined ) {
 				}
 			};
 		}() ),
-	
+
 		/** HTML construction helper functions */
 		html: ( function () {
 			function escapeCallback( s ) {
@@ -1471,7 +1509,7 @@ var mw = ( function ( $, undefined ) {
 				escape: function ( s ) {
 					return s.replace( /['"<>&]/g, escapeCallback );
 				},
-		
+
 				/**
 				 * Wrapper object for raw HTML passed to mw.html.element().
 				 * @constructor
@@ -1479,7 +1517,7 @@ var mw = ( function ( $, undefined ) {
 				Raw: function ( value ) {
 					this.value = value;
 				},
-		
+
 				/**
 				 * Wrapper object for CDATA element contents passed to mw.html.element()
 				 * @constructor
@@ -1487,7 +1525,7 @@ var mw = ( function ( $, undefined ) {
 				Cdata: function ( value ) {
 					this.value = value;
 				},
-		
+
 				/**
 				 * Create an HTML element string, with safe escaping.
 				 *
@@ -1509,7 +1547,7 @@ var mw = ( function ( $, undefined ) {
 				 */
 				element: function ( name, attrs, contents ) {
 					var v, attrName, s = '<' + name;
-		
+
 					for ( attrName in attrs ) {
 						v = attrs[attrName];
 						// Convert name=true, to name=name
@@ -1641,7 +1679,7 @@ var mw = ( function ( $, undefined ) {
 
 
 	};
-	
+
 })( jQuery );
 
 // Alias $j to jQuery for backwards compatibility

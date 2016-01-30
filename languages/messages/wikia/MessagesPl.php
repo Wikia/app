@@ -256,4 +256,7 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 ***w:c:pl.bionicle|Bionicle
 ***w:c:pl.vocaloid|Vocaloid
 ",
+
+'tog-enableuserjs' => 'Włącz osobisty kod JavaScript ([[Pomoc:Osobiste_CSS_i_JS|Dowiedz się więcej]])',
+'wikia-pagetitle' => '$1 – Wikia',
 ) );

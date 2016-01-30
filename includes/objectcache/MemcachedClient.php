@@ -865,9 +865,7 @@ class MWMemcached {
 			wfRestoreWarnings();
 		}
 		if ( !$sock ) {
-			if ( $this->_debug ) {
-				$this->_debugprint( "Error connecting to $host: $errstr\n" );
-			}
+			wfDebug( __METHOD__ . ": Error connecting to $host: $errstr\n" ); // Wikia change
 
 			// Wikia change - begin
 			$this->error( 'MemcachedClient: socket connection failed', [

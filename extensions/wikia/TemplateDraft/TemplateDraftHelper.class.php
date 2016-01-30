@@ -53,7 +53,7 @@ class TemplateDraftHelper {
 	 * @return Title Parent Title
 	 * @throws MWException
 	 */
-	public function getParentTitle( Title $title ) {
+	public static function getParentTitle( Title $title ) {
 		return Title::newFromText( $title->getBaseText(), NS_TEMPLATE );
 	}
 
@@ -64,8 +64,7 @@ class TemplateDraftHelper {
 	 */
 	public function isRailModuleAllowed( Title $title ) {
 		return self::allowedForTitle( $title )
-			&& $title->userCan( 'templatedraft' )
-			&& $title->userCan( 'edit' );
+			&& $title->userCan( 'templatedraft' );
 	}
 
 	/**

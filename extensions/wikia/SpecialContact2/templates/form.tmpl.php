@@ -44,7 +44,7 @@ if ( !empty($err) ) {
 <input id="wpScreenshot1" name="wpScreenshot[]" type="file" accept="image/*" multiple />
 </p>
 
-<?php	
+<?php
 if( !$isLoggedIn && (isset($captchaForm)) ) {
 	echo "<div class='captcha'>" .
 	wfMessage( 'specialcontact-captchatitle' )->escaped() .
@@ -71,7 +71,7 @@ if( $isLoggedIn && $hasEmail ) {
 ?>
 
 <?php #we prefil the browser info in from PHP var ?>
-<input type="hidden" id="wpBrowser" name="wpBrowser" value="<?php echo $_SERVER['HTTP_USER_AGENT']; ?>" />
+<input type="hidden" id="wpBrowser" name="wpBrowser" value="<?= Sanitizer::encodeAttribute( $_SERVER['HTTP_USER_AGENT'] ); ?>" />
 <input type="hidden" id="wpAbTesting" name="wpAbTesting" value="[unknown]" />
 </form>
 

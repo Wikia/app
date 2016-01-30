@@ -1038,4 +1038,15 @@ hu',
 'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]',
 
 'usesitejs-disabled-warning' => 'Custom JavaScript is disabled on this wikia.',
-));
+'tog-enableuserjs' => 'Enable personal JavaScript ([[Help:Personal_CSS_and_JS#JavaScript|Learn more]])',
+
+# wikia.wikibits.js mesages for import scripts notifications
+'import-article-missing-single' => '$1 was not found (requested by user-supplied javascript)',
+'import-article-missing-multiple' => '$1 $2 were not found (requested by user-supplied javascript)',
+'import-article-missing-more-single' => '(and one more article)',
+'import-article-missing-more-multiple' => '(and $1 more articles)',
+'import-article-not-js-single' => '$1 was not loaded as it\'s not a JS page (requested by user-supplied javascript). Please make sure the article title has .js extension.',
+'import-article-not-js-multiple' => '$1 $2 were not loaded as they\'re not JS pages (requested by user-supplied javascript). Please make sure the articles titles have .js extension.',
+
+'wikia-pagetitle' => '$1 - Wikia',
+) );

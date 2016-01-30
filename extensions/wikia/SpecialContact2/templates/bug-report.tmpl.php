@@ -1,10 +1,10 @@
 <?php
-if ( !empty($err) ) {
-        print $err;
+if ( !empty( $err ) ) {
+	echo $err;
 }
-
-echo wfMessage( 'specialcontact-intro-bug' )->parseAsBlock();
 ?>
+
+<?= wfMessage( 'specialcontact-intro-bug' )->parseAsBlock(); ?>
 
 <h2><?= wfMessage( 'specialcontact-form-header' )->escaped() ?></h2>
 
@@ -73,6 +73,6 @@ if( $isLoggedIn && $hasEmail ) {
 }
 ?>
 
-<input type="hidden" id="wpBrowser" name="wpBrowser" value="<?php echo $_SERVER['HTTP_USER_AGENT']; ?>" />
+<input type="hidden" id="wpBrowser" name="wpBrowser" value="<?= Sanitizer::encodeAttribute( $_SERVER['HTTP_USER_AGENT'] ); ?>" />
 <input type="hidden" id="wpAbTesting" name="wpAbTesting" value="[unknown]" />
 </form>

@@ -37,4 +37,6 @@ $messages = array_merge( $messages, array(
 'review_reason_5' => 'Motivo revisão 5',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 'addnewtalksection-link' => 'Iniciar uma nova secção',
+
+'tog-enableuserjs' => 'Autorizar JavaScript pessoal ([[Ajuda:CSS_e_JS_pessoal|Saiba mais]])',
 ) );

@@ -212,13 +212,11 @@ class GlobalNavigationWallNotificationsController extends WikiaController {
 		// chronological order. We want the url to point to the oldest unread item (which is the last element in the
 		// array) instead of the most recent so that they start reading where the left off. See bugid 64560.
 		$oldestEntity = end( $notify['grouped'] );
-		if ( empty( $oldestEntity->data->url ) ) {
-			$oldestEntity->data->url = '';
-		}
+		$url = empty( $oldestEntity->data->url ) ? '' : $oldestEntity->data->url;
 
 		$title = $this->getWallHelper()->shortenText( $data->thread_title, self::NOTIFICATION_TITLE_LIMIT );
 
-		$this->response->setVal( 'url', $this->fixNotificationURL( $oldestEntity->data->url ) );
+		$this->response->setVal( 'url', $this->fixNotificationURL( $url ) );
 		$this->response->setVal( 'authors', array_reverse( $authors ) );
 		$this->response->setVal( 'title', $title );
 		$this->response->setVal( 'iso_timestamp',  wfTimestamp( TS_ISO_8601, $data->timestamp ) );

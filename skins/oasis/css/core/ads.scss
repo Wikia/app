@@ -14,10 +14,6 @@
 	display: none !important;
 }
 
-.source-point .wikia-ad.default-height {
-	height: auto !important;
-}
-
 /** Leaderboards **/
 
 .WikiaTopAds {
@@ -27,7 +23,7 @@
 	padding: 10px 0;
 	text-align: center;
 	width: $width-outside;
-	z-index: 0;
+	z-index: 2;
 	.WikiaTopAdsInner {
 		@include clearfix;
 		display: inline-block;
@@ -269,5 +265,21 @@ body >a >img[src$="noad.gif"] {
 	#WikiaArticleBottomAd {
 		clear: both;
 		margin: 0;
+	}
+}
+
+// Recovered message
+.recovered-message {
+	background: #eee;
+	color: #000;
+	font-size: 2em;
+	text-align: center;
+	padding: 10px 0;
+
+	&.recovered-message-top {
+		margin: 0 auto;
+		position: relative;
+		width: 970px;
+		z-index: 2;
 	}
 }

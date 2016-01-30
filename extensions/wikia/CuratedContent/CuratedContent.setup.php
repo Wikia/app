@@ -51,12 +51,13 @@ JSMessages::registerPackage( 'CuratedContentMsg', [
 	'wikiacuratedcontent-content-videonotsupported-error',
 	'wikiacuratedcontent-content-notsupportedtype-error',
 	'wikiacuratedcontent-content-nocategoryintag-error',
-	'wikiacuratedcontent-content-imagemissing-error',
+	'wikiacuratedcontent-content-imagemissing-error'
 ] );
 
 //hooks
 $wgHooks['CuratedContentSave'][] = 'CuratedContentHooks::onCuratedContentSave';
 $wgHooks['SkinAfterBottomScripts'][] = 'CuratedContentHooks::onSkinAfterBottomScripts';
+$wgHooks['OutputPageBeforeHTML'][] = 'CuratedContentHooks::onOutputPageBeforeHTML';
 
 //minimal package of messages in CuratedContent
 JSMessages::registerPackage( 'CuratedContent', [
@@ -64,4 +65,10 @@ JSMessages::registerPackage( 'CuratedContent', [
 	'wikiamobile-image-not-loaded',
 	'wikiamobile-video-not-friendly',
 	'wikiamobile-video-not-friendly-header'
+
+] );
+
+JSMessages::registerPackage( 'CuratedContentModal', [
+	'wikiacuratedcontent-close-modal-prompt-message',
+	'wikiacuratedcontent-modal-title'
 ] );

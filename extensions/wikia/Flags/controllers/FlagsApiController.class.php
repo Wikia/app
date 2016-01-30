@@ -132,22 +132,24 @@ class FlagsApiController extends FlagsApiBaseController {
 	 * ]
 	 */
 	public function addFlagsToPage() {
-		try {
-			$this->processRequest();
+		$this->processRequest();
+		$this->validatePageId();
 
-			$flagModel = new Flag();
-			$modelResponse = $flagModel->addFlagsToPage( $this->params );
+		$pageId = $this->params['page_id'];
+		$wikiId = $this->params['wiki_id'];
+		$this->checkUserEditPermissions( $pageId, $wikiId );
 
-			$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
-			$this->purgeFlaggedPages( $this->params['flags'] );
-			$this->purgeFlagInsights( $this->params['flags'] );
+		$flags = $this->params['flags'];
+		$flagModel = new Flag();
+		$modelResponse = $flagModel->addFlagsToPage( $this->params );
 
-			$this->makeSuccessResponse( $modelResponse );
-			$this->logFlagChange( $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'], self::LOG_ACTION_FLAG_ADDED );
-		} catch ( Exception $e ) {
-			$this->logResponseException( $e, $this->request );
-			$this->response->setException( $e );
-		}
+		$this->getCache()->purgeFlagsForPage( $pageId );
+
+		$this->purgeFlaggedPages( $flags );
+		$this->purgeFlagInsights( $flags );
+
+		$this->makeSuccessResponse( $modelResponse );
+		$this->logFlagChange( $flags, $wikiId, $pageId, self::LOG_ACTION_FLAG_ADDED );
 	}
 
 	/**
@@ -159,23 +161,24 @@ class FlagsApiController extends FlagsApiBaseController {
 	 * @requestParam int page_id
 	 */
 	public function removeFlagsFromPage() {
-		try {
-			$this->processRequest();
-			$this->validatePageId();
+		$this->processRequest();
+		$this->validatePageId();
 
-			$flagModel = new Flag();
-			$modelResponse = $flagModel->removeFlagsFromPage( $this->params['flags'] );
+		$pageId = $this->params['page_id'];
+		$wikiId = $this->params['wiki_id'];
+		$this->checkUserEditPermissions( $pageId, $wikiId );
 
-			$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
-			$this->purgeFlaggedPages( $this->params['flags'] );
-			$this->purgeFlagInsights( $this->params['flags'], $this->params['page_id'] );
+		$flags = $this->params['flags'];
 
-			$this->makeSuccessResponse( $modelResponse );
-			$this->logFlagChange( $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'], self::LOG_ACTION_FLAG_REMOVED );
-		} catch ( Exception $e ) {
-			$this->logResponseException( $e, $this->request );
-			$this->response->setException( $e );
-		}
+		$flagModel = new Flag();
+		$modelResponse = $flagModel->removeFlagsFromPage( $flags );
+
+		$this->getCache()->purgeFlagsForPage( $pageId );
+		$this->purgeFlaggedPages( $flags );
+		$this->purgeFlagInsights( $flags, $pageId );
+
+		$this->makeSuccessResponse( $modelResponse );
+		$this->logFlagChange( $flags, $wikiId, $pageId, self::LOG_ACTION_FLAG_REMOVED );
 	}
 
 	/**
@@ -183,35 +186,35 @@ class FlagsApiController extends FlagsApiBaseController {
 	 *
 	 * @requestParam int page_id
 	 * @requestParam array $flags Should have flag_id values as indexes
-	 *
-	 * @return bool
+	 * @throws BadRequestApiException
+	 * @throws Exception
+	 * @throws InvalidParameterApiException
+	 * @throws MissingParameterApiException
+	 * @throws PermissionsException
 	 */
 	public function updateFlagsForPage() {
-		try {
-			$this->processRequest();
-			$this->validatePageId();
+		$this->processRequest();
+		$this->validatePageId();
 
-			if ( !isset( $this->params['page_id'] ) ) {
-				throw new \MissingParameterApiException( 'page_id' );
-			}
+		$pageId = $this->params['page_id'];
+		$wikiId = $this->params['wiki_id'];
+		$this->checkUserEditPermissions( $pageId, $wikiId );
 
-			$oldFlags = $this->app->sendRequest(
-				'FlagsApiController',
-				'getFlagsForPage',
-				[ 'page_id' => $this->params['page_id'] ]
-			)->getData();
+		$flags = $this->params['flags'];
 
-			$flagModel = new Flag();
-			$modelResponse = $flagModel->updateFlagsForPage( $this->params['flags'] );
+		$oldFlags = $this->app->sendRequest(
+			'FlagsApiController',
+			'getFlagsForPage',
+			[ 'page_id' => $pageId ]
+		)->getData();
 
-			$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
+		$flagModel = new Flag();
+		$modelResponse = $flagModel->updateFlagsForPage( $flags );
 
-			$this->makeSuccessResponse( $modelResponse );
-			$this->logParametersChange( $oldFlags, $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'] );
-		} catch ( Exception $e ) {
-			$this->logResponseException( $e, $this->request );
-			$this->response->setException( $e );
-		}
+		$this->getCache()->purgeFlagsForPage( $pageId );
+
+		$this->makeSuccessResponse( $modelResponse );
+		$this->logParametersChange( $oldFlags, $flags, $wikiId, $pageId );
 	}
 
 	/**
@@ -723,8 +726,33 @@ class FlagsApiController extends FlagsApiBaseController {
 	}
 
 	private function checkAdminPermissions() {
-		if ( !$this->wg->user->isAllowed( 'flags-administration' ) ) {
+		if ( !$this->wg->User->isAllowed( 'flags-administration' ) ) {
 			throw new PermissionsException( 'flags-administration' );
 		}
+	}
+
+	/**
+	 * Checks if user is allowed to perform an edit on a given page.
+	 * @param $pageId
+	 * @param $wikiId
+	 * @return bool
+	 * @throws InvalidParameterApiException
+	 * @throws PermissionsException
+	 */
+	private function checkUserEditPermissions( $pageId, $wikiId ) {
+		if ( $wikiId !== $this->wg->CityId ) {
+			$title = GlobalTitle::newFromId( $pageId, $wikiId );
+		} else {
+			$title = Title::newFromID( $pageId, $wikiId );
+		}
+
+		if ( $title === null ) {
+			throw new InvalidParameterApiException( 'page_id' );
+		}
+
+		if ( !$title->userCan( 'edit', $this->wg->User ) ) {
+			throw new PermissionsException( 'edit' );
+		}
+		return true;
 	}
 }

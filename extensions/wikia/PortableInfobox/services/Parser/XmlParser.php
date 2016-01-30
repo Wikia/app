@@ -4,6 +4,8 @@ namespace Wikia\PortableInfobox\Parser;
 use Wikia\Logger\WikiaLogger;
 
 class XmlParser {
+	protected static $contentTags = [ 'default', 'label', 'format', 'navigation', 'header' ];
+
 	/**
 	 * @param string $xmlString XML to parse
 	 *
@@ -16,8 +18,7 @@ class XmlParser {
 		$global_libxml_setting = libxml_use_internal_errors();
 		libxml_use_internal_errors( true );
 		// support for html entities and single & char
-		$decoded = str_replace( '&', '&amp;', html_entity_decode( $xmlString ) );
-		$xml = simplexml_load_string( $decoded );
+		$xml = simplexml_load_string( self::prepareXml( $xmlString ) );
 		$errors = libxml_get_errors();
 		libxml_use_internal_errors( $global_libxml_setting );
 
@@ -37,6 +38,21 @@ class XmlParser {
 			"level" => $level,
 			"code" => $code,
 			"message" => $message ] );
+	}
+
+	/**
+	 * @param string $xmlString
+	 *
+	 * @return mixed
+	 */
+	protected static function prepareXml( $xmlString ) {
+		foreach ( self::$contentTags as $tag ) {
+			// wrap content in CDATA for content tags
+			$xmlString = preg_replace( '|(<' . $tag . '.*>)(.*)(</' . $tag . '>)|sU', '$1<![CDATA[$2]]>$3', $xmlString );
+		}
+		$decoded = str_replace( '&', '&amp;', html_entity_decode( $xmlString ) );
+
+		return $decoded;
 	}
 
 }

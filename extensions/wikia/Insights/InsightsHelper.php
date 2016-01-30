@@ -101,7 +101,7 @@ class InsightsHelper {
 	/**
 	 * Checks if a given subpage is known
 	 *
-	 * @param $subpage A slug of a subpage
+	 * @param $subpage string|null A slug of a subpage
 	 * @return bool
 	 */
 	public static function isInsightPage( $subpage ) {
@@ -130,7 +130,7 @@ class InsightsHelper {
 	 * Returns a specific subpage model
 	 * If it does not exist a user is redirected to the Special:Insights landing page
 	 *
-	 * @param $subpage A slug of a subpage
+	 * @param $subpage string|null A slug of a subpage
 	 * @return InsightsModel|null
 	 */
 	public static function getInsightModel( $subpage ) {

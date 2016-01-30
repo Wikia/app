@@ -137,4 +137,6 @@ $messages = array_merge( $messages, array(
 ***w:c:es.gorillaz|Gorillaz
 ***w:c:arte|Arte
 ",
+
+'tog-enableuserjs' => 'Habilitar JavaScript personal ([[Ayuda:CSS_y_JS_personal#JavaScript|Aprenda más]])',
 ) );

@@ -122,8 +122,13 @@ function wfCreatePageLoadPreformattedContent( $editpage ) {
 			} else {
 				$editpage->textbox1 = wfMsgForContentNoTrans( 'newpagelayout' );
 			}
-		} else if ( $msg = $wgRequest->getVal( 'useMessage' ) ) {
-			$editpage->textbox1 = wfMsgForContentNoTrans( $msg );
+		} elseif ( $msgKey = $wgRequest->getVal( 'useMessage' ) ) {
+			$msg = wfMessage( $msgKey );
+			$msgParams = $wgRequest->getArray( 'messageParams' );
+			if ( $msgParams !== null ) {
+				$msg = $msg->params( $msgParams );
+			}
+			$editpage->textbox1 = $msg->inContentLanguage()->plain();
 		}
 	}
 	return true ;

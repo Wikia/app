@@ -93,7 +93,10 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 
 		$this->output( "Fetching {$this->mLimit} images to sync ...\n" );
 
+		$then = microtime( true );
+
 		/* take X elements from queue */
+		/* @var \Wikia\SwiftSync\ImageSync $imageSyncList */
 		$imageSyncList = \Wikia\SwiftSync\ImageSync::newFromQueue( $this->mLimit );
 		foreach ( $imageSyncList as $this->imageSyncQueueItem ) {
 			$this->output( sprintf( "Run %s operation: (record: %d)\n", $this->imageSyncQueueItem->action, $this->imageSyncQueueItem->id ) );
@@ -140,6 +143,15 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 					'dst'     => $this->imageSyncQueueItem->dst,
 				] );
 			}
+		}
+
+		if ( $imageSyncList->count() > 0 ) {
+			Wikia\Logger\WikiaLogger::instance()->debug( 'MigrateImagesBetweenSwiftDC: execute', [
+				'dest_dc'    => $this->mDC_dst,
+				'limit'      => $this->mLimit,
+				'batch_size' => $imageSyncList->count(),
+				'took'       => round( microtime( true ) - $then, 4 ),
+			] );
 		}
 	}
 

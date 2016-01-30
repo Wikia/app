@@ -20,20 +20,19 @@ class NodeImage extends Node {
 
 			$title = $this->getImageAsTitleObject( $imageData );
 			$file = $this->getFilefromTitle( $title );
-			$this->getExternalParser()->addImage( $title ? $title->getDBkey() : $imageData );
+			if ( $title instanceof \Title ) {
+				$this->getExternalParser()->addImage( $title->getDBkey() );
+			}
 			$ref = null;
 			$alt = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
 			$caption = $this->getValueWithDefault( $this->xmlNode->{self::CAPTION_TAG_NAME} );
-
-			wfRunHooks( 'PortableInfoboxNodeImage::getData', [ $title, &$ref, $alt ] );
 
 			$this->data = [
 				'url' => $this->resolveImageUrl( $file ),
 				'name' => ( $title ) ? $title->getText() : '',
 				'key' => ( $title ) ? $title->getDBKey() : '',
 				'alt' => $alt,
-				'caption' => $caption,
-				'ref' => $ref
+				'caption' => $caption
 			];
 
 			if ( $this->isVideo( $file ) ) {
@@ -66,9 +65,9 @@ class NodeImage extends Node {
 
 	private function getImageAsTitleObject( $imageName ) {
 		global $wgContLang;
-		$title = \Title::newFromText(
-			ImageFilenameSanitizer::getInstance()->sanitizeImageFileName( $imageName, $wgContLang ),
-			NS_FILE
+		$title = \Title::makeTitleSafe(
+			NS_FILE,
+			ImageFilenameSanitizer::getInstance()->sanitizeImageFileName( $imageName, $wgContLang )
 		);
 
 		return $title;
@@ -108,8 +107,14 @@ class NodeImage extends Node {
 	 * @return array
 	 */
 	private function videoDataDecorator( $data, $file ) {
-		$data['isVideo'] = true;
-		$data['duration'] = WikiaFileHelper::formatDuration( $file->getMetadataDuration());
+		$title = $file->getTitle();
+
+		if ( $title ) {
+			$data[ 'url' ] = $title->getFullURL();
+		}
+
+		$data[ 'isVideo' ] = true;
+		$data[ 'duration' ] = WikiaFileHelper::formatDuration( $file->getMetadataDuration());
 
 		return $data;
 	}

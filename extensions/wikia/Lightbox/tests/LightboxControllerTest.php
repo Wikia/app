@@ -33,6 +33,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 
 	public function testGetThumbImages_exclude() {
 		$time = time();
+		$timeFormatted = wfTimestamp( TS_MW, $time );
 		$count = 5;
 		$images = [
 			'image 1',
@@ -46,7 +47,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 		];
 		$imageList = [
 			'images' => $images,
-		    'minTimestamp' => $time - 10000,
+		    'minTimestamp' => wfTimestamp( TS_MW, $time - 10000 ),
 		];
 		$request = $this->getMockBuilder( 'WikiaRequest' )
 			->disableOriginalConstructor()
@@ -59,7 +60,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 		$request->expects( $this->at( 1 ) )
 			->method( 'getVal' )
 			->with( 'to', $this->anything() )
-			->will( $this->returnValue( $time ) );
+			->will( $this->returnValue( $timeFormatted ) );
 		$request->expects( $this->at( 2 ) )
 			->method( 'getVal' )
 			->with( 'inclusive', $this->anything() )
@@ -71,7 +72,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 			->getMock();
 		$lightboxHelper->expects( $this->once() )
 			->method( 'getImageList' )
-			->with( $count, $time )
+			->with( $count, $timeFormatted )
 			->will( $this->returnValue( $imageList ) );
 
 		$lightboxMock = $this->getMockBuilder( 'LightboxController' )
@@ -97,6 +98,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 
 	public function testGetThumbImages() {
 		$time = time();
+		$timeFormatted = wfTimestamp( TS_MW, $time );
 		$count = 5;
 		$images = [
 			'image 1',
@@ -114,7 +116,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 		];
 		$imageList = [
 			'images' => $images,
-		    'minTimestamp' => $time - 10000,
+		    'minTimestamp' => wfTimestamp( TS_MW, $time - 10000 ),
 		];
 		$request = $this->getMockBuilder( 'WikiaRequest' )
 			->disableOriginalConstructor()
@@ -127,7 +129,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 		$request->expects( $this->at( 1 ) )
 			->method( 'getVal' )
 			->with( 'to', $this->anything() )
-			->will( $this->returnValue( $time ) );
+			->will( $this->returnValue( $timeFormatted ) );
 		$request->expects( $this->at( 2 ) )
 			->method( 'getVal' )
 			->with( 'inclusive', $this->anything() )
@@ -139,7 +141,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 			->getMock();
 		$lightboxHelper->expects( $this->once() )
 			->method( 'getImageList' )
-			->with( $count, $time )
+			->with( $count, $timeFormatted )
 			->will( $this->returnValue( $imageList ) );
 		$lightboxHelper->expects( $this->once() )
 			->method( 'getLatestPhotos' )

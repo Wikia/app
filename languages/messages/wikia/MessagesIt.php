@@ -7,4 +7,6 @@ $messages = array_merge( $messages, array(
 'not_you' => "Non sei tu?",
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 'addnewtalksection-link' => 'Inizia una nuova sezione',
+
+'tog-enableuserjs' => 'Abilita il tuo JavaScript ([[Help:Personal_CSS_and_JS#JavaScript|Per saperne di più]])',
 ) );

@@ -1,7 +1,11 @@
 <? if (!$wg->NoExternals && !$wg->SuppressSpotlights) { ?>
 <section>
 	<div class="header-container">
-		<h1><?= wfMsg('oasis-spotlights-footer-title') ?></h1>
+		<? if ( $seoTestOneH1 ): ?>
+			<h2><?= wfMsg('oasis-spotlights-footer-title') ?></h2>
+		<? else: ?>
+			<h1><?= wfMsg('oasis-spotlights-footer-title') ?></h1>
+		<? endif; ?>
 		<?= F::app()->renderView('RandomWiki', 'Index') ?>
 	</div>
 	<script type='text/javascript'>

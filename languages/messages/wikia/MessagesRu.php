@@ -37,4 +37,7 @@ $messages = array_merge( $messages, array(
 'review_reason_5' => 'рассмотрите рассуждают 5',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 'addnewtalksection-link' => 'Создать новый раздел',
+
+'tog-enableuserjs' => 'Включить персональный JavaScript ([[Справка:Персональный СSS и JavaScript|подробнее]])',
+'wikia-pagetitle' => '$1 — Wikia',
 ) );

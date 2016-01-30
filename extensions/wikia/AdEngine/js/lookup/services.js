@@ -13,17 +13,15 @@
 /*jshint camelcase:false*/
 define('ext.wikia.adEngine.lookup.services', [
 	'wikia.log',
-	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
-	require.optional('ext.wikia.adEngine.lookup.amazonMatchOld'),
+	require.optional('ext.wikia.adEngine.lookup.openXBidder'),
 	require.optional('ext.wikia.adEngine.lookup.rubiconRtp')
-], function (log, win, amazonMatch, amazonMatchOld, rtp) {
+], function (log, amazonMatch, oxBidder, rtp) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.services',
 		rtpLookupTracked = false,
-		amazonLookupTracked = false,
-		amazonOldLookupTracked = false;
+		amazonLookupTracked = false;
 
 	function trackState(module) {
 		if (module && module.wasCalled()) {
@@ -31,10 +29,25 @@ define('ext.wikia.adEngine.lookup.services', [
 		}
 	}
 
+	function addParameters(slotName, slotTargeting, modules) {
+		var params;
+		if (!Object.keys) {
+			return;
+		}
+		modules.forEach(function (module) {
+			if (module && module.wasCalled()) {
+				params = module.getSlotParams(slotName);
+				Object.keys(params).forEach(function (key) {
+					slotTargeting[key] = params[key];
+				});
+			}
+		});
+	}
+
 	function extendSlotTargeting(slotName, slotTargeting) {
 		log(['extendSlotTargeting', slotName, slotTargeting], 'debug', logGroup);
 
-		var rtpSlots, rtpTier, amazonParams;
+		var rtpSlots, rtpTier;
 
 		if (!rtpLookupTracked) {
 			rtpLookupTracked = true;
@@ -56,63 +69,10 @@ define('ext.wikia.adEngine.lookup.services', [
 			}
 		}
 
-		if (amazonMatch && amazonMatch.wasCalled() && Object.keys) {
-			amazonParams = amazonMatch.getSlotParams(slotName);
-
-			Object.keys(amazonParams).forEach(function (key) {
-				slotTargeting[key] = amazonParams[key];
-			});
-		}
-	}
-
-	// Copied from AdLogicPageParams
-	// No longer needed when AmazonOld is removed
-	function decodeLegacyDartParams(dartString) {
-		var params = {},
-			kvs,
-			kv,
-			key,
-			value,
-			i,
-			len;
-
-		log(['decodeLegacyDartParams', dartString], 'debug', logGroup);
-
-		if (typeof dartString === 'string') {
-			kvs = dartString.split(';');
-			for (i = 0, len = kvs.length; i < len; i += 1) {
-				kv = kvs[i].split('=');
-				key = kv[0];
-				value = kv[1];
-				if (key && value) {
-					params[key] = params[key] || [];
-					params[key].push(value);
-				}
-			}
-		}
-
-		return params;
-	}
-
-	// No longer needed when AmazonOld is removed
-	function extendPageTargeting(pageTargeting) {
-		var amazonParams;
-
-		if (!amazonOldLookupTracked) {
-			amazonOldLookupTracked  = true;
-			trackState(amazonMatchOld);
-		}
-
-		if (amazonMatchOld && amazonMatchOld.wasCalled() && Object.keys) {
-			amazonParams = decodeLegacyDartParams(win.amzn_targs);
-			Object.keys(amazonParams).forEach(function (key) {
-				pageTargeting[key] = amazonParams[key];
-			});
-		}
+		addParameters(slotName, slotTargeting, [amazonMatch, oxBidder]);
 	}
 
 	return {
-		extendSlotTargeting: extendSlotTargeting,
-		extendPageTargeting: extendPageTargeting
+		extendSlotTargeting: extendSlotTargeting
 	};
 });
