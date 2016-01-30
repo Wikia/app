@@ -629,9 +629,10 @@ class ArticleComment {
 
 		$text = '';
 		$this->load( true );
-		if ( $this->canEdit() ) {
+		$canEdit = $this->getTitle()->userCan( 'edit' );
+		if ( $canEdit ) {
 			$vars = [
-				'canEdit'				=> $this->canEdit(),
+				'canEdit'				=> $canEdit,
 				'comment'				=> htmlentities( ArticleCommentsAjax::getConvertedContent( $this->mLastRevision->getText() ) ),
 				'isReadOnly'			=> wfReadOnly(),
 				'isMiniEditorEnabled'	=> ArticleComment::isMiniEditorEnabled(),
@@ -1533,8 +1534,8 @@ class ArticleComment {
 	 * @return bool Whether to continue checking hooks
 	 */
 	static public function userCan( Title &$title, User &$user, $action, &$result ) {
-		$app = F::app();
-		$commentsNS = $app->wg->ArticleCommentsNamespaces;
+		$wg = F::app()->wg;
+		$commentsNS = $wg->ArticleCommentsNamespaces;
 		$ns = $title->getNamespace();
 
 		// Only handle article and blog comments
@@ -1544,9 +1545,8 @@ class ArticleComment {
 		}
 
 		$comment = ArticleComment::newFromTitle( $title );
-		$isBlog = ( $app->wg->EnableBlogArticles && ArticleComment::isBlog( $title ) );
+		$isBlog = ( $wg->EnableBlogArticles && ArticleComment::isBlog( $title ) );
 
-		$return = true;
 		switch ( $action ) {
 			// Creating article comments requires 'commentcreate' permission
 			// For blogs, additionally check if the owner has enabled commenting+
@@ -1577,7 +1577,9 @@ class ArticleComment {
 					( $user->isAllowed( 'commentdelete' ) || $isBlog && $user->isAllowed( 'blog-comments-delete' ) )
 				);
 				$return = false;
+				break;
 			default:
+				$result = $return = true;
 		}
 
 		return $return;
@@ -1593,16 +1595,16 @@ class ArticleComment {
 	 * @return bool Whether $user can add a comment to $title
 	 */
 	static public function userCanCommentOn( Title $title, User $user = null ) {
-		$app = F::app();
+		$wg = F::app()->wg;
 		if ( !( $user instanceof User ) ) {
-			$user = $app->wg->User;
+			$user = $wg->User;
 		}
 
 		if ( wfReadOnly() ) {
 			return false;
 		}
 
-		$isBlog = ( $app->wg->EnableBlogArticles && ArticleComment::isBlog( $title ) );
+		$isBlog = ( $wg->EnableBlogArticles && ArticleComment::isBlog( $title ) );
 		if ( $isBlog ) {
 			$props = BlogArticle::getProps( $title->getArticleID() );
 			$commentingEnabled = isset( $props[ 'commenting' ] ) ? (bool) $props[ 'commenting' ] : true;

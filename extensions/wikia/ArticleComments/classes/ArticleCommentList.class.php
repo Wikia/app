@@ -384,11 +384,11 @@ class ArticleCommentList {
 	 * @return array data for comments list
 	 */
 	public function getData( $page = 1 ) {
-		global $wgUser, $wgStylePath;
+		$wg = F::app()->wg;
 
 		// $isSysop = in_array('sysop', $groups) || in_array('staff', $groups);
-		$canEdit = ArticleComment::userCanCommentOn( $this->mTitle, $wgUser );
-		$isBlocked = $wgUser->isBlocked();
+		$canEdit = ArticleComment::userCanCommentOn( $this->mTitle );
+		$isBlocked = $wg->User->isBlocked();
 		$isReadOnly = wfReadOnly();
 		// $showall = $wgRequest->getText( 'showall', false );
 
@@ -408,21 +408,21 @@ class ArticleCommentList {
 		$pagination = $this->doPagination( $countComments, count( $comments ), $page );
 
 		return [
-			'avatar' => AvatarService::renderAvatar( $wgUser->getName(), 50 ),
-			'userurl' => AvatarService::getUrl( $wgUser->getName() ),
+			'avatar' => AvatarService::renderAvatar( $wg->User->getName(), 50 ),
+			'userurl' => AvatarService::getUrl( $wg->User->getName() ),
 			'canEdit' => $canEdit,
 			'commentListRaw' => $comments,
 			'commentingAllowed' => ArticleComment::userCanCommentOn( $this->mTitle ),
 			'commentsPerPage' => $this->mMaxPerPage,
 			'countComments' => $countComments,
 			'countCommentsNested' => $countCommentsNested,
-			'isAnon' => $wgUser->isAnon(),
+			'isAnon' => $wg->User->isAnon(),
 			'isBlocked' => $isBlocked,
 			'isReadOnly' => $isReadOnly,
 			'page' => $page,
 			'pagination' => $pagination,
 			'reason' => $isBlocked ? $this->blockedPage() : '',
-			'stylePath' => $wgStylePath,
+			'stylePath' => $wg->StylePath,
 			'title' => $this->mTitle
 		];
 	} // end getData();

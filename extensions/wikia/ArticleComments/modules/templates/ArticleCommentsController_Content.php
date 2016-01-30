@@ -21,7 +21,7 @@
 		<div class="session">
 			<?= $avatar ?>
 			<? if ( $isAnon ): ?>
-				<?= wfMessage( 'oasis-comments-anonymous-prompt' )->parse() /* wfMsg( 'oasis-comments-user-prompt', $avatar->mUser->getName() ) */ ?>
+				<?= wfMessage( 'oasis-comments-anonymous-prompt' )->parse() ?>
 			<? endif ?>
 		</div>
 		<form action="<?= $title->getFullURL() ?>" method="post" class="article-comm-form" id="article-comm-form">
