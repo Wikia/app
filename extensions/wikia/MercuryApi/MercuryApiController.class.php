@@ -375,30 +375,19 @@ class MercuryApiController extends WikiaController {
 	 */
 	public function getArticleFromMarkup() {
 		global $wgUser, $wgRequest;
-		$wikitext = '';
 
 		if ( !$wgRequest->wasPosted() ) {
 			throw new BadRequestApiException();
 		}
 
-		// This is so unbelievably ugly that I cannot believe there is no better way
-		// PHP auto-urldecodes all params so the only way to avoid this is to parse
-		// php://input manually
-		preg_match_all( '/(\w+)=([^&]+)/', file_get_contents('php://input'), $pairs );
-		$params = array_combine( $pairs[1], $pairs[2] );
-
-		$titleText = !empty( $params['title'] ) ? $params['title'] : '';
+		$wikitext = $this->getVal( 'wikitext' );
+		$titleText = !empty( $this->getVal( 'title' ) ) ? $this->getVal( 'title' ) : '';
 		$title = Title::newFromText( $titleText );
 		$parserOptions = new ParserOptions( $wgUser );
-		$wrapper = new GlobalStateWrapper( ['wgArticleAsJson' => true, '$wgDefaultSkin' => 'wikiamobile'] );
+		$wrapper = new GlobalStateWrapper( ['wgArticleAsJson' => true] );
 
-		if( !empty( $params['wikitext'] ) ) {
-			$wikitext = $params['wikitext'];
-		}
-
-		if( !empty( $params['CKmarkup'] ) ) {
-			$CKmarkup = $params['CKmarkup'];
-			$wikitext = RTE::HtmlToWikitext( $CKmarkup );
+		if( !empty( $this->getVal( 'CKmarkup' ) ) ) {
+			$wikitext = RTE::HtmlToWikitext( $this->getVal( 'CKmarkup' ) );
 		}
 
 		$wrapper->wrap( function () use ( &$articleAsJson, $wikitext, $title, $parserOptions ) {
