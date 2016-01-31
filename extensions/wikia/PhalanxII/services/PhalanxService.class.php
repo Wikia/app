@@ -222,6 +222,13 @@ class PhalanxService extends Service {
 					usleep( self::PHALANX_SERVICE_TRY_USLEEP );
 				}
 				$tries++;
+
+				$this->error( "Phalanx service error - retrying...", [
+					"phalanxUrl" => $url,
+					'postParams' => json_encode( $loggerPostParams ),
+					'tries' => $tries,
+					'exception' => new Exception( $action ),
+				] );
 			}
 			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 10000.0 );
 		}

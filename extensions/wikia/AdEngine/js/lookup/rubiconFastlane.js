@@ -28,7 +28,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 					targeting: {loc: 'footer'}
 				},
 				INCONTENT_BOXAD_1: {
-					sizes: [[300, 250]],
+					sizes: [[300, 250], [300, 600]],
 					targeting: {loc: 'middle'}
 				},
 				PREFOOTER_LEFT_BOXAD: {
@@ -52,7 +52,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 				}
 			}
 		},
-		context = adContext.getContext(),
+		context,
 		logGroup = 'ext.wikia.adEngine.lookup.rubiconFastlane',
 		priceMap = {},
 		rubiconSlots = [],
@@ -195,6 +195,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		rubicon.src = rubiconLibraryUrl;
 
 		node.parentNode.insertBefore(rubicon, node);
+		context = adContext.getContext();
 		defineSlots(skin, onResponse);
 	}
 

@@ -339,6 +339,7 @@ function wfRandom() {
  * so no fancy : for IIS7.
  *
  * %2F in the page titles seems to fatally break for some reason.
+ * @see http://httpd.apache.org/docs/2.2/mod/core.html#allowencodedslashes
  *
  * @param $s String:
  * @return string

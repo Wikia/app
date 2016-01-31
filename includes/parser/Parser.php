@@ -484,15 +484,6 @@ class Parser {
 		$this->recordPerformanceStats( $wikitextSize, strlen($text) );
 		// Wikia change end
 
-		// There was "a lot" of wikitext but ultimately no content was created out of it
-		if ( $wikitextSize > 500 && trim($text) === '' ) {
-			if ( $title && $title->exists() && $title->isContentPage() ) {
-				\Wikia\Logger\WikiaLogger::instance()->info( 'PLATFORM-1355-somethingToNothing', [
-					'exception'   => new Exception() // log the backtrace
-				] );
-			}
-		}
-
 		# Information on include size limits, for the benefit of users who try to skirt them
 		if ( $this->mOptions->getEnableLimitReport() ) {
 			$max = $this->mOptions->getMaxIncludeSize();

@@ -129,7 +129,7 @@ class ListusersData {
 			$dbs = wfGetDB( DB_SLAVE, array(), $this->mDBh );
 
 			/* initial conditions for SQL query */
-			$where = array( 'wiki_id' => $this->mCityId );
+			$where = array( 'wiki_id' => $this->mCityId, "user_name != ''" );
 
 			/* filter: groups */
 			if ( !empty( $this->mFilterGroup ) && is_array( $this->mFilterGroup ) ) {
@@ -144,7 +144,7 @@ class ListusersData {
 							 * and include it in the No group checkbox
 							 */
 							$powerUserGroupName = \Wikia\PowerUser\PowerUser::GROUP_NAME;
-							$whereGroup[] = " single_group = '{$powerUserGroupName}' ";
+							$whereGroup[] = ' single_group = ' . $dbs->addQuotes( $powerUserGroupName );
 
 							$whereGroup[] = " all_groups = '' ";
 						} else {
@@ -221,12 +221,14 @@ class ListusersData {
 					$oUser = User::newFromName($oRow->user_name);
 
 					# check by ID id, if user not found
-					if ( !($oUser instanceof User) ) {
-						$oUser = User::newFromId($oRow->user_id);
-					}
+					if ( !( $oUser instanceof User ) || $oUser->getId() === 0 ) {
+						$oUser = User::newFromId( $oRow->user_id );
 
-					# hmmm ... if user not found
-					if ( !($oUser instanceof User) ) continue;
+						if ( !$oUser->loadFromId() ) {
+							// User doesn't exist
+							continue;
+						}
+					}
 
 					/* groups */
 					$groups = explode(";", $oRow->all_groups);
@@ -395,7 +397,8 @@ class ListusersData {
 					# group name or all groups
 					$where = array(
 						'wiki_id' => $this->mCityId,
-						'user_is_closed' => 0
+						'user_is_closed' => 0,
+						"user_name != ''",
 					);
 					if ( $key != Listusers::DEF_GROUP_NAME ) {
 						$where[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $key ) . " OR all_groups " . $dbs->buildLike( $dbs->anyString(), sprintf("%s;", $key), $dbs->anyString() );

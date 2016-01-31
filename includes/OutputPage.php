@@ -1632,18 +1632,7 @@ class OutputPage extends ContextSource {
 			}
 		}
 
-		$lengthBefore = strlen( $parserOutput->getText() );
 		wfRunHooks( 'OutputPageParserOutput', array( &$this, $parserOutput ) );
-		$lengthAfter = strlen( $parserOutput->getText() );
-		if ( $lengthBefore !== $lengthAfter ) {
-			$title = $this->getTitle();
-			if ( $title && $title->exists() && $title->isContentPage() ) {
-				\Wikia\Logger\WikiaLogger::instance()->info( 'PLATFORM-1355-OutputPageParserOutput', [
-					'lengthBefore' => $lengthBefore,
-					'lengthAfter' => $lengthAfter
-				] );
-			}
-		}
 	}
 
 	/**
@@ -1655,18 +1644,7 @@ class OutputPage extends ContextSource {
 		$this->addParserOutputNoText( $parserOutput );
 		$text = $parserOutput->getText();
 
-		$lengthBefore = strlen( $text );
 		wfRunHooks( 'OutputPageBeforeHTML', array( &$this, &$text ) );
-		$lengthAfter = strlen( $text );
-		if ( $lengthBefore !== $lengthAfter ) {
-			$title = $this->getTitle();
-			if ( $title && $title->exists() && $title->isContentPage() ) {
-				\Wikia\Logger\WikiaLogger::instance()->info( 'PLATFORM-1355-OutputPageBeforeHTML', [
-					'lengthBefore' => $lengthBefore,
-					'lengthAfter' => $lengthAfter
-				] );
-			}
-		}
 
 		$this->addHTML( $text );
 	}
