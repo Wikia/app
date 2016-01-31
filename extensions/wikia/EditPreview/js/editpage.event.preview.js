@@ -1,8 +1,6 @@
 define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.window', 'wikia.querystring'], function (helper, $, window, qs){
 	'use strict';
 
-
-
 	// handle "Preview" button
 	function onPreview(ev, editor) {
 		ev.preventDefault();
@@ -21,32 +19,6 @@ define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.wind
 		if (editor) {
 			editor.track('preview-mobile');
 		}
-	}
-
-	function iframeform(url) {
-		var object = this;
-		object.time = new Date().getTime();
-		object.form = $('<form action="' + url + '" target="iframe' + object.time + '" style="display:none" method="post" id="form' + object.time + '" name="form' + object.time + '"></form>');
-
-		object.addParameter = function (parameter, value) {
-			$("<input type='hidden' />")
-				.attr("name", parameter)
-				.attr("value", value)
-				.appendTo(object.form);
-		};
-
-		object.send = function (frameRoot, callback) {
-			var iframe = $('<iframe data-time="' + object.time + '" style="display:block; width:320px; height:100%; margin: 0 auto;" name="iframe' + object.time + '" id="iframe' + object.time + '"></iframe>');
-			$(frameRoot).append(iframe);
-			$(frameRoot).append(object.form);
-
-			iframe.load(function () {
-				$('#form' + $(this).data('time')).remove();
-				callback();
-			});
-
-			object.form.submit();
-		};
 	}
 
 	// render "Preview" modal
@@ -164,8 +136,9 @@ define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.wind
 		}
 
 		if (skin === 'wikiamobile') {
-			var previewFrame = new iframeform(qs(window.wgEditPageMercuryPreviewHandler).addCb());
+			var previewFrame = new helper.iFrameForm(qs(window.wgEditPreviewMercuryUrl).addCb());
 
+			// add hidden parameter fields to be able to send POST
 			previewFrame.addParameter('title', window.wgEditedTitle);
 			previewFrame.addParameter(mode === 'source' ? 'wikitext' : 'CKmarkup', content);
 

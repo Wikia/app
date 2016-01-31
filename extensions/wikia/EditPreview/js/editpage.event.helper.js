@@ -90,10 +90,37 @@ define('editpage.event.helper', ['wikia.window'], function (window, ace){
 		return $('#categories');
 	}
 
+	function iFrameForm(url) {
+		var object = this;
+		object.time = new Date().getTime();
+		object.form = $('<form action="' + url + '" target="iframe' + object.time + '" style="display:none" method="post" id="form' + object.time + '" name="form' + object.time + '"></form>');
+
+		object.addParameter = function (parameter, value) {
+			$("<input type='hidden' />")
+				.attr("name", parameter)
+				.attr("value", value)
+				.appendTo(object.form);
+		};
+
+		object.send = function (frameRoot, callback) {
+			var iframe = $('<iframe data-time="' + object.time + '" name="iframe' + object.time + '" id="iframe' + object.time + '" class="mobile-preview"></iframe>');
+			$(frameRoot).append(iframe);
+			$(frameRoot).append(object.form);
+
+			iframe.load(function () {
+				$('#form' + $(this).data('time')).remove();
+				callback();
+			});
+
+			object.form.submit();
+		};
+	}
+
 	return {
 		ajax: ajax,
 		getCategories: getCategories,
 		getContent: getContent,
-		getScrollbarWidth: getScrollbarWidth
+		getScrollbarWidth: getScrollbarWidth,
+		iFrameForm: iFrameForm
 	};
 });
