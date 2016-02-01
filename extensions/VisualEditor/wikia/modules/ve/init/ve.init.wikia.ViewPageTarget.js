@@ -32,89 +32,53 @@ OO.inheritClass( ve.init.wikia.ViewPageTarget, ve.init.mw.ViewPageTarget );
 
 /* Static Properties */
 
-if (ve.init.wikia.getToolbarABTestVariantNumber() === 1) {
-	// INT-322 A/B test: Image / Video upload for toolbar
-	ve.init.wikia.ViewPageTarget.static.toolbarGroups = [
-		// History
-		{ include: [ 'undo' ] },
-		// Format
-		{
-			type: 'menu',
-			indicator: 'down',
-			title: OO.ui.deferMsg( 'visualeditor-toolbar-format-tooltip' ),
-			include: [ { group: 'format' } ],
-			promote: [ 'paragraph' ],
-			demote: [ 'preformatted' ],
-			exclude: [ 'heading1' ]
-		},
-		// Style
-		{ include: [ 'bold', 'italic', 'link' ] },
-		{
-			type: 'list',
-			icon: 'text-style',
-			indicator: 'down',
-			title: OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
-			include: [ 'subscript', 'superscript', 'strikethrough', 'underline', 'indent', 'outdent', 'clear' ]
-		},
-		// Insert
-		{ include: [ 'wikiaImageInsert', 'wikiaVideoInsert'] },
-		{
-			type: 'list',
-			label: OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
-			indicator: 'down',
-			include: [ 'wikiaSingleMedia', 'wikiaInfoboxInsert', 'number', 'bullet', 'wikiaMapInsert', 'wikiaTemplateInsert', 'reference', 'referencesList', 'insertTable' ]
-		},
-		// Table
-		{
-			header: OO.ui.deferMsg( 'visualeditor-toolbar-table' ),
-			type: 'list',
-			icon: 'table-insert',
-			indicator: 'down',
-			include: [ { group: 'table' } ],
-			demote: [ 'deleteTable' ]
-		}
-	];
+ve.init.wikia.ViewPageTarget.static.toolbarGroups = [
+	// History
+	{ include: [ 'undo' ] },
+	// Format
+	{
+		type: 'menu',
+		indicator: 'down',
+		title: OO.ui.deferMsg( 'visualeditor-toolbar-format-tooltip' ),
+		include: [ { group: 'format' } ],
+		promote: [ 'paragraph' ],
+		demote: [ 'preformatted' ],
+		exclude: [ 'heading1' ]
+	},
+	// Style
+	{ include: [ 'bold', 'italic', 'link' ] },
+	{
+		type: 'list',
+		icon: 'text-style',
+		indicator: 'down',
+		title: OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
+		include: [ 'subscript', 'superscript', 'strikethrough', 'underline', 'indent', 'outdent', 'clear' ]
+	},
+	// Insert
+	{ include: [ 'wikiaImageInsert', 'wikiaVideoInsert'] },
+	{
+		type: 'list',
+		label: OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
+		indicator: 'down',
+		include: [ 'wikiaMediaInsert', 'wikiaSingleMedia', 'wikiaInfoboxInsert', 'number', 'bullet', 'wikiaMapInsert', 'wikiaTemplateInsert', 'reference', 'referencesList', 'insertTable' ]
+	},
+	// Table
+	{
+		header: OO.ui.deferMsg( 'visualeditor-toolbar-table' ),
+		type: 'list',
+		icon: 'table-insert',
+		indicator: 'down',
+		include: [ { group: 'table' } ],
+		demote: [ 'deleteTable' ]
+	}
+];
+
+if ( ve.init.wikia.getToolbarABTestVariantNumber() === 1 ) {
+	// INT-322 A/B test: Image / Video upload for toolbar: Remove wikiaMediaInsert in insert list
+	ve.init.wikia.ViewPageTarget.static.toolbarGroups[5].include.splice(0, 1);
 } else {
-	// Original toolbar configuration
-	ve.init.wikia.ViewPageTarget.static.toolbarGroups = [
-		// History
-		{ include: [ 'undo' ] },
-		// Format
-		{
-			type: 'menu',
-			indicator: 'down',
-			title: OO.ui.deferMsg( 'visualeditor-toolbar-format-tooltip' ),
-			include: [ { group: 'format' } ],
-			promote: [ 'paragraph' ],
-			demote: [ 'preformatted' ],
-			exclude: [ 'heading1' ]
-		},
-		// Style
-		{ include: [ 'bold', 'italic', 'link' ] },
-		{
-			type: 'list',
-			icon: 'text-style',
-			indicator: 'down',
-			title: OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
-			include: [ 'subscript', 'superscript', 'strikethrough', 'underline', 'indent', 'outdent', 'clear' ]
-		},
-		// Insert
-		{
-			type: 'list',
-			label: OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
-			indicator: 'down',
-			include: [ 'wikiaMediaInsert', 'wikiaSingleMedia', 'wikiaInfoboxInsert', 'number', 'bullet', 'wikiaMapInsert', 'wikiaTemplateInsert', 'reference', 'referencesList', 'insertTable' ]
-		},
-		// Table
-		{
-			header: OO.ui.deferMsg( 'visualeditor-toolbar-table' ),
-			type: 'list',
-			icon: 'table-insert',
-			indicator: 'down',
-			include: [ { group: 'table' } ],
-			demote: [ 'deleteTable' ]
-		}
-	];
+	// Original toolbar configuration, remove wikiaImageInsert and wikiaVideoInsert
+	ve.init.wikia.ViewPageTarget.static.toolbarGroups.splice(4, 1);
 }
 
 ve.init.wikia.ViewPageTarget.static.actionsToolbarConfig = [
