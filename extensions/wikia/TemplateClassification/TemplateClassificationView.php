@@ -68,7 +68,7 @@ class View {
 			$editButton = true;
 		}
 
-		$hint = $this->prepareHint();
+		$hint = wfMessage( 'template-classification-open-modal-key-tip' )->plain();
 
 		return \MustacheService::getInstance()->render(
 			__DIR__ . '/templates/TemplateClassificationViewPageEntryPoint.mustache',
@@ -82,7 +82,4 @@ class View {
 		);
 	}
 
-	private function prepareHint() {
-		return wfMessage( 'template-classification-open-modal-key-tip' )->plain();
-	}
 }

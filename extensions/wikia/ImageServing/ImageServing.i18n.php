@@ -208,6 +208,7 @@ $messages['pms'] = array(
  */
 $messages['pt'] = array(
 	'imageserving-desc' => 'Escolhe imagens dum conjunto especificado de páginas com base em requisitos visuais.',
+	'mostlinkedfilesincontent' => 'Arquivos com mais links em namespaces de conteúdo',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -279,6 +280,7 @@ $messages['vi'] = array(
  */
 $messages['zh-hans'] = array(
 	'imageserving-desc' => '从指定的数组的视觉要求基于页面中选择图像',
+	'mostlinkedfilesincontent' => '内容空间链接最多的文件',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
@@ -286,4 +288,5 @@ $messages['zh-hans'] = array(
  */
 $messages['zh-hant'] = array(
 	'imageserving-desc' => '依視需求從指定的一系列頁面中選擇要的圖片。',
+	'mostlinkedfilesincontent' => '內容空間連結最多的文檔',
 );
