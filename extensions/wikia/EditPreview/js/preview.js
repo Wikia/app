@@ -128,7 +128,9 @@ define('wikia.preview', [
 					$this.appendTo($this.next());
 				});
 
-				addEditSummary($article, editPageOptions.width, data.summary);
+				if (data) {
+					addEditSummary($article, editPageOptions.width, data.summary);
+				}
 
 				// fire an event once preview is rendered
 				$(window).trigger('EditPageAfterRenderPreview', [$article]);

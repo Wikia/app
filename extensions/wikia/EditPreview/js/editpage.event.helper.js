@@ -90,29 +90,42 @@ define('editpage.event.helper', ['wikia.window'], function (window, ace){
 		return $('#categories');
 	}
 
-	function iFrameForm(url) {
-		var object = this;
-		object.time = new Date().getTime();
-		object.form = $('<form action="' + url + '" target="iframe' + object.time + '" style="display:none" method="post" id="form' + object.time + '" name="form' + object.time + '"></form>');
+	function IFrameForm(url) {
+		if (!this instanceof IFrameForm) {
+			return new IFrameForm(url);
+		}
 
-		object.addParameter = function (parameter, value) {
+		this.time = new Date().getTime();
+		this.form = $('<form></form>')
+			.attr('action', url)
+			.attr('style', 'display:none')
+			.attr('target', 'iframe' + this.time)
+			.attr('method', 'post')
+			.attr('id', 'form' + this.time)
+			.attr('name', 'form' + this.time);
+
+		this.addParameter = function (parameter, value) {
 			$("<input type='hidden' />")
-				.attr("name", parameter)
-				.attr("value", value)
-				.appendTo(object.form);
+				.attr('name', parameter)
+				.attr('value', value)
+				.appendTo(this.form);
 		};
 
-		object.send = function (frameRoot, callback) {
-			var iframe = $('<iframe data-time="' + object.time + '" name="iframe' + object.time + '" id="iframe' + object.time + '" class="mobile-preview"></iframe>');
+		this.send = function (frameRoot, callback) {
+			var iframe = $('<iframe></iframe>')
+				.attr('data-time', this.time)
+				.attr('id', 'iframe' + this.time)
+				.attr('name', 'iframe' + this.time)
+				.attr('class', 'mobile-preview');
 			$(frameRoot).append(iframe);
-			$(frameRoot).append(object.form);
+			$(frameRoot).append(this.form);
 
 			iframe.load(function () {
 				$('#form' + $(this).data('time')).remove();
 				callback();
 			});
 
-			object.form.submit();
+			this.form.submit();
 		};
 	}
 
@@ -121,6 +134,6 @@ define('editpage.event.helper', ['wikia.window'], function (window, ace){
 		getCategories: getCategories,
 		getContent: getContent,
 		getScrollbarWidth: getScrollbarWidth,
-		iFrameForm: iFrameForm
+		IFrameForm: IFrameForm
 	};
 });

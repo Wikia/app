@@ -136,7 +136,7 @@ define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.wind
 		}
 
 		if (skin === 'wikiamobile') {
-			var previewFrame = new helper.iFrameForm(qs(window.wgEditPreviewMercuryUrl).addCb());
+			var previewFrame = new helper.IFrameForm(qs(window.wgEditPreviewMercuryUrl).addCb());
 
 			// add hidden parameter fields to be able to send POST
 			previewFrame.addParameter('title', window.wgEditedTitle);

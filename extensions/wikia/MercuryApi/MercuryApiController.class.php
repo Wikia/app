@@ -381,10 +381,15 @@ class MercuryApiController extends WikiaController {
 			$wikitext = RTE::HtmlToWikitext( $this->getVal( 'CKmarkup' ) );
 		}
 
-		$wrapper->wrap( function () use ( &$articleAsJson, $wikitext, $title, $parserOptions ) {
-			// explicit revisionId of -1 passed to ensure proper behavior on ArticleAsJson end
-			$articleAsJson = json_decode(ParserPool::create()->parse( $wikitext, $title, $parserOptions, true, true, -1 )->getText());
-		});
+		if ( $title ) {
+			$wrapper->wrap( function () use ( &$articleAsJson, $wikitext, $title, $parserOptions ) {
+				// explicit revisionId of -1 passed to ensure proper behavior on ArticleAsJson end
+				$articleAsJson = json_decode(ParserPool::create()->parse( $wikitext, $title, $parserOptions, true, true, -1 )->getText());
+			});
+		} else {
+			$this->response->setVal( 'data', ['content' => 'Invalid title'] );
+			return;
+		}
 
 		$data['article'] = [
 			'content' => $articleAsJson->content,
