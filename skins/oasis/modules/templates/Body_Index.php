@@ -178,6 +178,14 @@
 						'slotName' => 'PREFOOTER_LEFT_BOXAD',
 						'onLoad' => true
 					] );
+
+					if ( WikiaPageType::isMainPage() ) {
+						echo $app->renderView( 'Ad', 'Index', [
+							'slotName' => 'PREFOOTER_MIDDLE_BOXAD',
+							'onLoad' => true
+						] );
+					}
+
 					echo $app->renderView( 'Ad', 'Index', [
 						'slotName' => 'PREFOOTER_RIGHT_BOXAD',
 						'onLoad' => true
