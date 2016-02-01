@@ -15,7 +15,7 @@ $wgExtensionCredits['specialpage'][] = [
 // classes
 $wgAutoloadClasses['SpecialVideosSpecialController'] =  __DIR__ . '/SpecialVideosSpecialController.class.php';
 $wgAutoloadClasses['SpecialVideosHelper'] =  __DIR__ . '/SpecialVideosHelper.class.php';
-$wgAutoloadClasses['SpecialVideosHooks'] = __DIR__ . '/SpecialVideosHooks.php';
+$wgAutoloadClasses['SpecialVideosHooks'] = __DIR__ . '/SpecialVideosHooks.class.php';
 
 // i18n mapping
 $wgExtensionMessagesFiles['SpecialVideos'] = __DIR__ . '/SpecialVideos.i18n.php';
