@@ -293,6 +293,11 @@ class PageHeaderController extends WikiaController {
 			case NS_SPECIAL:
 				$this->pageType = wfMessage( 'oasis-page-header-subtitle-special' )->escaped();
 
+				if ( $wg->Title->isSpecial( 'Images' ) ) {
+					$this->isSpecialImages = true;
+				}
+
+
 				if ( $wg->Title->isSpecial( 'Videos' ) ) {
 					$this->isSpecialVideos = true;
 					$mediaService = ( new MediaQueryService );
