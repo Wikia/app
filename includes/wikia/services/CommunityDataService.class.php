@@ -11,9 +11,9 @@ class CommunityDataService extends WikiaService {
 		$this->cityId = $cityId;
 	}
 
-	public function setCuratedContent( $data ) {
+	public function setCuratedContent( $data, $reason=null ) {
 		$ready = $this->isLegacyFormat( $data ) ? $this->toNew( $data ) : $data;
-		$status = WikiFactory::setVarByName( self::CURATED_CONTENT_VAR_NAME, $this->cityId, $ready );
+		$status = WikiFactory::setVarByName( self::CURATED_CONTENT_VAR_NAME, $this->cityId, $ready, $reason );
 		if ( $status ) {
 			wfWaitForSlaves();
 			$this->curatedContentData = $ready;
