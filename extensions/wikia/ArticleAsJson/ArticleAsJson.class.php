@@ -15,6 +15,8 @@ class ArticleAsJson extends WikiaService {
 	const MEDIA_CONTEXT_GALLERY_IMAGE = 'gallery-image';
 	const MEDIA_CONTEXT_ICON = 'icon';
 
+	const MEDIA_IMAGE_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-image.mustache';
+
 	private static function createMarker( $media, $isGallery = false ){
 		$blankImgUrl = '//:0';
 		$id = count( self::$media ) - 1;
@@ -26,9 +28,15 @@ class ArticleAsJson extends WikiaService {
 			// Mercury isn't ready yet for galleries
 			return "<img src='{$blankImgUrl}' class='{$classes}' data-ref='{$id}'{$width}{$height} />";
 		} else {
-			$componentAttributes = htmlspecialchars( json_encode( $media ) );
+			$componentAttributes = json_encode( $media );
 
-			return "<img src='{$blankImgUrl}' class='{$classes}' data-component='image-media' data-attrs='{$componentAttributes}'{$width}{$height} />";
+			return \MustacheService::getInstance()->render(
+				self::MEDIA_IMAGE_TEMPLATE,
+				[
+					'attrs' => $componentAttributes,
+					'media' => $media
+				]
+			);
 		}
 	}
 
