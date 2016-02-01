@@ -600,7 +600,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
  * @param {Object} items Items to insert
  * @param {ve.dm.SurfaceFragment} fragment
  */
-ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function ( items, fragment ) {
+ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallbackWrapper = function ( items, fragment, label ) {
 	var count, item, title, type, captionType,
 		typeCount = { photo: 0, video: 0 },
 		linmod = [];
@@ -638,7 +638,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 		if ( count ) {
 			ve.track( 'wikia', {
 				action: ve.track.actions.ADD,
-				label: 'dialog-media-insert-' + type,
+				label: label + '-' + type,
 				value: count
 			} );
 		}
@@ -647,7 +647,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 	if ( count.image && count.video ) {
 		ve.track( 'wikia', {
 			action: ve.track.actions.ADD,
-			label: 'dialog-media-insert-multiple'
+			label: label + '-multiple'
 		} );
 	}
 
@@ -655,9 +655,20 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 
 	ve.track( 'wikia', {
 		action: ve.track.actions.SUCCESS,
-		label: 'dialog-media-insert',
+		label: label,
 		value: ve.now() - this.timings.insertStart
 	} );
+};
+
+/**
+ * Inserts media items into the document
+ *
+ * @method
+ * @param {Object} items Items to insert
+ * @param {ve.dm.SurfaceFragment} fragment
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function ( items, fragment ) {
+	this.insertPermanentMediaCallbackWrapper( items, fragment, 'dialog-media-insert');
 };
 
 /**

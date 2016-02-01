@@ -133,63 +133,7 @@ ve.ui.WikiaImageInsertDialog.prototype.initialize = function () {
  * @param {ve.dm.SurfaceFragment} fragment
  */
 ve.ui.WikiaImageInsertDialog.prototype.insertPermanentMediaCallback = function ( items, fragment ) {
-	var count, item, title, type, captionType,
-		typeCount = { photo: 0, video: 0 },
-		linmod = [];
-
-	for ( title in items ) {
-		item = items[title];
-		type = 'wikiaBlock' + ( item.type === 'photo' ? 'Image' : 'Video' );
-		captionType = ( item.type === 'photo' ) ? 'wikiaImageCaption' : 'wikiaVideoCaption';
-		typeCount[item.type]++;
-		linmod.push(
-			{
-				type: type,
-				attributes: {
-					type: 'thumb',
-					align: 'default',
-					href: './' + item.title,
-					src: item.url,
-					width: item.width,
-					height: item.height,
-					resource: './' + item.title,
-					user: item.username
-				}
-			},
-			{ type: captionType },
-			{ type: '/' + captionType },
-			{ type: '/' + type }
-		);
-	}
-
-	for ( type in typeCount ) {
-		count = typeCount[type];
-		if ( type === 'photo' ) {
-			type = 'image';
-		}
-		if ( count ) {
-			ve.track( 'wikia', {
-				action: ve.track.actions.ADD,
-				label: 'dialog-image-insert-' + type,
-				value: count
-			} );
-		}
-	}
-
-	if ( count.image && count.video ) {
-		ve.track( 'wikia', {
-			action: ve.track.actions.ADD,
-			label: 'dialog-image-insert-multiple'
-		} );
-	}
-
-	fragment.collapseToEnd().insertContent( linmod );
-
-	ve.track( 'wikia', {
-		action: ve.track.actions.SUCCESS,
-		label: 'dialog-image-insert',
-		value: ve.now() - this.timings.insertStart
-	} );
+	this.insertPermanentMediaCallbackWrapper( items, fragment, 'dialog-image-insert');
 };
 
 ve.ui.windowFactory.register( ve.ui.WikiaImageInsertDialog );
