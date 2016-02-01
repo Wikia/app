@@ -72,8 +72,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.getBodyHeight = function () {
 
 /**
  * @inheritdoc
+ * @param {boolean} Sets if the main page (insert image drop area) should be shown
  */
-ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
+ve.ui.WikiaMediaInsertDialog.prototype.initializeWrapper = function ( addMainPage ) {
 	var uploadEvents = {
 		change: 'onUploadChange',
 		upload: 'onUploadSuccess'
@@ -151,7 +152,12 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 
 	this.mainPage = new OO.ui.PageLayout( 'main', { $content: this.$mainPage } );
 	this.searchPage = new OO.ui.PageLayout( 'search', { $content: this.search.$element } );
-	this.pages.addPages( [ this.mainPage, this.searchPage ] );
+
+	if ( addMainPage ) {
+		this.pages.addPages( [ this.mainPage, this.searchPage ] );
+	} else {
+		this.pages.addPages( [ this.searchPage ] );
+	}
 
 	this.$cart
 		.addClass( 've-ui-wikiaCartWidget-wrapper' )
@@ -164,6 +170,13 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.$content.addClass( 've-ui-wikiaMediaInsertDialog' );
 	this.$frame.append( this.dropTarget.$element );
 	this.$overlay.append( this.mediaPreview.$element );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
+	this.initializeWrapper(true);
 };
 
 /**
