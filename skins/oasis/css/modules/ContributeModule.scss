@@ -1,0 +1,46 @@
+@import 'skins/shared/mixins/flexbox';
+
+.contribute-module {
+	@include align-content(stretch);
+	@include align-items(flex-start);
+	@include flex-direction(row);
+	@include flexbox;
+	@include flex-wrap(nowrap);
+	@include justify-content(flex-start);
+
+	.tally {
+		@include align-self(flex-start);
+		@include flex(0 1 100%);
+		min-width: 0;
+		order: 0;
+		white-space: nowrap;
+
+		em {
+			float: left;
+    		font-size: 30px;
+    		font-style: normal;
+    		letter-spacing: -1px;
+    		line-height: 26px;
+    		margin-right: 2px;
+		}
+
+		span {
+			float: left;
+		}
+	}
+
+	.buttons {
+		@include align-self(auto);
+		@include flex(0 0 auto);
+		order: 0;
+
+		.contribute {
+			vertical-align: middle;
+
+			> img {
+				height: 18px;
+				margin-bottom: 4px;
+			}
+		}
+	}
+}
