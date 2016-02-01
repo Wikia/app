@@ -1897,22 +1897,6 @@ $config['manage_wikia_home_js'] = array(
 	)
 );
 
-$config['licensed_video_swap_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/LicensedVideoSwap/js/lvsTracker.js',
-		'//extensions/wikia/LicensedVideoSwap/js/lvsCommonAjax.js',
-		'//extensions/wikia/LicensedVideoSwap/js/lvsVideoControls.js',
-		'//extensions/wikia/LicensedVideoSwap/js/lvsCallout.js',
-		'//extensions/wikia/LicensedVideoSwap/js/lvsEllipses.js',
-		'//extensions/wikia/LicensedVideoSwap/js/lvsSuggestions.js',
-		'//extensions/wikia/LicensedVideoSwap/js/lvsSwapKeep.js',
-		'//extensions/wikia/LicensedVideoSwap/js/lvsUndo.js',
-		'//extensions/wikia/LicensedVideoSwap/js/lvsHistoryPage.js',
-		'//extensions/wikia/LicensedVideoSwap/js/LicensedVideoSwap.js',
-	),
-);
-
 /* UI repo JS API */
 $config['ui_repo_api_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
