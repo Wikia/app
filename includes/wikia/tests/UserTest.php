@@ -7,8 +7,6 @@ use Wikia\Service\User\Attributes\UserAttributes;
 use Wikia\Service\User\Attributes\AttributeService;
 use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Service\User\Preferences\Migration\PreferenceScopeService;
-use Wikia\Service\User\Preferences\Migration\PreferenceCorrectionService;
-use Wikia\Util\Statistics\BernoulliTrial;
 
 class UserTest extends WikiaBaseTest {
 
@@ -56,8 +54,6 @@ class UserTest extends WikiaBaseTest {
 			->bind( AttributeService::class )->to( $this->userAttributeServiceMock )
 			->bind( PreferenceScopeService::GLOBAL_SCOPE_PREFS )->to( $wgGlobalUserPreferenceWhiteList )
 			->bind( PreferenceScopeService::LOCAL_SCOPE_PREFS )->to( $wgLocalUserPreferenceWhiteList )
-			->bind( PreferenceCorrectionService::PREFERENCE_CORRECTION_ENABLED )->to( false )
-			->bind( PreferenceCorrectionService::PREFERENCE_CORRECTION_SAMPLER )->to( new BernoulliTrial( 0 ) )
 			->bind( UserAttributes::class )->to( $this->userAttributesMock )
 			->build();
 		Injector::setInjector( $container );
