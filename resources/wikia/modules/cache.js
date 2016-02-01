@@ -28,7 +28,7 @@
 			try {
 				/**
 				 * Note:
-				 * in some browsers (eg. WebView for Android, Chrome with disabled
+				 * In some browsers (eg. WebView for Android, Chrome with disabled
 				 * local storage) `windows.localStorage` exists and it's null;
 				 * in those cases simple `localStorage = window.localStorage;` check
 				 * won't throw exception. This will be thrown later, when trying to
@@ -36,8 +36,8 @@
 				 * https://wikia-inc.atlassian.net/browse/XW-1036
 				 * https://wikia-inc.atlassian.net/browse/XW-1062
 				 */
-				window.localStorage.setItem('foo', 'bar');
-				window.localStorage.getItem('foo');
+				window.localStorage.setItem('localStorageTestItem', 'testValue');
+				window.localStorage.getItem('localStorageTestItem');
 
 				localStorage = window.localStorage;
 			} catch ( e ) {
