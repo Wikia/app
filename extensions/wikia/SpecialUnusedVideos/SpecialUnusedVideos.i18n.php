@@ -25,3 +25,7 @@ $messages['es'] = array(
 $messages['it'] = array(
 	'unusedvideos' => 'Video inutilizzati',
 );
+
+$messages['pt'] = array(
+	'unusedvideos' => 'Vídeos não usados',
+);

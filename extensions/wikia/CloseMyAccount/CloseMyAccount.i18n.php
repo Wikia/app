@@ -314,7 +314,7 @@ Masz $1 {{PLURAL:$1|dzień|dni}} aby je reaktywować logując się na nie ponown
 );
 
 $messages['pt'] = array(
-	'closemyaccount' => 'Close My Account',
+	'closemyaccount' => 'Fechar minha conta',
 	'closemyaccount-desc' => 'Allows users to close their own accounts.',
 	'closemyaccount-intro-text' => 'Lamentamos que você deseje desativar sua conta. A Wikia tem muitas wikias em todos os tipos de assuntos e nós gostaríamos que você ficasse por aqui e encontrasse uma que é perfeita para você. Se você está tendo um problema local com a sua wikia, por favor não hesite em contatar seu [[Special:ListUsers/sysop|administrador local]] para ajuda e conselhos.
 
