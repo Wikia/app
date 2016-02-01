@@ -30,6 +30,6 @@ $wgExtensionCredits['other'][] = array(
 	'version'			=> '0.1',
 	'author'			=> 'Rafal Wilinski',
 	'description'		=> 'Internal tool to help review images post-upload and remove Terms of Use violations',
-	'descriptionmsg'	=> 'imagereviewmercurydesc',
+	'descriptionmsg'	=> 'imagereviewmercury-desc',
 	'url'				=> 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ImageReviewMercury'
 );
