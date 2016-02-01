@@ -260,6 +260,7 @@ $messages['ja'] = array(
 	'piggyback-nosuchuser' => '「$1」という利用者は存在しません。
 利用者名の大文字小文字は区別されます。
 入力に間違いがないか確認してください。',
+	'piggyback' => 'ピギーバック',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
