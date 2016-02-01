@@ -14,20 +14,17 @@ class HeroImageToCuratedContentMigrator extends Maintenance {
 
 		$wikiData = new WikiDataModel(Title::newMainPage()->getText());
 		$wikiData->getFromProps();
-//
-//		$this->output($wikiData->description."\n");
-//		$this->output($wikiData->getImageName()."\n");
-//		$this->output($wikiData->cropPosition."\n");
-//		$this->output(Title::newFromText($wikiData->getImageName(), NS_IMAGE)->getArticleID());
 
-		if (!empty($commData->getCommunityDescription())) {
+		if (empty($commData->getCommunityDescription()) && !empty($wikiData->description)) {
 			$curatedData['community_data']['description'] = $wikiData->description;
 		}
-		if (!empty($commData->getCommunityImageId())) {
-			$curatedData['community_data']['image_id'] = Title::newFromText($wikiData->getImageName(), NS_IMAGE)->getArticleID();
+
+		$heroImage = Title::newFromText($wikiData->getImageName(), NS_IMAGE);
+		if (empty($commData->getCommunityImageId()) && !empty($heroImage)) {
+			$curatedData['community_data']['image_id'] = $heroImage->getArticleID();
 		}
-		$this -> output($curatedData);
-//		$commData->setCuratedContent($curatedData);
+
+		$commData->setCuratedContent($curatedData);
 	}
 }
 
