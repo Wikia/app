@@ -25,7 +25,6 @@ use Wikia\DependencyInjection\Injector;
 use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
 use Wikia\Service\User\Attributes\UserAttributes;
-use Wikia\Service\User\Preferences\Migration\PreferenceCorrectionService;
 use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Util\Statistics\BernoulliTrial;
 use Wikia\Service\Helios\HeliosClient;
@@ -296,13 +295,6 @@ class User {
 	 */
 	public function arePreferencesReadOnly() {
 		return $this->userPreferences()->getPreferences( $this->getId() )->isReadOnly();
-	}
-
-	/**
-	 * @return PreferenceCorrectionService
-	 */
-	private function preferenceCorrection() {
-		return Injector::getInjector()->get(PreferenceCorrectionService::class);
 	}
 
 	/**
@@ -4953,8 +4945,6 @@ class User {
 				$this->mOptionOverrides[$row->up_property] = $row->up_value;
 				$this->mOptions[$row->up_property] = $row->up_value;
 			}
-
-			$this->preferenceCorrection()->compareAndCorrect($this->getId(), $this->mOptions);
 		}
 
 		$this->mOptionsLoaded = true;
