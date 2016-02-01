@@ -19,6 +19,23 @@ $messages['it'] = array(
 	'withoutimages' => 'Pagine prive di immagini',
 );
 
+
+$messages['ja'] = array(
+	'withoutimages' => '画像がないページ',
+);
+
+$messages['pt'] = array(
+	'withoutimages' => 'Páginas sem imagens',
+);
+
 $messages['ru'] = array(
 	'withoutimages' => 'Страницы без изображений',
+);
+
+$messages['zh-hans'] = array(
+	'withoutimages' => '没有图片的页面',
+);
+
+$messages['zh-hant'] = array(
+	'withoutimages' => '沒有圖片的頁面',
 );

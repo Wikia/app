@@ -457,6 +457,7 @@ $messages['ja'] = array(
 	'template-classification-description-infoicon' => 'このテンプレートを使用すると、小さいアイコン付きのリンクを作成できます。',
 	'special-templates-portable-infobox' => 'ポータブル',
 	'special-templates-non-portable-infobox' => '非ポータブル',
+	'templates' => 'コミュニティ内のテンプレート',
 );
 
 $messages['nl'] = array(
@@ -651,6 +652,7 @@ $messages['pt'] = array(
 	'template-classification-description-infoicon' => 'Esta predefinição é usada para criar um link com um ícone pequeno.',
 	'special-templates-portable-infobox' => 'Portátil',
 	'special-templates-non-portable-infobox' => 'Não-portátil',
+	'templates' => 'Predefinições na wikia',
 );
 
 $messages['ru'] = array(
@@ -781,6 +783,7 @@ $messages['zh-hans'] = array(
 	'template-classification-description-infoicon' => '此模板通过使用一个小图标进行创建链接。',
 	'special-templates-portable-infobox' => '便携式',
 	'special-templates-non-portable-infobox' => '非便携式',
+	'templates' => 'Wikia上所有模版',
 );
 
 $messages['zh-hant'] = array(
@@ -845,5 +848,6 @@ $messages['zh-hant'] = array(
 	'template-classification-description-infoicon' => '此模板通過使用一個小圖示進行創建連結。',
 	'special-templates-portable-infobox' => '可擕式',
 	'special-templates-non-portable-infobox' => '非可擕式',
+	'templates' => 'Wikia上所有模版',
 );
 
