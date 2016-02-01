@@ -1,1 +1,12 @@
-<img src="//:0" class="article-media" data-component="image-media" data-attrs="{{attrs}}"{{#media.width}} width="{{media.width}}"{{/media.width}}{{#media.height}} height="{{media.height}}"{{/media.height}}/>
+<figure data-component="article-media-image" data-attrs="{{attrs}}">
+	<a href="{{#media.link}}{{media.link}}{{/media.link}}{{^media.link}}{{media.url}}{{/media.link}}">
+		<img class="article-media" src="//:0" alt="{{media.title}}"{{{imageSize}}}>
+		<noscript>
+			<img src="" alt="{{media.title}}"{{{imageSize}}}>
+		</noscript>
+	</a>
+	<figcaption>
+		<a href="{{media.fileUrl}}" style="display: none"></a>
+		{{#media.caption}}{{media.caption}}{{/media.caption}}
+	</figcaption>
+</figure>

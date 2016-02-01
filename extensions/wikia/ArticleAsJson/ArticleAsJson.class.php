@@ -34,7 +34,8 @@ class ArticleAsJson extends WikiaService {
 				self::MEDIA_IMAGE_TEMPLATE,
 				[
 					'attrs' => $componentAttributes,
-					'media' => $media
+					'media' => $media,
+					'imageSize' => $width . $height
 				]
 			);
 		}
