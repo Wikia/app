@@ -7,12 +7,12 @@ class ExactTargetApi {
 
 	/* @var ExactTargetApiHelper $helper */
 	protected $helper;
+
 	/* @var ExactTargetSoapClient $client */
-	protected $client;
+	private $client;
 
 	function __construct() {
 		$this->setupHelper();
-		$this->setupClient();
 	}
 
 	/**
@@ -113,13 +113,28 @@ class ExactTargetApi {
 	 */
 	protected function sendRequest( $sType, $oRequestObject ) {
 		try {
-			$oResults = $this->client->$sType( $oRequestObject );
-			WikiaLogger::instance()->info( $this->client->__getLastResponse() );
+			$oResults = $this->getClient()->$sType( $oRequestObject );
+			WikiaLogger::instance()->info( $this->getClient()->__getLastResponse() );
 			return $oResults;
-		} catch ( SoapFault $e ) {
+		} catch ( \SoapFault $e ) {
 			/* Log error */
 			WikiaLogger::instance()->error( __METHOD__ . "::{$sType} SoapFault: " . $e->getMessage() . ' ErrorCode:  ' . $e->getCode() );
 			return false;
 		}
+	}
+
+	/**
+	 * @return ExactTargetSoapClient
+	 */
+	protected function getClient() {
+		$this->setupClient();
+		return $this->client;
+	}
+
+	/**
+	 * @param \ExactTargetSoapClient $client
+	 */
+	public function setClient(\ExactTargetSoapClient $client) {
+		$this->client = $client;
 	}
 }

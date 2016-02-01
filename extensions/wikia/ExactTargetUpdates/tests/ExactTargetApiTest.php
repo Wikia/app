@@ -7,6 +7,7 @@ class ExactTargetApiTest extends WikiaBaseTest {
 	public function setUp() {
 		$this->setupFile = __DIR__ . '/../ExactTargetUpdates.setup.php';
 		parent::setUp();
+		require_once __DIR__ . '/helpers/ExactTargetApiWrapper.php';
 	}
 
 	function testPrepareSoapVarsShouldReturnSoapVarsArray() {
@@ -81,6 +82,25 @@ class ExactTargetApiTest extends WikiaBaseTest {
 		$mockApiSubscriber->deleteRequest($aApiParams);
 	}
 
+	/**
+	 * Ensure that SoapFaults thrown by the SoapClient are caught.
+	 */
+	function testSendRequestCatchSoapFault() {
+		$mockSoapClient = $this->getExactTargetSoapClientMock();
+
+		$mockSoapClient
+			->expects( $this->once() )
+			->method( 'Update' )
+			->with( array() )
+			->will($this->throwException(new SoapFault("Could not connect to host")));
+
+		$api = new ExactTargetApiWrapper();
+		$api->setClient( $mockSoapClient );
+		$this->assertFalse( $api->sendRequest( 'Update', array() ) );
+	}
+
+
+
 	function deleteSubscriberProvider () {
 		// Prepare input parameters
 		$aApiParams = [
@@ -104,6 +124,13 @@ class ExactTargetApiTest extends WikiaBaseTest {
 		return [
 			[ $aApiParams, $oExpectedRequest ]
 		];
+	}
+
+	protected function getExactTargetSoapClientMock() {
+		return $this->getMockBuilder( '\ExactTargetSoapClient' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'Update' ] )
+			->getMock();
 	}
 
 }
