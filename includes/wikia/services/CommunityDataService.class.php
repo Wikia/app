@@ -93,6 +93,58 @@ class CommunityDataService extends WikiaService {
 		return isset( $data[ 'image_id' ] ) ? $data[ 'image_id' ] : 0;
 	}
 
+	/** format of returned data:
+	   'featured' => [
+			'items' => [
+				'article_id' => int,
+				'image_id' => int,
+				'label' => string,
+				'title' => string,
+				'type' => "article",
+			]],
+		'curated' => [
+			[
+				'label' : string
+				'article_id': int,
+				'image_id': int,
+				'image_url' : string
+				'image_crop': {},
+				'items': [
+					'article_id' => int,
+					'image_id' => int,
+					'items' => "",
+					'label' => string,
+					'title' => string,
+					'type' => "article",
+					'image_url' => string
+					'node_type' => "item"
+				]],
+			...
+			[]
+		],
+		'optional' => [
+			'label' => string,
+			'items' => [
+				[
+					'article_id': int,
+					'image_id': int,
+					'image_crop': {},
+					'items': "",
+					'label': string,
+					'title': string,
+					'type': "category",
+					'image_url': string
+					'node_type': "item"
+				],
+				[]
+			]],
+		'community_data' => [
+			'description' => string,
+			'image_id': int,
+			'image_crop': {},
+			'node_type': "section"
+		]]
+	 */
 	public function getCuratedContentData() {
 		return $this->curatedContentData();
 	}
