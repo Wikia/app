@@ -6,7 +6,7 @@
 	/**
 	 * @returns {number} The A/B test variant number for the Toolbar A/B test
 	 */
-	ve.init.wikia.ToolbarABTestVariantNumber = function () {
+	ve.init.wikia.getToolbarABTestVariantNumber = function () {
 		var optimizely = window.optimizely,
 			optimizelyId = window.wgDevelEnvironment ? '4721410313' : '4701112678';
 

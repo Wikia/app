@@ -26,49 +26,7 @@ ve.ui.WikiaVideoInsertDialog.static.name = 'wikiaVideoInsert';
 
 ve.ui.WikiaVideoInsertDialog.static.title = OO.ui.deferMsg( 'visualeditor-dialog-video-insert-title' );
 
-// as in OO.ui.WindowManager.static.sizes
-ve.ui.WikiaVideoInsertDialog.static.size = '840px';
-
-ve.ui.WikiaVideoInsertDialog.static.actions = [
-	{
-		action: 'apply',
-		label: OO.ui.deferMsg( 'visualeditor-dialog-action-apply' ),
-		flags: [ 'progressive', 'primary' ]
-	}
-];
-
-ve.ui.WikiaVideoInsertDialog.static.pages = [ 'main', 'search' ];
-
-/**
- * Properly format the media policy message
- * Strip all HTML tags except for anchors. Make anchors open in a new window.
- *
- * @method
- * @param {string} html The HTML to format
- * @returns {jQuery}
- */
-ve.ui.WikiaVideoInsertDialog.static.formatPolicy = function ( html ) {
-	return $( '<div>' )
-		.html( html )
-		.find( '*' )
-		.each( function () {
-			if ( this.tagName.toLowerCase() === 'a' ) {
-				$( this ).attr( 'target', '_blank' );
-			} else {
-				$( this ).contents().unwrap();
-			}
-		} )
-		.end();
-};
-
 /* Methods */
-
-/**
- * @inheritdoc
- */
-ve.ui.WikiaVideoInsertDialog.prototype.getBodyHeight = function () {
-	return 600;
-};
 
 /**
  * @inheritdoc

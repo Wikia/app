@@ -37,13 +37,9 @@ require( ['wikia.tracker'], function ( tracker ) {
 				};
 			},
 			'mwtiming.performance.system.activation': function ( data ) {
-				// INT-322 A/B test: Image / Video upload for toolbar
-				var label = (ve.init.wikia.ToolbarABTestVariantNumber() === 1) ?
-					'edit-page-ready-toolbartest' : 'edit-page-ready';
-
 				return {
 					action: actions.IMPRESSION,
-					label: label,
+					label: 'edit-page-ready',
 					value: normalizeDuration( data.duration )
 				};
 			},
@@ -194,7 +190,6 @@ require( ['wikia.tracker'], function ( tracker ) {
 	function handleFunnel( data ) {
 		var funnelEvents = [
 			'edit-page-ready/impression',
-			'edit-page-ready-toolbartest/impression',
 			'button-publish/enable',
 			'button-cancel/click',
 			'button-publish/click',
@@ -204,6 +199,11 @@ require( ['wikia.tracker'], function ( tracker ) {
 		funnelEvent = data.label + '/' + data.action;
 
 		if ( funnelEvents.indexOf( funnelEvent ) !== -1 ) {
+			if (ve.init.wikia.getToolbarABTestVariantNumber() === 1 && funnelEvents === 'edit-page-ready/impression') {
+				// Extra impression event when toolbar A/B test is active
+				window.guaTrackPageview( '/fake-visual-editor/edit-page-ready-toolbartest/impression', 've' );
+			}
+
 			window.guaTrackPageview( '/fake-visual-editor/' + funnelEvent, 've' );
 		}
 	}

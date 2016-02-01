@@ -32,7 +32,7 @@ OO.inheritClass( ve.init.wikia.ViewPageTarget, ve.init.mw.ViewPageTarget );
 
 /* Static Properties */
 
-if (ve.init.wikia.ToolbarABTestVariantNumber() === 1) {
+if (ve.init.wikia.getToolbarABTestVariantNumber() === 1) {
 	// INT-322 A/B test: Image / Video upload for toolbar
 	ve.init.wikia.ViewPageTarget.static.toolbarGroups = [
 		// History
