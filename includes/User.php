@@ -2519,6 +2519,7 @@ class User {
 	 * Get all user's options
 	 *
 	 * @return array
+	 * @deprecated use get(Global|Local)Preference  get(Global|Local)Attribute or get(Global|Local)Flag
 	 */
 	public function getOptions() {
 		global $wgHiddenPrefs;
@@ -2540,6 +2541,20 @@ class User {
 		// Populate with attributes from attribute service
 		foreach ( $this->userAttributes()->getAttributes( $this->getId() ) as $attrName => $attrValue ) {
 			$options[$attrName] = $attrValue;
+		}
+
+		// Populate with user global preferences, and wiki local preferences
+		$preferences = $this->userPreferences()->getPreferences( $this->getId() );
+
+		foreach ( $preferences->getGlobalPreferences() as $globalPreference ) {
+			$options[ $globalPreference->getName() ] = $globalPreference->getValue();
+		}
+
+		global $wgCityId;
+		$localPreferences = $preferences->getLocalPreferencesForWiki( $wgCityId );
+
+		foreach ( $localPreferences as $localPreference ) {
+			$options[ $localPreference->getName() ] = $localPreference->getValue();
 		}
 
 		return $options;
