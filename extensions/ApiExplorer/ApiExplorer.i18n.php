@@ -170,6 +170,13 @@ $messages['ia'] = array(
 	'apiexplorer-loading' => 'Carga functiones...',
 );
 
+/** Japanese
+ * @author Keiko Lai-Tong
+ */
+$messages['ja'] = array(
+	'apiexplorer' => 'エクスプローラー',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -244,6 +251,13 @@ $messages['pms'] = array(
 	'apiexplorer-desc' => "Pàgina për esploré ëd fasson anterativa la documentassion ëd l'API ëd MediaWiki",
 	'apiexplorer-intro' => "Costa pàgina a smonla documentassion për l'API dla wiki atual. Për piasì, ch'a sgnaca dzora a na funsion sì-sota për vëdde pi d'anformassion a propòsit ëd che paràmetr a peulo esse dovrà an minca ciamà. Ch'a bèica ëdcò [http://www.mediawiki.org/wiki/API:Main_page la documentassion general dl'API MediaWiki].",
 	'apiexplorer-loading' => 'Cariament dle funsion...',
+);
+
+/** Portuguese
+ * @author Ana Fleischmann
+ */
+$messages['pt'] = array(
+	'apiexplorer' => 'Explorador de API',
 );
 
 /** Russian (Русский)

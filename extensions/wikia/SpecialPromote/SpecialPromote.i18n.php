@@ -375,6 +375,10 @@ $messages['pl'] = array(
 	'promote-upload-image-uploads-disabled' => 'Dodawanie plików jest czasowo wyłączone na Twojej wiki. Spróbuj ponownie za jakiś czas.',
 );
 
+$messages['pt'] = array(
+	'promote' => 'Promover',
+);
+
 $messages['qqq'] = array(
 	'promote-desc' => '{{desc}}',
 	'promote' => 'Promote page heading',
