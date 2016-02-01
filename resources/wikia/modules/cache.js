@@ -26,6 +26,16 @@
 			// Trying to access storage with cookies disabled can throw
 			// security exceptions in some browsers like Firefox (BugId:94924)
 			try {
+				/**
+				 * Note:
+				 * in some browsers (eg. WebView for Android, Chrome with disabled
+				 * local storage) `windows.localStorage` exists and it's null;
+				 * in those cases simple `localStorage = window.localStorage;` check
+				 * won't throw exception. This will be thrown later, when trying to
+				 * access methods from it.
+				 * https://wikia-inc.atlassian.net/browse/XW-1036
+				 * https://wikia-inc.atlassian.net/browse/XW-1062
+				 */
 				window.localStorage.setItem('foo', 'bar');
 				window.localStorage.getItem('foo');
 
