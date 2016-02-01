@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../lib/exacttarget_soap_client.php';
+use Wikia\Logger\WikiaLogger;
 
 class ExactTargetApiTest extends WikiaBaseTest {
 
@@ -86,6 +87,7 @@ class ExactTargetApiTest extends WikiaBaseTest {
 	 * Ensure that SoapFaults thrown by the SoapClient are caught.
 	 */
 	function testSendRequestCatchSoapFault() {
+		$mockLogger = $this->getWikiaLoggerMock();
 		$mockSoapClient = $this->getExactTargetSoapClientMock();
 
 		$mockSoapClient
@@ -94,9 +96,44 @@ class ExactTargetApiTest extends WikiaBaseTest {
 			->with( array() )
 			->will($this->throwException(new SoapFault("Could not connect to host")));
 
+		$mockLogger
+			->expects( $this->once() )
+			->method( 'error' )
+			->with( $this->matchesRegularExpression( "/.*SoapFault.*/") );
+
+
 		$api = new ExactTargetApiWrapper();
 		$api->setClient( $mockSoapClient );
+		$api->setLogger( $mockLogger );
 		$this->assertFalse( $api->sendRequest( 'Update', array() ) );
+	}
+
+	function testSendRequestSuccess() {
+		$responseValue = 'response';
+		$lastRespose = 'last response';
+		$mockLogger = $this->getWikiaLoggerMock();
+		$mockSoapClient = $this->getExactTargetSoapClientMock();
+
+		$mockSoapClient
+			->expects( $this->once() )
+			->method( 'Update' )
+			->with( array() )
+			->willReturn( $responseValue );
+
+		$mockSoapClient
+			->expects( $this->once() )
+			->method( '__getLastResponse' )
+			->willReturn( $lastRespose );
+
+		$mockLogger
+			->expects( $this->once() )
+			->method( 'info' )
+			->with( $this->matchesRegularExpression( "/.*{$lastRespose}.*/") );
+
+		$api = new ExactTargetApiWrapper();
+		$api->setClient( $mockSoapClient );
+		$api->setLogger( $mockLogger );
+		$this->assertEquals( $responseValue, $api->sendRequest( 'Update', array() ) );
 	}
 
 
@@ -129,7 +166,14 @@ class ExactTargetApiTest extends WikiaBaseTest {
 	protected function getExactTargetSoapClientMock() {
 		return $this->getMockBuilder( '\ExactTargetSoapClient' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'Update' ] )
+			->setMethods( [ 'Update', '__getLastResponse' ] )
+			->getMock();
+	}
+
+	protected function getWikiaLoggerMock() {
+		return $this->getMockBuilder( 'Wikia\Logger\WikiaLogger' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'info', 'error' ] )
 			->getMock();
 	}
 

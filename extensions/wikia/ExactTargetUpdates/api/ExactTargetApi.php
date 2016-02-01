@@ -11,6 +11,9 @@ class ExactTargetApi {
 	/* @var ExactTargetSoapClient $client */
 	private $client;
 
+	/* @var \WikiaLogger $logger */
+	private $logger;
+
 	function __construct() {
 		$this->setupHelper();
 	}
@@ -114,11 +117,10 @@ class ExactTargetApi {
 	protected function sendRequest( $sType, $oRequestObject ) {
 		try {
 			$oResults = $this->getClient()->$sType( $oRequestObject );
-			WikiaLogger::instance()->info( $this->getClient()->__getLastResponse() );
+			$this->getLogger()->info( $this->getClient()->__getLastResponse() );
 			return $oResults;
 		} catch ( \SoapFault $e ) {
-			/* Log error */
-			WikiaLogger::instance()->error( __METHOD__ . "::{$sType} SoapFault: " . $e->getMessage() . ' ErrorCode:  ' . $e->getCode() );
+			$this->getLogger()->error( __METHOD__ . "::{$sType} SoapFault: " . $e->getMessage() . ' ErrorCode:  ' . $e->getCode() );
 			return false;
 		}
 	}
@@ -136,5 +138,23 @@ class ExactTargetApi {
 	 */
 	public function setClient(\ExactTargetSoapClient $client) {
 		$this->client = $client;
+	}
+
+	/**
+	 * @return WikiaLogger
+	 */
+	protected function getLogger() {
+		if ( !isset( $this->logger ) ) {
+			$this->logger = WikiaLogger::instance();
+		}
+
+		return $this->logger;
+	}
+
+	/**
+	 * @param WikiaLogger
+	 */
+	public function setLogger(WikiaLogger $logger) {
+		$this->logger = $logger;
 	}
 }
