@@ -2,29 +2,29 @@
 /**
  * @file
  * @ingroup SpecialPage
- * Extends the IncludeableSpecialPage to override some of the header formatting
  *
+ * Extends the IncludeableSpecialPage to override some of the header formatting
  */
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'path'           => __FILE__,
 	'name'           => 'WikiaNewFiles',
 	'author'         => 'Garth Webb',
 	'descriptionmsg' => 'wikianewfiles-desc',
 	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaNewFiles',
-);
+];
 
-$dir = dirname( __FILE__ );
+// i18n
+$wgExtensionMessagesFiles['WikiaNewFiles'] =  __DIR__ . '/SpecialNewFiles.i18n.php';
+$wgExtensionMessagesFiles['WikiaNewFilesAliases'] = __DIR__ . '/SpecialNewFiles.alias.php';
 
-// Translations
-$wgExtensionMessagesFiles["WikiaNewFiles"] =  "{$dir}/SpecialNewFiles.i18n.php";
+// autoloaded classes
+$wgAutoloadClasses['WikiaNewFiles'] = __DIR__ . '/WikiaNewFiles.class.php';
+$wgAutoloadClasses['WikiaNewFilesHooks'] = __DIR__ . '/WikiaNewFilesHooks.php';
 
-//Fix BugzId: 4310
-$wgExtensionMessagesFiles['WikiaNewFilesAliases'] = "{$dir}/SpecialNewFiles.alias.php";
+// hooks
+$wgHooks['PageHeaderIndexExtraButtons'][] = 'WikiaNewFilesHooks::onPageHeaderIndexExtraButtons';
 
-// Autoloaded classes
-$wgAutoloadClasses['WikiaNewFiles'] = "{$dir}/WikiaNewFiles.class.php";
-
-require_once( "{$dir}/SpecialNewFiles.php" );
+require_once( __DIR__ . '/SpecialNewFiles.php' );
 
 $wgSpecialPages['Newimages'] = 'WikiaNewFiles';

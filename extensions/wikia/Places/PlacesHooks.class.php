@@ -7,41 +7,50 @@ class PlacesHooks {
 		self::$modelToSave = $model;
 	}
 
-	static public function onPageHeaderIndexExtraButtons( $response ){
+	/**
+	 * Adds to buttosns to category pages to enabled/disable geotagging
+	 *
+	 * @param array $extraButtons An array of strings to add extra buttons to
+	 * @return bool true
+	 */
+	static public function onPageHeaderIndexExtraButtons( array &$extraButtons ){
 		$app = F::app();
-		$extraButtons = $response->getVal('extraButtons');
 
-		if (	( $app->wg->title->getNamespace() == NS_CATEGORY ) &&
-			$app->wg->user->isAllowed('places-enable-category-geolocation') ){
-
-			$isGeotaggingEnabled =
-				PlaceCategory::newFromTitle($app->wg->title->getFullText() )->isGeoTaggingEnabled();
-
+		if (
+			$app->wg->Title->getNamespace() == NS_CATEGORY &&
+			$app->wg->User->isAllowed( 'places-enable-category-geolocation' )
+		) {
 			$commonClasses = 'secondary geoEnableButton';
-			$extraButtons[] = F::app()->renderView( 'MenuButton',
+			$disabled = ' disabled';
+			$isGeotaggingEnabled = PlaceCategory::newFromTitle( $app->wg->title->getFullText() )
+				->isGeoTaggingEnabled();
+
+			$extraButtons[] = $app->renderView(
+				'MenuButton',
 				'Index',
-				array(
-					'action' => array(
-						"href" => "#",
-						"text" => wfMsg('places-category-switch')
-					),
-					'class' =>  !$isGeotaggingEnabled ? $commonClasses.' disabled': $commonClasses,
+				[
+					'action' => [
+						'href' => '#',
+						'text' => wfMessage( 'places-category-switch' )->escaped()
+					],
+					'class' =>  !$isGeotaggingEnabled ? $commonClasses . $disabled : $commonClasses,
 					'name' => 'places-category-switch-on'
-				)
+				]
 			);
-			$extraButtons[] = F::app()->renderView('MenuButton',
+
+			$extraButtons[] = $app->renderView(
+				'MenuButton',
 				'Index',
-				array(
-					'action' => array(
-						"href" => "#",
-						"text" => wfMsg('places-category-switch-off')
-					),
-					'class' => $isGeotaggingEnabled ? $commonClasses.' disabled': $commonClasses,
+				[
+					'action' => [
+						'href' => '#',
+						'text' => wfMessage( 'places-category-switch-off' )->escaped()
+					],
+					'class' => $isGeotaggingEnabled ? $commonClasses . $disabled : $commonClasses,
 					'name' => 'places-category-switch-off'
-				)
+				]
 			);
 		}
-		$response->setVal('extraButtons', $extraButtons);
 
 		return true;
 	}
