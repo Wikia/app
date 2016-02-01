@@ -93,6 +93,10 @@ class CommunityDataService extends WikiaService {
 		return isset( $data[ 'image_id' ] ) ? $data[ 'image_id' ] : 0;
 	}
 
+	public function getCuratedContentData() {
+		return $this->curatedContentData();
+	}
+
 	private function curatedContentData() {
 		if ( empty( $this->curatedContentData ) ) {
 			$raw = WikiFactory::getVarValueByName( self::CURATED_CONTENT_VAR_NAME, $this->cityId );
