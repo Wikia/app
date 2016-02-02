@@ -11,7 +11,7 @@ $messages['en'] = array(
 	'action-imageservingtest' => 'view Image Serving Test',
 );
 
-$messages['js'] = array(
+$messages['ja'] = array(
 	'imageservingtest' => 'ImageServingテスト',
 );
 

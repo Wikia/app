@@ -323,6 +323,11 @@ $messages['es'] = array(
 	'promote-statusbar-approved' => '¡Yuju! $1 se está promocionando en [http://es.wikia.com es.wikia.com]!',
 	'promote-statusbar-rejected' => 'Una o más de tus imágenes no fue aprobada. [[Special:Contact|Pregunta por qué]].',
 );
+
+$messages['ja'] = array(
+	'promote' => 'プロモート',
+);
+
 $messages['pl'] = array(
 	'promote' => 'Promocja',
 	'promote-title' => 'Promocja',
