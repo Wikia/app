@@ -120,7 +120,7 @@ class ExactTargetApi {
 			$this->getLogger()->info( $this->getClient()->__getLastResponse() );
 			return $oResults;
 		} catch ( \SoapFault $e ) {
-			$this->getLogger()->error( 'SUS-34-sendRequest-failure', [ 'exception' => $e] );
+			$this->getLogger()->error( __METHOD__, [ 'exception' => $e] );
 			return false;
 		}
 	}
