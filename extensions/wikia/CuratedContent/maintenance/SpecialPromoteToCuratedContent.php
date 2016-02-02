@@ -32,11 +32,11 @@ class SpecialPromoteToCuratedContentMigrator extends Maintenance {
 		];
 
 		if ( empty( $curatedContentData['community_data']['description'] ) ) {
-			$originalDescription = $curatedContentData['community_data']['description'];
+			$originalDescription = '';
 			// updateDescription
 			$description = $this->getPromoteDescription( $cv, $wgCityId, $wgLang->getCode() );
 		} else {
-			$originalDescription = '';
+			$originalDescription = $curatedContentData['community_data']['description'];
 		}
 
 		if ( empty( $curatedContentData['community_data']['image_id'] ) ) {
