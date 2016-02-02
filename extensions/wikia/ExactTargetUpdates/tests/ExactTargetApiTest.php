@@ -99,7 +99,7 @@ class ExactTargetApiTest extends WikiaBaseTest {
 		$mockLogger
 			->expects( $this->once() )
 			->method( 'error' )
-			->with( $this->matchesRegularExpression( "/.*SoapFault.*/") );
+			->with( 'Wikia\ExactTarget\ExactTargetApi::sendRequest' );
 
 
 		$api = new ExactTargetApiWrapper();
