@@ -24,8 +24,7 @@ This extension provides some key shortcuts and an actions explorer to help users
 	'global-shortcuts-title-help-entry-point' => 'Open keyboard shortcuts help dialog (?)',
 	'global-shortcuts-title-keyboard-shortcuts' => 'Keyboard shortcuts',
 	'global-shortcuts-welcome-hint' => 'Introducing our new-and-improved Keyboard Shortcuts.',
-	'template-class-global-shortcuts-caption-classify-page' => 'Classify page',
-	'template-class-global-shortcuts-press-to-explore-shortcuts' => 'Press $1 to explore shortcuts',
+	'global-shortcuts-press-to-explore-shortcuts' => 'Press $1 to explore shortcuts',
 );
 
 $messages['qqq'] = array(
@@ -47,8 +46,7 @@ $messages['qqq'] = array(
 	'global-shortcuts-title-help-entry-point' => 'Hint that will appear when you indicate the entry point of shortcuts help dialog. Question mark in brackets informs about shortcut key to open the dialog.',
 	'global-shortcuts-title-keyboard-shortcuts' => 'The title of a keyboard shorcuts modal.',
 	'global-shortcuts-welcome-hint' => 'One time hint shown tooltip above entrypoint to shortcuts help modal.',
-	'template-class-global-shortcuts-caption-classify-page' => 'This shortcut redirects users to the page where they can classify the template; it appears on template page.',
-	'template-class-global-shortcuts-press-to-explore-shortcuts' => '$1 is an html of . key. This sentence appears at the bottom of a keyboard shortcut help and it indicates that whenever user press a . key the actions explorer will appear.',
+	'global-shortcuts-press-to-explore-shortcuts' => '$1 is an html of . key. This sentence appears at the bottom of a keyboard shortcut help and it indicates that whenever user press a . key the actions explorer will appear.',
 );
 
 $messages['de'] = array(
@@ -72,8 +70,7 @@ Einfacheres Browsen und Bearbeiten auf Wikia mithilfe von Tastenkombinationen. D
 	'global-shortcuts-title-help-entry-point' => 'Hilfedialog für Tastenkombinationen öffnen (?)',
 	'global-shortcuts-title-keyboard-shortcuts' => 'Tastenkombinationen',
 	'global-shortcuts-welcome-hint' => 'Unsere neuen und verbesserten Tastenkombinationen.',
-	'template-class-global-shortcuts-caption-classify-page' => 'Klassifizierungsseite',
-	'template-class-global-shortcuts-press-to-explore-shortcuts' => 'Drücke auf $1, um die Tastenkombinationen anzusehen',
+	'global-shortcuts-press-to-explore-shortcuts' => 'Drücke auf $1, um die Tastenkombinationen anzusehen',
 );
 
 $messages['es'] = array(
@@ -91,8 +88,7 @@ $messages['es'] = array(
 	'global-shortcuts-key-then' => 'luego',
 	'global-shortcuts-title-help-entry-point' => 'Abrir el diálogo de ayuda sobre atajos de teclado (?)',
 	'global-shortcuts-title-keyboard-shortcuts' => 'Atajos de teclado',
-	'template-class-global-shortcuts-caption-classify-page' => 'Clasificar la página',
-	'template-class-global-shortcuts-press-to-explore-shortcuts' => 'Pulse $1 para explorar atajos',
+	'global-shortcuts-press-to-explore-shortcuts' => 'Pulse $1 para explorar atajos',
 	'global-shortcuts-description' => '
 Mejora tu experiencia en navegación y edición usando los atajos de teclado en Wikia.
 
@@ -118,8 +114,7 @@ $messages['fr'] = array(
 	'global-shortcuts-key-then' => 'puis',
 	'global-shortcuts-title-help-entry-point' => "Ouvrir la boîte de dialogue de l'aide sur les raccourcis clavier (?)",
 	'global-shortcuts-title-keyboard-shortcuts' => 'Raccourcis clavier',
-	'template-class-global-shortcuts-caption-classify-page' => 'Page de classification',
-	'template-class-global-shortcuts-press-to-explore-shortcuts' => 'Appuyer sur $1 pour explorer les raccourcis',
+	'global-shortcuts-press-to-explore-shortcuts' => 'Appuyer sur $1 pour explorer les raccourcis',
 	'global-shortcuts-description' => "
 Utilisez les raccourcis clavier de Wikia pour améliorer votre expérience de navigation et de modification.
 
@@ -145,8 +140,7 @@ $messages['it'] = array(
 	'global-shortcuts-key-then' => 'quindi',
 	'global-shortcuts-title-help-entry-point' => "Finestra di dialogo per aprire l'aiuto alle scorciatoie da tastiera (?)",
 	'global-shortcuts-title-keyboard-shortcuts' => 'Scorciatoie da tastiera',
-	'template-class-global-shortcuts-caption-classify-page' => 'Classifica la pagina',
-	'template-class-global-shortcuts-press-to-explore-shortcuts' => 'Premi $1 per esplorare le scorciatoie',
+	'global-shortcuts-press-to-explore-shortcuts' => 'Premi $1 per esplorare le scorciatoie',
 	'global-shortcuts-description' => '
 Migliora la tua esperienza di navigazione e di modifica delle wiki utilizzando le scorciatoie da tastiera di Wikia.
 
@@ -172,8 +166,7 @@ $messages['ja'] = array(
 	'global-shortcuts-key-then' => 'に続いて',
 	'global-shortcuts-title-help-entry-point' => 'キーボード・ショートカットのヘルプダイアログを開く（?）',
 	'global-shortcuts-title-keyboard-shortcuts' => 'キーボード・ショートカット',
-	'template-class-global-shortcuts-caption-classify-page' => 'ページを分類',
-	'template-class-global-shortcuts-press-to-explore-shortcuts' => '$1キーを押すとショートカットを検索できます',
+	'global-shortcuts-press-to-explore-shortcuts' => '$1キーを押すとショートカットを検索できます',
 	'global-shortcuts-description' => '
 Wikiaでショートカットキーを使うと、閲覧や編集がしやすくなります。
 
@@ -207,8 +200,7 @@ To rozszerzenie pozwala wykorzystać eksplorator działań oraz niektóre skrót
 	'global-shortcuts-title-help-entry-point' => 'Otwórz okno pomocy skrótów klawiaturowych (?)',
 	'global-shortcuts-title-keyboard-shortcuts' => 'Skróty klawiaturowe',
 	'global-shortcuts-welcome-hint' => 'Przedstawiamy nowe i ulepszone skróty klawiaturowe.',
-	'template-class-global-shortcuts-caption-classify-page' => 'Zaklasyfikuj stronę',
-	'template-class-global-shortcuts-press-to-explore-shortcuts' => 'Wciśnij $1, aby poznać skróty',
+	'global-shortcuts-press-to-explore-shortcuts' => 'Wciśnij $1, aby poznać skróty',
 );
 
 $messages['pt'] = array(
@@ -226,8 +218,7 @@ $messages['pt'] = array(
 	'global-shortcuts-key-then' => 'em seguida',
 	'global-shortcuts-title-help-entry-point' => 'Abrir o diálogo de ajuda para atalhos de teclado (?)',
 	'global-shortcuts-title-keyboard-shortcuts' => 'Atalhos de teclado',
-	'template-class-global-shortcuts-caption-classify-page' => 'Classificar a página',
-	'template-class-global-shortcuts-press-to-explore-shortcuts' => 'Pressione $1 para explorar atalhos',
+	'global-shortcuts-press-to-explore-shortcuts' => 'Pressione $1 para explorar atalhos',
 	'global-shortcuts-description' => '
 Melhore a navegação e a edição usando teclas de atalho na Wikia.
 
@@ -261,8 +252,7 @@ $messages['ru'] = array(
 	'global-shortcuts-title-help-entry-point' => 'Открыть справочный диалог по клавиатурным сочетаниям (?)',
 	'global-shortcuts-title-keyboard-shortcuts' => 'Сочетания клавиш',
 	'global-shortcuts-welcome-hint' => 'Представляем наши новые и улучшенные сочетания клавиш.',
-	'template-class-global-shortcuts-caption-classify-page' => 'Классифицировать страницу',
-	'template-class-global-shortcuts-press-to-explore-shortcuts' => 'Нажмите $1, чтобы просмотреть все имеющиеся клавиатурные сочетания',
+	'global-shortcuts-press-to-explore-shortcuts' => 'Нажмите $1, чтобы просмотреть все имеющиеся клавиатурные сочетания',
 );
 
 $messages['zh-hans'] = array(
@@ -280,8 +270,7 @@ $messages['zh-hans'] = array(
 	'global-shortcuts-key-then' => '然后',
 	'global-shortcuts-title-help-entry-point' => '打开键盘快捷方式帮助对话框 (?)',
 	'global-shortcuts-title-keyboard-shortcuts' => '键盘快捷键',
-	'template-class-global-shortcuts-caption-classify-page' => '分类页',
-	'template-class-global-shortcuts-press-to-explore-shortcuts' => '点击$1查找快捷方式',
+	'global-shortcuts-press-to-explore-shortcuts' => '点击$1查找快捷方式',
 	'global-shortcuts-description' => '使用Wikia上的快捷键提高您的浏览和编辑体验。
 
 此项扩展提供了一些关键的快捷键和操作管理器，帮助用户管理重要的页面或执行某些操作。',
@@ -305,8 +294,7 @@ $messages['zh-hant'] = array(
 	'global-shortcuts-key-then' => '然後',
 	'global-shortcuts-title-help-entry-point' => '打開鍵盤快速鍵幫助對話框 (?)',
 	'global-shortcuts-title-keyboard-shortcuts' => '鍵盤快速鍵',
-	'template-class-global-shortcuts-caption-classify-page' => '分類頁',
-	'template-class-global-shortcuts-press-to-explore-shortcuts' => '按一下$1查找快捷方式',
+	'global-shortcuts-press-to-explore-shortcuts' => '按一下$1查找快捷方式',
 	'global-shortcuts-description' => '使用Wikia上的快速鍵提高您的流覽和編輯體驗。
 
 此項擴展提供了一些關鍵的快速鍵和操作管理器，幫助使用者管理重要的頁面或執行某些操作。',
