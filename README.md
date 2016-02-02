@@ -5,7 +5,7 @@
 For system requirements, installation and upgrade details, see the files 
 RELEASE-NOTES, INSTALL, and UPGRADE.
 
-== MediaWiki ==
+== MediaWiki == 
 
 MediaWiki is the software used for Wikipedia [http://www.wikipedia.org/] and the
 other Wikimedia Foundation websites. Compared to other wikis, it has an
