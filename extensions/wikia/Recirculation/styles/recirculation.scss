@@ -1,5 +1,5 @@
 @import 'skins/shared/mixins/arrow';
-@import "skins/shared/mixins/flexbox";
+@import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/color';
 
 .WikiaRail .recirculation-rail {
@@ -78,18 +78,18 @@ $discussion-small-font-color: #999999;
 $discussion-thread-background-color-dark: #262626;
 $discussion-thread-border-color-dark: #1a1a1a;
 $discussion-thread-border-color-light: $color-headline-border;
+$discussion-thread-height: 100px;
 $discussion-thread-featured-height: 147px;
 $discussion-thread-font-size: 14px;
 $discussion-thread-line-height: 18px;
 $discussion-thread-side-padding: 15px;
-$discussion-thread-vertical-padding: 10px;
-
+$discussion-thread-padding: 10px;
 
 .discussion-module .discussion-threads {
 	@include flex-wrap(wrap);
 	@include justify-content(space-between);
 	height: $discussion-height;
-	padding: 20px 12px;
+	padding: ($discussion-thread-padding * 2) $discussion-thread-padding;
 
 	.discussion-thread {
 		border: 1px solid $discussion-thread-border-color-light;
@@ -97,7 +97,7 @@ $discussion-thread-vertical-padding: 10px;
 		height: $discussion-thread-featured-height;
 		line-height: $discussion-thread-line-height;
 		list-style-type: none;
-		padding: $discussion-thread-vertical-padding $discussion-thread-side-padding;
+		padding: $discussion-thread-padding $discussion-thread-side-padding;
 		position: relative;
 		width: 49%;
 		cursor: pointer;
@@ -111,7 +111,7 @@ $discussion-thread-vertical-padding: 10px;
 	.discussion-thread:nth-child(n+3) {
 		@include align-self(flex-end);
 		font-size: $discussion-small-font-size;
-		height: 100px;
+		height: $discussion-thread-height;
 		line-height: 16px;
 		padding: 6px $discussion-thread-side-padding;
 
@@ -164,7 +164,7 @@ $discussion-icon-background-dark: #262626;
 .discussion-meta {
 	@include align-items(center);
 	@include justify-content(space-between);
-	bottom: $discussion-thread-vertical-padding;
+	bottom: $discussion-thread-padding;
 	left: $discussion-thread-side-padding;
 	position: absolute;
 	right: $discussion-thread-side-padding;

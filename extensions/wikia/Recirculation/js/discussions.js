@@ -5,7 +5,6 @@ require([
 	'wikia.tracker',
 	'wikia.nirvana',
 ], function ($, abTest, tracker, nirvana) {
-	console.log('DISCUSSIONS');
 
 	function trackClick(location) {
 		tracker.track({
@@ -25,7 +24,7 @@ require([
 		});
 	}
 
-	function injectDiscussions(cb) {
+	function injectDiscussions(done) {
 		nirvana.sendRequest({
 			controller: 'Recirculation',
 			method: 'discussions',
@@ -33,13 +32,12 @@ require([
 			type: 'get',
 			callback: function (response) {
 				$('#WikiaArticle').append(response);
-				cb();
+				done();
 			}
 		});
 	}
 
 	if (abTest.inGroup('RECIRCULATION_DISCUSSIONS', 'ARTICLE_FOOTER')) {
-		console.log('in test!');
 		injectDiscussions(function () {
 			trackImpression();
 			$('.discussion-timestamp').timeago();

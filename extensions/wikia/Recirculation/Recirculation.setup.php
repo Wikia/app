@@ -7,14 +7,12 @@ $wgExtensionCredits['other'][] = [
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Recirculation',
 ];
 
-$dir = __DIR__;
-
 // Autoload
-$wgAutoloadClasses['FandomDataService'] =  $dir . '/services/FandomDataService.class.php';
-$wgAutoloadClasses['DiscussionsDataService'] =  $dir . '/services/DiscussionsDataService.class.php';
+$wgAutoloadClasses['FandomDataService'] =  __DIR__ . '/services/FandomDataService.class.php';
+$wgAutoloadClasses['DiscussionsDataService'] =  __DIR__ . '/services/DiscussionsDataService.class.php';
 
-$wgAutoloadClasses['RecirculationController'] =  $dir . '/RecirculationController.class.php';
-$wgAutoloadClasses['RecirculationHooks'] =  $dir . '/RecirculationHooks.class.php';
+$wgAutoloadClasses['RecirculationController'] =  __DIR__ . '/RecirculationController.class.php';
+$wgAutoloadClasses['RecirculationHooks'] =  __DIR__ . '/RecirculationHooks.class.php';
 
 // Hooks
 $wgHooks['GetRailModuleList'][] = 'RecirculationHooks::onGetRailModuleList';
@@ -22,4 +20,4 @@ $wgHooks['OasisSkinAssetGroups'][] = 'RecirculationHooks::onOasisSkinAssetGroups
 $wgHooks['BeforePageDisplay'][] = 'RecirculationHooks::onBeforePageDisplay';
 
 // i18n
-$wgExtensionMessagesFiles['Recirculation'] = $dir . '/Recirculation.i18n.php';
+$wgExtensionMessagesFiles['Recirculation'] = __DIR__ . '/Recirculation.i18n.php';

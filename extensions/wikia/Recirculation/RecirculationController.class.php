@@ -23,7 +23,7 @@ class RecirculationController extends WikiaController {
 			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 			$this->response->setData( [
 				'title'	=> wfMessage( 'recirculation-fandom-title' )->plain(),
-				'posts' => $posts
+				'posts' => $posts,
 			] );
 			return true;
 		} else {
@@ -45,7 +45,7 @@ class RecirculationController extends WikiaController {
 				'title' => wfMessage( 'recirculation-discussion-title' )->plain(),
 				'linkText' => wfMessage( 'recirculation-discussion-link-text' )->plain(),
 				'discussionsUrl' => $discussionsUrl,
-				'posts' => $posts
+				'posts' => $posts,
 			] );
 			return true;
 		} else {

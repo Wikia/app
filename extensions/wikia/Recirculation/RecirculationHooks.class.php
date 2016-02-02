@@ -46,7 +46,7 @@ class RecirculationHooks {
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 		$jsAssets[] = 'recirculation_js';
 
-		if ( self::canShowDiscussions() && self::canShowVideosModule() ) {
+		if ( self::canShowDiscussions() && self::onCorrectPageType() ) {
 			$jsAssets[] = 'recirculation_discussions_js';
 		}
 
@@ -54,12 +54,13 @@ class RecirculationHooks {
 	}
 
 	/**
-	 * Return whether we're on one of the pages where we want to show the Videos Module,
+	 * Return whether we're on one of the pages where we want to show the Recirculation widgets,
 	 * specifically File pages, Article pages, and Main pages
 	 * @return bool
 	 */
-	static public function canShowVideosModule() {
+	static public function onCorrectPageType() {
 		$wg = F::app()->wg;
+
 		$showableNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE ] );
 
 		if ( $wg->Title->exists()
@@ -68,8 +69,19 @@ class RecirculationHooks {
 			&& $wg->request->getVal( 'diff' ) === null
 		) {
 			return true;
+		} else {
+			return false;
 		}
-		return false;
+	}
+
+	static public function canShowVideosModule() {
+		$wg = F::app()->wg;
+
+		if ( !empty($wg->EnableVideosModuleExt) && self::onCorrectPageType() ) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	static public function canShowDiscussions() {
@@ -78,7 +90,7 @@ class RecirculationHooks {
 			'fallout',
 			'marvel',
 			'elderscrolls',
-			'walkingdead'
+			'walkingdead',
 		];
 		$wg = F::app()->wg;
 		if (in_array($wg->DBname, $enabledWikis)) {
