@@ -70,7 +70,14 @@ class ApiVisualEditor extends ApiBase {
 		) {
 			$req->setHeader( 'Cookie', $this->getRequest()->getHeader( 'Cookie' ) );
 		}
+
+		if ( $this->veConfig->get( 'VisualEditorNoCache' ) ) {
+			$req->setHeader( 'Cache-control', 'no-cache' );
+		}
+
+		$time_start = microtime(true);
 		$status = $req->execute();
+		$time_end = microtime(true);
 		if ( $status->isOK() ) {
 			// Pass thru performance data from Parsoid to the client, unless the response was
 			// served directly from Varnish, in  which case discard the value of the XPP header
