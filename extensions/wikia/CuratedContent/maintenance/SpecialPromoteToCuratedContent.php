@@ -144,8 +144,8 @@ class SpecialPromoteToCuratedContentMigrator extends Maintenance {
 	public function uploadImageToLocalWiki( $imageName, $imageUrl ) {
 		$uploadOptions = new StdClass();
 		$uploadOptions->name = $imageName;
-		$uploadOptions->comment = wfMessage( 'curated-content-image-upload' )->inContentLanguage()->escaped();
-		$uploadOptions->description = wfMessage( 'curated-content-image-context-description' )->inContentLanguage()->escaped();
+		$uploadOptions->comment = wfMessage( 'wikiacuratedcontent-image-upload-comment' )->inContentLanguage()->escaped();
+		$uploadOptions->description = wfMessage( 'wikiacuratedcontent-image-upload-description' )->inContentLanguage()->escaped();
 		$wikiaBotUser = User::newFromName( 'WikiaBot' );
 
 		$result = ImagesService::uploadImageFromUrl( $imageUrl, $uploadOptions, $wikiaBotUser );
