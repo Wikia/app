@@ -228,7 +228,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			expectAsyncHop = true;
 		}
 
-		if (adType === 'adParnter') {
+		if (adType === 'adPartner') {
 			expectAsyncCollapse = true;
 		}
 
