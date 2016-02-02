@@ -20,6 +20,7 @@ class SpecialPromoteToCuratedContentMigrator extends Maintenance {
 
 		$dryRun = $this->hasOption('dry-run');
 
+		$change = false;
 		$cv = new CityVisualization();
 		$communityDataService = new CommunityDataService( $wgCityId );
 
@@ -76,6 +77,7 @@ class SpecialPromoteToCuratedContentMigrator extends Maintenance {
 					empty( $originalDescription ) ? "''" : $originalDescription,
 					$description)
 			);
+			$change = true;
 		}
 
 		if(!empty($imageId)) {
@@ -85,18 +87,23 @@ class SpecialPromoteToCuratedContentMigrator extends Maintenance {
 					$originalImageId,
 					$imageId)
 			);
+			$change = true;
 		}
 
-		if(!$dryRun) {
-			$this->output( "\nSaving Curated Content\n" );
-			$result = $communityDataService->setCuratedContent($curatedContentData);
-			if($result) {
-				$this->output( "Success!\n");
-			} else {
-				$this->output( "FAILED!\n");
-			}
-		} else {
+		if ( $dryRun ) {
 			$this->output( "\nDRY RUN: Skipping save of Curated Content\n" );
+		} else {
+			if ( $change ) {
+				$this->output( "\nSaving Curated Content\n" );
+				$result = $communityDataService->setCuratedContent( $curatedContentData );
+				if ( $result ) {
+					$this->output( "Success!\n" );
+				} else {
+					$this->output( "FAILED!\n" );
+				}
+			} else {
+				$this->output( "\nNO change in Curated Content\n" );
+			}
 		}
 		$this->output( "\n" );
 		$this->output( "Done\n" );
