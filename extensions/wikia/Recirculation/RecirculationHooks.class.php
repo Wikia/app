@@ -46,6 +46,10 @@ class RecirculationHooks {
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 		$jsAssets[] = 'recirculation_js';
 
+		if ( self::canShowDiscussions() && self::canShowVideosModule() ) {
+			$jsAssets[] = 'recirculation_discussions_js';
+		}
+
 		return true;
 	}
 
@@ -66,5 +70,21 @@ class RecirculationHooks {
 			return true;
 		}
 		return false;
+	}
+
+	static public function canShowDiscussions() {
+		$enabledWikis = [
+			'starwars',
+			'fallout',
+			'marvel',
+			'elderscrolls',
+			'walkingdead'
+		];
+		$wg = F::app()->wg;
+		if (in_array($wg->DBname, $enabledWikis)) {
+			return true;
+		} else {
+			return false;
+		}		
 	}
 }
