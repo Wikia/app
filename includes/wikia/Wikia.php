@@ -71,6 +71,9 @@ $wgHooks['WikiaSkinTopScripts'][] = 'Wikia::onWikiaSkinTopScripts';
 # handle internal requests - PLATFORM-1473
 $wgHooks['WebRequestInitialized'][] = 'Wikia::onWebRequestInitialized';
 
+# Log user email changes
+$wgHooks['BeforeUserSetEmail'][] = 'Wikia::logEmailChanges';
+
 /**
  * This class has only static methods so they can be used anywhere
  *
@@ -2504,4 +2507,26 @@ class Wikia {
 
 		return true;
 	}
+
+	/**
+	 * Hook for storing historical log of email changes
+	 * Depends on the central user_email_log table defined in the EditAccount extension
+	 * @return bool
+	 */
+	public static function logEmailChanges($user, $new_email, $old_email) {
+		global $wgExternalSharedDB, $wgUser, $wgRequest;
+		if ( $wgExternalSharedDB && isset( $new_email ) && isset( $old_email ) ) {
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+			$dbw->insert(
+				'user_email_log',
+				['user_id' => $user->getId(),
+				 'old_email' => $old_email,
+				 'new_email' => $new_email,
+				 'changed_by_id' => $wgUser->getId(),
+				 'changed_by_ip' => $wgRequest->getIP()		// stored as string
+				]);
+		}
+		return true;
+	}
+
 }
