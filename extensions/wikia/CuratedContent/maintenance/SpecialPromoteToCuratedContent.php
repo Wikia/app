@@ -10,12 +10,12 @@
 require_once( dirname( __FILE__ ) . '/../../../../maintenance/Maintenance.php' );
 
 class SpecialPromoteToCuratedContentMigrator extends Maintenance {
-	function __construct() {
+	public function __construct() {
 		$this->addOption( 'dry-run', 'Dry run - do not save changes to curated content' );
 		parent::__construct();
 	}
 
-	function execute() {
+	public function execute() {
 		global $wgCityId, $wgLang, $wgDBname;
 
 		$dryRun = $this->hasOption('dry-run');
@@ -57,7 +57,6 @@ class SpecialPromoteToCuratedContentMigrator extends Maintenance {
 				$imageUrl = $image->getOriginFile( $corporateWikiId )->getUrl();
 				$imageName = $image->getPathname();
 
-				
 				$this->disableUploadValidationHook();
 				$result = $this->uploadImageToLocalWiki( $imageName, $imageUrl );
 
@@ -110,12 +109,12 @@ class SpecialPromoteToCuratedContentMigrator extends Maintenance {
 	}
 
 	/**
-	 * @param $cv
-	 * @param $wgCityId
-	 * @param $wgLang
+	 * @param $cv CityVisualization
+	 * @param $cityId int
+	 * @param $langCode string
 	 * @return mixed
 	 */
-	public function getPromoteDescription( $cv, $cityId, $langCode ) {
+	private function getPromoteDescription( $cv, $cityId, $langCode ) {
 		$data = $cv->getWikiData( $cityId, $langCode, new WikiGetDataForVisualizationHelper() );
 
 		if ( !empty( $data['description'] ) ) {
@@ -130,7 +129,7 @@ class SpecialPromoteToCuratedContentMigrator extends Maintenance {
 	 * For a one-time script it does not make sense to extract logic in this method for reuse
 	 * @see fixVisualizationImage.php
 	 */
-	public function disableUploadValidationHook() {
+	private function disableUploadValidationHook() {
 		global $wgHooks;
 
 		$SPECIAL_UPLOAD_VERIFICATION = "UploadVisualizationImageFromFile::UploadVerification";
@@ -144,11 +143,11 @@ class SpecialPromoteToCuratedContentMigrator extends Maintenance {
 	}
 
 	/**
-	 * @param $imageName
-	 * @param $imageUrl
+	 * @param $imageName string
+	 * @param $imageUrl string
 	 * @return array
 	 */
-	public function uploadImageToLocalWiki( $imageName, $imageUrl ) {
+	private function uploadImageToLocalWiki( $imageName, $imageUrl ) {
 		$uploadOptions = new StdClass();
 		$uploadOptions->name = $imageName;
 		$uploadOptions->comment = wfMessage( 'wikiacuratedcontent-image-upload-comment' )->inContentLanguage()->escaped();
