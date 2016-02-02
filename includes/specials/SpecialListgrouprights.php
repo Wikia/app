@@ -21,6 +21,10 @@
  * @ingroup SpecialPage
  */
 
+
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Permissions\PermissionsService;
+
 /**
  * This special page lists all defined user groups and the associated rights.
  * See also @ref $wgGroupPermissions.
@@ -109,7 +113,7 @@ class SpecialListGroupRights extends SpecialPage {
 					SpecialPage::getTitleFor( 'Listusers' ),
 					wfMsgHtml( 'listgrouprights-members' )
 				);
-			} elseif ( !in_array( $group, $this->permissionsService()->getImplicitGroups() ) ) {
+			} elseif ( !in_array( $group, $this->userPermissions()->getImplicitGroups() ) ) {
 				$grouplink = '<br />' . Linker::linkKnown(
 					SpecialPage::getTitleFor( 'Listusers' ),
 					wfMsgHtml( 'listgrouprights-members' ),
@@ -121,7 +125,7 @@ class SpecialListGroupRights extends SpecialPage {
 				$grouplink = '';
 			}
 
-			$groupArr = $this->permissionsService()->getGroupsChangeableByGroup( $group );
+			$groupArr = $this->userPermissions()->getGroupsChangeableByGroup( $group );
 
 			$revoke = isset( $wgRevokePermissions[$group] ) ? $wgRevokePermissions[$group] : array();
 			$addgroups = isset( $groupArr['add'] ) ? $groupArr['add'] : array();

@@ -382,7 +382,6 @@ class User {
 	 */
 	public function saveToCache() {
 		$this->load();
-		$this->loadGroups();
 		$this->loadOptions();
 		if ( $this->isAnon() ) {
 			// Anonymous users are uncached
@@ -1264,7 +1263,6 @@ class User {
 	 */
 	protected function loadFromUserObject( $user ) {
 		$user->load();
-		$user->loadGroups();
 		$user->loadOptions();
 		foreach ( self::$mCacheVars as $var ) {
 			$this->$var = $user->$var;
@@ -4600,10 +4598,6 @@ class User {
 			]);
 	}
 
-
-
-	// User Permissions related functionality
-
 	/**
 	 * Get the list of explicit group memberships this user has.
 	 * The implicit * and user groups are not included.
@@ -4711,7 +4705,8 @@ class User {
 	 * @param $group String Name of the group to add
 	 */
 	public function addGroup( $group ) {
-		return self::userPermissions()->addUserToGroup( $this, $group );
+		global $wgCityId, $wgUser;
+		return self::userPermissions()->addUserToGroup( $wgCityId, $wgUser, $this, $group );
 	}
 
 	/**
@@ -4720,10 +4715,9 @@ class User {
 	 * @param $group String Name of the group to remove
 	 */
 	public function removeGroup( $group ) {
-		return self::userPermissions()->removeUserFromGroup( $this, $group );
+		global $wgCityId, $wgUser;
+		return self::userPermissions()->removeUserFromGroup( $wgCityId, $wgUser, $this, $group );
 	}
-
-	//JCEL needs to be moved to new service, better understood.
 
 	/**
 	 * Returns an array of groups that this user can add and remove
@@ -4733,39 +4727,8 @@ class User {
 	 *  'remove-self' => array( removable groups from self) )
 	 */
 	public function changeableGroups() {
-		if( $this->isAllowed( 'userrights' ) ) {
-			// This group gives the right to modify everything (reverse-
-			// compatibility with old "userrights lets you change
-			// everything")
-			// Using array_merge to make the groups reindexed
-			$all = array_merge( User::getAllGroups() );
-			return array(
-				'add' => $all,
-				'remove' => $all,
-				'add-self' => array(),
-				'remove-self' => array()
-			);
-		}
-
-		// Okay, it's not so simple, we will have to go through the arrays
-		$groups = array(
-			'add' => array(),
-			'remove' => array(),
-			'add-self' => array(),
-			'remove-self' => array()
-		);
-		$addergroups = $this->getEffectiveGroups();
-
-		foreach( $addergroups as $addergroup ) {
-			$groups = array_merge_recursive(
-				$groups, $this->changeableByGroup( $addergroup )
-			);
-			$groups['add']    = array_unique( $groups['add'] );
-			$groups['remove'] = array_unique( $groups['remove'] );
-			$groups['add-self'] = array_unique( $groups['add-self'] );
-			$groups['remove-self'] = array_unique( $groups['remove-self'] );
-		}
-		return $groups;
+		global $wgCityId;
+		return self::userPermissions()->getGroupsChangeableByUser( $wgCityId, $this );
 	}
 
 	/**
@@ -4803,37 +4766,6 @@ class User {
 		return self::userPermissions()->doesUserHavePermission( $wgCityId, $this, $action );
 	}
 
-	//JCEL delete after rest is moved
-
-	private function loadGroups() {
-		if ( is_null( $this->mGroups ) ) {
-			$dbr = wfGetDB( DB_MASTER );
-			$res = $dbr->select( 'user_groups',
-				array( 'ug_group' ),
-				array( 'ug_user' => $this->mId ),
-				__METHOD__ );
-			$this->mGroups = array();
-			foreach ( $res as $row ) {
-				$this->mGroups[] = $row->ug_group;
-			}
-		}
-		wfRunHooks( 'UserLoadGroups', array( $this ) );
-	}
-
-
-
-	//Mostly static permission functions that we can leave as is for now
-
-	/**
-	 * Whether this user is Wikia staff or not
-	 * @return bool
-	 */
-	public function isStaff() {
-		return in_array( 'staff', $this->getEffectiveGroups() );
-	}
-
-	//JCEL can stay as is
-
 	/**
 	 * Get the localized descriptive name for a group, if it exists
 	 *
@@ -4844,8 +4776,6 @@ class User {
 		$msg = wfMessage( "group-$group" );
 		return $msg->isBlank() ? $group : $msg->text();
 	}
-
-	//JCEL can stay as is
 
 	/**
 	 * Get the localized descriptive name for a member of a group, if it exists
@@ -4858,8 +4788,6 @@ class User {
 		$msg = wfMessage( "group-$group-member", $username );
 		return $msg->isBlank() ? $group : $msg->text();
 	}
-
-	//JCEL can stay as is
 
 	/**
 	 * Get the title of a page describing a particular group
@@ -4876,8 +4804,6 @@ class User {
 		}
 		return false;
 	}
-
-	//JCEL can stay as is
 
 	/**
 	 * Create a link to the group in HTML, if available;
@@ -4899,8 +4825,6 @@ class User {
 		}
 	}
 
-	//JCEL can stay as is
-
 	/**
 	 * Create a link to the group in Wikitext, if available;
 	 * else return the group name.
@@ -4921,8 +4845,6 @@ class User {
 			return $text;
 		}
 	}
-
-	//JCEL can stay as is
 
 	/**
 	 * Get the description of a given right

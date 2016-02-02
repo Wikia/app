@@ -192,145 +192,143 @@ class PermissionsServiceImpl implements PermissionsService {
 			'userrights',
 			'userrights-interwiki',
 			'writeapi',
+			'canremovemap',
+			'wikiawidget',
+			'wikifactory',
+			'wikifactorymetrics',
+			'dumpsondemand',
+			'wikifeatures',
+			'MultiFileUploader',
+			'allowedtoblank',
+			'batchmove',
+			'linkstoredirects',
+			'mobilesearches',
+			'soapfailures',
+			'moderatesotd',
+			'hiderevision',
+			'oversight',
+			'abusefilter-modify',
+			'abusefilter-log-detail',
+			'abusefilter-view',
+			'abusefilter-log',
+			'abusefilter-private',
+			'abusefilter-modify-restricted',
+			'abusefilter-revert',
+			'abusefilter-view-private',
+			'abusefilter-hidden-log',
+			'abusefilter-hide-log',
+			'override-antispoof',
+			'checkuser',
+			'checkuser-log',
+			'geocode',
+			'nuke',
+			'refreshspecial',
+			'replacetext',
+			'spamregex',
+			'tboverride', 	// Implies tboverride-account
+			'tboverride-account', 	// For account creation
+			'torunblocked',
+			'abusefilter-bypass',
+			'platinum',
+			'sponsored-achievements',
+			'achievements-exempt',
+			'achievements-explicit',
+			'admindashboard',
+			'commentmove',
+			'commentedit',
+			'commentdelete',
+			'becp_user',
+			'blog-comments-toggle',
+			'blog-comments-delete',
+			'blog-articles-edit',
+			'blog-articles-move',
+			'blog-articles-protect',
+			'blog-auto-follow',
+			'skipcaptcha',
+			'chatmoderator',
+			'chat',
+			'commentcsv',
+			'content-review',
+			'content-review-test-mode',
+			'coppatool',
+			'createnewwiki',
+			'createwikilimitsexempt',  // user not bound by creation throttle
+			'finishcreate',
+			'devboxpanel',
+			'dmcarequestmanagement',
+			'editaccount',
+			'emailsstorage',
+			'flags-administration',
+			'forum',
+			'boardedit',
+			'forumadmin',
+			'welcomeexempt',
+			'coppaimagereview',
+			'imagereview',
+			'questionableimagereview',
+			'rejectedimagereview',
+			'imagereviewstats',
+			'imagereviewcontrols',
+			'promoteimagereview',
+			'promoteimagereviewquestionableimagereview',
+			'promoteimagereviewrejectedimagereview',
+			'promoteimagereviewstats',
+			'promoteimagereviewcontrols',
+			'insights',
+			'listusers',
+			'lookupcontribs',
+			'lookupuser',
+			'minieditor-specialpage',
+			'multidelete',
+			'multiwikiedit',
+			'multiwikifinder',
+			'njordeditmode',
+			'phalanxexempt',
+			'phalanx',
+			'phalanxemailblock',
+			'piggyback',
+			'places-enable-category-geolocation',
+			'metadata',
+			'powerdelete',
+			'quicktools',
+			'quickadopt',
+			'regexblock',
+			'restrictsession',
+			'scribeevents',
+			'performancestats',
+			'messagetool',
+			'forceview',
+			'apigate_admin',
+			'batchuserrights',
+			'edithub',
+			'InterwikiEdit',
+			'multilookup',
+			'newwikislist',
+			'restricted_promote',
+			'protectsite',
+			'stafflog',
+			'unblockable',
+			'tagsreport',
+			'taskmanager',
+			'taskmanager-action',
+			'tasks-user',
+			'template-bulk-classification',
+			'templatedraft',
+			'textregex',
+			'themedesigner',
+			'toplists-create-edit-list',
+			'toplists-create-item',
+			'toplists-edit-item',
+			'toplists-delete-item',
+			'usermanagement',
+			'removeavatar',
+			'renameuser',
+			'userrollback',
+			'specialvideohandler',
+			'uploadpremiumvideo',
+			'wdacreview',
+			'WhereIsExtension'
 		);
-
-		//Permissions from extensions
-		$this->permissions[] = 'canremovemap';
-		$this->permissions[] = 'wikiawidget';
-		$this->permissions[] = 'wikifactory';
-		$this->permissions[] = 'wikifactorymetrics';
-		$this->permissions[] = 'dumpsondemand';
-		$this->permissions[] = 'wikifeatures';
-		$this->permissions[] = 'MultiFileUploader';
-		$this->permissions[] = 'allowedtoblank';
-		$this->permissions[] = 'batchmove';
-		$this->permissions[] = 'linkstoredirects';
-		$this->permissions[] = 'mobilesearches';
-		$this->permissions[] = 'soapfailures';
-		$this->permissions[] = 'moderatesotd';
-		$this->permissions[] = 'hiderevision';
-		$this->permissions[] = 'oversight';
-		$this->permissions[] = 'abusefilter-modify';
-		$this->permissions[] = 'abusefilter-log-detail';
-		$this->permissions[] = 'abusefilter-view';
-		$this->permissions[] = 'abusefilter-log';
-		$this->permissions[] = 'abusefilter-private';
-		$this->permissions[] = 'abusefilter-modify-restricted';
-		$this->permissions[] = 'abusefilter-revert';
-		$this->permissions[] = 'abusefilter-view-private';
-		$this->permissions[] = 'abusefilter-hidden-log';
-		$this->permissions[] = 'abusefilter-hide-log';
-		$this->permissions[] = 'override-antispoof';
-		$this->permissions[] = 'checkuser';
-		$this->permissions[] = 'checkuser-log';
-		$this->permissions[] = 'geocode';
-		$this->permissions[] = 'nuke';
-		$this->permissions[] = 'refreshspecial';
-		$this->permissions[] = 'replacetext';
-		$this->permissions[] = 'spamregex';
-		$this->permissions[] = 'tboverride';	// Implies tboverride-account
-		$this->permissions[] = 'tboverride-account';	// For account creation
-		$this->permissions[] = 'torunblocked';
-		$this->permissions[] = 'abusefilter-bypass';
-		$this->permissions[] = 'platinum';
-		$this->permissions[] = 'sponsored-achievements';
-		$this->permissions[] = 'achievements-exempt';
-		$this->permissions[] = 'achievements-explicit';
-		$this->permissions[] = 'admindashboard';
-		$this->permissions[] = 'commentmove';
-		$this->permissions[] = 'commentedit';
-		$this->permissions[] = 'commentdelete';
-		$this->permissions[] = 'becp_user';
-		$this->permissions[] = 'blog-comments-toggle';
-		$this->permissions[] = 'blog-comments-delete';
-		$this->permissions[] = 'blog-articles-edit';
-		$this->permissions[] = 'blog-articles-move';
-		$this->permissions[] = 'blog-articles-protect';
-		$this->permissions[] = 'blog-auto-follow';
-		$this->permissions[] = 'skipcaptcha';
-		$this->permissions[] = 'chatmoderator';
-		$this->permissions[] = 'chat';
-		$this->permissions[] = 'commentcsv';
-		$this->permissions[] = 'content-review';
-		$this->permissions[] = 'content-review-test-mode';
-		$this->permissions[] = 'coppatool';
-		$this->permissions[] = 'createnewwiki';
-		$this->permissions[] = 'createwikilimitsexempt'; // user not bound by creation throttle
-		$this->permissions[] = 'finishcreate';
-		$this->permissions[] = 'devboxpanel';
-		$this->permissions[] = 'dmcarequestmanagement';
-		$this->permissions[] = 'editaccount';
-		$this->permissions[] = 'emailsstorage';
-		$this->permissions[] = 'flags-administration';
-		$this->permissions[] = 'forum';
-		$this->permissions[] = 'boardedit';
-		$this->permissions[] = 'forumadmin';
-		$this->permissions[] = 'welcomeexempt';
-		$this->permissions[] = 'coppaimagereview';
-		$this->permissions[] = 'imagereview';
-		$this->permissions[] = 'questionableimagereview';
-		$this->permissions[] = 'rejectedimagereview';
-		$this->permissions[] = 'imagereviewstats';
-		$this->permissions[] = 'imagereviewcontrols';
-		$this->permissions[] = 'promoteimagereview';
-		$this->permissions[] = 'promoteimagereviewquestionableimagereview';
-		$this->permissions[] = 'promoteimagereviewrejectedimagereview';
-		$this->permissions[] = 'promoteimagereviewstats';
-		$this->permissions[] = 'promoteimagereviewcontrols';
-		$this->permissions[] = 'insights';
-		$this->permissions[] = 'listusers';
-		$this->permissions[] = 'lookupcontribs';
-		$this->permissions[] = 'lookupuser';
-		$this->permissions[] = 'minieditor-specialpage';
-		$this->permissions[] = 'multidelete';
-		$this->permissions[] = 'multiwikiedit';
-		$this->permissions[] = 'multiwikifinder';
-		$this->permissions[] = 'njordeditmode';
-		$this->permissions[] = 'phalanxexempt';
-		$this->permissions[] = 'phalanx';
-		$this->permissions[] = 'phalanxemailblock';
-		$this->permissions[] = 'piggyback';
-		$this->permissions[] = 'places-enable-category-geolocation';
-		$this->permissions[] = 'metadata';
-		$this->permissions[] = 'powerdelete';
-		$this->permissions[] = 'quicktools';
-		$this->permissions[] = 'quickadopt';
-		$this->permissions[] = 'regexblock';
-		$this->permissions[] = 'restrictsession';
-		$this->permissions[] = 'scribeevents';
-		$this->permissions[] = 'performancestats';
-		$this->permissions[] = 'messagetool';
-		$this->permissions[] = 'forceview';
-		$this->permissions[] = 'apigate_admin';
-		$this->permissions[] = 'batchuserrights';
-		$this->permissions[] = 'edithub';
-		$this->permissions[] = 'InterwikiEdit';
-		$this->permissions[] = 'multilookup';
-		$this->permissions[] = 'newwikislist';
-		$this->permissions[] = 'restricted_promote';
-		$this->permissions[] = 'protectsite';
-		$this->permissions[] = 'stafflog';
-		$this->permissions[] = 'unblockable';
-		$this->permissions[] = 'tagsreport';
-		$this->permissions[] = 'taskmanager';
-		$this->permissions[] = 'taskmanager-action';
-		$this->permissions[] = 'tasks-user';
-		$this->permissions[] = 'template-bulk-classification';
-		$this->permissions[] = 'templatedraft';
-		$this->permissions[] = 'textregex';
-		$this->permissions[] = 'themedesigner';
-		$this->permissions[] = 'toplists-create-edit-list';
-		$this->permissions[] = 'toplists-create-item';
-		$this->permissions[] = 'toplists-edit-item';
-		$this->permissions[] = 'toplists-delete-item';
-		$this->permissions[] = 'usermanagement';
-		$this->permissions[] = 'removeavatar';
-		$this->permissions[] = 'renameuser';
-		$this->permissions[] = 'userrollback';
-		$this->permissions[] = 'specialvideohandler';
-		$this->permissions[] = 'uploadpremiumvideo';
-		$this->permissions[] = 'wdacreview';
-		$this->permissions[] = 'WhereIsExtension';
 	}
 
 	private function loadGroupsChangeableByGroups() {
@@ -365,10 +363,9 @@ class PermissionsServiceImpl implements PermissionsService {
 		if ( !empty( $wgGroupsRemoveFromSelfLocal ) )
 			$this->groupsSelfRemovableByGroup = array_merge( $this->groupsSelfRemovableByGroup, $wgGroupsRemoveFromSelfLocal );
 
-		$this->groupsAddableByGroup['util'] =
-			array_diff( $this->getExplicitGroups(), array_merge( [ 'wikifactory' ], $this->getImplicitGroups() ) );
-		$this->groupsRemovableByGroup['util'] =
-			array_diff( $this->getExplicitGroups(), $this->getImplicitGroups() );
+		$this->groupsAddableByGroup['util'] = array_diff( $this->getExplicitGroups(),
+			array_merge( [ 'wikifactory', 'content-reviewer' ], $this->getImplicitGroups() ) );
+		$this->groupsRemovableByGroup['util'] = array_diff( $this->getExplicitGroups(), $this->getImplicitGroups() );
 
 		global $wgDevelEnvironment;
 		if ( !empty( $wgDevelEnvironment )) {
@@ -606,18 +603,6 @@ class PermissionsServiceImpl implements PermissionsService {
 		return $groups;
 	}
 
-	private function isBlockedContentReviewGroupAddition( $group ) {
-		global $wgUser;
-
-		//TODO would be good to change this to not have such hard coded group specific checks
-		//TODO also remove usage of wgUser
-		if ( $group === 'content-reviewer' && ( !$wgUser->isAllowed( 'content-review' ) || !$wgUser->isStaff() ) ) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private function isCentralWiki() {
 		global $wgWikiaIsCentralWiki;
 		return (bool)$wgWikiaIsCentralWiki;
@@ -664,16 +649,40 @@ class PermissionsServiceImpl implements PermissionsService {
 		return true;
 	}
 
-	public function addUserToGroup( \User $user, $group ) {
-		if ( $this->isBlockedContentReviewGroupAddition( $group ) ) {
+	private function canGroupBeAdded( $cityId, \User $userPerformingChange, \User $userToChange, $group ) {
+		$groups = $this->getGroupsChangeableByUser( $cityId, $userPerformingChange );
+		if ( in_array($group, $groups['add']) ) {
+			return true;
+		}
+		if ( $userPerformingChange->getId() == $userToChange->getId() && in_array($group, $groups['add-self'] ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private function canGroupBeRemoved( $cityId, \User $userPerformingChange, \User $userToChange, $group ) {
+		$groups = $this->getGroupsChangeableByUser( $cityId, $userPerformingChange );
+		if ( in_array($group, $groups['remove']) ) {
+			return true;
+		}
+		if ( $userPerformingChange->getId() == $userToChange->getId() && in_array($group, $groups['remove-self'] ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public function addUserToGroup( $cityId, \User $userPerformingChange, \User $userToChange, $group ) {
+		if ( !$this->canGroupBeAdded( $cityId, $userPerformingChange, $userToChange, $group ) ) {
 			return false;
 		}
 
 		//Is global group
 		if ( in_array( $group, $this->getGlobalGroups() ) ) {
-			return $this->addUserToGlobalGroup( $user, $group );
+			return $this->addUserToGlobalGroup( $userToChange, $group );
 		} else {
-			return $this->addUserToLocalGroup( $user, $group );
+			return $this->addUserToLocalGroup( $userToChange, $group );
 		}
 	}
 
@@ -714,11 +723,15 @@ class PermissionsServiceImpl implements PermissionsService {
 		return true;
 	}
 
-	public function removeUserFromGroup( \User $user, $group ) {
+	public function removeUserFromGroup( $cityId, \User $userPerformingChange, \User $userToChange, $group ) {
+		if ( !$this->canGroupBeRemoved( $cityId, $userPerformingChange, $userToChange, $group ) ) {
+			return false;
+		}
+
 		if ( in_array( $group, $this->getGlobalGroups() ) ) {
-			return $this->removeUserFromGlobalGroup( $user, $group );
+			return $this->removeUserFromGlobalGroup( $userToChange, $group );
 		} else {
-			return $this->removeUserFromLocalGroup( $user, $group );
+			return $this->removeUserFromLocalGroup( $userToChange, $group );
 		}
 	}
 
@@ -765,5 +778,48 @@ class PermissionsServiceImpl implements PermissionsService {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Returns an array of groups that this user can add and remove
+	 * @return Array array( 'add' => array( addablegroups ),
+	 *  'remove' => array( removablegroups ),
+	 *  'add-self' => array( addablegroups to self),
+	 *  'remove-self' => array( removable groups from self) )
+	 */
+	public function getGroupsChangeableByUser( $cityId, \User $user ) {
+		if( $this->doesUserHavePermission( $cityId, $user, 'userrights' ) ) {
+			// This group gives the right to modify everything (reverse-
+			// compatibility with old "userrights lets you change
+			// everything")
+			// Using array_merge to make the groups reindexed
+			$all = array_merge( $this->getExplicitGroups() );
+			return array(
+				'add' => $all,
+				'remove' => $all,
+				'add-self' => array(),
+				'remove-self' => array()
+			);
+		}
+
+		// Okay, it's not so simple, we will have to go through the arrays
+		$groups = array(
+			'add' => array(),
+			'remove' => array(),
+			'add-self' => array(),
+			'remove-self' => array()
+		);
+		$addergroups = $this->getEffectiveUserGroups( $cityId, $user );
+
+		foreach( $addergroups as $addergroup ) {
+			$groups = array_merge_recursive(
+				$groups, $this->getGroupsChangeableByGroup( $addergroup )
+			);
+			$groups['add']    = array_unique( $groups['add'] );
+			$groups['remove'] = array_unique( $groups['remove'] );
+			$groups['add-self'] = array_unique( $groups['add-self'] );
+			$groups['remove-self'] = array_unique( $groups['remove-self'] );
+		}
+		return $groups;
 	}
 }

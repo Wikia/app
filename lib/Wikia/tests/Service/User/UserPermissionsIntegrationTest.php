@@ -241,40 +241,49 @@ class UserPermissionsIntegrationTest extends \WikiaBaseTest {
 		$this->mockGlobalVariable('wgWikiaIsCentralWiki', true);
 
 		$groups = $this->permissionsService->getExplicitGlobalUserGroups( $this->testUserId );
-		if ( !in_array( 'beta', $groups ) ) {
-			$this->permissionsService->addUserToGroup( $this->staffUser, 'beta' );
+		if ( !in_array( 'reviewer', $groups ) ) {
+			$this->permissionsService->addUserToGroup( $this->testCityId, $this->staffUser, $this->staffUser, 'reviewer' );
 		}
 		$groups = $this->permissionsService->getExplicitGlobalUserGroups( $this->testUserId );
-		$this->assertContains( 'beta', $groups );
+		$this->assertContains( 'reviewer', $groups );
 
-		$this->permissionsService->removeUserFromGroup( $this->staffUser, 'beta' );
+		$this->permissionsService->removeUserFromGroup( $this->testCityId, $this->staffUser, $this->staffUser, 'reviewer' );
 		$groups = $this->permissionsService->getExplicitGlobalUserGroups( $this->testUserId );
-		$this->assertNotContains( 'beta', $groups );
+		$this->assertNotContains( 'reviewer', $groups );
 
-		$this->permissionsService->addUserToGroup( $this->staffUser, 'beta' );
+		$this->permissionsService->addUserToGroup( $this->testCityId, $this->staffUser, $this->staffUser, 'reviewer' );
 		$groups = $this->permissionsService->getExplicitGlobalUserGroups( $this->testUserId );
-		$this->assertContains( 'beta', $groups );
+		$this->assertContains( 'reviewer', $groups );
+
+		$groups = $this->permissionsService->getExplicitGlobalUserGroups( $this->testUserId );
+		$this->assertNotContains( 'content-review', $groups );
+		$this->assertFalse( $this->permissionsService->addUserToGroup(
+			$this->testCityId, $this->staffUser, $this->staffUser, 'content-review' ) );
+		$groups = $this->permissionsService->getExplicitGlobalUserGroups( $this->testUserId );
+		$this->assertNotContains( 'content-review', $groups );
+
+		$this->assertFalse( $this->permissionsService->removeUserFromGroup(
+			$this->testCityId, $this->staffUser, $this->staffUser, 'some-made-up-group' ) );
 	}
 
 	public function testShouldAddAndRemoveLocalGroup() {
 		$groups = $this->permissionsService->getExplicitLocalUserGroups( $this->testCityId, $this->testUserId );
 		if ( !in_array( 'bureaucrat', $groups ) ) {
-			$this->permissionsService->addUserToGroup( $this->staffUser, 'bureaucrat' );
+			$this->permissionsService->addUserToGroup( $this->testCityId, $this->staffUser, $this->staffUser, 'bureaucrat' );
 		}
 		$groups = $this->permissionsService->getExplicitLocalUserGroups( $this->testCityId, $this->testUserId );
 		$this->assertContains( 'bureaucrat', $groups );
 
-		$this->permissionsService->removeUserFromGroup( $this->staffUser, 'bureaucrat' );
+		$this->permissionsService->removeUserFromGroup( $this->testCityId, $this->staffUser, $this->staffUser, 'bureaucrat' );
 		$groups = $this->permissionsService->getExplicitLocalUserGroups( $this->testCityId, $this->testUserId );
 		$this->assertNotContains( 'bureaucrat', $groups );
 
-		$this->permissionsService->addUserToGroup( $this->staffUser, 'bureaucrat' );
+		$this->permissionsService->addUserToGroup( $this->testCityId, $this->staffUser, $this->staffUser, 'bureaucrat' );
 		$groups = $this->permissionsService->getExplicitLocalUserGroups( $this->testCityId, $this->testUserId );
 		$this->assertContains( 'bureaucrat', $groups );
 	}
 
 	public function testShouldAllowPermission() {
-
 		$this->assertTrue( $this->permissionsService->doesUserHavePermission(
 			$this->testCityId, $this->staffUser, 'move' ) );
 		$this->assertTrue( $this->permissionsService->doesUserHavePermission(
@@ -287,7 +296,6 @@ class UserPermissionsIntegrationTest extends \WikiaBaseTest {
 	}
 
 	public function testShouldAllowAllPermissions() {
-
 		$this->assertTrue( $this->permissionsService->doesUserHaveAllPermissions(
 			$this->testCityId, $this->staffUser, array( 'move', 'edit' ) ) );
 		$this->assertFalse( $this->permissionsService->doesUserHaveAllPermissions(
@@ -295,7 +303,6 @@ class UserPermissionsIntegrationTest extends \WikiaBaseTest {
 	}
 
 	public function testShouldAllowAnyPermission() {
-
 		$this->assertTrue( $this->permissionsService->doesUserHaveAnyPermission(
 			$this->testCityId, $this->staffUser, array( 'move', 'edit' ) ) );
 		$this->assertTrue( $this->permissionsService->doesUserHaveAnyPermission(

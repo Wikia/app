@@ -29,9 +29,11 @@ interface PermissionsService {
 
 	public function getGroupsChangeableByGroup( $group );
 
-	public function addUserToGroup( \User $user, $group );
+	public function getGroupsChangeableByUser( $cityId, \User $user );
 
-	public function removeUserFromGroup( \User $user, $group );
+	public function addUserToGroup( $cityId, \User $userPerformingChange, \User $userToChange, $group );
+
+	public function removeUserFromGroup( $cityId, \User $userPerformingChange, \User $userToChange, $group );
 
 	public function doesUserHavePermission( $cityId, \User $user, $permission );
 
