@@ -7,7 +7,7 @@
  * @ingroup Maintenance
  */
 
-require_once( dirname( __FILE__ ) . '/../../../../usr/wikia/slot1/current/src/maintenance/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/../../../../maintenance/Maintenance.php' );
 
 class SpecialPromoteToCuratedContentMigrator extends Maintenance {
 	function __construct() {
