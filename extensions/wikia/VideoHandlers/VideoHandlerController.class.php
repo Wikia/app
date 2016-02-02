@@ -66,6 +66,8 @@ class VideoHandlerController extends WikiaController {
 		if ( !empty( $error ) ) {
 			$this->setVal( 'error', $error );
 		}
+
+		$this->response->setFormat( 'json' );
 	}
 
 	/**
@@ -97,6 +99,8 @@ class VideoHandlerController extends WikiaController {
 		foreach ( $response as $key => $val ) {
 			$this->setVal( $key, $val );
 		}
+
+		$this->response->setFormat( 'json' );
 	}
 
 	/**
