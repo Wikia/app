@@ -270,17 +270,3 @@ $wgGroupPermissions['sysop']['wallmessagemove'] = true;
 $wgGroupPermissions['vstf']['wallmessagemove'] = true;
 $wgGroupPermissions['helper']['wallmessagemove'] = true;
 $wgGroupPermissions['staff']['wallmessagemove'] = true;
-
-$wgAddGroups['bureaucrat'][] = 'threadmoderator';
-$wgRemoveGroups['bureaucrat'][] = 'threadmoderator';
-$wgAddGroups['sysop'][] = 'threadmoderator';
-$wgRemoveGroups['sysop'][] = 'threadmoderator';
-$wgAddGroups['helper'][] = 'threadmoderator';
-$wgRemoveGroups['helper'][] = 'threadmoderator';
-
-if ( is_array( $wgAddGroups['staff'] ) ) {
-	$wgAddGroups[ 'staff' ][] = 'threadmoderator';
-}
-if ( is_array( $wgRemoveGroups[ 'staff' ] ) ) {
-	$wgRemoveGroups[ 'staff' ][] = 'threadmoderator';
-}

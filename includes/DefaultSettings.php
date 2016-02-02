@@ -3553,29 +3553,6 @@ $wgGroupPermissions['bureaucrat']['noratelimit'] = true;
 $wgRevokePermissions = array();
 
 /**
- * A map of group names that the user is in, to group names that those users
- * are allowed to add or revoke.
- *
- * Setting the list of groups to add or revoke to true is equivalent to "any group".
- *
- * For example, to allow sysops to add themselves to the "bot" group:
- *
- *    $wgGroupsAddToSelf = array( 'sysop' => array( 'bot' ) );
- *
- * Implicit groups may be used for the source group, for instance:
- *
- *    $wgGroupsRemoveFromSelf = array( '*' => true );
- *
- * This allows users in the '*' group (i.e. any user) to remove themselves from
- * any group that they happen to be in.
- *
- */
-$wgGroupsAddToSelf = array();
-
-/** @see $wgGroupsAddToSelf */
-$wgGroupsRemoveFromSelf = array();
-
-/**
  * Set of available actions that can be restricted via action=protect
  * You probably shouldn't change this.
  * Translated through restriction-* messages.
@@ -3667,25 +3644,6 @@ $wgAutopromote = array(
 		array( APCOND_AGE, &$wgAutoConfirmAge ),
 	),
 );
-
-/**
- * $wgAddGroups and $wgRemoveGroups can be used to give finer control over who
- * can assign which groups at Special:Userrights.  Example configuration:
- *
- * @code
- * // Bureaucrat can add any group
- * $wgAddGroups['bureaucrat'] = true;
- * // Bureaucrats can only remove bots and sysops
- * $wgRemoveGroups['bureaucrat'] = array( 'bot', 'sysop' );
- * // Sysops can make bots
- * $wgAddGroups['sysop'] = array( 'bot' );
- * // Sysops can disable other sysops in an emergency, and disable bots
- * $wgRemoveGroups['sysop'] = array( 'sysop', 'bot' );
- * @endcode
- */
-$wgAddGroups = array();
-/** @see $wgAddGroups */
-$wgRemoveGroups = array();
 
 /**
  * Optional to restrict deletion of pages with higher revision counts

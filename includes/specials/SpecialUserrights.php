@@ -21,6 +21,9 @@
  * @ingroup SpecialPage
  */
 
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Permissions\PermissionsService;
+
 /**
  * Special page to allow managing user group membership
  *
@@ -33,8 +36,18 @@ class UserrightsPage extends SpecialPage {
 	protected $mTarget;
 	protected $isself = false;
 
+	private $permissionsService;
+
 	public function __construct() {
 		parent::__construct( 'Userrights' );
+	}
+
+	private function userPermissions() {
+		if ( is_null( self::$permissionsService ) ) {
+			self::$permissionsService = Injector::getInjector()->get( PermissionsService::class );
+		}
+
+		return self::$permissionsService;
 	}
 
 	public function isRestricted() {
@@ -413,12 +426,6 @@ class UserrightsPage extends SpecialPage {
 	 * @param $groups    Array:  Array of groups the user is in
 	 */
 	protected function showEditUserGroupsForm( $user, $groups ) {
-		/* Wikia change begin - @author: Marooned */
-		/* This hook was invalid in this version of the code and in the current (2010-05-18) MW trunk it even doesn't exist */
-		/* We need it to alter displayed list without alter real groups */
-		wfRunHooks('UserRights::showEditUserGroupsForm', array( &$user, &$groups ));
-		/* Wikia change end */
-
 		$list = array();
 		foreach( $groups as $group ) {
 			$list[] = self::buildGroupLink( $group );
@@ -504,6 +511,11 @@ class UserrightsPage extends SpecialPage {
 		return User::getAllGroups();
 	}
 
+	private function isGlobalNonEditableGroup( $group ) {
+		global $wgWikiaIsCentralWiki;
+		return $wgWikiaIsCentralWiki === false && in_array( $group, $this->userPermissions()->getExplicitGlobalUserGroups() );
+	}
+
 	/**
 	 * Adds a table with checkboxes where you can select what groups to add/remove
 	 *
@@ -526,15 +538,11 @@ class UserrightsPage extends SpecialPage {
 			$disabled = !(
 				( $set && $this->canRemove( $group ) ) ||
 				( !$set && $this->canAdd( $group ) ) );
+			$disabled = $disabled || $this->isGlobalNonEditableGroup( $group );
 			# Do we need to point out that this action is irreversible?
 			$irreversible = !$disabled && (
 				( $set && !$this->canAdd( $group ) ) ||
 				( !$set && !$this->canRemove( $group ) ) );
-
-			/* Wikia change begin - @author: Marooned */
-			/* Because of "return all" in changeableGroups() hook UserrightsChangeableGroups is not invoked - this hook is to fill this gap */
-			wfRunHooks('UserRights::groupCheckboxes', array( $group, &$disabled, &$irreversible ));
-			/* Wikia change end */
 
 			$checkbox = array(
 				'set' => $set,

@@ -45,46 +45,6 @@ $wgGroupPermissions['util']['chatfailover'] = true;
 // Allow admins to control banning/unbanning and chatmod-status
 
 
-// Let staff & helpers change chatmod & banning status.
-if ( empty( $wgAddGroups['staff'] )  || !is_array( $wgAddGroups['staff'] ) ) {
-	$wgAddGroups['staff'] = array();
-}
-if ( empty( $wgAddGroups['helper'] )  || !is_array( $wgAddGroups['helper'] ) ) {
-	$wgAddGroups['helper'] = array();
-}
-if ( empty( $wgRemoveGroups['staff'] ) || !is_array( $wgRemoveGroups['staff'] ) ) {
-	$wgRemoveGroups['staff'] = array();
-}
-if ( empty( $wgRemoveGroups['helper'] ) || !is_array( $wgRemoveGroups['helper'] ) ) {
-	$wgRemoveGroups['helper'] = array();
-}
-
-/*
-$wgRemoveGroups['sysop'][] = 'bannedfromchat';
-$wgAddGroups['sysop'][] = 'bannedfromchat';
-$wgAddGroups['chatmoderator'][] = 'bannedfromchat';
-$wgRemoveGroups['chatmoderator'][] = 'bannedfromchat';
-$wgAddGroups['staff'][] = 'bannedfromchat';
-$wgRemoveGroups['staff'][] = 'bannedfromchat';
-$wgAddGroups['helper'][] = 'bannedfromchat';
-$wgRemoveGroups['helper'][] = 'bannedfromchat';
-
-// Attempt to do the permissions the other way (adding restriction instead of subtracting permission).
-// When in 'bannedfromchat' group, the 'chat' permission will be revoked
-// See http://www.mediawiki.org/wiki/Manual:$wgRevokePermissions
-$wgRevokePermissions['bannedfromchat']['chat'] = true;
-
-*/
-
-
-$wgAddGroups['staff'][] = 'chatmoderator';
-$wgRemoveGroups['staff'][] = 'chatmoderator';
-$wgAddGroups['helper'][] = 'chatmoderator';
-$wgRemoveGroups['helper'][] = 'chatmoderator';
-$wgAddGroups['sysop'][] = 'chatmoderator';
-$wgRemoveGroups['sysop'][] = 'chatmoderator';
-
-
 // autoloaded classes
 $wgAutoloadClasses['Chat'] = "$dir/Chat.class.php";
 $wgAutoloadClasses['ChatAjax'] = "$dir/ChatAjax.class.php";

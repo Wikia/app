@@ -26,4 +26,14 @@ interface PermissionsService {
 	public function getGroupsWithPermission( $role );
 
 	public function getUserPermissions( $cityId, \User $user );
+
+	public function getGroupsChangeableByGroup( $group );
+
+	public function addUserToGroup( \User $user, $group );
+
+	public function removeUserFromGroup( \User $user, $group );
+
+	public function doesUserHavePermission( $cityId, \User $user, $permission );
+
+	public function doesUserHaveAllPermissions( $cityId, \User $user, $permissions );
 }

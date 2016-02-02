@@ -142,8 +142,8 @@ class PowerUser {
 			&& $this->bUseGroups
 			&& !in_array( self::GROUP_NAME, $this->userPermissions()->getExplicitGlobalUserGroups( $this->oUser->getId() ) )
 		) {
-				\UserRights::addGlobalGroup( $this->oUser, self::GROUP_NAME );
-				$this->logSuccess( $sProperty, self::ACTION_ADD_GROUP );
+			$this->userPermissions()->addUserToGroup( $this->oUser, self::GROUP_NAME );
+			$this->logSuccess( $sProperty, self::ACTION_ADD_GROUP );
 		}
 		return true;
 	}
@@ -192,7 +192,7 @@ class PowerUser {
 			&& $this->bUseGroups
 			&& $this->isGroupForRemoval( $sProperty )
 		) {
-			\UserRights::removeGlobalGroup( $this->oUser, self::GROUP_NAME );
+			$this->userPermissions()->removeUserFromGroup( $this->oUser, self::GROUP_NAME );
 			$this->logSuccess( $sProperty, self::ACTION_REMOVE_GROUP );
 		}
 		return true;

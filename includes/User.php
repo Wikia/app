@@ -4692,72 +4692,6 @@ class User {
 		return self::userPermissions()->getPermissions();
 	}
 
-	//JCEL needs rewriting to the new service. Hook handles global shared gropus, and some special case with
-	//content review where the addition of a group is disallowed.
-	//However hook after adding group of shared user starts a job 'addUserGroup' from ExactTargetUser
-
-
-	/**
-	 * Add the user to the given group.
-	 * This takes immediate effect.
-	 * @param $group String Name of the group to add
-	 */
-	public function addGroup( $group ) {
-		if( wfRunHooks( 'UserAddGroup', array( $this, &$group )) ) {
-			$dbw = wfGetDB( DB_MASTER );
-			if( $this->getId() ) {
-				$dbw->insert( 'user_groups',
-					array(
-						'ug_user'  => $this->getID(),
-						'ug_group' => $group,
-					),
-					__METHOD__,
-					array( 'IGNORE' ) );
-			}
-
-			$this->loadGroups();
-			$this->mGroups[] = $group;
-			$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
-
-			$this->invalidateCache();
-
-			return true;
-		}
-
-		return false;
-	}
-
-	//JCEL needs rewriting to the new service. Hook handles global shared gropus
-	//However hook after adding group of shared user starts a job 'removeUserGroup' from ExactTargetUser
-
-	/**
-	 * Remove the user from the given group.
-	 * This takes immediate effect.
-	 * @param $group String Name of the group to remove
-	 */
-	public function removeGroup( $group ) {
-		$this->load();
-		if( wfRunHooks( 'UserRemoveGroup', array( $this, &$group ) ) ) {
-			$dbw = wfGetDB( DB_MASTER );
-			$dbw->delete( 'user_groups',
-				array(
-					'ug_user'  => $this->getID(),
-					'ug_group' => $group,
-				), __METHOD__ );
-
-			$this->loadGroups();
-			$this->mGroups = array_diff( $this->mGroups, array( $group ) );
-			$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
-
-			$this->invalidateCache();
-
-			return true;
-		}
-		return false;
-	}
-
-	//JCEL needs to be moved to new service, better understood.
-
 	/**
 	 * Returns an array of the groups that a particular group can add/remove.
 	 *
@@ -4768,60 +4702,25 @@ class User {
 	 *     'remove-self' => array( removable groups from self) )
 	 */
 	public static function changeableByGroup( $group ) {
-		global $wgAddGroups, $wgRemoveGroups, $wgGroupsAddToSelf, $wgGroupsRemoveFromSelf;
+		return self::userPermissions()->getGroupsChangeableByGroup( $group );
+	}
 
-		$groups = array( 'add' => array(), 'remove' => array(), 'add-self' => array(), 'remove-self' => array() );
-		if( empty( $wgAddGroups[$group] ) ) {
-			// Don't add anything to $groups
-		} elseif( $wgAddGroups[$group] === true ) {
-			// You get everything
-			$groups['add'] = self::getAllGroups();
-		} elseif( is_array( $wgAddGroups[$group] ) ) {
-			$groups['add'] = $wgAddGroups[$group];
-		}
+	/**
+	 * Add the user to the given group.
+	 * This takes immediate effect.
+	 * @param $group String Name of the group to add
+	 */
+	public function addGroup( $group ) {
+		return self::userPermissions()->addUserToGroup( $this, $group );
+	}
 
-		// Same thing for remove
-		if( empty( $wgRemoveGroups[$group] ) ) {
-		} elseif( $wgRemoveGroups[$group] === true ) {
-			$groups['remove'] = self::getAllGroups();
-		} elseif( is_array( $wgRemoveGroups[$group] ) ) {
-			$groups['remove'] = $wgRemoveGroups[$group];
-		}
-
-		// Re-map numeric keys of AddToSelf/RemoveFromSelf to the 'user' key for backwards compatibility
-		if( empty( $wgGroupsAddToSelf['user']) || $wgGroupsAddToSelf['user'] !== true ) {
-			foreach( $wgGroupsAddToSelf as $key => $value ) {
-				if( is_int( $key ) ) {
-					$wgGroupsAddToSelf['user'][] = $value;
-				}
-			}
-		}
-
-		if( empty( $wgGroupsRemoveFromSelf['user']) || $wgGroupsRemoveFromSelf['user'] !== true ) {
-			foreach( $wgGroupsRemoveFromSelf as $key => $value ) {
-				if( is_int( $key ) ) {
-					$wgGroupsRemoveFromSelf['user'][] = $value;
-				}
-			}
-		}
-
-		// Now figure out what groups the user can add to him/herself
-		if( empty( $wgGroupsAddToSelf[$group] ) ) {
-		} elseif( $wgGroupsAddToSelf[$group] === true ) {
-			// No idea WHY this would be used, but it's there
-			$groups['add-self'] = User::getAllGroups();
-		} elseif( is_array( $wgGroupsAddToSelf[$group] ) ) {
-			$groups['add-self'] = $wgGroupsAddToSelf[$group];
-		}
-
-		if( empty( $wgGroupsRemoveFromSelf[$group] ) ) {
-		} elseif( $wgGroupsRemoveFromSelf[$group] === true ) {
-			$groups['remove-self'] = User::getAllGroups();
-		} elseif( is_array( $wgGroupsRemoveFromSelf[$group] ) ) {
-			$groups['remove-self'] = $wgGroupsRemoveFromSelf[$group];
-		}
-
-		return $groups;
+	/**
+	 * Remove the user from the given group.
+	 * This takes immediate effect.
+	 * @param $group String Name of the group to remove
+	 */
+	public function removeGroup( $group ) {
+		return self::userPermissions()->removeUserFromGroup( $this, $group );
 	}
 
 	//JCEL needs to be moved to new service, better understood.
@@ -4869,8 +4768,6 @@ class User {
 		return $groups;
 	}
 
-	//JCEL can stay as is
-
 	/**
 	 * Check if user is allowed to access a feature / make an action
 	 *
@@ -4881,15 +4778,9 @@ class User {
 	 */
 	public function isAllowedAny( /*...*/ ){
 		$permissions = func_get_args();
-		foreach( $permissions as $permission ){
-			if( $this->isAllowed( $permission ) ){
-				return true;
-			}
-		}
-		return false;
+		global $wgCityId;
+		return self::userPermissions()->doesUserHaveAnyPermission( $wgCityId, $this, $permissions );
 	}
-
-	//JCEL can stay as is
 
 	/**
 	 *
@@ -4898,15 +4789,9 @@ class User {
 	 */
 	public function isAllowedAll( /*...*/ ){
 		$permissions = func_get_args();
-		foreach( $permissions as $permission ){
-			if( !$this->isAllowed( $permission ) ){
-				return false;
-			}
-		}
-		return true;
+		global $wgCityId;
+		return self::userPermissions()->doesUserHaveAllPermissions( $wgCityId, $this, $permissions );
 	}
-
-	//JCEL can stay as is. What is $wgUseNPPatrol?
 
 	/**
 	 * Internal mechanics of testing a permission
@@ -4914,18 +4799,8 @@ class User {
 	 * @return bool
 	 */
 	public function isAllowed( $action = '' ) {
-		if ( $action === '' ) {
-			return true; // In the spirit of DWIM
-		}
-		# Patrolling may not be enabled
-		if( $action === 'patrol' || $action === 'autopatrol' ) {
-			global $wgUseRCPatrol, $wgUseNPPatrol;
-			if( !$wgUseRCPatrol && !$wgUseNPPatrol )
-				return false;
-		}
-		# Use strict parameter to avoid matching numeric 0 accidentally inserted
-		# by misconfiguration: 0 == 'foo'
-		return in_array( $action, $this->getRights(), true );
+		global $wgCityId;
+		return self::userPermissions()->doesUserHavePermission( $wgCityId, $this, $action );
 	}
 
 	//JCEL delete after rest is moved

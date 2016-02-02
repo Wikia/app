@@ -58,8 +58,7 @@ class SpecialListGroupRights extends SpecialPage {
 	 * Show the special page
 	 */
 	public function execute( $par ) {
-		global $wgGroupPermissions, $wgRevokePermissions, $wgAddGroups, $wgRemoveGroups;
-		global $wgGroupsAddToSelf, $wgGroupsRemoveFromSelf;
+		global $wgGroupPermissions, $wgRevokePermissions;
 
 		$this->setHeaders();
 		$this->outputHeader();
@@ -75,14 +74,7 @@ class SpecialListGroupRights extends SpecialPage {
 				'</tr>'
 		);
 
-		$allGroups = array_unique( array_merge(
-			array_keys( $wgGroupPermissions ),
-			array_keys( $wgRevokePermissions ),
-			array_keys( $wgAddGroups ),
-			array_keys( $wgRemoveGroups ),
-			array_keys( $wgGroupsAddToSelf ),
-			array_keys( $wgGroupsRemoveFromSelf )
-		) );
+		$allGroups = User::getAllGroups();
 		asort( $allGroups );
 
 		foreach ( $allGroups as $group ) {
@@ -129,11 +121,13 @@ class SpecialListGroupRights extends SpecialPage {
 				$grouplink = '';
 			}
 
+			$groupArr = $this->permissionsService()->getGroupsChangeableByGroup( $group );
+
 			$revoke = isset( $wgRevokePermissions[$group] ) ? $wgRevokePermissions[$group] : array();
-			$addgroups = isset( $wgAddGroups[$group] ) ? $wgAddGroups[$group] : array();
-			$removegroups = isset( $wgRemoveGroups[$group] ) ? $wgRemoveGroups[$group] : array();
-			$addgroupsSelf = isset( $wgGroupsAddToSelf[$group] ) ? $wgGroupsAddToSelf[$group] : array();
-			$removegroupsSelf = isset( $wgGroupsRemoveFromSelf[$group] ) ? $wgGroupsRemoveFromSelf[$group] : array();
+			$addgroups = isset( $groupArr['add'] ) ? $groupArr['add'] : array();
+			$removegroups = isset( $groupArr['remove'] ) ? $groupArr['remove'] : array();
+			$addgroupsSelf = isset( $groupArr['add-self'] ) ? $groupArr['add-self'] : array();
+			$removegroupsSelf = isset( $groupArr['remove-self'] ) ? $groupArr['remove-self'] : array();
 
 			$id = $group == '*' ? false : Sanitizer::escapeId( $group );
 			$out->addHTML( Html::rawElement( 'tr', array( 'id' => $id ),
