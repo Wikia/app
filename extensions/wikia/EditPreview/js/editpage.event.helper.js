@@ -5,13 +5,14 @@ define('editpage.event.helper', ['wikia.window'], function (window, ace){
 	// and call provided callback with wikitext as its parameter
 	function getContent() {
 		var dfd = new $.Deferred(),
-			editor = typeof RTE == 'object' ? RTE.getInstance() : false, mode = editor ? editor.mode : 'mw',
+			editor = typeof RTE == 'object' ? RTE.getInstance() : false,
+			mode = editor ? editor.mode : 'mw',
 			content = '';
 
 		if (window.wgEnableCodePageEditor) {
 			require(['wikia.ace.editor'], function (ace){
 				content = ace.getContent();
-				dfd.resolve(content);
+				dfd.resolve(content, mode);
 			});
 		} else {
 			switch (mode) {

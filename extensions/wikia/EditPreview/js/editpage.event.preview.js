@@ -140,7 +140,7 @@ define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.wind
 
 			// add hidden parameter fields to be able to send POST
 			previewFrame.addParameter('title', window.wgEditedTitle);
-			previewFrame.addParameter(mode === 'source' ? 'wikitext' : 'CKmarkup', content);
+			previewFrame.addParameter(mode === 'wysiwyg' ? 'CKmarkup' : 'wikitext', content);
 
 			previewFrame.send($('.ArticlePreviewInner'), function (data) {
 				callback(data);
