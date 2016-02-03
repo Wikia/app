@@ -73,10 +73,7 @@ class TemplateTypesParser {
 				$outputText = ScrollboxTemplate::getLongestElement( $templateArgs );
 			}
 
-			if ( ( $type === TemplateClassificationService::TEMPLATE_QUOTE
-				   || $type === TemplateClassificationService::TEMPLATE_QUOTE )
-				 && $wgEnableQuoteTemplateParsing
-			) {
+			if ( $type === TemplateClassificationService::TEMPLATE_QUOTE && $wgEnableQuoteTemplateParsing ) {
 				$templateArgs = TemplateArgsHelper::getTemplateArgs( $args, $frame );
 				$outputText = QuoteTemplate::execute( $templateArgs );
 			}
