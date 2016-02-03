@@ -1,7 +1,7 @@
 <?php
 
 
-class ExactTargetApiTest extends WikiaBaseTest {
+class ExactTargetApiHelperTest extends WikiaBaseTest {
 
 	private $helper;
 
