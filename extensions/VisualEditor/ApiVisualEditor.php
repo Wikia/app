@@ -97,7 +97,7 @@ class ApiVisualEditor extends ApiBase {
 					// sending string instead of boolean because our elasticsearch/kibana does not support the latter well
 					'hit' => $hit ? 'yes' : 'no',
 					// we are interested in millisecond only (instead of microseconds)
-					'duration' => round ( ( $time_end - $time_start ) * 1000 )
+					'durationMS' => (int) round ( ( $time_end - $time_start ) * 1000 )
 				] );
 			}
 
