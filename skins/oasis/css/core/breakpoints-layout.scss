@@ -65,7 +65,7 @@
 		width: 100%;
 	}
 
-	.wikinav2.oasis-one-column .WikiaPageHeader .tally {
+	.wikinav2.oasis-one-column .page-header .tally {
 		@media #{$breakpoint-small-only} {
 			right: 0;
 		}
@@ -99,7 +99,7 @@
 			margin-left: 10px;
 		}
 
-		.wikinav2.oasis-one-column .WikiaPageHeader {
+		.wikinav2.oasis-one-column .page-header {
 			padding: 0;
 		}
 
@@ -241,7 +241,7 @@
 		padding-right: 0;
 	}
 
-	.WikiaPageHeader {
+	.page-header {
 		margin-left: 0;
 		margin-right: 0;
 	}
@@ -329,7 +329,7 @@ body.ve {
 		display: none !important;
 	}
 
-	.WikiaPageHeader {
+	.page-header {
 		margin: 0 10px;
 	}
 

@@ -82,7 +82,7 @@ define('TemplateClassificationInCategory',
 
 				mw.messages.set(res.messages);
 
-				$hintTooltip = $('#WikiaPageHeader').children('.wikia-menu-button')
+				$hintTooltip = $('#pageHeader').children('.wikia-menu-button')
 					.tooltip({
 						placement: 'in right',
 						title: createHintMessage(),

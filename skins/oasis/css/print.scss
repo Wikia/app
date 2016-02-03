@@ -33,11 +33,9 @@ html,
 }
 
 // article header: hide everything except page title
-#WikiaPageHeader {
-	.commentslikes,
-	details,
-	p,
-	h2,
+#pageHeader {
+	.subtitle,
+	.breadcrumbs,
 	a,
 	ul,
 	.tally {
