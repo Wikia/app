@@ -26,6 +26,8 @@ ve.ui.WikiaMediaInsertDialog.static.name = 'wikiaMediaInsert';
 
 ve.ui.WikiaMediaInsertDialog.static.title = OO.ui.deferMsg( 'visualeditor-dialog-media-insert-title' );
 
+ve.ui.WikiaMediaInsertDialog.static.trackingLabel = 'dialog-media-insert';
+
 // as in OO.ui.WindowManager.static.sizes
 ve.ui.WikiaMediaInsertDialog.static.size = '840px';
 
@@ -74,7 +76,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.getBodyHeight = function () {
  * @inheritdoc
  * @param {boolean} Sets if the main page (insert image drop area) should be shown
  */
-ve.ui.WikiaMediaInsertDialog.prototype.initializeWrapper = function ( addMainPage ) {
+ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	var uploadEvents = {
 		change: 'onUploadChange',
 		upload: 'onUploadSuccess'
@@ -152,12 +154,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initializeWrapper = function ( addMainPag
 
 	this.mainPage = new OO.ui.PageLayout( 'main', { $content: this.$mainPage } );
 	this.searchPage = new OO.ui.PageLayout( 'search', { $content: this.search.$element } );
-
-	if ( addMainPage ) {
-		this.pages.addPages( [ this.mainPage, this.searchPage ] );
-	} else {
-		this.pages.addPages( [ this.searchPage ] );
-	}
+	this.pages.addPages( [ this.mainPage, this.searchPage ] );
 
 	this.$cart
 		.addClass( 've-ui-wikiaCartWidget-wrapper' )
@@ -170,13 +167,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.initializeWrapper = function ( addMainPag
 	this.$content.addClass( 've-ui-wikiaMediaInsertDialog' );
 	this.$frame.append( this.dropTarget.$element );
 	this.$overlay.append( this.mediaPreview.$element );
-};
-
-/**
- * @inheritdoc
- */
-ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
-	this.initializeWrapper(true);
 };
 
 /**
@@ -613,10 +603,11 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
  * @param {Object} items Items to insert
  * @param {ve.dm.SurfaceFragment} fragment
  */
-ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallbackWrapper = function ( items, fragment, label ) {
+ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function ( items, fragment ) {
 	var count, item, title, type, captionType,
 		typeCount = { photo: 0, video: 0 },
-		linmod = [];
+		linmod = [],
+		label = this.constructor.static.trackingLabel;
 
 	for ( title in items ) {
 		item = items[title];
@@ -671,17 +662,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallbackWrapper = fun
 		label: label,
 		value: ve.now() - this.timings.insertStart
 	} );
-};
-
-/**
- * Inserts media items into the document
- *
- * @method
- * @param {Object} items Items to insert
- * @param {ve.dm.SurfaceFragment} fragment
- */
-ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function ( items, fragment ) {
-	this.insertPermanentMediaCallbackWrapper( items, fragment, 'dialog-media-insert');
 };
 
 /**

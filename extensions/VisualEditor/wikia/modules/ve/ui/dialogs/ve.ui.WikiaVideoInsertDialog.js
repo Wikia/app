@@ -26,25 +26,21 @@ ve.ui.WikiaVideoInsertDialog.static.name = 'wikiaVideoInsert';
 
 ve.ui.WikiaVideoInsertDialog.static.title = OO.ui.deferMsg( 'visualeditor-dialog-video-insert-title' );
 
+ve.ui.WikiaVideoInsertDialog.static.trackingLabel = 'dialog-video-insert';
+
 /* Methods */
 
 /**
  * @inheritdoc
  */
 ve.ui.WikiaVideoInsertDialog.prototype.initialize = function () {
-	this.initializeWrapper(false);
-	$('.ve-ui-wikiaMediaQueryWidget-uploadWrapper').addClass('ve-ui-wikiaMediaQueryWidget-uploadWrapper-video');
-};
+	console.log('ve.ui.WikiaVideoInsertDialog.prototype.initialize');
 
-/**
- * Inserts media items into the document
- *
- * @method
- * @param {Object} items Items to insert
- * @param {ve.dm.SurfaceFragment} fragment
- */
-ve.ui.WikiaVideoInsertDialog.prototype.insertPermanentMediaCallback = function ( items, fragment ) {
-	this.insertPermanentMediaCallbackWrapper( items, fragment, 'dialog-video-insert');
+	// Parent method
+	ve.ui.WikiaVideoInsertDialog.super.prototype.initialize.call( this );
+
+	this.pages.removePages( [ this.mainPage ] );
+	$('.ve-ui-wikiaMediaQueryWidget-uploadWrapper').addClass('ve-ui-wikiaMediaQueryWidget-uploadWrapper-video');
 };
 
 ve.ui.windowFactory.register( ve.ui.WikiaVideoInsertDialog );
