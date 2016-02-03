@@ -46,7 +46,7 @@ class RecirculationHooks {
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 		$jsAssets[] = 'recirculation_js';
 
-		if ( self::canShowDiscussions() && self::onCorrectPageType() ) {
+		if ( self::canShowDiscussions() && self::isCorrectPageType() ) {
 			$jsAssets[] = 'recirculation_discussions_js';
 		}
 
@@ -58,7 +58,7 @@ class RecirculationHooks {
 	 * specifically File pages, Article pages, and Main pages
 	 * @return bool
 	 */
-	static public function onCorrectPageType() {
+	static public function isCorrectPageType() {
 		$wg = F::app()->wg;
 
 		$showableNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE ] );
@@ -77,7 +77,7 @@ class RecirculationHooks {
 	static public function canShowVideosModule() {
 		$wg = F::app()->wg;
 
-		if ( !empty($wg->EnableVideosModuleExt) && self::onCorrectPageType() ) {
+		if ( !empty( $wg->EnableVideosModuleExt ) && self::isCorrectPageType() ) {
 			return true;
 		} else {
 			return false;
@@ -85,15 +85,8 @@ class RecirculationHooks {
 	}
 
 	static public function canShowDiscussions() {
-		$enabledWikis = [
-			'starwars',
-			'fallout',
-			'marvel',
-			'elderscrolls',
-			'walkingdead',
-		];
 		$wg = F::app()->wg;
-		if (in_array($wg->DBname, $enabledWikis)) {
+		if ( !empty( $wg->EnableRecirculationDiscussions ) ) {
 			return true;
 		} else {
 			return false;
