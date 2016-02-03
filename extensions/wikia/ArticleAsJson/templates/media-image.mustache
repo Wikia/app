@@ -1,6 +1,6 @@
 <figure class="article-media" {{#mediaAttrs}}data-component="article-media-image" data-attrs="{{mediaAttrs}}"{{/mediaAttrs}}>
-	<a href="{{#link}}{{link}}{{/link}}{{^link}}{{fileUrl}}{{/link}}">
-		<img class="article-media" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="{{title}}" width="{{width}}" height="{{height}}">
+	<a href="{{#link}}{{link}}{{/link}}{{^link}}{{url}}{{/link}}">
+		<img class="article-media" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="{{title}}" {{#width}}width="{{width}}" height="{{height}}">
 		<noscript>
 			<img src="{{url}}" alt="{{title}}">
 		</noscript>
