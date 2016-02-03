@@ -26,10 +26,12 @@ class WikiaHtmlTitle {
 	private $brandName;
 
 	public function __construct() {
-		global $wgWikiaEnvironment;
+		global $wgWikiaEnvironment, $wgEnableHostnameInHtmlTitle;
 
 		if ( $wgWikiaEnvironment !== WIKIA_ENV_PROD ) {
-			$this->environment = wfHostname();
+			if ( $wgEnableHostnameInHtmlTitle ) {
+				$this->environment = wfHostname();
+			}
 		}
 
 		$this->brandName = wfMessage( 'wikia-pagetitle-brand' );
