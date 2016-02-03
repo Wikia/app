@@ -387,6 +387,7 @@ $messages['ja'] = array(
 	'partner-feed-recent-changes' => '最近の変更',
 	'all-blog-posts' => 'すべてのカテゴリ',
 	'feed-title-recentchanges' => '最近の更新',
+	'partnerfeed' => 'パートナーフィード',
 );
 
 /** Kannada (ಕನ್ನಡ)

@@ -25,9 +25,11 @@ $wgSpecialPages['ImageReviewMercury'] = 'ImageReviewMercuryController';
 $wgExtensionMessagesFiles['ImageReviewMercury'] = $dir . 'ImageReviewMercury.i18n.php' ;
 
 $wgExtensionCredits['other'][] = array(
+	'path'				=> __FILE__,
 	'name'				=> 'Wikia Special:ImageReviewMercury',
 	'version'			=> '0.1',
 	'author'			=> 'Rafal Wilinski',
-	'descriptionmsg'	=> 'image-review embedded from mercury',
-	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ImageReviewMercury'
+	'description'		=> 'Internal tool to help review images post-upload and remove Terms of Use violations',
+	'descriptionmsg'	=> 'imagereviewmercury-desc',
+	'url'				=> 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ImageReviewMercury'
 );

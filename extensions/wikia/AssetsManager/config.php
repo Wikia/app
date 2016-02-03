@@ -134,6 +134,14 @@ $config['recirculation_js'] = array(
 	),
 );
 
+$config['recirculation_discussions_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => array(
+		'//extensions/wikia/Recirculation/js/discussions.js',
+	),
+);
+
 $config['recirculation_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
@@ -1895,22 +1903,6 @@ $config['manage_wikia_home_js'] = array(
 		'//extensions/wikia/SpecialManageWikiaHome/js/CollectionsSetup.js',
 		'//extensions/wikia/SpecialManageWikiaHome/js/CollectionsNavigation.js',
 	)
-);
-
-$config['licensed_video_swap_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/LicensedVideoSwap/js/lvsTracker.js',
-		'//extensions/wikia/LicensedVideoSwap/js/lvsCommonAjax.js',
-		'//extensions/wikia/LicensedVideoSwap/js/lvsVideoControls.js',
-		'//extensions/wikia/LicensedVideoSwap/js/lvsCallout.js',
-		'//extensions/wikia/LicensedVideoSwap/js/lvsEllipses.js',
-		'//extensions/wikia/LicensedVideoSwap/js/lvsSuggestions.js',
-		'//extensions/wikia/LicensedVideoSwap/js/lvsSwapKeep.js',
-		'//extensions/wikia/LicensedVideoSwap/js/lvsUndo.js',
-		'//extensions/wikia/LicensedVideoSwap/js/lvsHistoryPage.js',
-		'//extensions/wikia/LicensedVideoSwap/js/LicensedVideoSwap.js',
-	),
 );
 
 /* UI repo JS API */

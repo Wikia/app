@@ -9,8 +9,12 @@ $wgExtensionCredits['other'][] = [
 
 // Autoload
 $wgAutoloadClasses['FandomDataService'] =  __DIR__ . '/services/FandomDataService.class.php';
+$wgAutoloadClasses['DiscussionsDataService'] =  __DIR__ . '/services/DiscussionsDataService.class.php';
+
 $wgAutoloadClasses['RecirculationController'] =  __DIR__ . '/RecirculationController.class.php';
 $wgAutoloadClasses['RecirculationHooks'] =  __DIR__ . '/RecirculationHooks.class.php';
+
+// Hooks
 $wgHooks['GetRailModuleList'][] = 'RecirculationHooks::onGetRailModuleList';
 $wgHooks['OasisSkinAssetGroups'][] = 'RecirculationHooks::onOasisSkinAssetGroups';
 $wgHooks['BeforePageDisplay'][] = 'RecirculationHooks::onBeforePageDisplay';
