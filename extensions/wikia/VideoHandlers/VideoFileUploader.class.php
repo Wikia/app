@@ -254,13 +254,19 @@ class VideoFileUploader {
 		// to fetch a thumbnail
 		try {
 			$upload = $this->uploadBestThumbnail( $thumbnailUrl, $delayIndex );
+
+			// Publish the thumbnail file (some filerepo classes do not support write operations)
+			$result = $file->publish( $upload->getTempPath(), File::DELETE_SOURCE );
 		} catch ( Exception $e ) {
+			WikiaLogger::instance()->error( __METHOD__, [
+				'thumbnailUrl' => $thumbnailUrl,
+				'delayIndex' => $delayIndex,
+				'file_obj' => $file,
+				'exception' => $e
+			]);
 			wfProfileOut(__METHOD__);
 			return Status::newFatal($e->getMessage());
 		}
-
-		// Publish the thumbnail file
-		$result = $file->publish( $upload->getTempPath(), File::DELETE_SOURCE );
 
 		wfProfileOut(__METHOD__);
 		return $result;

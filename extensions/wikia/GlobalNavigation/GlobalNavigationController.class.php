@@ -24,18 +24,13 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 	public function index() {
-		global $wgLang, $wgUser, $wgEnableGlobalNav2016;
+		global $wgLang, $wgUser;
 
 		Wikia::addAssetsToOutput( 'global_navigation_scss' );
 		Wikia::addAssetsToOutput( 'global_navigation_js' );
 
-		if ( !empty( $wgEnableGlobalNav2016 ) ) {
-			Wikia::addAssetsToOutput( 'global_navigation_2016_js' );
-			$this->response->setVal( 'menuContents', $this->helper->getMenuNodes2016() );
-			$this->response->setVal( 'isFandomExposed', $this->wikiaLogoHelper->isFandomExposed( $wgLang->getCode() ) );
-		} else {
-			Wikia::addAssetsToOutput( 'global_navigation_2015_js' );
-		}
+		$this->response->setVal( 'menuContents', $this->helper->getMenuNodes() );
+		$this->response->setVal( 'isFandomExposed', $this->wikiaLogoHelper->isFandomExposed( $wgLang->getCode() ) );
 
 		$createWikiUrl = $this->helper->getCreateNewWikiUrl( $wgLang->getCode() );
 		$userCanRead = $wgUser->isAllowed( 'read' );
@@ -81,84 +76,6 @@ class GlobalNavigationController extends WikiaController {
 		$this->response->setVal( 'query', $query );
 		$this->response->setVal( 'lang', $lang );
 	}
-
-	public function hubsMenu() {
-		$menuNodes = $this->getMenuNodes();
-
-		// use transparent background to fill the space
-		// when we do not get enough hubs (CON-1820)
-		while ( count( $menuNodes ) < self::HUBS_COUNT ) {
-			$menuNodes[] = [
-				'placeholder' => true,
-			];
-		}
-
-		$this->response->setVal( 'menuNodes', $menuNodes );
-
-		$activeNode = $this->getActiveNode();
-		$activeNodeIndex = $this->getActiveNodeIndex( $menuNodes, $activeNode );
-		$this->response->setVal( 'activeNodeIndex', $activeNodeIndex );
-	}
-
-	public function hubsMenuSections() {
-		$menuSections = $this->request->getVal( 'menuSections', [] );
-		$this->response->setVal( 'menuSections', $menuSections );
-	}
-
-	public function lazyLoadHubsMenu() {
-		$lazyLoadMenuNodes = $this->getMenuNodes();
-
-		$activeNode = $this->getActiveNode();
-		$activeNodeIndex = $this->getActiveNodeIndex( $lazyLoadMenuNodes, $activeNode );
-		array_splice( $lazyLoadMenuNodes, $activeNodeIndex, 1 );
-
-		$this->response->setVal( 'menuSections', $lazyLoadMenuNodes );
-		$this->overrideTemplate( 'hubsMenuSections' );
-
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
-	}
-
-	private function getMenuNodes() {
-		$menuNodes = ( new NavigationModel( true /* useSharedMemcKey */ ) )->getGlobalNavigationTree(
-			'global-navigation-hubs-menu'
-		);
-
-		return $menuNodes;
-	}
-
-	private function getActiveNodeIndex( $menuNodes, $activeNode ) {
-		$nodeIndex = 0;
-
-		foreach ( $menuNodes as $index => $hub ) {
-			if ( $hub['specialAttr'] === $activeNode ) {
-				$nodeIndex = $index;
-				break;
-			}
-		}
-		return $nodeIndex;
-	}
-
-	/**
-	 * Get active node in Hamburger menu
-	 * Temporary method until we full migrate to new verticals
-	 *
-	 * @return string
-	 */
-	private function getActiveNode() {
-		global $wgCityId;
-		$activeNode = '';
-
-		$wikiFactoryHub = WikiFactoryHub::getInstance();
-		$verticalId = $wikiFactoryHub->getVerticalId( $wgCityId );
-
-		$allVerticals = $wikiFactoryHub->getAllVerticals();
-		if ( isset( $allVerticals[$verticalId]['short'] ) ) {
-			$activeNode = $allVerticals[$verticalId]['short'];
-		}
-
-		return $activeNode;
-	}
-
 
 	protected function isGameStarLogoEnabled() {
 		return $this->wg->contLang->getCode() == 'de';

@@ -1,5 +1,4 @@
 <?php
-
 abstract class ApiWrapper {
 
 	const RESPONSE_FORMAT_JSON = 0;
@@ -636,9 +635,10 @@ abstract class PseudoApiWrapper extends ApiWrapper {
 		// override me!
 	}
 
-	protected function processResponse( $response, $type ) {
+	protected function processResponse( $response ) {
 		// override me!
 	}
+
 }
 
 /**
