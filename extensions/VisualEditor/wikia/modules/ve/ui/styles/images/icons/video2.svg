@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.4.4 (17249) - http://www.bohemiancoding.com/sketch -->
-    <title>Play Button</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="VE-simpleVersion-Copy" sketch:type="MSArtboardGroup" transform="translate(-2174.000000, -522.000000)" fill="#333333" opacity="0.75">
-            <g id="Dropdown-menu-Copy" sketch:type="MSLayerGroup" transform="translate(2162.000000, 513.000000)">
-                <g id="Gallery" sketch:type="MSShapeGroup">
-                    <path d="M21.6570833,16.4853333 L18.1570833,18.8186667 C18.0596667,18.8834167 17.9470833,18.9166667 17.8333333,18.9166667 C17.7388333,18.9166667 17.6443333,18.8939167 17.5585833,18.8478333 C17.3684167,18.74575 17.25,18.5485833 17.25,18.3333333 L17.25,13.6666667 C17.25,13.4514167 17.3684167,13.2536667 17.5585833,13.1521667 C17.7481667,13.05125 17.978,13.06175 18.1570833,13.1813333 L21.6570833,15.5146667 C21.81925,15.6225833 21.9166667,15.8045833 21.9166667,16 C21.9166667,16.1948333 21.81925,16.3768333 21.6570833,16.4853333 M19,9 C15.1400833,9 12,12.1400833 12,16 C12,19.8599167 15.1400833,23 19,23 C22.8605,23 26,19.8599167 26,16 C26,12.1400833 22.8605,9 19,9" id="Play-Button"></path>
-                </g>
-            </g>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" width="14" height="14" viewBox="0 0 14 14" version="1.1">
+  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+    <g id="VE-simpleVersion-Copy" sketch:type="MSArtboardGroup" transform="translate(-2174.000000, -522.000000)" fill="#333333" opacity="0.75">
+      <g id="Dropdown-menu-Copy" sketch:type="MSLayerGroup" transform="translate(2162.000000, 513.000000)">
+        <g id="Gallery" sketch:type="MSShapeGroup">
+          <path d="M21.66 16.49L18.16 18.82C18.06 18.88 17.95 18.92 17.83 18.92 17.74 18.92 17.64 18.89 17.56 18.85 17.37 18.75 17.25 18.55 17.25 18.33L17.25 13.67C17.25 13.45 17.37 13.25 17.56 13.15 17.75 13.05 17.98 13.06 18.16 13.18L21.66 15.51C21.82 15.62 21.92 15.8 21.92 16 21.92 16.19 21.82 16.38 21.66 16.49M19 9C15.14 9 12 12.14 12 16 12 19.86 15.14 23 19 23 22.86 23 26 19.86 26 16 26 12.14 22.86 9 19 9" id="Play-Button"/>
         </g>
+      </g>
     </g>
+  </g>
 </svg>
