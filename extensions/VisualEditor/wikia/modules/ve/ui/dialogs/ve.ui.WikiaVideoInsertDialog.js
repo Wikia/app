@@ -38,7 +38,7 @@ ve.ui.WikiaVideoInsertDialog.prototype.initialize = function () {
 	ve.ui.WikiaVideoInsertDialog.super.prototype.initialize.call( this );
 
 	this.pages.removePages( [ this.mainPage ] );
-	$('.ve-ui-wikiaMediaQueryWidget-uploadWrapper').addClass('ve-ui-wikiaMediaQueryWidget-uploadWrapper-video');
+	this.query.upload.uploadButton.toggle();
 };
 
 ve.ui.windowFactory.register( ve.ui.WikiaVideoInsertDialog );
