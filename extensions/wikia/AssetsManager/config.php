@@ -2260,7 +2260,6 @@ $config[ 'global_navigation_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'#group_menu_aim_js',
 		'#group_delayed_hover_js',
 		'//resources/wikia/modules/scrollToLink.js',
 		'//skins/shared/scripts/transparent-out.js',
@@ -2366,15 +2365,6 @@ $config['delayed_hover_js'] = [
 	'assets' => [
 		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
 		'//resources/wikia/modules/delayedHover.js'
-	]
-];
-
-$config['menu_aim_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//resources/wikia/libraries/menu-aim/menu-aim.js',
-		'//resources/wikia/modules/menuAim.js'
 	]
 ];
 
