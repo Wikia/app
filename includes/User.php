@@ -1151,14 +1151,14 @@ class User {
 		}
 
 		if ( !$this->isUserAuthenticatedViaAuthenticationService() ) {
-			global $wgAuthForceLogoutOnBadCredentials;
+			global $wgAuthForceLogoutOnFailedAuthSessionFallback;
 
 			/*
 			 * when failing over to Reston (readonly), users should be anonymous but their session
 			 * should resume without them having to do anything when we go back to r/w. See
 			 * SERVICES-1125
 			 */
-			if ( $wgAuthForceLogoutOnBadCredentials ) {
+			if ( $wgAuthForceLogoutOnFailedAuthSessionFallback ) {
 				$this->logFallbackToMediaWikiSessionRejection( $from );
 				$this->logout();
 			}
