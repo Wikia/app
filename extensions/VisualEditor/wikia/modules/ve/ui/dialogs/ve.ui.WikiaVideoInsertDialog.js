@@ -34,8 +34,6 @@ ve.ui.WikiaVideoInsertDialog.static.trackingLabel = 'dialog-video-insert';
  * @inheritdoc
  */
 ve.ui.WikiaVideoInsertDialog.prototype.initialize = function () {
-	console.log('ve.ui.WikiaVideoInsertDialog.prototype.initialize');
-
 	// Parent method
 	ve.ui.WikiaVideoInsertDialog.super.prototype.initialize.call( this );
 
