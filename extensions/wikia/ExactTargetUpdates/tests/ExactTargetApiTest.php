@@ -60,30 +60,6 @@ class ExactTargetApiTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider deleteSubscriberProvider
-	 */
-	function testDeleteSubscriber( $aApiParams, $expectedRequest) {
-		// Mock tested class
-		$mockApiSubscriber = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetApiSubscriber' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'sendRequest' ] )
-			->getMock();
-		$mockApiSubscriber
-			->expects( $this->once() )
-			->method( 'sendRequest' )
-			->with( 'Delete', $expectedRequest );
-
-		// Set helper property
-		$oReflection = new ReflectionClass($mockApiSubscriber);
-		$oReflectionProperty = $oReflection->getProperty('helper');
-		$oReflectionProperty->setAccessible(true);
-		$oReflectionProperty->setValue($mockApiSubscriber, new Wikia\ExactTarget\ExactTargetApiHelper());
-
-		// Run tested method
-		$mockApiSubscriber->deleteRequest($aApiParams);
-	}
-
-	/**
 	 * Ensure that SoapFaults thrown by the SoapClient are caught.
 	 */
 	function testSendRequestCatchSoapFault() {
@@ -134,33 +110,6 @@ class ExactTargetApiTest extends WikiaBaseTest {
 		$api->setClient( $mockSoapClient );
 		$api->setLogger( $mockLogger );
 		$this->assertEquals( $responseValue, $api->sendRequest( 'Update', array() ) );
-	}
-
-
-
-	function deleteSubscriberProvider () {
-		// Prepare input parameters
-		$aApiParams = [
-			'Subscriber' => [
-				[
-					'SubscriberKey' => 'test@test.com',
-				],
-			],
-		];
-
-		// Prepare expected request parameter to be send
-		$aSoapVars = [];
-		$oSubscriber = new ExactTarget_Subscriber();
-		$oSubscriber->SubscriberKey = 'test@test.com';
-		$aSoapVars[] = new SoapVar( $oSubscriber, SOAP_ENC_OBJECT, 'Subscriber', 'http://exacttarget.com/wsdl/partnerAPI' );
-
-		$oExpectedRequest = new ExactTarget_DeleteRequest();
-		$oExpectedRequest->Objects = $aSoapVars;
-		$oExpectedRequest->Options = new ExactTarget_DeleteOptions();
-
-		return [
-			[ $aApiParams, $oExpectedRequest ]
-		];
 	}
 
 	protected function getExactTargetSoapClientMock() {
