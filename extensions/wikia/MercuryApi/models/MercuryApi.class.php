@@ -131,6 +131,7 @@ class MercuryApi {
 			'siteMessage' => $this->getSiteMessage(),
 			'siteName' => $wgSitename,
 			'theme' => SassUtil::getOasisSettings(),
+			'enableGlobalNav2016' => true,
 			'tracking' => [
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
 				'ivw3' => [

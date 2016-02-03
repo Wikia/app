@@ -297,7 +297,7 @@ class MercuryApiController extends WikiaController {
 			);
 		}
 
-		$wikiVariables[ 'navigation' ] = $navigation;
+		$wikiVariables[ 'navigation2016' ] = $navigation;
 		$wikiVariables[ 'vertical' ] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )[ 'short' ];
 		$wikiVariables[ 'basePath' ] = $this->wg->Server;
 
