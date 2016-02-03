@@ -72,8 +72,8 @@ class WikiaLogoTest extends WikiaBaseTest
 
 	public function isFandomExposedDataProvider() {
 		return [
-			[true, 'de', false],
-			[true, WikiaLogoHelper::FANDOM_LANG, true]
+			['de', false],
+			[WikiaLogoHelper::FANDOM_LANG, true]
 		];
 	}
 }
