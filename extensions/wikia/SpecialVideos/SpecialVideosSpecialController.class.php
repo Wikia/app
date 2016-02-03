@@ -62,7 +62,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$this->getContext()->getOutput()->addMeta( 'description', $helper->getMetaTagDescription() );
 
 		// Sorting/filtering dropdown values
-		$sort = $this->request->getVal( 'sort', 'trend' );
+		$sort = $this->request->getVal( 'sort', 'recent' );
 		$page = $this->request->getVal( 'page', 1 );
 		$category = $this->request->getVal( 'category', '' );
 		// Filter on a comma separated list of providers if given.
@@ -91,7 +91,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 
 		// get sorting options
 		if ( $isMobile ) {
-			$sortingOptions = $helper->getSortOptionsMobile();
+			$sortingOptions = $helper->getSortOptions();
 		} else {
 			$sortingOptions = array_merge( $helper->getSortOptions(), $helper->getFilterOptions() );
 		}

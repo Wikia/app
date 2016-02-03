@@ -50,21 +50,9 @@ class SpecialVideosHelper extends WikiaModel {
 	 * @return array $options
 	 */
 	public function getSortOptions() {
-		$options = $this->getSortOptionsMobile();
-		$options['popular'] = wfMessage( 'specialvideos-sort-most-popular' )->plain();
-
-		return $options;
-	}
-
-	/**
-	 * get list of sorting options for mobile
-	 * @return array $options
-	 */
-	public function getSortOptionsMobile() {
-		$options = array(
-			'trend'   => wfMessage( 'specialvideos-sort-trending' )->plain(),
-			'recent'  => wfMessage( 'specialvideos-sort-latest' )->plain(),
-		);
+		$options = [
+			'recent'  => wfMessage( 'specialvideos-sort-latest' )->escaped(),
+		];
 
 		return $options;
 	}
