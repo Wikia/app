@@ -23,7 +23,29 @@ class RecirculationController extends WikiaController {
 			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 			$this->response->setData( [
 				'title'	=> wfMessage( 'recirculation-fandom-title' )->plain(),
-				'posts' => $posts
+				'posts' => $posts,
+			] );
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function discussions() {
+		global $wgCityId;
+
+		$discussionsDataService = new DiscussionsDataService();
+		$posts = $discussionsDataService->getPosts();
+
+		if ( count( $posts ) > 0 ) {
+			$discussionsUrl = "/d/f/$wgCityId/trending";
+
+			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
+			$this->response->setData( [
+				'title' => wfMessage( 'recirculation-discussion-title' )->plain(),
+				'linkText' => wfMessage( 'recirculation-discussion-link-text' )->plain(),
+				'discussionsUrl' => $discussionsUrl,
+				'posts' => $posts,
 			] );
 			return true;
 		} else {

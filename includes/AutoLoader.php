@@ -843,7 +843,6 @@ $wgAutoloadLocalClasses = array(
 	'SpecialMostlinkedtemplates' => 'includes/specials/SpecialMostlinkedtemplates.php',
 	'SpecialNewFiles' => 'includes/specials/SpecialNewimages.php',
 	'SpecialNewpages' => 'includes/specials/SpecialNewpages.php',
-	'SpecialPasswordReset' => 'includes/specials/SpecialPasswordReset.php',
 	'SpecialPermanentLink' => 'includes/SpecialPage.php',
 	'SpecialPreferences' => 'includes/specials/SpecialPreferences.php',
 	'SpecialPrefixindex' => 'includes/specials/SpecialPrefixindex.php',

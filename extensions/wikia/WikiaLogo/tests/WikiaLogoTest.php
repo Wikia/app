@@ -63,21 +63,17 @@ class WikiaLogoTest extends WikiaBaseTest
 
 	/**
 	 * @dataProvider isFandomExposedDataProvider
-	 * @param $wgEnableGlobalNav2016Value
 	 * @param $lang
 	 * @param $expectedResult
 	 */
-	public function testIsFandomExposed( $wgEnableGlobalNav2016Value, $lang, $expectedResult ) {
-		$this->mockGlobalVariable( 'wgEnableGlobalNav2016', $wgEnableGlobalNav2016Value );
+	public function testIsFandomExposed( $lang, $expectedResult ) {
 		$this->assertEquals( ( new WikiaLogoHelper() )->isFandomExposed( $lang ), $expectedResult );
 	}
 
 	public function isFandomExposedDataProvider() {
 		return [
-			[false, WikiaLogoHelper::FANDOM_LANG, false],
-			[false, 'de', false],
-			[true, 'de', false],
-			[true, WikiaLogoHelper::FANDOM_LANG, true]
+			['de', false],
+			[WikiaLogoHelper::FANDOM_LANG, true]
 		];
 	}
 }

@@ -85,6 +85,19 @@ class UserPreferences {
 	}
 
 	/**
+	 * Return all local preferences for specific wiki
+	 *
+	 * @param $wikiId
+	 * @return LocalPreference[]
+	 */
+	public function getLocalPreferencesForWiki( $wikiId ) {
+		if ( is_array( $this->localPreferences[ $wikiId ] ) ) {
+			return array_values( $this->localPreferences[ $wikiId ] );
+		}
+		return [ ];
+	}
+
+	/**
 	 * This toggle is to flag the object as being not suitable for saving.
 	 *
 	 * @param boolean state true to set the preferences to read only

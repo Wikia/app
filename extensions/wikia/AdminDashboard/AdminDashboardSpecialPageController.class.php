@@ -46,7 +46,6 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		}
 		$this->urlCreateBlogPage = Title::newFromText('CreateBlogPage', NS_SPECIAL)->getFullURL();
 		$this->urlMultipleUpload = Title::newFromText('MultipleUpload', NS_SPECIAL)->getFullURL();
-		$this->urlLVS = Title::newFromText('LicensedVideoSwap', NS_SPECIAL)->getFullURL();
 		$this->urlSpecialCss = SpecialPage::getTitleFor('CSS')->getFullURL();
 
 		// special:specialpages
@@ -55,18 +54,6 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		// icon display logic
 		$this->displayWikiFeatures = !empty($this->wg->EnableWikiFeatures);
 		$this->displaySpecialCss = !empty($this->wg->EnableSpecialCssExt);
-
-		// LicensedVideoSwap
-		if ( empty( $this->wg->EnableLicensedVideoSwapExt ) ) {
-			$this->displayLicensedVideoSwap = false;
-			$this->badgeLicensedVideoSwap = '';
-		} else {
-			$this->displayLicensedVideoSwap = true;
-
-			// alert badge
-			$lvsHelper = new LicensedVideoSwapHelper();
-			$this->badgeLicensedVideoSwap = $lvsHelper->getAlertBadge();
-		}
 
 		// add messages package
 		JSMessages::enqueuePackage('AdminDashboard', JSMessages::INLINE);

@@ -48,6 +48,7 @@ $messages['en'] = array(
 	'template-classification-bulk-classification-hint' => 'Hi $1! Help us organize templates in this category. Click "Bulk edit template type" and choose one of the types.
 [[Help:Template Types|Learn more]].',
 	'template-classification-bulk-classification-agreement' => 'I understand',
+	'template-classification-global-shortcuts-caption-classify-page' => 'Classify page',
 	'template-classification-indicator' => 'Template type:',
 	'template-classification-notification-error-retry' => 'Something went wrong and we could not save the template type. Could you retry it using the link under the page title?',
 	'template-classification-open-modal-key-tip' => 'Open classification dialog (k)',
@@ -64,7 +65,7 @@ $messages['en'] = array(
 	'special-templates-portable-infobox' => 'Portable',
 	'special-templates-non-portable-infobox' => 'Non-portable',
 	'logentry-templateclassification-tc-changed' => '$1 changed type of $3 from $5 to $4.',
-	'templates' => 'Templates on wikia'
+	'templates' => 'Templates on wikia',
 );
 
 $messages['qqq'] = array(
@@ -113,6 +114,7 @@ $messages['qqq'] = array(
 	'template-classification-edit-modal-bulk-task' => 'A message shown in Banner Notification with information that bulk classification will be done in background task because of number of pages to classify. For this reason a result may be visible with delay. Thank user for his patience.',
 	'template-classification-bulk-classification-hint' => 'A text displayed on a tooltip near the edit dropdown asking users to help classify templates in current category. Shown only once for a user. $1 - username',
 	'template-classification-bulk-classification-agreement' => 'A text on a tooltip to confirm user read it. After user clicks it, it will not appear anymore.',
+	'template-classification-global-shortcuts-caption-classify-page' => 'This shortcut redirects users to the page where they can classify the template; it appears on template page.',
 	'template-classification-indicator' => 'Shown in page subheader and near classification dialog entry points to indicate which type the template is currently classified as.',
 	'template-classification-notification-error-retry' => 'A message shown to a user in a Banner Notification if classifying of a template resulted with an error and we want a user to retry doing it.',
 	'template-classification-open-modal-key-tip' => 'Tip text displayed on hover on modal entry point telling what action will happen and inform about shortcut key to use to open the modal.',
@@ -129,7 +131,7 @@ $messages['qqq'] = array(
 	'special-templates-portable-infobox' => 'Inform that given infobox is portable',
 	'special-templates-non-portable-infobox' => 'Inform that given infobox is non-portable',
 	'logentry-templateclassification-tc-changed' => "A message that is saved to a user-facing log if a type of a template is changed to another one. Parameters are: $1 - User's name, $3 - A link to a target page, $4 - New type of the template, $5 - Old type of the template.",
-	'templates' => 'Describe that Special:Templates page contains templates on wikia.'
+	'templates' => 'Describe that Special:Templates page contains templates on wikia.',
 );
 
 $messages['de'] = array(
@@ -167,6 +169,7 @@ $messages['de'] = array(
 	'template-classification-edit-modal-help' => 'Auf der Seite [[Hilfe:Vorlagenklassifizierung]] findest du weitere Informationen über jeden Vorlagentyp sowie Beispiele dazu.',
 	'template-classification-edit-modal-success' => 'Der neue Vorlagentyp wurde gespeichert. Vielen Dank!',
 	'template-classification-edit-modal-error' => 'Leider konnten wir diesen Vorlagentyp nicht speichern. Könntest du es bitte noch einmal probieren?',
+	'template-classification-global-shortcuts-caption-classify-page' => 'Klassifizierungsseite',
 	'template-classification-indicator' => 'Vorlagentyp:',
 	'template-classification-notification-error-retry' => 'Leider ist etwas schief gelaufen und wir können den Vorlagentyp nicht speichern. Bitte probiere es noch einmal und verwende dabei den Link unter dem Seitentitel.',
 	'template-classification-type-context-link' => 'Kontextlink',
@@ -199,7 +202,7 @@ $messages['de'] = array(
 );
 
 $messages['es'] = array(
-	'templates' => 'Plantillas en la wikia',
+	'templates' => 'Plantillas en wikia',
 	'template-classification-description' => 'Interfaz para clasificar plantillas para entender mejor el contenido.',
 	'template-classification-type-unclassified' => 'No clasificado',
 	'template-classification-type-infobox' => 'Infobox',
@@ -233,6 +236,7 @@ $messages['es'] = array(
 	'template-classification-edit-modal-help' => 'Para conocer más sobre cada tipo de plantilla, incluyendo ejemplos, por favor visita [[w:es:Ayuda:Clasificación de plantillas]].',
 	'template-classification-edit-modal-success' => 'Se ha guardado el nuevo tipo de plantilla. ¡Gracias!',
 	'template-classification-edit-modal-error' => 'Desafortunadamente no pudimos guardar este tipo de plantilla. ¿Te importaría volver a intentarlo?',
+	'template-classification-global-shortcuts-caption-classify-page' => 'Clasificar la página',
 	'template-classification-indicator' => 'Tipo de plantilla:',
 	'template-classification-notification-error-retry' => 'Algo salió mal y no pudimos guardar el tipo de plantilla. ¿Podrías intentarlo nuevamente usando el enlace bajo el título de la página?',
 	'template-classification-type-context-link' => 'Enlace contextual',
@@ -298,6 +302,7 @@ $messages['fr'] = array(
 	'template-classification-edit-modal-help' => 'Pour en savoir plus sur chaque type de modèle et voir des exemples, consultez la page [[Aide:Classification des modèles]].',
 	'template-classification-edit-modal-success' => 'Le nouveau type de modèle est enregistré, merci !',
 	'template-classification-edit-modal-error' => "Ce type de modèle n'a malheureusement pas pu être enregistré. Veuillez réessayer.",
+	'template-classification-global-shortcuts-caption-classify-page' => 'Page de classification',
 	'template-classification-indicator' => 'Type de modèle :',
 	'template-classification-notification-error-retry' => "Le type de modèle n'a pas pu être enregistré en raison d'un problème. Veuillez réessayer avec le lien sous le titre de la page.",
 	'template-classification-type-context-link' => 'Lien-contexte',
@@ -316,7 +321,7 @@ $messages['fr'] = array(
 	'template-classification-edit-modal-bulk-error' => "Malheureusement, nous n'avons pas réussi à classer {{PLURAL:$1|cette page|ces pages}}: $2. Pourriez-vous réessayer ?",
 	'template-classification-edit-modal-bulk-error-limited' => "Nous n'avons malheureusement pas été en mesure de classifier $1 des $2 pages. Pourriez-vous réessayer ?",
 	'template-classification-edit-modal-bulk-task' => "En raison de la taille de cette catégorie, la classification des modèles va se faire en arrière-plan. Les changements risquent donc de prendre un certain temps avant d'apparaître. Nous vous remercions de votre patience !",
-	'template-classification-open-modal-key-tip' => 'Ouvrir le dialogue de classification (k)',
+	'template-classification-open-modal-key-tip' => 'Ouvrir la boîte de dialogue de classification (k)',
 	'template-classification-bulk-classification-hint' => "Bonjour $1! Aidez-nous à organiser les modèles de cette catégorie. Cliquez sur Modifier le type de plusieurs modèles et choisissez l'un de ces types. 
 [[w:c:fr:Aide:Classification des modèles|En savoir plus]].",
 	'template-classification-bulk-classification-agreement' => 'Je comprends',
@@ -327,6 +332,7 @@ $messages['fr'] = array(
 	'template-classification-description-infoicon' => 'Ce modèle est utilisé pour créer un lien avec une petite icône.',
 	'special-templates-portable-infobox' => 'Portable',
 	'special-templates-non-portable-infobox' => 'Non-portable',
+	'templates' => 'Modèles sur Wikia',
 );
 
 $messages['it'] = array(
@@ -363,6 +369,7 @@ $messages['it'] = array(
 	'template-classification-edit-modal-help' => 'Per ulteriori informazioni su ogni tipologia di template, esempi inclusi, visita [[w:it:Aiuto:Tipologie di template|Aiuto:Tipologie di template]].',
 	'template-classification-edit-modal-success' => 'La nuova tipologia del template è stata salvata. Grazie!',
 	'template-classification-edit-modal-error' => 'Purtroppo non siamo riusciti a salvare la tipologia di questo template. Potresti riprovare?',
+	'template-classification-global-shortcuts-caption-classify-page' => 'Classifica la pagina',
 	'template-classification-indicator' => 'Tipo di template:',
 	'template-classification-notification-error-retry' => 'Qualcosa è andato storto e non siamo riusciti a salvare la tipologia del template. Potresti riprovare utilizzando il link sotto il titolo della pagina?',
 	'template-classification-type-context-link' => 'Link contestuale',
@@ -392,6 +399,7 @@ $messages['it'] = array(
 	'template-classification-description-infoicon' => "Questo template è usato per creare un link con un'icona di piccole dimensioni.",
 	'special-templates-portable-infobox' => 'Esportabile',
 	'special-templates-non-portable-infobox' => 'Non esportabile',
+	'templates' => 'Modelli su Wikia',
 );
 
 $messages['ja'] = array(
@@ -428,6 +436,7 @@ $messages['ja'] = array(
 	'template-classification-edit-modal-help' => '各種テンプレートの詳細やサンプルについては、[[ヘルプ:テンプレートの分類]]をご覧ください。',
 	'template-classification-edit-modal-success' => '新しいテンプレートの種類を保存しました。',
 	'template-classification-edit-modal-error' => '申し訳ありませんが、このテンプレートの種類を保存できませんでした。もう一度お試しください。',
+	'template-classification-global-shortcuts-caption-classify-page' => 'ページを分類',
 	'template-classification-indicator' => 'テンプレートの種類：',
 	'template-classification-notification-error-retry' => 'エラーが発生したため、テンプレートの種類を保存できませんでした。ページタイトルの下にあるリンクを使ってもう一度お試しください。',
 	'template-classification-type-context-link' => '関連リンク',
@@ -446,7 +455,7 @@ $messages['ja'] = array(
 	'template-classification-edit-modal-bulk-error' => '申し訳ありませんが、{{PLURAL:$1|次のページ|次のページ}}を分類できませんでした: $2。もう一度お試しください。',
 	'template-classification-edit-modal-bulk-error-limited' => '申し訳ありませんが、$2ページ中$1ページを分類できませんでした。もう一度お試しください。',
 	'template-classification-edit-modal-bulk-task' => 'このカテゴリのページ数が多すぎるため、バックグラウンド・タスクとして一括編集を実行しています。そのため、変更が反映されるまで少し時間がかかる場合があります。もうしばらくお待ちください。',
-	'template-classification-open-modal-key-tip' => '分類ダイアログを開く（k）',
+	'template-classification-open-modal-key-tip' => '分類ダイアログを開く（K）',
 	'template-classification-bulk-classification-hint' => 'こんにちは、$1さん。このカテゴリのテンプレートを整理してみましょう。「テンプレートの種類を一括編集」をクリックして、いずれかの種類をお選びください。
 詳しくは、[[w:c:ja:ヘルプ:テンプレートの種類|こちら]]をご覧ください。',
 	'template-classification-bulk-classification-agreement' => 'OK',
@@ -457,6 +466,7 @@ $messages['ja'] = array(
 	'template-classification-description-infoicon' => 'このテンプレートを使用すると、小さいアイコン付きのリンクを作成できます。',
 	'special-templates-portable-infobox' => 'ポータブル',
 	'special-templates-non-portable-infobox' => '非ポータブル',
+	'templates' => 'コミュニティのテンプレート',
 );
 
 $messages['nl'] = array(
@@ -522,6 +532,7 @@ $messages['nl'] = array(
 	'template-classification-description-infoicon' => 'This template is used for creating a link with a small icon.',
 	'special-templates-portable-infobox' => 'Portable',
 	'special-templates-non-portable-infobox' => 'Non-portable',
+	'templates' => 'Templates on wikia',
 );
 
 $messages['pl'] = array(
@@ -558,6 +569,7 @@ $messages['pl'] = array(
 	'template-classification-edit-modal-help' => 'Aby dowiedzieć się więcej na temat każdego typu szablonu oraz zobaczyć przykłady, wejdź na [[w:c:pl.c:Pomoc:Typy szablonów|Pomoc:Typy szablonów]].',
 	'template-classification-edit-modal-success' => 'Nowy typ szablonu został zapisany. Dziękujemy!',
 	'template-classification-edit-modal-error' => 'Niestety nie udało nam się zapisać typu szablonu. Czy możesz spróbować ponownie?',
+	'template-classification-global-shortcuts-caption-classify-page' => 'Zaklasyfikuj stronę',
 	'template-classification-indicator' => 'Typ szablonu:',
 	'template-classification-notification-error-retry' => 'Coś poszło nie tak i nie byliśmy w stanie zapisać typu szablonu. Spróbuj ponownie korzystając z linku pod tytułem strony?',
 	'template-classification-type-context-link' => 'Link kontekstowy',
@@ -577,7 +589,7 @@ $messages['pl'] = array(
 	'template-classification-edit-modal-bulk-error-limited' => 'Niestety nie udało nam się sklasyfikować $1 z $2 stron. Czy mógłbyś spróbować ponownie?',
 	'template-classification-edit-modal-bulk-task' => 'Ze względu na wielkość tej kategorii ta edycja jest uruchomiona jako zadanie w tle. W rezultacie, może zająć to trochę czasu zanim zmiany staną się aktywne. Dziękujemy za cierpliwość!',
 	'template-classification-entry-point-hint' => 'Cześć $1! Pomóż nam zaklasyfikować ten szablon. Kliknij tutaj i wybierz jeden z typów.[[w:c:pl.c:Pomoc:Typy_szablonów| Dowiedz się więcej]].',
-	'template-classification-open-modal-key-tip' => 'Otwórz okno dialogowe klasyfikacji (k)',
+	'template-classification-open-modal-key-tip' => 'Otwórz okno klasyfikacji (k)',
 	'template-classification-bulk-classification-agreement' => 'Rozumiem',
 	'logentry-templateclassification-tc-changed' => 'Użytkownik $1 zmienił $3 z $5 na $4.',
 	'template-classification-type-scrollbox' => 'Scrollbox',
@@ -586,6 +598,8 @@ $messages['pl'] = array(
 	'template-classification-description-infoicon' => 'Tego szablonu używa się do tworzenia odnośnika z małą ikoną.',
 	'special-templates-portable-infobox' => 'Przenośne',
 	'special-templates-non-portable-infobox' => 'Nieprzenośne',
+	'template-classification-bulk-classification-hint' => 'Cześć $1! Pomóż nam zorganizować szablony w tej kategorii. Kliknij "Edycja zbiorcza typu szablonu" i wybierz jeden z typów. [[w:c:pl:Pomoc:Szablony|Dowiedz się więcej]].',
+	'templates' => 'Szablony na wikii',
 );
 
 $messages['pt'] = array(
@@ -621,6 +635,7 @@ $messages['pt'] = array(
 	'template-classification-edit-modal-title-select-type' => 'Escolha o tipo de predefinição',
 	'template-classification-edit-modal-success' => 'O novo tipo de predefinição foi salvo. Obrigado!',
 	'template-classification-edit-modal-error' => 'Infelizmente não foi possível salvar este tipo de predefinição. Por favor, tente novamente.',
+	'template-classification-global-shortcuts-caption-classify-page' => 'Classificar a página',
 	'template-classification-indicator' => 'Tipo de predefinição:',
 	'template-classification-notification-error-retry' => 'Algo deu errado e não foi possível salvar o tipo de predefinição. Você poderia tentar novamente usando o link que está sob o título da página?',
 	'template-classification-edit-modal-help' => 'Para saber mais sobre cada tipo de predefinição, incluindo exemplos, por favor visite [[Ajuda:classificação de predefinição]].',
@@ -640,7 +655,7 @@ $messages['pt'] = array(
 	'template-classification-edit-modal-bulk-error' => 'Infelizmente não foi possível classificar {{PLURAL:$1|esta página|estas páginas}}: $2. Por favor, tente novamente.',
 	'template-classification-edit-modal-bulk-error-limited' => 'Infelizmente não foi possível classificar $1 de $2 páginas. Por favor, tente novamente.',
 	'template-classification-edit-modal-bulk-task' => 'Devido ao tamanho desta categoria, estamos executando esta edição múltipla em segundo plano. Como resultado, pode demorar um pouco para que as alterações tornem-se ativas. Obrigado por sua paciência!',
-	'template-classification-open-modal-key-tip' => 'Abrir o diálogo de classificação (k)',
+	'template-classification-open-modal-key-tip' => 'Abrir o diálogo de classificação(k)',
 	'template-classification-bulk-classification-hint' => 'Olá $1! Ajude-nos a organizar as predefinições nesta categoria. Clique em "Edição múltipla dos tipos de predefinição" e escolha um dos tipos. 
 [[w:c:pt:Ajuda:Tipos de predefinição|Saiba mais]].',
 	'template-classification-bulk-classification-agreement' => 'Eu entendo',
@@ -651,10 +666,11 @@ $messages['pt'] = array(
 	'template-classification-description-infoicon' => 'Esta predefinição é usada para criar um link com um ícone pequeno.',
 	'special-templates-portable-infobox' => 'Portátil',
 	'special-templates-non-portable-infobox' => 'Não-portátil',
+	'templates' => 'Predefinições na wikia',
 );
 
 $messages['ru'] = array(
-	'templates' => 'Шаблоны на вики',
+	'templates' => 'Шаблоны на Викия',
 	'template-classification-description' => 'Интерфейс классификации шаблонов для лучшего понимания их содержимого.',
 	'template-classification-type-unclassified' => 'Неклассифицированные',
 	'template-classification-type-infobox' => 'Инфобоксы',
@@ -688,6 +704,7 @@ $messages['ru'] = array(
 	'template-classification-edit-modal-help' => 'Прочтите [[Справка:Классификация шаблонов|справочную статью]] о классификации шаблонов, чтобы узнать больше.',
 	'template-classification-edit-modal-success' => 'Отлично! Тип шаблона был обновлён.',
 	'template-classification-edit-modal-error' => 'Произошла ошибка во время сохранения типа шаблона.',
+	'template-classification-global-shortcuts-caption-classify-page' => 'Классифицировать страницу',
 	'template-classification-indicator' => 'Тип шаблона:',
 	'template-classification-notification-error-retry' => 'Во время сохранения типа шаблона произошла ошибка. Пожалуйста, попробуйте снова, используя ссылку под названием страницы.',
 	'template-classification-type-context-link' => 'Ссылки на другие статьи',
@@ -706,8 +723,8 @@ $messages['ru'] = array(
 	'template-classification-edit-modal-bulk-error' => 'К сожалению, мы не смогли классифицировать {{PLURAL:$1|эту страницу|эти страницы}}: $2. Пожалуйста, попробуйте снова.',
 	'template-classification-edit-modal-bulk-error-limited' => 'К сожалению мы не смогли классифицировать $1 из $2 страниц. Пожалуйста, попробуйте снова.',
 	'template-classification-edit-modal-bulk-task' => 'Из-за размеров этой категории массовая классификация будет поставлена в очередь. Это означает, что классификация займет немного больше времени, чем обычно.',
-	'template-classification-open-modal-key-tip' => 'Открыть окно классификации (k)',
-	'template-classification-bulk-classification-hint' => 'Привет, $1! Помогите нам классифицировать шаблоны в этой категории. Нажмите кнопку "Массовое изменение типов шаблонов" и выберите подходящий тип шаблонов.
+	'template-classification-open-modal-key-tip' => 'Открыть диалог классификации (k)',
+	'template-classification-bulk-classification-hint' => 'Привет, $1! Помогите нам классифицировать шаблоны в этой категории. Нажмите кнопку «Массовое изменение типов шаблонов» и выберите подходящий тип шаблонов.
 [[w:c:ru:Справка:Классификация шаблонов|Подробнее о классификации шаблонов]].',
 	'template-classification-bulk-classification-agreement' => 'Хорошо',
 	'logentry-templateclassification-tc-changed' => '$1 изменил(а) тип шаблона $3 с $5 на $4.',
@@ -752,6 +769,7 @@ $messages['zh-hans'] = array(
 	'template-classification-edit-modal-title-select-type' => '选择模板类型',
 	'template-classification-edit-modal-success' => '已保存新模板类型。谢谢！',
 	'template-classification-edit-modal-error' => '很抱歉，我们无法保存此模板类型。您介意再试一次吗?',
+	'template-classification-global-shortcuts-caption-classify-page' => '分类页',
 	'template-classification-indicator' => '模板类型：',
 	'template-classification-notification-error-retry' => '出现错误，我们无法保存这个模板类型。您希望使用页面标题下方的链接重新尝试吗？',
 	'template-classification-edit-modal-help' => '学习每一个模版的类型，包括例子，请点击[[Help:模板類型|模版类型]]了解详情。',
@@ -771,7 +789,7 @@ $messages['zh-hans'] = array(
 	'template-classification-edit-modal-bulk-error' => '很抱歉我们无法分类{{PLURAL:$1|这个页面|这些页面}}: $2。您介意再试一次吗?',
 	'template-classification-edit-modal-bulk-error-limited' => '很抱歉我们无法分类$2个页面中的$1。您介意再试一次吗?',
 	'template-classification-edit-modal-bulk-task' => '由于类别的大小，我们正在使用后台任务运行这些批量编辑。因此，它可能需要一段时间才会生成变化。感谢您的耐心等待!',
-	'template-classification-open-modal-key-tip' => '打开分类对话框(k)',
+	'template-classification-open-modal-key-tip' => '打开分类对话框 (k)',
 	'template-classification-bulk-classification-hint' => '你好，$1！请帮助我们组织这一类别中的模板。单击"批量编辑模板类型"选择一种类型。[[Help:Template Types|点击这里了解更多]]。',
 	'template-classification-bulk-classification-agreement' => '我明白。',
 	'logentry-templateclassification-tc-changed' => '$1将$3中的类型从 $5更改为$4。',
@@ -781,6 +799,7 @@ $messages['zh-hans'] = array(
 	'template-classification-description-infoicon' => '此模板通过使用一个小图标进行创建链接。',
 	'special-templates-portable-infobox' => '便携式',
 	'special-templates-non-portable-infobox' => '非便携式',
+	'templates' => 'Wikia上的所有模板',
 );
 
 $messages['zh-hant'] = array(
@@ -816,6 +835,7 @@ $messages['zh-hant'] = array(
 	'template-classification-edit-modal-title-select-type' => '選擇模版類型',
 	'template-classification-edit-modal-success' => '已保存新模版類型。謝謝！',
 	'template-classification-edit-modal-error' => '抱歉，我們無法保存此模版類型。 您介意再試一次嗎?',
+	'template-classification-global-shortcuts-caption-classify-page' => '分類頁',
 	'template-classification-indicator' => '模版類型',
 	'template-classification-notification-error-retry' => '出現錯誤，我們無法保存這個模版類型。 您希望使用頁面標題下方的連結重新嘗試嗎？',
 	'template-classification-edit-modal-help' => '學習每一個模版的類型，包括例子，請點擊[[Help:模板類型|模板類型]]了解詳情。',
@@ -835,7 +855,7 @@ $messages['zh-hant'] = array(
 	'template-classification-edit-modal-bulk-error' => '很抱歉，我們無法分類{{PLURAL:$1|這個頁面|這些頁面}}: $2。 您介意再試一次嗎?',
 	'template-classification-edit-modal-bulk-error-limited' => '很抱歉我們無法分類$2個頁面中的$1。 您介意再試一次嗎?',
 	'template-classification-edit-modal-bulk-task' => '由於類別的大小，我們正在使用背景任務運行這些大量編輯。因此，它可能需要一段時間才會生成變化。感謝您的耐心等待！',
-	'template-classification-open-modal-key-tip' => '打開分類對話框(k)',
+	'template-classification-open-modal-key-tip' => '打開分類對話框 (k)',
 	'template-classification-bulk-classification-hint' => '你好，$1！ 請幫助我們組織這一類別中的模板。 按一下"大量編輯模板類型"選擇一種類型。[[w:c:zh:Help:Template Types|點擊這裡查看更多]]。',
 	'template-classification-bulk-classification-agreement' => '我明白。',
 	'logentry-templateclassification-tc-changed' => '$1將$3中的類型從$5更改為$4。',
@@ -845,5 +865,6 @@ $messages['zh-hant'] = array(
 	'template-classification-description-infoicon' => '此模板通過使用一個小圖示進行創建連結。',
 	'special-templates-portable-infobox' => '可擕式',
 	'special-templates-non-portable-infobox' => '非可擕式',
+	'templates' => 'Wikia上的所有模板',
 );
 

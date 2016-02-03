@@ -23,7 +23,7 @@ require(['TemplateClassificationModal', 'GlobalShortcuts', 'PageActions', 'mw', 
 			var actionId = 'page:Classify',
 				actionDescription = {
 					id: actionId,
-					caption: mw.message('template-class-global-shortcuts-caption-classify-page').escaped(),
+					caption: mw.message('template-classification-global-shortcuts-caption-classify-page').escaped(),
 					fn: templateClassificationModal.open,
 					weight: 120,
 					category: mw.message('global-shortcuts-category-current-page').escaped()
