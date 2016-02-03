@@ -1,7 +1,9 @@
+@import 'GlobalNavigationColors';
 $global-nav-inverse-background: rgba(0,0,0,.65);
 $global-nav-inverse-text-color: rgb(255,255,255);
 $global-nav-inverse-background-hover: #656E78;
 $global-nav-inverse-link-hover-color: #C5CED9;
+
 
 .global-navigation {
 	&.inverse {
