@@ -40,14 +40,14 @@
 			display: table-row;
 			height: $global-navigation-height-without-margin;
 			font-size: 12px;
-			padding-top: 2px;
+			padding-top: 1px;
 			vertical-align: middle;
 
 			.chevron {
 				@include global-nav-chevron;
 				left: 50px;
 				margin-left: 3px;
-				margin-top: 13px;
+				margin-top: 14px;
 				position: absolute;
 			}
 
