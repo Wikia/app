@@ -220,9 +220,9 @@ class BodyController extends WikiaController {
 
 		$railModuleList = [];
 
-		// temp plocation for testing
+		// temp location for testing
 		// @todo figure out where this should go
-		$railModuleList[1460] = [ 'Contribute', 'index', null ];
+		$railModuleList[1495] = [ 'Contribute', 'index', null ];
 
 		$latestActivityKey = $wg->User->isAnon() ? 1250 : 1300;
 		$huluVideoPanelKey = $wg->User->isAnon() ? 1390 : 1280;
@@ -347,6 +347,7 @@ class BodyController extends WikiaController {
 		}
 
 		$railModuleList[1440] = [ 'Ad', 'Index', [ 'slotName' => 'TOP_RIGHT_BOXAD' ] ];
+		$railModuleList[1435] = [ 'AdEmptyContainer', 'Index', [ 'slotName' => 'NATIVE_TABOOLA_RAIL' ] ];
 		$railModuleList[1100] = [ 'Ad', 'Index', [ 'slotName' => 'LEFT_SKYSCRAPER_2' ] ];
 
 		unset( $railModuleList[1450] );

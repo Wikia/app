@@ -1739,7 +1739,7 @@ class WallHooksHelper {
 			$meta = static::getMetatitleFromTitleObject( $app->wg->Title, $wmRef );
 
 			$pageHeaderModule->title = wfMessage( 'oasis-page-header-diff' )
-				->rawParams( htmlspecialchars( $meta ) )
+				->params( $meta )
 				->parse();
 			$pageHeaderModule->subtitle = Xml::element(
 				'a',

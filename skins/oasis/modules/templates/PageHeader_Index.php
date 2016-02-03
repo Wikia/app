@@ -55,7 +55,7 @@ if ( $runNjord ) {
 		<div class="header-column header-right">
 			<?php
 			// don't show share buttons on Special:Videos as we want the tally instead
-			if ( !empty( $wg->EnablePageShareExt && !$isSpecialVideos ) ) { ?>
+			if ( !empty( $wg->EnablePageShareExt ) && !$isSpecialVideos ) { ?>
 				<div id="pageShareContainer" class="page-share-container">
 					<?= $app->renderView( 'PageShare', 'Index' ); ?>
 				</div>
