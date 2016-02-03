@@ -371,6 +371,9 @@ class MercuryApiController extends WikiaController {
 			throw new BadRequestApiException();
 		}
 
+		// set mobile skin explicitly as we want to get parser output for Mercury
+		RequestContext::getMain()->setSkin( Skin::newFromKey( 'wikiamobile' ) );
+
 		$wikitext = $this->getVal( 'wikitext' );
 		$titleText = !empty( $this->getVal( 'title' ) ) ? $this->getVal( 'title' ) : '';
 		$title = Title::newFromText( $titleText );
