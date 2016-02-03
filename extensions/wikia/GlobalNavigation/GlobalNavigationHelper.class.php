@@ -96,7 +96,7 @@ class GlobalNavigationHelper {
 		)->getFullURL();
 	}
 
-	public function getMenuNodes2016() {
+	public function getMenuNodes() {
 		global $wgLang;
 
 		$exploreDropdownLinks = [];
