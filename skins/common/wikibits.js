@@ -529,6 +529,12 @@ window.redirectToFragment = function( fragment ) {
 				if ( window.location.hash == fragment ) {
 					window.location.hash = fragment;
 				}
+
+				// Firefox also has a strange bug where it doesn't show the proper
+				// favicon when redirecting to sections because of the code above.
+				// Refreshing the link tag is enough to fix it surprisingly...
+				// @see https://wikia-inc.atlassian.net/browse/SEO-115
+				$( 'head' ).append( $( 'link[rel="shortcut icon"]' ) );
 			});
 		}
 	}
