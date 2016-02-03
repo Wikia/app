@@ -1,4 +1,4 @@
-define('editpage.event.helper', ['wikia.window'], function (window, ace){
+define('editpage.event.helper', ['wikia.window'], function (window, ace) {
 	'use strict';
 
 	// get editor's content (either wikitext or HTML)
@@ -10,7 +10,7 @@ define('editpage.event.helper', ['wikia.window'], function (window, ace){
 			content = '';
 
 		if (window.wgEnableCodePageEditor) {
-			require(['wikia.ace.editor'], function (ace){
+			require(['wikia.ace.editor'], function (ace) {
 				content = ace.getContent();
 				dfd.resolve(content, mode);
 			});
@@ -36,7 +36,7 @@ define('editpage.event.helper', ['wikia.window'], function (window, ace){
 		var editor = typeof RTE == 'object' ? RTE.getInstance() : false;
 
 		params = $.extend({
-			page: window.wgEditPageClass ? window.wgEditPageClass : "",
+			page: window.wgEditPageClass ? window.wgEditPageClass : '',
 			method: method,
 			mode: editor.mode
 		}, params);
@@ -91,6 +91,13 @@ define('editpage.event.helper', ['wikia.window'], function (window, ace){
 		return $('#categories');
 	}
 
+	/**
+	 * Allows for sending POST requests from an iframe.
+	 * Creates an iframe with form with id and target marked with timestamp.
+	 *
+	 * @param {string} url
+	 * @returns {IFrameForm}
+	 */
 	function IFrameForm(url) {
 		if (!this instanceof IFrameForm) {
 			return new IFrameForm(url);
@@ -105,26 +112,29 @@ define('editpage.event.helper', ['wikia.window'], function (window, ace){
 			.attr('id', 'form' + this.time)
 			.attr('name', 'form' + this.time);
 
+		this.iframe = $('<iframe></iframe>')
+			.attr('data-time', this.time)
+			.attr('id', 'iframe' + this.time)
+			.attr('name', 'iframe' + this.time)
+			.attr('class', 'mobile-preview');
+
 		this.addParameter = function (parameter, value) {
-			$("<input type='hidden' />")
+			$('<input type=\'hidden\' />')
 				.attr('name', parameter)
 				.attr('value', value)
 				.appendTo(this.form);
 		};
 
 		this.send = function (frameRoot, callback) {
-			var iframe = $('<iframe></iframe>')
-				.attr('data-time', this.time)
-				.attr('id', 'iframe' + this.time)
-				.attr('name', 'iframe' + this.time)
-				.attr('class', 'mobile-preview');
-			$(frameRoot).append(iframe);
-			$(frameRoot).append(this.form);
+			var $frameRoot = $(frameRoot);
+			$frameRoot
+				.append(this.iframe)
+				.append(this.form);
 
-			iframe.load(function () {
-				$('#form' + $(this).data('time')).remove();
+			this.iframe.load((function () {
+				$('#form' + this.time).remove();
 				callback();
-			});
+			}).bind(this));
 
 			this.form.submit();
 		};
