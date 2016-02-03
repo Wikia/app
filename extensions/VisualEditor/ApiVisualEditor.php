@@ -88,7 +88,9 @@ class ApiVisualEditor extends ApiBase {
 			if ( $method === 'GET' ) {
 				\Wikia\Logger\WikiaLogger::instance()->info( 'ApiVisualEditor_requestParsoid', [
 					// sending string instead of boolean because our elasticsearch/kibana does not support the latter well
-					'hit' => $hit ? 'yes' : 'no'
+					'hit' => $hit ? 'yes' : 'no',
+					// we are interested in millisecond only (instead of microseconds)
+					'durationMS' => (int) round ( ( $time_end - $time_start ) * 1000 )
 				] );
 			}
 
