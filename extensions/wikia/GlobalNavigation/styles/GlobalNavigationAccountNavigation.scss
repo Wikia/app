@@ -4,6 +4,10 @@
 
 .account-navigation-container {
 	position: relative;
+
+	.user-menu {
+		margin-top: 1px;
+	}
 }
 
 .AccountNavigation {
@@ -19,6 +23,10 @@
 			display: table;
 			table-layout: fixed;
 		}
+	}
+
+	.UserLoginDropdown {
+		margin-top: 1px;
 	}
 
 	.avatar {
