@@ -70,7 +70,14 @@ class ApiVisualEditor extends ApiBase {
 		) {
 			$req->setHeader( 'Cookie', $this->getRequest()->getHeader( 'Cookie' ) );
 		}
+
+		if ( $this->veConfig->get( 'VisualEditorNoCache' ) ) {
+			$req->setHeader( 'Cache-control', 'no-cache' );
+		}
+
+		$time_start = microtime(true);
 		$status = $req->execute();
+		$time_end = microtime(true);
 		if ( $status->isOK() ) {
 			// Pass thru performance data from Parsoid to the client, unless the response was
 			// served directly from Varnish, in  which case discard the value of the XPP header
@@ -88,7 +95,9 @@ class ApiVisualEditor extends ApiBase {
 			if ( $method === 'GET' ) {
 				\Wikia\Logger\WikiaLogger::instance()->info( 'ApiVisualEditor_requestParsoid', [
 					// sending string instead of boolean because our elasticsearch/kibana does not support the latter well
-					'hit' => $hit ? 'yes' : 'no'
+					'hit' => $hit ? 'yes' : 'no',
+					// we are interested in millisecond only (instead of microseconds)
+					'duration' => round ( ( $time_end - $time_start ) * 1000 )
 				] );
 			}
 
