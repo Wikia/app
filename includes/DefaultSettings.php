@@ -3160,7 +3160,7 @@ $wgMinimalPasswordLength = 1;
  * has the effect of disabling password resets entirely
  */
 $wgPasswordResetRoutes = array(
-	'username' => false,
+	'username' => true,
 	'email' => false,
 );
 
