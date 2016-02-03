@@ -15,18 +15,18 @@ class ArticleAsJson extends WikiaService {
 	const MEDIA_CONTEXT_GALLERY_IMAGE = 'gallery-image';
 	const MEDIA_CONTEXT_ICON = 'icon';
 
-	const MEDIA_IMAGE_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-image.mustache';
+	const MEDIA_IMAGE_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/ArticleAsJsonMediaImageSingleLine.mustache';
 
 	private static function createMarker( $media, $isGallery = false ){
 		$blankImgUrl = '//:0';
-		$id = count( self::$media ) - 1;
+		$ref = count( self::$media ) - 1;
 		$classes = 'article-media' . ( $isGallery ? ' gallery' : '' );
 		$width = !empty( $media['width'] ) ? " width='{$media['width']}'" : '';
 		$height = !empty( $media['height'] ) ? " height='{$media['height']}'" : '';
 
 		if ( $isGallery ) {
 			// Mercury isn't ready yet for galleries
-			return "<img src='{$blankImgUrl}' class='{$classes}' data-ref='{$id}'{$width}{$height} />";
+			return "<img src='{$blankImgUrl}' class='{$classes}' data-ref='{$ref}'{$width}{$height} />";
 		} else {
 			$componentAttributes = json_encode( $media );
 
@@ -35,6 +35,7 @@ class ArticleAsJson extends WikiaService {
 				[
 					'attrs' => $componentAttributes,
 					'media' => $media,
+					'ref' => $ref,
 					'imageSize' => $width . $height
 				]
 			);
@@ -244,6 +245,8 @@ class ArticleAsJson extends WikiaService {
 			foreach ( self::$media as &$media ) {
 				self::linkifyMediaCaption( $parser, $media );
 			}
+
+			$parser->replaceLinkHolders( $text );
 
 			$text = json_encode( [
 				'content' => $text,
