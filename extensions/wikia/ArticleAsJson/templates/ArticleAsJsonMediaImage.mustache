@@ -1,12 +1,9 @@
-<figure data-component="article-media-image" data-ref="{{ref}}">
-	<a href="{{#media.link}}{{media.link}}{{/media.link}}{{^media.link}}{{media.url}}{{/media.link}}">
-		<img class="article-media" src="//:0" alt="{{media.title}}"{{{imageSize}}}>
+<figure class="article-media" {{#mediaAttrs}}data-component="article-media-image" data-attrs="{{mediaAttrs}}"{{/mediaAttrs}}>
+	<a href="{{#link}}{{link}}{{/link}}{{^link}}{{fileUrl}}{{/link}}">
+		<img class="article-media" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="{{title}}" width="{{width}}" height="{{height}}">
 		<noscript>
-			<img src="" alt="{{media.title}}"{{{imageSize}}}>
+			<img src="{{url}}" alt="{{title}}">
 		</noscript>
 	</a>
-	<figcaption>
-		<a href="{{media.fileUrl}}" style="display: none"></a>
-		{{#media.caption}}{{{media.caption}}}{{/media.caption}}
-	</figcaption>
+	<figcaption>{{caption}}</figcaption>
 </figure>
