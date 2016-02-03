@@ -545,9 +545,6 @@ class PageHeaderController extends WikiaController {
 			$this->title = '';
 		}
 
-		// temp styles loader for testing
-		$this->response->addAsset( 'wikiahubs_v3_scss' );
-
 		// always use the database defaults for these
 		// as they're URLs that could be modified to anything
 		$this->fbMsg = wfMessage( 'wikiahubs-v3-social-facebook-link' )
