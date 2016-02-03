@@ -48,4 +48,11 @@ class ExactTargetApiHelperTest extends WikiaBaseTest {
 		$this->assertEquals( self::TEST_KEY, $subscribers[3]->SubscriberKey );
 	}
 
+	public function testWrapCreateRequest() {
+		$soapVars = [ 'something' => 1 ];
+		$request = $this->helper->wrapCreateRequest( $soapVars );
+		$this->assertNull( $request->Options );
+		$this->assertEquals( $request->Objects, $soapVars );
+	}
+
 }
