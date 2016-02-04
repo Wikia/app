@@ -1,6 +1,7 @@
 @import "skins/shared/color";
 @import "skins/shared/mixins/box-shadow";
 @import "skins/shared/mixins/clearfix";
+@import 'skins/shared/mixins/flexbox';
 @import "skins/shared/mixins/menus";
 
 // TODO: all of these should be consolidated and put into oasis
@@ -283,21 +284,16 @@
 	}
 }
 
-.WikiaPage .WikiaPageHeader {
+.page-header.forum {
+	@include align-content(stretch);
+	@include align-items(flex-start);
+	@include flex-direction(row);
+	@include flexbox;
+	@include flex-wrap(nowrap);
+	@include justify-content(flex-start);
 	border-bottom: 0;
-	margin: 0 10px 0 0;
+	margin-bottom: 0;
 	padding-bottom: 0;
-	padding-right: 0;
-	position: relative;
-
-	h1 {
-		margin: 0;
-		word-break: normal;
-	}
-
-	.header-right {
-		float: right;
-	}
 
 	.tally {
 		float: left;
@@ -306,10 +302,6 @@
 
 		&.last {
 			border-left: 1px solid $color-page-border-subtle;
-		}
-
-		> span {
-			float: left;
 		}
 	}
 }

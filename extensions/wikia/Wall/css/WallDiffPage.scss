@@ -1,7 +1,8 @@
-.WikiaPageHeader { 
+.page-header { 
 	.wikia-button {
-		display:none;
+		display: none;
 	}
+
 	.WikiaSearch {
 		.wikia-button {
 			display: inline;
@@ -9,14 +10,8 @@
 	}
 }
 
-.mw-rev-head-action {
-	display:none;
-}
-
-.mw-rollback-link{
-	display:none;
-}
-
+.mw-rev-head-action,
+.mw-rollback-link,
 .mw-revdelundel-link {
-	display:none;
+	display: none;
 }

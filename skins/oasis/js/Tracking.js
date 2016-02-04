@@ -70,7 +70,7 @@ jQuery(function ($) {
 			return;
 		}
 
-		$('#WikiaPageHeader').on('mousedown', 'a', function (e) {
+		$('#pageHeader').on('mousedown', 'a', function (e) {
 			var label,
 				el = $(e.currentTarget),
 				id = el.data('id');

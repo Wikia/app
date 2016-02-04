@@ -3,40 +3,44 @@
 @import 'skins/shared/mixins/flexbox';
 @import 'layout';
 
-.WikiaPageHeader {
-	margin: 0 10px 10px;
-	position: relative;
+.page-header {
+	border-bottom: solid 1px $color-page-border;
+	margin-bottom: 7px;
+	padding: 7px 0;
 
-	&.separator {
-		border-bottom: 1px solid $color-page-border;
-		padding: 0 0 15px;
-	}
-
-	&.editbox {
-		margin: 0 0 10px;
-		padding: 20px 90px 0 0;
-
-		p {
-			margin-top: 4px;
-		}
-	}
-
-	.ns-talk & {
-		padding-right: 10px;
-
+	.ve-activated & {
+		.button,
+		.wikia-button,
 		.wikia-menu-button {
-			float: right;
-			top: 7px;
+			display: none;
 		}
 	}
 
-	.commentslikes {
-		float: right;
-		margin: 0 -10px 4px 0;
-		padding: 1px 0;
+	&.index {
+		@include align-content(stretch);
+		@include align-items(flex-start);
+		@include flex-direction(row);
+		@include flexbox;
+		@include flex-wrap(nowrap);
+		@include justify-content(flex-start);
+	}
 
-		.likes {
-			padding-top: 1px;
+	.header-column {
+		float: none;
+
+		&.header-left {
+			@include align-self(flex-start);
+			@include flex(0 1 100%);
+			// This is fix for firefox bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1136818
+			// CONCF-560
+			min-width: 0;
+			order: 0;
+		}
+
+		&.header-right {
+			@include align-self(auto);
+			@include flex(0 0 auto);
+			order: 0;
 		}
 	}
 
@@ -44,13 +48,11 @@
 		display: inline;
 		font-size: 26px;
 		line-height: 27px;
-		//@TODO CONCF-189 remove this declaration when social buttons are live
-		margin: 0 10px;
+		margin-right: 10px;
 		word-wrap: break-word;
 
 		strong {
 			font-weight: bold;
-			margin-right: 5px;
 		}
 
 		i {
@@ -58,228 +60,38 @@
 		}
 	}
 
-	.view-source {
-		font-size: 10px;
-		position: relative;
-		top: -2px;
-
-		img {
-			padding: 0 3px;
-			vertical-align: baseline;
-		}
-
-		.sprite {
-			position: relative;
-			top: 1px;
-		}
-	}
-
-	h2,
-	p {
-		border: 0;
-		font-size: 14px;
-		margin-top: 4px;
-	}
-
-	.subtitle {
-		line-height: 1.5em;
-		margin: 1em 0;
-	}
-
-	img {
-		vertical-align: text-bottom;
-	}
-
+	.button,
 	.wikia-button,
 	.wikia-menu-button {
-		margin-top: 2px;
+		margin-right: 10px;
 		vertical-align: top;
 		z-index: 3;
 	}
 
-	.mainpage-tally {
+	.page-share-container {
+		text-align: right;
+	}
+
+	.tally {
 		float: right;
-		margin-right: 10px;
-		padding: 1px 0;
+		margin-top: 4px;
+		white-space: nowrap;
 
-		> span {
-			float: left;
+		em {
+			float: none;
+		}
+
+		span {
+			display: inline-block;
+			float: none;
 		}
 	}
 
-	.mainpage-add-page {
-		border-right: 1px solid $color-page-border;
-		float: right;
-		line-height: 20px;
-		margin-top: 2px;
-		padding: 0 10px;
-	}
-}
-
-// WikiaNav - begin
-.wikinav2 {
-	.WikiaPageHeader {
-		//@TODO CONCF-189 border-bottom should be removed when social buttons enabled globally
-		border-bottom: solid 1px $color-page-border;
-		margin-bottom: 10px;
-		padding-bottom: 7px;
-		//@TODO CONCF-189 should be removed when social buttons enabled globally - flexbox enabled
-		padding-right: 175px;
-		word-wrap: break-word;
-
-		> .comments {
-			margin: 2px 10px 0;
-		}
-
-		> .tally {
-			position: absolute;
-			right: 0;
-			top: 0;
-
-			&.mainpage-tally {
-				position: static;
-			}
-		}
-	}
-
-	&.oasis-one-column {
-		.WikiaPageHeader {
-			//@TODO CONCF-189 should be removed when social buttons enabled globally - flexbox enabled
-			padding-right: 505px;
-
-			&.WikiaPageHeaderDiffHistory {
-				margin-right: 10px;
-				padding-right: 320px;
-			}
-
-			.tally {
-				right: 330px;
-			}
-		}
-
-		.WikiaSearchHeader {
-			position: absolute;
-			right: 10px;
-			top: 0;
-			width: $wikia-search-base-width + 100px;
-			z-index: 3;
-
-			form {
-				border-bottom: 0;
-				margin-bottom: 0;
-				padding-bottom: 0;
-			}
-		}
-
-		// temp grid transition code - integrate into main, then remove after grid is fully rolled out
-		.WikiaGrid {
-			.WikiaPageHeader .tally {
-				right: 340px;
-			}
-
-			.WikiaSearchHeader {
-				right: 0;
-			}
-		}
-		// temp grid transition code
-	}
-}
-// WikiaNav - end
-
-// main page
-.oasis-one-column .WikiaPageHeader {
-	padding-right: 320px;
-	position: relative;
-
-	.WikiaSearch {
-		position: absolute;
-		right: 0;
-		top: 1px;
-		width: $wikia-search-base-width + 100px;
-	}
-
-	details {
-		width: 980px;
-	}
-}
-
-//Changes related with Social Icons roll-out
-//@TODO CONCF-189 padding-right should be removed when social buttons enabled globally
-.oasis-one-column {
-	.wikia-page-header.WikiaPageHeader {
-		padding-right: 0;
-	}
-}
-.wikia-page-header {
-	//@TODO CONCF-189 border-bottom should be removed when social buttons enabled globally
-	&.WikiaPageHeader {
-		border: none;
-		padding-right: 0;
-	}
-
-	.header-container {
-		@include align-content(stretch);
-		@include align-items(flex-start);
-		@include flex-direction(row);
-		@include flexbox;
-		@include flex-wrap(nowrap);
-		@include justify-content(flex-start);
-		border-bottom: solid 1px $color-page-border;
-		margin-bottom: 7px;
-	}
-
-	.header-column {
-		float: none;
-		padding-bottom: 7px;
-		padding-top: 7px;
-
-		&.header-title {
-			@include align-self(flex-start);
-			@include flex(0 1 100%);
-			// This is fix for firefox bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1136818
-			// Jira ticket: https://wikia-inc.atlassian.net/browse/CONCF-560
-			min-width: 0;
-			order: 0;
-		}
-
-		&.header-tally {
-			@include align-self(flex-end);
-			@include flex(0 0 auto);
-			order: 0;
-
-			.page-share-toolbar {
-				text-align: right;
-			}
-
-			.tally {
-				float: right;
-				white-space: nowrap;
-
-				em {
-					float: none;
-				}
-
-				span {
-					display: inline-block;
-					float: none;
-				}
-			}
-		}
-
-		h1 {
-			margin: 0 10px 0 0;
-		}
-	}
-}
-
-.ve-activated .wikia-page-header {
-	padding-bottom: 0;
-
-	.header-container {
-		margin-bottom: 0;
-	}
-
-	.wikia-button, .wikia-menu-button, .header-tally {
-		display: none;
+	.breadcrumbs,
+	.subtitle {
+		border: 0;
+		font-size: 14px;
+		line-height: 18px;
+		margin-top: 4px;
 	}
 }
