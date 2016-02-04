@@ -18,16 +18,15 @@ class SpecialVideosHooks {
 			$app->wg->Title->isSpecial( 'Videos' ) &&
 			$app->wg->User->isAllowed( 'videoupload' )
 		) {
-			$text = Html::element(
+			$linkContent = Html::element(
 				'img',
 				[
 					'src' => wfBlankImgUrl(),
 					'class' => 'sprite addRelatedVideo'
-				],
-				null
+				]
 			);
 
-			$text .= ' ' . wfMessage( 'videos-add-video' )->escaped();
+			$linkContent .= ' ' . wfMessage( 'videos-add-video' )->escaped();
 
 			// use rawElement so it doesn't escape $text
 			// or more specifically, the img tag above
@@ -39,8 +38,7 @@ class SpecialVideosHooks {
 					'rel' => 'tooltip',
 					'title' => wfMessage( 'related-videos-tooltip-add' )->escaped()
 				],
-				$text
-
+				$linkContent
 			);
 		}
 

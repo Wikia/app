@@ -65,7 +65,7 @@
 		width: 100%;
 	}
 
-	.wikinav2.oasis-one-column .WikiaPageHeader .tally {
+	.wikinav2.oasis-one-column .page-header .tally {
 		@media #{$breakpoint-small-only} {
 			right: 0;
 		}
@@ -99,7 +99,7 @@
 			margin-left: 10px;
 		}
 
-		.wikinav2.oasis-one-column .WikiaPageHeader {
+		.wikinav2.oasis-one-column .page-header {
 			padding: 0;
 		}
 
@@ -241,7 +241,7 @@
 		padding-right: 0;
 	}
 
-	.WikiaPageHeader {
+	.page-header {
 		margin-left: 0;
 		margin-right: 0;
 	}
@@ -311,6 +311,37 @@
 	}
 }
 
+@if $oasisTypography == 1 {
+	@media #{$breakpoint-below-large} {
+		.page-header {
+			.button,
+			.wikia-button,
+			.wikia-menu-button {
+				margin-top: 4px;
+			}
+
+			.page-share-container {
+				margin-top: 2px;
+			}
+		}
+	}
+
+	@media #{$breakpoint-large-up} {
+		.page-header {
+			.button,
+			.wikia-button,
+			.wikia-menu-button {
+				margin-top: 8px;
+			}
+
+			.page-share-container {
+				margin-top: 6px;
+			}
+		}
+	}
+}
+
+
 // Visual Editor changes for breakpoints
 $ve-overlay-color: rgba(0, 0, 0, .5);
 $vw-overlay-shadow-size: 1000vw; // IE does not support vmax
@@ -329,7 +360,7 @@ body.ve {
 		display: none !important;
 	}
 
-	.WikiaPageHeader {
+	.page-header {
 		margin: 0 10px;
 	}
 

@@ -85,8 +85,8 @@
 		}
 	}
 
-	.WikiaPageHeader,
-	.wikinav2 .WikiaPageHeader {
+	.page-header,
+	.wikinav2 .page-header {
 		margin: 0 0 $width-padding;
 		padding-bottom: $width-padding / 2;
 
@@ -209,7 +209,7 @@
 		.WikiaSearchHeader .WikiaSearch,
 		.WikiaRail .WikiaSearch,
 		.WikiaRail .search-suggest,
-		.WikiaPageHeader .WikiaSearch {
+		.page-header .WikiaSearch {
 			display: none;
 		}
 	}

@@ -249,7 +249,7 @@ class ForumHooksHelper {
 
 		// check namespace(s)
 
-		if ( $ns == NS_FORUM || $ns == NS_FORUM_TALK ) {
+		if ( $ns === NS_FORUM || $ns === NS_FORUM_TALK ) {
 			if ( !static::canEditOldForum( $app->wg->User ) ) {
 				$action = [
 					'class' => '',
