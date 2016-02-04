@@ -9,7 +9,6 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
  */
 
 set_time_limit( 0 );
-$wgGroupPermissions['util']['batchuserrights'] = true;
 
 $wgSpecialPages['BatchUserRights'] = 'SpecialBatchUserRights';
 // $wgAutoloadClasses['SpecialBatchUserRights'] = $dir . 'SpecialBatchUserRights.php';

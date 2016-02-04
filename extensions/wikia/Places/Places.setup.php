@@ -85,9 +85,3 @@ JSMessages::registerPackage('Places', array(
 
 JSMessages::registerPackage('PlacesEditPageButton', array( 'places-toolbar-button-tooltip' ) );
 JSMessages::registerPackage('PlacesGeoLocationModal', array( 'places-geolocation-modal-*' ) );
-
-/*
- * user rights
- */
-$wgGroupPermissions['*']['places-enable-category-geolocation'] = false;
-$wgGroupPermissions['sysop']['places-enable-category-geolocation'] = true;

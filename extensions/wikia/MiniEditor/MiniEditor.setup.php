@@ -33,9 +33,3 @@ $wgSpecialPages['MiniEditorDemo'] = 'MiniEditorSpecialController';
  * Message files
  */
 $wgExtensionMessagesFiles['MiniEditor'] = $dir . 'MiniEditor.i18n.php';
-
-/**
- * Permissions
- */
-$wgGroupPermissions['*']['minieditor-specialpage'] = false;
-$wgGroupPermissions['staff']['minieditor-specialpage'] = true;

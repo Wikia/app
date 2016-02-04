@@ -8,12 +8,6 @@
 $wgHooks[ "CustomSpecialStatistics" ][] = "DumpsOnDemand::customSpecialStatistics";
 $wgExtensionMessagesFiles[ "DumpsOnDemand" ] =  __DIR__ . '/DumpsOnDemand.i18n.php';
 
-$wgGroupPermissions['*']['dumpsondemand'] = false;
-$wgGroupPermissions['staff']['dumpsondemand'] = true;
-$wgGroupPermissions['sysop']['dumpsondemand'] = true;
-$wgGroupPermissions['bureaucrat']['dumpsondemand'] = true;
-$wgGroupPermissions['autoconfirmed']['dumpsondemand'] = true;
-
 class DumpsOnDemand {
 
 	const BASEURL = "http://dumps.wikia.net";

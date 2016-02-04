@@ -40,17 +40,5 @@ $wgSpecialPages[ 'PromoteImageReview'] = 'PromoteImageReviewSpecialController';
 $wgHooks['WikiFactory::onPostChangesApplied'][] = 'CityVisualization::onWikiDataUpdated';
 $wgHooks['CreatePromoImageReviewTask'][] = 'PromoteImageReviewHelper::onCreatePromoteImageReviewTask';
 
-// rights
-$wgGroupPermissions['util']['promoteimagereview'] = true;
-$wgGroupPermissions['vstf']['promoteimagereview'] = true;
-
-$wgGroupPermissions['util']['promoteimagereviewquestionableimagereview'] = true;
-
-$wgGroupPermissions['util']['promoteimagereviewrejectedimagereview'] = true;
-
-$wgGroupPermissions['util']['promoteimagereviewstats'] = true;
-
-$wgGroupPermissions['util']['promoteimagereviewcontrols'] = true;
-
 // i18n
 $wgExtensionMessagesFiles['PromoteImageReview'] = $dir . 'PromoteImageReview.i18n.php';

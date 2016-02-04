@@ -40,22 +40,5 @@ $wgSpecialPages['ImageReview'] = 'ImageReviewSpecialController';
 // hooks setup
 $wgExtensionFunctions[] = 'ImageReviewHooks::setupHooks';
 
-// rights
-$wgGroupPermissions['util']['imagereview'] = true;
-$wgGroupPermissions['vstf']['imagereview'] = true;
-
-$wgGroupPermissions['reviewer']['imagereview'] = true;
-$wgGroupPermissions['reviewer']['deletedhistory'] = true;
-$wgGroupPermissions['reviewer']['deletedtext'] = true;
-$wgGroupPermissions['reviewer']['edit'] = false;
-
-$wgGroupPermissions['util']['questionableimagereview'] = true;
-
-$wgGroupPermissions['util']['rejectedimagereview'] = true;
-
-$wgGroupPermissions['util']['imagereviewstats'] = true;
-
-$wgGroupPermissions['util']['imagereviewcontrols'] = true;
-
 // i18n
 $wgExtensionMessagesFiles['ImageReview'] = $dir . 'ImageReview.i18n.php';

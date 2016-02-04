@@ -17,50 +17,14 @@ class UserTest extends MediaWikiTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$this->savedGroupPermissions = $GLOBALS['wgGroupPermissions'];
-		$this->savedRevokedPermissions = $GLOBALS['wgRevokePermissions'];
-
-		$this->setUpPermissionGlobals();
 		$this->setUpUser();
-	}
-	private function setUpPermissionGlobals() {
-		global $wgGroupPermissions, $wgRevokePermissions;
-
-		# Data for regular $wgGroupPermissions test
-		$wgGroupPermissions['unittesters'] = array(
-			'test' => true,
-			'runtest' => true,
-			'writetest' => false,
-			'nukeworld' => false,
-		);
-		$wgGroupPermissions['testwriters'] = array(
-			'test' => true,
-			'writetest' => true,
-			'modifytest' => true,
-		);
-		# Data for regular $wgRevokePermissions test
-		$wgRevokePermissions['formertesters'] = array(
-			'runtest' => true,
-		);
 	}
 	private function setUpUser() {
 		$this->user = new User;
-		$this->user->addGroup( 'unittesters' );
 	}
 
 	public function tearDown() {
 		parent::tearDown();
-
-		$GLOBALS['wgGroupPermissions'] = $this->savedGroupPermissions;
-		$GLOBALS['wgRevokePermissions'] = $this->savedRevokedPermissions;
-	}
-
-	public function testUserPermissions() {
-		$rights = $this->user->getRights();
-		$this->assertContains( 'runtest', $rights );
-		$this->assertNotContains( 'writetest', $rights );
-		$this->assertNotContains( 'modifytest', $rights );
-		$this->assertNotContains( 'nukeworld', $rights );
 	}
 
 	/**

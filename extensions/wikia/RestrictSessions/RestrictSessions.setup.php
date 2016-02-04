@@ -24,7 +24,4 @@ $wgAutoloadClasses['RestrictSessions\RestrictSessionsHooks'] =  __DIR__ . '/Rest
 
 $wgExtensionMessagesFiles['RestrictSessions'] = __DIR__ . '/RestrictSessions.i18n.php' ;
 
-$wgGroupPermissions['staff']['restrictsession'] = true;
-$wgGroupPermissions['util']['restrictsession'] = true;
-
 $wgExtensionFunctions[] = '\RestrictSessions\RestrictSessionsHooks::setupHooks';

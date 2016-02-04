@@ -30,13 +30,6 @@ $wgSpecialPages['LicensedVideoSwap'] = 'LicensedVideoSwapSpecialController';
 
 $wgSpecialPageGroups['LicensedVideoSwap'] = 'media';
 
-// permissions
-$wgGroupPermissions['*']['licensedvideoswap'] = false;
-$wgGroupPermissions['staff']['licensedvideoswap'] = true;
-$wgGroupPermissions['sysop']['licensedvideoswap'] = true;
-$wgGroupPermissions['helper']['licensedvideoswap'] = true;
-$wgGroupPermissions['vstf']['licensedvideoswap'] = true;
-
 // hooks
 $wgHooks['PageHeaderIndexExtraButtons'][] = 'LicensedVideoSwapHooksHelper::onPageHeaderIndexExtraButtons';
 $wgHooks['OasisAddPageDeletedConfirmationMessage'][] = 'LicensedVideoSwapHooksHelper::onOasisAddPageDeletedConfirmationMessage';

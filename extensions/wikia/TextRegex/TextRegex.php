@@ -19,9 +19,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TextRegex'
 );
 
-// New user right
-$wgGroupPermissions['staff']['textregex'] = true;
-
 // Set up the new special page
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['TextRegex'] = $dir . 'TextRegex.i18n.php';

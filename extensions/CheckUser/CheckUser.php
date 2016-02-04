@@ -33,9 +33,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'checkuser-desc',
 );
 
-$wgGroupPermissions['checkuser']['checkuser'] = true;
-$wgGroupPermissions['checkuser']['checkuser-log'] = true;
-
 // Legacy variable, no longer used. Used to point to a file in the server where
 // CheckUser would log all queries done through Special:CheckUser.
 // If this file exists, the installer will try to import data from this file to

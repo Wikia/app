@@ -24,9 +24,6 @@ $wgExtensionCredits['specialpage'][] = array(
 $wgExtensionMessagesFiles["Multiwikiedit"] = dirname(__FILE__) . '/MultiTasks.i18n.php';
 $wgExtensionMessagesFiles['MultiwikieditAliases'] = __DIR__ . '/MultiTasks.aliases.php';
 
-$wgGroupPermissions['staff']['multiwikiedit'] = true;
-$wgGroupPermissions['helper']['multiwikiedit'] = true;
-
 require_once( $IP . "/extensions/wikia/TaskManager/BatchTask.php" );
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialMultiWikiEdit_body.php', 'Multiwikiedit', 'Multiwikiedit' );

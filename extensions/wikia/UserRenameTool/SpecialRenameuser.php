@@ -35,10 +35,6 @@ $dir = dirname( __FILE__ ) . '/';
 $wgSpecialPages['UserRenameTool'] = 'SpecialRenameuser';
 $wgSpecialPageGroups['UserRenameTool'] = 'users';
 
-// rights
-$wgGroupPermissions['*']['renameuser'] = false;
-$wgGroupPermissions['staff']['renameuser'] = true;
-
 
 // internationalization files
 $wgExtensionMessagesFiles['UserRenameTool'] = $dir . 'SpecialRenameuser.i18n.php';

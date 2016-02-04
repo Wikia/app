@@ -49,8 +49,6 @@ define('APCOND_TOR', 'tor'); // Numbers won't work, we'll get collisions
  */
 $wgTorBypassPermissions = array( 'torunblocked', /*'autoconfirmed', 'proxyunbannable'*/ );
 
-$wgGroupPermissions['user']['torunblocked'] = true;
-
 /**
  * Whether to load Tor blocks if they aren't stored in memcached.
  * Set to false on high-load sites, and use a cron job with the included

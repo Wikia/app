@@ -48,11 +48,6 @@ $wgAutoloadClasses['SpecialNewWikisGraphSourceDatabase'] = $dir . '/Metrics/Spec
 require_once( $dir . '/Tags/WikiFactoryTags.php' );
 require_once( $dir . '/Tags/WikiFactoryTagsQuery.php' );
 
-/**
- * permissions
- */
-$wgGroupPermissions['staff']['wikifactorymetrics'] = true;
-
 extAddSpecialPage( dirname(__FILE__) . '/SpecialWikiFactory_body.php', 'WikiFactory', 'WikiFactoryPage' );
 $wgSpecialPageGroups['WikiFactory'] = 'wikia';
 

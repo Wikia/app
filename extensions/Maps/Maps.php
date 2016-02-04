@@ -304,13 +304,6 @@ $wgResourceModules['mapeditor'] = array(
 	)
 );
 
-# Users that can geocode. By default the same as those that can edit.
-foreach ( $wgGroupPermissions as $group => $rights ) {
-	if ( array_key_exists( 'edit' , $rights ) ) {
-		$wgGroupPermissions[$group]['geocode'] = $wgGroupPermissions[$group]['edit'];
-	}
-}
-
 $egMapsGlobalJSVars = array();
 
 /**

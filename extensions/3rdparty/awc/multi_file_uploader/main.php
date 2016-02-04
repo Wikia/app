@@ -2,8 +2,6 @@
 
 $wgExtensionFunctions[] = "wfExtensionAWCMultiFileUploader";
 
-$wgGroupPermissions[ 'user' ][ 'MultiFileUploader' ] = true;
-
 function wfExtensionAWCMultiFileUploader() {
     global $wgMessageCache;
     $wgMessageCache->addMessages(array('awcmultifileuploader' => 'Multi-File Uploader')); //will expand

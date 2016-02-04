@@ -18,5 +18,3 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['SOTD'] = $dir . 'Special_SOTD.body.php';
 $wgSpecialPages['SOTD'] = 'SOTD';
 $wgExtensionMessagesFiles['SOTD'] = $dir . 'Special_SOTD.i18n.php';
-$wgGroupPermissions['sysop']['moderatesotd'] = true;
-$wgGroupPermissions['sotdhelper']['moderatesotd'] = true;

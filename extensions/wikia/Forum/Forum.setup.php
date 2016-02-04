@@ -96,9 +96,6 @@ include ( $dir . '/Forum.namespace.setup.php' );
 $app->registerNamespaceControler( NS_WIKIA_FORUM_BOARD, 'ForumController', 'board', true );
 $app->registerNamespaceControler( NS_WIKIA_FORUM_TOPIC_BOARD, 'ForumController', 'board', true );
 
-// permissions
-include ( $dir . '/Forum.rights.setup.php' );
-
 JSMessages::registerPackage( 'Forum', array(
 	'back',
 	'forum-specialpage-policies-edit',

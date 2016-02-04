@@ -42,9 +42,6 @@ $wgExtensionCredits['other'][] = array(
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/HAWelcome/'
 );
 
-$wgGroupPermissions['bot']['welcomeexempt'] = true;
-$wgGroupPermissions['staff']['welcomeexempt'] = true;
-
 $wgExtensionMessagesFiles[ 'HAWelcome' ] = $dir . '/HAWelcome.i18n.php';
 
 $wgAutoloadClasses['HAWelcomeHooks'] =  $dir . 'HAWelcomeHooks.php' ;

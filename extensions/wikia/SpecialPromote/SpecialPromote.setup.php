@@ -42,9 +42,3 @@ JSMessages::registerPackage('SpecialPromote', array('promote-*'));
 
 // special pages
 $wgSpecialPages['Promote'] = 'SpecialPromoteController';
-
-$wgGroupPermissions['*']['restricted_promote'] = false;
-$wgGroupPermissions['staff']['restricted_promote'] = true;
-$wgGroupPermissions['helper']['restricted_promote'] = true;
-$wgGroupPermissions['sysop']['restricted_promote'] = false;
-$wgGroupPermissions['bureaucrat']['restricted_promote'] = false;

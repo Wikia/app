@@ -22,15 +22,6 @@ if( defined( 'MEDIAWIKI' ) ) {
 	$wgExtensionMessagesFiles['SpecialVote'] = dirname(__FILE__) . '/Vote.i18n.php';
 
 	/**
-	 * Users who can vote
-	 */
-	$wgGroupPermissions['user']['vote'] = false;
-	/**
-	 * Users who can view vote results
-	 */
-	$wgGroupPermissions['bureaucrat']['voteadmin'] = false;
-
-	/**
 	 * Extension setup function
 	 */
 	function efVote() {

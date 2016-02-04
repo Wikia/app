@@ -39,11 +39,6 @@ $wgSpecialPages['Insights'] = 'InsightsController';
 $wgSpecialPageGroups['Insights'] = 'wikia';
 
 /**
- * Permissions
- */
-$wgGroupPermissions['*']['insights'] = true;
-
-/**
  * Models
  */
 $wgAutoloadClasses['InsightsModel'] = $dir . 'models/InsightsModel.php';

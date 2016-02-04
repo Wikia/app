@@ -15,7 +15,4 @@ $wgAutoloadClasses['QuestDetailsSolrHelper'] = $searchDir . "QuestDetails/QuestD
 
 $wgSpecialPages['Metadata']		= 'MetadataSpecialController';
 
-$wgGroupPermissions['*']['metadata'] = false;
-$wgGroupPermissions['staff']['metadata'] = true;
-
 $wgWikiaApiControllers['PalantirApiController'] =  $dir . 'PalantirApiController.class.php';

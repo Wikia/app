@@ -25,14 +25,6 @@ $wgExtensionCredits['other'][] = [
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ContentReview',
 	'descriptionmsg'    => 'content-review-desc',
 ];
-
-/**
- * Groups and permissions
- */
-$wgGroupPermissions['*']['content-review'] = false;
-$wgGroupPermissions['content-reviewer']['content-review'] = true;
-
-$wgGroupPermissions['user']['content-review-test-mode'] = true;
 /**
  * Controllers
  */

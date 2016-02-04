@@ -123,11 +123,6 @@ if ( !empty($wgVideoHandlersVideosMigrated) ) {
 	$wgHooks['ParserFirstCallInit'][] = 'VideoHandlerHooks::initParserHook';
 }
 
-// permissions
-$wgGroupPermissions['staff']['specialvideohandler'] = true;
-$wgGroupPermissions['*']['uploadpremiumvideo'] = false;
-$wgGroupPermissions['staff']['uploadpremiumvideo'] = true;
-
 /*
  * handlers
  */

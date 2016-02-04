@@ -17,8 +17,3 @@ $wgSpecialPages['FinishCreate'] = 'SpecialFinishCreate';
 
 // i18n mapping
 $wgExtensionMessagesFiles['CreateNewWiki'] = $dir . 'CreateNewWiki.i18n.php';
-
-// permissions
-$wgGroupPermissions['staff']['finishcreate'] = true;
-$wgGroupPermissions['sysop']['finishcreate'] = true;
-$wgGroupPermissions['bureaucrat']['finishcreate'] = true;

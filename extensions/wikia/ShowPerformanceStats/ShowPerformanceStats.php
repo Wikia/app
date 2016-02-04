@@ -27,10 +27,6 @@ $wgExtensionCredits['other'][] = array(
 
 $wgExtensionMessagesFiles['ShowPerformanceStats'] = dirname(__FILE__) . '/ShowPerformanceStats.i18n.php';
 
-$wgGroupPermissions['*']['performancestats'] = false;
-$wgGroupPermissions['staff']['performancestats'] = true;
-$wgGroupPermissions['helper']['performancestats'] = true; // BugId:5497
-
 function wfGetPerformanceStats(){
 	wfProfileIn( __METHOD__ );
 	$statsString = "";

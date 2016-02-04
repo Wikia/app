@@ -27,10 +27,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/EditAccount'
 );
 
-// New user right, required to use the extension.
-$wgGroupPermissions['*']['editaccount'] = false;
-$wgGroupPermissions['util']['editaccount'] = true;
-
 // Log definition
 $wgLogTypes[] = 'editaccnt';
 $wgLogNames['editaccnt'] = 'editaccount-log';

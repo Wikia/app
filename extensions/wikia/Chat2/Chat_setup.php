@@ -19,29 +19,6 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname( __FILE__ );
 
-// rights
-$wgGroupPermissions['*']['chatmoderator'] = false;
-$wgGroupPermissions['sysop']['chatmoderator'] = true;
-$wgGroupPermissions['staff']['chatmoderator'] = true;
-$wgGroupPermissions['helper']['chatmoderator'] = true;
-$wgGroupPermissions['chatmoderator']['chatmoderator'] = true;
-$wgGroupPermissions['threadmoderator']['chatmoderator'] = true;
-
-$wgGroupPermissions['*']['chatstaff'] = false;
-$wgGroupPermissions['staff']['chatstaff'] = true;
-
-$wgGroupPermissions['*']['chatadmin'] = false;
-$wgGroupPermissions['sysop']['chatadmin'] = true;
-
-$wgGroupPermissions['*']['chat'] = false;
-$wgGroupPermissions['staff']['chat'] = true;
-$wgGroupPermissions['user']['chat'] = true;
-if ( $wgWikiaEnvironment == WIKIA_ENV_PREVIEW || $wgWikiaEnvironment == WIKIA_ENV_VERIFY ) {
-	$wgGroupPermissions['user']['chat'] = false;
-}
-
-$wgGroupPermissions['util']['chatfailover'] = true;
-
 // Allow admins to control banning/unbanning and chatmod-status
 
 

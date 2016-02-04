@@ -116,6 +116,11 @@ class PermissionsServiceImpl implements PermissionsService {
 		$this->globalGroups[] = 'translator';
 		$this->globalGroups[] = 'wikifactory';
 		$this->globalGroups[] = 'restricted-login';
+		$this->globalGroups[] = 'council';
+		$this->globalGroups[] = 'authenticated';
+		$this->globalGroups[] = 'wikiastars';
+		$this->globalGroups[] = 'restricted-login';
+		$this->globalGroups[] = 'voldev';
 	}
 
 	private function loadImplicitGroups() {
@@ -327,7 +332,21 @@ class PermissionsServiceImpl implements PermissionsService {
 			'specialvideohandler',
 			'uploadpremiumvideo',
 			'wdacreview',
-			'WhereIsExtension'
+			'WhereIsExtension',
+			'smwallowaskpage',
+			'council',
+			'authenticated',
+			'displaywikiastarslabel',
+			'editinterfacetrusted',
+			'deleteinterfacetrusted',
+			'voldev',
+			'wikianavglobal',
+			'wikianavlocal',
+			'videoupload',
+			'mcachepurge',
+			'editrestrictedfields',
+			'viewedittab',
+			'createclass'
 		);
 	}
 
@@ -344,6 +363,7 @@ class PermissionsServiceImpl implements PermissionsService {
 
 		$this->groupsAddableByGroup['sysop'] = array('chatmoderator', 'threadmoderator');
 		$this->groupsRemovableByGroup['sysop'] = array('chatmoderator', 'threadmoderator');
+		$this->groupsSelfRemovableByGroup['sysop'] = array('sysop');
 
 		$this->groupsAddableByGroup['content-reviewer'] = array('content-reviewer');
 		$this->groupsRemovableByGroup['content-reviewer'] = array('content-reviewer');

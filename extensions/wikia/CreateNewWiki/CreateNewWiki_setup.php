@@ -31,11 +31,5 @@ $wgExtensionMessagesFiles['AutoCreateWiki'] = $dir . 'AutoCreateWiki.i18n.php';
 $wgExtensionMessagesFiles['CreateNewWiki'] = $dir . 'CreateNewWiki.i18n.php';
 $wgExtensionMessagesFiles['CreateNewWikiAlias'] = $dir . 'CreateNewWiki.alias.php';
 
-// permissions
-$wgGroupPermissions['*']['createnewwiki'] = true;
-$wgGroupPermissions['staff']['createnewwiki'] = true;
-
-$wgGroupPermissions['staff']['createwikilimitsexempt'] = true;
-
 // setup functions
 $wgExtensionFunctions[] = 'CreateNewWikiController::setupCreateNewWiki';

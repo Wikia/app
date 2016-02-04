@@ -28,11 +28,6 @@ $wgExtensionCredits['specialpage'][] = array(
 $wgExtensionMessagesFiles["Scribeevents"] = dirname(__FILE__) . '/SpecialScribeEvents.i18n.php';
 $wgExtensionMessagesFiles['ScribeeventsAliases'] = __DIR__ . '/SpecialScribeEvents.aliases.php';
 
-$permname = "scribeevents";
-$wgGroupPermissions['staff'][$permname] = true;
-$wgGroupPermissions['helper'][$permname] = true;
-$wgGroupPermissions['vstf'][$permname] = true;
-
 if ( !function_exists( 'extAddSpecialPage' ) ) {
     require_once ( "$IP/extensions/ExtensionFunctions.php" );
 }

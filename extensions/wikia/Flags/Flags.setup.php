@@ -33,10 +33,6 @@ $wgExtensionCredits['other'][] = [
 $wgSpecialPages['Flags'] = 'SpecialFlagsController';
 $wgSpecialPageGroups['Flags'] = 'wikia';
 
-$wgGroupPermissions['*']['flags-administration'] = false;
-$wgGroupPermissions['sysop']['flags-administration'] = true;
-$wgGroupPermissions['staff']['flags-administration'] = true;
-
 /**
  * Controllers
  */

@@ -44,14 +44,6 @@ $wgAutoloadClasses['CommentsIndex'] = "$dir/classes/CommentsIndex.class.php";
 
 $wgExtensionMessagesFiles['ArticleComments'] = dirname(__FILE__) . '/ArticleComments.i18n.php';
 
-$wgGroupPermissions['sysop']['commentmove'] = true;
-$wgGroupPermissions['sysop']['commentedit'] = true;
-$wgGroupPermissions['sysop']['commentdelete'] = true;
-
-# PLATFORM-1707: threadmoderator additional rights
-$wgGroupPermissions['threadmoderator']['commentmove'] = true;
-$wgGroupPermissions['threadmoderator']['commentedit'] = true;
-$wgGroupPermissions['threadmoderator']['commentdelete'] = true;
 
 if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty($wgEnableBlogArticles)) {
 

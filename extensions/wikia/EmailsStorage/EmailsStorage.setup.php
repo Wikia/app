@@ -24,6 +24,3 @@ $wgSpecialPages['Emails'] = 'EmailsStorageSpecialController';
 
 // i18n
 $wgExtensionMessagesFiles['EmailsStorage'] = "$dir/EmailsStorage.i18n.php";
-
-// rights
-$wgGroupPermissions['staff']['emailsstorage'] = true;

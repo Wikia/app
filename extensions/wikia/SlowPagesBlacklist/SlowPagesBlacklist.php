@@ -19,9 +19,6 @@ $wgExtensionCredits['other'][] = array(
     'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SlowPagesBlacklist/',
 );
 
-$wgGroupPermissions['*']['forceview'] = false;
-$wgGroupPermissions['staff']['forceview'] = true;
-
 /**
  * Displays an error message if the page has been blacklisted and the action implies parsing and rendering.
  */

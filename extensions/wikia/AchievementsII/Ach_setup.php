@@ -53,24 +53,6 @@ if( !empty( $wgEnableAchievementsExt ) ) {
     $wgSpecialPages['AchievementsSharing'] = 'SpecialAchievementsSharing';
 }
 
-// RIGHTS
-$wgGroupPermissions['*']['platinum'] = false;
-$wgGroupPermissions['staff']['platinum'] = true;
-$wgGroupPermissions['helper']['platinum'] = true;
-
-$wgGroupPermissions['*']['sponsored-achievements'] = false;
-$wgGroupPermissions['staff']['sponsored-achievements'] = true;
-
-$wgGroupPermissions['*']['achievements-exempt'] = false;
-$wgGroupPermissions['helper']['achievements-exempt'] = true;
-$wgGroupPermissions['staff']['achievements-exempt'] = true;
-$wgGroupPermissions['vstf']['achievements-exempt'] = true;
-
-// overrides acievements-exempt
-$wgGroupPermissions['*']['achievements-explicit'] = false;
-$wgGroupPermissions['sysop']['achievements-explicit'] = true;
-$wgGroupPermissions['bureaucrat']['achievements-explicit'] = true;
-
 // AUTOLOADS
 
 // config

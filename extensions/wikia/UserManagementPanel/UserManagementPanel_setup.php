@@ -20,9 +20,6 @@ $wgExtensionMessagesFiles['UserManagementPanel'] = $dir.'/UserManagementPanel.i1
 // hooks
 $wgHooks['UserPagesHeaderModuleAfterGetTabs'][] = 'efUserManagementPanelAddTab';
 
-// user rights
-$wgGroupPermissions['util']['usermanagement'] = true;
-
 /**
  * @param Array $tabs
  * @param $namespace
