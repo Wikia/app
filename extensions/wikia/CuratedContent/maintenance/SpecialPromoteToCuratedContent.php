@@ -42,21 +42,21 @@ class SpecialPromoteToCuratedContentMigrator extends Maintenance {
 		if ( empty( $curatedContentData['community_data']['image_id'] ) ) {
 			$originalImageId = $curatedContentData['community_data']['image_id'];
 
-			// update image
+			// fetch image Id for update from corporate wiki for a given language
 			$image = ( new PromoImage( PromoImage::MAIN, $wgDBname ) );
 			$corporateWikiId = $cv->getTargetWikiId( $wgLang->getCode() );
-			$imageTitle = $image->getOriginFile()->getTitle();
+			$originFile = $image->getOriginFile($corporateWikiId);
+			$imageName = $image->getPathname();
+			$imageTitle = $originFile->getTitle();
+			$imageUrl = $originFile->getUrl();
 			$imageId = $imageTitle->exists() ? $imageTitle->getArticleID() : null;
 
 			if ( !empty( $imageId ) ) {
-				// we are good to go; image exists on the destination wiki
-			} else {
-				// image does not exist on this community
-				// we need to upload the image to the local wiki
+				// image exists on the corporate site. Since it's the final source of truth
+				// for apps (and unapproved images cannot be there) we upload it to the local wiki
 				// we first need to fetch it from the corporate wiki
-				$imageUrl = $image->getOriginFile( $corporateWikiId )->getUrl();
-				$imageName = $image->getPathname();
-
+				// and now we upload it, disabling the Special:Promote upload prevention
+				// implemented as validation hook
 				$this->disableUploadValidationHook();
 				$result = $this->uploadImageToLocalWiki( $imageName, $imageUrl );
 
@@ -65,6 +65,10 @@ class SpecialPromoteToCuratedContentMigrator extends Maintenance {
 				} else {
 					$this->output( 'Upload failed: ' . serialize( $result ) );
 				}
+			} else {
+				// image may exist on the local wiki, we use it as fallback
+				$imageTitle = $image->getOriginFile()->getTitle();
+				$imageId = $imageTitle->exists() ? $imageTitle->getArticleID() : null;
 			}
 
 		}
