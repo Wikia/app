@@ -33,7 +33,7 @@ class PlacesHooks {
 						'href' => '#',
 						'text' => wfMessage( 'places-category-switch' )->escaped()
 					],
-					'class' =>  $commonClasses . (!$isGeotaggingEnabled ? $disabled : ''),
+					'class' =>  $commonClasses . ( !$isGeotaggingEnabled ? $disabled : '' ),
 					'name' => 'places-category-switch-on'
 				]
 			);
