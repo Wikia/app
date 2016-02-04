@@ -74,7 +74,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.getBodyHeight = function () {
 
 /**
  * @inheritdoc
- * @param {boolean} Sets if the main page (insert image drop area) should be shown
  */
 ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	var uploadEvents = {

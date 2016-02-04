@@ -3,10 +3,10 @@
  */
 
 /**
- * Dialog for inserting MediaWiki media objects.
+ * Dialog for inserting videos.
  *
  * @class
- * @extends ve.ui.FragmentDialog
+ * @extends ve.ui.WikiaMediaInsertDialog
  *
  * @constructor
  * @param {Object} [config] Config options
