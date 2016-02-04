@@ -25,7 +25,6 @@ use Wikia\DependencyInjection\Injector;
 use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
 use Wikia\Service\User\Attributes\UserAttributes;
-use Wikia\Service\User\Preferences\Migration\PreferenceCorrectionService;
 use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Util\Statistics\BernoulliTrial;
 use Wikia\Service\Helios\HeliosClient;
@@ -296,13 +295,6 @@ class User {
 	 */
 	public function arePreferencesReadOnly() {
 		return $this->userPreferences()->getPreferences( $this->getId() )->isReadOnly();
-	}
-
-	/**
-	 * @return PreferenceCorrectionService
-	 */
-	private function preferenceCorrection() {
-		return Injector::getInjector()->get(PreferenceCorrectionService::class);
 	}
 
 	/**
@@ -1159,8 +1151,18 @@ class User {
 		}
 
 		if ( !$this->isUserAuthenticatedViaAuthenticationService() ) {
-			$this->logFallbackToMediaWikiSessionRejection( $from );
-			$this->logout();
+			global $wgAuthForceLogoutOnFailedAuthSessionFallback;
+
+			/*
+			 * when failing over to Reston (readonly), users should be anonymous but their session
+			 * should resume without them having to do anything when we go back to r/w. See
+			 * SERVICES-1125
+			 */
+			if ( $wgAuthForceLogoutOnFailedAuthSessionFallback ) {
+				$this->logFallbackToMediaWikiSessionRejection( $from );
+				$this->logout();
+			}
+
 			$this->loadDefaults();
 			return false;
 		}
@@ -2519,6 +2521,7 @@ class User {
 	 * Get all user's options
 	 *
 	 * @return array
+	 * @deprecated use get(Global|Local)Preference  get(Global|Local)Attribute or get(Global|Local)Flag
 	 */
 	public function getOptions() {
 		global $wgHiddenPrefs;
@@ -2540,6 +2543,20 @@ class User {
 		// Populate with attributes from attribute service
 		foreach ( $this->userAttributes()->getAttributes( $this->getId() ) as $attrName => $attrValue ) {
 			$options[$attrName] = $attrValue;
+		}
+
+		// Populate with user global preferences, and wiki local preferences
+		$preferences = $this->userPreferences()->getPreferences( $this->getId() );
+
+		foreach ( $preferences->getGlobalPreferences() as $globalPreference ) {
+			$options[ $globalPreference->getName() ] = $globalPreference->getValue();
+		}
+
+		global $wgCityId;
+		$localPreferences = $preferences->getLocalPreferencesForWiki( $wgCityId );
+
+		foreach ( $localPreferences as $localPreference ) {
+			$options[ $localPreference->getName() ] = $localPreference->getValue();
 		}
 
 		return $options;
@@ -4938,8 +4955,6 @@ class User {
 				$this->mOptionOverrides[$row->up_property] = $row->up_value;
 				$this->mOptions[$row->up_property] = $row->up_value;
 			}
-
-			$this->preferenceCorrection()->compareAndCorrect($this->getId(), $this->mOptions);
 		}
 
 		$this->mOptionsLoaded = true;

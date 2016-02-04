@@ -5,7 +5,6 @@ class ExactTargetApiHelper {
 
 	/**
 	 * Creates an ExactTargetSoapClient object containing credentials to connect to the API.
-	 * Note: ExactTargetSoapClient should be called before other ExactTarget classes as it triggers other classes loading
 	 * @return ExactTargetSoapClient
 	 */
 	public function getClient() {

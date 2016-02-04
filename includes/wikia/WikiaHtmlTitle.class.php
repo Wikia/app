@@ -26,9 +26,9 @@ class WikiaHtmlTitle {
 	private $brandName;
 
 	public function __construct() {
-		global $wgWikiaEnvironment;
+		global $wgWikiaEnvironment, $wgEnableHostnameInHtmlTitle;
 
-		if ( $wgWikiaEnvironment !== WIKIA_ENV_PROD ) {
+		if ( $wgWikiaEnvironment !== WIKIA_ENV_PROD && $wgEnableHostnameInHtmlTitle ) {
 			$this->environment = wfHostname();
 		}
 

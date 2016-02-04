@@ -22,6 +22,8 @@ class User {
 	const AUTH_TYPE_NORMAL_PW = 1;
 	const AUTH_TYPE_RESET_PW = 2;
 	const AUTH_TYPE_FB_TOKEN = 4;
+	const INVALIDATE_CACHE_THROTTLE_SESSION_KEY = 'invalidate-cache-throttle';
+	const INVALIDATE_CACHE_THROTTLE = 60; /* seconds */
 
 	// This is set to 6 months,(365/2)*24*60*60 = 15768000
 	const ACCESS_TOKEN_COOKIE_TTL = 15768000;
@@ -105,12 +107,17 @@ class User {
 					// the code is borrowed from SpecialUserlogin
 					// @see PLATFORM-1261
 					if ( session_id() == '' ) {
-						wfSetupSession();
+						$sessionId = substr(hash('sha256',$token),0,32);
+						wfSetupSession($sessionId);
 						WikiaLogger::instance()->debug( __METHOD__ . '::startSession' );
 
 						// Update mTouched on user when he starts new MW session
 						// @see SOC-1326
-						$user->invalidateCache();
+						$invalidateCacheThrottleTime = $request->getSessionData( self::INVALIDATE_CACHE_THROTTLE_SESSION_KEY );
+						if ( $invalidateCacheThrottleTime === null || $invalidateCacheThrottleTime < time() ) {
+							$request->setSessionData( self::INVALIDATE_CACHE_THROTTLE_SESSION_KEY, time() + self::INVALIDATE_CACHE_THROTTLE );
+							$user->invalidateCache();
+						}
 					}
 
 					// return a MediaWiki's User object

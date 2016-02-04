@@ -1,10 +1,7 @@
 <?php
 
 class RobotsTxt {
-
-	// Caching for 1 hour in case this does a lot of damage and we need to revert quickly
-	// In the long run, we can for longer, much longer
-	const CACHE_PERIOD = 3600;
+	const CACHE_PERIOD = 24 * 3600;
 
 	private $allowed = [];
 	private $blockedRobots = [];
@@ -108,7 +105,7 @@ class RobotsTxt {
 		return [
 			'Content-Type: text/plain',
 			'Cache-Control: s-maxage=' . self::CACHE_PERIOD,
-			'X-Pass-Cache-Control: public, max-age=3600' . self::CACHE_PERIOD,
+			'X-Pass-Cache-Control: public, max-age=' . self::CACHE_PERIOD,
 		];
 	}
 

@@ -24,13 +24,13 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'emailext-wallmessage-owned-subject' => 'Auf {{SITENAME}} wure eine neue Nachricht für dich hinterlassen: $1',
+	'emailext-wallmessage-owned-subject' => 'Auf {{SITENAME}} wurde eine neue Nachricht für dich hinterlassen: $1',
 	'emailext-wallmessage-following-subject' => 'Auf {{SITENAME}} wurde eine neue Nachricht für $1 hinterlassen: $2',
 	'emailext-wallmessage-owned-summary' => "'''Auf [{{SERVER}} {{SITENAME}}] wurde eine neue Nachricht für dich hinterlassen: [$1 $2]'''",
 	'emailext-wallmessage-following-summary' => "'''Auf [{{SERVER}} {{SITENAME}}] wurde eine neue Nachricht für $1 hinterlassen: [$2 $3]'''",
 	'emailext-wallmessage-full-conversation' => 'Gesamter Gesprächsverlauf',
 	'emailext-wallmessage-recent-messages' => '[$1 Alle neuen Nachrichten auf $2]',
-	'emailext-wallmessage-reply-subject' => 'Auf {{SITENAME}} wurde eine neue Antwort zu $1hinterlassen',
+	'emailext-wallmessage-reply-subject' => 'Auf {{SITENAME}} wurde eine neue Antwort zu $1 hinterlassen',
 	'emailext-wallmessage-reply-summary' => "'''Auf [{{SERVER}} {{SITENAME}}] wurde eine neue Antwort zu [$1 $2] hinterlassen'''",
 );
 
@@ -113,24 +113,35 @@ $messages['pt'] = array(
 
 $messages['ru'] = array(
 	'emailext-wallmessage-owned-subject' => 'У вас новое сообщение на {{SITENAME}}: «$1»',
-	'emailext-wallmessage-following-subject' => 'У пользователя $1 новое сообщение на {{SITENAME}}: «$2»',
+	'emailext-wallmessage-following-subject' => 'У участника(цы) $1 новое сообщение на {{SITENAME}}: «$2»',
 	'emailext-wallmessage-owned-summary' => "'''У вас новое сообщение на [{{SERVER}} {{SITENAME}}]: [$1 $2]'''",
-	'emailext-wallmessage-following-summary' => "'''У пользователя $1 новое сообщение на [{{SERVER}} {{SITENAME}}]: [$2 $3]'''",
-	'emailext-wallmessage-full-conversation' => 'Обсуждение полностью',
+	'emailext-wallmessage-following-summary' => "'''У участника(цы) $1 новое сообщение на [{{SERVER}} {{SITENAME}}]: [$2 $3]'''",
+	'emailext-wallmessage-full-conversation' => 'Посмотреть обсуждение',
 	'emailext-wallmessage-recent-messages' => '[$1 Все недавние сообщения на $2]',
 	'emailext-wallmessage-reply-subject' => 'Получен новый ответ на сообщение «$1» на {{SITENAME}}',
 	'emailext-wallmessage-reply-summary' => "'''Получен новый ответ на сообщение [$1 $2] на [{{SERVER}} {{SITENAME}}]'''",
 );
 
 $messages['zh-hans'] = array(
-	'emailext-wallmessage-owned-subject' => '有人在{{SITENAME}}上给您留言：$1',
-	'emailext-wallmessage-following-subject' => '有人在{{SITENAME}}上给$1留言：$2',
-	'emailext-wallmessage-owned-summary' => "'''有人在[{{SERVER}} {{SITENAME}}]上给您留言：[$1 $2]'''",
-	'emailext-wallmessage-following-summary' => "'''有人在[{{SERVER}} {{SITENAME}}]上给$1留言：[$2 $3]'''",
+	'emailext-wallmessage-owned-subject' => '$1在{{SITENAME}}上给您留言了',
+	'emailext-wallmessage-following-subject' => '$1在{{SITENAME}}上给$2留言了',
+	'emailext-wallmessage-owned-summary' => "'''[$1 $2]在[{{SERVER}} {{SITENAME}}]上给您留言了。'''",
+	'emailext-wallmessage-following-summary' => "'''[$1 $2]在[{{SERVER}} {{SITENAME}}]给$3留言了。'''",
 	'emailext-wallmessage-full-conversation' => '完整对话',
-	'emailext-wallmessage-recent-messages' => '[$1$2上最近的所有留言]',
+	'emailext-wallmessage-recent-messages' => '[$1 $2上最近的所有留言]',
 	'emailext-wallmessage-reply-subject' => '有人在{{SITENAME}}上对$1作了回复。',
 	'emailext-wallmessage-reply-summary' => "'''有人在[{{SERVER}} {{SITENAME}}]上对[$1 $2]作了回复'''",
+);
+
+$messages['zh-hant'] = array(
+	'emailext-wallmessage-owned-subject' => '$1在{{SITENAME}}上給您留言了',
+	'emailext-wallmessage-following-subject' => '$1在{{SITENAME}}上給$2留言了',
+	'emailext-wallmessage-owned-summary' => "'''[$1 $2]在[{{SERVER}} {{SITENAME}}]上給您留言了。'''",
+	'emailext-wallmessage-following-summary' => "'''[$1 $2]在[{{SERVER}} {{SITENAME}}]給$3留言了。'''",
+	'emailext-wallmessage-full-conversation' => '完整對話',
+	'emailext-wallmessage-recent-messages' => '[$1 $2上最近的所有留言]',
+	'emailext-wallmessage-reply-subject' => '有人在{{SITENAME}}上對$1作了回復。',
+	'emailext-wallmessage-reply-summary' => "'''有人在[{{SERVER}} {{SITENAME}}]上對[$1 $2]作了回復'''",
 );
 
 $messages['zh-tw'] = array(

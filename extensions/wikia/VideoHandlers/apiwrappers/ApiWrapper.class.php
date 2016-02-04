@@ -1,5 +1,4 @@
 <?php
-
 abstract class ApiWrapper {
 
 	const RESPONSE_FORMAT_JSON = 0;
@@ -216,7 +215,7 @@ abstract class ApiWrapper {
 				}
 			break;
 			case self::RESPONSE_FORMAT_PHP :
-				$return = unserialize( $response );
+				$return = Wikia\Util\Serialize::safeUnserialize( $response );
 			break;
 			default: throw new UnsuportedTypeSpecifiedException();
 		}
@@ -636,9 +635,10 @@ abstract class PseudoApiWrapper extends ApiWrapper {
 		// override me!
 	}
 
-	protected function processResponse( $response, $type ) {
+	protected function processResponse( $response ) {
 		// override me!
 	}
+
 }
 
 /**
