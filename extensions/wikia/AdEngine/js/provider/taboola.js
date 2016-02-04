@@ -98,12 +98,12 @@ define('ext.wikia.adEngine.provider.taboola', [
 		slot.success();
 	}
 
-	function fillInSlotByConfig(slotName, slotElement, success) {
-		if (supportedSlots.regular.indexOf(slotName) !== -1) {
-			fillInSlot(slotName, slotElement, success);
-		} else if (supportedSlots.recovery.indexOf(slotName) !== -1) {
+	function fillInSlotByConfig(slot) {
+		if (supportedSlots.regular.indexOf(slot.getName()) !== -1) {
+			fillInSlot(slot);
+		} else if (supportedSlots.recovery.indexOf(slot.getName()) !== -1) {
 			recoveryHelper.addOnBlockingCallback(function () {
-				fillInSlot(slotName, slotElement, success);
+				fillInSlot(slot);
 			});
 		}
 	}

@@ -18,6 +18,7 @@ describe('ext.wikia.adEngine.adEngine decorators', function () {
 		adDecoratorFake1: noop,
 		adDecoratorFake2: noop,
 		adDecoratorLegacyParamFormat: noop,
+		adSlot: {},
 		decoratedFillInSlot: noop,
 		decoratedFillInSlotFake1: noop,
 		decoratedFillInSlotFake2: noop,
@@ -48,6 +49,7 @@ describe('ext.wikia.adEngine.adEngine decorators', function () {
 			mocks.lazyQueue,
 			mocks.adDecoratorLegacyParamFormat,
 			mocks.eventDispatcher,
+			mocks.adSlot,
 			mocks.slotTracker,
 			mocks.slotTweaker
 		);
