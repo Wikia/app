@@ -204,10 +204,13 @@ $config['adengine2_tracking_js'] = array(
 	'skin' => [ 'oasis', 'wikiamobile' ],
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/AdContext.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
+		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
-		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js'
+		'//resources/wikia/modules/krux.js',
 	),
 );
 
