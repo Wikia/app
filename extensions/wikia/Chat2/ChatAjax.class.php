@@ -157,7 +157,8 @@ class ChatAjax {
 		global $wgRequest, $wgUser;
 		wfProfileIn( __METHOD__ );
 
-		$wgRequest->isValidWriteRequest( $wgUser );
+		// MAIN-6290  server.js needs to pass edit token for this to work
+		// $wgRequest->isValidWriteRequest( $wgUser );
 
 		$kickingUser = $wgUser;
 

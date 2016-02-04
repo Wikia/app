@@ -2,9 +2,8 @@
 /*jshint camelcase:false*/
 require([
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adEngine',
+	'ext.wikia.adEngine.adEngineRunner',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
-	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.dartHelper',
@@ -21,9 +20,8 @@ require([
 	require.optional('ext.wikia.adEngine.recovery.gcs')
 ], function (
 	adContext,
-	adEngine,
+	adEngineRunner,
 	adLogicHighValueCountry,
-	adTracker,
 	adConfigDesktop,
 	customAdsLoader,
 	dartHelper,
@@ -83,10 +81,9 @@ require([
 	// Everything starts after content and JS
 	win.wgAfterContentAndJS.push(function () {
 		// Ads
-		adTracker.measureTime('adengine.init', 'queue.desktop').track();
 		scrollHandler.init(skin);
 		win.adslots2 = win.adslots2 || [];
-		adEngine.run(adConfigDesktop, win.adslots2, 'queue.desktop');
+		adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
 
 		// Recovery
 		recoveryHelper.initEventQueue();
@@ -95,8 +92,7 @@ require([
 		if (context.opts.sourcePointRecovery && win.ads) {
 			win.ads.runtime.sp.slots = win.ads.runtime.sp.slots || [];
 			recoveryHelper.addOnBlockingCallback(function () {
-				adTracker.measureTime('adengine.init', 'queue.sp').track();
-				adEngine.run(adConfigDesktop, win.ads.runtime.sp.slots, 'queue.sp');
+				adEngineRunner.run(adConfigDesktop, win.ads.runtime.sp.slots, 'queue.sp', false);
 			});
 		}
 
@@ -127,7 +123,7 @@ require([
 	'wikia.document',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.slot.exitstitial'),
-	require.optional('ext.wikia.adEngine.slot.inContentDesktop')
+	require.optional('ext.wikia.adEngine.slot.inContentDesktop'),
 ], function (inContentPlayer, skyScraper3, doc, win, exitstitial, inContentDesktop) {
 	'use strict';
 

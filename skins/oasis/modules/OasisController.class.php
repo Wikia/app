@@ -46,6 +46,7 @@ class OasisController extends WikiaController {
 		$this->rubiconFastlane = null;
 		$this->dynamicYield = null;
 		$this->ivw2 = null;
+		$this->ivw3 = null;
 
 		wfProfileOut(__METHOD__);
 	}
@@ -90,13 +91,26 @@ class OasisController extends WikiaController {
 	}
 
 	public function executeIndex($params) {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgEnableAdminDashboardExt, $wgOasisThemeSettings;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgEnableAdminDashboardExt, $wgOasisThemeSettings,
+		$wgWikiaMobileSmartBannerConfig;
 
 		wfProfileIn(__METHOD__);
 
-		//Add Smart banner for My Wikia App
-		//See: https://wikia-inc.atlassian.net/browse/MOB-167
-		$wgOut->addHeadItem('My Wikia Smart Banner', '<meta name="apple-itunes-app" content="app-id=623705389">');
+		//Add Smart banner for Wikia dedicated App
+		//Or fallback to My Wikia App
+		if (
+			!empty( $wgWikiaMobileSmartBannerConfig ) &&
+			is_array( $wgWikiaMobileSmartBannerConfig['meta'] ) &&
+			!empty( $wgWikiaMobileSmartBannerConfig['meta']['apple-itunes-app'] )
+		) {
+			$appId= $wgWikiaMobileSmartBannerConfig['meta']['apple-itunes-app'];
+			$wgOut->addHeadItem(
+				'Wikia App Smart Banner',
+				sprintf('<meta name="apple-itunes-app" content="%s, app-arguments=%s">', $appId, $wgRequest->getFullRequestURL())
+			);
+		} else {
+			$wgOut->addHeadItem('My Wikia Smart Banner', '<meta name="apple-itunes-app" content="app-id=623705389">');
+		}
 
 		/* set the grid if passed in, otherwise, respect the default */
 		$grid = $wgRequest->getVal('wikiagrid', '');
@@ -221,6 +235,7 @@ class OasisController extends WikiaController {
 			$this->rubiconFastlane = AnalyticsEngine::track('RubiconFastlane', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->ivw3 = AnalyticsEngine::track('IVW3', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
 
 		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {

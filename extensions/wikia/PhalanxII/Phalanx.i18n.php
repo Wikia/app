@@ -125,7 +125,7 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 	'phalanx-stats-table-text' => 'Text',
 	'phalanx-stats-table-reason' => 'Reason',
 	'phalanx-stats-table-comment' => 'Comment',
-	'phalanx-stats-row' => "at $4, block type '''$1''' blocked '''$2''' at $3",
+	'phalanx-stats-row' => "at $4, filter type '''$1''' blocked '''$2''' on $3",
 	'phalanx-stats-row-per-wiki' => "user '''$2''' was blocked at '''$4''' by filter ID '''$3''' ($5) (type: '''$1''', referrer: '''$6''')",
 	'phalanx-stats-not-implemented' => 'This feature is not yet implemented',
 	'phalanx-stats-results' => 'Block log',

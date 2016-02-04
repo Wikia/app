@@ -53,6 +53,14 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 					return [mocks.doc.node];
 				}
 			},
+			lazyQueue: {
+				makeQueue: function (queue, callback) {
+					queue.push = function () {
+						callback();
+					};
+					queue.start = noop;
+				}
+			},
 			log: noop,
 			slot: {
 				setFPI: function (key, value) {
@@ -90,6 +98,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
+			mocks.lazyQueue,
 			mocks.log
 		);
 	}

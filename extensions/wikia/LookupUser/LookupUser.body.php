@@ -400,9 +400,14 @@ EOT
 		global $wgRequest, $wgMemc;
 
 		$userName = $wgRequest->getVal( 'username' );
-		$wikiUrl = $wgRequest->getVal( 'url' );
 		$wikiId = $wgRequest->getVal( 'id' );
-		$apiUrl = $wikiUrl . 'api.php?action=query&list=users&ususers=' . urlencode( $userName ) . '&usprop=blockinfo|groups|editcount&format=php';
+
+		$wiki = WikiFactory::getWikiByID( $wikiId );
+		if ( empty( $wiki ) ) {
+			return json_encode( [ 'success' => false ] );
+		}
+
+		$apiUrl = $wiki->city_url . 'api.php?action=query&list=users&ususers=' . urlencode( $userName ) . '&usprop=blockinfo|groups|editcount&format=json';
 
 		$cachedData = $wgMemc->get( LookupUserPage::getUserLookupMemcKey( $userName, $wikiId ) );
 		if ( !empty( $cachedData ) ) {
@@ -411,7 +416,7 @@ EOT
 			$result = Http::get( $apiUrl );
 
 			if ( $result !== false ) {
-				$result = @unserialize( $result );
+				$result = json_decode( $result, true );
 
 				if ( isset( $result['query']['users'][0] ) ) {
 					$userData = $result['query']['users'][0];
