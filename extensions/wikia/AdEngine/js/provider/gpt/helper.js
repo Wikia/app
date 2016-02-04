@@ -52,8 +52,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	/**
 	 * Push ad to queue and flush if it should be
 	 *
-	 * @param {string}   slotName           - slot name
-	 * @param {Object}   slotElement        - slot div container
+	 * @param {Object}   slot               - slot (ext.wikia.adEngine.slot.adSlot::create instance)
 	 * @param {string}   slotPath           - slot path
 	 * @param {Object}   slotTargeting      - slot targeting details
 	 * @param {Object}   extra              - optional parameters
@@ -62,10 +61,11 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	 * @param {boolean}  extra.sraEnabled   - whether to use Single Request Architecture
 	 * @param {string}   extra.forcedAdType - ad type for callbacks info
 	 */
-	function pushAd(slotName, slotElement, slotPath, slotTargeting, extra) {
+	function pushAd(slot, slotPath, slotTargeting, extra) {
 		var count,
 			element,
 			recoverableSlots = extra.recoverableSlots || [],
+			slotName = slot.getName(),
 			shouldPush = !recoveryHelper.isBlocking() ||
 				(recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slotName, recoverableSlots));
 
@@ -81,20 +81,15 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		element = new AdElement(slotName, slotPath, slotTargeting);
 
-		function callSuccess(adInfo) {
+		slot.pre('success', function (slot, adInfo) {
 			if (adInfo && adInfo.adType === 'collapse') {
 				slotTweaker.hide(
 					element.getSlotContainerId(),
 					recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()
 				);
 			}
-
-			if (typeof extra.success === 'function') {
-				extra.success(adInfo);
-			}
-		}
-
-		function callError(adInfo) {
+		});
+		slot.pre('hop', function (slot, adInfo) {
 			slotTweaker.hide(
 				element.getSlotContainerId(),
 				recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()
@@ -104,11 +99,11 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				adInfo.method = 'hop';
 				extra.error(adInfo);
 			}
-		}
+		});
 
 		function queueAd() {
-			log(['queueAd', slotName, slotElement, element], 'debug', logGroup);
-			slotElement.appendChild(element.getNode());
+			log(['queueAd', slotName, element], 'debug', logGroup);
+			slot.getElement().appendChild(element.getNode());
 
 			googleApi.addSlot(element);
 		}
@@ -118,7 +113,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			// Let's launch our callback in a setTimeout instead.
 			setTimeout(function () {
 				log(['onAdLoadCallback', slotElementId], 'info', logGroup);
-				adDetect.onAdLoad(slotElementId, gptEvent, iframe, callSuccess, callError, extra.forcedAdType);
+				adDetect.onAdLoad(slotElementId, gptEvent, iframe, slot, extra.forcedAdType);
 			}, 0);
 		}
 
@@ -159,7 +154,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		if (slotTargeting.flushOnly) {
-			callSuccess();
+			slot.success();
 		}
 	}
 

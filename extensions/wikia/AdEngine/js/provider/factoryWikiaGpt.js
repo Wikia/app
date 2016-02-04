@@ -47,32 +47,30 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			return ret;
 		}
 
-		function fillInSlot(slotName, slotElement, success, hop) {
-			log(['fillInSlot', slotName, slotElement, success, hop], 'debug', logGroup);
+		function fillInSlot(slot) {
+			log(['fillInSlot', slot.getName()], 'debug', logGroup);
 
 			var extraParams = {
 					sraEnabled: extra.sraEnabled,
 					recoverableSlots: extra.recoverableSlots
 				},
 				pageParams = adLogicPageParams.getPageLevelParams(),
-				slotTargeting = JSON.parse(JSON.stringify(slotMap[slotName])), // copy value
+				slotName = slot.getName(),
+				slotTargeting = JSON.parse(JSON.stringify(slotMap[slot.getName()])), // copy value
 				slotPath = [
 					'/5441', 'wka.' + pageParams.s0, pageParams.s1, '', pageParams.s2, src, slotName
 				].join('/');
 
-			extraParams.success = function (adInfo) {
+			slot.pre('success', function (adInfo) {
 				if (typeof extra.beforeSuccess === 'function') {
 					extra.beforeSuccess(slotName, adInfo);
 				}
-				success(adInfo);
-			};
-
-			extraParams.error = function (adInfo) {
+			});
+			slot.pre('hop', function (adInfo) {
 				if (typeof extra.beforeHop === 'function') {
 					extra.beforeHop(slotName, adInfo);
 				}
-				hop(adInfo);
-			};
+			});
 
 			slotTargeting.pos = slotTargeting.pos || slotName;
 			slotTargeting.src = src;
@@ -81,8 +79,8 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 				lookups.extendSlotTargeting(slotName, slotTargeting, providerName);
 			}
 
-			gptHelper.pushAd(slotName, slotElement, slotPath, slotTargeting, extraParams);
-			log(['fillInSlot', slotName, success, hop, 'done'], 'debug', logGroup);
+			gptHelper.pushAd(slot, slotPath, slotTargeting, extraParams);
+			log(['fillInSlot', slotName, 'done'], 'debug', logGroup);
 		}
 
 		return {

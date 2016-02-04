@@ -75,27 +75,27 @@ define('ext.wikia.adEngine.provider.taboola', [
 		return false;
 	}
 
-	function fillInSlot(slotName, slotElement, success) {
+	function fillInSlot(slot) {
 		var container = document.createElement('div'),
-			slot = slots[slotName];
-		log(['fillInSlot', slotName, slotElement], 'debug', logGroup);
+			mappedSlot = slots[slot.getName()];
+		log(['fillInSlot', slot.getName()], 'debug', logGroup);
 
-		if (slotName === 'NATIVE_TABOOLA_ARTICLE') {
+		if (slot.getName() === 'NATIVE_TABOOLA_ARTICLE') {
 			readMoreDiv.parentNode.removeChild(readMoreDiv);
 		}
 
-		container.id = slot.id;
-		slotElement.appendChild(container);
+		container.id = mappedSlot.id;
+		slot.getElement().appendChild(container);
 
 		taboolaHelper.initializeWidget({
-			mode: slot.mode,
+			mode: mappedSlot.mode,
 			container: container.id,
-			placement: slot.label + getVerticalName(),
+			placement: mappedSlot.label + getVerticalName(),
 			target_type: 'mix'
 		});
 
-		slotTweaker.show(slotName);
-		success();
+		slotTweaker.show(slot.getName());
+		slot.success();
 	}
 
 	function fillInSlotByConfig(slotName, slotElement, success) {

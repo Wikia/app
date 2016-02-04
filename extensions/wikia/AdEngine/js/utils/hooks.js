@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.utils.hooks', function () {
+define('ext.wikia.adEngine.utils.hooks', [], function () {
 	'use strict';
 
 	/**
@@ -20,13 +20,17 @@ define('ext.wikia.adEngine.utils.hooks', function () {
 				if (!hooks[methodName]) {
 					throw new Error('Method ' + methodName + ' is not registered.');
 				}
-				hooks[methodName].pre.push(callback);
+				if (typeof callback === 'function') {
+					hooks[methodName].pre.push(callback);
+				}
 			};
 			objectInstance.post = function (methodName, callback) {
 				if (!hooks[methodName]) {
 					throw new Error('Method ' + methodName + ' is not registered.');
 				}
-				hooks[methodName].post.push(callback);
+				if (typeof callback === 'function') {
+					hooks[methodName].post.push(callback);
+				}
 			};
 		}
 

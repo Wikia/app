@@ -74,32 +74,30 @@ define('ext.wikia.adEngine.provider.evolve2', [
 		return ret;
 	}
 
-	function fillInSlot(slotName, slotElement, success, hop) {
-		log(['fillInSlot', slotName, slotElement, success, hop], 'debug', logGroup);
+	function fillInSlot(slot) {
+		log(['fillInSlot', slot.getName()], 'debug', logGroup);
 		var section = getSection(),
-			slotCopy = JSON.parse(JSON.stringify(slotMap[slotName]));
+			slotCopy = JSON.parse(JSON.stringify(slotMap[slot.getName()]));
 
 		slotCopy.sect = section;
 		setTargeting(slotCopy);
+		slot.pre('success', function () {
+			var slotName = slot.getName();
+
+			slotTweaker.removeDefaultHeight(slotName);
+			slotTweaker.removeTopButtonIfNeeded(slotName);
+			slotTweaker.adjustLeaderboardSize(slotName);
+		});
 		gptHelper.pushAd(
-			slotName,
-			slotElement,
-			'/4403/ev/' + site + '/' + section + '/' + slotName,
+			slot,
+			'/4403/ev/' + site + '/' + section + '/' + slot.getName(),
 			slotCopy,
 			{
-				success: function (adInfo) {
-					slotTweaker.removeDefaultHeight(slotName);
-					slotTweaker.removeTopButtonIfNeeded(slotName);
-					slotTweaker.adjustLeaderboardSize(slotName);
-
-					success(adInfo);
-				},
-				error: hop,
 				forcedAdType: 'evolve2'
 			}
 		);
 
-		log(['fillInSlot', slotName, slotElement, success, hop, 'done'], 'debug', logGroup);
+		log(['fillInSlot', slot.getName(), 'done'], 'debug', logGroup);
 	}
 
 	return {

@@ -211,7 +211,8 @@ $config['adengine2_tracking_js'] = array(
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
-		'//resources/wikia/modules/krux.js',
+		'//extensions/wikia/AdEngine/js/utils/hooks.js',
+		'//resources/wikia/modules/krux.js'
 	),
 );
 

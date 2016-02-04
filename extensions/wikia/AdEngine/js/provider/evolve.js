@@ -122,17 +122,18 @@ define('ext.wikia.adEngine.provider.evolve', [
 		hoppedSlots[sanitizeSlotname(slotname)] = true;
 	}
 
-	function fillInSlot(slotName, slotElement, pSuccess, pHop) {
-		log(['fillInSlot', slotName, slotElement], 5, logGroup);
+	function fillInSlot(slot) {
+		var slotName = slot.getName();
+		log(['fillInSlot', slotName], 5, logGroup);
 
 		if (slotName === slotForSkin) {
 			scriptWriter.injectScriptByUrl(
-				slotElement,
+				slot.getElement(),
 				'http://cdn.triggertag.gorillanation.com/js/triggertag.js',
 				function () {
 					log('(invisible triggertag) ghostwriter done', 5, logGroup);
 
-					scriptWriter.injectScriptByText(slotElement, getReskinAndSilverScript(slotName), function () {
+					scriptWriter.injectScriptByText(slot.getElement(), getReskinAndSilverScript(slotName), function () {
 						// gorrilla skin is suppressed by body.mediawiki !important so make it !important too
 						if (document.body.style.backgroundImage.search(/http:\/\/cdn\.assets\.gorillanation\.com/) !== -1) {
 							document.body.style.cssText = document.body.style.cssText.replace(document.body.style.backgroundImage, document.body.style.backgroundImage + ' !important');
@@ -140,18 +141,18 @@ define('ext.wikia.adEngine.provider.evolve', [
 						}
 
 						if (hoppedSlots[slotName]) {
-							pHop({method: 'hop'});
+							slot.hop({method: 'hop'});
 							return;
 						}
 
-						pSuccess();
+						slot.success();
 					});
 				}
 			);
 		} else {
-			scriptWriter.injectScriptByUrl(slotElement, getUrl(slotName), function () {
+			scriptWriter.injectScriptByUrl(slot.getElement(), getUrl(slotName), function () {
 				if (hoppedSlots[slotName]) {
-					pHop({method: 'hop'});
+					slot.hop({method: 'hop'});
 					return;
 				}
 
@@ -161,15 +162,15 @@ define('ext.wikia.adEngine.provider.evolve', [
 				slotTweaker.removeTopButtonIfNeeded(slotName);
 				slotTweaker.adjustLeaderboardSize(slotName);
 
-				pSuccess();
+				slot.success();
 			});
 		}
 	}
 
-	function canHandleSlot(slotname) {
-		log(['canHandleSlot', slotname], 5, logGroup);
+	function canHandleSlot(slotName) {
+		log(['canHandleSlot', slotName], 5, logGroup);
 
-		return evolveSlotConfig.canHandleSlot(slotname);
+		return evolveSlotConfig.canHandleSlot(slotName);
 	}
 
 	iface = {

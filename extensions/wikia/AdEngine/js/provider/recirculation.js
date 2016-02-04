@@ -17,12 +17,12 @@ define('ext.wikia.adEngine.provider.recirculation', [
 		return (properSlot && recirculation);
 	}
 
-	function fillInSlot(slotName, slotElement, success) {
-		log(['fillInSlot', slotName, slotElement], 'debug', logGroup);
+	function fillInSlot(slot) {
+		log(['fillInSlot', slot.getName()], 'debug', logGroup);
 
-		recirculation.injectRecirculationModule(slotElement);
+		recirculation.injectRecirculationModule(slot.getName());
 
-		success();
+		slot.success();
 	}
 
 	return {
