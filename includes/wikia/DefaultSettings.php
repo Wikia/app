@@ -1830,6 +1830,14 @@ $wgLogRestrictions['piggyback'] = 'piggyback';
 $wgRejectAuthenticationFallback = true;
 
 /**
+ * @name $wgEnableHostnameInHtmlTitle
+ *
+ * Whether to include the hostname in HTML <title> tag.
+ * On production this is overridden and false.
+ */
+$wgEnableHostnameInHtmlTitle = true;
+
+/**
  * Use template types from Template Classification Service in MW context
  */
 include_once("$IP/includes/wikia/parser/templatetypes/TemplateTypes.setup.php");

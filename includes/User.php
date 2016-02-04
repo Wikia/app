@@ -1151,8 +1151,18 @@ class User {
 		}
 
 		if ( !$this->isUserAuthenticatedViaAuthenticationService() ) {
-			$this->logFallbackToMediaWikiSessionRejection( $from );
-			$this->logout();
+			global $wgAuthForceLogoutOnFailedAuthSessionFallback;
+
+			/*
+			 * when failing over to Reston (readonly), users should be anonymous but their session
+			 * should resume without them having to do anything when we go back to r/w. See
+			 * SERVICES-1125
+			 */
+			if ( $wgAuthForceLogoutOnFailedAuthSessionFallback ) {
+				$this->logFallbackToMediaWikiSessionRejection( $from );
+				$this->logout();
+			}
+
 			$this->loadDefaults();
 			return false;
 		}

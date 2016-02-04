@@ -40,69 +40,15 @@
 		display: table-cell;
 		vertical-align: middle;
 	}
-
-	.wikia-logo-container {
-		padding-right: 15px;
-
-		.wikia-logo img {
-			background-position: right center;
-			vertical-align: sub;
-		}
-	}
-
-	.start-wikia-container {
-		padding-left: 10px;
-
-		.start-wikia {
-			border: solid 1px $global-navigation-text-color;
-			color: $global-navigation-text-color;
-			display: inline-block;
-			font-size: 12px;
-			height: $start-a-wikia-logo-size;
-			line-height: 28px;
-			margin-bottom: $global-navigation-margin-size + 1px;
-			margin-top: $global-navigation-margin-size + 1px;
-			padding: 0 10px;
-
-			&:hover {
-				background-color: $global-navigation-active-color;
-				color: $global-wikia-background-color;
-				text-decoration: none;
-			}
-
-			span {
-				display: inline-block;
-				padding-top: 1px;
-			}
-		}
-	}
-}
-
-
-.WikiaSiteWrapper {
-	padding-top: $global-navigation-height + 1px;
-}
-
-.ve .global-navigation {
-	position: absolute;
-	z-index: $global-navigation-z-index - 1;
-}
-
-.sso-login.hidden {
-	display: none;
-}
-
-.global-navigation-2016 {
-	.global-nav-search-input-wrapper .autocomplete-container,
-	.account-navigation-container .user-menu,
-	.AccountNavigation .UserLoginDropdown {
-		margin-top: 1px;
-	}
-
 	.wikia-logo {
 		align-items: flex-end;
 		display: flex;
 		text-decoration: none !important;
+
+		img {
+			background-position: right center;
+			vertical-align: sub;
+		}
 	}
 
 	.wikia-logo__subtitle {
@@ -115,6 +61,23 @@
 		line-height: 16px;
 		margin-left: 8px;
 		text-transform: uppercase;
+	}
+
+	.wikia-logo-container {
+		padding-right: 15px;
+	}
+
+	.cell-link {
+		color: $global-navigation-text-color;
+		display: inline-block;
+		font-size: 14px;
+		line-height: 30px;
+		padding: 8px;
+
+		&:hover {
+			background-color: $global-navigation-cell-hover-color;
+			text-decoration: none;
+		}
 	}
 
 	.explore-wikia-dropdown {
@@ -135,7 +98,7 @@
 			font-size: 11px;
 			font-weight: bold;
 			margin: 12px 16px 16px;
-			padding: 4px 10px;
+			padding: 9px 10px;
 			text-transform: uppercase;
 			width: auto;
 
@@ -181,39 +144,20 @@
 			}
 		}
 	}
+}
 
-	.cell-link {
-		color: $global-navigation-text-color;
-		display: inline-block;
-		font-size: 14px;
-		line-height: 30px;
-		padding: 8px;
 
-		&:hover {
-			background-color: $global-navigation-cell-hover-color;
-			text-decoration: none;
-		}
-	}
+.WikiaSiteWrapper {
+	padding-top: $global-navigation-height + 1px;
+}
 
-	// inverse colors
-	&.inverse {
-		.wikia-logo__subtitle {
-			color: #ddd;
-		}
+.ve .global-navigation {
+	position: absolute;
+	z-index: $global-navigation-z-index - 1;
+}
 
-		.explore-wikia-entry-point .chevron {
-			border-top-color: #fff;
-		}
-
-		.cell-link.top-level {
-			color: #fff;
-
-			&:hover {
-				color: $global-navigation-text-color;
-				background-color: #ddd;
-			}
-		}
-	}
+.sso-login.hidden {
+	display: none;
 }
 
 @media #{$breakpoint-below-small-plus} {
