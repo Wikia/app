@@ -64,5 +64,7 @@ class ContentReviewModuleController extends WikiaController {
 		$this->setVal( 'enableTestMode', wfMessage( 'content-review-module-test-mode-enable' )->plain() );
 		$this->setVal( 'title', wfMessage( 'content-review-module-title' )->plain() );
 		$this->setVal( 'help', wfMessage( 'content-review-module-help' )->parse() );
+		$this->setVal( 'jsPagesUrl', SpecialPage::getTitleFor( 'JSPages' )->getLocalURL() );
+		$this->setVal( 'jsPagesTitle', wfMessage( 'content-review-module-jspages' )->plain() );
 	}
 }

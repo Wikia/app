@@ -10,7 +10,8 @@ define('TemplateClassificationLabeling',
 		var availableModes = [
 				'editType',
 				'addTemplate',
-				'addTypeBeforePublish'
+				'addTypeBeforePublish',
+				'bulkEditType'
 			],
 			mode = 'editType',
 			getTitleStrategy,
@@ -44,51 +45,64 @@ define('TemplateClassificationLabeling',
 				return mw.message('template-classification-edit-modal-save-button-text').escaped();
 			}
 
+			function addTypeBeforePublish() {
+				return mw.message('savearticle').escaped();
+			}
+
 			return {
 				addTemplate: addTemplate,
 				editType: editType,
-				addTypeBeforePublish: editType
+				addTypeBeforePublish: addTypeBeforePublish,
+				bulkEditType: editType
 			};
 		})();
 
 		getTitleStrategy = (function getTitleStrategy() {
-			function addTemplate() {
-				return mw.message('template-classification-edit-modal-title-add-template').escaped();
-			}
-
 			function editType() {
 				return mw.message('template-classification-edit-modal-title-edit-type').escaped();
 			}
 
-			function addTypeBeforePublish() {
-				return mw.message('template-classification-edit-modal-select-type-sub-title').escaped();
+			function chooseType() {
+				return mw.message('template-classification-edit-modal-title-select-type').escaped();
+			}
+
+			function bulkEditType() {
+				return mw.message('template-classification-edit-modal-title-bulk-types').escaped();
 			}
 
 			return {
-				addTemplate: addTemplate,
+				addTemplate: chooseType,
 				editType: editType,
-				addTypeBeforePublish: addTypeBeforePublish
+				addTypeBeforePublish: chooseType,
+				bulkEditType: bulkEditType
 			};
 		})();
 
 		prepareContentStrategy = (function prepareContentStrategy() {
-			function addTemplate(content) {
-				var $subtitle = $('<h2>').html(
-					mw.message('template-classification-edit-modal-select-type-sub-title').escaped()
-				);
-				return $subtitle[0].outerHTML + content;
-			}
-
 			function editType(content) {
-				return content;
+				var helpText = $('<p></p>').addClass('tc-instructions')
+					.html(mw.message('template-classification-edit-modal-help').parse())[0].outerHTML;
+				return addTargetBlankToLinks(helpText + content);
 			}
 
 			return {
-				addTemplate: addTemplate,
+				addTemplate: editType,
 				editType: editType,
-				addTypeBeforePublish: editType
+				addTypeBeforePublish: editType,
+				bulkEditType: editType
 			};
 		})();
+
+		/**
+		 * Adds target="_blank" to all links in content
+		 * @param {string} content
+		 * @returns {string}
+		 */
+		function addTargetBlankToLinks(content) {
+			var $c = $('<div>').html(content);
+			$c.find('a').attr('target', '_blank');
+			return $c.html();
+		}
 
 		return {
 			init: init,

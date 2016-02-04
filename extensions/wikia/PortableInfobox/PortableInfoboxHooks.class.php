@@ -4,10 +4,10 @@ class PortableInfoboxHooks {
 	const PARSER_TAG_GALLERY = 'gallery';
 
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+		Wikia::addAssetsToOutput( 'portable_infobox_js' );
 		if ( F::app()->checkSkin( 'monobook', $skin ) ) {
 			Wikia::addAssetsToOutput( 'portable_infobox_monobook_scss' );
 		} else {
-			Wikia::addAssetsToOutput( 'portable_infobox_js' );
 			Wikia::addAssetsToOutput( 'portable_infobox_scss' );
 		}
 

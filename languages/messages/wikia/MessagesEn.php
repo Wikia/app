@@ -321,6 +321,9 @@ Your account has been created. Don't forget to change your {{SITENAME}} [[Specia
 'group-voldev-member' => 'Volunteer Developer',
 'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
 
+'group-content-moderator' => 'Content Moderators',
+'group-content-moderator-member' => 'Content Moderator',
+
 #new registration aka LoginFriction aka Signup
 
 'signup-password' => 'Password - ',
@@ -1048,5 +1051,6 @@ hu',
 'import-article-not-js-single' => '$1 was not loaded as it\'s not a JS page (requested by user-supplied javascript). Please make sure the article title has .js extension.',
 'import-article-not-js-multiple' => '$1 $2 were not loaded as they\'re not JS pages (requested by user-supplied javascript). Please make sure the articles titles have .js extension.',
 
-'wikia-pagetitle' => '$1 - Wikia',
+'wikia-pagetitle-brand' => 'Wikia',
+'wikia-pagetitle-sitename' => '{{SITENAME}}',
 ) );

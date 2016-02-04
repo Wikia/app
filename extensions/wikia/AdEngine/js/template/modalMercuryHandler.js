@@ -6,8 +6,8 @@ define('ext.wikia.adEngine.template.modalMercuryHandler', [
 
 	var mercuryHandler = Function;
 
-	mercuryHandler.prototype.create = function (adContainer, modalVisible) {
-		win.Mercury.Modules.Ads.getInstance().createLightbox(adContainer, modalVisible);
+	mercuryHandler.prototype.create = function (adContainer, modalVisible, closeButtonDelay) {
+		win.Mercury.Modules.Ads.getInstance().createLightbox(adContainer, closeButtonDelay, modalVisible);
 	};
 
 	mercuryHandler.prototype.show = function () {

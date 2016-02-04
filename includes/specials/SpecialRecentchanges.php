@@ -638,9 +638,13 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		$form = Xml::tags( 'form', array( 'action' => $wgScript ), $out );
 		$panel[] = $form;
 		$panelString = implode( "\n", $panel );
+		$panelString = Html::rawElement( 'div', [ 'class' => 'rc-fieldset-content' ], $panelString );
 
 		$this->getOutput()->addHTML(
-			Xml::fieldset( wfMsg( 'recentchanges-legend' ), $panelString, array( 'class' => 'rcoptions' ) )
+			Xml::fieldset( wfMessage( 'recentchanges-legend' )->escaped(), $panelString, [
+				'class' => 'rcoptions collapsible',
+				'id' => 'recentchanges-options',
+			] )
 		);
 
 		$this->setBottomText( $opts );

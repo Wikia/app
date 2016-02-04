@@ -228,8 +228,6 @@ class RequestContext implements IContextSource {
 
 		$this->logAuthenticationMethod($this->user, $authPath);
 
-		// Replace the user object according to the context, e.g. Piggyback.
-		wfRunHooks( 'RequestContextOverrideUser', [ &$this->user, $this->getRequest() ] );
 		return $this->user;
 	}
 

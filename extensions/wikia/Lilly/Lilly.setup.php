@@ -1,7 +1,4 @@
 <?php
 
 // Autoload
-$wgAutoloadClasses['LillyHooks'] =  __DIR__ . '/LillyHooks.class.php';
-
-// Hooks
-$wgHooks['LinkerMakeExternalLink'][] = 'LillyHooks::onLinkerMakeExternalLink';
+$wgAutoloadClasses['Lilly'] = __DIR__ . '/Lilly.class.php';

@@ -56,3 +56,8 @@ $specialPageAliases['ru'] = array(
 $specialPageAliases['vi'] = array(
 	'Forum' => array( 'Diễn_đàn' ),
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'Forum' => array( 'フォーラム' )
+);

@@ -14,7 +14,9 @@ class ExternalTemplateTypesProviderTest extends WikiaBaseTest {
 	 */
 	public function testGetTemplateType( $wikiId, $templateId, $type ) {
 		$this->assertEquals(
-			( new ExternalTemplateTypesProvider( new TCSMock() ) )->getTemplateType( $wikiId, $templateId ),
+			ExternalTemplateTypesProvider::getInstance()
+				->setTCS( new TCSMock( false ) )
+				->getTemplateType( $wikiId, $templateId ),
 			$type
 		);
 	}
@@ -28,7 +30,31 @@ class ExternalTemplateTypesProviderTest extends WikiaBaseTest {
 	 */
 	public function testGetTemplateTypeThrowException( $wikiId, $templateId, $type ) {
 		$this->assertEquals(
-			( new ExternalTemplateTypesProvider( new TCSMock( true ) ) )->getTemplateType( $wikiId, $templateId ),
+			ExternalTemplateTypesProvider::getInstance()
+				->setTCS( new TCSMock( true ) )
+				->getTemplateType( $wikiId, $templateId ),
+			$type
+		);
+	}
+
+	/**
+	 * @param $wikiId
+	 * @param $templateId
+	 * @param $type
+	 *
+	 * @dataProvider getTemplateTypeFromCacheDataProvider
+	 */
+	public function testGetTemplateTypeFromCache( $wikiId, $templateId, $type ) {
+		$templateTypesProvider = ExternalTemplateTypesProvider::getInstance();
+
+		// cache type
+		$templateTypesProvider->setTCS( new TCSMock( false ) )
+			->getTemplateType( $wikiId, $templateId );
+
+		// check if get type is returned from cache
+		$this->assertEquals(
+			$templateTypesProvider->setTCS( new TCSMock( true ) )
+				->getTemplateType( $wikiId, $templateId ),
 			$type
 		);
 	}
@@ -37,7 +63,7 @@ class ExternalTemplateTypesProviderTest extends WikiaBaseTest {
 		return [
 			[
 				12345,
-				12345,
+				11111,
 				self::TEST_TYPE
 			]
 		];
@@ -47,8 +73,18 @@ class ExternalTemplateTypesProviderTest extends WikiaBaseTest {
 		return [
 			[
 				12345,
-				12345,
+				22222,
 				TemplateClassificationService::TEMPLATE_UNCLASSIFIED
+			]
+		];
+	}
+
+	public function getTemplateTypeFromCacheDataProvider() {
+		return [
+			[
+				12345,
+				33333,
+				self::TEST_TYPE
 			]
 		];
 	}

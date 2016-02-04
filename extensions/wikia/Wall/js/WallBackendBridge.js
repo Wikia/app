@@ -79,7 +79,8 @@
 					pagetitle: page.title,
 					pagenamespace: page.namespace,
 					convertToFormat: convertToFormat,
-					quotedFrom: quotedFrom || ''
+					quotedFrom: quotedFrom || '',
+					token: window.mw.user.tokens.get('editToken')
 				},
 				callback: this.proxy(function (data) {
 					var newMessage = $(data.message);
@@ -155,7 +156,8 @@
 					isreply: isreply,
 					pagetitle: page.title,
 					pagenamespace: page.namespace,
-					convertToFormat: convertToFormat
+					convertToFormat: convertToFormat,
+					token: window.mw.user.tokens.get('editToken')
 				},
 				callback: this.proxy(function (data) {
 					if ($.isFunction(callback)) {

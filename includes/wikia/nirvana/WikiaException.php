@@ -62,6 +62,7 @@ class WikiaException extends WikiaBaseException {
 
 			// log on devboxes to /tmp/debug.log
 			wfDebug($exceptionClass . ": {$message}\n");
+			wfDebug($this->getTraceAsString());
 
 			WikiaLogger::instance()->error($exceptionClass, [
 				'err' => $message,

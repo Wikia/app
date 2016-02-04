@@ -1,8 +1,9 @@
 <?php
-use Wikia\ContentReview\Models\ReviewModel;
-use Wikia\ContentReview\Models\ReviewLogModel;
-use Wikia\ContentReview\Models\CurrentRevisionModel;
-use Wikia\ContentReview\Helper;
+use Wikia\ContentReview\ContentReviewService,
+	Wikia\ContentReview\Models\ReviewModel,
+	Wikia\ContentReview\Models\ReviewLogModel,
+	Wikia\ContentReview\Models\CurrentRevisionModel,
+	Wikia\ContentReview\Helper;
 
 class ContentReviewSpecialController extends WikiaSpecialPageController {
 
@@ -18,6 +19,8 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		 */
 		'live' => 'content-review-status-live',
 	];
+
+	private $contentReviewService;
 
 	function __construct() {
 		parent::__construct( 'ContentReview', 'content-review', true );
@@ -47,6 +50,8 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 
 		$this->getOutput()->setPageTitle( wfMessage( 'content-review-special-title' )->plain() );
 
+		Wikia::addAssetsToOutput( 'content_review_special_page_scss' );
+
 		$wikiId = $this->getPar();
 
 		if ( !empty( $wikiId ) ) {
@@ -71,19 +76,19 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		$reviews = [];
 
 		foreach ( $reviewsRaw as $review ) {
-			$title = GlobalTitle::newFromID( $review['page_id'], $review['wiki_id'] );
+			$wikiId = (int)$review['wiki_id'];
+			$pageId = (int)$review['page_id'];
+			$title = GlobalTitle::newFromID( $pageId, $wikiId );
 
 			if ( !is_null( $title ) ) {
-				$wiki = WikiFactory::getWikiByID( $review['wiki_id'] );
+				$wiki = WikiFactory::getWikiByID( $wikiId );
 
 				$review['url'] = $title->getFullURL( [
 					'oldid' => $review['revision_id'],
 				] );
 				$review['title'] = $title->getText();
 				$review['wiki'] = $wiki->city_title;
-				$review['wikiArchiveUrl'] = $this->getContext()->getTitle()->getFullURL( [
-					self::PAR => $review['wiki_id'],
-				] );
+				$review['wikiArchiveUrl'] = $this->specialPage->getTitle( $wikiId )->getFullURL();
 
 				$review['user'] = User::newFromId( $review['submit_user_id'] )->getName();
 				$review['diff'] = $title->getFullURL( [
@@ -100,17 +105,29 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 				}
 
 				$reviewKey = implode( ':', [
-					$review['wiki_id'],
-					$review['page_id'],
+					$wikiId,
+					$pageId,
 					ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW
 				] );
-				if ( $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
-					&& isset( $reviewsRaw[$reviewKey] )
-				) {
-					$review['hide'] = true;
-				}
 
-				$reviews[$review['wiki_id']][] = $review;
+				$review['hide'] = $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
+					&& isset( $reviewsRaw[$reviewKey] );
+				$review['escalated'] = (bool)$review['escalated'];
+				$reviews[$wikiId][] = $review;
+			} else {
+				/**
+				 * If the GlobalTitle cannot be created, it means that a page is deleted and its data
+				 * should be removed from ContentReview
+				 */
+				$this->getContentReviewService()->deletePageData( $wikiId, $pageId );
+
+				/**
+				 * Log the situation to monitor the situation and preferably - get rid of this else clause.
+				 */
+				Wikia\Logger\WikiaLogger::instance()->warning( 'Deleted page in the ContentReview tool', [
+					'wikiId' => $wikiId,
+					'pageId' => $pageId,
+				] );
 			}
 		}
 
@@ -156,5 +173,15 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 		}
 
 		return $reviews;
+	}
+
+	/**
+	 * @return ContentReviewService
+	 */
+	private function getContentReviewService() {
+		if ( !isset( $this->contentReviewService ) ) {
+			$this->contentReviewService = new ContentReviewService();
+		}
+		return $this->contentReviewService;
 	}
 }

@@ -31,9 +31,12 @@
 		{{/isTestModeEnabled}}
 	</div>
 
-	{{#help}}
 	<div class="content-review-module-help">
-		{{{help}}}
+		{{#jsPages}}
+			<a href="{{jsPagesUrl}}">{{jsPagesTitle}}</a>
+		{{/jsPages}}
+		{{#help}}
+			{{{help}}}
+		{{/help}}
 	</div>
-	{{/help}}
 </section>

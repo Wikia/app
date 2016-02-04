@@ -89,7 +89,7 @@ function WidgetBookmark($id) {
 function WidgetBookmarkGetPages() {
 	global $wgUser;
 
-	$pages = unserialize( $wgUser->getGlobalPreference('widget_bookmark_pages') );
+	$pages = Wikia\Util\Serialize::safeUnserialize( $wgUser->getGlobalPreference('widget_bookmark_pages') );
 
 	return $pages;
 }

@@ -83,8 +83,10 @@ $wikia-top-ads-index: 2;
 #LEFT_SKYSCRAPER_3 {
 	clear: both;
 	position: absolute;
-	right: 70px;
-	top: -640px;
+	right: 0;
+	text-align: center;
+	top: -600px;
+	width: 300px;
 }
 
 /** Box ads **/
@@ -127,7 +129,7 @@ $wikia-top-ads-index: 2;
 	height: 250px;
 }
 
-#PREFOOTER_LEFT_BOXAD, #PREFOOTER_RIGHT_BOXAD {
+#PREFOOTER_LEFT_BOXAD, #PREFOOTER_MIDDLE_BOXAD, #PREFOOTER_RIGHT_BOXAD {
 	float: left;
 	margin: 0 15px;
 
@@ -230,8 +232,6 @@ body >a >img[src$="noad.gif"] {
 #WikiaAdInContentPlaceHolder {
 	position: absolute;
 	#INCONTENT_BOXAD_1 {
-		height: 250px;
-		width: 300px;
 		position: relative;
 	}
 }
@@ -240,7 +240,7 @@ body >a >img[src$="noad.gif"] {
 	max-width: 700px;
 }
 
-#NATIVE_TABOOLA_ARTICLE, #NATIVE_TABOOLA_RAIL {
+#NATIVE_TABOOLA_ARTICLE, #NATIVE_TABOOLA_RAIL, #RECIRCULATION_RAIL {
 	.trc_rbox_header .trc_rbox_header_span {
 		color: $color-page-opposite;
 	}
@@ -278,6 +278,11 @@ body >a >img[src$="noad.gif"] {
 			overflow: hidden;
 		}
 	}
+
+	> header .close-counter {
+		float: right;
+		font-size: 17px;
+	}
 }
 
 //@TODO remove .oasis-responsive after deprecating responsive (July 2015)
@@ -290,9 +295,10 @@ body >a >img[src$="noad.gif"] {
 
 // Recovered message
 .recovered-message {
+	margin: 0 auto;
+	position: relative;
 	text-align: center;
-	padding: 10px 0;
-	min-height: 100px;
+	padding-top: 10px;
 
 	.message {
 		background: #fff;
@@ -354,29 +360,28 @@ body >a >img[src$="noad.gif"] {
 		background: url(/skins/oasis/images/recovered_message_icon.png) no-repeat; /* $wgCdnStylePath */
 	}
 
-	&.recovered-message-top {
-		margin: 0 auto;
-		position: relative;
-		max-width: 728px;
-		z-index: $wikia-top-ads-index;
+	&.recovered-message-right-rail {
+		width: 300px;
+	}
 
-		.icon {
-			margin: 0;
-		}
+	&.recovered-message-top {
+		width: 600px;
 
 		.message {
-			max-width: 550px;
+			max-width: 425px;
 			display: inline-block;
 
 			.dialog-pointer {
-				top: 15px;
-				left: -10px;
-				@include transform-rotate(-45deg);
+				top: 60px;
+				left: auto;
+				right: -10px;
+				@include transform-rotate(135deg);
 			}
 		}
 
 		.icon {
-			float: left;
+			margin: 0;
+			float: right;
 		}
 	}
 }

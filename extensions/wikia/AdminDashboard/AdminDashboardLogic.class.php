@@ -65,13 +65,13 @@ class AdminDashboardLogic {
 				'Following',
 				'Forum',
 				'ImageReview',
+				'Images',
 				'Insights',
 				'Invalidateemail',
 				'LandingPageSmurfs',
 				'LayoutBuilder',
 				'LayoutBuilderForm',
 				'Leaderboard',
-				'LicensedVideoSwap',
 				'LookupContribs',
 				'LookupUser',
 				'ManageWikiaHome',
@@ -98,6 +98,7 @@ class AdminDashboardLogic {
 				'ThemeDesigner',
 				'ThemeDesignerPreview',
 				'UnusedVideos',
+				'UserActivity',
 				'Userlogin',
 				'UserManagement',
 				'UserPathPrediction',
@@ -114,7 +115,6 @@ class AdminDashboardLogic {
 				'WikiaStyleGuide',
 				'WikiFactory',
 				'WikiFactoryReporter',
-				'WikiStats',
 			];
 			return (!in_array($alias, $exclusionList));
 		}
@@ -124,30 +124,17 @@ class AdminDashboardLogic {
 	/**
 	 *  @brief hook to add toolbar item for admin dashboard
 	 */
-	static function onBeforeToolbarMenu(&$items) {
+	static function onBeforeToolbarMenu( &$items, $type ) {
 		$wg = F::app()->wg;
-		if( $wg->User->isAllowed('admindashboard') ) {
-			$item = array(
+		if( $wg->User->isAllowed( 'admindashboard' ) && $type == 'main' ) {
+			$items[] =  [
 				'type' => 'html',
-				'html' => Wikia::specialPageLink('AdminDashboard', 'admindashboard-toolbar-link', array('data-tracking' => 'admindashboard/toolbar/admin') )
-			);
-
-			if( is_array($items) ) {
-				$isMenuSubElPresent = false;
-
-				foreach($items as $el) {
-					if( isset($el['type']) && $el['type'] === 'menu' ) {
-						$isMenuSubElPresent = true;
-						break;
-					}
-				}
-
-				if( $isMenuSubElPresent ) {
-					$items[] = $item;
-				}
-			} else {
-				$items = array($item);
-			}
+				'html' => Wikia::specialPageLink(
+					'AdminDashboard',
+					'admindashboard-toolbar-link',
+					['data-tracking' => 'admindashboard/toolbar/admin']
+				)
+			];
 		}
 		return true;
 	}

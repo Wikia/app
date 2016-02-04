@@ -274,30 +274,12 @@ $messages = array(
 'navigation'    => 'Paglilibot (nabigasyon)',
 'and'           => ',&#32;at',
 
-# Cologne Blue skin
 'qbfind'         => 'Hanapin',
 'qbbrowse'       => 'Basa-basahin',
-'qbedit'         => 'Baguhin',
 'qbpageoptions'  => 'Itong pahina',
 'qbpageinfo'     => 'Konteksto',
-'qbmyoptions'    => 'Mga pahina ko',
-'qbspecialpages' => 'Mga natatanging pahina',
 'faq'            => "Mga karaniwang itinatanong (''FAQ'')",
-'faqpage'        => "Project:Mga karaniwang itinatanong (''FAQ'')",
 
-# Vector skin
-'vector-action-addsection'       => 'Magdagdag ng paksa',
-'vector-action-delete'           => 'Burahin',
-'vector-action-move'             => 'Ilipat',
-'vector-action-protect'          => 'Ipagsanggalang',
-'vector-action-undelete'         => 'Alisin ang pagbubura',
-'vector-action-unprotect'        => 'Baguhin ang pagsasanggalang',
-'vector-simplesearch-preference' => 'Paganahin ang pinainam na mga mungkahi sa paghahanap (pabalat na Vector lang)',
-'vector-view-create'             => 'Likhain',
-'vector-view-edit'               => 'Baguhin',
-'vector-view-history'            => 'Tingnan ang kasaysayan',
-'vector-view-view'               => 'Basahin',
-'vector-view-viewsource'         => 'Tingnan ang pinagmulan',
 'actions'                        => 'Mga kilos',
 'namespaces'                     => 'Mga ngalan-espasyo',
 'variants'                       => 'Naiiba pa',
@@ -320,7 +302,6 @@ $messages = array(
 'edit'              => 'Baguhin',
 'create'            => 'Likhain',
 'editthispage'      => 'Baguhin ang pahinang ito',
-'create-this-page'  => 'Likhain ang pahinang ito',
 'delete'            => 'Burahin',
 'deletethispage'    => 'Burahin itong pahina',
 'undelete_short'    => 'Baligtarin ang pagbura ng {{PLURAL:$1|isang pagbabago|$1 pagbabago}}',
@@ -335,19 +316,9 @@ $messages = array(
 'talkpagelinktext'  => 'Usapan',
 'specialpage'       => 'Natatanging pahina',
 'personaltools'     => 'Mga kagamitang pansarili',
-'postcomment'       => 'Bagong seksyon',
-'articlepage'       => 'Tingnan ang pahina ng nilalaman',
 'talk'              => 'Usapan',
 'views'             => 'Mga anyo',
 'toolbox'           => 'Mga kagamitan',
-'userpage'          => 'Tingnan ang pahina ng tagagamit',
-'projectpage'       => 'Tingnan ang pahina ng proyekto',
-'imagepage'         => 'Tingnan ang pahina ng talaksan',
-'mediawikipage'     => 'Tingnan ang pahina ng mensahe',
-'templatepage'      => 'Tingnan ang pahina ng suleras',
-'viewhelppage'      => 'Tingnan ang pahina ng tulong',
-'categorypage'      => 'Tingnan ang pahina ng kategorya',
-'viewtalkpage'      => 'Tingnan ang usapan',
 'otherlanguages'    => 'Sa ibang wika',
 'redirectedfrom'    => '(Ikinarga mula sa $1)',
 'redirectpagesub'   => 'Pahina ng pagkarga',
@@ -1160,13 +1131,6 @@ Subuking lagyan ng unlapi/paunang ''all:'' upang hanapin ang lahat ng mga nialal
 'search-external'                  => 'Panlabas na paghahanap',
 'searchdisabled'                   => 'Nakapatay ang paghahanap sa {{SITENAME}}. Maaari kang pansamantalang maghanap sa pamamagitan ng Google. Tandaan na maaaring luma na ang kanilang mga indeks sa nilalaman ng {{SITENAME}}.',
 
-# Quickbar
-'qbsettings'               => 'Quickbar',
-'qbsettings-none'          => 'Wala',
-'qbsettings-fixedleft'     => 'Inayos ang kaliwa',
-'qbsettings-fixedright'    => 'Inayos ang kanan',
-'qbsettings-floatingleft'  => 'Kaliwa lumulutang',
-'qbsettings-floatingright' => 'Kanan lumulutang',
 
 # Preferences page
 'preferences'                   => 'Mga kagustuhan',
@@ -2704,27 +2668,13 @@ Sagipin mo ito sa iyong kompyuter at papaitaas na ikarga ito rito.',
 
 # Stylesheets
 'common.css'      => '/* Ang inilagay na CSS dito ay gagamitin para sa lahat ng mga pabalat */',
-'standard.css'    => '/* Ang inilagay na CSS dito ay makakaapekto sa mga tagagamit ng Karaniwang pabalat */',
-'nostalgia.css'   => '/* Ang CSS na inilagay dito ay makakaapekto sa mga tagagamit ng pabalat na Nostalgia */',
-'cologneblue.css' => "/* Ang CSS na inilagay dito ay makakaapekto sa mga tagagamit ng pabalat na Bugkaw na Kolon (''Cologne Blue'') */",
 'monobook.css'    => '/* Ang CSS na inilagay dito ay makakaapekto sa mga tagagamit ng pabalat na Monobook */',
-'myskin.css'      => "/* Ang CSS na inilagay dito ay makakaapekto sa lahat ng mga tagagamit ng pabalat na Balatko (''MySkin'') */",
-'chick.css'       => "/* Ang CSS na inilagay dito ay makakaapekto sa mga tagagamit ng pabalat na ''Chick'' */",
-'simple.css'      => "/* Ang CSS na iniligay dito ay makakaapekto sa mga tagagamit ng Payak (''Simple'') na pabalat */",
-'modern.css'      => "/* Ang CSS na iniligay dito ay makakaapekto sa tagagamit ng Makabagong (''Modern'') pabalat */",
 'print.css'       => '/* Ang CSS na inilagay dito ay makakaapekto sa kalalabasan o resulta ng paglilimbag */',
 'handheld.css'    => "/* Ang CSS na inilagay dito ay makakaapekto sa mga aparatong nahahawakan (''handheld device'') batay sa itinakdang pabalat sa ''\$wgHandheldStyle'' */",
 
 # Scripts
 'common.js'      => '/* Anumang JavaScript dito ay ikakarga para sa lahat ng mga tagagamit ng bawat pahinang ikinarga. */',
-'standard.js'    => '/* Anumang JavaScript dito ay ikakarga para lahat ng mga tagagamit na gumagamit ng Karaniwang pabalat */',
-'nostalgia.js'   => '/* Anumang JavaScript dito ay ikakarga para lahat ng mga tagagamit na gumagamit ng pabalat na Nostalgia */',
-'cologneblue.js' => '/* Anumang JavaScript dito ay ikakarga para sa tagagamit ng pabalat na Bughaw na Kolon */',
 'monobook.js'    => '/* Anumang JavaScript dito ay ikakarga para sa mga tagagamit na gumagamit ng pabalat na MonoBook */',
-'myskin.js'      => '/* Anumang JavaScript dito ay ikakarga para sa tagagamit na gumagamit ng pabalat na Balatko */',
-'chick.js'       => "/* Anumang JavaScript dito ay ikakarga para sa mga tagagamit na gumagamit ng pabalat na ''Chick'' */",
-'simple.js'      => '/* Anumang JavaScript dito ay ikakarga para sa tagagamit na gumagamit ng Payak na pabalat */',
-'modern.js'      => '/* Anumang JavaScript dito ay ikakarga para sa mga tagagamit na gumagamit ng Makabagong pabalat */',
 
 # Metadata
 'notacceptable' => 'Hindi makapagbigay ng dato ang serbidor ng wiki sa anyong mababasa ng iyong kliyente.',
@@ -2751,14 +2701,7 @@ Maaaring dahil ito sa isang kawing sa isang nakatalang hinarang dahil di-kinaisn
 'spam_blanking'       => 'Lahat ng mga pagbabago ay naglalaman ng mga kawing sa $1, pagpapatlang',
 
 # Skin names
-'skinname-standard'    => 'Klasiko',
-'skinname-nostalgia'   => 'Nostalhiya',
-'skinname-cologneblue' => 'Bughaw na Kolon',
 'skinname-monobook'    => 'MonoAklat ("isang aklat")',
-'skinname-myskin'      => 'PabalatKo',
-'skinname-chick'       => "\"Pambabae\" (''Chick'')",
-'skinname-simple'      => 'Payak',
-'skinname-modern'      => 'Makabago (Moderno)',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Tatakan bilang napatrolya na',

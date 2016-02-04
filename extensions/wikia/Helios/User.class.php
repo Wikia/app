@@ -2,7 +2,6 @@
 
 namespace Wikia\Helios;
 
-use LoginForm;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Service\Helios\ClientException;
@@ -17,11 +16,14 @@ class User {
 	const ACCESS_TOKEN_COOKIE_NAME = 'access_token';
 	const ACCESS_TOKEN_HEADER_NAME = 'X-Wikia-AccessToken';
 	const AUTH_METHOD_NAME = 'auth_method';
+	const STATUS_NAME = 'status';
 	const MERCURY_ACCESS_TOKEN_COOKIE_NAME = 'sid';
 	const AUTH_TYPE_FAILED = 0;
 	const AUTH_TYPE_NORMAL_PW = 1;
 	const AUTH_TYPE_RESET_PW = 2;
 	const AUTH_TYPE_FB_TOKEN = 4;
+	const INVALIDATE_CACHE_THROTTLE_SESSION_KEY = 'invalidate-cache-throttle';
+	const INVALIDATE_CACHE_THROTTLE = 60; /* seconds */
 
 	// This is set to 6 months,(365/2)*24*60*60 = 15768000
 	const ACCESS_TOKEN_COOKIE_TTL = 15768000;
@@ -105,12 +107,17 @@ class User {
 					// the code is borrowed from SpecialUserlogin
 					// @see PLATFORM-1261
 					if ( session_id() == '' ) {
-						wfSetupSession();
+						$sessionId = substr(hash('sha256',$token),0,32);
+						wfSetupSession($sessionId);
 						WikiaLogger::instance()->debug( __METHOD__ . '::startSession' );
 
 						// Update mTouched on user when he starts new MW session
 						// @see SOC-1326
-						$user->invalidateCache();
+						$invalidateCacheThrottleTime = $request->getSessionData( self::INVALIDATE_CACHE_THROTTLE_SESSION_KEY );
+						if ( $invalidateCacheThrottleTime === null || $invalidateCacheThrottleTime < time() ) {
+							$request->setSessionData( self::INVALIDATE_CACHE_THROTTLE_SESSION_KEY, time() + self::INVALIDATE_CACHE_THROTTLE );
+							$user->invalidateCache();
+						}
 					}
 
 					// return a MediaWiki's User object
@@ -157,12 +164,12 @@ class User {
 
 		$result = false;
 		$authMethod = self::AUTH_TYPE_FAILED;
+		$status = \WikiaResponse::RESPONSE_CODE_ERROR;
 		$throwException = null;
 
 		// Authenticate with username and password.
 		try {
-			$loginInfo = $heliosClient->login( $username, $password );
-
+			list($status, $loginInfo) = $heliosClient->login( $username, $password );
 			if ( !empty( $loginInfo->error ) ) {
 				if ( $loginInfo->error === 'access_denied' ) {
 					$logger->info(
@@ -190,13 +197,14 @@ class User {
 			'result' => $result,
 			'exception' => $throwException,
 			self::AUTH_METHOD_NAME => $authMethod,
+			self::STATUS_NAME => $status,
 		];
 
 		if ( $throwException ) {
 			throw $throwException;
 		}
 
-		if ( !empty( $loginInfo ) && $authMethod != self::AUTH_TYPE_RESET_PW ) {
+		if ( isset( $loginInfo->access_token ) && $authMethod != self::AUTH_TYPE_RESET_PW ) {
 			self::setAccessTokenCookie( $loginInfo->access_token );
 		}
 
@@ -216,6 +224,14 @@ class User {
 		$authMethod = self::$authenticationCache[$username][$password][self::AUTH_METHOD_NAME];
 
 		return $authMethod == self::AUTH_TYPE_RESET_PW;
+	}
+
+	public static function checkAuthenticationStatus( $username, $password, $status ) {
+		if ( empty( self::$authenticationCache[$username][$password][self::STATUS_NAME] ) ) {
+			return false;
+		}
+
+		return self::$authenticationCache[$username][$password][self::STATUS_NAME] == $status;
 	}
 
 	/**
@@ -321,23 +337,6 @@ class User {
 			}
 
 			$result = $heliosResult;
-		}
-
-		return true;
-	}
-
-	public static function onLoginSuccessModifyRetval($username, $password, &$retval) {
-		if ( isset( self::$authenticationCache[$username][$password][self::AUTH_METHOD_NAME] ) ) {
-			$resultData = self::$authenticationCache[$username][$password];
-
-			switch ($resultData[ self::AUTH_METHOD_NAME ]) {
-				case self::AUTH_TYPE_RESET_PW:
-					$retval = \LoginForm::RESET_PASS;
-					break;
-				case self::AUTH_TYPE_NORMAL_PW:
-					$retval = \LoginForm::SUCCESS;
-					break;
-			}
 		}
 
 		return true;

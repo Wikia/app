@@ -695,13 +695,10 @@ class Article extends Page {
 		# that's not empty).
 		# This message always exists because it is in the i18n files
 		# Wikia change - begin
-		# This logic is moved to OutputPage::setHTMLTitle
-		#if ( $this->getTitle()->isMainPage() ) {
-		#	$msg = wfMessage( 'pagetitle-view-mainpage' )->inContentLanguage();
-		#	if ( !$msg->isDisabled() ) {
-		#		$wgOut->setHTMLTitle( $msg->title( $this->getTitle() )->text() );
-		#	}
-		#}
+		if ( $this->getTitle()->isMainPage() ) {
+			// The wiki name and brand name are added to all titles
+			$wgOut->setHTMLTitle( '' );
+		}
 		# Wikia change - end
 
 		# Check for any __NOINDEX__ tags on the page using $pOutput
@@ -734,6 +731,8 @@ class Article extends Page {
 	 */
 	public function showDiffPage() {
 		global $wgRequest, $wgUser;
+
+		Transaction::setAttribute( Transaction::PARAM_ACTION, 'diff' ); # Wikia change
 
 		$diff = $wgRequest->getVal( 'diff' );
 		$rcid = $wgRequest->getVal( 'rcid' );

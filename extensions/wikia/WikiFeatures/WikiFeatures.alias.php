@@ -56,3 +56,8 @@ $specialPageAliases['pl'] = array(
 $specialPageAliases['vi'] = array(
 	'WikiFeatures' => array( 'Tính_năng_wiki' ),
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'WikiFeatures' => array( 'ウィキフィーチャーズ' )
+);

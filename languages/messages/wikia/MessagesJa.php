@@ -161,4 +161,7 @@ $messages = array_merge( $messages , array(
 'vertical-movies' => '映画',
 
 'tog-enableuserjs' => '個人用JavaScriptを有効にする（[[w:c:ja.community:ヘルプ:個人用CSSとJavaScript#JavaScript|詳細]]）',
+
+'group-content-moderator' => 'コンテンツ・モデレーター',
+'group-content-moderator-member' => 'コンテンツ・モデレーター',
 ));

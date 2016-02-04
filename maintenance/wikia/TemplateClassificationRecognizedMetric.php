@@ -32,19 +32,16 @@ class TemplateClassificationRecognizedMetricMaintenance extends Maintenance {
 		$top500CNAllCount = 0;
 
 		foreach ( $wamTop500 as $wikia ) {
-			$wikiaDBName = WikiFactory::IDtoDB( $wikia->wiki_id );
-			$wikiaDBRead = wfGetDB( DB_SLAVE, [], $wikiaDBName );
-
-			$cnTemplatesOnWikia = $this->getContentNamespacesTemplates( $wikiaDBRead, $wgContentNamespaces );
-			$recognizedTemplates  = $this->getRecognizedTemplatesOnWikia(
+			$recognizedProvider = new RecognizedTemplatesProvider(
 				( new TemplateClassificationService() ),
-				$wikia->wiki_id
+				$wikia->wiki_id,
+				$wgContentNamespaces
 			);
 
-			$cnRecognizedTemplates = $this->intersectSets( $cnTemplatesOnWikia, $recognizedTemplates );
+			$cnRecognizedTemplates = $recognizedProvider->getRecognizedTemplates();
 
 			$top500CNRecognizedCount += count( $cnRecognizedTemplates );
-			$top500CNAllCount += count( $cnTemplatesOnWikia );
+			$top500CNAllCount += count( $recognizedProvider->getNamespacesTemplates() );
 		}
 
 		/*
@@ -58,22 +55,6 @@ class TemplateClassificationRecognizedMetricMaintenance extends Maintenance {
 		$this->pushGecko( $top500CNRecognizedCount, $top500CNAllCount );
 	}
 
-	private function getRecognizedTemplatesOnWikia( TemplateClassificationService $tcService, $wikiaId ) {
-		$templates = $tcService->getTemplatesOnWiki( $wikiaId );
-		foreach ( $templates as $pageId => $type ) {
-			if ( !$this->isRecognized( $type ) ) {
-				unset( $templates[$pageId] );
-			}
-		}
-		return $templates;
-	}
-
-	private function isRecognized( $type ) {
-		return $type !== TemplateClassificationService::TEMPLATE_UNKNOWN
-			&& $type !== AutomaticTemplateTypes::TEMPLATE_UNCLASSIFIED
-			&& $type !== AutomaticTemplateTypes::TEMPLATE_OTHER;
-	}
-
 	private function getWamTop500( $db, \WikiaSQL $sql ) {
 		return $sql->SELECT( 'wiki_id' )
 			->FROM( 'fact_wam_scores' )
@@ -81,38 +62,6 @@ class TemplateClassificationRecognizedMetricMaintenance extends Maintenance {
 			->ORDER_BY( 'wam_rank' )
 			->LIMIT( 500 )
 			->run( $db );
-	}
-
-	/**
-	 * Remove non content templates from list of recognized templates
-	 */
-	private function intersectSets( $cnTemplatesOnWikia, $recognizedTemplates ) {
-		$cnRecognizedTemplates = [];
-		foreach ( $recognizedTemplates as $pageId => $type ) {
-			if ( in_array( $pageId, $cnTemplatesOnWikia ) ) {
-				$cnRecognizedTemplates[] = $pageId;
-			}
-		}
-		return $cnRecognizedTemplates;
-	}
-
-	private function getContentNamespacesTemplates( $db, $contentNamespaces ) {
-		$sql = ( new \WikiaSQL() )
-			->SELECT()->DISTINCT( 'p2.page_id as temp_id' )
-			->FROM( 'page' )->AS_( 'p' )
-			->INNER_JOIN( 'templatelinks' )->AS_( 't' )
-			->ON( 't.tl_from', 'p.page_id' )
-			->INNER_JOIN( 'page' )->AS_( 'p2' )
-			->ON( 'p2.page_title', 't.tl_title' )
-			->WHERE( 'p.page_namespace' )->IN( $contentNamespaces )
-			->AND_( 'p2.page_namespace' )->EQUAL_TO( NS_TEMPLATE )
-			->AND_( 'p.page_id' )->NOT_EQUAL_TO( Title::newMainPage()->getArticleID() );
-
-		$pages = $sql->runLoop( $db, function ( &$pages, $row ) {
-			$pages[] = $row->temp_id;
-		} );
-
-		return $pages;
 	}
 
 	private function setStats( $recognizedCNCount, $totalCNCount, $timestamp, $dbw ) {

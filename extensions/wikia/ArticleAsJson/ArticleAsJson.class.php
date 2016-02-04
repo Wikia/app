@@ -303,8 +303,10 @@ class ArticleAsJson extends WikiaService {
 		$smallFixedHeight = self::isIconSize( $handlerParams['height'] );
 		$smallWidth = self::isIconSize( $details['width'] );
 		$smallHeight = self::isIconSize( $details['height'] );
+		$templateType = isset ( $handlerParams['template-type'] ) ? $handlerParams['template-type'] : '';
+		$isInfoIcon = self::isInfoIcon( $templateType );
 
-		return $smallFixedWidth || $smallFixedHeight || $smallWidth || $smallHeight;
+		return $smallFixedWidth || $smallFixedHeight || $smallWidth || $smallHeight || $isInfoIcon;
 	}
 
 	/**
@@ -315,5 +317,9 @@ class ArticleAsJson extends WikiaService {
 	 */
 	private static function isIconSize( $sizeParam ) {
 		return isset( $sizeParam ) ? $sizeParam <= self::ICON_MAX_SIZE : false;
+	}
+
+	private static function isInfoIcon( $templateType ) {
+		return $templateType == TemplateClassificationService::TEMPLATE_INFOICON;
 	}
 }

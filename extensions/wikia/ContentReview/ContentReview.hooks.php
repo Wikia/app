@@ -23,6 +23,53 @@ class Hooks {
 		\Hooks::register( 'UserRights::groupCheckboxes', [ $hooks, 'onUserRightsGroupCheckboxes' ] );
 		\Hooks::register( 'UserAddGroup', [ $hooks, 'onUserAddGroup' ] );
 		\Hooks::register( 'BeforeUserAddGlobalGroup', [ $hooks, 'onUserAddGroup' ] );
+		\Hooks::register( 'SkinAfterBottomScripts', [ $hooks, 'onSkinAfterBottomScripts' ] );
+		\Hooks::register( 'ArticleNonExistentPage', [ $hooks, 'onArticleNonExistentPage' ] );
+		\Hooks::register( 'OutputPageBeforeHTML', [ $hooks, 'onOutputPageBeforeHTML' ] );
+	}
+
+	/**
+	 * Add description how to import scripts on view page
+	 *
+	 * @param \OutputPage $out
+	 * @param $content
+	 * @return bool
+	 */
+	public function onOutputPageBeforeHTML( \OutputPage $out, &$content ) {
+		$title = $out->getTitle();
+
+		if ( $title->exists() ) {
+			if ( ImportJS::isImportJSPage( $title ) ) {
+				$message = ImportJS::getImportJSDescriptionMessage();
+				$content = $this->prepareContent( $title, $content, $message );
+			} elseif ( ProfileTags::isProfileTagsPage( $title ) ) {
+				$message = ProfileTags::getProfileTagsDescriptionMessage();
+				$content = $this->prepareContent( $title, $content, $message );
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Add description how to import scripts on non existing page
+	 *
+	 * @param \Article $article
+	 * @param String $content
+	 * @return bool
+	 */
+	public function onArticleNonExistentPage( \Article $article, \OutputPage $out, &$content ) {
+		$title = $article->getTitle();
+
+		if ( ImportJS::isImportJSPage( $title ) ) {
+			$message = ImportJS::getImportJSDescriptionMessage();
+			$content = $this->prepareContent( $title, $content, $message, false );
+		} elseif ( ProfileTags::isProfileTagsPage( $title ) ) {
+			$message = ProfileTags::getProfileTagsDescriptionMessage();
+			$content = $this->prepareContent( $title, $content, $message, false );
+		}
+
+		return true;
 	}
 
 	public function onGetRailModuleList( Array &$railModuleList ) {
@@ -70,16 +117,32 @@ class Hooks {
 		return true;
 	}
 
+	/**
+	 * Add script to load safe imports
+	 *
+	 * @param $skin
+	 * @param String $bottomScripts
+	 * @return bool
+	 * @throws \MWException
+	 */
+	public function onSkinAfterBottomScripts( $skin, &$bottomScripts ) {
+		$bottomScripts .= ( new ImportJS() )->getImportScripts();
+
+		return true;
+	}
+
+	/**
+	 * Initiates a diff page Content Review controller and renders a reviewer's toolbar.
+	 * @param $diffEngine
+	 * @param \OutputPage $output
+	 * @return bool
+	 */
 	public function onArticleContentOnDiff( $diffEngine, \OutputPage $output ) {
-		$helper = new Helper();
+		$title = $output->getTitle();
+		$diffPage = new ContentReviewDiffPage( $title );
 
-		if ( $helper->shouldDisplayReviewerToolbar() ) {
-			\Wikia::addAssetsToOutput( 'content_review_diff_page_js' );
-			\Wikia::addAssetsToOutput( 'content_review_diff_page_scss' );
-			\JSMessages::enqueuePackage( 'ContentReviewDiffPage', \JSMessages::EXTERNAL );
-
-			$revisionId = $helper->getCurrentlyReviewedRevisionId( $output->getRequest() );
-			$output->prependHTML( $helper->getToolbarTemplate( $revisionId ) );
+		if ( $diffPage->shouldDisplayToolbar() ) {
+			$diffPage->addToolbarToOutput( $output );
 		}
 
 		return true;
@@ -92,7 +155,22 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onRawPageViewBeforeOutput( \RawAction $rawAction, &$text ) {
+		global $wgCityId;
+
 		$title = $rawAction->getTitle();
+		$titleText = $title->getText();
+
+		if ( $wgCityId == Helper::DEV_WIKI_ID && !$title->inNamespace( NS_MEDIAWIKI ) ) {
+			$title = \Title::newFromText( $titleText, NS_MEDIAWIKI );
+
+			// TODO: After scripts transition on dev wiki is done, remove this if statement (CE-3093)
+			if ( !$title || !$title->exists() ) {
+				return true;
+			}
+
+			$text = \Revision::newFromTitle( $title )->getRawText();
+		}
+
 		$helper = new Helper();
 		$text = $helper->replaceWithLastApproved( $title, $rawAction->getContentType(), $text );
 		return true;
@@ -171,12 +249,19 @@ class Hooks {
 
 		$title = $article->getTitle();
 
-		if ( !is_null( $title )	&&  $title->isJsPage() ) {
-			$this->purgeContentReviewData();
+		if ( !is_null( $title ) ) {
+			if ( $title->isJsPage() ) {
+				$this->purgeContentReviewData();
 
-			if ( ( new Helper() )->userCanAutomaticallyApprove( $user ) ) {
-				( new ContentReviewService() )
-					->automaticallyApproveRevision( $user, $wgCityId, $title->getArticleID(), $revision->getId() );
+				if ( ( new Helper() )->userCanAutomaticallyApprove( $user ) ) {
+					( new ContentReviewService() )
+						->automaticallyApproveRevision( $user, $wgCityId, $title->getArticleID(), $revision->getId() );
+				}
+			}
+
+			if ( ImportJS::isImportJSPage( $title ) ) {
+				ImportJS::purgeImportScripts();
+				\WikiPage::factory( $title )->doPurge();
 			}
 		}
 
@@ -184,18 +269,30 @@ class Hooks {
 	}
 
 	/**
-	 * Purges JS pages data
+	 * Purges JS pages data and removes data on a deleted page from the database
 	 *
 	 * @param \WikiPage $article
 	 * @param \User $user
 	 * @param $reason
 	 * @param $id
+	 * @return bool
 	 */
 	public function onArticleDeleteComplete( \WikiPage &$article, \User &$user, $reason, $id ) {
+		global $wgCityId;
+
 		$title = $article->getTitle();
 
-		if ( !is_null( $title )	&&  $title->isJsPage() ) {
-			$this->purgeContentReviewData();
+		if ( !is_null( $title )	) {
+			if ( $title->isJsPage() ) {
+				$service = new ContentReviewService();
+				$service->deletePageData( $wgCityId, $id );
+
+				$this->purgeContentReviewData();
+			}
+
+			if ( ImportJS::isImportJSPage( $title ) ) {
+				ImportJS::purgeImportScripts();
+			}
 		}
 
 		return true;
@@ -210,8 +307,14 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onArticleUndelete( \Title $title, $created, $comment ) {
-		if ( !is_null( $title )	&&  $title->isJsPage() ) {
-			$this->purgeContentReviewData();
+		if ( !is_null( $title )	) {
+			if ( $title->isJsPage() ) {
+				$this->purgeContentReviewData();
+			}
+
+			if ( ImportJS::isImportJSPage( $title ) ) {
+				ImportJS::purgeImportScripts();
+			}
 		}
 
 		return true;
@@ -272,5 +375,16 @@ class Hooks {
 		$helper->purgeCurrentJsPagesTimestamp();
 
 		ContentReviewStatusesService::purgeJsPagesCache();
+	}
+
+	private function prepareContent( \Title $title, $content, \Message $message, $parse = true ) {
+		$isViewPage = empty( \RequestContext::getMain()->getRequest()->getVal( 'action' ) );
+
+		if ( $isViewPage ) {
+			$text = $parse ? $message->parse() : $message->escaped();
+			$content = $text . '<pre>' . trim( strip_tags( $content ) ) . '</pre>';
+		}
+
+		return $content;
 	}
 }

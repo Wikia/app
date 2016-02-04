@@ -105,6 +105,11 @@ body {
 	width: $width-rail-epl;
 	z-index: 101; // and the loading status indicator (z-index: 100)
 
+	.InfoboxPreview {
+		display: block;
+		margin: 10px auto 0;
+	}
+
 	.rail-auto-height {
 		overflow: hidden;
 		position: relative; // IE 7 needs this
@@ -349,30 +354,6 @@ body {
 			.ArticlePreviewInner {
 				height: 100%;
 				margin: 0 auto;
-			}
-
-			.preview-modal-msg-wrapper {
-				border: 1px solid $color-page-border;
-				border-bottom: 0;
-				box-sizing: border-box;
-				max-height: 100px;
-				overflow-y: auto;
-				width: 100%;
-			}
-
-			.preview-modal-msg {
-				display: table;
-
-				.preview-message {
-					display: table-cell;
-					padding: 18px;
-				}
-
-				.preview-link {
-					display: table-cell;
-					padding: 0 18px;
-					text-align: right;
-				}
 			}
 
 			// FB#8087 - styling for interlanguage links in RTE popup preview

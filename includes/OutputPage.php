@@ -830,11 +830,12 @@ class OutputPage extends ContextSource {
 	 */
 	public function setHTMLTitle( $name ) {
 		/* Wikia change - begin */
-		if ( $name instanceof Message ) {
-			$name = $name->setContext( $this->getContext() )->text();
+		if ( is_array( $name ) ) {
+			$parts = $name;
+		} else {
+			$parts = [ $name ];
 		}
-
-		$this->mHTMLtitle = WikiaHtmlTitle::getPageTitle( $name, $this->getTitle()->isMainPage() );
+		$this->mHTMLtitle = ( new WikiaHtmlTitle() )->setParts( $parts )->getTitle();
 		/* Wikia change - end */
 	}
 
@@ -1642,7 +1643,9 @@ class OutputPage extends ContextSource {
 	function addParserOutput( &$parserOutput ) {
 		$this->addParserOutputNoText( $parserOutput );
 		$text = $parserOutput->getText();
+
 		wfRunHooks( 'OutputPageBeforeHTML', array( &$this, &$text ) );
+
 		$this->addHTML( $text );
 	}
 

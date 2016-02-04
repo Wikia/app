@@ -7,7 +7,7 @@ $messages['en'] = array(
 	'emailext-articlecomment-summary' => 'People are talking about [$1 $2] on [{{SERVER}} {{SITENAME}}]!',
 	'emailext-blogcomment-summary' => 'People are talking about the [$1 $2] post on [{{SERVER}} {{SITENAME}}]!',
 	'emailext-comment-link-label' => 'See this comment',
-	'emailext-comment-view-all' => '[$1 View all comments]'
+	'emailext-comment-view-all' => '[$1 View all comments]',
 );
 
 $messages['qqq'] = array(
@@ -16,7 +16,7 @@ $messages['qqq'] = array(
 	'emailext-articlecomment-summary' => 'Information about an article comment comment.  $1 is the article URL and $2 is the article name',
 	'emailext-blogcomment-summary' => 'Information about a blog post comment comment.  $1 is the blog post URL and $2 is the blog post name',
 	'emailext-comment-link-label' => 'Label text for a button a user can click to view the comment on the site',
-	'emailext-comment-view-all' => 'A link to the comment section on the blog post or article, plus the link label.  $1 is the link itself, and must remain at the beginning of the string with a space after it.'
+	'emailext-comment-view-all' => 'A link to the comment section on the blog post or article, plus the link label.  $1 is the link itself, and must remain at the beginning of the string with a space after it.',
 );
 
 $messages['de'] = array(
@@ -78,8 +78,8 @@ $messages['pl'] = array(
 	'emailext-blogcomment-subject' => 'Ludzie komentują post $1 na {{SITENAME}}!',
 	'emailext-articlecomment-summary' => 'Ludzie komentują [$1 $2] na [{{SERVER}} {{SITENAME}}]!',
 	'emailext-blogcomment-summary' => 'Ludzie komentują post [$1 $2] na [{{SERVER}} {{SITENAME}}]!',
-	'emailext-comment-link-label' => 'Zobacz ten komentarz',
-	'emailext-comment-view-all' => '[$1 Zobacz komentarze]',
+	'emailext-comment-link-label' => 'Zobacz komentarz',
+	'emailext-comment-view-all' => '[$1 Zobacz wszystkie komentarze]',
 );
 
 $messages['pt'] = array(
@@ -92,21 +92,30 @@ $messages['pt'] = array(
 );
 
 $messages['ru'] = array(
-	'emailext-articlecomment-subject' => 'Люди обсуждают «$1» на {{SITENAME}}!',
-	'emailext-blogcomment-subject' => 'Люди обсуждают запись «$1» на {{SITENAME}}!',
-	'emailext-articlecomment-summary' => 'Люди обсуждают «[$1 $2]» на [{{SERVER}} {{SITENAME}}]!',
-	'emailext-blogcomment-summary' => 'Люди обсуждают запись «[$1 $2]» на [{{SERVER}} {{SITENAME}}]!',
-	'emailext-comment-link-label' => 'Просмотреть комментарий',
-	'emailext-comment-view-all' => '[$1 Просмотреть все комментарии]',
+	'emailext-articlecomment-subject' => 'Участники обсуждают «$1» на {{SITENAME}}!',
+	'emailext-blogcomment-subject' => 'Участники обсуждают запись «$1» на {{SITENAME}}!',
+	'emailext-articlecomment-summary' => 'Участники обсуждают «[$1 $2]» на [{{SERVER}} {{SITENAME}}]!',
+	'emailext-blogcomment-summary' => 'Участники обсуждают запись «[$1 $2]» на [{{SERVER}} {{SITENAME}}]!',
+	'emailext-comment-link-label' => 'Посмотреть комментарий',
+	'emailext-comment-view-all' => '[$1 Посмотреть все комментарии]',
 );
 
 $messages['zh-hans'] = array(
 	'emailext-articlecomment-subject' => '大家都在谈论发布在{{SITENAME}}上标题为$1的文章！',
-	'emailext-blogcomment-subject' => '大家都在谈论发布在{{SITENAME}}上名为$1的博客！',
-	'emailext-articlecomment-summary' => '大家都在谈论发布在[{{SERVER}} {{SITENAME}}]上标题为[$1 $2]的文章！',
-	'emailext-blogcomment-summary' => '大家都在谈论发布在[{{SERVER}} {{SITENAME}}]上名为[$1 $2]的博客！',
+	'emailext-blogcomment-subject' => '大家正在谈论{{SITENAME}}上的博客$1！',
+	'emailext-articlecomment-summary' => '大家正在讨论发布在{{SITENAME}}上标题为$1的文章！',
+	'emailext-blogcomment-summary' => '大家正在讨论{{SITENAME}}上名为$1的博客！',
 	'emailext-comment-link-label' => '查看评论',
 	'emailext-comment-view-all' => '[$1 查看所有评论]',
+);
+
+$messages['zh-hant'] = array(
+	'emailext-articlecomment-subject' => '大家都在談論發佈在{{SITENAME}}上標題為$1的文章！',
+	'emailext-blogcomment-subject' => '有人在討論{{SITENAME}}上名為$1的網誌！',
+	'emailext-articlecomment-summary' => '有人在討論發佈在{{SITENAME}}上標題為$1的文章！',
+	'emailext-blogcomment-summary' => '有人在討論{{SITENAME}}上名為$1的網誌！',
+	'emailext-comment-link-label' => '查看評論',
+	'emailext-comment-view-all' => '[$1 查看所有評論]',
 );
 
 $messages['zh-tw'] = array(

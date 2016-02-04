@@ -1,8 +1,7 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
-use Wikia\PortableInfobox\Helpers\ImageFilenameSanitizer;
-use Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag;
+use HtmlHelper;
 use WikiaFileHelper;
 
 class NodeImage extends Node {
@@ -52,10 +51,7 @@ class NodeImage extends Node {
 	public static function getTabberData( $html ) {
 		global $wgArticleAsJson;
 		$data = array();
-		$doc = new \DOMDocument();
-		libxml_use_internal_errors( true );
-		$doc->loadHTML( $html );
-		libxml_use_internal_errors( false );
+		$doc = HtmlHelper::createDOMDocumentFromText( $html );
 		$sxml = simplexml_import_dom( $doc );
 		$divs = $sxml->xpath( '//div[@class=\'tabbertab\']' );
 		foreach ( $divs as $div ) {
@@ -135,6 +131,14 @@ class NodeImage extends Node {
 		return $tabberItems;
 	}
 
+	/**
+	 * @desc prepare infobox image node data.
+	 *
+	 * @param $title
+	 * @param $alt
+	 * @param $caption
+	 * @return array
+	 */
 	private function getImageData( $title, $alt, $caption ) {
 		$titleObj = $this->getImageAsTitleObject( $title );
 		$fileObj = $this->getFilefromTitle( $titleObj );
@@ -186,7 +190,7 @@ class NodeImage extends Node {
 		global $wgContLang;
 		$title = \Title::makeTitleSafe(
 			NS_FILE,
-			ImageFilenameSanitizer::getInstance()->sanitizeImageFileName( $imageName, $wgContLang )
+			\FileNamespaceSanitizeHelper::getInstance()->sanitizeImageFileName( $imageName, $wgContLang )
 		);
 
 		return $title;

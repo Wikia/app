@@ -1,7 +1,25 @@
-.template-classification-edit {
-	display: inline-block;
-	margin: 0 4px;
+@import "skins/shared/color";
+
+$tc-name-color-checked: $color-links;
+
+@if $is-dark-wiki {
+	$tc-name-color: lighten(mix($color-text, $color-links, 75%), 5%);
+	$tc-modal-text-color: darken($color-text, 20);
+} @else {
+	$tc-name-color: darken(mix($color-text, $color-links, 75%), 5%);
+	$tc-modal-text-color: lighten($color-text, 20);
+}
+
+.template-classification-type-wrapper {
+	position: relative;
+}
+
+.template-classification-type-text {
 	cursor: pointer;
+	.edit {
+		display: inline-block;
+		margin: 0 4px;
+	}
 }
 
 .tc-edit-rail-box {
@@ -19,9 +37,39 @@
 }
 
 .template-classification-edit-modal {
-	line-height: 2.5em;
+	/* Override modal defaults to new design */
+	font-size: 14px;
+	line-height: 20px;
+	color: $tc-modal-text-color;
+
+	&.modal>section {
+		padding: 25px 27px;
+	}
+
+	h2 {
+		margin-bottom: 27px;
+	}
+
+	.tc-instructions {
+		font-size: 16px;
+		margin-bottom: 37px;
+	}
+
+	.tc-type-name {
+		color: $tc-name-color;
+		font-size: 16px;
+		font-weight: bold;
+		padding-bottom: 4px;
+	}
+
+	:checked+div .tc-type-name,
+	a {
+		color: $tc-name-color-checked;
+	}
 
 	.template-classification-edit-form-input {
+		flex: 0 0 14px;
+		margin: 0 13px 0 0 ;
 		vertical-align: text-bottom;
 	}
 
@@ -31,14 +79,23 @@
 	}
 }
 
-.template-classification-edit-form-label div {
-	display: inline-block;
-	vertical-align: top;
-	width: 300px;
+.template-classification-edit-form-label {
+	align-items: baseline;
+	display: flex;
+	justify-content: flex-start;
 
-	p {
-		line-height: 1.6em;
-		margin-bottom: 0.6em;
+	&:last-child div p {
+		margin-bottom: 0;
+	}
+
+	div {
+		display: inline-block;
+		vertical-align: top;
+
+		p {
+			line-height: 20px;
+			margin-bottom: 30px;
+		}
 	}
 }
 
@@ -53,6 +110,21 @@
 }
 
 .template-classification-error {
-	background-color: #e1390b;
+	background-color: $color-error;
 	animation: fadeBackground 1s linear;
+}
+
+.template-classification-type-wrapper .tooltip,
+.wikia-page-header .tooltip {
+	color: $color-text;
+	white-space: normal;
+	width: 220px;
+
+	a {
+		color: $color-links;
+	}
+
+	.close-bulk-hint {
+		text-align: right;
+	}
 }

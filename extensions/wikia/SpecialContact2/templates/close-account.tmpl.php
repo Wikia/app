@@ -11,6 +11,7 @@ echo wfMessage( 'specialcontact-intro-close-account' )->parseAsBlock();
 <form id="contactform" method="post" action="">
 <input name="wpEmail" type="hidden" value="<?= $encEmail ?>" />
 <input name="wpUserName" type="hidden" value="<?= $encName ?>" />
+<input name="wpEditToken" type="hidden" value="<?= Sanitizer::encodeAttribute( $editToken ) ?>" />
 
 <?= wfMessage( 'specialcontact-logged-in-as', $encName )->parseAsBlock() ?>
 

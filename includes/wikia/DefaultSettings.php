@@ -160,6 +160,7 @@ $wgAutoloadClasses['UserApiController'] = "{$IP}/includes/wikia/api/UserApiContr
 $wgAutoloadClasses['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
 $wgAutoloadClasses['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiController.class.php";
 $wgAutoloadClasses['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
+$wgAutoloadClasses['LogEventsApiController'] = "{$IP}/includes/wikia/api/LogEventsApiController.class.php";
 $wgAutoloadClasses['TemplateClassificationApiController'] = "{$IP}/includes/wikia/api/TemplateClassificationApiController.class.php";
 $wgExtensionMessagesFiles['WikiaApi'] = "{$IP}/includes/wikia/api/WikiaApi.i18n.php";
 
@@ -174,6 +175,7 @@ $wgWikiaApiControllers['UserApiController'] = "{$IP}/includes/wikia/api/UserApiC
 $wgWikiaApiControllers['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
 $wgWikiaApiControllers['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiController.class.php";
 $wgWikiaApiControllers['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
+$wgWikiaApiControllers['LogEventsApiController'] = "{$IP}/includes/wikia/api/LogEventsApiController.class.php";
 
 //Wikia Api exceptions classes
 $wgAutoloadClasses[ 'ApiAccessService' ] = "{$IP}/includes/wikia/api/services/ApiAccessService.php";
@@ -282,7 +284,9 @@ $wgHooks          [ 'RestInPeace'                     ][] = 'Transaction::onRest
 $wgHooks          [ 'RestInPeace'                     ][] = 'ScribePurge::onRestInPeace';
 $wgHooks          [ 'RestInPeace'                     ][] = 'CeleryPurge::onRestInPeace';
 $wgAutoloadClasses[ 'Wikia\\Blogs\\BlogTask'          ] = "$IP/extensions/wikia/Blogs/BlogTask.class.php";
+$wgAutoloadClasses[ 'FileNamespaceSanitizeHelper'     ] = "$IP/includes/wikia/helpers/FileNamespaceSanitizeHelper.php";
 $wgAutoloadClasses[ 'TemplatePageHelper'              ] = "$IP/includes/wikia/helpers/TemplatePageHelper.php";
+$wgAutoloadClasses[ 'HtmlHelper'                      ] = "$IP/includes/wikia/helpers/HtmlHelper.class.php";
 $wgAutoloadClasses[ 'CrossOriginResourceSharingHeaderHelper' ] = "$IP/includes/wikia/helpers/CrossOriginResourceSharingHeaderHelper.php";
 $wgAutoloadClasses[ 'VignetteRequest'                 ] = "{$IP}/includes/wikia/vignette/VignetteRequest.php";
 $wgAutoloadClasses[ 'UrlGeneratorInterface'           ] = "{$IP}/includes/wikia/vignette/UrlGeneratorInterface.php";
@@ -354,6 +358,7 @@ $wgAutoloadClasses['LicensedWikisService']  =  $IP.'/includes/wikia/services/Lic
 $wgAutoloadClasses['ArticleQualityService'] = $IP.'/includes/wikia/services/ArticleQualityService.php';
 $wgAutoloadClasses['PortableInfoboxDataService'] = $IP . '/extensions/wikia/PortableInfobox/services/PortableInfoboxDataService.class.php';
 $wgAutoloadClasses['TemplateClassificationService'] = $IP . '/includes/wikia/services/TemplateClassificationService.class.php';
+$wgAutoloadClasses['CommunityDataService'] = $IP . '/includes/wikia/services/CommunityDataService.class.php';
 
 // services hooks
 $wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
@@ -479,11 +484,6 @@ require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
  * i18n support for jquery.timeago.js (used in History Dropdown)
  */
 include_once( "$IP/extensions/wikia/TimeAgoMessaging/TimeAgoMessaging_setup.php" );
-
-/**
- * Updated layout for edit pages (Oasis only)
- */
-//include_once("$IP/extensions/wikia/EditPageLayout/EditPageLayout_setup.php");
 
 /**
  * MW messages in JS
@@ -648,8 +648,6 @@ include_once( "$IP/extensions/wikia/Security/Security.setup.php" );
 $wgSkipSkins = array(
 		'armchairgm',
 		'cars',
-		'chick',
-		'cologneblue_view',
 		'corporate',
 		'corporatebase',
 		'corporatehome',
@@ -667,7 +665,6 @@ $wgSkipSkins = array(
 		'lyricsminimal',
 		'memalpha',
 		'music',
-		'nostalgia',
 		'politics',
 		'psn',
 		'restaurants',
@@ -682,21 +679,8 @@ $wgSkipSkins = array(
 		'smartphone',
 		'efmonaco',
 		'answers',
-		'vector',
 		'campfire',
 		'wikiamobile'
-);
-/**
- * @name wgSkipOldSkins
- *
- * Remove them only from SkinChooser but let use it if in prefs or ?useskin
- */
-$wgSkipOldSkins = array(
-		'cologneblue',
-		'modern',
-		'myskin',
-		'simple',
-		'standard',
 );
 
 /**
@@ -734,12 +718,6 @@ include_once( "$IP/extensions/wikia/CreateNewWiki/CreateWikiLocalJob.php" );
  */
 require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
 require_once( "{$IP}/includes/wikia/tasks/autoload.php");
-
-/**
- * @name wgWikiaStaffLanguages
- * array of language codes supported by ComTeam
- */
-$wgWikiaStaffLanguages = array();
 
 /**
  * @name wgExternalSharedDB
@@ -1040,17 +1018,6 @@ $wgSpecialEditCountExludedUsernames = array(
 $wgMobileSkins = array( 'wikiamobile' );
 
 /**
- * variable for disabling memcached deleted key replication
- */
-$wgDisableMemCachedReplication = false;
-
-/**
- * variable for enabling Nirvana's per-skin template override
- * @see includes/wikia/WikiaView.class.php
- */
-$wgEnableSkinTemplateOverride = false;
-
-/**
  * variable for enabling Nirvana's API entrypoint wikia.php,
  * requests will be served with a 503 status code if this is false or not set
  * @see wikia.php
@@ -1199,12 +1166,14 @@ $wgEnableQuickToolsExt = true;
 
 /**
  * @name $wgPhalanxService
+ * @see extensions/wikia/PhalanxII
  * Use phalanx external service
  */
-$wgPhalanxService = false;
-$wgPhalanxServiceUrl = "http://phalanx";
-$wgPhalanxServiceOptions = [];
-
+$wgPhalanxService = true;
+$wgPhalanxServiceUrl = "http://phalanx.service.consul:4666"; # PLATFORM-1744
+$wgPhalanxServiceOptions = [
+	'noProxy' => true, # PLATFORM-1744: do not use the default HTTP proxy (defined in $wgHTTPProxy) for Phalanx requests
+];
 
 /**
  * @name $wgWikiaHubsFileRepoDBName
@@ -1223,6 +1192,12 @@ $wgWikiaHubsFileRepoPath = 'http://corp.wikia.com/';
  * filesystem path for hubs' images
  */
 $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
+
+/**
+ * @name $wgEnableNielsen
+ * Enables Nielsen Digital Content Ratings
+ */
+$wgEnableNielsen = false;
 
 /**
  * @name $wgEnableAmazonMatch
@@ -1245,7 +1220,7 @@ $wgAmazonMatchCountries = null;
 $wgAmazonMatchCountriesMobile = null;
 
 /**
- * @name $wgEnableOpenXBidder
+ * @name $wgAdDriverEnableOpenXBidder
  * Enables OpenX bidder
  */
 $wgAdDriverEnableOpenXBidder = true;
@@ -1263,6 +1238,19 @@ $wgAdDriverOpenXBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverOpenXBidderCountriesMobile = null;
+
+/**
+ * @name $wgAdDriverEnableRubiconFastlane
+ * Enables Rubicon Fastlane
+ */
+$wgAdDriverEnableRubiconFastlane = true;
+
+/**
+ * @name $wgAdDriverRubiconFastlaneCountries
+ * Enables RubiconFastlane in these countries (given wgAdDriverEnableRubiconFastlane is also true).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRubiconFastlaneCountries = null;
 
 /**
  * @name $wgAdPageLevelCategoryLangs
@@ -1302,17 +1290,43 @@ $wgAdDriverEnableInvisibleHighImpactSlot = true;
 $wgAdDriverUseAdsAfterInfobox = false;
 
 /**
+ * @name $wgAdDriverUseGoogleConsumerSurveys
+ * Whether to enable Google Consumer Surveys
+ */
+$wgAdDriverUseGoogleConsumerSurveys = true;
+
+/**
+ * @name $wgAdDriverGoogleConsumerSurveysCountries
+ * List of countries with enabled Google Consumer Surveys.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverGoogleConsumerSurveysCountries = null;
+
+/**
+ * @name $wgAdDriverUseEvolve2
+ * Whether to enable AdProviderEvolve2 (true) or not (false)
+ */
+$wgAdDriverUseEvolve2 = true;
+
+/**
+ * @name $wgAdDriverEvolve2Countries
+ * List of countries with enabled Evolve2 module.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverEvolve2Countries = null;
+
+/**
  * @name $wgAdDriverUseTaboola
  * Whether to enable AdProviderTaboola (true) or not (false)
  */
 $wgAdDriverUseTaboola = true;
 
 /**
- * @name $wgAdDriverTaboolaCountries
- * List of countries with enabled Taboola module.
+ * @name $wgAdDriverTaboolaConfig
+ * Config with list of countries with enabled Taboola module.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverTaboolaCountries = null;
+$wgAdDriverTaboolaConfig = null;
 
 /**
  * @name $wgAdDriverUseTopInContentBoxad
@@ -1347,6 +1361,24 @@ $wgSitewideDisableGpt = false;
  * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  */
 $wgSitewideDisableIVW2 = false;
+
+/**
+ * @name $wgSitewideDisableIVW3
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableIVW3
+ *
+ * Disable IVW3 Analytics pixel sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisableIVW3 = false;
+
+/**
+ * @name $wgAnalyticsDriverIVW3Countries
+ *
+ * List of countries with enabled IVW3 tracking
+ */
+$wgAnalyticsDriverIVW3Countries = ['AT', 'CH', 'DE'];
 
 /**
  * @name $wgSitewideDisableLiftium
@@ -1432,7 +1464,7 @@ $wgAdDriverTrackState = false;
 
 /**
  * @name $wgAdDriverForcedProvider
- * @example 'liftium', 'turtle' or 'openx'
+ * @example 'liftium', 'turtle'
  * Forces to use passed provider for all slots managed by this provider and disables other providers.
  */
 $wgAdDriverForcedProvider = null;
@@ -1442,6 +1474,13 @@ $wgAdDriverForcedProvider = null;
  * Whether to display ads within interactive maps
  */
 $wgAdDriverEnableAdsInMaps = true;
+
+/**
+ * @name $wgAdDriverDelayCountries
+ * List of countries with enabled AdEngine delay
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverDelayCountries = null;
 
 /**
  * @name $wgAdDriverKruxCountries
@@ -1477,13 +1516,6 @@ $wgHighValueCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverTurtleCountries = null;
-
-/**
- * @name $wgAdDriverOpenXCountries
- * List of countries to call OpenX ad partner in
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverOpenXCountries = null;
 
 /**
  * @name $wgAdDriverSourcePointDetectionCountries
@@ -1795,6 +1827,14 @@ $wgLogRestrictions['piggyback'] = 'piggyback';
  * Reject attempts to fall back to the MediaWiki session for authentication.
  */
 $wgRejectAuthenticationFallback = true;
+
+/**
+ * @name $wgEnableHostnameInHtmlTitle
+ *
+ * Whether to include the hostname in HTML <title> tag.
+ * On production this is overridden and false.
+ */
+$wgEnableHostnameInHtmlTitle = true;
 
 /**
  * Use template types from Template Classification Service in MW context

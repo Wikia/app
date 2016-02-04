@@ -36,9 +36,11 @@ class Transaction {
 	const PARAM_FUNCTION = 'function';
 	const PARAM_SPECIAL_PAGE_NAME = 'special_page';
 	const PARAM_API_ACTION = 'api_action';
+	const PARAM_API_LIST = 'api_list';
 	const PARAM_WIKI = 'wiki';
 	const PARAM_DPL = 'dpl';
 	const PARAM_AB_PERFORMANCE_TEST = 'perf_test';
+	const PARAM_MAINTENANCE_SCRIPT = 'maintenance_script';
 
 	const PSEUDO_PARAM_TYPE = 'type';
 

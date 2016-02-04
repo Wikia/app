@@ -71,7 +71,6 @@ $messages = array(
 'mytalk'     => 'Minu juttu',
 'navigation' => 'Valittsõmin',
 
-# Cologne Blue skin
 'qbfind' => 'Etsi',
 
 'errorpagetitle'   => 'Vika',

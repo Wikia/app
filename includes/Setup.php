@@ -31,7 +31,6 @@ if ( !isset( $wgVersion ) ) {
 
 // Set various default paths sensibly...
 if ( $wgScript === false ) $wgScript = "$wgScriptPath/index$wgScriptExtension";
-if ( $wgRedirectScript === false ) $wgRedirectScript = "$wgScriptPath/redirect$wgScriptExtension";
 if ( $wgLoadScript === false ) $wgLoadScript = "$wgScriptPath/load$wgScriptExtension";
 
 if ( $wgArticlePath === false ) {
@@ -50,7 +49,7 @@ if ( !empty($wgActionPaths) && !isset($wgActionPaths['view']) ) {
 
 if ( !empty($wgActionPaths) && !isset($wgActionPaths['view']) ) {
 	# 'view' is assumed the default action path everywhere in the code
-	# but is rarely filled in $wgActionPaths 
+	# but is rarely filled in $wgActionPaths
 	$wgActionPaths['view'] = $wgArticlePath ;
 }
 
@@ -201,7 +200,7 @@ if ( $wgUseInstantCommons ) {
 		'hashLevels'             => 2,
 		'fetchDescription'       => true,
 		'descriptionCacheExpiry' => 43200,
-		'apiThumbCacheExpiry'    => 86400,
+		'apiThumbCacheExpiry'    => 0, # PLATFORM-1735 (do not try to fetch thumbs and store them on our DFS, serve them from Wikimedia Commons)
 	);
 }
 /*
@@ -237,10 +236,6 @@ if ( $wgRCFilterByAge ) {
 			break;
 		}
 	}
-}
-
-if ( $wgSkipSkin ) {
-	$wgSkipSkins[] = $wgSkipSkin;
 }
 
 # Set default shared prefix
@@ -396,6 +391,16 @@ if ( !defined( 'MW_COMPILED' ) ) {
 	require_once( "$IP/includes/ImageFunctions.php" );
 	require_once( "$IP/includes/normal/UtfNormalDefines.php" );
 	wfProfileOut( $fname . '-includes' );
+}
+
+// T48998: Bail out early if $wgArticlePath is non-absolute
+if ( !preg_match( '/^(https?:\/\/|\/)/', $wgArticlePath ) ) {
+	throw new FatalError(
+		'If you use a relative URL for $wgArticlePath, it must start ' .
+		'with a slash (<code>/</code>).<br><br>See ' .
+		'<a href="https://www.mediawiki.org/wiki/Manual:$wgArticlePath">' .
+		'https://www.mediawiki.org/wiki/Manual:$wgArticlePath</a>.'
+	);
 }
 
 # Now that GlobalFunctions is loaded, set the default for $wgCanonicalServer

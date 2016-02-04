@@ -135,4 +135,7 @@ $messages = array_merge( $messages, array(
 ",
 
 'tog-enableuserjs' => 'Activer le code javascript personnel ([[Aide:CSS_et_JS_avancés|En savoir plus]])',
+
+'group-content-moderator' => 'Modérateurs de contenu',
+'group-content-moderator-member' => 'Modérateur de contenu',
 ) );

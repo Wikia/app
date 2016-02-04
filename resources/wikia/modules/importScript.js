@@ -25,11 +25,11 @@ define('wikia.importScript', ['wikia.importScriptHelper', 'wikia.window'], funct
 
 		for (var i = 0; i < articles.length; i++) {
 			if (!importScriptHelper.isJsPage(articles[i])) {
-				articlesFailed.push(importScriptHelper.getNamespacePrefix() + articles[i]);
+				articlesFailed.push(importScriptHelper.getNamespacePrefix() + ':' + articles[i]);
 				continue;
 			}
 			if (importScriptHelper.isLocal(articles[i])) {
-				articlesToImport.push(importScriptHelper.getNamespacePrefix() + articles[i]);
+				articlesToImport.push(importScriptHelper.getNamespacePrefix() + ':' + articles[i]);
 			} else if (importScriptHelper.isExternal(articles[i])) {
 				scriptName = importScriptHelper.prepareExternalScript(articles[i]);
 				articlesToImport.push(scriptName);

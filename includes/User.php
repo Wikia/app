@@ -25,7 +25,6 @@ use Wikia\DependencyInjection\Injector;
 use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
 use Wikia\Service\User\Attributes\UserAttributes;
-use Wikia\Service\User\Preferences\Migration\PreferenceCorrectionService;
 use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Util\Statistics\BernoulliTrial;
 use Wikia\Service\Helios\HeliosClient;
@@ -292,10 +291,10 @@ class User {
 	}
 
 	/**
-	 * @return PreferenceCorrectionService
+	 * @return bool
 	 */
-	private function preferenceCorrection() {
-		return Injector::getInjector()->get(PreferenceCorrectionService::class);
+	public function arePreferencesReadOnly() {
+		return $this->userPreferences()->getPreferences( $this->getId() )->isReadOnly();
 	}
 
 	/**
@@ -991,11 +990,10 @@ class User {
 		// Decide the final password length based on our min password length, stopping at a minimum of 20 chars
 		$length = max( 20, $wgMinimalPasswordLength );
 		// Multiply by 1.25 to get the number of hex characters we need
-		$length = $length * 1.25;
 		// Generate random hex chars
-		$hex = MWCryptRand::generateHex( $length );
+		$hex = MWCryptRand::generateHex( ceil( $length * 1.25 ) );
 		// Convert from base 16 to base 32 to get a proper password like string
-		return wfBaseConvert( $hex, 16, 32 );
+		return substr( wfBaseConvert( $hex, 16, 32, $length ), -$length );
 	}
 
 	/**
@@ -1153,8 +1151,18 @@ class User {
 		}
 
 		if ( !$this->isUserAuthenticatedViaAuthenticationService() ) {
-			$this->logFallbackToMediaWikiSessionRejection( $from );
-			$this->logout();
+			global $wgAuthForceLogoutOnFailedAuthSessionFallback;
+
+			/*
+			 * when failing over to Reston (readonly), users should be anonymous but their session
+			 * should resume without them having to do anything when we go back to r/w. See
+			 * SERVICES-1125
+			 */
+			if ( $wgAuthForceLogoutOnFailedAuthSessionFallback ) {
+				$this->logFallbackToMediaWikiSessionRejection( $from );
+				$this->logout();
+			}
+
 			$this->loadDefaults();
 			return false;
 		}
@@ -2513,6 +2521,7 @@ class User {
 	 * Get all user's options
 	 *
 	 * @return array
+	 * @deprecated use get(Global|Local)Preference  get(Global|Local)Attribute or get(Global|Local)Flag
 	 */
 	public function getOptions() {
 		global $wgHiddenPrefs;
@@ -2534,6 +2543,20 @@ class User {
 		// Populate with attributes from attribute service
 		foreach ( $this->userAttributes()->getAttributes( $this->getId() ) as $attrName => $attrValue ) {
 			$options[$attrName] = $attrValue;
+		}
+
+		// Populate with user global preferences, and wiki local preferences
+		$preferences = $this->userPreferences()->getPreferences( $this->getId() );
+
+		foreach ( $preferences->getGlobalPreferences() as $globalPreference ) {
+			$options[ $globalPreference->getName() ] = $globalPreference->getValue();
+		}
+
+		global $wgCityId;
+		$localPreferences = $preferences->getLocalPreferencesForWiki( $wgCityId );
+
+		foreach ( $localPreferences as $localPreference ) {
+			$options[ $localPreference->getName() ] = $localPreference->getValue();
 		}
 
 		return $options;
@@ -3943,7 +3966,7 @@ class User {
 			$request = $this->getRequest();
 		}
 
-		if ( $this->isAnon() ) {
+		if ( $this->isAnon() && session_status() !== PHP_SESSION_ACTIVE /* Wikia change (SUS-20) */ ) {
 			return EDIT_TOKEN_SUFFIX;
 		} else {
 			$token = $request->getSessionData( 'wsEditToken' );
@@ -3981,7 +4004,8 @@ class User {
 	 */
 	public function matchEditToken( $val, $salt = '', $request = null ) {
 		$sessionToken = $this->getEditToken( $salt, $request );
-		if ( $val != $sessionToken ) {
+		$equals = hash_equals( $sessionToken, $val );
+		if ( !$equals ) {
 			wfDebug( "User::matchEditToken: broken session data\n" );
 
 			// Wikia change - begin
@@ -4005,7 +4029,7 @@ class User {
 
 		wfRunHooks( 'UserMatchEditToken' ); # Wikia change
 
-		return $val == $sessionToken;
+		return $equals;
 	}
 
 	/**
@@ -4019,7 +4043,7 @@ class User {
 	 */
 	public function matchEditTokenNoSuffix( $val, $salt = '', $request = null ) {
 		$sessionToken = $this->getEditToken( $salt, $request );
-		return substr( $sessionToken, 0, 32 ) == substr( $val, 0, 32 );
+		return hash_equals( substr( $sessionToken, 0, 32 ), substr( $val, 0, 32 ) );
 	}
 
 	/**
@@ -4931,8 +4955,6 @@ class User {
 				$this->mOptionOverrides[$row->up_property] = $row->up_value;
 				$this->mOptions[$row->up_property] = $row->up_value;
 			}
-
-			$this->preferenceCorrection()->compareAndCorrect($this->getId(), $this->mOptions);
 		}
 
 		$this->mOptionsLoaded = true;

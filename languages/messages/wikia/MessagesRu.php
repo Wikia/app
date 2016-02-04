@@ -40,4 +40,7 @@ $messages = array_merge( $messages, array(
 
 'tog-enableuserjs' => 'Включить персональный JavaScript ([[Справка:Персональный СSS и JavaScript|подробнее]])',
 'wikia-pagetitle' => '$1 — Wikia',
+
+'group-content-moderator' => 'Модераторы контента',
+'group-content-moderator-member' => 'Модератор контента',
 ) );

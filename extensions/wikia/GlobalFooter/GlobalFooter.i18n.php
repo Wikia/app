@@ -56,7 +56,7 @@ $messages['ca'] = array(
 		*Special:Contact|Contacte
 		*http://ca.wikia.com/wiki/Wikia:Termes_d%27%C3%BAs|Termes d'Ús
 		*http://ca.wikia.com/wiki/Wikia:Pol%C3%ADtica_de_Privacitat|Política de Privacitat
-		*http://ca.wikia.com/wiki/Wikia:Llic%C3%A8ncia|CC-BY-SA",
+		*_LICENSE_",
 );
 
 $messages['cs'] = array(
@@ -81,7 +81,7 @@ $messages['de'] = array(
 		*http://de.wikia.com/Nutzungsbedingungen|Nutzungsbedingungen
 		*http://de.wikia.com/Datenschutz|Datenschutz
 		*_SITEMAP_
-		*http://de.wikia.com/Lizenz|Lizenz',
+		*_LICENSE_',
 	'shared-Monobook-footer-wikia-links' => '* [http://de.wikia.com/Datenschutz Datenschutz]
 * [http://de.wikia.com/wiki/%C3%9Cber_Wikia Über Wikia]
 * [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen]<span style="color: #ff0000"> (Aktualisiert)</span>
@@ -109,7 +109,7 @@ $messages['es'] = array(
 		*http://es.wikia.com/T%C3%A9rminos_de_uso|Términos de uso
 		*http://es.wikia.com/Pol%C3%ADtica_de_privacidad|Política de privacidad
 		*_SITEMAP_
-		*http://es.wikia.com/Licencia|CC-BY-SA',
+		*_LICENSE_',
 	'shared-Monobook-footer-wikia-links' => '* [http://es.wikia.com/Pol%C3%ADtica_de_Privacidad Política de Privacidad]
 		* [http://es.wikia.com/Sobre_nosotros Sobre Wikia]
 		* [http://es.wikia.com/T%C3%A9rminos_de_Uso Términos de Uso]
@@ -158,7 +158,7 @@ $messages['fr'] = array(
 		*http://fr.wikia.com/Conditions_d'utilisation|Conditions d'utilisation
 		*http://fr.wikia.com/Politique_de_confidentialité|Politique de confidentialité
 		*_SITEMAP_
-		*http://fr.wikia.com/Licence|Sous licence CC-BY-SA",
+		*_LICENSE_",
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Confidentialité]
 		* [http://fr.wikia.com/À_propos À propos de Wikia]
 		* [http://fr.wikia.com/Conditions_d\'utilisation Conditions d\'utilisation]<span style="color: #ff0000"> (Mises à jour)</span>
@@ -182,7 +182,7 @@ $messages['it'] = array(
 		* Special:Contact|Contattaci
 		* http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo |Termini di utilizzo
 		* http://www.wikia.com/Privacy_Policy |Privacy
-		* http://it.community.wikia.com/wiki/Wiki_della_Community:Licenza |Licenza
+		*_LICENSE_
 		*_SITEMAP_
 		* http://www.wikia.com/Special:CreateWiki |Crea una wiki',
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
@@ -217,7 +217,7 @@ $messages['ja'] = array(
 		*http://ja.wikia.com/利用規約|利用規約
 		*http://ja.wikia.com/プライバシーポリシー|プライバシーポリシー
 		*_SITEMAP_
-		*http://ja.wikia.com/Licensing|コンテンツはCC-BY-SAのもとに提供されています',
+		*_LICENSE_',
 	'global-footer-vertical-music-link' => 'http://musichub.wikia.com/wiki/Music_Hub',
 	'global-footer-vertical-lifestyle-link' => 'http://lifestylehub.wikia.com/wiki/Lifestyle_Hub',
 	'global-footer-desc' => 'GlobalFooter',

@@ -73,7 +73,7 @@ class AdEngine2PageTypeService {
 					// Chosen special pages:
 					|| $title->isSpecial( 'Leaderboard' )
 					|| $title->isSpecial( 'Maps' )
-					|| $title->isSpecial( 'Newimages' )
+					|| $title->isSpecial( 'Images' )
 					|| $title->isSpecial( 'Videos' );
 			}
 		}

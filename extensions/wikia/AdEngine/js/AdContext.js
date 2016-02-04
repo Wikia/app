@@ -4,12 +4,13 @@
  */
 define('ext.wikia.adEngine.adContext', [
 	'wikia.abTest',
+	'wikia.cookies',
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.window',
 	'wikia.querystring'
-], function (abTest, doc, geo, instantGlobals, w, Querystring) {
+], function (abTest, cookies, doc, geo, instantGlobals, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -34,6 +35,10 @@ define('ext.wikia.adEngine.adContext', [
 		return !!parseInt(qs.getVal(param, '0'), 10);
 	}
 
+	function isPageType(pageType) {
+		return context.targeting.pageType === pageType;
+	}
+
 	function setContext(newContext) {
 		var i,
 			len,
@@ -48,10 +53,15 @@ define('ext.wikia.adEngine.adContext', [
 		context.targeting = context.targeting || {};
 		context.providers = context.providers || {};
 		context.forcedProvider = qs.getVal('forcead', null) || context.forcedProvider || null;
+		context.opts.noExternals = noExternals;
 
 		// Don't show ads when Sony requests the page
 		if (doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/)) {
 			context.opts.showAds = false;
+		}
+
+		if (geo.isProperGeo(instantGlobals.wgAdDriverDelayCountries)) {
+			context.opts.delayEngine = true;
 		}
 
 		// SourcePoint detection integration
@@ -65,18 +75,25 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// SourcePoint recovery integration
-		if (context.opts.sourcePointDetection && context.opts.sourcePointRecoveryUrl) {
+		if (!context.opts.delayEngine && context.opts.sourcePointDetection && context.opts.sourcePointRecoveryUrl) {
 			context.opts.sourcePointRecovery = isUrlParamSet('sourcepointrecovery') ||
 				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
 		}
 
 		// Recoverable ads message
 		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
-			context.opts.recoveredAdsMessage = geo.isProperGeo(instantGlobals.wgAdDriverAdsRecoveryMessageCountries);
+			context.opts.recoveredAdsMessage = isPageType('article') &&
+				geo.isProperGeo(instantGlobals.wgAdDriverAdsRecoveryMessageCountries);
 		}
 
-		// Showcase.*
-		if (isUrlParamSet('showcase')) {
+		// Google Consumer Surveys
+		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
+			context.opts.googleConsumerSurveys = abTest.getGroup('PROJECT_43') === 'GROUP_5' &&
+				geo.isProperGeo(instantGlobals.wgAdDriverGoogleConsumerSurveysCountries);
+		}
+
+		// showcase.*
+		if (cookies.get('mock-ads') === 'NlfdjR5xC0') {
 			context.opts.showcase = true;
 		}
 
@@ -85,19 +102,13 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
 		}
 
-		// Taboola integration
-		if (context.providers.taboola) {
-			context.providers.taboola = !!abTest.getGroup('TABOOLA_MODULES') &&
-				geo.isProperGeo(instantGlobals.wgAdDriverTaboolaCountries) &&
-				context.targeting.pageType === 'article';
+		// Evolve2 integration
+		if (context.providers.evolve2) {
+			context.providers.evolve2 = geo.isProperGeo(instantGlobals.wgAdDriverEvolve2Countries);
 		}
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverTurtleCountries)) {
 			context.providers.turtle = true;
-		}
-
-		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXCountries)) {
-			context.providers.openX = true;
 		}
 
 		// INVISIBLE_HIGH_IMPACT slot
@@ -121,6 +132,13 @@ define('ext.wikia.adEngine.adContext', [
 			!instantGlobals.wgSitewideDisableKrux &&
 			!context.targeting.wikiDirectedAtChildren &&
 			!noExternals
+		);
+
+		// Floating medrec
+		context.opts.floatingMedrec = !!(
+			context.opts.showAds && context.opts.adsInContent &&
+			(isPageType('article') || isPageType('search')) &&
+			!context.targeting.wikiIsCorporate
 		);
 
 		// Export the context back to ads.context

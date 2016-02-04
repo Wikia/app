@@ -39,4 +39,7 @@ $messages = array_merge( $messages, array(
 'addnewtalksection-link' => 'Iniciar uma nova secção',
 
 'tog-enableuserjs' => 'Autorizar JavaScript pessoal ([[Ajuda:CSS_e_JS_pessoal|Saiba mais]])',
+
+'group-content-moderator' => 'Moderadores de conteúdo',
+'group-content-moderator-member' => 'Moderador de conteúdo',
 ) );

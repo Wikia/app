@@ -68,10 +68,12 @@
 
 <?= $comScore ?>
 <?= $quantServe ?>
-<?= $googleAnalytics ?>
 <?= $amazonMatch ?>
 <?= $openXBidder ?>
+<?= $rubiconFastlane ?>
+<?= $krux ?>
 <?= $dynamicYield ?>
+<?= $ivw3 ?>
 <?= $ivw2 ?>
 <div class="WikiaSiteWrapper">
 	<?= $body ?>
@@ -101,6 +103,7 @@
 <?php } ?>
 <?= $bottomScripts ?>
 
+<?= $nielsen ?>
 </body>
 
 <?= wfReportTime() . "\n" ?>

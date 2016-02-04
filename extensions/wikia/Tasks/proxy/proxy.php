@@ -23,8 +23,9 @@ $wikiId = escapeshellarg( $_POST['wiki_id'] );
 $list = escapeshellarg( $_POST['task_list'] );
 $order = escapeshellarg( $_POST['call_order'] );
 $createdBy = escapeshellarg( $_POST['created_by'] );
+$createdAt = escapeshellarg( $_POST['created_at'] );
 
-$command = "php {$script} --wiki_id={$wikiId} --task_id={$taskId} --task_list={$list} --call_order={$order} --created_by={$createdBy}";
+$command = "php {$script} --wiki_id={$wikiId} --task_id={$taskId} --task_list={$list} --call_order={$order} --created_by={$createdBy} --created_at={$createdAt}";
 
 // can't use globals here, this doesn't execute within mediawiki
 if ( getenv( 'WIKIA_ENVIRONMENT' ) == 'dev' ) {
@@ -32,8 +33,9 @@ if ( getenv( 'WIKIA_ENVIRONMENT' ) == 'dev' ) {
 	require_once( __DIR__ . '/../../../../lib/composer/autoload.php' );
 
 	\Wikia\Logger\WikiaLogger::instance()->setDevModeWithES();
-	\Wikia\Logger\WikiaLogger::instance()->debug( $command, [
-		'task_id' => $taskId
+	\Wikia\Logger\WikiaLogger::instance()->debug( 'Tasks - proxy.php', [
+		'cmd' => $command,
+		'data' => $_POST,
 	] );
 }
 

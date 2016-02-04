@@ -100,7 +100,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 */
 	private function renderGroup( $groupData ) {
 		$cssClasses = [];
-		$helper = new PortableInfoboxRenderServiceHelper();;
+		$helper = new PortableInfoboxRenderServiceHelper();
 		$groupHTMLContent = '';
 		$dataItems = $groupData[ 'value' ];
 		$layout = $groupData[ 'layout' ];
@@ -169,13 +169,16 @@ class PortableInfoboxRenderService extends WikiaService {
 
 		if ( $type === 'image' ) {
 			$images = array();
+
 			for ( $i = 0; $i < count($data); $i++ ) {
 				$data[$i][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
 				$data[$i] = $helper->extendImageData( $data[$i] );
+
 				if ( !!$data[$i] ) {
 					$images[] = $data[$i];
 				}
 			}
+
 			if ( count ( $images ) === 0 ) {
 				return false;
 			} else if ( count ( $images ) === 1 ) {
@@ -186,6 +189,7 @@ class PortableInfoboxRenderService extends WikiaService {
 				$data = array( 'images' => $images );
 				$templateName = 'image-collection';
 			}
+
 			if ( $helper->isWikiaMobile() ) {
 				$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX;
 			}
@@ -193,8 +197,11 @@ class PortableInfoboxRenderService extends WikiaService {
 			$templateName = $type;
 		}
 
+		/**
+		 * Currently, based on business decision, sanitization happens ONLY on Mercury
+		 */
 		if ( $helper->isWikiaMobile() ) {
-			$data = $helper->sanitizeInfoboxFields( $type, $data );
+			$data = SanitizerBuilder::createFromType( $type )->sanitize( $data );
 		}
 
 		return $this->templateEngine->clearData()

@@ -433,29 +433,12 @@ $messages = array(
 'navigation'    => 'Navigacion',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Recercar',
 'qbbrowse'       => 'Far desfilar',
-'qbedit'         => 'Modificar',
 'qbpageoptions'  => 'Opcions de la pagina',
 'qbpageinfo'     => 'Pagina d’entresenhas',
-'qbmyoptions'    => 'Mas opcions',
-'qbspecialpages' => 'Paginas especialas',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection' => 'Apondre un subjècte',
-'vector-action-delete'     => 'Suprimir',
-'vector-action-move'       => 'Tornar nomenar',
-'vector-action-protect'    => 'Protegir',
-'vector-action-undelete'   => 'Restablir',
-'vector-action-unprotect'  => 'Suprimir la proteccion',
-'vector-view-create'       => 'Crear',
-'vector-view-edit'         => 'Modificar',
-'vector-view-history'      => "Veire l'istoric",
-'vector-view-view'         => 'Legir',
-'vector-view-viewsource'   => 'Veire la font',
 'actions'                  => 'Accions',
 'namespaces'               => 'Espacis de noms',
 'variants'                 => 'Variantas',
@@ -478,7 +461,6 @@ $messages = array(
 'edit'              => 'Modificar',
 'create'            => 'Crear',
 'editthispage'      => 'Modificar aquesta pagina',
-'create-this-page'  => 'Crear aquesta pagina',
 'delete'            => 'Suprimir',
 'deletethispage'    => 'Suprimir aquesta pagina',
 'undelete_short'    => 'Restablir {{PLURAL:$1|1 modificacion| $1 modificacions}}',
@@ -493,19 +475,9 @@ $messages = array(
 'talkpagelinktext'  => 'Discussion',
 'specialpage'       => 'Pagina especiala',
 'personaltools'     => 'Aisinas personalas',
-'postcomment'       => 'Seccion novèla',
-'articlepage'       => "Vejatz l'article",
 'talk'              => 'Discussion',
 'views'             => 'Afichatges',
 'toolbox'           => "Bóstia d'espleches",
-'userpage'          => "Pagina d'utilizaire",
-'projectpage'       => 'Pagina meta',
-'imagepage'         => 'Veire la pagina del fichièr',
-'mediawikipage'     => 'Vejatz la pagina dels messatges',
-'templatepage'      => 'Vejatz la pagina del modèl',
-'viewhelppage'      => "Vejatz la pagina d'ajuda",
-'categorypage'      => 'Vejatz la pagina de las categorias',
-'viewtalkpage'      => 'Pagina de discussion',
 'otherlanguages'    => 'Autras lengas',
 'redirectedfrom'    => '(Redirigit dempuèi $1)',
 'redirectpagesub'   => 'Pagina de redireccion',
@@ -911,7 +883,6 @@ La darrièra entrada del jornal dels blocatges es indicada çaijós a títol d�
 'sitecsspreview'                   => "'''Remembratz-vos que sètz a previsualizar vòstre pròpri fuèlh CSS !'''
 '''Es pas estada encara enregistrada !'''",
 'sitejspreview'                    => "'''Remembratz-vos que sètz a visualizar o testar vòstre còde JavaScript e qu’es pas encara estat enregistrat !'''",
-'userinvalidcssjstitle'            => "'''Atencion :''' existís pas d'estil « $1 ». Remembratz-vos que las paginas personalas amb extensions .css e .js utilizan de títols en minusculas, per exemple, {{ns:user}}:Foo/vector.css e non pas {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Mes a jorn)',
 'note'                             => "'''Nòta :'''",
 'previewnote'                      => "'''Atencion, aqueste tèxte es sonque una previsualizacion e es pas encara estat salvat !'''",
@@ -1247,13 +1218,6 @@ Ensajatz en utilizant lo prefix ''all:'' per recercar tot lo contengut (tot incl
 En esperant la reactivacion, podètz efectuar una recèrca via Google.
 Atencion, lor indexacion de contengut {{SITENAME}} benlèu es pas a jorn.',
 
-# Quickbar
-'qbsettings'               => "Barra d'espleches",
-'qbsettings-none'          => 'Cap',
-'qbsettings-fixedleft'     => 'Esquèrra',
-'qbsettings-fixedright'    => 'Drecha',
-'qbsettings-floatingleft'  => 'Flotanta a esquèrra',
-'qbsettings-floatingright' => 'Flotanta a drecha',
 
 # Preferences page
 'preferences'                   => 'Preferéncias',
@@ -2741,29 +2705,13 @@ Totas las accions d’importacion interwiki son conservadas dins lo [[Special:Lo
 
 # Stylesheets
 'common.css'      => '/** Lo CSS plaçat aicí serà aplicat a totas las aparéncias. */',
-'standard.css'    => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Estandard. */',
-'nostalgia.css'   => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Nostalgia. */',
-'cologneblue.css' => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Cologne Blue */',
 'monobook.css'    => '/* Lo CSS plaçat aicí afectarà los utilizaires del skin Monobook */',
-'myskin.css'      => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge MySkin */',
-'chick.css'       => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Chick */',
-'simple.css'      => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Simple */',
-'modern.css'      => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Modern */',
-'vector.css'      => '/* Lo CSS plaçat aicí afectarà los utilizaires de l’abilhatge Vector */',
 'print.css'       => '/* Lo CSS plaçat aicí afectarà las impressions */',
 'handheld.css'    => '/* Lo CSS plaçat aicí afectarà los aparelhs mobils en foncion de l\'abilhatge configurat $wgHandheldStyle */',
 
 # Scripts
 'common.js'      => '/* Tot JavaScript serà cargat amb cada pagina accedida per un utilizaire quin que siá. */',
-'standard.js'    => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Standard unicament. */',
-'nostalgia.js'   => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Nostalgia unicament. */',
-'cologneblue.js' => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Cologne Blue unicament. */',
 'monobook.js'    => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge MonoBook unicament. */',
-'myskin.js'      => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge MySkin unicament. */',
-'chick.js'       => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Chick unicament. */',
-'simple.js'      => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Simple unicament. */',
-'modern.js'      => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Modern unicament. */',
-'vector.js'      => '/* Tot JavaScript aicí serà cargat amb las paginas accedidas pels utilizaires de l’abilhatge Vector unicament. */',
 
 # Metadata
 'notacceptable' => 'Aqueste servidor wiki pòt pas fornir las donadas dins un format que vòstre client es capable de legir.',
@@ -2790,14 +2738,7 @@ Aquò es probablament causat per un ligam sus lista negra que punta cap a un sit
 'spam_blanking'       => 'Totas las versions que contenon de ligams cap a $1 son blanquidas',
 
 # Skin names
-'skinname-standard'    => 'Estandard',
-'skinname-nostalgia'   => 'Nostalgia',
-'skinname-cologneblue' => 'Colonha Blau',
 'skinname-monobook'    => 'Monobook',
-'skinname-myskin'      => 'Mon interfàcia',
-'skinname-chick'       => 'Poleton',
-'skinname-simple'      => 'Simple',
-'skinname-modern'      => 'Modèrne',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marcar coma essent pas un vandalisme',

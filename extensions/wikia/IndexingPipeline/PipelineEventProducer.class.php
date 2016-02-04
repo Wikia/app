@@ -1,28 +1,28 @@
 <?php
 
+namespace Wikia\IndexingPipeline;
+
 class PipelineEventProducer {
 	const ARTICLE_MESSAGE_PREFIX = 'article';
 	const PRODUCER_NAME = 'MWEventsProducer';
-	const NS_CONTENT = 'content';
-	const ROUTE_ACTION_KEY = '_action';
-	const ROUTE_NAMESPACE_KEY = '_namespace';
-	const ROUTE_CONTENT_KEY = '_content';
-	const ACTION_CREATE = 'create';
-	const ACTION_UPDATE = 'update';
-	const ACTION_DELETE = 'delete';
-	/** @var PipelineConnectionBase */
 	protected static $pipe;
 
 	/**
 	 * @desc Send event to pipeline in old format (message with params inside).
 	 *
-	 * @param $eventName
 	 * @param $pageId
-	 * @param array $params
+	 * @param null $revisionId
+	 * @param null $eventName
 	 */
-	public static function send( $eventName, $pageId, $params = [ ] ) {
-		self::publish( implode( '.', [ self::ARTICLE_MESSAGE_PREFIX, $eventName ] ),
-			self::prepareMessage( $pageId, $params ) );
+	public static function send( $eventName, $pageId, $revisionId ) {
+		self::getPipeline()->publish(
+			implode( '.', [ self::ARTICLE_MESSAGE_PREFIX, $eventName ] ),
+			PipelineMessageBuilder::create()
+				->addWikiId()
+				->addPageId( $pageId )
+				->addRevisionId( $revisionId )
+				->build()
+		);
 	}
 
 	/**
@@ -30,12 +30,23 @@ class PipelineEventProducer {
 	 * using new action names (see function prepareRoute).
 	 *
 	 * @param $action
-	 * @param $id
+	 * @param $pageId
+	 * @param $revisionId
 	 * @param string $ns
-	 * @param array $data
 	 */
-	public static function sendFlaggedSyntax( $action, $id, $ns = self::NS_CONTENT, $data = [ ] ) {
-		self::publish( self::prepareRoute( $action, $ns, $data ), self::prepareMessage( $id, $data ) );
+	public static function sendFlaggedSyntax( $action, $pageId, $revisionId, $ns = PipelineRoutingBuilder::NS_CONTENT ) {
+		self::getPipeline()->publish(
+			PipelineRoutingBuilder::create()
+				->addName( static::PRODUCER_NAME )
+				->addAction( $action )
+				->addNamespace( $ns )
+				->build(),
+			PipelineMessageBuilder::create()
+				->addWikiId()
+				->addPageId( $pageId )
+				->addRevisionId( $revisionId )
+				->build()
+		);
 	}
 
 	/*
@@ -49,15 +60,22 @@ class PipelineEventProducer {
 	 *  - edition undo
 	 *  - edition revert
 	 *  - article rename
+	 *
+	 * @param \Article $article
+	 * @param \Revision $rev
+	 * @param $baseID
+	 * @param \User $user
+	 *
 	 * @return bool
 	 */
-	public static function onNewRevisionFromEditComplete( $article, Revision $rev, $baseID, User $user ) {
-		$ns = self::preparePageNamespaceName( $article->getTitle() );
-		$action = $rev->getPrevious() === null ? self::ACTION_CREATE : self::ACTION_UPDATE;
-		$id = $article->getId();
+	public static function onNewRevisionFromEditComplete( $article, \Revision $rev, $baseID, \User $user ) {
+		$action = $rev->getPrevious() === null ? PipelineRoutingBuilder::ACTION_CREATE
+			: PipelineRoutingBuilder::ACTION_UPDATE;
+		$pageId = $article->getId();
+		$revisionId = $rev->getId();
 
-		self::send( 'onNewRevisionFromEditComplete', $id );
-		self::sendFlaggedSyntax( $action, $id, $ns );
+		self::send( 'onNewRevisionFromEditComplete', $pageId, $revisionId );
+		self::sendFlaggedSyntax( $action, $pageId, $revisionId, $article->getTitle()->getNamespace() );
 
 		return true;
 	}
@@ -68,10 +86,11 @@ class PipelineEventProducer {
 	 * @return bool
 	 */
 	public static function onArticleDeleteComplete( &$oPage, &$oUser, $reason, $pageId ) {
-		$ns = self::preparePageNamespaceName( $oPage->getTitle() );
+		$revisionId = $oPage->getTitle()->getLatestRevID();
 
-		self::send( 'onArticleDeleteComplete', $pageId );
-		self::sendFlaggedSyntax( self::ACTION_DELETE, $pageId, $ns );
+		self::send( 'onArticleDeleteComplete', $pageId, $revisionId );
+		self::sendFlaggedSyntax(
+			PipelineRoutingBuilder::ACTION_DELETE, $pageId, $revisionId, $oPage->getTitle()->getNamespace() );
 
 		return true;
 	}
@@ -82,12 +101,12 @@ class PipelineEventProducer {
 	 * Send ACTION_CREATE as an article with new ID is created
 	 * @return bool
 	 */
-	public static function onArticleUndelete( Title &$oTitle, $isNew = false ) {
-		$ns = self::preparePageNamespaceName( $oTitle );
-		$data = [ 'isNew' => $isNew ];
+	public static function onArticleUndelete( \Title &$oTitle, $isNew = false ) {
+		$revisionId = $oTitle->getLatestRevID();
 
-		self::send( 'onArticleUndelete', $oTitle->getArticleId(), $data );
-		self::sendFlaggedSyntax( self::ACTION_CREATE, $oTitle->getArticleId(), $ns, $data );
+		self::send( 'onArticleUndelete', $oTitle->getArticleId(), $revisionId );
+		self::sendFlaggedSyntax(
+			PipelineRoutingBuilder::ACTION_CREATE, $oTitle->getArticleId(), $revisionId, $oTitle->getNamespace() );
 
 		return true;
 	}
@@ -99,11 +118,55 @@ class PipelineEventProducer {
 	 * @return bool
 	 */
 	public static function onTitleMoveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $pageId, $redirectId = 0 ) {
-		$ns = self::preparePageNamespaceName( $oNewTitle );
-		$data = [ 'redirectId' => $redirectId ];
+		$revisionId = $oNewTitle->getLatestRevID();
 
-		self::send( 'onTitleMoveComplete', $pageId, $data );
-		self::sendFlaggedSyntax( self::ACTION_UPDATE, $pageId, $ns, $data );
+		self::send( 'onTitleMoveComplete', $pageId, $revisionId );
+		self::sendFlaggedSyntax(
+			PipelineRoutingBuilder::ACTION_UPDATE, $pageId, $revisionId, $oNewTitle->getNamespace() );
+
+		return true;
+	}
+
+	/**
+	 * @desc Fires on:
+	 *  - successful save from TemplateClassificationApiController
+	 *  - successful classification of parent template during draft creation
+	 *
+	 * @param integer $pageId The affected template's pageId
+	 * @param \Title $title The affected template's Title object
+	 * @param $templateType
+	 *
+	 * @return bool
+	 */
+	public static function onTemplateClassified( $pageId, \Title $title, $templateType ) {
+		// there is purposedly no legacy (unflagged) event sent here
+		self::sendFlaggedSyntax(
+			PipelineRoutingBuilder::ACTION_UPDATE, $pageId, $title->getLatestRevID(), $title->getNamespace() );
+
+		return true;
+	}
+
+	/**
+	 * @desc Fires on:
+	 *  - successful wiki creation
+	 *
+	 * @param integer $cityId new wiki id
+	 * @param string $starter starter db name
+	 *
+	 * @return bool
+	 */
+	public static function onAfterWikiCreated( $cityId, $starter ) {
+		static::getPipeline()->publish(
+			PipelineRoutingBuilder::create()
+				->addName( static::PRODUCER_NAME )
+				->addType( PipelineRoutingBuilder::TYPE_WIKIA )
+				->addAction( PipelineRoutingBuilder::ACTION_CREATE )
+				->build(),
+			PipelineMessageBuilder::create()
+				->addWikiId( $cityId )
+				->addParam( 'starterId', \WikiFactory::DBtoID( $starter ) )
+				->build()
+		);
 
 		return true;
 	}
@@ -111,96 +174,14 @@ class PipelineEventProducer {
 	/*
 	 * Helper methods
 	 */
-
-	/**
-	 * @desc create message with cityId and pageId fields
-	 *
-	 * @param $pageId
-	 *
-	 * @return \stdClass
-	 */
-	protected static function prepareMessage( $pageId, $params ) {
-		global $wgCityId;
-		$msg = new stdClass();
-		$msg->cityId = $wgCityId;
-		$msg->pageId = $pageId;
-
-		foreach ( $params as $param => $value ) {
-			$msg->{$param} = $value;
-		}
-
-		return $msg;
-	}
-
-	/**
-	 * @desc create message route
-	 *
-	 * @param $action
-	 * @param $ns
-	 * @param $data
-	 *
-	 * @return string message route in format:
-	 * PRODUCER_NAME.ROUTE_ACTION_KEY:{action}.ROUTE_NAMESPACE_KEY:{namespace}.ROUTE_CONTENT_KEY:{items}
-	 */
-	public static function prepareRoute( $action, $ns, $data = [ ] ) {
-		$contentData = [ ];
-
-		//prepare info about what data can be found in the message content
-		if ( !empty( array_keys( $data ) ) ) {
-			$contentData = array_map( function ( $item ) {
-				return self::ROUTE_CONTENT_KEY . ':' . $item;
-			}, array_keys( $data ) );
-		}
-
-		$routeData = array_merge(
-			[ self::PRODUCER_NAME, self::ROUTE_ACTION_KEY . ':' . $action, self::ROUTE_NAMESPACE_KEY . ':' . $ns ],
-			$contentData
-		);
-
-		$route = implode( '.', $routeData );
-
-		return $route;
-	}
-
-	/**
-	 * @param $key
-	 * @param $data
-	 */
-	protected static function publish( $key, $data ) {
-		try {
-			self::getPipeline()->publish( $key, $data );
-		} catch ( Exception $e ) {
-			\Wikia\Logger\WikiaLogger::instance()->error( $e->getMessage() );
-		}
-	}
-
-	/** @return PipelineConnectionBase */
+	/** @return ConnectionBase */
 	protected static function getPipeline() {
+		global $wgIndexingPipeline;
+
 		if ( !isset( self::$pipe ) ) {
-			self::$pipe = new PipelineConnectionBase();
+			self::$pipe = new ConnectionBase( $wgIndexingPipeline );
 		}
 
 		return self::$pipe;
-	}
-
-	/**
-	 * @desc For given page title returns it's lowerased namespace in english.
-	 * Namespace CONTENT means that page is in 0 or one of the custom content namespaces.
-	 *
-	 * @param $title
-	 *
-	 * @return string lowerased english namespace
-	 */
-	public static function preparePageNamespaceName( $title ) {
-		global $wgContentNamespaces;
-		$namespaceID = $title->getNamespace();
-
-		if ( in_array( $namespaceID, $wgContentNamespaces ) ) {
-			$pageNamespace = self::NS_CONTENT;
-		} else {
-			$pageNamespace = strtolower( MWNamespace::getCanonicalName( $namespaceID ) );
-		}
-
-		return $pageNamespace;
 	}
 }

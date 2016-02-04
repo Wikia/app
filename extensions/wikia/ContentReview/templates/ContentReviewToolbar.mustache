@@ -1,11 +1,16 @@
-<div class="content-review-toolbar">
-	<h3 class="content-review-toolbar-title">{{toolbarTitle}}</h3>
-	<button id="content-review-diff-button-approve" class="content-review-diff-button" data-wiki-id="{{wikiId}}" data-page-id="{{pageId}}" data-status="{{approveStatus}}">
+<div class="content-review-toolbar" data-wiki-id="{{wikiId}}" data-page-id="{{pageId}}">
+	<h3 class="content-review-toolbar-title">{{toolbarTitle}} {{#escalatedTitle}}{{escalatedTitle}}{{/escalatedTitle}}</h3>
+	<button id="content-review-diff-button-approve" class="content-review-diff-button content-review-status-button" data-status="{{approveStatus}}">
 		{{buttonApproveText}}
 	</button>
-	<button id="content-review-diff-button-reject" class="content-review-diff-button"  data-wiki-id="{{wikiId}}" data-page-id="{{pageId}}" data-status="{{rejectStatus}}">
+	<button id="content-review-diff-button-reject" class="content-review-diff-button content-review-status-button" data-status="{{rejectStatus}}">
 		{{buttonRejectText}}
 	</button>
+	{{#buttonEscalateText}}
+		<button id="content-review-escalate-button" class="content-review-diff-button">
+			{{buttonEscalateText}}
+		</button>
+	{{/buttonEscalateText}}
 	<div class="content-review-toolbar-links">
 		<a href="{{talkpageUrl}}" target="_blank" class="button secondary content-review-toolbar-link">{{talkpageLinkText}}</a>
 		<a href="{{guidelinesUrl}}" target="_blank" class="content-review-toolbar-link">{{guidelinesLinkText}}</a>
