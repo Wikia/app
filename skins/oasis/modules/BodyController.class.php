@@ -220,8 +220,6 @@ class BodyController extends WikiaController {
 
 		$railModuleList = [];
 
-		// temp location for testing
-		// @todo figure out where this should go
 		$railModuleList[1495] = [ 'Contribute', 'index', null ];
 
 		$latestActivityKey = $wg->User->isAnon() ? 1250 : 1300;

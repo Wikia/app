@@ -23,6 +23,9 @@ $wikiahubs-line-height: 16px;
 }
 
 .page-header.hubs {
+	// set height so when the h1 is hidden it doesn't collapse
+	height: 34px;
+
 	.social-links {
 		float: right;
 		margin-right: 20px;
@@ -57,10 +60,7 @@ $wikiahubs-line-height: 16px;
 	}
 
 	h1 {
-		// making this display:none causes the bottom border to go above/across
-		// the social links because they're floated instead of using flex
-		// like the default page header
-		visibility: hidden;
+		display: none;
 	}
 }
 
