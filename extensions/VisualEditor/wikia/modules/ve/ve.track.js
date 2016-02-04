@@ -182,7 +182,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 				action: data.action,
 				label: 'edit-page-ready-toolbartest',
 				value: data.value
-			}
+			};
 
 			handleFunnel( abTestData );
 			tracker.track( ve.extendObject( params, abTestData ) );
