@@ -411,7 +411,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 			}
 
 			if ( $this->fld_useravatar ) {
-				$vals['useravatar'] = AvatarService::getAvatarUrl( $vals['user'], AvatarService::AVATAR_SIZE_MEDIUM );
+				$vals['useravatar'] = AvatarService::getAvatarUrl( $row->rc_user_text, AvatarService::AVATAR_SIZE_MEDIUM );
 			}
 
 			if ( !$row->rc_user ) {
