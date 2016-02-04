@@ -17,7 +17,7 @@ var ads = (function (window, document) {
 		});
 
 		define('ext.wikia.adEngine.provider.gpt.adDetect', function () {
-			function onAdLoad(slotname, gptEvent) {
+			function onAdLoad(slot, gptEvent) {
 				var parentIframeContainer,
 					height = gptEvent.size && gptEvent.size[1];
 

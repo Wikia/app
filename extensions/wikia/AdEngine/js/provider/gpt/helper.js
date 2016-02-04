@@ -113,7 +113,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			// Let's launch our callback in a setTimeout instead.
 			setTimeout(function () {
 				log(['onAdLoadCallback', slotElementId], 'info', logGroup);
-				adDetect.onAdLoad(slotElementId, gptEvent, iframe, slot, extra.forcedAdType);
+				adDetect.onAdLoad(slot, gptEvent, iframe, extra.forcedAdType);
 			}, 0);
 		}
 

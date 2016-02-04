@@ -150,9 +150,10 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		return 'inspect_iframe';
 	}
 
-	function onAdLoad(slotName, gptEvent, iframe, slot, forcedAdType) {
+	function onAdLoad(slot, gptEvent, iframe, forcedAdType) {
 
-		var adType = forcedAdType || getAdType(slotName, gptEvent, iframe),
+		var slotName = slot.getName(),
+			adType = forcedAdType || getAdType(slotName, gptEvent, iframe),
 			shouldPollForSuccess = false,
 			expectAsyncHop = false,
 			expectAsyncHopWithSlotName = false,
