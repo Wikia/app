@@ -20,7 +20,7 @@ class CleanPageWikiaPropsMaintenance extends Maintenance {
 	public function execute() {
 		global $wgDBname, $wgDBCluster;
 
-		$this->output("Cleraning up page_wikia_props on {$wgDBname} ({$wgDBCluster})...");
+		$this->output("Cleaning up page_wikia_props on {$wgDBname} ({$wgDBCluster})...");
 		$dbw = $this->getDB( DB_MASTER );
 
 		$then = microtime( true );
