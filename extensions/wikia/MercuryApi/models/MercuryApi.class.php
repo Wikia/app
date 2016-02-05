@@ -117,6 +117,7 @@ class MercuryApi {
 			'disableAnonymousUploadForMercury' => $wgDisableAnonymousUploadForMercury,
 			'enableDiscussions' => $wgEnableDiscussions,
 			'enableNewAuth' => $wgEnableNewAuth,
+			'favicon' => Wikia::getFaviconFullUrl(),
 			'homepage' => $this->getHomepageUrl(),
 			'id' => (int)$wgCityId,
 			'isCoppaWiki' => ( $wgWikiDirectedAtChildrenByFounder || $wgWikiDirectedAtChildrenByStaff ),
