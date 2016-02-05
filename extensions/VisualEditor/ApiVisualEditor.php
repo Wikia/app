@@ -97,9 +97,10 @@ class ApiVisualEditor extends ApiBase {
 					'hit' => $hit ? 'yes' : 'no', // sending string instead of boolean because our elasticsearch/kibana does not support the latter well
 					'durationMS' => (int) round ( ( $time_end - $time_start ) * 1000 ) // we are interested in millisecond only (instead of microseconds)
 				);
-				if ( $hit === false && preg_match ( "/duration=(\d*); start=(\d*)/", $xpp, $matches ) ) {
+				if ( $hit === false && preg_match ( "/duration=(\d*); realstart=(\d*); start=(\d*)/", $xpp, $matches ) ) {
 					$loggerParams['parsoidDurationMS'] = (int) $matches[1];
-					$loggerParams['parsoidStartDeltaMS'] = (int) round ( $matches[2] - ( $time_start * 1000 ) );
+					$loggerParams['parsoidRealstartDeltaMS'] = (int) round ( $matches[2] - ( $time_start * 1000 ) );
+					$loggerParams['parsoidStartDeltaMS'] = (int) round ( $matches[3] - ( $time_start * 1000 ) );
 				}
 				\Wikia\Logger\WikiaLogger::instance()->info( 'ApiVisualEditor_requestParsoid', $loggerParams );
 			}
