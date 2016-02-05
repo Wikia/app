@@ -98,23 +98,23 @@ define('ext.wikia.adEngine.adEngine', [
 				slotElement = prepareAdProviderContainer(provider.name, slotName),
 				aSlotTracker = slotTracker(provider.name, slotName, queueName);
 
-			slot = adSlot.create(slotName, slotElement);
+			slot = adSlot.create(slotName, slotElement, {
+				success: function (adInfo) {
+					log(['success', provider.name, slotName, adInfo], 'debug', logGroup);
+					aSlotTracker.track('success', adInfo);
+				},
+				hop: function (adInfo) {
+					log(['hop', provider.name, slotName, adInfo], 'debug', logGroup);
+					aSlotTracker.track('hop', adInfo);
+					nextProvider();
+				}
+			});
 
 			// Notify people there's the slot handled
 			eventDispatcher.trigger('ext.wikia.adEngine fillInSlot', slotName, provider);
 
 			initializeProviderOnce(provider);
-
-			slot.post('success', function (extra) {
-				log(['success', provider.name, slotName, extra], 'debug', logGroup);
-				aSlotTracker.track('success', extra);
-			});
 			slot.post('success', queuedSlot.onSuccess);
-			slot.post('hop', function (extra) {
-				log(['hop', provider.name, slotName, extra], 'debug', logGroup);
-				aSlotTracker.track('hop', extra);
-				nextProvider();
-			});
 
 			provider.fillInSlotQueue.push([slot]);
 		}

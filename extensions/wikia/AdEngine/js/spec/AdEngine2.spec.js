@@ -10,15 +10,13 @@ describe('ext.wikia.adEngine.adEngine', function () {
 		originalLazyQueue = modules['wikia.lazyqueue'](),
 		adDecoratorLegacyParamFormatMock = function (fillInSlot) { return fillInSlot; },
 		adSlotMock = {
-			create: function (slotName) {
-				var registerHooks = modules['ext.wikia.adEngine.utils.hooks'](),
-					slot = {
-						name: slotName,
-						success: noop,
-						hop: noop
-					};
-				registerHooks(slot, ['success', 'hop']);
-				return slot;
+			create: function (slotName, slotElement, callbacks) {
+				return {
+					name: slotName,
+					success: callbacks.success || noop,
+					hop: callbacks.hop || noop,
+					post: noop
+				};
 			}
 		},
 		slotTrackerMock = function () { return { track: noop }; },

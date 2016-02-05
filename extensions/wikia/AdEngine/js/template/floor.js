@@ -82,15 +82,16 @@ define('ext.wikia.adEngine.template.floor', [
 
 		if (async) {
 			log(['show', params.slotName, 'can hop'], 'info', logGroup);
-			slot = adSlot.create(params.slotName);
-			slot.pre('success', function () {
-				log(['ad detect', params.slotName, 'success'], 'info', logGroup);
-				win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"success"}}', '*');
-				showFloor();
-			});
-			slot.pre('hop', function () {
-				log(['ad detect', params.slotName, 'hop'], 'info', logGroup);
-				win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"hop"}}', '*');
+			slot = adSlot.create(params.slotName, null, {
+				success: function () {
+					log(['ad detect', params.slotName, 'success'], 'info', logGroup);
+					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"success"}}', '*');
+					showFloor();
+				},
+				hop: function () {
+					log(['ad detect', params.slotName, 'hop'], 'info', logGroup);
+					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"hop"}}', '*');
+				}
 			});
 			$(iframe).on('load', function () {
 				adDetect.onAdLoad(slot, gptEventMock, iframe);

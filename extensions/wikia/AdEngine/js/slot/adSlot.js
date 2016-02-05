@@ -4,7 +4,7 @@ define('ext.wikia.adEngine.slot.adSlot', [
 ], function (registerHooks) {
 	'use strict';
 
-	function create(slotName, slotElement) {
+	function create(slotName, slotElement, callbacks) {
 		var slot = {};
 
 		slot.getName = function () {
@@ -15,9 +15,21 @@ define('ext.wikia.adEngine.slot.adSlot', [
 			return slotElement;
 		};
 
-		slot.success = function () {};
-		slot.collapse = function () {};
-		slot.hop = function () {};
+		slot.success = function (adInfo) {
+			if (typeof callbacks.success === 'function') {
+				callbacks.success(adInfo);
+			}
+		};
+		slot.collapse = function (adInfo) {
+			if (typeof callbacks.collapse === 'function') {
+				callbacks.collapse(adInfo);
+			}
+		};
+		slot.hop = function (adInfo) {
+			if (typeof callbacks.hop === 'function') {
+				callbacks.hop(adInfo);
+			}
+		};
 
 		registerHooks(slot, ['success', 'collapse', 'hop']);
 

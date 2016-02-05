@@ -88,15 +88,16 @@ define('ext.wikia.adEngine.template.modal', [
 		adContainer.appendChild(adIframe);
 
 		if (async) {
-			slot = adSlot.create(params.slotName);
-			slot.pre('success', function () {
-				log(['ad detect', params.slotName, 'success'], 'info', logGroup);
-				win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"success"}}', '*');
-				modalHandler.show();
-			});
-			slot.pre('hop', function () {
-				log(['ad detect', params.slotName, 'hop'], 'info', logGroup);
-				win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"hop"}}', '*');
+			slot = adSlot.create(params.slotName, null, {
+				success: function () {
+					log(['ad detect', params.slotName, 'success'], 'info', logGroup);
+					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"success"}}', '*');
+					modalHandler.show();
+				},
+				hop: function () {
+					log(['ad detect', params.slotName, 'hop'], 'info', logGroup);
+					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"hop"}}', '*');
+				}
 			});
 			adIframe.addEventListener('load', function () {
 				adDetect.onAdLoad(slot, gptEventMock, adIframe);
