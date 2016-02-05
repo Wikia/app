@@ -142,7 +142,7 @@ class Wikia {
 	public static function getFaviconFullUrl() {
 		return WikiaDataAccess::cache(
 			wfMemcKey( self::FAVICON_URL_CACHE_KEY ),
-			86400,
+			WikiaResponse::CACHE_STANDARD,
 			function () {
 				$faviconFilename = 'Favicon.ico';
 
