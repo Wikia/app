@@ -10,7 +10,8 @@ class ApiPortableInfobox extends ApiBase {
 		$text = $this->getParameter( "text" );
 		$title = $this->getParameter( "title" );
 		$arguments = $this->getFrameArguments();
-		if ( $arguments === null ) {
+
+		if ( empty( $arguments ) ) {
 			$this->getResult()->setWarning( "Arguments json format incorect or empty" );
 		}
 
@@ -107,11 +108,17 @@ class ApiPortableInfobox extends ApiBase {
 	}
 
 	/**
-	 * @return mixed
+	 * @return array of key-value args
+	 * or empty array if args are empty or they couldn't be decoded.
 	 */
 	protected function getFrameArguments() {
 		$arguments = $this->getParameter( "args" );
-		return isset( $arguments ) ? json_decode( $arguments, true ) : false;
+
+		if ( isset( $arguments ) ) {
+			$arguments = json_decode( $arguments, true );
+		}
+
+		return isset( $arguments ) ? $arguments : [];
 	}
 
 }
