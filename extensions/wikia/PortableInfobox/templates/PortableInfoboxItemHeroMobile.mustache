@@ -3,14 +3,20 @@
 		<hgroup class="pi-hero-title-wrapper pi-item-spacing">
 			<h2 class="pi-hero-title">{{{value}}}</h2>
 			{{#image.caption}}
-			<h3 class="pi-hero-caption">{{{image.caption}}}</h3>
+				<h3 class="pi-hero-caption">{{{image.caption}}}</h3>
 			{{/image.caption}}
 		</hgroup>
 	{{/title}}
 	{{#image}}
-	<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"
-	     data-src="{{thumbnail}}" class="pi-image-thumbnail lazy media article-media" alt="{{alt}}"
-	     data-image-key="{{name}}" data-image-name="{{name}}" data-ref="{{ref}}"
-	     data-params='[{"name":"{{name}}", "full":"{{url}}"}]'/>
+		<figure class="article-media" data-ref="{{ref}}">
+			<a href="{{url}}">
+				<!-- remove data-src, class and data-params after wikiaMobile is gone -->
+				<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" alt="{{alt}}"
+					 data-src="{{thumbnail}}" class="lazy media" data-params='[{"full":"{{url}}"}]' />
+				<noscript>
+					<img src="{{url}}" alt="{{alt}}">
+				</noscript>
+			</a>
+		</figure>
 	{{/image}}
 </div>
