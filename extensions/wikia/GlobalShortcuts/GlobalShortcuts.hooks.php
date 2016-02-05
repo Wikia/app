@@ -57,7 +57,7 @@ class Hooks {
 		$user = \RequestContext::getMain()->getUser();
 
 		if ( $user->isLoggedIn() && !empty( $wgEnableGlobalShortcutsExt ) ) {
-			$html = \HTML::rawElement(
+			$html = \Html::rawElement(
 				'a',
 				[
 					'href' => '#',

@@ -14,7 +14,6 @@ require([
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
-	'wikia.krux',
 	'wikia.window',
 	'wikia.loader',
 	require.optional('ext.wikia.adEngine.recovery.gcs')
@@ -32,15 +31,13 @@ require([
 	slotTracker,
 	slotTweaker,
 	sourcePoint,
-	krux,
 	win,
 	loader,
 	gcs
 ) {
 	'use strict';
 
-	var kruxSiteId = 'JU3_GW1b',
-		context = adContext.getContext(),
+	var context = adContext.getContext(),
 		skin = 'oasis';
 
 	win.AdEngine_getTrackerStats = slotTracker.getStats;
@@ -110,9 +107,6 @@ require([
 				});
 			});
 		}
-
-		// Krux
-		krux.load(kruxSiteId);
 	});
 });
 
