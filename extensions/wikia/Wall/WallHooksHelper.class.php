@@ -548,10 +548,19 @@ class WallHooksHelper {
 				$ns === NS_USER_WALL
 				&& $title->isSubpage()
 				&& !empty( $parts[1] )
-				&& mb_strtolower( str_replace( ' ', '_', $parts[1] ) ) === mb_strtolower( $helper->getArchiveSubPageText() )
 			) {
-				// subpage
-				$userTalkPageTitle = $helper->getTitle( NS_USER_TALK, $parts[1] );
+				$parts1 = mb_strtolower( str_replace( ' ', '_', $parts[1] ) );
+				$archiveSubPageText = mb_strtolower( $helper->getArchiveSubPageText() );
+
+				// user talk archive
+				if ( $parts1 === $archiveSubPageText ) {
+					$userTalkPageTitle = $helper->getTitle( NS_USER_TALK );
+
+				// subpages
+				// @example user talk subpages being used as archives
+				} else {
+					$userTalkPageTitle = $helper->getTitle( NS_USER_TALK, $parts[1] );
+				}
 
 				$button['action'] = [
 					'class' => '',
