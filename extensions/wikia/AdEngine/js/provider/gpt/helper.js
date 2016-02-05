@@ -56,19 +56,17 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	 * @param {string}   slotPath           - slot path
 	 * @param {Object}   slotTargeting      - slot targeting details
 	 * @param {Object}   extra              - optional parameters
-	 * @param {function} extra.success      - on success callback
-	 * @param {function} extra.error        - on error callback
 	 * @param {boolean}  extra.sraEnabled   - whether to use Single Request Architecture
 	 * @param {string}   extra.forcedAdType - ad type for callbacks info
 	 */
 	function pushAd(slot, slotPath, slotTargeting, extra) {
+		extra = extra || {};
 		var count,
 			element,
 			recoverableSlots = extra.recoverableSlots || [],
 			shouldPush = !recoveryHelper.isBlocking() ||
 				(recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slot.name, recoverableSlots));
 
-		extra = extra || {};
 		slotTargeting = JSON.parse(JSON.stringify(slotTargeting)); // copy value
 
 		if (scrollHandler) {
@@ -88,16 +86,11 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				);
 			}
 		});
-		slot.pre('hop', function (adInfo) {
+		slot.pre('hop', function () {
 			slotTweaker.hide(
 				element.getSlotContainerId(),
 				recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()
 			);
-			if (typeof extra.error === 'function') {
-				adInfo = adInfo || {};
-				adInfo.method = 'hop';
-				extra.error(adInfo);
-			}
 		});
 
 		function queueAd() {

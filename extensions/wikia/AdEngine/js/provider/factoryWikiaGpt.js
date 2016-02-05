@@ -50,11 +50,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		function fillInSlot(slot) {
 			log(['fillInSlot', slot.name], 'debug', logGroup);
 
-			var extraParams = {
-					sraEnabled: extra.sraEnabled,
-					recoverableSlots: extra.recoverableSlots
-				},
-				pageParams = adLogicPageParams.getPageLevelParams(),
+			var pageParams = adLogicPageParams.getPageLevelParams(),
 				slotTargeting = JSON.parse(JSON.stringify(slotMap[slot.name])), // copy value
 				slotPath = [
 					'/5441', 'wka.' + pageParams.s0, pageParams.s1, '', pageParams.s2, src, slot.name
@@ -78,7 +74,10 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 				lookups.extendSlotTargeting(slot.name, slotTargeting, providerName);
 			}
 
-			gptHelper.pushAd(slot, slotPath, slotTargeting, extraParams);
+			gptHelper.pushAd(slot, slotPath, slotTargeting, {
+				sraEnabled: extra.sraEnabled,
+				recoverableSlots: extra.recoverableSlots
+			});
 			log(['fillInSlot', slot.name, 'done'], 'debug', logGroup);
 		}
 
