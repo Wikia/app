@@ -19,6 +19,7 @@ describe('ext.wikia.adEngine.adEngine', function () {
 				};
 			}
 		},
+		hooksMock = noop,
 		slotTrackerMock = function () { return { track: noop }; },
 		slotTweakerMock = { show: noop, hide: noop },
 		docMock = {
@@ -55,14 +56,15 @@ describe('ext.wikia.adEngine.adEngine', function () {
 
 	function getAdEngine(lazyQueueMock, adDecoratorMock) {
 		return modules['ext.wikia.adEngine.adEngine'](
-			docMock,
-			logMock,
-			lazyQueueMock,
 			adDecoratorMock || adDecoratorLegacyParamFormatMock,
 			eventDispatcher,
 			adSlotMock,
 			slotTrackerMock,
-			slotTweakerMock
+			slotTweakerMock,
+			hooksMock,
+			docMock,
+			lazyQueueMock,
+			logMock
 		);
 	}
 

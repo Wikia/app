@@ -1,7 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.slot.adSlot', [
-	'ext.wikia.adEngine.utils.hooks'
-], function (registerHooks) {
+define('ext.wikia.adEngine.slot.adSlot', [], function () {
 	'use strict';
 
 	function create(slotName, slotElement, callbacks) {
@@ -30,8 +28,6 @@ define('ext.wikia.adEngine.slot.adSlot', [
 				callbacks.hop(adInfo);
 			}
 		};
-
-		registerHooks(slot, ['success', 'collapse', 'hop']);
 
 		return slot;
 	}

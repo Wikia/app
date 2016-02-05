@@ -1,14 +1,25 @@
 /*global define*/
 define('ext.wikia.adEngine.adEngine', [
-	'wikia.document',
-	'wikia.log',
-	'wikia.lazyqueue',
 	'ext.wikia.adEngine.adDecoratorLegacyParamFormat',
 	'ext.wikia.adEngine.eventDispatcher',
 	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.slotTracker',
-	'ext.wikia.adEngine.slotTweaker'
-], function (doc, log, lazyQueue, adDecoratorLegacyParamFormat, eventDispatcher, adSlot, slotTracker, slotTweaker) {
+	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.utils.hooks',
+	'wikia.document',
+	'wikia.lazyqueue',
+	'wikia.log'
+], function (
+	adDecoratorLegacyParamFormat,
+	eventDispatcher,
+	adSlot,
+	slotTracker,
+	slotTweaker,
+	registerHooks,
+	doc,
+	lazyQueue,
+	log
+) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adEngine';
@@ -87,6 +98,14 @@ define('ext.wikia.adEngine.adEngine', [
 		}
 	}
 
+	function createSlot(queuedSlot, slotElement, callbacks) {
+		var slot = adSlot.create(queuedSlot.slotName, slotElement, callbacks);
+		registerHooks(slot, ['success', 'collapse', 'hop']);
+		slot.post('success', queuedSlot.onSuccess);
+
+		return slot;
+	}
+
 	function run(adConfig, adslots, queueName) {
 		log(['run', adslots, queueName], 'debug', logGroup);
 
@@ -98,7 +117,7 @@ define('ext.wikia.adEngine.adEngine', [
 				slotElement = prepareAdProviderContainer(provider.name, slotName),
 				aSlotTracker = slotTracker(provider.name, slotName, queueName);
 
-			slot = adSlot.create(slotName, slotElement, {
+			slot = createSlot(queuedSlot, slotElement, {
 				success: function (adInfo) {
 					log(['success', provider.name, slotName, adInfo], 'debug', logGroup);
 					aSlotTracker.track('success', adInfo);
@@ -114,7 +133,6 @@ define('ext.wikia.adEngine.adEngine', [
 			eventDispatcher.trigger('ext.wikia.adEngine fillInSlot', slotName, provider);
 
 			initializeProviderOnce(provider);
-			slot.post('success', queuedSlot.onSuccess);
 
 			provider.fillInSlotQueue.push([slot]);
 		}
