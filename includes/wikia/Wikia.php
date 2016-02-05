@@ -163,7 +163,7 @@ class Wikia {
 	}
 
 	public static function invalidateFavicon() {
-		WikiaDataAccess::cachePurge( wfMemcKey(self::FAVICON_URL_CACHE_KEY) );
+		WikiaDataAccess::cachePurge( wfMemcKey( self::FAVICON_URL_CACHE_KEY ) );
 	}
 
 	/**
