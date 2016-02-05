@@ -115,7 +115,10 @@ define('editpage.event.helper', ['wikia.window'], function (window, ace) {
 		this.iframe = $('<iframe></iframe>')
 			.attr('data-time', this.time)
 			.attr('id', 'iframe' + this.time)
-			.attr('name', 'iframe' + this.time)
+			.attr('name', 'iframe' + this.time);
+
+		// wrapper with special styling is required to prevent iframe auto-resizing on iOS Safari
+		this.iframeWrapper = $('<div></div>')
 			.attr('class', 'mobile-preview');
 
 		this.addParameter = function (parameter, value) {
@@ -127,8 +130,10 @@ define('editpage.event.helper', ['wikia.window'], function (window, ace) {
 
 		this.send = function (frameRoot, callback) {
 			var $frameRoot = $(frameRoot);
+
+			this.iframeWrapper.append(this.iframe);
 			$frameRoot
-				.append(this.iframe)
+				.append(this.iframeWrapper)
 				.append(this.form);
 
 			this.iframe.load((function () {

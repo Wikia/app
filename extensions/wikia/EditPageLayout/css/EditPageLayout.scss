@@ -557,13 +557,19 @@ body {
 .mobile-preview {
 	border: 1px solid $color-page-border;
 	box-sizing: border-box;
-	display: block;
 	height: 100%;
 	margin: 0 auto;
 	overflow: auto;
 	-webkit-overflow-scrolling: touch;
 	-webkit-transform: translate3d(0, 0, 0);
 	width: 320px;
+
+	iframe {
+		display: block;
+		height: 100%;
+		margin: 0 auto;
+		width: 100%;
+	}
 }
 
 // add breakpoint typography styles to article preview
