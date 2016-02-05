@@ -80,7 +80,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		element = new AdElement(slot.name, slotPath, slotTargeting);
 
-		slot.pre('success', function (slot, adInfo) {
+		slot.pre('success', function (adInfo) {
 			if (adInfo && adInfo.adType === 'collapse') {
 				slotTweaker.hide(
 					element.getSlotContainerId(),
@@ -88,7 +88,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				);
 			}
 		});
-		slot.pre('hop', function (slot, adInfo) {
+		slot.pre('hop', function (adInfo) {
 			slotTweaker.hide(
 				element.getSlotContainerId(),
 				recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()
