@@ -33,6 +33,8 @@ $messages['en'] = array(
 	'wikiacuratedcontent-edit-mobile-main-page' => 'Edit Mobile Main Page',
 	'wikiacuratedcontent-close-modal-prompt-message' => 'Are you sure you want to close this modal?',
 	'wikiacuratedcontent-modal-title' => 'Mobile Main Page',
+	'wikiacuratedcontent-image-upload-comment' => 'Uploaded through Curated Content',
+	'wikiacuratedcontent-image-upload-description' => 'This image was uploaded through Curated Content. It is used for representing your wiki in search results and community apps',
 );
 
 $messages['qqq'] = array(
@@ -67,6 +69,8 @@ $messages['qqq'] = array(
 	'wikiacuratedcontent-edit-mobile-main-page' => 'Message on the button allowing to edit Mobile Main Page, visible on the main page',
 	'wikiacuratedcontent-close-modal-prompt-message' => 'Message displayed in prompt when user hit X button and attempt to close modal',
 	'wikiacuratedcontent-modal-title' => 'Modal title in which user can edit mobile main page on desktop',
+	'wikiacuratedcontent-image-upload-comment' => 'Message displayed in file history, informing that file was uploaded through Curated Content',
+	'wikiacuratedcontent-image-upload-description' => 'Message displayed as description on file page, stating that the image was uploaded through Curated Content and is used for representing the wiki in search results and community apps',
 );
 
 $messages['ach'] = array(
