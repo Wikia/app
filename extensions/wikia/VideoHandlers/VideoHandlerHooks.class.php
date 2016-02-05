@@ -217,8 +217,7 @@ class VideoHandlerHooks {
 	 */
 	public static function onClearCacheTotalVideos() {
 		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__ );
-
-		// TODO: purge by surrogate key
+		CeleryPurge::purgeBySurrogateKey( VideoHandlerController::getVideoListSurrogateKey() );
 
 		return true;
 	}

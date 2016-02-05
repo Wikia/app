@@ -71,6 +71,30 @@ class CeleryPurge {
 	}
 
 	/**
+	 * SUS-81: allow CDN purging by surrogate key
+	 *
+	 * Use OutputPage::tagWithSurrogateKeys() helper to emit proper headers
+	 *
+	 * @param string $key surrogate key to purge
+	 * @param string $service Fastly's service name (defaults to mediawiki)
+	 */
+	static function purgeBySurrogateKey( $key, $service = 'mediawiki' ) {
+		$caller = self::getPurgeCaller();
+		wfDebug( "Purging backtrace: " . wfGetAllCallers( false ) . "\n" );
+
+		WikiaLogger::instance()->info( 'varnish.purge', [
+			'key' => $key,
+			'service' => $service
+		] );
+
+		( new AsyncCeleryTask() )
+			->taskType( 'celery_workers.purger.purge' )
+			->setArgs( [], [ $key ], $service )
+			->setPriority( PurgeQueue::NAME )
+			->queue();
+	}
+
+	/**
 	 * Return the name of the method (outside of the internal code) that triggered purge request
 	 *
 	 * @return string method name
