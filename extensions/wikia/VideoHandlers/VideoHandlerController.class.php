@@ -392,7 +392,19 @@ class VideoHandlerController extends WikiaController {
 		$this->response->setVal( 'videos', $videoList );
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_STANDARD );
 
+		$this->wg->Out->tagWithSurrogateKeys( self::getVideoListSurrogateKey() );
+
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * SUS-81: return a surrogate key to be used for purging various responses rendered by getVideoList method
+	 *
+	 * @return string
+	 */
+	public static function getVideoListSurrogateKey() {
+		global $wgCachePrefix;
+		return implode( '-', [ $wgCachePrefix, __CLASS__, 'getVideoList' ] );
 	}
 
 	protected function getVideoListParams() {
