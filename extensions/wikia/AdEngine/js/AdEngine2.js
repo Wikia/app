@@ -120,6 +120,10 @@ define('ext.wikia.adEngine.adEngine', [
 						log(['success', provider.name, slotName, adInfo], 'debug', logGroup);
 						tracker.track('success', adInfo);
 					},
+					collapse: function (adInfo) {
+						log(['collapse', provider.name, slotName, adInfo], 'debug', logGroup);
+						tracker.track('collapse', adInfo);
+					},
 					hop: function (adInfo) {
 						log(['hop', provider.name, slotName, adInfo], 'debug', logGroup);
 						tracker.track('hop', adInfo);
@@ -135,21 +139,21 @@ define('ext.wikia.adEngine.adEngine', [
 			provider.fillInSlotQueue.push([slot]);
 		}
 
-		function fillInSlot(queuedSlot) {
-			log(['fillInSlot', queuedSlot], 'debug', logGroup);
+		function fillInSlot(slot) {
+			log(['fillInSlot', slot], 'debug', logGroup);
 
-			var slotName = queuedSlot.slotName,
+			var slotName = slot.slotName,
 				providerList = adConfig.getProviderList(slotName).slice(); // Get a copy of the array
 
 			slotTweaker.show(slotName);
 
-			log(['fillInSlot', queuedSlot, 'provider list', JSON.stringify(providerList)], 'debug', logGroup);
+			log(['fillInSlot', slot, 'provider list', JSON.stringify(providerList)], 'debug', logGroup);
 
 			function handleNoAd() {
-				log(['handleNoAd', queuedSlot], 'debug', logGroup);
+				log(['handleNoAd', slot], 'debug', logGroup);
 				slotTweaker.hide(slotName);
-				if (typeof queuedSlot.onError === 'function') {
-					queuedSlot.onError(queuedSlot);
+				if (typeof slot.onError === 'function') {
+					slot.onError(slot);
 				}
 			}
 
@@ -165,11 +169,11 @@ define('ext.wikia.adEngine.adEngine', [
 					}
 
 					if (provider.canHandleSlot(slotName)) {
-						fillInSlotUsingProvider(queuedSlot, provider, nextProvider);
+						fillInSlotUsingProvider(slot, provider, nextProvider);
 						return;
 					}
 
-					log(['fillInSlot', queuedSlot, 'skipping provider, cannot handle slot', provider], 'debug', logGroup);
+					log(['fillInSlot', slot, 'skipping provider, cannot handle slot', provider], 'debug', logGroup);
 				} while (provider);
 			}
 

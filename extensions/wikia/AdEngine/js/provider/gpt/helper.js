@@ -49,6 +49,15 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 	}
 
+	function collapseElement(element) {
+		slotTweaker.removeDefaultHeight(element.getSlotName());
+		slotTweaker.removeTopButtonIfNeeded(element.getSlotName());
+		slotTweaker.hide(
+			element.getSlotContainerId(),
+			recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()
+		);
+	}
+
 	/**
 	 * Push ad to queue and flush if it should be
 	 *
@@ -80,11 +89,11 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		slot.pre('success', function (adInfo) {
 			if (adInfo && adInfo.adType === 'collapse') {
-				slotTweaker.hide(
-					element.getSlotContainerId(),
-					recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()
-				);
+				collapseElement(element);
 			}
+		});
+		slot.pre('collapse', function () {
+			collapseElement(element);
 		});
 		slot.pre('hop', function () {
 			slotTweaker.hide(
