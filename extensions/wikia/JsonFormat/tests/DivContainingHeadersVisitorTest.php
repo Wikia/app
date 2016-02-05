@@ -10,7 +10,7 @@ class DivContainingHeadersVisitorTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @group ExternalDependencyIntegration
+	 * @group ContractualResponsibilitiesValidation
 	 * @dataProvider getUrlWithoutPathDataProvider
 	 */
 	public function testGetUrlWithoutPath( $wgArticlePath, $url, $expected ) {
@@ -20,7 +20,7 @@ class DivContainingHeadersVisitorTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @group ExternalDependencyIntegration
+	 * @group ContractualResponsibilitiesValidation
 	 */
 	public function testParseTabber() {
 		$generatedJson = $this->getSimpleJson( $this->getTabberHtml() );
@@ -29,7 +29,7 @@ class DivContainingHeadersVisitorTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @group ExternalDependencyIntegration
+	 * @group ContractualResponsibilitiesValidation
 	 */
 	public function testParsingTabViewTitles() {
 		$body = $this->getDomBody( $this->getHtmlForTestingTabviewTitles() );

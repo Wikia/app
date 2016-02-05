@@ -9,7 +9,7 @@ class JsonSimplifierTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @group ExternalDependencyIntegration
+	 * @group ContractualResponsibilitiesValidation
 	 */
 	public function testImages() {
 		// PLA-1362
@@ -31,7 +31,7 @@ class JsonSimplifierTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @group ExternalDependencyIntegration
+	 * @group ContractualResponsibilitiesValidation
 	 */
 	public function testEditSection() {
 		$htmlParser = new \Wikia\JsonFormat\HtmlParser();
@@ -63,7 +63,7 @@ EOD;
 	}
 
 	/**
-	 * @group ExternalDependencyIntegration
+	 * @group ContractualResponsibilitiesValidation
 	 */
 	public function testLists() {
 		$htmlParser = new \Wikia\JsonFormat\HtmlParser();
@@ -84,7 +84,7 @@ EOD;
 	
 	/**
 	 * @group Slow
-	 * @group ExternalDependencyIntegration
+	 * @group ContractualResponsibilitiesValidation
 	 * @slowExecutionTime 0.01676 ms
 	 */
 	public function testProcessList() {
@@ -191,7 +191,7 @@ EOD;
 	}
 
 	/**
-	 * @group ExternalDependencyIntegration
+	 * @group ContractualResponsibilitiesValidation
 	 */
 	public function testPrehistoricIceMan() {
 		// PLA-1343

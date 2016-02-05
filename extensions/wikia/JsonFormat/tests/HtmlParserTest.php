@@ -17,7 +17,7 @@ class HtmlParserTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @group ExternalDependencyIntegration
+	 * @group ContractualResponsibilitiesValidation
 	 */
 	public function testParseSimple() {
 		$htmlParser = new HtmlParser();
@@ -28,7 +28,7 @@ class HtmlParserTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @group ExternalDependencyIntegration
+	 * @group ContractualResponsibilitiesValidation
 	 */
 	public function testParseSimpleNoA() {
 		$htmlParser = new HtmlParser();
@@ -39,7 +39,7 @@ class HtmlParserTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @group ExternalDependencyIntegration
+	 * @group ContractualResponsibilitiesValidation
 	 */
 	public function testParseDivWrappingSection() {
 		$htmlParser = new HtmlParser();
@@ -58,7 +58,7 @@ class HtmlParserTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @group ExternalDependencyIntegration
+	 * @group ContractualResponsibilitiesValidation
 	 */
 	public function testSectionsSameLevel() {
 		$htmlParser = new HtmlParser();
@@ -80,7 +80,7 @@ class HtmlParserTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @group ExternalDependencyIntegration
+	 * @group ContractualResponsibilitiesValidation
 	 */
 	public function testParseSimpleParagraph() {
 		$htmlParser = new HtmlParser();
@@ -94,7 +94,7 @@ class HtmlParserTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @group ExternalDependencyIntegration
+	 * @group ContractualResponsibilitiesValidation
 	 */
 	public function testParseSection() {
 		$htmlParser = new HtmlParser();
@@ -108,7 +108,7 @@ class HtmlParserTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @group ExternalDependencyIntegration
+	 * @group ContractualResponsibilitiesValidation
 	 */
 	public function testParseSectionWithContent() {
 		$htmlParser = new HtmlParser();
@@ -125,7 +125,7 @@ class HtmlParserTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @group ExternalDependencyIntegration
+	 * @group ContractualResponsibilitiesValidation
 	 */
 	public function testAmericanDadWrapper() {
 		$htmlParser = new HtmlParser();

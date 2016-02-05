@@ -33,7 +33,7 @@ class JsonFormatTest extends WikiaBaseTest {
 	/* Main tests */
 	/**
 	 * @group Slow
-	 * @group ExternalDependencyIntegration
+	 * @group ContractualResponsibilitiesValidation
 	 * @slowExecutionTime 0.21435 ms
 	 * @dataProvider StructureProvider
 	 */
@@ -48,7 +48,7 @@ class JsonFormatTest extends WikiaBaseTest {
 
 	/**
 	 * @group Slow
-	 * @group ExternalDependencyIntegration
+	 * @group ContractualResponsibilitiesValidation
 	 * @slowExecutionTime 0.1468 ms
 	 * @dataProvider StructureProvider
 	 */
@@ -65,7 +65,7 @@ class JsonFormatTest extends WikiaBaseTest {
 
 	/**
 	 * @group UsingDB
-	 * @group ExternalDependencyIntegration
+	 * @group ContractualResponsibilitiesValidation
 	 * @dataProvider ContentProvider
 	 */
 	public function testContentMatching( $wikiText, $expectedContent ) {
@@ -78,7 +78,7 @@ class JsonFormatTest extends WikiaBaseTest {
 
 	/**
 	 * @group UsingDB
-	 * @group ExternalDependencyIntegration
+	 * @group ContractualResponsibilitiesValidation
 	 * @dataProvider ContentProvider
 	 */
 	public function testContentMatchingWithLazyLoad( $wikiText, $expectedContent ) {
