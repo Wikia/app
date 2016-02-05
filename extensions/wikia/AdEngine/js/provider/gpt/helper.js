@@ -103,7 +103,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		function queueAd() {
 			log(['queueAd', slotName, element], 'debug', logGroup);
-			slot.getElement().appendChild(element.getNode());
+			slot.getContainer().appendChild(element.getNode());
 
 			googleApi.addSlot(element);
 		}

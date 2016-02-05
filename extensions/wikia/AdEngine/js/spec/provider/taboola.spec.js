@@ -74,7 +74,7 @@ describe('Taboola ', function () {
 			getName: function () {
 				return slotName;
 			},
-			getElement: function () {
+			getContainer: function () {
 				return mocks.document.node;
 			},
 			success: noop

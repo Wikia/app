@@ -123,17 +123,18 @@ define('ext.wikia.adEngine.provider.evolve', [
 	}
 
 	function fillInSlot(slot) {
-		var slotName = slot.getName();
+		var container = slot.getContainer(),
+			slotName = slot.getName();
 		log(['fillInSlot', slotName], 5, logGroup);
 
 		if (slotName === slotForSkin) {
 			scriptWriter.injectScriptByUrl(
-				slot.getElement(),
+				container,
 				'http://cdn.triggertag.gorillanation.com/js/triggertag.js',
 				function () {
 					log('(invisible triggertag) ghostwriter done', 5, logGroup);
 
-					scriptWriter.injectScriptByText(slot.getElement(), getReskinAndSilverScript(slotName), function () {
+					scriptWriter.injectScriptByText(container, getReskinAndSilverScript(slotName), function () {
 						// gorrilla skin is suppressed by body.mediawiki !important so make it !important too
 						if (document.body.style.backgroundImage.search(/http:\/\/cdn\.assets\.gorillanation\.com/) !== -1) {
 							document.body.style.cssText = document.body.style.cssText.replace(document.body.style.backgroundImage, document.body.style.backgroundImage + ' !important');
@@ -150,7 +151,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 				}
 			);
 		} else {
-			scriptWriter.injectScriptByUrl(slot.getElement(), getUrl(slotName), function () {
+			scriptWriter.injectScriptByUrl(container, getUrl(slotName), function () {
 				if (hoppedSlots[slotName]) {
 					slot.hop({method: 'hop'});
 					return;

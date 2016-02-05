@@ -90,7 +90,7 @@ define('ext.wikia.adEngine.provider.sevenOneMedia', [
 		if (slotDeName.match(/^(rectangle1|promo[123])$/)) {
 			$slot = $('<div class="ad-wrapper" style="display: none"></div>');
 			$slot.attr('id', 'ad-' + slotDeName);
-			$(slot.getElement()).append($slot);
+			$(slot.getContainer()).append($slot);
 			sevenOneMedia.pushAd(slotDeName, {beforeFinish: clearDefaultHeight, afterFinish: success});
 			sevenOneMedia.flushAds();
 		}

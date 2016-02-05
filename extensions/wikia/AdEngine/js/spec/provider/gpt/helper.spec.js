@@ -78,7 +78,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			getName: function () {
 				return slotName;
 			},
-			getElement: function () {
+			getContainer: function () {
 				return mocks.slotElement;
 			},
 			success: noop,

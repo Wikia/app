@@ -85,7 +85,7 @@ define('ext.wikia.adEngine.provider.taboola', [
 		}
 
 		container.id = mappedSlot.id;
-		slot.getElement().appendChild(container);
+		slot.getContainer().appendChild(container);
 
 		taboolaHelper.initializeWidget({
 			mode: mappedSlot.mode,

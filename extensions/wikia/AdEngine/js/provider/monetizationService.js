@@ -37,7 +37,7 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 		if (context.providers.monetizationServiceAds && context.providers.monetizationServiceAds[slotName]) {
 			log(['fillInSlot', slot.getName(), 'injectScript'], 'debug', logGroup);
 
-			scriptWriter.injectHtml(slot.getElement(), context.providers.monetizationServiceAds[slotName], function () {
+			scriptWriter.injectHtml(slot.getContainer(), context.providers.monetizationServiceAds[slotName], function () {
 				slot.success();
 			});
 		} else {

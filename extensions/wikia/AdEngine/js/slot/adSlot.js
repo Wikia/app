@@ -2,15 +2,15 @@
 define('ext.wikia.adEngine.slot.adSlot', [], function () {
 	'use strict';
 
-	function create(slotName, slotElement, callbacks) {
+	function create(name, container, callbacks) {
 		var slot = {};
 
 		slot.getName = function () {
-			return slotName;
+			return name;
 		};
 
-		slot.getElement = function () {
-			return slotElement;
+		slot.getContainer = function () {
+			return container;
 		};
 
 		slot.success = function (adInfo) {

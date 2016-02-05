@@ -38,9 +38,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 			getName: function () {
 				return slotName;
 			},
-			getElement: function () {
-				return mocks.slotElement;
-			},
+			getContainer: noop,
 			success: noop,
 			hop: noop,
 			pre: function (name, callback) {

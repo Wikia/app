@@ -112,22 +112,20 @@ define('ext.wikia.adEngine.adEngine', [
 		function fillInSlotUsingProvider(queuedSlot, provider, nextProvider) {
 			log(['fillInSlotUsingProvider', provider.name, queuedSlot], 'debug', logGroup);
 
-			var slot,
-				slotName = queuedSlot.slotName,
-				slotElement = prepareAdProviderContainer(provider.name, slotName),
-				aSlotTracker = slotTracker(provider.name, slotName, queueName);
-
-			slot = createSlot(queuedSlot, slotElement, {
-				success: function (adInfo) {
-					log(['success', provider.name, slotName, adInfo], 'debug', logGroup);
-					aSlotTracker.track('success', adInfo);
-				},
-				hop: function (adInfo) {
-					log(['hop', provider.name, slotName, adInfo], 'debug', logGroup);
-					aSlotTracker.track('hop', adInfo);
-					nextProvider();
-				}
-			});
+			var slotName = queuedSlot.slotName,
+				container = prepareAdProviderContainer(provider.name, slotName),
+				tracker = slotTracker(provider.name, slotName, queueName),
+				slot = createSlot(queuedSlot, container, {
+					success: function (adInfo) {
+						log(['success', provider.name, slotName, adInfo], 'debug', logGroup);
+						tracker.track('success', adInfo);
+					},
+					hop: function (adInfo) {
+						log(['hop', provider.name, slotName, adInfo], 'debug', logGroup);
+						tracker.track('hop', adInfo);
+						nextProvider();
+					}
+				});
 
 			// Notify people there's the slot handled
 			eventDispatcher.trigger('ext.wikia.adEngine fillInSlot', slotName, provider);

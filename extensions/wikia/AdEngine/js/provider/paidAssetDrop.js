@@ -20,7 +20,7 @@ define('ext.wikia.adEngine.provider.paidAssetDrop', [
 		log(['fillInSlot', slot.getName()], 'debug', logGroup);
 
 		if (pad.isNowValid(adContext.getContext().opts.paidAssetDropConfig)) {
-			pad.injectPAD(slot.getElement(), 'mobile', pageType);
+			pad.injectPAD(slot.getContainer(), 'mobile', pageType);
 			slot.success();
 		} else {
 			slot.hop();

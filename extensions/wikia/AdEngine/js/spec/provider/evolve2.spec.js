@@ -36,11 +36,6 @@ describe('Evolve2 Provider targeting', function () {
 			getName: function () {
 				return slotName;
 			},
-			//getElement: function () {
-			//	return mocks.slotElement;
-			//},
-			//success: noop,
-			//hop: noop,
 			pre: noop
 		};
 	}
