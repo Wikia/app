@@ -29,12 +29,7 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 						};
 					}
 				},
-				messageListener: {},
-				adSlot: {
-					getShortSlotName: function (slotName) {
-						return slotName;
-					}
-				}
+				messageListener: {}
 			};
 
 			mocks.iframe.contentWindow = {
@@ -48,8 +43,7 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 				mocks.log,
 				mocks.window,
 				mocks.adContext,
-				mocks.messageListener,
-				mocks.adSlot
+				mocks.messageListener
 			);
 
 			spyOn(mocks, 'success');
@@ -85,12 +79,7 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 						};
 					}
 				},
-				messageListener: {},
-				adSlot: {
-					getShortSlotName: function (slotName) {
-						return slotName;
-					}
-				}
+				messageListener: {}
 			};
 
 			mocks.iframe.contentWindow = {};
@@ -112,8 +101,7 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 				mocks.log,
 				mocks.window,
 				mocks.adContext,
-				mocks.messageListener,
-				mocks.adSlot
+				mocks.messageListener
 			);
 
 			spyOn(mocks, 'success');
