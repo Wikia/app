@@ -146,18 +146,18 @@ class Wikia {
 			function () {
 				$faviconFilename = 'Favicon.ico';
 
-				$localFaviconTitle = Title::newFromText($faviconFilename, NS_FILE);
+				$localFaviconTitle = Title::newFromText( $faviconFilename, NS_FILE );
 
 				#FIXME: Checking existance of Title in order to use File. #VID-1744
-				if ($localFaviconTitle->exists()) {
-					$localFavicon = wfFindFile($faviconFilename);
+				if ( $localFaviconTitle->exists() ) {
+					$localFavicon = wfFindFile( $faviconFilename );
 
-					if ($localFavicon) {
+					if ( $localFavicon ) {
 						return $localFavicon->getURL();
 					}
 				}
 
-				return GlobalFile::newFromText($faviconFilename, self::COMMUNITY_WIKI_ID)->getURL();
+				return GlobalFile::newFromText( $faviconFilename, self::COMMUNITY_WIKI_ID )->getURL();
 			}
 		);
 	}
