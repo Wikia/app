@@ -502,9 +502,6 @@ class MediaQueryService extends WikiaService {
 	 */
 	public function clearCacheTotalVideos() {
 		$this->wg->Memc->delete( $this->getMemKeyTotalVideos() );
-
-		// SUS-81: allow other features to clear their video-related caches
-		wfRunHooks( 'ClearCacheTotalVideos' );
 	}
 
 	/**
