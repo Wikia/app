@@ -208,4 +208,19 @@ class VideoHandlerHooks {
 		return true;
 	}
 
+	/**
+	 * SUS-81: bind to a hook that is called when clearing the videos counter
+	 *
+	 * This allow us to purge the cached responses of getVideoList method when a video is added / re-uploaded / deleted.
+	 *
+	 * @return bool
+	 */
+	public static function onClearCacheTotalVideos() {
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__ );
+
+		// TODO: purge by surrogate key
+
+		return true;
+	}
+
 }
