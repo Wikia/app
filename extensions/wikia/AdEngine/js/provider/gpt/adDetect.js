@@ -154,6 +154,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 
 		var adType = forcedAdType || getAdType(slotName, gptEvent, iframe),
 			shouldPollForSuccess = false,
+			expectAsyncCollapse = false,
 			expectAsyncHop = false,
 			expectAsyncHopWithSlotName = false,
 			expectAsyncSuccessWithSlotName = false,
@@ -187,37 +188,48 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			}, 500);
 		}
 
-		function msgCallback(data) {
-			log(['msgCallback', slotName, 'caught message', data], 'info', logGroup);
-
-			if (data.status === 'success') {
-				if (expectAsyncSuccess || expectAsyncSuccessWithSlotName) {
-					callAdCallback(data.extra);
-				} else {
-					log(
-						['msgCallback', slotName, 'Got asynchronous success message, while not expecting it'],
-						'error',
-						logGroup
-					);
-				}
-			}
-
-			if (data.status === 'hop') {
-				if (expectAsyncHop || expectAsyncHopWithSlotName) {
-					callNoAdCallback(data.extra);
-				} else {
-					log(
-						['msgCallback', slotName, 'Got asynchronous hop message, while not expecting it'],
-						'error',
-						logGroup
-					);
-				}
+		function handleAsyncMessage(status, expected, callback) {
+			if (expected) {
+				callback();
+			} else {
+				log(
+					['msgCallback', slotName, status, 'Got asynchronous message, while not expecting it'],
+					'error',
+					logGroup
+				);
 			}
 		}
 
-		if (['openx', 'rubicon', 'saymedia', 'turtle', 'evolve2'].indexOf(adType) !== -1) {
+		function msgCallback(data) {
+			log(['msgCallback', slotName, 'caught message', data], 'info', logGroup);
+
+			switch (data.status) {
+				case 'success':
+					handleAsyncMessage('success', expectAsyncSuccess || expectAsyncSuccessWithSlotName, function () {
+						callAdCallback(data.extra);
+					});
+					break;
+				case 'collapse':
+					handleAsyncMessage('collapse', expectAsyncCollapse, function () {
+						adType = 'collapse';
+						callAdCallback(data.extra);
+					});
+					break;
+				case 'hop':
+					handleAsyncMessage('hop', expectAsyncHop || expectAsyncHopWithSlotName, function () {
+						callNoAdCallback(data.extra);
+					});
+					break;
+			}
+		}
+
+		if (['openx', 'rubicon', 'saymedia', 'turtle', 'evolve2', 'adPartner'].indexOf(adType) !== -1) {
 			shouldPollForSuccess = true;
 			expectAsyncHop = true;
+		}
+
+		if (adType === 'adPartner') {
+			expectAsyncCollapse = true;
 		}
 
 		if (adType === 'async') {
@@ -253,7 +265,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			pollForSuccess();
 		}
 
-		if (expectAsyncHop || expectAsyncSuccess) {
+		if (expectAsyncHop || expectAsyncSuccess || expectAsyncCollapse) {
 			messageListener.register({source: iframe.contentWindow, dataKey: 'status'}, msgCallback);
 		}
 
