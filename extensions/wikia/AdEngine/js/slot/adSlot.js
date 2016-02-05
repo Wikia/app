@@ -3,14 +3,9 @@ define('ext.wikia.adEngine.slot.adSlot', [], function () {
 	'use strict';
 
 	function create(name, container, callbacks) {
-		var slot = {};
-
-		slot.getName = function () {
-			return name;
-		};
-
-		slot.getContainer = function () {
-			return container;
+		var slot = {
+			name: name,
+			container: container
 		};
 
 		slot.success = function (adInfo) {

@@ -66,13 +66,13 @@ define('ext.wikia.adEngine.provider.sevenOneMedia', [
 	}
 
 	function fillInSlot(slot) {
-		log(['fillInSlot', slot.getName()], 'info', logGroup);
+		log(['fillInSlot', slot.name], 'info', logGroup);
 
-		var slotDeName = slotMap[slot.getName()],
+		var slotDeName = slotMap[slot.name],
 			$slot;
 
 		function clearDefaultHeight() {
-			$('#' + slot.getName()).removeClass('default-height');
+			$('#' + slot.name).removeClass('default-height');
 		}
 
 		function success() {
@@ -90,13 +90,13 @@ define('ext.wikia.adEngine.provider.sevenOneMedia', [
 		if (slotDeName.match(/^(rectangle1|promo[123])$/)) {
 			$slot = $('<div class="ad-wrapper" style="display: none"></div>');
 			$slot.attr('id', 'ad-' + slotDeName);
-			$(slot.getContainer()).append($slot);
+			$(slot.container).append($slot);
 			sevenOneMedia.pushAd(slotDeName, {beforeFinish: clearDefaultHeight, afterFinish: success});
 			sevenOneMedia.flushAds();
 		}
 
 		if (slotDeName === 'trackEnd') {
-			sevenOneMedia.trackEnd(slot.getName());
+			sevenOneMedia.trackEnd(slot.name);
 		}
 	}
 

@@ -7,9 +7,7 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 
 	function createSlot(slotName, success, hop) {
 		return {
-			getName: function () {
-				return slotName;
-			},
+			name: slotName,
 			success: success,
 			hop: hop,
 			pre: noop

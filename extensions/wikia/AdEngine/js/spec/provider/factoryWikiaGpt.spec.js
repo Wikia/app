@@ -35,10 +35,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 
 	function createSlot(slotName) {
 		return {
-			getName: function () {
-				return slotName;
-			},
-			getContainer: noop,
+			name: slotName,
 			success: noop,
 			hop: noop,
 			pre: function (name, callback) {

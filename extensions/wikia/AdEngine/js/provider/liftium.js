@@ -54,35 +54,34 @@ define('ext.wikia.adEngine.provider.liftium', [
 	};
 
 	fillInSlot = function (slot) {
-		var slotName = slot.getName();
-		log(['fillInSlot', slotName], 'debug', logGroup);
+		log(['fillInSlot', slot.name], 'debug', logGroup);
 
 		// TOP_BUTTON_WIDE after TOP_LEADERBOARD hack:
-		if (slotName === 'TOP_BUTTON_WIDE') {
+		if (slot.name === 'TOP_BUTTON_WIDE') {
 			log('Tried TOP_BUTTON_WIDE. Disabled (waiting for leaderboard ads)', 'info', logGroup);
 			return;
 		}
-		if (slotName === 'TOP_BUTTON_WIDE.force') {
+		if (slot.name === 'TOP_BUTTON_WIDE.force') {
 			log('Forced TOP_BUTTON_WIDE call (this means leaderboard is ready and standard)', 'info', logGroup);
-			slotName = slotName.replace('.force', '');
+			slot.name = slot.name.replace('.force', '');
 		}
-		if (slotName.indexOf('LEADERBOARD') !== -1) {
+		if (slot.name.indexOf('LEADERBOARD') !== -1) {
 			log('LEADERBOARD-ish slot handled by Liftium. Running the forced TOP_BUTTON_WIDE now', 'info', logGroup);
 
 			win.adslots2.push('TOP_BUTTON_WIDE.force');
 		}
 		// END of hack
-		if (!doc.getElementById(slotName)) {
-			log('No such element in DOM: #' + slotName, 'info', logGroup);
+		if (!doc.getElementById(slot.name)) {
+			log('No such element in DOM: #' + slot.name, 'info', logGroup);
 			return;
 		}
 
-		var slotsize = slotMap[slotName].size;
+		var slotsize = slotMap[slot.name].size;
 
-		log('using iframe for #' + slotName, 'debug', logGroup);
-		Liftium.injectAd(doc, slotName, slot.getContainer(), slotsize);
+		log('using iframe for #' + slot.name, 'debug', logGroup);
+		Liftium.injectAd(doc, slot.name, slot.container, slotsize);
 
-		slotTweaker.removeDefaultHeight(slotName);
+		slotTweaker.removeDefaultHeight(slot.name);
 
 		// Fake success, because we don't have the success event in Liftium
 		slot.success();

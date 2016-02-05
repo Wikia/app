@@ -26,10 +26,10 @@ define('ext.wikia.adEngine.provider.turtle', [
 	}
 
 	function fillInSlot(slot) {
-		log(['fillInSlot', slot.getName()], 'debug', logGroup);
+		log(['fillInSlot', slot.name], 'debug', logGroup);
 
 		slot.pre('success', function () {
-			var slotName = slot.getName();
+			var slotName = slot.name;
 
 			slotTweaker.removeDefaultHeight(slotName);
 			slotTweaker.removeTopButtonIfNeeded(slotName);
@@ -37,8 +37,8 @@ define('ext.wikia.adEngine.provider.turtle', [
 		});
 		gptHelper.pushAd(
 			slot,
-			'/98544404/Wikia/Nordics_RoN/' + slot.getName(),
-			slotMap[slot.getName()],
+			'/98544404/Wikia/Nordics_RoN/' + slot.name,
+			slotMap[slot.name],
 			{
 				forcedAdType: 'turtle',
 				sraEnabled: true

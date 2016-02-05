@@ -75,12 +75,8 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 	function createSlot(slotName) {
 		return {
-			getName: function () {
-				return slotName;
-			},
-			getContainer: function () {
-				return mocks.slotElement;
-			},
+			name: slotName,
+			container: mocks.slotElement,
 			success: noop,
 			pre: noop
 		};

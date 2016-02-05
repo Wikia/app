@@ -51,9 +51,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 
 	function createSlot(slotName) {
 		return {
-			getName: function () {
-				return slotName;
-			},
+			name: slotName,
 			pre: noop,
 			post: noop
 		};

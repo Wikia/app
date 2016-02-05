@@ -29,15 +29,14 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 	}
 
 	function fillInSlot(slot) {
-		log(['fillInSlot', slot.getName()], 'debug', logGroup);
+		log(['fillInSlot', slot.name], 'debug', logGroup);
 
-		var slotName = slotMap[slot.getName()],
-			context = adContext.getContext();
+		var context = adContext.getContext();
 
-		if (context.providers.monetizationServiceAds && context.providers.monetizationServiceAds[slotName]) {
-			log(['fillInSlot', slot.getName(), 'injectScript'], 'debug', logGroup);
+		if (context.providers.monetizationServiceAds && context.providers.monetizationServiceAds[slot.name]) {
+			log(['fillInSlot', slot.name, 'injectScript'], 'debug', logGroup);
 
-			scriptWriter.injectHtml(slot.getContainer(), context.providers.monetizationServiceAds[slotName], function () {
+			scriptWriter.injectHtml(slot.container, context.providers.monetizationServiceAds[slot.name], function () {
 				slot.success();
 			});
 		} else {

@@ -123,25 +123,23 @@ define('ext.wikia.adEngine.provider.evolve', [
 	}
 
 	function fillInSlot(slot) {
-		var container = slot.getContainer(),
-			slotName = slot.getName();
-		log(['fillInSlot', slotName], 5, logGroup);
+		log(['fillInSlot', slot.name], 5, logGroup);
 
-		if (slotName === slotForSkin) {
+		if (slot.name === slotForSkin) {
 			scriptWriter.injectScriptByUrl(
-				container,
+				slot.container,
 				'http://cdn.triggertag.gorillanation.com/js/triggertag.js',
 				function () {
 					log('(invisible triggertag) ghostwriter done', 5, logGroup);
 
-					scriptWriter.injectScriptByText(container, getReskinAndSilverScript(slotName), function () {
+					scriptWriter.injectScriptByText(slot.container, getReskinAndSilverScript(slot.name), function () {
 						// gorrilla skin is suppressed by body.mediawiki !important so make it !important too
 						if (document.body.style.backgroundImage.search(/http:\/\/cdn\.assets\.gorillanation\.com/) !== -1) {
 							document.body.style.cssText = document.body.style.cssText.replace(document.body.style.backgroundImage, document.body.style.backgroundImage + ' !important');
 							document.body.style.cssText = document.body.style.cssText.replace(document.body.style.backgroundColor, document.body.style.backgroundColor + ' !important');
 						}
 
-						if (hoppedSlots[slotName]) {
+						if (hoppedSlots[slot.name]) {
 							slot.hop({method: 'hop'});
 							return;
 						}
@@ -151,17 +149,17 @@ define('ext.wikia.adEngine.provider.evolve', [
 				}
 			);
 		} else {
-			scriptWriter.injectScriptByUrl(container, getUrl(slotName), function () {
-				if (hoppedSlots[slotName]) {
+			scriptWriter.injectScriptByUrl(slot.container, getUrl(slot.name), function () {
+				if (hoppedSlots[slot.name]) {
 					slot.hop({method: 'hop'});
 					return;
 				}
 
 				// Success
 				// TODO: find a better place for operation below
-				slotTweaker.removeDefaultHeight(slotName);
-				slotTweaker.removeTopButtonIfNeeded(slotName);
-				slotTweaker.adjustLeaderboardSize(slotName);
+				slotTweaker.removeDefaultHeight(slot.name);
+				slotTweaker.removeTopButtonIfNeeded(slot.name);
+				slotTweaker.adjustLeaderboardSize(slot.name);
 
 				slot.success();
 			});

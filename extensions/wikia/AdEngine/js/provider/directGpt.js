@@ -75,7 +75,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		provider;
 
 	function fillInSlotWithDelay(slot) {
-		log(['fillInSlotWithDelay', slot.getName()], 'debug', logGroup);
+		log(['fillInSlotWithDelay', slot.name], 'debug', logGroup);
 
 		if (!context.opts.delayBtf) {
 			provider.fillInSlot(slot);
@@ -83,8 +83,8 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		}
 
 		// For the above the fold slot:
-		if (atfSlots.indexOf(slot.getName()) > -1) {
-			pendingAtfSlots.push(slot.getName());
+		if (atfSlots.indexOf(slot.name) > -1) {
+			pendingAtfSlots.push(slot.name);
 			provider.fillInSlot(slot);
 			return;
 		}
@@ -94,7 +94,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	}
 
 	function processBtfSlot(slot) {
-		log(['processBtfSlot', slot.getName()], 'debug', logGroup);
+		log(['processBtfSlot', slot.name], 'debug', logGroup);
 
 		if (!win.ads.runtime.disableBtf) {
 			provider.fillInSlot(slot);
@@ -102,7 +102,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		}
 
 		slot.success({adType: 'blocked'});
-		slotTweaker.hide(slot.getName());
+		slotTweaker.hide(slot.name);
 	}
 
 	function startBtfQueue() {

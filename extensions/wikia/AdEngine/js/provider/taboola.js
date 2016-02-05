@@ -77,15 +77,15 @@ define('ext.wikia.adEngine.provider.taboola', [
 
 	function fillInSlot(slot) {
 		var container = document.createElement('div'),
-			mappedSlot = slots[slot.getName()];
-		log(['fillInSlot', slot.getName()], 'debug', logGroup);
+			mappedSlot = slots[slot.name];
+		log(['fillInSlot', slot.name], 'debug', logGroup);
 
-		if (slot.getName() === 'NATIVE_TABOOLA_ARTICLE') {
+		if (slot.name === 'NATIVE_TABOOLA_ARTICLE') {
 			readMoreDiv.parentNode.removeChild(readMoreDiv);
 		}
 
 		container.id = mappedSlot.id;
-		slot.getContainer().appendChild(container);
+		slot.container.appendChild(container);
 
 		taboolaHelper.initializeWidget({
 			mode: mappedSlot.mode,
@@ -94,14 +94,14 @@ define('ext.wikia.adEngine.provider.taboola', [
 			target_type: 'mix'
 		});
 
-		slotTweaker.show(slot.getName());
+		slotTweaker.show(slot.name);
 		slot.success();
 	}
 
 	function fillInSlotByConfig(slot) {
-		if (supportedSlots.regular.indexOf(slot.getName()) !== -1) {
+		if (supportedSlots.regular.indexOf(slot.name) !== -1) {
 			fillInSlot(slot);
-		} else if (supportedSlots.recovery.indexOf(slot.getName()) !== -1) {
+		} else if (supportedSlots.recovery.indexOf(slot.name) !== -1) {
 			recoveryHelper.addOnBlockingCallback(function () {
 				fillInSlot(slot);
 			});

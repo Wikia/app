@@ -17,10 +17,10 @@ define('ext.wikia.adEngine.provider.paidAssetDrop', [
 
 	function fillInSlot(slot) {
 		var pageType = adContext.getContext().targeting.pageType;
-		log(['fillInSlot', slot.getName()], 'debug', logGroup);
+		log(['fillInSlot', slot.name], 'debug', logGroup);
 
 		if (pad.isNowValid(adContext.getContext().opts.paidAssetDropConfig)) {
-			pad.injectPAD(slot.getContainer(), 'mobile', pageType);
+			pad.injectPAD(slot.container, 'mobile', pageType);
 			slot.success();
 		} else {
 			slot.hop();

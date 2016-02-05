@@ -33,9 +33,7 @@ describe('Evolve2 Provider targeting', function () {
 
 	function createSlot(slotName) {
 		return {
-			getName: function () {
-				return slotName;
-			},
+			name: slotName,
 			pre: noop
 		};
 	}

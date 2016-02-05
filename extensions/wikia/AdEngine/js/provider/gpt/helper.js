@@ -65,21 +65,20 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		var count,
 			element,
 			recoverableSlots = extra.recoverableSlots || [],
-			slotName = slot.getName(),
 			shouldPush = !recoveryHelper.isBlocking() ||
-				(recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slotName, recoverableSlots));
+				(recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slot.name, recoverableSlots));
 
 		extra = extra || {};
 		slotTargeting = JSON.parse(JSON.stringify(slotTargeting)); // copy value
 
 		if (scrollHandler) {
-			count = scrollHandler.getReloadedViewCount(slotName);
+			count = scrollHandler.getReloadedViewCount(slot.name);
 			if (count !== null) {
 				slotTargeting.rv = count.toString();
 			}
 		}
 
-		element = new AdElement(slotName, slotPath, slotTargeting);
+		element = new AdElement(slot.name, slotPath, slotTargeting);
 
 		slot.pre('success', function (slot, adInfo) {
 			if (adInfo && adInfo.adType === 'collapse') {
@@ -102,8 +101,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		});
 
 		function queueAd() {
-			log(['queueAd', slotName, element], 'debug', logGroup);
-			slot.getContainer().appendChild(element.getNode());
+			log(['queueAd', slot.name, element], 'debug', logGroup);
+			slot.container.appendChild(element.getNode());
 
 			googleApi.addSlot(element);
 		}
@@ -120,7 +119,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		function gptCallback(gptEvent) {
 			log(['gptCallback', element.getId(), gptEvent], 'info', logGroup);
 			element.updateDataParams(gptEvent);
-			googleApi.onAdLoad(slotName, element, gptEvent, onAdLoadCallback);
+			googleApi.onAdLoad(slot.name, element, gptEvent, onAdLoadCallback);
 		}
 
 		if (!googleApi.isInitialized()) {
@@ -133,22 +132,22 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		if (!shouldPush) {
-			log(['Push blocked', slotName], 'debug', logGroup);
-			slotTweaker.removeDefaultHeight(slotName);
+			log(['Push blocked', slot.name], 'debug', logGroup);
+			slotTweaker.removeDefaultHeight(slot.name);
 			return;
 		}
 
 		if (!recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()) {
-			recoveryHelper.addSlotToRecover(slotName);
+			recoveryHelper.addSlotToRecover(slot.name);
 		}
 
-		log(['pushAd', slotName], 'info', logGroup);
+		log(['pushAd', slot.name], 'info', logGroup);
 		if (!slotTargeting.flushOnly) {
 			googleApi.registerCallback(element.getId(), gptCallback);
 			googleApi.push(queueAd);
 		}
 
-		if (!extra.sraEnabled || sraHelper.shouldFlush(slotName)) {
+		if (!extra.sraEnabled || sraHelper.shouldFlush(slot.name)) {
 			log('flushing', 'debug', logGroup);
 			googleApi.flush();
 		}

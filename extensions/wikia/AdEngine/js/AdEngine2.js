@@ -98,8 +98,8 @@ define('ext.wikia.adEngine.adEngine', [
 		}
 	}
 
-	function createSlot(queuedSlot, slotElement, callbacks) {
-		var slot = adSlot.create(queuedSlot.slotName, slotElement, callbacks);
+	function createSlot(queuedSlot, container, callbacks) {
+		var slot = adSlot.create(queuedSlot.slotName, container, callbacks);
 		registerHooks(slot, ['success', 'collapse', 'hop']);
 		slot.post('success', queuedSlot.onSuccess);
 

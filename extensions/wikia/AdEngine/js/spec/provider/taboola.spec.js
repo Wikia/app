@@ -71,12 +71,8 @@ describe('Taboola ', function () {
 
 	function createSlot(slotName) {
 		return {
-			getName: function () {
-				return slotName;
-			},
-			getContainer: function () {
-				return mocks.document.node;
-			},
+			name: slotName,
+			container: mocks.document.node,
 			success: noop
 		};
 	}
