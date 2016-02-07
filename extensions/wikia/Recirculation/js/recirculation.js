@@ -1,14 +1,14 @@
-/*global define*/
+/*global define,require*/
 define('ext.wikia.recirculation.recirculation', [
 	'jquery',
 	'wikia.window',
 	'wikia.abTest',
 	'wikia.nirvana',
-	'videosmodule.controllers.rail',
 	'ext.wikia.adEngine.taboolaHelper',
 	'ext.wikia.recirculation.googleMatchHelper',
-	'ext.wikia.recirculation.tracker'
-], function ($, w, abTest, nirvana, videosModule, taboolaHelper, googleMatchHelper, tracker) {
+	'ext.wikia.recirculation.tracker',
+	require.optional('videosmodule.controllers.rail')
+], function ($, w, abTest, nirvana, taboolaHelper, googleMatchHelper, tracker, videosModule) {
 	'use strict';
 
 	var experimentName = 'RECIRCULATION_RAIL';
@@ -33,7 +33,7 @@ define('ext.wikia.recirculation.recirculation', [
 	}
 
 	function injectRecirculationModule(element) {
-		if (w.wgContentLanguage !== 'en') {
+		if (w.wgContentLanguage !== 'en' && videosModule) {
 			videosModule(element);
 			return;
 		}
@@ -65,7 +65,6 @@ define('ext.wikia.recirculation.recirculation', [
 				videosModule(element);
 				break;
 			default:
-				videosModule(element);
 				return;
 		}
 
