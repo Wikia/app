@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\Logger\WikiaLogger;
+use Wikia\Util\GlobalStateWrapper;
 
 class MercuryApiController extends WikiaController {
 
@@ -285,10 +286,9 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
-	 * @desc Returns wiki variables for the current wiki
-	 *
+	 * @desc Prepares wiki variables for the current wikia
 	 */
-	public function getWikiVariables() {
+	private function prepareWikiVariables() {
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
 		$navigation = $this->getNavigation();
 		if ( empty( $navData ) ) {
@@ -329,13 +329,72 @@ class MercuryApiController extends WikiaController {
 		}
 
 		// template for non-main pages (use $1 for article name)
-		$wikiVariables[ 'htmlTitleTemplate' ] = ( new WikiaHtmlTitle() )->setParts( [ '$1' ] )->getTitle();
+		$wikiVariables['htmlTitleTemplate'] = ( new WikiaHtmlTitle() )->setParts( ['$1'] )->getTitle();
+		return $wikiVariables;
+	}
+
+	/**
+	 * @desc Returns wiki variables for the current wikia
+	 *
+	 */
+	public function getWikiVariables() {
+		$wikiVariables = $this->prepareWikiVariables();
 
 		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
 		// cache wikiVariables for 1 minute
 		$this->response->setCacheValidity( self:: WIKI_VARIABLES_CACHE_TTL );
+	}
+
+	/**
+	 * @desc for classic or CK editor markup return
+	 * wikitext ready to process and display in Mercury skin
+	 *
+	 * @throws \BadRequestApiException
+	 * @throws \MWException
+	 */
+	public function getArticleFromMarkup() {
+		global $wgUser, $wgRequest;
+
+		if ( !$wgRequest->wasPosted() ) {
+			throw new BadRequestApiException();
+		}
+
+		// set mobile skin explicitly as we want to get parser output for Mercury
+		RequestContext::getMain()->setSkin( Skin::newFromKey( 'wikiamobile' ) );
+
+		$wikitext = $this->getVal( 'wikitext' );
+		$titleText = !empty( $this->getVal( 'title' ) ) ? $this->getVal( 'title' ) : '';
+		$title = Title::newFromText( $titleText );
+		$parserOptions = new ParserOptions( $wgUser );
+		$wrapper = new GlobalStateWrapper( ['wgArticleAsJson' => true] );
+
+		if( !empty( $this->getVal( 'CKmarkup' ) ) ) {
+			$wikitext = RTE::HtmlToWikitext( $this->getVal( 'CKmarkup' ) );
+		}
+
+		if ( $title ) {
+			$wrapper->wrap( function () use ( &$articleAsJson, $wikitext, $title, $parserOptions ) {
+				// explicit revisionId of -1 passed to ensure proper behavior on ArticleAsJson end
+				$articleAsJson = json_decode(ParserPool::create()->parse( $wikitext, $title, $parserOptions, true, true, -1 )->getText());
+			});
+		} else {
+			$this->response->setVal( 'data', ['content' => 'Invalid title'] );
+			return;
+		}
+
+		$data['article'] = [
+			'content' => $articleAsJson->content,
+			'media' => $articleAsJson->media
+		];
+
+		$wikiVariables = $this->prepareWikiVariables();
+
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		$this->response->setVal( 'data', $data );
+		$this->response->setVal( 'wikiVariables', $wikiVariables );
 	}
 
 	/**

@@ -93,12 +93,16 @@ class ApiVisualEditor extends ApiBase {
 
 			// we cache only GET requests so hit ratio tracking makes sense only in such case
 			if ( $method === 'GET' ) {
-				\Wikia\Logger\WikiaLogger::instance()->info( 'ApiVisualEditor_requestParsoid', [
-					// sending string instead of boolean because our elasticsearch/kibana does not support the latter well
-					'hit' => $hit ? 'yes' : 'no',
-					// we are interested in millisecond only (instead of microseconds)
-					'durationMS' => (int) round ( ( $time_end - $time_start ) * 1000 )
-				] );
+				$loggerParams = array(
+					'hit' => $hit ? 'yes' : 'no', // sending string instead of boolean because our elasticsearch/kibana does not support the latter well
+					'durationMS' => (int) round ( ( $time_end - $time_start ) * 1000 ) // we are interested in millisecond only (instead of microseconds)
+				);
+				if ( $hit === false && preg_match ( "/duration=(\d*); realstart=(\d*); start=(\d*)/", $xpp, $matches ) ) {
+					$loggerParams['parsoidDurationMS'] = (int) $matches[1];
+					$loggerParams['parsoidRealstartDeltaMS'] = (int) round ( $matches[2] - ( $time_start * 1000 ) );
+					$loggerParams['parsoidStartDeltaMS'] = (int) round ( $matches[3] - ( $time_start * 1000 ) );
+				}
+				\Wikia\Logger\WikiaLogger::instance()->info( 'ApiVisualEditor_requestParsoid', $loggerParams );
 			}
 
 			if ( $xpp !== null ) {
