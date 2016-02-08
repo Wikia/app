@@ -66,7 +66,7 @@ phpunit-slow-list: prepare
 # run tests for a specific group
 phpunit-group: prepare
 	${CMD_PHPUNIT} \
-				--group $(GROUP)
+		--group $(GROUP)
 
 #
 # JavaScript TESTS
