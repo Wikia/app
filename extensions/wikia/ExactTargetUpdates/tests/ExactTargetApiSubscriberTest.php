@@ -8,17 +8,15 @@ class ExactTargetApiSubscriberTest extends ExactTargetApiTestBase {
 	const TEST_USER_ID = "1234";
 	const TEST_USER_EMAIL = "test@wikia-inc.com";
 
-	protected $taskHelper;
+	protected $helper;
 
 	public function setUp() {
 		$this->setupFile = __DIR__ . '/../ExactTargetUpdates.setup.php';
 		parent::setUp();
 		require_once __DIR__ . '/helpers/ExactTargetApiWrapper.php';
 
-		$this->taskHelper = new Wikia\ExactTarget\ExactTargetUserTaskHelper();
-
+		$this->helper = new Wikia\ExactTarget\ExactTargetApiHelper();
 	}
-
 
 	public function testCreateRequest() {
 		$responseValue = 'response';
@@ -26,11 +24,20 @@ class ExactTargetApiSubscriberTest extends ExactTargetApiTestBase {
 		$mockLogger = $this->getWikiaLoggerMock();
 		$mockSoapClient = $this->getExactTargetSoapClientMock();
 
+		$params = ['Subscriber' => array(array(
+			'SubscriberKey' => self::TEST_USER_EMAIL,
+			'EmailAddress' => self::TEST_USER_EMAIL,
+			))];
+
+		$makeCreateRequestParams = $this->helper->prepareSubscriberObjects( $params['Subscriber'] );
+		$requestVars = $this->helper->wrapCreateRequest(
+			$this->helper->prepareSoapVars( $makeCreateRequestParams, 'Subscriber' )
+		);
+
 		$mockSoapClient
 			->expects( $this->once() )
 			->method( 'Create' )
-			// FIXME: we should be able to test what goes into Create
-			->with( $this->anything() )
+			->with( $requestVars )
 			->willReturn( $responseValue );
 
 		$mockSoapClient
@@ -47,7 +54,6 @@ class ExactTargetApiSubscriberTest extends ExactTargetApiTestBase {
 		$subscriber->setClient( $mockSoapClient );
 		$subscriber->setLogger( $mockLogger );
 
-		$params = $this->taskHelper->prepareSubscriberData( $sUserEmail );
 		$this->assertEquals( $responseValue, $subscriber->createRequest( $params ) );
 	}
 
