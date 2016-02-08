@@ -136,7 +136,7 @@ class ArticleAsJson extends WikiaService {
 	}
 
 	public static function onGalleryBeforeProduceHTML( $data, &$out ) {
-		global $wgArticleAsJson;
+		global $wgArticleAsJson, $wgEnableSeoFriendlyImagesForMobile;
 
 		wfProfileIn( __METHOD__ );
 
@@ -209,7 +209,7 @@ class ArticleAsJson extends WikiaService {
 		&$time,
 		&$res
 	) {
-		global $wgArticleAsJson;
+		global $wgArticleAsJson, $wgEnableSeoFriendlyImagesForMobile;
 
 		wfProfileIn( __METHOD__ );
 
