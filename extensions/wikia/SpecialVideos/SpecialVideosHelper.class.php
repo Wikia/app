@@ -97,8 +97,6 @@ class SpecialVideosHelper extends WikiaModel {
 			$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
 			if ( !empty( $videoDetail ) ) {
 				$byUserMsg = WikiaFileHelper::getByUserMsg( $videoDetail['userName'], $videoDetail['timestamp'] );
-				// SUS-78 | Not used in template but used by API clients - GameGuides App
-				$viewTotal = wfMessage( 'videohandler-video-views', $this->wg->Lang->formatNum( $videoDetail['viewsTotal'] ) )->text();
 
 				$videos[] = [
 					'title' => $videoDetail['fileTitle'],
@@ -107,7 +105,6 @@ class SpecialVideosHelper extends WikiaModel {
 					'thumbnail' => $videoDetail['thumbnail'],
 					'timestamp' => wfTimeFormatAgo( $videoDetail['timestamp'], false ),
 					'updated' => $videoDetail['timestamp'],
-					'viewTotal' => $viewTotal,
 					'byUserMsg' => $byUserMsg,
 					'truncatedList' => $videoDetail['truncatedList'],
 					'duration' => $videoDetail['duration'],
