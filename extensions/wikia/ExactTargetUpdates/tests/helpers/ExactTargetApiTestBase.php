@@ -14,7 +14,7 @@ class ExactTargetApiTestBase extends WikiaBaseTest {
 	protected function getExactTargetSoapClientMock() {
 		return $this->getMockBuilder( '\ExactTargetSoapClient' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'Update', '__getLastResponse' ] )
+			->setMethods( [ 'Update', 'Delete', 'Create', '__getLastResponse' ] )
 			->getMock();
 	}
 
@@ -24,6 +24,5 @@ class ExactTargetApiTestBase extends WikiaBaseTest {
 			->setMethods( [ 'info', 'error' ] )
 			->getMock();
 	}
-
 
 }

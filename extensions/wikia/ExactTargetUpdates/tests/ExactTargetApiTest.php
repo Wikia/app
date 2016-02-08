@@ -86,7 +86,7 @@ class ExactTargetApiTest extends ExactTargetApiTestBase {
 		$mockSoapClient
 			->expects( $this->once() )
 			->method( 'Update' )
-			->with( array() )
+			->with( $this->anything() )
 			->willReturn( $responseValue );
 
 		$mockSoapClient
