@@ -16,8 +16,7 @@ require(['jquery', 'mw', 'phalanx', 'BannerNotification'], function($, mw, phala
 
 			phalanx.unblock(blockId).
 				done(function() {
-					// hide
-					new notification(mw.msg('phalanx-unblock-message', blockId), 'notify').show();
+					new notification(mw.msg('phalanx-unblock-message', blockId), 'confirm').show();
 					node.closest('li').addClass('removed');
 				}).
 				fail(function() {
