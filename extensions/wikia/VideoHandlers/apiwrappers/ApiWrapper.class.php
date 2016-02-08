@@ -600,6 +600,12 @@ class NegativeResponseException extends Exception {
 		}
 
 		$this->message = $message;
+
+		Wikia\Logger\WikiaLogger::instance()->error(
+			__CLASS__,
+			[ 'exception' => $this ]
+		);
+
 	}
 
 	/**
