@@ -603,7 +603,7 @@ class NegativeResponseException extends Exception {
 
 		Wikia\Logger\WikiaLogger::instance()->error(
 			__CLASS__,
-			[ 'sus27response' => [
+			[ 'ooyala_response' => [
 				'status' => $this->status,
 				'content' => $this->content,
 				'apiUrl' => $this->apiUrl,
