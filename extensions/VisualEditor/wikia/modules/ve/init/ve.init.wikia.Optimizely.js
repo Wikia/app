@@ -17,7 +17,7 @@ ve.init.wikia.getToolbarABTestVariantNumber = function () {
 	var optimizely = window.optimizely,
 		optimizelyId = ve.init.wikia.getToolbarABTestId();
 
-	if (optimizely && optimizely.variationMap && optimizely.variationMap.hasOwnProperty(optimizelyId)) {
+	if ( optimizely && optimizely.variationMap && optimizely.variationMap.hasOwnProperty(optimizelyId) ) {
 		return optimizely.variationMap[optimizelyId] || 0;
 	}
 
@@ -28,5 +28,5 @@ ve.init.wikia.getToolbarABTestVariantNumber = function () {
  * Hook for activating experiment on VE load
  */
 mw.hook( 've.activate' ).add( function () {
-	window.optimizely.push(['activate', ve.init.wikia.getToolbarABTestId()]);
+	window.optimizely.push( ['activate', ve.init.wikia.getToolbarABTestId()] );
 });
