@@ -147,14 +147,12 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * Get videos
-	 * @requestParam string sort [ recent/popular/trend/premium ]
 	 * @requestParam integer page - page number
 	 * @requestParam string category
 	 * @requestParam string provider
 	 * @responseParam array videos - list of videos
 	 */
 	public function getVideos() {
-		$sort = $this->request->getVal( 'sort', 'trend' );
 		$page = $this->request->getVal( 'page', 1 );
 		$category = $this->request->getVal( 'category', '' );
 		$providers = $this->request->getVal( 'provider', '' );
@@ -163,7 +161,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$options = ['getThumbnail'=> $getThumbnail ];
 
 		$helper = new SpecialVideosHelper();
-		$videos = $helper->getVideos( $sort, $page, $providers, $category, $options );
+		$videos = $helper->getVideos( $page, 'all', $providers, $category, $options );
 
 		$this->videos = $videos;
 	}

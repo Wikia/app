@@ -80,22 +80,15 @@ class SpecialVideosHelper extends WikiaModel {
 
 	/**
 	 * get list of videos
-	 * @param string $sort [recent/popular/trend]
 	 * @param integer $page
+	 * @param string $filter [all/premium]
 	 * @param array $providers
 	 * @param string $category
 	 * @param array $options
 	 * @return array $videos
 	 */
-	public function getVideos( $sort, $page, $providers = [], $category = '', $options = [] ) {
+	public function getVideos( $page, $filter = 'all', $providers = [], $category = '', $options = [] ) {
 		wfProfileIn( __METHOD__ );
-
-		if ( $sort == 'premium' ) {
-			$sort = 'recent';
-			$filter = 'premium';
-		} else {
-			$filter = 'all';
-		}
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			$limit = self::VIDEOS_PER_PAGE_MOBILE;
@@ -120,7 +113,7 @@ class SpecialVideosHelper extends WikiaModel {
 
 		// get video list
 		$mediaService = new MediaQueryService();
-		$videoList = $mediaService->getVideoList( $sort, $filter, $limit, $page, $providers, $category );
+		$videoList = $mediaService->getVideoList( $filter, $limit, $page, $providers, $category );
 
 		$videoOptions = [
 			'thumbWidth'       => self::THUMBNAIL_WIDTH,
