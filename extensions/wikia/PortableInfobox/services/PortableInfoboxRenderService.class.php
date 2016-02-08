@@ -13,13 +13,13 @@ class PortableInfoboxRenderService extends WikiaService {
 		'header' => 'PortableInfoboxItemHeader.mustache',
 		'image' => 'PortableInfoboxItemImage.mustache',
 		'image-mobile' => 'PortableInfoboxItemImageMobile.mustache',
-		'image-mobile-old' => 'PortableInfoboxItemImageMobileOld.mustache',
+		'image-mobile-experimental' => 'PortableInfoboxItemImageMobileExperimental.mustache',
 		'data' => 'PortableInfoboxItemData.mustache',
 		'group' => 'PortableInfoboxItemGroup.mustache',
 		'horizontal-group-content' => 'PortableInfoboxHorizontalGroupContent.mustache',
 		'navigation' => 'PortableInfoboxItemNavigation.mustache',
 		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache',
-		'hero-mobile-old' => 'PortableInfoboxItemHeroMobileOld.mustache',
+		'hero-mobile-experimental' => 'PortableInfoboxItemHeroMobileExperimental.mustache',
 		'image-collection' => 'PortableInfoboxItemImageCollection.mustache',
 		'image-collection-mobile' => 'PortableInfoboxItemImageCollectionMobile.mustache'
 	];
@@ -152,10 +152,10 @@ class PortableInfoboxRenderService extends WikiaService {
 			$image = $helper->extendImageData( $image );
 			$data['image'] = $image;
 
-			if (!empty($wgEnableSeoFriendlyImagesForMobile)) {
-				$markup = $this->renderItem( 'hero-mobile', $data );
+			if ( !empty( $wgEnableSeoFriendlyImagesForMobile ) ) {
+				$markup = $this->renderItem( 'hero-mobile-experimental', $data );
 			} else {
-				$markup = $this->renderItem( 'hero-mobile-old', $data );
+				$markup = $this->renderItem( 'hero-mobile', $data );
 			}
 		} else {
 			$markup = $this->renderItem( 'title', $data[ 'title' ] );
@@ -202,10 +202,10 @@ class PortableInfoboxRenderService extends WikiaService {
 			}
 
 			if ( $helper->isWikiaMobile() ) {
-				if (!empty($wgEnableSeoFriendlyImagesForMobile)) {
-					$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX;
+				if ( !empty( $wgEnableSeoFriendlyImagesForMobile ) ) {
+					$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX . '-experimental';
 				} else {
-					$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX . '-old';
+					$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX;
 				}
 			}
 		} else {

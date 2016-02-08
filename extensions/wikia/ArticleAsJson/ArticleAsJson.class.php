@@ -52,7 +52,17 @@ class ArticleAsJson extends WikiaService {
 		return trim( preg_replace( '/\s+/', ' ', $string ) );
 	}
 
-	private static function createMarker( $media, $isGallery = false ) {
+	private static function createMarker( $width = 0, $height = 0, $isGallery = false ){
+		$blankImgUrl = '//:0';
+		$id = count( self::$media ) - 1;
+		$classes = 'article-media' . ($isGallery ? ' gallery' : '');
+		$width = !empty( $width ) ? " width='{$width}'" : '';
+		$height = !empty( $height ) ? " height='{$height}'": '';
+
+		return "<img src='{$blankImgUrl}' class='{$classes}' data-ref='{$id}'{$width}{$height} />";
+	}
+
+	private static function createMarkerExperimental( $media, $isGallery = false ) {
 
 		$id = count( self::$media ) - 1;
 
@@ -157,7 +167,11 @@ class ArticleAsJson extends WikiaService {
 			self::$media[] = $media;
 
 			if ( !empty( $media ) ) {
-				$out = self::createMarker( $media, true );
+				if ( !empty( $wgEnableSeoFriendlyImagesForMobile ) ) {
+					$out = self::createMarkerExperimental( $media, true );
+				} else {
+					$out = self::createMarker( $media[0]['width'], $media[0]['height'], true );
+				}
 			} else {
 				$out = '';
 			}
@@ -220,7 +234,11 @@ class ArticleAsJson extends WikiaService {
 
 			self::addUserObj( $details );
 
-			$res = self::createMarker( $media );
+			if ( !empty( $wgEnableSeoFriendlyImagesForMobile ) ) {
+				$res = self::createMarkerExperimental( $media );
+			} else {
+				$res = self::createMarker( $details['width'], $details['height'] );
+			}
 
 			wfProfileOut( __METHOD__ );
 			return false;
