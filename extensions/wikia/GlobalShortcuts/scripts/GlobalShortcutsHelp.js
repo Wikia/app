@@ -109,7 +109,7 @@ define('GlobalShortcutsHelp',
 			modalInstance.show();
 			// Add footer hint
 			modalInstance.$element.find('footer')
-				.html(mw.message('template-class-global-shortcuts-press-to-explore-shortcuts', dotKey).parse());
+				.html(mw.message('global-shortcuts-press-to-explore-shortcuts', dotKey).parse());
 		}
 
 		function setupModal(content) {

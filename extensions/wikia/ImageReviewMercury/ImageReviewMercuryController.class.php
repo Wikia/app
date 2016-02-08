@@ -4,8 +4,7 @@ class ImageReviewMercuryController extends WikiaSpecialPageController {
 
 	private $imageReview;
 	public function __construct() {
-
-		$this->imageReview = (new ImageReviewMercury);
+		$this->imageReview = new ImageReviewMercury;
 		parent::__construct( 'ImageReviewMercury', '', false );
 	}
 

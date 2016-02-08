@@ -23,9 +23,9 @@ class Hooks {
 	 * @return true
 	 */
 	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		global $wgEnableDiscussion;
+		global $wgEnableDiscussions;
 
-		if ( !empty( $wgEnableDiscussion ) ) {
+		if ( !empty( $wgEnableDiscussions ) ) {
 			\Wikia::addAssetsToOutput( 'globalshortcuts_discussions_js' );
 		}
 
@@ -57,7 +57,7 @@ class Hooks {
 		$user = \RequestContext::getMain()->getUser();
 
 		if ( $user->isLoggedIn() && !empty( $wgEnableGlobalShortcutsExt ) ) {
-			$html = \HTML::rawElement(
+			$html = \Html::rawElement(
 				'a',
 				[
 					'href' => '#',

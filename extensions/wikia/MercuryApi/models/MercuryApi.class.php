@@ -107,7 +107,7 @@ class MercuryApi {
 		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin, $wgDisableAnonymousEditing,
 			   $wgLanguageCode, $wgContLang, $wgCityId, $wgEnableNewAuth, $wgDisableAnonymousUploadForMercury,
 			   $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff, $wgDisableMobileSectionEditor,
-			   $wgEnableDiscussions, $wgAnalyticsDriverIVW3Countries, $wgEnableGlobalNav2016, $wgEnableCommunityData;
+			   $wgEnableDiscussions, $wgAnalyticsDriverIVW3Countries, $wgEnableCommunityData;
 
 		return [
 			'cacheBuster' => (int)$wgCacheBuster,
@@ -117,6 +117,7 @@ class MercuryApi {
 			'disableAnonymousUploadForMercury' => $wgDisableAnonymousUploadForMercury,
 			'enableDiscussions' => $wgEnableDiscussions,
 			'enableNewAuth' => $wgEnableNewAuth,
+			'favicon' => Wikia::getFaviconFullUrl(),
 			'homepage' => $this->getHomepageUrl(),
 			'id' => (int)$wgCityId,
 			'isCoppaWiki' => ( $wgWikiDirectedAtChildrenByFounder || $wgWikiDirectedAtChildrenByStaff ),
@@ -131,7 +132,7 @@ class MercuryApi {
 			'siteMessage' => $this->getSiteMessage(),
 			'siteName' => $wgSitename,
 			'theme' => SassUtil::getOasisSettings(),
-			'enableGlobalNav2016' => $wgEnableGlobalNav2016,
+			'enableGlobalNav2016' => true,
 			'tracking' => [
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
 				'ivw3' => [

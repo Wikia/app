@@ -48,13 +48,6 @@ JSMessages::registerPackage( 'GlobalShortcuts', [
 	'global-shortcuts-key-*',
 	'global-shortcuts-search-placeholder',
 	'global-shortcuts-title-keyboard-shortcuts',
-	// TODO remove template-class- prefix once messages come back from translations, as it's wrong naming
-	'template-class-global-shortcuts-press-to-explore-shortcuts',
+	'global-shortcuts-press-to-explore-shortcuts',
 ] );
 
-/*
- * TODO move this block and message used below to TemplateClassification ext
- */
-JSMessages::registerPackage( 'TemplateClassificationGlobalShortcuts', [
-	'template-class-global-shortcuts-caption-classify-page',
-] );

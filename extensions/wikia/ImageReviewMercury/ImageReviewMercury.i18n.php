@@ -1,9 +1,11 @@
-<?php 
+<?php
 
 $messages = array();
 
 $messages['en'] = array(
-	'wikia-version-desc' => "Wikia's extension for Special:ImageReviewMercury.",
-	'wikia-version-code' => "Wikia code",
-	'wikia-version-config' => "Wikia config"
+		'imagereviewmercury-desc' => "Internal tool to help review images post-upload and remove Terms of Use violations",
+);
+
+$messages['qqq'] = array(
+		'imagereviewmercury-desc' => "{{desc}}",
 );

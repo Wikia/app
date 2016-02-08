@@ -52,6 +52,9 @@ define('ext.wikia.recirculation.recirculation', [
 		var group = abTest.getGroup('RECIRCULATION_RAIL');
 
 		switch (group) {
+			case 'RECENT_POPULAR':
+				injectFandomPosts('recent_popular', element);
+				break;
 			case 'POPULAR':
 				injectFandomPosts('popular', element);
 				break;
