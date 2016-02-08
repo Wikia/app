@@ -70,7 +70,14 @@ class ApiVisualEditor extends ApiBase {
 		) {
 			$req->setHeader( 'Cookie', $this->getRequest()->getHeader( 'Cookie' ) );
 		}
+
+		if ( $this->veConfig->get( 'VisualEditorNoCache' ) ) {
+			$req->setHeader( 'Cache-control', 'no-cache' );
+		}
+
+		$time_start = microtime(true);
 		$status = $req->execute();
+		$time_end = microtime(true);
 		if ( $status->isOK() ) {
 			// Pass thru performance data from Parsoid to the client, unless the response was
 			// served directly from Varnish, in  which case discard the value of the XPP header
@@ -86,10 +93,16 @@ class ApiVisualEditor extends ApiBase {
 
 			// we cache only GET requests so hit ratio tracking makes sense only in such case
 			if ( $method === 'GET' ) {
-				\Wikia\Logger\WikiaLogger::instance()->info( 'ApiVisualEditor_requestParsoid', [
-					// sending string instead of boolean because our elasticsearch/kibana does not support the latter well
-					'hit' => $hit ? 'yes' : 'no'
-				] );
+				$loggerParams = array(
+					'hit' => $hit ? 'yes' : 'no', // sending string instead of boolean because our elasticsearch/kibana does not support the latter well
+					'durationMS' => (int) round ( ( $time_end - $time_start ) * 1000 ) // we are interested in millisecond only (instead of microseconds)
+				);
+				if ( $hit === false && preg_match ( "/duration=(\d*); realstart=(\d*); start=(\d*)/", $xpp, $matches ) ) {
+					$loggerParams['parsoidDurationMS'] = (int) $matches[1];
+					$loggerParams['parsoidRealstartDeltaMS'] = (int) round ( $matches[2] - ( $time_start * 1000 ) );
+					$loggerParams['parsoidStartDeltaMS'] = (int) round ( $matches[3] - ( $time_start * 1000 ) );
+				}
+				\Wikia\Logger\WikiaLogger::instance()->info( 'ApiVisualEditor_requestParsoid', $loggerParams );
 			}
 
 			if ( $xpp !== null ) {

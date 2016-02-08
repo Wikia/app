@@ -2,7 +2,7 @@
 
 class RecirculationController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
-	const ALLOWED_TYPES = ['popular', 'shares'];
+	const ALLOWED_TYPES = ['popular', 'shares', 'recent_popular'];
 	const DEFAULT_TYPE = 'popular';
 
 	public function init() {

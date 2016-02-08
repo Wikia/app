@@ -140,33 +140,30 @@ class Wikia {
 	}
 
 	public static function getFaviconFullUrl() {
-		global $wgMemc;
+		return WikiaDataAccess::cache(
+			wfMemcKey( self::FAVICON_URL_CACHE_KEY ),
+			WikiaResponse::CACHE_STANDARD,
+			function () {
+				$faviconFilename = 'Favicon.ico';
 
-		$mMemcacheKey = wfMemcKey(self::FAVICON_URL_CACHE_KEY);
-		$mData = $wgMemc->get($mMemcacheKey);
-		$faviconFilename = 'Favicon.ico';
+				$localFaviconTitle = Title::newFromText( $faviconFilename, NS_FILE );
 
-		if ( empty($mData) ) {
-			$localFaviconTitle = Title::newFromText( $faviconFilename, NS_FILE );
-			#FIXME: Checking existance of Title in order to use File. #VID-1744
-			if ( $localFaviconTitle->exists() ) {
-				$localFavicon = wfFindFile( $faviconFilename );
+				#FIXME: Checking existance of Title in order to use File. #VID-1744
+				if ( $localFaviconTitle->exists() ) {
+					$localFavicon = wfFindFile( $faviconFilename );
+
+					if ( $localFavicon ) {
+						return $localFavicon->getURL();
+					}
+				}
+
+				return GlobalFile::newFromText( $faviconFilename, self::COMMUNITY_WIKI_ID )->getURL();
 			}
-			if ( $localFavicon ) {
-				$favicon = $localFavicon->getURL();
-			} else {
-				$favicon = GlobalFile::newFromText( $faviconFilename, self::COMMUNITY_WIKI_ID )->getURL();
-			}
-			$wgMemc->set($mMemcacheKey, $favicon, 86400);
-		}
-
-		return $mData;
+		);
 	}
 
 	public static function invalidateFavicon() {
-		global $wgMemc;
-
-		$wgMemc->delete( wfMemcKey(self::FAVICON_URL_CACHE_KEY) );
+		WikiaDataAccess::cachePurge( wfMemcKey( self::FAVICON_URL_CACHE_KEY ) );
 	}
 
 	/**

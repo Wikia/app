@@ -41,6 +41,8 @@ class AnalyticsEngine {
 				return new AnalyticsProviderExelate();
 			case 'GoogleUA':
 				return new AnalyticsProviderGoogleUA();
+			case 'Krux':
+				return new AnalyticsProviderKrux();
 			case 'AmazonMatch':
 				return new AnalyticsProviderAmazonMatch();
 			case 'Nielsen':

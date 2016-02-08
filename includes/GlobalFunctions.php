@@ -1275,9 +1275,8 @@ function wfReadOnly() {
  * @return bool
  */
 function wfReadOnlyReason() {
-	global $wgReadOnly;
 	wfReadOnly();
-	return $wgReadOnly;
+	return wfMessage( 'wikia-read-only-mode' )->plain();
 }
 
 /**

@@ -350,12 +350,12 @@ class CuratedContentController extends WikiaController {
 				}, $this->communityDataService->getCurated() );
 
 				$featured = $this->communityDataService->getFeatured();
-				if ( !empty( $featured ) && !empty( $curated ) ) {
+				if ( !empty( $featured ) ) {
 					$featured[ 'featured' ] = 'true';
 					$curated[] = $featured;
 				}
 				$optional = $this->communityDataService->getOptional();
-				if ( !empty( $optional ) && !empty( $curated ) ) {
+				if ( !empty( $optional ) ) {
 					$curated[] = $optional;
 				}
 
