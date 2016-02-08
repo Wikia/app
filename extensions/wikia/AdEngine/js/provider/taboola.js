@@ -42,6 +42,11 @@ define('ext.wikia.adEngine.provider.taboola', [
 				id: 'taboola-right-rail-thumbnails',
 				mode: 'thumbnails-rr',
 				label: 'Right Rail Thumbnails - '
+			},
+			'TOP_LEADERBOARD_AB': {
+				id: 'taboola-above-article-thumbnails',
+				mode: 'thumbnails-h-abp',
+		    label: 'Above Article Thumbnails'
 			}
 		},
 		supportedSlots = {
