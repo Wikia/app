@@ -13,4 +13,7 @@ $messages = array_merge( $messages, array(
 
 'group-content-moderator' => 'Moderatori di contenuti',
 'group-content-moderator-member' => 'Moderatore di contenuti',
+
+	'wikia-read-only-mode' => "Oh! Il nostro centro dati principale non è al momento disponibile, così come il nostro backup. Sfortunatamente, ciò significa che non puoi fare cose come modificare, caricare o chattare.
++Stiamo lavorando alla risoluzione del problema, ti ringraziamo per la pazienza! Se visualizzi questo messaggio per un periodo di tempo prolungato, contatta pure Wikia all'indirizzo community@wikia.com.",
 ) );
