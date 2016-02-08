@@ -46,39 +46,6 @@ class SpecialVideosHelper extends WikiaModel {
 	}
 
 	/**
-	 * get list of sorting options
-	 * @return array $options
-	 */
-	public function getSortOptions() {
-		$options = [
-			'recent'  => wfMessage( 'specialvideos-sort-latest' )->escaped(),
-		];
-
-		return $options;
-	}
-
-	/**
-	 * get list of filter options
-	 * @return array $options
-	 */
-	public function getFilterOptions() {
-		$options = array();
-
-		$premiumVideos = $this->premiumVideosExist();
-		if ( !empty( $premiumVideos ) ) {
-			$options['premium'] = wfMessage( 'specialvideos-sort-featured' )->text();
-		}
-
-		if ( $this->wg->UseVideoVerticalFilters ) {
-			$options['trend:Games'] = wfMessage( 'specialvideos-filter-games' )->text();
-			$options['trend:Lifestyle'] = wfMessage( 'specialvideos-filter-lifestyle' )->text();
-			$options['trend:Entertainment'] = wfMessage( 'specialvideos-filter-entertainment' )->text();
-		}
-
-		return $options;
-	}
-
-	/**
 	 * get list of videos
 	 * @param integer $page
 	 * @param string $filter [all/premium]
@@ -130,7 +97,7 @@ class SpecialVideosHelper extends WikiaModel {
 			$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
 			if ( !empty( $videoDetail ) ) {
 				$byUserMsg = WikiaFileHelper::getByUserMsg( $videoDetail['userName'], $videoDetail['timestamp'] );
-				// FIXME: this isn't shown to users b/c it's buggy (CONSF-51)
+				// SUS-78 | Not used in template but used by API clients - GameGuides App
 				$viewTotal = wfMessage( 'videohandler-video-views', $this->wg->Lang->formatNum( $videoDetail['viewsTotal'] ) )->text();
 
 				$videos[] = [

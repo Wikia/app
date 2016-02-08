@@ -439,6 +439,7 @@ class MediaQueryService extends WikiaService {
 				'addedAt'    => $row->added_at,
 				'addedBy'    => $row->added_by,
 				'duration'   => $row->duration,
+				// SUS-78 | Not used in template but used by API clients - GameGuides App
 				'viewsTotal' => $row->views_total
 			];
 		});

@@ -13,7 +13,6 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * Videos page
-	 * @requestParam string sort [ recent/popular/trend/premium ]
 	 * @requestParam integer page - page number
 	 * @requestParam string category
 	 * @requestParam string msg - BannerNotifications message
@@ -22,8 +21,6 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 	 * @responseParam integer addVideo [0/1]
 	 * @responseParam string pagination
 	 * @responseParam string loadMore (For mobile only)
-	 * @responseParam string sortMsg - selected option (sorting)
-	 * @responseParam array sortingOptions - sorting options
 	 * @responseParam array videos - list of videos
 	 * @responseParam string message
 	 */
@@ -61,8 +58,6 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		// Add meta description tag to HTML source
 		$this->getContext()->getOutput()->addMeta( 'description', $helper->getMetaTagDescription() );
 
-		// Sorting/filtering dropdown values
-		$sort = $this->request->getVal( 'sort', 'recent' );
 		$page = $this->request->getVal( 'page', 1 );
 		$category = $this->request->getVal( 'category', '' );
 		// Filter on a comma separated list of providers if given.
@@ -89,23 +84,8 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		// Variable to display the "add video" link at the end of the results
 		$addVideo = 1;
 
-		// get sorting options
-		if ( $isMobile ) {
-			$sortingOptions = $helper->getSortOptions();
-		} else {
-			$sortingOptions = array_merge( $helper->getSortOptions(), $helper->getFilterOptions() );
-		}
-
-		if ( !array_key_exists( $sort, $sortingOptions ) ) {
-			$sort = 'recent';
-		}
-
-		// The new trending in <category> options have a slightly different key format
-		$sortKey = $sort.( empty( $category ) ? '' : ":$category" );
-
 		// get videos
 		$params = [
-			'sort' => $sort,
 			'page' => $page,
 			'category' => $category,
 			'provider' => $providers,
@@ -129,8 +109,6 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 
 		$this->addVideo = $addVideo;
 		$this->pagination = $paginationBar;
-		$this->sortMsg = $sortingOptions[$sortKey]; // selected sorting option to display in drop down
-		$this->sortingOptions = $sortingOptions; // populate the drop down
 		$this->videos = $videos;
 		$this->message = $message;
 
