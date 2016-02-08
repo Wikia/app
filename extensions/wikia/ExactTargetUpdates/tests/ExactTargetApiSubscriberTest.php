@@ -24,15 +24,8 @@ class ExactTargetApiSubscriberTest extends ExactTargetApiTestBase {
 		$mockLogger = $this->getWikiaLoggerMock();
 		$mockSoapClient = $this->getExactTargetSoapClientMock();
 
-		$params = ['Subscriber' => array(array(
-			'SubscriberKey' => self::TEST_USER_EMAIL,
-			'EmailAddress' => self::TEST_USER_EMAIL,
-			))];
-
-		$makeCreateRequestParams = $this->helper->prepareSubscriberObjects( $params['Subscriber'] );
-		$requestVars = $this->helper->wrapCreateRequest(
-			$this->helper->prepareSoapVars( $makeCreateRequestParams, 'Subscriber' )
-		);
+		$params = $this->createSubscriberParams( self::TEST_USER_EMAIL, false );
+		$requestVars = $this->createRequestVars( $params );
 
 		$mockSoapClient
 			->expects( $this->once() )
@@ -57,4 +50,20 @@ class ExactTargetApiSubscriberTest extends ExactTargetApiTestBase {
 		$this->assertEquals( $responseValue, $subscriber->createRequest( $params ) );
 	}
 
+
+
+	protected function createSubscriberParams( $email, $unsubscribed ) {
+		return ['Subscriber' => array(array(
+			'SubscriberKey' => self::TEST_USER_EMAIL,
+			'EmailAddress' => self::TEST_USER_EMAIL,
+			))];
+	}
+
+	protected function createRequestVars( $params ) {
+		$makeCreateRequestParams = $this->helper->prepareSubscriberObjects( $params['Subscriber'] );
+		$requestVars = $this->helper->wrapCreateRequest(
+			$this->helper->prepareSoapVars( $makeCreateRequestParams, 'Subscriber' )
+		);
+		return $requestVars;
+	}
 }
