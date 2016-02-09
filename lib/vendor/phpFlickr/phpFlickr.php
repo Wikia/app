@@ -315,7 +315,7 @@ if ( !class_exists('phpFlickr') ) {
 			 * the result, so be sure that you look at the results.
 			 */
 			//$this->parsed_response = unserialize($this->response);
-			$this->parsed_response = $this->clean_text_nodes(unserialize($this->response));
+			$this->parsed_response = $this->clean_text_nodes(Wikia\Util\Serialize::safeUnserialize($this->response));
 			if ($this->parsed_response['stat'] == 'fail') {
 				if ($this->die_on_error) die("The Flickr API returned the following error: #{$this->parsed_response['code']} - {$this->parsed_response['message']}");
 				else {
@@ -403,7 +403,7 @@ if ( !class_exists('phpFlickr') ) {
 			 * website provides, but isn't available in the API. I'm providing this service as long
 			 * as it doesn't flood my server with requests and crash it all the time.
 			 */
-			return unserialize(file_get_contents('http://phpflickr.com/geodata/?format=php&lat=' . $lat . '&lon=' . $lon));
+			return Wikia\Util\Serialize::safeUnserialize(file_get_contents('http://phpflickr.com/geodata/?format=php&lat=' . $lat . '&lon=' . $lon));
 		}
 
 		function sync_upload ($photo, $title = null, $description = null, $tags = null, $is_public = null, $is_friend = null, $is_family = null) {

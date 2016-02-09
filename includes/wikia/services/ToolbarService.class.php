@@ -161,7 +161,7 @@ abstract class ToolbarService {
 		}
 
 		$seenPromotions = $wgUser->getGlobalPreference( $this->getPromotionsOptionName() );
-		$seenPromotions = $seenPromotions ? unserialize( $seenPromotions ) : array();
+		$seenPromotions = $seenPromotions ? Wikia\Util\Serialize::safeUnserialize( $seenPromotions ) : array();
 		$promotionsDiff = array_intersect( $this->getPromotions(), $seenPromotions );
 
 		return $promotionsDiff;
@@ -225,7 +225,7 @@ abstract class ToolbarService {
 		if ( !$wgUser->isAnon() ) {
 			$toolbar = $wgUser->getGlobalPreference( $this->getToolbarOptionName() );
 			if ( is_string( $toolbar ) ) {
-				$toolbar = @unserialize( $toolbar );
+				$toolbar = @Wikia\Util\Serialize::safeUnserialize( $toolbar );
 				if ( is_array( $toolbar ) ) {
 					/* FB:42264 Fix bad data by switch my-tools to menu if it is item */
 					foreach ( $toolbar as $k => $v ) {

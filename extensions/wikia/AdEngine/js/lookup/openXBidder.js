@@ -142,10 +142,6 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		node.parentNode.insertBefore(openx, node);
 	}
 
-	function isEnabled() {
-		return adLogicZoneParams.getSite() === 'life';
-	}
-
 	function getPrices() {
 		return priceMap;
 	}
@@ -157,7 +153,6 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 	return factory.create({
 		logGroup: logGroup,
 		name: 'ox_bidder',
-		isEnabled: isEnabled,
 		call: call,
 		calculatePrices: calculatePrices,
 		getPrices: getPrices,

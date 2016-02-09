@@ -1959,4 +1959,3 @@ abstract class BaseTemplate extends QuickTemplate {
 	}
 
 }
-

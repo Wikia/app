@@ -1,17 +1,27 @@
 /*global define*/
 define('ext.wikia.recirculation.recirculation', [
 	'jquery',
+	'wikia.window',
 	'wikia.abTest',
 	'wikia.tracker',
 	'wikia.nirvana',
 	'videosmodule.controllers.rail',
 	'ext.wikia.adEngine.taboolaHelper'
-], function ($, abTest, tracker, nirvana, videosModule, taboolaHelper) {
+], function ($, w, abTest, tracker, nirvana, videosModule, taboolaHelper) {
 	'use strict';
 
 	function trackClick() {
 		tracker.track({
 			action: tracker.ACTIONS.CLICK,
+			category: 'recirculation',
+			label: 'rail',
+			trackingMethod: 'analytics'
+		});
+	}
+
+	function trackImpression() {
+		tracker.track({
+			action: tracker.ACTIONS.IMPRESSION,
 			category: 'recirculation',
 			label: 'rail',
 			trackingMethod: 'analytics'
@@ -34,9 +44,17 @@ define('ext.wikia.recirculation.recirculation', [
 	}
 
 	function injectRecirculationModule(element) {
+		if (w.wgContentLanguage !== 'en') {
+			videosModule(element);
+			return;
+		}
+
 		var group = abTest.getGroup('RECIRCULATION_RAIL');
 
 		switch (group) {
+			case 'RECENT_POPULAR':
+				injectFandomPosts('recent_popular', element);
+				break;
 			case 'POPULAR':
 				injectFandomPosts('popular', element);
 				break;
@@ -52,12 +70,15 @@ define('ext.wikia.recirculation.recirculation', [
 				});
 				break;
 			case 'VIDEOS_MODULE':
-			default:
 				videosModule(element);
 				break;
+			default:
+				videosModule(element);
+				return;
 		}
 
-		$(element).on('click', 'a', trackClick);
+		trackImpression();
+		$(element).on('mousedown', 'a', trackClick);
 	}
 
 	return {

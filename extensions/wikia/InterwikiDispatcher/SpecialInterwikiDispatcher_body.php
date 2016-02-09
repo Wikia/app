@@ -128,7 +128,7 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 
 						//RT#54264,#41254
 						$sArticleTitle = str_replace(' ', '_', $sArticleTitle);
-						$sArticleTitle = urlencode($sArticleTitle);
+						$sArticleTitle = wfUrlencode($sArticleTitle);
 
 						$sCityUrl = self::getCityUrl($iCityId);
 						if (!empty($sCityUrl)) {

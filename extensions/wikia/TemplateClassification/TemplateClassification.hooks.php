@@ -118,6 +118,7 @@ class Hooks {
 	 * @return true
 	 */
 	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+		global $wgEnableGlobalShortcutsExt;
 		$title = $out->getTitle();
 		$user = $skin->getUser();
 		$permissions = new Permissions();
@@ -126,6 +127,9 @@ class Hooks {
 			if ( $title->exists() && !$this->isEditPage() ) {
 				\Wikia::addAssetsToOutput( 'template_classification_in_view_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
+				if ( !empty( $wgEnableGlobalShortcutsExt ) ) {
+					\Wikia::addAssetsToOutput( 'template_classification_globalshortcuts_js' );
+				}
 			} elseif ( $this->isEditPage() ) {
 				\Wikia::addAssetsToOutput( 'template_classification_in_edit_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
@@ -133,7 +137,11 @@ class Hooks {
 		} elseif ( $permissions->shouldDisplayBulkActions( $user, $title ) ) {
 			\Wikia::addAssetsToOutput( 'template_classification_in_category_js' );
 			\Wikia::addAssetsToOutput( 'template_classification_scss' );
+			if ( !empty( $wgEnableGlobalShortcutsExt ) ) {
+				\Wikia::addAssetsToOutput( 'template_classification_globalshortcuts_js' );
+			}
 		}
+
 		return true;
 	}
 

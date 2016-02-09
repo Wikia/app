@@ -6,9 +6,10 @@ CREATE TABLE content_review_status (
   revision_id     INT unsigned      NOT NULL,
   status          SMALLINT unsigned NOT NULL,
   submit_user_id  INT unsigned      NOT NULL,
-  submit_time     TIMESTAMP         NOT NULL  DEFAULT CURRENT_TIMESTAMP,
+  submit_time     TIMESTAMP         NOT NULL DEFAULT CURRENT_TIMESTAMP,
   review_user_id  INT unsigned      NULL,
   review_start    TIMESTAMP         NULL,
+  escalated       BOOLEAN           NOT NULL DEFAULT 0,
   UNIQUE KEY page_id (wiki_id, page_id, revision_id)
 ) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 CREATE INDEX content_review_status_idx         ON content_review_status (status);
@@ -25,7 +26,8 @@ CREATE TABLE reviewed_content_logs (
   submit_time     TIMESTAMP         NOT NULL DEFAULT 0,
   review_user_id  INT unsigned      NOT NULL,
   review_start    TIMESTAMP         NOT NULL DEFAULT 0,
-  review_end      TIMESTAMP         NOT NULL  DEFAULT CURRENT_TIMESTAMP
+  review_end      TIMESTAMP         NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  escalated       BOOLEAN           NOT NULL DEFAULT 0,
 ) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 -- Table current_reviewed_revisions

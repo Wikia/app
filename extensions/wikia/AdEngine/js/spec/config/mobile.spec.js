@@ -18,10 +18,6 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 			name: 'RemnantGptMobileMock',
 			canHandleSlot: function () { return true; }
 		},
-		adProviderOpenXMock = {
-			name: 'OpenX',
-			canHandleSlot: function () { return true; }
-		},
 		context = {},
 		mocks = {
 			adContext: {
@@ -51,7 +47,6 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 			mocks.adContext,
 			adProviderDirectMock,
 			adProviderEvolveMock,
-			adProviderOpenXMock,
 			adProviderPaidAssetDropMock,
 			adProviderRemnantMock
 		);
@@ -84,22 +79,6 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		expect(adConfigMobile.getProviderList('INVISIBLE_HIGH_IMPACT')).toEqual([]);
 	});
 
-	it('getProviderLists returns DirectGPT, RemnantGPT, OpenX when OpenX provider is turned on', function () {
-		context.providers.openX = true;
-		var adConfigMobile = getConfig();
-
-		expect(adConfigMobile.getProviderList('foo'))
-				.toEqual([adProviderDirectMock, adProviderRemnantMock, adProviderOpenXMock]);
-	});
-
-	it('getProviderLists returns DirectGPT, RemnantGPT when ox is turned on but cannot handle slot', function () {
-		spyOn(adProviderOpenXMock, 'canHandleSlot').and.returnValue(false);
-		context.providers.openX = true;
-		var adConfigMobile = getConfig();
-
-		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
-	});
-
 	it('getProviderLists returns Evolve2, RemnantGPT when evolve is enabled', function () {
 		context.providers.evolve2 = true;
 		var adConfigMobile = getConfig();
@@ -120,12 +99,5 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		var adConfigMobile = getConfig();
 
 		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderEvolveMock]);
-	});
-
-	it('getProviderLists returns OpenX when force provider is set', function () {
-		context.forcedProvider = 'openx';
-		var adConfigMobile = getConfig();
-
-		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderOpenXMock]);
 	});
 });

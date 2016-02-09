@@ -42,4 +42,7 @@ $messages = array_merge( $messages, array(
 
 'group-content-moderator' => 'Moderadores de conteúdo',
 'group-content-moderator-member' => 'Moderador de conteúdo',
+
+	'wikia-read-only-mode' => 'Nosso centro de dados principal está indisponível, então este é o nosso backup. Infelizmente, isto significa que talvez você não possa fazer certas coisas como editar, carregar ou entrar no chat.
+ + Estamos trabalhando para corrigir o problema, obrigado por sua paciência! Se isso demorar muito, entre em contato com a Wikia na community@wikia.com.',
 ) );

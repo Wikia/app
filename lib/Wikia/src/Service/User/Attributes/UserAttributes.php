@@ -141,7 +141,10 @@ class UserAttributes {
 	}
 
 	private function attributeShouldBeDeleted( $name, $value ) {
-		return isset( $this->defaultAttributes[$name] ) && $value == $this->defaultAttributes[$name];
+		return (
+			( isset( $this->defaultAttributes[$name] ) && $value == $this->defaultAttributes[$name] ) ||
+			is_null( $value )
+		);
 	}
 
 	/**

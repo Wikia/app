@@ -343,7 +343,7 @@ class WallHooksHelper {
 	 *
 	 * @return bool
 	 */
-	static public function onBeforeToolbarMenu( &$items ) {
+	static public function onBeforeToolbarMenu( &$items, $type ) {
 		$app = F::app();
 		if ( empty( $app->wg->EnableWallExt ) ) {
 			return true;

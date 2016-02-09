@@ -76,7 +76,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 			$params = ( $infoboxNode instanceof Nodes\NodeInfobox ) ? $infoboxNode->getParams() : [ ];
 		}
 
-		$infoboxParamsValidator = new Wikia\PortableInfobox\Helpers\InfoboParamsValidator();
+		$infoboxParamsValidator = new Wikia\PortableInfobox\Helpers\InfoboxParamsValidator();
 		$infoboxParamsValidator->validateParams( $params );
 
 		$data = $infoboxNode->getRenderData();

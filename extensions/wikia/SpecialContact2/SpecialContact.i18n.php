@@ -1516,6 +1516,7 @@ Navegador/OS: ',
 );
 
 $messages['ru'] = array(
+	'contact' => 'Связаться с Викия',
 	'specialcontact-seclink-security' => 'Мне кажется, что я нашёл/нашла уязвимость безопасности',
 	'specialcontact-seclink-dmca-request' => 'Я хочу сообщить о нарушении авторских прав',
 	'specialcontact-sectitle-security' => 'Сообщение об уязвимости',

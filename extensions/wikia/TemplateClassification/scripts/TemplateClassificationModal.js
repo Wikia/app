@@ -42,8 +42,6 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		typeGetter = typeGetterProvided;
 		$typeLabel = $('.template-classification-type-text');
 
-		$w.on('keydown', openModalKeyboardShortcut);
-
 		$typeLabel.click(function (e) {
 			e.preventDefault();
 			openEditModal(mode);
@@ -57,9 +55,6 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			classificationFormLoader = falseFunction;
 
 		modalMode = modeProvided;
-
-		// Unbind modal opening keyboard shortcut while it's open
-		$w.unbind('keydown', openModalKeyboardShortcut);
 
 		labeling.init(modalMode);
 
@@ -143,9 +138,6 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 
 		modalInstance.bind('close', function () {
 			$w.unbind('keypress', submitFormOnEnterKeyPress);
-
-			// Re-bind modal opening keyboard shortcut
-			$w.on('keydown', openModalKeyboardShortcut);
 
 			// Track - close TC modal
 			track({
@@ -290,16 +282,6 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 
 	function falseFunction() {
 		return false;
-	}
-
-	function openModalKeyboardShortcut(e) {
-		var keyCode = e.keyCode ? e.keyCode : e.which;
-
-		// Shortcut - Shift + Action Key (Ctrl or Cmd) + K
-		if (e.shiftKey && (e.ctrlKey || e.metaKey) && keyCode === 75) {
-			e.preventDefault();
-			openEditModal('editType');
-		}
 	}
 
 	function submitFormOnEnterKeyPress(e) {
