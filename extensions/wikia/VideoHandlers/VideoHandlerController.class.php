@@ -387,7 +387,7 @@ class VideoHandlerController extends WikiaController {
 
 		// filter out items that provide no details (see the comment above)
 		// array_values helps us keep consecutive index values
-		return array_values( array_filter( $videoList ) );
+		$videoList = array_values( array_filter( $videoList ) );
 
 		$this->response->setVal( 'videos', $videoList );
 
