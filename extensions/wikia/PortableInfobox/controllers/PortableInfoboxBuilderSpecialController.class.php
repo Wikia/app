@@ -7,7 +7,7 @@
 class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController {
 	const PAGE_NAME = 'PortableInfoboxBuilder';
 	const PAGE_RESTRICTION = 'editinterface';
-	const INFOBOX_BUILDER_MERCURY_ROUTE = 'infoboxBuilder';
+	const INFOBOX_BUILDER_MERCURY_ROUTE = 'infobox-builder';
 	const PATH_SEPARATOR = '/';
 	const EXPLODE_LIMIT = 2;
 
