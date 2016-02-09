@@ -16,8 +16,10 @@ class RevisionApiController extends WikiaApiController {
 	 * @throws MissingParameterApiException
 	 */
 	public function getRevisionsDiff() {
-		$oldId = $this->getRequest()->getVal( 'oldId', null );
-		$newId = $this->getRequest()->getVal( 'newId', null );
+		$request = $this->getRequest();
+
+		$oldId = $request->getVal( 'oldId' );
+		$newId = $request->getVal( 'newId' );
 
 		if ( empty( $oldId ) ) {
 			throw new MissingParameterApiException( 'oldId' );
@@ -27,8 +29,8 @@ class RevisionApiController extends WikiaApiController {
 			throw new MissingParameterApiException( 'newId' );
 		}
 
-		$avatar = $this->getRequest()->getVal( 'avatar', false );
-		$oldRev = $this->getRequest()->getVal( 'oldRev', false );
+		$avatar = $request->getBool( 'avatar' );
+		$oldRev = $request->getBool( 'oldRev' );
 
 		$data = [];
 		$revision = Revision::newFromId( $newId );
@@ -66,7 +68,7 @@ class RevisionApiController extends WikiaApiController {
 
 		return [
 			'pageId' => $revision->getPage(),
-			'ns' =>$title->getNamespace(),
+			'ns' => $title->getNamespace(),
 			'title' => $title->getText()
 		];
 	}
