@@ -216,7 +216,7 @@ class VideoHandlerHooks {
 	 * @param VideoInfo $video
 	 * @return bool
 	 */
-	public static function onClearVideoCache( VideoInfo $video ) {
+	public static function clearVideoCache( VideoInfo $video ) {
 		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__ );
 		CeleryPurge::purgeBySurrogateKey( VideoHandlerController::getVideoListSurrogateKey() );
 
