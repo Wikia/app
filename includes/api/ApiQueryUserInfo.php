@@ -62,7 +62,9 @@ class ApiQueryUserInfo extends ApiQueryBase {
 		}
 
 		if ( isset( $this->prop['blockinfo'] ) ) {
-			if ( $user->isBlocked() ) {
+			/* Wikia change begin - SUS-92 */
+			if ( $user->isBlocked( true, false ) ) {
+			/* Wikia change end */
 				$vals['blockedby'] = User::whoIs( $user->blockedBy() );
 				$vals['blockreason'] = $user->blockedFor();
 			}
