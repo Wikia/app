@@ -27,11 +27,11 @@ class ExactTargetUserTaskHelperTest extends WikiaBaseTest {
 
 	public function simpleFilterPartProvider() {
 		return [
-			[ self::TEST_EMAIL, true, ExactTarget_SubscriberStatus::Active ],
-			[ self::TEST_EMAIL, null, ExactTarget_SubscriberStatus::Active ],
-			[ self::TEST_EMAIL, 1, ExactTarget_SubscriberStatus::Active ],
-			[ self::TEST_EMAIL, 0, ExactTarget_SubscriberStatus::Unsubscribed ],
-			[ self::TEST_EMAIL, false, ExactTarget_SubscriberStatus::Unsubscribed ],
+			[ self::TEST_EMAIL, true, \ExactTarget_SubscriberStatus::Active ],
+			[ self::TEST_EMAIL, null, \ExactTarget_SubscriberStatus::Active ],
+			[ self::TEST_EMAIL, 1, \ExactTarget_SubscriberStatus::Active ],
+			[ self::TEST_EMAIL, 0, \ExactTarget_SubscriberStatus::Unsubscribed ],
+			[ self::TEST_EMAIL, false, \ExactTarget_SubscriberStatus::Unsubscribed ],
 			];
 	}
 
