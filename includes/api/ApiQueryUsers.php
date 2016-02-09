@@ -158,8 +158,10 @@ class ApiQueryUsers extends ApiQueryBase {
 				if ( $row->ipb_deleted ) {
 					$data[$name]['hidden'] = '';
 				}
-				if ( isset( $this->prop['blockinfo'] ) && $user->isBlocked() ) {
-					$blockInfo = $user->getBlock();
+				/* Wikia change begin - SUS-92 */
+				if ( isset( $this->prop['blockinfo'] ) && $user->isBlocked( true, false ) ) {
+				/* Wikia change end */
+					$blockInfo = $user->getBlock( true, false );
 
 					$data[$name]['blockedby'] = $blockInfo->getByName();
 					$data[$name]['blockreason'] = $blockInfo->mReason;

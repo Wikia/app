@@ -1461,6 +1461,7 @@ class User {
 	}
 
 
+	/* Wikia change begin - SUS-92 */
 	/**
 	 * Get blocking information
 	 * @param $bFromSlave Bool Whether to check the slave database first. To
@@ -1470,6 +1471,7 @@ class User {
 	 * @param $shouldLogBlockInStats Bool flag that decides whether to log or not in PhalanxStats
 	 */
 	private function getBlockedStatus( $bFromSlave = true, $shouldLogBlockInStats = true ) {
+	/* Wikia change end */
 		global $wgProxyWhitelist, $wgUser;
 
 		if ( -1 != $this->mBlockedby ) {
@@ -1530,7 +1532,9 @@ class User {
 		}
 
 		# Extensions
+		/* Wikia change begin - SUS-92 */
 		wfRunHooks( 'GetBlockedStatus', array( &$this, $shouldLogBlockInStats ) );
+		/* Wikia change end */
 
 		if ( !empty($this->mBlockedby) ) {
 			$this->mBlock->mBy = $this->mBlockedby;
@@ -1757,6 +1761,7 @@ class User {
 		return $triggered;
 	}
 
+	/* Wikia change begin - SUS-92 */
 	/**
 	 * Check if user is blocked
 	 *
@@ -1781,6 +1786,7 @@ class User {
 		$this->getBlockedStatus( $bFromSlave, $shouldLogBlockInStats );
 		return $this->mBlock instanceof Block ? $this->mBlock : null;
 	}
+	/* Wikia change end */
 
 	/**
 	 * Check if user is blocked from editing a particular article
