@@ -89,6 +89,14 @@ class HtmlHelper {
 
 		$dom->load( $dom->save() );
 
-		return $dom->save();
+		$domStripped = $dom->save();
+
+		// simple_html_dom leaks memory and this is the way to fix it
+		// @see http://stackoverflow.com/a/18090273/1050577
+		// @see XW-1093
+		$dom->clear();
+		unset( $dom );
+
+		return $domStripped;
 	}
 }
