@@ -29,11 +29,9 @@ define('ext.wikia.adEngine.provider.turtle', [
 		log(['fillInSlot', slot.name], 'debug', logGroup);
 
 		slot.pre('success', function () {
-			var slotName = slot.name;
-
-			slotTweaker.removeDefaultHeight(slotName);
-			slotTweaker.removeTopButtonIfNeeded(slotName);
-			slotTweaker.adjustLeaderboardSize(slotName);
+			slotTweaker.removeDefaultHeight(slot.name);
+			slotTweaker.removeTopButtonIfNeeded(slot.name);
+			slotTweaker.adjustLeaderboardSize(slot.name);
 		});
 		gptHelper.pushAd(
 			slot,

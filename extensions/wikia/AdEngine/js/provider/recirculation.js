@@ -20,7 +20,7 @@ define('ext.wikia.adEngine.provider.recirculation', [
 	function fillInSlot(slot) {
 		log(['fillInSlot', slot.name], 'debug', logGroup);
 
-		recirculation.injectRecirculationModule(slot.name);
+		recirculation.injectRecirculationModule(slot.container);
 
 		slot.success();
 	}
