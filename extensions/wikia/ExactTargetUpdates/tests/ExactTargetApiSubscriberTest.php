@@ -9,6 +9,7 @@ class ExactTargetApiSubscriberTest extends ExactTargetApiTestBase {
 	const TEST_USER_EMAIL = "test@wikia-inc.com";
 
 	protected $helper;
+	protected $taskHelper;
 
 	public function setUp() {
 		$this->setupFile = __DIR__ . '/../ExactTargetUpdates.setup.php';
@@ -16,6 +17,7 @@ class ExactTargetApiSubscriberTest extends ExactTargetApiTestBase {
 		require_once __DIR__ . '/helpers/ExactTargetApiWrapper.php';
 
 		$this->helper = new Wikia\ExactTarget\ExactTargetApiHelper();
+		$this->taskHelper = new Wikia\ExactTarget\ExactTargetUserTaskHelper();
 	}
 
 	public function testCreateRequest() {
@@ -84,10 +86,7 @@ class ExactTargetApiSubscriberTest extends ExactTargetApiTestBase {
 	}
 
 	protected function createSubscriberParams( $email, $unsubscribed ) {
-		return ['Subscriber' => array(array(
-			'SubscriberKey' => self::TEST_USER_EMAIL,
-			'EmailAddress' => self::TEST_USER_EMAIL,
-			))];
+		return $this->taskHelper->prepareSubscriberData( $email );
 	}
 
 	protected function createRequestVars( $params ) {
