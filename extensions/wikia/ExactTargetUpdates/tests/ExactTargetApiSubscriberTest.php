@@ -85,6 +85,38 @@ class ExactTargetApiSubscriberTest extends ExactTargetApiTestBase {
 		$this->assertEquals( $responseValue, $subscriber->deleteRequest( $params ) );
 	}
 
+	public function testUpdateRequest() {
+		$responseValue = 'update response';
+		$lastRespose = 'last update response';
+		$mockLogger = $this->getWikiaLoggerMock();
+		$mockSoapClient = $this->getExactTargetSoapClientMock();
+
+		$params = $this->createSubscriberParams( self::TEST_USER_EMAIL, false );
+		$requestVars = $this->updateRequestVars( $params );
+
+		$mockSoapClient
+			->expects( $this->once() )
+			->method( 'Update' )
+			->with( $requestVars )
+			->willReturn( $responseValue );
+
+		$mockSoapClient
+			->expects( $this->once() )
+			->method( '__getLastResponse' )
+			->willReturn( $lastRespose );
+
+		$mockLogger
+			->expects( $this->once() )
+			->method( 'info' )
+			->with( $this->matchesRegularExpression( "/.*{$lastRespose}.*/") );
+
+		$subscriber = new ExactTargetApiSubscriber();
+		$subscriber->setClient( $mockSoapClient );
+		$subscriber->setLogger( $mockLogger );
+
+		$this->assertEquals( $responseValue, $subscriber->updateRequest( $params ) );
+	}
+
 	protected function createSubscriberParams( $email, $unsubscribed ) {
 		return $this->taskHelper->prepareSubscriberData( $email );
 	}
@@ -101,6 +133,14 @@ class ExactTargetApiSubscriberTest extends ExactTargetApiTestBase {
 		$makeDeleteRequestParams = $this->helper->prepareSubscriberObjects( $params['Subscriber'] );
 		$requestVars = $this->helper->wrapDeleteRequest(
 			$this->helper->prepareSoapVars( $makeDeleteRequestParams, 'Subscriber' )
+		);
+		return $requestVars;
+	}
+
+	protected function updateRequestVars( $params ) {
+		$makeUpdateRequestParams = $this->helper->prepareSubscriberObjects( $params['Subscriber'] );
+		$requestVars = $this->helper->wrapUpdateRequest(
+			$this->helper->prepareSoapVars( $makeUpdateRequestParams, 'Subscriber' )
 		);
 		return $requestVars;
 	}
