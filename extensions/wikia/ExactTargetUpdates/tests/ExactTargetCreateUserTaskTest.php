@@ -160,7 +160,8 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 			'Subscriber' => [
 				[
 					'SubscriberKey' => $sUserEmail,
-					'EmailAddress' => $sUserEmail
+					'EmailAddress' => $sUserEmail,
+					'Status' => ExactTarget_SubscriberStatus::Active,
 				]
 			],
 		];
