@@ -10,6 +10,9 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 	}
 
 	function testSendNewUserShouldDistributeParams() {
+		$createRequestReturn = "created";
+		$updateFallbackCreateRequest = (object)array( 'OverallStatus' => 'ok' );
+		$taskId = 100;
 		/* Params to compare */
 		$aUserData = [
 			'user_id' => 12345,
@@ -19,49 +22,80 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 			'property_name' => 'property_value'
 		];
 
-		/* @var ExactTargetDeleteUserTask $addTaskMock mock of ExactTargetDeleteUserTask class */
 		$oDeleteUserTask = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetDeleteUserTask' )
 			->disableOriginalConstructor()
 			->setMethods( [ 'deleteSubscriber', 'taskId' ] )
 			->getMock();
-
 		$oDeleteUserTask
 			->expects( $this->once() )
 			->method( 'deleteSubscriber' )
-			->will($this->returnValue(8));
+			->will( $this->returnValue( 8 ) );
 
-		/* Mock tested class /*
-		/* @var ExactTargetCreateUserTask $addTaskMock mock of ExactTargetCreateUserTask class */
-		$addTaskMock = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetCreateUserTask' )
+		$verificationTask = $this->getMockBuilder( 'ExactTargetUserDataVerificationTask' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'createSubscriber', 'createUser', 'createUserProperties', 'getDeleteUserTask', 'getTaskId' ] )
+			->setMethods( [ 'taskId', 'verifyUsersData', 'verifyUserPropertiesData' ] )
 			->getMock();
+		$verificationTask->expects( $this->exactly( 2 ) )
+			->method( 'taskId' )
+			->with( $this->anything() );
+		$verificationTask->expects( $this->once() )
+			->method( 'verifyUsersData' )
+			->with( $this->anything() )
+			->will( $this->returnValue( true ) );
+		$verificationTask->expects( $this->once() )
+			->method( 'verifyUserPropertiesData' )
+			->with( $this->anything() )
+			->will( $this->returnValue( true ) );
 
-		$addTaskMock
-			->expects( $this->once() )
+
+		$taskProvider = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetTaskProvider' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getDeleteUserTask', 'getCreateUserTask', 'getRetrieveUserTask', 'getUserDataVerificationTask', 'getRetrieveWikiTask', 'getWikiDataVerificationTask', 'getUpdateWikiHelper' ] )
+			->getMock();
+		$taskProvider->expects( $this->once() )
 			->method( 'getDeleteUserTask' )
 			->will( $this->returnValue( $oDeleteUserTask ) );
+		$taskProvider->expects( $this->exactly( 2 ) )
+			->method( 'getUserDataVerificationTask' )
+			->will( $this->returnValue( $verificationTask ) );
 
-		/* test createSubscriber invoke params */
-		$addTaskMock
-			->expects( $this->once() )
-			->method( 'createSubscriber' )
-			->with( $aUserData['user_email'] );
 
-		/* test createUser invoke params */
-		$addTaskMock
-			->expects( $this->once() )
-			->method( 'createUser' )
-			->with( $aUserData );
+		$apiSubscriber = $this->getMockBuilder( 'ExactTargetApiSubscriber' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'createRequest' ] )
+			->getMock();
+		$apiSubscriber->expects( $this->once() )
+			->method( 'createRequest' )
+			->with( $this->anything() ) // FIXME
+			->will( $this->returnValue( $createRequestReturn ) );
 
-		/* test createUserProperties invoke params */
-		$addTaskMock
-			->expects( $this->once() )
-			->method( 'createUserProperties' )
-			->with( $aUserData['user_id'], $aUserProperties );
+		$dataExtension = $this->getMockBuilder( 'ExactTargetApiDataExtension' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'updateFallbackCreateRequest' ] )
+			->getMock();
+		$dataExtension->expects( $this->exactly( 2 ) )
+			->method( 'updateFallbackCreateRequest' )
+			->with( $this->anything() ) // FIXME
+			->will( $this->returnValue( $updateFallbackCreateRequest ) );
 
-		/* Run tested method */
-		$addTaskMock->updateCreateUserData( $aUserData, $aUserProperties );
+		$apiProvider = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetApiProvider' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getApiSubscriber', 'getApiDataExtension' ] )
+			->getMock();
+		$apiProvider->expects( $this->once() )
+			->method( 'getApiSubscriber' )
+			->will( $this->returnValue( $apiSubscriber ) );
+		$apiProvider->expects( $this->exactly( 2 ) )
+			->method( 'getApiDataExtension' )
+			->will( $this->returnValue( $dataExtension ) );
+
+
+
+		$createUserTask = new ExactTargetCreateUserTask();
+		$createUserTask->setApiProvider( $apiProvider );
+		$createUserTask->setTaskProvider( $taskProvider );
+
+		$this->assertEquals( 'OK', $createUserTask->updateCreateUserData( $aUserData, $aUserProperties ) );
 	}
 
 	function testCreateUserPropertiesDataExtensionShouldSendData() {
