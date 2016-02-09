@@ -4,7 +4,6 @@ namespace Wikia\ExactTarget;
 class ExactTargetTaskProviderImpl implements ExactTargetTaskProvider {
 
 	/**
-	/**
 	 * Returns an instance of ExactTargetDeleteUserTask class
 	 * @return ExactTargetDeleteUserTask
 	 */
