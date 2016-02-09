@@ -26,7 +26,7 @@ class RecentChangesFiltersStorage {
 	public function get($onlyFromThisWiki = true) {
 		$values = $this->getCache();
 		if(is_null($values)) {
-			$values = unserialize( $this->user->getGlobalPreference('RCFilters') );
+			$values = Wikia\Util\Serialize::safeUnserialize( $this->user->getGlobalPreference('RCFilters') );
 		}
 
 		if(empty($values)) {

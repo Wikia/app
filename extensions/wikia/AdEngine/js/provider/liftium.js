@@ -33,6 +33,7 @@ define('ext.wikia.adEngine.provider.liftium', [
 		'TOP_LEADERBOARD': {'size': '728x90'},
 		'TOP_RIGHT_BOXAD': {'size': '300x250'},
 		'PREFOOTER_LEFT_BOXAD': {'size': '300x250'},
+		'PREFOOTER_MIDDLE_BOXAD': {'size': '300x250'},
 		'PREFOOTER_RIGHT_BOXAD': {'size': '300x250'},
 		'WIKIA_BAR_BOXAD_1': {'size': '300x250'}
 	};

@@ -1,10 +1,14 @@
 <div class="insights-container-nav <?= $themeClass ?>">
 	<ul class="insights-nav-list">
-		<? foreach( InsightsHelper::getMessageKeys() as $key => $messages ) : ?>
+		<? foreach( $insightsList as $key => $insight ) : ?>
 			<?php $subpage == $key ? $class = 'active' : $class = '' ?>
 			<li class="insights-nav-item insights-icon-<?= $key ?> <?= $class ?>">
 				<a href="<?= InsightsHelper::getSubpageLocalUrl( $key ) ?>" class="insights-nav-link">
-					<?= wfMessage( $messages['subtitle'] )->escaped() ?>
+					<?php if ( $insight['count'] ): ?>
+						<div class="insights-red-dot<?php if ( $insight['highlighted'] ):?> highlighted<?php endif ?>"><div class="insights-red-dot-count"><?= $insight['count'] ?></div></div>
+					<?php endif ?>
+
+					<?= wfMessage(  $insight['subtitle'] )->escaped() ?>
 				</a>
 			</li>
 		<? endforeach; ?>
@@ -51,19 +55,29 @@
 								<?php if ( isset( $item['metadata'] ) ) : ?>
 									<p class="insights-list-item-metadata">
 										<?php if ( isset( $item['metadata']['lastRevision'] ) ) : ?>
+											<?php $revision = $item['metadata']['lastRevision'] ?>
 											<?= wfMessage( 'insights-last-edit' )->rawParams(
-											Xml::element( 'a', [
-													'href' => $item['metadata']['lastRevision']['userpage']
-												],
-													$item['metadata']['lastRevision']['username']
+												Html::element( 'a',
+													[
+														'href' => $revision['userpage']
+													],
+													$revision['username']
 												),
-											date( 'F j, Y', $item['metadata']['lastRevision']['timestamp'] )
+												$wg->Lang->userDate( $revision['timestamp'], $wg->User )
 											)->escaped() ?>
 										<?php endif; ?>
 									</p>
 									<p class="insights-list-item-metadata">
 										<?php if ( isset( $item['metadata']['wantedBy'] ) ) : ?>
-											<?= $item['metadata']['wantedBy'] ?>
+											<?php $wantedBy = $item['metadata']['wantedBy']; ?>
+											<?=
+												Html::element( 'a',
+													[
+														'href' => $wantedBy['url'],
+													],
+													wfMessage( $wantedBy['message'] )->numParams( $wantedBy['value'] )->escaped()
+												);
+											?>
 										<?php endif; ?>
 									</p>
 								<?php endif; ?>

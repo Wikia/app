@@ -5,6 +5,7 @@ class PortableInfoboxHooks {
 	const INFOBOX_BUILDER_SPECIAL_PAGE = 'Special:PortableInfoboxBuilder';
 
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+		Wikia::addAssetsToOutput( 'portable_infobox_js' );
 		if ( F::app()->checkSkin( 'monobook', $skin ) ) {
 			Wikia::addAssetsToOutput( 'portable_infobox_monobook_scss' );
 		} else {

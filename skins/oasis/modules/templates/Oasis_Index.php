@@ -61,19 +61,20 @@
 <?= $headItems ?>
 
 </head>
-<body class="<?= implode(' ', $bodyClasses) ?>"<?= $itemType ?>>
+<body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
 <? if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ): ?>
 	<div class="background-image-gradient"></div>
 <? endif ?>
 
 <?= $comScore ?>
 <?= $quantServe ?>
-<?= $googleAnalytics ?>
 <?= $amazonMatch ?>
 <?= $openXBidder ?>
+<?= $rubiconFastlane ?>
+<?= $krux ?>
 <?= $dynamicYield ?>
+<?= $ivw3 ?>
 <?= $ivw2 ?>
-<?= $rubiconRtp ?>
 <div class="WikiaSiteWrapper">
 	<?= $body ?>
 
@@ -102,6 +103,7 @@
 <?php } ?>
 <?= $bottomScripts ?>
 
+<?= $nielsen ?>
 </body>
 
 <?= wfReportTime() . "\n" ?>

@@ -30,7 +30,7 @@ class WikiaPollController extends WikiaController {
 	}
 
 	public function executeSpecialPage() {
-
+		$this->editToken = $this->getContext()->getUser()->getEditToken();
 	}
 
 	public function executeSpecialPageEdit($params) {
@@ -39,6 +39,7 @@ class WikiaPollController extends WikiaController {
 		if ($title instanceof Title && $title->exists()) {
 			$this->poll = WikiaPoll::NewFromTitle($title);
 			$this->data = $this->poll->getData();
+			$this->editToken = $this->getContext()->getUser()->getEditToken();
 		}
 	}
 

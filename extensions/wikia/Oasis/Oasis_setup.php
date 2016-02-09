@@ -46,6 +46,7 @@ function wfOasisSetup() {
 
 	// misc
 	$wgHooks['MakeGlobalVariablesScript'][] = 'OasisController::onMakeGlobalVariablesScript';
+	$wgHooks['MakeGlobalVariablesScript'][] = 'ArticleInterlangController::onMakeGlobalVariablesScript';
 
 	// support "noexternals" URL param
 	global $wgNoExternals, $wgRequest;

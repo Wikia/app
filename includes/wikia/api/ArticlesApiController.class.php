@@ -915,11 +915,11 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	static private function followRedirect( $category ) {
-
 		if ( $category instanceof Title && $category->exists() ) {
 			$redirect = ( new WikiPage( $category ) )->getRedirectTarget();
 
-			if ( !empty( $redirect ) ) {
+			// Follow redirects only to other categories.
+			if ( !empty( $redirect ) && $redirect->getNamespace() === NS_CATEGORY ) {
 				return $redirect;
 			}
 		}
@@ -1031,11 +1031,12 @@ class ArticlesApiController extends WikiaApiController {
 			} else {
 				$content = $articleContent->content;
 			}
+			$wgArticleAsJson = false;
 		} else {
+			$wgArticleAsJson = false;
 			throw new ArticleAsJsonParserException( 'Parser is currently not available' );
 		}
 
-		$wgArticleAsJson = false;
 		$categories = [];
 
 		foreach ( array_keys( $parsedArticle->getCategories() ) as $category ) {
@@ -1052,7 +1053,9 @@ class ArticlesApiController extends WikiaApiController {
 			'content' => $content,
 			'media' => $articleContent->media,
 			'users' => $articleContent->users,
-			'categories' => $categories
+			'categories' => $categories,
+			// The same transformation that happens in OutputPage::setPageTitle:
+			'displayTitle' => Sanitizer::stripAllTags( $parsedArticle->getTitleText() ),
 		];
 
 		$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );

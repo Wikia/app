@@ -707,7 +707,8 @@ var NodeChatController = $.createClass(NodeRoomController, {
 			url: wgScript + '?action=ajax&rs=ChatAjax&method=blockOrBanChat',
 			data: {
 				userToBan: name,
-				dir: dir
+				dir: dir,
+				token: mw.user.tokens.get('editToken')
 			},
 			success: callback
 		});

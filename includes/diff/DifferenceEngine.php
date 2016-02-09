@@ -253,11 +253,6 @@ class DifferenceEngine extends ContextSource {
 		} else {
 			wfRunHooks( 'DiffViewHeader', array( $this, $this->mOldRev, $this->mNewRev ) );
 
-			$sk = $this->getSkin();
-			if ( method_exists( $sk, 'suppressQuickbar' ) ) {
-				$sk->suppressQuickbar();
-			}
-
 			if ( $this->mNewPage->equals( $this->mOldPage ) ) {
 				$out->setPageTitle( $this->mNewPage->getPrefixedText() );
 				$out->addSubtitle( $this->msg( 'difference' ) );
@@ -736,6 +731,13 @@ class DifferenceEngine extends ContextSource {
 			return $text;
 		}
 		if ( $wgExternalDiffEngine != 'wikidiff3' && $wgExternalDiffEngine !== false ) {
+			# Wikia change - begin
+			# PLATFORM-1668: log fallback to external diff engine
+			Wikia\Logger\WikiaLogger::instance()->warning( 'External diff engine used', [
+				'engine' => $wgExternalDiffEngine
+			] );
+			# Wikia change - end
+
 			# Diff via the shell
 			global $wgTmpDirectory;
 			$tempName1 = tempnam( $wgTmpDirectory, 'diff_' );
@@ -765,6 +767,11 @@ class DifferenceEngine extends ContextSource {
 			wfProfileOut( __METHOD__ );
 			return $difftext;
 		}
+
+		# Wikia change - begin
+		# PLATFORM-1668: it's better to fail early then use a heavy diff generator as a fallback
+		throw new WikiaException( "Diff engine fallback to PHP prevented" );
+		# Wikia change - end
 
 		# Native PHP diff
 		$ota = explode( "\n", $wgContLang->segmentForDiff( $otext ) );
@@ -1036,7 +1043,7 @@ class DifferenceEngine extends ContextSource {
 		// Load the new revision object
 		$this->mNewRev = $this->mNewid
 			? Revision::newFromId( $this->mNewid )
-			: Revision::newFromTitle( $this->getTitle() );
+			: Revision::newFromTitle( $this->getTitle(), false, Revision::READ_NORMAL );
 
 		if ( !$this->mNewRev instanceof Revision ) {
 			return false;

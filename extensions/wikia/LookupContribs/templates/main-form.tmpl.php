@@ -2,8 +2,8 @@
 <!-- DISTRIBUTION TABLE -->
 <script type="text/javascript" charset="utf-8">
 function lcShowDetails(dbname, mode) {
-	var username = '<?= urlencode( $username ) ?>';
-	var action = '<?=$action?>';
+	var username = '<?= Xml::escapeJsString( $username ) ?>';
+	var action = '<?= Xml::escapeJsString( $action ) ?>';
 	//var sel_mode = '#lc-mode-' + dbname;
 	//var mode = ( $(sel_mode).exists() ) ? $(sel_mode).val() : '';
 
@@ -11,12 +11,12 @@ function lcShowDetails(dbname, mode) {
 		return false;
 	}
 
-	document.location.href = action + '?target=' + username + '&wiki=' + dbname + '&mode=' + mode;
+	document.location.href = action + '?target=' + encodeURIComponent(username) + '&wiki=' + mw.html.escape( dbname ) + '&mode=' + mw.html.escape( mode );
 }
 
 $(document).ready(function() {
 	var baseurl = wgScript + "?action=ajax&rs=LookupContribsAjax::axData";
-	var username = '<?= urlencode( $username ) ?>';
+	var username = '<?= Xml::escapeJsString( $username ) ?>';
 
 	if ( !username ) {
 		return;
@@ -25,19 +25,19 @@ $(document).ready(function() {
 	var oTable = $('#lc-table').dataTable( {
 		bAutoWidth: false,
 		"oLanguage": {
-			"sLengthMenu": "<?=wfMsg('table_pager_limit', '_MENU_');?>",
-			"sZeroRecords": "<?=wfMsg('table_pager_empty');?>",
-			"sEmptyTable": "<?=wfMsg('table_pager_empty');?>",
-			"sInfo": "<?=wfMsgExt('lookupcontribsrecordspager',  array('parseinline'), '_START_', '_END_', '_TOTAL_');?>",
-			"sInfoEmpty": "<?=wfMsgExt('lookupcontribsrecordspager', array('parseinline'), '0', '0', '0');?>",
+			"sLengthMenu": "<?= wfMessage( 'table_pager_limit', '_MENU_' )->escaped() ?>",
+			"sZeroRecords": "<?= wfMessage( 'table_pager_empty' )->escaped() ?>",
+			"sEmptyTable": "<?= wfMessage( 'table_pager_empty' )->escaped() ?>",
+			"sInfo": "<?= wfMessage('lookupcontribsrecordspager', '_START_', '_END_', '_TOTAL_' )->parse() ?>",
+			"sInfoEmpty": "<?= wfMessage( 'lookupcontribsrecordspager', '0', '0', '0' )->parse() ?>",
 			"sInfoFiltered": "",
-			"sSearch": "<?=wfMsg('search')?>",
-			"sProcessing": "<img src='" + stylepath + "/common/images/ajax.gif' /> <?=wfMsg('livepreview-loading')?>",
+			"sSearch": "<?= wfMessage( 'search' )->escaped() ?>",
+			"sProcessing": "<img src='" + mw.html.escape( stylepath ) + "/common/images/ajax.gif' /> <?= wfMessage( 'livepreview-loading' )->escaped() ?>",
 			"oPaginate" : {
-				"sFirst": "<?=wfMsg('table_pager_first')?>",
-				"sPrevious": "<?=wfMsg('table_pager_prev')?>",
-				"sNext": "<?=wfMsg('table_pager_next')?>",
-				"sLast": "<?=wfMsg('table_pager_last')?>"
+				"sFirst": "<?= wfMessage( 'table_pager_first')->escaped() ?>",
+				"sPrevious": "<?= wfMessage( 'table_pager_prev')->escaped() ?>",
+				"sNext": "<?= wfMessage( 'table_pager_next')->escaped() ?>",
+				"sLast": "<?= wfMessage( 'table_pager_last')->escaped() ?>"
 			}
 		},
 		"aaSorting" : [],
@@ -58,9 +58,9 @@ $(document).ready(function() {
 			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : true, "sClass": "lc-datetime" },
 			{
 				"fnRender": function ( oObj ) {
-					var row = '<span class="lc-row"><a href="' + oObj.aData[3] + '">' + oObj.aData[3] + '</a></span>';
-					row += '&nbsp;(<a href="' + oObj.aData[3] + 'index.php?title=Special:Contributions/' + username + '">';
-					row += '<?=wfMsg('lookupcontribscontribs')?>';
+					var row = '<span class="lc-row"><a href="' + mw.html.escape(oObj.aData[3])+ '">' + mw.html.escape(oObj.aData[3]) + '</a></span>';
+					row += '&nbsp;(<a href="' + mw.html.escape(oObj.aData[3]) + 'index.php?title=Special:Contributions/' + mw.html.escape(encodeURIComponent(username)) + '">';
+					row += '<?= wfMessage( 'lookupcontribscontribs' )->escaped() ?>';
 					row += '</a>)</span>';
 					return row;
 				},
@@ -72,7 +72,7 @@ $(document).ready(function() {
 				"fnRender": function ( oObj ) {
 					var row = '<div style="white-space:nowrap">';
 <? $loop = 0; foreach ( $modes as $mode => $modeName ) : ?>
-					row += '(<a href="javascript:void(0)" onclick="lcShowDetails(\'' + oObj.aData[1] + '\', \'<?=$mode?>\');"><?=$modeName?></a>)';
+					row += '(<a href="javascript:void(0)" onclick="lcShowDetails(\'' + mw.html.escape(encodeURIComponent(oObj.aData[1])) + '\', \'<?= Sanitizer::encodeAttribute( $mode ) ?>\');"><?= htmlspecialchars( $modeName ) ?></a>)';
 <? if ( $loop < count($modes) - 1 ) : ?> row += ' &#183; '; <? endif ?>
 <? $loop++; endforeach ?>
 					row += '</div>';
@@ -136,12 +136,12 @@ $(document).ready(function() {
 				"type": "POST",
 				"url": sSource,
 				"data": [
-					{ 'name' : 'username',	'value' : ( $('#lc_search').exists() ) ? $('#lc_search').val() : '' },
+					{ 'name' : 'username',	'value' : ( $('#lc_search').length ) ? $('#lc_search').val() : '' },
 					{ 'name' : 'limit', 	'value' : limit },
 					{ 'name' : 'offset',	'value' : offset },
-					{ 'name' : 'loop', 		'value' : loop },
+					{ 'name' : 'loop',      'value' : loop },
 					{ 'name' : 'numOrder',	'value' : sortingCols },
-					{ 'name' : 'order',		'value' : order }
+					{ 'name' : 'order',     'value' : order }
 				],
 				"success": fnCallback
 			} );
@@ -159,9 +159,9 @@ $(document).ready(function() {
 <div>
 <form method="post" action="<?=$action?>" id="lc-form">
 <div class="lc_filter">
-	<span class="lc_filter lc_first"><?= wfMsg('lookupcontribsselectuser') ?></span>
-		<span class="lc_filter"><input type="text" name="target" id="lc_search" size="50" value="<?= htmlspecialchars( $username ); ?>"></span>
-	<span class="lc_filter"><input type="button" value="<?=wfMsg('lookupcontribsgo')?>" id="lc-showuser" onclick="submit();"></span>
+	<span class="lc_filter lc_first"><?= wfMessage( 'lookupcontribsselectuser' )->escaped() ?></span>
+		<span class="lc_filter"><input type="text" name="target" id="lc_search" size="50" value="<?= Sanitizer::encodeAttribute( $username ) ?>"></span>
+	<span class="lc_filter"><input type="button" value="<?= wfMessage( 'lookupcontribsgo' )->escaped() ?>" id="lc-showuser" onclick="submit();"></span>
 </div>
 </form>
 </div>
@@ -170,26 +170,26 @@ $(document).ready(function() {
 	<thead>
 		<tr>
 			<th width="2%">#</th>
-			<th width="3%"><?=wfMsg('lookupcontribswikidbname')?></th>
-			<th width="35%"><?=wfMsg('lookupcontribswikititle')?></th>
-			<th width="20%"><?=wfMsg('lookupcontribswikiurl')?></th>
-			<th width="20%" style="white-space:nowrap"><?=wfMsg('lookupcontribslastedited')?></th>
-			<th width="20%"><?=wfMsg('lookupcontribscontribtitleforuser')?></th>
+			<th width="3%"><?= wfMessage( 'lookupcontribswikidbname' )->escaped() ?></th>
+			<th width="35%"><?= wfMessage( 'lookupcontribswikititle' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupcontribswikiurl' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupcontribslastedited' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupcontribscontribtitleforuser' )->escaped() ?></th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td colspan="6" class="dataTables_empty"><?=wfMsg('livepreview-loading')?></td>
+			<td colspan="6" class="dataTables_empty"><?= wfMessage( 'livepreview-loading' )->escaped() ?></td>
 		</tr>
 	</tbody>
 	<tfoot>
 		<tr>
 			<th width="2%">#</th>
-			<th width="3%"><?=wfMsg('lookupcontribswikidbname')?></th>
-			<th width="35%"><?=wfMsg('lookupcontribswikititle')?></th>
-			<th width="20%"><?=wfMsg('lookupcontribswikiurl')?></th>
-			<th width="20%" style="white-space:nowrap"><?=wfMsg('lookupcontribslastedited')?></th>
-			<th width="20%"><?=wfMsg('lookupcontribscontribtitleforuser')?></th>
+			<th width="3%"><?= wfMessage( 'lookupcontribswikidbname' )->escaped() ?></th>
+			<th width="35%"><?= wfMessage( 'lookupcontribswikititle' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupcontribswikiurl' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupcontribslastedited' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupcontribscontribtitleforuser' )->escaped() ?></th>
 		</tr>
 	</tfoot>
 </table>

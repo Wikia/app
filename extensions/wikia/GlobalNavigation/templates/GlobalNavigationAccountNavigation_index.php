@@ -25,7 +25,7 @@
 				<li><?= $link ?></li>
 			<?php endforeach; ?>
 		</ul>
-	<?php else:
+	<?php elseif ( !$enableNewAuthModal ):
 		echo $loginDropdown;
 	endif; ?>
 	</li>

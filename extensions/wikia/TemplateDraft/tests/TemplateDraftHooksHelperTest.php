@@ -119,42 +119,6 @@ class TemplateDraftHooksHelperTest extends WikiaBaseTest {
 
 	}
 
-	/**
-	 * @dataProvider isParentValidProvider
-	 */
-	public function testIsParentValid(
-		$paramUserCanTemplateDraft,
-		$paramIsMarkedAsInfobox,
-		$isParentValidExpected
-	) {
-
-		/** @var Title $mockTitle */
-		$mockTitle = $this->getMockBuilder( 'Title' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'userCan' ] )
-			->getMock();
-
-		$mockTitle->expects( $this->once() )
-			->method( 'userCan' )
-			->with( 'templatedraft' )
-			->will( $this->returnValue( $paramUserCanTemplateDraft ) );
-
-		/* Mock tested class */
-		/** @var TemplateDraftHelper $mockTemplateDraftHelper */
-		$mockTemplateDraftHelper = $this->getMockBuilder( 'TemplateDraftHelper' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'isMarkedAsInfobox' ] )
-			->getMock();
-
-		$mockTemplateDraftHelper->expects( $this->any() )
-			->method( 'isMarkedAsInfobox' )
-			->will( $this->returnValue( $paramIsMarkedAsInfobox ) );
-
-		$isParentValidActual = $mockTemplateDraftHelper->isParentValid( $mockTitle );
-
-		$this->assertEquals( $isParentValidExpected, $isParentValidActual );
-	}
-
 	/* Data providers */
 	public function showCreateDraftModuleProvider() {
 		$railModuleListDefault = [];
@@ -187,26 +151,6 @@ class TemplateDraftHooksHelperTest extends WikiaBaseTest {
 			[ true, NS_TEMPLATE, false, $mockTitleClass, false ],
 			[ true, NS_TEMPLATE, false, null, false ],
 			[ true, NS_TEMPLATE, false, $mockSomeClass, false ],
-		];
-	}
-
-	public function isParentValidProvider() {
-		$railModuleListExpectedCreate[1502] = [ 'TemplateDraftModule', 'Create', null ];
-		$railModuleListExpectedApprove[1502] = [ 'TemplateDraftModule', 'Approve', null ];
-
-		/*
-		 * Params order
-		 * [
-		 *	$paramUserCanTemplateDraft,
-		 *	$paramIsMarkedAsInfobox,
-		 *	$isParentValidExpected
-		 * ]
-		 */
-		return [
-			[ true, true, true ],
-			[ true, false, true ],
-			[ false, true, false ],
-			[ false, false, false ],
 		];
 	}
 }

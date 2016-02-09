@@ -36,10 +36,11 @@ class Transaction {
 	const PARAM_FUNCTION = 'function';
 	const PARAM_SPECIAL_PAGE_NAME = 'special_page';
 	const PARAM_API_ACTION = 'api_action';
+	const PARAM_API_LIST = 'api_list';
 	const PARAM_WIKI = 'wiki';
 	const PARAM_DPL = 'dpl';
 	const PARAM_AB_PERFORMANCE_TEST = 'perf_test';
-	const PARAM_USER_ATTRIBUTES = 'user_attributes';
+	const PARAM_MAINTENANCE_SCRIPT = 'maintenance_script';
 
 	const PSEUDO_PARAM_TYPE = 'type';
 
@@ -55,6 +56,7 @@ class Transaction {
 	const EVENT_USER_PREFERENCES = 'user_preferences';
 	const EVENT_USER_PREFERENCES_COUNTERS = "user_preferences_counters";
 	const EVENT_USER_ATTRIBUTES = 'user_attributes';
+	const EVENT_USER_AUTH = 'user_auth';
 
 	/**
 	 * Returns TransactionTrace singleton instance
@@ -64,7 +66,7 @@ class Transaction {
 	public static function getInstance() {
 		static $instance;
 		if ( $instance === null ) {
-			global $wgWikiaEnvironment, $wgEnableReadsFromAttributeService;
+			global $wgWikiaEnvironment;
 			$instance = new TransactionTrace( array(
 				// plugins
 				new TransactionTraceNewrelic(),
@@ -73,9 +75,6 @@ class Transaction {
 			$instance->set( self::PARAM_ENVIRONMENT, $wgWikiaEnvironment );
 			$instance->set( self::PARAM_HOSTNAME, wfHostname() );
 			$instance->set( self::PARAM_PHP_VERSION, explode( '-', phpversion() )[0] ); // report "5.4.17-1~precise+1" as "5.4.17"
-
-			// TODO clean up User Attributes classification when service is fully rolled out - SOC-1350
-			$instance->set( self::PARAM_USER_ATTRIBUTES, $wgEnableReadsFromAttributeService );
 		}
 		return $instance;
 	}

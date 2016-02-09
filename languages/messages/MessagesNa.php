@@ -22,8 +22,6 @@ $messages = array(
 'moredotdotdot' => 'Iyuw...',
 'and'           => '&#32;me',
 
-# Cologne Blue skin
-'qbedit' => 'Kiwiwid',
 
 'errorpagetitle' => 'Dairinaiya',
 'help'           => 'Ipuok',

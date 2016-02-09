@@ -8,17 +8,13 @@ use Wikia\Util\Statistics\BernoulliTrial;
 
 class PreferenceMigrationModule implements Module {
 
-	const PREFERENCE_CORRECTION_RAMP = 100;
+	const PREFERENCE_CORRECTION_RAMP = 0;
 	const PREFERENCE_CORRECTION_SAMPLE_RATE = 0.2;
 
 	public function configure( InjectorBuilder $builder ) {
-		global $wgGlobalUserPreferenceWhiteList, $wgLocalUserPreferenceWhiteList, $wgCityId, $wgWikiaDatacenter;
-
-		$preferenceCorrectionEnabled = isset( $wgCityId ) && $wgCityId % 100 < self::PREFERENCE_CORRECTION_RAMP && $wgWikiaDatacenter != WIKIA_DC_RES;
+		global $wgGlobalUserPreferenceWhiteList, $wgLocalUserPreferenceWhiteList, $wgCityId;
 
 		$builder
-			->bind( PreferenceCorrectionService::PREFERENCE_CORRECTION_ENABLED )->to( $preferenceCorrectionEnabled )
-			->bind( PreferenceCorrectionService::PREFERENCE_CORRECTION_SAMPLER )->to( new BernoulliTrial( self::PREFERENCE_CORRECTION_SAMPLE_RATE ) )
 			->bind( PreferenceScopeService::GLOBAL_SCOPE_PREFS )->to( $wgGlobalUserPreferenceWhiteList )
 			->bind( PreferenceScopeService::LOCAL_SCOPE_PREFS )->to( $wgLocalUserPreferenceWhiteList );
 	}

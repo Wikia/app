@@ -2,7 +2,8 @@
 
 namespace Wikia\ContentReview\Models;
 
-use Wikia\ContentReview\Helper;
+use FluentSql\Exception\SqlException,
+	Wikia\ContentReview\ContentReviewStatusesService;
 
 class ReviewModel extends ContentReviewBaseModel {
 
@@ -15,35 +16,24 @@ class ReviewModel extends ContentReviewBaseModel {
 			CONTENT_REVIEW_STATUS_REJECTED = 4,
 			CONTENT_REVIEW_STATUS_AUTOAPPROVED = 5;
 
-	public function getPageStatus( $wikiId, $pageId ) {
+	public static $unreviewedStatuses = [
+		self::CONTENT_REVIEW_STATUS_UNREVIEWED,
+		self::CONTENT_REVIEW_STATUS_IN_REVIEW,
+	];
+
+	public function getPagesStatuses( $wikiId ) {
 		$db = $this->getDatabaseForRead();
 
-		$pageStatus = ( new \WikiaSQL() )
-			->SELECT( 'revision_id', 'status' )
+		$pagesStatuses = ( new \WikiaSQL() )
+			->SELECT( 'page_id', 'revision_id', 'status' )
 			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
-				->AND_( 'page_id' )->EQUAL_TO( $pageId )
-			->ORDER_BY( [ 'revision_id', 'ASC' ] )
-			->runLoop( $db, function ( &$pageStatus, $row ) {
-				if ( Helper::isStatusAwaiting( $row->status ) ) {
-					$pageStatus['latestId'] = (int)$row->revision_id;
-					$pageStatus['latestStatus'] = (int)$row->status;
-				} else {
-					$pageStatus['lastReviewedId'] = (int)$row->revision_id;
-					$pageStatus['lastReviewedStatus'] = (int)$row->status;
-				}
+			->ORDER_BY( [ 'page_id', 'ASC' ], [ 'revision_id', 'DESC' ] )
+			->runLoop( $db, function ( &$pagesStatuses, $row ) {
+				$pagesStatuses[$row->page_id][(int)$row->status] = (int)$row->revision_id;
 			} );
 
-		if ( empty( $pageStatus ) ) {
-			$pageStatus = [
-				'latestId' => null,
-				'latestStatus' => null,
-				'lastReviewedId' => null,
-				'lastReviewedStatus' => null,
-			];
-		}
-
-		return $pageStatus;
+		return $pagesStatuses;
 	}
 
 	public function getCurrentUnreviewedId( $wikiId, $pageId ) {
@@ -103,7 +93,7 @@ class ReviewModel extends ContentReviewBaseModel {
 		$affectedRows = $db->affectedRows();
 
 		if ( $affectedRows === 0 ) {
-			throw new \FluentSql\Exception\SqlException( 'The INSERT operation failed.' );
+			throw new SqlException( 'The INSERT operation failed.' );
 		}
 
 		$db->commit( __METHOD__ );
@@ -143,7 +133,7 @@ class ReviewModel extends ContentReviewBaseModel {
 		$affectedRows = $db->affectedRows();
 
 		if ( $affectedRows === 0 ) {
-			throw new \FluentSql\Exception\SqlException( 'The DELETE and UPDATE operation failed.' );
+			throw new SqlException( 'The DELETE and UPDATE operation failed.' );
 		}
 
 		$db->commit( __METHOD__ );
@@ -167,7 +157,7 @@ class ReviewModel extends ContentReviewBaseModel {
 		$affectedRows = $db->affectedRows();
 
 		if ( $affectedRows === 0 ) {
-			throw new \FluentSql\Exception\SqlException( 'The UPDATE operation failed.' );
+			throw new SqlException( 'The UPDATE operation failed.' );
 		}
 
 		return $status;
@@ -182,7 +172,7 @@ class ReviewModel extends ContentReviewBaseModel {
 			->LEFT_JOIN( self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE )
 			->ON( self::CONTENT_REVIEW_STATUS_TABLE . '.wiki_id', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE . '.wiki_id' )
 				->AND_( self::CONTENT_REVIEW_STATUS_TABLE . '.page_id', self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE . '.page_id' )
-			->WHERE( 'status' )->IN( self::CONTENT_REVIEW_STATUS_UNREVIEWED, self::CONTENT_REVIEW_STATUS_IN_REVIEW )
+			->WHERE( 'status' )->IN( self::$unreviewedStatuses )
 			->ORDER_BY( ['submit_time', 'asc'], ['status', 'desc'] )
 			->runLoop( $db, function ( &$content, $row ) {
 				$key = implode( ':', [ $row->wiki_id, $row->page_id, $row->status ] );
@@ -190,6 +180,24 @@ class ReviewModel extends ContentReviewBaseModel {
 			} );
 
 		return $content;
+	}
+
+	public function getAllReviewsOfPage( $wikiId, $pageId ) {
+		$db = $this->getDatabaseForRead();
+
+		$reviews = ( new \WikiaSQL() )
+			->SELECT( 'revision_id', 'status' )
+			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->AND_( 'page_id' )->EQUAL_TO( $pageId )
+			->runLoop( $db, function ( &$reviews, $row ) {
+				$reviews[] = [
+					'revision_id' => (int)$row->revision_id,
+					'status' => (int)$row->status,
+				];
+			} );
+
+		return $reviews;
 	}
 
 	/**
@@ -232,6 +240,7 @@ class ReviewModel extends ContentReviewBaseModel {
 					'wikiId' => (int)$row->wiki_id,
 					'pageId' => (int)$row->page_id,
 					'status' => (int)$row->status,
+					'escalated' => (bool)$row->escalated,
 				];
 			} );
 
@@ -241,25 +250,79 @@ class ReviewModel extends ContentReviewBaseModel {
 	public function getStatusName( $status, $revisionId ) {
 		switch( $status ) {
 			case self::CONTENT_REVIEW_STATUS_UNREVIEWED:
-				$statusName = \ContentReviewModuleController::STATUS_AWAITING;
-				break;
 			case self::CONTENT_REVIEW_STATUS_IN_REVIEW:
-				$statusName = \ContentReviewModuleController::STATUS_AWAITING;
+				$statusName = ContentReviewStatusesService::STATUS_AWAITING;
 				break;
 			case self::CONTENT_REVIEW_STATUS_APPROVED:
-				$statusName = \ContentReviewModuleController::STATUS_APPROVED;
+				$statusName = ContentReviewStatusesService::STATUS_APPROVED;
 				break;
 			case self::CONTENT_REVIEW_STATUS_REJECTED:
-				$statusName = \ContentReviewModuleController::STATUS_REJECTED;
+				$statusName = ContentReviewStatusesService::STATUS_REJECTED;
 				break;
-			default: $statusName = \ContentReviewModuleController::STATUS_NONE;
+			default: $statusName = ContentReviewStatusesService::STATUS_NONE;
 		}
 
 		// Distinguish none from unsubmitted
-		if ( $statusName == \ContentReviewModuleController::STATUS_NONE && !empty( $revisionId ) ) {
-			$statusName = \ContentReviewModuleController::STATUS_UNSUBMITTED;
+		if ( $statusName == ContentReviewStatusesService::STATUS_NONE && !empty( $revisionId ) ) {
+			$statusName = ContentReviewStatusesService::STATUS_UNSUBMITTED;
 		}
 
 		return $statusName;
+	}
+
+	/**
+	 * Deletes all reviews information on a given page.
+	 * Used for cleaning up data on deleted articles.
+	 * @param $wikiId
+	 * @param $pageId
+	 * @return bool|mixed
+	 */
+	public function deleteReviewsOfPage( $wikiId, $pageId ) {
+		$reviews = $this->getAllReviewsOfPage( $wikiId, $pageId );
+
+		// Quit early if there are no reviews to delete.
+		if ( empty( $reviews ) ) {
+			return true;
+		}
+
+		$db = $this->getDatabaseForWrite();
+
+		$result = ( new \WikiaSQL() )
+			->DELETE()
+			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->AND_( 'page_id' )->EQUAL_TO( $pageId )
+			->run( $db );
+
+		if ( $result ) {
+			$db->commit();
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Sets the `escalated` flag to true for a given revision.
+	 * @param $wikiId
+	 * @param $pageId
+	 * @param $revisionId
+	 * @return bool|mixed
+	 */
+	public function escalateReview( $wikiId, $pageId, $revisionId ) {
+		$db = $this->getDatabaseForWrite();
+
+		$result = ( new \WikiaSQL() )
+			->UPDATE( self::CONTENT_REVIEW_STATUS_TABLE )
+			->SET( 'escalated', 1 )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->AND_( 'page_id' )->EQUAL_TO( $pageId )
+			->AND_( 'revision_id' )->EQUAL_TO( $revisionId )
+			->run( $db );
+
+		if ( $result ) {
+			$db->commit();
+		}
+
+		return $result;
 	}
 }

@@ -57,6 +57,12 @@ $wgAutoloadClasses['InsightsWantedpagesModel'] = $dir . 'models/InsightsWantedpa
 $wgAutoloadClasses['InsightsWithoutimagesModel'] = $dir . 'models/InsightsWithoutimagesModel.php';
 
 /**
+ * Counting service
+ */
+$wgAutoloadClasses['InsightsCountService'] = $dir . 'services/InsightsCountService.class.php';
+$wgAutoloadClasses['InsightsCountApiController'] = $dir . 'controllers/InsightsCountApiController.class.php';
+
+/**
  * The right rail module
  */
 $wgAutoloadClasses['InsightsModuleController'] = $IP.'/skins/oasis/modules/InsightsModuleController.class.php';
@@ -86,3 +92,4 @@ function wfInsightsSetup() {
  * Message files
  */
 $wgExtensionMessagesFiles['Insights'] = $dir . 'Insights.i18n.php';
+$wgExtensionMessagesFiles['InsightsAliases'] = $dir . 'Insights.alias.php';

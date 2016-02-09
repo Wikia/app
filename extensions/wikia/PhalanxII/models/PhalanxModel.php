@@ -89,10 +89,16 @@ abstract class PhalanxModel extends WikiaObject {
 		return $instance;
 	}
 
+	/**
+	 * Skip calls to Phalanx service if this method returns true
+	 *
+	 * @return bool
+	 */
 	public function isOk() {
 		return (
 			( ( $this->user instanceof User ) && ( $this->user->getName() == $this->wg->User->getName() && $this->wg->User->isAllowed( 'phalanxexempt' ) ) ) ||
-			( ( $this->user instanceof User ) && $this->user->isAllowed( 'phalanxexempt' ) )
+			( ( $this->user instanceof User ) && $this->user->isAllowed( 'phalanxexempt' ) ) ||
+			$this->isWikiaInternalRequest()
 		);
 	}
 
@@ -119,6 +125,11 @@ abstract class PhalanxModel extends WikiaObject {
 		$fallback = "{$method}_{$type}_old";
 		$ret = false;
 		if ( method_exists( $this, $fallback ) ) {
+			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+				'method' => $method,
+				'exception' => new Exception( 'Phalanx fallback triggered' )
+			] );
+
 			Wikia::log( __METHOD__, __LINE__, "Call method from previous version of Phalanx - check Phalanx service!\n" );
 			$ret = call_user_func( array( $this, $fallback ) );
 		}
@@ -170,5 +181,17 @@ abstract class PhalanxModel extends WikiaObject {
 		}
 
 		return $ret;
+	}
+
+	/**
+	 * Check if the current request is an internal one (has the required header and is a GET)
+	 *
+	 * @see PLATFORM-1473
+	 *
+	 * @return bool
+	 */
+	public function isWikiaInternalRequest() {
+		$request = $this->wg->Request;
+		return !$request->wasPosted() && $request->isWikiaInternalRequest();
 	}
 }

@@ -2,18 +2,19 @@
 
 namespace Wikia\ContentReview;
 
+use Wikia\Interfaces\IRequest;
 use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Models\ReviewModel;
 
 class Helper extends \ContextSource {
 
-	const CONTENT_REVIEW_TOOLBAR_TEMPLATE_PATH = 'extensions/wikia/ContentReview/templates/ContentReviewToolbar.mustache';
 	const CONTENT_REVIEW_PARAM = 'contentreview';
 	const CONTENT_REVIEW_MEMC_VER = '1.0';
 	const CONTENT_REVIEW_REVIEWED_KEY = 'reviewed-js-pages';
 	const CONTENT_REVIEW_CURRENT_KEY = 'current-js-pages';
 	const JS_FILE_EXTENSION = '.js';
 
+	const DEV_WIKI_ID = 7931;
 
 	/**
 	 * Returns data about all approved revisions (of JS pages) for current wiki
@@ -34,13 +35,13 @@ class Helper extends \ContextSource {
 	 *
 	 * @return bool|mixed
 	 */
-	public function getJsPages() {
+	public function getJsPages( $ns = NS_MEDIAWIKI ) {
 		$db = wfGetDB( DB_SLAVE );
 
 		$jsPages = ( new \WikiaSQL() )
 			->SELECT( 'page_id', 'page_title', 'page_touched', 'page_latest' )
 			->FROM( 'page' )
-			->WHERE( 'page_namespace' )->EQUAL_TO( NS_MEDIAWIKI )
+			->WHERE( 'page_namespace' )->EQUAL_TO( $ns )
 			->AND_( 'LOWER (page_title)' )->LIKE( '%' . self::JS_FILE_EXTENSION )
 			->runLoop( $db, function ( &$jsPages, $row ) {
 				$jsPages[$row->page_id] = get_object_vars( $row );
@@ -236,66 +237,25 @@ class Helper extends \ContextSource {
 		return ( !empty( $currentData ) && (int)$currentData['revision_id'] === $oldid );
 	}
 
-	public function shouldDisplayReviewerToolbar() {
-		global $wgCityId;
-
-		$title = $this->getTitle();
-
-		if ( $title->inNamespace( NS_MEDIAWIKI )
-			&& $title->isJsPage()
-			&& $title->userCan( 'content-review' )
-		) {
-			$diffRevisionId = $this->getRequest()->getInt( 'diff' );
-			$diffRevisionInfo = ( new ReviewModel() )->getRevisionInfo(
-				$wgCityId,
-				$title->getArticleID(),
-				$diffRevisionId
-			);
-
-			$status = (int)$diffRevisionInfo['status'];
-			return ( $status === ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW
-				/* Fallback to URL param if a master-slave replication has not finished */
-				|| ( $this->getRequest()->getInt( self::CONTENT_REVIEW_PARAM ) === 1
-					&& $status === ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
-				)
-			);
-		}
-
-		return false;
-	}
-
-	public function getToolbarTemplate() {
-		global $wgCityId;
-
-		return \MustacheService::getInstance()->render(
-			self::CONTENT_REVIEW_TOOLBAR_TEMPLATE_PATH,
-			[
-				'toolbarTitle' => wfMessage( 'content-review-diff-toolbar-title' )->plain(),
-				'wikiId' => $wgCityId,
-				'pageId' => $this->getTitle()->getArticleID(),
-				'approveStatus' => ReviewModel::CONTENT_REVIEW_STATUS_APPROVED,
-				'buttonApproveText' => wfMessage( 'content-review-diff-approve' )->plain(),
-				'rejectStatus' => ReviewModel::CONTENT_REVIEW_STATUS_REJECTED,
-				'buttonRejectText' => wfMessage( 'content-review-diff-reject' )->plain(),
-				'talkpageUrl' => $this->prepareProvideFeedbackLink( $this->getTitle() ),
-				'talkpageLinkText' => wfMessage( 'content-review-diff-toolbar-talkpage' )->plain(),
-				'guidelinesUrl' => wfMessage( 'content-review-diff-toolbar-guidelines-url' )->useDatabase( false )->plain(),
-				'guidelinesLinkText' => wfMessage( 'content-review-diff-toolbar-guidelines' )->plain(),
-			]
-		);
-	}
-
 	/**
 	 * Link for adding new section on script talk page. Prefilled with standard explanation of rejection.
 	 * @param \Title $title Title object of JS page
+	 * @param int $revisionId
 	 * @return string full link to edit page
 	 */
-	public function prepareProvideFeedbackLink( \Title $title ) {
+	public function prepareProvideFeedbackLink( \Title $title, $revisionId = 0 ) {
 		$params = [
 			'action' => 'edit',
 			'section' => 'new',
-			'useMessage' => 'content-review-rejection-explanation'
+			'useMessage' => 'content-review-rejection-explanation',
 		];
+
+		$params['messageParams'] = [
+			1 => wfMessage( 'content-review-rejection-explanation-title' )->params( $revisionId )->escaped(),
+			2 => $title->getFullURL( "oldid={$revisionId}" ),
+			3 => $revisionId,
+		];
+
 		return $title->getTalkPage()->getFullURL( $params );
 	}
 

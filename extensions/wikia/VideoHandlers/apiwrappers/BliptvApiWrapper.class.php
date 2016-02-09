@@ -30,7 +30,7 @@ class BliptvApiWrapper extends ApiWrapper {
 	}
 
 
-	protected function processResponse($response, $type) {
+	protected function processResponse( $response ) {
 
 		wfProfileIn( __METHOD__ );
 		$replaced_count = 0;
@@ -44,7 +44,7 @@ class BliptvApiWrapper extends ApiWrapper {
 			$response = str_replace( "]);", "]", $response );
 		}		 
 		wfProfileOut( __METHOD__ );
-		return parent::processResponse($response, $type);
+		return parent::processResponse( $response );
 	}
 
 	protected function postProcess( $return ){

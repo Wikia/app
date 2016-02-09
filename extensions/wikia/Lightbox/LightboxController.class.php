@@ -161,6 +161,8 @@ class LightboxController extends WikiaController {
 	 * @responseParam boolean isAdded - check if the file is added to the wiki
 	 */
 	public function getMediaDetail() {
+		$this->response->setFormat( 'json' );
+
 		$fileTitle = urldecode( $this->request->getVal( 'fileTitle', '' ) );
 		$isInline = $this->request->getVal( 'isInline', false );
 
@@ -200,6 +202,7 @@ class LightboxController extends WikiaController {
 		list( $smallerArticleList, $articleListIsSmaller ) = WikiaFileHelper::truncateArticleList( $articles, self::POSTED_IN_ARTICLES );
 
 		// file details
+		// FIXME: view count isn't shown to users b/c it's buggy (CONSF-51)
 		$this->views = wfMessage( 'lightbox-video-views', $this->wg->Lang->formatNum( $data['videoViews'] ) )->parse();
 		$this->title = $title->getDBKey();
 		$this->fileTitle = $title->getText();
@@ -220,9 +223,6 @@ class LightboxController extends WikiaController {
 		$this->exists = $data['exists'];
 		$this->isAdded = $data['isAdded'];
 		$this->extraHeight = $data['extraHeight'];
-
-		// Make sure that a request with missing &format=json does not throw a "template not found" exception
-		$this->response->setFormat( 'json' );
 
 		// set cache control to 15 minutes
 		$this->response->setCacheValidity( 900 );

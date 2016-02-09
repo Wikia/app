@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Util\Assert;
+
 /**
  * Utility class to check types of currently rendered page
  */
@@ -237,14 +239,26 @@ class WikiaPageType {
 	/**
 	 * Check if current page is Wikia hub main page ( for hubs v3 )
 	 *
+	 * @param Title|null $title optional title to perform a check for (instead of wgTitle as it's not always set - see SUS-11)
 	 * @return bool
+	 * @throws \Wikia\Util\AssertionException
 	 */
-	public static function isWikiaHubMain() {
-		$title = self::getTitle();
-		$mainPageName = trim( str_replace( '_', ' ', wfMessage( 'mainpage' )->inContentLanguage()->text() ) );
+	public static function isWikiaHubMain( $title = null ) {
+		$title = $title ?: self::getTitle();
+
+		Assert::true( $title instanceof Title, __METHOD__ ); // SUS-11
+
+		$mainPageName = self::getMainPageName();
 		$isMainPage = ( strcasecmp( $mainPageName, $title->getText() ) === 0 ) && $title->getNamespace() === NS_MAIN;
 
 		return ( self::isWikiaHub() && $isMainPage );
+	}
+
+	/**
+	 * @return string
+	 */
+	public static function getMainPageName() {
+		return trim( str_replace( '_', ' ', wfMessage( 'mainpage' )->inContentLanguage()->text() ) );
 	}
 
 	/**

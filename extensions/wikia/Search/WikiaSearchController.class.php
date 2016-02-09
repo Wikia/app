@@ -4,6 +4,7 @@
  */
 
 use \Wikia\Logger\WikiaLogger;
+use \Wikia\Search\Result\ResultHelper;
 
 /**
  * Responsible for handling search requests.
@@ -711,8 +712,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$matchResult['onWikiMatch'] = true;
 			$this->setVal(
 					'wikiMatch',
-					$this->getApp()->getView( 'WikiaSearch', 'exactResult', [ 'result' => $matchResult, 'pos' => 'wiki' ] )
-					);
+					$this->getApp()->getView( 'WikiaSearch', 'exactResult',
+						ResultHelper::extendResult($matchResult, 'wiki', ResultHelper::MAX_WORD_COUNT_EXACT_MATCH) )
+			);
 			$this->resultsFound++;
 		}
 	}
@@ -754,7 +756,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $skin instanceof SkinMonoBook ) {
 		    $this->response->addAsset ('extensions/wikia/Search/monobook/monobook.scss' );
 		}
-		if ( $skin instanceof SkinOasis || $skin instanceof SkinVenus ) {
+		if ( $skin instanceof SkinOasis ) {
 		    $this->response->addAsset( 'extensions/wikia/Search/css/WikiaSearch.scss' );
 		}
 		if ( $skin instanceof SkinWikiaMobile ) {

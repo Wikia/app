@@ -54,6 +54,10 @@ class Preferences {
 	 * @return array|null
 	 */
 	static function getPreferences( $user, IContextSource $context ) {
+		if ( $user->arePreferencesReadOnly() ) {
+			throw new MWException("Error, preferences are read-only.");
+		}
+
 		if ( self::$defaultPreferences ) {
 			return self::$defaultPreferences;
 		}
@@ -538,18 +542,6 @@ class Preferences {
 				'section' => 'rendering/skin',
 			);
 		}
-
-		$selectedSkin = $user->getGlobalPreference( 'skin' );
-		if ( in_array( $selectedSkin, array( 'cologneblue', 'standard' ) ) ) {
-			$settings = array_flip( $context->getLanguage()->getQuickbarSettings() );
-
-			$defaultPreferences['quickbar'] = array(
-				'type' => 'radio',
-				'options' => $settings,
-				'section' => 'rendering/skin',
-				'label-message' => 'qbsettings',
-			);
-		}
 	}
 
 	/**
@@ -1016,7 +1008,7 @@ class Preferences {
 	 * @param $defaultPreferences Array
 	 */
 	static function searchPreferences( $user, IContextSource $context, &$defaultPreferences ) {
-		global $wgContLang, $wgEnableMWSuggest, $wgVectorUseSimpleSearch;
+		global $wgContLang, $wgEnableMWSuggest;
 
 		## Search #####################################
 		$defaultPreferences['searchlimit'] = array(
@@ -1043,14 +1035,6 @@ class Preferences {
 				'type' => 'toggle',
 				'label-message' => 'mwsuggest-disable',
 				'section' => 'searchoptions/display',
-			);
-		}
-
-		if ( $wgVectorUseSimpleSearch ) {
-			$defaultPreferences['vector-simplesearch'] = array(
-				'type' => 'toggle',
-				'label-message' => 'vector-simplesearch-preference',
-				'section' => 'searchoptions/displaysearchoptions'
 			);
 		}
 

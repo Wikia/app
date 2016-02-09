@@ -89,7 +89,7 @@ class Configuration
      *
      * @var string
      */
-    protected $host = 'https://localhost/user-preference';
+    protected $host = 'https://localhost/';
   
     /**
      * Timeout (second) of the HTTP request, by default set to 0, no timeout

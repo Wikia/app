@@ -72,7 +72,7 @@ class BlogArticle extends Article {
 			/**
 			 * blog listing
 			 */
-			$wgOut->setHTMLTitle( $wgOut->getWikiaPageTitle( $this->mTitle->getPrefixedText() ) );
+			$wgOut->setHTMLTitle( $this->mTitle->getPrefixedText() );
 			$this->showBlogListing();
 		}
 	}

@@ -111,6 +111,15 @@ $messages['zh-hans'] = array(
 	'emailext-fbdisconnect-instructions' => '如果您已经在Wikia上设置了密码，别担心，您的帐户是安全的。您可以忽略这封电子邮件，并继续使用旧的密码进行登录。或者，您也可以使用我们提供的临时密码进行登录，然后在您的“用户设定”页面中重新设置密码。',
 );
 
+$messages['zh-hant'] = array(
+	'emailext-fbdisconnect-subject' => '你的Wikia帳戶與Facebook的連結現已斷開！',
+	'emailext-fbdisconnect-summary' => '你好像剛剛斷開了你的Wikia帳戶與Facebook的連結。由於你是Wikia社區的重要一員，我們已經保存了你的所有歷史記錄、留言訊息和個人資訊。',
+	'emailext-fbdisconnect-intro' => '你可以繼續使用之前的用戶名，另外，我們還生成了一個新的臨時密碼供你使用。詳細資訊如下：',
+	'emailext-fbdisconnect-username' => '用戶名：$ 1',
+	'emailext-fbdisconnect-password' => '密碼：$ 1',
+	'emailext-fbdisconnect-instructions' => '如果你已經在Wikia上設置了密碼，不要擔心！你的帳戶是安全的。你可以忽略這封電子郵件，並繼續用你的舊密碼登入Wikia。否則，也可以用上面提供的臨時密碼登入，然後在你的用戶設定頁面中重新設置你的密碼。',
+);
+
 $messages['zh-tw'] = array(
 	'emailext-fbdisconnect-subject' => '你的Wikia帳戶與Facebook的連結現已斷開！',
 	'emailext-fbdisconnect-summary' => '你好像剛剛斷開了你的Wikia帳戶與Facebook的連結。由於你是Wikia社區的重要一員，我們已經保存了你的所有歷史記錄、留言訊息和個人資訊。',

@@ -16,24 +16,6 @@ class Optimizely {
 		return true;
 	}
 
-	/**
-	 * Load Optimizely AssetsManager "blocking" group (i.e. in head section) on Venus
-	 *
-	 * @param array $jsHeadGroups
-	 * @param array $jsBodyGroups
-	 * @param array $cssGroups
-	 * @return bool true
-	 */
-	static public function onVenusAssetsPackages( Array &$jsHeadGroups, Array &$jsBodyGroups, Array &$cssGroups ) {
-		global $wgNoExternals;
-
-		if ( empty( $wgNoExternals ) ) {
-			$jsHeadGroups[] = 'optimizely_blocking_js';
-		}
-
-		return true;
-	}
-
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
 		global $wgOptimizelyLoadFromOurCDN, $wgNoExternals, $wgWikiaEnvironment;
 

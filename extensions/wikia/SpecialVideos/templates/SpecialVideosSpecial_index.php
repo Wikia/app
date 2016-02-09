@@ -49,7 +49,6 @@
 				</p>
 				<p class="by-views">
 					<?= $video['byUserMsg'] ?>
-					<span class="views"><?= $video['viewTotal'] ?></span>
 				</p>
 				<div class="posted-in">
 					<? if ( count($video['truncatedList']) ): ?>

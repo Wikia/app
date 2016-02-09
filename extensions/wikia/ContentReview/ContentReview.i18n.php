@@ -1,12 +1,14 @@
 <?php
-$messages = [];
+$messages = array();
 
-$messages['en'] = [
+$messages['en'] = array(
 	'content-review-desc' => 'This extension creates a process by which community JavaScript is manually reviewed before it goes live for visitors.',
 	'content-review-module-title' => 'Custom JavaScript status',
 	'content-review-module-header-latest' => 'Latest revision:',
 	'content-review-module-header-last' => 'Last reviewed revision:',
 	'content-review-module-header-live' => 'Live revision:',
+	'content-review-module-header-pagename' => 'Page name',
+	'content-review-module-header-actions' => 'Actions',
 	'content-review-module-status-none' => 'None',
 	'content-review-module-status-unsubmitted' => 'needs to be submitted',
 	'content-review-module-status-live' => 'is live!',
@@ -14,9 +16,10 @@ $messages['en'] = [
 	'content-review-module-status-approved' => 'was approved',
 	'content-review-module-status-rejected' => 'was rejected',
 	'content-review-rejection-reason-link' => 'Why?',
-	'content-review-module-help' => '[[Help:JavaScript_review_process|Help]]',
+	'content-review-module-help' => '[[Help:CSS and JS customization|Help]]',
 	'content-review-module-help-article' => 'Help:CSS and JS customization',
 	'content-review-module-help-text' => 'Help',
+	'content-review-module-jspages' => 'All JS pages',
 	'content-review-module-submit' => 'Submit for review',
 	'content-review-module-submit-success' => 'The changes have been successfully submitted for a review.',
 	'content-review-module-submit-exception' => 'Unfortunately, we could not submit the changes for a review due to the following error: $1.',
@@ -33,17 +36,40 @@ $messages['en'] = [
 	'content-review-status-rejected' => 'Rejected',
 	'content-review-status-live' => 'Live',
 	'content-review-status-autoapproved' => 'Auto-approved',
-	'content-review-rejection-explanation' => '==Submitted script change rejected==
-The recently submitted change to this JS script was rejected by the Wikia review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]].',
+	'content-review-status-escalated' => 'Escalated',
+	'content-review-rejection-explanation-title' => 'Submitted script change $1 rejected',
+	'content-review-rejection-explanation' => '==$1==
+The recently submitted change to this JavaScript page (revision [$2 $3]) was rejected by the Wikia review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]]. --~~~~',
 	'content-review-status-link-text' => 'Review status',
-];
+	'content-review-special-js-pages-title' => 'JavaScript pages',
+	'content-review-special-js-description' => 'This page lists the current [[Help:JavaScript review process|review status]] of MediaWiki namespace scripts on this community.',
+	'content-review-special-js-importjs-description' => 'Note: you can add and remove local and dev.wikia.com script imports without the review process via [[MediaWiki:ImportJS]].',
+	'content-review-importjs-description' => 'Here, you can easily import scripts:
+* from your local wikia by article name - e.g. MyScript.js
+* from dev.wikia.com by article name, preceded by "dev:" - e.g. dev:Code.js
+Names should not contain the MediaWiki namespace prefix. Write each script on a new line. See [[Help:Including additional CSS and JS]] for more information.
+----
+',
+	'content-review-profile-tags-description' => 'To use this feature, you must import [[w:c:dev:ProfileTags|ProfileTags.js]] from dev.wikia.com. [[w:c:dev:ProfileTags|Learn more]].
 
-$messages['qqq'] = [
+Use this page to customize the tags that appear on user profiles. Separate usernames and tags by a pipe (|). To display multiple tags for a user, separate each tag text with commas. Write each username on a new line.
+
+Examples:
+
+ ExampleUsername | Trainee, Newbie
+ ExampleUsername2 | Guru
+----
+',
+);
+
+$messages['qqq'] = array(
 	'content-review-desc' => '{{desc}}',
 	'content-review-module-title' => 'Title of a the right rail module with information on a page status.',
 	'content-review-module-header-latest' => 'Header of a section of the right rail module with information on the latest revision submitted for a review.',
 	'content-review-module-header-last' => 'Header of a section of the right rail module with information on the last reviewed revision.',
 	'content-review-module-header-live' => 'Header of a section of the right rail module with information on the revision that is currently live and served to users.',
+	'content-review-module-header-pagename' => 'A column name for a Page name',
+	'content-review-module-header-actions' => 'A column name for a Actions',
 	'content-review-module-status-none' => "Message shown as a revision's status when there is no information on it.",
 	'content-review-module-status-unsubmitted' => "Message shown as a revision's status when the latest made revision has not yet been sent for a review.",
 	'content-review-module-status-live' => "Message shown as a revision's status when it is currently live and served to users.",
@@ -54,6 +80,7 @@ $messages['qqq'] = [
 	'content-review-module-help' => 'A link to a Help page explaining how the review system works.',
 	'content-review-module-help-article' => 'Article name to a Help page explaining how the review system works.',
 	'content-review-module-help-text' => 'Text shown on a link a Help page explaining how the review system works.',
+	'content-review-module-jspages' => 'Text shown on a link to page with all javascript pages.',
 	'content-review-module-submit' => 'A text of a button that sends a given page for a review.',
 	'content-review-module-submit-success' => 'A message shown to a user in a Banner Notification if a page has been added to review.',
 	'content-review-module-submit-exception' => 'A message shown to a user in a Banner Notification if a known error happened. $1 is the error message.',
@@ -70,11 +97,22 @@ $messages['qqq'] = [
 	'content-review-status-rejected' => 'A name of a status of a revision that has been rejected.',
 	'content-review-status-autoapproved' => 'A name of a status of a revision that was auto-approved',
 	'content-review-status-live' => 'A name of a status of a revision that is currently live',
-	'content-review-rejection-explanation' => 'Standard explanation response when script changes were rejected. This text is a prefill to script talk page when reviewer is redirected there to provide feedback on rejection.',
+	'content-review-status-escalated' => 'The name of the status of a revision that has been escalated.',
+	'content-review-rejection-explanation-title' => 'A title of a section with a rejection explanation. Became a separate message to allow extraction to a URL anchor of a Why? link.',
+	'content-review-rejection-explanation' => 'Standard explanation response when script changes were rejected. This text is a prefill to script talk page when reviewer is redirected there to provide feedback on rejection. $1 is the title message, $2 is a URL to a view of a revision and $3 is the number of a revision that becomes a text of the link.',
 	'content-review-status-link-text' => 'Text on entrypoint link to show content review module with review status info and submit for review buttons',
-];
+	'content-review-special-js-pages-title' => 'Title of special page which contains all JavaScript pages on given wiki',
+	'content-review-special-js-description' => 'Text with description of this special page that contains lists with all scripts in MediaWiki namespace on that community with their review statuses and linking to help page.',
+	'content-review-special-js-importjs-description' => 'Information that user can manage script imports from community or dev.wikia.com by editing  MediaWiki:ImportJS page.',
+	'content-review-importjs-description' => 'Information for user how to add scripts. For scripts from local wikia, user should only add article name and from dev.wikia.com should preceded them by "dev:". Also user should add MediaWiki namespace and should add each script in separate line.',
+	'content-review-profile-tags-description' => 'Inform user that to use this feature user must import ProfileTags.js script from dev.wikia.com. Then explain that user should use current page to customize user tags on their profiles by adding user name and tags separated by a pipe (|).
+	 If a user wants to provide for more than one tag for a user, they should separate them by comma. Also each user name should be written on a new line. Examples:
 
-$messages['de'] = [
+    * ExampleUsername | Trainee, Newbie
+    * ExampleUsername2 | Guru'
+);
+
+$messages['de'] = array(
 	'content-review-desc' => 'Diese Erweiterung erzeugt einen Prozess, in dem das Community-JavaScript manuell überprüft wird, bevor Besucher es live sehen können.',
 	'content-review-module-title' => 'Status des angepassten JavaScripts',
 	'content-review-module-header-latest' => 'Letzte Überprüfung:',
@@ -106,12 +144,25 @@ $messages['de'] = [
 	'content-review-status-rejected' => 'Abgelehnt',
 	'content-review-status-live' => 'Live',
 	'content-review-status-autoapproved' => 'Automatisch zugelassen',
-	'content-review-rejection-explanation' => '==Die eingereichte Skript-Änderung wurde abgelehnt==
-Die kürzlich eingereichte Änderung dieses JS-Skripts wurde im Wikia- Überprüfungsprozess abgelehnt. Stelle bitte sicher, dass du die [[w:c:de:Hilfe:JavaScript-Überprüfungsprozess|Richtlinien für angepasstes Javascript]] erfüllst.',
+	'content-review-rejection-explanation' => '==$1==
+Die kürzlich eingereichte Änderung dieser JavaScript-Seite (Überprüfung [$2 $3]) wurde im Wikia- Überprüfungsprozess abgelehnt. Stelle bitte sicher, dass du die [[w:c:de:Hilfe:JavaScript-Überprüfungsprozess|Richtlinien für angepasstes Javascript]] erfüllst.--~~~~',
 	'content-review-status-link-text' => 'Stand der Überprüfung',
-];
+	'content-review-rejection-explanation-title' => 'Die eingereichte Skript-Änderung $1 wurde abgelehnt',
+	'content-review-special-js-pages-title' => 'JavaScript-Seiten',
+	'content-review-module-header-pagename' => 'Seitenname',
+	'content-review-module-header-actions' => 'Aktionen',
+	'content-review-module-jspages' => 'Alle JS-Seiten',
+	'content-review-special-js-description' => 'Auf dieser Seite wird der aktuelle [[w:c:de:Hilfe:JavaScript-Überprüfungsprozess|Überprüfungsprozess]] von MediaWiki-Namensräume-Skripten dieser Community aufgeführt.',
+	'content-review-special-js-importjs-description' => 'Hinweis: du kannst lokale und dev.wikia.com-Skriptimporte ohne den Überprüfungsprozess über [[MediaWiki:ImportJS]] hinzufügen und entfernen.',
+	'content-review-importjs-description' => 'Von hier kannst du ganz einfach Skripte importieren:
+* aus deinem lokalen Wikia nach Artikelname - z. B. MyScript.js
+* aus dev.wikia.com nach Artikelname mit vorangestelltem "dev:" - z. B. dev:Code.js
+Namen sollten nicht das Wikia-Namensräume-Präfix enthalten. Verwende für jedes Skript eine neue Zeile. Weitere Informationen findest du unter [[Hilfe:Einbinden von zusätzlichem CSS und JS]].
+----
+',
+);
 
-$messages['es'] = [
+$messages['es'] = array(
 	'content-review-desc' => 'Esta extensión crea un proceso en el que el JavaScript comunitario es revisado manualmente antes de que sea activo para los visitantes.',
 	'content-review-module-title' => 'Estado del JavaScript personalizado',
 	'content-review-module-header-latest' => 'Última revisión:',
@@ -124,7 +175,7 @@ $messages['es'] = [
 	'content-review-module-status-approved' => 'fue aprobado',
 	'content-review-module-status-rejected' => 'fue rechazado',
 	'content-review-rejection-reason-link' => '¿Por qué?',
-	'content-review-module-help' => '[[w:c:es:Ayuda:Personalización CSS y JS|Ayuda]]',
+	'content-review-module-help' => '[[Ayuda:Personalización CSS y JS|Ayuda]]',
 	'content-review-module-help-article' => 'Ayuda:Personalización CSS y JS',
 	'content-review-module-help-text' => 'Ayuda',
 	'content-review-module-submit' => 'Presentar para aprobación',
@@ -143,23 +194,36 @@ $messages['es'] = [
 	'content-review-status-rejected' => 'Rechazado',
 	'content-review-status-live' => 'Activo',
 	'content-review-status-autoapproved' => 'Auto-aprobado',
-	'content-review-rejection-explanation' => '==Cambio de script presentado rechazado== 
-El cambio a este script de JS presentado recientemente fue rechazado por el proceso de revisión de Wikia. Por favor, asegúrate de haber cumplido con las [[w:c:es:Ayuda:Proceso de revisión de JavaScript|directrices de JavaScript personalizado]].',
+	'content-review-rejection-explanation' => '== $1==
+El cambio recientemente presentado a esta página de JavaScript (revisión [$2 $3]) fue rechazada por el proceso de revisión de Wikia. Por favor, asegúrate de que cumple con las [[Ayuda:Proceso de revisión de JavaScript|directrices de personalización de JavaScript]]. --~~~~',
 	'content-review-status-link-text' => 'Estado de revisión',
-];
+	'content-review-rejection-explanation-title' => 'El cambio de script $1 presentado ha sido rechazado',
+	'content-review-special-js-pages-title' => 'Páginas de JavaScript',
+	'content-review-module-header-pagename' => 'Nombre de la página',
+	'content-review-module-header-actions' => 'Acciones',
+	'content-review-module-jspages' => 'Todas las páginas de JS',
+	'content-review-special-js-description' => 'Esta página muestra el actual [[w:c:es:Ayuda:Proceso de revisión de JavaScript|el estado de revisión de JavaScript]] de los guiones de espacio para nombres de MediaWiki en esta comunidad.',
+	'content-review-special-js-importjs-description' => 'Nota: puedes añadir y remover guiones locales e importados de dev.wikia.com sin el proceso de revisión vía [[MediaWiki:ImportarJS]].',
+	'content-review-importjs-description' => 'Aquí, puedes importar fácilmente guiones:
+* de tu wikia local por nombre de artículo - e.j. MiGuión.js
+* de dev.wikia.com por nombre de artículo, precedido por "dev:" - e.j. dev:Código.js
+Los nombres no deben contener el prefijo del espacio para nombres de MediaWiki. Escribe cada guión en una nueva línea. Ver [[Ayuda:Incluyendo JavaScript y CSS adicional]] para más información.
+----
+',
+);
 
-$messages['fr'] = [
+$messages['fr'] = array(
 	'content-review-desc' => 'Cette extension permet de lancer un processus de vérification manuelle du JavaScript de la communauté avant sa publication.',
 	'content-review-module-title' => 'État du JavaScript personnel',
-	'content-review-module-header-latest' => 'Dernière version soumise :',
+	'content-review-module-header-latest' => 'Dernière version :',
 	'content-review-module-header-last' => 'Dernière version vérifiée :',
 	'content-review-module-header-live' => 'Version actuellement publiée :',
-	'content-review-module-status-none' => 'Aucun',
-	'content-review-module-status-unsubmitted' => 'doit être soumis',
-	'content-review-module-status-live' => 'est publié !',
-	'content-review-module-status-awaiting' => 'doit être vérifié',
-	'content-review-module-status-approved' => 'a été approuvé',
-	'content-review-module-status-rejected' => 'a été rejeté',
+	'content-review-module-status-none' => 'Aucune',
+	'content-review-module-status-unsubmitted' => 'doit être soumise',
+	'content-review-module-status-live' => 'est publiée !',
+	'content-review-module-status-awaiting' => 'doit être vérifiée',
+	'content-review-module-status-approved' => 'a été approuvée',
+	'content-review-module-status-rejected' => 'a été rejetée',
 	'content-review-rejection-reason-link' => 'Pourquoi ?',
 	'content-review-module-help' => '[[w:c:fr:Aide:Personnalisation_du_CSS_et_JS|Aide]]',
 	'content-review-module-help-article' => 'Aide:Personnalisation du CSS et JS',
@@ -174,18 +238,31 @@ $messages['fr'] = [
 	'content-review-test-mode-enabled' => "Vous utilisez actuellement des versions de fichiers JavaScript personnels n'ayant fait l'objet d'aucune vérification. ",
 	'action-content-review' => 'Vérification du contenu',
 	'content-review-restore-summary' => 'Rétablissement de la version $1',
-	'content-review-status-unreviewed' => 'Non vérifié',
+	'content-review-status-unreviewed' => 'Non vérifiée',
 	'content-review-status-in-review' => 'En cours de vérification',
-	'content-review-status-approved' => 'Approuvé',
-	'content-review-status-rejected' => 'Rejeté',
-	'content-review-status-live' => 'Publié',
-	'content-review-status-autoapproved' => 'Approuvé automatiquement',
-	'content-review-rejection-explanation' => '==Rejet de la modification soumise pour le script==
-Le processus de vérification Wikia a rejeté la modification soumise pour ce script JS. Assurez-vous de respecter les [[w:c:fr:Aide:Processus_de_vérification_du_JavaScript|directives de personnalisation du JavaScript]].',
+	'content-review-status-approved' => 'Approuvée',
+	'content-review-status-rejected' => 'Rejetée',
+	'content-review-status-live' => 'Publiée',
+	'content-review-status-autoapproved' => 'Approuvée automatiquement',
+	'content-review-rejection-explanation' => '==$1==
+Le processus de vérification Wikia a rejeté la modification soumise pour cette page JavaScript (révision [$2 $3]) . Assurez-vous de respecter les [[w:c:fr:Aide:Processus_de_vérification_du_JavaScript|instructions de personnalisation du JavaScript]]. --~~~~',
 	'content-review-status-link-text' => 'État de la vérification',
-];
+	'content-review-rejection-explanation-title' => 'Modification $1 soumise pour le script rejetée',
+	'content-review-special-js-pages-title' => 'Pages JavaScript',
+	'content-review-module-header-pagename' => 'Nom de la page',
+	'content-review-module-header-actions' => 'Actions',
+	'content-review-module-jspages' => 'Toutes les pages JS',
+	'content-review-special-js-description' => "Cette page indique [[w:c:fr:Aide:Processus_de_vérification_du_JavaScript| l'état de vérification]] des scripts de l'espace de noms MediaWiki relatifs à cette communauté.",
+	'content-review-special-js-importjs-description' => 'Remarque : vous pouvez ajouter et supprimer les importations de scripts dev.wikia.com et locaux sans processus de vérification via [[MediaWiki:ImportJS]].',
+	'content-review-importjs-description' => "Vous pouvez ici facilement importer des scripts :
+* de votre wikia local par nom d'article (par ex., MonScript.js) ;
+* de dev.wikia.com par nom d'article précédé de \"dev:\" (par ex., dev:Code.js).
+Les noms ne doivent pas comporter le préfixe d'espace de noms MediaWiki. Écrivez chaque script sur une nouvelle ligne. Pour plus d'informations, consultez la page [[Aide:Inclure_du_CSS_et_JS_supplémentaire]].
+----
+",
+);
 
-$messages['it'] = [
+$messages['it'] = array(
 	'content-review-desc' => 'Questa estensione crea un processo attraverso il quale il JavaScript della community è controllato manualmente prima che diventi visibile ai visitatori.',
 	'content-review-module-title' => 'Stato del JavaScript personalizzato',
 	'content-review-module-header-latest' => 'Ultima revisione:',
@@ -198,7 +275,7 @@ $messages['it'] = [
 	'content-review-module-status-approved' => 'è stata approvata',
 	'content-review-module-status-rejected' => 'è stata respinta',
 	'content-review-rejection-reason-link' => 'Perché?',
-	'content-review-module-help' => '[[w:it:Aiuto:CSS|Guida]]',
+	'content-review-module-help' => '[[w:it:Aiuto:Processo di revisione del JavaScript|Guida]]',
 	'content-review-module-help-article' => 'Aiuto:CSS',
 	'content-review-module-help-text' => 'Aiuto',
 	'content-review-module-submit' => 'Invia per revisione',
@@ -217,12 +294,25 @@ $messages['it'] = [
 	'content-review-status-rejected' => 'Respinta',
 	'content-review-status-live' => 'Live',
 	'content-review-status-autoapproved' => 'Auto-approvata',
-	'content-review-rejection-explanation' => '==Modifica allo script respinta==
-La modifica da poco inviata per questo script in JS è stata respinta dal processo di revisione di Wikia. Assicurati di osservare le [[w:it:Aiuto:Processo_di_revisione_del_JavaScript|Linee guida del JavaScript personalizzato]].',
+	'content-review-rejection-explanation' => '==$1==
+La modifica inviata di recente per questa pagina in JavaScript (revisione [$2 $3]) è stata respinta dal processo di revisione di Wikia. Assicurati di seguire le [[Help:JavaScript review process|Linee guida del JavaScript personalizzato]]. --~~~~',
 	'content-review-status-link-text' => 'Stato della revisione',
-];
+	'content-review-rejection-explanation-title' => 'La modifica $1 inviata per lo script è stata respinta',
+	'content-review-special-js-pages-title' => 'Pagine in JavaScript',
+	'content-review-module-header-pagename' => 'Titolo della pagina',
+	'content-review-module-header-actions' => 'Azioni',
+	'content-review-module-jspages' => 'Tutte le pagine JS',
+	'content-review-special-js-description' => "Questa pagina indica l'attuale [[Aiuto:Processo di revisione del JavaScript|Processo di revisione]] degli script dello spazio dei nomi MediaWiki relativi a questa comunità.",
+	'content-review-special-js-importjs-description' => 'Nota: puoi aggiungere e rimuovere le importazioni degli script dev.wikia.com e locali senza il processo di revisione via [[MediaWiki:ImportJS]].',
+	'content-review-importjs-description' => 'Potrai facilmente importare gli script:
+* dalla tua wikia locale con il nome dell\'articolo (per es., MyScript.js)
+* da dev.wikia.com con il nome dell\'articolo preceduto da "dev:" (per es., dev:Code.js)
+I nomi non devono contenere il prefisso dello spazio dei nomi MediaWiki. Scrivi ogni script su una riga nuova. Per maggiori informazioni consulta [[Aiuto:Includere CSS e JS]] supplementari.
+----
+',
+);
 
-$messages['ja'] = [
+$messages['ja'] = array(
 	'content-review-desc' => 'この拡張機能により、コミュニティのJavaScriptが公開前に手動で審査されるようになります。',
 	'content-review-module-title' => 'カスタムJavaScriptの状況',
 	'content-review-module-header-latest' => '最新版：',
@@ -235,7 +325,7 @@ $messages['ja'] = [
 	'content-review-module-status-approved' => '承認されました',
 	'content-review-module-status-rejected' => '拒否されました',
 	'content-review-rejection-reason-link' => '理由',
-	'content-review-module-help' => '[[w:c:ja:ヘルプ:CSSとJavaScriptのカスタマイゼーション|ヘルプ]]',
+	'content-review-module-help' => '[[ヘルプ:CSSとJavaScriptのカスタマイゼーション|ヘルプ]]',
 	'content-review-module-help-article' => 'ヘルプ:CSSとJavaScriptのカスタマイゼーション',
 	'content-review-module-help-text' => 'ヘルプ',
 	'content-review-module-submit' => '申請する',
@@ -254,12 +344,25 @@ $messages['ja'] = [
 	'content-review-status-rejected' => '拒否済み',
 	'content-review-status-live' => '公開中',
 	'content-review-status-autoapproved' => '自動承認済み',
-	'content-review-rejection-explanation' => '==申請されたスクリプトの変更が拒否されました==
-最近申請されたこのJSスクリプトに対する変更は、ウィキアの審査プロセスにおいて拒否されました。[[w:c:ja:ヘルプ:JavaScriptの審査プロセス|カスタムJavaScriptのガイドライン]]を満たしていることをご確認ください。',
+	'content-review-rejection-explanation' => '==$1==
+最近申請したこのJavaScriptページへの変更（版[$2 $3]）は、ウィキアの審査プロセスにおいて拒否されました。[[ヘルプ:JavaScriptの審査プロセス|カスタムJavaScriptのガイドライン]]を満たしていることをご確認ください。--~~~~',
 	'content-review-status-link-text' => '審査状況',
-];
+	'content-review-rejection-explanation-title' => '申請したスクリプトの変更「$1」が拒否されました',
+	'content-review-special-js-pages-title' => 'JavaScriptページ',
+	'content-review-module-header-pagename' => 'ページ名',
+	'content-review-module-header-actions' => '対処',
+	'content-review-module-jspages' => 'すべてのJSページ',
+	'content-review-special-js-description' => 'このページには、このコミュニティのMediaWiki名前空間スクリプトの現在の[[w:c:ja:ヘルプ:JavaScriptの審査プロセス|審査状況]]が一覧表示されています。',
+	'content-review-special-js-importjs-description' => '注：ローカルとdev.wikia.comのスクリプトのインポートは、[[MediaWiki:ImportJS]]から審査プロセスを経ずに追加、削除できます。',
+	'content-review-importjs-description' => 'ここでは、スクリプトを簡単にインポートしていただけます：
+* ローカルウィキアからは記事名（例：MyScript.js）
+* dev.wikia.comからは記事名の先頭に「dev:」を付ける（例：dev:Code.js）
+MediaWikiの名前空間プレフィックスは名前に含めないでください。スクリプトごとに新しい行に記述します。詳しくは、[[ヘルプ:追加のJavaScriptとCSSをインクルードする]]をご覧ください。
+----
+',
+);
 
-$messages['nl'] = [
+$messages['nl'] = array(
 	'content-review-desc' => 'This extension creates a process by which community JavaScript is manually reviewed before it goes live for visitors.',
 	'content-review-module-title' => 'Custom JavaScript status',
 	'content-review-module-header-latest' => 'Latest revision:',
@@ -291,19 +394,32 @@ $messages['nl'] = [
 	'content-review-status-rejected' => 'Rejected',
 	'content-review-status-live' => 'Live',
 	'content-review-status-autoapproved' => 'Auto-approved',
-	'content-review-rejection-explanation' => '==Submitted script change rejected==
-The recently submitted change to this JS script was rejected by the Wikia review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]].',
+	'content-review-rejection-explanation' => '==$1==
+The recently submitted change to this JavaScript page (revision [$2 $3]) was rejected by the Wikia review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]]. --~~~~',
 	'content-review-status-link-text' => 'Review status',
-];
+	'content-review-rejection-explanation-title' => 'Submitted script change $1 rejected',
+	'content-review-special-js-pages-title' => 'JavaScript pages',
+	'content-review-module-header-pagename' => 'Page name',
+	'content-review-module-header-actions' => 'Actions',
+	'content-review-module-jspages' => 'All JS pages',
+	'content-review-special-js-description' => 'This page lists the current [[Help:JavaScript review process|review status]] of MediaWiki namespace scripts on this community.',
+	'content-review-special-js-importjs-description' => 'Note: you can add and remove local and dev.wikia.com script imports without the review process via [[MediaWiki:ImportJS]].',
+	'content-review-importjs-description' => 'Here, you can easily import scripts:
+* from your local wikia by article name - e.g. MyScript.js
+* from dev.wikia.com by article name, preceded by "dev:" - e.g. dev:Code.js
+Names should not contain the MediaWiki namespace prefix. Write each script on a new line. See [[Help:Including additional CSS and JS]] for more information.
+----
+',
+);
 
-$messages['pl'] = [
+$messages['pl'] = array(
 	'content-review-desc' => 'To rozszerzenie tworzy proces, dzięki któremu kod JavaScript tworzony przez społeczność jest sprawdzany ręcznie zanim zobaczą go odwiedzający.',
 	'content-review-module-title' => 'Status dostosowanego kodu JavaScript',
 	'content-review-module-header-latest' => 'Ostatnia wersja:',
 	'content-review-module-header-last' => 'Ostatnia sprawdzona wersja:',
 	'content-review-module-header-live' => 'Aktywna wersja:',
 	'content-review-module-status-none' => 'Brak',
-	'content-review-module-status-unsubmitted' => 'wymaga przesłania do sprawdzenia',
+	'content-review-module-status-unsubmitted' => 'wymaga sprawdzenia',
 	'content-review-module-status-live' => 'jest aktywna!',
 	'content-review-module-status-awaiting' => 'oczekuje na sprawdzenie',
 	'content-review-module-status-approved' => 'została zaakceptowana',
@@ -328,18 +444,31 @@ $messages['pl'] = [
 	'content-review-status-rejected' => 'Odrzucona',
 	'content-review-status-live' => 'Aktywna',
 	'content-review-status-autoapproved' => 'Zatwierdzona automatycznie',
-	'content-review-rejection-explanation' => '== Przesłana zmiana skryptu została odrzucona == 
-Niedawno przesłana zmiana w tym skrypcie JS została odrzucona przez Wikię w procesie przeglądu kodu. Proszę upewnij się, że spełniasz [[Help:JavaScript review process|wytyczne własnego kodu JavaScript]].',
+	'content-review-rejection-explanation' => '==$1==
+Niedawno przesłana zmiana tej strony JavaScript (wersja [$2 $3]) została odrzucona przez Wikię w sprawdzania kodu. Proszę upewnij się, że spełniasz [[Help:JavaScript review process|wytyczne własnego kodu JavaScript]]. --~~~~',
 	'content-review-status-link-text' => 'Status przeglądu',
-];
+	'content-review-rejection-explanation-title' => 'Przesłana zmiana skryptu $1 została odrzucona',
+	'content-review-special-js-pages-title' => 'Strony JavaScript',
+	'content-review-module-header-pagename' => 'Nazwa strony',
+	'content-review-module-header-actions' => 'Działania',
+	'content-review-module-jspages' => 'Wszystkie strony JS',
+	'content-review-special-js-description' => 'Ta strona przedstawia aktualny [[Help:JavaScript review process|status przeglądu]] skryptów obszaru nazw MediaWiki na tej społeczności.',
+	'content-review-special-js-importjs-description' => 'Uwaga: istnieje możliwość dodawania i usuwania skryptów importowanych lokalnie i na dev.wikia.com bez procesu przeglądu poprzez [[MediaWiki:ImportJS]].',
+	'content-review-importjs-description' => 'Tutaj z łatwością zaimportujesz skrypty:
+* z lokalnej wikii według nazwy artykułu - np. MyScript.js
+* z dev.wikia.com według nazwy artykułu dodając "dev:" na początku nazwy - np. dev:Code.js
+Nazwy nie powinny zawierać przedrostka obszaru nazw MediaWiki. Każdy skrypt należy zapisywać w nowej linii. Zobacz [[Help:Including additional CSS and JS]], aby uzyskać więcej informacji.
+----
+',
+);
 
-$messages['pt'] = [
+$messages['pt'] = array(
 	'content-review-desc' => 'Esta extensão cria um processo que é revisado manualmente pela comunidade JavaScript antes do lançamento para os visitantes.',
 	'content-review-module-title' => 'Status do JavaScript personalizado',
 	'content-review-module-header-latest' => 'Revisão mais recente:',
 	'content-review-module-header-last' => 'Última revisão:',
 	'content-review-module-header-live' => 'Revisão ao vivo:',
-	'content-review-module-status-none' => 'Nenhum',
+	'content-review-module-status-none' => 'Nenhuma',
 	'content-review-module-status-unsubmitted' => 'necessita ser submetida',
 	'content-review-module-status-live' => 'ao vivo!',
 	'content-review-module-status-awaiting' => 'aguardando revisão',
@@ -365,26 +494,37 @@ $messages['pt'] = [
 	'content-review-status-rejected' => 'Rejeitada',
 	'content-review-status-live' => 'Ao vivo',
 	'content-review-status-autoapproved' => 'Auto-aprovada',
-	'content-review-rejection-explanation' => '== Alteração de script enviado rejeitada ==
-A recente alteração enviada para este script JS foi rejeitada pelo processo de revisão de Wikia. Por favor, certifique-se de estar seguindo [[w:c:pt:Ajuda:Processo_de_revisão_de_JavaScript|as diretrizes personalizadas JavaScript]].',
+	'content-review-rejection-explanation' => '==$1==
+A recente alteração enviada para esta página JavaScript (revisão [$2 $3]) foi rejeitada pelo processo de revisão da Wikia. Por favor, certifique-se de estar seguindo [[w:c:pt:Ajuda:Processo_de_revisão_de_JavaScript|as diretrizes personalizadas JavaScript]]. --˜˜˜˜ ',
 	'content-review-status-link-text' => 'Status da revisão',
-];
+	'content-review-rejection-explanation-title' => 'A alteração do script $1 enviado foi rejeitada',
+	'content-review-special-js-pages-title' => 'Páginas JavaScript',
+	'content-review-module-header-pagename' => 'Título da página',
+	'content-review-module-header-actions' => 'Ações',
+	'content-review-module-jspages' => 'Todas as páginas JS',
+	'content-review-special-js-description' => 'Esta página indica o atual [[Ajuda:Processo de revisão de JavaScript |status de revisão]] dos scripts namespace MediaWiki nesta comunidade.',
+	'content-review-special-js-importjs-description' => 'Nota: você pode adicionar e remover os scripts importados local e dev.wikia.com sem o processo de revisão em [[MediaWiki:ImportJS]].',
+	'content-review-importjs-description' => 'Aqui, você pode importar scripts facilmente:
+* da sua wikia local pelo nome do artigo - por exemplo, MyScript.js
+* de dev.wikia.com pelo nome do artigo, precedido por "dev:"- por exemplo, dev:Code.js
+Nomes não devem conter o prefixo de namespace MediaWiki. Escreva cada script em uma nova linha. Veja [[Ajuda: incluindo CSS e JS adicionais]] para obter mais informações. ---- ',
+);
 
-$messages['ru'] = [
+$messages['ru'] = array(
 	'content-review-desc' => 'Это расширение позволяет проверять пользовательский JavaScript википроекта перед тем, как он будет применён для посетителей вики.',
 	'content-review-module-title' => 'Статус пользовательского JavaScript',
 	'content-review-module-header-latest' => 'Последняя версия:',
 	'content-review-module-header-last' => 'Последняя проверенная версия:',
 	'content-review-module-header-live' => 'Рабочая версия:',
 	'content-review-module-status-none' => 'Нет данных',
-	'content-review-module-status-unsubmitted' => 'необходимо отправить на проверку',
+	'content-review-module-status-unsubmitted' => 'ожидается отправка',
 	'content-review-module-status-live' => 'подключена!',
 	'content-review-module-status-awaiting' => 'ожидается проверка',
 	'content-review-module-status-approved' => 'одобрена',
 	'content-review-module-status-rejected' => 'отклонена',
 	'content-review-rejection-reason-link' => 'Почему?',
-	'content-review-module-help' => '[[w:c:ru:Справка:Использование CSS и JS|Справка]]',
-	'content-review-module-help-article' => 'Справка:Использование CSS и JS',
+	'content-review-module-help' => '[[Справка:Использование CSS и JS|Справка]]',
+	'content-review-module-help-article' => 'Справка:Проверка JavaScript',
 	'content-review-module-help-text' => 'Справка',
 	'content-review-module-submit' => 'Отправить на проверку',
 	'content-review-module-submit-success' => 'Правки были успешно отправлены на проверку.',
@@ -402,17 +542,31 @@ $messages['ru'] = [
 	'content-review-status-rejected' => 'Отклонено',
 	'content-review-status-live' => 'Используется',
 	'content-review-status-autoapproved' => 'Одобрено автоматически',
-	'content-review-rejection-explanation' => '==Отправленная версия страницы была отклонена==
-Последняя отправленная версия этой страницы была отклонена после проверки кода. Пожалуйста, проверьте, соответствует ли ваш код [[w:c:ru:Справка:Проверка JavaScript|политике Викия в отношении пользовательского JavaScript]].',
+	'content-review-rejection-explanation' => '==$1==
+Недавно отправленные изменения этой страницы (версия [$2 $3]) были отклонены после проверки кода. Пожалуйста, проверьте, соответствует ли ваш код [[w:c:ru:Справка:Проверка JavaScript|политике Викия в отношении пользовательского JavaScript]]. --~~~~',
 	'content-review-status-link-text' => 'Прогресс проверки',
-];
+	'content-review-rejection-explanation-title' => 'Отправленная версия $1 была отклонена',
+	'content-review-special-js-pages-title' => 'Страницы JavaScript',
+	'content-review-module-header-pagename' => 'Название страницы',
+	'content-review-module-header-actions' => 'Действия',
+	'content-review-module-jspages' => 'Все страницы с JavaScript',
+	'content-review-special-js-description' => 'На этой странице указан текущий [[Справка:Проверка JavaScript|статус проверки JS]] для всех страниц с общим JS на этой вики.',
+	'content-review-special-js-importjs-description' => 'Примечание: Вы можете добавлять и удалять локальные скрипты без проверки с помощью страницы [[MediaWiki:ImportJS]].',
+	'content-review-importjs-description' => 'С помощью этой страницы в можете с лёгкостью добавлять скрипты
+* с локальной вики, путём добавления названия страницы - например MyScript.js
+* с dev.wikia.com, при помощи названия страницы, но с префиксом dev, например dev:Code.js
+Названия не должны содержать префикс "MediaWiki". Указывайте название каждого отдельного скрипта новой строкой.
+См. [[Справка:Включение дополнительных JS и CSS]] для получения дополнительной информации.
+----
+',
+);
 
-$messages['zh-hans'] = [
+$messages['zh-hans'] = array(
 	'content-review-desc' => '这个扩展功能让社区的JavaScript在完全开放给用户之前需要通过人工审核。',
 	'content-review-module-title' => '自定义JavaScript状态',
 	'content-review-module-header-latest' => '最新版本:',
 	'content-review-module-header-last' => '上次审核版本:',
-	'content-review-module-header-live' => '上线版本:',
+	'content-review-module-header-live' => '现在使用版本:',
 	'content-review-module-status-none' => '无',
 	'content-review-module-status-unsubmitted' => '需要提交',
 	'content-review-module-status-live' => '已发布！',
@@ -420,7 +574,7 @@ $messages['zh-hans'] = [
 	'content-review-module-status-approved' => '已被批准',
 	'content-review-module-status-rejected' => '已被拒绝',
 	'content-review-rejection-reason-link' => '为什么?',
-	'content-review-module-help' => '[[Help:CSS and JS customization|帮助]]',
+	'content-review-module-help' => '[[Help:自訂CSS與JS|帮助]]',
 	'content-review-module-help-article' => '帮助: CSS和JS定制化',
 	'content-review-module-help-text' => '帮助',
 	'content-review-module-submit' => '提交等待审核',
@@ -439,12 +593,24 @@ $messages['zh-hans'] = [
 	'content-review-status-rejected' => '已被拒绝',
 	'content-review-status-live' => '已发布',
 	'content-review-status-autoapproved' => '自动批准',
-	'content-review-rejection-explanation' => '==提交脚本更改被拒绝==
-最近提交对此JS脚本更改的请求被Wikia拒绝。 请确保您符合[[Help:JavaScript review process|自定义JavaScript审核流程]]。',
+	'content-review-rejection-explanation' => '==$1==
+JavaScript页面最近提交的变更请求(版本[$2 $3]) 未通过Wikia审核。请确保您的变更符合[[Help:JavaScript審核流程|JavaScript审核流程]]。--~~~~',
 	'content-review-status-link-text' => '审核状态',
-];
+	'content-review-rejection-explanation-title' => '提交的脚本更改$1被拒绝',
+	'content-review-special-js-pages-title' => 'JavaScript页面',
+	'content-review-module-header-pagename' => '页面名称',
+	'content-review-module-header-actions' => '操作',
+	'content-review-module-jspages' => '所有的JS页面',
+	'content-review-special-js-description' => '此页面列出这个社区当前Mediawiki命名空间脚本的[[Help:JavaScript審核流程|审核状态]]。',
+	'content-review-special-js-importjs-description' => '注意: 您可以不需要通过[[MediaWiki:ImportJS]]审查流程就可以添加和删除本地以及dev.wikia.com的脚本输入。',
+	'content-review-importjs-description' => '在这里，您可以通过以下途径轻松地导入脚本:
+* 在您的Wikia社区通过文章名称进行导入 - 例如：MyScript.js
+* 从dev.wikia.com通过文章名称，前缀"dev:"进行导入 - 例如：dev:Code.js
+名称不应包含MediaWiki命名空间前缀。请在新的一行上逐个输入脚本。请点击[[Help:Including additional CSS and JS|帮助页]]了解详细信息。
+----',
+);
 
-$messages['zh-hant'] = [
+$messages['zh-hant'] = array(
 	'content-review-desc' => '此擴展功能讓社區的JavaScript在完全開放給使用者之前需要通過人工審核。',
 	'content-review-module-title' => '自訂JavaScript狀態',
 	'content-review-module-header-latest' => '最新版本:',
@@ -457,8 +623,8 @@ $messages['zh-hant'] = [
 	'content-review-module-status-approved' => '已通過審核',
 	'content-review-module-status-rejected' => '被拒絕了',
 	'content-review-rejection-reason-link' => '為什麼?',
-	'content-review-module-help' => '[[Help:CSS and JS customization|幫助頁]]',
-	'content-review-module-help-article' => 'Help:自訂CSS與JS',
+	'content-review-module-help' => '[[Help:自訂CSS與JS|幫助]]',
+	'content-review-module-help-article' => '幫助:自訂CSS與JS',
 	'content-review-module-help-text' => '幫助',
 	'content-review-module-submit' => '送出審核',
 	'content-review-module-submit-success' => '所做的更改已成功提交供審核。',
@@ -476,8 +642,20 @@ $messages['zh-hant'] = [
 	'content-review-status-rejected' => '未通過',
 	'content-review-status-live' => '已發佈',
 	'content-review-status-autoapproved' => '已自動批准',
-	'content-review-rejection-explanation' => '==提交腳本更改被拒絕== 
-最近提交對此JS腳本更改的請求被Wikia拒絕。請確保您所提交內容符合[[Help:JavaScript review process|自訂JavaScript審核流程]]。',
+	'content-review-rejection-explanation' => '==$1==
+JavaScript頁最近提交的變更請求(版本[$2 $3]) 未通過Wikia審核。 請確保您的變更符合[[Help:JavaScript審核流程|JavaScript審核流程]]。 --~~~~',
 	'content-review-status-link-text' => '審核狀態',
-];
+	'content-review-rejection-explanation-title' => '提交的腳本更改$1被拒絕',
+	'content-review-special-js-pages-title' => 'JavaScript頁',
+	'content-review-module-header-pagename' => '頁面名稱',
+	'content-review-module-header-actions' => '操作',
+	'content-review-module-jspages' => '所有的JS頁面',
+	'content-review-special-js-description' => '此頁面列出這個社區當前Mediawiki命名空間腳本的[[Help:JavaScript審核流程|審核狀態]]。',
+	'content-review-special-js-importjs-description' => '注意: 您可以不需要通過[[MediaWiki:ImportJS]]審查流程就可以添加和刪除本地以及dev.wikia.com的腳本輸入。',
+	'content-review-importjs-description' => '在這裡，您可以通過以下途徑輕鬆地導入腳本:
+* 在您的Wikia社區通過文章名稱進行導入 - 例如：MyScript.js
+* 從dev.wikia.com通過文章名稱，首碼"dev:"進行導入 - 例如：dev:Code.js
+名稱不應包含MediaWiki命名空間首碼。請在新的一行上逐個輸入腳本。請點擊[[Help:Including additional CSS and JS|説明頁]]參閱詳細資訊。
+----',
+);
 

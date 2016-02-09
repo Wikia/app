@@ -7,6 +7,63 @@ class NodeImageTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers       NodeImage::getGalleryData
+	 */
+	public function testGalleryData() {
+		$input = '<div data-model="[{&quot;caption&quot;:&quot;_caption_&quot;,&quot;title&quot;:&quot;_title_&quot;}]"></div>';
+		$expected = array(
+			array(
+				'label' => '_caption_',
+				'title' => '_title_',
+			)
+		);
+		$this->assertEquals( $expected, Wikia\PortableInfobox\Parser\Nodes\NodeImage::getGalleryData( $input ) );
+	}
+
+	/**
+	 * @covers       NodeImage::getTabberData
+	 */
+	public function testTabberData() {
+		$input = '<div class="tabber"><div class="tabbertab" title="_title_"><p><a><img data-image-key="_data-image-key_"></a></p></div></div>';
+		$expected = array(
+			array(
+				'label' => '_title_',
+				'title' => '_data-image-key_',
+			)
+		);
+		$this->assertEquals( $expected, Wikia\PortableInfobox\Parser\Nodes\NodeImage::getTabberData( $input ) );
+	}
+
+	/**
+	 * @covers       NodeImage::getMarkers
+	 * @dataProvider markersProvider
+	 *
+	 * @param $markup
+	 * @param $params
+	 * @param $expected
+	 */
+	public function testMarkers( $ext, $value, $expected ) {
+		$this->assertEquals( $expected, Wikia\PortableInfobox\Parser\Nodes\NodeImage::getMarkers( $value, $ext ) );
+	}
+
+	public function markersProvider() {
+		return [
+			[
+				'TABBER',
+				"<div>\x7fUNIQ123456789-tAbBeR-12345678-QINU\x7f</div>",
+				[ "\x7fUNIQ123456789-tAbBeR-12345678-QINU\x7f" ]
+			],
+			[
+				'GALLERY',
+				"\x7fUNIQ123456789-tAbBeR-12345678-QINU\x7f<center>\x7fUNIQabcd-gAlLeRy-12345678-QINU\x7f</center>\x7fUNIQabcd-gAlLeRy-87654321-QINU\x7f",
+				[ "\x7fUNIQabcd-gAlLeRy-12345678-QINU\x7f", "\x7fUNIQabcd-gAlLeRy-87654321-QINU\x7f" ]
+			]
+		];
+	}
+
+
+
+	/**
 	 * @covers       NodeImage::getData
 	 * @dataProvider dataProvider
 	 *
@@ -21,19 +78,33 @@ class NodeImageTest extends WikiaBaseTest {
 	}
 
 	public function dataProvider() {
+		// markup, params, expected
 		return [
-			[ '<image source="img"></image>', [ ],
-			  [ 'url' => '', 'name' => '', 'key' => '', 'alt' => null, 'caption' => null ] ],
-			[ '<image source="img"></image>', [ 'img' => 'test.jpg' ],
-			  [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => null, 'caption' => null ] ],
-			[ '<image source="img"><alt><default>test alt</default></alt></image>', [ 'img' => 'test.jpg' ],
-			  [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 'test alt', 'caption' => null ] ],
-			[ '<image source="img"><alt source="alt source"><default>test alt</default></alt></image>',
-			  [ 'img' => 'test.jpg', 'alt source' => 2 ],
-			  [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 2, 'caption' => null ] ],
-			[ '<image source="img"><alt><default>test alt</default></alt><caption source="img"/></image>',
-			  [ 'img' => 'test.jpg' ],
-			  [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 'test alt', 'caption' => 'test.jpg' ] ],
+			[ 
+				'<image source="img"></image>',
+				[ ],
+				[ [ 'url' => '', 'name' => '', 'key' => '', 'alt' => null, 'caption' => null ] ]
+			],
+			[
+				'<image source="img"></image>',
+				[ 'img' => 'test.jpg' ],
+			  	[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => null, 'caption' => null ] ]
+			],
+			[
+				'<image source="img"><alt><default>test alt</default></alt></image>',
+				[ 'img' => 'test.jpg' ],
+				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 'test alt', 'caption' => null ] ]
+			],
+			[
+				'<image source="img"><alt source="alt source"><default>test alt</default></alt></image>',
+				[ 'img' => 'test.jpg', 'alt source' => 2 ],
+				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 2, 'caption' => null ] ]
+			],
+			[
+				'<image source="img"><alt><default>test alt</default></alt><caption source="img"/></image>',
+				[ 'img' => 'test.jpg' ],
+				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 'test alt', 'caption' => 'test.jpg' ] ]
+			],
 		];
 	}
 
@@ -72,12 +143,25 @@ class NodeImageTest extends WikiaBaseTest {
 
 	public function sourceProvider() {
 		return [
-			[ '<image source="img"/>', [ 'img' ] ],
-			[ '<image source="img"><default>{{{img}}}</default><alt source="img" /></image>', [ 'img' ] ],
-			[ '<image source="img"><alt source="alt"/><caption source="cap"/></image>', [ 'img', 'alt', 'cap' ] ],
-			[ '<image source="img"><alt source="alt"><default>{{{def}}}</default></alt><caption source="cap"/></image>',
-			  [ 'img', 'alt', 'def', 'cap' ] ],
-			[ '<image/>', [ ] ],
+			[
+				'<image source="img"/>',
+				[ 'img' ]
+			],
+			[
+				'<image source="img"><default>{{{img}}}</default><alt source="img" /></image>',
+				[ 'img' ]
+			],
+			[
+				'<image source="img"><alt source="alt"/><caption source="cap"/></image>',
+				[ 'img', 'alt', 'cap' ]
+			],
+			[
+				'<image source="img"><alt source="alt"><default>{{{def}}}</default></alt><caption source="cap"/></image>',
+				[ 'img', 'alt', 'def', 'cap' ] ],
+			[
+				'<image/>',
+				[ ]
+			],
 		];
 	}
 
@@ -110,13 +194,15 @@ class NodeImageTest extends WikiaBaseTest {
 				'<image source="img" />',
 				[ 'img' => 'test.jpg' ],
 				[
-					'url' => 'http://test.url',
-					'name' => 'Test.jpg',
-					'key' => 'Test.jpg',
-					'alt' => null,
-					'caption' => null,
-					'isVideo' => true,
-					'duration' => '00:10'
+					[
+						'url' => 'http://test.url',
+						'name' => 'Test.jpg',
+						'key' => 'Test.jpg',
+						'alt' => null,
+						'caption' => null,
+						'isVideo' => true,
+						'duration' => '00:10'
+					]
 				]
 			]
 		];

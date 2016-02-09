@@ -84,6 +84,7 @@ abstract class AbstractEmailConfirmationController extends EmailController {
 }
 
 class EmailConfirmationController extends AbstractEmailConfirmationController {
+	const TYPE = "ConfirmationMail";
 
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-emailconfirmation-subject' )->text();

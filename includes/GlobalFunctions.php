@@ -339,6 +339,7 @@ function wfRandom() {
  * so no fancy : for IIS7.
  *
  * %2F in the page titles seems to fatally break for some reason.
+ * @see http://httpd.apache.org/docs/2.2/mod/core.html#allowencodedslashes
  *
  * @param $s String:
  * @return string
@@ -1274,9 +1275,8 @@ function wfReadOnly() {
  * @return bool
  */
 function wfReadOnlyReason() {
-	global $wgReadOnly;
 	wfReadOnly();
-	return $wgReadOnly;
+	return wfMessage( 'wikia-read-only-mode' )->plain();
 }
 
 /**
@@ -3933,13 +3933,14 @@ function wfMemoryLimit() {
 /**
  * Converts shorthand byte notation to integer form
  *
- * @param $string String
+ * @param string $string
+ * @param int $default Returned if $string is empty
  * @return Integer
  */
-function wfShorthandToInteger( $string = '' ) {
+function wfShorthandToInteger( $string = '', $default = -1 ) {
 	$string = trim( $string );
-	if( $string === '' ) {
-		return -1;
+	if ( $string === '' ) {
+		return $default;
 	}
 	$last = $string[strlen( $string ) - 1];
 	$val = intval( $string );

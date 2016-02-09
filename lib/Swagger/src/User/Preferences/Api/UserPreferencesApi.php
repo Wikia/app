@@ -213,7 +213,7 @@ class UserPreferencesApi
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $_header_accept = ApiClient::selectHeaderAccept(array('application/v2+json'));
+        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
         if (!is_null($_header_accept)) {
             $headerParams['Accept'] = $_header_accept;
         }
@@ -271,6 +271,88 @@ class UserPreferencesApi
                 $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\User\Preferences\Models\Problem', $httpHeader);
                 $e->setResponseObject($data);
                 break;
+            }
+  
+            throw $e;
+        }
+        
+    }
+    
+    /**
+     * deleteUserPreferences
+     *
+     * deletes all of a user's preferences
+     *
+     * @param int $user_id The id of the uesr whose preferences are to be deleted (required)
+     * @return void
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function deleteUserPreferences($user_id)
+    {
+        
+        // verify the required parameter 'user_id' is set
+        if ($user_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling deleteUserPreferences');
+        }
+  
+        // parse inputs
+        $resourcePath = "/{userId}";
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+        $method = "DELETE";
+        $httpBody = '';
+        $queryParams = array();
+        $headerParams = array();
+        $formParams = array();
+        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+  
+        
+        
+        // path params
+        if ($user_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "userId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($user_id),
+                $resourcePath
+            );
+        }
+        
+        
+  
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } else if (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
+        if (isset($apiKey)) {
+            $headerParams['X-Wikia-AccessToken'] = $apiKey;
+        }
+        
+        
+        
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
+        if (isset($apiKey)) {
+            $headerParams['X-Wikia-UserId'] = $apiKey;
+        }
+        
+        
+        
+        // make the API Call
+        try
+        {
+            list($response, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, $method,
+                $queryParams, $httpBody,
+                $headerParams
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) { 
             }
   
             throw $e;

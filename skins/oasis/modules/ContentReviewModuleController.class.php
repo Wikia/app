@@ -1,17 +1,9 @@
 <?php
 
 use Wikia\ContentReview\Helper;
-use Wikia\ContentReview\Models\ReviewModel;
+use Wikia\ContentReview\ContentReviewStatusesService;
 
 class ContentReviewModuleController extends WikiaController {
-
-	const STATUS_NONE = 'none';
-	const STATUS_LIVE = 'live';
-	const STATUS_AWAITING = 'awaiting';
-	const STATUS_REJECTED = 'rejected';
-	const STATUS_APPROVED = 'approved';
-	const STATUS_UNSUBMITTED = 'unsubmitted';
-
 	const STATUS_TEMPLATE_PATH = 'extensions/wikia/ContentReview/templates/ContentReviewModuleStatus.mustache';
 	const STATUS_MODULE_TEMPLATE_PATH =
 		'extensions/wikia/ContentReview/controllers/templates/ContentReviewModule.mustache';
@@ -25,44 +17,38 @@ class ContentReviewModuleController extends WikiaController {
 		Wikia::addAssetsToOutput( 'content_review_module_scss' );
 		JSMessages::enqueuePackage( 'ContentReviewModule', JSMessages::EXTERNAL );
 
-		$this->setVal( 'isTestModeEnabled', ( new Helper() )->isContentReviewTestModeEnabled() );
+		$helper = new Helper();
 
-		/*
-		 * This part allows fetches required params if not set. This allows direct usage via API
-		 * (not needed in standard flow via $railModuleList loaded modules)
-		 */
-		if ( empty( $params ) ) {
-			$params = [
-				'pageStatus' => $this->getVal( 'pageStatus' ),
-				'latestRevisionId' => $this->getVal( 'latestRevisionId' )
-			];
-		}
+		$this->setVal( 'isTestModeEnabled', $helper->isContentReviewTestModeEnabled() );
+
+		$contentReviewStatusesService = new ContentReviewStatusesService();
+		$pageStatus = $contentReviewStatusesService->getJsPageStatus( $params['wikiId'], $params['pageId'] );
 
 		/**
 		 * Latest revision status
 		 */
-		$latestStatus = $this->getLatestRevisionStatusTemplateData( $params['latestRevisionId'], $params['pageStatus'] );
 		$this->setVal( 'latestStatus', MustacheService::getInstance()->render(
-			self::STATUS_TEMPLATE_PATH, $latestStatus
+			self::STATUS_TEMPLATE_PATH, $pageStatus['latestRevision']
 		) );
-
-		/* Set displaySubmit */
-		$this->setVal( 'displaySubmit', $latestStatus['statusKey'] === self::STATUS_UNSUBMITTED );
+		$this->setVal(
+			'displaySubmit',
+			$pageStatus['latestRevision']['statusKey'] === ContentReviewStatusesService::STATUS_UNSUBMITTED
+				&& $helper->userCanEditJsPage( $this->wg->Title, $this->wg->User )
+		);
+		$this->setVal( 'pageName', $pageStatus['pageName'] );
 
 		/**
 		 * Last reviewed status
 		 */
-		$lastStatus = $this->getLastRevisionStatus( $params['pageStatus'] );
 		$this->setVal( 'lastStatus', MustacheService::getInstance()->render(
-			self::STATUS_TEMPLATE_PATH, $lastStatus
+			self::STATUS_TEMPLATE_PATH, $pageStatus['latestReviewed']
 		) );
 
 		/**
 		 * Live revision status
 		 */
-		$liveStatus = $this->getLiveRevisionStatus( $params['pageStatus'] );
 		$this->setVal( 'liveStatus', MustacheService::getInstance()->render(
-			self::STATUS_TEMPLATE_PATH, $liveStatus
+			self::STATUS_TEMPLATE_PATH, $pageStatus['liveRevision']
 		) );
 
 		/* Use mustache status template from ContentReview extension  */
@@ -78,117 +64,7 @@ class ContentReviewModuleController extends WikiaController {
 		$this->setVal( 'enableTestMode', wfMessage( 'content-review-module-test-mode-enable' )->plain() );
 		$this->setVal( 'title', wfMessage( 'content-review-module-title' )->plain() );
 		$this->setVal( 'help', wfMessage( 'content-review-module-help' )->parse() );
-	}
-
-	public function isWithReason( $latestRevisionId, $pageStatus ) {
-		return ( isset( $pageStatus['lastReviewedId'] )
-			&& $latestRevisionId === (int)$pageStatus['lastReviewedId']
-			&& $pageStatus['lastReviewedStatus'] === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
-		);
-	}
-
-	public function getLatestRevisionStatus( $latestRevisionId, array $pageStatus ) {
-		$latestId = isset( $pageStatus['latestId'] ) ? $pageStatus['latestId'] : 0;
-		$liveId = isset( $pageStatus['liveId'] ) ? $pageStatus['liveId'] : 0;
-		$lastReviewedId = isset( $pageStatus['lastReviewedId'] ) ? $pageStatus['lastReviewedId'] : 0;
-
-		if ( $latestRevisionId === 0 ) {
-			$latestStatus = self::STATUS_NONE;
-		} elseif ( $latestRevisionId === $liveId ) {
-			$latestStatus = self::STATUS_LIVE;
-		} elseif ( $latestRevisionId === $latestId
-			&& Helper::isStatusAwaiting( $pageStatus['latestStatus'] )
-		) {
-			$latestStatus = self::STATUS_AWAITING;
-		} elseif ( $latestRevisionId === $lastReviewedId
-			&& $pageStatus['lastReviewedStatus'] === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED
-		) {
-			$latestStatus = self::STATUS_REJECTED;
-		} elseif ( $latestRevisionId > $liveId
-			&& $latestRevisionId > $latestId
-			&& $latestRevisionId > $lastReviewedId
-		) {
-			$latestStatus = self::STATUS_UNSUBMITTED;
-		}
-
-		return $latestStatus;
-	}
-
-	public function getLatestRevisionStatusTemplateData( $latestRevisionId, $pageStatus ) {
-		$latestStatus = $this->getLatestRevisionStatus( $latestRevisionId, $pageStatus );
-		$withReason = $this->isWithReason( $latestRevisionId, $pageStatus );
-
-		$latestStatusTemplateData = $this->prepareTemplateData( $latestStatus, $pageStatus['liveId'], $latestRevisionId, $withReason );
-		return $latestStatusTemplateData;
-	}
-
-	public function getLastRevisionStatus( array $pageStatus ) {
-		if ( !isset( $pageStatus['lastReviewedId'] ) ) {
-			$lastStatus = $this->prepareTemplateData( self::STATUS_NONE );
-		} elseif ( $pageStatus['lastReviewedStatus'] === ReviewModel::CONTENT_REVIEW_STATUS_APPROVED ) {
-			$lastStatus = $this->prepareTemplateData( self::STATUS_APPROVED, $pageStatus['liveId'], $pageStatus['lastReviewedId'] );
-		} elseif ( $pageStatus['lastReviewedStatus'] === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED ) {
-			$lastStatus = $this->prepareTemplateData( self::STATUS_REJECTED, $pageStatus['liveId'], $pageStatus['lastReviewedId'], true );
-		}
-
-		return $lastStatus;
-	}
-
-	public function getLiveRevisionStatus( array $pageStatus ) {
-		if ( isset( $pageStatus['liveId'] ) ) {
-			$liveStatus = $this->prepareTemplateData( self::STATUS_LIVE, $pageStatus['liveId'] );
-		} else {
-			$liveStatus = $this->prepareTemplateData( self::STATUS_NONE );
-		}
-
-		return $liveStatus;
-	}
-
-	protected function prepareTemplateData( $status, $liveRevisionId = 0, $revisionId = 0, $withReason = false ) {
-		$templateData = [
-			'statusKey' => $status,
-			'message' => wfMessage( "content-review-module-status-{$status}" )->escaped(),
-		];
-
-		if ( !empty( $revisionId ) ) {
-			$templateData['diffLink'] = $this->createRevisionLink( $liveRevisionId, $revisionId );
-			if ( $withReason ) {
-				$templateData['reasonLink'] = $this->createRevisionTalkpageLink( $revisionId );
-			}
-		} elseif ( !empty( $liveRevisionId ) ) {
-			$templateData['diffLink'] = $this->createRevisionLink( $liveRevisionId );
-		}
-
-		return $templateData;
-	}
-
-	protected function createRevisionLink( $oldId, $revisionId = 0 ) {
-		$params = [];
-
-		if ( !empty( $oldId ) ) {
-			$params['oldid'] = $oldId;
-		} else {
-			$params['oldid'] = $revisionId;
-		}
-
-		if ( !empty( $oldId ) && !empty( $revisionId ) && $revisionId !== $oldId ) {
-			$params['diff'] = $revisionId;
-		} elseif ( empty( $revisionId ) ) {
-			$revisionId = $oldId;
-		}
-
-		return Linker::linkKnown(
-			$this->wg->Title,
-			"#{$revisionId}",
-			[],
-			$params
-		);
-	}
-
-	protected function createRevisionTalkpageLink() {
-		return Linker::linkKnown(
-			$this->wg->Title->getTalkPage(),
-			wfMessage( 'content-review-rejection-reason-link' )->escaped()
-		);
+		$this->setVal( 'jsPagesUrl', SpecialPage::getTitleFor( 'JSPages' )->getLocalURL() );
+		$this->setVal( 'jsPagesTitle', wfMessage( 'content-review-module-jspages' )->plain() );
 	}
 }

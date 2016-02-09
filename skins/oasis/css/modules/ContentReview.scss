@@ -1,7 +1,12 @@
 @import 'extensions/wikia/ContentReview/styles/ContentReviewVariables';
 
 .content-review-module-help {
+	margin-top: 15px;
 	text-align: right;
+
+	a {
+		margin-left: 10px;
+	}
 }
 
 .content-review-module-submit-container {
@@ -39,13 +44,16 @@
 	border-color: $content-review-color-rejected;
 }
 
-.content-review-status-unsubmitted {
-	border-color: $content-review-color-unsubmitted;
-	animation: submitReminder 3s infinite;
-}
-
 .content-review-status-awaiting {
 	border-color: $content-review-color-awaiting;
+}
+
+.content-review-status-unsubmitted {
+	border-color: $content-review-color-unsubmitted;
+}
+
+.WikiaRail .content-review-status-unsubmitted {
+	animation: submitReminder 3s infinite;
 }
 
 /* Animation */

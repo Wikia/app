@@ -865,12 +865,15 @@ class MWMemcached {
 			wfRestoreWarnings();
 		}
 		if ( !$sock ) {
-			wfDebug( __METHOD__ . ": Error connecting to $host: $errstr\n" ); // Wikia change
+			wfDebug( __METHOD__ . ": Error connecting to $host ($ip:$port): $errstr\n" ); // Wikia change
 
 			// Wikia change - begin
 			$this->error( 'MemcachedClient: socket connection failed', [
 				'host' => $host,
 				'exception' => new Exception( $errstr, $errno ),
+				'ip' => $ip,
+				'port' => $port,
+				'timeout' => $timeout,
 			]);
 			// Wikia change - end
 			return false;

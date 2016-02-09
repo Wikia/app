@@ -78,7 +78,7 @@ $messages['pl'] = array(
 	'emailext-password-summary' => 'Wygląda na to, że masz problem z logowaniem. Przepraszamy! Chcielibyśmy po prostu przeslać Ci Twoje hasło, ale ze względów bezpieczeństwa musisz zalogować się korzystając z  tymczasowego hasła.',
 	'emailext-password-intro' => 'Poniżej znajduje się twoje tymczasowe hasło:',
 	'emailext-password-unrequested' => 'Jeśli nie prosiłeś o przesłanie nowego hasła, nie przejmuj się! Twoje konto jest bezpieczne. Zignoruj ten e-mail i loguj się do portalu Wikia używajc starego hasła.',
-	'emailext-password-questions' => 'Masz pytania lub wtpliwości? Skontaktuj się z [http://spolecznosc.wikia.com/wiki/Specjalna:Kontakt/account-issue  Nami].',
+	'emailext-password-questions' => 'Masz pytania lub wątpliwości? Skontaktuj się z [http://spolecznosc.wikia.com/wiki/Specjalna:Kontakt/account-issue  Nami].',
 	'emailext-password-signature' => 'The Wikia Community Team',
 );
 
@@ -92,21 +92,30 @@ $messages['pt'] = array(
 );
 
 $messages['ru'] = array(
-	'emailext-password-subject' => 'Сброс пароля Викия',
-	'emailext-password-summary' => 'Похоже, у вас возникли проблемы со входом в систему. Приносим свои извинения! Как бы нам ни хотелось просто выслать вам пароль, по соображениям безопасности вам понадобится войти с временным паролем.',
-	'emailext-password-intro' => 'Ниже вы видите свой временный пароль:',
-	'emailext-password-unrequested' => 'Если Вы не запрашивали новый пароль, не беспокойтесь! Ваша учетная запись надежно защищена. Не обращайте внимания на данное сообщение и войдите в систему Викия, используя свой старый пароль.',
-	'emailext-password-questions' => 'Возникли вопросы или сложности? Смотрите страницу Поддержки [http://ru.community.wikia.com/wiki/Служебная:Contact/account-issue].',
-	'emailext-password-signature' => 'Команда сообщества Викия',
+	'emailext-password-subject' => 'Восстановление пароля на Викия',
+	'emailext-password-summary' => 'Похоже, у вас возникли проблемы со входом в систему. Просто выслать вам новый пароль мы не можем из соображений безопасности, поэтому вам понадобится войти в систему с помощью временного пароля.',
+	'emailext-password-intro' => 'Вот ваш временный пароль:',
+	'emailext-password-unrequested' => 'Если вы не запрашивали новый пароль, не беспокойтесь. Ваша учетная запись надёжно защищена. Не обращайте внимания на данное сообщение и войдите в систему, используя свой старый пароль.',
+	'emailext-password-questions' => 'Возникли вопросы или сложности? [http://ru.community.wikia.com/wiki/Служебная:Contact/account-issue Обратитесь в поддержку Викия].',
+	'emailext-password-signature' => 'Команда Викия',
 );
 
 $messages['zh-hans'] = array(
 	'emailext-password-subject' => '请重置您的Wikia密码',
-	'emailext-password-summary' => '看来您好像无法登录。真抱歉！尽管我们很想给您发送密码，但为了安全起见，我们需要您用一个临时密码登录。',
+	'emailext-password-summary' => '看来您好像无法登录账户。真抱歉！尽管我们希望将您的密码发送给您，但是为了安全考虑，我们只能发送给您一个临时密码，您可以使用这个临时密码进行登录。',
 	'emailext-password-intro' => '请在下方查看临时密码：',
-	'emailext-password-unrequested' => '如果您没有申请新密码，不用担心！您的帐户很安全。您可以忽略此邮件并用您的旧密码登入Wikia。',
-	'emailext-password-questions' => '有疑问或顾虑？请随时http://zh.community.wikia.com/wiki/Special:联系我们/account-issue]。',
+	'emailext-password-unrequested' => '如果您没有申请新密码，不用担心！您的帐户非常安全。您可以忽略此邮件并用您的旧密码登录Wikia账户。',
+	'emailext-password-questions' => '有疑问或顾虑？请随时[http://zh.community.wikia.com/wiki/Special:Contact/account-issue 联系我们]。',
 	'emailext-password-signature' => 'Wikia社区团队',
+);
+
+$messages['zh-hant'] = array(
+	'emailext-password-subject' => '請重置Wikia密碼',
+	'emailext-password-summary' => '看來您好像無法登錄賬戶。真抱歉！儘管我們希望將您的密碼發送給您，但是為了安全考慮，我們只能發送給您一個臨時密碼，您可以使用這個臨時密碼進行登錄。',
+	'emailext-password-intro' => '請查看下面的臨時密碼：',
+	'emailext-password-unrequested' => '如果你沒有申請新的密碼，不要擔心！您的帳戶安全而可靠。你可以忽略這封電子郵件，並用你的舊密碼登入Wikia賬戶。',
+	'emailext-password-questions' => '有問題或疑慮？請隨時[http://zh.community.wikia.com/wiki/Special:Contact/account-issue 聯繫我們]。',
+	'emailext-password-signature' => 'Wikia社區團隊',
 );
 
 $messages['zh-tw'] = array(

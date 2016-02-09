@@ -65,14 +65,20 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	}
 
 	protected function createTitle( $titleText, $options = array() ) {
-		global $wgCityId;
+		global $wgCityId, $wgEnableContentReviewExt;
 		wfProfileIn(__METHOD__);
 		$title = null;
+
 		$realTitleText = isset($options['title']) ? $options['title'] : $titleText;
+		list( $titleText, $namespace ) = $this->parseTitle( $realTitleText );
+
+		if ( $options['type'] === 'script' && $namespace != NS_USER && !empty( $wgEnableContentReviewExt ) ) {
+			return $this->createScriptTitle( $titleText, $options );
+		}
+
 		if ( !empty( $options['city_id'] ) && $wgCityId != $options['city_id'] ) {
-			list( $text, $namespace ) = $this->parseTitle($realTitleText);
-			if ( $text !== false ) {
-				$title = GlobalTitle::newFromTextCached($text, $namespace, $options['city_id']);
+			if ( $titleText !== false ) {
+				$title = GlobalTitle::newFromTextCached($titleText, $namespace, $options['city_id']);
 			}
 			$title = $this->resolveRedirect($title);
 		} else {
@@ -84,38 +90,56 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		return $title;
 	}
 
+	/**
+	 * Create title for scripts. Only NS_MEDIAWIKI is allowed for javascript pages.
+	 *
+	 * @param string $titleText
+	 * @param array $options
+	 * @return GlobalTitle|null|Title
+	 * @throws MWException
+	 */
+	private function createScriptTitle( $titleText, $options ) {
+		global $wgCityId;
+
+		$title = null;
+		$targetCityId = (int) $options['city_id'];
+
+		if ( $targetCityId !== 0 && $wgCityId !== $targetCityId && $titleText !== false ) {
+			$title = GlobalTitle::newFromTextCached( $titleText, NS_MEDIAWIKI, $targetCityId );
+		} else {
+			$title = Title::newFromText( $titleText, NS_MEDIAWIKI );
+		}
+
+		$title = $this->resolveRedirect( $title );
+
+		return $title;
+	}
+
 	protected function getContent( $title, $titleText, $options = array() ) {
-		global $wgCityId, $wgEnableContentReviewExt;
+		global $wgCityId;
 		$content = null;
 		$revisionId = null;
 
 		wfProfileIn(__METHOD__);
 
-		if ( $wgEnableContentReviewExt && $options['type'] === 'script' && $title->inNamespace( NS_MEDIAWIKI ) ) {
+		if ( Wikia::isUsingSafeJs()
+			&& $options['type'] === 'script'
+			&& $title->inNamespace( NS_MEDIAWIKI )
+		) {
 			$revisionId = $this->getScriptReviewedRevisionId( $title );
 		}
 
-		if ( $title instanceof GlobalTitle ) {
-			// todo: think of pages like NS_MAIN:Test/code.js that are pulled
-			// from dev.wikia.com
-			/*
-			if ( !$title->isCssJsSubpage() && !$title->isCssOrJsPage() ) {
-				return null;
+		if ( $title instanceof GlobalTitle && WikiFactory::isWikiPrivate( $title->getCityId() ) == false ) {
+			if ( !is_null( $revisionId ) ) {
+				if ( $revisionId === 0 ) {
+					$content = '';
+				} else {
+					$content = $title->getRevisionText( $revisionId );
+				}
 			}
-			*/
 
-			if ( WikiFactory::isWikiPrivate( $title->getCityId() ) == false ) {
-				if ( !is_null( $revisionId ) ) {
-					if ( $revisionId === 0 ) {
-						$content = '';
-					} else {
-						$content = $title->getRevisionText( $revisionId );
-					}
-				}
-
-				if ( is_null( $content ) ) {
-					$content = $title->getContent();
-				}
+			if ( is_null( $content ) ) {
+				$content = $title->getContent();
 			}
 
 		// Try to load the contents of an article before falling back to a message (BugId:45352)
@@ -254,6 +278,10 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	private function getScriptReviewedRevisionId( Title $title ) {
 		$revisionId = null;
 		$wikiId = 0;
+
+		if ( empty( $title->getArticleID() ) ) {
+			return 0;
+		}
 
 		$contentReviewHelper = new Wikia\ContentReview\Helper();
 

@@ -9,10 +9,31 @@ define( 'MW_NO_SETUP', 1 );
 require_once( dirname(__FILE__) . '/includes/WebStart.php' );
 require_once( dirname(__FILE__) . '/includes/Setup.php' );
 
+// Serve an experimental version of robots.txt for a specific wiki
+// Configurable from $wgExperimentalRobotsTxt, it should contain a name of the experiment
+// File robots.txt.d/experiment-name.txt will be loaded instead of generating robots.txt contents
+
+if ( !empty( $wgExperimentalRobotsTxt ) && preg_match( '/^[a-z0-9-]+$/m', $wgExperimentalRobotsTxt ) ) {
+	$allowRobots = ( $wgWikiaEnvironment === WIKIA_ENV_PROD || $wgRequest->getBool( 'forcerobots' ) );
+	$file = __DIR__ . '/robots.txt.d/' . $wgExperimentalRobotsTxt . '.txt';
+	if ( $allowRobots && is_file( $file ) && is_readable( $file ) ) {
+		header( 'Content-Type: text/plain' );
+		header( 'Cache-Control: s-maxage=3600' );
+		echo file_get_contents( $file );
+		echo "\n";
+		echo getSitemapUrl();
+		exit;
+	}
+}
+
+// Load the new robots extensions if it's enabled
+
 if ( !empty( $wgEnableRobotsTxtExt ) ) {
 	require( __DIR__ . '/wikia-robots-txt.php' );
 	exit;
 }
+
+// The old logic goes now:
 
 require_once( dirname(__FILE__) . '/includes/StreamFile.php' );
 require_once( dirname(__FILE__) . '/includes/SpecialPage.php' );

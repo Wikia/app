@@ -7,6 +7,7 @@ class ReviewedBeforeDateRevision extends Maintenance {
 
 	private $contentReviewService,
 			$currentRevisionModel,
+			$reviewModel,
 			$wikiaUser;
 
 	/**
@@ -39,7 +40,9 @@ class ReviewedBeforeDateRevision extends Maintenance {
 
 			foreach ( $jsPages as $jsPage ) {
 				if ( !empty( $jsPage['page_id'] ) && !empty( $jsPage['page_latest'] ) ) {
-					$lastApprovedRevisionId = isset( $currentRevisions[$jsPage['page_id']] ) ? $currentRevisions[$jsPage['page_id']] : 0;
+					$lastApprovedRevisionId = isset( $currentRevisions[$jsPage['page_id']] )
+						? $currentRevisions[$jsPage['page_id']]['revision_id']
+						: 0;
 
 					if ( $jsPage['page_latest'] != $lastApprovedRevisionId ) {
 						$revision = Revision::newFromId( $jsPage['page_latest'] );
@@ -69,11 +72,29 @@ class ReviewedBeforeDateRevision extends Maintenance {
 							}
 
 						}
+					} elseif ( !empty( $lastApprovedRevisionId ) ) {
+						try {
+							$reviewModel = $this->getReviewModel();
+							$reviewModel->submitPageForReview(
+								$wgCityId,
+								$jsPage['page_id'],
+								$lastApprovedRevisionId,
+								$this->getWikiaUser()->getId()
+							);
+							$reviewModel->updateCompletedReview(
+								$wgCityId,
+								$jsPage['page_id'],
+								$lastApprovedRevisionId, Wikia\ContentReview\Models\ReviewModel::CONTENT_REVIEW_STATUS_APPROVED );
+							$this->output( "Moved revision id for page {$jsPage['page_title']} (ID: {$jsPage['page_id']})\n" );
+						} catch( FluentSql\Exception\SqlException $e ) {
+							$this->output( $e->getMessage() . "\n" );
+						}
 					}
 				}
 			}
 
 			$helper->purgeReviewedJsPagesTimestamp();
+			\Wikia\ContentReview\ContentReviewStatusesService::purgeJsPagesCache();
 		} else {
 			$this->output( "Wiki (Id: {$wgCityId}) has disabled custom scripts or JSRT.\n" );
 		}
@@ -94,6 +115,14 @@ class ReviewedBeforeDateRevision extends Maintenance {
 		}
 
 		return $this->currentRevisionModel;
+	}
+
+	private function getReviewModel() {
+		if ( empty( $this->reviewModel ) ) {
+			$this->reviewModel = new Wikia\ContentReview\Models\ReviewModel();
+		}
+
+		return $this->reviewModel;
 	}
 
 	private function getContentReviewService() {

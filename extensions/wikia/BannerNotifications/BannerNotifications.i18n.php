@@ -87,7 +87,7 @@ $messages['de'] = array(
 $messages['es'] = array(
 	'bannernotifications-desc' => 'Muestra las notificaciones del sistema para eventos tales como fallas de AJAX',
 	'bannernotifications-general-ajax-failure' => 'El navegador no pudo conectarse a Wikia. Inténtalo más tarde.',
-	'bannernotifications-not-confirmed-email' => '¡ Oh, no! Aún no se ha confirmado tu dirección de correo electrónico. Debes tener un mensaje de confirmación en tu bandeja de entrada. ¿No te llegó? [[Special: ConfirmEmail| Haz clic aquí y te enviaremos uno nuevo.]] Si necesitas cambiar tu dirección, dirígete a [[Special:Preferences#mw-prefsection-emailv2|Página de preferencias]].',
+	'bannernotifications-not-confirmed-email' => '¡ Oh, no! Aún no se ha confirmado tu dirección de correo electrónico. Debes tener un mensaje de confirmación en tu bandeja de entrada. ¿No te llegó? [[Special:ConfirmEmail|Haz clic aquí y te enviaremos uno nuevo.]] Si necesitas cambiar tu dirección, dirígete a [[Special:Preferences#mw-prefsection-emailv2|Página de preferencias]].',
 	'bannernotifications-no-email' => '¡Oh no! Parece que no tenemos tu dirección de correo electrónico. Para configurar tu correo electrónico, dirígete a tu [[Special:Preferences#mw-prefsection-emailv2|página de preferencias]].',
 );
 
@@ -167,8 +167,8 @@ $messages['id'] = array(
 $messages['it'] = array(
 	'bannernotifications-desc' => 'Visualizza le notifiche di sistema per eventi quali guasti AJAX',
 	'bannernotifications-general-ajax-failure' => 'Il browser non riesce a connettersi a Wikia. Riprovare più tardi.',
-	'bannernotifications-not-confirmed-email' => "Oh no! Il tuo indirizzo email non è ancora stato confermato. Avresti dovuto ricevere un messaggio di conferma nella tua casella di posta. Non l'hai ricevuto? [[Special: ConfirmEmail| Clicca qui e te ne invieremo un altro.]] Se devi cambiare il tuo indirizzo, visita la pagina [[speciale: preferenze #mw-prefsection-emailv2| Preferenze]].",
-	'bannernotifications-no-email' => 'Oh no! A quanto pare non abbiamo un indirizzo email per te. Per impostare la tua email, vai nelle tue [[Special:Preferences#mw-prefsection-emailv2| Preferenze]].',
+	'bannernotifications-not-confirmed-email' => "Oh no! Il tuo indirizzo email non è ancora stato confermato. Avresti dovuto ricevere un messaggio di conferma nella tua casella di posta. Non l'hai ricevuto? [[Special:ConfirmEmail|Clicca qui e te ne invieremo un altro.]] Se devi cambiare il tuo indirizzo, visita la pagina [[speciale: preferenze #mw-prefsection-emailv2|Preferenze]].",
+	'bannernotifications-no-email' => 'Oh no! A quanto pare non abbiamo un indirizzo email per te. Per impostare la tua email, vai nelle tue [[Special:Preferences#mw-prefsection-emailv2|Preferenze]].',
 );
 
 $messages['ja'] = array(
@@ -245,8 +245,8 @@ $messages['pms'] = array(
 $messages['pt'] = array(
 	'bannernotifications-desc' => 'Exibe notificações de sistema para eventos como falhas de AJAX',
 	'bannernotifications-general-ajax-failure' => 'O navegador não pode se conectar a Wikia. Tente novamente mais tarde.',
-	'bannernotifications-not-confirmed-email' => 'Seu endereço de e-mail ainda não foi confirmado. Você deve ter recebido uma mensagem de confirmação em sua caixa de entrada. Não recebeu? [[Especial: ConfirmEmail| Clique aqui e enviaremos um novo.]] Se você precisar alterar o seu endereço, visite sua [[especial: preferências #mw-prefsection-emailv2| página de preferências]].',
-	'bannernotifications-no-email' => 'Aparentemente não temos um endereço de e-mail para você. Para definir o seu e-mail, acesse [[especial: preferências #mw-prefsection-emailv2| Preferências]].',
+	'bannernotifications-not-confirmed-email' => 'Seu endereço de e-mail ainda não foi confirmado. Você deve ter recebido uma mensagem de confirmação em sua caixa de entrada. Não recebeu? [[Special:ConfirmEmail|Clique aqui e enviaremos um novo.]] Se você precisar alterar o seu endereço, visite sua [[Special:Preferences#mw-prefsection-emailv2|página de preferências]].',
+	'bannernotifications-no-email' => 'Aparentemente não temos um endereço de e-mail para você. Para definir o seu e-mail, acesse [[Special:Preferences#mw-prefsection-emailv2|Preferências]].',
 );
 
 /** Brazilian Portuguese (português do Brasil)

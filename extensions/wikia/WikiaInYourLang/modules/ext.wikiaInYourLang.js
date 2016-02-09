@@ -21,25 +21,44 @@ require(
 
 		// Get user's geographic data and a country code
 		var targetLanguage = getTargetLanguage(),
-			// Per request we should unify dialects like pt and pt-br
-			// @see CE-1220
-			contentLanguage = w.wgContentLanguage.split('-')[0],
-			// Cache version
-			cacheVersion = '1.01',
-			// LinkTitle from Cache
+			contentLanguage = w.wgContentLanguage,
+		// Cache version
+			cacheVersion = '1.02',
+		// LinkTitle from Cache
 			linkTitle = retrieveLinkTitle();
 
 		function init() {
-			if (targetLanguage !== false && targetLanguage !== contentLanguage) {
+			var interlangExist = false;
+			if (targetLanguage !== false && shouldShowWikiaInYourLangWithTargetAndContentLanguage(targetLanguage, contentLanguage)) {
 				// Check local browser cache to see if a request has been sent
 				// in the last month and if the notification has been shown to him.
 				// Both have to be !== true to continue.
 				if (cache.get(getWIYLRequestSentKey()) !== true &&
 					cache.get(getWIYLNotificationShownKey()) !== true) {
-					getNativeWikiaInfo();
+					interlangExist = getInterlangFromArticleInterlangList();
+					if (!interlangExist) {
+						getNativeWikiaInfo();
+					}
 				} else if (typeof cache.get(getWIYLMessageKey()) === 'string') {
 					displayNotification(cache.get(getWIYLMessageKey()));
 				}
+			}
+		}
+
+		// Per request we should unify dialects like pt and pt-br
+		// Feature is enabled only for languages in targetLanguageFilter
+		// @see CE-1220
+		// @see INT-302
+		function shouldShowWikiaInYourLangWithTargetAndContentLanguage(targetLanguage, contentLanguage) {
+			var targetLanguageLangCode = targetLanguage.split('-')[0],
+				contentLanguageLangCode = contentLanguage.split('-')[0],
+				targetLanguageFilter = [ 'zh', 'ko', 'vi', 'ru', 'ja'];
+
+			if (targetLanguageFilter.indexOf(targetLanguageLangCode) === -1) {
+				return false;
+			}
+			else {
+				return targetLanguageLangCode !== contentLanguageLangCode;
 			}
 		}
 
@@ -61,13 +80,25 @@ require(
 				// If neither - return false
 				targetLanguage = false;
 			}
-
-			// Per request we should unify dialects like pt and pt-br
-			// @see CE-1220
-			return targetLanguage.split('-')[0];
+			return targetLanguage;
 		}
 
-		function getNativeWikiaInfo() {
+		function getInterlangFromArticleInterlangList() {
+			var i, interlangData;
+			if (Array.isArray(w.wgArticleInterlangList)) {
+				for(i = 0; i < w.wgArticleInterlangList.length; i++) {
+					interlangData = w.wgArticleInterlangList[i].split(':');
+					if (targetLanguage === interlangData[0]) {
+						//we have interlang for this user. Pass the interlang article title
+						getNativeWikiaInfo(interlangData[1]);
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		function getNativeWikiaInfo(interlangTitle) {
 			/**
 			 * Sends a request to the WikiaInYourLangController via Nirvana.
 			 * Response consists of:
@@ -84,7 +115,8 @@ require(
 				type: 'GET',
 				data: {
 					targetLanguage: targetLanguage,
-					articleTitle: w.wgPageName
+					articleTitle: w.wgPageName,
+					interlangTitle: interlangTitle
 				},
 				callback: function (results) {
 					if (results.success === true) {
@@ -115,7 +147,7 @@ require(
 		function displayNotification(message) {
 			var bannerNotification = new BannerNotification(message, 'notify').show(),
 				label = getTrackingLabel('notification-view'),
-				// Track a view of the notification
+			// Track a view of the notification
 				trackingParams = {
 					trackingMethod: 'analytics',
 					category: 'wikia-in-your-lang',
@@ -140,12 +172,12 @@ require(
 		function onNotificationClosed() {
 			// Track closing of a notification
 			var label = getTrackingLabel('notification-close'),
-			    trackingParams = {
-				trackingMethod: 'analytics',
-				category: 'wikia-in-your-lang',
-				action: tracker.ACTIONS.CLOSE,
-				label: label,
-			};
+				trackingParams = {
+					trackingMethod: 'analytics',
+					category: 'wikia-in-your-lang',
+					action: tracker.ACTIONS.CLOSE,
+					label: label,
+				};
 			tracker.track(trackingParams);
 
 			cache.set(getWIYLMessageKey(), null);
@@ -156,12 +188,12 @@ require(
 		function onLinkClick() {
 			// Track a click on a notification link
 			var label = getTrackingLabel('notification-link-click'),
-			    trackingParams = {
-				trackingMethod: 'analytics',
-				category: 'wikia-in-your-lang',
-				action: tracker.ACTIONS.CLICK_LINK_TEXT,
-				label: label,
-			};
+				trackingParams = {
+					trackingMethod: 'analytics',
+					category: 'wikia-in-your-lang',
+					action: tracker.ACTIONS.CLICK_LINK_TEXT,
+					label: label,
+				};
 			tracker.track(trackingParams);
 		}
 

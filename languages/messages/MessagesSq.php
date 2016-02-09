@@ -335,30 +335,12 @@ $messages = array(
 'navigation'    => 'Shfleto',
 'and'           => '&#32;dhe',
 
-# Cologne Blue skin
 'qbfind'         => 'Kërko',
 'qbbrowse'       => 'Shfletoni',
-'qbedit'         => 'Redaktoni',
 'qbpageoptions'  => 'Kjo faqe',
 'qbpageinfo'     => 'Kontekst',
-'qbmyoptions'    => 'Faqet e mia',
-'qbspecialpages' => 'Faqet speciale',
 'faq'            => 'Pyetje që bëhen shpesh',
-'faqpage'        => 'Project: Pyetje që bëhen shpesh',
 
-# Vector skin
-'vector-action-addsection'       => 'Shto një temë',
-'vector-action-delete'           => 'Grise',
-'vector-action-move'             => 'Zhvendose',
-'vector-action-protect'          => 'Mbroje',
-'vector-action-undelete'         => 'Anullo fshirjen',
-'vector-action-unprotect'        => 'Ndrysho mbrojtjen',
-'vector-simplesearch-preference' => 'Aktivizo kërkimin e zgjeruar (vetëm për veshjen Vector)',
-'vector-view-create'             => 'Krijo',
-'vector-view-edit'               => 'Redakto',
-'vector-view-history'            => 'Shiko historikun',
-'vector-view-view'               => 'Lexo',
-'vector-view-viewsource'         => 'Shiko tekstin',
 'actions'                        => 'Veprimet',
 'namespaces'                     => 'Hapsirat e emrit',
 'variants'                       => 'Variante',
@@ -381,7 +363,6 @@ $messages = array(
 'edit'              => 'Redakto',
 'create'            => 'Krijo',
 'editthispage'      => 'Redakto këtë faqe',
-'create-this-page'  => 'Krijoje këtë faqe',
 'delete'            => 'Grise',
 'deletethispage'    => 'Grise këtë faqe',
 'undelete_short'    => 'Anullo fshirjen {{PLURAL:$1|një redaktim|$1 redaktime}}',
@@ -396,19 +377,9 @@ $messages = array(
 'talkpagelinktext'  => 'Diskuto',
 'specialpage'       => 'Faqe speciale',
 'personaltools'     => 'Mjetet e mia',
-'postcomment'       => 'Seksion i ri',
-'articlepage'       => 'Shiko faqen me përmbajtje',
 'talk'              => 'Diskutimet',
 'views'             => 'Shikime',
 'toolbox'           => 'Mjete',
-'userpage'          => 'Shiko faqen e përdoruesit',
-'projectpage'       => 'Shiko projekt-faqen',
-'imagepage'         => 'Shikoni faqen e skedës',
-'mediawikipage'     => 'Shiko faqen e mesazhit',
-'templatepage'      => 'Shiko faqen e shabllonit',
-'viewhelppage'      => 'Shiko faqen për ndihmë',
-'categorypage'      => 'Shiko faqen e kategorive',
-'viewtalkpage'      => 'Shiko diskutimet',
 'otherlanguages'    => 'Në gjuhë të tjera',
 'redirectedfrom'    => '(Përcjellë nga $1)',
 'redirectpagesub'   => 'Faqe përcjellëse',
@@ -863,7 +834,6 @@ Më poshtë mund t'i referoheni shënimit të regjistruar për bllokimin e fundi
 '''Nuk është ruajtur ende!'''",
 'sitejspreview'                    => "'''Vini re! Ju jeni duke inspektuar këtë kod JavaScript.'''
 '''Nuk është ruajtur ende!'''",
-'userinvalidcssjstitle'            => "'''Kujdes:''' Nuk ka pamje të quajtur \"\$1\". Vini re se faqet .css dhe .js përdorin titull me gërma të vogla, p.sh. {{ns:user}}:Foo/vector.css, jo {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(E ndryshuar)',
 'note'                             => "'''Shënim:'''",
 'previewnote'                      => "'''Vini re! Kjo faqe është vetëm për inspektim'''
@@ -1211,14 +1181,6 @@ Kini kujdes se përdorimi i lidhjeve të shfletimit do të ndryshojë përzgjedh
 'search-external'                  => 'Kërkim i jashtëm',
 'searchdisabled'                   => '<p>Kërkimi me tekst të plotë është bllokuar tani për tani ngaqë shërbyesi është shumë i ngarkuar; shpresojmë ta nxjerrim prapë në gjendje normale pas disa punimeve. Deri atëherë mund të përdorni Google-in për kërkime:</p>',
 
-# Quickbar
-'qbsettings'                => 'Vendime të shpejta',
-'qbsettings-none'           => 'Asnjë',
-'qbsettings-fixedleft'      => 'Lidhur majtas',
-'qbsettings-fixedright'     => 'Lidhur djathtas',
-'qbsettings-floatingleft'   => 'Pezull majtas',
-'qbsettings-floatingright'  => 'Pezull djathtas',
-'qbsettings-directionality' => 'Fikse, në varësi të skriptës së drejtuar në gjuhën tuaj',
 
 # Preferences page
 'preferences'                   => 'Parapëlqimet',
@@ -2891,9 +2853,6 @@ Ju lutemi provoni përsëri.',
 'pageinfo-viewsperedit'     => 'Shikime për redaktim',
 
 # Skin names
-'skinname-standard'    => 'Standarte',
-'skinname-nostalgia'   => 'Nostalgjike',
-'skinname-cologneblue' => 'Kolonjë Blu',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Shënoje si të patrulluar',

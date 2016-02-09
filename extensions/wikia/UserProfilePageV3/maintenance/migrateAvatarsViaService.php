@@ -31,6 +31,10 @@ class AvatarsMigrator extends Maintenance {
 		$this->addOption( 'dry-run', 'Don\'t perform any operations [default]' );
 		$this->addOption( 'force', 'Perform the migration' );
 
+		$this->addOption( 'from', 'User ID to start the migration from' );
+		$this->addOption( 'to', 'User ID to stop the migration at' );
+		$this->addOption( 'ids', 'Comma-separated list of user IDs to perform the migration for' );
+
 		$this->mDescription = 'This script migrates the user avatars from DFS to user avatars service';
 	}
 
@@ -44,17 +48,28 @@ class AvatarsMigrator extends Maintenance {
 
 		$this->output( "Getting the list of all accounts...\n" );
 
+		// handle --from and --to options
+		$where = [];
+
+		if ($this->hasOption('from')) $where[] = sprintf( 'user_id >= %d', $this->getOption( 'from' ) );
+		if ($this->hasOption('to'))   $where[] = sprintf( 'user_id <= %d', $this->getOption( 'to' ) );
+		if ($this->hasOption('ids'))  $where[] = sprintf( 'user_id IN (%s)', $this->getOption( 'ids' ) );
+
 		// get all accounts
 		$db = $this->getDB( DB_SLAVE );
 
 		$res = $db->select(
 			'`user`',
 			'user_id AS id',
-			[],
-			__METHOD__
+			$where,
+			__METHOD__,
+			[
+				'ORDER BY' => 'user_id'
+			]
 		);
 
 		$rows = $res->numRows();
+		$this->output( "Query: {$db->lastQuery()}\n" );
 		$this->output( "Processing {$rows} users...\n" );
 
 		$this->output( "Will start in 5 seconds...\n" );
@@ -91,7 +106,7 @@ class AvatarsMigrator extends Maintenance {
 		$avatar = $user->getGlobalAttribute( AVATAR_USER_OPTION_NAME );
 
 		// no avatar set, skip this account
-		if ( is_null( $avatar ) ) {
+		if ( is_null( $avatar ) || $avatar === '' ) {
 			$this->output( 'no avatar set - skipping' );
 			return;
 		}
@@ -126,6 +141,7 @@ class AvatarsMigrator extends Maintenance {
 
 			$avatarContent = Http::get( $avatarUrl, 'default', [ 'noProxy' => true ] );
 			if ( empty( $avatarContent ) ) {
+				$this->setAvatarUrl( $user, '' );
 				throw new AvatarsMigratorException( 'Avatar fetch failed' );
 			}
 

@@ -65,7 +65,7 @@ require([
 	}
 
 	function onAuthSuccess() {
-		var redirect = this.url.replace(/.*?redirect=([^&]+)/, '$1');
+		var redirect = this.url.replace(/.*?redirect=([^&]+).*/, '$1');
 		window.location.href = decodeURIComponent(redirect);
 	}
 

@@ -21,8 +21,9 @@ define('ext.wikia.adEngine.template.modal', [
 	 * @param {number} params.width - desired width of the Lightbox
 	 * @param {number} params.height - desired height of the Lightbox
 	 * @param {boolean} params.scalable - extend iframe to maximum sensible size of the Lightbox
-	 * @param {boolean} [params.canHop] detect ad in the embedded iframe
-	 * @param {string}  [params.slotName] name of the original slot (required if params.canHop set to true)
+	 * @param {boolean} [params.canHop] - detect ad in the embedded iframe
+	 * @param {string}  [params.slotName] - name of the original slot (required if params.canHop set to true)
+	 * @param {number} [params.closeDelay] - delay (in seconds) after which a close button will appear and modal will be able to close
 	 */
 	function show(params) {
 		log(['show', params], 'debug', logGroup);
@@ -98,7 +99,10 @@ define('ext.wikia.adEngine.template.modal', [
 		}
 
 		scaleAdIfNeeded();
-		modalHandler.create(adContainer, !async);
+		if (!params.hasOwnProperty('closeDelay')) {
+			params.closeDelay = 0;
+		}
+		modalHandler.create(adContainer, !async, params.closeDelay);
 	}
 
 	return {

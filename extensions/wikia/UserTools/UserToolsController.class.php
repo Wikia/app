@@ -29,7 +29,8 @@ class UserToolsController extends WikiaController {
 
 	public function executeMenu( $params ) {
 		$items = (array)$params['items'];
-		wfRunHooks( 'BeforeToolbarMenu', array( &$items ) );
+		$type = isset( $params['type'] ) ? $params['type'] : 'main';
+		wfRunHooks( 'BeforeToolbarMenu', [ &$items, $type ] );
 		$this->response->setVal( 'items', $items );
 	}
 

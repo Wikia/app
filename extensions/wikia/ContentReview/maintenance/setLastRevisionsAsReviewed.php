@@ -2,12 +2,14 @@
 
 $dir = __DIR__ . "/../../../../";
 require_once( $dir . 'maintenance/Maintenance.php' );
+require_once( '../ContentReview.setup.php' );
 
 class ReviewedRevision extends Maintenance {
 
 	const JS_FILE_EXTENSION = '.js';
 
-	private $revisionModel;
+	private $contentReviewService,
+			$wikiaUser;
 
 	/**
 	 * Set script options
@@ -31,30 +33,47 @@ class ReviewedRevision extends Maintenance {
 		if ( !empty( $wgUseSiteJs ) && !$excludeWiki ) {
 			$this->output( "Processing wiki id: {$wgCityId}\n" );
 
-			$jsPages = ( new \Wikia\ContentReview\Helper() )->getJsPages();
+			$helper = new \Wikia\ContentReview\Helper();
+			$jsPages = $helper->getJsPages();
 
 			foreach ( $jsPages as $jsPage ) {
 				if ( !empty( $jsPage['page_id'] ) && !empty( $jsPage['page_latest'] ) ) {
 					try {
-						$this->getRevisionModel()->approveRevision( $wgCityId, $jsPage['page_id'], $jsPage['page_latest'] );
+						$this->getContentReviewService()->automaticallyApproveRevision(
+							$this->getWikiaUser(),
+							$wgCityId,
+							$jsPage['page_id'],
+							$jsPage['page_latest']
+						);
 						$this->output( "Added revision id for page {$jsPage['page_title']} (ID: {$jsPage['page_id']})\n" );
 					} catch( FluentSql\Exception\SqlException $e ) {
 						$this->output( $e->getMessage() . "\n" );
 					}
 				}
 			}
+
+			$helper->purgeReviewedJsPagesTimestamp();
+			Wikia\ContentReview\ContentReviewStatusesService::purgeJsPagesCache();
 		} else {
 			$this->output( "Wiki (Id: {$wgCityId}) has disabled custom scripts.\n" );
 		}
 
 	}
 
-	private function getRevisionModel() {
-		if ( empty( $this->revisionModel ) ) {
-			$this->revisionModel = new Wikia\ContentReview\Models\CurrentRevisionModel();
+	private function getWikiaUser() {
+		if ( empty( $this->wikiaUser ) ) {
+			$this->wikiaUser = User::newFromName( 'Wikia' );
 		}
 
-		return $this->revisionModel;
+		return $this->wikiaUser;
+	}
+
+	private function getContentReviewService() {
+		if ( empty( $this->contentReviewService ) ) {
+			$this->contentReviewService = new Wikia\ContentReview\ContentReviewService();
+		}
+
+		return $this->contentReviewService;
 	}
 }
 

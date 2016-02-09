@@ -27,13 +27,12 @@ class TemplateDraftHelper {
 	}
 
 	/**
-	 * Checks if the template (Title object) is marked by human as infobox
+	 * Determines whether a title is a draft in infobox conversion mode
 	 * @param Title $title
 	 * @return bool
 	 */
-	public function isMarkedAsInfobox( Title $title ) {
-		$tc = new TemplateClassification( $title );
-		return $tc->isType( $tc::TEMPLATE_INFOBOX );
+	public static function isInfoboxDraftConversion( Title $title ) {
+		return self::isTitleDraft( $title ) && \TemplateConverter::isConversion();
 	}
 
 	/**
@@ -79,14 +78,12 @@ class TemplateDraftHelper {
 			 * Add rail module for draft approval
 			 */
 			$railModuleList[1502] = [ 'TemplateDraftModule', 'Approve', null ];
-		} else {
+		} elseif ( $this->shouldDisplayCreateModule( $title ) ) {
 			/**
 			 * $title is a parent page
 			 * Check if the template has not been classified before
 			 */
-			if ( $this->shouldDisplayCreateModule( $title ) ) {
-				$railModuleList[1502] = [ 'TemplateDraftModule', 'Create', null ];
-			}
+			$railModuleList[1502] = [ 'TemplateDraftModule', 'Create', null ];
 		}
 	}
 
@@ -98,10 +95,19 @@ class TemplateDraftHelper {
 	 * @return bool
 	 */
 	public function shouldDisplayCreateModule( Title $title ) {
-		$tc = new TemplateClassification( $title );
-		$type = $tc->getType();
-		return ( empty( $type ) || $type === $tc::TEMPLATE_INFOBOX )
-			&& !self::titleHasPortableInfobox( $title );
+		global $wgCityId;
+		$tc = new TemplateClassificationService();
+
+		try {
+			$type = $tc->getType( $wgCityId, $title->getArticleID() );
+			return empty( $type )
+				|| $type === TemplateClassificationService::TEMPLATE_CUSTOM_INFOBOX
+				|| ( $type === TemplateClassificationService::TEMPLATE_INFOBOX
+					&& !self::titleHasPortableInfobox( $title ) );
+		} catch ( Swagger\Client\ApiException $e ) {
+			// If we cannot reach the service assume false to avoid overwriting data
+			return false;
+		}
 	}
 
 	public static function titleHasPortableInfobox( Title $title ) {

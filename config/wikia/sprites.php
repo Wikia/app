@@ -103,13 +103,6 @@ $config['Lightbox'] = array(
 	'scss'   => "$IP/extensions/wikia/Lightbox/styles/mixins/_sprite-Lightbox.scss"
 );
 
-$config['LicensedVideoSwap'] = array(
-	'name'   => 'LicensedVideoSwap',
-	'source' => "$IP/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/",
-	'sprite' => "$IP/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap.png",
-	'scss'   => "$IP/extensions/wikia/LicensedVideoSwap/css/mixins/_sprite-LicensedVideoSwap.scss"
-);
-
 $config['VideoPageTool'] = array(
 	'name'   => 'VideoPageTool',
 	'source' => "$IP/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/",

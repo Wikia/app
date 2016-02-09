@@ -76,7 +76,7 @@ function actionCreate( $action, $article ) {
 		global $wgOut;
 		$text = $article->getTitle()->getPrefixedText();
 		$wgOut->setPageTitle( $text );
-		$wgOut->setHTMLTitle( wfMsg( 'pagetitle', $text . ' - ' . wfMsg( 'createbox-create' ) ) );
+		$wgOut->setHTMLTitle( wfMsg( 'createbox-create' ) . ' - ' . $text );
 		$wgOut->addWikiMsg( 'createbox-exists' );
 	}
 	return false;
@@ -98,7 +98,7 @@ function acMakeBox( $input, $argv, $parser ) {
 	if( $wgRequest->getVal( 'action' ) == 'create' ) {
 		$prefix = acGetOption( $input, 'prefix' );
 		$preload = acGetOption( $input, 'preload' );
-		$editintro = acGetOption( $input, 'editintro' ); 
+		$editintro = acGetOption( $input, 'editintro' );
 		$text = $parser->getTitle()->getPrefixedText();
 		if( $prefix && strpos( $text, $prefix ) === 0 ) {
 			$text = substr( $text, strlen( $prefix ) );

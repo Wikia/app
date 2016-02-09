@@ -17,7 +17,9 @@ class PortableInfoboxRenderService extends WikiaService {
 		'group' => 'PortableInfoboxItemGroup.mustache',
 		'horizontal-group-content' => 'PortableInfoboxHorizontalGroupContent.mustache',
 		'navigation' => 'PortableInfoboxItemNavigation.mustache',
-		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache'
+		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache',
+		'image-collection' => 'PortableInfoboxItemImageCollection.mustache',
+		'image-collection-mobile' => 'PortableInfoboxItemImageCollectionMobile.mustache'
 	];
 	private $templateEngine;
 
@@ -39,6 +41,8 @@ class PortableInfoboxRenderService extends WikiaService {
 	 *
 	 * @param array $infoboxdata
 	 *
+	 * @param $theme
+	 * @param $layout
 	 * @return string - infobox HTML
 	 */
 	public function renderInfobox( array $infoboxdata, $theme, $layout ) {
@@ -95,10 +99,12 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string - group HTML markup
 	 */
 	private function renderGroup( $groupData ) {
-		$helper = new PortableInfoboxRenderServiceHelper();;
+		$cssClasses = [];
+		$helper = new PortableInfoboxRenderServiceHelper();
 		$groupHTMLContent = '';
 		$dataItems = $groupData[ 'value' ];
 		$layout = $groupData[ 'layout' ];
+		$collapse = $groupData[ 'collapse' ];
 
 		if ( $layout === 'horizontal' ) {
 			$groupHTMLContent .= $this->renderItem(
@@ -115,7 +121,15 @@ class PortableInfoboxRenderService extends WikiaService {
 			}
 		}
 
-		return $this->renderItem( 'group', [ 'content' => $groupHTMLContent ] );
+		if ( $collapse !== null && count( $dataItems ) > 0 && $dataItems[ 0 ][ 'type' ] === 'header' ) {
+			$cssClasses[] = 'pi-collapse';
+			$cssClasses[] = 'pi-collapse-' . $collapse;
+		}
+
+		return $this->renderItem( 'group', [
+			'content' => $groupHTMLContent,
+			'cssClasses' => implode(' ', $cssClasses)
+		] );
 	}
 
 	/**
@@ -129,8 +143,10 @@ class PortableInfoboxRenderService extends WikiaService {
 		$helper = new PortableInfoboxRenderServiceHelper();
 
 		if ( array_key_exists( 'image', $data ) ) {
-			$data[ 'image' ][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX_HERO_IMAGE;
-			$data[ 'image' ] = $helper->extendImageData( $data[ 'image' ] );
+			$image = $data[ 'image' ][ 0 ];
+			$image[ 'context' ] = self::MEDIA_CONTEXT_INFOBOX_HERO_IMAGE;
+			$image = $helper->extendImageData( $image );
+			$data['image'] = $image;
 			$markup = $this->renderItem( 'hero-mobile', $data );
 		} else {
 			$markup = $this->renderItem( 'title', $data[ 'title' ] );
@@ -152,23 +168,44 @@ class PortableInfoboxRenderService extends WikiaService {
 		$helper = new PortableInfoboxRenderServiceHelper();
 
 		if ( $type === 'image' ) {
-			$data[ 'image' ][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
-			$data = $helper->extendImageData( $data );
-			if ( !$data ) {
+			$images = array();
+
+			for ( $i = 0; $i < count($data); $i++ ) {
+				$data[$i][ 'context' ] = self::MEDIA_CONTEXT_INFOBOX;
+				$data[$i] = $helper->extendImageData( $data[$i] );
+
+				if ( !!$data[$i] ) {
+					$images[] = $data[$i];
+				}
+			}
+
+			if ( count ( $images ) === 0 ) {
 				return false;
+			} else if ( count ( $images ) === 1 ) {
+				$data = $images[0];
+				$templateName = $type;
+			} else {
+				$images[0]['isFirst'] = true;
+				$data = array( 'images' => $images );
+				$templateName = 'image-collection';
 			}
 
 			if ( $helper->isWikiaMobile() ) {
-				$type = $type . self::MOBILE_TEMPLATE_POSTFIX;
+				$templateName = $templateName . self::MOBILE_TEMPLATE_POSTFIX;
 			}
+		} else {
+			$templateName = $type;
 		}
 
+		/**
+		 * Currently, based on business decision, sanitization happens ONLY on Mercury
+		 */
 		if ( $helper->isWikiaMobile() ) {
-			$data = $helper->sanitizeInfoboxTitle( $type, $data );
+			$data = SanitizerBuilder::createFromType( $type )->sanitize( $data );
 		}
 
 		return $this->templateEngine->clearData()
 			->setData( $data )
-			->render( self::getTemplates()[ $type ] );
+			->render( self::getTemplates()[ $templateName ] );
 	}
 }

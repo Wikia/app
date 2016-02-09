@@ -267,4 +267,18 @@ class WikiaRequest implements Wikia\Interfaces\IRequest {
 		$scriptUrl = isset( $_SERVER['SCRIPT_URL'] ) ? $_SERVER['SCRIPT_URL'] : null;
 		return $scriptUrl;
 	}
+
+	/**
+	 * Verify if write request is a valid, non-CSRF request
+	 * (uses POST and contains a valid edit token)
+	 *
+	 * @param \User $user
+	 * @return mixed
+	 * @throws BadRequestException
+	 */
+	public function isValidWriteRequest( \User $user ) {
+		if ( !$this->wasPosted() || !$user->matchEditToken( $this->getVal( 'token' ) ) ) {
+			throw new BadRequestException( 'Request must be POSTed and provide a valid edit token.' );
+		}
+	}
 }

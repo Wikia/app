@@ -191,6 +191,7 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 
 	'forum-related-discussion-see-more' => 'See more discussions',
 	'forum-confirmation-board-deleted' => '"$1" has been deleted.',
+	'forum-token-mismatch' => 'Oops! Token doesn\'t match',
 );
 
 /** Message documentation (Message documentation)
@@ -419,6 +420,7 @@ Parameters:
 	'forum-related-discussion-total-replies' => 'Label showing total number of replies in a discussion.  $1 is number of replies',
 	'forum-related-discussion-see-more' => 'See More link to topic page',
 	'forum-confirmation-board-deleted' => 'Board delete confirmation message. $1 is board name',
+	'forum-token-mismatch' => "Shown when hidden token (to prevent hijacking) sent to the backend doesn't match the one stored in user's session",
 );
 
 /** Old English (Ænglisc)
@@ -603,6 +605,7 @@ ___________________________________________<br />
 	'forum-related-discussion-total-replies' => '$1 رسائل',
 	'forum-related-discussion-see-more' => 'رؤية المزيد من النقاشات',
 	'forum-confirmation-board-deleted' => '"$1" قد حُذفت.',
+	'forum-token-mismatch' => 'عفوا! الرمز المميز لا يتطابق',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -751,6 +754,7 @@ ___________________________________________
 	'forum-related-discussion-total-replies' => '$1 kemennadenn',
 	'forum-related-discussion-see-more' => "Gwelet muioc'h a gaozioù",
 	'forum-confirmation-board-deleted' => 'Dilamet eo bet "$1".',
+	'forum-token-mismatch' => 'Pop ! Ar jedouer ne glot ket',
 );
 
 /** Iriga Bicolano (Iriga Bicolano)
@@ -940,6 +944,7 @@ http://ca.wikia.com
 	'forum-related-discussion-total-replies' => '$1 missatges',
 	'forum-related-discussion-see-more' => 'Mostra més discussions',
 	'forum-confirmation-board-deleted' => "S'ha suprimit “$1”.",
+	'forum-token-mismatch' => 'Ops! No coincideix amb la fitxa',
 );
 
 /** Chechen (нохчийн)
@@ -1189,6 +1194,7 @@ abmelden oder deine E-Mail-Einstellungen hier ändern: http://community.wikia.co
 	'forum-related-discussion-total-replies' => '$1 Nachrichten',
 	'forum-related-discussion-see-more' => 'Weitere Diskussionen ansehen',
 	'forum-confirmation-board-deleted' => '„$1“ wurde gelöscht.',
+	'forum-token-mismatch' => 'Upps! Token stimmt nicht überein.',
 );
 
 /** British English (British English)
@@ -1376,6 +1382,7 @@ ___________________________________________ <br />
 	'forum-related-discussion-total-replies' => '$1 mensajes',
 	'forum-related-discussion-see-more' => 'Ver más temas',
 	'forum-confirmation-board-deleted' => '"$1" ha sido borrado.',
+	'forum-token-mismatch' => '¡Oops! El token no coincide.',
 );
 
 /** Basque (euskara)
@@ -1790,6 +1797,7 @@ ___________________________________________
 	'forum-related-discussion-total-replies' => '$1 messages',
 	'forum-related-discussion-see-more' => 'Voir plus de discussions',
 	'forum-confirmation-board-deleted' => '« $1 » a été supprimé.',
+	'forum-token-mismatch' => 'Oups ! Le jeton ne correspond pas',
 );
 
 /** Western Frisian (Frysk)
@@ -1978,6 +1986,7 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'forum-related-discussion-total-replies' => '$1 mensaxes',
 	'forum-related-discussion-see-more' => 'Ver máis debates',
 	'forum-confirmation-board-deleted' => 'Borrouse "$1".',
+	'forum-token-mismatch' => 'Vaites! O pase non coincide',
 );
 
 /** Hebrew (עברית)
@@ -2270,6 +2279,7 @@ ___________________________________________<br />
 	'forum-related-discussion-total-replies' => '$1 件の投稿',
 	'forum-related-discussion-see-more' => 'さらにスレッドを見る',
 	'forum-confirmation-board-deleted' => '「$1」を削除しました。',
+	'forum-token-mismatch' => 'おっと! トークンが一致しません',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -2530,6 +2540,7 @@ $messages['lv'] = array(
  */
 $messages['mk'] = array(
 	'forum-forum-title' => 'Форум',
+	'forum-token-mismatch' => 'Упс! Шифрата не се совпаѓа',
 );
 
 /** Malay (Bahasa Melayu)
@@ -2708,6 +2719,7 @@ keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
 	'forum-related-discussion-total-replies' => '$1 pesanan',
 	'forum-related-discussion-see-more' => 'Lihat lebih banyak perbincangan',
 	'forum-confirmation-board-deleted' => '"$1" telah dihapuskan.',
+	'forum-token-mismatch' => 'Eh! Token tak sepadan',
 );
 
 /** Dutch (Nederlands)
@@ -2888,6 +2900,7 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
 	'forum-related-discussion-total-replies' => '{{PLURAL:$1|Eén bericht|$1 berichten}}',
 	'forum-related-discussion-see-more' => 'Meer discussies bekijken',
 	'forum-confirmation-board-deleted' => '"$1" is verwijderd.',
+	'forum-token-mismatch' => 'Het token komt niet overeen',
 );
 
 /** Occitan (occitan)
@@ -3142,6 +3155,7 @@ ___________________________________________<br />
 	'forum-related-discussion-total-replies' => '$1 wiadomości',
 	'forum-related-discussion-see-more' => 'Zobacz więcej dyskusji',
 	'forum-confirmation-board-deleted' => '"$1" został usunięty.',
+	'forum-token-mismatch' => 'Ups! Token nie pasuje',
 );
 
 /** Pashto (پښتو)
@@ -3587,6 +3601,7 @@ ___________________________________________<br />
 	'forum-related-discussion-total-replies' => '$1 {{PLURAL:$1|сообщение|сообщения|сообщений}}',
 	'forum-related-discussion-see-more' => 'Посмотреть другие обсуждения',
 	'forum-confirmation-board-deleted' => '«$1» был удалён.',
+	'forum-token-mismatch' => 'Символ не соответствует',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -3599,6 +3614,7 @@ $messages['sr-ec'] = array(
 	'forum-sorting-option-most-replies' => 'Најактивније у протеклих 7 дана.',
 	'forum-discussion-post' => 'Постави',
 	'forum-discussion-placeholder-message-short' => 'Пошаљите нову поруку',
+	'forum-token-mismatch' => 'Упс! Жетон се не поклапа.',
 );
 
 /** Swedish (svenska)
@@ -3775,6 +3791,7 @@ ___________________________________________<br />
 	'forum-related-discussion-total-replies' => '$1 meddelanden',
 	'forum-related-discussion-see-more' => 'Se fler diskussioner',
 	'forum-confirmation-board-deleted' => '"$1" har raderats.',
+	'forum-token-mismatch' => 'Hoppsan! Koden stämmer inte överens',
 );
 
 /** Tamil (தமிழ்)
@@ -4142,6 +4159,7 @@ ___________________________________________<br />
 	'forum-related-discussion-total-replies' => '$1 повідомлень',
 	'forum-related-discussion-see-more' => 'Переглянути більше обговорень',
 	'forum-confirmation-board-deleted' => '"$1" було видалено.',
+	'forum-token-mismatch' => 'Йой! Знак не збігається',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -4682,6 +4700,7 @@ ___________________________________________<br />
 	'forum-related-discussion-total-replies' => '$1条信息',
 	'forum-related-discussion-see-more' => '参阅更多讨论',
 	'forum-confirmation-board-deleted' => '“$1”已被删除。',
+	'forum-token-mismatch' => '呀！令牌不匹配',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

@@ -63,3 +63,8 @@ $specialPageAliases['pl'] = array(
 $specialPageAliases['vi'] = array(
 	'Promote' => array( 'Xúc_tiến' ),
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'Promote' => array( 'プロモート' )
+);

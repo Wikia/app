@@ -9,7 +9,7 @@ abstract class InsightsPageModel extends InsightsModel {
 
 	const
 		INSIGHTS_MEMC_PREFIX = 'insights',
-		INSIGHTS_MEMC_VERSION = '1.2',
+		INSIGHTS_MEMC_VERSION = '1.4',
 		INSIGHTS_MEMC_TTL = 259200, // Cache for 3 days
 		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData',
 		INSIGHTS_LIST_MAX_LIMIT = 100,
@@ -205,7 +205,7 @@ abstract class InsightsPageModel extends InsightsModel {
 	 * Fetches page views data for a given set of articles. The data includes
 	 * number of views for the last four time ids (data points).
 	 *
-	 * @param $articlesIds An array of IDs of articles to fetch views for
+	 * @param array $articlesIds An array of IDs of articles to fetch views for
 	 * @return array An array with views for the last four time ids
 	 */
 	public function getPageViewsData( array $articlesIds ) {
@@ -258,7 +258,11 @@ abstract class InsightsPageModel extends InsightsModel {
 				}
 
 				if ( $this->isWlhLinkRequired() ) {
-					$article['metadata']['wantedBy'] = $this->makeWlhLink( $title, $row );
+					$article['metadata']['wantedBy'] = [
+						'message' => $this->wlhLinkMessage(),
+						'value' => (int)$row->value,
+						'url' => $this->getWlhUrl( $title ),
+					];
 				}
 
 				if ( $this->arePageViewsRequired() ) {
@@ -379,6 +383,15 @@ abstract class InsightsPageModel extends InsightsModel {
 		$data['userpage'] = $userpage;
 
 		return $data;
+	}
+
+	/**
+	 * Returns a link to a WhatLinksHere page for the given Title.
+	 * @param Title $title The target article's title object
+	 * @return string
+	 */
+	public function getWlhUrl( Title $title ) {
+		return SpecialPage::getTitleFor( 'Whatlinkshere', $title->getPrefixedText() )->getFullUrl();
 	}
 
 	/**

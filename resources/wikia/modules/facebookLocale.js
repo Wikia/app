@@ -252,8 +252,8 @@
 				countryCode = '';
 			if (geoCountryCode) {
 				matchingLanguages = languagesOfCountry[geoCountryCode.toUpperCase()];
-				if (languageCode in matchingLanguages) {
-					countryCode = matchingLanguages[languageCode];
+				if (matchingLanguages && languageCode in matchingLanguages) {
+					countryCode = geoCountryCode.toUpperCase();
 				}
 			}
 			if (!countryCode) {
@@ -278,7 +278,7 @@
 	}
 
 	//namespace
-	context.Wikia.fbLocale = facebookLocale(context);
+	context.Wikia.fbLocale = facebookLocale();
 
 	if (context.define && context.define.amd) {
 		context.define('wikia.fbLocale', [], facebookLocale);
