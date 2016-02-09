@@ -9,6 +9,7 @@ class ArticleAsJson extends WikiaService {
 
 	const ICON_MAX_SIZE = 48;
 	const CACHE_VERSION = '0.0.3';
+	const CACHE_VERSION_FOR_SEO_FRIENDLY_IMAGES = 1; // for $wgEnableSeoFriendlyImagesForMobile
 
 	const MEDIA_CONTEXT_ARTICLE_IMAGE = 'article-image';
 	const MEDIA_CONTEXT_ARTICLE_VIDEO = 'article-video';
@@ -249,12 +250,16 @@ class ArticleAsJson extends WikiaService {
 	}
 
 	public static function onPageRenderingHash( &$confstr ) {
-		global $wgArticleAsJson;
+		global $wgArticleAsJson, $wgEnableSeoFriendlyImagesForMobile;
 
 		wfProfileIn( __METHOD__ );
 
 		if ( $wgArticleAsJson ) {
-			$confstr .= '!ArticleAsJson:' . self::CACHE_VERSION;
+			if ( $wgEnableSeoFriendlyImagesForMobile ) {
+				$confstr .= '!ArticleAsJson:' . self::CACHE_VERSION_FOR_SEO_FRIENDLY_IMAGES;
+			} else {
+				$confstr .= '!ArticleAsJson:' . self::CACHE_VERSION;
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
