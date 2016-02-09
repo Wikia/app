@@ -4,6 +4,8 @@
 class ExactTargetUserTaskHelperTest extends WikiaBaseTest {
 
 	const TEST_EMAIL = 'test@wikia-inc.com';
+	const ACTIVE = ExactTarget_SubscriberStatus::Active;
+	const UNSUBSCRIBED = ExactTarget_SubscriberStatus::Unsubscribed;
 
 	private $helper;
 
@@ -27,11 +29,11 @@ class ExactTargetUserTaskHelperTest extends WikiaBaseTest {
 
 	public function simpleFilterPartProvider() {
 		return [
-			[ self::TEST_EMAIL, true, \ExactTarget_SubscriberStatus::Active ],
-			[ self::TEST_EMAIL, null, \ExactTarget_SubscriberStatus::Active ],
-			[ self::TEST_EMAIL, 1, \ExactTarget_SubscriberStatus::Active ],
-			[ self::TEST_EMAIL, 0, \ExactTarget_SubscriberStatus::Unsubscribed ],
-			[ self::TEST_EMAIL, false, \ExactTarget_SubscriberStatus::Unsubscribed ],
+			[ self::TEST_EMAIL, true, self::ACTIVE ],
+			[ self::TEST_EMAIL, null, self::ACTIVE ],
+			[ self::TEST_EMAIL, 1, self::ACTIVE ],
+			[ self::TEST_EMAIL, 0, self::UNSUBSCRIBED ],
+			[ self::TEST_EMAIL, false, self::UNSUBSCRIBED ],
 			];
 	}
 
