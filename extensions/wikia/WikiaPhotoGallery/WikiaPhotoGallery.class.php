@@ -1013,10 +1013,10 @@ class WikiaPhotoGallery extends ImageGallery {
 				);
 
 				if ( $isVideo ) {
-					$imgAttribs['data-video-name'] = htmlspecialchars( $image['fileTitle'] );
+					$imgAttribs['data-video-name'] = $image['fileTitle'];
 					$imgAttribs['data-video-key'] = urlencode( htmlspecialchars( $image['DBKey'] ) );
 				} else {
-					$imgAttribs['data-image-name'] = htmlspecialchars( $image['fileTitle'] );
+					$imgAttribs['data-image-name'] = $image['fileTitle'];
 					$imgAttribs['data-image-key'] = urlencode( htmlspecialchars( $image['DBKey'] ) );
 				}
 

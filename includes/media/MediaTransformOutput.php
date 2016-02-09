@@ -339,8 +339,8 @@ class ThumbnailImage extends MediaTransformOutput {
 		 */
 		$fileTitle = $this->file->getTitle();
 		if ( $fileTitle instanceof Title ) {
-			$attribs['data-image-name'] = htmlspecialchars($fileTitle->getText());
-			$attribs['data-image-key'] = htmlspecialchars(urlencode($fileTitle->getDBKey()));
+			$attribs['data-image-name'] = $fileTitle->getText();
+			$attribs['data-image-key'] = urlencode($fileTitle->getDBKey());
 		}
 
 		$html = $this->linkWrap( $linkAttribs, Xml::element( 'img', $attribs ) );
