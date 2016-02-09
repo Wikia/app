@@ -85,7 +85,9 @@
 				.on('click.lightbox', '.lightbox, a.image', function (e) {
 					var $this = $(this),
 						$thumb = $this.find('img').first(),
-						fileKey = $thumb.attr('data-image-key') || $thumb.attr('data-video-key'),
+						// SUS-84: data-*-name attributes are not URI encoded (like data-*-key ones)
+						// so here we get a proper handling of special characters like quotation marks
+						fileKey = $thumb.attr('data-image-name') || $thumb.attr('data-video-name'),
 						$parent,
 						isVideo,
 						trackingInfo,
