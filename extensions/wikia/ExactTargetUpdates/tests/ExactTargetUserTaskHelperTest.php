@@ -4,8 +4,8 @@
 class ExactTargetUserTaskHelperTest extends WikiaBaseTest {
 
 	const TEST_EMAIL = 'test@wikia-inc.com';
-	const ACTIVE = ExactTarget_SubscriberStatus::Active;
-	const UNSUBSCRIBED = ExactTarget_SubscriberStatus::Unsubscribed;
+	const ACTIVE = "Active";
+	const UNSUBSCRIBED = "Unsubscribed";
 
 	private $helper;
 
