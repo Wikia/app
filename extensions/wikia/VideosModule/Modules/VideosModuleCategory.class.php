@@ -50,7 +50,6 @@ class Category extends Base {
 	protected function getLogParams() {
 		$params = parent::getLogParams();
 
-		$params['sort'] = $this->sort;
 		$params['category'] = $this->categories;
 
 		return $params;
@@ -64,7 +63,7 @@ class Category extends Base {
 		sort( $category );
 		$hashCategory = md5( json_encode( $category ) );
 
-		return implode( ':', [ $cacheKey, $hashCategory, $this->sort ] );
+		return implode( ':', [ $cacheKey, $hashCategory ] );
 	}
 
 	/**
