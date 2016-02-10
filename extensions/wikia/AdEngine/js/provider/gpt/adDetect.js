@@ -215,7 +215,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			}
 		}
 
-		if (adType === 'openx' || adType === 'rubicon' || adType === 'saymedia' || adType === 'turtle') {
+		if (['openx', 'rubicon', 'saymedia', 'turtle', 'evolve2'].indexOf(adType) !== -1) {
 			shouldPollForSuccess = true;
 			expectAsyncHop = true;
 		}

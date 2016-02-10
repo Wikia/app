@@ -462,7 +462,7 @@ class RTEParser extends Parser {
 	 * Convert wikitext to HTML and add extra HTML attributes for RTE
 	 *
 	 * @param $text String: text we want to parse
-	 * @param $title A title object
+	 * @param $title Title A title object
 	 * @param $options ParserOptions
 	 * @param $linestart boolean
 	 * @param $clearState boolean

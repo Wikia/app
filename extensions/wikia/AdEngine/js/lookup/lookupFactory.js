@@ -2,26 +2,38 @@
 define('ext.wikia.adEngine.lookup.lookupFactory', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
+	'wikia.lazyqueue',
 	'wikia.log'
-], function (adContext, adTracker, log) {
+], function (adContext, adTracker, lazyQueue, log) {
 	'use strict';
 
 	function create(module) {
 		var called = false,
+			onResponseCallbacks = [],
 			response = false,
 			timing,
 			context = adContext.getContext();
+
+		function onResponse() {
+			log('onResponse', 'debug', module.logGroup);
+
+			timing.measureDiff({}, 'end').track();
+			module.calculatePrices();
+			response = true;
+			onResponseCallbacks.start();
+
+			adTracker.track(module.name + '/lookup_end', module.getPrices(), 0, 'nodata');
+		}
+
+		function addResponseListener(callback) {
+			onResponseCallbacks.push(callback);
+		}
 
 		function call() {
 			log('call', 'debug', module.logGroup);
 
 			if (!Object.keys) {
 				log(['call', 'Module is not supported in IE8', module.name], 'debug', module.logGroup);
-				return;
-			}
-
-			if (typeof module.isEnabled === 'function' && !module.isEnabled()) {
-				log(['call', 'Module is not enabled', module.name], 'debug', module.logGroup);
 				return;
 			}
 
@@ -33,16 +45,6 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			called = true;
 		}
 
-		function onResponse() {
-			log('onResponse', 'debug', module.logGroup);
-
-			timing.measureDiff({}, 'end').track();
-			module.calculatePrices();
-			response = true;
-
-			adTracker.track(module.name + '/lookup_end', module.getPrices(), 0);
-		}
-
 		function wasCalled() {
 			log(['wasCalled', called], 'debug', module.logGroup);
 			return called;
@@ -51,6 +53,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 		function trackState(providerName, slotName, params) {
 			log(['trackState', response, providerName, slotName], 'debug', module.logGroup);
 			var category,
+				encodedParams,
 				eventName;
 
 			if (!module.isSlotSupported(slotName)) {
@@ -60,8 +63,9 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 
 			eventName = response ? 'lookup_success' : 'lookup_error';
 			category = module.name + '/' + eventName + '/' + providerName;
+			encodedParams = module.encodeParamsForTracking(params) || 'nodata';
 
-			adTracker.track(category, slotName, 0, module.encodeParamsForTracking(params));
+			adTracker.track(category, slotName, 0, encodedParams);
 		}
 
 		function getSlotParams(slotName) {
@@ -75,18 +79,28 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			return module.getSlotParams(slotName);
 		}
 
+		function getName() {
+			return module.name;
+		}
+
 		// needed only for selenium tests
 		function hasResponse() {
 			log(['hasResponse', response], 'debug', module.logGroup);
 			return response;
 		}
 
+		lazyQueue.makeQueue(onResponseCallbacks, function (callback) {
+			callback();
+		});
+
 		return {
+			addResponseListener: addResponseListener,
 			call: call,
+			getName: getName,
 			getSlotParams: getSlotParams,
+			hasResponse: hasResponse,
 			trackState: trackState,
-			wasCalled: wasCalled,
-			hasResponse: hasResponse
+			wasCalled: wasCalled
 		};
 	}
 

@@ -204,7 +204,7 @@ Veuillez noter que vous avez  $1 {{PLURAL:$1|jour|jours}} à partir de maintenan
 );
 
 $messages['it'] = array(
-	'closemyaccount' => 'Close My Account',
+	'closemyaccount' => 'Chiudi il mio account',
 	'closemyaccount-desc' => 'Allows users to close their own accounts.',
 	'closemyaccount-intro-text' => "Ci dispiace che tu voglia disabilitare il tuo account. Wikia ha molte wiki su tanti argomenti e ci piacerebbe che tu possa restare con noi per trovare quello che più ti piace. Se stai avendo un problema locale nella tua wiki, per favore, non esitare a contattare gli [[Special:ListUsers/sysop|amministratori locali]] per aiuto e consiglio.
 
@@ -314,7 +314,7 @@ Masz $1 {{PLURAL:$1|dzień|dni}} aby je reaktywować logując się na nie ponown
 );
 
 $messages['pt'] = array(
-	'closemyaccount' => 'Close My Account',
+	'closemyaccount' => 'Fechar minha conta',
 	'closemyaccount-desc' => 'Allows users to close their own accounts.',
 	'closemyaccount-intro-text' => 'Lamentamos que você deseje desativar sua conta. A Wikia tem muitas wikias em todos os tipos de assuntos e nós gostaríamos que você ficasse por aqui e encontrasse uma que é perfeita para você. Se você está tendo um problema local com a sua wikia, por favor não hesite em contatar seu [[Special:ListUsers/sysop|administrador local]] para ajuda e conselhos.
 

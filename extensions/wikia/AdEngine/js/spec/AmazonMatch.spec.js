@@ -12,6 +12,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
+			mocks.lazyQueue,
 			mocks.log
 		);
 	}
@@ -69,6 +70,14 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 						}
 					}
 				];
+			}
+		},
+		lazyQueue: {
+			makeQueue: function (queue, callback) {
+				queue.push = function () {
+					callback();
+				};
+				queue.start = noop;
 			}
 		},
 		log: noop,

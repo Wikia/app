@@ -55,6 +55,7 @@ $wgResourceModules['ext.wikia.Phalanx'] = array(
 		'phalanx',
 		'phalanx-validate-regexp-valid',
 		'phalanx-validate-regexp-invalid',
+		'phalanx-unblock-message',
 		'phalanx-unblock-failure',
 	),
 	'localBasePath' => __DIR__,

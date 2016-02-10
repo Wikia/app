@@ -73,6 +73,12 @@ $messages['zh-hans'] = array(
 	'emailext-watchedpage-article-restored-button-text' => '查看文章',
 );
 
+$messages['zh-hant'] = array(
+	'emailext-watchedpage-article-restored-subject' => '{{SITENAME}}網站上標題為$1的文章已被$2恢復。',
+	'emailext-watchedpage-article-restored-summary' => '{{SITENAME}}網站上標題為$1的文章已被恢復。趕快查看...',
+	'emailext-watchedpage-article-restored-button-text' => '參閲文章',
+);
+
 $messages['zh-tw'] = array(
 	'emailext-watchedpage-article-restored-subject' => '{{SITENAME}}網站上標題為$1的文章已被$2恢復。',
 	'emailext-watchedpage-article-restored-summary' => '{{SITENAME}}網站上標題為$1的文章已被恢復。趕快查看...',

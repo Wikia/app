@@ -120,7 +120,6 @@ class WikiaView {
 			$dirName = $this->getTemplateDir( $controllerClass );
 			foreach ( $templates as $templateName ) {
 				$templatePath = $dirName . '/' . $templateName . '.' . $extension;
-
 				if ( file_exists( $templatePath ) ) {
 					$templateExists = true;
 					break;

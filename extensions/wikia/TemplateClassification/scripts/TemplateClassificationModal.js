@@ -42,8 +42,6 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		typeGetter = typeGetterProvided;
 		$typeLabel = $('.template-classification-type-text');
 
-		$w.on('keydown', openModalKeyboardShortcut);
-
 		$typeLabel.click(function (e) {
 			e.preventDefault();
 			openEditModal(mode);
@@ -58,12 +56,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 
 		modalMode = modeProvided;
 
-		// Unbind modal opening keyboard shortcut while it's open
-		$w.unbind('keydown', openModalKeyboardShortcut);
-
 		labeling.init(modalMode);
-
-		dismissWelcomeHint();
 
 		if (!messagesLoaded) {
 			messagesLoader = getMessages;
@@ -145,9 +138,6 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 
 		modalInstance.bind('close', function () {
 			$w.unbind('keypress', submitFormOnEnterKeyPress);
-
-			// Re-bind modal opening keyboard shortcut
-			$w.on('keydown', openModalKeyboardShortcut);
 
 			// Track - close TC modal
 			track({
@@ -267,40 +257,9 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	}
 
 	function setupTooltip() {
-		$typeWrapper = $('.template-classification-type-wrapper');
-
-		if ($typeWrapper.data('mode') === 'welcome') {
-			mw.loader.using(
-				['ext.wikia.TemplateClassification.ModalMessages', 'mediawiki.jqueryMsg'],
-				function showWelcomeTooltip() {
-					$typeWrapper.tooltip({
-						title: mw.message(
-							'template-classification-entry-point-hint',
-							mw.config.get('wgUserName')
-						).parse()
-					}).tooltip('show');
-				}
-			);
-		} else {
-			$typeWrapper.tooltip({
-				delay: {show: 500, hide: 300}
-			});
-		}
-	}
-
-	function dismissWelcomeHint() {
-		if ($typeWrapper.data('has-seen-welcome') === 0) {
-			$typeWrapper.data('has-seen-welcome', 1);
-			$typeWrapper.tooltip('hide');
-			nirvana.sendRequest({
-				controller: 'TemplateClassification',
-				method: 'dismissWelcomeHint',
-				type: 'post',
-				data: {
-					token: mw.user.tokens.get('editToken')
-				}
-			});
-		}
+		$('.template-classification-type-wrapper').tooltip({
+			delay: {show: 500, hide: 300}
+		});
 	}
 
 	function getTemplateClassificationEditForm() {
@@ -323,16 +282,6 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 
 	function falseFunction() {
 		return false;
-	}
-
-	function openModalKeyboardShortcut(e) {
-		var keyCode = e.keyCode ? e.keyCode : e.which;
-
-		// Shortcut - Shift + Action Key (Ctrl or Cmd) + K
-		if (e.shiftKey && (e.ctrlKey || e.metaKey) && keyCode === 75) {
-			e.preventDefault();
-			openEditModal('editType');
-		}
 	}
 
 	function submitFormOnEnterKeyPress(e) {

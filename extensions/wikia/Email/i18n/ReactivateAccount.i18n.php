@@ -85,6 +85,13 @@ $messages['zh-hans'] = array(
 	'emailext-reactivate-account-welcome-back' => '欢迎您回来！',
 );
 
+$messages['zh-hant'] = array(
+	'emailext-reactivate-account-subject' => '重新成爲維基用戶',
+	'emailext-reactivate-account-summary' => '你只差一步就可重新啓動你的維基帳戶了。請按一下下面的連接確認你的請求並開始使用。',
+	'emailext-reactivate-account-button-text' => '現在就重新啟動',
+	'emailext-reactivate-account-welcome-back' => '歡迎回來！',
+);
+
 $messages['zh-tw'] = array(
 	'emailext-reactivate-account-subject' => '重新成爲維基用戶',
 	'emailext-reactivate-account-summary' => '你只差一步就可重新啓動你的維基帳戶了。請按一下下面的連接確認你的請求並開始使用。',

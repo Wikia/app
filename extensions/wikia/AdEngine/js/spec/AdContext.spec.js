@@ -57,7 +57,6 @@ describe('AdContext', function () {
 		},
 		queryParams = [
 			'liftium',
-			'openx',
 			'turtle'
 		];
 
@@ -282,19 +281,6 @@ describe('AdContext', function () {
 		mocks.instantGlobals = {wgAdDriverTurtleCountries: ['YY']};
 		adContext = getModule();
 		expect(adContext.getContext().providers.turtle).toBeFalsy();
-	});
-
-	it('makes providers.openX true when country in instantGlobals.wgAdDriverOpenXCountries', function () {
-		var adContext;
-
-		mocks.win = {};
-		mocks.instantGlobals = {wgAdDriverOpenXCountries: ['AA', 'CURRENT_COUNTRY', 'ZZ']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.openX).toBeTruthy();
-
-		mocks.instantGlobals = {wgAdDriverOpenXCountries: ['YY']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.openX).toBeFalsy();
 	});
 
 	it('calls whoever registered with addCallback each time setContext is called', function () {

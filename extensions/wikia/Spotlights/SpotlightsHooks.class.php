@@ -13,10 +13,11 @@ class SpotlightsHooks {
 	 */
 	public static function onWikiaSkinTopScripts(&$vars, &$scripts)
 	{
-		global $wgEnableOpenXSPC;
+		global $wgEnableOpenXSPC, $wgEnableReviveSpotlights;
 
 		if ($wgEnableOpenXSPC) {
 			$vars['wgEnableOpenXSPC'] = $wgEnableOpenXSPC;
+			$vars['wgEnableReviveSpotlights'] = $wgEnableReviveSpotlights;
 		}
 
 		return true;

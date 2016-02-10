@@ -1,7 +1,7 @@
 <?php
 
 class ResourceLoaderAdEngineSourcePointDetectionModule extends ResourceLoaderAdEngineSourcePointRecoveryModule {
-	const CACHE_BUSTER = 2;     // increase this any time the local files change
+	const CACHE_BUSTER = 3;     // increase this any time the local files change
 	const SCRIPT_DETECTION_URL = 'https://api.sourcepoint.com/script/detection?delivery=bundle';
 
 	/**

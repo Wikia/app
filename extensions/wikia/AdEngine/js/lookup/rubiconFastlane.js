@@ -28,7 +28,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 					targeting: {loc: 'footer'}
 				},
 				INCONTENT_BOXAD_1: {
-					sizes: [[300, 250]],
+					sizes: [[300, 250], [300, 600]],
 					targeting: {loc: 'middle'}
 				},
 				PREFOOTER_LEFT_BOXAD: {
@@ -48,11 +48,11 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 					sizes: [[300, 250]]
 				},
 				MOBILE_TOP_LEADERBOARD: {
-					sizes: [[320, 50]]
+					sizes: [[320, 50], [300, 250]]
 				}
 			}
 		},
-		context = adContext.getContext(),
+		context,
 		logGroup = 'ext.wikia.adEngine.lookup.rubiconFastlane',
 		priceMap = {},
 		rubiconSlots = [],
@@ -61,10 +61,21 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		rubiconLibraryUrl = '//ads.rubiconproject.com/header/7450.js',
 		slots = {};
 
+	function compareTiers(a,b) {
+		var aMatches = /^(\d+)/.exec(a),
+			bMatches = /^(\d+)/.exec(b);
+
+		if (aMatches && bMatches) {
+			return parseInt(aMatches[1], 10) > parseInt(bMatches[1], 10) ? 1 : -1;
+		}
+
+		return 0;
+	}
+
 	function addSlotPrice(slotName, rubiconTargeting) {
 		rubiconTargeting.forEach(function (params) {
 			if (params.key === rubiconTierKey) {
-				priceMap[slotName] = params.values.join(',');
+				priceMap[slotName] = params.values.sort(compareTiers).join(',');
 			}
 		});
 	}
@@ -137,11 +148,16 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 
 	function getSlotParams(slotName) {
 		var targeting,
+			values,
 			parameters = {};
 
 		targeting = slots[slotName].getAdServerTargeting();
 		targeting.forEach(function (params) {
 			if (params.key !== rubiconElementKey) {
+				values = params.values;
+				if (typeof values.sort === 'function') {
+					values.sort(compareTiers);
+				}
 				parameters[params.key] = params.values;
 			}
 		});
@@ -151,7 +167,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 
 	function encodeParamsForTracking(params) {
 		if (!params[rubiconTierKey]) {
-			return {};
+			return;
 		}
 
 		return params[rubiconTierKey].join(';');
@@ -179,11 +195,8 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		rubicon.src = rubiconLibraryUrl;
 
 		node.parentNode.insertBefore(rubicon, node);
+		context = adContext.getContext();
 		defineSlots(skin, onResponse);
-	}
-
-	function isEnabled() {
-		return context.opts.rubiconFastlaneOnAllVerticals || adLogicZoneParams.getSite() === 'life';
 	}
 
 	function getPrices() {
@@ -197,7 +210,6 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	return factory.create({
 		logGroup: logGroup,
 		name: 'rubicon_fastlane',
-		isEnabled: isEnabled,
 		call: call,
 		calculatePrices: calculatePrices,
 		getPrices: getPrices,

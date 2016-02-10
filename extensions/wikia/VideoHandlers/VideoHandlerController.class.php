@@ -6,6 +6,8 @@ use \Wikia\Logger\WikiaLogger;
  * Class VideoHandlerController
  */
 class VideoHandlerController extends WikiaController {
+	use Wikia\Logger\Loggable;
+
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	const VIDEO_LIMIT = 100;
@@ -66,6 +68,8 @@ class VideoHandlerController extends WikiaController {
 		if ( !empty( $error ) ) {
 			$this->setVal( 'error', $error );
 		}
+
+		$this->response->setFormat( 'json' );
 	}
 
 	/**
@@ -97,6 +101,8 @@ class VideoHandlerController extends WikiaController {
 		foreach ( $response as $key => $val ) {
 			$this->setVal( $key, $val );
 		}
+
+		$this->response->setFormat( 'json' );
 	}
 
 	/**
@@ -326,7 +332,6 @@ class VideoHandlerController extends WikiaController {
 
 	/**
 	 * Get list of videos (controller that provides access to MediaQueryService::getVideoList method)
-	 * @requestParam string sort [recent/popular/trend]
 	 * @requestParam integer limit (maximum = 100)
 	 * @requestParam integer page
 	 * @requestParam string|array providers - Only videos hosted by these providers will be returned. Default: all providers.
@@ -356,7 +361,6 @@ class VideoHandlerController extends WikiaController {
 			function() use ( $params ) {
 				$mediaService = new \MediaQueryService();
 				$videoList = $mediaService->getVideoList(
-					$params['sort'],
 					$params['filter'],
 					$params['limit'],
 					$params['page'],
@@ -376,11 +380,24 @@ class VideoHandlerController extends WikiaController {
 						if ( !empty( $videoDetail ) ) {
 							$videoInfo = array_merge( $videoInfo, $videoDetail );
 						}
+						else {
+							/**
+							 * SUS-80: because of the way videos upload was fixed before SUS-66 was applied,
+							 * rows to "page" table were added, but the actual video was never uploaded (i.e. "image" table row was missing)
+							 */
+							$videoInfo = false;  // this entry will be removed by array_filter() below
+
+							$this->error( __METHOD__ . ' - getVideoDetail returned no results', [
+								'title' => $videoInfo['title'],
+							] );
+						}
 					}
 					unset( $videoInfo );
 				}
 
-				return $videoList;
+				// filter out items that provide no details (see the comment above)
+				// array_values helps us keep consecutive index values
+				return array_values( array_filter( $videoList ) );
 			},
 			$cacheOptions
 		);
@@ -393,7 +410,6 @@ class VideoHandlerController extends WikiaController {
 
 	protected function getVideoListParams() {
 		return [
-			'sort' => $this->getVal( 'sort', 'recent' ),
 			'limit' => $this->getVideoListLimit(),
 			'page' => $this->getVal( 'page', 1 ),
 			'providers' => $this->getVideoListProviders(),

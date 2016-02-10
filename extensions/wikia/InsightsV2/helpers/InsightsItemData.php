@@ -33,6 +33,7 @@ class InsightsItemData {
 	 */
 	public function prepareRevisionData( $revId ) {
 		$data = [];
+		$userpage = null;
 		$rev = Revision::newFromId( $revId );
 
 		if ( $rev ) {
@@ -41,13 +42,17 @@ class InsightsItemData {
 			$user = $rev->getUserText();
 
 			if ( $rev->getUser() ) {
-				$userpage = Title::newFromText( $user, NS_USER )->getFullURL();
+				$userpage = Title::newFromText( $user, NS_USER );
+			}
+
+			if ( $userpage instanceof Title ) {
+				$userpageUrl = $userpage->getFullURL();
 			} else {
-				$userpage = SpecialPage::getTitleFor( 'Contributions', $user )->getFullUrl();
+				$userpageUrl = SpecialPage::getTitleFor( 'Contributions', $user )->getFullUrl();
 			}
 
 			$data['username'] = $user;
-			$data['userpage'] = $userpage;
+			$data['userpage'] = $userpageUrl;
 		}
 
 		return $data;
