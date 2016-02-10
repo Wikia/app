@@ -5,13 +5,15 @@ require([
 	'wikia.abTest',
 	'wikia.nirvana',
 	'wikia.mustache',
-	'ext.wikia.recirculation.templates.mustache',
-	'ext.wikia.recirculation.tracker'
-], function ($, w, abTest, nirvana, Mustache, templates, tracker) {
+	'ext.wikia.recirculation.tracker',
+	'ext.wikia.recirculation.utils'
+], function ($, w, abTest, nirvana, Mustache, tracker, utils) {
 	// Currently only showing for English communities
 	if (w.wgContentLanguage !== 'en') { return; }
 
-	var $container = $('#mw-content-text');
+
+	var $container = $('#mw-content-text'),
+		template;
 
 	function injectInContentWidget($container) {
 		var $links = $container.find('a'),
@@ -70,7 +72,7 @@ require([
 				items.push(item);
 			});
 
-			$html = $(Mustache.render(templates['inContent.client'], {
+			$html = $(Mustache.render(template, {
 				title: $.msg('recirculation-incontent-title'),
 				items: items
 			}));
@@ -176,8 +178,10 @@ require([
 	}
 
 	if (abTest.inGroup('RECIRCULATION_INCONTENT', 'YES')) {
-		$(document).ready( function() {
-			injectInContentWidget($container);
-		});
+		utils.loadTemplate('extensions/wikia/Recirculation/templates/inContent.client.mustache')
+			.then(function(loadedTemplate) {
+				template = loadedTemplate;
+				injectInContentWidget($container);
+			});
 	}
 });
