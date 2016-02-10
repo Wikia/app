@@ -16,8 +16,25 @@ class ArticleAsJson extends WikiaService {
 	const MEDIA_CONTEXT_GALLERY_IMAGE = 'gallery-image';
 	const MEDIA_CONTEXT_ICON = 'icon';
 
+	const MEDIA_ICON_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-icon.mustache';
 	const MEDIA_IMAGE_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-image.mustache';
 	const MEDIA_GALLERY_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-gallery.mustache';
+
+	private static function renderIcon( $media ) {
+		return self::removeNewLines(
+			\MustacheService::getInstance()->render(
+				self::MEDIA_ICON_TEMPLATE,
+				[
+					'width' => $media['width'],
+					'height' => $media['height'],
+					'url' => $media['url'],
+					'title' => $media['title'],
+					'link' => $media['link'],
+					'caption' => $media['caption']
+				]
+			)
+		);
+	}
 
 	private static function renderImage( $media, $id ) {
 		return self::removeNewLines(
@@ -31,7 +48,8 @@ class ArticleAsJson extends WikiaService {
 					'url' => $media['url'],
 					'title' => $media['title'],
 					'fileUrl' => $media['fileUrl'],
-					'caption' => $media['caption']
+					'caption' => $media['caption'],
+					'link' => $media['link'],
 				]
 			)
 		);
@@ -77,6 +95,8 @@ class ArticleAsJson extends WikiaService {
 			}
 
 			return self::renderGallery( $media, $id, $hasLinkedImages );
+		} else if ( $media['context'] === self::MEDIA_CONTEXT_ICON ) {
+			return self::renderIcon( $media );
 		} else {
 			return self::renderImage( $media, $id );
 		}
