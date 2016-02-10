@@ -30,10 +30,7 @@ class PhalanxUserBlock extends WikiaObject {
 		wfProfileIn( __METHOD__ );
 
 		$phalanxModel = new PhalanxUserModel( $user );
-
-		if ( !$shouldLogBlockInStats ) {
-			$phalanxModel->setShouldLogInStats( false );
-		}
+		$phalanxModel->setShouldLogInStats( $shouldLogBlockInStats );
 
 		$ret = $phalanxModel->match_user();
 		if ( $ret !== false ){
