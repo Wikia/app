@@ -28,7 +28,7 @@
 
 			}
 
-			if ( empty( $wg->SuppressWikiHeader ) && empty( $wg->SuppressWikiaChrome ) ) {
+			if ( empty( $wg->SuppressWikiHeader ) ) {
 				echo $app->renderView( 'WikiHeader', 'Index' );
 			}
 		?>
@@ -70,7 +70,7 @@
 					}
 
 					// render UserPagesHeader or PageHeader or nothing...
-					if ( empty( $wg->SuppressPageHeader ) && empty( $wg->SuppressWikiaChrome ) && $headerModuleName ) {
+					if ( empty( $wg->SuppressPageHeader ) && $headerModuleName ) {
 						if ( $headerModuleName == 'UserPagesHeader' ) {
 							if ( $headerModuleAction == 'BlogPost' || $headerModuleAction == 'BlogListing' ) {
 								// Show blog post header
@@ -144,7 +144,7 @@
 				}
 				?>
 
-				<?php if ( !empty( $afterContentHookText ) && empty( $wg->SuppressWikiaChrome ) ) { ?>
+				<?php if ( !empty( $afterContentHookText ) ) { ?>
 					<div id="WikiaArticleFooter" class="WikiaArticleFooter">
 						<?= $afterContentHookText ?>
 					</div>
@@ -181,11 +181,9 @@
 		}
 		?>
 
-		<?php if( empty( $wg->SuppressWikiaChrome ) ): ?>
-			<?= empty( $wg->SuppressFooter ) ? $app->renderView( 'Footer', 'Index' ) : '' ?>
-			<? if( !empty( $wg->EnableCorporateFooterExt ) ) echo $app->renderView( 'CorporateFooter', 'index' ) ?>
-			<?= $app->renderView( 'GlobalFooter', 'index' ); ?>
-		<?php endif; ?>
+		<?= empty( $wg->SuppressFooter ) ? $app->renderView( 'Footer', 'Index' ) : '' ?>
+		<? if( !empty( $wg->EnableCorporateFooterExt ) ) echo $app->renderView( 'CorporateFooter', 'index' ) ?>
+		<?= $app->renderView( 'GlobalFooter', 'index' ); ?>
 	</div>
 </section><!--WikiaPage-->
 
