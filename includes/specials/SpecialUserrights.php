@@ -43,11 +43,11 @@ class UserrightsPage extends SpecialPage {
 	}
 
 	private function userPermissions() {
-		if ( is_null( self::$permissionsService ) ) {
-			self::$permissionsService = Injector::getInjector()->get( PermissionsService::class );
+		if ( is_null( $this->permissionsService ) ) {
+			$this->permissionsService = Injector::getInjector()->get( PermissionsService::class );
 		}
 
-		return self::$permissionsService;
+		return $this->permissionsService;
 	}
 
 	public function isRestricted() {

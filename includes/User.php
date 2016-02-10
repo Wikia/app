@@ -4604,8 +4604,7 @@ class User {
 	 * @return Array of String internal group names
 	 */
 	public function getGroups() {
-		global $wgCityId;
-		return self::userPermissions()->getExplicitUserGroups( $wgCityId, $this->getId() );
+		return self::userPermissions()->getExplicitUserGroups( $this->getId() );
 	}
 
 	/**
@@ -4616,8 +4615,7 @@ class User {
 	 * @return Array of String internal group names
 	 */
 	public function getEffectiveGroups( $recache = false ) {
-		global $wgCityId;
-		return self::userPermissions()->getEffectiveUserGroups( $wgCityId, $this, $recache );
+		return self::userPermissions()->getEffectiveUserGroups( $this, $recache );
 	}
 
 	/**
@@ -4674,8 +4672,7 @@ class User {
 	 * @return Array of String permission names
 	 */
 	public function getRights() {
-		global $wgCityId;
-		return self::userPermissions()->getUserPermissions( $wgCityId, $this );
+		return self::userPermissions()->getUserPermissions( $this );
 	}
 
 	/**
@@ -4705,8 +4702,8 @@ class User {
 	 * @param $group String Name of the group to add
 	 */
 	public function addGroup( $group ) {
-		global $wgCityId, $wgUser;
-		return self::userPermissions()->addUserToGroup( $wgCityId, $wgUser, $this, $group );
+		global $wgUser;
+		return self::userPermissions()->addUserToGroup( $wgUser, $this, $group );
 	}
 
 	/**
@@ -4715,8 +4712,8 @@ class User {
 	 * @param $group String Name of the group to remove
 	 */
 	public function removeGroup( $group ) {
-		global $wgCityId, $wgUser;
-		return self::userPermissions()->removeUserFromGroup( $wgCityId, $wgUser, $this, $group );
+		global $wgUser;
+		return self::userPermissions()->removeUserFromGroup( $wgUser, $this, $group );
 	}
 
 	/**
@@ -4727,8 +4724,7 @@ class User {
 	 *  'remove-self' => array( removable groups from self) )
 	 */
 	public function changeableGroups() {
-		global $wgCityId;
-		return self::userPermissions()->getGroupsChangeableByUser( $wgCityId, $this );
+		return self::userPermissions()->getGroupsChangeableByUser( $this );
 	}
 
 	/**
@@ -4741,8 +4737,7 @@ class User {
 	 */
 	public function isAllowedAny( /*...*/ ){
 		$permissions = func_get_args();
-		global $wgCityId;
-		return self::userPermissions()->doesUserHaveAnyPermission( $wgCityId, $this, $permissions );
+		return self::userPermissions()->doesUserHaveAnyPermission( $this, $permissions );
 	}
 
 	/**
@@ -4752,8 +4747,7 @@ class User {
 	 */
 	public function isAllowedAll( /*...*/ ){
 		$permissions = func_get_args();
-		global $wgCityId;
-		return self::userPermissions()->doesUserHaveAllPermissions( $wgCityId, $this, $permissions );
+		return self::userPermissions()->doesUserHaveAllPermissions( $this, $permissions );
 	}
 
 	/**
@@ -4762,8 +4756,7 @@ class User {
 	 * @return bool
 	 */
 	public function isAllowed( $action = '' ) {
-		global $wgCityId;
-		return self::userPermissions()->doesUserHavePermission( $wgCityId, $this, $action );
+		return self::userPermissions()->doesUserHavePermission( $this, $action );
 	}
 
 	/**
