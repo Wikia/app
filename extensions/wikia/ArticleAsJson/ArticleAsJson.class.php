@@ -28,6 +28,8 @@ class ArticleAsJson extends WikiaService {
 					'media' => $media,
 					'width' => $media['width'],
 					'height' => $media['height'],
+					'svgWidth' => $media['width'] ? $media['width'] : 1,
+					'svgHeight' => $media['height'] ? $media['height'] : 1,
 					'url' => $media['url'],
 					'title' => $media['title'],
 					'fileUrl' => $media['fileUrl'],
