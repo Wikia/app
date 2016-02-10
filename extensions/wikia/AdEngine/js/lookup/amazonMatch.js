@@ -1,10 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.amazonMatch', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (factory, doc, log, win) {
+], function (adContext, factory, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.amazonMatch',
@@ -36,6 +37,10 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			node = doc.getElementsByTagName('script')[0];
 
 		slots = config[skin];
+
+		if (adContext.getContext().opts.overridePrefootersSizes) {
+			slots.PREFOOTER_LEFT_BOXAD = ['7x9', '9x2'];
+		}
 
 		amznMatch.type = 'text/javascript';
 		amznMatch.src = 'http://c.amazon-adsystem.com/aax2/amzn_ads.js';

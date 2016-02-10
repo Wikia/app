@@ -156,15 +156,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				onSlotResponse(slotName);
 			},
 			sraEnabled: true,
-			recoverableSlots: recoverableSlots,
-			overrideSizesPerCountry: {
-				JP: {
-					CORP_TOP_LEADERBOARD: '728x90',
-					HOME_TOP_LEADERBOARD: '728x90',
-					HUB_TOP_LEADERBOARD: '728x90',
-					TOP_LEADERBOARD: '728x90'
-				}
-			}
+			recoverableSlots: recoverableSlots
 		}
 	);
 

@@ -1,20 +1,29 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.provider.gpt.helper',
-	'wikia.geo',
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.services')
-], function (adLogicPageParams, gptHelper, geo, log, lookups) {
+], function (adContext, adLogicPageParams, gptHelper, log, lookups) {
 	'use strict';
-	var country = geo.getCountryCode();
 
-	function overrideSizes(slotMap, newSizes) {
-		var slotName;
-		for (slotName in slotMap) {
-			if (slotMap.hasOwnProperty(slotName) && newSizes[slotName]) {
-				slotMap[slotName].size = newSizes[slotName];
+	function overrideSizes(slotMap) {
+		var context = adContext.getContext();
+
+		if (context.opts.overrideLeaderboardSizes) {
+			for (var slotName in slotMap) {
+				if (slotMap.hasOwnProperty(slotName)) {
+					if (slotName.indexOf('TOP_LEADERBOARD') > -1) {
+						slotMap[slotName].size = '728x90';
+					}
+				}
 			}
+		}
+
+		if (context.opts.overridePrefootersSizes) {
+			slotMap.PREFOOTER_LEFT_BOXAD.size = '300x250,728x90,970x250';
+			delete slotMap.PREFOOTER_RIGHT_BOXAD;
 		}
 	}
 
@@ -35,9 +44,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	function createProvider(logGroup, providerName, src, slotMap, extra) {
 		extra = extra || {};
 
-		if (extra.overrideSizesPerCountry && extra.overrideSizesPerCountry[country]) {
-			overrideSizes(slotMap, extra.overrideSizesPerCountry[country]);
-		}
+		overrideSizes(slotMap);
 
 		function canHandleSlot(slotName) {
 			log(['canHandleSlot', slotName], 'debug', logGroup);

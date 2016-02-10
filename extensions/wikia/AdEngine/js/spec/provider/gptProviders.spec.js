@@ -9,7 +9,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			context: {
 				opts: {}
 			},
-			countryCode: 'CURRENT',
 			adContext: {
 				getContext: function () {
 					return mocks.context;
@@ -33,11 +32,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			lookups: {
 				extendSlotTargeting: noop
 			},
-			geo: {
-				getCountryCode: function () {
-					return mocks.countryCode;
-				}
-			},
 			slotTweaker: {
 				removeDefaultHeight: noop,
 				removeTopButtonIfNeeded: noop,
@@ -51,9 +45,9 @@ describe('ext.wikia.adEngine.provider.*', function () {
 
 	function getFactory() {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
+			mocks.adContext,
 			mocks.adLogicPageParams,
 			mocks.gptHelper,
-			mocks.geo,
 			mocks.log,
 			mocks.lookups
 		);
@@ -110,7 +104,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	}
 
 	beforeEach(function () {
-		mocks.countryCode = 'CURRENT';
+		mocks.context.opts.overrideLeaderboardSizes = false;
 	});
 
 	it('directGpt: Push ad with specific slot sizes', function () {
@@ -135,7 +129,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	});
 
 	it('directGpt: Push ad with overridden slot sizes', function () {
-		mocks.countryCode = 'JP';
+		mocks.context.opts.overrideLeaderboardSizes = true;
 		var expectedSizes = {
 				CORP_TOP_LEADERBOARD: '728x90',
 				CORP_TOP_RIGHT_BOXAD: '300x250,300x600,300x1050',
@@ -178,7 +172,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	});
 
 	it('remnantGpt: Push ad with overridden slot sizes', function () {
-		mocks.countryCode = 'JP';
+		mocks.context.opts.overrideLeaderboardSizes = true;
 		var expectedSizes = {
 				CORP_TOP_LEADERBOARD: null,
 				CORP_TOP_RIGHT_BOXAD: null,

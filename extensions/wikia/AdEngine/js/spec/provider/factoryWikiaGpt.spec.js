@@ -6,6 +6,14 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 
 	var mocks = {
 			log: noop,
+			context: {
+				opts: {}
+			},
+			adContext: {
+				getContext: function () {
+					return mocks.context;
+				}
+			},
 			adLogicPageParams: {
 				getPageLevelParams: function () {
 					return {
@@ -24,20 +32,15 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 			lookups: {
 				extendSlotTargeting: noop
 			},
-			geo: {
-				getCountryCode: function () {
-					return 'CURRENT';
-				}
-			},
 			beforeSuccess: noop,
 			beforeHop: noop
 		};
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
+			mocks.adContext,
 			mocks.adLogicPageParams,
 			mocks.gptHelper,
-			mocks.geo,
 			mocks.log,
 			mocks.lookups
 		);
@@ -98,49 +101,5 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		}).fillInSlot('TOP_LEADERBOARD', {}, noop, noop);
 
 		expect(mocks.beforeHop).toHaveBeenCalled();
-	});
-
-	it('Override slot sizes when country is listed in provider configuration', function () {
-		spyOn(mocks.gptHelper, 'pushAd');
-		var provider = getProvider({
-			overrideSizesPerCountry: {
-				CURRENT: {
-					TOP_LEADERBOARD: '2x2',
-					TOP_RIGHT_BOXAD: '3x3'
-				}
-			}
-		});
-		provider.fillInSlot('TOP_RIGHT_BOXAD');
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[3].size).toEqual('3x3');
-		provider.fillInSlot('TOP_LEADERBOARD');
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[3].size).toEqual('2x2');
-	});
-
-	it('Do nothing when overriding other slots', function () {
-		spyOn(mocks.gptHelper, 'pushAd');
-
-		getProvider({
-			overrideSizesPerCountry: {
-				CURRENT: {
-					TOP_LEADERBOARD: '2x2'
-				}
-			}
-		}).fillInSlot('TOP_RIGHT_BOXAD');
-
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[3].size).toEqual('300x250,300x600');
-	});
-
-	it('Do nothing when overriding in different country', function () {
-		spyOn(mocks.gptHelper, 'pushAd');
-
-		getProvider({
-			overrideSizesPerCountry: {
-				US: {
-					TOP_LEADERBOARD: '2x2'
-				}
-			}
-		}).fillInSlot('TOP_LEADERBOARD');
-
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[3].size).toEqual('728x90,970x250,970x90');
 	});
 });
