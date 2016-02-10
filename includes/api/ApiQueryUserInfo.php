@@ -66,7 +66,7 @@ class ApiQueryUserInfo extends ApiQueryBase {
 			if ( $user->isBlocked( true, false ) ) {
 			/* Wikia change end */
 				$block = $user->getBlock();
-				
+
 				$vals['blockid'] = $block->getId();
 				$vals['blockedby'] = $block->getByName();
 				$vals['blockreason'] = $user->blockedFor();
