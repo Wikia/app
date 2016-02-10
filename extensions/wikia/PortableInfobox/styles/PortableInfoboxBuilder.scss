@@ -1,0 +1,27 @@
+.WikiaPage {
+	border: none;
+	.WikiaPageBackground {
+		height: 99%;
+	}
+}
+
+@media only screen and (max-width: 1083px) {
+	.WikiaPage {
+		padding: 0;
+		width: 766px;
+	}
+}
+
+@media only screen and (min-width: 1084px) and (max-width: 1595px) {
+	.WikiaPage {
+		padding: 0;
+		width: 1064px;
+	}
+}
+
+@media only screen and (min-width: 1596px) {
+	.WikiaPage {
+		padding: 0;
+		width: 1238px;
+	}
+}

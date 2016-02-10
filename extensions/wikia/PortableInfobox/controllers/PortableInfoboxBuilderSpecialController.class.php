@@ -25,22 +25,20 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 		parent::__construct( self::PAGE_NAME, self::PAGE_RESTRICTION, $listed, $function, $file, $includable );
 	}
 
-	/**
-	 * Infobox Builder special page
-	 */
 	public function index() {
-		$this->wg->SuppressPageHeader = true;
 		$this->wg->out->setHTMLTitle( wfMessage( 'portable-infobox-builder-title' )->text() );
-
-		// extract base title from path
-		$title = explode( self::PATH_SEPARATOR, $this->getPar(), self::EXPLODE_LIMIT )[0];
+		$title = explode( self::PATH_SEPARATOR, $this->getPar(), self::EXPLODE_LIMIT )[ 0 ];
 		$noTemplateSet = empty( $title ) ? true : false;
 
 		if ( $noTemplateSet ) {
+			$this->wg->SuppressPageHeader = true;
 			$this->response->setVal( 'noTemplateSet', true );
 			$this->response->setVal( 'setTemplateNameCallToAction', wfMessage(
 				'portable-infobox-builder-no-template-title-set' )->text() );
 		} else {
+			RenderContentOnlyHelper::setRenderContentVar( true );
+			RenderContentOnlyHelper::setRenderContentLevel( RenderContentOnlyHelper::LEAVE_GLOBAL_NAV_ONLY );
+			Wikia::addAssetsToOutput( 'portable_infobox_builder_scss' );
 			$url = implode( self::PATH_SEPARATOR, [ $this->wg->server, self::INFOBOX_BUILDER_MERCURY_ROUTE, $title ] );
 			$this->response->setVal( 'iframeUrl', $url );
 		}
