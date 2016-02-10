@@ -347,65 +347,67 @@ class VideoHandlerController extends WikiaController {
 
 		$params = $this->getVideoListParams();
 
-		// Key to cache the data under in memcache
-		$cacheKey = $this->getVideoListCacheKey( $params );
-
-		$cacheOptions = [
-			'cacheTTL' => \WikiaResponse::CACHE_STANDARD,
-			'negativeCacheTTL' => 0,
-		];
-
-		// Retrieve the result and if not null, cache it
-		$videoList = \WikiaDataAccess::cacheWithOptions(
-			$cacheKey,
-			function() use ( $params ) {
-				$mediaService = new \MediaQueryService();
-				$videoList = $mediaService->getVideoList(
-					$params['filter'],
-					$params['limit'],
-					$params['page'],
-					$params['providers'],
-					$params['category']
-				);
-
-				// get video detail
-				if ( !empty( $params['detail'] ) ) {
-					$videoOptions = [
-						'thumbWidth' => $params['width'],
-						'thumbHeight' => $params['height'],
-					];
-					$helper = new \VideoHandlerHelper();
-					foreach ( $videoList as &$videoInfo ) {
-						$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
-						if ( !empty( $videoDetail ) ) {
-							$videoInfo = array_merge( $videoInfo, $videoDetail );
-						}
-						else {
-							/**
-							 * SUS-80: because of the way videos upload was fixed before SUS-66 was applied,
-							 * rows to "page" table were added, but the actual video was never uploaded (i.e. "image" table row was missing)
-							 */
-							$videoInfo = false;  // this entry will be removed by array_filter() below
-
-							$this->error( __METHOD__ . ' - getVideoDetail returned no results', [
-								'title' => $videoInfo['title'],
-							] );
-						}
-					}
-					unset( $videoInfo );
-				}
-
-				// filter out items that provide no details (see the comment above)
-				// array_values helps us keep consecutive index values
-				return array_values( array_filter( $videoList ) );
-			},
-			$cacheOptions
+		$mediaService = new \MediaQueryService();
+		$videoList = $mediaService->getVideoList(
+			$params['filter'],
+			$params['limit'],
+			$params['page'],
+			$params['providers'],
+			$params['category']
 		);
 
+		// get video detail
+		if ( !empty( $params['detail'] ) ) {
+			$videoOptions = [
+				'thumbWidth' => $params['width'],
+				'thumbHeight' => $params['height'],
+			];
+			$helper = new \VideoHandlerHelper();
+			foreach ( $videoList as &$videoInfo ) {
+				$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
+				if ( !empty( $videoDetail ) ) {
+					$videoInfo = array_merge( $videoInfo, $videoDetail );
+				}
+				else {
+					/**
+					 * SUS-80: because of the way videos upload was fixed before SUS-66 was applied,
+					 * rows to "page" table were added, but the actual video was never uploaded (i.e. "image" table row was missing)
+					 */
+					$videoInfo = false;  // this entry will be removed by array_filter() below
+
+					$this->error( __METHOD__ . ' - getVideoDetail returned no results', [
+						'title' => $videoInfo['title'],
+					] );
+				}
+			}
+			unset( $videoInfo );
+		}
+
+		// filter out items that provide no details (see the comment above)
+		// array_values helps us keep consecutive index values
+		$videoList = array_values( array_filter( $videoList ) );
+
 		$this->response->setVal( 'videos', $videoList );
+
+		/**
+		 * SUS-81: let's rely on CDN cache only
+		 *
+		 * The surrogate key allows us to purge the whole range of getVideoList responses with a single PURGE request.
+		 */
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_STANDARD );
+		$this->wg->Out->tagWithSurrogateKeys( self::getVideoListSurrogateKey() );
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * SUS-81: return a surrogate key to be used for purging various responses rendered by getVideoList method
+	 *
+	 * @return string
+	 */
+	public static function getVideoListSurrogateKey() {
+		global $wgCachePrefix;
+		return implode( '-', [ $wgCachePrefix, __CLASS__, 'getVideoList' ] );
 	}
 
 	protected function getVideoListParams() {
@@ -444,25 +446,5 @@ class VideoHandlerController extends WikiaController {
 			$limit = self::VIDEO_LIMIT;
 		}
 		return $limit;
-	}
-
-	protected function getVideoListCacheKey( $params ) {
-		return wfMemcKey( __METHOD__, md5( serialize( $params ) ) );
-	}
-
-	/**
-	 * Clears the cache created by the getVideoList method. As such this takes the same request parameters
-	 * as that method.
-	 */
-	public function clearVideoListCache() {
-		$params = $this->getVideoListParams();
-		$cacheKey = $this->getVideoListCacheKey( $params );
-
-		\WikiaDataAccess::cachePurge( $cacheKey );
-
-		$this->response->setData([
-			'status' => 'ok',
-			'msg' => '',
-		]);
 	}
 }
