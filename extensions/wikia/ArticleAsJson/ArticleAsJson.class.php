@@ -166,7 +166,9 @@ class ArticleAsJson extends WikiaService {
 
 				if ( !empty( $caption ) ) {
 					$caption = $parser->parse( $caption, $title, $parserOptions, false )->getText();
+					self::unwrapParsedTextFromParagraph( $caption );
 				}
+
 				$linkHref = isset( $image['linkhref'] ) ? $image['linkhref'] : null;
 				$media[] = self::createMediaObject( $details, $image['name'], $caption, $linkHref );
 
@@ -365,6 +367,22 @@ class ArticleAsJson extends WikiaService {
 		) {
 			$parser->replaceLinkHolders( $media['caption'] );
 		}
+	}
+
+	/**
+	 * Copied from \Message::toString()
+	 *
+	 * @param $text
+	 * @return string
+	 */
+	private static function unwrapParsedTextFromParagraph( $text ) {
+		$matches = [ ];
+
+		if ( preg_match( '/^<p>(.*)\n?<\/p>\n?$/sU', $text, $matches ) ) {
+			$text = $matches[1];
+		}
+
+		return $text;
 	}
 
 	/**

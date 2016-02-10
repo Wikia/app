@@ -8,6 +8,41 @@ class ArticleAsJsonTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @dataProvider testUnwrapParsedTextFromParagraphDataProvider
+	 * @param $text
+	 * @param $expectedOutput
+	 */
+	public function testUnwrapParsedTextFromParagraph( $text, $expectedOutput ) {
+		$method = new ReflectionMethod( 'ArticleAsJson', 'unwrapParsedTextFromParagraph' );
+		$method->setAccessible( true );
+
+		$unwrappedText = $method->invoke( new ArticleAsJson, $text );
+
+		$this->assertEquals( $expectedOutput, $unwrappedText );
+	}
+
+	public function testUnwrapParsedTextFromParagraphDataProvider() {
+		return [
+			[
+				'text' => '<p>Test</p>',
+				'expectedOutput' => 'Test'
+			],
+			[
+				'text' => 'Test',
+				'expectedOutput' => 'Test'
+			],
+			[
+				'text' => '<p style="color: black;">Test</p>',
+				'expectedOutput' => '<p style="color: black;">Test</p>'
+			],
+			[
+				'text' => '<a href="http://www.wikia.com">Test</a>',
+				'expectedOutput' => '<a href="http://www.wikia.com">Test</a>'
+			]
+		];
+	}
+
+	/**
 	 * @dataProvider testIsIconImageDataProvider
 	 * @param $details
 	 * @param $expectedOutput
