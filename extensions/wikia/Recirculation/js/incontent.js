@@ -77,7 +77,7 @@ require([
 
 			section.$start.before($html);
 
-			$html.on('click', 'a', function() {
+			$html.on('mousedown', 'a', function() {
 				tracker.trackClick('in-content');
 			});
 		}
