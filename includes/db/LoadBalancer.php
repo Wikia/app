@@ -995,22 +995,12 @@ class LoadBalancer {
 	}
 
 	/**
-	 * @note This method may trigger a DB connection if not yet done
-	 * @param string|bool $wiki Wiki ID, or false for the current wiki
 	 * @return string|bool Reason the master is read-only or false if it is not
 	 * @since 1.27
 	 */
-	public function getReadOnlyReason( $wiki = false ) {
+	public function getReadOnlyReason() {
 		if ( $this->readOnlyReason !== false ) {
 			return $this->readOnlyReason;
-		} elseif ( $this->getLaggedSlaveMode( $wiki ) ) {
-			if ( $this->slavesDownMode ) {
-				return 'The database has been automatically locked ' .
-				'until the slave database servers become available';
-			} else {
-				return 'The database has been automatically locked ' .
-				'while the slave database servers catch up to the master.';
-			}
 		}
 
 		return false;
