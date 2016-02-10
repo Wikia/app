@@ -646,7 +646,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				'Include additional pieces of information',
 				' user           - Adds the user responsible for the edit and tags if they are an IP',
 				' userid         - Adds the user id responsible for the edit',
-				' useravatar     - Adds an avatar of a user responsible for the edit',
+				' useravatar     - Adds an avatar of a user responsible for the edit. It requires the user or the userid param to be present.',
 				' comment        - Adds the comment for the edit',
 				' parsedcomment  - Adds the parsed comment for the edit',
 				' flags          - Adds flags for the edit',
