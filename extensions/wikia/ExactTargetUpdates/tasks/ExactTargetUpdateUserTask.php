@@ -219,4 +219,20 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 		return $oUpdateUsersEditsResult->Results[0]->StatusMessage;
 	}
 
+	/**
+	 * Update the users subscription status in exact target.
+	 *
+	 * @param string $email
+	 * @param bool $subscribed
+	 */
+	public function updateUserSubscriptionStatus( $email, $subscribed=true ) {
+		$params = $this->getUserHelper()->prepareSubscriberData( $email, $subscribed );
+		$result = $this->getApiSubscriber()->updateRequest( $params );
+
+		$this->info( __METHOD__ . ' OverallStatus: ' . $result->OverallStatus );
+		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$result ) );
+
+		return $result;
+	}
+
 }

@@ -50,7 +50,7 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 
 		$taskProvider = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetTaskProvider' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'getDeleteUserTask', 'getCreateUserTask', 'getRetrieveUserTask', 'getUserDataVerificationTask', 'getRetrieveWikiTask', 'getWikiDataVerificationTask', 'getUpdateWikiHelper' ] )
+			->setMethods( [ 'getDeleteUserTask', 'getCreateUserTask', 'getRetrieveUserTask', 'getUserDataVerificationTask', 'getRetrieveWikiTask', 'getWikiDataVerificationTask', 'getUpdateWikiHelper', 'getUpdateUserTask' ] )
 			->getMock();
 		$taskProvider->expects( $this->once() )
 			->method( 'getDeleteUserTask' )
@@ -73,6 +73,7 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 			->disableOriginalConstructor()
 			->setMethods( [ 'updateFallbackCreateRequest' ] )
 			->getMock();
+		// FIXME: why is this being called twice? Is it necessary?
 		$dataExtension->expects( $this->exactly( 2 ) )
 			->method( 'updateFallbackCreateRequest' )
 			->with( $this->anything() ) // FIXME
@@ -88,8 +89,6 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 		$apiProvider->expects( $this->exactly( 2 ) )
 			->method( 'getApiDataExtension' )
 			->will( $this->returnValue( $dataExtension ) );
-
-
 
 		$createUserTask = new ExactTargetCreateUserTask();
 		$createUserTask->setApiProvider( $apiProvider );
