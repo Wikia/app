@@ -166,7 +166,7 @@ class ArticleAsJson extends WikiaService {
 
 				if ( !empty( $caption ) ) {
 					$caption = $parser->parse( $caption, $title, $parserOptions, false )->getText();
-					self::unwrapParsedTextFromParagraph( $caption );
+					$caption = self::unwrapParsedTextFromParagraph( $caption );
 				}
 
 				$linkHref = isset( $image['linkhref'] ) ? $image['linkhref'] : null;
