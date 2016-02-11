@@ -11,8 +11,9 @@ require([
 	// Currently only showing for English communities
 	if (w.wgContentLanguage !== 'en') { return; }
 
-
 	var $container = $('#mw-content-text'),
+		minimumLinksNumber = 8,
+		minimumSectionsNumber = 3,
 		template;
 
 	function injectInContentWidget($container) {
@@ -24,7 +25,7 @@ require([
 
 		// If this page doesn't have enough content (either links or sections) we
 		// don't want to show this widget
-		if ($links.length < 8 || sections.length < 3) {
+		if ($links.length < minimumLinksNumber || sections.length < minimumSectionsNumber) {
 			return;
 		}
 
