@@ -193,13 +193,6 @@ class BodyController extends WikiaController {
 			$namespaces[] = NS_BLOG_ARTICLE;
 		}
 
-		/*
-		// FIXME: THIS IS NOT REALLY PART OF THE USER PAGES NAMESPACES
-		if ( defined( 'NS_BLOG_LISTING' ) ) {
-			$namespaces[] = NS_BLOG_LISTING;
-		}
-		*/
-
 		if ( defined( 'NS_USER_WALL' ) ) {
 			$namespaces[] = NS_USER_WALL;
 		}
