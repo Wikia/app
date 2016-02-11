@@ -53,7 +53,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 		function trackState(providerName, slotName, params) {
 			log(['trackState', response, providerName, slotName], 'debug', module.logGroup);
 			var category,
-				encodedParams = module.encodeParamsForTracking(params),
+				encodedParams,
 				eventName;
 
 			if (!module.isSlotSupported(slotName)) {
@@ -61,6 +61,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 				return;
 			}
 
+			encodedParams = module.encodeParamsForTracking(params);
 			eventName = encodedParams ? 'lookup_success' : 'lookup_error';
 			category = module.name + '/' + eventName + '/' + providerName;
 
