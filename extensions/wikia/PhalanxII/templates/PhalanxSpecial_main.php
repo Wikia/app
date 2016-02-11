@@ -113,7 +113,7 @@
 							</select>
 						</div>
 						<div class="clearfix">
-							<input type="submit" id="wpPhalanxSubmit" name="wpPhalanxSubmit" value="<?php echo wfMsg( 'phalanx-add-block' ) ?>" />
+							<input type="submit" id="wpPhalanxSubmit" name="wpPhalanxSubmit" value="<?= wfMessage( empty( $editMode ) ? 'phalanx-add-block' : 'phalanx-modify-block' )->escaped() ?>" />
 							<input type="reset" value="<?php echo wfMsg( 'phalanx-reset-form' ) ?>" />
 						</div>
 					</div>
