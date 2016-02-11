@@ -145,6 +145,7 @@ $messages['it'] = array(
  */
 $messages['ja'] = array(
 	'imageserving-desc' => '視覚的な要件に基づいてページの指定された配列から画像を選択します。',
+	'mostlinkedfilesincontent' => 'コンテンツでよく利用されているファイル',
 );
 
 /** Colognian (Ripoarisch)
