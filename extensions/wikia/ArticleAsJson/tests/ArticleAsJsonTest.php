@@ -152,4 +152,56 @@ class ArticleAsJsonTest extends WikiaBaseTest {
 			]
 		];
 	}
+
+	/**
+	 * @dataProvider testScaleIconSizeDataProvider
+	 * @param $originalHeight
+	 * @param $originalWidth
+	 * @param $expectedOutput
+	 */
+	public function testScaleIconSize( $originalHeight, $originalWidth, $expectedOutput ) {
+		$method = new ReflectionMethod( 'ArticleAsJson', 'scaleIconSize' );
+		$method->setAccessible( true );
+
+		$output = $method->invoke( new ArticleAsJson, $originalHeight, $originalWidth );
+
+		$this->assertEquals( $expectedOutput, $output );
+	}
+
+	public function testScaleIconSizeDataProvider() {
+		return [
+			[
+				'originalHeight' => 100,
+				'originalWidth' => 200,
+				'expectedOutput' => [
+					'height' => 20,
+					'width' => 40
+				]
+			],
+			[
+				'originalHeight' => 10,
+				'originalWidth' => 200,
+				'expectedOutput' => [
+					'height' => 10,
+					'width' => 200
+				]
+			],
+			[
+				'originalHeight' => 100,
+				'originalWidth' => 20,
+				'expectedOutput' => [
+					'height' => 20,
+					'width' => 4
+				]
+			],
+			[
+				'originalHeight' => 130,
+				'originalWidth' => 20,
+				'expectedOutput' => [
+					'height' => 20,
+					'width' => 3
+				]
+			]
+		];
+	}
 }

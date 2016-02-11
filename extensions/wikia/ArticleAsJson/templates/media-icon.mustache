@@ -1,0 +1,13 @@
+{{#link}}
+<a href="{{link}}"{{#caption}} title="{{caption}}"{{/caption}}>
+	<img src="{{url}}" alt="{{title}}"
+		{{#width}} width="{{width}}"{{/width}}
+		{{#height}} height="{{height}}"{{/height}}>
+</a>
+{{/link}}
+{{^link}}
+	<img src="{{url}}" alt="{{title}}"
+		{{#caption}} title="{{caption}}"{{/caption}}
+		{{#width}} width="{{width}}"{{/width}}
+		{{#height}} height="{{height}}"{{/height}}>
+{{/link}}
