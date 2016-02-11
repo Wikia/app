@@ -80,7 +80,7 @@ $(function () {
 										.show();
 								} else {
 									VET.close();
-									(new Wikia.Querystring()).setVal('sort', 'recent').goTo();
+									(new Wikia.Querystring()).goTo();
 								}
 							},
 							// error callback

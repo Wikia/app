@@ -6,36 +6,6 @@
 /* @var $showAddVideoBtn bool */
 /* @var $pagination string */
 ?>
-
-<div class="ContentHeader sort-form">
-	<label><?= wfMsg('specialvideos-sort-by') ?></label>
-
-
-	<div class="WikiaDropdown MultiSelect" id="sorting-dropdown">
-		<div class="selected-items">
-			<span class="selected-items-list"><?= $sortMsg ?></span>
-			<img class="arrow" src="<?= $wg->BlankImgUrl ?>" />
-		</div>
-		<div class="dropdown">
-			<ul class="dropdown-list">
-				<? foreach ( $sortingOptions as $sortBy => $option ): ?>
-					<? if ( $sortMsg != $option ): ?>
-						<?
-							$parts = explode( ':', $sortBy );
-							$sortType = empty( $parts[0] ) ? '' : $parts[0];
-							$category = empty( $parts[1] ) ? '' : $parts[1];
-						?>
-						<li class="dropdown-item">
-							<label data-sort="<?= $sortType ?>" data-category="<?= $category ?>"><?= $option ?></label>
-						</li>
-					<? endif; ?>
-				<? endforeach; ?>
-			</ul>
-		</div>
-	</div>
-</div>
-
-
 <ul class="special-videos-grid small-block-grid-3 large-block-grid-3 x-large-block-grid-4">
 	<?php $counter = 0 ?>
 	<?php foreach( $videos as $video ): ?>

@@ -208,4 +208,19 @@ class VideoHandlerHooks {
 		return true;
 	}
 
+	/**
+	 * SUS-81: bind to hooks that are triggered when clearing the video_info cache
+	 *
+	 * This allow us to purge the cached responses of getVideoList method when a video is added / re-uploaded / deleted.
+	 *
+	 * @param VideoInfo $video
+	 * @return bool
+	 */
+	public static function clearVideoCache( VideoInfo $video ) {
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__ );
+		CeleryPurge::purgeBySurrogateKey( VideoHandlerController::getVideoListSurrogateKey() );
+
+		return true;
+	}
+
 }

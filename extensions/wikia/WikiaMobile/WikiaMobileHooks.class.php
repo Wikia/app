@@ -121,37 +121,8 @@ class WikiaMobileHooks {
 	static public function onParserAfterTidy( &$parser, &$text ){
 		wfProfileIn( __METHOD__ );
 
-		//cleanup page output from unwanted stuff
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
-			//remove inline styling to avoid weird results and optimize the output size
-			$attributesToStrip = [ 'style', 'color', 'bgcolor', 'border', 'align', 'cellspacing', 'cellpadding', 'hspace', 'vspace' ];
-			$text = HtmlHelper::stripAttributes( $text, $attributesToStrip );
-
-			//Remove "In other languages" section from starwars wikis that looks like this:
-			//
-			//<div id="p-lang" class="portlet">
-			//<div>In other languages</div>
-			//<div class="pBody">
-			//<ul>
-			//<li class="interwiki-bg plainlinks" title="bg:Чубака"><a class="text" href=" [...]</ul>
-			//</div>
-			//</div>
-			//
-			//There's code in Mercury to generate the section based on links from Lilly
-
-			if ( F::app()->wg->EnableLillyExt ) {
-				$regex = '<div id="p-lang" class="portlet">\s*'
-					. '<div>[^<>]*</div>\s*'
-					. '<div class="pBody">\s*'
-					. '<ul>\s*'
-					. '([^<>]+|<li\s[^<>]*>|</li>|<a\s[^<>]*>|</a>)*</ul>\s*'
-					. '</div>\s*'
-					. '</div>';
-				$text = preg_replace(":$regex:im", '',	$text);
-			}
-
-			//don't let the article content be an empty space
-			$text = trim( $text );
+			self::cleanMobileOutput( $text );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -408,5 +379,41 @@ class WikiaMobileHooks {
 
 		wfProfileOut( __METHOD__ );
 		return self::$mediaNsString;
+	}
+
+	static private function cleanMobileOutput( &$text ) {
+		wfProfileIn( __METHOD__ );
+
+		//remove inline styling to avoid weird results and optimize the output size
+		$attributesToStrip = [ 'style', 'color', 'bgcolor', 'border', 'align', 'cellspacing', 'cellpadding', 'hspace', 'vspace' ];
+		$text = HtmlHelper::stripAttributes( $text, $attributesToStrip );
+
+		//Remove "In other languages" section from starwars wikis that looks like this:
+		//
+		//<div id="p-lang" class="portlet">
+		//<div>In other languages</div>
+		//<div class="pBody">
+		//<ul>
+		//<li class="interwiki-bg plainlinks" title="bg:Чубака"><a class="text" href=" [...]</ul>
+		//</div>
+		//</div>
+		//
+		//There's code in Mercury to generate the section based on links from Lilly
+
+		if ( F::app()->wg->EnableLillyExt ) {
+			$regex = '<div id="p-lang" class="portlet">\s*' .
+				'<div>[^<>]*</div>\s*' .
+				'<div class="pBody">\s*' .
+				'<ul>\s*' .
+				'([^<>]+|<li\s[^<>]*>|</li>|<a\s[^<>]*>|</a>)*</ul>\s*' .
+				'</div>\s*' .
+				'</div>';
+			$text = preg_replace( ":$regex:im", '', $text );
+		}
+
+		//don't let the article content be an empty space
+		$text = trim( $text );
+
+		wfProfileOut( __METHOD__ );
 	}
 }
