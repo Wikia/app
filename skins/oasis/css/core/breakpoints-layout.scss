@@ -166,7 +166,7 @@
 				column-break-inside: avoid;
 
 				// fallback, because column-break-inside is currently NYI
-				display: table;
+				display: inline-block;
 				position: static;
 				width: 100%;
 
