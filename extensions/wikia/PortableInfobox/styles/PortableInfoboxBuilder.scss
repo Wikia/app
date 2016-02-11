@@ -8,6 +8,7 @@
 	border: none;
 	.InfoboxBuilder {
 		height: calc(100vh - #{$global-navigation-height});
+		position: fixed;
 	}
 	.WikiaPageBackground {
 		height: 99%;
@@ -15,21 +16,21 @@
 }
 
 @media only screen and (max-width: 1083px) {
-	.WikiaPage {
+	.WikiaPage, .InfoboxBuilder {
 		padding: 0;
 		width: 766px;
 	}
 }
 
 @media only screen and (min-width: 1084px) and (max-width: 1595px) {
-	.WikiaPage {
+	.WikiaPage, .InfoboxBuilder {
 		padding: 0;
 		width: 1064px;
 	}
 }
 
 @media only screen and (min-width: 1596px) {
-	.WikiaPage {
+	.WikiaPage, .InfoboxBuilder {
 		padding: 0;
 		width: 1238px;
 	}
