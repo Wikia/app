@@ -4,14 +4,16 @@ require([
 	'wikia.window',
 	'wikia.abTest',
 	'wikia.nirvana',
+	'wikia.log',
 	'wikia.mustache',
 	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.utils'
-], function ($, w, abTest, nirvana, Mustache, tracker, utils) {
+], function ($, w, abTest, nirvana, log, Mustache, tracker, utils) {
 	// Currently only showing for English communities
 	if (w.wgContentLanguage !== 'en') { return; }
 
-	var $container = $('#mw-content-text'),
+	var logGroup = 'ext.wikia.recirculation.incontent',
+		$container = $('#mw-content-text'),
 		minimumLinksNumber = 8,
 		minimumSectionsNumber = 3,
 		template;
@@ -26,6 +28,7 @@ require([
 		// If this page doesn't have enough content (either links or sections) we
 		// don't want to show this widget
 		if ($links.length < minimumLinksNumber || sections.length < minimumSectionsNumber) {
+			log('Recirculation in-content widget not shown - Not enough links or sections in article', 'debug', logGroup);
 			return;
 		}
 
@@ -36,12 +39,13 @@ require([
 		});
 
 		if (!firstSuitableSection) {
+			log('Recirculation in-content widget not shown - No section is wide enough', 'debug', logGroup);
 			return;
 		}
 
 		topTitles = findTopTitles($links);
-
 		if (topTitles.length < 3) {
+			log('Recirculation in-content widget not shown - No enough top links', 'debug', logGroup);
 			return;
 		}
 
