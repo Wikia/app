@@ -39,13 +39,14 @@ class ArticleAsJson extends WikiaService {
 		);
 	}
 
-	private static function renderGallery( $media, $id ) {
+	private static function renderGallery( $media, $id, $hasLinkedImages ) {
 		return self::removeNewLines(
 			\MustacheService::getInstance()->render(
 				self::MEDIA_GALLERY_TEMPLATE,
 				[
 					'galleryAttrs' => json_encode( [ 'ref' => $id ] ),
-					'media' => $media
+					'media' => $media,
+					'hasLinkedImages' => $hasLinkedImages
 				]
 			)
 		);
@@ -66,11 +67,18 @@ class ArticleAsJson extends WikiaService {
 	}
 
 	private static function createMarkerExperimental( $media, $isGallery = false ) {
-
 		$id = count( self::$media ) - 1;
 
 		if ( $isGallery ) {
-			return self::renderGallery( $media, $id );
+			$hasLinkedImages = false;
+
+			if ( count( array_filter( $media, function ( $item ) {
+				return isset( $item['link'] );
+			} ) ) ) {
+				$hasLinkedImages = true;
+			}
+
+			return self::renderGallery( $media, $id, $hasLinkedImages );
 		} else {
 			return self::renderImage( $media, $id );
 		}
@@ -160,7 +168,9 @@ class ArticleAsJson extends WikiaService {
 
 				if ( !empty( $caption ) ) {
 					$caption = $parser->parse( $caption, $title, $parserOptions, false )->getText();
+					$caption = self::unwrapParsedTextFromParagraph( $caption );
 				}
+
 				$linkHref = isset( $image['linkhref'] ) ? $image['linkhref'] : null;
 				$media[] = self::createMediaObject( $details, $image['name'], $caption, $linkHref );
 
@@ -359,6 +369,22 @@ class ArticleAsJson extends WikiaService {
 		) {
 			$parser->replaceLinkHolders( $media['caption'] );
 		}
+	}
+
+	/**
+	 * Copied from \Message::toString()
+	 *
+	 * @param $text
+	 * @return string
+	 */
+	private static function unwrapParsedTextFromParagraph( $text ) {
+		$matches = [ ];
+
+		if ( preg_match( '/^<p>(.*)\n?<\/p>\n?$/sU', $text, $matches ) ) {
+			$text = $matches[1];
+		}
+
+		return $text;
 	}
 
 	/**
