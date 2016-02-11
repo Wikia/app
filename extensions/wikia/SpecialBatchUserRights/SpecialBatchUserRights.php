@@ -8,6 +8,10 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
  * @ingroup SpecialPage
  */
 
+
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Permissions\PermissionsService;
+
 set_time_limit( 0 );
 
 $wgSpecialPages['BatchUserRights'] = 'SpecialBatchUserRights';
@@ -517,7 +521,7 @@ class SpecialBatchUserRights extends SpecialPage {
 
 		foreach ( $addergroups as $addergroup ) {
 			$groups = array_merge_recursive(
-				$groups, $this->userPermissions()->changeableByGroup( $addergroup )
+				$groups, $this->userPermissions()->getGroupsChangeableByGroup( $addergroup )
 			);
 			$groups['add']    = array_unique( $groups['add'] );
 			$groups['remove'] = array_unique( $groups['remove'] );
