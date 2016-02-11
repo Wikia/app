@@ -2,12 +2,7 @@
 
 namespace Wikia\Service\User\Permissions;
 
-use Wikia\Util\WikiaProfiler;
-use Wikia\Logger\Loggable;
-
 class PermissionsServiceImpl implements PermissionsService {
-
-	use Loggable;
 
 	/** @var string[string] - key is user id */
 	private $localExplicitUserGroups = [];
@@ -125,7 +120,6 @@ class PermissionsServiceImpl implements PermissionsService {
 	}
 
 	private function loadExplicitGroups() {
-		//TODO need to remove the $wgGroupPermissions and $wgRevokePermissions variables
 		global $wgGroupPermissions, $wgRevokePermissions;
 		$this->explicitGroups = array_diff(
 			array_merge( array_keys( $wgGroupPermissions ), array_keys( $wgRevokePermissions ) ),
@@ -422,7 +416,7 @@ class PermissionsServiceImpl implements PermissionsService {
 	/**
 	 * Return memcache key used for storing groups for a given user
 	 *
-	 * @param \User $user
+	 * @param $userId
 	 * @return string memcache key
 	 */
 	static public function getMemcKey( $userId ) {
@@ -433,6 +427,8 @@ class PermissionsServiceImpl implements PermissionsService {
 	 * Get the list of implicit group memberships this user has.
 	 * This includes 'user' if logged in, '*' for all accounts,
 	 * and autopromoted groups
+	 * @param \User $user
+	 * @param $reCacheAutomaticGroups
 	 * @return Array of String internal group names
 	 */
 	public function getAutomaticUserGroups( \User $user, $reCacheAutomaticGroups = false ) {
@@ -456,6 +452,8 @@ class PermissionsServiceImpl implements PermissionsService {
 	 * Get the list of explicit and implicit group memberships this user has.
 	 * This includes all explicit groups, plus 'user' if logged in,
 	 * '*' for all accounts, and autopromoted groups
+	 * @param \User $user
+	 * @param $reCacheAutomaticGroups
 	 * @return Array of String internal group names
 	 */
 	public function getEffectiveUserGroups( \User $user, $reCacheAutomaticGroups = false ) {
@@ -473,7 +471,6 @@ class PermissionsServiceImpl implements PermissionsService {
 	 * @return Array of Strings List of permission key names for given groups combined
 	 */
 	public function getGroupPermissions( $groups ) {
-		//TODO remove the global variables
 		global $wgGroupPermissions, $wgRevokePermissions;
 		$rights = array();
 		// grant every granted permission first
@@ -501,7 +498,6 @@ class PermissionsServiceImpl implements PermissionsService {
 	 * @return Array of Strings List of internal group names with the given permission
 	 */
 	public function getGroupsWithPermission( $role ) {
-		//TODO remove the global variable
 		global $wgGroupPermissions;
 		$allowedGroups = array();
 		foreach ( $wgGroupPermissions as $group => $rights ) {
@@ -514,12 +510,13 @@ class PermissionsServiceImpl implements PermissionsService {
 
 	/**
 	 * Get the permissions this user has.
+	 * @param \User $user
 	 * @return Array of String permission names
 	 */
 	public function getUserPermissions( \User $user ) {
 		if ( $this->getUserPermissionsArray( $user->getId() ) == false ) {
 			$permissions = $this->getGroupPermissions( $this->getEffectiveUserGroups( $user ) );
-			wfRunHooks( 'UserGetRights', array( $this, &$permissions ) );
+			wfRunHooks( 'UserGetRights', array( $user, &$permissions ) );
 			$this->setUserPermissionsArray( $user->getId(), array_values( $permissions ) );
 		}
 		return $this->getUserPermissionsArray( $user->getId());
@@ -642,7 +639,6 @@ class PermissionsServiceImpl implements PermissionsService {
 			);
 		}
 
-		//This calls ExactTarget updates
 		wfRunHooks( 'AfterUserAddGlobalGroup', [ $user, $group ] );
 		return true;
 	}
@@ -692,7 +688,6 @@ class PermissionsServiceImpl implements PermissionsService {
 			return false;
 		}
 
-		//Is global group
 		if ( in_array( $group, $this->getGlobalGroups() ) ) {
 			return $this->addUserToGlobalGroup( $userToChange, $group );
 		} else {
@@ -718,7 +713,6 @@ class PermissionsServiceImpl implements PermissionsService {
 			__METHOD__
 		);
 
-		//This calls ExactTarget updates
 		wfRunHooks( 'AfterUserRemoveGlobalGroup', [ $user, $group ] );
 
 		return true;
@@ -792,6 +786,7 @@ class PermissionsServiceImpl implements PermissionsService {
 
 	/**
 	 * Returns an array of groups that this user can add and remove
+	 * @param \User user
 	 * @return Array array( 'add' => array( addablegroups ),
 	 *  'remove' => array( removablegroups ),
 	 *  'add-self' => array( addablegroups to self),

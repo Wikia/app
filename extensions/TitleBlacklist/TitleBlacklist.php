@@ -46,8 +46,6 @@ $dir = dirname( __FILE__ );
 $wgAutoloadClasses['ApiQueryTitleBlacklist'] = "$dir/api/ApiQueryTitleBlacklist.php";
 $wgAPIModules['titleblacklist'] = 'ApiQueryTitleBlacklist';
 
-// $wgGroupPermissions['sysop']['tboverride'] = true; // Wikia change - move default rights to settings file so they can be overridden by WikiFactory
-
 $wgHooks['getUserPermissionsErrorsExpensive'][] = 'TitleBlacklistHooks::userCan';
 $wgHooks['AbortMove'][] = 'TitleBlacklistHooks::abortMove';
 //$wgHooks['AbortNewAccount'][] = 'TitleBlacklistHooks::abortNewAccount';

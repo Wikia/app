@@ -25,10 +25,6 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-// You could add a group like this:
-// $wgGroupPermissions['censor']['hiderevision'] = true;
-// $wgGroupPermissions['quiscustodiet']['oversight'] = true;
-
 $wgExtensionCredits['specialpage'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'Oversight',
