@@ -397,6 +397,10 @@ class PermissionsServiceImpl implements PermissionsService {
 	}
 
 	public function getExplicitUserGroups( $userId ) {
+		if ( empty( $userId ) ) {
+			return [];
+		}
+
 		return array_unique( array_merge (
 			$this->getExplicitLocalUserGroups( $userId ),
 			$this->getExplicitGlobalUserGroups( $userId )
@@ -488,7 +492,7 @@ class PermissionsServiceImpl implements PermissionsService {
 					array_keys( array_filter( $wgRevokePermissions[$group] ) ) );
 			}
 		}
-		return array_unique( $rights );
+		return array_values( array_unique( $rights ) );
 	}
 
 	/**
@@ -514,12 +518,16 @@ class PermissionsServiceImpl implements PermissionsService {
 	 * @return Array of String permission names
 	 */
 	public function getUserPermissions( \User $user ) {
-		if ( $this->getUserPermissionsArray( $user->getId() ) == false ) {
+		$userId = $user->getId();
+		$permissions = $this->getUserPermissionsArray( $userId );
+		if ( $permissions == false ) {
 			$permissions = $this->getGroupPermissions( $this->getEffectiveUserGroups( $user ) );
 			wfRunHooks( 'UserGetRights', array( $user, &$permissions ) );
-			$this->setUserPermissionsArray( $user->getId(), array_values( $permissions ) );
+			if ( !empty( $userId ) ) {
+				$this->setUserPermissionsArray( $userId, array_values( $permissions ) );
+			}
 		}
-		return $this->getUserPermissionsArray( $user->getId());
+		return $permissions;
 	}
 
 	/**
@@ -531,9 +539,7 @@ class PermissionsServiceImpl implements PermissionsService {
 	}
 
 	private function loadLocalGroups( $userId ) {
-		$userLocalGroups = $this->getLocalUserGroupsArray( $userId );
-
-		if ( $userLocalGroups == false ) {
+		if ( !empty( $userId ) && $this->getLocalUserGroupsArray( $userId ) == false ) {
 			$dbr = wfGetDB( DB_MASTER );
 			$res = $dbr->select( 'user_groups',
 				array( 'ug_group' ),
@@ -557,29 +563,25 @@ class PermissionsServiceImpl implements PermissionsService {
 	}
 
 	private function loadGlobalUserGroups( $userId ) {
-		if ( $this->getGlobalUserGroupsArray( $userId ) == false ) {
+		if ( !empty( $userId ) && $this->getGlobalUserGroupsArray( $userId ) == false ) {
 
-			if ( empty( $userId ) ) {
-				$this->setGlobalUserGroupsArray( $userId, [] );
-			} else {
-				$fname = __METHOD__;
-				$globalGroups = \WikiaDataAccess::cache(
-					self::getMemcKey( $userId ),
-					\WikiaResponse::CACHE_LONG,
-					function() use ( $userId, $fname ) {
-						$dbr = self::getSharedDB( DB_MASTER );
-						return $dbr->selectFieldValues(
-							'user_groups',
-							'ug_group',
-							[ 'ug_user' => $userId ],
-							$fname
-						);
-					}
-				);
+			$fname = __METHOD__;
+			$globalGroups = \WikiaDataAccess::cache(
+				self::getMemcKey( $userId ),
+				\WikiaResponse::CACHE_LONG,
+				function() use ( $userId, $fname ) {
+					$dbr = self::getSharedDB( DB_MASTER );
+					return $dbr->selectFieldValues(
+						'user_groups',
+						'ug_group',
+						[ 'ug_user' => $userId ],
+						$fname
+					);
+				}
+			);
 
-				$globalGroups = array_intersect( $globalGroups, $this->globalGroups );
-				$this->setGlobalUserGroupsArray( $userId, $globalGroups );
-			}
+			$globalGroups = array_intersect( $globalGroups, $this->globalGroups );
+			$this->setGlobalUserGroupsArray( $userId, $globalGroups );
 		}
 	}
 
