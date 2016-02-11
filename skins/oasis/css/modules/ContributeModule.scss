@@ -1,13 +1,16 @@
 @import 'skins/shared/mixins/flexbox';
 
 .contribute-module {
+	line-height: 35px;
+	text-align: center;
+
 	.tally,
 	.buttons {
 		display: inline-block;
+		vertical-align: middle;
 	}
 
 	.tally {
-		float: right;
 		white-space: nowrap;
 
 		em {
@@ -26,6 +29,7 @@
 
 	.buttons {
 		.contribute {
+			margin-right: 10px;
 			vertical-align: middle;
 
 			> img {
