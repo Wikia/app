@@ -195,7 +195,7 @@ class BodyController extends WikiaController {
 
 		/*
 		// FIXME: THIS IS NOT REALLY PART OF THE USER PAGES NAMESPACES
-		if ( defined( 'NS_BLOG_LISTING' ) ) {		
+		if ( defined( 'NS_BLOG_LISTING' ) ) {
 			$namespaces[] = NS_BLOG_LISTING;
 		}
 		*/
@@ -219,8 +219,6 @@ class BodyController extends WikiaController {
 		$subjectNamespace = MWNamespace::getSubject($namespace);
 
 		$railModuleList = [];
-
-		$railModuleList[1495] = [ 'Contribute', 'index', null ];
 
 		$latestActivityKey = $wg->User->isAnon() ? 1250 : 1300;
 		$huluVideoPanelKey = $wg->User->isAnon() ? 1390 : 1280;
@@ -344,6 +342,7 @@ class BodyController extends WikiaController {
 			return [];
 		}
 
+		$railModuleList[1495] = [ 'Contribute', 'index', null ];
 		$railModuleList[1440] = [ 'Ad', 'Index', [ 'slotName' => 'TOP_RIGHT_BOXAD' ] ];
 		$railModuleList[1435] = [ 'AdEmptyContainer', 'Index', [ 'slotName' => 'NATIVE_TABOOLA_RAIL' ] ];
 		$railModuleList[1100] = [ 'Ad', 'Index', [ 'slotName' => 'LEFT_SKYSCRAPER_2' ] ];
