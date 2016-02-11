@@ -73,6 +73,15 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		);
 	}
 
+	function createSlot(slotName) {
+		return {
+			name: slotName,
+			container: mocks.slotElement,
+			success: noop,
+			pre: noop
+		};
+	}
+
 	beforeEach(function () {
 		AdElement = noop;
 
@@ -95,7 +104,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		spyOn(mocks.googleTag.prototype, 'isInitialized').and.returnValue(false);
 		spyOn(mocks.googleTag.prototype, 'init');
 
-		getModule().pushAd('TOP_LEADERBOARD', mocks.slotElement, '/foo/slot/path', {}, {});
+		getModule().pushAd(createSlot('TOP_LEADERBOARD'), '/foo/slot/path', {}, {});
 
 		expect(mocks.googleTag.prototype.init).toHaveBeenCalled();
 	});
@@ -103,7 +112,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	it('Prevent initializing googletag if module is already initialized', function () {
 		spyOn(mocks.googleTag.prototype, 'init');
 
-		getModule().pushAd('TOP_LEADERBOARD', mocks.slotElement, '/foo/slot/path', {}, {});
+		getModule().pushAd(createSlot('TOP_LEADERBOARD'), '/foo/slot/path', {}, {});
 
 		expect(mocks.googleTag.prototype.init).not.toHaveBeenCalled();
 	});
@@ -112,7 +121,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		spyOn(mocks.googleTag.prototype, 'push');
 		spyOn(mocks.googleTag.prototype, 'flush');
 
-		getModule().pushAd('TOP_LEADERBOARD', mocks.slotElement, '/foo/slot/path', {}, {});
+		getModule().pushAd(createSlot('TOP_LEADERBOARD'), '/foo/slot/path', {}, {});
 
 		expect(mocks.googleTag.prototype.push).toHaveBeenCalled();
 		expect(mocks.googleTag.prototype.flush).toHaveBeenCalled();
@@ -123,7 +132,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		spyOn(mocks.googleTag.prototype, 'flush');
 		spyOn(mocks.sraHelper, 'shouldFlush').and.returnValue(false);
 
-		getModule().pushAd('TOP_LEADERBOARD', mocks.slotElement, '/foo/slot/path', {}, { sraEnabled: true });
+		getModule().pushAd(createSlot('TOP_LEADERBOARD'), '/foo/slot/path', {}, { sraEnabled: true });
 
 		expect(mocks.googleTag.prototype.push).toHaveBeenCalled();
 		expect(mocks.googleTag.prototype.flush).not.toHaveBeenCalled();
@@ -133,7 +142,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		spyOn(mocks.googleTag.prototype, 'push');
 		spyOn(mocks.googleTag.prototype, 'flush');
 
-		getModule().pushAd('TOP_RIGHT_BOXAD', mocks.slotElement, '/foo/slot/path', {}, { sraEnabled: true });
+		getModule().pushAd(createSlot('TOP_RIGHT_BOXAD'), '/foo/slot/path', {}, { sraEnabled: true });
 
 		expect(mocks.googleTag.prototype.push).toHaveBeenCalled();
 		expect(mocks.googleTag.prototype.flush).toHaveBeenCalled();
@@ -143,14 +152,14 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		spyOn(mocks.googleTag.prototype, 'push');
 		spyOn(mocks.googleTag.prototype, 'flush');
 
-		getModule().pushAd('GPT_FLUSH', mocks.slotElement, '/foo/slot/path', { flushOnly: true }, {});
+		getModule().pushAd(createSlot('GPT_FLUSH'), '/foo/slot/path', { flushOnly: true }, {});
 
 		expect(mocks.googleTag.prototype.push).not.toHaveBeenCalled();
 		expect(mocks.googleTag.prototype.flush).toHaveBeenCalled();
 	});
 
 	it('Register slot callback on push', function () {
-		getModule().pushAd('TOP_RIGHT_BOXAD', mocks.slotElement, '/foo/slot/path', {}, {});
+		getModule().pushAd(createSlot('TOP_RIGHT_BOXAD'), '/foo/slot/path', {}, {});
 
 		expect(callbacks.length).toEqual(1);
 	});
@@ -167,7 +176,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		spyOn(mocks.googleTag.prototype, 'push');
 		spyOn(mocks.googleTag.prototype, 'flush');
 
-		getModule().pushAd('TOP_RIGHT_BOXAD', mocks.slotElement, '/foo/slot/path', {}, { sraEnabled: true });
+		getModule().pushAd(createSlot('TOP_RIGHT_BOXAD'), '/foo/slot/path', {}, { sraEnabled: true });
 
 		expect(mocks.googleTag.prototype.push).not.toHaveBeenCalled();
 		expect(mocks.googleTag.prototype.flush).not.toHaveBeenCalled();
@@ -185,7 +194,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		spyOn(mocks.googleTag.prototype, 'push');
 		spyOn(mocks.googleTag.prototype, 'flush');
 
-		getModule().pushAd('TOP_RIGHT_BOXAD', mocks.slotElement, '/foo/slot/path', {}, {
+		getModule().pushAd(createSlot('TOP_RIGHT_BOXAD'), '/foo/slot/path', {}, {
 			sraEnabled: true,
 			recoverableSlots: ['TOP_RIGHT_BOXAD']
 		});
