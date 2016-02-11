@@ -427,7 +427,7 @@ class WallExternalController extends WikiaController {
 
 			$reason = isset( $formassoc['reason'] ) ? $formassoc['reason'] : '';
 
-			if ( empty( $reason ) && !$mw->canFastrestore( $this->wg->User ) ) {
+			if ( empty( $reason ) && !$mw->canFastRestore( $this->wg->User ) ) {
 				$this->response->setVal( 'status', false );
 				return true;
 			}
