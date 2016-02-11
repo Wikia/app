@@ -342,7 +342,7 @@ class BodyController extends WikiaController {
 			return [];
 		}
 
-		$railModuleList[1495] = [ 'Contribute', 'index', null ];
+		$railModuleList[1439] = [ 'Contribute', 'index', null ];
 		$railModuleList[1440] = [ 'Ad', 'Index', [ 'slotName' => 'TOP_RIGHT_BOXAD' ] ];
 		$railModuleList[1435] = [ 'AdEmptyContainer', 'Index', [ 'slotName' => 'NATIVE_TABOOLA_RAIL' ] ];
 		$railModuleList[1100] = [ 'Ad', 'Index', [ 'slotName' => 'LEFT_SKYSCRAPER_2' ] ];
