@@ -1,5 +1,14 @@
+@import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationVariables.scss';
+
+.mw-special-PortableInfoboxBuilder {
+	padding: 0;
+}
+
 .WikiaPage {
 	border: none;
+	.InfoboxBuilder {
+		height: calc(100vh - #{$global-navigation-height});
+	}
 	.WikiaPageBackground {
 		height: 99%;
 	}
