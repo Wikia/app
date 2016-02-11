@@ -83,6 +83,10 @@ $(function () {
 						window.WikiaButtons.init(rail);
 					}
 
+					if (window.CreatePage) {
+						$( '.createpage' ).click( window.CreatePage.requestDialog );
+					}
+
 					require([
 						'ext.wikia.adEngine.slot.floatingMedrec',
 						'wikia.window'
