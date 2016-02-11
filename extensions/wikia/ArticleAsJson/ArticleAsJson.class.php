@@ -7,9 +7,12 @@ class ArticleAsJson extends WikiaService {
 		'imageMaxWidth' => false
 	];
 
-	const ICON_MAX_SIZE = 48;
 	const CACHE_VERSION = '0.0.3';
 	const CACHE_VERSION_FOR_SEO_FRIENDLY_IMAGES = 1; // for $wgEnableSeoFriendlyImagesForMobile
+
+	const ICON_MAX_SIZE = 48;
+	// Line height in Mercury
+	const ICON_SCALE_TO_MAX_HEIGHT = 20;
 
 	const MEDIA_CONTEXT_ARTICLE_IMAGE = 'article-image';
 	const MEDIA_CONTEXT_ARTICLE_VIDEO = 'article-video';
@@ -21,13 +24,21 @@ class ArticleAsJson extends WikiaService {
 	const MEDIA_GALLERY_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-gallery.mustache';
 
 	private static function renderIcon( $media ) {
+		$scaledSize = self::scaleIconSize( $media['height'], $media['width'] );
+
+		$thumbUrl = VignetteRequest::fromUrl( $media['url'] )
+			->thumbnailDown()
+			->height( $scaledSize['height'] )
+			->width( $scaledSize['width'] )
+			->url();
+
 		return self::removeNewLines(
 			\MustacheService::getInstance()->render(
 				self::MEDIA_ICON_TEMPLATE,
 				[
-					'width' => $media['width'],
-					'height' => $media['height'],
-					'url' => $media['url'],
+					'url' => $thumbUrl,
+					'height' => $scaledSize['height'],
+					'width' => $scaledSize['width'],
 					'title' => $media['title'],
 					'link' => $media['link'],
 					'caption' => $media['caption']
@@ -437,5 +448,27 @@ class ArticleAsJson extends WikiaService {
 
 	private static function isInfoIcon( $templateType ) {
 		return $templateType == TemplateClassificationService::TEMPLATE_INFOICON;
+	}
+
+	/**
+	 * @param $originalHeight
+	 * @param $originalWidth
+	 *
+	 * @return array
+	 */
+	private static function scaleIconSize( $originalHeight, $originalWidth ) {
+		$height = $originalHeight;
+		$width = $originalWidth;
+		$maxHeight = self::ICON_SCALE_TO_MAX_HEIGHT;
+
+		if ( $originalHeight > $maxHeight ) {
+			$height = $maxHeight;
+			$width = intval( $maxHeight * $originalWidth / $originalHeight );
+		}
+
+		return [
+			'height' => $height,
+			'width' => $width
+		];
 	}
 }
