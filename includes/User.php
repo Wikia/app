@@ -1461,14 +1461,17 @@ class User {
 	}
 
 
+	/* Wikia change begin - SUS-92 */
 	/**
 	 * Get blocking information
 	 * @param $bFromSlave Bool Whether to check the slave database first. To
 	 *                    improve performance, non-critical checks are done
 	 *                    against slaves. Check when actually saving should be
 	 *                    done against master.
+	 * @param $shouldLogBlockInStats Bool flag that decides whether to log or not in PhalanxStats
 	 */
-	private function getBlockedStatus( $bFromSlave = true ) {
+	private function getBlockedStatus( $bFromSlave = true, $shouldLogBlockInStats = true ) {
+	/* Wikia change end */
 		global $wgProxyWhitelist, $wgUser;
 
 		if ( -1 != $this->mBlockedby ) {
@@ -1529,7 +1532,9 @@ class User {
 		}
 
 		# Extensions
-		wfRunHooks( 'GetBlockedStatus', array( &$this ) );
+		/* Wikia change begin - SUS-92 */
+		wfRunHooks( 'GetBlockedStatus', array( &$this, $shouldLogBlockInStats ) );
+		/* Wikia change end */
 
 		if ( !empty($this->mBlockedby) ) {
 			$this->mBlock->mBy = $this->mBlockedby;
@@ -1756,26 +1761,32 @@ class User {
 		return $triggered;
 	}
 
+	/* Wikia change begin - SUS-92 */
 	/**
 	 * Check if user is blocked
 	 *
 	 * @param $bFromSlave Bool Whether to check the slave database instead of the master
+	 * @param $shouldLogBlockInStats Bool flag that decides whether to log or not in PhalanxStats
+	 *
 	 * @return Bool True if blocked, false otherwise
 	 */
-	public function isBlocked( $bFromSlave = true ) { // hacked from false due to horrible probs on site
-		return $this->getBlock( $bFromSlave ) instanceof Block && $this->getBlock()->prevents( 'edit' );
+	public function isBlocked( $bFromSlave = true, $shouldLogBlockInStats = true ) { // hacked from false due to horrible probs on site
+		return $this->getBlock( $bFromSlave, $shouldLogBlockInStats ) instanceof Block && $this->getBlock()->prevents( 'edit' );
 	}
 
 	/**
 	 * Get the block affecting the user, or null if the user is not blocked
 	 *
 	 * @param $bFromSlave Bool Whether to check the slave database instead of the master
+	 * @param $shouldLogBlockInStats Bool flag that decides whether to log or not in PhalanxStats
+	 *
 	 * @return Block|null
 	 */
-	public function getBlock( $bFromSlave = true ){
-		$this->getBlockedStatus( $bFromSlave );
+	public function getBlock( $bFromSlave = true, $shouldLogBlockInStats = true ){
+		$this->getBlockedStatus( $bFromSlave, $shouldLogBlockInStats );
 		return $this->mBlock instanceof Block ? $this->mBlock : null;
 	}
+	/* Wikia change end */
 
 	/**
 	 * Check if user is blocked from editing a particular article

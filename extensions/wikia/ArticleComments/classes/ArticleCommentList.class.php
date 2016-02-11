@@ -402,7 +402,7 @@ class ArticleCommentList {
 
 		// $isSysop = in_array('sysop', $groups) || in_array('staff', $groups);
 		$canEdit = $wgUser->isAllowed( 'edit' );
-		$isBlocked = $wgUser->isBlocked();
+		$isBlocked = $wgUser->isBlocked( true, false );
 		$isReadOnly = wfReadOnly();
 		// $showall = $wgRequest->getText( 'showall', false );
 

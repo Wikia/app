@@ -227,6 +227,13 @@ class CreateWiki {
 		$this->mClusterDB = ( self::ACTIVE_CLUSTER ) ? "wikicities_" . self::ACTIVE_CLUSTER : "wikicities";
 		$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $this->mClusterDB ); // database handler, old $dbwTarget
 
+		// SUS-108: check read-only state of ACTIVE_CLUSTER before performing any DB-related actions
+		$readOnlyReason = $this->mNewWiki->dbw->getLBInfo( 'readOnlyReason' );
+		if ( $readOnlyReason !== false ) {
+			wfProfileOut( __METHOD__ );
+			throw new CreateWikiException( sprintf( '%s is in read-only mode: %s', self::ACTIVE_CLUSTER, $readOnlyReason ), self::ERROR_READONLY );
+		}
+
 		// check if database is creatable
 		// @todo move all database creation checkers to canCreateDatabase
 		if( !$this->canCreateDatabase() ) {

@@ -106,6 +106,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/template/modalOasisHandler.js',
 		'//extensions/wikia/AdEngine/js/template/skin.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
+		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 		'//resources/wikia/modules/krux.js',
 
 		// was: late queue
@@ -130,6 +131,9 @@ $config['recirculation_js'] = array(
 	'skin' => [ 'oasis' ],
 	'assets' => array(
 		'#group_videos_module_js',
+		'//extensions/wikia/Recirculation/js/tracker.js',
+		'//extensions/wikia/Recirculation/js/utils.js',
+		'//extensions/wikia/Recirculation/js/incontent.js',
 		'//extensions/wikia/Recirculation/js/recirculation.js',
 	),
 );
@@ -210,7 +214,7 @@ $config['adengine2_tracking_js'] = array(
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
-		'//resources/wikia/modules/krux.js',
+		'//resources/wikia/modules/krux.js'
 	),
 );
 
@@ -817,6 +821,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/remnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
+		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 
 		// Video ads
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',

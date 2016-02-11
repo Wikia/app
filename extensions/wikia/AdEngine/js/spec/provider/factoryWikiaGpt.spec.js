@@ -24,9 +24,9 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 				}
 			},
 			gptHelper: {
-				pushAd: function (slotName, slotElement, slotPath, slotTargeting, extra) {
-					extra.success();
-					extra.error();
+				pushAd: function (slot, slotPath, slotTargeting, extra) {
+					slot.success();
+					slot.hop();
 				}
 			},
 			lookups: {
@@ -35,6 +35,17 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 			beforeSuccess: noop,
 			beforeHop: noop
 		};
+
+	function createSlot(slotName) {
+		return {
+			name: slotName,
+			success: noop,
+			hop: noop,
+			pre: function (name, callback) {
+				callback();
+			}
+		};
+	}
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
@@ -76,9 +87,9 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 	it('Build slot path based on page params', function () {
 		spyOn(mocks.gptHelper, 'pushAd');
 
-		getProvider().fillInSlot('TOP_LEADERBOARD');
+		getProvider().fillInSlot(createSlot('TOP_LEADERBOARD'));
 
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2]).toEqual(
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[1]).toEqual(
 			'/5441/wka.ent/_muppet//home/testSource/TOP_LEADERBOARD'
 		);
 	});
@@ -88,7 +99,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 
 		getProvider({
 			beforeSuccess: mocks.beforeSuccess
-		}).fillInSlot('TOP_LEADERBOARD', {}, noop, noop);
+		}).fillInSlot(createSlot('TOP_LEADERBOARD'));
 
 		expect(mocks.beforeSuccess).toHaveBeenCalled();
 	});
@@ -98,7 +109,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 
 		getProvider({
 			beforeHop: mocks.beforeHop
-		}).fillInSlot('TOP_LEADERBOARD', {}, noop, noop);
+		}).fillInSlot(createSlot('TOP_LEADERBOARD'));
 
 		expect(mocks.beforeHop).toHaveBeenCalled();
 	});
