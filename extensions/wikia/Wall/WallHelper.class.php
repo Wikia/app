@@ -242,6 +242,7 @@ class WallHelper {
 			}
 
 			$wallThread = WallThread::newFromId( $parentId );
+			$wallThread->loadIfCached();
 			$topMessage = $wallThread->getThreadMainMsg();
 			$comments = $wallThread->getRepliesWallMessages();
 
