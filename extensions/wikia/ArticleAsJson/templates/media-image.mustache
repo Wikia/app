@@ -1,9 +1,9 @@
 <figure class="article-media-image"{{#mediaAttrs}} data-component="article-media-image" data-attrs="{{mediaAttrs}}"{{/mediaAttrs}}>
 	<a href="{{#link}}{{link}}{{/link}}{{^link}}{{url}}{{/link}}">
-		<img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="{{title}}"{{#width}} width="{{width}}"{{/width}}{{#height}} height="{{height}}"{{/height}}>
+		<img src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 {{width}} {{height}}'%2F%3E" alt="{{title}}"{{#width}} width="{{width}}"{{/width}}{{#height}} height="{{height}}"{{/height}}>
 		<noscript>
-			<img src="{{url}}" alt="{{title}}">
+			<img src="{{url}}" alt="{{title}}"{{#width}} width="{{width}}"{{/width}}{{#height}} height="{{height}}"{{/height}}>
 		</noscript>
 	</a>
-	<figcaption>{{{caption}}}</figcaption>
+	{{#caption}}<figcaption>{{{caption}}}</figcaption>{{/caption}}
 </figure>
