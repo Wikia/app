@@ -17,14 +17,6 @@ $messages['en'] = array(
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => 'Opening and ending tag mismatch',
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'Premature end of tag',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Attribute "$1" is not supported in <infobox> tag',
-	'portable-infobox-builder-title' => 'Portable Infobox Builder',
-	'portable-infobox-builder-no-template-title-set' => 'No template title set. Please specify the title for new infobox template.',
-	'portable-infobox-builder-create-template-entry-point-create-infobox' => 'Create Infobox',
-	'portable-infobox-builder-create-template-entry-point-create-regular-template' => 'Create Regular Template',
-	'portable-infobox-builder-entry-point-modal-title' => 'Do you want to create an infobox?',
-	'portable-infobox-builder-entry-point-modal-message' => 'Perhaps you are creating a new infobox template? Try out our new Infobox builder UI tool.',
-	'portable-infobox-builder-entry-point-modal-ok-button' => 'Ok',
-	'portable-infobox-builder-entry-point-modal-cancel-button' => 'Cancel',
 );
 
 $messages['qqq'] = array(
@@ -42,14 +34,6 @@ $messages['qqq'] = array(
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => 'XML Error: Opening and ending tag mismatch (for example: <data></label>)',
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'XML Error: premature end of tag',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Unsupported attribute used inside <infobox> tag. $1 param contains attribute name.',
-	'portable-infobox-builder-entry-point-modal-title' => 'Title for portable infobox builder entry point modal on edit page with a question: Do you want to create infobox?',
-	'portable-infobox-builder-entry-point-modal-message' => 'Message in portable infobox builder asking if user wants to create an infobox and if she / he would like to use new Infobox Builder UI tool.',
-	'portable-infobox-builder-entry-point-modal-ok-button' => 'Ok button, meaning the user confirms using the new infobox builder',
-	'portable-infobox-builder-entry-point-modal-cancel-button' => 'Cancel button',
-	'portable-infobox-builder-title' => 'Title for infobox builder special page',
-	'portable-infobox-builder-no-template-title-set' => 'Information that no template title was set. user need to set template title in order to create new infobox',
-	'portable-infobox-builder-create-template-entry-point-create-infobox' => 'Button to create infobox with Infobox builder tool displayed on new template page',
-	'portable-infobox-builder-create-template-entry-point-create-regular-template' => 'Button to create regular template with editor displayed on new template page',
 );
 
 $messages['de'] = array(

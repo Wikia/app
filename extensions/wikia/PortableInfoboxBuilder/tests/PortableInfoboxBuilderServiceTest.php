@@ -3,7 +3,7 @@
 class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 
 	protected function setUp() {
-		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
+		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfoboxBuilder.setup.php';
 		parent::setUp();
 	}
 

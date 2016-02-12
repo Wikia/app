@@ -2,7 +2,6 @@
 
 class PortableInfoboxHooks {
 	const PARSER_TAG_GALLERY = 'gallery';
-	const INFOBOX_BUILDER_SPECIAL_PAGE = 'Special:PortableInfoboxBuilder';
 
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		Wikia::addAssetsToOutput( 'portable_infobox_js' );
@@ -103,26 +102,6 @@ class PortableInfoboxHooks {
 	public static function onBacklinksPurge( Array $articles ) {
 		foreach ( $articles as $title ) {
 			PortableInfoboxDataService::newFromTitle( $title )->purge();
-		}
-
-		return true;
-	}
-
-	/**
-	 * @param Skin $skin
-	 * @param string $text
-	 *
-	 * @return bool
-	 */
-	public static function onSkinAfterBottomScripts( $skin, &$text ) {
-		$title = $skin->getTitle();
-
-		if ( $title && $title->isSpecial( PortableInfoboxBuilderSpecialController::PAGE_NAME ) ) {
-			$scripts = AssetsManager::getInstance()->getURL( 'portable_infobox_builder_js' );
-
-			foreach ( $scripts as $script ) {
-				$text .= Html::linkedScript( $script );
-			}
 		}
 
 		return true;

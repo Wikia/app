@@ -2487,8 +2487,8 @@ $config[ 'portable_infobox_builder_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//resources/wikia/libraries/Ponto/ponto.js',
-		'//extensions/wikia/PortableInfobox/js/PortableInfoboxBuilderPonto.js',
-		'//extensions/wikia/PortableInfobox/js/PortableInfoboxBuilder.js'
+		'//extensions/wikia/PortableInfoboxBuilder/js/PortableInfoboxBuilderPonto.js',
+		'//extensions/wikia/PortableInfoboxBuilder/js/PortableInfoboxBuilder.js'
 	]
 ];
 
@@ -2496,7 +2496,7 @@ $config[ 'portable_infobox_builder_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxBuilder.scss'
+		'//extensions/wikia/PortableInfoboxBuilder/styles/PortableInfoboxBuilder.scss'
 	]
 ];
 
