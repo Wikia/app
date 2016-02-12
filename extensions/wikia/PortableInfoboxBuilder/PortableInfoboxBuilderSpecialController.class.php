@@ -27,22 +27,27 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 
 	public function index() {
 		$this->wg->out->setHTMLTitle( wfMessage( 'portable-infobox-builder-title' )->text() );
-		$title = explode( self::PATH_SEPARATOR, $this->getPar(), self::EXPLODE_LIMIT )[ 0 ];
-		$noTemplateSet = empty( $title ) ? true : false;
-
-		if ( $noTemplateSet ) {
-			$this->wg->SuppressPageHeader = true;
-			$this->response->setVal( 'noTemplateSet', true );
-			$this->response->setVal( 'setTemplateNameCallToAction', wfMessage(
-				'portable-infobox-builder-no-template-title-set' )->text() );
+		if ( empty( $this->getPar() ) ) {
+			$this->forward( __CLASS__, 'notitle' );
 		} else {
-			RenderContentOnlyHelper::setRenderContentVar( true );
-			RenderContentOnlyHelper::setRenderContentLevel( RenderContentOnlyHelper::LEAVE_GLOBAL_NAV_ONLY );
-			Wikia::addAssetsToOutput( 'portable_infobox_builder_scss' );
-			$url = implode( self::PATH_SEPARATOR, [ $this->wg->server, self::INFOBOX_BUILDER_MERCURY_ROUTE, $title ] );
-			$this->response->setVal( 'iframeUrl', $url );
+			$this->forward( __CLASS__, 'builder' );
 		}
+	}
 
+	public function noTitle() {
+		$this->wg->SuppressPageHeader = true;
+		$this->response->setVal( 'setTemplateNameCallToAction', wfMessage(
+			'portable-infobox-builder-no-template-title-set' )->text() );
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
+	public function builder() {
+		$title = explode( self::PATH_SEPARATOR, $this->getPar(), self::EXPLODE_LIMIT )[ 0 ];
+		RenderContentOnlyHelper::setRenderContentVar( true );
+		RenderContentOnlyHelper::setRenderContentLevel( RenderContentOnlyHelper::LEAVE_GLOBAL_NAV_ONLY );
+		Wikia::addAssetsToOutput( 'portable_infobox_builder_scss' );
+		$url = implode( self::PATH_SEPARATOR, [ $this->wg->server, self::INFOBOX_BUILDER_MERCURY_ROUTE, $title ] );
+		$this->response->setVal( 'iframeUrl', $url );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 }
