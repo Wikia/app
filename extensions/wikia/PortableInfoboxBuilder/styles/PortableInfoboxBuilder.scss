@@ -8,8 +8,8 @@
 .WikiaPage {
 	border: none;
 	.InfoboxBuilder {
-		height: calc(100vh - #{$global-navigation-height});
-		position: fixed;
+		display: block;
+		height: calc(100vh - #{$global-navigation-negative-top-margin});
 	}
 	.WikiaPageBackground {
 		height: 99%;
