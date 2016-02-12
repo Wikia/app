@@ -74,40 +74,35 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		],
 		provider;
 
-	function fillInSlotWithDelay(slotName, slotElement, success, hop) {
-		log(['fillInSlotWithDelay', slotName], 'debug', logGroup);
+	function fillInSlotWithDelay(slot) {
+		log(['fillInSlotWithDelay', slot.name], 'debug', logGroup);
 
 		if (!context.opts.delayBtf) {
-			provider.fillInSlot(slotName, slotElement, success, hop);
+			provider.fillInSlot(slot);
 			return;
 		}
 
 		// For the above the fold slot:
-		if (atfSlots.indexOf(slotName) > -1) {
-			pendingAtfSlots.push(slotName);
-			provider.fillInSlot(slotName, slotElement, success, hop);
+		if (atfSlots.indexOf(slot.name) > -1) {
+			pendingAtfSlots.push(slot.name);
+			provider.fillInSlot(slot);
 			return;
 		}
 
 		// For the below the fold slot:
-		btfQueue.push({
-			slotName: slotName,
-			slotElement: slotElement,
-			success: success,
-			hop: hop
-		});
+		btfQueue.push(slot);
 	}
 
 	function processBtfSlot(slot) {
-		log(['processBtfSlot', slot.slotName], 'debug', logGroup);
+		log(['processBtfSlot', slot.name], 'debug', logGroup);
 
 		if (!win.ads.runtime.disableBtf) {
-			provider.fillInSlot(slot.slotName, slot.slotElement, slot.success, slot.hop);
+			provider.fillInSlot(slot);
 			return;
 		}
 
 		slot.success({adType: 'blocked'});
-		slotTweaker.hide(slot.slotName);
+		slotTweaker.hide(slot.name);
 	}
 
 	function startBtfQueue() {

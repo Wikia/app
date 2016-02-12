@@ -60,7 +60,7 @@ class AchAwardingService {
 
 			$dbr = wfGetDB( DB_SLAVE );
 
-			$badge = $dbr->selectField( 
+			$badge = $dbr->selectField(
 				'ach_user_badges',
 				'badge_type_id',
 				$where,
@@ -418,7 +418,7 @@ class AchAwardingService {
 						//calls api.php?action=query&list=imageusage&iulimit=10&iutitle=File:File_mame.ext
 						$imageUsageCount = 0;
 						$imageUsageLimit = 10;
-						$params = array( 
+						$params = array(
 							'action' => 'query',
 							'list' => 'imageusage',
 							'iutitle' => "File:{$inserted_image['il_to']}",
@@ -530,7 +530,7 @@ class AchAwardingService {
 			$where = array( 'badge_type_id' => BADGE_LUCKYEDIT );
 			$dbr = wfGetDB( DB_SLAVE );
 
-			$maxLap = $dbr->selectField( 
+			$maxLap = $dbr->selectField(
 				'ach_user_badges',
 				'max( badge_lap ) as cnt',
 				$where,
@@ -686,7 +686,7 @@ class AchAwardingService {
 		$where = array( 'user_id' => $this->mUser->getId() );
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$res = $dbr->select( 
+		$res = $dbr->select(
 			'ach_user_badges',
 			'badge_type_id, badge_lap',
 			$where,
@@ -729,9 +729,9 @@ class AchAwardingService {
 			$user = $wgUser;
 		}
 
-		if ( 
+		if (
 			$user->isAnon() ||
-			$user->isBlocked() ||
+			$user->isBlocked( true, false ) ||
 			( $user->isAllowed( 'bot' ) || in_array( $user->getName(), $wgWikiaBotLikeUsers ) ) ||
 			( is_array( $wgAchievementsExemptUsers ) && in_array( $user->getId(), $wgAchievementsExemptUsers ) ) ||
 			/*

@@ -253,7 +253,7 @@ class WallHistoryController extends WallController {
 			}
 
 			if ( ( $type == WH_REMOVE && !$wm->isAdminDelete() ) || ( $type == WH_DELETE && $wm->isAdminDelete() ) ) {
-				if ( $wm->canRestore( $this->getContext()->getUser() ) ) {
+				if ( $wm->canRestore( $this->getContext()->getUser(), false ) ) {
 					if ( $this->isThreadLevel ) {
 						$restoreActionMsg = ( $isReply === '1' ) ? wfMessage( 'wall-history-action-restore-reply' )->text() : wfMessage( 'wall-history-action-restore-thread' )->text();
 					} else {
@@ -263,7 +263,7 @@ class WallHistoryController extends WallController {
 					$history[$key]['actions'][] = array(
 						'class' => 'message-restore', // TODO: ?
 						'data-id' => $value['page_id'],
-						'data-mode' => 'restore' . ( $wm->canFastrestore( $this->getContext()->getUser() ) ? '-fast' : '' ),
+						'data-mode' => 'restore' . ( $wm->canFastRestore( $this->getContext()->getUser(), false ) ? '-fast' : '' ),
 						'href' => '#',
 						'msg' => $restoreActionMsg
 					);
