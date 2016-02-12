@@ -5,7 +5,7 @@ class NodeHeroImageSanitizer extends NodeSanitizer {
 	protected $selectorsWrappingTextToPad = [ 'li' ];
 	protected $selectorsWrappingAllowedFeatures = [ 'sup[@class="reference"]' ];
 	protected $selectorsForFullRemoval =
-		[ 'script', 'span[@itemprop="duration"]', '*[contains(@data-component,"article-media-gallery")]'];
+		[ 'script', 'span[@itemprop="duration"]', '*[contains(@data-component,"article-media")]'];
 
 	/**
 	 * @param $data
