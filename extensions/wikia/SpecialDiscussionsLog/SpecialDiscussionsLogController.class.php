@@ -15,6 +15,8 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	const HTTP_STATUS_OK = 200;
 	const NO_USER_MATCH_ERROR = "Provided username did not match any user";
 
+	static $inputFormTemplate = 'extensions/wikia/SpecialDiscussionsLog/templates/SpecialDiscussionsLog_inputForm.mustache';
+
 	public function __construct() {
 		parent::__construct( 'DiscussionsLog' );
 	}
@@ -42,10 +44,10 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	}
 
 	private function getInputForm() {
-		return '<form method="post">
-<label for="username">Username: </label>
-<input id="username" name="username" type="text" required>
-<input type="submit" value="View Logs"></form><br>';
+		return \MustacheService::getInstance()->render(
+			self::$inputFormTemplate,
+			[]
+		);
 	}
 
 	private function constructKibanaUrl( $dayOffset ) {
