@@ -10,7 +10,8 @@ class PhalanxUserModel extends PhalanxModel {
 	/**
 	 * Return the list of string to be checked by Phalanx.
 	 *
-	 * Will be:
+	 * It can be:
+	 *  - an email address (provided via setText method)
 	 *  - a user name (passed via $user constructor argument)
 	 *  - the IP address taken from the current request (only when performing an action that can be blocked) - see SUS-141
 	 *
@@ -18,7 +19,7 @@ class PhalanxUserModel extends PhalanxModel {
 	 */
 	public function getText() {
 		if ( !empty( $this->text ) ) {
-			// TODO: check if this is actually needed
+			// text is used for checking email addresses
 			$ret = $this->text;
 		}
 		else {
@@ -33,7 +34,7 @@ class PhalanxUserModel extends PhalanxModel {
 			 * Example: do not pass the current IP address when checking the block status
 			 * of the owner of user page we're currently visiting (via Masthead code)
 			 */
-			if ( $this->shouldLogInStats === true ) {
+			if ( $this->getShouldLogInStats() === true ) {
 				$ret[] = $this->ip;
 			}
 		}
