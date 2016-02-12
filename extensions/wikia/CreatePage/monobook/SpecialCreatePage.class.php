@@ -67,37 +67,41 @@ class SpecialCreatePage extends SpecialEditPage {
 	}
 
 	protected function parseFormData() {
-		global $wgRequest;
-
 		wfRunHooks( 'BlogsAlternateEdit', array( false ) );
 
-		$this->mFormData['postBody'] = $wgRequest->getVal( 'wpTextbox1' );
-		$this->mFormData['postTitle'] = $wgRequest->getVal( 'postTitle' );
-		$this->mFormData['postEditSummary'] = $wgRequest->getVal( 'wpSummary' );
-		$this->mFormData['postCategories'] = $wgRequest->getVal( 'wpCategoryTextarea1' );
+		$request = $this->getRequest();
+
+		$this->mFormData['postBody'] = $request->getVal( 'wpTextbox1' );
+		$this->mFormData['postTitle'] = $request->getVal( 'postTitle' );
+		$this->mFormData['postEditSummary'] = $request->getVal( 'wpSummary' );
+		$this->mFormData['postCategories'] = $request->getVal( 'wpCategoryTextarea1' );
+
+		if ( !$this->getUser()->matchEditToken( $request->getVal( 'wpEditToken' ) ) ) {
+			$this->mFormErrors[] = $this->msg( 'sessionfailure' )->escaped();
+		}
 
 		$postBody = trim( $this->mFormData['postBody'] );
 		if ( empty( $postBody ) ) {
-			$this->mFormErrors[] = wfMsg( 'createpage_empty_article_body_error' );
+			$this->mFormErrors[] = $this->msg( 'createpage_empty_article_body_error' )->escaped();
 		}
 
 		if ( empty( $this->mFormData['postTitle'] ) ) {
-			$this->mFormErrors[] = wfMsg( 'createpage_empty_title_error' );
+			$this->mFormErrors[] = $this->msg( 'createpage_empty_title_error' )->escaped();
 		}
 		else {
 			$oPostTitle = Title::newFromText( $this->mFormData['postTitle'], NS_MAIN );
 
 			if ( !( $oPostTitle instanceof Title ) ) {
-				$this->mFormErrors[] = wfMsg( 'createpage_invalid_title_error' );
+				$this->mFormErrors[] = $this->msg( 'createpage_invalid_title_error' )->escaped();
 			}
 			else {
 				$sFragment = $oPostTitle->getFragment();
 				if ( strlen( $sFragment ) > 0 ) {
-					$this->mFormErrors[] = wfMsg( 'createpage_invalid_title_error' );
+					$this->mFormErrors[] = $this->msg( 'createpage_invalid_title_error' )->escaped();
 				} else {
 					$this->mPostArticle = new Article( $oPostTitle, 0 );
 					if ( $this->mPostArticle->exists() ) {
-						$this->mFormErrors[] = wfMsg( 'createpage_article_already_exists' );
+						$this->mFormErrors[] = $this->msg( 'createpage_article_already_exists' )->escaped();
 					}
 				}
 			}

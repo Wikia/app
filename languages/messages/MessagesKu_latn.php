@@ -217,29 +217,12 @@ $messages = array(
 'navigation'    => 'Navîgasyon',
 'and'           => '&#32;û',
 
-# Cologne Blue skin
 'qbfind'         => 'Bibîne',
 'qbbrowse'       => 'Bigere',
-'qbedit'         => 'Biguherîne',
 'qbpageoptions'  => 'Ev rûpel',
 'qbpageinfo'     => 'Naverok',
-'qbmyoptions'    => 'Rûpelên min',
-'qbspecialpages' => 'Rûpelên taybet',
 'faq'            => 'PGP',
-'faqpage'        => 'Project:PGP',
 
-# Vector skin
-'vector-action-addsection' => 'Mijarekê lê zêde bike',
-'vector-action-delete'     => 'Jê bibe',
-'vector-action-move'       => 'Nav biguherîne',
-'vector-action-protect'    => 'Biparêze',
-'vector-action-undelete'   => 'Jê nebe',
-'vector-action-unprotect'  => 'Parastinê rake',
-'vector-view-create'       => 'Çêke',
-'vector-view-edit'         => 'Biguherîne',
-'vector-view-history'      => 'Dîrokê bibîne',
-'vector-view-view'         => 'Bixwîne',
-'vector-view-viewsource'   => 'Çavkaniyan bibîne',
 'actions'                  => 'Çalakî',
 'namespaces'               => 'Valahiya nav',
 'variants'                 => 'Variyant',
@@ -262,7 +245,6 @@ $messages = array(
 'edit'              => 'Biguherîne',
 'create'            => 'Biafirîne',
 'editthispage'      => 'Vê rûpelê biguherîne',
-'create-this-page'  => 'Vê rûpelê çêke',
 'delete'            => 'Jê bibe',
 'deletethispage'    => 'Vê rûpelê jê bibe',
 'undelete_short'    => 'Dîsa {{PLURAL:$1|guherandinekî|$1 guherandinan}} çêke',
@@ -276,19 +258,9 @@ $messages = array(
 'talkpagelinktext'  => 'Nîqaş',
 'specialpage'       => 'Rûpela taybet',
 'personaltools'     => 'Amûrên kesane',
-'postcomment'       => 'Beşeke nû',
-'articlepage'       => 'Li rûpela naverokê binêre',
 'talk'              => 'Guftûgo',
 'views'             => 'Dîtin',
 'toolbox'           => 'Qutiya amûran',
-'userpage'          => 'Li rûpela vê/vî bikarhênerê/î binêre',
-'projectpage'       => 'Li rûpela projeyê binêre',
-'imagepage'         => 'Rûpela dosyeyan bibîne',
-'mediawikipage'     => 'Rûpela peyamê bibîne',
-'templatepage'      => 'Rûpela şablonê bibîne',
-'viewhelppage'      => 'Rûpela alîkariyê bibîne',
-'categorypage'      => 'Li rûpela kategoriyê binêre',
-'viewtalkpage'      => 'Li guftûgoyê binêre',
 'otherlanguages'    => 'Zimanên din',
 'redirectedfrom'    => '(ji $1 hate beralîkirin)',
 'redirectpagesub'   => 'Rûpelê beralî bike',
@@ -438,8 +410,9 @@ $2
 # Login and logout pages
 'logouttext'                 => "'''Tu niha derketî (logged out).'''
 
-Tu dikarî {{SITENAME}} niha weke bikarhênerekî nediyarkirî bikarbînî, yan jî tu dikarî dîsa bi vî navê xwe yan navekî din wek bikarhêner [[Special:UserLogin|dîsa têkevî]].
+Tu dikarî {{SITENAME}} niha weke bikarhênerekî nediyarkirî bikarbînî, yan jî tu dikarî dîsa bi vî navê xwe yan navekî din wek bikarhêner $1.
 Bila di bîra te de be ku gengaz e hin rûpel mîna ku tu hîn bi navê xwe qeyd kiriyî werin nîşandan, heta ku tu nîşanên çavlêgerandina (browser) xwe jênebî.",
+'logouttext-link-text'       => 'dîsa têkevî',
 'welcomecreation'            => '== Tu bi xêr hatî, $1! ==
 
 Hesabê te hate afirandin. Tu dikarî niha [[Special:Preferences|tercîhên xwe di {{SITENAME}}]] de biguherînî.',
@@ -831,8 +804,6 @@ Sedema qedexekirina $3 ev e: ''$2''",
 'searchdisabled'                 => '<p>Tu dikarî li {{SITENAME}} bi Google an Yahoo! bigere. Têbînî: Dibe ku encamen lêgerîne ne yên herî nû ne.
 </p>',
 
-# Quickbar
-'qbsettings-none' => 'Tune',
 
 # Preferences page
 'preferences'                 => 'Tercîhên min',

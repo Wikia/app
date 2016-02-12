@@ -7,6 +7,63 @@ class NodeImageTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers       NodeImage::getGalleryData
+	 */
+	public function testGalleryData() {
+		$input = '<div data-model="[{&quot;caption&quot;:&quot;_caption_&quot;,&quot;title&quot;:&quot;_title_&quot;}]"></div>';
+		$expected = array(
+			array(
+				'label' => '_caption_',
+				'title' => '_title_',
+			)
+		);
+		$this->assertEquals( $expected, Wikia\PortableInfobox\Parser\Nodes\NodeImage::getGalleryData( $input ) );
+	}
+
+	/**
+	 * @covers       NodeImage::getTabberData
+	 */
+	public function testTabberData() {
+		$input = '<div class="tabber"><div class="tabbertab" title="_title_"><p><a><img data-image-key="_data-image-key_"></a></p></div></div>';
+		$expected = array(
+			array(
+				'label' => '_title_',
+				'title' => '_data-image-key_',
+			)
+		);
+		$this->assertEquals( $expected, Wikia\PortableInfobox\Parser\Nodes\NodeImage::getTabberData( $input ) );
+	}
+
+	/**
+	 * @covers       NodeImage::getMarkers
+	 * @dataProvider markersProvider
+	 *
+	 * @param $markup
+	 * @param $params
+	 * @param $expected
+	 */
+	public function testMarkers( $ext, $value, $expected ) {
+		$this->assertEquals( $expected, Wikia\PortableInfobox\Parser\Nodes\NodeImage::getMarkers( $value, $ext ) );
+	}
+
+	public function markersProvider() {
+		return [
+			[
+				'TABBER',
+				"<div>\x7fUNIQ123456789-tAbBeR-12345678-QINU\x7f</div>",
+				[ "\x7fUNIQ123456789-tAbBeR-12345678-QINU\x7f" ]
+			],
+			[
+				'GALLERY',
+				"\x7fUNIQ123456789-tAbBeR-12345678-QINU\x7f<center>\x7fUNIQabcd-gAlLeRy-12345678-QINU\x7f</center>\x7fUNIQabcd-gAlLeRy-87654321-QINU\x7f",
+				[ "\x7fUNIQabcd-gAlLeRy-12345678-QINU\x7f", "\x7fUNIQabcd-gAlLeRy-87654321-QINU\x7f" ]
+			]
+		];
+	}
+
+
+
+	/**
 	 * @covers       NodeImage::getData
 	 * @dataProvider dataProvider
 	 *
@@ -21,21 +78,33 @@ class NodeImageTest extends WikiaBaseTest {
 	}
 
 	public function dataProvider() {
+		// markup, params, expected
 		return [
-			[ '<image source="img"></image>', [ ],
-			  [ 'url' => '', 'name' => '', 'key' => '', 'alt' => null, 'caption' => null, 'ref' => null ] ],
-			[ '<image source="img"></image>', [ 'img' => 'test.jpg' ],
-			  [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => null, 'caption' => null, 'ref' => 0 ] ],
-			[ '<image source="img"><alt><default>test alt</default></alt></image>', [ 'img' => 'test.jpg' ],
-			  [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 'test alt', 'caption' => null,
-				'ref' => 1 ] ],
-			[ '<image source="img"><alt source="alt source"><default>test alt</default></alt></image>',
-			  [ 'img' => 'test.jpg', 'alt source' => 2 ],
-			  [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 2, 'caption' => null, 'ref' => 2 ] ],
-			[ '<image source="img"><alt><default>test alt</default></alt><caption source="img"/></image>',
-			  [ 'img' => 'test.jpg' ],
-			  [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 'test alt', 'caption' => 'test.jpg',
-				'ref' => 3 ] ],
+			[ 
+				'<image source="img"></image>',
+				[ ],
+				[ [ 'url' => '', 'name' => '', 'key' => '', 'alt' => null, 'caption' => null ] ]
+			],
+			[
+				'<image source="img"></image>',
+				[ 'img' => 'test.jpg' ],
+			  	[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => null, 'caption' => null ] ]
+			],
+			[
+				'<image source="img"><alt><default>test alt</default></alt></image>',
+				[ 'img' => 'test.jpg' ],
+				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 'test alt', 'caption' => null ] ]
+			],
+			[
+				'<image source="img"><alt source="alt source"><default>test alt</default></alt></image>',
+				[ 'img' => 'test.jpg', 'alt source' => 2 ],
+				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 2, 'caption' => null ] ]
+			],
+			[
+				'<image source="img"><alt><default>test alt</default></alt><caption source="img"/></image>',
+				[ 'img' => 'test.jpg' ],
+				[ [ 'url' => '', 'name' => 'Test.jpg', 'key' => 'Test.jpg', 'alt' => 'test alt', 'caption' => 'test.jpg' ] ]
+			],
 		];
 	}
 
@@ -74,12 +143,92 @@ class NodeImageTest extends WikiaBaseTest {
 
 	public function sourceProvider() {
 		return [
-			[ '<image source="img"/>', [ 'img' ] ],
-			[ '<image source="img"><default>{{{img}}}</default><alt source="img" /></image>', [ 'img' ] ],
-			[ '<image source="img"><alt source="alt"/><caption source="cap"/></image>', [ 'img', 'alt', 'cap' ] ],
-			[ '<image source="img"><alt source="alt"><default>{{{def}}}</default></alt><caption source="cap"/></image>',
-			  [ 'img', 'alt', 'def', 'cap' ] ],
-			[ '<image/>', [ ] ],
+			[
+				'<image source="img"/>',
+				[ 'img' ]
+			],
+			[
+				'<image source="img"><default>{{{img}}}</default><alt source="img" /></image>',
+				[ 'img' ]
+			],
+			[
+				'<image source="img"><alt source="alt"/><caption source="cap"/></image>',
+				[ 'img', 'alt', 'cap' ]
+			],
+			[
+				'<image source="img"><alt source="alt"><default>{{{def}}}</default></alt><caption source="cap"/></image>',
+				[ 'img', 'alt', 'def', 'cap' ] ],
+			[
+				'<image/>',
+				[ ]
+			],
 		];
+	}
+
+	/**
+	 * @dataProvider testVideoProvider
+	 */
+	public function testVideo( $markup, $params, $expected ) {
+		global $wgHooks;
+
+		// backup the hooks
+		$tmpHooks = $wgHooks['PortableInfoboxNodeImage::getData'];
+		$wgHooks['PortableInfoboxNodeImage::getData'] = [];
+
+		$fileMock = new FileMock();
+		$xmlObj = Wikia\PortableInfobox\Parser\XmlParser::parseXmlString( $markup );
+
+
+		$this->mockStaticMethod( 'WikiaFileHelper', 'getFileFromTitle', $fileMock );
+		$nodeImage = new Wikia\PortableInfobox\Parser\Nodes\NodeImage( $xmlObj, $params );
+
+		$this->assertEquals( $expected, $nodeImage->getData() );
+
+		// restore the hooks
+		$wgHooks['PortableInfoboxNodeImage::getData'] = $tmpHooks;
+	}
+
+	public function testVideoProvider() {
+		return [
+			[
+				'<image source="img" />',
+				[ 'img' => 'test.jpg' ],
+				[
+					[
+						'url' => 'http://test.url',
+						'name' => 'Test.jpg',
+						'key' => 'Test.jpg',
+						'alt' => null,
+						'caption' => null,
+						'isVideo' => true,
+						'duration' => '00:10'
+					]
+				]
+			]
+		];
+	}
+}
+
+class FileMock {
+	public function getMediaType() {
+		return "VIDEO";
+	}
+
+	public function getMetadataDuration() {
+		return 10;
+	}
+
+	public function getUrl() {
+		return '';
+	}
+
+	public function getTitle() {
+		return new TitleMock();
+	}
+}
+
+class TitleMock {
+	public function getFullURL() {
+		return 'http://test.url';
 	}
 }

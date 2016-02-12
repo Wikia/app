@@ -41,7 +41,7 @@ $wgSpecialPages[ 'Maps' ] = 'WikiaMapsSpecialController';
 $wgSpecialPageGroups[ 'Maps' ] = 'wikia';
 
 // hooks
-$wgHooks[ 'ParserFirstCallInit' ][] = 'WikiaMapsParserTagController::parserTagInit';
+$wgHooks[ 'ParserFirstCallInit' ][] = 'WikiaMapsParserTagController::onParserFirstCallInit';
 $wgHooks[ 'OasisSkinAssetGroups' ][] = 'WikiaMapsHooks::onOasisSkinAssetGroups';
 $wgHooks[ 'SkinAfterBottomScripts' ][] = 'WikiaMapsHooks::onSkinAfterBottomScripts';
 $wgHooks[ 'BeforePageDisplay' ][] = 'WikiaMapsHooks::onBeforePageDisplay';

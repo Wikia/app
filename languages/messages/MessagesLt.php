@@ -317,30 +317,12 @@ $messages = array(
 'navigation'    => 'Naršymas',
 'and'           => '&#32;ir',
 
-# Cologne Blue skin
 'qbfind'         => 'Paieška',
 'qbbrowse'       => 'Naršymas',
-'qbedit'         => 'Taisyti',
 'qbpageoptions'  => 'Šis puslapis',
 'qbpageinfo'     => 'Kontekstas',
-'qbmyoptions'    => 'Mano puslapiai',
-'qbspecialpages' => 'Specialieji puslapiai',
 'faq'            => 'DUK',
-'faqpage'        => 'Project:DUK',
 
-# Vector skin
-'vector-action-addsection'       => 'Pridėti temą',
-'vector-action-delete'           => 'Ištrinti',
-'vector-action-move'             => 'Perkelti',
-'vector-action-protect'          => 'Užrakinti',
-'vector-action-undelete'         => 'Atkurti',
-'vector-action-unprotect'        => 'Keisti apsaugą',
-'vector-simplesearch-preference' => 'Įjungti išplėstinius paieškos pasiūlymus (tik „Vector“ išvaizda)',
-'vector-view-create'             => 'Kurti',
-'vector-view-edit'               => 'Redaguoti',
-'vector-view-history'            => 'Istorija',
-'vector-view-view'               => 'Skaityti',
-'vector-view-viewsource'         => 'Žiūrėti kodą',
 'actions'                        => 'Veiksmai',
 'namespaces'                     => 'Vardų sritys',
 'variants'                       => 'Variantai',
@@ -363,7 +345,6 @@ $messages = array(
 'edit'              => 'Redaguoti',
 'create'            => 'Sukurti',
 'editthispage'      => 'Redaguoti šį puslapį',
-'create-this-page'  => 'Sukurti šį puslapį',
 'delete'            => 'Trinti',
 'deletethispage'    => 'Ištrinti šį puslapį',
 'undelete_short'    => 'Atstatyti $1 {{PLURAL:$1:redagavimą|redagavimus|redagavimų}}',
@@ -378,19 +359,9 @@ $messages = array(
 'talkpagelinktext'  => 'Aptarimas',
 'specialpage'       => 'Specialusis puslapis',
 'personaltools'     => 'Asmeniniai įrankiai',
-'postcomment'       => 'Rašyti komentarą',
-'articlepage'       => 'Rodyti turinio puslapį',
 'talk'              => 'Aptarimas',
 'views'             => 'Žiūrėti',
 'toolbox'           => 'Įrankiai',
-'userpage'          => 'Rodyti naudotojo puslapį',
-'projectpage'       => 'Rodyti projekto puslapį',
-'imagepage'         => 'Žiūrėti failo puslapį',
-'mediawikipage'     => 'Rodyti pranešimo puslapį',
-'templatepage'      => 'Rodyti šablono puslapį',
-'viewhelppage'      => 'Rodyti pagalbos puslapį',
-'categorypage'      => 'Rodyti kategorijos puslapį',
-'viewtalkpage'      => 'Rodyti aptarimo puslapį',
 'otherlanguages'    => 'Kitomis kalbomis',
 'redirectedfrom'    => '(Nukreipta iš $1)',
 'redirectpagesub'   => 'Nukreipimo puslapis',
@@ -571,8 +542,9 @@ Nurodyta priežastis yra ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Dabar jūs esate atsijungęs.'''
 
-Galite toliau naudoti {{SITENAME}} anonimiškai arba [[Special:UserLogin|prisijunkite]] iš naujo tuo pačiu ar kitu naudotoju.
+Galite toliau naudoti {{SITENAME}} anonimiškai arba $1 iš naujo tuo pačiu ar kitu naudotoju.
 Pastaba: kai kuriuose puslapiuose ir toliau gali rodyti, kad esate prisijungęs iki tol, kol išvalysite savo naršyklės podėlį.",
+'logouttext-link-text'       => 'prisijunkite',
 'welcomecreation'            => '== Sveiki, $1! ==
 
 Jūsų paskyra buvo sukurta. Nepamirškite pakeisti savo [[Special:Preferences|{{SITENAME}} nustatymų]].',
@@ -833,7 +805,6 @@ Jūs galite [[Special:Search/{{PAGENAME}}|ieškoti šio puslapio pavadinimo]] ki
 'userjspreview'                    => "'''Nepamirškite, kad jūs tik testuojat/peržiūrit savo naudotojo JavaScript, jis dar nebuvo išsaugotas!'''",
 'sitecsspreview'                   => "'''Nepamirškite, kad jūs tik peržiūrit šio CSS .'''! N!''' Tai dar nebuvo išsaugotas!'''",
 'sitejspreview'                    => "'''Nepamirškite, kad jūs tik peržiūrit šis JavaScript kodas .'''! N!''' Tai dar nebuvo išsaugotas!'''",
-'userinvalidcssjstitle'            => "'''Dėmesio:''' Nėra jokios išvaizdos „$1“. Nepamirškite, kad savo .css ir .js puslapiai naudoja pavadinimą mažosiomis raidėmis, pvz., {{ns:user}}:Foo/vector.css, o ne {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Atnaujinta)',
 'note'                             => "'''Pastaba:'''",
 'previewnote'                      => "'''Nepamirškite, kad tai tik peržiūra, pakeitimai dar nėra išsaugoti!'''",
@@ -1178,14 +1149,6 @@ Prašome patikrinti sąrašus.',
 'search-external'                  => 'Išorinė paieška',
 'searchdisabled'                   => 'Projekto {{SITENAME}} paieška yra uždrausta. Galite pamėginti ieškoti Google paieškos sistemoje. Paieškos sistemoje projekto {{SITENAME}} duomenys gali būti pasenę.',
 
-# Quickbar
-'qbsettings'                => 'Greitasis pasirinkimas',
-'qbsettings-none'           => 'Nerodyti',
-'qbsettings-fixedleft'      => 'Fiksuoti kairėje',
-'qbsettings-fixedright'     => 'Fiksuoti dešinėje',
-'qbsettings-floatingleft'   => 'Plaukiojantis kairėje',
-'qbsettings-floatingright'  => 'Plaukiojantis dešinėje',
-'qbsettings-directionality' => 'Pataisyta, priklausomai nuo jūsų rašybos ir kalbos krypties',
 
 # Preferences page
 'preferences'                   => 'Nustatymai',
@@ -2862,15 +2825,7 @@ Leidžia pridėti atmetimo priežastį komentaruose',
 'pageinfo-viewsperedit'     => 'Peržiūrėta redaguojant',
 
 # Skin names
-'skinname-standard'    => 'Klasikinė',
-'skinname-nostalgia'   => 'Nostalgija',
-'skinname-cologneblue' => 'Kelno mėlyna',
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'Mano išvaizda',
-'skinname-chick'       => 'Chick',
-'skinname-simple'      => 'Paprasta',
-'skinname-modern'      => 'Moderni',
-'skinname-vector'      => 'Vektorinė',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Žymėti, kad patikrinta',
@@ -3554,9 +3509,9 @@ Jūs taip pat galite [[Special:EditWatchlist|naudoti standartinį redaktorių]].
 'version-license'               => 'Licencija',
 'version-poweredby-credits'     => "Šis projektas naudoja '''[//www.mediawiki.org/ MediaWiki]''', autorystės teisės © 2001-$1 $2.",
 'version-poweredby-others'      => 'kiti',
-'version-license-info'          => 'MediaWiki yra nemokama programinė įranga; galite ją platinti ir/arba modifikuoti pagal GNU General Public License, kurią publikuoja Free Software Foundation; taikoma 2-oji licenzijos versija arba (Jūsų pasirinkimu) bet kuri vėlesnė versija. 
+'version-license-info'          => 'MediaWiki yra nemokama programinė įranga; galite ją platinti ir/arba modifikuoti pagal GNU General Public License, kurią publikuoja Free Software Foundation; taikoma 2-oji licenzijos versija arba (Jūsų pasirinkimu) bet kuri vėlesnė versija.
 
-MediaWiki yra platinama su viltimi, kad ji bus naudinga, bet BE JOKIOS GARANTIJOS; be jokios numanomos PARDAVIMO arba TINKAMUMO TAM TIKRAM TIKSLUI garantijos. Daugiau informacijos galite sužinoti GNU General Public License. 
+MediaWiki yra platinama su viltimi, kad ji bus naudinga, bet BE JOKIOS GARANTIJOS; be jokios numanomos PARDAVIMO arba TINKAMUMO TAM TIKRAM TIKSLUI garantijos. Daugiau informacijos galite sužinoti GNU General Public License.
 
 Jūs turėjote gauti [{{SERVER}}{{SCRIPTPATH}}/COPYING GNU General Public License kopiją] kartu su šia programa, jei ne, rašykite Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, JAV arba [//www.gnu.org/licenses/old-licenses/gpl-2.0.html perskaitykite ją internete].',
 'version-software'              => 'Įdiegta programinė įranga',

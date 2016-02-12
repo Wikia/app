@@ -1,0 +1,24 @@
+{
+	"@metadata": {
+		"authors": [
+			"Fluence",
+			"Ricardo gs",
+			"Teòtlalili"
+		]
+	},
+	"sf_createproperty_propname": "Āxcāitl tōcāitl:",
+	"templates": "Nemachiyōtīlli",
+	"createtemplate": "Ticchīhuāz cē nemachiyōtīlli",
+	"sf_createtemplate_namelabel": "Nemachiyōtīlli ītōca:",
+	"sf_createtemplate_deletefield": "Ticpolōz",
+	"sf_createform_inputtypedefault": "(ic default)",
+	"sf_createform_hidden": "Ichtac",
+	"sf_createform_atend": "Tlamilizpan",
+	"sf_createform_add": "Ticcētilīz",
+	"sf_createcategory_name": "Tlaìxmatkàtlàlilòtokâtli:",
+	"sf_formstart_createoredit": "Titlayōcoyāz ahnozo titlapatlāz",
+	"sf_formedit_createtitle": "Ticyōcoyāz $1: $2",
+	"sf_formedit_edittitle": "Ticpatlāz $1: $2",
+	"sf_formedit_addanother": "Titlacēntilīz occē",
+	"sf_formedit_none": "Ahtlein"
+}

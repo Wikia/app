@@ -284,30 +284,12 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Cercar',
 'qbbrowse'       => 'Foliar',
-'qbedit'         => 'Modificar',
 'qbpageoptions'  => 'Iste pagina',
 'qbpageinfo'     => 'Contexto',
-'qbmyoptions'    => 'Mi paginas',
-'qbspecialpages' => 'Paginas special',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Adder topico',
-'vector-action-delete'           => 'Deler',
-'vector-action-move'             => 'Renominar',
-'vector-action-protect'          => 'Proteger',
-'vector-action-undelete'         => 'Restaurar',
-'vector-action-unprotect'        => 'Cambiar protection',
-'vector-simplesearch-preference' => 'Activar le suggestiones de recerca meliorate (solmente in apparentia Vector)',
-'vector-view-create'             => 'Crear',
-'vector-view-edit'               => 'Modificar',
-'vector-view-history'            => 'Vider historia',
-'vector-view-view'               => 'Leger',
-'vector-view-viewsource'         => 'Vider texto fonte',
 'actions'                        => 'Actiones',
 'namespaces'                     => 'Spatios de nomines',
 'variants'                       => 'Variantes',
@@ -330,7 +312,6 @@ $messages = array(
 'edit'              => 'Modificar',
 'create'            => 'Crear',
 'editthispage'      => 'Modificar iste pagina',
-'create-this-page'  => 'Crear iste pagina',
 'delete'            => 'Deler',
 'deletethispage'    => 'Deler iste pagina',
 'undelete_short'    => 'Restaurar {{PLURAL:$1|un modification|$1 modificationes}}',
@@ -345,19 +326,9 @@ $messages = array(
 'talkpagelinktext'  => 'Discussion',
 'specialpage'       => 'Pagina special',
 'personaltools'     => 'Instrumentos personal',
-'postcomment'       => 'Nove section',
-'articlepage'       => 'Vider pagina de contento',
 'talk'              => 'Discussion',
 'views'             => 'Representationes',
 'toolbox'           => 'Instrumentario',
-'userpage'          => 'Vider pagina del usator',
-'projectpage'       => 'Vider pagina de projecto',
-'imagepage'         => 'Vider le pagina del file',
-'mediawikipage'     => 'Vider pagina de message',
-'templatepage'      => 'Vider pagina de patrono',
-'viewhelppage'      => 'Vider pagina de adjuta',
-'categorypage'      => 'Vider pagina de categoria',
-'viewtalkpage'      => 'Vider discussion',
 'otherlanguages'    => 'In altere linguas',
 'redirectedfrom'    => '(Redirigite ab $1)',
 'redirectpagesub'   => 'Pagina de redirection',
@@ -541,8 +512,9 @@ Le motivo specificate es ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Tu ha claudite le session.'''
 
-Tu pote continuar a usar {{SITENAME}} anonymemente, o tu pote [[Special:UserLogin|aperir un nove session]] con le mesme nomine de usator o con un altere.
+Tu pote continuar a usar {{SITENAME}} anonymemente, o tu pote $1 con le mesme nomine de usator o con un altere.
 Nota que alcun paginas pote continuar a apparer como si tu esserea ancora authenticate. Pro remediar isto, tu pote vacuar le cache de tu navigator.",
+'logouttext-link-text'       => 'aperir un nove session',
 'welcomecreation'            => '== Benvenite, $1! ==
 Tu conto ha essite create.
 Non oblida personalisar tu [[Special:Preferences|preferentias in {{SITENAME}}]].',
@@ -822,7 +794,7 @@ Le ultime entrata del registro de blocadas es reproducite ci infra pro informati
 'clearyourcache'                   => "'''Nota:''' Post confirmar, il pote esser necessari refrescar le ''cache'' de tu navigator pro vider le cambiamentos.
 * '''Firefox / Safari:''' Tenente ''Shift'' clicca ''Reload (Recargar)'', o preme ''Ctrl-F5'' o ''Ctrl-R'' (''⌘-R'' sur Mac)
 * '''Google Chrome:''' Preme ''Ctrl-Shift-R'' (''⌘-Shift-R'' sur Mac)
-* '''Internet Explorer:''' Tenente ''Ctrl'' clicca ''Refresh (Refrescar)'', o preme ''Ctrl-F5'' 
+* '''Internet Explorer:''' Tenente ''Ctrl'' clicca ''Refresh (Refrescar)'', o preme ''Ctrl-F5''
 * '''Konqueror:''' Clicca ''Reload (Recargar)'' o preme ''F5''
 * '''Opera:''' Vacua le ''cache'' in ''Tools → Preferences (Utensiles → Preferentias)''",
 'usercssyoucanpreview'             => "'''Consilio:''' Usa le button \"{{int:showpreview}}\" pro testar tu nove CSS ante de salveguardar lo.",
@@ -1194,14 +1166,6 @@ Tenta prefixar tu consulta con ''all:'' pro cercar in tote le contento (includen
 Tu pote cercar via Google in le interim.
 Nota que lor indices del contento de {{SITENAME}} pote esser obsolete.',
 
-# Quickbar
-'qbsettings'                => 'Barra rapide',
-'qbsettings-none'           => 'Necun',
-'qbsettings-fixedleft'      => 'Fixe a sinistra',
-'qbsettings-fixedright'     => 'Fixe a dextra',
-'qbsettings-floatingleft'   => 'Flottante a sinistra',
-'qbsettings-floatingright'  => 'Flottante a dextra',
-'qbsettings-directionality' => 'Fixe, dependente del direction de scriptura de tu lingua',
 
 # Preferences page
 'preferences'                   => 'Preferentias',
@@ -2196,7 +2160,7 @@ Como alternativa tu pote reinitialisar le optiones de notification pro tote le p
 
              Le systema de notification de {{SITENAME}}, a tu servicio
 
--- 
+--
 Pro configurar le notification per e-mail, visita
 {{canonicalurl:{{#special:Preferences}}}}
 
@@ -2884,29 +2848,13 @@ Es possibile adder un motivo in le summario.',
 
 # Stylesheets
 'common.css'      => '/* Le CSS placiate hic se applicara a tote le stilos */',
-'standard.css'    => '/* Le CSS placiate hic afficera le usatores del apparentia Classic */',
-'nostalgia.css'   => '/* Le CSS placiate hic afficera le usatores del apparentia Nostalgia */',
-'cologneblue.css' => '/* Le CSS placiate hic afficera le usatores del apparentia Colonia Blau */',
 'monobook.css'    => '/* Le CSS placiate hic afficera le usatores del apparentia MonoBook */',
-'myskin.css'      => '/* Le CSS placiate hic afficera le usatores del apparentia "Mi apparentia" */',
-'chick.css'       => '/* Le CSS placiate hic afficera le usatores del apparentia Chique */',
-'simple.css'      => '/* Le CSS placiate hic afficera le usatores del apparentia Simple */',
-'modern.css'      => '/* Le CSS placiate hic afficera le usatores del apparentia Moderne */',
-'vector.css'      => '/* Le CSS placiate hic afficera le usatores del apparentia Vector */',
 'print.css'       => '/* Le CSS placiate hic influentiara le apparentia del paginas imprimite */',
 'handheld.css'    => '/* Le CSS placiate hic afficera le apparatos mobile basate super le apparentia configurate in $wgHandheldStyle */',
 
 # Scripts
 'common.js'      => '/* Omne JavaScript hic se executara pro tote le usatores a cata cargamento de pagina. */',
-'standard.js'    => '/* Omne JavaScript hic se executara pro le usatores del apparentia Classic */',
-'nostalgia.js'   => '/* Omne JavaScript hic se executara pro le usatores del apparentia Nostalgia */',
-'cologneblue.js' => '/* Omne JavaScript hic se executara pro le usatores del apparentia Colonia Blau */',
 'monobook.js'    => '/* Omne JavaScript hic se executara pro le usatores del apparentia MonoBook */',
-'myskin.js'      => '/* Omne JavaScript hic se executara pro le usatores del apparentia "Mi apparentia" */',
-'chick.js'       => '/* Omne JavaScript hic se executara pro le usatores del apparentia Chique */',
-'simple.js'      => '/* Omne JavaScript hic se executara pro le usatores del apparentia Simple */',
-'modern.js'      => '/* Omne JavaScript hic se executara pro le usatores del apparentia Moderne */',
-'vector.js'      => '/* Omne JavaScript hic se executara pro le usatores del apparentia Vector */',
 
 # Metadata
 'notacceptable' => 'Le servitor wiki non pote provider datos in un formato que tu cliente sape leger.',
@@ -2946,14 +2894,7 @@ Le causa es probabilemente un ligamine verso un sito externe que es presente in 
 'pageinfo-viewsperedit'     => 'Visitas per modification',
 
 # Skin names
-'skinname-standard'    => 'Classic',
-'skinname-nostalgia'   => 'Nostalgia',
-'skinname-cologneblue' => 'Colonia Blau',
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'Mi apparentia',
-'skinname-chick'       => 'Chique',
-'skinname-simple'      => 'Simple',
-'skinname-modern'      => 'Moderne',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marcar como patruliate',

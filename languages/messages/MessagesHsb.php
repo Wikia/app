@@ -294,30 +294,12 @@ $messages = array(
 'navigation'    => 'Nawigacija',
 'and'           => '&#32;a',
 
-# Cologne Blue skin
 'qbfind'         => 'Namakać',
 'qbbrowse'       => 'Přepytować',
-'qbedit'         => 'Wobdźěłać',
 'qbpageoptions'  => 'Tuta strona',
 'qbpageinfo'     => 'Kontekst',
-'qbmyoptions'    => 'Moje strony',
-'qbspecialpages' => 'Specialne strony',
 'faq'            => 'Husto stajene prašenja (FAQ)',
-'faqpage'        => 'Project:Husto stajene prašenja (FAQ)',
 
-# Vector skin
-'vector-action-addsection'       => 'Temu přidać',
-'vector-action-delete'           => 'wušmórnyć',
-'vector-action-move'             => 'přesunyć',
-'vector-action-protect'          => 'škitać',
-'vector-action-undelete'         => 'Wobnowić',
-'vector-action-unprotect'        => 'Škit wotstronić',
-'vector-simplesearch-preference' => 'Polěpšene pytanske namjety zmóžnić (jenož šat Vector)',
-'vector-view-create'             => 'Wutworić',
-'vector-view-edit'               => 'Wobdźěłać',
-'vector-view-history'            => 'Stawizny',
-'vector-view-view'               => 'Čitać',
-'vector-view-viewsource'         => 'Žórło sej wobhladać',
 'actions'                        => 'Akcije',
 'namespaces'                     => 'Mjenowe rumy',
 'variants'                       => 'Warianty',
@@ -340,7 +322,6 @@ $messages = array(
 'edit'              => 'wobdźěłać',
 'create'            => 'Wutworić',
 'editthispage'      => 'Tutu stronu wobdźěłać',
-'create-this-page'  => 'Stronu wutworić',
 'delete'            => 'wušmórnyć',
 'deletethispage'    => 'Stronu wušmórnyć',
 'undelete_short'    => '{{PLURAL:$1|jednu wersiju|$1 wersiji|$1 wersije|$1 wersijow}} wobnowić',
@@ -355,19 +336,9 @@ $messages = array(
 'talkpagelinktext'  => 'diskusija',
 'specialpage'       => 'Specialna strona',
 'personaltools'     => 'Wosobinske nastroje',
-'postcomment'       => 'Nowy wotrězk',
-'articlepage'       => 'Nastawk',
 'talk'              => 'diskusija',
 'views'             => 'Zwobraznjenja',
 'toolbox'           => 'Nastroje',
-'userpage'          => 'Wužiwarsku stronu pokazać',
-'projectpage'       => 'Projektowu stronu pokazać',
-'imagepage'         => 'Datajowu stronu sej wobhladać',
-'mediawikipage'     => 'Zdźělenku pokazać',
-'templatepage'      => 'Předłohu pokazać',
-'viewhelppage'      => 'Pomocnu stronu pokazać',
-'categorypage'      => 'Kategoriju pokazać',
-'viewtalkpage'      => 'Diskusiju pokazać',
 'otherlanguages'    => 'W druhich rěčach',
 'redirectedfrom'    => '(ze strony $1 sposrědkowany)',
 'redirectpagesub'   => 'Daleposrědkowanje',
@@ -545,8 +516,9 @@ Podata přičina je \'\'"$2"\'\'.',
 # Login and logout pages
 'logouttext'                 => "'''{{GENDER:|Sy|Sy}} nětko {{GENDER:|wotzjewjeny|wotzjewjena}}.'''
 
-Móžeš {{GRAMMAR:akuzatiw|{{SITENAME}}}} nětko anonymnje dale wužiwać abo so ze samsnym abo druhim wužiwarskim mjenom [[Special:UserLogin|zaso přizjewić]].
+Móžeš {{GRAMMAR:akuzatiw|{{SITENAME}}}} nětko anonymnje dale wužiwać abo so ze samsnym abo druhim wužiwarskim mjenom $1.
 Wobkedźbuj, zo so někotre strony dale jewja, kaž by hišće přizjewjeny był, doniž pufrowak swojeho wobhladowaka njewuprózdnješ.",
+'logouttext-link-text'       => 'zaso přizjewić',
 'welcomecreation'            => '== Witaj, $1! ==
 
 Twoje konto bu wutworjene. Njezabudź swoje nastajenja za [[Special:Preferences|{{GRAMMAR:akuzatiw|{{SITENAME}}}}]] změnić.',
@@ -580,7 +552,7 @@ Prošu wubjer druhe mjeno.',
 'createaccounterror'         => 'Wužiwarske konto njeda so załožić: $1',
 'nocookiesnew'               => 'Wužiwarske konto bu załožene, njejsy pak přizjewjeny. {{SITENAME}} wužiwa placki (cookies), zo bychu so wužiwarjo přizjewili. Sy placki znjemóžnił. Prošu zmóžń je a přizjew so potom ze swojim nowym wužiwarskim mjenom a hesłom.',
 'nocookieslogin'             => '{{SITENAME}} wužiwa placki za přizjewjenje wužiwarjow.
-Sy placki znjemóžnił. 
+Sy placki znjemóžnił.
 Prošu zmóžń je a spytaj hišće raz.',
 'nocookiesfornew'            => 'Wužiwarske konto njeje so załožiło, dokelž njemóžachmy jeho žórło wobkrućić.
 Přeswědč so, zo placki su zmóžnjene, ačitaj tutu stronu znowa a spytaj hišće raz.',
@@ -781,7 +753,7 @@ Móžeš [[Special:Search/{{PAGENAME}}|tutón titul strony]] na druhich stronach
 'userpage-userdoesnotexist'        => 'Wužiwarske konto „$1“ njeje zregistrowane. Prošu pruwuj, hač chceš tutu stronu woprawdźe wutworić/wobdźěłać.',
 'userpage-userdoesnotexist-view'   => 'Wužiwarske konto "$1" njeje zregistrowane.',
 'blocked-notice-logextract'        => 'Tutón wužiwar je tuchwilu zablokowany. Najnowši protokolowy zapisk so deleka jako referenca podawa:',
-'clearyourcache'                   => "'''Kedźbu: Po składowanju dyrbiš snano pufrowak swojeho wobhladowaka wuprózdnić, zo by změny widźał.''' 
+'clearyourcache'                   => "'''Kedźbu: Po składowanju dyrbiš snano pufrowak swojeho wobhladowaka wuprózdnić, zo by změny widźał.'''
 * '''Firefox/Safari:''' Tłóč na ''Umsch'' kliknjo na ''Znowa'' abo tłóč ''Strg-F5'' abo ''Strg-R'' (''⌘-R'' na Macintosh);
 * '''Google Chrome:''' Tłóč na ''Strg-Umsch-R'' (''⌘-Umsch-R'' na Mac)
 * '''Internet Explorer:''' Dźěrź ''Strg'' tłóčeny kliknjo na ''Znowa,'' abo tłóč ''Strg-F5''.
@@ -796,7 +768,6 @@ Móžeš [[Special:Search/{{PAGENAME}}|tutón titul strony]] na druhich stronach
 '''Wón hišće składowany njeje!'''",
 'sitejspreview'                    => "'''Wobkedźbujće, zo sej jenož přehlad tutoho JavaScriptoweho koda wobhladuješ.'''
 '''Wón hišće składowany njeje!'''",
-'userinvalidcssjstitle'            => "'''Warnowanje:''' Drasta z mjenom „$1” njeeksistuje. Prošu mysli na to, zo wosobinske strony .css a .js titul z małym pismikom wuwziwaja, na př. {{ns:user}}:Foo/vector.css město {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Zaktualizowany)',
 'note'                             => "'''Kedźbu:'''",
 'previewnote'                      => "'''Kedźbu, to je jenož přehlad. Twoje změny hišće składowane njejsu!'''",
@@ -1135,14 +1106,6 @@ Spytaj swoje naprašowanje z prefiksom ''all:'' wužiwać, zo by wšón wobsah (
 'search-external'                  => 'Eksterne pytanje',
 'searchdisabled'                   => 'Pytanje w {{GRAMMAR:lokatiw|{{SITENAME}}}} tuchwilu móžne njeje. Móžeš mjeztym z Google pytać. Wobkedźbuj, zo móža wuslědki z wobsaha {{GRAMMAR:genitiw|{{SITENAME}}}} zestarjene być.',
 
-# Quickbar
-'qbsettings'                => 'Pobóčna lajsta',
-'qbsettings-none'           => 'Žane',
-'qbsettings-fixedleft'      => 'Leži nalěwo',
-'qbsettings-fixedright'     => 'Leži naprawo',
-'qbsettings-floatingleft'   => 'Wisa nalěwo',
-'qbsettings-floatingright'  => 'Wisa naprawo',
-'qbsettings-directionality' => 'Kruty, wotwisny wot pisanskeho směra twojeje rěče',
 
 # Preferences page
 'preferences'                   => 'Nastajenja',
@@ -2789,14 +2752,7 @@ W poslednim padźe móžeš tež wotkaz wužiwać, na př. „[[{{#Special:Expor
 'pageinfo-viewsperedit'     => 'Zwobraznjenja na změnu',
 
 # Skin names
-'skinname-standard'    => 'Klasiski',
-'skinname-nostalgia'   => 'Nostalgija',
-'skinname-cologneblue' => 'Kölnjanska módrina',
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'MySkin',
-'skinname-chick'       => 'Ćipka',
-'skinname-simple'      => 'Jednory',
-'skinname-modern'      => 'Moderny',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Změnu jako přepruwowanu woznamjenić',
@@ -3340,7 +3296,7 @@ Zo by wobkrućił, zo tute konto ći woprawdźe słuša a zo bychu so e-mejlowe 
 
 $3
 
-Jeli konto ći *nje*słuša, slěduj tutón wotkaz, 
+Jeli konto ći *nje*słuša, slěduj tutón wotkaz,
 zo by wobkrućenje e-mejloweje adresy přetorhnył:
 
 $5

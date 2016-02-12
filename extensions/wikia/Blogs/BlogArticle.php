@@ -72,7 +72,7 @@ class BlogArticle extends Article {
 			/**
 			 * blog listing
 			 */
-			$wgOut->setHTMLTitle( $wgOut->getWikiaPageTitle( $this->mTitle->getPrefixedText() ) );
+			$wgOut->setHTMLTitle( $this->mTitle->getPrefixedText() );
 			$this->showBlogListing();
 		}
 	}
@@ -129,11 +129,28 @@ class BlogArticle extends Article {
 				],
 				self::CACHE_TTL );
 		}
+
+		// Link rel=next/prev for SEO
+		$lastPage = ceil( $blogPostCount / $this->mCount ) - 1;
+		if ( $page > 0 && $page <= $lastPage ) {
+			// All pages but the first
+			$prevUrl = sprintf( '?page=%d', $page - 1 );
+			$link = Html::element( 'link', [ 'rel' => 'prev', 'href' => $prevUrl ] );
+			$wg->Out->addHeadItem( 'Pagination - prev', "\t" . $link . PHP_EOL );
+		}
+		if ( $page >= 0 && $page < $lastPage ) {
+			// All pages but the last
+			$nextUrl = sprintf( '?page=%d', $page + 1 );
+			$link = Html::element( 'link', [ 'rel' => 'next', 'href' => $nextUrl ] );
+			$wg->Out->addHeadItem( 'Pagination - next', "\t" . $link . PHP_EOL );
+		}
+
 		if ( isset( $blogPostCount ) && $blogPostCount == 0 ) {
 			// bugid: PLA-844
 			$wg->Out->setRobotPolicy( "noindex,nofollow" );
 		}
 		$wg->Out->addHTML( $listing );
+
 	}
 
 	/**

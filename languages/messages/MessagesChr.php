@@ -22,9 +22,7 @@ $messages = array(
 'article'    => 'ᎤᏓᏡᎬ',
 'navigation' => 'ᎠᏂᎩᏍᏗ ᏥᏳ',
 
-# Cologne Blue skin
 'qbpageinfo'     => 'ᎦᎷᎯᏍᏗ',
-'qbspecialpages' => 'ᎤᏤᎵᏛ',
 
 'help'             => 'ᎠᎵᏍᏕᎸᏗ',
 'search'           => 'ᎠᏯᏍᏗ',

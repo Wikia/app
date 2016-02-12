@@ -23,15 +23,15 @@ class ForumController extends WallBaseController {
 
 		if ( $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$topicTitle = $this->getTopicTitle();
-			if ( empty($topicTitle) || !$topicTitle->exists() ) {
-				if(!$topicTitle->exists()) {
+			if ( empty( $topicTitle ) || !$topicTitle->exists() ) {
+				if ( !$topicTitle->exists() ) {
 					$this->redirectToIndex();
 					return false;
 				}
 			}
 		}
 
-		parent::index(self::BOARD_PER_PAGE);
+		parent::index( self::BOARD_PER_PAGE );
 
 		JSMessages::enqueuePackage( 'Wall', JSMessages::EXTERNAL );
 		$this->response->addAsset( 'forum_js' );
@@ -74,7 +74,7 @@ class ForumController extends WallBaseController {
 
 		$this->response->setVal( 'boardNamespace', NS_WIKIA_FORUM_BOARD );
 
-		//TODO: keep the varnish cache and do purging on post
+		// TODO: keep the varnish cache and do purging on post
 		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
 
 		$this->app->wg->SuppressPageHeader = true;
@@ -91,7 +91,7 @@ class ForumController extends WallBaseController {
 		return $topicTitle;
 	}
 
-	public function getWallForIndexPage($title) {
+	public function getWallForIndexPage( $title ) {
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$topicTitle = $this->getTopicTitle();
 			if ( !empty( $topicTitle ) ) {
@@ -110,8 +110,8 @@ class ForumController extends WallBaseController {
 
 	public function boardNewThread() {
 		parent::newMessage();
-		$this->isTopicPage = $this->getVal('isTopicPage', false);
-		if($this->isTopicPage) {
+		$this->isTopicPage = $this->getVal( 'isTopicPage', false );
+		if ( $this->isTopicPage ) {
 			$forum = new Forum();
 
 			$list = $forum->getBoardList();
@@ -128,7 +128,7 @@ class ForumController extends WallBaseController {
 		wfProfileIn( __METHOD__ );
 
 		$wallMessage = $this->getWallMessage();
-		if ( !($wallMessage instanceof WallMessage) ) {
+		if ( !( $wallMessage instanceof WallMessage ) ) {
 			wfProfileOut( __METHOD__ );
 			$this->forward( __CLASS__, 'message_error' );
 			return true;
@@ -144,7 +144,7 @@ class ForumController extends WallBaseController {
 		$repliesCount = count( $replies ) + 1;
 		$this->response->setVal( 'repliesNumber', $repliesCount );
 
-		$thread = WallThread::newFromId($wallMessage->getId());
+		$thread = WallThread::newFromId( $wallMessage->getId() );
 
 		$lastReply = $thread->getLastMessage( $replies );
 		if ( $lastReply === null ) {
@@ -169,7 +169,7 @@ class ForumController extends WallBaseController {
 		} else {
 			$displayname = $name;
 			$displayname2 = '';
-			$url = Title::newFromText($name, $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK )->getFullUrl();
+			$url = Title::newFromText( $name, $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK )->getFullUrl();
 		}
 
 		$this->response->setVal( 'username', $name );
@@ -259,9 +259,9 @@ class ForumController extends WallBaseController {
 	protected function getSortingOptionsText() {
 		switch( $this->sortingType ) {
 			case 'history' :
-				//keys of sorting array are names of DOM elements' classes
-				//which are needed to click tracking
-				//if you change those keys here, do so in Wall.js file, please
+				// keys of sorting array are names of DOM elements' classes
+				// which are needed to click tracking
+				// if you change those keys here, do so in Wall.js file, please
 				$options = array( 'nf' => wfMessage( 'wall-history-sorting-newest-first' )->escaped(), 'of' => wfMessage( 'wall-history-sorting-oldest-first' )->escaped(), );
 				break;
 			case 'index' :
@@ -294,7 +294,7 @@ class ForumController extends WallBaseController {
 		}
 
 		if ( empty( $selected ) || !array_key_exists( $selected, $this->getSortingOptionsText() ) ) {
-			$selected = ($this->sortingType === 'history') ? 'of' : 'nr';
+			$selected = ( $this->sortingType === 'history' ) ? 'of' : 'nr';
 		}
 
 		return $selected;
@@ -357,7 +357,7 @@ class ForumController extends WallBaseController {
 	 */
 
 	public function oldForumInfo() {
-		//TODO: include some css build some urls
+		// TODO: include some css build some urls
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumOld.scss' );
 
 		$forumTitle = SpecialPage::getTitleFor( 'Forum' );

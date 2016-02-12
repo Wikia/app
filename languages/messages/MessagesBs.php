@@ -420,30 +420,12 @@ $messages = array(
 'navigation'    => 'Navigacija',
 'and'           => '&#32;i',
 
-# Cologne Blue skin
 'qbfind'         => 'Pronađite',
 'qbbrowse'       => 'Prelistajte',
-'qbedit'         => 'Uredi',
 'qbpageoptions'  => 'Opcije stranice',
 'qbpageinfo'     => 'Informacije o stranici',
-'qbmyoptions'    => 'Moje opcije',
-'qbspecialpages' => 'Posebne stranice',
 'faq'            => 'ČPP',
-'faqpage'        => 'Project:NPP',
 
-# Vector skin
-'vector-action-addsection'       => 'Dodaj temu',
-'vector-action-delete'           => 'Brisanje',
-'vector-action-move'             => 'Pomjeri',
-'vector-action-protect'          => 'Zaštiti',
-'vector-action-undelete'         => 'Vrati obrisano',
-'vector-action-unprotect'        => 'Promijeni zaštitu',
-'vector-simplesearch-preference' => 'Omogući napredne sugestije pretrage (samo vector koža)',
-'vector-view-create'             => 'Napravi',
-'vector-view-edit'               => 'Uređivanje',
-'vector-view-history'            => 'Pregled historije',
-'vector-view-view'               => 'Čitanje',
-'vector-view-viewsource'         => 'Pogledaj izvor',
 'actions'                        => 'Akcije',
 'namespaces'                     => 'Imenski prostori',
 'variants'                       => 'Varijante',
@@ -466,7 +448,6 @@ $messages = array(
 'edit'              => 'Uredi',
 'create'            => 'Napravi',
 'editthispage'      => 'Uredite ovu stranicu',
-'create-this-page'  => 'Napravi ovu stranicu',
 'delete'            => 'Obriši',
 'deletethispage'    => 'Obriši ovu stranicu',
 'undelete_short'    => 'Vrati obrisanih {{PLURAL:$1|$1 izmjenu|$1 izmjene|$1 izmjena}}',
@@ -481,19 +462,9 @@ $messages = array(
 'talkpagelinktext'  => 'Razgovor',
 'specialpage'       => 'Posebna Stranica',
 'personaltools'     => 'Lični alati',
-'postcomment'       => 'Nova sekcija',
-'articlepage'       => 'Pogledaj članak',
 'talk'              => 'Razgovor',
 'views'             => 'Pregledi',
 'toolbox'           => 'Traka sa alatima',
-'userpage'          => 'Pogledaj korisničku stranicu',
-'projectpage'       => 'Pogledaj stranu o ovoj strani',
-'imagepage'         => 'Pogledajte stranicu datoteke',
-'mediawikipage'     => 'Pogledaj stranicu sa porukama',
-'templatepage'      => 'Pogledajte stranicu za šablone',
-'viewhelppage'      => 'Pogledajte stranicu za pomoć',
-'categorypage'      => 'Pogledaj stranicu kategorije',
-'viewtalkpage'      => 'Pogledaj raspravu',
 'otherlanguages'    => 'Ostali jezici',
 'redirectedfrom'    => '(Preusmjereno sa $1)',
 'redirectpagesub'   => 'Preusmjeri stranicu',
@@ -675,8 +646,9 @@ Iz razloga "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Sad ste odjavljeni.'''
 
-Možete nastaviti da koristite {{SITENAME}} anonimno, ili se ponovo [[Special:UserLogin|prijaviti]] kao isti ili kao drugi korisnik.
+Možete nastaviti da koristite {{SITENAME}} anonimno, ili se ponovo $1 kao isti ili kao drugi korisnik.
 Obratite pažnju da neke stranice mogu nastaviti da se prikazuju kao da ste još uvijek prijavljeni, dok ne očistite keš svog preglednika.",
+'logouttext-link-text'       => 'prijaviti',
 'welcomecreation'            => '== Dobro došli, $1 ==
 Vaš nalog je napravljen.
 Ne zaboravite da prilagodite sebi svoja [[Special:Preferences|{{SITENAME}} podešavanja]].',
@@ -812,7 +784,7 @@ $2
 
 {{PLURAL:$3|Ova privremena šifra|Ove privremene šifre}} će isteći za {{PLURAL:$5|jedan dan|$5 dana}}.
 Trebate se prijaviti i odabrati novu šifru. Ako je neko drugi napravio ovaj
-zahtjev, ili ako ste se sjetili Vaše početne šifre, a ne želite je promijeniti, 
+zahtjev, ili ako ste se sjetili Vaše početne šifre, a ne želite je promijeniti,
 možete zanemariti ovu poruku i nastaviti koristiti staru šifru.',
 'passwordreset-emailtext-user'     => 'Korisnik $1 na {{SITENAME}} je zatražio podsjetnik o detaljima Vašeg računa za {{SITENAME}}
 ($4). Sljedeći {{PLURAL:$3|korisnički račun je|korisnički računi su}} povezani s ovom e-mail adresom:
@@ -821,7 +793,7 @@ $2
 
 {{PLURAL:$3|Ova privremena šifra|Ove privremene šifre}} će isteći za {{PLURAL:$5|jedan dan|$5 dana}}.
 Trebate se prijaviti i odabrati novu šifru. Ako je neko drugi napravio ovaj
-zahtjev, ili ako ste se sjetili Vaše originalne šifre, a ne želite je više promijeniti, 
+zahtjev, ili ako ste se sjetili Vaše originalne šifre, a ne želite je više promijeniti,
 možete zanemariti ovu poruku i nastaviti koristiti staru šifru.',
 'passwordreset-emailelement'       => 'Korisničko ime: $1
 Privremena šifra: $2',
@@ -1309,14 +1281,6 @@ Pokušajte u Vaš upit uključiti prefiks ''all:'' da bi ste pretražili sav sad
 'search-external'                  => 'Vanjska pretraga',
 'searchdisabled'                   => '<p>Izvinjavamo se!  Puno pretraga teksta je privremeno onemogućena.  U međuvremenu, možete koristiti Google za pretragu.  Indeks može biti stariji.',
 
-# Quickbar
-'qbsettings'                => 'Podešavanja brze palete',
-'qbsettings-none'           => 'Nikakva',
-'qbsettings-fixedleft'      => 'Pričvršćena lijevo',
-'qbsettings-fixedright'     => 'Pričvršćena desno',
-'qbsettings-floatingleft'   => 'Plutajuća lijevo',
-'qbsettings-floatingright'  => 'Plutajući desno',
-'qbsettings-directionality' => 'Čvrsto, u zavisnosti od usmjerenosti pisma vašeg jezika',
 
 # Preferences page
 'preferences'                   => 'Podešavanja',
@@ -2932,27 +2896,13 @@ Dopušta unos razloga u sažetak.',
 
 # Stylesheets
 'common.css'      => '/* CSS umetnut ovdje primijenit će se na sve skinove */',
-'standard.css'    => '/* CSS umetnut ovdje uticat će na korisnike koji koriste Standard skin */',
-'nostalgia.css'   => '/* CSS umetnut ovdje uticat će na korisnike koji koriste Nostalgia skin */',
-'cologneblue.css' => '/* CSS umetnut ovdje uticat će na korisnike koji koriste Cologne Blue skin */',
 'monobook.css'    => '/* CSS umetnut ovdje uticat će na korisnike koji koriste Monobook skin */',
-'myskin.css'      => '/* CSS umetnut ovdje uticat će na korisnike koji koriste MySkin skin */',
-'chick.css'       => '/* CSS umetnut ovdje uticat će na korisnike koji koriste Chick skin */',
-'simple.css'      => '/* CSS umetnut ovdje uticat će na korisnike koji koriste Simple skin */',
-'modern.css'      => '/* CSS umetnut ovdje uticat će na korisnike koji koriste Modern skin */',
 'print.css'       => '/* CSS umetnut ovdje uticat će na izgled isprintane stranice */',
 'handheld.css'    => '/* CSS umetnut ovdje uticat će na ručne sprave koji rade na skinu konfigurisanom u $wgHandheldStyle */',
 
 # Scripts
 'common.js'      => '/* Bilo koja JavaScript će biti učitana za sve korisnike pri svakom učitavanju stranice. */',
-'standard.js'    => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste Standard skin */',
-'nostalgia.js'   => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste Nostalgia skin */',
-'cologneblue.js' => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste Cologne Blue skin */',
 'monobook.js'    => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste MonoBook skin */',
-'myskin.js'      => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste MySkin skin */',
-'chick.js'       => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste Chick skin */',
-'simple.js'      => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste Simple skin */',
-'modern.js'      => '/* Bilo koja JavaScript će biti učitana za sve korisnike koji koriste Modern skin */',
 
 # Metadata
 'notacceptable' => 'Viki server ne može da pruži podatke u onom formatu koji Vaš klijent može da pročita.',
@@ -2992,14 +2942,7 @@ Ovo je vjerovatno izazvao vezom ka vanjskoj nepoželjnoj stranici.',
 'pageinfo-viewsperedit'     => 'Pogleda po izmjeni',
 
 # Skin names
-'skinname-standard'    => 'Klasično',
-'skinname-nostalgia'   => 'Nostalgija',
-'skinname-cologneblue' => 'Kelnsko plavo',
 'skinname-monobook'    => 'MonoKnjiga',
-'skinname-myskin'      => 'MojaKoža',
-'skinname-chick'       => 'Pile (chick)',
-'skinname-simple'      => 'Jednostavna',
-'skinname-modern'      => 'Moderna',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Označi kao patrolirano',

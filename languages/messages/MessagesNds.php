@@ -355,30 +355,12 @@ $messages = array(
 'navigation'    => 'Navigatschoon',
 'and'           => '&#32;un',
 
-# Cologne Blue skin
 'qbfind'         => 'Finnen',
 'qbbrowse'       => 'Blädern',
-'qbedit'         => 'Ännern',
 'qbpageoptions'  => 'Disse Sied',
 'qbpageinfo'     => 'Sietendaten',
-'qbmyoptions'    => 'Instellen',
-'qbspecialpages' => 'Spezialsieten',
 'faq'            => 'Faken stellte Fragen',
-'faqpage'        => 'Project:Faken stellte Fragen',
 
-# Vector skin
-'vector-action-addsection'       => 'Thema tofögen',
-'vector-action-delete'           => 'Wegdoon',
-'vector-action-move'             => 'Schuven',
-'vector-action-protect'          => 'Schulen',
-'vector-action-undelete'         => 'Wedderhalen',
-'vector-action-unprotect'        => 'Siedenschuul ännern',
-'vector-simplesearch-preference' => 'Verbeterte Söökvörslääg anstellen (blot mit’n Skin Vector)',
-'vector-view-create'             => 'Opstellen',
-'vector-view-edit'               => 'Ännern',
-'vector-view-history'            => 'Historie bekieken',
-'vector-view-view'               => 'Lesen',
-'vector-view-viewsource'         => 'Borntext bekieken',
 'actions'                        => 'Akschonen',
 'namespaces'                     => 'Naamrüüm',
 'variants'                       => 'Varianten',
@@ -401,7 +383,6 @@ $messages = array(
 'edit'              => 'Ännern',
 'create'            => 'Opstellen',
 'editthispage'      => 'Disse Siet ännern',
-'create-this-page'  => 'Siet opstellen',
 'delete'            => 'Wegsmieten',
 'deletethispage'    => 'Disse Siet wegsmieten',
 'undelete_short'    => '{{PLURAL:$1|ene Version|$1 Versionen}} wedderhalen',
@@ -416,19 +397,9 @@ $messages = array(
 'talkpagelinktext'  => 'Diskuschoon',
 'specialpage'       => 'Spezialsiet',
 'personaltools'     => 'Persönliche Warktüüch',
-'postcomment'       => 'Afsnidd tofögen',
-'articlepage'       => 'Artikel',
 'talk'              => 'Diskuschoon',
 'views'             => 'Ansichten',
 'toolbox'           => 'Warktüüch',
-'userpage'          => 'Brukersiet ankieken',
-'projectpage'       => 'Meta-Text',
-'imagepage'         => 'Dateisied',
-'mediawikipage'     => 'Systemnaricht ankieken',
-'templatepage'      => 'Vörlaag ankieken',
-'viewhelppage'      => 'Helpsiet ankieken',
-'categorypage'      => 'Kategorie ankieken',
-'viewtalkpage'      => 'Diskuschoon ankieken',
 'otherlanguages'    => 'Annere Spraken',
 'redirectedfrom'    => '(wiederwiest vun $1)',
 'redirectpagesub'   => 'Redirectsiet',
@@ -438,7 +409,7 @@ $messages = array(
 'jumpto'            => 'Wesseln na:',
 'jumptonavigation'  => 'Navigatschoon',
 'jumptosearch'      => 'Söök',
-'view-pool-error'   => "Dat deit uns leed, man de Servers sünd in'n Momang överladen. 
+'view-pool-error'   => "Dat deit uns leed, man de Servers sünd in'n Momang överladen.
 To vele Brukers versöökt, düsse Siet to besöken.
 Bitte tööv en poor Minuten, ehrder du dat nochmal versöchst.
 
@@ -607,8 +578,9 @@ As Grund is angeven: ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Du büst nu afmellt.'''
 
-Du kannst {{SITENAME}} nu anonym wiederbruken oder di ünner dissen oder en annern Brukernaam wedder [[Special:UserLogin|anmellen]].
+Du kannst {{SITENAME}} nu anonym wiederbruken oder di ünner dissen oder en annern Brukernaam wedder $1.
 Denk dor an, dat welk Sieden ünner Ümstänn noch jümmer so wiest warrn köönt, as wenn du anmellt weerst. Dat ännert sik, wenn du den Cache vun dien Browser leddig maakst.",
+'logouttext-link-text'       => 'anmellen',
 'welcomecreation'            => '== Willkamen, $1! ==
 Dien Brukerkonto is nu inricht.
 Vergeet nich, de Sied för di persönlich [[Special:Preferences|intostellen]].',
@@ -825,7 +797,6 @@ De jüngste Indrag in dat Sperr-Logbook wart ünnen wiest:',
 'userjsyoucanpreview'              => "'''Tipp:''' Bruuk den Vörschau-Knoop, üm dien nieg JS vör dat Spiekern to testen.",
 'usercsspreview'                   => "'''Denk doran, dat du blots en Vörschau vun dien CSS ankickst, dat is noch nich spiekert!'''",
 'userjspreview'                    => "'''Denk doran, dat du blots en Vörschau vun dien JS ankiekst, dat is noch nich spiekert!'''",
-'userinvalidcssjstitle'            => "'''Wohrschau:''' Dat gifft keen Skin „$1“. Denk dor an, dat .css- un .js-Sieden  för Brukers mit en lütten Bookstaven anfangen mööt, to’n Bispeel ''{{ns:user}}:Brukernaam/vector.css'' un nich ''{{ns:user}}:Brukernaam/Vector.css''.",
 'updated'                          => '(Ännert)',
 'note'                             => "'''Wohrschau:'''",
 'previewnote'                      => "'''Dit is blots en Vörschau, de Siet is noch nich spiekert!'''",
@@ -1131,13 +1102,6 @@ Du kannst dat Woord ''all:'' vör dien Söökwoord setten, dat all Naamrüüm (o
 'searchdisabled'                   => '<p>De Vulltextsöök is wegen Överlast en Stoot deaktiveert. In disse Tied kannst du disse Google-Söök verwennen,
 de aver nich jümmer den aktuellsten Stand weerspegelt.<p>',
 
-# Quickbar
-'qbsettings'               => 'Siedenliest',
-'qbsettings-none'          => 'Keen',
-'qbsettings-fixedleft'     => 'Links, fast',
-'qbsettings-fixedright'    => 'Rechts, fast',
-'qbsettings-floatingleft'  => 'Links, sweven',
-'qbsettings-floatingright' => 'Rechts, sweven',
 
 # Preferences page
 'preferences'                   => 'Instellen',
@@ -2505,10 +2469,6 @@ All Transwiki-Import-Akschonen staht later ok in dat [[Special:Log/import|Import
 'spam_blanking'       => 'All Versionen harrn Lenken na $1, rein maakt.',
 
 # Skin names
-'skinname-standard'    => 'Klassik',
-'skinname-nostalgia'   => 'Nostalgie',
-'skinname-cologneblue' => 'Kölsch Blau',
-'skinname-chick'       => 'Küken',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'As nakeken marken',
@@ -2580,7 +2540,7 @@ Wat denn noch an Lenken kummt in de Reeg, dat sünd Utnahmen, bi de dat Bild lie
 'metadata-help'     => 'Disse Datei bargt noch mehr Informatschonen, de mehrsttiets vun de Digitalkamera oder den Scanner kaamt. Dör Afännern vun de Originaldatei köönt welk Details nich mehr ganz to dat Bild passen.',
 'metadata-expand'   => 'Wies mehr Details',
 'metadata-collapse' => 'Wies minner Details',
-'metadata-fields'   => 'De folgen Fehlers vun de EXIF-Metadaten, de in disse MediaWiki-Systemtext indragen sünd, warrt op Bildbeschrievenssieden mit inklappte Metadatentabell anwiest. 
+'metadata-fields'   => 'De folgen Fehlers vun de EXIF-Metadaten, de in disse MediaWiki-Systemtext indragen sünd, warrt op Bildbeschrievenssieden mit inklappte Metadatentabell anwiest.
 Wiedere warrt standardmatig nich anwiest:
 * make
 * model

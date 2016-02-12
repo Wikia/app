@@ -323,30 +323,12 @@ $messages = array(
 'navigation'    => 'Navigacija',
 'and'           => '&#32;in',
 
-# Cologne Blue skin
 'qbfind'         => 'Poišči',
 'qbbrowse'       => 'Prebrskaj',
-'qbedit'         => 'Uredi',
 'qbpageoptions'  => 'Možnosti strani',
 'qbpageinfo'     => 'Podatki o strani',
-'qbmyoptions'    => 'Moje možnosti',
-'qbspecialpages' => 'Posebne strani',
 'faq'            => 'Najpogostejša vprašanja',
-'faqpage'        => 'Project:Najpogostejša vprašanja',
 
-# Vector skin
-'vector-action-addsection'       => 'Dodaj temo',
-'vector-action-delete'           => 'Izbriši',
-'vector-action-move'             => 'Prestavi',
-'vector-action-protect'          => 'Zaščiti',
-'vector-action-undelete'         => 'Vrni',
-'vector-action-unprotect'        => 'Spremeni zaščito',
-'vector-simplesearch-preference' => 'Omogoči izboljšane predloge iskanja (samo koža Vector)',
-'vector-view-create'             => 'Ustvari',
-'vector-view-edit'               => 'Uredi',
-'vector-view-history'            => 'Zgodovina',
-'vector-view-view'               => 'Preberi',
-'vector-view-viewsource'         => 'Izvorno besedilo',
 'actions'                        => 'Dejanja',
 'namespaces'                     => 'Imenski prostori',
 'variants'                       => 'Različice',
@@ -369,7 +351,6 @@ $messages = array(
 'edit'              => 'Uredi stran',
 'create'            => 'Ustvari',
 'editthispage'      => 'Uredi stran',
-'create-this-page'  => 'Ustvari to stran',
 'delete'            => 'Briši',
 'deletethispage'    => 'Briši stran',
 'undelete_short'    => 'Vrni $1 {{PLURAL:$1|izbrisano urejanje|izbrisani urejanji|izbrisana urejanja|izbrisanih urejanj|izbrisanih urejanj}}',
@@ -384,19 +365,9 @@ $messages = array(
 'talkpagelinktext'  => 'Pogovor',
 'specialpage'       => 'Posebna stran',
 'personaltools'     => 'Osebna orodja',
-'postcomment'       => 'Nov razdelek',
-'articlepage'       => 'Prikaže članek',
 'talk'              => 'Pogovor',
 'views'             => 'Pogled',
 'toolbox'           => 'Pripomočki',
-'userpage'          => 'Prikaži uporabnikovo stran',
-'projectpage'       => 'Prikaži projektno stran',
-'imagepage'         => 'Pokaži stran z datoteko',
-'mediawikipage'     => 'Poglej stran s sporočilom',
-'templatepage'      => 'Poglej stran s predlogo',
-'viewhelppage'      => 'Poglej stran s pomočjo',
-'categorypage'      => 'Prikaži stran kategorije',
-'viewtalkpage'      => '< Pogovor',
 'otherlanguages'    => 'V drugih jezikih',
 'redirectedfrom'    => '(Preusmerjeno z $1)',
 'redirectpagesub'   => 'Preusmeritvena stran',
@@ -580,8 +551,9 @@ Podani razlog je bil »''$2''«.",
 # Login and logout pages
 'logouttext'                 => "'''Odjavili ste se.'''
 
-{{GRAMMAR:tožilnik|{{SITENAME}}}} lahko zdaj uporabljate neprijavljeni ali pa se [[Special:UserLogin|ponovno prijavite]] kot enak ali drug uporabnik.
+{{GRAMMAR:tožilnik|{{SITENAME}}}} lahko zdaj uporabljate neprijavljeni ali pa se $1 kot enak ali drug uporabnik.
 Morda bodo nekatere strani še naprej prikazane, kot da ste prijavljeni, dokler ne boste izpraznili predpomnilnika brskalnika.",
+'logouttext-link-text'       => 'ponovno prijavite',
 'welcomecreation'            => '== Dobrodošli, $1! ==
 Ustvarili ste račun.
 Ne pozabite si prilagoditi vaših [[Special:Preferences|nastavitev {{GRAMMAR:rodilnik|{{SITENAME}}}}]].',
@@ -1216,14 +1188,6 @@ Upoštevajte, da bo uporaba navigacijskih gumbov ponastavila ta stolpec.',
 Medtem lahko iščete preko Googla.
 Upoštevajte, da so njihovi podatki vsebine {{GRAMMAR:rodilnik|{{SITENAME}}}} morda zastareli.',
 
-# Quickbar
-'qbsettings'                => 'Nastavitve hitre vrstice',
-'qbsettings-none'           => 'Brez',
-'qbsettings-fixedleft'      => 'Levo nepomično',
-'qbsettings-fixedright'     => 'Desno nepomično',
-'qbsettings-floatingleft'   => 'Levo leteče',
-'qbsettings-floatingright'  => 'Desno leteče',
-'qbsettings-directionality' => 'Stalno, odvisno od usmerjenosti pisave vašega jezika',
 
 # Preferences page
 'preferences'                   => 'Nastavitve',

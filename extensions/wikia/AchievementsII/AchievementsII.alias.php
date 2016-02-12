@@ -32,3 +32,8 @@ $specialPageAliases['pl'] = array(
 $specialPageAliases['fr'] = array(
 	'AchievementsCustomize' => array( 'Personnaliser_distinctions' ),
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'AchievementsCustomize' => array( 'アチーブメントカスタマイズ' ),
+);

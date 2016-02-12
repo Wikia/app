@@ -264,30 +264,12 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => '&#32;un',
 
-# Cologne Blue skin
 'qbfind'         => 'Finde',
 'qbbrowse'       => 'Blättre',
-'qbedit'         => 'Ändere',
 'qbpageoptions'  => 'Sytenoptione',
 'qbpageinfo'     => 'Sytedate',
-'qbmyoptions'    => 'Ystellige',
-'qbspecialpages' => 'Spezialsytene',
 'faq'            => 'Froge, wo vilmol gstellt wäre',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Abschnitt zuefiege',
-'vector-action-delete'           => 'Lesche',
-'vector-action-move'             => 'Verschiebe',
-'vector-action-protect'          => 'Schitze',
-'vector-action-undelete'         => 'Widerhärstelle',
-'vector-action-unprotect'        => 'Syteschutz ändere',
-'vector-simplesearch-preference' => 'Erwytereti Suechvorschleg aktiviere (nume Vector)',
-'vector-view-create'             => 'Aalege',
-'vector-view-edit'               => 'Bearbeite',
-'vector-view-history'            => 'Versionsgschicht',
-'vector-view-view'               => 'Läse',
-'vector-view-viewsource'         => 'Quälltext aaluege',
 'actions'                        => 'Aktione',
 'namespaces'                     => 'Namensryym',
 'variants'                       => 'Variante',
@@ -310,7 +292,6 @@ $messages = array(
 'edit'              => 'Ändere',
 'create'            => 'Erstelle',
 'editthispage'      => 'Syte bearbeite',
-'create-this-page'  => 'Die Syte afange',
 'delete'            => 'Lösche',
 'deletethispage'    => 'Syte lösche',
 'undelete_short'    => '{{PLURAL:$1|1 Version|$1 Versione}} widerherstelle',
@@ -325,19 +306,9 @@ $messages = array(
 'talkpagelinktext'  => 'Diskussion',
 'specialpage'       => 'Spezialsyte',
 'personaltools'     => 'Persönlichi Wärkzüg',
-'postcomment'       => 'Neje Abschnitt',
-'articlepage'       => 'Syte',
 'talk'              => 'Diskussion',
 'views'             => 'Wievylmol agluegt',
 'toolbox'           => 'Wärkzügkäschtli',
-'userpage'          => 'Benutzersyte',
-'projectpage'       => 'Projektsyte azeige',
-'imagepage'         => 'Dateisyte',
-'mediawikipage'     => 'Inhaltssyte aazeige',
-'templatepage'      => 'Vorlagesyte aazeige',
-'viewhelppage'      => 'D Hilf aazeige',
-'categorypage'      => 'Kategoriesyte aazeige',
-'viewtalkpage'      => 'Diskussion',
 'otherlanguages'    => 'Anderi Sproche',
 'redirectedfrom'    => '(Witergleitet vun $1)',
 'redirectpagesub'   => 'Umgleiteti Syte',
@@ -513,9 +484,10 @@ Die Sperri isch dur [[User:$1|$1]] yygrichtet wore mit dr Begrindig ''„$2“''
 # Login and logout pages
 'logouttext'                 => "'''Du bisch jetz abgmäldet.'''
 
-Du chasch {{SITENAME}} wyter anonym bruche, oder Du chasch di [[Special:UserLogin|wider aamälde]] mit em glyche oder eme andere Benutzername.
+Du chasch {{SITENAME}} wyter anonym bruche, oder Du chasch di $1 mit em glyche oder eme andere Benutzername.
 
 Ochat: s cha syy, ass bstimmti Syte eso aazeigt wäre, wie wänn Du allno aagmäldet wärsch, bis Du dr Zwischespycher vu Dyym Browser glescht hesch.",
+'logouttext-link-text'       => 'wider aamälde',
 'welcomecreation'            => '==Willcho, $1!==
 Dyy Benutzerkonto isch aaglait wore.
 Vergiss nid, dyni [[Special:Preferences|{{SITENAME}}-Yystellige]] aazpasse.',
@@ -790,7 +762,6 @@ As Information chunnt do ne aktuälle Uuszug us em Benutzersperr-Logbuech:',
 '''S isch nonig gspycheret wore!'''",
 'sitejspreview'                    => "'''Obacht: Du luegsch nume ne Vorschau vu däm JavaScript aa.'''
 '''S isch nonig gspycheret wore!'''",
-'userinvalidcssjstitle'            => "'''Achtig:''' D Skin „$1“ git s nid. Dänk dra, ass benutzerspezifischi .css- und .js-Syte mit eme Chleibuechstabe mien aafange, also z B. ''{{ns:user}}:Mustermann/vector.css'' statt ''{{ns:user}}:Mustermann/Vector.css''.",
 'updated'                          => '(Gänderet)',
 'note'                             => "'''Obacht: '''",
 'previewnote'                      => "'''Das isch numen e Vorschau und nonig gspycheret!'''",
@@ -1130,14 +1101,6 @@ Stell sicher, ass d Versionsgschicht vun eme Artikel historisch korrekt isch.',
 'search-external'                  => 'Externi Suech',
 'searchdisabled'                   => 'D {{SITENAME}}-Suech isch deaktiviert. Du chasch mit Google sueche, s cha aber syy ass dr Suechindex vu Google fir {{SITENAME}} veraltet isch.',
 
-# Quickbar
-'qbsettings'                => 'Syteleischte',
-'qbsettings-none'           => 'Keini',
-'qbsettings-fixedleft'      => 'Links, fescht',
-'qbsettings-fixedright'     => 'Rächts, fescht',
-'qbsettings-floatingleft'   => 'Links, in dr Schwebi',
-'qbsettings-floatingright'  => 'Rächts, in dr Schwebi',
-'qbsettings-directionality' => 'Fescht, abhängig vu dr Schrybrichtig vu dr gwehlte Sproch',
 
 # Preferences page
 'preferences'                   => 'Yystellige',

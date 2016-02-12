@@ -2,8 +2,8 @@
 <!-- DISTRIBUTION TABLE -->
 <script type="text/javascript" charset="utf-8">
 function mlShowDetails(dbname) {
-	var username = '<?=$username?>';
-	var action = '<?=$action?>';
+	var username = '<?= Xml::escapeJsString( $username ) ?>';
+	var action = '<?= Xml::escapeJsString( $action ) ?>';
 
 	if ( !username ) {
 		return false;
@@ -14,7 +14,7 @@ function mlShowDetails(dbname) {
 
 $(document).ready(function() {
 	var baseurl = wgScript + "?action=ajax&rs=MultiLookupAjax::axData";
-	var username = '<?=$username?>';
+	var username = '<?= Xml::escapeJsString( $username ) ?>';
 
 	if ( !username ) {
 		return;
@@ -22,19 +22,19 @@ $(document).ready(function() {
 
 	var oTable = $('#ml-table').dataTable( {
 		"oLanguage": {
-			"sLengthMenu": "<?=wfMsg('table_pager_limit', '_MENU_');?>",
-			"sZeroRecords": "<?=wfMsg('table_pager_empty');?>",
-			"sEmptyTable": "<?=wfMsg('table_pager_empty');?>",
-			"sInfo": "<?=wfMsgExt('multilookuprecordspager',  array('parseinline'), '_START_', '_END_', '_TOTAL_');?>",
-			"sInfoEmpty": "<?=wfMsgExt('multilookuprecordspager', array('parseinline'), '0', '0', '0');?>",
+			"sLengthMenu": "<?= wfMessage( 'table_pager_limit', '_MENU_' )->escaped() ?>",
+			"sZeroRecords": "<?= wfMessage( 'table_pager_empty' )->escaped() ?>",
+			"sEmptyTable": "<?= wfMessage( 'table_pager_empty' )->escaped() ?>",
+			"sInfo": "<?= wfMessage( 'multilookuprecordspager' )->parse() ?>",
+			"sInfoEmpty": "<?= wfMessage( 'multilookuprecordspager' )->parse() ?>",
 			"sInfoFiltered": "",
-			"sSearch": "<?=wfMsg('search')?>",
-			"sProcessing": "<img src='" + stylepath + "/common/images/ajax.gif' /> <?=wfMsg('livepreview-loading')?>",
+			"sSearch": "<?= wfMessage( 'search' )->escaped() ?>",
+			"sProcessing": "<img src='" + stylepath + "/common/images/ajax.gif' /> <?= wfMessage( 'livepreview-loading' )->escaped() ?>",
 			"oPaginate" : {
-				"sFirst": "<?=wfMsg('table_pager_first')?>",
-				"sPrevious": "<?=wfMsg('table_pager_prev')?>",
-				"sNext": "<?=wfMsg('table_pager_next')?>",
-				"sLast": "<?=wfMsg('table_pager_last')?>"
+				"sFirst": "<?= wfMessage( 'table_pager_first' )->escaped() ?>",
+				"sPrevious": "<?= wfMessage( 'table_pager_prev' )->escaped() ?>",
+				"sNext": "<?= wfMessage( 'table_pager_next' )->escaped() ?>",
+				"sLast": "<?= wfMessage( 'table_pager_last' )->escaped() ?>"
 			}
 		},
 		"aaSorting" : [],
@@ -52,7 +52,7 @@ $(document).ready(function() {
 		"aoColumnDefs": [
 			{ "bVisible": true,  "aTargets": [ 0 ], "bSortable" : false },
 			{ "fnRender": function ( oObj ) {
-				var row = '<a href="'+ window.location.pathname + "?target="+ username +'&wiki=' + oObj.aData[1] + '">' + oObj.aData[1] + '</a>';
+				var row = '<a href="'+ window.location.pathname + "?target="+ mw.html.escape( username ) +'&wiki=' + mw.html.escape( oObj.aData[1] ) + '">' + mw.html.escape( oObj.aData[1] ) + '</a>';
 				return row;
 			},
 				"bUseRendered": false,
@@ -61,7 +61,7 @@ $(document).ready(function() {
 			},
 			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : false },
 			{ "fnRender": function ( oObj ) {
-				var row = '<a href="'+ oObj.aData[3] + '">' + oObj.aData[3] + '</a>';
+				var row = '<a href="'+ mw.html.escape( oObj.aData[3] ) + '">' + mw.html.escape( oObj.aData[3] ) + '</a>';
 				return row;
 			},
 				"bUseRendered": false,
@@ -146,9 +146,9 @@ $(document).ready(function() {
 <div>
 <form method="post" action="<?=$action?>" id="ml-form">
 <div class="ml_filter">
-	<span class="ml_filter ml_first"><?= wfMsg('multilookupselectuser') ?></span>
-	<span class="ml_filter"><input type="text" name="target" id="ml_search" size="50" value="<?=$username?>"></span>
-	<span class="ml_filter"><input type="button" value="<?=wfMsg('multilookupgo')?>" id="ml-showuser" onclick="submit();"></span>
+	<span class="ml_filter ml_first"><?= wfMessage( 'multilookupselectuser' )->escaped() ?></span>
+	<span class="ml_filter"><input type="text" name="target" id="ml_search" size="50" value="<?= Sanitizer::encodeAttribute( $username ) ?>"></span>
+	<span class="ml_filter"><input type="button" value="<?= wfMessage( 'multilookupgo' )->escaped() ?>" id="ml-showuser" onclick="submit();"></span>
 </div>
 </form>
 </div>
@@ -157,26 +157,26 @@ $(document).ready(function() {
 	<thead>
 		<tr>
 			<th width="2%">#</th>
-			<th width="3%"><?=wfMsg('multilookupwikidbname')?></th>
-			<th width="40%"><?=wfMsg('multilookupwikititle')?></th>
-			<th width="30%"><?=wfMsg('multilookupwikiurl')?></th>
-			<th width="5%"><?=wfMsg( 'multilookuplastedithdr' )?></th>
-			<th width="20%"><?=wfMsg('multilookupdetails')?></th>
+			<th width="3%"><?= wfMessage( 'multilookupwikidbname' )->escaped() ?></th>
+			<th width="40%"><?= wfMessage( 'multilookupwikititle' )->escaped() ?></th>
+			<th width="30%"><?= wfMessage( 'multilookupwikiurl' )->escaped() ?></th>
+			<th width="5%"><?= wfMessage(  'multilookuplastedithdr' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'multilookupdetails' )->escaped() ?></th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td colspan="6" class="dataTables_empty"><?=wfMsg('livepreview-loading')?></td>
+			<td colspan="6" class="dataTables_empty"><?= wfMessage( 'livepreview-loading' )->escaped() ?></td>
 		</tr>
 	</tbody>
 	<tfoot>
 		<tr>
 			<th width="2%">#</th>
-			<th width="3%"><?=wfMsg('multilookupwikidbname')?></th>
-			<th width="40%"><?=wfMsg('multilookupwikititle')?></th>
-			<th width="30%"><?=wfMsg('multilookupwikiurl')?></th>
-			<th width="5%"><?=wfMsg( 'multilookuplastedithdr' )?></th>
-			<th width="20%"><?=wfMsg('multilookupdetails')?></th>
+			<th width="3%"><?= wfMessage( 'multilookupwikidbname' )->escaped() ?></th>
+			<th width="40%"><?= wfMessage( 'multilookupwikititle' )->escaped() ?></th>
+			<th width="30%"><?= wfMessage( 'multilookupwikiurl' )->escaped() ?></th>
+			<th width="5%"><?= wfMessage(  'multilookuplastedithdr' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'multilookupdetails' )->escaped() ?></th>
 		</tr>
 	</tfoot>
 </table>

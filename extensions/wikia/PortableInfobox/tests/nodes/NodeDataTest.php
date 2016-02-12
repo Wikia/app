@@ -92,6 +92,8 @@ class NodeDataTest extends WikiaBaseTest {
 				[ 'value' => '{{{not_defined_var}}}%', 'label' => 'l' ] ],
 			[ '<data source="test"><label>l</label><format>{{{test}}}%</format><default>def</default></data>', [ ],
 				[ 'value' => 'def', 'label' => 'l' ] ],
+			[ '<data source="test"><format>{{{test}}}%</format></data>', [ 'test' => 0 ],
+				[ 'value' => '{{{test}}}%', 'label' => '' ] ],
 		];
 	}
 

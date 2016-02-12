@@ -328,15 +328,4 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 
 		wfProfileOut( __METHOD__ );
 	}
-
-	public function email() {
-		$this->language = $this->getVal( 'language' );
-		$this->greeting = $this->msg( 'closemyaccount-reactivation-email-greeting' )
-		                       ->inLanguage( $this->language )->useDatabase( false )->text();
-		$this->content = $this->msg( 'closemyaccount-reactivation-email-content' )
-		                      ->inLanguage( $this->language )->useDatabase( false )->text();
-		$this->signature = $this->msg( 'closemyaccount-reactivation-email-signature' )
-		                        ->inLanguage( $this->language )->useDatabase( false )->text();
-	}
-
 }

@@ -450,30 +450,12 @@ $messages = array(
 'navigation'    => 'Navigasie',
 'and'           => '&#32;en',
 
-# Cologne Blue skin
 'qbfind'         => 'Zeuken',
 'qbbrowse'       => 'Blaojen',
-'qbedit'         => 'Bewark',
 'qbpageoptions'  => 'Pagina-opsies',
 'qbpageinfo'     => 'Pagina-informasie',
-'qbmyoptions'    => 'Veurkeuren',
-'qbspecialpages' => "Spesiale pagina's",
 'faq'            => 'Vragen die vake esteld wörden',
-'faqpage'        => 'Project:Vragen die vake esteld wörden',
 
-# Vector skin
-'vector-action-addsection'       => 'Niej onderwarp',
-'vector-action-delete'           => 'Vortdoon',
-'vector-action-move'             => 'Herneumen',
-'vector-action-protect'          => 'Beveiligen',
-'vector-action-undelete'         => 'Weerummeplaotsen',
-'vector-action-unprotect'        => 'Beveiliging wiezigen',
-'vector-simplesearch-preference' => 'Verbeterde zeuksuggesties anzetten (allinnig mit Vector-vormgeving)',
-'vector-view-create'             => 'Anmaken',
-'vector-view-edit'               => 'Bewarken',
-'vector-view-history'            => 'Geschiedenisse bekieken',
-'vector-view-view'               => 'Lezen',
-'vector-view-viewsource'         => 'Brontekste bekieken',
 'actions'                        => 'Haandeling',
 'namespaces'                     => 'Naamruumtes',
 'variants'                       => 'Variaanten',
@@ -496,7 +478,6 @@ $messages = array(
 'edit'              => 'Bewarken',
 'create'            => 'Anmaken',
 'editthispage'      => 'Pagina bewarken',
-'create-this-page'  => 'Disse pagina anmaken',
 'delete'            => 'Vortdoon',
 'deletethispage'    => 'Disse pagina vortdoon',
 'undelete_short'    => '$1 {{PLURAL:$1|versie|versies}} weerummeplaotsen',
@@ -511,19 +492,9 @@ $messages = array(
 'talkpagelinktext'  => 'Overleg',
 'specialpage'       => 'Spesiale pagina',
 'personaltools'     => 'Persoonlike instellingen',
-'postcomment'       => 'Niej onderwarp',
-'articlepage'       => 'Artikel',
 'talk'              => 'Overleg',
 'views'             => 'Aspekten/aksies',
 'toolbox'           => 'Hulpmiddels',
-'userpage'          => 'gebrukerspagina',
-'projectpage'       => 'Bekiek projektpagina',
-'imagepage'         => 'Bestaandspagina bekieken',
-'mediawikipage'     => 'Tiejige bekieken',
-'templatepage'      => 'Mal bekieken',
-'viewhelppage'      => 'Hulppagina bekieken',
-'categorypage'      => 'Kategoriepagina bekieken',
-'viewtalkpage'      => 'Bekiek overlegpagina',
 'otherlanguages'    => 'Aandere talen',
 'redirectedfrom'    => '(deurestuurd vanaof "$1")',
 'redirectpagesub'   => 'Deurstuurpagina',
@@ -702,8 +673,9 @@ De op-egeven reden is ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Je bin noen aofemeld.'''
 
-Je kunnen {{SITENAME}} noen anoniem gebruken of je eigen [[Special:UserLogin|opniej anmelden]] onder disse of n aandere gebrukersnaam.
+Je kunnen {{SITENAME}} noen anoniem gebruken of je eigen $1 onder disse of n aandere gebrukersnaam.
 t Kan ween dat der wat pagina's bin die weeregeven wörden asof je an-emeld bin totda'j t tussengeheugen van joew webkieker leegmaken.",
+'logouttext-link-text'       => 'opniej anmelden',
 'welcomecreation'            => '== Welkom, $1! ==
 Joew gebrukersnaam is an-emaakt.
 Vergeet niet joew [[Special:Preferences|veurkeuren veur {{SITENAME}}]] in te stellen.',
@@ -961,7 +933,7 @@ Je kunnen [[Special:Search/{{PAGENAME}}|zeuken naor disse term]] in aandere pagi
 'userpage-userdoesnotexist-view'   => 'Gebruker "$1" steet hier niet in-eschreven',
 'blocked-notice-logextract'        => 'Disse gebruker is op t moment eblokkeerd.
 De leste regel uut t blokkeerlogboek steet hieronder as referensie:',
-'clearyourcache'                   => "'''Waort je:''' naodat de wiezigingen op-esleugen bin, mut t tussengeheugen van de webkieker nog eleegd wörden um t te kunnen zien. 
+'clearyourcache'                   => "'''Waort je:''' naodat de wiezigingen op-esleugen bin, mut t tussengeheugen van de webkieker nog eleegd wörden um t te kunnen zien.
 *'''Firefox / Safari:''' drok op ''Shift'' terwiel je op ''verniejen'' klikken, of gebruuk ''Ctrl-F5'' of ''Ctrl-R'' (''⌘-R'' op n knipperkiste van Mac)
 * '''Google Chrome:''' drok op ''Ctrl-Shift-R'' (''⌘-Shift-R'' op n knipperkiste van Mac)
 *'''Internet Explorer:''' drok op ''Ctrl'' terwiel je op ''verniejen'' klikken of drok op ''Ctrl-F5''
@@ -1314,14 +1286,6 @@ Kiek de logboeken nao.',
 'search-external'                  => 'Extern zeuken',
 'searchdisabled'                   => 'Zeuken in {{SITENAME}} is niet meugelik. Je kunnen gebruukmaken van Google. De gegevens over {{SITENAME}} bin misschien niet bie-ewörken.',
 
-# Quickbar
-'qbsettings'                => 'Paginalieste',
-'qbsettings-none'           => 'Gien',
-'qbsettings-fixedleft'      => 'Links, vaste',
-'qbsettings-fixedright'     => 'Rechts, vaste',
-'qbsettings-floatingleft'   => 'Links, zweven',
-'qbsettings-floatingright'  => 'Rechts, zweven',
-'qbsettings-directionality' => 'Vaste, aofhankelik van de schriefrichtige van joew taal',
 
 # Preferences page
 'preferences'                   => 'Veurkeuren',
@@ -1767,8 +1731,8 @@ Gao weerumme naor t [[Special:Upload/stash/$1|bestaandinlaodformulier]] um dit p
 'upload-file-error'         => 'Interne fout',
 'upload-file-error-text'    => 'Bie ons gung der effen wat fout to n tiedelik bestaand op de server an-emaakt wörden. Neem kontakt op mit n [[Special:ListUsers/sysop|systeembeheerder]].',
 'upload-misc-error'         => 'Onbekende fout bie t inlaojen van joew bestaand',
-'upload-misc-error-text'    => 'Der is bie t inlaojen van t bestaand n onbekende fout op-etrejen. 
-Kiek effen nao of de verwiezing t wel döt en probeer t opniej. 
+'upload-misc-error-text'    => 'Der is bie t inlaojen van t bestaand n onbekende fout op-etrejen.
+Kiek effen nao of de verwiezing t wel döt en probeer t opniej.
 As t probleem zo blif, neem dan kontakt op mit één van de [[Special:ListUsers/sysop|systeembeheerders]].',
 'upload-too-many-redirects' => 'Der zatten te veule deurverwiezingen in de URL.',
 'upload-unknown-size'       => 'Onbekende grootte',
@@ -2984,14 +2948,7 @@ Meestentieds kump dit deur n uutgaonde verwiezing die op de zwarte lieste steet.
 'pageinfo-viewsperedit'     => 'Antal keer bekeken per bewarking',
 
 # Skin names
-'skinname-standard'    => 'Klassiek',
-'skinname-nostalgia'   => 'Nostalgie',
-'skinname-cologneblue' => 'Keuls blauw',
 'skinname-monobook'    => 'Monobook',
-'skinname-myskin'      => 'MienSkin',
-'skinname-chick'       => 'Deftig',
-'skinname-simple'      => 'Eenvoudig',
-'skinname-modern'      => 'Niejmoeds',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Markeer as ekontroleerd',
@@ -3675,8 +3632,8 @@ Samen mit dit programma heur je n [{{SERVER}}{{SCRIPTPATH}}/COPYING kopie van de
 'filepath'         => 'Bestaandslokasie',
 'filepath-page'    => 'Bestaand:',
 'filepath-submit'  => 'Zeuken',
-'filepath-summary' => 'Disse spesiale pagina geef t hele pad veur n bestaand. 
-Aofbeeldingen wörden in resolusie helemaole weeregeven. 
+'filepath-summary' => 'Disse spesiale pagina geef t hele pad veur n bestaand.
+Aofbeeldingen wörden in resolusie helemaole weeregeven.
 Aandere bestaandstypen wörden gelieke in t mit t MIME-type verbunnen programma opend.',
 
 # Special:FileDuplicateSearch

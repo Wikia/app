@@ -33,34 +33,34 @@ class UrlGenerator {
 	const REVISION_LATEST = 'latest';
 
 	/** @var UrlConfig */
-	private $config;
+	protected $config;
 
 	/** @var string mode of the image we're requesting */
-	private $mode = self::MODE_ORIGINAL;
+	protected $mode = self::MODE_ORIGINAL;
 
 	/** @var int width of the image, in pixels */
-	private $width = 100;
+	protected $width = 100;
 
 	/** @var int height of the image, in pixels */
-	private $height = 100;
+	protected $height = 100;
 
 	/** @var array hash of query parameters to send to the thumbnailer */
-	private $query = [];
+	protected $query = [];
 
 	/** @var string one of the IMAGE_TYPE_ constants */
-	private $imageType = self::IMAGE_TYPE_IMAGES;
+	protected $imageType = self::IMAGE_TYPE_IMAGES;
 
 	/** @var int for window-crop modes, where to start the window (from the left) */
-	private $xOffset = 0;
+	protected $xOffset = 0;
 
 	/** @var int for window-crop modes, where to start the window (from the top) */
-	private $yOffset = 0;
+	protected $yOffset = 0;
 
 	/** @var int for window-crop modes, the width of the window that's cropped */
-	private $windowWidth = 0;
+	protected $windowWidth = 0;
 
 	/** @var int for window-crop modes, the height of the window that's cropped */
-	private $windowHeight = 0;
+	protected $windowHeight = 0;
 
 	public function __construct(UrlConfig $config) {
 		$this->config = $config;
@@ -309,7 +309,7 @@ class UrlGenerator {
 	/**
 	 * @return string
 	 */
-	private function modePath() {
+	protected function modePath() {
 		$modePath = '';
 
 		if ($this->mode != self::MODE_ORIGINAL) {
@@ -335,7 +335,7 @@ class UrlGenerator {
 	}
 
 
-	private function getRevision() {
+	protected function getRevision() {
 		$revision = self::REVISION_LATEST;
 
 		if ($this->config->isArchive()) {
@@ -376,12 +376,12 @@ class UrlGenerator {
 		return $this;
 	}
 
-	private function imageType($type) {
+	protected function imageType($type) {
 		$this->imageType = $type;
 		return $this;
 	}
 
-	private function domainShard($imagePath) {
+	protected function domainShard($imagePath) {
 		// shard based on original image, so frontends can build thumb urls from originals that might be cached in the
 		// user's browser (VE, for instance)
 		$hash = ord(sha1($this->config->relativePath()));

@@ -30,13 +30,43 @@ class RecentChangesUpdateTask extends BaseTask {
 		return $task;
 	}
 
+	/**
+	 * Remove recentchanges rows older than $wgRCMaxAge.
+	 * Additionally limit he number of rows in this table (controlled by $wgRCMaxRows)
+	 *
+	 * @return bool
+	 * @throws \DBUnexpectedError
+	 */
 	public function purgeExpiredRows() {
-		global $wgRCMaxAge;
+		global $wgRCMaxAge, $wgRCMaxRows;
 
 		$dbw = wfGetDB( DB_MASTER );
+
 		$rows = 0;
+		$rowsBefore = $dbw->estimateRowCount( 'recentchanges', '*' /* $vars */, '' /* $conds */, __METHOD__ );
 
 		$cutoff = $dbw->timestamp( time() - $wgRCMaxAge );
+
+		/**
+		 * Take the timestamp of the n-th row in recentchanges
+		 * if we have more rows in recentchanges than we allow
+		 *
+		 * @see PLATFORM-1393
+		 */
+		if ( $rowsBefore > $wgRCMaxRows ) {
+			$cutoff = $dbw->selectField(
+				'recentchanges',
+				'rc_timestamp',
+				'',
+				__METHOD__,
+				[
+					'ORDER BY' => 'rc_timestamp DESC',
+					'LIMIT' => 1,
+					'OFFSET' => $wgRCMaxRows
+				]
+			);
+		}
+
 		do {
 			$rcIds = $dbw->selectFieldValues( 'recentchanges',
 				'rc_id',
@@ -53,7 +83,9 @@ class RecentChangesUpdateTask extends BaseTask {
 		} while ( $rcIds );
 
 		$this->info( __METHOD__, [
-			'rows' => $rows
+			'cutoff' => $cutoff,
+			'rows' => $rows,
+			'rows_before' => $rowsBefore,
 		] );
 
 		return true;

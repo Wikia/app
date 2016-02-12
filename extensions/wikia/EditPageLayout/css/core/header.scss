@@ -6,15 +6,15 @@
 	background-color: $color-epl-header;
 	border-bottom: 1px solid $color-page-border;
 	height: $height-epl-header;
+	line-height: 1px; // Prevent browser line-height impact child elements layout
 	padding-left: 20px;
 	position: relative;
 	vertical-align: top;
 
 	> h1 {
 		display: inline-block;
-		float: left;
 		font-size: 19px;
-		line-height: 17px;
+		line-height: 23px;
 		overflow: hidden;
 		padding: 0;
 		text-overflow: ellipsis;
@@ -31,9 +31,9 @@
 	> h2 {
 		color: $color-epl-header-text;
 		font-size: 14px;
-		line-height: 21px;
+		line-height: 17px;
 		// BugId:7024 - override per-wiki custom CSS
-		margin: 0;
+		margin: 4px 5px 2px 0;
 		padding: 0;
 	}
 
@@ -50,23 +50,6 @@
 		width: auto;
 		img {
 			max-height: $height-epl-header;
-		}
-	}
-}
-
-@if ( $responsive-or-breakpoints-layout-enabled ) {
-	@media screen and (max-width: 1024px) {
-		.EditPageHeader {
-			> h1 {
-				float: none;
-				line-height: normal;
-				vertical-align: bottom;
-			}
-
-			> h2 {
-				display: inline-block;
-				margin-right: 2px;
-			}
 		}
 	}
 }

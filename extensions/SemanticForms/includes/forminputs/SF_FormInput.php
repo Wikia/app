@@ -90,27 +90,27 @@ abstract class SFFormInput {
 		$params['mandatory'] = array(
 			'name' => 'mandatory',
 			'type' => 'boolean',
-			'description' => wfMsg( 'sf_forminputs_mandatory' )
+			'description' => wfMessage( 'sf_forminputs_mandatory' )->text()
 		);
 		$params['restricted'] = array(
 			'name' => 'restricted',
 			'type' => 'boolean',
-			'description' => wfMsg( 'sf_forminputs_restricted' )
+			'description' => wfMessage( 'sf_forminputs_restricted' )->text()
 		);
 		$params['class'] = array(
 			'name' => 'class',
 			'type' => 'string',
-			'description' => wfMsg( 'sf_forminputs_class' )
+			'description' => wfMessage( 'sf_forminputs_class' )->text()
 		);
 		$params['property'] = array(
 			'name' => 'property',
 			'type' => 'string',
-			'description' => wfMsg( 'sf_forminputs_property' )
+			'description' => wfMessage( 'sf_forminputs_property' )->text()
 		);
 		$params['default'] = array(
 			'name' => 'default',
 			'type' => 'string',
-			'description' => wfMsg( 'sf_forminputs_default' )
+			'description' => wfMessage( 'sf_forminputs_default' )->text()
 		);
 		return $params;
 	}
@@ -165,14 +165,14 @@ abstract class SFFormInput {
 	public function getJsValidationFunctionData() {
 		return $this->mJsValidationFunctionData;
 	}
-	
-	
+
+
 	/**
 	 * Returns the names of the resource modules this input type uses.
-	 * 
-	 * Returns the names of the modules as an array or - if there is only one 
+	 *
+	 * Returns the names of the modules as an array or - if there is only one
 	 * module - as a string.
-	 * 
+	 *
 	 * @return null|string|array
 	 */
 	public function getResourceModuleNames() {
@@ -283,6 +283,23 @@ abstract class SFFormInput {
 		return array();
 	}
 
+	// Now the same set of methods, but for Cargo instead of SMW.
+	public static function getDefaultCargoTypes() {
+		return array();
+	}
+
+	public static function getDefaultCargoTypeLists() {
+		return array();
+	}
+
+	public static function getOtherCargoTypesHandled() {
+		return array();
+	}
+
+	public static function getOtherCargoTypeListsHandled() {
+		return array();
+	}
+
 	/**
 	 * Method to make new style input types compatible with old-style call from
 	 * the SF parser.
@@ -293,7 +310,7 @@ abstract class SFFormInput {
 	 */
 	public static function getHTML( $cur_value, $input_name, $is_mandatory, $is_disabled, $other_args ) {
 
-		global $sfgFieldNum, $wgOut;
+		global $sfgFieldNum, $wgParser;
 
 		// create an input of the called class
 		// TODO: get_called_class was introduced in PHP 5.3. The use of the
@@ -304,19 +321,20 @@ abstract class SFFormInput {
 			if ( $input_name === 'sf_free_text' ) { // free text
 				$calledClass = 'SFTextAreaInput';
 			} else {
-				$bt = debug_backtrace(false);		
+				$bt = debug_backtrace(false);
 				$calledClass = $bt[1]['args'][0][0];
 			}
 		}
-		
+
 		$input = new $calledClass ( $sfgFieldNum, $cur_value, $input_name, $is_disabled, $other_args );
 
+		$output = $wgParser->getOutput();
 		$modules = $input->getResourceModuleNames();
-		
+
 		// register modules for the input
 		if ( $modules !== null ) {
-			$wgOut->addModuleStyles( $modules );
-			$wgOut->addModuleScripts( $modules );
+			$output->addModuleStyles( $modules );
+			$output->addModuleScripts( $modules );
 		}
 
 		// create calls to JS initialization and validation
@@ -343,7 +361,7 @@ abstract class SFFormInput {
 			$jstext = 'jQuery(function(){' . $jstext . '});';
 
 			// write JS code directly to the page's code
-			$wgOut->addScript( Html::inlineScript( $jstext ) );
+			$output->addHeadItem( Html::inlineScript( $jstext ) );
 		}
 
 		return $input->getHtmlText();

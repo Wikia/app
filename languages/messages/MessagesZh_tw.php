@@ -167,13 +167,8 @@ $messages = array(
 # Categories related messages
 'subcategories' => '子分類',
 
-# Cologne Blue skin
 'qbfind' => '尋找',
 
-# Vector skin
-'vector-action-protect' => '保護',
-'vector-view-create'    => '建立',
-'vector-view-view'      => '閱讀',
 
 'help'           => '使用說明',
 'search'         => '搜尋',
@@ -184,10 +179,7 @@ $messages = array(
 'create'         => '建立',
 'delete'         => '刪除',
 'protect_change' => '更改',
-'postcomment'    => '新段落',
 'toolbox'        => '工具箱',
-'userpage'       => '檢視使用者頁面',
-'projectpage'    => '檢視計畫頁面',
 'lastmodifiedat' => '本頁最後更動時間在 $1 $2。',
 'jumptosearch'   => '搜尋',
 

@@ -105,7 +105,7 @@
 
 		.WikiHeader > nav.WikiNav .navbackground {
 			left: -24px;
-			width: 772px;
+			width: 771px;
 		}
 	}
 
@@ -134,7 +134,7 @@
 
 	@media #{$breakpoint-large-up} {
 		.WikiHeader > nav.WikiNav .navbackground {
-			@include width-calc('100% + 9px');
+			@include width-calc('100% + 10px');
 		}
 	}
 
@@ -203,10 +203,6 @@
 	}
 
 	.EditPageHeader {
-		> h1 {
-			margin-left: 5px;
-			margin-top: 2px;
-		}
 
 		> h2 {
 			display: inline-block;
@@ -216,6 +212,7 @@
 
 	.banner-notifications-wrapper {
 		width: auto;
+
 		&.float {
 			@media #{$breakpoint-small-only} {
 				margin-left: $page-width-small / -2;
@@ -249,10 +246,6 @@
 		margin-right: 0;
 	}
 
-	.ve-activated .WikiaMainContent {
-		position: static;
-	}
-
 	// 'special case' for 1024px tablets (think landscape iPad)
 	@media #{$breakpoint-small-plus} {
 		.WikiaPage {
@@ -282,7 +275,8 @@
 			}
 
 			> nav.WikiNav {
-				@include width-calc('100% - 250px');
+				// we need to accomodate for additional space while having to count scrollbar
+				@include width-calc('100% - 265px');
 
 				left: 275px;
 				top: 20px;
@@ -294,14 +288,10 @@
 
 				.navbackground {
 					left: 10px;
-					width: 734px; // it's 100% of content minus wordmark
+					// it's content width minus wordmark and padding plus space that ribbon occupies outside of the page
+					width: 714px;
 				 }
 			}
-		}
-
-		// needs to be nested in this way, so it it'll override styles in GlobalNav extension
-		.WikiaSiteWrapper > .global-navigation > .global-navigation-container {
-			width: $content-width-small-plus - $scroll-bar-width;
 		}
 	}
 
@@ -317,6 +307,65 @@
 			img {
 				display: none;
 			}
+		}
+	}
+}
+
+// Visual Editor changes for breakpoints
+$ve-overlay-color: rgba(0, 0, 0, .5);
+$vw-overlay-shadow-size: 1000vw; // IE does not support vmax
+body.ve {
+	.WikiaSiteWrapper {
+		pointer-events: none;
+	}
+
+	.ve-ui-overlay {
+		pointer-events: all;
+	}
+
+	// do not show VE overlay
+	//TODO: XW-179 | Remove this overlay from VE code
+	.ve-ui-wikiaFocusWidget {
+		display: none !important;
+	}
+
+	.WikiaPageHeader {
+		margin: 0 10px;
+	}
+
+	.WikiaMainContent {
+		box-shadow: 0 0 0 $vw-overlay-shadow-size $ve-overlay-color;
+		padding: 0;
+		pointer-events: all;
+		z-index: $zTop;
+	}
+
+	.ve-init-mw-viewPageTarget-toolbar {
+		margin: 0;
+	}
+
+	.WikiaArticle {
+		min-height: 0;
+		padding: 0 10px;
+	}
+
+	// cover some additional elements with an overlay
+	.WikiaArticleFooter, .CategorySelect.articlePage {
+		border-color: $ve-overlay-color;
+		margin: 0;
+		padding: 10px;
+		pointer-events: none;
+		position: relative;
+
+		&::after {
+			background: $ve-overlay-color;
+			bottom: 0;
+			content: ' ';
+			display: block;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
 		}
 	}
 }

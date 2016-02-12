@@ -370,30 +370,12 @@ $messages = array(
 'navigation' => 'Flakk',
 'and' => '&#32;og',
 
-# Cologne Blue skin
 'qbfind' => 'Finna',
 'qbbrowse' => 'Flakka',
-'qbedit' => 'Breyta',
 'qbpageoptions' => 'Þessi síða',
 'qbpageinfo' => 'Samhengi',
-'qbmyoptions' => 'Mínar síður',
-'qbspecialpages' => 'Kerfissíður',
 'faq' => 'Algengar spurningar',
-'faqpage' => 'Project:Algengar spurningar',
 
-# Vector skin
-'vector-action-addsection' => 'Bæta við umræðu',
-'vector-action-delete' => 'Eyða',
-'vector-action-move' => 'Færa',
-'vector-action-protect' => 'Vernda',
-'vector-action-undelete' => 'Hætta við eyðingu',
-'vector-action-unprotect' => 'Breyta verndunarstigi',
-'vector-simplesearch-preference' => 'Virkja leitaruppástungur (eingöngu fyrir vector þema)',
-'vector-view-create' => 'Skapa',
-'vector-view-edit' => 'Breyta',
-'vector-view-history' => 'Breytingaskrá',
-'vector-view-view' => 'Lesa',
-'vector-view-viewsource' => 'Sýna frumkóða',
 'actions' => 'Aðgerðir',
 'namespaces' => 'Nafnrými',
 'variants' => 'Útgáfur',
@@ -416,7 +398,6 @@ $messages = array(
 'edit' => 'Breyta',
 'create' => 'Skapa',
 'editthispage' => 'Breyta þessari síðu',
-'create-this-page' => 'Skapa þessari síðu',
 'delete' => 'Eyða',
 'deletethispage' => 'Eyða þessari síðu',
 'undelete_short' => 'Endurvekja {{PLURAL:$1|eina breytingu|$1 breytingar}}',
@@ -431,19 +412,9 @@ $messages = array(
 'talkpagelinktext' => 'Spjall',
 'specialpage' => 'Kerfissíða',
 'personaltools' => 'Tenglar',
-'postcomment' => 'Nýr hluti',
-'articlepage' => 'Sýna núverandi síðu',
 'talk' => 'Spjall',
 'views' => 'Sýn',
 'toolbox' => 'Verkfæri',
-'userpage' => 'Skoða notandasíðu',
-'projectpage' => 'Skoða verkefnissíðu',
-'imagepage' => 'Skoða skráarsíðu',
-'mediawikipage' => 'Skoða skilaboðasíðu',
-'templatepage' => 'Skoða sniðasíðu',
-'viewhelppage' => 'Skoða hjálparsíðu',
-'categorypage' => 'Skoða flokkatré',
-'viewtalkpage' => 'Skoða umræðu',
 'otherlanguages' => 'Á öðrum tungumálum',
 'redirectedfrom' => '(Tilvísað frá $1)',
 'redirectpagesub' => 'Tilvísunarsíða',
@@ -454,7 +425,7 @@ $messages = array(
 'jumptonavigation' => 'flakk',
 'jumptosearch' => 'leita',
 'view-pool-error' => 'Því miður eru vefþjónarnir yfirhlaðnir í augnablikinu.
-Of margir notendur eru að reyna að skoða þessa síðu. 
+Of margir notendur eru að reyna að skoða þessa síðu.
 Vinsamlegast bíddu í smástund áður en þú reynir að sækja þessa síðu aftur.
 
 $1',
@@ -626,8 +597,9 @@ Möppudýrið sem læsti skránni gaf þessa ástæðu: "\'\'$3\'\'".',
 # Login and logout pages
 'logouttext' => "'''Þú hefur verið skráð(ur) út.'''
 
-Þú getur haldið áfram að nota {{SITENAME}} óþekkt(ur), eða þú getur [[Special:UserLogin|skráð þig inn aftur]] sem sami eða annar notandi.
+Þú getur haldið áfram að nota {{SITENAME}} óþekkt(ur), eða þú getur $1 sem sami eða annar notandi.
 Athugaðu að sumar síður kunna að birtast líkt og þú sért ennþá skráð(ur) inn, þangað til að þú hreinsar skyndiminnið í vafranum þínum.",
+'logouttext-link-text'       => 'skráð þig inn aftur',
 'welcomecreation' => '== Velkomin(n), $1! ==
 Aðgangurinn þinn hefur verið búinn til.
 Ekki gleyma að breyta [[Special:Preferences|{{SITENAME}}-stillingunum]] þínum.',
@@ -893,7 +865,7 @@ Síðasta færsla notandans úr bönnunarskrá er sýnd hér fyrir neðan til sk
 'clearyourcache' => "Athugaðu - Eftir vistun, má vera að þú þurfir að komast hjá skyndiminni vafrans til að sjá breytingarnar.'''
 '''Mozilla / Firefox / Safari:''' haltu ''Shift'' og smelltu á ''Reload'', eða ýttu á annaðhvort ''Ctrl-F5'' eða ''Ctrl-R'' (''Command-R'' á Mac)
 '''Google Chrome: '''smelltu á ''Ctrl-Shift-R'' (''Command-Shift-R'' á Mac)
-'''Konqueror: '''smelltu á ''Reload'' eða ýttu á ''F5'' 
+'''Konqueror: '''smelltu á ''Reload'' eða ýttu á ''F5''
 '''Opera:''' hreinsaðu skyndiminnið í ''Tools → Prefernces'';
 '''Internet Explorer:''' haltu ''Ctrl'' og smelltu á ''Refresh'', eða ýttu á ''Ctrl-F5''.",
 'usercssyoucanpreview' => "'''Ath:''' Hægt er að nota „{{int:showpreview}}“ hnappinn til að prófa CSS-kóða áður en hann er vistaður.",
@@ -906,7 +878,6 @@ Síðasta færsla notandans úr bönnunarskrá er sýnd hér fyrir neðan til sk
 '''Hann hefur ekki enn verið vistaður!'''",
 'sitejspreview' => "'''Mundu að þú ert aðeins að prófa/forskoða JavaScript-kóðann.'''
 '''Hann hefur ekki enn verið vistaður!'''",
-'userinvalidcssjstitle' => "'''Viðvörun:''' Þemað $1 er ekki til. Sérsniðin CSS og JavaScript útlit nota lágstafi, t.d.  {{ns:user}}:Foo/vector.css en alls ekki {{ns:user}}:Foo/Vector.css.",
 'updated' => '(Uppfært)',
 'note' => "'''Athugið:'''",
 'previewnote' => "'''Það sem sést hér er aðeins forskoðun og hefur ekki enn verið vistað!'''",
@@ -929,7 +900,7 @@ Ef þetta leysir ekki vandamálið, reyndu að [[Special:UserLogout|skrá þig �
 'editingsection' => 'Breyti $1 (hluta)',
 'editingcomment' => 'Breyti $1 (nýr hluti)',
 'editconflict' => 'Breytingaárekstur: $1',
-'explainconflict' => "Síðunni hefur verið breytt síðan þú byrjaðir að gera breytingar á henni, textinn í efri reitnum inniheldur núverandi útgáfu úr gagnagrunni og sá neðri inniheldur þína útgáfu, þú þarft hér að færa breytingar sem þú vilt halda úr neðri reitnum í þann efri og vista síðuna. 
+'explainconflict' => "Síðunni hefur verið breytt síðan þú byrjaðir að gera breytingar á henni, textinn í efri reitnum inniheldur núverandi útgáfu úr gagnagrunni og sá neðri inniheldur þína útgáfu, þú þarft hér að færa breytingar sem þú vilt halda úr neðri reitnum í þann efri og vista síðuna.
 '''Aðeins''' texti úr efri reitnum mun vera vistaður þegar þú vistar.",
 'yourtext' => 'Þinn texti',
 'storedversion' => 'Geymd útgáfa',
@@ -1220,14 +1191,6 @@ Sjáðu til þess að þessi breyting sameini breytingarskrárnar samfellt.',
 Þú getur leitað í genum Google á meðan.
 Athugaðu að skrár þeirra yfir {{SITENAME}}-efni kunna að vera úreltar.',
 
-# Quickbar
-'qbsettings' => 'Valblað',
-'qbsettings-none' => 'Sleppa',
-'qbsettings-fixedleft' => 'Fast vinstra megin',
-'qbsettings-fixedright' => 'Fast hægra megin',
-'qbsettings-floatingleft' => 'Fljótandi til vinstri',
-'qbsettings-floatingright' => 'Fljótandi til hægri',
-'qbsettings-directionality' => 'Lagað, fer eftir því í hvaða átt er skrifað á þínu tungumáli.',
 
 # Preferences page
 'preferences' => 'Stillingar',
@@ -2070,7 +2033,7 @@ Studdar samskiptareglur: <tt>$1</tt> (ekki bæta neinum af þessum í leitina)',
 
 # Special:ListGroupRights
 'listgrouprights' => 'Notandahópréttindi',
-'listgrouprights-summary' => 'Hér er listi yfir notendahópa á þessum wiki, með þeirra réttindum. 
+'listgrouprights-summary' => 'Hér er listi yfir notendahópa á þessum wiki, með þeirra réttindum.
 Það gæti verið til síða með [[{{MediaWiki:Listgrouprights-helppage}}|frekari upplýsingar]] um einstök réttindi.',
 'listgrouprights-key' => '* <span class="listgrouprights-granted">Veitt réttindi</span>
 * <span class="listgrouprights-revoked">Afturkölluð réttindi</span>',
@@ -2583,7 +2546,7 @@ Athugaðu að síðan mun '''ekki''' færast ef þegar er síða á nafninu sem 
 
 '''Varúð:'''
 Athugaðu að þessi aðgerð getur kallað fram viðbrögð annarra notenda og getur þýtt mjög rótækar breytingar á vinsælum síðum.",
-'movepagetext-noredirectfixer' => "Með þessu eyðublaði er hægt að endurnefna síðu og færa alla breytingarskrá hennar á nýja nafnið. Gamli titillinn verður að tilvísun á nýja titilinn. 
+'movepagetext-noredirectfixer' => "Með þessu eyðublaði er hægt að endurnefna síðu og færa alla breytingarskrá hennar á nýja nafnið. Gamli titillinn verður að tilvísun á nýja titilinn.
 Athugaðu hvort síðan tengist [[Special:DoubleRedirects|tvöfaldri]]- eða [[Special:BrokenRedirects|brotinni]] tilvísun.
 Þú berð ábyrgð á því að tenglarnir haldi áfram að tengjast á réttan stað.
 
@@ -2875,14 +2838,7 @@ Vinsamlegast reyndu aftur.',
 'pageinfo-viewsperedit' => 'Flettingar á hverja breytingu',
 
 # Skin names
-'skinname-standard' => 'Sígilt',
-'skinname-nostalgia' => 'Gamaldags',
-'skinname-cologneblue' => 'Kölnarblátt',
 'skinname-monobook' => 'EinBók',
-'skinname-myskin' => 'Mitt þema',
-'skinname-chick' => 'Gella',
-'skinname-simple' => 'Einfalt',
-'skinname-modern' => 'Nútímalegt',
 
 # Patrolling
 'markaspatrolleddiff' => 'Merkja sem yfirfarið',
@@ -3445,7 +3401,7 @@ Til að fjarlægja titil hakaðu í kassann við hliðina á honum og smelltu á
 'watchlistedit-raw-legend' => 'Breyta opnum vaktlistanum',
 'watchlistedit-raw-explain' => 'Titlarnir á vaktlistanum þínum eru sýndir hér fyrir neðan og þeim er hægt að breyta með því að bæta við og taka út af honum;
 einn titil í hverri línu.
-Þegar þú ert búinn, smelltu á "{{int:Watchlistedit-raw-submit}}". 
+Þegar þú ert búinn, smelltu á "{{int:Watchlistedit-raw-submit}}".
 Þú getur einnig notað [[Special:EditWatchlist|hefðbundna ritilinn]].',
 'watchlistedit-raw-titles' => 'Titlar:',
 'watchlistedit-raw-submit' => 'Uppfæra vaktlistann',
@@ -3494,7 +3450,7 @@ MediaWiki er útgefin í þeirri von að hann sé gagnlegur, en ÁN ALLRAR ÁBYR
 'filepath' => 'Slóð skráar',
 'filepath-page' => 'Skrá:',
 'filepath-submit' => 'Áfram',
-'filepath-summary' => 'Þessi kerfisíða birtir fulla vefslóð skráar. 
+'filepath-summary' => 'Þessi kerfisíða birtir fulla vefslóð skráar.
 Myndir eru sýndar í fullri upplausn og önnur skráarsnið eru ræst í sjálfvöldu forriti til þess að opna skránna.',
 
 # Special:FileDuplicateSearch

@@ -191,28 +191,12 @@ $messages = array(
 'navigation'    => 'Navigadura',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Busca',
 'qbbrowse'       => 'Nàviga',
-'qbedit'         => 'Acontza',
 'qbpageoptions'  => 'Possibilidades de sa pàgina',
 'qbpageinfo'     => 'Cuntestu de sa pàgina',
-'qbmyoptions'    => 'Is preferèntzias meas',
-'qbspecialpages' => 'Pàginas spetziales',
 'faq'            => 'Pregontas/Respostas (FAQ)',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection' => 'Giunghe cuntierra',
-'vector-action-delete'     => 'Cantzella',
-'vector-action-move'       => 'Move',
-'vector-action-protect'    => 'Ampara',
-'vector-action-undelete'   => 'Recùpera',
-'vector-view-create'       => 'Crea',
-'vector-view-edit'         => 'Acontza',
-'vector-view-history'      => 'Càstia istòria',
-'vector-view-view'         => 'Leghe',
-'vector-view-viewsource'   => 'Càstia mitza',
 'actions'                  => 'Atziones',
 'namespaces'               => 'Nùmene-logos',
 'variants'                 => 'Variantes',
@@ -234,7 +218,6 @@ $messages = array(
 'edit'              => 'Acontza',
 'create'            => 'Crea',
 'editthispage'      => 'Acontza custa pàgina',
-'create-this-page'  => 'Crea custa pàgina',
 'delete'            => 'Fùlia',
 'deletethispage'    => 'Fùlia custa pàgina',
 'undelete_short'    => 'Restaurare {{PLURAL:$1|un acontzu|$1 acontzos}}',
@@ -248,19 +231,9 @@ $messages = array(
 'talkpagelinktext'  => 'Cuntierra',
 'specialpage'       => 'Pàgina Ispetziale',
 'personaltools'     => 'Ainas personales',
-'postcomment'       => 'Setzione noa',
-'articlepage'       => "Càstia s'artìculu",
 'talk'              => 'Cuntierras',
 'views'             => 'Bisuras',
 'toolbox'           => 'Ainas',
-'userpage'          => 'Càstia sa pàgina usuàriu',
-'projectpage'       => 'Càstia sa pàgina meta',
-'imagepage'         => 'Càstia sa pàgina de su file',
-'mediawikipage'     => 'Càstia su messàgiu',
-'templatepage'      => 'Càstia su template',
-'viewhelppage'      => 'Càstia sa pàgina de agiudu',
-'categorypage'      => 'Càstia sa categoria',
-'viewtalkpage'      => 'Càstia cuntierras',
 'otherlanguages'    => 'Àteras limbas',
 'redirectedfrom'    => '(Reindiritzadu dae $1)',
 'redirectpagesub'   => 'Pàgina de reindiritzadura',
@@ -393,8 +366,9 @@ Podet èsser stadu burradu dae calicunu àteru.',
 # Login and logout pages
 'logouttext'              => "'''As acabadu sa sessione.'''
 
-Immoe podes sighire a impreare {{SITENAME}} in forma anònima, o ti podes [[Special:UserLogin|identificare torra]] comente su de prima o comente usuàriu diferente.
+Immoe podes sighire a impreare {{SITENAME}} in forma anònima, o ti podes $1 comente su de prima o comente usuàriu diferente.
 Tene contu ca is pàginas ki sunt giai abertas in àteras bentanas podent sighire a pàrrer comente cando fias identificadu, fintzas a cando non ddas renfriscas.",
+'logouttext-link-text'       => 'identificare torra',
 'welcomecreation'         => "== Benènnidu, $1! ==
 S'account tuo est istadu creadu.
 No iscaressa de personalizare sas [[Special:Preferences|preferèntzias de {{SITENAME}}]].",
@@ -669,13 +643,6 @@ Prova a seberare ''totu:'' pro chircare in totu su cuntènnidu (inclùdidas pàg
 'powersearch-toggleall'          => 'Totu',
 'powersearch-togglenone'         => 'Nudda',
 
-# Quickbar
-'qbsettings'               => 'Settaggio della barra menu',
-'qbsettings-none'          => 'Nessuno',
-'qbsettings-fixedleft'     => 'Fisso a sinistra',
-'qbsettings-fixedright'    => 'Fisso a destra',
-'qbsettings-floatingleft'  => 'Fluttuante a sinistra',
-'qbsettings-floatingright' => 'Fluttuante a destra',
 
 # Preferences page
 'preferences'                 => 'Preferèntzias',

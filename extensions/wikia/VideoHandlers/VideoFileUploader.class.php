@@ -1,7 +1,6 @@
 <?php
 use Wikia\Logger\WikiaLogger;
 
-class VideoUploadFailedException extends Exception {}
 /**
  * Class VideoFileUploader
  */
@@ -132,23 +131,7 @@ class VideoFileUploader {
 		}
 
 		if ( $oTitle->exists() ) {
-			// @TODO
-			// if video already exists make sure that we are in fact changing something
-			// before generating upload (for now this only works for edits)
-			$articleId = $oTitle->getArticleID();
-			$article = Article::newFromID( $articleId );
-			// In case Article is null log more info and throw an exception
-			if ( is_null( $article ) ) {
-				$exception = new VideoUploadFailedException( 'Video upload failed');
-				WikiaLogger::instance()->error('Video upload: title exists but article is null', [
-					'Title object' => $oTitle,
-					'Video title' => $this->getNormalizedDestinationTitle(),
-					'Article ID' => $articleId,
-					'Title from ID' => Title::newFromID($articleId),
-					'exception' => $exception
-				] );
-				throw $exception;
-			}
+			$article = new Article( $oTitle );
 			$content = $article->getContent();
 			$newcontent = $this->getDescription();
 			if ( $content != $newcontent ) {
@@ -254,13 +237,19 @@ class VideoFileUploader {
 		// to fetch a thumbnail
 		try {
 			$upload = $this->uploadBestThumbnail( $thumbnailUrl, $delayIndex );
+
+			// Publish the thumbnail file (some filerepo classes do not support write operations)
+			$result = $file->publish( $upload->getTempPath(), File::DELETE_SOURCE );
 		} catch ( Exception $e ) {
+			WikiaLogger::instance()->error( __METHOD__, [
+				'thumbnailUrl' => $thumbnailUrl,
+				'delayIndex' => $delayIndex,
+				'file_obj' => $file,
+				'exception' => $e
+			]);
 			wfProfileOut(__METHOD__);
 			return Status::newFatal($e->getMessage());
 		}
-
-		// Publish the thumbnail file
-		$result = $file->publish( $upload->getTempPath(), File::DELETE_SOURCE );
 
 		wfProfileOut(__METHOD__);
 		return $result;

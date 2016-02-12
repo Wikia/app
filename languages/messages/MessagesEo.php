@@ -449,30 +449,12 @@ $messages = array(
 'navigation'    => 'Navigado',
 'and'           => '&#32;kaj',
 
-# Cologne Blue skin
 'qbfind'         => 'Trovi',
 'qbbrowse'       => 'Foliumi',
-'qbedit'         => 'Redakti',
 'qbpageoptions'  => 'Paĝagado',
 'qbpageinfo'     => 'Paĝinformoj',
-'qbmyoptions'    => 'Personaĵoj',
-'qbspecialpages' => 'Specialaj paĝoj',
 'faq'            => 'Oftaj demandoj',
-'faqpage'        => 'Project:Oftaj demandoj',
 
-# Vector skin
-'vector-action-addsection'       => 'Aldoni temon',
-'vector-action-delete'           => 'Forigi',
-'vector-action-move'             => 'Alinomigi',
-'vector-action-protect'          => 'Protekti',
-'vector-action-undelete'         => 'Malforigi',
-'vector-action-unprotect'        => 'Ŝanĝi protekadon',
-'vector-simplesearch-preference' => 'Ebligi plibonigitajn serĉajn sugestojn (nur Vektora etoso)',
-'vector-view-create'             => 'Krei',
-'vector-view-edit'               => 'Redakti',
-'vector-view-history'            => 'Vidi historion',
-'vector-view-view'               => 'Legi',
-'vector-view-viewsource'         => 'Vidi fonton',
 'actions'                        => 'Agoj',
 'namespaces'                     => 'Nomspacoj',
 'variants'                       => 'Variantoj',
@@ -495,7 +477,6 @@ $messages = array(
 'edit'              => 'Redakti',
 'create'            => 'Krei',
 'editthispage'      => 'Redakti la paĝon',
-'create-this-page'  => 'Krei ĉi tiun paĝon',
 'delete'            => 'Forigi',
 'deletethispage'    => 'Forigi ĉi tiun paĝon',
 'undelete_short'    => 'Malforigi {{PLURAL:$1|redakton|$1 redaktojn}}',
@@ -510,19 +491,9 @@ $messages = array(
 'talkpagelinktext'  => 'Diskuto',
 'specialpage'       => 'Speciala Paĝo',
 'personaltools'     => 'Personaj iloj',
-'postcomment'       => 'Nova sekcio',
-'articlepage'       => 'Rigardi artikolon',
 'talk'              => 'Diskuto',
 'views'             => 'Vidoj',
 'toolbox'           => 'Iloj',
-'userpage'          => 'Rigardi personan paĝon',
-'projectpage'       => 'Rigardi projektopaĝon',
-'imagepage'         => 'Vidi dosieropaĝon',
-'mediawikipage'     => 'Vidi mesaĝopaĝon',
-'templatepage'      => 'Vidi ŝablonopaĝon',
-'viewhelppage'      => 'Vidi helpopaĝon',
-'categorypage'      => 'Vidi kategorian paĝon',
-'viewtalkpage'      => 'Vidi diskuton',
 'otherlanguages'    => 'Aliaj lingvoj',
 'redirectedfrom'    => '(Alidirektita el $1)',
 'redirectpagesub'   => 'Alidirektilo',
@@ -707,8 +678,9 @@ La kialo donata estis ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Vi nun estas elsalutita.'''
 
-Vi rajtas daŭre vikiumi sennome, aŭ vi povas [[Special:UserLogin|reensaluti]] kiel la sama aŭ kiel alia uzanto.
+Vi rajtas daŭre vikiumi sennome, aŭ vi povas $1 kiel la sama aŭ kiel alia uzanto.
 Notu ke iuj paĝoj daŭre ŝajnos kvazaŭ vi ankoraŭ estas ensalutita, ĝis vi refreŝigu vian retumilan kaŝmemoron.",
+'logouttext-link-text'       => 'reensaluti',
 'welcomecreation'            => '== Bonvenon, $1! ==
 Via konto estas kreita.
 Ne forgesu fari viajn [[Special:Preferences|{{SITENAME}}-preferojn]].',
@@ -843,7 +815,7 @@ $2
 Ĉi {{PLURAL:$3|tiu provizora pasvorto|tiuj provizoraj pasvortoj}} findatiĝos {{PLURAL:$5|unu tagon|$5 tagojn}}.
 Vi ensalutu kaj elektu novan pasvorton nun. Se iu alia petis ĉi tion,
 aŭ se vi memoris vian originalan pasvorton, kaj vi ne plu volas
-ŝanĝi ĝin, vi povas ignori ĉi tiun mesaĝon kaj plu uzi vian 
+ŝanĝi ĝin, vi povas ignori ĉi tiun mesaĝon kaj plu uzi vian
 malnovan pasvorton.',
 'passwordreset-emailtext-user'     => 'Uzanto $1 de {{SITENAME}} petis rememoraĵo de viaj kontaj detaloj por {{SITENAME}}
 ($4). La {{PLURAL:$3|jena uzanto-konto|jenaj uzanto-kontoj}} estas asociita kun ĉi tiu retpoŝtadreso:
@@ -968,10 +940,10 @@ aŭ <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}
 'userpage-userdoesnotexist-view'   => 'Uzanto-konto "$1" ne estas registrita.',
 'blocked-notice-logextract'        => 'Ĉi tiu uzanto estas ĉi-momente forbarita.
 La lasta protokolero estas jene montrata por via referenco:',
-'clearyourcache'                   => "'''Notu:''' Post konservado vi forviŝu la kaŝmemoron de via foliumilo por vidi la ŝanĝojn. 
+'clearyourcache'                   => "'''Notu:''' Post konservado vi forviŝu la kaŝmemoron de via foliumilo por vidi la ŝanĝojn.
 * '''Firefox / Safari:''' Premu majuskligan klavon klakante ''Reŝarĝi'', aŭ premu ''Stir-F5'', aŭ premu ''Stir-R'' aŭ ''⌘-R'' kun Makintoŝo
 * '''Google Chrome:''' Premu ''Stir-majuskligklavon'' aŭ ⌘-Majuskligklavo-R'' kun Makintoŝo
-* '''Interreta Esplorilo''': Premu ''Stir'' klakante ''Refreŝu'', aŭ premu ''Stir-F5'' 
+* '''Interreta Esplorilo''': Premu ''Stir'' klakante ''Refreŝu'', aŭ premu ''Stir-F5''
 * '''Safari:''' ''Cmd-R''
 * '''Konqueror:''' Klaku ''Reŝarĝu'' aŭ premu ''F5''
 * '''Opera:''' Nuligi la kaŝmemoro en ''Iloj → Preferoj''",
@@ -983,7 +955,6 @@ La lasta protokolero estas jene montrata por via referenco:',
 'sitecsspreview'                   => "'''Konsciu ke vi nur antaŭrigardas tiun ĉi CSS.'''
 '''Ĝi ne jam estis savita!''",
 'sitejspreview'                    => "'''Konsciu ke vi nur antaŭrigardas tiun ĉi Ĝavaskripta kodon''. ''Ĝi ne jam estis konservita''.",
-'userinvalidcssjstitle'            => "'''Averto:''' Ne ekzistas aspekto \"\$1\". Rememoru ke individuaj .css-aj kaj .js-aj paĝoj uzas minusklan titolon, ekz. {{ns:user}}:Foo/vector.css kontraŭe  al {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Ŝanĝo registrita)',
 'note'                             => "'''Noto:'''",
 'previewnote'                      => "'''Memoru, ke ĉi tio estas nur antaŭrigardo kaj ankoraŭ ne konservita!'''",
@@ -1332,14 +1303,6 @@ Provu prefiksi vian mendon kun ''all:'' por serĉi ĉiun enhavon (inkluzivante d
 'searchdisabled'                   => '<p>Oni provizore malŝaltis serĉadon per la plenteksta
 indekso pro troŝarĝita servilo. Intertempe, vi povas serĉi per <i>guglo</i> aŭ per <i>jahu!</i>:</p>',
 
-# Quickbar
-'qbsettings'                => 'Preferoj pri ilaro',
-'qbsettings-none'           => 'Neniu',
-'qbsettings-fixedleft'      => 'Fiksiĝas maldekstre',
-'qbsettings-fixedright'     => 'Fiksiĝas dekstre',
-'qbsettings-floatingleft'   => 'Ŝvebas maldekstre',
-'qbsettings-floatingright'  => 'Ŝvebas dekstre',
-'qbsettings-directionality' => 'Fiksita, laŭ la teksto-direkteco de via lingvo',
 
 # Preferences page
 'preferences'                   => 'Preferoj',
@@ -2691,7 +2654,7 @@ Pro tio, vi ja povos removi la paĝon je la antaŭa titolo se vi mistajpus, kaj 
 '''AVERTO!'''
 Tio povas esti drasta kaj neatendita ŝanĝo por populara paĝo;
 bonvolu certigi vin, ke vi komprenas ties konsekvencojn antaŭ ol vi antaŭeniru.",
-'movepagetext-noredirectfixer' => "Per jena formularo vi povas alinomigi paĝon, kaj movi tutan ĝian redaktohistorion al la nova nomo. 
+'movepagetext-noredirectfixer' => "Per jena formularo vi povas alinomigi paĝon, kaj movi tutan ĝian redaktohistorion al la nova nomo.
 La antaŭa titolo alidirektigos onin al la nova titolo.
 Kontrolu pri [[Special:DoubleRedirects|duoblajn]] aŭ [[Special:BrokenRedirects|nefunkciantajn alidirektilojn]].
 Vi respondecas pri tio ke ligoj restas montrantaj ĝustadirekten.
@@ -2987,11 +2950,7 @@ Datoj de versioj kaj nomoj de redaktantoj estos preservitaj.
 'pageinfo-viewsperedit'     => 'Po rigardoj por redakto',
 
 # Skin names
-'skinname-standard'    => 'Klasika',
-'skinname-nostalgia'   => 'Nostalgio',
-'skinname-cologneblue' => 'Kolonja Bluo',
 'skinname-monobook'    => 'Librejo',
-'skinname-chick'       => 'Kokido',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marki kiel patrolitan',
@@ -3075,7 +3034,7 @@ Sekvaj ligilo en la sama linio estas konsiderata kiel esceptoj (paĝoj kiel la b
 'metadata-help'     => 'Ĉi tiu dosiero enhavas plian informon, verŝajne aldonitan de la cifereca fotilo aŭ skanilo uzita por krei aux skani ĝin. Se la dosiero estis modifita de sia originala stato, iuj detaloj eble ne konformos al efektiva stato de la modifita bildo.',
 'metadata-expand'   => 'Montri etendajn detalojn',
 'metadata-collapse' => 'Kaŝi etendajn detalojn',
-'metadata-fields'   => 'Metadatumaj kampoj de ĉi tiu mesaĝo estos inkluzivita en la paĝoj de bidloj kiam la metadatuma tabelo estas disfaldigita. 
+'metadata-fields'   => 'Metadatumaj kampoj de ĉi tiu mesaĝo estos inkluzivita en la paĝoj de bidloj kiam la metadatuma tabelo estas disfaldigita.
 Aliaj estos kaŝitaj defaŭlte.
 * make
 * model

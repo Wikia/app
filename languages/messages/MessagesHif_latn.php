@@ -163,40 +163,12 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => '&#32;aur',
 
-# Cologne Blue skin
 'qbfind'         => 'Khojo',
 'qbbrowse'       => 'Browse karo',
-'qbedit'         => 'Badlo',
 'qbpageoptions'  => 'Ii panna',
 'qbpageinfo'     => 'Vishay',
-'qbmyoptions'    => 'Hamar panna',
-'qbspecialpages' => 'Khaas panna',
 'faq'            => 'Sab time puchhe waala sawal',
-'faqpage'        => 'Project:Sab time puchhe waala sawal',
 
-# Vector skin
-'vector-action-addsection'   => 'Topic jorro',
-'vector-action-delete'       => 'Mitao',
-'vector-action-move'         => 'Naam badlo',
-'vector-action-protect'      => 'Bachao',
-'vector-action-undelete'     => 'Pahile jaise karo',
-'vector-action-unprotect'    => 'Nai bachao',
-'vector-namespace-category'  => 'Vibhag',
-'vector-namespace-help'      => 'Madat waala panna',
-'vector-namespace-image'     => 'File',
-'vector-namespace-main'      => 'Panna',
-'vector-namespace-media'     => 'Chapa aur awaaj waala panna',
-'vector-namespace-mediawiki' => 'Sandes',
-'vector-namespace-project'   => 'Project panna',
-'vector-namespace-special'   => 'Khaas panna',
-'vector-namespace-talk'      => 'Salah',
-'vector-namespace-template'  => 'Template',
-'vector-namespace-user'      => 'Sadasya ke panna',
-'vector-view-create'         => 'Banao',
-'vector-view-edit'           => 'Badlo',
-'vector-view-history'        => 'Itihaas dekho',
-'vector-view-view'           => 'Parrho',
-'vector-view-viewsource'     => 'Source dekho',
 'actions'                    => 'Karam',
 'namespaces'                 => 'Naam',
 'variants'                   => 'Antar',
@@ -219,7 +191,6 @@ $messages = array(
 'edit'              => 'Badlo',
 'create'            => 'Banao',
 'editthispage'      => 'Ii panna ke badlo',
-'create-this-page'  => 'Ii panna ke banao',
 'delete'            => 'Mitao',
 'deletethispage'    => 'Ii panna ke mitao',
 'undelete_short'    => '{{PLURAL:$1|ek badlao|$1 badlao}} ke pahile jaise karo',
@@ -233,19 +204,9 @@ $messages = array(
 'talkpagelinktext'  => 'Baat',
 'specialpage'       => 'Khaas Panna',
 'personaltools'     => 'Aapan aujaar',
-'postcomment'       => 'Nawaa section',
-'articlepage'       => 'Content waala panna ke dekho',
 'talk'              => 'Salah',
 'views'             => 'Bichar',
 'toolbox'           => 'Aujaar ke dabba',
-'userpage'          => 'Sadasya ke panna dekho',
-'projectpage'       => 'Project waala panna dekho',
-'imagepage'         => 'File panna ke dekho',
-'mediawikipage'     => 'Sandes waala panna dekho',
-'templatepage'      => 'Template waala panna dekho',
-'viewhelppage'      => 'Madat waala panna dekho',
-'categorypage'      => 'Vibhag waala panna dekho',
-'viewtalkpage'      => 'Salah dekho',
 'otherlanguages'    => 'Duusra bhasa me',
 'redirectedfrom'    => '($1 se bheja gais)',
 'redirectpagesub'   => 'Panna ke redirect karo',
@@ -416,8 +377,9 @@ Iske kaaran hai ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Aap abhi logged out hai.'''
 
-Aap bina naam ke {{SITENAME}} ke kaam me lae sakta hai, nai to aap wahi sadasya ke naam se nai to duusra sadasya ke naam se [[Special:UserLogin|log in kare sakta hai]].
+Aap bina naam ke {{SITENAME}} ke kaam me lae sakta hai, nai to aap wahi sadasya ke naam se nai to duusra sadasya ke naam se $1.
 Yaad rakhna ki kuch panna wahi rakam se dekhai jaise ki aap log in bhaya hai, jab tak ki browser ke cache safaa nai hoe jaae.",
+'logouttext-link-text'       => 'log in kare sakta hai',
 'welcomecreation'            => '== Swagat, $1! ==
 Aap ke account banae dewa gais hai.
 Aapan [[Special:Preferences|{{SITENAME}} pasand]]  ke badle nai bhulna.',
@@ -998,13 +960,6 @@ Aapan query ke ''all:'' se suruu kar ke visay suchi me khojo (including talk pag
 Aap tab tak Google se khoje sakta hai.
 Yaad rakhna ki uu log ke {{SITENAME}} ke index saait purana hoi.',
 
-# Quickbar
-'qbsettings'               => 'Quickbar',
-'qbsettings-none'          => 'Koi nai',
-'qbsettings-fixedleft'     => 'Left me fixed hai',
-'qbsettings-fixedright'    => 'Right me fixed hai',
-'qbsettings-floatingleft'  => 'Baaen or baho',
-'qbsettings-floatingright' => 'Daaen or baho',
 
 # Preferences page
 'preferences'                   => 'Pasand',
@@ -1607,7 +1562,7 @@ They should link to the appropriate topic instead.<br />
 A page is treated as disambiguation page if it uses a template which is linked from [[MediaWiki:Disambiguationspage]]",
 
 'doubleredirects'            => 'Dugna redirects',
-'doubleredirectstext'        => 'Ii panna uu panna ke suchi de hai jon ki duusra redirect panna pe redirect kare hai. 
+'doubleredirectstext'        => 'Ii panna uu panna ke suchi de hai jon ki duusra redirect panna pe redirect kare hai.
 Sab row me pahila aur duusra redirect ke jorr hae, aur isme duusra redirect ke nisana bhi hae, jon ki jaada kar ke "aslii" nisana waala panna, jon ki pahila redirect ke dekhae hae.
 <s>Mitawa gais</s> entires ke solve kar dewa gais hae.',
 'double-redirect-fixed-move' => '[[$1]] ke naam badal dewa gais hai, ab ii [[$2]] pe redirect kare hai',

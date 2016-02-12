@@ -20,9 +20,14 @@
  * @file
  */
 
+use Email\Controller\EmailConfirmationController;
 use Wikia\DependencyInjection\Injector;
+use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
-use Wikia\Service\User\Preferences\UserPreferences;
+use Wikia\Service\User\Attributes\UserAttributes;
+use Wikia\Service\User\Preferences\PreferenceService;
+use Wikia\Util\Statistics\BernoulliTrial;
+use Wikia\Service\Helios\HeliosClient;
 
 /**
  * Int Number of characters in user_token field.
@@ -34,7 +39,7 @@ define( 'USER_TOKEN_LENGTH', 32 );
  * Int Serialized record version.
  * @ingroup Constants
  */
-define( 'MW_USER_VERSION', 8 );
+define( 'MW_USER_VERSION', 17 );
 
 /**
  * String Some punctuation to prevent editing from broken text-mangling proxies.
@@ -68,6 +73,7 @@ class User {
 	 * Traits extending the class
 	 */
 	use PowerUserTrait;
+	use GlobalUserDataTrait;
 	# WIKIA CHANGE END
 
 	use Loggable;
@@ -79,7 +85,10 @@ class User {
 	const USER_TOKEN_LENGTH = USER_TOKEN_LENGTH;
 	const MW_USER_VERSION = MW_USER_VERSION;
 	const EDIT_TOKEN_SUFFIX = EDIT_TOKEN_SUFFIX;
-	const CACHE_PREFERENCES_KEY = "preferences";
+	const CACHE_ATTRIBUTES_KEY = "attributes";
+	const GET_SET_OPTION_SAMPLE_RATE = 0.1;
+
+	private static $PROPERTY_UPSERT_SET_BLOCK = [ "up_user = VALUES(up_user)", "up_property = VALUES(up_property)", "up_value = VALUES(up_value)" ];
 
 	/**
 	 * Array of Strings List of member variables which are saved to the
@@ -211,8 +220,6 @@ class User {
 	 */
 	var $mFrom;
 
-	var $mTheme; # Wikia - Skin chooser related
-
 	/**
 	 * Lazy-initialized variables, invalidated with clearInstanceCache
 	 */
@@ -238,6 +245,16 @@ class User {
 	static $idCacheByName = array();
 
 	/**
+		* @var string the service auth token (currently helios); should NEVER be cached
+	 */
+	private $globalAuthToken = null;
+
+	/**
+	 * @var UserAttributes
+	 */
+	private $attributeService;
+
+	/**
 	 * Lightweight constructor for an anonymous user.
 	 * Use the User::newFrom* factory functions for other kinds of users.
 	 *
@@ -258,8 +275,50 @@ class User {
 		return $this->getName();
 	}
 
+
+	/**
+		* @return HeliosClient
+	 */
+	private function getAuthenticationService() {
+		return Injector::getInjector()->get(HeliosClient::class);
+	}
+
+	/**
+	 * @return PreferenceService
+	 */
 	private function userPreferences() {
-		return Injector::getInjector()->get(UserPreferences::class);
+		return Injector::getInjector()->get(PreferenceService::class);
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function arePreferencesReadOnly() {
+		return $this->userPreferences()->getPreferences( $this->getId() )->isReadOnly();
+	}
+
+	/**
+	 * @return UserAttributes
+	 */
+	private function userAttributes() {
+		if ( is_null( $this->attributeService ) ) {
+			$this->attributeService = Injector::getInjector()->get( UserAttributes::class );
+		}
+
+		return $this->attributeService;
+	}
+
+	/**
+	 * @return BernoulliTrial
+	 */
+	private function getOrSetOptionSampler() {
+		static $sampler = null;
+
+		if ($sampler === null) {
+			$sampler = new BernoulliTrial(self::GET_SET_OPTION_SAMPLE_RATE);
+		}
+
+		return $sampler;
 	}
 
 	/**
@@ -312,7 +371,7 @@ class User {
 		}
 
 		# Try cache
-		$key = wfMemcKey( 'user', 'id', $this->mId );
+		$key = $this->getCacheKey();
 		$data = $wgMemc->get( $key );
 		if ( !is_array( $data ) || $data['mVersion'] < MW_USER_VERSION ) {
 			# Object is expired, load from DB
@@ -358,10 +417,6 @@ class User {
 					$this->$name = $data[$name];
 				}
 			}
-
-			if (isset($data[self::CACHE_PREFERENCES_KEY])) {
-				 $this->userPreferences()->setPreferences($this->mId, $data[self::CACHE_PREFERENCES_KEY]);
-			}
 		}
 		return true;
 	}
@@ -391,12 +446,19 @@ class User {
 			$data[$name] = $this->$name;
 		}
 		$data['mVersion'] = MW_USER_VERSION;
-		$data[self::CACHE_PREFERENCES_KEY] = $this->userPreferences()->getPreferences($this->mId);
-		$key = wfMemcKey( 'user', 'id', $this->mId );
+		$key = $this->getCacheKey();
 		global $wgMemc;
 		$wgMemc->set( $key, $data );
 
 		wfDebug( "User: user {$this->mId} stored in cache\n" );
+	}
+
+	private function getCacheKey() {
+		return self::getCacheKeyById( $this->mId );
+	}
+
+	private static function getCacheKeyById( $id ) {
+		return wfMemcKey( 'user', 'id', $id );
 	}
 
 	/** @name newFrom*() static factory methods */
@@ -925,14 +987,13 @@ class User {
 	 */
 	public static function randomPassword() {
 		global $wgMinimalPasswordLength;
-		// Decide the final password length based on our min password length, stopping at a minimum of 10 chars
-		$length = max( 10, $wgMinimalPasswordLength );
+		// Decide the final password length based on our min password length, stopping at a minimum of 20 chars
+		$length = max( 20, $wgMinimalPasswordLength );
 		// Multiply by 1.25 to get the number of hex characters we need
-		$length = $length * 1.25;
 		// Generate random hex chars
-		$hex = MWCryptRand::generateHex( $length );
+		$hex = MWCryptRand::generateHex( ceil( $length * 1.25 ) );
 		// Convert from base 16 to base 32 to get a proper password like string
-		return wfBaseConvert( $hex, 16, 32 );
+		return substr( wfBaseConvert( $hex, 16, 32, $length ), -$length );
 	}
 
 	/**
@@ -968,8 +1029,6 @@ class User {
 		$this->mEmailTokenExpires = null;
 		$this->mRegistration = wfTimestamp( TS_MW );
 		$this->mGroups = array();
-		$this->mMonacoData = null;
-		$this->mMonacoSidebar = null;
 
 		$this->mBirthDate = null; // Wikia. Added to reflect our user table layout.
 
@@ -1049,14 +1108,14 @@ class User {
 			return false;
 		}
 
-                // Wikia change start
-                global $wgExternalAuthType;
-                if ( $wgExternalAuthType ) { // in other words: unless Uncyclopedia
-                    $extUser = ExternalUser::newFromCookie();
-                    if ( $extUser ) {
-                            $extUser->linkToLocal( $sId );
-                    }
-                }
+		// Wikia change start
+		global $wgExternalAuthType;
+		if ( $wgExternalAuthType ) { // in other words: unless Uncyclopedia
+			$extUser = ExternalUser::newFromCookie();
+			if ( $extUser ) {
+					$extUser->linkToLocal( $sId );
+			}
+		}
 
 		$passwordCorrect = FALSE;
 		// wikia change end
@@ -1087,6 +1146,23 @@ class User {
 			$from = 'cookie';
 		} else {
 			# No session or persistent login cookie
+			$this->loadDefaults();
+			return false;
+		}
+
+		if ( !$this->isUserAuthenticatedViaAuthenticationService() ) {
+			global $wgAuthForceLogoutOnFailedAuthSessionFallback;
+
+			/*
+			 * when failing over to Reston (readonly), users should be anonymous but their session
+			 * should resume without them having to do anything when we go back to r/w. See
+			 * SERVICES-1125
+			 */
+			if ( $wgAuthForceLogoutOnFailedAuthSessionFallback ) {
+				$this->logFallbackToMediaWikiSessionRejection( $from );
+				$this->logout();
+			}
+
 			$this->loadDefaults();
 			return false;
 		}
@@ -1154,8 +1230,6 @@ class User {
 			$this->loadFromRow( $s );
 			$this->mGroups = null; // deferred
 			$this->getEditCount(); // revalidation for nulls
-			$this->mMonacoData = null;
-			$this->mMonacoSidebar = null;
 			return true;
 		} else {
 			# Invalid user_id
@@ -1319,11 +1393,12 @@ class User {
 		$this->mDatePreference = null;
 		$this->mBlockedby = -1; # Unset
 		$this->mHash = false;
-		$this->mTheme = null; # Wikia - Skin chooser related
 		$this->mRights = null;
 		$this->mEffectiveGroups = null;
 		$this->mImplicitGroups = null;
 		$this->mOptions = null;
+		$this->mOptionOverrides = null;
+		$this->mOptionsLoaded = false;
 
 		if ( $reloadFrom ) {
 			$this->mLoadedItems = array();
@@ -1340,6 +1415,14 @@ class User {
 	public static function getDefaultOptions() {
 		global $wgNamespacesToBeSearchedDefault, $wgDefaultUserOptions, $wgContLang, $wgDefaultSkin;
 
+		static $defOpt = null;
+		if ( !defined( 'MW_PHPUNIT_TEST' ) && $defOpt !== null ) {
+			// Disabling this for the unit tests, as they rely on being able to change $wgContLang
+			// mid-request and see that change reflected in the return value of this function.
+			// Which is insane and would never happen during normal MW operation
+			// Owen backported this from MW 1.25
+			return $defOpt;
+		}
 		$defOpt = $wgDefaultUserOptions;
 		# default language setting
 		$variant = $wgContLang->getDefaultVariant();
@@ -1350,6 +1433,7 @@ class User {
 		}
 		$defOpt['skin'] = $wgDefaultSkin;
 
+		// Owen fixed this (see above)
 		// FIXME: Ideally we'd cache the results of this function so the hook is only run once,
 		// but that breaks the parser tests because they rely on being able to change $wgContLang
 		// mid-request and see that change reflected in the return value of this function.
@@ -1377,14 +1461,17 @@ class User {
 	}
 
 
+	/* Wikia change begin - SUS-92 */
 	/**
 	 * Get blocking information
 	 * @param $bFromSlave Bool Whether to check the slave database first. To
 	 *                    improve performance, non-critical checks are done
 	 *                    against slaves. Check when actually saving should be
 	 *                    done against master.
+	 * @param $shouldLogBlockInStats Bool flag that decides whether to log or not in PhalanxStats
 	 */
-	private function getBlockedStatus( $bFromSlave = true ) {
+	private function getBlockedStatus( $bFromSlave = true, $shouldLogBlockInStats = true ) {
+	/* Wikia change end */
 		global $wgProxyWhitelist, $wgUser;
 
 		if ( -1 != $this->mBlockedby ) {
@@ -1404,7 +1491,7 @@ class User {
 		# We only need to worry about passing the IP address to the Block generator if the
 		# user is not immune to autoblocks/hardblocks, and they are the current user so we
 		# know which IP address they're actually coming from
-		if ( !$this->isAllowed( 'ipblock-exempt' ) && $this->getID() == $wgUser->getID() ) {
+		if ( !$this->isAllowed( 'ipblock-exempt' ) && $this->equals( $wgUser ) ) {
 			$ip = $this->getRequest()->getIP();
 		} else {
 			$ip = null;
@@ -1445,12 +1532,14 @@ class User {
 		}
 
 		# Extensions
-		wfRunHooks( 'GetBlockedStatus', array( &$this ) );
+		/* Wikia change begin - SUS-92 */
+		wfRunHooks( 'GetBlockedStatus', array( &$this, $shouldLogBlockInStats ) );
+		/* Wikia change end */
 
 		if ( !empty($this->mBlockedby) ) {
-		    $this->mBlock->mBy = $this->mBlockedby;
-		    $this->mBlock->mReason = $this->mBlockreason;
-        }
+			$this->mBlock->mBy = $this->mBlockedby;
+			$this->mBlock->mReason = $this->mBlockreason;
+		}
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -1672,26 +1761,32 @@ class User {
 		return $triggered;
 	}
 
+	/* Wikia change begin - SUS-92 */
 	/**
 	 * Check if user is blocked
 	 *
 	 * @param $bFromSlave Bool Whether to check the slave database instead of the master
+	 * @param $shouldLogBlockInStats Bool flag that decides whether to log or not in PhalanxStats
+	 *
 	 * @return Bool True if blocked, false otherwise
 	 */
-	public function isBlocked( $bFromSlave = true ) { // hacked from false due to horrible probs on site
-		return $this->getBlock( $bFromSlave ) instanceof Block && $this->getBlock()->prevents( 'edit' );
+	public function isBlocked( $bFromSlave = true, $shouldLogBlockInStats = true ) { // hacked from false due to horrible probs on site
+		return $this->getBlock( $bFromSlave, $shouldLogBlockInStats ) instanceof Block && $this->getBlock()->prevents( 'edit' );
 	}
 
 	/**
 	 * Get the block affecting the user, or null if the user is not blocked
 	 *
 	 * @param $bFromSlave Bool Whether to check the slave database instead of the master
+	 * @param $shouldLogBlockInStats Bool flag that decides whether to log or not in PhalanxStats
+	 *
 	 * @return Block|null
 	 */
-	public function getBlock( $bFromSlave = true ){
-		$this->getBlockedStatus( $bFromSlave );
+	public function getBlock( $bFromSlave = true, $shouldLogBlockInStats = true ){
+		$this->getBlockedStatus( $bFromSlave, $shouldLogBlockInStats );
 		return $this->mBlock instanceof Block ? $this->mBlock : null;
 	}
+	/* Wikia change end */
 
 	/**
 	 * Check if user is blocked from editing a particular article
@@ -2056,10 +2151,10 @@ class User {
 		$this->load();
 		if( $this->mId ) {
 			global $wgMemc, $wgSharedDB; # Wikia
-			$wgMemc->delete( wfMemcKey( 'user', 'id', $this->mId ) );
+			$wgMemc->delete( $this->getCacheKey() );
+			$this->userPreferences()->deleteFromCache( $this->getId() );
 			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
 			$this->saveToCache();
-			# not uncyclo
 			if( !empty( $wgSharedDB ) ) {
 				$memckey = self::getUserTouchedKey( $this->mId );
 				$wgMemc->set( $memckey, $this->mTouched );
@@ -2083,13 +2178,13 @@ class User {
 			$this->mTouched = self::newTouchedTimestamp();
 
 			#<Wikia>
-            global $wgExternalSharedDB, $wgSharedDB;
-            if( isset( $wgSharedDB ) ) {
-                    $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-            }
-            else {
-                    $dbw = wfGetDB( DB_MASTER );
-            }
+			global $wgExternalSharedDB, $wgSharedDB;
+			if( isset( $wgSharedDB ) ) {
+				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+			}
+			else {
+				$dbw = wfGetDB( DB_MASTER );
+			}
 			#</Wikia>
 
 			$touched = $dbw->timestamp( $this->mTouched );
@@ -2126,6 +2221,19 @@ class User {
 	public function getTouched() {
 		$this->load();
 		return $this->mTouched;
+	}
+
+	/**
+	 * A function to clear cache with no side effects.  Functions such as clearSharedCache
+	 * or invalidateCache both have side effects like loading things from cache before clearing
+	 * it and writing back to cache after finishing.
+	 *
+	 * @param int $userId
+	 */
+	public static function clearUserCache( $userId ) {
+		global $wgMemc;
+		$memKey = self::getCacheKeyById( $userId );
+		$wgMemc->delete( $memKey );
 	}
 
 	/**
@@ -2273,6 +2381,31 @@ class User {
 	}
 
 	/**
+	 * Return the new email address that is waiting for confirmation
+	 *
+	 * @return string
+	 */
+	public function getNewEmail() {
+		return $this->getGlobalAttribute( 'new_email' );
+	}
+
+	/**
+	 * Sets a new email address, to be confirmed
+	 *
+	 * @param $newEmail
+	 */
+	public function setNewEmail( $newEmail ) {
+		$this->setGlobalAttribute( 'new_email', $newEmail );
+	}
+
+	/**
+	 * Clear out the new email after its been confirmed
+	 */
+	public function clearNewEmail() {
+		$this->setGlobalAttribute( 'new_email', null );
+	}
+
+	/**
 	 * Get the timestamp of the user's e-mail authentication
 	 * @return String TS_MW timestamp
 	 */
@@ -2291,6 +2424,11 @@ class User {
 		if( $str == $this->mEmail ) {
 			return;
 		}
+
+		/* Wikia change */
+		/* add a new hook that sends both before/after emails @param User, new_email, old_email */
+		wfRunHooks( 'BeforeUserSetEmail', array( $this, $str, $this->mEmail ) );
+
 		$this->mEmail = $str;
 
 		/* Wikia change begin - @author: Macbre */
@@ -2332,11 +2470,15 @@ class User {
 	 * @deprecated use get(Global|Local)Preference  get(Global|Local)Attribute or get(Global|Local)Flag
 	 */
 	public function getOption($oname, $defaultOverride = null, $ignoreHidden = false) {
-		$this->warning("calling getOption", [
-			"class" => "user",
-			"type" => "getoption",
-			"source" => wfBacktrace(true),
-		]);
+		if ($this->getOrSetOptionSampler()->shouldSample()) {
+			$this->warning("calling getOption", [
+				"class" => "user",
+				"type" => "getoption",
+				"option" => $oname,
+				"source" => wfBacktrace(true),
+			]);
+		}
+
 		return $this->getOptionHelper($oname, $defaultOverride, $ignoreHidden);
 	}
 
@@ -2371,16 +2513,6 @@ class User {
 		}
 
 		if ( array_key_exists( $oname, $this->mOptions ) ) {
-			# Wikia - Skin chooser related
-			if($oname == 'skin') {
-				if(strlen(trim($this->mOptions[$oname])) > 7 &&  substr(trim($this->mOptions[$oname]), 0, 6) == 'quartz') {
-					$this->mOptions[$oname] = 'quartz';
-					$this->setOptionHelper('theme', substr(trim($this->mOptions[$oname]), 6));
-				} else if(trim($this->mOptions[$oname]) == 'slate' || trim($this->mOptions[$oname]) == 'smoke') {
-					$this->mOptions[$oname] = 'quartz';
-					$this->setOptionHelper('theme', trim($this->mOptions[$oname]));
-				}
-			}
 
 			/* Wikia change begin - @author: Macbre */
 			/* allow extensions to modify value returned by User::getOption() */
@@ -2400,6 +2532,7 @@ class User {
 	 * Get all user's options
 	 *
 	 * @return array
+	 * @deprecated use get(Global|Local)Preference  get(Global|Local)Attribute or get(Global|Local)Flag
 	 */
 	public function getOptions() {
 		global $wgHiddenPrefs;
@@ -2418,6 +2551,25 @@ class User {
 			}
 		}
 
+		// Populate with attributes from attribute service
+		foreach ( $this->userAttributes()->getAttributes( $this->getId() ) as $attrName => $attrValue ) {
+			$options[$attrName] = $attrValue;
+		}
+
+		// Populate with user global preferences, and wiki local preferences
+		$preferences = $this->userPreferences()->getPreferences( $this->getId() );
+
+		foreach ( $preferences->getGlobalPreferences() as $globalPreference ) {
+			$options[ $globalPreference->getName() ] = $globalPreference->getValue();
+		}
+
+		global $wgCityId;
+		$localPreferences = $preferences->getLocalPreferencesForWiki( $wgCityId );
+
+		foreach ( $localPreferences as $localPreference ) {
+			$options[ $localPreference->getName() ] = $localPreference->getValue();
+		}
+
 		return $options;
 	}
 
@@ -2426,6 +2578,7 @@ class User {
 	 *
 	 * @param $oname String The option to check
 	 * @return Bool User's current value for the option
+	 * @deprecated use get(Global|Local)Preference  get(Global|Local)Attribute or get(Global|Local)Flag
 	 * @see getOption()
 	 */
 	public function getBoolOption( $oname ) {
@@ -2438,7 +2591,7 @@ class User {
 	 * @param $oname String The option to check
 	 * @param $defaultOverride Int A default value returned if the option does not exist
 	 * @return Int User's current value for the option
-	 * @see getOption()
+	 * @deprecated use get(Global|Local)Preference  get(Global|Local)Attribute or get(Global|Local)Flag
 	 */
 	public function getIntOption( $oname, $defaultOverride=0 ) {
 		$val = $this->getOption( $oname );
@@ -2448,24 +2601,38 @@ class User {
 		return intval( $val );
 	}
 
-
 	/**
 	 * Get a preference local to this wikia.
 	 *
-	 * @param string $pref the preference name
+	 * Refere to getGlobalPreference for more detailed documentation.
+	 *
+	 * @param string $preference the preference name
 	 * @param int $cityId the city id
 	 * @param string $sep the separator between the name and the city id
 	 * @param mixed $default
 	 * @param bool $ignoreHidden
 	 * @return string
+	 * @see getGlobalPreference
 	 */
-	public function getLocalPreference($pref, $cityId = null, $sep = "-", $default = null, $ignoreHidden = false) {
-		$globalPref = self::localToGlobalPropertyName($pref, $cityId, $sep);
-		return $this->getGlobalPreference($globalPref, $default, $ignoreHidden);
+	public function getLocalPreference($preference, $cityId, $sep = "-", $default = null, $ignoreHidden = false) {
+		global $wgPreferenceServiceRead;
+
+		if ($wgPreferenceServiceRead) {
+			$value = $this->userPreferences()->getLocalPreference($this->getId(), $cityId, $preference, $default, $ignoreHidden);
+		} else {
+			$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
+			$value = $this->getOptionHelper($preferenceGlobalName, $default, $ignoreHidden);
+		}
+
+		return $value;
 	}
 
 	/**
 	 * Get a global user preference.
+	 *
+	 * Preferences are options that typically alter the users experience. Some
+	 * examples include the skin, language, and whether or not marketing is
+	 * allowed.
 	 *
 	 * @param string $preference
 	 * @param mixed $default
@@ -2473,15 +2640,19 @@ class User {
 	 * @return string
 	 */
 	public function getGlobalPreference($preference, $default = null, $ignoreHidden = false) {
-		global $wgPreferencesUseService;
+		global $wgPreferenceServiceRead;
 
-		if ($wgPreferencesUseService) {
-			$this->load();
-			$value = $this->userPreferences()->get($this->mId, $preference, $default, $ignoreHidden);
+		if ($wgPreferenceServiceRead) {
+			$preferences = [];
+			$value = $this->userPreferences()->getGlobalPreference($this->getId(), $preference, $default, $ignoreHidden);
+			foreach ($this->userPreferences()->getPreferences($this->getId())->getGlobalPreferences() as $globalPreference) {
+				$preferences[$globalPreference->getName()] = $globalPreference->getValue();
+			}
+
 			wfRunHooks(
 				'UserGetPreference',
 				[
-					$this->userPreferences()->getPreferences($this->mId),
+					$preferences,
 					$preference,
 					&$value
 				]
@@ -2503,10 +2674,18 @@ class User {
 	 * @param string $value
 	 * @param int $cityId [optional, defaults to $wgCityId]
 	 * @param string $sep [optional, defaults to '-']
-	 *
+	 * @see getGlobalPreference
 	 */
-	public function setLocalPreference($preference, $value, $cityId = null, $sep = '-') {
-		$this->setGlobalPreference(self::localToGlobalPropertyName($preference, $cityId, $sep), $value);
+	public function setLocalPreference($preference, $value, $cityId, $sep = '-') {
+		global $wgPreferenceServiceWrite;
+
+		if ( $wgPreferenceServiceWrite ) {
+			$value = $this->replaceNewlineAndCRWithSpace( $value );
+			$this->userPreferences()->setLocalPreference( $this->getId(), $cityId, $preference, $value );
+		} else {
+			$preferenceGlobalName = self::localToGlobalPropertyName($preference, $cityId, $sep);
+			$this->setOptionHelper( $preferenceGlobalName, $value );
+		}
 	}
 
 	/**
@@ -2514,31 +2693,29 @@ class User {
 	 *
 	 * @param string $preference
 	 * @param string $value
+	 * @see getGlobalPreference for documentation about preferences
 	 */
-	public function setGlobalPreference($preference, $value) {
-		global $wgPreferencesUseService;
+	public function setGlobalPreference( $preference, $value ) {
+		global $wgPreferenceServiceWrite;
 
-		if ($wgPreferencesUseService) {
-			$this->load();
-			$value = $this->sanitizeProperty($value);
-			$this->userPreferences()->set($this->mId, $preference, $value);
-
-			// Clear cached skin/theme, so the new one displays immediately in Special:Preferences
-			switch ($preference) {
-				case 'skin':
-					unset($this->mSkin);
-					break;
-				case 'theme':
-					unset($this->mTheme);
-					break;
+		if ( $wgPreferenceServiceWrite ) {
+			$value = $this->replaceNewlineAndCRWithSpace( $value );
+			$this->userPreferences()->setGlobalPreference( $this->getId(), $preference, $value );
+			if ( $preference == 'skin' ) {
+				unset( $this->mSkin );
 			}
-
-			wfRunHooks("UserSetPreferences", [$this, $this->userPreferences()->getPreferences($this->mId)]);
-
-			$this->clearSharedCache();
 		} else {
-			$this->setOptionHelper($preference, $value);
+			$this->setOptionHelper( $preference, $value );
 		}
+	}
+
+	/**
+	 * @param String $preference set to default
+	 * for now its support only old aproach to handle preferences (get/set Option)
+	 * It will be handled with https://wikia-inc.atlassian.net/browse/SERVICES-483
+	 */
+	public function removeGlobalPreference($preference){
+		unset( $this->mOptions[ $preference ] );
 	}
 
 	/**
@@ -2546,48 +2723,58 @@ class User {
 	 *
 	 * @param string $preference
 	 * @return string
+	 * @see getGlobalPreference for documentation about preferences
 	 */
-	public function getDefaultGlobalPreference($preference) {
-		return $this->userPreferences()->getFromDefault($preference);
-	}
-
-	/**
-	 * Get a user attribute local to this wikia.
-	 *
-	 * @param string $attr the attribute name
-	 * @param int $cityId the city id
-	 * @param string $sep the separator between the name and the city id
-	 * @return string
-	 */
-	public function getLocalAttribute($attr, $cityId = null, $sep = "-") {
-		return $this->getGlobalAttribute(self::localToGlobalPropertyName($attr, $cityId, $sep));
+	public function getDefaultGlobalPreference( $preference ) {
+		return $this->userPreferences()->getGlobalDefault( $preference );
 	}
 
 	/**
 	 * Get a global user attribute.
 	 *
+	 * Attributes are facts about the user such as their avatar URL, their
+	 * location, or their twitter username.
+	 *
 	 * @param string $attribute
 	 * @param mixed $default
 	 * @return string
 	 */
-	public function getGlobalAttribute($attribute, $default=null) {
+	public function getGlobalAttribute( $attribute, $default = null ) {
+
+		if ( $this->shouldGetAttributeFromService( $attribute ) ) {
+			return $this->userAttributes()->getAttribute( $this->getId(), $attribute, $default );
+		}
+
 		return $this->getOptionHelper($attribute, $default);
 	}
 
 	/**
-	 * Set an attribute local to a wikia. See createLocalOptionName for details regarding
-	 * the format. Note that the $sep param is provided in the rare case where
-	 * the option name is not normal. Should you have to use the separator, PLEASE MAKE
-	 * A PLAN TO NORMALIZE IT TO "-".
-	 *
-	 * @param string $attribute
-	 * @param string $value
-	 * @param int $cityId
-	 * @param string $sep
+	 * @param $attributeName
 	 * @return bool
 	 */
-	public function setLocalAttribute($attribute, $value, $cityId = null, $sep = '-') {
-		$this->setGlobalAttribute(self::localToGlobalPropertyName($attribute, $cityId, $sep), $value);
+	private function shouldGetAttributeFromService( $attributeName ) {
+		global $wgEnableReadsFromAttributeService;
+
+		if ( empty( $wgEnableReadsFromAttributeService ) ) {
+			return false;
+		}
+
+		// User is anonymous or nonexistant
+		if ( $this->getId() == 0 ) {
+			return false;
+		}
+
+		if ( !$this->isPublicAttribute( $attributeName ) ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private function isPublicAttribute( $attributeName ) {
+		global $wgPublicUserAttributes;
+
+		return in_array( $attributeName, $wgPublicUserAttributes );
 	}
 
 	/**
@@ -2595,25 +2782,53 @@ class User {
 	 *
 	 * @param string $attribute
 	 * @param string $value
+	 * @see getGlobalAttribute for more documentation about attributes
 	 */
 	public function setGlobalAttribute($attribute, $value) {
-		$this->setOptionHelper($attribute, $value);
+		if ( $this->isPublicAttribute( $attribute ) ) {
+			$value = $this->replaceNewlineAndCRWithSpace( $value );
+			$this->userAttributes()->setAttribute( $this->getId(), new Attribute( $attribute, $value ) );
+		}
+
+		// Continue writing all attributes to the user_properties table for the time being. When we work on
+		// SOC-1408 (remove public attributes from the MW dbs) we'll make sure to stop setting them here.
+		$this->setOptionHelper( $attribute, $value );
 	}
 
 	/**
-	 * Get a user flag local to this wikia.
+	 * Get a user flag local to a wikia.
 	 *
 	 * @param string $flag the flag name
 	 * @param int $cityId the city id
 	 * @param string $sep the separator between the name and the city id
-	 * @return string
+	 * @return bool
+	 * @see getGlobalFlag for more documentation about flags
 	 */
-	public function getLocalFlag($flag, $cityId = null, $sep = "-") {
-		return $this->getGlobalFlag(self::localToGlobalPropertyName($flag, $cityId, $sep));
+	public function getLocalFlag( $flag, $cityId = null, $sep = '-' ) {
+		$name = self::localToGlobalPropertyName( $flag, $cityId, $sep );
+		return $this->getGlobalFlag( $name );
+	}
+
+	/**
+	 * Set a user flag local to a wikia.
+	 *
+	 * @param string $flag the flag name
+	 * @param bool $value The value of the flag
+	 * @param int $cityId the city id
+	 * @param string $sep the separator between the name and the city id
+	 * @see getGlobalFlag for more documentation about flags
+	 */
+	public function setLocalFlag( $flag, $value, $cityId = null, $sep = '-' ) {
+		$name = self::localToGlobalPropertyName( $flag, $cityId, $sep );
+		$this->setGlobalFlag( $name, $value );
 	}
 
 	/**
 	 * Get a global user flag.
+	 *
+	 * Flags are typically boolean settings that are used internally to signify
+	 * something about the user such as whether or not their account has been
+	 * disabled or if they are a power user.
 	 *
 	 * @param string $flag
 	 * @return bool
@@ -2627,6 +2842,7 @@ class User {
 	 *
 	 * @param string $flag
 	 * @return bool
+	 * @see getGlobalFlag for more documentation about flags
 	 */
 	public function setGlobalFlag($flag, $value) {
 		$this->setOptionHelper($flag, $value);
@@ -2652,7 +2868,7 @@ class User {
 		return sprintf("%s%s%s", $property, $sep, $cityId);
 	}
 
-	private function sanitizeProperty($value) {
+	private function replaceNewlineAndCRWithSpace($value) {
 		if ($value) {
 			$value = str_replace("\r\n", "\n", $value);
 			$value = str_replace("\r", "\n", $value);
@@ -2668,11 +2884,14 @@ class User {
 	 * @deprecated use set(Global|Local)Preference  set(Global|Local)Attribute or set(Global|Local)Flag
 	 */
 	public function setOption( $oname, $val ) {
-		$this->warning("calling setOption", [
-			"class" => "user",
-			"type" => "setoption",
-			"source" => wfBacktrace(true),
-		]);
+		if ($this->getOrSetOptionSampler()->shouldSample()) {
+			$this->warning("calling setOption", [
+				"class" => "user",
+				"type" => "setoption",
+				"source" => wfBacktrace(true),
+			]);
+		}
+
 		$this->setOptionHelper($oname, $val);
 	}
 
@@ -2690,14 +2909,9 @@ class User {
 			# Clear cached skin, so the new one displays immediately in Special:Preferences
 			unset( $this->mSkin );
 		}
-		# Wikia - Skin chooser related
-		if ( $oname == 'theme' ) {
-			# Clear cached skin, so the new one displays immediately in Special:Preferences
-			unset($this->mTheme);
-		}
 		// Filter out any newlines that may have passed through input validation.
 		// Newlines are used to separate items in the options blob.
-		$val = $this->sanitizeProperty($val);
+		$val = $this->replaceNewlineAndCRWithSpace($val);
 		// Explicitly NULL values should refer to defaults
 		global $wgDefaultUserOptions;
 		if( is_null( $val ) && isset( $wgDefaultUserOptions[$oname] ) ) {
@@ -2893,7 +3107,7 @@ class User {
 	 * @param $group String Name of the group to add
 	 */
 	public function addGroup( $group ) {
-		if( wfRunHooks( 'UserAddGroup', array( $this, &$group ) ) ) {
+		if( wfRunHooks( 'UserAddGroup', array( $this, &$group )) ) {
 			$dbw = wfGetDB( DB_MASTER );
 			if( $this->getId() ) {
 				$dbw->insert( 'user_groups',
@@ -2904,12 +3118,17 @@ class User {
 					__METHOD__,
 					array( 'IGNORE' ) );
 			}
-		}
-		$this->loadGroups();
-		$this->mGroups[] = $group;
-		$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
 
-		$this->invalidateCache();
+			$this->loadGroups();
+			$this->mGroups[] = $group;
+			$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
+
+			$this->invalidateCache();
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -2934,12 +3153,16 @@ class User {
 				),
 				__METHOD__,
 				array( 'IGNORE' ) );
-		}
-		$this->loadGroups();
-		$this->mGroups = array_diff( $this->mGroups, array( $group ) );
-		$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
 
-		$this->invalidateCache();
+			$this->loadGroups();
+			$this->mGroups = array_diff( $this->mGroups, array( $group ) );
+			$this->mRights = User::getGroupPermissions( $this->getEffectiveGroups( true ) );
+
+			$this->invalidateCache();
+
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -2959,6 +3182,19 @@ class User {
 	}
 
 	/**
+	 * Checks if two user objects point to the same user.
+	 *
+	 * Ported from MW 1.25 by Michał Roszka
+	 *
+	 * @since 1.25
+	 * @param User $user
+	 * @return bool
+	 */
+	public function equals( User $user ) {
+		return $this->getName() === $user->getName();
+	}
+
+	/**
 	 * Whether this user is Wikia staff or not
 	 * @return bool
 	 */
@@ -2969,7 +3205,7 @@ class User {
 	/**
 	 * Check if user is allowed to access a feature / make an action
 	 *
-	 * @internal param \String $varargs permissions to test
+	 * internal param \String $varargs permissions to test
 	 * @return Boolean: True if user is allowed to perform *any* of the given actions
 	 *
 	 * @return bool
@@ -2986,7 +3222,7 @@ class User {
 
 	/**
 	 *
-	 * @internal param $varargs string
+	 * internal param $varargs string
 	 * @return bool True if the user is allowed to perform *all* of the given actions
 	 */
 	public function isAllowedAll( /*...*/ ){
@@ -3334,31 +3570,7 @@ class User {
 			$this->mPassword = '';
 		}
 
-		// wikia change begin
-		/**
-		 * @author Krzysztof Krzyżaniak (eloy)
-		 * trap for BugId: 4013
-		 */
-		if( $this->mEmail == "devbox@wikia-inc.com" || $this->mEmail == "devbox+test@wikia-inc.com" ) {
-			// gather everything we know about request
-			global $wgCommandLineMode;
-			$log = "MOLI TRAP@devbox: ";
-			if( $wgCommandLineMode && !empty($argv)) {
-				$log .= $argv[ 0 ];
-				openlog( "trap", LOG_PID | LOG_PERROR, LOG_LOCAL6 );
-				syslog( LOG_WARNING, "$log");
-				closelog();
-			}
-			else {
-				global $wgTitle;
-				if (is_object($wgTitle)) {
-					$log .= $wgTitle->getFullUrl();
-					error_log( $log );
-				}
-			}
-		}
-
-		// wikia change end
+		wfRunHooks( 'BeforeUserSaveSettings', array( $this ) );
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update( 'user',
@@ -3380,6 +3592,8 @@ class User {
 		);
 
 		$this->saveOptions();
+		$this->savePreferences();
+		$this->saveAttributes();
 
 		wfRunHooks( 'UserSaveSettings', array( $this ) );
 		$this->clearSharedCache();
@@ -3503,6 +3717,8 @@ class User {
 		$this->clearInstanceCache();
 
 		$this->saveOptions();
+		$this->savePreferences();
+		$this->saveAttributes();
 	}
 
 	/**
@@ -3761,7 +3977,7 @@ class User {
 			$request = $this->getRequest();
 		}
 
-		if ( $this->isAnon() ) {
+		if ( $this->isAnon() && session_status() !== PHP_SESSION_ACTIVE /* Wikia change (SUS-20) */ ) {
 			return EDIT_TOKEN_SUFFIX;
 		} else {
 			$token = $request->getSessionData( 'wsEditToken' );
@@ -3799,7 +4015,8 @@ class User {
 	 */
 	public function matchEditToken( $val, $salt = '', $request = null ) {
 		$sessionToken = $this->getEditToken( $salt, $request );
-		if ( $val != $sessionToken ) {
+		$equals = hash_equals( $sessionToken, $val );
+		if ( !$equals ) {
 			wfDebug( "User::matchEditToken: broken session data\n" );
 
 			// Wikia change - begin
@@ -3820,7 +4037,10 @@ class User {
 			}
 			// Wikia change - end
 		}
-		return $val == $sessionToken;
+
+		wfRunHooks( 'UserMatchEditToken' ); # Wikia change
+
+		return $equals;
 	}
 
 	/**
@@ -3834,17 +4054,30 @@ class User {
 	 */
 	public function matchEditTokenNoSuffix( $val, $salt = '', $request = null ) {
 		$sessionToken = $this->getEditToken( $salt, $request );
-		return substr( $sessionToken, 0, 32 ) == substr( $val, 0, 32 );
+		return hash_equals( substr( $sessionToken, 0, 32 ), substr( $val, 0, 32 ) );
 	}
 
 	/**
 	 * Generate a new e-mail confirmation token and send a confirmation/invalidation
 	 * mail to the user's given address.
 	 *
-	 * @param $type String: message to send, either "created", "changed" or "set"
-	 * @return Status object
+	 * @param string $type
+	 * @param string $mailtype
+	 * @param string $mailmsg
+	 * @param bool|true $ip_arg
+	 * @param string $emailTextTemplate
+	 * @param null $language
+	 * @return Status
+	 * @throws MWException
 	 */
-	public function sendConfirmationMail( $type = 'created', $mailtype = "ConfirmationMail", $mailmsg = '', $ip_arg = true, $emailTextTemplate = '', $langCode = null ) {
+	public function sendConfirmationMail(
+		$type = 'created',
+		$mailtype = EmailConfirmationController::TYPE,
+		$mailmsg = '',
+		$ip_arg = true,
+		$emailTextTemplate = '',
+		$language = null ) {
+
 		global $wgLang;
 		$expiration = null; // gets passed-by-ref and defined in next line.
 		$token = $this->confirmationToken( $expiration );
@@ -3884,7 +4117,7 @@ class User {
 
 		$emailController = $this->getEmailController( $mailtype );
 		if ( !empty( $emailController ) ) {
-			return $this->sendUsingEmailExtension( $emailController, $url );
+			return $this->sendUsingEmailExtension( $emailController, $url, $language );
 		}
 
 		/* Wikia change begin - @author: Marooned */
@@ -3903,11 +4136,8 @@ class User {
 				$wgLang->time( $expiration, false ) ), null, null, $mailtype, null, $priority );
 		} else {
 			$wantHTML = $this->isAnon() || $this->getGlobalPreference( 'htmlemails' );
-			if ( empty( $langCode ) ) {
-				$langCode = $this->getGlobalPreference( 'language' );
-			}
 
-			list($body, $bodyHTML) = wfMsgHTMLwithLanguage( $message, $langCode, array(), $args, $wantHTML );
+			list($body, $bodyHTML) = wfMsgHTMLwithLanguage( $message, $this->getGlobalPreference( 'language' ), array(), $args, $wantHTML );
 
 			if ( !empty($emailTextTemplate) && $wantHTML ) {
 				$emailParams = array(
@@ -3925,18 +4155,20 @@ class User {
 	private function getEmailController( $mailType ) {
 		$controller = "";
 		if ( $this->isConfirmationMail( $mailType ) ) {
-			$controller = 'Email\Controller\EmailConfirmation';
+			$controller = Email\Controller\EmailConfirmationController::class;
 		} elseif ( $this->isConfirmationReminderMail( $mailType ) ) {
-			$controller = 'Email\Controller\EmailConfirmationReminder';
+			$controller = Email\Controller\EmailConfirmationReminderController::class;
 		} elseif ( $this->isChangeEmailConfirmationMail( $mailType ) ) {
-			$controller = 'Email\Controller\ConfirmationChangedEmail';
+			$controller = Email\Controller\ConfirmationChangedEmailController::class;
+		} elseif ( $this->isReactivateAccountMail( $mailType ) ) {
+			$controller = Email\Controller\ReactivateAccountController::class;
 		}
 
 		return $controller;
 	}
 
 	private function isConfirmationMail( $mailType ) {
-		return $mailType == "ConfirmationMail";
+		return $mailType == EmailConfirmationController::TYPE;
 	}
 
 	private function isConfirmationReminderMail( $mailType ) {
@@ -3947,11 +4179,20 @@ class User {
 		return $mailType == "ReConfirmationMail";
 	}
 
-	private function sendUsingEmailExtension( $emailController, $url ) {
+	private function isReactivateAccountMail( $mailType ) {
+		return $mailType == "ReactivationMail";
+	}
+
+	private function sendUsingEmailExtension( $emailController, $url, $language=null ) {
 		$params = [
 			'targetUser' => $this->getName(),
+			'newEmail' => $this->getNewEmail(),
 			'confirmUrl' => $url,
 		];
+
+		if ($language !== null) {
+			$params['targetLang'] = $language;
+		}
 
 		$responseData = F::app()->sendRequest( $emailController, 'handle', $params )->getData();
 
@@ -3971,7 +4212,10 @@ class User {
 	function sendReConfirmationMail() {
 		$this->setGlobalFlag("mail_edited","1");
 		$this->saveSettings();
-		return $this->sendConfirmationMail( false, 'ReConfirmationMail' );
+		return $this->sendConfirmationMail(
+			false,
+			!empty( $this->getNewEmail() ) ? 'ReConfirmationMail' : EmailConfirmationController::TYPE
+		);
 	}
 
 	/**
@@ -4506,16 +4750,16 @@ class User {
 	public function incEditCount() {
 		global $wgMemc, $wgCityId, $wgEnableEditCountLocal;
 		if( !$this->isAnon() ) {
-            // wikia change, load always from first cluster when we use
-            // shared users database
-            // @author Lucas Garczewski (tor)
-            global $wgExternalSharedDB, $wgSharedDB;
-            if( isset( $wgSharedDB ) ) {
-                    $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-            }
-            else {
-                    $dbw = wfGetDB( DB_MASTER );
-            }
+			// wikia change, load always from first cluster when we use
+			// shared users database
+			// @author Lucas Garczewski (tor)
+			global $wgExternalSharedDB, $wgSharedDB;
+			if( isset( $wgSharedDB ) ) {
+				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+			}
+			else {
+				$dbw = wfGetDB( DB_MASTER );
+			}
 
 			$dbw->update( '`user`',
 				array( 'user_editcount=user_editcount+1' ),
@@ -4638,12 +4882,12 @@ class User {
 	 * @return int|bool True if not $wgNewUserLog; otherwise ID of log item or 0 on failure
 	 */
 	public function addNewUserLogEntry( $byEmail = false, $reason = '' ) {
-		global $wgUser, $wgContLang, $wgNewUserLog;
+		global $wgContLang, $wgNewUserLog, $wgUser;
 		if( empty( $wgNewUserLog ) ) {
 			return true; // disabled
 		}
 
-		if( $this->getName() == $wgUser->getName() ) {
+		if( $this->equals( $wgUser ) ) {
 			$action = 'create';
 		} else {
 			$action = 'create2';
@@ -4730,6 +4974,55 @@ class User {
 	}
 
 	/**
+	 * Save this user's preferences into the database.
+	 *
+	 * @see getGlobalPreference for documentation about preferences
+	 */
+	protected function savePreferences() {
+		$this->userPreferences()->save($this->getId());
+	}
+
+	/**
+	 * Save this user's attributes into the attribute service.
+	 */
+	protected function saveAttributes() {
+		$this->userAttributes()->save( $this->getId() );
+		$this->compareAttributesAtSave();
+	}
+
+	/**
+	 * SOC-1407 -- Log discrepancies between MW's result for an
+	 * attribute and the service's result for an attribute at save
+	 * time to try and identify cases where the 2 diverge.
+	 */
+	private function compareAttributesAtSave() {
+		global $wgPublicUserAttributes;
+		foreach ( $wgPublicUserAttributes as $attribute ) {
+			$this->logIfMismatch( $attribute );
+		}
+	}
+
+	private function logIfMismatch( $attribute ) {
+		$valueFromMW = $this->getOptionHelper( $attribute );
+		$valueFromService = $this->userAttributes()->getAttribute( $this->getId(), $attribute );
+		if ( $valueFromMW !== $valueFromService ) {
+			$this->logMismatch( $attribute, $valueFromMW, $valueFromService );
+		}
+	}
+
+	private function logMismatch( $attrName, $valueFromMW, $valueFromService ) {
+		$e = new Exception();
+		$this->error( 'USER_ATTRIBUTES attribute_mismatch_during_save', [
+				'attribute' => $attrName,
+				'valueFromMW' => $valueFromMW,
+				'valueFromService' => $valueFromService,
+				'userId' => $this->getId(),
+				'traceBack' => $e->getTraceAsString()
+			]
+		);
+	}
+
+	/**
 	 * @todo document
 	 */
 	protected function saveOptions() {
@@ -4739,7 +5032,7 @@ class User {
 
 		$this->loadOptions();
 		// wikia change
-		global $wgExternalSharedDB, $wgSharedDB, $wgGlobalUserProperties;
+		global $wgExternalSharedDB, $wgSharedDB;
 		if( isset( $wgSharedDB ) ) {
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		}
@@ -4747,7 +5040,7 @@ class User {
 			$dbw = wfGetDB( DB_MASTER );
 		}
 
-		$insert_rows = array();
+		$insertRows = $deletePrefs = [];
 
 		$saveOptions = $this->mOptions;
 
@@ -4761,7 +5054,9 @@ class User {
 			# Don't bother storing default values
 			# <Wikia>
 			if ( $this->shouldOptionBeStored( $key, $value ) ) {
-				$insert_rows[] = array( 'up_user' => $this->getId(), 'up_property' => $key, 'up_value' => $value );
+				$insertRows[] = [ 'up_user' => $this->getId(), 'up_property' => $key, 'up_value' => $value ];
+			} elseif ($this->isDefaultOption($key, $value)) {
+				$deletePrefs[] = $key;
 			}
 			# </Wikia>
 			if ( $extuser && isset( $wgAllowPrefChange[$key] ) ) {
@@ -4776,8 +5071,16 @@ class User {
 			}
 		}
 
-		$dbw->delete( 'user_properties', array( 'up_user' => $this->getId() ), __METHOD__ );
-		$dbw->insert( 'user_properties', $insert_rows, __METHOD__ );
+		// user has default set, so clear any other entries from db
+		if (!empty($deletePrefs)) {
+			(new WikiaSQL())
+				->DELETE('user_properties')
+				->WHERE('up_user')->EQUAL_TO($this->getId())
+					->AND_('up_property')->IN($deletePrefs)
+				->run($dbw);
+		}
+
+		$dbw->upsert('user_properties', $insertRows, [], self::$PROPERTY_UPSERT_SET_BLOCK);
 
 		if ( $extuser ) {
 			$extuser->updateUser();
@@ -4792,15 +5095,17 @@ class User {
 	 * @return bool
 	 */
 	private function shouldOptionBeStored( $key, $value ) {
-		global $wgGlobalUserProperties;
 		if (
-			( is_array( $wgGlobalUserProperties ) && in_array( $key, $wgGlobalUserProperties ) ) ||
 			( is_null( self::getDefaultOption( $key ) ) && !( $value === false || is_null($value) ) ) ||
 			$value != self::getDefaultOption( $key )
 		) {
 			return true;
 		}
 		return false;
+	}
+
+	private function isDefaultOption($key, $value) {
+		return $value == self::getDefaultOption($key);
 	}
 
 	/**
@@ -4886,4 +5191,61 @@ class User {
 	public static function getUserTouchedKey( $user_id ) {
 		return wfSharedMemcKey( "user_touched", 'v1', $user_id );
 	}
+
+	/**
+	 * Get the global authentication token.
+	 * @return string
+	 */
+	public function getGlobalAuthToken() {
+		return $this->globalAuthToken;
+	}
+
+	/**
+	 * Set the global authentication token.
+	 * @param string
+	 */
+	public function setGlobalAuthToken( $token ) {
+		$this->globalAuthToken = $token;
+	}
+
+	/**
+	 * Is the user authenticated via the authentication service?
+	 * @return bool true if yes, false if no
+	 */
+	public function isUserAuthenticatedViaAuthenticationService() {
+		global $wgRejectAuthenticationFallback;
+
+		if ( !$wgRejectAuthenticationFallback ) {
+			return true;
+		}
+
+		$token = $this->getGlobalAuthToken();
+		if ( empty( $token ) ) {
+			return false;
+		}
+
+		$tokenInfo = $this->getAuthenticationService()->info( $token );
+		if ( !empty( $tokenInfo->user_id ) ) {
+			return ( $this->getId() > 0 ) && ( $tokenInfo->user_id == $this->getId() );
+		}
+
+		return false;
+	}
+
+	/**
+	 * Log an attempt to fallback to the MW session that was rejected.
+	 */
+	protected function logFallbackToMediaWikiSessionRejection( $from ) {
+		Wikia\Logger\WikiaLogger::instance()->error(
+			'AUTHENTICATION_FALLBACK_REJECTED',
+			[
+			'global_auth_token' => $this->getGlobalAuthToken(),
+			'from'              => $from,
+			'ip'                => $this->getRequest()->getIP(),
+			'session_id'        => session_id(),
+			'user_id'           => $this->getId(),
+			'user_name'         => $this->getName(),
+			]);
+	}
+
 }

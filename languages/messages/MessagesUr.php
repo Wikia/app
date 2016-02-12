@@ -177,28 +177,12 @@ $messages = array(
 'navigation'    => 'رہنمائی',
 'and'           => '&#32;اور',
 
-# Cologne Blue skin
 'qbfind'         => 'ڈھونڈ',
 'qbbrowse'       => 'تصفّح',
-'qbedit'         => 'ترمیم',
 'qbpageoptions'  => 'صفحۂ ہٰذا',
 'qbpageinfo'     => 'مفہوم',
-'qbmyoptions'    => 'میرے صفحات',
-'qbspecialpages' => 'خاص صفحات',
 'faq'            => 'معلوماتِ عامہ',
-'faqpage'        => 'Project:معلوماتِ عامہ',
 
-# Vector skin
-'vector-action-addsection' => 'نیا موضوع',
-'vector-action-delete'     => 'حذف کرو',
-'vector-action-move'       => 'منتقل کرو',
-'vector-action-protect'    => 'محفوظ کرو',
-'vector-action-unprotect'  => 'تحفظ میں تبدیلی',
-'vector-view-create'       => 'تخلیق',
-'vector-view-edit'         => 'ترمیم',
-'vector-view-history'      => 'تاریخ',
-'vector-view-view'         => 'پڑھیں',
-'vector-view-viewsource'   => 'مسودہ',
 'actions'                  => 'ایکشنز',
 'namespaces'               => 'جائے نام',
 'variants'                 => 'متغیرات',
@@ -220,7 +204,6 @@ $messages = array(
 'edit'              => 'ترمیم',
 'create'            => 'تخلیق',
 'editthispage'      => 'اس صفحہ میں ترمیم کریں',
-'create-this-page'  => 'صفحہ ہٰذا تخلیق کیجئے',
 'delete'            => 'حذف',
 'deletethispage'    => 'یہ صفحہ حذف کریں',
 'undelete_short'    => 'بحال {{PLURAL:$1|ایک ترمیم|$1 ترامیم}}',
@@ -234,19 +217,9 @@ $messages = array(
 'talkpagelinktext'  => 'گفتگو',
 'specialpage'       => 'خصوصی صفحہ',
 'personaltools'     => 'ذاتی اوزار',
-'postcomment'       => 'اگلا حصّہ',
-'articlepage'       => 'مندرجاتی صفحہ دیکھیۓ',
 'talk'              => 'تبادلہٴ خیال',
 'views'             => 'خیالات',
 'toolbox'           => 'اوزاردان',
-'userpage'          => 'صفحۂ صارف دیکھئے',
-'projectpage'       => 'صفحۂ منصوبہ دیکھئے',
-'imagepage'         => 'صفحۂ مسل دیکھئے',
-'mediawikipage'     => 'صفحۂ پیغام دیکھئے',
-'templatepage'      => 'صفحۂ سانچہ دیکھئے',
-'viewhelppage'      => 'صفحۂ معاونت دیکھیے',
-'categorypage'      => 'زمرہ‌جاتی صفحہ دیکھئے',
-'viewtalkpage'      => 'تبادلۂ خیال دیکھئے',
 'otherlanguages'    => 'دیگر زبانوں میں',
 'redirectedfrom'    => '($1 سے پلٹایا گیا)',
 'redirectpagesub'   => 'لوٹایا گیا صفحہ',
@@ -416,7 +389,8 @@ Warning: Page may not contain recent updates.',
 # Login and logout pages
 'logouttext'                 => "'''اب آپ خارج ہوچکے ہیں'''
 
-آپ گمنام طور پر {{SITENAME}}  کا استعمال جاری رکھ سکتے ہیں، یا دوبارہ اسی نام یا مختلف نام سے [[Special:UserLogin|دوبارہ داخلِ نوشتہ]] بھی ہو سکتے ہیں۔  یہ یاد آوری کرلیجیۓ کہ کچھ صفحات ایسے نظر آتے رہیں گے کہ جیسے ابھی آپ خارج نہیں ہوئے ، جب تک آپ اپنے متصفح کا ابطن صاف نہ کردیں۔",
+آپ گمنام طور پر {{SITENAME}}  کا استعمال جاری رکھ سکتے ہیں، یا دوبارہ اسی نام یا مختلف نام سے $1 بھی ہو سکتے ہیں۔  یہ یاد آوری کرلیجیۓ کہ کچھ صفحات ایسے نظر آتے رہیں گے کہ جیسے ابھی آپ خارج نہیں ہوئے ، جب تک آپ اپنے متصفح کا ابطن صاف نہ کردیں۔",
+'logouttext-link-text'       => 'دوبارہ داخلِ نوشتہ',
 'welcomecreation'            => '== خوش آمدید، $1 ! ==
 آپ کا کھاتہ بنا دیا گیا ہے۔ اپنی [[Special:Preferences|{{SITENAME}} ترجیحات]] مرتب کرنا مت بھولئے گا.',
 'yourname'                   => 'اسمِ رکنیت',
@@ -810,9 +784,6 @@ $1",
 آپ فی الحال گوگل کے ذریعے تلاش کرسکتے ہیں.
 یاد رکھئے کہ اُن کے {{SITENAME}} اشاریے ممکناً پرانے ہوسکتے ہیں.',
 
-# Quickbar
-'qbsettings'      => 'فوری‌بار',
-'qbsettings-none' => 'ہیچ',
 
 # Preferences page
 'preferences'                   => 'ترجیحات',

@@ -456,30 +456,12 @@ $messages = array(
 'navigation'    => 'Navigering',
 'and'           => '&#32;och',
 
-# Cologne Blue skin
 'qbfind'         => 'Hitta',
 'qbbrowse'       => 'Bläddra igenom',
-'qbedit'         => 'Redigera',
 'qbpageoptions'  => 'Denna sida',
 'qbpageinfo'     => 'Sidinformation',
-'qbmyoptions'    => 'Mina inställningar',
-'qbspecialpages' => 'Specialsidor',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Nytt ämne',
-'vector-action-delete'           => 'Radera',
-'vector-action-move'             => 'Flytta',
-'vector-action-protect'          => 'Skrivskydda',
-'vector-action-undelete'         => 'Återställ',
-'vector-action-unprotect'        => 'Ändra skydd',
-'vector-simplesearch-preference' => 'Aktivera utökade sökförslag (endast Vector-utseendet)',
-'vector-view-create'             => 'Skapa',
-'vector-view-edit'               => 'Redigera',
-'vector-view-history'            => 'Visa historik',
-'vector-view-view'               => 'Visa',
-'vector-view-viewsource'         => 'Visa källa',
 'actions'                        => 'Åtgärder',
 'namespaces'                     => 'Namnrymder',
 'variants'                       => 'Varianter',
@@ -502,7 +484,6 @@ $messages = array(
 'edit'              => 'Redigera',
 'create'            => 'Skapa',
 'editthispage'      => 'Redigera denna sida',
-'create-this-page'  => 'Skapa denna sida',
 'delete'            => 'Radera',
 'deletethispage'    => 'Radera denna sida',
 'undelete_short'    => 'Återställ {{PLURAL:$1|en version|$1 versioner}}',
@@ -517,19 +498,9 @@ $messages = array(
 'talkpagelinktext'  => 'Diskussion',
 'specialpage'       => 'Specialsida',
 'personaltools'     => 'Personliga verktyg',
-'postcomment'       => 'Nytt avsnitt',
-'articlepage'       => 'Visa innehållssida',
 'talk'              => 'Diskussion',
 'views'             => 'Visningar',
 'toolbox'           => 'Verktygslåda',
-'userpage'          => 'Visa användarsida',
-'projectpage'       => 'Visa projektsida',
-'imagepage'         => 'Visa filsida',
-'mediawikipage'     => 'Visa meddelandesida',
-'templatepage'      => 'Visa mallsida',
-'viewhelppage'      => 'Visa hjälpsida',
-'categorypage'      => 'Visa kategorisida',
-'viewtalkpage'      => 'Visa diskussionssida',
 'otherlanguages'    => 'På andra språk',
 'redirectedfrom'    => '(Omdirigerad från $1)',
 'redirectpagesub'   => 'Omdirigeringssida',
@@ -708,8 +679,9 @@ Den uppgivna anledningen är "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Du är nu utloggad.'''
 
-Du kan fortsätta att använda {{SITENAME}} anonymt, eller så kan du [[Special:UserLogin|logga in igen]] som samma eller som en annan användare.
+Du kan fortsätta att använda {{SITENAME}} anonymt, eller så kan du $1 som samma eller som en annan användare.
 Observera att det, tills du tömmer din webbläsares cache, på vissa sidor kan se ut som att du fortfarande är inloggad.",
+'logouttext-link-text'       => 'logga in igen',
 'welcomecreation'            => '== Välkommen, $1! ==
 Ditt konto har skapats.
 Glöm inte att justera dina [[Special:Preferences|{{SITENAME}}-inställningar]].',
@@ -971,11 +943,10 @@ Orsaken till senaste blockeringen kan ses nedan:',
 'usercsspreview'                   => "'''Kom ihåg att du bara förhandsgranskar din användar-CSS.
 Den har inte sparats än!'''",
 'userjspreview'                    => "'''Kom ihåg att du bara testar/förhandsgranskar ditt JavaScript, det har inte sparats än!'''",
-'sitecsspreview'                   => "'''Kom ihåg att du bara förhandsgranskar detta CSS.''' 
+'sitecsspreview'                   => "'''Kom ihåg att du bara förhandsgranskar detta CSS.'''
 '''Det har ännu inte sparats!'''",
 'sitejspreview'                    => "'''Kom ihåg att du bara förhandsgranskar denna JavaScript-kod.'''
 '''Det har ännu inte sparats!'''",
-'userinvalidcssjstitle'            => "'''Varning:''' Skalet \"\$1\" finns inte. Kom ihåg att .css- och .js-sidor för enskilda användare börjar på liten bokstav. Exempel: {{ns:user}}:Foo/vector.css i stället för {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Uppdaterad)',
 'note'                             => "'''Obs!'''",
 'previewnote'                      => "'''Detta är bara en förhandsvisning;
@@ -1328,14 +1299,6 @@ Se till att sidhistorikens kontinuitet behålls när du sammanfogar historik.',
 Du kan istället göra sökningar med hjälp av Google.
 Notera dock att deras indexering av {{SITENAME}} kan vara något föråldrad.',
 
-# Quickbar
-'qbsettings'                => 'Snabbmeny',
-'qbsettings-none'           => 'Ingen',
-'qbsettings-fixedleft'      => 'Fast vänster',
-'qbsettings-fixedright'     => 'Fast höger',
-'qbsettings-floatingleft'   => 'Flytande vänster',
-'qbsettings-floatingright'  => 'Flytande höger',
-'qbsettings-directionality' => 'Fast, beroende på riktningen av ditt skript och språk',
 
 # Preferences page
 'preferences'                   => 'Inställningar',
@@ -2977,28 +2940,12 @@ Ger möjlighet att skriva en motivering i redigeringssammanfattningen',
 
 # Stylesheets
 'common.css'      => '/* CSS som skrivs här påverkar alla skal */',
-'standard.css'    => '/* CSS som skrivs här kommer att påverka alla användare av skalet Standard */',
-'nostalgia.css'   => '/* CSS som skrivs här kommer att påverka alla användare av skalet Nostalgi */',
-'cologneblue.css' => '/* CSS som skrivs här kommer att påverka alla användare av skalet Cologne blå */',
 'monobook.css'    => '/* CSS som skrivs här kommer att påverka alla användare av skalet Monobook */',
-'myskin.css'      => '/* CSS som skrivs här kommer att påverka alla användare av skalet Mitt utseende */',
-'chick.css'       => '/* CSS som skrivs här kommer att påverka alla användare av skalet Chick */',
-'simple.css'      => '/* CSS som skrivs här kommer att påverka alla användare av skalet Enkel */',
-'modern.css'      => '/* CSS som skrivs här kommer att påverka alla användare av skalet Modern */',
-'vector.css'      => '/* CSS som skrivs här kommer att påverka alla användare av skalet Vector */',
 'print.css'       => '/* CSS som skrivs här kommer att påverka utskriftsversionen */',
 
 # Scripts
 'common.js'      => '/* JavaScript som skrivs här körs varje gång en användare laddar en sida. */',
-'standard.js'    => '/* JavaScript här kommer att laddas för dem som använder skalet Standard */',
-'nostalgia.js'   => '/* JavaScript här kommer att laddas för dem som använder skalet Nostalgi */',
-'cologneblue.js' => '/* JavaScript här kommer att laddas för dem som använder skalet Cologne blå */',
 'monobook.js'    => '/* JavaScript här kommer att laddas för dem som använder skalet Monobook */',
-'myskin.js'      => '/* JavaScript här kommer att laddas för dem som använder skalet Mitt utseende */',
-'chick.js'       => '/* JavaScript här kommer att laddas för dem som använder skalet Chick */',
-'simple.js'      => '/* JavaScript här kommer att laddas för dem som använder skalet Enkel */',
-'modern.js'      => '/* JavaScript här kommer att laddas för dem som använder skalet Modern */',
-'vector.js'      => '/* JavaScript här kommer att laddas för dem som använder skalet Vector */',
 
 # Metadata
 'notacceptable' => 'Den här wiki-servern kan inte erbjuda data i ett format som din klient kan läsa.',
@@ -3038,15 +2985,7 @@ Detta orsakades troligen av en länk till en svartlistad webbplats.',
 'pageinfo-viewsperedit'     => 'Sidvisningar per redigering',
 
 # Skin names
-'skinname-standard'    => 'Standard',
-'skinname-nostalgia'   => 'Nostalgi',
-'skinname-cologneblue' => 'Cologne blå',
 'skinname-monobook'    => 'Monobook',
-'skinname-myskin'      => 'Mitt utseende',
-'skinname-chick'       => 'Chick',
-'skinname-simple'      => 'Enkel',
-'skinname-modern'      => 'Modern',
-'skinname-vector'      => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Märk som patrullerad',
@@ -3728,9 +3667,9 @@ Du kan också [[Special:EditWatchlist|använda standardeditorn]].',
 'version-license'               => 'Licens',
 'version-poweredby-credits'     => "Den här wikin drivs av '''[//www.mediawiki.org/ MediaWiki]''', copyright © 2001-$1 $2.",
 'version-poweredby-others'      => 'andra',
-'version-license-info'          => 'MediaWiki är fri programvara; du kan distribuera det och/eller modifiera det under villkoren i GNU General Public License, publicerad av Free Software Foundation; antingen version 2 av licensen, eller (om du önskar) någon senare version. 
+'version-license-info'          => 'MediaWiki är fri programvara; du kan distribuera det och/eller modifiera det under villkoren i GNU General Public License, publicerad av Free Software Foundation; antingen version 2 av licensen, eller (om du önskar) någon senare version.
 
-MediaWiki distribueras i hopp om att det ska vara användbart, men UTAN NÅGON GARANTI, även utan underförstådd garanti om SÄLJBARHET eller LÄMPLIGHET FÖR ETT VISST SYFTE. Se GNU General Public License för fler detaljer. 
+MediaWiki distribueras i hopp om att det ska vara användbart, men UTAN NÅGON GARANTI, även utan underförstådd garanti om SÄLJBARHET eller LÄMPLIGHET FÖR ETT VISST SYFTE. Se GNU General Public License för fler detaljer.
 
 Du bör ha fått [{{SERVER}}{{SCRIPTPATH}}/COPYING en kopia av GNU General Public License] tillsammans med detta program; om inte, skriv till Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA eller [//www.gnu.org/licenses/old-licenses/gpl-2.0.html läs den online].',
 'version-software'              => 'Installerad programvara',

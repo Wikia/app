@@ -52,6 +52,11 @@ $wgGroupPermissions['sysop']['commentmove'] = true;
 $wgGroupPermissions['sysop']['commentedit'] = true;
 $wgGroupPermissions['sysop']['commentdelete'] = true;
 
+# PLATFORM-1707: threadmoderator additional rights
+$wgGroupPermissions['threadmoderator']['commentmove'] = true;
+$wgGroupPermissions['threadmoderator']['commentedit'] = true;
+$wgGroupPermissions['threadmoderator']['commentdelete'] = true;
+
 if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty($wgEnableBlogArticles)) {
 
 	$wgHooks['ArticleDelete'][] = 'ArticleCommentList::articleDelete';
@@ -143,6 +148,11 @@ function ArticleCommentsAjax() {
 			// send text as text/html
 			$response = new AjaxResponse($data);
 			$response->setContentType('text/html; charset=utf-8');
+		}
+
+		// Don't cache requests made to edit comment, see SOC-788
+		if ( $method == "axEdit" ) {
+			$response->setCacheDuration(0);
 		}
 
 		wfProfileOut(__METHOD__);

@@ -69,7 +69,7 @@ abstract class File implements UrlGeneratorInterface {
 	 */
 
 	/**
-	 * @var FileRepo|false
+	 * @var FileRepo|false|LocalRepo
 	 */
 	var $repo;
 

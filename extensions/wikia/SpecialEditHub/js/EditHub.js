@@ -35,7 +35,8 @@
 							method: 'uploadAndGetVideo',
 							type: 'post',
 							data: {
-								'url': url
+								url: url,
+								token: window.mw.user.tokens.get('editToken')
 							},
 							callback: function (response) {
 								require( ['wikia.throbber'], function( throbber ) {

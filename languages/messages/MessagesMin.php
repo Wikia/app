@@ -157,30 +157,12 @@ $messages = array(
 'navigation'    => 'Navigasi',
 'and'           => '&#32;jo',
 
-# Cologne Blue skin
 'qbfind'         => 'Pencarian',
 'qbbrowse'       => 'Browse',
-'qbedit'         => 'Suntiang',
 'qbpageoptions'  => 'Laman ko',
 'qbpageinfo'     => 'Konteks',
-'qbmyoptions'    => 'Laman denai',
-'qbspecialpages' => 'Halaman istimewa',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Bagian baru',
-'vector-action-delete'           => 'Hapuih',
-'vector-action-move'             => 'Pindahkan',
-'vector-action-protect'          => 'Lindungi',
-'vector-action-undelete'         => 'Pambatalan panghapusan',
-'vector-action-unprotect'        => 'Palinduangan',
-'vector-simplesearch-preference' => 'Aktifkan pancarian saran nan disampurnokan (hanyo kulik Vector)',
-'vector-view-create'             => 'Buek',
-'vector-view-edit'               => 'Suntiang',
-'vector-view-history'            => 'Caliak riwayat nan lalu',
-'vector-view-view'               => 'Baco',
-'vector-view-viewsource'         => 'Caliak sumber',
 'actions'                        => 'Tindakan',
 'namespaces'                     => 'Ruang namo:',
 'variants'                       => 'Variasi:',
@@ -203,7 +185,6 @@ $messages = array(
 'edit'              => 'Suntiang',
 'create'            => 'Buek',
 'editthispage'      => 'Suntiang laman ko',
-'create-this-page'  => 'Buek laman iko',
 'delete'            => 'Hapuih',
 'deletethispage'    => 'Hapuih laman iko',
 'undelete_short'    => 'Batal hapuih $1 {{PLURAL:$1|suntiangan|suntiangan}}',
@@ -218,19 +199,9 @@ $messages = array(
 'talkpagelinktext'  => 'Kecek',
 'specialpage'       => 'Laman istimewa',
 'personaltools'     => 'Peralatan pribadi',
-'postcomment'       => 'Bagian baru',
-'articlepage'       => 'Liek isi laman',
 'talk'              => 'Pembicaraan',
 'views'             => 'Tampilan',
 'toolbox'           => 'Kotak pakakeh',
-'userpage'          => 'Liek laman pangguno',
-'projectpage'       => 'Caliak laman proyek',
-'imagepage'         => 'Caliak laman berkas',
-'mediawikipage'     => 'Caliak laman pasan',
-'templatepage'      => 'Caliak laman templat',
-'viewhelppage'      => 'Caliak laman bantuan',
-'categorypage'      => 'Caliak laman kategori',
-'viewtalkpage'      => 'Caliak laman ota',
 'otherlanguages'    => 'Dalam baso lain',
 'redirectedfrom'    => '(Dialiahkan dari $1)',
 'redirectpagesub'   => 'Laman pengalihan',
@@ -401,8 +372,9 @@ Alasan nan diberikan adolah ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Sanak alah kalua log dari sistem.'''
 
-Sanak dapek taruih manggunoan {{SITENAME}} sacaro anonim, atau Sanak dapek [[Special:UserLogin|masuak log liak]] sabagai pangguno nan samo atau pangguno nan lain.
+Sanak dapek taruih manggunoan {{SITENAME}} sacaro anonim, atau Sanak dapek $1 sabagai pangguno nan samo atau pangguno nan lain.
 Parhatian bahawa bara laman mungkin masih taruih manunjukkan bahawa Sanak masih masuak log sampai Sanak mambarasihan singgahan panjelajah web Sanak.",
+'logouttext-link-text'       => 'masuak log liak',
 'welcomecreation'            => '== Salamaik datang, $1! ==
 
 Akun Sanak alah dibuek. Jan lupo maatur konfigurasi [[Special:Preferences|preferensi {{SITENAME}}]] Sanak.',
@@ -657,7 +629,6 @@ Pratayang iko alun disimpan!'''",
 '''Parubahan alun disimpan!'''",
 'sitejspreview'                    => "'''Ingeklah bahawa Sanak hanyo manampilan pratayang dari Kode JavaScript iko.'''
 '''Parubahan alun disimpan!'''",
-'userinvalidcssjstitle'            => "'''Paringatan:''' Kulik \"\$1\" indak ditamuan. Harap diingek bahawa laman .css dan .js manggunokan huruf kecil, contoh {{ns:user}}:Foo/vector.css dan bukannyo {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Dipabaharui)',
 'note'                             => "'''Catatan:'''",
 'previewnote'                      => "'''Iko hanyo tampilan pratonton.'''
@@ -737,7 +708,7 @@ Sabagai referensi, barikuik adolah log panghapusan dan pamindahan laman iko.',
 'post-expand-template-inclusion-warning'  => "'''Peringatan:''' Ukuran templat talalu gadang.
 Babarapo templat akan diabaikan.",
 'post-expand-template-inclusion-category' => 'Laman nan ukurannyo templatnyo malabiahi bateh',
-'post-expand-template-argument-warning'   => 'Peringatan: Laman ko barisi satidaknyo ciek uraian templat na baukuran ekspansi nan talalu gadang. 
+'post-expand-template-argument-warning'   => 'Peringatan: Laman ko barisi satidaknyo ciek uraian templat na baukuran ekspansi nan talalu gadang.
 Uraian-uraian tu alah diabaikan.',
 'post-expand-template-argument-category'  => 'Laman nan barisi uraian template nan diabaikan',
 
@@ -1209,7 +1180,7 @@ Pranala-pranala salanjuiknyo pado barih nan samo dianggap sabagai pengecualian, 
 'metadata-help'     => 'Berkas ko mengandung informasi tambahan yang mungkin ditambahkan dek kamera digital atau pemindai yang digunokan untuak mambuek atau mendigitalisasi berkas. Jiko berkas ko lah mangalami modifikasi, rincian yang ado mungkin indak sacaro penuh merefleksikan modifikasi berkas tu.',
 'metadata-expand'   => 'Tampilkan rincian tambahan',
 'metadata-collapse' => 'Suruakkan rincian tambahan',
-'metadata-fields'   => 'Tapak metadata gambar nan disenaraikan dalam pasan ko akan di masuakan pado tampilan laman gambar katiko tabel metadata disuruakkan. 
+'metadata-fields'   => 'Tapak metadata gambar nan disenaraikan dalam pasan ko akan di masuakan pado tampilan laman gambar katiko tabel metadata disuruakkan.
 Nan lainnyo akan tasuruak sacaro default.
 * make
 * model

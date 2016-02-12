@@ -198,29 +198,12 @@ $messages = array(
 'navigation'    => 'Tabok-tabok',
 'and'           => '&#32;ug',
 
-# Cologne Blue skin
 'qbfind'         => 'Pangitaa',
 'qbbrowse'       => 'Browse',
-'qbedit'         => 'Usba',
 'qbpageoptions'  => 'Kini nga panid',
 'qbpageinfo'     => 'Konteksto',
-'qbmyoptions'    => 'Akong mga panid',
-'qbspecialpages' => 'Mga espesyal nga panid',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection' => 'Pagdugang og topiko',
-'vector-action-delete'     => 'Papasa',
-'vector-action-move'       => 'Ibalhin',
-'vector-action-protect'    => 'Protektahi',
-'vector-action-undelete'   => 'Ayaw papasa',
-'vector-action-unprotect'  => 'Ayaw protektahi',
-'vector-view-create'       => 'Himoa',
-'vector-view-edit'         => 'Usba',
-'vector-view-history'      => 'Tan-awa ang kaagi',
-'vector-view-view'         => 'Basaha',
-'vector-view-viewsource'   => 'Tan-awa ang ginikanan',
 'actions'                  => 'Mga lihok',
 'namespaces'               => 'Mga ngalang espasyo',
 'variants'                 => 'Mga baryant',
@@ -242,7 +225,6 @@ $messages = array(
 'edit'              => 'Usba',
 'create'            => 'Himoa',
 'editthispage'      => 'Usba kining panid',
-'create-this-page'  => 'Himoa kining panid',
 'delete'            => 'Papasa',
 'deletethispage'    => 'Papasa kining panid',
 'undelete_short'    => 'Ibalik ang {{PLURAL:$1|usa ka pag-usab|$1 ka mga pag-usab}}',
@@ -256,19 +238,9 @@ $messages = array(
 'talkpagelinktext'  => 'Hisgot',
 'specialpage'       => 'Espesyal nga panid',
 'personaltools'     => 'Personal nga galamiton',
-'postcomment'       => 'Pagbilin og komento',
-'articlepage'       => 'Tan-awa ang panid sa sulod',
 'talk'              => 'Panaghisgot-hisgot',
 'views'             => 'Mga pagtan-aw',
 'toolbox'           => 'Galamiton',
-'userpage'          => 'Tan-awa ang panid sa gumagamit',
-'projectpage'       => 'Tan-awa ang panid sa proyekto',
-'imagepage'         => 'Tan-awa ang panid sa medya',
-'mediawikipage'     => 'Tan-awa ang panid sa mensahe',
-'templatepage'      => 'Tan-awa ang panid sa plantilya',
-'viewhelppage'      => 'Tan-awa ang panid sa tabang',
-'categorypage'      => 'Tan-awa ang panid sa kategoriya',
-'viewtalkpage'      => 'Tan-awa ang panaghisgot-hisgot',
 'otherlanguages'    => 'Sa ubang pinulongan',
 'redirectedfrom'    => '(Naredirek gikan sa $1)',
 'redirectpagesub'   => 'Panid sa redirekta',
@@ -437,7 +409,8 @@ Ang rason nga gihatag mao ang "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'              => "'''Nakabiya ka na.'''
 
-Mahimo kang magpadayon sa paggamit sa {{SITENAME}} bisan wala ka magpaila o puyde usab nga [[Special:UserLogin|mag-log in ka'g usab]] o isip laing gumagamit. Palihog hinumdomi nga may ubang mga panid nga magpakita sama nga ikaw naka-log in pa; kini tungod kay wala pa nimo malimpiyohi ang cache sa imong brawser.",
+Mahimo kang magpadayon sa paggamit sa {{SITENAME}} bisan wala ka magpaila o puyde usab nga $1 o isip laing gumagamit. Palihog hinumdomi nga may ubang mga panid nga magpakita sama nga ikaw naka-log in pa; kini tungod kay wala pa nimo malimpiyohi ang cache sa imong brawser.",
+'logouttext-link-text'       => "mag-log in ka'g usab",
 'welcomecreation'         => '== Maayong pag-abot, $1! ==
 Nahimo na ang imong akawnt.
 Ayaw kalimot sa pag-usab sa imong [[Special:Preferences|{{SITENAME}} mga preperensiya]].',
@@ -737,13 +710,6 @@ Sulayi'g prefix ang imong gipangita gamit ang ''all:'' alang mangita sa tanang s
 Puyde ka mangita gamit ang Google sa kasamtangan.
 Hinumdomi nga ang ilang indeks sa sulod sa {{SITENAME}} mahimong dugay-dugay na.',
 
-# Quickbar
-'qbsettings'               => 'Quickbar',
-'qbsettings-none'          => 'Wala',
-'qbsettings-fixedleft'     => 'Naka-fix sa wala',
-'qbsettings-fixedright'    => 'Naka-fix sa tuo',
-'qbsettings-floatingleft'  => 'Floating sa wala',
-'qbsettings-floatingright' => 'Floating sa tuo',
 
 # Preferences page
 'preferences'                   => 'Mga preperensiya',

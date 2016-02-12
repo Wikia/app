@@ -364,42 +364,6 @@ class LinksUpdate {
 				'page_touched < ' . $this->mDb->addQuotes( $this->mInvalidationTimestamp )
 			), __METHOD__
 		);
-
-		$this->logPagesInvalidation(
-			[
-				'table' => 'page',
-				'set' => "page_touched = {$this->mInvalidationTimestamp}",
-				'conditions' => [
-					'page_id IN (' . $this->mDb->makeList( $this->mInvalidationQueue ) . ')',
-					'page_touched < ' . $this->mDb->addQuotes( $this->mInvalidationTimestamp )
-					]
-			]
-		);
-	}
-
-	/**
-	 * Log function called by LinksUpdate::invalidatePages
-	 * to gather some data on heavy load on DB reported in CE-677
-	 * @param Array $queryParams Array with sql query params to be logged
-	 */
-	function logPagesInvalidation( $queryParams ) {
-		global $wgRequest, $wgDBname;
-		$logFileName = "KamilkLogPagesInvalidation";
-		$logFileName .= "-WIKIA: ";
-
-		error_log( $logFileName . __METHOD__ ." called from:" );
-		$requestClass = get_class( $wgRequest );
-
-		if ( $requestClass !== 'FauxRequest' && $requestClass !== 'DerivativeRequest' ) {
-			$requestUrl = $wgRequest->getFullRequestURL();
-		} else {
-			$requestUrl = "not available";
-		}
-
-		error_log( $logFileName . "==Request URL== " . $requestUrl );
-		error_log( $logFileName . "==Database== " . $wgDBname );
-		error_log( $logFileName . "==with SQL update query params== " . json_encode( $queryParams ) );
-		error_log( $logFileName . "==Backtrace== " . json_encode(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS) ) );
 	}
 
 	/**

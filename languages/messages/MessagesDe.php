@@ -181,7 +181,7 @@ $specialPageAliases = array(
 	'Shortpages'                => array( 'Kürzeste_Seiten' ),
 	'Specialpages'              => array( 'Spezialseiten' ),
 	'Statistics'                => array( 'Statistik' ),
-	'Tags'                      => array( 'Markierungen' ),
+	'Tags'                      => array( 'Kennzeichnungen' ),
 	'Unblock'                   => array( 'Freigeben' ),
 	'Uncategorizedcategories'   => array( 'Nicht_kategorisierte_Kategorien' ),
 	'Uncategorizedimages'       => array( 'Nicht_kategorisierte_Dateien' ),
@@ -519,30 +519,12 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => '&#32;und',
 
-# Cologne Blue skin
 'qbfind'         => 'Finden',
 'qbbrowse'       => 'Durchsuchen',
-'qbedit'         => 'Bearbeiten',
 'qbpageoptions'  => 'Seitenoptionen',
 'qbpageinfo'     => 'Seitendaten',
-'qbmyoptions'    => 'Meine Seiten',
-'qbspecialpages' => 'Spezialseiten',
 'faq'            => 'Häufige Fragen',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Abschnitt hinzufügen',
-'vector-action-delete'           => 'Löschen',
-'vector-action-move'             => 'Verschieben',
-'vector-action-protect'          => 'Schützen',
-'vector-action-undelete'         => 'Wiederherstellen',
-'vector-action-unprotect'        => 'Seitenschutz ändern',
-'vector-simplesearch-preference' => 'Erweiterte Suchvorschläge aktivieren (nur Vector)',
-'vector-view-create'             => 'Erstellen',
-'vector-view-edit'               => 'Bearbeiten',
-'vector-view-history'            => 'Versionsgeschichte',
-'vector-view-view'               => 'Lesen',
-'vector-view-viewsource'         => 'Quelltext anzeigen',
 'actions'                        => 'Aktionen',
 'namespaces'                     => 'Namensräume',
 'variants'                       => 'Varianten',
@@ -565,7 +547,6 @@ $messages = array(
 'edit'              => 'Bearbeiten',
 'create'            => 'Erstellen',
 'editthispage'      => 'Seite bearbeiten',
-'create-this-page'  => 'Seite erstellen',
 'delete'            => 'Löschen',
 'deletethispage'    => 'Diese Seite löschen',
 'undelete_short'    => '{{PLURAL:$1|1 Version|$1 Versionen}} wiederherstellen',
@@ -580,19 +561,9 @@ $messages = array(
 'talkpagelinktext'  => 'Diskussion',
 'specialpage'       => 'Spezialseite',
 'personaltools'     => 'Meine Werkzeuge',
-'postcomment'       => 'Neuer Abschnitt',
-'articlepage'       => 'Inhaltsseite anzeigen',
 'talk'              => 'Diskussion',
 'views'             => 'Ansichten',
 'toolbox'           => 'Werkzeuge',
-'userpage'          => 'Benutzerseite anzeigen',
-'projectpage'       => 'Projektseite anzeigen',
-'imagepage'         => 'Dateiseite anzeigen',
-'mediawikipage'     => 'Meldungsseite anzeigen',
-'templatepage'      => 'Vorlagenseite anzeigen',
-'viewhelppage'      => 'Hilfeseite anzeigen',
-'categorypage'      => 'Kategorieseite anzeigen',
-'viewtalkpage'      => 'Diskussion',
 'otherlanguages'    => 'In anderen Sprachen',
 'redirectedfrom'    => '(Weitergeleitet von $1)',
 'redirectpagesub'   => 'Weiterleitung',
@@ -773,8 +744,9 @@ Die Sperre wurde durch [[User:$1|$1]] mit der Begründung ''„$2“'' eingerich
 # Login and logout pages
 'logouttext'                 => "'''Du bist nun abgemeldet.'''
 
-Du kannst {{SITENAME}} jetzt anonym weiternutzen, oder dich erneut unter demselben oder einem anderen Benutzernamen [[Special:UserLogin|anmelden]].
+Du kannst {{SITENAME}} jetzt anonym weiternutzen, oder dich erneut unter demselben oder einem anderen Benutzernamen $1.
 Beachte, dass einige Seiten noch anzeigen können, dass du angemeldet bist, solange du nicht deinen Browsercache geleert hast.",
+'logouttext-link-text'       => 'anmelden',
 'welcomecreation'            => '== Willkommen, $1! ==
 
 Dein Benutzerkonto wurde eingerichtet.
@@ -1039,7 +1011,6 @@ Zur Information folgt ein aktueller Auszug aus dem Benutzersperr-Logbuch:',
 '''Es wurde noch nicht gespeichert!'''",
 'sitejspreview'                    => "'''Beachte, dass du nur eine Vorschau dieses JavaScript betrachtest.'''
 '''Es wurde noch nicht gespeichert!'''",
-'userinvalidcssjstitle'            => "'''Achtung:''' Die Benutzeroberfläche „$1“ existiert nicht. Bedenke, dass benutzerspezifische .css- und .js-Seiten mit einem Kleinbuchstaben anfangen müssen, also beispielsweise ''{{ns:user}}:Mustermann/vector.css'' an Stelle von ''{{ns:user}}:Mustermann/Vector.css''.",
 'updated'                          => '(Geändert)',
 'note'                             => "'''Hinweis:'''",
 'previewnote'                      => "'''Dies ist nur eine Vorschau, die Seite wurde noch nicht gespeichert!'''",
@@ -1380,14 +1351,6 @@ Stelle sicher, dass die Versionsgeschichte einer Seite historisch korrekt ist.',
 'search-external'                  => 'Externe Suche',
 'searchdisabled'                   => 'Die {{SITENAME}}-Suche ist deaktiviert. Du kannst unterdessen mit Google suchen. Bitte bedenke, dass der Suchindex von {{SITENAME}} veraltet sein kann.',
 
-# Quickbar
-'qbsettings'                => 'Seitenleiste',
-'qbsettings-none'           => 'Keine',
-'qbsettings-fixedleft'      => 'Links, fest',
-'qbsettings-fixedright'     => 'Rechts, fest',
-'qbsettings-floatingleft'   => 'Links, schwebend',
-'qbsettings-floatingright'  => 'Rechts, schwebend',
-'qbsettings-directionality' => 'Fest, abhängig von der Schreibrichtung der gewählten Sprache',
 
 # Preferences page
 'preferences'                   => 'Einstellungen',
@@ -1949,7 +1912,7 @@ Aus Sicherheitsgründen ist img_auth.php deaktiviert.',
 'upload_source_file' => ' (eine Datei auf deinem Computer)',
 
 # Special:ListFiles
-'listfiles-summary'     => 'Diese Spezialseite listet alle hochgeladenen Dateien auf. 
+'listfiles-summary'     => 'Diese Spezialseite listet alle hochgeladenen Dateien auf.
 Sofern nach einem bestimmten Benutzer gefiltert wird, werden nur die Dateien gezeigt, bei denen er die letzte Version hochgeladen hat.',
 'listfiles_search_for'  => 'Suche nach Datei:',
 'imgfile'               => 'Datei',
@@ -3018,15 +2981,7 @@ Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
 
 # Stylesheets
 'common.css'              => '/* Das folgende CSS wird für alle Benutzeroberflächen geladen. */',
-'standard.css'            => '/* Das folgende CSS wird für Benutzer der Klassik-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
-'nostalgia.css'           => '/* Das folgende CSS wird für Benutzer der Nostalgie-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
-'cologneblue.css'         => '/* Das folgende CSS wird für Benutzer der Kölnisch-Blau-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
 'monobook.css'            => '/* Das folgende CSS wird für Benutzer der Monobook-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
-'myskin.css'              => '/* Das folgende CSS wird für Benutzer der MySkin-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
-'chick.css'               => '/* Das folgende CSS wird für Benutzer der Küken-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
-'simple.css'              => '/* Das folgende CSS wird für Benutzer der Einfach-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
-'modern.css'              => '/* Das folgende CSS wird für Benutzer der Modern-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte MediaWiki:Common.css bearbeiten. */',
-'vector.css'              => '/* Das folgende CSS wird für Benutzer der Vector-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
 'print.css'               => '/* Das folgende CSS wird in der Druckausgabe geladen. */',
 'handheld.css'            => '/* Das folgende CSS wird für Handheld-Geräte, basierend auf der in $wgHandheldStyle konfigurierten Benutzeroberfläche, geladen. */',
 'noscript.css'            => '/* Das folgende CSS wirkt sich für Benutzer aus, die JavaScript deaktiviert haben */',
@@ -3037,15 +2992,7 @@ Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
 
 # Scripts
 'common.js'              => '/* Das folgende JavaScript wird für alle Benutzer geladen. */',
-'standard.js'            => '/* Das folgende JavaScript wird für Benutzer der Klassik-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
-'nostalgia.js'           => '/* Das folgende JavaScript wird für Benutzer der Nostalgie-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
-'cologneblue.js'         => '/* Das folgende JavaScript wird für Benutzer der Kölnisch-Blau-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
 'monobook.js'            => '/* Das folgende JavaScript wird für Benutzer der Monobook-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
-'myskin.js'              => '/* Das folgende JavaScript wird für Benutzer der MySkin-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
-'chick.js'               => '/* Das folgende JavaScript wird für Benutzer der Küken-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
-'simple.js'              => '/* Das folgende JavaScript wird für Benutzer der Einfach-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
-'modern.js'              => '/* Das folgende JavaScript wird für Benutzer der Modern-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
-'vector.js'              => '/* Das folgende JavaScript wird für Benutzer der Vector-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
 'group-autoconfirmed.js' => '/* Das folgende JavaScript wird nur für automatisch bestätigte Benutzer geladen. */',
 'group-bot.js'           => '/* Das folgende JavaScript wird nur für Bots geladen. */',
 'group-sysop.js'         => '/* Das folgende JavaScript wird nur für Administratoren geladen. */',
@@ -3089,15 +3036,7 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 'pageinfo-viewsperedit'     => 'Seitenaufrufe pro Bearbeitung',
 
 # Skin names
-'skinname-standard'    => 'Klassik',
-'skinname-nostalgia'   => 'Nostalgie',
-'skinname-cologneblue' => 'Kölnisch Blau',
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'MySkin',
-'skinname-chick'       => 'Küken',
-'skinname-simple'      => 'Einfach',
-'skinname-modern'      => 'Modern',
-'skinname-vector'      => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Als kontrolliert markieren',

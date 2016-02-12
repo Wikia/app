@@ -22,16 +22,17 @@ class SFFormStart extends SpecialPage {
 	}
 
 	function execute( $query ) {
-		global $wgOut, $wgRequest;
-
 		$this->setHeaders();
 
-		$form_name = $wgRequest->getVal( 'form' );
-		$target_namespace = $wgRequest->getVal( 'namespace' );
-		$super_page = $wgRequest->getVal( 'super_page' );
-		$params = $wgRequest->getVal( 'params' );
+		$out = $this->getOutput();
+		$req = $this->getRequest();
 
-		// If the query string did not contain a form name, try the URL
+		$form_name = $req->getVal( 'form' );
+		$target_namespace = $req->getVal( 'namespace' );
+		$super_page = $req->getVal( 'super_page' );
+		$params = $req->getVal( 'params' );
+
+		// If the query string did not contain a form name, try the URL.
 		if ( ! $form_name ) {
 			$queryparts = explode( '/', $query, 2 );
 			$form_name = isset( $queryparts[0] ) ? $queryparts[0] : '';
@@ -49,17 +50,13 @@ class SFFormStart extends SpecialPage {
 			}
 		}
 
-		// Remove forbidden characters from the form name.
-		$forbidden_chars = array( '"', "'", '<', '>', '{', '}', '(', ')', '[', ']', '=' );
-		$form_name = str_replace( $forbidden_chars, "", $form_name );
-
 		// Get title of form.
 		$form_title = Title::makeTitleSafe( SF_NS_FORM, $form_name );
 
 		// Handle submission of this form.
-		$form_submitted = $wgRequest->getCheck( 'page_name' );
+		$form_submitted = $req->getCheck( 'page_name' );
 		if ( $form_submitted ) {
-			$page_name = $wgRequest->getVal( 'page_name' );
+			$page_name = $req->getVal( 'page_name' );
 			// This form can be used to create a sub-page for an
 			// existing page
 			if ( !is_null( $super_page ) && $super_page !== '' ) {
@@ -77,7 +74,7 @@ class SFFormStart extends SpecialPage {
 				// message.
 				$page_title = Title::newFromText( $page_name );
 				if ( !$page_title ) {
-					$wgOut->addHTML( htmlspecialchars( wfMsg( 'sf_formstart_badtitle', $page_name ) ) );
+					$out->addHTML( wfMessage( 'sf_formstart_badtitle', $page_name )->escaped() );
 					return;
 				} else {
 					$this->doRedirect( $form_name, $page_name, $params );
@@ -87,13 +84,13 @@ class SFFormStart extends SpecialPage {
 		}
 
 		if ( ( !$form_title || !$form_title->exists() ) && ( $form_name !== '' ) ) {
-			$text = Html::rawElement( 'p', array( 'class' => 'error' ), wfMsgExt( 'sf_formstart_badform', 'parseinline', SFUtils::linkText( SF_NS_FORM, $form_name ) ) ) . "\n";
+			$text = Html::rawElement( 'p', array( 'class' => 'error' ), wfMessage( 'sf_formstart_badform', SFUtils::linkText( SF_NS_FORM, $form_name ) )->parse() ) . "\n";
 		} else {
 			if ( $form_name === '' ) {
-				$description = htmlspecialchars( wfMsg( 'sf_formstart_noform_docu', $form_name ) );
+				$description = wfMessage( 'sf_formstart_noform_docu', $form_name )->escaped();
 			}
 			else {
-				$description = htmlspecialchars( wfMsg( 'sf_formstart_docu', $form_name ) );
+				$description = wfMessage( 'sf_formstart_docu', $form_name )->escaped();
 			}
 
 			$text = <<<END
@@ -111,17 +108,17 @@ END;
 			$text .= Html::hidden( 'namespace', $target_namespace );
 			$text .= Html::hidden( 'super_page', $super_page );
 			$text .= Html::hidden( 'params', $params );
-			$text .= "\n\t" . Html::input( null, wfMsg( 'sf_formstart_createoredit' ), 'submit' ) . "\n";
+			$text .= "\n\t" . Html::input( null, wfMessage( 'sf_formstart_createoredit' )->text(), 'submit' ) . "\n";
 			$text .= "\t</form>\n";
 		}
-		$wgOut->addHTML( $text );
+		$out->addHTML( $text );
 	}
 
 	/**
 	 * Helper function - returns a URL that includes Special:FormEdit.
 	 */
 	static function getFormEditURL( $formName, $targetName) {
-		$fe = SFUtils::getSpecialPage( 'FormEdit' );
+		$fe = SpecialPageFactory::getPage( 'FormEdit' );
 		// Special handling for forms whose name contains a slash.
 		if ( strpos( $formName, '/' ) !== false ) {
 			return $fe->getTitle()->getLocalURL( array( 'form' => $formName, 'target' => $targetName ) );
@@ -130,7 +127,7 @@ END;
 	}
 
 	function doRedirect( $form_name, $page_name, $params ) {
-		global $wgOut;
+		$out = $this->getOutput();
 
 		$page_title = Title::newFromText( $page_name );
 		if ( $page_title->exists() ) {
@@ -151,10 +148,11 @@ END;
 			// out-guess the user and always send to the
 			// standard form-edit page, with the 'correct' form?
 			$default_forms = SFFormLinker::getDefaultFormsForPage( $page_title );
-			if ( count( $default_forms ) > 0 )
+			if ( count( $default_forms ) > 0 ) {
 				$default_form_name = $default_forms[0];
-			else
+			} else {
 				$default_form_name = null;
+			}
 			if ( $form_name == $default_form_name ) {
 				$redirect_url = $page_title->getLocalURL( 'action=formedit' );
 			} else {
@@ -167,13 +165,13 @@ END;
 			// identify the latter because they show up as arrays.
 			foreach ( $_REQUEST as $key => $val ) {
 				if ( is_array( $val ) ) {
-					$template_name = urlencode( $key );
-					foreach ( $val as $field_name => $value ) {
-						$field_name = urlencode( $field_name );
-						$value = urlencode( $value );
-						$redirect_url .= ( strpos( $redirect_url, '?' ) > - 1 ) ? '&' : '?';
-						$redirect_url .= $template_name . '[' . $field_name . ']=' . $value;
-					}
+					$redirect_url .= ( strpos( $redirect_url, '?' ) > - 1 ) ? '&' : '?';
+					// Re-add the key (i.e. the template
+					// name), so we can make a nice query
+					// string snippet out of the whole
+					// thing.
+					$wrapperArray = array( $key => $val );
+					$redirect_url .= urldecode( http_build_query( $wrapperArray ) );
 				} elseif ( $key == 'preload' ) {
 					$redirect_url .= ( strpos( $redirect_url, '?' ) > - 1 ) ? '&' : '?';
 					$redirect_url .= "$key=$val";
@@ -186,20 +184,14 @@ END;
 			$redirect_url .= $params;
 		}
 
-		$wgOut->setArticleBodyOnly( true );
+		$out->setArticleBodyOnly( true );
+
 		// Show "loading" animated image while people wait for the
 		// redirect.
 		global $sfgScriptPath;
-		$text = "<p style=\"position: absolute; left: 45%; top: 45%;\"><img src=\"$sfgScriptPath/skins/loading.gif\" /></p>\n";
-		$text .= <<<END
-		<script type="text/javascript">
-		window.onload = function() {
-			window.location="$redirect_url";
-		}
-		</script>
-
-END;
-		$wgOut->addHTML( $text );
+		$text = "\t" . Html::rawElement( 'p', array( 'style' => "position: absolute; left: 45%; top: 45%;" ), Html::element( 'img', array( 'src' => "$sfgScriptPath/skins/loading.gif" ) ) );
+		$text .= "\t" . Html::element( 'meta', array( 'http-equiv' => 'refresh', 'content' => "0; url=$redirect_url" ) );
+		$out->addHTML( $text );
 		return;
 	}
 

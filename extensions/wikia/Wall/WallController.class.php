@@ -144,7 +144,7 @@ class WallController extends WallBaseController {
 	protected function checkAndSetUserBlockedStatus( $wallOwner = null ) {
 		$user = $this->app->wg->User;
 
-		if ( $user->isBlocked() || $user->isBlockedGlobally() ) {
+		if ( $user->isBlocked( true, false ) || $user->isBlockedGlobally() ) {
 			if (	!empty( $wallOwner ) &&
 				$wallOwner->getName() == $this->wg->User->getName() &&
 				!( empty( $user->mAllowUsertalk ) ) ) {

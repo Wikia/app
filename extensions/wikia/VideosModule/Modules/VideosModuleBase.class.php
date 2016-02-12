@@ -230,28 +230,19 @@ abstract class Base extends \WikiaModel {
 		];
 
 		$response = \ApiService::foreignCall( $this->wg->WikiaVideoRepoDBName, $params, \ApiService::WIKIA );
-		$videosWithDetails = $this->getVideoDetailFromVideoWiki( $this->getVideoTitles( $response['videos'] ) );
 
-		foreach ( $videosWithDetails as $video ) {
-			if ( $this->atVideoLimit() ) {
-				break;
+		if ( !empty( $response['videos'] ) ) {
+			$videosWithDetails = $this->getVideoDetailFromVideoWiki(
+				array_column( $response['videos'], 'title' )
+			);
+
+			foreach ( $videosWithDetails as $video ) {
+				if ( $this->atVideoLimit() ) {
+					break;
+				}
+				$this->addVideo( $video );
 			}
-			$this->addVideo( $video );
 		}
-	}
-
-	/**
-	 * Return a list of just titles given a list of video details.
-	 *
-	 * @param array $videos An array of video details
-	 * @return array
-	 */
-	protected function getVideoTitles( array $videos ) {
-		$videoTitles = [];
-		foreach ( $videos as $video ) {
-			$videoTitles[] = $video['title'];
-		}
-		return $videoTitles;
 	}
 
 	/**

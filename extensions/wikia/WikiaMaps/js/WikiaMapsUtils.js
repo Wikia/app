@@ -277,15 +277,18 @@ define(
 		/**
 		 * @desc launches force login modal
 		 * @param {string} origin - used for tracking the source of force login modal
-		 * @param {function} cb - callback function to be called after login
+		 * @param {function} onLoggedIn - callback function to be called after login
 		 */
-		function showForceLoginModal(origin, cb) {
-			w.UserLoginModal.show({
-				origin: origin,
-				callback: function () {
-					w.UserLogin.forceLoggedIn = true;
-					cb();
-				}
+		function showForceLoginModal(origin, onLoggedIn) {
+			require(['AuthModal'], function (authModal) {
+				authModal.load({
+					origin: origin,
+					url: '/signin?redirect=' + encodeURIComponent(w.location.href),
+					onAuthSuccess: function () {
+						w.UserLogin.forceLoggedIn = true;
+						onLoggedIn();
+					}
+				});
 			});
 		}
 

@@ -29,6 +29,7 @@ class HTMLCacheUpdateTask extends BaseTask {
 		global $wgUseFileCache, $wgUseSquid;
 
 		$affectedTitles = $this->getAffectedTitles( (array)$tables );
+		wfRunHooks( "BacklinksPurge", [ $affectedTitles ] );
 		$affectedCount  = count( $affectedTitles );
 
 		$this->info( "Purge Request", [

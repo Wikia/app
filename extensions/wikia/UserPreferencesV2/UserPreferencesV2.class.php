@@ -157,11 +157,6 @@ class UserPreferencesV2 {
 			$defaultPreferences['marketingallowed']['label-message'] = 'tog-marketingallowed-v2';
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'marketingallowed' );
 		}
-		if ( isset( $defaultPreferences['watchlistdigest'] ) ) {
-			$defaultPreferences['watchlistdigest']['section'] = 'emailv2/email-me-v2';
-			$defaultPreferences['watchlistdigest']['label-message'] = 'tog-watchlistdigest-v2';
-			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'watchlistdigest' );
-		}
 		if ( isset( $defaultPreferences['marketingallowed'] ) ) {
 			$defaultPreferences['marketingallowed']['section'] = 'emailv2/email-me-v2';
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'marketingallowed' );
@@ -183,11 +178,6 @@ class UserPreferencesV2 {
 			$defaultPreferences['enotifrevealaddr']['section'] = 'emailv2/email-advanced-v2';
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'enotifrevealaddr' );
 		}
-		if ( array_key_exists( 'watchlistdigestclear', $defaultPreferences ) ) {
-			$defaultPreferences['watchlistdigestclear']['section'] = 'emailv2/email-advanced-v2';
-			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'watchlistdigestclear' );
-		}
-
 		if ( isset( $defaultPreferences['unsubscribed'] ) ) {
 			$defaultPreferences['unsubscribed']['section'] = 'emailv2/email-unsubscribe';
 			$defaultPreferences['unsubscribed']['label-message'] = 'unsubscribe-preferences-toggle-v2';
@@ -211,14 +201,11 @@ class UserPreferencesV2 {
 		unset( $defaultPreferences['nocache'] );
 		unset( $defaultPreferences['showjumplinks'] );
 		unset( $defaultPreferences['numberheadings'] );
-		if ( isset( $defaultPreferences['enablerichtext'] ) ) {
-			$defaultPreferences['enablerichtext']['section'] = 'editing/editing-experience';
-		}
 		if ( isset( $defaultPreferences['disablelinksuggest'] ) ) {
 			$defaultPreferences['disablelinksuggest']['section'] = 'editing/editing-experience';
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'disablelinksuggest' );
 		}
-		if ( $user->mOptions['skin'] == 'monobook' ) {
+		if ( $user->getGlobalPreference( 'skin' ) == 'monobook' ) {
 			if ( isset( $defaultPreferences['showtoolbar'] ) ) {
 				$defaultPreferences['showtoolbar']['section'] = 'editing/monobookv2';
 				$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'showtoolbar' );
@@ -345,7 +332,7 @@ class UserPreferencesV2 {
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'hidefollowedpages' );
 		}
 		if ( isset( $defaultPreferences['justify'] ) ) {
-			if ( $user->mOptions['skin'] == 'monobook' ) {
+			if ( $user->getGlobalPreference( 'skin' ) == 'monobook' ) {
 				$defaultPreferences['justify']['section'] = 'under-the-hood/advanced-displayv2';
 				$defaultPreferences['justify']['label-message'] = 'tog-justify-v2';
 				$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'justify' );

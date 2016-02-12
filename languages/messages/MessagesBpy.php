@@ -187,30 +187,12 @@ $messages = array(
 'navigation'    => 'দিশা-ধরুনী',
 'and'           => '&#32;বারো',
 
-# Cologne Blue skin
 'qbfind'         => 'বিসারিয়া চা',
 'qbbrowse'       => 'বুলিয়া চা',
-'qbedit'         => 'পতানি',
 'qbpageoptions'  => 'পাতা এহানর সারুক',
 'qbpageinfo'     => 'পাতা এহানর পৌ',
-'qbmyoptions'    => 'মর পছন',
-'qbspecialpages' => 'বিশেষ পাতাহানি',
 'faq'            => 'আঙলাক',
-'faqpage'        => 'Project:আঙলাক',
 
-# Vector skin
-'vector-action-addsection'       => 'বিষয় তিলকর',
-'vector-action-delete'           => 'পুসে বেলা',
-'vector-action-move'             => 'থেইকর',
-'vector-action-protect'          => 'লুকর',
-'vector-action-undelete'         => 'নাপুসি',
-'vector-action-unprotect'        => 'লুকরানিহান সিলকর',
-'vector-simplesearch-preference' => 'বিসারানির কা পরামর্শ থা করেই (হুদ্দা ভেক্টর স্কিনর কা)',
-'vector-view-create'             => 'হঙকরিক',
-'vector-view-edit'               => 'পতানি',
-'vector-view-history'            => 'ইতিহাস চেইক',
-'vector-view-view'               => 'পাকরিক',
-'vector-view-viewsource'         => 'সোর্স চেইক',
 'actions'                        => 'কার্যক্রম',
 'namespaces'                     => 'নাঙরলাম',
 'variants'                       => 'ভেরিয়েন্টহানি',
@@ -233,7 +215,6 @@ $messages = array(
 'edit'              => 'পতানি',
 'create'            => 'হঙকর',
 'editthispage'      => 'পাতা এহান পতিক',
-'create-this-page'  => 'পাতা এহান হঙকর',
 'delete'            => 'পুসানি',
 'deletethispage'    => 'পাতা এহান পুসে বেলিক',
 'undelete_short'    => 'পুসানিহান আলকর {{PLURAL:$1|পতাহান|$1 পতাহানি}}',
@@ -248,19 +229,9 @@ $messages = array(
 'talkpagelinktext'  => 'য়্যারি',
 'specialpage'       => 'বিশেষ পাতাহান',
 'personaltools'     => 'নিজস্ব আতিয়ার',
-'postcomment'       => 'নুৱা অনুচ্ছেদহান',
-'articlepage'       => 'নিবন্ধ চেইক',
 'talk'              => 'য়্যারী',
 'views'             => 'চা',
 'toolbox'           => 'আতিয়ার',
-'userpage'          => 'আতাকুরার পাতাহান চেইক',
-'projectpage'       => 'প্রকল্পর পাতাহান',
-'imagepage'         => 'ফাইলর পাতাহান চেইক',
-'mediawikipage'     => 'পৌর পাতাহান চা',
-'templatepage'      => 'মডেলর পাতাহান চা',
-'viewhelppage'      => 'পাঙলাকর পাতাহান চা',
-'categorypage'      => 'বিষয়থাকর পাতাহানি চা',
-'viewtalkpage'      => 'য়্যারীর পাতাহান চেইক',
 'otherlanguages'    => 'আরআর ঠারে',
 'redirectedfrom'    => '($1 -ত্ত পাকদিয়া আহিল)',
 'redirectpagesub'   => 'কুইপা পাতা',
@@ -436,8 +407,9 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''তি খানি আগে তর একাউন্টহাত্ত নিকুরিসত।'''
 
-এ পরিস্থিতিত তি বেনাঙল {{SITENAME}} ব্যবহার করানি পারর, নাইলে আরাক নাঙল [[Special:UserLogin|বারো হমানি]] পারর।
+এ পরিস্থিতিত তি বেনাঙল {{SITENAME}} ব্যবহার করানি পারর, নাইলে আরাক নাঙল $1 পারর।
 খিয়াল থ, কোন কোন পাতা তি আগর অংতাত আসত বুলিয়া দেখা দিতে পারে। অসারে ইলে তি ব্রাওজারর ক্যাশ সেঙকরে বেলা (clear browser cache)।",
+'logouttext-link-text'       => 'বারো হমানি',
 'welcomecreation'            => '==সম্ভাষা, $1! ==
 তর একাউন্টহান হঙিল। তর [[Special:Preferences|{{SITENAME}} পছনহান]] সিলানি না পাহুরিস।',
 'yourname'                   => 'আতাকুরার নাংহান (Username)',
@@ -464,7 +436,7 @@ $2',
 'createaccountmail'          => 'ই-মেইলন',
 'createaccountreason'        => 'কারণ:',
 'badretype'                  => 'খন্তাচাবি (password) দ্বিয়গি না মিলের।',
-'userexists'                 => 'এরে আতাকুরার নাঙ এহান আরাক আগই আগে ব্যবহার করিসে। 
+'userexists'                 => 'এরে আতাকুরার নাঙ এহান আরাক আগই আগে ব্যবহার করিসে।
 তি আরাক নাঙ আহান বাছ।',
 'loginerror'                 => 'লগইনে লালুইসে',
 'createaccounterror'         => 'একাউন্টহান হঙকরানি নুৱারলাং: $1',
@@ -880,13 +852,6 @@ $2',
 'powersearch-togglenone'           => 'কিত্তাউ নেই',
 'search-external'                  => 'বারেদে বিসারা',
 
-# Quickbar
-'qbsettings'               => 'কুইকবার',
-'qbsettings-none'          => 'কিত্তাউ নেই',
-'qbsettings-fixedleft'     => 'লেপ্পা বিঙ',
-'qbsettings-fixedright'    => 'লেপ্পা বাত',
-'qbsettings-floatingleft'  => 'বাহের বিঙ',
-'qbsettings-floatingright' => 'বাহের বাত',
 
 # Preferences page
 'preferences'               => 'পছনহানি',

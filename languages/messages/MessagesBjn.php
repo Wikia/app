@@ -193,30 +193,12 @@ $messages = array(
 'navigation'    => 'Napigasi',
 'and'           => '&#32;wan',
 
-# Cologne Blue skin
 'qbfind'         => 'Paugaian',
 'qbbrowse'       => 'Tangadahi',
-'qbedit'         => 'Babak',
 'qbpageoptions'  => 'Tungkaran ini',
 'qbpageinfo'     => 'Naskah aluran',
-'qbmyoptions'    => 'Tungkaran ulun',
-'qbspecialpages' => 'Tungkaran istimiwa',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Tambahi tupik',
-'vector-action-delete'           => 'Hapus',
-'vector-action-move'             => 'Pindahakan',
-'vector-action-protect'          => 'Lindungi',
-'vector-action-undelete'         => 'Pawalangan pahapusan',
-'vector-action-unprotect'        => 'Palindungan',
-'vector-simplesearch-preference' => 'Kawa-akan saran panggagaian tingkat lanjut (Vector skin haja)',
-'vector-view-create'             => 'Ulah',
-'vector-view-edit'               => 'Babak',
-'vector-view-history'            => 'Tiringi halam',
-'vector-view-view'               => 'Baca',
-'vector-view-viewsource'         => 'Tiringi asal mula',
 'actions'                        => 'Tindakan',
 'namespaces'                     => 'Ngarankamar',
 'variants'                       => 'Macam',
@@ -239,7 +221,6 @@ $messages = array(
 'edit'              => 'Babak',
 'create'            => 'Ulah',
 'editthispage'      => 'Babak tungkaran ini',
-'create-this-page'  => 'Ulah tungkaran ini',
 'delete'            => 'Hapus',
 'deletethispage'    => 'Hapus tungkaran ini',
 'undelete_short'    => 'Walang mahapus {{PLURAL:$1|asa babakan|$1 bababakan}}',
@@ -254,19 +235,9 @@ $messages = array(
 'talkpagelinktext'  => 'Pandir',
 'specialpage'       => 'Tungkaran istimiwa',
 'personaltools'     => 'Pakakas surang',
-'postcomment'       => 'Palih hanyar',
-'articlepage'       => 'Tiringi isi tungkaran',
 'talk'              => 'Pamandiran',
 'views'             => 'Titiringan',
 'toolbox'           => 'Wadah pakakas',
-'userpage'          => 'Tiringi tungkaran pamuruk',
-'projectpage'       => 'Tiringi tungkaran rangka gawian',
-'imagepage'         => 'Tiringi tungkaran barakas',
-'mediawikipage'     => 'Tiringi tungkaran pasan sistim',
-'templatepage'      => 'Tiringi tungkaran citakan',
-'viewhelppage'      => 'Tiringi tungkaran patulung',
-'categorypage'      => 'Tiringi tungkaran tumbung',
-'viewtalkpage'      => 'Tiringi tungkaran pamandiran',
 'otherlanguages'    => 'Dalam bahasa lain',
 'redirectedfrom'    => '(Diugahakan matan $1)',
 'redirectpagesub'   => 'Tungkaran paugahan',
@@ -447,8 +418,9 @@ Alasan nang dibariakan adalah ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Pian parhatan ini sudah kaluar log.'''
 
-Pian kawa manyambung hagan mamuruk {{SITENAME}} kada bangaran, atawa Pian kawa [[Special:UserLogin|babuat log pulang]] sawagai pamuruk nang sama atawa sawagai pamuruk balain.
+Pian kawa manyambung hagan mamuruk {{SITENAME}} kada bangaran, atawa Pian kawa $1 sawagai pamuruk nang sama atawa sawagai pamuruk balain.
 Catatan bahwasa babarapa tungkaran pinanya masih ha tarus manampaiakan Pian masih babuat log, sampai Pian mahabisakan timbuluk panjalajah web Pian.",
+'logouttext-link-text'       => 'babuat log pulang',
 'welcomecreation'            => '==Salamat datang, $1!==
 Akun Pian sudah diulah.
 Jangan kada ingat hagan maubah [[Special:Preferences|preferensi {{SITENAME}}]] Pian.',
@@ -658,7 +630,7 @@ Alasannya ''$2''.
 * Tujuan pamblukiran: $7
 
 Pian kawa mangiwau $1 atawa nang lain [[{{MediaWiki:Grouppage-sysop}}|pambakal]] hagan mamandirakan pamblukiran nangini.
-Pian kada kawa mamuruk pitur 'surili pamuruk ini' amun kadada sabuah alamat suril nang sah nang diajukan dalam [[Special:Preferences|kakatujuan akun]] Pian wan  Pian kada lagi diblukir mamuruk nangini. 
+Pian kada kawa mamuruk pitur 'surili pamuruk ini' amun kadada sabuah alamat suril nang sah nang diajukan dalam [[Special:Preferences|kakatujuan akun]] Pian wan  Pian kada lagi diblukir mamuruk nangini.
 Alamat IP Pian parhatan ini $3, wan ID nang diblukir adalah $5.
 Muhun sampaiakan samunyaan rarinci di atas dalam parmintaan nag Pian ulah.",
 'autoblockedtext'                  => "Alamat IP Pian sudah utumatis diblukir karana dipuruk ulih pamuruk lain, nang diblukir ulih $1.
@@ -670,7 +642,7 @@ Alasannya: ''$2''.
 
 Pian kawa mangiwau $1 atawa nang lain [[{{MediaWiki:Grouppage-sysop}}|pambakal]] hagan mamandirakan pamblukiran nangini.
 
-Catatan Pian kada kawa mamuruk pitur 'surili pamuruk ini' amun kadada sabuah alamat suril nang sah nang tadaptar dalam [[Special:Preferences|kakatujuan akun]] Pian wan  Pian kada lagi diblukir mamuruk nangini. 
+Catatan Pian kada kawa mamuruk pitur 'surili pamuruk ini' amun kadada sabuah alamat suril nang sah nang tadaptar dalam [[Special:Preferences|kakatujuan akun]] Pian wan  Pian kada lagi diblukir mamuruk nangini.
 
 Alamat IP Pian parhatan ini $3, wan ID nang diblukir adalah $5.
 Muhun sampaiakan samunyaan rarinci di atas dalam parmintaan nag Pian ulah.",
@@ -1073,14 +1045,6 @@ Tarai pamintaan Pian lawan ''all:'' gasan manggagai samunyaan isi (tamasuk tungk
 Pian kawa manggagai lung Google parhatan ini.
 Catatan nang dihaharnya matan isi {{SITENAME}} kawa-ai sudah kadaluarsa.',
 
-# Quickbar
-'qbsettings'                => 'Bilahhancap',
-'qbsettings-none'           => 'Kadada',
-'qbsettings-fixedleft'      => 'Tatap di kiwa',
-'qbsettings-fixedright'     => 'Tatap di kanan',
-'qbsettings-floatingleft'   => 'Mangambang sabalah kiwa',
-'qbsettings-floatingright'  => 'Mangambang sabalah kanan',
-'qbsettings-directionality' => 'Tatap, tagantung pada ampah skrip matan bahasa Pian',
 
 # Preferences page
 'preferences'                   => 'Kakatujuan',
@@ -2462,7 +2426,7 @@ Pian batanggung jawab gasan mamastiakan tautan-tautan tatarusan manuju ka mana n
 Catatan bahwasanya tungkaran '''kada''' akan tapindah amun sudah ada tungkaran nang bangaran hanyar ngitu, kacuali amun tungkaran itu puang atawa sabuah paugahan wan kadada halam babakan.
 
 '''Paringatan!'''
-Ini kawa maakibatakan parubahan kada taduga wan drastis gasan sabuah tungkaran rami; 
+Ini kawa maakibatakan parubahan kada taduga wan drastis gasan sabuah tungkaran rami;
 muhun mamastiakan Pian paham akibatnya sabalum manarusakan.",
 'movepagetalktext'             => "Tungkaran pamandiran tarait akan langsung dipindahakan baimbai wan ini '''kacuali amun:'''
 *Sabuah tungkaran pamandiran nang kada puang sudah baisi awan judul hanyar, atawa

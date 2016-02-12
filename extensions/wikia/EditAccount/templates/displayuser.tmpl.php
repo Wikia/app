@@ -1,5 +1,7 @@
 <!-- s:<?= __FILE__ ?> -->
-<small><a href="<?php print $returnURL; ?>">Return</a><?= wfMessage( 'pipe-separator' )->escaped() . $logLink ?></small>
+<small><a href="<?php print $returnURL; ?>">Return</a>
+	<?= wfMessage( 'pipe-separator' )->escaped() . $logLink ?>
+	<?= wfMessage( 'pipe-separator' )->escaped() . $mailLogLink ?></small>
 <?php if (!is_null($status)) { ?>
 <fieldset>
 	<legend><?= wfMessage( 'editaccount-status' )->escaped(); ?></legend>

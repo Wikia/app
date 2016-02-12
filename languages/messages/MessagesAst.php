@@ -199,30 +199,12 @@ $messages = array(
 'navigation'    => 'Navegación',
 'and'           => '&#32;y',
 
-# Cologne Blue skin
 'qbfind'         => 'Alcontrar',
 'qbbrowse'       => 'Escartafoyar',
-'qbedit'         => 'Editar',
 'qbpageoptions'  => 'Esta páxina',
 'qbpageinfo'     => 'Contestu',
-'qbmyoptions'    => 'Les mios páxines',
-'qbspecialpages' => 'Páxines especiales',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:Entrugues más frecuentes',
 
-# Vector skin
-'vector-action-addsection'       => 'Amestar asuntu',
-'vector-action-delete'           => 'Desaniciar',
-'vector-action-move'             => 'Treslladar',
-'vector-action-protect'          => 'Protexer',
-'vector-action-undelete'         => 'Des-desaniciar',
-'vector-action-unprotect'        => 'Camudar la proteición',
-'vector-simplesearch-preference' => 'Activar suxerencies de gueta enantaes (piel Vector namái)',
-'vector-view-create'             => 'Crear',
-'vector-view-edit'               => 'Editar',
-'vector-view-history'            => 'Ver historial',
-'vector-view-view'               => 'Lleer',
-'vector-view-viewsource'         => 'Ver códigu fonte',
 'actions'                        => 'Aiciones',
 'namespaces'                     => 'Espacios de nome',
 'variants'                       => 'Variantes',
@@ -245,7 +227,6 @@ $messages = array(
 'edit'              => 'Editar',
 'create'            => 'Crear',
 'editthispage'      => 'Editar esta páxina',
-'create-this-page'  => 'Crear esta páxina',
 'delete'            => 'Desaniciar',
 'deletethispage'    => 'Desaniciar esta páxina',
 'undelete_short'    => 'Restaurar {{PLURAL:$1|una edición|$1 ediciones}}',
@@ -260,19 +241,9 @@ $messages = array(
 'talkpagelinktext'  => 'Alderique',
 'specialpage'       => 'Páxina especial',
 'personaltools'     => 'Ferramientes personales',
-'postcomment'       => 'Seición nueva',
-'articlepage'       => 'Ver conteníu de la páxina',
 'talk'              => 'Alderique',
 'views'             => 'Vistes',
 'toolbox'           => 'Ferramientes',
-'userpage'          => "Ver páxina d'usuariu",
-'projectpage'       => 'Ver la páxina de proyeutu',
-'imagepage'         => 'Ver la páxina de ficheros',
-'mediawikipage'     => 'Ver la páxina de mensaxe',
-'templatepage'      => 'Ver la páxina de plantía',
-'viewhelppage'      => "Ver la páxina d'ayuda",
-'categorypage'      => 'Ver páxina de categoríes',
-'viewtalkpage'      => 'Ver alderique',
 'otherlanguages'    => "N'otres llingües",
 'redirectedfrom'    => '(Redirixío dende $1)',
 'redirectpagesub'   => 'Páxina de redireición',
@@ -456,8 +427,9 @@ El motivu conseñáu ye ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Yá tas desconectáu.'''
 
-Pues siguir usando {{SITENAME}} de forma anónima, o pues [[Special:UserLogin|volver a entrar]] como'l mesmu o como otru usuariu.
+Pues siguir usando {{SITENAME}} de forma anónima, o pues $1 como'l mesmu o como otru usuariu.
 Ten en cuenta que dalgunes páxines puen siguir apaeciendo como si tovía tuvieres coneutáu, hasta que llimpies la caché del navegador.",
+'logouttext-link-text'       => 'volver a entrar',
 'welcomecreation'            => "== Bienveníu, $1! ==
 Se creó la to cuenta.
 Nun t'escaezas d'escoyer les tos [[Special:Preferences|preferencies de {{SITENAME}}]].",
@@ -743,7 +715,6 @@ La cabera entrada del rexistru de bloqueos s'ufre darréu pa referencia:",
 '''¡Tovía nun ta guardáu!'''",
 'sitejspreview'                    => "'''¡Recuerda que namái tas probando esti códigu JavaScript'''
 '''¡Tovía nun tá guardáu!'''",
-'userinvalidcssjstitle'            => "'''Avisu:''' Nun hai piel \"\$1\". Recuerda que les páxines personalizaes .css y .js usen un títulu en minúscules, p. ex. {{ns:user}}:Foo/vector.css en cuenta de {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Actualizao)',
 'note'                             => "'''Nota:'''",
 'previewnote'                      => "'''Alcuérdate de qu'esto ye sólo una vista previa.'''
@@ -972,7 +943,7 @@ Nun tienes accesu al mesmu.',
 'revdelete-concurrent-change' => "Error al camudar l'elementu con data $2, $1: paez que'l so estáu camudólu otra persona mientres tentabes camudalu tu.
 Comprueba los rexistros, por favor.",
 'revdelete-only-restricted'   => "Fallu al anubrir l'elementu con data $1, $2: nun se puen quitar elementos de la vista de los alministradores ensin escoyer tamién una de les otres opciones de visibilidá.",
-'revdelete-reason-dropdown'   => '*Razones comúnes de desaniciu 
+'revdelete-reason-dropdown'   => '*Razones comúnes de desaniciu
 ** Violación del Copyright
 ** Información personal non apropiada
 ** Información potencialmente bilordiosa',
@@ -1090,14 +1061,6 @@ Asegúrate de qu'esti cambéu caltenga la continuidá del históricu de la páxi
 'search-external'                  => 'Busca esterna',
 'searchdisabled'                   => "La busca en {{SITENAME}} ta desactivada. Mentanto, pues buscar en Google. Has fixate en que'l conteníu de los sos índices de {{SITENAME}} pue tar desfasáu.",
 
-# Quickbar
-'qbsettings'                => 'Barra rápida',
-'qbsettings-none'           => 'Nenguna',
-'qbsettings-fixedleft'      => 'Fixa a manzorga',
-'qbsettings-fixedright'     => 'Fixa a mandrecha',
-'qbsettings-floatingleft'   => 'Flotante a manzorga',
-'qbsettings-floatingright'  => 'Flotante a mandrecha',
-'qbsettings-directionality' => "Fixa, según la direición d'escritura de la to llingua",
 
 # Preferences page
 'preferences'                   => 'Preferencies',
@@ -2753,15 +2716,7 @@ Pues ver el so códigu fonte.',
 
 # Stylesheets
 'common.css'              => "/* Los CSS allugaos equí s'aplicarán a tolos aspeutos */",
-'standard.css'            => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu Standard */',
-'nostalgia.css'           => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu Nostalgia */',
-'cologneblue.css'         => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu Cologne Blue */',
 'monobook.css'            => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu Monobook */',
-'myskin.css'              => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu MySkin */',
-'chick.css'               => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu Chick */',
-'simple.css'              => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu Simple */',
-'modern.css'              => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu Modern */',
-'vector.css'              => '/* Los CSS allugaos equí afeutarán a los usuarios del aspeutu Vector */',
 'print.css'               => '/* Los CSS allugaos equí afeutarán a la salida pola imprentadora */',
 'handheld.css'            => '/* Los CSS allugaos equí afeutarán a los preseos portátiles basaos nel aspeutu configuráu en $wgHandheldStyle */',
 'noscript.css'            => '/* Los CSS allugaos equí afeutarán a los usuarios col JavaScript desactiváu */',
@@ -2772,15 +2727,7 @@ Pues ver el so códigu fonte.',
 
 # Scripts
 'common.js'              => '/* Cualesquier JavaScript que tea equí se cargará pa tolos usuarios en cada carga de páxina. */',
-'standard.js'            => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu Standard */',
-'nostalgia.js'           => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu Nostalgia */',
-'cologneblue.js'         => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu Cologne Blue */',
 'monobook.js'            => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu MonoBook */',
-'myskin.js'              => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu MySkin */',
-'chick.js'               => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu Chick */',
-'simple.js'              => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu Simple */',
-'modern.js'              => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu Modern */',
-'vector.js'              => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios del aspeutu Vector */',
 'group-autoconfirmed.js' => '/* Cualesquier JavaScript que tea equí se cargará pa los usuarios autoconfirmaos namái */',
 'group-bot.js'           => '/* Cualesquier JavaScript que tea equí se cargará pa los bots namái */',
 'group-sysop.js'         => '/* Cualesquier JavaScript que tea equí se cargará pa los sysops namái */',
@@ -2824,11 +2771,6 @@ Probablemente tea causao por un enllaz a un sitiu esternu de la llista prieta.',
 'pageinfo-viewsperedit'     => 'Visites por edición',
 
 # Skin names
-'skinname-standard'    => 'Clásicu',
-'skinname-nostalgia'   => 'Señardá',
-'skinname-cologneblue' => 'Azul Colonia',
-'skinname-myskin'      => 'MySkin',
-'skinname-modern'      => 'Modernu',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marcar como supervisada',

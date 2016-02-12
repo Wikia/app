@@ -295,29 +295,12 @@ $messages = array(
 'navigation'    => 'ګرځښت',
 'and'           => '&#32;او',
 
-# Cologne Blue skin
 'qbfind'         => 'موندل',
 'qbbrowse'       => 'سپړل',
-'qbedit'         => 'سمول',
 'qbpageoptions'  => 'همدا مخ',
 'qbpageinfo'     => 'متن',
-'qbmyoptions'    => 'زما پاڼې',
-'qbspecialpages' => 'ځانګړي مخونه',
 'faq'            => 'ډ-ځ-پ',
-'faqpage'        => 'Project:ډ-ځ-پ',
 
-# Vector skin
-'vector-action-addsection' => 'سرليکونه ورګډول',
-'vector-action-delete'     => 'ړنګول',
-'vector-action-move'       => 'لېږدول',
-'vector-action-protect'    => 'پروژه',
-'vector-action-undelete'   => 'ناړنګول',
-'vector-action-unprotect'  => 'ژغورنه بدلول',
-'vector-view-create'       => 'جوړول',
-'vector-view-edit'         => 'سمول',
-'vector-view-history'      => 'پېښليک کتل',
-'vector-view-view'         => 'لوستل',
-'vector-view-viewsource'   => 'سرچينه کتل',
 'actions'                  => 'کړنې',
 'namespaces'               => 'نوم-تشيالونه',
 
@@ -339,7 +322,6 @@ $messages = array(
 'edit'              => 'سمول',
 'create'            => 'جوړول',
 'editthispage'      => 'همدا مخ سمول',
-'create-this-page'  => 'همدا مخ ليکل',
 'delete'            => 'ړنګول',
 'deletethispage'    => 'دا مخ ړنګ کړه',
 'undelete_short'    => '{{PLURAL:$1|يو سمون|$1 سمونې}} ناړنګول',
@@ -354,19 +336,9 @@ $messages = array(
 'talkpagelinktext'  => 'خبرې اترې',
 'specialpage'       => 'ځانګړې پاڼه',
 'personaltools'     => 'شخصي اوزار',
-'postcomment'       => 'نوې برخه',
-'articlepage'       => 'د مخ مېنځپانګه ښکاره کول',
 'talk'              => 'خبرې اترې',
 'views'             => 'کتنې',
 'toolbox'           => 'اوزاربکس',
-'userpage'          => 'د کارن پاڼه کتل',
-'projectpage'       => 'د پروژې مخ کتل',
-'imagepage'         => 'د دوتنې مخ کتل',
-'mediawikipage'     => 'د پيغامونو مخ کتل',
-'templatepage'      => 'د کينډۍ مخ کتل',
-'viewhelppage'      => 'د لارښود مخ کتل',
-'categorypage'      => 'د وېشنيزې مخ کتل',
-'viewtalkpage'      => 'خبرې اترې کتل',
 'otherlanguages'    => 'په نورو ژبو کې',
 'redirectedfrom'    => '(له $1 نه مخ ګرځېدلی)',
 'redirectpagesub'   => 'د مخ ګرځونې مخ',
@@ -409,7 +381,7 @@ $1',
 'badaccess-groups' => 'د کومې کړنې غوښتنه چې تاسې کړې د هغو کارنانو پورې محدوده ده چې {{PLURAL:$2|په ډله د|په ډلو د}}: $1 کې دي.',
 
 'versionrequired'     => 'د ميډياويکي $1 بڼې ته اړتيا ده',
-'versionrequiredtext' => 'د دې مخ په ليدلو کې د مېډياويکي $1 بڼې ته اړتيا ده. 
+'versionrequiredtext' => 'د دې مخ په ليدلو کې د مېډياويکي $1 بڼې ته اړتيا ده.
 [[Special:Version|د بڼې مخ وګورۍ]].',
 
 'ok'                      => 'ښه',
@@ -521,8 +493,9 @@ $1',
 # Login and logout pages
 'logouttext'                 => "'''تاسې اوس د غونډال نه ووتلی.'''
 
-تاسې کولای شی چې د کارن-نوم نه پرته په ورکنومي توګه {{SITENAME}} وکاروی، او يا هم په همدې او يا کوم بل کارن-نوم، يو ځل [[Special:UserLogin|بيا غونډال ته ورننوځۍ]].
+تاسې کولای شی چې د کارن-نوم نه پرته په ورکنومي توګه {{SITENAME}} وکاروی، او يا هم په همدې او يا کوم بل کارن-نوم، يو ځل $1.
 دا په پام کې وساتۍ چې تر څو تاسې د خپل کتنمل حافظه نه وي سپينه کړې، نو ځينې مخونو کې به لا تر اوسه پورې په غونډال کې ننوتي ښکارۍ.",
+'logouttext-link-text'       => 'بيا غونډال ته ورننوځۍ',
 'welcomecreation'            => '==$1 ښه راغلاست! ==
 
 ستاسې ګڼون جوړ شو. لطفاً د [[Special:Preferences|{{SITENAME}} غوره توبونو]] ټاکل مو مه هېروی.',
@@ -732,7 +705,7 @@ $1',
 'userpage-userdoesnotexist-view'   => 'د "$1" ګڼون نه دی ثبت شوی.',
 'blocked-notice-logextract'        => 'دم مهال په دې کارن بنديز لګېدلی.
 دلته لاندې د بنديز تازه يادښت د سرچينې په توګه ورکړ شوی:',
-'clearyourcache'                   => "'''يادونه:''' د غوره توبونو د خوندي کولو وروسته، ددې لپاره چې تاسو خپل سر ته رسولي ونجونه وګورۍ نو پکار ده چې د خپل بروزر ساتل شوې حافظه تازه کړی. 
+'clearyourcache'                   => "'''يادونه:''' د غوره توبونو د خوندي کولو وروسته، ددې لپاره چې تاسو خپل سر ته رسولي ونجونه وګورۍ نو پکار ده چې د خپل بروزر ساتل شوې حافظه تازه کړی.
 * د '''Mozilla / Firefox / Safari:''' لپاره د ''Shift'' تڼۍ نيولې وساتی کله مو چې په ''Reload''، ټک واهه، او يا هم ''Ctrl-Shift-R'' تڼۍ کېښکاږۍ (په Apple Mac کمپيوټر باندې ''Cmd-Shift-R'' کېښکاږۍ)
 * '''د ګووګل کروم:''' لپاره د ''Ctrl-Shift-R'' تڼۍ کېښکاږۍ (د مک لپاره ''Command-Shift-R'')
 * د '''IE:''' د ''Ctrl'' تڼۍ کېښکاږۍ کله مو چې په ''Refresh'' ټک واهه، او يا هم د ''Ctrl-F5'' تڼۍ کېښکاږۍ
@@ -954,13 +927,6 @@ $1',
 'powersearch-togglenone'           => 'هېڅ',
 'search-external'                  => 'باندنۍ پلټنه',
 
-# Quickbar
-'qbsettings'               => 'چټک پټه',
-'qbsettings-none'          => 'هېڅ',
-'qbsettings-fixedleft'     => 'ثابته کيڼ',
-'qbsettings-fixedright'    => 'ثابته ښي',
-'qbsettings-floatingleft'  => 'کيڼه لامبا',
-'qbsettings-floatingright' => 'ښي لامبا',
 
 # Preferences page
 'preferences'                   => 'غوره توبونه',
@@ -2043,14 +2009,7 @@ $UNWATCHURL  نه ليدنه وکړۍ
 'pageinfo-views'            => 'د کتنو شمېر',
 
 # Skin names
-'skinname-standard'    => 'کلاسيک',
-'skinname-nostalgia'   => 'نوستالژي',
-'skinname-cologneblue' => 'شين کلون',
 'skinname-monobook'    => 'مونوبوک',
-'skinname-myskin'      => 'زمابڼه',
-'skinname-chick'       => 'شيک',
-'skinname-simple'      => 'ساده',
-'skinname-modern'      => 'نوی',
 
 # Patrolling
 'markaspatrolledtext' => 'دا مخ څارل شوی په نخښه کول',
@@ -2441,7 +2400,7 @@ $5
 # External image whitelist
 'external_image_whitelist' => ' #دا کرښه چې څنګه ده، همداسې پرېږدۍ<pre>
 #لاندې د منظمو اصطلاحګانو ټوټې (يوازې هغه برخه چې د // په مېنځ کې ليکلې) ځای پر ځای کړی
-#دا به د باندنيو انځورونو د يو آر اېل (hotlinked) سره مطابقه شي 
+#دا به د باندنيو انځورونو د يو آر اېل (hotlinked) سره مطابقه شي
 #هغه څه چې مطابقت لري هغه به د انځورونو په توګه ښکاره شي، کوم چې مطابقت نلري نو يوازې د انځور تړنه به ښکاره کېږي
 #هغه کرښې چې په # پيل کېږي د تبصرو په توګه په نظر کې نيول کېږي
 #دا کرښې د غټو تورو او وړو تورو سره حساسې نه دي

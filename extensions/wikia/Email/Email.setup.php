@@ -34,11 +34,12 @@ $wgAutoloadClasses['Email\Fatal'] =  $dir . 'EmailExceptions.class.php';
 $wgAutoloadClasses['Email\Check'] =  $dir . 'EmailExceptions.class.php';
 $wgAutoloadClasses['Email\Controller\ForgotPasswordController'] =  $dir . 'Controller/ForgotPasswordController.class.php';
 $wgAutoloadClasses['Email\Controller\WatchedPageController'] =  $dir . 'Controller/WatchedPageController.class.php';
-$wgAutoloadClasses['Email\Controller\WatchedPageEditedController'] =  $dir . 'Controller/WatchedPageController.class.php';
+$wgAutoloadClasses['Email\Controller\WatchedPageEditedOrCreatedController'] =  $dir . 'Controller/WatchedPageController.class.php';
 $wgAutoloadClasses['Email\Controller\WatchedPageProtectedController'] =  $dir . 'Controller/WatchedPageController.class.php';
 $wgAutoloadClasses['Email\Controller\WatchedPageUnprotectedController'] =  $dir . 'Controller/WatchedPageController.class.php';
 $wgAutoloadClasses['Email\Controller\WatchedPageRenamedController'] =  $dir . 'Controller/WatchedPageController.class.php';
 $wgAutoloadClasses['Email\Controller\WatchedPageDeletedController'] =  $dir . 'Controller/WatchedPageController.class.php';
+$wgAutoloadClasses['Email\Controller\WatchedPageRestoredController'] =  $dir . 'Controller/WatchedPageController.class.php';
 $wgAutoloadClasses['Email\Controller\ArticleCommentController'] =  $dir . 'Controller/CommentController.class.php';
 $wgAutoloadClasses['Email\Controller\BlogCommentController'] =  $dir . 'Controller/CommentController.class.php';
 $wgAutoloadClasses['Email\Controller\UserBlogPostController'] =  $dir . 'Controller/BlogPostController.class.php';
@@ -54,15 +55,25 @@ $wgAutoloadClasses['Email\Controller\AbstractEmailConfirmationController'] =  $d
 $wgAutoloadClasses['Email\Controller\EmailConfirmationController'] =  $dir . 'Controller/EmailConfirmationController.class.php';
 $wgAutoloadClasses['Email\Controller\EmailConfirmationReminderController'] =  $dir . 'Controller/EmailConfirmationController.class.php';
 $wgAutoloadClasses['Email\Controller\ConfirmationChangedEmailController'] = $dir . 'Controller/EmailConfirmationController.class.php';
+$wgAutoloadClasses['Email\Controller\ReactivateAccountController'] =  $dir . 'Controller/EmailConfirmationController.class.php';
 $wgAutoloadClasses['Email\Controller\CategoryAddController'] = $dir . 'Controller/CategoryAddController.class.php';
-$wgAutoloadClasses['Email\Controller\AbstractFounderEditController'] =  $dir . 'Controller/FounderController.class.php';
 $wgAutoloadClasses['Email\Controller\FounderEditController'] =  $dir . 'Controller/FounderController.class.php';
 $wgAutoloadClasses['Email\Controller\FounderAnonEditController'] =  $dir . 'Controller/FounderController.class.php';
 $wgAutoloadClasses['Email\Controller\FounderMultiEditController'] =  $dir . 'Controller/FounderController.class.php';
 $wgAutoloadClasses['Email\Controller\FounderActiveController'] =  $dir . 'Controller/FounderController.class.php';
 $wgAutoloadClasses['Email\Controller\FounderNewMemberController'] =  $dir . 'Controller/FounderController.class.php';
+$wgAutoloadClasses['Email\Controller\GenericController'] =  $dir . 'Controller/GenericController.class.php';
+$wgAutoloadClasses['Email\Controller\FounderDigestController'] = $dir . 'Controller/FounderDigestController.class.php';
+$wgAutoloadClasses['Email\Controller\FounderActivityDigestController'] = $dir . 'Controller/FounderDigestController.class.php';
+$wgAutoloadClasses['Email\Controller\FounderPageViewsDigestController'] = $dir . 'Controller/FounderDigestController.class.php';
+$wgAutoloadClasses['Email\Controller\FounderTipsController'] = $dir . 'Controller/FounderController.class.php';
+$wgAutoloadClasses['Email\Controller\FounderTipsThreeDaysController'] = $dir . 'Controller/FounderController.class.php';
+$wgAutoloadClasses['Email\Controller\FounderTipsTenDaysController'] = $dir . 'Controller/FounderController.class.php';
+$wgAutoloadClasses['Email\Controller\WelcomeController'] = $dir . 'Controller/WelcomeController.class.php';
+$wgAutoloadClasses['Email\Controller\UserRightsChangedController'] =  $dir . 'Controller/UserRightsChangedController.class.php';
+$wgAutoloadClasses['Email\Controller\UserNameChangeController'] = $dir . 'Controller/UserNameChangeController.class.php';
+$wgAutoloadClasses['Email\Controller\FacebookDisconnectController'] = $dir . 'Controller/FacebookDisconnectController.class.php';
 $wgAutoloadClasses['Email\SpecialSendEmailController'] = $dir .  'SpecialSendEmailController.class.php';
-$wgAutoloadClasses['Email\Tracking\TrackingCategories'] = $dir .  'tracking/TrackingCategories.class.php';
 
 /**
  * special pages
@@ -74,16 +85,23 @@ $wgSpecialPages[ 'SendEmail' ] =  'Email\SpecialSendEmailController';
  */
 $wgExtensionMessagesFiles['Email'] = $dir . 'Email.i18n.php';
 $wgExtensionMessagesFiles['EmailWatchedPage'] = $dir . 'i18n/WatchedPage.i18n.php';
+$wgExtensionMessagesFiles['EmailWatchedPageRestored'] = $dir . 'i18n/WatchedPageRestored.i18n.php';
 $wgExtensionMessagesFiles['EmailComment'] = $dir . 'i18n/Comment.i18n.php';
 $wgExtensionMessagesFiles['EmailBlogPost'] = $dir . 'i18n/BlogPost.i18n.php';
 $wgExtensionMessagesFiles['EmailForum'] = $dir . 'i18n/Forum.i18n.php';
 $wgExtensionMessagesFiles['EmailWallMessage'] = $dir . 'i18n/WallMessage.i18n.php';
 $wgExtensionMessagesFiles['EmailWeeklyDigest'] = $dir . 'i18n/WeeklyDigest.i18n.php';
 $wgExtensionMessagesFiles['EmailFounder'] = $dir . 'i18n/Founder.i18n.php';
+$wgExtensionMessagesFiles['EmailFacebookDisconnect'] = $dir . 'i18n/FacebookDisconnect.i18n.php';
 $wgExtensionMessagesFiles['EmailConfirmation'] = $dir . 'i18n/EmailConfirmation.i18n.php';
+$wgExtensionMessagesFiles['EmailFounderDigest'] = $dir . 'i18n/FounderDigest.i18n.php';
+$wgExtensionMessagesFiles['ReactivateAccount'] = $dir . 'i18n/ReactivateAccount.i18n.php';
 $wgExtensionMessagesFiles['EmailCategoryAdd'] = $dir . 'i18n/CategoryAdd.i18n.php';
+$wgExtensionMessagesFiles['EmailWelcome'] = $dir . 'i18n/Welcome.i18n.php';
 $wgExtensionMessagesFiles['SpecialSendEmail'] = $dir . 'i18n/specialSendEmail.i18n.php';
 $wgExtensionMessagesFiles['ForgotPassword'] = $dir . 'i18n/ForgotPassword.i18n.php';
+$wgExtensionMessagesFiles['UserRightsChanged'] = $dir . 'i18n/UserRightsChanged.i18n.php';
+$wgExtensionMessagesFiles['EmailUserNameChange'] = $dir . 'i18n/UserNameChange.i18n.php';
 
 /**
  * permissions
@@ -93,5 +111,9 @@ $wgGroupPermissions['staff']['access-sendemail'] = true;
 $wgGroupPermissions['helper']['access-sendemail'] = true;
 $wgGroupPermissions['translator']['access-sendemail'] = true;
 
-$wgAddGroups['staff'][] = 'translator';
-$wgRemoveGroups['staff'][] = 'translator';
+if ( is_array( $wgAddGroups['staff'] ) ) {
+	$wgAddGroups[ 'staff' ][] = 'translator';
+}
+if ( is_array( $wgRemoveGroups[ 'staff' ] ) ) {
+	$wgRemoveGroups[ 'staff' ][] = 'translator';
+}

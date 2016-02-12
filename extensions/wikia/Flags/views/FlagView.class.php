@@ -14,6 +14,9 @@ use Flags\Models\FlagType;
 
 class FlagView {
 
+	const FLAGS_CSS_CLASS = 'portable-flags';
+	const FLAGS_CSS_CLASS_INLINE = 'portable-flags-inline';
+
 	public static $flagsTargetingCssClasses = [
 		FlagType::FLAG_TARGETING_READERS => 'flags-targeting-readers',
 		FlagType::FLAG_TARGETING_CONTRIBUTORS => 'flags-targeting-contributors',
@@ -71,7 +74,7 @@ class FlagView {
 	 */
 	public function wrapAllFlags( Array $templateCalls ) {
 		return \Html::rawElement( 'div', [
-			'class' => 'portable-flags',
+			'class' => self::FLAGS_CSS_CLASS,
 		], implode( '', $templateCalls ) );
 	}
 }

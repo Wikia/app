@@ -28,6 +28,7 @@ class AchRankingService {
 		$cacheKey = self::getRankingCacheKey( $limit, $compareToSnapshot );
 		$ranking = $wgMemc->get( $cacheKey );
 
+		// We do not flush cache when condition changed. See MAIN-5571
 		if( empty( $ranking ) ) {
 			$ranking = array();
 			$rules = array('ORDER BY' => 'score desc');

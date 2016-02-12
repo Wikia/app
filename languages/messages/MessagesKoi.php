@@ -93,19 +93,11 @@ $messages = array(
 'navigation'    => 'Уялöм',
 'and'           => '&#32;да',
 
-# Cologne Blue skin
 'qbfind'         => 'Кошшан',
 'qbbrowse'       => 'Мыччавны',
-'qbedit'         => 'Мöдкодьсьöтны',
 'qbpageoptions'  => 'Этiя листбок',
-'qbmyoptions'    => 'Листбоккезö',
-'qbspecialpages' => 'Тодильнöй листбоккез',
 'faq'            => 'Отир сё юасьö',
-'faqpage'        => 'Project:отир сё юасьö',
 
-# Vector skin
-'vector-action-delete' => 'Чышкыны',
-'vector-view-view'     => 'Лыддьöтны',
 'variants'             => 'Варианттэз',
 
 'errorpagetitle'   => 'Сорасьöм',
@@ -123,7 +115,6 @@ $messages = array(
 'edit'             => 'Веськöтны',
 'create'           => 'Лöсьöтны',
 'editthispage'     => 'Мöдкодьсьöтны этiйö листбоксö',
-'create-this-page' => 'Аркмöтны этiйö листбоксö',
 'delete'           => 'Чышкыны',
 'deletethispage'   => 'Чышкыны этiйö листбоксö',
 'protect'          => 'Дорйыны',
@@ -133,7 +124,6 @@ $messages = array(
 'talkpagelinktext' => 'Сёрнитан',
 'specialpage'      => 'Тодильнöй листбок',
 'personaltools'    => 'Аслат керöтаннэз',
-'postcomment'      => 'Виль юкöт',
 'talk'             => 'Сёрни',
 'views'            => 'Видзöтöммез',
 'toolbox'          => 'Керöтаннэз',

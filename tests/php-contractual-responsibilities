@@ -1,0 +1,2 @@
+#!/bin/sh
+make phpunit-contractual-responsibilities

@@ -571,30 +571,12 @@ $messages = array(
 'navigation'    => 'گشتن',
 'and'           => '&#32;و',
 
-# Cologne Blue skin
 'qbfind'         => 'یافتن',
 'qbbrowse'       => 'مرور',
-'qbedit'         => 'ویرایش',
 'qbpageoptions'  => 'این صفحه',
 'qbpageinfo'     => 'بافت',
-'qbmyoptions'    => 'صفحه‌های من',
-'qbspecialpages' => 'صفحه‌های ویژه',
 'faq'            => 'پرسش‌های متداول',
-'faqpage'        => 'Project:پرسش‌های متداول',
 
-# Vector skin
-'vector-action-addsection'       => 'افزودن بخش',
-'vector-action-delete'           => 'حذف',
-'vector-action-move'             => 'انتقال',
-'vector-action-protect'          => 'محافظت',
-'vector-action-undelete'         => 'احیا',
-'vector-action-unprotect'        => 'تغییر سطح حفاظت',
-'vector-simplesearch-preference' => 'فعال کردن پیشنهادهای جستجوی پیشرفته (فقط در پوسته برداری)',
-'vector-view-create'             => 'ایجاد',
-'vector-view-edit'               => 'ویرایش',
-'vector-view-history'            => 'نمایش تاریخچه',
-'vector-view-view'               => 'خواندن',
-'vector-view-viewsource'         => 'نمایش مبدأ',
 'actions'                        => 'عملکردها',
 'namespaces'                     => 'فضاهای نام',
 'variants'                       => 'گویش‌ها',
@@ -617,7 +599,6 @@ $messages = array(
 'edit'              => 'ویرایش',
 'create'            => 'ایجاد',
 'editthispage'      => 'ویرایش این صفحه',
-'create-this-page'  => 'این صفحه را ایجاد کنید',
 'delete'            => 'حذف',
 'deletethispage'    => 'حذف این صفحه',
 'undelete_short'    => 'احیای {{PLURAL:$1|یک ویرایش|$1 ویرایش}}',
@@ -632,19 +613,9 @@ $messages = array(
 'talkpagelinktext'  => 'بحث',
 'specialpage'       => 'صفحهٔ ویژه',
 'personaltools'     => 'ابزارهای شخصی',
-'postcomment'       => 'بخش جدید',
-'articlepage'       => 'نمایش مقاله',
 'talk'              => 'بحث',
 'views'             => 'بازدیدها',
 'toolbox'           => 'جعبه‌ابزار',
-'userpage'          => 'نمایش صفحهٔ کاربر',
-'projectpage'       => 'دیدن صفحهٔ پروژه',
-'imagepage'         => 'نمایش صفحهٔ پرونده',
-'mediawikipage'     => 'نمایش صفحهٔ پیغام',
-'templatepage'      => 'نمایش صفحهٔ الگو',
-'viewhelppage'      => 'نمایش صفحهٔ راهنما',
-'categorypage'      => 'نمایش صفحهٔ رده',
-'viewtalkpage'      => 'نمایش صفحهٔ بحث',
 'otherlanguages'    => 'زبان‌های دیگر',
 'redirectedfrom'    => '(تغییرمسیر از $1)',
 'redirectpagesub'   => 'صفحهٔ تغییرمسیر',
@@ -834,8 +805,9 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''هم‌اکنون از سامانه خارج شدید.'''
 
-شما می‌توانید به استفادهٔ گمنام از {{SITENAME}} ادامه دهید، یا با همین حساب کاربری یا حسابی دیگر [[Special:UserLogin|به سامانه وارد شوید]].
+شما می‌توانید به استفادهٔ گمنام از {{SITENAME}} ادامه دهید، یا با همین حساب کاربری یا حسابی دیگر $1.
 توجه کنید که تا زمانی که میانگیر مرورگرتان را پاک نکنید، بعضی صفحه‌ها ممکن است به گونه‌ای نمایش یابند که گویی هنوز از سامانه خارج نشده‌اید.",
+'logouttext-link-text'       => 'به سامانه وارد شوید',
 'welcomecreation'            => '==$1، خوش آمدید!==
 حساب شما ایجاد شد.
 فراموش نکنید که [[Special:Preferences|ترجیحات {{SITENAME}}]] را برای خود تغییر دهید.',
@@ -895,7 +867,7 @@ $2',
 'password-login-forbidden'   => 'استفاده از این نام کاربری و گذرواژه ممنوع است.',
 'mailmypassword'             => 'گذرواژهٔ جدید با پست الکترونیکی فرستاده شود',
 'passwordremindertitle'      => 'یادآور گذرواژهٔ {{SITENAME}}',
-'passwordremindertext'       => 'یک نفر (احتمالاً خود شما، با نشانی آی‌پی $1) گذرواژهٔ جدیدی برای حساب کاربری‌ شما در {{SITENAME}} درخواست کرده‌است ($4). 
+'passwordremindertext'       => 'یک نفر (احتمالاً خود شما، با نشانی آی‌پی $1) گذرواژهٔ جدیدی برای حساب کاربری‌ شما در {{SITENAME}} درخواست کرده‌است ($4).
 یک گذرواژهٔ موقت برای کاربر «$2» ساخته شده و برابر با «$3» قرار داده شده‌است.
 اگر هدفتان همین بوده‌است، اکنون باید وارد سامانه شوید و گذرواژهٔ جدیدی برگزینید.
 گذرواژهٔ موقت شما ظرف {{PLURAL:$5|یک روز|$5 روز}} باطل می‌شود.
@@ -1475,14 +1447,6 @@ $1",
 موقتاً می‌توانید از جستجوی Google استفاده کنید.
 توجه کنید که نتایج حاصل از جستجو با آن روش ممکن است به‌روز نباشند.',
 
-# Quickbar
-'qbsettings'                => 'نوار سریع',
-'qbsettings-none'           => 'نباشد',
-'qbsettings-fixedleft'      => 'ثابت چپ',
-'qbsettings-fixedright'     => 'ثابت راست',
-'qbsettings-floatingleft'   => 'شناور چپ',
-'qbsettings-floatingright'  => 'شناور راست',
-'qbsettings-directionality' => 'ثابت، بسته به جهت نگارش زبان شما',
 
 # Preferences page
 'preferences'                   => 'ترجیحات',
@@ -3188,15 +3152,7 @@ $1',
 'pageinfo-viewsperedit'     => 'تعداد بازدید به ازای هر ویرایش',
 
 # Skin names
-'skinname-standard'    => 'کلاسیک',
-'skinname-nostalgia'   => 'نوستالژی',
-'skinname-cologneblue' => 'آبی کلن',
 'skinname-monobook'    => 'مونوبوک',
-'skinname-myskin'      => 'پوستهٔ من',
-'skinname-chick'       => 'شیک',
-'skinname-simple'      => 'ساده',
-'skinname-modern'      => 'مدرن',
-'skinname-vector'      => 'برداری',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'برچسب گشت بزن',

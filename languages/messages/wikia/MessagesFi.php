@@ -38,4 +38,5 @@ $messages = array_merge( $messages, array(
 'preferences' => 'Asetukset',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 'addnewtalksection-link' => 'Lisää uusi osio',
+'wikia-pagetitle' => '$1 – Wikia',
 ) );

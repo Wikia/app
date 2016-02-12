@@ -59,7 +59,12 @@ ve.ui.WindowAction.prototype.open = function ( name, data ) {
 
 	surface.getView().deactivate();
 
-	if ( windowType === 'toolbar' || name === 'wikiaSourceMode' || name === 'wikiaTemplateInsert' || name === 'transclusion' ) {
+	if ( windowType === 'toolbar' ||
+		name === ve.ui.WikiaSourceModeDialog.static.name ||
+		name === ve.ui.WikiaInfoboxInsertDialog.static.name ||
+		name === ve.ui.WikiaTemplateInsertDialog.static.name ||
+		name === ve.ui.MWTransclusionDialog.static.name
+	) {
 		data = ve.extendObject( data, { surface: surface } );
 	}
 

@@ -161,7 +161,7 @@ class NewWikisPage extends AlphabeticPager {
 		}
 		if( !empty( $this->hub ) ) {
 			$query['tables'][] = 'city_cat_mapping';
-			$query['conds'][] = 'cat_id = ' . $this->hub;
+			$query['conds']['cat_id'] = $this->hub;
 			$query['join_conds']['city_cat_mapping'] = array( 'LEFT JOIN', 'city_cat_mapping.city_id = city_list.city_id' );
 		}
 

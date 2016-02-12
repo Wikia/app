@@ -459,30 +459,12 @@ $messages = array(
 'navigation' => 'सुचालन',
 'and' => '&#32;आणि',
 
-# Cologne Blue skin
 'qbfind' => 'शोधा',
 'qbbrowse' => 'न्याहाळा',
-'qbedit' => 'संपादन',
 'qbpageoptions' => 'हे पान',
 'qbpageinfo' => 'सामग्री',
-'qbmyoptions' => 'माझी पाने',
-'qbspecialpages' => 'विशेष पाने',
 'faq' => 'नेहमीची प्रश्नावली',
-'faqpage' => 'Project:प्रश्नावली',
 
-# Vector skin
-'vector-action-addsection' => 'विषय जोडा',
-'vector-action-delete' => 'वगळा',
-'vector-action-move' => 'स्थानांतरण',
-'vector-action-protect' => 'सुरक्षित करा',
-'vector-action-undelete' => 'पुनर्स्थापित करा',
-'vector-action-unprotect' => 'असुरक्षित करा',
-'vector-simplesearch-preference' => 'प्रगत शोधविकल्प सक्रिय करा (फक्त व्हेक्टर त्वचेसाठी)',
-'vector-view-create' => 'तयार करा',
-'vector-view-edit' => 'संपादन',
-'vector-view-history' => 'इतिहास पहा',
-'vector-view-view' => 'वाचा',
-'vector-view-viewsource' => 'स्रोत पहा',
 'actions' => 'क्रिया',
 'namespaces' => 'नामविश्वे',
 'variants' => 'अस्थिर',
@@ -505,7 +487,6 @@ $messages = array(
 'edit' => 'संपादन',
 'create' => 'तयार करा',
 'editthispage' => 'हे पृष्ठ संपादित करा',
-'create-this-page' => 'हे पान तयार करा',
 'delete' => 'वगळा',
 'deletethispage' => 'हे पृष्ठ काढून टाका',
 'undelete_short' => 'पुनर्स्थापन {{PLURAL:$1|एक संपादन|$1 संपादने}}',
@@ -520,19 +501,9 @@ $messages = array(
 'talkpagelinktext' => 'चर्चा',
 'specialpage' => 'विशेष पृष्ठ',
 'personaltools' => 'वैयक्तिक साधने',
-'postcomment' => 'नवीन चर्चा',
-'articlepage' => 'लेख पृष्ठ',
 'talk' => 'चर्चा',
 'views' => 'दृष्ये',
 'toolbox' => 'साधनपेटी',
-'userpage' => 'सदस्य पृष्ठ',
-'projectpage' => 'प्रकल्प पान पहा',
-'imagepage' => 'संचिका पृष्ठ पहा',
-'mediawikipage' => 'संदेश पान पहा',
-'templatepage' => 'साचा पृष्ठ पहा.',
-'viewhelppage' => 'साहाय्य पान पहा',
-'categorypage' => 'वर्ग पान पहा',
-'viewtalkpage' => 'चर्चा पृष्ठ पहा',
 'otherlanguages' => 'इतर भाषा',
 'redirectedfrom' => '($1 पासून पुनर्निर्देशित)',
 'redirectpagesub' => 'पुनर्निर्देशनाचे पान',
@@ -708,8 +679,9 @@ $2',
 # Login and logout pages
 'logouttext' => "'''तुम्ही आता अदाखल झाला(logout)आहात.'''
 
-तुम्ही अनामिकपणे {{SITENAME}}चा उपयोग करत राहू शकता, किंवा त्याच अथवा वेगळ्या सदस्य नावाने [[Special:UserLogin| पुन्हा दाखल होऊ शकता]].
+तुम्ही अनामिकपणे {{SITENAME}}चा उपयोग करत राहू शकता, किंवा त्याच अथवा वेगळ्या सदस्य नावाने $1.
 आपण स्वत:च्या न्याहाळकाची सय (cache) रिकामी करत नाही तो पर्यंत काही पाने आपण अजून दाखल आहात, असे नुसतेच दाखवत राहू शकतील.",
+'logouttext-link-text'       => ' पुन्हा दाखल होऊ शकता',
 'welcomecreation' => '== सुस्वागतम, $1! ==
 
 तुमचे खाते उघडण्यात आले आहे.
@@ -943,7 +915,7 @@ $2',
 'userpage-userdoesnotexist-view' => 'सदस्यखाते "$1"  हे नोंदलेले नाही.',
 'blocked-notice-logextract' => 'हा सदस्य सध्या प्रतिबंधित आहे.
 सर्वांत नवीन प्रतिबंधन यादी खाली संदर्भासाठी दिली आहे:',
-'clearyourcache' => "'''सूचना:''' जतन केल्यावर बदल दिसण्यासाठी तुम्हाला कदाचित न्याहाळकाची सय टाळायला लागेल. असे करण्यासाठी - 
+'clearyourcache' => "'''सूचना:''' जतन केल्यावर बदल दिसण्यासाठी तुम्हाला कदाचित न्याहाळकाची सय टाळायला लागेल. असे करण्यासाठी -
 *'''फायरफॉक्स / सफारी:''' ''Reload'' करताना ''Shift'' दाबून ठेवा, किंवा ''Ctrl-F5'' अथवा ''Ctrl-R'' दाबा (मॅकसाठी ''⌘-R'')
 *'''गूगल क्रोम:''' ''Ctrl-Shift-R'' दाबा (मॅकसाठी ''⌘-Shift-R'')
 *'''इंटरनेट एक्सप्लोरर:''' ''Reload'' करताना ''Ctrl'' दाबून ठेवा, किंवा ''Ctrl-F5'' दाबा
@@ -955,7 +927,6 @@ $2',
 'userjspreview' => "'''तुम्ही तुमची सदस्य जावास्क्रिप्ट तपासत आहात किंवा झलक पहात आहात ,ती अजून जतन केलेली नाही हे लक्षात घ्या!'''",
 'sitecsspreview' => "'''तुम्ही तुमच्या सी.एस.एस.ची केवळ झलक पहात आहात, ती अजून जतन केलेली नाही हे लक्षात घ्या.'''",
 'sitejspreview' => "'''तुम्ही तुमच्या जावास्क्रिप्टची केवळ झलक पहात आहात, ती अजून जतन केलेली नाही हे लक्षात घ्या.'''",
-'userinvalidcssjstitle' => "'''सावधान:''' \"\$1\" अशी त्वचा नाही.custom .css आणि .js पाने lowercase title वापरतात हे लक्षात घ्या, उदा. {{ns:user}}:Foo/vector.css या विरूद्ध {{ns:user}}:Foo/Vector.css.",
 'updated' => '(बदल झाला आहे.)',
 'note' => "'''सूचना:'''",
 'previewnote' => "'''लक्षात ठेवा की ही फक्त झलक आहे''', बदल अजून जतन करण्यात आलेले नाहीत.",
@@ -1296,14 +1267,6 @@ $1",
 'search-external' => 'बाह्य शोध',
 'searchdisabled' => '{{SITENAME}} शोध अनुपलब्ध केला आहे.तो पर्यंत गूगलवरून शोध घ्या.{{SITENAME}}च्या मजकुराची त्यांची सूचिबद्धता शिळी असण्याची शक्यता असु शकते हे लक्षात घ्या.',
 
-# Quickbar
-'qbsettings' => 'शीघ्रपट',
-'qbsettings-none' => 'नाही',
-'qbsettings-fixedleft' => 'स्थिर डावे',
-'qbsettings-fixedright' => 'स्थिर ऊजवे',
-'qbsettings-floatingleft' => 'तरंगते डावे',
-'qbsettings-floatingright' => 'तरंगते ऊजवे',
-'qbsettings-directionality' => 'तुमच्या भाशा ची पद्धत दिशात्मक असली पाहिजे.',
 
 # Preferences page
 'preferences' => 'माझ्या पसंती',
@@ -2946,15 +2909,7 @@ $1',
 'pageinfo-viewsperedit' => 'प्रति संपादन अभिप्राय',
 
 # Skin names
-'skinname-standard' => 'अभिजात',
-'skinname-nostalgia' => 'रम्य',
-'skinname-cologneblue' => 'सुरेखनीळी',
 'skinname-monobook' => 'मोनोबुक',
-'skinname-myskin' => 'माझीकांती',
-'skinname-chick' => 'मस्त',
-'skinname-simple' => 'साधी',
-'skinname-modern' => 'आधुनिक',
-'skinname-vector' => 'सदिश',
 
 # Patrolling
 'markaspatrolleddiff' => 'टेहळणी केल्याची खूण करा',

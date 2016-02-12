@@ -297,30 +297,12 @@ $messages = array(
 'navigation'    => 'Navigatie',
 'and'           => '&#32;en',
 
-# Cologne Blue skin
 'qbfind'         => 'Zeuke',
 'qbbrowse'       => 'Bladere',
-'qbedit'         => 'Bewirke',
 'qbpageoptions'  => 'Pazjena-opties',
 'qbpageinfo'     => 'Pazjena-informatie',
-'qbmyoptions'    => 'mien opties',
-'qbspecialpages' => "Speciaal pagina's",
 'faq'            => 'FAQ (väölgesjtèlde vraoge)',
-'faqpage'        => 'Project:Väölgestjèlde vraoge',
 
-# Vector skin
-'vector-action-addsection'       => 'Voog köpke toe',
-'vector-action-delete'           => 'Ewegsjaffe',
-'vector-action-move'             => 'Verplaats',
-'vector-action-protect'          => 'Besjirm',
-'vector-action-undelete'         => 'Plaats trök',
-'vector-action-unprotect'        => 'Anger beveiliging',
-'vector-simplesearch-preference' => "Sjakel nuuj zeuksuggesties in (allein veur 't vectoroeterlik)",
-'vector-view-create'             => 'Maak aan',
-'vector-view-edit'               => 'Bewirk',
-'vector-view-history'            => 'Bekiek de gesjiedenis',
-'vector-view-view'               => 'Laes',
-'vector-view-viewsource'         => 'Bekiek bróntèks',
 'actions'                        => 'Hanjeling',
 'namespaces'                     => 'Naamruumdes',
 'variants'                       => 'Anger vorme',
@@ -343,7 +325,6 @@ $messages = array(
 'edit'              => 'Bewèrk',
 'create'            => 'Aanmake',
 'editthispage'      => 'Pagina bewirke',
-'create-this-page'  => 'Dees pagina aanmake',
 'delete'            => 'Wisse',
 'deletethispage'    => 'Wisse',
 'undelete_short'    => '$1 {{PLURAL:$1|bewirking|bewirkinge}} trökzètte',
@@ -358,19 +339,9 @@ $messages = array(
 'talkpagelinktext'  => 'Euverlègk',
 'specialpage'       => 'Speciaal pagina',
 'personaltools'     => 'Persuunlike hulpmiddele',
-'postcomment'       => 'Nuuj sectie',
-'articlepage'       => 'Artikel',
 'talk'              => 'Euverlègk',
 'views'             => 'Weergave',
 'toolbox'           => 'Gereidsjapskis',
-'userpage'          => 'gebroekerspazjena',
-'projectpage'       => 'Projekpazjena tuine',
-'imagepage'         => 'Besjtandjspagina tuine',
-'mediawikipage'     => 'Berichpazjena tuine',
-'templatepage'      => 'Sjabloonpazjena tuine',
-'viewhelppage'      => 'Hulppazjena tuine',
-'categorypage'      => 'Categoriepazjena tuine',
-'viewtalkpage'      => 'Euverlèk tuine',
 'otherlanguages'    => 'Anger tale',
 'redirectedfrom'    => '(Doorverweze van $1)',
 'redirectpagesub'   => 'Doorverwiespazjena',
@@ -550,8 +521,9 @@ De gegaeve ree is ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''De bis noe aafgemeld.'''
 
-De kèns {{SITENAME}} noe anoniem (mit vermeljing van IP-adres) gebroeke, of [[Special:UserLogin|opnuuj aanmelde]] ónger dezelfde of 'ne angere naam.
+De kèns {{SITENAME}} noe anoniem (mit vermeljing van IP-adres) gebroeke, of $1 ónger dezelfde of 'ne angere naam.
 Mäögelik waere nog 'n deil pazjena's getuind esofs te nog aangemeld bis pès te de cache van diene browser laeg maaks.",
+'logouttext-link-text'       => 'opnuuj aanmelde',
 'welcomecreation'            => '== Wèlkóm, $1! ==
 Diene gebroeker is noe vaerdig.
 Vergaet neet dien [[Special:Preferences|veurkäöre veur {{SITENAME}}]] aan te passe.',
@@ -810,7 +782,7 @@ De leste bloklogregel wuuertj hiejónger t'r raodpleging gegaeve:",
 '''Deze is nog neet opgesjlage!'''",
 'sitejspreview'                    => "'''Dit is allein 'n veurvertuin van de JavaScriptcode.'''
 '''Deze is nog neet opgesjlage!'''",
-'userinvalidcssjstitle'            => "'''Waarsjoewing:''' d'r is gein skin \"\$1\". 
+'userinvalidcssjstitle'            => "'''Waarsjoewing:''' d'r is gein skin \"\$1\".
 Lèt op: dien eige .css- en .js-pagina's beginne mèt  'ne klein lètter, beveurbeeld {{ns:user}}:Naam/vector.css in plaats van {{ns:user}}:Naam/Vector.css.",
 'updated'                          => '(Biegewèrk)',
 'note'                             => "'''Opmirking:'''",
@@ -1152,14 +1124,6 @@ Doe kans ouch 'n naamruumde es veurvoegsel gebroeke.",
 Zoelang as de servers nog neet sjterk genog zunt kins e zeuke bie Google.
 Mèrk op dat hun indexe van {{SITENAME}} content e bietje gedatierd kint zien.',
 
-# Quickbar
-'qbsettings'                => 'Menubalkinsjtèllinge',
-'qbsettings-none'           => 'Oetgesjakeld',
-'qbsettings-fixedleft'      => 'Links vas',
-'qbsettings-fixedright'     => 'Rechts vas',
-'qbsettings-floatingleft'   => 'Links zjwevend',
-'qbsettings-floatingright'  => 'Rechs zjwevend',
-'qbsettings-directionality' => 'Vas, aafhenkelik vanne sjrifrichting van dien sjpraok',
 
 # Preferences page
 'preferences'                   => 'Veurkäöre',
@@ -2501,9 +2465,9 @@ Vergaet neet de database opnuuj te [[Special:UnlockDB|deblokkere]] wens te klaor
 # Move page
 'move-page'                    => '"$1" hernömme',
 'move-page-legend'             => 'Verplaats pazjena',
-'movepagetext'                 => "Mit 't óngersjtaond formuleer kans te 'n pagina verplaatse. 
-De historie van de auw pagina zal nao de nuuj mitgoon. 
-De auwe titel zal automatisch 'ne redirect nao de nuuj pagina waere. 
+'movepagetext'                 => "Mit 't óngersjtaond formuleer kans te 'n pagina verplaatse.
+De historie van de auw pagina zal nao de nuuj mitgoon.
+De auwe titel zal automatisch 'ne redirect nao de nuuj pagina waere.
 Verwiezinge nao de auw pagina waere neet aangepas.
 De pagina's die doorverwieze  nao de oersjprunkelike paginanaom weurt otomatisch biegewirk.
 Es dat neet gewunsj is, controleer dan of d'r gein [[Special:DoubleRedirects|dobbel]] of [[Special:BrokenRedirects|gebraoke redirects]] ontsjtange zien.
@@ -2513,8 +2477,8 @@ Doe kans 'n pagina allein verplaatse, es gein pagina besjteit mit de nuje naam, 
 '''Waarsjoewing!'''
 Veur väöl bekeke pagina's ken 't verplaatse drastische en onveurzene gevolge höbbe.
 Zörg deveur dets te die gevolge euverzuus ierdets te dees hanjeling oetvoers.",
-'movepagetext-noredirectfixer' => "Mit 't óngersjtaond formuleer kans te 'n pagina verplaatse. De historie van de auw pagina zal nao de nuuj mitgoon. 
-De auwe titel zal automatisch 'ne redirect nao de nuuj pagina waere. 
+'movepagetext-noredirectfixer' => "Mit 't óngersjtaond formuleer kans te 'n pagina verplaatse. De historie van de auw pagina zal nao de nuuj mitgoon.
+De auwe titel zal automatisch 'ne redirect nao de nuuj pagina waere.
 Controleer den of d'r gein [[Special:DoubleRedirects|dobbel]] of [[Special:BrokenRedirects|gebraoke redirects]] ontsjtange zien.
 
 Doe kans 'n pagina '''allein''' verplaatse, es gein pagina besjteit mit de nuje naam, of es op die pagina allein 'ne redirect zónger historie sjteit. Doe kins dus 's pagina die abusievelik verplaats is, trökverplaatse en 'n bestaondje pagina neet euversjrieve.
@@ -2652,7 +2616,7 @@ Alle transwiki-importhanjelinge waere opgeslage in 't [[Special:Log/import|impor
 'import-interwiki-namespace' => 'Doelnaamruumdje:',
 'import-upload-filename'     => 'Bestandjsnaam:',
 'import-comment'             => 'Opmèrking:',
-'importtext'                 => 'Gebroek de functie [[Special:Export|export]] in de wiki wo de informatie vanaaf kömp. 
+'importtext'                 => 'Gebroek de functie [[Special:Export|export]] in de wiki wo de informatie vanaaf kömp.
 Slaon de oetveur op dien eige systeem op, en voeg dae dao nao hiej toe.',
 'importstart'                => "Pazjena's aan 't importere ...",
 'import-revision-count'      => '$1 {{PLURAL:$1|versie|versies}}',
@@ -2810,9 +2774,6 @@ Meistal wörd dit door 'ne zwarte externe link veroorzaak.",
 'pageinfo-viewsperedit'     => 'Weergave per bewerking',
 
 # Skin names
-'skinname-standard'    => 'Standaard',
-'skinname-nostalgia'   => 'Nostalgie',
-'skinname-cologneblue' => 'Keuls blauw',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Markeer es gecontroleerd',
@@ -3627,7 +3588,7 @@ Aafbeildinge waere in häör vollejige resolutie getoeandj. Anger bestandjstypes
 'newuserlog-byemail'                  => 'wachwaord is versjik per e-mail',
 
 # Feedback
-'feedback-bugornote' => 'Es se zewied bös óm e technisch perbleem in détail te besjrieve, [$1 rapperteer \'ne bug]. 
+'feedback-bugornote' => 'Es se zewied bös óm e technisch perbleem in détail te besjrieve, [$1 rapperteer \'ne bug].
 Anges kin se-n ouch \'t einvawdig formeleer hieónger gebroeke. Dien commentaar zal waere toegeveug ane pagina "[$3 $2]", same mit diene gebroekersnaam enne browser dae se gebruuks.',
 'feedback-subject'   => 'Óngerwerp:',
 'feedback-message'   => 'Berich:',

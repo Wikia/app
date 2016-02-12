@@ -152,30 +152,12 @@ $messages = array(
 'navigation'    => 'pandhu arah',
 'and'           => '&#32;lan',
 
-# Cologne Blue skin
 'qbfind'         => 'Goleti',
 'qbbrowse'       => 'Jelajahi',
-'qbedit'         => 'Sunting',
 'qbpageoptions'  => 'Kaca kiye',
 'qbpageinfo'     => 'Konteks kaca',
-'qbmyoptions'    => 'Kaca-ne inyong',
-'qbspecialpages' => 'Kaca-kaca astamiwa',
 'faq'            => 'FAQ (Pitakonan sing sering ditakokna)',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Nambah topik',
-'vector-action-delete'           => 'Busek',
-'vector-action-move'             => 'Pindah',
-'vector-action-protect'          => 'Reksa',
-'vector-action-undelete'         => 'Batalna pambusakan',
-'vector-action-unprotect'        => 'Owahi pangreksan',
-'vector-simplesearch-preference' => 'Aktifna saran panggoletan sing wis disempurnakna (nang kulit Vector thok)',
-'vector-view-create'             => 'Gawe',
-'vector-view-edit'               => 'Sunting',
-'vector-view-history'            => 'Sajarah kaca',
-'vector-view-view'               => 'Waca',
-'vector-view-viewsource'         => 'Deleng sumbere',
 'actions'                        => 'Tindakan',
 'namespaces'                     => 'Bilik jeneng',
 'variants'                       => 'Varian',
@@ -198,7 +180,6 @@ $messages = array(
 'edit'              => 'Sunting',
 'create'            => 'Gawe',
 'editthispage'      => 'Sunting kaca kiye',
-'create-this-page'  => 'Gawe kaca kiye',
 'delete'            => 'Busek',
 'deletethispage'    => 'Busak kaca kiye',
 'undelete_short'    => 'Batalna pambusakan $1 {{PLURAL:$1|suntingan|suntingan}}',
@@ -213,19 +194,9 @@ $messages = array(
 'talkpagelinktext'  => 'Dopokan',
 'specialpage'       => 'Kaca khusus',
 'personaltools'     => 'Piranti pribadi',
-'postcomment'       => 'Bagéyan anyar',
-'articlepage'       => 'Deleng isi tulisan',
 'talk'              => 'bahas',
 'views'             => 'Tampilan',
 'toolbox'           => 'perangkat',
-'userpage'          => 'Ndeleng kaca panganggo',
-'projectpage'       => 'Deleng kaca proyèk',
-'imagepage'         => 'Deleng kaca berkas',
-'mediawikipage'     => 'Ndeleng kaca pesen sistem',
-'templatepage'      => 'Ndeleng kaca cithakan',
-'viewhelppage'      => 'Ndeleng kaca pitulung',
-'categorypage'      => 'Deleng kaca kategori',
-'viewtalkpage'      => 'Ndeleng kaca dhiskusi',
 'otherlanguages'    => 'basa liya',
 'redirectedfrom'    => '(Dialihna sekang $1)',
 'redirectpagesub'   => 'Kaca pangalihan',
@@ -344,7 +315,7 @@ Administrator sing ngunci kiye aweh katerangan kaya kiye: $1',
 
 Kiye biasanye jalaran pranala daluwarsa maring revisi sedurunge sekang kaca sing wis dibusak.
 
-Angger dudu kuwe sebabe, Rika ndeyan nemokna "bug" nang software. 
+Angger dudu kuwe sebabe, Rika ndeyan nemokna "bug" nang software.
 Monggo dilaporna maring [[Special:ListUsers/sysop|administrator]], karo nyebutna URL sing dituju.
 
 A',
@@ -407,8 +378,9 @@ Alesane yakuwe "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Rika uwis metu log sekang sistem.'''
 
-Rika teyeng terus nggunakna {{SITENAME}} kanthi anonim, utawa Rika teyeng [[Special:UserLogin|mlebu log maning]] nganggo jeneng panganggo sing padha utawa sejene.
+Rika teyeng terus nggunakna {{SITENAME}} kanthi anonim, utawa Rika teyeng $1 nganggo jeneng panganggo sing padha utawa sejene.
 Digatekna ya, nek ana kaca sing esih terus nidokna nek rika esih mlebu log nnganti Rika mbusak singgahan nang panjelajah web-e Rika.",
+'logouttext-link-text'       => 'mlebu log maning',
 'welcomecreation'            => '== Sugeng rawuh, $1! ==
 
 Akun Rika uwis digawe. Aja kelalen nata konfigurasi [[Special:Preferences|preferensi {{SITENAME}}]] Rika.',
@@ -469,7 +441,7 @@ Monggo dijajal sepisan maning.',
 'mailmypassword'             => 'Imelna tembung sandhi anyar',
 'passwordremindertitle'      => 'Tembung sandi anyar temporer kanggo {{SITENAME}}',
 'passwordremindertext'       => 'Ana wong (ndeyane Rika dhewek, sekang alamat IP $1) sing njaluk
-tembung sandhi anyar kanggo {{SITENAME}} ($4). Tembung sandhi sawetara nggo panganggo 
+tembung sandhi anyar kanggo {{SITENAME}} ($4). Tembung sandhi sawetara nggo panganggo
 "$2" uwis digawe lan sekiye dadi "$3". Angger kiye pancen karepe Rika dhewek,
 mayuh ndang mlebu log lan ngganti tembung sandhi sekiye.
 Tembung sandhi sawetara kuwe mau bakal kadaluwarsa nang {{PLURAL:$5|sadina|$5 dina}}.
@@ -594,10 +566,10 @@ Tembung sandhi sauntara: $2',
 'anoneditwarning'                  => 'Rika ora kadaftar mlebu.
 Alamat IP-ne Rika bakal dicatet nang sajarah panyuntingane kaca kiye.',
 'anonpreviewwarning'               => "''Rika durung mlebu log. Nyimpen kaca bakal nyatetna alamat IP-ne Rika nang riwayat suntingan kaca kiye.''",
-'missingsummary'                   => "'''Pènget:''' Rika ora nglebokna ringkesan panyuntingan. 
+'missingsummary'                   => "'''Pènget:''' Rika ora nglebokna ringkesan panyuntingan.
 Angger Rika mencèt tombol Simpen maning, suntingane Rika bakal kasimpen tanpa ringkesan panyuntingan.",
 'missingcommenttext'               => 'Tulung lebokna komentar nang ngisor kiye.',
-'missingcommentheader'             => "'''Pènget:''' Rika ora nglebokna subjek/judul nggo komentare Rika kiye. 
+'missingcommentheader'             => "'''Pènget:''' Rika ora nglebokna subjek/judul nggo komentare Rika kiye.
 Angger Rika mencèt \"{{int:savearticle}}\" maning, suntingane Rika bakal kasimpen tanpa komentar kuwe.",
 'summary-preview'                  => 'Pratayang ringkesan:',
 'subject-preview'                  => 'Pratayang subyèk/judul:',
@@ -642,14 +614,13 @@ Log pamblokiran pungkasan ditidokna nang ngisor kiye kanggo bahan rujukan:',
 '''Pratayang kiye anu durung disimpen!'''",
 'sitejspreview'                    => "'''Eling ya Rika kuwe mung lagi nampilna pratayang sekang kode JavaScript kiye.'''
 '''Pratayang kiye anu durung disimpen!'''",
-'userinvalidcssjstitle'            => "'''Pènget:''' Kulit \"\$1\" ora ditemokna. Eling ya nek kaca .css lan .js kuwe nggunakna aksara cilik, conto {{ns:user}}:Foo/vector.css lan dudu {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Dianyari)',
 'note'                             => "'''Cathetan:'''",
 'previewnote'                      => "'''Eling ya kiye tembe pratayang thok.'''
 Owahane Rika durung disimpen!",
 'previewconflict'                  => 'Pratayang kiye nidokna teks nang bagiyan dhuwur kotak suntingan teks kaya sing bakal katon nek Rika nyimpen.',
 'session_fail_preview'             => "'''Nuwun sèwu, suntingan Rika ora teyeng diolah jalaran dhata sèsi kabusak.
-Monggo dijajal sepisan maning. 
+Monggo dijajal sepisan maning.
 Angger tetep ora teyeng, jajal [[Special:UserLogout|metu log]] disit lan mlebu log maning.",
 'session_fail_preview_html'        => "'''Nuwun sèwu! Kita ora teyeng mrosès suntingan Rika jalaran data sési ilang.'''
 
@@ -810,7 +781,7 @@ Rika ora duwe hak akses maring revisi kiye.',
 'mergehistory-into'                => 'Kaca tujuan:',
 'mergehistory-list'                => 'Sejarah suntingan sing teyeng digabung',
 'mergehistory-merge'               => 'Révisi-révisi sekang [[:$1]] sing ana nang ngisor kiye teyeng digabungna maring [[:$2]].
-Gunakna tombol radio kanggo nggabungna révisi-révisi sing digawé sadurungé wektu tartamtu. 
+Gunakna tombol radio kanggo nggabungna révisi-révisi sing digawé sadurungé wektu tartamtu.
 Gatèkna, angger nganggo pranala navigasi kuwe bakalan nge-reset kolom kiye.',
 'mergehistory-go'                  => 'Tidokna suntingan-suntingan sing teyeng digabung',
 'mergehistory-submit'              => 'Gabung revisi',
@@ -894,7 +865,7 @@ Gatèkna, angger nganggo pranala navigasi kuwe bakalan nge-reset kolom kiye.',
 'showingresults'                   => "Nang ngisor kiye ditidokna ana {{PLURAL:$1|'''1''' kasil|'''$1''' kasil}}, dimulai sekang #'''$2'''.",
 'showingresultsnum'                => "Nang ngisor kiye ditidokna ana {{PLURAL:$3'''1''' kasil|'''$3''' kasil}}, dimulai sekang #'''$2'''.",
 'showingresultsheader'             => "{{PLURAL:$5|Asil '''$1''' sekang '''$3'''|Asil '''$1 - $2''' sekang '''$3'''}} kanggo '''$4'''",
-'nonefound'                        => "'''Cathetan''': Mung sawetara bilik jeneng sing digolèti sacara baku. 
+'nonefound'                        => "'''Cathetan''': Mung sawetara bilik jeneng sing digolèti sacara baku.
 Jajal aweh awalan ''all:'' kanggo nggolèti kabèh isi (kalebu kaca dhiskusi, cithakan lsp.), utawa nganggo bilik jeneng sing dipèngèni minangka préfiks.",
 'search-nonefound'                 => "Ora ana kasil sing cocog karo pitakonan (''query'').",
 'powersearch'                      => 'Panggoletan lanjut',
@@ -910,14 +881,6 @@ Jajal aweh awalan ''all:'' kanggo nggolèti kabèh isi (kalebu kaca dhiskusi, ci
 Rika teyeng nggoleti nganggo Google disit.
 Ningen Rika kudu eling nek indeks Google kanggo {{SITENAME}} bisa baen isine anu sing lawas lan durung dianyari.',
 
-# Quickbar
-'qbsettings'                => 'Pangaturan bar pintas',
-'qbsettings-none'           => 'Ora ana',
-'qbsettings-fixedleft'      => 'Tetep sisih kiwa',
-'qbsettings-fixedright'     => 'Tetep sisih tengen',
-'qbsettings-floatingleft'   => 'Ngambang sisih kiwa',
-'qbsettings-floatingright'  => 'Ngambang sisih tengen',
-'qbsettings-directionality' => 'Tetep, ngetutna maring bentuk skrip sekang basane Rika',
 
 # Preferences page
 'preferences'                   => 'Preferensi',
@@ -1319,7 +1282,7 @@ Deskripsi sekang [$2 kaca deskripsine] ditidokna nang ngisor kiye.',
 'disambiguationspage'  => 'Template:Disambig',
 'disambiguations-text' => "Kaca-kaca kiye nduwe pranala maring '''kaca disambiguasi'''.
 Kaca-kaca kuwe kudune nggandeng maring topik sing bener/pas.<br />
-Sawijining kaca bakal dianggep dadi kaca disambiguasi angger nggunakna cithakan sing nggandeng maring 
+Sawijining kaca bakal dianggep dadi kaca disambiguasi angger nggunakna cithakan sing nggandeng maring
 [[MediaWiki:Disambiguationspage]]",
 
 'doubleredirects'                   => 'Pangalihan dobel',
@@ -1534,7 +1497,7 @@ Deleng [[Special:ProtectedPages|daftar kaca sing direksa]] kanggo daftar pangrek
 Kiye konfigurasi sekiye nggo kaca '''$1''':",
 'protect-locked-access'       => "Akune Rika ora duwe hak nggo ngganti tingkat pangreksan kaca.
 Nang ngisor kiye kapacak konfigurasi sekiye kanggo kaca '''$1'''.",
-'protect-cascadeon'           => 'Kaca kie sekiye lagi direksa jalaran klebu nang {{PLURAL:$1|kaca|kaca-kaca}} sing direksa nganggo pilihan pangreksan runtun diaktifna. 
+'protect-cascadeon'           => 'Kaca kie sekiye lagi direksa jalaran klebu nang {{PLURAL:$1|kaca|kaca-kaca}} sing direksa nganggo pilihan pangreksan runtun diaktifna.
 Rika teyeng ngowaih tingkat pangreksan nggo kaca kiye, ningen perkara iku ora aweh pengaruh ming pangreksan runtun.',
 'protect-default'             => 'Ijinna kabeh panganggo',
 'protect-fallback'            => 'Merlokna hak akses "$1"',

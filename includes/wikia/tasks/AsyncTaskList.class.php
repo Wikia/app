@@ -192,7 +192,7 @@ class AsyncTaskList {
 
 	/**
 	 * Lets us set the task type so that we can use other tasks in celery-workers lib
-	 * @param str $type
+	 * @param string $type
 	 * @return $this
 	 */
 	public function taskType( $type ) {
@@ -226,6 +226,7 @@ class AsyncTaskList {
 			'call_order' => $this->calls,
 			'task_list' => $taskList,
 			'created_by' => $this->createdBy,
+			'created_at' => microtime( true ),
 		]];
 	}
 
@@ -284,13 +285,14 @@ class AsyncTaskList {
 		}
 
 		$id = $this->generateId();
+		$workIdHash = sha1( json_encode( $this->workId ) );
 		$payload = (object) [
 			'id' => $id,
 			'task' => $this->taskType,
 			'args' => $this->payloadArgs(),
 			'kwargs' => (object) [
 				'created_ts' => time(),
-				'work_id' => sha1( json_encode( $this->workId ) ),
+				'work_id' => $workIdHash,
 				'force' => !$this->dupCheck,
 				'executor' => $this->getExecutor()
 			]
@@ -331,12 +333,24 @@ class AsyncTaskList {
 			}
 
 			if ( $exception !== null ) {
-				WikiaLogger::instance()->critical( "Failed to queue task", [ 'error' => $exception->getMessage() ] );
+				WikiaLogger::instance()->critical( 'AsyncTaskList::queue', [
+					'exception' => $exception
+				] );
 				return null;
 			}
 		} else {
 			$channel->batch_basic_publish( $message, '', $this->getQueue()->name() );
 		}
+
+		$argsJson = json_encode($this->payloadArgs());
+		WikiaLogger::instance()->info( 'AsyncTaskList::queue ' . $id, [
+			'exception' => new \Exception(),
+			'spawn_task_id' => $id,
+			'spawn_task_type' => $this->taskType,
+			'spawn_task_work_id' => $workIdHash,
+			'spawn_task_args' => substr($argsJson,0,3000) . (strlen($argsJson)>3000 ? '...' : ''),
+			'spawn_task_queue' => $this->getQueue()->name(),
+		]);
 
 		return $id;
 	}
@@ -347,13 +361,30 @@ class AsyncTaskList {
 	 * @throws AMQPTimeoutException
 	 */
 	protected function connection() {
-		global $wgTaskBroker;
-
 		if ( $this->connection == null ) {
-			$this->connection = new AMQPConnection( $wgTaskBroker['host'], $wgTaskBroker['port'], $wgTaskBroker['user'], $wgTaskBroker['pass'] );
+			$this->connection = self::getConnection();
 		}
 
 		return $this->connection;
+	}
+
+	/**
+	 * A helper for getting an AMQP connection
+	 *
+	 * Throws AMQPRuntimeException when task broker is disabled in a cureent environment (PLATFORM-1740)
+	 *
+	 * @return AMQPConnection connection to message broker
+	 * @throws AMQPRuntimeException
+	 * @throws AMQPTimeoutException
+	 */
+	protected static function getConnection() {
+		global $wgTaskBroker;
+
+		if ( empty( $wgTaskBroker ) ) {
+			throw new AMQPRuntimeException( 'Task broker is disabled' );
+		}
+
+		return new AMQPConnection( $wgTaskBroker['host'], $wgTaskBroker['port'], $wgTaskBroker['user'], $wgTaskBroker['pass'] );
 	}
 
 	/**
@@ -392,18 +423,17 @@ class AsyncTaskList {
 	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
 	 */
 	public static function batch( $taskLists ) {
-		global $wgTaskBroker;
-
 		$logError = function( \Exception $e ) {
-			WikiaLogger::instance()->critical( 'Failed to queue task group', [
-				'error' => $e->getMessage(),
+			WikiaLogger::instance()->critical( 'AsyncTaskList::batch', [
+				'exception' => $e,
+				'caller' => wfGetCallerClassMethod( [ __CLASS__, 'Wikia\\Tasks\\Tasks\\BaseTask' ] ),
 			] );
 
 			return null;
 		};
 
 		try {
-			$connection = new AMQPConnection( $wgTaskBroker['host'], $wgTaskBroker['port'], $wgTaskBroker['user'], $wgTaskBroker['pass'] );
+			$connection = self::getConnection();
 		} catch ( AMQPRuntimeException $e ) {
 			return $logError( $e );
 		} catch ( AMQPTimeoutException $e ) {

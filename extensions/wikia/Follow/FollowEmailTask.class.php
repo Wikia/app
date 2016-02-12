@@ -4,33 +4,35 @@ use Wikia\Tasks\Tasks\BaseTask;
 
 class FollowEmailTask extends BaseTask {
 
-	public function emailFollowNotifications( $initiatingUser, $aWatchers, $iUserId, $iNamespace, $sMessage, $sAction ) {
-		$wg = F::app()->wg;
-		$wg->DBname = WikiFactory::IDtoDB( $this->getWikiId() );
-		$wg->Server = trim( WikiFactory::DBtoUrl( F::app()->wg->DBname ), '/' );
+	/**
+	 * Given some information about a notification, sends emails to all following users
+	 *
+	 * @param int $initiatingUser The user that initiated this by making a change
+	 * @param array $watchers A mapping of titles to an array of users following that title
+	 * @param int $userId The editor of whatever changed.  Likely the same as $initiatingUser
+	 * @param int $namespace The namespace of the title which changed
+	 * @param string $message The commit message for the change
+	 * @param string $action The action taken (create, edit, delete, etc)
+	 */
+	public function emailFollowNotifications( $initiatingUser, $watchers, $userId, $namespace, $message, $action ) {
+		Wikia::initAsyncRequest( $this->getWikiId(), $initiatingUser );
 
-		if ( !empty( $wg->DevelEnvironment ) ) {
-			$wg->Server = WikiFactory::getLocalEnvURL( $wg->Server );
-		}
+		$targetUser = User::newFromId( $userId );
 
-		$wg->User = User::newFromId( $initiatingUser );
+		$this->logWatchers( $watchers, $action );
 
-		$targetUser = User::newFromId( $iUserId );
-
-		$this->logWatchers( $aWatchers, $sAction );
-
-		foreach ( $aWatchers as $sKey => $sValue ) {
-			$oTitle = Title::makeTitle( $iNamespace, $sKey );
-			$oEmailNotification = new EmailNotification( $targetUser, $oTitle,
+		foreach ( $watchers as $titleText => $followingUsers ) {
+			$title = Title::makeTitle( $namespace, $titleText );
+			$emailNotification = new EmailNotification( $targetUser, $title,
 				wfTimestampNow(),
-				$sMessage,
+				$message,
 				false,
 				$currentRevId = 0,
 				$previousRevId = 0,
-				$sAction,
+				$action,
 				[ 'notisnull' => 1, 'childTitle' => $this->title ]
 			);
-			$oEmailNotification->notifyOnPageChange();
+			$emailNotification->notifyOnPageChange( $followingUsers );
 		}
 	}
 

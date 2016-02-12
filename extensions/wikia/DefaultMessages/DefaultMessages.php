@@ -25,29 +25,8 @@ function efDefaultMessagesSetup() {
 	}
 
 	if( $wgDefaultMessagesDB != $wgDBname ) {
-		$wgHooks['MsgGetFromNamespaceAfter'][] = 'efGetDefaultMessage';
 		$wgDefaultMessagesCache = new DefaultMessagesCache( $messageMemc, $wgUseDatabaseMessages, $wgMsgCacheExpiry );
 	}
 
 	wfProfileOut(__FUNCTION__);
-}
-
-function efGetDefaultMessage( $lckey, $lang, &$message, $useDB ) {
-	wfProfileIn(__FUNCTION__);
-	if( $message === false ) {
-		global $wgDefaultMessagesCache, $wgContLang;
-		if( is_object( $wgDefaultMessagesCache ) ) {
-			$title = $wgContLang->ucfirst( $lckey );
-			if( $lang !== 'en' ) {
-				$pos = strrpos( $title, '/' );
-				if( $pos === false ) {
-					$title .= '/' . $lang;
-				}
-			}
-			$message = $wgDefaultMessagesCache->get( $title, $lang, $useDB );
-		}
-	}
-	wfProfileOut(__FUNCTION__);
-
-	return true;
 }

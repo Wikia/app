@@ -217,26 +217,12 @@ $messages = array(
 'navigation'    => 'Paglibotlíbot',
 'and'           => '&#32;asin',
 
-# Cologne Blue skin
 'qbfind'         => 'Hanápon',
 'qbbrowse'       => 'Maghalungkát',
-'qbedit'         => 'Hirahón',
 'qbpageoptions'  => 'Ining pahina',
 'qbpageinfo'     => 'Konteksto',
-'qbmyoptions'    => 'Mga pahina ko',
-'qbspecialpages' => 'Espesyal na mga pahina',
 'faq'            => 'HD',
-'faqpage'        => 'Project:HD',
 
-# Vector skin
-'vector-action-delete'   => 'paráon',
-'vector-action-move'     => 'Ibalyó',
-'vector-action-protect'  => 'Olangán',
-'vector-view-create'     => 'Maggíbo',
-'vector-view-edit'       => 'Liwatón',
-'vector-view-history'    => 'Hilingón an uusipón',
-'vector-view-view'       => 'Basáhon',
-'vector-view-viewsource' => 'Hilingón an ginikánan',
 'actions'                => 'Mga paghiro',
 
 'errorpagetitle'    => 'Salâ',
@@ -257,7 +243,6 @@ $messages = array(
 'edit'              => 'Liwatón',
 'create'            => 'Maggíbo',
 'editthispage'      => 'Hirahón ining pahina',
-'create-this-page'  => 'Gibohon ining pahina',
 'delete'            => 'Paraon',
 'deletethispage'    => 'Paraon ining pahina',
 'undelete_short'    => 'Bawion an pagparà {{PLURAL:$1|paghirá|$1 mga paghirá}}',
@@ -271,19 +256,9 @@ $messages = array(
 'talkpagelinktext'  => 'Pag-oláyan',
 'specialpage'       => 'Espesyal na Pahina',
 'personaltools'     => 'Mga gamit na personal',
-'postcomment'       => 'Magkomento',
-'articlepage'       => 'Hilingón an pahina kan laog',
 'talk'              => 'Orólay',
 'views'             => 'Mga hilíng',
 'toolbox'           => 'Kagamitan',
-'userpage'          => 'Hilingón an pahina kan parágamit',
-'projectpage'       => 'Hilingón an pahina kan proyekto',
-'imagepage'         => 'Hilingón an pahina kan ladawan',
-'mediawikipage'     => 'Hilingón an pahina kan mensahe',
-'templatepage'      => 'Hilingón an pahina kan templato',
-'viewhelppage'      => 'Hilingón an pahina kan tabang',
-'categorypage'      => 'Hilingón an pahina kan kategorya',
-'viewtalkpage'      => 'Hilingón an orólay',
 'otherlanguages'    => 'Sa ibáng mga tatarámon',
 'redirectedfrom'    => '(Piglikay halì sa $1)',
 'redirectpagesub'   => 'Ilikáy an pahina',
@@ -597,7 +572,6 @@ Kun dai tinuyong nakaabot ka digdi, pindoton sana an back sa browser mo.',
 'userjsyoucanpreview'        => "'''Tip:''' Gamiton an 'Show preview' para testingon an bâgong JS bago magtagama.",
 'usercsspreview'             => "'''Giromdomon tabî na pigpapatânaw sana saimo an CSS nin parágamit, dai pa ini nakatagama!'''",
 'userjspreview'              => "'''Giromdomon tabi na pigtetest/pighihiling mo sana an patanaw kan saimong JavaScript nin paragamit, dai pa ini naitagama!'''",
-'userinvalidcssjstitle'      => "'''Patanid:''' Mayong ''skin'' na \"\$1\". Giromdomon tabî na an .css asin .js na mga páhina naggagamit nin titulong nakasurat sa sadit na letras, halimbawa {{ns:user}}:Foo/vector.css bakong {{ns:user}}:Foo/Vector.css.",
 'updated'                    => '(Binàgo)',
 'note'                       => "'''Paisi:'''",
 'previewnote'                => "'''Patànaw sana ini; dai pa naitagama an mga pagbabàgo!'''",
@@ -769,13 +743,6 @@ An ibang mga administrador sa ining wiki pwede pang maghiling kan mga nakatagong
 'powersearch-field'         => 'Hanápon an',
 'searchdisabled'            => 'Pigpopogolan mûna an paghanap sa {{SITENAME}}. Mientras tanto, pwede ka man maghanap sa Google. Giromdomon tabî na an mga indise kan laog ninda sa {{SITENAME}} pwede ser na lumâ na.',
 
-# Quickbar
-'qbsettings'               => 'Quickbar',
-'qbsettings-none'          => 'Mayô',
-'qbsettings-fixedleft'     => 'Nakatakód sa walá',
-'qbsettings-fixedright'    => 'Nakatakód sa tûo',
-'qbsettings-floatingleft'  => 'Naglálatáw sa walá',
-'qbsettings-floatingright' => 'Naglálatáw sa tûo',
 
 # Preferences page
 'preferences'               => 'Mga kabòtan',
@@ -1727,9 +1694,6 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 'spam_blanking'       => 'An gabos na mga pahirá na may takod sa $1, pigblablanko',
 
 # Skin names
-'skinname-standard' => 'Klasiko',
-'skinname-simple'   => 'Simple',
-'skinname-modern'   => 'Bago',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Markahan bilang pigpapatrolya',

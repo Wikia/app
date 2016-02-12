@@ -22,7 +22,7 @@
 				'type' => 'text',
 				'name' => 'username',
 				'isRequired' => true,
-				'label' => wfMessage('yourname')->escaped(),
+				'label' => wfMessage( 'yourname' )->escaped(),
 				'tabindex' => ++$tabIndex,
 			),
 			array(
@@ -30,26 +30,25 @@
 				'name' => 'password',
 				'class' => 'password-input',
 				'isRequired' => true,
-				'label' => wfMessage('yourpassword')->escaped(),
+				'label' => wfMessage( 'yourpassword' )->escaped(),
 				'tabindex' => ++$tabIndex,
 			),
 
 			array(
-				'type' => 'nirvanaview',
-				'controller' => 'UserLogin',
-				'view' => 'forgotPasswordLink',
+				'type' => 'custom',
+				'output' => F::app()->renderPartial( 'UserLogin', 'forgotPasswordLink' ),
 			),
 			array(
 				'type' => 'checkbox',
 				'name' => 'keeploggedin',
 				'class' => 'keep-logged-in',
 				'value' => '1',
-				'label' => wfMessage('userlogin-remembermypassword')->escaped(),
+				'label' => wfMessage( 'userlogin-remembermypassword' )->escaped(),
 				'tabindex' => ++$tabIndex,
 			),
 			array(
 				'type' => 'submit',
-				'value' => wfMessage('login')->escaped(),
+				'value' => wfMessage( 'login' )->escaped(),
 				'class' => 'login-button',
 				'tabindex' => ++$tabIndex,
 			),
@@ -61,9 +60,9 @@
 	$form['isInvalid'] = true;
 	$form['errorMsg'] = '';
 
-	echo $app->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
+	echo $app->renderView( 'WikiaStyleGuideForm', 'index', array( 'form' => $form ) );
 
 	// 3rd party providers buttons
-	echo $app->renderView('UserLoginSpecial', 'Providers', array('tabindex' => ++$tabIndex));
+	echo $app->renderView( 'UserLoginSpecial', 'Providers', array( 'tabindex' => ++$tabIndex ) );
 ?>
 </div>

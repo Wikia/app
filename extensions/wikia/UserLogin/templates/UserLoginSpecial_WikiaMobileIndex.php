@@ -10,7 +10,7 @@ if ( !empty( $result ) ) {
 				$pwdErr = true;
 			}
 		} elseif ( !empty( $msg ) ) {
-			//error from send new password
+			// error from send new password
 			$userErr = true;
 		}
 	} else {
@@ -20,11 +20,11 @@ if ( !empty( $result ) ) {
 ?>
 <div class=wkForm id=wkLgn>
 	<? if ( $toastErr ) : ?>
-	<div id=wkLgnMsg><?= $msg ;?></div>
-	<? endif;?>
+	<div id=wkLgnMsg><?= $msg ; ?></div>
+	<? endif; ?>
 	<? if ( !$recoverPassword ) : ?>
-	<?= $app->renderView( 'UserLoginSpecial', 'Providers' ) ;?>
-	<? endif;?>
+	<?= $app->renderView( 'UserLoginSpecial', 'Providers' ) ; ?>
+	<? endif; ?>
 	<form method=post action="<?= $formPostAction ?>">
 		<input type=hidden name=loginToken id='loginToken' value="<?= Sanitizer::encodeAttribute( $loginToken ) ?>">
 		<input type=hidden name=keeploggedin value=true>
@@ -32,19 +32,19 @@ if ( !empty( $result ) ) {
 			<input type=hidden name=returnto value="<?= Sanitizer::encodeAttribute( $returnto ); ?>">
 		<? endif; ?>
 		<input type=text name=username class=wkInp
-		       placeholder='<?= wfMessage( 'yourname' )->escaped()?>'<?= ( $username ) ? ' value="' . htmlspecialchars($username) . '"' : ''?><?= ( $userErr ) ? ' class=inpErr' : ''?>>
+		       placeholder='<?= wfMessage( 'yourname' )->escaped()?>'<?= ( $username ) ? ' value="' . htmlspecialchars( $username ) . '"' : ''?><?= ( $userErr ) ? ' class=inpErr' : ''?>>
 		<? if ( $userErr ) : ?>
 		<div class=wkErr><?= $msg ?></div>
 		<? endif; ?>
 		<? if ( !$recoverPassword ) : ?>
 		<input type=password name=password class=wkInp
-		       placeholder='<?= wfMessage( 'yourpassword' )->escaped() ?>'<?= ( $password ) ? ' value="' . htmlspecialchars($password) . '"' : ''?><?= ( $pwdErr ) ? ' class=inpErr' : ''?>>
+		       placeholder='<?= wfMessage( 'yourpassword' )->escaped() ?>'<?= ( $password ) ? ' value="' . htmlspecialchars( $password ) . '"' : ''?><?= ( $pwdErr ) ? ' class=inpErr' : ''?>>
 		<? if ( $pwdErr ) : ?>
 			<div class=wkErr><?= $msg ?></div>
 			<? endif; ?>
-		<? endif;?>
+		<? endif; ?>
 		<a id=wkLgnRcvLnk
-		   href="<?= $recoverLink ;?>"<?= ( $recoverPassword ) ? ' class=hide' : null ?>><?= wfMessage( 'userlogin-forgot-password' )->escaped() ;?></a>
+		   href="<?= $recoverLink ; ?>"<?= ( $recoverPassword ) ? ' class=hide' : null ?>><?= wfMessage( 'userlogin-forgot-password' )->escaped() ; ?></a>
 		<input id=wkLgnBtn name=action type=submit value='<?= wfMessage( 'login' )->escaped() ?>'
 		       class='wkBtn main<?= ( $recoverPassword ) ? ' hide' : null ?> round'>
 		<input id=wkLgnRcvBtn name=action type=submit value='<?= wfMessage( 'wikiamobile-sendpassword-label' )->escaped() ?>'

@@ -1,13 +1,13 @@
-<li class="SpeechBubble message <?php echo ($isreply ? '':'message-main'); ?> <?php echo ($removedOrDeletedMessage ? 'hide ':'') . ($showRemovedBox?' message-removed':''); ?> <? echo 'message-'.$linkid ?>" id="<? echo $linkid ?>" data-id="<? echo $id ?>" data-is-reply="<?= $isreply == true ?>" <? if($collapsed):?> style="display:none" <? endif;?> >	
+<li class="SpeechBubble message <?php echo ($isreply ? '':'message-main'); ?> <?php echo ($removedOrDeletedMessage ? 'hide ':'') . ($showRemovedBox?' message-removed':''); ?> <? echo 'message-'.$linkid ?>" id="<? echo $linkid ?>" data-id="<? echo $id ?>" data-is-reply="<?= $isreply == true ?>" <? if($collapsed):?> style="display:none" <? endif;?> >
 	<?php echo $head ?>
 	<?php echo $app->renderView( 'WallController', 'statusInfoBox', array('showDeleteOrRemoveInfo' => $showDeleteOrRemoveInfo, 'comment' => $comment) ); ?>
-	
+
 	<? if($showRemovedBox): ?>
 		<div class='removed-info speech-bubble-message-removed' >
 			<?php echo wfMsg('wall-removed-reply'); ?>
 		</div>
 	<? endif; ?>
-	
+
 	<div class="speech-bubble-avatar">
 		<a href="<?= $user_author_url ?>">
 			<? if(!$isreply): ?>
@@ -17,7 +17,7 @@
 			<? endif ?>
 		</a>
 	</div>
-	
+
 	<div class="speech-bubble-message">
 		<? if(!$isreply): ?>
 			<?php if($isWatched): ?>
@@ -31,16 +31,16 @@
 			<div class="voting-controls">
 				<a class="votes<?= $votes > 0 ? "" : " notlink" ?>" data-votes="<?= $votes ?>">
 					<?= wfMsg('wall-votes-number', '<span class="number" >'.$votes.'</span>') ?>
-				</a>			
+				</a>
 				<?php if($canVotes):?>
 					<a class="vote <?php if($isVoted): ?>voted<?php endif;?>">
 						<img src="<?= $wg->BlankImgUrl ?>" height="19" width="19" >
 					</a>
 				<?php endif; ?>
 			</div>
-		<?php endif; ?>	
-		
-		
+		<?php endif; ?>
+
+
 		<? if ( $wg->EnableMiniEditorExtForWall ):
 			echo $app->renderPartialCached( 'MiniEditorController', 'Header', 'Wall_message', array(
 				'attributes' => array( 'data-min-height' => 100, 'data-max-height' => 400 )
@@ -49,7 +49,7 @@
 		<? if(!$isreply): ?>
 			<div class="msg-title"><a href="<?= $fullpageurl; ?>"><? echo $feedtitle ?></a></div>
 		<? endif; ?>
-		
+
 		<div class="edited-by">
 			<a href="<?= $user_author_url ?>"><?= $displayname ?></a>
 			<a href="<?= $user_author_url ?>" class="subtle"><?= $displayname2 ?></a>
@@ -57,7 +57,7 @@
 				<span class="stafflogo"></span>
 			<?php endif; ?>
 		</div>
-		
+
 		<?php if($quote_of): ?>
 		<div class="quote-of">
 			<a href="<?php echo $quote_of_url; ?>" data-postfix="<?php echo $quote_of_postfix; ?>" >
@@ -65,7 +65,7 @@
 			</a>
 		</div>
 		<?php endif; ?>
-		
+
 		<? if ( $wg->EnableMiniEditorExtForWall ):
 			echo $app->renderPartialCached( 'MiniEditorController', 'Editor_Header', 'Wall_message' );
 		endif; ?>
@@ -78,9 +78,9 @@
 		<div class="msg-toolbar">
 			<div class="timestamp">
 				<?php if($isEdited):?>
-					<? if($showSummary): ?> 
+					<? if($showSummary): ?>
 						<? echo wfMsg('wall-message-edited-summary', array('$1' => $summary, '$2' => $editorUrl, '$3' => $editorName, '$4' => $historyUrl )); ?>
-					<? else: ?> 	
+					<? else: ?>
 						<? echo wfMsg('wall-message-edited', array( '$1' => $editorUrl, '$2' => $editorName, '$3' => $historyUrl )); ?>
 					<? endif; ?>
 				<?php endif; ?>
@@ -102,9 +102,9 @@
 			echo $app->renderPartialCached( 'MiniEditorController', 'Footer', 'Wall_message' );
 		endif; ?>
 	</div>
-	
+
 	<?php echo $app->renderView( 'WallController', 'statusInfoBox', array('showDeleteOrRemoveInfo' => $showClosedBox, 'comment' => $comment) ); ?>
-	
+
 	<? if(!$isreply): ?>
 		<ul class="replies">
 			<? if(!empty($replies)): ?>
@@ -122,7 +122,11 @@
 					<? $i++; ?>
 				<? endforeach; ?>
 			<? endif; ?>
-			<?= $app->renderViewCached( 'WallController', 'reply', 'Wall_message'.$showReplyForm, array('showReplyForm' => $showReplyForm )); ?>
+			<? if( $repliesNumber < $repliesLimit ) {
+				echo $app->renderViewCached( 'WallController', 'reply', 'Wall_message'.$showReplyForm, array('showReplyForm' => $showReplyForm ));
+			} else {
+				echo "<div class=message-topic-error >" . wfMsgExt('wall-message-limit-reached', array('parsemag'), array( $repliesLimit )) . "</div>";
+			} ?>
 			<?php if($showTopics): ?>
 				<?= F::app()->renderPartial( 'Wall', 'relatedTopics', array('relatedTopics' => $relatedTopics) ) ?>
 			<?php endif; ?>

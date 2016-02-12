@@ -1,0 +1,23 @@
+<table class="detailsTable">
+	<tr>
+		<td>
+			<div class="detailsIcon">
+				{{# iconLink}}<a href="{{iconLink}}">{{/iconLink}}
+				<img src="{{iconSrc}}" style="float: left">
+				{{# iconLink}}</a>{{/ iconLink}}
+			</div>
+		</td>
+		<td>
+			<div>
+				{{# detailsHeader}}
+					<p>
+						{{# iconLink}}<a href="{{iconLink}}">{{/ iconLink}}
+						<strong>{{detailsHeader}}</strong>
+						{{# iconLink}}</a>{{/ iconLink}}
+					</p>
+				{{/ detailsHeader}}
+				<p>{{{details}}}</p>
+			</div>
+		</td>
+	</tr>
+</table>

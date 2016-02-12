@@ -357,30 +357,12 @@ $messages = array(
 'navigation'    => 'Fikarohana',
 'and'           => '&#32;sy',
 
-# Cologne Blue skin
 'qbfind'         => 'Tadiavina',
 'qbbrowse'       => 'Tadiavina',
-'qbedit'         => 'Hanova',
 'qbpageoptions'  => 'Ity pejy ity',
 'qbpageinfo'     => 'Pejy fanoroana',
-'qbmyoptions'    => 'Ny pejiko',
-'qbspecialpages' => 'Pejy manokana',
 'faq'            => 'FMM',
-'faqpage'        => 'Project:FMM',
 
-# Vector skin
-'vector-action-addsection'       => 'Hanampy lohahevitra',
-'vector-action-delete'           => 'Fafana',
-'vector-action-move'             => 'Hanolo anarana',
-'vector-action-protect'          => 'Arovy',
-'vector-action-undelete'         => 'Avereno',
-'vector-action-unprotect'        => 'Hanala ny fiarovana',
-'vector-simplesearch-preference' => "Alefa ny soso-kevitra mikasika ny fikarohana (ho an'ny Vector ihany)",
-'vector-view-create'             => 'Foronona',
-'vector-view-edit'               => 'Hanova',
-'vector-view-history'            => 'Hijery ny tantara',
-'vector-view-view'               => 'Hamaky',
-'vector-view-viewsource'         => 'Hijery fango',
 'actions'                        => 'Tao',
 'namespaces'                     => 'Valam-pejy',
 'variants'                       => "Ny ''skin'' Voasintona",
@@ -403,7 +385,6 @@ $messages = array(
 'edit'              => 'Ovaina',
 'create'            => 'Amboarina',
 'editthispage'      => 'Hanova ity pejy ity',
-'create-this-page'  => 'Forony ity pejy ity',
 'delete'            => 'Hamafa',
 'deletethispage'    => 'Fafao ity pejy ity',
 'undelete_short'    => 'Famerenana fanovana {{PLURAL:$1|$1|$1}}',
@@ -418,19 +399,9 @@ $messages = array(
 'talkpagelinktext'  => 'Dinika',
 'specialpage'       => 'Pejy manokana',
 'personaltools'     => 'Fitaovana manokana',
-'postcomment'       => 'Hametraka fanamarihana',
-'articlepage'       => "Hijery ny votoatin'ny pejy",
 'talk'              => 'dinika',
 'views'             => 'Fijerena',
 'toolbox'           => 'Fitaovana',
-'userpage'          => "Hijery ny pejy manokan'ny mpikambana",
-'projectpage'       => 'Pejy meta',
-'imagepage'         => "Jereo ny pejin'ny sary",
-'mediawikipage'     => 'Hijery ny pejy misy io hafatra io',
-'templatepage'      => "Jereo ny pejin'ny endrika",
-'viewhelppage'      => "Jereo ny pejin'ny fanampiana",
-'categorypage'      => "Jereo ny pejin'ny sokajy",
-'viewtalkpage'      => 'Hijery pejin-dresaka',
 'otherlanguages'    => "Amin'ny tenim-pirenena hafa",
 'redirectedfrom'    => "(tonga teto avy amin'ny $1)",
 'redirectpagesub'   => 'Pejy fihodinana',
@@ -609,8 +580,9 @@ Ny antony napetraka dia : « ''$2'' ».",
 # Login and logout pages
 'logouttext'                 => "'''Tafavoaka ianao ankehitriny.'''
 
-Mbola afaka mampiasa ny {{SITENAME}} ianao na dia ef anivoaka aza, na afaka [[Special:UserLogin|miverina mihiditra]] ianao ambanin'ny anaranao na anaram-pikambana hafa.
+Mbola afaka mampiasa ny {{SITENAME}} ianao na dia ef anivoaka aza, na afaka $1 ianao ambanin'ny anaranao na anaram-pikambana hafa.
 Fantaro fa ny endriky ny pejy sasany dia mety mitovy amin'ny endrika nahitanao azy tamin' ianao mbola niditra tato, ho toy izany ny endri-pejy raha tsy nofafanao ny cache.",
+'logouttext-link-text'       => 'miverina mihiditra',
 'welcomecreation'            => '== Tonga soa, $1! ==
 
 Voaforona soa aman-tsara ny kaontinao.
@@ -1052,7 +1024,7 @@ Azonao jerena ilay diff ; ao amin'ny [{{fullurl:{{#Special:Log}}/suppress|page={
 'rev-showdeleted'             => 'aseho',
 'revisiondelete'              => 'Hamafa na hamerina santiôna',
 'revdelete-nooldid-title'     => 'Santiôna tanjona tsy mameno fetra.',
-'revdelete-nooldid-text'      => 'Tsy voalazanao ny santiôna tanjona hanaovana ity tao ity, 
+'revdelete-nooldid-text'      => 'Tsy voalazanao ny santiôna tanjona hanaovana ity tao ity,
 tsy misy ilay izy, na ny santiôna ankehitriny no andramana asitrika.',
 'revdelete-nologtype-title'   => 'Tsy nilaza karazana tatitra',
 'revdelete-nologtype-text'    => 'Tsy natsofokao ny karazana tatitra/laogy hanatanterahana ilay asa.',
@@ -1225,13 +1197,6 @@ ihany no miseho amin'ny vokatry ny karoka).",
 'search-external'                  => 'Hikaroka any ivelany',
 'searchdisabled'                   => "Tsy nalefa ny karoka eto amin'i {{SITENAME}}. Afaka mampiasa an'i Google aloha ianao mandra-paha. Nefa fantaro fa mety ho efa lany daty ny valiny omeny.",
 
-# Quickbar
-'qbsettings'               => 'Tsipika fiasàna',
-'qbsettings-none'          => 'Tsy misy',
-'qbsettings-fixedleft'     => 'Ankavia',
-'qbsettings-fixedright'    => 'Ankavanana',
-'qbsettings-floatingleft'  => 'Mitsingevaheva any ankavanana',
-'qbsettings-floatingright' => 'Mitsigevaheva any ankavanana',
 
 # Preferences page
 'preferences'                   => 'Ny momba anao',
@@ -2182,7 +2147,7 @@ miverina any amin'ny santiôna farany nataon'i $2.",
 
 # Protect
 'protectlogpage'              => 'Tatitr’asa momban’ny fiarovana',
-'protectlogtext'              => "Eto ambany ny lisitry ny fiarovana/fanalana hidy ny pejy. 
+'protectlogtext'              => "Eto ambany ny lisitry ny fiarovana/fanalana hidy ny pejy.
 Ho ann'y fanazavana fanampiny, jereo [[Special:ProtectedPages|ny lisitry ny pejy voaaro]] ho an'ny pejy fiarovana amin'izao fotoana izao.",
 'protectedarticle'            => 'voaaro ny pejy "[[$1]]"',
 'modifiedarticleprotection'   => "nanova ny haabo ny fiarovana ho an'ny « [[$1]] »",

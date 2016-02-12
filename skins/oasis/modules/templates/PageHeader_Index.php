@@ -13,6 +13,8 @@ if ( $runNjord ) {
 	if ( !empty( $action ) ) {
 		echo F::app()->renderView( 'MenuButton', 'Index', array( 'action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName ) );
 	}
+
+	echo $curatedContentToolButton;
 } else {
 	?>
 	<!-- @TODO CONCF-189 everything inside this if should be removed when social buttons are live -->
@@ -26,10 +28,12 @@ if ( $runNjord ) {
 				echo F::app()->renderView( 'MenuButton', 'Index', array( 'action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName ) );
 			}
 
+			echo $curatedContentToolButton;
+
 			// TODO: use PageHeaderIndexExtraButtons hook for these buttons
 
 			// "Add a photo" button
-			if ( !empty( $isNewFiles ) && !empty( $wg->EnableUploads ) ) {
+			if ( !empty( $isSpecialImages ) && !empty( $wg->EnableUploads ) ) {
 				echo Wikia::specialPageLink( 'Upload', 'oasis-add-photo', 'wikia-button upphotos', 'blank.gif', 'oasis-add-photo-to-wiki', 'sprite photo' );
 			}
 
@@ -103,9 +107,11 @@ if ( $runNjord ) {
 				echo F::app()->renderView( 'MenuButton', 'Index', array( 'action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName ) );
 			}
 
+			echo $curatedContentToolButton;
+
 			// TODO: use PageHeaderIndexExtraButtons hook for these buttons
 			// "Add a photo" button
-			if ( !empty( $isNewFiles ) && !empty( $wg->EnableUploads ) ) {
+			if ( !empty( $isSpecialImages ) && !empty( $wg->EnableUploads ) ) {
 				echo Wikia::specialPageLink( 'Upload', 'oasis-add-photo', 'wikia-button upphotos', 'blank.gif', 'oasis-add-photo-to-wiki', 'sprite photo' );
 			}
 

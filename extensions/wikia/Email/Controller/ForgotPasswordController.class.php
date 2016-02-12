@@ -3,7 +3,7 @@
 namespace Email\Controller;
 
 use Email\EmailController;
-use Email\Tracking\TrackingCategories;
+use Email\Fatal;
 
 /**
  * Class ForgotPasswordController
@@ -14,15 +14,25 @@ use Email\Tracking\TrackingCategories;
  */
 class ForgotPasswordController extends EmailController {
 
-	const TRACKING_CATEGORY = TrackingCategories::FORGOT_PASSWORD;
+	protected $tempPass;
 
-	private $tempPass;
+	/**
+	 * A redefinition of our parent's assertCanEmail which removes assertions:
+	 *
+	 * - assertUserWantsEmail : Even if a user says they don't want email, they should get this
+	 * - assertUserNotBlocked : Even if a user is blocked they should still get these emails
+	 *
+	 * @throws \Email\Fatal
+	 */
+	public function assertCanEmail() {
+		$this->assertUserHasEmail();
+	}
 
 	public function initEmail() {
-		$userService = new \UserService();
 		$this->tempPass = $this->request->getVal( 'tempPass' );
-		if ( empty( $this->tempPass ) ) {
-			$this->tempPass = $userService->resetPassword( $this->targetUser );
+
+		if ( empty($this->tempPass) ) {
+			throw new Fatal('Required temporary password has been left empty');
 		}
 	}
 
@@ -31,7 +41,7 @@ class ForgotPasswordController extends EmailController {
 	}
 
 	/**
-	 * @template forgotPassword
+	 * @template temporaryPassword
 	 */
 	public function body() {
 		$this->response->setData( [
@@ -39,7 +49,7 @@ class ForgotPasswordController extends EmailController {
 			'summary' => $this->getSummary(),
 			'passwordIntro' => $this->getIntro(),
 			'tempPassword' => $this->tempPass,
-			'unrequested' => $this->getMessage( 'emailext-password-unrequested' )->text(),
+			'instructions' => $this->getMessage( 'emailext-password-unrequested' )->text(),
 			'questions' => $this->getMessage( 'emailext-password-questions' )->parse(),
 			'signature' => $this->getMessage( 'emailext-password-signature' )->text(),
 		] );
