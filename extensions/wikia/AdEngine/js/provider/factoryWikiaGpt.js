@@ -13,10 +13,8 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 
 		if (context.opts.overrideLeaderboardSizes) {
 			for (var slotName in slotMap) {
-				if (slotMap.hasOwnProperty(slotName)) {
-					if (slotName.indexOf('TOP_LEADERBOARD') > -1) {
-						slotMap[slotName].size = '728x90';
-					}
+				if (slotMap.hasOwnProperty(slotName) && slotName.indexOf('TOP_LEADERBOARD') > -1) {
+					slotMap[slotName].size = '728x90';
 				}
 			}
 		}
