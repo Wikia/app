@@ -319,10 +319,6 @@ $messages = array(
 'resetpass-submit-loggedin' => 'КъайладогӀа дӀахувца',
 'resetpass-submit-cancel'   => 'Юхавал/ялa',
 
-# Special:PasswordReset
-'passwordreset-username' => 'Дакъалаьцархочунна цӀи:',
-'passwordreset-email'    => 'Д-фошта моттиг:',
-
 # Edit page toolbar
 'bold_sample'     => 'Сома яздам',
 'bold_tip'        => 'Сома яздам',

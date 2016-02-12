@@ -828,43 +828,6 @@ Iniciando sesión...',
 Puede que ya hayas cambiado la contraseña o que hayas pedido una temporal.',
 'resetpass-temp-password'   => 'Contraseña temporal:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Restablecimiento de contraseña',
-'passwordreset-text'               => 'Completa este formulario para recibir un recordatorio por correo electrónico de los detalles de tu cuenta.',
-'passwordreset-legend'             => 'Restablecer contraseña',
-'passwordreset-disabled'           => 'Se ha desactivado el restablecimiento de contraseñas en este wiki.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Introduce uno de los elementos de datos siguientes}}',
-'passwordreset-username'           => 'Nombre de usuario:',
-'passwordreset-domain'             => 'Dominio:',
-'passwordreset-capture'            => '¿Ver el mensaje resultante?',
-'passwordreset-capture-help'       => 'Si marcas esta casilla, se te mostrará el correo electrónico (con la contraseña temporal) además de enviarse al usuario.',
-'passwordreset-email'              => 'Dirección de correo electrónico:',
-'passwordreset-emailtitle'         => 'Detalles de la cuenta en {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Alguien (probablemente tú, desde la dirección IP $1) pidió un recordatorio de tus
-datos de cuenta para {{SITENAME}} ($4). {{PLURAL:$3|La siguiente cuenta está asociada|Las siguientes cuentas están asociadas}}
-con esta dirección de correo electrónico:
-
-$2
-
-{{PLURAL:$3|Esta contraseña temporal|Estas contraseñas temporales}} expirarán en {{PLURAL:$5|un día|$5 días}}.
-Deberías iniciar sesión y establecer una contraseña nueva ahora. Si alguien más hizo este pedido,
-o recuerdas tu contraseña original, y no deseas cambiarla, puedes
-ignorar este mensaje y continuar usando tu contraseña anterior.',
-'passwordreset-emailtext-user'     => 'El usuario $1 en {{SITENAME}} pidió un recordatorio de tus datos de cuenta para {{SITENAME}}
-($4). {{PLURAL:$3|La siguiente cuenta está asociada|Las siguientes cuentas están asociadas}} con esta dirección de correo electrónico:
-
-$2
-
-{{PLURAL:$3|Esta contraseña temporal|Estas contraseñas temporales}} expirarán en {{PLURAL:$5|un día|$5 días}}.
-Deberías iniciar sesión y establecer una contraseña nueva ahora. Si alguien más hizo este pedido,
-o recuerdas tu contraseña original, y no deseas cambiarla, puedes
-ignorar este mensaje y continuar usando tu contraseña anterior.',
-'passwordreset-emailelement'       => 'Nombre de usuario: $1
-Contraseña temporal: $2',
-'passwordreset-emailsent'          => 'Se ha enviado un correo electrónico de recordatorio.',
-'passwordreset-emailsent-capture'  => 'Un recordatorio por correo electrónico ha sido enviado, que se muestra a continuación.',
-'passwordreset-emailerror-capture' => 'Un recordatorio por correo electrónico fue generado, que se muestra a continuación, pero el envío al usuario falló: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Cambiar la dirección de correo-e',
 'changeemail-header'   => 'Cambiar la dirección de correo-e de la cuenta',

@@ -232,10 +232,6 @@ Ezalí listɛ́ ya nkásá gudi bizalí  na [[Special:SpecialPages|{{int:special
 'newpassword'             => 'Banda sika',
 'resetpass-submit-cancel' => 'Kozóngela',
 
-# Special:PasswordReset
-'passwordreset-username' => 'Nkómbó ya mosáleli:',
-'passwordreset-email'    => 'Adɛlɛ́sɛ-ímɛ́lɛ:',
-
 # Edit page toolbar
 'bold_sample'     => 'Nkomá ya mbinga',
 'bold_tip'        => 'Nkomá ya mbinga',

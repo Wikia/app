@@ -310,10 +310,6 @@ $messages = array(
 'resetpass-submit-cancel'   => 'རྩིས་མེད་ཐོངས།',
 'resetpass-temp-password'   => 'གནས་སྐབས་ལམ་ཡིག',
 
-# Special:PasswordReset
-'passwordreset-username' => 'སྤྱོད་མིང་།',
-'passwordreset-email'    => 'དྲ་འཕྲིན་ཁ་བྱང་།',
-
 # Special:ChangeEmail
 'changeemail'          => 'དྲ་འཕྲིན་ཁ་བྱང་བརྗེ་བ།',
 'changeemail-oldemail' => 'ད་ཡོད་དྲ་འཕྲིན་ཁ་བྱང་།',

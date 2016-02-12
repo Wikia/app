@@ -752,34 +752,6 @@ Biex tkompli l-aċċess tal-kont tiegħek huwa neċessarju li toħloq password �
 Jista' jkun li int diġà biddilt il-password, jew għamilt rikjesta għal password temporanja ġdida.",
 'resetpass-temp-password'   => 'Password temporanja:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Irrisettja l-password',
-'passwordreset-text'               => 'Imla din il-formola sabiex tirċievi notifikazzjoni permezz tal-posta elettronika tad-dettalji tal-kont tiegħek.',
-'passwordreset-legend'             => 'Irrisettja l-password',
-'passwordreset-disabled'           => 'L-irrisettjar tal-password fuq din il-wiki ġie diżattivat.',
-'passwordreset-pretext'            => "{{PLURAL:$1||Daħħal wieħed mill-biċċiet ta' informazzjoni t'hawn taħt}}",
-'passwordreset-username'           => 'Isem tal-utent:',
-'passwordreset-domain'             => 'Dominju:',
-'passwordreset-capture'            => 'Ara l-kontenut tal-messaġġ?',
-'passwordreset-capture-help'       => 'Jekk tagħżel din il-kaxxa, l-indirizz elettroniku (bil-password temporanja) se jiġi muri lilek barra milli jintbagħat lill-utent.',
-'passwordreset-email'              => 'Indirizz elettroniku:',
-'passwordreset-emailtitle'         => 'Dettalji tal-kont fuq {{SITENAME}}',
-'passwordreset-emailtext-ip'       => "Xi ħadd (probabilment int, mill-indirizz IP $1) għamel rikjesta sabiex jingħata password ġdida sabiex jaċċessa l-{{SITENAME}} ($4). {{PLURAL:$3|L-utent assoċjat|L-utenti assoċjati}} ma' dan l-indirizz elettroniku huma:
-
-$2
-
-{{PLURAL:$3|Din il-password temporanja se tiskadi|Dawn il-passwords temporanji se jiskadu}} fi żmien {{PLURAL:$5|ġurnata|$5 jum}}. Inti għadek tidħol fil-kont tiegħek u tagħżel password ġdida issa. Jekk xi ħadd ieħor għamel din ir-rikjesta, jew jekk ftakart il-password oriġinali, u m'għadikx trid tbiddilha, inti tista' tinjora dan il-messaġġ u tibqa' tuża' l-password il-qadima.",
-'passwordreset-emailtext-user'     => "L-utent $1 fuq {{SITENAME}} għamel rikjesta sabiex jingħata password ġdida sabiex jaċċessa l-{{SITENAME}} ($4). {{PLURAL:$3|L-utent assoċjat|L-utenti assoċjati}} ma' dan l-indirizz elettroniku huma:
-
-$2
-
-{{PLURAL:$3|Din il-password temporanja se tiskadi|Dawn il-passwords temporanji se jiskadu}} fi żmien {{PLURAL:$5|ġurnata|$5 jum}}. Inti għadek tidħol fil-kont tiegħek u tagħżel password ġdida issa. Jekk xi ħadd ieħor għamel din ir-rikjesta, jew jekk ftakart il-password oriġinali, u m'għadikx trid tbiddilha, inti tista' tinjora dan il-messaġġ u tibqa' tuża' l-password il-qadima.",
-'passwordreset-emailelement'       => 'Isem tal-utent: $1
-Password temporanja: $2',
-'passwordreset-emailsent'          => 'Intbagħtet ittra-e bħala tfakkira.',
-'passwordreset-emailsent-capture'  => 'Intbagħtet ittra-e bħala tfakkira, bil-kontenut jidher hawn taħt.',
-'passwordreset-emailerror-capture' => "Ġiet ġenerata ittra-e ta' tfakkira, li l-kontenut tagħha jidher hawn taħt. Madanakollu, il-posta ma ntbagħtitx lill-utent: $1",
-
 # Special:ChangeEmail
 'changeemail'          => 'Biddel l-indirizz elettroniku',
 'changeemail-header'   => 'Biddel l-indirizz elettroniku tal-kont',

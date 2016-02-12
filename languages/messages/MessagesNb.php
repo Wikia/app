@@ -785,45 +785,6 @@ Du kan ignorere denne beskjeden dersom kontoen ble opprettet ved en feil.',
 Du kan ha allerede byttet passordet, eller bedt om et nytt midlertidig passord.',
 'resetpass-temp-password'   => 'Midlertidig passord:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Passordresetting',
-'passwordreset-text'               => 'Fyll ut dette skjemaet for å motta en påminnelse om kontoopplysningene dine i en e-post.',
-'passwordreset-legend'             => 'Nullstill passord',
-'passwordreset-disabled'           => 'Nullstilling av passord er deaktivert på denne wikien.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Skriv inn en av datadelene nedenfor}}',
-'passwordreset-username'           => 'Brukernavn:',
-'passwordreset-domain'             => 'Domene:',
-'passwordreset-capture'            => 'Vise resulterende e-post?',
-'passwordreset-capture-help'       => 'Hvis du krysser av her, vil du se e-posten (med foreløpig passord) i tillegg til at den blir sendt til brukeren.',
-'passwordreset-email'              => 'E-postadresse:',
-'passwordreset-emailtitle'         => 'Kontodetaljer på {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Noen (sannsynligvis deg fra IP-adressen $1) ba om en påminnelse om dine
-kontodetaljer for {{SITENAME}} ($4). {{PLURAL:$3|Den følgende brukerkontoen|De følgende brukerkontoene}} er
-tilknyttet denne e-postadressen:
-
-$2
-
-{{PLURAL:$3|Dette midlertidige passordet|Disse midlertidige passordene}} utløper om {{PLURAL:$5|én dag|$5 dager}}.
-Du bør logge på og velge et nytt passord nå. Dersom noen andre kom med denne
-forespørselen, eller du har kommet på ditt opprinnelige passord, og ikke lenger
-ønsker å endre det, kan du ignorere denne meldingen og fortsette å bruke ditt gamle
-passord.',
-'passwordreset-emailtext-user'     => 'Brukeren $1 på {{SITENAME}} ba om en påminnelse om kontodetaljene dine for {{SITENAME}}
-($4). {{PLURAL:$3|Den følgende brukerkontoen|De følgende brukerkontoene}} er tilknyttet denne e-postadressen:
-
-$2
-
-{{PLURAL:$3|Dette midlertidige passordet|Disse midlertidige passordene}} utløper om {{én dag|$5 dager}}.
-Du bør logge på og velge et nytt passord nå. Dersom noen andre kom med denne
-forespørselen, eller du har kommet på ditt opprinnelige passord, og ikke lenger
-ønsker å endre det, kan du ignorere denne meldingen og fortsette å bruke ditt gamle
-passord.',
-'passwordreset-emailelement'       => 'Brukernavn: $1
-Midlertidig passord: $2',
-'passwordreset-emailsent'          => 'En påminnelse har blitt sendt på e-post.',
-'passwordreset-emailsent-capture'  => 'E-posten under er sendt ut som en påminnelse.',
-'passwordreset-emailerror-capture' => 'E-posten, som du ser under, ble forsøkt sendt til brukeren, men dette mislyktes: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Endre e-postadresse',
 'changeemail-header'   => 'Endre kontoens e-postadresse',
