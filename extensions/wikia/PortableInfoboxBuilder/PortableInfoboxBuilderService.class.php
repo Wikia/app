@@ -34,7 +34,8 @@ class PortableInfoboxBuilderService extends WikiaService {
 
 	protected function addGroupNode( $data, SimpleXMLElement $xml ) {
 		foreach ( $data as $item ) {
-			$child = $xml->addChild( $item->type, is_string( $item->data ) ? (string)$item->data : null );
+			$type = strcasecmp( $item->type, 'row' ) == 0 ? 'data' : $item->type;
+			$child = $xml->addChild( $type, is_string( $item->data ) ? (string)$item->data : null );
 			if ( is_array( $item->data ) ) {
 				$this->addGroupNode( $item->data, $child );
 			} else {
