@@ -381,16 +381,15 @@ class ImageServing {
 	}
 
 	private function getCutParams($width, $height, $align="center", $issvg=false) {
-		// make sure these are numeric and nonzero (BugId:20644, BugId:25965)
-		$width = max(1, intval($width));
-		$height = max(1, intval($height));
-		
 		//rescale of png always use width 512;
 		if( $issvg ) {
 			$height = round( ( 512 * $height) / $width );
 			$width = 512;
 		}
 
+		// make sure these are numeric and nonzero (BugId:20644, BugId:25965)
+		$width = max(1, intval($width));
+		$height = max(1, intval($height));
 		// in case we're missing some proportions, maintain the original aspect ratio
 		if (empty($this->proportion['h']) && !empty($this->proportion['w'])) {
 			$this->proportion['h'] = (float)$height * $this->proportion['w'] / $width;
@@ -398,10 +397,6 @@ class ImageServing {
 		if (empty($this->proportion['w']) && !empty($this->proportion['h'])) {
 			$this->proportion['w'] = (float)$width * $this->proportion['h'] / $height;
 		}
-
-		// make sure that these also are numeric and nonzero (PLATFORM-1725)
-		$this->proportion['w'] = max(1, intval($this->proportion['w']));
-		$this->proportion['h'] = max(1, intval($this->proportion['h']));
 
 		$pHeight = round( ( $width ) * ( $this->proportion['h'] / $this->proportion['w'] ) );
 
