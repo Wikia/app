@@ -34,11 +34,15 @@ ve.ui.WikiaVideoInsertDialog.static.trackingLabel = 'dialog-video-insert';
  * @inheritdoc
  */
 ve.ui.WikiaVideoInsertDialog.prototype.initialize = function () {
+	var uploadWidget;
+
 	// Parent method
 	ve.ui.WikiaVideoInsertDialog.super.prototype.initialize.call( this );
 
 	this.pages.removePages( [ this.mainPage ] );
-	this.query.upload.uploadButton.toggle();
+
+	uploadWidget = this.query.getUpload();
+	uploadWidget.uploadButton.toggle();
 };
 
 ve.ui.windowFactory.register( ve.ui.WikiaVideoInsertDialog );
