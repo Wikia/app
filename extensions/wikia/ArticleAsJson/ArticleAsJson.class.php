@@ -13,6 +13,7 @@ class ArticleAsJson extends WikiaService {
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
 	const ICON_SCALE_TO_MAX_HEIGHT = 20;
+	const MAX_MERCURY_IMAGE_WIDTH = 985;
 
 	const MEDIA_CONTEXT_ARTICLE_IMAGE = 'article-image';
 	const MEDIA_CONTEXT_ARTICLE_VIDEO = 'article-video';
@@ -187,7 +188,7 @@ class ArticleAsJson extends WikiaService {
 			$media = [ ];
 
 			foreach ( $data['images'] as $image ) {
-				$details = WikiaFileHelper::getMediaDetail(
+				$details = self::getMediaDetailWithSizeFallback(
 					Title::newFromText( $image['name'], NS_FILE ),
 					self::$mediaDetailConfig
 				);
@@ -232,7 +233,7 @@ class ArticleAsJson extends WikiaService {
 
 		$title = Title::newFromText( $data['name'] );
 		if ( $title ) {
-			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
+			$details = self::getMediaDetailWithSizeFallback( $title, self::$mediaDetailConfig );
 			$details['context'] = $data['context'];
 			self::$media[] = self::createMediaObject( $details, $title->getText(), $data['caption'] );
 			$ref = count( self::$media ) - 1;
@@ -264,7 +265,7 @@ class ArticleAsJson extends WikiaService {
 				$linkHref = $frameParams['link-url'];
 			}
 
-			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
+			$details = self::getMediaDetailWithSizeFallback($title, self::$mediaDetailConfig);
 
 			//information for mobile skins how they should display small icons
 			$details['context'] = self::isIconImage( $details, $handlerParams ) ?
@@ -470,5 +471,36 @@ class ArticleAsJson extends WikiaService {
 			'height' => $height,
 			'width' => $width
 		];
+	}
+
+	private static function getMediaDetailWithSizeFallback(
+		$title, $mediaDetailConfig, $fallbackSize=self::MAX_MERCURY_IMAGE_WIDTH
+	) {
+		$mediaDetail = WikiaFileHelper::getMediaDetail( $title, $mediaDetailConfig );
+		if ( $mediaDetail['width'] == 0 ) {
+			$mediaDetail['width'] = $fallbackSize;
+
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				'Media width was empty - fallback to fallbackSize',
+				[
+					'mediaDetails' => $mediaDetail,
+					'fallbackSize' => $fallbackSize
+				]
+			);
+		}
+
+		if ( $mediaDetail['height'] == 0 ) {
+			$mediaDetail['height'] = $fallbackSize;
+
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				'Image height was empty - fallback to fallbackSize',
+				[
+					'mediaDetails' => $mediaDetail,
+					'fallbackSize' => $fallbackSize
+				]
+			);
+		}
+
+		return $mediaDetail;
 	}
 }
