@@ -21,3 +21,7 @@ $wgHooks['BeforePageDisplay'][] = 'RecirculationHooks::onBeforePageDisplay';
 
 // i18n
 $wgExtensionMessagesFiles['Recirculation'] = __DIR__ . '/Recirculation.i18n.php';
+
+JSMessages::registerPackage('Recirculation', [
+	'recirculation-incontent-title',
+]);

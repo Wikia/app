@@ -381,10 +381,6 @@ class MediaQueryService extends WikiaService {
 	 * Get list of videos based on a few filters ($type, $providers, $category)
 	 * and sort options ($sort, $limit, $page).
 	 *
-	 * @param string $sort How to sort the results.  Valid options are:
-	 *                     - recent  : Sort by the date the video was added (DEFAULT)
-	 *                     - popular : Sort by total views
-	 *                     - trend   : Sort by views over the last 7 days
 	 * @param string $type What type of videos to return.  Valid options are:
 	 *                     - all     : Show all videos (DEFAULT)
 	 *                     - premium : Show only premium videos
@@ -396,17 +392,8 @@ class MediaQueryService extends WikiaService {
 	 *                         (DEFAULT any category)
 	 * @return array $videoList
 	 */
-	public function getVideoList( $sort = 'recent', $type = 'all', $limit = 0, $page = 1, $providers = [], $categories = [] ) {
+	public function getVideoList( $type = 'all', $limit = 0, $page = 1, $providers = [], $categories = [] ) {
 		wfProfileIn( __METHOD__ );
-
-		// Determine the sort column
-		if ( $sort == 'popular' ) {
-			$sortCol = 'views_total';
-		} elseif ( $sort == 'trend' ) {
-			$sortCol = 'views_7day';
-		} else {
-			$sortCol = 'added_at';
-		}
 
 		// Setup the base query cache for a minimal amount of time
 		$query = (new WikiaSQL())->cache( 5 )
@@ -419,7 +406,7 @@ class MediaQueryService extends WikiaService {
 				->DISTINCT( 'video_title' )
 			->FROM( 'video_info' )
 			->WHERE( 'removed' )->EQUAL_TO( 0 )
-			->ORDER_BY( $sortCol )->DESC();
+			->ORDER_BY( 'added_at' )->DESC();
 
 		if ( $categories ) {
 				$query->JOIN( 'page' )->ON( 'video_title', 'page_title' )
@@ -452,6 +439,7 @@ class MediaQueryService extends WikiaService {
 				'addedAt'    => $row->added_at,
 				'addedBy'    => $row->added_by,
 				'duration'   => $row->duration,
+				// SUS-78 | Not used in template but used by API clients - GameGuides App
 				'viewsTotal' => $row->views_total
 			];
 		});

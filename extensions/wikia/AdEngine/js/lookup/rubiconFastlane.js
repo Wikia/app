@@ -151,6 +151,10 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			values,
 			parameters = {};
 
+		if (!slots[slotName].getAdServerTargeting) {
+			return {};
+		}
+
 		targeting = slots[slotName].getAdServerTargeting();
 		targeting.forEach(function (params) {
 			if (params.key !== rubiconElementKey) {

@@ -49,6 +49,14 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			beforeHop: noop
 		};
 
+	function createSlot(slotName) {
+		return {
+			name: slotName,
+			pre: noop,
+			post: noop
+		};
+	}
+
 	function getFactory() {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
 			mocks.adLogicPageParams,
@@ -84,8 +92,8 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	}
 
 	function assertSlotSizes(provider, slotName, expectedSizes) {
-		provider.fillInSlot(slotName, {}, noop, noop);
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[3].size)
+		provider.fillInSlot(createSlot(slotName));
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2].size)
 			.toBe(expectedSizes, provider.name + '.' + slotName + ' sizes');
 	}
 

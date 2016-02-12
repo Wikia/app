@@ -10,7 +10,7 @@ global $wgWidgets;
 $wgWidgets['WidgetEditedRecently'] = array(
 	'callback' => 'WidgetEditedRecently',
 	'title' => 'widget-title-editedrecently',
-	'desc' => 'widget-desc-editedrecently',  
+	'desc' => 'widget-desc-editedrecently',
     	'params' => array(
 		'limit' => array(
 			'type' => 'text',
@@ -24,7 +24,7 @@ $wgWidgets['WidgetEditedRecently'] = array(
 function WidgetEditedRecently($id, $params) {
 	wfProfileIn( __METHOD__ );
 	global $wgTitle, $wgRequest;
-	
+
 	if ( (!is_object($wgTitle) || ($wgTitle->mArticleID == -1)) && ($wgRequest->getVal('actionType') == 'add') ) {
 		// ask for page refresh
 		wfProfileOut( __METHOD__ );
@@ -55,14 +55,14 @@ function WidgetEditedRecently($id, $params) {
 			foreach ($contribs['revisions'] as $contrib) {
 				$is_anon = isset($contrib['anon']);
 				$author = $contrib['user'];
-				
+
 				if ($is_anon) {
 					// don't show anon edits - requested by JohnQ
 					continue;
 				} else {
 					$oUser = User::newFromName( $author );
-					if ( ( $oUser instanceof User ) && 
-						 ( !$oUser->isBlocked() ) 
+					if ( ( $oUser instanceof User ) &&
+						 ( !$oUser->isBlocked( true, false ) )
 					) {
 						$userPage = $oUser->getUserPage();
 						if ( ($userPage instanceof Title) && ($userPage->exists()) ) {
