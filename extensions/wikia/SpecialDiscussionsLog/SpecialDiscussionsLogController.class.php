@@ -69,42 +69,43 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	}
 
 	private function getUserLog( $userName ) {
+		$userErrorMessage = null;
+		$noUserLogMessage = false;
+		$displayedUserLogRecords = [];
+
 		try {
 			$userId = $this->getUserIdByUsername( $userName );
 		} catch ( Exception $e ) {
-			return "<p>{$e->getMessage()}</p>";
-		}
-		$userLogRecords = $this->aggregateLogSearches( $userId, $userName );
-		if ( count( $userLogRecords ) == 0 ) {
-			return "<p>No mobile app activity by $userName in the past two weeks!</p>";
+			$userErrorMessage = "<p>{$e->getMessage()}</p>";
 		}
 
-		$resultHtml = "<p>Log data for user \"$userName\" (ID: $userId)</p>";
-		$resultHtml .= '<table>
-  <thead>
-    <tr>
-      <th style="padding-right:8px">IP Address</th>
-      <th style="padding-right:8px">Location</th>
-      <th style="padding-right:8px">Language</th>
-      <th style="padding-right:8px">User Agent</th>
-      <th style="padding-right:8px">App</th>
-      <th style="padding-right:8px">Timestamp</th>
-    </tr>
-  </thead>';
+		$userLogRecords = $this->aggregateLogSearches( $userId, $userName );
+
+		if ( count( $userLogRecords ) == 0 ) {
+			$noUserLogRecords = true;// "<p>No mobile app activity by $userName in the past two weeks!</p>";
+		}
 
 		foreach ( $userLogRecords as $userLogRecord ) {
-			$resultHtml .= "<tr>
-				<td style=\"padding-right:8px\">{$userLogRecord->getIp()}</td>
-				<td style=\"padding-right:8px\">{$userLogRecord->getLocation()}</td>
-				<td style=\"padding-right:8px\">{$userLogRecord->getLanguage()}</td>
-				<td style=\"padding-right:8px\">{$userLogRecord->getUserAgent()}</td>
-				<td style=\"padding-right:8px\">{$userLogRecord->getApp()}</td>
-				<td style=\"padding-right:8px\">{$userLogRecord->getTimestamp()}</td>
-			</tr>";
+			array_push( $displayedUserLogRecords, [
+				'ip' => $userLogRecord->getIp(),
+				'location' => $userLogRecord->getLocation(),
+				'language' => $userLogRecord->getLanguage(),
+				'userAgent' => $userLogRecord->getUserAgent(),
+				'app' => $userLogRecord->getApp(),
+				'timestamp' => $userLogRecord->getTimestamp(),
+			] );
 		}
-		$resultHtml .= '</table>';
 
-		return $resultHtml;
+		return \MustacheService::getInstance()->render(
+			self::$inputFormTemplate,
+			[
+				'username' => $username,
+				'userId' => $userId,
+				'userErrorMessage' => $userErrorMessage,
+				'noUserLoginRecords' => $noUserLoginRecords,
+				'userLogRecords' => $displayedUserLogRecords
+			]
+		);
 	}
 
 	private function aggregateLogSearches( $userId, $userName ) {
