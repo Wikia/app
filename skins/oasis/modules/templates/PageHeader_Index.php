@@ -33,7 +33,7 @@ if ( $runNjord ) {
 			// TODO: use PageHeaderIndexExtraButtons hook for these buttons
 
 			// "Add a photo" button
-			if ( !empty( $isNewFiles ) && !empty( $wg->EnableUploads ) ) {
+			if ( !empty( $isSpecialImages ) && !empty( $wg->EnableUploads ) ) {
 				echo Wikia::specialPageLink( 'Upload', 'oasis-add-photo', 'wikia-button upphotos', 'blank.gif', 'oasis-add-photo-to-wiki', 'sprite photo' );
 			}
 
@@ -111,7 +111,7 @@ if ( $runNjord ) {
 
 			// TODO: use PageHeaderIndexExtraButtons hook for these buttons
 			// "Add a photo" button
-			if ( !empty( $isNewFiles ) && !empty( $wg->EnableUploads ) ) {
+			if ( !empty( $isSpecialImages ) && !empty( $wg->EnableUploads ) ) {
 				echo Wikia::specialPageLink( 'Upload', 'oasis-add-photo', 'wikia-button upphotos', 'blank.gif', 'oasis-add-photo-to-wiki', 'sprite photo' );
 			}
 

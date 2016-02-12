@@ -102,13 +102,6 @@ JSMessages::registerPackage( 'TemplateClassificationHints', [
 	'template-classification-bulk-classification-*'
 ] );
 
-/**
- * Resources Loader module
- */
-$wgResourceModules['ext.wikia.TemplateClassification.ModalMessages'] = [
-	'messages' => [
-		'template-classification-entry-point-hint',
-	],
-	'localBasePath' => __DIR__,
-	'remoteExtPath' => 'wikia/TemplateClassification'
-];
+JSMessages::registerPackage( 'TemplateClassificationGlobalShortcuts', [
+	'template-classification-global-shortcuts-caption-classify-page',
+] );

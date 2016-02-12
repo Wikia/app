@@ -140,10 +140,9 @@ $messages = array_merge( $messages, array(
 
 'tog-enableuserjs' => 'Habilitar JavaScript personal ([[Ayuda:CSS_y_JS_personal#JavaScript|Aprenda más]])',
 
-'recentchanges-on-wikia-title' => 'Cambios recientes en Wikia',
-'recentchanges-on-wikia-content' => "Introduciendo Tipos de Plantilla — Organiza tus plantillas por tipo para hacer [[Special:Templates|gestión de plantilla]] más simple y para mejorar la forma en que se muestran en los teléfonos móviles. [[Ayuda:Clasificación de Plantillas|Conoce más]] o '''[[Special:Insights/templateswithouttype|¡Comienza ahora!]]'''
+'group-content-moderator' => 'Moderadores de contenido',
+'group-content-moderator-member' => 'Moderador de contenido',
 
-Imágenes con pestañas y grupos plegables están ahora disponibles para [[Ayuda:Infoboxes|Infoboxes Portátiles]].
-
-¿Tu contenido es portátil? Aprende más sobre contenido a prueba de futuro en [[w:c:portability|Portability.wikia.com]].",
+	'wikia-read-only-mode' => 'Nuestro centro de datos principal no se encuentra disponible en estos momentos, esta es nuestra copia de seguridad. Desgraciadamente, esto significa que no puedes ser capaz de hacer ciertas cosas como editar, subir archivos o chatear.
++ ¡Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si ves este mensaje por un largo período de tiempo, no dudes en contactarte con Wikia a través de community@wikia.com.',
 ) );

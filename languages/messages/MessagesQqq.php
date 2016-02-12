@@ -281,63 +281,11 @@ This can also appear in the credits page if the credits feature is enabled,for e
 
 {{Identical|And}}',
 
-# Cologne Blue skin
-'qbfind'         => 'Alternative for "search" as used in Cologne Blue skin.
+'qbfind'         => 'Alternative for "search" as used in MultiTasks extensions
 {{Identical|Find}}',
-'qbedit'         => '{{Identical|Edit}}',
-'qbmyoptions'    => '{{Identical|My pages}}',
-'qbspecialpages' => '{{Identical|Special pages}}',
-'faqpage'        => "FAQ is short for ''frequently asked questions''. This page is only linked on some of the old skins, not in Monobook or Modern.
 
-{{doc-important|Do not translate <tt>Project:</tt> part.}}",
-
-# Vector skin
-'vector-action-addsection'   => 'Used in the Vector skin. See for example http://translatewiki.net/wiki/Talk:Main_Page?useskin=vector',
-'vector-action-delete'       => 'Used in the Vector skin, as the name of a tab at the top of the page. See for example http://translatewiki.net/wiki/Main_Page?useskin=vector
-
-{{Identical|Delete}}',
-'vector-action-move'         => 'Used in the Vector skin, on the tabs at the top of the page. See for example http://translatewiki.net/wiki/Talk:Main_Page?useskin=vector
-
-{{Identical|Move}}',
-'vector-action-protect'      => 'Tab at top of page, in vector skin
-
-{{Identical|Protect}}',
-'vector-action-undelete'     => 'Tab at top of page, in vector skin.
-{{Identical|Undelete}}',
-'vector-action-unprotect'    => 'Tab at top of page, in vector skin.
-
-{{Identical|Unprotect}}',
-'vector-namespace-category'  => 'Tab label in the Vector skin. See for example http://translatewiki.net/wiki/Category:Translatewiki.net?useskin=vector
-
-{{Identical|Category}}',
-'vector-namespace-help'      => 'Tab label in the Vector skin. See for example http://translatewiki.net/wiki/Help:Rollback?useskin=vector',
-'vector-namespace-image'     => 'Tab label in the Vector skin. See for example http://translatewiki.net/wiki/File:Tournesol.png?useskin=vector
-
-{{Identical|File}}',
-'vector-namespace-main'      => 'Tab label in the Vector skin. See for example http://translatewiki.net/wiki/Main_Page?useskin=vector
-{{Identical|Page}}',
-'vector-namespace-mediawiki' => 'Tab label in the Vector skin. See for example http://translatewiki.net/wiki/MediaWiki:Vector-namespace-mediawiki?useskin=vector
-{{Identical|Message}}',
-'vector-namespace-project'   => 'Tab label in the Vector skin. See for example http://translatewiki.net/wiki/Project:About?useskin=vector',
-'vector-namespace-special'   => 'Tab label in the Vector skin. See for example http://translatewiki.net/wiki/Special:SpecialPages?useskin=vector',
-'vector-namespace-talk'      => 'Tab label in the Vector skin. See for example http://translatewiki.net/wiki/Talk:Main_Page?useskin=vector
-{{Identical|Discussion}}',
-'vector-namespace-template'  => 'Tab label in the Vector skin. See for example http://translatewiki.net/wiki/Template:Identical?useskin=vector
-{{Identical|Template}}',
-'vector-namespace-user'      => 'Tab label in the Vector skin. See for example http://translatewiki.net/wiki/User:FuzzyBot?useskin=vector
-{{Identical|User page}}',
-'vector-view-create'         => 'Tab label in the Vector skin. See for example http://translatewiki.net/wiki/Foo?useskin=vector
-{{Identical|Create}}',
-'vector-view-edit'           => 'Tab label in the Vector skin. See for example http://translatewiki.net/wiki/Main_Page?useskin=vector
-{{Identical|Edit}}',
-'vector-view-history'        => 'Tab label in the Vector skin. See for example http://translatewiki.net/wiki/Main_Page?useskin=vector
-{{Identical|View history}}',
-'vector-view-view'           => 'Tab label in the Vector skin (verb). See for example http://translatewiki.net/w/i.php?title=Main_Page&useskin=vector',
-'vector-view-viewsource'     => 'Tab label in the Vector skin.
-{{Identical|View source}}',
 'actions'                    => '{{Identical|Action}}',
 'namespaces'                 => '{{Identical|Namespace}}',
-'variants'                   => 'Used by the Vector skin.',
 
 'errorpagetitle'    => 'Message shown in browser title bar when encountering error operation.
 
@@ -375,9 +323,8 @@ Also used as title of [[Special:Search]] page in [[Special:SpecialPages]].
 'create'            => 'The text on the tab for to the edit form on unexisting pages.
 
 {{Identical|Create}}',
-'editthispage'      => 'This is the "edit" link as used in the skins Classic/Standard, Cologne Blue and Nostalgia. See {{msg|create-this-page}} for when the page does not exist.',
-'create-this-page'  => 'In the skins Classic/Standard, Cologne Blue and Nostalgia this is the text for the link leading to the edit form on pages that have not yet been created. See {{msg|editthispage}} for when the page already exists.
-{{Identical|Createpage}}',
+'editthispage'      => 'This is the "edit" link as used by the MyHome extension.',
+
 'delete'            => 'Name of the Delete tab shown for admins. Should be in the imperative mood.
 
 {{Identical|Delete}}',
@@ -398,9 +345,7 @@ Also used as title of [[Special:Search]] page in [[Special:SpecialPages]].
 
 {{Identical|Talk}}',
 'personaltools'     => 'Heading for a group of links to your user page, talk page, preferences, watchlist, and contributions. This heading is visible in the sidebar in some skins. For an example, see [http://translatewiki.net/wiki/Main_Page?useskin=simple Main Page using simple skin].',
-'articlepage'       => "'Content page' is used for NS_MAIN and any other non-standard namespace and this message is only used in skins Nostalgia, Cologneblue and Standard in the bottomLinks part.
 
-{{Identical|Content page}}",
 'talk'              => 'Used as display name for the tab to all talk pages. These pages accompany all content pages and can be used for discussing the content page. Example: [[Talk:Example]].
 
 {{Identical|Discussion}}',
@@ -1227,9 +1172,6 @@ This is a search result (and I guess search engine) dependent messages. I do not
 'search-external'                => 'Legend of the fieldset for the input form when the internal search is disabled. Inside the fieldset [[MediaWiki:Searchdisabled]] and [[MediaWiki:Googlesearch]] is shown.',
 'searchdisabled'                 => 'Shown on [[Special:Search]] when the internal search is disabled.',
 
-# Quickbar
-'qbsettings'      => 'The title of the section in [[Special:Preferences]], only shown when using the skins "Standard/Classic" or "Cologne Blue". The quicbar is the same as the sidebar.',
-'qbsettings-none' => '{{Identical|None}}',
 
 # Preferences page
 'preferences'                   => 'Title of the Special:Preferences page.
@@ -2940,14 +2882,7 @@ See also {{msg-mw|Anonuser}} and {{msg-mw|Siteusers}}.',
 'spam_reverting' => '{{Identical|Revert}}',
 
 # Skin names
-'skinname-standard'    => '{{optional}}',
-'skinname-nostalgia'   => '{{optional}}',
-'skinname-cologneblue' => '{{optional}}',
 'skinname-monobook'    => '{{optional}}',
-'skinname-myskin'      => '{{optional}}',
-'skinname-chick'       => '{{optional}}',
-'skinname-simple'      => '{{optional}}',
-'skinname-modern'      => '{{optional}}',
 
 # Math options
 'mw_math_png'    => 'In user preferences.',

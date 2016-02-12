@@ -479,6 +479,7 @@ class Parser {
 		}
 
 		wfRunHooks( 'ParserAfterTidy', array( &$this, &$text ) );
+
 		// Wikia change begin - @author: wladek
 		$this->recordPerformanceStats( $wikitextSize, strlen($text) );
 		// Wikia change end
@@ -1263,6 +1264,11 @@ class Parser {
 					[0-9Xx]                 # check digit
 					\b)
 			)!xu', array( &$this, 'magicLinkCallback' ), $text );
+
+		if ( preg_last_error() !== 0 ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'PCRE error', [ 'preg_last_error' => preg_last_error() ] );
+		}
+
 		wfProfileOut( __METHOD__ );
 		return $text;
 	}

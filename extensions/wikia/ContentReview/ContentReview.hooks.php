@@ -42,8 +42,8 @@ class Hooks {
 			if ( ImportJS::isImportJSPage( $title ) ) {
 				$message = ImportJS::getImportJSDescriptionMessage();
 				$content = $this->prepareContent( $title, $content, $message );
-			} elseif ( UserBadges::isUserBadgesPage( $title ) ) {
-				$message = UserBadges::getUserBadgesDescriptionMessage();
+			} elseif ( ProfileTags::isProfileTagsPage( $title ) ) {
+				$message = ProfileTags::getProfileTagsDescriptionMessage();
 				$content = $this->prepareContent( $title, $content, $message );
 			}
 		}
@@ -64,8 +64,8 @@ class Hooks {
 		if ( ImportJS::isImportJSPage( $title ) ) {
 			$message = ImportJS::getImportJSDescriptionMessage();
 			$content = $this->prepareContent( $title, $content, $message, false );
-		} elseif ( UserBadges::isUserBadgesPage( $title ) ) {
-			$message = UserBadges::getUserBadgesDescriptionMessage();
+		} elseif ( ProfileTags::isProfileTagsPage( $title ) ) {
+			$message = ProfileTags::getProfileTagsDescriptionMessage();
 			$content = $this->prepareContent( $title, $content, $message, false );
 		}
 
@@ -131,16 +131,18 @@ class Hooks {
 		return true;
 	}
 
+	/**
+	 * Initiates a diff page Content Review controller and renders a reviewer's toolbar.
+	 * @param $diffEngine
+	 * @param \OutputPage $output
+	 * @return bool
+	 */
 	public function onArticleContentOnDiff( $diffEngine, \OutputPage $output ) {
-		$helper = new Helper();
+		$title = $output->getTitle();
+		$diffPage = new ContentReviewDiffPage( $title );
 
-		if ( $helper->shouldDisplayReviewerToolbar() ) {
-			\Wikia::addAssetsToOutput( 'content_review_diff_page_js' );
-			\Wikia::addAssetsToOutput( 'content_review_diff_page_scss' );
-			\JSMessages::enqueuePackage( 'ContentReviewDiffPage', \JSMessages::EXTERNAL );
-
-			$revisionId = $helper->getCurrentlyReviewedRevisionId( $output->getRequest() );
-			$output->prependHTML( $helper->getToolbarTemplate( $revisionId ) );
+		if ( $diffPage->shouldDisplayToolbar() ) {
+			$diffPage->addToolbarToOutput( $output );
 		}
 
 		return true;

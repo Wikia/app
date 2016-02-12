@@ -49,6 +49,14 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			beforeHop: noop
 		};
 
+	function createSlot(slotName) {
+		return {
+			name: slotName,
+			pre: noop,
+			post: noop
+		};
+	}
+
 	function getFactory() {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
 			mocks.adLogicPageParams,
@@ -84,8 +92,8 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	}
 
 	function assertSlotSizes(provider, slotName, expectedSizes) {
-		provider.fillInSlot(slotName, {}, noop, noop);
-		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[3].size)
+		provider.fillInSlot(createSlot(slotName));
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2].size)
 			.toBe(expectedSizes, provider.name + '.' + slotName + ' sizes');
 	}
 
@@ -120,7 +128,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				HOME_TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
 				HOME_TOP_RIGHT_BOXAD: '300x250,300x600,300x1050',
 				HUB_TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
-				INCONTENT_BOXAD_1: '300x250',
+				INCONTENT_BOXAD_1: '300x250,300x600',
 				INCONTENT_PLAYER: '1x1',
 				INVISIBLE_SKIN: '1000x1000,1x1',
 				LEFT_SKYSCRAPER_2: '160x600,300x600',
@@ -142,7 +150,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				HOME_TOP_LEADERBOARD: '728x90',
 				HOME_TOP_RIGHT_BOXAD: '300x250,300x600,300x1050',
 				HUB_TOP_LEADERBOARD: '728x90',
-				INCONTENT_BOXAD_1: '300x250',
+				INCONTENT_BOXAD_1: '300x250,300x600',
 				INCONTENT_PLAYER: '1x1',
 				INVISIBLE_SKIN: '1000x1000,1x1',
 				LEFT_SKYSCRAPER_2: '160x600,300x600',
@@ -163,7 +171,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				HOME_TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
 				HOME_TOP_RIGHT_BOXAD: '300x250,300x600,300x1050',
 				HUB_TOP_LEADERBOARD: null,
-				INCONTENT_BOXAD_1: '300x250',
+				INCONTENT_BOXAD_1: '300x250,300x600',
 				INCONTENT_PLAYER: null,
 				INVISIBLE_SKIN: '1000x1000,1x1',
 				LEFT_SKYSCRAPER_2: '160x600,300x600',
@@ -185,7 +193,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				HOME_TOP_LEADERBOARD: '728x90',
 				HOME_TOP_RIGHT_BOXAD: '300x250,300x600,300x1050',
 				HUB_TOP_LEADERBOARD: null,
-				INCONTENT_BOXAD_1: '300x250',
+				INCONTENT_BOXAD_1: '300x250,300x600',
 				INCONTENT_PLAYER: null,
 				INVISIBLE_SKIN: '1000x1000,1x1',
 				LEFT_SKYSCRAPER_2: '160x600,300x600',

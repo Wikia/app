@@ -234,28 +234,12 @@ $messages = array(
 'navigation'    => 'somari',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Cjate',
 'qbbrowse'       => 'Sgarfe',
-'qbedit'         => 'Cambie',
 'qbpageoptions'  => 'Cheste pagjine',
 'qbpageinfo'     => 'Contest',
-'qbmyoptions'    => 'Mês pagjinis',
-'qbspecialpages' => 'Pagjinis speciâls',
 'faq'            => 'Domandis plui frecuentis',
 
-# Vector skin
-'vector-action-addsection' => 'Gnove sezion',
-'vector-action-delete'     => 'Elimine',
-'vector-action-move'       => 'Môf',
-'vector-action-protect'    => 'Protêç',
-'vector-action-undelete'   => 'Recupere',
-'vector-action-unprotect'  => 'No stâ protezi',
-'vector-view-create'       => 'Cree',
-'vector-view-edit'         => 'Cambie',
-'vector-view-history'      => 'Cjale il storic',
-'vector-view-view'         => 'Lei',
-'vector-view-viewsource'   => 'Cjale risultive',
 'actions'                  => 'Azions',
 'namespaces'               => 'Spazis dai nons',
 'variants'                 => 'Variants',
@@ -278,7 +262,6 @@ $messages = array(
 'edit'              => 'Cambie',
 'create'            => 'Cree',
 'editthispage'      => 'Cambie cheste pagjine',
-'create-this-page'  => 'Cree cheste pagjine',
 'delete'            => 'Elimine',
 'deletethispage'    => 'Elimine cheste pagjine',
 'undelete_short'    => 'Recupere {{PLURAL:$1|modifiche eliminade|$1 modifichis eliminadis}}',
@@ -293,19 +276,9 @@ $messages = array(
 'talkpagelinktext'  => 'discussion',
 'specialpage'       => 'Pagjine speciâl',
 'personaltools'     => 'Imprescj personâi',
-'postcomment'       => 'Gnove sezion',
-'articlepage'       => 'Cjale la vôs',
 'talk'              => 'Discussion',
 'views'             => 'Visitis',
 'toolbox'           => 'imprescj',
-'userpage'          => 'Cjale pagjine dal utent',
-'projectpage'       => 'Cjale pagjine dal progjet',
-'imagepage'         => 'Cjale pagjine dal file',
-'mediawikipage'     => 'Cjale la pagjine dal messaç',
-'templatepage'      => 'Cjale il model',
-'viewhelppage'      => 'Cjale la pagjine di jutori',
-'categorypage'      => 'Cjale la categorie',
-'viewtalkpage'      => 'Cjale la pagjine di discussion',
 'otherlanguages'    => 'Altris lenghis',
 'redirectedfrom'    => '(Inviât ca di $1)',
 'redirectpagesub'   => 'Pagjine di redirezion',
@@ -712,13 +685,6 @@ Leiende: (cur) = difarencis cun la version atuâl, (prec) = difarencis cun la ve
 'search-external'                  => 'Ricercje esterne',
 'searchdisabled'                   => 'La ricercje in {{SITENAME}} no je ative. Tu puedis doprâ Google intant. Sta atent che lis lôr tabelis sul contignût di {{SITENAME}} a puedin jessi pôc inzornadis.',
 
-# Quickbar
-'qbsettings'               => 'Sbare svelte',
-'qbsettings-none'          => 'Nissune',
-'qbsettings-fixedleft'     => 'Fis a Çampe',
-'qbsettings-fixedright'    => 'Fis a Drete',
-'qbsettings-floatingleft'  => 'Flutuant a çampe',
-'qbsettings-floatingright' => 'Flutuant a diestre',
 
 # Preferences page
 'preferences'                 => 'Preferencis',
@@ -1490,9 +1456,6 @@ Par plasê va su [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] 
 'nocredits'        => 'Nissune informazion sui ricognossiments disponibil par cheste pagjine.',
 
 # Skin names
-'skinname-standard'  => 'Classiche',
-'skinname-nostalgia' => 'Nostalgjie',
-'skinname-modern'    => 'Moderne',
 
 # Browsing diffs
 'previousdiff' => '← Difarence precedente',

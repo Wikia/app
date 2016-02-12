@@ -40,11 +40,9 @@ $messages = array_merge( $messages, array(
 
 'tog-enableuserjs' => 'Autorizar JavaScript pessoal ([[Ajuda:CSS_e_JS_pessoal|Saiba mais]])',
 
-'recentchanges-on-wikia-title' => 'Mudanças recentes na Wikia',
-'recentchanges-on-wikia-content' => "Introduzindo tipos de predefinições — organize suas predefinições pelo tipo para [[Special:Templates|gerenciamento de predefinição]] torná-las mais simples e para melhorar como são exibidas em celulares. [[Ajuda:Tipos de predefinição|Saiba mais]] ou '''[[Special:Insights/predefiniçõessemtipo|Comece agora!]]'''
+'group-content-moderator' => 'Moderadores de conteúdo',
+'group-content-moderator-member' => 'Moderador de conteúdo',
 
-Imagens com guias e grupos flexíveis estão disponíveis agora para [[Ajuda:Infobox|Infoboxes móveis]].
-
-O seu conteúdo é móvel? Saiba mais sobre conteúdo em [[w:c:portability|Portability.wikia.com]].",
-
+	'wikia-read-only-mode' => 'Nosso centro de dados principal está indisponível, então este é o nosso backup. Infelizmente, isto significa que talvez você não possa fazer certas coisas como editar, carregar ou entrar no chat.
+ + Estamos trabalhando para corrigir o problema, obrigado por sua paciência! Se isso demorar muito, entre em contato com a Wikia na community@wikia.com.',
 ) );

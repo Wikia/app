@@ -6,6 +6,7 @@
 	<h1><?= wfMsg('wikiapoll-editpoll-headline') ?></h1>
 
 	<form>
+	<input type="hidden" name="token" value="<?= Sanitizer::encodeAttribute( $editToken ) ?>">
 	<label>question</label>
 
 	<div class="question">

@@ -1,16 +1,15 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.lookup.lookupFactory',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, adTracker, adLogicZoneParams, doc, log, win) {
+], function (adContext, factory, adLogicZoneParams, doc, log, win) {
 	'use strict';
 
-	var called = false,
-		config = {
+	var config = {
 			oasis: {
 				TOP_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
@@ -29,7 +28,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 					targeting: {loc: 'footer'}
 				},
 				INCONTENT_BOXAD_1: {
-					sizes: [[300, 250]],
+					sizes: [[300, 250], [300, 600]],
 					targeting: {loc: 'middle'}
 				},
 				PREFOOTER_LEFT_BOXAD: {
@@ -49,92 +48,40 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 					sizes: [[300, 250]]
 				},
 				MOBILE_TOP_LEADERBOARD: {
-					sizes: [[320, 50]]
+					sizes: [[320, 50], [300, 250]]
 				}
 			}
 		},
-		context = adContext.getContext(),
+		context,
 		logGroup = 'ext.wikia.adEngine.lookup.rubiconFastlane',
-		name = 'rubicon_fastlane',
 		priceMap = {},
-		response = false,
 		rubiconSlots = [],
 		rubiconElementKey = 'rpfl_elemid',
 		rubiconTierKey = 'rpfl_7450',
 		rubiconLibraryUrl = '//ads.rubiconproject.com/header/7450.js',
-		slots = {},
-		timing;
+		slots = {};
 
-	function configureHomePageSlots() {
-		var slotName;
-		for (slotName in slots) {
-			if (slots.hasOwnProperty(slotName) && slotName.indexOf('TOP') > -1) {
-				slots['HOME_' + slotName] = slots[slotName];
-				delete slots[slotName];
-			}
-		}
-	}
+	function compareTiers(a,b) {
+		var aMatches = /^(\d+)/.exec(a),
+			bMatches = /^(\d+)/.exec(b);
 
-	function getSlots(skin) {
-		slots = config[skin];
-		if (skin === 'oasis' && context.targeting.pageType === 'home') {
-			configureHomePageSlots();
+		if (aMatches && bMatches) {
+			return parseInt(aMatches[1], 10) > parseInt(bMatches[1], 10) ? 1 : -1;
 		}
 
-		return slots;
-	}
-
-	function encodeParamsForTracking(params) {
-		if (params[rubiconTierKey]) {
-			return params[rubiconTierKey].join(';');
-		}
-	}
-
-	function trackState(providerName, slotName, params) {
-		log(['trackState', response, providerName, slotName], 'debug', logGroup);
-		var category,
-			eventName = 'lookup_error';
-
-		if (!slots[slotName]) {
-			log(['trackState', 'Not supported slot', slotName], 'debug', logGroup);
-			return;
-		}
-		if (response) {
-			eventName = 'lookup_success';
-		}
-		category = name + '/' + eventName + '/' + providerName;
-		adTracker.track(category, slotName, 0, encodeParamsForTracking(params) || 'nodata');
-	}
-
-	function trackLookupEnd() {
-		adTracker.track(name + '/lookup_end', priceMap || 'nodata', 0);
+		return 0;
 	}
 
 	function addSlotPrice(slotName, rubiconTargeting) {
 		rubiconTargeting.forEach(function (params) {
 			if (params.key === rubiconTierKey) {
-				priceMap[slotName] = params.values.join(',');
+				priceMap[slotName] = params.values.sort(compareTiers).join(',');
 			}
 		});
 	}
 
-	function onResponse() {
-		timing.measureDiff({}, 'end').track();
-		log('Rubicon Fastlane done', 'info', logGroup);
-		var slotName;
-
-		for (slotName in slots) {
-			if (slots.hasOwnProperty(slotName)) {
-				addSlotPrice(slotName, slots[slotName].getAdServerTargeting());
-			}
-		}
-		response = true;
-		log(['Rubicon Fastlane prices', priceMap], 'info', logGroup);
-		trackLookupEnd();
-	}
-
 	function setTargeting(slotName, targeting, rubiconSlot, provider) {
-		var s1 = context.targeting.wikiIsTop1000 ? adLogicZoneParams.getMappedVertical() : 'not a top1k wiki';
+		var s1 = context.targeting.wikiIsTop1000 ? adLogicZoneParams.getName() : 'not a top1k wiki';
 		if (targeting) {
 			Object.keys(targeting).forEach(function (key) {
 				rubiconSlot.setFPI(key, targeting[key]);
@@ -164,7 +111,30 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		});
 	}
 
-	function defineSlots(skin) {
+	function configureHomePageSlots() {
+		var slotName;
+		for (slotName in slots) {
+			if (slots.hasOwnProperty(slotName) && slotName.indexOf('TOP') > -1) {
+				slots['HOME_' + slotName] = slots[slotName];
+				delete slots[slotName];
+			}
+		}
+		slots.PREFOOTER_MIDDLE_BOXAD = {
+			sizes: [[300, 250]],
+			targeting: {loc: 'footer'}
+		};
+	}
+
+	function getSlots(skin) {
+		slots = config[skin];
+		if (skin === 'oasis' && context.targeting.pageType === 'home') {
+			configureHomePageSlots();
+		}
+
+		return slots;
+	}
+
+	function defineSlots(skin, onResponse) {
 		var definedSlots = getSlots(skin);
 		Object.keys(definedSlots).forEach(function (slotName) {
 			defineSingleSlot(slotName, definedSlots[slotName], skin);
@@ -176,58 +146,75 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		});
 	}
 
-	function call(skin) {
-		log('call', 'debug', logGroup);
+	function getSlotParams(slotName) {
+		var targeting,
+			values,
+			parameters = {};
 
-		var rubicon = doc.createElement('script'),
-			node = doc.getElementsByTagName('script')[0];
+		targeting = slots[slotName].getAdServerTargeting();
+		targeting.forEach(function (params) {
+			if (params.key !== rubiconElementKey) {
+				values = params.values;
+				if (typeof values.sort === 'function') {
+					values.sort(compareTiers);
+				}
+				parameters[params.key] = params.values;
+			}
+		});
+		log(['getSlotParams', slotName, parameters], 'debug', logGroup);
+		return parameters;
+	}
 
-		if (!context.opts.rubiconFastlaneOnAllVerticals && adLogicZoneParams.getSite() !== 'life') {
-			log(['call', 'Not wka.life vertical'], 'debug', logGroup);
+	function encodeParamsForTracking(params) {
+		if (!params[rubiconTierKey]) {
 			return;
 		}
 
+		return params[rubiconTierKey].join(';');
+	}
+
+	function calculatePrices() {
+		var slotName;
+
+		for (slotName in slots) {
+			if (slots.hasOwnProperty(slotName)) {
+				addSlotPrice(slotName, slots[slotName].getAdServerTargeting());
+			}
+		}
+	}
+
+	function call(skin, onResponse) {
+		var rubicon = doc.createElement('script'),
+			node = doc.getElementsByTagName('script')[0];
+
 		win.rubicontag = win.rubicontag || {};
 		win.rubicontag.cmd = win.rubicontag.cmd || [];
-
-		timing = adTracker.measureTime('rubicon_fastlane', {}, 'start');
-		timing.track();
 
 		rubicon.async = true;
 		rubicon.type = 'text/javascript';
 		rubicon.src = rubiconLibraryUrl;
 
 		node.parentNode.insertBefore(rubicon, node);
-		defineSlots(skin);
-		called = true;
+		context = adContext.getContext();
+		defineSlots(skin, onResponse);
 	}
 
-	function wasCalled() {
-		log(['wasCalled', called], 'debug', logGroup);
-		return called;
+	function getPrices() {
+		return priceMap;
 	}
 
-	function getSlotParams(slotName) {
-		var targeting,
-			parameters = {};
-		if (response && slots[slotName]) {
-			targeting = slots[slotName].getAdServerTargeting();
-			targeting.forEach(function (params) {
-				// exclude redundant rpfl_elemid parameter
-				if (params.key !== rubiconElementKey) {
-					parameters[params.key] = params.values;
-				}
-			});
-			log(['getSlotParams', slotName, parameters], 'debug', logGroup);
-			return parameters;
-		}
-		return {};
+	function isSlotSupported(slotName) {
+		return slots[slotName];
 	}
 
-	return {
+	return factory.create({
+		logGroup: logGroup,
+		name: 'rubicon_fastlane',
 		call: call,
-		getSlotParams: getSlotParams,
-		trackState: trackState,
-		wasCalled: wasCalled
-	};
+		calculatePrices: calculatePrices,
+		getPrices: getPrices,
+		isSlotSupported: isSlotSupported,
+		encodeParamsForTracking: encodeParamsForTracking,
+		getSlotParams: getSlotParams
+	});
 });

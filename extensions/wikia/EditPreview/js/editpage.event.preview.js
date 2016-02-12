@@ -1,7 +1,5 @@
-define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.window'], function(helper, $, window){
+define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.window', 'wikia.querystring'], function (helper, $, window, qs){
 	'use strict';
-
-
 
 	// handle "Preview" button
 	function onPreview(ev, editor) {
@@ -93,8 +91,8 @@ define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.wind
 				getPreviewContent: function (callback, skin) {
 					$.when(
 						helper.getContent()
-					).done(function(content){
-						preparePreviewContent(content, extraData, callback, skin);
+					).done(function (content, mode) {
+						preparePreviewContent(content, mode, extraData, callback, skin);
 					});
 				}
 			};
@@ -117,7 +115,7 @@ define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.wind
 
 	// internal method, based on the editor content and some extraData, prepare a preview markup for the
 	// preview dialog and pass it to the callback
-	function preparePreviewContent(content, extraData, callback, skin) {
+	function preparePreviewContent(content, mode, extraData, callback, skin) {
 		var categories = helper.getCategories();
 
 		// add section name when adding new section (BugId:7658)
@@ -137,9 +135,21 @@ define('editpage.event.preview', ['editpage.event.helper', 'jquery', 'wikia.wind
 			extraData.categories = categories.val();
 		}
 
-		helper.ajax('preview', extraData, function (data) {
-			callback(data);
-		}, skin);
+		if (skin === 'wikiamobile') {
+			var previewFrame = new helper.IFrameForm(qs(window.wgEditPreviewMercuryUrl).addCb());
+
+			// add hidden parameter fields to be able to send POST
+			previewFrame.addParameter('title', window.wgEditedTitle);
+			previewFrame.addParameter(mode === 'wysiwyg' ? 'CKmarkup' : 'wikitext', content);
+
+			previewFrame.send($('.ArticlePreviewInner'), function (data) {
+				callback(data);
+			});
+		} else {
+			helper.ajax('preview', extraData, function (data) {
+				callback(data);
+			}, skin);
+		}
 	}
 
 	function getSummary() {

@@ -181,30 +181,12 @@ $messages = array(
 'navigation'    => 'Juhtminõ',
 'and'           => '&#32;ja',
 
-# Cologne Blue skin
 'qbfind'         => 'Otsiq',
 'qbbrowse'       => 'Kaeq',
-'qbedit'         => 'Toimõndaq',
 'qbpageoptions'  => 'Leheküle säädmine',
 'qbpageinfo'     => 'Leheküle teedüs',
-'qbmyoptions'    => 'Mu säädmiseq',
-'qbspecialpages' => 'Tallitusleheküleq',
 'faq'            => 'Sagõhõhe küsüdüq küsümiseq',
-'faqpage'        => 'Project:KKK',
 
-# Vector skin
-'vector-action-addsection'       => 'Vahtsõ teema ülespandminõ',
-'vector-action-delete'           => 'Kistudaq ärq',
-'vector-action-move'             => 'Nõstaq ümbre',
-'vector-action-protect'          => 'Kaidsaq',
-'vector-action-undelete'         => 'Tiiq tagasi',
-'vector-action-unprotect'        => 'Muudaq kaidsõt',
-'vector-simplesearch-preference' => 'Lupaq tävvendedüid otsmispakmiisi (õnnõ Vektori-kujundusõn)',
-'vector-view-create'             => 'Luuq',
-'vector-view-edit'               => 'Toimõndaq',
-'vector-view-history'            => 'Näütäq aoluku',
-'vector-view-view'               => 'Loeq',
-'vector-view-viewsource'         => 'Kaeq lätteteksti',
 'actions'                        => 'Tallitusõq',
 'namespaces'                     => 'Nimeruumiq',
 'variants'                       => 'Tõõsõndiq',
@@ -227,7 +209,6 @@ $messages = array(
 'edit'              => 'Toimõndaq',
 'create'            => 'Luuq leht',
 'editthispage'      => 'Toimõndaq seod artiklit',
-'create-this-page'  => 'Luuq seo leht',
 'delete'            => 'Kistudaq ärq',
 'deletethispage'    => 'Kistudaq seo artikli ärq',
 'undelete_short'    => 'Võtaq tagasi {{PLURAL:$1|üts muutminõ|$1 muutmist}}',
@@ -242,19 +223,9 @@ $messages = array(
 'talkpagelinktext'  => 'Arotus',
 'specialpage'       => 'Tallituslehekülg',
 'personaltools'     => 'Erätüüriistaq',
-'postcomment'       => 'Vahtsõnõ alajago',
-'articlepage'       => 'Artiklilehekülg',
 'talk'              => 'Arotus',
 'views'             => 'Kaemisõq',
 'toolbox'           => 'Tüüriistakast',
-'userpage'          => 'Pruukjalehekülg',
-'projectpage'       => 'Tallituslehekülg',
-'imagepage'         => 'Näütäq teedüstülehte',
-'mediawikipage'     => 'Näütäq sõnomilehekülge',
-'templatepage'      => 'Näütäq näüdüselehekülge',
-'viewhelppage'      => 'Näütäq abilehekülge',
-'categorypage'      => 'Näütäq katõgoorialehekülge',
-'viewtalkpage'      => 'Arotuslehekülg',
 'otherlanguages'    => 'Tõisin keelin',
 'redirectedfrom'    => '(Ümbre saadõt artiklist $1)',
 'redirectpagesub'   => 'Ümbresaatmislehekülg',
@@ -815,13 +786,6 @@ otsisõna iin edejakku ''all:''. Ütest kimmäst nimeruumist otsmisõs pruugiq e
 'search-external'                  => 'Väline otsminõ',
 'searchdisabled'                   => "{{SITENAME}} otsminõ parhillaq ei tüütäq. Niikavva, ku otsminõ jälq tüüle saa, võit pruukiq otsmisõs alanolõvat Google'i otsikasti, a näide teedüs {{SITENAME}} sisust pruugi-i ollaq alasi kõgõ värskimb.",
 
-# Quickbar
-'qbsettings'               => 'Kipõriba säädmine',
-'qbsettings-none'          => 'Olõ-i',
-'qbsettings-fixedleft'     => 'Kõgõ kural puul',
-'qbsettings-fixedright'    => 'Kõgõ hüäl puul',
-'qbsettings-floatingleft'  => 'Ujovahe kural puul',
-'qbsettings-floatingright' => 'Ujovahe hüäl puul',
 
 # Preferences page
 'preferences'               => 'Säädmine',
@@ -1822,9 +1786,6 @@ Kokkovõttõria pääle või kirotaq tagasivõtmisõ põhjusõ.',
 'spam_blanking'       => "Kõigin kujõn oll' linke lehele $1. Leht tühäs tett.",
 
 # Skin names
-'skinname-standard'    => 'Array',
-'skinname-cologneblue' => 'Array',
-'skinname-myskin'      => 'Array',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Märgiq ülekaetus',

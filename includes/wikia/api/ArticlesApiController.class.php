@@ -1031,11 +1031,12 @@ class ArticlesApiController extends WikiaApiController {
 			} else {
 				$content = $articleContent->content;
 			}
+			$wgArticleAsJson = false;
 		} else {
+			$wgArticleAsJson = false;
 			throw new ArticleAsJsonParserException( 'Parser is currently not available' );
 		}
 
-		$wgArticleAsJson = false;
 		$categories = [];
 
 		foreach ( array_keys( $parsedArticle->getCategories() ) as $category ) {
@@ -1053,7 +1054,8 @@ class ArticlesApiController extends WikiaApiController {
 			'media' => $articleContent->media,
 			'users' => $articleContent->users,
 			'categories' => $categories,
-			'displayTitle' => $parsedArticle->getTitleText(),
+			// The same transformation that happens in OutputPage::setPageTitle:
+			'displayTitle' => Sanitizer::stripAllTags( $parsedArticle->getTitleText() ),
 		];
 
 		$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );

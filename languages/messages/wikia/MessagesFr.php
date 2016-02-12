@@ -136,10 +136,9 @@ $messages = array_merge( $messages, array(
 
 'tog-enableuserjs' => 'Activer le code javascript personnel ([[Aide:CSS_et_JS_avancés|En savoir plus]])',
 
-'recentchanges-on-wikia-title' => "Modifications récentes sur l'ensemble de Wikia",
-'recentchanges-on-wikia-content' => "Les types de modèles sont arrivés : organisez vos modèles par type afin de faciliter leur [[Special:Templates|gestion]] et d'améliorer leur affichage sur les smartphones. [[Aide:Types_de_modèles|Cliquez ici]] pour en savoir plus ou '''[[Special:Insights/templateswithouttype|commencez dès maintenant !]]'''
+'group-content-moderator' => 'Modérateurs de contenu',
+'group-content-moderator-member' => 'Modérateur de contenu',
 
-Les images en onglets et les groupes réductibles sont désormais disponibles pour les [[Aide:Infobox|infoboxes portables]].
-
-Votre contenu est-il adapté aux appareils mobiles ? Pour savoir comment vous en assurer à l'avenir, consultez le site [[w:c:portability|Portability.wikia.com]].",
+	'wikia-read-only-mode' => "Oups. Ceci est notre sauvegarde car notre principal centre de données est actuellement indisponible. Il se peut donc que vous ne puissiez malheureusement pas effectuer certaines tâches comme apporter des modifications, importer ou tchatter.
+ +Nous essayons de résoudre le problème et vous remercions de votre patience. S'il persiste pendant une période prolongée, n'hésitez pas à contacter Wikia à l'adresse e-mail community@wikia.com.",
 ) );

@@ -123,7 +123,7 @@ class ApprovedraftAction extends FormlessAction {
 		// Update Infoboxes Insights list if enabled
 		if ( $wgEnableInsightsInfoboxes ) {
 			$model = new InsightsUnconvertedInfoboxesModel();
-			$model->updateInsightsCache( $parentTitle->getArticleID() );
+			( new InsightsCache( $model->getConfig() ) )->updateInsightsCache( $parentTitle->getArticleID() );
 		}
 
 		// Show a confirmation message to a user after redirect

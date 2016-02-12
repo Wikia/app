@@ -244,30 +244,12 @@ $messages = array(
 'navigation'    => 'Saytta yol tapuv',
 'and'           => '&#32;ve',
 
-# Cologne Blue skin
 'qbfind'         => 'Tap',
 'qbbrowse'       => 'Baqıp çıq',
-'qbedit'         => 'Deñiştir',
 'qbpageoptions'  => 'Bu saife',
 'qbpageinfo'     => 'Saife aqqında malümat',
-'qbmyoptions'    => 'Saifelerim',
-'qbspecialpages' => 'Mahsus saifeler',
 'faq'            => 'Sıq berilgen sualler',
-'faqpage'        => 'Project:Sıq berilgen sualler',
 
-# Vector skin
-'vector-action-addsection'       => 'Mevzu qoş',
-'vector-action-delete'           => 'Yoq et',
-'vector-action-move'             => 'Adını deñiştir',
-'vector-action-protect'          => 'Qorçala',
-'vector-action-undelete'         => 'Yañıdan yarat',
-'vector-action-unprotect'        => 'Qorçalavnı deñiştir',
-'vector-simplesearch-preference' => 'Tafsilâtlı qıdıruv tekliflerini işlet (tek Vektor resimlemesi içün)',
-'vector-view-create'             => 'Yarat',
-'vector-view-edit'               => 'Deñiştir',
-'vector-view-history'            => 'Keçmişini köster',
-'vector-view-view'               => 'Oqu',
-'vector-view-viewsource'         => 'Menba kodunı köster',
 'actions'                        => 'Areketler',
 'namespaces'                     => 'İsim fezaları',
 'variants'                       => 'Variantlar',
@@ -290,7 +272,6 @@ $messages = array(
 'edit'              => 'Deñiştir',
 'create'            => 'Yarat',
 'editthispage'      => 'Saifeni deñiştir',
-'create-this-page'  => 'Bu saifeni yarat',
 'delete'            => 'Yoq et',
 'deletethispage'    => 'Saifeni yoq et',
 'undelete_short'    => '{{PLURAL:$1|1|$1}} deñişmeni keri ketir',
@@ -305,19 +286,9 @@ $messages = array(
 'talkpagelinktext'  => 'Muzakere',
 'specialpage'       => 'Mahsus Saife',
 'personaltools'     => 'Şahsiy aletler',
-'postcomment'       => 'Yañı bölük',
-'articlepage'       => 'Saifege bar',
 'talk'              => 'Muzakere',
 'views'             => 'Körünişler',
 'toolbox'           => 'Aletler',
-'userpage'          => 'Qullanıcı saifesini köster',
-'projectpage'       => 'Leyha saifesini köster',
-'imagepage'         => 'Fayl saifesini köster',
-'mediawikipage'     => 'Beyanat saifesisni köster',
-'templatepage'      => 'Şablon saifesini köster',
-'viewhelppage'      => 'Yardım saifesini köster',
-'categorypage'      => 'Kategoriya saifesini köster',
-'viewtalkpage'      => 'Muzakere saifesini köster',
 'otherlanguages'    => 'Diger tillerde',
 'redirectedfrom'    => '($1 saifesinden yollandı)',
 'redirectpagesub'   => 'Yollama saifesi',
@@ -894,8 +865,6 @@ Vikide bu saifege oşağan saifelerni [[Special:Search|tapıp baqıñız]].',
 'search-external'                  => 'Tış qıdıruv',
 'searchdisabled'                   => '{{SITENAME}} saytında qıdıruv yapma vaqtınca toqtatıldı. Bu arada Google qullanıp {{SITENAME}} içinde qıdıruv yapıp olasıñız. Qıdıruv saytlarında indekslemeleriniñ biraz eski qalğan ola bilecegini köz ögüne alıñız.',
 
-# Quickbar
-'qbsettings' => 'Vızlı irişim sutun sazlamaları',
 
 # Preferences page
 'preferences'                   => 'Sazlamalar',
@@ -1820,13 +1789,7 @@ MediaWiki interfeysiniñ çeşit tillerge tercime etüvde iştirak etmege istese
 'spam_blanking'       => 'Bar olğan versiyalarda $1 saytına bağlantılar bar, temizlev',
 
 # Skin names
-'skinname-standard'    => 'Standart',
-'skinname-nostalgia'   => 'Nostalgiya',
-'skinname-cologneblue' => 'Köln asretligi',
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'Öz resimleme',
-'skinname-chick'       => 'Çipçe',
-'skinname-simple'      => 'Adiy',
 
 # Patrol log
 'patrol-log-page'      => 'Teşkerüv jurnalı',

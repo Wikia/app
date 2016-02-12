@@ -324,29 +324,12 @@ $messages = array(
 'navigation'    => 'Навигация',
 'and'           => '&#32;ды',
 
-# Cologne Blue skin
 'qbfind'         => 'Мук',
 'qbbrowse'       => 'Ваномо-тееме',
-'qbedit'         => 'Витнеме-петнеме',
 'qbpageoptions'  => 'Те лопась',
 'qbpageinfo'     => 'Косо-зярдо',
-'qbmyoptions'    => 'Монь лопан',
-'qbspecialpages' => 'Башка тевень лопат',
 'faq'            => 'Сеедьстэ кепедень кевкстемат',
-'faqpage'        => 'Project:Сеедьстэ кепедень кевкстемат',
 
-# Vector skin
-'vector-action-addsection' => 'Поладомс мезде кортамс',
-'vector-action-delete'     => 'Нардамс',
-'vector-action-move'       => 'Печтевтемс',
-'vector-action-protect'    => 'Аравтомс ванстомас',
-'vector-action-undelete'   => 'Вельмевтемс нардазенть',
-'vector-action-unprotect'  => 'Полавтомс ванстоманзо',
-'vector-view-create'       => 'Теемс-Шкамс',
-'vector-view-edit'         => 'Витнемс-петнемс',
-'vector-view-history'      => 'Ваномс юронзо-путовксонзо',
-'vector-view-view'         => 'Ловномс',
-'vector-view-viewsource'   => 'Ваномс косто саезь',
 'actions'                  => 'Тев теемат',
 'namespaces'               => 'Лемпотмот',
 'variants'                 => 'Вариантт',
@@ -369,7 +352,6 @@ $messages = array(
 'edit'              => 'Витнеме-петнеме',
 'create'            => 'Тейть-шкак',
 'editthispage'      => 'Витнемс-петнемс те лопанть',
-'create-this-page'  => 'Теик-шкик те лопанть',
 'delete'            => 'Нардамс',
 'deletethispage'    => 'Нардамс те лопанть',
 'undelete_short'    => 'Велявтомс нардазенть {{PLURAL:$1|вейке витнема-петнема|$1 витнемат-петнемат}}',
@@ -383,19 +365,9 @@ $messages = array(
 'talkpagelinktext'  => 'Кортнеме',
 'specialpage'       => 'Башка тевень лопа',
 'personaltools'     => 'Эсень кедьёнкст',
-'postcomment'       => 'Од явкс',
-'articlepage'       => 'Ваномс потмокслопанть',
 'talk'              => 'Кортнеме',
 'views'             => 'Ваномкат',
 'toolbox'           => 'Кедьёнкс парго',
-'userpage'          => 'Ваномонзо кирдицянть лопанзо',
-'projectpage'       => 'Ваномонзо проектенть лопанть',
-'imagepage'         => 'Ваномс файлань лопанть',
-'mediawikipage'     => 'Невтемензе сёрма паргонть лопанть',
-'templatepage'      => 'Ванномс лопапарцунонь лопанть',
-'viewhelppage'      => 'Ванномс лезкслопанть',
-'categorypage'      => 'Ванномс категориянь лопанть',
-'viewtalkpage'      => 'Ванномс мезде молить кортнемат',
 'otherlanguages'    => 'Лия кельсэ',
 'redirectedfrom'    => '(Ютавтозь $1 вельде)',
 'redirectpagesub'   => 'Лиясто ютавтозь лопа',
@@ -875,13 +847,6 @@ IP-тешкстэть — $3, саймас совавтоманть ID-сь — 
 'powersearch-togglenone'           => 'Арась мезе невтемс',
 'search-external'                  => 'Ушо йондонь вешнема',
 
-# Quickbar
-'qbsettings'               => 'Навигациянь лазнэ',
-'qbsettings-none'          => 'Арась мезе невтемс',
-'qbsettings-fixedleft'     => 'Керш ёндо кирдезь',
-'qbsettings-fixedright'    => 'Вить ёндо кирдезь',
-'qbsettings-floatingleft'  => 'Керш ёнга уи',
-'qbsettings-floatingright' => 'Вить ёнга уи',
 
 # Preferences page
 'preferences'               => 'Лия ютксто явома',
@@ -1796,11 +1761,6 @@ IP-тешкстэть — $3, саймас совавтоманть ID-сь — 
 'pageinfo-views'        => 'Зяро ванома потмонзо',
 
 # Skin names
-'skinname-standard'  => 'Классикань',
-'skinname-nostalgia' => 'ОдПингеньМазы',
-'skinname-myskin'    => 'ЭсьМелемКоряс',
-'skinname-simple'    => 'Шожда',
-'skinname-modern'    => 'НееньШкань',
 
 # Patrolling
 'markaspatrolleddiff' => 'Тешкстамс ванстнемань ютазекс',

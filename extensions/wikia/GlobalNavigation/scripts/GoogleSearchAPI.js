@@ -30,13 +30,11 @@ $(function () {
 			currentUrlPath = window.location.pathname,
 			fakeSearchParam = '&qInter=' + encodeURIComponent(searchQuery);
 
-		evt.preventDefault();
-
-		//get info of local or global search and modify query scope
+		//We run Google search only for inter search (INT-289)
 		if ($selectedOption.val() === 'local') {
-			fakeSearchParam = '&qIntra=' + encodeURIComponent(searchQuery);
-			searchQuery += ' site:' + window.location.hostname;
+			return;
 		}
+		evt.preventDefault();
 
 		//Manually trigger page view
 		currentUrlPath += '?q=' + encodeURIComponent(searchQuery) + fakeSearchParam;

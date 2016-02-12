@@ -29,4 +29,6 @@ $messages = array_merge( $messages, array(
 'preferences' => 'Voorkeuren',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 'addnewtalksection-link' => 'Nieuw kopje toevoegen',
+'group-content-moderator' => 'Inhoudmoderatoren',
+'group-content-moderator-member' => 'Inhoudmoderator',
 ) );

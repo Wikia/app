@@ -19,6 +19,11 @@ describe('Taboola ', function () {
 			slotTweaker: {
 				show: noop
 			},
+			taboolaHelper: {
+				initializeWidget: function ( widget ) {
+					mocks.window._taboola = [widget];
+				}
+			},
 			abTest: {
 				getGroup: noop
 			},
@@ -54,6 +59,7 @@ describe('Taboola ', function () {
 			mocks.adContext,
 			mocks.recoveryHelper,
 			mocks.slotTweaker,
+			mocks.taboolaHelper,
 			mocks.abTest,
 			mocks.geo,
 			mocks.instantGlobals,
@@ -61,6 +67,14 @@ describe('Taboola ', function () {
 			mocks.window,
 			mocks.document
 		);
+	}
+
+	function createSlot(slotName) {
+		return {
+			name: slotName,
+			container: mocks.document.node,
+			success: noop
+		};
 	}
 
 	beforeEach(function () {
@@ -155,7 +169,7 @@ describe('Taboola ', function () {
 		var taboola = getTaboola();
 
 		taboola.canHandleSlot('NATIVE_TABOOLA_ARTICLE');
-		taboola.fillInSlot('NATIVE_TABOOLA_ARTICLE', mocks.document.node, noop);
+		taboola.fillInSlot(createSlot('NATIVE_TABOOLA_ARTICLE'));
 
 		expect(mocks.recoveryHelper.addOnBlockingCallback).not.toHaveBeenCalled();
 		expect(mocks.slotTweaker.show).toHaveBeenCalled();
@@ -171,7 +185,7 @@ describe('Taboola ', function () {
 		var taboola = getTaboola();
 
 		taboola.canHandleSlot('NATIVE_TABOOLA_RAIL');
-		taboola.fillInSlot('NATIVE_TABOOLA_RAIL', mocks.document.node, noop);
+		taboola.fillInSlot(createSlot('NATIVE_TABOOLA_RAIL'));
 
 		expect(mocks.recoveryHelper.addOnBlockingCallback).toHaveBeenCalled();
 	});

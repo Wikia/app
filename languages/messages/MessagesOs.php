@@ -190,28 +190,12 @@ $messages = array(
 'navigation'    => 'Навигаци',
 'and'           => '&#32;æмæ',
 
-# Cologne Blue skin
 'qbfind'         => 'Агур',
 'qbbrowse'       => 'Фен',
-'qbedit'         => 'Ивын',
 'qbpageoptions'  => 'Ацы фарс',
 'qbpageinfo'     => 'Фарсы контекст',
-'qbmyoptions'    => 'Мæ фæрстæ',
-'qbspecialpages' => 'Сæрмагонд фæрстæ',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection' => 'Нæуæг ныхас бакæнын',
-'vector-action-delete'     => 'Аппарын',
-'vector-action-move'       => 'Ном ивын',
-'vector-action-protect'    => 'Сæхгæнын',
-'vector-action-undelete'   => 'Рацаразын',
-'vector-view-create'       => 'Скæнын',
-'vector-view-edit'         => 'Ивын',
-'vector-view-history'      => 'Истори',
-'vector-view-view'         => 'Кæсын',
-'vector-view-viewsource'   => 'Код кæсын',
 'actions'                  => 'Архайдтæ',
 'namespaces'               => 'Номдæттæ',
 'variants'                 => 'Варианттæ',
@@ -233,7 +217,6 @@ $messages = array(
 'edit'              => 'Ивын',
 'create'            => 'Скæнын',
 'editthispage'      => 'Ивын ацы фарс',
-'create-this-page'  => 'Ацы фарс скæнын',
 'delete'            => 'Аппар',
 'deletethispage'    => 'Аппарын ацы фарс',
 'undelete_short'    => 'Рацаразын {{PLURAL:$1|иу ивд|$1 ивды}}',
@@ -247,19 +230,9 @@ $messages = array(
 'talkpagelinktext'  => 'Ныхас',
 'specialpage'       => 'Сæрмагонд фарс',
 'personaltools'     => 'Мигæнæнтæ',
-'postcomment'       => 'Ног хай',
-'articlepage'       => 'Фен статья',
 'talk'              => 'Тæрхон',
 'views'             => 'Æркæстытæ',
 'toolbox'           => 'Фæрæзтæ',
-'userpage'          => 'Ацы архайæджы фарс фен',
-'projectpage'       => 'Проекты фарс фен',
-'imagepage'         => 'Файлы фарс фен',
-'mediawikipage'     => 'Фыстæджы фарс фен',
-'templatepage'      => 'Шаблоны фарс фен',
-'viewhelppage'      => 'Æххуысы фарс фен',
-'categorypage'      => 'Категорийы фарс фен',
-'viewtalkpage'      => 'Тæрхон фен',
 'otherlanguages'    => 'Æндæр æвзæгтыл',
 'redirectedfrom'    => '(Ацы статьяйæ æрвыст: «$1»)',
 'redirectpagesub'   => 'Рарвысты фарс',
@@ -578,12 +551,6 @@ $messages = array(
 'powersearch-field'                => 'Агуырд',
 'powersearch-toggleall'            => 'Иууылдæр',
 
-# Quickbar
-'qbsettings'              => 'Навигацион таг',
-'qbsettings-none'         => 'Ма равдис',
-'qbsettings-fixedleft'    => 'Галиуырдыгæй',
-'qbsettings-fixedright'   => 'Рахизырдыгæй',
-'qbsettings-floatingleft' => 'Рахизырдыгæй ленккæнгæ',
 
 # Preferences page
 'mypreferences'             => 'Мæ фадæттæ',
@@ -1111,12 +1078,7 @@ $3',
 'spamprotectiontitle' => 'Спамы ныхмæ фильтр',
 
 # Skin names
-'skinname-standard'    => 'Стандартон',
-'skinname-nostalgia'   => 'Æнкъард',
-'skinname-cologneblue' => 'Кёльны æрхæндæг',
 'skinname-monobook'    => 'Моно-чиныг',
-'skinname-myskin'      => 'Мæхи',
-'skinname-chick'       => 'Карк',
 
 # Browsing diffs
 'previousdiff' => '← Зæронддæр ивд',

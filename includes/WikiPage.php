@@ -3199,21 +3199,6 @@ class PoolWorkArticleView extends PoolCounterWork {
 				$this->page->getTitle()->getPrefixedDBkey() ) );
 		}
 
-		# PLATFORM-1355 (investigate blank pages)
-		# Check to see if Input exists but Output is just a Parser Performance dump with no other content
-		global $wgContentNamespaces;
-		if ( !empty($text) &&
-			 in_array ( $this->page->getTitle()->getNamespace(), $wgContentNamespaces ) &&
-			 preg_match("/^\n<!-- \nNewPP/s", $this->parserOutput->mText) === 1 ) {
-
-			\Wikia\Logger\WikiaLogger::instance()->error(
-				__METHOD__ . ' empty content PLAT1355'
-			);
-			// In addition to logging, do this quick hack/fix for blank pages
-			$this->cacheable = false;
-		}
-		// End PLATFORM-1355 investigation code
-
 		if ( $this->cacheable && $this->parserOutput->isCacheable() ) {
 			ParserCache::singleton()->save( $this->parserOutput, $this->page, $this->parserOptions );
 		}

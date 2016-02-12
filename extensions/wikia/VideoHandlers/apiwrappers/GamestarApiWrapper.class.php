@@ -74,7 +74,7 @@ class GamestarApiWrapper extends ApiWrapper {
 				$this->checkForResponseErrors( $req->status, $req->getContent(), $apiUrl );
 			}
 
-			$processedResponse = $this->processResponse( $response, $type );
+			$processedResponse = $this->processResponse( $response );
 			F::app()->wg->memc->set( $memcKey, $processedResponse, static::$CACHE_EXPIRY );
 		}
 
@@ -83,7 +83,7 @@ class GamestarApiWrapper extends ApiWrapper {
 		return $processedResponse;
 	}
 
-	protected function processResponse( $response, $type ) {
+	protected function processResponse( $response ) {
 		wfProfileIn( __METHOD__ );
 
 		$return = '';

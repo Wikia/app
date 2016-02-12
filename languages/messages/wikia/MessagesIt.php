@@ -2,6 +2,7 @@
 #Related to visitor skins: Slate.php and Smoke.php
 $messages = array_merge( $messages, array(
 'login_greeting' => "Benvenuto su Wikia, [[User:$1|$1]]!",
+'createpage' => 'Crea nuova pagina',
 'create_an_account' => "Crea un account",
 'login_as_another' => "Esegui il login come un'altro user",
 'not_you' => "Non sei tu?",
@@ -10,11 +11,9 @@ $messages = array_merge( $messages, array(
 
 'tog-enableuserjs' => 'Abilita il tuo JavaScript ([[Help:Personal_CSS_and_JS#JavaScript|Per saperne di più]])',
 
-'recentchanges-on-wikia-title' => 'Cambiamenti recenti su Wikia',
-'recentchanges-on-wikia-content' => "Introduzione alle tipologie di template: organizza i tuoi template per tipo per rendere la [[Special:Templates|gestione dei template]] più semplice e per migliorare il loro layout sui dispositivi mobili. [[Help:Template Types|Per saperne di più]] o '''[[Special:Insights/templateswithouttype|Comincia subito!]]'''
+'group-content-moderator' => 'Moderatori di contenuti',
+'group-content-moderator-member' => 'Moderatore di contenuti',
 
-Immagini con schede e gruppi pieghevoli [[Aiuto:Infobox|Infobox esportabili]].
-
-Il tuo contenuto è esportabile? Per saperne di più dai un'occhiata a [[w:c:portability|Portability.wikia.com]].",
-
+	'wikia-read-only-mode' => "Oh! Il nostro centro dati principale non è al momento disponibile, così come il nostro backup. Sfortunatamente, ciò significa che non puoi fare cose come modificare, caricare o chattare.
++Stiamo lavorando alla risoluzione del problema, ti ringraziamo per la pazienza! Se visualizzi questo messaggio per un periodo di tempo prolungato, contatta pure Wikia all'indirizzo community@wikia.com.",
 ) );
