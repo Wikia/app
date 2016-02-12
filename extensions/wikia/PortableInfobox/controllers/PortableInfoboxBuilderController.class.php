@@ -28,9 +28,11 @@ class PortableInfoboxBuilderController extends WikiaController {
 			$status->fatal( 'no-title-provided' );
 		}
 		$title = $status->isGood() ? Title::newFromText( $params[ 'title' ], NS_TEMPLATE ) : false;
+		// check if title object created
 		if ( $status->isGood() && !$title ) {
 			$status->fatal( 'no-title-object' );
 		}
+		// user permissions check
 		if ( $status->isGood() && !$title->userCan( 'edit' ) ) {
 			$status->fatal( 'user-cant-edit' );
 		}
