@@ -2,6 +2,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'portableinfoboxbuilder' => 'Infobox Builder',
 	'portable-infobox-builder-title' => 'Portable Infobox Builder',
 	'portable-infobox-builder-no-template-title-set' => 'No template title set. Please specify the title for new infobox template.',
 	'portable-infobox-builder-create-template-entry-point-create-infobox' => 'Create Infobox',
@@ -13,6 +14,7 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
+	'portableinfoboxbuilder' => 'Tool name used on special pages list',
 	'portable-infobox-builder-entry-point-modal-title' => 'Title for portable infobox builder entry point modal on edit page with a question: Do you want to create infobox?',
 	'portable-infobox-builder-entry-point-modal-message' => 'Message in portable infobox builder asking if user wants to create an infobox and if she / he would like to use new Infobox Builder UI tool.',
 	'portable-infobox-builder-entry-point-modal-ok-button' => 'Ok button, meaning the user confirms using the new infobox builder',
