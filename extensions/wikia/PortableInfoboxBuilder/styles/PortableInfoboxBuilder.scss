@@ -1,3 +1,4 @@
+@import 'skins/oasis/css/core/breakpoints-variables';
 @import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationVariables.scss';
 
 .mw-special-PortableInfoboxBuilder {
@@ -15,23 +16,23 @@
 	}
 }
 
-@media only screen and (max-width: 1083px) {
+@media #{$breakpoint-small-only} {
 	.WikiaPage, .InfoboxBuilder {
 		padding: 0;
-		width: 766px;
+		width:  $page-width-small;
 	}
 }
 
-@media only screen and (min-width: 1084px) and (max-width: 1595px) {
+@media #{$breakpoint-medium-only} {
 	.WikiaPage, .InfoboxBuilder {
 		padding: 0;
-		width: 1064px;
+		width: $content-width-medium;
 	}
 }
 
-@media only screen and (min-width: 1596px) {
+@media #{$breakpoint-large-up} {
 	.WikiaPage, .InfoboxBuilder {
 		padding: 0;
-		width: 1238px;
+		width: $content-width-large;
 	}
 }
