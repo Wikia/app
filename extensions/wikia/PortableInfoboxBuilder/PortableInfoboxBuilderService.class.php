@@ -20,6 +20,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 					$xml->addAttribute( $key, $value );
 				}
 			}
+
 			$this->addGroupNode( $infobox->data, $xml );
 
 			// save to xml, import to dom, to remove xml header
@@ -48,13 +49,18 @@ class PortableInfoboxBuilderService extends WikiaService {
 		if ( $node->source ) {
 			$xml->addAttribute( 'source', $node->source );
 		}
+
 		foreach ( $node->data as $key => $value ) {
-			// map defaultValue to default, as its js reserved key word
-			$key = strcasecmp( $key, 'defaultValue' ) == 0 ? 'default' : $key;
-			if ( is_object( $value ) ) {
-				$this->addNode( $value, $xml->addChild( $key ) );
-			} else {
-				$xml->addChild( $key, $value );
+			if ( !empty( $value ) ) {
+				// map defaultValue to default, as its js reserved key word
+				$key = strcasecmp( $key, 'defaultValue' ) == 0 ? 'default' : $key;
+
+				if ( is_object( $value ) ) {
+					$this->addNode( $value, $xml->addChild( $key ) );
+				} else {
+					$xml->addChild( $key, $value );
+				}
+
 			}
 		}
 	}
