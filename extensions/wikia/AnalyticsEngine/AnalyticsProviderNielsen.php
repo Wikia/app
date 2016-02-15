@@ -33,7 +33,7 @@ class AnalyticsProviderNielsen implements iAnalyticsProvider {
 			sfcode: 'dcr-cert',
 			apid: '{$apid}',
 			apn : 'test-static'
-		},
+		};
 		gg1 = NOLCMB.getInstance(_nolggGlobalParams),
 		staticmeta = {
 			clientid: '{$clientId}',
