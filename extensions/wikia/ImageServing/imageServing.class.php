@@ -383,6 +383,11 @@ class ImageServing {
 	private function getCutParams($width, $height, $align="center", $issvg=false) {
 		//rescale of png always use width 512;
 		if( $issvg ) {
+			// PLATFORM-1725 - If supplied width is 0 then serve image in 1:1 ratio
+			if( $width == 0 ) {
+				$width = 512;
+			}
+
 			$height = round( ( 512 * $height) / $width );
 			$width = 512;
 		}
