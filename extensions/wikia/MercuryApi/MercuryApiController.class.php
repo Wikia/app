@@ -415,6 +415,13 @@ class MercuryApiController extends WikiaController {
 			$data['isMainPage'] = $isMainPage;
 
 			$titleBuilder = new WikiaHtmlTitle();
+			$data['htmlTitle'] = $titleBuilder->getTitle();
+
+			$otherLanguages = $this->getOtherLanguages( $title );
+
+			if ( !empty( $otherLanguages ) ) {
+				$data['otherLanguages'] = $otherLanguages;
+			}
 
 			if ( $isMainPage &&
 				!empty( $wgEnableMainPageDataMercuryApi ) &&
@@ -442,13 +449,6 @@ class MercuryApiController extends WikiaController {
 				);
 
 				throw new NotFoundApiException( 'Article is empty' );
-			}
-
-			$data['htmlTitle'] = $titleBuilder->getTitle();
-			$otherLanguages = $this->getOtherLanguages( $title );
-
-			if ( !empty( $otherLanguages ) ) {
-				$data['otherLanguages'] = $otherLanguages;
 			}
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
