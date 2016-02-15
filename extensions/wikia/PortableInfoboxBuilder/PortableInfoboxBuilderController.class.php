@@ -45,7 +45,12 @@ class PortableInfoboxBuilderController extends WikiaController {
 		$editPage = new EditPage( $article );
 		$editPage->initialiseForm();
 		$editPage->edittime = $article->getTimestamp();
-		$editPage->textbox1 = ( new PortableInfoboxBuilderService() )->translate( $data );
+
+		$infoboxBuilderService = new PortableInfoboxBuilderService() ;
+		$infoboxMarkup = $infoboxBuilderService->translate( $data );
+		$infoboxDocumentation = $infoboxBuilderService->getDocumentation( $infoboxMarkup, $title );
+
+		$editPage->textbox1 = implode( "\n", [ $infoboxMarkup, $infoboxDocumentation ] );
 		$status = $editPage->internalAttemptSave( $result );
 		return $status;
 	}

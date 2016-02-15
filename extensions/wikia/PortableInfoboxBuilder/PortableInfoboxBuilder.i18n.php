@@ -11,6 +11,8 @@ $messages['en'] = array(
 	'portable-infobox-builder-entry-point-modal-message' => 'Perhaps you are creating a new infobox template? Try out our new Infobox builder UI tool.',
 	'portable-infobox-builder-entry-point-modal-ok-button' => 'Ok',
 	'portable-infobox-builder-entry-point-modal-cancel-button' => 'Cancel',
+	'portable-infobox-builder-documentation-example-usage' => 'Example usage:',
+	'portable-infobox-builder-documentation-example-param' => 'Example',
 );
 
 $messages['qqq'] = array(
@@ -23,4 +25,6 @@ $messages['qqq'] = array(
 	'portable-infobox-builder-no-template-title-set' => 'Information that no template title was set. user need to set template title in order to create new infobox',
 	'portable-infobox-builder-create-template-entry-point-create-infobox' => 'Button to create infobox with Infobox builder tool displayed on new template page',
 	'portable-infobox-builder-create-template-entry-point-create-regular-template' => 'Button to create regular template with editor displayed on new template page',
+	'portable-infobox-builder-documentation-example-usage' => 'Information that infobox usage follows',
+	'portable-infobox-builder-documentation-example-param' => 'Literally \'example param value\'',
 );
