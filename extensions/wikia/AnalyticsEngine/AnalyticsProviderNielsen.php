@@ -36,12 +36,10 @@ class AnalyticsProviderNielsen implements iAnalyticsProvider {
 		};
 		gg1 = NOLCMB.getInstance(_nolggGlobalParams),
 		staticmeta = {
-			clientid: '{$clientId}',
-			subbrand: '{$wg->DBname}',
 			type: 'static',
 			assetid: '{$section}',
 			section: '{$section}',
-			segA: '',
+			segA: '{$wg->DBname}',
 			segB: '',
 			segC: ''
 		};
