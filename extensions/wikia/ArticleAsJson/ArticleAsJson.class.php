@@ -62,6 +62,14 @@ class ArticleAsJson extends WikiaService {
 					'fileUrl' => $media['fileUrl'],
 					'caption' => $media['caption'],
 					'link' => $media['link'],
+					/**
+					 * data-ref has to be set for now because it's read in
+					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php
+					 * and in
+					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php.
+					 * Base on presence of data-ref element is classified as an image
+					 * - without that service would return null
+					 */
 					'ref' => $id
 				]
 			)
@@ -74,6 +82,14 @@ class ArticleAsJson extends WikiaService {
 				self::MEDIA_GALLERY_TEMPLATE,
 				[
 					'galleryAttrs' => json_encode( [ 'ref' => $id ] ),
+					/**
+					 * data-ref has to be set for now because it's read in
+					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php
+					 * and in
+					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php.
+					 * Base on presence of data-ref element is classified as an image
+					 * - without that service would return null
+					 */
 					'ref' => $id,
 					'media' => $media,
 					'hasLinkedImages' => $hasLinkedImages
