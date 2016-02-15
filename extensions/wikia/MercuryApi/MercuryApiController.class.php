@@ -397,8 +397,6 @@ class MercuryApiController extends WikiaController {
 	 * @return void
 	 */
 	public function getPage() {
-		global $wgEnableMainPageDataMercuryApi, $wgCityId;
-
 		try {
 			$title = $this->getTitleFromRequest();
 			$articleId = $title->getArticleId();
@@ -423,10 +421,7 @@ class MercuryApiController extends WikiaController {
 				$data['otherLanguages'] = $otherLanguages;
 			}
 
-			if ( $isMainPage &&
-				!empty( $wgEnableMainPageDataMercuryApi ) &&
-				( new CommunityDataService( $wgCityId ) )->hasData()
-			) {
+			if ( $this->shouldGetMainPageData( $isMainPage ) ) {
 				$data['mainPageData'] = $this->getMainPageData();
 			} elseif ( $title->isContentPage() && $title->isKnown() ) {
 				if ( !$article instanceof Article ) {
@@ -502,6 +497,14 @@ class MercuryApiController extends WikiaController {
 		}
 
 		return [ $title, $articleId, $article, $data ];
+	}
+
+	private function shouldGetMainPageData( $isMainPage ) {
+		global $wgEnableMainPageDataMercuryApi, $wgCityId;
+
+		return $isMainPage &&
+			!empty( $wgEnableMainPageDataMercuryApi ) &&
+			( new CommunityDataService( $wgCityId ) )->hasData();
 	}
 
 	/**
