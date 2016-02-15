@@ -1465,24 +1465,31 @@ class WallMessage {
 		if ( !empty( $commentId ) ) {
 			$commentsIndex = $this->getCommentsIndex();
 			if ( $commentsIndex instanceof CommentsIndex ) {
-				switch( $prop ) {
-					case WPP_WALL_ARCHIVE: $commentsIndex->updateArchived( $value );
-											break;
-					case WPP_WALL_ADMINDELETE: $commentsIndex->updateDeleted( $value );
-												$lastChildCommentId = $commentsIndex->getParentLastCommentId( $useMaster );
-												$commentsIndex->updateParentLastCommentId( $lastChildCommentId );
-
-												wfRunHooks( 'EditCommentsIndex', [ $this->getTitle(), $commentsIndex ] );
-												break;
-					case WPP_WALL_REMOVE: $commentsIndex->updateRemoved( $value );
-											$lastChildCommentId = $commentsIndex->getParentLastCommentId( $useMaster );
-											$commentsIndex->updateParentLastCommentId( $lastChildCommentId );
-
-											wfRunHooks( 'EditCommentsIndex', [ $this->getTitle(), $commentsIndex ] );
-											break;
+				switch ( $prop ) {
+					case WPP_WALL_ARCHIVE:
+						$commentsIndex->updateArchived( $value );
+						break;
+					case WPP_WALL_ADMINDELETE:
+						$commentsIndex->updateDeleted( $value );
+						$this->updateParentLastComment( $useMaster, $commentsIndex );
+						break;
+					case WPP_WALL_REMOVE:
+						$commentsIndex->updateRemoved( $value );
+						$this->updateParentLastComment( $useMaster, $commentsIndex );
+						break;
 				}
 			}
 		}
+	}
+
+	/**
+	 * @param boolean $useMaster
+	 * @param CommentsIndex $commentsIndex
+	 */
+	private function updateParentLastComment( boolean $useMaster, CommentsIndex $commentsIndex ) {
+		$lastChildCommentId = $commentsIndex->getParentLastCommentId( $useMaster );
+		$commentsIndex->updateParentLastCommentId( $lastChildCommentId );
+		wfRunHooks( 'EditCommentsIndex', [ $this->getTitle(), $commentsIndex ] );
 	}
 
 	protected function markInProps( $prop ) {
