@@ -62,6 +62,7 @@ class ArticleAsJson extends WikiaService {
 					'fileUrl' => $media['fileUrl'],
 					'caption' => $media['caption'],
 					'link' => $media['link'],
+					'ref' => $id
 				]
 			)
 		);
@@ -73,6 +74,7 @@ class ArticleAsJson extends WikiaService {
 				self::MEDIA_GALLERY_TEMPLATE,
 				[
 					'galleryAttrs' => json_encode( [ 'ref' => $id ] ),
+					'ref' => $id,
 					'media' => $media,
 					'hasLinkedImages' => $hasLinkedImages
 				]
