@@ -7,7 +7,6 @@ CREATE TABLE IF NOT EXISTS `upvote_revisions` (
 	PRIMARY KEY (`upvote_id`),
 	UNIQUE KEY `upvote_revision_unique` (`wiki_id`, `revision_id`)
 ) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-CREATE INDEX `upvote_revision_idx` ON `upvote_revisions` (`wiki_id`, `revision_id`);
 CREATE INDEX `upvote_revision_user_idx` ON `upvote_revisions` (`user_id`);
 
 CREATE TABLE IF NOT EXISTS `upvote` (
