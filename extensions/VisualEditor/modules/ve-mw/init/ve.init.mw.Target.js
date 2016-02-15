@@ -293,6 +293,28 @@ ve.init.mw.Target.static.integrationType = 'page';
 /* Static Methods */
 
 /**
+ * Process page query arguments
+ * @returns {object} The processed parameters
+ */
+function processArguments() {
+	var params = {}, argParts, argValues, i;
+
+	if ( window.location.search ) {
+		argParts = window.location.search.substring(1).split('&');
+
+		for ( i = 0; i < argParts.length; i++ ) {
+			argValues = argParts[i].split('=');
+
+			if (argValues.length >= 2) {
+				params[argValues[0]] = argValues[1] || true;
+			}
+		}
+	}
+
+	return params;
+}
+
+/**
  * Send an AJAX request to the MediaWiki API.
  *
  * This method has special behavior for certain options. If the request type is POST, then
@@ -986,7 +1008,7 @@ ve.init.mw.Target.prototype.getHtml = function ( newDoc ) {
  * @returns {boolean} Loading has been started
 */
 ve.init.mw.Target.prototype.load = function ( additionalModules ) {
-	var data, start, xhr, target = this;
+	var data, start, xhr, target = this, args = processArguments();
 
 	// Prevent duplicate requests
 	if ( this.loading ) {
@@ -1012,6 +1034,10 @@ ve.init.mw.Target.prototype.load = function ( additionalModules ) {
 	// seeing (slightly) stale cache.
 	if ( this.restoring ) {
 		data.oldid = this.revid;
+	}
+
+	if (args.preload) {
+		data.preload = args.preload;
 	}
 
 	// Load DOM

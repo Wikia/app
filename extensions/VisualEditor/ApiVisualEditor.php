@@ -163,6 +163,16 @@ class ApiVisualEditor extends ApiBase {
 			$timestamp = $latestRevision->getTimestamp();
 		} else {
 			$content = '';
+			$preloadTitle = Title::newFromText( urldecode( $parserParams['preload'] ) );
+
+			if ( isset( $preloadTitle ) && $preloadTitle->userCan( 'read' ) ) {
+				$rev = Revision::newFromTitle($preloadTitle);
+
+				if (is_object($rev)) {
+					$content = $this->parseWikitextFragment( $preloadTitle, $rev->getText() );
+				}
+			}
+			
 			$timestamp = wfTimestampNow();
 			$oldid = 0;
 		}
@@ -357,6 +367,10 @@ class ApiVisualEditor extends ApiBase {
 		$parserParams = array();
 		if ( isset( $params['oldid'] ) ) {
 			$parserParams['oldid'] = $params['oldid'];
+		}
+
+		if ( isset( $params['preload'] ) ) {
+			$parserParams['preload'] = $params['preload'];
 		}
 
 		$html = $params['html'];
@@ -657,6 +671,7 @@ class ApiVisualEditor extends ApiBase {
 			'html' => null,
 			'cachekey' => null,
 			'pst' => false,
+			'preload' => null,
 		);
 	}
 

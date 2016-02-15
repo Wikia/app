@@ -52,15 +52,13 @@ class InputBoxHooks {
 		$request, 
 		$wiki )
 	{
+		global $wgScript, $wgUser;
+
 		if( $wiki->getAction( $request ) !== 'edit' ){
 			# not our problem
 			return true;
 		}
-		if( $request->getText( 'prefix', '' ) === '' ){
-			# Fine
-			return true;
-		}
-		
+
 		$params = $request->getValues();
 		$title = $params['prefix'];
 		if ( isset( $params['title'] ) ){
@@ -68,8 +66,12 @@ class InputBoxHooks {
 		}
 		unset( $params['prefix'] );
 		$params['title'] = $title;
-		
-		global $wgScript;
+
+		if ( EditorPreference::isVisualEditorPrimary() && $wgUser->isLoggedIn() ) {
+			$params['veaction'] = $params['action'];
+			unset( $params['action'] );
+		}
+
 		$output->redirect( wfAppendQuery( $wgScript, $params ), '301' );
 		return false;
 	}
