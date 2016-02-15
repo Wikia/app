@@ -412,14 +412,13 @@ class MercuryApiController extends WikiaController {
 			$isMainPage = $title->isMainPage();
 			$data['isMainPage'] = $isMainPage;
 
-			$titleBuilder = new WikiaHtmlTitle();
-			$data['htmlTitle'] = $titleBuilder->getTitle();
-
 			$otherLanguages = $this->getOtherLanguages( $title );
 
 			if ( !empty( $otherLanguages ) ) {
 				$data['otherLanguages'] = $otherLanguages;
 			}
+
+			$titleBuilder = new WikiaHtmlTitle();
 
 			if ( $this->shouldGetMainPageData( $isMainPage ) ) {
 				$data['mainPageData'] = $this->getMainPageData();
@@ -443,6 +442,8 @@ class MercuryApiController extends WikiaController {
 					$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
 				}
 			}
+
+			$data['htmlTitle'] = $titleBuilder->getTitle();
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 
