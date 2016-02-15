@@ -4,6 +4,7 @@ class AnalyticsProviderNielsen implements iAnalyticsProvider {
 
 	private static $apid = 'T26086A07-C7FB-4124-A679-8AC404198BA7';
 	private static $libraryUrl = 'http://secure-dcr-cert.imrworldwide.com/novms/js/2/ggcmb500.js';
+	private static $template = 'extensions/wikia/AnalyticsEngine/templates/nielsen.mustache';
 
 	function getSetupHtml( $params=array() ) {
 		return null;
@@ -12,42 +13,21 @@ class AnalyticsProviderNielsen implements iAnalyticsProvider {
 	function trackEvent( $event, $eventDetails=array() ) {
 		global $wgCityId;
 
-		$url = self::$libraryUrl;
-		$apid = self::$apid;
-		$wg = F::app()->wg;
-		$section = HubService::getVerticalNameForComscore( $wgCityId );
-
 		if (!$this->isEnabled()) {
 			return '<!-- Nielsen is disabled -->';
 		}
 
 		switch ($event) {
 			case AnalyticsEngine::EVENT_PAGEVIEW:
-				return <<<EOT
-<!-- Begin Nielsen Tag -->
-<script type="text/javascript" src="{$url}"></script>
-<script type="text/javascript">
-	var _nolggGlobalParams = {
-			sfcode: 'dcr-cert',
-			apid: '{$apid}',
-			apn : 'test-static'
-		};
-
-	gg1 = NOLCMB.getInstance(_nolggGlobalParams),
-	staticmeta = {
-		type: 'static',
-		assetid: '{$section}',
-		section: '{$section}',
-		segA: '{$wg->DBname}',
-		segB: '',
-		segC: ''
-	};
-
-	gg1.ggInitialize(_nolggGlobalParams);
-	gg1.ggPM('staticstart', staticmeta);
-</script>
-<!-- End Nielsen Tag -->
-EOT;
+				return \MustacheService::getInstance()->render(
+					self::$template,
+					[
+						'url' => self::$libraryUrl,
+						'appId' => self::$apid,
+						'section' => HubService::getVerticalNameForComscore( $wgCityId ),
+						'dbName' => F::app()->wg->DBname
+					]
+				);
 			default:
 				return '<!-- Unsupported event for Nielsen -->';
 		}
