@@ -45,19 +45,12 @@ class PortableInfoboxBuilderController extends WikiaController {
 		$editPage = new EditPage( $article );
 		$editPage->initialiseForm();
 		$editPage->edittime = $article->getTimestamp();
-		$infoboxMarkup = ( new PortableInfoboxBuilderService() )->translate( $data );
 
-		//TODO: refactor it, to use template instead, think about adding different example for different fields
-		$infobox = \Wikia\PortableInfobox\Parser\Nodes\NodeFactory::newFromXML( $infoboxMarkup );
-		$sources = $infobox->getSource();
-		$documentation = "\n<noinclude>{{" . $title->getText();
-		foreach ( $sources as $key ) {
-			$documentation .= "|{$key}=example";
-		}
-		$documentation .= "}}</noinclude>";
+		$infoboxBuilderService = new PortableInfoboxBuilderService() ;
+		$infoboxMarkup = $infoboxBuilderService->translate( $data );
+		$infoboxDocumentation = $infoboxBuilderService->getDocumentation( $infoboxMarkup, $title );
 
-
-		$editPage->textbox1 = $infoboxMarkup . $documentation;
+		$editPage->textbox1 = implode( "\n", [ $infoboxMarkup, $infoboxDocumentation ] );
 		$status = $editPage->internalAttemptSave( $result );
 		return $status;
 	}

@@ -7,7 +7,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 *
 	 * @return string
 	 *
-	 * @see PortableInfoboxBuilderServiceTest:: translationsDataProvider
+	 * @see PortableInfoboxBuilderServiceTest::translationsDataProvider
 	 */
 	public function translate( $builderData ) {
 		$out = "";
@@ -30,6 +30,25 @@ class PortableInfoboxBuilderService extends WikiaService {
 		}
 
 		return $out;
+	}
+
+	/**
+	 *
+	 * @param $infoboxMarkup
+	 * @return string
+	 */
+	public function getDocumentation( $infoboxMarkup, $title ) {
+		$infobox = \Wikia\PortableInfobox\Parser\Nodes\NodeFactory::newFromXML( $infoboxMarkup );
+
+		return (new Wikia\Template\PHPEngine() )
+			->setPrefix( dirname( __FILE__ ) . '/templates' )
+			->setData(
+				[
+					'title' => $title->getText(),
+					'sources' => $infobox->getSource()
+				]
+			)
+			->render( 'PortableInfoboxBuilderService_getDocumentation.php' );
 	}
 
 	protected function addGroupNode( $data, SimpleXMLElement $xml ) {
