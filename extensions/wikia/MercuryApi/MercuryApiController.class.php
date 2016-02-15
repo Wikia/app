@@ -393,6 +393,9 @@ class MercuryApiController extends WikiaController {
 		$this->response->setVal( 'wikiVariables', $wikiVariables );
 	}
 
+	/**
+	 * @return void
+	 */
 	public function getPage() {
 		global $wgEnableMainPageDataMercuryApi, $wgCityId;
 
@@ -404,18 +407,8 @@ class MercuryApiController extends WikiaController {
 			$article = Article::newFromID( $articleId );
 
 			if ( $article instanceof Article && $title->isRedirect() ) {
-				/* @var Title|null $redirectTargetTitle */
-				$redirectTargetTitle = $article->getRedirectTarget();
-				$redirectTargetID = $redirectTargetTitle->getArticleID();
-				$data['redirected'] = true;
-
-				if ( $redirectTargetTitle instanceof Title && !empty( $redirectTargetID ) ) {
-					$title = $redirectTargetTitle;
-					$articleId = $redirectTargetID;
-					$article = Article::newFromID( $redirectTargetID );
-				} else {
-					$data['redirectEmptyTarget'] = true;
-				}
+				list( $title, $articleId, $article, $data ) =
+					$this->handleRedirect( $title, $articleId, $article, [ ] );
 			}
 
 			$isMainPage = $title->isMainPage();
@@ -428,7 +421,7 @@ class MercuryApiController extends WikiaController {
 				( new CommunityDataService( $wgCityId ) )->hasData()
 			) {
 				$data['mainPageData'] = $this->getMainPageData();
-			} elseif ( $title->isContentPage() ) {
+			} elseif ( $article instanceof Article && $title->isContentPage() && $title->isKnown() ) {
 				$articleData = $this->getArticleData( $article );
 
 				if ( $articleData ) {
@@ -489,14 +482,35 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
+	 * @param Title $title
+	 * @param int $articleId
+	 * @param Article $article
+	 * @param array $data
+	 *
+	 * @return array [Title, int, Article, array]
+	 */
+	private function handleRedirect( Title $title, $articleId, Article $article, $data ) {
+		/* @var Title|null $redirectTargetTitle */
+		$redirectTargetTitle = $article->getRedirectTarget();
+		$redirectTargetID = $redirectTargetTitle->getArticleID();
+		$data['redirected'] = true;
+
+		if ( $redirectTargetTitle instanceof Title && !empty( $redirectTargetID ) ) {
+			$title = $redirectTargetTitle;
+			$articleId = $redirectTargetID;
+			$article = Article::newFromID( $redirectTargetID );
+		} else {
+			$data['redirectEmptyTarget'] = true;
+		}
+
+		return [ $title, $articleId, $article, $data ];
+	}
+
+	/**
 	 * @param Article $article
 	 * @return array
 	 */
 	private function getArticleData( Article $article ) {
-		if ( !$article instanceof Article ) {
-			return [ ];
-		}
-
 		$articleId = $article->getID();
 		$sections = $this->getVal( 'sections' );
 
