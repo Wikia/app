@@ -3,7 +3,6 @@
 class AnalyticsProviderNielsen implements iAnalyticsProvider {
 
 	private static $apid = 'T26086A07-C7FB-4124-A679-8AC404198BA7';
-	private static $clientId = 'Wikia';
 	private static $libraryUrl = 'http://secure-dcr-cert.imrworldwide.com/novms/js/2/ggcmb500.js';
 
 	function getSetupHtml( $params=array() ) {
@@ -15,7 +14,6 @@ class AnalyticsProviderNielsen implements iAnalyticsProvider {
 
 		$url = self::$libraryUrl;
 		$apid = self::$apid;
-		$clientId = self::$clientId;
 		$wg = F::app()->wg;
 		$section = HubService::getVerticalNameForComscore( $wgCityId );
 
@@ -34,7 +32,7 @@ class AnalyticsProviderNielsen implements iAnalyticsProvider {
 			apid: '{$apid}',
 			apn : 'test-static'
 		};
-	
+
 	gg1 = NOLCMB.getInstance(_nolggGlobalParams),
 	staticmeta = {
 		type: 'static',
