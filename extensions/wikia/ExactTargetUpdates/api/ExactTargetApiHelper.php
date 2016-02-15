@@ -143,7 +143,6 @@ class ExactTargetApiHelper {
 	 * @param String $value Propert yvalue
 	 * @return ExactTarget_APIProperty
 	 */
-
 	public function wrapApiProperty( $key, $value ) {
 		$apiProperty = new \ExactTarget_APIProperty();
 		$apiProperty->Name = $key;

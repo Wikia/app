@@ -57,6 +57,7 @@ $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetTask'] =  $dir . '/tasks/ExactT
 /* Add user-related tasks classes */
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetUserDataVerificationTask'] =  $dir . '/tasks/ExactTargetUserDataVerificationTask.php';
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetUserTaskHelper'] =  $dir . '/tasks/ExactTargetUserTaskHelper.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetCreateUser'] =  $dir . '/tasks/ExactTargetCreateUser.task.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetCreateUserTask'] =  $dir . '/tasks/ExactTargetCreateUserTask.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetRetrieveUserTask'] =  $dir . '/tasks/ExactTargetRetrieveUserTask.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetUpdateUserTask'] =  $dir . '/tasks/ExactTargetUpdateUserTask.php' ;
@@ -75,7 +76,13 @@ $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApi'] =  $dir . '/api/ExactTarg
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApiDataExtension'] =  $dir . '/api/ExactTargetApiDataExtension.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApiSubscriber'] =  $dir . '/api/ExactTargetApiSubscriber.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApiHelper'] =  $dir . '/api/ExactTargetApiHelper.php' ;
+
+/* Client classes */
 $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_client.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Client'] =  $dir . '/client/Client.interface.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetClient'] =  $dir . '/client/ExactTargetClient.class.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetDataHelper'] =  $dir . '/client/ExactTargetDataHelper.class.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetRequestBuilder'] =  $dir . '/client/ExactTargetRequestBuilder.class.php' ;
 
 /* ExactTarget_* classes */
 

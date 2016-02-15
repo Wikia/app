@@ -142,8 +142,8 @@ class ExactTargetUserHooks {
 		$aUserProperties = $oUserHelper->prepareUserPropertiesParams( $oUser );
 
 		/* Get and run the task */
-		$task = $oUserHelper->getCreateUserTask();
-		$task->call( 'updateCreateUserData', $aUserData, $aUserProperties );
+		$task = new ExactTargetCreateUser();
+		$task->call( 'create', $aUserData, $aUserProperties );
 		$task->queue();
 	}
 
