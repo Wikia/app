@@ -21,7 +21,7 @@ class ArticleAsJson extends WikiaService {
 	const MEDIA_CONTEXT_ICON = 'icon';
 
 	const MEDIA_ICON_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-icon.mustache';
-	const MEDIA_IMAGE_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-image.mustache';
+	const MEDIA_THUMBNAIL_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-thumbnail.mustache';
 	const MEDIA_GALLERY_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-gallery.mustache';
 
 	private static function renderIcon( $media ) {
@@ -51,7 +51,7 @@ class ArticleAsJson extends WikiaService {
 	private static function renderImage( $media, $id ) {
 		return self::removeNewLines(
 			\MustacheService::getInstance()->render(
-				self::MEDIA_IMAGE_TEMPLATE,
+				self::MEDIA_THUMBNAIL_TEMPLATE,
 				[
 					'mediaAttrs' => json_encode( [ 'ref' => $id ] ),
 					'media' => $media,
