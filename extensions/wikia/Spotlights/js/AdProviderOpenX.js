@@ -56,7 +56,7 @@ AdProviderOpenX.getUrl = function() {
 function isReviveEnabledInGeo() {
 	'use strict';
 
-	if (!window.Wikia.geo.getCountryCode) {
+	if (!window.Wikia.geo.isProperGeo) {
 		return false;
 	}
 
@@ -64,13 +64,7 @@ function isReviveEnabledInGeo() {
 		return false;
 	}
 
-	var reviveSpotlightsCountries = window.Wikia.InstantGlobals.wgReviveSpotlightsCountries;
-
-	return !!(
-		reviveSpotlightsCountries &&
-		reviveSpotlightsCountries.indexOf &&
-		reviveSpotlightsCountries.indexOf(window.Wikia.geo.getCountryCode()) > -1
-	);
+	return window.Wikia.geo.isProperGeo(window.Wikia.InstantGlobals.wgReviveSpotlightsCountries);
 }
 
 if (!window.wgNoExternals && window.wgEnableOpenXSPC && !window.wgIsEditPage && !window.navigator.userAgent.match(/sony_tvs/)) {
