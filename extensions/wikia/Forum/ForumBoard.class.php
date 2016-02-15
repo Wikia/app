@@ -29,20 +29,20 @@ class ForumBoard extends Wall {
 			$db = wfGetDB( $db );
 
 			$row = $db->selectRow(
-				array( 'comments_index' ),
-				array( 'count(if(parent_comment_id=0,1,null)) threads, count(*) posts, max(first_rev_id) rev_id' ),
-				array(
+				[ 'comments_index' ],
+				[ 'count(if(parent_comment_id=0,1,null)) threads, count(*) posts, max(first_rev_id) rev_id' ],
+				[
 						'parent_page_id' => $this->getId(),
 						'archived' => 0,
 						'deleted' => 0,
 						'removed' => 0
-				),
+				],
 				__METHOD__
 			);
 
-			$info = array( 'postCount' => 0, 'threadCount' => 0 );
+			$info = [ 'postCount' => 0, 'threadCount' => 0 ];
 			if ( $row ) {
-				$info = array( 'postCount' => $row->posts, 'threadCount' => $row->threads, );
+				$info = [ 'postCount' => $row->posts, 'threadCount' => $row->threads, ];
 
 				// get last post info
 				$revision = Revision::newFromId( $row->rev_id );
@@ -55,11 +55,11 @@ class ForumBoard extends Wall {
 
 					$userprofile = Title::makeTitle( $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK, $username )->getFullURL();
 
-					$info['lastPost'] = array(
+					$info['lastPost'] = [
 						'username' => $username,
 						'userprofile' => $userprofile,
 						'timestamp' => $revision->getTimestamp()
-					);
+					];
 				}
 			}
 			$this->wg->Memc->set( $memKey, $info, 60 * 60 * 12 );
@@ -95,14 +95,14 @@ class ForumBoard extends Wall {
 			}
 
 			$activeThreads = $db->selectField(
-				array( 'comments_index' ),
-				array( 'count(*) cnt' ),
-				array( $filter,
+				[ 'comments_index' ],
+				[ 'count(*) cnt' ],
+				[ $filter,
 					'parent_comment_id' => 0,
 					'deleted' => 0,
 					'removed' => 0,
 					'last_touched > curdate() - interval 7 day',
-				),
+				],
 				__METHOD__
 			);
 
