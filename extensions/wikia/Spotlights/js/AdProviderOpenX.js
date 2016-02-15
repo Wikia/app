@@ -5,6 +5,8 @@ var AdProviderOpenX = {
 };
 
 AdProviderOpenX.getConfig = function() {
+	'use strict';
+
 	var config =  {
 		'zones':'14|15|16|17|18|19|20|21|22',
 		'source': '',
@@ -30,6 +32,8 @@ AdProviderOpenX.getConfig = function() {
 };
 
 AdProviderOpenX.getUrlParamsFromConfig = function(config) {
+	'use strict';
+
 	var params = [];
 	for (var key in config) {
 		if (config.hasOwnProperty(key)) {
@@ -40,12 +44,34 @@ AdProviderOpenX.getUrlParamsFromConfig = function(config) {
 };
 
 AdProviderOpenX.getUrl = function() {
-	var httpBase = window.wgEnableReviveSpotlights ? AdProviderOpenX.reviveHttpBase : AdProviderOpenX.defaultHttpBase,
-		url = httpBase + 'spc.php?' + AdProviderOpenX.getUrlParamsFromConfig(AdProviderOpenX.getConfig());
-	AdProviderOpenX.url = url;
+	'use strict';
+
+	var httpBase = (window.wgEnableReviveSpotlights && isReviveEnabledInGeo()) ? AdProviderOpenX.reviveHttpBase : AdProviderOpenX.defaultHttpBase;
+
+	AdProviderOpenX.url = httpBase + 'spc.php?' + AdProviderOpenX.getUrlParamsFromConfig(AdProviderOpenX.getConfig());
+
 	return AdProviderOpenX.url;
 };
 
+function isReviveEnabledInGeo() {
+	'use strict';
+
+	if (!window.Wikia.geo.getCountryCode) {
+		return false;
+	}
+
+	if (!window.Wikia.InstantGlobals.wgReviveSpotlightsCountries) {
+		return false;
+	}
+
+	var reviveSpotlightsCountries = window.Wikia.InstantGlobals.wgReviveSpotlightsCountries;
+
+	return !!(
+		reviveSpotlightsCountries &&
+		reviveSpotlightsCountries.indexOf &&
+		reviveSpotlightsCountries.indexOf(window.Wikia.geo.getCountryCode()) > -1
+	);
+}
 
 if (!window.wgNoExternals && window.wgEnableOpenXSPC && !window.wgIsEditPage && !window.navigator.userAgent.match(/sony_tvs/)) {
 	jQuery(function($) {
