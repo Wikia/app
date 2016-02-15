@@ -51,7 +51,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 		}
 
 		foreach ( $node->data as $key => $value ) {
-			if ( !empty( $value ) ) {
+			if ( !$this->isEmptyNodeValue( $value ) ) {
 				// map defaultValue to default, as its js reserved key word
 				$key = strcasecmp( $key, 'defaultValue' ) == 0 ? 'default' : $key;
 
@@ -63,5 +63,15 @@ class PortableInfoboxBuilderService extends WikiaService {
 
 			}
 		}
+	}
+
+	/**
+	 * return true if value should be treated as empty
+	 *
+	 * @param $value
+	 * @return bool
+	 */
+	private function isEmptyNodeValue( $value ) {
+		return ( empty( $value ) && $value != '0' );
 	}
 }

@@ -29,6 +29,8 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 			  '<infobox><title source="title"><default>{{PAGENAME}}</default></title></infobox>' ],
 			[ '{"data":[{"type":"title", "source":"title", "data": {"defaultValue": ""}}]}',
 				'<infobox><title source="title"/></infobox>' ],
+			[ '{"data":[{"type":"title", "source":"title", "data": {"defaultValue": "0"}}]}',
+				'<infobox><title source="title"><default>0</default></title></infobox>' ],
 			[ '{"data":[{"type":"group", "data": [{"type": "row", "source": "asdf"}]}]}',
 			  '<infobox><group><data source="asdf"/></group></infobox>' ],
 			[ '{"theme": "asdf", "data": [{"type": "image", "source": "image", "data": { "alt": {"source": "title", "data": {"default": "asdf"}}}}]}',
