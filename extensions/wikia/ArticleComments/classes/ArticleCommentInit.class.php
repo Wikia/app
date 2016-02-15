@@ -41,6 +41,8 @@ class ArticleCommentInit {
 
 	/**
 	 * Check whether comments should be enabled for given title
+	 * @param Title $title
+	 * @return bool
 	 */
 	static public function ArticleCommentCheckTitle( $title ) {
 		wfProfileIn( __METHOD__ );
