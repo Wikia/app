@@ -1,32 +1,29 @@
+/* global toolbarABTestVariantNumber:false */
 /*!
  * Utility functions for running Optimizely A/B tests with VisualEditor
  */
 
 /**
- * Gets Optimizely ID for Toolbar A/B test
- * @returns {string}
- */
-ve.init.wikia.getToolbarABTestId = function () {
-	return window.wgDevelEnvironment ? '4721410313' : '4701112678';
-};
-
-/**
  * @returns {number} The A/B test variant number for the Toolbar A/B test
  */
 ve.init.wikia.getToolbarABTestVariantNumber = function () {
-	var optimizely = window.optimizely,
-		optimizelyId = ve.init.wikia.getToolbarABTestId();
-
-	if ( optimizely && optimizely.variationMap && optimizely.variationMap.hasOwnProperty( optimizelyId ) ) {
-		return optimizely.variationMap[ optimizelyId ] || 0;
+	// toolbarABTestVariantNumber is set for variant #1 for all Optimizely toolbar experiments
+	if ( typeof ( toolbarABTestVariantNumber ) === 'undefined' ) {
+		return 0;
 	}
 
-	return 0;
+	return toolbarABTestVariantNumber;
 };
 
 /**
  * Hook for activating experiment on VE load
  */
 mw.hook( 've.activate' ).add( function () {
-	window.optimizely.push( [ 'activate', ve.init.wikia.getToolbarABTestId() ] );
+	// Production tests are split by language. This is done because each language has a separate engagement percentage
+	var optimizelyIds = window.wgDevelEnvironment ?
+		[ '4721410313' ] : [ '4701112678', '5003080344', '5003533755', '5013830116' ];
+
+	optimizelyIds.forEach( function (element) {
+		window.optimizely.push( [ 'activate', element ] );
+	});
 });
