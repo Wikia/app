@@ -64,8 +64,10 @@ class WallMessage {
 	static public function addMessageWall( $userPageTitle ) {
 		wfProfileIn( __METHOD__ );
 		$botUser = User::newFromName( 'WikiaBot' );
+		/** @var Article $article */
 		$article = new Article( $userPageTitle );
-		$status = $article->doEdit( '', '', EDIT_NEW | EDIT_MINOR | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
+		$status = $article->getPage()
+			->doEdit( '', '', EDIT_NEW | EDIT_MINOR | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
 		$title = ( $status->isOK() ) ? $article->getTitle() : false ;
 		wfProfileOut( __METHOD__ );
 		return $title;
@@ -513,8 +515,7 @@ class WallMessage {
 			if ( $notifyEveryone ) {
 				$this->getArticleComment()->setMetaData( 'notify_everyone', time() );
 				$this->doSaveMetadata( $app->wg->User,
-					wfMessage( 'wall-message-update-highlight-summary' )->inContentLanguage()->text(),
-					false, true );
+					wfMessage( 'wall-message-update-highlight-summary' )->inContentLanguage()->text(), false );
 				$rev = $this->getArticleComment()->mLastRevision;
 				$entity = WallNotificationEntity::createFromRev( $rev );
 				$wne->addNotificationToQueue( $entity );
@@ -523,8 +524,7 @@ class WallMessage {
 				$pageId = $this->getId();
 				$wne->removeNotificationForPageId( $pageId );
 				$this->doSaveMetadata( $app->wg->User,
-					wfMessage( 'wall-message-update-removed-highlight-summary' )->inContentLanguage()->text(),
-					false, true );
+					wfMessage( 'wall-message-update-removed-highlight-summary' )->inContentLanguage()->text(), false );
 			}
 		}
 	}
@@ -737,7 +737,7 @@ class WallMessage {
 	}
 
 	/**
-	 * @return null|WallMessage
+
 	 */
 	public function getTopParentObj() {
 		wfProfileIn( __METHOD__ );

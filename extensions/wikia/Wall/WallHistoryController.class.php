@@ -175,8 +175,10 @@ class WallHistoryController extends WallController {
 				continue;
 			}
 
+			/** @var Title $title */
 			$title = $value['title'];
 			$wm = new WallMessage( $title );
+			/** @var User $user */
 			$user = $value['user'];
 			$username = $user->getName();
 

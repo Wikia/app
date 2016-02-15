@@ -572,7 +572,7 @@ class WallHelper {
 	}
 
 	/**
-	 * @param null $rc
+	 * @param RecentChange $rc
 	 * @param array $row [ page_title, page_namespace, rev_user_text?, page_is_new?, rev_parent_id? ]
 	 * @return array|bool
 	 */
