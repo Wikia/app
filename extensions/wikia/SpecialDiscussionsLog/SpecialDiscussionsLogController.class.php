@@ -16,6 +16,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	const NO_USER_MATCH_ERROR = "Provided username did not match any user";
 
 	static $inputFormTemplate = 'extensions/wikia/SpecialDiscussionsLog/templates/SpecialDiscussionsLog_inputForm.mustache';
+	static $userLogTemplate = 'extensions/wikia/SpecialDiscussionsLog/templates/SpecialDiscussionsLog_userLog.mustache';
 
 	public function __construct() {
 		parent::__construct( 'DiscussionsLog' );
@@ -97,7 +98,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		}
 
 		return \MustacheService::getInstance()->render(
-			self::$inputFormTemplate,
+			self::$userLogTemplate,
 			[
 				'username' => $username,
 				'userId' => $userId,
