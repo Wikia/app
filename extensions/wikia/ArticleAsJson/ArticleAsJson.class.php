@@ -13,7 +13,7 @@ class ArticleAsJson extends WikiaService {
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
 	const ICON_SCALE_TO_MAX_HEIGHT = 20;
-	const MAX_MERCURY_IMAGE_WIDTH = 985;
+	const MAX_MERCURY_CONTENT_WIDTH = 985;
 
 	const MEDIA_CONTEXT_ARTICLE_IMAGE = 'article-image';
 	const MEDIA_CONTEXT_ARTICLE_VIDEO = 'article-video';
@@ -473,23 +473,33 @@ class ArticleAsJson extends WikiaService {
 		];
 	}
 
+	/**
+	 * For some media WikiaFileHelper::getMediaDetail returns size 0 (width or height).
+	 * Instead of showing broken image we want to show the image
+	 * and as the fallback size we use the maximum content width handled by Mercury
+	 *
+	 * @param Title $title
+	 * @param array $mediaDetailConfig
+	 * @param int $fallbackSize
+	 * @return array
+	 */
 	private static function getMediaDetailWithSizeFallback(
-		$title, $mediaDetailConfig, $fallbackSize=self::MAX_MERCURY_IMAGE_WIDTH
+		$title, $mediaDetailConfig, $fallbackSize=self::MAX_MERCURY_CONTENT_WIDTH
 	) {
 		$mediaDetail = WikiaFileHelper::getMediaDetail( $title, $mediaDetailConfig );
-		if ( $mediaDetail['width'] == 0 ) {
+		if ( empty( $mediaDetail['width'] ) ) {
 			$mediaDetail['width'] = $fallbackSize;
 
 			\Wikia\Logger\WikiaLogger::instance()->error(
-				'Media width was empty - fallback to fallbackSize',
+				'ArticleAsJson - Media width was empty - fallback to fallbackSize',
 				[
-					'mediaDetails' => $mediaDetail,
-					'fallbackSize' => $fallbackSize
+					'media_details' => $mediaDetail,
+					'fallback_size' => $fallbackSize
 				]
 			);
 		}
 
-		if ( $mediaDetail['height'] == 0 ) {
+		if ( empty( $mediaDetail['height']) ) {
 			$mediaDetail['height'] = $fallbackSize;
 
 			\Wikia\Logger\WikiaLogger::instance()->error(
