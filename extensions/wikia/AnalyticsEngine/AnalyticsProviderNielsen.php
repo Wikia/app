@@ -34,15 +34,16 @@ class AnalyticsProviderNielsen implements iAnalyticsProvider {
 			apid: '{$apid}',
 			apn : 'test-static'
 		};
-		gg1 = NOLCMB.getInstance(_nolggGlobalParams),
-		staticmeta = {
-			type: 'static',
-			assetid: '{$section}',
-			section: '{$section}',
-			segA: '{$wg->DBname}',
-			segB: '',
-			segC: ''
-		};
+	
+	gg1 = NOLCMB.getInstance(_nolggGlobalParams),
+	staticmeta = {
+		type: 'static',
+		assetid: '{$section}',
+		section: '{$section}',
+		segA: '{$wg->DBname}',
+		segB: '',
+		segC: ''
+	};
 
 	gg1.ggInitialize(_nolggGlobalParams);
 	gg1.ggPM('staticstart', staticmeta);
