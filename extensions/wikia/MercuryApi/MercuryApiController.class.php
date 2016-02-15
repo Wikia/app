@@ -428,27 +428,25 @@ class MercuryApiController extends WikiaController {
 				( new CommunityDataService( $wgCityId ) )->hasData()
 			) {
 				$data['mainPageData'] = $this->getMainPageData();
-			} elseif ( $article instanceof Article && $title->isContentPage() && $title->isKnown() ) {
-				$articleData = $this->getArticleData( $article );
+			} elseif ( $title->isContentPage() && $title->isKnown() ) {
+				if ( !$article instanceof Article ) {
+					\Wikia\Logger\WikiaLogger::instance()->error(
+						'$article should be an instance of an Article',
+						[
+							'$article' => $article,
+							'$articleId' => $articleId,
+							'$title' => $title
+						]
+					);
 
-				if ( $articleData ) {
-					$data += $articleData;
-
-					if ( !$isMainPage ) {
-						$titleBuilder->setParts( [ $articleData['article']['displayTitle'] ] );
-					}
+					throw new NotFoundApiException( 'Article is empty' );
 				}
-			} else {
-				\Wikia\Logger\WikiaLogger::instance()->error(
-					'$article should be an instance of an Article',
-					[
-						'$article' => $article,
-						'$articleId' => $articleId,
-						'$title' => $title
-					]
-				);
 
-				throw new NotFoundApiException( 'Article is empty' );
+				$data += $this->getArticleData( $article );
+
+				if ( !$isMainPage ) {
+					$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
+				}
 			}
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
