@@ -737,7 +737,7 @@ class WallMessage {
 	}
 
 	/**
-
+	 * @return null|WallMessage
 	 */
 	public function getTopParentObj() {
 		wfProfileIn( __METHOD__ );

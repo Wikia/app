@@ -133,7 +133,7 @@ class WallNotificationEntity {
 	 *
 	 * @param int $revId
 	 * @param int $wikiId
-	 *
+	 * @param bool $useMasterDB
 	 * @return bool
 	 */
 	public function loadDataFromRevIdOnWiki( $revId, $wikiId, $useMasterDB = false ) {
