@@ -71,19 +71,21 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 
 	private function getUserLog( $userName ) {
 		$userErrorMessage = null;
-		$noUserLogMessage = false;
+		$noUserLogRecords = false;
 		$displayedUserLogRecords = [];
+		$userId = null;
+		$userErrorMessage = '';
 
 		try {
 			$userId = $this->getUserIdByUsername( $userName );
 		} catch ( Exception $e ) {
-			$userErrorMessage = "<p>{$e->getMessage()}</p>";
+			$userErrorMessage = $e->getMessage();
 		}
 
 		$userLogRecords = $this->aggregateLogSearches( $userId, $userName );
 
 		if ( count( $userLogRecords ) == 0 ) {
-			$noUserLogRecords = true;// "<p>No mobile app activity by $userName in the past two weeks!</p>";
+			$noUserLogRecords = true;
 		}
 
 		foreach ( $userLogRecords as $userLogRecord ) {
@@ -100,10 +102,10 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		return \MustacheService::getInstance()->render(
 			self::$userLogTemplate,
 			[
-				'username' => $username,
+				'userName' => $userName,
 				'userId' => $userId,
 				'userErrorMessage' => $userErrorMessage,
-				'noUserLoginRecords' => $noUserLoginRecords,
+				'noUserLogRecords' => $noUserLogRecords,
 				'userLogRecords' => $displayedUserLogRecords
 			]
 		);
