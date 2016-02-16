@@ -2,6 +2,21 @@
 namespace Wikia\ExactTarget;
 
 class ExactTargetRequestBuilder {
+
+	/**
+	 * Returns ExactTarget_UpdateRequest object with soap vars set from param
+	 * @param Array $aSoapVars
+	 * @param ExactTarget_UpdateOptions|null $oOptions Null for simple update;
+	 *        ExactTarget_UpdateOptions for update-add etc.
+	 * @return ExactTarget_UpdateRequest
+	 */
+	public function wrapUpdateRequest( $aSoapVars, $oOptions = null ) {
+		$oRequest = new \ExactTarget_UpdateRequest();
+		$oRequest->Options = $oOptions;
+		$oRequest->Objects = $aSoapVars;
+		return $oRequest;
+	}
+
 	/**
 	 * Prepares an array of SoapVar objects by looping over an array of objects
 	 * @param array $aObjects
@@ -39,21 +54,7 @@ class ExactTargetRequestBuilder {
 	 * @return SoapVar
 	 * @link https://help.exacttarget.com/en/technical_library/web_service_guide/objects/ ExactTarget Objects types
 	 */
-	public function wrapToSoapVar( $oObject, $sObjectType = 'DataExtensionObject' ) {
+	private function wrapToSoapVar( $oObject, $sObjectType = 'DataExtensionObject' ) {
 		return new \SoapVar( $oObject, SOAP_ENC_OBJECT, $sObjectType, 'http://exacttarget.com/wsdl/partnerAPI' );
-	}
-
-	/**
-	 * Returns ExactTarget_UpdateRequest object with soap vars set from param
-	 * @param Array $aSoapVars
-	 * @param ExactTarget_UpdateOptions|null $oOptions Null for simple update;
-	 *        ExactTarget_UpdateOptions for update-add etc.
-	 * @return ExactTarget_UpdateRequest
-	 */
-	public function wrapUpdateRequest( $aSoapVars, $oOptions = null ) {
-		$oRequest = new \ExactTarget_UpdateRequest();
-		$oRequest->Options = $oOptions;
-		$oRequest->Objects = $aSoapVars;
-		return $oRequest;
 	}
 }
