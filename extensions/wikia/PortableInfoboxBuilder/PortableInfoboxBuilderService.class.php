@@ -43,13 +43,22 @@ class PortableInfoboxBuilderService extends WikiaService {
 	}
 
 	/**
-	 * @param $infoboxMarkup: string with infobox markup
+	 * @param $infoboxMarkup string with infobox markup
 	 */
 	public function isSupportedMarkup( $infoboxMarkup ) {
 
 		return true;
 	}
 
+	/**
+	 * Determines whether provided array of infobox markups is supported by the builder
+	 *
+	 * @param $infoboxes
+	 * @return bool
+	 */
+	public function isValidInfoboxArray( $infoboxes ) {
+		return count( $infoboxes ) == 1 && $this->isSupportedMarkup( $infoboxes[0] );
+	}
 
 
 	/**

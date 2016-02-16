@@ -11,10 +11,24 @@ class PortableInfoboxBuilderController extends WikiaController {
 
 		$params = $this->getRequest()->getParams();
 		if ( isset( $params['title'] ) ) {
+			$infoboxes = PortableInfoboxDataService::newFromTitle(
+				Title::newFromText($params['title'],NS_TEMPLATE)
+			)->getInfoboxes();
+
+			$builderService = new PortableInfoboxBuilderService();
+			if ( $builderService->isValidInfoboxArray( $infoboxes ) ) {
+				$response->setVal( 'data', $builderService->translateMarkupToData( $infoboxes[0] ) );
+			}
+
+			// TODO: remove this placeholder once translations are implemented
 			$response->setVal(
 				'data',
 				'{"data":[{"type":"title", "source":"title", "data": {"defaultValue": "{{PAGENAME}}"}},{"type":"row", "source":"asdf", "data": {"label": "asdfsda"}}]}'
 			);
+		} else {
+			$status = new Status();
+			$status->warning( 'no-title-provided' );
+			$response->setVal( 'warnings', $status->getWarningsArray() );
 		}
 	}
 
