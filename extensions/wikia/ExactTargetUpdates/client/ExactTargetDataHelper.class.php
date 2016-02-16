@@ -2,6 +2,8 @@
 namespace Wikia\ExactTarget;
 
 class ExactTargetDataHelper {
+	const CUSTOMER_KEY_USER = 'user';
+
 	/**
 	 * Prepares array of params for ExactTarget API for creating DataExtension objects for user table
 	 * Assumes $aUserData has user_id key that will be treated as filter to update data
@@ -10,18 +12,14 @@ class ExactTargetDataHelper {
 	 * @return array An array of DataExtension objects
 	 */
 	public function prepareUsersUpdateParams( array $aUsersData ) {
-		$aDE = [];
+		$aDataExtension = [];
 		foreach ( $aUsersData as $aUserData ) {
-
-			/* Get Customer Keys specific for production or development */
-			$aCustomerKeys = $this->getCustomerKeys();
-			$sCustomerKey = $aCustomerKeys['user'];
 
 			$userId = $this->extractUserIdFromData( $aUserData );
 			$keys = [ 'user_id' => $userId ];
 
 			$oDE = new \ExactTarget_DataExtensionObject();
-			$oDE->CustomerKey = $sCustomerKey;
+			$oDE->CustomerKey = self::CUSTOMER_KEY_USER;
 
 			if( isset( $aUserData ) ) {
 				$aApiProperties = [];
@@ -39,11 +37,11 @@ class ExactTargetDataHelper {
 				$oDE->Keys = $aApiKeys;
 			}
 
-			$aDE[] = $oDE;
+			$aDataExtension[] = $oDE;
 
 		};
 
-		return $aDE;
+		return $aDataExtension;
 	}
 
 	/**
@@ -57,20 +55,6 @@ class ExactTargetDataHelper {
 		$iUserId = $aUserData['user_id'];
 		unset( $aUserData['user_id'] );
 		return $iUserId;
-	}
-
-	/**
-	 * Get Customer Keys
-	 * CustomerKey is a key that indicates Wikia table reflected by DataExtension
-	 */
-	protected function getCustomerKeys() {
-		$aCustomerKeys = [
-			'user' => 'user',
-			'user_properties' => 'user_properties',
-			'user_groups' => 'user_groups',
-			'UserID_WikiID' => 'UserID_WikiID'
-		];
-		return $aCustomerKeys;
 	}
 
 	/**
