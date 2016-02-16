@@ -35,8 +35,6 @@ class ExactTargetUserHooksHelper {
 		return $aUserPropertiesParams;
 	}
 
-	// FIXME: replace these with an ExactTargetTaskProvider instance
-
 	/**
 	 * Returns new instance of ExactTargetCreateUserTask
 	 * @return ExactTargetCreateUserTask

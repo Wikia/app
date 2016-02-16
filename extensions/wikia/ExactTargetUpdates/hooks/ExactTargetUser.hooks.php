@@ -128,11 +128,6 @@ class ExactTargetUserHooks {
 		$task = $oUserHelper->getCreateUserTask();
 		$task->call( 'createUserProperties', $user->getId(), $aUserProperties );
 		$task->queue();
-
-		$updateUserTask = $oUserHelper->getUpdateUserTask();
-		$updateUserTask->call( 'updateUserSubscriptionStatus', $user->getEmail(), !$user->getGlobalPreference( 'unsubscribed' ) );
-		$updateUserTask->queue();
-
 		return true;
 	}
 

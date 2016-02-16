@@ -60,11 +60,4 @@ class ExactTargetTaskProviderImpl implements ExactTargetTaskProvider {
 		return new ExactTargetWikiDataVerificationTask();
 	}
 
-	/**
-	 * Returns new instance of ExactTargetUpdateUserTask
-	 * @return ExactTargetUpdateUserTask
-	 */
-	public function getUpdateUserTask() {
-		return new ExactTargetUpdateUserTask();
-	}
 }
