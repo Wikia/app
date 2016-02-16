@@ -58,13 +58,6 @@ class SpecialAllpages extends IncludableSpecialPage {
 	 * @param $par String: becomes "FOO" when called like Special:Allpages/FOO (default NULL)
 	 */
 	function execute( $par ) {
-		$user = User::newFromName( 'Idradm' );
-
-		$task = new \Wikia\ExactTarget\ExactTargetCreateUser();
-		$task->create( [ 'user_id' => $user->getId(), 'user_email' => 'test@test.com' ], [ ] );
-		//		$task->call( 'create', [ 'user_id' => $user->getId(), 'user_email' => 'test@test.com' ], [ ] );
-		//		$task->queue();
-		dd( 'asdfds' );
 		global $wgContLang;
 		$request = $this->getRequest();
 		$out = $this->getOutput();
