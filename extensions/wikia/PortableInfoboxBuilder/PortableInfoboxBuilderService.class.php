@@ -3,13 +3,11 @@
 class PortableInfoboxBuilderService extends WikiaService {
 
 	/**
-	 * @param $builderData
-	 *
+	 * @param $builderData string jsonencoded data object
 	 * @return string
-	 *
 	 * @see PortableInfoboxBuilderServiceTest::translationsDataProvider
 	 */
-	public function translate( $builderData ) {
+	public function translateDataToMarkup( $builderData ) {
 		$out = "";
 		$infobox = json_decode( $builderData );
 
@@ -32,6 +30,26 @@ class PortableInfoboxBuilderService extends WikiaService {
 
 		return $out;
 	}
+
+	/**
+	 * @param $builderData
+	 * @return array json_encoded array representing the infobox markup
+	 * @see PortableInfoboxBuilderServiceTest::translationsDataProvider
+	 */
+	public function translateMarkupToData( $infoboxMarkup ) {
+		$builderData = [];
+
+		return json_encode($builderData);
+	}
+
+	/**
+	 * @param $infoboxMarkup
+	 */
+	public function isSupportedMarkup( $infoboxMarkup ) {
+		return true;
+	}
+
+
 
 	/**
 	 *
