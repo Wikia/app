@@ -7,34 +7,58 @@ class ExactTargetRequestBuilderTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider buildRequestDataProvider
+	 * @dataProvider usersDataProvider
 	 */
-	public function testBuildRequest( $usersParams ) {
-		// Prepare params
-		$dataExtensions = array_map( [ $this, 'prepareDataExtension' ], $usersParams );
-
+	public function testBuildRequest( $usersData, $expectedParams ) {
 		// Prepare Expected
+		$dataExtensions = array_map( [ $this, 'prepareDataExtension' ], $expectedParams );
 		$expected = $this->prepareExpected( $dataExtensions );
 
 		$oRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::createUpdate()
-			->withObjects( $dataExtensions )
+			->withUserData( $usersData )
 			->build();
 
 		$this->assertEquals( $expected, $oRequest );
 	}
 
-	public function buildRequestDataProvider() {
+	public function testEmptyUser() {
+		$this->setExpectedException( 'Wikia\Util\AssertionException' );
+		\Wikia\ExactTarget\ExactTargetRequestBuilder::createUpdate()
+			->withUserData([ [ 'user_id' => 0 ] ])
+			->build();
+	}
+
+	public function usersDataProvider() {
 		return [
-			[ [ [ 'user_id' => 0 ] ] ],
-			[ [ [ 'user_id' => 1 ] ] ],
-			[ [ [ 'user_id' => 1 ], [ 'user_id' => 2 ] ] ],
-			[ [ [ 'user_id' => 1, 'properties' => [ 'user_email' => 'test@wikia.com' ] ] ] ]
+			// Test empty array
+			[
+				[ ], [ ]
+			],
+			// Test single user
+			[
+				[ [ 'user_id' => 1 ] ],
+				[ [ 'user_id' => 1, 'properties' => [ ] ] ]
+			],
+			// Test double user
+			[
+				[ [ 'user_id' => 1 ], [ 'user_id' => 2 ] ],
+				[ [ 'user_id' => 1, 'properties' => [ ] ], [ 'user_id' => 2, 'properties' => [ ] ] ]
+			],
+			// Test properties
+			[
+				[ [ 'user_id' => 1, 'user_email' => 'test@wikia.com' ] ],
+				[ [ 'user_id' => 1, 'properties' => [ 'user_email' => 'test@wikia.com' ] ] ]
+			],
+			// Test two properties
+			[
+				[ [ 'user_id' => 1, 'user_email' => 'test@wikia.com', 'prop2' => 'val2' ] ],
+				[ [ 'user_id' => 1, 'properties' => [ 'user_email' => 'test@wikia.com', 'prop2' => 'val2' ] ] ]
+			]
 		];
 	}
 
-	/**
-	 * @return ExactTarget_DataExtensionObject
-	 */
+	/** Tests helpers methods */
+
 	private function prepareDataExtension( $userParams ) {
 		$apiProperty = new ExactTarget_APIProperty();
 		$apiProperty->Name = 'user_id';
@@ -48,11 +72,6 @@ class ExactTargetRequestBuilderTest extends WikiaBaseTest {
 		return $dataExtension;
 	}
 
-	/**
-	 * @param $dataExtension
-	 * @return ExactTarget_UpdateRequest
-	 * @internal param $saveOption
-	 */
 	private function prepareExpected( $dataExtensions ) {
 		$saveOption = new \ExactTarget_SaveOption();
 		$saveOption->PropertyName = 'DataExtensionObject';

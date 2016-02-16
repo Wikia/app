@@ -6,11 +6,8 @@ use Wikia\Logger\WikiaLogger;
 class ExactTargetClient implements Client {
 
 	public function createUser( array $aUserData ) {
-		$oHelper = new ExactTargetDataHelper();
-		$aDE = $oHelper->prepareUsersUpdateParams( [ $aUserData ] );
-
 		$oRequest = ExactTargetRequestBuilder::createUpdate()
-			->withObjects( $aDE )
+			->withUserData( [ $aUserData ] )
 			->build();
 
 		$oCreateUserResult = $this->sendRequest( 'Update', $oRequest );
@@ -23,6 +20,10 @@ class ExactTargetClient implements Client {
 				'Error in ' . __METHOD__ . ': ' . $oCreateUserResult->Results->StatusMessage
 			);
 		}
+	}
+
+	public function deleteSubscriber() {
+
 	}
 
 	protected function sendRequest( $sType, $oRequestObject ) {
