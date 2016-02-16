@@ -61,10 +61,10 @@ class PortableInfoboxBuilderService extends WikiaService {
 			]];
 
 		$infobox = \Wikia\PortableInfobox\Parser\Nodes\NodeFactory::newFromXML($infoboxMarkup);
-//		var_dump($infobox->getData()['value'][1]);
+//		var_dump($infobox->getData()['value']);
 
-		foreach($infobox->getData() as $tag) {
-			if (!array_key_exists($tag['title'], $allowedTags)) {
+		foreach($infobox->getData()['value'] as $tag) {
+			if (!array_key_exists($tag['type'], $allowedTags)) {
 				return false;
 			}
 		}
