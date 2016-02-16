@@ -43,9 +43,10 @@ class PortableInfoboxBuilderService extends WikiaService {
 	}
 
 	/**
-	 * @param $infoboxMarkup
+	 * @param $infoboxMarkup: string with infobox markup
 	 */
 	public function isSupportedMarkup( $infoboxMarkup ) {
+
 		return true;
 	}
 

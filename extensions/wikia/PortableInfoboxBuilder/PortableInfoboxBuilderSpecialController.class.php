@@ -48,8 +48,7 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 	}
 
 	public function sourceEditor() {
-		$title = Title::newFromText($this->getPar(), NS_TEMPLATE);
-		$this->wg->out->redirect($title->getEditURL());
+		$this->wg->out->redirect(Title::newFromText($this->getPar(), NS_TEMPLATE)->getEditURL());
 	}
 
 	private function getMethodName() {
@@ -57,9 +56,10 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 			return 'notitle';
 		}
 
-		$markup = 'something to fetch'; //TODO: get the markup for template
+		$title = Title::newFromText($this->getPar(), NS_TEMPLATE);
+		$infoboxes = PortableInfoboxDataService::newFromTitle($title)->getInfoboxes();
 
-		if( (new PortableInfoboxBuilderService() )->isSupportedMarkup($markup)) {
+		if( count($infoboxes) == 1 && (new PortableInfoboxBuilderService())->isSupportedMarkup($infoboxes[0])) {
 			return 'builder';
 		} else {
 			return 'sourceEditor';
