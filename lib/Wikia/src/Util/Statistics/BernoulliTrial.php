@@ -88,7 +88,7 @@ class BernoulliTrial {
 	 * If the probability is > 1 then set it to 1. If the probability is < 0 then set it to 0.
 	 *
 	 * @param float $probability
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 *
 	 */
 	public function checkProbability( $probability ) {
