@@ -3,40 +3,108 @@
 class RevisionUpvotesApiController extends WikiaApiController {
 
 	/**
-	 * Returns number of upvotes for revision on a wiki.
-	 * If user provided returns info if revision was upvoted by that user
+	 * Add upvote for given revision made by current user
 	 *
-	 * @param int $wikiId wiki id (required)
-	 * @param int $revisionId revision id to get data for (required)
-	 * @param int $userId user that wants to get data (optional)
+	 * @requestParam int revisionId
 	 *
 	 * @throws MissingParameterApiException
+	 * @throws NotFoundException
+	 * @throws BadRequestApiException
 	 */
-	public function getCount() {
+	public function addUpvote() {
 		$request = $this->getRequest();
 
-		$wikiId = $request->getInt( 'wikiId' );
-		$userId = $request->getInt( 'userId' );
-		$revisionId = $request->getInt( 'revisionId' );
-
-		if ( empty( $wikiId ) ) {
-			throw new MissingParameterApiException( 'wikiId' );
+		if ( !$request->wasPosted() ) {
+			throw new BadRequestApiException();
 		}
 
+		$revisionId = $request->getInt( 'revisionId' );
 		if ( empty( $revisionId ) ) {
 			throw new MissingParameterApiException( 'revisionId' );
 		}
 
-		$upvotes = new RevisionUpvotesService();
-		$upvotesCount = $upvotes->getCount( $wikiId, $revisionId );
-		$userUpvoted = $upvotes->userUpvoted( $wikiId, $revisionId, $userId );
+		$user = $this->wg->User;
+		$this->validateUser( $user, $request );
 
-		$this->setResponseData( [
-			'wiki_id' => $wikiId,
-			'revision_id' => $revisionId,
-			'upvotes_count' => $upvotesCount,
-			'user_id' => $userId,
-			'user_upvoted' => $userUpvoted,
-		] );
+		$revision = Revision::newFromId( $revisionId );
+		if ( !$revision instanceof Revision ) {
+			throw new NotFoundException();
+		}
+
+		( new RevisionUpvotesService() )->addUpvote(
+			$this->wg->CityId,
+			$revision->getPage(),
+			$revisionId,
+			$revision->getUser(),
+			$user->getId()
+		);
+	}
+
+	/**
+	 * Remove upvote for given revision made by current user
+	 *
+	 * @requestParam int upvote id
+	 *
+	 * @throws MissingParameterApiException
+	 * @throws BadRequestApiException
+	 */
+	public function removeUpvote() {
+		$request = $this->getRequest();
+
+		if ( !$request->wasPosted() ) {
+			throw new BadRequestApiException();
+		}
+
+		$id = $request->getInt( 'id' );
+		if ( empty( $id ) ) {
+			throw new MissingParameterApiException( 'id' );
+		}
+
+		$user = $this->wg->User;
+		$this->validateUser( $user, $request );
+
+		( new RevisionUpvotesService() )->removeUpvote( $id, $user->getId() );
+	}
+
+	/**
+	 * Get data about all upvotes for given revision
+	 *
+	 * @requestParam int revision id
+	 *
+	 * @throws MissingParameterApiException
+	 */
+	public function getRevisionUpvotes() {
+		$revisionId = $this->getRequest()->getInt( 'revisionId' );
+		if ( empty( $revisionId ) ) {
+			throw new MissingParameterApiException( 'revisionId' );
+		}
+
+		$upvote = ( new RevisionUpvotesService() )->getRevisionUpvotes( $this->wg->CityId, $revisionId );
+
+		$this->setResponseData( $upvote );
+	}
+
+	/**
+	 * Get data about all upvotes for many revisions
+	 *
+	 * @requestParam string revisionsIds ids separated by comma
+	 *
+	 * @throws MissingParameterApiException
+	 */
+	public function getRevisionsUpvotes() {
+		$revisionsIds = $this->getRequest()->getArray( 'revisionsIds' );
+		if ( empty( $revisionsIds ) ) {
+			throw new MissingParameterApiException( 'revisionsIds' );
+		}
+
+		$upvotes = ( new RevisionUpvotesService() )->getRevisionsUpvotes( $this->wg->CityId, $revisionsIds );
+
+		$this->setResponseData( $upvotes );
+	}
+
+	private function validateUser( User $user, WikiaRequest $request ) {
+		if ( !$user->isLoggedIn() || !$user->matchEditToken( $request->getVal( 'editToken' ) ) ) {
+			throw new UnauthorizedException();
+		}
 	}
 }

@@ -2,50 +2,282 @@
 
 class RevisionUpvotesService {
 
-	/**
-	 * @param int $wikiId
-	 * @param int $revisionId
-	 */
-	public function getCount( $wikiId, $revisionId ) {
-		$db = $this->getDatabaseForRead();
-
-		/* @var ResultWrapper $wrap  */
-		$wrap = ( new \WikiaSQL() )
-			->SELECT( 'count(*)' )->AS_( 'upvotes_count' )
-			->FROM( 'upvote_revisions' )
-			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
-			->AND_( 'revision_id' )->EQUAL_TO( $revisionId )
-			->run( $db );
-
-		return $wrap->current()->upvotes_count;
-	}
+	const UPVOTE_TABLE = 'upvote';
+	const UPVOTE_REVISIONS_TABLE = 'upvote_revisions';
+	const UPVOTE_USERS_TABLE = 'upvote_users';
 
 	/**
+	 * Add upvote for given revision
+	 *
 	 * @param int $wikiId
+	 * @param int $pageId
 	 * @param int $revisionId
 	 * @param int $userId
+	 * @param int $fromUser
 	 */
-	public function userUpvoted( $wikiId, $revisionId, $userId ) {
-		$db = $this->getDatabaseForRead();
+	public function addUpvote( $wikiId, $pageId, $revisionId, $userId, $fromUser ) {
+		$upvoteId = $this->getUpvoteId( $wikiId, $revisionId );
 
-		/* @var ResultWrapper $wrap  */
-		$wrap = ( new \WikiaSQL() )
-			->SELECT( 'upvote_id' )
-			->FROM( 'upvote_revisions' )
-			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
-			->AND_( 'revision_id' )->EQUAL_TO( $revisionId )
-			->AND_( 'from_user' )->EQUAL_TO( $userId )
-			->LIMIT( 1 )
-			->run( $db );
+		if ( empty( $upvoteId ) ) {
+			$upvoteId = $this->addUpvoteRevision( $wikiId, $pageId, $revisionId, $userId );
+		}
 
-		return (bool)$wrap->current();
+		if ( !empty( $upvoteId ) ) {
+			$this->addUserUpvote( $upvoteId, $userId, $fromUser );
+		}
 	}
 
 	/**
-	 * Connects to a database with an intent of performing SELECT queries
-	 * @return \DatabaseBase
+	 * Remove upvote for given revision made by user
+	 *
+	 * @param int $id
+	 * @param int $fromUser
 	 */
-	protected function getDatabaseForRead() {
-		return wfGetDB( DB_SLAVE, [], F::app()->wg->UpvotesDB );
+	public function removeUpvote( $id, $fromUser ) {
+		$db = $this->getDatabaseForWrite();
+
+		$db->begin();
+
+		( new \WikiaSQL() )
+			->DELETE( self::UPVOTE_TABLE )
+			->WHERE( 'id' )->EQUAL_TO( $id )
+			->AND_( 'from_user' )->EQUAL_TO( $fromUser )
+			->run( $db );
+
+		( new \WikiaSQL() )
+			->UPDATE( self::UPVOTE_USERS_TABLE )
+			->SET_RAW( 'total', 'IF(`total` > 0, `total` - 1, 0)' )
+			->SET_RAW( 'new', 'IF(`new` > 0, `new` - 1, 0)' )
+			->WHERE( 'id' )->EQUAL_TO( $id )
+			->AND_( 'from_user' )->EQUAL_TO( $fromUser )
+			->run( $db );
+
+		$db->commit();
+	}
+
+	/**
+	 * Get all upvotes for given revision
+	 *
+	 * @param int $wikiId
+	 * @param int $revisionId
+	 * @return bool|array
+	 */
+	public function getRevisionUpvotes( $wikiId, $revisionId ) {
+		$db = $this->getDatabaseForRead();
+
+		$upvote = ( new \WikiaSQL() )
+			->SELECT_ALL()
+			->FROM( self::UPVOTE_REVISIONS_TABLE )->AS_( 'revs' )
+			->LEFT_JOIN( self::UPVOTE_TABLE )->AS_( 'uv' )
+			->ON( 'revs.upvote_id', 'uv.upvote_id' )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->AND_( 'revision_id' )->EQUAL_TO( $revisionId )
+			->runLoop( $db, function( &$upvote, $row ) {
+				if ( empty( $upvote['revision'] ) ) {
+					$upvote['revision'] = [
+						'wikiId' => $row->wiki_id,
+						'pageId' => $row->page_id,
+						'revisionId' => $row->revision_id,
+						'userId' => $row->user_id,
+						'upvoteId' => $row->upvote_id
+					];
+				}
+
+				$upvote['upvotes'][] = [
+					'from_user' => $row->from_user
+				];
+			} );
+
+		$upvote['count'] = count( $upvote['upvotes'] );
+
+		return $upvote;
+	}
+
+	/**
+	 * Get upvotes data for many revisions
+	 *
+	 * @param int $wikiId
+	 * @param array $revisionsIds
+	 * @return bool|array
+	 */
+	public function getRevisionsUpvotes( $wikiId, array $revisionsIds ) {
+		$db = $this->getDatabaseForRead();
+
+		$upvotes = ( new \WikiaSQL() )
+			->SELECT_ALL()
+			->FROM( self::UPVOTE_REVISIONS_TABLE )->AS_( 'revs' )
+			->LEFT_JOIN( self::UPVOTE_TABLE )->AS_( 'uv' )
+			->ON( 'revs.upvote_id', 'uv.upvote_id' )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->AND_( 'revision_id' )->IN( $revisionsIds )
+			->runLoop( $db, function( &$upvotes, $row ) {
+				if ( empty( $upvotes[$row->revision_id]['revision'] ) ) {
+					$upvotes[$row->revision_id]['revision'] = [
+						'wikiId' => $row->wiki_id,
+						'pageId' => $row->page_id,
+						'revisionId' => $row->revision_id,
+						'userId' => $row->user_id,
+						'upvoteId' => $row->upvote_id
+					];
+				}
+
+				$upvotes[$row->revision_id]['upvotes'][] = [
+					'from_user' => $row->from_user
+				];
+			} );
+
+		foreach( $upvotes as $revisionId => $upvote ) {
+			$upvotes[$revisionId]['count'] = count( $upvotes[$revisionId]['upvotes'] );
+		}
+
+		return $upvotes;
+	}
+
+	/**
+	 * Get all upvotes for revisions made by given user
+	 *
+	 * @param int $userId
+	 * @return bool|array
+	 */
+	public function getUserUpvotes( $userId ) {
+		$db = $this->getDatabaseForRead();
+
+		$upvotes = ( new \WikiaSQL() )
+			->SELECT_ALL()
+			->FROM( self::UPVOTE_REVISIONS_TABLE )->AS_( 'revs' )
+			->LEFT_JOIN( self::UPVOTE_TABLE )->AS_( 'uv' )
+			->ON( 'revs.upvote_id', 'uv.upvote_id' )
+			->WHERE( 'user_id' )->EQUAL_TO( $userId )
+			->runLoop( $db, function( &$upvotes, $row ) {
+				if ( empty( $upvotes[$row->upvote_id]['revision'] ) ) {
+					$upvotes[$row->upvote_id]['revision'] = [
+						'wikiId' => $row->wiki_id,
+						'pageId' => $row->page_id,
+						'revisionId' => $row->revision_id,
+						'userId' => $row->user_id,
+						'upvoteId' => $row->upvote_id
+					];
+				}
+
+				$upvotes[$row->upvote_id]['upvotes'][] = [
+					'from_user' => $row->from_user
+				];
+			} );
+
+		foreach( $upvotes as $upvoteId => $upvote ) {
+			$upvotes[$upvoteId]['count'] = count( $upvotes[$upvoteId]['upvotes'] );
+		}
+
+		return $upvotes;
+	}
+
+	/**
+	 * Update user upvotes notification state
+	 *
+	 * @param $userId
+	 */
+	public function userNotified( $userId ) {
+		$db = $this->getDatabaseForWrite();
+
+		( new \WikiaSQL() )
+			->UPDATE( self::UPVOTE_USERS_TABLE )
+			->SET( 'notified', true )
+			->SET( 'new', 0 )
+			->WHERE( 'user_id' )->EQUAL_TO( $userId )
+			->run( $db );
+	}
+
+	/**
+	 * Gets upvote id for given wiki id and revision id
+	 *
+	 * @param int $wikiId
+	 * @param int $revisionId
+	 * @return bool|int
+	 */
+	private function getUpvoteId( $wikiId, $revisionId ) {
+		$db = $this->getDatabaseForRead();
+
+		$upvoteId = ( new \WikiaSQL() )
+			->SELECT( 'upvote_id' )
+			->FROM( self::UPVOTE_REVISIONS_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->AND_( 'revision_id' )->EQUAL_TO( $revisionId )
+			->run( $db, function( $result ) {
+				$row = $result->fetchObject();
+				return $row->upvote_id;
+			} );
+
+		return $upvoteId;
+	}
+
+	/**
+	 * Adds revision data
+	 *
+	 * @param int $wikiId
+	 * @param int $pageId
+	 * @param int $revisionId
+	 * @param int $userId
+	 * @return int
+	 */
+	private function addUpvoteRevision( $wikiId, $pageId, $revisionId, $userId ) {
+		$db = $this->getDatabaseForWrite();
+
+		( new \WikiaSQL() )
+			->INSERT( self::UPVOTE_REVISIONS_TABLE )
+			->SET( 'wiki_id', $wikiId )
+			->SET( 'page_id', $pageId )
+			->SET( 'revision_id', $revisionId )
+			->SET( 'user_id', $userId )
+			->run( $db );
+
+		$lastId = $db->insertId();
+
+		return $lastId;
+	}
+
+	/**
+	 * Add upvote for given revision and update user upvotes data
+	 *
+	 * @param int $upvoteId
+	 * @param int $userId
+	 * @param int $fromUser
+	 *
+	 * @throws DBQueryError
+	 * @throws MWException
+	 */
+	private function addUserUpvote( $upvoteId, $userId, $fromUser ) {
+		$db = $this->getDatabaseForWrite();
+
+		$db->begin();
+
+		$query = sprintf(
+			'INSERT INTO `%s` SET `upvote_id` = %d, `from_user` = %d;',
+			self::UPVOTE_TABLE,
+			$upvoteId,
+			$fromUser
+		);
+		$db->query( $query );
+
+		$query = sprintf(
+			'INSERT INTO `%s` SET `user_id` = %d, `total` = 1, `new` = 1
+			ON DUPLICATE KEY UPDATE `total` = `total` + 1, `new` = `new` + 1, `notified` = false;',
+			self::UPVOTE_USERS_TABLE,
+			$userId
+		);
+		$db->query( $query );
+
+		$db->commit();
+	}
+
+	private function getDatabaseForRead() {
+		return $this->getDatabase();
+	}
+
+	private function getDatabaseForWrite() {
+		return $this->getDatabase( DB_MASTER );
+	}
+
+	private function getDatabase( $db = DB_SLAVE ) {
+		return wfGetDB( $db, [], F::app()->wg->RevisionUpvotesDB );
 	}
 }
