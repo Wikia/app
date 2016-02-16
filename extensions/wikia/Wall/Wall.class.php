@@ -3,6 +3,7 @@
 class Wall extends WikiaModel {
 	const DESCRIPTION_CACHE_TTL = 3600;
 
+	/** @var  Title */
 	protected $mTitle;
 	protected $mCityId;
 
@@ -53,7 +54,7 @@ class Wall extends WikiaModel {
 		$wall = self::getEmpty();
 		$wall->mTitle = $title;
 		$wall->mCityId = F::app()->wg->CityId;
-		$wall->mRelatedPageId = (int) $relatedPageId;
+		$wall->mRelatedPageId = (int)$relatedPageId;
 		wfProfileOut( __METHOD__ );
 		return $wall;
 	}
@@ -85,9 +86,9 @@ class Wall extends WikiaModel {
 	 * @return string raw wikitext
 	 */
 	public function getRawDescription() {
+		/** @var Article $oArticle */
 		$oArticle = new Article( $this->getTitle() );
-
-		return $oArticle->getRawText();
+		return $oArticle->getPage()->getRawText();
 	}
 
 
@@ -119,6 +120,7 @@ class Wall extends WikiaModel {
 	private function getDescriptionParsed( $bStripTemplates = false ) {
 		wfProfileIn( __METHOD__ );
 
+		/** @var Article $oArticle */
 		$oArticle = new Article( $this->getTitle() );
 
 		$oApp = F::App();
@@ -127,28 +129,28 @@ class Wall extends WikiaModel {
 		// Functionality based on request https://wikia-inc.atlassian.net/browse/DAR-330
 		if ( $bStripTemplates ) {
 
-			$sSourceWithoutTemplates = trim( preg_replace( '/({{[^}]+}})/', '', $oArticle->getText() ) );
+			$sSourceWithoutTemplates = trim( preg_replace( '/({{[^}]+}})/', '', $oArticle->getPage()->getText() ) );
 
 			$oParserOut = $oApp->wg->Parser->parse( $sSourceWithoutTemplates, $oApp->wg->Title, $oParserOptions );
 
 		} else {
 			// just parse
-			$oParserOut = $oApp->wg->Parser->parse( $oArticle->getText(), $oApp->wg->Title, $oParserOptions );
+			$oParserOut = $oApp->wg->Parser->parse( $oArticle->getPage()->getText(), $oApp->wg->Title, $oParserOptions );
 		}
 
 		$aOutput = [ ];
 		// Take the content out of an HTML P element and strip whitespace from the beginning and end.
 		$res = $oParserOut->getText();
 		if ( preg_match( '/^<p>\\s*(.*)\\s*<\/p>$/su', $res, $aOutput ) ) {
-			$res = $aOutput[1];
+			$res = $aOutput[ 1 ];
 		}
 
 		wfProfileOut( __METHOD__ );
 		return $res;
 	}
 
-	public function getDescription ( $bParse = true ) {
-		/** @var $title Title */
+	public function getDescription( $bParse = true ) {
+		/** @var Title $title */
 		$title = $this->getTitle();
 		$memcKey = wfmemcKey( __METHOD__, $title->getArticleID(), $title->getTouchedCached(), 'parsed' );
 		$res = $this->wg->memc->get( $memcKey );
@@ -156,7 +158,7 @@ class Wall extends WikiaModel {
 
 			if ( !$bParse ) {
 				$oArticle = new Article( $title );
-				return $oArticle->getText();
+				return $oArticle->getPage()->getText();
 			}
 
 			$res = $this->getDescriptionParsed( false );
@@ -175,7 +177,7 @@ class Wall extends WikiaModel {
 	}
 
 	public function exists() {
-		$id = (int) $this->getId();
+		$id = (int)$this->getId();
 		if ( $id != 0 ) {
 			return true;
 		}
@@ -237,7 +239,7 @@ class Wall extends WikiaModel {
 		if ( $where ) {
 			$db = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 
-			$time = date ( "Y-m-d H:i:s", time() - 24 * 7 * 60 * 60 ) ;
+			$time = date( "Y-m-d H:i:s", time() - 24 * 7 * 60 * 60 );
 
 			$res = $db->select(
 				[ 'comments_index' ],
@@ -279,7 +281,7 @@ class Wall extends WikiaModel {
 
 		$this->getLast7daysOrder();
 
-		switch( $this->mSorting ) {
+		switch ( $this->mSorting ) {
 			case 'nt': // newest threads first
 			default:
 				wfProfileOut( __METHOD__ );
@@ -322,7 +324,6 @@ class Wall extends WikiaModel {
 			$res = $db->query( $query, __METHOD__ );
 
 
-
 			while ( $row = $db->fetchObject( $res ) ) {
 				$out[] = WallThread::newFromId( $row->comment_id );
 			}
@@ -363,11 +364,11 @@ class Wall extends WikiaModel {
 	}
 
 	public function setMaxPerPage( $val ) {
- 		$this->mMaxPerPage = $val;
+		$this->mMaxPerPage = $val;
 	}
 
 	public function setSorting( $val ) {
- 		$this->mSorting = $val;
+		$this->mSorting = $val;
 	}
 
 	public function invalidateCache() {

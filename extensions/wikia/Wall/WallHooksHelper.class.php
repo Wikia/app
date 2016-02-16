@@ -32,6 +32,13 @@ class WallHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @param Article $article
+	 * @param $outputDone
+	 * @param $useParserCache
+	 * @return bool
+	 * @throws MWException
+	 */
 	static public function onArticleViewHeader( &$article, &$outputDone, &$useParserCache ) {
 		wfProfileIn( __METHOD__ );
 
@@ -288,7 +295,7 @@ class WallHooksHelper {
 	/**
 	 * @brief Redirects any attempts of viewing history of any page in NS_USER_WALL namespace
 	 *
-	 * @param $article
+	 * @param Article $article
 	 * @return true
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
@@ -510,7 +517,7 @@ class WallHooksHelper {
 	/**
 	 * @brief Remove Message Wall:: from back link
 	 *
-	 * @param $title
+	 * @param Title $title
 	 * @param $ptext
 	 * @param $cssClass
 	 * @return bool
@@ -529,7 +536,7 @@ class WallHooksHelper {
 	/**
 	 * @brief Adds an action button on user talk archive page
 	 *
-	 * @param $response
+	 * @param WikiaResponse $response
 	 * @param $ns
 	 * @param $skin
 	 * @return bool
@@ -661,7 +668,7 @@ class WallHooksHelper {
 
 	/**
 	 * clean history after delete
-	 * @param $self
+	 * @param Article $self
 	 * @param $user
 	 * @param $reason
 	 * @param $id
@@ -677,6 +684,13 @@ class WallHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @param Article $article
+	 * @param User $user
+	 * @param $reason
+	 * @param $error
+	 * @return bool
+	 */
 	static public function onArticleDelete( $article, &$user, &$reason, &$error ) {
 		$title = $article->getTitle();
 		if ( $title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
@@ -686,6 +700,10 @@ class WallHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @param RecentChange $recentChange
+	 * @return bool
+	 */
 	static public function onRecentChangeSave( $recentChange ) {
 		wfProfileIn( __METHOD__ );
 		// notifications
@@ -706,6 +724,10 @@ class WallHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @param ArticleComment $comment
+	 * @return bool
+	 */
 	static public function onArticleCommentBeforeWatchlistAdd( $comment ) {
 		$commentTitle = $comment->getTitle();
 		$app = F::app();
@@ -749,7 +771,7 @@ class WallHooksHelper {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 *
 	 * @param $permErrors
-	 * @param $title
+	 * @param Title $title
 	 * @param $removeArray
 	 * @return boolean true -- because it's a hook
 	 */
@@ -1075,7 +1097,7 @@ class WallHooksHelper {
 	 * @param ChangesList $list
 	 * @param RecentChange $rc
 	 * @param String $s
-	 * @param Formatter $formatter
+	 * @param $formatter
 	 * @param string $mark
 	 *
 	 * @return true because this is a hook
@@ -1286,7 +1308,7 @@ class WallHooksHelper {
 	 * @param string $r
 	 * @param array $oRCCacheEntryArray an array of RCCacheEntry instances
 	 * @param boolean $changeRecentChangesHeader a flag saying Wikia's hook if we want to change header or not
-	 * @param $oTitle
+	 * @param Title $oTitle
 	 * @param string $headerTitle string which will be put as a header for RecentChanges block
 	 *
 	 * @return bool
@@ -1410,8 +1432,8 @@ class WallHooksHelper {
 	/**
 	 * getUserPermissionsErrors -  control access to articles in the namespace NS_USER_WALL_MESSAGE_GREETING
 	 *
-	 * @param $title
-	 * @param $user
+	 * @param Title $title
+	 * @param User $user
 	 * @param $action
 	 * @param $result
 	 * @return bool
@@ -1439,6 +1461,20 @@ class WallHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @param Article $article
+	 * @param User $user
+	 * @param $text
+	 * @param $summary
+	 * @param $minoredit
+	 * @param $watchthis
+	 * @param $sectionanchor
+	 * @param $flags
+	 * @param $revision
+	 * @param $status
+	 * @param $baseRevId
+	 * @return bool
+	 */
 	static public function onArticleSaveComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
 		$app = F::app();
 		$title = $article->getTitle();
@@ -1458,6 +1494,11 @@ class WallHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @param $editor
+	 * @param Title $title
+	 * @return bool
+	 */
 	static public function onAllowNotifyOnPageChange( $editor, $title ) {
 		$app = F::app();
 		if ( in_array( MWNamespace::getSubject( $title->getNamespace() ), $app->wg->WallNS ) || $title->getNamespace() == NS_USER_WALL_MESSAGE_GREETING ) {
@@ -1466,6 +1507,11 @@ class WallHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @param User $user
+	 * @param Article $article
+	 * @return bool
+	 */
 	static public function onWatchArticle( &$user, &$article ) {
 		$app = F::app();
 		$title = $article->getTitle();
@@ -1511,7 +1557,7 @@ class WallHooksHelper {
 
 	/**
 	 * @param User $user
-	 * @param Title $title
+	 * @param $title
 	 * @param string $action
 	 *
 	 * @throws MWException
@@ -1526,6 +1572,11 @@ class WallHooksHelper {
 		}
 	}
 
+	/**
+	 * @param User $user
+	 * @param $preferences
+	 * @return bool
+	 */
 	static public function onGetPreferences( $user, &$preferences ) {
 		$app = F::app();
 
@@ -1658,7 +1709,7 @@ class WallHooksHelper {
 	 * @brief Collects data basing on RC object or std object
 	 * Those lines of code were used a lot in this class. Better keep them in one place.
 	 *
-	 * @param RecentChanges $rc
+	 * @param $rc
 	 * @param Object $row
 	 *
 	 * @return Array
@@ -1730,8 +1781,8 @@ class WallHooksHelper {
 	 * Changes fields in a DifferenceEngine instance to display correct content in <title /> tag
 	 *
 	 * @param DifferenceEngine $differenceEngine
-	 * @param Revivion $oldRev
-	 * @param Revivion $newRev
+	 * @param $oldRev
+	 * @param $newRev
 	 *
 	 * @return true
 	 */
@@ -1753,7 +1804,7 @@ class WallHooksHelper {
 	/**
 	 * Changes fields in a PageHeaderModule instance to display correct content in <h1 /> and <h2 /> tags
 	 *
-	 * @param PageHeaderModule $pageHeaderModule
+	 * @param PageHeaderController $pageHeaderModule
 	 * @param int $ns
 	 * @param Boolean $isPreview
 	 * @param Boolean $isShowChanges
@@ -1939,6 +1990,11 @@ class WallHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @param OutputPage $out
+	 * @param User $user
+	 * @return bool
+	 */
 	static public function onSpecialWikiActivityExecute( $out, $user ) {
 		$app = F::App();
 		$out->addScript( "<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/Wall/js/WallWikiActivity.js\"></script>\n" );
@@ -2102,14 +2158,17 @@ class WallHooksHelper {
 		return true;
 	}
 
-
+	/**
+	 * @param $link
+	 * @param RecentChange $rcObj
+	 * @return bool
+	 */
 	static public function onChangesListItemGroupRegular( &$link, &$rcObj ) {
 		if ( WallHelper::isWallNamespace( intval( $rcObj->getAttribute( 'rc_namespace' ) ) ) ) {
 
+			/** @var WallMessage $wallMsg */
 			$wallMsg = WallMessage::newFromId( $rcObj->getAttribute( 'rc_cur_id' ) );
 			if ( !empty( $wallMsg ) ) {
-				/* @var $wallMsg Wall */
-
 				$url = $wallMsg->getMessagePageUrl();
 				$link = '<a href="' . $url . '">' . $rcObj->timestamp . '</a>';
 				$rcObj->curlink = '<a href="' . $url . '">' . wfMessage( 'cur' )->escaped() . '</a>';

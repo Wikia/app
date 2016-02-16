@@ -11,6 +11,7 @@ class GlobalNavigationWallNotificationsController extends WikiaController {
 	private $wallHelper;
 
 	public function __construct() {
+		parent::__construct();
 		$this->app = F::App();
 	}
 

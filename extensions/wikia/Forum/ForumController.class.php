@@ -57,6 +57,7 @@ class ForumController extends WallBaseController {
 			$this->app->wg->Out->setPageTitle( wfMessage( 'forum-board-topic-title', $this->wg->title->getBaseText() )->plain() );
 		} else {
 			$boardId = $this->wall->getId();
+			/** @var ForumBoard $board */
 			$board = ForumBoard::newFromId( $boardId );
 
 			if ( empty( $board ) ) {
@@ -91,6 +92,10 @@ class ForumController extends WallBaseController {
 		return $topicTitle;
 	}
 
+	/**
+	 * @param Title $title
+	 * @return null|Wall
+	 */
 	public function getWallForIndexPage( $title ) {
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$topicTitle = $this->getTopicTitle();
@@ -146,7 +151,7 @@ class ForumController extends WallBaseController {
 
 		$thread = WallThread::newFromId( $wallMessage->getId() );
 
-		$lastReply = $thread->getLastMessage( $replies );
+		$lastReply = $thread->getLastMessage();
 		if ( $lastReply === null ) {
 			$lastReply = $wallMessage;
 		}

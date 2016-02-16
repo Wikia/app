@@ -74,7 +74,7 @@ class WallNotificationsController extends WikiaController {
 				$displayname = wfMessage( 'oasis-anon-user' )->text();
 			}
 		} else {
-			// annon
+			// anon
 			$displayname = wfMessage( 'oasis-anon-user' )->text();
 		}
 
@@ -203,7 +203,7 @@ class WallNotificationsController extends WikiaController {
 
 		// The instances of `WallNotificationEntity` in the `$notify['grouped']` array are sorted in reverse
 		// chronological order. We want the url to point to the oldest unread item (which is the last element in the
-		// array) instead of the most recent so that they start reading where the left off. See bugid 64560.
+		// array) instead of the most recent so that they start reading where the left off. See bug id 64560.
 		$oldestEntity = end( $notify['grouped'] );
 		$url = empty( $oldestEntity->data->url ) ? '' :  $oldestEntity->data->url;
 
