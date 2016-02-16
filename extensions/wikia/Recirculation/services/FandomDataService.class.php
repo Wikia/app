@@ -4,9 +4,11 @@ class FandomDataService {
 	static protected $instance = null;
 
 	const PARSELY_API_BASE = 'https://api.parsely.com/v2/';
-	const PARSELY_API_LIMIT = 5;
+	const PARSELY_API_LIMIT = 8; // We request more posts than we actually need incase we receive duplicates
 	const PARSELY_API_PAGE = 1;
 	const PARSELY_API_SORT = '_hits';
+
+	const PARSELY_POSTS_LIMIT = 5;
 
 	const MCACHE_VER = '1.0';
 	const MCACHE_TIME = 900; // 15 minutes
@@ -58,7 +60,8 @@ class FandomDataService {
 		$data = Http::get( $url );
 
 		$obj = json_decode( $data );
-		return $obj->data;
+		$posts = $this->dedupePosts( $obj->data );
+		return $posts;
 	}
 
 	/**
@@ -82,5 +85,29 @@ class FandomDataService {
 		$url = self::PARSELY_API_BASE . $endpoint . '?' . http_build_query( $params );
 
 		return $url;
+	}
+
+	/**
+	 * Remove duplicates from Parsely's API result
+	 * @param array $rawPosts
+	 * @return array
+	 */
+	private function dedupePosts( $rawPosts ) {
+		$posts = [];
+		$postIds = [];
+
+		foreach ($rawPosts as $post) {
+			if ( count($posts) >= self::PARSELY_POSTS_LIMIT ) {
+				break;
+			}
+
+			$metadata = json_decode( $post->metadata );
+			if ( !empty($metadata->postID) && !in_array( $metadata->postID, $postIds) ) {
+				$postIds[] = $metadata->postID;
+				$posts[] = $post;
+			}
+		}
+
+		return $posts;
 	}
 }
