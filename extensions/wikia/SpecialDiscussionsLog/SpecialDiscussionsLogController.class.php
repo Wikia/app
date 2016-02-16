@@ -108,14 +108,14 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 			self::$userLogTemplate,
 			[
 				'hasUserError' => $hasUserError,
-				'logTableCaption' => wfMessage('discussionslog-table-caption')
-						->params([$userName, $userId])
+				'logTableCaption' => wfMessage( 'discussionslog-table-caption' )
+						->params( [$userName, $userId] )
 						->escaped(),
-				'userErrorMessage' => wfMessage('discussionslog-no-user-match-error')
+				'userErrorMessage' => wfMessage( 'discussionslog-no-user-match-error' )
 						->escaped(),
 				'hasNoUserLogRecords' => $hasNoUserLogRecords,
-				'noUserLogRecordsMessage' => wfMessage('discussionslog-no-mobile-activity-error')
-						->params($userName)
+				'noUserLogRecordsMessage' => wfMessage( 'discussionslog-no-mobile-activity-error' )
+						->params( $userName )
 						->escaped(),
 				'userLogRecords' => $displayedUserLogRecords
 			]
