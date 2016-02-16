@@ -116,10 +116,10 @@ class ForumController extends WallBaseController {
 
 			$list = $forum->getBoardList();
 
-			$this->destinationBoards = array( array( 'value' => '', 'content' => wfMessage( 'forum-board-destination-empty' )->escaped() ) );
+			$this->destinationBoards = [ [ 'value' => '', 'content' => wfMessage( 'forum-board-destination-empty' )->escaped() ] ];
 
 			foreach ( $list as $value ) {
-				$this->destinationBoards[] = array( 'value' => htmlspecialchars( $value['name'] ), 'content' => htmlspecialchars( $value['name'] ) );
+				$this->destinationBoards[] = [ 'value' => htmlspecialchars( $value['name'] ), 'content' => htmlspecialchars( $value['name'] ) ];
 			}
 		}
 	}
@@ -140,7 +140,7 @@ class ForumController extends WallBaseController {
 		$this->response->setVal( 'fullpageurl', $wallMessage->getMessagePageUrl() );
 		$this->response->setVal( 'kudosNumber', $wallMessage->getVoteCount() );
 
-		$replies = $this->getVal( 'replies', array() );
+		$replies = $this->getVal( 'replies', [ ] );
 		$repliesCount = count( $replies ) + 1;
 		$this->response->setVal( 'repliesNumber', $repliesCount );
 
@@ -185,15 +185,15 @@ class ForumController extends WallBaseController {
 	public function breadCrumbs() {
 		if ( $this->app->wg->Title->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$indexPage = Title::newFromText( 'Forum', NS_SPECIAL );
-			$path = array();
-			$path[] = array( 'title' => wfMessage( 'forum-forum-title' )->escaped(), 'url' => $indexPage->getFullUrl() );
+			$path = [ ];
+			$path[] = [ 'title' => wfMessage( 'forum-forum-title' )->escaped(), 'url' => $indexPage->getFullUrl() ];
 
-			$path[] = array( 'title' => wfMessage( 'forum-board-topics' )->escaped() );
+			$path[] = [ 'title' => wfMessage( 'forum-board-topics' )->escaped() ];
 
 			$topicTitle = Title::newFromURL( $this->app->wg->Title->getText() );
 
 			if ( !empty( $topicTitle ) ) {
-				$path[] = array( 'title' => $topicTitle->getPrefixedText() );
+				$path[] = [ 'title' => $topicTitle->getPrefixedText() ];
 			}
 
 			$this->response->setVal( 'path', $path );
@@ -250,7 +250,7 @@ class ForumController extends WallBaseController {
 	protected function addMiniEditorAssets() {
 		if ( $this->wg->EnableMiniEditorExtForWall && $this->app->checkSkin( 'oasis' ) ) {
 			$this->sendRequest( 'MiniEditor', 'loadAssets',
-				array( 'additionalAssets' => array( 'forum_mini_editor_js', 'extensions/wikia/MiniEditor/css/Wall/Wall.scss' ) )
+				[ 'additionalAssets' => [ 'forum_mini_editor_js', 'extensions/wikia/MiniEditor/css/Wall/Wall.scss' ] ]
 			);
 		}
 	}
@@ -262,17 +262,17 @@ class ForumController extends WallBaseController {
 				// keys of sorting array are names of DOM elements' classes
 				// which are needed to click tracking
 				// if you change those keys here, do so in Wall.js file, please
-				$options = array( 'nf' => wfMessage( 'wall-history-sorting-newest-first' )->escaped(), 'of' => wfMessage( 'wall-history-sorting-oldest-first' )->escaped(), );
+				$options = [ 'nf' => wfMessage( 'wall-history-sorting-newest-first' )->escaped(), 'of' => wfMessage( 'wall-history-sorting-oldest-first' )->escaped(), ];
 				break;
 			case 'index' :
 			default :
-				$options = array(
+				$options = [
 					'nr' => wfMessage( 'forum-sorting-option-newest-replies' )->escaped(),
 					// 'pt' => wfMessage('forum-sorting-option-popular-threads')->escaped(),
 					'mr' => wfMessage( 'forum-sorting-option-most-replies' )->escaped(),
 					'nt' => wfMessage( 'forum-sorting-option-newest-threads' )->escaped(),
 					'ot' => wfMessage( 'forum-sorting-option-oldest-threads' )->escaped(),
-				);
+				];
 				break;
 		}
 
@@ -312,8 +312,8 @@ class ForumController extends WallBaseController {
 		if ( !empty( $title ) && $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
 
 			$rp = new WallRelatedPages();
-			$out = $rp->getMessageRelatetMessageIds( array( $title->getArticleId() ) );
-			$messages = array();
+			$out = $rp->getMessageRelatetMessageIds( [ $title->getArticleId() ] );
+			$messages = [ ];
 			$count = 0;
 			foreach ( $out as $key => $val ) {
 				if ( $title->getArticleId() == $val['comment_id'] ) {
@@ -324,7 +324,7 @@ class ForumController extends WallBaseController {
 				if ( !empty( $msg ) ) {
 					$msg->load();
 
-					$message = array( 'message' => $msg );
+					$message = [ 'message' => $msg ];
 
 					if ( !empty( $val['last_child'] ) ) {
 						$childMsg = WallMessage::newFromId( $val['last_child'] );

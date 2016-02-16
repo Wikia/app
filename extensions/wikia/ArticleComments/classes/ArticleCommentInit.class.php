@@ -31,7 +31,7 @@ class ArticleCommentInit {
 				self::$enable = false;
 			}
 
-			if ( self::$enable && !wfRunHooks( 'ArticleCommentCheck', array( $title ) ) ) {
+			if ( self::$enable && !wfRunHooks( 'ArticleCommentCheck', [ $title ] ) ) {
 				self::$enable = false;
 			}
 		}
@@ -301,7 +301,7 @@ class ArticleCommentInit {
 	 *
 	 * @return bool
 	 */
-	static public function userCanComment( Array &$info = array(), Title $title = null, User $user = null ) {
+	static public function userCanComment( Array &$info = [ ], Title $title = null, User $user = null ) {
 		$ret = true;
 
 		if ( !( $user instanceof User ) ) {
@@ -353,7 +353,7 @@ class ArticleCommentInit {
 
 			$link = wfMsgExt(
 				'article-comments-file-page',
-				array ( 'parsemag' ),
+				[ 'parsemag' ],
 				$title->getLocalURL(),
 				self::getUserNameFromRevision( $title ),
 				Title::newFromText( $parentTitle )->getLocalURL(),
@@ -368,7 +368,7 @@ class ArticleCommentInit {
 
 			$link = wfMsgExt(
 				'article-blog-comments-file-page',
-				array ( 'parsemag' ),
+				[ 'parsemag' ],
 				$title->getLocalURL(),
 				self::getUserNameFromRevision( $title ),
 				Title::newFromText( $baseText, NS_BLOG_ARTICLE )->getLocalURL(),
