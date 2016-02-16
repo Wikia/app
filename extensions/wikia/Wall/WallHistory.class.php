@@ -25,7 +25,7 @@ class WallHistory extends WikiaModel {
 			case WH_EDIT:
 			case WH_NEW:
 				// wall the wall action goes through this point.
-				wfRunHooks( 'WallAction', array( $type, $feed->data->parent_id, $feed->data->title_id ) );
+				wfRunHooks( 'WallAction', [ $type, $feed->data->parent_id, $feed->data->title_id ] );
 				$this->addNewOrEdit( $type, $feed, $user );
 			break;
 			case WH_ARCHIVE:
@@ -34,7 +34,7 @@ class WallHistory extends WikiaModel {
 			case WH_REMOVE:
 			case WH_RESTORE:
 				// wall the wall action goes through this point.
-				wfRunHooks( 'WallAction', array( $type, $feed->data->parent_id, $feed->data->message_id ) );
+				wfRunHooks( 'WallAction', [ $type, $feed->data->parent_id, $feed->data->message_id ] );
 				$this->addStatChangeAction( $type, $feed, $user );
 			break;
 		}
@@ -45,19 +45,19 @@ class WallHistory extends WikiaModel {
 	public function remove( $pageId ) {
 		$this->getDB( DB_MASTER )->delete(
 			'wall_history',
-			array(
+			[
 				'parent_comment_id' => ( (int) $pageId )
-			)
+			]
 		);
 	}
 
 	public function moveThreads( $from, $to ) {
 		$this->getDB( DB_MASTER )->update(
 			'wall_history',
-			array( 'parent_page_id' => $to ),
-			array(
+			[ 'parent_page_id' => $to ],
+			[
 				'parent_page_id' => $from
-			),
+			],
 			__METHOD__
 		);
 
@@ -67,10 +67,10 @@ class WallHistory extends WikiaModel {
 	public function moveThread( $thread, $to ) {
 		$this->getDB( DB_MASTER )->update(
 			'wall_history',
-			array( 'parent_page_id' => $to ),
-			array(
+			[ 'parent_page_id' => $to ],
+			[
 				"parent_comment_id = $thread or comment_id = $thread"
-			),
+			],
 			__METHOD__
 		);
 
@@ -129,10 +129,10 @@ class WallHistory extends WikiaModel {
 
 		$this->getDB( DB_MASTER )->update(
 			'wall_history',
-			array( 'deleted_or_removed' => ( $action == WH_DELETE || $action == WH_REMOVE ) ? 1: 0 ),
-			array(
+			[ 'deleted_or_removed' => ( $action == WH_DELETE || $action == WH_REMOVE ) ? 1: 0 ],
+			[
 				'comment_id' => $data->message_id
-			),
+			],
 			__METHOD__
 		);
 
@@ -143,7 +143,7 @@ class WallHistory extends WikiaModel {
 	public function internalAdd( $parentPageId, $postUserId, $postUserName, $isReply, $commentId, $ns, $parentCommentId, $metatitle, $action, $reason, $revId ) {
 		$this->getDB( DB_MASTER )->insert(
 			'wall_history',
-			array(
+			[
 				'parent_page_id' => $parentPageId,
 				'post_user_id' => $postUserId,
 				'post_ns' => MWNamespace::getSubject( $ns ),
@@ -155,7 +155,7 @@ class WallHistory extends WikiaModel {
 				'reason' => empty( $reason ) ? null: $reason,
 				'action' => $action,
 				'revision_id' => $revId
-			)
+			]
 		);
 	}
 
@@ -205,7 +205,7 @@ class WallHistory extends WikiaModel {
 		$ns    = (int)MWNamespace::getSubject( $ns );
 		$count = (int)$count;
 		$db    = $this->getDB( DB_SLAVE );
-		$out   = array();
+		$out   = [ ];
 
 		$result = $db->query(
 			'SELECT
@@ -282,7 +282,7 @@ class WallHistory extends WikiaModel {
 		$where = $this->getWhere( $parent_page_id, $parent_comment_id, $show_replay );
 
 		if ( $where === false ) {
-			return array();
+			return [ ];
 		}
 		return $this->loadFromDB( $where, $this->getLimit(), $this->getOffset(), $sort );
 	}
@@ -296,9 +296,9 @@ class WallHistory extends WikiaModel {
 		$db =  $this->getDB( DB_SLAVE );
 		$row = $db->selectRow(
 			'wall_history',
-			array(
+			[
 				'count(*) as cnt'
-			),
+			],
 			$where,
 			__METHOD__
 		);
@@ -306,7 +306,7 @@ class WallHistory extends WikiaModel {
 	}
 
 	protected function getWhere( $parent_page_id = 0, $parent_comment_id = 0, $show_replay = true ) {
-		$query = array();
+		$query = [ ];
 
 		if ( $parent_comment_id === 0 ) {
 			$query[] = 'parent_page_id is null';
@@ -319,9 +319,9 @@ class WallHistory extends WikiaModel {
 		}
 
 		if ( $parent_page_id > 0 ) {
-			$query = array(
+			$query = [
 				'parent_page_id' => $parent_page_id
-			);
+			];
 		}
 
 		if ( !$show_replay ) {
@@ -349,7 +349,7 @@ class WallHistory extends WikiaModel {
 
 		$res = $db->select(
 			'wall_history',
-			array(
+			[
 				'parent_page_id',
 				'post_user_id',
 				'post_user_ip',
@@ -361,14 +361,14 @@ class WallHistory extends WikiaModel {
 				'metatitle',
 				'reason',
 				'revision_id'
-			),
+			],
 			$con,
 			__METHOD__,
-			array(
+			[
 				'LIMIT' => $limit,
 				'OFFSET' => $offset,
 				'ORDER BY' => 'event_date ' . $sort,
-			)
+			]
 		);
 
 		return $res;
@@ -379,7 +379,7 @@ class WallHistory extends WikiaModel {
 
 		$res = $this->baseLoadFromDB( $con, $limit, $offset, $sort );
 
-		$out = array();
+		$out = [ ];
 		while ( $row = $db->fetchRow( $res ) ) {
 			$data = $this->formatData( $row );
 			if ( !empty( $data ) ) {
@@ -407,7 +407,7 @@ class WallHistory extends WikiaModel {
 		$title = $message->getTitle();
 
 		if ( ( $title instanceof Title ) && ( $message instanceof WallMessage ) ) {
-			return array(
+			return [
 				'user' => $user,
 				'event_date' => $row['event_date'],
 				'event_iso' => wfTimestamp( TS_ISO_8601, $row['event_date'] ),
@@ -421,7 +421,7 @@ class WallHistory extends WikiaModel {
 				'reason' => $row['reason'],
 				'revision_id' => $row['revision_id'],
 				'wall_message' => $message
-			);
+			];
 		} else {
 		// it happened once on devbox when master&slave weren't sync'ed
 			wfDebug( __METHOD__ . ": Seems like master&slave are not sync'ed\n" );

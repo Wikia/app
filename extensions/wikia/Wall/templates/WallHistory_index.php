@@ -94,7 +94,7 @@
 							?>
 							<?php
 								if ( !empty( $entry['actions'] ) ):
-									$actions = array();
+									$actions = [ ];
 									foreach ( $entry['actions'] as $key => $action ):
 										$htmldata = $action;
 										unset( $htmldata['msg'] );

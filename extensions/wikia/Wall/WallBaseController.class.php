@@ -10,7 +10,7 @@ class WallBaseController extends WikiaController {
 	const DEFAULT_MESSAGES_PER_PAGE = 10; // how many messages should appear per page if not specified otherwise
 	protected $helper;
 	// use for controlling if we are not adding the some css/js head two time
-	static $uniqueHead = array();
+	static $uniqueHead = [ ];
 	public function __construct() {
 		$this->app = F::App();
 		$this->helper = new WallHelper();
@@ -26,12 +26,12 @@ class WallBaseController extends WikiaController {
 
 		// Load MiniEditor assets, if enabled
 		if ( $this->wg->EnableMiniEditorExtForWall &&  F::app()->checkSkin( 'oasis' ) ) {
-			$this->sendRequest( 'MiniEditor', 'loadAssets', array(
-				'additionalAssets' => array(
+			$this->sendRequest( 'MiniEditor', 'loadAssets', [
+				'additionalAssets' => [
 					'wall_mini_editor_js',
 					'extensions/wikia/MiniEditor/css/Wall/Wall.scss'
-				)
-			) );
+				]
+			] );
 		}
 
 		if ( $this->app->checkSkin( 'monobook' ) ) {
@@ -110,7 +110,7 @@ class WallBaseController extends WikiaController {
 			$article->mParserOptions->setEditSection( false );
 			$greetingText = $article->getParserOutput()->getText();
 		}
-		wfRunHooks( 'WallGreetingContent', array( &$greetingText ) ); // used by SWM to add messages to Wall in monobook
+		wfRunHooks( 'WallGreetingContent', [ &$greetingText ] ); // used by SWM to add messages to Wall in monobook
 		$this->response->setVal( 'greeting', $greetingText );
 
 		$this->response->setVal( 'sortingOptions', $this->getSortingOptions() );
@@ -137,13 +137,13 @@ class WallBaseController extends WikiaController {
 
 	public function messageButtons() {
 		$wallMessage = $this->getWallMessage();
-		$this->response->setVal( 'canEdit', $wallMessage->canEdit( $this->wg->User ) );
-		$this->response->setVal( 'canDelete', $wallMessage->canDelete( $this->wg->User ) );
-		$this->response->setVal( 'canAdminDelete', $wallMessage->canAdminDelete( $this->wg->User )  && $wallMessage->isRemove()  );
-		$this->response->setVal( 'canFastAdminDelete', $wallMessage->canFastAdminDelete( $this->wg->User ) );
-		$this->response->setVal( 'canRemove', $wallMessage->canRemove( $this->wg->User )  && !$wallMessage->isRemove() );
-		$this->response->setVal( 'canClose', $wallMessage->canArchive( $this->wg->User ) );
-		$this->response->setVal( 'canReopen', $wallMessage->canReopen( $this->wg->User ) );
+		$this->response->setVal( 'canEdit', $wallMessage->canEdit( $this->wg->User, false ) );
+		$this->response->setVal( 'canDelete', $wallMessage->canDelete( $this->wg->User, false ) );
+		$this->response->setVal( 'canAdminDelete', $wallMessage->canAdminDelete( $this->wg->User, false )  && $wallMessage->isRemove()  );
+		$this->response->setVal( 'canFastAdminDelete', $wallMessage->canFastAdminDelete( $this->wg->User, false ) );
+		$this->response->setVal( 'canRemove', $wallMessage->canRemove( $this->wg->User, false )  && !$wallMessage->isRemove() );
+		$this->response->setVal( 'canClose', $wallMessage->canArchive( $this->wg->User, false ) );
+		$this->response->setVal( 'canReopen', $wallMessage->canReopen( $this->wg->User, false ) );
 		$this->response->setVal( 'showViewSource', $this->wg->User->getGlobalPreference( 'wallshowsource', false ) );
 		$this->response->setVal( 'threadHistoryLink', $wallMessage->getMessagePageUrl( true ) . '?action=history' );
 		$this->response->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
@@ -151,7 +151,7 @@ class WallBaseController extends WikiaController {
 		$this->response->setVal( 'isAnon', $this->wg->User->isAnon() );
 		$this->response->setVal( 'canNotifyeveryone', $wallMessage->canNotifyeveryone() );
 		$this->response->setVal( 'canUnnotifyeveryone', $wallMessage->canUnnotifyeveryone() );
-		$this->response->setVal( 'canMove', $wallMessage->canMove( $this->wg->User ) );
+		$this->response->setVal( 'canMove', $wallMessage->canMove( $this->wg->User, false ) );
 
 		$wallThread = $wallMessage;
 		if ( !$wallMessage->isMain() ) {
@@ -209,7 +209,7 @@ class WallBaseController extends WikiaController {
 				$wallMaxReplies = $this->app->wg->WallMaxReplies;
 			}
 
-			$replies = $this->getVal( 'replies', array() );
+			$replies = $this->getVal( 'replies', [ ] );
 			$repliesCount = count( $replies );
 			$this->response->setVal( 'repliesNumber', $repliesCount );
 			$this->response->setVal( 'repliesLimit', WallThread::FETCHED_REPLIES_LIMIT);
@@ -268,10 +268,10 @@ class WallBaseController extends WikiaController {
 				$this->response->setVal( 'showSummary',  false );
 			}
 
-			$query = array(
+			$query = [
 				'diff' => 'prev',
 				'oldid' => $wallMessage->getTitle()->getLatestRevID(),
-			);
+			];
 
 			$this->response->setVal( 'historyUrl', $wallMessage->getTitle()->getFullUrl( $query ) );
 		} else {
@@ -371,8 +371,8 @@ class WallBaseController extends WikiaController {
 				$this->response->setVal( 'statusInfo', $info );
 				$this->response->setVal( 'id', $wallMessage->getId() );
 				if ( $showRemoveOrDeleteInfo ) {
-					$this->response->setVal( 'canRestore', $wallMessage->canRestore( $this->app->wg->User ) );
-					$this->response->setVal( 'fastrestore', $wallMessage->canFastrestore( $this->app->wg->User ) );
+					$this->response->setVal( 'canRestore', $wallMessage->canRestore( $this->app->wg->User, false ) );
+					$this->response->setVal( 'fastrestore', $wallMessage->canFastRestore( $this->app->wg->User, false ) );
 					$this->response->setVal( 'isreply', !$wallMessage->isMain() );
 				}
 			}
@@ -425,7 +425,7 @@ class WallBaseController extends WikiaController {
 	protected function getSortingOptions() {
 		$title = $this->request->getVal( 'title', $this->app->wg->Title );
 
-		$output = array();
+		$output = [ ];
 		$selected = $this->getSortingSelected();
 
 		// $id's are names of DOM elements' classes
@@ -433,15 +433,15 @@ class WallBaseController extends WikiaController {
 		// if you change them here, do so in Wall.js file, please
 		foreach ( $this->getSortingOptionsText() as $id => $option ) {
 			if ( $this->sortingType === 'history' ) {
-				$href = $title->getFullURL( array( 'action' => 'history', 'sort' => $id ) );
+				$href = $title->getFullURL( [ 'action' => 'history', 'sort' => $id ] );
 			} else {
-				$href = $title->getFullURL( array( 'sort' => $id ) );
+				$href = $title->getFullURL( [ 'sort' => $id ] );
 			}
 
 			if ( $id == $selected ) {
-				$output[] = array( 'id' => $id, 'text' => $option, 'href' => $href, 'selected' => true );
+				$output[] = [ 'id' => $id, 'text' => $option, 'href' => $href, 'selected' => true ];
 			} else {
-				$output[] = array( 'id' => $id, 'text' => $option, 'href' => $href );
+				$output[] = [ 'id' => $id, 'text' => $option, 'href' => $href ];
 			}
 		}
 
@@ -475,20 +475,20 @@ class WallBaseController extends WikiaController {
 				// keys of sorting array are names of DOM elements' classes
 				// which are needed to click tracking
 				// if you change those keys here, do so in Wall.js file, please
-				$options = array(
+				$options = [
 					'nf' => wfMessage( 'wall-history-sorting-newest-first' )->escaped(),
 					'of' => wfMessage( 'wall-history-sorting-oldest-first' )->escaped(),
-				);
+				];
 				break;
 			case 'index':
 			default:
-				$options = array(
+				$options = [
 					'nt' => wfMessage( 'wall-sorting-newest-threads' )->escaped(),
 					'ot' => wfMessage( 'wall-sorting-oldest-threads' )->escaped(),
 					'nr' => wfMessage( 'wall-sorting-newest-replies' )->escaped(),
 					// 'ma' => wfMessage( 'wall-sorting-most-active' )->escaped(),
 					// 'a' => wfMessage( 'wall-sorting-archived' )->escaped()
-				);
+				];
 				break;
 		}
 
@@ -511,7 +511,7 @@ class WallBaseController extends WikiaController {
 		$this->response->setVal( 'isNotifyeveryone', false );
 		$this->response->setVal( 'isClosed', false );
 
-		$path = array();
+		$path = [ ];
 		$this->response->setVal( 'path', $path );
 
 		$title = Title::newFromId( $this->request->getVal( 'id' ) );
@@ -565,20 +565,20 @@ class WallBaseController extends WikiaController {
 			$wno = new WallNotificationsOwner;
 			$wno->removeForThread( $this->app->wg->CityId, $user->getId(), $wallMessage->getId() );
 
-			$path[] = array(
+			$path[] = [
 				'title' => $wallName,
 				'url' => $wallUrl
-			);
+			];
 
-			$path[] = array(
+			$path[] = [
 				'title' => $messageTitle
-			);
+			];
 
 			$this->getContext()->getOutput()->setRobotPolicy( 'index,follow' );
 
-			wfRunHooks( 'WallThreadHeader', array( $title, $wallMessage, &$path, &$this->response, &$this->request ) );
+			wfRunHooks( 'WallThreadHeader', [ $title, $wallMessage, &$path, &$this->response, &$this->request ] );
 		} else {
-			wfRunHooks( 'WallHeader', array( $this->wg->Title, &$path, &$this->response, &$this->request ) );
+			wfRunHooks( 'WallHeader', [ $this->wg->Title, &$path, &$this->response, &$this->request ] );
 		}
 		$this->response->setVal( 'path', $path );
 	}
@@ -597,7 +597,7 @@ class WallBaseController extends WikiaController {
 		$this->response->setVal( 'username', $username );
 		$this->response->setVal( 'wall_username', $wall_username );
 
-		wfRunHooks( 'WallNewMessage', array( $this->wg->Title, &$this->response ) );
+		wfRunHooks( 'WallNewMessage', [ $this->wg->Title, &$this->response ] );
 
 		$notifyEveryone = $this->helper->isAllowedNotifyEveryone( $this->wg->Title->getNamespace(), $this->wg->User );
 
@@ -615,7 +615,7 @@ class WallBaseController extends WikiaController {
 	protected function checkAndSetUserBlockedStatus( $wallOwner = null ) {
 		$user = $this->app->wg->User;
 
-		if ( $user->isBlocked() || $user->isBlockedGlobally() ) {
+		if ( $user->isBlocked( true, false ) || $user->isBlockedGlobally() ) {
 			if (	!empty( $wallOwner ) &&
 				$wallOwner->getName() == $this->wg->User->getName() &&
 				!( empty( $user->mAllowUsertalk ) ) ) {
@@ -637,7 +637,7 @@ class WallBaseController extends WikiaController {
 		$wallthread = WallThread::newFromId( $filterid );
 		$wallthread->loadIfCached();
 
-		$this->threads = array( $filterid => $wallthread );
+		$this->threads = [ $filterid => $wallthread ];
 
 		$this->title = $this->wg->Title;
 

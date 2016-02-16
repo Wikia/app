@@ -5,6 +5,15 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 	var noop = function () {},
 		returnObj = function () { return {}; };
 
+	function createSlot(slotName, success, hop) {
+		return {
+			name: slotName,
+			success: success,
+			hop: hop,
+			pre: noop
+		};
+	}
+
 	function desktop(name, slotName, gptEvent, windowMock, successOrHop, forceAdType) {
 		it('calls ' + successOrHop + ' for ' + name + ' ' + slotName + ' on desktop', function () {
 			var gptHop, mocks = {
@@ -20,12 +29,7 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 						};
 					}
 				},
-				messageListener: {},
-				adSlot: {
-					getShortSlotName: function (slotName) {
-						return slotName;
-					}
-				}
+				messageListener: {}
 			};
 
 			mocks.iframe.contentWindow = {
@@ -39,14 +43,13 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 				mocks.log,
 				mocks.window,
 				mocks.adContext,
-				mocks.messageListener,
-				mocks.adSlot
+				mocks.messageListener
 			);
 
 			spyOn(mocks, 'success');
 			spyOn(mocks, 'hop');
 
-			gptHop.onAdLoad(slotName, gptEvent, mocks.iframe, mocks.success, mocks.hop);
+			gptHop.onAdLoad(createSlot(slotName, mocks.success, mocks.hop), gptEvent, mocks.iframe);
 
 			if (successOrHop === 'success') {
 				expect(mocks.success.calls.count()).toBe(1, 'Success callback should be called once');
@@ -76,12 +79,7 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 						};
 					}
 				},
-				messageListener: {},
-				adSlot: {
-					getShortSlotName: function (slotName) {
-						return slotName;
-					}
-				}
+				messageListener: {}
 			};
 
 			mocks.iframe.contentWindow = {};
@@ -103,14 +101,13 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 				mocks.log,
 				mocks.window,
 				mocks.adContext,
-				mocks.messageListener,
-				mocks.adSlot
+				mocks.messageListener
 			);
 
 			spyOn(mocks, 'success');
 			spyOn(mocks, 'hop');
 
-			gptHop.onAdLoad(slotName, gptEvent, mocks.iframe, mocks.success, mocks.hop);
+			gptHop.onAdLoad(createSlot(slotName, mocks.success, mocks.hop), gptEvent, mocks.iframe);
 
 			if (successOrHop === 'success') {
 				expect(mocks.success.calls.count()).toBe(1, 'Success callback should be called once');

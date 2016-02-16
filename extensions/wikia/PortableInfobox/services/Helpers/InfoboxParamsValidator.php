@@ -1,7 +1,7 @@
 <?php
 namespace Wikia\PortableInfobox\Helpers;
 
-class InfoboParamsValidator {
+class InfoboxParamsValidator {
 	private $supportedParams = [
 		'theme',
 		'theme-source',

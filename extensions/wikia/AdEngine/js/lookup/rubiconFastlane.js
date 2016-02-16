@@ -131,6 +131,11 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			configureHomePageSlots();
 		}
 
+		if (context.opts.overridePrefootersSizes) {
+			slots.PREFOOTER_LEFT_BOXAD.sizes = [[300, 250], [728, 90], [970, 250]];
+			delete slots.PREFOOTER_RIGHT_BOXAD;
+		}
+
 		return slots;
 	}
 
@@ -150,6 +155,10 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		var targeting,
 			values,
 			parameters = {};
+
+		if (!slots[slotName].getAdServerTargeting) {
+			return {};
+		}
 
 		targeting = slots[slotName].getAdServerTargeting();
 		targeting.forEach(function (params) {

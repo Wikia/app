@@ -34,7 +34,7 @@ class PhalanxService extends Service {
 	 */
 	public function __call($name, $args) {
 		$method = substr($name, 0, 3);
-		$key = strtolower( substr( $name, 3 ) );
+		$key = lcfirst( substr( $name, 3 ) );
 
 		$result = null;
 		switch($method) {
@@ -145,7 +145,6 @@ class PhalanxService extends Service {
 	 * @return integer|mixed data of blocks applied or numeric value (0 - block applied, 1 - no block applied)
 	 */
 	private function sendToPhalanxDaemon( $action, $parameters ) {
-		
 		$baseurl = F::app()->wg->PhalanxServiceUrl;
 		$options = F::app()->wg->PhalanxServiceOptions;
 

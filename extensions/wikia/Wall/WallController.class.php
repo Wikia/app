@@ -5,7 +5,7 @@
  * In typical use, a Wall will only load a subset of Bricks because there will be a TON of bricks as time goes on.
  */
 class WallController extends WallBaseController {
-	protected $allowedNamespaces = array();
+	protected $allowedNamespaces = [ ];
 	protected $sortingType = 'index';
 	const WALL_MESSAGE_RELATIVE_TIMESTAMP = 604800; // relative message timestampt for 7 days (improvement 20178)
 
@@ -40,7 +40,7 @@ class WallController extends WallBaseController {
 
 			$this->response->setVal( 'returnTo', wfMsg( 'wall-deleted-msg-return-to', $user_displayname ) );
 
-			wfRunHooks( 'WallMessageDeleted', array( &$wm, &$this->response ) );
+			wfRunHooks( 'WallMessageDeleted', [ &$wm, &$this->response ] );
 		}
 	}
 
@@ -144,7 +144,7 @@ class WallController extends WallBaseController {
 	protected function checkAndSetUserBlockedStatus( $wallOwner = null ) {
 		$user = $this->app->wg->User;
 
-		if ( $user->isBlocked() || $user->isBlockedGlobally() ) {
+		if ( $user->isBlocked( true, false ) || $user->isBlockedGlobally() ) {
 			if (	!empty( $wallOwner ) &&
 				$wallOwner->getName() == $this->wg->User->getName() &&
 				!( empty( $user->mAllowUsertalk ) ) ) {
@@ -164,7 +164,7 @@ class WallController extends WallBaseController {
 	protected function getSortingOptions() {
 		$title = $this->request->getVal( 'title', $this->app->wg->Title );
 
-		$output = array();
+		$output = [ ];
 		$selected = $this->getSortingSelected();
 
 		// $id's are names of DOM elements' classes
@@ -172,15 +172,15 @@ class WallController extends WallBaseController {
 		// if you change them here, do so in Wall.js file, please
 		foreach ( $this->getSortingOptionsText() as $id => $option ) {
 			if ( $this->sortingType === 'history' ) {
-				$href = $title->getFullURL( array( 'action' => 'history', 'sort' => $id ) );
+				$href = $title->getFullURL( [ 'action' => 'history', 'sort' => $id ] );
 			} else {
-				$href = $title->getFullURL( array( 'sort' => $id ) );
+				$href = $title->getFullURL( [ 'sort' => $id ] );
 			}
 
 			if ( $id == $selected ) {
-				$output[] = array( 'id' => $id, 'text' => $option, 'href' => $href, 'selected' => true );
+				$output[] = [ 'id' => $id, 'text' => $option, 'href' => $href, 'selected' => true ];
 			} else {
-				$output[] = array( 'id' => $id, 'text' => $option, 'href' => $href );
+				$output[] = [ 'id' => $id, 'text' => $option, 'href' => $href ];
 			}
 		}
 
@@ -214,20 +214,20 @@ class WallController extends WallBaseController {
 				// keys of sorting array are names of DOM elements' classes
 				// which are needed to click tracking
 				// if you change those keys here, do so in Wall.js file, please
-				$options = array(
+				$options = [
 					'nf' => wfMsg( 'wall-history-sorting-newest-first' ),
 					'of' => wfMsg( 'wall-history-sorting-oldest-first' ),
-				);
+				];
 				break;
 			case 'index':
 			default:
-				$options = array(
+				$options = [
 					'nt' => wfMsg( 'wall-sorting-newest-threads' ),
 					'ot' => wfMsg( 'wall-sorting-oldest-threads' ),
 					'nr' => wfMsg( 'wall-sorting-newest-replies' ),
 					// 'ma' => wfMsg('wall-sorting-most-active'),
 					// 'a' => wfMsg('wall-sorting-archived')
-				);
+				];
 				break;
 		}
 
