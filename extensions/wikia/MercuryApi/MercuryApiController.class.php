@@ -399,10 +399,9 @@ class MercuryApiController extends WikiaController {
 	public function getPage() {
 		try {
 			$title = $this->getTitleFromRequest();
-			$articleId = $title->getArticleId();
 
 			// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
-			$article = Article::newFromID( $articleId );
+			$article = Article::newFromID( $title->getArticleId() );
 
 			if ( $article instanceof Article && $title->isRedirect() ) {
 				list( $title, $article, $data ) =
