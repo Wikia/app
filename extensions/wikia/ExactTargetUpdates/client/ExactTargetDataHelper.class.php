@@ -1,46 +1,37 @@
 <?php
 namespace Wikia\ExactTarget;
 
+use Wikia\Util\Assert;
+
 class ExactTargetDataHelper {
 	const CUSTOMER_KEY_USER = 'user';
+	const EXACT_TARGET_USER_ID_PROPERTY = 'user_id';
 
 	/**
-	 * Prepares array of params for ExactTarget API for creating DataExtension objects for user table
-	 * Assumes $aUserData has user_id key that will be treated as filter to update data
-	 * Creates an array of DataExtension objects based on passed parameters
-	 * @param  array $aUserData  User key value array
+	 * Creates an array of DataExtension objects for sending Soap update to ExactTarget
+	 * @param array $aUsersData Array of users data for update. Each should contain at least array of user id and email.
 	 * @return array An array of DataExtension objects
+	 * @throws \Wikia\Util\AssertionException
 	 */
 	public function prepareUsersUpdateParams( array $aUsersData ) {
-		$aDataExtension = [];
+		$aDataExtension = [ ];
 		foreach ( $aUsersData as $aUserData ) {
-
 			$userId = $this->extractUserIdFromData( $aUserData );
-			$keys = [ 'user_id' => $userId ];
+			Assert::true( !empty( $userId ) );
 
 			$oDE = new \ExactTarget_DataExtensionObject();
 			$oDE->CustomerKey = self::CUSTOMER_KEY_USER;
+			$oDE->Keys = [ $this->wrapApiProperty( self::EXACT_TARGET_USER_ID_PROPERTY, $userId ) ];
 
-			if( isset( $aUserData ) ) {
-				$aApiProperties = [];
-				foreach ( $aUserData as $sKey => $sValue ) {
-					$aApiProperties[] = $this->wrapApiProperty( $sKey, $sValue );
-				}
-				$oDE->Properties = $aApiProperties;
+			$aApiProperties = [ ];
+			foreach ( $aUserData as $sKey => $sValue ) {
+				$aApiProperties[ ] = $this->wrapApiProperty( $sKey, $sValue );
 			}
+			$oDE->Properties = $aApiProperties;
 
-			if( isset( $keys ) ) {
-				$aApiKeys = [];
-				foreach ( $keys as $sKey => $sValue ) {
-					$aApiKeys[] = $this->wrapApiProperty( $sKey, $sValue );
-				}
-				$oDE->Keys = $aApiKeys;
-			}
-
-			$aDataExtension[] = $oDE;
-
-		};
-
+			$aDataExtension[ ] = $oDE;
+		}
+print_r($aDataExtension);
 		return $aDataExtension;
 	}
 
@@ -52,8 +43,8 @@ class ExactTargetDataHelper {
 	 * @return int
 	 */
 	private function extractUserIdFromData( &$aUserData ) {
-		$iUserId = $aUserData['user_id'];
-		unset( $aUserData['user_id'] );
+		$iUserId = $aUserData[ self::EXACT_TARGET_USER_ID_PROPERTY ];
+		unset( $aUserData[ self::EXACT_TARGET_USER_ID_PROPERTY ] );
 		return $iUserId;
 	}
 

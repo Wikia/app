@@ -15,6 +15,12 @@ class ExactTargetDataHelperTest extends WikiaBaseTest {
 		$this->assertEquals( $this->prepareExpected( $expected ), $dataHelper->prepareUsersUpdateParams( $params ) );
 	}
 
+	public function testEmptyUser() {
+		$this->setExpectedException( 'Wikia\Util\AssertionException' );
+		$dataHelper = new \Wikia\ExactTarget\ExactTargetDataHelper();
+		$dataHelper->prepareUsersUpdateParams( [ [ 'user_id' => 0 ] ] );
+	}
+
 	public function usersDataProvider() {
 		return [
 			// Test empty array
@@ -67,7 +73,7 @@ class ExactTargetDataHelperTest extends WikiaBaseTest {
 			$userExtensionObject = new ExactTarget_APIProperty();
 			$userExtensionObject->Name = $key;
 			$userExtensionObject->Value = $value;
-			$result[] = $userExtensionObject;
+			$result[ ] = $userExtensionObject;
 		}
 		return $result;
 	}

@@ -14,8 +14,8 @@ class ExactTargetCreateUser extends BaseTask {
 	}
 
 	public function create( array $aUserData, array $aUserProperties ) {
-		Assert::true( !empty( $aUserData['user_id'] ) );
-		Assert::true( !empty( $aUserData['user_email'] ) );
+		Assert::true( !empty( $aUserData['user_id'] ), 'User ID missing' );
+		Assert::true( !empty( $aUserData['user_email'] ), 'User email missing' );
 
 		/* Delete subscriber (email address) used by touched user */
 		$oDeleteUserTask = new ExactTargetDeleteUserTask();
