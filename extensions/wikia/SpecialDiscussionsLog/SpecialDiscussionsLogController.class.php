@@ -31,7 +31,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		$this->setHeaders();
 
 		$this->wg->Out->clearHTML();
-		$this->wg->Out->setPageTitle( wfMessage( 'discussionslog-pagetitle' )->plain() );
+		$this->wg->Out->setPageTitle( wfMessage( 'discussionslog-pagetitle' )->escaped() );
 
 		$output = $this->getInputForm();
 
@@ -47,7 +47,12 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	private function getInputForm() {
 		return \MustacheService::getInstance()->render(
 			self::$inputFormTemplate,
-			[]
+			[
+				'userNameLabel' => wfMessage( 'discussionslog-username-label' )
+						->escaped(),
+				'viewLogsAction' => wfMessage( 'discussionslog-view-logs' )
+						->escaped()
+			]
 		);
 	}
 
@@ -70,42 +75,48 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	}
 
 	private function getUserLog( $userName ) {
-		$userErrorMessage = null;
-		$noUserLogRecords = false;
 		$displayedUserLogRecords = [];
+		$hasNoUserLogRecords = false;
+		$hasUserError = false;
 		$userId = null;
-		$userErrorMessage = '';
+		$userErrorMessage = null;
 
 		try {
 			$userId = $this->getUserIdByUsername( $userName );
 		} catch ( Exception $e ) {
-			$userErrorMessage = $e->getMessage();
+			$hasUserError = true;
 		}
 
 		$userLogRecords = $this->aggregateLogSearches( $userId, $userName );
 
 		if ( count( $userLogRecords ) == 0 ) {
-			$noUserLogRecords = true;
+			$hasNoUserLogRecords = true;
 		}
 
 		foreach ( $userLogRecords as $userLogRecord ) {
 			array_push( $displayedUserLogRecords, [
-				'ip' => $userLogRecord->getIp(),
-				'location' => $userLogRecord->getLocation(),
-				'language' => $userLogRecord->getLanguage(),
-				'userAgent' => $userLogRecord->getUserAgent(),
 				'app' => $userLogRecord->getApp(),
+				'ip' => $userLogRecord->getIp(),
+				'language' => $userLogRecord->getLanguage(),
+				'location' => $userLogRecord->getLocation(),
 				'timestamp' => $userLogRecord->getTimestamp(),
+				'userAgent' => $userLogRecord->getUserAgent(),
 			] );
 		}
 
 		return \MustacheService::getInstance()->render(
 			self::$userLogTemplate,
 			[
-				'userName' => $userName,
-				'userId' => $userId,
-				'userErrorMessage' => $userErrorMessage,
-				'noUserLogRecords' => $noUserLogRecords,
+				'hasUserError' => $hasUserError,
+				'logTableCaption' => wfMessage('discussionslog-table-caption')
+						->params([$userName, $userId])
+						->escaped(),
+				'userErrorMessage' => wfMessage('discussionslog-no-user-match-error')
+						->escaped(),
+				'hasNoUserLogRecords' => $hasNoUserLogRecords,
+				'noUserLogRecordsMessage' => wfMessage('discussionslog-no-mobile-activity-error')
+						->params($userName)
+						->escaped(),
 				'userLogRecords' => $displayedUserLogRecords
 			]
 		);

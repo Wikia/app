@@ -21,5 +21,5 @@ $wgAutoloadClasses['UserLogRecord'] = $dir . 'UserLogRecord.class.php';
 $wgSpecialPages['DiscussionsLog'] = 'SpecialDiscussionsLogController';
 
 // message files
-$wgExtensionMessagesFiles['DiscussionsLog'] = __DIR__ . '/SpecialDiscussionsLog.i18n.php';
+$wgExtensionMessagesFiles['SpecialDiscussionsLog'] = $dir . 'SpecialDiscussionsLog.i18n.php';
 

@@ -1,13 +1,13 @@
-{{#userErrorMessage}}
+{{#hasUserError}}
 	<p>{{userErrorMessage}}</p>
-{{/userErrorMessage}}
-{{^userErrorMessage}}
-	{{#noUserLogRecords}}
-		<p>No mobile app activity by {{userName}} in the past two weeks!</p>
-	{{/noUserLogRecords}}
-	{{^noUserLogRecords}}
-		<p>Log data for user {{userName}} (ID: {{userId}})</p>
-		<table>
+{{/hasUserError}}
+{{^hasUserError}}
+	{{#hasNoUserLogRecords}}
+		<p>{{noUserLogRecordsMessage}}</p>
+	{{/hasNoUserLogRecords}}
+	{{^hasNoUserLogRecords}}
+		<p>{{logTableCaption}}</p>
+		<table class="article-table">
 			<thead>
 			<tr>
 				<th style="padding-right:8px">IP Address</th>
@@ -29,5 +29,5 @@
 				</tr>
 			{{/userLogRecords}}
 		</table>
-	{{/noUserLogRecords}}
-{{/userErrorMessage}}
+	{{/hasNoUserLogRecords}}
+{{/hasUserError}}
