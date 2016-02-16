@@ -46,6 +46,28 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 * @param $infoboxMarkup string with infobox markup
 	 */
 	public function isSupportedMarkup( $infoboxMarkup ) {
+		$allowedTags = [
+			'title'=>[
+				'children'=>[],
+				'attributes'=>[]
+			],
+			'image'=>[
+				'children'=>[],
+				'attributes'=>[]
+			],
+			'data'=>[
+				'children'=>[],
+				'attributes'=>[]
+			]];
+
+		$infobox = \Wikia\PortableInfobox\Parser\Nodes\NodeFactory::newFromXML($infoboxMarkup);
+//		var_dump($infobox->getData()['value'][1]);
+
+		foreach($infobox->getData() as $tag) {
+			if (!array_key_exists($tag['title'], $allowedTags)) {
+				return false;
+			}
+		}
 
 		return true;
 	}
@@ -57,7 +79,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 * @return bool
 	 */
 	public function isValidInfoboxArray( $infoboxes ) {
-		return count( $infoboxes ) == 1 && $this->isSupportedMarkup( $infoboxes[0] );
+		return count( $infoboxes ) <= 1 && $this->isSupportedMarkup( $infoboxes[0] );
 	}
 
 
