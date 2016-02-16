@@ -8,6 +8,14 @@ class PortableInfoboxBuilderController extends WikiaController {
 		$response = $this->getResponse();
 		$response->setFormat( WikiaResponse::FORMAT_JSON );
 		$response->setVal( 'css', AssetsManager::getInstance()->getURL( 'portable_infobox_scss' ) );
+
+		$params = $this->getRequest()->getParams();
+		if ( isset( $params['title'] ) ) {
+			$response->setVal(
+				'data',
+				'{"data":[{"type":"title", "source":"title", "data": {"defaultValue": "{{PAGENAME}}"}},{"type":"row", "source":"asdf", "data": {"label": "asdfsda"}}]}'
+			);
+		}
 	}
 
 	public function publish() {
