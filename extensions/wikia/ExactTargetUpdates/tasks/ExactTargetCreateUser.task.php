@@ -6,7 +6,6 @@ use Wikia\Util\Assert;
 
 class ExactTargetCreateUser extends BaseTask {
 
-	/** @var Client $client */
 	private $client;
 
 	public function __construct( $client = null ) {
@@ -18,9 +17,7 @@ class ExactTargetCreateUser extends BaseTask {
 		Assert::true( !empty( $aUserData['user_email'] ), 'User email missing' );
 
 		/* Delete subscriber (email address) used by touched user */
-		$oDeleteUserTask = new ExactTargetDeleteUserTask();
-		$oDeleteUserTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
-		$oDeleteUserTask->deleteSubscriber( $aUserData['user_id'] );
+		$this->getClient()->deleteSubscriber( $aUserData['user_id'] );
 
 		/* Create Subscriber with new email */
 		$oldCreateTask = new ExactTargetCreateUserTask();

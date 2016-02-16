@@ -82,6 +82,10 @@ $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_cli
 $wgAutoloadClasses['Wikia\ExactTarget\Client'] =  $dir . '/client/Client.interface.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetClient'] =  $dir . '/client/ExactTargetClient.class.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetRequestBuilder'] =  $dir . '/client/ExactTargetRequestBuilder.class.php' ;
+/* Client builders */
+$wgAutoloadClasses['Wikia\ExactTarget\Builders\BaseRequestBuilder'] =  $dir . '/client/builders/BaseRequestBuilder.class.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Builders\UpdateRequestBuilder'] =  $dir . '/client/builders/UpdateRequestBuilder.class.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Builders\DeleteRequestBuilder'] =  $dir . '/client/builders/DeleteRequestBuilder.class.php' ;
 
 /* ExactTarget_* classes */
 
