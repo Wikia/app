@@ -53,7 +53,7 @@ class ExactTargetDataHelper {
 	 * @param array $aUserData key value data from user table
 	 * @return int
 	 */
-	public function extractUserIdFromData( &$aUserData ) {
+	private function extractUserIdFromData( &$aUserData ) {
 		$iUserId = $aUserData['user_id'];
 		unset( $aUserData['user_id'] );
 		return $iUserId;
