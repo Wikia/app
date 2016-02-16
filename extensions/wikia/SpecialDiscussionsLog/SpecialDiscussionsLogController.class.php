@@ -7,7 +7,6 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	// @todo
 	//1. Pagination
 	//2. Add date range input field
-	//3. Use handlebar templates
 
 	const KIBANA_BASEURL = 'http://query.es.service.sjc.consul:9200';
 	const PAGINATION_SIZE = 50;
