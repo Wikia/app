@@ -960,6 +960,18 @@ abstract class DatabaseBase implements DatabaseType {
 		if ( strpos( $sql, ' ' ) === false ) {
 			$commentedSql = "{$sql} /* {$fname} {$userName} */";
 		}
+
+		// PLATFORM-1311: log deletes on `revision` table
+		if ( startsWith( $sql, 'DELETE ' ) && strpos( $sql, '`revision`' ) !== false ) {
+			WikiaLogger::instance()->warning( 'PLATFORM-1311', [
+				'reason' => 'SQL DELETE',
+				'fname' => $fname,
+				'sql' => $sql,
+				'exception' => new Exception(),
+			] );
+		}
+		// Wikia change- end
+
 		# Wikia change - end
 
 		# If DBO_TRX is set, start a transaction
@@ -3729,30 +3741,6 @@ abstract class DatabaseBase implements DatabaseType {
 			$num_rows = false;
 		}
 
-		if ( startsWith( $sql, 'DELETE ' ) && strpos( $sql, '`revision`' ) !== false ) {
-
-			WikiaLogger::instance()->warning( 'PLATFORM-1311', [
-				'reason' => 'SQL DELETE',
-				'fname' => $fname,
-				'sql' => $sql,
-				'exception' => new Exception(),
-			] );
-		}
-
-		$forceLog = false;
-		if ( $this->isWriteQuery($sql) &&
-			(
-				   strpos( $sql, '`revision`' ) !== false
-				|| strpos( $sql, '`page`' ) !== false
-				|| strpos( $sql, '`archive`' ) !== false
-				|| strpos( $sql, '`text`' ) !== false
-				|| strpos( $sql, '`filearchive`' ) !== false
-				|| strpos( $sql, '`oldimage`' ) !== false
-			)
-		) {
-			$forceLog = true;
-		}
-
 		$context = [
 			'method'      => $fname,
 			'elapsed'     => $elapsedTime,
@@ -3764,7 +3752,7 @@ abstract class DatabaseBase implements DatabaseType {
 			'exception'   => new Exception(), // log the backtrace
 		];
 
-		if ( $forceLog || $this->getSampler()->shouldSample() ) {
+		if ( $this->getSampler()->shouldSample() ) {
 			$this->getWikiaLogger()->info( "SQL {$sql}", $context );
 		}
 
