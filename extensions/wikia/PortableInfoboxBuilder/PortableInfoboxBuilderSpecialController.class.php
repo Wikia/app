@@ -59,15 +59,10 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 
 		$markup = 'something to fetch'; //TODO: get the markup for template
 
-		if ($this->isMarkupSuported($markup)) {
+		if( (new PortableInfoboxBuilderService() )->isSupportedMarkup($markup)) {
 			return 'builder';
 		} else {
 			return 'sourceEditor';
 		}
-	}
-
-	private function isMarkupSuported($markup) {
-		//TODO: implement
-		return false;
 	}
 }
