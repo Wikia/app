@@ -16,11 +16,9 @@ class ExactTargetRequestBuilderTest extends WikiaBaseTest {
 		// Prepare Expected
 		$expected = $this->prepareExpected( $dataExtensions );
 
-		$requestBuilder = new \Wikia\ExactTarget\ExactTargetRequestBuilder();
-		$oRequest = $requestBuilder->wrapUpdateRequest(
-			$requestBuilder->prepareSoapVars( $dataExtensions, 'DataExtensionObject' ),
-			$requestBuilder->prepareUpdateCreateOptions()
-		);
+		$oRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::createUpdate()
+			->withObjects( $dataExtensions )
+			->build();
 
 		$this->assertEquals( $expected, $oRequest );
 	}

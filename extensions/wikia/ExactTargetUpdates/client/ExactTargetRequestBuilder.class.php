@@ -2,59 +2,85 @@
 namespace Wikia\ExactTarget;
 
 class ExactTargetRequestBuilder {
+	const UPDATE_REQUEST = 'update';
+	const EXACT_TARGET_API_URL = 'http://exacttarget.com/wsdl/partnerAPI';
+
+	const DATA_EXTENSION_OBJECT_TYPE = 'DataExtensionObject';
+	const SAVE_OPTION_TYPE = 'SaveOption';
+
+	private $type;
+	private $objects;
+
+	private function __construct( $type ) {
+		$this->type = $type;
+	}
 
 	/**
-	 * Returns ExactTarget_UpdateRequest object with soap vars set from param
-	 * @param Array $aSoapVars
-	 * @param ExactTarget_UpdateOptions|null $oOptions Null for simple update;
-	 *        ExactTarget_UpdateOptions for update-add etc.
-	 * @return ExactTarget_UpdateRequest
+	 * @return ExactTargetRequestBuilder
 	 */
-	public function wrapUpdateRequest( $aSoapVars, $oOptions = null ) {
+	public static function createUpdate() {
+		return new ExactTargetRequestBuilder( self::UPDATE_REQUEST );
+	}
+
+	/**
+	 * @param $objects
+	 * @return ExactTargetRequestBuilder
+	 */
+	public function withObjects( $objects ) {
+		$this->objects = $objects;
+		return $this;
+	}
+
+	/**
+	 * @return \ExactTarget_UpdateRequest
+	 */
+	public function build() {
 		$oRequest = new \ExactTarget_UpdateRequest();
-		$oRequest->Options = $oOptions;
-		$oRequest->Objects = $aSoapVars;
+		$oRequest->Options = $this->prepareUpdateCreateOptions();
+		$oRequest->Objects = $this->prepareSoapVars( $this->objects );
 		return $oRequest;
 	}
 
 	/**
 	 * Prepares an array of SoapVar objects by looping over an array of objects
-	 * @param array $aObjects
-	 * @param string $objectType Type of ExactTarget object to be wrapped
+	 *
+	 * @param $aObjects
 	 * @return array
-	 * @link https://help.exacttarget.com/en/technical_library/web_service_guide/objects/ ExactTarget Objects types
 	 */
-	public function prepareSoapVars( $aObjects, $sObjectType = 'DataExtensionObject' ) {
-		$aSoapVars = [];
+	private function prepareSoapVars( $aObjects ) {
+		$aSoapVars = [ ];
 		foreach ( $aObjects as $object ) {
-			$aSoapVars[] = $this->wrapToSoapVar( $object, $sObjectType );
+			$aSoapVars[] = $this->wrapToSoapVar( $object, self::DATA_EXTENSION_OBJECT_TYPE );
 		}
 		return $aSoapVars;
 	}
 
 	/**
-	 * Prepares ExactTarget_UpdateOptions that says update or create if doesn't exist
-	 * @return ExactTarget_UpdateOptions
+	 * Wraps an ExactTarget object to a SoapVar
+	 *
+	 * @param $oObject
+	 * @param $sObjectType
+	 * @return \SoapVar
+	 *
+	 * @link https://help.exacttarget.com/en/technical_library/web_service_guide/objects/ ExactTarget Objects types
 	 */
-	public function prepareUpdateCreateOptions() {
-		$updateOptions = new \ExactTarget_UpdateOptions();
-
-		$saveOption = new \ExactTarget_SaveOption();
-		$saveOption->PropertyName = 'DataExtensionObject';
-		$saveOption->SaveAction = \ExactTarget_SaveAction::UpdateAdd;
-
-		$updateOptions->SaveOptions[] = new \SoapVar( $saveOption, SOAP_ENC_OBJECT, 'SaveOption', 'http://exacttarget.com/wsdl/partnerAPI' );
-		return $updateOptions;
+	private function wrapToSoapVar( $oObject, $sObjectType ) {
+		return new \SoapVar( $oObject, SOAP_ENC_OBJECT, $sObjectType, self::EXACT_TARGET_API_URL );
 	}
 
 	/**
-	 * Wraps an ExactTarget object to a SoapVar
-	 * @param $object
-	 * @param string $objectType Type of ExactTarget object to be wrapped
-	 * @return SoapVar
-	 * @link https://help.exacttarget.com/en/technical_library/web_service_guide/objects/ ExactTarget Objects types
+	 * Prepares ExactTarget_UpdateOptions that says update or create if doesn't exist
+	 *
+	 * @return \ExactTarget_UpdateOptions
 	 */
-	private function wrapToSoapVar( $oObject, $sObjectType = 'DataExtensionObject' ) {
-		return new \SoapVar( $oObject, SOAP_ENC_OBJECT, $sObjectType, 'http://exacttarget.com/wsdl/partnerAPI' );
+	private function prepareUpdateCreateOptions() {
+		$updateOptions = new \ExactTarget_UpdateOptions();
+
+		$saveOption = new \ExactTarget_SaveOption();
+		$saveOption->PropertyName = self::DATA_EXTENSION_OBJECT_TYPE;
+		$saveOption->SaveAction = \ExactTarget_SaveAction::UpdateAdd;
+
+		$updateOptions->SaveOptions = [ $this->wrapToSoapVar( $saveOption, self::SAVE_OPTION_TYPE ) ];
+		return $updateOptions;
 	}
 }

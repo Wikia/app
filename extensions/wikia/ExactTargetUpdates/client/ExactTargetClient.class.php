@@ -9,11 +9,10 @@ class ExactTargetClient implements Client {
 		$oHelper = new ExactTargetDataHelper();
 		$aDE = $oHelper->prepareUsersUpdateParams( [ $aUserData ] );
 
-		$requestBuilder = new ExactTargetRequestBuilder();
-		$oRequest = $requestBuilder->wrapUpdateRequest(
-			$requestBuilder->prepareSoapVars( $aDE, 'DataExtensionObject' ),
-			$requestBuilder->prepareUpdateCreateOptions()
-		);
+		$oRequest = ExactTargetRequestBuilder::createUpdate()
+			->withObjects( $aDE )
+			->build();
+
 		$oCreateUserResult = $this->sendRequest( 'Update', $oRequest );
 
 //		$this->info( __METHOD__ . ' OverallStatus: ' . $oCreateUserResult->OverallStatus );
