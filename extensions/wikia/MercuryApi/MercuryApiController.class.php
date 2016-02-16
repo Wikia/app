@@ -405,8 +405,8 @@ class MercuryApiController extends WikiaController {
 			$article = Article::newFromID( $articleId );
 
 			if ( $article instanceof Article && $title->isRedirect() ) {
-				list( $title, $articleId, $article, $data ) =
-					$this->handleRedirect( $title, $articleId, $article, [ ] );
+				list( $title, $article, $data ) =
+					$this->handleRedirect( $title, $article, [ ] );
 			}
 
 			$isMainPage = $title->isMainPage();
@@ -423,19 +423,6 @@ class MercuryApiController extends WikiaController {
 			if ( $this->shouldGetMainPageData( $isMainPage ) ) {
 				$data['mainPageData'] = $this->getMainPageData();
 			} elseif ( $title->isContentPage() && $title->isKnown() ) {
-				if ( !$article instanceof Article ) {
-					\Wikia\Logger\WikiaLogger::instance()->error(
-						'$article should be an instance of an Article',
-						[
-							'$article' => $article,
-							'$articleId' => $articleId,
-							'$title' => $title
-						]
-					);
-
-					throw new NotFoundApiException( 'Article is empty' );
-				}
-
 				$data += $this->getArticleData( $article );
 
 				if ( !$isMainPage ) {
@@ -477,13 +464,12 @@ class MercuryApiController extends WikiaController {
 
 	/**
 	 * @param Title $title
-	 * @param int $articleId
 	 * @param Article $article
 	 * @param array $data
 	 *
-	 * @return array [Title, int, Article, array]
+	 * @return array [Title, Article, array]
 	 */
-	private function handleRedirect( Title $title, $articleId, Article $article, $data ) {
+	private function handleRedirect( Title $title, Article $article, $data ) {
 		/* @var Title|null $redirectTargetTitle */
 		$redirectTargetTitle = $article->getRedirectTarget();
 		$redirectTargetID = $redirectTargetTitle->getArticleID();
@@ -491,13 +477,12 @@ class MercuryApiController extends WikiaController {
 
 		if ( $redirectTargetTitle instanceof Title && !empty( $redirectTargetID ) ) {
 			$title = $redirectTargetTitle;
-			$articleId = $redirectTargetID;
 			$article = Article::newFromID( $redirectTargetID );
 		} else {
 			$data['redirectEmptyTarget'] = true;
 		}
 
-		return [ $title, $articleId, $article, $data ];
+		return [ $title, $article, $data ];
 	}
 
 	private function shouldGetMainPageData( $isMainPage ) {
@@ -509,10 +494,20 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
-	 * @param Article $article
+	 * @param $article
 	 * @return array
+	 * @throws NotFoundApiException
 	 */
-	private function getArticleData( Article $article ) {
+	private function getArticleData( $article ) {
+		if ( !$article instanceof Article ) {
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				'$article should be an instance of an Article',
+				['article' => $article]
+			);
+
+			throw new NotFoundApiException( 'Article is empty' );
+		}
+
 		$articleId = $article->getID();
 		$sections = $this->getVal( 'sections' );
 
