@@ -24,7 +24,7 @@ class ArticleCommentsController extends WikiaController {
 						if ( !$isMobile ) {
 							$this->wg->Out->redirect( $oTitle->getLocalURL() );
 						} else {
-							$result = array();
+							$result = [ ];
 							$canComment = ArticleCommentInit::userCanComment( $result, $oTitle );
 
 							//this check should be done for all the skins and before calling ArticleComment::doPost but that requires a good bit of refactoring
@@ -33,7 +33,7 @@ class ArticleCommentsController extends WikiaController {
 								if ( empty( $response[2]['error'] ) ) {
 									//wgOut redirect doesn't work when running fully under the
 									//Nirvana stack (WikiaMobile skin), also send back to the first page of comments
-									$this->response->redirect( $oTitle->getLocalURL( array( 'page' => 1 ) ) . '#article-comments' );
+									$this->response->redirect( $oTitle->getLocalURL( [ 'page' => 1 ] ) . '#article-comments' );
 								} else {
 									$this->response->setVal( 'error', $response[2]['msg'] );
 								}
@@ -175,7 +175,7 @@ class ArticleCommentsController extends WikiaController {
 	private function getCommentsData(Title $title, $page, $perPage = null, $filterid = null) {
 		wfProfileIn(__METHOD__);
 
-		$key = implode( '_', array( $title->getArticleID(), $page, $perPage, $filterid ) );
+		$key = implode( '_', [ $title->getArticleID(), $page, $perPage, $filterid ] );
 		$data = null;
 
 		// avoid going through all this when calling the method from the same round trip for the same paramenters
@@ -228,13 +228,13 @@ class ArticleCommentsController extends WikiaController {
 
 			// Load MiniEditor assets (oasis skin only)
 			if ( ArticleComment::isMiniEditorEnabled() ) {
-				$app->sendRequest( 'MiniEditor', 'loadAssets', array(
+				$app->sendRequest( 'MiniEditor', 'loadAssets', [
 					'loadStyles' => !ArticleComment::isLoadingOnDemand(),
 					'loadOnDemand' => true,
-					'loadOnDemandAssets' => array(
+					'loadOnDemandAssets' => [
 						'/extensions/wikia/MiniEditor/js/Wall/Wall.Animations.js'
-					)
-				));
+					]
+				] );
 			}
 		}
 		return true;

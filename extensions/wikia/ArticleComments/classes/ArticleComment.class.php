@@ -426,7 +426,7 @@ class ArticleComment {
 
 		$sig = $this->mUser->isAnon()
 			? AvatarService::renderLink( $this->mUser->getName() )
-			: Xml::element( 'a', array ( 'href' => $this->mUser->getUserPage()->getFullUrl() ), $this->mUser->getName() );
+			: Xml::element( 'a', [ 'href' => $this->mUser->getUserPage()->getFullUrl() ], $this->mUser->getName() );
 
 		$isStaff = (int)in_array( 'staff', $this->mUser->getEffectiveGroups() );
 
@@ -596,7 +596,7 @@ class ArticleComment {
 		} else {
 			// not a comment - fallback
 			$title = $titleText;
-			$partsOriginal = $partsStripped = array();
+			$partsOriginal = $partsStripped = [ ];
 		}
 
 		$result = [
@@ -802,7 +802,7 @@ class ArticleComment {
 	 *
 	 * @return Status TODO: Document
 	 */
-	static protected function doSaveAsArticle( $text, $article, $user, $metadata = array(), $summary = '' ) {
+	static protected function doSaveAsArticle( $text, $article, $user, $metadata = [ ], $summary = '' ) {
 		$result = null;
 
 		$editPage = new EditPage( $article );
@@ -846,7 +846,7 @@ class ArticleComment {
 	 * @return Article -- newly created article
 	 * @throws MWException
 	 */
-	static public function doPost( $text, $user, $title, $parentId = false, $metadata = array() ) {
+	static public function doPost( $text, $user, $title, $parentId = false, $metadata = [ ] ) {
 		global $wgTitle;
 
 		if ( !$text || !strlen( $text ) ) {
@@ -1179,7 +1179,7 @@ class ArticleComment {
 
 		if ( MWNamespace::isTalk( $title->getNamespace() ) && ArticleComment::isTitleComment( $title ) ) {
 			if ( !is_array( $keys ) ) {
-				$keys = array();
+				$keys = [ ];
 			}
 
 			$name = $wgEnotifUseRealName ? $editor->getRealName() : $editor->getName();

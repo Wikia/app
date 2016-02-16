@@ -5,9 +5,9 @@
 * @addtogroup Languages
 */
 
-$messages = array();
+$messages = [ ];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'forum-desc' => 'Wikia\'s Special:Forum extension',
 	'forum-disabled-desc' => 'Wikia\'s Special:Forum extension; disabled',
 	'forum-forum-title' => 'Forum',
@@ -192,14 +192,14 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 	'forum-related-discussion-see-more' => 'See more discussions',
 	'forum-confirmation-board-deleted' => '"$1" has been deleted.',
 	'forum-token-mismatch' => 'Oops! Token doesn\'t match',
-);
+];
 
 /** Message documentation (Message documentation)
  * @author Elseweyr
  * @author Shirayuki
  * @author Siebrand
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'forum-desc' => '{{desc}}',
 	'forum-disabled-desc' => '{{desc}}',
 	'forum-forum-title' => 'The main title for the forum.
@@ -421,20 +421,20 @@ Parameters:
 	'forum-related-discussion-see-more' => 'See More link to topic page',
 	'forum-confirmation-board-deleted' => 'Board delete confirmation message. $1 is board name',
 	'forum-token-mismatch' => "Shown when hidden token (to prevent hijacking) sent to the backend doesn't match the one stored in user's session",
-);
+];
 
 /** Old English (Ænglisc)
  * @author Espreon
  */
-$messages['ang'] = array(
+$messages['ang'] = [
 	'forum-specialpage-policies-edit' => 'Adihtan',
-);
+];
 
 /** Arabic (العربية)
  * @author Claw eg
  * @author Test Create account
  */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'forum-desc' => "Wikia's Special:إضافات المنتدى",
 	'forum-disabled-desc' => "Wikia's Special:إضافات المنتدى; معطلة",
 	'forum-forum-title' => 'منتدى',
@@ -606,12 +606,12 @@ ___________________________________________<br />
 	'forum-related-discussion-see-more' => 'رؤية المزيد من النقاشات',
 	'forum-confirmation-board-deleted' => '"$1" قد حُذفت.',
 	'forum-token-mismatch' => 'عفوا! الرمز المميز لا يتطابق',
-);
+];
 
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
-$messages['az'] = array(
+$messages['az'] = [
 	'forum-forum-title' => 'Forum',
 	'forum-specialpage-heading' => 'Forum',
 	'forum-specialpage-policies-edit' => 'Redaktə',
@@ -623,24 +623,24 @@ $messages['az'] = array(
 	'forum-mail-notification-subject' => '$1 -- $2',
 	'forum-autoboard-title-5' => 'Əyləncə və oyunlar',
 	'forum-related-discussion-total-replies' => '$1 mesajlar',
-);
+];
 
 /** Bulgarian (български)
  * @author Agilight
  * @author DCLXVI
  */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'forum-forum-title' => 'Форум',
 	'forum-specialpage-heading' => 'Форум',
 	'forum-specialpage-policies-edit' => 'Редактиране',
 	'forum-admin-delete-and-merge-button-label' => 'Изтриване и обединяване',
-);
+];
 
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Gwenn-Ael
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'forum-forum-title' => 'Forom',
 	'forum-active-threads' => '$1 {{PLURAL:$1|Kendiviz oberiant|Kendivizoù oberiant}}',
 	'forum-active-threads-on-topic' => '$1 {{PLURAL:$1|Kendiviz oberiant|Kendivizoù oberiant}} diwar-benn "[[$2]]"',
@@ -755,23 +755,23 @@ ___________________________________________
 	'forum-related-discussion-see-more' => "Gwelet muioc'h a gaozioù",
 	'forum-confirmation-board-deleted' => 'Dilamet eo bet "$1".',
 	'forum-token-mismatch' => 'Pop ! Ar jedouer ne glot ket',
-);
+];
 
 /** Iriga Bicolano (Iriga Bicolano)
  * @author Filipinayzd
  */
-$messages['bto'] = array(
+$messages['bto'] = [
 	'forum-specialpage-policies-edit' => 'Balyowan',
 	'forum-mail-notification-html-greeting' => 'Unta $1,',
 	'forum-mail-notification-subject' => '$1 -- $2',
-);
+];
 
 /** Catalan (català)
  * @author Fitoschido
  * @author Grondin
  * @author Unapersona
  */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'forum-desc' => 'Extensió Especial:Forum de Wikia',
 	'forum-disabled-desc' => 'Extensió Especial:Forum de Wikia; desactivada',
 	'forum-forum-title' => 'Fòrum',
@@ -945,25 +945,25 @@ http://ca.wikia.com
 	'forum-related-discussion-see-more' => 'Mostra més discussions',
 	'forum-confirmation-board-deleted' => "S'ha suprimit “$1”.",
 	'forum-token-mismatch' => 'Ops! No coincideix amb la fitxa',
-);
+];
 
 /** Chechen (нохчийн)
  * @author Умар
  */
-$messages['ce'] = array(
+$messages['ce'] = [
 	'forum-discussion-post' => 'Хаам',
 	'forum-contributions-line' => '[[$1|$2]] дакъанехь [[$3|$4]]',
 	'forum-recentchanges-new-message' => '[[$1|дакъанехь $2]]',
 	'forum-recentchanges-edit' => 'табина хаам',
 	'forum-recentchanges-deleted-reply-title' => 'Хаам',
-);
+];
 
 /** Czech (čeština)
  * @author Aktron
  * @author Darth Daron
  * @author H4nek
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'forum-forum-title' => 'Fórum',
 	'forum-active-threads' => '$1 {{PLURAL:$1|aktivní diskuze|aktivní diskuze|aktivních diskuzí}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|aktivní diskuze|aktivní diskuze|aktivních diskuzí}} o: '''[[$2]]'''",
@@ -1016,13 +1016,13 @@ $messages['cs'] = array(
 	'forum-related-discussion-total-replies' => '$1{{PLURAL:$1|zpráva|zprávy|zpráv}}',
 	'forum-related-discussion-see-more' => 'Zobrazit více diskuzí',
 	'forum-confirmation-board-deleted' => '"$1" bylo smazáno.',
-);
+];
 
 /** German (Deutsch)
  * @author Das Schäfchen
  * @author Metalhead64
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'forum-desc' => 'Forum-Erweiterung von Wikia',
 	'forum-disabled-desc' => 'Forum-Erweiterung von Wikia; deaktiviert',
 	'forum-forum-title' => 'Forum',
@@ -1195,13 +1195,13 @@ abmelden oder deine E-Mail-Einstellungen hier ändern: http://community.wikia.co
 	'forum-related-discussion-see-more' => 'Weitere Diskussionen ansehen',
 	'forum-confirmation-board-deleted' => '„$1“ wurde gelöscht.',
 	'forum-token-mismatch' => 'Upps! Token stimmt nicht überein.',
-);
+];
 
 /** British English (British English)
  * @author Captaindogfish
  * @author Shirayuki
  */
-$messages['en-gb'] = array(
+$messages['en-gb'] = [
 	'forum-policies-and-faq' => "==Forum policies==
 Before contributing to the {{SITENAME}} Forums, please keep in mind a few best practices for conduct:
 
@@ -1230,7 +1230,7 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 '''What are Topics?'''
 : Topics allow you to link a forum discussion with a wiki article. It's another way to keep Forums organised and to help people find interesting discussions. For example, a Forum thread tagged with \"Lord Voldemort\" will appear at the bottom of the \"Lord Voldemort\" article.",
 	'forum-recentchanges-thread-group' => '$1 on the [[$2|$3 Board]]',
-);
+];
 
 /** Spanish (español)
  * @author Fitoschido
@@ -1238,7 +1238,7 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
  * @author VegaDark
  * @author Vivaelcelta
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'forum-desc' => 'Extensión Especial:Foro de Wikia',
 	'forum-disabled-desc' => 'Extensión Especial:Foro de Wikia; desactivada',
 	'forum-forum-title' => 'Foro',
@@ -1383,25 +1383,25 @@ ___________________________________________ <br />
 	'forum-related-discussion-see-more' => 'Ver más temas',
 	'forum-confirmation-board-deleted' => '"$1" ha sido borrado.',
 	'forum-token-mismatch' => '¡Oops! El token no coincide.',
-);
+];
 
 /** Basque (euskara)
  * @author Subi
  */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'forum-board-topics' => 'Gaiak',
 	'forum-board-thread-replies' => '{{PLURAL:$1|Mezu bat|$1 mezu}}',
 	'forum-thread-reply-post' => 'Erantzun',
 	'forum-related-discussion-total-replies' => '$1 mezu',
 	'forum-related-discussion-see-more' => 'Ikusi eztabaida gehiago',
-);
+];
 
 /** Persian (فارسی)
  * @author Ebraminio
  * @author Movyn
  * @author Reza1615
  */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'forum-forum-title' => 'فروم',
 	'forum-specialpage-heading' => 'فروم',
 	'forum-specialpage-board-lastpostby' => 'آخرین ارسال توسط',
@@ -1444,12 +1444,12 @@ $messages['fa'] = array(
 	'forum-related-discussion-new-post-button' => 'اغاز یک بحث',
 	'forum-related-discussion-total-replies' => '$1 پیغام',
 	'forum-related-discussion-see-more' => 'مشاهده بحث‌های بیشتر',
-);
+];
 
 /** Finnish (suomi)
  * @author Elseweyr
  */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'forum-forum-title' => 'Foorumi',
 	'forum-active-threads' => '$1 {{PLURAL:$1|aktiivinen keskustelu|aktiivista keskustelua}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|aktiivinen keskustelu|aktiivista keskustelua}} aiheesta '''[[$2]]'''",
@@ -1617,14 +1617,14 @@ ___________________________________________<br />
 	'forum-related-discussion-total-replies' => '$1 viestiä',
 	'forum-related-discussion-see-more' => 'Katso lisää keskusteluja',
 	'forum-confirmation-board-deleted' => '"$1" on poistettu.',
-);
+];
 
 /** French (français)
  * @author Crochet.david
  * @author Gomoko
  * @author Wyz
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'forum-desc' => 'Extension Special:Forum de Wikia',
 	'forum-disabled-desc' => 'Extension Special:Forum de Wikia ; désactivée',
 	'forum-forum-title' => 'Forum',
@@ -1798,25 +1798,25 @@ ___________________________________________
 	'forum-related-discussion-see-more' => 'Voir plus de discussions',
 	'forum-confirmation-board-deleted' => '« $1 » a été supprimé.',
 	'forum-token-mismatch' => 'Oups ! Le jeton ne correspond pas',
-);
+];
 
 /** Western Frisian (Frysk)
  * @author Robin0van0der0vliet
  */
-$messages['fy'] = array(
+$messages['fy'] = [
 	'forum-forum-title' => 'Foarum',
 	'forum-specialpage-heading' => 'Foarum',
 	'forum-specialpage-policies-edit' => 'Bewurkje',
 	'forum-mail-notification-html-greeting' => 'Hallo $1,',
 	'forum-mail-notification-subject' => '$1 -- $2',
-);
+];
 
 /** Galician (galego)
  * @author Elisardojm
  * @author Toliño
  * @author Vivaelcelta
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'forum-forum-title' => 'Foro',
 	'forum-active-threads' => '$1 {{PLURAL:$1|debate activo|debates activos}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|debate activo|debates activos}} sobre: '''[[$2]]'''",
@@ -1987,13 +1987,13 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'forum-related-discussion-see-more' => 'Ver máis debates',
 	'forum-confirmation-board-deleted' => 'Borrouse "$1".',
 	'forum-token-mismatch' => 'Vaites! O pase non coincide',
-);
+];
 
 /** Hebrew (עברית)
  * @author Guycn2
  * @author LaG roiL
  */
-$messages['he'] = array(
+$messages['he'] = [
 	'forum-forum-title' => 'פורום',
 	'forum-specialpage-heading' => 'פורום',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|נושא אחד|נושאים}}',
@@ -2020,13 +2020,13 @@ $messages['he'] = array(
 	'forum-mail-notification-html-greeting' => 'שלום, $1.',
 	'forum-recentchanges-thread-group' => '$1 ב[[$2|לוח של $3]]',
 	'forum-confirmation-board-deleted' => '"$1" נמחק.',
-);
+];
 
 /** Hungarian (magyar)
  * @author TK-999
  * @author Tacsipacsi
  */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'forum-forum-title' => 'Fórum',
 	'forum-active-threads' => '$1 aktív beszélgetés',
 	'forum-active-threads-on-topic' => "$1 aktív beszélgetés erről a témáról: '''[[$2]]'''",
@@ -2038,13 +2038,13 @@ $messages['hu'] = array(
 	'forum-specialpage-board-lastpostby' => 'Utoljára hozzászólt:',
 	'forum-specialpage-policies-edit' => 'Szerkesztés',
 	'forum-specialpage-policies' => 'A fórum szabályai / GYIK',
-);
+];
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
  * @author Fate Kage
  */
-$messages['id'] = array(
+$messages['id'] = [
 	'forum-forum-title' => 'Forum',
 	'forum-specialpage-board-lastpostby' => 'Postingan terakhir oleh',
 	'forum-specialpage-policies-edit' => 'Sunting',
@@ -2098,21 +2098,21 @@ Sebelum berkontribusi ke Forum {{SITENAME}}, harap diingat beberapa praktek terb
 	'forum-related-module-heading' => 'Lembar Terkait',
 	'forum-related-discussion-new-post-button' => 'Mulai Diskusi',
 	'forum-related-discussion-new-post-tooltip' => 'Mulai diskusi baru tentang $1',
-);
+];
 
 /** Italian (italiano)
  * @author Gloria sah
  */
-$messages['it'] = array(
+$messages['it'] = [
 	'forum-forum-title' => 'Forum',
 	'forum-specialpage-heading' => 'Forum',
-);
+];
 
 /** Japanese (日本語)
  * @author BryghtShadow
  * @author Tommy6
  */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'forum-forum-title' => 'フォーラム',
 	'forum-active-threads' => '$1 件のスレッドがアクティブです',
 	'forum-active-threads-on-topic' => "'''[[$2]]'''を話題にしてるスレッドでアクティブなものは $1 件です",
@@ -2280,22 +2280,22 @@ ___________________________________________<br />
 	'forum-related-discussion-see-more' => 'さらにスレッドを見る',
 	'forum-confirmation-board-deleted' => '「$1」を削除しました。',
 	'forum-token-mismatch' => 'おっと! トークンが一致しません',
-);
+];
 
 /** Kannada (ಕನ್ನಡ)
  * @author VASANTH S.N.
  */
-$messages['kn'] = array(
+$messages['kn'] = [
 	'forum-specialpage-policies-edit' => 'ಸಂಪಾದಿಸಿ',
 	'forum-thread-reply-post' => 'ಉತ್ತರಿಸಿ',
-);
+];
 
 /** Korean (한국어)
  * @author Miri-Nae
  * @author 관인생략
  * @author 아라
  */
-$messages['ko'] = array(
+$messages['ko'] = [
 	'forum-desc' => '위키아 특수기능:포럼 확장 기능',
 	'forum-disabled-desc' => '위키아 특수기능:포럼 확장 기능; 비활성',
 	'forum-forum-title' => '포럼',
@@ -2462,13 +2462,13 @@ ___________________________________________<br />
 	'forum-related-discussion-total-replies' => '메시지 $1개',
 	'forum-related-discussion-see-more' => '더 많은 토론 보기',
 	'forum-confirmation-board-deleted' => '"$1" 게시판이 삭제되었습니다.',
-);
+];
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author Bikarhêner
  * @author George Animal
  */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'forum-forum-title' => 'Forum',
 	'forum-specialpage-heading' => 'Forum',
 	'forum-specialpage-policies-edit' => 'Biguherîne',
@@ -2480,12 +2480,12 @@ $messages['ku-latn'] = array(
 	'forum-related-discussion-total-replies' => '$1 peyam',
 	'forum-related-discussion-see-more' => 'Zêdetir gotûbêjan bibîne',
 	'forum-confirmation-board-deleted' => '$1 hat jêbirin.',
-);
+];
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'forum-forum-title' => 'Forum',
 	'forum-active-threads' => '{{PLURAL:$1|Eng aktiv Diskussioun|$1 aktiv Diskussiounen}}',
 	'forum-active-threads-on-topic' => "{{PLURAL:$1|Eng aktiv Diskussioun|$1 aktiv Diskussiounen}} iwwer: '''[[$2]]'''",
@@ -2511,43 +2511,43 @@ $messages['lb'] = array(
 	'forum-related-discussion-total-replies' => '$1 Messagen',
 	'forum-related-discussion-see-more' => 'Kuckt méi Diskussiounen',
 	'forum-confirmation-board-deleted' => '"$1" gouf geläscht.',
-);
+];
 
 /** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
-$messages['lrc'] = array(
+$messages['lrc'] = [
 	'forum-specialpage-policies-edit' => 'ويرايشت',
 	'forum-board-thread-follow' => 'نهاگردی',
 	'forum-board-thread-following' => 'د حالت نهاگردی',
 	'forum-thread-reply-post' => 'جؤاو ده ئن',
-);
+];
 
 /** Latvian (latviešu)
  * @author Sg ghost
  */
-$messages['lv'] = array(
+$messages['lv'] = [
 	'forum-forum-title' => 'Forums',
 	'forum-specialpage-heading' => 'Forums',
 	'forum-specialpage-policies' => 'Forums politika / FAQ',
 	'forum-activity-module-heading' => 'Forums Aktivitātes',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Forums Valdes',
 	'forum-specialpage-oldforum-link' => 'Vecie forums Arhīvs',
-);
+];
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'forum-forum-title' => 'Форум',
 	'forum-token-mismatch' => 'Упс! Шифрата не се совпаѓа',
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  * @author SNN95
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'forum-desc' => 'Sambungan Special:Forum Wikia',
 	'forum-disabled-desc' => 'Sambungan Special:Forum Wikia; dimatikan',
 	'forum-forum-title' => 'Forum',
@@ -2720,7 +2720,7 @@ keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
 	'forum-related-discussion-see-more' => 'Lihat lebih banyak perbincangan',
 	'forum-confirmation-board-deleted' => '"$1" telah dihapuskan.',
 	'forum-token-mismatch' => 'Eh! Token tak sepadan',
-);
+];
 
 /** Dutch (Nederlands)
  * @author Arent
@@ -2730,7 +2730,7 @@ keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
  * @author Sjoerddebruin
  * @author Southparkfan
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'forum-forum-title' => 'Forum',
 	'forum-active-threads' => '$1 {{PLURAL:$1|Actief overleg|Actieve overleggen}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Actief overleg|Actieve overleggen}} over: '''[[$2]]'''",
@@ -2901,13 +2901,13 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
 	'forum-related-discussion-see-more' => 'Meer discussies bekijken',
 	'forum-confirmation-board-deleted' => '"$1" is verwijderd.',
 	'forum-token-mismatch' => 'Het token komt niet overeen',
-);
+];
 
 /** Occitan (occitan)
  * @author Cedric31
  * @author Hulothe
  */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'forum-forum-title' => 'Forum',
 	'forum-active-threads' => '$1 {{PLURAL:$1|discussion activa|discussions activas}}',
 	'forum-active-threads-on-topic' => '$1 {{PLURAL:$1|discussion activa|discussions activas}}  a prepaus de : « [[$2]] »',
@@ -2974,7 +2974,7 @@ $messages['oc'] = array(
 	'forum-board-destination-empty' => '(Seleccionatz un sosforum)',
 	'forum-related-discussion-new-post-button' => 'Començar una discussion',
 	'forum-related-discussion-total-replies' => '$1 messatges',
-);
+];
 
 /** Polish (polski)
  * @author Chrumps
@@ -2985,7 +2985,7 @@ $messages['oc'] = array(
  * @author Rzuwig
  * @author Vuh
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'forum-desc' => 'Rozszerzenie Wikii Specjalna:Forum',
 	'forum-disabled-desc' => 'Rozszerzenie Wikii Specjalna:Forum; wyłączone',
 	'forum-forum-title' => 'Forum',
@@ -3156,24 +3156,24 @@ ___________________________________________<br />
 	'forum-related-discussion-see-more' => 'Zobacz więcej dyskusji',
 	'forum-confirmation-board-deleted' => '"$1" został usunięty.',
 	'forum-token-mismatch' => 'Ups! Token nie pasuje',
-);
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'forum-specialpage-policies-edit' => 'سمول',
 	'forum-specialpage-policies' => 'د فورم تگلارې/ډ ځ پ',
 	'forum-thread-reply-post' => 'ځوابول',
 	'forum-mail-notification-html-greeting' => 'سلامونه $1،',
-);
+];
 
 /** Portuguese (português)
  * @author Imperadeiro98
  * @author Josep Maria 15.
  * @author Vitorvicentevalente
  */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'forum-forum-title' => 'Fórum',
 	'forum-active-threads' => '$1 {{PLURAL:$1|Discussão ativa|Discussões ativas}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Discussão ativa|Discussões ativas}} sobre: '''[[$2]]'''",
@@ -3341,7 +3341,7 @@ ___________________________________________<br />
 	'forum-related-discussion-total-replies' => '$1 mensagem',
 	'forum-related-discussion-see-more' => 'Veja mais discussões',
 	'forum-confirmation-board-deleted' => '"$1" foi deletado.',
-);
+];
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
@@ -3349,7 +3349,7 @@ ___________________________________________<br />
  * @author TheGabrielZaum
  * @author Tuliouel
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'forum-desc' => 'Extensão Especial:Forum da Wikia',
 	'forum-disabled-desc' => 'Extensão Especial:Forum da Wikia; desativado',
 	'forum-forum-title' => 'Fórum',
@@ -3425,13 +3425,13 @@ $messages['pt-br'] = array(
 	'forum-related-discussion-total-replies' => '$1 mensagens',
 	'forum-related-discussion-see-more' => 'Veja mais discussões',
 	'forum-confirmation-board-deleted' => '"$1" foi excluído.',
-);
+];
 
 /** Russian (русский)
  * @author Okras
  * @author Капитан Джон Шепард
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'forum-desc' => 'Вікі Спеціальна: Розширення форуму',
 	'forum-disabled-desc' => 'Вікі Спеціальна: Розширення форуму; інвалідів',
 	'forum-forum-title' => 'Форум',
@@ -3602,26 +3602,26 @@ ___________________________________________<br />
 	'forum-related-discussion-see-more' => 'Посмотреть другие обсуждения',
 	'forum-confirmation-board-deleted' => '«$1» был удалён.',
 	'forum-token-mismatch' => 'Символ не соответствует',
-);
+];
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Aktron
  * @author Milicevic01
  */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'forum-thread-reply-post' => 'Одговори',
 	'forum-sorting-option-popular-threads' => 'Најпопуларније',
 	'forum-sorting-option-most-replies' => 'Најактивније у протеклих 7 дана.',
 	'forum-discussion-post' => 'Постави',
 	'forum-discussion-placeholder-message-short' => 'Пошаљите нову поруку',
 	'forum-token-mismatch' => 'Упс! Жетон се не поклапа.',
-);
+];
 
 /** Swedish (svenska)
  * @author Lokal Profil
  * @author WikiPhoenix
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'forum-desc' => 'Wikia-tillägget Special:Forum',
 	'forum-disabled-desc' => 'Wikia-tillägget Special:Forum; inaktiverat',
 	'forum-forum-title' => 'Forum',
@@ -3792,20 +3792,20 @@ ___________________________________________<br />
 	'forum-related-discussion-see-more' => 'Se fler diskussioner',
 	'forum-confirmation-board-deleted' => '"$1" har raderats.',
 	'forum-token-mismatch' => 'Hoppsan! Koden stämmer inte överens',
-);
+];
 
 /** Tamil (தமிழ்)
  * @author ElangoRamanujam
  */
-$messages['ta'] = array(
+$messages['ta'] = [
 	'forum-forum-title' => 'கருத்துக்களம்',
-);
+];
 
 /** Telugu (తెలుగు)
  * @author Chaduvari
  * @author Ravichandra
  */
-$messages['te'] = array(
+$messages['te'] = [
 	'forum-forum-title' => 'వేదిక',
 	'forum-active-threads' => '$1 {{PLURAL:$1|చురుగ్గా ఉన్న చర్చ|చురుగ్గా ఉన్న చర్చలు}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|చురుగ్గా ఉన్న చర్చ|చురుగ్గా ఉన్న చర్చలు}} - ఈ అంశం గురించి: '''[[$2]]'''",
@@ -3967,29 +3967,29 @@ ___________________________________________<br />
 	'forum-related-discussion-total-replies' => '$1 సందేశాలు',
 	'forum-related-discussion-see-more' => 'మరిన్ని చర్చలను చూడండి',
 	'forum-confirmation-board-deleted' => '"$1" తొలగించబడింది.',
-);
+];
 
 /** Turkish (Türkçe)
  * @author Incelemeelemani
  */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'forum-specialpage-policies-edit' => 'Düzenle',
 	'forum-specialpage-policies' => 'Forum İlkeleri / SSS',
-);
+];
 
 /** Tuvinian (тыва дыл)
  * @author Agilight
  */
-$messages['tyv'] = array(
+$messages['tyv'] = [
 	'forum-forum-title' => 'Шуулган',
 	'forum-specialpage-heading' => 'Шуулган',
-);
+];
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  * @author Капитан Джон Шепард
  */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'forum-desc' => 'Вікіа Спеціальна: Розширення форуму',
 	'forum-disabled-desc' => 'Вікіа Спеціальна: Розширення форуму; інвалідів',
 	'forum-forum-title' => 'Форум',
@@ -4160,14 +4160,14 @@ ___________________________________________<br />
 	'forum-related-discussion-see-more' => 'Переглянути більше обговорень',
 	'forum-confirmation-board-deleted' => '"$1" було видалено.',
 	'forum-token-mismatch' => 'Йой! Знак не збігається',
-);
+];
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
  * @author Dinhxuanduyet
  * @author Rémy Lee
  */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'forum-desc' => 'Trang đặc biệt của Wikia: mở rộng Diễn đàn',
 	'forum-disabled-desc' => 'Trang đặc biệt của Wikia: mở rộng Diễn đàn; vô hiệu',
 	'forum-forum-title' => 'Diễn đàn',
@@ -4337,19 +4337,19 @@ ___________________________________________<br />
 	'forum-related-discussion-total-replies' => '$1 tin nhắn',
 	'forum-related-discussion-see-more' => 'Xem thêm các cuộc thảo luận',
 	'forum-confirmation-board-deleted' => "'''$1''' đã bị xóa.",
-);
+];
 
 /** Yiddish (ייִדיש)
  * @author פוילישער
  */
-$messages['yi'] = array(
+$messages['yi'] = [
 	'forum-recentchanges-edit' => 'רעדאקטירטע מעלדונג',
-);
+];
 
 /** Chinese (中文)
  * @author Wikia
  */
-$messages['zh'] = array(
+$messages['zh'] = [
 	'forum-forum-title' => '论坛',
 	'forum-active-threads' => '$1 {{PLURAL:$1|条活跃讨论|条活跃讨论}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|条活跃讨论|条活跃讨论}}关于: '''[[$2]]'''",
@@ -4517,7 +4517,7 @@ ___________________________________________<br />
 	'forum-related-discussion-total-replies' => '$1条信息',
 	'forum-related-discussion-see-more' => '查看更多讨论',
 	'forum-confirmation-board-deleted' => '"$1"已经被删除。',
-);
+];
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Byfserag
@@ -4530,7 +4530,7 @@ ___________________________________________<br />
  * @author Yfdyh000
  * @author 御坂美琴
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'forum-desc' => 'Wikia的 特殊:论坛 扩展',
 	'forum-disabled-desc' => 'Wikia的 特殊:论坛 扩展；已禁用',
 	'forum-forum-title' => '论坛',
@@ -4701,7 +4701,7 @@ ___________________________________________<br />
 	'forum-related-discussion-see-more' => '参阅更多讨论',
 	'forum-confirmation-board-deleted' => '“$1”已被删除。',
 	'forum-token-mismatch' => '呀！令牌不匹配',
-);
+];
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Cwlin0416
@@ -4709,7 +4709,7 @@ ___________________________________________<br />
  * @author LNDDYL
  * @author Liuxinyu970226
  */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'forum-desc' => 'Wikia 的 Special:Forum 擴充套件',
 	'forum-disabled-desc' => 'Wikia 的 Special:Forum 擴充套件，已停用',
 	'forum-forum-title' => '論壇',
@@ -4852,4 +4852,4 @@ $messages['zh-hant'] = array(
 	'forum-related-discussion-total-replies' => '$1 條訊息',
 	'forum-related-discussion-see-more' => '請參考更多討論',
 	'forum-confirmation-board-deleted' => ' "$1" 已被删除。',
-);
+];
