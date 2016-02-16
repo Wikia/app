@@ -13,18 +13,17 @@ class RevisionUpvotesApiController extends WikiaApiController {
 	 */
 	public function addUpvote() {
 		$request = $this->getRequest();
+		$user = $this->wg->User;
 
-		if ( !$request->wasPosted() ) {
-			throw new BadRequestApiException();
+		if ( !$user->isLoggedIn() ) {
+			throw new UnauthorizedException();
 		}
+		$this->checkWriteRequest();
 
 		$revisionId = $request->getInt( 'revisionId' );
 		if ( empty( $revisionId ) ) {
 			throw new MissingParameterApiException( 'revisionId' );
 		}
-
-		$user = $this->wg->User;
-		$this->validateUser( $user, $request );
 
 		$revision = Revision::newFromId( $revisionId );
 		if ( !$revision instanceof Revision ) {
@@ -50,18 +49,17 @@ class RevisionUpvotesApiController extends WikiaApiController {
 	 */
 	public function removeUpvote() {
 		$request = $this->getRequest();
+		$user = $this->wg->User;
 
-		if ( !$request->wasPosted() ) {
-			throw new BadRequestApiException();
+		if ( !$user->isLoggedIn() ) {
+			throw new UnauthorizedException();
 		}
+		$this->checkWriteRequest();
 
 		$id = $request->getInt( 'id' );
 		if ( empty( $id ) ) {
 			throw new MissingParameterApiException( 'id' );
 		}
-
-		$user = $this->wg->User;
-		$this->validateUser( $user, $request );
 
 		( new RevisionUpvotesService() )->removeUpvote( $id, $user->getId() );
 	}
@@ -100,11 +98,5 @@ class RevisionUpvotesApiController extends WikiaApiController {
 		$upvotes = ( new RevisionUpvotesService() )->getRevisionsUpvotes( $this->wg->CityId, $revisionsIds );
 
 		$this->setResponseData( $upvotes );
-	}
-
-	private function validateUser( User $user, WikiaRequest $request ) {
-		if ( !$user->isLoggedIn() || !$user->matchEditToken( $request->getVal( 'editToken' ) ) ) {
-			throw new UnauthorizedException();
-		}
 	}
 }
