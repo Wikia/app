@@ -250,29 +250,36 @@ class RevisionUpvotesService {
 
 		$db->begin();
 
-		$query = sprintf(
-			'INSERT INTO `%s` SET `upvote_id` = %d, `from_user` = %d;',
-			self::UPVOTE_TABLE,
-			$upvoteId,
-			$fromUser
-		);
-		$db->query( $query );
+		$db->insert( self::UPVOTE_TABLE, [ 'upvote_id' => $upvoteId, 'from_user' => $fromUser ] );
 
-		$query = sprintf(
-			'INSERT INTO `%s` SET `user_id` = %d, `total` = 1, `new` = 1
-			ON DUPLICATE KEY UPDATE `total` = `total` + 1, `new` = `new` + 1, `notified` = false;',
+		$db->upsert(
 			self::UPVOTE_USERS_TABLE,
-			$userId
+			[
+				'user_id' => $userId,
+				'total' => 1,
+				'new' => 1
+			],
+			[],
+			[
+				'total = total + 1',
+				'new = new + 1',
+				'notified' => false
+			]
 		);
-		$db->query( $query );
 
 		$db->commit();
 	}
 
+	/**
+	 * @return DatabaseMysqli
+	 */
 	private function getDatabaseForRead() {
 		return $this->getDatabase();
 	}
 
+	/**
+	 * @return DatabaseMysqli
+	 */
 	private function getDatabaseForWrite() {
 		return $this->getDatabase( DB_MASTER );
 	}
