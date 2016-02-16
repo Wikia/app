@@ -106,7 +106,15 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		return \MustacheService::getInstance()->render(
 			self::$userLogTemplate,
 			[
+				'appHeader' => wfMessage( 'discussionslog-app-header' )
+						->escaped(),
 				'hasUserError' => $hasUserError,
+				'ipAddressHeader' => wfMessage( 'discussionslog-ip-address-header' )
+						->escaped(),
+				'languageHeader' => wfMessage( 'discussionslog-language-header')
+						->escaped(),
+				'locationHeader' => wfMessage( 'discussionslog-location-header' )
+						->escaped(),
 				'logTableCaption' => wfMessage( 'discussionslog-table-caption' )
 						->params( [$userName, $userId] )
 						->escaped(),
@@ -115,6 +123,10 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 				'hasNoUserLogRecords' => $hasNoUserLogRecords,
 				'noUserLogRecordsMessage' => wfMessage( 'discussionslog-no-mobile-activity-error' )
 						->params( $userName )
+						->escaped(),
+				'timestampHeader' => wfMessage( 'discussionslog-timestamp-header' )
+						->escaped(),
+				'userAgentHeader' => wfMessage( 'discussionslog-user-agent-header' )
 						->escaped(),
 				'userLogRecords' => $displayedUserLogRecords
 			]
