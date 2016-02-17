@@ -117,8 +117,7 @@ class WallThread {
 	}
 
 	private function loadReplyIdsFromDB( $master = false ) {
-		// VOLDEV-3 change: fix "Can't use function return value in write context" fatal
-		if ( Title::newFromId( $this->mThreadId ) == null ) {
+		if ( empty( Title::newFromId( $this->mThreadId ) ) ) {
 			return;
 		}
 
