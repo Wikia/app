@@ -784,36 +784,6 @@ Aby zakończyć proces logowania, musisz ustawić nowe hasło:',
 Być może właśnie zmienił{{GENDER:|eś|aś|eś(‐aś)}} swoje hasło lub poprosił{{GENDER:|eś|aś|eś(‐aś)}} o nowe tymczasowe hasło.',
 'resetpass-temp-password'   => 'Tymczasowe hasło:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Wyczyść hasło',
-'passwordreset-text'               => 'Wypełnij formularz, aby otrzymać e‐mail z przypomnieniem danych Twojego konta.',
-'passwordreset-legend'             => 'Zresetuj hasło',
-'passwordreset-disabled'           => 'Na tej wiki wyłączono możliwość resetowania haseł.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Wprowadź jedną z danych poniżej}}',
-'passwordreset-username'           => 'Nazwa użytkownika:',
-'passwordreset-domain'             => 'Domena',
-'passwordreset-capture'            => 'Czy pokazywać treść wiadomości e‐mail?',
-'passwordreset-capture-help'       => 'Jeśli zaznaczysz to pole, zobaczysz treść wiadomości e‐mail z tymczasowym hasłem, w tej samej formie w jakiej jest wysyłana do użytkownika.',
-'passwordreset-email'              => 'Adres e‐mail',
-'passwordreset-emailtitle'         => 'Dane konta w {{GRAMMAR:MS.lp|{{SITENAME}}}}',
-'passwordreset-emailtext-ip'       => 'Ktoś (prawdopodobnie Ty, spod adresu IP $1) poprosił o przypomnienie szczegółów dotyczących Twojego konta w {{GRAMMAR:MS.lp{{SITENAME}}}} ($4). Z tym adresem e‐mailowym powiązane {{PLURAL:$3|jest konto użytkownika|są następujące konta użytkowników:}}
-
-$2
-
-{{PLURAL:$3|Tymczasowego hasła|Tymczasowych haseł}} można użyć w ciągu {{PLURAL:$5|jednego dnia|$5 dni}}.
-Powinieneś zalogować się i zmienić hasło na nowe. Jeśli to ktoś inni poprosił o wysłanie przypomnienia lub jeśli pamiętasz aktualne hasło i nie chce go zmieniać wystarczy, że zignorujesz tę wiadomość i będziesz nadal korzystał ze swojego starego hasła.',
-'passwordreset-emailtext-user'     => 'Użytkownik $1 poprosił o przypomnienie szczegółów dotyczących Twojego konta w {{GRAMMAR:MS.lp{{SITENAME}}}} ($4). Z tym adresem e‐mailowym powiązane {{PLURAL:$3|jest konto użytkownika|są następujące konta użytkowników:}}
-
-$2
-
-{{PLURAL:$3|Tymczasowego hasła|Tymczasowych haseł}} można użyć w ciągu {{PLURAL:$5|jednego dnia|$5 dni}}.
-Powinieneś zalogować się i zmienić hasło na nowe. Jeśli to ktoś inni poprosił o wysłanie przypomnienia lub jeśli pamiętasz aktualne hasło i nie chce go zmieniać wystarczy, że zignorujesz tę wiadomość i będziesz nadal korzystał ze swojego starego hasła.',
-'passwordreset-emailelement'       => 'Nazwa użytkownika – $1
-Tymczasowe hasło – $2',
-'passwordreset-emailsent'          => 'Przypominający e‐mail został wysłany.',
-'passwordreset-emailsent-capture'  => 'Poniżej znajdujący się e‐mail z przypomnieniem został wysłany',
-'passwordreset-emailerror-capture' => 'Poniżej wyświetlony e‐mail z przypomnieniem został wygenerowany, ale nie udało się wysłać go do użytkownika: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Zmiana adresu e‐mail',
 'changeemail-header'   => 'Zmiana adresu e‐mail',

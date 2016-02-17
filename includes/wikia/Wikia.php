@@ -71,6 +71,9 @@ $wgHooks['WikiaSkinTopScripts'][] = 'Wikia::onWikiaSkinTopScripts';
 # handle internal requests - PLATFORM-1473
 $wgHooks['WebRequestInitialized'][] = 'Wikia::onWebRequestInitialized';
 
+# Log user email changes
+$wgHooks['BeforeUserSetEmail'][] = 'Wikia::logEmailChanges';
+
 /**
  * This class has only static methods so they can be used anywhere
  *
@@ -137,33 +140,30 @@ class Wikia {
 	}
 
 	public static function getFaviconFullUrl() {
-		global $wgMemc;
+		return WikiaDataAccess::cache(
+			wfMemcKey( self::FAVICON_URL_CACHE_KEY ),
+			WikiaResponse::CACHE_STANDARD,
+			function () {
+				$faviconFilename = 'Favicon.ico';
 
-		$mMemcacheKey = wfMemcKey(self::FAVICON_URL_CACHE_KEY);
-		$mData = $wgMemc->get($mMemcacheKey);
-		$faviconFilename = 'Favicon.ico';
+				$localFaviconTitle = Title::newFromText( $faviconFilename, NS_FILE );
 
-		if ( empty($mData) ) {
-			$localFaviconTitle = Title::newFromText( $faviconFilename, NS_FILE );
-			#FIXME: Checking existance of Title in order to use File. #VID-1744
-			if ( $localFaviconTitle->exists() ) {
-				$localFavicon = wfFindFile( $faviconFilename );
+				#FIXME: Checking existance of Title in order to use File. #VID-1744
+				if ( $localFaviconTitle->exists() ) {
+					$localFavicon = wfFindFile( $faviconFilename );
+
+					if ( $localFavicon ) {
+						return $localFavicon->getURL();
+					}
+				}
+
+				return GlobalFile::newFromText( $faviconFilename, self::COMMUNITY_WIKI_ID )->getURL();
 			}
-			if ( $localFavicon ) {
-				$favicon = $localFavicon->getURL();
-			} else {
-				$favicon = GlobalFile::newFromText( $faviconFilename, self::COMMUNITY_WIKI_ID )->getURL();
-			}
-			$wgMemc->set($mMemcacheKey, $favicon, 86400);
-		}
-
-		return $mData;
+		);
 	}
 
 	public static function invalidateFavicon() {
-		global $wgMemc;
-
-		$wgMemc->delete( wfMemcKey(self::FAVICON_URL_CACHE_KEY) );
+		WikiaDataAccess::cachePurge( wfMemcKey( self::FAVICON_URL_CACHE_KEY ) );
 	}
 
 	/**
@@ -2504,4 +2504,26 @@ class Wikia {
 
 		return true;
 	}
+
+	/**
+	 * Hook for storing historical log of email changes
+	 * Depends on the central user_email_log table defined in the EditAccount extension
+	 * @return bool
+	 */
+	public static function logEmailChanges($user, $new_email, $old_email) {
+		global $wgExternalSharedDB, $wgUser, $wgRequest;
+		if ( $wgExternalSharedDB && isset( $new_email ) && isset( $old_email ) ) {
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+			$dbw->insert(
+				'user_email_log',
+				['user_id' => $user->getId(),
+				 'old_email' => $old_email,
+				 'new_email' => $new_email,
+				 'changed_by_id' => $wgUser->getId(),
+				 'changed_by_ip' => $wgRequest->getIP()		// stored as string
+				]);
+		}
+		return true;
+	}
+
 }

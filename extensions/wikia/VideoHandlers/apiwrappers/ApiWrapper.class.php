@@ -1,5 +1,4 @@
 <?php
-
 abstract class ApiWrapper {
 
 	const RESPONSE_FORMAT_JSON = 0;
@@ -601,6 +600,17 @@ class NegativeResponseException extends Exception {
 		}
 
 		$this->message = $message;
+
+		Wikia\Logger\WikiaLogger::instance()->error(
+			__CLASS__,
+			[ 'ooyala_response' => [
+				'status' => $this->status,
+				'content' => $this->content,
+				'apiUrl' => $this->apiUrl,
+				'errors' => $this->errors
+			] ]
+		);
+
 	}
 
 	/**
@@ -636,9 +646,10 @@ abstract class PseudoApiWrapper extends ApiWrapper {
 		// override me!
 	}
 
-	protected function processResponse( $response, $type ) {
+	protected function processResponse( $response ) {
 		// override me!
 	}
+
 }
 
 /**

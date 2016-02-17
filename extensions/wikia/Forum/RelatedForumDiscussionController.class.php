@@ -58,7 +58,7 @@ class RelatedForumDiscussionController extends WikiaController {
 
 		if ( $timediff < 24 * 60 * 60 ) {
 			$this->replace = true;
-			$this->html = $this->app->renderView( "RelatedForumDiscussion", "relatedForumDiscussion", array( 'messages' => $messages ) );
+			$this->html = $this->app->renderView( "RelatedForumDiscussion", "relatedForumDiscussion", [ 'messages' => $messages ] );
 		} else {
 			$this->replace = false;
 			$this->html = '';

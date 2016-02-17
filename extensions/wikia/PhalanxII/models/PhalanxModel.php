@@ -18,9 +18,13 @@ abstract class PhalanxModel extends WikiaObject {
 	private $service = null;
 	public $ip = null;
 
+	protected $shouldLogInStats = true;
+
 	public function __construct( $model, $data = array() ) {
 		parent::__construct();
 		$this->model = $model;
+
+		$this->user = $this->wg->user;
 		if ( !empty( $data ) ) {
 			foreach ( $data as $key => $value ) {
 				$method = "set{$key}";
@@ -104,7 +108,7 @@ abstract class PhalanxModel extends WikiaObject {
 
 	public function __call($name, $args) {
 		$method = substr($name, 0, 3);
-		$key = strtolower( substr( $name, 3 ) );
+		$key = lcfirst( substr( $name, 3 ) );
 
 		$result = null;
 		switch($method) {
@@ -145,14 +149,12 @@ abstract class PhalanxModel extends WikiaObject {
 		$ret = true;
 
 		if ( !$this->isOk() ) {
-			$isUser = ($this->user instanceof User) && ( $this->user->getName() == $this->wg->User->getName() );
-
 			$content = $this->getText();
 
 			# send request to service
 			$result = $this->service
 				->setLimit(1)
-				->setUser( $isUser ? $this->user : null )
+				->setUser( ( $this->getShouldLogInStats() && $this->user instanceof User ) ? $this->user : null )
 				->match( $type, $content, $this->getLang() );
 
 			if ( $result !== false ) {

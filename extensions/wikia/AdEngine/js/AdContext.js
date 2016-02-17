@@ -53,6 +53,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.targeting = context.targeting || {};
 		context.providers = context.providers || {};
 		context.forcedProvider = qs.getVal('forcead', null) || context.forcedProvider || null;
+		context.opts.noExternals = noExternals;
 
 		// Don't show ads when Sony requests the page
 		if (doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/)) {
@@ -138,6 +139,19 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.showAds && context.opts.adsInContent &&
 			(isPageType('article') || isPageType('search')) &&
 			!context.targeting.wikiIsCorporate
+		);
+
+		// Override prefooters sizes
+		context.opts.overridePrefootersSizes =  !!(
+			context.targeting.skin === 'oasis' &&
+			geo.isProperGeo(instantGlobals.wgAdDriverOverridePrefootersCountries) &&
+			!isPageType('home')
+		);
+
+		// Override leaderboard sizes
+		context.opts.overrideLeaderboardSizes = !!(
+			context.targeting.skin === 'oasis' &&
+			geo.isProperGeo(['JP'])
 		);
 
 		// Export the context back to ads.context

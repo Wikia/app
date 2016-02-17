@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\Logger\WikiaLogger;
+use Wikia\Util\GlobalStateWrapper;
 
 class MercuryApiController extends WikiaController {
 
@@ -166,7 +167,7 @@ class MercuryApiController extends WikiaController {
 	 * @return array
 	 */
 	private function getNavigation() {
-		global $wgEnableGlobalNav2016, $wgLang;
+		global $wgLang;
 
 		$navData = $this->sendRequest( 'NavigationApi', 'getData' )->getData();
 
@@ -176,29 +177,25 @@ class MercuryApiController extends WikiaController {
 			$localNavigation = $navData[ 'navigation' ][ 'wiki' ];
 		}
 
-		if ( empty( $wgEnableGlobalNav2016 ) ) {
-			return $localNavigation;
-		} else {
-			$navigationNodes = ( new GlobalNavigationHelper() )->getMenuNodes2016();
+		$navigationNodes = ( new GlobalNavigationHelper() )->getMenuNodes();
 
-			// Add link to explore wikia only for EN language
-			if ( $wgLang->getCode() === WikiaLogoHelper::FANDOM_LANG ) {
-				$navigationNodes[ 'exploreDropdown' ][] = [
-					'text' => wfMessage( 'global-navigation-explore-wikia-mercury-link-label' )->plain(),
-					'textEscaped' => wfMessage( 'global-navigation-explore-wikia-mercury-link-label' )->escaped(),
-					'href' => wfMessage( 'global-navigation-explore-wikia-link' )->plain(),
-					'trackingLabel' => 'explore-wikia'
-				];
-			}
-
-			return [
-				'hubsLinks' => $navigationNodes[ 'hubs' ],
-				'exploreWikia' => $navigationNodes[ 'exploreWikia' ],
-				'exploreWikiaMenu' => $navigationNodes[ 'exploreDropdown' ],
-				'localNav' => $localNavigation,
-				'fandomLabel' => wfMessage( 'global-navigation-home-of-fandom' )->escaped()
+		// Add link to explore wikia only for EN language
+		if ( $wgLang->getCode() === WikiaLogoHelper::FANDOM_LANG ) {
+			$navigationNodes[ 'exploreDropdown' ][] = [
+				'text' => wfMessage( 'global-navigation-explore-wikia-mercury-link-label' )->plain(),
+				'textEscaped' => wfMessage( 'global-navigation-explore-wikia-mercury-link-label' )->escaped(),
+				'href' => wfMessage( 'global-navigation-explore-wikia-link' )->plain(),
+				'trackingLabel' => 'explore-wikia'
 			];
 		}
+
+		return [
+			'hubsLinks' => $navigationNodes[ 'hubs' ],
+			'exploreWikia' => $navigationNodes[ 'exploreWikia' ],
+			'exploreWikiaMenu' => $navigationNodes[ 'exploreDropdown' ],
+			'localNav' => $localNavigation,
+			'fandomLabel' => wfMessage( 'global-navigation-home-of-fandom' )->escaped()
+		];
 	}
 
 	/**
@@ -289,12 +286,9 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
-	 * @desc Returns wiki variables for the current wiki
-	 *
+	 * @desc Prepares wiki variables for the current wikia
 	 */
-	public function getWikiVariables() {
-		global $wgEnableGlobalNav2016;
-
+	private function prepareWikiVariables() {
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
 		$navigation = $this->getNavigation();
 		if ( empty( $navData ) ) {
@@ -303,13 +297,7 @@ class MercuryApiController extends WikiaController {
 			);
 		}
 
-		if ( !empty( $wgEnableGlobalNav2016 ) ) {
-			$wikiVariables[ 'navigation' ] = $navigation[ 'localNav' ];
-			$wikiVariables[ 'navigation2016' ] = $navigation;
-		} else {
-			$wikiVariables[ 'navigation' ] = $navigation;
-		}
-
+		$wikiVariables[ 'navigation2016' ] = $navigation;
 		$wikiVariables[ 'vertical' ] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )[ 'short' ];
 		$wikiVariables[ 'basePath' ] = $this->wg->Server;
 
@@ -341,13 +329,72 @@ class MercuryApiController extends WikiaController {
 		}
 
 		// template for non-main pages (use $1 for article name)
-		$wikiVariables[ 'htmlTitleTemplate' ] = ( new WikiaHtmlTitle() )->setParts( [ '$1' ] )->getTitle();
+		$wikiVariables['htmlTitleTemplate'] = ( new WikiaHtmlTitle() )->setParts( ['$1'] )->getTitle();
+		return $wikiVariables;
+	}
+
+	/**
+	 * @desc Returns wiki variables for the current wikia
+	 *
+	 */
+	public function getWikiVariables() {
+		$wikiVariables = $this->prepareWikiVariables();
 
 		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
 		// cache wikiVariables for 1 minute
 		$this->response->setCacheValidity( self:: WIKI_VARIABLES_CACHE_TTL );
+	}
+
+	/**
+	 * @desc for classic or CK editor markup return
+	 * wikitext ready to process and display in Mercury skin
+	 *
+	 * @throws \BadRequestApiException
+	 * @throws \MWException
+	 */
+	public function getArticleFromMarkup() {
+		global $wgUser, $wgRequest;
+
+		if ( !$wgRequest->wasPosted() ) {
+			throw new BadRequestApiException();
+		}
+
+		// set mobile skin explicitly as we want to get parser output for Mercury
+		RequestContext::getMain()->setSkin( Skin::newFromKey( 'wikiamobile' ) );
+
+		$wikitext = $this->getVal( 'wikitext' );
+		$titleText = !empty( $this->getVal( 'title' ) ) ? $this->getVal( 'title' ) : '';
+		$title = Title::newFromText( $titleText );
+		$parserOptions = new ParserOptions( $wgUser );
+		$wrapper = new GlobalStateWrapper( ['wgArticleAsJson' => true] );
+
+		if( !empty( $this->getVal( 'CKmarkup' ) ) ) {
+			$wikitext = RTE::HtmlToWikitext( $this->getVal( 'CKmarkup' ) );
+		}
+
+		if ( $title ) {
+			$wrapper->wrap( function () use ( &$articleAsJson, $wikitext, $title, $parserOptions ) {
+				// explicit revisionId of -1 passed to ensure proper behavior on ArticleAsJson end
+				$articleAsJson = json_decode(ParserPool::create()->parse( $wikitext, $title, $parserOptions, true, true, -1 )->getText());
+			});
+		} else {
+			$this->response->setVal( 'data', ['content' => 'Invalid title'] );
+			return;
+		}
+
+		$data['article'] = [
+			'content' => $articleAsJson->content,
+			'media' => $articleAsJson->media
+		];
+
+		$wikiVariables = $this->prepareWikiVariables();
+
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		$this->response->setVal( 'data', $data );
+		$this->response->setVal( 'wikiVariables', $wikiVariables );
 	}
 
 	/**

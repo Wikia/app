@@ -47,6 +47,7 @@ class OasisController extends WikiaController {
 		$this->dynamicYield = null;
 		$this->ivw2 = null;
 		$this->ivw3 = null;
+		$this->krux = null;
 
 		wfProfileOut(__METHOD__);
 	}
@@ -236,6 +237,7 @@ class OasisController extends WikiaController {
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw3 = AnalyticsEngine::track('IVW3', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->krux = AnalyticsEngine::track('Krux', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
 
 		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {

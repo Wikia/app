@@ -350,12 +350,12 @@ class CuratedContentController extends WikiaController {
 				}, $this->communityDataService->getCurated() );
 
 				$featured = $this->communityDataService->getFeatured();
-				if ( !empty( $featured ) && !empty( $curated ) ) {
+				if ( !empty( $featured ) ) {
 					$featured[ 'featured' ] = 'true';
 					$curated[] = $featured;
 				}
 				$optional = $this->communityDataService->getOptional();
-				if ( !empty( $optional ) && !empty( $curated ) ) {
+				if ( !empty( $optional ) ) {
 					$curated[] = $optional;
 				}
 
@@ -369,6 +369,11 @@ class CuratedContentController extends WikiaController {
 				$community = $this->communityDataService->getCommunityData();
 				if ( !empty( $community ) ) {
 					$community[ 'community_data' ] = 'true';
+
+					if ( !empty( $community[ 'image_id' ] ) ) {
+						$url = CuratedContentHelper::getImageUrl( $community[ 'image_id' ] );
+						$community[ 'image_url' ] = $url;
+					}
 					$data[] = $community;
 				}
 

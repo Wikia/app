@@ -5,13 +5,13 @@
 		</div>
 		<div class="speech-bubble-message">
 			<? if ( $wg->EnableMiniEditorExtForWall ):
-				echo $app->getView( 'MiniEditorController', 'Header', array(
-					'attributes' => array(
+				echo $app->getView( 'MiniEditorController', 'Header', [
+					'attributes' => [
 						'id' => 'wall-new-message',
 						'data-min-height' => 200,
 						'data-max-height' => 400
-					)
-				))->render();
+					]
+				] )->render();
 			endif; ?>
 			<div class="no-title-container">
 				<div class="no-title-warning" style="display:none"><?= wfMsg('wall-no-title-warning') ?></div>

@@ -46,6 +46,8 @@ define('wikia.preview', [
 					modalHeight = options.height || $(window).height() - 250,
 					modalHeightModifier = 0;
 
+				$contentNode.startThrobbing();
+
 				// block all clicks
 				$contentNode.on('click', function (ev) {
 					var target = $(ev.target);
@@ -67,34 +69,9 @@ define('wikia.preview', [
 		}, options);
 
 		// use loading indicator before real content will be fetched
-		var content = '<div class="ArticlePreview"><div class="ArticlePreviewInner"><img src="' +
-			window.stylepath +
-			'/common/images/ajax.gif" class="loading"></div></div>';
+		var content = '<div class="ArticlePreview"><div class="ArticlePreviewInner"></div></div>';
 
 		$.showCustomModal(title, content, options);
-	}
-
-	/**
-	 * @desc Handles appending mobile preview to modal
-	 *
-	 * This is a separate skin so we're loading it in iframe
-	 * @param {object} data - data that comes from preview api
-	 */
-	function handleMobilePreview(data) {
-		var iframe = $article.html(
-				'<div class="mobile-preview"><iframe width="320" height="480"></iframe></div>'
-			).find('iframe')[0],
-			doc = iframe.document;
-
-		if (iframe.contentDocument) {
-			doc = iframe.contentDocument;
-		} else if (iframe.contentWindow) {
-			doc = iframe.contentWindow.document;
-		}
-
-		doc.open();
-		doc.writeln(data.html);
-		doc.close();
 	}
 
 	/**
@@ -115,6 +92,7 @@ define('wikia.preview', [
 	function loadPreview(type, opening) {
 		if (!opening) {
 			$previewTypeDropdown.attr('disabled', true);
+			$article.html('');
 			$article.parent().startThrobbing();
 		}
 
@@ -123,9 +101,7 @@ define('wikia.preview', [
 			$previewTypeDropdown.attr('disabled', false);
 			$article.parent().stopThrobbing();
 
-			if (type === previewTypes.mobile.name) {
-				handleMobilePreview(data);
-			} else {
+			if (type !== previewTypes.mobile.name) {
 				handleDesktopPreview(data);
 			}
 
@@ -152,7 +128,9 @@ define('wikia.preview', [
 					$this.appendTo($this.next());
 				});
 
-				addEditSummary($article, editPageOptions.width, data.summary);
+				if (data) {
+					addEditSummary($article, editPageOptions.width, data.summary);
+				}
 
 				// fire an event once preview is rendered
 				$(window).trigger('EditPageAfterRenderPreview', [$article]);

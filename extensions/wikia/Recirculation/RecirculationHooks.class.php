@@ -32,6 +32,7 @@ class RecirculationHooks {
 	}
 
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+		JSMessages::enqueuePackage( 'Recirculation', JSMessages::EXTERNAL );
 		Wikia::addAssetsToOutput( 'recirculation_scss' );
 		return true;
 	}
@@ -44,18 +45,25 @@ class RecirculationHooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-		$jsAssets[] = 'recirculation_js';
+		if ( self::isCorrectPageType() ) {
+			$jsAssets[] = 'recirculation_js';
+
+			if ( self::canShowDiscussions() ) {
+				$jsAssets[] = 'recirculation_discussions_js';
+			}
+		}
 
 		return true;
 	}
 
 	/**
-	 * Return whether we're on one of the pages where we want to show the Videos Module,
+	 * Return whether we're on one of the pages where we want to show the Recirculation widgets,
 	 * specifically File pages, Article pages, and Main pages
 	 * @return bool
 	 */
-	static public function canShowVideosModule() {
+	static public function isCorrectPageType() {
 		$wg = F::app()->wg;
+
 		$showableNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE ] );
 
 		if ( $wg->Title->exists()
@@ -64,7 +72,27 @@ class RecirculationHooks {
 			&& $wg->request->getVal( 'diff' ) === null
 		) {
 			return true;
+		} else {
+			return false;
 		}
-		return false;
+	}
+
+	static public function canShowVideosModule() {
+		$wg = F::app()->wg;
+
+		if ( !empty( $wg->EnableVideosModuleExt ) && self::isCorrectPageType() ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	static public function canShowDiscussions() {
+		$wg = F::app()->wg;
+		if ( !empty( $wg->EnableRecirculationDiscussions ) ) {
+			return true;
+		} else {
+			return false;
+		}		
 	}
 }

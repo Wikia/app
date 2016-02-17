@@ -43,7 +43,7 @@ foreach ( $wgInfoboxParserNodes as $parserNode ) {
 }
 
 // helpers
-$wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\InfoboParamsValidator' ] = $dir . 'services/Helpers/InfoboParamsValidator.php';
+$wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\InfoboxParamsValidator' ] = $dir . 'services/Helpers/InfoboxParamsValidator.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag' ] = $dir . 'services/Helpers/PortableInfoboxDataBag.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper' ] = $dir . 'services/Helpers/PortableInfoboxRenderServiceHelper.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxTemplatesHelper' ] = $dir . 'services/Helpers/PortableInfoboxTemplatesHelper.php';
@@ -66,7 +66,6 @@ $wgAutoloadClasses[ 'ApiPortableInfobox' ] = $dir . 'controllers/ApiPortableInfo
 $wgAutoloadClasses[ 'ApiQueryPortableInfobox' ] = $dir . 'controllers/ApiQueryPortableInfobox.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxHooks' ] = $dir . 'PortableInfoboxHooks.class.php';
 $wgAutoloadClasses[ 'ApiQueryAllinfoboxes' ] = $dir . 'controllers/ApiQueryAllinfoboxes.class.php';
-$wgAutoloadClasses[ 'PortableInfoboxBuilderController' ] = $dir . 'controllers/PortableInfoboxBuilderController.class.php';
 
 // query pages
 $wgAutoloadClasses[ 'AllinfoboxesQueryPage' ] = $dir . 'querypage/AllinfoboxesQueryPage.php';

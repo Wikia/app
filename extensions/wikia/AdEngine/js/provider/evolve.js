@@ -122,54 +122,54 @@ define('ext.wikia.adEngine.provider.evolve', [
 		hoppedSlots[sanitizeSlotname(slotname)] = true;
 	}
 
-	function fillInSlot(slotName, slotElement, pSuccess, pHop) {
-		log(['fillInSlot', slotName, slotElement], 5, logGroup);
+	function fillInSlot(slot) {
+		log(['fillInSlot', slot.name], 5, logGroup);
 
-		if (slotName === slotForSkin) {
+		if (slot.name === slotForSkin) {
 			scriptWriter.injectScriptByUrl(
-				slotElement,
+				slot.container,
 				'http://cdn.triggertag.gorillanation.com/js/triggertag.js',
 				function () {
 					log('(invisible triggertag) ghostwriter done', 5, logGroup);
 
-					scriptWriter.injectScriptByText(slotElement, getReskinAndSilverScript(slotName), function () {
+					scriptWriter.injectScriptByText(slot.container, getReskinAndSilverScript(slot.name), function () {
 						// gorrilla skin is suppressed by body.mediawiki !important so make it !important too
 						if (document.body.style.backgroundImage.search(/http:\/\/cdn\.assets\.gorillanation\.com/) !== -1) {
 							document.body.style.cssText = document.body.style.cssText.replace(document.body.style.backgroundImage, document.body.style.backgroundImage + ' !important');
 							document.body.style.cssText = document.body.style.cssText.replace(document.body.style.backgroundColor, document.body.style.backgroundColor + ' !important');
 						}
 
-						if (hoppedSlots[slotName]) {
-							pHop({method: 'hop'});
+						if (hoppedSlots[slot.name]) {
+							slot.hop({method: 'hop'});
 							return;
 						}
 
-						pSuccess();
+						slot.success();
 					});
 				}
 			);
 		} else {
-			scriptWriter.injectScriptByUrl(slotElement, getUrl(slotName), function () {
-				if (hoppedSlots[slotName]) {
-					pHop({method: 'hop'});
+			scriptWriter.injectScriptByUrl(slot.container, getUrl(slot.name), function () {
+				if (hoppedSlots[slot.name]) {
+					slot.hop({method: 'hop'});
 					return;
 				}
 
 				// Success
 				// TODO: find a better place for operation below
-				slotTweaker.removeDefaultHeight(slotName);
-				slotTweaker.removeTopButtonIfNeeded(slotName);
-				slotTweaker.adjustLeaderboardSize(slotName);
+				slotTweaker.removeDefaultHeight(slot.name);
+				slotTweaker.removeTopButtonIfNeeded(slot.name);
+				slotTweaker.adjustLeaderboardSize(slot.name);
 
-				pSuccess();
+				slot.success();
 			});
 		}
 	}
 
-	function canHandleSlot(slotname) {
-		log(['canHandleSlot', slotname], 5, logGroup);
+	function canHandleSlot(slotName) {
+		log(['canHandleSlot', slotName], 5, logGroup);
 
-		return evolveSlotConfig.canHandleSlot(slotname);
+		return evolveSlotConfig.canHandleSlot(slotName);
 	}
 
 	iface = {

@@ -142,4 +142,7 @@ $messages = array_merge( $messages, array(
 
 'group-content-moderator' => 'Moderadores de contenido',
 'group-content-moderator-member' => 'Moderador de contenido',
+
+	'wikia-read-only-mode' => 'Nuestro centro de datos principal no se encuentra disponible en estos momentos, esta es nuestra copia de seguridad. Desgraciadamente, esto significa que no puedes ser capaz de hacer ciertas cosas como editar, subir archivos o chatear.
++ ¡Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si ves este mensaje por un largo período de tiempo, no dudes en contactarte con Wikia a través de community@wikia.com.',
 ) );

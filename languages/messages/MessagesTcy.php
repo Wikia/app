@@ -398,11 +398,6 @@ $messages = array(
 'resetpass-submit-cancel'   => 'ವಜಾ ಮಲ್ಪುಲೆ',
 'resetpass-temp-password'   => 'ತಾತ್ಕಾಲಿಕ ಪ್ರವೇಶಪದ:',
 
-# Special:PasswordReset
-'passwordreset'          => 'ಪ್ರವೇಶ ಪದನ್ ರಿಸೆಟ್ ಮಲ್ಪುಲೆ',
-'passwordreset-username' => 'ಸದಸ್ಯೆರ್ನ ಪುದರ್:',
-'passwordreset-email'    => 'ಇ-ಅಂಚೆ ವಿಳಾಸೊ',
-
 # Special:ChangeEmail
 'changeemail-submit' => 'ಇ-ಅಂಚೆ ವಿಳಾಸ ಬದಲಾವಣೆ ಮಲ್ಪುಲೆ',
 'changeemail-cancel' => 'ವಜಾ ಮಲ್ಪುಲೆ',
