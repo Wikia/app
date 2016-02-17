@@ -8,12 +8,26 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 
 	const SAVE_OPTION_TYPE = 'SaveOption';
 	const CUSTOMER_KEY_USER = 'user';
-	const EXACT_TARGET_USER_ID_PROPERTY = 'user_id';
+	const CUSTOMER_KEY_USER_PROPERTIES = 'user_properties';
 
+	const EXACT_TARGET_USER_ID_PROPERTY = 'user_id';
 	private $userData;
+	private $userId;
+
+	private $properties;
 
 	public function withUserData( array $userData ) {
 		$this->userData = $userData;
+		return $this;
+	}
+
+	public function withUserId( $userId ) {
+		$this->userId = $userId;
+		return $this;
+	}
+
+	public function withProperties( $properties ) {
+		$this->properties = $properties;
 		return $this;
 	}
 
@@ -25,10 +39,39 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 		$oRequest->Options = $this->prepareUpdateCreateOptions();
 
 		// prepare exact target structure
-		$userObjects = $this->prepareUsersUpdateParams( $this->userData );
+		$objects = [ ];
+		if ( isset( $this->properties ) ) {
+			$objects = $this->prepareUserPreferencesParams( $this->userId, $this->properties );
+		} elseif ( isset( $this->userData ) ) {
+			$objects = $this->prepareUsersUpdateParams( $this->userData );
+		}
 		// make it soap vars
-		$oRequest->Objects = $this->prepareSoapVars( $userObjects, self::DATA_EXTENSION_OBJECT_TYPE );
+		$oRequest->Objects = $this->prepareSoapVars( $objects, self::DATA_EXTENSION_OBJECT_TYPE );
+		//		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
+
 		return $oRequest;
+	}
+
+	/**
+	 * @param $id
+	 * @param $properties
+	 * @return array
+	 * @throws \Wikia\Util\AssertionException
+	 */
+	private function prepareUserPreferencesParams( $id, $properties ) {
+		Assert::true( isset( $this->userId ) );
+		$objects = [ ];
+		foreach ( $properties as $sProperty => $sValue ) {
+			$oDE = new \ExactTarget_DataExtensionObject();
+			$oDE->CustomerKey = self::CUSTOMER_KEY_USER_PROPERTIES;
+			$oDE->Properties = [ $this->wrapApiProperty( 'up_value', $sValue ) ];
+			$oDE->Keys = [
+				$this->wrapApiProperty( 'up_user', $id ),
+				$this->wrapApiProperty( 'up_property', $sProperty )
+			];
+			$objects[] = $oDE;
+		}
+		return $objects;
 	}
 
 	/**

@@ -61,6 +61,30 @@ class ExactTargetClient implements Client {
 		//		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$createSubscriberResult ) );
 	}
 
+	public function createUserProperties( $iUserId, array $aUserProperties ) {
+		$oRequest = ExactTargetRequestBuilder::createUpdate()
+			->withUserId( $iUserId )
+			->withProperties( $aUserProperties )
+			->build();
+
+		$oCreateUserPropertiesResult = $this->sendRequest( 'Update', $oRequest );
+
+		//		$this->info( __METHOD__ . ' OverallStatus: ' . $oCreateUserPropertiesResult->OverallStatus );
+		//		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oCreateUserPropertiesResult ) );
+
+		if ( $oCreateUserPropertiesResult->OverallStatus === 'Error' ) {
+			throw new \Exception(
+				'Error in ' . __METHOD__ . ': ' . $oCreateUserPropertiesResult->Results[ 0 ]->StatusMessage
+			);
+		}
+
+		$oUserDataVerificationTask = new ExactTargetUserDataVerificationTask();
+		$oUserDataVerificationTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
+		$bUserDataVerificationResult = $oUserDataVerificationTask->verifyUserPropertiesData( $iUserId );
+
+		return $bUserDataVerificationResult;
+	}
+
 	/**
 	 * Checks whether there are any users that has provided email
 	 * @param string $sEmail Email address to check in ExactTarget
