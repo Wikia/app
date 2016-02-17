@@ -565,7 +565,7 @@ class WallHooksHelper {
 		$dropdown = $response->getVal( 'dropdown' );
 		$canEdit = $app->wg->User->isAllowed( 'editwallarchivedpages' );
 
-		if ($title->isSubpage() && !empty( $parts[ 1 ] )){
+		if ( $title->isSubpage() && !empty( $parts[ 1 ] ) ) {
 			// user talk archive
 			if ($ns === NS_USER_WALL
 				&& mb_strtolower( str_replace( ' ', '_', $parts[ 1 ] ) ) === mb_strtolower( $helper->getArchiveSubPageText())){
