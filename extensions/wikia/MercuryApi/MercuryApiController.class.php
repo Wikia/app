@@ -449,6 +449,14 @@ class MercuryApiController extends WikiaController {
 		}
 
 		$data['ns'] = $title->getNamespace();
+
+		switch ($data['ns']) {
+			case 14:
+			case '14':
+				$data['content'] = (new MercuryApiCategoryHandler($title))->getCategoryContent();
+				break;
+		}
+
 		$data['articleType'] = WikiaPageType::getArticleType( $title );
 		$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
 

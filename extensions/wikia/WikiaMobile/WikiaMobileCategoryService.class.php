@@ -48,7 +48,7 @@ class WikiaMobileCategoryService extends WikiaService {
 			$this->initModel();
 
 			$items = $this->model->getExhibitionItems( $title );
-			
+
 			if ( empty( $items ) ) {
 				wfProfileOut( __METHOD__ );
 				return false;
