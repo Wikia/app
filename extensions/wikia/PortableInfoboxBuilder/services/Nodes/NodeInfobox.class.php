@@ -1,8 +1,8 @@
 <?php
 
-namespace Wikia\PortableInfoboxBuilder\Validators;
+namespace Wikia\PortableInfoboxBuilder\Nodes;
 
-class NodeInfoboxValidator extends NodeValidator {
+class NodeInfobox extends Node {
 	/**
 	 * allowed node attributes
 	 * @var array of string
@@ -15,4 +15,11 @@ class NodeInfoboxValidator extends NodeValidator {
 	 */
 	protected $allowedChildNodes = [ 'data', 'image', 'title' ];
 
+	/**
+	 * Parent node explicitly does NOT provide type
+	 * @return null
+	 */
+	public function getType() {
+		return null;
+	}
 }

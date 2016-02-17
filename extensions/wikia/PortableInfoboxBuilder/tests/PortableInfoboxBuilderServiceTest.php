@@ -24,8 +24,11 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	 * @dataProvider markupTranslationsDataProvider
 	 */
 	public function testTranslationFromMarkup( $markup, $expected ) {
-		$this->markTestIncomplete('Feature under development');
-		$this->assertEquals( $expected, $this->builderService->translateDataToMarkup( $markup ) );
+		$generated_json = json_decode($this->builderService->translateMarkupToData( $markup ));
+		$expected_json = json_decode($expected);
+		print_r($expected_json);
+		print_r($generated_json);
+		$this->assertEquals( $expected_json, $generated_json );
 	}
 
 	/**
@@ -71,13 +74,11 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 			[ "", "[]" ],
 			[ '<infobox><data source="asdf"/></infobox>', '{"data":[{"type":"row", "source":"asdf"}]}' ],
 			[ '<infobox><data source="asdf"><label>asdfsda</label></data></infobox>', '{"data":[{"type":"row", "source":"asdf", "data": {"label": "asdfsda"}}]}' ],
-			[ '<infobox><data source="asdf"/></infobox>', '{"data":[{"type":"row", "source":"asdf", "data": {"label": ""}}]}' ],
+			[ '<infobox><data source="asdf"/></infobox>', '{"data":[{"type":"row", "source":"asdf"}]}' ],
 			[ '<infobox><title source="title"><default>{{PAGENAME}}</default></title></infobox>', '{"data":[{"type":"title", "source":"title", "data": {"defaultValue": "{{PAGENAME}}"}}]}' ],
-			[ '<infobox><title source="title"/></infobox>', '{"data":[{"type":"title", "source":"title", "data": {"defaultValue": ""}}]}' ],
+			[ '<infobox><title source="title"/></infobox>', '{"data":[{"type":"title", "source":"title"}]}' ],
 			[ '<infobox><title source="title"><default>0</default></title></infobox>', '{"data":[{"type":"title", "source":"title", "data": {"defaultValue": "0"}}]}' ],
-			[ '<infobox><group><data source="asdf"/></group></infobox>', '{"data":[{"type":"group", "data": [{"type": "row", "source": "asdf"}]}]}' ],
-			[ '<infobox theme="asdf"><image source="image"><alt source="title"><default>asdf</default></alt></image></infobox>', '{"theme": "asdf", "data": [{"type": "image", "source": "image", "data": { "alt": {"source": "title", "data": {"default": "asdf"}}}}]}' ],
-			[ '<infobox theme="adsf"><group><header>asdf</header></group></infobox>', '{"theme": "adsf", "data": [{"type": "group", "data": [{"type":"header", "data":"asdf"}]}]}' ]
+			[ '<infobox><title source="title1"/><image source="image1"><caption source="caption1"/></image><data source="row1"><label>Label 1</label></data><data source="row2"><label>Label 2</label></data><image source="image2"><caption source="caption2"/></image><image source="image3"><caption source="caption3"/></image></infobox>', '{"data":[{"source":"title1","type":"title"},{"data":{"caption":{"source":"caption1"}},"source":"image1","type":"image"},{"data":{"label":"Label 1"},"source":"row1","type":"row"},{"data":{"label":"Label 2"},"source":"row2","type":"row"},{"data":{"caption":{"source":"caption2"}},"source":"image2","type":"image"},{"data":{"caption":{"source":"caption3"}},"source":"image3","type":"image"}]}' ]
 		];
 	}
 

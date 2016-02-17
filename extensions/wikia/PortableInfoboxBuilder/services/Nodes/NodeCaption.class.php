@@ -1,8 +1,8 @@
 <?php
 
-namespace Wikia\PortableInfoboxBuilder\Validators;
+namespace Wikia\PortableInfoboxBuilder\Nodes;
 
-class NodeCaptionValidator extends NodeValidator {
+class NodeCaption extends Node {
 	/**
 	 * allowed node attributes
 	 * @var array of string
@@ -14,4 +14,8 @@ class NodeCaptionValidator extends NodeValidator {
 	 * @var array string
 	 */
 	protected $allowedChildNodes = [ ];
+
+	public function asJson() {
+		return [ 'caption' => [ 'source' => (string)$this->xmlNode->attributes()['source'] ] ];
+	}
 }

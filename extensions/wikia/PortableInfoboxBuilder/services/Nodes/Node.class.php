@@ -1,11 +1,8 @@
 <?php
 
-namespace Wikia\PortableInfoboxBuilder\Validators;
+namespace Wikia\PortableInfoboxBuilder\Nodes;
 
-use Wikia\PortableInfobox\Parser\Nodes\Node;
-use Wikia\PortableInfobox\Parser\Nodes\NodeFactory;
-
-abstract class NodeValidator {
+abstract class Node {
 	/**
 	 * allowed node attributes
 	 * @var array of string
@@ -24,7 +21,7 @@ abstract class NodeValidator {
 	protected $xmlNode;
 
 	/**
-	 * NodeValidator constructor.
+	 * Node constructor.
 	 * @param $node \SimpleXMLElement
 	 */
 	public function __construct( \SimpleXMLElement $node ) {
@@ -44,6 +41,30 @@ abstract class NodeValidator {
 		return true;
 	}
 
+	public function asJson() {
+		$result = new \StdClass();
+
+		foreach ( $this->xmlNode->attributes() as $attribute => $value ) {
+			$result->$attribute = (string)$value;
+		}
+
+		$data = $this->getChildrenAsJson();
+
+		if(!empty($data)) {
+			$result->data = $data;
+		}
+		$type = $this->getType();
+		if(!empty($type)) {
+			$result->type= $type;
+		}
+
+		return $result;
+	}
+
+	protected function getType() {
+		return $this->xmlNode->getName();
+	}
+
 	protected function hasValidAttributes() {
 		foreach ( $this->xmlNode->attributes() as $attribute => $value ) {
 			if ( !in_array( $attribute, $this->allowedAttributes ) ) {
@@ -54,16 +75,30 @@ abstract class NodeValidator {
 	}
 
 	protected function hasValidChildren() {
-		foreach ( $this->xmlNode as $childNode ) {
+		foreach ( $this->xmlNode->children() as $childNode ) {
 			if ( !in_array( $childNode->getName(), $this->allowedChildNodes) ) {
 				return false;
 			}
 
-			$validator = ValidatorBuilder::createFromNode( $childNode );
-			if ( !$validator->isValid() ) {
+			$builderNode = NodeBuilder::createFromNode( $childNode );
+			if ( !$builderNode->isValid() ) {
 				return false;
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * @return array
+	 * @throws \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException
+	 */
+	public function getChildrenAsJson() {
+		$data = [];
+
+		foreach ( $this->xmlNode->children() as $childNode ) {
+			$builderNode = NodeBuilder::createFromNode( $childNode );
+			$data[] = $builderNode->asJson();
+		}
+		return $data;
 	}
 }

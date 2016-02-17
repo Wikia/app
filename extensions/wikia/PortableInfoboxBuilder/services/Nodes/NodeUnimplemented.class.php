@@ -1,8 +1,8 @@
 <?php
 
-namespace Wikia\PortableInfoboxBuilder\Validators;
+namespace Wikia\PortableInfoboxBuilder\Nodes;
 
-class NodeLabelValidator extends NodeValidator {
+class NodeUnimplemented extends Node {
 	/**
 	 * allowed node attributes
 	 * @var array of string
@@ -14,4 +14,8 @@ class NodeLabelValidator extends NodeValidator {
 	 * @var array string
 	 */
 	protected $allowedChildNodes = [ ];
+
+	public function isValid() {
+		return false;
+	}
 }

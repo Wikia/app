@@ -1,8 +1,8 @@
 <?php
 
-namespace Wikia\PortableInfoboxBuilder\Validators;
+namespace Wikia\PortableInfoboxBuilder\Nodes;
 
-class NodeUnimplementedValidator extends NodeValidator {
+class NodeDefault extends Node {
 	/**
 	 * allowed node attributes
 	 * @var array of string
@@ -15,7 +15,7 @@ class NodeUnimplementedValidator extends NodeValidator {
 	 */
 	protected $allowedChildNodes = [ ];
 
-	public function isValid() {
-		return false;
+	public function asJson() {
+		return [ 'defaultValue' => (string)$this->xmlNode ];
 	}
 }

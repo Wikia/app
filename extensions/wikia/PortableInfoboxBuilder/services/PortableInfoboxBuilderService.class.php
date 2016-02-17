@@ -40,9 +40,15 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 * @see PortableInfoboxBuilderServiceTest::translationsDataProvider
 	 */
 	public function translateMarkupToData( $infoboxMarkup ) {
-		$builderData = [];
+		$jsonObject = [];
 
-		return json_encode($builderData);
+		$xmlNode = simplexml_load_string( $infoboxMarkup );
+		if($xmlNode) {
+			$builderNode = \Wikia\PortableInfoboxBuilder\Nodes\NodeBuilder::createFromNode($xmlNode);
+			$jsonObject = $builderNode->asJson($xmlNode);
+		}
+
+		return json_encode( $jsonObject );
 	}
 
 	/**
@@ -51,8 +57,8 @@ class PortableInfoboxBuilderService extends WikiaService {
 	public function isSupportedMarkup( $infoboxMarkup ) {
 		$xmlNode = simplexml_load_string( $infoboxMarkup );
 		if ( $xmlNode ) {
-			$validator = \Wikia\PortableInfoboxBuilder\Validators\ValidatorBuilder::createFromNode( $xmlNode );
-			return $validator->isValid();
+			$builderNode = \Wikia\PortableInfoboxBuilder\Nodes\NodeBuilder::createFromNode( $xmlNode );
+			return $builderNode->isValid();
 		}
 		return false;
 	}
@@ -77,7 +83,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 		$infobox = \Wikia\PortableInfobox\Parser\Nodes\NodeFactory::newFromXML( $infoboxMarkup );
 
 		return (new Wikia\Template\PHPEngine() )
-			->setPrefix( dirname( __FILE__ ) . '/templates' )
+			->setPrefix( dirname( dirname( __FILE__ ) ) . '/templates' )
 			->setData(
 				[
 					'title' => $title->getText(),
