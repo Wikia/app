@@ -1344,45 +1344,6 @@ class User {
 	}
 
 	/**
-	 * Add the user to the group if he/she meets given criteria.
-	 *
-	 * Contrary to autopromotion by \ref $wgAutopromote, the group will be
-	 *   possible to remove manually via Special:UserRights. In such case it
-	 *   will not be re-added automatically. The user will also not lose the
-	 *   group if they no longer meet the criteria.
-	 *
-	 * @param $event String key in $wgAutopromoteOnce (each one has groups/criteria)
-	 *
-	 * @return array Array of groups the user has been promoted to.
-	 *
-	 * @see $wgAutopromoteOnce
-	 */
-	public function addAutopromoteOnceGroups( $event ) {
-		global $wgAutopromoteOnceLogInRC;
-
-		$toPromote = array();
-		if ( $this->getId() ) {
-			$toPromote = Autopromote::getAutopromoteOnceGroups( $this, $event );
-			if ( count( $toPromote ) ) {
-				$oldGroups = $this->getGroups(); // previous groups
-				foreach ( $toPromote as $group ) {
-					$this->addGroup( $group );
-				}
-				$newGroups = array_merge( $oldGroups, $toPromote ); // all groups
-
-				$log = new LogPage( 'rights', $wgAutopromoteOnceLogInRC /* in RC? */ );
-				$log->addEntry( 'autopromote',
-					$this->getUserPage(),
-					'', // no comment
-					// These group names are "list to texted"-ed in class LogPage.
-					array( implode( ', ', $oldGroups ), implode( ', ', $newGroups ) )
-				);
-			}
-		}
-		return $toPromote;
-	}
-
-	/**
 	 * Clear various cached data stored in this object.
 	 * @param $reloadFrom bool|String Reload user and user_groups table data from a
 	 *   given source. May be "name", "id", "defaults", "session", or false for
