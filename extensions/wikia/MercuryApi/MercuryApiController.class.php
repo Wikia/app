@@ -422,6 +422,7 @@ class MercuryApiController extends WikiaController {
 
 			if ( $this->shouldGetMainPageData( $isMainPage ) ) {
 				$data['mainPageData'] = $this->getMainPageData();
+				$data['details'] = $this->getArticleDetails($article);
 			} elseif ( $title->isContentPage() && $title->isKnown() ) {
 				$data = array_merge( $data, $this->getArticleData( $article ) );
 
