@@ -141,6 +141,7 @@ class WallController extends WallBaseController {
 		return $this->parserText( $text );
 	}
 
+	/** @param User $wallOwner */
 	protected function checkAndSetUserBlockedStatus( $wallOwner = null ) {
 		$user = $this->app->wg->User;
 

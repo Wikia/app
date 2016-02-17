@@ -1,4 +1,5 @@
 <?php
+
 /**
  * A class which represents a user wall. A Wall is a replacement for the main part of the User_talk page.
  * A Wall consists of "Bricks" which are each a single topic/thread/conversation.
@@ -19,13 +20,13 @@ class WallBaseController extends WikiaController {
 	public function addAsset() {
 		JSMessages::enqueuePackage( 'Wall', JSMessages::EXTERNAL );
 
-		$this->response->addAsset( 'wall_topic_js' );	// need to load on thread only
+		$this->response->addAsset( 'wall_topic_js' );    // need to load on thread only
 		$this->response->addAsset( 'wall_js' );
 		$this->response->addAsset( 'extensions/wikia/Wall/css/Wall.scss' );
-		$this->response->addAsset( 'extensions/wikia/Wall/css/MessageTopic.scss' );	// need to load on thread only
+		$this->response->addAsset( 'extensions/wikia/Wall/css/MessageTopic.scss' );    // need to load on thread only
 
 		// Load MiniEditor assets, if enabled
-		if ( $this->wg->EnableMiniEditorExtForWall &&  F::app()->checkSkin( 'oasis' ) ) {
+		if ( $this->wg->EnableMiniEditorExtForWall && F::app()->checkSkin( 'oasis' ) ) {
 			$this->sendRequest( 'MiniEditor', 'loadAssets', [
 				'additionalAssets' => [
 					'wall_mini_editor_js',
@@ -46,7 +47,6 @@ class WallBaseController extends WikiaController {
 
 		$this->addAsset();
 
-		$title = $this->request->getVal( 'title', $this->app->wg->Title );
 		$id = $this->request->getVal( 'id', null );
 
 		$this->getThread( $id );
@@ -58,7 +58,7 @@ class WallBaseController extends WikiaController {
 		if ( count( $this->threads ) > 0 ) {
 			$wn = new WallNotifications();
 			foreach ( $this->threads as $key => $val ) {
-				$all = $wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $key );
+				$wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $key );
 				break;
 			}
 		}
@@ -139,9 +139,9 @@ class WallBaseController extends WikiaController {
 		$wallMessage = $this->getWallMessage();
 		$this->response->setVal( 'canEdit', $wallMessage->canEdit( $this->wg->User, false ) );
 		$this->response->setVal( 'canDelete', $wallMessage->canDelete( $this->wg->User, false ) );
-		$this->response->setVal( 'canAdminDelete', $wallMessage->canAdminDelete( $this->wg->User, false )  && $wallMessage->isRemove()  );
+		$this->response->setVal( 'canAdminDelete', $wallMessage->canAdminDelete( $this->wg->User, false ) && $wallMessage->isRemove() );
 		$this->response->setVal( 'canFastAdminDelete', $wallMessage->canFastAdminDelete( $this->wg->User, false ) );
-		$this->response->setVal( 'canRemove', $wallMessage->canRemove( $this->wg->User, false )  && !$wallMessage->isRemove() );
+		$this->response->setVal( 'canRemove', $wallMessage->canRemove( $this->wg->User, false ) && !$wallMessage->isRemove() );
 		$this->response->setVal( 'canClose', $wallMessage->canArchive( $this->wg->User, false ) );
 		$this->response->setVal( 'canReopen', $wallMessage->canReopen( $this->wg->User, false ) );
 		$this->response->setVal( 'showViewSource', $this->wg->User->getGlobalPreference( 'wallshowsource', false ) );
@@ -178,15 +178,15 @@ class WallBaseController extends WikiaController {
 		 * let's take this items and add them to text
 		 */
 		foreach ( $wallMessage->getHeadItems() as $key => $val ) {
-			if ( empty( self::$uniqueHead[$key] ) ) {
+			if ( empty( self::$uniqueHead[ $key ] ) ) {
 				$head .= $val;
-				self::$uniqueHead[$key] = true;
+				self::$uniqueHead[ $key ] = true;
 			}
 		}
 
 		$this->response->setVal( 'head', $head );
 		$this->response->setVal( 'comment', $wallMessage );
-		$this->response->setVal( 'collapsed',  false );
+		$this->response->setVal( 'collapsed', false );
 		$this->response->setVal( 'showReplyForm', false );
 		$this->response->setVal( 'removedOrDeletedMessage', false );
 
@@ -212,7 +212,7 @@ class WallBaseController extends WikiaController {
 			$replies = $this->getVal( 'replies', [ ] );
 			$repliesCount = count( $replies );
 			$this->response->setVal( 'repliesNumber', $repliesCount );
-			$this->response->setVal( 'repliesLimit', WallThread::FETCHED_REPLIES_LIMIT);
+			$this->response->setVal( 'repliesLimit', WallThread::FETCHED_REPLIES_LIMIT );
 			$this->response->setVal( 'showRepliesNumber', $repliesCount );
 			$this->response->setVal( 'showLoadMore', false );
 
@@ -227,12 +227,12 @@ class WallBaseController extends WikiaController {
 
 			$this->response->setVal( 'showReplyForm', ( !$wallMessage->isRemove() && !$wallMessage->isAdminDelete() && !$wallMessage->isArchive() ) );
 
-			$this->response->setVal( 'relatedTopics',  $wallMessage->getRelatedTopics() );
+			$this->response->setVal( 'relatedTopics', $wallMessage->getRelatedTopics() );
 		} else {
 			$showFrom = $this->request->getVal( 'repliesNumber', 0 ) - $this->request->getVal( 'showRepliesNumber', 0 );
 			// $current = $this->request->getVal('current', false);
 			if ( $showFrom > $this->request->getVal( 'current' ) ) {
-				$this->response->setVal( 'collapsed',  true );
+				$this->response->setVal( 'collapsed', true );
 			}
 
 			$this->response->setVal( 'body', $wallMessage->getText() );
@@ -246,26 +246,26 @@ class WallBaseController extends WikiaController {
 
 		if ( $wallMessage->isEdited() ) {
 			if ( time() - $wallMessage->getEditTime( TS_UNIX ) < self::WALL_MESSAGE_RELATIVE_TIMESTAMP ) {
-				$this->response->setVal( 'iso_timestamp',  $wallMessage->getEditTime( TS_ISO_8601 ) );
+				$this->response->setVal( 'iso_timestamp', $wallMessage->getEditTime( TS_ISO_8601 ) );
 			} else {
 				$this->response->setVal( 'iso_timestamp', null );
 			}
-			$this->response->setVal( 'fmt_timestamp',  $this->wg->Lang->timeanddate( $wallMessage->getEditTime( TS_MW ) ) );
-			$this->response->setVal( 'showEditedTS',  true );
+			$this->response->setVal( 'fmt_timestamp', $this->wg->Lang->timeanddate( $wallMessage->getEditTime( TS_MW ) ) );
+			$this->response->setVal( 'showEditedTS', true );
 			$editorName = $wallMessage->getEditor()->getName();
 			$this->response->setVal( 'editorName', $editorName );
 			$editorUrl = Title::newFromText( $editorName, $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK )->getFullUrl();
-			$this->response->setVal( 'editorUrl',  $editorUrl );
-			$this->response->setVal( 'isEdited',  true );
+			$this->response->setVal( 'editorUrl', $editorUrl );
+			$this->response->setVal( 'isEdited', true );
 
 			$summary = $wallMessage->getLastEditSummary();
 
 			if ( !empty( $summary ) ) {
 				$summary = Linker::formatComment( $summary );
 				$this->response->setVal( 'summary', $summary );
-				$this->response->setVal( 'showSummary',  true );
+				$this->response->setVal( 'showSummary', true );
 			} else {
-				$this->response->setVal( 'showSummary',  false );
+				$this->response->setVal( 'showSummary', false );
 			}
 
 			$query = [
@@ -275,14 +275,14 @@ class WallBaseController extends WikiaController {
 
 			$this->response->setVal( 'historyUrl', $wallMessage->getTitle()->getFullUrl( $query ) );
 		} else {
-			$this->response->setVal( 'showEditedTS',  false );
+			$this->response->setVal( 'showEditedTS', false );
 			if ( time() - $wallMessage->getEditTime( TS_UNIX ) < self::WALL_MESSAGE_RELATIVE_TIMESTAMP ) {
-				$this->response->setVal( 'iso_timestamp',  $wallMessage->getCreatTime( TS_ISO_8601 ) );
+				$this->response->setVal( 'iso_timestamp', $wallMessage->getCreatTime( TS_ISO_8601 ) );
 			} else {
 				$this->response->setVal( 'iso_timestamp', null );
 			}
-			$this->response->setVal( 'fmt_timestamp',  $this->wg->Lang->timeanddate( $wallMessage->getCreatTime( TS_MW ) ) );
-			$this->response->setVal( 'isEdited',  false );
+			$this->response->setVal( 'fmt_timestamp', $this->wg->Lang->timeanddate( $wallMessage->getCreatTime( TS_MW ) ) );
+			$this->response->setVal( 'isEdited', false );
 		}
 
 
@@ -313,11 +313,11 @@ class WallBaseController extends WikiaController {
 
 		$url = $wallMessage->getUserWallUrl();
 
-		if ( $wallMessage->getUser()->getId() == 0 ) { // anynymous contributor
+		if ( $wallMessage->getUser()->getId() == 0 ) { // anonymous contributor
 			$displayname2 = $wallMessage->getUser()->getName();
 		}
 
-		$this->response->setVal( 'displayname',  $displayname );
+		$this->response->setVal( 'displayname', $displayname );
 		$this->response->setVal( 'displayname2', $displayname2 );
 
 		if ( $wallMessage->showVotes() ) {
@@ -331,22 +331,22 @@ class WallBaseController extends WikiaController {
 
 		$this->response->setVal( 'showTopics', $wallMessage->showTopics() );
 
-		$this->response->setVal( 'user_author_url',  $url );
+		$this->response->setVal( 'user_author_url', $url );
 
-		$this->response->setVal( 'quote_of',  false );
+		$this->response->setVal( 'quote_of', false );
 
 		$quoteOf = $wallMessage->getQuoteOf();
 
 		if ( !empty( $quoteOf ) ) {
-			$this->response->setVal( 'quote_of',  true );
-			$this->response->setVal( 'quote_of_url',  $quoteOf->getMessagePageUrl() );
+			$this->response->setVal( 'quote_of', true );
+			$this->response->setVal( 'quote_of_url', $quoteOf->getMessagePageUrl() );
 
 			$postfix = $quoteOf->getPageUrlPostFix();
 			if ( empty( $postfix ) ) {
 				$postfix = 1;
 			}
 
-			$this->response->setVal( 'quote_of_postfix',  $postfix );
+			$this->response->setVal( 'quote_of_postfix', $postfix );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -367,7 +367,7 @@ class WallBaseController extends WikiaController {
 			$info = $wallMessage->getLastActionReason();
 
 			if ( !empty( $info ) ) {
-				$info['fmttime'] = $this->wg->Lang->timeanddate( $info['mwtime'] );
+				$info[ 'fmttime' ] = $this->wg->Lang->timeanddate( $info[ 'mwtime' ] );
 				$this->response->setVal( 'statusInfo', $info );
 				$this->response->setVal( 'id', $wallMessage->getId() );
 				if ( $showRemoveOrDeleteInfo ) {
@@ -405,7 +405,7 @@ class WallBaseController extends WikiaController {
 
 		$this->wall = $this->getWallForIndexPage( $title );
 
-		/* @var $this->wall Wall */
+		/* @var $this ->wall Wall */
 
 		if ( !empty( $perPage ) ) {
 			$this->wall->setMaxPerPage( $perPage );
@@ -470,7 +470,7 @@ class WallBaseController extends WikiaController {
 	}
 
 	protected function getSortingOptionsText() {
-		switch( $this->sortingType ) {
+		switch ( $this->sortingType ) {
 			case 'history':
 				// keys of sorting array are names of DOM elements' classes
 				// which are needed to click tracking
@@ -498,7 +498,7 @@ class WallBaseController extends WikiaController {
 	protected function getSortingSelectedText() {
 		$selected = $this->getSortingSelected();
 		$options = $this->getSortingOptionsText();
-		return $options[$selected];
+		return $options[ $selected ];
 	}
 
 	public function brickHeader() {
@@ -557,7 +557,8 @@ class WallBaseController extends WikiaController {
 			$user = $this->app->wg->User;
 			// remove admin notification for it if Admin just checked it
 			if ( in_array( 'sysop', $user->getEffectiveGroups() ) ||
-				in_array( 'staff', $user->getEffectiveGroups() ) ) {
+				in_array( 'staff', $user->getEffectiveGroups() )
+			) {
 				$wna = new WallNotificationsAdmin;
 				$wna->removeForThread( $this->app->wg->CityId, $wallMessage->getId() );
 			}
@@ -589,7 +590,7 @@ class WallBaseController extends WikiaController {
 		// only use realname if user made edits (use logic from masthead)
 		$userStatsService = new UserStatsService( $this->helper->getUser()->getID() );
 		$userStats = $userStatsService->getStats();
-		if ( empty( $userStats['edits'] ) || $userStats['edits'] == 0 ) {
+		if ( empty( $userStats[ 'edits' ] ) || $userStats[ 'edits' ] == 0 ) {
 			$wall_username = $this->helper->getUser()->getName();
 		}
 
@@ -612,13 +613,15 @@ class WallBaseController extends WikiaController {
 		$this->checkAndSetUserBlockedStatus( $this->helper->getUser() );
 	}
 
+	/** @param User $wallOwner */
 	protected function checkAndSetUserBlockedStatus( $wallOwner = null ) {
 		$user = $this->app->wg->User;
 
 		if ( $user->isBlocked( true, false ) || $user->isBlockedGlobally() ) {
-			if (	!empty( $wallOwner ) &&
+			if ( !empty( $wallOwner ) &&
 				$wallOwner->getName() == $this->wg->User->getName() &&
-				!( empty( $user->mAllowUsertalk ) ) ) {
+				!( empty( $user->mAllowUsertalk ) )
+			) {
 				// user is blocked, but this is his wall and he was not blocked
 				// from user talk page
 				$this->response->setVal( 'userBlocked', false );
