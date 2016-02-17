@@ -126,7 +126,7 @@ class MercuryApiHooks {
 		Title::newMainPage()->purgeSquid();
 
 		$urls = [ ];
-		WikiaDataAccess::cachePurge( MercuryApiController::curatedContentDataMemcKey() );
+		WikiaDataAccess::cachePurge( MercuryApiMainPageHandler::curatedContentDataMemcKey() );
 
 		foreach ( $sections as $section ) {
 			if ( !empty( $section['featured'] ) ) {
@@ -135,7 +135,7 @@ class MercuryApiHooks {
 
 			$sectionTitle = $section['title'];
 
-			WikiaDataAccess::cachePurge( MercuryApiController::curatedContentDataMemcKey( $sectionTitle ) );
+			WikiaDataAccess::cachePurge( MercuryApiMainPageHandler::curatedContentDataMemcKey( $sectionTitle ) );
 
 			// We have to double encode because Ember's RouteRecognizer does decodeURI while processing path.
 			$doubleEncodedTitle = self::encodeURI( self::encodeURIQueryParam( $sectionTitle ) );
