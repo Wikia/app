@@ -691,7 +691,7 @@ class WallHooksHelper {
 	 * Change RC db key to affect Watchlist behavior
 	 * @author TK-999 <https://github.com/TK-999>
 	 * @param RecentChange $rc
-	 * @return bool true because it is a hook
+	 * @return Bool true because it is a hook
 	 */
 	static public function onRecentChangeBeforeSave( RecentChange &$rc ) {
 		$wg = F::app()->wg;
