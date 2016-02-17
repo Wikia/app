@@ -39,6 +39,5 @@ class MercuryApiCategoryHandler {
 	}
 
 	public function getContent() {
-		return ARticleHandler->getArticleContent()
 	}
 }
