@@ -8,7 +8,6 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	//1. Pagination
 	//2. Add date range input field
 
-	const KIBANA_BASEURL = 'http://query.es.service.sjc.consul:9200';
 	const PAGINATION_SIZE = 50;
 	const DAYS_RANGE = 15;
 	const HTTP_STATUS_OK = 200;
@@ -24,7 +23,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	public function execute( $subpage ) {
 
 		if ( !$this->checkAccess() ) {
-			return;
+			throw new \PermissionsError( Helper::REQUIRED_USER_RIGHT );
 		}
 
 		$this->setHeaders();
@@ -56,8 +55,12 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	}
 
 	private function constructKibanaUrl( $dayOffset ) {
+		global $wgConsulUrl;
+
+		$esUrl = (new  Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, 'query', 'sjc' ))->getUrl( 'es' );
 		$date = time() - ( $dayOffset * 24 * 60 * 60 );
-		return self::KIBANA_BASEURL . '/logstash-' . date( 'Y.m.d', $date ) . '/_search';
+
+		return 'http://' . $esUrl . '/logstash-' . date( 'Y.m.d', $date ) . '/_search';
 	}
 
 	private function getUserIdByUsername( $userName ) {
@@ -74,6 +77,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	}
 
 	private function getUserLog( $userName ) {
+		$userLogRecords = [];
 		$displayedUserLogRecords = [];
 		$hasNoUserLogRecords = false;
 		$hasUserError = false;
@@ -86,7 +90,9 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 			$hasUserError = true;
 		}
 
-		$userLogRecords = $this->aggregateLogSearches( $userId, $userName );
+		if ( $hasUserError !== true ) {
+			$userLogRecords = $this->aggregateLogSearches( $userId, $userName );
+		}
 
 		if ( count( $userLogRecords ) == 0 ) {
 			$hasNoUserLogRecords = true;
@@ -94,12 +100,12 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 
 		foreach ( $userLogRecords as $userLogRecord ) {
 			array_push( $displayedUserLogRecords, [
-				'app' => $userLogRecord->getApp(),
-				'ip' => $userLogRecord->getIp(),
-				'language' => $userLogRecord->getLanguage(),
-				'location' => $userLogRecord->getLocation(),
-				'timestamp' => $userLogRecord->getTimestamp(),
-				'userAgent' => $userLogRecord->getUserAgent(),
+				'app' => $userLogRecord->app,
+				'ip' => $userLogRecord->ip,
+				'language' => $userLogRecord->language,
+				'location' => $userLogRecord->location,
+				'timestamp' => $userLogRecord->timestamp,
+				'userAgent' => $userLogRecord->userAgent,
 			] );
 		}
 
@@ -151,36 +157,34 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 				$logger->warning(
 					sprintf( 'Request to elasticsearch failed: %s', $requestException->getMessage() )
 				);
-				continue;
+				break;
 			}
 
 			if ( $response->getStatusCode() !== self::HTTP_STATUS_OK ) {
 				$logger->warning(
 					sprintf( 'Elasticsearch request error; status code %d', $response->getStatusCode() )
 				);
-				continue;
+				break;
 			}
 
 			$resultObject = json_decode( $response->getBody() );
 			$hits = $resultObject->hits->hits;
+
 			foreach ( $hits as $hit ) {
 				$record = $hit->_source;
 
 				$userLogRecord = new UserLogRecord();
-				$userLogRecord->setApp(
-					$record->{'mobile_app.data.app_name'} . ' ' . $record->{'mobile_app.data.app_version'}
-				);
-				$userLogRecord->setIp( $record->{'mobile_app.client_ip'} );
-				$userLogRecord->setLanguage( $record->{'mobile_app.event.device_language'} );
-				$userLogRecord->setLocation(
-					$record->{'mobile_app.geo_ip.city'} . ', ' . $record->{'mobile_app.geo_ip.country_name'}
-				);
-				$userLogRecord->setTimestamp( date( DATE_RFC2822, $record->{'mobile_app.event.timestamp'} / 1000 ) );
-				$userLogRecord->setUserAgent(
-					$record->{'mobile_app.data.platform'} . ' ' . $record->{'mobile_app.data.platform_version'}
-				);
-				$userLogRecord->setUserId( $userId );
-				$userLogRecord->setUserName( $userName );
+				$userLogRecord->app =
+					$record->{'mobile_app.data.app_name'} . ' ' . $record->{'mobile_app.data.app_version'};
+				$userLogRecord->ip = $record->{'mobile_app.client_ip'};
+				$userLogRecord->language = $record->{'mobile_app.event.device_language'};
+				$userLogRecord->location =
+					$record->{'mobile_app.geo_ip.city'} . ', ' . $record->{'mobile_app.geo_ip.country_name'};
+				$userLogRecord->timestamp = date( DATE_RFC2822, $record->{'mobile_app.event.timestamp'} / 1000 );
+				$userLogRecord->userAgent =
+					$record->{'mobile_app.data.platform'} . ' ' . $record->{'mobile_app.data.platform_version'};
+				$userLogRecord->userId = $userId;
+				$userLogRecord->userName = $userName;
 				$records[] = $userLogRecord;
 			}
 		}
@@ -217,11 +221,6 @@ JSON_BODY;
 
 	private function checkAccess() {
 		if ( !$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed( 'forumadmin' ) ) {
-
-			$this->wg->Out->clearHTML();
-			$this->wg->Out->setPageTitle( wfMessage( 'badaccess' )->plain() );
-			$this->wg->Out->addHTML( wfMessage( 'badaccess' )->parse() );
-
 			return false;
 		}
 
