@@ -58,112 +58,6 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
-	 * @desc Returns user ids for top contributors
-	 *
-	 * @param int $articleId
-	 *
-	 * @return int[]
-	 */
-	private function getTopContributorsPerArticle( $articleId ) {
-		$usersIds = $this->mercuryApi->topContributorsPerArticle( $articleId, self::NUMBER_CONTRIBUTORS );
-
-		return $usersIds;
-	}
-
-	/**
-	 * @desc returns article details
-	 *
-	 * @param Article $article
-	 *
-	 * @return mixed
-	 */
-	private function getArticleDetails( Article $article ) {
-		$articleId = $article->getID();
-		$articleDetails =
-			$this->sendRequest( 'ArticlesApi', 'getDetails', [ 'ids' => $articleId ] )->getData()[ 'items' ][ $articleId ];
-
-		$description = $this->getArticleDescription( $article );
-
-		$articleDetails[ 'abstract' ] = htmlspecialchars( $articleDetails[ 'abstract' ] );
-		$articleDetails[ 'description' ] = htmlspecialchars( $description );
-
-		return $articleDetails;
-	}
-
-	/**
-	 * @desc Returns description for the article's meta tag.
-	 *
-	 * This is mostly copied from the ArticleMetaDescription extension.
-	 *
-	 * @param Article $article
-	 * @param int $descLength
-	 *
-	 * @return string
-	 * @throws NotFoundApiException
-	 */
-	private function getArticleDescription( Article $article, $descLength = 100 ) {
-		$title = $article->getTitle();
-		$sMessage = null;
-
-		if ( $title->isMainPage() ) {
-			// we're on Main Page, check MediaWiki:Description message
-			$sMessage = wfMessage( 'Description' )->text();
-		}
-
-		if ( ( $sMessage == null ) || wfEmptyMsg( 'Description', $sMessage ) ) {
-			$articleService = new ArticleService( $article );
-			$description = $articleService->getTextSnippet( $descLength );
-		} else {
-			// MediaWiki:Description message found, use it
-			$description = $sMessage;
-		}
-
-		return $description;
-	}
-
-	/**
-	 * @desc returns an article in simplified json structure
-	 *
-	 * @param int $articleId
-	 * @param string $sections List of section numbers or 'all'
-	 *
-	 * @return array
-	 */
-	private function getArticleJson( $articleId, $sections = '' ) {
-		$redirect = $this->request->getVal( 'redirect' );
-
-		return $this->sendRequest(
-				'ArticlesApi',
-				'getAsJson',
-				[
-					'id' => $articleId,
-					'redirect' => $redirect,
-					'sections' => $sections
-				]
-			)->getData();
-	}
-
-
-	/**
-	 * @desc returns top contributors user details
-	 *
-	 * @param array $ids
-	 * @return mixed
-	 */
-	private function getTopContributorsDetails( Array $ids ) {
-		if ( empty( $ids ) ) {
-			return [ ];
-		}
-		try {
-			return $this->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ) ] )->getData()[ 'items' ];
-		} catch ( NotFoundApiException $e ) {
-			// getDetails throws NotFoundApiException when no contributors are found
-			// and we want the article even if we don't have the contributors
-			return [ ];
-		}
-	}
-
-	/**
 	 * @desc Returns local navigation data for current wiki
 	 *
 	 * @return array
@@ -198,22 +92,6 @@ class MercuryApiController extends WikiaController {
 			'localNav' => $localNavigation,
 			'fandomLabel' => wfMessage( 'global-navigation-home-of-fandom' )->escaped()
 		];
-	}
-
-	/**
-	 * @desc Returns related pages
-	 *
-	 * @param int $articleId
-	 * @param int $limit
-	 *
-	 * @return mixed
-	 */
-	private function getRelatedPages( $articleId, $limit = 6 ) {
-		if ( class_exists( 'RelatedPages' ) ) {
-			return RelatedPages::getInstance()->get( $articleId, $limit );
-		} else {
-			return false;
-		}
 	}
 
 	/**
@@ -419,12 +297,35 @@ class MercuryApiController extends WikiaController {
 
 			if ( $this->mainPageHandler->shouldGetMainPageData( $isMainPage ) ) {
 				$data['mainPageData'] = $this->mainPageHandler->getMainPageData();
-				$data['details'] = $this->getArticleDetails($article);
-			} elseif ( $title->isContentPage() && $title->isKnown() ) {
-				$data = array_merge( $data, $this->getArticleData( $article ) );
+				$data['details'] = ( new MercuryApiArticleHandler( $article, $this->request, $this->mercuryApi ) )
+					->getArticleDetails();
+			} else {
+				// Article handling
+				if ( $title->isContentPage() && $title->isKnown() ) {
+					if ( !$article instanceof Article ) {
+						\Wikia\Logger\WikiaLogger::instance()->error(
+							'$article should be an instance of an Article',
+							[ 'article' => $article ]
+						);
 
-				if ( !$isMainPage ) {
-					$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
+						throw new NotFoundApiException( 'Article is empty' );
+					}
+
+					$data = array_merge(
+						$data,
+						( new MercuryApiArticleHandler( $article, $this->request, $this->mercuryApi ) )
+							->getArticleData()
+					);
+
+					if ( !$isMainPage ) {
+						$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
+					}
+				} else {
+					switch ( $data['ns'] ) {
+						case NS_CATEGORY:
+							$data['content'] = ( new MercuryApiCategoryHandler( $title ) )->getCategoryContent();
+							break;
+					}
 				}
 			}
 
@@ -446,14 +347,6 @@ class MercuryApiController extends WikiaController {
 			$title = $this->wg->Title;
 		}
 
-
-
-		switch ($data['ns']) {
-			case 14:
-			case '14':
-				$data['content'] = (new MercuryApiCategoryHandler($title))->getCategoryContent();
-				break;
-		}
 
 		$data['articleType'] = WikiaPageType::getArticleType( $title );
 		$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
@@ -494,38 +387,6 @@ class MercuryApiController extends WikiaController {
 		}
 
 		return [ $title, $article, $data ];
-	}
-
-	/**
-	 * @param $article
-	 * @return array
-	 * @throws NotFoundApiException
-	 */
-	private function getArticleData( $article ) {
-		if ( !$article instanceof Article ) {
-			\Wikia\Logger\WikiaLogger::instance()->error(
-				'$article should be an instance of an Article',
-				['article' => $article]
-			);
-
-			throw new NotFoundApiException( 'Article is empty' );
-		}
-
-		$articleId = $article->getID();
-		$sections = $this->getVal( 'sections' );
-
-		$data['details'] = $this->getArticleDetails( $article );
-		$data['article'] = $this->getArticleJson( $articleId, $sections );
-		$data['topContributors'] = $this->getTopContributorsDetails(
-			$this->getTopContributorsPerArticle( $articleId )
-		);
-		$relatedPages = $this->getRelatedPages( $articleId );
-
-		if ( !empty( $relatedPages ) ) {
-			$data['relatedPages'] = $relatedPages;
-		}
-
-		return $data;
 	}
 
 	/**
