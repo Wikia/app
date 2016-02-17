@@ -3,6 +3,7 @@ namespace Wikia\ExactTarget;
 
 use Wikia\ExactTarget\Builders\CreateRequestBuilder;
 use Wikia\ExactTarget\Builders\DeleteRequestBuilder;
+use Wikia\ExactTarget\Builders\RetrieveRequestBuilder;
 use Wikia\ExactTarget\Builders\UpdateRequestBuilder;
 
 class ExactTargetRequestBuilder {
@@ -20,5 +21,9 @@ class ExactTargetRequestBuilder {
 
 	public static function createCreate() {
 		return new CreateRequestBuilder();
+	}
+
+	public static function createRetrieve() {
+		return new RetrieveRequestBuilder();
 	}
 }

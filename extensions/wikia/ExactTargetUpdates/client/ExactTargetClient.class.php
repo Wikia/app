@@ -52,7 +52,7 @@ class ExactTargetClient implements Client {
 	public function createSubscriber( $userEmail ) {
 		//		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 		$oRequest = ExactTargetRequestBuilder::createCreate()
-			->withUserEmail($userEmail)
+			->withUserEmail( $userEmail )
 			->build();
 
 		$oResults = $this->sendRequest( 'Create', $oRequest );
@@ -93,18 +93,12 @@ class ExactTargetClient implements Client {
 	 * @throws \Exception
 	 */
 	public function retrieve( array $properties, $filterProperty, array $filterValues ) {
-		$helper = new ExactTargetUserTaskHelper();
-		$apiParams = $helper->prepareUserRetrieveParams( $properties, $filterProperty, $filterValues );
-
-		$callObjectParams = $apiParams['DataExtension'];
-		$simpleFilterParams = $apiParams['SimpleFilterPart'];
+		$oRequest = ExactTargetRequestBuilder::createRetrieve()
+			->withParams( $properties, $filterProperty, $filterValues )
+			->build();
 
 		$apiHelper = new ExactTargetApiHelper();
-		$retrieveRequest = $apiHelper->wrapRetrieveRequest( $callObjectParams );
-		$simpleFilterPart = $apiHelper->wrapSimpleFilterPart( $simpleFilterParams );
-		$retrieveRequest->Filter = $apiHelper->wrapToSoapVar( $simpleFilterPart, 'SimpleFilterPart' );
-		$retrieveRequest->Options = null;
-		$retrieveRequestMsg = $apiHelper->wrapRetrieveRequestMsg( $retrieveRequest );
+		$retrieveRequestMsg = $apiHelper->wrapRetrieveRequestMsg( $oRequest );
 		$emailResult = $this->sendRequest( 'Retrieve', $retrieveRequestMsg );
 
 		if ( $emailResult->OverallStatus === 'Error' ) {
