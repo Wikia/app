@@ -294,13 +294,11 @@ class MercuryApiController extends WikiaController {
 			$data['ns'] = $title->getNamespace();
 
 			$titleBuilder = new WikiaHtmlTitle();
-
 			if ( $this->mainPageHandler->shouldGetMainPageData( $isMainPage ) ) {
 				$data['mainPageData'] = $this->mainPageHandler->getMainPageData();
-				$data['details'] = ( new MercuryApiArticleHandler( $article ) )
-					->getArticleDetails();
+				$data['details'] = MercuryApiArticleHandler::getArticleDetails($article);
 			} else {
-				// Article handling
+				// Content Namespace Handling
 				if ( $title->isContentPage() && $title->isKnown() ) {
 					if ( !$article instanceof Article ) {
 						\Wikia\Logger\WikiaLogger::instance()->error(

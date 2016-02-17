@@ -1,32 +1,20 @@
 <?php
 
 class MercuryApiArticleHandler {
-	/**
-	 * @var Article|null
-	 */
-	private $article = null;
-	private $request = null;
-	private $mercuryApi = null;
-	private $articleId = null;
-
-	public function __construct( Article $article, WikiaRequest $request = null, MercuryApi $mercuryApi = null ) {
-		$this->article = $article;
-		$this->request = $request;
-		$this->mercuryApi = $mercuryApi;
-		$this->articleId = $this->article->getID();
-	}
 
 	/**
+	 * @param Article $article
+	 * @param WikiaRequest $request
+	 * @param MercuryApi $mercuryApiModel
 	 * @return array
-	 * @throws NotFoundApiException
 	 */
-	public function getArticleData() {
-		$data['details'] = $this->getArticleDetails();
-		$data['article'] = $this->getArticleJson();
-		$data['topContributors'] = $this->getTopContributorsDetails(
-			$this->getTopContributorsPerArticle()
+	public static function getArticleData(Article $article, WikiaRequest $request, MercuryApi $mercuryApiModel) {
+		$data['details'] = self::getArticleDetails($article);
+		$data['article'] = self::getArticleJson($article, $request);
+		$data['topContributors'] = self::getTopContributorsDetails(
+			self::getTopContributorsPerArticle($mercuryApiModel, $article)
 		);
-		$relatedPages = $this->getRelatedPages();
+		$relatedPages = self::getRelatedPages($article);
 
 		if ( !empty( $relatedPages ) ) {
 			$data['relatedPages'] = $relatedPages;
@@ -38,15 +26,16 @@ class MercuryApiArticleHandler {
 	/**
 	 * @desc returns article details
 	 *
+	 * @param Article $article
 	 * @return mixed
 	 */
-	public function getArticleDetails() {
-		$articleId = $this->article->getID();
+	public static function getArticleDetails(Article $article) {
+		$articleId = $article->getID();
 		$articleDetails = F::app()
 			->sendRequest( 'ArticlesApi', 'getDetails', [ 'ids' => $articleId ] )
 			->getData()['items'][$articleId];
 
-		$description = $this->getArticleDescription();
+		$description = self::getArticleDescription($article);
 
 		$articleDetails['abstract'] = htmlspecialchars( $articleDetails['abstract'] );
 		$articleDetails['description'] = htmlspecialchars( $description );
@@ -59,13 +48,13 @@ class MercuryApiArticleHandler {
 	 *
 	 * This is mostly copied from the ArticleMetaDescription extension.
 	 *
+	 * @param Article $article
 	 * @param int $descLength
-	 *
 	 * @return string
-	 * @throws NotFoundApiException
+	 * @throws WikiaException
 	 */
-	private function getArticleDescription( $descLength = 100 ) {
-		$title = $this->article->getTitle();
+	public static function getArticleDescription( Article $article, $descLength = 100 ) {
+		$title = $article->getTitle();
 		$sMessage = null;
 
 		if ( $title->isMainPage() ) {
@@ -74,7 +63,7 @@ class MercuryApiArticleHandler {
 		}
 
 		if ( ( $sMessage == null ) || wfEmptyMsg( 'Description', $sMessage ) ) {
-			$articleService = new ArticleService( $this->article );
+			$articleService = new ArticleService( $article );
 			$description = $articleService->getTextSnippet( $descLength );
 		} else {
 			// MediaWiki:Description message found, use it
@@ -87,18 +76,20 @@ class MercuryApiArticleHandler {
 	/**
 	 * @desc returns an article in simplified json structure
 	 *
+	 * @param Article $article
+	 * @param WikiaRequest $request
 	 * @return array
 	 */
-	private function getArticleJson() {
-		$redirect = $this->request->getVal( 'redirect' );
-		$sections = $this->request->getVal( 'sections', '');
+	public static function getArticleJson(Article $article, WikiaRequest $request) {
+		$redirect = $request->getVal( 'redirect' );
+		$sections = $request->getVal( 'sections', '');
 
 		return F::app()
 			->sendRequest(
 				'ArticlesApi',
 				'getAsJson',
 				[
-					'id' => $this->articleId,
+					'id' => $article->getID(),
 					'redirect' => $redirect,
 					'sections' => $sections
 				]
@@ -112,7 +103,7 @@ class MercuryApiArticleHandler {
 	 * @param array $ids
 	 * @return mixed
 	 */
-	private function getTopContributorsDetails( Array $ids ) {
+	private static function getTopContributorsDetails( Array $ids ) {
 		if ( empty( $ids ) ) {
 			return [ ];
 		}
@@ -130,22 +121,24 @@ class MercuryApiArticleHandler {
 	/**
 	 * @desc Returns user ids for top contributors
 	 *
+	 * @param $mercuryApiModel
+	 * @param $article
 	 * @return int[]
 	 */
-	private function getTopContributorsPerArticle() {
-		return $this->mercuryApi->topContributorsPerArticle( $this->articleId, MercuryApiController::NUMBER_CONTRIBUTORS );
+	private static function getTopContributorsPerArticle(MercuryApi $mercuryApiModel, Article $article) {
+		return $mercuryApiModel->topContributorsPerArticle( $article->getID(), MercuryApiController::NUMBER_CONTRIBUTORS );
 	}
 
 	/**
 	 * @desc Returns related pages
 	 *
+	 * @param Article $article
 	 * @param int $limit
-	 *
 	 * @return mixed
 	 */
-	private function getRelatedPages( $limit = 6 ) {
+	private static function getRelatedPages( Article $article, $limit = 6 ) {
 		if ( class_exists( 'RelatedPages' ) ) {
-			return RelatedPages::getInstance()->get( $this->articleId, $limit );
+			return RelatedPages::getInstance()->get( $article->getID(), $limit );
 		} else {
 			return false;
 		}
