@@ -23,7 +23,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	public function execute( $subpage ) {
 
 		if ( !$this->checkAccess() ) {
-			throw new \PermissionsError( Helper::REQUIRED_USER_RIGHT );
+			throw new \PermissionsError('specialdiscussionslog');
 		}
 
 		$this->setHeaders();

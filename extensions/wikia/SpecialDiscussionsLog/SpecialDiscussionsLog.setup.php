@@ -23,3 +23,11 @@ $wgSpecialPages['DiscussionsLog'] = 'SpecialDiscussionsLogController';
 // message files
 $wgExtensionMessagesFiles['SpecialDiscussionsLog'] = $dir . 'SpecialDiscussionsLog.i18n.php';
 
+// permissions
+$wgAvailableRights[] = 'specialdiscussionslog';
+$wgGroupPermissions['*']['specialdiscussionslog'] = false;
+$wgGroupPermissions['user']['specialdiscussionslog'] = false;
+$wgGroupPermissions['staff']['specialdiscussionslog'] = true;
+$wgGroupPermissions['vstf']['specialdiscussionslog'] = true;
+$wgGroupPermissions['helper']['specialdiscussionslog'] = true;
+
