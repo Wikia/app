@@ -26,8 +26,6 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	public function testTranslationFromMarkup( $markup, $expected ) {
 		$generated_json = json_decode($this->builderService->translateMarkupToData( $markup ));
 		$expected_json = json_decode($expected);
-		print_r($expected_json);
-		print_r($generated_json);
 		$this->assertEquals( $expected_json, $generated_json );
 	}
 
