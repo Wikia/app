@@ -12,7 +12,6 @@ class RetrieveRequestBuilder extends BaseRequestBuilder {
 	private $properties;
 
 	public function build() {
-
 		$helper = new ExactTargetUserTaskHelper();
 		$apiParams = $helper->prepareUserRetrieveParams( $this->properties, $this->filterProperty, $this->filterValues );
 
@@ -28,9 +27,17 @@ class RetrieveRequestBuilder extends BaseRequestBuilder {
 		return $retrieveRequest;
 	}
 
-	public function withParams( $properties, $filterProperty, $filterValues ) {
+	public function withProperties( $properties ) {
 		$this->properties = $properties;
+		return $this;
+	}
+
+	public function withFilterProperty( $filterProperty ) {
 		$this->filterProperty = $filterProperty;
+		return $this;
+	}
+
+	public function withFilterValues( $filterValues ) {
 		$this->filterValues = $filterValues;
 		return $this;
 	}

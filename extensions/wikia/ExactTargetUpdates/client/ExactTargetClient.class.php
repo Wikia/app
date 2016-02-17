@@ -94,7 +94,9 @@ class ExactTargetClient implements Client {
 	 */
 	public function retrieve( array $properties, $filterProperty, array $filterValues ) {
 		$oRequest = ExactTargetRequestBuilder::createRetrieve()
-			->withParams( $properties, $filterProperty, $filterValues )
+			->withProperties( $properties )
+			->withFilterProperty( $filterProperty )
+			->withFilterValues( $filterValues )
 			->build();
 
 		$apiHelper = new ExactTargetApiHelper();
