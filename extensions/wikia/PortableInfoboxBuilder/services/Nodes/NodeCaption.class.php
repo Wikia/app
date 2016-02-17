@@ -9,12 +9,6 @@ class NodeCaption extends Node {
 	 */
 	protected $allowedAttributes = [ 'source' ];
 
-	/**
-	 * allowed child nodes
-	 * @var array string
-	 */
-	protected $allowedChildNodes = [ ];
-
 	public function asJson() {
 		return [ 'caption' => [ 'source' => (string)$this->xmlNode->attributes()['source'] ] ];
 	}
