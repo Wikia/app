@@ -26,8 +26,7 @@ class ExactTargetClient implements Client {
 	 * Deletes Subscriber object in ExactTarget by API request if email is not used by other user
 	 */
 	public function deleteSubscriber( $userId ) {
-		$oRetrieveUserTask = new ExactTargetRetrieveUserTask();
-		$sUserEmail = $oRetrieveUserTask->getUserEmail( $userId );
+		$sUserEmail = $this->retrieve( [ 'user_email' ], 'user_id', [ $userId ] );
 
 		/* Skip deletion if no email found */
 		if ( empty( $sUserEmail ) ) {
@@ -86,10 +85,46 @@ class ExactTargetClient implements Client {
 		return $ret;
 	}
 
+	/**
+	 * @param array $properties
+	 * @param string $filterProperty
+	 * @param array $filterValues
+	 * @return null
+	 * @throws \Exception
+	 */
+	public function retrieve( array $properties, $filterProperty, array $filterValues ) {
+		$helper = new ExactTargetUserTaskHelper();
+		$apiParams = $helper->prepareUserRetrieveParams( $properties, $filterProperty, $filterValues );
+
+		$callObjectParams = $apiParams['DataExtension'];
+		$simpleFilterParams = $apiParams['SimpleFilterPart'];
+
+		$apiHelper = new ExactTargetApiHelper();
+		$retrieveRequest = $apiHelper->wrapRetrieveRequest( $callObjectParams );
+		$simpleFilterPart = $apiHelper->wrapSimpleFilterPart( $simpleFilterParams );
+		$retrieveRequest->Filter = $apiHelper->wrapToSoapVar( $simpleFilterPart, 'SimpleFilterPart' );
+		$retrieveRequest->Options = null;
+		$retrieveRequestMsg = $apiHelper->wrapRetrieveRequestMsg( $retrieveRequest );
+		$emailResult = $this->sendRequest( 'Retrieve', $retrieveRequestMsg );
+
+		if ( $emailResult->OverallStatus === 'Error' ) {
+			throw new \Exception(
+				'Error in ' . __METHOD__ . ': ' . $emailResult->Results->StatusMessage
+			);
+		}
+
+		if ( empty( $emailResult->Results->Properties->Property->Value ) ) {
+//			$this->info( __METHOD__ . ' User DataExtension object not found for user_id = ' . $iUserId );
+			return null;
+		}
+
+		return $emailResult->Results->Properties->Property->Value;
+	}
+
 	protected function sendRequest( $sType, $oRequestObject ) {
 		try {
-			$oResults = $this->getClient()->$sType( $oRequestObject );
-			WikiaLogger::instance()->info( $this->getClient()->__getLastResponse() );
+			$oResults = $this->getExactTargetClient()->$sType( $oRequestObject );
+			WikiaLogger::instance()->info( $this->getExactTargetClient()->__getLastResponse() );
 			return $oResults;
 		} catch ( \SoapFault $e ) {
 			WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e ] );
@@ -97,7 +132,7 @@ class ExactTargetClient implements Client {
 		}
 	}
 
-	protected function getClient() {
+	protected function getExactTargetClient() {
 		if ( !isset( $this->client ) ) {
 			global $wgExactTargetApiConfig;
 			$wsdl = $wgExactTargetApiConfig[ 'wsdl' ];
