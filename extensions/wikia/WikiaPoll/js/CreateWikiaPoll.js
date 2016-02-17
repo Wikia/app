@@ -1,10 +1,7 @@
 var CreateWikiaPoll = {
 
 	init: function() {
-		$.when(
-			mw.loader.use('jquery.ui.sortable')
-		).
-		done(CreateWikiaPoll.initBindings);
+		mw.loader.using('jquery.ui.sortable').done(CreateWikiaPoll.initBindings);
 	},
 
 	initBindings: function () {
@@ -52,7 +49,7 @@ var CreateWikiaPoll = {
 	showEditor: function(event) {
 		// load CSS for editor popup and jQuery UI library (if not loaded yet) via loader function
 		$.when(
-			mw.loader.use('jquery.ui.sortable'),
+			mw.loader.using('jquery.ui.sortable'),
 			$.getResources([
 				$.getSassCommonURL('/extensions/wikia/WikiaPoll/css/CreateWikiaPoll.scss'),
 				wgExtensionsPath + '/wikia/WikiaPoll/js/CreateWikiaPoll.js'
@@ -77,7 +74,7 @@ var CreateWikiaPoll = {
 
 	editExisting: function(placeholder) {
 		var pollData = $(placeholder).getData(),
-			createWikiaPollContainer = $("#CreateWikiaPoll"), 
+			createWikiaPollContainer = $("#CreateWikiaPoll"),
 			index,
 			li;
 
@@ -107,7 +104,7 @@ var CreateWikiaPoll = {
 		var formData = $("#CreateWikiaPoll").find("form").serialize();
 
 		event.preventDefault();
-		
+
 		if ($("#CreateWikiaPoll").data('pollId')) {
 			// editing existing poll
 			$.post(wgScript + '?action=ajax&rs=WikiaPollAjax&method=update', formData, function(data) {
