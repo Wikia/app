@@ -31,7 +31,7 @@ class ExactTargetRetrieveRequestBuilderTest extends WikiaBaseTest {
 		$filter = new \ExactTarget_SimpleFilterPart();
 		$filter->Property = $filterProperty;
 		$filter->SimpleOperator = 'equals';
-		if (count($filterValues)>1) {
+		if ( count( $filterValues ) > 1 ) {
 			$filter->SimpleOperator = 'IN';
 		}
 		$filter->Value = $filterValues;
