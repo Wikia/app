@@ -155,7 +155,7 @@ class User {
 	/**
 	 * Lazy-initialized variables, invalidated with clearInstanceCache
 	 */
-	var $mNewtalk, $mDatePreference, $mBlockedby, $mHash, $mRights,
+	var $mNewtalk, $mDatePreference, $mBlockedby, $mHash,
 		$mBlockreason, $mBlockedGlobally,
 		$mLocked, $mHideName, $mOptions;
 
@@ -1282,7 +1282,6 @@ class User {
 		$this->mDatePreference = null;
 		$this->mBlockedby = -1; # Unset
 		$this->mHash = false;
-		$this->mRights = null;
 		$this->mOptions = null;
 		$this->mOptionOverrides = null;
 		$this->mOptionsLoaded = false;
