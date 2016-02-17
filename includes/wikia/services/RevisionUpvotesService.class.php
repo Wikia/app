@@ -16,6 +16,7 @@ class RevisionUpvotesService {
 	 * @param int $fromUser
 	 */
 	public function addUpvote( $wikiId, $pageId, $revisionId, $userId, $fromUser ) {
+		$id = 0;
 		$upvoteId = $this->getUpvoteId( $wikiId, $revisionId );
 
 		if ( empty( $upvoteId ) ) {
@@ -23,8 +24,10 @@ class RevisionUpvotesService {
 		}
 
 		if ( !empty( $upvoteId ) ) {
-			$this->addUserUpvote( $upvoteId, $userId, $fromUser );
+			$id = $this->addUserUpvote( $upvoteId, $userId, $fromUser );
 		}
+
+		return $id;
 	}
 
 	/**
@@ -44,6 +47,8 @@ class RevisionUpvotesService {
 			->AND_( 'from_user' )->EQUAL_TO( $fromUser )
 			->run( $db );
 
+		$rowRemoved = $db->affectedRows();
+
 		( new \WikiaSQL() )
 			->UPDATE( self::UPVOTE_USERS_TABLE )
 			->SET_RAW( 'total', 'IF(`total` > 0, `total` - 1, 0)' )
@@ -52,7 +57,13 @@ class RevisionUpvotesService {
 			->AND_( 'from_user' )->EQUAL_TO( $fromUser )
 			->run( $db );
 
-		$db->commit();
+		if ( $rowRemoved ) {
+			$db->commit();
+		} else {
+			$db->rollback();
+		}
+
+		return $rowRemoved;
 	}
 
 	/**
@@ -126,7 +137,7 @@ class RevisionUpvotesService {
 				];
 			} );
 
-		foreach( $upvotes as $revisionId => $upvote ) {
+		foreach ( $upvotes as $revisionId => $upvote ) {
 			$upvotes[$revisionId]['count'] = count( $upvotes[$revisionId]['upvotes'] );
 		}
 
@@ -164,7 +175,7 @@ class RevisionUpvotesService {
 				];
 			} );
 
-		foreach( $upvotes as $upvoteId => $upvote ) {
+		foreach ( $upvotes as $upvoteId => $upvote ) {
 			$upvotes[$upvoteId]['count'] = count( $upvotes[$upvoteId]['upvotes'] );
 		}
 
@@ -252,6 +263,8 @@ class RevisionUpvotesService {
 
 		$db->insert( self::UPVOTE_TABLE, [ 'upvote_id' => $upvoteId, 'from_user' => $fromUser ] );
 
+		$lastId = $db->insertId();
+
 		$db->upsert(
 			self::UPVOTE_USERS_TABLE,
 			[
@@ -268,6 +281,8 @@ class RevisionUpvotesService {
 		);
 
 		$db->commit();
+
+		return $lastId;
 	}
 
 	/**

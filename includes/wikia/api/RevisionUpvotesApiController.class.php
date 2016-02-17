@@ -30,13 +30,18 @@ class RevisionUpvotesApiController extends WikiaApiController {
 			throw new NotFoundException();
 		}
 
-		( new RevisionUpvotesService() )->addUpvote(
+		$id = ( new RevisionUpvotesService() )->addUpvote(
 			$this->wg->CityId,
 			$revision->getPage(),
 			$revisionId,
 			$revision->getUser(),
 			$user->getId()
 		);
+
+		$this->setResponseData( [
+			'success' => !empty( $id ),
+			'id' => $id
+		] );
 	}
 
 	/**
@@ -61,7 +66,11 @@ class RevisionUpvotesApiController extends WikiaApiController {
 			throw new MissingParameterApiException( 'id' );
 		}
 
-		( new RevisionUpvotesService() )->removeUpvote( $id, $user->getId() );
+		$removed = ( new RevisionUpvotesService() )->removeUpvote( $id, $user->getId() );
+
+		$this->setResponseData( [
+			'success' => (bool) $removed
+		] );
 	}
 
 	/**
