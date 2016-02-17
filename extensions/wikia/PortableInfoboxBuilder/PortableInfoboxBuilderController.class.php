@@ -59,11 +59,19 @@ class PortableInfoboxBuilderController extends WikiaController {
 			$status->fatal( 'user-cant-edit' );
 		}
 
-		return $status->isGood() ? $this->save( $title, $params[ 'data' ] ) : $status;
+		//check if there is no write conflict
+		$infoboxDataService = PortableInfoboxDataService::newFromTitle($title);
+		$infoboxes = $infoboxDataService->getInfoboxes();
+
+		if ( $status->isGood() && count($infoboxes) > 1 ) {
+			$status->fatal( 'write-conflict' );
+		}
+
+		return $status->isGood() ? $this->save( $title, $params[ 'data' ], empty($infoboxes) ? null : $infoboxes[0] ) : $status;
 	}
 
-	private function save( Title $title, $data ) {
-		$article = new Article( $title );
+	private function save( Title $title, $data, $oldInfobox) {
+		$article = new Article($title);
 		$editPage = new EditPage( $article );
 		$editPage->initialiseForm();
 		$editPage->edittime = $article->getTimestamp();
@@ -72,7 +80,13 @@ class PortableInfoboxBuilderController extends WikiaController {
 		$infoboxMarkup = $infoboxBuilderService->translateDataToMarkup( $data );
 		$infoboxDocumentation = $infoboxBuilderService->getDocumentation( $infoboxMarkup, $title );
 
-		$editPage->textbox1 = implode( "\n", [ $infoboxMarkup, $infoboxDocumentation ] );
+		$oldContent = $article->fetchContent();
+		if (empty($oldInfobox)) {
+			$editPage->textbox1 = implode( "\n", [ $infoboxMarkup, $infoboxDocumentation, $oldContent ] );
+		} else {
+			$editPage->textbox1 = str_replace($oldInfobox, $infoboxMarkup, $oldContent);
+		}
+
 		$status = $editPage->internalAttemptSave( $result );
 		return $status;
 	}
