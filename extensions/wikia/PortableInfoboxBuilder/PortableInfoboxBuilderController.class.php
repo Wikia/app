@@ -79,8 +79,8 @@ class PortableInfoboxBuilderController extends WikiaController {
 			$editPage->textbox1 = implode( "\n", [ $infoboxMarkup, $infoboxDocumentation, $oldContent ] );
 		} else {
 			$oldDocumentation = $infoboxBuilderService->getDocumentation($oldInfobox, $title);
-			$content = str_replace($oldDocumentation, $infoboxDocumentation, $oldContent);
-			$editPage->textbox1 = str_replace($oldInfobox, $infoboxMarkup, $content);
+			$content = $infoboxBuilderService->updateInfobox($oldInfobox, $infoboxMarkup, $oldContent);
+			$editPage->textbox1 = $infoboxBuilderService->updateDocumentation($oldDocumentation, $infoboxDocumentation, $content);
 		}
 
 		$status = $editPage->internalAttemptSave( $result );

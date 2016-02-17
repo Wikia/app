@@ -35,6 +35,21 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $this->builderService->isSupportedMarkup( $markup ) );
 	}
 
+	/**
+	 * @dataProvider updateInfoboxProvider
+	 */
+	public function testUpdateInfobox($data, $expected) {
+		$this->assertEquals( $expected, $this->builderService->updateInfobox($data['oldInfobox'], $data['newInfobox'], $data['oldContent']));
+	}
+
+	/**
+	 * @dataProvider updateDocumentationProvider
+	 */
+	public function testUpdateDocumentation($data, $expected) {
+		$this->assertEquals( $expected, $this->builderService->updateDocumentation($data['oldDoc'],
+			$data['newDoc'], $data['oldContent']));
+	}
+
 	public function dataTranslationsDataProvider() {
 		return [
 			[ "", "" ],
@@ -79,6 +94,72 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 			[ '<infobox><group><data source="asdf"/></group></infobox>', false ],
 			[ '<infobox theme="asdf"><image source="image"><alt source="title"><default>asdf</default></alt></image></infobox>', false ],
 			[ '<infobox theme="adsf"><group><header>asdf</header></group></infobox>', false ]
+		];
+	}
+
+	public function updateInfoboxProvider() {
+		return [
+			[
+				[
+					"oldInfobox" => '<infobox><data source="asdf"/></infobox>',
+					"newInfobox" => '<infobox><data source="something_different"/><data source="something_different2"/></infobox>',
+					"oldContent" => '<infobox><data source="asdf"/></infobox>\n other non infobox content'
+				], '<infobox><data source="something_different"/><data source="something_different2"/></infobox>\n other non infobox content'
+			],
+			[
+				[
+					"oldInfobox" => '<infobox><data source="asdf123"/></infobox>',
+					"newInfobox" => '<infobox><data source="something_different"/><data source="something_different2"/></infobox>',
+					"oldContent" => '<infobox><data source="asdf"/></infobox>\n other non infobox content <noinclude>some doc</noinclude>'
+				], '<infobox><data source="asdf"/></infobox>\n other non infobox content <noinclude>some doc</noinclude>'
+			],
+			[
+				[
+					"oldInfobox" => '<infobox><data source="asdf"/></infobox>',
+					"newInfobox" => '<infobox><data source="asdf"/></infobox>',
+					"oldContent" => '<infobox><data source="asdf"/></infobox>\n other non infobox content <noinclude>some doc</noinclude>'
+				], '<infobox><data source="asdf"/></infobox>\n other non infobox content <noinclude>some doc</noinclude>'
+			],
+			[
+				[
+					"oldInfobox" => '',
+					"newInfobox" => '<infobox><data source="asdf"/></infobox>',
+					"oldContent" => 'other non infobox content <noinclude>some doc</noinclude>'
+				], 'other non infobox content <noinclude>some doc</noinclude>'
+			]
+		];
+	}
+
+	public function updateDocumentationProvider() {
+		return [
+			[
+				[
+					"oldDoc" => '<pre>{{Poiu|title1=my title;}}</pre>',
+					"newDoc" => '<pre>{{Poiu|awesome_title=my title;}}</pre>',
+					"oldContent" => '<infobox><data source="asdf"/></infobox>\n other non infobox content <pre>{{Poiu|title1=my title;}}</pre>'
+				], '<infobox><data source="asdf"/></infobox>\n other non infobox content <pre>{{Poiu|awesome_title=my title;}}</pre>'
+			],
+			[
+				[
+					"oldDoc" => '<pre>{{Poiu|title2=my title;}}</pre>',
+					"newDoc" => '<pre>{{Poiu|awesome_title=my title;}}</pre>',
+					"oldContent" => '<infobox><data source="asdf"/></infobox>\n other non infobox content <pre>{{Poiu|title1=my title;}}</pre>'
+				], '<infobox><data source="asdf"/></infobox>\n other non infobox content <pre>{{Poiu|title1=my title;}}</pre>'
+			],
+			[
+				[
+					"oldDoc" => '<pre>{{Poiu|title1=my title;}}</pre>',
+					"newDoc" => '<pre>{{Poiu|title1=my title;}}</pre>',
+					"oldContent" => '<infobox><data source="asdf"/></infobox>\n other non infobox content <pre>{{Poiu|title1=my title;}}</pre>'
+				], '<infobox><data source="asdf"/></infobox>\n other non infobox content <pre>{{Poiu|title1=my title;}}</pre>'
+			],
+			[
+				[
+					"oldDoc" => '',
+					"newDoc" => '<pre>{{Poiu|title1=my title;}}</pre>',
+					"oldContent" => '<infobox><data source="asdf"/></infobox>\n other non infobox content <pre>{{Poiu|title1=my title;}}</pre>'
+				], '<infobox><data source="asdf"/></infobox>\n other non infobox content <pre>{{Poiu|title1=my title;}}</pre>'
+			]
 		];
 	}
 }

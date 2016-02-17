@@ -87,6 +87,32 @@ class PortableInfoboxBuilderService extends WikiaService {
 			->render( 'PortableInfoboxBuilderService_getDocumentation.php' );
 	}
 
+	/**
+	 * replaces old infobox with new infobox within template content
+	 *
+	 * @param $oldInfobox
+	 * @param $newInfobox
+	 * @param $oldContent
+	 *
+	 * @return string
+	 */
+	public function updateInfobox($oldInfobox, $newInfobox, $oldContent) {
+		return str_replace($oldInfobox, $newInfobox, $oldContent);
+	}
+
+	/**
+	 * replaces old infobox doc with new infobox doc within template content
+	 *
+	 * @param $oldDocumentation
+	 * @param $newDocumentation
+	 * @param $oldContent
+	 *
+	 * @return string
+	 */
+	public function updateDocumentation($oldDocumentation, $newDocumentation, $oldContent) {
+		return str_replace($oldDocumentation, $newDocumentation, $oldContent);
+	}
+
 	protected function addGroupNode( $data, SimpleXMLElement $xml ) {
 		foreach ( $data as $item ) {
 			$type = strcasecmp( $item->type, 'row' ) == 0 ? 'data' : $item->type;
