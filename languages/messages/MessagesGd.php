@@ -508,17 +508,6 @@ Gus an clàradh a-steach a choileadh, tha agad ri facal-faire ùr a shuidheachad
 Saoil an do dh'atharraich thu am facal-faire agad mu thràth no an do dh'iarr thu facal-faire sealach ùr?",
 'resetpass-temp-password'   => 'Facal-faire sealach:',
 
-# Special:PasswordReset
-'passwordreset'            => 'Ath-shuidhich am facal-faire',
-'passwordreset-text'       => "Lìon am foirm seo gus post-d fhaighinn sa bheil mion-fhiosrachadh a' chunntais agad.",
-'passwordreset-legend'     => 'Ath-shuidhich am facal-faire',
-'passwordreset-disabled'   => 'Chaidh ath-shuidheachadh nam faclan-faire a chur à comas air an uicipeid seo.',
-'passwordreset-pretext'    => '{{PLURAL:$1||Cuir a-steach aon dhe na pìosan dàta gu h-ìosal}}',
-'passwordreset-username'   => 'Ainm-cleachdaiche:',
-'passwordreset-domain'     => 'Àrainn-lìn:',
-'passwordreset-email'      => 'Seòladh puist-d:',
-'passwordreset-emailtitle' => "Dàta a' chunntais air {{SITENAME}}",
-
 # Edit page toolbar
 'bold_sample'     => 'Teacs trom',
 'bold_tip'        => 'Teacs trom',

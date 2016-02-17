@@ -375,9 +375,6 @@ Ngì khó-yî ki-siu̍k yî ngia̍k-miàng fông-sṳt sṳ́-yung {{SITENAME}},
 'resetpass-submit-loggedin' => 'Kiên-kói me̍t-me̍t',
 'resetpass-submit-cancel'   => 'Chhí-sêu',
 
-# Special:PasswordReset
-'passwordreset-username' => 'Yung-fu-miàng',
-
 # Edit page toolbar
 'bold_sample'     => 'Chhû-thí vùn-sṳ',
 'bold_tip'        => 'Chhû-thí vùn-sṳ',

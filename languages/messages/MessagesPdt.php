@@ -247,9 +247,6 @@ Bitte schriew eene Notiz aun [[Special:ListUsers/sysop|administrator]], en lot d
 Bitte nemm eenen aundren.',
 'loginlanguagelabel'      => 'Sproak: $1',
 
-# Special:PasswordReset
-'passwordreset-username' => 'Bruckernome:',
-
 # Edit page toolbar
 'media_tip' => 'Datei-Link',
 

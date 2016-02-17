@@ -682,40 +682,6 @@ $2',
 您可能已成功地更改了您的密碼，或者已經請求一個新的臨時密碼。',
 'resetpass-temp-password'   => '臨時密碼:',
 
-# Special:PasswordReset
-'passwordreset'                    => '重新設定密碼',
-'passwordreset-text'               => '完成此表格以接收一個電郵以提示你的帳戶詳情。',
-'passwordreset-legend'             => '重設密碼',
-'passwordreset-disabled'           => '此維基上已禁止了重設密碼。',
-'passwordreset-pretext'            => '{{PLURAL:$1||輸入下列其中一個}}',
-'passwordreset-username'           => '使用者名稱：',
-'passwordreset-domain'             => '域名：',
-'passwordreset-capture'            => '查看生成的電子郵件嗎？',
-'passwordreset-capture-help'       => '如果您選中此框，電子郵件（包括臨時密碼）將顯示，並發送給用戶。',
-'passwordreset-email'              => '電郵地址：',
-'passwordreset-emailtitle'         => '在{{SITENAME}}上的詳細信息',
-'passwordreset-emailtext-ip'       => '有人（可能是你，來自$1這個IP）要求發出一個在{{SITENAME}}（$4）的帳戶信
-息提示。該用戶{{PLURAL:$3|是|是}}與以下電郵地址有關：
-
-$2
-
-{{PLURAL:$3|這個臨時密碼|這些臨時密碼}}會在{{PLURAL:$5|一天|$5天}}到期。
-你應該現在登入並選擇一個新的密碼。如果不是你作出這個請求，又或你已經記
-起你原來的密碼，你可以忽略本信息並使用你原來的密碼。',
-'passwordreset-emailtext-user'     => '用戶$1要求發出一個在{{SITENAME}}（$4）的帳戶信息提示。該用戶{{PLURAL:$3|是|是}}與以下
-電郵地址有關：
-
-$2
-
-{{PLURAL:$3|這個臨時密碼|這些臨時密碼}}會在{{PLURAL:$5|一天|$5天}}到期。
-你應該現在登入並選擇一個新的密碼。如果不是你作出這個請求，又或你已經記
-起你原來的密碼，你可以忽略本信息並使用你原來的密碼。',
-'passwordreset-emailelement'       => '用戶名：$1
-臨時密碼：$2',
-'passwordreset-emailsent'          => '已發送提示電郵。',
-'passwordreset-emailsent-capture'  => '提醒電子郵件已發送，並在下面顯示。',
-'passwordreset-emailerror-capture' => '生成的提醒電子郵件如下所示，但發送失敗：$1',
-
 # Special:ChangeEmail
 'changeemail'          => '更改電郵地址',
 'changeemail-header'   => '更改帳號電郵地址',

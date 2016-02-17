@@ -416,9 +416,6 @@ Occeppa xicalaqui niman ticmatīz.',
 'resetpass-submit-loggedin' => 'Ticpatlāz motlahtōlichtacāyo',
 'resetpass-submit-cancel'   => 'Ticcuepāz',
 
-# Special:PasswordReset
-'passwordreset-username' => 'Tlatequitiltilīltōcāitl:',
-
 # Edit page toolbar
 'bold_sample'     => 'Tlīltic tlahcuilōlli',
 'bold_tip'        => 'Tlīltic tlahcuilōlli',

@@ -390,9 +390,6 @@ $1',
 'resetpass-submit-cancel'   => 'ܒܛܘܠ',
 'resetpass-temp-password'   => 'ܡܠܬܐ ܕܥܠܠܐ ܙܒܢܢܝܬܐ:',
 
-# Special:PasswordReset
-'passwordreset-username' => 'ܫܡܐ ܕܡܦܠܚܢܐ:',
-
 # Edit page toolbar
 'bold_sample'     => 'ܟܬܒܬܐ ܥܒܝܬܐ',
 'bold_tip'        => 'ܟܬܒܬܐ ܥܒܝܬܐ',

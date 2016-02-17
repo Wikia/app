@@ -455,9 +455,6 @@ Prime di ricevi cualsisei altri messaç di pueste, tu scugnis seguî lis istruzi
 'retypenew'               => 'Torne a scrivi chê gnove',
 'resetpass-submit-cancel' => 'Scancele',
 
-# Special:PasswordReset
-'passwordreset-username' => 'Non utent:',
-
 # Edit page toolbar
 'bold_sample'     => 'Test in gruessut',
 'bold_tip'        => 'Test in gruessut',
