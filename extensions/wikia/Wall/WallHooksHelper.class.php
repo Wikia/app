@@ -19,6 +19,13 @@ class WallHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @param $user
+	 * @param Title $title
+	 * @param $blocked
+	 * @param $allowUsertalk
+	 * @return bool
+	 */
 	static public function onUserIsBlockedFrom( $user, $title, &$blocked, &$allowUsertalk ) {
 
 		if ( !$user->mHideName && $allowUsertalk && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
@@ -547,79 +554,76 @@ class WallHooksHelper {
 		$app = F::App();
 		$helper = new WallHelper();
 
-		if ( !empty( $app->wg->EnableWallExt ) ) {
-			$title = $app->wg->Title;
-			$parts = explode( '/', $title->getText() );
-			$action = $response->getVal( 'action' );
-			$dropdown = $response->getVal( 'dropdown' );
-			$canEdit = $app->wg->User->isAllowed( 'editwallarchivedpages' );
-
-			if ( $ns === NS_USER_WALL
-				&& $title->isSubpage()
-				&& !empty( $parts[1] )
-				&& mb_strtolower( str_replace( ' ', '_', $parts[1] ) ) === mb_strtolower( $helper->getArchiveSubPageText() )
-			) {
-				// user talk archive
-				$userTalkPageTitle = $helper->getTitle( NS_USER_TALK );
-
-				$action = [
-						'class' => '',
-						'text' => wfMessage( 'viewsource' )->text(),
-						'href' => $userTalkPageTitle->getLocalUrl( [ 'action' => 'edit' ] ),
-				];
-
-				$dropdown = [
-						'history' => [
-								'href' => $userTalkPageTitle->getLocalUrl( [ 'action' => 'history' ] ),
-								'text' => wfMessage( 'history_short' )->text(),
-						],
-				];
-
-				if ( $canEdit ) {
-					$action['text'] = wfMessage( 'edit' )->text();
-					$action['id'] = 'talkArchiveEditButton';
-				}
-
-				$response->setVal( 'action', $action );
-				$response->setVal( 'dropdown', $dropdown );
-			}
-
-			if ( $title->getNamespace() === NS_USER_WALL
-					&& $title->isSubpage()
-					&& !empty( $parts[1] )
-					&& mb_strtolower( str_replace( ' ', '_', $parts[1] ) ) !== mb_strtolower( $helper->getArchiveSubPageText() )
-			) {
-				// subpage
-				$userTalkPageTitle = $helper->getTitle( NS_USER_TALK, $parts[1] );
-
-				$action = [
-						'class' => '',
-						'text' => wfMessage( 'viewsource' )->text(),
-						'href' => $userTalkPageTitle->getLocalUrl( [ 'action' => 'edit' ] ),
-				];
-
-				$dropdown = [
-						'history' => [
-								'href' => $userTalkPageTitle->getLocalUrl( [ 'action' => 'history' ] ),
-								'text' => wfMessage( 'history_short' )->text(),
-						],
-				];
-
-				if ( $canEdit ) {
-					$action['text'] = wfMessage( 'edit' )->text();
-					$action['id'] = 'talkArchiveEditButton';
-				}
-
-				$response->setVal( 'action', $action );
-				$response->setVal( 'dropdown', $dropdown );
-			}
-			// update the response object with any changes
-			$response->setVal( 'action', $action );
-			$response->setVal( 'dropdown', $dropdown );
+		//return early instead wrap everything with brackets
+		if ( empty( $app->wg->EnableWallExt ) ) {
+			return true;
 		}
 
+		$title = $app->wg->Title;
+		$parts = explode( '/', $title->getText() );
+		$action = $response->getVal( 'action' );
+		$dropdown = $response->getVal( 'dropdown' );
+		$canEdit = $app->wg->User->isAllowed( 'editwallarchivedpages' );
+
+		if ( $title->isSubpage() && !empty( $parts[ 1 ] ) ) {
+			// user talk archive
+			if ($ns === NS_USER_WALL
+				&& mb_strtolower( str_replace( ' ', '_', $parts[ 1 ] ) ) === mb_strtolower( $helper->getArchiveSubPageText())){
+
+				$userTalkPageTitle = $helper->getTitle( NS_USER_TALK );
+				$action = self::getAction( $userTalkPageTitle, $canEdit );
+				$dropdown = self::getDropDown( $userTalkPageTitle );
+			}
+
+			// subpage
+			if($title->getNamespace() === NS_USER_WALL
+				&& mb_strtolower( str_replace( ' ', '_', $parts[ 1 ] ) ) !== mb_strtolower( $helper->getArchiveSubPageText())){
+
+				$userTalkPageTitle = $helper->getTitle( NS_USER_TALK, $parts[ 1 ] );
+				$action = self::getAction( $userTalkPageTitle, $canEdit );
+				$dropdown = self::getDropDown( $userTalkPageTitle );
+			}
+		}
+		// update the response object with any changes
+		$response->setVal( 'action', $action );
+		$response->setVal( 'dropdown', $dropdown );
 		return true;
 	}
+
+	/**
+	 * @param Title $userTalkPageTitle
+	 * @param $canEdit
+	 * @return array
+	 */
+	private static function getAction( Title $userTalkPageTitle, boolean $canEdit ) {
+		$action = [
+			'class' => '',
+			'text' => wfMessage( 'viewsource' )->text(),
+			'href' => $userTalkPageTitle->getLocalUrl( [ 'action' => 'edit' ] ),
+		];
+
+		if ( $canEdit ) {
+			$action[ 'text' ] = wfMessage( 'edit' )->text();
+			$action[ 'id' ] = 'talkArchiveEditButton';
+			return $action;
+		}
+		return $action;
+	}
+
+	/**
+	 * @param Title $userTalkPageTitle
+	 * @return array
+	 */
+	private static function getDropDown( Title $userTalkPageTitle ) {
+		$dropdown = [
+			'history' => [
+				'href' => $userTalkPageTitle->getLocalUrl( [ 'action' => 'history' ] ),
+				'text' => wfMessage( 'history_short' )->text(),
+			],
+		];
+		return $dropdown;
+	}
+
 
 	/**
 	 * @brief Redirects to current title if it is in NS_USER_WALL namespace
