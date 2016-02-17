@@ -3,7 +3,7 @@
 class MercuryApiHooks {
 
 	const SERVICE_API_ROOT = '/';
-	const SERVICE_API_BASE = 'api/v1/';
+	const SERVICE_API_BASE = 'api/mercury/';
 	const SERVICE_API_ARTICLE = 'article/';
 	const SERVICE_API_CURATED_CONTENT = 'main/section/';
 
@@ -91,8 +91,7 @@ class MercuryApiHooks {
 
 		if ( $title->inNamespaces( NS_MAIN ) ) {
 			// Mercury API call from Ember.js to Hapi.js e.g.
-			// http://elderscrolls.wikia.com/api/v1/article/Morrowind
-			// To access it, you have to set your client to be directed to the Mercury machines.
+			// http://elderscrolls.wikia.com/api/mercury/article/Morrowind
 			$urls[] =
 				$wgServer .
 				self::SERVICE_API_ROOT .

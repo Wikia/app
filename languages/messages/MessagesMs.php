@@ -335,30 +335,12 @@ $messages = array(
 'navigation'    => 'Pandu arah',
 'and'           => '&#32;dan',
 
-# Cologne Blue skin
 'qbfind'         => 'Cari',
 'qbbrowse'       => 'Semak imbas',
-'qbedit'         => 'Sunting',
 'qbpageoptions'  => 'Laman ini',
 'qbpageinfo'     => 'Konteks',
-'qbmyoptions'    => 'Laman-laman saya',
-'qbspecialpages' => 'Laman khas',
 'faq'            => 'Soalan Lazim',
-'faqpage'        => 'Project:Soalan Lazim',
 
-# Vector skin
-'vector-action-addsection'       => 'Buka topik',
-'vector-action-delete'           => 'Hapuskan',
-'vector-action-move'             => 'Pindahkan',
-'vector-action-protect'          => 'Lindungi',
-'vector-action-undelete'         => 'Batal hapus',
-'vector-action-unprotect'        => 'Ubah perlindungan',
-'vector-simplesearch-preference' => 'Bolehkan cadangan carian lanjutan (kulit Vector sahaja)',
-'vector-view-create'             => 'Cipta',
-'vector-view-edit'               => 'Sunting',
-'vector-view-history'            => 'Lihat sejarah',
-'vector-view-view'               => 'Baca',
-'vector-view-viewsource'         => 'Lihat sumber',
 'actions'                        => 'Tindakan',
 'namespaces'                     => 'Ruang nama',
 'variants'                       => 'Kelainan',
@@ -381,7 +363,6 @@ $messages = array(
 'edit'              => 'Sunting',
 'create'            => 'Cipta',
 'editthispage'      => 'Sunting laman ini',
-'create-this-page'  => 'Cipta laman ini',
 'delete'            => 'Hapuskan',
 'deletethispage'    => 'Hapuskan laman ini',
 'undelete_short'    => 'Nyahhapus {{PLURAL:$1|satu suntingan|$1 suntingan}}',
@@ -396,19 +377,9 @@ $messages = array(
 'talkpagelinktext'  => 'Perbualan',
 'specialpage'       => 'Laman Khas',
 'personaltools'     => 'Alatan peribadi',
-'postcomment'       => 'Bahagian baru',
-'articlepage'       => 'Lihat laman kandungan',
 'talk'              => 'Perbincangan',
 'views'             => 'Rupa',
 'toolbox'           => 'Alatan',
-'userpage'          => 'Lihat laman pengguna',
-'projectpage'       => 'Lihat laman projek',
-'imagepage'         => 'Lihat laman fail',
-'mediawikipage'     => 'Lihat laman pesanan',
-'templatepage'      => 'Lihat laman templat',
-'viewhelppage'      => 'Lihat laman bantuan',
-'categorypage'      => 'Lihat laman kategori',
-'viewtalkpage'      => 'Lihat perbincangan',
 'otherlanguages'    => 'Bahasa lain',
 'redirectedfrom'    => '(Dilencongkan dari $1)',
 'redirectpagesub'   => 'Laman lencongan',
@@ -705,34 +676,6 @@ Sila tunggu sebentar dan cuba lagi.',
 Anda mungkin telah pun berjaya menukar kata laluan anda atau meminta kata laluan sementara yang baru.',
 'resetpass-temp-password'   => 'Kata laluan sementara:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Set semula kata laluan',
-'passwordreset-text'               => 'Isikan borang ini untuk menerima peringatan butiran akaun anda melalui e-mel.',
-'passwordreset-legend'             => 'Set semula kata laluan',
-'passwordreset-disabled'           => 'Ciri set semula kata laluan telah dimatikan di wiki ini.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Isikan data di bawah}}',
-'passwordreset-username'           => 'Nama pengguna:',
-'passwordreset-domain'             => 'Domain:',
-'passwordreset-capture'            => 'Lihat e-mel yang terhasil?',
-'passwordreset-capture-help'       => 'Jika anda menandai ruang ini, e-mel (yang membawa kata laluan sementara) akan ditunjukkan kepada anda dan juga dihantar kepada pengguna itu.',
-'passwordreset-email'              => 'Alamat e-mel:',
-'passwordreset-emailtitle'         => 'Butiran akaun di {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Ada orang (mungkin anda, dari alamat IP $1) yang memohon peringatan butiran akaun anda untuk {{SITENAME}} ($4).  {{PLURAL:$3|Akaun|Akaun-akaun}} pengguna yang berikut dikaitkan dengan alamat e-mel ini:
-
-$2
-
-{{PLURAL:$3|Kata|Kata-kata}} laluan sementara ini akan luput dalam masa {{PLURAL:$5|sehari|$5 hari}}. Anda mesti log masuk dan buat kata laluan baru sekarang juga. Jika permohonan ini dibuat oleh orang lain, ataupun jika anda teringat balik kata laluan lama anda, dan tidak ingin lagi untuk menukarnya, anda boleh mengabaikan pesanan ini dan terus menggunakan kata laluan lama anda.',
-'passwordreset-emailtext-user'     => 'Pengguna $1 di {{SITENAME}} memohon peringatan butiran akaun anda untuk {{SITENAME}} ($4). {{PLURAL:$3|Akaun|Akaun-akaun}} pengguna yang berikut dikaitkan dengan alamat e-mel ini:
-
-$2
-
-{{PLURAL:$3|Kata|Kata-kata}} laluan sementara ini akan luput dalam masa {{PLURAL:$5|sehari|$5 hari}}. Anda mesti log masuk dan buat kata laluan baru sekarang juga. Jika permohonan ini dibuat oleh orang lain, ataupun jika anda teringat balik kata laluan lama anda, dan tidak ingin lagi untuk menukarnya, anda boleh mengabaikan pesanan ini dan terus menggunakan kata laluan lama anda.',
-'passwordreset-emailelement'       => 'Nama pengguna: $1
-Kata laluan sementara: $2',
-'passwordreset-emailsent'          => 'E-mel peringatan telah dihantar.',
-'passwordreset-emailsent-capture'  => 'E-mel peringatan (seperti di bawah) telah dihantar.',
-'passwordreset-emailerror-capture' => 'E-mel peringatan (seperti di bawah) telah dihasilkan tetapi tidak dapat dihantar kepada pengguna: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Tukar alamat e-mel',
 'changeemail-header'   => 'Tukar alamat e-mel akaun',
@@ -852,7 +795,6 @@ Masukan log sekatan terakhir disediakan di bawah sebagai rujukan:',
 '''Ia belum lagi disimpan!'''",
 'sitejspreview'                    => "'''Ingat bahawa anda cuma mempralihat kod JavaScript ini.'''
 '''Ia belum lagi disimpan!'''",
-'userinvalidcssjstitle'            => "'''Amaran:''' Rupa \"\$1\" tidak wujud. Ingat bahawa laman tempahan .css dan .js menggunakan tajuk berhuruf kecil, contohnya {{ns:user}}:Anu/vector.css tidak sama dengan {{ns:user}}:Anu/Vector.css.",
 'updated'                          => '(Dikemas kini)',
 'note'                             => "'''Catatan:'''",
 'previewnote'                      => "'''Ingatlah bahawa ini hanya pralihat.'''
@@ -1201,14 +1143,6 @@ Cuba berikan awalan ''all:'' untuk mencari semua kandungan (termasuk laman perbi
 'search-external'                  => 'Carian luar',
 'searchdisabled'                   => 'Ciri pencarian dalam {{SITENAME}} dimatikan. Anda boleh mencari melalui Google. Sila ambil perhatian bahawa indeks dalam Google mungkin bukan yang terkini.',
 
-# Quickbar
-'qbsettings'                => 'Bar pantas',
-'qbsettings-none'           => 'Tiada',
-'qbsettings-fixedleft'      => 'Tetap sebelah kiri',
-'qbsettings-fixedright'     => 'Tetap sebelah kanan',
-'qbsettings-floatingleft'   => 'Berubah-ubah sebelah kiri',
-'qbsettings-floatingright'  => 'Berubah-ubah sebelah kanan',
-'qbsettings-directionality' => 'Tetap, bergantung pada kearahan tulisan bahasa anda',
 
 # Preferences page
 'preferences'                   => 'Keutamaan',
@@ -2850,15 +2784,7 @@ Simpan dalam komputer anda dan muat naiknya di sini.',
 
 # Stylesheets
 'common.css'      => '/* CSS yang terletak di sini akan digunakan pada semua kulit */',
-'standard.css'    => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Klasik */',
-'nostalgia.css'   => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Nostalgia */',
-'cologneblue.css' => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Cologne Blue */',
 'monobook.css'    => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Monobook */',
-'myskin.css'      => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit MySkin */',
-'chick.css'       => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Chick */',
-'simple.css'      => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Ringkas */',
-'modern.css'      => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Moden */',
-'vector.css'      => '/* CSS yang terletak di sini akan mempengaruhi pengguna kulit Vector */',
 
 # Metadata
 'notacceptable' => 'Pelayan wiki ini tidak mampu menyediakan data dalam format yang boleh dibaca oleh pelanggan anda.',
@@ -2897,15 +2823,7 @@ Simpan dalam komputer anda dan muat naiknya di sini.',
 'pageinfo-viewsperedit'     => 'Kunjungan sesuntingan',
 
 # Skin names
-'skinname-standard'    => 'Klasik',
-'skinname-nostalgia'   => 'Nostalgia',
-'skinname-cologneblue' => 'Cologne Blue',
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'MySkin',
-'skinname-chick'       => 'Chick',
-'skinname-simple'      => 'Ringkas',
-'skinname-modern'      => 'Moden',
-'skinname-vector'      => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Tanda ronda',

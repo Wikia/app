@@ -19,7 +19,7 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 	 * @param Array $aUsersData array of user data arrays with selected fields from Wikia user table
 	 * @return bool
 	 */
-	public function updateFallbackCreateUsers( $aUsersData ) {
+	public function updateFallbackCreateUsers( array $aUsersData ) {
 
 		/* Validate users data, unset if incomplete */
 		foreach ( $aUsersData as $iArrayKey => $aUserData ) {
@@ -30,6 +30,12 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 				$this->error( __METHOD__ . ' user under ' . $iArrayKey . ' index of $aUsersData has no email' );
 				unset( $aUsersData[$iArrayKey] );
 			}
+		}
+
+		if ( empty( $aUsersData ) ) {
+			$this->info( __METHOD__ . ' Cannot update empty record (no user_id or user_email provided).
+				Skipping update.' );
+			return false;
 		}
 
 		$oHelper = $this->getUserHelper();

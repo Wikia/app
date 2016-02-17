@@ -1,4 +1,4 @@
-/*global describe, it, modules, expect*/
+/*global describe, it, modules, expect, spyOn*/
 describe('EvolveHelper', function () {
 	'use strict';
 	var noop = function () { return; },
@@ -48,30 +48,54 @@ describe('EvolveHelper', function () {
 		adContextMock.targeting.wikiDbName = null;
 		adContextMock.targeting.wikiCustomKeyValues = null;
 		adContextMock.targeting.wikiVertical = null;
-		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](adContextModuleMock, mockAdLogicPageParams(), mockDartUrl(), mockKrux(), logMock);
+		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](
+			adContextModuleMock,
+			mockAdLogicPageParams(),
+			mockDartUrl(),
+			mockKrux(),
+			logMock
+		);
 
 		expect(evolveHelper.getSect()).toBe('ros', 'ros');
 
 		adContextMock.targeting.wikiCustomKeyValues = 'foo=bar;media=tv';
 		adContextMock.targeting.wikiVertical = 'Entertainment';
-		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](adContextModuleMock, mockAdLogicPageParams(), mockDartUrl(), mockKrux(), logMock);
+		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](
+			adContextModuleMock,
+			mockAdLogicPageParams(),
+			mockDartUrl(),
+			mockKrux(),
+			logMock
+		);
 
 		expect(evolveHelper.getSect()).toBe('tv', 'tv entertainment');
 
 		adContextMock.targeting.wikiCustomKeyValues = 'foo=bar';
 		adContextMock.targeting.wikiVertical = 'Entertainment';
-		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](adContextModuleMock, mockAdLogicPageParams(), mockDartUrl(), mockKrux(), logMock);
+		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](
+			adContextModuleMock,
+			mockAdLogicPageParams(),
+			mockDartUrl(),
+			mockKrux(),
+			logMock
+		);
 
 		expect(evolveHelper.getSect()).toBe('entertainment', 'foo entertainment');
 
 		adContextMock.targeting.wikiCustomKeyValues = 'foo=bar;media=movie';
 		adContextMock.targeting.wikiVertical = 'Entertainment';
-		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](adContextModuleMock, mockAdLogicPageParams(), mockDartUrl(), mockKrux(), logMock);
+		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](
+			adContextModuleMock,
+			mockAdLogicPageParams(),
+			mockDartUrl(),
+			mockKrux(),
+			logMock
+		);
 
 		expect(evolveHelper.getSect()).toBe('movies', 'movie entertainment');
 	});
 
-	it('getTargeting returns nothing if nothing is set', function() {
+	it('getTargeting returns nothing if nothing is set', function () {
 		var dartUrlMock = mockDartUrl(),
 			evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](
 				mockAdContext(),
@@ -114,14 +138,14 @@ describe('EvolveHelper', function () {
 			);
 
 		spyOn(dartUrlMock, 'decorateParam').and.callFake(function (key) {
-			if ( key === 'segments' ) {
-				return 'segments=segment1,segment2;';
+			if (key === 'ksgmnt') {
+				return 'ksgmnt=segment1,segment2;';
 			}
 
 			return '';
 		});
 
-		expect(evolveHelper.getTargeting()).toBe('segments=segment1,segment2;');
+		expect(evolveHelper.getTargeting()).toBe('ksgmnt=segment1,segment2;');
 	});
 
 	it('getTargeting returns right targeting', function () {

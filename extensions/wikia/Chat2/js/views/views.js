@@ -576,7 +576,7 @@ var NodeChatUsers = Backbone.View.extend({
 					this[ location ? 'actionTemplate' : 'actionTemplateNoUrl' ]({
 						actionUrl: location,
 						actionName: action,
-						actionDesc: $.msg('chat-user-menu-' + action)
+						actionDesc: mw.html.escape($.msg('chat-user-menu-' + action))
 					})
 				);
 			}
@@ -592,7 +592,7 @@ var NodeChatUsers = Backbone.View.extend({
 				adminActions.append(
 					this.actionTemplateNoUrl({
 						actionName: action,
-						actionDesc: $.msg('chat-user-menu-' + action)
+						actionDesc: mw.html.escape($.msg('chat-user-menu-' + action))
 					})
 				);
 			}

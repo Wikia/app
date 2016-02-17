@@ -370,30 +370,12 @@ $messages = array(
 'navigation' => 'Flakk',
 'and' => '&#32;og',
 
-# Cologne Blue skin
 'qbfind' => 'Finna',
 'qbbrowse' => 'Flakka',
-'qbedit' => 'Breyta',
 'qbpageoptions' => 'Þessi síða',
 'qbpageinfo' => 'Samhengi',
-'qbmyoptions' => 'Mínar síður',
-'qbspecialpages' => 'Kerfissíður',
 'faq' => 'Algengar spurningar',
-'faqpage' => 'Project:Algengar spurningar',
 
-# Vector skin
-'vector-action-addsection' => 'Bæta við umræðu',
-'vector-action-delete' => 'Eyða',
-'vector-action-move' => 'Færa',
-'vector-action-protect' => 'Vernda',
-'vector-action-undelete' => 'Hætta við eyðingu',
-'vector-action-unprotect' => 'Breyta verndunarstigi',
-'vector-simplesearch-preference' => 'Virkja leitaruppástungur (eingöngu fyrir vector þema)',
-'vector-view-create' => 'Skapa',
-'vector-view-edit' => 'Breyta',
-'vector-view-history' => 'Breytingaskrá',
-'vector-view-view' => 'Lesa',
-'vector-view-viewsource' => 'Sýna frumkóða',
 'actions' => 'Aðgerðir',
 'namespaces' => 'Nafnrými',
 'variants' => 'Útgáfur',
@@ -416,7 +398,6 @@ $messages = array(
 'edit' => 'Breyta',
 'create' => 'Skapa',
 'editthispage' => 'Breyta þessari síðu',
-'create-this-page' => 'Skapa þessari síðu',
 'delete' => 'Eyða',
 'deletethispage' => 'Eyða þessari síðu',
 'undelete_short' => 'Endurvekja {{PLURAL:$1|eina breytingu|$1 breytingar}}',
@@ -431,19 +412,9 @@ $messages = array(
 'talkpagelinktext' => 'Spjall',
 'specialpage' => 'Kerfissíða',
 'personaltools' => 'Tenglar',
-'postcomment' => 'Nýr hluti',
-'articlepage' => 'Sýna núverandi síðu',
 'talk' => 'Spjall',
 'views' => 'Sýn',
 'toolbox' => 'Verkfæri',
-'userpage' => 'Skoða notandasíðu',
-'projectpage' => 'Skoða verkefnissíðu',
-'imagepage' => 'Skoða skráarsíðu',
-'mediawikipage' => 'Skoða skilaboðasíðu',
-'templatepage' => 'Skoða sniðasíðu',
-'viewhelppage' => 'Skoða hjálparsíðu',
-'categorypage' => 'Skoða flokkatré',
-'viewtalkpage' => 'Skoða umræðu',
 'otherlanguages' => 'Á öðrum tungumálum',
 'redirectedfrom' => '(Tilvísað frá $1)',
 'redirectpagesub' => 'Tilvísunarsíða',
@@ -747,38 +718,6 @@ Til að klára að skrá þig inn, verður þú að endurstilla lykilorðið hé
 Þú gætir þegar verið búin/n að breyta lykilorðinu eða sótt um nýtt tímabundið lykilorð',
 'resetpass-temp-password' => 'Tímabundið lykilorð:',
 
-# Special:PasswordReset
-'passwordreset' => 'Endurstilla lykilorð',
-'passwordreset-text' => 'Fylltu út þennan reit til að fá tölvupóst um áminningu um notendauplýsingarnar þínar.',
-'passwordreset-legend' => 'Endurstilla lykilorð',
-'passwordreset-disabled' => 'Lokað hefur verið fyrir að endurstilla lykilorð á þessum wiki.',
-'passwordreset-pretext' => '{{PLURAL:$1||Sláðu inn einn hluta gagnanna hér fyrir neðan}}',
-'passwordreset-username' => 'Notandanafn:',
-'passwordreset-domain' => 'Lén:',
-'passwordreset-capture' => 'Sjá áminninguna sem var send í tölvupósti?',
-'passwordreset-capture-help' => 'Ef þú hakar við þennan reit verður tölvupósturinn (með tímabundna lykilorðinu) sýndur þér og einnig sendur notandanum.',
-'passwordreset-email' => 'Netfang:',
-'passwordreset-emailtitle' => 'Notendaupplýsingar á {{SITENAME}}',
-'passwordreset-emailtext-ip' => 'Einhver (líklegast þú, á vistfanginu $1) hefur beðið um notendaupplýsingar þínar fyrir {{SITENAME}} ($4). Aðgangur eftirfarandi {{PLURAL:$3|notanda er|notendum eru}} tengd þessu netfangi:
-
-$2
-
-Ef þetta er það sem þú vildir, þarftu að skrá þig inn og velja nýtt lykilorð. {{PLURAL:$3|Tímabundna lykilorð|Tímabundnu lykilorðin}} renna út eftir {{PLURAL:$5|einn dag|$5 daga}}.
-
-Ef það varst ekki þú sem fórst fram á þetta, eða ef þú mannst lykilorðið þitt, og villt ekki lengur breyta því, skaltu hunsa þessi skilaboð og halda áfram að nota gamla lykilorðið.',
-'passwordreset-emailtext-user' => 'Notandinn $1 á {{SITENAME}} hefur beðið um notendaupplýsingar þínar fyrir {{SITENAME}} ($4). Aðgangur eftirfarandi {{PLURAL:$3|notanda er|notendum eru}} tengd þessu netfangi:
-
-$2
-
-Ef þetta er það sem þú vildir, þarftu að skrá þig inn og velja nýtt lykilorð. {{PLURAL:$3|Tímabundna lykilorð|Tímabundnu lykilorðin}} renna út eftir {{PLURAL:$5|einn dag|$5 daga}}.
-
-Ef það varst ekki þú sem fórst fram á þetta, eða ef þú mannst lykilorðið þitt, og villt ekki lengur breyta því, skaltu hunsa þessi skilaboð og halda áfram að nota gamla lykilorðið.',
-'passwordreset-emailelement' => 'Notendanafn: $1
-Tímabundið lykilorð: $2',
-'passwordreset-emailsent' => 'Áminning hefur verið send í tölvupósti.',
-'passwordreset-emailsent-capture' => 'Áminning hefur verið send í tölvupósti, sem er sýnd hér fyrir neðan.',
-'passwordreset-emailerror-capture' => 'Áminning var búin til, sem er sýnd hér fyrir neðan, en ekki tókst að senda hana til notandans: $1',
-
 # Special:ChangeEmail
 'changeemail' => 'Breyting netfangs',
 'changeemail-header' => 'Breyta skráðu netfangi',
@@ -907,7 +846,6 @@ Síðasta færsla notandans úr bönnunarskrá er sýnd hér fyrir neðan til sk
 '''Hann hefur ekki enn verið vistaður!'''",
 'sitejspreview' => "'''Mundu að þú ert aðeins að prófa/forskoða JavaScript-kóðann.'''
 '''Hann hefur ekki enn verið vistaður!'''",
-'userinvalidcssjstitle' => "'''Viðvörun:''' Þemað $1 er ekki til. Sérsniðin CSS og JavaScript útlit nota lágstafi, t.d.  {{ns:user}}:Foo/vector.css en alls ekki {{ns:user}}:Foo/Vector.css.",
 'updated' => '(Uppfært)',
 'note' => "'''Athugið:'''",
 'previewnote' => "'''Það sem sést hér er aðeins forskoðun og hefur ekki enn verið vistað!'''",
@@ -1221,14 +1159,6 @@ Sjáðu til þess að þessi breyting sameini breytingarskrárnar samfellt.',
 Þú getur leitað í genum Google á meðan.
 Athugaðu að skrár þeirra yfir {{SITENAME}}-efni kunna að vera úreltar.',
 
-# Quickbar
-'qbsettings' => 'Valblað',
-'qbsettings-none' => 'Sleppa',
-'qbsettings-fixedleft' => 'Fast vinstra megin',
-'qbsettings-fixedright' => 'Fast hægra megin',
-'qbsettings-floatingleft' => 'Fljótandi til vinstri',
-'qbsettings-floatingright' => 'Fljótandi til hægri',
-'qbsettings-directionality' => 'Lagað, fer eftir því í hvaða átt er skrifað á þínu tungumáli.',
 
 # Preferences page
 'preferences' => 'Stillingar',
@@ -2876,14 +2806,7 @@ Vinsamlegast reyndu aftur.',
 'pageinfo-viewsperedit' => 'Flettingar á hverja breytingu',
 
 # Skin names
-'skinname-standard' => 'Sígilt',
-'skinname-nostalgia' => 'Gamaldags',
-'skinname-cologneblue' => 'Kölnarblátt',
 'skinname-monobook' => 'EinBók',
-'skinname-myskin' => 'Mitt þema',
-'skinname-chick' => 'Gella',
-'skinname-simple' => 'Einfalt',
-'skinname-modern' => 'Nútímalegt',
 
 # Patrolling
 'markaspatrolleddiff' => 'Merkja sem yfirfarið',

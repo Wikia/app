@@ -282,30 +282,12 @@ $messages = array(
 'navigation'    => 'మార్గదర్శకం',
 'and'           => '&#32;మరియు',
 
-# Cologne Blue skin
 'qbfind'         => 'వెతుకు',
 'qbbrowse'       => 'విహరించు',
-'qbedit'         => 'సవరించు',
 'qbpageoptions'  => 'ఈ పేజీ',
 'qbpageinfo'     => 'సందర్భం',
-'qbmyoptions'    => 'నా పేజీలు',
-'qbspecialpages' => 'ప్రత్యేక పేజీలు',
 'faq'            => 'తరచూ అడిగే ప్రశ్నలు',
-'faqpage'        => 'Project:తరచూ అడిగే ప్రశ్నలు',
 
-# Vector skin
-'vector-action-addsection'       => 'విషయాన్ని చేర్చు',
-'vector-action-delete'           => 'తొలగించు',
-'vector-action-move'             => 'తరలించు',
-'vector-action-protect'          => 'సంరక్షించు',
-'vector-action-undelete'         => 'తిరిగి చేర్చు',
-'vector-action-unprotect'        => 'సంరక్షణను మార్చు',
-'vector-simplesearch-preference' => 'మెరుగైన అన్వేషణ సలహాలని చేతనంచేయి (వెక్టర్ అలంకారానికి మాత్రమే)',
-'vector-view-create'             => 'సృష్టించు',
-'vector-view-edit'               => 'సవరించు',
-'vector-view-history'            => 'చరిత్రని చూడండి',
-'vector-view-view'               => 'చదువు',
-'vector-view-viewsource'         => 'మూలాన్ని చూడండి',
 'actions'                        => 'చర్యలు',
 'namespaces'                     => 'నేంస్పేసులు',
 'variants'                       => 'వైవిధ్యాలు',
@@ -328,7 +310,6 @@ $messages = array(
 'edit'              => 'సవరించు',
 'create'            => 'సృష్టించు',
 'editthispage'      => 'ఈ పేజీని సవరించండి',
-'create-this-page'  => 'ఈ పేజీని సృష్టించండి',
 'delete'            => 'తొలగించు',
 'deletethispage'    => 'ఈ పేజీని తొలగించండి',
 'undelete_short'    => '{{PLURAL:$1|ఒక్క రచనను|$1 రచనలను}} పునఃస్థాపించు',
@@ -343,19 +324,9 @@ $messages = array(
 'talkpagelinktext'  => 'చర్చ',
 'specialpage'       => 'ప్రత్యేక పేజీ',
 'personaltools'     => 'వ్యక్తిగత పనిముట్లు',
-'postcomment'       => 'కొత్త విభాగం',
-'articlepage'       => 'విషయపు పేజీని చూడండి',
 'talk'              => 'చర్చ',
 'views'             => 'పేజీ లింకులు',
 'toolbox'           => 'పరికరాలపెట్టె',
-'userpage'          => 'వాడుకరి పేజీని చూడండి',
-'projectpage'       => 'ప్రాజెక్టు పేజీని చూడు',
-'imagepage'         => 'ఫైలు పేజీని చూడండి',
-'mediawikipage'     => 'సందేశం పేజీని చూడు',
-'templatepage'      => 'మూస పేజీని చూడు',
-'viewhelppage'      => 'సహాయం పేజీని చూడు',
-'categorypage'      => 'వర్గం పేజీని చూడు',
-'viewtalkpage'      => 'చర్చను చూడు',
 'otherlanguages'    => 'ఇతర భాషలలొ',
 'redirectedfrom'    => '($1 నుండి మళ్ళించబడింది)',
 'redirectpagesub'   => 'దారిమార్పు పుట',
@@ -650,33 +621,6 @@ $2',
 'resetpass-wrong-oldpass'   => 'తప్పుడు తాత్కాలిక లేదా ప్రస్తుత సంకేతపదం.
 మీరు మీ సంకేతపదాన్ని ఇప్పటికే విజయవంతంగా మార్చుకొనివుండవచ్చు లేదా కొత్త తాత్కాలిక సంకేతపదం కోసం అభ్యర్థించారు.',
 'resetpass-temp-password'   => 'తాత్కాలిక సంకేతపదం:',
-
-# Special:PasswordReset
-'passwordreset'                => 'సంకేతపదాన్ని మార్చుకోండి',
-'passwordreset-text'           => 'మీ ఖాతా వివరాలను గుర్తు చేసే ఈమెయిలు కోసం ఈ ఫారాన్ని పూర్తి చెయ్యండి.',
-'passwordreset-legend'         => 'సంకేతపదాన్ని మార్చుకోండి',
-'passwordreset-disabled'       => 'ఈ వికీలో సంకేతపదాల మార్పును అచేతనం చేసాం.',
-'passwordreset-pretext'        => '{{PLURAL:$1||డేటా శకలాల్లోంచి ఒకదాన్ని ఇవ్వండి}}',
-'passwordreset-username'       => 'వాడుకరిపేరు:',
-'passwordreset-email'          => 'ఈ-మెయిలు చిరునామా:',
-'passwordreset-emailtitle'     => '{{SITENAME}}లో ఖాతా వివరాలు',
-'passwordreset-emailtext-ip'   => 'ఎవరో (బహుశా మీరే, ఐపీ అడ్రసు $1 నుంచి)  {{SITENAME}} ($4) లో మీ ఖాతా వివరాలను చెప్పమంటూ అడిగారు. కింది వాడుకరి {{PLURAL:$3|ఖాతా|ఖాతాలు}}
-ఈ ఈమెయిలు అడ్రసుతో అనుసంధింపబడి ఉన్నాయి:
-
-$2
-
-{{PLURAL:$3|ఈ తాత్కాలిక సంకేతపదానికి|ఈ తాత్కాలిక సంకేతపదాలకు}} {{PLURAL:$5|ఒక్క రోజులో|$5 రోజుల్లో}} కాలం చెల్లుతుంది.
-ఇప్పుడు మీరు లాగినై కొత్త సంకేతపదాన్ని ఎంచుకోవాల్సి ఉంటుంది. ఈ అభ్యర్ధన చేసింది మరెవరైనా అయినా, లేక మీ అసలు సంకేతపదం మీకు గుర్తొచ్చి, మార్చాల్సిన అవసరం లేకపోయినా, మీరీ సందేశాన్ని పట్టించుకోనక్కర్లేదు. పాత సంకేతపదాన్నే వాడుతూ పోవచ్చు.',
-'passwordreset-emailtext-user' => '{{SITENAME}} లోని వాడుకరి $1, {{SITENAME}} ($4) లోని మీ ఖాతా వివరాలను చెప్పమంటూ అడిగారు. కింది వాడుకరి {{PLURAL:$3|ఖాతా|ఖాతాలు}}
-ఈ ఈమెయిలు అడ్రసుతో అనుసంధింపబడి ఉన్నాయి:
-
-$2
-
-{{PLURAL:$3|ఈ తాత్కాలిక సంకేతపదానికి|ఈ తాత్కాలిక సంకేతపదాలకు}} {{PLURAL:$5|ఒక్క రోజులో|$5 రోజుల్లో}} కాలం చెల్లుతుంది.
-ఇప్పుడు మీరు లాగినై కొత్త సంకేతపదాన్ని ఎంచుకోవాల్సి ఉంటుంది. ఈ అభ్యర్ధన చేసింది మరెవరైనా అయినా, లేక మీ అసలు సంకేతపదం మీకు గుర్తొచ్చి, మార్చాల్సిన అవసరం లేకపోయినా, మీరీ సందేశాన్ని పట్టించుకోనక్కర్లేదు. పాత సంకేతపదాన్నే వాడుతూ పోవచ్చు.',
-'passwordreset-emailelement'   => 'వాడుకరిపేరు: $1
-తాత్కాలిక సంకేతపదం: $2',
-'passwordreset-emailsent'      => 'జ్ఞాపకం ఈమెయిలు పంపించాం.',
 
 # Special:ChangeEmail
 'changeemail'          => 'ఈ-మెయిలు చిరునామా మార్పు',
@@ -1132,14 +1076,6 @@ $1",
 'search-external'                  => 'బయటి అన్వేషణ',
 'searchdisabled'                   => '{{SITENAME}} అన్వేషణ తాత్కాలికంగా పని చెయ్యడం లేదు. ఈలోగా మీరు గూగుల్‌ ఉపయోగించి అన్వేషించవచ్చు. ఒక గమనిక: గూగుల్‌ ద్వారా కాలదోషం పట్టిన ఫలితాలు రావడానికి అవకాశం ఉంది.',
 
-# Quickbar
-'qbsettings'                => 'క్విక్‌బార్',
-'qbsettings-none'           => 'ఏదీకాదు',
-'qbsettings-fixedleft'      => 'స్థిర ఎడమ',
-'qbsettings-fixedright'     => 'స్థిర కుడి',
-'qbsettings-floatingleft'   => 'ఎడమకు ఒదిగి',
-'qbsettings-floatingright'  => 'కుడికి ఒదిగి',
-'qbsettings-directionality' => 'స్థిరం, మీ లిపి మరియు భాషల యొక్క దిశ ఆధారంగా',
 
 # Preferences page
 'preferences'                   => 'అభిరుచులు',
@@ -2707,15 +2643,7 @@ $UNWATCHURL కి వెళ్ళండి.
 'pageinfo-viewsperedit'     => 'ఒక మార్పుకి వీక్షణలు',
 
 # Skin names
-'skinname-standard'    => 'సంప్రదాయ',
-'skinname-nostalgia'   => 'నాస్టాల్జియా',
-'skinname-cologneblue' => 'కలోన్ నీలం',
 'skinname-monobook'    => 'మోనోబుక్',
-'skinname-myskin'      => 'నాఅలంకారం',
-'skinname-chick'       => 'చిక్',
-'skinname-simple'      => 'సరళ',
-'skinname-modern'      => 'ఆధునిక',
-'skinname-vector'      => 'వెక్టర్',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'పరీక్షించినట్లుగా గుర్తు పెట్టు',

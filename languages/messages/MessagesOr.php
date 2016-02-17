@@ -393,30 +393,12 @@ $messages = array(
 'navigation'    => 'ଦିଗବାରେଣି',
 'and'           => '&#32;ଓ',
 
-# Cologne Blue skin
 'qbfind'         => 'ଖୋଜିବା',
 'qbbrowse'       => 'ଖୋଜିବା',
-'qbedit'         => 'ବଦଳାଇବେ',
 'qbpageoptions'  => 'ଏହି ଫର୍ଦଟି',
 'qbpageinfo'     => 'ଭିତର ଚିଜ',
-'qbmyoptions'    => 'ମୋର ଫର୍ଦ',
-'qbspecialpages' => 'ନିଆରା ପୃଷ୍ଠା',
 'faq'            => 'ବାରମ୍ବାର ପଚରାଯାଉଥିବା ପ୍ରଶ୍ନ',
-'faqpage'        => 'Project:ବାରମ୍ବାର ପଚାରାଯାଉଥିବା ପ୍ରଶ୍ନ',
 
-# Vector skin
-'vector-action-addsection'       => 'ଲେଖା ମିଶାଇବା',
-'vector-action-delete'           => 'ଲିଭାଇବେ',
-'vector-action-move'             => 'ଘୁଞ୍ଚାଇବେ',
-'vector-action-protect'          => 'କିଳିବେ',
-'vector-action-undelete'         => 'ଲିଭାଇବେ ନାହିଁ',
-'vector-action-unprotect'        => 'କିଳିବେ ନାହିଁ',
-'vector-simplesearch-preference' => 'ଆହୁରି ଅଧିକ ଖୋଜା ମତାମତ ଗୁଡ଼ିକ ସଚଳ କରିବେ (କେବଳ ଭେକ୍ଟର ସ୍କିନ)',
-'vector-view-create'             => 'ତିଆରି',
-'vector-view-edit'               => 'ବଦଳାଇବେ',
-'vector-view-history'            => 'ଇତିହାସ ଦେଖିବେ',
-'vector-view-view'               => 'ପଢ଼ିବେ',
-'vector-view-viewsource'         => 'ଉତ୍ସ ଦେଖିବେ',
 'actions'                        => 'କାମ',
 'namespaces'                     => 'ନେମସ୍ପେସ',
 'variants'                       => 'ନିଆରା',
@@ -439,7 +421,6 @@ $messages = array(
 'edit'              => 'ବଦଳାଇବେ',
 'create'            => 'ତିଆରି କରିବେ',
 'editthispage'      => 'ଏହି ପୃଷ୍ଠାଟିକୁ ବଦଳାଇବା',
-'create-this-page'  => 'ଏହି ପୃଷ୍ଠାଟି ତିଆରିବେ',
 'delete'            => 'ଲିଭାଇବେ',
 'deletethispage'    => 'ଏହି ପୃଷ୍ଠାଟି ଲିଭାଇବେ',
 'undelete_short'    => '{{PLURAL:$1|ଗୋଟିଏ ବଦଳ|$1ଟି ବଦଳ}} ଯାହା ଲିଭାସରିଛି ତାହାକୁ ପଛକୁ ଫେରାଇଦେବା',
@@ -454,19 +435,9 @@ $messages = array(
 'talkpagelinktext'  => 'କଥାଭାଷା',
 'specialpage'       => 'ନିଆରା ପୃଷ୍ଠା',
 'personaltools'     => 'ନିଜର ଟୁଲ',
-'postcomment'       => 'ନୂଆ ଭାଗ',
-'articlepage'       => 'ସୂଚୀ ପୃଷ୍ଠାଟି ଦେଖାଇବେ',
 'talk'              => 'ଆଲୋଚନା',
 'views'             => 'ଦେଖା',
 'toolbox'           => 'ଉପକରଣ',
-'userpage'          => 'ବ୍ୟବହାରକାରୀଙ୍କ ପୃଷ୍ଠା ଦେଖନ୍ତୁ',
-'projectpage'       => 'ପ୍ରକଳ୍ପ ପୃଷ୍ଠାଟି ଦେଖାଇବା',
-'imagepage'         => 'ଫାଇଲ ପୃଷ୍ଠାଗୁଡ଼ିକ ଦେଖନ୍ତୁ',
-'mediawikipage'     => 'ମେସେଜ ପୃଷ୍ଠାଟି ଦେଖାଇବେ',
-'templatepage'      => 'ଛାଞ୍ଚ ପୃଷ୍ଠାଗୁଡ଼ିକ ଦେଖନ୍ତୁ',
-'viewhelppage'      => 'ସହାଯୋଗ ପୃଷ୍ଠାଗୁଡ଼ିକ ଦେଖନ୍ତୁ',
-'categorypage'      => 'ଶ୍ରେଣୀ ପୃଷ୍ଠାଟିକୁ ଦେଖାଇବେ',
-'viewtalkpage'      => 'ଆଲୋଚନାଗୁଡ଼ିକୁ ଦେଖନ୍ତୁ',
 'otherlanguages'    => 'ଅଲଗା ଭାଷା',
 'redirectedfrom'    => '($1 ରୁ ଲେଉଟି ଆସିଛି)',
 'redirectpagesub'   => 'ଆଉଥରେ ଫେରିବା ପୃଷ୍ଠା',
@@ -774,41 +745,6 @@ continue using your old password.',
 'resetpass-wrong-oldpass'   => 'ଅସ୍ଥାୟୀ ବା ଏବେକାର ପାସବାର୍ଡ଼ଟି ଭୁଲ ଅଟେ ।
 ଆପଣ ବୋଧ ହୁଏ ଆଗରୁ ସଫଳ ଭାବରେ ନିଜର ପାସବାର୍ଡ଼ଟି ବଦଳାଇଦେଇଛନ୍ତି ବା ନୂଆ ଅସ୍ଥାୟୀ ପାସବାର୍ଡ଼ଟିଏ ପାଇଁ ଆବେଦନ କରିଅଛନ୍ତି ।',
 'resetpass-temp-password'   => 'ଅସ୍ଥାୟୀ ପାସବାର୍ଡ଼:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'ପାସୱାର୍ଡ଼ ପୁନସ୍ଥାପନ କରନ୍ତୁ',
-'passwordreset-text'               => 'ନିଜ ଖାତାର ସବିଶେଷ ବିବରଣୀ ଏକ ଇ-ମେଲରେ ପାଇବା ପାଇଁ ଏହି ଆବେଦନ ପତ୍ରଟି ପୂରଣ କରନ୍ତୁ ।',
-'passwordreset-legend'             => 'ପାସୱାର୍ଡ଼ ପୁନସ୍ଥାପନ କରନ୍ତୁ',
-'passwordreset-disabled'           => 'ପାସବାର୍ଡ଼କୁ ପୁରାପୁରି ମୂଳକୁ ଫେରାଇବା ଏହି ଉଇକିରେ ଅଚଳ କରାଯାଇଅଛି ।',
-'passwordreset-pretext'            => '{{PLURAL:$1||ତଳେ ଥିବା ତଥ୍ୟସମୂହରୁ କୌଣସି ଗୋଟିଏ ଦିଅନ୍ତୁ}}',
-'passwordreset-username'           => 'ବ୍ୟବହାରକାରୀଙ୍କ ନାମ:',
-'passwordreset-domain'             => 'ଡୋମେନ:',
-'passwordreset-capture'            => 'ଯାଉଥିବା ଇ-ମେଲଟି ଦେଖିବେ?',
-'passwordreset-capture-help'       => 'ଯଦି ଆପଣ ଘରଟିକୁ ଦେଖନ୍ତି ତେବେ (ଅସ୍ଥାୟୀ ପାସୱାର୍ଡ଼ ସହିତ) ଇ-ମେଲଟି ଆପଣଙ୍କୁ ଦେଖାଯିବ ଓ ବାକି ସଭ୍ୟମାନଙ୍କୁ ଚାଲିଯିବ ।',
-'passwordreset-email'              => 'ଇ-ମେଲ ଠିକଣା:',
-'passwordreset-emailtitle'         => '{{SITENAME}} ର ଖାତା ସବିଶେଷ',
-'passwordreset-emailtext-ip'       => 'କେହି ଜଣେ (ବୋଧେ ଆପଣ, $1 IP ଠିକଣାରୁ)
-{{SITENAME}} ($4) ସାଇଟରେ ଥିବା ଆପଣଙ୍କ ଖାତାର ସବିଶେଷ ଜାଣିବାକୁ ଅନୁରୋଧ କରିଛନ୍ତି । ଏହି ଇମେଲ ଠିକଣା ସହିତ ତଳଲିଖିତ ବ୍ୟବହାରକାରୀଙ୍କ {{PLURAL:$3|ଖାତା|ଖାତାସମୂହ}} ଯୋଡ଼ା:
-
-$2
-
-{{PLURAL:$3|ଏହି ଅସ୍ଥାୟୀ ପାସବାର୍ଡ଼ଟି|ଏହି ଅସ୍ଥାୟୀ ପାସବାର୍ଡ଼ସବୁ}} {{PLURAL:$5|ଦିନକରେ|$5 ଦିନରେ ଅଚଳ}} ହୋଇଯିବ ।
-ଆପଣ ଏବେ ଲଗ ଇନ କରି ନୂଆ ପାସବାର୍ଡ଼ଟିଏ ବାଛନ୍ତୁ । ଯହି ଆଉ କେହି ଜଣେ ଏହି ଅନୁରୋଧ କରିଥାନ୍ତି
-କିମ୍ବା ଆପଣ ଏବେ ନିଜର ମୂଳ ପାସବାର୍ଡ଼ ମନେ ପକାଇ ପାରିଥାନ୍ତି ତେବେ ଏହି ପାସବାର୍ଡ଼ଟିକୁ ଆଉ ବଦଳାଇବା ଲୋଡ଼ା ନାହିଁ ।
-ଆପଣ ନିଜ ପୁରୁଣା ପାସବାର୍ଡ଼ଟି ଆଗପରି ବ୍ୟବହାର କରିପାରନ୍ତି ।',
-'passwordreset-emailtext-user'     => '{{SITENAME}}ରେ ଥିବା ବ୍ୟୟବହାରକାରୀ $1 {{SITENAME}} ($4) ସାଇଟରେ ଥିବା ଆପଣଙ୍କ ଖାତାର ସବିଶେଷ ଜାଣିବାକୁ ଅନୁରୋଧ କରିଛନ୍ତି । ଏହି ଇମେଲ ଠିକଣା ସହିତ ତଳଲିଖିତ ବ୍ୟବହାରକାରୀଙ୍କ {{PLURAL:$3|ଖାତା|ଖାତାସମୂହ}} ଯୋଡ଼ା:
-
-$2
-
-{{PLURAL:$3|ଏହି ଅସ୍ଥାୟୀ ପାସବାର୍ଡ଼ଟି|ଏହି ଅସ୍ଥାୟୀ ପାସବାର୍ଡ଼ସବୁ}} {{PLURAL:$5|ଦିନକରେ|$5 ଦିନରେ ଅଚଳ}} ହୋଇଯିବ ।
-ଆପଣ ଏବେ ଲଗ ଇନ କରି ନୂଆ ପାସବାର୍ଡ଼ଟିଏ ବାଛନ୍ତୁ । ଯହି ଆଉ କେହି ଜଣେ ଏହି ଅନୁରୋଧ କରିଥାନ୍ତି
-କିମ୍ବା ଆପଣ ଏବେ ନିଜର ମୂଳ ପାସବାର୍ଡ଼ ମନେ ପକାଇ ପାରିଥାନ୍ତି ତେବେ ଏହି ପାସବାର୍ଡ଼ଟିକୁ ଆଉ ବଦଳାଇବା ଲୋଡ଼ା ନାହିଁ ।
-ଆପଣ ନିଜ ପୁରୁଣା ପାସବାର୍ଡ଼ଟି ଆଗପରି ବ୍ୟବହାର କରିପାରନ୍ତି ।',
-'passwordreset-emailelement'       => 'ଇଉଜର ନାମ: $1
-ଅସ୍ଥାୟୀ ପାସବାର୍ଡ଼: $2',
-'passwordreset-emailsent'          => 'ଏକ ମନେପକାଇବା ଇ-ମେଲ ପଠାଇଦିଆଯାଇଅଛି ।',
-'passwordreset-emailsent-capture'  => 'ତଳେ ଦିଆଯାଇଥିବା ଭଳି ମନେପକାଇବା ଇ-ମେଲଟିଏ ପଠାଦିଆଗଲା ।',
-'passwordreset-emailerror-capture' => 'ଗୋଟିଏ ସବିଶେଷ ଏମେଲଟିଏ ବାହାରିଛି, ଯାହାକି ତଳେ ଅଛି, କିନ୍ତୁ ଏହାକୁ ବ୍ୟବହାରକାରୀକୁ ପଠାଇବାରେ ଅସଫଳ ହେଲା :$1',
 
 # Special:ChangeEmail
 'changeemail'          => 'ଇ-ମେଲ ଠିକଣା ବଦଳାଇବେ',
@@ -1296,14 +1232,6 @@ $1",
 ଆପଣ ଏହି ଭିତରେ ଗୁଗଲ ଦେଖିପାରନ୍ତି ।
 ଜାଣିରଖନ୍ତୁ ଯେ {{SITENAME}}ର ବିଷୟ ସୂଚି ପୁରାତନ ହୋଇଥାଇପାରେ ।',
 
-# Quickbar
-'qbsettings'                => 'ସହଳ ପଟି (Quickbar)',
-'qbsettings-none'           => 'କିଛି ନାହିଁ',
-'qbsettings-fixedleft'      => 'ବାମକୁ ଥୟ କରାଗଲା',
-'qbsettings-fixedright'     => 'ଡାହାଣକୁ ଥୟ କରାଗଲା',
-'qbsettings-floatingleft'   => 'ବାମରେ ଭାସନ୍ତା',
-'qbsettings-floatingright'  => 'ଡାହାଣରେ ଭାସନ୍ତା',
-'qbsettings-directionality' => 'ଆପଣଙ୍କ ଭାଷାର ବାମ-ଡାହାଣ ଲିଖନ ଶୈଳୀ ଅନୁସାରେ ସଜାଡ଼ି ଦିଆଗଲା',
 
 # Preferences page
 'preferences'                   => 'ପସନ୍ଦ',

@@ -1866,6 +1866,7 @@ $messages['inh'] = array(
  * @author Gifh
  */
 $messages['it'] = array(
+	'sitewidemessages' => 'Messaggi globali',
 	'swm-label-preview' => 'Anteprima',
 	'swm-label-edit' => 'Modifica',
 	'swm-label-remove' => 'Rimuovi',

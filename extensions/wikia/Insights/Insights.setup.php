@@ -57,6 +57,12 @@ $wgAutoloadClasses['InsightsWantedpagesModel'] = $dir . 'models/InsightsWantedpa
 $wgAutoloadClasses['InsightsWithoutimagesModel'] = $dir . 'models/InsightsWithoutimagesModel.php';
 
 /**
+ * Counting service
+ */
+$wgAutoloadClasses['InsightsCountService'] = $dir . 'services/InsightsCountService.class.php';
+$wgAutoloadClasses['InsightsCountApiController'] = $dir . 'controllers/InsightsCountApiController.class.php';
+
+/**
  * The right rail module
  */
 $wgAutoloadClasses['InsightsModuleController'] = $IP.'/skins/oasis/modules/InsightsModuleController.class.php';
@@ -68,13 +74,22 @@ $wgAutoloadClasses['InsightsHooks'] = $dir . 'InsightsHooks.class.php';
 $wgHooks['BeforePageDisplay'][] = 'InsightsHooks::onBeforePageDisplay';
 $wgHooks['ArticleUpdateBeforeRedirect'][] = 'InsightsHooks::AfterActionBeforeRedirect';
 $wgHooks['ArticleCreateBeforeRedirect'][] = 'InsightsHooks::AfterActionBeforeRedirect';
-$wgHooks['GetLocalURL'][] = 'InsightsHooks::onGetLocalURL';
 $wgHooks['MakeGlobalVariablesScript'][] = 'InsightsHooks::onMakeGlobalVariablesScript';
 $wgHooks['GetRailModuleList'][] = 'InsightsHooks::onGetRailModuleList';
 $wgHooks['wgQueryPages'][] = 'InsightsHooks::onwgQueryPages';
 $wgHooks['AfterUpdateSpecialPages'][] = 'InsightsHooks::onAfterUpdateSpecialPages';
 
+$wgExtensionFunctions[] = 'wfInsightsSetup';
+function wfInsightsSetup() {
+	global $wgRequest, $wgHooks;
+
+	if ( !empty( $wgRequest->getVal( 'insights', null ) ) ) {
+		$wgHooks['GetLocalURL'][] = 'InsightsHooks::onGetLocalURL';
+	}
+}
+
 /**
  * Message files
  */
 $wgExtensionMessagesFiles['Insights'] = $dir . 'Insights.i18n.php';
+$wgExtensionMessagesFiles['InsightsAliases'] = $dir . 'Insights.alias.php';

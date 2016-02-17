@@ -1229,9 +1229,10 @@ class EditPage {
 
 		wfProfileOut( __METHOD__ . '-checks' );
 
-		# If article is new, insert it.
-		$aid = $this->mTitle->getArticleID( Title::GAID_FOR_UPDATE );
-		$new = ( $aid == 0 );
+		// Use SELECT FOR UPDATE here to avoid transaction collision in
+		// WikiPage::updateRevisionOn() and ending in the self::AS_END case.
+		$this->mArticle->loadPageData( 'forupdate' );
+		$new = !$this->mArticle->exists();
 
 		if ( $new ) {
 			// Late check for create permission, just in case *PARANOIA*
@@ -1311,10 +1312,7 @@ class EditPage {
 		} else {
 
 			# Article exists. Check for edit conflict.
-
-			$this->mArticle->clear(); # Force reload of dates, etc.
 			$timestamp = $this->mArticle->getTimestamp();
-
 			wfDebug( "timestamp: {$timestamp}, edittime: {$this->edittime}\n" );
 
 			if ( $timestamp != $this->edittime ) {
@@ -1699,7 +1697,9 @@ class EditPage {
 			if ( !($user && $user->isLoggedIn()) && !$ip ) { # User does not exist
 				$wgOut->wrapWikiMsg( "<div class=\"mw-userpage-userdoesnotexist error\">\n$1\n</div>",
 					array( 'userpage-userdoesnotexist', wfEscapeWikiText( $username ) ) );
-			} elseif ( $user->isBlocked() ) { # Show log extract if the user is currently blocked
+			/* Wikia change begin - SUS-92 */
+			} elseif ( $user->isBlocked( true, false ) ) { # Show log extract if the user is currently blocked
+			/* Wikia change end */
 				LogEventsList::showLogExtract(
 					$wgOut,
 					'block',

@@ -6,7 +6,7 @@
 	<div id="phalanx-content-area">
 		<div id="phalanx-filter-area">
 			<fieldset id="phalanx-input-filter">
-				<legend><?php echo wfMsg( 'phalanx-legend-input' ) ?></legend>
+				<legend><?= wfMessage( 'phalanx-legend-input' )->escaped() ?></legend>
 				<form id="phalanx-block" method="post" action="<?= $action ?>">
 					<!-- Filter -->
 					<div id="phalanx-block-texts">
@@ -15,14 +15,14 @@
 						<strong>ID:</strong> <?= $data['id'] ?>
 						<?php endif; ?>
 						<div id="singlemode">
-							<label for="wpPhalanxFilter" class="left"><?php echo wfMsg( 'phalanx-label-filter' ) ?></label>
+							<label for="wpPhalanxFilter" class="left"><?= wfMessage( 'phalanx-label-filter' )->escaped() ?></label>
 							<input type="text" id="wpPhalanxFilter" name="wpPhalanxFilter" class="blue" size="40" value="<?= htmlspecialchars($data['text']) ?>" />
-							<input type="button" id="validate" value="<?php echo wfMsg( 'phalanx-validate-regexp' ) ?>" />
+							<input type="button" id="validate" value="<?= wfMessage( 'phalanx-validate-regexp' )->escaped() ?>" />
 							<?php if (empty($editMode)): ?>
 							<input type="button" id="enterbulk" value="<?= wfMsg('phalanx-bulkmode') ?>">
 						</div>
 						<div id="bulkmode" style="display: none">
-							<label for="wpPhalanxFilterBulk" class="left">Bulk<br/><?php echo wfMsg( 'phalanx-label-filter' ) ?></label>
+							<label for="wpPhalanxFilterBulk" class="left">Bulk<br/><?= wfMessage( 'phalanx-label-filter' )->escaped() ?></label>
 							<textarea type="text" id="wpPhalanxFilterBulk" name="wpPhalanxFilterBulk" class="blue" rows="10" cols="40" value="" ></textarea>
 							<input type="button" id="entersingle" value="<?= wfMsg('phalanx-singlemode') ?>">
 						<?php endif; ?>
@@ -34,13 +34,13 @@
 						<div class="clearfix">
 							<div class="left-spacer">&nbsp;</div>
 							<?= Xml::check( 'wpPhalanxFormatRegex', !empty( $data['regex'] ), array( 'id' => 'wpPhalanxFormatRegex' ) ) ?>
-							<label for="wpPhalanxFormatRegex"><?php echo wfMsg( 'phalanx-format-regex' ) ?></label>
+							<label for="wpPhalanxFormatRegex"><?= wfMessage( 'phalanx-format-regex' )->escaped() ?></label>
 
 							<?= Xml::check( 'wpPhalanxFormatCase', !empty( $data['case'] ), array( 'id' => 'wpPhalanxFormatCase' ) ) ?>
-							<label for="wpPhalanxFormatCase"><?php echo wfMsg( 'phalanx-format-case' ) ?></label>
+							<label for="wpPhalanxFormatCase"><?= wfMessage( 'phalanx-format-case' )->escaped() ?></label>
 
 							<?= Xml::check( 'wpPhalanxFormatExact', !empty( $data['exact'] ), array( 'id' => 'wpPhalanxFormatExact' ) ) ?>
-							<label for="wpPhalanxFormatExact"><?php echo wfMsg( 'phalanx-format-exact' ) ?></label>
+							<label for="wpPhalanxFormatExact"><?= wfMessage( 'phalanx-format-exact' )->escaped() ?></label>
 						</div>
 						<!-- Expiry-->
 						<div class="clearfix">
@@ -70,7 +70,7 @@
 					</div>
 					<!-- Type -->
 					<div class="clearfix">
-						<div class="left-spacer"><?php echo wfMsg( 'phalanx-label-type' ) ?></div>
+						<div class="left-spacer"><?= wfMessage( 'phalanx-label-type' )->escaped() ?></div>
 						<div class="phalanx-block-types">
 <?php
 						foreach($typeSections as $section => $types) {
@@ -97,15 +97,15 @@
 					<!-- Reason -->
 					<div id="phalanx-block-optionals" class="clearfix">
 						<div class="clearfix">
-							<label for="wpPhalanxReason" class="left"><?php echo wfMsg( 'phalanx-label-reason' ) ?></label>
+							<label for="wpPhalanxReason" class="left"><?= wfMessage( 'phalanx-label-reason' )->escaped() ?></label>
 							<input type="text" id="wpPhalanxReason" name="wpPhalanxReason" class="blue" size="40" value="<?= htmlspecialchars($data['reason']) ?>" />
 						</div>
 						<div class="clearfix">
-							<label for="wpPhalanxComment" class="left"><?php echo wfMsg( 'phalanx-label-comment' ) ?></label>
+							<label for="wpPhalanxComment" class="left"><?= wfMessage( 'phalanx-label-comment' )->escaped() ?></label>
 							<input type="text" id="wpPhalanxComment" name="wpPhalanxComment" size="40" value="<?= htmlspecialchars($data['comment']) ?>" />
 						</div>
 						<div class="clearfix">
-							<label for="wpPhalanxLanguages" class="left"><?php echo wfMsg( 'phalanx-label-lang' ) ?></label>
+							<label for="wpPhalanxLanguages" class="left"><?= wfMessage( 'phalanx-label-lang' )->escaped() ?></label>
 							<select name="wpPhalanxLanguages" id="wpPhalanxLanguages" class="blue" >
 								<? foreach ($languages as $k => $v) { ?>
 									<option <?=($k == $data['lang']) ? "selected" : ""?> value="<?=$k?>"><?=$v?></option>
@@ -113,28 +113,28 @@
 							</select>
 						</div>
 						<div class="clearfix">
-							<input type="submit" id="wpPhalanxSubmit" name="wpPhalanxSubmit" value="<?php echo wfMsg( 'phalanx-add-block' ) ?>" />
-							<input type="reset" value="<?php echo wfMsg( 'phalanx-reset-form' ) ?>" />
+							<input type="submit" id="wpPhalanxSubmit" name="wpPhalanxSubmit" value="<?= wfMessage( empty( $editMode ) ? 'phalanx-add-block' : 'phalanx-modify-block' )->escaped() ?>" />
+							<input type="reset" value="<?= wfMessage( 'phalanx-reset-form' )->escaped() ?>" />
 						</div>
 					</div>
 				</form>
 			</fieldset>
 
 			<fieldset>
-				<legend><?php echo wfMsg( 'phalanx-legend-listing' ) ?></legend>
+				<legend><?= wfMessage( 'phalanx-legend-listing' )->escaped() ?></legend>
 
 				<?= wfMessage('phalanx-filters-intro', 'Special:Log/phalanx')->parse() ?>
 
 				<form id="phalanx-filters" method="get" action="<?= $action ?>">
 					<div id="phalanx-check-options">
-						<label for="wpPhalanxCheckBlocker"><?php echo wfMsg( 'phalanx-view-blocker' ) ?></label>
+						<label for="wpPhalanxCheckBlocker"><?= wfMessage( 'phalanx-view-blocker' )->escaped() ?></label>
 						<input type="text" id="wpPhalanxCheckBlocker" name="wpPhalanxCheckBlocker" class="blue" size="30" value="<?= htmlspecialchars($data['checkBlocker']) ?>">
-						<input type="submit" value="<?php echo wfMsg( 'phalanx-view-blocks' ) ?>"  />
+						<input type="submit" value="<?= wfMessage( 'phalanx-view-blocks' )->escaped() ?>"  />
 
-						<label for="wpPhalanxCheckId"><?php echo wfMsg( 'phalanx-view-id' ) ?></label>
+						<label for="wpPhalanxCheckId"><?= wfMessage( 'phalanx-view-id' )->escaped() ?></label>
 						<input type="text" id="wpPhalanxCheckId" name="id" class="blue" size="5" value="<?= $data['checkId'] ?>" />
 
-						<input type="submit" value="<?php echo wfMsg( 'phalanx-view-id-submit' ) ?>"  />
+						<input type="submit" value="<?= wfMessage( 'phalanx-view-id-submit' )->escaped() ?>"  />
 
 						<div class="phalanx-block-types">
 <?php

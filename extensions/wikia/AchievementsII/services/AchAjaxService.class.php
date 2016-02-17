@@ -4,8 +4,16 @@ use Wikia\Logger\WikiaLogger;
 
 class AchAjaxService {
 
+	/**
+	 * @return string
+	 * @throws BadRequestException
+	 * @throws MWException
+	 * @throws BadRequestException
+	 */
 	public static function editPlatinumBadge() {
-		global $wgRequest, $wgSitename, $wgServer, $wgScriptPath;
+		global $wgRequest, $wgSitename, $wgServer, $wgScriptPath, $wgUser;
+
+		$wgRequest->isValidWriteRequest( $wgUser );
 
 		$badge_type_id = $wgRequest->getVal('type_id');
 		$ret = array('errors' => null, 'typeId' => $badge_type_id);

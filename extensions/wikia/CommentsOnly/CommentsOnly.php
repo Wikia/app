@@ -87,7 +87,7 @@ function wfCOQuestionBox(Parser &$parser) {
 function wfCOQuestionBoxRender($input, $argv, Parser $parser) {
 	global $wgUser;
 
-	if (wfReadOnly() || !$wgUser->isAllowed('edit') || $wgUser->isBlocked()) {
+	if (wfReadOnly() || !$wgUser->isAllowed('edit') || $wgUser->isBlocked( true, false )) {
 		return '';
 	}
 

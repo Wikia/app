@@ -12,3 +12,8 @@ $specialPageAliases['en'] = array(
 $specialPageAliases['pl'] = array(
 	'TaskManager'	=> array( 'Menedżer zadań', 'TaskManager' )
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'TaskManager' => array( 'タスクマネージャー' )
+);

@@ -69,10 +69,10 @@ class WallThread {
 			$this->loadReplyIdsFromDB();
 		}
 
-		$this->data->threadReplyObjs = array();
+		$this->data->threadReplyObjs = [ ];
 
 		if ( empty( $this->data->threadReplyIds ) ) {
-			$this->data->threadReplyIds = array();
+			$this->data->threadReplyIds = [ ];
 		}
 
 		foreach ( $this->data->threadReplyIds as $id ) {
@@ -112,6 +112,7 @@ class WallThread {
 
 		$lastId = end( $list );
 
+		// TODO: add pagination or a limit here because this will return all replies
 		return empty( $lastId ) ? $list :
 			array_merge( $list, $this->getReplyIdsFromDB( $dbr, $lastId ) );
 	}
@@ -202,14 +203,14 @@ class WallThread {
 		$data = WikiaDataAccess::cache( $key, 30 * 24 * 60 * 60, function() use ( $threadId ) {
 			$db = wfGetDB( DB_SLAVE );
 			$row = $db->selectRow(
-				array( 'comments_index' ),
-				array( 'max(first_rev_id) rev_id' ),
-				array(
+				[ 'comments_index' ],
+				[ 'max(first_rev_id) rev_id' ],
+				[
 						'parent_comment_id' => $threadId,
 						'archived' => 0,
 						'deleted' => 0,
 						'removed' => 0
-				),
+				],
 				__METHOD__
 			);
 			return $row;

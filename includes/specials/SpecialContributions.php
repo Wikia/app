@@ -232,7 +232,9 @@ class SpecialContributions extends SpecialPage {
 			$links = $this->getLanguage()->pipeList( $tools );
 
 			// Show a note if the user is blocked and display the last block log entry.
-			if ( $userObj->isBlocked() ) {
+			/* Wikia change begin - SUS-92 */
+			if ( $userObj->isBlocked( true, false ) ) {
+			/* Wikia change end */
 				$out = $this->getOutput(); // showLogExtract() wants first parameter by reference
 				//If user is blocked globally we do not show local log extract as it doesn't contain information about this block
 				if ( wfRunHooks('ContributionsLogEventsList', array( $out, $userObj) ) ) {
@@ -285,7 +287,9 @@ class SpecialContributions extends SpecialPage {
 
 		if ( ( $id !== null ) || ( $id === null && IP::isIPAddress( $username ) ) ) {
 			if ( $this->getUser()->isAllowed( 'block' ) ) { # Block / Change block / Unblock links
-				if ( $target->isBlocked() && $target->getBlock()->getType() != Block::TYPE_AUTO ) {
+				/* Wikia change begin - SUS-92 */
+				if ( $target->isBlocked( true, false) && $target->getBlock( true, false )->getType() != Block::TYPE_AUTO ) {
+				/* Wikia change end */
 					$tools[] = Linker::linkKnown( # Change block link
 						SpecialPage::getTitleFor( 'Block', $username ),
 						$this->msg( 'change-blocklink' )->escaped()

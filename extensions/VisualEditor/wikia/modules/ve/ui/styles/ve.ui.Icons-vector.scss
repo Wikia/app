@@ -546,3 +546,7 @@
 .oo-ui-icon-template {
 	@include ve-icon(template, mw);
 }
+
+.oo-ui-icon-infobox {
+	@include ve-icon(infobox, mw);
+}

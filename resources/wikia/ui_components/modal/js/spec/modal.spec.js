@@ -20,7 +20,10 @@ describe('Modal module', function () {
 					};
 				},
 				on: function () {},
-				click: function () {}
+				click: function () {},
+				removeClass: function () {
+					return this;
+				}
 			};
 		},
 		browserDetect = {},
@@ -369,7 +372,8 @@ describe('Modal buttons', function () {
 						},
 						'<button>'
 					]
-				}
+				},
+				confirmCloseModal: false
 			};
 
 		spyOn(jQuery.fn, 'append');

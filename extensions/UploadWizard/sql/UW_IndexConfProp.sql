@@ -1,1 +1,0 @@
-CREATE INDEX /*i*/uw_cc_property ON /*_*/uw_campaign_conf (cc_property);

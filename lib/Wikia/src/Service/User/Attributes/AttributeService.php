@@ -13,7 +13,7 @@ interface AttributeService {
 	 * @param Attribute $attribute
 	 * @return bool true when saved, exception otherwise
 	 */
-	public function set( $userId, $attribute );
+	public function set( $userId, Attribute $attribute );
 
 
 	/**
@@ -31,6 +31,5 @@ interface AttributeService {
 	 * @param Attribute $attribute
 	 * @return bool true when deleted, false exception otherwise
 	 */
-	public function delete( $userId, $attribute );
-
+	public function delete( $userId, Attribute $attribute );
 }

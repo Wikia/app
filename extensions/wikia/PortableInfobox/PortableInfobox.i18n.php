@@ -16,8 +16,7 @@ $messages['en'] = array(
 	'portable-infobox-xml-parse-error-gt-required' => 'Tag definition is not properly terminated',
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => 'Opening and ending tag mismatch',
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'Premature end of tag',
-	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Attribute "$1" is not supported in
-	<infobox> tag',
+	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Attribute "$1" is not supported in <infobox> tag',
 );
 
 $messages['qqq'] = array(
@@ -38,19 +37,19 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'portable-infobox-desc' => 'Erstelle mit einfachem mächtigen XML-Markup portable Infoboxen, die in jedem Skin und auf jeder Plattform in sauberem semantischen HTML-Markup gerendert werden.',
+	'portable-infobox-desc' => 'Erstelle in einem einfachen mächtigen XML-Format portable Infoboxen, die in jedem Skin und auf jeder Plattform in sauberem semantischen HTML dargestellt werden.',
 	'portable-infobox-unimplemented-infobox-tag' => 'Nicht implementiertes Infobox-Tag: <$1>',
-	'portable-infobox-xml-parse-error' => 'Fehler im XML-Markup. Bitte überprüfe deinen XML-Code',
+	'portable-infobox-xml-parse-error' => 'Fehler im XML-Format. Bitte überprüfe deinen XML-Code.',
 	'portable-infobox-xml-parse-error-info' => 'Beim Parsen der Infobox ist ein Problem aufgetreten',
 	'portable-infobox-xml-parse-error-document-end' => 'Zusätzlicher Inhalt am Ende des Dokuments',
 	'portable-infobox-xml-parse-error-undeclared-entity' => 'Nicht deklarierte Entität (zum Beispiel: &nbsp;)',
 	'portable-infobox-xml-parse-error-attribute-not-started' => 'Attributwert muss in Anführungszeichen stehen',
 	'portable-infobox-xml-parse-error-attribute-without-value' => 'Das Tag-Attribut muss einen Wert haben',
-	'portable-infobox-xml-parse-error-space-required' => 'Attribute erstellen Fehler',
+	'portable-infobox-xml-parse-error-space-required' => 'Durch Attribute erzeugter Fehler',
 	'portable-infobox-xml-parse-error-name-required' => 'Fehler beim Parsen des Attributnamens',
-	'portable-infobox-xml-parse-error-gt-required' => 'Die Tag-Definition wurde nicht richtig beendet',
+	'portable-infobox-xml-parse-error-gt-required' => 'Die Tag-Definition wurde nicht richtig geschlossen',
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => 'Keine Übereinstimmung bei öffnendem Tag und Endtag',
-	'portable-infobox-xml-parse-error-tag-not-finished' => 'Vorzeitiges Ende des Tags',
+	'portable-infobox-xml-parse-error-tag-not-finished' => 'Der Tag wurde vorzeitig geschlossen',
 	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Das Attribut "$1" wird im
 	<infobox>-Tag nicht unterstützt',
 );
@@ -95,7 +94,7 @@ $messages['it'] = array(
 	'portable-infobox-desc' => 'Crea profili portatili con potenti codici tipo XML facili da capire che possono essere processati su qualunque skin o piattaforma usando semplici codici semantici HTML',
 	'portable-infobox-unimplemented-infobox-tag' => 'Tag profilo non inclusi: <$1>',
 	'portable-infobox-xml-parse-error' => 'Sintassi XML non corretta. Per favore, controlla il tuo XML',
-	'portable-infobox-xml-parse-error-info' => "C'è un problema con l'analisi sintattica dell'infobox",
+	'portable-infobox-xml-parse-error-info' => "C'è un problema con l'analisi sintattica del profilo",
 	'portable-infobox-xml-parse-error-document-end' => 'Contenuto extra alla fine del documento',
 	'portable-infobox-xml-parse-error-undeclared-entity' => 'Entità non dichiarata (ad esempio: &nbsp;)',
 	'portable-infobox-xml-parse-error-attribute-not-started' => "Il valore dell'attributo deve essere racchiuso tra virgolette",

@@ -1,4 +1,5 @@
 <?php
+
 use Wikia\Logger\WikiaLogger;
 
 /**
@@ -488,6 +489,14 @@ class WallNotifications {
 	protected function getWatchlist( $name, $titleDbkey, $ns = NS_USER_WALL ) {
 		// TODO: add some caching
 		$userTitle = Title::newFromText( $name, MWNamespace::getSubject( $ns ) );
+		if ( empty( $userTitle ) ) {
+			WikiaLogger::instance()->error( 'User page is non-existent', [
+				'issue' => 'SOC-1070',
+				'name' => $name,
+				'ns' => $ns,
+			] );
+			return [];
+		}
 
 		$dbw = $this->getLocalDB( true );
 		$res = $dbw->select(
@@ -761,7 +770,7 @@ class WallNotifications {
 		// The code will call this method twice for the same notification at times.  Rather than unwind this terrible
 		// mess of logic and state, just make sure we don't add the same notification twice.
 		static $seen = [];
-		if ( $seen[$entityKey] ) {
+		if ( !empty( $seen[$entityKey] ) ) {
 			return;
 		}
 		$seen[$entityKey] = true;
@@ -975,30 +984,18 @@ class WallNotifications {
 		// for many notifications we want to make sure we 50 notifications from different pages hance distinct
 		$db = $this->getDB( $useMaster );
 		$res = $db->select(
-			[ 'wn1' => 'wall_notification', 'wn2' => 'wall_notification' ],
-			[ 'wn1.unique_id' ],
+			'wall_notification',
+			'unique_id' ,
 			[
-				'wn1.user_id' => $userId,
-				'wn1.wiki_id' => $wikiId,
-				'wn1.is_hidden' => 0,
-				'wn2.id' => null
+				'user_id' => $userId,
+				'wiki_id' => $wikiId,
+				'is_hidden' => 0,
 			],
 			__METHOD__,
 			[
+				'DISTINCT',
 				'LIMIT' => '50',
-				'ORDER BY' => 'wn1.id DESC'
-			],
-			[
-				'wn2' => [
-					'LEFT JOIN',
-					[
-						'wn1.user_id = wn2.user_id',
-						'wn1.wiki_id = wn2.wiki_id',
-						'wn1.is_hidden = wn2.is_hidden',
-						'wn1.unique_id = wn2.unique_id',
-						'wn2.id < wn1.id'
-					]
-				],
+				'ORDER BY' => 'unique_id DESC'
 			]
 		);
 
@@ -1060,7 +1057,7 @@ class WallNotifications {
 	}
 
 	public function getKey( $userId, $wikiId ) {
-		return wfSharedMemcKey( __CLASS__, $userId, $wikiId . 'v31' );
+		return wfSharedMemcKey( __CLASS__, $userId, $wikiId . 'v32' );
 	}
 
 	/**

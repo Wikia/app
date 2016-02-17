@@ -159,4 +159,12 @@ $messages = array_merge( $messages , array(
 'vertical-comics' => '漫画',
 'vertical-lifestyle' => 'ライフスタイル',
 'vertical-movies' => '映画',
+
+'tog-enableuserjs' => '個人用JavaScriptを有効にする（[[w:c:ja.community:ヘルプ:個人用CSSとJavaScript#JavaScript|詳細]]）',
+
+'group-content-moderator' => 'コンテンツ・モデレーター',
+'group-content-moderator-member' => 'コンテンツ・モデレーター',
+
+	'wikia-read-only-mode' => 'Wikiaのメイン・データセンターは現在、ご利用いただけなくなっているため、バックアップを表示しています。このため、編集、アップロード、チャットなどの特定の操作を行えない可能性があります。
+ 現在、Wikiaでは問題の修正に取り組んでおりますので、もうしばらくお待ちください。しばらくたっても引き続きこのメッセージが表示される場合は、Wikia（community@wikia.com）までお気軽にお問い合わせください。',
 ));

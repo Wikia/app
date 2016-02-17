@@ -60,6 +60,7 @@ module.exports = function (config) {
 			'resources/wikia/modules/geo.js',
 			'resources/wikia/modules/history.js',
 			'resources/wikia/modules/lazyqueue.js',
+			'resources/wikia/modules/facebookLocale.js',
 			'resources/wikia/modules/loader.js',
 			'resources/wikia/modules/nirvana.js',
 			'resources/wikia/modules/nodeFinder.js',
@@ -77,10 +78,6 @@ module.exports = function (config) {
 			'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.mocks.js',
 			'extensions/wikia/SpecialPromote/js/SpecialPromote.js',
 			'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.spec.js',
-
-			// Venus infobox
-			'extensions/wikia/Venus/scripts/modules/infobox.module.js',
-			'extensions/wikia/Venus/scripts/modules/spec/integration/infobox.spec.js',
 
 			// Lightbox
 			'extensions/wikia/Lightbox/scripts/Lightbox.js',

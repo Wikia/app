@@ -86,21 +86,9 @@ $messages = array(
 'navigation' => 'Mɔtabiala',
 'and'        => '&#32;kpakple',
 
-# Cologne Blue skin
 'qbfind'         => 'Di',
-'qbedit'         => 'Trɔ asi le eŋu',
 'qbpageoptions'  => 'Axa sia',
-'qbmyoptions'    => 'Nyeƒe axawo',
-'qbspecialpages' => 'Axa tɔxewo',
 
-# Vector skin
-'vector-action-delete'   => 'Tutui',
-'vector-action-move'     => 'Ɖɔli eƒe nɔƒe',
-'vector-view-create'     => 'Dze egɔme',
-'vector-view-edit'       => 'Trɔ asi le eŋu',
-'vector-view-history'    => 'Kpɔ xoxoawo',
-'vector-view-view'       => 'Xlẽ',
-'vector-view-viewsource' => 'Kpɔ alesi woŋlɔe',
 
 'errorpagetitle'   => 'Vodada',
 'returnto'         => 'Gbugbɔ yi $1.',
@@ -115,7 +103,6 @@ $messages = array(
 'edit'             => 'Trɔ asi le eŋu',
 'create'           => 'Dze egɔme',
 'editthispage'     => 'Ðɔ axa sia ɖo',
-'create-this-page' => 'Dze axa sia gɔme',
 'delete'           => 'Tutui',
 'deletethispage'   => 'Tutu axa sia',
 'protect'          => 'Dzɔ eŋu',
@@ -125,7 +112,6 @@ $messages = array(
 'talkpagelinktext' => 'Nyamedzroƒe',
 'specialpage'      => 'Axa Tɔxe',
 'personaltools'    => 'Wòƒe dɔwɔnuwo',
-'postcomment'      => 'Akpa yeye',
 'talk'             => 'Nyamedzroƒe',
 'toolbox'          => 'Dɔwɔnuɖaka',
 'otherlanguages'   => 'Le gbe bubuwo me',

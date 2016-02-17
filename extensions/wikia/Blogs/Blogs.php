@@ -75,6 +75,7 @@ $wgGroupPermissions['*'][ 'blog-comments-delete' ] = false;
 $wgGroupPermissions['sysop'][ 'blog-comments-delete' ] = true;
 $wgGroupPermissions['staff'][ 'blog-comments-delete' ] = true;
 $wgGroupPermissions['helper'][ 'blog-comments-delete' ] = true;
+$wgGroupPermissions['threadmoderator'][ 'blog-comments-delete' ] = true;
 
 $wgGroupPermissions['*'][ 'blog-articles-edit' ] = false;
 $wgGroupPermissions['sysop'][ 'blog-articles-edit' ] = true;
@@ -143,8 +144,6 @@ $wgHooks[ 'SpecialSearchProfiles' ][] = 'BlogsHelper::OnSpecialSearchProfiles';
 $wgHooks[ 'ParserBeforeInternalParse' ][] = 'BlogsHelper::OnParserBeforeInternalParse';
 $wgHooks[ 'ArticleInsertComplete' ][] = 'BlogsHelper::OnArticleInsertComplete';
 $wgHooks[ 'TitleMoveComplete' ][] = 'BlogsHelper::onTitleMoveComplete';
-$wgHooks['ImportHandlePageXMLTag'][] = 'BlogsHelper::onImportHandlePageXMLTag';
-$wgHooks['AfterImportPage'][] = 'BlogsHelper::onAfterImportPage';
 
 // Usages of images on blogs on file pages
 $wgHooks['FilePageImageUsageSingleLink'][] = 'BlogsHelper::onFilePageImageUsageSingleLink';

@@ -22,7 +22,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  * //Wikia Change End
  */
 abstract class Skin extends ContextSource {
-	protected $skinname = 'standard';
+	protected $skinname = 'oasis';
 	protected $mRelevantTitle = null;
 	protected $mRelevantUser = null;
 
@@ -59,6 +59,18 @@ abstract class Skin extends ContextSource {
 			$skinsInitialised = true;
 
 			ksort($wgValidSkinNames); // Wikia change - BAC-1154
+
+			# PLATFORM-1652 Remove legacy skins
+			# Michał 'Mix' Roszka <mix@wikia.com>
+			# I am wondering how often we do these file system scans.
+			# I see room for improvement here.
+			# I log therefore I am.
+			if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
+				Wikia\Logger\WikiaLogger::instance()->info(
+					'PLATFORM-1652 getSkinNames',
+					[ 'wgValidSkinNames' => $wgValidSkinNames ]
+				);
+			}
 
 			wfProfileOut( __METHOD__ . '-init' );
 		}
@@ -99,7 +111,7 @@ abstract class Skin extends ContextSource {
 	 * Normalize a skin preference value to a form that can be loaded.
 	 * If a skin can't be found, it will fall back to the configured
 	 * default (or the old 'Classic' skin if that's broken).
-	 * @param $key String: 'monobook', 'standard', etc.
+	 * @param $key String: 'monobook', etc.
 	 * @return string
 	 */
 	static function normalizeKey( $key ) {
@@ -120,9 +132,7 @@ abstract class Skin extends ContextSource {
 		// Older versions of the software used a numeric setting
 		// in the user preferences.
 		$fallback = array(
-			0 => $wgDefaultSkin,
-			1 => 'nostalgia',
-			2 => 'cologneblue'
+			0 => $wgDefaultSkin
 		);
 
 		if ( isset( $fallback[$key] ) ) {
@@ -134,13 +144,13 @@ abstract class Skin extends ContextSource {
 		} elseif ( isset( $skinNames[$wgDefaultSkin] ) ) {
 			return $wgDefaultSkin;
 		} else {
-			return 'vector';
+			return 'oasis';
 		}
 	}
 
 	/**
 	 * Factory method for loading a skin of a given type
-	 * @param $key String: 'monobook', 'standard', etc.
+	 * @param $key String: 'monobook', etc.
 	 * @return Skin
 	 */
 	static function &newFromKey( $key ) {
@@ -171,9 +181,9 @@ abstract class Skin extends ContextSource {
 				# except by SQL manipulation if a previously valid skin name
 				# is no longer valid.
 				wfDebug( "Skin class does not exist: $className\n" );
-				$className = 'SkinVector';
+				$className = 'SkinOasis';
 				if ( !defined( 'MW_COMPILED' ) ) {
-					require_once( "{$wgStyleDirectory}/Vector.php" );
+					require_once( "{$wgStyleDirectory}/Oasis.php" );
 				}
 			}
 		}
@@ -1587,13 +1597,11 @@ abstract class Skin extends ContextSource {
 	 * @return string Updated link markup
 	 */
 	protected function getWrappedEditSectionLink( $link, $langCode ) {
-		if ( $this->getSkinName() !== WikiaSkin::SKIN_VENUS ) {
-			// Wrap in brackets
-			$link = wfMessage( 'editsection-brackets' )
-				->rawParams( $link )
-				->inLanguage( $langCode )
-				->escaped();
-		}
+		// Wrap in brackets
+		$link = wfMessage( 'editsection-brackets' )
+			->rawParams( $link )
+			->inLanguage( $langCode )
+			->escaped();
 		return "<span class=\"editsection\">$link</span>";
 	}
 

@@ -38,15 +38,17 @@ class AnalyticsProviderIVW2 implements iAnalyticsProvider {
 					"sv" => "ke"      // FRABO-Tag deaktiviert
 				];
 
-				$ivwScriptTag = '<script src="https://script.ioam.de/iam.js"></script>';
-				$ivwScriptTag .= '<script>iom.c(' . json_encode($iamData) . ', 2);</script>';
-				$ivwScriptTagEscaped = json_encode($ivwScriptTag);
+				$ivwScriptTag = json_encode('<script src="https://script.ioam.de/iam.js"></script>');
+				$ivwTrackTag = json_encode('<script>iom.c(' . json_encode($iamData) . ', 2);</script>');
 
 				$script = <<<SCRIPT
 <!-- SZM VERSION="2.0" -->
 <script>
 if (!(window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableIVW2)) {
-	document.write($ivwScriptTagEscaped);
+	if (!window.ivw3Initialized) {
+		document.write($ivwScriptTag);
+		document.write($ivwTrackTag);
+	}
 }
 </script>
 SCRIPT;

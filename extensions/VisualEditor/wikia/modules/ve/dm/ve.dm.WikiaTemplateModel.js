@@ -6,6 +6,8 @@
 ve.dm.WikiaTemplateModel = function VeDmWikiaTemplateModel( transclusion, target ) {
 	// Parent constructor
 	ve.dm.WikiaTemplateModel.super.call( this, transclusion, target );
+
+	this.spec = transclusion.getIsInfobox() ? new ve.dm.WikiaInfoboxSpecModel( this ) : new ve.dm.MWTemplateSpecModel( this );
 };
 
 /* Inheritance */

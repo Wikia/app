@@ -25,7 +25,7 @@
  * and handle all outputting (or lack of outputting) via it.
  * @ingroup HTTP
  */
-class WebResponse {
+class WebResponse implements \Wikia\HTTP\Response {
 
 	const NO_COOKIE_PREFIX = '';
 

@@ -18,7 +18,9 @@ class CloseWikiMaintenance {
 
 	const CLOSE_WIKI_DELAY = 30;
 
-	private $mTarget, $mOptions;
+	const S3_CONFIG = '/etc/s3cmd/sjc_prod.cfg'; # s3cmd config for Swift storage
+
+	private $mOptions;
 
 	/**
 	 * constructor
@@ -26,13 +28,6 @@ class CloseWikiMaintenance {
 	 * @access public
 	 */
 	public function __construct( $options ) {
-		global $wgDevelEnvironment;
-		if( !empty( $wgDevelEnvironment ) ) {
-			$this->mTarget = "root@127.0.0.1:/tmp/dumps";
-		}
-		else {
-			$this->mTarget = "root@file-i6:/raid/dumps";
-		}
 		$this->mOptions = $options;
 	}
 
@@ -149,7 +144,6 @@ class CloseWikiMaintenance {
 			}
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_DB_DUMP ) {
 				$this->log( "Dumping database on remote host" );
-				list ( $remote  ) = explode( ":", $this->mTarget, 2 );
 
 				$script = ( $hide )
 					? "--script='../extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$cityid} --tmp --s3'"
@@ -195,14 +189,17 @@ class CloseWikiMaintenance {
 					}
 				}
 			}
-			if( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES ||
-			$row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) {
-				$this->log( "Cleaning the shared database" );
+			if( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES || $row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) {
+
+				// PLATFORM-1700: Remove wiki's DFS bucket
+				$this->removeBucket( $cityid );
 
 				/**
 				 * clear wikifactory tables, condition for city_public should
 				 * be always true there but better safe than sorry
 				 */
+				$this->log( "Cleaning the shared database" );
+
 				WikiFactory::copyToArchive( $row->city_id );
 				$dbw = WikiFactory::db( DB_MASTER );
 				$dbw->delete(
@@ -342,7 +339,7 @@ class CloseWikiMaintenance {
 			// s3cmd sync --dry-run s3://dilbert ~/images/dilbert/ --exclude "/thumb/*" --exclude "/temp/*"
 			$cmd = sprintf(
 				'sudo /usr/bin/s3cmd -c %s sync s3://%s/images "%s" --exclude "/thumb/*" --exclude "/temp/*"',
-				'/etc/s3cmd/sjc_prod.cfg', // s3cmd config for Swift storage
+				self::S3_CONFIG,
 				$container,
 				$directory
 			);
@@ -413,6 +410,38 @@ class CloseWikiMaintenance {
 		wfProfileOut( __METHOD__ );
 
 		return $files;
+	}
+
+	/**
+	 * Remove DFS bucket of a given wiki
+	 *
+	 * @see PLATFORM-1700
+	 * @param int $cityId
+	 */
+	private function removeBucket( $cityid ) {
+		try {
+			$swift = \Wikia\SwiftStorage::newFromWiki( $cityid );
+			$this->log( sprintf( "Removing DFS bucket /%s%s", $swift->getContainerName(), $swift->getPathPrefix() ) );
+
+			// s3cmd --recursive del s3://BUCKET/OBJECT / Recursively delete files from bucket
+			$cmd = sprintf(
+				'sudo /usr/bin/s3cmd -c %s --recursive del s3://%s%s/',
+				self::S3_CONFIG,
+				$swift->getContainerName(),  # e.g. 'nordycka'
+				$swift->getPathPrefix()      # e.g. '/pl/images'
+			);
+			$out = wfShellExec( $cmd, $iStatus );
+			$this->log( $cmd );
+
+			if ( $iStatus !== 0 ) {
+				throw new Exception( 'Failed to remove a bucket content - ' . $cmd, $iStatus );
+			}
+		} catch ( Exception $ex ) {
+			Wikia\Logger\WikiaLogger::instance()->error( 'Removing DFS bucket failed', [
+				'exception' => $ex,
+				'city_id' => $cityid
+			] );
+		}
 	}
 
 	/**

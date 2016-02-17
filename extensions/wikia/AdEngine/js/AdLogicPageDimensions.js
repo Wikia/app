@@ -4,9 +4,10 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	'wikia.window',
 	'wikia.document',
 	'wikia.log',
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.adHelper'
-], function (win, doc, log, slotTweaker, adHelper) {
+], function (win, doc, log, adContext, slotTweaker, adHelper) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageDimensions',
@@ -21,6 +22,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			LEFT_SKYSCRAPER_2: 2400,
 			LEFT_SKYSCRAPER_3: 4000,
 			PREFOOTER_LEFT_BOXAD: preFootersThreshold,
+			PREFOOTER_MIDDLE_BOXAD: preFootersThreshold,
 			PREFOOTER_RIGHT_BOXAD: preFootersThreshold
 		},
 		pageHeight,
@@ -43,12 +45,14 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			HOME_TOP_RIGHT_BOXAD:    'oneColumn',
 			LEFT_SKYSCRAPER_2:       'oneColumn',
 			LEFT_SKYSCRAPER_3:       'oneColumn',
-			INCONTENT_BOXAD_1:       'oneColumn'
+			INCONTENT_BOXAD_1:       'oneColumn',
+			PREFOOTER_MIDDLE_BOXAD:  'noMiddlePrefooter'
 		},
 		mediaQueriesToCheck = {
 			twoColumns: 'screen and (min-width: 1024px)',
 			oneColumn: 'screen and (max-width: 1023px)',
-			noTopButton: 'screen and (max-width: 1063px)'
+			noTopButton: 'screen and (max-width: 1063px)',
+			noMiddlePrefooter: 'screen and (max-width: 1083px)'
 		},
 		mediaQueriesMet,
 		matchMedia;
@@ -68,6 +72,10 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 
 	if (!matchMedia) {
 		log('No working matchMedia implementation found', 'user', logGroup);
+	}
+
+	if (adContext.getContext().opts.overridePrefootersSizes) {
+		slotsToHideOnMediaQuery.PREFOOTER_LEFT_BOXAD = 'oneColumn';
 	}
 
 	/**
@@ -245,7 +253,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	}
 
 	return {
-		isApplicable: isApplicable,
-		addSlot: add
+		addSlot: add,
+		isApplicable: isApplicable
 	};
 });

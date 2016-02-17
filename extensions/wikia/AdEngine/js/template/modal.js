@@ -1,35 +1,18 @@
-/*global define, require*/
+/*global define*/
 define('ext.wikia.adEngine.template.modal', [
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adHelper',
+	'ext.wikia.adEngine.slot.adSlot',
+	'ext.wikia.adEngine.provider.gpt.adDetect',
+	'ext.wikia.adEngine.template.modalHandlerFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.iframeWriter',
-	'wikia.window',
-	require.optional('wikia.ui.factory')
-], function (adContext, adHelper, doc, log, iframeWriter, win, uiFactory) {
+	'wikia.window'
+], function (adHelper, adSlot, adDetect, modalHandlerFactory, doc, log, iframeWriter, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.modal',
-		modalId = 'ext-wikia-adEngine-template-modal',
-		lightBoxExpansionModel = {
-			mercury: {
-				availableHeightRatio: 1,
-				availableWidthRatio: 1,
-				heightSubtract: 80,
-				minWidth: 100,
-				minHeight: 100,
-				maximumRatio: 3
-			},
-			oasis: {
-				availableHeightRatio: 0.8,
-				availableWidthRatio: 0.9,
-				heightSubtract: 90,
-				minWidth: 200,
-				minHeight: 150,
-				maximumRatio: 2
-			}
-		};
+		modalHandler = modalHandlerFactory.create();
 
 	/**
 	 * Show the modal ad
@@ -39,6 +22,9 @@ define('ext.wikia.adEngine.template.modal', [
 	 * @param {number} params.width - desired width of the Lightbox
 	 * @param {number} params.height - desired height of the Lightbox
 	 * @param {boolean} params.scalable - extend iframe to maximum sensible size of the Lightbox
+	 * @param {boolean} [params.canHop] - detect ad in the embedded iframe
+	 * @param {string} [params.slotName] - name of the original slot (required if params.canHop set to true)
+	 * @param {number} [params.closeDelay] - delay (in seconds) after which a close button will appear and modal will be able to close
 	 */
 	function show(params) {
 		log(['show', params], 'debug', logGroup);
@@ -50,8 +36,19 @@ define('ext.wikia.adEngine.template.modal', [
 				width: params.width,
 				classes: 'wikia-ad-iframe'
 			}),
-			skin = adContext.getContext().targeting.skin,
-			lightboxParams = lightBoxExpansionModel[skin];
+			async = params.canHop && params.slotName,
+			gptEventMock = {
+				size: {
+					width: params.width,
+					height: params.height
+				}
+			},
+			lightboxParams = modalHandler.getExpansionModel(),
+			slot;
+
+		if (modalHandler === null) {
+			return;
+		}
 
 		function scaleAd() {
 			var availableWidth = Math.max(
@@ -78,27 +75,6 @@ define('ext.wikia.adEngine.template.modal', [
 			adContainer.style.height = Math.floor(params.height * ratio) + 'px';
 		}
 
-		function createAndShowDesktopModal() {
-			var modalConfig = {
-				vars: {
-					id: modalId,
-					size: 'medium',
-					content: '',
-					title: 'Advertisement',
-					closeText: 'Close',
-					buttons: []
-				}
-			};
-
-			uiFactory.init('modal').then(function (uiModal) {
-				uiModal.createComponent(modalConfig, function (modal) {
-					modal.$content.append(adContainer);
-					modal.$element.width('auto');
-					modal.show();
-				});
-			});
-		}
-
 		function scaleAdIfNeeded() {
 			if (params.scalable) {
 				scaleAd();
@@ -111,15 +87,28 @@ define('ext.wikia.adEngine.template.modal', [
 		adIframe.style.maxWidth = 'none';
 		adContainer.appendChild(adIframe);
 
-		if (skin === 'oasis') {
-			scaleAdIfNeeded();
-			createAndShowDesktopModal();
+		if (async) {
+			slot = adSlot.create(params.slotName, null, {
+				success: function () {
+					log(['ad detect', params.slotName, 'success'], 'info', logGroup);
+					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"success"}}', '*');
+					modalHandler.show();
+				},
+				hop: function () {
+					log(['ad detect', params.slotName, 'hop'], 'info', logGroup);
+					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"hop"}}', '*');
+				}
+			});
+			adIframe.addEventListener('load', function () {
+				adDetect.onAdLoad(slot, gptEventMock, adIframe);
+			});
 		}
 
-		if (skin === 'mercury') {
-			scaleAdIfNeeded();
-			win.Mercury.Modules.Ads.getInstance().openLightbox(adContainer);
+		scaleAdIfNeeded();
+		if (!params.hasOwnProperty('closeDelay')) {
+			params.closeDelay = 0;
 		}
+		modalHandler.create(adContainer, !async, params.closeDelay);
 	}
 
 	return {

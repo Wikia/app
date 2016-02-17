@@ -13,11 +13,26 @@ class SpotlightsHooks {
 	 */
 	public static function onWikiaSkinTopScripts(&$vars, &$scripts)
 	{
-		global $wgEnableOpenXSPC;
+		global $wgEnableOpenXSPC, $wgEnableReviveSpotlights;
 
 		if ($wgEnableOpenXSPC) {
 			$vars['wgEnableOpenXSPC'] = $wgEnableOpenXSPC;
+			$vars['wgEnableReviveSpotlights'] = $wgEnableReviveSpotlights;
 		}
+
+		return true;
+	}
+
+	/**
+	 * Register "instant" global JS
+	 *
+	 * @param array $vars
+	 *
+	 * @return bool
+	 */
+	public static function onInstantGlobalsGetVariables( array &$vars )
+	{
+		$vars[] = 'wgReviveSpotlightsCountries';
 
 		return true;
 	}

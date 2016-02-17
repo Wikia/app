@@ -39,23 +39,22 @@ $wgAutoloadClasses['AutomaticWikiAdoptionController'] = "$dir/AutomaticWikiAdopt
 $wgAutoloadClasses['SpecialWikiAdoption'] = "$dir/SpecialWikiAdoption.class.php";
 $wgSpecialPages['WikiAdoption'] = 'SpecialWikiAdoption';
 
+# 194785 = ID of wiki created on 2010-12-14 so it will work for wikis created after this project has been deployed
+if ( $wgCityId > 194785 ) {
+	$wgDefaultUserOptions["adoptionmails-$wgCityId"] = 1;
+}
+
 /**
  * Initialize hooks
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function AutomaticWikiAdoptionInit() {
-	global $wgHooks, $wgDefaultUserOptions, $wgCityId;
-
-	# 194785 = ID of wiki created on 2010-12-14 so it will work for wikis created after this project has been deployed
-	if ( $wgCityId > 194785 ) {
-		$wgDefaultUserOptions["adoptionmails-$wgCityId"] = 1;
-	}
+	global $wgHooks;
 
 	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'AutomaticWikiAdoptionHelper::onSkinTemplateOutputPageBeforeExec';
 	$wgHooks['GetPreferences'][] = 'AutomaticWikiAdoptionHelper::onGetPreferences';
 	$wgHooks['ArticleSaveComplete'][] = 'AutomaticWikiAdoptionHelper::onArticleSaveComplete';
-
 }
 
 // Ajax dispatcher

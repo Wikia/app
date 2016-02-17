@@ -294,30 +294,12 @@ $messages = array(
 'navigation'    => 'Nawigacija',
 'and'           => '&#32;a',
 
-# Cologne Blue skin
 'qbfind'         => 'Namakać',
 'qbbrowse'       => 'Přepytować',
-'qbedit'         => 'Wobdźěłać',
 'qbpageoptions'  => 'Tuta strona',
 'qbpageinfo'     => 'Kontekst',
-'qbmyoptions'    => 'Moje strony',
-'qbspecialpages' => 'Specialne strony',
 'faq'            => 'Husto stajene prašenja (FAQ)',
-'faqpage'        => 'Project:Husto stajene prašenja (FAQ)',
 
-# Vector skin
-'vector-action-addsection'       => 'Temu přidać',
-'vector-action-delete'           => 'wušmórnyć',
-'vector-action-move'             => 'přesunyć',
-'vector-action-protect'          => 'škitać',
-'vector-action-undelete'         => 'Wobnowić',
-'vector-action-unprotect'        => 'Škit wotstronić',
-'vector-simplesearch-preference' => 'Polěpšene pytanske namjety zmóžnić (jenož šat Vector)',
-'vector-view-create'             => 'Wutworić',
-'vector-view-edit'               => 'Wobdźěłać',
-'vector-view-history'            => 'Stawizny',
-'vector-view-view'               => 'Čitać',
-'vector-view-viewsource'         => 'Žórło sej wobhladać',
 'actions'                        => 'Akcije',
 'namespaces'                     => 'Mjenowe rumy',
 'variants'                       => 'Warianty',
@@ -340,7 +322,6 @@ $messages = array(
 'edit'              => 'wobdźěłać',
 'create'            => 'Wutworić',
 'editthispage'      => 'Tutu stronu wobdźěłać',
-'create-this-page'  => 'Stronu wutworić',
 'delete'            => 'wušmórnyć',
 'deletethispage'    => 'Stronu wušmórnyć',
 'undelete_short'    => '{{PLURAL:$1|jednu wersiju|$1 wersiji|$1 wersije|$1 wersijow}} wobnowić',
@@ -355,19 +336,9 @@ $messages = array(
 'talkpagelinktext'  => 'diskusija',
 'specialpage'       => 'Specialna strona',
 'personaltools'     => 'Wosobinske nastroje',
-'postcomment'       => 'Nowy wotrězk',
-'articlepage'       => 'Nastawk',
 'talk'              => 'diskusija',
 'views'             => 'Zwobraznjenja',
 'toolbox'           => 'Nastroje',
-'userpage'          => 'Wužiwarsku stronu pokazać',
-'projectpage'       => 'Projektowu stronu pokazać',
-'imagepage'         => 'Datajowu stronu sej wobhladać',
-'mediawikipage'     => 'Zdźělenku pokazać',
-'templatepage'      => 'Předłohu pokazać',
-'viewhelppage'      => 'Pomocnu stronu pokazać',
-'categorypage'      => 'Kategoriju pokazać',
-'viewtalkpage'      => 'Diskusiju pokazać',
 'otherlanguages'    => 'W druhich rěčach',
 'redirectedfrom'    => '(ze strony $1 sposrědkowany)',
 'redirectpagesub'   => 'Daleposrědkowanje',
@@ -654,36 +625,6 @@ Móžeš tutu zdźělenku ignorować, jeli so wužiwarske konto zmylnje wutwori�
 Snano sy swoje hesło hižo wuspěšnje změnił abo nowe nachwilne hesło požadał.',
 'resetpass-temp-password'   => 'Nachwilne hesło:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Hesło wróćo stajić',
-'passwordreset-text'               => 'Wupjelń tutón formular, zo by dopomnjensku e-mejl wo swojich kontowych podrobnosćach dóstał.',
-'passwordreset-legend'             => 'Hesło wróćo stajić',
-'passwordreset-disabled'           => 'Wróćostajenje hesłow je so na  tutym wikiju znjemóžniło.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Zapodaj deleka jedne ze slědowacych datowych podaćow}}',
-'passwordreset-username'           => 'Wužiwarske mjeno:',
-'passwordreset-domain'             => 'Domena:',
-'passwordreset-capture'            => 'E-mejlku sej wobhladać?',
-'passwordreset-capture-help'       => 'Jeli nakřižuješ tutón kašćik, budźe so e-mejlka z nachwilnym hesło pokazować a tež wužiwarjej pósłać.',
-'passwordreset-email'              => 'E-mejlowa adresa:',
-'passwordreset-emailtitle'         => 'Kontowe podrobnosće na {{GRAMMAR:lokatiw|{{SITENAME}}}}',
-'passwordreset-emailtext-ip'       => 'Něchtó (najskerje ty, z IP-adresu $1) je dopomnjenku na twoje kontowe podrobnosće za {{SITENAME}} požadał ($4).  {{PLURAL:$3|Slědowace wužiwarske konto je|Slědowacej wužiwarskej konće stej|Slědowace wužiwarske konta su|Slědowace wužiwarske konta su}} z tutej e-mejlowej adresu {{PLURAL:$3|zwjazane|zwjazanej|zwjazane|zwjazane}}:
-
-$2
-
-{{PLURAL:$3|Tute nachwilne hesło spadnje|Tutej nachwilnej hesle spadnjetej|Tute nachwilne hesła spadnu|Tute nachwilne hesła spadnu}} za {{PLURAL:$5|jedyn dźeń|$5 dnjej|$5 dny|$5 dnjow}}.
-Ty měł so nětko přizjewić a nowe hesło wubrać. Jeli něchtó druhi je tute naprašowanje pósłał, abo jeli sy so zaso na prěnjotne hesło dopomnił a wjace nochceš jo změnić, móžeš tutu zdźělenku ignorować a swoje stare hesło dale wužiwać.',
-'passwordreset-emailtext-user'     => 'Wužiwar $1 je dopomnjenku na twoje kontowe podrobnosće za {{SITENAME}} požadał ($4).  {{PLURAL:$3|Slědowace wužiwarske konto je|Slědowacej wužiwarskej konće stej|Slědowace wužiwarske konta su|Slědowace wužiwarske konta su}} z tutej e-mejlowej adresu {{PLURAL:$3|zwjazane|zwjazanej|zwjazane|zwjazane}}:
-
-$2
-
-{{PLURAL:$3|Tute nachwilne hesło spadnje|Tutej nachwilnej hesle spadnjetej|Tute nachwilne hesła spadnu|Tute nachwilne hesła spadnu}} za {{PLURAL:$5|jedyn dźeń|$5 dnjej|$5 dny|$5 dnjow}}.
-Ty měł so nětko přizjewić a nowe hesło wubrać. Jeli něchtó druhi je tute naprašowanje pósłał, abo jeli sy so zaso na prěnjotne hesło dopomnił a wjace nochceš jo změnić, móžeš tutu zdźělenku ignorować a swoje stare hesło dale wužiwać.',
-'passwordreset-emailelement'       => 'Wužiwarske mjeno: $1
-Nachwilne hesło: $2',
-'passwordreset-emailsent'          => 'Wopomnjenska e-mejlka je so pósłała.',
-'passwordreset-emailsent-capture'  => 'Deleka pokazana dopomnjenska e-mejl je so wotpósłała.',
-'passwordreset-emailerror-capture' => 'Deleka pokazana dopomnjenska e-mejl je so wutworiła, ale słanje wužiwarjej je so njeporadźiło: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'E-mejlowu adresu změnić',
 'changeemail-header'   => 'Kontowu e-mejlowu adresu změnić',
@@ -797,7 +738,6 @@ Móžeš [[Special:Search/{{PAGENAME}}|tutón titul strony]] na druhich stronach
 '''Wón hišće składowany njeje!'''",
 'sitejspreview'                    => "'''Wobkedźbujće, zo sej jenož přehlad tutoho JavaScriptoweho koda wobhladuješ.'''
 '''Wón hišće składowany njeje!'''",
-'userinvalidcssjstitle'            => "'''Warnowanje:''' Drasta z mjenom „$1” njeeksistuje. Prošu mysli na to, zo wosobinske strony .css a .js titul z małym pismikom wuwziwaja, na př. {{ns:user}}:Foo/vector.css město {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Zaktualizowany)',
 'note'                             => "'''Kedźbu:'''",
 'previewnote'                      => "'''Kedźbu, to je jenož přehlad. Twoje změny hišće składowane njejsu!'''",
@@ -1136,14 +1076,6 @@ Spytaj swoje naprašowanje z prefiksom ''all:'' wužiwać, zo by wšón wobsah (
 'search-external'                  => 'Eksterne pytanje',
 'searchdisabled'                   => 'Pytanje w {{GRAMMAR:lokatiw|{{SITENAME}}}} tuchwilu móžne njeje. Móžeš mjeztym z Google pytać. Wobkedźbuj, zo móža wuslědki z wobsaha {{GRAMMAR:genitiw|{{SITENAME}}}} zestarjene być.',
 
-# Quickbar
-'qbsettings'                => 'Pobóčna lajsta',
-'qbsettings-none'           => 'Žane',
-'qbsettings-fixedleft'      => 'Leži nalěwo',
-'qbsettings-fixedright'     => 'Leži naprawo',
-'qbsettings-floatingleft'   => 'Wisa nalěwo',
-'qbsettings-floatingright'  => 'Wisa naprawo',
-'qbsettings-directionality' => 'Kruty, wotwisny wot pisanskeho směra twojeje rěče',
 
 # Preferences page
 'preferences'                   => 'Nastajenja',
@@ -2790,14 +2722,7 @@ W poslednim padźe móžeš tež wotkaz wužiwać, na př. „[[{{#Special:Expor
 'pageinfo-viewsperedit'     => 'Zwobraznjenja na změnu',
 
 # Skin names
-'skinname-standard'    => 'Klasiski',
-'skinname-nostalgia'   => 'Nostalgija',
-'skinname-cologneblue' => 'Kölnjanska módrina',
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'MySkin',
-'skinname-chick'       => 'Ćipka',
-'skinname-simple'      => 'Jednory',
-'skinname-modern'      => 'Moderny',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Změnu jako přepruwowanu woznamjenić',

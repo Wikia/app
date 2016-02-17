@@ -166,30 +166,12 @@ $messages = array(
 'navigation'    => 'Nawigacyjo',
 'and'           => '&#32;a',
 
-# Cologne Blue skin
 'qbfind'         => 'Nojdź',
 'qbbrowse'       => 'Uoglůndańy',
-'qbedit'         => 'Sprowjej',
 'qbpageoptions'  => 'Ta zajta',
 'qbpageinfo'     => 'Kontekst',
-'qbmyoptions'    => 'Moje zajty',
-'qbspecialpages' => 'Szpecyjalne zajty',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Nowo tajla',
-'vector-action-delete'           => 'Wyćepej',
-'vector-action-move'             => 'Przećep',
-'vector-action-protect'          => 'Zawrzij',
-'vector-action-undelete'         => 'Wćep',
-'vector-action-unprotect'        => 'Uodymkńij',
-'vector-simplesearch-preference' => 'Włącz zaawansowane podpowiedzi wyszukiwania (tylko dla skórki Wektor)',
-'vector-view-create'             => 'Stwůrz',
-'vector-view-edit'               => 'Sprowjej',
-'vector-view-history'            => 'Uobocz gyszichta',
-'vector-view-view'               => 'Czytej',
-'vector-view-viewsource'         => 'Zdrzůdłowy tekst',
 'actions'                        => 'Akcyje',
 'namespaces'                     => 'Raumy mjan',
 'variants'                       => 'Warjanty',
@@ -212,7 +194,6 @@ $messages = array(
 'edit'              => 'Sprowjej',
 'create'            => 'Stwůrz',
 'editthispage'      => 'Sprowjej ta zajta',
-'create-this-page'  => 'Stwůrz ta zajta',
 'delete'            => 'Wyćep',
 'deletethispage'    => 'Wyćep ta zajta',
 'undelete_short'    => 'Wćep nazod {{PLURAL:$1|jedna wersyjo|$1 wersyje|$1 wersyji}}',
@@ -227,19 +208,9 @@ $messages = array(
 'talkpagelinktext'  => 'dyskusyjo',
 'specialpage'       => 'Špecyjalno zajta',
 'personaltools'     => 'Perzůnolne',
-'postcomment'       => 'Skůmyntuj',
-'articlepage'       => 'Zajta artikla',
 'talk'              => 'Dyskusyjo',
 'views'             => 'Widok',
 'toolbox'           => 'Werkcojg',
-'userpage'          => 'Zajta sprowjorza',
-'projectpage'       => 'Zajta projekta',
-'imagepage'         => 'Zobejrz zajte pliku',
-'mediawikipage'     => 'Zajta komuńikata',
-'templatepage'      => 'Zajta šablůna',
-'viewhelppage'      => 'Zajta pomocy',
-'categorypage'      => 'Zajta katygoryji',
-'viewtalkpage'      => 'Zajta godki',
 'otherlanguages'    => 'We inkszych godkach',
 'redirectedfrom'    => '(Punkńyńto s $1)',
 'redirectpagesub'   => 'Zajta překerowujůnco',
@@ -514,34 +485,6 @@ Coby powstřimać nadužyća, možliwość wysyuańa připůmńeń naštalowano 
 Możliwe co właśńy zmjyńiłżeś swoje hasło abo poprosiłżeś uo nowe tymczasowe hasło.',
 'resetpass-temp-password'   => 'Tymczasowe hasło:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Wyczyść hasło',
-'passwordreset-text'               => 'Wypełnij formularz, aby otrzymać e‐mail z przypomnieniem danych Twojego konta.',
-'passwordreset-legend'             => 'Wyczyść hasło',
-'passwordreset-disabled'           => 'No tyj wiki zamkńynto resytowańy hasył.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Wćep jydną z danych}}',
-'passwordreset-username'           => 'Mjano używacza:',
-'passwordreset-domain'             => 'Domyna:',
-'passwordreset-capture'            => 'Czy pokazywać treść wiadomości e‐mail?',
-'passwordreset-capture-help'       => 'Eli zaznaczysz to pole, łoboczysz wjadomość e-mail z hasłem.',
-'passwordreset-email'              => 'E-brif:',
-'passwordreset-emailtitle'         => 'Kůnto na {{GRAMMAR:MS.lp|{{SITENAME}}}}',
-'passwordreset-emailtext-ip'       => 'Ftůś (cheba Ty, s IP $1)
-pado, aże chce informacyji lo konta do {{GRAMMAR:MS.lp{{SITENAME}}}} ($4).
-Z tem ausdrukiem sum powjonzyne konta:
-$2
-
-{{PLURAL:$3|Tymczasowygo hasła|Tymczasowych haseł}} możno użyć w ciągu {{PLURAL:$5|jednego dnia|$5 dni}}.
-
-Jak chćołżeś gynał to zrobjyć, to zalůgůj śe terozki a podej swoje hasło.
-
-Jak ktůś inkszy chćoł nowe hasło abo jak Ci śe przipůmńouo stare a ńy chcesz nowygo, to zignoruj to a używej starygo hasła.',
-'passwordreset-emailelement'       => 'Nazwa sprowjorza: $1
-Tymczasowe hasło: $2',
-'passwordreset-emailsent'          => 'E-brif posłany.',
-'passwordreset-emailsent-capture'  => 'E-brif posłony, kerego widać niżej.',
-'passwordreset-emailerror-capture' => 'Ńy udało sie wysłać wjadomości lo sprowjorza: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Pomjyno ausdruka e-mail',
 'changeemail-header'   => 'Pomjyno ausduku e-mail',
@@ -647,7 +590,6 @@ abo <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}
 'sitecsspreview'                   => "'''Pamjyntej, aże to je na raźe ino podglůnd Twojego arkusza stylůw CSS.'''
 '''Ńic jeszczče ńy zostoło naszkryflone!'''",
 'sitejspreview'                    => "'''Pamjyntej, aże to je na raźe ino podglůnd Twojego JavaScriptu - nic jeszcze ńy zostoło naškryflone!'''",
-'userinvalidcssjstitle'            => "'''Pozůr:''' Ńy mo skůrki uo mjańe \"\$1\". Pamjyntej, aže zajty užytkowńika zawjyrajůnce CSS i JavaScript powinny začynać śe mouům buchštabům, np. {{ns:user}}:Foo/vector.css.",
 'updated'                          => '(Pomjyńano)',
 'note'                             => "'''Pozůr:'''",
 'previewnote'                      => "'''To je ino podglůnd - artikel ješče ńy je naškryflany!'''",
@@ -936,13 +878,6 @@ $1',
 'search-external'                  => 'Šnupańy zewnyntřne',
 'searchdisabled'                   => 'Šnupańy we {{GRAMMAR:MS.lp|{{SITENAME}}}} zostouo zawarte. Zańim go zouůnčům, možeš sprůbować šnupańo bez Google. Ino zauwaž, co informacyje uo treśći {{GRAMMAR:MS.lp|{{SITENAME}}}} můgům być we Google ńyakuratne.',
 
-# Quickbar
-'qbsettings'               => 'Gurt šybkigo dostympu',
-'qbsettings-none'          => 'Brak',
-'qbsettings-fixedleft'     => 'Stouy, s lewyj',
-'qbsettings-fixedright'    => 'Stouy, s prawyj',
-'qbsettings-floatingleft'  => 'Unošůncy śe, s lewyj',
-'qbsettings-floatingright' => 'Unošůncy śe, s prawyj',
 
 # Preferences page
 'preferences'                   => 'Preferyncyje',

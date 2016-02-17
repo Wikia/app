@@ -571,30 +571,12 @@ $messages = array(
 'navigation'    => 'گشتن',
 'and'           => '&#32;و',
 
-# Cologne Blue skin
 'qbfind'         => 'یافتن',
 'qbbrowse'       => 'مرور',
-'qbedit'         => 'ویرایش',
 'qbpageoptions'  => 'این صفحه',
 'qbpageinfo'     => 'بافت',
-'qbmyoptions'    => 'صفحه‌های من',
-'qbspecialpages' => 'صفحه‌های ویژه',
 'faq'            => 'پرسش‌های متداول',
-'faqpage'        => 'Project:پرسش‌های متداول',
 
-# Vector skin
-'vector-action-addsection'       => 'افزودن بخش',
-'vector-action-delete'           => 'حذف',
-'vector-action-move'             => 'انتقال',
-'vector-action-protect'          => 'محافظت',
-'vector-action-undelete'         => 'احیا',
-'vector-action-unprotect'        => 'تغییر سطح حفاظت',
-'vector-simplesearch-preference' => 'فعال کردن پیشنهادهای جستجوی پیشرفته (فقط در پوسته برداری)',
-'vector-view-create'             => 'ایجاد',
-'vector-view-edit'               => 'ویرایش',
-'vector-view-history'            => 'نمایش تاریخچه',
-'vector-view-view'               => 'خواندن',
-'vector-view-viewsource'         => 'نمایش مبدأ',
 'actions'                        => 'عملکردها',
 'namespaces'                     => 'فضاهای نام',
 'variants'                       => 'گویش‌ها',
@@ -617,7 +599,6 @@ $messages = array(
 'edit'              => 'ویرایش',
 'create'            => 'ایجاد',
 'editthispage'      => 'ویرایش این صفحه',
-'create-this-page'  => 'این صفحه را ایجاد کنید',
 'delete'            => 'حذف',
 'deletethispage'    => 'حذف این صفحه',
 'undelete_short'    => 'احیای {{PLURAL:$1|یک ویرایش|$1 ویرایش}}',
@@ -632,19 +613,9 @@ $messages = array(
 'talkpagelinktext'  => 'بحث',
 'specialpage'       => 'صفحهٔ ویژه',
 'personaltools'     => 'ابزارهای شخصی',
-'postcomment'       => 'بخش جدید',
-'articlepage'       => 'نمایش مقاله',
 'talk'              => 'بحث',
 'views'             => 'بازدیدها',
 'toolbox'           => 'جعبه‌ابزار',
-'userpage'          => 'نمایش صفحهٔ کاربر',
-'projectpage'       => 'دیدن صفحهٔ پروژه',
-'imagepage'         => 'نمایش صفحهٔ پرونده',
-'mediawikipage'     => 'نمایش صفحهٔ پیغام',
-'templatepage'      => 'نمایش صفحهٔ الگو',
-'viewhelppage'      => 'نمایش صفحهٔ راهنما',
-'categorypage'      => 'نمایش صفحهٔ رده',
-'viewtalkpage'      => 'نمایش صفحهٔ بحث',
 'otherlanguages'    => 'زبان‌های دیگر',
 'redirectedfrom'    => '(تغییرمسیر از $1)',
 'redirectpagesub'   => 'صفحهٔ تغییرمسیر',
@@ -959,37 +930,6 @@ $2',
 'resetpass-wrong-oldpass'   => 'گذرواژهٔ موقت یا اخیر نامعتبر.
 ممکن است که شما همینک گذرواژه‌تان را با موفقیت تغییر داده باشید یا درخواست یک گذرواژهٔ موقت جدید کرده باشید.',
 'resetpass-temp-password'   => 'گذرواژهٔ موقت:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'بازنشانی گذرواژه',
-'passwordreset-text'               => 'این فرم را برای دریافت نامهٔ یادآور جزئیات حسابتان کامل کنید.',
-'passwordreset-legend'             => 'بازنشانی گذرواژه',
-'passwordreset-disabled'           => 'بازنشانی گذرواژه در این ویکی غیرفعال شده است.',
-'passwordreset-pretext'            => '{{PLURAL:$1||یکی از قطعه‌های داده را در زیر وارد کنید}}',
-'passwordreset-username'           => 'نام کاربری:',
-'passwordreset-domain'             => 'دامنه:',
-'passwordreset-capture'            => 'پست الکترونیکی نهایی نشان داده شود؟',
-'passwordreset-capture-help'       => 'اگر این گزینه را علامت بزنید پست الکترونیکی (حاوی گذرواژهٔ موقت) به شما نشان داده خواهد شد و برای کاربر نیز فرستاده خواهد شد.',
-'passwordreset-email'              => 'نشانی پست الکترونیک:',
-'passwordreset-emailtitle'         => 'جزئیات حساب در {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'شخصی (احتمالاً شما، با نشانی آی‌پی $1) درخواست یادآوری جزئیات حساب کاربریتان در {{SITENAME}} ($4) را کرده‌است. {{PLURAL:$3|حساب|حساب‌های}} کاربری زیر با این رایانشانی مرتبط هستند:
-
-$2
-
-{{PLURAL:$3|این گذرواژهٔ موقت|این گذرواژه‌های موقت}} پس از {{PLURAL:$5|یک روز|$5 روز}} باطل خواهند شد.
-شما باید اکنون وارد سایت شوید و گذرواژه‌ای جدید برگزینید. اگر فکر می‌کنید شخص دیگری این درخواست را داده‌است یا اگر گذرواژهٔ اصلی‌تان را به یاد آوردید و دیگر نمی‌خواهید آن را تغییر دهید، می‌توانید این پیغام را نادیده بگیرید و به استفاده از گذرواژهٔ قبلی‌تان ادامه دهید.',
-'passwordreset-emailtext-user'     => 'کاربر $1 از {{SITENAME}} درخواست یادآور جزئیات حساب شما را برای {{SITENAME}}
-($4) کرده است. {{PLURAL:$3|حساب|حساب‌های}} کاربری زیر با این رایانشانی مرتبط است:
-
-$2
-
-{{PLURAL:$3|این گذرواژهٔ موقت|این گذرواژه‌های موقت}} تا {{PLURAL:$5|یک روز|$5 روز}} باطل می‌شود.
-شما باید هم‌اکنون وارد شده و یک گذرواژهٔ جدید برگزینید. اگر شخص دیگری این درخواست را داده است، یا اگر گذرواژهٔ اصلی‌تان را به خاطر آوردید، و دیگر نمی‌خواهید که آن را تغییر دهید، می‌توانید این پیغام را نادیده بگیرید و به استفاده از گذرواژهٔ قبلی‌تان ادامه دهید.',
-'passwordreset-emailelement'       => 'نام کاربری: $1
-گذرواژهٔ موقت: $2',
-'passwordreset-emailsent'          => 'یک نامهٔ یادآور فرستاده شده است.',
-'passwordreset-emailsent-capture'  => 'پست الکترونیکی یادآور فرستاده شد، که به شرح زیر است.',
-'passwordreset-emailerror-capture' => 'پست الکترونیکی یادآور همانطور که در زیر مشاهده‌ می‌فرمایید ایجاد شد ولی ارسال آن به کاربر موفقیت‌آمیز نبود: $1',
 
 # Special:ChangeEmail
 'changeemail'          => 'تغییر آدرس پست الکترونیک',
@@ -1476,14 +1416,6 @@ $1",
 موقتاً می‌توانید از جستجوی Google استفاده کنید.
 توجه کنید که نتایج حاصل از جستجو با آن روش ممکن است به‌روز نباشند.',
 
-# Quickbar
-'qbsettings'                => 'نوار سریع',
-'qbsettings-none'           => 'نباشد',
-'qbsettings-fixedleft'      => 'ثابت چپ',
-'qbsettings-fixedright'     => 'ثابت راست',
-'qbsettings-floatingleft'   => 'شناور چپ',
-'qbsettings-floatingright'  => 'شناور راست',
-'qbsettings-directionality' => 'ثابت، بسته به جهت نگارش زبان شما',
 
 # Preferences page
 'preferences'                   => 'ترجیحات',
@@ -3189,15 +3121,7 @@ $1',
 'pageinfo-viewsperedit'     => 'تعداد بازدید به ازای هر ویرایش',
 
 # Skin names
-'skinname-standard'    => 'کلاسیک',
-'skinname-nostalgia'   => 'نوستالژی',
-'skinname-cologneblue' => 'آبی کلن',
 'skinname-monobook'    => 'مونوبوک',
-'skinname-myskin'      => 'پوستهٔ من',
-'skinname-chick'       => 'شیک',
-'skinname-simple'      => 'ساده',
-'skinname-modern'      => 'مدرن',
-'skinname-vector'      => 'برداری',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'برچسب گشت بزن',

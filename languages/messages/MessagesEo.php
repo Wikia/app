@@ -449,30 +449,12 @@ $messages = array(
 'navigation'    => 'Navigado',
 'and'           => '&#32;kaj',
 
-# Cologne Blue skin
 'qbfind'         => 'Trovi',
 'qbbrowse'       => 'Foliumi',
-'qbedit'         => 'Redakti',
 'qbpageoptions'  => 'Paĝagado',
 'qbpageinfo'     => 'Paĝinformoj',
-'qbmyoptions'    => 'Personaĵoj',
-'qbspecialpages' => 'Specialaj paĝoj',
 'faq'            => 'Oftaj demandoj',
-'faqpage'        => 'Project:Oftaj demandoj',
 
-# Vector skin
-'vector-action-addsection'       => 'Aldoni temon',
-'vector-action-delete'           => 'Forigi',
-'vector-action-move'             => 'Alinomigi',
-'vector-action-protect'          => 'Protekti',
-'vector-action-undelete'         => 'Malforigi',
-'vector-action-unprotect'        => 'Ŝanĝi protekadon',
-'vector-simplesearch-preference' => 'Ebligi plibonigitajn serĉajn sugestojn (nur Vektora etoso)',
-'vector-view-create'             => 'Krei',
-'vector-view-edit'               => 'Redakti',
-'vector-view-history'            => 'Vidi historion',
-'vector-view-view'               => 'Legi',
-'vector-view-viewsource'         => 'Vidi fonton',
 'actions'                        => 'Agoj',
 'namespaces'                     => 'Nomspacoj',
 'variants'                       => 'Variantoj',
@@ -495,7 +477,6 @@ $messages = array(
 'edit'              => 'Redakti',
 'create'            => 'Krei',
 'editthispage'      => 'Redakti la paĝon',
-'create-this-page'  => 'Krei ĉi tiun paĝon',
 'delete'            => 'Forigi',
 'deletethispage'    => 'Forigi ĉi tiun paĝon',
 'undelete_short'    => 'Malforigi {{PLURAL:$1|redakton|$1 redaktojn}}',
@@ -510,19 +491,9 @@ $messages = array(
 'talkpagelinktext'  => 'Diskuto',
 'specialpage'       => 'Speciala Paĝo',
 'personaltools'     => 'Personaj iloj',
-'postcomment'       => 'Nova sekcio',
-'articlepage'       => 'Rigardi artikolon',
 'talk'              => 'Diskuto',
 'views'             => 'Vidoj',
 'toolbox'           => 'Iloj',
-'userpage'          => 'Rigardi personan paĝon',
-'projectpage'       => 'Rigardi projektopaĝon',
-'imagepage'         => 'Vidi dosieropaĝon',
-'mediawikipage'     => 'Vidi mesaĝopaĝon',
-'templatepage'      => 'Vidi ŝablonopaĝon',
-'viewhelppage'      => 'Vidi helpopaĝon',
-'categorypage'      => 'Vidi kategorian paĝon',
-'viewtalkpage'      => 'Vidi diskuton',
 'otherlanguages'    => 'Aliaj lingvoj',
 'redirectedfrom'    => '(Alidirektita el $1)',
 'redirectpagesub'   => 'Alidirektilo',
@@ -823,44 +794,6 @@ Bonvolu ĝisatendi antaŭ retrovi.',
 Vi eble jam ŝanĝis vian pasvorton aŭ petis novan provizoran pasvorton.',
 'resetpass-temp-password'   => 'Provizora pasvorto:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Restarigo de pasvorto',
-'passwordreset-text'               => 'Plenumigu ĉi tiun formularon por ricevi retpoŝtan memoraĵon de viaj kontaj detaloj.',
-'passwordreset-legend'             => 'Refari pasvorton',
-'passwordreset-disabled'           => 'Pasvortaj restarigoj estis malŝaltitaj en ĉi tiu vikio.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Enigi unu el la jenaj datenoj}}',
-'passwordreset-username'           => 'Salutnomo:',
-'passwordreset-domain'             => 'Domajno:',
-'passwordreset-capture'            => 'Vidi la rezultan retpoŝton?',
-'passwordreset-capture-help'       => 'Se vi marki ĉi tiun skatoleton, la retpoŝto (kun provizora pasvorto) estos montrita al vi kaj estos sendita al la uzanto.',
-'passwordreset-email'              => 'Retpoŝtadreso:',
-'passwordreset-emailtitle'         => 'Kontaj detaloj en {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Iu (verŝajne vi, de IP-adreso $1) petis rememoraĵo de viaj
-kontaj detaloj por {{SITENAME}} ($4). La {{PLURAL:$3|jena uzanto-konto|jenaj uzanto-kontoj}} estas
-asociita kun ĉi tiu retpoŝtadreso:
-
-$2
-
-Ĉi {{PLURAL:$3|tiu provizora pasvorto|tiuj provizoraj pasvortoj}} findatiĝos {{PLURAL:$5|unu tagon|$5 tagojn}}.
-Vi ensalutu kaj elektu novan pasvorton nun. Se iu alia petis ĉi tion,
-aŭ se vi memoris vian originalan pasvorton, kaj vi ne plu volas
-ŝanĝi ĝin, vi povas ignori ĉi tiun mesaĝon kaj plu uzi vian
-malnovan pasvorton.',
-'passwordreset-emailtext-user'     => 'Uzanto $1 de {{SITENAME}} petis rememoraĵo de viaj kontaj detaloj por {{SITENAME}}
-($4). La {{PLURAL:$3|jena uzanto-konto|jenaj uzanto-kontoj}} estas asociita kun ĉi tiu retpoŝtadreso:
-
-$2
-
-Ĉi {{PLURAL:$3|tiu provizora pasvorto|tiuj provizoraj pasvortoj}} findatiĝos {{PLURAL:$5|unu tagon|$5 tagojn}}.
-Vi devas ensaluti kaj elekti novan pasvorton nun. Se iu alia petis ĉi tion,
-aŭ se vi memoris vian originalan pasvorton, kaj vi ne plu volas ŝanĝi
-ĝin, vi povas ignori ĉi tiun mesaĝon kaj uzi vian malnovan pasvorton.',
-'passwordreset-emailelement'       => 'Salutnomo: $1
-Provizora pasvorto: $2',
-'passwordreset-emailsent'          => 'Rememoriga retpoŝto estis sendita.',
-'passwordreset-emailsent-capture'  => 'Memoriga retpoŝto estis sendita, kiu estas montrata sube.',
-'passwordreset-emailerror-capture' => 'Memoriga retpoŝto estis generita, montrata sube, sed sendado al uzanto malsukcesis: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Ŝanĝi retpoŝtadreson',
 'changeemail-header'   => 'Ŝanĝi retpoŝtadreso por konto',
@@ -984,7 +917,6 @@ La lasta protokolero estas jene montrata por via referenco:',
 'sitecsspreview'                   => "'''Konsciu ke vi nur antaŭrigardas tiun ĉi CSS.'''
 '''Ĝi ne jam estis savita!''",
 'sitejspreview'                    => "'''Konsciu ke vi nur antaŭrigardas tiun ĉi Ĝavaskripta kodon''. ''Ĝi ne jam estis konservita''.",
-'userinvalidcssjstitle'            => "'''Averto:''' Ne ekzistas aspekto \"\$1\". Rememoru ke individuaj .css-aj kaj .js-aj paĝoj uzas minusklan titolon, ekz. {{ns:user}}:Foo/vector.css kontraŭe  al {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Ŝanĝo registrita)',
 'note'                             => "'''Noto:'''",
 'previewnote'                      => "'''Memoru, ke ĉi tio estas nur antaŭrigardo kaj ankoraŭ ne konservita!'''",
@@ -1333,14 +1265,6 @@ Provu prefiksi vian mendon kun ''all:'' por serĉi ĉiun enhavon (inkluzivante d
 'searchdisabled'                   => '<p>Oni provizore malŝaltis serĉadon per la plenteksta
 indekso pro troŝarĝita servilo. Intertempe, vi povas serĉi per <i>guglo</i> aŭ per <i>jahu!</i>:</p>',
 
-# Quickbar
-'qbsettings'                => 'Preferoj pri ilaro',
-'qbsettings-none'           => 'Neniu',
-'qbsettings-fixedleft'      => 'Fiksiĝas maldekstre',
-'qbsettings-fixedright'     => 'Fiksiĝas dekstre',
-'qbsettings-floatingleft'   => 'Ŝvebas maldekstre',
-'qbsettings-floatingright'  => 'Ŝvebas dekstre',
-'qbsettings-directionality' => 'Fiksita, laŭ la teksto-direkteco de via lingvo',
 
 # Preferences page
 'preferences'                   => 'Preferoj',
@@ -2988,11 +2912,7 @@ Datoj de versioj kaj nomoj de redaktantoj estos preservitaj.
 'pageinfo-viewsperedit'     => 'Po rigardoj por redakto',
 
 # Skin names
-'skinname-standard'    => 'Klasika',
-'skinname-nostalgia'   => 'Nostalgio',
-'skinname-cologneblue' => 'Kolonja Bluo',
 'skinname-monobook'    => 'Librejo',
-'skinname-chick'       => 'Kokido',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marki kiel patrolitan',

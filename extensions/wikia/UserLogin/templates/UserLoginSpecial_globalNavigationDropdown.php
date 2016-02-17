@@ -44,9 +44,8 @@
 				'tabindex' => ++$tabIndex,
 			],
 			[
-				'type' => 'nirvanaview',
-				'controller' => 'UserLogin',
-				'view' => 'forgotPasswordLink',
+				'type' => 'custom',
+				'output' => F::app()->renderPartial( 'UserLogin', 'forgotPasswordLink' ),
 			],
 			[
 				'type' => 'checkbox',
