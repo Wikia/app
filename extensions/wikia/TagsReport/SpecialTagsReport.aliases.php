@@ -35,3 +35,8 @@ $specialPageAliases['pl'] = array(
 $specialPageAliases['vi'] = array(
 	'TagsReport' => array( 'Bản_báo_cáo' ),
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'TagsReport' => array( 'タグレポート' )
+);

@@ -134,23 +134,23 @@ class PortableInfoboxDataServiceTest extends WikiaBaseTest {
 									 "label" => "BBBB"
 								 ]
 							   ], [ "type" => "image",
-									"data" => [
+									"data" => [ [
 										"key" => "Test.jpg",
 										"alt" => null,
 										"caption" => null,
-									]
+									] ]
 							   ], [ "type" => "image",
-									"data" => [
+									"data" => [ [
 										"key" => "Test2.jpg",
 										"alt" => null,
 										"caption" => null
-									] ] ] ],
+									] ] ] ] ],
 				 [ 'data' => [ [ "type" => "image",
-								 "data" => [
+								 "data" => [ [
 									 "key" => "Test2.jpg",
 									 "alt" => null,
 									 "caption" => null
-								 ] ] ] ] ];
+								 ] ] ] ] ] ];
 	}
 }
 

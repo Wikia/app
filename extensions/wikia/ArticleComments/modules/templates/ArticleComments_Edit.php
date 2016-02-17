@@ -7,7 +7,7 @@
 					'data-min-height' => 100,
 					'data-max-height' => 400
 				]
-			] )->render();
+			] )->render()
 		?>
 		<? endif ?>
 		<form action="<?= $articleFullUrl ?>" method="post" id="article-comm-form-<?= $articleId ?>" class="article-comm-form">

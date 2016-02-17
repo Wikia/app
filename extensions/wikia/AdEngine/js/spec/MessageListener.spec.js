@@ -8,6 +8,9 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		gptMock = { id: 'gpt_iframe', parent: windowMock },
 
 		mocks = {
+			adContext: {
+				addCallback: noop
+			},
 			gptIframe: gptMock,
 			otherIframe: { id: 'other_iframe', parent: windowMock },
 			otherIframeInsideGpt: { id: 'iframe_in_iframe', parent: gptMock },
@@ -38,13 +41,17 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		callback({data: data, source: source});
 	}
 
+	function getModule() {
+		return modules['ext.wikia.adEngine.messageListener'](mocks.adContext, mocks.log, mocks.window);
+	}
+
 	it('reacts to register then event', function () {
 		var messageListener;
 
 		spyOn(mocks.window, 'addEventListener');
 		spyOn(mocks, 'callback');
 
-		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
+		messageListener = getModule();
 		messageListener.init();
 		messageListener.register({ source: mocks.gptIframe, dataKey: 'status' }, mocks.callback);
 
@@ -60,7 +67,7 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		spyOn(mocks.window, 'addEventListener');
 		spyOn(mocks, 'callback');
 
-		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
+		messageListener = getModule();
 		messageListener.init();
 		messageListener.register({source: mocks.gptIframe, dataKey: 'status'}, mocks.callback);
 
@@ -84,7 +91,7 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		spyOn(mocks.window, 'addEventListener');
 		spyOn(mocks, 'callback');
 
-		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
+		messageListener = getModule();
 		messageListener.init();
 		messageListener.register({dataKey: 'slot_TOP_LEADERBOARD'}, mocks.callback);
 
@@ -104,7 +111,7 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		spyOn(mocks.window, 'addEventListener');
 		spyOn(mocks, 'callback');
 
-		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
+		messageListener = getModule();
 		messageListener.init();
 		messageListener.register({source: mocks.gptIframe, dataKey: 'status'}, mocks.callback);
 
@@ -125,7 +132,7 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		spyOn(mocks, 'callback5');
 		spyOn(mocks, 'callback6');
 
-		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
+		messageListener = getModule();
 		messageListener.init();
 		messageListener.register({source: mocks.gptIframe, dataKey: 'status'}, mocks.callback);
 		messageListener.register({source: mocks.otherIframe, dataKey: 'info'}, mocks.callback4);
@@ -157,7 +164,7 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		spyOn(mocks.window, 'addEventListener');
 		spyOn(mocks, 'callback');
 
-		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
+		messageListener = getModule();
 		messageListener.init();
 		messageListener.register({source: mocks.gptIframe, dataKey: 'status'}, mocks.callback);
 
@@ -178,7 +185,7 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		spyOn(mocks.window, 'addEventListener');
 		spyOn(mocks, 'callback');
 
-		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
+		messageListener = getModule();
 		messageListener.init();
 
 		checkAddEventListenerCall();
@@ -194,7 +201,7 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		spyOn(mocks.window, 'addEventListener');
 		spyOn(mocks, 'callback');
 
-		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
+		messageListener = getModule();
 		messageListener.init();
 
 		checkAddEventListenerCall();
@@ -212,7 +219,7 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		spyOn(mocks.window, 'addEventListener');
 		spyOn(mocks, 'callback');
 
-		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
+		messageListener = getModule();
 		messageListener.init();
 
 		checkAddEventListenerCall();

@@ -72,6 +72,9 @@ class Wall extends WikiaModel {
 		return $this->mTitle->getArticleId();
 	}
 
+	/**
+	 * @return \Title
+	 */
 	public function getTitle() {
 		return $this->mTitle;
 	}
@@ -133,7 +136,7 @@ class Wall extends WikiaModel {
 			$oParserOut = $oApp->wg->Parser->parse( $oArticle->getText(), $oApp->wg->Title, $oParserOptions );
 		}
 
-		$aOutput = array();
+		$aOutput = [ ];
 		// Take the content out of an HTML P element and strip whitespace from the beginning and end.
 		$res = $oParserOut->getText();
 		if ( preg_match( '/^<p>\\s*(.*)\\s*<\/p>$/su', $res, $aOutput ) ) {
@@ -228,7 +231,7 @@ class Wall extends WikiaModel {
 	protected function getLast7daysOrder( $master = false ) {
 		wfProfileIn( __METHOD__ );
 
-		$out = array();
+		$out = [ ];
 		$where = $this->getWhere();
 
 		if ( $where ) {
@@ -237,19 +240,19 @@ class Wall extends WikiaModel {
 			$time = date ( "Y-m-d H:i:s", time() - 24 * 7 * 60 * 60 ) ;
 
 			$res = $db->select(
-				array( 'comments_index' ),
-				array( 'parent_comment_id, count(*) as cnt' ),
-				array(
+				[ 'comments_index' ],
+				[ 'parent_comment_id, count(*) as cnt' ],
+				[
 					$where,
 					'parent_comment_id != 0',
 					"last_touched BETWEEN '$time' AND NOW()",
-				),
+				],
 				__METHOD__,
-				array(
+				[
 					'ORDER BY' => 'cnt desc',
 					'LIMIT' => 100,
 					'GROUP BY' => 'parent_comment_id'
-				)
+				]
 			);
 
 			while ( $row = $db->fetchObject( $res ) ) {
@@ -301,7 +304,7 @@ class Wall extends WikiaModel {
 
 		$offset = ( $page - 1 ) * $this->mMaxPerPage;
 
-		$out = array();
+		$out = [ ];
 		$where = $this->getWhere();
 
 		if ( $where ) {
@@ -338,12 +341,12 @@ class Wall extends WikiaModel {
 			$db = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 
 			$count = $db->selectField(
-				array( 'comments_index' ),
-				array( 'count(distinct comment_id) cnt' ),
-				array(
+				[ 'comments_index' ],
+				[ 'count(distinct comment_id) cnt' ],
+				[
 					'parent_comment_id' => 0,
 					$where
-				),
+				],
 				__METHOD__
 			);
 		}

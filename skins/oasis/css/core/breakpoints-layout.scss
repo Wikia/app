@@ -203,10 +203,6 @@
 	}
 
 	.EditPageHeader {
-		> h1 {
-			margin-left: 5px;
-			margin-top: 2px;
-		}
 
 		> h2 {
 			display: inline-block;
@@ -319,7 +315,9 @@
 $ve-overlay-color: rgba(0, 0, 0, .5);
 $vw-overlay-shadow-size: 1000vw; // IE does not support vmax
 body.ve {
-	pointer-events: none;
+	.WikiaSiteWrapper {
+		pointer-events: none;
+	}
 
 	.ve-ui-overlay {
 		pointer-events: all;
@@ -336,7 +334,7 @@ body.ve {
 	}
 
 	.WikiaMainContent {
-		box-shadow: 0 0 $vw-overlay-shadow-size $vw-overlay-shadow-size $ve-overlay-color;
+		box-shadow: 0 0 0 $vw-overlay-shadow-size $ve-overlay-color;
 		padding: 0;
 		pointer-events: all;
 		z-index: $zTop;

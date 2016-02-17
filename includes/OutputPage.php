@@ -462,21 +462,6 @@ class OutputPage extends ContextSource {
 	 * @return Array of module names
 	 */
 	public function getModules( $filter = false, $position = null, $param = 'mModules' ) {
-		// Wikia change - begin - @author macbre
-		// Load all ResourceLoader modules at the bottom of the page
-		// when the skin has the flag set (e.g. Venus)
-		$skin = $this->getSkin();
-		if ( $skin instanceof WikiaSkin && !empty( $skin->pushRLModulesToBottom ) ) {
-			// when asked for top modules return nothing
-			if ( $position === 'top' ) {
-				return [];
-			}
-
-			// otherwise, return all modules - null means no filtering below
-			$position = null;
-		}
-		// Wikia change - end
-
 		$modules = array_values( array_unique( $this->$param ) );
 		return $filter
 			? $this->filterModules( $modules, $position )
@@ -845,21 +830,12 @@ class OutputPage extends ContextSource {
 	 */
 	public function setHTMLTitle( $name ) {
 		/* Wikia change - begin */
-		if ( $name instanceof Message ) {
-			$name = $name->setContext( $this->getContext() )->text();
-		}
-
-		// First apply the per-wiki template (editable by communitiess)
-		if ( $this->getTitle()->isMainPage() ) {
-			$title = wfMessage( 'pagetitle-view-mainpage', $name )->text();
+		if ( is_array( $name ) ) {
+			$parts = $name;
 		} else {
-			$title = wfMessage( 'pagetitle', $name )->text();
+			$parts = [ $name ];
 		}
-
-		// Now apply Wikia-wide template on top of that
-		$fullTitle = wfMessage( 'wikia-pagetitle', $title )->text();
-
-		$this->mHTMLtitle = $fullTitle;
+		$this->mHTMLtitle = ( new WikiaHtmlTitle() )->setParts( $parts )->getTitle();
 		/* Wikia change - end */
 	}
 
@@ -1667,7 +1643,9 @@ class OutputPage extends ContextSource {
 	function addParserOutput( &$parserOutput ) {
 		$this->addParserOutputNoText( $parserOutput );
 		$text = $parserOutput->getText();
+
 		wfRunHooks( 'OutputPageBeforeHTML', array( &$this, &$text ) );
+
 		$this->addHTML( $text );
 	}
 
@@ -2916,13 +2894,6 @@ $templates
 	function getScriptsForBottomQueue( $inHead ) {
 		global $wgUseSiteJs, $wgAllowUserJs, $wgEnableContentReviewExt;
 
-		$asyncMWload = true;
-
-		$skin = $this->getSkin();
-		if ( $skin instanceof WikiaSkin && !empty( $skin->pushRLModulesToBottom ) ) {
-			$asyncMWload = false;
-		}
-
 		// Script and Messages "only" requests marked for bottom inclusion
 		// If we're in the <head>, use load() calls rather than <script src="..."> tags
 		// Messages should go first
@@ -2941,7 +2912,7 @@ $templates
 		if ( $modules ) {
 			$scripts .= Html::inlineScript(
 				ResourceLoader::makeLoaderConditionalScript(
-					Xml::encodeJsCall( 'mw.loader.load', array( $modules, null, $asyncMWload ) )
+					Xml::encodeJsCall( 'mw.loader.load', array( $modules, null, true ) )
 				)
 			);
 		}
@@ -2952,16 +2923,14 @@ $templates
 		$userScripts = array();
 
 		// Add site JS if enabled
-		if ( $wgUseSiteJs ) {
+		if ( Wikia::isUsingSafeJs() ) {
 			$extraQuery = [];
 
-			if ( $wgEnableContentReviewExt ) {
-				$contentReviewHelper = new \Wikia\ContentReview\Helper();
-				if ( $contentReviewHelper->isContentReviewTestModeEnabled() ) {
-					$extraQuery['current'] = $contentReviewHelper->getJsPagesTimestamp();
-				} else {
-					$extraQuery['reviewed'] = $contentReviewHelper->getReviewedJsPagesTimestamp();
-				}
+			$contentReviewHelper = new \Wikia\ContentReview\Helper();
+			if ( $contentReviewHelper->isContentReviewTestModeEnabled() ) {
+				$extraQuery['current'] = $contentReviewHelper->getJsPagesTimestamp();
+			} else {
+				$extraQuery['reviewed'] = $contentReviewHelper->getReviewedJsPagesTimestamp();
 			}
 
 			$scripts .= $this->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_SCRIPTS,

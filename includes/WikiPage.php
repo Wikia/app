@@ -12,7 +12,7 @@ abstract class Page {}
  *
  * internal documentation reviewed 15 Mar 2010
  */
-class WikiPage extends Page {
+class WikiPage extends Page implements IDBAccessObject {
 	// doDeleteArticleReal() return values. Values less than zero indicate fatal errors,
 	// values greater than zero indicate that there were problems not resulting in page
 	// not being deleted
@@ -50,6 +50,11 @@ class WikiPage extends Page {
 	public $mLatest = false;             // !< Integer (false means "not loaded")
 	public $mPreparedEdit = false;       // !< Array
 	/**@}}*/
+
+	/**
+	 * @var int; one of the READ_* constants
+	 */
+	protected $mDataLoadedFrom = self::READ_NONE;
 
 	/**
 	 * @var Title
@@ -117,15 +122,58 @@ class WikiPage extends Page {
 	 * Constructor from a page id
 	 *
 	 * @param $id Int article ID to load
+	 * @param $from string|int one of the following values:
+	 *        - "fromdb" or WikiPage::READ_NORMAL to select from a slave database
+	 *        - "fromdbmaster" or WikiPage::READ_LATEST to select from the master database
 	 *
 	 * @return WikiPage
 	 */
-	public static function newFromID( $id ) {
-		$t = Title::newFromID( $id );
-		if ( $t ) {
-			return self::factory( $t );
+	public static function newFromID( $id, $from = 'fromdb' ) {
+		$from = self::convertSelectType( $from );
+		$db = wfGetDB( $from === self::READ_LATEST ? DB_MASTER : DB_SLAVE );
+		$row = $db->selectRow( 'page', self::selectFields(), array( 'page_id' => $id ), __METHOD__ );
+		if ( !$row ) {
+			return null;
 		}
-		return null;
+		return self::newFromRow( $row, $from );
+	}
+
+	/**
+	 * Constructor from a database row
+	 *
+	 * @since 1.20
+	 * @param $row object: database row containing at least fields returned
+	 *        by selectFields().
+	 * @param $from string|int: source of $data:
+	 *        - "fromdb" or WikiPage::READ_NORMAL: from a slave DB
+	 *        - "fromdbmaster" or WikiPage::READ_LATEST: from the master DB
+	 *        - "forupdate" or WikiPage::READ_LOCKING: from the master DB using SELECT FOR UPDATE
+	 * @return WikiPage
+	 */
+	public static function newFromRow( $row, $from = 'fromdb' ) {
+		$page = self::factory( Title::newFromRow( $row ) );
+		$page->loadFromRow( $row, $from );
+		return $page;
+	}
+
+	/**
+	 * Convert 'fromdb', 'fromdbmaster' and 'forupdate' to READ_* constants.
+	 *
+	 * @param $type object|string|int
+	 * @return mixed
+	 */
+	private static function convertSelectType( $type ) {
+		switch ( $type ) {
+		case 'fromdb':
+			return self::READ_NORMAL;
+		case 'fromdbmaster':
+			return self::READ_LATEST;
+		case 'forupdate':
+			return self::READ_LOCKING;
+		default:
+			// It may already be an integer or whatever else
+			return $type;
+		}
 	}
 
 	/**
@@ -155,6 +203,7 @@ class WikiPage extends Page {
 	 */
 	public function clear() {
 		$this->mDataLoaded = false;
+		$this->mDataLoadedFrom = self::READ_NONE;
 
 		$this->mCounter = null;
 		$this->mRedirectTarget = null; # Title object if set
@@ -192,14 +241,15 @@ class WikiPage extends Page {
 	 * Fetch a page record with the given conditions
 	 * @param $dbr DatabaseBase object
 	 * @param $conditions Array
+	 * @param $options Array
 	 * @return mixed Database result resource, or false on failure
 	 */
-	protected function pageData( $dbr, $conditions ) {
+	protected function pageData( $dbr, $conditions, $options = array() ) {
 		$fields = self::selectFields();
 
 		wfRunHooks( 'ArticlePageDataBefore', array( &$this, &$fields ) );
 
-		$row = $dbr->selectRow( 'page', $fields, $conditions, __METHOD__ );
+		$row = $dbr->selectRow( 'page', $fields, $conditions, __METHOD__, $options );
 
 		wfRunHooks( 'ArticlePageDataAfter', array( &$this, &$row ) );
 
@@ -212,12 +262,13 @@ class WikiPage extends Page {
 	 *
 	 * @param $dbr DatabaseBase object
 	 * @param $title Title object
+	 * @param $options Array
 	 * @return mixed Database result resource, or false on failure
 	 */
-	public function pageDataFromTitle( $dbr, $title ) {
+	public function pageDataFromTitle( $dbr, $title, $options = array() ) {
 		return $this->pageData( $dbr, array(
 			'page_namespace' => $title->getNamespace(),
-			'page_title'     => $title->getDBkey() ) );
+			'page_title'     => $title->getDBkey() ), $options );
 	}
 
 	/**
@@ -225,37 +276,69 @@ class WikiPage extends Page {
 	 *
 	 * @param $dbr DatabaseBase
 	 * @param $id Integer
+	 * @param $options Array
 	 * @return mixed Database result resource, or false on failure
 	 */
-	public function pageDataFromId( $dbr, $id ) {
-		return $this->pageData( $dbr, array( 'page_id' => $id ) );
+	public function pageDataFromId( $dbr, $id, $options = array() ) {
+		return $this->pageData( $dbr, array( 'page_id' => $id ), $options );
 	}
 
 	/**
 	 * Set the general counter, title etc data loaded from
 	 * some source.
 	 *
-	 * @param $data Object|String One of the following:
-	 *		A DB query result object or...
-	 *		"fromdb" to get from a slave DB or...
-	 *		"fromdbmaster" to get from the master DB
+	 * @param $from object|string|int One of the following:
+	 *        - A DB query result object
+	 *        - "fromdb" or WikiPage::READ_NORMAL to get from a slave DB
+	 *        - "fromdbmaster" or WikiPage::READ_LATEST to get from the master DB
+	 *        - "forupdate"  or WikiPage::READ_LOCKING to get from the master DB using SELECT FOR UPDATE
+	 *
 	 * @return void
 	 */
-	public function loadPageData( $data = 'fromdb' ) {
-		if ( $data === 'fromdbmaster' ) {
+	public function loadPageData( $from = 'fromdb' ) {
+		$from = self::convertSelectType( $from );
+		if ( is_int( $from ) && $from <= $this->mDataLoadedFrom ) {
+			// We already have the data from the correct location, no need to load it twice.
+			return;
+		}
+
+		if ( $from === self::READ_LOCKING ) {
+			$data = $this->pageDataFromTitle( wfGetDB( DB_MASTER ), $this->mTitle, array( 'FOR UPDATE' ) );
+		} elseif ( $from === self::READ_LATEST ) {
 			$data = $this->pageDataFromTitle( wfGetDB( DB_MASTER ), $this->mTitle );
-		} elseif ( $data === 'fromdb' ) { // slave
+		} elseif ( $from === self::READ_NORMAL ) {
 			$data = $this->pageDataFromTitle( wfGetDB( DB_SLAVE ), $this->mTitle );
 			# Use a "last rev inserted" timestamp key to dimish the issue of slave lag.
 			# Note that DB also stores the master position in the session and checks it.
 			$touched = $this->getCachedLastEditTime();
 			if ( $touched ) { // key set
 				if ( !$data || $touched > wfTimestamp( TS_MW, $data->page_touched ) ) {
+					$from = self::READ_LATEST;
 					$data = $this->pageDataFromTitle( wfGetDB( DB_MASTER ), $this->mTitle );
 				}
 			}
+		} else {
+			// No idea from where the caller got this data, assume slave database.
+			$data = $from;
+			$from = self::READ_NORMAL;
 		}
 
+		$this->loadFromRow( $data, $from );
+	}
+
+	/**
+	 * Load the object from a database row
+	 *
+	 * @since 1.20
+	 * @param $data object: database row containing at least fields returned
+	 *        by selectFields()
+	 * @param $from string|int One of the following:
+	 *        - "fromdb" or WikiPage::READ_NORMAL if the data comes from a slave DB
+	 *        - "fromdbmaster" or WikiPage::READ_LATEST if the data comes from the master DB
+	 *        - "forupdate"  or WikiPage::READ_LOCKING if the data comes from from
+	 *          the master DB using SELECT FOR UPDATE
+	 */
+	public function loadFromRow( $data, $from ) {
 		$lc = LinkCache::singleton();
 
 		if ( $data ) {
@@ -277,6 +360,7 @@ class WikiPage extends Page {
 		}
 
 		$this->mDataLoaded = true;
+		$this->mDataLoadedFrom = self::convertSelectType( $from );
 	}
 
 	/**
@@ -381,7 +465,14 @@ class WikiPage extends Page {
 			return; // page doesn't exist or is missing page_latest info
 		}
 
-		$revision = Revision::newFromPageId( $this->getId(), $latest );
+		// Bug 37225: if session S1 loads the page row FOR UPDATE, the result always includes the
+		// latest changes committed. This is true even within REPEATABLE-READ transactions, where
+		// S1 normally only sees changes committed before the first S1 SELECT. Thus we need S1 to
+		// also gets the revision row FOR UPDATE; otherwise, it may not find it since a page row
+		// UPDATE and revision row INSERT by S2 may have happened after the first S1 SELECT.
+		// http://dev.mysql.com/doc/refman/5.0/en/set-transaction.html#isolevel_repeatable-read.
+		$flags = ( $this->mDataLoadedFrom == self::READ_LOCKING ) ? Revision::READ_LOCKING : 0;
+		$revision = Revision::newFromPageId( $this->getId(), $latest, $flags );
 		if ( $revision ) { // sanity
 			$this->setLastEdit( $revision );
 		}
@@ -1278,7 +1369,9 @@ class WikiPage extends Page {
 		$user = is_null( $user ) ? $wgUser : $user;
 		$status = Status::newGood( array() );
 
-		# Load $this->mTitle->getArticleID() and $this->mLatest if it's not already
+		// Load the data from the master database if needed.
+		// The caller may already loaded it from the master or even loaded it using
+		// SELECT FOR UPDATE, so do not override that using clear().
 		$this->loadPageData( 'fromdbmaster' );
 
 		$flags = $this->checkFlags( $flags );
@@ -1985,19 +2078,24 @@ class WikiPage extends Page {
 		$reason, $suppress = false, $id = 0, $commit = true, &$error = '', User $user = null
 	) {
 		global $wgUser;
-		$user = is_null( $user ) ? $wgUser : $user;
 
 		wfDebug( __METHOD__ . "\n" );
 
+		if ( $this->mTitle->getDBkey() === '' ) {
+			return WikiPage::DELETE_NO_PAGE;
+		}
+
+		$user = is_null( $user ) ? $wgUser : $user;
 		if ( ! wfRunHooks( 'ArticleDelete', array( &$this, &$user, &$reason, &$error ) ) ) {
 			return WikiPage::DELETE_HOOK_ABORTED;
 		}
-		$dbw = wfGetDB( DB_MASTER );
-		$t = $this->mTitle->getDBkey();
-		$id = $id ? $id : $this->mTitle->getArticleID( Title::GAID_FOR_UPDATE );
 
-		if ( $t === '' || $id == 0 ) {
-			return WikiPage::DELETE_NO_PAGE;
+		if ( $id == 0 ) {
+			$this->loadPageData( 'forupdate' );
+			$id = $this->getID();
+			if ( $id == 0 ) {
+				return WikiPage::DELETE_NO_PAGE;
+			}
 		}
 
 		// Bitfields to further suppress the content
@@ -2012,7 +2110,38 @@ class WikiPage extends Page {
 			$bitfield = 'rev_deleted';
 		}
 
+		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
+
+		// Wikia change - begin -@author: wladek
+		$pageRow = $dbw->selectRow('page','*',[
+			'page_id' => $id,
+		],__METHOD__);
+		if (!$pageRow){
+			$pageRow = (object)[
+				'page_namespace' => '-1',
+				'page_title' => '???',
+			];
+		}
+		$beforeRevisionCount = $dbw->selectField('revision','count(*)',[
+			'rev_page' => $id,
+		],__METHOD__);
+		$beforeArchiveCount = $dbw->selectField('archive','count(*)',[
+			'ar_namespace' => $pageRow->page_namespace,
+			'ar_title'     => $pageRow->page_title,
+		],__METHOD__);
+		\Wikia\Logger\WikiaLogger::instance()->debug(
+			'RevisionAudit - before delete revisions',[
+				'exception' => new Exception(),
+				'page_namespace' => $pageRow->page_namespace,
+				'page_title' => $pageRow->page_title,
+				'page_id' => $id,
+				'rev_count_before' => $beforeRevisionCount,
+				'ar_count_before' => $beforeArchiveCount,
+			]
+		);
+		// Wikia change - end
+
 		// For now, shunt the revision data into the archive table.
 		// Text is *not* removed from the text table; bulk storage
 		// is left intact to avoid breaking block-compression or
@@ -2052,6 +2181,20 @@ class WikiPage extends Page {
 		$ok = ( $dbw->affectedRows() > 0 ); // getArticleId() uses slave, could be laggy
 
 		if ( !$ok ) {
+			// Wikia change - begin - @author: wladek
+			\Wikia\Logger\WikiaLogger::instance()->debug(
+				'RevisionAudit - delete revision error',[
+					'exception' => new Exception(),
+					'page_namespace' => $pageRow->page_namespace,
+					'page_title' => $pageRow->page_title,
+					'page_id' => $id,
+					'rev_count_before' => $beforeRevisionCount,
+					'ar_count_before' => $beforeArchiveCount,
+					'error_name' => 'no page row deleted',
+				]
+			);
+			// Wikia change - end
+
 			$dbw->rollback();
 			return WikiPage::DELETE_NO_REVISIONS;
 		}
@@ -2080,6 +2223,28 @@ class WikiPage extends Page {
 		// page if they rely on the title or related associations.
 		$this->doDeleteUpdates( $id );
 		// Wikia change end
+
+		// Wikia change - begin - @author: wladek
+		$afterRevisionCount = $dbw->selectField('revision','count(*)',[
+			'rev_page' => $id,
+		],__METHOD__);
+		$afterArchiveCount = $dbw->selectField('archive','count(*)',[
+			'ar_namespace' => $pageRow->page_namespace,
+			'ar_title'     => $pageRow->page_title,
+		],__METHOD__);
+		\Wikia\Logger\WikiaLogger::instance()->debug(
+			'RevisionAudit - after delete revisions',[
+				'exception' => new Exception(),
+				'page_namespace' => $pageRow->page_namespace,
+				'page_title' => $pageRow->page_title,
+				'page_id' => $id,
+				'rev_count_before' => $beforeRevisionCount,
+				'ar_count_before' => $beforeArchiveCount,
+				'rev_count_after' => $afterRevisionCount,
+				'ar_count_after' => $afterArchiveCount,
+			]
+		);
+		// Wikia change - end
 
 		if ( $commit ) {
 			$dbw->commit();
@@ -2146,10 +2311,10 @@ class WikiPage extends Page {
 
 		# Clear the cached article id so the interface doesn't act like we exist
 		$this->mTitle->resetArticleID( 0 );
-		
+
 		# Wikia change here
 		$this->setCachedLastEditTime( wfTimestampNow() );
-		# Wikia 
+		# Wikia
 	}
 
 	/**

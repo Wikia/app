@@ -139,7 +139,7 @@ class ArticleCommentList {
 		$this->mCountNested = 0;
 
 		// grab list of required article IDs
-		$commentsQueue = [];
+		$commentsQueue = [ ];
 		foreach ( $this->mComments as $id => &$levels ) {
 			if ( isset( $levels['level1'] ) ) {
 				$commentsQueue[] = $id;
@@ -151,7 +151,7 @@ class ArticleCommentList {
 
 		$titles = Title::newFromIds( $commentsQueue );
 
-		$comments = [];
+		$comments = [ ];
 		foreach ( $titles as $title ) {
 			$comments[$title->getArticleID()] = ArticleComment::newFromTitle( $title );
 		}
@@ -197,15 +197,15 @@ class ArticleCommentList {
 		}
 
 		if ( empty( $this->mCommentsAll ) ) {
-			$pages = [];
-			$subpages = [];
+			$pages = [ ];
+			$subpages = [ ];
 			$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 
 			$table = [ 'page' ];
 			$vars = [ 'page_id', 'page_title' ];
 			$conds = $this->getQueryWhere( $dbr );
 			$options = [ 'ORDER BY' => 'page_id DESC' ];
-			$join_conds = [];
+			$join_conds = [ ];
 
 			if ( !empty( $wgArticleCommentsEnableVoting ) ) {
 				// add votes to the result set
@@ -215,11 +215,11 @@ class ArticleCommentList {
 				$join_conds['page_vote'] = [ 'LEFT JOIN', 'page_id = article_id' ];
 
 				// a placeholder for 3 top voted answers
-				$top3 = [];
+				$top3 = [ ];
 			}
 			$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options, $join_conds );
 
-			$helperArray = [];
+			$helperArray = [ ];
 			while ( $row = $dbr->fetchObject( $res ) ) {
 				$parts = ArticleComment::explode( $row->page_title );
 				$p0 = $parts['partsStripped'][0];
@@ -237,7 +237,7 @@ class ArticleCommentList {
 						// check if the answer is in top 3
 						for ( $i = 0; $i < 3; $i++ ) {
 							if ( !isset( $top3[$i] ) ) {
-								$top3[$i] = array( 'id' => $row->page_id, 'votes' => $row->vote_cnt );
+								$top3[$i] = [ 'id' => $row->page_id, 'votes' => $row->vote_cnt ];
 								break;
 							}
 							if ( $top3[$i]['votes'] > $row->vote_cnt ) {
@@ -247,7 +247,7 @@ class ArticleCommentList {
 								continue;
 							}
 							$top3[$i + 1] = $top3[$i];
-							$top3[$i] = array( 'id' => $row->page_id, 'votes' => $row->vote_cnt );
+							$top3[$i] = [ 'id' => $row->page_id, 'votes' => $row->vote_cnt ];
 							break;
 						}
 					}
@@ -269,7 +269,7 @@ class ArticleCommentList {
 
 			if ( !empty( $wgArticleCommentsEnableVoting ) ) {
 				// move 3 most voted answers to the top
-				$newPages = array();
+				$newPages = [ ];
 				for ( $i = 0; $i < 3; $i++ ) {
 					if ( isset( $top3[$i] ) ) {
 						$newPages[$top3[$i]['id']] = $pages[$top3[$i]['id']];
@@ -322,7 +322,7 @@ class ArticleCommentList {
 			__METHOD__
 		);
 
-		$pages = [];
+		$pages = [ ];
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			$pages[$row->page_id] = ArticleComment::newFromId( $row->page_id );
 		}
@@ -346,12 +346,12 @@ class ArticleCommentList {
 			$parent = $title->getDBkey();
 		}
 		$like = "page_title" . $dbr->buildLike( $parent, $dbr->anyString() );
-
 		return [ $like, 'page_namespace' => $namspace ];
 	}
 
 	private function getRemovedCommentPages( $oTitle ) {
-		$pages = [];
+		$pages = [ ];
+
 		if ( $oTitle instanceof Title ) {
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select(
@@ -387,8 +387,10 @@ class ArticleCommentList {
 		$wg = F::app()->wg;
 
 		// $isSysop = in_array('sysop', $groups) || in_array('staff', $groups);
+
 		$canEdit = ArticleComment::userCanCommentOn( $this->mTitle );
 		$isBlocked = $wg->User->isBlocked();
+
 		$isReadOnly = wfReadOnly();
 		// $showall = $wgRequest->getText( 'showall', false );
 
@@ -568,7 +570,7 @@ class ArticleCommentList {
 	}
 
 	protected function preloadFirstRevId( $comments ) {
-		$articles = [];
+		$articles = [ ];
 		foreach ( $comments as $id => $levels ) {
 			if ( isset( $levels['level1'] ) ) {
 				if ( !empty( $levels['level1'] ) ) {
@@ -908,9 +910,9 @@ class ArticleCommentList {
 	 */
 	static function formatList( $comments ) {
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/../templates/' );
-		$template->set_vars( array(
+		$template->set_vars( [
 			'comments'  => $comments
-		) );
+		] );
 		return $template->render( 'comment-list' );
 	}
 
@@ -1121,7 +1123,7 @@ class ArticleCommentList {
 	 */
 	static public function undeleteComplete( $oTitle, $oUser, $reason ) {
 		if ( $oTitle instanceof Title ) {
-			if ( in_array( $oTitle->getNamespace(), array( NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) ) ) {
+			if ( in_array( $oTitle->getNamespace(), [ NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ] ) ) {
 				$aProps = $oTitle->aProps;
 				$pageId = $oTitle->getArticleId();
 				if ( !empty( $aProps ) ) {

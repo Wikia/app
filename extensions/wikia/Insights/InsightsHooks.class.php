@@ -6,7 +6,11 @@ class InsightsHooks {
 	 * Check if article is in insights flow and init script to show banner with message and next steps
 	 */
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-		global $wgRequest;
+		global $wgRequest, $wgEnableGlobalShortcutsExt;
+
+		if ( $wgEnableGlobalShortcutsExt ) {
+			\Wikia::addAssetsToOutput('insights_globalshortcuts_js');
+		}
 
 		$subpage = $wgRequest->getVal( 'insights', null );
 
@@ -78,8 +82,10 @@ class InsightsHooks {
 	public static function onGetRailModuleList( Array &$railModuleList ) {
 		global $wgTitle, $wgUser;
 
-		if ( $wgTitle->isSpecial( 'WikiActivity' ) && $wgUser->isPowerUser() ) {
-			$railModuleList[1501] = [ 'InsightsModule', 'Index', null ];
+		if ( ( $wgTitle->isSpecial( 'WikiActivity' ) && $wgUser->isLoggedIn() )
+				|| ( $wgTitle->inNamespace( NS_MAIN ) && $wgUser->isPowerUser() )
+		) {
+			$railModuleList[1207] = [ 'InsightsModule', 'Index', null ];
 		}
 
 		return true;
@@ -91,7 +97,23 @@ class InsightsHooks {
 	 * @return bool
 	 */
 	public static function onwgQueryPages( Array &$wgQueryPages ) {
-		$wgQueryPages[] = [ 'UnconvertedInfoboxesPage', 'Nonportableinfoboxes' ];
+		global $wgEnableInsightsInfoboxes, $wgEnableTemplateClassificationExt,
+			   $wgEnableInsightsPagesWithoutInfobox, $wgEnableInsightsTemplatesWithoutType;
+
+		if ( !empty( $wgEnableInsightsInfoboxes ) ) {
+			$wgQueryPages[] = [ 'UnconvertedInfoboxesPage', 'Nonportableinfoboxes' ];
+		}
+
+		if ( !empty( $wgEnableTemplateClassificationExt ) ) {
+			if ( !empty( $wgEnableInsightsPagesWithoutInfobox ) ) {
+				$wgQueryPages[] = [ 'PagesWithoutInfobox', 'Pageswithoutinfobox' ];
+			}
+
+			if ( !empty( $wgEnableInsightsTemplatesWithoutType ) ) {
+				$wgQueryPages[] = [ 'TemplatesWithoutTypePage', 'Templateswithouttype' ];
+			}
+		}
+
 		return true;
 	}
 
@@ -114,4 +136,15 @@ class InsightsHooks {
 
 		return true;
 	}
+
+
+	public static function onTemplateClassified( $pageId, Title $title, $templateType ) {
+		if ( !RecognizedTemplatesProvider::isUnrecognized( $templateType ) ) {
+			$model = new InsightsTemplatesWithoutTypeModel();
+			$model->removeFixedItem( TemplatesWithoutTypePage::TEMPLATES_WITHOUT_TYPE_TYPE, $title );
+			$model->updateInsightsCache( $pageId );
+		}
+		return true;
+	}
+
 } 

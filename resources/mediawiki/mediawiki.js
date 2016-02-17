@@ -266,6 +266,8 @@ var mw = ( function ( $, undefined ) {
 				text = mw.html.escape( text );
 			}
 
+			// The raw replacesments shouldn't go through any more transformations
+			this.format = 'plain';
 			text = this.parser( text, true );
 
 			return text;

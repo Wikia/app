@@ -4,6 +4,7 @@ use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Models\ReviewModel;
 use Wikia\ContentReview\Models\ReviewLogModel;
 use Wikia\ContentReview\Helper;
+use Wikia\ContentReview\ContentReviewService;
 use Wikia\ContentReview\ContentReviewStatusesService;
 
 class ContentReviewApiController extends WikiaApiController {
@@ -158,26 +159,27 @@ class ContentReviewApiController extends WikiaApiController {
 			$reviewModel->updateCompletedReview( $wikiId, $pageId, $review['revision_id'], $status );
 
 			ContentReviewStatusesService::purgeJsPagesCache();
-		}
-		else {
+		} else {
 			$this->notification = wfMessage( 'content-review-diff-already-done' )->escaped();
 		}
 	}
 
-	public function getPageStatus() {
+	public function escalateReview() {
+		$this->isValidPostRequest( $this->request, $this->wg->User );
+
+		if ( !$this->wg->User->isAllowed( 'content-review' ) ) {
+			throw new PermissionsException( 'content-review' );
+		}
+
 		$wikiId = $this->request->getInt( 'wikiId' );
 		$pageId = $this->request->getInt( 'pageId' );
+		$diff = $this->request->getInt( 'diff' );
+		$oldid = $this->request->getInt( 'oldid' );
 
-		$liveRevisionData = [
-			'liveId' => $this->getLatestReviewedRevisionFromDB( $wikiId, $pageId )['revision_id'],
-		];
-
-		$reviewModel = new ReviewModel();
-		$reviewData = $reviewModel->getPageStatus( $wikiId, $pageId );
-
-		$currentPageData = array_merge( $liveRevisionData, $reviewData );
-
-		$this->makeSuccessResponse( $currentPageData );
+		$service = new ContentReviewService();
+		if ( $service->escalateReview( $wikiId, $pageId, $diff, $oldid ) ) {
+			$this->notification = wfMessage( 'content-review-diff-escalate-confirmation' )->escaped();
+		}
 	}
 
 	public function getLatestReviewedRevision() {
@@ -210,24 +212,13 @@ class ContentReviewApiController extends WikiaApiController {
 		/* Override global title to provide context */
 		$this->wg->Title = Title::newFromText( $pageName );
 
-		/* Get page status */
-		$pageStatus = \F::app()->sendRequest(
-			'ContentReviewApiController',
-			'getPageStatus',
+		/* Render status module */
+		$res = $this->app->sendRequest(
+			'ContentReviewModule',
+			'Render',
 			[
 				'wikiId' => $this->wg->CityId,
 				'pageId' => $this->wg->Title->getArticleID(),
-			],
-			true
-		)->getData();
-
-		/* Render status module */
-		$res = \F::app()->sendRequest(
-			'ContentReviewModule',
-			'executeRender',
-			[
-				'pageStatus' => $pageStatus,
-				'latestRevisionId' => $this->wg->Title->getLatestRevID(),
 			],
 			true
 		)->getData();

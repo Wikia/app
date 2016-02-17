@@ -208,7 +208,7 @@ class GadgetHooks {
 	 * @param $out OutputPage
 	 */
 	private static function applyScript( $page, $out ) {
-		global $wgJsMimeType, $wgEnableContentReviewExt;
+		global $wgJsMimeType;
 
 		# bug 22929: disable gadgets on sensitive pages.  Scripts loaded through the
 		# ResourceLoader handle this in OutputPage::getModules()
@@ -226,7 +226,7 @@ class GadgetHooks {
 		// Wikia change begin; author: lukaszk
 		$extraQuery = '';
 
-		if ( $wgEnableContentReviewExt ) {
+		if ( Wikia::isUsingSafeJs() ) {
 			$contentReviewHelper = new Wikia\ContentReview\Helper();
 
 			if ( $contentReviewHelper->isContentReviewTestModeEnabled() ) {
@@ -672,9 +672,7 @@ class GadgetResourceLoaderModule extends ResourceLoaderGlobalWikiModule {
 
 	// Wikia change begin; author: lukaszk
 	public function getModifiedTime( ResourceLoaderContext $context ) {
-		global $wgEnableContentReviewExt;
-
-		if ( $wgEnableContentReviewExt ) {
+		if ( Wikia::isUsingSafeJs() ) {
 			$pages = $this->getPages( $context );
 
 			foreach ( $pages as $page ) {

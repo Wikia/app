@@ -323,6 +323,11 @@ $messages['es'] = array(
 	'promote-statusbar-approved' => '¡Yuju! $1 se está promocionando en [http://es.wikia.com es.wikia.com]!',
 	'promote-statusbar-rejected' => 'Una o más de tus imágenes no fue aprobada. [[Special:Contact|Pregunta por qué]].',
 );
+
+$messages['ja'] = array(
+	'promote' => 'プロモート',
+);
+
 $messages['pl'] = array(
 	'promote' => 'Promocja',
 	'promote-title' => 'Promocja',
@@ -373,6 +378,10 @@ $messages['pl'] = array(
 	'promote-error-oasis-only' => 'Ta strona nie jest dostępna w wybranej skórce. Zmień ją [[Special:Preferences|na skórkę "Wikia" w preferencjach,]] aby uzyskać dostęp.',
 
 	'promote-upload-image-uploads-disabled' => 'Dodawanie plików jest czasowo wyłączone na Twojej wiki. Spróbuj ponownie za jakiś czas.',
+);
+
+$messages['pt'] = array(
+	'promote' => 'Promover',
 );
 
 $messages['qqq'] = array(

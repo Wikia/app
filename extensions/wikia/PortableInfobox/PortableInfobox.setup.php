@@ -16,6 +16,7 @@ $wgExtensionCredits[ 'parserhook' ][] = [
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/PortableInfobox'
 ];
 
+$wgAutoloadClasses[ 'PortableInfoboxQueryService' ] = $dir . 'services/PortableInfoboxQueryService.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxRenderService' ] = $dir . 'services/PortableInfoboxRenderService.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxErrorRenderService' ] = $dir . 'services/PortableInfoboxErrorRenderService.class.php';
 
@@ -42,13 +43,22 @@ foreach ( $wgInfoboxParserNodes as $parserNode ) {
 }
 
 // helpers
-$wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\ImageFilenameSanitizer' ] = $dir . 'services/Helpers/ImageFilenameSanitizer.php';
-$wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\InfoboParamsValidator' ] = $dir . 'services/Helpers/InfoboParamsValidator.php';
+$wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\InfoboxParamsValidator' ] = $dir . 'services/Helpers/InfoboxParamsValidator.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag' ] = $dir . 'services/Helpers/PortableInfoboxDataBag.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxRenderServiceHelper' ] = $dir . 'services/Helpers/PortableInfoboxRenderServiceHelper.php';
-$wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxClassification' ] = $dir . 'services/Helpers/PortableInfoboxClassification.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PortableInfoboxTemplatesHelper' ] = $dir . 'services/Helpers/PortableInfoboxTemplatesHelper.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\PagePropsProxy' ] = $dir . 'services/Helpers/PagePropsProxy.php';
+
+//sanitizers
+$wgAutoloadClasses[ 'SanitizerBuilder' ] = $dir . 'services/Sanitizers/SanitizerBuilder.php';
+$wgAutoloadClasses[ 'NodeSanitizer' ] = $dir . 'services/Sanitizers/NodeSanitizer.php';
+$wgAutoloadClasses[ 'PassThroughSanitizer' ] = $dir . 'services/Sanitizers/PassThroughSanitizer.php';
+$wgAutoloadClasses[ 'NodeTypeSanitizerInterface' ] = $dir . 'services/Sanitizers/NodeTypeSanitizerInterface.php';
+$wgAutoloadClasses[ 'NodeDataSanitizer' ] = $dir . 'services/Sanitizers/NodeDataSanitizer.php';
+$wgAutoloadClasses[ 'NodeHeroImageSanitizer' ] = $dir . 'services/Sanitizers/NodeHeroImageSanitizer.php';
+$wgAutoloadClasses[ 'NodeHorizontalGroupSanitizer' ] = $dir . 'services/Sanitizers/NodeHorizontalGroupSanitizer.php';
+$wgAutoloadClasses[ 'NodeImageSanitizer' ] = $dir . 'services/Sanitizers/NodeImageSanitizer.php';
+$wgAutoloadClasses[ 'NodeTitleSanitizer' ] = $dir . 'services/Sanitizers/NodeTitleSanitizer.php';
 
 // controller classes
 $wgAutoloadClasses[ 'PortableInfoboxParserTagController' ] = $dir . 'controllers/PortableInfoboxParserTagController.class.php';
@@ -56,7 +66,6 @@ $wgAutoloadClasses[ 'ApiPortableInfobox' ] = $dir . 'controllers/ApiPortableInfo
 $wgAutoloadClasses[ 'ApiQueryPortableInfobox' ] = $dir . 'controllers/ApiQueryPortableInfobox.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxHooks' ] = $dir . 'PortableInfoboxHooks.class.php';
 $wgAutoloadClasses[ 'ApiQueryAllinfoboxes' ] = $dir . 'controllers/ApiQueryAllinfoboxes.class.php';
-$wgAutoloadClasses[ 'PortableInfoboxBuilderController' ] = $dir . 'controllers/PortableInfoboxBuilderController.class.php';
 
 // query pages
 $wgAutoloadClasses[ 'AllinfoboxesQueryPage' ] = $dir . 'querypage/AllinfoboxesQueryPage.php';

@@ -78,19 +78,8 @@ $messages = array(
 'mytalk'     => 'Kaná ítgap',
 'navigation' => 'Kasarşoní',
 
-# Cologne Blue skin
 'qbfind' => 'Paŧŧa',
 
-# Vector skin
-'vector-action-addsection' => 'Púskun sarhál',
-'vector-action-delete'     => 'Mesa',
-'vector-action-move'       => 'Surif',
-'vector-action-protect'    => 'Rakk',
-'vector-view-create'       => 'Biná',
-'vector-view-edit'         => 'Radbadal',
-'vector-view-history'      => 'Lekav e ur',
-'vector-view-view'         => 'Xuán',
-'vector-view-viewsource'   => 'Bumpad e ur',
 'actions'                  => 'Amal ák',
 'namespaces'               => 'Pin-jága ģák',
 'variants'                 => 'Badaldroşumk',
@@ -109,7 +98,6 @@ $messages = array(
 'edit'             => 'Radbadal',
 'create'           => 'Biná',
 'editthispage'     => 'Dá panna ŧí radbadal kar',
-'create-this-page' => 'Dá panna e ađđ et',
 'delete'           => 'Mesa',
 'protect'          => 'Rakk',
 'protect_change'   => 'badal kar',

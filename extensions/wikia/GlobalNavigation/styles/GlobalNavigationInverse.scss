@@ -1,7 +1,9 @@
+@import 'GlobalNavigationColors';
 $global-nav-inverse-background: rgba(0,0,0,.65);
 $global-nav-inverse-text-color: rgb(255,255,255);
 $global-nav-inverse-background-hover: #656E78;
 $global-nav-inverse-link-hover-color: #C5CED9;
+
 
 .global-navigation {
 	&.inverse {
@@ -11,30 +13,8 @@ $global-nav-inverse-link-hover-color: #C5CED9;
 		.wikia-logo-container img {
 				background-image: url('/extensions/wikia/WikiaLogo/images/wikia_logo_white.svg'); /* inline */
 		}
-
-		.start-wikia-container {
-			.start-wikia {
-				border-color: $global-nav-inverse-text-color;
-				color: $global-nav-inverse-text-color;
-
-				&:hover {
-					background-color: $global-nav-inverse-background-hover;
-				}
-			}
-		}
-
-		.hubs-container {
-			&.active {
-				background-color: $global-nav-inverse-background-hover;
-			}
-
-			.hubs-entry-point {
-				background-image: url('/extensions/wikia/GlobalNavigation/images/hubs_entry_point_white.svg'); /* inline */
-
-				&:after {
-					border-top-color: $global-nav-inverse-text-color;
-				}
-			}
+		.wikia-logo__subtitle {
+			color: #ddd;
 		}
 
 		.account-navigation-container {
@@ -82,6 +62,19 @@ $global-nav-inverse-link-hover-color: #C5CED9;
 				&:after {
 					border-top-color: $global-nav-inverse-text-color;
 				}
+			}
+		}
+
+		.explore-wikia-entry-point .chevron {
+			border-top-color: #fff;
+		}
+
+		.cell-link.top-level {
+			color: #fff;
+
+			&:hover {
+				color: $global-navigation-text-color;
+				background-color: #ddd;
 			}
 		}
 	}

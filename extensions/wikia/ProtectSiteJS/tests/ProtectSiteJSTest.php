@@ -130,6 +130,20 @@ class ProtectSiteJSTest extends WikiaBaseTest {
 			],
 			[
 				[
+					'title' => 'SomeUser/chat.js',
+					'namespace' => NS_USER,
+					'username' => 'SomeUser',
+					'groups' => [],
+					'editinterfacetrusted' => false,
+					'wikiId' => 147,
+					'wgEnableContentReviewExt' => false,
+					'wgUseSiteJs' => true,
+				],
+				true,
+				'Valid user JS subpages can be edited by the user',
+			],
+			[
+				[
 					'title' => 'SomeUser/common.js',
 					'namespace' => NS_USER,
 					'username' => 'SomeUser',

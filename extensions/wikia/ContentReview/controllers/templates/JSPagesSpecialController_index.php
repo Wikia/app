@@ -1,4 +1,8 @@
 <p>
+	<?= wfMessage( 'content-review-special-js-description' )->parse() ?>
+	<?= wfMessage( 'content-review-special-js-importjs-description' )->parse() ?>
+</p>
+<p>
 	<?php if ( $isTestModeEnabled ): ?>
 		<button class="content-review-module-test-mode-disable secondary">
 			<?= wfMessage( 'content-review-module-test-mode-disable' )->escaped() ?>
@@ -12,11 +16,11 @@
 <table class="article-table">
 	<thead>
 	<tr class="content-review-special-list-headers">
-		<th><?= wfMessage( 'content-review-special-list-header-page-name' )->escaped() ?></th>
+		<th><?= wfMessage( 'content-review-module-header-pagename' )->escaped() ?></th>
 		<th><?= wfMessage( 'content-review-module-header-latest' )->escaped() ?></th>
 		<th><?= wfMessage( 'content-review-module-header-last' )->escaped() ?></th>
 		<th><?= wfMessage( 'content-review-module-header-live' )->escaped() ?></th>
-		<th><?= wfMessage( 'content-review-special-list-header-actions' )->escaped() ?></th>
+		<th><?= wfMessage( 'content-review-module-header-actions' )->escaped() ?></th>
 	</tr>
 	</thead>
 	<tbody>

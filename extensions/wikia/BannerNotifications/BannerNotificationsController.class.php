@@ -38,13 +38,22 @@ class BannerNotificationsController extends WikiaController {
 				$_SESSION[self::SESSION_KEY] = [];
 			}
 
+			// Making sure if the message is not already set in the session.
+			// We're checking only the message text and not other message parameters,
+			// because the text is the most important here.
+			if ( in_array( $message, array_column( $_SESSION[self::SESSION_KEY], 'message' ) ) ) {
+				\Wikia\Logger\WikiaLogger::instance()
+					->debug( __METHOD__ . " - {$message}\n - already in the _SESSION array" );
+				return;
+			}
+
 			$_SESSION[self::SESSION_KEY][] = [
 				'message' => $message,
 				'type' => $type,
 				'options' => $options
 			];
 
-			wfDebug( __METHOD__ . " - {$message}\n" );
+			\Wikia\Logger\WikiaLogger::instance()->debug( __METHOD__ . " - {$message}\n" );
 		}
 	}
 
@@ -213,7 +222,7 @@ class BannerNotificationsController extends WikiaController {
 	public static function addLogOutConfirmation( &$user, &$injected_html, $oldName ) {
 		global $wgOut, $wgRequest;
 
-		if ( F::app()->checkSkin( 'oasis' ) || F::app()->checkSkin( 'venus' ) ) {
+		if ( F::app()->checkSkin( 'oasis' ) ) {
 
 			self::addConfirmation(
 				wfMessage( 'oasis-confirmation-user-logout' )->escaped()

@@ -1,8 +1,8 @@
 <?php
 
-$messages = array();
+$messages = [ ];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'wall-no-title' => 'No title',
 	'wall-message-loadmore' => 'View <span class="count">{{PLURAL:$1|$1 reply|all $1 replies}}</span>',
 	'wall-message-wall' => 'Message Wall',
@@ -66,6 +66,7 @@ $messages['en'] = array(
 	'wall-message-closed-by' => "[[$2|$1]] closed this thread",
 	'wall-message-closed-by-because' => "$1 closed this thread because:",
 	'wall-message-restore-reply' => "Restore Reply",
+	'wall-message-limit-reached' => "There is a limit of $1 posts per thread.",
 	'wall-delete-reason' => "User/admin action",
 	'wall-user-talk-page-archive-anchor' => 'See archived talk page',
 	'wall-user-talk-archive-page-title' => 'User_talk_archive',
@@ -314,10 +315,10 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-topic-edit-save' => 'Save',
 	'wall-topic-edit-cancel' => 'Cancel',
 
-	'group-threadmoderator' => 'Moderators',
-	'group-threadmoderator-member' => 'Moderator',
+	'group-threadmoderator' => 'Discussions Moderators',
+	'group-threadmoderator-member' => 'Discussions Moderator',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
-);
+];
 
 /** Message documentation (Message documentation)
  * @author Liuxinyu970226
@@ -328,7 +329,7 @@ The original post and your summary will still appear in the wiki's history.",
  * @author Siebrand
  * @author Wyz
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'wall-no-title' => 'fallback wall message title for deleted message which are not accessible in archive',
 	'wall-message-loadmore' => 'See all the messages in the thread. Parameters:
 * $1 is the number of messages.',
@@ -419,6 +420,7 @@ $messages['qqq'] = array(
 	'wall-message-closed-by-because' => 'Summary at the top of a closed thread page. Parameters:
 * $1 is the user who closed the thread (GENDER is supported in this message).',
 	'wall-message-restore-reply' => 'Button to restore a reply on a removed reply page',
+	'wall-message-limit-reached' => 'Error message displayed instead of edit form when thread reaches the maximum number of replies',
 	'wall-delete-reason' => 'default user/admin action',
 	'wall-user-talk-page-archive-anchor' => "Link on a Message Wall page to the user's old talk page archive",
 	'wall-user-talk-archive-page-title' => "Title on a user's talk page archive",
@@ -757,12 +759,12 @@ checkbox on Special:Block',
 	'group-threadmoderator' => '{{doc-group|threadmoderator}}',
 	'group-threadmoderator-member' => '{{doc-group|threadmoderator|member}}',
 	'grouppage-threadmoderator' => '{{doc-group|threadmoderator|page}}',
-);
+];
 
 /** Old English (Ænglisc)
  * @author Espreon
  */
-$messages['ang'] = array(
+$messages['ang'] = [
 	'wall-toolbar-history' => 'Stǣr',
 	'wall-button-to-cancel-preview' => 'Adihtan',
 	'wall-message-edit' => 'Adihtan',
@@ -770,7 +772,7 @@ $messages['ang'] = array(
 	'wall-history' => 'Stǣr',
 	'wall-quote-author' => '$1 wrāt:',
 	'wall-topic-edit-save' => 'Hordian',
-);
+];
 
 /** Arabic (العربية)
  * @author Achraf94
@@ -779,7 +781,7 @@ $messages['ang'] = array(
  * @author Sonic N800
  * @author زكريا
  */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'wall-no-title' => 'لا يوجد عنوان',
 	'wall-message-loadmore' => 'عرض <span class="count">{{PLURAL:$1|الرد|كل الردود ال$1}}</span>',
 	'wall-message-wall' => 'جدار الرسائل',
@@ -1027,13 +1029,13 @@ $messages['ar'] = array(
 	'wall-topic-edit' => 'تعديل المواضيع',
 	'wall-topic-edit-save' => 'حفظ',
 	'wall-topic-edit-cancel' => 'إلغاء',
-);
+];
 
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  * @author Erdemaslancan
  */
-$messages['az'] = array(
+$messages['az'] = [
 	'wall-message-remove' => 'Çıxar',
 	'wall-button-to-cancel-preview' => 'Redaktə',
 	'wall-message-delete' => 'Sil',
@@ -1046,12 +1048,12 @@ $messages['az'] = array(
 	'wall-history' => 'Tarix',
 	'wall-history-action-view' => 'görünüş',
 	'wall-topic-edit-save' => 'Saxla',
-);
+];
 
 /** Bulgarian (български)
  * @author DCLXVI
  */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'wall-message-undoremove' => 'Отмяна',
 	'wall-button-to-cancel-preview' => 'Редактиране',
 	'wall-button-save-changes' => 'Съхраняване на промените',
@@ -1080,13 +1082,13 @@ $messages['bg'] = array(
 	'wall-topic-input-placeholder' => 'Добавяне на тема (незадължително)',
 	'wall-topic-edit-save' => 'Съхраняване',
 	'wall-topic-edit-cancel' => 'Отказване',
-);
+];
 
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'wall-no-title' => 'Titl ebet',
 	'wall-message-loadmore' => 'Gwelet <span class="count">{{PLURAL:$1|ur|ar/an $1}} respont</span>',
 	'wall-message-wall' => "Moger ar c'homzoù",
@@ -1277,18 +1279,18 @@ $messages['br'] = array(
 	'wall-topic-input-heading' => 'Tem',
 	'wall-topic-edit-save' => 'Enrollañ',
 	'wall-topic-edit-cancel' => 'Nullañ',
-);
+];
 
 /** Bosnian (bosanski)
  * @author CERminator
  */
-$messages['bs'] = array(
+$messages['bs'] = [
 	'wall-message-closed-by-because' => '$1 je zatvorio ovaj niz zbog:',
 	'wall-action-close-thread-title' => 'Zatvorite ovaj niz',
 	'wall-action-close-confirm' => 'Molimo objasnite nam zašto želite zatvoriti ovo:',
 	'wall-action-close-thread-confirm-info' => 'Ovaj niz će i dalje biti vidljiv.',
 	'wall-action-close-confirm-ok' => 'Zatvori',
-);
+];
 
 /** Catalan (català)
  * @author BroOk
@@ -1297,7 +1299,7 @@ $messages['bs'] = array(
  * @author Marcmpujol
  * @author Unapersona
  */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'wall-no-title' => 'Sense títol',
 	'wall-message-loadmore' => 'Veure <span class="count">{{PLURAL:$1|$1 resposta|$1 respostes}}</span>',
 	'wall-message-wall' => 'Mur de missatges',
@@ -1547,12 +1549,12 @@ El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'wall-topic-edit-cancel' => 'Cancel·lar',
 	'group-threadmoderator' => 'Moderadors',
 	'group-threadmoderator-member' => 'Moderador',
-);
+];
 
 /** Chechen (нохчийн)
  * @author Умар
  */
-$messages['ce'] = array(
+$messages['ce'] = [
 	'wall-message-wall' => 'Декъашхочун дийцаре',
 	'wall-message-wall-shorten' => 'дийцаре',
 	'wall-message-update-topics-summary' => 'Тема хийцина',
@@ -1565,14 +1567,14 @@ $messages['ce'] = array(
 	'wall-wiki-activity-on' => '[[$1|пен тӀехь $2]]',
 	'wall-thread-history-title' => 'Ган истори',
 	'wall-votes-number' => '$1 {{PLURAL:$1|«суна хаза хетта»}}',
-);
+];
 
 /** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  * @author Vks
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'wall-no-title' => 'Bez názvu',
 	'wall-message-loadmore' => 'Zobrazit <span class="count">{{PLURAL:$1|$1 odpověď|všechny $1 odpovědi}}</span>',
 	'wall-message-wall' => 'Zeď zpráv',
@@ -1818,13 +1820,13 @@ Původní příspěvek a vaše shrnutí se budou i nadále zobrazovat v historii
 	'wall-topic-edit' => 'Upravit témata',
 	'wall-topic-edit-save' => 'Uložit',
 	'wall-topic-edit-cancel' => 'Zrušit',
-);
+];
 
 /** Welsh (Cymraeg)
  * @author Lloffiwr
  * @author Thefartydoctor
  */
-$messages['cy'] = array(
+$messages['cy'] = [
 	'wall-toolbar-history' => 'Hanes',
 	'wall-message-elseswall' => 'Wal $1',
 	'wall-default-title' => 'Neges oddi wrth $1',
@@ -1839,7 +1841,7 @@ $messages['cy'] = array(
 	'wall-history-title' => 'hanes wal',
 	'wall-history-rail-wall' => 'wal',
 	'wall-topic-edit-cancel' => 'Diddymu',
-);
+];
 
 /** German (Deutsch)
  * @author Arkondi
@@ -1850,7 +1852,7 @@ $messages['cy'] = array(
  * @author MtaÄ
  * @author PtM
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'wall-no-title' => 'Kein Titel',
 	'wall-message-loadmore' => 'Zeige <span class="count">{{PLURAL:$1|eine Antwort|alle $1 Antworten}}</span>',
 	'wall-message-wall' => 'Nachrichtenseite',
@@ -2098,10 +2100,10 @@ Der Original-Post und deine Zusammenfassung bleiben in der Wiki-Historie sichtba
 	'wall-topic-edit' => 'Themen bearbeiten',
 	'wall-topic-edit-save' => 'Speichern',
 	'wall-topic-edit-cancel' => 'Abbrechen',
-	'group-threadmoderator' => 'Moderatoren',
-	'group-threadmoderator-member' => 'Moderator',
+	'group-threadmoderator' => 'Diskussionsmoderatoren',
+	'group-threadmoderator-member' => 'Diskussionsmoderator',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderatoren',
-);
+];
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
@@ -2109,7 +2111,7 @@ Der Original-Post und deine Zusammenfassung bleiben in der Wiki-Historie sichtba
  * @author Marmase
  * @author Mirzali
  */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'wall-no-title' => 'Sername çıno',
 	'wall-message-loadmore' => '<span class="count">{{PLURAL:$1|$1 Cewab|Cewabanê $1 }}</span> bıvinê',
 	'wall-message-wall' => 'Mesacê Dêsi',
@@ -2178,12 +2180,12 @@ $messages['diq'] = array(
 	'wall-quote-reply-to' => 'cewabê #$1',
 	'wall-topic-input-heading' => 'Topik:',
 	'wall-topic-edit' => 'Topiki bıvurne',
-);
+];
 
 /** Greek (Ελληνικά)
  * @author Glavkos
  */
-$messages['el'] = array(
+$messages['el'] = [
 	'wall-no-title' => 'Χωρίς τίτλο',
 	'wall-message-loadmore' => 'Προβολή <span class="count">{{PLURAL:$1|$1 απάντησης|όλων $1 των απαντήσεων}}</span>',
 	'wall-message-wall' => 'Τοίχος μηνυμάτων',
@@ -2247,14 +2249,14 @@ $messages['el'] = array(
 	'tog-enotifmywall-reminder' => 'Με ένα ημερήσιο email υπενθύμισης',
 	'wall-votes-number' => '$1 Kudos', # Fuzzy
 	'wall-votes-number-tooltip' => 'Δείτε ποιος έδωσε Kudos σε αυτό το μήνυμα',
-);
+];
 
 /** British English (British English)
  * @author Captaindogfish
  */
-$messages['en-gb'] = array(
+$messages['en-gb'] = [
 	'wall-recentchanges-thread-group' => "$1 on [[$2|$3's wall]]",
-);
+];
 
 /** Spanish (español)
  * @author AnakngAraw
@@ -2266,7 +2268,7 @@ $messages['en-gb'] = array(
  * @author VegaDark
  * @author Vivaelcelta
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'wall-no-title' => 'Sin título',
 	'wall-message-loadmore' => 'Ver <span class="count">{{PLURAL:$1|$1 respuesta|$1 respuestas}}</span>',
 	'wall-message-wall' => 'Muro de mensajes',
@@ -2514,16 +2516,16 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wall-topic-edit' => 'Editar temas',
 	'wall-topic-edit-save' => 'Guardar',
 	'wall-topic-edit-cancel' => 'Cancelar',
-	'group-threadmoderator' => 'Moderadores',
-	'group-threadmoderator-member' => 'Moderador',
+	'group-threadmoderator' => 'Moderadores de discusiones',
+	'group-threadmoderator-member' => 'Moderador de discusiones',
 	'grouppage-threadmoderator' => 'w:c:comunidad:Ayuda:Moderadores',
-);
+];
 
 /** Basque (euskara)
  * @author Subi
  * @author Xabier Armendaritz
  */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'wall-message-more' => 'Gehiago',
 	'wall-message-delete' => 'Ezabatu',
 	'wall-delete-error-title' => 'Errorea',
@@ -2538,7 +2540,7 @@ $messages['eu'] = array(
 	'wall-topic-edit-cancel' => 'Utzi',
 	'group-threadmoderator' => 'Moderatzaileak',
 	'group-threadmoderator-member' => 'Moderatzailea',
-);
+];
 
 /** Persian (فارسی)
  * @author Alirezaaa
@@ -2546,7 +2548,7 @@ $messages['eu'] = array(
  * @author Reza1615
  * @author ZxxZxxZ
  */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'wall-message-wall' => 'دیوار پیام',
 	'wall-message-unfollow' => 'دنبال نکردن',
 	'wall-message-undoremove' => 'واگردانی',
@@ -2594,7 +2596,7 @@ $messages['fa'] = array(
 	'wall-topic-edit-save' => 'ذخیره',
 	'wall-topic-edit-cancel' => 'لغو',
 	'group-threadmoderator-member' => 'مدیر',
-);
+];
 
 /** Finnish (suomi)
  * @author Elseweyr
@@ -2604,7 +2606,7 @@ $messages['fa'] = array(
  * @author Silvonen
  * @author Ville96
  */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'wall-no-title' => 'Ei otsikkoa',
 	'wall-message-loadmore' => 'Näytä <span class="count">{{PLURAL:$1|$1 vastaus|kaikki $1 vastausta}}</span>',
 	'wall-message-wall' => 'Viestiseinä',
@@ -2850,12 +2852,12 @@ Tätä ei voi peruuttaa.',
 	'wall-topic-edit' => 'Muokkaa aiheita',
 	'wall-topic-edit-save' => 'Tallenna',
 	'wall-topic-edit-cancel' => 'Peruuta',
-);
+];
 
 /** Faroese (føroyskt)
  * @author EileenSanda
  */
-$messages['fo'] = array(
+$messages['fo'] = [
 	'wall-no-title' => 'Onki heiti',
 	'wall-message-loadmore' => 'Vís <span class="count">{{PLURAL:$1|$1 svar|øll $1 svar}}</span>',
 	'wall-message-wall' => 'Boðsveggur',
@@ -2884,7 +2886,7 @@ $messages['fo'] = array(
 	'wall-action-remove-reply-title' => 'Tak hetta svarið burtur',
 	'wall-action-remove-thread-title' => 'Tak henda tráðin burtur',
 	'wall-delete-error-title' => 'Feilur',
-);
+];
 
 /** French (français)
  * @author Gomoko
@@ -2892,7 +2894,7 @@ $messages['fo'] = array(
  * @author McDutchie
  * @author Wyz
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'wall-no-title' => 'Sans titre',
 	'wall-message-loadmore' => 'Voir <span class="count">{{PLURAL:$1|une réponse|les $1 réponses}}</span>',
 	'wall-message-wall' => 'Mur de discussion',
@@ -3140,15 +3142,15 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-topic-edit' => 'Modifier les rubriques',
 	'wall-topic-edit-save' => 'Enregistrer',
 	'wall-topic-edit-cancel' => 'Annuler',
-	'group-threadmoderator' => 'Modérateurs',
-	'group-threadmoderator-member' => 'Modérateur',
+	'group-threadmoderator' => 'Modérateurs de discussions',
+	'group-threadmoderator-member' => 'Modérateur de discussions',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
-);
+];
 
 /** Western Frisian (Frysk)
  * @author Robin0van0der0vliet
  */
-$messages['fy'] = array(
+$messages['fy'] = [
 	'wall-toolbar-history' => 'Skiednis',
 	'wall-button-to-cancel-preview' => 'Bewurkje',
 	'wall-button-cancel-changes' => 'Annulearje',
@@ -3163,13 +3165,13 @@ $messages['fy'] = array(
 	'wall-history' => 'Skiednis',
 	'wall-topic-edit-save' => 'Bewarje',
 	'wall-topic-edit-cancel' => 'Annulearje',
-);
+];
 
 /** Galician (galego)
  * @author Toliño
  * @author Vivaelcelta
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'wall-no-title' => 'Sen título',
 	'wall-message-loadmore' => 'Ollar <span class="count">{{PLURAL:$1|$1 resposta|as $1 respostas}}</span>',
 	'wall-message-wall' => 'Muro de mensaxes',
@@ -3417,28 +3419,28 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wall-topic-edit' => 'Editar os temas',
 	'wall-topic-edit-save' => 'Gardar',
 	'wall-topic-edit-cancel' => 'Cancelar',
-);
+];
 
 /** Hebrew (עברית)
  * @author Guycn2
  */
-$messages['he'] = array(
+$messages['he'] = [
 	'wall-recentchanges-thread-group' => '$1 ב[[$2|קיר של $3]]',
 	'wall-whatlinkshere-wall-line' => '[[$1|$2]] ב[[$3|קיר של $4]]',
-);
+];
 
 /** Hindi (हिन्दी)
  * @author Vivek Rai
  */
-$messages['hi'] = array(
+$messages['hi'] = [
 	'wall-history-who-involved-wall-title' => 'कौन शामिल है?',
-);
+];
 
 /** Hungarian (magyar)
  * @author Csega
  * @author TK-999
  */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'wall-no-title' => 'Nincs cím',
 	'wall-message-loadmore' => 'Mind a(z) <span class="count">$1</span> válasz megtekintése',
 	'wall-message-wall' => 'Üzenőfal',
@@ -3675,19 +3677,19 @@ Az eredeti üzenet és az indoklásod megmarad a wiki történetében.',
 	'wall-topic-edit' => 'Témák szerkesztése',
 	'wall-topic-edit-save' => 'Mentés',
 	'wall-topic-edit-cancel' => 'Mégse',
-);
+];
 
 /** Armenian (Հայերեն)
  * @author Աշոտ1997
  */
-$messages['hy'] = array(
+$messages['hy'] = [
 	'group-threadmoderator-member' => 'Մոդերատոր',
-);
+];
 
 /** Interlingua (interlingua)
  * @author McDutchie
  */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'wall-no-title' => 'Sin titulo',
 	'wall-message-loadmore' => 'Vider <span class="count">{{PLURAL:$1|un responsa|tote le $1 responsas}}</span>',
 	'wall-message-wall' => 'Muro de messages',
@@ -3905,21 +3907,21 @@ Le message original e tu summario apparera totevia in le historia del wiki.',
 	'wall-votes-voted-tooltip' => 'Tu ha date complimentos a iste message!',
 	'wall-quote-author' => '$1 scribeva:',
 	'wall-quote-reply-to' => 'responsa a №$1',
-);
+];
 
 /** Indonesian (Bahasa Indonesia)
  * @author Kenrick95
  */
-$messages['id'] = array(
+$messages['id'] = [
 	'wall-message-undoremove' => 'Balikkan',
-);
+];
 
 /** Italian (italiano)
  * @author Beta16
  * @author Minerva Titani
  * @author Sactage
  */
-$messages['it'] = array(
+$messages['it'] = [
 	'wall-thread-isnotifyeveryone' => 'Evidenziata',
 	'wall-recentchanges-new-message' => 'nella [[$1|bacheca di $2]]',
 	'wall-recentchanges-removed-thread' => 'ha rimosso la discussione "[[$1|$2]]" nella [[$3|Bacheca di $4]]',
@@ -3932,7 +3934,9 @@ $messages['it'] = array(
 	'wall-message-notifyeveryone' => 'Evidenzia questa discussione',
 	'wall-message-unnotifyeveryone' => 'Non evidenziare più questa discussione',
 	'wall-message-notifyeveryone-tooltip' => 'Tutti gli utenti loggati in questa wiki riceveranno le notifiche per questa discussione la prossima volta che visiteranno la wiki',
-);
+	'group-threadmoderator' => 'Moderatori di discussioni',
+	'group-threadmoderator-member' => 'Moderatore di discussioni',
+];
 
 /** Japanese (日本語)
  * @author BryghtShadow
@@ -3941,7 +3945,7 @@ $messages['it'] = array(
  * @author Tommy6
  * @author Whym
  */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'wall-no-title' => 'タイトルなし',
 	'wall-message-loadmore' => '<span class="count">$1件</span>の返信を全てを見る',
 	'wall-message-wall' => 'メッセージウォール',
@@ -4187,14 +4191,15 @@ $messages['ja'] = array(
 	'wall-topic-edit' => 'タグを編集',
 	'wall-topic-edit-save' => '保存',
 	'wall-topic-edit-cancel' => '中止',
-	'group-threadmoderator' => 'モデレーター',
-);
+	'group-threadmoderator' => 'トーク・モデレーター',
+	'group-threadmoderator-member' => 'トーク・モデレーター',
+];
 
 /** Georgian (ქართული)
  * @author DevaMK
  * @author Otogi
  */
-$messages['ka'] = array(
+$messages['ka'] = [
 	'wall-message-loadmore' => 'იხილე $1-ვე პასუხი',
 	'wall-message-unfollow' => 'კონტროლის გაუქმება',
 	'wall-message-mywall' => 'ჩემი კედელი',
@@ -4217,14 +4222,14 @@ $messages['ka'] = array(
 	'wall-sorting-newest-threads' => 'უახლესი ბმულები',
 	'wall-sorting-oldest-threads' => 'უძველესი ბმულები',
 	'wall-sorting-newest-replies' => 'უახლესი პასუხები',
-);
+];
 
 /** Kabardian (Адыгэбзэ)
  * @author Erdemaslancan
  */
-$messages['kbd'] = array(
+$messages['kbd'] = [
 
-);
+];
 
 /** Korean (한국어)
  * @author Cafeinlove
@@ -4232,7 +4237,7 @@ $messages['kbd'] = array(
  * @author Priviet
  * @author 아라
  */
-$messages['ko'] = array(
+$messages['ko'] = [
 	'wall-no-title' => '제목 없음',
 	'wall-message-loadmore' => '<span class="count">{{PLURAL:$1|덧글 $1개}}</span> 보기',
 	'wall-message-wall' => '메시지 담벼락',
@@ -4338,21 +4343,21 @@ $messages['ko'] = array(
 	'wall-quote-reply-to' => '#$1에 대한 덧글',
 	'wall-topic-edit-save' => '저장',
 	'wall-topic-edit-cancel' => '취소',
-);
+];
 
 /** Karachay-Balkar (къарачай-малкъар)
  * @author Iltever
  */
-$messages['krc'] = array(
+$messages['krc'] = [
 	'wall-message-wall-shorten' => 'сюзюу',
 	'wall-toolbar-history' => 'Тарих',
 	'wall-thread-closed' => 'Джаб',
-);
+];
 
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'wall-no-title' => 'Keine Tittel',
 	'wall-message-loadmore' => 'Zeisch {{PLURAL:$1|ein Antwoot|$1 Antwoote|kei Antwoot}}', # Fuzzy
 	'wall-message-undoremove' => 'Zeröcknämme',
@@ -4402,12 +4407,12 @@ $messages['ksh'] = array(
 	'wall-history-action-restore' => 'wider zerök holle',
 	'wall-history-action-thread-history' => 'dem Jeshprääschßfäddem sing Verjangeheit un Versione',
 	'wall-thread-history-title' => 'dem Jeshprääschßfäddem sing Verjangeheit un Versione', # Fuzzy
-);
+];
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author Bikarhêner
  */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'wall-toolbar-history' => 'Dîrok',
 	'wall-thread-deleted' => 'Hate jêbirin',
 	'wall-thread-closed' => 'Hate girtin',
@@ -4427,12 +4432,12 @@ $messages['ku-latn'] = array(
 	'wall-topic-edit-cancel' => 'Betal bike',
 	'group-threadmoderator' => 'Moderator',
 	'group-threadmoderator-member' => 'Moderator',
-);
+];
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'wall-no-title' => 'Keen Titel',
 	'wall-message-undoremove' => 'Réckgängeg maachen',
 	'wall-toolbar-history' => 'Versiounen',
@@ -4473,30 +4478,30 @@ $messages['lb'] = array(
 	'wall-topic-edit-cancel' => 'Ofbriechen',
 	'group-threadmoderator' => 'Moderateuren',
 	'group-threadmoderator-member' => 'Moderateur',
-);
+];
 
 /** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
-$messages['lrc'] = array(
+$messages['lrc'] = [
 	'wall-button-save-changes' => 'اماییه کردن آلشتیا',
-);
+];
 
 /** Latvian (latviešu)
  * @author Edgars2007
  * @author Sg ghost
  */
-$messages['lv'] = array(
+$messages['lv'] = [
 	'wall-message-wall' => 'Lietotāja diskusija',
 	'wall-desc' => 'Lietotāja diskusija lapas nomaiņa',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Lietotāja diskusija',
 	'prefs-email-wall-v2' => 'Lietotāja diskusija un Forums',
-);
+];
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'wall-no-title' => 'Без наслов',
 	'wall-message-loadmore' => 'Погл. <span class="count">{{PLURAL:$1|$1 одговор|сите $1 одговори}}</span>',
 	'wall-message-wall' => 'Ѕид за пораки',
@@ -4747,12 +4752,12 @@ $messages['mk'] = array(
 	'group-threadmoderator' => 'Модератори',
 	'group-threadmoderator-member' => 'Модератор',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'wall-no-title' => 'Tiada tajuk',
 	'wall-message-loadmore' => 'Lihat <span class="count">{{PLURAL:$1|$1 balasan|kesemua $1 balasan}}</span>',
 	'wall-message-wall' => 'Papan Pesanan',
@@ -5003,14 +5008,14 @@ Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'group-threadmoderator' => 'Pengawal Selia',
 	'group-threadmoderator-member' => 'Pengawal Selia',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
-);
+];
 
 /** Neapolitan (Napulitano)
  * @author C.R.
  */
-$messages['nap'] = array(
+$messages['nap'] = [
 	'wall-thread-history-title' => "Storico d' 'o filo",
-);
+];
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
@@ -5018,7 +5023,7 @@ $messages['nap'] = array(
  * @author EvenT
  * @author Wouterkoch
  */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'wall-no-title' => 'Ingen tittel',
 	'wall-message-loadmore' => 'Vis <span class="count">{{PLURAL:$1|$1 svar|alle $1 svar}}</span>',
 	'wall-message-wall' => 'Beskjedtavle',
@@ -5257,7 +5262,7 @@ Originalinnlegget og sammendraget vil fremdeles vises i wikiens historikk.',
 	'wall-topic-edit' => 'Rediger emner',
 	'wall-topic-edit-save' => 'Lagre',
 	'wall-topic-edit-cancel' => 'Avbryt',
-);
+];
 
 /** Dutch (Nederlands)
  * @author AvatarTeam
@@ -5269,7 +5274,7 @@ Originalinnlegget og sammendraget vil fremdeles vises i wikiens historikk.',
  * @author Siebrand
  * @author Wiki13
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'wall-no-title' => 'Geen koptekst',
 	'wall-message-loadmore' => '<span class="count">{{PLURAL:$1|Reactie|Alle $1 reacties}}</span> bekijken',
 	'wall-message-wall' => 'Prikbord',
@@ -5517,21 +5522,21 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'wall-topic-edit' => 'Onderwerpen bewerken',
 	'wall-topic-edit-save' => 'Opslaan',
 	'wall-topic-edit-cancel' => 'Annuleren',
-	'group-threadmoderator' => 'Moderators',
-	'group-threadmoderator-member' => 'Moderator',
-);
+	'group-threadmoderator' => 'Discussiemoderatoren',
+	'group-threadmoderator-member' => 'Discussiemoderator',
+];
 
 /** Norwegian Nynorsk (norsk nynorsk)
  * @author Erdemaslancan
  */
-$messages['nn'] = array(
+$messages['nn'] = [
 
-);
+];
 
 /** Occitan (occitan)
  * @author Cedric31
  */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'wall-message-wall-shorten' => 'mur',
 	'wall-message-unfollow' => 'Seguir pas mai',
 	'wall-message-undoremove' => 'Anullar',
@@ -5581,20 +5586,20 @@ $messages['oc'] = array(
 	'wall-votes-number' => '$1 {{PLURAL:$1|seleccion|seleccions}}',
 	'wall-topic-edit-save' => 'Enregistrar',
 	'wall-topic-edit-cancel' => 'Anullar',
-);
+];
 
 /** Punjabi (ਪੰਜਾਬੀ)
  * @author Babanwalia
  */
-$messages['pa'] = array(
+$messages['pa'] = [
 	'wall-recentchanges-thread-group' => '$1 on [[$2|$3 ਦੀ ਕੰਧ]]',
 	'wall-whatlinkshere-wall-line' => '[[$3|$4 ਦੀ ਕੰਧ]] ਉੱਤੇ [[$1|$2]]',
-);
+];
 
 /** Palatine German (Pälzisch)
  * @author Manuae
  */
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'wall-no-title' => 'Kän Tidl',
 	'wall-message-undoremove' => "Rigg'gängisch",
 	'wall-toolbar-history' => 'Gschischd',
@@ -5613,7 +5618,7 @@ $messages['pfl'] = array(
 	'wall-action-rev-confirm-ok' => 'Ja, lesche',
 	'wall-notifications-markasread-all-wikis' => 'Alli Wikis',
 	'wall-notifications-markasread-this-wiki' => 'Des Wiki',
-);
+];
 
 /** Polish (polski)
  * @author Ankry
@@ -5624,7 +5629,7 @@ $messages['pfl'] = array(
  * @author Rezonansowy
  * @author Sovq
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'wall-no-title' => 'Brak tytułu',
 	'wall-message-loadmore' => 'Zobacz <span class="count">({{PLURAL:$1|odpowiedź|wszystkie $1 odpowiedzi}})</span>',
 	'wall-message-wall' => 'Tablica',
@@ -5872,14 +5877,14 @@ Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 	'wall-topic-edit' => 'Edytuj tematy',
 	'wall-topic-edit-save' => 'Zapisz zmiany',
 	'wall-topic-edit-cancel' => 'Anuluj',
-	'group-threadmoderator' => 'Moderatorzy',
-	'group-threadmoderator-member' => 'Moderator',
-);
+	'group-threadmoderator' => 'Moderatorzy dyskusji',
+	'group-threadmoderator-member' => 'Moderator dyskusji',
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'wall-no-title' => 'بې سرليکه',
 	'wall-message-loadmore' => '<span class="count">{{PLURAL:$1|$1 ځواب|ټول $1 ځوابونه}}</span> کتل',
 	'wall-message-wall' => 'پيغام دېوال',
@@ -5937,7 +5942,7 @@ $messages['ps'] = array(
 	'wall-quote-reply-to' => '#$1 ته ځواب وييل',
 	'wall-topic-edit-save' => 'خوندي کول',
 	'wall-topic-edit-cancel' => 'ناگارل',
-);
+];
 
 /** Portuguese (português)
  * @author Hamilton Abreu
@@ -5949,7 +5954,7 @@ $messages['ps'] = array(
  * @author Vitorvicentevalente
  * @author Waldir
  */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'wall-no-title' => 'Sem título',
 	'wall-message-loadmore' => 'Ver <span class="count">{{PLURAL:$1|a $1 resposta|todas as $1 respostas}}</span>',
 	'wall-message-wall' => 'Mural de Mensagens',
@@ -6190,8 +6195,9 @@ A publicação original e o teu sumário ainda serão visíveis no histórico da
 	'wall-topic-edit' => 'Editar tópicos',
 	'wall-topic-edit-save' => 'Gravar',
 	'wall-topic-edit-cancel' => 'Cancelar',
-	'group-threadmoderator' => 'Moderadores',
-);
+	'group-threadmoderator' => 'Moderadores de discussões',
+	'group-threadmoderator-member' => 'Moderador de discussões',
+];
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
@@ -6202,7 +6208,7 @@ A publicação original e o teu sumário ainda serão visíveis no histórico da
  * @author TheGabrielZaum
  * @author Tooguether
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'wall-no-title' => 'Sem título',
 	'wall-message-loadmore' => 'Ver <span class="count">{{PLURAL:$1|a $1 resposta|todas as $1 respostas}}</span>',
 	'wall-message-wall' => 'Mural de Mensagens',
@@ -6399,19 +6405,19 @@ O post original e seu sumário ainda aparecerão no histórico da wikia.',
 	'wall-topic-edit' => 'Editar tópicos',
 	'wall-topic-edit-save' => 'Salvar',
 	'wall-topic-edit-cancel' => 'Cancelar',
-);
+];
 
 /** Quechua (Runa Simi)
  * @author AlimanRuna
  */
-$messages['qu'] = array(
+$messages['qu'] = [
 	'wall-notifications-markasread' => 'Tukuykunata ñawirisqa nispa unanchay',
-);
+];
 
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'wall-no-title' => 'Nisciune titole',
 	'wall-message-loadmore' => 'View <span class="count">{{PLURAL:$1|$1 resposte|tutte le $1 resposte}}</span>',
 	'wall-message-wall' => 'Mure de le Messàgge',
@@ -6450,7 +6456,7 @@ $messages['roa-tara'] = array(
 	'wall-notifications-loading' => 'Stoche a careche le notifiche',
 	'wall-topic-edit-save' => 'Reggistre',
 	'wall-topic-edit-cancel' => 'Annulle',
-);
+];
 
 /** Russian (русский)
  * @author DCamer
@@ -6460,7 +6466,7 @@ $messages['roa-tara'] = array(
  * @author Kuzura
  * @author Okras
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'wall-no-title' => 'Без названия',
 	'wall-message-loadmore' => 'Просмотреть <span class="count">$1 {{PLURAL:$1|ответ|ответа|ответов}}</span>',
 	'wall-message-wall' => 'Обсуждение участника',
@@ -6708,14 +6714,14 @@ $messages['ru'] = array(
 	'wall-topic-edit' => 'Edit Topics',
 	'wall-topic-edit-save' => 'Сохранить',
 	'wall-topic-edit-cancel' => 'Отмена',
-	'group-threadmoderator' => 'Модераторы',
-	'group-threadmoderator-member' => 'Модератор',
-);
+	'group-threadmoderator' => 'Модераторы обсуждений',
+	'group-threadmoderator-member' => 'Модератор обсуждений',
+];
 
 /** Scots (Scots)
  * @author John Reid
  */
-$messages['sco'] = array(
+$messages['sco'] = [
 	'wall-no-title' => 'Nae title',
 	'wall-message-loadmore' => 'See <span class="count">{{PLURAL:$1|$1 reply|aw $1 replies}}</span>',
 	'wall-message-wall' => 'Message Waw',
@@ -6957,13 +6963,13 @@ The oreeginal post n yer ootline will still kyth in the wiki's histerie.",
 	'wall-topic-heading' => 'Topics fer this threed:',
 	'wall-topic-edit' => 'Eedit Topics',
 	'wall-topic-edit-save' => 'Hain',
-);
+];
 
 /** Swedish (svenska)
  * @author Cybjit
  * @author WikiPhoenix
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'wall-no-title' => 'Ingen titel',
 	'wall-message-loadmore' => 'Visa <span class="count">{{PLURAL:$1|$1 svar|alla $1 svar}}</span>',
 	'wall-message-wall' => 'Meddelandevägg',
@@ -7214,13 +7220,13 @@ Originalinlägget och din sammanfattning kommer fortfarande att visas i wikins h
 	'group-threadmoderator' => 'Moderatorer',
 	'group-threadmoderator-member' => 'Moderator',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
-);
+];
 
 /** Tamil (தமிழ்)
  * @author Karthi.dr
  * @author மதனாஹரன்
  */
-$messages['ta'] = array(
+$messages['ta'] = [
 	'wall-no-title' => 'தலைப்பில்லை',
 	'wall-toolbar-history' => 'வரலாறு',
 	'wall-message-remove' => 'நீக்குக',
@@ -7239,19 +7245,19 @@ $messages['ta'] = array(
 	'wall-action-all-confirm-cancel' => 'ரத்து செய்',
 	'wall-delete-error-title' => 'பிழை',
 	'wall-action-remove-confirm-ok' => 'நீக்குக',
-);
+];
 
 /** Telugu (తెలుగు)
  * @author Ravichandra
  */
-$messages['te'] = array(
+$messages['te'] = [
 	'wall-history-who-involved-wall-title' => 'ఎవరు పాల్గొంటున్నారు?',
-);
+];
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'wall-no-title' => 'Walang pamagat',
 	'wall-message-loadmore' => 'Tingnan ang <span class="count">{{PLURAL:$1|$1 tugon|lahat ng $1 mga tugon}}</span>',
 	'wall-message-wall' => 'Dingding ng Mensahe',
@@ -7469,25 +7475,25 @@ Ang orihinal na pagpapaskil at ang buod mo ay lilitaw pa rin sa loob ng kasaysay
 	'wall-votes-voted-tooltip' => 'Binigyan mo ng Kudos ang mensaheng ito!',
 	'wall-quote-author' => 'Isinulat ni $1 ang:',
 	'wall-quote-reply-to' => 'tumugon kay #$1',
-);
+];
 
 /** Talysh (толышә зывон)
  * @author Erdemaslancan
  * @author Гусейн
  */
-$messages['tly'] = array(
+$messages['tly'] = [
 	'wall-no-title' => 'Бе ном',
 	'wall-button-to-cancel-preview' => 'Сәрост кардеј',
 	'wall-delete-error-title' => 'Сәһв',
 	'wall-history-rail-block' => 'бә гырд гәтеј',
 	'wall-history-action-view' => 'тәмшо кардеј',
-);
+];
 
 /** Turkish (Türkçe)
  * @author Erdemaslancan
  * @author Incelemeelemani
  */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'wall-message-wall' => 'Mesaj Duvarı',
 	'wall-message-wall-shorten' => 'duvar',
 	'wall-message-unfollow' => 'Takibi bırak',
@@ -7543,13 +7549,13 @@ $messages['tr'] = array(
 	'wall-notifications-markasread-this-wiki' => 'Bu wiki',
 	'wall-notifications-empty' => 'Herhangi bir bildiriminiz yok',
 	'wall-notifications-loading' => 'Yükleme bildirimleri',
-);
+];
 
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  * @author Ilnur efende
  */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'wall-message-undoremove' => 'Кире кайтару',
 	'wall-toolbar-history' => 'Тарих',
 	'wall-message-remove' => 'Бетерү',
@@ -7575,14 +7581,14 @@ $messages['tt-cyrl'] = array(
 	'wall-action-restore-confirm-ok' => 'Торгызу',
 	'wall-notifications-markasread-all-wikis' => 'Барлык викиләр',
 	'wn-newmsg' => 'Сез $1 диварында яңа хат калдырдыгыз',
-);
+];
 
 /** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
  * @author Tifinaghes
  */
-$messages['tzm'] = array(
+$messages['tzm'] = [
 	'wall-no-title' => 'ⵡⴰⵔ ⴰⵣⵡⵉⵍ',
-);
+];
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
@@ -7591,7 +7597,7 @@ $messages['tzm'] = array(
  * @author Wildream
  * @author Капитан Джон Шепард
  */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'wall-no-title' => 'Без назви',
 	'wall-message-loadmore' => 'Подивитись $1 {{PLURAL:$1|відповідь|відповідей|відповіді}}',
 	'wall-message-wall' => 'Обговорення користувача',
@@ -7840,21 +7846,21 @@ $messages['uk'] = array(
 	'group-threadmoderator' => 'Модератори',
 	'group-threadmoderator-member' => 'Модератор',
 	'grouppage-threadmoderator' => 'w:c:спільнота:допомога:Модератори',
-);
+];
 
 /** Uzbek (oʻzbekcha/ўзбекча)
  * @author Sociologist
  */
-$messages['uz'] = array(
+$messages['uz'] = [
 	'wall-history-thread-removed' => '$1 $2 ni oʻchirdi',
-);
+];
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
  * @author Rémy Lee
  * @author Xiao Qiao
  */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'wall-no-title' => 'Không có tiêu đề',
 	'wall-message-loadmore' => 'Xem <span class="count">{{PLURAL:$1|$1 hồi âm|tất cả $1 hồi âm}}</span>',
 	'wall-message-wall' => 'Tường tin nhắn',
@@ -8102,12 +8108,12 @@ Các bản gốc và tóm tắt của bạn vẫn sẽ xuất hiện trong lịc
 	'wall-topic-edit' => 'Sửa đổi chủ đề',
 	'wall-topic-edit-save' => 'Lưu',
 	'wall-topic-edit-cancel' => 'Hủy bỏ',
-);
+];
 
 /** Walloon (walon)
  * @author Srtxg
  */
-$messages['wa'] = array(
+$messages['wa'] = [
 	'wall-no-title' => "Pont d' tite",
 	'wall-message-loadmore' => 'Vey {{PLURAL:$1|li response|totes les $1 responses}}', # Fuzzy
 	'wall-message-wall' => 'Meur di messaedjes',
@@ -8195,14 +8201,14 @@ Li messaedje d' oridjinne eyet vosse rascourti seront todi veyåves dins l' istw
 	'wall-history-rail-block' => 'bloker',
 	'wall-history-action-view' => 'vey',
 	'wall-history-action-restore' => 'rapexhî',
-);
+];
 
 /** Yiddish (ייִדיש)
  * @author פוילישער
  */
-$messages['yi'] = array(
+$messages['yi'] = [
 	'wall-recentchanges-edit' => 'רעדאקטירטע מעלדונג',
-);
+];
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
@@ -8214,7 +8220,7 @@ $messages['yi'] = array(
  * @author Yfdyh000
  * @author 乌拉跨氪
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'wall-no-title' => '无标题',
 	'wall-message-loadmore' => '查看<span class="count">{{PLURAL:$1|$1条回复|全部$1条回复}}</span>',
 	'wall-message-wall' => '信息墙',
@@ -8462,10 +8468,10 @@ $messages['zh-hans'] = array(
 	'wall-topic-edit' => '编辑主题',
 	'wall-topic-edit-save' => '保存',
 	'wall-topic-edit-cancel' => '取消',
-	'group-threadmoderator' => '版主',
-	'group-threadmoderator-member' => '版主',
+	'group-threadmoderator' => '话题版主',
+	'group-threadmoderator-member' => '话题版主',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
-);
+];
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
@@ -8474,7 +8480,7 @@ $messages['zh-hans'] = array(
  * @author Liuxinyu970226
  * @author Macofe
  */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'wall-no-title' => '無標題',
 	'wall-message-loadmore' => '查看<span class="count">{{PLURAL:$1|$1條回覆|全部$1條回覆}}</span>',
 	'wall-message-wall' => '訊息牆',
@@ -8720,4 +8726,6 @@ $messages['zh-hant'] = array(
 	'wall-topic-edit' => '編輯主題',
 	'wall-topic-edit-save' => '儲存',
 	'wall-topic-edit-cancel' => '取消',
-);
+	'group-threadmoderator' => '話題版主',
+	'group-threadmoderator-member' => '話題版主',
+];

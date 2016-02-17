@@ -84,9 +84,18 @@ class Http {
 				'backendTimeMS' => intval( 1000 * $backendTime),
 			];
 			if ( !$isOk ) {
-				$params[ 'statusMessage' ] = $status->getMessage();
+				$params[ 'responseHeaders' ] = $req->getResponseHeaders();
+				$params[ 'reqStatus' ] = $status;
+				$params[ 'exception' ] = new Exception( $url, $req->getStatus() );
+				$level = 'error';
+				$message = "HTTP request failed - {$caller}";
 			}
-			\Wikia\Logger\WikiaLogger::instance()->debug( 'Http request' , $params );
+			else {
+				$level = 'debug';
+				$message = 'Http request';
+			}
+
+			\Wikia\Logger\WikiaLogger::instance()->$level( $message, $params );
 		}
 
 		// Wikia change - @author: nAndy - begin
@@ -472,7 +481,8 @@ class MWHttpRequest {
 		}
 
 		if ( is_object( $wgTitle ) && !isset( $this->reqHeaders['Referer'] ) ) {
-			$this->setReferer( wfExpandUrl( $wgTitle->getFullURL(), PROTO_CURRENT ) );
+			$referer = ( $wgTitle->isLocal() ) ? $wgTitle->getFullURL() : $_SERVER['REQUEST_URI'];
+			$this->setReferer( wfExpandUrl( $referer, PROTO_CURRENT ) );
 		}
 
 		if ( !$this->noProxy ) {
@@ -490,6 +500,8 @@ class MWHttpRequest {
 		// @author macbre
 		// pass Request ID to internal requests
 		$this->setHeader( Wikia\Util\RequestId::REQUEST_HEADER_NAME, Wikia\Util\RequestId::instance()->getRequestId() );
+		// PLATFORM-1473: pass X-Wikia-Internal-Request
+		$this->setHeader( WebRequest::WIKIA_INTERNAL_REQUEST_HEADER, 'mediawiki' );
 
 		// Wikia change - begin - @author: wladek
 		// Append extra headers for internal requests, currently only X-Request-Origin-Host

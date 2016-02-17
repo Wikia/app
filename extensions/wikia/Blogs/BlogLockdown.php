@@ -87,7 +87,8 @@ class BlogLockdown {
 				break;
 
 			case "delete":
-				if ( $user->isAllowed( 'delete' ) ) {
+			case "undelete":
+				if ( $user->isAllowed( $action ) ) {
 					$result = true;
 					$return = true;
 				}

@@ -31,7 +31,6 @@ if ( !isset( $wgVersion ) ) {
 
 // Set various default paths sensibly...
 if ( $wgScript === false ) $wgScript = "$wgScriptPath/index$wgScriptExtension";
-if ( $wgRedirectScript === false ) $wgRedirectScript = "$wgScriptPath/redirect$wgScriptExtension";
 if ( $wgLoadScript === false ) $wgLoadScript = "$wgScriptPath/load$wgScriptExtension";
 
 if ( $wgArticlePath === false ) {
@@ -50,7 +49,7 @@ if ( !empty($wgActionPaths) && !isset($wgActionPaths['view']) ) {
 
 if ( !empty($wgActionPaths) && !isset($wgActionPaths['view']) ) {
 	# 'view' is assumed the default action path everywhere in the code
-	# but is rarely filled in $wgActionPaths 
+	# but is rarely filled in $wgActionPaths
 	$wgActionPaths['view'] = $wgArticlePath ;
 }
 
@@ -201,7 +200,7 @@ if ( $wgUseInstantCommons ) {
 		'hashLevels'             => 2,
 		'fetchDescription'       => true,
 		'descriptionCacheExpiry' => 43200,
-		'apiThumbCacheExpiry'    => 86400,
+		'apiThumbCacheExpiry'    => 0, # PLATFORM-1735 (do not try to fetch thumbs and store them on our DFS, serve them from Wikimedia Commons)
 	);
 }
 /*
@@ -239,10 +238,6 @@ if ( $wgRCFilterByAge ) {
 	}
 }
 
-if ( $wgSkipSkin ) {
-	$wgSkipSkins[] = $wgSkipSkin;
-}
-
 # Set default shared prefix
 if ( $wgSharedPrefix === false ) {
 	$wgSharedPrefix = $wgDBprefix;
@@ -266,6 +261,15 @@ $wgUseEnotif = $wgEnotifUserTalk || $wgEnotifWatchlist;
 if ( $wgMetaNamespace === false ) {
 	$wgMetaNamespace = str_replace( ' ', '_', $wgSitename );
 }
+
+// Ensure the minimum chunk size is less than PHP upload limits or the maximum
+// upload size.
+$wgMinUploadChunkSize = min(
+	$wgMinUploadChunkSize,
+	$wgMaxUploadSize,
+	wfShorthandToInteger( ini_get( 'upload_max_filesize' ), 1e100 ),
+	wfShorthandToInteger( ini_get( 'post_max_size' ), 1e100) - 1024 # Leave room for other parameters
+);
 
 /**
  * Definitions of the NS_ constants are in Defines.php
@@ -389,6 +393,16 @@ if ( !defined( 'MW_COMPILED' ) ) {
 	wfProfileOut( $fname . '-includes' );
 }
 
+// T48998: Bail out early if $wgArticlePath is non-absolute
+if ( !preg_match( '/^(https?:\/\/|\/)/', $wgArticlePath ) ) {
+	throw new FatalError(
+		'If you use a relative URL for $wgArticlePath, it must start ' .
+		'with a slash (<code>/</code>).<br><br>See ' .
+		'<a href="https://www.mediawiki.org/wiki/Manual:$wgArticlePath">' .
+		'https://www.mediawiki.org/wiki/Manual:$wgArticlePath</a>.'
+	);
+}
+
 # Now that GlobalFunctions is loaded, set the default for $wgCanonicalServer
 if ( $wgCanonicalServer === false ) {
 	$wgCanonicalServer = wfExpandUrl( $wgServer, PROTO_HTTP );
@@ -435,6 +449,8 @@ if ( $wgCommandLineMode ) {
 	}
 	wfDebug( "$debug\n" );
 }
+
+wfRunHooks('WebRequestInitialized', [ $wgRequest ] ); // Wikia change
 
 wfProfileOut( $fname . '-misc1' );
 wfProfileIn( $fname . '-memcached' );

@@ -161,29 +161,12 @@ $messages = array(
 'navigation'    => 'ਨੇਵੀਗੇਸ਼ਨ',
 'and'           => '&#32;ਅਤੇ',
 
-# Cologne Blue skin
 'qbfind'         => 'ਖੋਜ',
 'qbbrowse'       => 'ਬਰਾਊਜ਼',
-'qbedit'         => 'ਸੋਧ',
 'qbpageoptions'  => 'ਇਹ ਪੇਜ',
 'qbpageinfo'     => 'ਭਾਗ',
-'qbmyoptions'    => 'ਮੇਰੇ ਪੇਜ',
-'qbspecialpages' => 'ਖਾਸ ਪੇਜ',
 'faq'            => 'ਸਵਾਲ-ਜਵਾਬ',
-'faqpage'        => 'Project:ਸਵਾਲ-ਜਵਾਬ',
 
-# Vector skin
-'vector-action-addsection' => 'ਮਜ਼ਮੂਨ ਜੋੜੋ',
-'vector-action-delete'     => 'ਹਟਾਓ',
-'vector-action-move'       => 'ਭੇਜੋ',
-'vector-action-protect'    => 'ਸੁਰੱਖਿਅਤ',
-'vector-action-undelete'   => 'ਹਟਾਉਣਾ ਵਾਪਸ',
-'vector-action-unprotect'  => 'ਸੁਰੱਖਿਆ ਬਦਲੋ',
-'vector-view-create'       => 'ਬਣਾਓ',
-'vector-view-edit'         => 'ਸੋਧ',
-'vector-view-history'      => 'ਅਤੀਤ ਵੇਖੋ',
-'vector-view-view'         => 'ਪੜ੍ਹੋ',
-'vector-view-viewsource'   => 'ਸਰੋਤ ਵੇਖੋ',
 'actions'                  => 'ਕਾਰਵਾਈ',
 'namespaces'               => 'ਨਾਂ-ਥਾਂ:',
 'variants'                 => 'ਬਦਲ',
@@ -206,7 +189,6 @@ $messages = array(
 'edit'              => 'ਬਦਲੋ',
 'create'            => 'ਬਣਾਓ',
 'editthispage'      => 'ਇਹ ਪੇਜ ਸੋਧੋ',
-'create-this-page'  => 'ਇਹ ਸਫ਼ਾ ਬਣਾਓ',
 'delete'            => 'ਹਟਾਓ',
 'deletethispage'    => 'ਇਹ ਪੇਜ ਹਟਾਓ',
 'undelete_short'    => 'ਅਣ-ਹਟਾਓ {{PLURAL:$1|one edit|$1 edits}}',
@@ -220,19 +202,9 @@ $messages = array(
 'talkpagelinktext'  => 'ਗੱਲਬਾਤ',
 'specialpage'       => 'ਖਾਸ ਪੇਜ',
 'personaltools'     => 'ਨਿੱਜੀ ਟੂਲ',
-'postcomment'       => 'ਨਵਾਂ ਭਾਗ',
-'articlepage'       => 'ਸਮੱਗਰੀ ਪੇਜ ਵੇਖੋ',
 'talk'              => 'ਚਰਚਾ',
 'views'             => 'ਵੇਖੋ',
 'toolbox'           => 'ਟੂਲਬਾਕਸ',
-'userpage'          => 'ਯੂਜ਼ਰ ਪੇਜ ਵੇਖੋ',
-'projectpage'       => 'ਪਰੋਜੈਕਟ ਪੇਜ ਵੇਖੋ',
-'imagepage'         => 'ਫਾਇਲ ਪੇਜ ਵੇਖੋ',
-'mediawikipage'     => 'ਸੁਨੇਹਾ ਪੇਜ ਵੇਖੋ',
-'templatepage'      => 'ਟੈਪਲੇਟ ਪੇਜ ਵੇਖੋ',
-'viewhelppage'      => 'ਮੱਦਦ ਪੇਜ ਵੇਖੋ',
-'categorypage'      => 'ਕੈਟਾਗਰੀ ਪੇਜ ਵੇਖੋ',
-'viewtalkpage'      => 'ਚਰਚਾ ਵੇਖੋ',
 'otherlanguages'    => 'ਹੋਰ ਭਾਸ਼ਾਵਾਂ ਵਿੱਚ',
 'redirectedfrom'    => '($1 ਤੋਂ ਰੀ-ਡਿਰੈਕਟ)',
 'redirectpagesub'   => 'ਰੀ-ਡਿਰੈਕਟ ਪੇਜ',
@@ -586,9 +558,6 @@ $1 ਘੰਟੇ ਵਿੱਚ। ਨੁਕਸਾਨ ਤੋਂ ਬਚਣ ਲਈ, $
 'powersearch-redir'                => 'ਰੀ-ਡਿਰੈਕਟ ਲਿਸਟ',
 'powersearch-field'                => 'ਇਸ ਲਈ ਖੋਜ',
 
-# Quickbar
-'qbsettings'      => 'ਤੁਰੰਤ ਬਾਰ',
-'qbsettings-none' => 'ਕੋਈ ਨਹੀਂ',
 
 # Preferences page
 'preferences'                 => 'ਮੇਰੀ ਪਸੰਦ',
@@ -1124,11 +1093,7 @@ to upload files.',
 'spamprotectiontitle' => 'Spam ਸੁਰੱਖਿਆ ਫਿਲਟਰ',
 
 # Skin names
-'skinname-standard' => 'ਕਲਾਸਿਕ',
 'skinname-monobook' => 'ਮੋਨੋਬੁੱਕ',
-'skinname-myskin'   => 'ਮੇਰੀਸਕਿਨ',
-'skinname-chick'    => 'ਚੀਚਕ',
-'skinname-simple'   => 'ਸੈਂਪਲ',
 
 # Browsing diffs
 'previousdiff' => '← ਪੁਰਾਣੀ ਸੋਧ',

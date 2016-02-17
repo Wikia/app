@@ -10,7 +10,7 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.sourcePointDetection',
-		kruxEventSent = false,
+		statusTracked = false,
 		detectionInitialized = false,
 		spDetectionTime;
 
@@ -22,14 +22,19 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 	function sendKruxEvent(value) {
 		var eventId = 'KEa0tIof';
 
-		if (kruxEventSent) {
+		if (krux.sendEvent(eventId, {blocking: value})) {
+			log(['sendKruxEvent', eventId, value], 'debug', logGroup);
+		}
+	}
+
+	function trackStatusOnce(value) {
+		if (statusTracked) {
 			return;
 		}
 
-		if (krux.sendEvent(eventId, {blocking: value})) {
-			log(['sendKruxEvent', eventId, value], 'debug', logGroup);
-			kruxEventSent = true;
-		}
+		statusTracked = true;
+		sendKruxEvent(value);
+		spDetectionTime.measureDiff({}, 'end').track();
 	}
 
 	function initDetection() {
@@ -55,14 +60,11 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 		detectionScript.src = context.opts.sourcePointDetectionUrl;
 		detectionScript.setAttribute('data-client-id', getClientId());
 
-		// @TODO Refactor event listeners after ADEN-2452
 		doc.addEventListener('sp.blocking', function () {
-			sendKruxEvent('yes');
-			spDetectionTime.measureDiff({}, 'end').track();
+			trackStatusOnce('yes');
 		});
 		doc.addEventListener('sp.not_blocking', function () {
-			sendKruxEvent('no');
-			spDetectionTime.measureDiff({}, 'end').track();
+			trackStatusOnce('no');
 		});
 
 		log('Appending detection script to head', 'debug', logGroup);

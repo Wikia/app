@@ -31,7 +31,7 @@ function compareMetadata( $oldMeta, $newMeta ) {
  * @param $ingester
  * @param array $video
  */
-function updateRemoteAssetUrls( $ingester, $video ) {
+function updateRemoteAssetUrls( $ingester, $source, $video ) {
 	global $dryRun, $skipped, $failed;
 
 	if ( empty( $video['metadata']['sourceid'] ) ) {
@@ -40,8 +40,20 @@ function updateRemoteAssetUrls( $ingester, $video ) {
 		return;
 	}
 
+	if ( $video['metadata']['source'] != $source ) {
+		echo "\tSKIP: $video[name] (Id: $video[embed_code]) - Invalid source (source=".$video['metadata']['source'].").\n";
+		$skipped++;
+		return;
+	}
+
 	if ( !empty( $video['metadata']['updateAssetUrls'] ) && $video['metadata']['updateAssetUrls'] == 9 ) {
 		echo "\tSKIP: $video[name] (Id: $video[embed_code]) - Already updated.\n";
+		$skipped++;
+		return;
+	}
+
+	if ( $video['asset_type'] != 'remote_asset' ) {
+		echo "\tSKIP: $video[name] (Id: $video[embed_code]) - Invalid asset_type (source=$video[asset_type]).\n";
 		$skipped++;
 		return;
 	}
@@ -105,15 +117,12 @@ if ( !in_array( $source, $sources ) ) {
 	die( "Invalid source.\n" );
 }
 
-$apiPageSize = 100;
+$apiPageSize = 500;
 if ( !empty( $limit ) && $limit < $apiPageSize ) {
 	$apiPageSize = $limit;
 }
 
 $ingester = FeedIngesterFactory::getIngester( $source );
-
-$extra[] = "metadata.source = '$source'";
-$extra[] = "asset_type = 'remote_asset'";
 
 $nextPage = '';
 $page = 1;
@@ -152,7 +161,7 @@ do {
 			echo "\t\t:: $line\n";
 		}
 
-		updateRemoteAssetUrls( $ingester, $video );
+		updateRemoteAssetUrls( $ingester, $source, $video );
 	}
 	$page++;
 } while ( !empty( $nextPage ) && $total < $limit );

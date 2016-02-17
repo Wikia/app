@@ -619,17 +619,19 @@ function getMenuHelper( $name, $limit = 7 ) {
 	}
 
 	$name = str_replace( " ", "_", $name );
+	$limit = intval( $limit );
 
-	$dbr =& wfGetDB( DB_SLAVE );
-	$query = "SELECT cl_from FROM categorylinks USE INDEX (cl_from), page_visited USE INDEX (page_visited_cnt_inx) WHERE article_id = cl_from AND cl_to = '" . addslashes( $name ) . "' ORDER BY COUNT DESC LIMIT $limit";
-	$res = $dbr->query( $query );
+	$dbr = wfGetDB( DB_SLAVE );
+	$query = "SELECT cl_from FROM categorylinks USE INDEX (cl_from), page_visited USE INDEX (page_visited_cnt_inx) WHERE article_id = cl_from AND cl_to = " . $dbr->addQuotes( $name ) . " ORDER BY COUNT DESC LIMIT $limit";
+	$res = $dbr->query( $query, __METHOD__ );
 	$result = array();
 	while ( $row = $dbr->fetchObject( $res ) ) {
 		$result[] = $row->cl_from;
 	}
 	if ( count( $result ) < $limit ) {
-		$query = "SELECT cl_from FROM categorylinks WHERE cl_to = '" . addslashes( $name ) . "' " . ( count( $result ) > 0 ? " AND cl_from NOT IN (" . implode( ',', $result ) . ") " : "" ) . " LIMIT " . ( $limit - count( $result ) );
-		$res = $dbr->query( $query );
+		$resultEscaped = $dbr->makeList( $result ); # PLATFORM-1579 - e.g. 'a', 'b', 'c'
+		$query = "SELECT cl_from FROM categorylinks WHERE cl_to = " . $dbr->addQuotes( $name ) . " " . ( count( $result ) > 0 ? " AND cl_from NOT IN (" . $resultEscaped . ") " : "" ) . " LIMIT " . ( $limit - count( $result ) );
+		$res = $dbr->query( $query, __METHOD__ );
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			$result[] = $row->cl_from;
 		}
@@ -977,20 +979,6 @@ function wfMsgWithFallback( $key ) {
 }
 
 /**
- * @deprecated
- *
- * TODO: remove this
- *
- * @param $name module name
- * @param string $action method name
- * @param null $params
- * @return string rendered module's response
- */
-function wfRenderModule( $name, $action = 'Index', $params = null ) {
-	return F::app()->renderView( $name, $action, $params );
-}
-
-/**
  * wfAutomaticReadOnly
  *
  * @author tor
@@ -1094,6 +1082,15 @@ function &wfGetSolidCacheStorage( $bucket = false ) {
 
 /**
  * Set value of wikia article prop list of type is define in
+ *
+ * Note: The query below used to be done using a REPLACE, however
+ * the primary key was removed from the page_wikia_props due to
+ * performance issues (see PLATFORM-1658). Without a primary key
+ * or unique index, a REPLACE becomes just an INSERT so this method
+ * was adding duplicate rows to the table.
+ *
+ * Because of this, we're implementing a manual REPLACE by explicitly
+ * issuing a DELETE query followed by an INSERT.
  */
 function wfSetWikiaPageProp( $type, $pageID, $value, $dbname = '' ) {
 	if ( empty( $dbname ) ) {
@@ -1102,14 +1099,22 @@ function wfSetWikiaPageProp( $type, $pageID, $value, $dbname = '' ) {
 		$db = wfGetDB( DB_MASTER, array(), $dbname );
 	}
 
-	$db->replace(
+	$db->delete(
 		'page_wikia_props',
-		'',
-		array(
+		[
+			'page_id' => $pageID,
+			'propname' => $type
+		],
+		__METHOD__
+	);
+
+	$db->insert(
+		'page_wikia_props',
+		[
 			'page_id'  => $pageID,
 			'propname' => $type,
 			'props'    => wfSerializeProp( $type, $value )
-		),
+		],
 		__METHOD__
 	);
 
@@ -1622,4 +1627,51 @@ function mb_pathinfo( $filepath ) {
 		$ret['filename'] = $m[3];
 	}
 	return $ret;
+}
+
+// Selectively allow cross-site AJAX
+
+/**
+ * Helper function to convert wildcard string into a regex
+ * '*' => '.*?'
+ * '?' => '.'
+ *
+ * @param $search string
+ * @return string
+ */
+function convertWildcard( $search ) {
+	$search = preg_quote( $search, '/' );
+	$search = str_replace(
+		array( '\*', '\?' ),
+		array( '.*?', '.' ),
+		$search
+	);
+	return "/$search/";
+}
+
+/**
+ * Moved core code from api.php to be available in wikia.php
+ *
+ * @see PLATFORM-1790
+ * @author macbre
+ */
+function wfHandleCrossSiteAJAXdomain() {
+	global $wgCrossSiteAJAXdomains, $wgCrossSiteAJAXdomainExceptions;
+
+	if ( $wgCrossSiteAJAXdomains && isset( $_SERVER['HTTP_ORIGIN'] ) ) {
+		$exceptions = array_map( 'convertWildcard', $wgCrossSiteAJAXdomainExceptions );
+		$regexes = array_map( 'convertWildcard', $wgCrossSiteAJAXdomains );
+		foreach ( $regexes as $regex ) {
+			if ( preg_match( $regex, $_SERVER['HTTP_ORIGIN'] ) ) {
+				foreach ( $exceptions as $exc ) { // Check against exceptions
+					if ( preg_match( $exc, $_SERVER['HTTP_ORIGIN'] ) ) {
+						break 2;
+					}
+				}
+				header( "Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}" );
+				header( 'Access-Control-Allow-Credentials: true' );
+				break;
+			}
+		}
+	}
 }

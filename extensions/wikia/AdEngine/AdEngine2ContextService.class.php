@@ -16,6 +16,7 @@ class AdEngine2ContextService {
 			$hubService = new HubService();
 			$adPageTypeService = new AdEngine2PageTypeService();
 			$wikiaPageType = new WikiaPageType();
+			$pageType = $wikiaPageType->getPageType();
 
 			$sevenOneMediaCombinedUrl = null;
 			if ( !empty( $wg->AdDriverUseSevenOneMedia ) ) {
@@ -28,10 +29,10 @@ class AdEngine2ContextService {
 				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
 			}
 
-			$sourcePointUrl = null;
-			$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sourcepoint.detection'], 'scripts' );
+			$sourcePointRecoveryUrl = null;
+			$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sp.detection'], 'scripts' );
 			if ( $skinName === 'oasis' ) {
-				$sourcePointUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sourcepoint'], 'scripts' );
+				$sourcePointRecoveryUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sp.recovery'], 'scripts' );
 			}
 
 			$langCode = $title->getPageLanguage()->getCode();
@@ -52,8 +53,8 @@ class AdEngine2ContextService {
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
 					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
-					'sourcePointUrl' => $sourcePointUrl,
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
+					'sourcePointRecoveryUrl' => $sourcePointRecoveryUrl,
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => $wg->EnableKruxTargeting,
@@ -63,7 +64,7 @@ class AdEngine2ContextService {
 					'pageIsArticle' => !!$title->getArticleId(),
 					'pageIsHub' => $wikiaPageType->isWikiaHub(),
 					'pageName' => $title->getPrefixedDBKey(),
-					'pageType' => $wikiaPageType->getPageType(),
+					'pageType' => $pageType,
 					'sevenOneMediaSub2Site' => $wg->AdDriverSevenOneMediaOverrideSub2Site,
 					'skin' => $skinName,
 					'wikiCategory' => $wikiFactoryHub->getCategoryShort( $wg->CityId ),
@@ -81,7 +82,8 @@ class AdEngine2ContextService {
 					'monetizationServiceAds' => $monetizationServiceAds,
 					'sevenOneMedia' => $wg->AdDriverUseSevenOneMedia,
 					'sevenOneMediaCombinedUrl' => $sevenOneMediaCombinedUrl,
-					'taboola' => $wg->AdDriverUseTaboola,
+					'taboola' => $wg->AdDriverUseTaboola && $pageType === 'article',
+					'evolve2' => $wg->AdDriverUseEvolve2,
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
 					'exitstitial' => $wg->EnableOutboundScreenExt,

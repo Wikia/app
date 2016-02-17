@@ -14,11 +14,27 @@ class TransactionClassifier {
 	// copied from extensions/wikia/Wall/WallNamespaces.php to use a constant below
 	// while not being dependant on Wall extension inclusion
 	const NS_USER_WALL = 1200;
+	const NS_USER_WALL_MESSAGE = 1201;
+	const NS_USER_WALL_MESSAGE_GREETING = 1202;
+
+	// copied from extensions/wikia/Forum/ForumNamespaces.php to use a constant below
+	// while not being dependant on Forum extension inclusion
+	const NS_WIKIA_FORUM_BOARD = 2000;
+	const NS_WIKIA_FORUM_BOARD_THREAD = 2001;
+	const NS_WIKIA_FORUM_TOPIC_BOARD = 2002;
+
+	// copied from extensions/wikia/Blogs/Blogs.php to use a constant below
+	// while not being dependant on Blogs extension inclusion
+	const NS_BLOG_ARTICLE = 500;
+	const NS_BLOG_ARTICLE_TALK = 501;
+	const NS_BLOG_LISTING = 502;
+	const NS_BLOG_LISTING_TALK = 503;
 
 	protected static $FILTER_ARTICLE_ACTIONS = array(
 		'view',
 		'edit',
 		'submit',
+		'diff',
 	);
 
 	protected static $FILTER_SPECIAL_PAGES = array(
@@ -32,6 +48,7 @@ class TransactionClassifier {
 		'Chat',
 		'Newimages',
 		'Videos',
+		'Contributions',
 	);
 
 	protected static $FILTER_AJAX_FUNCTIONS = array(
@@ -50,13 +67,29 @@ class TransactionClassifier {
 		'opensearch',
 		'parse',
 		'lyrics',
+		'visualeditor',
+		'visualeditoredit',
 	);
 
 	protected static $MAP_ARTICLE_NAMESPACES = array(
 		NS_MAIN => 'main',
+		NS_USER => 'user',
+		NS_USER_TALK => 'user_talk',
 		NS_FILE => 'file',
 		NS_CATEGORY => 'category',
+
 		self::NS_USER_WALL => 'message_wall',
+		self::NS_USER_WALL_MESSAGE => 'message_wall',
+		self::NS_USER_WALL_MESSAGE_GREETING => 'message_wall',
+
+		self::NS_WIKIA_FORUM_BOARD => 'forum',
+		self::NS_WIKIA_FORUM_BOARD_THREAD => 'forum',
+		self::NS_WIKIA_FORUM_TOPIC_BOARD => 'forum',
+
+		self::NS_BLOG_ARTICLE => 'blog',
+		self::NS_BLOG_ARTICLE_TALK => 'blog',
+		self::NS_BLOG_LISTING => 'blog',
+		self::NS_BLOG_LISTING_TALK => 'blog',
 	);
 
 	protected static $MAP_PARSER_CACHED_USED = array(
@@ -134,6 +167,11 @@ class TransactionClassifier {
 			// api call - api.php
 			case Transaction::ENTRY_POINT_API:
 				$this->addByList( Transaction::PARAM_API_ACTION, self::$FILTER_API_CALLS );
+				$this->add( Transaction::PARAM_API_LIST );
+				break;
+			// MediaWiki maintenance scripts
+			case Transaction::ENTRY_POINT_MAINTENANCE:
+				$this->add( Transaction::PARAM_MAINTENANCE_SCRIPT );
 				break;
 		}
 	}

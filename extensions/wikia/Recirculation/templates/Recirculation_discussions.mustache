@@ -1,0 +1,26 @@
+<section class="module discussion-module">
+  <h2 class="discussion-title">{{ title }}</h2>
+  <a class="discussion-link" href="{{ discussionsUrl }}">{{ linkText }} {{> arrow}}</a>
+  <ul class="discussion-threads">
+    {{#posts}}
+      <li class="discussion-thread" data-link="{{ link }}">
+        <div class="discussion-author">
+          <img src="{{authorAvatar}}" class="discussion-author-avatar" />
+          <h4>{{author}}</h4>
+          <span class="subtext">&#183; <time class="discussion-timestamp" datetime="{{createdAt}}"></time></span>
+        </div>
+        <p class="discussion-content">{{content}}</p>
+        <div class="discussion-meta">
+          <div class="discussion-upvotes-container">
+              {{> upvotes}}
+              <span class="subtext">{{upvoteCount}}</span>
+          </div>
+          <div class="discussion-comments-container">
+            {{> comments}}
+            <span class="subtext">{{commentCount}}</span>
+          </div>
+        </div>
+      </li>
+    {{/posts}}
+  </ul>
+</section>

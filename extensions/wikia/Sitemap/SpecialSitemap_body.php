@@ -20,7 +20,7 @@ class SitemapPage extends UnlistedSpecialPage {
 
 	const BLOBS_TABLE_NAME = 'sitemap_blobs';
 	private $mType, $mTitle, $mNamespaces, $mNamespace, $mPriorities,
-		$mSizeLimit, $mPage, $mGoogleCode;
+		$mSizeLimit, $mPage;
 
 	/**
 	 * @var MediaQueryService
@@ -88,29 +88,24 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		$this->parseType();
 
-		if( $this->mType == "google" ) {
-			$this->verifyGoogle();
+		// cache on both CDN and client
+		header( "Cache-Control: s-maxage=86400", true );
+		header( "X-Pass-Cache-Control: public, max-age=86400", true );
+		header( "X-Robots-Tag: noindex" );
+
+		$this->mTitle = SpecialPage::getTitleFor( "Sitemap", $subpage );
+		$this->getNamespacesList();
+		if ( $this->mType == "namespace" ) {
+			$wgOut->disable();
+
+			header( "Content-type: application/x-gzip" );
+			print $this->generateNamespace();
+		}
+		else if($subpage == 'sitemap-index.xml') {
+			$this->generateIndex();
 		}
 		else {
-			// cache on both CDN and client
-			header( "Cache-Control: s-maxage=86400", true );
-			header( "X-Pass-Cache-Control: public, max-age=86400", true );
-			header( "X-Robots-Tag: noindex" );
-
-			$this->mTitle = SpecialPage::getTitleFor( "Sitemap", $subpage );
-			$this->getNamespacesList();
-			if ( $this->mType == "namespace" ) {
-				$wgOut->disable();
-
-				header( "Content-type: application/x-gzip" );
-				print $this->generateNamespace();
-			}
-			else if($subpage == 'sitemap-index.xml') {
-				$this->generateIndex();
-			}
-			else {
-				$this->print404();
-			}
+			$this->print404();
 		}
 	}
 
@@ -165,30 +160,6 @@ class SitemapPage extends UnlistedSpecialPage {
 	}
 
 	/**
-	 * compare provided hex with local configuration
-	 *
-	 * @access private
-	 */
-	private function verifyGoogle() {
-		global $wgGoogleSiteVerification, $wgGoogleSiteVerificationAlwaysValid, $wgOut;
-
-		$wgOut->disable();
-
-		$out = "";
-		if( $wgGoogleSiteVerification == $this->mGoogleCode ||
-			$wgGoogleSiteVerificationAlwaysValid ) {
-			header( "Cache-Control: public, max-age=3600", true );
-			$out .= "google-site-verification: google{$this->mGoogleCode}.html";
-		}
-		else {
-			header( "Cache-Control: no-cache" );
-			header( "HTTP/1.0 404 Not Found" );
-			$out .= "go away";
-		}
-		print $out;
-	}
-
-	/**
 	 * parse type and set mType and mNamespace
 	 */
 	private function parseType() {
@@ -200,10 +171,6 @@ class SitemapPage extends UnlistedSpecialPage {
 			$this->mType = "namespace";
 			$this->mNamespace = $match[ 1 ];
 			$this->mPage = $match[ 2 ];
-		}
-		elseif( preg_match( "/^google([0-9a-f]{16}).html$/", $this->mType, $match ) ) {
-			$this->mType = "google";
-			$this->mGoogleCode = $match[ 1 ];
 		}
 		else {
 			$this->mType = "index";
@@ -228,7 +195,6 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		$out = "";
 		$out .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-		$out .= sprintf( "<!-- generated on fly by %s -->\n", $this->mTitle->getFullURL() );
 		$out .= "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
 
 		header( "Content-type: application/xml; charset=UTF-8" );
@@ -290,7 +256,6 @@ class SitemapPage extends UnlistedSpecialPage {
 		$dbr = wfGetDB( DB_SLAVE, "vslow" );
 
 		$out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-		$out .= sprintf( "<!-- generated on the fly by %s -->\n", $this->mTitle->getFullURL() );
 
 		$scope = array( 'page_namespace' => $this->mNamespace );
 		$index = is_array( $sitemapIndex ) ? $sitemapIndex : $wgMemc->get( wfMemcKey( "sitemap-index") );
@@ -313,7 +278,10 @@ class SitemapPage extends UnlistedSpecialPage {
 			),
 			$scope,
 			__METHOD__,
-			array( "ORDER BY" => "page_id" )
+			[
+				"ORDER BY" => "page_id",
+				"USE INDEX" => "PRIMARY", # PLATFORM-1286
+			]
 		);
 
 		$includeVideo = (bool) F::app()->wg->EnableVideoSitemaps;

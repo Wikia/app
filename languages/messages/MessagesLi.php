@@ -297,30 +297,12 @@ $messages = array(
 'navigation'    => 'Navigatie',
 'and'           => '&#32;en',
 
-# Cologne Blue skin
 'qbfind'         => 'Zeuke',
 'qbbrowse'       => 'Bladere',
-'qbedit'         => 'Bewirke',
 'qbpageoptions'  => 'Pazjena-opties',
 'qbpageinfo'     => 'Pazjena-informatie',
-'qbmyoptions'    => 'mien opties',
-'qbspecialpages' => "Speciaal pagina's",
 'faq'            => 'FAQ (väölgesjtèlde vraoge)',
-'faqpage'        => 'Project:Väölgestjèlde vraoge',
 
-# Vector skin
-'vector-action-addsection'       => 'Voog köpke toe',
-'vector-action-delete'           => 'Ewegsjaffe',
-'vector-action-move'             => 'Verplaats',
-'vector-action-protect'          => 'Besjirm',
-'vector-action-undelete'         => 'Plaats trök',
-'vector-action-unprotect'        => 'Anger beveiliging',
-'vector-simplesearch-preference' => "Sjakel nuuj zeuksuggesties in (allein veur 't vectoroeterlik)",
-'vector-view-create'             => 'Maak aan',
-'vector-view-edit'               => 'Bewirk',
-'vector-view-history'            => 'Bekiek de gesjiedenis',
-'vector-view-view'               => 'Laes',
-'vector-view-viewsource'         => 'Bekiek bróntèks',
 'actions'                        => 'Hanjeling',
 'namespaces'                     => 'Naamruumdes',
 'variants'                       => 'Anger vorme',
@@ -343,7 +325,6 @@ $messages = array(
 'edit'              => 'Bewèrk',
 'create'            => 'Aanmake',
 'editthispage'      => 'Pagina bewirke',
-'create-this-page'  => 'Dees pagina aanmake',
 'delete'            => 'Wisse',
 'deletethispage'    => 'Wisse',
 'undelete_short'    => '$1 {{PLURAL:$1|bewirking|bewirkinge}} trökzètte',
@@ -358,19 +339,9 @@ $messages = array(
 'talkpagelinktext'  => 'Euverlègk',
 'specialpage'       => 'Speciaal pagina',
 'personaltools'     => 'Persuunlike hulpmiddele',
-'postcomment'       => 'Nuuj sectie',
-'articlepage'       => 'Artikel',
 'talk'              => 'Euverlègk',
 'views'             => 'Weergave',
 'toolbox'           => 'Gereidsjapskis',
-'userpage'          => 'gebroekerspazjena',
-'projectpage'       => 'Projekpazjena tuine',
-'imagepage'         => 'Besjtandjspagina tuine',
-'mediawikipage'     => 'Berichpazjena tuine',
-'templatepage'      => 'Sjabloonpazjena tuine',
-'viewhelppage'      => 'Hulppazjena tuine',
-'categorypage'      => 'Categoriepazjena tuine',
-'viewtalkpage'      => 'Euverlèk tuine',
 'otherlanguages'    => 'Anger tale',
 'redirectedfrom'    => '(Doorverweze van $1)',
 'redirectpagesub'   => 'Doorverwiespazjena',
@@ -1153,14 +1124,6 @@ Doe kans ouch 'n naamruumde es veurvoegsel gebroeke.",
 Zoelang as de servers nog neet sjterk genog zunt kins e zeuke bie Google.
 Mèrk op dat hun indexe van {{SITENAME}} content e bietje gedatierd kint zien.',
 
-# Quickbar
-'qbsettings'                => 'Menubalkinsjtèllinge',
-'qbsettings-none'           => 'Oetgesjakeld',
-'qbsettings-fixedleft'      => 'Links vas',
-'qbsettings-fixedright'     => 'Rechts vas',
-'qbsettings-floatingleft'   => 'Links zjwevend',
-'qbsettings-floatingright'  => 'Rechs zjwevend',
-'qbsettings-directionality' => 'Vas, aafhenkelik vanne sjrifrichting van dien sjpraok',
 
 # Preferences page
 'preferences'                   => 'Veurkäöre',
@@ -2811,9 +2774,6 @@ Meistal wörd dit door 'ne zwarte externe link veroorzaak.",
 'pageinfo-viewsperedit'     => 'Weergave per bewerking',
 
 # Skin names
-'skinname-standard'    => 'Standaard',
-'skinname-nostalgia'   => 'Nostalgie',
-'skinname-cologneblue' => 'Keuls blauw',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Markeer es gecontroleerd',

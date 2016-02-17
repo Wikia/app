@@ -1,14 +1,17 @@
+/*global define, require*/
 define('ext.wikia.adEngine.recovery.helper', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.document',
 	'wikia.lazyqueue',
 	'wikia.log',
+	'wikia.window',
 	require.optional('ext.wikia.adEngine.provider.gpt.sourcePointTag')
 ], function (
 	adContext,
 	doc,
 	lazyQueue,
 	log,
+	win,
 	SourcePointTag
 ) {
 	'use strict';
@@ -41,11 +44,11 @@ define('ext.wikia.adEngine.recovery.helper', [
 	}
 
 	function isRecoveryEnabled() {
-		return !!(context.opts.sourcePoint && SourcePointTag);
+		return !!(context.opts.sourcePointRecovery && SourcePointTag);
 	}
 
 	function isBlocking() {
-		return !!(window.ads && window.ads.runtime.sp.blocking);
+		return !!(win.ads && win.ads.runtime.sp.blocking);
 	}
 
 	function isRecoverable(slotName, recoverableSlots) {
@@ -59,7 +62,7 @@ define('ext.wikia.adEngine.recovery.helper', [
 
 		log(['Starting recovery', slotsToRecover], 'debug', logGroup);
 		while (slotsToRecover.length) {
-			window.ads.runtime.sp.slots.push([slotsToRecover.shift()]);
+			win.ads.runtime.sp.slots.push([slotsToRecover.shift()]);
 		}
 	}
 

@@ -11,7 +11,7 @@ define('ext.wikia.adEngine.provider.turtle', [
 			HOME_TOP_LEADERBOARD:    {size: '728x90,970x250,970x90'},
 			HOME_TOP_RIGHT_BOXAD:    {size: '300x250,300x600'},
 			INVISIBLE_SKIN:          {size: '1000x1000,1x1'},
-			LEFT_SKYSCRAPER_2:       {size: '160x600'},
+			LEFT_SKYSCRAPER_2:       {size: '160x600,300x600'},
 			TOP_LEADERBOARD:         {size: '728x90,970x250,970x90'},
 			TOP_RIGHT_BOXAD:         {size: '300x250,300x600'},
 			TURTLE_FLUSH:            {flushOnly: true}
@@ -25,31 +25,25 @@ define('ext.wikia.adEngine.provider.turtle', [
 		return ret;
 	}
 
-	function fillInSlot(slotName, slotElement, success, hop) {
-		log(['fillInSlot', slotName, slotElement, success, hop], 'debug', logGroup);
+	function fillInSlot(slot) {
+		log(['fillInSlot', slot.name], 'debug', logGroup);
 
+		slot.pre('success', function () {
+			slotTweaker.removeDefaultHeight(slot.name);
+			slotTweaker.removeTopButtonIfNeeded(slot.name);
+			slotTweaker.adjustLeaderboardSize(slot.name);
+		});
 		gptHelper.pushAd(
-			slotName,
-			slotElement,
-			'/98544404/Wikia/Nordics_RoN/' + slotName,
-			slotMap[slotName],
+			slot,
+			'/98544404/Wikia/Nordics_RoN/' + slot.name,
+			slotMap[slot.name],
 			{
-				success: function (adInfo) {
-					// Success
-					// TODO: find a better place for operation below
-					slotTweaker.removeDefaultHeight(slotName);
-					slotTweaker.removeTopButtonIfNeeded(slotName);
-					slotTweaker.adjustLeaderboardSize(slotName);
-
-					success(adInfo);
-				},
-				error: hop,
 				forcedAdType: 'turtle',
 				sraEnabled: true
 			}
 		);
 
-		log(['fillInSlot', slotName, slotElement, success, hop, 'done'], 'debug', logGroup);
+		log(['fillInSlot', slot, 'done'], 'debug', logGroup);
 	}
 
 	return {

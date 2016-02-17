@@ -120,22 +120,17 @@ class ApiQueryUsers extends ApiQueryBase {
 
 		if ( count( $goodNames ) ) {
 			$this->addTables( 'user' );
-			$this->addFields( '*' );
+			$this->addFields( 'user_id' );
 			$this->addWhereFld( 'user_name', $goodNames );
 
-			if ( isset( $this->prop['groups'] ) || isset( $this->prop['rights'] ) ) {
-				$this->addTables( 'user_groups' );
-				$this->addJoinConds( array( 'user_groups' => array( 'LEFT JOIN', 'ug_user=user_id' ) ) );
-				$this->addFields( 'ug_group' );
-			}
-
-			$this->showHiddenUsersAddBlockInfo( isset( $this->prop['blockinfo'] ) );
+			// Wikia: there's no point in querying a per-cluster user table for IP blocks
+			#$this->showHiddenUsersAddBlockInfo( isset( $this->prop['blockinfo'] ) );
 
 			$data = array();
 			$res = $this->select( __METHOD__ );
 
 			foreach ( $res as $row ) {
-				$user = User::newFromRow( $row );
+				$user = User::newFromId( $row->user_id );
 				$name = $user->getName();
 
 				$data[$name]['userid'] = $user->getId();
@@ -150,14 +145,7 @@ class ApiQueryUsers extends ApiQueryBase {
 				}
 
 				if ( isset( $this->prop['groups'] ) ) {
-					if ( !isset( $data[$name]['groups'] ) ) {
-						$data[$name]['groups'] = self::getAutoGroups( $user );
-					}
-
-					if ( !is_null( $row->ug_group ) ) {
-						// This row contains only one group, others will be added from other rows
-						$data[$name]['groups'][] = $row->ug_group;
-					}
+					$data[$name]['groups'] = $user->getEffectiveGroups();
 				}
 
 				if ( isset( $this->prop['implicitgroups'] ) && !isset( $data[$name]['implicitgroups'] ) ) {
@@ -165,22 +153,19 @@ class ApiQueryUsers extends ApiQueryBase {
 				}
 
 				if ( isset( $this->prop['rights'] ) ) {
-					if ( !isset( $data[$name]['rights'] ) ) {
-						$data[$name]['rights'] = User::getGroupPermissions( $user->getAutomaticGroups() );
-					}
-
-					if ( !is_null( $row->ug_group ) ) {
-						$data[$name]['rights'] = array_unique( array_merge( $data[$name]['rights'],
-							User::getGroupPermissions( array( $row->ug_group ) ) ) );
-					}
+					$data[$name]['rights'] = $user->getRights();
 				}
 				if ( $row->ipb_deleted ) {
 					$data[$name]['hidden'] = '';
 				}
-				if ( isset( $this->prop['blockinfo'] ) && !is_null( $row->ipb_by_text ) ) {
-					$data[$name]['blockedby'] = $row->ipb_by_text;
-					$data[$name]['blockreason'] = $row->ipb_reason;
-					$data[$name]['blockexpiry'] = $row->ipb_expiry;
+				/* Wikia change begin - SUS-92 */
+				if ( isset( $this->prop['blockinfo'] ) && $user->isBlocked( true, false ) ) {
+					$blockInfo = $user->getBlock( true, false );
+				/* Wikia change end */
+					
+					$data[$name]['blockedby'] = $blockInfo->getByName();
+					$data[$name]['blockreason'] = $blockInfo->mReason;
+					$data[$name]['blockexpiry'] = $blockInfo->getExpiry();
 				}
 
 				if ( isset( $this->prop['emailable'] ) && $user->canReceiveEmail() ) {

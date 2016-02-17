@@ -75,9 +75,13 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 	$page = file_get_contents($url);
 	if ($page) {
 		$pattern = '/city_id: (\d+), cluster: c([1-9])/';
-		preg_match($pattern, $page, $matches);
-		$city_id = $matches[1];
-		$clusterNumberParam = $matches[2];
+		if ( preg_match($pattern, $page, $matches) ) {
+			$city_id = $matches[1];
+			$clusterNumberParam = $matches[2];
+		} else {
+			echo "Wiki not found.\n";
+			exit;
+		}
 		if ( $clusterNumberParam > 26 ) {
 			echo "Clusters higher than 26 (Z letter) are not yet operated by this script. Time to update the script.\n";
 			exit;
@@ -204,9 +208,12 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 	$prod->csv("SELECT * from city_domains where city_id = $city_id", $file);
 	$dev->import($file);
 
+	# commented out due to PLATFORM-1672 - the REPLACE was removing city_variables entries on other wikis
+	/**
 	$file = "/tmp/city_variables_pool.csv";
 	$prod->csv("SELECT * from city_variables_pool where cv_id in (select cv_variable_id from city_variables where cv_city_id = $city_id)", $file);
 	$dev->import($file);
+	**/
 
 	$file = "/tmp/city_variables.csv";
 	$prod->csv("SELECT * from city_variables where cv_city_id = $city_id", $file);

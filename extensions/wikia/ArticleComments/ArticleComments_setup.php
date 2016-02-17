@@ -52,10 +52,12 @@ $wgGroupPermissions['sysop']['commentmove'] = true;
 $wgGroupPermissions['sysop']['commentedit'] = true;
 $wgGroupPermissions['sysop']['commentdelete'] = true;
 
-// VOLDEV-136: Allow moderators to delete comments
+# PLATFORM-1707: threadmoderator additional rights
+$wgGroupPermissions['threadmoderator']['commentmove'] = true;
+$wgGroupPermissions['threadmoderator']['commentedit'] = true;
 $wgGroupPermissions['threadmoderator']['commentdelete'] = true;
 
-if ( !empty( $wgEnableWallEngine ) || !empty( $wgEnableArticleCommentsExt ) || !empty( $wgEnableBlogArticles ) ) {
+if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty($wgEnableBlogArticles)) {
 
 	$wgHooks['ArticleDelete'][] = 'ArticleCommentList::articleDelete';
 	$wgHooks['ArticleDeleteComplete'][] = 'ArticleCommentList::articleDeleteComplete';

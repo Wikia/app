@@ -50,9 +50,6 @@ $messages = array(
 'mytalk'     => 'Zburare-a mea',
 'navigation' => 'Navigatsia',
 
-# Cologne Blue skin
-'qbedit'         => 'Alãxiri',
-'qbspecialpages' => 'Frãndzã spetsiale',
 
 'help'             => 'Agiutor',
 'search'           => 'Caftã',

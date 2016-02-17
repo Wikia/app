@@ -13,28 +13,6 @@ class MediaWikiParserService implements ExternalParser {
 	}
 
 	/**
-	 * Method used for parsing wikitext provided through variable
-	 *
-	 * @param $wikitext
-	 *
-	 * @return mixed
-	 */
-	public function parse( $wikitext ) {
-		wfProfileIn( __METHOD__ );
-		if ( in_array( substr( $wikitext, 0, 1 ), [ '*', '#' ] ) ) {
-			//fix for first item list elements
-			$wikitext = "\n" . $wikitext;
-		}
-		$parsed = $this->parser->internalParse( $wikitext, false, $this->frame );
-		$output = $this->parser->doBlockLevels( $parsed, false );
-		$this->parser->replaceLinkHolders( $output );
-
-		wfProfileOut( __METHOD__ );
-
-		return $output;
-	}
-
-	/**
 	 * Method used for parsing wikitext provided in infobox that might contain variables
 	 *
 	 * @param $wikitext
@@ -43,8 +21,14 @@ class MediaWikiParserService implements ExternalParser {
 	 */
 	public function parseRecursive( $wikitext ) {
 		wfProfileIn( __METHOD__ );
-		$parsed = $this->parse( $wikitext );
-		$ready = $this->parser->mStripState->unstripBoth( $parsed );
+		if ( in_array( substr( $wikitext, 0, 1 ), [ '*', '#' ] ) ) {
+			//fix for first item list elements
+			$wikitext = "\n" . $wikitext;
+		}
+		$parsed = $this->parser->internalParse( $wikitext, false, $this->frame );
+		$output = $this->parser->doBlockLevels( $parsed, false );
+		$ready = $this->parser->mStripState->unstripBoth( $output );
+		$this->parser->replaceLinkHolders( $ready );
 		$newlinesstripped = preg_replace( '|[\n\r]|Us', '', $ready );
 		$marksstripped = preg_replace( '|{{{.*}}}|Us', '', $newlinesstripped );
 		wfProfileOut( __METHOD__ );

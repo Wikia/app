@@ -65,14 +65,14 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	 * @param $input
 	 * @param $expectedOutput
 	 * @param $description
+	 * @param $mockParams
 	 * @dataProvider testRenderInfoboxDataProvider
 	 */
 	public function testRenderInfobox( $input, $expectedOutput, $description, $mockParams ) {
 		$this->mockInfoboxRenderServiceHelper( $mockParams );
 
 		$infoboxRenderService = new PortableInfoboxRenderService();
-		$actualOutput = $infoboxRenderService->renderInfobox( $input );
-
+		$actualOutput = $infoboxRenderService->renderInfobox( $input, '', '' );
 		$expectedHtml = $this->normalizeHTML( $expectedOutput) ;
 		$actualHtml = $this->normalizeHTML( $actualOutput );
 
@@ -105,12 +105,14 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'image',
 						'data' => [
-							'alt' => 'image alt',
-							'url' => 'http://image.jpg',
-							'name' => 'image',
-							'key' => 'image',
-							'caption' => 'Lorem ipsum dolor',
-							'isVideo' => false
+							[
+								'alt' => 'image alt',
+								'url' => 'http://image.jpg',
+								'name' => 'image',
+								'key' => 'image',
+								'caption' => 'Lorem ipsum dolor',
+								'isVideo' => false
+							]
 						]
 					]
 				],
@@ -144,13 +146,15 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'image',
 						'data' => [
-							'alt' => 'image alt',
-							'url' => 'http://image.jpg',
-							'caption' => 'Lorem ipsum dolor',
-							'isVideo' => true,
-							'duration' => '1:20',
-							'name' => 'test',
-							'key' => 'test'
+							[
+								'alt' => 'image alt',
+								'url' => 'http://image.jpg',
+								'caption' => 'Lorem ipsum dolor',
+								'isVideo' => true,
+								'duration' => '1:20',
+								'name' => 'test',
+								'key' => 'test'
+							]
 						]
 					]
 				],
@@ -228,11 +232,13 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 					[
 						'type' => 'image',
 						'data' => [
-							'alt' => 'image alt',
-							'url' => 'http://image.jpg',
-							'name' => 'image',
-							'key' => 'image',
-							'isVideo' => false
+							[
+								'alt' => 'image alt',
+								'url' => 'http://image.jpg',
+								'name' => 'image',
+								'key' => 'image',
+								'isVideo' => false
+							]
 						]
 					],
 					[
@@ -566,7 +572,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				'output' => '<aside class="portable-infobox pi-background">
 								<div class="pi-item pi-hero">
 									<hgroup class="pi-hero-title-wrapper pi-item-spacing">
-										<h2 class="pi-hero-title">Test Title</h2>
+										<h2 class="pi-hero-title">Test <a href="example.com">Title</a></h2>
 									</hgroup>
 									<img
 									src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="thumbnail.jpg" class="pi-image-thumbnail lazy media article-media" alt="" data-image-key="test1" data-image-name="test1" data-ref="44" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\'/>

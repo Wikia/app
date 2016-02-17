@@ -15,6 +15,9 @@ class ConsulUrlProvider implements UrlProvider {
 	private $consulUrl;
 
 	/** @var string */
+	private $dc;
+
+	/** @var string */
 	private $serviceTag;
 
 	/** @var string[][string] */
@@ -26,13 +29,15 @@ class ConsulUrlProvider implements UrlProvider {
 	 *  Wikia\Service\Gateway\ConsulUrlProvider::SERVICE_TAG})
 	 * @param string $consulUrl
 	 * @param string $serviceTag
+	 * @param string $dc DataCenter
 	 */
-	function __construct( $consulUrl, $serviceTag ) {
+	function __construct( $consulUrl, $serviceTag, $dc = '' ) {
 		if ( empty( $consulUrl ) || empty( $serviceTag ) ) {
 			throw new \InvalidArgumentException ( "consulUrl or serviceTag not set" );
 		}
 
 		$this->consulUrl = $consulUrl;
+		$this->dc = $dc;
 		$this->serviceTag = $serviceTag;
 		$this->cache = [];
 	}
@@ -62,10 +67,16 @@ class ConsulUrlProvider implements UrlProvider {
 	}
 
 	private function getHealthUrl($serviceName) {
-		return strtr( self::HEALTH_URL, [
+		$url = strtr( self::HEALTH_URL, [
 			'{consulUrl}' => $this->consulUrl,
 			'{serviceName}' => $serviceName,
-			'{serviceTag}' => $this->serviceTag
+			'{serviceTag}' => $this->serviceTag,
 		] );
+
+		if ( !empty( $this->dc ) ) {
+			$url .= "&dc={$this->dc}";
+		}
+
+		return $url;
 	}
 }

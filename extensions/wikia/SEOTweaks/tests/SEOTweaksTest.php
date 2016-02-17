@@ -15,12 +15,11 @@ class SEOTweaksTest extends WikiaBaseTest
 	 */
 	public function testOnBeforePageDisplayWithoutGoogleVals() {
 
-		$this->mockGlobalVariable('wgSEOGoogleSiteVerification', null);
 		$this->mockGlobalVariable('wgSEOGooglePlusLink', null);
 
 		$mockOut = $this->getMockbuilder( 'OutputPage' )
 						->disableOriginalConstructor()
-						->setMethods( array( 'addMeta', 'addLink' ) )
+						->setMethods( array( 'addLink' ) )
 						->getMock();
 
 		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
@@ -29,10 +28,6 @@ class SEOTweaksTest extends WikiaBaseTest
 		$wgRefl = new ReflectionProperty( 'WikiaObject', 'wg' );
 		$wgRefl->setAccessible( true );
 
-		$mockOut
-			->expects( $this->never() )
-			->method ( 'addMeta' )
-		;
 		$mockOut
 			->expects( $this->never() )
 			->method ( 'addLink' )
@@ -50,12 +45,11 @@ class SEOTweaksTest extends WikiaBaseTest
 	 */
 	public function testOnBeforePageDisplayWithGoogleVals() {
 
-		$this->mockGlobalVariable('wgSEOGoogleSiteVerification', 'foobar');
 		$this->mockGlobalVariable('wgSEOGooglePlusLink', 'bazqux');
 
 		$mockOut = $this->getMockbuilder( 'OutputPage' )
 						->disableOriginalConstructor()
-						->setMethods( array( 'addMeta', 'addLink' ) )
+						->setMethods( array( 'addLink' ) )
 						->getMock();
 
 		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
@@ -65,12 +59,7 @@ class SEOTweaksTest extends WikiaBaseTest
 		$wgRefl->setAccessible( true );
 
 		$mockOut
-			->expects( $this->at( 0 ) )
-			->method ( 'addMeta' )
-			->with   ( 'google-site-verification', 'foobar' )
-		;
-		$mockOut
-			->expects( $this->at( 1 ) )
+			->expects( $this->once() )
 			->method ( 'addLink' )
 			->with   ( array( 'href' => 'bazqux', 'rel' => 'publisher' ) )
 		;

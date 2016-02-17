@@ -62,6 +62,7 @@ class WikiaException extends WikiaBaseException {
 
 			// log on devboxes to /tmp/debug.log
 			wfDebug($exceptionClass . ": {$message}\n");
+			wfDebug($this->getTraceAsString());
 
 			WikiaLogger::instance()->error($exceptionClass, [
 				'err' => $message,
@@ -179,6 +180,11 @@ abstract class WikiaHttpException extends WikiaBaseException {
 class BadRequestException extends WikiaHttpException {
 	protected $code = 400;
 	protected $message = 'Bad request';
+}
+
+class UnauthorizedException extends WikiaHttpException {
+	protected $code = 401;
+	protected $message = 'Unauthorized';
 }
 
 class ForbiddenException extends WikiaHttpException {

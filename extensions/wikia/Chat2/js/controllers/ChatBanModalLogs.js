@@ -8,7 +8,8 @@ var ChatBanLogController = function() {
 						userToBanId: userId,
 						time: expires,
 						reason: reason,
-						mode: 'global'
+						mode: 'global',
+						token: mw.user.tokens.get('editToken')
 					},
 					$.proxy(function(data) {
 						window.location.reload();

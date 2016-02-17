@@ -60,6 +60,7 @@ class WikiaLogger implements LoggerInterface {
 			case E_ERROR:
 			case E_CORE_ERROR:
 			case E_USER_ERROR:
+			case E_RECOVERABLE_ERROR:
 				$exit = true;
 				$method = 'error';
 				$priorityString = 'Fatal Error';
@@ -72,13 +73,16 @@ class WikiaLogger implements LoggerInterface {
 			case E_COMPILE_ERROR:
 			case E_COMPILE_WARNING:
 			case E_DEPRECATED:
+			case E_USER_DEPRECATED:
 				// compile-time errors don't call autoload callbacks, so let the standard php error log handle them - BAC-1225
 				return false;
 			default:
 				return false;
 		}
 
-		$this->getLogger()->$method("PHP {$priorityString}: {$message} in {$file} on line {$line}");
+		$this->getLogger()->$method("PHP {$priorityString}: {$message} in {$file} on line {$line}", [
+			'exception' => new \Exception(),
+		]);
 
 		if ($exit) {
 			exit(1);

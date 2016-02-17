@@ -250,7 +250,11 @@ class WikiService extends WikiaModel {
 					array( 'user_id', 'edits', 'all_groups' ),
 					array( 'wiki_id' => $wikiId, 'edits != 0' ),
 					$fname,
-					array( 'ORDER BY' => 'edits desc', 'LIMIT' => static::TOPUSER_LIMIT )
+					array(
+						'ORDER BY' => 'edits desc',
+						'LIMIT' => static::TOPUSER_LIMIT,
+						'USE INDEX' => 'PRIMARY', # mysql in Reston wants to use a different key (PLATFORM-1648)
+					)
 				);
 
 				while( $row = $db->fetchObject($result) ) {

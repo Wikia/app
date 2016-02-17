@@ -17,6 +17,7 @@
 <? endif; ?>
 <form method=post action="" enctype="multipart/form-data" class=wkForm id=wkContactForm>
 	<input name=wpBrowser type=hidden  value="<?= Sanitizer::encodeAttribute( $_SERVER['HTTP_USER_AGENT'] ) ?>" />
+	<input name="wpEditToken" type="hidden" value="<?= Sanitizer::encodeAttribute( $editToken ) ?>" />
 <? if ( $referral != null ) : ?>
 	<input name=wpReferral type=hidden value="<?= Sanitizer::encodeAttribute( $referral ) ?>" />
 <? endif; ?>

@@ -334,7 +334,7 @@
 		}
 	}
 
-	// highlight selected reference (ported from Vector skin)
+	// highlight selected reference
 	.references > li:target {
 		background-color: mix($color-page, $color-links, 85%);
 	}
@@ -362,7 +362,29 @@
 		padding: 0 1em 1em;
 
 		legend {
+			cursor: pointer;
 			padding: 7px;
+		}
+
+		&.collapsible {
+			height: auto;
+
+			legend::before {
+				content: "\25b4\00a0";
+			}
+
+			&.collapsed {
+				height: 25px;
+				overflow: hidden;
+
+				.rc-fieldset-content {
+					visibility: hidden;
+				}
+
+				legend::before {
+					content: "\25be\00a0";
+				}
+			}
 		}
 	}
 

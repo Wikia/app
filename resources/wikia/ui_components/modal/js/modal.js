@@ -180,7 +180,7 @@ define('wikia.ui.modal', [
 		/** ATTACHING EVENT HANDLERS TO MODAL */
 
 		// trigger custom buttons events based on button 'data-event' attribute
-		this.$element.on('click', 'button, a.modalEvent', $.proxy(function (event) {
+		this.$element.on('click', 'button, .modalEvent', $.proxy(function (event) {
 			var $target = $(event.currentTarget),
 				modalEventName = $target.data('event');
 
@@ -389,6 +389,14 @@ define('wikia.ui.modal', [
 	Modal.prototype.setTitle = function (title) {
 		this.$element.find('header h3').text(title);
 	};
+
+	/**
+	 * Scroll's modal content to a given offset
+	 * @param {int} offsetTop in pixels
+	 */
+	Modal.prototype.scroll = function (offsetTop) {
+		this.$element.find('section').scrollTop(offsetTop);
+	}
 
 	/** Public API */
 

@@ -1,4 +1,4 @@
-define('editpage.event.diff', ['editpage.event.helper', 'wikia.window', 'jquery'], function(helper, win, $){
+define('editpage.event.diff', ['editpage.event.helper', 'wikia.window', 'jquery'], function (helper, win, $){
 	'use strict';
 
 	// handle "Show changes" button
@@ -14,8 +14,8 @@ define('editpage.event.diff', ['editpage.event.helper', 'wikia.window', 'jquery'
 
 	// render "show diff" modal
 	function renderChanges() {
-		require([ 'wikia.ui.factory' ], function(uiFactory){
-			uiFactory.init([ 'modal' ]).then(function(uiModal) {
+		require([ 'wikia.ui.factory' ], function (uiFactory){
+			uiFactory.init([ 'modal' ]).then(function (uiModal) {
 				var previewModalConfig = {
 					vars: {
 						id: 'EditPageDialog',
@@ -25,17 +25,17 @@ define('editpage.event.diff', ['editpage.event.helper', 'wikia.window', 'jquery'
 						size: 'large'
 					}
 				};
-				uiModal.createComponent(previewModalConfig, function(previewModal) {
+				uiModal.createComponent(previewModalConfig, function (previewModal) {
 					previewModal.deactivate();
 
-					previewModal.$content.on('click', function(event) {
+					previewModal.$content.on('click', function (event) {
 						var target = $(event.target);
 						target.closest('a').not('[href^="#"]').attr('target', '_blank');
 					});
 
 					$.when(
 						helper.getContent()
-					).done(function(content){
+					).done(function (content, mode){
 						prepareDiffContent(previewModal, content);
 						previewModal.show();
 					});
@@ -68,7 +68,7 @@ define('editpage.event.diff', ['editpage.event.helper', 'wikia.window', 'jquery'
 
 			// load CSS for diff
 			win.mw.loader.use('mediawiki.action.history.diff')
-		).done(function(ajaxData) {
+		).done(function (ajaxData) {
 			var data = ajaxData[ 0 ],
 				html = '<h1 class="pagetitle">' + win.wgEditedTitle + '</h1>' + data.html;
 			previewModal.$content.find('.ArticlePreview .ArticlePreviewInner').html(html);

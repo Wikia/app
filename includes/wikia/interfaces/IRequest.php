@@ -98,4 +98,14 @@ interface IRequest {
 	 * @return bool
 	 */
 	public function wasPosted();
+
+	/**
+	 * Should verify if write request is a valid, non-CSRF request
+	 * (uses POST and contains a valid edit token)
+	 *
+	 * @param \User $user
+	 * @return mixed
+	 * @throws BadRequestException
+	 */
+	public function isValidWriteRequest( \User $user );
 }

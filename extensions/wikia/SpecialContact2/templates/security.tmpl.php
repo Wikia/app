@@ -11,6 +11,7 @@ if ( !empty( $err ) ) {
 <form id="contactform" method="POST" action="" enctype="multipart/form-data">
 	<input name="wpEmail" type="hidden" value="<?= $encEmail ?>" />
 	<input name="wpUserName" type="hidden" value="<?= $encName ?>" />
+	<input name="wpEditToken" type="hidden" value="<?= Sanitizer::encodeAttribute( $editToken ) ?>" />
 
 	<? if ( $isLoggedIn ): ?>
 	<?= wfMessage( 'specialcontact-logged-in-as', $encName )->parseAsBlock(); ?>

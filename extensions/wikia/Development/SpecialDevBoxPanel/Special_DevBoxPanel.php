@@ -62,12 +62,15 @@ $wgSpecialPages['DevBoxPanel'] = 'DevBoxPanel';
 if (getenv('wgDevelEnvironmentName')) {
 	$wgDevelEnvironmentName = getenv('wgDevelEnvironmentName');
 } else {
+
+	# PLATFORM-1737 (Allow multiple dashes on dev hostnames)
+	# Get first hyphen, if there's any, delete it and everything from the left side of that "-", else pass whole $host
 	$host = gethostname();
-	$host = explode("-", $host);
-	if ( isset( $host[ 1 ] ) ) {
-		$wgDevelEnvironmentName = trim($host[1]);
+	$index = stripos($host, "-");
+	if($index > 0) {
+		$wgDevelEnvironmentName = trim(substr($host, $index + 1));
 	} else {
-		$wgDevelEnvironmentName = trim($host[0]);
+		$wgDevelEnvironmentName = trim($host);
 	}
 }
 

@@ -1,10 +1,10 @@
 <?php
-$wgExtensionCredits[ 'other' ][ ] = array(
+$wgExtensionCredits[ 'other' ][ ] = [
 	'name' => 'WallNotifications',
 	'author' => 'Wikia',
 	'descriptionmsg' => 'wallnotifications-desc',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WallNotifications',
-);
+];
 
 // i18n
 $wgExtensionMessagesFiles['WallNotifications'] = __DIR__ . '/i18n/WallNotifications.i18n.php';

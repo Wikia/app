@@ -9,7 +9,7 @@ describe('ext.wikia.adEngine.provider.gpt.sourcePointTag', function () {
 				getContext: function () {
 					return {
 						opts: {
-							sourcePointUrl: '//foo.url'
+							sourcePointRecoveryUrl: '//foo.url'
 						}
 					};
 				}
