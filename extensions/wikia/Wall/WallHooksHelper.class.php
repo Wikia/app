@@ -705,7 +705,6 @@ class WallHooksHelper {
 	}
 
 	/**
-<<<<<<< HEAD
 	 * Adjusting Recent Changes for Wall
 	 * Change RC db key to affect Watchlist behavior
 	 * @author TK-999 <https://github.com/TK-999>
