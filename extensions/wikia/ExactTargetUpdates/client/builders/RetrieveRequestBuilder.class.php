@@ -7,16 +7,21 @@ class RetrieveRequestBuilder extends BaseRequestBuilder {
 	private $filterProperty;
 	private $filterValues;
 	private $properties;
+	private $resource;
 
 	const DATA_EXTENSION_OBJECT_USER_TYPE = 'DataExtensionObject[user]';
 	const SIMPLE_FILTER_PART = 'SimpleFilterPart';
 
 	public function build() {
-		$retrieveRequest = $this->wrapRetrieveRequest();
+		$retrieveRequest = new \ExactTarget_RetrieveRequest();
+		$retrieveRequest->ObjectType = $this->getResource();
+		$retrieveRequest->Properties = $this->properties;
 		$retrieveRequest->Filter = $this->wrapToSoapVar( $this->wrapSimpleFilterPart(), self::SIMPLE_FILTER_PART );
-		$retrieveRequest->Options = null;
 
-		return $retrieveRequest;
+		$oRetrieveRequestMsg = new \ExactTarget_RetrieveRequestMsg();
+		$oRetrieveRequestMsg->RetrieveRequest = $retrieveRequest;
+
+		return $oRetrieveRequestMsg;
 	}
 
 	public function withProperties( $properties ) {
@@ -34,15 +39,9 @@ class RetrieveRequestBuilder extends BaseRequestBuilder {
 		return $this;
 	}
 
-	/**
-	 * Returns a new RetrieveRequest object from prepared params
-	 * @return ExactTarget_RetrieveRequest  An ExactTarget's request object
-	 */
-	public function wrapRetrieveRequest() {
-		$retrieveRequest = new \ExactTarget_RetrieveRequest();
-		$retrieveRequest->ObjectType = self::DATA_EXTENSION_OBJECT_USER_TYPE;
-		$retrieveRequest->Properties = $this->properties;
-		return $retrieveRequest;
+	public function withResource( $resource ) {
+		$this->resource = $resource;
+		return $this;
 	}
 
 	/**
@@ -64,5 +63,9 @@ class RetrieveRequestBuilder extends BaseRequestBuilder {
 		return count( $this->filterValues ) > 1
 			? \ExactTarget_SimpleOperators::IN
 			: \ExactTarget_SimpleOperators::equals;
+	}
+
+	private function getResource() {
+		return "DataExtensionObject[{$this->resource}]";
 	}
 }

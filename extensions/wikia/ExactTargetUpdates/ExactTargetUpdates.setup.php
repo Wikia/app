@@ -89,6 +89,10 @@ $wgAutoloadClasses['Wikia\ExactTarget\Builders\DeleteRequestBuilder'] =  $dir . 
 $wgAutoloadClasses['Wikia\ExactTarget\Builders\RetrieveRequestBuilder'] =  $dir . '/client/builders/RetrieveRequestBuilder.class.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\Builders\UpdateRequestBuilder'] =  $dir . '/client/builders/UpdateRequestBuilder.class.php' ;
 
+/* Enum classes */
+$wgAutoloadClasses['Wikia\ExactTarget\ResourceEnum'] =  $dir . '/client/ExactTargetResourceEnum.php' ;
+
+
 /* ExactTarget_* classes */
 
 $wgAutoloadClasses['ExactTarget_AccountDataItem'] =  $dir . '/lib/ExactTarget_AccountDataItem.php' ;

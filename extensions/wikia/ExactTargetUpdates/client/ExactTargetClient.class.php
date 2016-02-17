@@ -26,7 +26,7 @@ class ExactTargetClient implements Client {
 	 * Deletes Subscriber object in ExactTarget by API request if email is not used by other user
 	 */
 	public function deleteSubscriber( $userId ) {
-		$sUserEmail = $this->retrieve( [ 'user_email' ], 'user_id', [ $userId ] );
+		$sUserEmail = $this->retrieve( [ 'user_email' ], 'user_id', [ $userId ], ResourceEnum::USER );
 
 		/* Skip deletion if no email found */
 		if ( empty( $sUserEmail ) ) {
@@ -116,16 +116,15 @@ class ExactTargetClient implements Client {
 	 * @return null
 	 * @throws \Exception
 	 */
-	public function retrieve( array $properties, $filterProperty, array $filterValues ) {
+	public function retrieve( array $properties, $filterProperty, array $filterValues, $resource ) {
 		$oRequest = ExactTargetRequestBuilder::createRetrieve()
 			->withProperties( $properties )
 			->withFilterProperty( $filterProperty )
 			->withFilterValues( $filterValues )
+			->withResource( $resource )
 			->build();
 
-		$apiHelper = new ExactTargetApiHelper();
-		$retrieveRequestMsg = $apiHelper->wrapRetrieveRequestMsg( $oRequest );
-		$emailResult = $this->sendRequest( 'Retrieve', $retrieveRequestMsg );
+		$emailResult = $this->sendRequest( 'Retrieve', $oRequest );
 
 		if ( $emailResult->OverallStatus === 'Error' ) {
 			throw new \Exception(

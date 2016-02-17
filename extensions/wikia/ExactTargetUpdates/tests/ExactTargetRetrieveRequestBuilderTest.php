@@ -9,21 +9,22 @@ class ExactTargetRetrieveRequestBuilderTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider retrieveUserDataProvider
 	 */
-	public function testBuildRequest( $properties, $filterProperty, $filterValues ) {
+	public function testBuildRequest( $properties, $filterProperty, $filterValues, $resource ) {
 		// Prepare Expected
 		$expected = $this->prepareRetrieveRequest( $properties, $filterProperty, $filterValues );
 		$oRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::createRetrieve()
 			->withProperties( $properties )
 			->withFilterProperty( $filterProperty )
 			->withFilterValues( $filterValues )
+			->withResource( $resource )
 			->build();
 		$this->assertEquals( $expected, $oRequest );
 	}
 
 	public function retrieveUserDataProvider() {
 		return [
-			[ [ 'user_email' ], 'user_id', [ 1 ] ],
-			[ [ 'user_email' ], 'user_id', [ 1, 2 ] ]
+			[ [ 'user_email' ], 'user_id', [ 1 ], 'user' ],
+			[ [ 'user_email' ], 'user_id', [ 1, 2 ], 'user' ],
 		];
 	}
 
@@ -36,10 +37,13 @@ class ExactTargetRetrieveRequestBuilderTest extends WikiaBaseTest {
 		}
 		$filter->Value = $filterValues;
 
-		$expected = new ExactTarget_RetrieveRequest();
-		$expected->Filter = $this->wrapToSoapVar( $filter, 'SimpleFilterPart' );
-		$expected->ObjectType = 'DataExtensionObject[user]';
-		$expected->Properties = $properties;
+		$expectedPart = new ExactTarget_RetrieveRequest();
+		$expectedPart->Filter = $this->wrapToSoapVar( $filter, 'SimpleFilterPart' );
+		$expectedPart->ObjectType = 'DataExtensionObject[user]';
+		$expectedPart->Properties = $properties;
+
+		$expected = new \ExactTarget_RetrieveRequestMsg();
+		$expected->RetrieveRequest = $expectedPart;
 		return $expected;
 	}
 
