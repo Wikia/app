@@ -7,7 +7,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 * @return string
 	 * @see PortableInfoboxBuilderServiceTest::translationsDataProvider
 	 */
-	public function translateDataToMarkup( $builderData ) {
+	public function translateDataToMarkup( $builderData, $formatted = true ) {
 		$out = "";
 		$infobox = json_decode( $builderData );
 
@@ -23,6 +23,9 @@ class PortableInfoboxBuilderService extends WikiaService {
 
 			// save to xml, import to dom, to remove xml header
 			$dom = dom_import_simplexml( $xml );
+			// make the output document human-readable
+			$dom->ownerDocument->formatOutput = $formatted;
+
 			$out = $dom->ownerDocument->saveXML( $dom->ownerDocument->documentElement );
 			// ignore errors, we only load it to remove header
 			libxml_clear_errors();
@@ -46,30 +49,12 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 * @param $infoboxMarkup string with infobox markup
 	 */
 	public function isSupportedMarkup( $infoboxMarkup ) {
-		$allowedTags = [
-			'title'=>[
-				'children'=>[],
-				'attributes'=>[]
-			],
-			'image'=>[
-				'children'=>[],
-				'attributes'=>[]
-			],
-			'data'=>[
-				'children'=>[],
-				'attributes'=>[]
-			]];
-
-		$infobox = \Wikia\PortableInfobox\Parser\Nodes\NodeFactory::newFromXML($infoboxMarkup);
-//		var_dump($infobox->getData()['value']);
-
-		foreach($infobox->getData()['value'] as $tag) {
-			if (!array_key_exists($tag['type'], $allowedTags)) {
-				return false;
-			}
+		$xmlNode = simplexml_load_string( $infoboxMarkup );
+		if ( $xmlNode ) {
+			$validator = \Wikia\PortableInfoboxBuilder\Validators\ValidatorBuilder::createFromNode( $xmlNode );
+			return $validator->isValid();
 		}
-
-		return true;
+		return false;
 	}
 
 	/**

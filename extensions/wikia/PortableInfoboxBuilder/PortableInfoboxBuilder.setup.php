@@ -1,7 +1,23 @@
 <?php
 $dir = dirname( __FILE__ ) . '/';
 
-$wgAutoloadClasses[ 'PortableInfoboxBuilderService' ] = $dir . 'PortableInfoboxBuilderService.class.php';
+$wgAutoloadClasses[ 'PortableInfoboxBuilderService' ] = $dir . 'services/PortableInfoboxBuilderService.class.php';
+
+$wgBuilderNodeValidators = [
+	'NodeValidator',
+	'NodeImageValidator',
+	'NodeInfoboxValidator',
+	'NodeDataValidator',
+	'NodeDefaultValidator',
+	'NodeCaptionValidator',
+	'NodeLabelValidator',
+	'NodeTitleValidator',
+];
+
+$wgAutoloadClasses[ 'Wikia\\PortableInfoboxBuilder\\Validators\\ValidatorBuilder' ] = $dir . 'services/Validators/ValidatorBuilder.class.php';
+foreach ( $wgBuilderNodeValidators as $nodeValidator ) {
+	$wgAutoloadClasses[ 'Wikia\\PortableInfoboxBuilder\\Validators\\' . $nodeValidator ] = $dir . 'services/Validators/' . $nodeValidator . '.class.php';
+}
 
 $wgAutoloadClasses[ 'PortableInfoboxBuilderController' ] = $dir . 'PortableInfoboxBuilderController.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxBuilderSpecialController' ] = $dir . 'PortableInfoboxBuilderSpecialController.class.php';
