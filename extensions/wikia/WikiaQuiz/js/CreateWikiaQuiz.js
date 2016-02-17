@@ -117,6 +117,6 @@ var CreateWikiaQuiz = {
 $(function() {
 	if (wgAction != "edit" && wgAction != "submit"){
 		// only init on special page
-		mw.loader.using('jquery.ui.sortable').done(	CreateWikiaQuiz.init );
+		mw.loader.using('jquery.ui.sortable').done( CreateWikiaQuiz.init );
 	}
 });

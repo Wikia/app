@@ -13,7 +13,7 @@ EditHub.prototype = {
 		this.tooltipMessages[window.wgEditHubConstants.PUBLISHED] = $.msg('edit-hub-tooltip-published');
 
 		// jQuery UI datepicker plugin
-		mw.loader.using(['jquery.ui.datepicker'])
+		mw.loader.using('jquery.ui.datepicker')
 			.done($.proxy(function(getResourcesData) {
 				this.isCalendarReady = true;
 				this.initDatepicker();
