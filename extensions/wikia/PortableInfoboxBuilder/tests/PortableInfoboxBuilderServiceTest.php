@@ -17,7 +17,7 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	 * @dataProvider dataTranslationsDataProvider
 	 */
 	public function testTranslationFromData( $data, $expected ) {
-		$this->assertEquals( $expected, $this->builderService->translateDataToMarkup( $data ) );
+		$this->assertEquals( $expected, $this->builderService->translateDataToMarkup( $data, false ) );
 	}
 
 	/**
@@ -32,7 +32,6 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	 * @dataProvider markupSupportDataProvider
 	 */
 	public function testMarkupSupport( $markup, $expected ) {
-		$this->markTestIncomplete('Feature under development');
 		$this->assertEquals( $expected, $this->builderService->isSupportedMarkup( $markup ) );
 	}
 
@@ -69,9 +68,10 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 
 	public function markupSupportDataProvider() {
 		return [
-			[ "", true ],
+			[ "", false ],
 			[ '<infobox><data source="asdf"/></infobox>', true ],
 			[ '<infobox><data source="asdf"><label>asdfsda</label></data></infobox>', true ],
+			[ '<infobox><data source="asdf"><label source="label_source">asdfsda</label></data></infobox>', false ],
 			[ '<infobox><data source="asdf"/></infobox>', true ],
 			[ '<infobox><title source="title"><default>{{PAGENAME}}</default></title></infobox>', true ],
 			[ '<infobox><title source="title"/></infobox>', true ],

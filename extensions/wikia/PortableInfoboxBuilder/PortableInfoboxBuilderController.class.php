@@ -19,12 +19,6 @@ class PortableInfoboxBuilderController extends WikiaController {
 			if ( $builderService->isValidInfoboxArray( $infoboxes ) ) {
 				$response->setVal( 'data', $builderService->translateMarkupToData( $infoboxes[0] ) );
 			}
-
-			// TODO: remove this placeholder once translations are implemented
-			$response->setVal(
-				'data',
-				'{"data":[{"type":"title", "source":"title", "data": {"defaultValue": "{{PAGENAME}}"}},{"type":"row", "source":"asdf", "data": {"label": "asdfsda"}}]}'
-			);
 		} else {
 			$status = new Status();
 			$status->warning( 'no-title-provided' );
