@@ -411,12 +411,7 @@ class MercuryApiController extends WikiaController {
 
 			$isMainPage = $title->isMainPage();
 			$data['isMainPage'] = $isMainPage;
-
-			$otherLanguages = $this->getOtherLanguages( $title );
-
-			if ( !empty( $otherLanguages ) ) {
-				$data['otherLanguages'] = $otherLanguages;
-			}
+			$data['ns'] = $title->getNamespace();
 
 			$titleBuilder = new WikiaHtmlTitle();
 
@@ -448,7 +443,7 @@ class MercuryApiController extends WikiaController {
 			$title = $this->wg->Title;
 		}
 
-		$data['ns'] = $title->getNamespace();
+
 
 		switch ($data['ns']) {
 			case 14:
@@ -459,6 +454,11 @@ class MercuryApiController extends WikiaController {
 
 		$data['articleType'] = WikiaPageType::getArticleType( $title );
 		$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
+		$otherLanguages = $this->getOtherLanguages( $title );
+
+		if ( !empty( $otherLanguages ) ) {
+			$data['otherLanguages'] = $otherLanguages;
+		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );

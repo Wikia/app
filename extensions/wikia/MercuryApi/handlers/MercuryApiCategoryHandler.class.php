@@ -39,5 +39,6 @@ class MercuryApiCategoryHandler {
 	}
 
 	public function getContent() {
+		return null;
 	}
 }
