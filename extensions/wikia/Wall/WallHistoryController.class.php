@@ -15,7 +15,7 @@ class WallHistoryController extends WallController {
 
 		$this->isThreadLevel = $this->request->getVal( 'threadLevelHistory', false );
 
-		$path = array();
+		$path = [ ];
 
 		if ( $this->isThreadLevel ) {
 			$threadId = intval( $title->getDBkey() );
@@ -54,10 +54,10 @@ class WallHistoryController extends WallController {
 			$history = $wallHistory->get( null, $sort, $threadId );
 			$this->response->setVal( 'wallHistory', $this->getFormatedHistoryData( $history, $threadId ) );
 
-			$path[] = array(
+			$path[] = [
 				'title' => $wallMessage->getMetatitle(),
 				'url' => $wallMessage->getMessagePageUrl()
-			);
+			];
 
 			$wallUrl = $wallMessage->getArticleTitle()->getFullUrl();
 			$wallOwnerName = $wallMessage->getArticleTitle()->getText();
@@ -73,29 +73,29 @@ class WallHistoryController extends WallController {
 				$history = $wallHistory->get( $title->getArticleId(), $sort, null, false );
 			} else {
 				$count = 0;
-				$history = array();
+				$history = [ ];
 			}
 
 			$wallUrl = $title->getFullUrl();
 			$wallOwnerName = $title->getText();
 
 			$this->response->setVal( 'wallHistory', $this->getFormatedHistoryData( $history ) );
-			$this->response->setVal( 'wallHistoryUrl', $title->getFullURL( array( 'action' => 'history', 'sort' => $sort ) ) );
+			$this->response->setVal( 'wallHistoryUrl', $title->getFullURL( [ 'action' => 'history', 'sort' => $sort ] ) );
 		}
 
-		$path = array_merge( array( array(
-			'title' => wfMessage( 'wall-message-elseswall', array( $wallOwnerName ) )->escaped(),
+		$path = array_merge( [ [
+			'title' => wfMessage( 'wall-message-elseswall', [ $wallOwnerName ] )->escaped(),
 			'url' => $wallUrl
-		) ), $path );
+		] ], $path );
 
 		$this->response->setVal( 'wallOwnerName', $wallOwnerName );
 
 		if ( $this->isThreadLevel ) {
 			$this->response->setVal( 'pageTitle', wfMessage( 'wall-thread-history-title' )->escaped() );
-			wfRunHooks( 'WallHistoryThreadHeader', array( $title, $wallMessage, &$path, &$this->response, &$this->request ) );
+			wfRunHooks( 'WallHistoryThreadHeader', [ $title, $wallMessage, &$path, &$this->response, &$this->request ] );
 		} else {
 			$this->response->setVal( 'pageTitle', wfMessage( 'wall-history-title' )->escaped() );
-			wfRunHooks( 'WallHistoryHeader', array( $title, &$path, &$this->response, &$this->request ) );
+			wfRunHooks( 'WallHistoryHeader', [ $title, &$path, &$this->response, &$this->request ] );
 		}
 
 		$this->response->setVal( 'path', $path );
@@ -139,7 +139,7 @@ class WallHistoryController extends WallController {
 
 	private function getHistoryMessagesArray() {
 		if ( $this->isThreadLevel ) {
-			return array(
+			return [
 				'thread-' . WH_NEW => 'wall-thread-history-thread-created',
 				'reply-' . WH_NEW => 'wall-thread-history-reply-created',
 				'thread-' . WH_REMOVE => 'wall-thread-history-thread-removed',
@@ -152,14 +152,14 @@ class WallHistoryController extends WallController {
 				'reply-' . WH_EDIT => 'wall-thread-history-reply-edited',
 				'thread-' . WH_ARCHIVE => 'wall-thread-history-thread-closed',
 				'thread-' . WH_REOPEN => 'wall-thread-history-thread-reopened',
-			);
+			];
 		} else {
-			return array(
+			return [
 				WH_NEW => 'wall-history-thread-created',
 				WH_REMOVE => 'wall-history-thread-removed',
 				WH_RESTORE => 'wall-history-thread-restored',
 				WH_DELETE => 'wall-history-thread-admin-deleted',
-			);
+			];
 		}
 	}
 
@@ -170,13 +170,15 @@ class WallHistoryController extends WallController {
 		foreach ( $history as $key => $value ) {
 			$type = intval( $value['action'] );
 
-			if ( !$this->isThreadLevel && !in_array( $type, array( WH_NEW, WH_REMOVE, WH_RESTORE, WH_DELETE ) ) ) {
+			if ( !$this->isThreadLevel && !in_array( $type, [ WH_NEW, WH_REMOVE, WH_RESTORE, WH_DELETE ] ) ) {
 				unset( $history[$key] );
 				continue;
 			}
 
+			/** @var Title $title */
 			$title = $value['title'];
 			$wm = new WallMessage( $title );
+			/** @var User $user */
 			$user = $value['user'];
 			$username = $user->getName();
 
@@ -187,8 +189,8 @@ class WallHistoryController extends WallController {
 				$history[$key]['displayname'] = Linker::linkKnown( $userTalk, wfMessage( 'oasis-anon-user' )->escaped() );
 				$history[$key]['displayname'] .= ' ' . Linker::linkKnown(
 						$userTalk,
-						Html::element( 'small', array(), $username ),
-						array( 'class' => 'username' )
+						Html::element( 'small', [ ], $username ),
+						[ 'class' => 'username' ]
 					);
 			} else {
 				$history[$key]['displayname'] = Linker::linkKnown( $userTalk, $username );
@@ -200,7 +202,7 @@ class WallHistoryController extends WallController {
 			$history[$key]['type'] = $type;
 			$history[$key]['usertimeago'] = $this->getContext()->getLanguage()->timeanddate( $value['event_mw'] );
 			$history[$key]['reason'] = $value['reason'];
-			$history[$key]['actions'] = array();
+			$history[$key]['actions'] = [ ];
 
 			if ( $this->isThreadLevel ) {
 				$history[$key]['isreply'] = $isReply = $value['is_reply'];
@@ -236,20 +238,20 @@ class WallHistoryController extends WallController {
 				if ( $type == WH_EDIT ) {
 					$rev = Revision::newFromTitle( $title );
 					// mech: fixing 20617 - revision_id is available only for new entries
-					$query = array(
+					$query = [
 						'diff' => 'prev',
 						'oldid' => ( $history[$key]['revision_id'] ) ? $history[$key]['revision_id'] : $title->getLatestRevID(),
-					);
+					];
 
-					$history[$key]['actions'][] = array(
+					$history[$key]['actions'][] = [
 						'href' => $rev->getTitle()->getLocalUrl( $query ),
 						'msg' => wfMessage( 'diff' )->text(),
-					);
+					];
 				}
 			} else {
 				$msgUrl = $wm->getMessagePageUrl( true );
 				$history[$key]['msgurl'] = $msgUrl;
-				$history[$key]['historyLink'] = Xml::element( 'a', array( 'href' => $msgUrl . '?action=history' ), wfMessage( 'wall-history-action-thread-history' )->text() );
+				$history[$key]['historyLink'] = Xml::element( 'a', [ 'href' => $msgUrl . '?action=history' ], wfMessage( 'wall-history-action-thread-history' )->text() );
 			}
 
 			if ( ( $type == WH_REMOVE && !$wm->isAdminDelete() ) || ( $type == WH_DELETE && $wm->isAdminDelete() ) ) {
@@ -260,13 +262,13 @@ class WallHistoryController extends WallController {
 						$restoreActionMsg = wfMessage( 'wall-history-action-restore' )->text();
 					}
 
-					$history[$key]['actions'][] = array(
+					$history[$key]['actions'][] = [
 						'class' => 'message-restore', // TODO: ?
 						'data-id' => $value['page_id'],
 						'data-mode' => 'restore' . ( $wm->canFastRestore( $this->getContext()->getUser(), false ) ? '-fast' : '' ),
 						'href' => '#',
 						'msg' => $restoreActionMsg
-					);
+					];
 				}
 			}
 

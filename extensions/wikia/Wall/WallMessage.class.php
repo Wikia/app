@@ -7,10 +7,10 @@ class WallMessage {
 	protected $title;
 	protected $order = 0;
 	protected $isLoaded = false;
-	protected $propsCache = array();
+	protected $propsCache = [ ];
 	protected $cityId = 0;
-	protected static $permissionsCache = array(); // permissions cache
-	protected static $wallURLCache = array();
+	protected static $permissionsCache = [ ]; // permissions cache
+	protected static $wallURLCache = [ ];
 	/**
 	 * @var $commentsIndex CommentsIndex
 	 */
@@ -64,8 +64,10 @@ class WallMessage {
 	static public function addMessageWall( $userPageTitle ) {
 		wfProfileIn( __METHOD__ );
 		$botUser = User::newFromName( 'WikiaBot' );
+		/** @var Article $article */
 		$article = new Article( $userPageTitle );
-		$status = $article->doEdit( '', '', EDIT_NEW | EDIT_MINOR | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
+		$status = $article->getPage()
+			->doEdit( '', '', EDIT_NEW | EDIT_MINOR | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
 		$title = ( $status->isOK() ) ? $article->getTitle() : false ;
 		wfProfileOut( __METHOD__ );
 		return $title;
@@ -83,7 +85,7 @@ class WallMessage {
 	 * @param bool $notifyEveryone
 	 * @return WallMessage|Bool
 	 */
-	static public function buildNewMessageAndPost( $body, $page, $user, $metaTitle = '', $parent = false, $relatedTopics = array(), $notify = true, $notifyEveryone = false ) {
+	static public function buildNewMessageAndPost( $body, $page, $user, $metaTitle = '', $parent = false, $relatedTopics = [ ], $notify = true, $notifyEveryone = false ) {
 		wfProfileIn( __METHOD__ );
 		if ( $page instanceof Title ) {
 			$userPageTitle = $page;
@@ -108,7 +110,7 @@ class WallMessage {
 		}
 
 		if ( $parent === false ) {
-			$metaData = array( 'title' => $metaTitle );
+			$metaData = [ 'title' => $metaTitle ];
 			if ( $notifyEveryone ) {
 				$metaData['notify_everyone'] = time();
 			}
@@ -171,7 +173,7 @@ class WallMessage {
 
 		$class->addWatch( $user );
 
-		wfRunHooks( 'AfterBuildNewMessageAndPost', array( &$class ) );
+		wfRunHooks( 'AfterBuildNewMessageAndPost', [ &$class ] );
 		wfProfileOut( __METHOD__ );
 		return $class;
 	}
@@ -231,10 +233,10 @@ class WallMessage {
 	}
 
 	public function storeRelatedTopicsInDB( $relatedTopicURLs ) {
-		wfRunHooks( 'WallBeforeStoreRelatedTopicsInDB', array( $this->getTopParentId(), $this->getTitle()->getArticleId(), $this->getTitle()->getNamespace() ) );
+		wfRunHooks( 'WallBeforeStoreRelatedTopicsInDB', [ $this->getTopParentId(), $this->getTitle()->getArticleId(), $this->getTitle()->getNamespace() ] );
 		$rp = new WallRelatedPages();
 		$rp->setWithURLs( $this->getId(), $relatedTopicURLs );
-		wfRunHooks( 'WallAfterStoreRelatedTopicsInDB', array( $this->getTopParentId(), $this->getTitle()->getArticleId(), $this->getTitle()->getNamespace() ) );
+		wfRunHooks( 'WallAfterStoreRelatedTopicsInDB', [ $this->getTopParentId(), $this->getTitle()->getArticleId(), $this->getTitle()->getNamespace() ] );
 	}
 
 	public function getRelatedTopics() {
@@ -303,7 +305,7 @@ class WallMessage {
 		}
 
 		if ( empty( self::$permissionsCache[$username] ) ) {
-			self::$permissionsCache[$username] = array();
+			self::$permissionsCache[$username] = [ ];
 		}
 
 		wfProfileIn( __METHOD__ . "2" );
@@ -513,8 +515,7 @@ class WallMessage {
 			if ( $notifyEveryone ) {
 				$this->getArticleComment()->setMetaData( 'notify_everyone', time() );
 				$this->doSaveMetadata( $app->wg->User,
-					wfMessage( 'wall-message-update-highlight-summary' )->inContentLanguage()->text(),
-					false, true );
+					wfMessage( 'wall-message-update-highlight-summary' )->inContentLanguage()->text(), false );
 				$rev = $this->getArticleComment()->mLastRevision;
 				$entity = WallNotificationEntity::createFromRev( $rev );
 				$wne->addNotificationToQueue( $entity );
@@ -523,8 +524,7 @@ class WallMessage {
 				$pageId = $this->getId();
 				$wne->removeNotificationForPageId( $pageId );
 				$this->doSaveMetadata( $app->wg->User,
-					wfMessage( 'wall-message-update-removed-highlight-summary' )->inContentLanguage()->text(),
-					false, true );
+					wfMessage( 'wall-message-update-removed-highlight-summary' )->inContentLanguage()->text(), false );
 			}
 		}
 	}
@@ -561,7 +561,7 @@ class WallMessage {
 		$parts = explode( '/', $title->getText() );
 		$wallOwnerName = $parts[0];
 
-		wfRunHooks( 'WallMessageGetWallOwnerName', array( $title, &$wallOwnerName ) );
+		wfRunHooks( 'WallMessageGetWallOwnerName', [ $title, &$wallOwnerName ] );
 
 		return $wallOwnerName;
 	}
@@ -612,7 +612,7 @@ class WallMessage {
 
 		$pageId = $commentsIndex->getParentPageId();
 
-		static $cache = array();
+		static $cache = [ ];
 		if ( empty( $cache[$pageId] ) ) {
 			if ( !$useMasterDB ) {
 				$cache[$pageId] = Title::newFromId( $pageId );
@@ -697,7 +697,7 @@ class WallMessage {
 		$postFix = empty( $postFix ) ? "": ( '#' . $postFix );
 		$title = Title::newFromText( $id, NS_USER_WALL_MESSAGE );
 
-		$this->messagePageUrl = array();
+		$this->messagePageUrl = [ ];
 
 		$this->messagePageUrl[true] = $title->getFullUrl();
 		$this->messagePageUrl[false] = $this->messagePageUrl[true] . $postFix;
@@ -711,7 +711,7 @@ class WallMessage {
 		$articleId = $this->getArticleComment()->getTitle()->getArticleId();
 
 		if ( $articleId === false ) {
-			Wikia::log( __METHOD__, false, "WALL_NO_ARTILE_ID" . print_r( array( '$title' => $title ), true ) );
+			Wikia::log( __METHOD__, false, "WALL_NO_ARTILE_ID" . print_r( [ '$title' => $title ], true ) );
 			$articleId = 0;
 		}
 
@@ -742,7 +742,7 @@ class WallMessage {
 	public function getTopParentObj() {
 		wfProfileIn( __METHOD__ );
 
-		static $topObjectCache = array();
+		static $topObjectCache = [ ];
 
 		// TODO: some cache or pre setting of parentPageId during list fetching
 
@@ -874,7 +874,7 @@ class WallMessage {
 			return $ac->mHeadItems;
 		}
 
-		return array();
+		return [ ];
 	}
 
 	public function getCreateTime( $format = TS_ISO_8601 ) {
@@ -1375,7 +1375,7 @@ class WallMessage {
 
 		$user_link = $user->getUserPage()->getFullURL();
 
-		$info['user_displayname_linked'] = Xml::openElement( 'a', array( 'href' => $user_link ) ) . $displayname . Xml::closeElement( 'a' );
+		$info['user_displayname_linked'] = Xml::openElement( 'a', [ 'href' => $user_link ] ) . $displayname . Xml::closeElement( 'a' );
 
 		$info['status'] = $this->isAdminDelete() ? 'deleted' : 'removed';
 
@@ -1383,11 +1383,11 @@ class WallMessage {
 	}
 
 	protected function saveReason( $user, $reason ) {
-		$this->mActionReason = array(
+		$this->mActionReason = [
 			'reason' => strip_tags( $reason ),
 			'userid' => $user->getId(),
 			'time' => wfTimestampNow()
-		);
+		];
 
 		wfSetWikiaPageProp( WPP_WALL_ACTIONREASON, $this->getId(), $this->mActionReason );
 	}
@@ -1472,13 +1472,13 @@ class WallMessage {
 												$lastChildCommentId = $commentsIndex->getParentLastCommentId( $useMaster );
 												$commentsIndex->updateParentLastCommentId( $lastChildCommentId );
 
-												wfRunHooks( 'EditCommentsIndex', array( $this->getTitle(), $commentsIndex ) );
+												wfRunHooks( 'EditCommentsIndex', [ $this->getTitle(), $commentsIndex ] );
 												break;
 					case WPP_WALL_REMOVE: $commentsIndex->updateRemoved( $value );
 											$lastChildCommentId = $commentsIndex->getParentLastCommentId( $useMaster );
 											$commentsIndex->updateParentLastCommentId( $lastChildCommentId );
 
-											wfRunHooks( 'EditCommentsIndex', array( $this->getTitle(), $commentsIndex ) );
+											wfRunHooks( 'EditCommentsIndex', [ $this->getTitle(), $commentsIndex ] );
 											break;
 				}
 			}
@@ -1537,7 +1537,7 @@ class WallMessage {
 		}
 
 		if ( $this->propsCache === false ) {
-			$this->propsCache = array();
+			$this->propsCache = [ ];
 		}
 
 		// we have it memc

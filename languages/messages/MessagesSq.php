@@ -673,38 +673,6 @@ Për të hyrë tërësisht duhet të vendosni një fjalëkalim të ri këtu:',
 'resetpass-wrong-oldpass'   => 'Fjalëkalimi momental ose i përkohshëm nuk është i vlefshëm. Ndoshta tanimë me sukses keni ndërruar fjalëkalimin, ose keni kërkuar fjalëkalim të përkohshëm.',
 'resetpass-temp-password'   => 'Fjalëkalimi i përkohshëm:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Ndrysho fjalkalimin',
-'passwordreset-text'               => 'Plotësoni këtë formular për të marrë një këshillë e-mail të dhënat e llogarisë suaj.',
-'passwordreset-legend'             => 'Ndrysho fjalkalimin',
-'passwordreset-disabled'           => 'Rivendosja e fjalëkalimit është deaktivizuar në këtë wiki.',
-'passwordreset-pretext'            => '{{PLURAL:$1| | Shkruani një nga pjesët e të dhënave më poshtë}}',
-'passwordreset-username'           => 'Nofka:',
-'passwordreset-domain'             => 'Domain:',
-'passwordreset-capture'            => 'Dëshiron të shikosh e-mail-in që rezulton?',
-'passwordreset-capture-help'       => "Nëse shënoni këtë kuti, e-mail-i (dhe fjalekalimi i përkohshëm) që do t'i dërgohen përdoruesit, do të të tregohen edhe ty.",
-'passwordreset-email'              => 'Posta elektronike',
-'passwordreset-emailtitle'         => 'Detajet e llogarisë në {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Dikush (ndoshta ju, nga IP adresa $1) kërkoi një kujtesë për
-detajet e llogarisë suaj {{SITENAME}} ($4).Përdoruesi në vijim {{PLURAL:$3|llogari është|llogaritë janë}} të lidhur me këtë postë elektronike:
-
-$2
-
-{{PLURAL:$3|Ky fjalëkalim i përkohshëm|Këto fjalëkalime të përkohshme}} do të përfundojë për {{PLURAL:$5|një ditë|$5 ditë}}.
-
-Ju duhet të kyçeni dhe të zgjidhni një fjalëkalim të ri tani. Nëse dikush tjetër e ka bërë këtë kërkesës, ose në qoftë se ju mbani mend fjalëkalimin tuaj origjinal, dhe ju nuk dëshirojni të ndryshoni atë, ju mund të injoroni këtë mesazh dhe do të vazhdoni përdorimin e fjalëkalimit tuaj të vjetër.',
-'passwordreset-emailtext-user'     => 'Përdoruesi  $1 në {{SITENAME }} ka kërkuar një kujtesë për të dhënat e llogarisë suaj për {{SITENAME }} ($4). Përdoruesi në vijim {{PLURAL: $3 | llogaria është | llogaritë janë}} të lidhur me këtë postë elektronike:
-
-$2
-
-{{PLURAL: $3 | Ky fjalëkalim i përkohshëm | Këto fjalëkalime të përkohshme}} do të përfundojë në {{PLURAL: $5 | një ditë | $5 ditë}}.
-Ju duhet të kyçeni dhe të zgjidhni një fjalëkalim të ri tani. Nëse dikush tjetër e ka bërë këtë kërkesës, ose në qoftë se ju mbani mend fjalëkalimin tuaj origjinal, dhe ju nuk dëshirojni të ndryshoni atë, ju mund të injoroni këtë mesazh dhe do të vazhdoni përdorimin e fjalëkalimit tuaj të vjetër.',
-'passwordreset-emailelement'       => 'Nofka: $1
-Fjalëkalimi i përkohshëm: $2',
-'passwordreset-emailsent'          => 'Një korrespondencë kujtese është dërguar',
-'passwordreset-emailsent-capture'  => 'U dërgua një e-mail kujtesë, i cili tregohet më poshtë.',
-'passwordreset-emailerror-capture' => 'U dërgua një e-mail kujtesë, i cili tregohet më poshtë, por dërgesa për tek përdoruesi qe e pamundur: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Ndrysho postën elektronike',
 'changeemail-header'   => 'Ndrysho llogarinë e adresës së postës elektronike',
