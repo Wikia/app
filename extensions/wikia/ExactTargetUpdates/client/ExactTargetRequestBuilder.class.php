@@ -1,6 +1,7 @@
 <?php
 namespace Wikia\ExactTarget;
 
+use Wikia\ExactTarget\Builders\CreateRequestBuilder;
 use Wikia\ExactTarget\Builders\DeleteRequestBuilder;
 use Wikia\ExactTarget\Builders\UpdateRequestBuilder;
 
@@ -15,5 +16,9 @@ class ExactTargetRequestBuilder {
 
 	public static function createDelete() {
 		return new DeleteRequestBuilder();
+	}
+
+	public static function createCreate() {
+		return new CreateRequestBuilder();
 	}
 }

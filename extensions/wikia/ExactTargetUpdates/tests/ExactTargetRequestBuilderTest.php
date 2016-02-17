@@ -45,6 +45,32 @@ class ExactTargetRequestBuilderTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $oDeleteRequest );
 	}
 
+	/**
+	 * @dataProvider emailsDataProvider
+	 */
+	public function testCreateRequest( $email ) {
+		$subscriber = $this->prepareSubscriber( $email, true );
+		$expected = $this->prepareCreateOption( $subscriber );
+
+		$oRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::createCreate()
+			->withUserEmail( $email )
+			->build();
+
+//		$helper = new ExactTargetApiHelper();
+//		$aSubscribers = $helper->prepareSubscriberObjects( [
+//				[
+//					'SubscriberKey' => $email,
+//					'EmailAddress' => $email,
+//				]
+//			]
+//		);
+//
+//		$aSoapVars = $helper->prepareSoapVars( $aSubscribers, 'Subscriber' );
+//		$oRequest = $helper->wrapCreateRequest( $aSoapVars );
+
+		$this->assertEquals( $expected, $oRequest );
+	}
+
 	public function usersDataProvider() {
 		return [
 			// Test empty array
@@ -96,9 +122,12 @@ class ExactTargetRequestBuilderTest extends WikiaBaseTest {
 		return $dataExtension;
 	}
 
-	private function prepareSubscriber( $email ) {
+	private function prepareSubscriber( $email, $createMode = false ) {
 		$oSubscriber = new \ExactTarget_Subscriber();
 		$oSubscriber->SubscriberKey = $email;
+		if ( $createMode ) {
+			$oSubscriber->EmailAddress = $email;
+		}
 
 		return [ $oSubscriber ];
 	}
@@ -141,5 +170,16 @@ class ExactTargetRequestBuilderTest extends WikiaBaseTest {
 		$oDeleteRequest->Objects = $vars;
 		$oDeleteRequest->Options = new \ExactTarget_DeleteOptions();
 		return $oDeleteRequest;
+	}
+
+	private function prepareCreateOption( $subscribers ) {
+		$oRequest = new \ExactTarget_CreateRequest();
+		$vars = [ ];
+		foreach ( $subscribers as $item ) {
+			$vars[] = $this->wrapToSoapVar( $item, 'Subscriber' );
+		}
+		$oRequest->Options = NULL;
+		$oRequest->Objects = $vars;
+		return $oRequest;
 	}
 }

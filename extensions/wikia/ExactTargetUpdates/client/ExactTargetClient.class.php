@@ -50,6 +50,18 @@ class ExactTargetClient implements Client {
 		//		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oDeleteSubscriberResult ) );
 	}
 
+	public function createSubscriber( $userEmail ) {
+		//		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
+		$oRequest = ExactTargetRequestBuilder::createCreate()
+			->withUserEmail($userEmail)
+			->build();
+
+		$oResults = $this->sendRequest( 'Create', $oRequest );
+
+		//		$this->info( __METHOD__ . ' OverallStatus: ' . $createSubscriberResult->OverallStatus );
+		//		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$createSubscriberResult ) );
+	}
+
 	/**
 	 * Checks whether there are any users that has provided email
 	 * @param string $sEmail Email address to check in ExactTarget

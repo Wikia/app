@@ -86,6 +86,7 @@ $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetRequestBuilder'] =  $dir . '/cl
 $wgAutoloadClasses['Wikia\ExactTarget\Builders\BaseRequestBuilder'] =  $dir . '/client/builders/BaseRequestBuilder.class.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\Builders\UpdateRequestBuilder'] =  $dir . '/client/builders/UpdateRequestBuilder.class.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\Builders\DeleteRequestBuilder'] =  $dir . '/client/builders/DeleteRequestBuilder.class.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Builders\CreateRequestBuilder'] =  $dir . '/client/builders/CreateRequestBuilder.class.php' ;
 
 /* ExactTarget_* classes */
 
