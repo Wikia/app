@@ -297,7 +297,7 @@ class MercuryApiController extends WikiaController {
 
 			if ( $this->mainPageHandler->shouldGetMainPageData( $isMainPage ) ) {
 				$data['mainPageData'] = $this->mainPageHandler->getMainPageData();
-				$data['details'] = ( new MercuryApiArticleHandler( $article, $this->request, $this->mercuryApi ) )
+				$data['details'] = ( new MercuryApiArticleHandler( $article ) )
 					->getArticleDetails();
 			} else {
 				// Article handling

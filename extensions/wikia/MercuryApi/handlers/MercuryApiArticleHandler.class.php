@@ -9,7 +9,7 @@ class MercuryApiArticleHandler {
 	private $mercuryApi = null;
 	private $articleId = null;
 
-	public function __construct( Article $article, WikiaRequest $request, MercuryApi $mercuryApi ) {
+	public function __construct( Article $article, WikiaRequest $request = null, MercuryApi $mercuryApi = null ) {
 		$this->article = $article;
 		$this->request = $request;
 		$this->mercuryApi = $mercuryApi;
@@ -21,7 +21,6 @@ class MercuryApiArticleHandler {
 	 * @throws NotFoundApiException
 	 */
 	public function getArticleData() {
-
 		$data['details'] = $this->getArticleDetails();
 		$data['article'] = $this->getArticleJson();
 		$data['topContributors'] = $this->getTopContributorsDetails(
