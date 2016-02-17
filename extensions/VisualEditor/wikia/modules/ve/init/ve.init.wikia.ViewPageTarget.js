@@ -73,6 +73,8 @@ ve.init.wikia.ViewPageTarget.static.toolbarGroups = [
 	}
 ];
 
+ve.init.wikia.activateToolbarABTest();
+
 if ( ve.init.wikia.getToolbarABTestVariantNumber() === 1 ) {
 	// INT-322 A/B test: Image / Video upload for toolbar: Remove wikiaMediaInsert in insert list
 	ve.init.wikia.ViewPageTarget.static.toolbarGroups[5].include.splice(0, 1);

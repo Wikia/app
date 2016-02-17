@@ -16,9 +16,9 @@ ve.init.wikia.getToolbarABTestVariantNumber = function () {
 };
 
 /**
- * Hook for activating experiment on VE load
+ * Activates toolbar A/B test
  */
-mw.hook( 've.activate' ).add( function () {
+ve.init.wikia.activateToolbarABTest = function () {
 	// Production tests are split by language. This is done because each language has a separate engagement percentage
 	var optimizelyIds = window.wgDevelEnvironment ?
 		[ '4721410313' ] : [ '4701112678', '5003080344', '5003533755', '5013830116' ];
@@ -26,4 +26,4 @@ mw.hook( 've.activate' ).add( function () {
 	optimizelyIds.forEach( function (element) {
 		window.optimizely.push( [ 'activate', element ] );
 	});
-});
+};
