@@ -58,10 +58,10 @@ class PortableInfoboxBuilderController extends WikiaController {
 		$infoboxes = $infoboxDataService->getInfoboxes();
 
 		if ( $status->isGood() && count($infoboxes) > 1 ) {
-			$status->fatal( 'write-conflict' );
+			$status->fatal( 'article-modified' );
 		}
 
-		return $status->isGood() ? $this->save( $title, $params[ 'data' ], empty($infoboxes) ? null : $infoboxes[0] ) : $status;
+		return $status->isGood() ? $this->save( $title, $params[ 'data' ], $infoboxes[0] ) : $status;
 	}
 
 	private function save( Title $title, $data, $oldInfobox) {
