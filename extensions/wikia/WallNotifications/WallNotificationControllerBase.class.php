@@ -289,13 +289,13 @@ abstract class WallNotificationControllerBase extends WikiaController {
 	 * @param string $title
 	 * @return string
 	 */
-	protected abstract function getTitle( string $title );
+	protected abstract function getTitle( $title );
 
 	/**
 	 * @param bool $unread
 	 * @return void
 	 */
-	protected abstract function setUnread( bool $unread );
+	protected abstract function setUnread( $unread );
 
 	/**
 	 * @return void

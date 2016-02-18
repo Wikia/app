@@ -88,7 +88,7 @@ class UserPermissionsIntegrationTest extends \WikiaBaseTest {
 	}
 
 	function testShouldReturnGroupPermissions() {
-		global $wgGroupPermissions, $wgRevokePermissions;
+		global $wgGroupPermissions;
 
 		# Data for regular $wgGroupPermissions test
 		$wgGroupPermissions['unittesters'] = array(
@@ -101,10 +101,6 @@ class UserPermissionsIntegrationTest extends \WikiaBaseTest {
 			'test' => true,
 			'writetest' => true,
 			'modifytest' => true,
-		);
-		# Data for regular $wgRevokePermissions test
-		$wgRevokePermissions['formertesters'] = array(
-			'runtest' => true,
 		);
 
 		$permissions = $this->permissionsService->getGroupPermissions( array( 'unittesters' ) );
@@ -121,7 +117,7 @@ class UserPermissionsIntegrationTest extends \WikiaBaseTest {
 	}
 
 	public function testShouldReturnGroupPermissionsIncludingRevoked() {
-		global $wgGroupPermissions, $wgRevokePermissions;
+		global $wgGroupPermissions;
 
 		# Data for regular $wgGroupPermissions test
 		$wgGroupPermissions['unittesters'] = array(
@@ -135,20 +131,15 @@ class UserPermissionsIntegrationTest extends \WikiaBaseTest {
 			'writetest' => true,
 			'modifytest' => true,
 		);
-		# Data for regular $wgRevokePermissions test
-		$wgRevokePermissions['formertesters'] = array(
-			'runtest' => true,
-		);
 
 		$permissions = $this->permissionsService->getGroupPermissions( array( 'unittesters', 'formertesters' ) );
-		$this->assertNotContains( 'runtest', $permissions );
 		$this->assertNotContains( 'writetest', $permissions );
 		$this->assertNotContains( 'modifytest', $permissions );
 		$this->assertNotContains( 'nukeworld', $permissions );
 	}
 
 	function testShouldReturnGroupsWithPermission() {
-		global $wgGroupPermissions, $wgRevokePermissions;
+		global $wgGroupPermissions;
 
 		# Data for regular $wgGroupPermissions test
 		$wgGroupPermissions['unittesters'] = array(
@@ -161,10 +152,6 @@ class UserPermissionsIntegrationTest extends \WikiaBaseTest {
 			'test' => true,
 			'writetest' => true,
 			'modifytest' => true,
-		);
-		# Data for regular $wgRevokePermissions test
-		$wgRevokePermissions['formertesters'] = array(
-			'runtest' => true,
 		);
 
 		$groups = $this->permissionsService->getGroupsWithPermission( 'test' );

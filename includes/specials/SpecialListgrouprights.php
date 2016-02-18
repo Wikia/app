@@ -62,7 +62,7 @@ class SpecialListGroupRights extends SpecialPage {
 	 * Show the special page
 	 */
 	public function execute( $par ) {
-		global $wgGroupPermissions, $wgRevokePermissions;
+		global $wgGroupPermissions;
 
 		$this->setHeaders();
 		$this->outputHeader();
@@ -127,7 +127,6 @@ class SpecialListGroupRights extends SpecialPage {
 
 			$groupArr = $this->userPermissions()->getGroupsChangeableByGroup( $group );
 
-			$revoke = isset( $wgRevokePermissions[$group] ) ? $wgRevokePermissions[$group] : array();
 			$addgroups = isset( $groupArr['add'] ) ? $groupArr['add'] : array();
 			$removegroups = isset( $groupArr['remove'] ) ? $groupArr['remove'] : array();
 			$addgroupsSelf = isset( $groupArr['add-self'] ) ? $groupArr['add-self'] : array();
@@ -138,7 +137,7 @@ class SpecialListGroupRights extends SpecialPage {
 				"
 				<td>$grouppage$grouplink</td>
 					<td>" .
-						$this->formatPermissions( $permissions, $revoke, $addgroups, $removegroups,
+						$this->formatPermissions( $permissions, $addgroups, $removegroups,
 							$addgroupsSelf, $removegroupsSelf ) .
 					'</td>
 				'
@@ -154,28 +153,18 @@ class SpecialListGroupRights extends SpecialPage {
 	 * Create a user-readable list of permissions from the given array.
 	 *
 	 * @param $permissions Array of permission => bool (from $wgGroupPermissions items)
-	 * @param $revoke Array of permission => bool (from $wgRevokePermissions items)
 	 * @param $add Array of groups this group is allowed to add or true
 	 * @param $remove Array of groups this group is allowed to remove or true
 	 * @param $addSelf Array of groups this group is allowed to add to self or true
 	 * @param $removeSelf Array of group this group is allowed to remove from self or true
 	 * @return string List of all granted permissions, separated by comma separator
 	 */
-	 private function formatPermissions( $permissions, $revoke, $add, $remove, $addSelf, $removeSelf ) {
+	 private function formatPermissions( $permissions, $add, $remove, $addSelf, $removeSelf ) {
 		$r = array();
 		foreach( $permissions as $permission => $granted ) {
 			//show as granted only if it isn't revoked to prevent duplicate display of permissions
 			if( $granted && ( !isset( $revoke[$permission] ) || !$revoke[$permission] ) ) {
 				$description = wfMsgExt( 'listgrouprights-right-display', array( 'parseinline' ),
-					User::getRightDescription( $permission ),
-					'<span class="mw-listgrouprights-right-name">' . $permission . '</span>'
-				);
-				$r[] = $description;
-			}
-		}
-		foreach( $revoke as $permission => $revoked ) {
-			if( $revoked ) {
-				$description = wfMsgExt( 'listgrouprights-right-revoked', array( 'parseinline' ),
 					User::getRightDescription( $permission ),
 					'<span class="mw-listgrouprights-right-name">' . $permission . '</span>'
 				);

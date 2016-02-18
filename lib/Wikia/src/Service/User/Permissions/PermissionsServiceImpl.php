@@ -120,9 +120,9 @@ class PermissionsServiceImpl implements PermissionsService {
 	}
 
 	private function loadExplicitGroups() {
-		global $wgGroupPermissions, $wgRevokePermissions;
+		global $wgGroupPermissions;
 		$this->explicitGroups = array_diff(
-			array_merge( array_keys( $wgGroupPermissions ), array_keys( $wgRevokePermissions ) ),
+			array_keys( $wgGroupPermissions ),
 			$this->implicitGroups
 		);
 	}
@@ -475,7 +475,7 @@ class PermissionsServiceImpl implements PermissionsService {
 	 * @return Array of Strings List of permission key names for given groups combined
 	 */
 	public function getGroupPermissions( $groups ) {
-		global $wgGroupPermissions, $wgRevokePermissions;
+		global $wgGroupPermissions;
 		$rights = array();
 		// grant every granted permission first
 		foreach( $groups as $group ) {
@@ -483,13 +483,6 @@ class PermissionsServiceImpl implements PermissionsService {
 				$rights = array_merge( $rights,
 					// array_filter removes empty items
 					array_keys( array_filter( $wgGroupPermissions[$group] ) ) );
-			}
-		}
-		// now revoke the revoked permissions
-		foreach( $groups as $group ) {
-			if( isset( $wgRevokePermissions[$group] ) ) {
-				$rights = array_diff( $rights,
-					array_keys( array_filter( $wgRevokePermissions[$group] ) ) );
 			}
 		}
 		return array_values( array_unique( $rights ) );
