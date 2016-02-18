@@ -39,29 +39,43 @@ class PortableInfoboxBuilderController extends WikiaController {
 
 	private function attemptSave( $params ) {
 		$status = new Status();
-		// check for title
-		if ( !$params[ 'title' ] ) {
+
+		$title = $this->getTitle($params[ 'title' ], $status);
+
+		$status = $this->checkUserPermissions($title, $status);
+
+		$infoboxDataService = PortableInfoboxDataService::newFromTitle($title);
+		$infoboxes = $infoboxDataService->getInfoboxes();
+		$status = $this->checkForConflicts($infoboxes, $status);
+
+		return $status->isGood() ? $this->save( $title, $params[ 'data' ], $infoboxes[0] ) : $status;
+	}
+
+	private function getTitle($titleParam, &$status) {
+		if ( !$titleParam ) {
 			$status->fatal( 'no-title-provided' );
 		}
-		$title = $status->isGood() ? Title::newFromText( $params[ 'title' ], NS_TEMPLATE ) : false;
+
+		$title = $status->isGood() ? Title::newFromText( $titleParam, NS_TEMPLATE ) : false;
 		// check if title object created
 		if ( $status->isGood() && !$title ) {
-			$status->fatal( 'no-title-object' );
+			$status->fatal( 'bad-title' );
 		}
-		// user permissions check
+		return $title;
+	}
+
+	private function checkUserPermissions($title, $status) {
 		if ( $status->isGood() && !$title->userCan( 'edit' ) ) {
 			$status->fatal( 'user-cant-edit' );
 		}
+		return $status;
+	}
 
-		//check if there is no write conflict
-		$infoboxDataService = PortableInfoboxDataService::newFromTitle($title);
-		$infoboxes = $infoboxDataService->getInfoboxes();
-
+	private function checkForConflicts($infoboxes, $status) {
 		if ( $status->isGood() && count($infoboxes) > 1 ) {
 			$status->fatal( 'article-modified' );
 		}
-
-		return $status->isGood() ? $this->save( $title, $params[ 'data' ], $infoboxes[0] ) : $status;
+		return $status;
 	}
 
 	private function save( Title $title, $data, $oldInfobox) {
