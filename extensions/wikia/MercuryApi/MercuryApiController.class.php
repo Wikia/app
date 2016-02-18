@@ -311,17 +311,21 @@ class MercuryApiController extends WikiaController {
 
 					$data = array_merge(
 						$data,
-						( new MercuryApiArticleHandler( $article, $this->request, $this->mercuryApi ) )
-							->getArticleData()
+						MercuryApiArticleHandler::getArticleData( $article, $this->request, $this->mercuryApi )
 					);
 
 					if ( !$isMainPage ) {
 						$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
 					}
+					//Handling namespaces other than content ns
 				} else {
 					switch ( $data['ns'] ) {
 						case NS_CATEGORY:
-							$data['content'] = ( new MercuryApiCategoryHandler( $title ) )->getCategoryContent();
+							$data['nsData'] = MercuryApiCategoryHandler::getCategoryContent( $title );
+							if (MercuryApiCategoryHandler::hasArticle($title)) {
+								$data['article'] = MercuryApiArticleHandler::getArticleJson($article, $this->request);
+								$data['details'] = MercuryApiArticleHandler::getArticleDetails($article);
+							}
 							break;
 					}
 				}

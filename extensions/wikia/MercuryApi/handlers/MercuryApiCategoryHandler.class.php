@@ -1,32 +1,20 @@
 <?php
 
 class MercuryApiCategoryHandler {
-	/**
-	 * @var WikiaMobileCategoryService
-	 */
-	private $categoryService = null;
-	private $title = null;
-	private $categoryPage = null;
 
-	public function __construct($title) {
-		$this->categoryService = new WikiaMobileCategoryService();
-		$this->title = $title;
-		$this->categoryPage = CategoryPage::newFromTitle($title, RequestContext::getMain());
-	}
-
-	public function getCategoryContent() {
+	public static function getCategoryContent(Title $title) {
+		$categoryPage = CategoryPage::newFromTitle($title, RequestContext::getMain());
 		return [
-			'members' => $this->getMembers(),
-			'exhibition' => $this->getExhibition(),
-			'content' => $this->getContent()
+			'members' => self::getMembers($categoryPage),
+			'exhibition' => self::getExhibition($categoryPage)
 		];
 	}
 
-	public function getMembers() {
+	public static function getMembers($categoryPage) {
 		$alphabeticalList =  F::app()->sendRequest(
 			'WikiaMobileCategoryService',
 			'alphabeticalList',
-			['categoryPage' => $this->categoryPage]
+			['categoryPage' => $categoryPage]
 		)->getData();
 
 		$sanitizedAlphabeticalList = ['collections' => [] ];
@@ -51,15 +39,15 @@ class MercuryApiCategoryHandler {
 		return $sanitizedAlphabeticalList;
 	}
 
-	public function getExhibition() {
+	public static function getExhibition($categoryPage) {
 		return F::app()->sendRequest(
 			'WikiaMobileCategoryService',
 			'categoryExhibition',
-			['categoryPage' => $this->categoryPage]
+			['categoryPage' => $categoryPage]
 		)->getData();
 	}
 
-	public function getContent() {
-		return null;
+	public static function hasArticle(Title $title) {
+		return $title->getArticleID() > 0;
 	}
 }
