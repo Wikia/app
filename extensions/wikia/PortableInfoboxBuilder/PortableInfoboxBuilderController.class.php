@@ -46,11 +46,18 @@ class PortableInfoboxBuilderController extends WikiaController {
 
 		$infoboxDataService = PortableInfoboxDataService::newFromTitle($title);
 		$infoboxes = $infoboxDataService->getInfoboxes();
-		$status = $this->checkForConflicts($infoboxes, $status);
+		$status = $this->checkSaveEligibility($infoboxes, $status);
 
 		return $status->isGood() ? $this->save( $title, $params[ 'data' ], $infoboxes[0] ) : $status;
 	}
 
+	/**
+	 * creates Title object from provided title string. If Title object can not be created then status is updated
+	 * @param $titleParam
+	 * @param $status
+	 * @return Title
+	 * @throws MWException
+	 */
 	private function getTitle($titleParam, &$status) {
 		if ( !$titleParam ) {
 			$status->fatal( 'no-title-provided' );
@@ -64,6 +71,12 @@ class PortableInfoboxBuilderController extends WikiaController {
 		return $title;
 	}
 
+	/**
+	 * checks if user can edit
+	 * @param $title
+	 * @param $status
+	 * @return mixed
+	 */
 	private function checkUserPermissions($title, $status) {
 		if ( $status->isGood() && !$title->userCan( 'edit' ) ) {
 			$status->fatal( 'user-cant-edit' );
@@ -71,9 +84,16 @@ class PortableInfoboxBuilderController extends WikiaController {
 		return $status;
 	}
 
-	private function checkForConflicts($infoboxes, $status) {
+	/**
+	 * checks if there are more infoboxes within template.
+	 * @param $infoboxes
+	 * @param $status
+	 * @return mixed
+	 */
+	private function checkSaveEligibility($infoboxes, $status) {
+		//if there are more than one infobox in template it means that someone else added it manually.
 		if ( $status->isGood() && count($infoboxes) > 1 ) {
-			$status->fatal( 'article-modified' );
+			$status->fatal( 'article-usupported' );
 		}
 		return $status;
 	}
