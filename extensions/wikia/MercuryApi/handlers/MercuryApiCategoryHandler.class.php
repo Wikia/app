@@ -24,15 +24,14 @@ class MercuryApiCategoryHandler {
 			$itemsBatch = wfPaginateArray( $collection, WikiaMobileCategoryModel::BATCH_SIZE, $batch );
 			$currentBatch = $itemsBatch['currentBatch'];
 			$nextBatch = $currentBatch + 1;
-			$prevBatch = $currentBatch - 1;
 
 			$sanitizedAlphabeticalList['collections'][rawurlencode( $index )] = [
 				'items' => $itemsBatch['items'],
 				'nextBatch' => $nextBatch,
 				'currentBatch' => $currentBatch,
-				'prevBatch' => $prevBatch,
 				'total' => $itemsBatch['total'],
-				'hasNext' => $itemsBatch['next'] > 0
+				'hasNext' => $itemsBatch['next'] > 0,
+				'batchSize' => WikiaMobileCategoryModel::BATCH_SIZE
 			];
 		}
 
