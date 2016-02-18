@@ -1,6 +1,6 @@
 /*global define*/
 define('ext.wikia.recirculation.googleMatchHelper', [
-	'wikia.jquery'
+	'jquery',
 	'wikia.document',
 	'wikia.window'
 ], function ($, document, window) {
