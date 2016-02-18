@@ -1337,12 +1337,6 @@ $wgAdDriverUseTaboola = true;
  */
 $wgAdDriverTaboolaConfig = null;
 
-/**
- * @name $wgAdDriverUseTopInContentBoxad
- * Whether to enable the in-content ads for Oasis (for narrow screens)
- */
-$wgAdDriverUseTopInContentBoxad = true;
-
 /** @name $wgSitewideDisableAdsOnMercury
  * Disable ads on Mercury if set to true.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

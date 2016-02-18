@@ -186,15 +186,6 @@ $config['adengine2_interactive_maps_js'] = array(
 	),
 );
 
-$config['adengine2_oasis_in_content_ads_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'oasis',
-	'assets' => array(
-		'//extensions/wikia/AdEngine/js/slot/inContent.js',
-		'//extensions/wikia/AdEngine/js/slot/inContentDesktop.js',
-	),
-);
-
 $config['adengine2_oasis_exitstitial_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'oasis',
