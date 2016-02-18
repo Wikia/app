@@ -35,10 +35,8 @@ class MercuryApiArticleHandler {
 			->sendRequest( 'ArticlesApi', 'getDetails', [ 'ids' => $articleId ] )
 			->getData()['items'][$articleId];
 
-		$description = self::getArticleDescription( $article );
-
 		$articleDetails['abstract'] = htmlspecialchars( $articleDetails['abstract'] );
-		$articleDetails['description'] = htmlspecialchars( $description );
+		$articleDetails['description'] = htmlspecialchars( self::getArticleDescription( $article ) );
 
 		return $articleDetails;
 	}
