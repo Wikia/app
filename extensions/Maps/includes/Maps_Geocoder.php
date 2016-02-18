@@ -111,8 +111,8 @@ abstract class MapsGeocoder {
 	 * @return array or false
 	 */
 	public function geocode( $address ) {
-		$response = Http::get( $this->getRequestUrl( $address ) );
-		
+		$response = Http::get( $this->getRequestUrl( $address ), null, [ 'noProxy' => true ] ); # Wikia change
+
 		if ( $response === false ) {
 			return false;
 		}

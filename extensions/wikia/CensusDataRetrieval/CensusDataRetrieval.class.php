@@ -143,8 +143,6 @@ class CensusDataRetrieval {
 	public function fetchData()	{
 		wfProfileIn( __METHOD__ );
 		// fetch data from API based on $this->query
-		$http = new Http();
-
 		$censusData = null;
 
 		//Check censusDataArr to find out if relevant data exists in Census
@@ -160,7 +158,7 @@ class CensusDataRetrieval {
 			$type = $key[0];
 			$id   = $key[1];
 			//fetch data from Census by type and id
-			$censusData = $http->get( sprintf( self::QUERY_URL, $type, $id ) );
+			$censusData = Http::get( sprintf( self::QUERY_URL, $type, $id ), null, [ 'noProxy' => true ] );
 			$map        = json_decode( $censusData );
 			if ( $map->returned > 0 ) {
 				$censusData = $map->{$type . '_list'}[0];
@@ -456,13 +454,14 @@ class CensusDataRetrieval {
 			return $data;
 		}
 
-		$http = new Http();
 		$data = array();
 		foreach ( $this->supportedTypes as $type ) {
-			$censusData = $http->get(
-				sprintf( self::QUERY_URL, $type, '?c:show=id,name.' . $wikilang . '&c:limit=0' )
+			$censusData = Http::get(
+				sprintf( self::QUERY_URL, $type, '?c:show=id,name.' . $wikilang . '&c:limit=0' ),
+				null,
+				[ 'noProxy' => true ]
 			);
-			$map        = json_decode( $censusData );
+			$map = json_decode( $censusData );
 			$this->mergeResult( $data, $map, $type );
 		}
 		// error handling

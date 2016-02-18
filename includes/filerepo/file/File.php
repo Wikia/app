@@ -1578,7 +1578,7 @@ abstract class File implements UrlGeneratorInterface {
 				wfDebug("miss\n");
 			}
 			wfDebug( "Fetching shared description from $renderUrl\n" );
-			$res = Http::get( $renderUrl );
+			$res = Http::get( $renderUrl, null, [ 'noProxy' => true ] ); # Wikia change
 			if ( $res && $this->repo->descriptionCacheExpiry > 0 ) {
 				$wgMemc->set( $key, $res, $this->repo->descriptionCacheExpiry );
 			}
