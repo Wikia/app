@@ -151,17 +151,20 @@ class WallNotificationsControllerTest extends WikiaBaseTest {
 						'msg_author_username' => 'Ann',
 						'wall_username' => 'Crazy frog',
 						'wall_displayname' => 'Crazy frog',
-						'parent_username' => 'Tom' ],
+						'parent_username' => 'Tom',
+						'thread_title' => 'hello message' ],
 					[ 'msg_author_displayname' => 'Bob',
 						'msg_author_username' => 'Bob',
 						'wall_username' => 'Crazy frog',
 						'wall_displayname' => 'Crazy frog',
-						'parent_username' => 'Tom' ],
+						'parent_username' => 'Tom',
+						'thread_title' => 'hello message' ],
 					[ 'msg_author_displayname' => 'Crazy frog',
 						'msg_author_username' => 'Crazy frog',
 						'wall_username' => 'Crazy frog',
 						'wall_displayname' => 'Crazy frog',
-						'parent_username' => 'Tom' ]
+						'parent_username' => 'Tom',
+						'thread_title' => 'hello message' ]
 				]
 			]
 		];
