@@ -75,10 +75,12 @@ class WallThread {
 			$this->data->threadReplyIds = [ ];
 		}
 
-		foreach ( $this->data->threadReplyIds as $id ) {
-			$wm = WallMessage::newFromId( $id, $this->mForceMaster );
-			if ( $wm instanceof WallMessage && !$wm->isAdminDelete() ) {
-				$this->data->threadReplyObjs[] = $wm;
+		$replyMessages = WallMessage::newFromIds( $this->data->threadReplyIds );
+
+		/** @var WallMessage $reply */
+		foreach ( $replyMessages as $reply ) {
+			if ( !$reply->isAdminDelete() ) {
+				$this->data->threadReplyObjs[] = $reply;
 			}
 		}
 	}
