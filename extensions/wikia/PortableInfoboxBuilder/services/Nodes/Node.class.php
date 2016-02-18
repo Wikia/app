@@ -32,12 +32,15 @@ abstract class Node {
 	 * Return whether the node in its current state is supported by Infobox Builder
 	 * @return bool
 	 */
-
 	public function isValid() {
-		if ( !( $this->hasValidAttributes() && $this->hasValidChildren() ) ) {
+		if ( !( $this->hasValidContent() && $this->hasValidAttributes() && $this->hasValidChildren() ) ) {
 			return false;
 		}
 
+		return true;
+	}
+
+	public function hasValidContent() {
 		return true;
 	}
 
