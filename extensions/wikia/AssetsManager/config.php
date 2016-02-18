@@ -2487,23 +2487,6 @@ $config['portable_infobox_monobook_scss'] = [
 	]
 ];
 
-$config[ 'portable_infobox_builder_js' ] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//resources/wikia/libraries/Ponto/ponto.js',
-		'//extensions/wikia/PortableInfoboxBuilder/js/PortableInfoboxBuilderPonto.js',
-		'//extensions/wikia/PortableInfoboxBuilder/js/PortableInfoboxBuilder.js'
-	]
-];
-
-$config[ 'portable_infobox_builder_scss' ] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => ['oasis'],
-	'assets' => [
-		'//extensions/wikia/PortableInfoboxBuilder/styles/PortableInfoboxBuilder.scss'
-	]
-];
-
 $config['flags_view_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis', 'monobook' ],

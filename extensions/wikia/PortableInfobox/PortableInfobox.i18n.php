@@ -16,7 +16,8 @@ $messages['en'] = array(
 	'portable-infobox-xml-parse-error-gt-required' => 'Tag definition is not properly terminated',
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => 'Opening and ending tag mismatch',
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'Premature end of tag',
-	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Attribute "$1" is not supported in <infobox> tag',
+	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Attribute "$1" is not supported in
+	<infobox> tag',
 );
 
 $messages['qqq'] = array(
