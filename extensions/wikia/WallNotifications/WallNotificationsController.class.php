@@ -28,7 +28,7 @@ class WallNotificationsController extends WallNotificationControllerBase {
 		// nothing to do in this controller
 	}
 
-	public function getTitle( string $title ) {
+	public function getTitle( $title ) {
 		return $title;
 	}
 
@@ -39,7 +39,7 @@ class WallNotificationsController extends WallNotificationControllerBase {
 		return !empty( $suppressed );
 	}
 
-	protected function setUnread( bool $unread ) {
+	protected function setUnread( $unread ) {
 		// nothing to do in this controller
 	}
 
