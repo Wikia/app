@@ -101,7 +101,7 @@ class MercuryApiArticleHandler {
 	 * @param array $ids
 	 * @return mixed
 	 */
-	private static function getTopContributorsDetails( Array $ids ) {
+	public static function getTopContributorsDetails( Array $ids ) {
 		if ( empty( $ids ) ) {
 			return [ ];
 		}
@@ -137,7 +137,7 @@ class MercuryApiArticleHandler {
 	 * @param int $limit
 	 * @return mixed
 	 */
-	private static function getRelatedPages( Article $article, $limit = 6 ) {
+	public static function getRelatedPages( Article $article, $limit = 6 ) {
 		if ( class_exists( 'RelatedPages' ) ) {
 			return RelatedPages::getInstance()->get( $article->getID(), $limit );
 		} else {
