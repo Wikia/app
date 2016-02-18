@@ -80,7 +80,9 @@ class WikiaLogger implements LoggerInterface {
 				return false;
 		}
 
-		$this->getLogger()->$method("PHP {$priorityString}: {$message} in {$file} on line {$line}");
+		$this->getLogger()->$method("PHP {$priorityString}: {$message} in {$file} on line {$line}", [
+			'exception' => new \Exception(),
+		]);
 
 		if ($exit) {
 			exit(1);

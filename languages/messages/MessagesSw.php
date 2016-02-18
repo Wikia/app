@@ -614,36 +614,6 @@ Kumalizia kuingia ndani, ni lazima urekebishe neno la siri jipya hapa:',
 Inawezekana ikawa tayari umefaulu kubadilisha neno lako la siri au neno la siri jipya la muda.',
 'resetpass-temp-password'   => 'Neno la siri la muda:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Seti upya neno la siri',
-'passwordreset-text'               => 'Jaza fomu hii ili upate barua pepe inayotoa maelezo ya akaunti yako.',
-'passwordreset-legend'             => 'Seti upya neno la siri',
-'passwordreset-disabled'           => 'Kuweka neno la siri jipya kumeshitishwa katika wiki hii.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Ingiza moja kati ya data hizi hapo chini}}',
-'passwordreset-username'           => 'Jina la mtumiaji:',
-'passwordreset-domain'             => 'Miliki',
-'passwordreset-capture'            => 'Ioneshe barua-pepe itakayotumwa?',
-'passwordreset-capture-help'       => 'Iwapo utatia alama kisanduku hiki, barua-pepe (pamoja na nenosiri la muda) litaoneshwa kwako na vilevile litatumwa kwa mtumiaji.',
-'passwordreset-email'              => 'Anwani ya barua pepe:',
-'passwordreset-emailtitle'         => 'Maelezo ya akaunti kwenye {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Kuna mtu (huenda ikawa ni wewe, kutoka anwani ya IP $1) aliyeomba kukumbushwa kuhusu maelezo ya akaunti yako katika {{SITENAME}} ($4). {{PLURAL:$3|Akaunti inayofuata imeunganishwa|Akaunti zinazofuata zimeunganishwa}} na anwani ya barua pepe hii:
-
-$2
-
-{{PLURAL:$3|Neno la siri hili litakwisha|Maneno ya siri haya yatakwisha}} baada ya siku {{PLURAL:$5|$5}}.
-Tafadhali ingia sasa na uchague neno jipya la siri. Kama mtu mwingine ameomba hili, au ikiwa umekumbuka neno lako la siri na hutaki kulibadilisha tena, basi usijali ujumbe huu, na uendelee kutumia neno la siri lako la zamani.',
-'passwordreset-emailtext-user'     => 'Mtumiaji $1 kwenye {{SITENAME}} ameomba akumbushwe maelezo ya akaunti yako katika {{SITENAME}} ($4). {{PLURAL:$3|Akaunti inayofuata imeunganishwa|Akaunti zinazofuata zimeunganishwa}} na anwani ya barua pepe hii:
-
-$2
-
-{{PLURAL:$3|Neno la siri hili litakwisha|Maneno ya siri haya yatakwisha}} baada ya siku {{PLURAL:$5|$5}}.
-Tafadhali ingia sasa na uchague neno jipya la siri. Kama mtu mwingine ameomba hili, au ikiwa umekumbuka neno lako la siri na hutaki kulibadilisha tena, basi usijali ujumbe huu, na uendelee kutumia neno la siri lako la zamani.',
-'passwordreset-emailelement'       => 'Jina la mtumiaji: $1
-Neno la siri la muda: $2',
-'passwordreset-emailsent'          => 'Barua pepe ya ukumbusho imetumwa.',
-'passwordreset-emailsent-capture'  => 'Barua pepe ya ukukumbusho imetumwa, ambayo inaonekana hapo chini.',
-'passwordreset-emailerror-capture' => 'Barua pepe ya ukukumbusho imetengenezwa, ambayo inaonekana hapo chini, lakini kuituma kwa mtumiaji imeshindikana: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Badilisha anwani ya barua pepe',
 'changeemail-header'   => 'Badilisha anwani ya barua pepe ya akaunti yako',

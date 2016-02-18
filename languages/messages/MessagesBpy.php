@@ -521,12 +521,6 @@ $2',
 নিঙকরুরিতা তি হাদিএহান তর খন্তাচাবিগ সিলকরিসত নাইলে আরাক লেপনেই খন্তাচাবি আগর হেইচা করিসত।',
 'resetpass-temp-password'   => 'লেপনাইসে খন্তাচাবি:',
 
-# Special:PasswordReset
-'passwordreset'          => 'খন্তাচাবি রিসেট',
-'passwordreset-legend'   => 'খন্তাচাবি রিসেট',
-'passwordreset-username' => 'আতাকুরার নাংহান:',
-'passwordreset-domain'   => 'ডমেইন:',
-
 # Special:ChangeEmail
 'changeemail'         => 'ই-মেইল ঠিকানাহান সিলকর',
 'changeemail-header'  => 'অ্যাকাউন্টর ই-মেইল ঠিকানাহান সিলকর',

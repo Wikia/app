@@ -776,36 +776,6 @@ $2',
 당신은 이미 비밀번호를 성공적으로 변경하였거나 새 임시 비밀번호를 발급받았을 수 있습니다.',
 'resetpass-temp-password'   => '임시 비밀번호:',
 
-# Special:PasswordReset
-'passwordreset'                    => '암호 재설정',
-'passwordreset-text'               => '이메일을 통해 계정 정보를 받을 수 있습니다. 아래의 칸을 채워주세요.',
-'passwordreset-legend'             => '암호 초기화',
-'passwordreset-disabled'           => '이 위키에서는 암호 초기화 기능을 사용하지 않습니다.',
-'passwordreset-pretext'            => '{{PLURAL:$1||아래에 한 가지 정보를 입력해주십시오}}',
-'passwordreset-username'           => '계정 이름:',
-'passwordreset-domain'             => '도메인:',
-'passwordreset-capture'            => '발송 결과 이메일을 보시겠습니까?',
-'passwordreset-capture-help'       => '이 상자에 체크하면 이메일이 발송된 즉시 임시 비밀번호가 담긴 이메일을 볼 수 있습니다.',
-'passwordreset-email'              => '이메일 주소:',
-'passwordreset-emailtitle'         => '{{SITENAME}} 계정 상세 정보',
-'passwordreset-emailtext-ip'       => 'IP 주소 $1을 사용하는 누군가(아마도 당신이), {{SITENAME}} ($4)의 비밀번호 찾기를 요청하였습니다. 이 이메일 주소와 연관된 계정의 목록입니다:
-
-$2
-
-이 {{PLURAL:$3|임시 비밀번호}}의 효력은 $5일 후 만료됩니다.
-이 비밀번호로 로그인한 후 비밀번호를 변경하십시오. 만약 당신이 아닌 다른 사람이 요청하였거나, 원래의 비밀번호를 기억해냈다면, 이 메시지를 무시하고 이전의 비밀번호를 계속 사용할 수 있습니다.',
-'passwordreset-emailtext-user'     => '{{SITENAME}} ($4)의 사용자 $1이 비밀번호 찾기를 요청하였습니다. 이 이메일 주소와 연관된 계정의 목록입니다:
-
-$2
-
-이 {{PLURAL:$3|임시 비밀번호}}의 효력은 $5일 후 만료됩니다.
-이 비밀번호로 로그인한 후 비밀번호를 변경하십시오. 만약 당신이 아닌 다른 사람이 요청하였거나, 원래의 비밀번호를 기억해냈다면, 이 메시지를 무시하고 이전의 비밀번호를 계속 사용할 수 있습니다.',
-'passwordreset-emailelement'       => '계정 이름: $1
-임시 비밀번호: $2',
-'passwordreset-emailsent'          => '비밀번호 찾기 이메일을 보냈습니다.',
-'passwordreset-emailsent-capture'  => '비밀번호 찾기 이메일이 발송되었으며, 아래에 표시되어 있습니다.',
-'passwordreset-emailerror-capture' => '비밀번호 찾기 이메일이 생성되어 아래에 표시되었지만 발송하는 데에는 실패했습니다: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'E-mail 주소 변경',
 'changeemail-header'   => '계정 메일 주소 변경',

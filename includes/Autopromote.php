@@ -66,7 +66,7 @@ class Autopromote {
 				return false;
 			} elseif ( $cond[0] == '^' ) { // XOR (exactly one cond passes)
 				if ( count( $cond ) > 3 ) {
-					wfWarn( 'recCheckCondition() given XOR ("^") condition on three or more conditions. Check your $wgAutopromote and $wgAutopromoteOnce settings.' );
+					wfWarn( 'recCheckCondition() given XOR ("^") condition on three or more conditions. Check your $wgAutopromote settings.' );
 				}
 				return self::recCheckCondition( $cond[1], $user )
 					xor self::recCheckCondition( $cond[2], $user );

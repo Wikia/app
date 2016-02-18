@@ -440,9 +440,6 @@ MySQL جوابِ خطاء پرائے "$3: $4"',
 تو تان پاسورڈو کامیابیو سورا تبدیل کوری آسوس  یا تو نوغ عارضی پاسورڈو بچے درخواست کوری آسوس.',
 'resetpass-temp-password'   => 'عارضی پاسورڈ:',
 
-# Special:PasswordReset
-'passwordreset' => 'پاسورڈو ری سیٹ کورے',
-
 # Edit page toolbar
 'bold_sample'     => 'بوسک متن',
 'bold_tip'        => 'بولڈ ٹیکسٹ',

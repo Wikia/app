@@ -786,43 +786,6 @@ Molimo Vas da pričekate prije nego što pokušate ponovo.',
 Možda ste već uspješno promijenili Vašu lozinku ili ste zatražili novu privremenu lozinku.',
 'resetpass-temp-password'   => 'Privremena lozinka:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Ponovno postavi lozinku',
-'passwordreset-text'               => 'Ispunite ovaj obrazac da biste dobili e-mail podsjetnik o vašim detaljima računa.',
-'passwordreset-legend'             => 'Poništi lozinku',
-'passwordreset-disabled'           => 'Poništavanje lozinke je onemogućeno na ovom wikiju.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Unesite jedan od dijelova podataka u nastavku}}',
-'passwordreset-username'           => 'Suradničko ime:',
-'passwordreset-domain'             => 'Domena:',
-'passwordreset-capture'            => 'Pogledati krajnju poruku?',
-'passwordreset-capture-help'       => 'Ako označite ovu kućicu, e-poruka s privremenom lozinkom će biti prikazana i poslana korisniku.',
-'passwordreset-email'              => 'E-mail adresa:',
-'passwordreset-emailtitle'         => 'Pojedinosti o računu na {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Netko (vjerojatno Vi, s IP adrese $1) zatražio je podsjetnik za Vaše detalje računa
-za {{SITENAME}} ($4). Sljedeći {{PLURAL:$3|račun suradnika je|računi suradnika su}}
-povezani s ovom e-mail adresom:
-
-$2
-
-{{PLURAL:$3|Ova privremena lozinka|Ove privremene lozinke}} će isteći u {{PLURAL:$5|jedan dan|$5 dana}}.
-Trebate se prijaviti i odabrati novu lozinku. Ukoliko je netko drugi napravio ovaj
-zahtjev, ili ako ste sjeti Vaše izvorne lozinke, a vi je više ne želite promijeniti,
-možete zanemariti ovu poruku i nastavite koristiti staru lozinku.',
-'passwordreset-emailtext-user'     => 'Suradnik $1 na {{SITENAME}} zatražio podsjetnik o pojedinostima vašeg računa za {{SITENAME}}
-($4). Sljedeći {{PLURAL:$3|račun suradnika je|računi suradnika su}} povezani s ovom e-mail adresom:
-
-$2
-
-{{PLURAL:$3|Ova privremena lozinka|Ove privremene lozinke}} će isteći u {{PLURAL:$5|jedan dan|$5 dana}}.
-Trebate se prijaviti i odabrati novu lozinku. Ukoliko je netko drugi napravio ovaj
-zahtjev, ili ako ste sjeti Vaše izvorne lozinke, a vi je više ne želite promijeniti,
-možete zanemariti ovu poruku i nastavite koristiti staru lozinku.',
-'passwordreset-emailelement'       => 'Suradničko ime: $1
-Privremena lozinka: $2',
-'passwordreset-emailsent'          => 'E-mail podsjetnik je poslan.',
-'passwordreset-emailsent-capture'  => 'Poslan Vam je podsjetnik kao e-pošta (tekst je prikazan dolje).',
-'passwordreset-emailerror-capture' => 'Napravljen je podsjetnik za slanje e-pošte (prikazan dolje), ali njegovo slanje nije uspjelo: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Promijeni e-mail adresu',
 'changeemail-header'   => 'Promijeni e-mail adresu računa',

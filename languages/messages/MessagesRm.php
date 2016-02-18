@@ -523,34 +523,6 @@ Ti vegns annunzià…',
 Eventualmain has ti gia midà cun success tes pled-clav u dumandà per in nov pled-clav temporar.',
 'resetpass-temp-password'   => 'Pled-clav temporar:',
 
-# Special:PasswordReset
-'passwordreset'                => 'Redefinir il pled-clav',
-'passwordreset-text'           => "Emplenescha quest formular per retschaiver in e-mail che cuntegna ils detagls per acceder tes conto d'utilisader.",
-'passwordreset-legend'         => 'Redefinir il pled-clav',
-'passwordreset-disabled'       => 'La pussaivladad da redefinir il pled-clav è vegnida deactivada sin questa wiki.',
-'passwordreset-pretext'        => '{{PLURAL:$1||Endatescha in dals tocs da data sutvart}}',
-'passwordreset-username'       => "Num d'utilisader:",
-'passwordreset-domain'         => 'Domain:',
-'passwordreset-email'          => 'Adressa dad e-mail:',
-'passwordreset-emailtitle'     => 'Detagls davart il conto sn {{SITENAME}}',
-'passwordreset-emailtext-ip'   => "Insatgi (probablamain ti da l'adressa dad IP $1) ha dumandà in nov pled-clav per la pagina {{SITENAME}} ($4).
-{{PLURAL:$3|Il suandant conto d'utilisader è collià|Ils suandants contos d'utilisader èn colliads}} cun questa adressa dad e-mail:
-
-$2
-
-{{PLURAL:$3|Quest pled-clav temporar|Quests pleds-clav temporars}} èn valids {{PLURAL:$5|in di|$5 dis}}.
-Ti duessas t'annunziar e tscherner ussa in nov pled-clav. Sch'enzatgi auter ha empustà quests novs pleds-clav u sche ti ta regordas puspè da tes pled-clav original e na vuls betg pli midar il pled-clav pos ti ignorar quest messadi e cuntinuar dad utilisar tes pled-clav original.",
-'passwordreset-emailtext-user' => "L'utilisader $1 sin {{SITENAME}} ha dumandà in nov pled-clav per tes conto d'utilisader sin la pagina {{SITENAME}} ($4).
-{{PLURAL:$3|Il suandant conto d'utilisader è collià|Ils suandants contos d'utilisader èn colliads}} cun questa adressa dad e-mail:
-
-$2
-
-{{PLURAL:$3|Quest pled-clav temporar|Quests pled-clav temporars}} èn valids {{PLURAL:$5|in di|$5 dis}}.
-Ti duessas t'annunziar e tscherner ussa in nov pled-clav. Sche ti na levas betg quests novs pleds-clav u sche ti ta regordas puspè da tes pled-clav original e na vuls betg pli midar il pled-clav pos ti ignorar quest messadi e cuntinuar dad utilisar tes pled-clav original.",
-'passwordreset-emailelement'   => "Num d'utilisader: $1
-Pled-clav temporar: $2",
-'passwordreset-emailsent'      => 'In e-mail cun in nov pled-clav è vegnì tramess.',
-
 # Edit page toolbar
 'bold_sample'     => 'Text grass',
 'bold_tip'        => 'Text grass',

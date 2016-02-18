@@ -6,6 +6,8 @@ class WallNotificationsEveryone extends WallNotifications {
 	const DELETE_IDS_BATCH_SIZE = 100;
 
 	public function __construct() {
+		parent::__construct();
+
 		global $wgCityId, $wgWikiaEnvironment;
 
 		$this->app = F::app();

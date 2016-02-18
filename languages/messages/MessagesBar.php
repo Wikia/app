@@ -444,10 +444,6 @@ Es muass sichergstöd seih, daas Cookies aktivierd san. Danoch bittscheh d' Seit
 'resetpass-submit-loggedin' => 'Posswort ändern',
 'resetpass-submit-cancel'   => 'Obbrechen',
 
-# Special:PasswordReset
-'passwordreset'          => 'Passwoat zrucksetzn',
-'passwordreset-username' => 'Benutzernåm:',
-
 # Edit page toolbar
 'bold_sample'     => 'Fetter Text',
 'bold_tip'        => 'Fetter Text',

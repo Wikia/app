@@ -750,29 +750,6 @@ Du kan sjå bort frå denne meldinga dersom kontoen vart oppretta med eit uhell.
 Du kan allereie ha byta passordet, eller ha bede om å få eit nytt mellombels passord.',
 'resetpass-temp-password'   => 'Mellombels passord:',
 
-# Special:PasswordReset
-'passwordreset'                   => 'Attendestilling av passord',
-'passwordreset-text'              => '↓Fyll ut dette skjemaet for å motta ei påminning om kontoopplysningane dine i ein e-post.',
-'passwordreset-legend'            => '↓Nullstill passordet',
-'passwordreset-disabled'          => '↓Tilbakestilling av passord er ikkje aktivert på denne wikien',
-'passwordreset-pretext'           => '↓{{PLURAL:$1||Tast inn ein av datadelane nedanfor}}',
-'passwordreset-username'          => 'Brukarnamn:',
-'passwordreset-domain'            => 'Domene:',
-'passwordreset-capture'           => 'Vis resulterande epost',
-'passwordreset-capture-help'      => 'Huk av her dersom du vil sjå eposten (med førebels passord) i tillegg til at han blir sendt til brukaren.',
-'passwordreset-email'             => '↓E-postadresse:',
-'passwordreset-emailtitle'        => '↓Kontodetaljar på {{SITENAME}}',
-'passwordreset-emailtext-ip'      => 'Nokon (sannsynleg deg, frå IP-adresse $1) ba om ei påminning om kontodetaljane dine for {{SITENAME}} ($4). Følgjane brukar {{PLURAL:$3|brukar|brukarar}} er assosiert med denne epost-adressa:
-
-$2
-
-{{PLURAL:$3|Dette førebelse passordet|Desse førebelse passorda}} vil løpe ut om {{PLURAL:$5|ein dag|$5 dagar}}.
-Du bør logge inn og velje eit nytt passord no. Dersom nokon andre kom med denne førespurnaden, eller dersom du hugsar ditt opprinnelege passord, og du ikkje ynskjar å endre det, kan du ignorere denne eposten, og halde fram med å bruke ditt gamle passord.',
-'passwordreset-emailelement'      => '↓Brukarnamn: $1
-Mellombels passord: $2',
-'passwordreset-emailsent'         => '↓Ei påminning har vorte sendt på e-post.',
-'passwordreset-emailsent-capture' => 'Eposten under er sendt ut som ei påminning.',
-
 # Special:ChangeEmail
 'changeemail'          => '↓Endre e-postadresse',
 'changeemail-header'   => '↓Endre kontoen si e-postadresse',

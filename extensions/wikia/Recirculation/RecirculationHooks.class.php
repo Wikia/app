@@ -32,6 +32,7 @@ class RecirculationHooks {
 	}
 
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+		JSMessages::enqueuePackage( 'Recirculation', JSMessages::EXTERNAL );
 		Wikia::addAssetsToOutput( 'recirculation_scss' );
 		return true;
 	}
@@ -44,10 +45,12 @@ class RecirculationHooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-		$jsAssets[] = 'recirculation_js';
+		if ( self::isCorrectPageType() ) {
+			$jsAssets[] = 'recirculation_js';
 
-		if ( self::canShowDiscussions() && self::isCorrectPageType() ) {
-			$jsAssets[] = 'recirculation_discussions_js';
+			if ( self::canShowDiscussions() ) {
+				$jsAssets[] = 'recirculation_discussions_js';
+			}
 		}
 
 		return true;

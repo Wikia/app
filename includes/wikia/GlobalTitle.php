@@ -714,8 +714,7 @@ class GlobalTitle extends Title {
 	 */
 	private static function normalizeEnvURL( $server ) {
 		global $wgWikiaEnvironment;
-
-		if ( !in_array( $wgWikiaEnvironment, [ WIKIA_ENV_PROD ] ) ) {
+		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
 			return WikiFactory::getLocalEnvURL( $server );
 		}
 
