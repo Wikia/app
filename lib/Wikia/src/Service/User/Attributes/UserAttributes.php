@@ -117,12 +117,29 @@ class UserAttributes {
 			if ( $this->attributeShouldBeSaved( $name, $value ) ) {
 				$this->setInService( $userId, new Attribute( $name, $value ) );
 				$savedAttributes[$name] = $value;
+				if ( $name == 'avatar' ) {
+					$this->logIfBadAvatarVal( $value, $userId );
+				}
 			} elseif ( $this->attributeShouldBeDeleted( $name, $value ) ) {
 				$this->deleteFromService( $userId, new Attribute( $name, $value ) );
 			}
 		}
 
 		$this->setInMemcache( $userId, $savedAttributes );
+	}
+
+	private function logIfBadAvatarVal( $value, $userId ) {
+
+		if ( $value == "" || preg_match( '/^http/', $value ) ) {
+			return;
+		}
+
+		$e = new \Exception;
+		$this->info( 'USER_ATTRIBUTES saving_bad_avatar_val', [
+			'userId' => $userId,
+			'avatar_val' => $value,
+			'trace' => $e->getTraceAsString()
+		] );
 	}
 
 	/**
