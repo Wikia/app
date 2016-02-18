@@ -6,8 +6,9 @@ define('ext.wikia.recirculation.recirculation', [
 	'wikia.tracker',
 	'wikia.nirvana',
 	'videosmodule.controllers.rail',
-	'ext.wikia.adEngine.taboolaHelper'
-], function ($, w, abTest, tracker, nirvana, videosModule, taboolaHelper) {
+	'ext.wikia.adEngine.taboolaHelper',
+	'ext.wikia.recirculation.GoogleMatchHelper',
+], function ($, w, abTest, tracker, nirvana, videosModule, taboolaHelper, googleMatchHelper) {
 	'use strict';
 
 	function trackClick() {
@@ -52,6 +53,9 @@ define('ext.wikia.recirculation.recirculation', [
 		var group = abTest.getGroup('RECIRCULATION_RAIL');
 
 		switch (group) {
+			case 'GOOGLE_MATCH':
+				googleMatchHelper.injectGoogleMatchedContent(element);
+				break;
 			case 'RECENT_POPULAR':
 				injectFandomPosts('recent_popular', element);
 				break;
