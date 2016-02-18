@@ -136,14 +136,21 @@ class ExactTargetUserTaskHelper {
 	/**
 	 * Prepares Subscriber's object data
 	 * @param  string $sUserEmail  User's email
+	 * @param bool $subscribed User's subscription status
 	 * @return array               Array of Subscriber data arrays (nested arrays)
 	 */
-	public function prepareSubscriberData( $sUserEmail ) {
+	public function prepareSubscriberData( $sUserEmail, $subscribed=true ) {
+		$sUserStatus = \ExactTarget_SubscriberStatus::Active;
+		if ( isset($subscribed) && !$subscribed ) {
+			$sUserStatus = \ExactTarget_SubscriberStatus::Unsubscribed;
+		}
+
 		$aApiParams = [
 			'Subscriber' => [
 				[
 					'SubscriberKey' => $sUserEmail,
 					'EmailAddress' => $sUserEmail,
+					'Status' => $sUserStatus,
 				],
 			],
 		];

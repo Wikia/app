@@ -547,7 +547,7 @@
 	$(function () {
 		window.wgAjaxPath = window.wgScriptPath + window.wgScript;
 
-		mw.loader.use('wikia.stringhelper')
+		mw.loader.using('wikia.stringhelper')
 			.done(function () {
 				require(['wikia.stringhelper'], function (stringHelper) {
 					WikiBuilder.init(stringHelper);

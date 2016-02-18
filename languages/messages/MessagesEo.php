@@ -794,44 +794,6 @@ Bonvolu ĝisatendi antaŭ retrovi.',
 Vi eble jam ŝanĝis vian pasvorton aŭ petis novan provizoran pasvorton.',
 'resetpass-temp-password'   => 'Provizora pasvorto:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Restarigo de pasvorto',
-'passwordreset-text'               => 'Plenumigu ĉi tiun formularon por ricevi retpoŝtan memoraĵon de viaj kontaj detaloj.',
-'passwordreset-legend'             => 'Refari pasvorton',
-'passwordreset-disabled'           => 'Pasvortaj restarigoj estis malŝaltitaj en ĉi tiu vikio.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Enigi unu el la jenaj datenoj}}',
-'passwordreset-username'           => 'Salutnomo:',
-'passwordreset-domain'             => 'Domajno:',
-'passwordreset-capture'            => 'Vidi la rezultan retpoŝton?',
-'passwordreset-capture-help'       => 'Se vi marki ĉi tiun skatoleton, la retpoŝto (kun provizora pasvorto) estos montrita al vi kaj estos sendita al la uzanto.',
-'passwordreset-email'              => 'Retpoŝtadreso:',
-'passwordreset-emailtitle'         => 'Kontaj detaloj en {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Iu (verŝajne vi, de IP-adreso $1) petis rememoraĵo de viaj
-kontaj detaloj por {{SITENAME}} ($4). La {{PLURAL:$3|jena uzanto-konto|jenaj uzanto-kontoj}} estas
-asociita kun ĉi tiu retpoŝtadreso:
-
-$2
-
-Ĉi {{PLURAL:$3|tiu provizora pasvorto|tiuj provizoraj pasvortoj}} findatiĝos {{PLURAL:$5|unu tagon|$5 tagojn}}.
-Vi ensalutu kaj elektu novan pasvorton nun. Se iu alia petis ĉi tion,
-aŭ se vi memoris vian originalan pasvorton, kaj vi ne plu volas
-ŝanĝi ĝin, vi povas ignori ĉi tiun mesaĝon kaj plu uzi vian
-malnovan pasvorton.',
-'passwordreset-emailtext-user'     => 'Uzanto $1 de {{SITENAME}} petis rememoraĵo de viaj kontaj detaloj por {{SITENAME}}
-($4). La {{PLURAL:$3|jena uzanto-konto|jenaj uzanto-kontoj}} estas asociita kun ĉi tiu retpoŝtadreso:
-
-$2
-
-Ĉi {{PLURAL:$3|tiu provizora pasvorto|tiuj provizoraj pasvortoj}} findatiĝos {{PLURAL:$5|unu tagon|$5 tagojn}}.
-Vi devas ensaluti kaj elekti novan pasvorton nun. Se iu alia petis ĉi tion,
-aŭ se vi memoris vian originalan pasvorton, kaj vi ne plu volas ŝanĝi
-ĝin, vi povas ignori ĉi tiun mesaĝon kaj uzi vian malnovan pasvorton.',
-'passwordreset-emailelement'       => 'Salutnomo: $1
-Provizora pasvorto: $2',
-'passwordreset-emailsent'          => 'Rememoriga retpoŝto estis sendita.',
-'passwordreset-emailsent-capture'  => 'Memoriga retpoŝto estis sendita, kiu estas montrata sube.',
-'passwordreset-emailerror-capture' => 'Memoriga retpoŝto estis generita, montrata sube, sed sendado al uzanto malsukcesis: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Ŝanĝi retpoŝtadreson',
 'changeemail-header'   => 'Ŝanĝi retpoŝtadreso por konto',
