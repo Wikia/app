@@ -90,6 +90,7 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 			[ '<infobox><data source="asdf"><label source="label_source">asdfsda</label></data></infobox>', false ],
 			[ '<infobox><data source="asdf"/></infobox>', true ],
 			[ '<infobox><title source="title"><default>{{PAGENAME}}</default></title></infobox>', true ],
+			[ '<infobox><title source="title"><default>  {{PAGENAME}}  </default></title></infobox>', true ],
 			[ '<infobox><title source="title"><default>some strange title default</default></title></infobox>', false ],
 			[ '<infobox><title source="title"/></infobox>', true ],
 			[ '<infobox><title source="title"><default>0</default></title></infobox>', false ],

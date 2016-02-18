@@ -8,7 +8,7 @@ class NodeDefault extends Node {
 	}
 
 	public function hasValidContent() {
-		if( strcmp((string)$this->xmlNode, '{{PAGENAME}}') != 0) {
+		if( strcmp(trim((string)$this->xmlNode), '{{PAGENAME}}') != 0) {
 			return false;
 		}
 		return true;
