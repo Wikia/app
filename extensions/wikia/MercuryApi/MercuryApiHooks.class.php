@@ -101,7 +101,9 @@ class MercuryApiHooks {
 
 			// Mercury API call from Hapi.js to MediaWiki e.g.
 			// http://elderscrolls.wikia.com/wikia.php?controller=MercuryApi&method=getArticle&title=Morrowind
+			// TODO: Remove one of these two below when it is decided if we do the switch to getPage() or drop it.
 			$urls[] = MercuryApiController::getUrl( 'getArticle', [ 'title' => $title->getPartialURL() ] );
+			$urls[] = MercuryApiController::getUrl( 'getPage', [ 'title' => $title->getPartialURL() ] );
 		}
 		return true;
 	}
