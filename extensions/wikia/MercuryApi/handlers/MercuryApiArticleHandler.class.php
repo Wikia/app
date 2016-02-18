@@ -8,13 +8,13 @@ class MercuryApiArticleHandler {
 	 * @param MercuryApi $mercuryApiModel
 	 * @return array
 	 */
-	public static function getArticleData(Article $article, WikiaRequest $request, MercuryApi $mercuryApiModel) {
-		$data['details'] = self::getArticleDetails($article);
-		$data['article'] = self::getArticleJson($article, $request);
+	public static function getArticleData( Article $article, WikiaRequest $request, MercuryApi $mercuryApiModel ) {
+		$data['details'] = self::getArticleDetails( $article );
+		$data['article'] = self::getArticleJson( $article, $request );
 		$data['topContributors'] = self::getTopContributorsDetails(
-			self::getTopContributorsPerArticle($mercuryApiModel, $article)
+			self::getTopContributorsPerArticle( $mercuryApiModel, $article )
 		);
-		$relatedPages = self::getRelatedPages($article);
+		$relatedPages = self::getRelatedPages( $article );
 
 		if ( !empty( $relatedPages ) ) {
 			$data['relatedPages'] = $relatedPages;
@@ -29,13 +29,13 @@ class MercuryApiArticleHandler {
 	 * @param Article $article
 	 * @return mixed
 	 */
-	public static function getArticleDetails(Article $article) {
+	public static function getArticleDetails( Article $article ) {
 		$articleId = $article->getID();
 		$articleDetails = F::app()
 			->sendRequest( 'ArticlesApi', 'getDetails', [ 'ids' => $articleId ] )
 			->getData()['items'][$articleId];
 
-		$description = self::getArticleDescription($article);
+		$description = self::getArticleDescription( $article );
 
 		$articleDetails['abstract'] = htmlspecialchars( $articleDetails['abstract'] );
 		$articleDetails['description'] = htmlspecialchars( $description );
@@ -80,21 +80,19 @@ class MercuryApiArticleHandler {
 	 * @param WikiaRequest $request
 	 * @return array
 	 */
-	public static function getArticleJson(Article $article, WikiaRequest $request) {
+	public static function getArticleJson( Article $article, WikiaRequest $request ) {
 		$redirect = $request->getVal( 'redirect' );
-		$sections = $request->getVal( 'sections', '');
+		$sections = $request->getVal( 'sections', '' );
 
-		return F::app()
-			->sendRequest(
-				'ArticlesApi',
-				'getAsJson',
-				[
-					'id' => $article->getID(),
-					'redirect' => $redirect,
-					'sections' => $sections
-				]
-			)
-			->getData();
+		return F::app()->sendRequest(
+			'ArticlesApi',
+			'getAsJson',
+			[
+				'id' => $article->getID(),
+				'redirect' => $redirect,
+				'sections' => $sections
+			]
+		)->getData();
 	}
 
 	/**
@@ -125,8 +123,11 @@ class MercuryApiArticleHandler {
 	 * @param $article
 	 * @return int[]
 	 */
-	private static function getTopContributorsPerArticle(MercuryApi $mercuryApiModel, Article $article) {
-		return $mercuryApiModel->topContributorsPerArticle( $article->getID(), MercuryApiController::NUMBER_CONTRIBUTORS );
+	private static function getTopContributorsPerArticle( MercuryApi $mercuryApiModel, Article $article ) {
+		return $mercuryApiModel->topContributorsPerArticle(
+			$article->getID(),
+			MercuryApiController::NUMBER_CONTRIBUTORS
+		);
 	}
 
 	/**
