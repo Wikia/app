@@ -603,42 +603,6 @@ Nú verður tú ritaður inn...',
 Møguliga hevur tú longu broytt títt loyniorð ella biðið um eitt nýtt fyribils loyniorð.',
 'resetpass-temp-password' => 'Fyribils loyniorð',
 
-# Special:PasswordReset
-'passwordreset' => 'Nullstilla loyniorðið',
-'passwordreset-text' => 'Útfyll hetta skjalið fyri at fáa eina áminning við t-posti við tínum konto upplýsingum.',
-'passwordreset-legend' => 'Nulstilla loyniorðið',
-'passwordreset-disabled' => 'Tað ber ikki til at nullstilla loyniorðið á hesi wiki.',
-'passwordreset-pretext' => '{{PLURAL:$1||Skriva ein av upplýsingunum niðanfyri}}',
-'passwordreset-username' => 'Brúkaranavn:',
-'passwordreset-domain' => 'Umdømi (domain):',
-'passwordreset-capture' => 'Sí tann endaliga t-postin?',
-'passwordreset-capture-help' => 'Um tú setir kross við henda teigin, so verður t-posturin (við fyribils loyniorðinum) vístur fyri tær og verður harumframt sendur til brúkaran.',
-'passwordreset-email' => 'T-post adressur:',
-'passwordreset-emailtitle' => 'konto upplýsingar á {{SITENAME}}',
-'passwordreset-emailtext-ip' => 'Onkur (óiva tú, frá IP adressu $1) hevur biðið um eina áminning av tínum konto upplýsingum fyri {{SITENAME}} ($4). Fylgjandi brúkara {{PLURAL:$3|konta er|kontur eru}}
-sett í samband við hesa t-post adressu:
-
-$2
-
-{{PLURAL:$3|Hetta fyribils loyniorðið|Hesi fyribils loyniorðini}} ganga út um {{PLURAL:$5|ein dag|$5 dagar}}.
-Tú eigur at rita inn og velja eitt nýtt loyniorð nú. Um onkur annar hevur gjørt hesa
-umbønina, ella um tú ert komin í tankar um títt uppruna loyniorð, og tú ikki longur
-ynskir at broyta tað, so kanst tú síggja burtur frá hesum boðum og halda fram at brúka títt gamla loyniorð.',
-'passwordreset-emailtext-user' => 'Brúkari $1 á {{SITENAME}} hevur biðið um eina áminning av tínum konto upplýsingum fyri {{SITENAME}}
-($4). Fylgjandi brúkara {{PLURAL:$3|konta er|kontur eru}} settar í samband við hesa t-post adressuna:
-
-$2
-
-{{PLURAL:$3|Hetta fyribils loyniorðið|Hesi fyribils loyniorðini}} ganga út um {{PLURAL:$5|ein dag|$5 dagar}}.
-Tú eigur at rita inn og velja eitt nýtt loyniorð nú. Um onkur annar hevur gjørt hesa
-umbønina, ella um tú ert komin í tankar um títt uppruna loyniorð, og tú ikki longur
-ynskir at broyta tað, so kanst tú síggja burtur frá hesum boðum og halda fram at brúka títt gamla loyniorð.',
-'passwordreset-emailelement' => 'Brúkaranavn: $1
-Fyribils loyniorð: $2',
-'passwordreset-emailsent' => 'Ein áminningar teldupostur er blivin sendur.',
-'passwordreset-emailsent-capture' => 'Ein áminningar teldupostur er blivin sendur, sum víst niðanfyri.',
-'passwordreset-emailerror-capture' => 'Ein áminningar teldupostur var gjørdur, sum víst niðanfyri, men tað miseydnaðist at senda til brúkaran: $1',
-
 # Special:ChangeEmail
 'changeemail' => 'Broyt teldupost adressu',
 'changeemail-header' => 'Broyt t-post adressuna hjá kontuni',

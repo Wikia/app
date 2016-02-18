@@ -808,44 +808,6 @@ Branchement en cors...',
 Vos éd pôt-étre ja changiê voutron contresegno avouéc reusséta ou ben demandâ un contresegno temporèro novél.',
 'resetpass-temp-password' => 'Contresegno temporèro :',
 
-# Special:PasswordReset
-'passwordreset' => 'Tornar inicialisar lo contresegno',
-'passwordreset-text' => 'Rempléd ceti formulèro por recêvre un mèssâjo de rapèl des dètalys de voutron compto.',
-'passwordreset-legend' => 'Tornar inicialisar lo contresegno',
-'passwordreset-disabled' => 'La remisa a zérô des contresegnos at étâ dèsactivâ sur ceti vouiqui.',
-'passwordreset-pretext' => '{{PLURAL:$1||Buchiéd yon des bocons de balyês ce-desot}}',
-'passwordreset-username' => 'Nom d’usanciér :',
-'passwordreset-domain' => 'Domêno :',
-'passwordreset-capture' => 'Vêre lo mèssâjo que rèsulte ?',
-'passwordreset-capture-help' => 'Se vos pouentâd cela câsa, lo mèssâjo (avouéc lo contresegno temporèro) vos serat montrâ en mémo temps que serat mandâ a l’usanciér.',
-'passwordreset-email' => 'Adrèce èlèctronica :',
-'passwordreset-emailtitle' => 'Dètalys du compto dessus {{SITENAME}}',
-'passwordreset-emailtext-ip' => 'Quârqu’un (probâblament vos, avouéc l’adrèce IP $1) at demandâ un rapèl des dètalys
-de voutron compto por {{SITENAME}} ($4). {{PLURAL:$3|Ceti compto usanciér est associyê|Cetos comptos usanciérs sont associyês}}
-a cela adrèce èlèctronica :
-
-$2
-
-{{PLURAL:$3|Cél contresegno temporèro èxpirerat|Celos contresegnos temporèros èxpireront}} dens $5 jorn{{PLURAL:$5||s}}.
-Ora, vos vos dête branchiér et pués chouèsir un contresegno novél. Se cela demanda vint pas de vos,
-ou ben se vos vos rapelâd ora de voutron contresegno originâl et que vos souhètâd pas més nen changiér,
-vos pouede ignorar ceti mèssâjo et continuar a utilisar voutron viely contresegno.',
-'passwordreset-emailtext-user' => 'L’usanciér $1 dessus {{SITENAME}} at demandâ un rapèl des dètalys
-de voutron compto por {{SITENAME}} ($4). {{PLURAL:$3|Ceti compto usanciér est associyê|Cetos comptos usanciérs sont associyês}}
-a cela adrèce èlèctronica :
-
-$2
-
-{{PLURAL:$3|Cél contresegno temporèro èxpirerat|Celos contresegnos temporèros èxpireront}} dens $5 jorn{{PLURAL:$5||s}}.
-Ora, vos vos dête branchiér et pués chouèsir un contresegno novél. Se cela demanda vint pas de vos,
-ou ben se vos vos rapelâd ora de voutron contresegno originâl et que vos souhètâd pas més nen changiér,
-vos pouede ignorar ceti mèssâjo et continuar a utilisar voutron viely contresegno.',
-'passwordreset-emailelement' => 'Nom d’usanciér : $1
-Contresegno temporèro : $2',
-'passwordreset-emailsent' => 'Un mèssâjo de rapèl at étâ mandâ.',
-'passwordreset-emailsent-capture' => 'Un mèssâjo de rapèl at étâ mandâ, qu’est montrâ ce-desot.',
-'passwordreset-emailerror-capture' => 'Un mèssâjo de rapèl at étâ fêt, qu’est montrâ ce-desot, mas l’èxpèdicion a l’usanciér at pas reussia : $1',
-
 # Special:ChangeEmail
 'changeemail' => 'Changiér l’adrèce èlèctronica',
 'changeemail-header' => 'Changiér l’adrèce èlèctronica',

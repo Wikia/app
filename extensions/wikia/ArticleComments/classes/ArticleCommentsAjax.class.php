@@ -267,11 +267,11 @@ class ArticleCommentsAjax {
 		} else {
 			$listing = ArticleCommentList::newFromTitle( $title );
 			$comments = $listing->getCommentPages( false, $page );
-			$text = F::app()->getView( 'ArticleComments', $method, array( 'commentListRaw' => $comments, 'page' => $page, 'useMaster' => false ) )->render();
+			$text = F::app()->getView( 'ArticleComments', $method, [ 'commentListRaw' => $comments, 'page' => $page, 'useMaster' => false ] )->render();
 			$pagination = ( !$isMobile ) ? $listing->doPagination( $listing->getCountAll(), count( $comments ), $page === false ? 1 : $page, $title ) : '';
 		}
 
-		$result = array( 'error' => $error, 'text' => $text, 'pagination' => $pagination );
+		$result = [ 'error' => $error, 'text' => $text, 'pagination' => $pagination ];
 
 		return $result;
 	}

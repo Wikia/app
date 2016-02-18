@@ -521,37 +521,6 @@ Për piasì speta prima ëd prové torna.",
 Miraco it l'has già cambià la ciav o it l'has ciamà na neuva ciav a temp.",
 'resetpass-temp-password'   => 'Ciav a temp:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Cambi ëd ciav',
-'passwordreset-text'               => "Ch'a completa 's formolari për arsèive un mëssagi ëd pòsta eletrònica con ij detaj ëd sò cont.",
-'passwordreset-legend'             => 'Cambié la ciav',
-'passwordreset-disabled'           => 'Ij cangiament ëd ciav a son stàit disabilità su sta wiki.',
-'passwordreset-pretext'            => "{{PLURAL:$1||Ch'a anserissa un dij tòch ëd dat sì-sota}}",
-'passwordreset-username'           => 'Stranòm:',
-'passwordreset-domain'             => 'Domini:',
-'passwordreset-capture'            => 'Vardé ël mëssagi arzultant?',
-'passwordreset-capture-help'       => "S'a marca costa casela, ël mëssagi ëd pòsta eletrònica (con la ciav temporania) a-j sarà smonù e ant l'istess temp a sarà mandà a l'utent.",
-'passwordreset-email'              => 'Adrëssa ëd pòsta eletrònica:',
-'passwordreset-emailtitle'         => 'Detaj dël cont ansima {{SITENAME}}',
-'passwordreset-emailtext-ip'       => "Quaidun (a l'é bel fé ch'a sia chiel, da l'adrëssa IP $1) a l'ha ciamà d'arcordé ij detaj ëd sò cont për {{SITENAME}} ($4). {{PLURAL:$3|Ël cont utent sì-sota a l'é|Ij cont utent sì-sota a son}}
-associà a st'adrëssa ëd pòsta eletrònica:
-
-$2
-
-{{PLURAL:$3|Costa ciav|Coste ciav}} a temp a scadran da sì {{PLURAL:$5|un di|$5 di}}.
-A dovrìa intré ant ël sistema e serne na ciav neuva adess. Se quaidun d'àutr a l'ha fàit costa arcesta, o s'a l'é arcordasse soa ciav original, e a veul pa pi cangela, a peule ignoré ës mëssagi e continué a dovré soa veja ciav.",
-'passwordreset-emailtext-user'     => "L'utent $1 ansima a {{SITENAME}} a l'ha ciamà d'arcordé ij detaj ëd sò cont për {{SITENAME}} ($4). {{PLURAL:$3|Ël cont utent sì-sota a l'é|Ij cont utent sì-sota a son}} associà a st'adrëssa ëd pòsta eletrònica:
-
-$2
-
-{{PLURAL:$3|Costa ciav|Coste ciav}} a temp a scadran da sì {{PLURAL:$5|un di|$5 di}}.
-A dovrìa intré ant ël sistema e serne na ciav neuva adess. Se quaidun d'àutr a l'ha fàit costa arcesta, o s'a l'é arcordasse soa ciav original, e a veul pa pi cangela, a peul ignoré sto mëssagi e continué a dovré soa veja ciav.",
-'passwordreset-emailelement'       => 'Stranòm: $1
-Ciav a temp: $2',
-'passwordreset-emailsent'          => "Un mëssagi ëd pòsta eletrònica për giuté a arcordé a l'é stàit spedì.",
-'passwordreset-emailsent-capture'  => "Un mëssagi ëd pro-memòria a l'é stàit mandà, e a l'é mostrà sì-sota.",
-'passwordreset-emailerror-capture' => "Un mëssagi ëd pro-memòria a l'é stàit generà, e a l'é smonù sì-sota, ma la spedission a l'utent a l'é falìa: $1",
-
 # Special:ChangeEmail
 'changeemail'          => "Cangé l'adrëssa ëd pòsta eletrònica",
 'changeemail-header'   => "Cangé l'adrëssa ëd pòsta eletrònica dël cont",

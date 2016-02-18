@@ -599,34 +599,6 @@ Si a cuenta s\'ha creyato por error, simplament ignore iste mensache.',
 Talment ya ha cambiato a suya clau u ha demandato una nueva clau temporal.',
 'resetpass-temp-password'   => 'Clau temporal:',
 
-# Special:PasswordReset
-'passwordreset'                    => "Restablir a clau d'acceso",
-'passwordreset-text'               => "Completar ista forma ta recibir un recordatorio por correu con os detalles d'a suya cuenta.",
-'passwordreset-legend'             => "Restablir a clau d'acceso",
-'passwordreset-disabled'           => "S'ha desactivau o restablimiento de claus en ista wiki.",
-'passwordreset-pretext'            => "{{PLURAL:$1||Introduzca uno d'os siguients datos}}",
-'passwordreset-username'           => "Nombre d'usuario:",
-'passwordreset-domain'             => 'Dominio:',
-'passwordreset-capture'            => 'Veyer o mensache resultant?',
-'passwordreset-capture-help'       => "Si marca ista caixeta, se li amostrará o correu electronico (con a clau temporal) amás de ninviar-lo ta l'usuario.",
-'passwordreset-email'              => 'Adreza de correu electronico:',
-'passwordreset-emailtitle'         => "Detalles d'a cuenta en {{SITENAME}}",
-'passwordreset-emailtext-ip'       => "Belún (probablement vusté, dende l'adreza IP $1) ha demandau un recordatorio d'a información d'a suya cuenta en  {{SITENAME}} ($4). {{PLURAL:$3|A cuenta d'usuario siguient ye asociata|As cuentas d'usuario siguients son asociatas}} a ista adreza de correu-e:
-
-$2
-
-{{PLURAL:$3|Ista clau temporal circumducirá|Istas claus temporals circumducirán}} en {{PLURAL:$5|un día|$5 días}}. Habría de connectar-se agora y trigar una nueva clau. Si ista demanda no dimana de vusté, u ya se'n ha acordau d'a suya clau inicial y ya no deseya modificar-la, puet ignorar iste mensache y continar emplegando a suya viella clau.",
-'passwordreset-emailtext-user'     => "L'usuario $1 en {{SITENAME}} ha demandau un recordatorio d'a información d'a suya cuenta en {{SITENAME}} ($4). {{PLURAL:$3|A cuenta d'usuario siguient ye asociata|As cuentas d'usuario siguients son asociatas}} a ista adreza de correu-e:
-
-$2
-
-{{PLURAL:$3|Ista clau d'acceso temporal circumducirá|Istas claus d'acceso temporals circumducirán}} en {{PLURAL:$5|un día|$5 días}}. Habría de connectar-se agora y trigar una nueva clau. Si ista demanda no dimana de vusté, u ya se'n ha acordau d'a suya clau inicial y ya no deseya modificar-la, puet ignorar iste mensache y continar emplegando a suya viella clau.",
-'passwordreset-emailelement'       => "Nombre de usuario: $1
-Clau d'acceso temporal: $2",
-'passwordreset-emailsent'          => "S'ha ninviau un recordatorio por correu-e.",
-'passwordreset-emailsent-capture'  => "Se le ha ninviau un recordatorio por correu electronico, que s'amuestra contino.",
-'passwordreset-emailerror-capture' => "S'ha chenerau un recordatorio por correu electronico, que s'amuestra contino, pero o ninvío ta l'usuario ha fallau: $1",
-
 # Special:ChangeEmail
 'changeemail'          => "Cambiar l'adreza de correu-e",
 'changeemail-header'   => "Cambiar l'adreza de correu-e d'a cuenta",

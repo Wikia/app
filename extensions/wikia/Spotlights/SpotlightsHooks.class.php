@@ -24,6 +24,20 @@ class SpotlightsHooks {
 	}
 
 	/**
+	 * Register "instant" global JS
+	 *
+	 * @param array $vars
+	 *
+	 * @return bool
+	 */
+	public static function onInstantGlobalsGetVariables( array &$vars )
+	{
+		$vars[] = 'wgReviveSpotlightsCountries';
+
+		return true;
+	}
+
+	/**
 	 * Modify assets appended to the bottom of the page
 	 *
 	 * @param array $jsAssets

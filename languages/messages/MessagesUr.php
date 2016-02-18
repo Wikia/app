@@ -502,10 +502,6 @@ Warning: Page may not contain recent updates.',
 آپ یا تو پہلے ہی سے آپنا پارلفظ کامیابی سے تبدیل کرچکے ہیں اور یا آپ نے نئے عارضی پارلفظ کی درخواست کی ہے.',
 'resetpass-temp-password'   => 'عارضی پارلفظ:',
 
-# Special:PasswordReset
-'passwordreset'          => 'پارلفظ کی بازتعینی',
-'passwordreset-username' => 'اسمِ صارف:',
-
 # Edit page toolbar
 'bold_sample'     => 'دبیز متن',
 'bold_tip'        => 'دبیز متن',

@@ -43,16 +43,16 @@ class WallRelatedPages extends WikiaModel {
 	 * @param array $pages - array( 'order_index' => 'page_id' )
 	 */
 
-	function set( $messageId, $pages = array() ) {
+	function set( $messageId, $pages = [ ] ) {
 		wfProfileIn( __METHOD__ );
 		$db = wfGetDB( DB_MASTER );
 
 		$this->createTable();
 
 		$db->begin();
-		$db->delete( 'wall_related_pages', array(
+		$db->delete( 'wall_related_pages', [
 			'comment_id' => $messageId
-		), __METHOD__ );
+		], __METHOD__ );
 
 		foreach ( $pages as $key => $val ) {
 			$db->query( "INSERT  INTO `wall_related_pages` (comment_id,page_id,last_update,order_index) VALUES ('$messageId','$val',NOW(), $key)",  __METHOD__ );
@@ -69,9 +69,9 @@ class WallRelatedPages extends WikiaModel {
 	 * @param array $pages - array( 'order_index' => 'page_id' )
 	 */
 
-	function setWithURLs( $messageId, $url = array() ) {
+	function setWithURLs( $messageId, $url = [ ] ) {
 		wfProfileIn( __METHOD__ );
-		$out = array();
+		$out = [ ];
 
 		foreach ( $url as $key => $value ) {
 			$title = Title::newFromURL( $value );
@@ -117,14 +117,14 @@ class WallRelatedPages extends WikiaModel {
 
 	function getMessagesRelatedArticleIds( $messageIds, $orderBy = 'order_index', $db = DB_SLAVE ) {
 		wfProfileIn( __METHOD__ );
-		$pageIds = array();
+		$pageIds = [ ];
 
 		// Loading from cache
 		$db = wfGetDB( $db );
 
 		if ( ! $db->tableExists( 'wall_related_pages' ) && wfReadOnly() ) {
 			wfProfileOut( __METHOD__ );
-			return array();
+			return [ ];
 		}
 
 		if ( $this->createTable() ) {
@@ -132,14 +132,14 @@ class WallRelatedPages extends WikiaModel {
 		}
 
 		$result = $db->select(
-			array( 'wall_related_pages' ),
-			array( 'page_id, count(*) as cnt' ),
-			array( 'comment_id' => $messageIds ),
+			[ 'wall_related_pages' ],
+			[ 'page_id, count(*) as cnt' ],
+			[ 'comment_id' => $messageIds ],
 			__METHOD__,
-			array(
+			[
 				'ORDER BY' => $orderBy,
 				'GROUP BY' => 'page_id'
-			)
+			]
 		);
 
 		while ( $row = $db->fetchObject( $result ) ) {
@@ -160,7 +160,7 @@ class WallRelatedPages extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 		$ids = $this->getMessagesRelatedArticleIds( $messageIds, $orderBy );
 
-		$titles = array();
+		$titles = [ ];
 		foreach ( $ids as $val ) {
 			$title = Title::newFromId( $val );
 			if ( !empty( $title ) ) {
@@ -176,9 +176,9 @@ class WallRelatedPages extends WikiaModel {
 	public function getArticlesRelatedMessgesSnippet( $pageId, $messageCount, $replyCount ) {
 		$messages = $this->getArticlesRelatedMessgesIds( $pageId, 'last_update desc', $messageCount );
 
-		$out = array();
+		$out = [ ];
 
-		$update = array( 0 );
+		$update = [ 0 ];
 		$helper = new WallHelper();
 
 		foreach ( $messages as $value ) {
@@ -198,7 +198,7 @@ class WallRelatedPages extends WikiaModel {
 
 			$update[] = $wallMessage->getCreateTime( TS_UNIX );
 
-			$row = array();
+			$row = [ ];
 			$row['metaTitle'] = $wallMessage->getMetaTitle();
 			$row['threadUrl'] = $wallMessage->getMessagePageUrl();
 			$row['totalReplies'] = $wallThread->getRepliesCount();
@@ -210,7 +210,7 @@ class WallRelatedPages extends WikiaModel {
 			$row['messageBody'] = $helper->shortenText( $strippedText );
 			$row['timeStamp'] = $wallMessage->getCreateTime();
 
-			$row['replies'] = array();
+			$row['replies'] = [ ];
 
 			$replies = array_reverse( $wallThread->getRepliesWallMessages( 2, "DESC" ) );
 
@@ -221,13 +221,13 @@ class WallRelatedPages extends WikiaModel {
 
 				if ( !$reply->isRemove() && !$reply->isAdminDelete() ) {
 					$strippedText = $helper->strip_wikitext( $reply->getRawText(), $reply->getTitle() );
-					$replyRow = array(
+					$replyRow = [
 						'displayName' =>  $reply->getUserDisplayName(),
 						'userName' => $reply->getUser()->getName(),
 						'userUrl' => $reply->getUserWallUrl(),
 						'messageBody' => $helper->shortenText( $strippedText ),
 						'timeStamp' => $reply->getCreateTime()
-					);
+					];
 					$row['replies'][] = $replyRow;
 				}
 			}
@@ -257,17 +257,17 @@ class WallRelatedPages extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 		if ( empty( $pageIds ) ) {
 			wfProfileOut( __METHOD__ );
-			return array();
+			return [ ];
 		}
 
-		$messgesIds = array();
+		$messgesIds = [ ];
 
 		// Loading from cache
 		$db = wfGetDB( DB_SLAVE );
 
 	    if ( ! $db->tableExists( 'wall_related_pages' ) && wfReadOnly() ) {
 			wfProfileOut( __METHOD__ );
-			return array();
+			return [ ];
 		}
 
 		if ( $this->createTable() ) {
@@ -276,25 +276,25 @@ class WallRelatedPages extends WikiaModel {
 
 		// Loading from cache
 		$result = $db->select(
-			array( 'wall_related_pages', 'comments_index' ),
-			array( 'comments_index.comment_id, count(*) as cnt, last_child_comment_id' ),
-			array(
+			[ 'wall_related_pages', 'comments_index' ],
+			[ 'comments_index.comment_id, count(*) as cnt, last_child_comment_id' ],
+			[
 				'page_id' => $pageIds,
 				'removed' => 0,
 				'wall_related_pages.comment_id = comments_index.comment_id'
-			),
+			],
 			__METHOD__,
-			array(
+			[
 				'ORDER BY' => $orderBy,
 				'GROUP BY' => 'comments_index.comment_id',
 				'LIMIT' => $limit
-			)
+			]
 		);
 
 		while ( $row = $db->fetchObject( $result ) ) {
-			$messge = array(
+			$messge = [
 				'comment_id' => $row->comment_id,
-			);
+			];
 
 			if (	$row->comment_id != $row->last_child_comment_id ) {
 				$messge['last_child'] = $row->last_child_comment_id;
