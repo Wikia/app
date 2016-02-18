@@ -8,7 +8,7 @@ class NodeLabel extends Node {
 	}
 
 	public function hasValidContent() {
-		if (preg_match('/[\[\]{};\'"=|#*]+/', (string)$this->xmlNode)) {
+		if (preg_match('/[\[\]{};\'"=|#*<>]+/', (string)$this->xmlNode)) {
 			return false;
 		}
 
