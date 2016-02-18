@@ -7,7 +7,7 @@ define('ext.wikia.recirculation.recirculation', [
 	'wikia.nirvana',
 	'videosmodule.controllers.rail',
 	'ext.wikia.adEngine.taboolaHelper',
-	'ext.wikia.recirculation.GoogleMatchHelper',
+	'ext.wikia.recirculation.googleMatchHelper',
 ], function ($, w, abTest, tracker, nirvana, videosModule, taboolaHelper, googleMatchHelper) {
 	'use strict';
 

@@ -1,8 +1,9 @@
 /*global define*/
-define('ext.wikia.recirculation.GoogleMatchHelper', [
+define('ext.wikia.recirculation.googleMatchHelper', [
+	'wikia.jquery'
 	'wikia.document',
 	'wikia.window'
-], function (document, window) {
+], function ($, document, window) {
 	'use strict';
 
 	var libraryLoaded = false;
@@ -26,23 +27,24 @@ define('ext.wikia.recirculation.GoogleMatchHelper', [
 	}
 
 	function injectGoogleMatchedContent(element) {
-		var matchedContent,
+		var $ins,
 			sass = window.wgSassParams;
 
 		if (!libraryLoaded) {
 			loadGoogleMatch();
 		}
 
-		matchedContent = document.createElement('ins');
-		matchedContent.className = 'adsbygoogle recirculation-rail';
-		matchedContent.style.display = 'block';
-		matchedContent.dataset.adClient = "ca-pub-4086838842346968";
-		matchedContent.dataset.adSlot = "7831067424";
-		matchedContent.dataset.adFormat = "autorelaxed";
-		matchedContent.dataset.colorLink = sass['color-links'];
-		matchedContent.dataset.colorBg = sass['color-page'];
+		$ins = $('<ins>', {
+			'class': 'adsbygoogle recirculation-rail',
+			'style': 'display: block;',
+			'data-ad-client': 'ca-pub-4086838842346968',
+			'data-ad-format': 'autorelaxed',
+			'data-ad-slot': '7831067424',
+			'data-color-link': sass['color-links'],
+			'data-color-bg': sass['color-page'],
+		});
 
-		$(element).append(matchedContent);
+		$(element).append($ins);
 
 		window.adsbygoogle.push({});
 	}
