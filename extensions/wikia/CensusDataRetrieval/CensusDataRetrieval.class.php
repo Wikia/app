@@ -158,7 +158,7 @@ class CensusDataRetrieval {
 			$type = $key[0];
 			$id   = $key[1];
 			//fetch data from Census by type and id
-			$censusData = Http::get( sprintf( self::QUERY_URL, $type, $id ), null, [ 'noProxy' => true ] );
+			$censusData = ExternalHttp::get( sprintf( self::QUERY_URL, $type, $id ) );
 			$map        = json_decode( $censusData );
 			if ( $map->returned > 0 ) {
 				$censusData = $map->{$type . '_list'}[0];
@@ -456,10 +456,8 @@ class CensusDataRetrieval {
 
 		$data = array();
 		foreach ( $this->supportedTypes as $type ) {
-			$censusData = Http::get(
-				sprintf( self::QUERY_URL, $type, '?c:show=id,name.' . $wikilang . '&c:limit=0' ),
-				null,
-				[ 'noProxy' => true ]
+			$censusData = ExternalHttp::get(
+				sprintf( self::QUERY_URL, $type, '?c:show=id,name.' . $wikilang . '&c:limit=0' )
 			);
 			$map = json_decode( $censusData );
 			$this->mergeResult( $data, $map, $type );

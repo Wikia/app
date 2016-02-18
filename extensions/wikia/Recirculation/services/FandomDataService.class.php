@@ -55,7 +55,7 @@ class FandomDataService {
 		}
 
 		$url = $this->buildUrl( $endpoint, $options );
-		$data = Http::get( $url, null, [ 'noProxy' => true ] );
+		$data = ExternalHttp::get( $url );
 
 		$obj = json_decode( $data );
 		return $obj->data;
