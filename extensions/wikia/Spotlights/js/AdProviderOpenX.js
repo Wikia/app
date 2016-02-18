@@ -56,11 +56,15 @@ AdProviderOpenX.getUrl = function() {
 function isReviveEnabledInGeo() {
 	'use strict';
 
-	if (!window.Wikia.geo.isProperGeo) {
+	if (!window.Wikia) {
 		return false;
 	}
 
-	if (!window.Wikia.InstantGlobals.wgReviveSpotlightsCountries) {
+	if (!window.Wikia.geo || !window.Wikia.geo.isProperGeo) {
+		return false;
+	}
+
+	if (!window.Wikia.InstantGlobals || !window.Wikia.InstantGlobals.wgReviveSpotlightsCountries) {
 		return false;
 	}
 
