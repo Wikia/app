@@ -42,7 +42,7 @@ ve.ui.WikiaVideoInsertDialog.prototype.initialize = function () {
 	this.pages.removePages( [ this.mainPage ] );
 
 	uploadWidget = this.query.getUpload();
-	uploadWidget.uploadButton.toggle();
+	uploadWidget.getUploadButton().toggle();
 };
 
 ve.ui.windowFactory.register( ve.ui.WikiaVideoInsertDialog );
