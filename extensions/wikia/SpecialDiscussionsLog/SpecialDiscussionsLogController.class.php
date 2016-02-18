@@ -13,14 +13,13 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	const HTTP_STATUS_OK = 200;
 	const NO_USER_MATCH_ERROR = "Provided username did not match any user";
 
-	static $inputFormTemplate = 'extensions/wikia/SpecialDiscussionsLog/templates/SpecialDiscussionsLog_inputForm.mustache';
-	static $userLogTemplate = 'extensions/wikia/SpecialDiscussionsLog/templates/SpecialDiscussionsLog_userLog.mustache';
+	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	public function __construct() {
 		parent::__construct( 'DiscussionsLog' );
 	}
 
-	public function execute( $subpage ) {
+	public function index() {
 
 		if ( !$this->checkAccess() ) {
 			throw new \PermissionsError('specialdiscussionslog');
@@ -28,30 +27,20 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 
 		$this->setHeaders();
 
-		$this->wg->Out->clearHTML();
 		$this->wg->Out->setPageTitle( wfMessage( 'discussionslog-pagetitle' )->escaped() );
 
-		$output = $this->getInputForm();
+		$userName = $this->wg->request->getVal( 'username', null );
 
-		$userName = null;
-		if ( $this->wg->request->wasPosted() ) {
-			$userName = $this->wg->request->getVal( 'username', null );
-			$output .= $this->getUserLog( $userName );
+		$this->inputForm = $this->sendSelfRequest( 'inputForm', [ 'username' => $userName ] );
+		if ( !empty( $userName ) ) {
+			$this->userLog = $this->sendSelfRequest( 'userLog', [ 'username' => $userName ] );
 		}
-
-		$this->wg->Out->addHtml( $output );
 	}
 
-	private function getInputForm() {
-		return \MustacheService::getInstance()->render(
-			self::$inputFormTemplate,
-			[
-				'userNameLabel' => wfMessage( 'discussionslog-username-label' )
-						->escaped(),
-				'viewLogsAction' => wfMessage( 'discussionslog-view-logs' )
-						->escaped()
-			]
-		);
+	public function inputForm() {
+		$this->userName = $this->getVal( 'username' );
+		$this->userNameLabel = wfMessage( 'discussionslog-username-label' )->escaped();
+		$this->viewLogsAction = wfMessage( 'discussionslog-view-logs' )->escaped();
 	}
 
 	private function constructKibanaUrl( $dayOffset ) {
@@ -76,7 +65,9 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 		return $user->getId();
 	}
 
-	private function getUserLog( $userName ) {
+	public function userLog() {
+		$userName = $this->getVal( 'username' );
+
 		$userLogRecords = [];
 		$displayedUserLogRecords = [];
 		$hasNoUserLogRecords = false;
@@ -109,34 +100,22 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 			] );
 		}
 
-		return \MustacheService::getInstance()->render(
-			self::$userLogTemplate,
-			[
-				'appHeader' => wfMessage( 'discussionslog-app-header' )
-						->escaped(),
-				'hasUserError' => $hasUserError,
-				'ipAddressHeader' => wfMessage( 'discussionslog-ip-address-header' )
-						->escaped(),
-				'languageHeader' => wfMessage( 'discussionslog-language-header')
-						->escaped(),
-				'locationHeader' => wfMessage( 'discussionslog-location-header' )
-						->escaped(),
-				'logTableCaption' => wfMessage( 'discussionslog-table-caption' )
+		$this->appHeader = wfMessage( 'discussionslog-app-header' )->escaped();
+		$this->hasUserError = $hasUserError;
+		$this->ipAddressHeader = wfMessage( 'discussionslog-ip-address-header' )->escaped();
+		$this->languageHeader = wfMessage( 'discussionslog-language-header')->escaped();
+		$this->locationHeader = wfMessage( 'discussionslog-location-header' )->escaped();
+		$this->logTableCaption = wfMessage( 'discussionslog-table-caption' )
 						->params( [$userName, $userId] )
-						->escaped(),
-				'userErrorMessage' => wfMessage( 'discussionslog-no-user-match-error' )
-						->escaped(),
-				'hasNoUserLogRecords' => $hasNoUserLogRecords,
-				'noUserLogRecordsMessage' => wfMessage( 'discussionslog-no-mobile-activity-error' )
+						->escaped();
+		$this->userErrorMessage = wfMessage( 'discussionslog-no-user-match-error' )->escaped();
+		$this->hasNoUserLogRecords = $hasNoUserLogRecords;
+		$this->noUserLogRecordsMessage = wfMessage( 'discussionslog-no-mobile-activity-error' )
 						->params( $userName )
-						->escaped(),
-				'timestampHeader' => wfMessage( 'discussionslog-timestamp-header' )
-						->escaped(),
-				'userAgentHeader' => wfMessage( 'discussionslog-user-agent-header' )
-						->escaped(),
-				'userLogRecords' => $displayedUserLogRecords
-			]
-		);
+						->escaped();
+		$this->timestampHeader = wfMessage( 'discussionslog-timestamp-header' )->escaped();
+		$this->userAgentHeader = wfMessage( 'discussionslog-user-agent-header' )->escaped();
+		$this->userLogRecords = $displayedUserLogRecords;
 	}
 
 	private function aggregateLogSearches( $userId, $userName ) {
