@@ -220,7 +220,7 @@ JSON_BODY;
 	}
 
 	private function checkAccess() {
-		if ( !$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed( 'forumadmin' ) ) {
+		if ( !$this->wg->User->isAllowed('specialdiscussionslog') ) {
 			return false;
 		}
 
