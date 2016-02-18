@@ -741,44 +741,6 @@ Kay willay pantasqa kaptinqa, qhawarparillay.',
 Yaykuna rimaykitaqa aypalla hukcharqunkiñachá icha huk mit'alla yaykuna rimata mañakurqunkiñachá.",
 'resetpass-temp-password' => "Mit'alla yaykuna rima:",
 
-# Special:PasswordReset
-'passwordreset' => 'Yaykuna rimata kutichiy',
-'passwordreset-text' => "Kay hunt'ana p'anqata hunt'ay, rakiqunaykipaq willakunayuq e-chaskita chaskinaykipaq.",
-'passwordreset-legend' => 'Yaykuna rimata kutichiy',
-'passwordreset-disabled' => 'Kay wikipiqa yaykuna rimata manam kutichiyta atinkichu.',
-'passwordreset-pretext' => '{{PLURAL:$1||Qatiqpi kaq willa rakikunamanta huktam yaykuchiy}}',
-'passwordreset-username' => 'Ruraqpa sutin:',
-'passwordreset-domain' => 'Duminyu:',
-'passwordreset-capture' => 'Llalliwaq e-chaskita qhawayta munankichu?',
-'passwordreset-capture-help' => "Kay k'itichata ñit'iywan sananchaspaykiqa, mit'alla yaykuna rimayuq e-chaskita rikunki, hinaptiyki ruraqmanmi kachasqa kanqa.",
-'passwordreset-email' => 'E-chaski imamayta:',
-'passwordreset-emailtitle' => '{{SITENAME}}-paq rakiqunamanta willakuna',
-'passwordreset-emailtext-ip' => "Pipas (qamchiki, $1 IP huchhayuq tiyaymanta) {{SITENAME}}-paq ($4)
-rakiqunaykipaq willakunayuq yuyachinatam mañakurqan. Kay qatiq ruraqpa {{PLURAL:$3|rakiqunanmi|rakiqunankunam}}
-kay e-chaski imamaytayuq kachkan:
-
-$2
-
-Kay mit'alla yaykuna {{PLURAL:$3|rimaqa|rimakunaqa}} kunanmanta {{PLURAL:$5|huk p'unchawpi|$5 p'unchawpi}} mawk'ayanqam.
-Yaykuspayki musuq yaykuna rimaykitam akllankiman. Pi wakiykipas kayta mañakurqaptinqa,
-icha qam ñawpaq yaykuna rimaykita yuyaspayki manaña wakinchayta munaspaykiqa,
-kay willayta mana qhawaspa mana imatapas ruraspa ñawpaq yaykuna rimaykiwanmi llamk'ayta atinki.",
-'passwordreset-emailtext-user' => "{{SITENAME}}-pi kaq $1 sutiyuq ruraqqa {{SITENAME}}-paq ($4)
-rakiqunaykipaq willakunayuq yuyachinatam mañakurqan. Kay qatiq ruraqpa {{PLURAL:$3|rakiqunanmi|rakiqunankunam}}
-kay e-chaski imamaytayuq kachkan:
-
-$2
-
-Kay mit'alla yaykuna {{PLURAL:$3|rimaqa|rimakunaqa}} kunanmanta {{PLURAL:$5|huk p'unchawpi|$5 p'unchawpi}} mawk'ayanqam.
-Yaykuspayki musuq yaykuna rimaykitam akllankiman. Pi wakiykipas kayta mañakurqaptinqa,
-icha qam ñawpaq yaykuna rimaykita yuyaspayki manaña wakinchayta munaspaykiqa,
-kay willayta mana qhawaspa mana imatapas ruraspa ñawpaq yaykuna rimaykiwanmi llamk'ayta atinki.",
-'passwordreset-emailelement' => "Ruraqpa sutin: $1
-Mit'alla yaykuna rima: $2",
-'passwordreset-emailsent' => 'Yuyachina e-chaskiqa kachasqañam.',
-'passwordreset-emailsent-capture' => 'Yuyachina e-chaskiqa kachasqañam, kay qatiqpi rikunki.',
-'passwordreset-emailerror-capture' => 'Yuyachina e-chaskiqa rurasqa karqan, imatachus kay qatiqpi rikunki, ichataq kachasqa kaptin pantasqam tukurqan: $1',
-
 # Special:ChangeEmail
 'changeemail' => 'E-chaski imamaytata wakinchay',
 'changeemail-header' => 'Rakiqunap e-chaski imamaytanta wakinchay',

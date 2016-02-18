@@ -842,34 +842,6 @@ Veuillez attendre avant d’essayer à nouveau.',
 Vous avez peut-être déjà changé votre mot de passe ou demandé un nouveau mot de passe temporaire.',
 'resetpass-temp-password'   => 'Mot de passe temporaire :',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Remise à zéro du mot de passe',
-'passwordreset-text'               => 'Remplissez ce formulaire pour recevoir un courriel de rappel des détails de votre compte.',
-'passwordreset-legend'             => 'Remise à zéro du mot de passe',
-'passwordreset-disabled'           => 'La réinitialisation des mots de passe a été désactivée sur ce wiki.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Entrez un élément de données ci-dessous}}',
-'passwordreset-username'           => 'Nom d’utilisateur :',
-'passwordreset-domain'             => 'Domaine :',
-'passwordreset-capture'            => 'Voir le courriel résultant?',
-'passwordreset-capture-help'       => 'Si vous cochez cette case, le courriel (avec le mot de passe temporaire) vous sera affiché en même temps qu’il sera envoyé à l’utilisateur.',
-'passwordreset-email'              => 'Adresse de courriel :',
-'passwordreset-emailtitle'         => 'Détails du compte sur {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Quelqu’un (probablement vous, depuis l’adresse IP $1) a demandé un rappel des informations de votre compte pour {{SITENAME}} ($4). {{PLURAL:$3|Le compte utilisateur suivant est associé|Les comptes utilisateurs suivants sont associés}} à cette adresse de courriel :
-
-$2
-
-{{PLURAL:$3|Ce mot de passe temporaire expirera|Ces mots de passe temporaires expireront}} dans {{PLURAL:$5|un jour|$5 jours}}. Vous devez maintenant vous connecter et choisir un nouveau mot de passe. Si cette demande ne provient pas de vous, ou que vous vous êtes souvenu de votre mot de passe initial, et ne souhaitez plus le modifier, vous pouvez ignorer ce message et continuer à utiliser votre ancien mot de passe.',
-'passwordreset-emailtext-user'     => 'L’utilisateur $1 sur {{SITENAME}} a demandé un rappel des informations de votre compte pour {{SITENAME}} ($4). {{PLURAL:$3|Le compte utilisateur suivant est associé|Les comptes utilisateurs suivants sont associés}} à cette adresse de courriel :
-
-$2
-
-{{PLURAL:$3|Ce mot de passe temporaire expirera|Ces mots de passe temporaires expireront}} dans {{PLURAL:$5|un jour|$5 jours}}. Vous devez maintenant vous connecter et choisir un nouveau mot de passe. Si cette demande ne provient pas de vous, ou que vous vous êtes souvenu de votre mot de passe initial, et ne souhaitez plus le modifier, vous pouvez ignorer ce message et continuer à utiliser votre ancien mot de passe.',
-'passwordreset-emailelement'       => 'Nom d’utilisateur : $1
-Mot de passe temporaire : $2',
-'passwordreset-emailsent'          => 'Un courriel de rappel a été envoyé.',
-'passwordreset-emailsent-capture'  => 'Un courriel de rappel a été envoyé, qui est affiché ci-dessous.',
-'passwordreset-emailerror-capture' => 'Un courriel de rappel a été généré, qui est affiché ci-dessous, mais l’envoi à l’utilisateur a échoué : $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Changer l’adresse de courriel',
 'changeemail-header'   => 'Changer l’adresse de courriel du compte',

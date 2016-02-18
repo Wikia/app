@@ -758,16 +758,6 @@ Esperatz abans d’ensajar tornamai.',
 Benlèu ja avètz modificat vòstre senhal o demandat un senhal temporari novèl.',
 'resetpass-temp-password'   => 'Senhal temporari :',
 
-# Special:PasswordReset
-'passwordreset'              => 'Remesa a zèro del senhal',
-'passwordreset-legend'       => 'Reïnicializar lo senhal',
-'passwordreset-username'     => "Nom d'utilizaire :",
-'passwordreset-domain'       => 'Domeni:',
-'passwordreset-email'        => 'Adreça de corrièr electronic :',
-'passwordreset-emailtitle'   => "Detailhs d'un compte per {{SITENAME}}",
-'passwordreset-emailelement' => 'Utilizaire: $1
-Senhal temporari: $2',
-
 # Special:ChangeEmail
 'changeemail'          => "Cambiar l'adreça electronica:",
 'changeemail-header'   => "Cambiar l'adreça electronica del compte",

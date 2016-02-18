@@ -692,38 +692,6 @@ Om voort te gaan moet u 'n nuwe wagwoord hier kies:",
 U het moontlik reeds u wagwoord gewysig of 'n nuwe tydelike wagwoord aangevra.",
 'resetpass-temp-password'   => 'Tydelike wagwoord:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Wagwoord herstel',
-'passwordreset-text'               => "Voltooi hierdie vorm om 'n e-pos herinnering van jou rekening besonderhede te ontvang.",
-'passwordreset-legend'             => 'Kry nuwe wagwoord',
-'passwordreset-disabled'           => 'Die herskik van U wagwoord is gedeaktiveer op hierdie wiki.',
-'passwordreset-pretext'            => '{{PLURAL:$1| | Voer een van die onderstaande velde in}}',
-'passwordreset-username'           => 'Gebruiker:',
-'passwordreset-domain'             => 'Domein:',
-'passwordreset-capture'            => 'Wys resulterende e-pos?',
-'passwordreset-capture-help'       => 'As u die boks merk, word die e-pos (met die tydelike wagwoord) aan u getoon en aan die gebruiker gestuur.',
-'passwordreset-email'              => 'E-posadres:',
-'passwordreset-emailtitle'         => 'Gebruiker se details op {{site name}}',
-'passwordreset-emailtext-ip'       => 'Iemand, waarskynlik u vanaf die IP-adres $1, het u gebruikersgegewens vir {{SITENAME}} ($4) opgevra.
-Die volgende {{PLURAL:$3|gebruiker is|gebruikers is}} aan die e-posadres gekoppel:
-
-$2
-
-{{PLURAL:$3|Die tydelike wagwoord verval|Hierdie tydelike wagwoorde verval}} oor {{PLURAL:$5|een dag|$5 dae}}.
-Meld asseblief nou aan en wysig u wagwoord. As u dit nie versoek het nie, of as u die oorspronklike wagwoord nog ken en dit nie wil verander nie, ignoreer die berig en hou aan om u ou wagwoord te gebruik.',
-'passwordreset-emailtext-user'     => 'Gebruiker $1 op die webtuiste {{SITENAME}} het u gebruikersgegewens vir {{SITENAME}} ($4) opgevra.
-Die volgende {{PLURAL:$3|gebruiker is|gebruikers is}} aan die e-posadres gekoppel:
-
-$2
-
-{{PLURAL:$3|Die tydelike wagwoord verval|Hierdie tydelike wagwoorde verval}} oor {{PLURAL:$5|een dag|$5 dae}}.
-Meld asseblief aan en verander u wagwoord nou. As u dit nie versoek het nie, of as u die oorspronklike wagwoord nog ken en dit nie wil verander nie, ignoreer die berig en hou aan om u ou wagwoord te gebruik.',
-'passwordreset-emailelement'       => 'Gebruikersnaam: $1
-Tydelike wagwoord: $2',
-'passwordreset-emailsent'          => "'n E-pos ter herhindering is gestuur.",
-'passwordreset-emailsent-capture'  => "'n E-pos ter herinnering is gestuur en word hieronder vertoon.",
-'passwordreset-emailerror-capture' => "'n E-pos ter herinnering is geskep en word hieronder vertoon. Die uitstuur daarvan het egter gefaal: $1",
-
 # Special:ChangeEmail
 'changeemail'          => 'Wysig E-posadres',
 'changeemail-header'   => 'Wysig rekening se e-posadres',

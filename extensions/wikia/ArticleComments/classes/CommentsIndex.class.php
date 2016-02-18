@@ -22,10 +22,10 @@ class CommentsIndex extends WikiaModel {
 	protected $lastRevId = 0;
 	protected $lastTouched = 0;
 	protected $namespace = 0;
-	protected $data = array();
+	protected $data = [ ];
 	private $dbw = null;
 
-	public function __construct( $data = array(), $dbw = null ) {
+	public function __construct( $data = [ ], $dbw = null ) {
 		$this->data = $data;
 		$this->dbw = $dbw;
 
@@ -85,7 +85,7 @@ class CommentsIndex extends WikiaModel {
 	 * @param integer $value
 	 */
 	public function updateArchived( $value = 1 ) {
-		$updateValue = array( 'archived' => $value );
+		$updateValue = [ 'archived' => $value ];
 		$this->updateDatabase( $updateValue );
 	}
 
@@ -94,9 +94,9 @@ class CommentsIndex extends WikiaModel {
 	 * @param integer $value
 	 */
 	public function updateDeleted( $value = 1 ) {
-		$updateValue = array(
+		$updateValue = [
 			'deleted' => $value,
-		);
+		];
 		$this->updateDatabase( $updateValue );
 	}
 
@@ -105,9 +105,9 @@ class CommentsIndex extends WikiaModel {
 	 * @param integer $value
 	 */
 	public function updateRemoved( $value = 1 ) {
-		$updateValue = array(
+		$updateValue = [
 			'removed' => $value,
-		);
+		];
 		$this->updateDatabase( $updateValue );
 	}
 
@@ -116,7 +116,7 @@ class CommentsIndex extends WikiaModel {
 	 * @param integer $value
 	 */
 	public function updateLocked( $value = 1 ) {
-		$updateValue = array( 'locked' => $value );
+		$updateValue = [ 'locked' => $value ];
 		$this->updateDatabase( $updateValue );
 	}
 
@@ -125,7 +125,7 @@ class CommentsIndex extends WikiaModel {
 	 * @param integer $value
 	 */
 	public function updateProtected( $value = 1 ) {
-		$updateValue = array( 'protected' => $value );
+		$updateValue = [ 'protected' => $value ];
 		$this->updateDatabase( $updateValue );
 	}
 
@@ -134,7 +134,7 @@ class CommentsIndex extends WikiaModel {
 	 * @param integer $value
 	 */
 	public function updateSticky( $value = 1 ) {
-		$updateValue = array( 'sticky' => $value );
+		$updateValue = [ 'sticky' => $value ];
 		$this->updateDatabase( $updateValue );
 	}
 
@@ -143,7 +143,7 @@ class CommentsIndex extends WikiaModel {
 	 * @param integer $value
 	 */
 	public function updateLastRevId( $value ) {
-		$updateValue = array( 'last_rev_id' => $value );
+		$updateValue = [ 'last_rev_id' => $value ];
 		$this->updateDatabase( $updateValue );
 	}
 
@@ -152,7 +152,7 @@ class CommentsIndex extends WikiaModel {
 	 * @param integer $value
 	 */
 	public function updateLastChildCommentId( $value ) {
-		$updateValue = array( 'last_child_comment_id' => $value );
+		$updateValue = [ 'last_child_comment_id' => $value ];
 		$this->updateDatabase( $updateValue );
 	}
 
@@ -226,7 +226,7 @@ class CommentsIndex extends WikiaModel {
 			$db->update(
 				'comments_index',
 				$updateValue,
-				array( 'comment_id' => $this->commentId ),
+				[ 'comment_id' => $this->commentId ],
 				__METHOD__
 			);
 
@@ -268,7 +268,7 @@ class CommentsIndex extends WikiaModel {
 		$status = $db->replace(
 			'comments_index',
 			'',
-			array(
+			[
 				'parent_page_id' => $this->parentPageId,
 				'comment_id' => $this->commentId,
 				'parent_comment_id' => $this->parentCommentId,
@@ -283,7 +283,7 @@ class CommentsIndex extends WikiaModel {
 				'created_at' => $this->createdAt,
 				'last_rev_id' => $this->lastRevId,
 				'last_touched' => $this->lastTouched,
-			),
+			],
 			__METHOD__
 		);
 		if ( false === $status ) {
@@ -330,7 +330,7 @@ class CommentsIndex extends WikiaModel {
 			wfProfileOut( __METHOD__ );
 			return null;
 		}
-		$sqlWhere = array( 'comment_id' => $commentId );
+		$sqlWhere = [ 'comment_id' => $commentId ];
 		if ( !empty( $parentPageId ) ) {
 			$sqlWhere['parent_page_id'] = $parentPageId;
 		} else {
@@ -379,7 +379,7 @@ class CommentsIndex extends WikiaModel {
 			'*',
 			$sqlWhere,
 			__METHOD__,
-			array( 'LIMIT' => 1 )
+			[ 'LIMIT' => 1 ]
 		);
 		return $row;
 	 }
@@ -390,7 +390,7 @@ class CommentsIndex extends WikiaModel {
 	 * @return array comment
 	 */
 	public static function newFromRow( $row, $dbw = null ) {
-		$data = array(
+		$data = [
 			'parentPageId' => $row->parent_page_id,
 			'commentId' => $row->comment_id,
 			'parentCommentId' => $row->parent_comment_id,
@@ -405,7 +405,7 @@ class CommentsIndex extends WikiaModel {
 			'createdAt' => $row->created_at,
 			'lastRevId' => $row->last_rev_id,
 			'lastTouched' => $row->last_touched,
-		);
+		];
 
 		$comment = new CommentsIndex( $data, $dbw );
 
@@ -429,7 +429,7 @@ class CommentsIndex extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		if ( !empty( $this->parentCommentId ) ) {
-			$data = array( 'commentId' => $this->parentCommentId );
+			$data = [ 'commentId' => $this->parentCommentId ];
 			$parent = new CommentsIndex( $data, $this->dbw );
 			$parent->updateLastChildCommentId( $lastChildCommentId );
 		}
@@ -449,14 +449,14 @@ class CommentsIndex extends WikiaModel {
 		$db = wfGetDB( $dbname );
 
 		$row = $db->selectRow(
-			array( 'comments_index' ),
-			array( 'max(comment_id) last_comment_id' ),
-			array(
+			[ 'comments_index' ],
+			[ 'max(comment_id) last_comment_id' ],
+			[
 				'parent_comment_id' => $this->parentCommentId,
 				'archived' => 0,
 				'removed' => 0,
 				'deleted' => 0,
-			),
+			],
 			__METHOD__
 		);
 
@@ -493,15 +493,15 @@ class CommentsIndex extends WikiaModel {
 		$db = wfGetDB( DB_MASTER );
 
 		if ( !empty( $parent_comment ) ) {
-			$where = array( "parent_comment_id = " . $parent_comment . " or comment_id = " . $parent_comment );
+			$where = [ "parent_comment_id = " . $parent_comment . " or comment_id = " . $parent_comment ];
 		} else {
-			$where = array( 'parent_page_id' => $from );
+			$where = [ 'parent_page_id' => $from ];
 
 		}
 
 		$db->update(
 			'comments_index',
-			array( 'parent_page_id' => $to ),
+			[ 'parent_page_id' => $to ],
 			$where,
 			__METHOD__
 		);
@@ -517,9 +517,9 @@ class CommentsIndex extends WikiaModel {
 	 * @return bool
 	 */
 	static public function onLoadExtensionSchemaUpdates( $updater = null ) {
-		$map = array(
+		$map = [
 			'mysql' => 'patch-create-comments_index.sql',
-		);
+		];
 
 		$type = $updater->getDB()->getType();
 		if ( isset( $map[$type] ) ) {
@@ -563,14 +563,14 @@ class CommentsIndex extends WikiaModel {
 			if ( $flags & EDIT_NEW ) {
 				$titleText = $title->getText();
 				if ( isset( self::$commentInfoData[ $titleText] ) ) {
-					$data = array(
+					$data = [
 						'namespace' => self::$commentInfoData[ $titleText]->userPageTitle->getNamespace(),
 						'parentPageId' => self::$commentInfoData[ $titleText]->userPageTitle->getArticleID(),
 						'commentId' => $title->getArticleID(),
 						'parentCommentId' => intval( self::$commentInfoData[ $titleText]->parentId ),
 						'firstRevId' => $revision->getId(),
 						'lastRevId' => $revision->getId(),
-					);
+					];
 
 					$commentsIndex = new CommentsIndex( $data, $dbw );
 					$commentsIndex->addToDatabase();

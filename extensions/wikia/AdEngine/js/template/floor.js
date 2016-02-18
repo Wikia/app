@@ -1,12 +1,13 @@
 /*global define*/
 define('ext.wikia.adEngine.template.floor', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'wikia.log',
 	'wikia.document',
 	'wikia.iframeWriter',
 	'wikia.window'
-], function (adContext, adDetect, log, doc, iframeWriter, win) {
+], function (adContext, adSlot, adDetect, log, doc, iframeWriter, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.floor',
@@ -59,7 +60,8 @@ define('ext.wikia.adEngine.template.floor', [
 					height: params.height
 				}
 			},
-			async = params.canHop && params.slotName;
+			async = params.canHop && params.slotName,
+			slot;
 
 		function showFloor() {
 			var skin = adContext.getContext().targeting.skin;
@@ -80,15 +82,19 @@ define('ext.wikia.adEngine.template.floor', [
 
 		if (async) {
 			log(['show', params.slotName, 'can hop'], 'info', logGroup);
-			$(iframe).on('load', function () {
-				adDetect.onAdLoad(params.slotName + ' (floor inner iframe)', gptEventMock, iframe, function () {
+			slot = adSlot.create(params.slotName, null, {
+				success: function () {
 					log(['ad detect', params.slotName, 'success'], 'info', logGroup);
 					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"success"}}', '*');
 					showFloor();
-				}, function () {
+				},
+				hop: function () {
 					log(['ad detect', params.slotName, 'hop'], 'info', logGroup);
 					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"hop"}}', '*');
-				});
+				}
+			});
+			$(iframe).on('load', function () {
+				adDetect.onAdLoad(slot, gptEventMock, iframe);
 			});
 		}
 

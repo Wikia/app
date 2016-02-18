@@ -12,7 +12,7 @@
 	box-sizing: border-box;
 	color: $nav-foreground-dark-color;
 	height: $global-navigation-height;
-	margin-top: -$global-navigation-height - 1px;
+	margin-top: -$global-navigation-negative-top-margin;
 	position: fixed;
 	transition-duration: .5s;
 	transition-property: background-color;

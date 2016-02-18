@@ -302,10 +302,6 @@ Check your spelling, ka [[Special:UserLogin/signup|kria konta foun]].',
 # Change password dialog
 'resetpass_text' => "<!-- Hakerek testu iha ne'e -->",
 
-# Special:PasswordReset
-'passwordreset-username' => "Naran uza-na'in:",
-'passwordreset-email'    => 'Diresaun korreiu eletróniku:',
-
 # Edit page toolbar
 'link_tip'       => 'Ligasaun ba laran',
 'extlink_sample' => "http://www.example.com ligasaun ba li'ur",

@@ -795,37 +795,6 @@ Girişi bitirmek için, burada yeni bir parola yazın:',
 Şifrenizi zaten başarıyla değiştirdiniz ya da yeni bir geçici şifre istediniz.',
 'resetpass-temp-password'   => 'Geçici parola:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Parola sıfırlama',
-'passwordreset-text'               => 'Hesap bilgilerinizin e-posta ile hatırlatılması için bu formu doldurunuz.',
-'passwordreset-legend'             => 'Şifreyi sıfırla',
-'passwordreset-disabled'           => 'Parola sıfırlamaları bu wiki üzerinde devre dışı bırakıldı.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Aşağıdaki verilerden birini girin}}',
-'passwordreset-username'           => 'Kullanıcı adı:',
-'passwordreset-domain'             => 'Domain:',
-'passwordreset-capture'            => 'Sonuç e-postasını görüntüle?',
-'passwordreset-capture-help'       => 'Bu kutuyu işaretlerseniz, e-posta (geçici şifre ile) size ve yanı sıra kullanıcıya gönderiliyor.',
-'passwordreset-email'              => 'E-posta adresi:',
-'passwordreset-emailtitle'         => '{{SITENAME}} hesap detayları',
-'passwordreset-emailtext-ip'       => 'Birisi, (muhtemelen siz, $1 IP adresinden) {{SITENAME}} ($4) için hesap bilgilerinizin
-hatırlatılmasını istedi. Aşağıdaki kullanıcı {{PLURAL:$3|hesabı|hesapları}} bu e-posta adresiyle ilişkili:
-
-$2
-
-{{PLURAL:$3|Bu geçici şifre|Bu geçici şifreler}} {{PLURAL:$5|bir gün|$5  gün}} geçerlidir.
-Bu geçici parola ile giriş yapın ve yeni bir şifre seçin. Şifre değişimini siz istemediyseniz veya şifrenizi hatırladıysanız ve artık şifrenizi değiştirmek istemiyorsanız; bu iletiyi önemsemeyerek eski şifrenizi kullanmaya devam edebilirsiniz.',
-'passwordreset-emailtext-user'     => '$1 adlı kullanıcı, {{SITENAME}} ($4) için hesap bilgilerinizin hatırlatılmasını istedi. Aşağıdaki kullanıcı {{PLURAL:$3|hesabı|hesapları}} bu e-posta adresiyle ilişkili:
-
-$2
-
-{{PLURAL:$3|Bu geçici şifre|Bu geçici şifreler}} {{PLURAL:$5|bir gün|$5  gün}} geçerlidir.
-Bu geçici parola ile giriş yapın ve yeni bir şifre seçin. Bu talep bir başkasına aitse veya şifrenizi hatırladıysanız ve artık şifrenizi değiştirmek istemiyorsanız; bu iletiyi önemsemeyerek eski şifrenizi kullanmaya devam edebilirsiniz.',
-'passwordreset-emailelement'       => 'Kullanıcı adı: $1
-Geçici şifre: $2',
-'passwordreset-emailsent'          => 'Hatırlatma e-postası gönderildi.',
-'passwordreset-emailsent-capture'  => 'Aşağıda gözüktüğü gibi bir hatırlatma e-postası gönderilmiştir.',
-'passwordreset-emailerror-capture' => 'Aşağıda gözüktüğü gibi bir hatırlatma e-postası oluşturulmuştur ancak $1 adlı kullanıcıya gönderilememiştir.',
-
 # Special:ChangeEmail
 'changeemail'          => 'E-posta adresini değiştir',
 'changeemail-header'   => 'Hesabın e-posta adresini değiştirin',

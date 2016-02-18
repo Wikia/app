@@ -8,7 +8,7 @@
 			<?= $description ?>
 		</div>
 		<div class="greeting"><?= $greeting ?></div>
-		<?= $app->renderView( 'ForumController', 'boardNewThread', array( 'isTopicPage' => $isTopicPage ) ) ?>
+		<?= $app->renderView( 'ForumController', 'boardNewThread', [ 'isTopicPage' => $isTopicPage ] ) ?>
 		<div class="ContentHeader <?php if ( $isTopicPage ): ?> Topic<?php endif; ?>">
 			<?php if ( $isTopicPage ): ?>
 				<div class="activity"><?= wfMessage( 'forum-active-threads-on-topic', $wg->Lang->formatNum( $activeThreads ), $topicText )->parse(); ?></div>
@@ -28,19 +28,19 @@
 		</div>
 		<ul class="ThreadList">
 			<? foreach ( $threads as $thread ): ?>
-				<?= $app->renderView( 'ForumController', 'boardThread', array(
+				<?= $app->renderView( 'ForumController', 'boardThread', [
 					'replies' => $thread->getRepliesWallMessages(),
 					'comment' => $thread->getThreadMainMsg()
-				) ) ?>
+				] ) ?>
 			<? endforeach ?>
 		</ul>
 		<? if ( $showPager ): ?>
-			<?= $app->renderView( 'PaginationController', 'index', array(
-				'data' => array( 'controller' => 'ForumExternalController' ),
+			<?= $app->renderView( 'PaginationController', 'index', [
+				'data' => [ 'controller' => 'ForumExternalController' ],
 				'totalItems' => $totalItems,
 				'itemsPerPage' => $itemsPerPage,
 				'currentPage' => $currentPage
-			) ) ?>
+			] ) ?>
 		<? endif ?>
 		<div id="WallTooltipMeta">
 			<div class="tooltip-text tooltip-highlight-thread"><?= wfMsg( 'wall-message-notifyeveryone-tooltip' ) ?></div>
