@@ -64,9 +64,9 @@ class ArticleAsJson extends WikiaService {
 					'link' => $media['link'],
 					/**
 					 * data-ref has to be set for now because it's read in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php
+					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:20
 					 * and in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php.
+					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:51.
 					 * Base on presence of data-ref element is classified as an image
 					 * - without that service would return null
 					 */
@@ -84,11 +84,18 @@ class ArticleAsJson extends WikiaService {
 					'galleryAttrs' => json_encode( [ 'ref' => $id ] ),
 					/**
 					 * data-ref has to be set for now because it's read in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php
+					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:20
 					 * and in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php.
+					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:51
 					 * Base on presence of data-ref element is classified as an image
 					 * - without that service would return null
+					 *
+					 * !!! Important note - data-ref inside template has ' instead of "
+					 * because this is how regex in
+					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:20
+					 * works
+					 *
+					 * @TODO fix the regex if full rollout of experiment is confirmed
 					 */
 					'ref' => $id,
 					'media' => $media,
