@@ -80,7 +80,7 @@ class FandomDataService {
 			'limit' => self::PARSELY_API_LIMIT
 		];
 
-		$params = array_merge($defaultParams, $options);
+		$params = array_merge( $defaultParams, $options );
 
 		$url = self::PARSELY_API_BASE . $endpoint . '?' . http_build_query( $params );
 
@@ -96,13 +96,13 @@ class FandomDataService {
 		$posts = [];
 		$postIds = [];
 
-		foreach ($rawPosts as $post) {
-			if ( count($posts) >= self::PARSELY_POSTS_LIMIT ) {
+		foreach ( $rawPosts as $post ) {
+			if ( count( $posts ) >= self::PARSELY_POSTS_LIMIT ) {
 				break;
 			}
 
 			$metadata = json_decode( $post->metadata );
-			if ( !empty($metadata->postID) && !in_array( $metadata->postID, $postIds) ) {
+			if ( !empty( $metadata->postID ) && !in_array( $metadata->postID, $postIds ) ) {
 				$postIds[] = $metadata->postID;
 				$posts[] = $post;
 			}
