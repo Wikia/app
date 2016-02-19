@@ -27,10 +27,12 @@ class RevertNotice extends Maintenance {
 
 		foreach ( $pages as $page ) {
 			$templates = '';
+			$logTemplates = [];
 			$flags = $flagModel->getFlagsForPage( $wgCityId, $page );
 
 			foreach ( $flags as $flag ) {
 				$templates .= $this->createTemplateString( $flag );
+				$logTemplates[] = $flag['flag_view'];
 			}
 
 			if ( !empty( $templates ) ) {
@@ -45,18 +47,25 @@ class RevertNotice extends Maintenance {
 
 				if ( strcmp( $content, $text ) !== 0 ) {
 					$wiki->doEdit( $text, self::EDIT_SUMMARY, EDIT_FORCE_BOT );
+
+					$log = sprintf(
+						"Templates: %s where added to %s \n",
+						implode( ',', $logTemplates ),
+						$wiki->getTitle()->getText()
+					);
+					$this->output($log);
 				}
 			}
 		}
-
-		$this->app = F::app();
 	}
 
 	private function createTemplateString( $flag ) {
 		$template = "{{{$flag['flag_view']}";
 		if ( !empty( $flag['params'] ) ) {
 			foreach( $flag['params'] as $id => $param ) {
-				$template .= "|{$id}={$param}";
+				if ( !empty( $param ) ) {
+					$template .= "|{$id}={$param}";
+				}
 			}
 		}
 		$template .= "}}\n";
