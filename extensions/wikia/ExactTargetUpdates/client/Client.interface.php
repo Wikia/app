@@ -2,7 +2,7 @@
 namespace Wikia\ExactTarget;
 
 interface Client {
-	public function createUser( array $aUserData );
+	public function updateUser( array $userData );
 
 	public function deleteSubscriber( $userId );
 

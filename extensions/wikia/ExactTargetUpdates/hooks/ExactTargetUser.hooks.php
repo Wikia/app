@@ -13,7 +13,7 @@ class ExactTargetUserHooks {
 	public function onUserRenameAfterAccountRename( $iUserId, $sOldUsername, $sNewUsername ) {
 		$oUser = \User::newFromId( $iUserId );
 		$oUser->setName( $sNewUsername ); // Reset new username just in case it's not propagated yet
-		$this->addTheUpdateCreateUserTask( $oUser );
+		$this->queueUpdateUserTask( $oUser );
 		return true;
 	}
 
@@ -37,7 +37,7 @@ class ExactTargetUserHooks {
 	 * @return bool
 	 */
 	public function onEditAccountEmailChanged( \User $oUser ) {
-		$this->addTheUpdateCreateUserTask( $oUser );
+		$this->queueUpdateUserTask( $oUser );
 		return true;
 	}
 
@@ -80,7 +80,7 @@ class ExactTargetUserHooks {
 	 * @return bool
 	 */
 	public function onCreateNewUserComplete( \User $oUser ) {
-		$this->addTheUpdateCreateUserTask( $oUser );
+		$this->queueUpdateUserTask( $oUser );
 		return true;
 	}
 
@@ -135,15 +135,15 @@ class ExactTargetUserHooks {
 	 * Adds Task to job queue that updates a user or adds a user if one doesn't exist
 	 * @param User $oUser
 	 */
-	private function addTheUpdateCreateUserTask( \User $oUser ) {
+	private function queueUpdateUserTask( \User $oUser ) {
 		/* Prepare params */
 		$oUserHelper = $this->getUserHelper();
 		$aUserData = $oUserHelper->prepareUserParams( $oUser );
 		$aUserProperties = $oUserHelper->prepareUserPropertiesParams( $oUser );
 
 		/* Get and run the task */
-		$task = new ExactTargetCreateUser();
-		$task->call( 'create', $aUserData, $aUserProperties );
+		$task = new ExactTargetUserUpdate();
+		$task->call( 'update', $aUserData, $aUserProperties );
 		$task->queue();
 	}
 

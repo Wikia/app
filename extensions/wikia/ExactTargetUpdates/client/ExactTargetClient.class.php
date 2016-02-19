@@ -5,19 +5,16 @@ use Wikia\Logger\WikiaLogger;
 
 class ExactTargetClient implements Client {
 
-	public function createUser( array $aUserData ) {
-		$oRequest = ExactTargetRequestBuilder::createUpdate()
-			->withUserData( [ $aUserData ] )
+	public function updateUser( array $userData ) {
+		$request = ExactTargetRequestBuilder::createUpdate()
+			->withUserData( [ $userData ] )
 			->build();
 
-		$oCreateUserResult = $this->sendRequest( 'Update', $oRequest );
+		$response = $this->sendRequest( 'Update', $request );
 
-		//		$this->info( __METHOD__ . ' OverallStatus: ' . $oCreateUserResult->OverallStatus );
-		//		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oCreateUserResult ) );
-
-		if ( $oCreateUserResult->OverallStatus === 'Error' ) {
+		if ( $response->OverallStatus === 'Error' ) {
 			throw new \Exception(
-				'Error in ' . __METHOD__ . ': ' . $oCreateUserResult->Results->StatusMessage
+				'Error in ' . __METHOD__ . ': ' . $response->Results->StatusMessage
 			);
 		}
 	}
@@ -26,63 +23,52 @@ class ExactTargetClient implements Client {
 	 * Deletes Subscriber object in ExactTarget by API request if email is not used by other user
 	 */
 	public function deleteSubscriber( $userId ) {
-		$sUserEmail = $this->retrieveEmailByUserId( $userId );
+		$userEmail = $this->retrieveEmailByUserId( $userId );
 
 		/* Skip deletion if no email found */
-		if ( empty( $sUserEmail ) ) {
-			//			$this->info(__METHOD__ . ": No email found for the user or there's no user record. Deletion skipped.");
+		if ( empty( $userEmail ) ) {
 			return;
 		}
 
 		/* Skip deletion if email is used by other account */
-		if ( $this->isEmailInUse( $sUserEmail, $userId ) ) {
-			//			$this->info(__METHOD__ . ': Email in use by different account (record). Deletion skipped.');
+		if ( $this->isEmailInUse( $userEmail, $userId ) ) {
 			return;
 		}
 
-		$oDeleteRequest = ExactTargetRequestBuilder::createDelete()
-			->withUserEmail( $sUserEmail )
+		$deleteRequest = ExactTargetRequestBuilder::createDelete()
+			->withUserEmail( $userEmail )
 			->build();
 
-		$oResults = $this->sendRequest( 'Delete', $oDeleteRequest );
-		//		$this->info( __METHOD__ . ' OverallStatus: ' . $oDeleteSubscriberResult->OverallStatus );
-		//		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oDeleteSubscriberResult ) );
+		$this->sendRequest( 'Delete', $deleteRequest );
 	}
 
 	public function createSubscriber( $userEmail ) {
-		//		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 		$oRequest = ExactTargetRequestBuilder::createCreate()
 			->withUserEmail( $userEmail )
 			->build();
 
-		$oResults = $this->sendRequest( 'Create', $oRequest );
-
-		//		$this->info( __METHOD__ . ' OverallStatus: ' . $createSubscriberResult->OverallStatus );
-		//		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$createSubscriberResult ) );
+		$this->sendRequest( 'Create', $oRequest );
 	}
 
-	public function createUserProperties( $iUserId, array $aUserProperties ) {
-		$oRequest = ExactTargetRequestBuilder::createUpdate()
-			->withUserId( $iUserId )
-			->withProperties( $aUserProperties )
+	public function createUserProperties( $userId, array $userProperties ) {
+		$request = ExactTargetRequestBuilder::createUpdate()
+			->withUserId( $userId )
+			->withProperties( $userProperties )
 			->build();
 
-		$oCreateUserPropertiesResult = $this->sendRequest( 'Update', $oRequest );
+		$createUserPropertiesResult = $this->sendRequest( 'Update', $request );
 
-		//		$this->info( __METHOD__ . ' OverallStatus: ' . $oCreateUserPropertiesResult->OverallStatus );
-		//		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oCreateUserPropertiesResult ) );
-
-		if ( $oCreateUserPropertiesResult->OverallStatus === 'Error' ) {
+		if ( $createUserPropertiesResult->OverallStatus === 'Error' ) {
 			throw new \Exception(
-				'Error in ' . __METHOD__ . ': ' . $oCreateUserPropertiesResult->Results[ 0 ]->StatusMessage
+				'Error in ' . __METHOD__ . ': ' . $createUserPropertiesResult->Results[ 0 ]->StatusMessage
 			);
 		}
 
-		$oUserDataVerificationTask = new ExactTargetUserDataVerificationTask();
-		$oUserDataVerificationTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
-		$bUserDataVerificationResult = $oUserDataVerificationTask->verifyUserPropertiesData( $iUserId );
+		$userDataVerificationTask = new ExactTargetUserDataVerificationTask();
+//		$userDataVerificationTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
+		$userDataVerificationResult = $userDataVerificationTask->verifyUserPropertiesData( $userId );
 
-		return $bUserDataVerificationResult;
+		return $userDataVerificationResult;
 	}
 
 	public function retrieveEmailByUserId( $userId ) {

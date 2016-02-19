@@ -44,6 +44,7 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 		$oApiDataExtension = $this->getApiDataExtension();
 
 		/* Run update */
+		/* TODO replace with \Wikia\ExactTarget\ExactTargetClient::updateUser */
 		$oCreateUserResult = $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
 
 		$this->info( __METHOD__ . ' OverallStatus: ' . $oCreateUserResult->OverallStatus );

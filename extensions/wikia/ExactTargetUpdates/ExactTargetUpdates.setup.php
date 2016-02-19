@@ -57,11 +57,12 @@ $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetTask'] =  $dir . '/tasks/ExactT
 /* Add user-related tasks classes */
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetUserDataVerificationTask'] =  $dir . '/tasks/ExactTargetUserDataVerificationTask.php';
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetUserTaskHelper'] =  $dir . '/tasks/ExactTargetUserTaskHelper.php' ;
-$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetCreateUser'] =  $dir . '/tasks/ExactTargetCreateUser.task.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetCreateUserTask'] =  $dir . '/tasks/ExactTargetCreateUserTask.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetRetrieveUserTask'] =  $dir . '/tasks/ExactTargetRetrieveUserTask.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetUpdateUserTask'] =  $dir . '/tasks/ExactTargetUpdateUserTask.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetDeleteUserTask'] =  $dir . '/tasks/ExactTargetDeleteUserTask.php';
+/* Refactored tasks that are to replace old ones */
+$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetUserUpdate'] =  $dir . '/tasks/ExactTargetUserUpdate.task.php' ;
 /* Add wiki-related tasks classes */
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetWikiDataVerificationTask'] =  $dir . '/tasks/ExactTargetWikiDataVerificationTask.php';
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetWikiTaskHelper'] =  $dir . '/tasks/ExactTargetWikiTaskHelper.php' ;
