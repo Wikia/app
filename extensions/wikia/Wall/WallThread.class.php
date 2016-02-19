@@ -90,7 +90,7 @@ class WallThread {
 	 * @param integer $afterId The last reply ID after which the next set is selected
 	 * @return array List of reply IDs
 	 */
-	private function getReplyIdsFromDB( $dbr, $afterId = null ) {
+	private function getReplyIdsFromDB( $dbr, $afterId = 0 ) {
 		// this is a direct way to get IDs
 		// the other one is in Wall.class done in a grouped way
 		// (fetch for many threads at once, set with ->setReplies)
@@ -110,11 +110,11 @@ class WallThread {
 				$list[] = $oRow->comment_id;
 			} );
 
-		$lastId = end( $list );
-
-		// TODO: add pagination or a limit here because this will return all replies
-		return empty( $lastId ) ? $list :
-			array_merge( $list, $this->getReplyIdsFromDB( $dbr, $lastId ) );
+		if ( count( $list ) < self::FETCHED_REPLIES_LIMIT ) {
+			return $list;
+		} else {
+			return array_merge( $list, $this->getReplyIdsFromDB( $dbr, end( $list ) ) );
+		}
 	}
 
 	private function loadReplyIdsFromDB( $master = false ) {
