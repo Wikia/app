@@ -42,12 +42,7 @@ class UserApiController extends WikiaApiController {
 
 		foreach ( $users as $user ) {
 			$userName = $user->getName();
-			$powerUserTypes = [];
-			$powerUserTypesRaw = ( new \Wikia\PowerUser\PowerUser( $users[0] ) )->getTypesForUser();
-
-			foreach ( $powerUserTypesRaw as $powerUserType ) {
-				$powerUserTypes[$powerUserType] = true;
-			}
+			$powerUserTypes = ( new \Wikia\PowerUser\PowerUser( $users[0] ) )->getTypesForUser();
 
 			$item = array(
 				'user_id' => $user->getId(),
