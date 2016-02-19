@@ -26,7 +26,7 @@ class ExactTargetClient implements Client {
 	 * Deletes Subscriber object in ExactTarget by API request if email is not used by other user
 	 */
 	public function deleteSubscriber( $userId ) {
-		$sUserEmail = $this->retrieve( [ 'user_email' ], 'user_id', [ $userId ], ResourceEnum::USER );
+		$sUserEmail = $this->retrieveEmailByUserId( $userId );
 
 		/* Skip deletion if no email found */
 		if ( empty( $sUserEmail ) ) {
