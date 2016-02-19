@@ -99,6 +99,20 @@ class ExactTargetClient implements Client {
 		return ( new UserEmailAdapter( $result ) )->getEmail();
 	}
 
+	public function retrieveUsersEdits( $usersIds ) {
+		try {
+			$result = $this->retrieve(
+				[ 'user_id', 'wiki_id', 'contributions' ],
+				'user_id',
+				$usersIds,
+				\Wikia\ExactTarget\ResourceEnum::USER_WIKI
+			);
+		} catch ( EmptyResultException $e ) {
+			return [];
+		}
+		return ( new UserEditsAdapter( $result ) )->getEdits();
+	}
+
 	/**
 	 * Checks whether there are any users that has provided email
 	 * @param string $sEmail Email address to check in ExactTarget
