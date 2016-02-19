@@ -133,7 +133,25 @@ class ApiVisualEditor extends ApiBase {
 		return $req->getContent();
 	}
 
-	protected function getHTML( $title, $parserParams, $params ) {
+
+	protected function getPreloadHTML( $params ) {
+		$preloadTitle = Title::newFromText( urldecode( $params['preload'] ) );
+
+		if ( isset( $preloadTitle ) && $preloadTitle->userCan( 'read' ) ) {
+			$data = $this->getHTML( Title::newFromText( urldecode( $params['preload'] ) ) );
+
+			if ( $data ) {
+				$data['oldid'] = 0;
+				$data['basetimestamp'] = wfTimestampNow();
+
+				return $data;
+			}
+		}
+
+		return false;
+	}
+
+	protected function getHTML( $title, $parserParams ) {
 		$restoring = false;
 
 		if ( $title->exists() ) {
@@ -162,18 +180,10 @@ class ApiVisualEditor extends ApiBase {
 			}
 			$timestamp = $latestRevision->getTimestamp();
 		} else {
-			$preloadTitle = Title::newFromText( urldecode( $params['preload'] ) );
-
-			if ( isset( $preloadTitle ) && $preloadTitle->userCan( 'read' ) ) {
-				$data = $this->getHtml( Title::newFromText( urldecode( $params['preload'] ) ) );
-				$data['oldid'] = 0;
-				$data['basetimestamp'] = wfTimestampNow();
-
-				return $data;
-			} else {
-				$content = '';
-			}
-		}
+			$content = '';
+			$timestamp = wfTimestampNow();
+  			$oldid = 0;
+  		}
 		return array(
 			'result' => array(
 				'content' => $content,
@@ -375,7 +385,12 @@ class ApiVisualEditor extends ApiBase {
 		wfDebugLog( 'visualeditor', "called on '$page' with paction: '{$params['paction']}'" );
 		switch ( $params['paction'] ) {
 			case 'parse':
-				$parsed = $this->getHTML( $page, $parserParams, $params );
+				if ( isset( $params['preload'] )) {
+					$parsed = $this->getPreloadHTML( $params );
+				} else {
+					$parsed = $this->getHTML( $page, $parserParams );
+				}
+
 				// Dirty hack to provide the correct context for edit notices
 				global $wgTitle; // FIXME NOOOOOOOOES
 				$wgTitle = $page;
