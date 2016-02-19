@@ -2,6 +2,8 @@
 
 /* smart proxy to article comment */
 
+use Wikia\Logger\WikiaLogger;
+
 class WallMessage {
 	protected $articleComment;
 	protected $title;
@@ -74,7 +76,7 @@ class WallMessage {
 
 		//double check if all titles are correct
 		foreach ( $titles as $title ) {
-			if ( $title instanceof Title && $title->exists() ) {
+			if ( $title->exists() ) {
 				$wallMessages[] = WallMessage::newFromTitle( $title );
 				$correctIds[] = $title->mArticleID;
 			}
@@ -85,6 +87,8 @@ class WallMessage {
 			$title = Title::newFromId( $id, Title::GAID_FOR_UPDATE );
 			if ( $title instanceof Title && $title->exists() ) {
 				$wallMessages[] = WallMessage::newFromTitle( $title );
+			} else {
+				WikiaLogger::instance()->error( 'Failed to load reply for thread', [ 'titleId' => $id ] );
 			}
 		}
 
