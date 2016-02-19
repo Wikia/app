@@ -100,8 +100,8 @@ class InsightsPageViews {
 		return [
 			$lastTimeId->format( $format ),
 			$lastTimeId->modify( '-1 week' )->format( $format ),
-			$lastTimeId->modify( '-2 week' )->format( $format ),
-			$lastTimeId->modify( '-3 week' )->format( $format ),
+			$lastTimeId->modify( '-1 week' )->format( $format ),
+			$lastTimeId->modify( '-1 week' )->format( $format ),
 		];
 	}
 }
