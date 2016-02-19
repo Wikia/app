@@ -195,7 +195,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 		wfProfileIn( __METHOD__ );
 
 		$url = AnyclipApiWrapper::getApi( $code );
-		$response = Http::request( 'GET', $url, [ 'noProxy' => true ] );
+		$response = ExternalHttp::get( $url );
 		if ( $response !== false ) {
 			$content = json_decode( $response, true );
 

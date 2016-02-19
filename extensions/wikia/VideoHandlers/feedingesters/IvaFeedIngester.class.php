@@ -929,7 +929,7 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 
 		print( "Connecting to $url...\n" );
 
-		$resp = Http::request( 'GET', $url, [ 'noProxy' => true ] );
+		$resp = ExternalHttp::get( $url );
 		if ( $resp === false ) {
 			$this->logger->videoErrors( "ERROR: problem downloading content.\n" );
 
