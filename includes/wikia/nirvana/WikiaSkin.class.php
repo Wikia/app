@@ -398,6 +398,20 @@ abstract class WikiaSkin extends SkinTemplate {
 		return self::USER_LOGIN_STATUS_CLASS_ANON;
 	}
 
+	/**
+	 * VOLDEV-168: Add a community-specific class to the body tag
+	 * The class is the wikia's subdomain, with any dots replaced by dashes (e.g. de.mlp -> de-mlp)
+	 *
+	 * @return string Generated CSS class for this wikia
+	 */
+	public function getBodyClassForCommunity() {
+		$domain = wfParseUrl( $this->wg->Server )['host'];
+		$domain = str_replace( '.wikia.com', '', $domain );
+		$domain = str_replace( '.', '-', $domain );
+
+		return $domain;
+	}
+
 	public function initPage( OutputPage $out ) {
 		$out->topScripts = $this->getTopScripts();
 		parent::initPage($out);

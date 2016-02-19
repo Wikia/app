@@ -41,7 +41,6 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 
 		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = [ $this, 'addWikiaVars' ];
 		$wgHooks['SkinTemplateSetupPageCss'][] = [ $this, 'addWikiaCss' ];
-		$wgHooks['SkinGetPageClasses'][] = [ $this, 'addBodyClasses' ];
 		$wgHooks['SkinGetHeadScripts'][] = [ $this, 'onSkinGetHeadScripts' ];
 	}
 
@@ -87,11 +86,12 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 		return true;
 	}
 
-	public function addBodyClasses( &$classes ) {
-		$classes .= ( $this->ads ? ' with-adsense' : ' without-adsense' );
-		$classes .= $this->getUserLoginStatusClass();
+	public function addToBodyAttributes( OutputPage $out, array &$bodyAttrs ) {
+		$bodyAttrs['class'] .= ( $this->ads ? ' with-adsense' : ' without-adsense' );
+		$bodyAttrs['class'] .= $this->getUserLoginStatusClass();
 
-		return true;
+		// VOLDEV-168: Add a community-specific class to the body tag
+		$bodyAttrs['class'] .= ' ' . $this->getBodyClassForCommunity();
 	}
 
 	// load skin-specific JS files from MW (wikibits, user and site JS) - BugId:960
