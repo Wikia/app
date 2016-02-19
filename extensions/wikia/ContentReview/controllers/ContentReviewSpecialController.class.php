@@ -50,6 +50,8 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 
 		$this->getOutput()->setPageTitle( wfMessage( 'content-review-special-title' )->plain() );
 
+		Wikia::addAssetsToOutput( 'content_review_special_page_scss' );
+
 		$wikiId = $this->getPar();
 
 		if ( !empty( $wikiId ) ) {
@@ -107,12 +109,10 @@ class ContentReviewSpecialController extends WikiaSpecialPageController {
 					$pageId,
 					ReviewModel::CONTENT_REVIEW_STATUS_IN_REVIEW
 				] );
-				if ( $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
-					&& isset( $reviewsRaw[$reviewKey] )
-				) {
-					$review['hide'] = true;
-				}
 
+				$review['hide'] = $review['status'] == ReviewModel::CONTENT_REVIEW_STATUS_UNREVIEWED
+					&& isset( $reviewsRaw[$reviewKey] );
+				$review['escalated'] = (bool)$review['escalated'];
 				$reviews[$wikiId][] = $review;
 			} else {
 				/**

@@ -35,7 +35,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			INCONTENT_1A:               {size: '300x250', loc: 'middle', pos: 'incontent_1'},
 			INCONTENT_1B:               {size: '300x250,160x600', loc: 'middle', pos: 'incontent_1'},
 			INCONTENT_1C:               {size: '300x250,160x600,300x600', loc: 'middle', pos: 'incontent_1'},
-			INCONTENT_BOXAD_1:          {size: '300x250', loc: 'middle'},
+			INCONTENT_BOXAD_1:          {size: '300x250,300x600', loc: 'middle'},
 			INCONTENT_LEADERBOARD_1:    {size: '728x90,468x90', loc: 'middle'},
 			INCONTENT_PLAYER:           {size: '1x1', 'loc': 'middle', 'pos': 'incontent_player'},
 			INVISIBLE_SKIN:             {size: '1000x1000,1x1', loc: 'top'},
@@ -74,40 +74,35 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		],
 		provider;
 
-	function fillInSlotWithDelay(slotName, slotElement, success, hop) {
-		log(['fillInSlotWithDelay', slotName], 'debug', logGroup);
+	function fillInSlotWithDelay(slot) {
+		log(['fillInSlotWithDelay', slot.name], 'debug', logGroup);
 
 		if (!context.opts.delayBtf) {
-			provider.fillInSlot(slotName, slotElement, success, hop);
+			provider.fillInSlot(slot);
 			return;
 		}
 
 		// For the above the fold slot:
-		if (atfSlots.indexOf(slotName) > -1) {
-			pendingAtfSlots.push(slotName);
-			provider.fillInSlot(slotName, slotElement, success, hop);
+		if (atfSlots.indexOf(slot.name) > -1) {
+			pendingAtfSlots.push(slot.name);
+			provider.fillInSlot(slot);
 			return;
 		}
 
 		// For the below the fold slot:
-		btfQueue.push({
-			slotName: slotName,
-			slotElement: slotElement,
-			success: success,
-			hop: hop
-		});
+		btfQueue.push(slot);
 	}
 
 	function processBtfSlot(slot) {
-		log(['processBtfSlot', slot.slotName], 'debug', logGroup);
+		log(['processBtfSlot', slot.name], 'debug', logGroup);
 
 		if (!win.ads.runtime.disableBtf) {
-			provider.fillInSlot(slot.slotName, slot.slotElement, slot.success, slot.hop);
+			provider.fillInSlot(slot);
 			return;
 		}
 
 		slot.success({adType: 'blocked'});
-		slotTweaker.hide(slot.slotName);
+		slotTweaker.hide(slot.name);
 	}
 
 	function startBtfQueue() {
@@ -156,15 +151,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				onSlotResponse(slotName);
 			},
 			sraEnabled: true,
-			recoverableSlots: recoverableSlots,
-			overrideSizesPerCountry: {
-				JP: {
-					CORP_TOP_LEADERBOARD: '728x90',
-					HOME_TOP_LEADERBOARD: '728x90',
-					HUB_TOP_LEADERBOARD: '728x90',
-					TOP_LEADERBOARD: '728x90'
-				}
-			}
+			recoverableSlots: recoverableSlots
 		}
 	);
 

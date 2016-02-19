@@ -506,24 +506,6 @@ Sekiye mroses Rika mlebu log...',
 Rika ndeyan  uwis kasil ngganti tembung sandhine Rika utawa wis njaluk tembung sandhi sauntara sing anyar.',
 'resetpass-temp-password'   => 'Tembung sandhi sauntara:',
 
-# Special:PasswordReset
-'passwordreset'                    => "Tembung sandhi di-''reset''",
-'passwordreset-text'               => 'Lengkapi formulir kiye ben nampa imel ngelingna detil akune Rika.',
-'passwordreset-legend'             => "Tembung sandhi di-''reset''",
-'passwordreset-disabled'           => "''Reset'' tembung sandhi wis dipateni nang wiki kiye.",
-'passwordreset-pretext'            => '{{PLURAL:$1||Lebokna salah siji data nang ngisor kiye}}',
-'passwordreset-username'           => 'Jeneng panganggo:',
-'passwordreset-domain'             => 'Domain:',
-'passwordreset-capture'            => 'Deleng imel hasile?',
-'passwordreset-capture-help'       => 'Angger Rika nyonteng kotak kiye, imel (sing isi tembung sandhi sauntara) bakal ditidokna maring Rika barengan karo dikirimna maring panganggo.',
-'passwordreset-email'              => 'Alamat imel:',
-'passwordreset-emailtitle'         => 'Detil akun nang {{SITENAME}}',
-'passwordreset-emailelement'       => 'Jeneng panganggo: $1
-Tembung sandhi sauntara: $2',
-'passwordreset-emailsent'          => 'Imel nggo ngelingna uwis dikirim.',
-'passwordreset-emailsent-capture'  => 'Imel kanggo ngelingna uwis dikirim, kaya sing ditidokna nang ngisor kiye.',
-'passwordreset-emailerror-capture' => 'Imel nggo ngelingna uwis digawe, kaya sing ditidokna nang ngisor kiye, ningen ora teyeng dikirim maring panganggo: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Ganti alamat imel',
 'changeemail-header'   => 'Ganti alamat imel-e akun',

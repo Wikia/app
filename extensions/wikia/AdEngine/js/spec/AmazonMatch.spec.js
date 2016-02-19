@@ -12,12 +12,14 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
+			mocks.lazyQueue,
 			mocks.log
 		);
 	}
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.lookup.amazonMatch'](
+			mocks.adContext,
 			getFactory(),
 			mocks.document,
 			mocks.log,
@@ -36,7 +38,8 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 		adContext: {
 			getContext: function () {
 				return {
-					targeting: mocks.targeting
+					targeting: mocks.targeting,
+					opts: noop
 				};
 			}
 		},
@@ -69,6 +72,14 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 						}
 					}
 				];
+			}
+		},
+		lazyQueue: {
+			makeQueue: function (queue, callback) {
+				queue.push = function () {
+					callback();
+				};
+				queue.start = noop;
 			}
 		},
 		log: noop,

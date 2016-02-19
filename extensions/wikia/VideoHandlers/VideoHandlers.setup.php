@@ -123,6 +123,9 @@ if ( !empty($wgVideoHandlersVideosMigrated) ) {
 	$wgHooks['ParserFirstCallInit'][] = 'VideoHandlerHooks::initParserHook';
 }
 
+$wgHooks['VideoInfoSaveToCache'][] = 'VideoHandlerHooks::clearVideoCache';
+$wgHooks['VideoInfoInvalidateCache'][] = 'VideoHandlerHooks::clearVideoCache';
+
 // permissions
 $wgAvailableRights[] = 'specialvideohandler';
 $wgGroupPermissions['staff']['specialvideohandler'] = true;

@@ -5,6 +5,7 @@ use Wikia\Util\GlobalStateWrapper;
 use Wikia\Service\Constants;
 
 /**
+ * @Injectable(lazy=true)
  * A client for Wikia authentication service.
  *
  * This is a naive implementation.

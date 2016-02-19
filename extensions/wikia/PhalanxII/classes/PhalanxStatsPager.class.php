@@ -52,8 +52,14 @@ class PhalanxStatsPager extends PhalanxPager {
 		$url = ( isset( $row->ps_referrer ) ) ? $row->ps_referrer : "";
 		$url = ( empty( $url ) && isset( $oWiki ) ) ? $oWiki->city_url : $url;
 
+		$specialContributionsURL = GlobalTitle::newFromText( 'Contributions', NS_SPECIAL, $row->ps_wiki_id )->getFullURL();
+
+		if ( !empty( $specialContributionsURL ) ) {
+			$username = '[' . $specialContributionsURL . '/' . $username . ' ' . $username . ']';
+		}
+
 		$html  = Html::openElement( 'li' );
-		$html .= wfMsgExt( 'phalanx-stats-row', array('parseinline'), $type, $username, $url, $timestamp );
+		$html .= wfMessage( 'phalanx-stats-row', $type, $username, $url, $timestamp )->parse();
 		$html .= Html::closeElement( 'li' );
 
 		return $html;

@@ -42,6 +42,11 @@ class FandomDataService {
 				$options['days'] = 5;
 				$endpoint = 'shares/posts';
 				break;
+			case 'recent_popular':
+				$options['sort'] = self::PARSELY_API_SORT;
+				$options['pub_days'] = 3;
+				$endpoint = 'analytics/posts';
+				break;
 			case 'popular':
 			default:
 				$options['sort'] = self::PARSELY_API_SORT;
@@ -50,7 +55,7 @@ class FandomDataService {
 		}
 
 		$url = $this->buildUrl( $endpoint, $options );
-		$data = Http::get( $url );
+		$data = ExternalHttp::get( $url );
 
 		$obj = json_decode( $data );
 		return $obj->data;

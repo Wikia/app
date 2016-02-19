@@ -31,11 +31,9 @@ $(function() {
 		function getPositionRightValue() {
 			var width = 0;
 
-			if ($('.global-navigation').hasClass('global-navigation-2016')) {
-				width = parseInt($('.search-container').css('padding-left'), 10) +
-					$('.account-navigation-container').width() +
-					$('.notifications-container').width();
-			}
+			width = parseInt($('.search-container').css('padding-left'), 10) +
+				$('.account-navigation-container').width() +
+				$('.notifications-container').width();
 
 			return '-' + width + 'px';
 		}
@@ -44,9 +42,7 @@ $(function() {
 		WikiaSearchApp.prototype.initSuggest = function() {
 			var autocompleteReEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')',
 				'[', ']', '{', '}', '\\'].join('|\\') + ')', 'g');
-			$.when(
-					mw.loader.use('jquery.autocomplete')
-				).then($.proxy(function() {
+				mw.loader.using('jquery.autocomplete').then($.proxy(function() {
 					this.searchField.autocomplete({
 						serviceUrl: window.wgServer + window.wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
 						onSelect: $.proxy(function(value, data, event) {

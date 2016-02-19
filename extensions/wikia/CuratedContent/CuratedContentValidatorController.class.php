@@ -26,9 +26,6 @@ class CuratedContentValidatorController extends WikiaController {
 		if ( empty( $section ) ) {
 			$this->respondWithErrors();
 		} else {
-			$section['title'] = $section['label'];
-			unset( $section['label'] );
-
 			$errors = $this->validator->validateSection( $section );
 			$this->respond( $errors );
 		}
@@ -45,9 +42,6 @@ class CuratedContentValidatorController extends WikiaController {
 		if ( empty( $section ) ) {
 			$this->respondWithErrors();
 		} else {
-			$section['title'] = $section['label'];
-			unset( $section['label'] );
-
 			$section = $this->helper->processLogicForSection( $section );
 			$errors = $this->validator->validateSectionWithItems( $section );
 

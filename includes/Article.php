@@ -1046,7 +1046,9 @@ class Article extends Page {
 			if ( !($user && $user->isLoggedIn()) && !$ip ) { # User does not exist
 				$wgOut->wrapWikiMsg( "<div class=\"mw-userpage-userdoesnotexist error\">\n\$1\n</div>",
 					array( 'userpage-userdoesnotexist-view', wfEscapeWikiText( $rootPart ) ) );
-			} elseif ( $user->isBlocked() ) { # Show log extract if the user is currently blocked
+			/* Wikia change begin - SUS-92 */
+			} elseif ( $user->isBlocked( true, false ) ) { # Show log extract if the user is currently blocked
+			/* Wikia change end */
 				LogEventsList::showLogExtract(
 					$wgOut,
 					'block',
@@ -1106,7 +1108,7 @@ class Article extends Page {
 				$text = wfMsgNoTrans( 'noarticletext-nopermission' );
 			}
 		}
-		$text = "<div class='noarticletext'>\n$text\n</div>";
+		$text = "<div class='noarticletext'>$text</div>";
 
 		$wgOut->addWikiText( $text );
 	}

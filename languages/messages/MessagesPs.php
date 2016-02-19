@@ -599,18 +599,6 @@ $1',
 'resetpass-wrong-oldpass'   => 'لنډمهال او يا هم اوسنی پټنوم مو ناسم دی',
 'resetpass-temp-password'   => 'لنډمهالی پټنوم:',
 
-# Special:PasswordReset
-'passwordreset'              => 'پټنوم بياپرځايول',
-'passwordreset-text'         => 'د دې لپاره چې ستاسې د ګڼون بشپړې څرګندنې دربرېښليک شي نو دا فورمه ډکه کړۍ.',
-'passwordreset-legend'       => 'پټنوم بياپرځايول',
-'passwordreset-username'     => 'کارن-نوم:',
-'passwordreset-domain'       => 'شپول:',
-'passwordreset-email'        => 'برېښليک پته:',
-'passwordreset-emailtitle'   => 'د {{SITENAME}} د ګڼون څرګندنې',
-'passwordreset-emailelement' => 'کارن-نوم: $1
-لنډمهاله پټنوم: $2',
-'passwordreset-emailsent'    => 'يو يادښتي برېښليک ولېږل شو.',
-
 # Special:ChangeEmail
 'changeemail'          => 'برېښليک پته بدلول',
 'changeemail-oldemail' => 'اوسنۍ برېښليک پته:',

@@ -21,11 +21,15 @@ class LoadBalancer {
 	private $mParentInfo, $mLagTimes;
 	private $mLoadMonitorClass, $mLoadMonitor;
 
+	/** @var string|bool Reason the LB is read-only or false if not */
+	private $readOnlyReason = false;
+
 	/**
 	 * @param $params Array with keys:
 	 *    servers           Required. Array of server info structures.
 	 *    masterWaitTimeout Replication lag wait timeout
 	 *    loadMonitor       Name of a class used to fetch server lag and load.
+	 *    readOnlyReason    Reason the master DB is read-only if so [optional]
 	 */
 	function __construct( $params ) {
 		if ( !isset( $params['servers'] ) ) {
@@ -50,6 +54,10 @@ class LoadBalancer {
 		$this->mLaggedSlaveMode = false;
 		$this->mErrorConnection = false;
 		$this->mAllowLagged = false;
+
+		if ( isset( $params['readOnlyReason'] ) && is_string( $params['readOnlyReason'] ) ) {
+			$this->readOnlyReason = $params['readOnlyReason'];
+		}
 
 		if ( isset( $params['loadMonitor'] ) ) {
 			$this->mLoadMonitorClass = $params['loadMonitor'];
@@ -735,6 +743,19 @@ class LoadBalancer {
 		}
 
 		$db->setLBInfo( $server );
+
+		/**
+		 * Wikia change
+		 *
+		 * Manually apply https://github.com/wikimedia/mediawiki/commit/52010e6d21d8bdefa1c89fbc9421850185cc5011
+		 *
+		 * Thanks to this we can call $db->getLBInfo( 'readOnlyReason' )
+		 *
+		 * @see SUS-108
+		 * @author macbre
+		 */
+		$db->setLBInfo( 'readOnlyReason', $this->readOnlyReason );
+
 		if ( isset( $server['fakeSlaveLag'] ) ) {
 			$db->setFakeSlaveLag( $server['fakeSlaveLag'] );
 		}
@@ -971,6 +992,18 @@ class LoadBalancer {
 	 */
 	function getLaggedSlaveMode() {
 		return $this->mLaggedSlaveMode;
+	}
+
+	/**
+	 * @return string|bool Reason the master is read-only or false if it is not
+	 * @since 1.27
+	 */
+	public function getReadOnlyReason() {
+		if ( $this->readOnlyReason !== false ) {
+			return $this->readOnlyReason;
+		}
+
+		return false;
 	}
 
 	/**

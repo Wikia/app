@@ -487,38 +487,6 @@ Kini mamproses masuak log Sanak...',
 Sanak mungkin alah berhasil mangganti kato sandi Sanak atau alah maminto kato sandi samantaro nan baharu.',
 'resetpass-temp-password'   => 'Kato sandi samantaro:',
 
-# Special:PasswordReset
-'passwordreset'                => 'Setel ulang sandi',
-'passwordreset-text'           => 'Langkapi formulir iko untuak manarimo surel pangingek detail akun Sanak.',
-'passwordreset-legend'         => 'Tuka baliak kato sandi',
-'passwordreset-disabled'       => 'Panukaran baliak kato sandi alah dimatian di wiki iko.',
-'passwordreset-pretext'        => '{{PLURAL:$1||Masuakan ciek data di bawah iko}}',
-'passwordreset-username'       => 'Namo pangguno:',
-'passwordreset-email'          => 'Alamaik surel:',
-'passwordreset-emailtitle'     => 'Detail akun di {{SITENAME}}',
-'passwordreset-emailtext-ip'   => 'Sasaurang (mungkin Sanak, dari alamaik IP $1) maminta pangingek
-detail akun untuak {{SITENAME}} ($4). {{PLURAL:$3|Akun|Akun-akun}} barikuik
-takaik jo alamaik surel iko:
-
-$2
-
-{{PLURAL:$3|Sandi samantaro|Sandi samantaro}} barikuik akan kadaluwarsa dalam {{PLURAL:$5|sahari|$5 hari}}.
-Sanak harus masuak dan mamiliah sandi baharu kini. Jikok urang lain mambuek
-pamintaan iko atau jikok Sanak ingek sandi asali dan indak lai
-ingin maubahnyo, Sanak dapek mabaikan pasan iko dan taruih manggunoan sandi lamo.',
-'passwordreset-emailtext-user' => 'Sasaurang (mungkin Sanak, dari alamaik IP $1) maminta pangingek detail akun untuak {{SITENAME}} ($4).
-{{PLURAL:$3|Akun|Akun-akun}} barikuik takaik jo alamaik surel iko:
-
-$2
-
-{{PLURAL:$3|Sandi samantaro|Sandi samantaro}} barikuik akan kadaluwarsa dalam {{PLURAL:$5|sahari|$5 hari}}.
-Sanak harus masuak dan mamiliah sandi baharu kini. Jikok urang lain mambuek
-pamintaan iko atau jikok Sanak ingek sandi asali dan indak lai
-ingin maubahnyo, Sanak dapek maabaikan pasan iko dan taruih manggunokan sandi lamo.',
-'passwordreset-emailelement'   => 'Namo pangguno: $1
-Sandi samantaro: $2',
-'passwordreset-emailsent'      => 'Surel pangingek alah dikiriman.',
-
 # Edit page toolbar
 'bold_sample'     => 'Teks dicetak taba',
 'bold_tip'        => 'Teks dicetak taba',

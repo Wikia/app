@@ -578,14 +578,6 @@ $messages = array(
 'resetpass-submit-cancel'   => 'Саемс мекев',
 'resetpass-temp-password'   => 'А куватень совамо валось:',
 
-# Special:PasswordReset
-'passwordreset'              => 'Совамо валонь лиялгавтома',
-'passwordreset-legend'       => 'Полавтык совамо валонть',
-'passwordreset-username'     => 'Теиця леметь:',
-'passwordreset-email'        => 'Е-сёрмапаргот:',
-'passwordreset-emailelement' => 'Теицянь леметь: $1
-Нурькине шкань салававалот: $2',
-
 # Special:ChangeEmail
 'changeemail-oldemail' => 'Неень е-сёрмапаргот:',
 'changeemail-newemail' => 'Од е-сёрмапаргот:',

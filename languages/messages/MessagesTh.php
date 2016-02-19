@@ -656,18 +656,6 @@ $1',
 คุณอาจเปลี่ยนรหัสผ่านของคุณไปแล้ว หรือร้องขอรหัสผ่านชั่วคราวใหม่แล้ว',
 'resetpass-temp-password'   => 'รหัสผ่านชั่วคราว:',
 
-# Special:PasswordReset
-'passwordreset'              => 'ล้างรหัสผ่าน',
-'passwordreset-legend'       => 'เปลี่ยนรหัสผ่าน',
-'passwordreset-disabled'     => 'การเปลี่ยนรหัสผ่านไม่สามารถทำได้ในวิกินี้',
-'passwordreset-username'     => 'ชื่อผู้ใช้:',
-'passwordreset-domain'       => 'โดเมน:',
-'passwordreset-email'        => 'ที่อยู่อีเมล:',
-'passwordreset-emailtitle'   => 'รายละเอียดบัญชีบน {{SITENAME}}',
-'passwordreset-emailelement' => 'ชื่อผู้ใช้: $1
-รหัสผ่านชั่วคราว: $2',
-'passwordreset-emailsent'    => 'อีเมล์แจ้งเตือนได้ถูกส่งไปแล้ว',
-
 # Special:ChangeEmail
 'changeemail'          => 'เปลี่ยนที่อยู่อีเมล',
 'changeemail-header'   => 'เปลี่ยนที่อยู่อีเมลของบัญชีผู้ใช้',

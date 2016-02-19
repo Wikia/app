@@ -498,10 +498,6 @@ Baino sumuang log...',
 Naalanannu noh kaatalib toi nokopokianu koh no do kaatalib daamot.',
 'resetpass-temp-password'   => 'Kaatalib daamot:',
 
-# Special:PasswordReset
-'passwordreset-username'   => 'Ngarandait:',
-'passwordreset-emailtitle' => 'Kointalangan takaun id {{SITENAME}}',
-
 # Special:ChangeEmail
 'changeemail-no-info' => 'Mositi sumuang log ko do mongoguno monilombus id bolikon diti.',
 'changeemail-cancel'  => 'Kinsilo',

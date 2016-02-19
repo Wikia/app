@@ -152,6 +152,8 @@ $wgAutoloadClasses[ 'WikiaApiController'] =  "{$IP}/includes/wikia/api/WikiaApiC
 $wgAutoloadClasses['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
 $wgAutoloadClasses['NavigationApiController'] = "{$IP}/includes/wikia/api/NavigationApiController.class.php";
 $wgAutoloadClasses['ArticlesApiController'] = "{$IP}/includes/wikia/api/ArticlesApiController.class.php";
+$wgAutoloadClasses['RevisionApiController'] = "{$IP}/includes/wikia/api/RevisionApiController.class.php";
+$wgAutoloadClasses['RevisionUpvotesApiController'] = "{$IP}/includes/wikia/api/RevisionUpvotesApiController.class.php";
 $wgAutoloadClasses['SearchSuggestionsApiController'] = "{$IP}/includes/wikia/api/SearchSuggestionsApiController.class.php";
 $wgAutoloadClasses['StatsApiController'] = "{$IP}/includes/wikia/api/StatsApiController.class.php";
 $wgAutoloadClasses['RelatedPagesApiController'] = "{$IP}/includes/wikia/api/RelatedPagesApiController.class.php";
@@ -176,6 +178,8 @@ $wgWikiaApiControllers['TvApiController'] = "{$IP}/includes/wikia/api/TvApiContr
 $wgWikiaApiControllers['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiController.class.php";
 $wgWikiaApiControllers['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
 $wgWikiaApiControllers['LogEventsApiController'] = "{$IP}/includes/wikia/api/LogEventsApiController.class.php";
+$wgWikiaApiControllers['RevisionApiController'] = "{$IP}/includes/wikia/api/RevisionApiController.class.php";
+$wgWikiaApiControllers['RevisionUpvotesApiController'] = "{$IP}/includes/wikia/api/RevisionUpvotesApiController.class.php";
 
 //Wikia Api exceptions classes
 $wgAutoloadClasses[ 'ApiAccessService' ] = "{$IP}/includes/wikia/api/services/ApiAccessService.php";
@@ -328,6 +332,7 @@ $wgAutoloadClasses['AvatarService'] = $IP.'/includes/wikia/services/AvatarServic
 $wgAutoloadClasses['MediaQueryService'] = $IP.'/includes/wikia/services/MediaQueryService.class.php';
 $wgAutoloadClasses['OasisService']  =  $IP.'/includes/wikia/services/OasisService.php';
 $wgAutoloadClasses['PageStatsService']  =  $IP.'/includes/wikia/services/PageStatsService.class.php';
+$wgAutoloadClasses['RevisionUpvotesService'] = $IP . '/includes/wikia/services/RevisionUpvotesService.class.php';
 $wgAutoloadClasses['UserContribsProviderService'] = $IP.'/includes/wikia/services/UserContribsProviderService.class.php';
 $wgAutoloadClasses['UserStatsService'] = $IP.'/includes/wikia/services/UserStatsService.class.php';
 $wgAutoloadClasses['CategoriesService'] = $IP.'/includes/wikia/services/CategoriesService.class.php';
@@ -358,6 +363,7 @@ $wgAutoloadClasses['LicensedWikisService']  =  $IP.'/includes/wikia/services/Lic
 $wgAutoloadClasses['ArticleQualityService'] = $IP.'/includes/wikia/services/ArticleQualityService.php';
 $wgAutoloadClasses['PortableInfoboxDataService'] = $IP . '/extensions/wikia/PortableInfobox/services/PortableInfoboxDataService.class.php';
 $wgAutoloadClasses['TemplateClassificationService'] = $IP . '/includes/wikia/services/TemplateClassificationService.class.php';
+$wgAutoloadClasses['CommunityDataService'] = $IP . '/includes/wikia/services/CommunityDataService.class.php';
 
 // services hooks
 $wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
@@ -762,6 +768,7 @@ $wgSpecialsDB = 'specials';
 $wgSwiftSyncDB = 'swift_sync';
 $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see wfSharedMemcKey
 $wgWikiaMailerDB = 'wikia_mailer';
+$wgRevisionUpvotesDB = 'revision_upvotes';
 $wgForceMasterDatabase = false;  // true only during wiki creation process
 
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";
@@ -1252,6 +1259,13 @@ $wgAdDriverEnableRubiconFastlane = true;
 $wgAdDriverRubiconFastlaneCountries = null;
 
 /**
+ * @name $wgAdDriverOverridePrefootersCountries
+ * Enables overriding prefooters sizes on Oasis in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOverridePrefootersCountries = null;
+
+/**
  * @name $wgAdPageLevelCategoryLangs
  * Enables DART category page param for these content languages
  * "Utility" var, don't change it here.
@@ -1305,7 +1319,7 @@ $wgAdDriverGoogleConsumerSurveysCountries = null;
  * @name $wgAdDriverUseEvolve2
  * Whether to enable AdProviderEvolve2 (true) or not (false)
  */
-$wgAdDriverUseEvolve2 = false;
+$wgAdDriverUseEvolve2 = true;
 
 /**
  * @name $wgAdDriverEvolve2Countries
@@ -1360,6 +1374,24 @@ $wgSitewideDisableGpt = false;
  * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  */
 $wgSitewideDisableIVW2 = false;
+
+/**
+ * @name $wgSitewideDisableIVW3
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableIVW3
+ *
+ * Disable IVW3 Analytics pixel sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisableIVW3 = false;
+
+/**
+ * @name $wgAnalyticsDriverIVW3Countries
+ *
+ * List of countries with enabled IVW3 tracking
+ */
+$wgAnalyticsDriverIVW3Countries = ['AT', 'CH', 'DE'];
 
 /**
  * @name $wgSitewideDisableLiftium
@@ -1445,7 +1477,7 @@ $wgAdDriverTrackState = false;
 
 /**
  * @name $wgAdDriverForcedProvider
- * @example 'liftium', 'turtle' or 'openx'
+ * @example 'liftium', 'turtle'
  * Forces to use passed provider for all slots managed by this provider and disables other providers.
  */
 $wgAdDriverForcedProvider = null;
@@ -1455,6 +1487,13 @@ $wgAdDriverForcedProvider = null;
  * Whether to display ads within interactive maps
  */
 $wgAdDriverEnableAdsInMaps = true;
+
+/**
+ * @name $wgAdDriverDelayCountries
+ * List of countries with enabled AdEngine delay
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverDelayCountries = null;
 
 /**
  * @name $wgAdDriverKruxCountries
@@ -1490,13 +1529,6 @@ $wgHighValueCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverTurtleCountries = null;
-
-/**
- * @name $wgAdDriverOpenXCountries
- * List of countries to call OpenX ad partner in
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverOpenXCountries = null;
 
 /**
  * @name $wgAdDriverSourcePointDetectionCountries
@@ -1810,7 +1842,27 @@ $wgLogRestrictions['piggyback'] = 'piggyback';
 $wgRejectAuthenticationFallback = true;
 
 /**
+ * @name $wgEnableHostnameInHtmlTitle
+ *
+ * Whether to include the hostname in HTML <title> tag.
+ * On production this is overridden and false.
+ */
+$wgEnableHostnameInHtmlTitle = true;
+
+/**
  * Use template types from Template Classification Service in MW context
  */
 include_once("$IP/includes/wikia/parser/templatetypes/TemplateTypes.setup.php");
 
+/**
+ * @name $wgEnableReviveSpotlights
+ * Enables Revive Spotlights
+ */
+$wgEnableReviveSpotlights = true;
+
+/**
+ * @name $wgReviveSpotlightsCountries
+ * Enables Revive Spotlights in these countries (given wgEnableReviveSpotlights is also true).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgReviveSpotlightsCountries = null;

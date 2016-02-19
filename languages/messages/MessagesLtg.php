@@ -240,10 +240,6 @@ Par to var ziņuot [[Special:ListUsers/sysop|kaidam administratoram]], nūruodū
 'resetpass-submit-loggedin' => 'Puormeit paroļu',
 'resetpass-submit-cancel'   => 'Atsaukt',
 
-# Special:PasswordReset
-'passwordreset-username' => 'Slāgvuords:',
-'passwordreset-email'    => 'E-posta adress:',
-
 # Special:ChangeEmail
 'changeemail-cancel' => 'Atsaukt',
 

@@ -67,16 +67,14 @@ class TemplateTypesParser {
 
 		if ( self::shouldTemplateBeParsed() && !is_null( $args ) ) {
 			$type = self::getTemplateType( $title );
-			$templateArgs = TemplateArgsHelper::getTemplateArgs( $args, $frame );
 
 			if ( $type === TemplateClassificationService::TEMPLATE_SCROLLBOX && $wgEnableScrollboxTemplateParsing ) {
+				$templateArgs = TemplateArgsHelper::getTemplateArgs( $args, $frame );
 				$outputText = ScrollboxTemplate::getLongestElement( $templateArgs );
 			}
 
-			if ( ( $type === TemplateClassificationService::TEMPLATE_QUOTE
-				   || $type === TemplateClassificationService::TEMPLATE_QUOTE )
-				 && $wgEnableQuoteTemplateParsing
-			) {
+			if ( $type === TemplateClassificationService::TEMPLATE_QUOTE && $wgEnableQuoteTemplateParsing ) {
+				$templateArgs = TemplateArgsHelper::getTemplateArgs( $args, $frame );
 				$outputText = QuoteTemplate::execute( $templateArgs );
 			}
 		}
