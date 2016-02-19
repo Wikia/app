@@ -61,6 +61,37 @@ class WallMessage {
 		return null;
 	}
 
+	/**
+	 * @param array $ids
+	 * @return array
+	 */
+	static public function newFromIds( $ids ) {
+		wfProfileIn( __METHOD__ );
+
+		$titles = Title::newFromIDs( $ids );
+		$wallMessages = [ ];
+		$correctIds = [ ];
+
+		//double check if all titles are correct
+		foreach ( $titles as $title ) {
+			if ( $title instanceof Title && $title->exists() ) {
+				$wallMessages[] = WallMessage::newFromTitle( $title );
+				$correctIds[] = $title->mArticleID;
+			}
+		}
+
+		$retryIds = array_diff( $ids, $correctIds );
+		foreach ( $retryIds as $id ) {
+			$title = Title::newFromId( $id, Title::GAID_FOR_UPDATE );
+			if ( $title instanceof Title && $title->exists() ) {
+				$wallMessages[] = WallMessage::newFromTitle( $title );
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $wallMessages;
+	}
+
 	static public function addMessageWall( $userPageTitle ) {
 		wfProfileIn( __METHOD__ );
 		$botUser = User::newFromName( 'WikiaBot' );
