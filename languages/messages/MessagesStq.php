@@ -509,10 +509,6 @@ Täif, eer du fon näien fersäkst.',
 Muugelkerwiese hääst du dien Paaswoud al mäd Ärfoulch annerd of n näi tiedelk Paaswoud fräiged.',
 'resetpass-temp-password'   => 'Tiedelk Paaswoud:',
 
-# Special:PasswordReset
-'passwordreset'          => 'Paaswoud touräächsätte',
-'passwordreset-username' => 'Benutsernoome:',
-
 # Edit page toolbar
 'bold_sample'     => 'Fatten Text',
 'bold_tip'        => 'Fatten Text',

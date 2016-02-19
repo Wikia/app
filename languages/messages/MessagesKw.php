@@ -360,10 +360,6 @@ Assayowgh arta.',
 'resetpass-submit-loggedin' => 'Chanjya an ger-tremena',
 'resetpass-submit-cancel'   => 'Hedhy',
 
-# Special:PasswordReset
-'passwordreset-username' => 'Hanow-usyer:',
-'passwordreset-email'    => 'Trigva ebost:',
-
 # Edit page toolbar
 'bold_sample'     => 'Text tew',
 'bold_tip'        => 'Text tew',

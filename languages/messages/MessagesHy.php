@@ -720,9 +720,6 @@ $2',
 Հնարավոր է, որ դուք արդեն բարեհաջող փոխել եք գաղտնաբարը կամ հայցել եք նոր ժամանակավոր գաղտնաբառ։',
 'resetpass-temp-password'   => 'Ժամանակավոր գաղտնաբառ.',
 
-# Special:PasswordReset
-'passwordreset-username' => 'Մասնակցի անուն.',
-
 # Edit page toolbar
 'bold_sample'     => 'Թավատառ տեքստ',
 'bold_tip'        => 'Թավատառ տեքստ',

@@ -58,7 +58,7 @@ class TwitchtvApiWrapper extends ApiWrapper {
 		$url = str_replace( '$2', 'streams', static::$API_URL );
 		$url = str_replace( '$1', $this->videoId, $url );
 
-		$content = Http::request( 'GET', $url, array( 'noProxy' => true ) );
+		$content = ExternalHttp::get( $url );
 		if ( !empty( $content ) ) {
 			$result = json_decode( $content, true );
 			if ( isset( $result['stream']['preview']['large'] ) ) {

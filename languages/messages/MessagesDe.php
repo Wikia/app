@@ -860,35 +860,6 @@ Bitte warte, bevor du es erneut probierst.',
 Möglicherweise hast du dein Passwort bereits erfolgreich geändert oder ein neues temporäres Passwort beantragt.',
 'resetpass-temp-password'   => 'Temporäres Passwort:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Passwort zurücksetzen',
-'passwordreset-text'               => 'Bitte dieses Formular ausfüllen, um per E-Mail eine Erinnerung zu den Anmeldeinformationen deines Benutzerkontos zu erhalten.',
-'passwordreset-legend'             => 'Passwort zurücksetzen',
-'passwordreset-disabled'           => 'Das Zurücksetzen von Passwörtern wurde in diesem Wiki deaktiviert.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Gib eines der folgenden Daten ein}}',
-'passwordreset-username'           => 'Benutzername:',
-'passwordreset-domain'             => 'Domain:',
-'passwordreset-capture'            => 'Die E-Mail-Nachricht ansehen?',
-'passwordreset-capture-help'       => 'Sofern Du dieses Kästchen ankreuzt, wird die E-Mail-Nachricht mit dem temporären Passwort, sowohl dir angezeigt, als auch dem Benutzer zugesandt.',
-'passwordreset-email'              => 'E-Mail-Adresse:',
-'passwordreset-emailtitle'         => 'Benutzerkontoinformationen auf {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Jemand mit der IP-Adresse $1, wahrscheinlich du selbst, hat eine Erinnerung an deine Benutzerkonteninformationen für {{SITENAME}} angefordert ($4). {{PLURAL:$3|Das folgende Benutzerkonto ist|Die folgenden Benutzerkonten sind}} mit dieser E-Mail-Adresse verknüpft:
-
-$2
-
-{{PLURAL:$3|Dieses temporäre Passwort läuft|Diese temporären Passwörter laufen}} innerhalb von {{PLURAL:$5|einem Tag|$5 Tagen}} ab.
-Du solltest dich anmelden und ein neues Passwort vergeben. Falls jemand anderes diese Anfrage getätigt hat oder du dich wieder an dein ursprüngliches Passwort erinnern kannst und es nicht länger ändern möchtest, kannst du diese Nachricht ignorieren und weiterhin dein altes Passwort benutzen.',
-'passwordreset-emailtext-user'     => 'Benutzer $1 auf {{SITENAME}} hat eine Erinnerung an deine Benutzerkonteninformationen für {{SITENAME}} angefordert ($4). {{PLURAL:$3|Das folgende Benutzerkonto ist|Die folgenden Benutzerkonten sind}} mit dieser E-Mail-Adresse verknüpft:
-
-$2
-
-{{PLURAL:$3|Dieses temporäre Passwort läuft|Diese temporären Passwörter laufen}} innerhalb von {{PLURAL:$5|einem Tag|$5 Tagen}} ab. Du solltest dich anmelden und ein neues Passwort vergeben. Falls jemand anderes diese Anfrage getätigt hat oder du dich wieder an dein ursprüngliches Passwort erinnern kannst und es nicht ändern möchtest, kannst du diese Nachricht ignorieren und weiterhin dein altes Passwort benutzen.',
-'passwordreset-emailelement'       => 'Benutzername: $1
-Temporäres Passwort: $2',
-'passwordreset-emailsent'          => 'Eine Erinnerung wurde per E-Mail versandt.',
-'passwordreset-emailsent-capture'  => 'Die unten angezeigte Erinnerungs-E-Mail wurde abgeschickt.',
-'passwordreset-emailerror-capture' => 'Die unten angezeigte Erinnerungs-E-Mail wurde generiert, allerdings ist der Versand an den Benutzer gescheitert: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'E-Mail-Adresse ändern',
 'changeemail-header'   => 'E-Mail-Adresse ändern',

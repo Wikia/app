@@ -109,10 +109,6 @@ class MonetizationModuleHelper extends WikiaModel {
 	public function getMonetizationUnits( $params ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( $this->wg->WikiaDatacenter === WIKIA_DC_RES ) {
-			return false;
-		}
-
 		$log = WikiaLogger::instance();
 		$loggingParams = [ 'method' => __METHOD__, 'params' => $params ];
 
