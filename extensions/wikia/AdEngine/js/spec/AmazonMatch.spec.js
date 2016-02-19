@@ -38,8 +38,9 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 		adContext: {
 			getContext: function () {
 				return {
-					targeting: mocks.targeting,
-					opts: noop
+					opts: noop,
+					slots: noop,
+					targeting: mocks.targeting
 				};
 			}
 		},

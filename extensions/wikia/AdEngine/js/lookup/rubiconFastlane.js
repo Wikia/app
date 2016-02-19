@@ -136,6 +136,13 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 			delete slots.PREFOOTER_RIGHT_BOXAD;
 		}
 
+		if (context.slots.incontentLeaderboard) {
+			slots.INCONTENT_LEADERBOARD = {
+				sizes: [[300, 250], [728, 90]],
+				targeting: {loc: 'hivi'}
+			};
+		}
+
 		return slots;
 	}
 

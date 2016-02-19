@@ -9,8 +9,9 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 			adContext: {
 				getContext: function () {
 					return {
-						targeting: mocks.targeting,
-						opts: mocks.opts
+						opts: mocks.opts,
+						slots: noop,
+						targeting: mocks.targeting
 					};
 				}
 			},
