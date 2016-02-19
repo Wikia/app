@@ -69,7 +69,7 @@ class WallMessage {
 	 */
 	static public function newFromIds( $ids ) {
 		wfProfileIn( __METHOD__ );
-
+		$test = "";
 		$titles = Title::newFromIDs( $ids );
 		$wallMessages = [ ];
 		$correctIds = [ ];
