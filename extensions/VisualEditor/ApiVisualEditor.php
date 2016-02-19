@@ -133,7 +133,7 @@ class ApiVisualEditor extends ApiBase {
 		return $req->getContent();
 	}
 
-	protected function getHTML( $title, $parserParams ) {
+	protected function getHTML( $title, $parserParams, $params ) {
 		$restoring = false;
 
 		if ( $title->exists() ) {
@@ -162,19 +162,17 @@ class ApiVisualEditor extends ApiBase {
 			}
 			$timestamp = $latestRevision->getTimestamp();
 		} else {
-			$content = '';
-			$preloadTitle = Title::newFromText( urldecode( $parserParams['preload'] ) );
+			$preloadTitle = Title::newFromText( urldecode( $params['preload'] ) );
 
 			if ( isset( $preloadTitle ) && $preloadTitle->userCan( 'read' ) ) {
-				$rev = Revision::newFromTitle($preloadTitle);
+				$data = $this->getHtml( Title::newFromText( urldecode( $params['preload'] ) ) );
+				$data['oldid'] = 0;
+				$data['basetimestamp'] = wfTimestampNow();
 
-				if (is_object($rev)) {
-					$content = $this->parseWikitextFragment( $preloadTitle, $rev->getText() );
-				}
+				return $data;
+			} else {
+				$content = '';
 			}
-			
-			$timestamp = wfTimestampNow();
-			$oldid = 0;
 		}
 		return array(
 			'result' => array(
@@ -369,10 +367,6 @@ class ApiVisualEditor extends ApiBase {
 			$parserParams['oldid'] = $params['oldid'];
 		}
 
-		if ( isset( $params['preload'] ) ) {
-			$parserParams['preload'] = $params['preload'];
-		}
-
 		$html = $params['html'];
 		if ( substr( $html, 0, 11 ) === 'rawdeflate,' ) {
 			$html = gzinflate( base64_decode( substr( $html, 11 ) ) );
@@ -381,7 +375,7 @@ class ApiVisualEditor extends ApiBase {
 		wfDebugLog( 'visualeditor', "called on '$page' with paction: '{$params['paction']}'" );
 		switch ( $params['paction'] ) {
 			case 'parse':
-				$parsed = $this->getHTML( $page, $parserParams );
+				$parsed = $this->getHTML( $page, $parserParams, $params );
 				// Dirty hack to provide the correct context for edit notices
 				global $wgTitle; // FIXME NOOOOOOOOES
 				$wgTitle = $page;

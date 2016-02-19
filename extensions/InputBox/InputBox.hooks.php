@@ -68,7 +68,7 @@ class InputBoxHooks {
 		$params['title'] = $title;
 
 		if ( EditorPreference::isVisualEditorPrimary() && $wgUser->isLoggedIn() ) {
-			$params['veaction'] = $params['action'];
+			$params['veaction'] = 'edit';
 			unset( $params['action'] );
 		}
 
