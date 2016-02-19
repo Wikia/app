@@ -32,11 +32,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				size: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
 				loc: 'top'
 			},
-			INCONTENT_1A:               {size: '300x250', loc: 'middle', pos: 'incontent_1'},
-			INCONTENT_1B:               {size: '300x250,160x600', loc: 'middle', pos: 'incontent_1'},
-			INCONTENT_1C:               {size: '300x250,160x600,300x600', loc: 'middle', pos: 'incontent_1'},
 			INCONTENT_BOXAD_1:          {size: '300x250,300x600', loc: 'middle'},
-			INCONTENT_LEADERBOARD_1:    {size: '728x90,468x90', loc: 'middle'},
 			INCONTENT_PLAYER:           {size: '1x1', 'loc': 'middle', 'pos': 'incontent_player'},
 			INVISIBLE_SKIN:             {size: '1000x1000,1x1', loc: 'top'},
 			LEFT_SKYSCRAPER_2:          {size: '160x600,300x600', loc: 'middle'},
