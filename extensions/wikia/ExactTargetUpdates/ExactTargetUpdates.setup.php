@@ -92,6 +92,11 @@ $wgAutoloadClasses['Wikia\ExactTarget\Builders\UpdateRequestBuilder'] =  $dir . 
 /* Enum classes */
 $wgAutoloadClasses['Wikia\ExactTarget\ResourceEnum'] =  $dir . '/client/ExactTargetResourceEnum.php' ;
 
+/* Data Adapters */
+$wgAutoloadClasses['Wikia\ExactTarget\UserEmailAdapter'] =  $dir . '/client/UserEmailAdapter.class.php';
+
+/* Exceptions*/
+$wgAutoloadClasses['Wikia\ExactTarget\EmptyResultException'] =  $dir . '/client/EmptyResultException.php';
 
 /* ExactTarget_* classes */
 

@@ -85,6 +85,20 @@ class ExactTargetClient implements Client {
 		return $bUserDataVerificationResult;
 	}
 
+	public function retrieveEmailByUserId( $userId ) {
+		try {
+			$result = $this->retrieve(
+				[ 'user_email' ],
+				'user_id',
+				[ $userId ],
+				\Wikia\ExactTarget\ResourceEnum::USER
+			);
+		} catch ( EmptyResultException $e ) {
+			return '';
+		}
+		return ( new UserEmailAdapter( $result ) )->getEmail();
+	}
+
 	/**
 	 * Checks whether there are any users that has provided email
 	 * @param string $sEmail Email address to check in ExactTarget
@@ -116,28 +130,37 @@ class ExactTargetClient implements Client {
 	 * @return null
 	 * @throws \Exception
 	 */
-	public function retrieve( array $properties, $filterProperty, array $filterValues, $resource ) {
-		$oRequest = ExactTargetRequestBuilder::createRetrieve()
+	private function retrieve( array $properties, $filterProperty, array $filterValues, $resource ) {
+		$request = ExactTargetRequestBuilder::createRetrieve()
+			->withResource( $resource )
 			->withProperties( $properties )
 			->withFilterProperty( $filterProperty )
 			->withFilterValues( $filterValues )
-			->withResource( $resource )
 			->build();
 
-		$emailResult = $this->sendRequest( 'Retrieve', $oRequest );
+		$response = $this->sendRequest( 'Retrieve', $request );
 
-		if ( $emailResult->OverallStatus === 'Error' ) {
-			throw new \Exception(
-				'Error in ' . __METHOD__ . ': ' . $emailResult->Results->StatusMessage
-			);
+		if ( $response->OverallStatus === 'OK' ) {
+			if ( empty( $response->Results ) ) {
+				throw new EmptyResultException();
+			}
+			return $response->Results;
 		}
 
-		if ( empty( $emailResult->Results->Properties->Property->Value ) ) {
-//			$this->info( __METHOD__ . ' User DataExtension object not found for user_id = ' . $iUserId );
-			return null;
+		if ( $response->OverallStatus === 'Error' ) {
+			$exception = new \Exception( $response->Results->StatusMessage );
+			WikiaLogger::instance()->error( $response->Results->StatusMessage, [
+				'exception' => $exception,
+			] );
+			throw $exception;
 		}
 
-		return $emailResult->Results->Properties->Property->Value;
+		// TODO provide more context to logs - e.g. request object
+		$exception = new \Exception( $response->OverallStatus );
+		WikiaLogger::instance()->error( $response->OverallStatus, [
+			'exception' => $exception,
+		] );
+		throw $exception;
 	}
 
 	protected function sendRequest( $sType, $oRequestObject ) {
