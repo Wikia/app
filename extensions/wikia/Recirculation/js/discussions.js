@@ -2,27 +2,10 @@
 require([
 	'jquery',
 	'wikia.abTest',
-	'wikia.tracker',
 	'wikia.nirvana',
-], function ($, abTest, tracker, nirvana) {
-
-	function trackClick(location) {
-		tracker.track({
-			action: tracker.ACTIONS.CLICK,
-			category: 'recirculation',
-			label: 'discussions-' + location,
-			trackingMethod: 'analytics'
-		});
-	}
-
-	function trackImpression() {
-		tracker.track({
-			action: tracker.ACTIONS.IMPRESSION,
-			category: 'recirculation',
-			label: 'discussions',
-			trackingMethod: 'analytics'
-		});
-	}
+	'ext.wikia.recirculation.tracker'
+], function ($, abTest, nirvana, tracker) {
+	var experimentName = 'RECIRCULATION_DISCUSSIONS';
 
 	function injectDiscussions(done) {
 		nirvana.sendRequest({
@@ -37,18 +20,18 @@ require([
 		});
 	}
 
-	if (abTest.inGroup('RECIRCULATION_DISCUSSIONS', 'ARTICLE_FOOTER')) {
+	if (abTest.inGroup(experimentName, 'ARTICLE_FOOTER')) {
 		injectDiscussions(function () {
-			trackImpression();
+			tracker.trackQualifiedImpression(experimentName, 'discussions');
 			$('.discussion-timestamp').timeago();
 
 			$('.discussion-thread').click(function () {
-				trackClick('tile');
+				tracker.trackQualifiedClick(experimentName, 'discussions-tile');
 				window.location = $(this).data('link');
 			});
 
 			$('.discussion-link').mousedown(function() {
-				trackClick('link');
+				tracker.trackQualifiedClick(experimentName, 'discussions-link');
 			});
 		});
 	}

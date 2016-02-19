@@ -1,8 +1,23 @@
 /*global define*/
 define('ext.wikia.recirculation.tracker', [
-	'wikia.tracker'
-], function (tracker) {
+	'wikia.tracker',
+	'wikia.abTest'
+], function (tracker, abTest) {
 	'use strict';
+
+	function trackQualifiedClick(experiment, label) {
+		var group = abTest.getGroup(experiment),
+			structuredLabel = [experiment, group, label].join('=');
+
+		trackClick(structuredLabel);
+	}
+
+	function trackQualifiedImpression(experiment, label) {
+		var group = abTest.getGroup(experiment),
+			structuredLabel = [experiment, group, label].join('=');
+
+		trackImpression(structuredLabel);
+	}
 
 	function trackClick(label) {
 		tracker.track({
@@ -23,7 +38,7 @@ define('ext.wikia.recirculation.tracker', [
 	}
 
 	return {
-		trackClick: trackClick,
-		trackImpression: trackImpression
+		trackQualifiedClick: trackQualifiedClick,
+		trackQualifiedImpression: trackQualifiedImpression
 	};
 });
