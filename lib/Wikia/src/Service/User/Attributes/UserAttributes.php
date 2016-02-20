@@ -135,7 +135,7 @@ class UserAttributes {
 		}
 
 		$e = new \Exception;
-		$this->info( 'USER_ATTRIBUTES saving_bad_avatar_val', [
+		$this->error( 'USER_ATTRIBUTES saving_bad_avatar_val', [
 			'userId' => $userId,
 			'avatar_val' => $value,
 			'trace' => $e->getTraceAsString()
