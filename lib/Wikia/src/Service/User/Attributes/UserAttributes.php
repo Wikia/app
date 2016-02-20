@@ -134,11 +134,10 @@ class UserAttributes {
 			return;
 		}
 
-		$e = new \Exception;
 		$this->error( 'USER_ATTRIBUTES saving_bad_avatar_val', [
 			'userId' => $userId,
 			'avatar_val' => $value,
-			'trace' => $e->getTraceAsString()
+			'exception' => new \Exception()
 		] );
 	}
 
