@@ -16,58 +16,8 @@ class PortableInfoboxBuilderService extends WikiaService {
 		$infobox = json_decode( $builderData );
 
 		if ( $infobox ) {
-			$xml = new SimpleXMLElement( '<' . PortableInfoboxParserTagController::PARSER_TAG_NAME . '/>' );
-			foreach ( $infobox as $key => $value ) {
-				if ( $key !== 'data' ) {
-					$xml->addAttribute( $key, $value );
-				}
-			}
-
-			$this->addGroupNode( $infobox->data, $xml );
-
-			// FIXME: the below code is ugly and complex. Simplify it!
-			$newXml = new SimpleXMLElement( '<' . PortableInfoboxParserTagController::PARSER_TAG_NAME . '/>' );
-			// save to xml, import to dom, to remove xml header
-			$dom = dom_import_simplexml( $newXml );
-			// make the output document human-readable
-			$dom->ownerDocument->formatOutput = $formatted;
-
-			$inGroup = false;
-			$newChildDom = null;
-
-			foreach ( $xml->children() as $childNode ) {
-				if ( !$inGroup ) {
-					if ( $childNode->getName() !== 'header' ) {
-						$dom->appendChild( $dom->ownerDocument->importNode( dom_import_simplexml( $childNode ), true ) );
-					} else {
-						$newChildDom = dom_import_simplexml( new SimpleXMLElement( '<' . 'group' . '/>' ) );
-						$newChildDom->appendChild( $newChildDom->ownerDocument->importNode( dom_import_simplexml( $childNode ), true ) );
-						$inGroup = true;
-					}
-				} else {
-					if ( !in_array( $childNode->getName(), [ 'header', 'title' ] ) ) {
-						$newChildDom->appendChild( $newChildDom->ownerDocument->importNode( dom_import_simplexml( $childNode ), true ) );
-					} else {
-						if ( $childNode->getName() === 'header' ) {
-							$dom->appendChild( $dom->ownerDocument->importNode( $newChildDom, true ) );
-							$newChildDom = dom_import_simplexml( new SimpleXMLElement( '<' . 'group' . '/>' ) );
-							$newChildDom->appendChild( $newChildDom->ownerDocument->importNode( dom_import_simplexml( $childNode ), true ) );
-						} else {
-							$dom->appendChild( $dom->ownerDocument->importNode( $newChildDom, true ) );
-							$dom->appendChild( $dom->ownerDocument->importNode( dom_import_simplexml( $childNode ), true ) );
-							$inGroup = false;
-						}
-					}
-				}
-			}
-
-			if ( !empty( $newChild ) && $inGroup ) {
-				$dom->appendChild( $dom->ownerDocument->importNode( $newChildDom, true ) );
-			}
-
-			$out = $dom->ownerDocument->saveXML( $dom->ownerDocument->documentElement );
-			// ignore errors, we only load it to remove header
-			libxml_clear_errors();
+			$xml = $this->createInfoboxXml( $infobox );
+			$out = $this->getFormattedMarkup( $xml, $formatted );
 		}
 
 		return $out;
@@ -201,5 +151,72 @@ class PortableInfoboxBuilderService extends WikiaService {
 		mb_convert_case( $type, MB_CASE_LOWER, 'UTF-8' );
 		$type = !empty($this->typesToCanonicals[$type]) ? $this->typesToCanonicals[$type] : $type;
 		return $type;
+	}
+
+	/**
+	 * @param $infobox
+	 * @return SimpleXMLElement
+	 */
+	protected function createInfoboxXml( $infobox ) {
+		$xml = new SimpleXMLElement( '<' . PortableInfoboxParserTagController::PARSER_TAG_NAME . '/>' );
+		foreach ( $infobox as $key => $value ) {
+			if ( $key !== 'data' ) {
+				$xml->addAttribute( $key, $value );
+			}
+		}
+		$this->addGroupNode( $infobox->data, $xml );
+		return $xml;
+	}
+
+	/**
+	 * @param $xml
+	 * @param $formatted
+	 * @param $newChild
+	 * @return string
+	 */
+	protected function getFormattedMarkup( $xml, $formatted ) {
+		$newXml = new SimpleXMLElement( '<' . PortableInfoboxParserTagController::PARSER_TAG_NAME . '/>' );
+		// import to dom for processing and ability to remove <?xml document header
+		$dom = dom_import_simplexml( $newXml );
+		// make the output document human-readable (formatted) or condensed (no additional whitespace)
+		$dom->ownerDocument->formatOutput = $formatted;
+
+		$inGroup = false;
+		$newChildDom = null;
+
+		foreach ( $xml->children() as $childNode ) {
+			if ( !$inGroup ) {
+				if ( $childNode->getName() !== 'header' ) {
+					$dom->appendChild( $dom->ownerDocument->importNode( dom_import_simplexml( $childNode ), true ) );
+				} else {
+					$newChildDom = dom_import_simplexml( new SimpleXMLElement( '<' . 'group' . '/>' ) );
+					$newChildDom->appendChild( $newChildDom->ownerDocument->importNode( dom_import_simplexml( $childNode ), true ) );
+					$inGroup = true;
+				}
+			} else {
+				if ( !in_array( $childNode->getName(), [ 'header', 'title' ] ) ) {
+					$newChildDom->appendChild( $newChildDom->ownerDocument->importNode( dom_import_simplexml( $childNode ), true ) );
+				} else {
+					if ( $childNode->getName() === 'header' ) {
+						$dom->appendChild( $dom->ownerDocument->importNode( $newChildDom, true ) );
+						$newChildDom = dom_import_simplexml( new SimpleXMLElement( '<' . 'group' . '/>' ) );
+						$newChildDom->appendChild( $newChildDom->ownerDocument->importNode( dom_import_simplexml( $childNode ), true ) );
+					} else {
+						$dom->appendChild( $dom->ownerDocument->importNode( $newChildDom, true ) );
+						$dom->appendChild( $dom->ownerDocument->importNode( dom_import_simplexml( $childNode ), true ) );
+						$inGroup = false;
+					}
+				}
+			}
+		}
+
+		if ( !empty( $newChild ) && $inGroup ) {
+			$dom->appendChild( $dom->ownerDocument->importNode( $newChildDom, true ) );
+		}
+
+		$out = $dom->ownerDocument->saveXML( $dom->ownerDocument->documentElement );
+		libxml_clear_errors();
+
+		return $out;
 	}
 }
