@@ -1,6 +1,10 @@
 <?php
 
 class PortableInfoboxBuilderService extends WikiaService {
+	private $typesToCanonicals = [
+		'row' => 'data',
+		'section-header' => 'header'
+	];
 
 	/**
 	 * @param $builderData string jsonencoded data object
@@ -21,10 +25,45 @@ class PortableInfoboxBuilderService extends WikiaService {
 
 			$this->addGroupNode( $infobox->data, $xml );
 
+			// FIXME: the below code is ugly and complex. Simplify it!
+			$newXml = new SimpleXMLElement( '<' . PortableInfoboxParserTagController::PARSER_TAG_NAME . '/>' );
 			// save to xml, import to dom, to remove xml header
-			$dom = dom_import_simplexml( $xml );
+			$dom = dom_import_simplexml( $newXml );
 			// make the output document human-readable
 			$dom->ownerDocument->formatOutput = $formatted;
+
+			$inGroup = false;
+			$newChildDom = null;
+
+			foreach ( $xml->children() as $childNode ) {
+				if ( !$inGroup ) {
+					if ( $childNode->getName() !== 'header' ) {
+						$dom->appendChild( $dom->ownerDocument->importNode( dom_import_simplexml( $childNode ), true ) );
+					} else {
+						$newChildDom = dom_import_simplexml( new SimpleXMLElement( '<' . 'group' . '/>' ) );
+						$newChildDom->appendChild( $newChildDom->ownerDocument->importNode( dom_import_simplexml( $childNode ), true ) );
+						$inGroup = true;
+					}
+				} else {
+					if ( !in_array( $childNode->getName(), [ 'header', 'title' ] ) ) {
+						$newChildDom->appendChild( $newChildDom->ownerDocument->importNode( dom_import_simplexml( $childNode ), true ) );
+					} else {
+						if ( $childNode->getName() === 'header' ) {
+							$dom->appendChild( $dom->ownerDocument->importNode( $newChildDom, true ) );
+							$newChildDom = dom_import_simplexml( new SimpleXMLElement( '<' . 'group' . '/>' ) );
+							$newChildDom->appendChild( $newChildDom->ownerDocument->importNode( dom_import_simplexml( $childNode ), true ) );
+						} else {
+							$dom->appendChild( $dom->ownerDocument->importNode( $newChildDom, true ) );
+							$dom->appendChild( $dom->ownerDocument->importNode( dom_import_simplexml( $childNode ), true ) );
+							$inGroup = false;
+						}
+					}
+				}
+			}
+
+			if ( !empty( $newChild ) && $inGroup ) {
+				$dom->appendChild( $dom->ownerDocument->importNode( $newChildDom, true ) );
+			}
 
 			$out = $dom->ownerDocument->saveXML( $dom->ownerDocument->documentElement );
 			// ignore errors, we only load it to remove header
@@ -40,12 +79,12 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 * @see PortableInfoboxBuilderServiceTest::translationsDataProvider
 	 */
 	public function translateMarkupToData( $infoboxMarkup ) {
-		$jsonObject = [];
+		$jsonObject = [ ];
 
 		$xmlNode = simplexml_load_string( $infoboxMarkup );
-		if($xmlNode) {
-			$builderNode = \Wikia\PortableInfoboxBuilder\Nodes\NodeBuilder::createFromNode($xmlNode);
-			$jsonObject = $builderNode->asJson($xmlNode);
+		if ( $xmlNode ) {
+			$builderNode = \Wikia\PortableInfoboxBuilder\Nodes\NodeBuilder::createFromNode( $xmlNode );
+			$jsonObject = $builderNode->asJsonObject( $xmlNode );
 		}
 
 		return json_encode( $jsonObject );
@@ -82,15 +121,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 	public function getDocumentation( $infoboxMarkup, $title ) {
 		$infobox = \Wikia\PortableInfobox\Parser\Nodes\NodeFactory::newFromXML( $infoboxMarkup );
 
-		return (new Wikia\Template\PHPEngine() )
-			->setPrefix( dirname( dirname( __FILE__ ) ) . '/templates' )
-			->setData(
-				[
-					'title' => $title->getText(),
-					'sources' => $infobox->getSource()
-				]
-			)
-			->render( 'PortableInfoboxBuilderService_getDocumentation.php' );
+		return ( new Wikia\Template\PHPEngine() )->setPrefix( dirname( dirname( __FILE__ ) ) . '/templates' )->setData( [ 'title' => $title->getText(), 'sources' => $infobox->getSource() ] )->render( 'PortableInfoboxBuilderService_getDocumentation.php' );
 	}
 
 	/**
@@ -102,8 +133,8 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 *
 	 * @return string
 	 */
-	public function updateInfobox($oldInfobox, $newInfobox, $oldContent) {
-		return str_replace($oldInfobox, $newInfobox, $oldContent);
+	public function updateInfobox( $oldInfobox, $newInfobox, $oldContent ) {
+		return str_replace( $oldInfobox, $newInfobox, $oldContent );
 	}
 
 	/**
@@ -115,13 +146,14 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 *
 	 * @return string
 	 */
-	public function updateDocumentation($oldDocumentation, $newDocumentation, $oldContent) {
-		return str_replace($oldDocumentation, $newDocumentation, $oldContent);
+	public function updateDocumentation( $oldDocumentation, $newDocumentation, $oldContent ) {
+		return str_replace( $oldDocumentation, $newDocumentation, $oldContent );
 	}
 
 	protected function addGroupNode( $data, SimpleXMLElement $xml ) {
 		foreach ( $data as $item ) {
-			$type = strcasecmp( $item->type, 'row' ) == 0 ? 'data' : $item->type;
+			$type = $this->getCanonicalType( $item->type );
+
 			$child = $xml->addChild( $type, is_string( $item->data ) ? (string)$item->data : null );
 			if ( is_array( $item->data ) ) {
 				$this->addGroupNode( $item->data, $child );
@@ -159,5 +191,15 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 */
 	private function isEmptyNodeValue( $value ) {
 		return ( empty( $value ) && $value != '0' );
+	}
+
+	/**
+	 * @param $type string
+	 * @return string
+	 */
+	protected function getCanonicalType( $type ) {
+		mb_convert_case( $type, MB_CASE_LOWER, 'UTF-8' );
+		$type = !empty($this->typesToCanonicals[$type]) ? $this->typesToCanonicals[$type] : $type;
+		return $type;
 	}
 }

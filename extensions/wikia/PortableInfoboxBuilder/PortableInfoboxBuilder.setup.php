@@ -5,11 +5,13 @@ $wgAutoloadClasses[ 'PortableInfoboxBuilderService' ] = $dir . 'services/Portabl
 
 $wgBuilderNodes = [
 	'Node',
-	'NodeImage',
-	'NodeInfobox',
+	'NodeCaption',
 	'NodeData',
 	'NodeDefault',
-	'NodeCaption',
+	'NodeGroup',
+	'NodeHeader',
+	'NodeImage',
+	'NodeInfobox',
 	'NodeLabel',
 	'NodeTitle',
 ];
