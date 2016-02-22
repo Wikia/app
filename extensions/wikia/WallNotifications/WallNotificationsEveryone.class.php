@@ -12,10 +12,6 @@ class WallNotificationsEveryone extends WallNotifications {
 
 		$this->app = F::app();
 		$this->cityId = $wgCityId;
-
-		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
-			$this->cityId = 11;
-		}
 	}
 
 	/**
