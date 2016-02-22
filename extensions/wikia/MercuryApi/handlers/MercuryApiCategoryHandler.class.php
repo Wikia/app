@@ -25,7 +25,7 @@ class MercuryApiCategoryHandler {
 			$currentBatch = $itemsBatch['currentBatch'];
 			$nextBatch = $currentBatch + 1;
 
-			$sanitizedAlphabeticalList['collections'][rawurlencode( $index )] = [
+			$sanitizedAlphabeticalList['collections'][$index] = [
 				'items' => $itemsBatch['items'],
 				'nextBatch' => $nextBatch,
 				'currentBatch' => $currentBatch,
