@@ -9,33 +9,6 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 	 * @param array $aUserData Selected fields from Wikia user table
 	 * @param array $aUserProperties Array of Wikia user gobal properties
 	 */
-	public function updateCreateUserData( array $aUserData, array $aUserProperties ) {
-
-		if ( empty( $aUserData['user_id'] ) ) {
-			throw new \Exception( 'No user ID provided in params' );
-		}
-
-		if ( empty( $aUserData['user_email'] ) ) {
-			throw new \Exception( 'No user email address provided in params' );
-		}
-
-		/* Delete subscriber (email address) used by touched user */
-		$oDeleteUserTask = $this->getDeleteUserTask();
-		$oDeleteUserTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
-		$oDeleteUserTask->deleteSubscriber( $aUserData['user_id'] );
-
-		/* Create Subscriber with new email */
-		$this->createSubscriber( $aUserData['user_email'] );
-
-		/* Create User DataExtension with new email */
-		$this->createUser( $aUserData );
-
-		/* Create User Properties DataExtension with new email */
-		$this->createUserProperties( $aUserData['user_id'], $aUserProperties );
-
-		// If execution reached that point without exception thrown update succeeded
-		return 'OK';
-	}
 
 	/**
 	 * Creates Subscriber object in ExactTarget by API request
