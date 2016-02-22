@@ -112,11 +112,9 @@ class WallThread {
 				$list[] = $oRow->comment_id;
 			} );
 
-		if ( count( $list ) < self::FETCHED_REPLIES_LIMIT ) {
-			return $list;
-		} else {
-			return array_merge( $list, $this->getReplyIdsFromDB( $dbr, end( $list ) ) );
-		}
+		return count( $list ) < self::FETCHED_REPLIES_LIMIT ?
+			$list
+			: array_merge( $list, $this->getReplyIdsFromDB( $dbr, end( $list ) ) );
 	}
 
 	private function loadReplyIdsFromDB( $master = false ) {

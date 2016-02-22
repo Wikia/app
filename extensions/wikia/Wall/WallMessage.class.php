@@ -78,7 +78,7 @@ class WallMessage {
 		foreach ( $titles as $title ) {
 			if ( $title->exists() ) {
 				$wallMessages[] = WallMessage::newFromTitle( $title );
-				$correctIds[] = $title->mArticleID;
+				$correctIds[] = $title->getArticleID();
 			}
 		}
 
