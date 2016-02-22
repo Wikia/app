@@ -3,12 +3,7 @@ describe('ext.wikia.recirculation.tracker', function () {
 	'use strict';
 	function noop() {}
 
-	var experimentName = 'RECIRCULATION',
-		defaults = {
-			category: 'recirculation',
-			trackingMethod: 'analytics'
-		},
-		mocks = {
+	var mocks = {
 			abTest: {
 				getGroup: function() {
 					return 'GROUP_1';
