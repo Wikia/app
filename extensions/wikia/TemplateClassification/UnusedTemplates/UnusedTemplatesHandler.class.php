@@ -44,7 +44,7 @@ class Handler {
 	 * @param \ResultWrapper $results
 	 * @param \DatabaseBase $db
 	 * @return bool
-	 * @throws \MWException
+	 * @throws \DBQueryError
 	 */
 	public function markAsUnusedFromResults( \ResultWrapper $results, \DatabaseBase $db = null ) {
 		if ( $db === null ) {
@@ -58,20 +58,12 @@ class Handler {
 			return false;
 		}
 
-		$db->begin( __METHOD__ );
-
-		try {
-			$db->upsert(
-				'page_wikia_props',
-				$insertRows,
-				[ 'page_id', 'propname' ],
-				[ 'props' => self::UNUSED ]
-			);
-			$db->commit( __METHOD__ );
-		} catch ( \MWException $e ) {
-			$db->rollback( __METHOD__ );
-			throw $e;
-		}
+		$db->upsert(
+			'page_wikia_props',
+			$insertRows,
+			[ 'page_id', 'propname' ],
+			[ 'props' => self::UNUSED ]
+		);
 
 		return true;
 	}
