@@ -95,7 +95,7 @@ class SpecialListGroupRights extends SpecialPage {
 					SpecialPage::getTitleFor( 'Listusers' ),
 					wfMsgHtml( 'listgrouprights-members' )
 				);
-			} elseif ( !in_array( $group, $this->permissionsService()->getImplicitGroups() ) ) {
+			} elseif ( !in_array( $group, $this->permissionsService()->getDefinitions()->getImplicitGroups() ) ) {
 				$grouplink = '<br />' . Linker::linkKnown(
 					SpecialPage::getTitleFor( 'Listusers' ),
 					wfMsgHtml( 'listgrouprights-members' ),
@@ -107,7 +107,7 @@ class SpecialListGroupRights extends SpecialPage {
 				$grouplink = '';
 			}
 
-			$groupArr = $this->permissionsService()->getGroupsChangeableByGroup( $group );
+			$groupArr = $this->permissionsService()->getDefinitions()->getGroupsChangeableByGroup( $group );
 
 			$addgroups = isset( $groupArr['add'] ) ? $groupArr['add'] : array();
 			$removegroups = isset( $groupArr['remove'] ) ? $groupArr['remove'] : array();

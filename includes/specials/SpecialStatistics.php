@@ -195,7 +195,7 @@ class SpecialStatistics extends SpecialPage {
 		$text = '';
 		foreach( $wgGroupPermissions as $group => $permissions ) {
 			# Skip generic * and implicit groups
-			if ( in_array( $group, $this->permissionsService()->getImplicitGroups() ) || $group == '*' ) {
+			if ( in_array( $group, $this->permissionsService()->getDefinitions()->getImplicitGroups() ) || $group == '*' ) {
 				continue;
 			}
 			$groupname = htmlspecialchars( $group );
@@ -227,7 +227,7 @@ class SpecialStatistics extends SpecialPage {
 			$countUsers = SiteStats::numberingroup( $groupname );
 			if( $countUsers == 0 ) {
 				// wikia change start
-				if( in_array( $groupname, $this->permissionsService()->getGlobalGroups() ) ) {
+				if( in_array( $groupname, $this->permissionsService()->getDefinitions()->getGlobalGroups() ) ) {
 					//rt#57322 hide our effective global groups
 					continue;
 				}

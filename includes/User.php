@@ -4660,7 +4660,7 @@ class User {
 	 * @return Array of Strings Array of internal group names
 	 */
 	public static function getImplicitGroups() {
-		return self::permissionsService()->getImplicitGroups();
+		return self::permissionsService()->getDefinitions()->getImplicitGroups();
 	}
 
 	/**
@@ -4670,7 +4670,7 @@ class User {
 	 * @return Array of internal group names
 	 */
 	public static function getAllGroups() {
-		return self::permissionsService()->getExplicitGroups();
+		return self::permissionsService()->getDefinitions()->getExplicitGroups();
 	}
 
 	/**
@@ -4680,7 +4680,7 @@ class User {
 	 * @return Array of Strings List of permission key names for given groups combined
 	 */
 	public static function getGroupPermissions( $groups ) {
-		return self::permissionsService()->getGroupPermissions( $groups );
+		return self::permissionsService()->getDefinitions()->getGroupPermissions( $groups );
 	}
 
 	/**
@@ -4690,7 +4690,7 @@ class User {
 	 * @return Array of Strings List of internal group names with the given permission
 	 */
 	public static function getGroupsWithPermission( $role ) {
-		return self::permissionsService()->getGroupsWithPermission( $role );
+		return self::permissionsService()->getDefinitions()->getGroupsWithPermission( $role );
 	}
 
 	/**
@@ -4706,7 +4706,7 @@ class User {
 	 * @return Array of permission names
 	 */
 	public static function getAllRights() {
-		return self::permissionsService()->getPermissions();
+		return self::permissionsService()->getDefinitions()->getPermissions();
 	}
 
 	/**
@@ -4719,7 +4719,7 @@ class User {
 	 *     'remove-self' => array( removable groups from self) )
 	 */
 	public static function changeableByGroup( $group ) {
-		return self::permissionsService()->getGroupsChangeableByGroup( $group );
+		return self::permissionsService()->getDefinitions()->getGroupsChangeableByGroup( $group );
 	}
 
 	/**
