@@ -27,46 +27,6 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 	}
 
 	/**
-	 * Creates (or updates if already exists) DataExtension object in ExactTarget by API request that reflects Wikia user table
-	 * @param Array $aUserData Selected fields from Wikia user table
-	 * @return bool
-	 */
-	public function createUser( $aUserData ) {
-
-		if ( empty( $aUserData['user_id'] ) ) {
-			throw new \Exception( 'No user ID provided in params' );
-		}
-
-		if ( empty( $aUserData['user_email'] ) ) {
-			throw new \Exception( 'No user email address provided in params' );
-		}
-
-		$oHelper = $this->getUserHelper();
-		$aApiParams = $oHelper->prepareUsersUpdateParams( [ $aUserData ] );
-		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
-		$oApiDataExtension = $this->getApiDataExtension();
-
-		/* TODO replace with \Wikia\ExactTarget\ExactTargetClient::updateUser */
-		$oCreateUserResult = $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
-
-		$this->info( __METHOD__ . ' OverallStatus: ' . $oCreateUserResult->OverallStatus );
-		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oCreateUserResult ) );
-
-		if ( $oCreateUserResult->OverallStatus === 'Error' ) {
-			throw new \Exception(
-				'Error in ' . __METHOD__ . ': ' . $oCreateUserResult->Results->StatusMessage
-			);
-		}
-
-		/* Verify data */
-		$oUserDataVerificationTask = $this->getUserDataVerificationTask();
-		$oUserDataVerificationTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
-		$bUserDataVerificationResult = $oUserDataVerificationTask->verifyUsersData( [ $aUserData['user_id'] ] );
-
-		return $bUserDataVerificationResult;
-	}
-
-	/**
 	 * Creates DataExtension object in ExactTarget by API request that reflects Wikia user_properties table
 	 * @param Integer $iUserId User ID
 	 * @param Array $aUserProperties key-value array ['property_name'=>'property_value']
