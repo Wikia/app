@@ -471,12 +471,13 @@ class MercuryApiController extends WikiaController {
 	 * @return array [Title, Article, array]
 	 */
 	private function handleRedirect( Title $title, Article $article, $data ) {
+		// It should never be null because we check if $title is a redirect before calling this method
 		/* @var Title $redirectTargetTitle */
 		$redirectTargetTitle = $article->getRedirectTarget();
 		$redirectTargetID = $redirectTargetTitle->getArticleID();
 		$data['redirected'] = true;
 
-		if ( $redirectTargetTitle instanceof Title ) {
+		if ( !empty( $redirectTargetID ) ) {
 			$title = $redirectTargetTitle;
 			$article = Article::newFromID( $redirectTargetID );
 		} else {
