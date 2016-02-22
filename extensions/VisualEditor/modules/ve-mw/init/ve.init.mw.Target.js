@@ -1015,7 +1015,7 @@ ve.init.mw.Target.prototype.load = function ( additionalModules ) {
 	}
 
 	if ( uri.query.preload ) {
-		data.preload = uri.query.preload;
+		data.page = uri.query.preload;
 	}
 
 	// Load DOM
