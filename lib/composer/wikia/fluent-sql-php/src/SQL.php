@@ -1464,6 +1464,7 @@ class SQL {
 		}
 
 		if ($autoIterate) {
+			\Wikia\Util\Assert::true( $result instanceof \ResultWrapper, 'FluentSQL::query - did not get ResultWrapper - instead got ' . get_class($result) );
 			$data = $this->autoIterate($result, $callback);
 		} else {
 			$data = $callback($result);
