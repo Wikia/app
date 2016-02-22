@@ -77,7 +77,6 @@ $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApiHelper'] =  $dir . '/api/Exa
 
 /* Client classes */
 $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_client.php' ;
-$wgAutoloadClasses['Wikia\ExactTarget\Client'] =  $dir . '/client/Client.interface.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetClient'] =  $dir . '/client/ExactTargetClient.class.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetRequestBuilder'] =  $dir . '/client/ExactTargetRequestBuilder.class.php' ;
 /* Client builders */

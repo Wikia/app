@@ -3,7 +3,7 @@ namespace Wikia\ExactTarget;
 
 use Wikia\Logger\Loggable;
 
-class ExactTargetClient implements Client {
+class ExactTargetClient {
 	use Loggable;
 
 	const EXACT_TARGET_LABEL = 'ExactTarget client';
