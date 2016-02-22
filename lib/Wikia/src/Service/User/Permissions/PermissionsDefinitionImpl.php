@@ -367,15 +367,15 @@ class PermissionsDefinitionImpl implements PermissionsDefinition {
 	}
 
 	private function loadGroupsChangeableByGroups() {
-		$this->groupsAddableByGroup['bureaucrat'] = array('bureaucrat', 'rollback', 'sysop', 'content-moderator', 'threadmoderator');
-		$this->groupsRemovableByGroup['bureaucrat'] = array('rollback', 'sysop', 'bot', 'content-moderator', 'threadmoderator');
-		$this->groupsSelfRemovableByGroup['bureaucrat'] = array('rollback', 'sysop', 'bot', 'content-moderator');
+		$this->groupsAddableByGroup['bureaucrat'] = array('bureaucrat', 'rollback', 'sysop', 'content-moderator');
+		$this->groupsRemovableByGroup['bureaucrat'] = array('rollback', 'sysop', 'bot', 'content-moderator');
+		$this->groupsSelfRemovableByGroup['bureaucrat'] = array('bureaucrat');
 
 		$this->groupsAddableByGroup['staff'] = array('rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator');
 		$this->groupsRemovableByGroup['staff'] = array('rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator');
 
-		$this->groupsAddableByGroup['helper'] = array('rollback', 'bot', 'sysop', 'bureaucrat', 'chatmoderator', 'threadmoderator');
-		$this->groupsRemovableByGroup['helper'] = array('rollback', 'bot', 'sysop', 'bureaucrat', 'chatmoderator', 'threadmoderator');
+		$this->groupsAddableByGroup['helper'] = array('rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator');
+		$this->groupsRemovableByGroup['helper'] = array('rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator');
 
 		$this->groupsAddableByGroup['sysop'] = array('chatmoderator', 'threadmoderator');
 		$this->groupsRemovableByGroup['sysop'] = array('chatmoderator', 'threadmoderator');
