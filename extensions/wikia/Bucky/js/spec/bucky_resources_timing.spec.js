@@ -42,7 +42,9 @@ describe('BuckyResourcesTiming', function () {
 				// 3rd party assets
 				'http://edge.quantserve.com/quant-wikia.js': 'edge.quantserve.com',
 				'http://www.google-analytics.com/ga.js': 'www.google-analytics.com',
-				'http://www.google-analytics.com': 'www.google-analytics.com'
+				'http://www.google-analytics.com': 'www.google-analytics.com',
+				// invalid URL
+				'foo.bar/test.css': false
 			};
 
 		Object.keys(urls).forEach(function(url) {

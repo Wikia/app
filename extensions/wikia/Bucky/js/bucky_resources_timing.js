@@ -42,10 +42,11 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 	 * Returns the domain name from the full URL
 	 *
 	 * @param {string} url URL to get domain for
-	 * @return {string} domain
+	 * @return {string|false} domain or false when URLs in invalid
 	 */
 	function getDomain(url) {
-		return url.match(/\/\/([^/]+)/)[1];
+		var matches = url.match(/\/\/([^/]+)/);
+		return !!matches && matches[1];
 	}
 
 	/**
