@@ -3,6 +3,8 @@
 namespace Wikia\PortableInfoboxBuilder\Nodes;
 
 class NodeGroup extends Node {
+	const XML_TAG_NAME = 'group';
+
 	/**
 	 * @var array string
 	 */
