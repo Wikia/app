@@ -27,8 +27,7 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 
 		$oDeleteUserTask
 			->expects( $this->once() )
-			->method( 'deleteSubscriber' )
-			->will($this->returnValue(8));
+			->method( 'deleteSubscriber' );
 
 		/* Mock tested class /*
 		/* @var ExactTargetCreateUserTask $addTaskMock mock of ExactTargetCreateUserTask class */

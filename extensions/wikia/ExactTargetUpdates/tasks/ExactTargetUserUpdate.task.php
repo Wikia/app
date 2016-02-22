@@ -8,6 +8,8 @@ class ExactTargetUserUpdate extends BaseTask {
 
 	private $client;
 
+	const STATUS_OK = 'OK';
+
 	public function __construct( $client = null ) {
 		$this->client = $client;
 	}
@@ -30,20 +32,13 @@ class ExactTargetUserUpdate extends BaseTask {
 		/* Create Subscriber with new email */
 		$this->getClient()->createSubscriber( $userData[ 'user_email' ] );
 
-		/* Create User in external service */
+		/* Update or create User in external service */
 		$this->getClient()->updateUser( $userData );
 
-		/* Create User Properties DataExtension with new email
-		 * TODO move create user properties functionality to client */
-		$oldCreateTask = new ExactTargetCreateUserTask();
-		$oldCreateTask->createUserProperties( $userData[ 'user_id' ], $userProperties );
+		/* Update or create User Properties DataExtension with provided properties */
+		$this->getClient()->updateUserProperties( $userData[ 'user_id' ], $userProperties );
 
-		/* Verify data */
-		$userDataVerificationTask = new ExactTargetUserDataVerificationTask();
-		$userDataVerificationTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
-		$userDataVerificationResult = $userDataVerificationTask->verifyUsersData( [ $userData[ 'user_id' ] ] );
-
-		return $userDataVerificationResult;
+		return self::STATUS_OK;
 	}
 
 	protected function getClient() {

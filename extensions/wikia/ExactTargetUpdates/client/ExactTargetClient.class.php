@@ -50,7 +50,15 @@ class ExactTargetClient implements Client {
 		$this->sendRequest( 'Create', $oRequest );
 	}
 
-	public function createUserProperties( $userId, array $userProperties ) {
+	/**
+	 * Update or create user properties DataExtension object in ExactTarget by API request
+	 * that reflects Wikia user_properties table
+	 * @param int $userId User ID
+	 * @param array $userProperties key-value array ['property_name'=>'property_value']
+	 * @return bool
+	 * @throws \Exception
+	 */
+	public function updateUserProperties( $userId, array $userProperties ) {
 		$request = ExactTargetRequestBuilder::createUpdate()
 			->withUserId( $userId )
 			->withProperties( $userProperties )
@@ -65,7 +73,6 @@ class ExactTargetClient implements Client {
 		}
 
 		$userDataVerificationTask = new ExactTargetUserDataVerificationTask();
-//		$userDataVerificationTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
 		$userDataVerificationResult = $userDataVerificationTask->verifyUserPropertiesData( $userId );
 
 		return $userDataVerificationResult;
