@@ -37,7 +37,9 @@ class ExactTargetUserUpdate extends BaseTask {
 		$this->getClient()->updateUser( $userData );
 
 		/* Update or create User Properties DataExtension with provided properties */
-		$this->getClient()->updateUserProperties( $userData[ 'user_id' ], $userProperties );
+		if ( !empty( $userProperties ) ) {
+			$this->getClient()->updateUserProperties( $userData[ 'user_id' ], $userProperties );
+		}
 
 		return self::STATUS_OK;
 	}

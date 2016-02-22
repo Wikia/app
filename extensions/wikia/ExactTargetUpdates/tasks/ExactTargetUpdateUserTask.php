@@ -15,57 +15,6 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 	 */
 
 	/**
-	 * Updates or creates if don't yet exists DataExtension object in ExactTarget by API request that reflects Wikia user table
-	 * @param Array $aUsersData array of user data arrays with selected fields from Wikia user table
-	 * @return bool
-	 */
-	public function updateFallbackCreateUsers( array $aUsersData ) {
-
-		/* Validate users data, unset if incomplete */
-		foreach ( $aUsersData as $iArrayKey => $aUserData ) {
-			if ( empty( $aUserData['user_id'] ) ) {
-				$this->error( __METHOD__ . ' user under ' . $iArrayKey . ' index of $aUsersData has no ID' );
-				unset( $aUsersData[$iArrayKey] );
-			} elseif ( empty( $aUserData['user_email'] ) ) {
-				$this->error( __METHOD__ . ' user under ' . $iArrayKey . ' index of $aUsersData has no email' );
-				unset( $aUsersData[$iArrayKey] );
-			}
-		}
-
-		if ( empty( $aUsersData ) ) {
-			$this->info( __METHOD__ . ' Cannot update empty record (no user_id or user_email provided).
-				Skipping update.' );
-			return false;
-		}
-
-		$oHelper = $this->getUserHelper();
-		$aApiParams = $oHelper->prepareUsersUpdateParams( $aUsersData );
-		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
-		$oApiDataExtension = $this->getApiDataExtension();
-
-		/* Run update */
-		/* TODO replace with \Wikia\ExactTarget\ExactTargetClient::updateUser */
-		$oCreateUserResult = $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
-
-		$this->info( __METHOD__ . ' OverallStatus: ' . $oCreateUserResult->OverallStatus );
-		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oCreateUserResult ) );
-
-		if ( $oCreateUserResult->OverallStatus === 'Error' ) {
-			throw new \Exception(
-				'Error in ' . __METHOD__ . ': ' . $oCreateUserResult->Results[0]->StatusMessage
-			);
-		}
-
-		/* Verify data */
-		$aUserIds = array_column( $aUsersData , 'user_id' );
-		$oUserDataVerificationTask = $this->getUserDataVerificationTask();
-		$oUserDataVerificationTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
-		$bUserDataVerificationResult = $oUserDataVerificationTask->verifyUsersData( $aUserIds );
-
-		return $bUserDataVerificationResult;
-	}
-
-	/**
 	 * Sends update of user email to ExactTarget
 	 * @param int $iUserId
 	 * @param string $iUserEmail

@@ -75,11 +75,12 @@ class ExactTargetUpdateUserGlobalEditCountMaintenance extends Maintenance {
 		}
 	}
 
-	private function addUsersUpdateTask( $aUsersData ) {
-		/* Get and run the task */
-		$task = new ExactTargetUpdateUserTask();
-		$task->call( 'updateFallbackCreateUsers', $aUsersData );
-		$task->queue();
+	private function addUsersUpdateTask( $usersData ) {
+		foreach ( $usersData as $userData ) {
+			$task = new \Wikia\ExactTarget\ExactTargetUserUpdate();
+			$task->call( 'update', $userData );
+			$task->queue();
+		}
 	}
 
 	private function getLastDayDate() {

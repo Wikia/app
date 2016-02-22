@@ -46,15 +46,14 @@ class ExactTargetUserHooks {
 	 * @param User $user
 	 * @return bool
 	 */
-	public function onInvalidateEmailComplete( \User $oUser ) {
+	public function onInvalidateEmailComplete( \User $user ) {
 		/* Prepare params */
-		$oUserHelper = $this->getUserHelper();
-		$aUserData = $oUserHelper->prepareUserParams( $oUser );
-		$aUsersData = [ $aUserData ];
+		$userHelper = $this->getUserHelper();
+		$userData = $userHelper->prepareUserParams( $user );
 
 		/* Get and run the task */
-		$task = $oUserHelper->getUpdateUserTask();
-		$task->call( 'updateFallbackCreateUsers', $aUsersData );
+		$task = new ExactTargetUserUpdate();
+		$task->call( 'update', $userData );
 		$task->queue();
 		return true;
 	}

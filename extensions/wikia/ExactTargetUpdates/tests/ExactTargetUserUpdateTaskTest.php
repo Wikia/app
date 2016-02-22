@@ -24,7 +24,7 @@ class ExactTargetUserUpdateTaskTest extends WikiaBaseTest {
 			->method( 'createSubscriber' );
 		$mockClient->expects( $this->once() )
 			->method( 'updateUser' );
-		$mockClient->expects( $this->once() )
+		$mockClient->expects( $this->any() )
 			->method( 'updateUserProperties' );
 
 		( new \Wikia\ExactTarget\ExactTargetUserUpdate( $mockClient ) )->update( [ 'user_id' => 1, 'user_email' => 'test@test.com' ], [ ] );
