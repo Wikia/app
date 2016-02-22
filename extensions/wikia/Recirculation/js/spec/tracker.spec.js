@@ -36,37 +36,25 @@ describe('ext.wikia.recirculation.tracker', function () {
 
 	describe('trackVerboseClick', function() {
 		it('Calls the track method with the proper parameters', function() {
-			var tracker = getTracker(),
-				label = 'Link',
-				expectedLabel = experimentName + '=' + mocks.abTest.getGroup() + '=' + label;
-
-			var expectedParams = {
-				action: mocks.wikiaTracker.ACTIONS.CLICK,
-				category: defaults.category,
-				trackingMethod: defaults.trackingMethod,
-				label: expectedLabel
-			};
-
-			tracker.trackVerboseClick(experimentName, label);
-			expect(mocks.wikiaTracker.track).toHaveBeenCalledWith(expectedParams);
+			getTracker().trackVerboseClick('RECIRCULATION', 'Link');
+			expect(mocks.wikiaTracker.track).toHaveBeenCalledWith({
+				action: 'click',
+				category: 'recirculation',
+				trackingMethod: 'analytics',
+				label: 'RECIRCULATION=GROUP_1=Link'
+			});
 		});
 	});
 
 	describe('trackVerboseImpression', function() {
 		it('Calls the track method with the proper parameters', function() {
-			var tracker = getTracker(),
-				label = 'Link',
-				expectedLabel = experimentName + '=' + mocks.abTest.getGroup() + '=' + label;
-
-			var expectedParams = {
-				action: mocks.wikiaTracker.ACTIONS.IMPRESSION,
-				category: defaults.category,
-				trackingMethod: defaults.trackingMethod,
-				label: expectedLabel
-			};
-
-			tracker.trackVerboseImpression(experimentName, label);
-			expect(mocks.wikiaTracker.track).toHaveBeenCalledWith(expectedParams);
+			getTracker().trackVerboseImpression('RECIRCULATION', 'Link');
+			expect(mocks.wikiaTracker.track).toHaveBeenCalledWith({
+				action: 'impression',
+				category: 'recirculation',
+				trackingMethod: 'analytics',
+				label: 'RECIRCULATION=GROUP_1=Link'
+			});
 		});
 	});
 });
