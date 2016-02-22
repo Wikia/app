@@ -40,20 +40,18 @@ class AllinfoboxesQueryPage extends PageQueryPage {
 	 * @param bool $limit Only for consistency
 	 * @param bool $ignoreErrors Only for consistency
 	 *
-	 * @return bool|int
+	 * @return int number of rows updated
 	 */
 	public function recache( $limit = false, $ignoreErrors = true ) {
 		$dbw = wfGetDB( DB_MASTER );
 
 		$infoboxes = $this->reallyDoQuery();
-		$dbw->begin();
 
 		( new WikiaSQL() )
 			->DELETE( 'querycache' )
 			->WHERE( 'qc_type' )->EQUAL_TO( $this->getName() )
 			->run( $dbw );
 
-		$inserted = 0;
 		if ( !empty( $infoboxes ) ) {
 			( new WikiaSQL() )
 				->INSERT()->INTO( 'querycache', [
@@ -64,19 +62,11 @@ class AllinfoboxesQueryPage extends PageQueryPage {
 				] )
 				->VALUES( $infoboxes )
 				->run( $dbw );
-
-			$inserted = $dbw->affectedRows();
-			if ( $inserted === 0 ) {
-				$dbw->rollback();
-
-				return false;
-			}
-			$dbw->commit();
 		}
 
 		wfRunHooks( 'AllInfoboxesQueryRecached' );
 
-		return $inserted;
+		return count( $infoboxes );
 	}
 
 	/**
