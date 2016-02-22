@@ -650,24 +650,6 @@ Fir är Umeldung ofzeschléissen, musst Dir elo hei een neit Passwuert uginn:',
 Vläicht hutt Dir Äert Passwuert scho geännert oder en neit temporäert Passwuert ugefrot.',
 'resetpass-temp-password'   => 'Temporäert Passwuert:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Passwuert zrécksetzen',
-'passwordreset-text'               => 'Fëllt dëse Formulaire aus fir eng E-Mail Erënnerung vun den Detailer vun Ärem Benotzerkont ze kréien.',
-'passwordreset-legend'             => 'Passwuert zrécksetzen',
-'passwordreset-disabled'           => "D'Zerécksetze vum Passwuert ass op dëser Wiki ausgeschalt.",
-'passwordreset-pretext'            => '{{PLURAL:$1||Gitt eng vun dësen Donnéeën an}}',
-'passwordreset-username'           => 'Benotzernumm:',
-'passwordreset-domain'             => 'Domaine:',
-'passwordreset-capture'            => "D'Mail kucken?",
-'passwordreset-capture-help'       => 'Wann Dir dës Këscht ukräizt, gëtt de Mail (mam temporäre Passwuert) Iech gewisen an dem Benotzer geschéckt.',
-'passwordreset-email'              => 'E-Mailadress:',
-'passwordreset-emailtitle'         => 'Detailer vum Benotzerkont op{{SITENAME}}',
-'passwordreset-emailelement'       => 'Benotzernumm: $1
-Temporärt Passwuert: $2',
-'passwordreset-emailsent'          => 'Eng Erënnerungs-Mail gouf geschéckt.',
-'passwordreset-emailsent-capture'  => "D'Erënnerungsmail gouf esou geschéckt wéi Dir se hei drënner gesitt.",
-'passwordreset-emailerror-capture' => "D'Erënnerungsmail gouf esou geschéckt wéi Dir se hei drënner gesitt, awer de Benotzer konnt se net kréien: $1",
-
 # Special:ChangeEmail
 'changeemail'          => 'Mailadress änneren',
 'changeemail-header'   => 'Mailadress vum Benotzerkont änneren',

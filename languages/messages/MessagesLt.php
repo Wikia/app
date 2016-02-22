@@ -662,26 +662,6 @@ Palaukite prieš bandant vėl.',
 Jūs galbūt jau sėkmingai pakeitėte savo slaptažodį ar gavote naują laikiną slaptažodį.',
 'resetpass-temp-password'   => 'Laikinas slaptažodis:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Atstatyti slaptažodį',
-'passwordreset-text'               => 'Užpildykite šią formą, norėdami gauti el priminimas jūsų sąskaitos informaciją.',
-'passwordreset-legend'             => 'Atstatyti slaptažodį',
-'passwordreset-disabled'           => 'Slaptažodžių atstatymai šiame wikyje išjungti.',
-'passwordreset-pretext'            => '{{PLURAL:$1| | Langelyje parašykite vieną duomenų vienetų žemiau}}',
-'passwordreset-username'           => 'Naudotojo vardas:',
-'passwordreset-domain'             => 'Domenas:',
-'passwordreset-capture'            => 'Peržiūrėti galutinį e-mail laišką?',
-'passwordreset-capture-help'       => 'Jei jūs čia pažymėsite, tai e-mail laiškas (su laikinuoju slaptažodžiu) bus parodytas jums prieš išsiunčiant jį naudotojui.',
-'passwordreset-email'              => 'E-pašto adresas:',
-'passwordreset-emailtitle'         => 'Paskyros informacija apie {{sitename}}',
-'passwordreset-emailtext-ip'       => 'Kažkas (tikriausiai jūs, IP adresu $1 ) paprašė informacijos priminimas jūsų! N! sąskaitą {{sitename}} ( $4 ). Šis vartotojas {{PLURAL:$3| sąskaita | sąskaitas}} N!! N!, susijusių su šiuo e-pašto adresą!: N!! $2 ! N! N! {{PLURAL:$3| Šis laikinas slaptažodis | Šie laikini slaptažodžiai}} baigsis {{PLURAL:$5| vieną dieną | $5 dienų}} slaptažodis.! N! Jūs turėtumėte prisijungti ir pasirinkti naują. Jei kažkas padarė tai! N! prašymu, arba jūs prisiminėte savo pirminį slaptažodį, ir jums nebereikia! N! nori ją pakeisti, galite ignoruoti šį pranešimą ir toliau naudotis savo senuoju! N! slaptažodį.',
-'passwordreset-emailtext-user'     => 'Vartotojo $1 d. {{sitename}} prašoma informacija priminimas jūsų sąskaitos {{sitename}}! N! ( $4 ). Šis vartotojas {{PLURAL:$3| sąskaita | sąskaitas}}, susijusių su šiuo e-pašto adresą:! N! N! $2 ! N! N! {{PLURAL:$3| Šis laikinas slaptažodis | Šie laikini slaptažodžiai }} baigsis {{PLURAL:$5| vieną dieną | $5 dienų}} slaptažodis.! N! Jūs turėtumėte prisijungti ir pasirinkti naują. Jei kažkas padarė tai! N! prašymu, arba jūs prisiminėte savo pirminį slaptažodį, ir jums nebereikia! N! nori ją pakeisti, galite ignoruoti šį pranešimą ir toliau naudotis savo senuoju! N! slaptažodį.',
-'passwordreset-emailelement'       => 'Naudotojo vardas: $1
-Laikinas slaptažodis: $2',
-'passwordreset-emailsent'          => 'Priminimo laiškas buvo išsiųstas.',
-'passwordreset-emailsent-capture'  => 'Priminimo e-mail laiškas bus pasiųstas, toks koks parodytas.',
-'passwordreset-emailerror-capture' => 'Priminimo e-mail laiškas buvo sugeneruotas, toks koks parodytas, bet pasiuntimas naudotojui buvo nesėkmingas: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Pakeisti el. pašto adresą',
 'changeemail-header'   => 'Keisti paskyros el. pašto adresą',

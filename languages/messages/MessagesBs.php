@@ -764,43 +764,6 @@ Da biste završili prijavu, morate unijeti novu šifru ovdje:',
 Možda ste već uspješno promijenili Vašu šifru ili ste tražili novu privremenu šifru.',
 'resetpass-temp-password'   => 'Privremena šifra:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Poništavanje šifre',
-'passwordreset-text'               => 'Ispunite ovaj obrazac da biste dobili e-mail podsjetnik o vašim detaljima računa.',
-'passwordreset-legend'             => 'Poništi šifru',
-'passwordreset-disabled'           => 'Poništavanje šifre  je onemogućeno na ovoj wiki.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Unesite jedan dio podataka ispod}}',
-'passwordreset-username'           => 'Korisničko ime:',
-'passwordreset-domain'             => 'Domen:',
-'passwordreset-capture'            => 'Pogledati krajnji e-mail?',
-'passwordreset-capture-help'       => 'Ako označite ovu kućicu, e-poruka (s privremenom lozinkom) će biti prikazana i poslata korisniku.',
-'passwordreset-email'              => 'E-mail adresa:',
-'passwordreset-emailtitle'         => 'Detalji računa na {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Neto (vjerovatno Vi, s IP adrese $1) je zatražio podsjetnik Vaših detalja računa
-za {{SITENAME}} ($4). Sljedeći {{PLURAL:$3|račun korisnika je|računi korisnika su}}
-povezani s ovom e-mail adresom:
-
-$2
-
-{{PLURAL:$3|Ova privremena šifra|Ove privremene šifre}} će isteći za {{PLURAL:$5|jedan dan|$5 dana}}.
-Trebate se prijaviti i odabrati novu šifru. Ako je neko drugi napravio ovaj
-zahtjev, ili ako ste se sjetili Vaše početne šifre, a ne želite je promijeniti,
-možete zanemariti ovu poruku i nastaviti koristiti staru šifru.',
-'passwordreset-emailtext-user'     => 'Korisnik $1 na {{SITENAME}} je zatražio podsjetnik o detaljima Vašeg računa za {{SITENAME}}
-($4). Sljedeći {{PLURAL:$3|korisnički račun je|korisnički računi su}} povezani s ovom e-mail adresom:
-
-$2
-
-{{PLURAL:$3|Ova privremena šifra|Ove privremene šifre}} će isteći za {{PLURAL:$5|jedan dan|$5 dana}}.
-Trebate se prijaviti i odabrati novu šifru. Ako je neko drugi napravio ovaj
-zahtjev, ili ako ste se sjetili Vaše originalne šifre, a ne želite je više promijeniti,
-možete zanemariti ovu poruku i nastaviti koristiti staru šifru.',
-'passwordreset-emailelement'       => 'Korisničko ime: $1
-Privremena šifra: $2',
-'passwordreset-emailsent'          => 'E-mail podsjetnik je poslan.',
-'passwordreset-emailsent-capture'  => 'Poslat je podsjetnik preko e-pošte (prikazan dole).',
-'passwordreset-emailerror-capture' => 'Napravljen je podsjetnik preko e-pošte (prikazan dole), ali ga ne mogu poslati korisniku zbog sljedećeg razloga: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Promijeni e-mail adresu',
 'changeemail-header'   => 'Promijeni e-mail adresu korisničkog računa',

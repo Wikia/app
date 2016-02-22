@@ -28,7 +28,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 					targeting: {loc: 'footer'}
 				},
 				INCONTENT_BOXAD_1: {
-					sizes: [[300, 250], [300, 600]],
+					sizes: [[300, 250], [160, 600], [300, 600]],
 					targeting: {loc: 'middle'}
 				},
 				PREFOOTER_LEFT_BOXAD: {
@@ -129,6 +129,11 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 		slots = config[skin];
 		if (skin === 'oasis' && context.targeting.pageType === 'home') {
 			configureHomePageSlots();
+		}
+
+		if (context.opts.overridePrefootersSizes) {
+			slots.PREFOOTER_LEFT_BOXAD.sizes = [[300, 250], [728, 90], [970, 250]];
+			delete slots.PREFOOTER_RIGHT_BOXAD;
 		}
 
 		return slots;

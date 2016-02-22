@@ -718,34 +718,6 @@ $2',
 'resetpass-wrong-oldpass'   => '临时密码或当前密码无效。您可能已经更改了您的密码，或者请求了新的临时密码。',
 'resetpass-temp-password'   => '临时密码：',
 
-# Special:PasswordReset
-'passwordreset'                    => '重置密码',
-'passwordreset-text'               => '完成此表格以接收一个电邮以提示你的帐户详情。',
-'passwordreset-legend'             => '重置密码',
-'passwordreset-disabled'           => '此wiki已经禁用密码重置。',
-'passwordreset-pretext'            => '{{PLURAL:$1||输入下面的数据块之一}}',
-'passwordreset-username'           => '用户名：',
-'passwordreset-domain'             => '域：',
-'passwordreset-capture'            => '查看生成的电子邮件吗？',
-'passwordreset-capture-help'       => '如果您选中此框，电子邮件（包括临时密码）将显示，并发送给用户。',
-'passwordreset-email'              => '电子邮件地址：',
-'passwordreset-emailtitle'         => '在 {{SITENAME}} 的帐户详细信息',
-'passwordreset-emailtext-ip'       => '有人通过IP地址 $1 （也许是你）要求获取 {{SITENAME}} ($4)上相关账户的密码提示。{{PLURAL:$3|以下账户|此账户}}与该email地址关联：
-
-$2
-
-{{PLURAL:$3|这个|这些}}临时密码会在{{PLURAL:$5|一天|$5 天}}内过期。请现在登入并设置新的密码。如果请求是其他人提出的，或者您记起你的旧密码并不再需要更改，您可以无视本条消息并继续使用旧有密码。',
-'passwordreset-emailtext-user'     => '用户 $1 要求获取 {{SITENAME}} ($4)上你的账户的密码提示。{{PLURAL:$3|以下账户|此账户}}与该email地址关联：
-
-$2
-
-{{PLURAL:$3|这个|这些}}临时密码会在{{PLURAL:$5|一天|$5 天}}内过期。请现在登入并设置新的密码。如果请求是其他人提出的，或者您记起你的旧密码并不再需要更改，您可以无视本条消息并继续使用旧有密码。',
-'passwordreset-emailelement'       => '用户名：$1
-临时密码：$2',
-'passwordreset-emailsent'          => '已发送提醒电子邮件。',
-'passwordreset-emailsent-capture'  => '提醒电子邮件已发送，并在下面显示。',
-'passwordreset-emailerror-capture' => '生成的提醒电子邮件如下所示，但发送失败：$1',
-
 # Special:ChangeEmail
 'changeemail'          => '更改电子邮件地址',
 'changeemail-header'   => '更改帐户的电子邮件地址',

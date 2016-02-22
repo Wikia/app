@@ -571,9 +571,6 @@ Jo moatte efkes wachtsje foar't jo it op'e nij besykje kinne.",
 Mûglik hawwe Jo Jo wachtwurd al feroare of in nij tydlik wachtwurd oanfrege.',
 'resetpass-temp-password'   => 'Tydlik wachtwurd:',
 
-# Special:PasswordReset
-'passwordreset-username' => 'Meidoggernamme',
-
 # Edit page toolbar
 'bold_sample'     => 'Fette tekst',
 'bold_tip'        => 'Fette tekst',

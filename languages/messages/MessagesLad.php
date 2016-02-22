@@ -477,11 +477,6 @@ Si puede ser, escoge un otro nombre.',
 'newpassword'             => 'Kóddiche muevo:',
 'resetpass-submit-cancel' => 'Anular',
 
-# Special:PasswordReset
-'passwordreset-username' => 'Nombre de usador:',
-'passwordreset-domain'   => 'Dominio:',
-'passwordreset-email'    => 'Adresso de letral:',
-
 # Special:ChangeEmail
 'changeemail-submit' => 'Trocar letral',
 'changeemail-cancel' => 'Anular',

@@ -538,38 +538,6 @@ Wayah ini Pian sudah babuat log...',
 Pian pinanya sudah bahasil maubah katasunduk Pian atawa maminta sabuah katasunduk samantara hanyar.',
 'resetpass-temp-password'   => 'Katasunduk samantara:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Bulikakan setelan katasunduk',
-'passwordreset-text'               => 'Tuntungakan purmulir ngini gasan manarima sabuah suril pangingat rarincian akun Pian.',
-'passwordreset-legend'             => 'Bulikakan setelan katasunduk',
-'passwordreset-disabled'           => 'Mambulikakan setelan katasunduk dipajahakan hagan wiki ini.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Buati asa data di bawah ngini}}',
-'passwordreset-username'           => 'Ngaran pamuruk:',
-'passwordreset-domain'             => 'Dumain:',
-'passwordreset-capture'            => 'Tiringikah kulihan suril?',
-'passwordreset-capture-help'       => 'Amun Pian cintang kutak ngini, suril (awan katasunduk samantara) akan ditampaiakan ka Pian bahwasa lagi dikirim ka pamuruk.',
-'passwordreset-email'              => 'Alamat suril:',
-'passwordreset-emailtitle'         => 'Rarincian akun pada {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Ada urang (pinanya Pian, matan alamat IP $1) maminta sabuah pangingat hagan rarincian akun Pian gasan {{SITENAME}} ($4). Pamuruk barikut {{PLURAL:$3|akun|aakun}}
-tarait awan suril:
-
-$2
-
-{{PLURAL:$3|katasunduk samantara ngini|kakatasunduk samantara ngini}} akan kadaluarsa dalam {{PLURAL:$5|asa hari|$5 hahari}}.
-Pian parlu babuat log wan mamilih katasunduk hanyar wayah ini jua. Amun urang lain nang maminta ngini, atawa amun Pian sudah paingatan awan katasunduk Pian, wan Pian kada handak maubahnya, Pian kawa kada mahuwal pasan ini wan manyambung mamuruk katasunduk lawas Pian.',
-'passwordreset-emailtext-user'     => 'Ada urang (pinanya Pian, matan alamat IP $1) maminta sabuah pangingat hagan rarincian akun Pian gasan {{SITENAME}} ($4). Pamuruk barikut {{PLURAL:$3|akun|aakun}}
-tarait awan suril:
-
-$2
-
-{{PLURAL:$3|katasunduk samantara ngini|kakatasunduk samantara ngini}} akan kadaluarsa dalam {{PLURAL:$5|asa hari|$5 hahari}}.
-Pian parlu babuat log wan mamilih katasunduk hanyar wayah ini jua. Amun urang lain nang maminta ngini, atawa amun Pian sudah paingatan awan katasunduk Pian, wan Pian kada handak maubahnya, Pian kawa kada mahuwal pasan ini wan manyambung mamuruk katasunduk lawas Pian.',
-'passwordreset-emailelement'       => 'Ngaran pamuruk: $1
-Katasunduk samantara: $2',
-'passwordreset-emailsent'          => 'Sabuah suril pangingat sudah takirim.',
-'passwordreset-emailsent-capture'  => 'Sabuah suril pangingat sudah dikirim, nangkaya ditampaiakan di bawah.',
-'passwordreset-emailerror-capture' => 'Sabuah sril pangingat digenerasiakan, nangkaya ditampaiakan di bawah, tagal pangiriman ngini ka pamuruk gagal: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Ganti alamat suril',
 'changeemail-header'   => 'Ganti akun alamat suril',

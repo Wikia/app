@@ -553,43 +553,6 @@ Coneutando dafechu...',
 Seique yá camudasti correutamente la conseña o que pidieras una nueva conseña temporal.',
 'resetpass-temp-password'   => 'Conseña temporal:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Reaniciar conseña',
-'passwordreset-text'               => 'Completa esti formulariu pa recibir un corréu que te recuerde los detalles de la to cuenta.',
-'passwordreset-legend'             => 'Reaniciar conseña',
-'passwordreset-disabled'           => 'Los reanicios de conseña tan desactivaos nesta wiki.',
-'passwordreset-pretext'            => "{{PLURAL:$1||Escribi una de les partes de los datos d'abaxo}}",
-'passwordreset-username'           => "Nome d'usuariu:",
-'passwordreset-domain'             => 'Dominiu:',
-'passwordreset-capture'            => '¿Ver el mensaxe de corréu resultante?',
-'passwordreset-capture-help'       => "Si marques esta caxella, podrás ver el corréu (cola conseña temporal) de la que s'unvia al usuariu.",
-'passwordreset-email'              => 'Direición de corréu electrónicu:',
-'passwordreset-emailtitle'         => 'Detalles de la cuenta en {{SITENAME}}',
-'passwordreset-emailtext-ip'       => "Dalguién (seique tu, dende la direición IP $1) pidió un recordatoriu cola
-información de la to cuenta de {{SITENAME}} ($4).
-{{PLURAL:$3|La siguiente cuenta d'usuariu ta asociada|Les siguientes cuentes d'usuariu tan asociaes}} con esta direición de corréu:
-
-$2
-
-{{PLURAL:$3|Esta conseña temporal caducará|Estes conseñes temporales caducarán}} {{PLURAL:$5|nún día|en $5 díes}}.
-Tendríes d'entrar al sistema y escoyer una conseña nueva agora. Si esta
-solicitú ye d'otru o recordasti la conseña orixinal y nun quies camudala,
-escaez esti mensaxe y sigui emplegando la conseña antigua.",
-'passwordreset-emailtext-user'     => "L'usuariu $1 de {{SITENAME}} pidió un recordatoriu cola información de la to cuenta de {{SITENAME}} ($4).
-{{PLURAL:$3|La siguiente cuenta d'usuariu ta asociada|Les siguientes cuentes d'usuariu tan asociaes}} con esta direición de corréu:
-
-$2
-
-{{PLURAL:$3|Esta conseña temporal caducará|Estes conseñes temporales caducarán}} {{PLURAL:$5|nun día|en $5 díes}}.
-Tendríes d'entrar al sistema y escoyer una conseña nueva agora. Si esta
-solicitú ye d'otru o recordasti la conseña orixinal y nun quies camudala,
-escaez esti mensaxe y sigui emplegando la conseña antigua.",
-'passwordreset-emailelement'       => "Nome d'usuariu: $1
-Conseña temporal: $2",
-'passwordreset-emailsent'          => "S'unvió un corréu de recordatoriu.",
-'passwordreset-emailsent-capture'  => "S'unvió un corréu de recordatoriu, que s'amuesa abaxo.",
-'passwordreset-emailerror-capture' => "Se xeneró un corréu de recordatoriu, que s'amuesa abaxo; pero falló unvialu al usuariu: $1",
-
 # Special:ChangeEmail
 'changeemail'          => 'Camudar la direición de corréu electrónicu',
 'changeemail-header'   => 'Camudar la direición de corréu electrónicu de la cuenta',

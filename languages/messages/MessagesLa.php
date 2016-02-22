@@ -541,12 +541,6 @@ Hunc nuntium ignorare potes, si nolis hac ratione uti.',
 'resetpass-submit-loggedin' => 'Tesseram mutare',
 'resetpass-temp-password'   => 'Tessera temporaria:',
 
-# Special:PasswordReset
-'passwordreset-username'     => 'Nomen usoris:',
-'passwordreset-email'        => 'Inscriptio electronica:',
-'passwordreset-emailelement' => 'Nomen usoris: $1
-Momentarius Tessera: $2',
-
 # Special:ChangeEmail
 'changeemail-none'   => '(nulla)',
 'changeemail-submit' => 'Inscriptionem electronicam mutare',

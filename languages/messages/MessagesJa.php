@@ -862,46 +862,6 @@ $2',
 すでにパスワード変更を行っているか、新しい仮パスワードの発行を依頼している可能性があります。',
 'resetpass-temp-password'   => '仮パスワード：',
 
-# Special:PasswordReset
-'passwordreset'                    => 'パスワードの再設定',
-'passwordreset-text'               => 'このフォームに回答すると、ご自身のアカウントの詳細が電子メールで通知されます。',
-'passwordreset-legend'             => 'パスワードの再設定',
-'passwordreset-disabled'           => 'パスワードの再設定は、このウィキでは無効になっています。',
-'passwordreset-pretext'            => '{{PLURAL:$1||以下のデータのうちのひとつを入力してください。}}',
-'passwordreset-username'           => '利用者名：',
-'passwordreset-domain'             => 'ドメイン:',
-'passwordreset-capture'            => '送られるメールの内容を見ますか？',
-'passwordreset-capture-help'       => 'このボックスをチェックすると、利用者に送られるメールの内容（一時的なパスワードを含む）をあなたも見ることができます。',
-'passwordreset-email'              => '電子メールアドレス:',
-'passwordreset-emailtitle'         => '{{SITENAME}}上のアカウントの詳細',
-'passwordreset-emailtext-ip'       => 'どなたかが（おそらくあなた、IP アドレス $1 ）あなたの {{SITENAME}} ($4)
-におけるアカウントの詳細情報を送信するよう申請されました。
-下記の利用者{{PLURAL:$3|アカウント}}がこのメールアドレスと紐付けられています。
-
-$2
-
-{{PLURAL:$3|この一時的なパスワード}}は{{PLURAL:$5|$5日}}で有効期限が切れます。
-あなたはログインし、新しいパスワードをすぐに選ぶ必要があります。
-この申請が他のだれかによるものであるか、あるいはあなたが自身の元々のパスワードを
-覚えており、変えたくない場合には、このメッセージを無視して
-以前のパスワードを使い続けることができます。',
-'passwordreset-emailtext-user'     => '{{SITENAME}} の利用者 $1 があなたの {{SITENAME}} ($4)
-におけるアカウントの詳細情報を送信するよう申請されました。
-下記の利用者{{PLURAL:$3|アカウント}}がこのメールアドレスと紐付けられています。
-
-$2
-
-{{PLURAL:$3|この一時的なパスワード}}は{{PLURAL:$5|$5日}}で有効期限が切れます。
-あなたはログインし、新しいパスワードをすぐに選ぶ必要があります。
-この申請が他のだれかによるものであるか、あるいはあなたが自身の元々のパスワードを
-覚えており、変えたくない場合には、このメッセージを無視して
-以前のパスワードを使い続けることができます。',
-'passwordreset-emailelement'       => '利用者名： $1
-仮パスワード： $2',
-'passwordreset-emailsent'          => '確認のメールが送信されました。',
-'passwordreset-emailsent-capture'  => '確認のメールが送信されました。以下に表示します。',
-'passwordreset-emailerror-capture' => '生成された確認メールを以下に表示していますが、利用者への送信には失敗しました: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'メールアドレスの変更',
 'changeemail-header'   => 'アカウントのメールアドレスを変更',

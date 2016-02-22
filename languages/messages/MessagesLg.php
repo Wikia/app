@@ -497,18 +497,6 @@ Kati oyingira...',
 Oyinz'okuba nga wamaze okutegeka ekya ddala ekipya oba nga wakasabayo eky'ekiseerabuseera.",
 'resetpass-temp-password'   => "Ekyama kyo eky'ekiseerabuseera:",
 
-# Special:PasswordReset
-'passwordreset'              => 'Damu okutegeka ekyama',
-'passwordreset-text'         => "Oba oyagala okufuna 'email' ekujjukiza ebikwata ku akawunti yo, jjuza foomu eno.",
-'passwordreset-legend'       => 'Damu okutegeka ekyama',
-'passwordreset-disabled'     => "Eby'okuddamu okutegeka ebyama biymirizidwa ku wiki eno.",
-'passwordreset-pretext'      => '{{PLURAL:$1||Wandika wo kimu ku ebiri mu lukalala}}',
-'passwordreset-username'     => "Ery'obwa memba:",
-'passwordreset-email'        => "Endagiriro eya 'email':",
-'passwordreset-emailtitle'   => "Ebya akawunti ey'oku {{SITENAME}}",
-'passwordreset-emailelement' => "Ery'obwa memba: $1 <br />
-Ekyama kyo eky'ekiseerabuseera: $2",
-
 # Edit page toolbar
 'bold_sample'     => "Ennukuta z'owandika wano zonna ziba nziggumivu",
 'bold_tip'        => "Bw'onyiga kano, ofuna w'oyinza okuwandikira ennukuta ezo ne zivaamu nga nziggumivu",

@@ -537,10 +537,6 @@ Për me krye kyçjen, specifikoni fjalëkalimin e ri këtu:',
 Ndoshta tashmâ e keni ndryshue fjalëkalimin me sukses, apo keni kërkue nji fjalëkalim të përkohshëm.',
 'resetpass-temp-password'   => 'Fjalëkalimi i përkohshëm:',
 
-# Special:PasswordReset
-'passwordreset'          => 'reset Fjalëkalimi',
-'passwordreset-username' => 'Emri i përdoruesit:',
-
 # Edit page toolbar
 'bold_sample'     => 'Tekst i nximë',
 'bold_tip'        => 'Tekst i nximë',
