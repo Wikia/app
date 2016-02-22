@@ -37,6 +37,12 @@ class ExactTargetRetrieveUserTask extends ExactTargetTask {
 		return $oEmailResult->Results->Properties->Property->Value;
 	}
 
+	/**
+	 * This is unused. Left for debuging purpose only.
+	 * @param array $aUsersIds
+	 * @return array
+	 * @throws \Exception
+	 */
 	public function retrieveUsersDataByIds( array $aUsersIds ) {
 		$aProperties = [
 			'user_id',
