@@ -64,10 +64,7 @@ class ExactTargetClient implements Client {
 
 		$this->sendRequest( 'Update', $request );
 
-		$userDataVerificationTask = new ExactTargetUserDataVerificationTask();
-		$userDataVerificationResult = $userDataVerificationTask->verifyUserPropertiesData( $userId );
-
-		return $userDataVerificationResult;
+		return 'OK';
 	}
 
 	public function retrieveEmailByUserId( $userId ) {
