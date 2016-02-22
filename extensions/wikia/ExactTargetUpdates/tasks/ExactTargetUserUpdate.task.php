@@ -1,7 +1,6 @@
 <?php
 namespace Wikia\ExactTarget;
 
-use Wikia\Logger\WikiaLogger;
 use Wikia\Tasks\Tasks\BaseTask;
 use Wikia\Util\Assert;
 
@@ -18,12 +17,10 @@ class ExactTargetUserUpdate extends BaseTask {
 	/**
 	 * Update user or create if doesn't exist
 	 * @param array $userData
-	 * @param array $userProperties
 	 * @return bool
-	 * @throws \Exception
 	 * @throws \Wikia\Util\AssertionException
 	 */
-	public function update( array $userData, array $userProperties ) {
+	public function updateUser( array $userData ) {
 		Assert::true( !empty( $userData[ 'user_id' ] ), 'User ID missing' );
 		Assert::true( !empty( $userData[ 'user_email' ] ), 'User email missing' );
 
@@ -36,11 +33,16 @@ class ExactTargetUserUpdate extends BaseTask {
 		/* Update or create User in external service */
 		$this->getClient()->updateUser( $userData );
 
-		/* Update or create User Properties DataExtension with provided properties */
-		if ( !empty( $userProperties ) ) {
-			$this->getClient()->updateUserProperties( $userData[ 'user_id' ], $userProperties );
-		}
+		return self::STATUS_OK;
+	}
 
+	/**
+	 * Update or create User Properties DataExtension with provided properties
+	 * @param int $userId
+	 * @param array $userProperties
+	 */
+	public function updateUserProperties( $userId, array $userProperties ) {
+		$this->getClient()->updateUserProperties( $userId, $userProperties );
 		return self::STATUS_OK;
 	}
 

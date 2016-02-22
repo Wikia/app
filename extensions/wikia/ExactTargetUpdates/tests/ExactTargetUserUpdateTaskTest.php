@@ -12,33 +12,31 @@ class ExactTargetUserUpdateTaskTest extends WikiaBaseTest {
 	 */
 	public function testErrorOnUserUpdate( array $userParams, $errorClass, $errorMessage ) {
 		$this->setExpectedException( $errorClass, $errorMessage );
-		( new \Wikia\ExactTarget\ExactTargetUserUpdate() )->update( $userParams, [ ] );
+		( new \Wikia\ExactTarget\ExactTargetUserUpdate() )->updateUser( $userParams, [ ] );
 	}
 
 	public function testShouldCallAppropriateMethods() {
 		$mockClient = $this->getMock( '\Wikia\ExactTarget\ExactTargetClient',
-			[ 'deleteSubscriber', 'createSubscriber', 'updateUser', 'updateUserProperties' ] );
+			[ 'deleteSubscriber', 'createSubscriber', 'updateUser' ] );
 		$mockClient->expects( $this->once() )
 			->method( 'deleteSubscriber' );
 		$mockClient->expects( $this->once() )
 			->method( 'createSubscriber' );
 		$mockClient->expects( $this->once() )
 			->method( 'updateUser' );
-		$mockClient->expects( $this->any() )
-			->method( 'updateUserProperties' );
 
-		( new \Wikia\ExactTarget\ExactTargetUserUpdate( $mockClient ) )->update( [ 'user_id' => 1, 'user_email' => 'test@test.com' ], [ ] );
+		( new \Wikia\ExactTarget\ExactTargetUserUpdate( $mockClient ) )->updateUser( [ 'user_id' => 1, 'user_email' => 'test@test.com' ], [ ] );
 	}
 
 	public function testShouldReturnOkWhenNoErrors() {
 		$mockClient = $this->getMock( '\Wikia\ExactTarget\ExactTargetClient',
-			[ 'deleteSubscriber', 'createSubscriber', 'updateUser', 'updateUserProperties' ] );
+			[ 'deleteSubscriber', 'createSubscriber', 'updateUser' ] );
 
 		$userParams = [ 'user_id' => 1, 'user_email' => 'test@test.com' ];
 
 		$this->assertEquals(
 			\Wikia\ExactTarget\ExactTargetUserUpdate::STATUS_OK,
-			( new \Wikia\ExactTarget\ExactTargetUserUpdate( $mockClient ) )->update( $userParams, [ ] )
+			( new \Wikia\ExactTarget\ExactTargetUserUpdate( $mockClient ) )->updateUser( $userParams, [ ] )
 		);
 	}
 

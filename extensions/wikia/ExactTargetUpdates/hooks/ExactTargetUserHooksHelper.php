@@ -36,14 +36,6 @@ class ExactTargetUserHooksHelper {
 	}
 
 	/**
-	 * Returns new instance of ExactTargetCreateUserTask
-	 * @return ExactTargetCreateUserTask
-	 */
-	public function getCreateUserTask() {
-		return new ExactTargetCreateUserTask();
-	}
-
-	/**
 	 * Returns new instance of ExactTargetUpdateUserTask
 	 * @return ExactTargetUpdateUserTask
 	 */

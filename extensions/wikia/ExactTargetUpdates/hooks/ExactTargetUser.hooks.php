@@ -53,7 +53,7 @@ class ExactTargetUserHooks {
 
 		/* Get and run the task */
 		$task = new ExactTargetUserUpdate();
-		$task->call( 'update', $userData );
+		$task->call( 'updateUser', $userData );
 		$task->queue();
 		return true;
 	}
@@ -120,8 +120,8 @@ class ExactTargetUserHooks {
 		$aUserProperties = $oUserHelper->prepareUserPropertiesParams( $user );
 
 		/* Get and run the task */
-		$task = $oUserHelper->getCreateUserTask();
-		$task->call( 'createUserProperties', $user->getId(), $aUserProperties );
+		$task = new ExactTargetUserUpdate();
+		$task->call( 'updateUserProperties', $user->getId(), $aUserProperties );
 		$task->queue();
 		return true;
 	}
@@ -138,7 +138,8 @@ class ExactTargetUserHooks {
 
 		/* Get and run the task */
 		$task = new ExactTargetUserUpdate();
-		$task->call( 'update', $aUserData, $aUserProperties );
+		$task->call( 'updateUser', $aUserData );
+		$task->call( 'updateUserProperties', $oUser->getId(), $aUserProperties );
 		$task->queue();
 	}
 
