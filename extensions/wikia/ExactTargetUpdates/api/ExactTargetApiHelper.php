@@ -185,28 +185,6 @@ class ExactTargetApiHelper {
 	}
 
 	/**
-	 * Creates an array of Subscriber objects based on passed parameters
-	 * @param  array  $aObjectsParams An array of parameters of Subscriber objects'
-	 * @return array                  An array of Subscriber objects
-	 */
-	public function prepareSubscriberObjects( $aObjectsParams ) {
-		$aSubscribers = [];
-
-		foreach ( $aObjectsParams as $aSub ) {
-			$oSubscriber = new \ExactTarget_Subscriber();
-			if ( isset( $aSub['SubscriberKey'] ) ) {
-				$oSubscriber->SubscriberKey = $aSub['SubscriberKey'];
-			}
-			if ( isset( $aSub['EmailAddress'] ) ) {
-				$oSubscriber->EmailAddress = $aSub['EmailAddress'];
-			}
-			$aSubscribers[] = $oSubscriber;
-		}
-
-		return $aSubscribers;
-	}
-
-	/**
 	 * Uses proper compare operator from ExactTarget_SimpleOperators class
 	 * @param string $sSimpleOperator
 	 * @return null|string

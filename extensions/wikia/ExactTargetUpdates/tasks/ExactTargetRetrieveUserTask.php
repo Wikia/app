@@ -4,40 +4,6 @@ namespace Wikia\ExactTarget;
 class ExactTargetRetrieveUserTask extends ExactTargetTask {
 
 	/**
-	 * Retrieves user email from ExactTarget based on provided user ID
-	 * @param int $iUserId
-	 * @return null|string
-	 */
-	public function getUserEmail( $iUserId ) {
-		/* Prepare retrieve params */
-		$aProperties = [ 'user_email' ];
-		$sFilterProperty = 'user_id';
-		$aFilterValues = [ $iUserId ];
-		$oHelper = $this->getUserHelper();
-		$aApiParams = $oHelper->prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues );
-		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
-
-		$oApiDataExtension = $this->getApiDataExtension();
-		/* Send retrieve request */
-		$oEmailResult = $oApiDataExtension->retrieveRequest( $aApiParams );
-		$this->info( __METHOD__ . ' OverallStatus: ' . $oEmailResult->OverallStatus );
-		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oEmailResult ) );
-
-		if ( $oEmailResult->OverallStatus === 'Error' ) {
-			throw new \Exception(
-				'Error in ' . __METHOD__ . ': ' . $oEmailResult->Results->StatusMessage
-			);
-		}
-
-		if ( empty( $oEmailResult->Results->Properties->Property->Value ) ) {
-			$this->info( __METHOD__ . ' User DataExtension object not found for user_id = ' . $iUserId );
-			return null;
-		}
-
-		return $oEmailResult->Results->Properties->Property->Value;
-	}
-
-	/**
 	 * This is unused. Left for debuging purpose only.
 	 * @param array $aUsersIds
 	 * @return array

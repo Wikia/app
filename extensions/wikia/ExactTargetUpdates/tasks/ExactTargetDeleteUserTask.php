@@ -47,28 +47,4 @@ class ExactTargetDeleteUserTask extends ExactTargetTask {
 		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oDeleteUserPropertiesResult ) );
 	}
 
-	/**
-	 * Checks whether there are any users that has provided email
-	 * @param string $sEmail Email address to check in ExactTarget
-	 * @param int $iSkipUserId Skip this user ID when checking if email is used by any account
-	 * @return bool
-	 */
-	public function isEmailInUse( $sEmail, $iSkipUserId = null ) {
-		$oRetrieveUserTask = $this->getRetrieveUserTask();
-		/* @var stdClass $oUsersIds */
-		$oUsersIds = $oRetrieveUserTask->retrieveUserIdsByEmail( $sEmail );
-		$iUsersCount = count( $oUsersIds->Results );
-
-		// Email is in use when there are more than one user with email
-		$ret = ( $iUsersCount > 1 );
-
-		// One or less users
-		if ( !$ret ) {
-			// Email is in use when there's one user not equal to $iSkipUserId from parameters list
-			$ret = $iUsersCount == 1 && $oUsersIds->Results->Properties->Property->Value != $iSkipUserId;
-		}
-
-		return $ret;
-	}
-
 }

@@ -121,23 +121,6 @@ class ExactTargetUserTaskHelper {
 	}
 
 	/**
-	 * Prepares Subscriber's object data for delete
-	 * @param  string $sUserEmail  User's email
-	 * @return array               Array of Subscriber data arrays (nested arrays)
-	 */
-	public function prepareSubscriberDeleteData( $sUserEmail ) {
-		$aApiParams = [
-			'Subscriber' => [
-				[
-					'SubscriberKey' => $sUserEmail,
-				],
-			],
-		];
-
-		return $aApiParams;
-	}
-
-	/**
 	 * Prepares array of params for ExactTarget API for retrieving UserID_WikiID DataExtension objects
 	 * @param array $aUsersIds Array consists of user ids in key. Value doesn't matter.
 	 * e.g. $aUsersIds = [ 321, 12345 ]
@@ -276,19 +259,6 @@ class ExactTargetUserTaskHelper {
 			];
 		}
 		return $aApiParams;
-	}
-
-	/**
-	 * Returns user_id element from $aUserData array and removes it from array
-	 * This for API params preparation. Allows to use user_id separately as key
-	 * and user data as update parameters without user_id
-	 * @param array $aUserData key value data from user table
-	 * @return int
-	 */
-	public function extractUserIdFromData( &$aUserData ) {
-		$iUserId = $aUserData['user_id'];
-		unset( $aUserData['user_id'] );
-		return $iUserId;
 	}
 
 	/**

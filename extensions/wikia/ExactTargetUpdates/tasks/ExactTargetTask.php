@@ -14,14 +14,6 @@ class ExactTargetTask extends BaseTask {
 	}
 
 	/**
-	 * Returns an instance of ExactTargetApiSubscriber class
-	 * @return ExactTargetApiSubscriber
-	 */
-	protected function getApiSubscriber() {
-		return new ExactTargetApiSubscriber();
-	}
-
-	/**
 	/**
 	 * Returns an instance of ExactTargetDeleteUserTask class
 	 * @return ExactTargetDeleteUserTask

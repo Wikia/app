@@ -22,7 +22,6 @@ class ExactTargetApiHelperTest extends WikiaBaseTest {
 		$this->operators['IN'] = ExactTarget_SimpleOperators::IN;
 	}
 
-
 	public function testWrapRetrieveRequest() {
 		$type = 'sometype';
 		$properties = [ 'a' => 1 ];
@@ -33,30 +32,6 @@ class ExactTargetApiHelperTest extends WikiaBaseTest {
 		$this->assertNotNull( $request );
 		$this->assertEquals( $properties, $request->Properties );
 		$this->assertEquals( $type, $request->ObjectType );
-	}
-
-	public function testPrepareSubscriberObjects() {
-		$emptySubscriber = [];
-		$partialSubscriber1 = [ 'EmailAddress' => self::TEST_EMAIL ];
-		$partialSubscriber2 = [ 'SubscriberKey' => self::TEST_KEY ];
-		$setSubscriber = [ 'SubscriberKey' => self::TEST_KEY, 'EmailAddress' => self::TEST_EMAIL ];
-		$input = [ $emptySubscriber, $partialSubscriber1, $partialSubscriber2, $setSubscriber ];
-
-		$subscribers = $this->helper->prepareSubscriberObjects( $input );
-		$this->assertNotEmpty( $input );
-		$this->assertEquals( count($input), count($subscribers) );
-
-		$this->assertEmpty( $subscribers[0]->EmailAddress );
-		$this->assertEmpty( $subscribers[0]->SubscriberKey );
-
-		$this->assertEquals( self::TEST_EMAIL, $subscribers[1]->EmailAddress );
-		$this->assertEmpty( $subscribers[1]->SubscriberKey );
-
-		$this->assertEquals( self::TEST_KEY, $subscribers[2]->SubscriberKey );
-		$this->assertEmpty( $subscribers[2]->EmailAddress );
-
-		$this->assertEquals( self::TEST_EMAIL, $subscribers[3]->EmailAddress );
-		$this->assertEquals( self::TEST_KEY, $subscribers[3]->SubscriberKey );
 	}
 
 	public function testWrapCreateRequest() {
