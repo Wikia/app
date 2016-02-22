@@ -8,7 +8,7 @@ use Flags\Models\FlaggedPages;
 
 class RevertNotice extends Maintenance {
 
-	const EDIT_SUMMARY = 'Moving back templates from [[Special:Flags]] feature.';
+	const EDIT_SUMMARY = 'Restoring templates used in the [[Special:Flags]] feature.';
 
 	public function __construct() {
 		parent::__construct();

@@ -17,7 +17,8 @@ class RevertNotices extends Maintenance {
 		$wikiIds = $flagModel->getWikisWithFlags();
 
 		foreach ( $wikiIds as $wikiId ) {
-			$cmd = "SERVER_ID=$wikiId /usr/bin/php {$IP}/extensions/wikia/Flags/maintenance/RevertNotice.php";
+			$id = wfEscapeShellArg( $wikiId );
+			$cmd = "SERVER_ID={$id} /usr/bin/php {$IP}/extensions/wikia/Flags/maintenance/RevertNotice.php";
 			$this->output("Run cmd: $cmd\n");
 			$output = wfShellExec( $cmd );
 
