@@ -110,7 +110,7 @@ class SpecialUpload extends SpecialPage {
 
 		// If it was posted check for the token (no remote POST'ing with user credentials)
 		$token = $request->getVal( 'wpEditToken' );
-		$this->mTokenOk = !is_null( $token ) && $this->getUser()->matchEditToken( $token ); # Wikia change
+		$this->mTokenOk = $this->getUser()->matchEditToken( $token );
 
 		$this->uploadFormTextTop = '';
 		$this->uploadFormTextAfterSummary = '';
