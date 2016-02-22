@@ -208,25 +208,28 @@ class PortableInfoboxBuilderService extends WikiaService {
 				if ( !in_array( $currentChildNode->getName(), [ 'header', 'title' ] ) ) {
 					// regular node inside of a group
 					$currentGroupDom->appendChild( $currentGroupDom->ownerDocument->importNode( $childNodeDom, true ) );
+				} elseif ( $currentChildNode->getName() === 'header' ) {
+					// header node starting a group
+
+					// we close the current group and append it to the infobox dom...
+					$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $currentGroupDom ) );
+
+					// and initialize a new group
+					$currentGroupDom = $this->createGroupDom();
+					$currentGroupDom->appendChild( $currentGroupDom->ownerDocument->importNode( $childNodeDom, true ) );
 				} else {
-					if ( $currentChildNode->getName() === 'header' ) {
-						// header node starting a group - we close the current one and open up a new
-						$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $currentGroupDom ) );
-						$currentGroupDom = $this->createGroupDom();
-						$currentGroupDom->appendChild( $currentGroupDom->ownerDocument->importNode( $childNodeDom, true ) );
-					} else {
-						// title node, terminating the group and returning to regular flow
-						$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $currentGroupDom ) );
-						$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $childNodeDom ) );
-						$inGroup = false;
-					}
+					// title node, terminating the group and returning to regular flow
+					$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $currentGroupDom ) );
+					$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $childNodeDom ) );
+					$inGroup = false;
 				}
+
 			}
 		}
 
 		// make sure to add the last unterminated group
 		if ( !empty( $currentGroupDom ) && $inGroup ) {
-			$infoboxDom->appendChild( $infoboxDom->ownerDocument->importNode( $currentGroupDom, true ) );
+			$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $currentGroupDom ) );
 		}
 
 		$out = $infoboxDom->ownerDocument->saveXML( $infoboxDom->ownerDocument->documentElement );
@@ -236,12 +239,13 @@ class PortableInfoboxBuilderService extends WikiaService {
 	}
 
 	/**
-	 * @param $dom
+	 * Deep imports a domNode to a document
+	 * @param $domDocument
 	 * @param $childNodeDom
 	 * @return mixed
 	 */
-	protected function importNodeToDom( $dom, $childNodeDom ) {
-		return $dom->ownerDocument->importNode( $childNodeDom, true );
+	protected function importNodeToDom( $domDocument, $childNodeDom ) {
+		return $domDocument->ownerDocument->importNode( $childNodeDom, true );
 	}
 
 	/**
