@@ -1,9 +1,14 @@
 <?php
 namespace Wikia\ExactTarget;
 
+use Wikia\Logger\Loggable;
 use Wikia\Logger\WikiaLogger;
 
 class ExactTargetClient implements Client {
+	use Loggable;
+
+	const EXACT_TARGET_LABEL = 'ExactTarget Soap client query';
+	const RETRIES_LIMIT = 1;
 
 	public function updateUser( array $userData ) {
 		$request = ExactTargetRequestBuilder::createUpdate()
@@ -101,7 +106,7 @@ class ExactTargetClient implements Client {
 				\Wikia\ExactTarget\ResourceEnum::USER_WIKI
 			);
 		} catch ( EmptyResultException $e ) {
-			return [];
+			return [ ];
 		}
 		return ( new UserEditsAdapter( $result ) )->getEdits();
 	}
@@ -170,15 +175,30 @@ class ExactTargetClient implements Client {
 		throw $exception;
 	}
 
-	protected function sendRequest( $sType, $oRequestObject ) {
+	protected function sendRequest( $type, $request ) {
+		// send first call
+		return $this->doCall( $type, $request, 0 );
+	}
+
+	protected function doCall( $method, $request, $retry ) {
 		try {
-			$oResults = $this->getExactTargetClient()->$sType( $oRequestObject );
-			WikiaLogger::instance()->info( $this->getExactTargetClient()->__getLastResponse() );
-			return $oResults;
-		} catch ( \SoapFault $e ) {
-			WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e ] );
-			return false;
+			$results = $this->getExactTargetClient()->$method( $request );
+		} catch ( \Exception $e ) {
+			$this->error( self::EXACT_TARGET_LABEL, [ 'exception' => $e, 'retries' => $retry ] );
+			// retry on failure till limit reached
+			return $retry < self::RETRIES_LIMIT ? $this->doCall( $method, $request, $retry + 1 ) : false;
 		}
+		$this->info( self::EXACT_TARGET_LABEL, [ 'retries' => $retry ] );
+		return $results;
+	}
+
+	protected function getLoggerContext() {
+		$client = $this->getExactTargetClient();
+		return [
+			'request' => $client->__getLastRequestHeaders(),
+			'data' => $client->__getLastRequest(),
+			'status' => strtok( $client->__getLastResponseHeaders(), "\n" )
+		];
 	}
 
 	protected function getExactTargetClient() {
