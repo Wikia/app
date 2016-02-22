@@ -57,6 +57,8 @@
 
 	.pi-data-label {
 		@include flex-basis($infobox-width / 3);
+		width: $infobox-width / 3;
+		word-wrap: break-word;
 	}
 
 	.pi-data-value {
