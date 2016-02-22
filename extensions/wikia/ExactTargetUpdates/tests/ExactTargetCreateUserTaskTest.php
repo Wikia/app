@@ -56,43 +56,4 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 		$mockCreateUserTask->createUserProperties( $iUserId, $aUserProperties );
 	}
 
-	function testCreateSubscriberShouldSendData() {
-		/* Params to compare */
-		$sUserEmail = 'email@email.com';
-
-		$aApiParams = [
-			'Subscriber' => [
-				[
-					'SubscriberKey' => $sUserEmail,
-					'EmailAddress' => $sUserEmail
-				]
-			],
-		];
-
-		/* @var ExactTargetApiDataExtension $mockCreateUserTask mock of ExactTargetApiDataExtension */
-		$mockApiDataExtension = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetApiSubscriber' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'createRequest' ] )
-			->getMock();
-		$mockApiDataExtension
-			->expects( $this->once() )
-			->method( 'createRequest' )
-			->with( $aApiParams );
-
-
-		/* Mock tested class */
-		/* @var ExactTargetCreateUserTask $mockCreateUserTask mock of ExactTargetCreateUserTask */
-		$mockCreateUserTask = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetCreateUserTask' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getApiSubscriber' ] )
-			->getMock();
-		$mockCreateUserTask
-			->expects( $this->once() )
-			->method( 'getApiSubscriber' )
-			->will( $this->returnValue( $mockApiDataExtension ) );
-
-		/* Run tested method */
-		$mockCreateUserTask->createSubscriber( $sUserEmail );
-	}
-
 }

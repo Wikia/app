@@ -35,37 +35,6 @@ class ExactTargetUserTaskHelper {
 	}
 
 	/**
-	 * Prepares array of params for ExactTarget API for creating DataExtension objects for user table
-	 * Assumes $aUserData has user_id key that will be treated as filter to update data
-	 * @param  array $aUserData  User key value array
-	 * @return array             Array of DataExtension data arrays (nested arrays)
-	 */
-	public function prepareUsersUpdateParams( array $aUsersData ) {
-		$aApiParams = [
-			'DataExtension' => []
-		];
-
-		foreach ( $aUsersData as $aUserData ) {
-
-			/* Get Customer Keys specific for production or development */
-			$aCustomerKeys = $this->getCustomerKeys();
-			$sCustomerKey = $aCustomerKeys['user'];
-
-			$userId = $this->extractUserIdFromData( $aUserData );
-
-			/* Prepare API params for one user */
-			$aApiParams['DataExtension'][] = [
-				'CustomerKey' => $sCustomerKey,
-				'Properties' => $aUserData,
-				'Keys' => [ 'user_id' => $userId ]
-			];
-
-		};
-
-		return $aApiParams;
-	}
-
-	/**
 	 * Prepares data for a user record removal
 	 * @param  int $iUserId  User's ID
 	 * @return array         Array of DataExtension data arrays (nested arrays)
@@ -320,15 +289,6 @@ class ExactTargetUserTaskHelper {
 		$iUserId = $aUserData['user_id'];
 		unset( $aUserData['user_id'] );
 		return $iUserId;
-	}
-
-	/**
-	 * Returns User object for provided user ID
-	 * @param int $iUserId
-	 * @return \User
-	 */
-	public function getUserFromId( $iUserId ) {
-		return \User::newFromId( $iUserId );
 	}
 
 	/**

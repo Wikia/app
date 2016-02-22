@@ -8,49 +8,9 @@ class ExactTargetDeleteUserTask extends ExactTargetTask {
 	 * @param int $iUserId Id of user to be deleted
 	 */
 	public function deleteUserData( $iUserId ) {
-		$this->deleteSubscriber( $iUserId );
+		( new ExactTargetClient() )->deleteSubscriber( $iUserId );
 		$this->deleteUser( $iUserId );
 		$this->deleteUserProperties( $iUserId );
-	}
-
-	/**
-	 * Deletes Subscriber object in ExactTarget by API request if email is not used by other user
-	 * @param int $iUserId
-	 */
-	public function deleteSubscriber( $iUserId ) {
-		$oRetrieveUserTask = $this->getRetrieveUserTask();
-		$sUserEmail = $oRetrieveUserTask->getUserEmail( $iUserId );
-
-		/* Skip deletion if no email found */
-		if ( empty( $sUserEmail ) ) {
-			$this->info(__METHOD__ . ": No email found for the user or there's no user record. Deletion skipped.");
-			return;
-		}
-
-		/* Skip deletion if email is used by other account */
-		if ( $this->isEmailInUse( $sUserEmail, $iUserId ) ) {
-			$this->info(__METHOD__ . ': Email in use by different account (record). Deletion skipped.');
-			return;
-		}
-
-		$oHelper = $this->getUserHelper();
-		$aApiParams = $oHelper->prepareSubscriberDeleteData( $sUserEmail );
-		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
-
-		/* Delete subscriber */
-		$oDeleteSubscriberResult = $this->doDeleteSubscriber( $aApiParams );
-
-		$this->info( __METHOD__ . ' OverallStatus: ' . $oDeleteSubscriberResult->OverallStatus );
-		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oDeleteSubscriberResult ) );
-	}
-
-	/**
-	 * Sends delete request to actually delete Subscriber object in ExactTarget by API request
-	 * @param array $aApiParams
-	 */
-	private function doDeleteSubscriber( array $aApiParams ) {
-		$oApiSubscriber = $this->getApiSubscriber();
-		return $oApiSubscriber->deleteRequest( $aApiParams );
 	}
 
 	/**

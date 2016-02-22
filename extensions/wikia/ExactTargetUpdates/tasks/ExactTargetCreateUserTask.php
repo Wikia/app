@@ -4,29 +4,6 @@ namespace Wikia\ExactTarget;
 class ExactTargetCreateUserTask extends ExactTargetTask {
 
 	/**
-	 * Control method of the task responsible for creating all necessary objects
-	 * in ExactTarget related to newly created user
-	 * @param array $aUserData Selected fields from Wikia user table
-	 * @param array $aUserProperties Array of Wikia user gobal properties
-	 */
-
-	/**
-	 * Creates Subscriber object in ExactTarget by API request
-	 * @param String $sUserEmail new subscriber email address
-	 */
-	public function createSubscriber( $sUserEmail ) {
-		$oHelper = $this->getUserHelper();
-		$aApiParams = $oHelper->prepareSubscriberData( $sUserEmail );
-		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
-		$oApiDataExtension = $this->getApiSubscriber();
-
-		$createSubscriberResult = $oApiDataExtension->createRequest( $aApiParams );
-
-		$this->info( __METHOD__ . ' OverallStatus: ' . $createSubscriberResult->OverallStatus );
-		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$createSubscriberResult ) );
-	}
-
-	/**
 	 * Creates DataExtension object in ExactTarget by API request that reflects Wikia user_properties table
 	 * @param Integer $iUserId User ID
 	 * @param Array $aUserProperties key-value array ['property_name'=>'property_value']

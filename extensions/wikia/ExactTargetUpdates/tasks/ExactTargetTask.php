@@ -20,14 +20,6 @@ class ExactTargetTask extends BaseTask {
 	protected function getApiSubscriber() {
 		return new ExactTargetApiSubscriber();
 	}
-	/**
-
-	 * Returns an instance of ExactTargetCreateUserTask class
-	 * @return ExactTargetCreateUserTask
-	 */
-	protected function getCreateUserTask() {
-		return new ExactTargetCreateUserTask();
-	}
 
 	/**
 	/**

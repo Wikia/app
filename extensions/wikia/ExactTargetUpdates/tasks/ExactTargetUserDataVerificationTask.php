@@ -29,11 +29,4 @@ class ExactTargetUserDataVerificationTask extends ExactTargetTask {
 		return $bResult;
 	}
 
-	/**
-	 * A simple getter for an object of ExactTargetUserHooksHelper class
-	 * @return ExactTargetUserHooksHelper
-	 */
-	protected function getUserHooksHelper() {
-		return new ExactTargetUserHooksHelper();
-	}
 }
