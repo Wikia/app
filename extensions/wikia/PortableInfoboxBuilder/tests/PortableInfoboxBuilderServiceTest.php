@@ -39,14 +39,14 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider updateInfoboxProvider
 	 */
-	public function tzestUpdateInfobox($data, $expected) {
+	public function testUpdateInfobox($data, $expected) {
 		$this->assertEquals( $expected, $this->builderService->updateInfobox($data['oldInfobox'], $data['newInfobox'], $data['oldContent']));
 	}
 
 	/**
 	 * @dataProvider updateDocumentationProvider
 	 */
-	public function tzŃestUpdateDocumentation($data, $expected) {
+	public function testUpdateDocumentation($data, $expected) {
 		$this->assertEquals( $expected, $this->builderService->updateDocumentation($data['oldDoc'],
 			$data['newDoc'], $data['oldContent']));
 	}
