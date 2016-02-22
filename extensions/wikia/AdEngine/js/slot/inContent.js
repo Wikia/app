@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.slot.inContentPlayer', [
+define('ext.wikia.adEngine.slot.inContent', [
 	'ext.wikia.adEngine.adTracker',
 	'wikia.log',
 	'wikia.window'
