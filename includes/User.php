@@ -187,7 +187,7 @@ class User {
 	private $attributeService;
 
 	/**
-	 * @var UserPermissions
+	 * @var PermissionsService
 	 */
 	private static $permissionsService;
 
@@ -246,9 +246,9 @@ class User {
 	}
 
 	/**
-	 * @return UserPermissions
+	 * @return PermissionsService
 	 */
-	private static function userPermissions() {
+	private static function permissionsService() {
 		if ( is_null( self::$permissionsService ) ) {
 			self::$permissionsService = Injector::getInjector()->get( PermissionsService::class );
 		}
@@ -2084,6 +2084,7 @@ class User {
 					array( 'user_touched' => $touched ), array( 'user_id' => $this->mId ),
 					__METHOD__ );
 			}
+			self::permissionsService()->invalidateCache( $this );
 
 			$this->clearSharedCache();
 		}
@@ -4629,7 +4630,7 @@ class User {
 	 * @return Array of String internal group names
 	 */
 	public function getGroups() {
-		return self::userPermissions()->getExplicitUserGroups( $this->getId() );
+		return self::permissionsService()->getExplicitUserGroups( $this );
 	}
 
 	/**
@@ -4640,7 +4641,7 @@ class User {
 	 * @return Array of String internal group names
 	 */
 	public function getEffectiveGroups( $recache = false ) {
-		return self::userPermissions()->getEffectiveUserGroups( $this, $recache );
+		return self::permissionsService()->getEffectiveUserGroups( $this, $recache );
 	}
 
 	/**
@@ -4651,7 +4652,7 @@ class User {
 	 * @return Array of String internal group names
 	 */
 	public function getAutomaticGroups( $recache = false ) {
-		return self::userPermissions()->getAutomaticUserGroups( $this, $recache );
+		return self::permissionsService()->getAutomaticUserGroups( $this, $recache );
 	}
 
 	/**
@@ -4659,7 +4660,7 @@ class User {
 	 * @return Array of Strings Array of internal group names
 	 */
 	public static function getImplicitGroups() {
-		return self::userPermissions()->getImplicitGroups();
+		return self::permissionsService()->getImplicitGroups();
 	}
 
 	/**
@@ -4669,7 +4670,7 @@ class User {
 	 * @return Array of internal group names
 	 */
 	public static function getAllGroups() {
-		return self::userPermissions()->getExplicitGroups();
+		return self::permissionsService()->getExplicitGroups();
 	}
 
 	/**
@@ -4679,7 +4680,7 @@ class User {
 	 * @return Array of Strings List of permission key names for given groups combined
 	 */
 	public static function getGroupPermissions( $groups ) {
-		return self::userPermissions()->getGroupPermissions( $groups );
+		return self::permissionsService()->getGroupPermissions( $groups );
 	}
 
 	/**
@@ -4689,7 +4690,7 @@ class User {
 	 * @return Array of Strings List of internal group names with the given permission
 	 */
 	public static function getGroupsWithPermission( $role ) {
-		return self::userPermissions()->getGroupsWithPermission( $role );
+		return self::permissionsService()->getGroupsWithPermission( $role );
 	}
 
 	/**
@@ -4697,7 +4698,7 @@ class User {
 	 * @return Array of String permission names
 	 */
 	public function getRights() {
-		return self::userPermissions()->getUserPermissions( $this );
+		return self::permissionsService()->getUserPermissions( $this );
 	}
 
 	/**
@@ -4705,7 +4706,7 @@ class User {
 	 * @return Array of permission names
 	 */
 	public static function getAllRights() {
-		return self::userPermissions()->getPermissions();
+		return self::permissionsService()->getPermissions();
 	}
 
 	/**
@@ -4718,7 +4719,7 @@ class User {
 	 *     'remove-self' => array( removable groups from self) )
 	 */
 	public static function changeableByGroup( $group ) {
-		return self::userPermissions()->getGroupsChangeableByGroup( $group );
+		return self::permissionsService()->getGroupsChangeableByGroup( $group );
 	}
 
 	/**
@@ -4728,7 +4729,7 @@ class User {
 	 */
 	public function addGroup( $group ) {
 		global $wgUser;
-		return self::userPermissions()->addUserToGroup( $wgUser, $this, $group );
+		return self::permissionsService()->addUserToGroup( $wgUser, $this, $group );
 	}
 
 	/**
@@ -4738,7 +4739,7 @@ class User {
 	 */
 	public function removeGroup( $group ) {
 		global $wgUser;
-		return self::userPermissions()->removeUserFromGroup( $wgUser, $this, $group );
+		return self::permissionsService()->removeUserFromGroup( $wgUser, $this, $group );
 	}
 
 	/**
@@ -4749,7 +4750,7 @@ class User {
 	 *  'remove-self' => array( removable groups from self) )
 	 */
 	public function changeableGroups() {
-		return self::userPermissions()->getGroupsChangeableByUser( $this );
+		return self::permissionsService()->getGroupsChangeableByUser( $this );
 	}
 
 	/**
@@ -4762,7 +4763,7 @@ class User {
 	 */
 	public function isAllowedAny( /*...*/ ){
 		$permissions = func_get_args();
-		return self::userPermissions()->doesUserHaveAnyPermission( $this, $permissions );
+		return self::permissionsService()->doesUserHaveAnyPermission( $this, $permissions );
 	}
 
 	/**
@@ -4772,7 +4773,7 @@ class User {
 	 */
 	public function isAllowedAll( /*...*/ ){
 		$permissions = func_get_args();
-		return self::userPermissions()->doesUserHaveAllPermissions( $this, $permissions );
+		return self::permissionsService()->doesUserHaveAllPermissions( $this, $permissions );
 	}
 
 	/**
@@ -4781,7 +4782,7 @@ class User {
 	 * @return bool
 	 */
 	public function isAllowed( $action = '' ) {
-		return self::userPermissions()->doesUserHavePermission( $this, $action );
+		return self::permissionsService()->doesUserHavePermission( $this, $action );
 	}
 
 	/**

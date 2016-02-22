@@ -1,0 +1,414 @@
+<?php
+
+namespace Wikia\Service\User\Permissions;
+
+class PermissionsDefinitionImpl implements PermissionsDefinition {
+
+	/** @var string[] - global explicit groups to which a user can be explicitly assigned */
+	private $explicitGroups = [];
+
+	/** @var string[string][] - key is the group and value array of groups addable by this group */
+	private $groupsAddableByGroup = [];
+
+	/** @var string[string][] - key is the group and value array of groups removable by this group */
+	private $groupsRemovableByGroup = [];
+
+	/** @var string[string][] - key is the group and value array of groups self addable */
+	private $groupsSelfAddableByGroup = [];
+
+	/** @var string[string][] - key is the group and value array of groups self removable */
+	private $groupsSelfRemovableByGroup = [];
+
+	private $globalGroups = [
+		'content-reviewer',
+		'staff',
+		'helper',
+		'vstf',
+		'beta',
+		'bot-global',
+		'util',
+		'reviewer',
+		'poweruser',
+		'translator',
+		'wikifactory',
+		'restricted-login',
+		'council',
+		'authenticated',
+		'wikiastars',
+		'restricted-login',
+		'voldev'
+	];
+
+	private $implicitGroups = [
+		'*',
+		'user',
+		'autoconfirmed',
+		'poweruser'
+	];
+
+	private $permissions = [
+		'apihighlimits',
+		'autoconfirmed',
+		'autopatrol',
+		'bigdelete',
+		'block',
+		'blockemail',
+		'bot',
+		'browsearchive',
+		'createaccount',
+		'createpage',
+		'createtalk',
+		'delete',
+		'deletedhistory',
+		'deletedtext',
+		'deleterevision',
+		'edit',
+		'editinterface',
+		'editmyoptions',
+		'editusercssjs', #deprecated
+		'editusercss',
+		'edituserjs',
+		'hideuser',
+		'import',
+		'importupload',
+		'ipblock-exempt',
+		'markbotedits',
+		'mergehistory',
+		'minoredit',
+		'move',
+		'movefile',
+		'move-rootuserpages',
+		'move-subpages',
+		'nominornewtalk',
+		'noratelimit',
+		'override-export-depth',
+		'patrol',
+		'protect',
+		'proxyunbannable',
+		'purge',
+		'read',
+		'reupload',
+		'reupload-shared',
+		'rollback',
+		'sendemail',
+		'siteadmin',
+		'suppressionlog',
+		'suppressredirect',
+		'suppressrevision',
+		'unblockself',
+		'undelete',
+		'unwatchedpages',
+		'upload',
+		'upload_by_url',
+		'userrights',
+		'userrights-interwiki',
+		'writeapi',
+		'canremovemap',
+		'wikiawidget',
+		'wikifactory',
+		'wikifactorymetrics',
+		'dumpsondemand',
+		'wikifeatures',
+		'MultiFileUploader',
+		'allowedtoblank',
+		'batchmove',
+		'linkstoredirects',
+		'mobilesearches',
+		'soapfailures',
+		'moderatesotd',
+		'hiderevision',
+		'oversight',
+		'abusefilter-modify',
+		'abusefilter-log-detail',
+		'abusefilter-view',
+		'abusefilter-log',
+		'abusefilter-private',
+		'abusefilter-modify-restricted',
+		'abusefilter-revert',
+		'abusefilter-view-private',
+		'abusefilter-hidden-log',
+		'abusefilter-hide-log',
+		'override-antispoof',
+		'checkuser',
+		'checkuser-log',
+		'geocode',
+		'nuke',
+		'refreshspecial',
+		'replacetext',
+		'spamregex',
+		'tboverride', 	// Implies tboverride-account
+		'tboverride-account', 	// For account creation
+		'torunblocked',
+		'abusefilter-bypass',
+		'platinum',
+		'sponsored-achievements',
+		'achievements-exempt',
+		'achievements-explicit',
+		'admindashboard',
+		'commentmove',
+		'commentedit',
+		'commentdelete',
+		'becp_user',
+		'blog-comments-toggle',
+		'blog-comments-delete',
+		'blog-articles-edit',
+		'blog-articles-move',
+		'blog-articles-protect',
+		'blog-auto-follow',
+		'skipcaptcha',
+		'chatmoderator',
+		'chat',
+		'commentcsv',
+		'content-review',
+		'content-review-test-mode',
+		'coppatool',
+		'createnewwiki',
+		'createwikilimitsexempt',  // user not bound by creation throttle
+		'finishcreate',
+		'devboxpanel',
+		'dmcarequestmanagement',
+		'editaccount',
+		'emailsstorage',
+		'flags-administration',
+		'forum',
+		'boardedit',
+		'forumadmin',
+		'welcomeexempt',
+		'coppaimagereview',
+		'imagereview',
+		'questionableimagereview',
+		'rejectedimagereview',
+		'imagereviewstats',
+		'imagereviewcontrols',
+		'promoteimagereview',
+		'promoteimagereviewquestionableimagereview',
+		'promoteimagereviewrejectedimagereview',
+		'promoteimagereviewstats',
+		'promoteimagereviewcontrols',
+		'insights',
+		'listusers',
+		'lookupcontribs',
+		'lookupuser',
+		'minieditor-specialpage',
+		'multidelete',
+		'multiwikiedit',
+		'multiwikifinder',
+		'njordeditmode',
+		'phalanxexempt',
+		'phalanx',
+		'phalanxemailblock',
+		'piggyback',
+		'places-enable-category-geolocation',
+		'metadata',
+		'powerdelete',
+		'quicktools',
+		'quickadopt',
+		'regexblock',
+		'restrictsession',
+		'scribeevents',
+		'performancestats',
+		'messagetool',
+		'forceview',
+		'apigate_admin',
+		'batchuserrights',
+		'edithub',
+		'InterwikiEdit',
+		'multilookup',
+		'newwikislist',
+		'restricted_promote',
+		'protectsite',
+		'stafflog',
+		'unblockable',
+		'tagsreport',
+		'taskmanager',
+		'taskmanager-action',
+		'tasks-user',
+		'template-bulk-classification',
+		'templatedraft',
+		'textregex',
+		'themedesigner',
+		'toplists-create-edit-list',
+		'toplists-create-item',
+		'toplists-edit-item',
+		'toplists-delete-item',
+		'usermanagement',
+		'removeavatar',
+		'renameuser',
+		'userrollback',
+		'specialvideohandler',
+		'uploadpremiumvideo',
+		'wdacreview',
+		'WhereIsExtension',
+		'smwallowaskpage',
+		'council',
+		'authenticated',
+		'displaywikiastarslabel',
+		'editinterfacetrusted',
+		'deleteinterfacetrusted',
+		'voldev',
+		'wikianavglobal',
+		'wikianavlocal',
+		'videoupload',
+		'mcachepurge',
+		'editrestrictedfields',
+		'viewedittab',
+		'createclass'
+	];
+
+	public function __construct() {
+		$this->loadExplicitGroups();
+		$this->loadGroupsChangeableByGroups();
+	}
+
+	/**
+	 * @return string[] List of global groups, that is groups to which one is added on all wikis or on none
+	 */
+	public function getGlobalGroups() {
+		return $this->globalGroups;
+	}
+
+	/**
+	 * @return string[] List of implicit groups,
+	 * that is groups to which one is added automatically and not through manual assignment
+	 */
+	public function getImplicitGroups() {
+		return $this->implicitGroups;
+	}
+
+	/**
+	 * @return string[] List of explicit groups, that is groups to which one can be manually assigned.
+	 * Both global and local.
+	 */
+	public function getExplicitGroups() {
+		return $this->explicitGroups;
+	}
+
+	/**
+	 * @return string[] List of all defined permissions
+	 */
+	public function getPermissions() {
+		return $this->permissions;
+	}
+
+	/**
+	 * Get the permissions associated with a given list of groups
+	 *
+	 * @param $groups Array of Strings List of internal group names
+	 * @return Array of Strings List of permission key names for given groups combined
+	 */
+	public function getGroupPermissions( $groups ) {
+		global $wgGroupPermissions;
+		$rights = array();
+		// grant every granted permission first
+		foreach( $groups as $group ) {
+			if( isset( $wgGroupPermissions[$group] ) ) {
+				$rights = array_merge( $rights,
+					// array_filter removes empty items
+					array_keys( array_filter( $wgGroupPermissions[$group] ) ) );
+			}
+		}
+		return array_values( array_unique( $rights ) );
+	}
+
+	/**
+	 * Get all the groups who have a given permission
+	 *
+	 * @param $role String Role to check
+	 * @return Array of Strings List of internal group names with the given permission
+	 */
+	public function getGroupsWithPermission( $role ) {
+		global $wgGroupPermissions;
+		$allowedGroups = array();
+		foreach ( $wgGroupPermissions as $group => $rights ) {
+			if ( isset( $rights[$role] ) && $rights[$role] ) {
+				$allowedGroups[] = $group;
+			}
+		}
+		return $allowedGroups;
+	}
+
+	private function loadExplicitGroups() {
+		global $wgGroupPermissions;
+		$this->explicitGroups = array_diff(
+			array_keys( $wgGroupPermissions ),
+			$this->implicitGroups
+		);
+	}
+
+	/**
+	 * Returns an array of the groups that a particular group can add/remove.
+	 *
+	 * @param $group String: the group to check for whether it can add/remove
+	 * @return Array array( 'add' => array( addablegroups ),
+	 *     'remove' => array( removablegroups ),
+	 *     'add-self' => array( addablegroups to self),
+	 *     'remove-self' => array( removable groups from self) )
+	 */
+	public function getGroupsChangeableByGroup( $group ) {
+		$groups = array( 'add' => array(), 'remove' => array(), 'add-self' => array(), 'remove-self' => array() );
+
+		if ( array_key_exists( $group, $this->groupsAddableByGroup ) ) {
+			$groups['add'] = $this->groupsAddableByGroup[$group];
+		}
+
+		if ( array_key_exists( $group, $this->groupsRemovableByGroup ) ) {
+			$groups['remove'] = $this->groupsRemovableByGroup[$group];
+		}
+
+		if ( array_key_exists( $group, $this->groupsSelfAddableByGroup ) ) {
+			$groups['add-self'] = $this->groupsSelfAddableByGroup[$group];
+		}
+
+		if ( array_key_exists( $group, $this->groupsSelfRemovableByGroup ) ) {
+			$groups['remove-self'] = $this->groupsSelfRemovableByGroup[$group];
+		}
+
+		return $groups;
+	}
+
+	private function loadGroupsChangeableByGroups() {
+		$this->groupsAddableByGroup['bureaucrat'] = array('bureaucrat', 'rollback', 'sysop', 'content-moderator', 'threadmoderator');
+		$this->groupsRemovableByGroup['bureaucrat'] = array('rollback', 'sysop', 'bot', 'content-moderator', 'threadmoderator');
+		$this->groupsSelfRemovableByGroup['bureaucrat'] = array('rollback', 'sysop', 'bot', 'content-moderator');
+
+		$this->groupsAddableByGroup['staff'] = array('rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator');
+		$this->groupsRemovableByGroup['staff'] = array('rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator');
+
+		$this->groupsAddableByGroup['helper'] = array('rollback', 'bot', 'sysop', 'bureaucrat', 'chatmoderator', 'threadmoderator');
+		$this->groupsRemovableByGroup['helper'] = array('rollback', 'bot', 'sysop', 'bureaucrat', 'chatmoderator', 'threadmoderator');
+
+		$this->groupsAddableByGroup['sysop'] = array('chatmoderator', 'threadmoderator');
+		$this->groupsRemovableByGroup['sysop'] = array('chatmoderator', 'threadmoderator');
+		$this->groupsSelfRemovableByGroup['sysop'] = array('sysop');
+
+		$this->groupsAddableByGroup['content-reviewer'] = array('content-reviewer');
+		$this->groupsRemovableByGroup['content-reviewer'] = array('content-reviewer');
+
+		$this->groupsAddableByGroup['vstf'] = array('rollback', 'bot');
+		$this->groupsRemovableByGroup['vstf'] = array('rollback', 'bot');
+		$this->groupsSelfAddableByGroup['vstf'] = array('sysop');
+		$this->groupsSelfRemovableByGroup['vstf'] = array('sysop', 'bureaucrat');
+
+		//the $wgXXXLocal variables are loaded from wiki factory - we should use it as is
+		if ( !empty( $wgAddGroupsLocal ) )
+			$this->groupsAddableByGroup = array_merge( $this->groupsAddableByGroup, $wgAddGroupsLocal );
+		if ( !empty( $wgRemoveGroupsLocal ) )
+			$this->groupsRemovableByGroup = array_merge( $this->groupsRemovableByGroup, $wgRemoveGroupsLocal );
+		if ( !empty( $wgGroupsAddToSelfLocal ) )
+			$this->groupsSelfAddableByGroup = array_merge( $this->groupsSelfAddableByGroup, $wgGroupsAddToSelfLocal );
+		if ( !empty( $wgGroupsRemoveFromSelfLocal ) )
+			$this->groupsSelfRemovableByGroup = array_merge( $this->groupsSelfRemovableByGroup, $wgGroupsRemoveFromSelfLocal );
+
+		$this->groupsAddableByGroup['util'] = array_diff( $this->getExplicitGroups(),
+			array_merge( [ 'wikifactory', 'content-reviewer' ], $this->getImplicitGroups() ) );
+		$this->groupsRemovableByGroup['util'] = array_diff( $this->getExplicitGroups(), $this->getImplicitGroups() );
+
+		global $wgDevelEnvironment;
+		if ( !empty( $wgDevelEnvironment )) {
+			$this->groupsAddableByGroup['staff'] = $this->getExplicitGroups();
+			$this->groupsRemovableByGroup['staff'] = $this->getExplicitGroups();
+			$this->groupsSelfAddableByGroup['staff'] = $this->getExplicitGroups();
+			$this->groupsSelfRemovableByGroup['staff'] = $this->getExplicitGroups();
+		}
+	}
+}

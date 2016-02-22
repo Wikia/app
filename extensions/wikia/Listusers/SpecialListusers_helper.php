@@ -9,8 +9,10 @@
 
 use Wikia\DependencyInjection\Injector;
 use Wikia\Service\User\Permissions\PermissionsService;
+use Wikia\Service\User\Permissions\PermissionsAccessor;
 
 class ListusersData {
+	use PermissionsAccessor;
 	var $mCityId;
 	var $mGroups;
 	var $mFilterGroup;
@@ -24,11 +26,6 @@ class ListusersData {
 
 	var $mDBh;
 	var $mTable;
-
-	/**
-	 * @var UserPermissions
-	 */
-	private $permissionsService;
 
 	function __construct( $city_id, $load = 1 ) {
 		global $wgSpecialsDB;
@@ -63,17 +60,6 @@ class ListusersData {
 		$this->setOffset();
 		$this->setOrder();
 		$this->loadGroups();
-	}
-
-	/**
-	 * @return UserPermissions
-	 */
-	private function userPermissions() {
-		if ( is_null( $this->permissionsService ) ) {
-			$this->permissionsService = Injector::getInjector()->get( PermissionsService::class );
-		}
-
-		return $this->permissionsService;
 	}
 
 	function setFilterGroup ( $group = array() ) { $this->mFilterGroup = $group; }
@@ -501,7 +487,7 @@ class ListusersData {
 
 		$central_groups = array();
 		if ( !UserRights::isCentralWiki() ) {
-			$central_groups = $this->userPermissions()->getExplicitGlobalUserGroups( $user->getId() );
+			$central_groups = $this->permissionsService()->getExplicitGlobalUserGroups( $user );
 		}
 
 		# add groups

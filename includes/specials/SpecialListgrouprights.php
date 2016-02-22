@@ -21,9 +21,7 @@
  * @ingroup SpecialPage
  */
 
-
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\User\Permissions\PermissionsService;
+use Wikia\Service\User\Permissions\PermissionsAccessor;
 
 /**
  * This special page lists all defined user groups and the associated rights.
@@ -33,29 +31,13 @@ use Wikia\Service\User\Permissions\PermissionsService;
  * @author Petr Kadlec <mormegil@centrum.cz>
  */
 class SpecialListGroupRights extends SpecialPage {
-
-	/**
-	 * @var UserPermissions
-	 */
-	private $permissionsService;
+	use PermissionsAccessor;
 
 	/**
 	 * Constructor
 	 */
 	function __construct() {
 		parent::__construct( 'Listgrouprights' );
-	}
-
-
-	/**
-	 * @return UserPermissions
-	 */
-	private function userPermissions() {
-		if ( is_null( $this->permissionsService ) ) {
-			$this->permissionsService = Injector::getInjector()->get( PermissionsService::class );
-		}
-
-		return $this->permissionsService;
 	}
 
 	/**
@@ -113,7 +95,7 @@ class SpecialListGroupRights extends SpecialPage {
 					SpecialPage::getTitleFor( 'Listusers' ),
 					wfMsgHtml( 'listgrouprights-members' )
 				);
-			} elseif ( !in_array( $group, $this->userPermissions()->getImplicitGroups() ) ) {
+			} elseif ( !in_array( $group, $this->permissionsService()->getImplicitGroups() ) ) {
 				$grouplink = '<br />' . Linker::linkKnown(
 					SpecialPage::getTitleFor( 'Listusers' ),
 					wfMsgHtml( 'listgrouprights-members' ),
@@ -125,7 +107,7 @@ class SpecialListGroupRights extends SpecialPage {
 				$grouplink = '';
 			}
 
-			$groupArr = $this->userPermissions()->getGroupsChangeableByGroup( $group );
+			$groupArr = $this->permissionsService()->getGroupsChangeableByGroup( $group );
 
 			$addgroups = isset( $groupArr['add'] ) ? $groupArr['add'] : array();
 			$removegroups = isset( $groupArr['remove'] ) ? $groupArr['remove'] : array();

@@ -22,8 +22,7 @@
  */
 
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\User\Permissions\PermissionsService;
+use Wikia\Service\User\Permissions\PermissionsAccessor;
 
 /**
  * Special page lists various statistics, including the contents of
@@ -32,28 +31,13 @@ use Wikia\Service\User\Permissions\PermissionsService;
  * @ingroup SpecialPage
  */
 class SpecialStatistics extends SpecialPage {
+	use PermissionsAccessor;
 
 	private $views, $edits, $good, $images, $total, $users,
 			$activeUsers = 0;
 
-	/**
-	 * @var UserPermissions
-	 */
-	private $permissionsService;
-
 	public function __construct() {
 		parent::__construct( 'Statistics' );
-	}
-
-	/**
-	 * @return UserPermissions
-	 */
-	private function userPermissions() {
-		if ( is_null( $this->permissionsService ) ) {
-			$this->permissionsService = Injector::getInjector()->get( PermissionsService::class );
-		}
-
-		return $this->permissionsService;
 	}
 
 	public function execute( $par ) {
@@ -243,7 +227,7 @@ class SpecialStatistics extends SpecialPage {
 			$countUsers = SiteStats::numberingroup( $groupname );
 			if( $countUsers == 0 ) {
 				// wikia change start
-				if( in_array( $groupname, $this->userPermissions()->getGlobalGroups() ) ) {
+				if( in_array( $groupname, $this->permissionsService()->getGlobalGroups() ) ) {
 					//rt#57322 hide our effective global groups
 					continue;
 				}

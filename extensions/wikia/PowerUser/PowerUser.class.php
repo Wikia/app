@@ -13,10 +13,12 @@ namespace Wikia\PowerUser;
 
 use Wikia\Logger\Loggable;
 use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Permissions\PermissionsAccessor;
 use Wikia\Service\User\Permissions\PermissionsService;
 
 class PowerUser {
 	use Loggable;
+	use PermissionsAccessor;
 
 	/**
 	 * Names of properties used to described PowerUsers
@@ -68,22 +70,6 @@ class PowerUser {
 		global $wgEnableSharedUserRightsExt;
 		$this->oUser = $oUser;
 		$this->bUseGroups = $wgEnableSharedUserRightsExt;
-	}
-
-	/**
-	 * @var UserPermissions
-	 */
-	private $permissionsService;
-
-	/**
-	 * @return UserPermissions
-	 */
-	private function userPermissions() {
-		if ( is_null( $this->permissionsService ) ) {
-			$this->permissionsService = Injector::getInjector()->get( PermissionsService::class );
-		}
-
-		return $this->permissionsService;
 	}
 
 	/**
@@ -140,9 +126,10 @@ class PowerUser {
 	public function addPowerUserAddGroup( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUserProperties )
 			&& $this->bUseGroups
-			&& !in_array( self::GROUP_NAME, $this->userPermissions()->getExplicitGlobalUserGroups( $this->oUser->getId() ) )
+			&& !$this->permissionsService()->isUserInGroup( $this->oUser, self::GROUP_NAME )
 		) {
-			$this->userPermissions()->addUserToGroup( $this->oUser, self::GROUP_NAME );
+			global $wgUser;
+			$this->permissionsService()->addUserToGroup( $wgUser, $this->oUser, self::GROUP_NAME );
 			$this->logSuccess( $sProperty, self::ACTION_ADD_GROUP );
 		}
 		return true;
@@ -214,7 +201,7 @@ class PowerUser {
 				return false;
 			}
 		}
-		return in_array( self::GROUP_NAME, $this->userPermissions()->getExplicitGlobalUserGroups( $this->oUser->getId() ) );
+		return $this->permissionsService()->isUserInGroup( $this->oUser, self::GROUP_NAME );
 	}
 
 	/**
