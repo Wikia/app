@@ -1344,45 +1344,6 @@ class User {
 	}
 
 	/**
-	 * Add the user to the group if he/she meets given criteria.
-	 *
-	 * Contrary to autopromotion by \ref $wgAutopromote, the group will be
-	 *   possible to remove manually via Special:UserRights. In such case it
-	 *   will not be re-added automatically. The user will also not lose the
-	 *   group if they no longer meet the criteria.
-	 *
-	 * @param $event String key in $wgAutopromoteOnce (each one has groups/criteria)
-	 *
-	 * @return array Array of groups the user has been promoted to.
-	 *
-	 * @see $wgAutopromoteOnce
-	 */
-	public function addAutopromoteOnceGroups( $event ) {
-		global $wgAutopromoteOnceLogInRC;
-
-		$toPromote = array();
-		if ( $this->getId() ) {
-			$toPromote = Autopromote::getAutopromoteOnceGroups( $this, $event );
-			if ( count( $toPromote ) ) {
-				$oldGroups = $this->getGroups(); // previous groups
-				foreach ( $toPromote as $group ) {
-					$this->addGroup( $group );
-				}
-				$newGroups = array_merge( $oldGroups, $toPromote ); // all groups
-
-				$log = new LogPage( 'rights', $wgAutopromoteOnceLogInRC /* in RC? */ );
-				$log->addEntry( 'autopromote',
-					$this->getUserPage(),
-					'', // no comment
-					// These group names are "list to texted"-ed in class LogPage.
-					array( implode( ', ', $oldGroups ), implode( ', ', $newGroups ) )
-				);
-			}
-		}
-		return $toPromote;
-	}
-
-	/**
 	 * Clear various cached data stored in this object.
 	 * @param $reloadFrom bool|String Reload user and user_groups table data from a
 	 *   given source. May be "name", "id", "defaults", "session", or false for
@@ -4475,7 +4436,7 @@ class User {
 	 * @return Array of Strings List of permission key names for given groups combined
 	 */
 	public static function getGroupPermissions( $groups ) {
-		global $wgGroupPermissions, $wgRevokePermissions;
+		global $wgGroupPermissions;
 		$rights = array();
 		// grant every granted permission first
 		foreach( $groups as $group ) {
@@ -4483,13 +4444,6 @@ class User {
 				$rights = array_merge( $rights,
 					// array_filter removes empty items
 					array_keys( array_filter( $wgGroupPermissions[$group] ) ) );
-			}
-		}
-		// now revoke the revoked permissions
-		foreach( $groups as $group ) {
-			if( isset( $wgRevokePermissions[$group] ) ) {
-				$rights = array_diff( $rights,
-					array_keys( array_filter( $wgRevokePermissions[$group] ) ) );
 			}
 		}
 		return array_unique( $rights );
@@ -4542,9 +4496,9 @@ class User {
 	 * @return Array of internal group names
 	 */
 	public static function getAllGroups() {
-		global $wgGroupPermissions, $wgRevokePermissions;
+		global $wgGroupPermissions;
 		return array_diff(
-			array_merge( array_keys( $wgGroupPermissions ), array_keys( $wgRevokePermissions ) ),
+			array_keys( $wgGroupPermissions ),
 			self::getImplicitGroups()
 		);
 	}

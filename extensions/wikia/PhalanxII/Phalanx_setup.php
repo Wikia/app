@@ -146,3 +146,4 @@ $wgLogActions['phalanxemail/edit']  	= 'phalanx-rule-log-edit';
 $wgLogActions['phalanxemail/delete'] 	= 'phalanx-rule-log-delete';
 
 $wgAvailableRights[] = 'phalanxexempt';
+$wgPhalanxServiceUrl = "http://" . $wgConsulServiceTag . "." . $wgPhalanxBaseUrl; # PLATFORM-1744

@@ -39,6 +39,17 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 	}
 
 	/**
+	 * Returns the domain name from the full URL
+	 *
+	 * @param {string} url URL to get domain for
+	 * @return {string|false} domain or false when URLs in invalid
+	 */
+	function getDomain(url) {
+		var matches = url.match(/\/\/([^/]+)/);
+		return !!matches && matches[1];
+	}
+
+	/**
 	 * Log debug information
 	 *
 	 * @param {string} msg
@@ -55,7 +66,7 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 	 * @return object
 	 */
 	function getResourcesStats(resources) {
-		var dnsTime, len, res,
+		var dnsTime, domain, len, res,
 			stats = {};
 
 		/**
@@ -68,6 +79,17 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 				count: 0,
 				time: 0
 			};
+		}
+
+		/**
+		 * Initialize stats entry for a given type (if not yet defined)
+		 *
+		 * @param {string} type
+		 */
+		function initStatsEntryIfEmpty(type) {
+			if (typeof stats[type] === 'undefined') {
+				initStatsEntry(type);
+			}
 		}
 
 		/**
@@ -145,6 +167,15 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 			}
 			else {
 				addStatsEntry('3rdparty', res.duration);
+
+				// PLATFORM-1903: report per-domain performance of 3rd party assets
+				domain = getDomain(res.name);
+				if (domain) {
+					debug(domain, res.duration);
+
+					initStatsEntryIfEmpty('domain-' + domain);
+					addStatsEntry('domain-' + domain, res.duration);
+				}
 			}
 
 			// count all assets fetched
@@ -189,6 +220,7 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 	return {
 		isSupported: isSupported,
 		isWikiaAsset: isWikiaAsset, // exposed for unit tests
+		getDomain: getDomain, // exposed for unit tests
 		reportToBucky: reportToBucky
 	};
 });

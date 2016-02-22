@@ -64,9 +64,11 @@ class WallMessage {
 	static public function addMessageWall( $userPageTitle ) {
 		wfProfileIn( __METHOD__ );
 		$botUser = User::newFromName( 'WikiaBot' );
+		/** @var Article $article */
 		$article = new Article( $userPageTitle );
-		$status = $article->doEdit( '', '', EDIT_NEW | EDIT_MINOR | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
-		$title = ( $status->isOK() ) ? $article->getTitle() : false ;
+		$status = $article->getPage()
+			->doEdit( '', '', EDIT_NEW | EDIT_MINOR | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
+		$title = ( $status->isOK() ) ? $article->getTitle() : false;
 		wfProfileOut( __METHOD__ );
 		return $title;
 	}
@@ -110,21 +112,21 @@ class WallMessage {
 		if ( $parent === false ) {
 			$metaData = [ 'title' => $metaTitle ];
 			if ( $notifyEveryone ) {
-				$metaData['notify_everyone'] = time();
+				$metaData[ 'notify_everyone' ] = time();
 			}
 
 			if ( !empty( $relatedTopics ) ) {
-				$metaData['related_topics'] = implode( '|', $relatedTopics );
+				$metaData[ 'related_topics' ] = implode( '|', $relatedTopics );
 			}
 
-			$acStatus = ArticleComment::doPost( $body, $user, $userPageTitle, false , $metaData );
+			$acStatus = ArticleComment::doPost( $body, $user, $userPageTitle, false, $metaData );
 		} else {
 			if ( !$parent->canReply() ) {
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
 
-			$acStatus = ArticleComment::doPost( $body, $user, $userPageTitle, $parent->getId() , null );
+			$acStatus = ArticleComment::doPost( $body, $user, $userPageTitle, $parent->getId(), null );
 		}
 
 		if ( $acStatus === false ) {
@@ -132,7 +134,7 @@ class WallMessage {
 			return false;
 		}
 
-		$ac = ArticleComment::newFromId( $acStatus[1]->getId() );
+		$ac = ArticleComment::newFromId( $acStatus[ 1 ]->getId() );
 		if ( empty( $ac ) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -252,9 +254,9 @@ class WallMessage {
 	public function canEdit( User $user, $shouldLogBlockInStats = true ) {
 		wfProfileIn( __METHOD__ );
 		$out = $this->can( $user, 'edit', $shouldLogBlockInStats ) && (
-			$this->isAuthor( $user ) || $this->can( $user, 'walledit', $shouldLogBlockInStats ) ||
-			$this->can( $user, 'rollback', $shouldLogBlockInStats )
-		);
+				$this->isAuthor( $user ) || $this->can( $user, 'walledit', $shouldLogBlockInStats ) ||
+				$this->can( $user, 'rollback', $shouldLogBlockInStats )
+			);
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
@@ -297,26 +299,26 @@ class WallMessage {
 	protected function can( User $user, $permissionName, $shouldLogBlockInStats = true ) {
 		wfProfileIn( __METHOD__ );
 		$username = $user->getName();
-		if ( isset( self::$permissionsCache[$username][$permissionName] ) ) {
+		if ( isset( self::$permissionsCache[ $username ][ $permissionName ] ) ) {
 			wfProfileOut( __METHOD__ );
-			return self::$permissionsCache[$username][$permissionName];
+			return self::$permissionsCache[ $username ][ $permissionName ];
 		}
 
-		if ( empty( self::$permissionsCache[$username] ) ) {
-			self::$permissionsCache[$username] = [ ];
+		if ( empty( self::$permissionsCache[ $username ] ) ) {
+			self::$permissionsCache[ $username ] = [ ];
 		}
 
 		wfProfileIn( __METHOD__ . "2" );
 		if ( $permissionName == 'wallshowwikiaemblem' ) {
-			self::$permissionsCache[$username][$permissionName] = $user->isAllowed( $permissionName );
+			self::$permissionsCache[ $username ][ $permissionName ] = $user->isAllowed( $permissionName );
 		} else {
-			self::$permissionsCache[$username][$permissionName] = $user->isAllowed( $permissionName ) &&
-				!$user->isBlocked( true, $shouldLogBlockInStats);
+			self::$permissionsCache[ $username ][ $permissionName ] = $user->isAllowed( $permissionName ) &&
+				!$user->isBlocked( true, $shouldLogBlockInStats );
 		}
 		wfProfileOut( __METHOD__ . "2" );
 
 		wfProfileOut( __METHOD__ );
-		return self::$permissionsCache[$username][$permissionName];
+		return self::$permissionsCache[ $username ][ $permissionName ];
 	}
 
 	public function showWikiaEmblem() {
@@ -332,7 +334,7 @@ class WallMessage {
 	 */
 	public function canDelete( User $user, $shouldLogBlockInStats = true ) {
 		return $this->can( $user, 'walldelete', $shouldLogBlockInStats ) &&
-			$user->getGlobalPreference( 'walldelete', false );
+		$user->getGlobalPreference( 'walldelete', false );
 	}
 
 	/**
@@ -367,7 +369,7 @@ class WallMessage {
 	 */
 	public function canAdminDelete( User $user, $shouldLogBlockInStats = true ) {
 		return $this->can( $user, 'walladmindelete', $shouldLogBlockInStats ) &&
-			!$this->isAdminDelete() && $this->isRemove() && $this->isMain();
+		!$this->isAdminDelete() && $this->isRemove() && $this->isMain();
 	}
 
 	/**
@@ -472,7 +474,7 @@ class WallMessage {
 	}
 
 	public function getNotifyeveryone() {
-		$out = (int ) $this->getArticleComment()->getMetadata( 'notify_everyone' );
+		$out = (int )$this->getArticleComment()->getMetadata( 'notify_everyone' );
 		$ageInDays = ( time() - $out ) / ( 60 * 60 * 24 );
 
 		if ( $ageInDays < WallHelper::NOTIFICATION_EXPIRE_DAYS ) {
@@ -513,8 +515,7 @@ class WallMessage {
 			if ( $notifyEveryone ) {
 				$this->getArticleComment()->setMetaData( 'notify_everyone', time() );
 				$this->doSaveMetadata( $app->wg->User,
-					wfMessage( 'wall-message-update-highlight-summary' )->inContentLanguage()->text(),
-					false, true );
+					wfMessage( 'wall-message-update-highlight-summary' )->inContentLanguage()->text() );
 				$rev = $this->getArticleComment()->mLastRevision;
 				$entity = WallNotificationEntity::createFromRev( $rev );
 				$wne->addNotificationToQueue( $entity );
@@ -523,8 +524,7 @@ class WallMessage {
 				$pageId = $this->getId();
 				$wne->removeNotificationForPageId( $pageId );
 				$this->doSaveMetadata( $app->wg->User,
-					wfMessage( 'wall-message-update-removed-highlight-summary' )->inContentLanguage()->text(),
-					false, true );
+					wfMessage( 'wall-message-update-removed-highlight-summary' )->inContentLanguage()->text() );
 			}
 		}
 	}
@@ -559,7 +559,7 @@ class WallMessage {
 	public function getMainPageText() {
 		$title = $this->getArticleTitle();
 		$parts = explode( '/', $title->getText() );
-		$wallOwnerName = $parts[0];
+		$wallOwnerName = $parts[ 0 ];
 
 		wfRunHooks( 'WallMessageGetWallOwnerName', [ $title, &$wallOwnerName ] );
 
@@ -568,7 +568,7 @@ class WallMessage {
 
 	public function getWallOwner( $useMasterDB = false ) {
 		$parts = explode( '/', $this->getArticleTitle( $useMasterDB )->getText() );
-		$userName = $parts[0];
+		$userName = $parts[ 0 ];
 		$titleText = $this->title->getText();
 		$parts = explode( '/', $titleText );
 		if ( mt_rand( 1, 100 ) < 2 ) {  // doing this experiment for all requests pollutes the logs
@@ -577,9 +577,9 @@ class WallMessage {
 			// as the user name is the first part on comment's title. But I'm not able to go through all wall/forum
 			// usecases. I'm going to check production logs for the next 2-3 sprints and make sure the result is
 			// always correct
-			if ( $parts[0] != $userName ) {
+			if ( $parts[ 0 ] != $userName ) {
 				Wikia::log( __METHOD__, false, 'WALL_PERF article title owner does not match ci username (' . $userName .
-					' vs ' . $parts[0] . ') for ' . $this->getId() . ' (title is ' . $titleText . ')', true );
+					' vs ' . $parts[ 0 ] . ') for ' . $this->getId() . ' (title is ' . $titleText . ')', true );
 			}
 
 		}
@@ -587,8 +587,8 @@ class WallMessage {
 		// mech: when the wall message is not in the db yet, the getWallTitle will return 'Empty' as is cannot find
 		// the row in comments_index. After I'll make sure that call to getWallTitle is not needed, the check below
 		// can be safely removed
-		if ( $userName == 'Empty' && !empty( $parts[0] ) ) {
-			$userName = $parts[0];
+		if ( $userName == 'Empty' && !empty( $parts[ 0 ] ) ) {
+			$userName = $parts[ 0 ];
 		}
 
 		$wall_owner = User::newFromName( $userName, false );
@@ -613,28 +613,28 @@ class WallMessage {
 		$pageId = $commentsIndex->getParentPageId();
 
 		static $cache = [ ];
-		if ( empty( $cache[$pageId] ) ) {
+		if ( empty( $cache[ $pageId ] ) ) {
 			if ( !$useMasterDB ) {
-				$cache[$pageId] = Title::newFromId( $pageId );
+				$cache[ $pageId ] = Title::newFromId( $pageId );
 				// make sure this did not happen due to master-slave delay
 				// if so, this is a bug in the code, as $master flag should be set to true
 				// we want to log this and fix it
-				if ( empty( $cache[$pageId] ) ) {
-					$cache[$pageId] = Title::newFromId( $pageId, Title::GAID_FOR_UPDATE );
-					if ( !empty( $cache[$pageId] ) ) {
+				if ( empty( $cache[ $pageId ] ) ) {
+					$cache[ $pageId ] = Title::newFromId( $pageId, Title::GAID_FOR_UPDATE );
+					if ( !empty( $cache[ $pageId ] ) ) {
 						Wikia::log( __METHOD__, false, "WALL_BUG - title does not exist in slave db yet - fix it!", true );
 					}
 				}
 			} else {
-				$cache[$pageId] = Title::newFromId( $pageId, Title::GAID_FOR_UPDATE );
+				$cache[ $pageId ] = Title::newFromId( $pageId, Title::GAID_FOR_UPDATE );
 			}
 		}
 
-		if ( empty( $cache[$pageId] ) ) {
+		if ( empty( $cache[ $pageId ] ) ) {
 			return Title::newFromText( 'empty' );
 		}
 
-		return $cache[$pageId];
+		return $cache[ $pageId ];
 	}
 
 	/**
@@ -688,22 +688,22 @@ class WallMessage {
 		// local cache consider cache this in memc
 		if ( !empty( $this->messagePageUrl ) ) {
 			wfProfileOut( __METHOD__ );
-			return $this->messagePageUrl[$withoutAnchor];
+			return $this->messagePageUrl[ $withoutAnchor ];
 		}
 
 		$id = $this->getMessagePageId();
 
 		$postFix = $this->getPageUrlPostFix();
-		$postFix = empty( $postFix ) ? "": ( '#' . $postFix );
+		$postFix = empty( $postFix ) ? "" : ( '#' . $postFix );
 		$title = Title::newFromText( $id, NS_USER_WALL_MESSAGE );
 
 		$this->messagePageUrl = [ ];
 
-		$this->messagePageUrl[true] = $title->getFullUrl();
-		$this->messagePageUrl[false] = $this->messagePageUrl[true] . $postFix;
+		$this->messagePageUrl[ true ] = $title->getFullUrl();
+		$this->messagePageUrl[ false ] = $this->messagePageUrl[ true ] . $postFix;
 
 		wfProfileOut( __METHOD__ );
-		return $this->messagePageUrl[$withoutAnchor];
+		return $this->messagePageUrl[ $withoutAnchor ];
 	}
 
 	public function getArticleId( &$articleData = null ) {
@@ -753,17 +753,17 @@ class WallMessage {
 		}
 
 		$id = $index->getParentCommentId();
-		if ( !empty( $topObjectCache[$id] ) ) {
+		if ( !empty( $topObjectCache[ $id ] ) ) {
 			wfProfileOut( __METHOD__ );
-			return $topObjectCache[$id];
+			return $topObjectCache[ $id ];
 		}
 
 		wfProfileOut( __METHOD__ );
-		$topObjectCache[$id] = WallMessage::newFromId( $id );
-		return $topObjectCache[$id];
+		$topObjectCache[ $id ] = WallMessage::newFromId( $id );
+		return $topObjectCache[ $id ];
 	}
 
-	public function	getTopParentId() {
+	public function getTopParentId() {
 		$top = $this->getTopParentObj();
 		if ( empty( $top ) ) {
 			return null;
@@ -849,7 +849,7 @@ class WallMessage {
 	public function getUserWallUrl() {
 		$name = $this->getUser()->getName();
 
-		if ( empty( self::$wallURLCache[$name] ) ) {
+		if ( empty( self::$wallURLCache[ $name ] ) ) {
 			if ( $this->getUser()->getId() == 0 ) { // anynymous contributor
 				$url = Skin::makeSpecialUrl( 'Contributions' ) . '/' . $this->getUser()->getName();
 			} else if ( empty( F::app()->wg->EnableWallExt ) ) {
@@ -857,10 +857,10 @@ class WallMessage {
 			} else {
 				$url = Title::newFromText( $name, NS_USER_WALL )->getFullUrl();
 			}
-			self::$wallURLCache[$name] = $url;
+			self::$wallURLCache[ $name ] = $url;
 		}
 
-		return self::$wallURLCache[$name];
+		return self::$wallURLCache[ $name ];
 	}
 
 	public function getText() {
@@ -892,7 +892,7 @@ class WallMessage {
 	public function getRawText( $master = false ) {
 		$this->load( $master );
 		$data = $this->getData();
-		return $data['rawtext'];
+		return $data[ 'rawtext' ];
 
 	}
 
@@ -1095,29 +1095,29 @@ class WallMessage {
 	}
 
 	protected function getAdminNotificationEntity( $user, $reason ) {
-		$data = [];
+		$data = [ ];
 
 		$this->load();
 		$wikiId = $this->cityId;
-		$data['userIdRemoving'] = $user->getId();
-		$data['userIdWallOwner'] = $this->getWallOwner()->getId();
-		$data['parentPageId'] = $this->getArticleTitle()->getArticleId();
+		$data[ 'userIdRemoving' ] = $user->getId();
+		$data[ 'userIdWallOwner' ] = $this->getWallOwner()->getId();
+		$data[ 'parentPageId' ] = $this->getArticleTitle()->getArticleId();
 
-		$data['url'] = $this->getMessagePageUrl();
-		$data['title'] = $this->getMetaTitle();
-		$data['messageId'] = $this->getId();
-		$data['reason'] = $reason;
+		$data[ 'url' ] = $this->getMessagePageUrl();
+		$data[ 'title' ] = $this->getMetaTitle();
+		$data[ 'messageId' ] = $this->getId();
+		$data[ 'reason' ] = $reason;
 
 		if ( $this->isMain() ) {
-			$data['parentId'] = 0;
-			$data['isReply'] = false;
+			$data[ 'parentId' ] = 0;
+			$data[ 'isReply' ] = false;
 			$wnae = new WallNotificationAdminEntity( $wikiId, $data );
 		} else {
 			$parent = $this->getTopParentObj();
 			$parent->load();
-			$data['parentId'] = $parent->getId();
-			$data['title'] = $parent->getMetaTitle();
-			$data['isReply'] = true;
+			$data[ 'parentId' ] = $parent->getId();
+			$data[ 'title' ] = $parent->getMetaTitle();
+			$data[ 'isReply' ] = true;
 			$wnae = new WallNotificationAdminEntity( $wikiId, $data );
 		}
 
@@ -1130,27 +1130,27 @@ class WallMessage {
 	}
 
 	protected function getOwnerNotificationEntity( $user, $reason ) {
-		$data = [];
+		$data = [ ];
 
 		$this->load();
 		$wikiId = $this->cityId;
-		$data['userIdRemoving'] = $user->getId();
-		$data['userIdWallOwner'] = $this->getWallOwner()->getId();
-		$data['url'] = $this->getMessagePageUrl();
-		$data['title'] = $this->getMetaTitle();
-		$data['messageId'] = $this->getId();
-		$data['reason'] = $reason;
+		$data[ 'userIdRemoving' ] = $user->getId();
+		$data[ 'userIdWallOwner' ] = $this->getWallOwner()->getId();
+		$data[ 'url' ] = $this->getMessagePageUrl();
+		$data[ 'title' ] = $this->getMetaTitle();
+		$data[ 'messageId' ] = $this->getId();
+		$data[ 'reason' ] = $reason;
 
 		if ( $this->isMain() ) {
-			$data['parentMessageId'] = 0;
-			$data['isReply'] = false;
+			$data[ 'parentMessageId' ] = 0;
+			$data[ 'isReply' ] = false;
 			$wnoe = new WallNotificationOwnerEntity( $wikiId, $data );
 		} else {
 			$parent = $this->getTopParentObj();
 			$parent->load();
-			$data['parentMessageId'] = $parent->getId();
-			$data['title'] = $parent->getMetaTitle();
-			$data['isReply'] = true;
+			$data[ 'parentMessageId' ] = $parent->getId();
+			$data[ 'title' ] = $parent->getMetaTitle();
+			$data[ 'isReply' ] = true;
 			$wnoe = new WallNotificationOwnerEntity( $wikiId, $data );
 		}
 
@@ -1202,15 +1202,15 @@ class WallMessage {
 		RecentChange::notifyLog(
 			wfTimestampNow(),
 			$target,
-			$user,				// user
-			'',					// articleComment
-			'',					// ip
-			RC_EDIT,			// rc_log_type
-			$action,			// rc_action
+			$user,                // user
+			'',                    // articleComment
+			'',                    // ip
+			RC_EDIT,            // rc_log_type
+			$action,            // rc_action
 			$target,
-			$reason,			// rc_comment
-			'',					// params
-			0					// new id
+			$reason,            // rc_comment
+			'',                    // params
+			0                    // new id
 		);
 	}
 
@@ -1357,27 +1357,27 @@ class WallMessage {
 			$info = $this->mActionReason;
 		}
 
-		if ( empty( $info['userid'] ) ) {
+		if ( empty( $info[ 'userid' ] ) ) {
 			return false;
 		}
 
-		$user = User::newFromId( $info['userid'] );
+		$user = User::newFromId( $info[ 'userid' ] );
 		if ( empty( $user ) ) {
 			return false;
 		}
 
-		$info['isotime'] =  wfTimestamp( TS_ISO_8601, $info['time'] );
-		$info['mwtime'] =  wfTimestamp( TS_MW, $info['time'] );
+		$info[ 'isotime' ] = wfTimestamp( TS_ISO_8601, $info[ 'time' ] );
+		$info[ 'mwtime' ] = wfTimestamp( TS_MW, $info[ 'time' ] );
 
-		$info['user'] = $user;
+		$info[ 'user' ] = $user;
 
 		$displayname = $user->getName();
 
 		$user_link = $user->getUserPage()->getFullURL();
 
-		$info['user_displayname_linked'] = Xml::openElement( 'a', [ 'href' => $user_link ] ) . $displayname . Xml::closeElement( 'a' );
+		$info[ 'user_displayname_linked' ] = Xml::openElement( 'a', [ 'href' => $user_link ] ) . $displayname . Xml::closeElement( 'a' );
 
-		$info['status'] = $this->isAdminDelete() ? 'deleted' : 'removed';
+		$info[ 'status' ] = $this->isAdminDelete() ? 'deleted' : 'removed';
 
 		return $info;
 	}
@@ -1428,7 +1428,7 @@ class WallMessage {
 			}
 		} else {
 			$quotedMsgParent = $quotedMsg->getTopParentObj();
-			if ( $quotedMsgParent->getId() !=  $msgParent->getId() ) {
+			if ( $quotedMsgParent->getId() != $msgParent->getId() ) {
 				return false;
 			}
 		}
@@ -1448,7 +1448,7 @@ class WallMessage {
 
 	public function getPostedAsBot() {
 		$val = $this->getPropVal( WPP_WALL_POSTEDBYBOT );
-		if ( ( (int) $val ) == 0 ) {
+		if ( ( (int)$val ) == 0 ) {
 			return false;
 		}
 		$user = User::newFromId( $val );
@@ -1465,24 +1465,31 @@ class WallMessage {
 		if ( !empty( $commentId ) ) {
 			$commentsIndex = $this->getCommentsIndex();
 			if ( $commentsIndex instanceof CommentsIndex ) {
-				switch( $prop ) {
-					case WPP_WALL_ARCHIVE: $commentsIndex->updateArchived( $value );
-											break;
-					case WPP_WALL_ADMINDELETE: $commentsIndex->updateDeleted( $value );
-												$lastChildCommentId = $commentsIndex->getParentLastCommentId( $useMaster );
-												$commentsIndex->updateParentLastCommentId( $lastChildCommentId );
-
-												wfRunHooks( 'EditCommentsIndex', [ $this->getTitle(), $commentsIndex ] );
-												break;
-					case WPP_WALL_REMOVE: $commentsIndex->updateRemoved( $value );
-											$lastChildCommentId = $commentsIndex->getParentLastCommentId( $useMaster );
-											$commentsIndex->updateParentLastCommentId( $lastChildCommentId );
-
-											wfRunHooks( 'EditCommentsIndex', [ $this->getTitle(), $commentsIndex ] );
-											break;
+				switch ( $prop ) {
+					case WPP_WALL_ARCHIVE:
+						$commentsIndex->updateArchived( $value );
+						break;
+					case WPP_WALL_ADMINDELETE:
+						$commentsIndex->updateDeleted( $value );
+						$this->updateParentLastComment( $useMaster, $commentsIndex );
+						break;
+					case WPP_WALL_REMOVE:
+						$commentsIndex->updateRemoved( $value );
+						$this->updateParentLastComment( $useMaster, $commentsIndex );
+						break;
 				}
 			}
 		}
+	}
+
+	/**
+	 * @param boolean $useMaster
+	 * @param CommentsIndex $commentsIndex
+	 */
+	private function updateParentLastComment( boolean $useMaster, CommentsIndex $commentsIndex ) {
+		$lastChildCommentId = $commentsIndex->getParentLastCommentId( $useMaster );
+		$commentsIndex->updateParentLastCommentId( $lastChildCommentId );
+		wfRunHooks( 'EditCommentsIndex', [ $this->getTitle(), $commentsIndex ] );
 	}
 
 	protected function markInProps( $prop ) {
@@ -1497,7 +1504,7 @@ class WallMessage {
 		$key = $this->getPropCacheKey();
 		$cache = $this->getCache();
 		$this->propsCache = $cache->get( $key );
-		$this->propsCache[$prop] = $val;
+		$this->propsCache[ $prop ] = $val;
 
 		$cache->set( $key, $this->propsCache );
 
@@ -1506,7 +1513,7 @@ class WallMessage {
 
 	protected function unMarkInProps( $prop ) {
 		$key = $this->getPropCacheKey();
-		$this->propsCache[$prop] = false;
+		$this->propsCache[ $prop ] = false;
 
 		$cache = $this->getCache();
 		$cache->set( $key, false );
@@ -1524,7 +1531,7 @@ class WallMessage {
 		// check local memory cache
 		if ( array_key_exists( $prop, $this->propsCache ) ) {
 			wfProfileOut( __METHOD__ );
-			return $this->propsCache[$prop];
+			return $this->propsCache[ $prop ];
 		}
 
 		wfProfileIn( __METHOD__ . "_1" );
@@ -1533,7 +1540,7 @@ class WallMessage {
 		$fromcache = $cache->get( $key );
 
 		if ( !empty( $fromcache ) ) {
-			$this->propsCache =	$fromcache;
+			$this->propsCache = $fromcache;
 		}
 
 		if ( $this->propsCache === false ) {
@@ -1544,16 +1551,16 @@ class WallMessage {
 		if ( array_key_exists( $prop, $this->propsCache ) ) {
 			wfProfileOut( __METHOD__ . "_1" );
 			wfProfileOut( __METHOD__ );
-			return $this->propsCache[$prop];
+			return $this->propsCache[ $prop ];
 		}
 
 		// we don't lets add it
-		$this->propsCache[$prop] = wfGetWikiaPageProp( $prop, $this->getId() );
+		$this->propsCache[ $prop ] = wfGetWikiaPageProp( $prop, $this->getId() );
 
 		$cache->set( $key, $this->propsCache );
 		wfProfileOut( __METHOD__ . "_1" );
 		wfProfileOut( __METHOD__ );
-		return $this->propsCache[$prop];
+		return $this->propsCache[ $prop ];
 	}
 
 	protected function isMarkInProps( $prop ) {
@@ -1561,7 +1568,7 @@ class WallMessage {
 	}
 
 	protected function getPropCacheKey() {
-		return  wfMemcKey( __CLASS__, __METHOD__, $this->cityId, $this->getId(), 'v5' );
+		return wfMemcKey( __CLASS__, __METHOD__, $this->cityId, $this->getId(), 'v5' );
 	}
 
 	private function getCache() {
@@ -1646,7 +1653,7 @@ class WallMessage {
 	 * @return array
 	 */
 	public function getSquidURLs( $namespace ) {
-		$urls = [];
+		$urls = [ ];
 		$this->load( true );
 
 		// While creating a new forum board the message id === 0

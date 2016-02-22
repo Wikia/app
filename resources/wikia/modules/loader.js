@@ -236,7 +236,9 @@ define('wikia.loader', [
 			}
 
 			if (mw && use.length) {
-				mw.loader.use(use).done(callback).fail(fail(failure, {type: loader.LIBRARY, resources: useNames}));
+				mw.loader.using(use)
+					.done(callback)
+					.fail(fail(failure, {type: loader.LIBRARY, resources: useNames}));
 				load += use.length;
 			}
 

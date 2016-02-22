@@ -238,12 +238,8 @@ class MercuryApiController extends WikiaController {
 			$title = Title::newFromId( $articleId );
 		}
 
-		if ( !$title instanceof Title || !$title->isKnown() || !$title->isContentPage() ) {
-			$title = false;
-		}
-
-		if ( empty( $title ) ) {
-			throw new NotFoundApiException( 'Unable to find any article' );
+		if ( !$title instanceof Title ) {
+			throw new NotFoundApiException( 'An error occured while getting the title.' );
 		}
 
 		return $title;
@@ -398,78 +394,44 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
-	 * @throws NotFoundApiException
-	 * @throws BadRequestApiException
+	 * @return void
 	 */
-	public function getArticle() {
-		global $wgEnableMainPageDataMercuryApi, $wgCityId;
-
+	public function getPage() {
 		try {
 			$title = $this->getTitleFromRequest();
-			$articleId = $title->getArticleId();
-			$sections = $this->getVal( 'sections' );
+			$data = [ ];
 
-			// getArticle is cached (see the bottom of the method body) so there is no need for additional caching here
-			$article = Article::newFromID( $articleId );
+			// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
+			$article = Article::newFromID( $title->getArticleId() );
 
-			if ( $title->isRedirect() ) {
-				/* @var Title|null $redirectTargetTitle */
-				$redirectTargetTitle = $article->getRedirectTarget();
-				$data[ 'redirected' ] = true;
-				if ( $redirectTargetTitle instanceof Title && !empty( $redirectTargetTitle->getArticleID() ) ) {
-					$article = Article::newFromID( $redirectTargetTitle->getArticleID() );
-					$title = $redirectTargetTitle;
-				} else {
-					$data[ 'redirectEmptyTarget' ] = true;
-				}
+			if ( $article instanceof Article && $title->isRedirect() ) {
+				list( $title, $article, $data ) =
+					$this->handleRedirect( $title, $article, $data );
 			}
-
-			if ( !$article instanceof Article ) {
-				\Wikia\Logger\WikiaLogger::instance()->error(
-					'$article should be an instance of an Article',
-					[
-						'$article' => $article,
-						'$articleId' => $articleId,
-						'$title' => $title
-					]
-				);
-
-				throw new NotFoundApiException( 'Article is empty' );
-			}
-
-			$data[ 'details' ] = $this->getArticleDetails( $article );
 
 			$isMainPage = $title->isMainPage();
-			$data[ 'isMainPage' ] = $isMainPage;
+			$data['isMainPage'] = $isMainPage;
+
+			$otherLanguages = $this->getOtherLanguages( $title );
+
+			if ( !empty( $otherLanguages ) ) {
+				$data['otherLanguages'] = $otherLanguages;
+			}
 
 			$titleBuilder = new WikiaHtmlTitle();
 
-			if ( $isMainPage && !empty( $wgEnableMainPageDataMercuryApi ) &&
-				 ( new CommunityDataService( $wgCityId ) )->hasData()
-			) {
-				$data[ 'mainPageData' ] = $this->getMainPageData();
-			} else {
-				$articleAsJson = $this->getArticleJson( $articleId, $sections );
-				$data[ 'article' ] = $articleAsJson;
-				$data[ 'topContributors' ] = $this->getTopContributorsDetails(
-					$this->getTopContributorsPerArticle( $articleId )
-				);
-				$relatedPages = $this->getRelatedPages( $articleId );
+			if ( $this->shouldGetMainPageData( $isMainPage ) ) {
+				$data['mainPageData'] = $this->getMainPageData();
+				$data['details'] = $this->getArticleDetails($article);
+			} elseif ( $title->isContentPage() && $title->isKnown() ) {
+				$data = array_merge( $data, $this->getArticleData( $article ) );
 
-				if ( !empty( $relatedPages ) ) {
-					$data[ 'relatedPages' ] = $relatedPages;
-				}
 				if ( !$isMainPage ) {
-					$titleBuilder->setParts( [ $articleAsJson[ 'displayTitle' ] ] );
+					$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
 				}
 			}
-			$data[ 'htmlTitle' ] = $titleBuilder->getTitle();
 
-			$otherLanguages = $this->getOtherLanguages( $title );
-			if ( !empty( $otherLanguages ) ) {
-				$data[ 'otherLanguages' ] = $otherLanguages;
-			}
-
+			$data['htmlTitle'] = $titleBuilder->getTitle();
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 
@@ -487,13 +449,81 @@ class MercuryApiController extends WikiaController {
 			$title = $this->wg->Title;
 		}
 
-		$data[ 'articleType' ] = WikiaPageType::getArticleType( $title );
-		$data[ 'adsContext' ] = $this->mercuryApi->getAdsContext( $title );
+		$data['ns'] = $title->getNamespace();
+		$data['articleType'] = WikiaPageType::getArticleType( $title );
+		$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
 		$this->response->setVal( 'data', $data );
+	}
+
+	public function getArticle() {
+		$this->getPage();
+	}
+
+	/**
+	 * @param Title $title
+	 * @param Article $article
+	 * @param array $data
+	 *
+	 * @return array [Title, Article, array]
+	 */
+	private function handleRedirect( Title $title, Article $article, $data ) {
+		/* @var Title|null $redirectTargetTitle */
+		$redirectTargetTitle = $article->getRedirectTarget();
+		$redirectTargetID = $redirectTargetTitle->getArticleID();
+		$data['redirected'] = true;
+
+		if ( $redirectTargetTitle instanceof Title && !empty( $redirectTargetID ) ) {
+			$title = $redirectTargetTitle;
+			$article = Article::newFromID( $redirectTargetID );
+		} else {
+			$data['redirectEmptyTarget'] = true;
+		}
+
+		return [ $title, $article, $data ];
+	}
+
+	private function shouldGetMainPageData( $isMainPage ) {
+		global $wgEnableMainPageDataMercuryApi, $wgCityId;
+
+		return $isMainPage &&
+			!empty( $wgEnableMainPageDataMercuryApi ) &&
+			( new CommunityDataService( $wgCityId ) )->hasData();
+	}
+
+	/**
+	 * @param $article
+	 * @return array
+	 * @throws NotFoundApiException
+	 */
+	private function getArticleData( $article ) {
+		if ( !$article instanceof Article ) {
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				'$article should be an instance of an Article',
+				['article' => $article]
+			);
+
+			throw new NotFoundApiException( 'Article is empty' );
+		}
+
+		$articleId = $article->getID();
+		$sections = $this->getVal( 'sections' );
+
+		$data['details'] = $this->getArticleDetails( $article );
+		$data['article'] = $this->getArticleJson( $articleId, $sections );
+		$data['topContributors'] = $this->getTopContributorsDetails(
+			$this->getTopContributorsPerArticle( $articleId )
+		);
+		$relatedPages = $this->getRelatedPages( $articleId );
+
+		if ( !empty( $relatedPages ) ) {
+			$data['relatedPages'] = $relatedPages;
+		}
+
+		return $data;
 	}
 
 	/**
