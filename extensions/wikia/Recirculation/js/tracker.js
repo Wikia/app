@@ -5,14 +5,14 @@ define('ext.wikia.recirculation.tracker', [
 ], function (tracker, abTest) {
 	'use strict';
 
-	function trackQualifiedClick(experiment, label) {
+	function trackVerboseClick(experiment, label) {
 		var group = abTest.getGroup(experiment),
 			structuredLabel = [experiment, group, label].join('=');
 
 		trackClick(structuredLabel);
 	}
 
-	function trackQualifiedImpression(experiment, label) {
+	function trackVerboseImpression(experiment, label) {
 		var group = abTest.getGroup(experiment),
 			structuredLabel = [experiment, group, label].join('=');
 
@@ -38,7 +38,7 @@ define('ext.wikia.recirculation.tracker', [
 	}
 
 	return {
-		trackQualifiedClick: trackQualifiedClick,
-		trackQualifiedImpression: trackQualifiedImpression
+		trackVerboseClick: trackVerboseClick,
+		trackVerboseImpression: trackVerboseImpression
 	};
 });

@@ -34,7 +34,7 @@ describe('ext.wikia.recirculation.tracker', function () {
 		spyOn(mocks.wikiaTracker, 'track');
 	});
 
-	describe('trackQualifiedClick', function() {
+	describe('trackVerboseClick', function() {
 		it('Calls the track method with the proper parameters', function() {
 			var tracker = getTracker(),
 				label = 'Link',
@@ -47,12 +47,12 @@ describe('ext.wikia.recirculation.tracker', function () {
 				label: expectedLabel
 			};
 
-			tracker.trackQualifiedClick(experimentName, label);
+			tracker.trackVerboseClick(experimentName, label);
 			expect(mocks.wikiaTracker.track).toHaveBeenCalledWith(expectedParams);
 		});
 	});
 
-	describe('trackQualifiedImpression', function() {
+	describe('trackVerboseImpression', function() {
 		it('Calls the track method with the proper parameters', function() {
 			var tracker = getTracker(),
 				label = 'Link',
@@ -65,7 +65,7 @@ describe('ext.wikia.recirculation.tracker', function () {
 				label: expectedLabel
 			};
 
-			tracker.trackQualifiedImpression(experimentName, label);
+			tracker.trackVerboseImpression(experimentName, label);
 			expect(mocks.wikiaTracker.track).toHaveBeenCalledWith(expectedParams);
 		});
 	});

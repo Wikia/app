@@ -22,16 +22,16 @@ require([
 
 	if (abTest.inGroup(experimentName, 'ARTICLE_FOOTER')) {
 		injectDiscussions(function () {
-			tracker.trackQualifiedImpression(experimentName, 'discussions');
+			tracker.trackVerboseImpression(experimentName, 'discussions');
 			$('.discussion-timestamp').timeago();
 
 			$('.discussion-thread').click(function () {
-				tracker.trackQualifiedClick(experimentName, 'discussions-tile');
+				tracker.trackVerboseClick(experimentName, 'discussions-tile');
 				window.location = $(this).data('link');
 			});
 
 			$('.discussion-link').mousedown(function() {
-				tracker.trackQualifiedClick(experimentName, 'discussions-link');
+				tracker.trackVerboseClick(experimentName, 'discussions-link');
 			});
 		});
 	}

@@ -67,7 +67,7 @@ require([
 
 	function renderArticles(section) {
 		var placeholderImage = w.wgExtensionsPath + '/wikia/Recirculation/images/placeholder.png';
-		tracker.trackQualifiedImpression(experimentName, 'in-content');
+		tracker.trackVerboseImpression(experimentName, 'in-content');
 
 		return function (response) {
 			var items = [],
@@ -86,7 +86,7 @@ require([
 			section.$start.before($html);
 
 			$html.on('mousedown', 'a', function() {
-				tracker.trackQualifiedClick(experimentName, 'in-content');
+				tracker.trackVerboseClick(experimentName, 'in-content');
 			});
 		}
 	}

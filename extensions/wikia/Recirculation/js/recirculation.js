@@ -14,7 +14,7 @@ define('ext.wikia.recirculation.recirculation', [
 	var experimentName = 'RECIRCULATION_RAIL';
 
 	function trackClick() {
-		tracker.trackQualifiedClick(experimentName, 'rail-item');
+		tracker.trackVerboseClick(experimentName, 'rail-item');
 	}
 
 	function injectFandomPosts(type, element) {
@@ -69,7 +69,7 @@ define('ext.wikia.recirculation.recirculation', [
 				return;
 		}
 
-		trackQualifiedImpression(experimentName, 'rail');
+		trackVerboseImpression(experimentName, 'rail');
 		$(element).on('mousedown', 'a', trackClick);
 	}
 
