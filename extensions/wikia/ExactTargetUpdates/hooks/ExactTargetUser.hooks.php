@@ -65,11 +65,7 @@ class ExactTargetUserHooks {
 	 * @return bool
 	 */
 	public function onConfirmEmailComplete( \User $oUser ) {
-		/* Get and run the task */
-		$oUserHelper = $this->getUserHelper();
-		$task = $oUserHelper->getUpdateUserTask();
-		$task->call( 'updateUserEmail', $oUser->getId(), $oUser->getEmail() );
-		$task->queue();
+		$this->queueUpdateUserTask( $oUser );
 		return true;
 	}
 

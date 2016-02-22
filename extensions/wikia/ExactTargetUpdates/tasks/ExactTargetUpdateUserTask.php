@@ -15,52 +15,6 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 	 */
 
 	/**
-	 * Sends update of user email to ExactTarget
-	 * @param int $iUserId
-	 * @param string $iUserEmail
-	 */
-	public function updateUserEmail( $iUserId, $sUserEmail ) {
-
-		if ( empty( $sUserEmail ) ) {
-			throw new \Exception( 'No user email address provided in params' );
-		}
-
-		/* Delete subscriber (email address) used by touched user */
-		$oDeleteUserTask = $this->getDeleteUserTask();
-		$oDeleteUserTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
-		$oDeleteUserTask->deleteSubscriber( $iUserId );
-		/* Subscriber list contains unique emails
-		 * Assuming email may be new - try to create subscriber object using the email */
-		$oCreateUserTask = $this->getCreateUserTask();
-		$oCreateUserTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
-		$oCreateUserTask->createSubscriber( $sUserEmail );
-
-		/* Prepare user fields for update */
-		$oHelper = $this->getUserHelper();
-		$oUserHooksHelper = $this->getUserHooksHelper();
-		$oUser = $oHelper->getUserFromId( $iUserId );
-		$aUserData = $oUserHooksHelper->prepareUserParams( $oUser );
-
-		/* Prepare user update API params */
-		$aApiParams = $oHelper->prepareUsersUpdateParams( [ $aUserData ] );
-		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
-
-		/* Update user */
-		$oApiDataExtension = $this->getApiDataExtension();
-		$oUpdateUserEmailResult = $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
-		$this->info( __METHOD__ . ' OverallStatus: ' . $oUpdateUserEmailResult->OverallStatus );
-		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oUpdateUserEmailResult ) );
-
-		if ( $oUpdateUserEmailResult->OverallStatus === 'Error' ) {
-			throw new \Exception(
-				'Error in ' . __METHOD__ . ': ' . $oUpdateUserEmailResult->Results->StatusMessage
-			);
-		}
-
-		return $oUpdateUserEmailResult->Results->StatusMessage;
-	}
-
-	/**
 	 * Task for creating a record with user group and user in ExactTarget
 	 * @param int $iUserId
 	 * @param string $sGroup name of added group
