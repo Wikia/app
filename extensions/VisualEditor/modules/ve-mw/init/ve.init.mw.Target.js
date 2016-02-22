@@ -1014,12 +1014,12 @@ ve.init.mw.Target.prototype.load = function ( additionalModules ) {
 		data.oldid = this.revid;
 	}
 
-	if ( uri.query.preload ) {
-		data.preload = uri.query.preload;
-	}
-
 	// Load DOM
 	start = ve.now();
+
+	if ( uri.query.preload ) {
+		data.page = uri.query.preload;
+	}
 
 	xhr = this.constructor.static.apiRequest( data );
 	this.loading = xhr.then(

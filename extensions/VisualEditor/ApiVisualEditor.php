@@ -133,24 +133,6 @@ class ApiVisualEditor extends ApiBase {
 		return $req->getContent();
 	}
 
-
-	protected function getPreloadHTML( $title ) {
-		$preloadTitle = Title::newFromText( $title );
-
-		if ( isset( $preloadTitle ) && $preloadTitle->userCan( 'read' ) ) {
-			$data = $this->getHTML( Title::newFromText( $title ) );
-
-			if ( $data ) {
-				$data['oldid'] = 0;
-				$data['basetimestamp'] = wfTimestampNow();
-
-				return $data;
-			}
-		}
-
-		return false;
-	}
-
 	protected function getHTML( $title, $parserParams ) {
 		$restoring = false;
 
@@ -367,10 +349,6 @@ class ApiVisualEditor extends ApiBase {
 		if ( !$page ) {
 			$this->dieUsageMsg( 'invalidtitle', $params['page'] );
 		}
-		if ( !in_array( $page->getNamespace(), $this->veConfig->get( 'VisualEditorNamespaces' ) ) ) {
-			$this->dieUsage( "VisualEditor is not enabled in namespace " .
-				$page->getNamespace(), 'novenamespace' );
-		}
 
 		$parserParams = array();
 		if ( isset( $params['oldid'] ) ) {
@@ -385,11 +363,7 @@ class ApiVisualEditor extends ApiBase {
 		wfDebugLog( 'visualeditor', "called on '$page' with paction: '{$params['paction']}'" );
 		switch ( $params['paction'] ) {
 			case 'parse':
-				if ( isset( $params['preload'] )) {
-					$parsed = $this->getPreloadHTML( urldecode( $params['preload'] ) );
-				} else {
-					$parsed = $this->getHTML( $page, $parserParams );
-				}
+				$parsed = $this->getHTML( $page, $parserParams );
 
 				// Dirty hack to provide the correct context for edit notices
 				global $wgTitle; // FIXME NOOOOOOOOES
