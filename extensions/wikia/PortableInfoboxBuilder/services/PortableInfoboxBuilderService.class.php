@@ -182,11 +182,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 * @return string
 	 */
 	protected function getFormattedMarkup( $xml, $formatted ) {
-		$newXml = new SimpleXMLElement( '<' . PortableInfoboxParserTagController::PARSER_TAG_NAME . '/>' );
-		// import to dom for processing and ability to remove <?xml document header
-		$infoboxDom = dom_import_simplexml( $newXml );
-		// make the output document human-readable (formatted) or condensed (no additional whitespace)
-		$infoboxDom->ownerDocument->formatOutput = $formatted;
+		$infoboxDom = $this->createInfoboxDom( $formatted );
 
 		$inGroup = false;
 		$currentGroupDom = null;
@@ -255,5 +251,17 @@ class PortableInfoboxBuilderService extends WikiaService {
 		return dom_import_simplexml(
 			new SimpleXMLElement( '<' . \Wikia\PortableInfoboxBuilder\Nodes\NodeGroup::XML_TAG_NAME . '/>' )
 		);
+	}
+
+	/**
+	 * @param $formatted make the document human-readable (true) or condensed (false)
+	 * @return DOMElement
+	 */
+	protected function createInfoboxDom( $formatted ) {
+		// make the output document human-readable (formatted) or condensed (no additional whitespace)
+		$newXml = new SimpleXMLElement( '<' . PortableInfoboxParserTagController::PARSER_TAG_NAME . '/>' );
+		$infoboxDom = dom_import_simplexml( $newXml );
+		$infoboxDom->ownerDocument->formatOutput = $formatted;
+		return $infoboxDom;
 	}
 }
