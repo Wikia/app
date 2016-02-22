@@ -22,14 +22,13 @@ class ExactTargetClient implements Client {
 	 */
 	public function deleteSubscriber( $userId ) {
 		$userEmail = $this->retrieveEmailByUserId( $userId );
-
-		/* Skip deletion if no email found */
 		if ( empty( $userEmail ) ) {
 			return;
 		}
-
-		/* Skip deletion if email is used by other account */
-		if ( $this->isEmailInUse( $userEmail, $userId ) ) {
+		// retrieve users ids list
+		$ids = $this->retrieveUserIdsByEmail( $userEmail );
+		/* Skip deletion if no email found or email used by other account */
+		if ( !empty( $ids ) && ( count( $ids ) > 1 || $ids[ 0 ] != $userId ) ) {
 			return;
 		}
 
@@ -68,47 +67,22 @@ class ExactTargetClient implements Client {
 	}
 
 	public function retrieveEmailByUserId( $userId ) {
-		$result = $this->retrieve(
-			[ 'user_email' ],
-			'user_id',
-			[ $userId ],
-			ResourceEnum::USER
-		);
+		$result = $this->retrieve( [ 'user_email' ], 'user_id', [ $userId ], ResourceEnum::USER );
+
 		return ( new UserEmailAdapter( $result ) )->getEmail();
 	}
 
 	public function retrieveUsersEdits( $usersIds ) {
 		$result = $this->retrieve(
-			[ 'user_id', 'wiki_id', 'contributions' ],
-			'user_id',
-			$usersIds,
-			ResourceEnum::USER_WIKI
-		);
+			[ 'user_id', 'wiki_id', 'contributions' ], 'user_id', $usersIds, ResourceEnum::USER_WIKI );
+
 		return ( new UserEditsAdapter( $result ) )->getEdits();
 	}
 
-	/**
-	 * Checks whether there are any users that has provided email
-	 * @param string $sEmail Email address to check in ExactTarget
-	 * @param int $iSkipUserId Skip this user ID when checking if email is used by any account
-	 * @return bool
-	 */
-	protected function isEmailInUse( $sEmail, $iSkipUserId = null ) {
-		$oRetrieveUserTask = new ExactTargetRetrieveUserTask();
-		/* @var stdClass $oUsersIds */
-		$oUsersIds = $oRetrieveUserTask->retrieveUserIdsByEmail( $sEmail );
-		$iUsersCount = count( $oUsersIds->Results );
+	public function retrieveUserIdsByEmail( $email ) {
+		$result = $this->retrieve( [ 'user_id' ], 'user_email', [ $email ], ResourceEnum::USER );
 
-		// Email is in use when there are more than one user with email
-		$ret = ( $iUsersCount > 1 );
-
-		// One or less users
-		if ( !$ret ) {
-			// Email is in use when there's one user not equal to $iSkipUserId from parameters list
-			$ret = $iUsersCount == 1 && $oUsersIds->Results->Properties->Property->Value != $iSkipUserId;
-		}
-
-		return $ret;
+		return ( new UserIdsAdapter( $result ) )->getUsersIds();
 	}
 
 	private function retrieve( array $properties, $filterProperty, array $filterValues, $resource ) {

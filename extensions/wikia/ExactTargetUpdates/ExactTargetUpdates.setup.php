@@ -93,6 +93,7 @@ $wgAutoloadClasses['Wikia\ExactTarget\ResourceEnum'] =  $dir . '/client/ExactTar
 /* Data Adapters */
 $wgAutoloadClasses['Wikia\ExactTarget\UserEmailAdapter'] =  $dir . '/client/adapters/UserEmailAdapter.class.php';
 $wgAutoloadClasses['Wikia\ExactTarget\UserEditsAdapter'] =  $dir . '/client/adapters/UserEditsAdapter.class.php';
+$wgAutoloadClasses['Wikia\ExactTarget\UserIdsAdapter'] =  $dir . '/client/adapters/UserIdsAdapter.class.php';
 
 /* Exceptions*/
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetException'] =  $dir . '/client/ExactTargetException.php';
