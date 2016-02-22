@@ -2,7 +2,6 @@
 namespace Wikia\ExactTarget;
 
 use Wikia\Logger\Loggable;
-use Wikia\Logger\WikiaLogger;
 
 class ExactTargetClient implements Client {
 	use Loggable;
@@ -15,13 +14,7 @@ class ExactTargetClient implements Client {
 			->withUserData( [ $userData ] )
 			->build();
 
-		$response = $this->sendRequest( 'Update', $request );
-
-		if ( $response->OverallStatus === 'Error' ) {
-			throw new \Exception(
-				'Error in ' . __METHOD__ . ': ' . $response->Results->StatusMessage
-			);
-		}
+		$this->sendRequest( 'Update', $request );
 	}
 
 	/**
@@ -69,13 +62,7 @@ class ExactTargetClient implements Client {
 			->withProperties( $userProperties )
 			->build();
 
-		$createUserPropertiesResult = $this->sendRequest( 'Update', $request );
-
-		if ( $createUserPropertiesResult->OverallStatus === 'Error' ) {
-			throw new \Exception(
-				'Error in ' . __METHOD__ . ': ' . $createUserPropertiesResult->Results[ 0 ]->StatusMessage
-			);
-		}
+		$this->sendRequest( 'Update', $request );
 
 		$userDataVerificationTask = new ExactTargetUserDataVerificationTask();
 		$userDataVerificationResult = $userDataVerificationTask->verifyUserPropertiesData( $userId );
@@ -84,30 +71,22 @@ class ExactTargetClient implements Client {
 	}
 
 	public function retrieveEmailByUserId( $userId ) {
-		try {
-			$result = $this->retrieve(
-				[ 'user_email' ],
-				'user_id',
-				[ $userId ],
-				\Wikia\ExactTarget\ResourceEnum::USER
-			);
-		} catch ( EmptyResultException $e ) {
-			return '';
-		}
+		$result = $this->retrieve(
+			[ 'user_email' ],
+			'user_id',
+			[ $userId ],
+			ResourceEnum::USER
+		);
 		return ( new UserEmailAdapter( $result ) )->getEmail();
 	}
 
 	public function retrieveUsersEdits( $usersIds ) {
-		try {
-			$result = $this->retrieve(
-				[ 'user_id', 'wiki_id', 'contributions' ],
-				'user_id',
-				$usersIds,
-				\Wikia\ExactTarget\ResourceEnum::USER_WIKI
-			);
-		} catch ( EmptyResultException $e ) {
-			return [ ];
-		}
+		$result = $this->retrieve(
+			[ 'user_id', 'wiki_id', 'contributions' ],
+			'user_id',
+			$usersIds,
+			ResourceEnum::USER_WIKI
+		);
 		return ( new UserEditsAdapter( $result ) )->getEdits();
 	}
 
@@ -135,13 +114,6 @@ class ExactTargetClient implements Client {
 		return $ret;
 	}
 
-	/**
-	 * @param array $properties
-	 * @param string $filterProperty
-	 * @param array $filterValues
-	 * @return null
-	 * @throws \Exception
-	 */
 	private function retrieve( array $properties, $filterProperty, array $filterValues, $resource ) {
 		$request = ExactTargetRequestBuilder::createRetrieve()
 			->withResource( $resource )
@@ -150,34 +122,19 @@ class ExactTargetClient implements Client {
 			->withFilterValues( $filterValues )
 			->build();
 
-		$response = $this->sendRequest( 'Retrieve', $request );
-
-		if ( $response->OverallStatus === 'OK' ) {
-			if ( empty( $response->Results ) ) {
-				throw new EmptyResultException();
-			}
-			return $response->Results;
-		}
-
-		if ( $response->OverallStatus === 'Error' ) {
-			$exception = new \Exception( $response->Results->StatusMessage );
-			WikiaLogger::instance()->error( $response->Results->StatusMessage, [
-				'exception' => $exception,
-			] );
-			throw $exception;
-		}
-
-		// TODO provide more context to logs - e.g. request object
-		$exception = new \Exception( $response->OverallStatus );
-		WikiaLogger::instance()->error( $response->OverallStatus, [
-			'exception' => $exception,
-		] );
-		throw $exception;
+		return $this->sendRequest( 'Retrieve', $request );
 	}
 
 	protected function sendRequest( $type, $request ) {
 		// send first call
-		return $this->doCall( $type, $request, 0 );
+		$response = $this->doCall( $type, $request, 0 );
+		if ( $response->OverallStatus === 'OK' ) {
+			return $response->Results;
+		}
+
+		$exception = new ExactTargetException( $response->Results->StatusMessage );
+		$this->error( self::EXACT_TARGET_LABEL, [ 'exception' => $exception ] );
+		throw $exception;
 	}
 
 	protected function doCall( $method, $request, $retry ) {

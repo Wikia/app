@@ -98,7 +98,7 @@ $wgAutoloadClasses['Wikia\ExactTarget\UserEmailAdapter'] =  $dir . '/client/adap
 $wgAutoloadClasses['Wikia\ExactTarget\UserEditsAdapter'] =  $dir . '/client/adapters/UserEditsAdapter.class.php';
 
 /* Exceptions*/
-$wgAutoloadClasses['Wikia\ExactTarget\EmptyResultException'] =  $dir . '/client/EmptyResultException.php';
+$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetException'] =  $dir . '/client/ExactTargetException.php';
 
 /* ExactTarget_* classes */
 

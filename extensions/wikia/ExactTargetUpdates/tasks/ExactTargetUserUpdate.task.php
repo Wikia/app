@@ -1,6 +1,7 @@
 <?php
 namespace Wikia\ExactTarget;
 
+use Wikia\Logger\WikiaLogger;
 use Wikia\Tasks\Tasks\BaseTask;
 use Wikia\Util\Assert;
 
@@ -23,6 +24,8 @@ class ExactTargetUserUpdate extends BaseTask {
 	 * @throws \Wikia\Util\AssertionException
 	 */
 	public function update( array $userData, array $userProperties ) {
+		$e = new ExactTargetException('asdfadsf');
+		WikiaLogger::instance()->error( "test test", [ 'exception' => $e ] );
 		Assert::true( !empty( $userData[ 'user_id' ] ), 'User ID missing' );
 		Assert::true( !empty( $userData[ 'user_email' ] ), 'User email missing' );
 
