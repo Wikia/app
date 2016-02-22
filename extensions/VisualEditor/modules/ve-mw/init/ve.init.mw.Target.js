@@ -1014,7 +1014,7 @@ ve.init.mw.Target.prototype.load = function ( additionalModules ) {
 		data.oldid = this.revid;
 	}
 
-	if (uri.query.preload) {
+	if ( uri.query.preload ) {
 		data.preload = uri.query.preload;
 	}
 

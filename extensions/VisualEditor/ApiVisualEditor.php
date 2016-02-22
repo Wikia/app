@@ -134,11 +134,11 @@ class ApiVisualEditor extends ApiBase {
 	}
 
 
-	protected function getPreloadHTML( $params ) {
-		$preloadTitle = Title::newFromText( urldecode( $params['preload'] ) );
+	protected function getPreloadHTML( $title ) {
+		$preloadTitle = Title::newFromText( $title );
 
 		if ( isset( $preloadTitle ) && $preloadTitle->userCan( 'read' ) ) {
-			$data = $this->getHTML( Title::newFromText( urldecode( $params['preload'] ) ) );
+			$data = $this->getHTML( Title::newFromText( $title ) );
 
 			if ( $data ) {
 				$data['oldid'] = 0;
@@ -386,7 +386,7 @@ class ApiVisualEditor extends ApiBase {
 		switch ( $params['paction'] ) {
 			case 'parse':
 				if ( isset( $params['preload'] )) {
-					$parsed = $this->getPreloadHTML( $params );
+					$parsed = $this->getPreloadHTML( urldecode( $params['preload'] ) );
 				} else {
 					$parsed = $this->getHTML( $page, $parserParams );
 				}
