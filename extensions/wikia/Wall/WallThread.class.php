@@ -74,6 +74,8 @@ class WallThread {
 		if ( empty( $this->data->threadReplyIds ) ) {
 			$this->data->threadReplyIds = [ ];
 		}
+		
+		$something = '';
 
 		foreach ( $this->data->threadReplyIds as $id ) {
 			$wm = WallMessage::newFromId( $id, $this->mForceMaster );
