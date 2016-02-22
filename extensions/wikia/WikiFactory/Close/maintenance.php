@@ -325,6 +325,15 @@ class CloseWikiMaintenance {
 		$wgUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $cityid );
 
 		if ( $swiftEnabled ) {
+			// check that S3 bucket for this wiki exists (PLATFORM-1199)
+			$swiftStorage = \Wikia\SwiftStorage::newFromWiki( $cityid );
+			$isEmpty = $swiftStorage->getContainer()->object_count == 0;
+
+			if ($isEmpty) {
+				$this->log( sprintf( "'%s' S3 bucket is empty, leave early\n", $swiftStorage->getContainerName() ) );
+				return true;
+			}
+
 			// sync Swift container to the local directory
 			$directory = sprintf( "/tmp/images/{$dbname}/" );
 
