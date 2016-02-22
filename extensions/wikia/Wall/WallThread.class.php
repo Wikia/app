@@ -217,6 +217,7 @@ class WallThread {
 			);
 			return $row;
 		} );
+		$test = "";
 
 		// get last post info
 		$revision = Revision::newFromId( $data->rev_id );
