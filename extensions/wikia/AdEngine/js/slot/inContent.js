@@ -17,7 +17,15 @@ define('ext.wikia.adEngine.slot.inContent', [
 		var adHtml = '<div id="' + slotName + '" class="wikia-ad default-height"></div>',
 			logMessage,
 			logWikiData = '(wikiId: ' + win.wgCityId + ' articleId: ' + win.wgArticleId + ')',
-			$header;
+			$header,
+			slotNameGA;
+
+		if (!slotName) {
+			log('slotName is falsy', 'error', logGroup);
+			return;
+		}
+
+		slotNameGA = slotName.toLowerCase();
 
 		// take 2nd header from the article
 		header = $(selector)[1];
@@ -26,7 +34,7 @@ define('ext.wikia.adEngine.slot.inContent', [
 		if (!header) {
 			logMessage = 'no second section in the article ' + logWikiData;
 			log(slotName + ' not added - ' + logMessage, 'debug', logGroup);
-			adTracker.track('slot/' + slotName.toLowerCase() + '/failed', {'reason': logMessage});
+			adTracker.track('slot/' + slotNameGA + '/failed', {'reason': logMessage});
 			return;
 		}
 
@@ -34,13 +42,13 @@ define('ext.wikia.adEngine.slot.inContent', [
 		if ($header.width() < $('#mw-content-text').width()) {
 			logMessage = '2nd section in the article is not full width ' + logWikiData;
 			log(slotName + ' not added - ' + logMessage, 'debug', logGroup);
-			adTracker.track('slot/' + slotName.toLowerCase() + '/failed', {'reason': logMessage});
+			adTracker.track('slot/' + slotNameGA + '/failed', {'reason': logMessage});
 			return;
 		}
 
 		log('insertSlot()', 'debug', logGroup);
 		$header.before(adHtml);
-		adTracker.track('slot/' + slotName.toLowerCase() + '/success');
+		adTracker.track('slot/' + slotNameGA + '/success');
 		win.adslots2.push(slotName);
 	}
 
