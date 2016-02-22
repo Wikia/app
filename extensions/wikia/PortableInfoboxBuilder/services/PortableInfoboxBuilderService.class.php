@@ -196,21 +196,26 @@ class PortableInfoboxBuilderService extends WikiaService {
 
 			if ( !$inGroup ) {
 				if ( $currentChildNode->getName() !== 'header' ) {
+					// regular non-group node
 					$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $childNodeDom ) );
 				} else {
+					// header node starting a group; we create an empty group and append the current node (header) to it
 					$currentGroupDom = $this->createGroupDom();
 					$currentGroupDom->appendChild( $currentGroupDom->ownerDocument->importNode( $childNodeDom, true ) );
 					$inGroup = true;
 				}
 			} else {
 				if ( !in_array( $currentChildNode->getName(), [ 'header', 'title' ] ) ) {
+					// regular node inside of a group
 					$currentGroupDom->appendChild( $currentGroupDom->ownerDocument->importNode( $childNodeDom, true ) );
 				} else {
 					if ( $currentChildNode->getName() === 'header' ) {
+						// header node starting a group - we close the current one and open up a new
 						$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $currentGroupDom ) );
 						$currentGroupDom = $this->createGroupDom();
 						$currentGroupDom->appendChild( $currentGroupDom->ownerDocument->importNode( $childNodeDom, true ) );
 					} else {
+						// title node, terminating the group and returning to regular flow
 						$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $currentGroupDom ) );
 						$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $childNodeDom ) );
 						$inGroup = false;
@@ -219,7 +224,8 @@ class PortableInfoboxBuilderService extends WikiaService {
 			}
 		}
 
-		if ( !empty( $newChild ) && $inGroup ) {
+		// make sure to add the last unterminated group
+		if ( !empty( $currentGroupDom ) && $inGroup ) {
 			$infoboxDom->appendChild( $infoboxDom->ownerDocument->importNode( $currentGroupDom, true ) );
 		}
 
