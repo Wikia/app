@@ -68,6 +68,7 @@ $wgResourceModules += array(
 	'ext.visualEditor.wikia.oasisViewPageTarget' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => array(
 			've/init/ve.init.wikia.js',
+			've/init/ve.init.wikia.Optimizely.js',
 			've/init/ve.init.wikia.ViewPageTarget.js',
 			've/init/ve.init.wikia.TargetEvents.js',
 		),
@@ -121,7 +122,8 @@ $wgResourceModules += array(
 			've/ui/ve.ui.WikiaCommandRegistry.js',
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
 			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
-			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
+			've/ui/dialogs/ve.ui.WikiaImageInsertDialog.js',
+			've/ui/dialogs/ve.ui.WikiaVideoInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSingleMediaDialog.js',
 			've/ui/dialogs/ve.ui.WikiaMapInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaInfoboxInsertDialog.js',
@@ -159,8 +161,12 @@ $wgResourceModules += array(
 		'messages' => array(
 			'oasis-content-picture-added-by',
 			'videohandler-video-views',
+			'visualeditor-dialog-image-insert-title',
+			'visualeditor-dialog-video-insert-title',
 			'wikia-visualeditor-preference-enable',
 			'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip',
+			'wikia-visualeditor-dialogbutton-imageinsert-tooltip',
+			'wikia-visualeditor-dialogbutton-videoinsert-tooltip',
 			'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip',
 			'wikia-visualeditor-dialog-wikiamapinsert-create-button',
 			'wikia-visualeditor-dialog-wikiamapinsert-headline',

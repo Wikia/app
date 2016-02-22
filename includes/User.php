@@ -3976,7 +3976,7 @@ class User {
 	 */
 	public function matchEditToken( $val, $salt = '', $request = null ) {
 		$sessionToken = $this->getEditToken( $salt, $request );
-		$equals = hash_equals( $sessionToken, $val );
+		$equals = !is_null( $val ) && hash_equals( $sessionToken, $val );
 		if ( !$equals ) {
 			wfDebug( "User::matchEditToken: broken session data\n" );
 
@@ -4015,7 +4015,7 @@ class User {
 	 */
 	public function matchEditTokenNoSuffix( $val, $salt = '', $request = null ) {
 		$sessionToken = $this->getEditToken( $salt, $request );
-		return hash_equals( substr( $sessionToken, 0, 32 ), substr( $val, 0, 32 ) );
+		return !is_null( $val ) && hash_equals( substr( $sessionToken, 0, 32 ), substr( $val, 0, 32 ) );
 	}
 
 	/**
@@ -4436,7 +4436,7 @@ class User {
 	 * @return Array of Strings List of permission key names for given groups combined
 	 */
 	public static function getGroupPermissions( $groups ) {
-		global $wgGroupPermissions, $wgRevokePermissions;
+		global $wgGroupPermissions;
 		$rights = array();
 		// grant every granted permission first
 		foreach( $groups as $group ) {
@@ -4444,13 +4444,6 @@ class User {
 				$rights = array_merge( $rights,
 					// array_filter removes empty items
 					array_keys( array_filter( $wgGroupPermissions[$group] ) ) );
-			}
-		}
-		// now revoke the revoked permissions
-		foreach( $groups as $group ) {
-			if( isset( $wgRevokePermissions[$group] ) ) {
-				$rights = array_diff( $rights,
-					array_keys( array_filter( $wgRevokePermissions[$group] ) ) );
 			}
 		}
 		return array_unique( $rights );
@@ -4503,9 +4496,9 @@ class User {
 	 * @return Array of internal group names
 	 */
 	public static function getAllGroups() {
-		global $wgGroupPermissions, $wgRevokePermissions;
+		global $wgGroupPermissions;
 		return array_diff(
-			array_merge( array_keys( $wgGroupPermissions ), array_keys( $wgRevokePermissions ) ),
+			array_keys( $wgGroupPermissions ),
 			self::getImplicitGroups()
 		);
 	}
