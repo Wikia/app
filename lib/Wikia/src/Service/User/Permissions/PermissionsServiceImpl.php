@@ -106,6 +106,11 @@ class PermissionsServiceImpl implements PermissionsService {
 	 */
 	public function getUserPermissions( \User $user ) {
 		$userId = $user->getId();
+
+		if ( empty( $userId ) ) {
+			return [];
+		}
+
 		if ( !isset( $this->userPermissions[ $userId ] ) ) {
 			$permissions = $this->permissionsDefinition->getGroupPermissions( $this->getEffectiveUserGroups( $user ) );
 			wfRunHooks( 'UserGetRights', array( $user, &$permissions ) );
