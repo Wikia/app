@@ -1,4 +1,5 @@
 <?php
+use Wikia\Logger\WikiaLogger;
 
 /**
  * Forum
@@ -26,14 +27,18 @@ class Forum extends Walls {
 	const LEN_TOO_SMALL_ERR = -2;
 
 	public function getBoardList( $db = DB_SLAVE ) {
-		$boardTitles = $this->getListTitles( $db, NS_WIKIA_FORUM_BOARD );
-		$titlesBatch = new TitleBatch( $boardTitles );
+		$titlesBatch = $this->getTitlesForNamespace( $db, NS_WIKIA_FORUM_BOARD );
 		$orderIndexes = $titlesBatch->getWikiaProperties( WPP_WALL_ORDER_INDEX, $db );
 
-		$boards = [];
+		$boards = [ ];
 		arsort( $orderIndexes );
 		foreach ( array_keys( $orderIndexes ) as $pageId ) {
-			$title = $boardTitles[$pageId];
+			$title = $titlesBatch->getById( $pageId );
+
+			if ( empty( $title ) ) {
+				WikiaLogger::instance()->error( "Expecting title got null", [ "pageId" => $pageId ] );
+				continue;
+			}
 
 			/** @var $board ForumBoard */
 			$board = ForumBoard::newFromTitle( $title );
