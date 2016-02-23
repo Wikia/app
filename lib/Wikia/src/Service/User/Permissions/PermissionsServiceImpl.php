@@ -64,10 +64,12 @@ class PermissionsServiceImpl implements PermissionsService {
 	 * and autopromoted groups
 	 * @param \User $user
 	 * @param $reCacheAutomaticGroups
-	 * @return Array of String internal group names
+	 * @return string[] internal group names
 	 */
 	public function getAutomaticUserGroups( \User $user, $reCacheAutomaticGroups = false ) {
-		if ( $reCacheAutomaticGroups || !isset( $this->implicitUserGroups[ $user->getId() ] ) ) {
+		if ( !$reCacheAutomaticGroups && isset( $this->implicitUserGroups[ $user->getId() ] ) ) {
+			$implicitGroups = $this->implicitUserGroups[ $user->getId() ];
+		} else {
 			$implicitGroups = array( '*' );
 			if ( $user->getId() ) {
 				$implicitGroups[] = 'user';
@@ -76,11 +78,11 @@ class PermissionsServiceImpl implements PermissionsService {
 					$implicitGroups,
 					\Autopromote::getAutopromoteGroups( $user )
 				) );
+				$this->implicitUserGroups[ $user->getId() ] = $implicitGroups;
 			}
-			$this->implicitUserGroups[ $user->getId() ] = $implicitGroups;
 		}
 
-		return $this->implicitUserGroups[ $user->getId() ];
+		return $implicitGroups;
 	}
 
 	/**
@@ -89,7 +91,7 @@ class PermissionsServiceImpl implements PermissionsService {
 	 * '*' for all accounts, and autopromoted groups
 	 * @param \User $user
 	 * @param $reCacheAutomaticGroups
-	 * @return Array of String internal group names
+	 * @return string[] internal group names
 	 */
 	public function getEffectiveUserGroups( \User $user, $reCacheAutomaticGroups = false ) {
 
@@ -102,23 +104,21 @@ class PermissionsServiceImpl implements PermissionsService {
 	/**
 	 * Get the permissions this user has.
 	 * @param \User $user
-	 * @return Array of String permission names
+	 * @return string[] permission names
 	 */
 	public function getUserPermissions( \User $user ) {
 		$userId = $user->getId();
 
-		if ( empty( $userId ) ) {
-			return [];
-		}
-
-		if ( !isset( $this->userPermissions[ $userId ] ) ) {
+		if ( isset( $this->userPermissions[ $userId ] ) ) {
+			$permissions = $this->userPermissions[ $userId ];
+		} else {
 			$permissions = $this->permissionsDefinition->getGroupPermissions( $this->getEffectiveUserGroups( $user ) );
 			wfRunHooks( 'UserGetRights', array( $user, &$permissions ) );
 			if ( !empty( $userId ) ) {
 				$this->userPermissions[ $userId ] = array_values( $permissions );
 			}
 		}
-		return $this->userPermissions[ $userId ];
+		return $permissions;
 	}
 
 	private function loadLocalGroups( $userId ) {
@@ -343,7 +343,7 @@ class PermissionsServiceImpl implements PermissionsService {
 	/**
 	 * Returns an array of groups that this user can add and remove
 	 * @param \User user
-	 * @return Array array( 'add' => array( addablegroups ),
+	 * @return array array( 'add' => array( addablegroups ),
 	 *  'remove' => array( removablegroups ),
 	 *  'add-self' => array( addablegroups to self),
 	 *  'remove-self' => array( removable groups from self) )

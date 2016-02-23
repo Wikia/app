@@ -293,8 +293,8 @@ class PermissionsDefinitionImpl implements PermissionsDefinition {
 	/**
 	 * Get the permissions associated with a given list of groups
 	 *
-	 * @param $groups Array of Strings List of internal group names
-	 * @return Array of Strings List of permission key names for given groups combined
+	 * @param $groups string[] List of internal group names
+	 * @return string[] List of permission key names for given groups combined
 	 */
 	public function getGroupPermissions( $groups ) {
 		global $wgGroupPermissions;
@@ -314,7 +314,7 @@ class PermissionsDefinitionImpl implements PermissionsDefinition {
 	 * Get all the groups who have a given permission
 	 *
 	 * @param $role String Role to check
-	 * @return Array of Strings List of internal group names with the given permission
+	 * @return string[] List of internal group names with the given permission
 	 */
 	public function getGroupsWithPermission( $role ) {
 		global $wgGroupPermissions;
@@ -339,7 +339,7 @@ class PermissionsDefinitionImpl implements PermissionsDefinition {
 	 * Returns an array of the groups that a particular group can add/remove.
 	 *
 	 * @param $group String: the group to check for whether it can add/remove
-	 * @return Array array( 'add' => array( addablegroups ),
+	 * @return array array( 'add' => array( addablegroups ),
 	 *     'remove' => array( removablegroups ),
 	 *     'add-self' => array( addablegroups to self),
 	 *     'remove-self' => array( removable groups from self) )
