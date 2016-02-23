@@ -152,6 +152,7 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 			foreach ( $hits as $hit ) {
 				$record = $hit->_source;
 
+				$rawTimestamp = $record->{'mobile_app.event.timestamp'};
 				$userLogRecord = new UserLogRecord();
 				$userLogRecord->app =
 					$record->{'mobile_app.data.app_name'} . ' ' . $record->{'mobile_app.data.app_version'};
@@ -159,15 +160,16 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 				$userLogRecord->language = $record->{'mobile_app.event.device_language'};
 				$userLogRecord->location =
 					$record->{'mobile_app.geo_ip.city'} . ', ' . $record->{'mobile_app.geo_ip.country_name'};
-				$userLogRecord->timestamp = date( DATE_RFC2822, $record->{'mobile_app.event.timestamp'} / 1000 );
+				$userLogRecord->timestamp = date( DATE_RFC2822, $rawTimestamp / 1000 );
 				$userLogRecord->userAgent =
 					$record->{'mobile_app.data.platform'} . ' ' . $record->{'mobile_app.data.platform_version'};
 				$userLogRecord->userId = $userId;
 				$userLogRecord->userName = $userName;
-				$records[] = $userLogRecord;
+				$records[ $rawTimestamp ] = $userLogRecord;
 			}
 		}
 
+		krsort( $records, SORT_NUMERIC );
 		return $records;
 	}
 
