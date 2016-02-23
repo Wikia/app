@@ -6,7 +6,7 @@ use Wikia\Logger\Loggable;
 class ExactTargetClient implements Client {
 	use Loggable;
 
-	const EXACT_TARGET_LABEL = 'ExactTarget Soap client query';
+	const EXACT_TARGET_LABEL = 'ExactTarget client';
 	const RETRIES_LIMIT = 1;
 
 	public function updateUser( array $userData ) {
@@ -103,7 +103,8 @@ class ExactTargetClient implements Client {
 			return $response->Results;
 		}
 
-		$exception = new ExactTargetException( $response->Results->StatusMessage );
+		$exception = $response ? new ExactTargetException( $response->Results->StatusMessage )
+			: new ExactTargetException( "Request failed" );
 		$this->error( self::EXACT_TARGET_LABEL, [ 'exception' => $exception ] );
 		throw $exception;
 	}
@@ -123,9 +124,9 @@ class ExactTargetClient implements Client {
 	protected function getLoggerContext() {
 		$client = $this->getExactTargetClient();
 		return [
-			'request' => $client->__getLastRequestHeaders(),
-			'data' => $client->__getLastRequest(),
-			'status' => strtok( $client->__getLastResponseHeaders(), "\n" )
+			'request.headers' => $client->__getLastRequestHeaders(),
+			'request.data' => $client->__getLastRequest(),
+			'response.status' => strtok( $client->__getLastResponseHeaders(), "\n" )
 		];
 	}
 

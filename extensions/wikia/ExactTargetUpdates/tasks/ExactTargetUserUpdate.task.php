@@ -17,7 +17,7 @@ class ExactTargetUserUpdate extends BaseTask {
 	/**
 	 * Update user or create if doesn't exist
 	 * @param array $userData
-	 * @return bool
+	 * @return string
 	 * @throws \Wikia\Util\AssertionException
 	 */
 	public function updateUser( array $userData ) {
@@ -40,6 +40,7 @@ class ExactTargetUserUpdate extends BaseTask {
 	 * Update or create User Properties DataExtension with provided properties
 	 * @param int $userId
 	 * @param array $userProperties
+	 * @return string
 	 */
 	public function updateUserProperties( $userId, array $userProperties ) {
 		$this->getClient()->updateUserProperties( $userId, $userProperties );
