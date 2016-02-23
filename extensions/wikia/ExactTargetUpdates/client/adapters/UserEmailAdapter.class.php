@@ -6,8 +6,10 @@ class UserEmailAdapter {
 
 	var $userEmail = '';
 
-	public function __construct( \stdClass $result ) {
-		$this->userEmail = $result->Properties->Property->Value;
+	public function __construct( $result ) {
+		if ( $result instanceof \stdClass ) {
+			$this->userEmail = $result->Properties->Property->Value;
+		}
 	}
 
 	public function getEmail() {
