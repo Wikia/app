@@ -486,7 +486,8 @@ class ListusersData {
 		}
 
 		$central_groups = array();
-		if ( !UserRights::isCentralWiki() ) {
+		global $wgWikiaIsCentralWiki;
+		if ( $wgWikiaIsCentralWiki === false  ) {
 			$central_groups = $this->permissionsService()->getExplicitGlobalUserGroups( $user );
 		}
 
