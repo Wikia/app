@@ -111,6 +111,7 @@ class ExactTargetClient {
 
 	protected function doCall( $method, $request, $retry ) {
 		try {
+			$method = $method . 1;
 			$results = $this->getExactTargetClient()->$method( $request );
 		} catch ( \Exception $e ) {
 			$this->error( self::EXACT_TARGET_LABEL, [ 'exception' => $e, 'retries' => $retry ] );
@@ -123,10 +124,14 @@ class ExactTargetClient {
 
 	protected function getLoggerContext() {
 		$client = $this->getExactTargetClient();
+
+		$requestHeaders = $client->__getLastRequestHeaders();
+		$data = $client->__getLastRequest();
+		$status = strtok( $client->__getLastResponseHeaders(), "\n" );
 		return [
-			'request.headers' => $client->__getLastRequestHeaders(),
-			'request.data' => $client->__getLastRequest(),
-			'response.status' => strtok( $client->__getLastResponseHeaders(), "\n" )
+			'request.headers' => $requestHeaders ? $requestHeaders : '',
+			'request.data' => $data ? $data : '',
+			'response.status' => $status ? $status : ''
 		];
 	}
 
