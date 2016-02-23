@@ -12,14 +12,14 @@ class WikiaMobileCategoryModel extends WikiaModel {
 	const CACHE_VERSION = 0;
 	const BATCH_SIZE = 25;
 
-	public function getCollection( Category $category ) {
+	public function getCollection( Category $category, $isMercury = false ) {
 		return WikiaDataAccess::cache(
-			$this->getItemsCollectionCacheKey( $category->getID() ),
+			$this->getItemsCollectionCacheKey( $category->getID(), $isMercury ),
 			self::CACHE_TTL_ITEMSCOLLECTION,
-			function () use ( $category ) {
+			function () use ( $category, $isMercury ) {
 				wfProfileIn( __METHOD__ );
 
-				$viewer = new WikiaMobileCategoryViewer( $category );
+				$viewer = new WikiaMobileCategoryViewer( $category, $isMercury );
 				$viewer->doCategoryQuery();
 
 				wfProfileOut( __METHOD__ );
@@ -76,8 +76,9 @@ class WikiaMobileCategoryModel extends WikiaModel {
 		return false;
 	}
 
-	private function getItemsCollectionCacheKey( $categoryId ) {
-		return wfmemcKey( __CLASS__, 'ItemsCollection', $categoryId, self::CACHE_VERSION );
+	private function getItemsCollectionCacheKey( $categoryId, $isMercury ) {
+		$skinName = !empty($isMercury) ? 'mercury': 'wikiamobile';
+		return wfmemcKey( __CLASS__, 'ItemsCollection', $categoryId, $skinName, self::CACHE_VERSION );
 	}
 
 	private function getExhibitionItemsCacheKey( $titleText ) {
@@ -100,16 +101,18 @@ class WikiaMobileCategoryModel extends WikiaModel {
 class WikiaMobileCategoryViewer extends CategoryViewer {
 	private $items;
 	private $count;
+	public $isMercury;
 
 	const LIMIT = 5000;
 
-	function __construct( Category $category ) {
+	function __construct( Category $category, $isMercury=false ) {
 		parent::__construct( $category->getTitle(), RequestContext::getMain() );
 
 		$this->limit = self::LIMIT; # BAC-265
 
 		$this->items = [ ];
 		$this->count = 0;
+		$this->isMercury = $isMercury;
 	}
 
 	function addImage( Title $title, $sortkey, $pageLength, $isRedirect = false ) {

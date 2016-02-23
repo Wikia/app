@@ -479,6 +479,7 @@ class BlogArticle extends Article {
 	 * @internal param $CategoryViewer
 	 */
 	static public function addCategoryPage( &$catView, &$title, &$row, $sortkey ) {
+
 		if ( in_array( $row->page_namespace, array( NS_BLOG_ARTICLE, NS_BLOG_LISTING ) ) ) {
 			/**
 			 * initialize CategoryView->blogs array
@@ -487,7 +488,8 @@ class BlogArticle extends Article {
 				$catView->blogs = array();
 			}
 
-			if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+			//If request comes from wikiamobile or from MercuryApi return not-parsed output
+			if ( F::app()->checkSkin( 'wikiamobile' ) || !empty($catView->isMercury)) {
 				$catView->blogs[] = [
 					'name' => $title->getText(),
 					'url' => $title->getLocalUrl(),

@@ -15,7 +15,7 @@ class MercuryApiCategoryHandler {
 		$alphabeticalList =  F::app()->sendRequest(
 			'WikiaMobileCategoryService',
 			'alphabeticalList',
-			['categoryPage' => $categoryPage]
+			['categoryPage' => $categoryPage, 'isMercury' => true]
 		)->getData();
 
 		$sanitizedAlphabeticalList = ['collections' => [] ];
