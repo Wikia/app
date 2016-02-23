@@ -29,7 +29,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 				},
 				INCONTENT_BOXAD_1: {
 					sizes: [[300, 250], [160, 600], [300, 600]],
-					targeting: {loc: 'middle'}
+					targeting: {loc: 'hivi'}
 				},
 				PREFOOTER_LEFT_BOXAD: {
 					sizes: [[300, 250]],
