@@ -6,9 +6,9 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 class WikiaMobileCategoryModel extends WikiaModel {
-	const CACHE_TTL_ITEMSCOLLECTION = 1800;//30 mins, same TTL used by CategoryExhibition
-	const CACHE_TTL_EXHIBITION = 21600;//6h
-	const EXHIBITION_ITEMS_LIMIT = 4;//maximum number of items in Category Exhibition to display
+	const CACHE_TTL_ITEMSCOLLECTION = 1800;// 30 mins, same TTL used by CategoryExhibition
+	const CACHE_TTL_EXHIBITION = 21600;// 6h
+	const EXHIBITION_ITEMS_LIMIT = 4;// maximum number of items in Category Exhibition to display
 	const CACHE_VERSION = 0;
 	const BATCH_SIZE = 25;
 
@@ -77,7 +77,7 @@ class WikiaMobileCategoryModel extends WikiaModel {
 	}
 
 	private function getItemsCollectionCacheKey( $categoryId, $isMercury ) {
-		$skinName = !empty($isMercury) ? 'mercury': 'wikiamobile';
+		$skinName = !empty( $isMercury ) ? 'mercury': 'wikiamobile';
 		return wfmemcKey( __CLASS__, 'ItemsCollection', $categoryId, $skinName, self::CACHE_VERSION );
 	}
 
@@ -105,7 +105,7 @@ class WikiaMobileCategoryViewer extends CategoryViewer {
 
 	const LIMIT = 5000;
 
-	function __construct( Category $category, $isMercury=false ) {
+	function __construct( Category $category, $isMercury = false ) {
 		parent::__construct( $category->getTitle(), RequestContext::getMain() );
 
 		$this->limit = self::LIMIT; # BAC-265

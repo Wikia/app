@@ -9,7 +9,6 @@ class MercuryApiController extends WikiaController {
 	const PARAM_PAGE = 'page';
 	const PARAM_ARTICLE_TITLE = 'title';
 
-	const NUMBER_CONTRIBUTORS = 5;
 	const DEFAULT_PAGE = 1;
 
 	const WIKI_VARIABLES_CACHE_TTL = 60;
@@ -244,15 +243,15 @@ class MercuryApiController extends WikiaController {
 		$parserOptions = new ParserOptions( $wgUser );
 		$wrapper = new GlobalStateWrapper( ['wgArticleAsJson' => true] );
 
-		if( !empty( $this->getVal( 'CKmarkup' ) ) ) {
+		if ( !empty( $this->getVal( 'CKmarkup' ) ) ) {
 			$wikitext = RTE::HtmlToWikitext( $this->getVal( 'CKmarkup' ) );
 		}
 
 		if ( $title ) {
 			$wrapper->wrap( function () use ( &$articleAsJson, $wikitext, $title, $parserOptions ) {
 				// explicit revisionId of -1 passed to ensure proper behavior on ArticleAsJson end
-				$articleAsJson = json_decode(ParserPool::create()->parse( $wikitext, $title, $parserOptions, true, true, -1 )->getText());
-			});
+				$articleAsJson = json_decode( ParserPool::create()->parse( $wikitext, $title, $parserOptions, true, true, -1 )->getText() );
+			} );
 		} else {
 			$this->response->setVal( 'data', ['content' => 'Invalid title'] );
 			return;
@@ -293,8 +292,8 @@ class MercuryApiController extends WikiaController {
 
 			$titleBuilder = new WikiaHtmlTitle();
 			if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
-				$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData($this->mercuryApi);
-				$data['details'] = MercuryApiArticleHandler::getArticleDetails($article);
+				$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
+				$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
 			} else {
 				// Content Namespace Handling
 				if ( $title->isContentPage() && $title->isKnown() ) {
@@ -315,14 +314,14 @@ class MercuryApiController extends WikiaController {
 					if ( !$isMainPage ) {
 						$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
 					}
-					//Handling namespaces other than content ns
+					// Handling namespaces other than content ns
 				} else {
 					switch ( $data['ns'] ) {
 						case NS_CATEGORY:
 							$data['nsData'] = MercuryApiCategoryHandler::getCategoryContent( $title );
-							if (MercuryApiCategoryHandler::hasArticle($title)) {
-								$data['article'] = MercuryApiArticleHandler::getArticleJson($article, $this->request);
-								$data['details'] = MercuryApiArticleHandler::getArticleDetails($article);
+							if ( MercuryApiCategoryHandler::hasArticle( $title ) ) {
+								$data['article'] = MercuryApiArticleHandler::getArticleJson( $article, $this->request );
+								$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
 							}
 							break;
 					}
@@ -440,7 +439,7 @@ class MercuryApiController extends WikiaController {
 	 * @return array|Mixed|null
 	 */
 	public function getCuratedContentData( $section = null ) {
-		return MercuryApiMainPageHandler::getCuratedContentData($this->mercuryApi, $section);
+		return MercuryApiMainPageHandler::getCuratedContentData( $this->mercuryApi, $section );
 	}
 
 	private function getOtherLanguages( Title $title ) {
@@ -473,7 +472,7 @@ class MercuryApiController extends WikiaController {
 				'articleTitle' => str_replace( '_', ' ', $articleTitle ),
 				'url' => $url,
 			];
-		}, array_keys( $links ), array_values( $links ) );
+		} , array_keys( $links ), array_values( $links ) );
 
 		// Sort by localized language name
 		$c = Collator::create( 'en_US.UTF-8' );

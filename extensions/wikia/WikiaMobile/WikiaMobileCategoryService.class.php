@@ -11,24 +11,24 @@ class WikiaMobileCategoryService extends WikiaService {
 	 */
 	private $model;
 
-	//3 hours
+	// 3 hours
 	const CACHE_TIME = 10800;
 
-	private function initModel(){
-		if ( !isset( $this->model ) ){
+	private function initModel() {
+		if ( !isset( $this->model ) ) {
 			$this->model = new WikiaMobileCategoryModel;
 		}
 	}
 
-	public function index(){
-		if (WikiaPageType::isCorporatePage()) {
+	public function index() {
+		if ( WikiaPageType::isCorporatePage() ) {
 			return false;
 		}
 
 		$categoryLinks = $this->request->getVal( 'categoryLinks', '' );
 
-		//$catlinks are always returned even empty
-		if (strpos($categoryLinks, ' catlinks-allhidden\'></div>') !== false) {
+		// $catlinks are always returned even empty
+		if ( strpos( $categoryLinks, ' catlinks-allhidden\'></div>' ) !== false ) {
 			$categoryLinks = '';
 		}
 
@@ -36,7 +36,7 @@ class WikiaMobileCategoryService extends WikiaService {
 	}
 
 	public function categoryExhibition() {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		/**
 		 * @var $categoryPage CategoryPage
@@ -94,15 +94,15 @@ class WikiaMobileCategoryService extends WikiaService {
 		return true;
 	}
 
-	public function getBatch(){
-		//see Category::newFromName for valid format
+	public function getBatch() {
+		// see Category::newFromName for valid format
 		$categoryName = str_replace( ' ', '_', $this->request->getVal( 'category' ) );
 		$isMercury = $this->request->getBool( 'isMercury' );
 		$index = $this->request->getVal( 'index' );
 		$batch = $this->request->getInt( 'batch' );
 		$err = false;
 
-		if ( !empty( $categoryName ) && isset( $index ) && !empty( $batch ) ){
+		if ( !empty( $categoryName ) && isset( $index ) && !empty( $batch ) ) {
 			$category = Category::newFromTitle( Title::newFromText( $categoryName, NS_CATEGORY ) );
 
 			if ( $category instanceof Category ) {
@@ -115,8 +115,8 @@ class WikiaMobileCategoryService extends WikiaService {
 				);
 
 				if ( !empty( $data['items'] ) ) {
-					//cache response for 3 hours in varnish and browser
-					$this->response->setCacheValidity(WikiaMobileCategoryService::CACHE_TIME);
+					// cache response for 3 hours in varnish and browser
+					$this->response->setCacheValidity( WikiaMobileCategoryService::CACHE_TIME );
 					$this->response->setVal( 'itemsBatch', $data['items'] );
 				} else {
 					$err = "No Data for given index or batch";

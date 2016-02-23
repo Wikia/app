@@ -117,14 +117,17 @@ class MercuryApiArticleHandler {
 	/**
 	 * @desc Returns user ids for top contributors
 	 *
-	 * @param $mercuryApiModel
-	 * @param $article
+	 * @param MercuryApi $mercuryApiModel
+	 * @param Article $article
+	 * @param int $numberOfContributors
 	 * @return int[]
 	 */
-	private static function getTopContributorsPerArticle( MercuryApi $mercuryApiModel, Article $article ) {
+	private static function getTopContributorsPerArticle(
+		MercuryApi $mercuryApiModel, Article $article, $numberOfContributors = 5
+	) {
 		return $mercuryApiModel->topContributorsPerArticle(
 			$article->getID(),
-			MercuryApiController::NUMBER_CONTRIBUTORS
+			$numberOfContributors
 		);
 	}
 

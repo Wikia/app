@@ -4,11 +4,11 @@ use Wikia\Logger\WikiaLogger;
 
 class MercuryApiMainPageHandler {
 
-	public static function getMainPageData(MercuryApi $mercuryApiModel) {
+	public static function getMainPageData( MercuryApi $mercuryApiModel ) {
 		$mainPageData = [ ];
-		$curatedContent = self::getCuratedContentData($mercuryApiModel);
-		$trendingArticles = self::getTrendingArticlesData($mercuryApiModel);
-		$trendingVideos = self::getTrendingVideosData($mercuryApiModel);
+		$curatedContent = self::getCuratedContentData( $mercuryApiModel );
+		$trendingArticles = self::getTrendingArticlesData( $mercuryApiModel );
+		$trendingVideos = self::getTrendingVideosData( $mercuryApiModel );
 		$wikiaStats = self::getWikiaStatsData();
 
 		if ( !empty( $curatedContent[ 'items' ] ) ) {
@@ -58,7 +58,7 @@ class MercuryApiMainPageHandler {
 		return $data;
 	}
 
-	private static function getTrendingArticlesData(MercuryApi $mercuryApiModel) {
+	private static function getTrendingArticlesData( MercuryApi $mercuryApiModel ) {
 		global $wgContentNamespaces;
 
 		$params = [
@@ -79,7 +79,7 @@ class MercuryApiMainPageHandler {
 		return $data;
 	}
 
-	private static function getTrendingVideosData(MercuryApi $mercuryApiModel) {
+	private static function getTrendingVideosData( MercuryApi $mercuryApiModel ) {
 		$params = [
 			'sort' => 'trend',
 			'getThumbnail' => false,

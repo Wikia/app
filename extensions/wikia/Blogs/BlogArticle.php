@@ -194,7 +194,7 @@ class BlogArticle extends Article {
 	 * @return String - memcache key
 	 */
 	public function blogListingMemcacheKey( $userKey, $pageNum ) {
-		return wfMemcKey( 'blog', 'listing', 'v'.self::CACHE_VERSION, $userKey, $pageNum );
+		return wfMemcKey( 'blog', 'listing', 'v' . self::CACHE_VERSION, $userKey, $pageNum );
 	}
 
 	/**
@@ -203,7 +203,7 @@ class BlogArticle extends Article {
 	 * @return String
 	 */
 	public function blogListingOasisMemcacheKey() {
-		return wfMemcKey( "OasisPopularBlogPosts", 'v'.self::CACHE_VERSION, F::app()->wg->Lang->getCode() );
+		return wfMemcKey( "OasisPopularBlogPosts", 'v' . self::CACHE_VERSION, F::app()->wg->Lang->getCode() );
 	}
 
 	/**
@@ -213,7 +213,7 @@ class BlogArticle extends Article {
 	 * @return String
 	 */
 	public function blogFeedMemcacheKey( $userKey, $offset ) {
-		return wfMemcKey( 'blog', 'feed', 'v'.self::CACHE_VERSION, $userKey, $offset);
+		return wfMemcKey( 'blog', 'feed', 'v' . self::CACHE_VERSION, $userKey, $offset );
 	}
 
 	/**
@@ -479,7 +479,6 @@ class BlogArticle extends Article {
 	 * @internal param $CategoryViewer
 	 */
 	static public function addCategoryPage( &$catView, &$title, &$row, $sortkey ) {
-
 		if ( in_array( $row->page_namespace, array( NS_BLOG_ARTICLE, NS_BLOG_LISTING ) ) ) {
 			/**
 			 * initialize CategoryView->blogs array
@@ -488,8 +487,8 @@ class BlogArticle extends Article {
 				$catView->blogs = array();
 			}
 
-			//If request comes from wikiamobile or from MercuryApi return not-parsed output
-			if ( F::app()->checkSkin( 'wikiamobile' ) || !empty($catView->isMercury)) {
+			// If request comes from wikiamobile or from MercuryApi return not-parsed output
+			if ( F::app()->checkSkin( 'wikiamobile' ) || !empty( $catView->isMercury ) ) {
 				$catView->blogs[] = [
 					'name' => $title->getText(),
 					'url' => $title->getLocalUrl(),
