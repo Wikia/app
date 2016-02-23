@@ -111,7 +111,6 @@ class ExactTargetClient {
 
 	protected function doCall( $method, $request, $retry ) {
 		try {
-			$method = $method . 1;
 			$results = $this->getExactTargetClient()->$method( $request );
 		} catch ( \Exception $e ) {
 			$this->error( self::EXACT_TARGET_LABEL, [ 'exception' => $e, 'retries' => $retry ] );
