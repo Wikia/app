@@ -104,11 +104,10 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function getWikiVariables() {
-		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin, $wgDisableAnonymousEditing,
-			   $wgLanguageCode, $wgContLang, $wgCityId, $wgEnableNewAuth, $wgDisableAnonymousUploadForMercury,
-			   $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff, $wgDisableMobileSectionEditor,
-			   $wgEnableDiscussions, $wgAnalyticsDriverIVW3Countries, $wgEnableCommunityData,
-			   $wgEnableCategoryPagesInMercury;
+		global $wgAnalyticsDriverIVW3Countries, $wgCacheBuster, $wgCityId, $wgContLang, $wgDBname, $wgDefaultSkin,
+			$wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury, $wgDisableMobileSectionEditor,
+			$wgEnableCategoryPagesInMercury, $wgEnableCommunityData, $wgEnableDiscussions, $wgEnableNewAuth,
+			$wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
 
 		return [
 			'cacheBuster' => (int)$wgCacheBuster,
