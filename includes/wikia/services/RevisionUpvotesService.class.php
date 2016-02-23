@@ -95,6 +95,7 @@ class RevisionUpvotesService {
 				}
 
 				$upvote['upvotes'][] = [
+					'id' => $row->id,
 					'from_user' => $row->from_user
 				];
 			} );
@@ -133,6 +134,7 @@ class RevisionUpvotesService {
 				}
 
 				$upvotes[$row->revision_id]['upvotes'][] = [
+					'id' => $row->id,
 					'from_user' => $row->from_user
 				];
 			} );
