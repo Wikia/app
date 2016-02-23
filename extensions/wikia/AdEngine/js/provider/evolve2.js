@@ -19,6 +19,7 @@ define('ext.wikia.adEngine.provider.evolve2', [
 		},
 		site = 'wikia_intl',
 		slotMap = {
+			EVOLVE_FLUSH:             {flushOnly: true},
 			HOME_TOP_LEADERBOARD:     {size: '728x90,970x250,970x300,970x90'},
 			HOME_TOP_RIGHT_BOXAD:     {size: '300x250,300x600'},
 			HUB_TOP_LEADERBOARD:      {size: '728x90,970x250,970x300,970x90'},
@@ -91,7 +92,8 @@ define('ext.wikia.adEngine.provider.evolve2', [
 			'/4403/ev/' + site + '/' + section + '/' + slot.name,
 			slotCopy,
 			{
-				forcedAdType: 'evolve2'
+				forcedAdType: 'evolve2',
+				sraEnabled: true
 			}
 		);
 
