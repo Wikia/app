@@ -11,19 +11,19 @@ class ExactTargetRequestBuilder {
 	private function __construct() {
 	}
 
-	public static function createUpdate() {
+	public static function getUpdateBuilder() {
 		return new UpdateRequestBuilder();
 	}
 
-	public static function createDelete() {
+	public static function getDeleteBuilder() {
 		return new DeleteRequestBuilder();
 	}
 
-	public static function createCreate() {
+	public static function getCreateBuilder() {
 		return new CreateRequestBuilder();
 	}
 
-	public static function createRetrieve() {
+	public static function getRetrieveBuilder() {
 		return new RetrieveRequestBuilder();
 	}
 }

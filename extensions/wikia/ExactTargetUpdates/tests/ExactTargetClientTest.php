@@ -96,6 +96,58 @@ class ExactTargetClientTest extends WikiaBaseTest {
 		$client->deleteSubscriber( 1 );
 	}
 
+	public function testPathOnCorrectDeleteResponse() {
+		$soapClientMock = $this->getMockBuilder( 'ExactTargetSoapClient' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'Delete' ] )
+			->getMock();
+		$soapClientMock->expects( $this->any() )
+			->method( 'Delete' )
+			->will( $this->returnValue( $this->getResponse( [ ], 'OK' ) ) );
+
+		$client = new \Wikia\ExactTarget\ExactTargetClient( $soapClientMock );
+		$this->assertTrue( $client->deleteSubscriber( 'test@test.com' ) );
+	}
+
+	public function testPathOnCorrectCreateResponse() {
+		$soapClientMock = $this->getMockBuilder( 'ExactTargetSoapClient' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'Create' ] )
+			->getMock();
+		$soapClientMock->expects( $this->any() )
+			->method( 'Create' )
+			->will( $this->returnValue( $this->getResponse( [ ], 'OK' ) ) );
+
+		$client = new \Wikia\ExactTarget\ExactTargetClient( $soapClientMock );
+		$this->assertTrue( $client->createSubscriber( 'test@test.com' ) );
+	}
+
+	public function testCorrectResponseOnUserUpdate() {
+		$soapClientMock = $this->getMockBuilder( 'ExactTargetSoapClient' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'Update' ] )
+			->getMock();
+		$soapClientMock->expects( $this->any() )
+			->method( 'Update' )
+			->will( $this->returnValue( $this->getResponse( [ ], 'OK' ) ) );
+
+		$client = new \Wikia\ExactTarget\ExactTargetClient( $soapClientMock );
+		$this->assertTrue( $client->updateUser( [ 'user_id' => 1, 'user_email' => 'test@test.com' ] ) );
+	}
+
+	public function testCorrectResponseOnPropertiesUpdate() {
+		$soapClientMock = $this->getMockBuilder( 'ExactTargetSoapClient' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'Update' ] )
+			->getMock();
+		$soapClientMock->expects( $this->any() )
+			->method( 'Update' )
+			->will( $this->returnValue( $this->getResponse( [ ], 'OK' ) ) );
+
+		$client = new \Wikia\ExactTarget\ExactTargetClient( $soapClientMock );
+		$this->assertTrue( $client->updateUserProperties( 1, [ ] ) );
+	}
+
 	public function testDefaultClientConstruction() {
 		$getExactTargetClient = new ReflectionMethod( '\Wikia\ExactTarget\ExactTargetClient', 'getExactTargetClient' );
 		$getExactTargetClient->setAccessible( true );

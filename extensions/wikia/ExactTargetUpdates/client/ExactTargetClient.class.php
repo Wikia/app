@@ -6,6 +6,12 @@ use Wikia\Logger\Loggable;
 class ExactTargetClient {
 	use Loggable;
 
+	const UPDATE_CALL = 'Update';
+	const DELETE_CALL = 'Delete';
+	const CREATE_CALL = 'Create';
+	const RETRIEVE_CALL = 'Retrieve';
+
+	const STATUS_OK = 'OK';
 	const EXACT_TARGET_LABEL = 'ExactTarget client';
 	const RETRIES_LIMIT = 1;
 
@@ -18,30 +24,30 @@ class ExactTargetClient {
 	}
 
 	public function updateUser( array $userData ) {
-		$request = ExactTargetRequestBuilder::createUpdate()
+		$request = ExactTargetRequestBuilder::getUpdateBuilder()
 			->withUserData( [ $userData ] )
 			->build();
 
-		$this->sendRequest( 'Update', $request );
+		return $this->sendRequest( self::UPDATE_CALL, $request );
 	}
 
 	/**
 	 * Deletes Subscriber object in ExactTarget by API request
 	 */
 	public function deleteSubscriber( $userEmail ) {
-		$deleteRequest = ExactTargetRequestBuilder::createDelete()
+		$deleteRequest = ExactTargetRequestBuilder::getDeleteBuilder()
 			->withUserEmail( $userEmail )
 			->build();
 
-		$this->sendRequest( 'Delete', $deleteRequest );
+		return $this->sendRequest( self::DELETE_CALL, $deleteRequest );
 	}
 
 	public function createSubscriber( $userEmail ) {
-		$oRequest = ExactTargetRequestBuilder::createCreate()
+		$oRequest = ExactTargetRequestBuilder::getCreateBuilder()
 			->withUserEmail( $userEmail )
 			->build();
 
-		$this->sendRequest( 'Create', $oRequest );
+		return $this->sendRequest( self::CREATE_CALL, $oRequest );
 	}
 
 	/**
@@ -53,14 +59,12 @@ class ExactTargetClient {
 	 * @throws \Exception
 	 */
 	public function updateUserProperties( $userId, array $userProperties ) {
-		$request = ExactTargetRequestBuilder::createUpdate()
+		$request = ExactTargetRequestBuilder::getUpdateBuilder()
 			->withUserId( $userId )
 			->withProperties( $userProperties )
 			->build();
 
-		$this->sendRequest( 'Update', $request );
-
-		return 'OK';
+		return $this->sendRequest( self::UPDATE_CALL, $request );
 	}
 
 	public function retrieveEmailByUserId( $userId ) {
@@ -83,21 +87,21 @@ class ExactTargetClient {
 	}
 
 	private function retrieve( array $properties, $filterProperty, array $filterValues, $resource ) {
-		$request = ExactTargetRequestBuilder::createRetrieve()
+		$request = ExactTargetRequestBuilder::getRetrieveBuilder()
 			->withResource( $resource )
 			->withProperties( $properties )
 			->withFilterProperty( $filterProperty )
 			->withFilterValues( $filterValues )
 			->build();
 
-		return $this->sendRequest( 'Retrieve', $request );
+		return $this->sendRequest( self::RETRIEVE_CALL, $request );
 	}
 
 	protected function sendRequest( $type, $request ) {
 		// send first call
 		$response = $this->doCall( $type, $request, 0 );
-		if ( $response->OverallStatus === 'OK' ) {
-			return $response->Results;
+		if ( $response->OverallStatus === self::STATUS_OK ) {
+			return $response->Results ? $response->Results : true;
 		}
 
 		$exception = $response ? new ExactTargetException( $response->Results->StatusMessage )

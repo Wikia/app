@@ -14,7 +14,7 @@ class ExactTargetRequestBuilderTest extends WikiaBaseTest {
 		$dataExtensions = array_map( [ $this, 'prepareDataExtension' ], $expectedParams );
 		$expected = $this->prepareSaveOption( $dataExtensions );
 
-		$oRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::createUpdate()
+		$oRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::getUpdateBuilder()
 			->withUserData( $usersData )
 			->build();
 
@@ -23,7 +23,7 @@ class ExactTargetRequestBuilderTest extends WikiaBaseTest {
 
 	public function testEmptyUser() {
 		$this->setExpectedException( 'Wikia\Util\AssertionException' );
-		\Wikia\ExactTarget\ExactTargetRequestBuilder::createUpdate()
+		\Wikia\ExactTarget\ExactTargetRequestBuilder::getUpdateBuilder()
 			->withUserData( [ [ 'user_id' => 0 ] ] )
 			->build();
 	}
@@ -36,7 +36,7 @@ class ExactTargetRequestBuilderTest extends WikiaBaseTest {
 		$subscribers = $this->prepareSubscriber( $email );
 		$expected = $this->prepareDeleteOption( $subscribers );
 
-		$oDeleteRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::createDelete()
+		$oDeleteRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::getDeleteBuilder()
 			->withUserEmail( $email )
 			->build();
 
@@ -50,7 +50,7 @@ class ExactTargetRequestBuilderTest extends WikiaBaseTest {
 		$subscriber = $this->prepareSubscriber( $email, true );
 		$expected = $this->prepareCreateOption( $subscriber );
 
-		$oRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::createCreate()
+		$oRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::getCreateBuilder()
 			->withUserEmail( $email )
 			->build();
 
@@ -76,7 +76,7 @@ class ExactTargetRequestBuilderTest extends WikiaBaseTest {
 		}
 		$expected = $this->prepareSaveOption( $data );
 
-		$oRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::createUpdate()
+		$oRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::getUpdateBuilder()
 			->withUserId( $iUserId )
 			->withProperties( $aUserProperties )
 			->build();

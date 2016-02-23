@@ -12,7 +12,7 @@ class ExactTargetRetrieveRequestBuilderTest extends WikiaBaseTest {
 	public function testBuildRequest( $properties, $filterProperty, $filterValues, $resource ) {
 		// Prepare Expected
 		$expected = $this->prepareRetrieveRequest( $properties, $filterProperty, $filterValues );
-		$oRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::createRetrieve()
+		$oRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::getRetrieveBuilder()
 			->withProperties( $properties )
 			->withFilterProperty( $filterProperty )
 			->withFilterValues( $filterValues )
