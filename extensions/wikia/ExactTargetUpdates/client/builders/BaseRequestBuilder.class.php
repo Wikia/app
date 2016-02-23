@@ -4,11 +4,18 @@ namespace Wikia\ExactTarget\Builders;
 class BaseRequestBuilder {
 	const EXACT_TARGET_API_URL = 'http://exacttarget.com/wsdl/partnerAPI';
 	const SUBSCRIBER_OBJECT_TYPE = 'Subscriber';
+	const DATA_EXTENSION_OBJECT_TYPE = 'DataExtensionObject';
 
 	protected $email;
+	protected $userId;
 
 	public function withUserEmail( $email ) {
 		$this->email = $email;
+		return $this;
+	}
+
+	public function withUserId( $userId ) {
+		$this->userId = $userId;
 		return $this;
 	}
 
@@ -47,6 +54,21 @@ class BaseRequestBuilder {
 		}
 
 		return $subscriber;
+	}
+
+	/**
+	 * Returns ExactTarget_APIProperty object
+	 * This object can be used as ExactTarget_DataExtensionObject property
+	 * It stores key-value pair
+	 * @param String $key Property name
+	 * @param String $value Propert yvalue
+	 * @return \ExactTarget_APIProperty
+	 */
+	protected function wrapApiProperty( $key, $value ) {
+		$apiProperty = new \ExactTarget_APIProperty();
+		$apiProperty->Name = $key;
+		$apiProperty->Value = $value;
+		return $apiProperty;
 	}
 
 }

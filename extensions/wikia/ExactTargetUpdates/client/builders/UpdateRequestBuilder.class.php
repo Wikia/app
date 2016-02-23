@@ -4,25 +4,17 @@ namespace Wikia\ExactTarget\Builders;
 use Wikia\Util\Assert;
 
 class UpdateRequestBuilder extends BaseRequestBuilder {
-	const DATA_EXTENSION_OBJECT_TYPE = 'DataExtensionObject';
-
 	const SAVE_OPTION_TYPE = 'SaveOption';
 	const CUSTOMER_KEY_USER = 'user';
 	const CUSTOMER_KEY_USER_PROPERTIES = 'user_properties';
 
 	const EXACT_TARGET_USER_ID_PROPERTY = 'user_id';
 	private $userData;
-	private $userId;
 
 	private $properties;
 
 	public function withUserData( array $userData ) {
 		$this->userData = $userData;
-		return $this;
-	}
-
-	public function withUserId( $userId ) {
-		$this->userId = $userId;
 		return $this;
 	}
 
@@ -47,7 +39,6 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 		}
 		// make it soap vars
 		$oRequest->Objects = $this->prepareSoapVars( $objects, self::DATA_EXTENSION_OBJECT_TYPE );
-		//		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 
 		return $oRequest;
 	}
@@ -113,21 +104,6 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 		$iUserId = $aUserData[ self::EXACT_TARGET_USER_ID_PROPERTY ];
 		unset( $aUserData[ self::EXACT_TARGET_USER_ID_PROPERTY ] );
 		return $iUserId;
-	}
-
-	/**
-	 * Returns ExactTarget_APIProperty object
-	 * This object can be used as ExactTarget_DataExtensionObject property
-	 * It stores key-value pair
-	 * @param String $key Property name
-	 * @param String $value Propert yvalue
-	 * @return \ExactTarget_APIProperty
-	 */
-	private function wrapApiProperty( $key, $value ) {
-		$apiProperty = new \ExactTarget_APIProperty();
-		$apiProperty->Name = $key;
-		$apiProperty->Value = $value;
-		return $apiProperty;
 	}
 
 	/**

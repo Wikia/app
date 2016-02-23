@@ -2,6 +2,7 @@
 
 class ExactTargetRequestBuilderTest extends WikiaBaseTest {
 	public function setUp() {
+		require_once __DIR__ . '/helpers/RequestBuilderTestsHelper.class.php';
 		$this->setupFile = __DIR__ . '/../ExactTargetUpdates.setup.php';
 		parent::setUp();
 	}
@@ -31,23 +32,8 @@ class ExactTargetRequestBuilderTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider emailsDataProvider
 	 */
-	public function testDeleteRequest( $email ) {
-		// Prepare expected structure
-		$subscribers = $this->prepareSubscriber( $email );
-		$expected = $this->prepareDeleteOption( $subscribers );
-
-		$oDeleteRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::getDeleteBuilder()
-			->withUserEmail( $email )
-			->build();
-
-		$this->assertEquals( $expected, $oDeleteRequest );
-	}
-
-	/**
-	 * @dataProvider emailsDataProvider
-	 */
 	public function testCreateRequest( $email ) {
-		$subscriber = $this->prepareSubscriber( $email, true );
+		$subscriber = RequestBuilderTestsHelper::prepareSubscriber( $email, true );
 		$expected = $this->prepareCreateOption( $subscriber );
 
 		$oRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::getCreateBuilder()
@@ -65,12 +51,12 @@ class ExactTargetRequestBuilderTest extends WikiaBaseTest {
 		foreach ( $aUserProperties as $name => $value ) {
 			$dataExtension = new ExactTarget_DataExtensionObject();
 			$dataExtension->Keys = [
-				$this->prepareApiProperty( 'up_user', $iUserId ),
-				$this->prepareApiProperty( 'up_property', $name ),
+				RequestBuilderTestsHelper::prepareApiProperty( 'up_user', $iUserId ),
+				RequestBuilderTestsHelper::prepareApiProperty( 'up_property', $name ),
 			];
 			$dataExtension->CustomerKey = 'user_properties';
 			$dataExtension->Properties = [
-				$this->prepareApiProperty( 'up_value', $value )
+				RequestBuilderTestsHelper::prepareApiProperty( 'up_value', $value )
 			];
 			$data[] = $dataExtension;
 		}
@@ -131,7 +117,7 @@ class ExactTargetRequestBuilderTest extends WikiaBaseTest {
 	/** Tests helpers methods */
 
 	private function prepareDataExtension( $userParams ) {
-		$apiProperty = $this->prepareApiProperty( 'user_id', $userParams[ 'user_id' ] );
+		$apiProperty = RequestBuilderTestsHelper::prepareApiProperty( 'user_id', $userParams[ 'user_id' ] );
 
 		$dataExtension = new ExactTarget_DataExtensionObject();
 		$dataExtension->Name = '';
@@ -139,23 +125,6 @@ class ExactTargetRequestBuilderTest extends WikiaBaseTest {
 		$dataExtension->CustomerKey = 'user';
 		$dataExtension->Properties = $this->prepareProperties( $userParams[ 'properties' ] );
 		return $dataExtension;
-	}
-
-	private function prepareApiProperty( $name, $value ) {
-		$apiProperty = new ExactTarget_APIProperty();
-		$apiProperty->Name = $name;
-		$apiProperty->Value = $value;
-		return $apiProperty;
-	}
-
-	private function prepareSubscriber( $email, $createMode = false ) {
-		$oSubscriber = new \ExactTarget_Subscriber();
-		$oSubscriber->SubscriberKey = $email;
-		if ( $createMode ) {
-			$oSubscriber->EmailAddress = $email;
-		}
-
-		return [ $oSubscriber ];
 	}
 
 	private function prepareSaveOption( $dataExtensions ) {
