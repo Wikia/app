@@ -9,6 +9,14 @@ class ExactTargetClient {
 	const EXACT_TARGET_LABEL = 'ExactTarget client';
 	const RETRIES_LIMIT = 1;
 
+	private $client;
+
+	public function __construct( $client = null ) {
+		if ( isset( $client ) ) {
+			$this->client = $client;
+		}
+	}
+
 	public function updateUser( array $userData ) {
 		$request = ExactTargetRequestBuilder::createUpdate()
 			->withUserData( [ $userData ] )

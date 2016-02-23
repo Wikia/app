@@ -1,0 +1,151 @@
+<?php
+
+class ExactTargetClientTest extends WikiaBaseTest {
+
+	public function setUp() {
+		$this->setupFile = __DIR__ . '/../ExactTargetUpdates.setup.php';
+		parent::setUp();
+	}
+
+	public function testEmailRetrieval() {
+		$soapClientMock = $this->getMockBuilder( 'ExactTargetSoapClient' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'Retrieve' ] )
+			->getMock();
+		$soapClientMock->expects( $this->any() )
+			->method( 'Retrieve' )
+			->will( $this->returnValue(
+				$this->getResponse( [ [ 'user_email' => 'test@test.com' ] ], 'OK' )
+			) );
+
+		// inject into client wrapper
+		$client = new \Wikia\ExactTarget\ExactTargetClient( $soapClientMock );
+
+		$this->assertEquals( 'test@test.com', $client->retrieveEmailByUserId( 1 ) );
+	}
+
+	public function testUserIdsRetrieval() {
+		$soapClientMock = $this->getMockBuilder( 'ExactTargetSoapClient' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'Retrieve' ] )
+			->getMock();
+		$soapClientMock->expects( $this->any() )
+			->method( 'Retrieve' )
+			->will( $this->returnValue(
+				$this->getResponse( [ [ 'user_id' => 1 ], [ 'user_id' => 2 ] ], 'OK' )
+			) );
+
+		$client = new \Wikia\ExactTarget\ExactTargetClient( $soapClientMock );
+
+		$this->assertEquals( [ 1, 2 ], $client->retrieveUserIdsByEmail( 'test@test.com' ) );
+	}
+
+	public function testUserEditsRetrieval() {
+		$soapClientMock = $this->getMockBuilder( 'ExactTargetSoapClient' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'Retrieve' ] )
+			->getMock();
+		$soapClientMock->expects( $this->any() )
+			->method( 'Retrieve' )
+			->will( $this->returnValue(
+				$this->getResponse( [ [ 'user_id' => 1, 'wiki_id' => 1, 'contributions' => 2 ],
+									  [ 'user_id' => 1, 'wiki_id' => 2, 'contributions' => 20 ] ], 'OK' )
+			) );
+
+		$client = new \Wikia\ExactTarget\ExactTargetClient( $soapClientMock );
+
+		$this->assertEquals( [ 1 => [ 1 => 2, 2 => 20 ] ], $client->retrieveUsersEdits( [ 1 ] ) );
+	}
+
+	public function testEmptyResult() {
+		$this->setExpectedException( 'Wikia\ExactTarget\ExactTargetException', 'Request failed' );
+		$soapClientMock = $this->getMockBuilder( 'ExactTargetSoapClient' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'Create' ] )
+			->getMock();
+
+		$client = new \Wikia\ExactTarget\ExactTargetClient( $soapClientMock );
+		$client->createSubscriber( 'test@test.com' );
+	}
+
+	public function testErrorResponse() {
+		$this->setExpectedException( 'Wikia\ExactTarget\ExactTargetException', 'Test error response' );
+		$soapClientMock = $this->getMockBuilder( 'ExactTargetSoapClient' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'Update' ] )
+			->getMock();
+		$soapClientMock->expects( $this->any() )
+			->method( 'Update' )
+			->will( $this->returnValue( $this->getResponse( [ ], 'Error', 'Test error response' ) ) );
+
+		$client = new \Wikia\ExactTarget\ExactTargetClient( $soapClientMock );
+		$client->updateUserProperties( 1, [ ] );
+	}
+
+	public function testRetryFunctionality() {
+		$this->setExpectedException( 'Wikia\ExactTarget\ExactTargetException', 'Request failed' );
+		$soapClientMock = $this->getMockBuilder( 'ExactTargetSoapClient' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'Delete' ] )
+			->getMock();
+		$soapClientMock->expects( $this->any() )
+			->method( 'Delete' )
+			->willThrowException( new \Exception( 'Test external failure' ) );
+
+		$client = new \Wikia\ExactTarget\ExactTargetClient( $soapClientMock );
+		$client->deleteSubscriber( 1 );
+	}
+
+	public function testDefaultClientConstruction() {
+		$getExactTargetClient = new ReflectionMethod( '\Wikia\ExactTarget\ExactTargetClient', 'getExactTargetClient' );
+		$getExactTargetClient->setAccessible( true );
+
+		$wsdlPath = __DIR__ . '/resources/mocked.wsdl';
+		$username = 'test_username';
+		$password = 'test_password';
+		$wrapper = new \Wikia\Util\GlobalStateWrapper( [ 'wgExactTargetApiConfig' => [
+			'username' => $username,
+			'password' => $password,
+			'wsdl' => $wsdlPath
+		] ] );
+
+		$expected = new ExactTargetSoapClient( $wsdlPath, [ 'trace' => 1 ] );
+		$expected->username = $username;
+		$expected->password = $password;
+
+		$soapClient = $wrapper->wrap( function () use ( $getExactTargetClient ) {
+			$client = new \Wikia\ExactTarget\ExactTargetClient();
+			return $getExactTargetClient->invoke( $client );
+		} );
+
+		$this->assertEquals( $expected, $soapClient );
+	}
+
+	private function getResponse( $data, $status, $msg = '' ) {
+		$response = new stdClass();
+		$response->OverallStatus = $status;
+		if ( !empty( $msg ) ) {
+			$response->Results = new stdClass();
+			$response->Results->StatusMessage = $msg;
+		} else {
+			$results = [ ];
+			foreach ( $data as $item ) {
+				$result = new stdClass();
+				$result->Properties = new stdClass();
+				$properties = [ ];
+				foreach ( $item as $name => $value ) {
+					$property = new stdClass();
+					$property->Name = $name;
+					$property->Value = $value;
+					$properties[] = $property;
+				}
+				$result->Properties->Property = count( $properties ) == 1 ? $properties[ 0 ] : $properties;
+
+				$results[] = $result;
+			}
+			$response->Results = count( $results ) == 1 ? $results[ 0 ] : $results;
+		}
+
+		return $response;
+	}
+}
