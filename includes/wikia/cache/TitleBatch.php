@@ -135,13 +135,13 @@ class TitleBatch {
 	 * @return array 1-D or 2-D array representing fetched properties (2-D if more than one property ID was provided)
 	 */
 	public function getWikiaProperties( $propertyIds, $dbType = DB_SLAVE ) {
-		$articleIds = $this->getArticleIds();
 		$res = wfGetDB($dbType)->select(
 			array( 'p' => 'page', 'pp' => 'page_wikia_props' ),
 			array( 'p.page_id, pp.propname, pp.props' ),
 			array(
 				'p.page_id = pp.page_id',
 				'pp.propname' => $propertyIds,
+				'p.page_id' => $this->getArticleIds()
 			),
 			__METHOD__
 		);
