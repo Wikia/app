@@ -278,7 +278,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		$res = $this->select( __METHOD__ );
 
 		$titles = [];
-		$revisionsIds = [];
+		$revisionIds = [];
 
 		$result = $this->getResult();
 
@@ -290,7 +290,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				break;
 			}
 
-			$revisionsIds[] = $row->rc_this_oldid;
+			$revisionIds[] = $row->rc_this_oldid;
 
 			if ( is_null( $resultPageSet ) ) {
 				/* Extract the data from a single row. */
@@ -310,7 +310,9 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 			}
 		}
 
-		$this->combineAdditionalData( $result, $revisionsIds );
+		if ( $this->fld_upvotes ) {
+			$this->addUpvoteData( $result, $revisionIds );
+		}
 
 		if ( is_null( $resultPageSet ) ) {
 			/* Format the result */
@@ -531,24 +533,20 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		}
 	}
 
-	private function combineAdditionalData( ApiResult $result, array $revisionsIds ) {
+	private function addUpvoteData( ApiResult $result, array $revisionIds ) {
 		global $wgCityId;
 
-		if ( $this->fld_upvotes ) {
-			$upvotes = ( new RevisionUpvotesService() )->getRevisionsUpvotes( $wgCityId, $revisionsIds );
-			foreach( $revisionsIds as $index => $id ) {
-				$upvote = [];
-				$upvoteCount = 0;
-				$path = ['query', $this->getModuleName(), $index];
-
-				if ( isset( $upvotes[$id] ) ) {
-					$upvote = $upvotes[$id]['upvotes'];
-					$upvoteCount = $upvotes[$id]['count'];
-				}
-
-				$result->addValue( $path, 'upvotes', $upvote );
-				$result->addValue( $path, 'upvotes_count', $upvoteCount );
+		$upvotes = ( new RevisionUpvotesService() )->getRevisionsUpvotes( $wgCityId, $revisionIds );
+		foreach ( $revisionIds as $index => $id ) {
+			$upvote = [];
+			$upvoteCount = 0;
+			$path = [ 'query', $this->getModuleName(), $index ];
+			if ( isset( $upvotes[$id] ) ) {
+				$upvote = $upvotes[$id]['upvotes'];
+				$upvoteCount = $upvotes[$id]['count'];
 			}
+			$result->addValue( $path, 'upvotes', $upvote );
+			$result->addValue( $path, 'upvotes_count', $upvoteCount );
 		}
 	}
 
