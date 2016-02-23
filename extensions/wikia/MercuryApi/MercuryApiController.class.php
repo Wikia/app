@@ -16,12 +16,10 @@ class MercuryApiController extends WikiaController {
 	const WIKI_IMAGE_SIZE = 500;
 
 	private $mercuryApi = null;
-	private $mainPageHandler = null;
 
 	public function __construct() {
 		parent::__construct();
 		$this->mercuryApi = new MercuryApi();
-		$this->mainPageHandler = new MercuryApiMainPageHandler($this->mercuryApi);
 	}
 
 	/**
@@ -294,8 +292,8 @@ class MercuryApiController extends WikiaController {
 			$data['ns'] = $title->getNamespace();
 
 			$titleBuilder = new WikiaHtmlTitle();
-			if ( $this->mainPageHandler->shouldGetMainPageData( $isMainPage ) ) {
-				$data['mainPageData'] = $this->mainPageHandler->getMainPageData();
+			if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
+				$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData($this->mercuryApi);
 				$data['details'] = MercuryApiArticleHandler::getArticleDetails($article);
 			} else {
 				// Content Namespace Handling
@@ -414,7 +412,7 @@ class MercuryApiController extends WikiaController {
 			throw new NotFoundApiException( 'Section is not set' );
 		}
 
-		$data = $this->mainPageHandler->getCuratedContentData( $section );
+		$data = MercuryApiMainPageHandler::getCuratedContentData( $this->mercuryApi, $section );
 
 		if ( empty( $data ) ) {
 			throw new NotFoundApiException( 'No members' );
@@ -442,7 +440,7 @@ class MercuryApiController extends WikiaController {
 	 * @return array|Mixed|null
 	 */
 	public function getCuratedContentData( $section = null ) {
-		return $this->mainPageHandler->getCuratedContentData($section);
+		return MercuryApiMainPageHandler::getCuratedContentData($this->mercuryApi, $section);
 	}
 
 	private function getOtherLanguages( Title $title ) {

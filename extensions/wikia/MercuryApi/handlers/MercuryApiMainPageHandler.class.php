@@ -4,21 +4,12 @@ use Wikia\Logger\WikiaLogger;
 
 class MercuryApiMainPageHandler {
 
-	/**
-	 * @var MercuryApi
-	 */
-	private $mercuryApiModel = null;
-
-	public function __construct(MercuryApi $mercuryApiModel) {
-		$this->mercuryApiModel = $mercuryApiModel;
-	}
-
-	public function getMainPageData() {
+	public static function getMainPageData(MercuryApi $mercuryApiModel) {
 		$mainPageData = [ ];
-		$curatedContent = $this->getCuratedContentData();
-		$trendingArticles = $this->getTrendingArticlesData();
-		$trendingVideos = $this->getTrendingVideosData();
-		$wikiaStats = $this->getWikiaStatsData();
+		$curatedContent = self::getCuratedContentData($mercuryApiModel);
+		$trendingArticles = self::getTrendingArticlesData($mercuryApiModel);
+		$trendingVideos = self::getTrendingVideosData($mercuryApiModel);
+		$wikiaStats = self::getWikiaStatsData();
 
 		if ( !empty( $curatedContent[ 'items' ] ) ) {
 			$mainPageData[ 'curatedContent' ] = $curatedContent[ 'items' ];
@@ -43,21 +34,21 @@ class MercuryApiMainPageHandler {
 		return $mainPageData;
 	}
 
-	public function getCuratedContentData( $section = null ) {
+	public static function getCuratedContentData( MercuryApi $mercuryApiModel, $section = null ) {
 		$data = [ ];
 
 		try {
 			$data = WikiaDataAccess::cache(
 				self::curatedContentDataMemcKey( $section ),
 				WikiaResponse::CACHE_STANDARD,
-				function () use ( $section ) {
+				function () use ( $mercuryApiModel, $section ) {
 					$rawData = F::app()->sendRequest(
 						'CuratedContent',
 						'getList',
 						empty( $section ) ? [ ] : [ 'section' => $section ]
 					)->getData();
 
-					return $this->mercuryApiModel->processCuratedContent( $rawData );
+					return $mercuryApiModel->processCuratedContent( $rawData );
 				}
 			);
 		} catch ( NotFoundException $ex ) {
@@ -67,7 +58,7 @@ class MercuryApiMainPageHandler {
 		return $data;
 	}
 
-	private function getTrendingArticlesData() {
+	private static function getTrendingArticlesData(MercuryApi $mercuryApiModel) {
 		global $wgContentNamespaces;
 
 		$params = [
@@ -80,7 +71,7 @@ class MercuryApiMainPageHandler {
 
 		try {
 			$rawData = F::app()->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
-			$data = $this->mercuryApiModel->processTrendingArticlesData( $rawData );
+			$data = $mercuryApiModel->processTrendingArticlesData( $rawData );
 		} catch ( NotFoundException $ex ) {
 			WikiaLogger::instance()->info( 'Trending articles data is empty' );
 		}
@@ -88,7 +79,7 @@ class MercuryApiMainPageHandler {
 		return $data;
 	}
 
-	private function getTrendingVideosData() {
+	private static function getTrendingVideosData(MercuryApi $mercuryApiModel) {
 		$params = [
 			'sort' => 'trend',
 			'getThumbnail' => false,
@@ -98,7 +89,7 @@ class MercuryApiMainPageHandler {
 
 		try {
 			$rawData = F::app()->sendRequest( 'SpecialVideosSpecial', 'getVideos', $params )->getData();
-			$data = $this->mercuryApiModel->processTrendingVideoData( $rawData );
+			$data = $mercuryApiModel->processTrendingVideoData( $rawData );
 		} catch ( NotFoundException $ex ) {
 			WikiaLogger::instance()->info( 'Trending videos data is empty' );
 		}
@@ -106,7 +97,7 @@ class MercuryApiMainPageHandler {
 		return $data;
 	}
 
-	private function getWikiaStatsData() {
+	private static function getWikiaStatsData() {
 		global $wgCityId;
 
 		$service = new WikiDetailsService();
@@ -119,7 +110,7 @@ class MercuryApiMainPageHandler {
 		return wfMemcKey( 'curated-content-section-data', $section );
 	}
 
-	public function shouldGetMainPageData( $isMainPage ) {
+	public static function shouldGetMainPageData( $isMainPage ) {
 	global $wgEnableMainPageDataMercuryApi, $wgCityId;
 
 		return $isMainPage &&
