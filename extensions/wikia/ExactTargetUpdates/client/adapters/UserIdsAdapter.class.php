@@ -13,7 +13,9 @@ class UserIdsAdapter {
 			$result = [ $result ];
 		}
 		foreach ( $result as $object ) {
-			$ids[] = $object->Properties->Property->Value;
+			if ( isset( $object->Properties->Property->Value ) ) {
+				$ids[] = $object->Properties->Property->Value;
+			}
 		}
 		$this->ids = $ids;
 	}
