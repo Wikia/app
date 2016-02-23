@@ -107,7 +107,8 @@ class MercuryApi {
 		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin, $wgDisableAnonymousEditing,
 			   $wgLanguageCode, $wgContLang, $wgCityId, $wgEnableNewAuth, $wgDisableAnonymousUploadForMercury,
 			   $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff, $wgDisableMobileSectionEditor,
-			   $wgEnableDiscussions, $wgAnalyticsDriverIVW3Countries, $wgEnableCommunityData;
+			   $wgEnableDiscussions, $wgAnalyticsDriverIVW3Countries, $wgEnableCommunityData,
+			   $wgEnableCategoryPagesInMercury;
 
 		return [
 			'cacheBuster' => (int)$wgCacheBuster,
@@ -115,6 +116,7 @@ class MercuryApi {
 			'defaultSkin' => $wgDefaultSkin,
 			'disableAnonymousEditing' => $wgDisableAnonymousEditing,
 			'disableAnonymousUploadForMercury' => $wgDisableAnonymousUploadForMercury,
+			'enableCategoryPagesInMercury' => $wgEnableCategoryPagesInMercury,
 			'enableDiscussions' => $wgEnableDiscussions,
 			'enableNewAuth' => $wgEnableNewAuth,
 			'favicon' => Wikia::getFaviconFullUrl(),
