@@ -514,7 +514,7 @@ describe('AdContext', function () {
 	});
 
 	it('enables detection when ' +
-	   'instantGlobals.wgAdDriverSourcePointDetectionCountries is enabled for continent', function () {
+	'instantGlobals.wgAdDriverSourcePointDetectionCountries is enabled for continent', function () {
 		mocks.win = {
 			ads: {
 				context: {
@@ -550,7 +550,7 @@ describe('AdContext', function () {
 	});
 
 	it('enables incontent_leaderboard slot when ' +
-	   'country in instatnGlobals.wgAdDriverIncontentLeaderboardSlotCountries', function () {
+	'country in instatnGlobals.wgAdDriverIncontentLeaderboardSlotCountries', function () {
 		var adContext;
 
 		mocks.instantGlobals = {wgAdDriverIncontentLeaderboardSlotCountries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
