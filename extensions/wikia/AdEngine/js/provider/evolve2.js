@@ -80,8 +80,10 @@ define('ext.wikia.adEngine.provider.evolve2', [
 		var section = getSection(),
 			slotCopy = JSON.parse(JSON.stringify(slotMap[slot.name]));
 
-		slotCopy.sect = section;
-		setTargeting(slotCopy);
+		if (!slotCopy.flushOnly) {
+			slotCopy.sect = section;
+			setTargeting(slotCopy);
+		}
 		slot.pre('success', function () {
 			slotTweaker.removeDefaultHeight(slot.name);
 			slotTweaker.removeTopButtonIfNeeded(slot.name);
