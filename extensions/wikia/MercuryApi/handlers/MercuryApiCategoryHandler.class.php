@@ -17,7 +17,7 @@ class MercuryApiCategoryHandler {
 			['categoryPage' => $categoryPage, 'isMercury' => true]
 		)->getData();
 
-		$sanitizedAlphabeticalList = ['collections' => [] ];
+		$sanitizedAlphabeticalList = ['sections' => [] ];
 
 		foreach ( $alphabeticalList['collections'] as $index => $collection ) {
 			$batch = ( $index == $alphabeticalList['requestedIndex'] ) ? $alphabeticalList['requestedBatch'] : 1;
@@ -25,7 +25,7 @@ class MercuryApiCategoryHandler {
 			$currentBatch = $itemsBatch['currentBatch'];
 			$nextBatch = $currentBatch + 1;
 
-			$sanitizedAlphabeticalList['collections'][$index] = [
+			$sanitizedAlphabeticalList['sections'][$index] = [
 				'items' => $itemsBatch['items'],
 				'nextBatch' => $nextBatch,
 				'currentBatch' => $currentBatch,
