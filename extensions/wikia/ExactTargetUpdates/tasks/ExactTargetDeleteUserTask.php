@@ -8,7 +8,7 @@ class ExactTargetDeleteUserTask extends ExactTargetTask {
 	 * @param int $iUserId Id of user to be deleted
 	 */
 	public function deleteUserData( $iUserId ) {
-		( new ExactTargetClient() )->deleteSubscriber( $iUserId );
+		$this->attemptDeleteSubscriber( $iUserId );
 		$this->deleteUser( $iUserId );
 		$this->deleteUserProperties( $iUserId );
 	}
@@ -47,4 +47,23 @@ class ExactTargetDeleteUserTask extends ExactTargetTask {
 		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oDeleteUserPropertiesResult ) );
 	}
 
+	/**
+	 * @param int $userId
+	 */
+	private function attemptDeleteSubscriber( $userId ) {
+		$client = new ExactTargetClient();
+
+		$userEmail = $client->retrieveEmailByUserId( $userId );
+		if ( empty( $userEmail ) ) {
+			return;
+		}
+
+		$ids = $this->retrieveUserIdsByEmail( $userEmail );
+		/* Skip deletion if no email found or email used by other account */
+		if ( !empty( $ids ) && ( count( $ids ) > 1 || $ids[0] != $userId ) ) {
+			return;
+		}
+
+		$client->deleteSubscriber( $userEmail );
+	}
 }

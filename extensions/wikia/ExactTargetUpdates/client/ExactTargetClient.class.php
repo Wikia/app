@@ -18,20 +18,9 @@ class ExactTargetClient {
 	}
 
 	/**
-	 * Deletes Subscriber object in ExactTarget by API request if email is not used by other user
+	 * Deletes Subscriber object in ExactTarget by API request
 	 */
-	public function deleteSubscriber( $userId ) {
-		$userEmail = $this->retrieveEmailByUserId( $userId );
-		if ( empty( $userEmail ) ) {
-			return;
-		}
-		// retrieve users ids list
-		$ids = $this->retrieveUserIdsByEmail( $userEmail );
-		/* Skip deletion if no email found or email used by other account */
-		if ( !empty( $ids ) && ( count( $ids ) > 1 || $ids[ 0 ] != $userId ) ) {
-			return;
-		}
-
+	public function deleteSubscriber( $userEmail ) {
 		$deleteRequest = ExactTargetRequestBuilder::createDelete()
 			->withUserEmail( $userEmail )
 			->build();
@@ -127,10 +116,12 @@ class ExactTargetClient {
 		$requestHeaders = $client->__getLastRequestHeaders();
 		$data = $client->__getLastRequest();
 		$status = strtok( $client->__getLastResponseHeaders(), "\n" );
+		$response = $client->__getLastResponse();
 		return [
 			'request.headers' => $requestHeaders ? $requestHeaders : '',
 			'request.data' => $data ? $data : '',
-			'response.status' => $status ? $status : ''
+			'response.status' => $status ? $status : '',
+			'response.data' => $response ? $response : ''
 		];
 	}
 

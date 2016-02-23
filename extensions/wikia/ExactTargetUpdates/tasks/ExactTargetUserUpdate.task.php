@@ -21,17 +21,19 @@ class ExactTargetUserUpdate extends BaseTask {
 	 * @throws \Wikia\Util\AssertionException
 	 */
 	public function updateUser( array $userData ) {
-		Assert::true( !empty( $userData[ 'user_id' ] ), 'User ID missing' );
-		Assert::true( !empty( $userData[ 'user_email' ] ), 'User email missing' );
+		$userId = $userData[ 'user_id' ];
+		$userEmailNew = $userData[ 'user_email' ];
 
-		/* Delete subscriber (email address) used by touched user */
-		$this->getClient()->deleteSubscriber( $userData[ 'user_id' ] );
+		Assert::true( !empty( $userId ), 'User ID missing' );
+		Assert::true( !empty( $userEmailNew ), 'User email missing' );
 
-		/* Create Subscriber with new email */
-		$this->getClient()->createSubscriber( $userData[ 'user_email' ] );
+		$client = $this->getClient();
+		$userEmailOld = $client->retrieveEmailByUserId( $userId );
+
+		$this->updateSubscriber( $userEmailOld, $userEmailNew, $userId, $client );
 
 		/* Update or create User in external service */
-		$this->getClient()->updateUser( $userData );
+		$client->updateUser( $userData );
 
 		return self::STATUS_OK;
 	}
@@ -52,5 +54,31 @@ class ExactTargetUserUpdate extends BaseTask {
 			$this->client = new ExactTargetClient();
 		}
 		return $this->client;
+	}
+
+	/**
+	 * @param string $userEmailOld
+	 * @param string $userEmailNew
+	 * @param int $userId
+	 * @param ExactTargetClient $client
+	 */
+	private function updateSubscriber( $userEmailOld, $userEmailNew, $userId, ExactTargetClient $client ) {
+		// Remove old email if necessary
+		if ( !empty( $userEmailOld ) && $userEmailOld !== $userEmailNew ) {
+			// Remove old email if used only by this user account
+			$idsOld = $client->retrieveUserIdsByEmail( $userEmailOld );
+			if ( count( $idsOld ) === 1 && $idsOld[ 0 ] === $userId ) {
+				$client->deleteSubscriber( $userEmailOld );
+			}
+		}
+
+		// Create new email if necessary
+		if ( empty( $userEmailOld ) || $userEmailOld !== $userEmailNew ) {
+			// Create new email if doesn't already exist
+			$idsNew = $client->retrieveUserIdsByEmail( $userEmailNew );
+			if ( empty( $idsNew ) ) {
+				$client->createSubscriber( $userEmailNew );
+			}
+		}
 	}
 }
