@@ -6,7 +6,8 @@ class MercuryApiCategoryHandler {
 		$categoryPage = CategoryPage::newFromTitle($title, RequestContext::getMain());
 		return [
 			'members' => self::getMembers($categoryPage),
-			'exhibition' => self::getExhibition($categoryPage)
+			'exhibition' => self::getExhibition($categoryPage),
+			'name' => self::getCategoryName($title)
 		];
 	}
 
@@ -48,5 +49,9 @@ class MercuryApiCategoryHandler {
 
 	public static function hasArticle(Title $title) {
 		return $title->getArticleID() > 0;
+	}
+
+	private static function getCategoryName(Title $title) {
+		return $title->getText();
 	}
 }
