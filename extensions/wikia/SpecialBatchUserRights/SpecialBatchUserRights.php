@@ -48,7 +48,7 @@ class SpecialBatchUserRights extends SpecialPage {
 	}
 
 	public function userCanExecute( User $user ) {
-		return UserrightsPage::userCanChangeRights( $user, $this->$isself, false );
+		return UserrightsPage::userCanChangeRights( $user, $this->isself, false );
 	}
 
 	/**
@@ -67,7 +67,7 @@ class SpecialBatchUserRights extends SpecialPage {
 			return;
 		}
 
-		if ( !$this->userCanChangeRights( $wgUser, true ) ) {
+		if ( !UserrightsPage::userCanChangeRights( $wgUser, $this->isself, true ) ) {
 			// fixme... there may be intermediate groups we can mention.
 			global $wgOut;
 			$wgOut->showPermissionsErrorPage( array(

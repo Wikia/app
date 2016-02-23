@@ -36,7 +36,7 @@ class UserrightsPage extends SpecialPage {
 	protected $mTarget;
 	protected $isself = false;
 
-	public static function userCanChangeRights( $user, $isself, $checkIfSelf = true ) {
+	public static function userCanChangeRights( \User $user, $isself, $checkIfSelf = true ) {
 		$available = $user->changeableGroups();
 		return !empty( $available['add'] )
 		|| !empty( $available['remove'] )
@@ -45,11 +45,14 @@ class UserrightsPage extends SpecialPage {
 				|| !empty( $available['remove-self'] ) ) );
 	}
 
-
 	/**
 	 * Add a rights log entry for an action.
+	 * @param User $user
+	 * @param $oldGroups
+	 * @param $newGroups
+	 * @param $reason
 	 */
-	public static function addLogEntry( $user, $oldGroups, $newGroups, $reason ) {
+	public static function addLogEntry( \User $user, $oldGroups, $newGroups, $reason ) {
 		$log = new LogPage( 'rights' );
 
 		$log->addEntry( 'rights',
