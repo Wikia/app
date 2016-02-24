@@ -156,17 +156,6 @@ class ExactTargetRequestBuilderTest extends WikiaBaseTest {
 		return $result;
 	}
 
-	private function prepareDeleteOption( $aSubscribers ) {
-		$oDeleteRequest = new \ExactTarget_DeleteRequest();
-		$vars = [ ];
-		foreach ( $aSubscribers as $item ) {
-			$vars[] = $this->wrapToSoapVar( $item, 'Subscriber' );
-		}
-		$oDeleteRequest->Objects = $vars;
-		$oDeleteRequest->Options = new \ExactTarget_DeleteOptions();
-		return $oDeleteRequest;
-	}
-
 	private function prepareCreateOption( $subscribers ) {
 		$oRequest = new \ExactTarget_CreateRequest();
 		$vars = [ ];
