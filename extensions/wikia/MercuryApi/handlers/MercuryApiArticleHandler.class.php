@@ -2,6 +2,8 @@
 
 class MercuryApiArticleHandler {
 
+	const NUMBER_CONTRIBUTORS = 5;
+
 	/**
 	 * @param WikiaRequest $request
 	 * @param MercuryApi $mercuryApiModel
@@ -119,15 +121,12 @@ class MercuryApiArticleHandler {
 	 *
 	 * @param MercuryApi $mercuryApiModel
 	 * @param Article $article
-	 * @param int $numberOfContributors
 	 * @return int[]
 	 */
-	private static function getTopContributorsPerArticle(
-		MercuryApi $mercuryApiModel, Article $article, $numberOfContributors = 5
-	) {
+	private static function getTopContributorsPerArticle(MercuryApi $mercuryApiModel, Article $article) {
 		return $mercuryApiModel->topContributorsPerArticle(
 			$article->getID(),
-			$numberOfContributors
+			self::NUMBER_CONTRIBUTORS
 		);
 	}
 

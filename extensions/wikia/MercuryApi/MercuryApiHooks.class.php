@@ -44,7 +44,7 @@ class MercuryApiHooks {
 			$articleId = $wikiPage->getId();
 			if ( $articleId ) {
 				$userId = $user->getId();
-				$key = MercuryApi::getTopContributorsKey( $articleId, MercuryApiController::NUMBER_CONTRIBUTORS );
+				$key = MercuryApi::getTopContributorsKey( $articleId, MercuryApiArticleHandler::NUMBER_CONTRIBUTORS );
 				$memCache = F::app()->wg->Memc;
 				$contributions = $memCache->get( $key );
 				// Update the data only if the key is not empty
