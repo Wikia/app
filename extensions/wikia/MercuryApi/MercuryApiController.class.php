@@ -366,15 +366,15 @@ class MercuryApiController extends WikiaController {
 		$parserOptions = new ParserOptions( $wgUser );
 		$wrapper = new GlobalStateWrapper( ['wgArticleAsJson' => true] );
 
-		if( !empty( $this->getVal( 'CKmarkup' ) ) ) {
+		if ( !empty( $this->getVal( 'CKmarkup' ) ) ) {
 			$wikitext = RTE::HtmlToWikitext( $this->getVal( 'CKmarkup' ) );
 		}
 
 		if ( $title ) {
 			$wrapper->wrap( function () use ( &$articleAsJson, $wikitext, $title, $parserOptions ) {
 				// explicit revisionId of -1 passed to ensure proper behavior on ArticleAsJson end
-				$articleAsJson = json_decode(ParserPool::create()->parse( $wikitext, $title, $parserOptions, true, true, -1 )->getText());
-			});
+				$articleAsJson = json_decode( ParserPool::create()->parse( $wikitext, $title, $parserOptions, true, true, -1 )->getText() );
+			} );
 		} else {
 			$this->response->setVal( 'data', ['content' => 'Invalid title'] );
 			return;
@@ -401,6 +401,7 @@ class MercuryApiController extends WikiaController {
 			$title = $this->getTitleFromRequest();
 			$data = [ ];
 
+			$title->getText();
 			// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
 			$article = Article::newFromID( $title->getArticleId() );
 
@@ -422,7 +423,11 @@ class MercuryApiController extends WikiaController {
 
 			if ( $this->shouldGetMainPageData( $isMainPage ) ) {
 				$data['mainPageData'] = $this->getMainPageData();
-				$data['details'] = $this->getArticleDetails($article);
+				if ( $article instanceof Article ) {
+					$data['details'] = $this->getArticleDetails( $article );
+				} else {
+					$data['details'] = $this->getMainPageMockedDetails( $title );
+				}
 			} elseif ( $title->isContentPage() && $title->isKnown() ) {
 				$data = array_merge( $data, $this->getArticleData( $article ) );
 
@@ -707,7 +712,7 @@ class MercuryApiController extends WikiaController {
 				'articleTitle' => str_replace( '_', ' ', $articleTitle ),
 				'url' => $url,
 			];
-		}, array_keys( $links ), array_values( $links ) );
+		} , array_keys( $links ), array_values( $links ) );
 
 		// Sort by localized language name
 		$c = Collator::create( 'en_US.UTF-8' );
@@ -716,5 +721,20 @@ class MercuryApiController extends WikiaController {
 		} );
 
 		return $langMap;
+	}
+
+	/**
+	 * @TODO XW-1174 - this method should be moved to MainPageHandler.
+	 * We need to define which details we should send and from where we should fetch it when article doesn't exist
+	 *
+	 * @param Title $title
+	 * @return array
+	 */
+	private function getMainPageMockedDetails( Title $title ) {
+		return [
+			'ns' => 0,
+			'title' => $title->getText(),
+			'revision' => []
+		];
 	}
 }
