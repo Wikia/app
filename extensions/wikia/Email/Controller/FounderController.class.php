@@ -501,7 +501,7 @@ class FounderTipsController extends EmailController {
 			],
 			[
 				"iconSrc" => Email\ImageHelper::getFileUrl( "Add_photo.png" ),
-				"iconLink" => \GlobalTitle::newFromText( "NewFiles", NS_SPECIAL, $this->wikiId )->getFullURL( [ "modal" => "UploadImage" ] ),
+				"iconLink" => \GlobalTitle::newFromText( "Images", NS_SPECIAL, $this->wikiId )->getFullURL( [ "modal" => "UploadImage" ] ),
 				"detailsHeader" => $this->getMessage( "emailext-founder-add-photos-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-add-photos-details" )->text()
 			],
