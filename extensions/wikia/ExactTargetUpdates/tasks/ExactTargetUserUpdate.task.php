@@ -67,6 +67,11 @@ class ExactTargetUserUpdate extends BaseTask {
 		return self::STATUS_OK;
 	}
 
+	public function deleteUserData( $userId ) {
+		$this->getClient()->deleteUser( $userId );
+		return self::STATUS_OK;
+	}
+
 	protected function getClient() {
 		if ( !isset( $this->client ) ) {
 			$this->client = new ExactTargetClient();

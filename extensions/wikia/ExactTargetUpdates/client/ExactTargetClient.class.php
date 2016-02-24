@@ -31,6 +31,14 @@ class ExactTargetClient {
 		return $this->sendRequest( self::UPDATE_CALL, $request );
 	}
 
+	public function deleteUser( $userId ) {
+		$request = ExactTargetRequestBuilder::getUserDeleteBuilder()
+			->withUserId( $userId )
+			->build();
+
+		return $this->sendRequest( self::DELETE_CALL, $request );
+	}
+
 	/**
 	 * Deletes Subscriber object in ExactTarget by API request
 	 */
