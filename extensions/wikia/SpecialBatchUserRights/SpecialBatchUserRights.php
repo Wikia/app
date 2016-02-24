@@ -8,7 +8,7 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
  * @ingroup SpecialPage
  */
 
-use Wikia\Service\User\Permissions\PermissionsAccessor;
+use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 
 set_time_limit( 0 );
 
@@ -30,7 +30,7 @@ $wgExtensionMessagesFiles['BatchUserRightsAliases'] = dirname( __FILE__ ) . '/Ba
  * @ingroup SpecialPage
  */
 class SpecialBatchUserRights extends SpecialPage {
-	use PermissionsAccessor;
+	use PermissionsServiceAccessor;
 	protected $isself = false;
 
 	// For added security, this array will be the only groups we'll allow to be batch-added to users.

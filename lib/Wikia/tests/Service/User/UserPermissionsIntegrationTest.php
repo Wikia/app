@@ -2,10 +2,10 @@
 
 namespace Wikia\Service\User\Permissions;
 
-use Wikia\Service\User\Permissions\PermissionsAccessor;
+use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 
 class UserPermissionsIntegrationTest extends \WikiaBaseTest {
-	use PermissionsAccessor;
+	use PermissionsServiceAccessor;
 
 	/**
 	 * @var int

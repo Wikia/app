@@ -9,10 +9,10 @@
 
 use Wikia\DependencyInjection\Injector;
 use Wikia\Service\User\Permissions\PermissionsService;
-use Wikia\Service\User\Permissions\PermissionsAccessor;
+use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 
 class ListusersData {
-	use PermissionsAccessor;
+	use PermissionsServiceAccessor;
 	var $mCityId;
 	var $mGroups;
 	var $mFilterGroup;

@@ -21,7 +21,7 @@
  * @ingroup SpecialPage
  */
 
-use Wikia\Service\User\Permissions\PermissionsAccessor;
+use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 
 /**
  * This special page lists all defined user groups and the associated rights.
@@ -31,7 +31,7 @@ use Wikia\Service\User\Permissions\PermissionsAccessor;
  * @author Petr Kadlec <mormegil@centrum.cz>
  */
 class SpecialListGroupRights extends SpecialPage {
-	use PermissionsAccessor;
+	use PermissionsServiceAccessor;
 
 	/**
 	 * Constructor

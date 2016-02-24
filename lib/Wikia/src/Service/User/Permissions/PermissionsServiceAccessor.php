@@ -4,7 +4,7 @@ namespace Wikia\Service\User\Permissions;
 
 use Wikia\DependencyInjection\Injector;
 
-trait PermissionsAccessor {
+trait PermissionsServiceAccessor {
 
 	/**
 	 * @var PermissionsService

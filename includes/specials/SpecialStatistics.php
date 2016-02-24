@@ -22,7 +22,7 @@
  */
 
 
-use Wikia\Service\User\Permissions\PermissionsAccessor;
+use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 
 /**
  * Special page lists various statistics, including the contents of
@@ -31,7 +31,7 @@ use Wikia\Service\User\Permissions\PermissionsAccessor;
  * @ingroup SpecialPage
  */
 class SpecialStatistics extends SpecialPage {
-	use PermissionsAccessor;
+	use PermissionsServiceAccessor;
 
 	private $views, $edits, $good, $images, $total, $users,
 			$activeUsers = 0;

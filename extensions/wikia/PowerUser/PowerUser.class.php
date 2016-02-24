@@ -13,12 +13,12 @@ namespace Wikia\PowerUser;
 
 use Wikia\Logger\Loggable;
 use Wikia\DependencyInjection\Injector;
-use Wikia\Service\User\Permissions\PermissionsAccessor;
+use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 use Wikia\Service\User\Permissions\PermissionsService;
 
 class PowerUser {
 	use Loggable;
-	use PermissionsAccessor;
+	use PermissionsServiceAccessor;
 
 	/**
 	 * Names of properties used to described PowerUsers
@@ -179,7 +179,8 @@ class PowerUser {
 			&& $this->bUseGroups
 			&& $this->isGroupForRemoval( $sProperty )
 		) {
-			$this->userPermissions()->removeUserFromGroup( $this->oUser, self::GROUP_NAME );
+			global $wgUser;
+			$this->permissionsService()->removeUserFromGroup( $wgUser, $this->oUser, self::GROUP_NAME );
 			$this->logSuccess( $sProperty, self::ACTION_REMOVE_GROUP );
 		}
 		return true;

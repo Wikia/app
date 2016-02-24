@@ -21,7 +21,7 @@
  * @ingroup SpecialPage
  */
 
-use Wikia\Service\User\Permissions\PermissionsAccessor;
+use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 
 /**
  * Special page to allow managing user group membership
@@ -29,7 +29,7 @@ use Wikia\Service\User\Permissions\PermissionsAccessor;
  * @ingroup SpecialPage
  */
 class UserrightsPage extends SpecialPage {
-	use PermissionsAccessor;
+	use PermissionsServiceAccessor;
 	# The target of the local right-adjuster's interest.  Can be gotten from
 	# either a GET parameter or a subpage-style parameter, so have a member
 	# variable for it.
