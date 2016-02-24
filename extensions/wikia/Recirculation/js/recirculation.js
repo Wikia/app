@@ -3,29 +3,18 @@ define('ext.wikia.recirculation.recirculation', [
 	'jquery',
 	'wikia.window',
 	'wikia.abTest',
-	'wikia.tracker',
 	'wikia.nirvana',
 	'videosmodule.controllers.rail',
-	'ext.wikia.adEngine.taboolaHelper'
-], function ($, w, abTest, tracker, nirvana, videosModule, taboolaHelper) {
+	'ext.wikia.adEngine.taboolaHelper',
+	'ext.wikia.recirculation.googleMatchHelper',
+	'ext.wikia.recirculation.tracker'
+], function ($, w, abTest, nirvana, videosModule, taboolaHelper, googleMatchHelper, tracker) {
 	'use strict';
 
-	function trackClick() {
-		tracker.track({
-			action: tracker.ACTIONS.CLICK,
-			category: 'recirculation',
-			label: 'rail',
-			trackingMethod: 'analytics'
-		});
-	}
+	var experimentName = 'RECIRCULATION_RAIL';
 
-	function trackImpression() {
-		tracker.track({
-			action: tracker.ACTIONS.IMPRESSION,
-			category: 'recirculation',
-			label: 'rail',
-			trackingMethod: 'analytics'
-		});
+	function trackClick() {
+		tracker.trackVerboseClick(experimentName, 'rail-item');
 	}
 
 	function injectFandomPosts(type, element) {
@@ -49,9 +38,12 @@ define('ext.wikia.recirculation.recirculation', [
 			return;
 		}
 
-		var group = abTest.getGroup('RECIRCULATION_RAIL');
+		var group = abTest.getGroup(experimentName);
 
 		switch (group) {
+			case 'GOOGLE_MATCH':
+				googleMatchHelper.injectGoogleMatchedContent(element);
+				break;
 			case 'RECENT_POPULAR':
 				injectFandomPosts('recent_popular', element);
 				break;
@@ -77,7 +69,7 @@ define('ext.wikia.recirculation.recirculation', [
 				return;
 		}
 
-		trackImpression();
+		tracker.trackVerboseImpression(experimentName, 'rail');
 		$(element).on('mousedown', 'a', trackClick);
 	}
 

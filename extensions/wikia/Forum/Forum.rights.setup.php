@@ -14,8 +14,6 @@ $wgGroupPermissions['sysop']['forum'] = true;
 $wgGroupPermissions['bureaucrat']['forum'] = true;
 $wgGroupPermissions['helper']['forum'] = true;
 
-$wgRevokePermissions['vstf']['forum'] = true;
-
 $wgGroupPermissions['*']['boardedit'] = false;
 $wgGroupPermissions['staff']['boardedit'] = true;
 

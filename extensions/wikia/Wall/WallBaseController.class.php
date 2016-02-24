@@ -405,8 +405,7 @@ class WallBaseController extends WikiaController {
 
 		$this->wall = $this->getWallForIndexPage( $title );
 
-		/* @var $this ->wall Wall */
-
+		/* @var Wall wall */
 		if ( !empty( $perPage ) ) {
 			$this->wall->setMaxPerPage( $perPage );
 		}

@@ -41,11 +41,10 @@ class ResourceLoaderAdEngineSourcePointRecoveryModule extends ResourceLoaderAdEn
 	protected function fetchRemoteScript( $url ) {
 		global $wgSourcePointApiKey;
 
-		$content = Http::get( $url,
+		$content = ExternalHttp::get( $url,
 			null,
 			[
 				'headers' => ['Authorization' =>  'Token '.$wgSourcePointApiKey],
-				'noProxy' => true,
 				'timeout' => self::REQUEST_TIMEOUT
 			]
 		);
