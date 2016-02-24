@@ -64,6 +64,18 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 			[
 				'{"data": [{"data": {"defaultValue": ""},"source": "title1","type": "title"},{"data": {"caption": {"source": "caption1"}},"source": "image1","type": "image"},{"data": {"label": "Label 1"},"source": "row1","type": "row"},{"data": {"label": "Label 2"},"source": "row2","type": "row"},{"data": "Header 1","type": "section-header"},{"data": {"label": "Label 3"},"source": "row3","type": "row"},{"data": "Header 2","type": "section-header"},{"data": {"caption": {"source": "caption2"}},"source": "image2","type": "image"},{"data": "Header 3","type": "section-header"},{"data": {"label": "Label 4"},"source": "row4","type": "row"},{"data": {"defaultValue": ""},"source": "title2","type": "title"},{"data": "Header 4","type": "section-header"},{"data": {"caption": {"source": "caption3"}},"source": "image3","type": "image"},{"data": {"defaultValue": ""},"source": "title3","type": "title"}]}',
 				'<infobox><title source="title1"/><image source="image1"><caption source="caption1"/></image><data source="row1"><label>Label 1</label></data><data source="row2"><label>Label 2</label></data><group><header>Header 1</header><data source="row3"><label>Label 3</label></data></group><group><header>Header 2</header><image source="image2"><caption source="caption2"/></image></group><group><header>Header 3</header><data source="row4"><label>Label 4</label></data></group><title source="title2"/><group><header>Header 4</header><image source="image3"><caption source="caption3"/></image></group><title source="title3"/></infobox>'
+			],
+			[
+				'{"data": [{"type": "section-header", "data": "some fancy header", "collapsible": true}, {"type":"row", "source":"asdf"}]}',
+				'<infobox><group collapse="open"><header>some fancy header</header><data source="asdf"/></group></infobox>'
+			],
+			[
+				'{"data": [{"type": "section-header", "data": "some fancy header", "collapsible": false}, {"type":"row", "source":"asdf"}]}',
+				'<infobox><group><header>some fancy header</header><data source="asdf"/></group></infobox>'
+			],
+			[
+				'{"data": [{"type": "section-header", "data": "some fancy header", "collapsible": false}, {"type":"row", "source":"asdf"}, {"type": "section-header", "data": "some fancy header", "collapsible": true}, {"type":"row", "source":"asdf"}]}',
+				'<infobox><group><header>some fancy header</header><data source="asdf"/></group><group collapse="open"><header>some fancy header</header><data source="asdf"/></group></infobox>'
 			]
 		];
 	}

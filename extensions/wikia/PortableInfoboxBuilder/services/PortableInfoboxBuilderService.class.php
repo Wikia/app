@@ -125,6 +125,10 @@ class PortableInfoboxBuilderService extends WikiaService {
 			$xml->addAttribute( 'source', $node->source );
 		}
 
+		if ( $node->collapsible ) {
+			$xml->addAttribute( 'section_collapsible', true);
+		}
+
 		foreach ( $node->data as $key => $value ) {
 			if ( !$this->isEmptyNodeValue( $value ) ) {
 				// map defaultValue to default, as its js reserved key word
@@ -178,7 +182,6 @@ class PortableInfoboxBuilderService extends WikiaService {
 	/**
 	 * @param $xml \SimpleXMLElement
 	 * @param $formatted make the output document human-readable (true) or condensed (false)
-	 * @param $newChild
 	 * @return string
 	 */
 	protected function getFormattedMarkup( $xml, $formatted ) {
@@ -196,7 +199,12 @@ class PortableInfoboxBuilderService extends WikiaService {
 					$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $childNodeDom ) );
 				} else {
 					// header node starting a group; we create an empty group and append the current node (header) to it
-					$currentGroupDom = $this->createGroupDom();
+					if ( $currentChildNode[0]['section_collapsible'] ) {
+						$currentGroupDom = $this->createGroupDom('open');
+						unset($currentChildNode[0]['section_collapsible']);
+					} else {
+						$currentGroupDom = $this->createGroupDom();
+					}
 					$currentGroupDom->appendChild( $currentGroupDom->ownerDocument->importNode( $childNodeDom, true ) );
 					$inGroup = true;
 				}
@@ -211,7 +219,12 @@ class PortableInfoboxBuilderService extends WikiaService {
 					$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $currentGroupDom ) );
 
 					// and initialize a new group
-					$currentGroupDom = $this->createGroupDom();
+					if ( $currentChildNode[0]['section_collapsible'] ) {
+						$currentGroupDom = $this->createGroupDom('open');
+						unset($currentChildNode[0]['section_collapsible']);
+					} else {
+						$currentGroupDom = $this->createGroupDom();
+					}
 					$currentGroupDom->appendChild( $currentGroupDom->ownerDocument->importNode( $childNodeDom, true ) );
 				} else {
 					// title node, terminating the group and returning to regular flow
@@ -245,12 +258,16 @@ class PortableInfoboxBuilderService extends WikiaService {
 	}
 
 	/**
+	 * @param $collapse
 	 * @return DOMElement
 	 */
-	protected function createGroupDom() {
-		return dom_import_simplexml(
-			new SimpleXMLElement( '<' . \Wikia\PortableInfoboxBuilder\Nodes\NodeGroup::XML_TAG_NAME . '/>' )
-		);
+	protected function createGroupDom($collapse = null) {
+		$groupElem = new SimpleXMLElement( '<' . \Wikia\PortableInfoboxBuilder\Nodes\NodeGroup::XML_TAG_NAME . '/>' );
+		if ( !empty($collapse) ) {
+			$groupElem->addAttribute("collapse", $collapse);
+		}
+
+		return dom_import_simplexml($groupElem);
 	}
 
 	/**
