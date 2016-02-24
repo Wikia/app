@@ -15,7 +15,7 @@ $wgExtensionCredits['other'][] = array(
 	"url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/Blogs",
 	"svn-date" => '$LastChangedDate$',
 	"svn-revision" => '$LastChangedRevision$',
-	"author" => array('[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]', 'Piotr Molski', 'Adrian Wieczorek', '[http://www.wikia.com/wiki/User:Ppiotr Przemek Piotrowski (Nef)]', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
+	"author" => array( '[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]', 'Piotr Molski', 'Adrian Wieczorek', '[http://www.wikia.com/wiki/User:Ppiotr Przemek Piotrowski (Nef)]', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]' )
 );
 
 define( "NS_BLOG_ARTICLE", 500 );
@@ -47,7 +47,7 @@ $wgAutoloadClasses[ "WikiaApiBlogs" ] = __DIR__ . "/api/WikiaApiBlogs.php";
 global $wgAPIModules;
 $wgAPIModules[ "blogs" ] = "WikiaApiBlogs";
 
-//$wgExtensionFunctions[] = array('BlogArticle', 'createCategory');
+// $wgExtensionFunctions[] = array('BlogArticle', 'createCategory');
 
 /**
  * messages file
@@ -75,6 +75,7 @@ $wgGroupPermissions['*'][ 'blog-comments-delete' ] = false;
 $wgGroupPermissions['sysop'][ 'blog-comments-delete' ] = true;
 $wgGroupPermissions['staff'][ 'blog-comments-delete' ] = true;
 $wgGroupPermissions['helper'][ 'blog-comments-delete' ] = true;
+$wgGroupPermissions['threadmoderator'][ 'blog-comments-delete' ] = true;
 
 $wgGroupPermissions['*'][ 'blog-articles-edit' ] = false;
 $wgGroupPermissions['sysop'][ 'blog-articles-edit' ] = true;
@@ -105,14 +106,14 @@ $wgAutoloadClasses['BlogsHelper'] = __DIR__ . '/BlogsHelper.class.php';
 // initialize blogs special pages (BugId:7604)
 $wgHooks['BeforeInitialize'][] = 'wfBlogsOnBeforeInitialize';
 
-function wfBlogsOnBeforeInitialize(&$title, &$article, &$output, User $user, $request, $mediaWiki) {
+function wfBlogsOnBeforeInitialize( &$title, &$article, &$output, User $user, $request, $mediaWiki ) {
 	global $wgAutoloadClasses;
 
 	// this line causes initialization of the skin
 	// title before redirect handling is passed causing BugId:7282 - it will be fixed in "AfterInitialize" hook
-	$skinName = get_class($user->getSkin());
+	$skinName = get_class( $user->getSkin() );
 
-	if ($skinName == 'SkinMonoBook') {
+	if ( $skinName == 'SkinMonoBook' ) {
 		$wgAutoloadClasses['CreateBlogPage'] = __DIR__ . '/monobook/SpecialCreateBlogPage.php';
 	}
 
@@ -144,12 +145,12 @@ $wgHooks[ 'ParserBeforeInternalParse' ][] = 'BlogsHelper::OnParserBeforeInternal
 $wgHooks[ 'ArticleInsertComplete' ][] = 'BlogsHelper::OnArticleInsertComplete';
 $wgHooks[ 'TitleMoveComplete' ][] = 'BlogsHelper::onTitleMoveComplete';
 
-//Usages of images on blogs on file pages
+// Usages of images on blogs on file pages
 $wgHooks['FilePageImageUsageSingleLink'][] = 'BlogsHelper::onFilePageImageUsageSingleLink';
 
 /**
  * load other parts
  */
-include( __DIR__ . "/BlogTemplate.php");
-include( __DIR__ . "/BlogArticle.php");
-include( __DIR__ . "/BlogLockdown.php");
+include( __DIR__ . "/BlogTemplate.php" );
+include( __DIR__ . "/BlogArticle.php" );
+include( __DIR__ . "/BlogLockdown.php" );

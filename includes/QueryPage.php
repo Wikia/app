@@ -16,38 +16,38 @@ global $wgQueryPages; // not redundant
 $wgQueryPages = array(
 //         QueryPage subclass           Special page name         Limit (false for none, none for the default)
 // ----------------------------------------------------------------------------
-	array( 'AncientPagesPage',              'Ancientpages'                  ),
-	array( 'BrokenRedirectsPage',           'BrokenRedirects'               ),
-	array( 'DeadendPagesPage',              'Deadendpages'                  ),
-	array( 'DisambiguationsPage',           'Disambiguations'               ),
-	array( 'DoubleRedirectsPage',           'DoubleRedirects'               ),
-	array( 'FileDuplicateSearchPage',       'FileDuplicateSearch'           ),
-	array( 'LinkSearchPage',                'LinkSearch'                    ),
-	array( 'ListredirectsPage',             'Listredirects'                 ),
-	array( 'LonelyPagesPage',               'Lonelypages'                   ),
-	array( 'LongPagesPage',                 'Longpages'                     ),
-	array( 'MIMEsearchPage',                'MIMEsearch'                    ),
-	array( 'MostcategoriesPage',            'Mostcategories'                ),
-	array( 'MostimagesPage',                'Mostimages'                    ),
-	array( 'MostlinkedCategoriesPage',      'Mostlinkedcategories'          ),
-	array( 'MostlinkedTemplatesPage',       'Mostlinkedtemplates'           ),
-	array( 'MostlinkedPage',                'Mostlinked'                    ),
-	array( 'MostrevisionsPage',             'Mostrevisions'                 ),
-	array( 'FewestrevisionsPage',           'Fewestrevisions'               ),
-	array( 'ShortPagesPage',                'Shortpages'                    ),
-	array( 'UncategorizedCategoriesPage',   'Uncategorizedcategories'       ),
-	array( 'UncategorizedPagesPage',        'Uncategorizedpages'            ),
-	array( 'UncategorizedImagesPage',       'Uncategorizedimages'           ),
-	array( 'UncategorizedTemplatesPage',    'Uncategorizedtemplates'        ),
-	array( 'UnusedCategoriesPage',          'Unusedcategories'              ),
-	array( 'UnusedimagesPage',              'Unusedimages'                  ),
-	array( 'WantedCategoriesPage',          'Wantedcategories'              ),
-	array( 'WantedFilesPage',               'Wantedfiles'                   ),
-	array( 'WantedPagesPage',               'Wantedpages'                   ),
-	array( 'WantedTemplatesPage',           'Wantedtemplates'               ),
-	array( 'UnwatchedPagesPage',            'Unwatchedpages'                ),
-	array( 'UnusedtemplatesPage',           'Unusedtemplates'               ),
-	array( 'WithoutInterwikiPage',          'Withoutinterwiki'              ),
+	[ 'AncientPagesPage',              'Ancientpages'                  ],
+	[ 'BrokenRedirectsPage',           'BrokenRedirects'               ],
+	[ 'DeadendPagesPage',              'Deadendpages'                  ],
+	[ 'DisambiguationsPage',           'Disambiguations'               ],
+	[ 'DoubleRedirectsPage',           'DoubleRedirects'               ],
+	[ 'FileDuplicateSearchPage',       'FileDuplicateSearch'           ],
+	[ 'LinkSearchPage',                'LinkSearch'                    ],
+	[ 'ListredirectsPage',             'Listredirects'                 ],
+	[ 'LonelyPagesPage',               'Lonelypages'                   ],
+	[ 'LongPagesPage',                 'Longpages'                     ],
+	[ 'MIMEsearchPage',                'MIMEsearch'                    ],
+	[ 'MostcategoriesPage',            'Mostcategories'                ],
+	[ 'MostimagesPage',                'Mostimages'                    ],
+	[ 'MostlinkedCategoriesPage',      'Mostlinkedcategories'          ],
+	[ 'MostlinkedTemplatesPage',       'Mostlinkedtemplates'           ],
+	[ 'MostlinkedPage',                'Mostlinked'                    ],
+	[ 'MostrevisionsPage',             'Mostrevisions'                 ],
+	[ 'FewestrevisionsPage',           'Fewestrevisions'               ],
+	[ 'ShortPagesPage',                'Shortpages'                    ],
+	[ 'UncategorizedCategoriesPage',   'Uncategorizedcategories'       ],
+	[ 'UncategorizedPagesPage',        'Uncategorizedpages'            ],
+	[ 'UncategorizedImagesPage',       'Uncategorizedimages'           ],
+	[ 'UncategorizedTemplatesPage',    'Uncategorizedtemplates'        ],
+	[ 'UnusedCategoriesPage',          'Unusedcategories'              ],
+	[ 'UnusedimagesPage',              'Unusedimages'                  ],
+	[ 'WantedCategoriesPage',          'Wantedcategories'              ],
+	[ 'WantedFilesPage',               'Wantedfiles'                   ],
+	[ 'WantedPagesPage',               'Wantedpages'                   ],
+	[ 'WantedTemplatesPage',           'Wantedtemplates'               ],
+	[ 'UnwatchedpagesPage',            'Unwatchedpages'                ],
+	[ 'UnusedtemplatesPage',           'Unusedtemplates'               ],
+	[ 'WithoutInterwikiPage',          'Withoutinterwiki'              ],
 );
 wfRunHooks( 'wgQueryPages', array( &$wgQueryPages ) );
 
@@ -292,6 +292,16 @@ abstract class QueryPage extends SpecialPage {
 		# Do query
 		$res = $this->reallyDoQuery( $limit, false );
 		$num = false;
+
+		/**
+		 * Wikia change begin
+		 * @author <adamk@wikia-inc.com>
+		 */
+		wfRunHooks( 'QueryPageUseResultsBeforeRecache', [ $this, $dbr, $res ] );
+		/**
+		 * Wikia change end
+		 */
+
 		if ( $res ) {
 			$num = $dbr->numRows( $res );
 			# Fetch results

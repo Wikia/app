@@ -30,9 +30,7 @@ class Queue {
 	const SYNC_TABLE = 'image_sync';
 	/* archive sync files table */
 	const SYNC_ARCH_TABLE = 'image_sync_done';
-	/* sync files db */
-	const SYNC_DB = 'swift_sync';
-	
+
 	/*
 	 * constructor
 	 */
@@ -139,17 +137,16 @@ class Queue {
 	}
 	
 	static public function getTable() {
-		return sprintf( "`%s`.`%s`", self::SYNC_DB, self::SYNC_TABLE );
+		return self::SYNC_TABLE;
 	}
 	
 	static public function getArchTable() {
-		return sprintf( "`%s`.`%s`", self::SYNC_DB, self::SYNC_ARCH_TABLE );
+		return self::SYNC_ARCH_TABLE;
 	}
 	
 	static public function getDB( $master = false ) {
-		global $wgSpecialsDB;
-		
-		return wfGetDB( ( empty( $master ) ) ? DB_SLAVE : DB_MASTER, array(), $wgSpecialsDB );
+		global $wgSwiftSyncDB;
+		return wfGetDB( ( empty( $master ) ) ? DB_SLAVE : DB_MASTER, array(), $wgSwiftSyncDB );
 	}
 
 	/* 

@@ -1,0 +1,32 @@
+{
+	"@metadata": {
+		"authors": [
+			"Harald Khan",
+			"Jon Harald Søby",
+			"Njardarlogar"
+		]
+	},
+	"semanticdrilldown-desc": "Eit «drilldown»-brukargrensesnitt for navigering gjennom semantiske data",
+	"specialpages-group-sd_group": "Semantisk «drilldown»",
+	"browsedata": "Bla gjennom data",
+	"sd_browsedata_choosecategory": "Vel ein kategori",
+	"sd_browsedata_viewcategory": "sjå kategori",
+	"sd_browsedata_docu": "Trykk på ein eller fleire einingar nedanfor for å avgrensa resultata.",
+	"sd_browsedata_subcategory": "Underkategori",
+	"sd_browsedata_other": "Annan",
+	"sd_browsedata_none": "Ingen",
+	"sd_browsedata_filterbyvalue": "Filtrer etter denne verdien",
+	"sd_browsedata_filterbysubcategory": "Filtrer etter denne underkategorien",
+	"sd_browsedata_otherfilter": "Syn sider med ein annan verdi for dette filteret",
+	"sd_browsedata_nonefilter": "Syn sider med null verdi for dette fileteret",
+	"sd_browsedata_or": "eller",
+	"sd_browsedata_removefilter": "Fjern dette filteret",
+	"sd_browsedata_removesubcategoryfilter": "Fjern dette underkategorifilteret",
+	"sd_browsedata_resetfilters": "Nullstill filter",
+	"sd_browsedata_addanothervalue": "Legg til ny verdi",
+	"sd_browsedata_daterangestart": "Byrjing:",
+	"sd_browsedata_daterangeend": "Slutt:",
+	"sd_createfilter_usepropertyvalues": "Nytt alle verdiar av denne eigenskapen for filteret:",
+	"sd_createfilter_usecategoryvalues": "Få verdiar for filteret frå denne kategorien:",
+	"sd_createfilter_requirefilter": "Krev at eit anna filter blir valt før dette blir vist:"
+}

@@ -9,7 +9,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'imageserving-desc' => 'Selects images from a specified array of pages based on visual requirements',
-	'mostimagesincontent' => 'Most linked-to files in content namespaces',
+	'mostlinkedfilesincontent' => 'Most linked-to files in content namespaces',
 );
 
 /** Message documentation (Message documentation)
@@ -17,7 +17,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'imageserving-desc' => '{{desc}}',
-	'mostimagesincontent' => 'The name of the special page showing the list of the most popular images on pages in content namespaces',
+	'mostlinkedfilesincontent' => 'The name of the special page showing the list of the most popular images on pages in content namespaces',
 );
 
 /** Arabic (العربية)
@@ -80,13 +80,15 @@ $messages['cs'] = array(
  */
 $messages['de'] = array(
 	'imageserving-desc' => 'Wählt Bilder von einer Auswahl von Seiten entsprechend der visuellen Anforderungen aus',
-	'mostimagesincontent' => 'Meistverlinkte Dateien in Inhaltsnamensräumen',
+	'mostlinkedfilesincontent' => 'Meistverlinkte Dateien in Inhaltsnamensräumen',
 );
 
 /** Spanish (español)
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'imageserving-desc' => 'Selecciona las imágenes de un conjunto especificado de páginas basados en necesidades visuales',
+	'mostlinkedfilesincontent' => 'Archivos más enlazados en los espacios de nombres de contenido',
 );
 
 /** Finnish (suomi)
@@ -97,9 +99,11 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  */
 $messages['fr'] = array(
 	'imageserving-desc' => 'Sélectionne les images dans un ensemble défini de pages, en fonction des besoins visuels',
+	'mostlinkedfilesincontent' => 'Fichiers les plus référencés dans les espaces de nom de contenu',
 );
 
 /** Galician (galego)
@@ -133,6 +137,7 @@ $messages['ia'] = array(
  */
 $messages['it'] = array(
 	'imageserving-desc' => 'Seleziona le immagini da una lista specificata di pagine basata sulle esigenze visive',
+	'mostlinkedfilesincontent' => 'File più richiamati in pagine di contenuto',
 );
 
 /** Japanese (日本語)
@@ -140,6 +145,7 @@ $messages['it'] = array(
  */
 $messages['ja'] = array(
 	'imageserving-desc' => '視覚的な要件に基づいてページの指定された配列から画像を選択します。',
+	'mostlinkedfilesincontent' => 'コンテンツでよく利用されているファイル',
 );
 
 /** Colognian (Ripoarisch)
@@ -160,6 +166,7 @@ $messages['mk'] = array(
  */
 $messages['ms'] = array(
 	'imageserving-desc' => 'Memilih gambar daripada tatasusunan laman yang terpilih berasaskan keperluan visual',
+	'mostlinkedfilesincontent' => 'Fail-fail yang paling banyak pautan dalam ruang nama kandungan',
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -187,7 +194,7 @@ $messages['oc'] = array(
  */
 $messages['pl'] = array(
 	'imageserving-desc' => 'Wybiera obrazy z określonej grupy stron na bazie preferencji wizualnych.',
-	'mostimagesincontent' => 'Najczęściej linkowane pliki w przestrzeniach nazw z treścią',
+	'mostlinkedfilesincontent' => 'Najczęściej linkowane pliki w przestrzeniach nazw z treścią',
 );
 
 /** Piedmontese (Piemontèis)
@@ -202,6 +209,7 @@ $messages['pms'] = array(
  */
 $messages['pt'] = array(
 	'imageserving-desc' => 'Escolhe imagens dum conjunto especificado de páginas com base em requisitos visuais.',
+	'mostlinkedfilesincontent' => 'Arquivos com mais links em namespaces de conteúdo',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -223,10 +231,12 @@ $messages['ru'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Jopparn
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'imageserving-desc' => 'Väljer bilder från en given mängd sidor baserade på visuella krav',
+	'mostlinkedfilesincontent' => 'Filer som länkats mest till i innehållsnamnrymder',
 );
 
 /** Thai (ไทย)
@@ -259,9 +269,11 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
 	'imageserving-desc' => 'Chọn hình ảnh từ một mảng được chỉ định của trang dựa trên yêu cầu hình ảnh',
+	'mostlinkedfilesincontent' => 'Các file liên quan nhất liên kết với các không gian tên nội dung',
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -269,6 +281,7 @@ $messages['vi'] = array(
  */
 $messages['zh-hans'] = array(
 	'imageserving-desc' => '从指定的数组的视觉要求基于页面中选择图像',
+	'mostlinkedfilesincontent' => '内容空间链接最多的文件',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
@@ -276,4 +289,5 @@ $messages['zh-hans'] = array(
  */
 $messages['zh-hant'] = array(
 	'imageserving-desc' => '依視需求從指定的一系列頁面中選擇要的圖片。',
+	'mostlinkedfilesincontent' => '內容空間連結最多的文檔',
 );

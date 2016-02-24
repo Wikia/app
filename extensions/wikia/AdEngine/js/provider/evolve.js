@@ -28,13 +28,6 @@ define('ext.wikia.adEngine.provider.evolve', [
 		return 'tile=' + tile + ';';
 	}
 
-	function hasEmbed(slot) {
-		log(['hasEmbed', slot], 5, logGroup);
-		var embedNo = slot.getElementsByTagName('embed').length || slot.getElementsByTagName('object').length;
-		log(['hasEmbed', slot, embedNo], 5, logGroup);
-		return !!embedNo;
-	}
-
 	function getKv(slotname) {
 		var sect = evolveHelper.getSect();
 
@@ -107,8 +100,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 		log(slotname, 5, logGroup);
 
 		var re = new RegExp('[A-Z1-9_]+'),
-			out = re.exec(slotname),
-			undef;
+			out = re.exec(slotname);
 
 		log(out, 8, logGroup);
 
@@ -116,7 +108,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 			out = out[0];
 		}
 
-		if (slotMap[out] === undef) {
+		if (slotMap[out] === undefined) {
 			log('error, unknown slotname', 1, logGroup);
 			out = '';
 		}
@@ -130,48 +122,54 @@ define('ext.wikia.adEngine.provider.evolve', [
 		hoppedSlots[sanitizeSlotname(slotname)] = true;
 	}
 
-	function fillInSlot(slotname, pSuccess, pHop) {
-		log('fillInSlot', 5, logGroup);
-		log(slotname, 5, logGroup);
+	function fillInSlot(slot) {
+		log(['fillInSlot', slot.name], 5, logGroup);
 
-		if (slotname === slotForSkin) {
+		if (slot.name === slotForSkin) {
 			scriptWriter.injectScriptByUrl(
-				slotname,
+				slot.container,
 				'http://cdn.triggertag.gorillanation.com/js/triggertag.js',
 				function () {
 					log('(invisible triggertag) ghostwriter done', 5, logGroup);
-					scriptWriter.injectScriptByText(slotname, getReskinAndSilverScript(slotname), function () {
+
+					scriptWriter.injectScriptByText(slot.container, getReskinAndSilverScript(slot.name), function () {
 						// gorrilla skin is suppressed by body.mediawiki !important so make it !important too
 						if (document.body.style.backgroundImage.search(/http:\/\/cdn\.assets\.gorillanation\.com/) !== -1) {
 							document.body.style.cssText = document.body.style.cssText.replace(document.body.style.backgroundImage, document.body.style.backgroundImage + ' !important');
 							document.body.style.cssText = document.body.style.cssText.replace(document.body.style.backgroundColor, document.body.style.backgroundColor + ' !important');
 						}
-						pSuccess();
+
+						if (hoppedSlots[slot.name]) {
+							slot.hop({method: 'hop'});
+							return;
+						}
+
+						slot.success();
 					});
 				}
 			);
 		} else {
-			scriptWriter.injectScriptByUrl(slotname, getUrl(slotname), function () {
-				if (hoppedSlots[slotname]) {
-					pHop({method: 'hop'});
+			scriptWriter.injectScriptByUrl(slot.container, getUrl(slot.name), function () {
+				if (hoppedSlots[slot.name]) {
+					slot.hop({method: 'hop'});
 					return;
 				}
 
 				// Success
 				// TODO: find a better place for operation below
-				slotTweaker.removeDefaultHeight(slotname);
-				slotTweaker.removeTopButtonIfNeeded(slotname);
-				slotTweaker.adjustLeaderboardSize(slotname);
+				slotTweaker.removeDefaultHeight(slot.name);
+				slotTweaker.removeTopButtonIfNeeded(slot.name);
+				slotTweaker.adjustLeaderboardSize(slot.name);
 
-				pSuccess();
+				slot.success();
 			});
 		}
 	}
 
-	function canHandleSlot(slotname) {
-		log(['canHandleSlot', slotname], 5, logGroup);
+	function canHandleSlot(slotName) {
+		log(['canHandleSlot', slotName], 5, logGroup);
 
-		return evolveSlotConfig.canHandleSlot(slotname);
+		return evolveSlotConfig.canHandleSlot(slotName);
 	}
 
 	iface = {

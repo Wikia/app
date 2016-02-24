@@ -1,4 +1,8 @@
 <?php
+
+use Wikia\Vignette\StaticAssetsUrlGenerator;
+use Wikia\Vignette\UrlConfig;
+
 class AvatarService extends Service {
 
 	const AVATAR_SIZE_SMALL = 20;
@@ -125,7 +129,7 @@ class AvatarService extends Service {
 
 			$masthead = Masthead::newFromUser( $user );
 			// use per-user cachebuster when custom avatar is used
-			$cb = !$masthead->isDefault() ? intval( $user->getOption( 'avatar_rev' ) ) : 0;
+			$cb = !$masthead->isDefault() ? intval( $user->getGlobalAttribute( 'avatar_rev' ) ) : 0;
 
 			if ( $wgEnableVignette ) {
 				$avatarUrl = self::getVignetteUrl( $masthead, $avatarSize, $cb );
@@ -230,7 +234,7 @@ class AvatarService extends Service {
 		global $wgStylePath;
 
 		if ( class_exists( 'Masthead' ) ) {
-			$avatarUrl = Masthead::newFromUserName( $userName )->mUser->getOption( AVATAR_USER_OPTION_NAME );
+			$avatarUrl = Masthead::newFromUserName( $userName )->mUser->getGlobalAttribute( AVATAR_USER_OPTION_NAME );
 			$images = getMessageForContentAsArray( 'blog-avatar-defaults' );
 			$firstDefaultImage = $images[ 0 ];
 			if ( empty( $avatarUrl ) || substr( $avatarUrl, -strlen( $firstDefaultImage ) ) === $firstDefaultImage ) {
@@ -257,14 +261,14 @@ class AvatarService extends Service {
 	 * @return \Wikia\Vignette\UrlGenerator
 	 */
 	public static function getVignetteUrl( Masthead $masthead, $width, $timestamp ) {
-		$relativePath = $masthead->mUser->getOption( AVATAR_USER_OPTION_NAME );
+		$relativePath = $masthead->mUser->getGlobalAttribute( AVATAR_USER_OPTION_NAME );
 
 		if ( $relativePath ) {
 			if ( strpos( $relativePath, '/' ) !== false ) { // custom avatar
 				$url = self::vignetteCustomUrl( $width, $relativePath, $timestamp );
 			} else { // wikia-provided avatars
 				$hash = FileRepo::getHashPathForLevel( $relativePath, 2 );
-				$bucket = VignetteRequest::parseBucket( $masthead->mDefaultPath );
+				$bucket = VignetteRequest::parseBucket( Masthead::DEFAULT_PATH );
 				$relativePath = $hash . $relativePath;
 				$url = self::buildVignetteUrl( $width, $bucket, $relativePath, $timestamp, false );
 			}
@@ -286,6 +290,31 @@ class AvatarService extends Service {
 			$bucket = VignetteRequest::parseBucket( $wgBlogAvatarPath );
 			$relativePath = ltrim( $relativePath, '/' );
 			$url = self::buildVignetteUrl( $width, $bucket, $relativePath, $timestamp );
+		}
+		else {
+			// handle full URLs introduced by PLATFORM-1334
+			$parsedUrl = parse_url( $relativePath );
+
+			$bucket = VignetteRequest::parseBucket( $relativePath );
+			$relativePath = join( '/', array_filter( [
+				VignetteRequest::parsePathPrefix( $relativePath ),
+				VignetteRequest::parseRelativePath( $relativePath )
+			] ) );
+
+			// custom avatars
+			// e.g. http://vignette.wikia-dev.com/3feccb7c-d544-4998-b127-3eba49eb59af/scale-to-width-down/16
+			if ( is_null( $bucket ) ) {
+				$config = ( new UrlConfig() )
+					->setRelativePath( $parsedUrl['path'] )
+					->setBaseUrl( sprintf( '%s://%s', $parsedUrl['scheme'], $parsedUrl['host'] ) );
+
+				$url = ( new StaticAssetsUrlGenerator( $config ) )
+					->scaleToWidth( $width )
+					->url();
+			}
+			else {
+				$url = self::buildVignetteUrl( $width, $bucket, $relativePath, false, false );
+			}
 		}
 
 		return $url;

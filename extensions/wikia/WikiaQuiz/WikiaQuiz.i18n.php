@@ -603,6 +603,7 @@ $messages['eu'] = array(
 	'wikiaquiz-game-next-button' => 'Hurrengo galdera',
 	'wikiaquiz-game-finish-button' => 'Amaitu',
 	'wikiaquiz-game-continue-button' => 'Jarraitu',
+	'wikiaquiz-game-email-placeholder' => 'zureizena@zureposta.com',
 );
 
 /** Persian (فارسی)
@@ -625,8 +626,19 @@ $messages['fa'] = array(
 	'wikiaquiz-game-next-button' => 'سؤال بعدی',
 	'wikiaquiz-game-finish-button' => 'پایان',
 	'wikiaquiz-game-continue-button' => 'ادامه',
-	'wikiaquiz-game-email-valid-please' => 'لطفاً یک نشانی رایانامه‌ای معتبر وارد کنید.',
+	'wikiaquiz-game-email-valid-please' => 'لطفاً یک آدرس ایمیل معتبر وارد کنید.',
 	'wikiaquiz-game-mute' => 'صامت‌سازی',
+);
+
+/** Finnish (suomi)
+ * @author Silvonen
+ */
+$messages['fi'] = array(
+	'wikiaquiz-questions-label' => 'Kysymykset',
+	'wikiaquiz-answers-label' => 'Vastaukset',
+	'wikiaquiz-publish-label' => 'Julkaise',
+	'wikiaquiz-game-start-button' => 'Käynnistä peli',
+	'wikiaquiz-game-continue-button' => 'Jatka',
 );
 
 /** Faroese (føroyskt)
@@ -1472,9 +1484,54 @@ $messages['nl'] = array(
 	'wikiaquiz-game-mute' => 'Dempen',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'wikiaquiz-desc' => 'Provesís un mejan aisit de crear e de gerir de quizzes',
+	'wikiaquiz-createquiz-headline' => 'Crear un quizz',
+	'wikiaquiz-editquiz-headline' => 'Modificar lo quizz',
+	'wikiaquiz-createquizarticle-headline' => 'Crear las questions e las responsas del quizz',
+	'wikiaquiz-editquizarticle-headline' => 'Modificar las questions e las responsas del quizz',
+	'wikiaquiz-title-label' => 'Títol',
+	'wikiaquiz-titlescreentext-label' => 'Tèxte de l’ecran de títol',
+	'wikiaquiz-fbrecommendationtext-label' => 'Descripcion de la recomandacion de Facebook',
+	'wikiaquiz-titlescreenimages-label' => 'Imatges de l’ecran de títol',
+	'wikiaquiz-moreinfoheading-label' => 'Entèsta « Mai d’informacions »',
+	'wikiaquiz-moreinfolinks-label' => "Ligams « Mai d'informacions »",
+	'wikiaquiz-moreinfoarticle-label' => 'Article',
+	'wikiaquiz-moreinfolinktext-label' => 'Tèxte del ligam',
+	'wikiaquiz-question-label' => 'Question',
+	'wikiaquiz-image-label' => 'Imatge (opcional)',
+	'wikiaquiz-video-label' => 'Vidèo (facultatiu, remplaça Imatge)',
+	'wikiaquiz-explanation-label' => 'Explicacion de la responsa (facultatiu)',
+	'wikiaquiz-quiz-label' => 'Quizz',
+	'wikiaquiz-questions-label' => 'Questions',
+	'wikiaquiz-answers-label' => 'Responsas',
+	'wikiaquiz-answer-label' => 'Responsa',
+	'wikiaquiz-correct-label' => 'Corrècte ?',
+	'wikiaquiz-addnewitem-label' => 'Apondre un element novèl',
+	'wikiaquiz-cancel-label' => 'Anullar',
+	'wikiaquiz-publish-label' => 'Publicar',
+	'wikiaquiz-error-invalid-question' => 'L’intitulat de la question es pas valid.',
+	'wikiaquiz-error-invalid-image' => 'L’imatge es pas valid : $1',
+	'wikiaquiz-error-invalid-video' => 'La vidèo es pas valida : $1',
+	'wikiaquiz-error-invalid-quiz' => "Lo nom d'aqueste quizz es pas valid.",
+	'wikiaquiz-error-invalid-article' => 'L’ID article es pas valid.',
+	'wikiaquiz-error-invalid-article-with-details' => 'L’article es pas valid : $1',
+	'wikiaquiz-game-cadence-2' => 'Prèst',
+	'wikiaquiz-game-cadence-1' => 'Partissètz !',
+	'wikiaquiz-game-question-label' => 'QUESTION',
+	'wikiaquiz-game-next-button' => 'Question seguenta',
+	'wikiaquiz-game-finish-button' => 'Acabar',
+	'wikiaquiz-game-continue-button' => 'Contunhar',
+	'wikiaquiz-game-mute' => 'Mut',
+);
+
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
+ * @author Wedkarski
  */
 $messages['pl'] = array(
 	'wikiaquiz-desc' => 'Pozwala łatwo tworzyć i zarządzać quizami',
@@ -1507,7 +1564,7 @@ $messages['pl'] = array(
 	'wikiaquiz-error-duplicate-question' => 'Pytanie o tej nazwie już istnieje.',
 	'wikiaquiz-error-invalid-question' => 'Tekst pytania jest nieprawidłowy.',
 	'wikiaquiz-error-invalid-image' => 'Obraz jest nieprawidłowy: $1',
-	'wikiaquiz-error-invalid-video' => 'Film jest nieprawidłowe: $1',
+	'wikiaquiz-error-invalid-video' => 'Film jest nieprawidłowy: $1',
 	'wikiaquiz-error-missing-answers' => 'Należy podać co najmniej jedną odpowiedź.',
 	'wikiaquiz-error-invalid-correct-answer' => 'Należy określić jedną prawidłową odpowiedź.',
 	'wikiaquiz-error-invalid-quiz' => 'Nazwa quizu jest nieprawidłowa.',
@@ -1521,7 +1578,7 @@ $messages['pl'] = array(
 	'wikiaquiz-game-next-button' => 'Następne pytanie',
 	'wikiaquiz-game-finish-button' => 'Zakończ',
 	'wikiaquiz-game-correct-label' => 'Poprawnie! Wymiatasz.',
-	'wikiaquiz-game-incorrect-label' => 'ŻLE. Łeeee.',
+	'wikiaquiz-game-incorrect-label' => 'ŹLE. Łeeee.',
 	'wikiaquiz-game-congratulations' => 'Wspaniale, $1 !',
 	'wikiaquiz-game-congratulations-anon' => 'Dobra robota!',
 	'wikiaquiz-game-your-score' => 'TWÓJ WYNIK TO',
@@ -1617,6 +1674,7 @@ $messages['ps'] = array(
 	'wikiaquiz-answers-label' => 'ځوابونه',
 	'wikiaquiz-answer-label' => 'ځواب',
 	'wikiaquiz-correct-label' => 'سم؟',
+	'wikiaquiz-addnewitem-label' => 'نوی توکی ورگډول',
 	'wikiaquiz-cancel-label' => 'ناگارل',
 	'wikiaquiz-publish-label' => 'خپرول',
 	'wikiaquiz-game-start-button' => 'لوبه پيلول',
@@ -2180,9 +2238,65 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
+	'wikiaquiz-desc' => 'Cung cấp một cách đơn giản để tạo vào quản lý các câu hỏi nhanh (quiz)',
+	'wikiaquiz-createquiz-headline' => 'Tạo Câu hỏi nhanh',
+	'wikiaquiz-editquiz-headline' => 'Chỉnh sửa các câu hỏi nhanh (Quiz)',
+	'wikiaquiz-createquizarticle-headline' => 'Tạo câu hỏi và câu trả lời nhanh',
+	'wikiaquiz-editquizarticle-headline' => 'Chỉnh sửa câu hỏi và câu trả lời nhanh',
+	'wikiaquiz-title-label' => 'Tên',
+	'wikiaquiz-fbrecommendationtext-label' => 'Mô tả khuyến cáo Facebook',
+	'wikiaquiz-titlescreenimages-label' => 'Đặt tiêu đề cho hình ảnh nền',
+	'wikiaquiz-moreinfolinks-label' => 'Thêm thông tin liên kết',
+	'wikiaquiz-moreinfoarticle-label' => 'Bài viết',
+	'wikiaquiz-moreinfolinktext-label' => 'Văn bản liên kết',
+	'wikiaquiz-question-label' => 'Câu hỏi',
+	'wikiaquiz-image-label' => 'Hình ảnh (tùy chọn)',
+	'wikiaquiz-video-label' => 'Video (tùy chọn, supercedes Image)',
+	'wikiaquiz-explanation-label' => 'Giải thích câu trả lời (tùy chọn)',
+	'wikiaquiz-quiz-label' => 'Câu hỏi nhanh',
+	'wikiaquiz-questions-label' => 'Câu hỏi',
+	'wikiaquiz-answers-label' => 'Câu trả lời',
+	'wikiaquiz-answer-label' => 'Câu trả lời',
+	'wikiaquiz-correct-label' => 'Đúng không?',
+	'wikiaquiz-addnewitem-label' => 'Thêm mục mới',
+	'wikiaquiz-cancel-label' => 'Hủy bỏ',
+	'wikiaquiz-publish-label' => 'Đăng',
+	'wikiaquiz-error-duplicate-quiz' => 'Một câu hỏi nhanh trùng tên đã tồn tại.',
+	'wikiaquiz-error-duplicate-question' => 'Một câu hỏi trùng tên đã tồn tại.',
+	'wikiaquiz-error-invalid-question' => 'Văn bản câu hỏi là không hợp lệ.',
+	'wikiaquiz-error-invalid-image' => 'Hình ảnh không hợp lệ: $1',
+	'wikiaquiz-error-invalid-video' => 'Video không hợp lệ: $1',
+	'wikiaquiz-error-missing-answers' => 'Bạn phải đưa ra ít nhất một câu trả lời.',
+	'wikiaquiz-error-invalid-correct-answer' => 'Bạn phải xác định một câu trả lời đúng.',
+	'wikiaquiz-error-invalid-quiz' => 'Tên câu hỏi nhanh không hợp lệ.',
+	'wikiaquiz-error-invalid-article' => 'ID bài viết không hợp lệ.',
+	'wikiaquiz-error-invalid-article-with-details' => 'Bài viết không hợp lệ: $1',
+	'wikiaquiz-game-start-button' => 'Bắt đầu trò chơi',
+	'wikiaquiz-game-cadence-3' => 'Sẵn sàng',
+	'wikiaquiz-game-cadence-2' => 'Thiết đặt',
+	'wikiaquiz-game-cadence-1' => 'Bắt đầu!',
+	'wikiaquiz-game-question-label' => 'CÂU HỎI',
+	'wikiaquiz-game-next-button' => 'Câu hỏi kế',
+	'wikiaquiz-game-finish-button' => 'Kết thúc',
+	'wikiaquiz-game-correct-label' => 'Chính xác! Bạn thật tuyệt.',
+	'wikiaquiz-game-incorrect-label' => 'Lêu lêu, sau rồi.',
+	'wikiaquiz-game-congratulations' => 'Làm tốt lắm,$1!',
+	'wikiaquiz-game-congratulations-anon' => 'Làm rất tốt!',
+	'wikiaquiz-game-your-score' => 'ĐIỂM SỐ CỦA BẠN LÀ',
+	'wikiaquiz-game-continue-button' => 'Tiếp tục',
+	'wikiaquiz-game-thanks' => 'Cảm ơn bạn đã chơi trò này!',
+	'wikiaquiz-game-provide-email' => 'Xin nhập địa chỉ thư điện tử của bạn',
 	'wikiaquiz-game-email-placeholder' => 'tênđịachỉemail@wikia.com',
+	'wikiaquiz-game-email-button' => 'Gửi cho tôi công cụ miễn phí',
+	'wikiaquiz-game-email-valid-please' => 'Xin nhập một địa chỉ thư điện tử hợp lệ.',
+	'wikiaquiz-game-email-subject' => 'Cảm ơn bạn vì đã gửi bài trả lời!',
+	'wikiaquiz-game-email-body' => 'Đây là một email xác nhận. Chúng tôi đã nhận được bài trả lời của bạn và sẽ thông báo cho bạn nếu bạn là người chiến thắng!',
+	'wikiaquiz-game-email-error' => 'Có một lỗi khi gửi email này: $1',
+	'wikiaquiz-game-challenge' => 'Hãy thách thức những người bạn của bạn chơi trò này!',
+	'wikiaquiz-game-mute' => 'Tắt tiếng',
 );
 
 /** Simplified Chinese (中文（简体）‎)

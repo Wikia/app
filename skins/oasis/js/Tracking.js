@@ -104,6 +104,7 @@ jQuery(function ($) {
 			case 'history':
 			case 'move':
 			case 'protect':
+			case 'flags':
 				label = 'edit-' + id;
 				break;
 			}
@@ -439,22 +440,6 @@ jQuery(function ($) {
 				});
 			});
 		}
-	})();
-
-	/** share **/
-
-	(function () {
-		var category = 'share';
-
-		$wikiHeader.on('mousedown', '.share-button', {
-			category: category,
-			label: 'share-button'
-		}, trackWithEventData);
-
-		$wikiHeader.on('mousedown', '.SharingToolbar .email-link', {
-			category: category,
-			label: 'email'
-		}, trackWithEventData);
 	})();
 
 	/** thread-module **/

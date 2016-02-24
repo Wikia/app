@@ -148,6 +148,29 @@ class ParserOutput extends CacheTime {
 	public $mPerformanceStats = array();
 	function getPerformanceStats( $k )     { return @$this->mPerformanceStats[$k]; }
 	function setPerformanceStats( $k, $v ) { $this->mPerformanceStats[$k] = $v; }
+
+	/**
+	 * @var Names of vars that we are able to merge from another ParserOutput object
+	 */
+	public static $varsToMerge = [
+		'mLanguageLinks',
+		'mCategories',
+		'mLinks',
+		'mTemplates',
+		'mTemplateIds',
+		'mImages',
+		'mFileSearchOptions',
+		'mExternalLinks',
+		'mInterwikiLinks',
+		'mModules',
+		'mModuleScripts',
+		'mModuleStyles',
+		'mModuleMessages',
+		'mWarnings',
+	];
+
+	const INVALID_MERGE_MESSAGE = 'A trial of merging an invalid ParserOutput object (all vars should be arrays).';
+
 	# </Wikia>
 
 	const EDITSECTION_REGEX = '#<(?:mw:)?editsection page="(.*?)" section="(.*?)"(?:/>|>(.*?)(</(?:mw:)?editsection>))#';
@@ -465,5 +488,63 @@ class ParserOutput extends CacheTime {
 	 */
 	public function preventClickjacking( $flag = null ) {
 		return wfSetVar( $this->mPreventClickjacking, $flag );
+	}
+
+	/**
+	 * Merge vars from another ParserOutput object. Allows you to parse some wikitext separately
+	 * but still include information on added categories, templates etc.
+	 * Throws an exception if any of the source or external vars is not an array
+	 * what makes the objects invalid.
+	 * @param ParserOutput $externalParserOutput
+	 * @throws Exception
+	 */
+	public function mergeExternalParserOutputVars( ParserOutput $externalParserOutput ) {
+		foreach ( self::$varsToMerge as $var ) {
+			if ( is_array( $this->$var ) && is_array( $externalParserOutput->$var ) ) {
+				$this->$var = $this->mergeSingleVar(
+					$this->$var, $externalParserOutput->$var );
+			} else {
+				throw new Exception( self::INVALID_MERGE_MESSAGE );
+			}
+		}
+	}
+
+	/**
+	 * Function for safe-merge of vars of two ParserOutput objects. It only accepts arrays.
+	 * @param $source
+	 * @param $new
+	 * @return array
+	 */
+	private function mergeSingleVar( Array $source, Array $new ) {
+		$result = [];
+
+		// Retrieve unique keys from both arrays and iterate over them
+		$keys = array_unique( array_merge( array_keys( $source ), array_keys( $new ) ) );
+
+		foreach ( $keys as $key ) {
+			// The source does not have this key, so use only the new one
+			if ( !isset( $source[$key] ) ) {
+				$result[$key] = $new[$key];
+
+			// There is no such key in the new array OR
+			// types of values under the key in source and new differ.
+			// Treat it as an invalid input and use only the source.
+			} elseif ( !isset( $new[$key] )
+				|| gettype( $source[$key] ) !== gettype( $new[$key] ) ) {
+					$result[$key] = $source[$key];
+
+			// The key exists in both arrays and values are also arrays. Use the unite
+			// operator to use values from both arrays.
+			} elseif ( is_array( $source[$key] ) && is_array( $new[$key] ) ) {
+				$result[$key] = $source[$key] + $new[$key];
+
+			// If we get to this point it means that both arrays are non-associative
+			// and we can safely merge them because preserving indexes is not important.
+			} else {
+				$result = array_merge( $source, $new );
+				return $result;
+			}
+		}
+		return $result;
 	}
 }

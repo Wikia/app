@@ -25,7 +25,7 @@ Article '''$1''' could not be found.
 * To go on to the main page of this site, click the link: [{{SERVER}} {{SITENAME}}]"
 );
 
-/** Tunisian Spoken Arabic (تونسي)
+/** Tunisian Arabic (تونسي/Tûnsî)
  * @author Csisc
  */
 $messages['aeb'] = array(
@@ -143,8 +143,10 @@ N'eo ket bet kavet ar pennad '''$1'''.
 
 /** Catalan (català)
  * @author Marcmpujol
+ * @author Unapersona
  */
 $messages['ca'] = array(
+	'our404handler-desc' => 'El nostre gestor per pàgines inexistents',
 	'our404handler' => 'Error 404: Pàgina no trobada!',
 	'our404handler-oops' => "Aquestes no són les pàgines que estàs buscant. Surt d'aquí, si us plau.",
 	'message404' => "'''Ho sentim molt, però per alguna raó la pàgina que busques no existeix.'''
@@ -157,9 +159,11 @@ L'article '''$1''' no s'ha trobat.
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Mormegil
  */
 $messages['cs'] = array(
+	'our404handler-desc' => 'Náš 404 handler pro neexistující stránk',
 	'our404handler' => 'Chyba 404: Stránka nenalezena!',
 	'our404handler-oops' => 'Tohle nejsou ty stránky, které hledáte. Pokračujte, prosím.',
 	'message404' => "'''Je nám to opravdu líto, ale stránka, kterou žádáte, z nějakého důvodu neexistuje.'''
@@ -218,6 +222,23 @@ $messages['el'] = array(
 *Μπορείτε να δοκιμάσετε το άρθρο [[$2]]
 *Μπορείτε να χρησιμοποιήσετε το κουτί αναζήτησης στα αριστερά της σελίδας
 *Για την κύρια σελίδα του ιστότοπου, πατήστε στο σύνδεσμο: [{{SERVER}}{{SITENAME}}]",
+);
+
+/** British English (British English)
+ * @author Chase me ladies, I'm the Cavalry
+ */
+$messages['en-gb'] = array(
+	'our404handler-desc' => 'Our 404 handler for non-existent pages tricks',
+	'our404handler' => 'Error 404: Page not found!',
+	'our404handler-oops' => "These aren't the pages you're looking for. Move along, please.",
+	'message404' => "
+'''We're really sorry, but for some reason the page you've asked for doesn't exist.'''
+
+Article '''$1''' could not be found.
+
+* You can try article [[$2]]
+* You can use the search box on the left side of the page
+* To go on to the main page of this site, click the link: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Spanish (español)
@@ -480,11 +501,11 @@ $messages['ksh'] = array(
 	'our404handler-oops' => 'Dat sin nit de Sigge, woh De noh aam looere bes. Nemm andere!',
 	'message404' => "'''Et deihd uns leid, ävver di Sigg, di De han wullts, di jidd_et nit.'''
 
-Dä Atikel '''$1''' ham_mer nit jefonge.
+Di Sigg '''$1''' ham_mer nit jefonge.
 
-* Velleich helft Der dä Atikel [[$2]]
-* Do kanns övver dat Feld op de linke Sigg noh jät söhke
-* Öm op de Houpsigg ze kumme, kleck op: [{{SERVER}} {{SITENAME}}]",
+* Velleich helft Der di Sigg [[$2]]
+* Do kanns övver dat Fäld op de lengke Sigg noh jät söhke
+* Öm op de Houpsigg ze kumme, klegg op: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -557,6 +578,7 @@ $messages['ml'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'our404handler-desc' => 'Handler 404 kami untuk halaman yang tidak wujud',
 	'our404handler' => 'Ralat 404: Laman tidak dijumpai!',
 	'our404handler-oops' => 'Ini bukan laman yang anda cari. Sila teruskan pencarian.',
 	'message404' => "'''Kami minta maaf banyak-banyak, tetapi laman yang anda minta itu tidak wujud atas sebab-sebab tertentu.'''
@@ -669,7 +691,7 @@ $messages['pa'] = array(
 	'our404handler-oops' => 'ਇਹ ਸਫ਼ੇ ਨਹੀਂ ਹੈ, ਜਿੰਨ੍ਹਾਂ ਨੂੰ ਤੁਸੀਂ ਲੱਭਦੇ ਸੀ। ਜਾਰੀ ਰੱਖੋ ਜੀ।',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(

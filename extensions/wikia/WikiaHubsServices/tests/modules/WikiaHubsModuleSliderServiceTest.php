@@ -142,8 +142,8 @@ WIKI_TEXT;
 
 		$sliderMock = $this->getMock(
 				'WikiaHubsModuleSliderService',
-				array( 'getImageData' ),
-				array('en', 1, 1)
+				[ 'getImageInfo' ],
+				[ 'en', 1, 1 ]
 		);
 
 		$map = [];
@@ -151,6 +151,7 @@ WIKI_TEXT;
 			for ($i = 1; $i <= 5; $i++) {
 				$map[] = array(
 					$flatArray['photo' . $i],
+					0,
 					(object) array('url' => $expectedData['slides'][$i - 1]['photoUrl'])
 				);
 			}
@@ -158,7 +159,7 @@ WIKI_TEXT;
 
 		$sliderMock
 			->expects($this->any())
-			->method( 'getImageData' )
+			->method( 'getImageInfo' )
 			->will($this->returnValueMap($map));
 
 		$structuredData = $sliderMock->getStructuredData($flatArray);

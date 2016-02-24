@@ -1,0 +1,24 @@
+/**
+ * CSS for SRF gallery redirect module
+ *
+ * @licence: GNU GPL v2 or later
+ * @author:  mwjames
+ *
+ * @since: 1.8
+ *
+ * @release: 0.1
+ */
+
+.srf-redirect li {
+	position: relative;
+}
+
+.srf-redirect .redirecticon {
+	position: absolute;
+	top:10px;
+	left:10px;
+	width: 16px;
+	height: 16px;
+	display:block;
+	/* @embed */ background: url(images/gallery-redirect.png) no-repeat left;
+}

@@ -191,7 +191,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return array|bool
 	 */
 	protected function mysqlFetchArray( $res ) {
-		Assert::true( $res instanceof mysqli_result, __METHOD__ );
+		Assert::true( $res instanceof mysqli_result, __METHOD__, [ 'sql' => $this->lastQuery() ] );
 		$array = $res->fetch_array();
 		if ( $array === null ) {
 			return false;
@@ -204,7 +204,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return int
 	 */
 	protected function mysqlNumRows( $res ) {
-		Assert::true( $res instanceof mysqli_result, __METHOD__ );
+		Assert::true( $res instanceof mysqli_result, __METHOD__, [ 'sql' => $this->lastQuery() ] );
 		return $res->num_rows;
 	}
 
@@ -213,7 +213,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return int
 	 */
 	protected function mysqlNumFields( $res ) {
-		Assert::true( $res instanceof mysqli_result, __METHOD__ );
+		Assert::true( $res instanceof mysqli_result, __METHOD__, [ 'sql' => $this->lastQuery() ] );
 		return $res->field_count;
 	}
 
@@ -223,7 +223,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return stdClass
 	 */
 	protected function mysqlFetchField( $res, $n ) {
-		Assert::true( $res instanceof mysqli_result, __METHOD__ );
+		Assert::true( $res instanceof mysqli_result, __METHOD__, [ 'sql' => $this->lastQuery() ] );
 		$field = $res->fetch_field_direct( $n );
 		$field->not_null = $field->flags & MYSQLI_NOT_NULL_FLAG;
 		$field->primary_key = $field->flags & MYSQLI_PRI_KEY_FLAG;
@@ -239,7 +239,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return string
 	 */
 	protected function mysqlFieldName( $res, $n ) {
-		Assert::true( $res instanceof mysqli_result, __METHOD__ );
+		Assert::true( $res instanceof mysqli_result, __METHOD__, [ 'sql' => $this->lastQuery() ] );
 		$field = $res->fetch_field_direct( $n );
 		return $field->name;
 	}
@@ -271,7 +271,19 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return string
 	 */
 	protected function mysqlRealEscapeString( $s ) {
-		return $this->mConn->real_escape_string( $s );
+		$ret = $this->mConn->real_escape_string( $s );
+
+		// Wikia change - begin
+		// @see PLATFORM-1196
+		if ( is_null( $ret ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->warning( 'DatabaseMysqli::mysqlRealEscapeString', [
+				'arg_type' => is_object( $s ) ? get_class( $s ) : gettype( $s ),
+				'exception' => new Exception()
+			] );
+		}
+		// Wikia change - end
+
+		return $ret;
 	}
 
 	protected function mysqlPing() {

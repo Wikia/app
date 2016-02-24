@@ -61,7 +61,7 @@ class CategorySelectHelper {
 			$viewModeActions = array( 'view', 'purge' );
 			$editModeActions = array( 'edit', 'submit' );
 			$supportedActions = array_merge( $viewModeActions, $editModeActions );
-			$supportedSkins = array( 'SkinAnswers', 'SkinOasis', 'SkinVenus' );
+			$supportedSkins = array( 'SkinOasis' );
 
 			$isViewMode = in_array( $action, $viewModeActions );
 			$isEditMode = in_array( $action, $editModeActions );
@@ -74,7 +74,7 @@ class CategorySelectHelper {
 				// Disabled if usecatsel=no is present
 				$request->getVal( 'usecatsel', '' ) == 'no'
 				// Disabled by user preferences
-				|| $user->getOption( 'disablecategoryselect' )
+				|| $user->getGlobalPreference( 'disablecategoryselect' )
 				// Disabled for unsupported skin
 				|| !in_array( get_class( RequestContext::getMain()->getSkin() ), $supportedSkins )
 				// Disabled for unsupported action

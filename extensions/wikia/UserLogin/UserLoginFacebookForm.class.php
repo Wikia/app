@@ -55,9 +55,9 @@ class UserLoginFacebookForm extends UserLoginForm {
 	 * @return User A new user object
 	 */
 	public function addNewAccount() {
-		return UserLoginHelper::callWithCaptchaDisabled(function() {
+		return UserLoginHelper::callWithCaptchaDisabled( function() {
 			return $this->addNewAccountInternal();
-		});
+		} );
 	}
 
 	/**
@@ -78,7 +78,7 @@ class UserLoginFacebookForm extends UserLoginForm {
 
 			if ( $this->hasConfirmedEmail ) {
 				$this->confirmUser( $user );
-				$user->setCookies();
+				UserLoginHelper::setCookiesForFacebookUser( $user, $this->getRequest()->response() );
 				$this->addNewUserToLog( $user );
 			} else {
 				$this->sendConfirmationEmail( $user );
@@ -111,7 +111,7 @@ class UserLoginFacebookForm extends UserLoginForm {
 		$fbUserInfo = FacebookClient::getInstance()->getUserInfo();
 		$gender = $fbUserInfo->getProperty( 'gender' );
 		if ( !is_null( $gender ) ) {
-			$user->setOption( 'gender', $gender );
+			$user->setGlobalAttribute( 'gender', $gender );
 			$user->saveSettings();
 		}
 	}

@@ -55,12 +55,12 @@ class WikiaHubsModuleWAMService extends WikiaHubsModuleNonEditableService {
 		]);
 	}
 
-	public function loadData($model, $params) {
+	public function loadData(EditHubModel $model, $params) {
 		$hubParams = $this->getHubsParams();
 		$lastTimestamp = $model->getLastPublishedTimestamp(
-									$hubParams,
-									$params['ts']
-						);
+			$hubParams,
+			$params['ts']
+		);
 
 		$params = $this->prepareParameters($params);
 
@@ -82,17 +82,13 @@ class WikiaHubsModuleWAMService extends WikiaHubsModuleNonEditableService {
 		return $structuredData;
 	}
 
-	protected function loadStructuredData($model, $params) {
+	protected function loadStructuredData(EditHubModel $model, $params) {
 		try {
-
 			$apiResponse = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
-
 		} catch (WikiaHttpException $e) {
-
 			$logMsg = 'Message: ' . $e->getLogMessage() . ' Details: ' . $e->getDetails();
 			Wikia::log(__METHOD__, false, $logMsg );
 			Wikia::logBacktrace(__METHOD__);
-
 		}
 
 		$data = [

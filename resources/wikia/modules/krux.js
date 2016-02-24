@@ -1,13 +1,20 @@
-/*global Krux,define*/
+/*global Krux, define, window*/
 window.Krux || ((Krux = function () {
 	Krux.q.push(arguments);
 }).q = []);
 
-define('wikia.krux', ['wikia.window', 'wikia.document'], function (win, doc) {
+define('wikia.krux', [
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adTracker',
+	'wikia.document',
+	'wikia.window'
+], function (adContext, adTracker, doc, win) {
 	'use strict';
 
 	var maxNumberOfKruxSegments = 27,
-		kruxScriptId = 'krux-control-tag';
+		kruxScriptId = 'krux-control-tag',
+		kruxLoaded = false,
+		segmentsCountTracked = false;
 
 	function exportPageParams(adLogicPageParams) {
 		var params, value;
@@ -45,7 +52,6 @@ define('wikia.krux', ['wikia.window', 'wikia.document'], function (win, doc) {
 			adLogicPageParams
 		) {
 			var script;
-
 			if (adContext.getContext().targeting.enableKruxTargeting) {
 				// Export page level params, so Krux can read them
 				exportPageParams(adLogicPageParams);
@@ -57,6 +63,7 @@ define('wikia.krux', ['wikia.window', 'wikia.document'], function (win, doc) {
 
 				// Add Krux pixel
 				addConfigScript(confid);
+				kruxLoaded = true;
 			}
 		});
 	}
@@ -70,23 +77,54 @@ define('wikia.krux', ['wikia.window', 'wikia.document'], function (win, doc) {
 		}
 	}
 
-	function getSegments() {
-		var segments = getParams('segs');
-
-		if (segments) {
-			return segments.split(',').slice(0, maxNumberOfKruxSegments);
+	function trackNumberOfSegments(numberOfSegments) {
+		if (segmentsCountTracked) {
+			return;
+		}
+		var label = numberOfSegments + '';
+		while (label.length < 4) {
+			label = '0' + label;
 		}
 
-		return [];
+		adTracker.track('krux/segments_count', {}, numberOfSegments, label);
+		segmentsCountTracked = true;
+	}
+
+	function getSegments() {
+		var segments = getParams('segs'),
+			segsArray;
+
+		if (segments === '') {
+			trackNumberOfSegments(0);
+			return [];
+		}
+
+		segsArray = segments.split(',');
+		trackNumberOfSegments(segsArray.length);
+		return segsArray.slice(0, maxNumberOfKruxSegments);
 	}
 
 	function getUser() {
 		return getParams('user');
 	}
 
+	function sendEvent(eventId, data) {
+		if (!kruxLoaded) {
+			return false;
+		}
+		Krux('admEvent', eventId, data || {});
+		return true;
+	}
+
+	// Mercury solution to track number of segments on each page view
+	adContext.addCallback(function () {
+		segmentsCountTracked = false;
+	});
+
 	return {
 		load: load,
 		getSegments: getSegments,
-		getUser: getUser
+		getUser: getUser,
+		sendEvent: sendEvent
 	};
 });

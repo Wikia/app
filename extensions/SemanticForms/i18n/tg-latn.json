@@ -1,0 +1,38 @@
+{
+	"@metadata": {
+		"authors": [
+			"Liangent"
+		]
+	},
+	"createproperty": "Viƶagī bisozed",
+	"sf_createproperty_proptype": "Nav':",
+	"templates": "Şablonho",
+	"sf_templates_docu": "Şablonhoi zer dar in viki vuçud dorand.",
+	"sf_templates_definescat": "ta'jidi gurūh: $1",
+	"createtemplate": "Şablon bisozed",
+	"sf_createtemplate_namelabel": "Nomi şablon:",
+	"sf_createtemplate_categorylabel": "Ta'jidi gurūh bo vositai şablon (ixtijorī):",
+	"sf_createtemplate_templatefields": "Vurudihoi şablon",
+	"sf_createtemplate_aggregationlabel": "Unvon baroi fehrist:",
+	"sf_createtemplate_standardformat": "Standart",
+	"sf_createtemplate_deletefield": "Hafz",
+	"sf_forms_docu": "Formhoi zerin dar viki vuçud dorand.",
+	"createform": "Eçodi jak form",
+	"sf_createform_template": "Şablon:",
+	"sf_createform_inputtypedefault": "(peşfarz)",
+	"sf_createform_add": "Ilova kardan",
+	"sf_createform_additembeforesave": "Şumo bojad haddi aqal jak şablon ba in form qabl az zaxira kardani on ilova kuned.",
+	"sf_formedit_remove": "Hazf",
+	"sf_formedit_addanother": "Ilovai digare",
+	"sf_formedit_none": "Heç kadom",
+	"sf_formerrors_header": "Xatohoe dar vurudi formaton vuçud dorad; ba zer nigared",
+	"sf_blank_error": "nametavon xolī boşad",
+	"sf_property_isproperty": "In jak viƶagī az nav'i $1 ast.",
+	"sf_template_docu": "In şabloni '$1' ast. Bojad bo qolabi zerin faroxonī şavad:",
+	"sf_template_docufooter": "Baroi muşohidai matni şablon sahifaro viroiş kuned.",
+	"sf_form_docu": "In formi '$1' ast. Baroi ilova kardani jak sahifae bo in form, dar zer nomi sahifaro vorid kuned; agar sahifae bo in nom vuçud doşta boşad, ba formi viroişi sahifa hidojat meşaved.",
+	"sf_form_freetextlabel": "Matni dilxoh",
+	"sf_category_hasdefaultform": "In gurūh az formi $1 istifoda mekunad.",
+	"sf_category_desc": "In gurūhi $1 ast.",
+	"sf_blank_namespace": "Aslī"
+}

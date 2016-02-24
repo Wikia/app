@@ -52,6 +52,25 @@ class CategoryHelperTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $actual );
 	}
 
+	public function testGetUniqueCategoriesWithWrongArgument() {
+		$categories = [ self::$data[ 0 ], null ];
+		$expected = [ $categories[ 0 ] ];
+
+		$actual = CategoryHelper::getUniqueCategories( $categories );
+
+		$this->assertEquals( $expected, $actual );
+	}
+
+	public function testGetUniqueCategoriesWithNoCategories() {
+		$categories = [ null, null ];
+		$expected = [ ];
+
+		$actual = CategoryHelper::getUniqueCategories( $categories );
+
+		$this->assertEquals( $expected, $actual );
+	}
+
+
 	public function testGetDiffCategories() {
 		$categories = self::$data;
 		$newCategories = self::$data;

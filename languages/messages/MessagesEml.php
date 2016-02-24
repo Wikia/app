@@ -35,8 +35,6 @@ $messages = array(
 
 'mytalk' => 'I mê discussiòun',
 
-# Cologne Blue skin
-'qbspecialpages' => 'Pagini specièli',
 
 'returnto'         => 'Tórna a $1.',
 'help'             => 'Per quî rivê da pôch',

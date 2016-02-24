@@ -187,6 +187,7 @@ class Parser {
 	 */
 
 	var $mIsMainParse;	# Is main article content currently parsed
+	var $mFlagsParsed = false; # Have you already parsed the article's flags?
 
 	/**
 	 * Wikia change end
@@ -341,7 +342,6 @@ class Parser {
 		 * First pass--just handle <nowiki> sections, pass the rest off
 		 * to internalParse() which does all the real work.
 		 */
-
 		global $wgUseTidy, $wgAlwaysUseTidy, $wgDisableLangConversion, $wgDisableTitleConversion;
 		$fname = __METHOD__.'-' . wfGetCaller();
 		wfProfileIn( __METHOD__ );
@@ -390,7 +390,6 @@ class Parser {
 		/* Wikia change end */
 
 		$text = $this->doBlockLevels( $text, $linestart );
-
 		$this->replaceLinkHolders( $text );
 
 		/**
@@ -480,6 +479,7 @@ class Parser {
 		}
 
 		wfRunHooks( 'ParserAfterTidy', array( &$this, &$text ) );
+
 		// Wikia change begin - @author: wladek
 		$this->recordPerformanceStats( $wikitextSize, strlen($text) );
 		// Wikia change end
@@ -1264,6 +1264,11 @@ class Parser {
 					[0-9Xx]                 # check digit
 					\b)
 			)!xu', array( &$this, 'magicLinkCallback' ), $text );
+
+		if ( preg_last_error() !== 0 ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'PCRE error', [ 'preg_last_error' => preg_last_error() ] );
+		}
+
 		wfProfileOut( __METHOD__ );
 		return $text;
 	}
@@ -2564,7 +2569,7 @@ class Parser {
 				wfProfileIn( __METHOD__."-paragraph" );
 				# No prefix (not in list)--go to paragraph mode
 				# XXX: use a stack for nestable elements like span, table and div
-				$openmatch = preg_match('/(?:<table|<h1|<h2|<h3|<h4|<h5|<h6|<pre|<tr|<p|<ul|<ol|<li|<\\/tr|<\\/td|<\\/th)/iS', $t );
+				$openmatch = preg_match('/(?:<aside|<table|<h1|<h2|<h3|<h4|<h5|<h6|<pre|<tr|<p|<ul|<ol|<li|<\\/tr|<\\/td|<\\/th)/iS', $t );
 
 				/**
 				 * Wikia change start
@@ -2573,9 +2578,9 @@ class Parser {
 				 * Stop the parser from wrapping figure tags in paragraphs
 				 */
 				$closematch = preg_match(
-					'/(?:<\\/table|<\\/h1|<\\/h2|<\\/h3|<\\/h4|<\\/h5|<\\/h6|'.
+					'/(?:<\\/?aside|<\\/table|<\\/h1|<\\/h2|<\\/h3|<\\/h4|<\\/h5|<\\/h6|'.
 				#	'<td|<th|<\\/?div|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
-					'<td|<th|<\\/?div|<\\/?figure|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|'.$this->mUniqPrefix.'-bloglist|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
+					'<td|<th|<\\/?div|<\\/?figure|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|'.$this->mUniqPrefix.'-bloglist|'.$this->mUniqPrefix.'-infobox|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
 				/**
 				 * Wikia change end
 				 */
@@ -3388,6 +3393,7 @@ class Parser {
 		# SUBST
 		wfProfileIn( __METHOD__.'-modifiers' );
 		if ( !$found ) {
+			Wikia\Util\Assert::true( $this->mSubstWords instanceof MagicWordArray, 'Parser::mSubstWords should be an instance of MagicWordArray', [ 'part1' => $part1 ] ); // ER-9507
 
 			$substMatch = $this->mSubstWords->matchStartAndRemove( $part1 );
 
@@ -3616,7 +3622,7 @@ class Parser {
 					$found = false; # access denied
 					wfDebug( __METHOD__.": template inclusion denied for " . $title->getPrefixedDBkey() );
 				} else {
-					list( $text, $title ) = $this->getTemplateDom( $title );
+					list( $text, $title ) = $this->getTemplateDom( $title, $args, $frame );
 					if ( $text !== false ) {
 						$found = true;
 						$isChildObj = true;
@@ -3751,6 +3757,13 @@ class Parser {
 			$ret = array( 'text' => $text );
 		}
 
+		# wikia start
+		global $wgEnableContextLinkTemplateParsing, $wgEnableInfoIconTemplateParsing;
+		if ( $wgEnableContextLinkTemplateParsing || $wgEnableInfoIconTemplateParsing ) {
+			wfRunHooks( 'Parser::endBraceSubstitution', array( $originalTitle, &$ret['text'], &$this ) );
+		}
+		# wikia end
+
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
@@ -3760,12 +3773,24 @@ class Parser {
 	 * and its redirect destination title. Cached.
 	 *
 	 * @param $title Title
+	 * @param $args array
+	 * @param $frame PPFrame_DOM
 	 *
 	 * @return array
 	 */
-	function getTemplateDom( $title ) {
+	function getTemplateDom( $title, $args = null, $frame = null ) {
 		$cacheTitle = $title;
 		$titleText = $title->getPrefixedDBkey();
+
+		# wikia start
+		$text = '';
+		wfRunHooks( 'Parser::getTemplateDom', array( $title, $args, $frame,  &$text ) );
+
+		if ( !empty( $text ) ) {
+			$dom = $this->preprocessToDom( $text, self::PTD_FOR_INCLUSION );
+			return array( $dom, $title );
+		}
+		# wikia end
 
 		if ( isset( $this->mTplRedirCache[$titleText] ) ) {
 			list( $ns, $dbk ) = $this->mTplRedirCache[$titleText];
@@ -3869,7 +3894,7 @@ class Parser {
 			# Get the revision
 			$rev = $id
 				? Revision::newFromId( $id )
-				: Revision::newFromTitle( $title );
+				: Revision::newFromTitle( $title, 0, Revision::READ_NORMAL );
 			$rev_id = $rev ? $rev->getId() : 0;
 			# If there is no current revision, there is no page
 			if ( $id === false && !$rev ) {
@@ -4145,6 +4170,9 @@ class Parser {
 				if ( !is_callable( $this->mTagHooks[$name] ) ) {
 					throw new MWException( "Tag hook for $name is not callable\n" );
 				}
+
+				wfRunHooks( 'ParserTagHooksBeforeInvoke', [ $name, $marker, $content, $attributes, $this, $frame ] );
+
 				$output = call_user_func_array( $this->mTagHooks[$name],
 					array( $content, $attributes, $this, $frame ) );
 			} elseif ( isset( $this->mFunctionTagHooks[$name] ) ) {
@@ -4855,10 +4883,10 @@ class Parser {
 
 		# If not given, retrieve from the user object.
 		if ( $nickname === false )
-			$nickname = $user->getOption( 'nickname' );
+			$nickname = $user->getGlobalAttribute( 'nickname' );
 
 		if ( is_null( $fancySig ) ) {
-			$fancySig = $user->getBoolOption( 'fancysig' );
+			$fancySig = (bool)$user->getGlobalAttribute( 'fancysig' );
 		}
 
 		$nickname = $nickname == null ? $username : $nickname;

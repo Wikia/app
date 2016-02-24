@@ -1,4 +1,4 @@
-<footer class="global-footer row">
+<footer class="global-footer">
 	<nav>
 		<div class="branding <?= ( !empty( $verticalShort ) ? 'vertical-' . $verticalShort : '' ); ?> <?= ( !$isCorporate ? 'black' : '' ); ?>">
 			<a class="wikia-logo" href="<?=Sanitizer::encodeAttribute( $logoLink ); ?>">
@@ -10,11 +10,11 @@
 		</div>
 		<ul>
 			<?php
-			foreach ($footerLinks as $link):
+			foreach ( $footerLinks as $link ):
 				?>
 				<li>
 					<?php
-					if ($link['isLicense']) {
+					if ( isset( $link['isLicense'] ) ) {
 						echo $copyright;
 					} else {?>
 						<a<?= ( !empty( $link[ 'id' ] ) ) ? " id=\"{$link[ 'id' ]}\"" : '' ;?> href="<?= $link["href"]; ?>"<?= ( !empty( $link[ 'nofollow' ] ) ) ? ' rel="nofollow"' : '' ;?>><?= $link["text"]; ?></a>

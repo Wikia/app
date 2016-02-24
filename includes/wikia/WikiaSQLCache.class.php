@@ -8,12 +8,21 @@
  */
 
 class WikiaSQLCache extends FluentSql\Cache\Cache {
+	/** @var bool */
+	private $useSharedKey;
+
+	/**
+	 * @param bool $useSharedKey Whether or not this memcache key is shared amongst wikis
+	 */
+	public function __construct( $useSharedKey=false ) {
+		$this->useSharedKey = $useSharedKey;
+	}
+
 	/**
 	 * @param \FluentSql\Breakdown $breakDown
-	 * @param bool $sharedKey whether or not this memkey is shared amongst wikis
-	 * @return string a memcache key to use
+	 * @return string A memcache key to use
 	 */
-	public function generateKey(\FluentSql\Breakdown $breakDown, $sharedKey) {
+	public function generateKey( \FluentSql\Breakdown $breakDown ) {
 		$stack = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 4);
 		$keyArgs = ['sql-cache'];
 
@@ -30,7 +39,7 @@ class WikiaSQLCache extends FluentSql\Cache\Cache {
 		}
 
 		$keyArgs []= parent::generateKey($breakDown);
-		$func = $sharedKey ? 'wfSharedMemcKey' : 'wfMemcKey';
+		$func = $this->useSharedKey ? 'wfSharedMemcKey' : 'wfMemcKey';
 
 		return call_user_func_array($func, $keyArgs);
 	}

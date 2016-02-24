@@ -770,7 +770,7 @@ class SiteWideMessagesTask extends BaseTask {
 			->SELECT('city_id', 'city_dbname')
 			->FROM('city_list')
 			->WHERE('city_public')->EQUAL_TO(1)
-				->AND_('city_useshaerd')->EQUAL_TO(1)
+				->AND_('city_useshared')->EQUAL_TO(1)
 			->runLoop($db, function(&$results, $row) {
 				$results[$row->city_id] = $row->city_dbname;
 			});
@@ -843,7 +843,7 @@ class SiteWideMessagesTask extends BaseTask {
 	 * @return bool
 	 */
 	private function sendMessageHelperToGroup(&$wikisDB, &$params) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgSpecialsDB;
 
 		$result = true;
 		$this->info('get list of users that belong to specific group on specific wikis', [
@@ -851,21 +851,18 @@ class SiteWideMessagesTask extends BaseTask {
 			'group' => $params['groupName'],
 		]);
 
-		$sqlValues = [];
-		if ( !empty( $wgStatsDBEnabled ) ) {
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-			$sqlValues = (new \WikiaSQL())
-				->SELECT('user_id', 'wiki_id')
-				->FROM('specials.events_local_users')
-				->WHERE('wiki_id')->IN(array_keys($wikisDB))
-					->AND_(StaticSQL::RAW(
-						'(single_group = ? OR all_groups LIKE ?)', [$params['groupName'], "%{$params['groupName']}%"]
-					))
-				->GROUP_BY('wiki_id', 'user_id')
-				->runLoop($dbr, function(&$results, $row) USE ($params) {
-					$results []= [$row->wiki_id, $row->user_id, $params['messageId'], MSG_STATUS_UNSEEN];
-				});
-		}
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgSpecialsDB);
+		$sqlValues = (new \WikiaSQL())
+			->SELECT('user_id', 'wiki_id')
+			->FROM('events_local_users')
+			->WHERE('wiki_id')->IN(array_keys($wikisDB))
+				->AND_(StaticSQL::RAW(
+					'(single_group = ? OR all_groups LIKE ?)', [$params['groupName'], "%{$params['groupName']}%"]
+				))
+			->GROUP_BY('wiki_id', 'user_id')
+			->runLoop($dbr, function(&$sqlValues, $row) USE ($params) {
+				$sqlValues []= [$row->wiki_id, $row->user_id, $params['messageId'], MSG_STATUS_UNSEEN];
+			});
 
 		if (count($sqlValues)) {
 			$this->info('add records about new message to users', [
@@ -931,16 +928,15 @@ class SiteWideMessagesTask extends BaseTask {
 		$sql = (new \WikiaSQL())
 			->SELECT('city_id', 'city_dbname')
 			->FROM('city_list')
-			->JOIN('city_cat_mapping')->USING('city_id')
 			->WHERE('city_public')->EQUAL_TO(1)
 				->AND_('city_useshared')->EQUAL_TO(1);
 
 		if ($hubId) {
 			$this->info('get list of all active wikis belonging to a specific hub', [
-				'cat_id' => $hubId,
+				'city_vertical' => $hubId,
 			]);
 
-			$sql->AND_('cat_id')->EQUAL_TO($hubId);
+			$sql->AND_('city_vertical')->EQUAL_TO($hubId);
 		}
 
 		if ($clusterId) {

@@ -49,10 +49,6 @@ class WikiaMobileService extends WikiaService {
 				$this->globalVariables['wgAdDriverTrackState'] = $this->wg->AdDriverTrackState;
 			}
 
-			if ( $this->wg->AdDriverEnableRemnantGptMobile ) {
-				$this->globalVariables['wgAdDriverEnableRemnantGptMobile'] = $this->wg->AdDriverEnableRemnantGptMobile;
-			}
-
 			$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
 		}
 
@@ -153,23 +149,11 @@ class WikiaMobileService extends WikiaService {
 				AnalyticsEngine::track(
 					'Datonics',
 					AnalyticsEngine::EVENT_PAGEVIEW
-				) .
-				AnalyticsEngine::track(
-					'ClarityRay',
-					AnalyticsEngine::EVENT_PAGEVIEW
 				);
 		}
 
 		//Stats for Gracenote reporting
-		if ( $this->wg->cityId == self::LYRICSWIKI_ID ){
-			$trackingCode .= AnalyticsEngine::track('GA_Urchin', 'lyrics');
-		}
-
-		$trackingCode .= AnalyticsEngine::track( 'GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW ).
-			AnalyticsEngine::track( 'GA_Urchin', 'onewiki', [$this->wg->cityId] ).
-			AnalyticsEngine::track( 'GA_Urchin', 'pagetime', ['wikiamobile'] ).
-			AnalyticsEngine::track( 'GA_Urchin', 'varnish-stat').
-			AnalyticsEngine::track( 'GAS', 'usertiming' );
+		$trackingCode .= AnalyticsEngine::track( 'GoogleUA', 'usertiming' );
 
 		$this->response->setVal( 'trackingCode', $trackingCode );
 
@@ -232,17 +216,23 @@ class WikiaMobileService extends WikiaService {
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function handleToc(){
+	private function isArticleView() {
+		global $wgRequest, $wgTitle;
+
+		$action = $wgRequest->getVal( 'action', 'view' );
+		$namespace = $wgTitle->getNamespace();;
+
+		return ( ( $action === 'view' || $action === 'ajax' ) &&
+			$wgTitle->getArticleId() !== 0 &&
+			( $namespace !== NS_USER && $namespace !== NS_BLOG_ARTICLE ) // skip user profile and user blog pages
+		);
+	}
+
+	private function handleToc() {
 		$toc = '';
 
-		$action = $this->wg->Request->getVal( 'action', 'view' );
-        $nameSpace = $this->wg->Title->getNamespace();;
-
 		//Enable TOC only on view action and on real articles and preview
-		if ( ( $action == 'view' || $action == 'ajax' ) &&
-			$this->wg->Title->getArticleId() != 0 &&
-            ( $nameSpace !== 2 && $nameSpace !== 500 ) // skip user profile and user blog pages
-		) {
+		if ( $this->isArticleView() ) {
 			$this->jsExtensionPackages[] = 'wikiamobile_js_toc';
 			$this->scssPackages[] = 'wikiamobile_scss_toc';
 
@@ -250,6 +240,12 @@ class WikiaMobileService extends WikiaService {
 		}
 
 		$this->response->setVal( 'toc', $toc );
+	}
+
+	private function handleWikiaWidgets() {
+		if ( $this->isArticleView() ) {
+			$this->jsExtensionPackages[] = 'wikiamobile_widget_iframe_unwrapper';
+		}
 	}
 
 	private function disableSiteCSS() {
@@ -266,6 +262,7 @@ class WikiaMobileService extends WikiaService {
 		$this->handleContent();
 		$this->handleAds();
 		$this->handleToc();
+		$this->handleWikiaWidgets();
 		$this->handleAssets();
 		$this->handleTracking();
 
@@ -294,6 +291,7 @@ class WikiaMobileService extends WikiaService {
 		$this->handleMessages();
 		$this->handleToc();
 		$this->handleContent( $content );
+		$this->handleWikiaWidgets();
 		$this->handleAssets( 'preview' );
 
 		$this->response->setVal( 'jsClassScript', '<script>document.documentElement.className = "js";</script>' );

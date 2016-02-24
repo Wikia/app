@@ -36,10 +36,11 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		parent::__construct( $query, $moduleName, 'rc' );
 	}
 
-	private $fld_comment = false, $fld_parsedcomment = false, $fld_user = false, $fld_userid = false,
+	private $fld_comment = false, $fld_parsedcomment = false,
+			$fld_user = false, $fld_userid = false, $fld_useravatar = false,
 			$fld_flags = false, $fld_timestamp = false, $fld_title = false, $fld_ids = false,
-			$fld_sizes = false, $fld_redirect = false, $fld_patrolled = false, $fld_loginfo = false,
-			$fld_tags = false, $token = array();
+			$fld_sizes = false, $fld_redirect = false, $fld_patrolled = false,
+			$fld_loginfo = false, $fld_tags = false, $token = array();
 
 	private $tokenFunctions;
 
@@ -100,6 +101,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		$this->fld_parsedcomment = isset( $prop['parsedcomment'] );
 		$this->fld_user = isset( $prop['user'] );
 		$this->fld_userid = isset( $prop['userid'] );
+		$this->fld_useravatar = isset( $prop['useravatar'] );
 		$this->fld_flags = isset( $prop['flags'] );
 		$this->fld_timestamp = isset( $prop['timestamp'] );
 		$this->fld_title = isset( $prop['title'] );
@@ -408,6 +410,10 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				$vals['userid'] = $row->rc_user;
 			}
 
+			if ( $this->fld_useravatar ) {
+				$vals['useravatar'] = AvatarService::getAvatarUrl( $row->rc_user_text, AvatarService::AVATAR_SIZE_MEDIUM );
+			}
+
 			if ( !$row->rc_user ) {
 				$vals['anon'] = '';
 			}
@@ -569,6 +575,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				ApiBase::PARAM_TYPE => array(
 					'user',
 					'userid',
+					'useravatar',
 					'comment',
 					'parsedcomment',
 					'flags',
@@ -639,6 +646,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				'Include additional pieces of information',
 				' user           - Adds the user responsible for the edit and tags if they are an IP',
 				' userid         - Adds the user id responsible for the edit',
+				' useravatar     - Adds an avatar of a user responsible for the edit. It requires the user or the userid param to be present.',
 				' comment        - Adds the comment for the edit',
 				' parsedcomment  - Adds the parsed comment for the edit',
 				' flags          - Adds flags for the edit',

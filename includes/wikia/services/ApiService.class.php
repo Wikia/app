@@ -15,6 +15,10 @@ class ApiService extends Service {
 
 	/**
 	 * Simple wrapper for calling MW API
+	 *
+	 * @param array $params
+	 *
+	 * @return array|bool
 	 */
 	static function call( Array $params ) {
 		wfProfileIn(__METHOD__);
@@ -35,16 +39,17 @@ class ApiService extends Service {
 	/**
 	 * Do cross-wiki API call
 	 *
-	 * @param string database name
-	 * @param array API query parameters
-	 * @param string endpoint (api.php or wikia.php, generally)
+	 * @param string $dbName database name
+	 * @param array $params API query parameters
+	 * @param string $endpoint (api.php or wikia.php, generally)
 	 * @param boolean $setUser
+	 *
 	 * @return mixed API response
 	 */
-	static function foreignCall( $dbname, Array $params, $endpoint = self::API, $setUser = false ) {
+	static function foreignCall( $dbName, Array $params, $endpoint = self::API, $setUser = false ) {
 		wfProfileIn(__METHOD__);
 
-		$hostName = self::getHostByDbName( $dbname );
+		$hostName = self::getHostByDbName( $dbName );
 
 		// If hostName is empty, this would make a request to the current host.
 		if ( empty( $hostName ) ) {
@@ -81,13 +86,14 @@ class ApiService extends Service {
 	/**
 	 * Get domain for a wiki using given database name
 	 *
-	 * @param string database name
+	 * @param string $dbName database name
+	 *
 	 * @return string HTTP domain
 	 */
-	private static function getHostByDbName( $dbname ) {
+	private static function getHostByDbName( $dbName ) {
 		global $wgDevelEnvironment, $wgDevelEnvironmentName;
 
-		$cityId = WikiFactory::DBtoID( $dbname );
+		$cityId = WikiFactory::DBtoID( $dbName );
 		$hostName = WikiFactory::getVarValueByName( 'wgServer', $cityId );
 
 		if ( !empty( $wgDevelEnvironment ) ) {

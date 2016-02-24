@@ -1,0 +1,32 @@
+{
+	"@metadata": {
+		"authors": [
+			"EugeneZelenko",
+			"Jim-by"
+		]
+	},
+	"semanticdrilldown-desc": "Інтэрфэйс для навігацыі па сэмантычным зьвесткам",
+	"specialpages-group-sd_group": "Сэмантычная навігацыя",
+	"browsedata": "Прагляд зьвестак",
+	"sd_browsedata_choosecategory": "Выберыце катэгорыю",
+	"sd_browsedata_viewcategory": "паказаць катэгорыю",
+	"sd_browsedata_docu": "Пазначце адзін ці больш элемэнтаў для абмежаваньня Вашых вынікаў.",
+	"sd_browsedata_subcategory": "Падкатэгорыя",
+	"sd_browsedata_other": "Іншыя",
+	"sd_browsedata_none": "Не",
+	"sd_browsedata_filterbyvalue": "Фільтраваць па гэтаму значэньню",
+	"sd_browsedata_filterbysubcategory": "Фільтраваць па гэтай падкатэгорыі",
+	"sd_browsedata_otherfilter": "Паказваць старонкі зь іншымі значэньнямі па гэтаму фільтру",
+	"sd_browsedata_nonefilter": "Паказваць старонкі без значэньняў па гэтаму фільтру",
+	"sd_browsedata_or": "ці",
+	"sd_browsedata_removefilter": "Выдаліць гэты фільтар",
+	"sd_browsedata_removesubcategoryfilter": "Выдаліць гэты фільтар падкатэгорыі",
+	"sd_browsedata_resetfilters": "Ачысьціць фільтры",
+	"sd_browsedata_addanothervalue": "Націсьніце стрэлку каб дадаць іншае значэньне",
+	"sd_browsedata_daterangestart": "Пачатак:",
+	"sd_browsedata_daterangeend": "Канец:",
+	"sd_browsedata_novalues": "Няма значэньняў для гэтага фільтру",
+	"sd_createfilter_usepropertyvalues": "Выкарыстоўваць усе значэньні гэтай ўласьцівасьці для фільтру",
+	"sd_createfilter_usecategoryvalues": "Атрымаць значэньні для фільтру з гэтай катэгорыі:",
+	"sd_createfilter_requirefilter": "Патрабуецца выбар іншага фільтру перад тым, як будзе паказаны гэты:"
+}

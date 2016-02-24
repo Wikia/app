@@ -261,28 +261,11 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Constatar',
-'qbedit'         => 'Redacter',
 'qbpageoptions'  => 'Págine de optiones',
 'qbpageinfo'     => 'Págine de information',
-'qbmyoptions'    => 'Mi optiones',
-'qbspecialpages' => 'Págines special',
 'faq'            => 'FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Adjunter tema',
-'vector-action-delete'           => 'Deleter',
-'vector-action-move'             => 'Mover',
-'vector-action-protect'          => 'Gardar',
-'vector-action-undelete'         => 'Restituer',
-'vector-action-unprotect'        => 'Desgardar',
-'vector-simplesearch-preference' => 'Premisser suggestiones de sercha argumentat (pelle Vector solmen)',
-'vector-view-create'             => 'Crear',
-'vector-view-edit'               => 'Redacter',
-'vector-view-history'            => 'Vider historie',
-'vector-view-view'               => 'Leer',
-'vector-view-viewsource'         => 'Vider fonte',
 'actions'                        => 'Actiones',
 'namespaces'                     => 'Spacies de nómine',
 'variants'                       => 'Variantes',
@@ -316,17 +299,9 @@ $messages = array(
 'talkpagelinktext'  => 'Discussion',
 'specialpage'       => 'Págine special',
 'personaltools'     => 'Utensiles personal',
-'postcomment'       => 'Nov division',
-'articlepage'       => 'Vider li articul',
 'talk'              => 'Discussion',
 'views'             => 'Vistas',
 'toolbox'           => 'Buxe de utensiles',
-'userpage'          => 'Vider págine del usator',
-'projectpage'       => 'Vider págine de projecte',
-'imagepage'         => 'Vider li págine de figura',
-'templatepage'      => 'Vider li págine de avise',
-'viewhelppage'      => 'Vider págine de auxilie',
-'viewtalkpage'      => 'Vider discussion',
 'otherlanguages'    => 'Altri lingues',
 'redirectedfrom'    => '(Redirectet de $1)',
 'redirectpagesub'   => 'Págine de redirecterion',
@@ -414,7 +389,7 @@ Function: $1<br />
 Question: $2',
 'viewsource'           => 'Vider fonte',
 'viewsourcetext'       => 'Vu posse vider e copiar li contenete de ti págine:',
-'titleprotected'       => 'Ti titul ha esset gardat de creation per [[User:$1|$1]]. 
+'titleprotected'       => 'Ti titul ha esset gardat de creation per [[User:$1|$1]].
 Li motive dat es "\'\'$2\'\'".',
 
 # Virus scanner
@@ -424,10 +399,11 @@ Li motive dat es "\'\'$2\'\'".',
 
 # Login and logout pages
 'logouttext'                 => "'''Vu ha terminat vor session.'''
-Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse [[Special:UserLogin|aperter un session denov]] quam li sam usator o quam un diferent usator.
+Vu posse continuar usar {{SITENAME}} anonimimen, o vu posse $1 quam li sam usator o quam un diferent usator.
 Nota que alcun págines posse continuar esser monstrat quam si vu esset registrat, til que vu vacua li cache de tui navigator.",
-'welcomecreation'            => '== Benevenit, $1! == 
-Tui conto hat esset creat. 
+'logouttext-link-text'       => 'aperter un session denov',
+'welcomecreation'            => '== Benevenit, $1! ==
+Tui conto hat esset creat.
 Ne oblivia de mutar tui [[Special:Preferences|preferenties de {{SITENAME}}]].',
 'yourname'                   => 'Nómine de usator:',
 'yourpassword'               => 'Parol-clave:',
@@ -471,9 +447,6 @@ Por preventer misusa, solmen un parol-clave amemora va esser inviat per {{PLURAL
 'oldpassword' => 'Anteyan passa-parol:',
 'newpassword' => 'Nov passa-parol:',
 'retypenew'   => 'Confirmar nov passa-parol',
-
-# Special:PasswordReset
-'passwordreset-username' => 'Vor nómine usatori',
 
 # Edit page toolbar
 'bold_sample'     => 'Textu in nigri',
@@ -544,7 +517,7 @@ Ti quelcvez ocurre quande vu es usant un service de autorisation anonim mal exec
 'storedversion'                    => 'Version acumulat',
 'yourdiff'                         => 'Diferenties',
 'copyrightwarning'                 => "Omni contributiones a {{SITENAME}} es considerat quam publicat sub li termines del $2 (ples vider $1 por plu mult detallies). Si vu ne vole que vor ovres mey esser modificat e distribuet secun arbitrie, ples ne inviar les. Adplu, ples contribuer solmen vor propri ovres o ovres ex un fonte quel es líber de jures. '''NE UTILISA OVRES SUB JURE EDITORIAL SIN DEFINITIV AUTORISATION!'''",
-'titleprotectedwarning'            => "'''Advertiment: Ti págine ha esset serrat por que [[Special:ListGroupRights|jures specific]] es necessitat por crear it.''' 
+'titleprotectedwarning'            => "'''Advertiment: Ti págine ha esset serrat por que [[Special:ListGroupRights|jures specific]] es necessitat por crear it.'''
 Li ultim intrada in li historico es sub li condition infra por referentie:",
 'templatesused'                    => '{{PLURAL:$1|Avise|Avises}} usat in ti págine:',
 'templatesusedpreview'             => '{{PLURAL:$1|Avise|Avises}} usat in ti prevision:',
@@ -606,7 +579,7 @@ Legende: '''({{int:cur}})''' = diferenties che ultim revision, '''({{int:last}})
 
 # Suppression log
 'suppressionlog'     => 'Diarium de supression',
-'suppressionlogtext' => 'Infra es un liste de deletiones e bloces involuent contenete ocultant de administratores. 
+'suppressionlogtext' => 'Infra es un liste de deletiones e bloces involuent contenete ocultant de administratores.
 Vider li [[Special:IPBlockList|liste de bloc de IP]] por li liste de bloces e bannimentes operational currentmen.',
 
 # Merge log
@@ -656,8 +629,6 @@ Vider li [[Special:IPBlockList|liste de bloc de IP]] por li liste de bloces e ba
 'search-nonefound'                 => 'Ne esset constatat resultates por li question.',
 'powersearch'                      => 'Serchar avansat',
 
-# Quickbar
-'qbsettings' => 'Personalisation del barre de utensiles',
 
 # Preferences page
 'preferences'               => 'Preferenties',
@@ -1256,10 +1227,8 @@ Pleser fuse les manualmen.'''",
 'tooltip-summary'                 => 'Intrar un summarium curt',
 
 # Stylesheets
-'vector.css' => '/* CSS colocat ci va afectar usatores de pelle Vector */',
 
 # Scripts
-'vector.js' => '/* Alquel JavaScript ci va esser cargat por usatores que usa li pelle Vector */',
 
 # Browsing diffs
 'previousdiff' => '← Redaction anteriori',

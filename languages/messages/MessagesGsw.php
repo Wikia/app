@@ -264,30 +264,12 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => '&#32;un',
 
-# Cologne Blue skin
 'qbfind'         => 'Finde',
 'qbbrowse'       => 'Blättre',
-'qbedit'         => 'Ändere',
 'qbpageoptions'  => 'Sytenoptione',
 'qbpageinfo'     => 'Sytedate',
-'qbmyoptions'    => 'Ystellige',
-'qbspecialpages' => 'Spezialsytene',
 'faq'            => 'Froge, wo vilmol gstellt wäre',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Abschnitt zuefiege',
-'vector-action-delete'           => 'Lesche',
-'vector-action-move'             => 'Verschiebe',
-'vector-action-protect'          => 'Schitze',
-'vector-action-undelete'         => 'Widerhärstelle',
-'vector-action-unprotect'        => 'Syteschutz ändere',
-'vector-simplesearch-preference' => 'Erwytereti Suechvorschleg aktiviere (nume Vector)',
-'vector-view-create'             => 'Aalege',
-'vector-view-edit'               => 'Bearbeite',
-'vector-view-history'            => 'Versionsgschicht',
-'vector-view-view'               => 'Läse',
-'vector-view-viewsource'         => 'Quälltext aaluege',
 'actions'                        => 'Aktione',
 'namespaces'                     => 'Namensryym',
 'variants'                       => 'Variante',
@@ -310,7 +292,6 @@ $messages = array(
 'edit'              => 'Ändere',
 'create'            => 'Erstelle',
 'editthispage'      => 'Syte bearbeite',
-'create-this-page'  => 'Die Syte afange',
 'delete'            => 'Lösche',
 'deletethispage'    => 'Syte lösche',
 'undelete_short'    => '{{PLURAL:$1|1 Version|$1 Versione}} widerherstelle',
@@ -325,19 +306,9 @@ $messages = array(
 'talkpagelinktext'  => 'Diskussion',
 'specialpage'       => 'Spezialsyte',
 'personaltools'     => 'Persönlichi Wärkzüg',
-'postcomment'       => 'Neje Abschnitt',
-'articlepage'       => 'Syte',
 'talk'              => 'Diskussion',
 'views'             => 'Wievylmol agluegt',
 'toolbox'           => 'Wärkzügkäschtli',
-'userpage'          => 'Benutzersyte',
-'projectpage'       => 'Projektsyte azeige',
-'imagepage'         => 'Dateisyte',
-'mediawikipage'     => 'Inhaltssyte aazeige',
-'templatepage'      => 'Vorlagesyte aazeige',
-'viewhelppage'      => 'D Hilf aazeige',
-'categorypage'      => 'Kategoriesyte aazeige',
-'viewtalkpage'      => 'Diskussion',
 'otherlanguages'    => 'Anderi Sproche',
 'redirectedfrom'    => '(Witergleitet vun $1)',
 'redirectpagesub'   => 'Umgleiteti Syte',
@@ -513,9 +484,10 @@ Die Sperri isch dur [[User:$1|$1]] yygrichtet wore mit dr Begrindig ''„$2“''
 # Login and logout pages
 'logouttext'                 => "'''Du bisch jetz abgmäldet.'''
 
-Du chasch {{SITENAME}} wyter anonym bruche, oder Du chasch di [[Special:UserLogin|wider aamälde]] mit em glyche oder eme andere Benutzername.
+Du chasch {{SITENAME}} wyter anonym bruche, oder Du chasch di $1 mit em glyche oder eme andere Benutzername.
 
 Ochat: s cha syy, ass bstimmti Syte eso aazeigt wäre, wie wänn Du allno aagmäldet wärsch, bis Du dr Zwischespycher vu Dyym Browser glescht hesch.",
+'logouttext-link-text'       => 'wider aamälde',
 'welcomecreation'            => '==Willcho, $1!==
 Dyy Benutzerkonto isch aaglait wore.
 Vergiss nid, dyni [[Special:Preferences|{{SITENAME}}-Yystellige]] aazpasse.',
@@ -631,36 +603,6 @@ Wänn s Benutzerkonto us Versäh aaglait woren isch, chasch die Nochricht ignori
 'resetpass-wrong-oldpass'   => 'S temporär oder aktuäll Passwort isch nimi giltig.
 Villicht hesch Dyy Passwort scho gänderet oder e nej temporär Passwort aagforderet.',
 'resetpass-temp-password'   => 'Temporär Passwort:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Passwort zruggsetze',
-'passwordreset-text'               => 'Bitte des Formular uusfille, ass De E-Mail e Erinnerig zue dr Aamäldeinformatione vu Dyym Benutzerkonto iberchunnsch.',
-'passwordreset-legend'             => 'Passwort zrucksetze',
-'passwordreset-disabled'           => 'S Zrucksetze vu Passwerter isch in däm Wiki deaktiviert wore.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Gib eis vu däne Daten aa}}',
-'passwordreset-username'           => 'Benutzername:',
-'passwordreset-domain'             => 'Domain:',
-'passwordreset-capture'            => 'Die E-Mail aaluege?',
-'passwordreset-capture-help'       => 'Wänn du des Chäschtli aachrüüzesch, no wird die E-Mail (mit em temporäre Passwort) dir aazeigt, un au em Benutzer zuegschiggt.',
-'passwordreset-email'              => 'E-Mail-Adräss:',
-'passwordreset-emailtitle'         => 'Benutzerkontoinformationen uf {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Eber mit dr IP-Adresse $1, wahrschyns Du sälber, het e Erinnerig an Dyyni Benutzerkonteninformatione fir {{SITENAME}} aagforderet ($4). {{PLURAL:$3|Des Benutzerkonto isch|Die Benutzerkonte sin}} mit däre E-Mail-Adräss verchnipft:
-
-$2
-
-{{PLURAL:$3|Des temporär Passwort lauft|Die temporäre Passwerter laufe}} in {{PLURAL:$5|eim Tag|$5 Täg}} ab.
-Du sottsch di aamälden un e nej Passwort vergee. Wänn eber ander die Aafrog gstellt het oder Du di wider an Dyy alt Passwort chasch erinnere un s nimi wettsch ändere, chasch die Nochricht ignorieren un alsfurt Dyy alt Passwort bruche.',
-'passwordreset-emailtext-user'     => 'Benutzer $1 uf {{SITENAME}} het e Erinnerig an Dyyni Benutzerkonteninformatione fir {{SITENAME}} aagforderet ($4). {{PLURAL:$3|Des Benutzerkonto isch|Die Benutzerkonte sin}} mit däre E-Mail-Adräss verchnipft:
-
-$2
-
-{{PLURAL:$3|Des temporär Passwort lauft|Die temporäre Passwerter laufe}} in {{PLURAL:$5|eim Tag|$5 Täg}} ab.
-Du sottsch di aamälden un e nej Passwort vergee. Wänn eber ander die Aafrog gstellt het oder Du di wider an Dyy alt Passwort chasch erinnere un s nimi wettsch ändere, chasch die Nochricht ignorieren un alsfurt Dyy alt Passwort bruche.',
-'passwordreset-emailelement'       => 'Benutzername: $1
-Temporär Passwort: $2',
-'passwordreset-emailsent'          => 'E Erinnerig isch per E-Mail verschickt wore.',
-'passwordreset-emailsent-capture'  => 'E Erinnerigsmail isch abgschiggt worde, un isch unte aazeigt.',
-'passwordreset-emailerror-capture' => 'Die Erinnerigsmail, wo unte aazeigt isch, isch generiert worde, aber de Versand aa de Benutzer isch gschyyteret: $1',
 
 # Special:ChangeEmail
 'changeemail'          => 'E-Mail-Adräss ändre',
@@ -790,7 +732,6 @@ As Information chunnt do ne aktuälle Uuszug us em Benutzersperr-Logbuech:',
 '''S isch nonig gspycheret wore!'''",
 'sitejspreview'                    => "'''Obacht: Du luegsch nume ne Vorschau vu däm JavaScript aa.'''
 '''S isch nonig gspycheret wore!'''",
-'userinvalidcssjstitle'            => "'''Achtig:''' D Skin „$1“ git s nid. Dänk dra, ass benutzerspezifischi .css- und .js-Syte mit eme Chleibuechstabe mien aafange, also z B. ''{{ns:user}}:Mustermann/vector.css'' statt ''{{ns:user}}:Mustermann/Vector.css''.",
 'updated'                          => '(Gänderet)',
 'note'                             => "'''Obacht: '''",
 'previewnote'                      => "'''Das isch numen e Vorschau und nonig gspycheret!'''",
@@ -1130,14 +1071,6 @@ Stell sicher, ass d Versionsgschicht vun eme Artikel historisch korrekt isch.',
 'search-external'                  => 'Externi Suech',
 'searchdisabled'                   => 'D {{SITENAME}}-Suech isch deaktiviert. Du chasch mit Google sueche, s cha aber syy ass dr Suechindex vu Google fir {{SITENAME}} veraltet isch.',
 
-# Quickbar
-'qbsettings'                => 'Syteleischte',
-'qbsettings-none'           => 'Keini',
-'qbsettings-fixedleft'      => 'Links, fescht',
-'qbsettings-fixedright'     => 'Rächts, fescht',
-'qbsettings-floatingleft'   => 'Links, in dr Schwebi',
-'qbsettings-floatingright'  => 'Rächts, in dr Schwebi',
-'qbsettings-directionality' => 'Fescht, abhängig vu dr Schrybrichtig vu dr gwehlte Sproch',
 
 # Preferences page
 'preferences'                   => 'Yystellige',

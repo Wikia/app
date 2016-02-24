@@ -26,7 +26,7 @@ class CategorySelectController extends WikiaController {
 		}
 
 		$categories = $this->wg->out->getCategories();
-		$showHidden = $this->wg->User->getBoolOption( 'showhiddencats' );
+		$showHidden = (bool)$this->wg->User->getGlobalPreference( 'showhiddencats' );
 		$userCanEdit = $this->request->getVal( 'userCanEdit', CategorySelectHelper::isEditable() );
 
 		// There are no categories present and user can't edit, skip rendering
@@ -53,10 +53,6 @@ class CategorySelectController extends WikiaController {
 		$this->response->setVal( 'categoriesLink', $categoriesLink );
 		$this->response->setVal( 'showHidden', $showHidden );
 		$this->response->setVal( 'userCanEdit', $userCanEdit );
-
-		if ( $this->app->checkSkin( 'venus' ) ) {
-			$this->overrideTemplate( 'articlePageVenus' );
-		}
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -190,6 +186,8 @@ class CategorySelectController extends WikiaController {
 	 */
 	public function save() {
 		wfProfileIn( __METHOD__ );
+
+		$this->checkWriteRequest();
 
 		$articleId = $this->request->getVal( 'articleId', 0 );
 		$categories = $this->request->getVal( 'categories', array() );

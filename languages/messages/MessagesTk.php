@@ -176,30 +176,12 @@ kiçi kategoriýadan {{PLURAL:$1|sany kiçi kategoriýa|$1 sany kiçi kategoriý
 'navigation'    => 'Nawigasiýa',
 'and'           => '&#32;we',
 
-# Cologne Blue skin
 'qbfind'         => 'Tap',
 'qbbrowse'       => 'Göz aýla',
-'qbedit'         => 'Redaktirle',
 'qbpageoptions'  => 'Bu sahypa',
 'qbpageinfo'     => 'Kontekst',
-'qbmyoptions'    => 'Meniň sahypalarym',
-'qbspecialpages' => 'Ýörite sahypalar',
 'faq'            => 'KSS',
-'faqpage'        => 'Project:KSS',
 
-# Vector skin
-'vector-action-addsection'       => 'Tema goş',
-'vector-action-delete'           => 'Öçür',
-'vector-action-move'             => 'Adyny üýtget',
-'vector-action-protect'          => 'Goraga al',
-'vector-action-undelete'         => 'Öçürmäni yzyna al',
-'vector-action-unprotect'        => 'Goragy aýyr',
-'vector-simplesearch-preference' => 'Giňeldilen gözleg tekliplerini aç (Diňe Vector bezegi üçin)',
-'vector-view-create'             => 'Döret',
-'vector-view-edit'               => 'Redaktirle',
-'vector-view-history'            => 'Geçmişi gör',
-'vector-view-view'               => 'Oka',
-'vector-view-viewsource'         => 'Çeşmäni gör',
 'actions'                        => 'Hereketler',
 'namespaces'                     => 'At giňişlikleri',
 'variants'                       => 'Wariantlar',
@@ -222,7 +204,6 @@ kiçi kategoriýadan {{PLURAL:$1|sany kiçi kategoriýa|$1 sany kiçi kategoriý
 'edit'              => 'Redaktirle',
 'create'            => 'Döret',
 'editthispage'      => 'Bu sahypany redaktirle',
-'create-this-page'  => 'Bu sahypany döret',
 'delete'            => 'Öçür',
 'deletethispage'    => 'Bu sahypany öçür',
 'undelete_short'    => '{{PLURAL:$1|özgerdişi|$1 özgerdişi}} yzyna getir',
@@ -236,19 +217,9 @@ kiçi kategoriýadan {{PLURAL:$1|sany kiçi kategoriýa|$1 sany kiçi kategoriý
 'talkpagelinktext'  => 'Çekişme',
 'specialpage'       => 'Ýörite Sahypa',
 'personaltools'     => 'Şahsy gurallar',
-'postcomment'       => 'Täze bölüm',
-'articlepage'       => 'Makalany görkez',
 'talk'              => 'Çekişme',
 'views'             => 'Keşpler',
 'toolbox'           => 'Gural sandygy',
-'userpage'          => 'Ulanyjy sahypasyny görkez',
-'projectpage'       => 'Taslama sahypasyny görkez',
-'imagepage'         => 'Faýl sahypasyny görkez',
-'mediawikipage'     => 'Habarlaşyk sahypasy görkez',
-'templatepage'      => 'Şablon sahypasyny gör',
-'viewhelppage'      => 'Ýardam sahypasyny gör',
-'categorypage'      => 'Kategoriýa sahypasyny gör',
-'viewtalkpage'      => 'Çekişme sahypasyny görkez',
 'otherlanguages'    => 'Başga dillerde',
 'redirectedfrom'    => '($1 sahypasyndan gönükdirildi)',
 'redirectpagesub'   => 'Gönükdirme sahypasy',
@@ -421,8 +392,9 @@ Görkezilen sebäp: ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Sessiýany ýapdyňyz.'''
 
-Indi anonim ýagdaýda {{SITENAME}} saýtyny ulanyp bilersiňiz, ýa-da şol bir ýa-da başga bir at bilen [[Special:UserLogin|sessiýany ýaňadan]] açyp bilersiňiz.
+Indi anonim ýagdaýda {{SITENAME}} saýtyny ulanyp bilersiňiz, ýa-da şol bir ýa-da başga bir at bilen $1 açyp bilersiňiz.
 Web brauzeriňiziň keşini arassalaýançaňyz käbir sahypalar sessiýaňyzyň açyk wagtkysy ýaly görünip biler.",
+'logouttext-link-text'       => 'sessiýany ýaňadan',
 'welcomecreation'            => '== Hoş geldiňiz, $1! ==
 
 Hasabyňyz açyldy.
@@ -528,9 +500,6 @@ Sessiýa açmaklygy tamamlamak üçin, bu ýere täze parol ýazyň:',
 Parolyňyzy eýýäm şowlulyk bilen üýtgeden ýa-da täze wagtlaýyn parol talap eden bolmagyňyz ahmal.',
 'resetpass-temp-password'   => 'Wagtlaýyn parol:',
 
-# Special:PasswordReset
-'passwordreset-username' => 'Ulanyjy ady:',
-
 # Special:ChangeEmail
 'changeemail-none'   => '(hiç biri)',
 'changeemail-cancel' => 'Goýbolsun et',
@@ -568,7 +537,7 @@ Parolyňyzy eýýäm şowlulyk bilen üýtgeden ýa-da täze wagtlaýyn parol ta
 'missingsummary'                   => "'''Ýatlatma:''' Redaktirleme mazmunyny ýazmadyňyz.
 Sahypany ýazdyr düwmesine ýene bir gezek bassaňyz, özgerdişiňiz mazmunsyz ýazdyrylar.",
 'missingcommenttext'               => 'Aşakda teswir ýazmagyňyzy haýyş edýäris.',
-'missingcommentheader'             => "'''Ýatladyjy:''' Bu teswir üçin tema/setirbaş görkezmediňiz. 
+'missingcommentheader'             => "'''Ýatladyjy:''' Bu teswir üçin tema/setirbaş görkezmediňiz.
 Eger \"{{int:savearticle}}\" düwmesine gaýtadan bassaňyz, özgerdişiňiz temasyz/setirbaşsyz ýazdyrylar.",
 'summary-preview'                  => 'Deslapky synyň mazmuny:',
 'subject-preview'                  => 'Temanyň/adyň deslapky syny:',
@@ -1000,13 +969,6 @@ Gözlegiňiziň başyna '''all:''' pristawkasyny goşup tutuş mazmuny (şol san
 Ýogsa-da, oňa çenli Google bilen gözleg geçirip bilersiňiz.
 Emma olaryň {{SITENAME}} indeksleriniň möwriti geçen bolmagy mümkindir.',
 
-# Quickbar
-'qbsettings'               => 'Tiz panel',
-'qbsettings-none'          => 'Hiç biri',
-'qbsettings-fixedleft'     => 'Çepe berkidildi',
-'qbsettings-fixedright'    => 'Saga berkidildi',
-'qbsettings-floatingleft'  => 'Çepe ýaplanýar',
-'qbsettings-floatingright' => 'Saga ýaplanýar',
 
 # Preferences page
 'preferences'                   => 'Ileri tutmalar',
@@ -2996,8 +2958,8 @@ At aýyrmak üçin gapdalyndaky gutujygy belläp, "{{int:Watchlistedit-normal-su
 'watchlistedit-normal-done'    => '{{PLURAL:$1|1 sany at|$1 sany at}} gözegçilik sanawyndan aýyryldy:',
 'watchlistedit-raw-title'      => 'Işlenmedik gözegçilik sanawyny redaktirle',
 'watchlistedit-raw-legend'     => 'Işlenmedik gözegçilik sanawyny redaktirle',
-'watchlistedit-raw-explain'    => 'Gözegçilik sanawyňyzdaky atlar aşakda görkezilýär. Her setirde bir at goşmak ýa-da aýyrmak arkaly sanawy üýtgedip bilersiňiz. 
-Bolanyňyzdan soňra "{{int:Watchlistedit-raw-submit}}" düwmesine basyň. 
+'watchlistedit-raw-explain'    => 'Gözegçilik sanawyňyzdaky atlar aşakda görkezilýär. Her setirde bir at goşmak ýa-da aýyrmak arkaly sanawy üýtgedip bilersiňiz.
+Bolanyňyzdan soňra "{{int:Watchlistedit-raw-submit}}" düwmesine basyň.
 Şeýle-de siz  [[Special:EditWatchlist|adaty usuldan]] hem peýdalanyp bilersiňiz.',
 'watchlistedit-raw-titles'     => 'Atlar:',
 'watchlistedit-raw-submit'     => 'Gözegçilik sanawyny täzele',
@@ -3034,7 +2996,7 @@ Bolanyňyzdan soňra "{{int:Watchlistedit-raw-submit}}" düwmesine basyň.
 'version-poweredby-others'      => 'beýlekiler',
 'version-license-info'          => 'MediaWiki erkin programmadyr; MediaWiki-ni Erkin programma fondy tarapyndan çazp edilen GNU General Public License lisenziýasynyň ikini wersiýasynyň ýa-da (islegiňize görä) has täzeki bir wersiýasynyň şertlerine laýyklykda täzeden paýlap we/ýa-da üýtgedip bilersiňiz.
 
-MediaWiki programmasy peýdaly bolar diýen umyt bilen paýlanylýar, emma onuň üçin hatda TÄJIRÇILIK GYMMATY ýa-da KESGITLENILEN MAKSADA ÝARAMLYLYK boýunça hem hiç hili KEPILLIK BERILMEÝÄR. Has giňişleýin maglumat üçin GNU General Public License lisenziýasyna serediň. 
+MediaWiki programmasy peýdaly bolar diýen umyt bilen paýlanylýar, emma onuň üçin hatda TÄJIRÇILIK GYMMATY ýa-da KESGITLENILEN MAKSADA ÝARAMLYLYK boýunça hem hiç hili KEPILLIK BERILMEÝÄR. Has giňişleýin maglumat üçin GNU General Public License lisenziýasyna serediň.
 
 Bu programmanyň ýany bilen siz [{{SERVER}}{{SCRIPTPATH}}/COPYING GNU General Public License lisenziýasynyň bir nusgasyny] hem edinen bolmaly. Eger edinmedik bolsaňyz, onda Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA adresine ýazyň ýa-da  [//www.gnu.org/licenses/old-licenses/gpl-2.0.html lisenziýasyny onlaýn okaň].',
 'version-software'              => 'Gurlan programma üpjünçiligi',

@@ -28,7 +28,7 @@ class EmailTemplatesHooksHelper {
 			$action = $keys['$ACTION'];
 
 			/* modify bodyHTML for blogpost action */
-			if ( $action == 'blogpost' ) {
+			if ( $action == FollowHelper::LOG_ACTION_BLOG_POST ) {
 				$result = $oEthHelper->subjectBlogpost( $title, $keys, $subject, $editor );
 				wfProfileOut( __METHOD__ );
 				return $result;
@@ -54,7 +54,7 @@ class EmailTemplatesHooksHelper {
 			 * modify bodyHTML for blogpost action
 			 * check if Follow Ext is enabled, otherwise parameter $keys['$PAGETITLE'] that we need hasn't been initialized on MailNotifyBuildKeys hook
 			*/
-			if ( $action == 'blogpost'
+			if ( $action == FollowHelper::LOG_ACTION_BLOG_POST
 				&& ( !empty( $wgEnableWikiaFollowedPages ) || !empty( $wgEnableWikiaFollowedPagesOnlyPrefs ) )
 			) {
 
@@ -109,7 +109,7 @@ class EmailTemplatesHooksHelper {
 	 * @param string $action
 	 * @return bool
 	 */
-	public function bodyBlogpost( Title $title, &$keys, &$body, User $editor, &$bodyHTML, &$postTransformKeys, $action = 'blogpost' ) {
+	public function bodyBlogpost( Title $title, &$keys, &$body, User $editor, &$bodyHTML, &$postTransformKeys, $action = FollowHelper::LOG_ACTION_BLOG_POST ) {
 		/* @var $wgLang Language */
 		global $wgLang;
 		wfProfileIn( __METHOD__ );

@@ -48,7 +48,7 @@ $color-wam-button: #092344;
 
 .wam-header-faq {
 	height: 250px;
-	@if ( $responsive-layout-enabled ) {
+	@if ( $responsive-or-breakpoints-layout-enabled ) {
 		width: 100%;
 	} @else {
 		width: 1030px;
@@ -88,7 +88,7 @@ $color-wam-button: #092344;
 .WikiaArticle .wam-header {
 	height: 340px;
 	padding-bottom: 10px;
-	@if ( $responsive-layout-enabled ) {
+	@if ( $responsive-or-breakpoints-layout-enabled ) {
 		width: 100%;
 	} @else {
 		width: 1030px;
@@ -211,9 +211,9 @@ $color-wam-button: #092344;
 .wam-progressbar {
 	background-color: #e5e5e5;
 	height: 4px;
-	@if ( $responsive-layout-enabled ) {
+	@if ( $responsive-or-breakpoints-layout-enabled ) {
 		width: 100%;
-	} else {
+	} @else {
 		width: 1030px;
 	}
 }
@@ -356,7 +356,7 @@ $color-wam-button: #092344;
 
 .wam-index {
 	margin: 0 0 50px;
-	@if ( $responsive-layout-enabled == false ) {
+	@if ( not $responsive-or-breakpoints-layout-enabled ) {
 		width: 1030px;
 	}
 	.wam-index-search {

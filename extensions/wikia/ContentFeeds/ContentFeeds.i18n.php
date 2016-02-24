@@ -255,6 +255,14 @@ $messages['gl'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Erro: O corpo da páxina é necesario',
 );
 
+/** Hebrew (עברית)
+ * @author LaG roiL
+ */
+$messages['he'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'שם',
+	'contentfeeds-firstfewarticles-tag-next' => 'הבא',
+);
+
 /** Hungarian (magyar)
  * @author Dani
  * @author TK-999
@@ -285,14 +293,18 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author Fate Kage
  * @author Riemogerz
  */
 $messages['id'] = array(
 	'contentfeeds-desc' => 'Menyediakan informasi yang kaya dan mutakhir melalui berbagai tag atau "umpan balik"',
+	'contentfeeds-newimages-rss-title' => 'RSS Feed untuk {{#Istimewa:Berkas baru}}',
+	'contentfeeds-newimages-rss-desc' => 'Umpan dari $1',
 	'contentfeeds-firstfewarticles-tag-header' => 'Buatlah beberapa halaman pertama Anda!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Judul',
 	'contentfeeds-firstfewarticles-tag-next' => 'Selanjutnya',
-	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Kesalahan: Judul halaman disyaratkan',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Kesalahan: Judul halaman dibutuhkan',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Kesalahan: Badan halaman dibutuhkan',
 );
 
 /** Italian (italiano)
@@ -373,11 +385,11 @@ $messages['lb'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Feeler: De Säitentitel ass obligatoresch',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
-	'contentfeeds-newimages-rss-desc' => 'غذا دئن سی $1',
+	'contentfeeds-newimages-rss-desc' => 'هوال حون سی$1',
 	'contentfeeds-firstfewarticles-tag-next' => 'نها',
 );
 
@@ -480,7 +492,7 @@ $messages['oc'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error : lo còs de la pagina es necessari',
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -588,6 +600,14 @@ $messages['ru'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Ошибка: Требуется тело страницы',
 );
 
+/** Sanskrit (संस्कृतम्)
+ * @author NehalDaveND
+ */
+$messages['sa'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'शीर्षकम्',
+	'contentfeeds-firstfewarticles-tag-next' => 'अग्रिमम्',
+);
+
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
@@ -646,7 +666,7 @@ $messages['tl'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Kamalian: Kailangan ang isang katawan ng pahina',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -731,10 +751,12 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Cwlin0416
  * @author Radish10cm
  */
 $messages['zh-hant'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => '標題',
+	'contentfeeds-firstfewarticles-tag-next' => '下一頁',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => '錯誤: 頁面標題是必要的',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => '錯誤: 頁面主體是必需的',
 );

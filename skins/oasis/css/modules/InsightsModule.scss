@@ -1,0 +1,39 @@
+@import 'extensions/wikia/InsightsV2/styles/insights-icons-mixin';
+@import 'extensions/wikia/InsightsV2/styles/insights-red-dot-mixin';
+
+$insights-module-gray: #ccc;
+
+.insights-light {
+	@include insights-icons-light();
+}
+
+.insights-dark {
+	@include insights-icons-dark();
+}
+
+.insights-module-list {
+	margin: 0;
+}
+
+.insights-module-item {
+	@include insights-red-dot();
+
+	background-position: 5% 50%;
+	background-repeat: no-repeat;
+	background-size: auto 21px;
+	border-bottom: 1px solid $insights-module-gray;
+	list-style-type: none;
+	margin: 0;
+	padding: 5px 0;
+	position: relative;
+
+	&:last-child {
+		border-bottom: 0;
+	}
+}
+
+.insights-module-link {
+	display: block;
+	padding: 10px 10px 10px 55px;
+	text-decoration: none;
+}

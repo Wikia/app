@@ -2206,7 +2206,7 @@
 			// get full height available (RT #55203)
 			var height = parseInt($(window).height() - 125);
 
-			if (skin == 'oasis' || skin == 'venus') {
+			if (skin == 'oasis') {
 				height -= 150;
 				width = 740;
 			}
@@ -2238,7 +2238,7 @@
 					]),
 
 					// jQuery UI (autocomplete with CSS and slider plugin) and AIM plugin
-					mw.loader.use(['jquery.ui.autocomplete', 'jquery.ui.slider', 'wikia.aim']),
+					mw.loader.using(['jquery.ui.autocomplete', 'jquery.ui.slider', 'wikia.aim']),
 
 					// fetch dialog content
 					this.ajax('getEditorDialog', {title: wgPageName})
@@ -2271,7 +2271,7 @@
 					$('#WikiaPhotoGalleryEditorLoader').remove();
 
 					// mark editor dialog title node
-					if (skin == 'oasis' || skin == 'venus') {
+					if (skin == 'oasis') {
 						$('#WikiaPhotoGalleryEditor').children('h1').attr('id', 'WikiaPhotoGalleryEditorTitle');
 					}
 					else {

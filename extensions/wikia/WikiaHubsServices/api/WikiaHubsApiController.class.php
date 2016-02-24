@@ -96,7 +96,6 @@ class WikiaHubsApiController extends WikiaApiController {
 		$moduleName = $model->getNotTranslatedModuleName($moduleId);
 		$moduleService = WikiaHubsModuleService::getModuleByName($moduleName, $cityId);
 
-
 		if( $this->isValidModuleService($moduleService) ) {
 			$moduleService->setShouldFilterCommercialData( $this->hideNonCommercialContent() );
 

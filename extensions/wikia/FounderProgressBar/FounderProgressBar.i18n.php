@@ -224,6 +224,7 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author Fitoschido
  * @author Marcmpujol
  * @author Roxas Nobody 15
  */
@@ -247,7 +248,7 @@ $messages['ca'] = array(
 	'founderprogressbar-completion-message' => "Felicitats! Has fet una feina increïble completant totes les tasques al 100%. Has encaminat el teu wiki cap a l'èxit, o fins i tot ja hi és! Continua treballant així!",
 	'founderprogressbar-bonus-task-notice' => "Atenció: Cada tasca de bonificació es pot realitzar més d'un cop. Completa tantes com necessitis per arribar al 100%",
 	'founderprogressbar-page-add10-label' => 'Arribar a $1 {{PLURAL:$1|pàgina|pàgines}}',
-	'founderprogressbar-page-add10-description' => 'La mejor manera de darle un buen inicio a tu wiki es comenzar a añadir páginas con información sobre el tema. Las mejores páginas tienen al menos un párrafo o dos y pueden enlazar a otras páginas.',
+	'founderprogressbar-page-add10-description' => 'La millor manera de donar-li un bo inici al vostre wiki és començar a afegir pàgines amb informació sobre el tema. Les millors pàgines tenen com a mínim u o dos paràgrafs i poden contenir enllaços a altres pàgines.',
 	'founderprogressbar-themedesigner-visit-label' => 'Personalitza el tema',
 	'founderprogressbar-themedesigner-visit-description' => 'El Dissenyador de Temes us permet triar un tema per al seu wiki, o crear el seu propi tema amb els nostres eines senzilles. Un tema personalitzat que realment fa el vostre wiki única.',
 	'founderprogressbar-mainpage-edit-label' => 'Emplena la teva portada',
@@ -319,6 +320,7 @@ $messages['ce'] = array(
 );
 
 /** Czech (čeština)
+ * @author Aktron
  * @author Chmee2
  * @author H4nek
  */
@@ -329,6 +331,13 @@ $messages['cs'] = array(
 	'founderprogressbar-total-edit75-label' => 'Dosáhli jste 75 editací',
 	'founderprogressbar-gallery-add-label' => 'Přidat fotogalerii',
 	'founderprogressbar-video-add-label' => 'Přidat video',
+	'founderprogressbar-user-add5-label' => 'Dosáhněte 5 uživatelských profilů.',
+	'founderprogressbar-user-add5-description' => 'Skvělou wiki tvoří skvělá komunita. Nejlepší wiki mají hodně editorů, 5 uživatelů je do začátku velmi dobrý počet.',
+	'founderprogressbar-recentchanges-visit-label' => 'Navštivte Poslední změny.',
+	'founderprogressbar-fb-likes3-label' => 'Dosáhněte $1 likeů na Facebooku',
+	'founderprogressbar-uncategorized-visit-label' => 'Navštivte Nekategorizované stránky',
+	'founderprogressbar-bonus-photo-add10-label' => 'Přidejte ještě $1 fotografií',
+	'founderprogressbar-bonus-photo-add10-description' => 'Svojí wiki můžete vždy rozvíjet přidáním dalších obrázků. Přidejte deset dalších; splníte tak bonusový úkol',
 	'founderprogressbar-browse-page-name' => 'Procházet',
 );
 
@@ -1220,7 +1229,7 @@ $messages['lb'] = array(
 	'founderprogressbar-bonus-photo-add10-label' => 'Setzt $1 Fotoen derbäi',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -1917,11 +1926,12 @@ $messages['roa-tara'] = array(
 
 /** Russian (русский)
  * @author Ignatus
+ * @author Kaganer
  * @author Kuzura
  */
 $messages['ru'] = array(
 	'founderprogressbar-credits' => 'Центр задач и руководство для основателя новой вики',
-	'founderprogressbar-widget-label' => 'Прогресс {{SITENAME}}',
+	'founderprogressbar-widget-label' => 'Состояние сайта «{{SITENAME}}»',
 	'founderprogressbar-progress-label' => 'Выполненные задачи',
 	'founderprogressbar-progress-see-full-list' => 'Просмотреть полный список',
 	'founderprogressbar-progress-hide-full-list' => 'Скрыть полный список',
@@ -2539,6 +2549,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
@@ -2571,7 +2582,7 @@ $messages['zh-hant'] = array(
 	'founderprogressbar-category-add3-label' => '達到 $1   {{PLURAL:$1| Category|分類}}',
 	'founderprogressbar-category-add3-description' => '分類是組織你的wiki最好的方法之一，也讓人們很容易找到想要的頁面。簡單的分類就好，過多的分類反而可能造成混淆。',
 	'founderprogressbar-commcentral-visit-label' => '訪問創建者與管理員中心',
-	'founderprogressbar-commcentral-visit-description' => '你不是一個人！創始人和管理員中心是Wikia分享建議和技巧的社區，在那裡可以找到幫助頁面，指導和Wikia員工的聯繫方式。',
+	'founderprogressbar-commcentral-visit-description' => '你不是一個人！創始人和管理員中心是 Wikia 分享建議和技巧的社群，在那裡可以找到幫助頁面，指導和Wikia員工的聯絡方式。',
 	'founderprogressbar-wikiactivity-visit-label' => '訪問維基動態',
 	'founderprogressbar-wikiactivity-visit-description' => '維基動態讓你可以看到你的wiki所發生的各種事。它顯示那些用戶作出編輯，讓你可以很容易進入修改過的頁面。',
 	'founderprogressbar-profile-edit-label' => '填寫您的檔案頁',
@@ -2594,8 +2605,8 @@ $messages['zh-hant'] = array(
 	'founderprogressbar-topnav-edit-description' => '你的wiki的標誌旁的下拉選單是你的wiki的導航。你可以在這放置頁面連結，讓大家能更容易在你的wiki上找到相關的頁面、分類、部落格文章等。如果你對編輯導航欄有疑問，可以造訪社區中心。',
 	'founderprogressbar-mainpage-addslider-label' => '增加首頁幻燈片',
 	'founderprogressbar-mainpage-addslider-description' => '首頁幻燈片是一個讓你的首頁放上好看的圖片後，看起來專業美麗的方式。每張圖片連結到一個頁面，因此可用來標示出你的wiki上最值得看的頁面。如果想要修改幻燈片中圖片的大小，可以參見<a href="http://community.wikia.com/wiki/User_blog:Susan_Taylor/Tips_to_spruce_up_your_main_page">Susan Taylor\'s blog post</a>',
-	'founderprogressbar-commcorner-edit-label' => '編輯社區角',
-	'founderprogressbar-commcorner-edit-description' => '編輯社區角會發出給所有造訪你的wiki的用戶。這是一個讓大家了解你的社區，可以如何協助，以及公布事項的好方法。',
+	'founderprogressbar-commcorner-edit-label' => '編輯社群角',
+	'founderprogressbar-commcorner-edit-description' => '編輯社群角會發出給所有造訪你的wiki的用戶。這是一個讓大家了解你的社群，可以如何協助，以及公佈事項的好方法。',
 	'founderprogressbar-video-add-label' => '增加影片',
 	'founderprogressbar-video-add-description' => '影片是另一個能有助於吸引人來你的wiki的媒介。你可以在Youtube、Hulu或其他網站上找到很多影片。使用編輯器中的功能和媒體按鈕來增加影片。',
 	'founderprogressbar-user-add5-label' => '達到 5 個使用者檔案',
@@ -2606,8 +2617,8 @@ $messages['zh-hant'] = array(
 	'founderprogressbar-wordmark-edit-description' => 'wiki的標誌（wordmark）是wiki的類似旗幟的功能，它可以在每一頁看到，幫助讀者很快了解wiki的主題。上傳你自己的標誌圖片是確立你的wiki的品牌的好辦法。',
 	'founderprogressbar-mostvisited-visit-label' => '查詢訪問數最多的頁面',
 	'founderprogressbar-mostvisited-visit-description' => '當你的wiki真正開始發揮影響力，看一下wiki中最熱門的頁面對你很有幫助，你可以提昇它們，也可以建立連結到流量較少的頁面。看訪問數最多的頁面可以讓你了解你那方面作的最好，也可以幫其他頁面作類似的提昇。',
-	'founderprogressbar-toptenlist-add-label' => '增加前10名列表',
-	'founderprogressbar-toptenlist-add-description' => '前10名列表鼓勵那些可能不好意思編輯的訪客來參與你的wiki，對於建立社群很有幫助，因為人們較容易參與投票或在列表中增加內容。',
+	'founderprogressbar-toptenlist-add-label' => '增加前10名清單',
+	'founderprogressbar-toptenlist-add-description' => '前10名清單鼓勵那些可能不好意思編輯的訪客來參與你的wiki，對於建立社群很有幫助，因為人們較容易參與投票或在清單中增加內容。',
 	'founderprogressbar-blogpost-add-label' => '撰寫一篇部落格文章',
 	'founderprogressbar-blogpost-add-description' => '你的wiki的部落格文章是作出宣告的方便工具，多撰寫一些自己對wiki的看法，也鼓勵其他人撰寫自己的文章。試試看！',
 	'founderprogressbar-fb-likes3-label' => '達到 $1個 Facebook的贊',

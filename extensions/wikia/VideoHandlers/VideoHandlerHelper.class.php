@@ -493,4 +493,23 @@ class VideoHandlerHelper extends WikiaModel {
 		return $status;
 	}
 
+	/**
+	 * Check if video's provider is supported base on its URL.
+	 * Logic is partially ported from ApiWrapperFactory::getApiWrapper method.
+	 * @param $url
+	 * @return bool
+	 */
+	public function isVideoProviderSupported( $url ) {
+		global $wgVideoMigrationProviderMap;
+
+		$parsed = parse_url( strtolower( $url ), PHP_URL_HOST );
+
+		foreach( $wgVideoMigrationProviderMap as $name ) {
+			$className = $name . 'ApiWrapper';
+			if ( class_exists( $className ) && $className::isMatchingHostname( $parsed ) ) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

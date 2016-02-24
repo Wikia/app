@@ -30,7 +30,13 @@
 		list-style: none;
 		.feature {
 			@include clearfix;
+			max-height: 300px;
+			overflow-y: hidden;
 			padding-bottom: 30px;
+			transition-property: all;
+			transition-duration: 1s;
+			transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+
 			h3 {
 				border-bottom: 1px solid $color-page-border;
 				font-size: 20px;
@@ -39,6 +45,10 @@
 			}
 			&:first-child {
 				border-top: 0;
+			}
+			&.faded {
+				max-height: 0;
+				padding-bottom: 0;
 			}
 			.representation {
 				border: 1px solid $color-page-border;

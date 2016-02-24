@@ -56,6 +56,14 @@ class SkinLyricsMinimal extends SkinTemplate {
 		wfProfileIn(__METHOD__);
 		global $wgHooks, $wgCityId;
 
+		# PLATFORM-1652 Remove legacy skins
+		# Michał 'Mix' Roszka <mix@wikia.com>
+		# Is this skin ever used?
+		# I log therefore I am.
+		if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.1 ) )->shouldSample() ) {
+			Wikia\Logger\WikiaLogger::instance()->info( 'PLATFORM-1652 LyricsMinimal' );
+		}
+
 		SkinTemplate::initPage($out);
 
 		$this->skinname  = 'lyricsminimal';
@@ -227,9 +235,8 @@ EOS;
 		// <script type="text/javascript" src="URL"></script>
 		// load them using WSL and remove from $wgOut->mScripts
 		//
-		// macbre: Perform only for Monaco skin! New Answers skin does not use WikiaScriptLoader
-		if ((get_class($this) == 'SkinMonaco') || (get_class($this) == 'SkinAnswers')
-			|| (get_class($this) == 'SkinLyricsMinimal')) {
+		// macbre: Perform only for Monaco skin!
+		if ((get_class($this) == 'SkinMonaco') || (get_class($this) == 'SkinLyricsMinimal')) {
 			global $wgJsMimeType;
 
 			$headScripts = $tpl->data['headscripts'];
@@ -824,17 +831,6 @@ if(empty($wgEnableRecipesTweaksExt) || !RecipesTweaks::isHeaderStripeShown()) {
 		?>
 		</div>
 		<!-- /PAGE -->
-<!-- Begin Analytics -->
-<?php
-// Note, these were placed above the Ad calls intentionally because ad code screws with analytics
-echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
-echo AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine2Service::getCachedCategory());
-global $wgCityId;
-echo AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
-echo AnalyticsEngine::track('GA_Urchin', 'pagetime', array('lean_monaco'));
-if (43339 == $wgCityId) echo AnalyticsEngine::track("GA_Urchin", "lyrics");
-?>
-<!-- End Analytics -->
 
 <?php		wfProfileOut( __METHOD__ . '-page'); ?>
 

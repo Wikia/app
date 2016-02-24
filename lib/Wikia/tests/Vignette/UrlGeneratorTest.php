@@ -24,20 +24,32 @@ class UrlGeneratorTest extends PHPUnit_Framework_TestCase {
 			(new UrlGenerator($config))->width(50)->height(75)->zoomCrop()->backgroundFill('transparent')->url());
 
 		$this->assertEquals(
-			'http://images.vignette.com/tests/images/a/ab/SomeFile.jpg/revision/latest/scale-to-width/200?cb=12345',
+			'http://images.vignette.com/tests/images/a/ab/SomeFile.jpg/revision/latest/scale-to-width-down/200?cb=12345',
 			(new UrlGenerator($config))->scaleToWidth(200)->url());
 
 		$this->assertEquals(
-			'http://images.vignette.com/tests/images/a/ab/SomeFile.jpg/revision/latest/window-crop/width/200/height/100/x-offset/10/y-offset/0/window-width/200/window-height/100?cb=12345',
+			'http://images.vignette.com/tests/images/a/ab/SomeFile.jpg/revision/latest/scale-to-width/200?cb=12345',
+			(new UrlGenerator($config))->scaleToWidth(200, true)->url());
+
+		$this->assertEquals(
+			'http://images.vignette.com/tests/images/a/ab/SomeFile.jpg/revision/latest/window-crop-fixed/width/200/height/100/x-offset/10/y-offset/0/window-width/200/window-height/100?cb=12345',
 			(new UrlGenerator($config))->windowCropFixed()->width(200)->height(100)->xOffset(10)->windowWidth(200)->windowHeight(100)->url());
 
 		$this->assertEquals(
-			'http://images.vignette.com/tests/avatars/a/ab/SomeFile.jpg/revision/latest/scale-to-width/200?cb=12345',
+			'http://images.vignette.com/tests/avatars/a/ab/SomeFile.jpg/revision/latest/scale-to-width-down/200?cb=12345',
 			(new UrlGenerator($config))->avatar()->scaleToWidth(200)->url());
 
 		$this->assertEquals(
-			'http://images.vignette.com/tests/avatars/a/ab/SomeFile.jpg/revision/latest/scale-to-width/200?cb=12345&frame=3',
+			'http://images.vignette.com/tests/avatars/a/ab/SomeFile.jpg/revision/latest/scale-to-width/200?cb=12345',
+			(new UrlGenerator($config))->avatar()->scaleToWidth(200, true)->url());
+
+		$this->assertEquals(
+			'http://images.vignette.com/tests/avatars/a/ab/SomeFile.jpg/revision/latest/scale-to-width-down/200?cb=12345&frame=3',
 			(new UrlGenerator($config))->avatar()->scaleToWidth(200)->frame(3)->url());
+
+		$this->assertEquals(
+			'http://images.vignette.com/tests/avatars/a/ab/SomeFile.jpg/revision/latest/scale-to-width/200?cb=12345&frame=3',
+			(new UrlGenerator($config))->avatar()->scaleToWidth(200, true)->frame(3)->url());
 	}
 
 	public function testOldUrl() {

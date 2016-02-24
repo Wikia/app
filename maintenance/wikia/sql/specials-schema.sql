@@ -40,15 +40,8 @@ CREATE TABLE `events_local_users` (
   `user_is_blocked` tinyint(1) DEFAULT '0',
   `user_is_closed` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`wiki_id`,`user_id`,`user_name`),
-  KEY `user_name` (`user_name`),
-  KEY `user_id` (`user_id`,`user_name`),
   KEY `user_edits` (`user_id`,`edits`,`wiki_id`),
-  KEY `wiki_sgroup` (`wiki_id`,`single_group`),
-  KEY `wiki_allgroup` (`wiki_id`,`all_groups`(200)),
-  KEY `editdate_wiki` (`editdate`,`wiki_id`,`user_id`),
-  KEY `wiki_user_name_edits` (`wiki_id`,`user_name`,`user_id`,`edits`),
-  KEY `wiki_editdate_user_edits` (`wiki_id`,`editdate`,`user_id`,`edits`),
-  KEY `wiki_edits_by_user` (`wiki_id`,`edits`,`user_id`)
+  KEY `user_id` (`user_id`),
+  KEY `edits` (`edits`),
+  KEY `wiki_id` (`wiki_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-

@@ -49,10 +49,15 @@ $(function () {
 		 * Only used in Oasis
 		 */
 		initAddVideo: function () {
-			var addVideoButton = $('.addVideo');
+			var addVideoButton = $('.addVideo'),
+				videoEmbedMain;
 			if ($.isFunction($.fn.addVideoButton)) {
 				addVideoButton.addVideoButton({
 					callbackAfterSelect: function (url, VET) {
+						require( ['wikia.throbber'], function( throbber ) {
+							videoEmbedMain = $('#VideoEmbedMain');
+							throbber.show(videoEmbedMain);
+						});
 						$.nirvana.postJson(
 							// controller
 							'VideosController',
@@ -60,22 +65,29 @@ $(function () {
 							'addVideo',
 							// data
 							{
+								token: mw.user.tokens.get('editToken'),
 								url: url
 							},
 							// success callback
 							function (formRes) {
 								SpecialVideos.bannerNotification.hide();
+								require( ['wikia.throbber'], function( throbber ) {
+									throbber.remove(videoEmbedMain);
+								});
 								if (formRes.error) {
 									SpecialVideos.bannerNotification
 										.setContent(formRes.error)
 										.show();
 								} else {
 									VET.close();
-									(new Wikia.Querystring()).setVal('sort', 'recent').goTo();
+									(new Wikia.Querystring()).goTo();
 								}
 							},
 							// error callback
 							function () {
+								require( ['wikia.throbber'], function( throbber ) {
+									throbber.remove(videoEmbedMain);
+								} );
 								SpecialVideos.bannerNotification
 									.setContent($.msg('vet-error-while-loading'))
 									.show();

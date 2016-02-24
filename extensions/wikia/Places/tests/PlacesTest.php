@@ -74,6 +74,9 @@ class PlacesTest extends WikiaBaseTest {
 	 * @group UsingDB
 	 */
 	function testRenderMarkers() {
+		// mock wgTitle needed by RedirectsService
+		$this->mockGlobalVariable( 'wgTitle', Title::newMainPage() );
+
 		$resp = $this->app->sendRequest('Places', 'renderMarkers', array('markers' => array($this->model)));
 		$html = $resp->toString();
 

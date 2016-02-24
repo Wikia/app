@@ -156,7 +156,7 @@ class AjaxResponse {
 			return;
 		}
 
-		if ( $wgUser->getOption( 'nocache' ) ) {
+		if ( $wgUser->getGlobalPreference( 'nocache' ) ) {
 			wfDebug( "$fname: USER DISABLED CACHE\n", false );
 			return;
 		}

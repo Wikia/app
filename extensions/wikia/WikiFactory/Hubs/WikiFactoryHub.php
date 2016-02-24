@@ -16,7 +16,7 @@ class WikiFactoryHub extends WikiaModel {
 	private static $mInstance = false;
 	private $mOldCategories = array();
 	private $mNewCategories = array();
-	private $mAllCatefories = array();
+	private $mAllCategories = array();
 	private $cache_ttl = 86400;  // 1 day
 
 	const VERTICAL_ID_OTHER = 0;
@@ -143,12 +143,6 @@ class WikiFactoryHub extends WikiaModel {
 
 		wfProfileIn( __METHOD__ );
 
-		global $wgWikiaEnvironment;
-		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
-			wfProfileOut( __METHOD__ );
-			return 0;
-		}
-
 		$categories = (new WikiaSQL())
 			->SELECT( "cat_id" )
 			->FROM( "city_cats" )
@@ -178,11 +172,6 @@ class WikiFactoryHub extends WikiaModel {
 	 * @return Integer vertical_id
 	 */
 	public function getVerticalId( $city_id ) {
-		global $wgWikiaEnvironment;
-		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
-			$city_id = 11;
-		}
-
 		$id = (new WikiaSQL())
 			->SELECT( "city_vertical" )
 			->FROM( "city_list" )
@@ -215,12 +204,6 @@ class WikiFactoryHub extends WikiaModel {
 	 * @return array of "id", "name", "short", "url" mapping
 	 */
 	public function getWikiVertical( $city_id ) {
-
-		global $wgWikiaEnvironment;
-		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
-			$city_id = 11;
-		}
-
 		$vertical_id = $this->getVerticalId( $city_id );
 		$all_verticals = $this->getAllVerticals();
 		$vertical = $all_verticals[$vertical_id];
@@ -269,11 +252,6 @@ class WikiFactoryHub extends WikiaModel {
 	 * @return array of keys/values (id, name, url, short, deprecated, active)
 	 */
 	public function getWikiCategories( $city_id, $active = 1 ) {
-		global $wgWikiaEnvironment;
-		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
-			$city_id = 11;
-		}
-
 		// invalidated in clearCache method
 		$memckey = wfSharedMemcKey( __METHOD__, $city_id, $active ? 1 : 0 );
 
@@ -448,22 +426,24 @@ class WikiFactoryHub extends WikiaModel {
 			$values[]= ["city_id" => $city_id, "cat_id" => $category];
 		}
 
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+
+		// Clear categories, add any new ones
+		// Note: this allows a wiki to be in zero categories, which may affect other biz logic
+		$dbw->begin();
+		$dbw->delete( "city_cat_mapping", array( "city_id" => $city_id ), __METHOD__ );
 		if (!empty ( $values) ) {
-			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-
-			$dbw->begin();
-			$dbw->delete( "city_cat_mapping", array( "city_id" => $city_id ), __METHOD__ );
 			$dbw->insert( "city_cat_mapping", $values, __METHOD__  );
-			$dbw->commit();
-
-			$this->clearCache( $city_id );
-
-			$aHookParams = [
-				'city_id' => $city_id,
-				'categories' => $categories,
-			];
-			wfRunHooks( 'CityCatMappingUpdated', array( $aHookParams ) );
 		}
+		$dbw->commit();
+
+		$this->clearCache( $city_id );
+
+		$aHookParams = [
+			'city_id' => $city_id,
+			'categories' => $categories,
+		];
+		wfRunHooks( 'CityCatMappingUpdated', array( $aHookParams ) );
 
 		# pretty clunky way to load all the categories just for the name, maybe refactor this?
 		$this->loadCategories();

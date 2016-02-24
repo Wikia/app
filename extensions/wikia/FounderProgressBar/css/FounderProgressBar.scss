@@ -377,8 +377,8 @@ $color-founder-progress-list-border-shadow: #e2e2e2;
 	position: relative;
 }
 
-@if ( $responsive-layout-enabled ) {
-	@media screen and (max-width: $breakpoint-small) {
+@if ( $responsive-or-breakpoints-layout-enabled ) {
+	@media screen and (max-width: 1024px) {
 		.FounderProgressList .tail {
 			display: none;
 		}

@@ -361,7 +361,7 @@ class SpecialSearch extends SpecialPage {
 
 		// show number of results and current offset
 		/* Wikia change begin - @author: Macbre (merge 1.19 MoLi) */
-		if ( !( F::app()->checkSkin( ['oasis', 'venus'] ) ) ) {
+		if ( !( F::app()->checkSkin( [ 'oasis' ] ) ) ) {
 			$out->addHTML( $this->formHeader( $term, $num, $totalRes ) );
 			$out->addHtml( $this->getProfileForm( $this->profile, $term ) );
 		}
@@ -424,7 +424,7 @@ class SpecialSearch extends SpecialPage {
 
 		// show number of results and current offset
 		/* Wikia change begin - @author: Macbre */
-		if ( F::app()->checkSkin( ['oasis', 'venus'] ) ) {
+		if ( F::app()->checkSkin( [ 'oasis' ] ) ) {
 			$out->addHTML( $this->formHeader($term, $num, $totalRes));
 			$out->addHtml( $this->getProfileForm( $this->profile, $term ) );
 			if( $this->searchAdvanced ) {
@@ -445,7 +445,7 @@ class SpecialSearch extends SpecialPage {
 
 		/* Wikia change begin - @author: Macbre */
 		/* Don't show "create an article" link in Oasis */
-		if ( F::app()->checkSkin( ['oasis', 'venus'] ) ) {
+		if ( F::app()->checkSkin( [ 'oasis' ] ) ) {
 			return '';
 		}
 		/* Wikia change end */

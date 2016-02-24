@@ -1,0 +1,33 @@
+{
+	"@metadata": {
+		"authors": [
+			"McDutchie"
+		]
+	},
+	"semanticdrilldown-desc": "Un interfacie de exercitio pro navigar per datos semantic",
+	"specialpages-group-sd_group": "Exercitio de semantica",
+	"browsedata": "Percurrer datos",
+	"sd_browsedata_choosecategory": "Selige un categoria",
+	"sd_browsedata_viewcategory": "vider categoria",
+	"sd_browsedata_docu": "Clicca super un o plus entratas in basso pro restringer tu resultatos.",
+	"sd_browsedata_subcategory": "Subcategoria",
+	"sd_browsedata_other": "Altere",
+	"sd_browsedata_none": "Nulle",
+	"sd_browsedata_filterbyvalue": "Filtrar per iste valor",
+	"sd_browsedata_filterbysubcategory": "Filtrar per iste subcategoria",
+	"sd_browsedata_otherfilter": "Monstrar paginas con un altere valor pro iste filtro",
+	"sd_browsedata_nonefilter": "Monstrar paginas sin valor pro iste filtro",
+	"sd_browsedata_or": "o",
+	"sd_browsedata_removefilter": "Remover iste filtro",
+	"sd_browsedata_removesubcategoryfilter": "Remover iste filtro de subcategoria",
+	"sd_browsedata_resetfilters": "Reinitialisar filtros",
+	"sd_browsedata_addanothervalue": "Clicca super le sagitta pro adder ancora un valor",
+	"sd_browsedata_daterangestart": "Initio:",
+	"sd_browsedata_daterangeend": "Fin:",
+	"sd_browsedata_novalues": "Il non ha valores pro iste filtro",
+	"sd_createfilter_usepropertyvalues": "Usar tote le valores de iste proprietate pro le filtro",
+	"sd_createfilter_usecategoryvalues": "Obtener valores pro filtro ab iste categoria:",
+	"sd_createfilter_requirefilter": "Requirer que un altere filtro sia seligite ante que iste es monstrate:",
+	"sd-pageschemas-filter": "Filtro",
+	"sd-pageschemas-values": "Valores"
+}

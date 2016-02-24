@@ -10,7 +10,7 @@ $messages['en'] = array(
 User names are case sensitive.
 Check your spelling.',
 	'piggyback-wronguser' => '$1 is not your user name',
-	'piggyback-loginprompt' => 'Please re-enter your username and password.',
+	'piggyback-loginprompt' => 'Please re-enter your username and password. Warning: This will run ALL custom user-account CSS and JS on your machine. Be careful!',
 	'piggyback-firstlogout' => 'Please first logout back to your account.',
 	'piggyback-itisyou' => 'You cannot piggyback yourself.',
 	'piggyback-issysopto' => 'You cannot piggyback a user with the right to piggyback.',
@@ -73,16 +73,22 @@ $messages['br'] = array(
  */
 $messages['ca'] = array(
 	'piggybac-desc' => 'Permet entrar com a un altre usuari.',
+	'piggyback' => 'Personificar',
 	'piggyback-otherusername' => "Una altre nom d'usuari:",
 	'piggyback-nosuchuser' => 'No hi ha cap d\'usuari amb el nom "$1".
 Les majúscules i les minúscules compten, revisa l\'escriptura!',
 	'piggyback-wronguser' => "$1 no és el teu nom d'usuari.",
 	'piggyback-loginprompt' => "Si us plau, torneu a introduir el vostre nom d'usuari i contrasenya.",
 	'piggyback-firstlogout' => 'Si us plau, surt de la teva sessió i torna a entrar.',
+	'piggyback-itisyou' => 'No et pots personificar.',
+	'piggyback-issysopto' => 'No pots personificar un usuari amb el dret de personificar.',
 	'action-piggyback' => 'registre a un altre usuari',
+	'log-name-piggyback' => 'Registre de personificacions',
+	'log-description-piggyback' => 'Aquesta pàgina és un registre de personificacions a comptes.',
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Dontlietome7
  * @author Reaperman
  */
@@ -100,6 +106,7 @@ Zkontrolujte správné zadání jména.',
 	'piggyback-issysopto' => 'Nemůžete provést piggyback uživateli s právem piggyback.',
 	'action-piggyback' => 'přihlásit se jako jiný uživatel',
 	'log-name-piggyback' => 'Záznamy užití piggyback',
+	'log-description-piggyback' => 'Tento log obsahuje záznamy "piggybacků".',
 );
 
 /** German (Deutsch)
@@ -253,6 +260,7 @@ $messages['ja'] = array(
 	'piggyback-nosuchuser' => '「$1」という利用者は存在しません。
 利用者名の大文字小文字は区別されます。
 入力に間違いがないか確認してください。',
+	'piggyback' => 'ピギーバック',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)

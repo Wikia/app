@@ -197,7 +197,7 @@ class FileDeleteForm {
 			$suppress = '';
 		}
 
-		$checkWatch = $wgUser->getBoolOption( 'watchdeletion' ) || $this->title->userIsWatching();
+		$checkWatch = (bool)$wgUser->getGlobalPreference( 'watchdeletion' ) || $this->title->userIsWatching();
 		$form = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $this->getAction(),
 			'id' => 'mw-img-deleteconfirm' ) ) .
 			Xml::openElement( 'fieldset' ) .

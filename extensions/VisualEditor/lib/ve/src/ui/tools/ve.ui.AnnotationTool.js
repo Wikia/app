@@ -42,6 +42,14 @@ ve.ui.AnnotationTool.static.deactivateOnSelect = false;
 /**
  * @inheritdoc
  */
+ve.ui.AnnotationTool.prototype.onSelect = function () {
+	ve.track( 'tool.annotation.select', { name: this.constructor.static.name } );
+	ve.ui.Tool.prototype.onSelect.apply( this, arguments );
+};
+
+/**
+ * @inheritdoc
+ */
 ve.ui.AnnotationTool.prototype.onUpdateState = function ( fragment ) {
 	// Parent method
 	ve.ui.Tool.prototype.onUpdateState.apply( this, arguments );
@@ -84,6 +92,7 @@ ve.ui.BoldAnnotationTool.static.icon = {
 	hu: 'bold-f',
 	hy: 'bold-armn-to',
 	it: 'bold-g',
+	ja: 'bold-b',
 	ka: 'bold-geor-man',
 	ksh: 'bold-f',
 	ky: 'bold-cyrl-zhe',
@@ -136,6 +145,7 @@ ve.ui.ItalicAnnotationTool.static.icon = {
 	hu: 'italic-d',
 	hy: 'italic-armn-sha',
 	it: 'italic-c',
+	ja: 'italic-i',
 	ka: 'italic-geor-kan',
 	ksh: 'italic-s',
 	ky: 'italic-cyrl-ka',

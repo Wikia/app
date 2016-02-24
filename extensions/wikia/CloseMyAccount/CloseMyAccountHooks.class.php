@@ -16,6 +16,8 @@ class CloseMyAccountHooks {
 		$closeAccountHelper = new CloseMyAccountHelper();
 		if ( $closeAccountHelper->isScheduledForClosure( $user ) ) {
 			$wgRequest->setSessionData( 'closeAccountSessionId', $user->getId() );
+			// Ensure the user is logged out and access token is cleared
+			$user->logout();
 			$result = 'closurerequested';
 			$resultMsg = 'Account closure requested';
 			return false;

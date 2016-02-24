@@ -5,7 +5,7 @@
 
 				<p class="result-count subtle">
 					<?php if (empty($isOneResultsPageOnly)): ?>
-						<?= wfMsg('wikiasearch2-results-count', $resultsFoundTruncated, '<strong>' . $query . '</strong>'); ?>
+						<?= wfMessage('wikiasearch2-results-count', $resultsFoundTruncated, '<strong>' . $query . '</strong>')->text(); ?>
 					<?php else: ?>
 						<?= wfMsg('wikiasearch2-results-for', '<strong>' . $query . '</strong>'); ?>
 					<?php endif; ?>
@@ -30,14 +30,13 @@
 					$pos = 0;
 					foreach ($results as $result) {
 						$pos++;
-						echo $app->getView('WikiaSearch', 'CrossWiki_result', array(
-							'result' => $result,
-							'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
-							'query' => $query,
-							'hub' => $hub,
-							'corporateWikiId' => $corporateWikiId,
-							'wgExtensionsPath' => $wgExtensionsPath
-						));
+						echo $app->getView('WikiaSearch', 'CrossWiki_result',
+							\Wikia\Search\Result\ResultHelper::extendResult(
+								$result,
+								$pos + (($currentPage - 1) * $resultsPerPage),
+								\Wikia\Search\Result\ResultHelper::MAX_WORD_COUNT_XWIKI_RESULT
+							)
+						);
 					}
 					?>
 				</ul>

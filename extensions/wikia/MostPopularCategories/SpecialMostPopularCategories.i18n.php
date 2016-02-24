@@ -64,6 +64,7 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Aftabuzzaman
  */
 $messages['bn'] = array(
 	'mostpopularcategories' => 'সবচেয়ে জনপ্রিয় বিষয়শ্রেণীসমূহ',
@@ -78,8 +79,10 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author BroOk
+ * @author Unapersona
  */
 $messages['ca'] = array(
+	'mostpopularcategories-desc' => 'Obtenir la llista de les categories més populars',
 	'mostpopularcategories' => 'Categories més populars',
 );
 
@@ -92,9 +95,11 @@ $messages['ce'] = array(
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Mormegil
  */
 $messages['cs'] = array(
+	'mostpopularcategories-desc' => 'Seznam nejpopulárnějších skupin',
 	'mostpopularcategories' => 'Nejpopulárnější kategorie',
 );
 
@@ -294,6 +299,7 @@ $messages['lv'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'mostpopularcategories-desc' => 'Добијте список на најпопуларни категории',
 	'mostpopularcategories' => 'Најпопуларни категории',
 );
 
@@ -385,9 +391,11 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (русский)
+ * @author Kopcap94
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'mostpopularcategories-desc' => 'Получить список самых популярных категорий',
 	'mostpopularcategories' => 'Самые популярные категории',
 );
 
@@ -408,6 +416,7 @@ $messages['si'] = array(
  * @author Dbc334
  */
 $messages['sl'] = array(
+	'mostpopularcategories-desc' => 'Pridobi seznam najbolj priljubljenih kategorij',
 	'mostpopularcategories' => 'Najbolj priljubljene kategorije',
 );
 
@@ -478,15 +487,19 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author Prima klasy4na
+ * @author Капитан Джон Шепард
  */
 $messages['uk'] = array(
+	'mostpopularcategories-desc' => 'Отримати список найбільш популярних категорій',
 	'mostpopularcategories' => 'Найпопулярніші категорії',
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author KhangND
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
+	'mostpopularcategories-desc' => 'Hiện danh sách các thể loại phổ biến nhất',
 	'mostpopularcategories' => 'Thể loại phổ biến nhất',
 );
 

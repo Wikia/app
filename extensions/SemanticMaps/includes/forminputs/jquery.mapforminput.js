@@ -1,5 +1,5 @@
 /**
- * JavasSript for the form inputs of the Semantic Maps extension.
+ * JavaScript for the form inputs of the Semantic Maps extension.
  * @see http://www.mediawiki.org/wiki/Extension:Semantic_Maps
  * 
  * This jQuery plugin creates a simple interface consisting out of
@@ -16,7 +16,7 @@
  * @since 1.0
  * @ingroup SemanticMaps
  * 
- * @licence GNU GPL v3
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw <jeroendedauw at gmail dot com>
  */
 (function( $, mw ){ $.fn.mapforminput = function( mapDivId, options ) {
@@ -44,7 +44,7 @@
 	 */	
 	this.updateInput = function( locations ) {
 		this.input.attr( 'value', this.buildInputValue( locations ) );
-	}	
+	};
 	
 	this.input = $( '<input />' ).attr( {
 		'type': 'text',

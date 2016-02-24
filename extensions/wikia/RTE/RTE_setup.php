@@ -30,6 +30,7 @@ $wgHooks['EditPageBeforeConflictDiff'][] = 'RTE::reverse';
 // hooks for user preferences handling
 $wgHooks['EditingPreferencesBefore'][] = 'RTE::onEditingPreferencesBefore';
 $wgHooks['UserGetOption'][] = 'RTE::userGetOption';
+$wgHooks['UserGetPreference'][] = 'RTE::userGetOption';
 
 // __NOWYSIWYG__ magic words handling
 $wgHooks['MagicWordwgVariableIDs'][] = 'RTEMagicWord::register';

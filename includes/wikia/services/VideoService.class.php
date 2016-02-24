@@ -26,6 +26,13 @@ class VideoService extends WikiaModel {
 			return wfMessage('videos-error-no-video-url')->text();
 		}
 
+		$vHelper = new VideoHandlerHelper();
+# @TODO Commenting out to fix MAIN-4436 -- Should be fixed correctly when content team is back
+#		if ( !$vHelper->isVideoProviderSupported( $url ) ) {
+#			wfProfileOut( __METHOD__ );
+#			return wfMessage( 'videos-error-provider-not-supported' )->parse();
+#		}
+
 		try {
 			// is it a WikiLink?
 			$title = Title::newFromText($url, NS_FILE);
@@ -49,10 +56,10 @@ class VideoService extends WikiaModel {
 					return wfMessage( 'videohandler-non-premium' )->parse();
 				}
 				list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
-				$file = wfFindFile( $videoTitle );
+				$file = RepoGroup::singleton()->findFile( $videoTitle );
 			}
 
-			if ( !( $file instanceof File ) )  {
+			if ( !( $file instanceof File ) ) {
 				WikiaLogger::instance()->error( '\VideoHandlerHelper->adDefaultVideoDescription() - File is empty', [
 					'exception' => new Exception(),
 					'url' => $url,
@@ -66,7 +73,6 @@ class VideoService extends WikiaModel {
 				return wfMessage( 'videos-something-went-wrong' )->parse();
 			} else {
 				// Add a default description if available and one doesn't already exist
-				$vHelper = new VideoHandlerHelper();
 				$vHelper->addDefaultVideoDescription( $file );
 			}
 		} catch ( Exception $e ) {

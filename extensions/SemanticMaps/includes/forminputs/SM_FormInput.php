@@ -6,7 +6,7 @@
  * @file SM_FormInput.php
  * @ingroup SemanticMaps
  *
- * @licence GNU GPL v3
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class SMFormInput {
@@ -47,8 +47,9 @@ class SMFormInput {
 	 */
 	protected function getParameterInfo() {
 		global $smgFIMulti, $smgFIFieldSize;
-		
-		$params = MapsMapper::getCommonParameters();
+
+		$params = ParamDefinition::getCleanDefinitions( MapsMapper::getCommonParameters() );
+
 		$this->service->addParameterInfo( $params );
 		
 		$params['zoom']->setDefault( false, false );		
@@ -59,24 +60,23 @@ class SMFormInput {
 		$params['fieldsize'] = new Parameter( 'fieldsize', Parameter::TYPE_INTEGER );
 		$params['fieldsize']->setDefault( $smgFIFieldSize, false );
 		$params['fieldsize']->addCriteria( new CriterionInRange( 5, 100 ) );
-		
-		$params['centre'] = new Parameter( 'centre' );
-		$params['centre']->setDefault( false, false );
-		$params['centre']->addAliases( 'center' );
-		$params['centre']->addCriteria( new CriterionIsLocation() );
-		$manipulation = new MapsParamLocation();
-		$manipulation->toJSONObj = true;
-		$params['centre']->addManipulations( $manipulation );
 
 		$params['icon'] = new Parameter( 'icon' );
 		$params['icon']->setDefault( '' );
 		$params['icon']->addCriteria( New CriterionNotEmpty() );
-		
-		$params['locations'] = new ListParameter( 'locations', self::SEPARATOR );
-		$params['locations']->addCriteria( new CriterionIsLocation() );
+
 		$manipulation = new MapsParamLocation();
 		$manipulation->toJSONObj = true;
-		$params['locations']->addManipulations( $manipulation );		
+
+		$params['locations'] = array(
+			'aliases' => array( 'points' ),
+			'criteria' => new CriterionIsLocation(),
+			'manipulations' => $manipulation,
+			'default' => array(),
+			'islist' => true,
+			'delimiter' => self::SEPARATOR,
+			'message' => 'semanticmaps-par-locations', // TODO
+		);
 		
 		$params['geocodecontrol'] = new Parameter( 'geocodecontrol', Parameter::TYPE_BOOLEAN );
 		$params['geocodecontrol']->setDefault( true, false );
@@ -101,14 +101,16 @@ class SMFormInput {
 	public function getInputOutput( $coordinates, $input_name, $is_mandatory, $is_disabled, array $params ) {
 		$parameters = array();
 		foreach ( $params as $key => $value ) {
-			if ( !is_array( $value ) && !is_object( $value ) ) {
+			if ( !is_array( $value ) && !is_object( $value ) && !is_null( $value ) ) {
 				$parameters[$key] = $value;
 			}
 		}
 
-		$parameters['locations'] = $coordinates;
-		
-		$validator = new Validator( wfMsg( 'maps_' . $this->service->getName() ), false );
+		if ( !is_null( $coordinates ) ) {
+			$parameters['locations'] = $coordinates;
+		}
+
+		$validator = new Validator( wfMessage( 'maps_' . $this->service->getName() )->text(), false );
 		$validator->setParameters( $parameters, $this->getParameterInfo() );
 		$validator->validateParameters();
 		
@@ -129,7 +131,7 @@ class SMFormInput {
 			
 			$params['inputname'] = $input_name;
 			
-			$output = $this->getInputHTML( $params, $wgParser, $mapName ) . $this->getJSON( $params, $wgParser, $mapName );
+			$output = $this->getInputHTML( $params, $wgParser, $mapName );
 			
 			$this->service->addResourceModules( $this->getResourceModules() );
 			
@@ -154,7 +156,7 @@ class SMFormInput {
 		else {
 			return
 				'<span class="errorbox">' .
-				htmlspecialchars( wfMsgExt( 'validator-fatal-error', 'parsemag', $fatalError->getMessage() ) ) . 
+				htmlspecialchars( wfMessage( 'validator-fatal-error', $fatalError->getMessage() )->text() ) .
 				'</span>';			
 		}			
 	}
@@ -171,37 +173,19 @@ class SMFormInput {
 	 * @return string
 	 */
 	protected function getInputHTML( array $params, Parser $parser, $mapName ) {
-		return Html::element(
+		return Html::rawElement(
 			'div',
 			array(
 				'id' => $mapName . '_forminput',
-				'style' => 'display: inline'
+				'style' => 'display: inline',
+				'class' => 'sminput sminput-' . $this->service->getName()
 			),
-			wfMsg( 'semanticmaps-loading-forminput' )
-		);
-	}
-
-	/**
-	 * Returns the JSON with the maps data.
-	 *
-	 * @since 1.0
-	 *
-	 * @param array $params
-	 * @param Parser $parser
-	 * @param string $mapName
-	 * 
-	 * @return string
-	 */	
-	protected function getJSON( array $params, Parser $parser, $mapName ) {
-		$object = $this->getJSONObject( $params, $parser );
-		
-		if ( $object === false ) {
-			return '';
-		}
-		
-		return Html::inlineScript(
-			MapsMapper::getBaseMapJSON( $this->service->getName() . '_forminputs' )
-			. "mwmaps.{$this->service->getName()}_forminputs.{$mapName}=" . FormatJson::encode( $object ) . ';'
+			wfMessage( 'semanticmaps-loading-forminput' )->escaped() .
+				Html::element(
+					'div',
+					array( 'style' => 'display:none', 'class' => 'sminputdata' ),
+					FormatJson::encode( $this->getJSONObject( $params, $parser ) )
+				)
 		);
 	}
 	
@@ -227,5 +211,50 @@ class SMFormInput {
 	protected function getResourceModules() {
 		return array( 'ext.sm.forminputs' );
 	}
-	
+
+	/**
+	 * @since 2.0 alspha
+	 * 
+	 * @param string $coordinates
+	 * @param string $input_name
+	 * @param boolean $is_mandatory
+	 * @param boolean $is_disabled
+	 * @param array $field_args
+	 * 
+	 * @return string
+	 */
+	public function getEditorInputOutput( $coordinates, $input_name, $is_mandatory, $is_disabled, array $params ) {
+		global $wgOut;
+		$parameters = array();
+		$wgOut->addHtml( MapsGoogleMaps3::getApiScript(
+			'en',
+			array( 'libraries' => 'drawing' )
+		) );
+
+		$wgOut->addModules( 'mapeditor' );
+
+		$html = '
+			<div >
+				<textarea id="map-polygon" name="' . htmlspecialchars( $input_name ) . '" cols="4" rows="2"></textarea>
+			</div>';
+
+		$editor = new MapEditor( $this->getAttribs() );
+		$html = $html . $editor->getEditorHtml();
+
+		return $html;
+	}
+
+	/**
+	 * @since 2.1
+	 *
+	 * @return string
+	 */
+	protected function getAttribs(){
+		return array(
+			'id' => 'map-canvas',
+			'context' => 'forminput',
+			'style' => 'width:600px; height:400px'
+		);
+	}
+
 }

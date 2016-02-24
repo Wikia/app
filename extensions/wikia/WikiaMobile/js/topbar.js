@@ -17,7 +17,7 @@ function (
 	'use strict';
 
 	var d = w.document,
-		wkPrfTgl = d.getElementById('wkPrfTgl'),
+		loginButton = d.getElementById('wkPrfTgl'),
 		navBar = d.getElementById('wkTopNav'),
 		$navBar = $(navBar),
 		wkPrf = d.getElementById('wkPrf'),
@@ -121,11 +121,11 @@ function (
 	//end search setup
 
 	//profile/login setup
-	if (wkPrfTgl) {
+	if (loginButton && !loginButton.classList.contains('new-login')) {
 		//Fix for ios 4.x not respecting fully event.preventDefault()
 		// (it shows url bar for a second (and this is ugly (really)))
-		wkPrfTgl.href = '';
-		wkPrfTgl.addEventListener('click', function (event) {
+		loginButton.href = '';
+		loginButton.addEventListener('click', function (event) {
 			event.preventDefault();
 
 			if ($navBar.hasClass('prf')) {

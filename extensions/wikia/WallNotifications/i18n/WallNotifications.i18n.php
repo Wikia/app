@@ -1,11 +1,11 @@
 <?php
 
-$messages = array();
+$messages = [ ];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'wallnotifications-desc' => 'Wall Notifications extension',
-);
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'wallnotifications-desc' => '{{desc}}',
-);
+];

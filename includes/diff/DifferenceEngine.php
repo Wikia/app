@@ -164,6 +164,13 @@ class DifferenceEngine extends ContextSource {
 		}
 	}
 
+	/**
+	 * Add an HTML of a page with a diff between revisions. It has the following switches that
+	 * allow you to controll the output:
+	 * * $diffOnly - `True` hides the actual content after the latest revision.
+	 * @param bool|false $diffOnly
+	 * @throws PermissionsError
+	 */
 	function showDiffPage( $diffOnly = false ) {
 		wfProfileIn( __METHOD__ );
 
@@ -223,7 +230,7 @@ class DifferenceEngine extends ContextSource {
 
 		$query = array();
 		# Carry over 'diffonly' param via navigation links
-		if ( $diffOnly != $user->getBoolOption( 'diffonly' ) ) {
+		if ( $diffOnly != (bool)$user->getGlobalPreference( 'diffonly' ) ) {
 			$query['diffonly'] = $diffOnly;
 		}
 		# Cascade unhide param in links for easy deletion browsing
@@ -245,11 +252,6 @@ class DifferenceEngine extends ContextSource {
 			$oldHeader = '';
 		} else {
 			wfRunHooks( 'DiffViewHeader', array( $this, $this->mOldRev, $this->mNewRev ) );
-
-			$sk = $this->getSkin();
-			if ( method_exists( $sk, 'suppressQuickbar' ) ) {
-				$sk->suppressQuickbar();
-			}
 
 			if ( $this->mNewPage->equals( $this->mOldPage ) ) {
 				$out->setPageTitle( $this->mNewPage->getPrefixedText() );
@@ -382,7 +384,20 @@ class DifferenceEngine extends ContextSource {
 				$msg = $suppressed ? 'rev-suppressed-diff-view' : 'rev-deleted-diff-view';
 				$notice = "<div id='mw-$msg' class='mw-warning plainlinks'>\n" . $this->msg( $msg )->parse() . "</div>\n";
 			}
-			$this->showDiff( $oldHeader, $newHeader, $notice );
+			/**
+			 * Wikia change begin
+			 * Allows to hide a diff view and display a notice instead.
+			 * @author adamk@wikia-inc.com
+			 * @see CE-2704
+			 */
+			if ( !wfRunHooks( 'ShowDiff', [ $this, &$notice ] ) ) {
+				$out->addHTML( $notice );
+			} else {
+				$this->showDiff( $oldHeader, $newHeader, $notice );
+			}
+			/**
+			 * Wikia change end
+			 */
 			if ( !$diffOnly ) {
 				$this->renderNewRevision();
 			}
@@ -716,6 +731,13 @@ class DifferenceEngine extends ContextSource {
 			return $text;
 		}
 		if ( $wgExternalDiffEngine != 'wikidiff3' && $wgExternalDiffEngine !== false ) {
+			# Wikia change - begin
+			# PLATFORM-1668: log fallback to external diff engine
+			Wikia\Logger\WikiaLogger::instance()->warning( 'External diff engine used', [
+				'engine' => $wgExternalDiffEngine
+			] );
+			# Wikia change - end
+
 			# Diff via the shell
 			global $wgTmpDirectory;
 			$tempName1 = tempnam( $wgTmpDirectory, 'diff_' );
@@ -745,6 +767,11 @@ class DifferenceEngine extends ContextSource {
 			wfProfileOut( __METHOD__ );
 			return $difftext;
 		}
+
+		# Wikia change - begin
+		# PLATFORM-1668: it's better to fail early then use a heavy diff generator as a fallback
+		throw new WikiaException( "Diff engine fallback to PHP prevented" );
+		# Wikia change - end
 
 		# Native PHP diff
 		$ota = explode( "\n", $wgContLang->segmentForDiff( $otext ) );
@@ -1016,7 +1043,7 @@ class DifferenceEngine extends ContextSource {
 		// Load the new revision object
 		$this->mNewRev = $this->mNewid
 			? Revision::newFromId( $this->mNewid )
-			: Revision::newFromTitle( $this->getTitle() );
+			: Revision::newFromTitle( $this->getTitle(), false, Revision::READ_NORMAL );
 
 		if ( !$this->mNewRev instanceof Revision ) {
 			return false;

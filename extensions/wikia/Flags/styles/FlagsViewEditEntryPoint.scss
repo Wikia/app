@@ -1,0 +1,78 @@
+@import 'skins/shared/color';
+
+.portable-flags,
+.portable-flags-inline {
+	position: relative;
+
+	/* Show edit flags entry point on portable-flags hover */
+	.flags-edit {
+		background-color: $color-page;
+		opacity: 0;
+		padding: 5px;
+		transition: opacity .3s;
+		visibility: hidden;
+
+		&:first-child {
+			right: 0;
+			top: 0;
+		}
+
+		&:last-child {
+			bottom: 0;
+			right: 0;
+		}
+	}
+
+	&:hover {
+
+		.flags-edit {
+			opacity: $page-opacity;
+
+			&:first-child {
+				visibility: visible;
+			}
+
+			/* Show bottom edit entry point when there are at least 3 flags (that means show 5th or higher element
+			 * counting 3 flags and top entry point */
+			&:nth-child(n+5) {
+				visibility: visible;
+			}
+		}
+	}
+	/* End of Show edit flags entry point on portable-flags hover */
+
+	/* Edit flags entry point within portable flags */
+	.flags-edit {
+		box-sizing: border-box;
+		position: absolute;
+		text-align: right;
+
+		.flags-icon {
+			background-position: 0 50%;
+			background-repeat: no-repeat;
+			background-size: 20px;
+			cursor: pointer;
+			display: inline-block;
+			padding-left: 29px;
+		}
+	}
+}
+
+.user-anon {
+	.portable-flags {
+		.flags-edit {
+			display: none;
+		}
+	}
+}
+
+/* Icons */
+@if $is-dark-wiki {
+	.flags-icon {
+		background-image: url('/extensions/wikia/Flags/images/flags_icon_dark_theme.svg'); /* inline */
+	}
+} @else {
+	.flags-icon {
+		background-image: url('/extensions/wikia/Flags/images/flags_icon_light_theme.svg'); /* inline */
+	}
+}

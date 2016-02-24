@@ -1,0 +1,39 @@
+{
+	"@metadata": {
+		"authors": [
+			"Armin1392",
+			"Ebraminio",
+			"Huji",
+			"Ibrahim",
+			"Mjbmr",
+			"Reza1615",
+			"Tofighi"
+		]
+	},
+	"semanticdrilldown-desc": "یک رابط دریل‌دون برای مرورگر از طریق اطلاعات معنایی",
+	"specialpages-group-sd_group": "دریل‌دون معنایی",
+	"browsedata": "نمایش اطلاعات",
+	"sd_browsedata_choosecategory": "انتخاب یک رده",
+	"sd_browsedata_viewcategory": "نمایش رده",
+	"sd_browsedata_docu": "بر روی یک یا چند مورد زیر برای کم کردن نتایج خود کلیک کنید.",
+	"sd_browsedata_subcategory": "زیررده",
+	"sd_browsedata_other": "دیگر",
+	"sd_browsedata_none": "هیچکدام",
+	"sd_browsedata_filterbyvalue": "فیلتر با این مقدار",
+	"sd_browsedata_filterbysubcategory": "فیلتر با این زیر رده",
+	"sd_browsedata_otherfilter": "نمایش صفحاتی با مقدار دیگر برای این فیلتر",
+	"sd_browsedata_nonefilter": "نمایش صفحه‌های فاقد مقدار برای این فیلتر",
+	"sd_browsedata_or": "یا",
+	"sd_browsedata_removefilter": "حذف این فیلتر",
+	"sd_browsedata_removesubcategoryfilter": "حذف این فیلتر زیر رده",
+	"sd_browsedata_resetfilters": "تنظیم فیلترها از نو",
+	"sd_browsedata_addanothervalue": "برای اضافه‌کردن مقداری دیگر بر روی پیکان کلیک کنید.",
+	"sd_browsedata_daterangestart": ":شروع",
+	"sd_browsedata_daterangeend": "پایان:",
+	"sd_browsedata_novalues": "هیچ مقداری برای این فیلتر وجود ندارد",
+	"sd_createfilter_usepropertyvalues": "همه مقادیر این ویژگی را برای این فیلتر به‌کار برید",
+	"sd_createfilter_usecategoryvalues": "مقادیر فیلتر را از این رده بگیرید:",
+	"sd_createfilter_requirefilter": "قبل از نمایش این یکی، یک فیلتر دیگر باید انتخاب شود:",
+	"sd-pageschemas-filter": "پالایه",
+	"sd-pageschemas-values": "مقادیر"
+}

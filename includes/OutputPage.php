@@ -462,21 +462,6 @@ class OutputPage extends ContextSource {
 	 * @return Array of module names
 	 */
 	public function getModules( $filter = false, $position = null, $param = 'mModules' ) {
-		// Wikia change - begin - @author macbre
-		// Load all ResourceLoader modules at the bottom of the page
-		// when the skin has the flag set (e.g. Venus)
-		$skin = $this->getSkin();
-		if ( $skin instanceof WikiaSkin && !empty( $skin->pushRLModulesToBottom ) ) {
-			// when asked for top modules return nothing
-			if ( $position === 'top' ) {
-				return [];
-			}
-
-			// otherwise, return all modules - null means no filtering below
-			$position = null;
-		}
-		// Wikia change - end
-
 		$modules = array_values( array_unique( $this->$param ) );
 		return $filter
 			? $this->filterModules( $modules, $position )
@@ -656,7 +641,7 @@ class OutputPage extends ContextSource {
 			wfDebug( __METHOD__ . ": CACHE DISABLED\n", false );
 			return false;
 		}
-		if( $this->getUser()->getOption( 'nocache' ) ) {
+		if( $this->getUser()->getGlobalPreference( 'nocache' ) ) {
 			wfDebug( __METHOD__ . ": USER DISABLED CACHE\n", false );
 			return false;
 		}
@@ -838,14 +823,20 @@ class OutputPage extends ContextSource {
 	 * "HTML title" means the contents of <title>.
 	 * It is stored as plain, unescaped text and will be run through htmlspecialchars in the skin file.
 	 *
+	 * Wikia change: the pagetitle message template will be applied (adding " - Name of the wiki"
+	 * in most cases), then the wikia-pagetitle message template will be applied (adding " - Wikia")
+	 *
 	 * @param $name string
 	 */
 	public function setHTMLTitle( $name ) {
-		if ( $name instanceof Message ) {
-			$this->mHTMLtitle = $name->setContext( $this->getContext() )->text();
+		/* Wikia change - begin */
+		if ( is_array( $name ) ) {
+			$parts = $name;
 		} else {
-			$this->mHTMLtitle = $name;
+			$parts = [ $name ];
 		}
+		$this->mHTMLtitle = ( new WikiaHtmlTitle() )->setParts( $parts )->getTitle();
+		/* Wikia change - end */
 	}
 
 	/**
@@ -885,7 +876,11 @@ class OutputPage extends ContextSource {
 		$this->mPagetitle = $nameWithTags;
 
 		# change "<i>foo&amp;bar</i>" to "foo&bar"
-		$this->setHTMLTitle( $this->msg( 'pagetitle' )->rawParams( Sanitizer::stripAllTags( $nameWithTags ) ) );
+		# Wikia change - begin
+		#$this->setHTMLTitle( $this->msg( 'pagetitle' )->rawParams( Sanitizer::stripAllTags( $nameWithTags ) ) );
+		# This logic is moved to OutputPage::setHTMLTitle
+		$this->setHTMLTitle( Sanitizer::stripAllTags( $nameWithTags ) );
+		# Wikia change -end
 	}
 
 	/**
@@ -1648,7 +1643,9 @@ class OutputPage extends ContextSource {
 	function addParserOutput( &$parserOutput ) {
 		$this->addParserOutputNoText( $parserOutput );
 		$text = $parserOutput->getText();
+
 		wfRunHooks( 'OutputPageBeforeHTML', array( &$this, &$text ) );
+
 		$this->addHTML( $text );
 	}
 
@@ -2384,8 +2381,8 @@ class OutputPage extends ContextSource {
 			$params = array(
 				'id'   => 'wpTextbox1',
 				'name' => 'wpTextbox1',
-				'cols' => $this->getUser()->getOption( 'cols' ),
-				'rows' => $this->getUser()->getOption( 'rows' ),
+				'cols' => $this->getUser()->getGlobalPreference( 'cols' ),
+				'rows' => $this->getUser()->getGlobalPreference( 'rows' ),
 				'readonly' => 'readonly',
 				'lang' => $pageLang->getHtmlCode(),
 				'dir' => $pageLang->getDir(),
@@ -2536,7 +2533,7 @@ $templates
 		if ( $this->getHTMLTitle() == '' ) {
 			# start wikia change
 			wfProfileIn( "parsePageTitle" );
-			$this->setHTMLTitle(  $this->getWikiaPageTitle( $this->getPageTitle() ) );
+			$this->setHTMLTitle(  $this->getPageTitle() );
 			wfProfileOut( "parsePageTitle" );
 			# end wikia change
 			# $this->setHTMLTitle( $this->msg( 'pagetitle', $this->getPageTitle() ) );
@@ -2621,17 +2618,17 @@ $templates
 				$this->addModules( 'mediawiki.action.watch.ajax' );
 			}
 
-			if ( $wgEnableMWSuggest && !$this->getUser()->getOption( 'disablesuggest', false ) ) {
+			if ( $wgEnableMWSuggest && !$this->getUser()->getGlobalPreference( 'disablesuggest', false ) ) {
 				$this->addModules( 'mediawiki.legacy.mwsuggest' );
 			}
 		}
 
-		if ( $this->getUser()->getBoolOption( 'editsectiononrightclick' ) ) {
+		if ( (bool)$this->getUser()->getGlobalPreference( 'editsectiononrightclick' ) ) {
 			$this->addModules( 'mediawiki.action.view.rightClickEdit' );
 		}
 
 		# Crazy edit-on-double-click stuff
-		if ( $this->isArticle() && $this->getUser()->getOption( 'editondblclick' ) ) {
+		if ( $this->isArticle() && $this->getUser()->getGlobalPreference( 'editondblclick' ) ) {
 			$this->addModules( 'mediawiki.action.view.dblClickEdit' );
 		}
 	}
@@ -2792,6 +2789,7 @@ $templates
 				$this->getRequest()->getBool( 'handheld' ),
 				$extraQuery
 			);
+
 			if ( $useESI && $wgResourceLoaderUseESI ) {
 				$esi = Xml::element( 'esi:include', array( 'src' => $url ) );
 				if ( $only == ResourceLoaderModule::TYPE_STYLES ) {
@@ -2894,14 +2892,7 @@ $templates
 	 * @return string
 	 */
 	function getScriptsForBottomQueue( $inHead ) {
-		global $wgUseSiteJs, $wgAllowUserJs;
-
-		$asyncMWload = true;
-
-		$skin = $this->getSkin();
-		if ( $skin instanceof WikiaSkin && !empty( $skin->pushRLModulesToBottom ) ) {
-			$asyncMWload = false;
-		}
+		global $wgUseSiteJs, $wgAllowUserJs, $wgEnableContentReviewExt;
 
 		// Script and Messages "only" requests marked for bottom inclusion
 		// If we're in the <head>, use load() calls rather than <script src="..."> tags
@@ -2921,7 +2912,7 @@ $templates
 		if ( $modules ) {
 			$scripts .= Html::inlineScript(
 				ResourceLoader::makeLoaderConditionalScript(
-					Xml::encodeJsCall( 'mw.loader.load', array( $modules, null, $asyncMWload ) )
+					Xml::encodeJsCall( 'mw.loader.load', array( $modules, null, true ) )
 				)
 			);
 		}
@@ -2932,9 +2923,18 @@ $templates
 		$userScripts = array();
 
 		// Add site JS if enabled
-		if ( $wgUseSiteJs ) {
+		if ( Wikia::isUsingSafeJs() ) {
+			$extraQuery = [];
+
+			$contentReviewHelper = new \Wikia\ContentReview\Helper();
+			if ( $contentReviewHelper->isContentReviewTestModeEnabled() ) {
+				$extraQuery['current'] = $contentReviewHelper->getJsPagesTimestamp();
+			} else {
+				$extraQuery['reviewed'] = $contentReviewHelper->getReviewedJsPagesTimestamp();
+			}
+
 			$scripts .= $this->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_SCRIPTS,
-				/* $useESI = */ false, /* $extraQuery = */ array(), /* $loadCall = */ $inHead
+				/* $useESI = */ false, /* $extraQuery = */ $extraQuery, /* $loadCall = */ $inHead
 			);
 			if( $this->getUser()->isLoggedIn() ){
 				$userScripts[] = 'user.groups';
@@ -3053,7 +3053,6 @@ $templates
 		$vars = array(
 			'wgCanonicalNamespace' => $nsname,
 			'wgCanonicalSpecialPageName' => $canonicalName,
-			'wgNamespaceNumber' => $title->getNamespace(),
 			'wgPageName' => $title->getPrefixedDBKey(),
 			'wgTitle' => $title->getText(),
 			'wgCurRevisionId' => $latestRevID,
@@ -3075,7 +3074,7 @@ $templates
 		foreach ( $title->getRestrictionTypes() as $type ) {
 			$vars['wgRestriction' . ucfirst( $type )] = $title->getRestrictions( $type );
 		}
-		if ( $wgUseAjax && $wgEnableMWSuggest && !$this->getUser()->getOption( 'disablesuggest', false ) ) {
+		if ( $wgUseAjax && $wgEnableMWSuggest && !$this->getUser()->getGlobalPreference( 'disablesuggest', false ) ) {
 			$vars['wgSearchNamespaces'] = SearchEngine::userNamespaces( $this->getUser() );
 		}
 		if ( $title->isMainPage() ) {
@@ -3711,23 +3710,6 @@ $templates
 		$returnval = $this->mRedirectsEnabled;
 		$this->mRedirectsEnabled = $state;
 		return $returnval;
-	}
-
-	/**
-	 * @author Wikia
-	 */
-	public function getWikiaPageTitle( $name ) {
-		$msgPagetitle = wfMsg( 'pagetitle', $name );
-		if( $msgPagetitle == '#wikiapagetitle#' ) {
-			global $wgSitename;
-			if( $name == wfMsgForContent( 'mainpage' ) ) {
-				return $wgSitename;
-			} else {
-				return "$name - $wgSitename";
-			}
-		} else {
-			return $msgPagetitle;
-		}
 	}
 
 	/**

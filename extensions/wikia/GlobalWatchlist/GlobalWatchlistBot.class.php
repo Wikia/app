@@ -4,13 +4,8 @@ use \Wikia\Logger\WikiaLogger;
 
 class GlobalWatchlistBot {
 
-	const MAX_ARTICLES_PER_WIKI = 50;
-	const FROM_ADDRESS = 'Wikia <community@wikia.com>';
-	const REPLY_ADDRESS = 'noreply@wikia.com';
-
-	public function __construct() {
-		\F::app()->wg->ExtensionMessagesFiles['GlobalWatchlist'] = dirname( __FILE__ ) . '/GlobalWatchlist.i18n.php';
-	}
+	const MAX_PAGES_PER_DIGEST = 50;
+	const EMAIL_CONTROLLER = 'Email\Controller\WeeklyDigestController';
 
 	/**
 	 * Sends the weekly digest to all users in the global_watchlist table
@@ -100,8 +95,7 @@ class GlobalWatchlistBot {
 
 
 	/**
-	 * send email to user
-	 * TODO Break this method up a bit. It does way way too many things.
+	 * Send weekly digest to user
 	 * @param $userID integer
 	 */
 	public function sendDigestToUser( $userID ) {
@@ -110,103 +104,18 @@ class GlobalWatchlistBot {
 			return;
 		}
 
-		$dbr = wfGetDB( DB_SLAVE, [], \F::app()->wg->ExternalDatawareDB );
-
-		$oResource = $dbr->select(
-			[ GlobalWatchlistTable::TABLE_NAME ],
-			[
-				GlobalWatchlistTable::COLUMN_ID,
-				GlobalWatchlistTable::COLUMN_USER_ID,
-				GlobalWatchlistTable::COLUMN_CITY_ID,
-				GlobalWatchlistTable::COLUMN_NAMESPACE,
-				GlobalWatchlistTable::COLUMN_TITLE,
-				GlobalWatchlistTable::COLUMN_REVISION_ID,
-				GlobalWatchlistTable::COLUMN_TIMESTAMP
-			],
-			[ GlobalWatchlistTable::COLUMN_USER_ID => $userID ],
-			__METHOD__,
-			[ "ORDER BY" => GlobalWatchlistTable::COLUMN_TIMESTAMP . ", " . GlobalWatchlistTable::COLUMN_CITY_ID ]
-		);
-
-		$records = $dbr->numRows( $oResource );
-		$bTooManyPages = ( $records > self::MAX_ARTICLES_PER_WIKI );
-		$iWikiId = $loop = 0;
-		$aDigestData = [];
-		$aWikiDigest = [ 'pages' => [] ];
-		$aRemove = [];
-		while ( $oResultRow = $dbr->fetchObject( $oResource ) ) {
-			# ---
-			if ( $loop >= self::MAX_ARTICLES_PER_WIKI ) {
-				break;
-			}
-
-			$oWikia = WikiFactory::getWikiByID( $oResultRow->gwa_city_id );
-			if ( empty( $oWikia->city_public ) ) {
-				continue;
-			}
-
-			if ( $iWikiId != $oResultRow->gwa_city_id ) {
-
-				if ( count( $aWikiDigest['pages'] ) ) {
-					$aDigestData[ $iWikiId ] = $aWikiDigest;
-				}
-
-				$iWikiId = $oResultRow->gwa_city_id;
-
-				if ( isset( $aDigestData[ $iWikiId ] ) ) {
-					$aWikiDigest = $aDigestData[$iWikiId];
-				} else {
-					$aWikiDigest = [
-						'wikiName' => $oWikia->city_title,
-						'wikiLangCode' => $oWikia->city_lang,
-						'pages' => []
-					];
-				}
-			} // if
-
-			if ( in_array( $oResultRow->gwa_namespace, [ NS_BLOG_ARTICLE_TALK, NS_BLOG_ARTICLE ] ) ) {
-				# blogs
-				$aWikiBlogs[$iWikiId][] = $oResultRow;
-				$this->makeBlogsList( $aWikiDigest, $iWikiId, $oResultRow );
-			} else {
-				$oGlobalTitle = GlobalTitle::newFromText( $oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId );
-				if ( $oGlobalTitle->exists() ) {
-					$aWikiDigest['pages'][] = [
-						'title' => GlobalTitle::newFromText( $oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId ),
-						'revisionId' => $oResultRow->gwa_rev_id
-					];
-				} else {
-					$aRemove[] = $oResultRow->gwa_id;
-				}
-			}
-
-			$loop++;
-
-		} // while
-		$dbr->freeResult( $oResource );
-
-		$cnt = count( $aWikiDigest['pages'] );
-		if ( isset( $aWikiDigest['blogs'] ) ) {
-			$cnt += count( $aWikiDigest['blogs'] );
-		}
-		if ( !empty( $cnt ) ) {
-			$aDigestData[ $iWikiId ] = $aWikiDigest;
+		$digestData = $this->getDigestData( $userID );
+		if ( empty( $digestData ) ) {
+			return;
 		}
 
-		if ( count( $aDigestData ) ) {
-			$this->sendMail( $userID, $aDigestData, $bTooManyPages );
-		}
+		$params = [
+			'targetUser' => User::newFromId( $userID )->getName(),
+			'digestData' => $digestData
+		];
 
-		if ( count( $aRemove ) ) {
-			$dbs = wfGetDB( DB_MASTER, [], \F::app()->wg->ExternalDatawareDB );
-			foreach ( $aRemove as $gwa_id ) {
-				$dbs->delete(
-					GlobalWatchlistTable::TABLE_NAME,
-					[ GlobalWatchlistTable::COLUMN_USER_ID => $userID, GlobalWatchlistTable::COLUMN_ID => $gwa_id ],
-					__METHOD__
-				);
-			}
-		}
+		F::app()->sendRequest( self::EMAIL_CONTROLLER, 'handle', $params );
+		$this->logSentDigest( $userID );
 	}
 
 	/**
@@ -269,7 +178,7 @@ class GlobalWatchlistBot {
 	 * @throws Exception
 	 */
 	private function checkIfEmailUnSubscribed( \User $user ) {
-		if ( $user->getBoolOption( 'unsubscribed' ) ) {
+		if ( (bool)$user->getGlobalPreference( 'unsubscribed' ) ) {
 			throw new Exception( 'Email is unsubscribed.' );
 		}
 	}
@@ -289,226 +198,120 @@ class GlobalWatchlistBot {
 	 * @throws Exception
 	 */
 	private function checkIfSubscribedToWeeklyDigest( \User $user ) {
-		if ( !$user->getBoolOption( 'watchlistdigest' ) ) {
+		if ( !(bool)$user->getGlobalPreference( 'watchlistdigest' ) ) {
 			throw new Exception( 'Not subscribed to weekly digest' );
 		}
 	}
 
-	/**
-	 * send email
-	 */
-	private function sendMail( $iUserId, $aDigestData, $isDigestLimited ) {
-		$oUser = User::newFromId( $iUserId );
-		$oUser->load();
-
-		$sEmailSubject = $this->getLocalizedMsg( 'globalwatchlist-digest-email-subject', $oUser->getOption( 'language' ) );
-		list( $sEmailBody, $sEmailBodyHTML ) = $this->composeMail( $oUser, $aDigestData, $isDigestLimited );
-
-		// yes this needs to be a MA object, not string (the docs for sendMail are wrong)
-		$oReply = new MailAddress( self::REPLY_ADDRESS );
-
-		$oUser->sendMail( $sEmailSubject, $sEmailBody, self::FROM_ADDRESS, $oReply, 'GlobalWatchlist', $sEmailBodyHTML );
-
-		WikiaLogger::instance()->info( 'Weekly Digest Sent', [ 'userID' => $iUserId ] );
-	}
 
 	/**
-	 * compose digest email for user
-	 * TODO Break this method up a bit. It does way way too many things.
+	 * @param $userId
+	 * @return array
 	 */
-	function composeMail ( $oUser, $aDigestsData, $isDigestLimited ) {
+	private function getDigestData( $userId ) {
 
-		$sDigests = "";
-		$sDigestsHTML = "";
-		$sDigestsBlogs = "";
-		$sDigestsBlogsHTML = "";
-		$iPagesCount = 0; $iBlogsCount = 0;
+		$loop = 0;
+		$digestData = [];
+		foreach( $this->getWatchedPagesForUser( $userId ) as $watchedPage ) {
 
-		$sBodyHTML = null;
-		$usehtmlemail = false;
-		if ( $oUser->isAnon() || $oUser->getOption( 'htmlemails' ) ) {
-			$usehtmlemail = true;
-		}
-		$oUserLanguage = $oUser->getOption( 'language' ); // get this once, since its used 10 times in this func
-		foreach ( $aDigestsData as $aDigest ) {
-			$wikiname = $aDigest['wikiName'] . ( $aDigest['wikiLangCode'] != 'en' ?  " (" . $aDigest['wikiLangCode'] . ")": "" ) . ':';
-
-			$sDigests .=  $wikiname . "\n";
-			if ( $usehtmlemail ) {
-				$sDigestsHTML .= "<b>" . $wikiname . "</b><br/>\n";
+			if ( $loop >= self::MAX_PAGES_PER_DIGEST ) {
+				break;
 			}
 
-			if ( !empty( $aDigest['pages'] ) ) {
-				if ( $usehtmlemail ) {
-					$sDigestsHTML .= "<ul>\n";
-				}
-
-				foreach ( $aDigest['pages'] as $aPageData ) {
-					// watchlist tracking, rt#33913
-					$url = $aPageData['title']->getFullURL( 's=dgdiff' . ( $aPageData['revisionId'] ? "&diff=" . $aPageData['revisionId'] . "&oldid=prev" : "" ) );
-
-					// plain email
-					$sDigests .= $url . "\n";
-
-					// html email
-					if ( $usehtmlemail ) {
-						$pagename = $aPageData['title']->getArticleName();
-						$pagename = str_replace( '_', ' ', rawurldecode( $pagename ) );
-						$sDigestsHTML .= '<li><a href="' . $url . '">' . $pagename . "</a></li>\n";
-					}
-
-					$iPagesCount++;
-				}
-
-				if ( $usehtmlemail ) {
-					$sDigestsHTML .= "</ul>\n<br/>\n";
-				}
+			$wikiaName = $this->getWikiaName( $watchedPage->gwa_city_id );
+			if ( empty( $wikiaName ) ) {
+				continue;
 			}
 
-			# blog comments
-			if ( !empty( $aDigest['blogs'] ) ) {
-				foreach ( $aDigest['blogs'] as $blogTitle => $blogComments ) {
-					# $countComments = ($blogComments['comments'] >= $blogComments['own_comments']) ? intval($blogComments['comments'] - $blogComments['own_comments']) : $blogComments['comments'];
-					$countComments = $blogComments['comments'];
-
-					$tracking_url = $blogComments['blogpage']->getFullURL( 's=dg' ); // watchlist tracking, rt#33913
-
-					$message = wfMsgReplaceArgs(
-						( $countComments != 0 ) ? $this->getLocalizedMsg( 'globalwatchlist-blog-page-title-comment', $oUserLanguage ) : "$1",
-						[
-							0 => $tracking_url, // send the ugly tracking url to the plain emails
-							1 => $countComments
-						]
-					);
-					$sDigestsBlogs .= $message . "\n";
-
-					if ( $usehtmlemail ) {
-						// for html emails, remake some things
-						$clean_url = $blogComments['blogpage']->getFullURL();
-						$clean_url = str_replace( '_', ' ', rawurldecode( $clean_url ) );
-						$message = wfMsgReplaceArgs(
-							( $countComments != 0 ) ? $this->getLocalizedMsg( 'globalwatchlist-blog-page-title-comment', $oUserLanguage ) : "$1",
-							[
-								0 => "<a href=\"{$tracking_url}\">" . $clean_url . "</a>", // but use the non-tracking one for html display
-								1 => $countComments
-							]
-						);
-						$sDigestsBlogsHTML .= $message . "<br/>\n";
-					}
-
-					$iBlogsCount++;
-				}
-				$sDigestsBlogs .= "\n";
+			$title = $this->getTitle( $watchedPage );
+			if ( !$title->exists() ) {
+				continue;
 			}
 
-			$sDigests .= "\n";
-		}
-		if ( $isDigestLimited ) {
-			$sDigests .= $this->getLocalizedMsg( 'globalwatchlist-see-more', $oUserLanguage ) . "\n";
-		}
-		$aEmailArgs = [
-			0 => ucfirst( $oUser->getName() ),
-			1 => ( $iPagesCount > 0 ) ? $sDigests : $this->getLocalizedMsg( 'globalwatchlist-no-page-found', $oUserLanguage ),
-			2 => ( $iBlogsCount > 0 ) ? $sDigestsBlogs : "",
-		];
+			if ( empty( $digestData[$wikiaName] ) ) {
+				$digestData[$wikiaName] = [
+					'wikiaName' => $wikiaName,
+					'pages' => []
+				];
+			}
 
-		$sMessage = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body', $oUserLanguage ) . "\n";
-		if ( empty( $aEmailArgs[2] ) ) $sMessage = $this->cutOutPart( $sMessage, '$2', '$3' );
-		$sBody = wfMsgReplaceArgs( $sMessage, $aEmailArgs );
-		if ( $usehtmlemail ) {
-			// rebuild the $ args using the HTML text we've built
-			$aEmailArgs = [
-				0 => ucfirst( $oUser->getName() ),
-				1 => ( $iPagesCount > 0 ) ? $sDigestsHTML : $this->getLocalizedMsg( 'globalwatchlist-no-page-found', $oUserLanguage ),
-				2 => ( $iBlogsCount > 0 ) ? $sDigestsBlogsHTML : "",
+			$digestData[$wikiaName]['pages'][] = [
+				'pageUrl' => $this->getPageUrl( $title, $watchedPage->gwa_rev_id ),
+				'pageName' => $this->getPageName( $title )
 			];
 
-			$sMessageHTML = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body-html', $oUserLanguage );
-			if ( !wfEmptyMsg( 'globalwatchlist-digest-email-body-html', $sMessageHTML ) ) {
-				if ( empty( $aEmailArgs[2] ) ) $sMessageHTML = $this->cutOutPart( $sMessageHTML, '$2', '$3' );
-				$sBodyHTML = wfMsgReplaceArgs( $sMessageHTML, $aEmailArgs );
-			}
+			$loop++;
 		}
 
-		return [ $sBody, $sBodyHTML ];
-	}
-
-	private function cutOutPart( $message, $startMarker, $endMarker, $replacement = " " ) {
-		// this is a quick way to skip some parts of email message without remaking all the i18n messages.
-		$startPos = strpos( $message, $startMarker );
-		$endPos = strpos( $message, $endMarker );
-		if ( $startPos !== FALSE && $endPos !== FALSE ) {
-			$message = substr( $message, 0, $startPos + strlen( $startMarker ) ) . $replacement . substr( $message, $endPos );
-		}
-		return $message;
-	}
-
-	private function getLocalizedMsg( $sMsgKey, $sLangCode ) {
-		$sBody = null;
-
-		if ( ( $sLangCode != 'en' ) && !empty( $sLangCode ) ) {
-			// custom lang translation
-			$sBody = wfMessage( $sMsgKey )->inLanguage( $sLangCode )->text();
-		}
-
-		if ( $sBody == null ) {
-			$sBody = wfMessage( $sMsgKey )->text();
-		}
-
-		return $sBody;
+		return array_values( $digestData );
 	}
 
 	/**
-	 * blogs
+	 * Get all entries for the given user from the global watchlist
+	 * table.
+	 * @param $userId
+	 * @return bool|mixed
 	 */
-	private function makeBlogsList( &$aWikiDigest, $iWikiId, $oResultRow ) {
-		$blogTitle = $oResultRow->gwa_title;
+	private function getWatchedPagesForUser( $userId ) {
+		$db = wfGetDB( DB_SLAVE, [], \F::app()->wg->ExternalDatawareDB );
+		$watchedPages = ( new WikiaSQL() )
+			->SELECT()
+			->FIELD( GlobalWatchlistTable::COLUMN_CITY_ID )
+			->FIELD( GlobalWatchlistTable::COLUMN_TITLE )
+			->FIELD( GlobalWatchlistTable::COLUMN_NAMESPACE )
+			->FIELD( GlobalWatchlistTable::COLUMN_REVISION_ID )
+			->FROM( GlobalWatchlistTable::TABLE_NAME )
+			->WHERE( GlobalWatchlistTable::COLUMN_USER_ID )->EQUAL_TO( $userId )
+			->ORDER_BY( GlobalWatchlistTable::COLUMN_TIMESTAMP, GlobalWatchlistTable::COLUMN_CITY_ID )
+			->runLoop( $db, function ( &$watchedPages, $row ) {
+				$watchedPages[] = $row;
+			} );
 
-		if ( $oResultRow->gwa_namespace == NS_BLOG_ARTICLE_TALK ) {
-			$parts = ArticleComment::explode( $oResultRow->gwa_title );
-			$blogTitle = $parts['title'];
+		return $watchedPages;
+	}
+
+	/**
+	 * @param $wikiaId
+	 * @return string
+	 */
+	private function getWikiaName( $wikiaId ) {
+		$wikiaName = "";
+		$wikia = WikiFactory::getWikiByID( $wikiaId );
+		// Make sure wikia isn't private
+		if ( !empty( $wikia->city_public ) ) {
+			$wikiaName = $wikia->city_title;
 		}
 
-		if ( empty( $blogTitle ) ) {
-			return false;
-		}
+		return $wikiaName;
+	}
 
-		if ( empty( $aWikiDigest[ 'blogs' ][ $blogTitle ] ) ) {
-			$wikiDB = WikiFactory::IDtoDB( $oResultRow->gwa_city_id );
-			if ( $wikiDB ) {
-				$db_wiki = wfGetDB( DB_SLAVE, 'stats', $wikiDB );
-				$like_title = $db_wiki->buildLike( $oResultRow->gwa_title, $db_wiki->anyString() );
-				if ( $db_wiki && $like_title ) {
-					$oRow = $db_wiki->selectRow(
-						[ "watchlist" ],
-						[ "count(*) as cnt" ],
-						[
-							"wl_namespace = '" . NS_BLOG_ARTICLE_TALK . "'",
-							"wl_title $like_title",
-							"wl_notificationtimestamp is not null",
-							"wl_notificationtimestamp >= '" . $oResultRow->gwa_timestamp . "'",
-							"wl_user > 0",
-						],
-						__METHOD__
-					);
-					$aWikiDigest[ 'blogs' ][ $blogTitle ] = [
-						'comments' => intval( $oRow->cnt ),
-						'blogpage' => GlobalTitle::newFromText( $blogTitle, NS_BLOG_ARTICLE, $iWikiId ),
-						'own_comments' => 0
-					];
+	/**
+	 * @param $watchedPage
+	 * @return GlobalTitle
+	 */
+	private function getTitle( $watchedPage ) {
+		return GlobalTitle::newFromText( $watchedPage->gwa_title, $watchedPage->gwa_namespace, $watchedPage->gwa_city_id );
+	}
 
-					if ( !in_array( $wikiDB, [ 'wikicities', 'messaging' ] ) ) {
-						$db_wiki->close();
-					}
-				}
-			}
-		}
+	/**
+	 * @param GlobalTitle $title
+	 * @param $revisionId
+	 * @return string
+	 */
+	private function getPageUrl( GlobalTitle $title, $revisionId ) {
+		return $title->getFullURL('s=dgdiff' . ( $revisionId ? "&diff=" . $revisionId . "&oldid=prev" : "" )
+		);
+	}
 
-		if (
-			( $oResultRow->gwa_namespace == NS_BLOG_ARTICLE_TALK ) &&
-			isset( $aWikiDigest[ 'blogs' ][ $blogTitle ] )
-		) {
-			$aWikiDigest[ 'blogs' ][ $blogTitle ]['own_comments']++;
-		}
+	/**
+	 * @param GlobalTitle $title
+	 * @return string
+	 */
+	private function getPageName( GlobalTitle $title ) {
+		return str_replace( '_', ' ', rawurldecode( $title->getArticleName() ) );
+	}
+
+	private function logSentDigest( $userId ) {
+		WikiaLogger::instance()->info( 'Weekly Digest Sent', [ 'userID' => $userId ] );
 	}
 }

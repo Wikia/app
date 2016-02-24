@@ -10,14 +10,14 @@ require( ['wikia.tracker'], function ( tracker ) {
 		// assigned to a function which will map the data associated with a topic to a format
 		// understood by Wikia.Tracker. Keep them alphabetized.
 		mwTopics = {
-			'behavior.lastTransactionTillSaveDialogOpen': function ( data ) {
+			'mwtiming.behavior.lastTransactionTillSaveDialogOpen': function ( data ) {
 				return {
 					action: actions.OPEN,
 					label: 'dialog-save',
 					value: normalizeDuration( data.duration )
 				};
 			},
-			'behavior.saveDialogClose': function ( data ) {
+			'mwtiming.behavior.saveDialogClose': function ( data ) {
 				return {
 					action: actions.CLOSE,
 					label: 'dialog-save',
@@ -36,35 +36,35 @@ require( ['wikia.tracker'], function ( tracker ) {
 					label: 'createdocumentfromhtml-' + data.message
 				};
 			},
-			'performance.system.activation': function ( data ) {
+			'mwtiming.performance.system.activation': function ( data ) {
 				return {
 					action: actions.IMPRESSION,
 					label: 'edit-page-ready',
 					value: normalizeDuration( data.duration )
 				};
 			},
-			'performance.user.reviewComplete': function ( data ) {
+			'mwtiming.performance.user.reviewComplete': function ( data ) {
 				return {
 					action: actions.SUCCESS,
 					label: 'dialog-save-review-changes',
 					value: normalizeDuration( data.duration )
 				};
 			},
-			'performance.user.reviewError': function ( data ) {
+			'mwtiming.performance.user.reviewError': function ( data ) {
 				return {
 					action: actions.ERROR,
 					label: 'dialog-save-review-changes',
 					value: normalizeDuration( data.duration )
 				};
 			},
-			'performance.user.saveComplete': function ( data ) {
+			'mwtiming.performance.user.saveComplete': function ( data ) {
 				return {
 					action: actions.SUCCESS,
 					label: 'publish',
 					value: normalizeDuration( data.duration )
 				};
 			},
-			'performance.user.saveError': function ( data, topics ) {
+			'mwtiming.performance.user.saveError': function ( data, topics ) {
 				if ( !data.type ) {
 					data.type = topics[ topics.length - 1 ];
 				}
@@ -137,7 +137,8 @@ require( ['wikia.tracker'], function ( tracker ) {
 	 * @param {Object} data The data to send to our internal tracking function.
 	 */
 	function track( topic, data ) {
-		var i, mwEvent, topics,
+
+		var i, mwEvent, topics, abTestData,
 			params = {
 				category: 'editor-ve',
 				trackingMethod: 'analytics'
@@ -175,6 +176,18 @@ require( ['wikia.tracker'], function ( tracker ) {
 			return;
 		}
 
+		if ( ve.init.wikia.getToolbarABTestVariantNumber() === 1 && data.label === 'edit-page-ready' ) {
+			// Extra impression event when toolbar A/B test is active
+			abTestData = {
+				action: data.action,
+				label: 'edit-page-ready-toolbartest',
+				value: data.value
+			};
+
+			handleFunnel( abTestData );
+			tracker.track( ve.extendObject( params, abTestData ) );
+		}
+
 		// Funnel tracking
 		handleFunnel( data );
 
@@ -190,6 +203,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 	function handleFunnel( data ) {
 		var funnelEvents = [
 			'edit-page-ready/impression',
+			'edit-page-ready-toolbartest/impression',
 			'button-publish/enable',
 			'button-cancel/click',
 			'button-publish/click',
@@ -199,7 +213,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 		funnelEvent = data.label + '/' + data.action;
 
 		if ( funnelEvents.indexOf( funnelEvent ) !== -1 ) {
-			window.gaTrackPageview( '/fake-visual-editor/' + funnelEvent, 've' );
+			window.guaTrackPageview( '/fake-visual-editor/' + funnelEvent, 've' );
 		}
 	}
 

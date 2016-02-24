@@ -2,15 +2,6 @@
 
 class UserLoginHooksHelper {
 
-	// send reconfirmation mail
-	public static function onUserSendReConfirmationMail( User &$user, &$result ) {
-		$userLoginHelper = ( new UserLoginHelper );
-		$emailTextTemplate = $userLoginHelper->getReconfirmationEmailTempalte( $user );
-		$result = $user->sendConfirmationMail( false, 'ReConfirmationMail', 'usersignup-reconfirmation-email', true, $emailTextTemplate );
-
-		return true;
-	}
-
 	// get error message when abort new account
 	public static function onAbortNewAccountErrorMessage( &$abortError, &$errParam ) {
 		if ( $abortError == wfMessage( 'phalanx-user-block-new-account' )->escaped() ) {
@@ -34,7 +25,10 @@ class UserLoginHooksHelper {
 	// show request form for Special:ConfirmEmail
 	public static function onConfirmEmailShowRequestForm( EmailConfirmation &$pageObj, &$show ) {
 		$show = false;
-		if ( Sanitizer::validateEmail( $pageObj->getUser()->getEmail() ) ) {
+		if (
+			Sanitizer::validateEmail( $pageObj->getUser()->getEmail() )
+			|| !empty( $pageObj->getUser()->getNewEmail() )
+		) {
 			$userLoginHelper = new UserLoginHelper();
 			$userLoginHelper->showRequestFormConfirmEmail( $pageObj );
 		} else {
@@ -61,9 +55,9 @@ class UserLoginHooksHelper {
 
 	// get email authentication for Preferences::profilePreferences
 	public static function onGetEmailAuthentication( User &$user, IContextSource $context, &$disableEmailPrefs, &$emailauthenticated ) {
-		if ( $user->getEmail() ) {
+		$optionNewEmail = $user->getNewEmail();
+		if ( $user->getEmail() || $optionNewEmail ) {
 			$emailTimestamp = $user->getEmailAuthenticationTimestamp();
-			$optionNewEmail = $user->getOption( 'new_email' );
 			$msgKeyPrefixEmail = ( empty( $optionNewEmail ) && !$emailTimestamp ) ? 'usersignup-user-pref-unconfirmed-' : 'usersignup-user-pref-';
 			if ( empty( $optionNewEmail ) && $emailTimestamp ) {
 				$lang = $context->getLanguage();
@@ -103,9 +97,9 @@ class UserLoginHooksHelper {
 	public static function onSetUserEmail( User $user, $newEmail, &$result, &$info ) {
 		$app = F::app();
 		$oldEmail = $user->getEmail();
-		$optionNewEmail = $user->getOption( 'new_email' );
+		$optionNewEmail = $user->getNewEmail();
 		if ( ( empty( $optionNewEmail ) &&  $newEmail != $oldEmail ) || ( !empty( $optionNewEmail ) &&  $newEmail != $optionNewEmail ) ) {
-			$user->setOption( 'new_email', $newEmail );
+			$user->setNewEmail( $newEmail );
 			$user->invalidateEmail();
 			if ( $app->wg->EmailAuthentication ) {
 				$userLoginHelper = new UserLoginHelper();
@@ -122,7 +116,12 @@ class UserLoginHooksHelper {
 	}
 
 	public static function isValidEmailAddr( $addr ) {
-		return preg_match( '/^[a-z0-9._%+-]+@(?:[a-z0-9\-]+\.)+[a-z]{2,4}$/i', $addr ) !== 0;
+		// this validation match Helios email validation
+		// [see: https://github.com/Wikia/helios/blob/ce490394ae10eb248afd2a063dc465d8eb4efb01/domain/user_validator_funs.go#L29]
+		return preg_match(
+			'/^[\w!#$%&\'*+\/=?^_`{|}~-]+(?:\.[\w!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[a-zA-Z0-9](?:[\w-]*[\w])?$/i',
+			$addr
+		) !== 0;
 	}
 
 	/**
@@ -133,7 +132,7 @@ class UserLoginHooksHelper {
 		$app = F::app();
 
 		if ( $app->checkSkin( 'wikiamobile' ) ) {
-			$vars['wgLoginToken'] = UserLoginHelper::getLoginToken();
+			$vars['wgLoginToken'] = UserLoginHelper::readLoginToken();
 		}
 
 		// Max and min password lengths for JS validation
@@ -202,24 +201,6 @@ class UserLoginHooksHelper {
 			$scssPackages[] = 'wikiamobile_usersignup_scss';
 		}
 
-		return true;
-	}
-
-	/**
-	 * Hook introducing additional control over account creation
-	 * Currently forbids to create an account if username contains
-	 * circled latin characters, e.g. Ⓐ or ⓜ
-	 * @param User $user
-	 * @param String $message
-	 * @return bool
-	 */
-	static public function onAbortNewAccount( $user, &$message ) {
-		$username = $user->getName();
-		$forbiddenCharactersRegex = '/[\x{24B6}-\x{24E9}]|[\x{1F150}-\x{1F169}]/u';
-		if ( preg_match( $forbiddenCharactersRegex, $username ) ) {
-			$message = wfMessage( 'usersignup-error-symbols-in-username' )->escaped();
-			return false;
-		}
 		return true;
 	}
 

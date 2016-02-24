@@ -65,6 +65,12 @@ class RequestContext implements IContextSource {
 	private $skin;
 
 	/**
+	 * @var int
+	 */
+	private $recursion = 0;
+
+
+	/**
 	 * Set the WebRequest object
 	 *
 	 * @param $r WebRequest object
@@ -197,20 +203,68 @@ class RequestContext implements IContextSource {
 	public function getUser() {
 		// Wikia change - begin - @author: Michał Roszka
 		global $wgEnableHeliosExt;
-		if ( $wgEnableHeliosExt ) {
+		$authPath = [];
+
+		if ( $this->user === null && $wgEnableHeliosExt ) {
 			$this->user = \Wikia\Helios\User::newFromToken( $this->getRequest() );
+			$authPath['helios'] = ($this->user !== null ? 'OK' : 'FAIL');
+			if ( $this->user !== null && $this->user instanceof User ) {
+				wfRunHooks( 'UserLoadFromHeliosToken', array( $this->user ) );
+			}
 		}
 		// Wikia change - end
 		// Wikia change - begin - @author: wladek
 		global $wgUserForceAnon;
 		if ( $this->user === null && $wgUserForceAnon ) {
 			$this->user = new User();
+			$authPath['force_anon'] = 'OK';
 		}
-		// Wikia change - end
+
 		if ( $this->user === null ) {
+		// Wikia change - end
 			$this->user = User::newFromSession( $this->getRequest() );
+			$authPath['media_wiki'] = ($this->user !== null ? 'OK' : 'FAIL');
 		}
+
+		$this->logAuthenticationMethod($this->user, $authPath);
+
 		return $this->user;
+	}
+
+	/**
+	 * @param $user User
+	 * @param $authSource array
+	 */
+	private function logAuthenticationMethod($user, $authSource) {
+		if ( $user === null || !$user->isLoggedIn() ) {
+			return;
+		}
+
+		$sampler = new \Wikia\Util\Statistics\BernoulliTrial( 0.25 );
+
+		// send every 4-th request to InfluxDb
+		if ( $sampler->shouldSample() ) {
+			\Transaction::addEvent( \Transaction::EVENT_USER_AUTH, $authSource );
+		}
+
+		// now we sample logging at 5%
+		$sampler->setProbability( 0.05 );
+
+		if ( !$sampler->shouldSample() ) {
+			return;
+		}
+
+		\Wikia\Logger\WikiaLogger::instance()->info(
+			'AUTHENTICATION_FALLBACK',
+			[
+				'auth'			=> $authSource,
+				'ip'			=> $this->getRequest()->getIP(),
+				'session_id'	=> session_id(),
+				'from'			=> $user->mFrom,
+				'user_id'		=> $user->getId(),
+				'user_name'		=> $user->getName(),
+			]
+		);
 	}
 
 	/**
@@ -252,6 +306,7 @@ class RequestContext implements IContextSource {
 	 * @since 1.19
 	 */
 	public function setLanguage( $l ) {
+
 		if ( $l instanceof Language ) {
 			$this->lang = $l;
 		} elseif ( is_string( $l ) ) {
@@ -280,23 +335,26 @@ class RequestContext implements IContextSource {
 	 * @since 1.19
 	 */
 	public function getLanguage() {
-		if ( isset( $this->recursion ) ) {
-			trigger_error( "Recursion detected in " . __METHOD__, E_USER_WARNING );
-			$e = new Exception;
-			wfDebugLog( 'recursion-guard', "Recursion detected:\n" . $e->getTraceAsString() );
-
+		/**
+		 * The following block of code (between if and elseif) has been added in
+		 * order to force setting $this->lang to some value. Apparently there was
+		 * something wrong with the following block (the one inside elseif) that would
+		 * cause an infinite loop or other issues.
+		 */
+		if ( $this->recursion > 0 ) {
+			$this->recursion++;
 			global $wgLanguageCode;
 			$code = ( $wgLanguageCode ) ? $wgLanguageCode : 'en';
 			$this->lang = Language::factory( $code );
 		} elseif ( $this->lang === null ) {
-			$this->recursion = true;
+			$this->recursion++;
 
 			global $wgLanguageCode, $wgContLang;
 
 			$request = $this->getRequest();
 			$user = $this->getUser();
 
-			$code = $request->getVal( 'uselang', $user->getOption( 'language' ) );
+			$code = $request->getVal( 'uselang', $user->getGlobalPreference( 'language' ) );
 			$code = self::sanitizeLangCode( $code );
 
 			wfRunHooks( 'UserGetLanguageObject', array( $user, &$code, $this ) );
@@ -308,7 +366,7 @@ class RequestContext implements IContextSource {
 				$this->lang = $obj;
 			}
 
-			unset( $this->recursion );
+			$this->recursion = 0;
 		}
 
 		return $this->lang;
@@ -327,12 +385,12 @@ class RequestContext implements IContextSource {
 	/**
 	 * Get the Skin object
 	 *
-	 * @return Skin
+	 * @return Skin|Linker
 	 */
 	public function getSkin() {
 		if ( $this->skin === null ) {
 			wfProfileIn( __METHOD__ . '-createskin' );
-			
+
 			$skin = null;
 			wfRunHooks( 'RequestContextCreateSkin', array( $this, &$skin ) );
 
@@ -349,7 +407,7 @@ class RequestContext implements IContextSource {
 				global $wgHiddenPrefs;
 				if( !in_array( 'skin', $wgHiddenPrefs ) ) {
 					# get the user skin
-					$userSkin = $this->getUser()->getOption( 'skin' );
+					$userSkin = $this->getUser()->getGlobalPreference( 'skin' );
 					$userSkin = $this->getRequest()->getVal( 'useskin', $userSkin );
 				} else {
 					# if we're not allowing users to override, then use the default

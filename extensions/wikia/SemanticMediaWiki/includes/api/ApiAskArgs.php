@@ -31,6 +31,9 @@ class ApiAskArgs extends ApiSMWQuery {
 
 	public function execute() {
 		$params = $this->extractRequestParams();
+		// Wikia change - start - Make sure we always have an array (CE-1532)
+		$this->parameters = [];
+		// Wikia change - end
 
 		foreach ( $params['parameters'] as $param ) {
 			$parts = explode( '=', $param, 2 );

@@ -1,0 +1,99 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/oasis/css/core/layout';
+
+.sitemap-page {
+	font-size: 13px;
+	margin: 20px 10px 50px;
+
+	h1 {
+		border-bottom: solid 1px #ccc;
+		font-size: 30px;
+		margin: 0 0 10px;
+		padding-bottom: 10px;
+	}
+
+	.showlist {
+		border-bottom: 0;
+	}
+
+	.sitemap-top-level {
+		line-height: 30px;
+		margin: 0 20px;
+
+		span {
+			display: block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		a {
+			color: #006cb0;
+
+			span {
+				color: #000;
+				display: inline;
+			}
+		}
+	}
+
+	.sitemap-showlist {
+		border-collapse: collapse;
+		clear: both;
+		table-layout: fixed;
+		width: 100%;
+
+		td, th {
+			border: solid #e8e8e8;
+			border-width: 1px 0;
+			height: 35px;
+			padding: 0 10px;
+		}
+
+		td {
+			padding-top: 5px;
+			vertical-align: top;
+		}
+
+		th {
+			background-color: #f7f7f7;
+			text-align: left;
+		}
+
+		td:first-child, th:first-child {
+			padding-left: 20px;
+		}
+
+		td:first-child {
+			font-weight: bold;
+		}
+
+		@media(max-width: 840px) {
+			td:first-child, th:first-child {
+				padding-right: 20px;
+			}
+
+			td:not(:first-child), th:not(:first-child) {
+				display: none;
+			}
+		}
+
+		@media(min-width: 841px) {
+			td:first-child, th:first-child {
+				width: 30%;
+			}
+
+			td:last-child, th:last-child {
+				padding-right: 20px;
+				width: 47%;
+			}
+
+			td:last-child {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		}
+	}
+}

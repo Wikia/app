@@ -4,8 +4,6 @@
  * @ingroup Database
  */
 
-use Wikia\MastersPoll;
-
 /**
  * A multi-wiki, multi-master factory for Wikia and similar installations.
  * Ignores the old configuration globals
@@ -13,17 +11,6 @@ use Wikia\MastersPoll;
  * @ingroup Database
  */
 class LBFactory_Wikia extends LBFactory_Multi {
-
-	private $mastersPoll;
-
-	function __construct( $conf ) {
-		$this->mastersPoll = new MastersPoll($conf);
-		parent::__construct( $this->mastersPoll->getConf() );
-	}
-
-	function getMastersPoll() {
-		return $this->mastersPoll;
-	}
 
 	function getSectionForWiki( $wiki = false ) {
 		global $wgDBname, $wgDBcluster, $smwgUseExternalDB;
@@ -42,11 +29,11 @@ class LBFactory_Wikia extends LBFactory_Multi {
 		$section = 'central';
 
 		$this->isSMWClusterActive = false;
-		if ( $smwgUseExternalDB ) {
+		if( $smwgUseExternalDB ) {
 			/**
 			 * set flag, strip database name
 			 */
-			if ( substr( $dbName, 0, 4 ) == "smw+" && isset( $this->sectionsByDB[ "smw+" ] ) ) {
+			if( substr($dbName, 0, 4 ) == "smw+" && isset( $this->sectionsByDB[ "smw+" ] ) ) {
 				$this->isSMWClusterActive = true;
 				$dbName = substr( $dbName, 4 );
 				wfDebugLog( "connect", __METHOD__ . ": smw+ cluster is active, dbname changed to $dbName\n", true );
@@ -57,7 +44,7 @@ class LBFactory_Wikia extends LBFactory_Multi {
 			// this is a db that has a cluster defined in the config file (DB.php)
 			$section = $this->sectionsByDB[$dbName];
 		}
-		elseif ( $this->isSMWClusterActive ) {
+		elseif( $this->isSMWClusterActive ) {
 			// use smw+ entry
 			$section = $this->sectionsByDB[ "smw+" ];
 			wfDebugLog( "connect", __METHOD__ . "-smw: section $section choosen for $wiki\n" );

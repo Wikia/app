@@ -22,7 +22,7 @@ class UserLoginController extends WikiaController {
 			$this->previewBody = $this->app->renderView( "UserLogin", 'WelcomeMail', $params );
 			$emailParams = array (
 				'$USERNAME' => 'testUser',
-				'$EDITPROFILEURL' => $this->wg->Server.'/wiki/User:testUser',
+				'$EDITPROFILEURL' => $this->wg->Server . '/wiki/User:testUser',
 				'$LEARNBASICURL' => 'http://community.wikia.com/wiki/Help:Wikia_Basics',
 				'$EXPLOREWIKISURL' => 'http://www.wikia.com',
 			);
@@ -40,7 +40,7 @@ class UserLoginController extends WikiaController {
 	/**
 	 * General Mail template
 	 * @requestParam Array params
-	 * @responseParam String type [password-email, confirmation-email, reconfirmation-email, account-creation-email, confirmation-reminder-email]
+	 * @responseParam String type [password-email, account-creation-email]
 	 * @responseParam String language
 	 * @responseParam String greeting
 	 * @responseParam String content
@@ -52,17 +52,14 @@ class UserLoginController extends WikiaController {
 
 		switch ( $params['type'] ) {
 			case 'password-email':
-				$this->greeting = wfMessage( 'userlogin-'.$this->type.'-greeting' )->inLanguage( $this->language )->text();
-				$this->content = wfMessage( 'userlogin-'.$this->type.'-content' )->inLanguage( $this->language )->text();
-				$this->signature = wfMessage( 'userlogin-'.$this->type.'-signature' )->inLanguage( $this->language )->text();
+				$this->greeting = wfMessage( 'userlogin-' . $this->type . '-greeting' )->inLanguage( $this->language )->text();
+				$this->content = wfMessage( 'userlogin-' . $this->type . '-content' )->inLanguage( $this->language )->text();
+				$this->signature = wfMessage( 'userlogin-' . $this->type . '-signature' )->inLanguage( $this->language )->text();
 				break;
-			case 'confirmation-email':
-			case 'reconfirmation-email':
 			case 'account-creation-email':
-			case 'confirmation-reminder-email' :
-				$this->greeting = wfMessage( 'usersignup-'.$this->type.'-greeting' )->inLanguage( $this->language )->text();
-				$this->content = wfMessage( 'usersignup-'.$this->type.'-content' )->inLanguage( $this->language )->text();
-				$this->signature = wfMessage( 'usersignup-'.$this->type.'-signature' )->inLanguage( $this->language )->text();
+				$this->greeting = wfMessage( 'usersignup-' . $this->type . '-greeting' )->inLanguage( $this->language )->text();
+				$this->content = wfMessage( 'usersignup-' . $this->type . '-content' )->inLanguage( $this->language )->text();
+				$this->signature = wfMessage( 'usersignup-' . $this->type . '-signature' )->inLanguage( $this->language )->text();
 				break;
 			default:
 				$this->greeting = '';

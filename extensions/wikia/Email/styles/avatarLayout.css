@@ -11,6 +11,10 @@
 	width: 50px;
 }
 
+.bold {
+	font-weight: bold;
+}
+
 .username {
 	font-size: 12px;
 }
@@ -23,6 +27,3 @@
 	font-size: 14px;
 }
 
-.content-footer-messages {
-	padding-top: 70px;
-}

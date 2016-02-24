@@ -171,10 +171,9 @@ $color-borders: #CECECE;
 }
 
 #NameWiki {
-	@if ($responsive-layout-enabled) {
+	width: 500px;
+	@if ($responsive-or-breakpoints-layout-enabled) {
 		width: auto;
-	} @else {
-		width: 500px;
 	}
 
 	form {
@@ -204,10 +203,10 @@ $color-borders: #CECECE;
 #UserAuth {
 	@include clearfix;
 	display: none;
-	@if ($responsive-layout-enabled) {
+	width: 600px;
+	@if ($responsive-or-breakpoints-layout-enabled) {
 		min-width: 590px;
-	} @else {
-		width: 600px;
+		width: auto;
 	}
 
 	.UserLoginModal {
@@ -237,19 +236,16 @@ $color-borders: #CECECE;
 
 #DescWiki {
 	display: none;
-	@if ($responsive-layout-enabled) {
+	width: 700px;
+	@if ($responsive-or-breakpoints-layout-enabled) {
 		width: auto;
-	} @else {
-		width: 700px;
 	}
 
 	ol {
 		margin: 0;
 		padding: 0;
 
-		@if ($responsive-layout-enabled) {
-
-		} @else {
+		@if (not $responsive-or-breakpoints-layout-enabled) {
 			left: 515px;
 			position: absolute;
 			right: 515px;
@@ -267,7 +263,7 @@ $color-borders: #CECECE;
 			list-style: none;
 			margin-bottom: 10px;
 			padding: 10px;
-			@if ($responsive-layout-enabled) {
+			@if ($responsive-or-breakpoints-layout-enabled) {
 				display: inline-block;
 				float: left;
 				margin-left: 1%;
@@ -287,10 +283,9 @@ $color-borders: #CECECE;
 		height: 170px;
 		padding: 0;
 		resize: none;
-		@if ($responsive-layout-enabled) {
+		width: 425px;
+		@if ($responsive-or-breakpoints-layout-enabled) {
 			width: 510px;
-		} @else{
-			width: 425px;
 		}
 
 		&.placeholder {
@@ -346,10 +341,9 @@ $color-borders: #CECECE;
 
 #ThemeWiki {
 	display: none;
-	@if ($responsive-layout-enabled) {
+	width: 650px;
+	@if ($responsive-or-breakpoints-layout-enabled) {
 		width: auto;
-	} @else {
-		width: 650px;
 	}
 
 	.ThemeTab {
@@ -361,10 +355,9 @@ $color-borders: #CECECE;
 		.slider {
 			height: 106px;
 			top: 0;
-			@if ($responsive-layout-enabled) {
+			width: 608px;
+			@if ($responsive-or-breakpoints-layout-enabled) {
 				width: 500px;
-			} @else {
-				width: 608px;
 			}
 
 			ul {
@@ -386,10 +379,9 @@ $color-borders: #CECECE;
 			top: 37px;
 
 			&.next {
-				@if ($responsive-layout-enabled) {
+				left: 645px;
+				@if ($responsive-or-breakpoints-layout-enabled) {
 					left: 540px;
-				} @else {
-					left: 645px;
 				}
 			}
 		}
@@ -402,10 +394,9 @@ $color-borders: #CECECE;
 
 #UpgradeWiki {
 	display: none;
-	@if ($responsive-layout-enabled) {
+	width: 625px;
+	@if ($responsive-or-breakpoints-layout-enabled) {
 		width: auto;
-	} @else {
-		width: 625px;
 	}
 
 	.marketing {

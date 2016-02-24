@@ -10,24 +10,35 @@ abstract class WikiaHubsModuleService extends WikiaService {
 	private $shouldFilterCommercialData = false;
 
 	public function __construct($cityId) {
+		global $wgForeignFileRepos;
 		parent::__construct();
 
 		$this->cityId = $cityId;
 		$this->skinName = RequestContext::getMain()->getSkin()->getSkinName();
+
+		$hubWiki = WikiFactory::getWikiByID($cityId);
+		$hubDbName = $hubWiki->city_dbname;
+
+		$wgForeignFileRepos[] = [
+			'class'            => 'WikiaForeignDBViaLBRepo',
+			'name'             => $hubDbName,
+			'transformVia404'  => true,
+			'wiki'             => $hubDbName,
+			'backend'          => "wikia{$hubDbName}-backend"
+		];
 	}
 
 	abstract public function getStructuredData($data);
 
 	/**
-	 * @param $name
-	 * @param $cityId
-	 * @return WikiaHubsModuleService
+	 * @param string $name
+	 * @param int $cityId
+	 * @return WikiaHubsModuleEditableService|WikiaHubsModuleNonEditableService
 	 */
 	static public function getModuleByName($name, $cityId) {
 		$moduleClassName = self::CLASS_NAME_PREFIX . $name . self::CLASS_NAME_SUFFIX;
 		return new $moduleClassName($cityId);
 	}
-
 
 	protected function getHubsParams() {
 		return $this->cityId;
@@ -37,7 +48,7 @@ abstract class WikiaHubsModuleService extends WikiaService {
 		return $this->getView('index', $data);
 	}
 
-	public function loadData($model, $params) {
+	public function loadData(EditHubModel $model, $params) {
 		$hubParams = $this->getHubsParams();
 
 		$lastTimestamp = $model->getLastPublishedTimestamp(
@@ -52,6 +63,7 @@ abstract class WikiaHubsModuleService extends WikiaService {
 				return $this->loadStructuredData( $model, $params );
 			}
 		);
+
 		if ( $this->getShouldFilterCommercialData() ) {
 			$structuredData = $this->filterCommercialData( $structuredData );
 		}
@@ -59,7 +71,7 @@ abstract class WikiaHubsModuleService extends WikiaService {
 		return $structuredData;
 	}
 
-	protected function loadStructuredData( $model, $params ) {
+	protected function loadStructuredData( EditHubModel $model, $params ) {
 		$hubParams = $this->getHubsParams();
 
 		$moduleData = $model->getPublishedData(

@@ -99,9 +99,23 @@ class ArticleService extends WikiaObject {
 	}
 
 	/**
-	 * Gets a plain text snippet from an article
+	 * Gets a plain text snippet from an article.  An optional second argument allows a break limit.
+	 * When given, if the text is greater than $breakLimit, truncate it to $length, if its less than
+	 * $breakLimit, return the whole snippet.  This allows better snippets for text that is very close
+	 * in character count to $length.
+	 *
+	 * For example if $length=100 and $breakLimit=200 and the source text is 205 characters, the content
+	 * will be truncated at the word closest to 100 characters.  If the source text is 150 characters,
+	 * then this method will return all 150 characters.
+	 *
+	 * If however we only give one parameter, $length=200 and the source text is 205 characters, we
+	 * will return text truncated at the word nearest 200 characters, likely only leaving out a single
+	 * word from the snippet.  This can lead to a strange user experience in some cases (e.g. a user
+	 * clicks a link in a notification email to see the full edit and finds that there's only one word
+	 * they weren't able to read from the email)
 	 *
 	 * @param integer $length [OPTIONAL] The maximum snippet length, defaults to 100
+	 * @param integer $breakLimit A breakpoint for showing the full snippet.
 	 *
 	 * @return string The plain text snippet, it includes SUFFIX at the end of the string
 	 * if the length of the article's content is longer than $length, the text will be cut
@@ -111,7 +125,7 @@ class ArticleService extends WikiaObject {
 	 *
 	 * @example
 	 * $service = new ArticleService( $article );
-	 * $snippet = $service->getTextSnippet( 250 );
+	 * $snippet = $service->getTextSnippet( 250, 400 );
 	 *
 	 * $service->setArticleById( $title->getArticleID() );
 	 * $snippet = $service->getTextSnippet( 50 );
@@ -119,43 +133,43 @@ class ArticleService extends WikiaObject {
 	 * $service->setArticle( $anotherArticle );
 	 * $snippet = $service->getTextSnippet();
 	 */
-	public function getTextSnippet( $length = 100 ) {
+	public function getTextSnippet( $length = 100, $breakLimit = null ) {
 		// don't allow more than the maximum to avoid flooding Memcached
 		if ( $length > self::MAX_LENGTH ) {
 			throw new WikiaException( 'Maximum allowed length is ' . self::MAX_LENGTH );
 		}
 
-		// it may sometimes happen that the aricle is just not there
+		// It may be that the article is just not there
 		if ( !( $this->article instanceof Article ) ) {
 			return '';
 		}
 
-		$fname = __METHOD__;
-		wfProfileIn( __METHOD__ );
-
 		$id = $this->article->getID();
-		// in case the article is missing just return empty string
 		if ( $id <= 0 ) {
-			wfProfileOut( __METHOD__ );
 			return '';
 		}
 
-		// memoize to avoid Memcache access overhead
-		// when the same article needs to be processed
+		$text = $this->getTextSnippetSource( $id );
+		$length = $this->adjustTextSnippetLength( $text, $length, $breakLimit );
+		$snippet = wfShortenText( $text, $length, $useContentLanguage = true );
+
+		return $snippet;
+	}
+
+	private function getTextSnippetSource( $articleId ) {
+		// Memoize to avoid Memcache access overhead when the same article needs to be processed
 		// more than once in the same process
-		if ( array_key_exists( $id, self::$localCache ) ) {
-			$text = self::$localCache[$id];
+		if ( array_key_exists( $articleId, self::$localCache ) ) {
+			$text = self::$localCache[$articleId];
 		} else {
-			$key = self::getCacheKey( $id );
+			$key = self::getCacheKey( $articleId );
 			$service = $this;
-			$text = self::$localCache[$id] = WikiaDataAccess::cache(
+			$text = self::$localCache[$articleId] = WikiaDataAccess::cache(
 				$key,
 				86400 /*24h*/,
-				function() use ( $service, $fname ) {
-					wfProfileIn( $fname . '::CacheMiss' );
-
+				function() use ( $service ) {
 					$content = '';
-					if ( !empty( $this->wg->SolrMaster ) ) {
+					if ( !$this->wg->DevelEnvironment && !empty( $this->wg->SolrMaster ) ) {
 						$content = $service->getTextFromSolr();
 					}
 
@@ -164,16 +178,25 @@ class ArticleService extends WikiaObject {
 						$content = $service->getUncachedSnippetFromArticle();
 					}
 
-					wfProfileOut( $fname . '::CacheMiss' );
 					return $content;
 				}
 			);
 		}
 
-		$snippet = wfShortenText( $text, $length, true /*use content language*/ );
+		return $text;
+	}
 
-		wfProfileOut( __METHOD__ );
-		return $snippet;
+	private function adjustTextSnippetLength( $text, $length, $breakLimit ) {
+		if ( empty( $breakLimit ) ) {
+			return $length;
+		}
+
+		$textLength = mb_strlen( $text );
+		if ( $textLength >= $breakLimit ) {
+			return $length;
+		}
+
+		return $breakLimit;
 	}
 
 	/**
@@ -236,7 +259,10 @@ class ArticleService extends WikiaObject {
 		return $content;
 	}
 
-	private function getContentFromParser( ParserOutput $output ) {
+	private function getContentFromParser( $output ) {
+		if ( !$output instanceof ParserOutput ) {
+			throw new Exception("Not ParserOutput instance.");
+		}
 		return $output->getText();
 	}
 

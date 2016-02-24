@@ -59,6 +59,7 @@ $messages['be-tarask'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Aftabuzzaman
  */
 $messages['bn'] = array(
 	'wikiawidget' => 'উইকিয়া উইজেট',
@@ -87,9 +88,11 @@ $messages['ca'] = array(
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Mr. Richard Bolla
  */
 $messages['cs'] = array(
+	'wikiawidget-desc' => 'Vytvořte Wikia widget pro vložení na externí webové stránky nebo do Vaší wiki.',
 	'wikiawidget' => 'Wikia widgety',
 );
 
@@ -320,7 +323,7 @@ $messages['pap'] = array(
 	'wikiawidget' => 'Wikia widgetnan',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
@@ -329,8 +332,10 @@ $messages['pdc'] = array(
 
 /** Polish (polski)
  * @author Sp5uhe
+ * @author VerMa
  */
 $messages['pl'] = array(
+	'wikiawidget-desc' => 'Twórz Wikia Widgety do użytku na stronach zewnętrznych lub do wstawienia na twoją wiki',
 	'wikiawidget' => 'Wikia — widgety',
 );
 
@@ -388,8 +393,10 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Sertion
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'wikiawidget-desc' => 'Skapa Wikia-widgets att använda på externa webbplatser eller på din wiki',
 	'wikiawidget' => 'Wikia widgets',
 );
 
@@ -430,15 +437,19 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author Ast
+ * @author Капитан Джон Шепард
  */
 $messages['uk'] = array(
+	'wikiawidget-desc' => 'Створити Вікії віджети для використання на зовнішніх ресурсах або для включення на Вікі',
 	'wikiawidget' => 'Віджети Wikia',
 );
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
+	'wikiawidget-desc' => 'Tạo Wikia Widget để sử dụng trên các trang web bên ngoài hoặc để đưa vào wiki của bạn',
 	'wikiawidget' => 'Wikia widget',
 );
 

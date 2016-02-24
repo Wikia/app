@@ -1,0 +1,57 @@
+/*
+	Stylesheet for the value filter
+*/
+
+.filtered-filters .filtered-value { 
+	overflow: visible;
+	border: 1px solid #aaa;
+	padding: 1em;
+	margin: 1em;
+}
+
+.filtered-filters .filtered-value .filtered-value-label {
+	height: 0;
+}
+
+.filtered-filters .filtered-value .filtered-value-label span { 
+	background-color: white;
+	font-weight: bold;
+
+	position: relative;
+	top: -1.8em;
+	left: 0;
+	
+	padding: 0 1em;
+}
+
+.filtered-filters .filtered-value .filtered-value-switches { 
+	border-bottom: 1px solid #aaa;
+	font-weight: bold;
+	padding: 0.5em 1em;
+	
+	margin-bottom: 1em;
+}
+
+.filtered-filters .filtered-value .filtered-value-option { 
+	display: inline-block;
+	padding: 0 1em;
+	width: 20%;
+}
+
+.filtered-filters .filtered-value .filtered-value-show,
+.filtered-filters .filtered-value .filtered-value-hide { 
+	margin: 0pt;
+	padding: 0pt 1em;
+	background-color: white;
+	width: 1.5em;
+	float: right;
+	position: relative;
+	top: -1.8em;
+	right: 0pt;
+	text-align: center;
+	cursor: pointer;
+}
+
+.filtered-filters .filtered-value .filtered-value-scrollable { 
+	overflow: auto;
+}

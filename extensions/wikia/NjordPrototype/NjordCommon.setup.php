@@ -7,5 +7,6 @@
  */
 $dir = dirname( __FILE__ );
 
-$wgAutoloadClasses['WikiDataModel'] =  $dir . '/models/WikiDataModel.class.php';
+$wgAutoloadClasses[ 'WikiDataModel' ] =  $dir . '/models/WikiDataModel.class.php';
 $wgHooks[ 'ParserFirstCallInit' ][ ] = 'NjordHooks::onParserFirstCallInit';
+$wgHooks[ 'WikiFeatures::onGetFeatureLabs' ][] = 'NjordHooks::onGetFeatureLabs';

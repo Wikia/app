@@ -344,7 +344,11 @@ class EditPageLayout extends EditPage {
 	}
 
 	/**
-	 * Add hidden field to be shown in "Edit title" dialog
+	 * Add hidden field to editor
+	 * this can be any type of field checkbox, text, hidden etc
+	 * It won't be visible to user as it's hidden by css
+	 * @param array $field Array of attributes
+	 *        eg. [ 'name' => 'exampleName', 'type' => 'checkbox', ...]
 	 */
 	public function addHiddenField($field) {
 		$this->mHiddenFields[] = $field;
@@ -655,17 +659,22 @@ class EditPageLayout extends EditPage {
 				);
 			}
 
-			// check for empty message (BugId:6923)
-			$parsedMsg = wfMsg($msgName);
-			if (!wfEmptyMsg($msgName, $parsedMsg) && strip_tags($parsedMsg) != '') {
-				$msg = wfMsgExt($msgName, array('parse'));
+			$msgParams = [];
 
-				$this->mEditPagePreloads['EditPageIntro'] = array(
-					'content' => $msg,
-					'class' => $class,
-				);
+			// check for empty message (BugId:6923)
+			if ( !empty( $msgName ) ) {
+				$message = wfMessage( $msgName, $msgParams );
+				$messageParsed = $message->parse();
+				if ( !$message->isBlank() && trim( strip_tags( $messageParsed ) ) != '' ) {
+					$this->mEditPagePreloads['EditPageIntro'] = [
+							'content' => $messageParsed,
+							'class' => $class,
+					];
+				}
 			}
 		}
+
+		wfRunHooks( 'EditPageLayoutShowIntro', [ &$this->mEditPagePreloads, $this->mTitle ] );
 
 		// custom intro
 		$this->showCustomIntro();
@@ -701,15 +710,12 @@ class EditPageLayout extends EditPage {
 	 * @return bool
 	 */
 	protected function userDismissedEduNote() {
-		$EditorUserPropertiesHandler = new EditorUserPropertiesHandler();
+		$editorUserPropertiesHandler = new EditorUserPropertiesHandler();
+		$result = false;
 
 		try {
-			$results = $EditorUserPropertiesHandler->getUserPropertyValue(
-				$EditorUserPropertiesHandler->getEditorMainPageNoticePropertyName()
-			);
-			$result = ($results->value == true) ? true : false;
+			$result = $editorUserPropertiesHandler->getEditorMainPageNoticePropertyForCurrentUser() == true;
 		} catch( Exception $e ) {
-			$result = false;
 		}
 
 		return $result;

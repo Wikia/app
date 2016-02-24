@@ -193,6 +193,7 @@ Alternatively, you can click "$2" to see the page in its updated form.',
 );
 
 /** Message documentation (Message documentation)
+ * @author Citizen01
  * @author EugeneZelenko
  * @author LWChris
  * @author Liuxinyu970226
@@ -249,6 +250,7 @@ $messages['qqq'] = array(
 	'wikiaPhotoGallery-preview-captions-right' => '{{Identical|Right}}',
 	'wikiaPhotoGallery-slideshow-view-addphoto' => '{{Identical|Add photo}}',
 	'wikiaPhotoGallery-slideshow-view-title' => '{{Identical|Slideshow}}',
+	'wikiaPhotoGallery-slideshow-view-link-overlay' => '幻燈片左上角的提示文字，說明點擊之後會前往哪一個頁面',
 	'wikiaPhotoGallery-slideshowpreview-addphoto' => '{{Identical|Add photo}}',
 	'wikiaPhotoGallery-slideshowpreview-position-left' => '{{Identical|Left}}',
 	'wikiaPhotoGallery-slideshowpreview-position-center' => '{{Identical|Center}}',
@@ -511,6 +513,17 @@ $messages['ar'] = array(
 	'wikiaPhotoGallery-upload-image-size' => 'يجب أن تكون الصور 670 بكسل على 360 بكسل أو أكبر',
 	'wikiaPhotoGallery-not-displayed' => 'غير معروضة',
 	'galery-slider-read-more' => 'اقرأ المزيد >',
+);
+
+/** Egyptian Arabic (مصرى)
+ * @author Ghaly
+ */
+$messages['arz'] = array(
+	'wikiaPhotoGallery-lightbox-caption' => 'عن طريق $1',
+	'wikiaPhotoGallery-add-gallery' => 'إضافة معرض صور أو عرض شرايح',
+	'wikiaPhotoGallery-viewmode-addphoto' => 'إضافة صوره للمعرض ده',
+	'wikiaPhotoGallery-edit-summary' => 'تعديل معرض',
+	'wikiaPhotoGallery-error-caption' => 'غلط',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -1159,11 +1172,13 @@ $messages['ce'] = array(
 	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Чуйилла',
 	'wikiaPhotoGallery-upload-select-images' => 'Харжа',
 	'wikiaPhotoGallery-preview-saving-title' => 'ДӀадоьду Ӏалашяр',
+	'wikiaPhotoGallery-slideshow-view-next-tooltip' => 'ТӀаьхьа догӀу сурт',
+	'wikiaPhotoGallery-slideshow-view-prev-tooltip' => 'Хьалха доьду сурт',
 	'wikiaPhotoGallery-slideshow-view-link-overlay' => 'Дехьа гӀо $1',
 	'wikiaPhotoGallery-upload-selectbutton' => 'Харжа',
 );
 
-/** Sorani Kurdish (کوردی)
+/** Central Kurdish (کوردیی ناوەندی)
  */
 $messages['ckb'] = array(
 	'wikiaPhotoGallery-preview-hover-delete' => 'سڕینەوە',
@@ -1902,6 +1917,8 @@ Describe esta imagen.",
  * @author Subi
  */
 $messages['eu'] = array(
+	'wikiaPhotoGallery-upload-page-next' => 'Hurrengo 8',
+	'wikiaPhotoGallery-upload-page-prev' => 'Aurreko 8',
 	'wikiaPhotoGallery-slideshow-view-addphoto' => 'Gehitu argazkia',
 	'wikiaPhotoGallery-slideshow-view-next-tooltip' => 'Hurrengo argazkia',
 	'wikiaPhotoGallery-slideshow-view-prev-tooltip' => 'Aurreko argazkia',
@@ -1958,6 +1975,7 @@ $messages['fa'] = array(
  * @author Crt
  * @author Nedergard
  * @author Nike
+ * @author Silvonen
  * @author Tofu II
  * @author Ville96
  */
@@ -2011,6 +2029,9 @@ Mitä haluaisit tehdä?',
 	'wikiaPhotoGallery-preview-tab-layout' => 'Asettelu',
 	'wikiaPhotoGallery-preview-size-smaller' => 'pienempi',
 	'wikiaPhotoGallery-preview-size-larger' => 'suurempi',
+	'wikiaPhotoGallery-preview-spacing-small' => 'Pieni',
+	'wikiaPhotoGallery-preview-spacing-medium' => 'Keskikokoinen',
+	'wikiaPhotoGallery-preview-spacing-large' => 'Suuri',
 	'wikiaPhotoGallery-preview-size' => 'Valokuvan koko',
 	'wikiaPhotoGallery-preview-captions' => 'Kuvatekstit',
 	'wikiaPhotoGallery-preview-captions-left' => 'Vasen',
@@ -2341,10 +2362,12 @@ $messages['fy'] = array(
 	'wikiaPhotoGallery-upload-findbutton' => 'Sykje',
 	'wikiaPhotoGallery-upload-page-next' => 'Folgjende 8',
 	'wikiaPhotoGallery-upload-page-prev' => 'Foarige 8',
+	'wikiaPhotoGallery-preview-hover-delete' => 'fuortsmite',
 	'wikiaPhotoGallery-preview-spacing-small' => 'Lyts',
 	'wikiaPhotoGallery-preview-spacing-large' => 'Grut',
 	'wikiaPhotoGallery-preview-captionsize-small' => 'Lyts',
 	'wikiaPhotoGallery-preview-captionsize-large' => 'Grut',
+	'wikiaPhotoGallery-preview-bordersize-none' => 'Gjin',
 	'wikiaPhotoGallery-preview-bordersize-small' => 'Lyts',
 	'wikiaPhotoGallery-preview-bordersize-large' => 'Grut',
 );
@@ -3085,6 +3108,7 @@ Alternativemente, tu pote cliccar super "$2" pro vider le pagina in su forma act
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Fate Kage
  * @author Irwangatot
  * @author Kenrick95
  */
@@ -3109,7 +3133,7 @@ $messages['id'] = array(
 	'wikiaPhotoGallery-upload-select-images' => 'Pilih',
 	'wikiaPhotoGallery-photooptions-title' => 'Pilihan Foto',
 	'wikiaPhotoGallery-photooptions-done' => 'Selesai',
-	'wikiaPhotoGallery-preview-title' => 'Sunting galeri', # Fuzzy
+	'wikiaPhotoGallery-preview-title' => 'Pembangun galeri',
 	'wikiaPhotoGallery-preview-hover-modify' => 'ubah',
 	'wikiaPhotoGallery-preview-hover-delete' => 'hapus',
 	'wikiaPhotoGallery-preview-add-photo' => 'Tambah Foto',
@@ -3142,7 +3166,7 @@ $messages['ig'] = array(
  * @author Sapral Mikail
  */
 $messages['inh'] = array(
-	'wikiaPhotoGallery-error-caption' => 'ГӀалат',
+	'wikiaPhotoGallery-error-caption' => 'Г|алат',
 );
 
 /** Italian (italiano)
@@ -3425,6 +3449,13 @@ $messages['ja'] = array(
 	'galery-slider-read-more' => '続きを読む >',
 );
 
+/** Georgian (ქართული)
+ * @author Otogi
+ */
+$messages['ka'] = array(
+	'wikiaPhotoGallery-photooptions-done' => 'გაკეთდა',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author Dimension10
  * @author VASANTH S.N.
@@ -3493,11 +3524,13 @@ $messages['ko'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  * @author Gomada
  */
 $messages['ku-latn'] = array(
 	'wikiaPhotoGallery-back' => 'Paşve',
+	'wikiaPhotoGallery-finish' => 'Dawî',
 	'wikiaPhotoGallery-lightbox-caption' => 'Bi rêya $1',
 	'wikiaPhotoGallery-error-caption' => 'Çewtî',
 	'wikiaPhotoGallery-upload-title' => 'Wêne bibîne û bar bike',
@@ -3583,15 +3616,18 @@ $messages['lb'] = array(
 	'wikiaPhotoGallery-preview-position-center' => 'Zentréiert',
 	'wikiaPhotoGallery-preview-position-right' => 'Riets',
 	'wikiaPhotoGallery-preview-spacing-small' => 'Kleng',
+	'wikiaPhotoGallery-preview-spacing-medium' => 'Mëttel',
 	'wikiaPhotoGallery-preview-spacing-large' => 'Grouss',
 	'wikiaPhotoGallery-preview-captionposition-below' => 'Ënner der Foto',
 	'wikiaPhotoGallery-preview-captionalignment-left' => 'Lenks',
 	'wikiaPhotoGallery-preview-captionalignment-center' => 'Zentréiert',
 	'wikiaPhotoGallery-preview-captionalignment-right' => 'Riets',
 	'wikiaPhotoGallery-preview-captionsize-small' => 'Kleng',
+	'wikiaPhotoGallery-preview-captionsize-medium' => 'Mëttel',
 	'wikiaPhotoGallery-preview-captionsize-large' => 'Grouss',
 	'wikiaPhotoGallery-preview-bordersize-none' => 'Keng',
 	'wikiaPhotoGallery-preview-bordersize-small' => 'Kleng',
+	'wikiaPhotoGallery-preview-bordersize-medium' => 'Mëttel',
 	'wikiaPhotoGallery-preview-bordersize-large' => 'Grouss',
 	'wikiaPhotoGallery-preview-size' => 'Gréisst vun der Photo',
 	'wikiaPhotoGallery-preview-captions-left' => 'Lenks',
@@ -4515,17 +4551,59 @@ $messages['oc'] = array(
 	'wikiaPhotoGallery-feed-caption' => '$1, \'\'via\'\' <a href="$2">$3</a>',
 	'wikiaPhotoGallery-lightbox-caption' => "''Via'' $1",
 	'wikiaPhotoGallery-error-caption' => 'Error',
+	'wikiaPhotoGallery-upload-info-choose-list' => "'''O''' causissètz :",
 	'wikiaPhotoGallery-upload-findtitle' => 'Recercar',
 	'wikiaPhotoGallery-upload-findbutton' => 'Recercar',
+	'wikiaPhotoGallery-upload-page-next' => '8 seguentas',
+	'wikiaPhotoGallery-upload-page-prev' => '8 precedentas',
 	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Inserir',
 	'wikiaPhotoGallery-upload-select-images' => 'Seleccionar',
 	'wikiaPhotoGallery-photooptions-done' => 'Acabat',
 	'wikiaPhotoGallery-preview-hover-modify' => 'modificar',
 	'wikiaPhotoGallery-preview-hover-delete' => 'suprimir',
+	'wikiaPhotoGallery-preview-add-photo' => 'Apondre una fòto',
+	'wikiaPhotoGallery-preview-add-caption' => 'Apondre una legenda',
+	'wikiaPhotoGallery-preview-add-description' => 'Apondre una descripcion',
+	'wikiaPhotoGallery-preview-add-link' => 'Apondre un ligam',
+	'wikiaPhotoGallery-preview-tab-layout' => 'Disposicion',
 	'wikiaPhotoGallery-preview-px' => 'px',
+	'wikiaPhotoGallery-preview-size-smaller' => 'mai pichon',
+	'wikiaPhotoGallery-preview-size-larger' => 'mai grand',
+	'wikiaPhotoGallery-preview-columns' => 'Nombre de colomnas',
+	'wikiaPhotoGallery-preview-columns-dynamic' => 'Ajustar a la pagina',
+	'wikiaPhotoGallery-preview-position-left' => 'Esquèrra',
+	'wikiaPhotoGallery-preview-position-center' => 'Centre',
+	'wikiaPhotoGallery-preview-position-right' => 'Drecha',
+	'wikiaPhotoGallery-preview-spacing-small' => 'Pichon',
+	'wikiaPhotoGallery-preview-spacing-medium' => 'Mejan',
+	'wikiaPhotoGallery-preview-spacing-large' => 'Grand',
+	'wikiaPhotoGallery-preview-captionposition' => 'Posicion de la legenda',
+	'wikiaPhotoGallery-preview-captionalignment-left' => 'Esquèrra',
+	'wikiaPhotoGallery-preview-captionalignment-center' => 'Centre',
+	'wikiaPhotoGallery-preview-captionalignment-right' => 'Drecha',
+	'wikiaPhotoGallery-preview-captionsize-small' => 'Pichona',
+	'wikiaPhotoGallery-preview-captionsize-medium' => 'Mejana',
+	'wikiaPhotoGallery-preview-captionsize-large' => 'Granda',
+	'wikiaPhotoGallery-preview-bordersize-none' => 'Pas cap',
+	'wikiaPhotoGallery-preview-bordersize-small' => 'Pichona',
+	'wikiaPhotoGallery-preview-bordersize-medium' => 'Mejana',
+	'wikiaPhotoGallery-preview-bordersize-large' => 'Granda',
+	'wikiaPhotoGallery-preview-captions' => 'Legendas',
+	'wikiaPhotoGallery-preview-captions-left' => 'Esquèrra',
+	'wikiaPhotoGallery-preview-captions-center' => 'Centre',
+	'wikiaPhotoGallery-preview-captions-right' => 'Drecha',
+	'wikiaPhotoGallery-slideshowpreview-size-smaller' => 'mai pichon',
+	'wikiaPhotoGallery-slideshowpreview-size-larger' => 'mai grand',
+	'wikiaPhotoGallery-slideshowpreview-position-left' => 'Esquèrra',
+	'wikiaPhotoGallery-slideshowpreview-position-center' => 'Centre',
+	'wikiaPhotoGallery-slideshowpreview-position-right' => 'Drecha',
+	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'aquesta pagina',
+	'wikiaPhotoGallery-upload-selectbutton' => 'Seleccionar',
+	'wikiaPhotoGallery-search-tooltip' => 'Recercar de fòtos sus aqueste wiki',
+	'galery-slider-read-more' => ' Legir mai >',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
@@ -4536,7 +4614,7 @@ $messages['pdc'] = array(
 	'wikiaPhotoGallery-preview-bordersize-small' => 'Glee',
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  */
 $messages['pfl'] = array(
 	'wikiaPhotoGallery-upload-page-next' => 'Negschte 8',
@@ -4940,6 +5018,8 @@ $messages['ps'] = array(
 	'wikiaPhotoGallery-preview-add-description' => 'يوه څرگندونه ورگډول',
 	'wikiaPhotoGallery-preview-add-link' => 'يوه تړنه ورگډول',
 	'wikiaPhotoGallery-preview-tab-layout' => 'ليدنمخ',
+	'wikiaPhotoGallery-preview-columns' => 'د ستنو شمېر',
+	'wikiaPhotoGallery-preview-columns-dynamic' => 'مخ کې ځايول',
 	'wikiaPhotoGallery-preview-position-left' => 'کيڼ',
 	'wikiaPhotoGallery-preview-position-center' => 'منځ',
 	'wikiaPhotoGallery-preview-position-right' => 'ښي',
@@ -6447,7 +6527,7 @@ $messages['uk'] = array(
 	'galery-slider-read-more' => 'Читати далі >',
 );
 
-/** Uzbek (oʻzbekcha)
+/** Uzbek (oʻzbekcha/ўзбекча)
  * @author CoderSI
  */
 $messages['uz'] = array(
@@ -6830,6 +6910,7 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Cwlin0416
  * @author Ffaarr
  * @author LNDDYL
  * @author Liuxinyu970226
@@ -6848,7 +6929,7 @@ $messages['zh-hant'] = array(
 	'wikiaPhotoGallery-error-outdated' => '您查看的圖片庫已經被編輯。
 請刷新頁面並再試一次。',
 	'wikiaPhotoGallery-error-wrong-title' => '該id文章沒有標題',
-	'wikiaPhotoGallery-error-user-rights' => '用戶權限錯誤。',
+	'wikiaPhotoGallery-error-user-rights' => '使用者權限錯誤。',
 	'wikiaPhotoGallery-upload-title' => '查找&上傳圖片',
 	'wikiaPhotoGallery-upload-info-choose-list' => '「或」選擇：',
 	'wikiaPhotoGallery-upload-info-images-label' => '此頁面中的圖像',
@@ -6956,10 +7037,10 @@ $messages['zh-hant'] = array(
 	'wikiaPhotoGallery-slideshow-view-startslideshow' => '播放幻燈片',
 	'wikiaPhotoGallery-slideshow-view-stopslideshow' => '停止幻燈片',
 	'wikiaPhotoGallery-slideshow-view-details-tooltip' => '檢視圖片詳細資訊',
-	'wikiaPhotoGallery-slideshow-view-link-overlay' => '到達$1',
+	'wikiaPhotoGallery-slideshow-view-link-overlay' => '前往 $1',
 	'wikiaPhotoGallery-choice-title' => '增加幻燈片或圖庫',
 	'wikiaPhotoGallery-choice-intro' => '你想創建幻燈片或圖片庫嗎？',
-	'wikiaPhotoGallery-choice-slideshow' => '創建幻燈片',
+	'wikiaPhotoGallery-choice-slideshow' => '建立投影片',
 	'wikiaPhotoGallery-choice-gallery' => '新建圖庫',
 	'wikiaPhotoGallery-choice-slider' => '創建主頁面滑塊',
 	'wikiaPhotoGallery-slideshowpreview-title' => '幻燈片產生器',

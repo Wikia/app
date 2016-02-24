@@ -1,5 +1,9 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
+use Wikia\Helios\User as HeliosUser;
+use Wikia\Service\User\Auth\CookieHelper;
+
 class Piggyback extends SpecialPage {
 	var $mAction;
 
@@ -40,6 +44,37 @@ class Piggyback extends SpecialPage {
 	}
 }
 
+class PBHooks {
+	public static function onLoginFormAuthenticateModifyRetval( $invoker, $username, $password, &$retVal ) {
+		global $wgEnableHeliosExt;
+		/**
+		 * status of forbidden from authentication means that the credentials are correct, but the
+		 * user is unable to log in with those credentials (because security). In this case we should
+		 * let the login succeed when piggybacking, assuming the login request came from the
+		 * piggyback form
+		 */
+		if ( get_class( $invoker ) == PBLoginForm::class &&
+				$wgEnableHeliosExt &&
+				HeliosUser::checkAuthenticationStatus( $username, $password, WikiaResponse::RESPONSE_CODE_FORBIDDEN ) ) {
+
+			$retVal = LoginForm::SUCCESS;
+		}
+
+		return true;
+	}
+
+	public static function onUserSetCookies(User $user, $session, $cookies) {
+		if (PBLoginForm::isPiggyback()) {
+			/** @var CookieHelper $cookieHelper */
+			$cookieHelper = Injector::getInjector()->get(CookieHelper::class);
+			$response = RequestContext::getMain()->getRequest()->response();
+			$cookieHelper->setAuthenticationCookieWithUserId($user->getId(), $response);
+		}
+
+		return true;
+	}
+}
+
 
 /*
  * overload LoginForm to not re-implement user verification
@@ -61,10 +96,10 @@ class PBLoginForm extends LoginForm {
 
 		$this->mType = 'login';
 		/* fake to don't change remember password */
-		$this->mRemember = (bool) $wgUser->getOption( 'rememberpassword' );
+		$this->mRemember = (bool) $wgUser->getGlobalPreference( 'rememberpassword' );
 	}
 
-	function mainLoginForm( $msg, $msgtype = 'error' ) {
+	function mainLoginForm( $msg, $msgtype = 'error', $errParam = '' ) {
 		$this->templateData['messagetype'] = $msgtype;
 		$this->templateData['message'] = $msg;
 		$this->templateData['name'] = $this->mUsername;
@@ -73,14 +108,16 @@ class PBLoginForm extends LoginForm {
 	}
 
 	function successfulLogin() {
-		global $wgUser, $wgAuth, $wgOut, $wgRequest;
+		global $wgUser, $wgRequest;
 
 		/* post valid */
 		$u = User::newFromName( $this->mOtherName );
 
 		$cu = User::newFromName( $this->mUsername );
 
-		if ( !$cu->checkPassword( $this->mPassword ) ) {
+		if ( !$cu->checkPassword( $this->mPassword ) &&
+				!HeliosUser::checkAuthenticationStatus( $cu->getName(), $this->mPassword, WikiaResponse::RESPONSE_CODE_FORBIDDEN )) {
+
 			if ( $retval = '' == $this->mPassword ) {
 				$this->mainLoginForm( wfMessage( 'wrongpasswordempty' )->escaped() );
 			} else {
@@ -118,7 +155,7 @@ class PBLoginForm extends LoginForm {
 
 	function switchUser( $u ) {
 		global $wgUser, $wgAuth, $wgOut, $wgRequest, $wgLang;
-		$oldUserlang = $wgUser->getOption( 'language' );
+		$oldUserlang = $wgUser->getGlobalPreference( 'language' );
 		$wgAuth->updateUser( $u );
 		$wgUser = $u;
 		$wgUser->setCookies();

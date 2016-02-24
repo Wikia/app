@@ -32,7 +32,7 @@ class SearchController extends WikiaController {
 		}
 		$this->searchParams = $searchParams;
 
-		$this->fulltext = $this->wg->User->getOption('enableGoSearch') ? 0 : 'Search';
+		$this->fulltext = $this->wg->User->getGlobalPreference('enableGoSearch') ? 0 : 'Search';
 		$this->placeholder = WikiaPageType::isWikiaHub()
 			? wfMessage('wikiahubs-search-placeholder')->text()
 			: wfMessage('Tooltip-search', $this->wg->Sitename)->text();
@@ -53,7 +53,7 @@ class SearchController extends WikiaController {
 			}
 		}
 		if ( empty($namespaces) ) {
-			if ( $user->getOption( 'searchAllNamespaces' ) ) {
+			if ( $user->getGlobalPreference( 'searchAllNamespaces' ) ) {
 				$namespaces = array_keys($searchableNamespaces);
 			} else {
 				// this is mostly needed for unit testing

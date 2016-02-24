@@ -9,8 +9,12 @@
 
 namespace Wikia\Tasks\Tasks;
 
+use Wikia\Util\GlobalStateWrapper;
+
 class CreateNewWikiTask extends BaseTask {
-	const DEFAULT_USER = 'Default';
+	const
+		DEFAULT_USER = 'Default',
+		WIKIA_USER = 'Wikia';
 
 	/** @var \User */
 	private $founder;
@@ -32,7 +36,7 @@ class CreateNewWikiTask extends BaseTask {
 	}
 
 	public function postCreationSetup( $params ) {
-		global $wgUser, $wgErrorLog, $wgServer, $wgInternalServer, $wgStatsDBEnabled;
+		global $wgErrorLog, $wgServer, $wgInternalServer, $wgStatsDBEnabled;
 
 		$wgServer = rtrim( $params['url'], '/' );
 		$wgInternalServer = $wgServer;
@@ -63,8 +67,6 @@ class CreateNewWikiTask extends BaseTask {
 				}
 			}
 		}
-
-		$wgUser = \User::newFromName( 'CreateWiki script' );
 
 		$this->wikiName = isset( $params['sitename'] ) ? $params['sitename'] : \WikiFactory::getVarValueByName( 'wgSitename', $params['city_id'], true );
 		$this->wikiLang = isset( $params['language'] ) ? $params['language'] : \WikiFactory::getVarValueByName( 'wgLanguageCode', $params['city_id'] );
@@ -108,7 +110,8 @@ class CreateNewWikiTask extends BaseTask {
 		}
 
 		$dbname = \WikiFactory::IDtoDB( $wgCityId );
-		$cmd = sprintf( "perl /usr/wikia/backend/bin/scribe/events_local_users.pl --usedb={$dbname} " );
+		$founder = $this->founder->getId();
+		$cmd = sprintf( "perl /usr/wikia/backend/bin/scribe/events_local_users.pl --usedb={$dbname} --user={$founder} " );
 		$output = wfShellExec( $cmd, $exitStatus );
 		$this->info( 'run events_local_users.pl', ['exitStatus' => $exitStatus, 'output' => $output] );
 
@@ -129,9 +132,9 @@ class CreateNewWikiTask extends BaseTask {
 
 		$sourceTitle = \Title::newFromText( $source );
 		if ( !$sourceTitle ) {
-			$sourceTitle = \Title::newFromText( "Main_Page" );
+			$sourceTitle = \Title::newFromText( 'Main_Page' );
 			if ( !$sourceTitle ) {
-				$this->error("invalid page title", ["title" => $source]);
+				$this->error( 'invalid page title', [ 'title' => $source ] );
 				return;
 			}
 		}
@@ -148,7 +151,15 @@ class CreateNewWikiTask extends BaseTask {
 					'target' => $targetTitle->getPrefixedText(),
 				];
 				if ( $sourceTitle->getPrefixedText() !== $targetTitle->getPrefixedText() ) {
-					$err = $sourceTitle->moveTo( $targetTitle, false, "SEO" );
+					$wikiaUser = \User::newFromName( self::WIKIA_USER );
+					$wrapper = new GlobalStateWrapper( [
+						'wgUser' => $wikiaUser
+					] );
+
+					$err = $wrapper->wrap( function() use ( $sourceTitle, $targetTitle ) {
+						return $sourceTitle->moveTo( $targetTitle, false, 'SEO' );
+					});
+
 					if ( $err !== true ) {
 						$this->error('main page move failed', $moveContext);
 					} else {
@@ -156,9 +167,15 @@ class CreateNewWikiTask extends BaseTask {
 						/**
 						 * fill Mediawiki:Mainpage with new title
 						 */
-						$mwMainPageTitle = \Title::newFromText( "Mainpage", NS_MEDIAWIKI );
+						$mwMainPageTitle = \Title::newFromText( 'Mainpage', NS_MEDIAWIKI );
 						$mwMainPageArticle = new \Article( $mwMainPageTitle, 0 );
-						$mwMainPageArticle->doEdit( $targetTitle->getText(), "SEO", EDIT_SUPPRESS_RC | EDIT_MINOR | EDIT_FORCE_BOT );
+						$mwMainPageArticle->doEdit(
+							$targetTitle->getText(),
+							'SEO',
+							EDIT_SUPPRESS_RC | EDIT_MINOR | EDIT_FORCE_BOT,
+							false,
+							$wikiaUser
+						);
 						$mwMainPageArticle->doPurge();
 
 						/**
@@ -171,7 +188,9 @@ class CreateNewWikiTask extends BaseTask {
 								'source' => $sourceTalkTitle->getPrefixedText(),
 								'target' => $targetTalkTitle->getPrefixedText(),
 							];
-							$err = $sourceTalkTitle->moveTo( $targetTitle->getTalkPage(), false, "SEO" );
+							$err = $wrapper->wrap( function() use ( $sourceTalkTitle, $targetTitle ) {
+								return $sourceTalkTitle->moveTo( $targetTitle->getTalkPage(), false, "SEO" );
+							} );
 							if ( $err === true ) {
 								$this->info( 'talk page moved', $moveContext );
 							} else {
@@ -269,7 +288,7 @@ class CreateNewWikiTask extends BaseTask {
 		 * set apropriate staff member
 		 */
 		$wgUser = \Wikia::staffForLang( $this->wikiLang );
-		$wgUser = ( $wgUser instanceof \User ) ? $wgUser : \User::newFromName( "Angela" );
+		$wgUser = ( $wgUser instanceof \User ) ? $wgUser : \User::newFromName( \CreateWiki::DEFAULT_STAFF );
 
 		$talkParams = array( $this->founder->getName(), $wgUser->getName(), $wgUser->getRealName(), $this->wikiName );
 
@@ -350,10 +369,9 @@ class CreateNewWikiTask extends BaseTask {
 	private function protectKeyPages() {
 		global $wgUser, $wgWikiaKeyPages;
 
-		$wgUser = \User::newFromName( "CreateWiki script" );
-		if ( $wgUser->isAnon() ) {
-			$wgUser->addToDatabase();
-		}
+		$saveUser = $wgUser;
+		$wgUser = \User::newFromName( self::WIKIA_USER );
+
 		if ( empty( $wgWikiaKeyPages ) ) {
 			$wgWikiaKeyPages = array( 'File:Wiki.png', 'File:Favicon.ico' );
 		}
@@ -372,8 +390,6 @@ class CreateNewWikiTask extends BaseTask {
 		 *  define reason msg and fetch it
 		 */
 		$reason = wfMsgForContent( 'autocreatewiki-protect-reason' );
-
-		$wgUser->addGroup( 'staff' );
 
 		foreach ( $wgWikiaKeyPages as $pageName ) {
 			$title = \Title::newFromText( $pageName );
@@ -395,7 +411,8 @@ class CreateNewWikiTask extends BaseTask {
 				$this->warning('failed to protect key page', ['page_name' => $pageName]);
 			}
 		}
-		$wgUser->removeGroup( "staff" );
+
+		$wgUser = $saveUser;
 	}
 
 	/**

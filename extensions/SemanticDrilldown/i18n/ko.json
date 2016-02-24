@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"Albamhandae",
+			"Priviet"
+		]
+	},
+	"semanticdrilldown-desc": "시맨틱 데이터를 탐색하기 위한 드릴다운 인터페이스",
+	"specialpages-group-sd_group": "시맨틱 드릴다운",
+	"browsedata": "데이터 찾아보기",
+	"sd_browsedata_choosecategory": "분류 선택하기",
+	"sd_browsedata_viewcategory": "분류 보기",
+	"sd_browsedata_docu": "검색 결과를 줄이려면 하나 또는 그 이상의 항목을 선택하세요.",
+	"sd_browsedata_subcategory": "하위 분류",
+	"sd_browsedata_other": "기타",
+	"sd_browsedata_none": "없음",
+	"sd_browsedata_filterbyvalue": "이 값으로 필터",
+	"sd_browsedata_filterbysubcategory": "하위 분류로 필터",
+	"sd_browsedata_otherfilter": "이 필터에 대한 다른 값을 보이기",
+	"sd_browsedata_nonefilter": "이 필터에 대한 값이 없는 문서 보이기",
+	"sd_browsedata_or": "또는",
+	"sd_browsedata_removefilter": "이 필터를 제거",
+	"sd_browsedata_removesubcategoryfilter": "하위 분류 필터 제거",
+	"sd_browsedata_resetfilters": "필터 다시 설정",
+	"sd_browsedata_addanothervalue": "화살표를 클릭하여 다른 값을 추가",
+	"sd_browsedata_daterangestart": "시작:",
+	"sd_browsedata_daterangeend": "끝:",
+	"sd_browsedata_novalues": "이 필터에 대한 값이 없습니다",
+	"sd_createfilter_usepropertyvalues": "필터에 대한 속성의 모든 값을 사용",
+	"sd_createfilter_usecategoryvalues": "이 분류에서 필터를 위한 값 얻기:",
+	"sd_createfilter_requirefilter": "이 필터를 표시하기 전에 다른 필터가 선택되야 합니다:",
+	"sd-pageschemas-filter": "필터",
+	"sd-pageschemas-values": "값"
+}

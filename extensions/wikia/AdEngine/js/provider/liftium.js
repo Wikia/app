@@ -1,12 +1,13 @@
 /*global define, require, Liftium*/
 /*jshint maxparams:false*/
 define('ext.wikia.adEngine.provider.liftium', [
+	'ext.wikia.adEngine.adContext',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('wikia.instantGlobals')
-], function (doc, log, win, slotTweaker, instantGlobals) {
+], function (adContext, doc, log, win, slotTweaker, instantGlobals) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.liftium',
@@ -15,7 +16,6 @@ define('ext.wikia.adEngine.provider.liftium', [
 		fillInSlot;
 
 	slotMap = {
-		'EXIT_STITIAL_BOXAD_1': {'size': '300x250'},
 		'HOME_TOP_LEADERBOARD': {'size': '728x90'},
 		'HOME_TOP_RIGHT_BOXAD': {'size': '300x250'},
 		'INCONTENT_BOXAD_1': {'size': '300x250'},
@@ -28,15 +28,17 @@ define('ext.wikia.adEngine.provider.liftium', [
 		// TOP_BUTTON_WIDE after TOP_LEADERBOARD hack:
 		'TOP_BUTTON_WIDE.force': 'hack',
 
-		'INCONTENT_1A': {'size': '300x250'},
-		'INCONTENT_1B': {'size': '300x250'},
-		'INCONTENT_1C': {'size': '300x250'},
 		'TOP_LEADERBOARD': {'size': '728x90'},
 		'TOP_RIGHT_BOXAD': {'size': '300x250'},
 		'PREFOOTER_LEFT_BOXAD': {'size': '300x250'},
+		'PREFOOTER_MIDDLE_BOXAD': {'size': '300x250'},
 		'PREFOOTER_RIGHT_BOXAD': {'size': '300x250'},
 		'WIKIA_BAR_BOXAD_1': {'size': '300x250'}
 	};
+
+	if (adContext.getContext().opts.overridePrefootersSizes) {
+		delete slotMap.PREFOOTER_RIGHT_BOXAD;
+	}
 
 	canHandleSlot = function (slotname) {
 		log(['canHandleSlot', slotname], 'debug', logGroup);
@@ -53,38 +55,38 @@ define('ext.wikia.adEngine.provider.liftium', [
 		return false;
 	};
 
-	fillInSlot = function (slotname, success) {
-		log(['fillInSlot', slotname], 'debug', logGroup);
+	fillInSlot = function (slot) {
+		log(['fillInSlot', slot.name], 'debug', logGroup);
 
 		// TOP_BUTTON_WIDE after TOP_LEADERBOARD hack:
-		if (slotname === 'TOP_BUTTON_WIDE') {
+		if (slot.name === 'TOP_BUTTON_WIDE') {
 			log('Tried TOP_BUTTON_WIDE. Disabled (waiting for leaderboard ads)', 'info', logGroup);
 			return;
 		}
-		if (slotname === 'TOP_BUTTON_WIDE.force') {
+		if (slot.name === 'TOP_BUTTON_WIDE.force') {
 			log('Forced TOP_BUTTON_WIDE call (this means leaderboard is ready and standard)', 'info', logGroup);
-			slotname = slotname.replace('.force', '');
+			slot.name = slot.name.replace('.force', '');
 		}
-		if (slotname.indexOf('LEADERBOARD') !== -1) {
+		if (slot.name.indexOf('LEADERBOARD') !== -1) {
 			log('LEADERBOARD-ish slot handled by Liftium. Running the forced TOP_BUTTON_WIDE now', 'info', logGroup);
 
 			win.adslots2.push('TOP_BUTTON_WIDE.force');
 		}
 		// END of hack
-		if (!doc.getElementById(slotname)) {
-			log('No such element in DOM: #' + slotname, 'info', logGroup);
+		if (!doc.getElementById(slot.name)) {
+			log('No such element in DOM: #' + slot.name, 'info', logGroup);
 			return;
 		}
 
-		var slotsize = slotMap[slotname].size;
+		var slotsize = slotMap[slot.name].size;
 
-			log('using iframe for #' + slotname, 'debug', logGroup);
-			Liftium.injectAd(doc, slotname, slotsize);
+		log('using iframe for #' + slot.name, 'debug', logGroup);
+		Liftium.injectAd(doc, slot.name, slot.container, slotsize);
 
-			slotTweaker.removeDefaultHeight(slotname);
+		slotTweaker.removeDefaultHeight(slot.name);
 
 		// Fake success, because we don't have the success event in Liftium
-		success();
+		slot.success();
 	};
 
 	return {

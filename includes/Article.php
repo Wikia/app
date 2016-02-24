@@ -15,13 +15,14 @@
  * Note: edit user interface and cache support functions have been
  * moved to separate EditPage and HTMLFileCache classes.
  *
- * @internal documentation reviewed 15 Mar 2010
+ * internal documentation reviewed 15 Mar 2010
  *
  * //Wikia Change Start - helping PHP lint
  * @property Title mTitle
  * @method exists
  * @method getID
  * @method getRedirectTarget
+ * @method loadPageData
  * //Wikia Change End
  */
 class Article extends Page {
@@ -456,6 +457,7 @@ class Article extends Page {
 		$parserCache = ParserCache::singleton();
 
 		$parserOptions = $this->getParserOptions();
+
 		# Render printable version, use printable version cache
 		if ( $wgOut->isPrintable() ) {
 			$parserOptions->setIsPrintable( true );
@@ -682,18 +684,22 @@ class Article extends Page {
 		# Adjust title for main page & pages with displaytitle
 		if ( $pOutput ) {
 			$this->adjustDisplayTitle( $pOutput );
+
+			if ($pOutput->getText() == '') {
+				\Wikia\Logger\WikiaLogger::instance()->error( 'PLATFORM-1212 - empty parser output' );
+			}
 		}
 
 		# For the main page, overwrite the <title> element with the con-
 		# tents of 'pagetitle-view-mainpage' instead of the default (if
 		# that's not empty).
 		# This message always exists because it is in the i18n files
+		# Wikia change - begin
 		if ( $this->getTitle()->isMainPage() ) {
-			$msg = wfMessage( 'pagetitle-view-mainpage' )->inContentLanguage();
-			if ( !$msg->isDisabled() ) {
-				$wgOut->setHTMLTitle( $msg->title( $this->getTitle() )->text() );
-			}
+			// The wiki name and brand name are added to all titles
+			$wgOut->setHTMLTitle( '' );
 		}
+		# Wikia change - end
 
 		# Check for any __NOINDEX__ tags on the page using $pOutput
 		$policy = $this->getRobotPolicy( 'view', $pOutput );
@@ -726,9 +732,11 @@ class Article extends Page {
 	public function showDiffPage() {
 		global $wgRequest, $wgUser;
 
+		Transaction::setAttribute( Transaction::PARAM_ACTION, 'diff' ); # Wikia change
+
 		$diff = $wgRequest->getVal( 'diff' );
 		$rcid = $wgRequest->getVal( 'rcid' );
-		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getOption( 'diffonly' ) );
+		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getGlobalPreference( 'diffonly' ) );
 		$purge = $wgRequest->getVal( 'action' ) == 'purge';
 		$unhide = $wgRequest->getInt( 'unhide' ) == 1;
 		$oldid = $this->getOldID();
@@ -1038,7 +1046,9 @@ class Article extends Page {
 			if ( !($user && $user->isLoggedIn()) && !$ip ) { # User does not exist
 				$wgOut->wrapWikiMsg( "<div class=\"mw-userpage-userdoesnotexist error\">\n\$1\n</div>",
 					array( 'userpage-userdoesnotexist-view', wfEscapeWikiText( $rootPart ) ) );
-			} elseif ( $user->isBlocked() ) { # Show log extract if the user is currently blocked
+			/* Wikia change begin - SUS-92 */
+			} elseif ( $user->isBlocked( true, false ) ) { # Show log extract if the user is currently blocked
+			/* Wikia change end */
 				LogEventsList::showLogExtract(
 					$wgOut,
 					'block',
@@ -1098,7 +1108,7 @@ class Article extends Page {
 				$text = wfMsgNoTrans( 'noarticletext-nopermission' );
 			}
 		}
-		$text = "<div class='noarticletext'>\n$text\n</div>";
+		$text = "<div class='noarticletext'>$text</div>";
 
 		$wgOut->addWikiText( $text );
 	}
@@ -1497,7 +1507,7 @@ class Article extends Page {
 		} else {
 			$suppress = '';
 		}
-		$checkWatch = $user->getBoolOption( 'watchdeletion' ) || $this->getTitle()->userIsWatching();
+		$checkWatch = (bool)$user->getGlobalPreference( 'watchdeletion' ) || $this->getTitle()->userIsWatching();
 
 		$form = Xml::openElement( 'form', array( 'method' => 'post',
 			'action' => $this->getTitle()->getLocalURL( 'action=delete' ), 'id' => 'deleteconfirm' ) ) .

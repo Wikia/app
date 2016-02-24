@@ -19,6 +19,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 class EditAccount extends SpecialPage {
+	/** @var User */
 	var $mUser = null;
 	var $mStatus = null;
 	var $mStatusMsg;
@@ -124,6 +125,12 @@ class EditAccount extends SpecialPage {
 			return;
 		}
 
+		// Displays a log of email changes for the selected user
+		if ($par && $par == "log") {
+			$this->displayLogData();
+			return;
+		}
+
 		$changeReason = $request->getVal( 'wpReason' );
 
 		switch( $action ) {
@@ -144,7 +151,7 @@ class EditAccount extends SpecialPage {
 				break;
 			case 'closeaccount':
 				$template = 'closeaccount';
-				$this->mStatus = (bool) $this->mUser->getOption( 'requested-closure', 0 );
+				$this->mStatus = (bool) $this->mUser->getGlobalFlag( 'requested-closure', 0 );
 				$this->mStatusMsg = $this->mStatus ? wfMsg( 'editaccount-requested' ) : wfMsg( 'editaccount-not-requested' );
 				break;
 			case 'closeaccountconfirm':
@@ -209,7 +216,7 @@ class EditAccount extends SpecialPage {
 			$this->mUser->load();
 
 			// get new email (unconfirmed)
-			$optionNewEmail = $this->mUser->getOption( 'new_email' );
+			$optionNewEmail = $this->mUser->getNewEmail();
 			$changeEmailRequested = ( empty($optionNewEmail) ) ? '' : wfMsg( 'editaccount-email-change-requested', $optionNewEmail ) ;
 
 			// emailStatus is the status of the email in the "Set new email address" field
@@ -219,13 +226,18 @@ class EditAccount extends SpecialPage {
 					'userRealName' => $this->mUser->getRealName(),
 					'userId'  => $this->mUser->getID(),
 					'userReg' => date( 'r', strtotime( $this->mUser->getRegistration() ) ),
-					'isUnsub' => $this->mUser->getOption('unsubscribed'),
-					'isDisabled' => $this->mUser->getOption('disabled'),
+					'isUnsub' => $this->mUser->getGlobalPreference('unsubscribed'),
+					'isDisabled' => $this->mUser->getGlobalFlag('disabled'),
 					'isClosureRequested' => $this->isClosureRequested(),
-					'isAdopter' => $this->mUser->getOption('AllowAdoption', 1 ),
+					'isAdopter' => $this->mUser->getGlobalFlag('AllowAdoption', 1 ),
 					'userStatus' => $userStatus,
 					'emailStatus' => $emailStatus,
 					'changeEmailRequested' => $changeEmailRequested,
+					'mailLogLink' => Linker::linkKnown(
+						SpecialPage::getTitleFor( 'EditAccount', 'log' ),
+						"Mail change log",	// TODO: i18n this
+						array(),			// attribs
+						array('user_id' => $this->mUser->getID())),
 				) );
 		}
 
@@ -240,15 +252,14 @@ class EditAccount extends SpecialPage {
 	 * @return Boolean: true on success, false on failure (i.e. if we were given an invalid email address)
 	 */
 	function setEmail( $email, $changeReason = '' ) {
-		$oldEmail = $this->mUser->getEmail();
 		if ( Sanitizer::validateEmail( $email ) || $email == '' ) {
 			$this->mUser->setEmail( $email );
 			if ( $email != '' ) {
 				UserLoginHelper::removeNotConfirmedFlag( $this->mUser );
 				$this->mUser->confirmEmail();
-				$this->mUser->setOption( 'new_email', null );
+				$this->mUser->clearNewEmail();
 			} else {
-				if ( $this->mUser->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
+				if ( $this->mUser->getGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
 					// User not confirmed on signup can't has empty email
 					// @TODO introduce new message since usecase here is same as temp user empty email but it's not temp user anymore
 					$this->mStatusMsg = wfMsg( 'editaccount-error-tempuser-email' );
@@ -437,7 +448,7 @@ class EditAccount extends SpecialPage {
 	 */
 	function clearUnsubscribe() {
 		global $wgExternalAuthType;
-		$this->mUser->setOption( 'unsubscribed', null );
+		$this->mUser->setGlobalPreference( 'unsubscribed', null );
 		$this->mUser->saveSettings();
 
 		// delete the record from all the secondary clusters
@@ -457,8 +468,8 @@ class EditAccount extends SpecialPage {
 	 * @return Boolean: true
 	 */
 	function clearDisable() {
-		$this->mUser->setOption( 'disabled', null );
-		$this->mUser->setOption( 'disabled_date', null );
+		$this->mUser->setGlobalFlag( 'disabled', null );
+		$this->mUser->setGlobalAttribute( 'disabled_date', null );
 		$this->mUser->setRealName( '' );
 		$this->mUser->saveSettings();
 
@@ -468,7 +479,7 @@ class EditAccount extends SpecialPage {
 	}
 
 	function toggleAdopterStatus() {
-		$this->mUser->setOption( 'AllowAdoption', (int) !$this->mUser->getOption( 'AllowAdoption', 1 ) );
+		$this->mUser->setGlobalFlag( 'AllowAdoption', (int) !$this->mUser->getGlobalFlag( 'AllowAdoption', 1 ) );
 		$this->mUser->saveSettings();
 
 		$this->mStatusMsg = wfMsg( 'editaccount-success-toggleadopt', $this->mUser->mName );
@@ -517,5 +528,41 @@ class EditAccount extends SpecialPage {
 		// This suffix shouldn't reduce the entropy of the intentionally scrambled password.
 		$REQUIRED_CHARS = "A1a";
 		return (wfGenerateToken() . $REQUIRED_CHARS);
+	}
+
+	public function displayLogData() {
+		global $wgExternalSharedDB, $wgOut, $wgRequest;
+
+		$user_id = $wgRequest->getInt('user_id', 0);
+		$user_name = "Not found";
+		$rows = [];
+
+		if ( $wgExternalSharedDB && $user_id ) {
+			$user_name = User::newFromID($user_id);
+
+			$dbr = wfGetDB ( DB_SLAVE, array(), $wgExternalSharedDB );
+			$res = $dbr->select (
+				'user_email_log',			// from
+				["*"],						// cols
+				['user_id' => $user_id],	// where
+				__METHOD__,
+				["ORDER BY" => "changed_at DESC"]	// options
+				);
+			while ( $row = $dbr->fetchObject( $res ) ) {
+				$row->changed_by_name = User::newFromId($row->changed_by_id);
+				$rows[] = $row;
+			}
+		}
+
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+
+		$oTmpl->set_Vars( [
+			'userName' => $user_name,
+			'returnURL' => $this->getTitle()->getFullURL(),
+			'rows' => $rows
+			]
+		);
+
+		$wgOut->addHTML( $oTmpl->render( "changelog" ) );
 	}
 }

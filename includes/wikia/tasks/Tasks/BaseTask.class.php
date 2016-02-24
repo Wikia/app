@@ -96,12 +96,17 @@ abstract class BaseTask {
 			throw new \InvalidArgumentException;
 		}
 
+		$then = microtime( true );
 
 		try {
 			$result = call_user_func_array( [$this, $method], $args );
 		} catch ( \Exception $e ) {
 			$result = $e;
 		}
+
+		$this->info( 'BaseTask::execute', [
+			'took' => microtime( true ) - $then, // [sec]
+		] );
 
 		return $result;
 	}
@@ -143,6 +148,12 @@ abstract class BaseTask {
 	 * @return string|array the task's id or array of such IDs if the given wikiID is an array
 	 */
 	public function queue() {
+		$this->info( 'BaseTask::queue', [
+			'task' => get_class( $this ),
+			'caller' => wfGetCallerClassMethod( __CLASS__ ),
+			'backtrace' => new \Exception()
+		] );
+
 		$taskLists = $this->convertToTaskLists();
 		$taskIds = AsyncTaskList::batch( $taskLists );
 
@@ -378,16 +389,29 @@ abstract class BaseTask {
 	/**
 	 * queue a set of BaseTask objects
 	 *
-	 * @param array $tasks
+	 * @param BaseTask[] $tasks
 	 * @return array task ids
 	 */
 	public static function batch( array $tasks ) {
+		if ( count( $tasks ) === 0 ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'BaseTask::batch', [
+				'exception' => new \Exception('Tasks list is empty')
+			] );
+
+			return [];
+		}
+
 		$taskLists = [];
 
 		foreach ( $tasks as $task ) {
-			/** @var BaseTask $task $taskLists */
 			$taskLists = array_merge( $taskLists, $task->convertToTaskLists() );
 		}
+
+		\Wikia\Logger\WikiaLogger::instance()->info( 'BaseTask::batch', [
+			'count' => count( $taskLists ),
+			'task' => get_class( reset( $taskLists ) ),
+			'backtrace' => new \Exception()
+		] );
 
 		return AsyncTaskList::batch( $taskLists );
 	}

@@ -48,7 +48,7 @@ class CreateNewWikiController extends WikiaController {
 		asort( $languages );
 		$this->aLanguages = $languages;
 
-		$useLang = $wgRequest->getVal('uselang', $wgUser->getOption( 'language' ));
+		$useLang = $wgRequest->getVal('uselang', $wgUser->getGlobalPreference( 'language' ));
 
 		// squash language dialects (same wiki language for different dialects)
 		$useLang = $this->squashLanguageDialects($useLang);
@@ -211,9 +211,13 @@ class CreateNewWikiController extends WikiaController {
 
 	/**
 	 * Ajax call to Create wiki
+	 *
+	 * @throws BadRequestException
 	 */
 	public function CreateWiki() {
 		wfProfileIn(__METHOD__);
+		$this->checkWriteRequest();
+
 		$wgRequest = $this->app->getGlobal('wgRequest'); /* @var $wgRequest WebRequest */
 		$wgDevelDomains = $this->app->getGlobal('wgDevelDomains');
 		$wgUser = $this->app->getGlobal('wgUser'); /* @var $wgUser User */
@@ -319,6 +323,10 @@ class CreateNewWikiController extends WikiaController {
 				$this->status = 'backenderror';
 				$this->statusMsg = wfMessage( 'cnw-error-general' )->parse();
 				$this->statusHeader = wfMessage( 'cnw-error-general-heading' )->escaped();
+
+				$this->errClass = get_class( $ex );
+				$this->errCode = $ex->getCode();
+				$this->errMessage = $ex->getMessage();
 
 				$this->error('CreateWiki: failed to create new wiki', [
 					'code' => $error_code,

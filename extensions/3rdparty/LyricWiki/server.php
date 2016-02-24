@@ -453,9 +453,9 @@ if(!$funcsOnly){
 	wfDebug("LWSOAP: Done setting up SOAP functions, about to process...\n");
 
 	// Use the request to (try to) invoke the service
-	$HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : '';
+	$rawPostData = file_get_contents("php://input"); // preferred to HTTP_RAW_POST_DATA in PHP 5.6+
 	wfDebug("LWSOAP: Dispatching to the ->service().\n");
-	$server->service($HTTP_RAW_POST_DATA);
+	$server->service($rawPostData);
 	wfDebug("LWSOAP: Returned from ->service().");
 
 	// If the script took a long time to run, log it here.
@@ -466,7 +466,7 @@ if(!$funcsOnly){
 			if(is_writable($fileName)){
 				error_log(date("Y-m-d H:i:s")." - $scriptTime - ".$_SERVER['REQUEST_URI']."\n", 3, $fileName);
 				ob_start();
-				print_r($HTTP_RAW_POST_DATA);
+				print_r($rawPostData);
 				error_log(ob_get_clean(), 3, $fileName);
 			} else {
 				error_log("File not writable: \"$fileName\"", 1, "sean.colombo@gmail.com");
@@ -1028,25 +1028,14 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 					lw_soapStats_logHit($resultFound, $reqType);
 				}
 
-				// SWC 20101209 - Now we allow our own apps to get full lyrics, but the request has to be cryptographically signed so that others can't do the same thing.
-				// NOTE: The value of the fullApiAuth param for the request must be the md5 hash of the concatenation of wgFullLyricWikiApiToken, the artist, and the song.
-				$fullApiAuth = $wgRequest->getVal("fullApiAuth");
-				if(!empty($fullApiAuth)){
-					global $wgFullLyricWikiApiToken;
-					print (!$debug?"":"Comparing token against artist: $artist\n");
-					print (!$debug?"":"Comparing token against song: $song\n");
-
-					$expectedSig = md5($wgFullLyricWikiApiToken . "$origArtist$origSong");
-					if($expectedSig == $fullApiAuth){
-						$allowFullLyrics = true;
-					}
-				}
-
 				// Determine if this result was from the takedown list (must be done before truncating to a snippet, below).
 				$retVal['isOnTakedownList'] = (0 < preg_match("/\{\{(gracenote|lyricfind)[ _]takedown\}\}/", $retVal['lyrics']));
 
 				// SWC 20090802 - Neuter the actual lyrics :( - return an explanation with a link to the LyricWiki page.
 				// SWC 20091021 - Gil has determined that up to 17% of the lyrics can be returned as fair-use - we'll stick with 1/7th (about 14.3%) of the characters for safety.
+				// SWC 20151006 - allowFullLyrics is not likely to be true anymore. That was a previous feature to allow the original LyricWiki app (from 2010) to access
+				// lyrics. The newer LyricWiki app (Lyrically) does NOT use this feature, it uses its own API. To see the code which handled the signature, roll back the commit
+				// in which this comment appeared.
 				if(!$allowFullLyrics){
 					if(($retVal['lyrics'] != $defaultLyrics) && ($retVal['lyrics'] != $instrumental) && ($retVal['lyrics'] != "")){
 						$urlLink = "\n\n<a href='".$retVal['url']."'>".$retVal['artist'].":".$retVal['song']."</a>";
@@ -2126,7 +2115,7 @@ function lw_tracksToWiki($artistName, $songs){
 ////
 function lw_fmtArtist($artist){
 	$retVal = rawurldecode(ucwords($artist));
-	$retVal = preg_replace('/([-\("\.])([a-z])/e', '"$1".strtoupper("$2")', $retVal);
+	$retVal = preg_replace_callback('/([-\("\.])([a-z])/', function($m){ return $m[1].strtoupper($m[2]); }, $retVal);
 	$retVal = str_replace(" ", "_", $retVal);
 	return $retVal;
 } // end lw_fmtArtist()
@@ -2140,8 +2129,8 @@ function lw_fmtAlbum($album,$year){
 // Returns the standardly formatted song name.
 ////
 function lw_fmtSong($song){
-	$retVal = rawurldecode(ucwords($song));
-	$retVal = preg_replace('/([-\("\.])([a-z])/e', '"$1".strtoupper("$2")', $retVal);
+	$retVal = ucwords(rawurldecode($song));
+	$retVal = preg_replace_callback('/([-\("\.])([a-z])/', function($m){ return $m[1].strtoupper($m[2]); }, $retVal);
 	$retVal = str_replace(" ", "_", $retVal);
 	return $retVal;
 } // end lw_fmtSong()
@@ -2181,10 +2170,10 @@ function lw_getTitle($artist, $song='', $applyUnicode=true, $allowAllCaps=true){
 	}
 
 	$title = str_replace("|", "/", $title); # TODO: Figure out if this is the right solution.
-	$title = preg_replace('/([-\("\.\/:_])([a-z])/e', '"$1".strtoupper("$2")', $title);
-	$title = preg_replace('/\b(O)[\']([a-z])/ei', '"$1".strtoupper("\'$2")', $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.  Does it to "O'Riley" but not "I'm" or "Don't"
-	$title = preg_replace('/( \()[\']([a-z])/ei', '"$1".strtoupper("\'$2")', $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.
-	$title = preg_replace('/ [\']([a-z])/ei', '" ".strtoupper("\'$1")', $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.
+	$title = preg_replace_callback('/([-\("\.\/:_])([a-z])/', function($m){ return $m[1].strtoupper($m[2]); }, $title);
+	$title = preg_replace_callback('/\b(O)[\']([a-z])/i', function($m){ return $m[1].strtoupper("'".$m[2]); }, $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.  Does it to "O'Riley" but not "I'm" or "Don't"
+	$title = preg_replace_callback('/( \()[\']([a-z])/i', function($m){ return $m[1].strtoupper("'".$m[2]); }, $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.
+	$title = preg_replace_callback('/ [\']([a-z])/i', function($m){ return " ".strtoupper("'".$m[1]); }, $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.
 	$title = strtr($title, " ", "_"); // Warning: multiple-byte substitutions don't seem to work here, so smart-quotes can't be fixed in this line.
 
 	// Naming conventions. See: http://www.lyricwiki.org/LyricWiki:Page_names
@@ -2379,7 +2368,7 @@ function login($username, $password) {
 				} else {
 					$r = 0;
 				}
-				$u->setOption( 'rememberpassword', $r );
+				$u->setGlobalPreference( 'rememberpassword', $r );
 				$wgAuth->updateUser( $u );
 				$wgUser = $u;
 				$wgUser->setCookies();

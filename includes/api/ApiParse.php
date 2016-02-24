@@ -204,6 +204,18 @@ class ApiParse extends ApiBase {
 			$result_array['redirects'] = $redirValues;
 		}
 
+		/* Wikia Change Starts */
+		if ( !( $p_result instanceof ParserOutput ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				'ApiParse no ParserOutput',
+				[ 'pageTitle' => $title ]
+			);
+
+			// generate empty parser output to support code working on it
+			$p_result = new ParserOutput('');
+		}
+		/* Wikia Change Ends */
+
 		if ( isset( $prop['text'] ) ) {
 			$result_array['text'] = array();
 			$result->setContent( $result_array['text'], $p_result->getText() );

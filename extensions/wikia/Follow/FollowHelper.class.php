@@ -1,137 +1,199 @@
 <?php
-/*
+/**
  * Author: Tomek Odrobny
  * Helper function for extension hook etc.
  */
 
 class FollowHelper {
 
+	const LOG_ACTION_BLOG_POST = 'blogpost';
+	const LOG_ACTION_CATEGORY_ADD = 'categoryadd';
+	const MAX_WATCHERS_PER_JOB = 1000;
+
 	/**
-	 * watchCategory -- static hook/entry for foolow article category
+	 * watchCategory -- static hook/entry for follow article category
 	 *
-	 * @static
-	 * @access public
-	 *
+	 * @param $categoryInserts
+	 * @param $categoryDeletes
+	 * @param $title
 	 *
 	 * @return bool
 	 */
-	static public function watchCategories($categoryInserts, $categoryDeletes, $title) {
+	static public function watchCategories( $categoryInserts, $categoryDeletes, $title ) {
 		global $wgUser;
-		wfProfileIn( __METHOD__ );
-		if ( empty($categoryInserts) ) {
-			wfProfileOut( __METHOD__ );
+
+		if ( empty( $categoryInserts ) ) {
 			return true;
 		}
 
-		$action = "categoryadd";
-		$catList = array_keys($categoryInserts);
+		$action = self::LOG_ACTION_CATEGORY_ADD;
+		$catList = array_keys( $categoryInserts );
 
 		$queryIn = "";
-		foreach ($catList as $value) {
+		foreach ( $catList as $value ) {
 			$queryIn[] = $value;
 		}
 
-		self::emailNotification($title, $queryIn, NS_CATEGORY, $wgUser, $action, wfMsg('follow-categoryadd-summary'));
+		self::emailNotification( $title, $queryIn, NS_CATEGORY, $wgUser, $action, wfMsg( 'follow-categoryadd-summary' ) );
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	/**
-	 * emailNotification -- sent Notification for all related article  ,
+	 * emailNotification -- sent Notification for all related article
 	 *
-	 * @static
-	 * @access public
+	 * @param Title $childTitle
+	 * @param array $list
+	 * @param string $namespace
+	 * @param User $user
+	 * @param string $action
+	 * @param string $message
 	 *
-	 *
-	 * @return bool
+	 * @throws MWException
 	 */
-	public static function emailNotification($childTitle, $list, $namespace, $user, $action, $message) {
-		global $wgTitle;
+	public static function emailNotification( $childTitle, $list, $namespace, $user, $action, $message ) {
 
-		wfProfileIn( __METHOD__ );
-
-		if ( count($list) < 1 ) {
-			wfProfileOut( __METHOD__ );
-			return true;
+		if ( count( $list ) < 1 ) {
+			return;
 		}
 
-		$dbw = wfGetDB( DB_SLAVE );
-		$queryIn = array();
-		foreach ($list as $value) {
-			$queryIn[] = $dbw->addQuotes( $value ) ;
+		$watcherSQL = self::getWatcherSQL( $user->getId(), $namespace, $list, $action );
+		$watcherSets = self::getWatcherSets( $watcherSQL );
+
+		if ( empty( $watcherSets ) ) {
+			return;
 		}
 
-		/* Wikia change begin - @author: wladek */
-		/* RT#55604: Add a timeout to the watchlist email block */
+		$wg = \F::app()->wg;
+		foreach ( $watcherSets as $watchers ) {
+			$task = new FollowEmailTask();
+			$task->title( $childTitle );
+			$task->wikiId( $wg->CityId );
+			$task->call(
+				'emailFollowNotifications',
+				$wg->User->getId(),
+				$watchers,
+				$user->getId(),
+				$namespace,
+				$message,
+				$action
+			);
 
-	 	global $wgEnableWatchlistNotificationTimeout, $wgWatchlistNotificationTimeout;
-
-		$now = wfTimestampNow();
-	  	if ( !empty($wgEnableWatchlistNotificationTimeout) && isset($wgWatchlistNotificationTimeout) ) { // not using !empty() to allow setting integer value 0
-			$blockTimeout = wfTimestamp(TS_MW,wfTimestamp(TS_UNIX,$now) - intval($wgWatchlistNotificationTimeout) );
-			$notificationTimeoutSql = "(wl_notificationtimestamp IS NULL OR wl_notificationtimestamp < '$blockTimeout')";
-		} else {
-			$notificationTimeoutSql = "wl_notificationtimestamp IS NULL";
+			$task->queue();
 		}
-
-		if($action == "blogpost") {
-			$notificationTimeoutSql = "1";
-		}
-
-		$res = $dbw->select( array( 'watchlist' ),
-				array( 'wl_user, wl_title' ),
-				array(
-					'wl_user != ' . intval( $user->getID() ),
-					'wl_namespace' => $namespace ,
-					'wl_title in('.implode(",",$queryIn).') ',
-					$notificationTimeoutSql
-				),
-		__METHOD__ );
-
-		$watchers = array();
-		while ($row = $dbw->fetchObject( $res ) ) {
-			if ( empty($watchers[$row->wl_title]) ) {
-				$watchers[$row->wl_title] = array( $row->wl_user );
-			} else {
-				if( in_array($row->wl_user, $watchers[$row->wl_title]) ) {
-					$watchers[$row->wl_title][] = $row->wl_user;
-				}
-			}
-		}
-
-		/**
-		 * Selecting all watching users took to long
-		 * and was causing timeouts. It's been moved to a task.
-		 * @see CE-1239 by adamk@wikia-inc.com
-		 */
-		if ( !empty( $watchers ) ) {
-			$oTask = new FollowEmailTask();
-			$oTask->title( $childTitle );
-			$oTask->wikiId( F::app()->wg->CityId );
-			$oTask->call( 'emailFollowNotifications', $watchers, $user->getId(), $namespace, $message, $action );
-			$oTask->queue();
-		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * Create and return arrays of at most MAX_WATCHERS_PER_JOB watchers
+	 *
+	 * @param WikiaSQL $watcherSQL
+	 *
+	 * @return array
+	 */
+	private static function getWatcherSets( WikiaSQL $watcherSQL ) {
+		$currentPage = 0;
+		$watcherCount = 0;
 
-	/*
+		$watcherSets = $watcherSQL->runLoop(
+			wfGetDB( DB_SLAVE ),
+			function ( &$watcherSets, stdClass $row ) use ( &$currentPage, &$watcherCount ) {
+				$title = $row->wl_title;
+				$user = $row->wl_user;
+				$watcherSets[$currentPage][$title][] = $user;
+
+				$watcherCount++;
+				if ( ( $watcherCount % self::MAX_WATCHERS_PER_JOB ) === 0 ) {
+					$currentPage++;
+				}
+			}
+		);
+
+		return $watcherSets;
+	}
+
+	/**
+	 * Generate the WikiaSQL object needed to select all the watchers
+	 *
+	 * @param int $userId
+	 * @param string $namespace
+	 * @param array $list
+	 *
+	 * @return WikiaSQL
+	 */
+	private static function getWatcherSQL( $userId, $namespace, $list, $action ) {
+		/** @var WikiaSQL $watcherSQL */
+		$watcherSQL = ( new WikiaSQL() )
+			->SELECT( 'wl_user', 'wl_title' )
+			->FROM( 'watchlist' )
+			->WHERE( 'wl_user' )->NOT_EQUAL_TO( $userId )
+			->AND_( 'wl_namespace' )->EQUAL_TO( $namespace )
+			->AND_( 'wl_title' )->IN( $list );
+
+		self::addAnyTimeStampCondition( $watcherSQL, $action );
+
+		return $watcherSQL;
+	}
+
+	private static function addAnyTimeStampCondition( WikiaSQL $watcherSQL, $action ) {
+		// Skip any timestamp checking if this is a blog post
+		if ( $action == self::LOG_ACTION_BLOG_POST ) {
+			return;
+		}
+
+		$timeAgo = self::getTimeBoundary();
+		if ( !empty( $timeAgo ) ) {
+			$orCondition = "(wl_notificationtimestamp IS NULL OR wl_notificationtimestamp < '$timeAgo')";
+			$watcherSQL->AND_( $orCondition );
+		} else {
+			$watcherSQL->AND_( 'wl_notificationtimestamp' )->IS_NULL();
+		}
+
+		return;
+	}
+
+	/**
+	 * Determine if we should also look at notifications with a timestamp and if so
+	 * how new should they be
+	 *
+	 * RT#55604
+	 *
+	 * @author: wladek
+	 * @throws MWException
+	 *
+	 * @return null|string
+	 */
+	private static function getTimeBoundary() {
+		$wg = \F::app()->wg;
+
+		// This only matters if we have the notification timeout feature enabled
+		if ( empty( $wg->EnableWatchlistNotificationTimeout ) ) {
+			return null;
+		}
+
+		// Only do something if a timeout has been set (zero is allowed here)
+		if ( !isset( $wg->WatchlistNotificationTimeout ) ) {
+			return null;
+		}
+
+		$timeAgoSecs = time() - intval( $wg->WatchlistNotificationTimeout );
+		return wfTimestamp( TS_MW, $timeAgoSecs );
+	}
+
+	/**
 	 * blogListingBuildRelation - hook after save of blogListing create relations in table
 	 *
-	 * @static
-	 * @access public
-	 *
+	 * @param string $title
+	 * @param array $cat
+	 * @param array $users
 	 *
 	 * @return bool
+	 * @throws DBUnexpectedError
 	 */
-	static public function blogListingBuildRelation($title, $cat, $users){
-		wfProfileIn( __METHOD__ );
+	static public function blogListingBuildRelation( $title, $cat, $users ) {
 		$dbw = wfGetDB( DB_MASTER );
 
-		$exploded = explode(":", $title);
-		if(count($exploded) > 1) {
+		$exploded = explode( ":", $title );
+		if ( count( $exploded ) > 1 ) {
 			$title =  $exploded[1];
 		}
 
@@ -139,56 +201,65 @@ class FollowHelper {
 		$title =  $title->getDBKey();
 
 		$dbw->begin();
-		$dbw->delete( 'blog_listing_relation', array( "blr_title = ". $dbw->addQuotes( $title ) ) );
+		$dbw->delete( 'blog_listing_relation', array( "blr_title = " . $dbw->addQuotes( $title ) ) );
 
-		if ((!empty($cat)) && (is_array($cat)) ) {
-			foreach ($cat as $value) {
+		if ( !empty( $cat ) && is_array( $cat ) ) {
+			foreach ( $cat as $value ) {
 				$value = Title::makeTitle( NS_CATEGORY, $value );
 				$value = $value->getDBKey();
-				if( strlen($value) < 1 ) continue;
-				$dbw->insert('blog_listing_relation',
+				if ( strlen( $value ) < 1 ) continue;
+				$dbw->insert( 'blog_listing_relation',
 					array(
 						 'blr_relation' => $value,
 						 'blr_title' => $title ,
 		  				 'blr_type' => 'cat',
-				), __METHOD__);
+				), __METHOD__ );
 			}
 		}
 
-		if ((!empty($users)) && (is_array($users)) ) {
+		if ( !empty( $users ) && is_array( $users ) ) {
 
-			foreach ($users as $value) {
-				if( strlen(trim($value)) < 1 ) continue;
-				$dbw->insert('blog_listing_relation',
+			foreach ( $users as $value ) {
+				if ( strlen( trim( $value ) ) < 1 ) continue;
+				$dbw->insert( 'blog_listing_relation',
 					array(
 						 'blr_relation' => $value,
 						 'blr_title' => $title,
 		  				 'blr_type' => 'user',
-				), __METHOD__);
+				), __METHOD__ );
 			}
 		}
 		$dbw->commit();
-		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 
 	/**
-	 * saveListingRelation -- hook for ,
+	 * saveListingRelation -- hook
 	 *
-	 * @static
-	 * @access public
-	 *
+	 * @param Article $article
+	 * @param User $user
+	 * @param $text
+	 * @param $summary
+	 * @param $minor
+	 * @param $undef1
+	 * @param $undef2
+	 * @param $flags
+	 * @param $revision
+	 * @param $status
+	 * @param $baseRevId
 	 *
 	 * @return bool
 	 */
-	static public function watchBlogListing(&$article, &$user, $text, $summary, $minor, $undef1, $undef2, &$flags, $revision, &$status, $baseRevId ) {
-		if (!$status->value['new']){
+	static public function watchBlogListing( &$article, &$user, $text, $summary, $minor, $undef1, $undef2, &$flags, $revision, &$status, $baseRevId ) {
+		if ( !$status->value['new'] ) {
 			return true;
 		}
-		wfProfileIn( __METHOD__ );
+
+		$postTitle = $article->getTitle();
 
 		$dbw = wfGetDB( DB_SLAVE );
-		if (defined('NS_BLOG_ARTICLE') && $article->getTitle()->getNamespace() == NS_BLOG_ARTICLE ) {
+		if ( defined( 'NS_BLOG_ARTICLE' ) && $postTitle->getNamespace() == NS_BLOG_ARTICLE ) {
 			$cat =  array_keys( Wikia::getVar( 'categoryInserts' ) );
 			$catIn = array();
 
@@ -199,100 +270,120 @@ class FollowHelper {
 			$username = $user->getName();
 			$con = '';
 
-			if( count($catIn) > 0 ) {
-				$con .= '(blr_relation in('.implode(",",$catIn).') AND blr_type = "cat" ) OR ';
+			if ( count( $catIn ) > 0 ) {
+				$con .= '(blr_relation in(' . implode( ",", $catIn ) . ') AND blr_type = "cat" ) OR ';
 			}
-			$con .= '(blr_relation = "'. $dbw->addQuotes( $username ).'"  AND blr_type = "user" ) ';
+			$con .= '(blr_relation = "' . $dbw->addQuotes( $username ) . '"  AND blr_type = "user" ) ';
 
 			$res = $dbw->select( array( 'blog_listing_relation' ),
 					array( 'blr_title' ),
 					$con,
 					__METHOD__ );
 			$related = array();
-			while ($row = $dbw->fetchObject( $res ) ) {
-				//Bug fix  //
-				$exploded = explode(":", $row->blr_title);
-				if(count($exploded) > 1) {
+			while ( $row = $dbw->fetchObject( $res ) ) {
+				// Bug fix  //
+				$exploded = explode( ":", $row->blr_title );
+				if ( count( $exploded ) > 1 ) {
 					$title =  $exploded[1];
 				} else {
 					$title = $row->blr_title;
 				}
 				$title = Title::makeTitle( NS_BLOG_LISTING, $title );
-				$related[] = ucfirst($title->getDBKey());
+				$related[] = ucfirst( $title->getDBKey() );
 			}
-			self::emailNotification($article->getTitle(), $related, NS_BLOG_LISTING, $user, "blogpost", wfMsg('follow-bloglisting-summary'));
+
+			self::emailNotification(
+				$postTitle,
+				$related,
+				NS_BLOG_LISTING,
+				$user,
+				self::LOG_ACTION_BLOG_POST,
+				wfMessage( 'follow-bloglisting-summary' )->text()
+			);
+
+			$userBlogTitleText = $postTitle->getBaseText();
+			$userBlogTitle = Title::makeTitle( NS_BLOG_ARTICLE, $userBlogTitleText );
+			if ( $userBlogTitle->exists() ) {
+				$userBlog[] = ucfirst( $userBlogTitle->getDBKey() );
+
+				self::emailNotification(
+					$postTitle,
+					$userBlog,
+					NS_BLOG_ARTICLE,
+					$user,
+					self::LOG_ACTION_BLOG_POST,
+					wfMessage( 'follow-bloglisting-summary' )->text()
+				);
+			}
 		}
-		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 
-
-	/*
+	/**
 	 * Add link to Special:MyHome in Monaco user menu
 	 *
 	 * TODO: remove when support for Monaco will be finished
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
+	 *
+	 * @param $skin
+	 * @param $tpl
+	 * @param $custom_user_data
+	 *
+	 * @return bool
 	 */
-	public static function addToUserMenu($skin, $tpl, $custom_user_data) {
-		wfProfileIn(__METHOD__);
+	public static function addToUserMenu( $skin, $tpl, $custom_user_data ) {
 
 		// don't touch anon users
 		global $wgUser;
-		if ($wgUser->isAnon()) {
-			wfProfileOut(__METHOD__);
+		if ( $wgUser->isAnon() ) {
 			return true;
 		}
 
 		$skin->data['userlinks']['watchlist'] = array(
-			'text' =>  wfMsg('wikiafollowedpages-special-title-userbar'),
-			'href' => Skin::makeSpecialUrl('following'),
+			'text' =>  wfMsg( 'wikiafollowedpages-special-title-userbar' ),
+			'href' => Skin::makeSpecialUrl( 'following' ),
 		);
 
-		wfProfileOut(__METHOD__);
 		return true;
 	}
 
-	/*
+	/**
 	 * Add link to user dropdown in Oasis
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
+	 *
+	 * @param $personal_urls
+	 * @param $title
+	 *
+	 * @return bool
 	 */
-	public static function addPersonalUrl(&$personal_urls, &$title) {
-		wfProfileIn(__METHOD__);
-
+	public static function addPersonalUrl( &$personal_urls, &$title ) {
 		// don't touch anon users
 		global $wgUser;
-		if ($wgUser->isAnon()) {
-			wfProfileOut(__METHOD__);
+		if ( $wgUser->isAnon() ) {
 			return true;
 		}
 
 		// only for Oasis users
 		// replace 'watchlist' with 'followed pages'
-		if (get_class(RequestContext::getMain()->getSkin()) == 'SkinOasis') {
+		if ( get_class( RequestContext::getMain()->getSkin() ) == 'SkinOasis' ) {
 			$personal_urls['watchlist'] = array(
-				'text' =>  wfMsg('wikiafollowedpages-special-title-userbar'),
-				'href' => Skin::makeSpecialUrl('following'),
+				'text' =>  wfMsg( 'wikiafollowedpages-special-title-userbar' ),
+				'href' => Skin::makeSpecialUrl( 'following' ),
 			);
 		}
-		wfProfileOut(__METHOD__);
 		return true;
 	}
-
 
 	/**
 	 * showAll -- ajax function to show all feeds on follow list
 	 *
-	 * @static
-	 * @access public
-	 *
-	 *
 	 * @return bool
 	 */
-	static public function showAll(){
+	static public function showAll() {
 		global $wgRequest, $wgUser;
-		wfProfileIn(__METHOD__);
 
 		$user_id = $wgRequest->getVal( 'user_id' );
 		$head = $wgRequest->getVal( 'head' );
@@ -300,11 +391,10 @@ class FollowHelper {
 
 		$response = new AjaxResponse();
 
-		$user = User::newFromId($user_id);
-		if ( empty($user) || $user->getOption('hidefollowedpages') ) {
-			if( $user->getId() != $wgUser->getId() ) {
-				$response->addText( wfMsg('wikiafollowedpages-special-hidden') );
-				wfProfileOut(__METHOD__);
+		$user = User::newFromId( $user_id );
+		if ( empty( $user ) || $user->getGlobalPreference( 'hidefollowedpages' ) ) {
+			if ( $user->getId() != $wgUser->getId() ) {
+				$response->addText( wfMsg( 'wikiafollowedpages-special-hidden' ) );
 				return $response;
 			}
 		}
@@ -312,7 +402,7 @@ class FollowHelper {
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$template->set_vars(
 			array (
-				"data" 	=> FollowModel::getWatchList( $user_id, $from, FollowModel::$ajaxListLimit ,$head ),
+				"data" => FollowModel::getWatchList( $user_id, $from, FollowModel::$ajaxListLimit , $head ),
 				"owner" => $wgUser->getId() == $user_id,
 				"user_id" =>  $user_id,
 				"more" => true,
@@ -322,35 +412,32 @@ class FollowHelper {
 		$text = $template->render( "followedPages" );
 
 		$response->addText( $text );
-		wfProfileOut(__METHOD__);
 		return $response;
 	}
 
 	/**
 	 * renderFollowPrefs -- render prefs
 	 *
-	 * @static
-	 * @access public
-	 *
+	 * @param User $user
+	 * @param $defaultPreferences
 	 *
 	 * @return bool
 	 */
-	static public function renderFollowPrefs(User $user, &$defaultPreferences) {
+	static public function renderFollowPrefs( User $user, &$defaultPreferences ) {
 		global $wgUseRCPatrol, $wgEnableAPI, $wgJsMimeType, $wgExtensionsPath, $wgOut, $wgUser;
-		wfProfileIn(__METHOD__);
 
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Follow/js/ajax.js\"></script>\n");
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Follow/js/ajax.js\"></script>\n" );
 
 		$watchTypes = array(
 			'edit' => 'watchdefault'
 		);
 		// Kinda hacky
-		if( $user->isAllowed( 'createpage' ) || $user->isAllowed( 'createtalk' ) ) {
+		if ( $user->isAllowed( 'createpage' ) || $user->isAllowed( 'createtalk' ) ) {
 			$watchTypes['read'] = 'watchcreations';
 		}
 
-		foreach( $watchTypes as $action => $pref ) {
-			if( $user->isAllowed( $action ) ) {
+		foreach ( $watchTypes as $action => $pref ) {
+			if ( $user->isAllowed( $action ) ) {
 				$defaultPreferences[$pref] = array(
 					'type' => 'toggle',
 					'section' => 'watchlist/basic',
@@ -378,22 +465,20 @@ class FollowHelper {
 		);
 
 		global $wgEnableWallEngine, $wgEnableUserPreferencesV2Ext;
-		if($wgEnableWallEngine) {
-			if ($wgEnableUserPreferencesV2Ext) {
+		if ( $wgEnableWallEngine ) {
+			if ( $wgEnableUserPreferencesV2Ext ) {
 				$section = 'emailv2/email-wall-v2';
-				$messageWallmy = 'tog-enotifmywall-v2';
 				$messageWallthread = 'tog-enotifwallthread-v2';
 			}
 			else {
 				$section = 'watchlist/basic';
-				$messageWallmy = 'tog-enotifmywall';
 				$messageWallthread = 'tog-enotifwallthread';
 			}
 
-			//back compatybility
-			$option = $wgUser->getOption('enotifwallthread');
-			if(empty($option)){
-				$wgUser->setOption('enotifwallthread', WALL_EMAIL_NOEMAIL);
+			// back compatybility
+			$option = $wgUser->getGlobalPreference( 'enotifwallthread' );
+			if ( empty( $option ) ) {
+				$wgUser->setGlobalPreference( 'enotifwallthread', WALL_EMAIL_NOEMAIL );
 				$wgUser->saveSettings();
 			}
 
@@ -401,23 +486,22 @@ class FollowHelper {
 				'type' => 'select',
 				'section' => $section,
 				'options' => array(
-					wfMsg('tog-enotifmywall-every') => WALL_EMAIL_EVERY,
-					wfMsg('tog-enotifmywall-sincevisited') => WALL_EMAIL_SINCEVISITED,
+					wfMsg( 'tog-enotifmywall-every' ) => WALL_EMAIL_EVERY,
+					wfMsg( 'tog-enotifmywall-sincevisited' ) => WALL_EMAIL_SINCEVISITED,
 			//		wfMsg('tog-enotifmywall-reminder') => WALL_EMAIL_REMINDER,
-					wfMsg('tog-enotifmywall-noemail') => WALL_EMAIL_NOEMAIL
+					wfMsg( 'tog-enotifmywall-noemail' ) => WALL_EMAIL_NOEMAIL
 				),
 				'label-message' => $messageWallthread,
 			);
 		}
-
 
 		$watchTypes = array();
 
 		$watchTypes['move'] = 'watchmoves';
 		$watchTypes['delete'] = 'watchdeletion';
 
-		foreach( $watchTypes as $action => $pref ) {
-			if( $user->isAllowed( $action ) ) {
+		foreach ( $watchTypes as $action => $pref ) {
+			if ( $user->isAllowed( $action ) ) {
 				$defaultPreferences[$pref] = array(
 					'type' => 'toggle',
 					'section' => 'watchlist/advancedwatchlist',
@@ -426,8 +510,7 @@ class FollowHelper {
 			}
 		}
 
-
-		//wikiafollowedpages-prefs-watchlist
+		// wikiafollowedpages-prefs-watchlist
 
 		## Watchlist #####################################
 		$defaultPreferences['watchlistdays'] =
@@ -505,32 +588,29 @@ class FollowHelper {
 					);
 		}
 
-		wfProfileOut(__METHOD__);
 		return false;
 	}
 
 	/**
-	 * jsVars -- add java script varibale to html
+	 * jsVars -- add java script variable to html
 	 *
-	 * @static
-	 * @access public
-	 *
+	 * @param array $vars
 	 *
 	 * @return bool
 	 */
-	static public function jsVars(Array &$vars) {
+	static public function jsVars( Array &$vars ) {
 		$vars[ 'wgEnableWikiaFollowedPages' ] = true;
 		$vars[ 'wgFollowedPagesPagerLimit' ] = FollowModel::$specialPageListLimit;
 		$vars[ 'wgFollowedPagesPagerLimitAjax' ] = FollowModel::$ajaxListLimit;
 		return true;
 	}
 
-	static public function addExtraToggles($extraToggles) {
+	static public function addExtraToggles( $extraToggles ) {
 		$extraToggles[] = 'hidefollowedpages';
 		$extraToggles[] = 'enotiffollowedpages';
 		$extraToggles[] = 'enotiffollowedminoredits';
 		global $wgEnableWallExt;
-		if($wgEnableWallExt) {
+		if ( $wgEnableWallExt ) {
 			$extraToggles[] = 'enotifwallthread';
 			$extraToggles[] = 'enotifmywall';
 		}
@@ -538,58 +618,56 @@ class FollowHelper {
 	}
 
 	/**
-	 * getMasthead -- return mashead tab for fallowed pages
+	 * getMasthead -- return masthead tab for followed pages
 	 *
-	 * @static
-	 * @access public
+	 * @param $userspace
 	 *
-	 *
-	 * @return  array
+	 * @return array
+	 * @throws MWException
 	 */
-	static public function getMasthead($userspace) {
+	static public function getMasthead( $userspace ) {
 		global $wgUser;
-		if(($wgUser->getId() > 0) && ($wgUser->getName() == $userspace)) {
-			return array('text' => wfMsg('wikiafollowedpages-masthead'), 'href' => Title::newFromText("Following", NS_SPECIAL )->getLocalUrl(), 'dbkey' => 'Following', 'tracker' => 'following');
+		if ( ( $wgUser->getId() > 0 ) && ( $wgUser->getName() == $userspace ) ) {
+			return [
+				'text' => wfMsg( 'wikiafollowedpages-masthead' ),
+				'href' => Title::newFromText( "Following", NS_SPECIAL )->getLocalUrl(),
+				'dbkey' => 'Following',
+				'tracker' => 'following'
+			];
 		}
 		return null;
 	}
 
-
 	/**
-	 * renderUserProfile -- return mashead tab for fallowed pages
+	 * renderUserProfile -- return masthead tab for fallowed pages
 	 *
-	 * @static
-	 * @access public
+	 * @param $out
 	 *
-	 *
-	 * @return  array
+	 * @return array
 	 */
-	static public function renderUserProfile(&$out) {
-		global $wgTitle, $wgRequest, $wgOut, $wgExtensionsPath, $wgJsMimeType, $wgUser;
-		wfProfileIn(__METHOD__);
-		if( F::app()->checkSkin( 'wikiamobile' ) ){
-			wfProfileOut(__METHOD__);
+	static public function renderUserProfile( &$out ) {
+		global $wgTitle, $wgRequest, $wgOut, $wgExtensionsPath, $wgUser;
+
+		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 			return true;
 		}
 
-		if( ($wgUser->getId() != 0) && ($wgRequest->getVal( "hide_followed", 0) == 1) ) {
-			$wgUser->setOption( "hidefollowedpages", true );
+		if ( ( $wgUser->getId() != 0 ) && ( $wgRequest->getVal( "hide_followed", 0 ) == 1 ) ) {
+			$wgUser->setGlobalPreference( "hidefollowedpages", true );
 			$wgUser->saveSettings();
 		}
 
 		$key = $wgTitle->getDBKey();
 
-		if ( strlen($key) > 0 ) {
-			$user = User::newFromName($key);
+		if ( strlen( $key ) > 0 ) {
+			$user = User::newFromName( $key );
 
-			if ($user == null) {
-				wfProfileOut(__METHOD__);
+			if ( $user == null ) {
 				return true;
 			}
 
-			if($user->getId() == 0) {
-				//not a real user
-				wfProfileOut(__METHOD__);
+			if ( $user->getId() == 0 ) {
+				// not a real user
 				return true;
 			}
 		} else {
@@ -598,46 +676,39 @@ class FollowHelper {
 
 		// do not show Followed box on diffs
 		if ( $wgRequest->getVal( 'diff', null ) != null ) {
-			wfProfileOut(__METHOD__);
 			return true;
 		}
 
-		if( $user->getOption( "hidefollowedpages" ) ) {
-			wfProfileOut(__METHOD__);
+		if ( $user->getGlobalPreference( "hidefollowedpages" ) ) {
 			return true;
 		}
 
 		$data = FollowModel::getUserPageWatchList( $user->getId() );
 
-		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/Follow/css/userpage.css");
+		$wgOut->addExtensionStyle( "{$wgExtensionsPath}/wikia/Follow/css/userpage.css" );
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 
-		if ( count($data) == 0 ) $data = null;
-		/*
-		if ( count($data) > 5 ) {
-			$data2 = array_slice($data, 5 );
-			$data = array_slice($data, 0, 5);
-		} */
+		if ( count( $data ) == 0 ) $data = null;
 
 		// BugId:2643
 		$moreUrl = null;
-		if ($wgUser->getId() == $user->getId()) {
-			$specialPage = SpecialPage::getSafeTitleFor('Following', $user->getName());
-			if (!empty($specialPage)) {
+		if ( $wgUser->getId() == $user->getId() ) {
+			$specialPage = SpecialPage::getSafeTitleFor( 'Following', $user->getName() );
+			if ( !empty( $specialPage ) ) {
 				$moreUrl = $specialPage->getLocalUrl();
 			}
 		}
 
 		$template->set_vars(
 			array(
-				"isLogin" => ($wgUser->getId() == $user->getId() ),
+				"isLogin" => ( $wgUser->getId() == $user->getId() ),
 				"hideUrl" => $wgTitle->getFullUrl( "hide_followed=1" ),
 				"data" 	=> $data,
 				// show "more" only if wathing own user page
 				"moreUrl" => $moreUrl,
 			)
 		);
-		wfProfileOut(__METHOD__);
+
 		$out['followedPages'] = $template->render( "followedUserPage" );
 		return true;
 	}
@@ -645,42 +716,45 @@ class FollowHelper {
 	/**
 	 * MailNotifyBuildKeys -- return build keys for mail
 	 *
-	 * @static
-	 * @access public
+	 * @param $keys
+	 * @param $action
+	 * @param $other_param
 	 *
-	 *
-	 * @return  array
+	 * @return array
+	 * @throws MWException
 	 */
-	static public function mailNotifyBuildKeys(&$keys, $action, $other_param) {
+	static public function mailNotifyBuildKeys( &$keys, $action, $other_param ) {
 		global $wgEnableForumExt;
-		$actionsList = array('categoryadd', 'blogpost');
-		if (!in_array($action, $actionsList)) {
+		$actionsList = [ self::LOG_ACTION_CATEGORY_ADD, self::LOG_ACTION_BLOG_POST ];
+		if ( !in_array( $action, $actionsList ) ) {
 			return true;
 		}
 
 		$page = Title::newFromText( $keys['$PAGETITLE'] );
 
-		$keys['$PAGETITLE'] = $other_param['childTitle']->getPrefixedText();
-		$keys['$PAGETITLE_URL'] = $other_param['childTitle']->getFullUrl();
+		/** @var Title $childTitle */
+		$childTitle = $other_param['childTitle'];
 
-		if($action == 'categoryadd') {
+		$keys['$PAGETITLE'] = $childTitle->getPrefixedText();
+		$keys['$PAGETITLE_URL'] = $childTitle->getFullUrl();
+
+		if ( $action == self::LOG_ACTION_CATEGORY_ADD ) {
 			$keys['$CATEGORY_URL'] = $page->getFullUrl();
 			$keys['$CATEGORY'] = $page->getText();
 
 			// Format Forum thread URLs when added to category
 			if ( !empty( $wgEnableForumExt )
-				&& $other_param['childTitle']->getNamespace() === NS_WIKIA_FORUM_BOARD_THREAD
+				&& $childTitle->getNamespace() === NS_WIKIA_FORUM_BOARD_THREAD
 			) {
-				$title = $other_param['childTitle'];
-				$titleParts = explode( '/', $title->getPrefixedText() );
+				$titleParts = explode( '/', $childTitle->getPrefixedText() );
 
 				// Handle replies, can't use WallMessage::getTopParentObj as the comments
 				// index isn't updated yet
 				if ( strpos( $titleParts[count( $titleParts ) - 2], ARTICLECOMMENT_PREFIX ) === 0 ) {
 					$titleText = implode( '/', array_slice( $titleParts, 0, count( $titleParts ) - 1 ) );
-					$title = Title::newFromText( $titleText );
+					$childTitle = Title::newFromText( $titleText );
 				}
-				$wallMessage = WallMessage::newFromTitle( $title );
+				$wallMessage = WallMessage::newFromTitle( $childTitle );
 				$wallMessage->load();
 				$threadTitle = Title::newFromText( $wallMessage->getID(), NS_USER_WALL_MESSAGE );
 
@@ -690,7 +764,7 @@ class FollowHelper {
 			return true;
 		}
 
-		if($action == 'blogpost') {
+		if ( $action == self::LOG_ACTION_BLOG_POST ) {
 			$keys['$BLOGLISTING_URL'] = $page->getFullUrl();
 			$keys['$BLOGLISTING'] = $page->getText();
 			return true;
@@ -699,27 +773,25 @@ class FollowHelper {
 		return true;
 	}
 
-
 	/**
 	 * categoryIndexer --  indexer for blog listing page used only one time by indexing script
 	 *
-	 * @static
-	 * @access public
+	 * @param CreateBlogListingPage $blogListing
+	 * @param $article
 	 *
-	 *
-	 * @return  bool
+	 * @return bool
 	 */
-	static public function categoryIndexer(&$self, $article) {
+	static public function categoryIndexer( &$blogListing, $article ) {
 		global $wgRequest;
-		if( $wgRequest->getVal("makeindex", 0) != 1 ) {
+		if ( $wgRequest->getVal( "makeindex", 0 ) != 1 ) {
 			return true;
 		}
 
-		if($article != null) {
-			$self->parseTag(urldecode( $article ));
+		if ( $article != null ) {
+			$blogListing->parseTag( urldecode( $article ) );
 			$cats = BlogTemplateClass::getCategoryNames();
-			if(count($cats) > 0) {
-				self::blogListingBuildRelation($article, $cats, array());
+			if ( count( $cats ) > 0 ) {
+				self::blogListingBuildRelation( $article, $cats, array() );
 			}
 		}
 		return true;

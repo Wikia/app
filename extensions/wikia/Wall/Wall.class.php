@@ -3,6 +3,7 @@
 class Wall extends WikiaModel {
 	const DESCRIPTION_CACHE_TTL = 3600;
 
+	/** @var  Title */
 	protected $mTitle;
 	protected $mCityId;
 
@@ -18,8 +19,8 @@ class Wall extends WikiaModel {
 	 * @return null|Wall
 	 */
 	static public function newFromId( $id, $flags = 0 ) {
-		$title = Title::newFromId($id, $flags);
-		if( empty($title) ) {
+		$title = Title::newFromId( $id, $flags );
+		if ( empty( $title ) ) {
 			return null;
 		}
 		return self::newFromTitle( $title );
@@ -31,30 +32,30 @@ class Wall extends WikiaModel {
 	 * @return null|Wall
 	 */
 	static public function newFromTitle( Title $title ) {
-		wfProfileIn(__METHOD__);
-		if(!($title instanceof Title)) {
-			wfProfileOut(__METHOD__);
+		wfProfileIn( __METHOD__ );
+		if ( !( $title instanceof Title ) ) {
+			wfProfileOut( __METHOD__ );
 			return null;
 		}
 
 		$wall = self::getEmpty();
 		$wall->mTitle = $title;
 		$wall->mCityId = F::app()->wg->CityId;
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $wall;
 	}
 
 	static public function newFromRelatedPages( Title $title, $relatedPageId ) {
-		wfProfileIn(__METHOD__);
-		if(!($title instanceof Title)) {
-			wfProfileOut(__METHOD__);
+		wfProfileIn( __METHOD__ );
+		if ( !( $title instanceof Title ) ) {
+			wfProfileOut( __METHOD__ );
 			return null;
 		}
 		$wall = self::getEmpty();
 		$wall->mTitle = $title;
 		$wall->mCityId = F::app()->wg->CityId;
-		$wall->mRelatedPageId = (int) $relatedPageId;
-		wfProfileOut(__METHOD__);
+		$wall->mRelatedPageId = (int)$relatedPageId;
+		wfProfileOut( __METHOD__ );
 		return $wall;
 	}
 
@@ -63,7 +64,7 @@ class Wall extends WikiaModel {
 	 */
 	static public function getEmpty() {
 		/* small work around for problem with static constructors and inheritance */
-		//TODO: Look in to Late Static Bindings
+		// TODO: Look in to Late Static Bindings
 		$className = get_called_class();
 		return new $className();
 	}
@@ -72,6 +73,9 @@ class Wall extends WikiaModel {
 		return $this->mTitle->getArticleId();
 	}
 
+	/**
+	 * @return \Title
+	 */
 	public function getTitle() {
 		return $this->mTitle;
 	}
@@ -82,9 +86,9 @@ class Wall extends WikiaModel {
 	 * @return string raw wikitext
 	 */
 	public function getRawDescription() {
+		/** @var Article $oArticle */
 		$oArticle = new Article( $this->getTitle() );
-
-		return $oArticle->getRawText();
+		return $oArticle->getPage()->getRawText();
 	}
 
 
@@ -95,12 +99,12 @@ class Wall extends WikiaModel {
 	 */
 	public function getDescriptionWithoutTemplates() {
 		$title = $this->getTitle();
-		$memcKey = wfMemcKey(__METHOD__, $title->getArticleID(), $title->getTouchedCached(), 'without_template');
-		$res = $this->wg->memc->get($memcKey);
-		if ( !is_string($res) ) {
+		$memcKey = wfMemcKey( __METHOD__, $title->getArticleID(), $title->getTouchedCached(), 'without_template' );
+		$res = $this->wg->memc->get( $memcKey );
+		if ( !is_string( $res ) ) {
 			$res = $this->getDescriptionParsed( true );
 
-			$this->wg->memc->set($memcKey, $res, self::DESCRIPTION_CACHE_TTL);
+			$this->wg->memc->set( $memcKey, $res, self::DESCRIPTION_CACHE_TTL );
 		}
 		return $res;
 	}
@@ -113,9 +117,10 @@ class Wall extends WikiaModel {
 	 *
 	 * @return string Parsed description.
 	 */
-	private function getDescriptionParsed( $bStripTemplates = false) {
+	private function getDescriptionParsed( $bStripTemplates = false ) {
 		wfProfileIn( __METHOD__ );
 
+		/** @var Article $oArticle */
 		$oArticle = new Article( $this->getTitle() );
 
 		$oApp = F::App();
@@ -124,41 +129,41 @@ class Wall extends WikiaModel {
 		// Functionality based on request https://wikia-inc.atlassian.net/browse/DAR-330
 		if ( $bStripTemplates ) {
 
-			$sSourceWithoutTemplates = trim( preg_replace( '/({{[^}]+}})/', '', $oArticle->getText() ) );
+			$sSourceWithoutTemplates = trim( preg_replace( '/({{[^}]+}})/', '', $oArticle->getPage()->getText() ) );
 
 			$oParserOut = $oApp->wg->Parser->parse( $sSourceWithoutTemplates, $oApp->wg->Title, $oParserOptions );
 
 		} else {
 			// just parse
-			$oParserOut = $oApp->wg->Parser->parse( $oArticle->getText(), $oApp->wg->Title, $oParserOptions );
+			$oParserOut = $oApp->wg->Parser->parse( $oArticle->getPage()->getText(), $oApp->wg->Title, $oParserOptions );
 		}
 
-		$aOutput = array();
+		$aOutput = [ ];
 		// Take the content out of an HTML P element and strip whitespace from the beginning and end.
 		$res = $oParserOut->getText();
 		if ( preg_match( '/^<p>\\s*(.*)\\s*<\/p>$/su', $res, $aOutput ) ) {
-			$res = $aOutput[1];
+			$res = $aOutput[ 1 ];
 		}
 
 		wfProfileOut( __METHOD__ );
 		return $res;
 	}
 
-	public function getDescription ( $bParse = true ) {
-		/** @var $title Title */
+	public function getDescription( $bParse = true ) {
+		/** @var Title $title */
 		$title = $this->getTitle();
-		$memcKey = wfmemcKey(__METHOD__,$title->getArticleID(),$title->getTouchedCached(), 'parsed');
-		$res = $this->wg->memc->get($memcKey);
-		if ( !is_string($res) ) {
+		$memcKey = wfmemcKey( __METHOD__, $title->getArticleID(), $title->getTouchedCached(), 'parsed' );
+		$res = $this->wg->memc->get( $memcKey );
+		if ( !is_string( $res ) ) {
 
 			if ( !$bParse ) {
 				$oArticle = new Article( $title );
-				return $oArticle->getText();
+				return $oArticle->getPage()->getText();
 			}
 
 			$res = $this->getDescriptionParsed( false );
 
-			$this->wg->memc->set($memcKey,$res,self::DESCRIPTION_CACHE_TTL);
+			$this->wg->memc->set( $memcKey, $res, self::DESCRIPTION_CACHE_TTL );
 		}
 		return $res;
 	}
@@ -168,21 +173,21 @@ class Wall extends WikiaModel {
 	}
 
 	public function getUser() {
-		return User::newFromName($this->mTitle->getBaseText(), false);
+		return User::newFromName( $this->mTitle->getBaseText(), false );
 	}
-	
+
 	public function exists() {
-		$id = (int) $this->getId();
-		if($id != 0) {
+		$id = (int)$this->getId();
+		if ( $id != 0 ) {
 			return true;
 		}
 		return false;
 	}
 
 	public function getUrl() {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 		$title = Title::newFromText( $this->getUser()->getName(), NS_USER_WALL );
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		if ( $title instanceof Title ) {
 			return $title->getFullUrl();
 		} else {
@@ -202,7 +207,7 @@ class Wall extends WikiaModel {
 	 * ask for parent_page_id equal 0
 	 */
 	protected function getWhere() {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		if ( empty( $this->mRelatedPageId ) ) {
 			$pageId = $this->mTitle->getArticleID();
@@ -217,7 +222,7 @@ class Wall extends WikiaModel {
 			$where = "comment_id in (select comment_id from wall_related_pages where page_id = {$this->mRelatedPageId})";
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $where;
 	}
 
@@ -226,30 +231,30 @@ class Wall extends WikiaModel {
 	 */
 
 	protected function getLast7daysOrder( $master = false ) {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
-		$out = array();
+		$out = [ ];
 		$where = $this->getWhere();
 
 		if ( $where ) {
 			$db = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 
-			$time = date ("Y-m-d H:i:s", time() - 24*7*60*60 ) ;
+			$time = date( "Y-m-d H:i:s", time() - 24 * 7 * 60 * 60 );
 
 			$res = $db->select(
-				array( 'comments_index' ),
-				array( 'parent_comment_id, count(*) as cnt' ),
-				array(
+				[ 'comments_index' ],
+				[ 'parent_comment_id, count(*) as cnt' ],
+				[
 					$where,
 					'parent_comment_id != 0',
 					"last_touched BETWEEN '$time' AND NOW()",
-				),
+				],
 				__METHOD__,
-				array(
+				[
 					'ORDER BY' => 'cnt desc',
 					'LIMIT' => 100,
 					'GROUP BY' => 'parent_comment_id'
-				)
+				]
 			);
 
 			while ( $row = $db->fetchObject( $res ) ) {
@@ -258,50 +263,50 @@ class Wall extends WikiaModel {
 		}
 
 
-		if(!empty($out)) {
+		if ( !empty( $out ) ) {
 			/* look a lit bit complicated but it is fast, tested on 150000 rows, we are expecing less then that. */
-			$ids = implode(',', $out);
+			$ids = implode( ',', $out );
 			$out = "CASE WHEN comment_id in (" . $ids . ") THEN Field(comment_id," . $ids . ")
 				ELSE 1e12 END asc, comment_id desc ";
 		} else {
 			$out = 'comment_id DESC';
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $out;
 	}
 
 	protected function getOrderBy() {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$this->getLast7daysOrder();
 
-		switch( $this->mSorting ) {
+		switch ( $this->mSorting ) {
 			case 'nt': // newest threads first
 			default:
-				wfProfileOut(__METHOD__);
+				wfProfileOut( __METHOD__ );
 				return 'comment_id desc';
 			case 'ot': // oldest threads first
-				wfProfileOut(__METHOD__);
+				wfProfileOut( __METHOD__ );
 				return 'comment_id asc';
 			case 'nr': // threads with newest reply first
-				wfProfileOut(__METHOD__);
+				wfProfileOut( __METHOD__ );
 				return 'last_child_comment_id desc';
 			case 'mr': // most replies in 7 days first
 				$out = $this->getLast7daysOrder();
-				wfProfileOut(__METHOD__);
+				wfProfileOut( __METHOD__ );
 				return $out;
 		}
 	}
 
 	public function getThreads( $page = 1, $master = false ) {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 		// get list of threads (article IDs) on Message Wall
 		$db = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 
-		$offset = ($page - 1)*$this->mMaxPerPage;
+		$offset = ( $page - 1 ) * $this->mMaxPerPage;
 
-		$out = array();
+		$out = [ ];
 		$where = $this->getWhere();
 
 		if ( $where ) {
@@ -316,8 +321,7 @@ class Wall extends WikiaModel {
 				LIMIT $offset, {$this->mMaxPerPage}
 			";
 
-			$res = $db->query( $query );
-
+			$res = $db->query( $query, __METHOD__ );
 
 
 			while ( $row = $db->fetchObject( $res ) ) {
@@ -325,12 +329,12 @@ class Wall extends WikiaModel {
 			}
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $out;
 	}
 
 	public function getThreadCount( $master = false ) {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 		$where = $this->getWhere();
 		if ( !$where ) {
 			$count = 0;
@@ -338,37 +342,37 @@ class Wall extends WikiaModel {
 			$db = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 
 			$count = $db->selectField(
-				array( 'comments_index' ),
-				array( 'count(distinct comment_id) cnt' ),
-				array(
+				[ 'comments_index' ],
+				[ 'count(distinct comment_id) cnt' ],
+				[
 					'parent_comment_id' => 0,
 					$where
-				),
+				],
 				__METHOD__
 			);
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $count;
 	}
 
-	public function moveAllThread(Wall $dest) {
+	public function moveAllThread( Wall $dest ) {
 		CommentsIndex::changeParent( $this->getId(), $dest->getId() );
 
 		$wallHistory = new WallHistory( $this->mCityId );
 		$wallHistory->moveThreads( $this->getId(), $dest->getId() );
 	}
-	
+
 	public function setMaxPerPage( $val ) {
- 		$this->mMaxPerPage = $val;
+		$this->mMaxPerPage = $val;
 	}
 
 	public function setSorting( $val ) {
- 		$this->mSorting = $val;
+		$this->mSorting = $val;
 	}
 
 	public function invalidateCache() {
-		//TODO: implent it
+		// TODO: implent it
 		return true;
 	}
 }

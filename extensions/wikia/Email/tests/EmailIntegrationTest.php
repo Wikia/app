@@ -6,37 +6,37 @@
  * @group Integration
  */
 class EmailIntegrationTest extends WikiaBaseTest {
+
+	const VIGNETTE_BASE_URL_PROD = 'http://vignette<SHARD>.wikia.nocookie.net';
+
 	function setUp() {
 		$this->setupFile = __DIR__ . '/../Email.setup.php';
-		include_once( __DIR__ . '/../../../../includes/HttpFunctions.php');
 		parent::setUp();
 	}
 
 	/**
-	 * We've hard-coded some image URLs into the HTML emails, so let's make sure they are where we expect them to be
-	 *
-	 * @param string $name Image identifier
-	 * @param string $url URL for accessing image
-	 * @dataProvider emailImagesDataProvider
+	 * Make sure all the images we're using exist
 	 */
-	public function testEmailImages( $name, $url ) {
-		$response = HTTP::get( $url );
-		$this->assertTrue($response !== false, "{$name} should return HTTP 200");
+	public function testEmailImages() {
+
+		$this->setVignetteEnvToProd();
+		$this->disableMemCache();
+
+		foreach ( Email\ImageHelper::getIconInfo() as $iconInfo ) {
+			$url = $iconInfo['url'];
+			$name = $iconInfo['name'];
+			$response = HTTP::get( $url, 'default', [ 'noProxy' => true ] ); // noProxy: we want to connect to production
+			$this->assertTrue( $response !== false, "{$name} should return HTTP 200 -- {$url}" );
+		}
 	}
 
-	public function emailImagesDataProvider() {
-		return [
-			['wikia image', 'http://vignette3.wikia.nocookie.net/wikianewsletter/images/8/89/Wikia.gif/revision/latest?cb=20150330185243'],
-			['comics image', 'http://vignette1.wikia.nocookie.net/wikianewsletter/images/e/e3/Comics.gif/revision/latest?cb=20150330185129'],
-			['games image', 'http://vignette1.wikia.nocookie.net/wikianewsletter/images/e/e8/Games.gif/revision/latest?cb=20150330185144'],
-			['movies image', 'http://vignette1.wikia.nocookie.net/wikianewsletter/images/b/bf/Movies.gif/revision/latest?cb=20150330185202'],
-			['lifestyle image', 'http://vignette4.wikia.nocookie.net/wikianewsletter/images/6/60/Lifestyle.gif/revision/latest?cb=20150330185152'],
-			['music image', 'http://vignette4.wikia.nocookie.net/wikianewsletter/images/f/fb/Music.gif/revision/latest?cb=20150330185211'],
-			['books image', 'http://vignette4.wikia.nocookie.net/wikianewsletter/images/c/c2/Books.gif/revision/latest?cb=20150330185117'],
-			['tv image', 'http://vignette1.wikia.nocookie.net/wikianewsletter/images/c/c5/TV.gif/revision/latest?cb=20150330185219'],
-			['twitter image', 'http://vignette3.wikia.nocookie.net/wikianewsletter/images/8/88/Twitter.gif/revision/latest?cb=20150330185235'],
-			['youtube image', 'http://vignette4.wikia.nocookie.net/wikianewsletter/images/1/12/You-Tube.gif/revision/latest?cb=20150330185252'],
-			['facebook image', 'http://vignette2.wikia.nocookie.net/wikianewsletter/images/a/ad/Facebook.gif/revision/latest?cb=20150330185226'],
-		];
+	/**
+	 * Set the Vignette base URL to point to production. The testEmailImages test above
+	 * was failing frequently in dev and since prod images are what our user's see as
+	 * part of our emails, we're updating that test to only run in prod. See SOC-860.
+	 */
+	private function setVignetteEnvToProd() {
+		$this->mockGlobalVariable('wgVignetteUrl', self::VIGNETTE_BASE_URL_PROD);
+		$this->mockGlobalVariable('wgUploadPath', "http://images.wikia.com/wikianewsletter/images"); // see Wikia::NEWSLETTER_WIKI_ID
 	}
 }

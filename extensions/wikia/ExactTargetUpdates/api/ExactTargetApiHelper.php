@@ -5,13 +5,12 @@ class ExactTargetApiHelper {
 
 	/**
 	 * Creates an ExactTargetSoapClient object containing credentials to connect to the API.
-	 * Note: ExactTargetSoapClient should be called before other ExactTarget classes as it triggers other classes loading
 	 * @return ExactTargetSoapClient
 	 */
 	public function getClient() {
 		global $wgExactTargetApiConfig;
 		$wsdl = $wgExactTargetApiConfig[ 'wsdl' ];
-		$oClient = new \ExactTargetSoapClient( $wsdl, array( 'trace'=>1 ) );
+		$oClient = new \ExactTargetSoapClient( $wsdl, [ 'trace' => 1, 'exceptions' => true ] );
 		$oClient->username = $wgExactTargetApiConfig[ 'username' ];
 		$oClient->password = $wgExactTargetApiConfig[ 'password' ];
 		return $oClient;
@@ -37,7 +36,7 @@ class ExactTargetApiHelper {
 	 */
 	public function prepareSoapVars( $aObjects, $sObjectType = 'DataExtensionObject' ) {
 		$aSoapVars = [];
-		foreach( $aObjects as $object ) {
+		foreach ( $aObjects as $object ) {
 			$aSoapVars[] = $this->wrapToSoapVar( $object, $sObjectType );
 		}
 		return $aSoapVars;
@@ -160,13 +159,13 @@ class ExactTargetApiHelper {
 	public function prepareDataExtensionObjects( $aObjectsParams ) {
 		$aDE = [];
 
-		foreach( $aObjectsParams as $aObjectParams ) {
+		foreach ( $aObjectsParams as $aObjectParams ) {
 			$oDE = new \ExactTarget_DataExtensionObject();
 			$oDE->CustomerKey = $aObjectParams[ 'CustomerKey' ];
 
 			if( isset( $aObjectParams[ 'Properties' ] ) ) {
 				$aApiProperties = [];
-				foreach( $aObjectParams[ 'Properties' ] as $sKey => $sValue ) {
+				foreach ( $aObjectParams[ 'Properties' ] as $sKey => $sValue ) {
 					$aApiProperties[] = $this->wrapApiProperty( $sKey, $sValue );
 				}
 				$oDE->Properties = $aApiProperties;
@@ -174,7 +173,7 @@ class ExactTargetApiHelper {
 
 			if( isset( $aObjectParams[ 'Keys' ] ) ) {
 				$aApiKeys = [];
-				foreach( $aObjectParams[ 'Keys' ] as $sKey => $sValue ) {
+				foreach ( $aObjectParams[ 'Keys' ] as $sKey => $sValue ) {
 					$aApiKeys[] = $this->wrapApiProperty( $sKey, $sValue );
 				}
 				$oDE->Keys = $aApiKeys;

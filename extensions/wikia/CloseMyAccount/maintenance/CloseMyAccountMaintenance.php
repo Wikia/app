@@ -17,6 +17,16 @@ class CloseMyAccountMaintenance extends Maintenance {
 	public function execute() {
 		global $wgUser, $wgExternalSharedDB;
 
+		// Currently, inverted searches (using a column other than up_user) may not
+		// be supported for preferences in the future. However this feature may be
+		// supported for user "flags" if we need to do reverse lookups like these.
+		// See https://wikia-inc.atlassian.net/browse/SERVICES-469.
+		// --drsnyder
+
+		echo "*******************************************************";
+		echo "Warning, inverted searches on 'user_properties' may be deprecated soon. Contact the services team.";
+		echo "*******************************************************";
+
 		$closeAccountHelper = new CloseMyAccountHelper();
 
 		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
@@ -59,11 +69,11 @@ class CloseMyAccountMaintenance extends Maintenance {
 				$result = EditAccount::closeAccount( $userObj, $closeReason, $statusMsg1, $statusMsg2, /*$keepEmail = */true );
 
 				// Set an option that signifies this user was closed automatically
-				$userObj->setOption( 'disabled-by-user-request', true );
+				$userObj->setGlobalFlag( 'disabled-by-user-request', true );
 
 				// Cleanup
-				$userObj->setOption( 'requested-closure', null );
-				$userObj->setOption( 'requested-closure-date', null );
+				$userObj->setGlobalFlag( 'requested-closure', null );
+				$userObj->setGlobalAttribute( 'requested-closure-date', null );
 
 				$userObj->saveSettings();
 

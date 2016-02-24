@@ -157,27 +157,11 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => ',&#32;und',
 
-# Cologne Blue skin
 'qbfind'         => 'Fenda',
-'qbedit'         => 'Ändern',
 'qbpageoptions'  => 'Seytaoptiona',
 'qbpageinfo'     => 'Seytadata',
-'qbmyoptions'    => 'Menne Seyta',
-'qbspecialpages' => 'Spezialseyta',
 'faq'            => 'FAQ',
 
-# Vector skin
-'vector-action-addsection' => 'Obschnitt hinzufiega',
-'vector-action-delete'     => 'Läscha',
-'vector-action-move'       => 'Verschieba',
-'vector-action-protect'    => 'Schützen',
-'vector-action-undelete'   => 'Wiederherstella',
-'vector-action-unprotect'  => 'Freigahn',
-'vector-view-create'       => 'Erstella',
-'vector-view-edit'         => 'Bearbeita',
-'vector-view-history'      => 'Versionsgeschichte',
-'vector-view-view'         => 'Lessa',
-'vector-view-viewsource'   => 'Quelltext siehn',
 'actions'                  => 'Aksjonna',
 'namespaces'               => 'Noamensraum:',
 'variants'                 => 'Varianta',
@@ -198,7 +182,6 @@ $messages = array(
 'edit'             => 'Bearbta',
 'create'           => 'Erstella',
 'editthispage'     => 'Seite bearbta',
-'create-this-page' => 'Seite erstella',
 'delete'           => 'Löschen',
 'deletethispage'   => 'Diese Seite läscha',
 'protect'          => 'Schützen',
@@ -209,19 +192,9 @@ $messages = array(
 'talkpagelinktext' => 'Dischkur',
 'specialpage'      => 'Spezialseyte',
 'personaltools'    => 'Meine Werkzeuge',
-'postcomment'      => 'Neuer Obschnitt',
-'articlepage'      => 'Inhaltsseite oazeiga',
 'talk'             => 'Dischkur',
 'views'            => 'Oansichta',
 'toolbox'          => 'Werkzeuge',
-'userpage'         => 'Nutzerseyte oazeiga',
-'projectpage'      => 'Projektseyte',
-'imagepage'        => 'Dateiseyte oazeiga',
-'mediawikipage'    => 'Meldungsseite oazeiga',
-'templatepage'     => 'Vurloogaseyte oazeiga',
-'viewhelppage'     => 'Hilfeseyte oanzeiga',
-'categorypage'     => 'Heetgruppeseyte oazeiga',
-'viewtalkpage'     => 'Dischkur',
 'otherlanguages'   => 'Ei andern Sproacha',
 'redirectedfrom'   => '(Weitergeleitet vo $1)',
 'lastmodifiedat'   => 'Diese Seite wurde zuletzt oam $1 im $2 Seeger geändert.',
@@ -364,8 +337,9 @@ De Sperre wurde durch [[User:$1|$1]] miet der Begrindung ''„$2“'' eigerichte
 # Login and logout pages
 'logouttext'                 => "'''Du best nun obgemeldet.'''
 
-Du koast {{SITENAME}} jitz anonym wetter nutzen, oder diech erneut under damm selba oder a'm andern Nutzernoama [[Special:UserLogin|oamelda]].
+Du koast {{SITENAME}} jitz anonym wetter nutzen, oder diech erneut under damm selba oder a'm andern Nutzernoama $1.
 Beachte, doas einige Seyta noo oazeiga kinna, doas du oagemeldet best, sulange du ne denn Browsercache gelaart host.",
+'logouttext-link-text'       => 'oamelda',
 'welcomecreation'            => '== Willkumma, $1! ==
 
 Dei Benutzerkonto wurde eigerichtet.
@@ -553,7 +527,6 @@ oder de zugehieriga <span class="plainlinks">[{{fullurl:{{#special:Log}}|page={{
 '''Beachte:''' Noach damm Speichern mußt du dennen Browser oaweisa, de neue Version zu loada: '''Mozilla/Firefox:''' ''Strg-Shift-R'', '''Internet Explorer:''' ''Strg-F5'', '''Opera:''' ''F5'', '''Safari:''' ''Cmd-Shift-R'', '''Konqueror:''' ''F5''.",
 'userjspreview'                    => "== Vurschau Dennes Nutzer-JavaScript ==
 '''Beachte:''' Noach damm Speichern mußt du dennen Browser oaweisa, de neue Version zu loada: '''Mozilla/Firefox:''' ''Strg-Shift-R'', '''Internet Explorer:''' ''Strg-F5'', '''Opera:''' ''F5'', '''Safari:''' ''Cmd-Shift-R'', '''Konqueror:''' ''F5''.",
-'userinvalidcssjstitle'            => "'''OCHTICHE:''' Skin „$1“ existiert ne. Bedenke, doß nutzerspezifische .css- und .js-Seyta miet a'm Kleenbuchstaba oafanga missa, olso beispielsweise ''{{ns:user}}:Mustermann/vector.css'' oa Stalle vu ''{{ns:user}}:Mustermoan/Vector.css''.",
 'previewnote'                      => "'''Dies ies ock anne Vurschau, de Seite wurde noo nee gespeichert!'''",
 'previewconflict'                  => "Diese Vurschau gitt 'n Inhalt des obern Textfeldes wieder. Su werd de Seite aussahn, wenn du jitz speicherst.",
 'session_fail_preview'             => "'''Denne Beoarbeetung konnte ne gespeichert waan, do Sitzungsdaten verlorn geganga sein.
@@ -817,9 +790,6 @@ Stelle sicher, doaß de Versionsgeschichte anner Seite historisch korrekt ies.',
 'powersearch-togglenone'           => 'Kenne',
 'searchdisabled'                   => 'De {{SITENAME}}-Suche ies deaktiviert. Du koast underdessa miet Google sucha. Bitte bedenke, doaß der Suchindex fier {{SITENAME}} veraltet sei koan.',
 
-# Quickbar
-'qbsettings'      => 'Seytaleiste',
-'qbsettings-none' => 'Keene',
 
 # Preferences page
 'preferences'               => 'Eenstellunga',
@@ -1465,7 +1435,7 @@ Wiki: $PAGEEDITOR_WIKI
 
 Is waan sulange kenne wettera Benachrichtigungs-E-Mails gesendet, bis du de Seite wieder besucht host. Uff denner Beobachtungsliste koast du olle Benachrichtigungsmarker zusomma zerrickesetza.
 
-             Dei freindliches {{SITENAME}}-Benoachrichtigungssystem 
+             Dei freindliches {{SITENAME}}-Benoachrichtigungssystem
 
 --
 Im de Einstellunga denner Beobachtungsliste oazupoaßa, besuche: {{canonicalurl:{{#special:EditWatchlist}}}}
@@ -1670,7 +1640,7 @@ Bitte gib dann Grund fier de Sperre oa.",
 ** Eenfiega foalscher Informationen
 ** Laara vu Seita
 ** Fiegt massenweise externe Links a
-** Einstalla unsinniger Inhalte ei Seita 
+** Einstalla unsinniger Inhalte ei Seita
 ** bedrohliches Verhaala/Belästigung
 ** Missbrauch durch mehrere Nutzerkonten
 ** Ungeeigneter Nutzernoame',

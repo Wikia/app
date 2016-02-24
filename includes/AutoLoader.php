@@ -75,6 +75,7 @@ $wgAutoloadLocalClasses = array(
 	'ErrorPageError' => 'includes/Exception.php',
 	'ExplodeIterator' => 'includes/StringUtils.php',
 	'ExternalEdit' => 'includes/ExternalEdit.php',
+	'ExternalHttp' => 'includes/HttpFunctions.php', # Wikia change
 	'ExternalStore' => 'includes/ExternalStore.php',
 	'ExternalStoreDB' => 'includes/ExternalStoreDB.php',
 	'ExternalStoreHttp' => 'includes/ExternalStoreHttp.php',
@@ -136,7 +137,6 @@ $wgAutoloadLocalClasses = array(
 	'LCStore_CDB' => 'includes/LocalisationCache.php',
 	'LCStore_DB' => 'includes/LocalisationCache.php',
 	'LCStore_Null' => 'includes/LocalisationCache.php',
-	'LegacyTemplate' => 'includes/SkinLegacy.php',
 	'License' => 'includes/Licenses.php',
 	'Licenses' => 'includes/Licenses.php',
 	'Linker' => 'includes/Linker.php',
@@ -199,7 +199,6 @@ $wgAutoloadLocalClasses = array(
 	'SiteStatsInit' => 'includes/SiteStats.php',
 	'SiteStatsUpdate' => 'includes/SiteStats.php',
 	'Skin' => 'includes/Skin.php',
-	'SkinLegacy' => 'includes/SkinLegacy.php',
 	'SkinTemplate' => 'includes/SkinTemplate.php',
 	'SpecialCreateAccount' => 'includes/SpecialPage.php',
 	'SpecialListAdmins' => 'includes/SpecialPage.php',
@@ -400,6 +399,9 @@ $wgAutoloadLocalClasses = array(
 	'IContextSource' => 'includes/context/IContextSource.php',
 	'RequestContext' => 'includes/context/RequestContext.php',
 
+	# includes/dao
+	'IDBAccessObject' => 'includes/dao/IDBAccessObject.php',
+
 	# includes/db
 	'Blob' => 'includes/db/DatabaseUtility.php',
 	'ChronologyProtector' => 'includes/db/LBFactory.php',
@@ -436,7 +438,7 @@ $wgAutoloadLocalClasses = array(
 	'LoadMonitor_MySQL' => 'includes/db/LoadMonitor.php',
 	'LoadMonitor_Null' => 'includes/db/LoadMonitor.php',
 	'MySQLField' => 'includes/db/DatabaseMysql.php',
-	'MySQLMasterPos' => 'includes/db/DatabaseMysql.php',
+	'MySQLMasterPos' => 'includes/db/DatabaseMysqlBase.php',
 	'ORAField' => 'includes/db/DatabaseOracle.php',
 	'ORAResult' => 'includes/db/DatabaseOracle.php',
 	'PostgresField' => 'includes/db/DatabasePostgres.php',
@@ -842,7 +844,6 @@ $wgAutoloadLocalClasses = array(
 	'SpecialMostlinkedtemplates' => 'includes/specials/SpecialMostlinkedtemplates.php',
 	'SpecialNewFiles' => 'includes/specials/SpecialNewimages.php',
 	'SpecialNewpages' => 'includes/specials/SpecialNewpages.php',
-	'SpecialPasswordReset' => 'includes/specials/SpecialPasswordReset.php',
 	'SpecialPermanentLink' => 'includes/SpecialPage.php',
 	'SpecialPreferences' => 'includes/specials/SpecialPreferences.php',
 	'SpecialPrefixindex' => 'includes/specials/SpecialPrefixindex.php',
@@ -913,6 +914,9 @@ $wgAutoloadLocalClasses = array(
 	'UploadStashNotLoggedInException' => 'includes/upload/UploadStash.php',
 	'UploadStashWrongOwnerException' => 'includes/upload/UploadStash.php',
 	'UploadStashNoSuchKeyException' => 'includes/upload/UploadStash.php',
+
+	# includes/wikia/interfaces
+	'Wikia\Interfaces\IRequest' => 'includes/wikia/interfaces/IRequest.php',
 
 	# languages
 	'FakeConverter' => 'languages/Language.php',

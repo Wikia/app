@@ -46,7 +46,5 @@ $wgAvailableRights[] = 'edithub';
 
 $wgGroupPermissions['*']['edithub'] = false;
 $wgGroupPermissions['staff']['edithub'] = true;
-$wgGroupPermissions['sysop']['edithub'] = true;
-$wgGroupPermissions['bureaucrat']['edithub'] = true;
 $wgGroupPermissions['helper']['edithub'] = true;
 

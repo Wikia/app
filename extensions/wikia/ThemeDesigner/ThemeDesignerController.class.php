@@ -55,9 +55,6 @@ class ThemeDesignerController extends WikiaController {
 			$this->returnTo = $this->wg->Script;
 		}
 
-		// load Google Analytics code
-		$this->analytics = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
-
 		$wgOut->getResourceLoader()->getModule( 'mediawiki' );
 
 		$ret = implode( "\n", array(
@@ -68,6 +65,9 @@ class ThemeDesignerController extends WikiaController {
 		) );
 
 		$this->globalVariablesScript = $ret;
+
+		$pageTitle = wfMessage( 'themedesigner-title' );
+		$this->pageTitle = ( new WikiaHtmlTitle() )->setParts( [ $pageTitle ] )->getTitle();
 
 		wfProfileOut( __METHOD__ );
 	}

@@ -20,6 +20,7 @@ $wgAutoloadClasses['ImageServingDriverMainNS'] =  $dir . 'drivers/ImageServingDr
 $wgAutoloadClasses['ImageServingDriverCategoryNS'] =  $dir . 'drivers/ImageServingDriverCategoryNS.class.php';
 $wgAutoloadClasses['ImageServingDriverUserNS'] =  $dir . 'drivers/ImageServingDriverUserNS.class.php';
 $wgAutoloadClasses['ImageServingDriverFileNS'] =  $dir . 'drivers/ImageServingDriverFileNS.class.php';
+$wgAutoloadClasses['ImageServingDriverInfoboxImageNS'] =  $dir . 'drivers/ImageServingDriverInfoboxImageNS.class.php';
 $wgAutoloadClasses['ImageServingController'] =  $dir . 'ImageServingController.class.php';
 
 $wgImageServingDrivers = array(
@@ -52,13 +53,13 @@ $wgAutoloadClasses[ "WikiaApiImageServing"         ] = "{$dir}/api//WikiaApiImag
 $wgAPIModules['imageserving'] = 'WikiaApiImageServing';
 
 // query page for caching images popularity (see PLAQTFORM-817)
-$wgSpecialPages[ 'MostimagesInContent' ] =  'MostimagesInContentPage';
-$wgSpecialPageGroups['MostimagesInContent'] = 'maintenance';
+$wgSpecialPages[ 'MostLinkedFilesInContent' ] =  'MostimagesInContentPage';
+$wgSpecialPageGroups['MostLinkedFilesInContent'] = 'maintenance';
 
 $wgAutoloadClasses[ 'MostimagesInContentPage' ] = "{$dir}/querypage/MostimagesInContentPage.class.php";
 
 $wgHooks['wgQueryPages'][] = function( Array &$wgQueryPages ) {
 	//                  QueryPage subclass         Special page name
-	$wgQueryPages[] = [ 'MostimagesInContentPage', 'MostimagesInContent' ];
+	$wgQueryPages[] = [ 'MostimagesInContentPage', 'MostLinkedFilesInContent' ];
 	return true;
 };

@@ -2,7 +2,9 @@
 /**
  * Class LyricsApiController
  *
- * @desc Entry point for LyricsAPI
+ * @desc Entry point for LyricsAPI used by the Lyrically app. For the LyricWiki API that runs
+ *       through the standard MediaWiki and is accessible to the public, please use the
+ *       extension in /extensions/wikia/WikiaApiLyricWiki and /extensions/3rdparty/LyricWiki
  */
 class LyricsApiController extends WikiaController {
 	const PARAM_ARTIST = 'artist';
@@ -58,6 +60,11 @@ class LyricsApiController extends WikiaController {
 
 		// Validate result
 		if( is_null( $results ) ) {
+			// New songs that we don't have yet are likely to get hit repeatedly by a
+			// ton of users until we get the song, so this is a special case where it
+			// is helpful to cache 404s for a little while.
+			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
+
 			throw new NotFoundApiException( $this->getNotFoundDetails( $method ) );
 		}
 

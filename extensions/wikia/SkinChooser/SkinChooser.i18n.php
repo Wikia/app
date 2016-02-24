@@ -89,6 +89,15 @@ $messages['fi'] = array(
 	'site-layout' => 'Sivuston ulkoasut',
 );
 
+/** Faroese (føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'skinchooser-desc' => 'Loyvir brúkarum at velja útsjónd í innstillingum teirra',
+	'new-look' => 'Wikia',
+	'site-layout' => 'Síðuuppsetan',
+);
+
 /** French (français)
  * @author Gomoko
  * @author Iketsi
@@ -164,7 +173,7 @@ $messages['ko'] = array(
 	'site-layout' => '사이트 배치',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -325,7 +334,7 @@ $messages['uk'] = array(
 	'site-layout' => 'Оформлення сайту',
 );
 
-/** Uzbek (oʻzbekcha)
+/** Uzbek (oʻzbekcha/ўзбекча)
  * @author Akmalzhon
  */
 $messages['uz'] = array(

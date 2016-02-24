@@ -4,21 +4,23 @@ class PhalanxStatsPager extends PhalanxPager {
 	public $pInx = 'blockId';
 
 	public function __construct( $id ) {
+		global $wgSpecialsDB;
+
 		parent::__construct();
 		$this->id = (int) $id;
-		$this->mDb = wfGetDB( DB_SLAVE, array(), $this->app->wg->StatsDB );
+		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
 		if ( !empty( $this->pInx ) ) {
 			$this->mDefaultQuery[$this->pInx] = $this->id;
 		}
 	}
 
 	function getQueryInfo() {
-		$query['tables'] = '`specials`.`phalanx_stats`';
+		$query['tables'] = 'phalanx_stats';
 		$query['fields'] = '*';
 		$query['conds'] = array(
 			$this->qCond => $this->id,
 		);
-		
+
 		return $query;
 	}
 
@@ -50,8 +52,14 @@ class PhalanxStatsPager extends PhalanxPager {
 		$url = ( isset( $row->ps_referrer ) ) ? $row->ps_referrer : "";
 		$url = ( empty( $url ) && isset( $oWiki ) ) ? $oWiki->city_url : $url;
 
+		$specialContributionsURL = GlobalTitle::newFromText( 'Contributions', NS_SPECIAL, $row->ps_wiki_id )->getFullURL();
+
+		if ( !empty( $specialContributionsURL ) ) {
+			$username = '[' . $specialContributionsURL . '/' . $username . ' ' . $username . ']';
+		}
+
 		$html  = Html::openElement( 'li' );
-		$html .= wfMsgExt( 'phalanx-stats-row', array('parseinline'), $type, $username, $url, $timestamp );
+		$html .= wfMessage( 'phalanx-stats-row', $type, $username, $url, $timestamp )->parse();
 		$html .= Html::closeElement( 'li' );
 
 		return $html;

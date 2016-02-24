@@ -1,20 +1,26 @@
 {
-	"repositories": [
-		{
-			"type": "git",
-			"url": "https://github.com/Wikia/fluent-sql-php"
-		}
-	],
-	"config": {
-		"vendor-dir": "lib/composer"
-	},
-	"require": {
-		"wikia/fluent-sql-php": "1.0.*",
-		"videlalvaro/php-amqplib": "2.2.*",
-		"monolog/monolog": "1.9.1",
-		"phpunit/phpunit": "4.1.*",
-		"facebook/php-sdk-v4": "4.0.*",
-		"cssjanus/cssjanus": "1.1.*",
-		"tijsverkoyen/css-to-inline-styles": "1.5.2"
-	}
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/Wikia/fluent-sql-php"
+    }
+  ],
+  "config": {
+    "vendor-dir": "lib/composer",
+    "prepend-autoloader": false
+  },
+  "require": {
+    "wikia/fluent-sql-php": "1.0.*",
+    "videlalvaro/php-amqplib": "2.2.*",
+    "monolog/monolog": "1.9.1",
+    "phpunit/phpunit": "4.1.*",
+    "facebook/php-sdk-v4": "4.0.*",
+    "cssjanus/cssjanus": "1.1.*",
+    "tijsverkoyen/css-to-inline-styles": "1.5.2",
+    "php-di/php-di": "^5.0",
+    "doctrine/annotations": "~1.2",
+    "doctrine/cache": "~1.0",
+    "ocramius/proxy-manager": "~1.0",
+    "sensiolabs/consul-php-sdk": "^1.0"
+  }
 }

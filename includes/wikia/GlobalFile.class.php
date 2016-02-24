@@ -49,6 +49,8 @@ class GlobalFile extends WikiaObject implements UrlGeneratorInterface {
 	 *
 	 * @param string $title file name
 	 * @param int $wikiId city ID
+	 *
+	 * @return GlobalFile
 	 */
 	static public function newFromText($title, $wikiId) {
 		$title = GlobalTitle::newFromText($title, NS_FILE, $wikiId);

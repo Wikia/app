@@ -1,0 +1,31 @@
+{
+	"@metadata": {
+		"authors": [
+			"Cedric31"
+		]
+	},
+	"semanticdrilldown-desc": "Una interfàcia d’exercici per la navigacion a travèrs de semantic data",
+	"specialpages-group-sd_group": "Exercici de semantica",
+	"browsedata": "Cercar las donadas",
+	"sd_browsedata_choosecategory": "Causir una categoria",
+	"sd_browsedata_viewcategory": "Veire la categoria",
+	"sd_browsedata_docu": "Clicar sus un o maites elements per resarrar vòstres resultats.",
+	"sd_browsedata_subcategory": "Soscategoria",
+	"sd_browsedata_other": "Autre",
+	"sd_browsedata_none": "Nonrés",
+	"sd_browsedata_filterbyvalue": "Filtrat per valor",
+	"sd_browsedata_filterbysubcategory": "Filtrar per aquesta soscategoria",
+	"sd_browsedata_otherfilter": "Veire las paginas amb una autra valor per aqueste filtre",
+	"sd_browsedata_nonefilter": "Veire las paginas amb pas cap de valor per aqueste filtre",
+	"sd_browsedata_or": "o",
+	"sd_browsedata_removefilter": "Levar aqueste filtre",
+	"sd_browsedata_removesubcategoryfilter": "Levar aquesta soscategoria de filtre",
+	"sd_browsedata_resetfilters": "Remesa a zèro dels filtres",
+	"sd_browsedata_addanothervalue": "Clicatz sus la sageta per apondre una autra valor",
+	"sd_browsedata_daterangestart": "Començament :",
+	"sd_browsedata_daterangeend": "Fin :",
+	"sd_browsedata_novalues": "Existís pas de valor per aqueste filtre",
+	"sd_createfilter_usepropertyvalues": "Utilizar, per aqueste filtre, totas las valors d'aquesta proprietat",
+	"sd_createfilter_usecategoryvalues": "Obténer las valors per aqueste filtre a partir d'aquesta categoria :",
+	"sd_createfilter_requirefilter": "Necessita un filtre devent èsser seleccionat abans qu'aqueste siá afichat :"
+}

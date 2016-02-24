@@ -1,0 +1,79 @@
+/**
+ * CSS for SRF PageWidget module
+ *
+ * @licence: GNU GPL v2 or later
+ * @author:  mwjames
+ *
+ * @since: 1.8
+ *
+ * @release: 0.1
+ */
+
+ul.slidecontrols {
+	overflow: hidden;
+	margin: 0.3em 0 0 0;
+}
+
+.slidecontrols li {
+	display: inline;
+	margin-left: 0;
+	padding-left: 0;
+}
+
+.srf-pagewidget-carousel-source {
+	list-style: none;
+	font-size: 0.9em;
+	display: block;
+	width:67px;
+	clear:both;
+	padding: 4px 9px;
+	border: 1px solid #DDD;
+	text-decoration: none;
+	border-width: 1px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	border-radius: 3px 3px 3px 3px;
+	border-right: 1px solid #DDD;
+}
+.srf-pagewidget-carousel-prev {
+	list-style: none;
+	font-size: 0.9em;
+	display: block;
+	float: left;
+	padding: 4px 9px;
+	border: 1px solid #DDD;
+	border-right: none;
+	text-decoration: none;
+	border-left-width: 1px;
+	-webkit-border-radius: 3px 0 0 3px;
+	-moz-border-radius: 3px 0 0 3px;
+	border-radius: 3px 0 0 3px;
+}
+
+.srf-pagewidget-carousel-next {
+	list-style: none;
+	font-size: 0.9em;
+	display: block;
+	float: left;
+	padding: 4px 9px;
+	border: 1px solid #DDD;
+	border-right: none;
+	text-decoration: none;
+	border-right: 1px solid #DDD;
+	webkit-border-radius: 0 3px 3px 0;
+	-moz-border-radius: 0 3px 3px 0;
+	border-radius: 0 3px 3px 0;
+}
+
+.srf-pagewidget-carousel-next:hover,
+.srf-pagewidget-carousel-prev:hover {
+	background-color: whiteSmoke;
+}
+
+.srf-pagewidget-carousel-disabled {
+	background-color: whiteSmoke;
+}
+
+.srf-pagewidget-carousel-active-slide {
+	margin: 0;
+}

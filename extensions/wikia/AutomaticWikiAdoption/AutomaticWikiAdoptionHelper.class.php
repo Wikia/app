@@ -97,13 +97,13 @@ class AutomaticWikiAdoptionHelper {
 			$allowed = self::REASON_USER_BLOCKED;
 		}
 
-		if ( $user->getOption( 'AllowAdoption', 1 ) ) {
+		if ( $user->getGlobalFlag( 'AllowAdoption', 1 ) ) {
 			Wikia::log(__METHOD__, __LINE__, 'not allowed to adopt: per user override set by staff');
 			$allowed = self::REASON_USER_NOT_ELIGIBLE;
 		}
 
 		//user has adopted other wiki in the last 60 days
-		$lastAdoption = $user->getOption('LastAdoptionDate', false);
+		$lastAdoption = $user->getGlobalAttribute('LastAdoptionDate', false);
 		if (!isset($allowed) && ($lastAdoption !== false && time() - $lastAdoption < self::ADOPTION_DELAY)) {
 			Wikia::log(__METHOD__, __LINE__, 'not allowed to adopt: adopted in 60 days');
 			$allowed = self::REASON_ADOPTED_RECENTLY;
@@ -190,7 +190,7 @@ class AutomaticWikiAdoptionHelper {
 					//log
 					self::addLogEntry($admin, $oldGroups, $newGroups);
 					//Unset preference for receiving future adoption emails
-					$admin->setOption("adoptionmails-$wikiId", 0);
+					$admin->setLocalPreference( "adoptionmails", 0, $wikiId );
 					$admin->saveSettings();
 				}
 			}
@@ -211,9 +211,9 @@ class AutomaticWikiAdoptionHelper {
 			WikiFactory::log(WikiFactory::LOG_STATUS, $user->getName()." adopted wiki ".  $wiki_name);
 		}
 		//set date of adoption - this will be used to check when next adoption is possible
-		$user->setOption('LastAdoptionDate', time());
+		$user->setGlobalAttribute('LastAdoptionDate', time());
 		//Set preference for receiving future adoption emails
-		$user->setOption("adoptionmails-$wikiId", 1);
+		$user->setLocalPreference("adoptionmails", 1, $wikiId);
 		$user->saveSettings();
 
 		// Block user from seeing the adoption page again or adopting another wiki
@@ -275,24 +275,22 @@ class AutomaticWikiAdoptionHelper {
 	 * @return boolean success/fail
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	private static function countUserEditsOnWiki($wikiId, $user) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+	private static function countUserEditsOnWiki($wikiId, User $user) {
+		global $wgSpecialsDB;
 		wfProfileIn(__METHOD__);
 
 		$result = 0;
-		if ( !empty( $wgStatsDBEnabled ) ) {
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgSpecialsDB);
 
-			$row = $dbr->selectRow(
-				'specials.events_local_users',
-				'edits',
-				array('wiki_id' => $wikiId, 'user_id' => $user->getId()),
-				__METHOD__
-			);
+		$row = $dbr->selectRow(
+			'events_local_users',
+			'edits',
+			array('wiki_id' => $wikiId, 'user_id' => $user->getId()),
+			__METHOD__
+		);
 
-			if ($row !== false) {
-				$result = $row->edits;
-			}
+		if ($row !== false) {
+			$result = $row->edits;
 		}
 
 		wfProfileOut(__METHOD__);

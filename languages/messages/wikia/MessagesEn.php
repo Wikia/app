@@ -321,6 +321,9 @@ Your account has been created. Don't forget to change your {{SITENAME}} [[Specia
 'group-voldev-member' => 'Volunteer Developer',
 'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
 
+'group-content-moderator' => 'Content Moderators',
+'group-content-moderator-member' => 'Content Moderator',
+
 #new registration aka LoginFriction aka Signup
 
 'signup-password' => 'Password - ',
@@ -525,7 +528,6 @@ div.wikiaDialog h2,
 'wikicities-nav' => 'wikia',
 'searchsuggest' => 'Search suggest',
 'tog-searchsuggest' => 'Use search suggest',
-'tog-htmlemails' => 'Enable receipt of HTML emails',
 'tagline-url'   => 'From [{{SERVER}} {{SITENAME}}], a [http://www.wikia.com Wikia] wiki.',
 'tagline-url-interwiki' => 'From [[wikia:c:$1|{{SITENAME}}]], a [[wikia:|Wikia]] wiki.',
 'showall' => 'Show All', #ticet #699 messages
@@ -1038,4 +1040,20 @@ hu',
 
 'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]',
 
-));
+'usesitejs-disabled-warning' => 'Custom JavaScript is disabled on this wikia.',
+'tog-enableuserjs' => 'Enable personal JavaScript ([[Help:Personal_CSS_and_JS#JavaScript|Learn more]])',
+
+# wikia.wikibits.js mesages for import scripts notifications
+'import-article-missing-single' => '$1 was not found (requested by user-supplied javascript)',
+'import-article-missing-multiple' => '$1 $2 were not found (requested by user-supplied javascript)',
+'import-article-missing-more-single' => '(and one more article)',
+'import-article-missing-more-multiple' => '(and $1 more articles)',
+'import-article-not-js-single' => '$1 was not loaded as it\'s not a JS page (requested by user-supplied javascript). Please make sure the article title has .js extension.',
+'import-article-not-js-multiple' => '$1 $2 were not loaded as they\'re not JS pages (requested by user-supplied javascript). Please make sure the articles titles have .js extension.',
+
+'wikia-pagetitle-brand' => 'Wikia',
+'wikia-pagetitle-sitename' => '{{SITENAME}}',
+
+'wikia-read-only-mode' => 'Uh-oh! Our main datacenter is currently unavailable, so this is our backup. Unfortunately, this means you may not be able to do certain things like edit, upload, or chat.
+We are working to fix the problem, thank you for your patience! If you see this for an extended period of time, feel free to contact Wikia at community@wikia.com.',
+) );

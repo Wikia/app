@@ -26,7 +26,7 @@ class WikiaSQL extends FluentSql\SQL {
 
 	protected function getCacheKey(sql\Breakdown $breakDown) {
 		$cache = $this->getCache();
-		return $cache->generateKey($breakDown, $this->useSharedMemKey);
+		return $cache->generateKey( $breakDown );
 	}
 
 	protected function query($db, sql\Breakdown $breakDown, $autoIterate, callable $callback=null) {
@@ -44,7 +44,7 @@ class WikiaSQL extends FluentSql\SQL {
 		static $cache = null;
 
 		if ($cache === null) {
-			$cache = new WikiaSQLCache();
+			$cache = new WikiaSQLCache( $this->useSharedMemKey );
 		}
 
 		return $cache;

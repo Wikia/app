@@ -1,9 +1,8 @@
+@import "skins/oasis/css/core/breakpoints-variables";
 @import "skins/shared/color";
 @import "skins/shared/mixins/gradient";
 @import "skins/shared/mixins/flexbox";
-@import "skins/oasis/css/core/responsive-variables";
-@import "extensions/wikia/Venus/styles/fonts/venus-icons";
-@import "extensions/wikia/Venus/styles/mixins";
+@import "icons";
 
 $btn-bar-color: mix($color-page, #000, 90);
 @if $is-dark-wiki {
@@ -451,6 +450,28 @@ header.MainPageHeroHeader {
 	}
 }
 
+.MainPageHeroHeader.hero-image-wrapper {
+	@media #{$breakpoint-small-up} {
+		margin-left: -#{$padding-width-small};
+		margin-right: -#{$padding-width-small};
+	}
+
+	@media #{$breakpoint-small-plus-up} {
+		margin-left: -#{$padding-width-small-plus};
+		margin-right: -#{$padding-width-small-plus};
+	}
+
+	@media #{$breakpoint-medium-up} {
+		margin-left: -#{$padding-width-medium};
+		margin-right: -#{$padding-width-medium};
+	}
+
+	@media #{$breakpoint-large-up} {
+		margin-left: -#{$padding-width-large};
+		margin-right: -#{$padding-width-large};
+	}
+}
+
 .WikiaArticle {
 	.hero-description {
 		margin: 20px 320px 40px 30px;
@@ -477,7 +498,7 @@ header.MainPageHeroHeader {
 			}
 		}
 
-		@media screen and (max-width: $breakpoint-small) {
+		@media screen and (max-width: $breakpoint-lower-plus) {
 			margin-right: 20px;
 		}
 	}

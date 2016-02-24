@@ -28,7 +28,7 @@ abstract class SpecialEditPage extends SpecialPage {
 		$wgRequest->setVal( 'action', 'edit' );
 
 		// force CategorySelect initialisation if available
-		if ( class_exists( 'CategorySelectHooksHelper' ) && ( $wgUser->getOption( 'disablecategoryselect', false ) == false ) ) {
+		if ( class_exists( 'CategorySelectHooksHelper' ) && ( $wgUser->getGlobalPreference( 'disablecategoryselect', false ) == false ) ) {
 			$this->mCategorySelectEnabled = true;
 			CategorySelectHooksHelper::onMediaWikiPerformAction( null, null, $this->mTitle, null, null, null );
 		}

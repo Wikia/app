@@ -23,6 +23,16 @@ ve.ui.IndentationTool = function VeUiIndentationTool( toolGroup, config ) {
 
 OO.inheritClass( ve.ui.IndentationTool, ve.ui.Tool );
 
+/* Methods */
+
+/**
+ * @inheritdoc
+ */
+ve.ui.IndentationTool.prototype.onSelect = function () {
+	ve.track( 'tool.indentation.select', { name: this.constructor.static.name } );
+	ve.ui.Tool.prototype.onSelect.apply( this, arguments );
+};
+
 /**
  * UserInterface indent tool.
  *

@@ -92,6 +92,7 @@ $messages['bg'] = array(
  * @author Aftabuzzaman
  */
 $messages['bn'] = array(
+	'mostvisitedpages-desc' => 'সর্বাধিক দেখা পাতার তালিকা দেয়',
 	'mostvisitedpages' => 'সর্বাধিক দেখা পাতাসমূহ',
 	'mostvisitedpagessearchtext' => 'নিবন্ধের নাম:',
 	'mostvisitedpagessearchbtn' => 'অনুসন্ধান',
@@ -115,8 +116,10 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author BroOk
+ * @author Unapersona
  */
 $messages['ca'] = array(
+	'mostvisitedpages-desc' => 'Obtenir una llista de les pàgines més visitades',
 	'mostvisitedpages' => 'Pàgines més visitades',
 	'mostvisitedpagessearchtext' => "Nom de l'article:",
 	'mostvisitedpagessearchbtn' => 'Cerca',
@@ -133,10 +136,12 @@ $messages['ce'] = array(
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Dontlietome7
  * @author Reaperman
  */
 $messages['cs'] = array(
+	'mostvisitedpages-desc' => 'Seznam nejčastěji navštěvovaných stránek',
 	'mostvisitedpages' => 'Nejnavštěvovanější stránky',
 	'mostvisitedpagessearchtext' => 'Název článku:',
 	'mostvisitedpagessearchbtn' => 'hledat',
@@ -413,7 +418,7 @@ $messages['lb'] = array(
 	'mostvisitedpagesalllink' => 'Déi am dackst besicht Säite kucken',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -425,6 +430,7 @@ $messages['lrc'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'mostvisitedpages-desc' => 'Добијте список на најпосетувани страници',
 	'mostvisitedpages' => 'Најпосетени страници',
 	'mostvisitedpagessearchtext' => 'Назив на статијата:',
 	'mostvisitedpagessearchbtn' => 'пребарај',
@@ -530,6 +536,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'mostvisitedpages-desc' => 'د ډېرو لوستل شويو مخونو لړليک ترلاسه کول',
 	'mostvisitedpages' => 'تر ټولو ډېر کتل شوي مخونه',
 	'mostvisitedpagessearchtext' => 'د ليکنې نوم:',
 	'mostvisitedpagessearchbtn' => 'پلټل',
@@ -580,10 +587,12 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (русский)
+ * @author Kopcap94
  * @author Lockal
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'mostvisitedpages-desc' => 'Получить список самых посещаемых страниц',
 	'mostvisitedpages' => 'Наиболее часто посещаемые страницы',
 	'mostvisitedpagessearchtext' => 'Название статьи:',
 	'mostvisitedpagessearchbtn' => 'найти',
@@ -596,6 +605,7 @@ $messages['ru'] = array(
  * @author Dbc334
  */
 $messages['sl'] = array(
+	'mostvisitedpages-desc' => 'Pridobi seznam najbolj obiskanih strani',
 	'mostvisitedpages' => 'Strani z največ ogledi',
 	'mostvisitedpagessearchtext' => 'Naslov članka:',
 	'mostvisitedpagessearchbtn' => 'išči',
@@ -636,6 +646,7 @@ $messages['sv'] = array(
  * @author Krol111
  */
 $messages['szl'] = array(
+	'mostvisitedpages-desc' => 'Lista nojczyńśći uobrzyranych zajt',
 	'mostvisitedpages' => 'Nojczyńśći uobźyrane zajty',
 	'mostvisitedpagessearchtext' => 'Mjano artikla:',
 	'mostvisitedpagessearchbtn' => 'sznupej',
@@ -681,7 +692,7 @@ $messages['tl'] = array(
 	'mostvisitedpagesalllink' => 'Tingnan ang pinakadinadalaw na mga pahina',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -710,9 +721,11 @@ $messages['tyv'] = array(
 
 /** Ukrainian (українська)
  * @author Prima klasy4na
+ * @author Капитан Джон Шепард
  * @author Тест
  */
 $messages['uk'] = array(
+	'mostvisitedpages-desc' => 'Отримати список найбільш відвідуваних сторінок',
 	'mostvisitedpages' => 'Сторінки, які найчастіше переглядають',
 	'mostvisitedpagessearchtext' => 'Назва статті:',
 	'mostvisitedpagessearchbtn' => 'пошук',
@@ -723,14 +736,16 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Farewell
+ * @author KhangND
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
+	'mostvisitedpages-desc' => 'Hiện danh sách các trang được xem nhiều nhất',
 	'mostvisitedpages' => 'Các trang được xem nhiều nhất',
 	'mostvisitedpagessearchtext' => 'Tên trang',
 	'mostvisitedpagessearchbtn' => 'Tìm kiếm',
-	'mostvisitedpageslatest' => 'trong $1 phút cuối',
+	'mostvisitedpageslatest' => 'trong $1 {{PLURAL:$1|minute|phút}} cuối',
 	'mostvisitedpageslatestlink' => 'Xem trang được truy cập mới nhất',
 	'mostvisitedpagesalllink' => 'Xem trang được truy cập nhiều nhất',
 );

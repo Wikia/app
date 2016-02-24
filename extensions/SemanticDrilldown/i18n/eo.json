@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Melancholie",
+			"Michawiki",
+			"Yekrats"
+		]
+	},
+	"browsedata": "Rigardu datenojn",
+	"sd_browsedata_choosecategory": "Elektu kategorion",
+	"sd_browsedata_viewcategory": "rigardu kategorion",
+	"sd_browsedata_subcategory": "Subkategorio",
+	"sd_browsedata_other": "Alia",
+	"sd_browsedata_none": "Neniu",
+	"sd_browsedata_filterbyvalue": "Filtru laŭ ĉi tiu valoro",
+	"sd_browsedata_filterbysubcategory": "Filtru laŭ ĉi tiu subkategorio",
+	"sd_browsedata_otherfilter": "Montru paĝojn kun alia valoro por ĉi tiu filtrilo",
+	"sd_browsedata_nonefilter": "Montru paĝojn kun neniu valoro por ĉi tiu filtrilo",
+	"sd_browsedata_or": "aŭ",
+	"sd_browsedata_removefilter": "Forigu filtrilon",
+	"sd_browsedata_removesubcategoryfilter": "Forigu ĉi tiun subkategorian filtrilon",
+	"sd_browsedata_resetfilters": "Restarigu filtrilojn",
+	"sd_browsedata_addanothervalue": "Alklaku sagon por aldoni plian valoron",
+	"sd_browsedata_daterangestart": "Ekde:",
+	"sd_browsedata_daterangeend": "Al:",
+	"sd_browsedata_novalues": "Estas neniuj valoroj por ĉi tiu filtrilo",
+	"sd_createfilter_usepropertyvalues": "Uzu ĉiujn valorojn de ĉi tiu atributo por la filtrilo",
+	"sd_createfilter_usecategoryvalues": "Akiru valorojn por filtrilo de ĉi tiu kategorio:",
+	"sd_createfilter_requirefilter": "Devigu alian filtrilon esti selektita antaŭ ĉi tiu estas montrita:"
+}

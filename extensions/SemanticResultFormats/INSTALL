@@ -1,6 +1,11 @@
 == Requirements ==
 
 Semantic Result Formats requires:
+* MediaWiki 1.17 or above
+* Semantic MediaWiki 1.7 or above
+* PHP 5.2 or above
+
+For MediaWiki 1.16.x setups, SRF 1.7.x can be used, which has these requirements:
 * MediaWiki 1.16 or above
 * Semantic MediaWiki 1.7 or above
 * PHP 5.2 or above
@@ -13,15 +18,14 @@ For older setups, SRF 1.6.x can be used, which has these requirements:
 == Installation ==
 
 Installation instructions are available online in a more convenient form for
-reading at:
-
- http://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats
+reading at https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats
 
 Copy all files into MediaWiki's extensions folder, either by using SVN or by
 extracting an installation package. You need to enter one line to your local
 settings (somewhere after the inclusion of Semantic MediaWiki):
 
- require_once("$IP/extensions/SemanticResultFormats/SemanticResultFormats.php");
+// Semantic Result Formats
+require_once( "$IP/extensions/SemanticResultFormats/SemanticResultFormats.php" );
 
 If nothing else is added, a default set of formats is enabled. These are the
 the formats that satisfy the following criteria:
@@ -36,7 +40,7 @@ Currently, these default formats thus are:
 'vcard', 'icalendar', 'calendar', 'timeline', 'eventline', 'bibtex', 'outline',
 'gallery', 'jqplotbar', 'jqplotpie', 'sum', 'average', 'min', 'max', 'tagcloud',
 'median', 'product', 'valuerank', 'array', 'tree', 'ultree', 'oltree',
-'D3Line'¹, 'D3Bar'¹, 'D3Treemap'¹, 'filtered'¹, 'hash'².
+'D3Line'¹, 'D3Bar'¹, 'D3Treemap'¹, 'hash'².
 
 ¹ from MediaWiki 1.17 onwards
 ² with HashTables extension installed

@@ -566,7 +566,7 @@ class SMWSQLStore2QueryEngine {
 					} else {
 						$this->m_errors[] = wfMessage(
 							'smw_concept_cache_miss',
-							$description->getConcept()->getText()
+							$description->getConcept()->getTitle()->getText()
 						)->text();
 					}
 				} // else: no cache, no description (this may happen); treat like empty concept

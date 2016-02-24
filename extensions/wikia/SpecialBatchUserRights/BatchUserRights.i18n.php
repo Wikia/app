@@ -284,6 +284,13 @@ Deste modo, non ocorrerá nada.
 Que apareza o resto da páxina só serve para que poida ollar facilmente se non se puido cargar algún dos nomes de usuario.',
 );
 
+/** Hebrew (עברית)
+ * @author LaG roiL
+ */
+$messages['he'] = array(
+	'batchuserrights-desc' => 'שיוך משתמש אחד או יותר לקבוצה או לקבוצות בפעולה אחת',
+);
+
 /** Hungarian (magyar)
  * @author TK-999
  */
@@ -322,6 +329,7 @@ Le resto del pagina essera executate solmente a fin que tu pote vider facilement
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author Fate Kage
  * @author Riemogerz
  */
 $messages['id'] = array(
@@ -334,6 +342,9 @@ Silakan minta ke seorang pengurus sistem jika Anda butuh mengizinkan penambahan-
 	'batchuserrights-single-progress-update' => 'Ditambahkan  {{PLURAL:$1|grup|grup}} untuk <strong> $2 </strong>.',
 	'batchuserrights-add-groups' => 'Menambahkan {{PLURAL:$1|satu pengguna|$1 pengguna}} ke {{PLURAL:$2|kelompok|kelompok-kelompok}} berikut: <strong>$3</strong>.',
 	'batchuserrights-userload-error' => "Tidak bisa memuat pengguna \"'''\$1'''\".",
+	'batchuserrights-no-groups' => 'Anda tidak memilih kelompok manapun.
+Ini tidak akan menghasilkan apa-apa.
+Sisa halaman akan diizinkan untuk dimuat agar Anda dapat dengan mudah melihat jika ada nama pengguna yang tidak dapat dimuat.',
 );
 
 /** Italian (italiano)
@@ -357,7 +368,7 @@ $messages['ko'] = array(
 	'batchuserrights' => '일괄 사용자 권한',
 	'batchuserrights-names' => '이 그룹에 추가할 사용자 이름 (줄마다 하나):',
 	'batchuserrights-single-progress-update' => '<strong>$2</strong> 사용자에게 {{PLURAL:$1|그룹|그룹들}}을 추가했습니다.',
-	'batchuserrights-add-groups' => '{{PLURAL:$1|사용자 한 명|사용자 $1명}}을 다음 그룹에 추가했습니다: <strong>$3</strong>', # Fuzzy
+	'batchuserrights-add-groups' => '사용자 $1명을 다음 그룹에 추가했습니다: <strong>$3</strong>', # Fuzzy
 	'batchuserrights-userload-error' => "\"'''\$1'''\" 사용자를 불러올 수 없습니다.",
 	'batchuserrights-no-groups' => '그룹을 선택하지 않았습니다.
 아무것도 수행하지 않습니다.

@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Class FacebookClientHooks
  */
@@ -14,6 +16,9 @@ class FacebookClientHooks {
 	 * fbReturnToTitle
 	 * fbScriptLangCode
 	 *
+	 * @param $vars
+	 *
+	 * @return bool
 	 */
 	public static function MakeGlobalVariablesScript( &$vars ) {
 		global $fbScript, $fbAppId, $fbLogo;
@@ -117,6 +122,10 @@ class FacebookClientHooks {
 
 	/**
 	 * Handle confirmation message from Facebook Connect
+	 *
+	 * @param $html
+	 *
+	 * @return bool
 	 */
 	public static function onSkinTemplatePageBeforeUserMsg( &$html ) {
 		if ( F::app()->checkSkin( 'oasis' ) ) {
@@ -124,8 +133,15 @@ class FacebookClientHooks {
 			$fbStatus = F::app()->wg->Request->getVal( 'fbconnected' );
 
 			if ( $fbStatus  == '1' ) {
-				// check if current user is connected to facebook
-				$map = FacebookClient::getInstance()->getMapping();
+				try {
+					// check if current user is connected to facebook
+					$map = FacebookClient::getInstance()->getMapping();
+				} catch ( Exception $e ) {
+					WikiaLogger::instance()->error( 'Could not find mapping ', [
+						'issue' => 'SOC-1112',
+						'error' => $e->getMessage(),
+					] );
+				}
 				if ( !empty( $map ) ) {
 					BannerNotificationsController::addConfirmation(
 						wfMessage( 'fbconnect-connect-msg' )->escaped()
@@ -137,11 +153,29 @@ class FacebookClientHooks {
 		return true;
 	}
 
+	/**
+	 * @param Skin $skin
+	 * @param string $text
+	 *
+	 * @return bool
+	 * @throws WikiaException
+	 */
 	public static function onSkinAfterBottomScripts( $skin, &$text ) {
 
-		$script = AssetsManager::getInstance()->getURL( 'facebook_client_xfbml_js' );
+		$script = AssetsManager::getInstance()->getURL( 'facebook_client_fbtags_js' );
 		$text .= Html::linkedScript( $script[0] );
 
+		return true;
+	}
+
+	/**
+	 * @param User $user
+	 *
+	 * @return bool
+	 */
+	public static function onUserLogout( &$user ) {
+		// Clean up any facebook cookies/data
+		FacebookClient::getInstance()->logout();
 		return true;
 	}
 }

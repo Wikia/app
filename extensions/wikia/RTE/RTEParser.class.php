@@ -296,7 +296,7 @@ class RTEParser extends Parser {
 		else if (isset($data['params']['thumbnail'])) {
 			// width not provided - get default for thumbs
 			global $wgUser, $wgThumbLimits;
-			$wopt = $wgUser->getOption('thumbsize');
+			$wopt = $wgUser->getGlobalPreference('thumbsize');
 
 			if(!isset($wgThumbLimits[$wopt])) {
 				$wopt = User::getDefaultOption('thumbsize');
@@ -462,7 +462,7 @@ class RTEParser extends Parser {
 	 * Convert wikitext to HTML and add extra HTML attributes for RTE
 	 *
 	 * @param $text String: text we want to parse
-	 * @param $title A title object
+	 * @param $title Title A title object
 	 * @param $options ParserOptions
 	 * @param $linestart boolean
 	 * @param $clearState boolean

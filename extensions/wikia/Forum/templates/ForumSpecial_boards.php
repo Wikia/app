@@ -1,11 +1,11 @@
 <ul class="boards">
-	<? foreach($boards as $board): ?>
+	<? foreach ( $boards as $board ): ?>
 		<li class="board board-<?= $board['id'] ?>" data-id="<?= $board['id'] ?>">
 			<div class="heading">
 				<h4>
-					<a href="<?= $board['url'] ?>"><?= htmlspecialchars($board['name']) ?></a>
+					<a href="<?= $board['url'] ?>"><?= htmlspecialchars( $board['name'] ) ?></a>
 				</h4>
-				<? if ($isEditMode): ?>
+				<? if ( $isEditMode ): ?>
 					<div class="editControls">
 						<!-- Admin editControls here -->
 						<img src="<?= wfBlankImgUrl() ?>" class="sprite edit-pencil">
@@ -25,7 +25,7 @@
 				<li class="threads"><?= wfMessage( 'forum-specialpage-board-threads', $wg->Lang->formatNum( $board['threadCount'] ) )->escaped(); ?></li>
 				<li class="posts"><?= wfMessage( 'forum-specialpage-board-posts', $wg->Lang->formatNum( $board['postCount'] ) )->escaped(); ?></li>
 			</ul>
-			<? if (!$isEditMode && $board['postCount'] > 0): ?>
+			<? if ( !$isEditMode && $board['postCount'] > 0 ): ?>
 				<p class="last-post"><?= $lastPostByMsg ?>
 					<a href="<?= $board['lastPost']['userprofile'] ?>"><?= $board['lastPost']['username'] ?></a>
 					<span class="timestamp timeago" title="<?= wfTimestamp( TS_ISO_8601, $board['lastPost']['timestamp'] ) ?>"><?= $wg->Lang->timeanddate( $board['lastPost']['timestamp'] ) ?></span>

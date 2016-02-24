@@ -130,34 +130,17 @@ class ImageServingHelper {
 
 		wfDebug(__METHOD__ . ' - ' . json_encode($images). "\n");
 
-		$dbw = wfGetDB(DB_MASTER, array());
-
 		if( count($images) < 1 ) {
 			if( $ignoreEmpty) {
 				wfProfileOut(__METHOD__);
 				return false;
 			}
-			$dbw->delete( 'page_wikia_props',
-				array(
-					'page_id' =>  $articleId,
-					'propname' => WPP_IMAGE_SERVING
-				),
-				__METHOD__
-			);
+			wfDeleteWikiaPageProp(WPP_IMAGE_SERVING, $articleId);
 			wfProfileOut(__METHOD__);
 			return array();
 		}
 
-		$dbw->replace('page_wikia_props','',
-			array(
-				'page_id' =>  $articleId,
-				'propname' => WPP_IMAGE_SERVING,
-				'props' => serialize($images)
-			),
-			__METHOD__
-		);
-
-		$dbw->commit();
+		wfSetWikiaPageProp(WPP_IMAGE_SERVING, $articleId, $images);
 		wfProfileOut(__METHOD__);
 		return $images;
 	}
@@ -183,8 +166,9 @@ class ImageServingHelper {
 
 		$out = array();
 		preg_match_all("/(?<=(image mw=')).*(?=')/U", $editInfo->output->getText(), $out );
-
-		$images = self::buildIndex($article->getID(), $out[0], $ignoreEmpty, $dryRun);
+		$imageList = $out[0];
+		wfRunHooks( "ImageServing::buildAndGetIndex", [ &$imageList, $title ] );
+		$images = self::buildIndex($article->getID(), $imageList, $ignoreEmpty, $dryRun);
 
 		wfProfileOut(__METHOD__);
 		return $images;

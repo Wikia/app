@@ -9,6 +9,12 @@ $messages['en'] = array(
 	'adengine-exitstitial-go-back' => 'Want to go back?',
 	'adengine-exitstitial-button' => 'Skip this Ad',
 	'adengine-desc' => 'Wikia\'s Ad Engine',
+
+	// Recoverable products
+	'adengine-recovery-message-blocking-welcome' => 'Hey! It looks like you\'re using ad blocking software!',
+	'adengine-recovery-message-blocking-click' => 'Click',
+	'adengine-recovery-message-blocking-message-a' => 'Wikia runs ads so we can keep the lights on and so Wikia will always be free to use. We can bring you fun, free, fan-oriented content until my glorious return to Earth if you add us to your adblock whitelist. $1 my face to refresh after you\'re done!',
+	'adengine-recovery-message-blocking-message-b' => 'Wikia runs ads so we can keep the lights on and so Wikia will always be free to use. We can bring you fun, free, fan-oriented content until my glorious return to Earth if you disable your adblock software while on Wikia. $1 my face to refresh after you\'re done!',
 );
 
 /** Message documentation (Message documentation)
@@ -22,6 +28,12 @@ $messages['qqq'] = array(
 	'adengine-exitstitial-go-back' => 'Text of the link/button that you can close the box with and get back to the content',
 	'adengine-exitstitial-button' => 'Text of the link/button that you can close the box with and get directly to the link target',
 	'adengine-desc' => '{{desc}}',
+	'adengine-recovery-message-blocking-welcome' => 'A bold title in comic bubble next to an image welcoming a user and saying our system detected she uses ad blocking software.',
+	'adengine-recovery-message-blocking-click' => 'A label of link in the last sentence in adengine-recovery-message-blocking-message-a message. This message is used as a parameter in the other, mentioned message.',
+	'adengine-recovery-message-blocking-message-a' => 'More in-depth explanation why using ad blocking software is not good for Wikia. This description is placed just under the welcome message in the comic bubble. And for now it is in two similar versions. Parameters:
+* $1 is a translated call-to-action word which will be linked and clickable.',
+	'adengine-recovery-message-blocking-message-b' => 'More in-depth explanation why using ad blocking software is not good for Wikia. This description is placed just under the welcome message in the comic bubble. And for now it is in two similar versions. Parameters:
+* $1 is a translated call-to-action word which will be linked and clickable.'
 );
 
 /** Arabic (العربية)
@@ -35,6 +47,15 @@ $messages['ar'] = array(
 	'adengine-exitstitial-redirecting' => 'المتصفح الخاص بك سيقوم بتحويلك إلى الصفحة التي طلبتها في بضع ثوانٍ.',
 	'adengine-exitstitial-go-back' => 'أتريد أن تعود؟',
 	'adengine-exitstitial-button' => 'تخطَّ هذا الإعلان',
+);
+
+/** Egyptian Arabic (مصرى)
+ * @author Ghaly
+ */
+$messages['arz'] = array(
+	'adengine-exitstitial-title-template' => 'أنت ماشى $1...',
+	'adengine-exitstitial-go-back' => 'عاوز ترجع ؟',
+	'adengine-exitstitial-button' => 'سيب الإعلان ده',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -110,17 +131,20 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author Marcmpujol
+ * @author Unapersona
  */
 $messages['ca'] = array(
-	'adengine-advertisement' => 'publicitat',
+	'adengine-advertisement' => 'anunci',
 	'adengine-exitstitial-title-template' => 'Estàs sortint de $1...',
 	'adengine-exitstitial-redirecting' => 'El teu navegador et redirigirà a la pàgina que has sol·licitat en uns segons.',
 	'adengine-exitstitial-go-back' => 'Vols tornar enrrere?',
 	'adengine-exitstitial-button' => 'Saltar aquest anunci',
+	'adengine-desc' => "La màquina d'anuncis de Wikia",
 );
 
 /** Czech (čeština)
  * @author Chmee2
+ * @author Darth Daron
  * @author H4nek
  */
 $messages['cs'] = array(
@@ -129,6 +153,7 @@ $messages['cs'] = array(
 	'adengine-exitstitial-redirecting' => 'Váš prohlížeč vás přesměruje na stránku kterou jste vyžádali během několika vteřin.',
 	'adengine-exitstitial-go-back' => 'Chcete se vrátit?',
 	'adengine-exitstitial-button' => 'Přeskočit tuto reklamu',
+	'adengine-desc' => 'Reklamní engine na Wikii',
 );
 
 /** Welsh (Cymraeg)
@@ -152,6 +177,10 @@ $messages['de'] = array(
 	'adengine-exitstitial-go-back' => 'Zurück gehen?',
 	'adengine-exitstitial-button' => 'Diese Anzeige überspringen',
 	'adengine-desc' => 'Anzeigenengine von Wikia',
+	'adengine-recovery-message-blocking-welcome' => 'Hallo! Es sieht so aus als würdest du eine Werbeblocker-Software verwenden!',
+	'adengine-recovery-message-blocking-click' => 'klicke',
+	'adengine-recovery-message-blocking-message-a' => 'Bei Wikia wird Werbung angezeigt, damit wir auf Sendung bleiben können und Wikia auch weiterhin kostenlos angeboten werden kann. Bis zu meiner glorreichen Rückkehr zur Erde findest du bei uns kostenlose, auf unsere Fans zugeschnittene Inhalte, die Spaß machen. Dazu musst du uns nur auf die Whitelist deines Werbeblockers setzen. Wenn du damit fertig bist, $1 zur Aktualisierung einfach auf mein Gesicht!',
+	'adengine-recovery-message-blocking-message-b' => 'Bei Wikia wird Werbung angezeigt, damit wir auf Sendung bleiben können und Wikia auch weiterhin kostenlos angeboten werden kann. Bis zu meiner glorreichen Rückkehr zur Erde findest du bei uns kostenlose, auf unsere Fans zugeschnittene Inhalte, die Spaß machen. Dazu musst du nur deinen Werbeblocker deaktivieren, solange du auf Wikia unterwegs bist. Wenn du damit fertig bist, $1 zur Aktualisierung einfach auf mein Gesicht!'
 );
 
 /** Greek (Ελληνικά)
@@ -175,6 +204,10 @@ $messages['es'] = array(
 	'adengine-exitstitial-go-back' => '¿Quieres regresar?',
 	'adengine-exitstitial-button' => 'Saltar este anuncio',
 	'adengine-desc' => "Wikia's Ad Engine",
+	'adengine-recovery-message-blocking-welcome' => '¡Hola!¡Parece que estás utilizando un software para bloquear publicidad!',
+	'adengine-recovery-message-blocking-click' => 'clic',
+	'adengine-recovery-message-blocking-message-a' => 'Wikia muestra publicidad para que podamos mantener las luces encendidas y que Wikia siempre sea libre de pago. Podemos brindar contenido divertido, libre y orientado a los fans hasta mi glorioso retorno a la tierra si es que nos añades a tu lista blanca de bloqueadores de publicidad. ¡Haz $1 en mi cara para refrescar después de que hayas terminado!',
+	'adengine-recovery-message-blocking-message-b' => 'Wikia muestra publicidad para que podamos mantener las luces encendidas y que Wikia siempre sea libre de pago. Podemos brindar contenido divertido, libre y orientado a los fans hasta mi glorioso retorno a la tierra si es que deshabilitas tu software para bloquear publicidad mientras te encuentres en Wikia. ¡Haz $1 en mi cara para refrescar después de que hayas terminado!',
 );
 
 /** Estonian (eesti)
@@ -197,12 +230,15 @@ $messages['eu'] = array(
 
 /** Persian (فارسی)
  * @author Ebraminio
+ * @author Movyn
  */
 $messages['fa'] = array(
+	'adengine-advertisement' => 'تبلیغات',
 	'adengine-exitstitial-title-template' => 'شما ترک می‌کند $1....',
 	'adengine-exitstitial-redirecting' => 'مرورگرتان در عرض چند ثانیه شما را به صفحه‌ای که درخواست‌کرده بودید هدایت خواهد کرد.',
 	'adengine-exitstitial-go-back' => 'می‌خواهید برگردید؟',
 	'adengine-exitstitial-button' => 'ردشدن از این تبلیغ',
+	'adengine-desc' => 'موتور تبلیغات ویکیا',
 );
 
 /** Finnish (suomi)
@@ -266,7 +302,7 @@ $messages['gv'] = array(
 	'adengine-advertisement' => 'soilsheen',
 );
 
-/** Hakka (客家語/Hak-kâ-ngî)
+/** Hakka Chinese (客家語/Hak-kâ-ngî)
  * @author EagerLin
  */
 $messages['hak'] = array(
@@ -284,6 +320,18 @@ $messages['haw'] = array(
 	'adengine-exitstitial-button' => 'Lele i kēia Hoʻolaha Kūʻai',
 );
 
+/** Hebrew (עברית)
+ * @author LaG roiL
+ */
+$messages['he'] = array(
+	'adengine-advertisement' => 'פרסומת',
+	'adengine-exitstitial-title-template' => 'הינכם יוצאים מ-$1...',
+	'adengine-exitstitial-redirecting' => 'תופנו לדף המבוקש תוך כמה שניות.',
+	'adengine-exitstitial-go-back' => 'רוצים לחזור?',
+	'adengine-exitstitial-button' => 'דילוג על פרסומת זו',
+	'adengine-desc' => 'מנוע הפרסום של ויקיה',
+);
+
 /** Hunsrik (Hunsrik)
  * @author Paul Beppler
  */
@@ -297,8 +345,10 @@ $messages['hrx'] = array(
 /** Hungarian (magyar)
  * @author Csega
  * @author Liteon
+ * @author Tacsipacsi
  */
 $messages['hu'] = array(
+	'adengine-advertisement' => 'hirdetés',
 	'adengine-exitstitial-redirecting' => 'Böngésződ másodperceken belül átirányít a kívánt oldalra.',
 	'adengine-exitstitial-go-back' => 'Visszamennél?',
 	'adengine-exitstitial-button' => 'Hirdetés átugrása',
@@ -306,24 +356,37 @@ $messages['hu'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author Fate Kage
  * @author Riemogerz
  */
 $messages['id'] = array(
+	'adengine-advertisement' => 'iklan',
 	'adengine-exitstitial-title-template' => 'Anda meninggalkan $1...',
 	'adengine-exitstitial-redirecting' => 'Peramban Anda akan mengarahkan Anda ke halaman yang Anda minta dalam beberapa detik.',
 	'adengine-exitstitial-go-back' => 'Ingin kembali?',
 	'adengine-exitstitial-button' => 'Lewati Iklan ini',
+	'adengine-desc' => 'Mesin Iklan Wikia',
+);
+
+/** Ingush (ГӀалгӀай)
+ * @author Sapral Mikail
+ */
+$messages['inh'] = array(
+	'adengine-advertisement' => 'дебат',
 );
 
 /** Italian (italiano)
  * @author Ontsed
  * @author PeppeAeco
+ * @author TecnoMaster
  */
 $messages['it'] = array(
+	'adengine-advertisement' => 'Pubblicità',
 	'adengine-exitstitial-title-template' => 'Stai lasciando  $1 ...',
 	'adengine-exitstitial-redirecting' => 'Il browser ti reindirizzerà alla pagina richiesta in pochi secondi.',
 	'adengine-exitstitial-go-back' => 'Vuoi tornare indietro?',
 	'adengine-exitstitial-button' => 'Ignora questo annuncio',
+	'adengine-desc' => 'Wikia motore di ricerca',
 );
 
 /** Japanese (日本語)
@@ -332,6 +395,10 @@ $messages['it'] = array(
 $messages['ja'] = array(
 	'adengine-advertisement' => '広告',
 	'adengine-exitstitial-button' => '広告をスキップ',
+	'adengine-recovery-message-blocking-welcome' => '広告ブロック・ソフトウェアをお使いのようです。',
+	'adengine-recovery-message-blocking-click' => '手順が完了したら',
+	'adengine-recovery-message-blocking-message-a' => 'ウィキアでは、ウィキアの運営を持続し、またユーザーの皆さんにいつでも無料でウィキアをご利用いただけるようにするため、広告を掲載しています。広告ブロックのホワイトリストにウィキアを追加していただくと、ファン向けの楽しい無料コンテンツをご提供できます。$1、私の顔をクリックして更新してくださいね！',
+	'adengine-recovery-message-blocking-message-b' => 'ウィキアでは、ウィキアの運営を持続し、またユーザーの皆さんにいつでも無料でウィキアをご利用いただけるようにするため、広告を掲載しています。ウィキアのご利用時は広告ブロック・ソフトウェアを無効にしていただくと、ファン向けの楽しい無料コンテンツをご提供できます。$1、私の顔をクリックして更新してくださいね！',
 );
 
 /** Georgian (ქართული)
@@ -375,6 +442,13 @@ $messages['krc'] = array(
 	'adengine-advertisement' => 'реклама',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'adengine-exitstitial-title-template' => 'Tu ji $1 derdikevî...',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -397,7 +471,7 @@ $messages['lez'] = array(
 	'adengine-exitstitial-button' => 'Реклама кими авун',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -446,6 +520,7 @@ $messages['mk'] = array(
 	'adengine-exitstitial-redirecting' => 'Прелистувачот за некоја секунда ќе ве одведе на страницата што ја побаравте.',
 	'adengine-exitstitial-go-back' => 'Сакате да се вратите назад?',
 	'adengine-exitstitial-button' => 'Прескокни ја рекламава',
+	'adengine-desc' => 'Рекламен погон на Викија',
 );
 
 /** Malayalam (മലയാളം)
@@ -543,6 +618,7 @@ $messages['oc'] = array(
 );
 
 /** Polish (polski)
+ * @author Devwebtel
  * @author Matik7
  * @author Pio387
  * @author Sovq
@@ -550,19 +626,26 @@ $messages['oc'] = array(
 $messages['pl'] = array(
 	'adengine-advertisement' => 'reklama',
 	'adengine-exitstitial-title-template' => 'Opuszczasz $1...',
-	'adengine-exitstitial-redirecting' => 'Twoja przeglądarka przekieruje Cię na pożądaną stronę za kilka sekund.',
+	'adengine-exitstitial-redirecting' => 'Twoja przeglądarka przekieruje Cię na pożądaną stronę w ciągu kilku sekund.',
 	'adengine-exitstitial-go-back' => 'Chcesz wrócić na wiki?',
-	'adengine-exitstitial-button' => 'Zamknij reklamę',
+	'adengine-exitstitial-button' => 'Pomiń tą reklamę',
 	'adengine-desc' => 'Silnik reklam Wikii',
+	'adengine-recovery-message-blocking-welcome' => 'Cześć! Wygląda na to, że korzystasz z oprogramowania do blokowania reklam!',
+	'adengine-recovery-message-blocking-click' => 'Kliknij',
+	'adengine-recovery-message-blocking-message-a' => 'Wikia wyświetla reklamy, aby móc działać, dzięki czemu Wikia zawsze pozostanie darmowa. Możemy być Twoim źródłem zabawnych, bezpłatnych treści skierowanych do fanów do czasu mojego chwalebnego powrotu na ziemię, pod warunkiem że dodasz nas do listy wyjątków swojego programu do blokowania reklam. $1 na moją twarz, aby odświeżyć stronę, kiedy będziesz gotowy!',
+	'adengine-recovery-message-blocking-message-b' => 'Wikia wyświetla reklamy, aby móc działać, dzięki czemu Wikia zawsze pozostanie darmowa. Możemy być Twoim źródłem zabawnych, bezpłatnych treści skierowanych do fanów do czasu mojego chwalebnego powrotu na ziemię, pod warunkiem że wyłączysz program do blokowania reklam na czas przeglądania Wikii. $1 na moją twarz, aby odświeżyć stronę, kiedy będziesz gotowy!',
 );
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'adengine-advertisement' => 'خبرتيا',
 	'adengine-exitstitial-title-template' => 'تاسې له $1 څخه وځۍ...',
+	'adengine-exitstitial-redirecting' => 'ستاسې کتنمل به تاسې په يو څو ثانيو کې هغه مخ ته وروگرځوي کوم چې تاسې يې غوښتنه کړې.',
 	'adengine-exitstitial-go-back' => 'بېرته ورستنېدل غواړۍ؟',
 	'adengine-exitstitial-button' => 'له دې خبرتيا تېرېدل',
+	'adengine-desc' => 'د ويکييا خبرتيا ماشين',
 );
 
 /** Portuguese (português)
@@ -625,21 +708,36 @@ $messages['sco'] = array(
 	'adengine-exitstitial-button' => 'Pass ower this Ad',
 );
 
+/** Sinhala (සිංහල)
+ * @author හරිත
+ */
+$messages['si'] = array(
+	'adengine-advertisement' => 'ප්‍රචාරක දැන්වීම',
+	'adengine-exitstitial-title-template' => 'ඔබ හැරයන්නේ $1…',
+	'adengine-exitstitial-redirecting' => 'ඔබේ ගවේෂකය ඔබට අවශ්‍ය පිටුවට ඔබව තත්පර කිහිපයකින් යළියොමු කරනු ඇත.',
+	'adengine-exitstitial-go-back' => 'ආපසු යාමට වුවමනා ද?',
+	'adengine-exitstitial-button' => 'මේ දැන්වීම මගහරින්න',
+);
+
 /** Slovenian (slovenščina)
  * @author Dbc334
  * @author Mitja i
  */
 $messages['sl'] = array(
+	'adengine-advertisement' => 'oglas',
 	'adengine-exitstitial-title-template' => 'Zapuščate  $1 ...',
 	'adengine-exitstitial-redirecting' => 'Kmalu boste preusmerjeni na zahtevano stran.',
 	'adengine-exitstitial-go-back' => 'Želite nazaj?',
 	'adengine-exitstitial-button' => 'Preskočite ta oglas',
+	'adengine-desc' => 'Oglaševalski pogon Wikia',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Aktron
  * @author Rancher
  */
 $messages['sr-ec'] = array(
+	'adengine-advertisement' => 'реклама',
 	'adengine-exitstitial-title-template' => 'Напуштате $1…',
 	'adengine-exitstitial-redirecting' => 'Прегледач ће вас за који секунд одвести на тражену страницу.',
 	'adengine-exitstitial-go-back' => 'Желите да се вратите назад?',
@@ -671,12 +769,27 @@ $messages['szl'] = array(
 
 /** Telugu (తెలుగు)
  * @author Chaduvari
+ * @author రహ్మానుద్దీన్
  */
 $messages['te'] = array(
+	'adengine-advertisement' => 'వాణిజ్య ప్రకటన',
 	'adengine-exitstitial-title-template' => 'మీరు $1 ను వీడుతున్నారు…',
 	'adengine-exitstitial-redirecting' => 'కొద్ది సెకండ్లలో మీ విహారిణి మీరడిగిన పేజీకి తీసుకుపోతుంది.',
 	'adengine-exitstitial-go-back' => 'తిరిగి వెనక్కి వెళ్తారా?',
 	'adengine-exitstitial-button' => 'ఈ యాడ్‍ను దాటవెయ్యి',
+	'adengine-desc' => 'వికియా యాడ్ ఇంజన్',
+);
+
+/** Thai (ไทย)
+ * @author Panan2544
+ */
+$messages['th'] = array(
+	'adengine-advertisement' => 'การโฆษณา',
+	'adengine-exitstitial-title-template' => 'คุณกำลังจะออกจาก $1',
+	'adengine-exitstitial-redirecting' => 'เบราว์เซอร์ของคุณจะนำคุณไปยัง หน้าเว็บไซต์ ที่คุณร้องขอในอีกไม่กี่วินาที',
+	'adengine-exitstitial-go-back' => 'ต้องการที่จะกลับไป?',
+	'adengine-exitstitial-button' => 'ข้ามโฆษณานี้',
+	'adengine-desc' => 'Engine ของ โฆษณา ของ Wikia',
 );
 
 /** Turkish (Türkçe)
@@ -699,19 +812,24 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
+ * @author Erami
  * @author Mykola Swarnyk
  * @author Ua2004
+ * @author Капитан Джон Шепард
  */
 $messages['uk'] = array(
 	'adengine-advertisement' => 'реклама',
-	'adengine-exitstitial-title-template' => 'Ви покидаєте $1...',
-	'adengine-exitstitial-redirecting' => 'Ваш переглядач переадресує вас на запитувану вами сторінку за декілька секунд.',
-	'adengine-exitstitial-go-back' => 'Хочете повернутися?',
-	'adengine-exitstitial-button' => 'Пропустити цю рекламу',
+	'adengine-exitstitial-title-template' => 'Ти йдеш з $1...',
+	'adengine-exitstitial-redirecting' => 'Ваш браузер переадресує вас на запитувану вами сторінку за декілька секунд.',
+	'adengine-exitstitial-go-back' => 'Бажаєте повернутися?',
+	'adengine-exitstitial-button' => 'Пропустити це оголошення',
+	'adengine-desc' => 'Вікі оголошення',
 );
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
+ * @author KhangND
  * @author Max20091
  * @author Xiao Qiao
  */
@@ -721,6 +839,7 @@ $messages['vi'] = array(
 	'adengine-exitstitial-redirecting' => 'Trình duyệt của bạn sẽ chuyển hướng bạn đến trang web mà bạn yêu cầu trong vài giây nữa.',
 	'adengine-exitstitial-go-back' => 'Bạn muốn quay trở lại?',
 	'adengine-exitstitial-button' => 'Bỏ qua quảng cáo này',
+	'adengine-desc' => 'Cơ chế quảng cáo của Wikia',
 );
 
 /** Waray (Winaray)
@@ -729,6 +848,13 @@ $messages['vi'] = array(
 $messages['war'] = array(
 	'adengine-exitstitial-title-template' => 'Naíwas ka na han $1...',
 	'adengine-exitstitial-go-back' => '¿Karúyag mo bumálik?',
+);
+
+/** Mingrelian (მარგალური)
+ * @author Silovan
+ */
+$messages['xmf'] = array(
+	'adengine-exitstitial-button' => 'გეგშიტეთ თე რეკლამა',
 );
 
 /** Chinese (中文)

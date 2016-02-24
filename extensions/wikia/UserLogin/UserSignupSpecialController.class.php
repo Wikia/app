@@ -14,13 +14,16 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	public function __construct() {
 		parent::__construct( 'UserSignup', '', false );
 
-		$this->disableCaptcha();
+		// Disable captcha for automated tests and wikia mobile and sites disabling it, e.g. Internal
+		if ( $this->shouldDisableCaptcha() ) {
+			$this->disableCaptcha();
+		}
 	}
 
 	public function init() {
-		$skin = $this->wg->User->getSkin();
+		$skin = RequestContext::getMain()->getSkin();
 		$this->isMonobookOrUncyclo = ( $skin instanceof SkinMonoBook || $skin instanceof SkinUncyclopedia );
-		$this->isEn = ( $this->wg->Lang->getCode() == 'en' );
+		$this->isEn = ( RequestContext::getMain()->getLanguage()->getCode() == 'en' );
 		$this->userLoginHelper = ( new UserLoginHelper );
 	}
 
@@ -39,6 +42,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 		if ( $this->wg->User->isLoggedIn() && !$this->wg->User->isAllowed( 'createaccount' ) ) {
 			$this->forward( 'UserLoginSpecialController', 'loggedIn' );
+		} elseif ( $this->request->getBool( 'sendConfirmationEmail' ) ) {
+			$this->forward( __CLASS__, 'sendConfirmationEmail' );
 		} else {
 			$this->forward( __CLASS__, 'signupForm' );
 		}
@@ -103,7 +108,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->signupToken = UserLoginHelper::getSignupToken();
 		$this->uselang = $this->request->getVal( 'uselang', 'en' );
 
-		//fb#38260 -- removed uselang
+		// fb#38260 -- removed uselang
 		$this->avatars = $this->userLoginHelper->getRandomAvatars();
 
 		// template params
@@ -122,82 +127,101 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		// process signup
 		$redirected = $this->request->getVal( 'redirected', '' );
 		if ( $this->wg->Request->wasPosted() && empty( $redirected ) ) {
+			$this->handleSignupFormSubmit();
+		} else {
+			$this->track( 'signup-start' );
+		}
 
-			$response = $this->app->sendRequest( 'UserSignupSpecial', 'signup' );
+		/**
+		 * OPS-6556 / PLATFORM-1341 Special:UserSignup daily vists
+		 * Contact: ruggero@wikia-inc.com or michal@wikia-inc.com or macbre@wikia-inc.com
+		 */
+		$context = RequestContext::getMain();
 
-			$this->result = $response->getVal( 'result', '' );
-			$this->msg = $response->getVal( 'msg', '' );
-			$this->errParam = $response->getVal( 'errParam', '' );
+		\Wikia\Logger\WikiaLogger::instance()->info(
+			'OPS-6556',
+			[
+				'i18n'         => $context->getLanguage()->getCode(),
+				'skin'         => $context->getSkin()->getSkinName(),
+				'client_ip'    => $context->getRequest()->getIP(),
+				'client_agent' => $context->getRequest()->getHeader( 'User-Agent' ),
+			]
+		);
+	}
 
-			if ( $this->result == 'ok' ) {
+	public function handleSignupFormSubmit() {
+		$response = $this->app->sendRequest( 'UserSignupSpecial', 'signup' );
+		$result = $response->getVal( 'result', '' );
 
-				/*
-				 * Remove when SOC-217 ABTest is finished
-				 */
-				$signupForm = new UserLoginForm( $this->wg->request );
+		if ( $result == 'ok' ) {
+			/*
+			 * Remove when SOC-217 ABTest is finished
+			 */
+			$signupForm = new UserLoginForm( $this->wg->request );
 
-				if ( $signupForm->isAllowedRegisterUnconfirmed() ) {
-					$user = User::newFromName( $this->username );
-					// Get and clear redirect page
-					$userSignupRedirect = $user->getOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
-					$user->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
+			if ( $signupForm->isAllowedRegisterUnconfirmed() ) {
+				$user = User::newFromName( $this->username );
+				// Get and clear redirect page
+				$userSignupRedirect = $user->getGlobalAttribute( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
+				$user->setGlobalAttribute( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
 
-					$user->saveSettings();
+				$user->saveSettings();
 
-					// redirect user
-					if ( !empty( $userSignupRedirect ) ) {
-						// Redirect user to the point where he finished (when signup on create wiki)
-						$title = SpecialPage::getTitleFor( 'CreateNewWiki' );
-						$query = $userSignupRedirect;
-					} else {
-						$title = $user->getUserPage();
-						$query = '';
-					}
-
-					$redirectUrl = $title->getFullURL( $query );
+				// redirect user
+				if ( !empty( $userSignupRedirect ) ) {
+					// Redirect user to the point where he finished (when signup on create wiki)
+					$title = SpecialPage::getTitleFor( 'CreateNewWiki' );
+					$query = $userSignupRedirect;
 				} else {
+					$title = $user->getUserPage();
+					$query = '';
+				}
+
+				$redirectUrl = $title->getFullURL( $query );
+			} else {
 				/*
 				 * end remove
 				 */
-					$params = [
-						'method' => 'sendConfirmationEmail',
-						'username' => $this->username,
-						'byemail' => intval( $this->byemail ),
-					];
-					$redirectUrl = $this->wg->title->getFullUrl( $params );
-				}
-
-				$this->wg->out->redirect( $redirectUrl );
+				$params = [
+					'sendConfirmationEmail' => true,
+					'username' => $this->username,
+					'byemail' => intval( $this->byemail ),
+				];
+				$redirectUrl = $this->wg->title->getFullUrl( $params );
 			}
 
+			$this->track( 'signup-successful' );
+			$this->wg->out->redirect( $redirectUrl );
+		} else {
+			$this->track( 'signup-failed' );
+			$this->response->setValues( [
+				'result' => $result,
+				'msg' => $response->getVal( 'msg', '' ),
+				'errParam' => $response->getVal( 'errParam', '' ),
+			] );
 		}
 	}
 
+	/**
+	 * Returns captcha HTML
+	 */
 	public function captcha() {
-		$this->rawHtml = '';
-		$this->isFancyCaptcha = false;
+		if ( $this->shouldDisableCaptcha() ) {
+			return;
+		}
 
-		if ( $this->shouldDisplayCaptcha() ) {
-			$captchaObj = $this->getCaptchaObj();
-			if ( !empty( $captchaObj ) ) {
-				$this->rawHtml = $captchaObj->getForm();
-				$this->isFancyCaptcha = (
-					class_exists( 'Captcha\Module\FancyCaptcha' ) &&
-					$captchaObj instanceof Captcha\Module\FancyCaptcha
-				);
-			}
+		$captchaObj = $this->getCaptchaObj();
+		if ( !empty( $captchaObj ) ) {
+			$this->response->setVal( 'rawHtml', $captchaObj->getForm() );
 		}
 	}
 
 	private function getCaptchaObj() {
-		$captchaObj = null;
-
-		if ( !empty( $this->wg->WikiaEnableConfirmEditExt ) ) {
-			$captchaObj = ConfirmEditHooks::getInstance();
-		} elseif ( !empty( $this->wg->EnableCaptchaExt ) ) {
-			$captchaObj = Captcha\Factory\Module::getInstance();
+		if ( empty( $this->wg->EnableCaptchaExt ) ) {
+			return null;
 		}
-		return $captchaObj;
+
+		return Captcha\Factory\Module::getInstance();
 	}
 
 	/**
@@ -276,6 +300,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string errParam
 	 * @responseParam string heading
 	 * @responseParam string subheading
+	 *
+	 * @throws BadRequestException
 	 */
 	public function sendConfirmationEmail() {
 		if ( $this->request->getVal( 'format', '' ) !== 'json' ) {
@@ -294,6 +320,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 		$this->username = $this->request->getVal( 'username', '' );
 		$this->byemail = $this->request->getBool( 'byemail', false );
+		$this->token = $this->wg->User->getEditToken();
 
 		// default heading, subheading, msg
 		// depending on what happens, default will be over written below
@@ -324,6 +351,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->errParam = '';
 
 			if ( $this->wg->Request->wasPosted() ) {
+				$this->checkWriteRequest(); // SUS-20: require a user token when handling POST requests
+
 				$action = $this->request->getVal( 'action', '' );
 				if ( $action == 'resendconfirmation' ) {
 					$response = $this->userLoginHelper->sendConfirmationEmail( $this->username );
@@ -446,7 +475,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	private function isValidUser( User $user ) {
 		if ( $user instanceof User && $user->getID() != 0 ) {
 			// break if user is already confirmed
-			if ( !$user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
+			if ( !$user->getGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
 				return $this->setResponseFields(
 					'confirmed',
 					wfMessage(
@@ -646,16 +675,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * Disables User Signup Captcha for automated tests, mobile skin, and sites such as internal
 	 */
 	private function disableCaptcha() {
-		// Disable captcha for automated tests and wikia mobile and sites disabling it, e.g. Internal
-		if ( $this->shouldDisplayCaptcha() ) {
-			return;
-		}
-
 		global $wgHooks;
 
-		//Switch off global var
-		$this->wg->WikiaEnableConfirmEditExt = false;
-		//Remove hook function
+		// Remove hook function
 		$hookArrayKey = array_search( 'Captcha\Hooks::confirmUserCreate', $wgHooks['AbortNewAccount'] );
 		if ( $hookArrayKey !== false ) {
 			unset( $wgHooks['AbortNewAccount'][$hookArrayKey] );
@@ -666,23 +688,38 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Determines if captcha should be displayed / enabled
+	 * Determines if captcha should be withheld
+	 *
 	 * @return bool
 	 */
-	protected function shouldDisplayCaptcha() {
-		// For mobile and when signup captcha is disabled, e.g Internal, return immediately
+	protected function shouldDisableCaptcha() {
+		// We shouldn't show captcha for mobile and when signup captcha is disabled
 		if ( $this->app->checkSkin( 'wikiamobile' ) || $this->wg->UserSignupDisableCaptcha ) {
+			return true;
+		}
+
+		// We shouldn't show captcha if nocaptchatest is set and we're in a known test environment.
+		try {
+			$isTest = $this->wg->Request->getInt( 'nocaptchatest' ) == 1;
+			$userIp = $this->wg->Request->getIP();
+
+			return $isTest && in_array( $userIp, $this->wg->AutomatedTestsIPsList );
+		} catch ( MWException $e ) {
 			return false;
 		}
+	}
 
-		try {
-			$userIp = $this->wg->Request->getIP();
-			$isTest = in_array( $userIp, $this->wg->AutomatedTestsIPsList ) &&
-				( $this->wg->Request->getInt( 'nocaptchatest' ) == 1 );
-		} catch ( MWException $e ) {
-			$isTest = false;
-		}
-
-		return !$isTest;
+	/**
+	 * Track an event with a given label with category 'user-sign-up' and action 'request'
+	 *
+	 * @param string $label
+	 */
+	protected function track( $label ) {
+		\Track::event( 'trackingevent', [
+			'ga_category' => 'user-sign-up',
+			'ga_action' => 'request',
+			'ga_label' => $label,
+			'beacon' => !empty( $this->wg->DevelEnvironment ) ? 'ThisIsFake' : wfGetBeaconId(),
+		] );
 	}
 }

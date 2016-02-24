@@ -151,6 +151,13 @@ $messages['ia'] = array(
 	'cacheepoch-no-wf' => 'WikiFactory non es activate in iste wiki. Impossibile alterar wgCacheEpoch.',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'cacheepoch-no-wf' => '이 위키에서는 위키팩토리를 사용할 수 없습니다. wgCacheEpoch를 수정할 수 없습니다.',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

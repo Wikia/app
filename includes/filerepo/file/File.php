@@ -69,7 +69,7 @@ abstract class File implements UrlGeneratorInterface {
 	 */
 
 	/**
-	 * @var FileRepo|false
+	 * @var FileRepo|false|LocalRepo
 	 */
 	var $repo;
 
@@ -1578,7 +1578,7 @@ abstract class File implements UrlGeneratorInterface {
 				wfDebug("miss\n");
 			}
 			wfDebug( "Fetching shared description from $renderUrl\n" );
-			$res = Http::get( $renderUrl );
+			$res = ExternalHttp::get( $renderUrl ); # this can fetch file page from Wikimedia Commons or other Wikia's wiki (Wikia change)
 			if ( $res && $this->repo->descriptionCacheExpiry > 0 ) {
 				$wgMemc->set( $key, $res, $this->repo->descriptionCacheExpiry );
 			}
@@ -1786,15 +1786,15 @@ abstract class File implements UrlGeneratorInterface {
 	 *
 	 */
 	public function getUrlGenerator() {
-			$timestamp = $this->isOld() ? $this->getArchiveTimestamp() : $this->getTimestamp();
+		$timestamp = $this->isOld() ? $this->getArchiveTimestamp() : $this->getTimestamp();
 
-			return VignetteRequest::fromConfigMap( [
-				'is-archive' => $this->isOld(),
-				'timestamp' => $timestamp,
-				'relative-path' => $this->getHashPath() . rawurlencode( $this->getName() ),
-				'bucket' => $this->getBucket(),
-				'path-prefix' => $this->getPathPrefix(),
-			] );
+		return VignetteRequest::fromConfigMap( [
+			'is-archive' => $this->isOld(),
+			'timestamp' => $timestamp,
+			'relative-path' => $this->getHashPath() . rawurlencode( $this->getName() ),
+			'bucket' => $this->getBucket(),
+			'path-prefix' => $this->getPathPrefix(),
+		] );
 	}
 
 	/**

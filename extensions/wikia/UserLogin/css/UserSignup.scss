@@ -98,7 +98,7 @@
 			margin-left: 80px;
 		}
 
-		@if ($responsive-layout-enabled) {
+		@if ($responsive-or-breakpoints-layout-enabled) {
 			@media screen and (max-width: 910px) {
 				margin-top: 35px;
 				width: 100%;
@@ -133,7 +133,7 @@
 			@include submitpane;
 		}
 
-		@if ($responsive-layout-enabled) {
+		@if ($responsive-or-breakpoints-layout-enabled) {
 			@media screen and (max-width: 910px) {
 				padding-left: 2%;
 				width: 52%;

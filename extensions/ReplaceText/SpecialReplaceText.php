@@ -456,7 +456,7 @@ class ReplaceText extends SpecialPage {
 	function extractContext( $text, $target, $use_regex = false ) {
 		global $wgLang;
 
-		$cw = $this->user->getOption( 'contextchars', 40 );
+		$cw = $this->user->getGlobalPreference( 'contextchars', 40 );
 
 		// Get all indexes
 		if ( $use_regex ) {

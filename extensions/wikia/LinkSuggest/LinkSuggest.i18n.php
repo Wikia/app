@@ -178,8 +178,10 @@ $messages['ia'] = array(
  * @author Aldnonymous
  * @author Bennylin
  * @author C5st4wr6ch
+ * @author Fate Kage
  */
 $messages['id'] = array(
+	'linksuggest-desc' => 'Menyarankan pranala kepada editor pada tampilan suntingan',
 	'tog-disablelinksuggest' => 'Jangan menampilkan saran pranala',
 	'tog-redirected-from' => '&ndash; dialihkan dari $1',
 );

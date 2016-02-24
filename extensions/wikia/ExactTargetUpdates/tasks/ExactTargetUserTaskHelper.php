@@ -10,9 +10,14 @@ class ExactTargetUserTaskHelper {
 	 * @param array $aFilterValues possible values to filter
 	 * @return array
 	 */
-	public function prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues ) {
+	public function prepareUserRetrieveParams( array $aProperties, $sFilterProperty, array $aFilterValues ) {
 		/* Get Customer Keys specific for production or development */
 		$aCustomerKeys = $this->getCustomerKeys();
+
+		$sSimpleOperator = 'equals';
+		if ( count( $aFilterValues ) > 1 ) {
+			$sSimpleOperator = 'IN';
+		}
 
 		$aApiParams = [
 			'DataExtension' => [
@@ -20,6 +25,7 @@ class ExactTargetUserTaskHelper {
 				'Properties' => $aProperties,
 			],
 			'SimpleFilterPart' => [
+				'SimpleOperator' => $sSimpleOperator,
 				'Property' => $sFilterProperty,
 				'Value' => $aFilterValues
 			]
@@ -34,21 +40,28 @@ class ExactTargetUserTaskHelper {
 	 * @param  array $aUserData  User key value array
 	 * @return array             Array of DataExtension data arrays (nested arrays)
 	 */
-	public function prepareUserUpdateParams( array $aUserData ) {
-		$userId = $this->extractUserIdFromData( $aUserData );
-		/* Get Customer Keys specific for production or development */
-		$aCustomerKeys = $this->getCustomerKeys();
-		$sCustomerKey = $aCustomerKeys['user'];
-
+	public function prepareUsersUpdateParams( array $aUsersData ) {
 		$aApiParams = [
-			'DataExtension' => [
-				[
-					'CustomerKey' => $sCustomerKey,
-					'Properties' => $aUserData,
-					'Keys' => [ 'user_id' => $userId ]
-				]
-			]
+			'DataExtension' => []
 		];
+
+		foreach ( $aUsersData as $aUserData ) {
+
+			/* Get Customer Keys specific for production or development */
+			$aCustomerKeys = $this->getCustomerKeys();
+			$sCustomerKey = $aCustomerKeys['user'];
+
+			$userId = $this->extractUserIdFromData( $aUserData );
+
+			/* Prepare API params for one user */
+			$aApiParams['DataExtension'][] = [
+				'CustomerKey' => $sCustomerKey,
+				'Properties' => $aUserData,
+				'Keys' => [ 'user_id' => $userId ]
+			];
+
+		};
+
 		return $aApiParams;
 	}
 
@@ -123,14 +136,21 @@ class ExactTargetUserTaskHelper {
 	/**
 	 * Prepares Subscriber's object data
 	 * @param  string $sUserEmail  User's email
+	 * @param bool $subscribed User's subscription status
 	 * @return array               Array of Subscriber data arrays (nested arrays)
 	 */
-	public function prepareSubscriberData( $sUserEmail ) {
+	public function prepareSubscriberData( $sUserEmail, $subscribed=true ) {
+		$sUserStatus = \ExactTarget_SubscriberStatus::Active;
+		if ( isset($subscribed) && !$subscribed ) {
+			$sUserStatus = \ExactTarget_SubscriberStatus::Unsubscribed;
+		}
+
 		$aApiParams = [
 			'Subscriber' => [
 				[
 					'SubscriberKey' => $sUserEmail,
 					'EmailAddress' => $sUserEmail,
+					'Status' => $sUserStatus,
 				],
 			],
 		];

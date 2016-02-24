@@ -1,0 +1,63 @@
+/**
+ * CSS for SRF flot module
+ * *
+ * @licence: GNU GPL v2 or later
+ * @author:  mwjames
+ *
+ * @release: 0.1
+ */
+.srf-flot-chart-title {
+	text-align:center;
+	font-weight: bold;
+	color:grey;
+	margin-left:10px;
+	margin-bottom:5px;
+	display:block;
+	position:relative;
+	font-size:110%;
+}
+
+.srf-flot-note{
+	font-weight: bold;
+	color:red;
+	position:relative;
+	margin-bottom:5px;
+	margin-top:5px;
+}
+
+.srf-flot-chart-text {
+	color:grey;
+	display:block;
+	position:relative;
+	font-size:90%;
+	margin-left: 5px;
+}
+
+.srf-flot-tooltip {
+	background:#3f3f3f;
+	border:1px solid #222;
+	opacity:.8;
+	z-index:1000;
+	padding:5px 10px;
+	color:#fff
+	background-color: #C5E1EE;
+	margin-top: 5px;
+	padding: 4px; !important;
+	font-size: 75%;
+	font-weight: normal;
+	line-height: 1.5;
+	clear:both;
+	color: #464646;
+	-webkit-border-radius: 1.25em;
+	-moz-border-radius: 1.25em;
+	-o-border-radius: 1.25em;
+	border-radius: 1.25em;
+	border: 1px solid #DFDFDF;
+	background-color: #F1F1F1;
+	background-image: -ms-linear-gradient(top,#ffffff,#f6f8f9);
+	background-image: -moz-linear-gradient(top,#ffffff,#f6f8f9);
+	background-image: -o-linear-gradient(top,#ffffff,#f6f8f9);
+	background-image: -webkit-radient(linear,left top,left bottom,from(#ffffff),to(#f6f8f9));
+	background-image: -webkit-linear-gradient(top,#ffffff,#f6f8f9);
+	background-image: linear-gradient(top,#ffffff,#f6f8f9);
+}

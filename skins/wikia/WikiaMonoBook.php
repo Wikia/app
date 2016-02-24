@@ -93,6 +93,8 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 
 	public function addBodyClasses(&$classes) {
 		$classes .= ($this->ads ? ' with-adsense' : ' without-adsense');
+		$classes .= $this->getUserLoginStatusClass();
+
 		return true;
 	}
 
@@ -132,10 +134,7 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 	private function getAnalyticsCode() {
 		global $wgCityId;
 
-		return AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW) .
-			AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine2Service::getCachedCategory()) .
-			AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId)) .
-			AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
+		return AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 	}
 
 	/**

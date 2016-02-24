@@ -28,3 +28,8 @@ $specialPageAliases['ko'] = array(
 $specialPageAliases['vi'] = array(
 	'CloseMyAccount' => array( 'Đóng_tài_khoản' ),
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'CloseMyAccount' => array( 'アカウント停止' ),
+);

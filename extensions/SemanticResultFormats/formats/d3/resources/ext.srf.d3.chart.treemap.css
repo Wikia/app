@@ -1,0 +1,18 @@
+/**
+ * CSS for SRF D3 module
+ *
+ * Based on the official D3 treemap chart tutorial
+ *
+ * @licence: GNU GPL v2 or later
+ * @author:  mwjames
+ *
+ * @release: 0.1
+ */
+.srf-d3-chart-treemap .cell {
+	border: solid 1px white;
+	font: 10px sans-serif;
+	line-height: 12px;
+	overflow: hidden;
+	position: absolute;
+	text-indent: 2px;
+}

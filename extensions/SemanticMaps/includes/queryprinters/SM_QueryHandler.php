@@ -8,21 +8,31 @@
  * @ingroup SemanticMaps
  * @file SM_QueryHandler.php
  *
- * @author Jeroen De Dauw
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class SMQueryHandler {
 
 	protected $queryResult;
 	protected $outputmode;
 
-	protected $locations = false;
+	/**
+	 * @since 2.0
+	 *
+	 * @var array
+	 */
+	protected $geoShapes = array(
+		'lines' => array(),
+		'locations' => array(),
+		'polygons' => array()
+	);
 
 	/**
 	 * The template to use for the text, or false if there is none.
 	 *
 	 * @since 0.7.3
 	 *
-	 * @var false or string
+	 * @var string|boolean false
 	 */
 	protected $template = false;
 
@@ -81,7 +91,7 @@ class SMQueryHandler {
 	protected $pageLinkText;
 
 	/**
-	 * A separator to use beteen the subject and properties in the text field.
+	 * A separator to use between the subject and properties in the text field.
 	 *
 	 * @since 1.0
 	 *
@@ -108,20 +118,31 @@ class SMQueryHandler {
 	protected $showSubject = true;
 
 	/**
+	 * Hide the namepsace or not.
+	 *
+	 * @var boolean
+	 */
+	protected $hideNamespace = false;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 0.7.3
 	 *
 	 * @param SMWQueryResult $queryResult
 	 * @param integer $outputmode
+	 * @param boolean $linkAbsolute
+	 * @param string $pageLinkText
+	 * @param boolean $titleLinkSeparate
 	 */
-	public function __construct( SMWQueryResult $queryResult, $outputmode, $linkAbsolute = false, $pageLinkText = '$1', $titleLinkSeparate = false ) {
+	public function __construct( SMWQueryResult $queryResult, $outputmode, $linkAbsolute = false, $pageLinkText = '$1', $titleLinkSeparate = false, $hideNamespace = false ) {
 		$this->queryResult = $queryResult;
 		$this->outputmode = $outputmode;
 
 		$this->linkAbsolute = $linkAbsolute;
 		$this->pageLinkText = $pageLinkText;
 		$this->titleLinkSeparate = $titleLinkSeparate;
+		$this->hideNamespace = $hideNamespace;
 	}
 
 	/**
@@ -212,36 +233,15 @@ class SMQueryHandler {
 		$this->pageLinkText = $text;
 	}
 
-	/**
-	 * Gets the query result as a list of locations.
-	 *
-	 * @since 0.7.3
-	 *
-	 * @return array of MapsLocation
-	 */
-	public function getLocations() {
-		if ( $this->locations === false ) {
-			$this->locations = $this->findLocations();
-		}
-
-		return $this->locations;
+	public function getShapes() {
+		$this->findShapes();
+		return $this->geoShapes;
 	}
 
-	/**
-	 * Gets the query result as a list of locations.
-	 *
-	 * @since 0.7.3
-	 *
-	 * @return array of MapsLocation
-	 */
-	protected function findLocations() {
-		$locations = array();
-
+	protected function findShapes() {
 		while ( ( $row = $this->queryResult->getNext() ) !== false ) {
-			$locations = array_merge( $locations, $this->handleResultRow( $row ) );
+			$this->handleResultRow( $row );
 		}
-
-		return $locations;
 	}
 
 	/**
@@ -271,7 +271,12 @@ class SMQueryHandler {
 				}
 				else if ( $dataValue->getTypeID() == '_str' && $i == 0 ) {
 					$title = $dataValue->getLongText( $this->outputmode, null );
-					$text = $dataValue->getLongText( $this->outputmode, $GLOBALS['wgUser']->getSkin() );
+					$text = $dataValue->getLongText( $this->outputmode, smwfGetLinker() );
+				}
+				else if ( $dataValue->getTypeID() == '_gpo' ) {
+					$dataItem = $dataValue->getDataItem();
+					$polyHandler = new PolygonHandler ( $dataItem->getString() );
+					$this->geoShapes[ $polyHandler->getGeoType() ][] = $polyHandler->shapeFromText();
 				}
 				else if ( $dataValue->getTypeID() != '_geo' && $i != 0 ) {
 					$properties[] = $this->handleResultProperty( $dataValue, $printRequest );
@@ -295,7 +300,16 @@ class SMQueryHandler {
 
 		$icon = $this->getLocationIcon( $row );
 
-		return $this->buildLocationsList( $locations, $title, $text, $icon, $properties );
+		$this->geoShapes['locations'] = array_merge(
+			$this->geoShapes['locations'],
+			$this->buildLocationsList(
+				$locations,
+				$text,
+				$icon,
+				$properties,
+				Title::newFromText( $title )
+			)
+		);
 	}
 
 	/**
@@ -309,8 +323,6 @@ class SMQueryHandler {
 	 * @return array with title and text
 	 */
 	protected function handleResultSubject( SMWWikiPageValue $object ) {
-		global $wgUser;
-
 		$title = $object->getLongText( $this->outputmode, null );
 		$text = '';
 
@@ -323,7 +335,7 @@ class SMQueryHandler {
 				);
 			}
 			else {
-				$text = $object->getLongText( $this->outputmode, $wgUser->getSkin() );
+				$text = $object->getLongHTMLText( smwfGetLinker() );
 			}
 
 			if ( $this->boldSubject ) {
@@ -331,15 +343,15 @@ class SMQueryHandler {
 			}
 
 			if ( $this->titleLinkSeparate ) {
-                $txt = $object->getTitle()->getText();
+				$txt = $object->getTitle()->getText();
 
-                if ( $this->pageLinkText !== '' ) {
-                    $txt = str_replace( '$1', $txt, $this->pageLinkText );
-                }
+				if ( $this->pageLinkText !== '' ) {
+					$txt = str_replace( '$1', $txt, $this->pageLinkText );
+				}
 				$text .= Html::element(
 					'a',
 					array( 'href' => $object->getTitle()->getFullUrl() ),
-                    $txt
+					$txt
 				);
 			}
 		}
@@ -358,8 +370,6 @@ class SMQueryHandler {
 	 * @return string
 	 */
 	protected function handleResultProperty( SMWDataValue $object, SMWPrintRequest $printRequest ) {
-		global $wgUser;
-
 		if ( $this->template ) {
 			if ( $object instanceof SMWWikiPageValue ) {
 				return $object->getTitle()->getPrefixedText();
@@ -383,7 +393,7 @@ class SMQueryHandler {
 			}
 		}
 		else {
-			$propertyName = $printRequest->getHTMLText( $wgUser->getSkin() );
+			$propertyName = $printRequest->getHTMLText( smwfGetLinker() );
 		}
 
 		if ( $this->linkAbsolute ) {
@@ -406,7 +416,7 @@ class SMQueryHandler {
 			}
 		}
 		else {
-			$propertyValue = $object->getLongText( $this->outputmode, $wgUser->getSkin() );
+			$propertyValue = $object->getLongText( $this->outputmode, smwfGetLinker() );
 		}
 
 		return $propertyName . ( $propertyName === '' ? '' : ': ' ) . $propertyValue;
@@ -417,38 +427,48 @@ class SMQueryHandler {
 	 *
 	 * @since 1.0
 	 *
-	 * @param array of MapsLocation $locations
-	 * @param string $title
+	 * @param MapsLocation[] $locations
 	 * @param string $text
 	 * @param string $icon
 	 * @param array $properties
+	 * @param Title|null $title
 	 *
-	 * @return array of MapsLocation
+	 * @return MapsLocation[]
 	 */
-	protected function buildLocationsList( array $locations, $title, $text, $icon, array $properties ) {
+	protected function buildLocationsList( array $locations, $text, $icon, array $properties, Title $title = null ) {
 		if ( $this->template ) {
 			global $wgParser;
-			$parser = version_compare( $GLOBALS['wgVersion'], '1.18', '<' ) ? $wgParser : clone $wgParser;
+			$parser = $wgParser;
 		}
 		else {
 			$text .= implode( '<br />', $properties );
 		}
 
-		foreach ( $locations as $location ) {
+		if ( $title === null ) {
+			$titleOutput = '';
+		}
+		else {
+			$titleOutput = $this->hideNamespace ? $title->getText() : $title->getFullText();
+		}
+
+		foreach ( $locations as &$location ) {
 			if ( $this->template ) {
 				$segments = array_merge(
-					array( $this->template, 'title=' . $title, 'latitude=' . $location->getLatitude(), 'longitude=' . $location->getLongitude() ),
+					array(
+						$this->template,
+						'title=' . $titleOutput,
+						'latitude=' . $location->getLatitude(),
+						'longitude=' . $location->getLongitude()
+					),
 					$properties
 				);
 
 				$text .= $parser->parse( '{{' . implode( '|', $segments ) . '}}', $parser->getTitle(), new ParserOptions() )->getText();
 			}
 
-			$location->setTitle( $title );
+			$location->setTitle( $titleOutput );
 			$location->setText( $text );
 			$location->setIcon( $icon );
-
-			$locations[] = $location;
 		}
 
 		return $locations;
@@ -468,7 +488,7 @@ class SMQueryHandler {
 		$legend_labels = array();
 
 		// Look for display_options field, which can be set by Semantic Compound Queries
-        // the location of this field changed in SMW 1.5
+		// the location of this field changed in SMW 1.5
 		$display_location = method_exists( $row[0], 'getResultSubject' ) ? $row[0]->getResultSubject() : $row[0];
 
 		if ( property_exists( $display_location, 'display_options' ) && is_array( $display_location->display_options ) ) {
@@ -492,6 +512,20 @@ class SMQueryHandler {
 		}
 
 		return $icon;
+	}
+
+	/**
+	 * @param boolean $hideNamespace
+	 */
+	public function setHideNamespace( $hideNamespace ) {
+		$this->hideNamespace = $hideNamespace;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getHideNamespace() {
+		return $this->hideNamespace;
 	}
 
 }

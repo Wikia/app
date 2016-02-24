@@ -7,7 +7,7 @@
 	@media #{$breakpoint-small-only} {
 		.WikiaPage {
 			padding: 0 $padding-width-small;
-			width: $page-width-small;
+			width: $page-width-small - 2 * $content-border-width;
 		}
 	}
 
@@ -33,9 +33,20 @@
 	html {
 		overflow-y: auto;
 	}
+
 	body {
 		overflow: hidden;
 		position: relative;
+
+		@media #{$breakpoint-not-supported} {
+			overflow: auto;
+		}
+
+		// CONCF-612: large modal sizes are hidden by small (and overflown) body
+		// solution: show scrollbar on body if nessesary
+		&.modalShown {
+			overflow-y: auto;
+		}
 	}
 
 	.WikiaMainContent {
@@ -61,7 +72,13 @@
 	}
 
 	@media #{$breakpoint-small-only} {
-		.wikia-main-page-tag-lcs, .main-page-tag-lcs-exploded {
+		.wikia-main-page-tag-lcs,
+		.main-page-tag-lcs-exploded {
+			width: 100%;
+		}
+
+		//Center ads on small breakpoint
+		.WikiaTopAds {
 			width: 100%;
 		}
 
@@ -85,18 +102,17 @@
 		.wikinav2.oasis-one-column .WikiaPageHeader {
 			padding: 0;
 		}
-	}
 
-	@media #{$breakpoint-small-only} {
 		.WikiHeader > nav.WikiNav .navbackground {
 			left: -24px;
-			width: 772px;
+			width: 771px;
 		}
 	}
 
 	@media #{$breakpoint-medium-up} {
-		.wikia-main-page-tag-lcs, .main-page-tag-lcs-exploded {
-			@include width-calc("100% - 320px");
+		.wikia-main-page-tag-lcs,
+		.main-page-tag-lcs-exploded {
+			@include width-calc('100% - 320px');
 		}
 
 		.main-page-tag-rcs {
@@ -104,7 +120,7 @@
 		}
 
 		.WikiHeader > nav.WikiNav {
-			@include width-calc("100% - 250px");
+			@include width-calc('100% - 250px');
 
 			.navbackground {
 				width: 100%;
@@ -118,14 +134,15 @@
 
 	@media #{$breakpoint-large-up} {
 		.WikiHeader > nav.WikiNav .navbackground {
-			@include width-calc("100% + 10px");
+			@include width-calc('100% + 10px');
 		}
 	}
 
-	.WikiaRail, .main-page-tag-rcs {
+	.WikiaRail,
+	.main-page-tag-rcs {
 		padding: 0;
 
-		@media #{$breakpoint-small-only} {
+		@media #{$breakpoint-below-small-plus} {
 			// this is copied from responsive-core.scss
 			clear: both;
 			float: none;
@@ -157,10 +174,11 @@
 		}
 	}
 
-	@media #{$small-only} {
+	@media #{$breakpoint-small-only} {
 		.EditPage .cke_toolbar_widescreen .cke_button.cke_button_big > a {
 			margin: 0 1px;
 		}
+
 		.EditPageToolbar .cke_toolbar_widescreen .cke_toolbar_insert {
 			padding: 0;
 		}
@@ -179,17 +197,14 @@
 			margin-right: 300px;
 		}
 	}
+
 	.EditPageRail {
 		width: 300px;
 	}
 
 	.EditPageHeader {
-		& > h1 {
-			margin-left: 5px;
-			margin-top: 2px;
-		}
 
-		& > h2 {
+		> h2 {
 			display: inline-block;
 			float: left;
 		}
@@ -199,9 +214,25 @@
 		width: auto;
 
 		&.float {
-			left: 0;
-			margin: 0;
-			right: 0;
+			@media #{$breakpoint-small-only} {
+				margin-left: $page-width-small / -2;
+				width: $page-width-small;
+			}
+
+			@media #{$breakpoint-small-plus} {
+				margin-left: $page-width-small-plus / -2;
+				width: $page-width-small-plus;
+			}
+
+			@media #{$breakpoint-medium-only} {
+				margin-left: $page-width-medium / -2;
+				width: $page-width-medium;
+			}
+
+			@media #{$breakpoint-large-up} {
+				margin-left: $page-width-large / -2;
+				width: $page-width-large;
+			}
 		}
 	}
 
@@ -213,5 +244,128 @@
 	.WikiaPageHeader {
 		margin-left: 0;
 		margin-right: 0;
+	}
+
+	// 'special case' for 1024px tablets (think landscape iPad)
+	@media #{$breakpoint-small-plus} {
+		.WikiaPage {
+			padding: 0 $padding-width-small-plus;
+			width: $page-width-small-plus;
+		}
+
+		.wikia-main-page-tag-lcs,
+		.main-page-tag-lcs-exploded,
+		.WikiaMainContent {
+			// right rail width + space between RR and content
+			@include width-calc('100% - 320px');
+		}
+
+		.main-page-tag-rcs {
+			// right rail width
+			width: 300px;
+		}
+
+		.WikiHeader {
+			// values here are mostly copied from WikiHeader.scss
+			// so it will override small breakpoint's values
+			min-height: 69px;
+
+			.buttons {
+				top: 22px;
+			}
+
+			> nav.WikiNav {
+				// we need to accomodate for additional space while having to count scrollbar
+				@include width-calc('100% - 265px');
+
+				left: 275px;
+				top: 20px;
+
+				.subnav-2 {
+					left: 10px;
+					width: auto;
+				}
+
+				.navbackground {
+					left: 10px;
+					// it's content width minus wordmark and padding plus space that ribbon occupies outside of the page
+					width: 714px;
+				 }
+			}
+		}
+	}
+
+	@media #{$breakpoint-not-supported} {
+		body {
+			//This has to be visible to allow for zooming out
+			overflow: visible;
+		}
+
+		.WikiHeader > nav.WikiNav .navbackground {
+			width: $content-width-small - $content-border-width;
+
+			img {
+				display: none;
+			}
+		}
+	}
+}
+
+// Visual Editor changes for breakpoints
+$ve-overlay-color: rgba(0, 0, 0, .5);
+$vw-overlay-shadow-size: 1000vw; // IE does not support vmax
+body.ve {
+	.WikiaSiteWrapper {
+		pointer-events: none;
+	}
+
+	.ve-ui-overlay {
+		pointer-events: all;
+	}
+
+	// do not show VE overlay
+	//TODO: XW-179 | Remove this overlay from VE code
+	.ve-ui-wikiaFocusWidget {
+		display: none !important;
+	}
+
+	.WikiaPageHeader {
+		margin: 0 10px;
+	}
+
+	.WikiaMainContent {
+		box-shadow: 0 0 0 $vw-overlay-shadow-size $ve-overlay-color;
+		padding: 0;
+		pointer-events: all;
+		z-index: $zTop;
+	}
+
+	.ve-init-mw-viewPageTarget-toolbar {
+		margin: 0;
+	}
+
+	.WikiaArticle {
+		min-height: 0;
+		padding: 0 10px;
+	}
+
+	// cover some additional elements with an overlay
+	.WikiaArticleFooter, .CategorySelect.articlePage {
+		border-color: $ve-overlay-color;
+		margin: 0;
+		padding: 10px;
+		pointer-events: none;
+		position: relative;
+
+		&::after {
+			background: $ve-overlay-color;
+			bottom: 0;
+			content: ' ';
+			display: block;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
 	}
 }

@@ -1,8 +1,8 @@
-define( 'wikia.ui.modal', [
+define('wikia.ui.modal', [
 	'jquery',
 	'wikia.window',
 	'wikia.browserDetect'
-], function(
+], function (
 	$,
 	w,
 	browserDetect
@@ -12,31 +12,34 @@ define( 'wikia.ui.modal', [
 	// constants for modal component
 	var BLACKOUT_ID = 'blackout',
 		BLACKOUT_VISIBLE_CLASS = 'visible',
+		BLACKOUT_HIDDEN_CLASS = 'hidden',
 		BODY_WITH_BLACKOUT_CLASS = 'with-blackout',
 		FAKE_SCROLLBAR_CLASS = 'fake-scrollbar',
 		CLOSE_CLASS = 'close',
 		INACTIVE_CLASS = 'inactive',
 
 		// vars required for disable scroll behind modal
-		$wrapper = $( '.WikiaSiteWrapper' ),
-		$win = $( w ),
+		$wrapper = $('.WikiaSiteWrapper'),
+		$win = $(w),
 		wScrollTop,
 
-		$body = $( w.document.body ),
+		$body = $(w.document.body),
 
 		// default modal rendering params
 		modalDefaults = {
 			type: 'default',
 			vars: {
-				closeText: $.msg( 'close' )
-			}
+				closeText: $.msg('close'),
+				escapeToClose: true
+			},
+			confirmCloseModal: false
 		},
 		// default modal buttons rendering params
 		btnConfig = {
 			type: 'button',
 			vars: {
 				type: 'button',
-				classes: [ 'normal', 'secondary' ]
+				classes: ['normal', 'secondary']
 			}
 		},
 
@@ -57,10 +60,10 @@ define( 'wikia.ui.modal', [
 	 * @returns {Object} - new instance of Modal object
 	 */
 
-	function createComponent( params, component ) {
+	function createComponent(params, component) {
 		uiComponent = component; // set reference to UI Component
 
-		return new Modal( params );
+		return new Modal(params);
 	}
 
 	/**
@@ -74,17 +77,16 @@ define( 'wikia.ui.modal', [
 	 * @param {Object} modal - Wikia modal object
 	 */
 
-	function ieFlexboxFallback( modal ) {
+	function ieFlexboxFallback(modal) {
 		var element = modal.$element,
 			HEADER_AND_FOOTER_HEIGHT = 90, // modal header and footer have 45px fixed height
 			SECTION_PADDING = 40, // modal section has 20px top and bottom padding
-			winHeight = $( w ).height(),
+			winHeight = $(w).height(),
 			// IE has problem with 'max-height' together with 'border-box', so set to 'content-box' and padding need to
 			// be subtracted from 'max-height'.
-			modalMaxHeight = ( 90 / 100 ) * winHeight - HEADER_AND_FOOTER_HEIGHT - SECTION_PADDING;
+			modalMaxHeight = (90 / 100) * winHeight - HEADER_AND_FOOTER_HEIGHT - SECTION_PADDING;
 
-
-		element.children( 'section' ).css( 'maxHeight', modalMaxHeight );
+		element.children('section').css('maxHeight', modalMaxHeight);
 	}
 
 	/**
@@ -94,15 +96,15 @@ define( 'wikia.ui.modal', [
 	function blockPageScrolling() {
 
 		// prevent page from jumping to right if vertical scroll bar exist
-		if ( $wrapper.height() > $win.height() ) {
-			$wrapper.addClass( FAKE_SCROLLBAR_CLASS );
+		if ($wrapper.height() > $win.height()) {
+			$wrapper.addClass(FAKE_SCROLLBAR_CLASS);
 		}
 
 		// set current page vertical position
 		wScrollTop = $win.scrollTop();
 
-		$body.addClass( BODY_WITH_BLACKOUT_CLASS );
-		$wrapper.css( 'top', -wScrollTop );
+		$body.addClass(BODY_WITH_BLACKOUT_CLASS);
+		$wrapper.css('top', -wScrollTop);
 	}
 
 	/**
@@ -110,9 +112,9 @@ define( 'wikia.ui.modal', [
 	 */
 
 	function unblockPageScrolling() {
-		$body.removeClass( BODY_WITH_BLACKOUT_CLASS );
-		$wrapper.removeClass( FAKE_SCROLLBAR_CLASS ).css( 'top', 'auto' );
-		$win.scrollTop( wScrollTop );
+		$body.removeClass(BODY_WITH_BLACKOUT_CLASS);
+		$wrapper.removeClass(FAKE_SCROLLBAR_CLASS).css('top', 'auto');
+		$win.scrollTop(wScrollTop);
 	}
 
 	/**
@@ -133,96 +135,110 @@ define( 'wikia.ui.modal', [
 	 * @param {String|Object} params - ID of modal element in DOM or object with mustache params
 	 */
 
-	function Modal( params ) {
-		var that = this,
-			id = ( typeof params === 'object' ) ? params.vars.id : params, // modal ID
+	function Modal(params) {
+		var self = this,
+			id = (typeof params === 'object') ? params.vars.id : params, // modal ID
 			jQuerySelector = '#' + id,
 			buttons, // array of objects with params for rendering modal buttons
 			blackoutId = BLACKOUT_ID + '_' + id;
 
-		if ( $( jQuerySelector ).length > 0 ) {
+		if ($(jQuerySelector).length > 0) {
 			throw 'Cannot create new modal with id ' + id + ' as it already exists in DOM';
 		}
 
-		if ( typeof( uiComponent ) === 'undefined' ) {
+		if (typeof (uiComponent) === 'undefined') {
 			throw 'Need uiComponent to render modal with id ' + id;
 		}
 
 		buttons = params.vars.buttons;
-		if ( $.isArray( buttons ) ) {
+		if ($.isArray(buttons)) {
 			// Create buttons
-			buttons.forEach(function( button, index ) {
-				if ( typeof button === 'object' ) {
+			buttons.forEach(function (button, index) {
+				if (typeof button === 'object') {
 
 					// Extend the button param with the modal default, get the button uicomponent,
 					// and render the params then replace the button params with the rendered html
-					buttons[ index ] = uiComponent.getSubComponent( 'button' ).render(
-						$.extend( true, {}, btnConfig, button )
+					buttons[index] = uiComponent.getSubComponent('button').render(
+						$.extend(true, {}, btnConfig, button)
 					);
 				}
 			});
 		}
 
 		// extend default modal params with the one passed in constructor call
-		params = $.extend( true, {}, modalDefaults, params );
+		params = $.extend(true, {}, modalDefaults, params);
 
 		// render modal markup and append to DOM
-		$body.append( uiComponent.render( params ) );
+		$body.append(uiComponent.render(params));
 
 		// cache jQuery selectors for different parts of modal
-		this.$element = $( jQuerySelector );
-		this.$content = this.$element.children( 'section' );
-		this.$close = this.$element.find( '.' + CLOSE_CLASS );
-		this.$blackout = $( '#' + blackoutId );
+		this.$element = $(jQuerySelector);
+		this.$content = this.$element.children('section');
+		this.$close = this.$element.find('.' + CLOSE_CLASS);
+		this.$blackout = $('#' + blackoutId);
 
 		/** ATTACHING EVENT HANDLERS TO MODAL */
 
 		// trigger custom buttons events based on button 'data-event' attribute
-		this.$element.on( 'click', 'button, a.modalEvent', $.proxy( function( event ) {
-			var $target = $( event.currentTarget ),
-				modalEventName = $target.data( 'event' );
+		this.$element.on('click', 'button, .modalEvent', $.proxy(function (event) {
+			var $target = $(event.currentTarget),
+				modalEventName = $target.data('event');
 
 			event.preventDefault();
 
-			if ( modalEventName ) {
-				this.trigger( modalEventName, event );
+			if (modalEventName) {
+				this.trigger(modalEventName, event);
 			}
-		}, that ) );
+		}, self));
 
 		// clicking outside modal triggers the close action
-		this.$blackout.click( $.proxy(function( event ) {
+		this.$blackout.click($.proxy(function (event) {
 			// jQuery only supports event bubbling,
 			// this is a workaround to be sure that click was done on blackout and doesn't bubble up from $element
 			// stopPropagation() on $element it not an option
 			// because we need bubbling for other events in the $elements content
 			var blackoutWasClicked = event.target === event.delegateTarget;
 
-			if ( this.isShown() && this.isActive() && blackoutWasClicked ) {
-				this.trigger( 'close', event );
+			if (this.isShown() && this.isActive() && blackoutWasClicked) {
+				this.trigger('close', event);
 			}
-		}, that ) );
+		}, self));
 
 		// attach close event to X icon in modal header
-		this.$close.click( $.proxy( function( event ) {
+		this.$close.click($.proxy(function (event) {
 			event.preventDefault();
-			this.trigger( 'close', event );
-		}, that ) );
+			this.trigger('close', event);
+		}, self));
+
+		// Close modal when the escape key is pressed
+		if (params.vars.escapeToClose) {
+			$(window).on('keydown.modal' + id, function (event) {
+				if (event.keyCode === 27) {
+					this.trigger('close', event);
+				}
+			}.bind(this));
+		}
 
 		// object containing modal event listeners
 		this.listeners = {
 			'close': [
-				function() {
-					that.trigger( 'beforeClose').then( $.proxy( function() {
-						// number of active modals on page
-						var activeModalsNumb = $body.children( '.modal-blackout' ).length;
+				function () {
+					if ((typeof params.confirmCloseModal === 'function') ? params.confirmCloseModal() : true) {
+						self.trigger('beforeClose').then($.proxy(function () {
+							// number of active modals on page
+							var activeModalsNumb = $body.children('.modal-blackout').length;
 
-						that.$blackout.remove();
+							self.$blackout.remove();
 
-						// unblock background scrolling only if this is the only if it's last active modal on page
-						if (activeModalsNumb === 1) {
-							unblockPageScrolling();
-						}
-					}, that ) );
+							// unblock background scrolling only if this is the only if it's last active modal on page
+							if (activeModalsNumb === 1) {
+								unblockPageScrolling();
+							}
+
+							// Remove any event listeners for this modal
+							$(window).unbind('.modal' + id);
+						}, self));
+					}
 				}
 			]
 		};
@@ -232,27 +248,27 @@ define( 'wikia.ui.modal', [
 	/**
 	 * Shows modal; adds shown class to modal and visible class to blackout
 	 */
-	Modal.prototype.show = function() {
+	Modal.prototype.show = function () {
 
 		// block background only if not modal in scenario
-		if ( $wrapper.hasClass( FAKE_SCROLLBAR_CLASS ) === false ) {
+		if ($wrapper.hasClass(FAKE_SCROLLBAR_CLASS) === false) {
 			blockPageScrolling();
 		}
 
-		this.$blackout.addClass( BLACKOUT_VISIBLE_CLASS );
+		this.$blackout.addClass(BLACKOUT_VISIBLE_CLASS).removeClass(BLACKOUT_HIDDEN_CLASS);
 
 		// IE flex-box fallback for small and medium modals
-		if ( browserDetect.isIE() ) {
+		if (browserDetect.isIE()) {
 
-			this.$blackout.addClass( 'IE-flex-fix' );
+			this.$blackout.addClass('IE-flex-fix');
 
-			if ( this.$element.hasClass( 'large' ) === false ) {
-				ieFlexboxFallback( this );
+			if (this.$element.hasClass('large') === false) {
+				ieFlexboxFallback(this);
 
 				// update modal section max-height on window resize
-				$( w ).on( 'resize', $.proxy( function() {
-					ieFlexboxFallback( this );
-				}, this ) );
+				$(w).on('resize', $.proxy(function () {
+					ieFlexboxFallback(this);
+				}, this));
 			}
 		}
 	};
@@ -269,32 +285,32 @@ define( 'wikia.ui.modal', [
 	 * @return {{}} promise which will call its handlers after listeners had been executed
 	 */
 
-	Modal.prototype.trigger = function ( eventName ) {
+	Modal.prototype.trigger = function (eventName) {
 		var deferred = new $.Deferred(),
 			i = 0,
-			args =  [].slice.call( arguments, 1 ),
-			listeners = this.listeners[ eventName ];
+			args = [].slice.call(arguments, 1),
+			listeners = this.listeners[eventName];
 
 		// in future we may consider ignoring an event if the previous trigger call with the same
 		// eventName did not compete
 
-		( function iterate( param ) {
+		(function iterate(param) {
 			var result;
 
 			// if listener returns some value then push it to array of arguments that are passed to the next listener
-			if ( typeof param !== 'undefined' ) {
-				args.push( param );
+			if (typeof param !== 'undefined') {
+				args.push(param);
 			}
 
-			while( listeners && ( i < listeners.length ) ) {
-				result = listeners[ i++ ].apply( undefined, args );
-				if ( result && ( typeof result.then === 'function' ) ) {
-					result.then( iterate, deferred.reject );
+			while (listeners && (i < listeners.length)) {
+				result = listeners[i++].apply(undefined, args);
+				if (result && (typeof result.then === 'function')) {
+					result.then(iterate, deferred.reject);
 					return;
 				}
 			}
 			deferred.resolve();
-		} )();
+		})();
 		return deferred.promise();
 	};
 
@@ -306,11 +322,11 @@ define( 'wikia.ui.modal', [
 	 * @param {String} eventName name of the event to bind to
 	 * @param {function} callback listener
 	 */
-	Modal.prototype.bind = function( eventName, callback ) {
-		if ( typeof( this.listeners[ eventName ] ) === 'undefined' ) {
-			this.listeners[ eventName ] = [];
+	Modal.prototype.bind = function (eventName, callback) {
+		if (typeof (this.listeners[eventName]) === 'undefined') {
+			this.listeners[eventName] = [];
 		}
-		this.listeners[ eventName ].push( callback );
+		this.listeners[eventName].push(callback);
 	};
 
 	/**
@@ -318,10 +334,10 @@ define( 'wikia.ui.modal', [
 	 * and runs jQuery $.startThrobbing() method on it
 	 */
 
-	Modal.prototype.deactivate = function() {
+	Modal.prototype.deactivate = function () {
 		var dialog = this.$element;
 
-		dialog.addClass( INACTIVE_CLASS ).find( 'button' ).attr( 'disabled', true );
+		dialog.addClass(INACTIVE_CLASS).find('button').attr('disabled', true);
 		dialog.startThrobbing();
 	};
 
@@ -330,12 +346,12 @@ define( 'wikia.ui.modal', [
 	 * sets disabled attribute for all modal's buttons to false
 	 */
 
-	Modal.prototype.activate = function() {
+	Modal.prototype.activate = function () {
 		var dialog = this.$element;
 
 		dialog.stopThrobbing();
-		dialog.removeClass( INACTIVE_CLASS )
-			.find( 'button' ).attr( 'disabled', false );
+		dialog.removeClass(INACTIVE_CLASS)
+			.find('button').attr('disabled', false);
 	};
 
 	/**
@@ -344,8 +360,8 @@ define( 'wikia.ui.modal', [
 	 * @returns {Boolean}
 	 */
 
-	Modal.prototype.isShown = function() {
-		return this.$blackout.hasClass( BLACKOUT_VISIBLE_CLASS );
+	Modal.prototype.isShown = function () {
+		return this.$blackout.hasClass(BLACKOUT_VISIBLE_CLASS);
 	};
 
 	/**
@@ -354,25 +370,33 @@ define( 'wikia.ui.modal', [
 	 * @returns {boolean}
 	 */
 
-	Modal.prototype.isActive = function() {
-		return !this.$element.hasClass( INACTIVE_CLASS );
+	Modal.prototype.isActive = function () {
+		return !this.$element.hasClass(INACTIVE_CLASS);
 	};
 
 	/**
 	 * Sets modal's content
 	 * @param {String} content HTML text
 	 */
-	Modal.prototype.setContent = function( content ) {
-		this.$content.html( content );
+	Modal.prototype.setContent = function (content) {
+		this.$content.html(content);
 	};
 
 	/**
 	 * Sets modal's title
 	 * @param {String} title text
 	 */
-	Modal.prototype.setTitle = function( title ) {
-		this.$element.find( 'header h3' ).text( title );
+	Modal.prototype.setTitle = function (title) {
+		this.$element.find('header h3').text(title);
 	};
+
+	/**
+	 * Scroll's modal content to a given offset
+	 * @param {int} offsetTop in pixels
+	 */
+	Modal.prototype.scroll = function (offsetTop) {
+		this.$element.find('section').scrollTop(offsetTop);
+	}
 
 	/** Public API */
 

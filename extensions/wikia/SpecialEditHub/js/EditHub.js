@@ -20,18 +20,28 @@
 			$('.module-popular-videos').on('click', '.remove', $.proxy(this.popularVideosRemove, this));
 			$('#edit-hub-removeall').click($.proxy(this.popularVideosRemoveAll, this));
 			editHubMain.find('.vet-show').each(function () {
-				var $this = $(this);
+				var $this = $(this),
+					videoEmbedMain;
 
 				$this.addVideoButton({
 					callbackAfterSelect: function (url, VET) {
+						require( ['wikia.throbber'], function( throbber ) {
+							videoEmbedMain = $('#VideoEmbedMain');
+							throbber.show(videoEmbedMain);
+						});
+
 						$.nirvana.sendRequest({
 							controller: 'EditHubController',
 							method: 'uploadAndGetVideo',
 							type: 'post',
 							data: {
-								'url': url
+								url: url,
+								token: window.mw.user.tokens.get('editToken')
 							},
 							callback: function (response) {
+								require( ['wikia.throbber'], function( throbber ) {
+									throbber.remove(videoEmbedMain);
+								});
 								var selectedModule = parseInt(window.wgEditHubModuleIdSelected),
 									box;
 

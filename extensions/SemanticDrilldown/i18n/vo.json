@@ -1,0 +1,28 @@
+{
+	"@metadata": {
+		"authors": [
+			"Malafaya",
+			"Smeira"
+		]
+	},
+	"browsedata": "Padön da nünods",
+	"sd_browsedata_choosecategory": "Välön kladi",
+	"sd_browsedata_viewcategory": "logön kladi",
+	"sd_browsedata_subcategory": "Donaklad",
+	"sd_browsedata_other": "Votik",
+	"sd_browsedata_none": "Nonik",
+	"sd_browsedata_filterbyvalue": "Sulön ma völad at",
+	"sd_browsedata_filterbysubcategory": "Sulön ma donaklad at",
+	"sd_browsedata_otherfilter": "Jonön padis labü völadi votik tefü sul at",
+	"sd_browsedata_nonefilter": "Jonön padis labü völad nonik tefü sul at",
+	"sd_browsedata_or": "u",
+	"sd_browsedata_removefilter": "Moükön suli at",
+	"sd_browsedata_removesubcategoryfilter": "Moükön donakladasuli at",
+	"sd_browsedata_resetfilters": "Geükön sulis ad stad kösömik",
+	"sd_browsedata_addanothervalue": "Läükön völadi votik",
+	"sd_browsedata_daterangestart": "Prim:",
+	"sd_browsedata_daterangeend": "Fin:",
+	"sd_createfilter_usepropertyvalues": "Gebön völadis valik patöfa at pro sul.",
+	"sd_createfilter_usecategoryvalues": "Tuvön völadis pro sul in klad at:",
+	"sd_createfilter_requirefilter": "Flagön, das sul votik puvälon büä sul at pojonon:"
+}

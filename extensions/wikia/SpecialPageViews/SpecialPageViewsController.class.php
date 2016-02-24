@@ -8,7 +8,6 @@ class SpecialPageViewsController extends WikiaSpecialPageController {
 
 	function __construct() {
 		parent::__construct( self::SPECIALPAGE_NAME );
-		$this->getOutput()->addModules( 'ext.SpecialPageViews' );
 	}
 
 	public function execute() {
@@ -19,6 +18,8 @@ class SpecialPageViewsController extends WikiaSpecialPageController {
 			$this->displayRestrictionError();
 			return false;  // skip rendering
 		}
+
+		$this->getOutput()->addModules( 'ext.SpecialPageViews' );
 
 		$this->setInitialDates();
 

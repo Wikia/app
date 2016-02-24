@@ -81,7 +81,6 @@ class WikiaHubsModulePollsService extends WikiaHubsModuleEditableService {
 			$model = new WikiaHubsPollsModel();
 			$optionsLimit = $model->getTotalOptionsLimit();
 
-
 			$structuredData['headline'] = $data['pollsTitle'];
 			$structuredData['pollsQuestion'] = $data['pollsQuestion'];
 			$structuredData['hubUrl'] = $this->getHubUrl();

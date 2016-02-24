@@ -9,9 +9,20 @@
  * @author Owen Davis <owen(at)wikia-inc.com>
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
  */
-class WikiaRequest {
+class WikiaRequest implements Wikia\Interfaces\IRequest {
+
+	const EXCEPTION_MODE_RETURN = 0;
+	const EXCEPTION_MODE_WRAP_AND_THROW = 1;
+	const EXCEPTION_MODE_THROW = 2;
+
+	static private $exceptionModes = [
+		self::EXCEPTION_MODE_RETURN,
+		self::EXCEPTION_MODE_WRAP_AND_THROW,
+		self::EXCEPTION_MODE_THROW,
+	];
 
 	private $isInternal = false;
+	private $exceptionMode = self::EXCEPTION_MODE_WRAP_AND_THROW;
 	protected $params = array();
 
 	/**
@@ -71,6 +82,26 @@ class WikiaRequest {
 	 */
 	public function setInternal($value) {
 		$this->isInternal = (bool) $value;
+	}
+
+	/**
+	 * checks what exception mode is set
+	 * @return int One of WikiaRequest::EXCEPTION_MODE_*
+	 */
+	public function getExceptionMode() {
+		return $this->exceptionMode;
+	}
+
+	/**
+	 * set exception mode
+	 * @param int $value One of WikiaRequest::EXCEPTION_MODE_*
+	 */
+	public function setExceptionMode( $value ) {
+		$value = (int) $value;
+		if ( !in_array( $value, self::$exceptionModes ) ) {
+			throw new InvalidArgumentException( 'Exception mode is invalid' );
+		}
+		$this->exceptionMode = $value;
 	}
 
 	/**
@@ -155,6 +186,8 @@ class WikiaRequest {
 	 * @return bool
 	 */
 	public function wasPosted() {
+		wfRunHooks( 'WikiaRequestWasPosted' );
+
 		return isset( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] == 'POST';
 	}
 
@@ -233,5 +266,19 @@ class WikiaRequest {
 	public function getScriptUrl() {
 		$scriptUrl = isset( $_SERVER['SCRIPT_URL'] ) ? $_SERVER['SCRIPT_URL'] : null;
 		return $scriptUrl;
+	}
+
+	/**
+	 * Verify if write request is a valid, non-CSRF request
+	 * (uses POST and contains a valid edit token)
+	 *
+	 * @param \User $user
+	 * @return mixed
+	 * @throws BadRequestException
+	 */
+	public function isValidWriteRequest( \User $user ) {
+		if ( !$this->wasPosted() || !$user->matchEditToken( $this->getVal( 'token' ) ) ) {
+			throw new BadRequestException( 'Request must be POSTed and provide a valid edit token.' );
+		}
 	}
 }

@@ -1,6 +1,6 @@
 <?php if( !empty($usersInvolved) ): ?>
 <section class="WallHistoryRail module">
-	<h1><?= wfMessage( 'wall-history-who-involved-wall-title' )->escaped(); ?></h1>
+	<h2><?= wfMessage( 'wall-history-who-involved-wall-title' )->escaped(); ?></h2>
 	<ul>
 		<?php foreach($usersInvolved as $userInvolved): ?>
 			<li>

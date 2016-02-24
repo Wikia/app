@@ -186,30 +186,12 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => '&#32;un',
 
-# Cologne Blue skin
 'qbfind'         => 'Fiende',
 'qbbrowse'       => 'Bleederje',
-'qbedit'         => 'Annerje',
 'qbpageoptions'  => 'Disse Siede',
 'qbpageinfo'     => 'Siedendoatäie',
-'qbmyoptions'    => 'Mien Sieden',
-'qbspecialpages' => 'Spezialsieden',
 'faq'            => 'Oafte stoalde Froagen',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Ousnit bietouföigje',
-'vector-action-delete'           => 'Läskje',
-'vector-action-move'             => 'Ferskuuwe',
-'vector-action-protect'          => 'Skutsje',
-'vector-action-undelete'         => 'Wierhäärstaale',
-'vector-action-unprotect'        => 'Fräireeke',
-'vector-simplesearch-preference' => 'Uutwiedede Säikfoarsleeke aktivierje (bloot Vector)',
-'vector-view-create'             => 'Moakje',
-'vector-view-edit'               => 'Beoarbaidje',
-'vector-view-history'            => 'Versionsgeskichte',
-'vector-view-view'               => 'Leese',
-'vector-view-viewsource'         => 'Wältext bekiekje',
 'actions'                        => 'Aktione',
 'namespaces'                     => 'Noomeruume',
 'variants'                       => 'Variante',
@@ -232,7 +214,6 @@ $messages = array(
 'edit'              => 'Siede beoarbaidje',
 'create'            => 'Moakje',
 'editthispage'      => 'Siede beoarbaidje',
-'create-this-page'  => 'Siede moakje',
 'delete'            => 'Läskje',
 'deletethispage'    => 'Disse Siede läskje',
 'undelete_short'    => '{{PLURAL:$1|1 Version|$1 Versione}} wier häärstaale',
@@ -247,19 +228,9 @@ $messages = array(
 'talkpagelinktext'  => 'Diskussion',
 'specialpage'       => 'Spezioalsiede',
 'personaltools'     => 'Persöönelke Reewen',
-'postcomment'       => 'Näi Stuk',
-'articlepage'       => 'Siede',
 'talk'              => 'Diskussion',
 'views'             => 'Anwiesengen',
 'toolbox'           => 'Reewen',
-'userpage'          => 'Benutsersiede',
-'projectpage'       => 'Meta-Text',
-'imagepage'         => 'Doatäisiede',
-'mediawikipage'     => 'Inhooldssiede anwiese',
-'templatepage'      => 'Foarloagensiede anwiese',
-'viewhelppage'      => 'Hälpesiede anwiese',
-'categorypage'      => 'Kategoriesiede anwiese',
-'viewtalkpage'      => 'Diskussion',
 'otherlanguages'    => 'Uur Sproaken',
 'redirectedfrom'    => '(Fäärelaited fon $1)',
 'redirectpagesub'   => 'Fäärelaitenge',
@@ -431,8 +402,9 @@ Ju Speere wuude truch [[User:$1|$1]] mäd ju Begruundenge ''$2'' ienroat.",
 # Login and logout pages
 'logouttext'                 => "'''Du bäst nu oumälded.'''
 
-Du koast {{SITENAME}} nu anonym fääre benutsje, of die fonnäien unner dänsälge of n uur Benutsernoome wier [[Special:UserLogin|anmäldje]].
+Du koast {{SITENAME}} nu anonym fääre benutsje, of die fonnäien unner dänsälge of n uur Benutsernoome wier $1.
 Beoachtje, dät eenige Sieden noch anwiese konnen, dät du oumälded bäst, soloange du nit din Browsercache loosmoaked hääst.",
+'logouttext-link-text'       => 'anmäldje',
 'welcomecreation'            => '== Wäilkuumen, $1 ==
 
 Dien Benutserkonto wuude iengjucht.
@@ -536,10 +508,6 @@ Täif, eer du fon näien fersäkst.',
 'resetpass-wrong-oldpass'   => 'Uungultich tiedelk of aktuell Paaswoud.
 Muugelkerwiese hääst du dien Paaswoud al mäd Ärfoulch annerd of n näi tiedelk Paaswoud fräiged.',
 'resetpass-temp-password'   => 'Tiedelk Paaswoud:',
-
-# Special:PasswordReset
-'passwordreset'          => 'Paaswoud touräächsätte',
-'passwordreset-username' => 'Benutsernoome:',
 
 # Edit page toolbar
 'bold_sample'     => 'Fatten Text',
@@ -654,7 +622,6 @@ Foar Information foulget n aktuellen Iendraach uut dät Benutser-Logbouk:',
 "Der wuud noch nit spiekerd!"',
 'sitejspreview'                    => "'''Beoachtje, dät du bloot n Foarbekiek fon dit JavaScript bekiekest.'''
 '''Dät is noch nit spiekerd!'''",
-'userinvalidcssjstitle'            => "'''Woarskauenge:''' Deer existiert neen Skin \"\$1\". Betoank jädden, dät benutserspezifiske .css- un .js-Sieden män n Littek-Bouksteeuwe anfange mouten, also t.B. ''{{ns:user}}:Mustermann/vector.css'', nit ''{{ns:user}}:Mustermann/Vector.css''.",
 'updated'                          => '(Annerd)',
 'note'                             => "'''Waiwiesenge:'''",
 'previewnote'                      => "'''Dit is man ne Foarbekiek, die Artikkel wuude noch nit spiekerd!'''",
@@ -987,13 +954,6 @@ Staal deertruch sicher, dät ju Versionsgeskichte fon n Artikkel historisk akroa
 'search-external'                  => 'Externe Säike',
 'searchdisabled'                   => 'Ju {{SITENAME}} Fultextsäike is weegen Uurläästenge apstuuns deaktivierd. Du koast insteede deerfon ne Google- of Yahoo-Säike startje. Do Resultoate foar {{SITENAME}} speegelje oawers nit uunbedingd dän aktuällen Stand wier.',
 
-# Quickbar
-'qbsettings'               => 'Siedenlieste',
-'qbsettings-none'          => 'Naan',
-'qbsettings-fixedleft'     => 'Links, fääst',
-'qbsettings-fixedright'    => 'Gjuchts, fääst',
-'qbsettings-floatingleft'  => 'Links, swieuwjend',
-'qbsettings-floatingright' => 'Gjuchts, swieuwjend',
 
 # Preferences page
 'preferences'                   => 'Ienstaalengen',
@@ -2206,7 +2166,7 @@ Reek dän Gruund foar ju Speere oun.',
 Hier foulget die Iendraach uut dät Unnerdrukkengs-Logbouk:',
 'blocklogentry'                   => '[[$1]] blokkierd foar n Tiedruum fon: $2 $3',
 'reblock-logentry'                => 'annerde ju Speere foar „[[$1]]“ foar dän Tiedruum: $2 $3',
-'blocklogtext'                    => 'Dit is n Logbouk fon Speerengen un Äntspeerengen fon Benutsere un IP-Adrässe. 
+'blocklogtext'                    => 'Dit is n Logbouk fon Speerengen un Äntspeerengen fon Benutsere un IP-Adrässe.
 Automatisk speerde IP-Adrässe sunt nit apnuumen.
 Sjuch ju [[Special:BlockList|Lieste fon de speerde IP-Adrässe un Benutsernoomen]] foar aal aktive Speeren.',
 'unblocklogentry'                 => 'Blokkade fon $1 aphieuwed',
@@ -2951,10 +2911,10 @@ uum ju E-Mail-Adräs-Bestäätigenge outoubreeken:
 $5
 
 Disse Bestäätigengskode is gultich bit $4',
-'confirmemail_body_set'     => 'Wäl mäd ju IP-Adresse $1, woarskienelk du sälwen, 
+'confirmemail_body_set'     => 'Wäl mäd ju IP-Adresse $1, woarskienelk du sälwen,
 häd ju E-Mail-Adresse fon dät Benutserkonto "$2" ap {{SITENAME}} tou disse E-Mail-Adresse annerd.
 
-Uum  tou bestäätigjen, dät dit Benutserkonto wuddelk tou die heert 
+Uum  tou bestäätigjen, dät dit Benutserkonto wuddelk tou die heert
 un uum do E-Mail-Funktione ap {{SITENAME}} tou reaktivierjen, eepenje dissen Link:
 
 $3

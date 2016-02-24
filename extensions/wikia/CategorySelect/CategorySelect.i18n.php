@@ -197,6 +197,7 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Aftabuzzaman
  */
 $messages['bn'] = array(
 	'categoryselect-button-add' => 'বিষয়শ্রেণী যোগ',
@@ -261,7 +262,7 @@ $messages['ca'] = array(
 	'tog-disablecategoryselect-v2' => "Desactivar el mòdul de categories (només s'aplica si l'edició en mode visual està desactivada).",
 );
 
-/** Sorani Kurdish (کوردی)
+/** Central Kurdish (کوردیی ناوەندی)
  */
 $messages['ckb'] = array(
 	'categoryselect-button-save' => 'پاشەکەوت',
@@ -411,6 +412,7 @@ $messages['eu'] = array(
 
 /** Persian (فارسی)
  * @author Ebraminio
+ * @author Movyn
  * @author Reza1615
  * @author ZxxZxxZ
  * @author جواد
@@ -419,9 +421,14 @@ $messages['fa'] = array(
 	'categoryselect-button-add' => 'افزودن رده',
 	'categoryselect-button-cancel' => 'لغو',
 	'categoryselect-button-save' => 'ذخیره‌کردن',
+	'categoryselect-category-add' => 'افزودن رده...',
 	'categoryselect-category-edit' => 'ویرایش رده',
 	'categoryselect-category-remove' => 'حذف رده',
 	'categoryselect-edit-summary' => 'افزودن رده',
+	'categoryselect-error-article-doesnt-exist' => 'صفحه [id=$1] وجود ندارد.',
+	'categoryselect-error-empty-category-name' => 'لطفا یک نام برای رده مشخص کنید.',
+	'categoryselect-error-user-rights' => 'کاربر دسترسی برای این عمل را ندارد.',
+	'categoryselect-modal-category-name' => 'نامی برای رده مشخص کنید:',
 	'categoryselect-tooltip-add' => 'پس از اتمام دکمه اینتر را فشار دهید', # Fuzzy
 );
 
@@ -510,6 +517,7 @@ $messages['fr'] = array(
 $messages['fy'] = array(
 	'categoryselect-button-add' => 'Kategory tafoegje',
 	'categoryselect-button-cancel' => 'Annulearje',
+	'categoryselect-button-save' => 'Bewarje',
 	'categoryselect-category-add' => 'Kategory tafoegje...',
 	'categoryselect-category-edit' => 'Kategory bewurkje',
 	'categoryselect-category-remove' => 'Kategory fuortsmite',
@@ -553,6 +561,26 @@ $messages['grc'] = array(
  */
 $messages['ha'] = array(
 	'categoryselect-button-cancel' => 'Soke',
+);
+
+/** Hebrew (עברית)
+ * @author LaG roiL
+ */
+$messages['he'] = array(
+	'categoryselect-button-add' => 'הוספת קטגוריה',
+	'categoryselect-button-cancel' => 'ביטול',
+	'categoryselect-button-save' => 'שמירה',
+	'categoryselect-category-add' => 'הוספת קטגוריה',
+	'categoryselect-category-edit' => 'עריכת קטגוריה',
+	'categoryselect-category-remove' => 'הסרת קטגוריה',
+	'categoryselect-edit-summary' => 'הוספת קטגוריות',
+	'categoryselect-error-article-doesnt-exist' => 'הדף "$1" אינו קיים.',
+	'categoryselect-error-category-name-length' => 'הגעת להגבלת האורך המירבית של שם קטגוריה.',
+	'categoryselect-error-db-locked' => 'בסיס הנתונים נעול.',
+	'categoryselect-error-duplicate-category-name' => 'הקטגוריה "$1" כבר קיימת.',
+	'categoryselect-error-empty-category-name' => 'נא להוסיף שם קטגוריה.',
+	'categoryselect-error-user-rights' => 'אין לך הרשאות לביצוע פעולה זו.',
+	'categoryselect-modal-category-name' => 'הוספת שם הקטגוריה:',
 );
 
 /** Hungarian (magyar)
@@ -609,6 +637,7 @@ $messages['ia'] = array(
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
  * @author C5st4wr6ch
+ * @author Fate Kage
  * @author Irwangatot
  * @author Riemogerz
  */
@@ -622,6 +651,7 @@ $messages['id'] = array(
 	'categoryselect-category-remove' => 'Menghapus kategori',
 	'categoryselect-edit-summary' => 'Menambahkan kategori',
 	'categoryselect-error-article-doesnt-exist' => 'Halaman [id=$1] tidak ada.',
+	'categoryselect-error-category-name-length' => 'Panjang maksimum untuk nama kategori telah tercapai.',
 	'categoryselect-error-db-locked' => 'Basis data dikunci.',
 	'categoryselect-error-duplicate-category-name' => 'Kategori "$1" sudah ada.',
 	'categoryselect-error-edit-abort' => 'Perubahan yang Anda coba dibatalkan oleh suatu kaitan ekstensi.',
@@ -630,8 +660,8 @@ $messages['id'] = array(
 	'categoryselect-modal-category-name' => 'Menyediakan nama kategori:',
 	'categoryselect-modal-category-sortkey' => 'Opsional, Anda dapat menyusun sesuai abjad pada kategori "$1" dengan nama:',
 	'categoryselect-tooltip-add' => 'Tekan tombol Masuk atau Kembali ketika sudah selesai.',
-	'tog-disablecategoryselect' => 'Nonaktifkan Kategori Tagging( hanya berlaku jika modus visual telah dinonaktifkan)',
-	'tog-disablecategoryselect-v2' => "Menonaktifkan modul kategori (hanya berlaku jika ''visual mode editing'' dinonaktifkan)",
+	'tog-disablecategoryselect' => 'Nonaktifkan modul Kategori (hanya berlaku jika suntingan dalam modus visual telah dinonaktifkan)',
+	'tog-disablecategoryselect-v2' => 'Nonaktifkan modul Kategori (hanya berlaku jika suntingan dalam modus visual telah dinonaktifkan)',
 );
 
 /** Igbo (Igbo)
@@ -787,13 +817,13 @@ $messages['lb'] = array(
 	'categoryselect-tooltip-add' => "Dréckt 'Enter' oder 'Return' wann Dir fäerdeg sidd",
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
 	'categoryselect-button-add' => 'یه گل دسه اضاف کو',
-	'categoryselect-button-cancel' => 'رد كردن',
-	'categoryselect-button-save' => 'ذخيره كردن',
+	'categoryselect-button-cancel' => 'انجوم شیوسن',
+	'categoryselect-button-save' => 'اماییه كردن',
 	'categoryselect-category-add' => 'یه گل دسه اضاف کو....',
 	'categoryselect-category-edit' => 'ویرایشت دسه',
 	'categoryselect-category-remove' => 'دسه نه جاوه جا کو',
@@ -990,14 +1020,14 @@ $messages['or'] = array(
 	'categoryselect-button-cancel' => 'ନାକଚ',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
 	'categoryselect-button-save' => 'Beilege',
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -1201,6 +1231,20 @@ $messages['ru'] = array(
 	'tog-disablecategoryselect-v2' => 'Отключить модуль Категорий (активно только при редактировании в режиме Исходного кода)',
 );
 
+/** Sanskrit (संस्कृतम्)
+ * @author NehalDaveND
+ */
+$messages['sa'] = array(
+	'categoryselect-button-add' => 'वर्गः योज्यताम्',
+	'categoryselect-button-cancel' => 'निरस्यताम्',
+	'categoryselect-button-save' => 'रक्ष्यताम्',
+	'categoryselect-category-add' => 'वर्गः योज्यताम्...',
+	'categoryselect-category-edit' => 'वर्गः सम्पाद्यताम्',
+	'categoryselect-category-remove' => 'वर्गः निष्कास्यताम्',
+	'categoryselect-edit-summary' => 'वर्गान् योजयति',
+	'categoryselect-error-db-locked' => 'दत्तांशनिधिः (database) कीलितः',
+);
+
 /** Slovenian (slovenščina)
  * @author Dbc334
  */
@@ -1209,15 +1253,20 @@ $messages['sl'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Aktron
  * @author Milicevic01
  * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
+	'categoryselect-button-add' => 'Додајте категорију',
 	'categoryselect-button-cancel' => 'Откажи',
 	'categoryselect-button-save' => 'Сачувај',
+	'categoryselect-category-add' => 'Додајте категорију...',
 	'categoryselect-category-edit' => 'Уреди категорију',
+	'categoryselect-category-remove' => 'Уклоните категорију',
 	'categoryselect-edit-summary' => 'Додавање категорија',
+	'categoryselect-error-article-doesnt-exist' => 'Страница [id=$1]  не постоји',
 	'categoryselect-error-db-locked' => 'База података је закључана.',
 	'categoryselect-error-user-rights' => 'Грешка у корисничким правима.', # Fuzzy
 );
@@ -1297,7 +1346,7 @@ $messages['tl'] = array(
 	'tog-disablecategoryselect-v2' => 'Huwag paganahin ang modyul ng Kategorya (nailalapat lamang kapag hindi pinagagana ang pamamatnugot na nasa gawi na nakikita)',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -1366,7 +1415,7 @@ $messages['ur'] = array(
 	'categoryselect-button-cancel' => 'منسوخ',
 );
 
-/** Uzbek (oʻzbekcha)
+/** Uzbek (oʻzbekcha/ўзбекча)
  * @author Sociologist
  */
 $messages['uz'] = array(
@@ -1407,7 +1456,7 @@ $messages['vi'] = array(
 	'tog-disablecategoryselect-v2' => 'Vô hiệu hóa bản Thể loại (chỉ áp dụng khi sửa đổi ở chế độ trực quan bị vô hiệu hoá)',
 );
 
-/** Wu (吴语)
+/** Wu Chinese (吴语)
  */
 $messages['wuu'] = array(
 	'categoryselect-button-cancel' => '取消',
@@ -1454,13 +1503,15 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
+ * @author Liuxinyu970226
  * @author Simon Shek
  */
 $messages['zh-hant'] = array(
 	'categoryselect-button-add' => '增加分類',
 	'categoryselect-button-cancel' => '取消',
 	'categoryselect-button-save' => '儲存',
-	'categoryselect-category-add' => '增加分類',
+	'categoryselect-category-add' => '增加分類...',
 	'categoryselect-category-edit' => '編輯分類',
 	'categoryselect-category-remove' => '移除分類',
 	'categoryselect-edit-summary' => '增加分類',
@@ -1468,6 +1519,6 @@ $messages['zh-hant'] = array(
 	'categoryselect-error-db-locked' => '資料庫已鎖定。',
 	'categoryselect-error-duplicate-category-name' => '分類「$1」已存在。',
 	'categoryselect-error-empty-category-name' => '請提供一個分類名稱。',
-	'categoryselect-error-user-rights' => '用戶沒有進行此操作的權限。',
+	'categoryselect-error-user-rights' => '使用者沒有進行此操作的權限。',
 	'categoryselect-modal-category-name' => '提供的分類的名稱：',
 );

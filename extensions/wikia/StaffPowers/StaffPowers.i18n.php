@@ -39,9 +39,11 @@ $messages['ca'] = array(
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Jezevec
  */
 $messages['cs'] = array(
+	'staffpowers-desc' => 'Dává pracovníkům různé superschopnosti, jako například nezablokovatelnost.',
 	'staffpowers-ipblock-abort' => 'Blokování personálu Wikia, pomocníků nebo členů našeho týmu na likvidaci spamu (VSTF) není možné. K ohlášení jakéhokoli problému s naším personálem použijte [[Special:Contact|kontaktní formulář]].',
 );
 
@@ -152,10 +154,12 @@ $messages['oc'] = array(
 );
 
 /** Polish (polski)
+ * @author Pio387
  * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
+	'staffpowers-desc' => 'Daje pracownikom Wikii różne supermoce, takich jak nieblokowalność.',
 	'staffpowers-ipblock-abort' => 'Blokowanie pracowników, helperów czy członków VSTF nie jest możliwe. Użyj [[Special:Contact|formularza kontaktowego]] aby zgłosić problem związany z użytkownikiem posiadającym takie uprawnienia.',
 );
 
@@ -176,8 +180,10 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author JM Pessanha
+ * @author Jefersonmoraes
  */
 $messages['pt-br'] = array(
+	'staffpowers-desc' => 'Dar à Staff vários privilégios como não bloqueável.',
 	'staffpowers-ipblock-abort' => 'Não é possível bloquear a Staff da Wikia, Wikia Helpers ou membros da nossa equipe de Volunteer Spam Task Force (VSTF). Por favor, utilize o [[Special:Contact|formulário de contato]] para relatar quaisquer questões ou problemas com a nossa equipe.',
 );
 
@@ -201,6 +207,7 @@ $messages['ru'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'staffpowers-desc' => 'Ger personalmedlemmar diverse superkrafter, som blockeringsimmunitet.',
 	'staffpowers-ipblock-abort' => 'Blockera Wikia-personal, Wikia-hjälpare, eller medlemmar av vår frivilliga spambekämpningsstyrka är inte möjligt. Var god använd [[Special:Contact|kontaktformuläret]] för att rapportera några fel eller problem med vår personal.',
 );
 
@@ -213,8 +220,10 @@ $messages['tl'] = array(
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
+ * @author Капитан Джон Шепард
  */
 $messages['uk'] = array(
+	'staffpowers-desc' => 'Дає співробітникам різні повноваження які можуть бути заблоковані.',
 	'staffpowers-ipblock-abort' => "Заблокувати співробітників Вікія, помічників Вікія або членів нашої команди користувачів-добровольців по боротбі з спамом (VSTF) - неможливо. Будь ласка, використовуйте  [[Special:Contact|контактну форму]], щоб повідомити про будь-яку проблему, пов'язану з нашими співробітниками.",
 );
 

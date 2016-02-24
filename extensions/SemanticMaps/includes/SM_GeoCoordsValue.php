@@ -9,7 +9,7 @@
  * @ingroup SemanticMaps
  * @ingroup SMWDataValues
  * 
- * @licence GNU GPL v3
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  * @author Markus Krötzsch
  */
@@ -72,6 +72,8 @@ class SMGeoCoordsValue extends SMWDataValue {
 	 * 
 	 * @param $value String
 	 * @param $asQuery Boolean
+	 *
+	 * @return SMWDescription
 	 */
 	protected function parseUserValueOrQuery( $value, $asQuery = false ) {
 		$this->wikiValue = $value;
@@ -79,7 +81,7 @@ class SMGeoCoordsValue extends SMWDataValue {
 		$comparator = SMW_CMP_EQ;
 
 		if ( $value === '' ) {
-			$this->addError( wfMsg( 'smw_novalues' ) );
+			$this->addError( wfMessage( 'smw_novalues' )->text() );
 		} else {
 			SMWDataValue::prepareValue( $value, $comparator );
 
@@ -92,7 +94,7 @@ class SMGeoCoordsValue extends SMWDataValue {
 				$distance = substr( trim( $distance ), 0, -1 );
 				
 				if ( !MapsDistanceParser::isDistance( $distance ) ) {
-					$this->addError( wfMsgExt( 'semanticmaps-unrecognizeddistance', array( 'parsemag' ), $distance ) );
+					$this->addError( wfMessage( 'semanticmaps-unrecognizeddistance', $distance )->text() );
 					$distance = false;							
 				}
 			}
@@ -101,7 +103,7 @@ class SMGeoCoordsValue extends SMWDataValue {
 			if ( $parsedCoords ) {
 				$this->m_dataitem = new SMWDIGeoCoord( $parsedCoords );
 			} else {
-				$this->addError( wfMsgExt( 'maps_unrecognized_coords', array( 'parsemag' ), $coordinates, 1 ) );
+				$this->addError( wfMessage( 'maps_unrecognized_coords', $coordinates, 1 )->text() );
 				
 				 // Make sure this is always set
 				 // TODO: Why is this needed?!
@@ -118,7 +120,7 @@ class SMGeoCoordsValue extends SMWDataValue {
 				case $distance !== false :
 					return new SMAreaValueDescription( $this->getDataItem(), $comparator, $distance );
 				default :
-					return new SMGeoCoordsValueDescription( $this->getDataItem(), $comparator );
+					return new SMGeoCoordsValueDescription( $this->getDataItem(), null, $comparator );
 			}
 		}
 	}
@@ -168,12 +170,12 @@ class SMGeoCoordsValue extends SMWDataValue {
 			$text = MapsCoordinateParser::formatCoordinates( $coordinateSet, $smgQPCoodFormat, $smgQPCoodDirectional );
 
 			$lines = array(
-				htmlspecialchars( wfMsgExt( 'semanticmaps-latitude', 'content', $coordinateSet['lat'] ) ),
-				htmlspecialchars( wfMsgExt( 'semanticmaps-longitude', 'content', $coordinateSet['lon'] ) ),
+				wfMessage( 'semanticmaps-latitude', $coordinateSet['lat'] )->inContentLanguage()->escaped(),
+				wfMessage( 'semanticmaps-longitude', $coordinateSet['lon'] )->inContentLanguage()->escaped(),
 			);
 			
 			if ( array_key_exists( 'alt', $coordinateSet ) ) {
-				$lines[] = htmlspecialchars ( wfMsgForContent( 'semanticmaps-altitude', 'content', $coordinateSet['alt'] ) );
+				$lines[] = wfMessage( 'semanticmaps-altitude', $coordinateSet['alt'] )->inContentLanguage()->escaped();
 			}
 			
 			return 	'<span class="smwttinline">' . htmlspecialchars( $text ) . '<span class="smwttcontent">' .

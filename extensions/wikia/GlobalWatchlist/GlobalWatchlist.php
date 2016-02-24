@@ -17,9 +17,6 @@ $wgExtensionCredits['specialpage'][] = [
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/GlobalWatchlist'
 ];
 
-// message file
-$wgExtensionMessagesFiles['GlobalWatchlist'] = dirname( __FILE__ ) . '/GlobalWatchlist.i18n.php';
-
 // classes
 $wgAutoloadClasses['GlobalWatchlistBot'] = dirname( __FILE__ ) . '/GlobalWatchlistBot.class.php';
 $wgAutoloadClasses['GlobalWatchlistHooks'] = dirname( __FILE__ ) . '/GlobalWatchlistHooks.class.php';

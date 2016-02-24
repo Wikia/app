@@ -92,7 +92,6 @@ $wgExtensionMessagesFiles['VideoHandlers'] = "$dir/VideoHandlers.i18n.php";
 **/
 
 $wgHooks['MWNamespace:isMovable'][] = 'VideoHandlerHooks::WikiaVideo_isMovable';
-$wgHooks['SpecialNewImages::beforeQuery'][] = 'VideoHandlerHooks::WikiaVideoNewImagesBeforeQuery';
 $wgHooks['ParserBeforeStrip'][] = 'VideoHandlerHooks::WikiaVideoParserBeforeStrip'; // <videogallery>
 
 $wgHooks['FileRevertFormBeforeUpload'][] = 'VideoHandlerHooks::onFileRevertFormBeforeUpload';
@@ -123,6 +122,9 @@ if ( !empty( $wgUseVideoVerticalFilters ) ) {
 if ( !empty($wgVideoHandlersVideosMigrated) ) {
 	$wgHooks['ParserFirstCallInit'][] = 'VideoHandlerHooks::initParserHook';
 }
+
+$wgHooks['VideoInfoSaveToCache'][] = 'VideoHandlerHooks::clearVideoCache';
+$wgHooks['VideoInfoInvalidateCache'][] = 'VideoHandlerHooks::clearVideoCache';
 
 // permissions
 $wgAvailableRights[] = 'specialvideohandler';
@@ -163,10 +165,6 @@ $wgMediaHandlers['video/metacafe'] = 'MetacafeVideoHandler';
 $wgAutoloadClasses['MovieclipsVideoHandler'] =  $dir . '/handlers/MovieclipsVideoHandler.class.php';
 $wgAutoloadClasses['MovieclipsApiWrapper'] =  $dir . '/apiwrappers/MovieclipsApiWrapper.class.php';
 $wgMediaHandlers['video/movieclips'] = 'MovieclipsVideoHandler';
-
-$wgAutoloadClasses['MyvideoVideoHandler'] =  $dir . '/handlers/MyvideoVideoHandler.class.php';
-$wgAutoloadClasses['MyvideoApiWrapper'] =  $dir . '/apiwrappers/MyvideoApiWrapper.class.php';
-$wgMediaHandlers['video/myvideo'] = 'MyvideoVideoHandler';
 
 // Uses Ooyala for video handler
 $wgAutoloadClasses['ScreenplayApiWrapper'] =  $dir . '/apiwrappers/ScreenplayApiWrapper.class.php';
@@ -260,7 +258,6 @@ $wgVideoMigrationProviderMap = array(
 	11 => 'Metacafe',
 	12 => 'Sevenload',
 	13 => 'Vimeo',
-	15 => 'Myvideo',
 	18 => 'Dailymotion',
 	19 => 'Viddler',
 	21 => 'Screenplay',

@@ -1,12 +1,25 @@
 /*global define*/
 define('ext.wikia.adEngine.adEngine', [
-	'wikia.log',
-	'wikia.lazyqueue',
 	'ext.wikia.adEngine.adDecoratorLegacyParamFormat',
 	'ext.wikia.adEngine.eventDispatcher',
+	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.slotTracker',
-	'ext.wikia.adEngine.slotTweaker'
-], function (log, lazyQueue, adDecoratorLegacyParamFormat, eventDispatcher, slotTracker, slotTweaker) {
+	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.utils.hooks',
+	'wikia.document',
+	'wikia.lazyqueue',
+	'wikia.log'
+], function (
+	adDecoratorLegacyParamFormat,
+	eventDispatcher,
+	adSlot,
+	slotTracker,
+	slotTweaker,
+	registerHooks,
+	doc,
+	lazyQueue,
+	log
+) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adEngine';
@@ -25,31 +38,105 @@ define('ext.wikia.adEngine.adEngine', [
 		return func;
 	}
 
+	function cleanProviderContainers(slotName) {
+		var slotContainer = doc.getElementById(slotName),
+			containers,
+			i;
+
+		if (!slotContainer) {
+			return;
+		}
+
+		containers = slotContainer.childNodes;
+
+		for (i = containers.length - 1; i >= 0; i -= 1) {
+			if (containers[i].tagName !== 'SCRIPT') { // keep the adslots2.push script
+				slotContainer.removeChild(containers[i]);
+			}
+		}
+	}
+
+	function prepareAdProviderContainer(providerName, slotName) {
+		// TODO: remove after Liftium-era
+		var providerContainerId = providerName + '_' + slotName.split('.')[0],
+			adContainer = doc.getElementById(slotName),
+			providerContainer = doc.getElementById(providerContainerId);
+
+		if (!providerContainer && adContainer) {
+			providerContainer = doc.createElement('div');
+			providerContainer.id = providerContainerId;
+			adContainer.appendChild(providerContainer);
+		}
+
+		log(['prepareAdProviderContainer', providerName, slotName, providerContainer], 'debug', logGroup);
+		return providerContainer;
+	}
+
+	/**
+	 * Initialize the provider before the first use
+	 * Build the queue for fillInSlot and call initialize (if present)
+	 *
+	 * !! If initialize method is present in a provider it MUST accept a callback param
+	 * and call it back once it is initialized !!
+	 *
+	 * TODO (if useful): support error param, so initialize can cause a provider to always hop?
+	 */
+	function initializeProviderOnce(provider) {
+		if (!provider.fillInSlotQueue) {
+			provider.fillInSlotQueue = [];
+			lazyQueue.makeQueue(provider.fillInSlotQueue, function (args) {
+				provider.fillInSlot.apply(provider, args);
+			});
+
+			if (provider.initialize) {
+				// Only start flushing the fillInSlot queue once the provider is initialized
+				provider.initialize(provider.fillInSlotQueue.start);
+			} else {
+				// No initialize function, let's fill in the slots immediately
+				provider.fillInSlotQueue.start();
+			}
+		}
+	}
+
+	function createSlot(queuedSlot, container, callbacks) {
+		var slot = adSlot.create(queuedSlot.slotName, container, callbacks);
+		registerHooks(slot, ['success', 'collapse', 'hop']);
+		slot.post('success', queuedSlot.onSuccess);
+
+		return slot;
+	}
+
 	function run(adConfig, adslots, queueName) {
 		log(['run', adslots, queueName], 'debug', logGroup);
 
-		function fillInSlotUsingProvider(slot, provider, nextProvider) {
-			log(['fillInSlotUsingProvider', provider.name, slot], 'debug', logGroup);
+		function fillInSlotUsingProvider(queuedSlot, provider, nextProvider) {
+			log(['fillInSlotUsingProvider', provider.name, queuedSlot], 'debug', logGroup);
 
-			var slotName = slot.slotName,
-				aSlotTracker = slotTracker(provider.name, slotName, queueName);
+			var slotName = queuedSlot.slotName,
+				container = prepareAdProviderContainer(provider.name, slotName),
+				tracker = slotTracker(provider.name, slotName, queueName),
+				slot = createSlot(queuedSlot, container, {
+					success: function (adInfo) {
+						log(['success', provider.name, slotName, adInfo], 'debug', logGroup);
+						tracker.track('success', adInfo);
+					},
+					collapse: function (adInfo) {
+						log(['collapse', provider.name, slotName, adInfo], 'debug', logGroup);
+						tracker.track('collapse', adInfo);
+					},
+					hop: function (adInfo) {
+						log(['hop', provider.name, slotName, adInfo], 'debug', logGroup);
+						tracker.track('hop', adInfo);
+						nextProvider();
+					}
+				});
 
 			// Notify people there's the slot handled
 			eventDispatcher.trigger('ext.wikia.adEngine fillInSlot', slotName, provider);
 
-			provider.fillInSlot(slotName, function (extra) {
-				// Success callback
-				log(['success', provider.name, slotName, extra], 'debug', logGroup);
-				aSlotTracker.track('success', extra);
-				if (typeof slot.onSuccess === 'function') {
-					slot.onSuccess();
-				}
-			}, function (extra) {
-				// Hop callback
-				log(['hop', provider.name, slotName, extra], 'debug', logGroup);
-				aSlotTracker.track('hop', extra);
-				nextProvider();
-			});
+			initializeProviderOnce(provider);
+
+			provider.fillInSlotQueue.push([slot]);
 		}
 
 		function fillInSlot(slot) {
@@ -90,6 +177,7 @@ define('ext.wikia.adEngine.adEngine', [
 				} while (provider);
 			}
 
+			cleanProviderContainers(slotName);
 			nextProvider();
 		}
 

@@ -43,8 +43,21 @@ class CategoryExhibitionSection {
 	 */
 	public function isCategoryExhibitionEnabled() {
 		if ( !isset( $this->categoryExhibitionEnabled ) ) {
-			$this->categoryExhibitionEnabled =
-				CategoryDataService::getArticleCount( $this->categoryTitle->getDBkey() ) > self::EXHIBITION_LIMIT ? false : true;
+			$this->categoryExhibitionEnabled = false;
+			$oTmpArticle = new Article( $this->categoryTitle );
+			if ( !is_null( $oTmpArticle ) ) {
+				if ( $this->categoryTitle->isRedirect() ) {
+					$rdTitle = $oTmpArticle->getRedirectTarget();
+				} else {
+					$rdTitle = $this->categoryTitle;
+				}
+
+				if ( !is_null( $rdTitle ) && ( $rdTitle->getNamespace() == NS_CATEGORY ) ) {
+					$sCategoryDBKey = $rdTitle->getDBkey();
+					$this->categoryExhibitionEnabled =
+						CategoryDataService::getArticleCount( $sCategoryDBKey ) > self::EXHIBITION_LIMIT ? false : true;
+				}
+			}
 		}
 		return $this->categoryExhibitionEnabled;
 	}
@@ -111,7 +124,7 @@ class CategoryExhibitionSection {
 			$this->setSortTypeFromParam();
 			$return = $this->sortOption;
 		} else {
-			$return = $wgUser->getOption( 'CategoryExhibitionSortType', $this->allowedSortOptions[0] );
+			$return = $wgUser->getGlobalPreference( 'CategoryExhibitionSortType', $this->allowedSortOptions[0] );
 		}
 
 		if ( !empty( $return ) && in_array( $return, $this->allowedSortOptions ) ){
@@ -127,8 +140,11 @@ class CategoryExhibitionSection {
 
 		if ( in_array( $sortType, $this->allowedSortOptions ) ) {
 			if ( !$wgUser->isAnon() ) {
-				$wgUser->setOption('CategoryExhibitionSortType', $sortType );
-				$wgUser->saveSettings();
+				# PLATFORM-1801: only update the preference when needed - i.e. we do change the value and it's not a default one
+				if ( $wgUser->getGlobalPreference('CategoryExhibitionSortType', $this->allowedSortOptions[0] ) !== $sortType ) {
+					$wgUser->setGlobalPreference('CategoryExhibitionSortType', $sortType );
+					$wgUser->saveSettings();
+				}
 			}
 			$this->sortOption = $sortType;
 		}
@@ -163,8 +179,11 @@ class CategoryExhibitionSection {
 		global $wgUser;
 		if ( in_array( $displayType, $this->allowedDisplayOptions ) ) {
 			if ( !$wgUser->isAnon() ) {
-				$wgUser->setOption('CategoryExhibitionDisplayType', $displayType );
-				$wgUser->saveSettings();
+				# PLATFORM-1801: only update the preference when needed - i.e. we do change the value and it's not a default one
+				if ( $wgUser->getGlobalPreference('CategoryExhibitionDisplayType', $this->allowedDisplayOptions[0] ) !== $displayType ) {
+					$wgUser->setGlobalPreference('CategoryExhibitionDisplayType', $displayType);
+					$wgUser->saveSettings();
+				}
 			}
 			$this->displayOption = $displayType;
 		}
@@ -182,7 +201,7 @@ class CategoryExhibitionSection {
 			$this->setDisplayTypeFromParam();
 			$return = $this->displayOption;
 		} else {
-			$return = $wgUser->getOption( 'CategoryExhibitionDisplayType', $this->allowedDisplayOptions[0] );
+			$return = $wgUser->getGlobalPreference( 'CategoryExhibitionDisplayType', $this->allowedDisplayOptions[0] );
 		}
 
 		if ( !empty( $return ) && in_array( $return, $this->allowedDisplayOptions ) ){

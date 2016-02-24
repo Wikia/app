@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Meursault2004"
+		]
+	},
+	"sd_browsedata_choosecategory": "Pilih kategori",
+	"sd_browsedata_viewcategory": "ndeleng kategori",
+	"sd_browsedata_subcategory": "Subkategori",
+	"sd_browsedata_other": "Liyané",
+	"sd_browsedata_none": "Ora ana",
+	"sd_browsedata_or": "utawa",
+	"sd_browsedata_removefilter": "Ilangana filter iki",
+	"sd_browsedata_addanothervalue": "Tambahna biji liya"
+}

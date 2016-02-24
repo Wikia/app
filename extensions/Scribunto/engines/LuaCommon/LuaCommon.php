@@ -38,6 +38,17 @@ abstract class Scribunto_LuaEngine extends ScribuntoEngineBase {
 	const MAX_EXPAND_CACHE_SIZE = 100;
 
 	/**
+	 * Wikia change begin
+	 * Set constants for modules shared from dev.wikia.com
+	 * @author Adam Karmiński <adamk@wikia-inc.com>
+	 */
+	const SHARED_MODULES_PREFIX = 'Dev:';
+	const SHARED_MODULES_DEV_CITYID = 7931;
+	/**
+	 * Wikia change end
+	 */
+
+	/**
 	 * Create a new interpreter object
 	 * @return Scribunto_LuaInterpreter
 	 */
@@ -314,12 +325,29 @@ abstract class Scribunto_LuaEngine extends ScribuntoEngineBase {
 			return array( $init );
 		}
 
-		$title = Title::newFromText( $name );
-		if ( !$title || $title->getNamespace() != NS_MODULE ) {
-			return array();
+		/**
+		 * Wikia change begin
+		 * Support modules shared from dev.wikia.com
+		 * @author Adam Karmiński <adamk@wikia-inc.com>
+		 */
+		if ( strpos( $name, self::SHARED_MODULES_PREFIX ) === 0 ) {
+			$sNameOnDev = substr( $name, strlen( self::SHARED_MODULES_PREFIX ) );
+			$title = GlobalTitle::newFromText( $sNameOnDev, NS_MODULE, self::SHARED_MODULES_DEV_CITYID );
+			if ( !$title ) {
+				return array();
+			}
+			$module = $this->fetchSharedModule( $title, self::SHARED_MODULES_PREFIX );
+		} else {
+			$title = Title::newFromText( $name );
+			if ( !$title || $title->getNamespace() != NS_MODULE ) {
+				return array();
+			}
+			$module = $this->fetchModuleFromParser( $title );
 		}
+		/**
+		 * Wikia change end
+		 */
 
-		$module = $this->fetchModuleFromParser( $title );
 		if ( $module ) {
 			return array( $module->getInitChunk() );
 		} else {

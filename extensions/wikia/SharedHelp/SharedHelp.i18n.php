@@ -47,7 +47,7 @@ $messages['qqq'] = array(
  * @author Malhargan
  */
 $messages['ar'] = array(
-	'sharedhelp-desc' => 'تأخذ صفحات من [[w:Help:Contents|ويكي المساعدة]] وتدرجها في نطاق ال{{ns:help}} في هذه الويكي', # Fuzzy
+	'sharedhelp-desc' => 'تأخذ صفحات من [[w:Help:Contents|ويكي المساعدة]] وتدرجها في نطاق ال{{ns:help}} في هذه الويكي',
 	'sharedhelp-autotalkcreate-summary' => 'إنشاء صفحة نقاش تلقائيا',
 	'sharedhelp-searchprofile' => 'صفحات المساعدة',
 	'sharedhelp-searchprofile-tooltip' => 'البحث في صفحات المساعدة',
@@ -83,7 +83,7 @@ $messages['ca'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Pàgina de discussió creada automàticament',
 	'sharedhelp-searchprofile' => "Pàgines d'ajuda",
 	'sharedhelp-searchprofile-tooltip' => "Cercar pàgines d'ajuda",
-	'shared_help_info' => 'Dubtes? Pregunta al [[w:ca:Special:Forum|Fòrum comunitari]].', # Fuzzy
+	'shared_help_info' => 'Preguntes? Pregunta al [[w:c:ca:Special:Forum|Fòrum comunitari]].', # Fuzzy
 	'shared_help_edit_info' => "El text dins d'aquesta caixa està emmagatzemat a [[w:c:comunidad:Ayuda:$1|Ajuda:$1]] al wiki $2. Vegeu [[Ajuda:Ajuda compartida]] per més informació.
 
 Qualsevol canvi que vulguis fer a ''tots'' els wikis s'ha de fer a la còpia del wiki $2. [[w:c:comunidad:Ayuda_discusión:$1|Suggeriu canvis aquí]].
@@ -152,6 +152,13 @@ El texto debe colocarse en esta página si deseas explicar las su uso, estilo y 
 	'shared_help_was_redirect' => 'Esta página es una redirección a $1',
 );
 
+/** Persian (فارسی)
+ * @author Movyn
+ */
+$messages['fa'] = array(
+	'sharedhelp-searchprofile-tooltip' => 'جستجوی صفحات راهنما',
+);
+
 /** Finnish (suomi)
  * @author Elseweyr
  * @author Ilkea
@@ -212,10 +219,12 @@ $messages['hsb'] = array(
 
 /** Hungarian (magyar)
  * @author TK-999
+ * @author Tacsipacsi
  */
 $messages['hu'] = array(
 	'sharedhelp-desc' => 'A [[w:Help:Contents|Community Central]] oldalait illeszti be az {{ns:help}} névtérbe ezen a wikin',
 	'sharedhelp-autotalkcreate-summary' => 'Automatikusan létrehozott vitalap',
+	'sharedhelp-searchprofile-tooltip' => 'Keresés a Segítség lapokon',
 	'shared_help_info' => 'Kérdéseid vannak? Tedd fel őket a [[w:Special:Forum|Közösségi Központ fórumain]].',
 );
 
@@ -522,12 +531,14 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
 	'sharedhelp-desc' => 'Mất trang từ [[w:Help:Contents|Community Central]] và chèn chúng vào không gian tên {{ns:help}} wiki này',
 	'sharedhelp-autotalkcreate-summary' => 'Thảo luận trang tự động tạo ra',
 	'sharedhelp-searchprofile' => 'Trang trợ giúp',
 	'sharedhelp-searchprofile-tooltip' => 'Trang trợ giúp tìm kiếm',
+	'shared_help_info' => 'Muốn hỏi? Hãy yêu cầu trên [[w:Special:Forum|Diễn đàn cộng đồng]].',
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -551,10 +562,11 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  */
 $messages['zh-hant'] = array(
-	'sharedhelp-desc' => '自[[w:c:Help|Wikia幫助]]獲取頁面並嵌入到這個維基的 {{ns:help}}命名空間',
-	'sharedhelp-autotalkcreate-summary' => '討論頁已自動創建',
+	'sharedhelp-desc' => '自[[w:c:Help|Wikia幫助]]獲取頁面並嵌入到這個維基的 {{ns:help}}命名空間', # Fuzzy
+	'sharedhelp-autotalkcreate-summary' => '討論頁已自動建立',
 	'sharedhelp-searchprofile' => '幫助頁面',
-	'sharedhelp-searchprofile-tooltip' => '搜尋幫助頁面',
+	'sharedhelp-searchprofile-tooltip' => '搜尋使用說明頁面',
 );

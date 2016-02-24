@@ -39,6 +39,7 @@ $messages['az'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Aftabuzzaman
  */
 $messages['bn'] = array(
 	'centralhelpsearch-placeholder' => 'সাহায্য অনুসন্ধান করুন...',
@@ -93,6 +94,13 @@ $messages['es'] = array(
 	'centralhelpsearch-placeholder' => 'Buscar en Ayuda...',
 );
 
+/** Persian (فارسی)
+ * @author Movyn
+ */
+$messages['fa'] = array(
+	'centralhelpsearch-placeholder' => 'کمک جستجو...',
+);
+
 /** Finnish (suomi)
  * @author Ilkea
  */
@@ -124,6 +132,13 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'centralhelpsearch-desc' => 'Permite a inclusión dun formulario para buscar na axuda central da comunidade',
 	'centralhelpsearch-placeholder' => 'Procurar na axuda&hellip;',
+);
+
+/** Hebrew (עברית)
+ * @author LaG roiL
+ */
+$messages['he'] = array(
+	'centralhelpsearch-placeholder' => 'חיפוש עזרה...',
 );
 
 /** Hungarian (magyar)
@@ -186,7 +201,7 @@ $messages['lb'] = array(
 	'centralhelpsearch-placeholder' => 'An der Hëllef sichen...',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -344,4 +359,11 @@ $messages['vi'] = array(
 $messages['zh-hans'] = array(
 	'centralhelpsearch-desc' => '允许一个搜寻社区中央帮助网站的表格',
 	'centralhelpsearch-placeholder' => '搜索帮助……',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Cwlin0416
+ */
+$messages['zh-hant'] = array(
+	'centralhelpsearch-placeholder' => '搜尋說明...',
 );

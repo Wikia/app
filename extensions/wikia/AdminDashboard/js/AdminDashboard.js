@@ -41,7 +41,10 @@ var AdminDashboard = {
 						// method
 						'addVideo',
 						// data
-						{ url: url },
+						{
+							token: mw.user.tokens.get('editToken'),
+							url: url
+						},
 						// success callback
 						function( formRes ) {
 							if ( formRes.error ) {
@@ -124,7 +127,7 @@ var AdminDashboard = {
 	},
 	modalLoad: {
 		loadAddPage: function() {
-			CreatePage.openDialog();
+			CreatePage.requestDialog();
 		},
 		loadAddPhoto: function() {
 			UploadPhotos.showDialog();

@@ -11,6 +11,18 @@ use Wikia\Util\Statistics\BernoulliTrial;
 
 class MemcachedStats {
 
+	// list of memcache keys to normalize by taking a look at the prefix
+	// @see PLATFORM-1186
+	private static $keyPrefixesToNormalize = [
+		'wikia:talk_messages:',
+		'wikicities:filepage:globalusage:',
+		'wikicities:InterwikiDispatcher::isWikiExists:',
+		'wikicities:UserCache:',
+		'wikicities:wikifactory:variables:metadata:',
+		'wikifactory:domains:by_domain_hash:',
+		'*:pcache:idhash:',
+	];
+
 	/**
 	 * Get memcache stats:
 	 *  - top keys (both hits and misses)
@@ -77,12 +89,23 @@ class MemcachedStats {
 			$key = str_replace($prefix, '*:', $key);
 		}
 
+		// check key prefixes
+		foreach(self::$keyPrefixesToNormalize as $prefix) {
+			if (startsWith($key, $prefix)) {
+				return $prefix . '*';
+			}
+		}
+
+		// normalize key parts separators
+		$key = str_replace( '-', ':', $key );
+		$key = str_replace( '_', ':', $key );
+
 		$parts = array_map(
 			function($part) {
-				// replace IP addresses, IDs and hashes with *
-				return ctype_xdigit( str_replace('.', '', $part) ) ? '*' : $part;
+				// replace IP addresses, IDs, "v1" suffixes and hashes with *
+				return ctype_xdigit( strtr( $part, '.v', '00' ) ) ? '*' : $part;
 			},
-			explode(':', $key)
+			explode( ':', $key )
 		);
 
 		return implode(':', $parts);

@@ -51,10 +51,12 @@ module.exports = function (config) {
 			'resources/wikia/modules/imageServing.js',
 			'resources/wikia/modules/krux.js',
 			'resources/wikia/modules/lazyqueue.js',
+			'resources/wikia/modules/facebookLocale.js',
 			'resources/wikia/modules/loader.js',
 			'resources/wikia/modules/nirvana.js',
 			'resources/wikia/modules/querystring.js',
 			'resources/wikia/modules/history.js',
+			'resources/wikia/modules/scriptwriter.js',
 			'resources/wikia/modules/scrollToLink.js',
 			'resources/wikia/modules/stringhelper.js',
 			'resources/wikia/modules/thumbnailer.js',
@@ -64,6 +66,9 @@ module.exports = function (config) {
 
 			//helper modules
 			'resources/wikia/modules/dom.js',
+
+			// Import Scripts
+			'resources/wikia/modules/importScriptHelper.js',
 
 			// Performance
 			'extensions/wikia/Bucky/js/spec/bucky.mock.js',
@@ -80,31 +85,16 @@ module.exports = function (config) {
 			'resources/wikia/ui_components/**/*.js',
 
 			//Advertisement
-			'extensions/wikia/AdEngine/js/AdConfig2.js',
-			'extensions/wikia/AdEngine/js/AdConfig2Late.js',
-			'extensions/wikia/AdEngine/js/AdConfigMobile.js',
-			'extensions/wikia/AdEngine/js/AdContext.js',
-			'extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
-			'extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
-			'extensions/wikia/AdEngine/js/AdEngine2.js',
-			'extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
-			'extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
-			'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
-			'extensions/wikia/AdEngine/js/AdLogicPageParams.js',
-			'extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
-			'extensions/wikia/AdEngine/js/AdTracker.js',
-			'extensions/wikia/AdEngine/js/DartUrl.js',
-			'extensions/wikia/AdEngine/js/EventDispatcher.js',
-			'extensions/wikia/AdEngine/js/EvolveHelper.js',
-			'extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
+			'extensions/wikia/AdEngine/js/*.js',
+			'extensions/wikia/AdEngine/js/config/*.js',
 			'extensions/wikia/AdEngine/js/lookup/*.js',
-			'extensions/wikia/AdEngine/js/MessageListener.js',
-			'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
-			'extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
-			'extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
 			'extensions/wikia/AdEngine/js/provider/*.js',
+			'extensions/wikia/AdEngine/js/provider/gpt/*.js',
+			'extensions/wikia/AdEngine/js/slot/*.js',
+			'extensions/wikia/AdEngine/js/template/*.js',
+			'extensions/wikia/AdEngine/js/utils/*.js',
 
-			'extensions/wikia/AdEngine/js/spec/*.spec.js',
+			'extensions/wikia/AdEngine/js/spec/**/*.spec.js',
 
 			//PhalanxII
 			'extensions/wikia/PhalanxII/js/modules/phalanx.js',
@@ -199,6 +189,14 @@ module.exports = function (config) {
 			// Banner Notifications
 			'extensions/wikia/BannerNotifications/js/BannerNotifications.js',
 			'extensions/wikia/BannerNotifications/js/spec/BannerNotifications.spec.js',
+
+			// Paid Asset Drop
+			'extensions/wikia/PaidAssetDrop/js/paidAssetDrop.js',
+			'extensions/wikia/PaidAssetDrop/js/spec/paidAssetDrop.spec.js',
+
+			// PageShare
+			'extensions/wikia/PageShare/scripts/PageShare.js',
+			'extensions/wikia/PageShare/scripts/spec/PageShare.spec.js'
 		]
 	});
 };

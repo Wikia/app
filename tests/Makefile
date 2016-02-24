@@ -29,12 +29,22 @@ prepare:
 # runs unit tests
 phpunit: prepare
 	${CMD_PHPUNIT} \
-		--exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack
+		--exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack,ExternalIntegration,ContractualResponsibilitiesValidation
 
 # runs integration tests only
 phpunit-infrastructure: prepare
 	${CMD_PHPUNIT} \
 		--group Infrastructure,Integration
+
+# runs external partners api integration tests only
+phpunit-externals: prepare
+	${CMD_PHPUNIT} \
+		--group ExternalIntegration
+
+# runs tests for externally used parts
+phpunit-contractual-responsibilities: prepare
+	${CMD_PHPUNIT} \
+		--group ContractualResponsibilitiesValidation
 
 # runs all (i.e. both unit and integration) tests from a given directory or a file
 phpunit-single: prepare
@@ -45,7 +55,7 @@ phpunit-single: prepare
 # runs fast unit tests only
 phpunit-fast: prepare
 	${CMD_PHPUNIT} \
-		--exclude-group Slow,Infrastructure,Integration,Broken,Stub,Monitoring,Hack,UsingDB
+		--exclude-group Slow,Infrastructure,Integration,Broken,Stub,Monitoring,Hack,UsingDB,ExternalIntegration
 
 # lists all slow test cases with execution time
 phpunit-slow-list: prepare
@@ -56,7 +66,7 @@ phpunit-slow-list: prepare
 # run tests for a specific group
 phpunit-group: prepare
 	${CMD_PHPUNIT} \
-                --group $(GROUP)
+		--group $(GROUP)
 
 #
 # JavaScript TESTS

@@ -1,5 +1,4 @@
 <?php
 
-abstract class WikiaHubsModuleNonEditableService extends WikiaHubsModuleService
-{
+abstract class WikiaHubsModuleNonEditableService extends WikiaHubsModuleService {
 }

@@ -8,16 +8,10 @@ class GlobalWatchlistHooks {
 
 		$defaultPreferences['watchlistdigest'] = [
 			'type' => 'toggle',
-			'label-message' => 'tog-watchlistdigest',
-			'section' => 'watchlist/advancedwatchlist',
+			'label-message' => 'tog-watchlistdigest-v2',
+			'section' => 'emailv2/email-me-v2',
 		];
 
-		$defaultPreferences['watchlistdigestclear'] = [
-			'type' => 'toggle',
-			'label-message' => 'tog-watchlistdigestclear',
-			'section' => 'watchlist/advancedwatchlist',
-		];
-		
 		return true;
 	}
 
@@ -49,7 +43,7 @@ class GlobalWatchlistHooks {
 	private static function userUnsubscribingFromAllEmail ( array $formData ) {
 		return (
 			$formData['unsubscribed'] == true &&
-			F::app()->wg->User->getBoolOption( 'unsubscribed' ) == false
+			F::app()->wg->User->getGlobalPreference( 'unsubscribed' ) == false
 		);
 	}
 
@@ -61,7 +55,7 @@ class GlobalWatchlistHooks {
 	private static function userUnsubscribingFromWeeklyDigest( array $formData ) {
 		return (
 			$formData['watchlistdigest'] == false &&
-			F::app()->wg->User->getBoolOption( 'watchlistdigest' ) == true
+			(bool)F::app()->wg->User->getGlobalPreference( 'watchlistdigest' ) == true
 		);
 	}
 

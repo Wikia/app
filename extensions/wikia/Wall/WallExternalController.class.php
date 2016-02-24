@@ -7,6 +7,8 @@
  */
 
 class WallExternalController extends WikiaController {
+	use \Wikia\Logger\Loggable;
+
 	/**
 	 * @var $helper WallHelper
 	 */
@@ -32,10 +34,10 @@ class WallExternalController extends WikiaController {
 	 */
 	public function moveModal() {
 
-		$id = $this->getVal('id');
-		$wm = WallMessage::newFromId($id);
+		$id = $this->getVal( 'id' );
+		$wm = WallMessage::newFromId( $id );
 
-		if(empty($wm)) {
+		if ( empty( $wm ) ) {
 			return true;
 		}
 
@@ -50,15 +52,15 @@ class WallExternalController extends WikiaController {
 
 		$forum = new Forum();
 
-		$list = $forum->getListTitles(DB_SLAVE, NS_WIKIA_FORUM_BOARD);
+		$list = $forum->getListTitles( DB_SLAVE, NS_WIKIA_FORUM_BOARD );
 
-		$this->destinationBoards = array( array( 'value' => '', 'content' => wfMsg( 'forum-board-destination-empty' ) ) );
+		$this->destinationBoards = [ [ 'value' => '', 'content' => wfMsg( 'forum-board-destination-empty' ) ] ];
 		/** @var $title Title */
 		foreach ( $list as $title ) {
 			$value = $title->getArticleID();
-			if($mainWall->getId() != $value) {
-				$wall = Wall::newFromTitle($title);
-				$this->destinationBoards[$value] = array( 'value' => $value, 'content' => htmlspecialchars( $wall->getTitle()->getText() ) );
+			if ( $mainWall->getId() != $value ) {
+				$wall = Wall::newFromTitle( $title );
+				$this->destinationBoards[$value] = [ 'value' => $value, 'content' => htmlspecialchars( $wall->getTitle()->getText() ) ];
 			}
 		}
 	}
@@ -78,23 +80,23 @@ class WallExternalController extends WikiaController {
 
 		$this->status = 'error';
 
-		$destinationId = $this->getVal('destinationBoardId', '');
-		$threadId = $this->getVal('rootMessageId', '');
+		$destinationId = $this->getVal( 'destinationBoardId', '' );
+		$threadId = $this->getVal( 'rootMessageId', '' );
 
-		if(empty($destinationId)) {
-			$this->errormsg = wfMsg('wall-action-move-validation-select-wall');
+		if ( empty( $destinationId ) ) {
+			$this->errormsg = wfMsg( 'wall-action-move-validation-select-wall' );
 			return true;
 		}
 
 		$wall = Wall::newFromId( $destinationId );
 		$thread = WallThread::newFromId( $threadId );
 
-		if(empty($wall)) {
+		if ( empty( $wall ) ) {
 			$this->errormsg = 'unknown';
 		}
 
 
-		$thread->move($wall, $this->wg->User);
+		$thread->move( $wall, $this->wg->User );
 		$this->status = 'ok';
 	}
 
@@ -122,35 +124,35 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function votersListItems() {
-		//TODO: implement load more button
+		// TODO: implement load more button
 
 		/**
 		 * @var $mw WallMessage
 		 */
-		$mw = $this->request->getVal('mw');
-		if(empty($mw)) {
-			$mw =  WallMessage::newFromId($this->request->getVal('id'));
+		$mw = $this->request->getVal( 'mw' );
+		if ( empty( $mw ) ) {
+			$mw =  WallMessage::newFromId( $this->request->getVal( 'id' ) );
 		}
 
 		$from = (int) $this->request->getVal( 'from', 0 );
 
-		$list = $mw->getVotersList($from, 1000);
+		$list = $mw->getVotersList( $from, 1000 );
 
-		if(count($list) == 26) {
+		if ( count( $list ) == 26 ) {
 			$this->response->setVal( 'hasmore', true );
 		} else {
 			$this->response->setVal( 'hasmore', false );
 		}
 
-		$out = array();
-		for( $i = 0; $i < min(count($list),24); $i++ ) {
+		$out = [ ];
+		for ( $i = 0; $i < min( count( $list ), 24 ); $i++ ) {
 			$user = User::newFromId( $list[$i] );
-			if(!empty($user)) {
-				$out[] = array(
+			if ( !empty( $user ) ) {
+				$out[] = [
 					'profilepage' =>  $user->getUserPage()->getFullUrl(),
 					'name' => $user->getName(),
-					'avatar' => AvatarService::getAvatarUrl($user->getName(), 50)
-				);
+					'avatar' => AvatarService::getAvatarUrl( $user->getName(), 50 )
+				];
 			}
 		}
 
@@ -166,7 +168,7 @@ class WallExternalController extends WikiaController {
 		 * @var $title Title
 		 * @var $wallMessage WallMessage
 		 */
-		$title = Title::newFromId( $this->request->getVal('commentId') );
+		$title = Title::newFromId( $this->request->getVal( 'commentId' ) );
 
 		if ( empty( $title ) ) {
 			$this->response->setCode( 404 );
@@ -186,33 +188,36 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function postNewMessage() {
-		wfProfileIn(__METHOD__);
-		$relatedTopics = $this->request->getVal('relatedTopics', array());
+		try {
+			$this->checkWriteRequest();
+		} catch ( \BadRequestException $bre ) {
+			$this->setTokenMismatchError();
+			return;
+		}
 
-		$this->response->setVal('status', true);
+		$relatedTopics = $this->request->getVal( 'relatedTopics', [ ] );
+
+		$this->response->setVal( 'status', true );
 
 		/**
 		 * BugId:68629 XSS vulnerable. We DO NOT want to have
 		 * any HTML here. Hence the strip_tags call.
 		 */
 		$titleMeta = strip_tags( $this->request->getVal( 'messagetitle', null ) );
-		$titleMeta = substr($titleMeta, 0, 200);
+		$titleMeta = substr( $titleMeta, 0, 200 );
 
-		$body = $this->getConvertedContent($this->request->getVal('body'));
+		$body = $this->getConvertedContent( $this->request->getVal( 'body' ) );
 
-		/**
-		 * @var $helper WallHelper
-		 */
+		/** @var $helper WallHelper */
 		$helper = new WallHelper();
 
-		if( empty($titleMeta) ) {
+		if ( empty( $titleMeta ) ) {
 			$titleMeta = $helper->getDefaultTitle();
 		}
 
-		if( empty($body) ) {
-			$this->response->setVal('status', false);
-			wfProfileOut(__METHOD__);
-			return true;
+		if ( empty( $body ) ) {
+			$this->response->setVal( 'status', false );
+			return;
 		}
 
 		$ns = $this->request->getVal( 'pagenamespace' );
@@ -221,19 +226,17 @@ class WallExternalController extends WikiaController {
 			$notifyEveryone = $this->request->getVal( 'notifyeveryone', false ) == 1;
 		}
 
-		$title = Title::newFromText( $this->request->getVal('pagetitle'), $ns );
-		$wallMessage = WallMessage::buildNewMessageAndPost($body, $title, $this->wg->User, $titleMeta, false, $relatedTopics, true, $notifyEveryone);
+		$title = Title::newFromText( $this->request->getVal( 'pagetitle' ), $ns );
+		$wallMessage = WallMessage::buildNewMessageAndPost( $body, $title, $this->wg->User, $titleMeta, false, $relatedTopics, true, $notifyEveryone );
 
-		if( $wallMessage === false ) {
-			error_log('WALL_NOAC_ON_POST');
-			$this->response->setVal('status', false);
-			wfProfileOut(__METHOD__);
-			return true;
+		if ( $wallMessage === false ) {
+			error_log( 'WALL_NOAC_ON_POST' );
+			$this->response->setVal( 'status', false );
+			return;
 		}
 
-		$wallMessage->load(true);
-		$this->response->setVal('message', $this->app->renderView( 'WallController', 'message', array( 'new' => true, 'comment' => $wallMessage ) ));
-		wfProfileOut(__METHOD__);
+		$wallMessage->load( true );
+		$this->response->setVal( 'message', $this->app->renderView( 'WallController', 'message', [ 'new' => true, 'comment' => $wallMessage ] ) );
 	}
 
 	public function deleteMessage() {
@@ -241,52 +244,52 @@ class WallExternalController extends WikiaController {
 		/**
 		 * @var $mw WallMessage
 		 */
-		$mw =  WallMessage::newFromId($this->request->getVal('msgid'));
-		if( empty($mw) ) {
-			$this->response->setVal('status', false);
+		$mw =  WallMessage::newFromId( $this->request->getVal( 'msgid' ) );
+		if ( empty( $mw ) ) {
+			$this->response->setVal( 'status', false );
 			return true;
 		}
 
-		$formassoc = $this->processModalForm($this->request);
+		$formassoc = $this->processModalForm( $this->request );
 
-		$reason = isset($formassoc['reason']) ? $formassoc['reason'] : '';
-		$notify = isset($formassoc['notify-admin']) ? true : false;
+		$reason = isset( $formassoc['reason'] ) ? $formassoc['reason'] : '';
+		$notify = isset( $formassoc['notify-admin'] ) ? true : false;
 
-		if( empty($reason) && !$this->request->getVal('mode') == 'rev' ) {
-			$this->response->setVal('status', false);
+		if ( empty( $reason ) && !$this->request->getVal( 'mode' ) == 'rev' ) {
+			$this->response->setVal( 'status', false );
 			return true;
 		}
 
 		$isDeleteOrRemove = true;
 
-		switch( $this->request->getVal('mode') ) {
+		switch( $this->request->getVal( 'mode' ) ) {
 			case 'rev':
-				if($mw->canDelete($this->wg->User)) {
-					$result = $mw->delete(wfMsgForContent('wall-delete-reason'), true);
-					$this->response->setVal('status', $result);
+				if ( $mw->canDelete( $this->wg->User ) ) {
+					$result = $mw->delete( wfMsgForContent( 'wall-delete-reason' ), true );
+					$this->response->setVal( 'status', $result );
 					return true;
 				} else {
-					$this->response->setVal('error', wfMsg('wall-message-no-permission'));
+					$this->response->setVal( 'error', wfMsg( 'wall-message-no-permission' ) );
 				}
 			break;
 
 			case 'admin':
-				if($mw->canAdminDelete($this->wg->User)) {
-					$result = $mw->adminDelete($this->wg->User, $reason, $notify);
-					$this->response->setVal('status', $result);
+				if ( $mw->canAdminDelete( $this->wg->User ) ) {
+					$result = $mw->adminDelete( $this->wg->User, $reason, $notify );
+					$this->response->setVal( 'status', $result );
 					$isDeleteOrRemove = true;
 				} else {
-					$this->response->setVal('error', wfMsg('wall-message-no-permission'));
+					$this->response->setVal( 'error', wfMsg( 'wall-message-no-permission' ) );
 				}
 			break;
 
 			case 'fastadmin':
-				if($mw->canFastAdminDelete($this->wg->User)) {
-					$result = $mw->fastAdminDelete($this->wg->User, $reason, $notify);
-					$this->response->setVal('status', $result);
+				if ( $mw->canFastAdminDelete( $this->wg->User ) ) {
+					$result = $mw->fastAdminDelete( $this->wg->User, $reason, $notify );
+					$this->response->setVal( 'status', $result );
 					$isDeleteOrRemove = true;
 				} else {
-					$this->response->setVal('error', wfMsg('wall-message-no-permission'));
+					$this->response->setVal( 'error', wfMsg( 'wall-message-no-permission' ) );
 				}
 			break;
 
@@ -295,56 +298,56 @@ class WallExternalController extends WikiaController {
 					$mw->load(); // must do this to allow checking for wall owner/message author - data not loaded otherwise
 				}
 
-				if( $mw->canRemove($this->wg->User) ) {
-					$this->response->setVal('status', $result);
-					$result = $mw->remove($this->wg->User, $reason, $notify);
+				if ( $mw->canRemove( $this->wg->User ) ) {
+					$this->response->setVal( 'status', $result );
+					$result = $mw->remove( $this->wg->User, $reason, $notify );
 
-					$this->response->setVal('status', $result);
+					$this->response->setVal( 'status', $result );
 					// TODO: log/save data
 					$isDeleteOrRemove = true;
 				} else {
-					$this->response->setVal('error', wfMsg('wall-message-no-permission'));
+					$this->response->setVal( 'error', wfMsg( 'wall-message-no-permission' ) );
 				}
 			break;
 		}
 
-		if($isDeleteOrRemove) {
-			$this->response->setVal('html', $this->app->renderView( 'WallController', 'messageRemoved', array('showundo' => true , 'comment' => $mw)));
+		if ( $isDeleteOrRemove ) {
+			$this->response->setVal( 'html', $this->app->renderView( 'WallController', 'messageRemoved', [ 'showundo' => true , 'comment' => $mw ] ) );
 			$mw->getLastActionReason();
 			$mw->purgeSquid();
-			$this->response->setVal('deleteInfoBox', 'INFO BOX');
+			$this->response->setVal( 'deleteInfoBox', 'INFO BOX' );
 		}
 
-		$this->response->setVal('status', $result);
+		$this->response->setVal( 'status', $result );
 		return true;
 	}
 
 	public function changeThreadStatus() {
 		$result = false;
-		$newState = $this->request->getVal('newState', false);
+		$newState = $this->request->getVal( 'newState', false );
 		/**
 		 * @var $mw WallMessage
 		 */
-		$mw =  WallMessage::newFromId($this->request->getVal('msgid'));
+		$mw =  WallMessage::newFromId( $this->request->getVal( 'msgid' ) );
 
-		if( empty($mw) || empty($newState) ) {
-			$this->response->setVal('status', false);
+		if ( empty( $mw ) || empty( $newState ) ) {
+			$this->response->setVal( 'status', false );
 			return true;
 		}
 
-		$formassoc = $this->processModalForm($this->request);
-		$reason = isset($formassoc['reason']) ? $formassoc['reason'] : '';
+		$formassoc = $this->processModalForm( $this->request );
+		$reason = isset( $formassoc['reason'] ) ? $formassoc['reason'] : '';
 
-		switch($newState) {
+		switch( $newState ) {
 			case 'close':
-				if($mw->canArchive($this->wg->User)) {
-					$result = $mw->archive($this->wg->User, $reason);
+				if ( $mw->canArchive( $this->wg->User ) ) {
+					$result = $mw->archive( $this->wg->User, $reason );
 					$mw->purgeSquid();
 				}
 				break;
 			case 'open':
-				if($mw->canReopen($this->wg->User)) {
-					$result = $mw->reopen($this->wg->User);
+				if ( $mw->canReopen( $this->wg->User ) ) {
+					$result = $mw->reopen( $this->wg->User );
 					$mw->purgeSquid();
 				}
 				break;
@@ -352,22 +355,22 @@ class WallExternalController extends WikiaController {
 				break;
 		}
 
-		$this->response->setVal('status', $result);
+		$this->response->setVal( 'status', $result );
 	}
 
 	/**
 	 * @param $request WebRequest
 	 * @return array
 	 */
-	protected function processModalForm($request) {
+	protected function processModalForm( $request ) {
 		/**
 		 * @var $formdata array
 		 */
-		$formdata = $request->getVal('formdata');
+		$formdata = $request->getVal( 'formdata' );
 
-		$formassoc = array();
-		if(!empty($formdata)) {
-			foreach($formdata as $value) {
+		$formassoc = [ ];
+		if ( !empty( $formdata ) ) {
+			foreach ( $formdata as $value ) {
 				$formassoc[ $value['name'] ] = $value['value'];
 			}
 		}
@@ -378,9 +381,9 @@ class WallExternalController extends WikiaController {
 		/**
 		 * @var $mw WallMessage
 		 */
-		$mw = WallMessage::newFromId($this->request->getVal('msgid'));
-		if( empty($mw) ) {
-			$this->response->setVal('status', false);
+		$mw = WallMessage::newFromId( $this->request->getVal( 'msgid' ) );
+		if ( empty( $mw ) ) {
+			$this->response->setVal( 'status', false );
 			return true;
 		}
 
@@ -388,20 +391,20 @@ class WallExternalController extends WikiaController {
 			$mw->load();
 		}
 
-		if($mw->isAdminDelete() && $mw->isRemove() && $mw->canRestore($this->wg->User)) {
-			$mw->undoAdminDelete($this->wg->User);
-			$this->response->setVal('status', true);
+		if ( $mw->isAdminDelete() && $mw->isRemove() && $mw->canRestore( $this->wg->User ) ) {
+			$mw->undoAdminDelete( $this->wg->User );
+			$this->response->setVal( 'status', true );
 			return true;
 		}
 
-		if(
-			($mw->isRemove() && $mw->canRestore($this->wg->User)) ||
-			($mw->isAdminDelete() || !$mw->isRemove() && $mw->canRestore($this->wg->User))
+		if (
+			( $mw->isRemove() && $mw->canRestore( $this->wg->User ) ) ||
+			( $mw->isAdminDelete() || !$mw->isRemove() && $mw->canRestore( $this->wg->User ) )
 
-		){
-			$mw->restore($this->wg->User);
+		) {
+			$mw->restore( $this->wg->User );
 			$mw->purgeSquid();
-			$this->response->setVal('status', true);
+			$this->response->setVal( 'status', true );
 			return true;
 		}
 	}
@@ -410,87 +413,83 @@ class WallExternalController extends WikiaController {
 		/**
 		 * @var $mw WallMessage
 		 */
-		$mw =  WallMessage::newFromId($this->request->getVal('msgid'));
-		if( empty($mw) ) {
-			$this->response->setVal('status', false);
+		$mw =  WallMessage::newFromId( $this->request->getVal( 'msgid' ) );
+		if ( empty( $mw ) ) {
+			$this->response->setVal( 'status', false );
 			return true;
 		}
 
 		if ( !$mw->canModerate( $this->wg->User ) ) {
 			$mw->load();
 		}
-		if($mw->canRestore($this->wg->User)) {
-			$formassoc = $this->processModalForm($this->request);
+		if ( $mw->canRestore( $this->wg->User ) ) {
+			$formassoc = $this->processModalForm( $this->request );
 
-			$reason = isset($formassoc['reason']) ? $formassoc['reason'] : '';
+			$reason = isset( $formassoc['reason'] ) ? $formassoc['reason'] : '';
 
-			if( empty($reason) && !$mw->canFastrestore($this->wg->User) ) {
-				$this->response->setVal('status', false);
+			if ( empty( $reason ) && !$mw->canFastRestore( $this->wg->User ) ) {
+				$this->response->setVal( 'status', false );
 				return true;
 			}
 
-			$mw->restore($this->wg->User, $reason);
+			$mw->restore( $this->wg->User, $reason );
 			$mw->purgeSquid();
 
-			$this->response->setVal('buttons', $this->app->renderView( 'WallController', 'messageButtons', array('comment' => $mw)));
-			$this->response->setVal('status', true);
+			$this->response->setVal( 'buttons', $this->app->renderView( 'WallController', 'messageButtons', [ 'comment' => $mw ] ) );
+			$this->response->setVal( 'status', true );
 		}
 	}
 
 	public function vote() {
-		$id = $this->request->getVal('id');
-		$dir  = $this->request->getVal('dir');
+		$id = $this->request->getVal( 'id' );
+		$dir  = $this->request->getVal( 'dir' );
 
 		/**
 		 * @var $mw WallMessage
 		 */
-		$mw =  WallMessage::newFromId($id);
+		$mw =  WallMessage::newFromId( $id );
 
-		if(!empty($mw)) {
-			if($dir == 1) {
-				$this->response->setVal('count', $mw->vote($this->wg->User));
+		if ( !empty( $mw ) ) {
+			if ( $dir == 1 ) {
+				$this->response->setVal( 'count', $mw->vote( $this->wg->User ) );
 			}
 
-			if($dir == -1) {
-				$this->response->setVal('count', $mw->removeVote($this->wg->User));
+			if ( $dir == -1 ) {
+				$this->response->setVal( 'count', $mw->removeVote( $this->wg->User ) );
 			}
 		}
 
 	}
 
 	public function editMessage() {
-		//TODO: remove call to ac !!!
-		$msgid = $this->request->getVal('msgid');
-		/**
-		 * @var $mw WallMessage
-		 */
-		$mw =  WallMessage::newFromId($msgid);
+		// TODO: remove call to ac !!!
+		$msgid = $this->request->getVal( 'msgid' );
+		/** @var $mw WallMessage */
+		$mw =  WallMessage::newFromId( $msgid );
 
-		if(empty($mw)) {
+		if ( empty( $mw ) ) {
 			// most likely scenario - can't create AC, because message was already
 			// deleted before we tried to edit it
 			// client(javascript) should reload user's page
 
-			$this->response->setVal('status', false);
-			$this->response->setVal('forcereload', true);
-			return true;
+			$this->response->setVal( 'status', false );
+			$this->response->setVal( 'forcereload', true );
+			return;
 		}
 
 		$text = $mw->getRawText();
 
-		//WallMessage getRawText returns wikitext
-		//so convert it to richtext only if needed as
-		//RTE::HtmlToWikitext will fail if wikitext is passed as content
-		//(BugId: 32591)
-		$convertToFormat = $this->request->getVal('convertToFormat', '');
-		if($convertToFormat == 'richtext'){
-			$text = $this->getConvertedContent($text);
+		// WallMessage getRawText returns wikitext
+		// so convert it to richtext only if needed as
+		// RTE::HtmlToWikitext will fail if wikitext is passed as content
+		// (BugId: 32591)
+		$convertToFormat = $this->request->getVal( 'convertToFormat', '' );
+		if ( $convertToFormat == 'richtext' ) {
+			$text = $this->getConvertedContent( $text );
 		}
 
-		$this->response->setVal('htmlorwikitext', $text);
-		$this->response->setVal('status', true);
-
-		return true;
+		$this->response->setVal( 'htmlorwikitext', $text );
+		$this->response->setVal( 'status', true );
 	}
 
 	public function notifyEveryoneSave() {
@@ -500,8 +499,8 @@ class WallExternalController extends WikiaController {
 		 * @var $mw WallMessage
 		 */
 		$mw = WallMessage::newFromId( $msgid );
-		if ($mw) {
-			if( $dir == 1 ) {
+		if ( $mw ) {
+			if ( $dir == 1 ) {
 				$mw->setNotifyEveryone( true );
 				$this->response->setVal( 'newdir', 0 );
 				$this->response->setVal( 'newmsg', wfMsg( 'wall-message-unnotifyeveryone' ) );
@@ -514,137 +513,148 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function editMessageSave() {
-		/**
-		 * @var $helper WallHelper
-		 */
+		try {
+			$this->checkWriteRequest();
+		} catch ( \BadRequestException $bre ) {
+			$this->setTokenMismatchError();
+			return;
+		}
+
+		/** @var $helper WallHelper */
 		$helper = new WallHelper();
 
-		$msgid = $this->request->getVal('msgid');
+		$msgid = $this->request->getVal( 'msgid' );
 
 		// XSS vulnerable (MAIN-1412)
-		$newtitle = strip_tags( trim($this->request->getVal('newtitle')) );
+		$newtitle = strip_tags( trim( $this->request->getVal( 'newtitle' ) ) );
 
-		$newbody = $this->getConvertedContent($this->request->getVal('newbody'));
+		$newbody = $this->getConvertedContent( $this->request->getVal( 'newbody' ) );
 
-		if( empty($newtitle) ) {
+		if ( empty( $newtitle ) ) {
 			$newtitle = $helper->getDefaultTitle();
 		}
 
 		$title = Title::newFromId( $msgid );
 
-		if( empty( $title ) ){
-			$this->response->setVal( 'status', false) ;
-			$this->response->setVal( 'msgTitle', wfMsg(' wall-delete-error-title' ) );
+		if ( empty( $title ) ) {
+			$this->response->setVal( 'status', false ) ;
+			$this->response->setVal( 'msgTitle', wfMsg( ' wall-delete-error-title' ) );
 			$this->response->setVal( 'msgContent', wfMsg( 'wall-deleted-msg-text' ) );
-			return true;
+			return;
 		}
-		/**
-		 * @var $wallMessage WallMessage
-		 */
+		/** @var $wallMessage WallMessage */
 		$wallMessage = WallMessage::newFromTitle( $title );
 
 		$wallMessage->load();
 
-		$wallMessage->setMetaTitle($newtitle);
+		$wallMessage->setMetaTitle( $newtitle );
 		$text = $wallMessage->doSaveComment( $newbody, $this->wg->User, '', false, true );
 
-		$this->response->setVal('isotime', wfTimestamp(TS_ISO_8601) );
-		$this->response->setVal('fulltime', $this->wg->Lang->timeanddate( wfTimestamp(TS_MW) ) );
+		$this->response->setVal( 'isotime', wfTimestamp( TS_ISO_8601 ) );
+		$this->response->setVal( 'fulltime', $this->wg->Lang->timeanddate( wfTimestamp( TS_MW ) ) );
 
-		$this->response->setVal('username', $this->wg->User->getName());
+		$this->response->setVal( 'username', $this->wg->User->getName() );
 
-		$editorUrl = Title::newFromText( $this->wg->User->getName(), NS_USER)->getFullUrl();
+		$editorUrl = Title::newFromText( $this->wg->User->getName(), NS_USER )->getFullUrl();
 
-		$this->response->setVal('userUrl', $editorUrl);
+		$this->response->setVal( 'userUrl', $editorUrl );
 
-		$query = array(
+		$query = [
 			'diff' => 'prev',
-			'oldid' => $wallMessage->getTitle()->getLatestRevID(Title::GAID_FOR_UPDATE),
-		);
+			'oldid' => $wallMessage->getTitle()->getLatestRevID( Title::GAID_FOR_UPDATE ),
+		];
 
-		$this->response->setVal( 'historyUrl', $wallMessage->getTitle()->getFullUrl($query) );
-
-		$this->response->setVal('status', true);
-		$this->response->setVal('msgTitle', Xml::element('a', array('href' => $wallMessage->getMessagePageUrl()), $newtitle));
-		$this->response->setVal('body', $text );
-		return true;
+		$this->response->setVal( 'historyUrl', $wallMessage->getTitle()->getFullUrl( $query ) );
+		$this->response->setVal( 'status', true );
+		$this->response->setVal( 'msgTitle', Xml::element( 'a', [ 'href' => $wallMessage->getMessagePageUrl() ], $newtitle ) );
+		$this->response->setVal( 'body', $text );
 	}
 
 	public function replyToMessage() {
-		$this->response->setVal('status', true);
+		try {
+			$this->checkWriteRequest();
+		} catch ( \BadRequestException $bre ) {
+			$this->setTokenMismatchError();
+			return;
+		}
 
-		$parentId = $this->request->getVal('parent');
+		$this->response->setVal( 'status', true );
+
+		$parentId = $this->request->getVal( 'parent' );
 		$parentTitle = Title::newFromId( $parentId );
 		$debugParentDB = 'from slave';   // tracing bug 95249
 
-		if(empty($parentTitle)) {
+		if ( empty( $parentTitle ) ) {
 			// try again from master
 			$parentTitle = Title::newFromId( $parentId, Title::GAID_FOR_UPDATE );
 			$debugParentDB = 'from master';
 		}
 
-		if(empty($parentTitle)) {
-			$this->response->setVal('status', false);
-			return true;
+		if ( empty( $parentTitle ) ) {
+			$this->response->setVal( 'status', false );
+			return;
 		}
 
-		Wikia::log( __METHOD__, false, 'Wall::replyToMessage for parent ' . $parentTitle->getFullUrl() . ' (parentId: ' . $parentId . ') ' . $debugParentDB, true );
+		$this->debug( 'Wall::replyToMessage called', [
+			'parentTitle' => $parentTitle->getFullUrl(),
+			'parentId' => $parentId,
+			'parentDb' => $debugParentDB,
+		] );
 
-		/**
-		 * @var $wallMessage WallMessage
-		 */
-		$wallMessage = WallMessage::newFromTitle($parentTitle);
-		$body = $this->getConvertedContent($this->request->getVal('body'));
-		$reply = $wallMessage->addNewReply($body, $this->wg->User);
+		/** @var $wallMessage WallMessage */
+		$wallMessage = WallMessage::newFromTitle( $parentTitle );
+		$body = $this->getConvertedContent( $this->request->getVal( 'body' ) );
+		$reply = $wallMessage->addNewReply( $body, $this->wg->User );
 
-		if($reply === false) {
-			$this->response->setVal('status', false);
-			return true;
+		if ( $reply === false ) {
+			$this->response->setVal( 'status', false );
+			return;
 		}
 
-		$quotedFrom = $this->request->getVal('quotedFrom');
+		$quotedFrom = $this->request->getVal( 'quotedFrom' );
 
-		if(!empty($quotedFrom)) {
-			$reply->setQuoteOf($quotedFrom);
+		if ( !empty( $quotedFrom ) ) {
+			$reply->setQuoteOf( $quotedFrom );
 		}
 
-		$this->replyToMessageBuildResponse($this, $reply);
+		$this->replyToMessageBuildResponse( $this, $reply );
 
 		// after successfully posting a reply
 		// remove notification for this thread (if user is following it)
-		/**
-		 * @var $wn WallNotifications
-		 */
+		/** @var $wn WallNotifications */
 		$wn = new WallNotifications();
-		$wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $this->request->getVal('parent'));
-
+		$wn->markRead(
+			$this->wg->User->getId(),
+			$this->wg->CityId,
+			$this->request->getVal( 'parent' )
+		);
 	}
 
 	public function preview() {
 
-		$body = $this->getConvertedContent( $this->request->getVal('body', ''));
-		$service = new EditPageService($this->wg->Title);
+		$body = $this->getConvertedContent( $this->request->getVal( 'body', '' ) );
+		$service = new EditPageService( $this->wg->Title );
 
-		$out = $service->getPreview($body);
+		$out = $service->getPreview( $body );
 
-		$metatitle = $this->request->getVal('metatitle', '');
+		$metatitle = $this->request->getVal( 'metatitle', '' );
 
-		if(!empty($metatitle)) {
-			$metatitle = '<div class="msg-title"><span>'.htmlspecialchars($metatitle).'</span></div>';
+		if ( !empty( $metatitle ) ) {
+			$metatitle = '<div class="msg-title"><span>' . htmlspecialchars( $metatitle ) . '</span></div>';
 		}
 
-		$this->response->setVal('body', $metatitle.$out[0]);
+		$this->response->setVal( 'body', $metatitle . $out[0] );
 	}
 
-	protected function replyToMessageBuildResponse($context, $reply) {
-		$context->response->setVal('message', $this->app->renderView( 'WallController', 'message', array( 'comment' => $reply, 'isreply' => true ) ));
+	protected function replyToMessageBuildResponse( $context, $reply ) {
+		$context->response->setVal( 'message', $this->app->renderView( 'WallController', 'message', [ 'comment' => $reply, 'isreply' => true ] ) );
 	}
 
 	private function getDisplayName() {
 		$displayname  = $this->wg->User->getName();
 		$displayname2 = '';
 
-		return array( $displayname, $displayname2 );
+		return [ $displayname, $displayname2 ];
 
 	}
 
@@ -654,12 +664,12 @@ class WallExternalController extends WikiaController {
 	 * @param string $text - the text to convert
 	 * @return string - the converted text
 	 */
-	private function getConvertedContent($content = '') {
-		if ($this->wg->EnableMiniEditorExtForWall && !empty($content)) {
-			$convertToFormat = $this->request->getVal('convertToFormat', '');
+	private function getConvertedContent( $content = '' ) {
+		if ( $this->wg->EnableMiniEditorExtForWall && !empty( $content ) ) {
+			$convertToFormat = $this->request->getVal( 'convertToFormat', '' );
 
-			if (!empty($convertToFormat)) {
-				$content = MiniEditorHelper::convertContent($content, $convertToFormat, $this->response);
+			if ( !empty( $convertToFormat ) ) {
+				$content = MiniEditorHelper::convertContent( $content, $convertToFormat, $this->response );
 			}
 		}
 
@@ -668,9 +678,9 @@ class WallExternalController extends WikiaController {
 
 
 	public function getCommentsPage() {
-		//workaround to prevent index data expose
-		$title = Title::newFromText($this->request->getVal('pagetitle'), $this->request->getVal('pagenamespace') );
-		$this->response->setVal( 'html', $this->app->renderView( 'WallController', 'index', array('title' => $title, 'page' => $this->request->getVal('page', 1) ) ));
+		// workaround to prevent index data expose
+		$title = Title::newFromText( $this->request->getVal( 'pagetitle' ), $this->request->getVal( 'pagenamespace' ) );
+		$this->response->setVal( 'html', $this->app->renderView( 'WallController', 'index', [ 'title' => $title, 'page' => $this->request->getVal( 'page', 1 ) ] ) );
 	}
 
 	/**
@@ -688,7 +698,7 @@ class WallExternalController extends WikiaController {
 		/**
 		 * @var $mw WallMessage
 		 */
-		$mw = WallMessage::newFromId($messageId);
+		$mw = WallMessage::newFromId( $messageId );
 		if ( !empty( $mw ) ) {
 			$mw->load();
 
@@ -705,7 +715,7 @@ class WallExternalController extends WikiaController {
 				$markup = $this->getConvertedContent( '<div class="quote">'
 					. wfMessage( 'wall-quote-author', $username )
 						->inContentLanguage()->escaped()
-					. "<br>" . $mw->getRawText() . "\n</div><br>");
+					. "<br>" . $mw->getRawText() . "\n</div><br>" );
 			}
 
 			$status = 'success';
@@ -722,14 +732,14 @@ class WallExternalController extends WikiaController {
 	 * @return string status - success/failure
 	 */
 	public function updateTopics() {
-		$messageId = $this->request->getVal('msgid', '');
-		$relatedTopics = $this->request->getVal('relatedTopics', array());
+		$messageId = $this->request->getVal( 'msgid', '' );
+		$relatedTopics = $this->request->getVal( 'relatedTopics', [ ] );
 			// place holder data, replace this with magic
 		$status = 'success';
-		$topics = array();
+		$topics = [ ];
 
-		if(!is_array($relatedTopics)) {
-			$relatedTopics = array();
+		if ( !is_array( $relatedTopics ) ) {
+			$relatedTopics = [ ];
 		}
 
 		// cut more then 4
@@ -739,20 +749,20 @@ class WallExternalController extends WikiaController {
 		/**
 		 * @var $mw WallMessage
 		 */
-		$mw =  WallMessage::newFromId($messageId);
+		$mw =  WallMessage::newFromId( $messageId );
 
-		if(!empty($mw)) {
+		if ( !empty( $mw ) ) {
 			$mw->load();
-			$mw->setRelatedTopics( $this->wg->User, $relatedTopics);
+			$mw->setRelatedTopics( $this->wg->User, $relatedTopics );
 		}
 
-		foreach($relatedTopics as $topic) {
-			$topicTitle = Title::newFromURL($topic);
-			$topics[] = array( 'topic' => $topic, 'url' => WallHelper::getTopicPageURL($topicTitle) );	// I have no idea what the url will be, just a placeholder for now
+		foreach ( $relatedTopics as $topic ) {
+			$topicTitle = Title::newFromURL( $topic );
+			$topics[] = [ 'topic' => $topic, 'url' => WallHelper::getTopicPageURL( $topicTitle ) ];	// I have no idea what the url will be, just a placeholder for now
 		}
 		// end place holder
 
-		$this->response->setVal('status', $status);
-		$this->response->setVal('topics', $topics);
+		$this->response->setVal( 'status', $status );
+		$this->response->setVal( 'topics', $topics );
 	}
 }

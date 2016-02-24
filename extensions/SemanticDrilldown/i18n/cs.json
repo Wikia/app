@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Juan de Vojníkov",
+			"Juandev",
+			"Vks"
+		]
+	},
+	"sd_browsedata_subcategory": "Podkategorie",
+	"sd_browsedata_other": "Jiné",
+	"sd_browsedata_none": "Nic",
+	"sd_browsedata_removefilter": "Odstanit tento filtr",
+	"sd_browsedata_daterangeend": "Konec:",
+	"sd-pageschemas-filter": "Filtr"
+}

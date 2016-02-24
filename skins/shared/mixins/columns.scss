@@ -15,3 +15,16 @@
 	-moz-column-gap: $gap;
 	column-gap: $gap;
 }
+
+@mixin column-break-inside( $value ) {
+	-webkit-column-break-inside: $value;
+	-moz-column-break-inside: $value;
+	-o-column-break-inside: $value;
+	-ms-column-break-inside: $value;
+	column-break-inside: $value;
+}
+
+@mixin column-span( $value ) {
+	-webkit-column-span: $value;
+	column-span: $value;
+}

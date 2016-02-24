@@ -65,6 +65,7 @@ class Track {
 		window.beacon_id = result[1];
 	} else {
 		// something went terribly wrong
+		document.write('<img src="http://logs-01.loggly.com/inputs/88a88e56-77c6-49cc-af41-6f44f83fe7fe.gif?message=wikia_beacon_id%20is%20empty"/>');
 	}
 
 	var utma = RegExp("__utma=([0-9\.]+)").exec(document.cookie);
@@ -81,6 +82,10 @@ SCRIPT1;
 	}
 
 	public static function event ($event_type, $param=null) {
+		if ( !self::shouldTrackEvents() ) {
+			return false;
+		}
+
 		wfProfileIn(__METHOD__);
 
 		$backtrace = debug_backtrace();
@@ -97,6 +102,17 @@ SCRIPT1;
 			wfProfileOut(__METHOD__);
 			return false;
 		}
+	}
+
+	/**
+	 * Check whether events should be tracked
+	 *
+	 * @return bool
+	 */
+	protected static function shouldTrackEvents() {
+		// Check request headers to make sure this is not a mirrored
+		// request, which could result in duplicate tracking events
+		return F::app()->wg->request->isWikiaInternalRequest() === false;
 	}
 
 	/**

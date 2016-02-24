@@ -103,6 +103,7 @@ class WikiaHubsModulePopularvideosService extends WikiaHubsModuleEditableService
 
 			$structuredData['header'] = $data['header'];
 			$structuredData['videos'] = null;
+
 			foreach($data['video'] as $key => $video) {
 				$videoData = $editHubModel->getVideoData($video, $moduleModel->getVideoThumbSize());
 

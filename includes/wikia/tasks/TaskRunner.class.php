@@ -48,7 +48,7 @@ class TaskRunner {
 	}
 
 	function run() {
-		$this->startTime = $this->endTime = time();
+		$this->startTime = $this->endTime = microtime( true );
 		if ( $this->exception ) {
 			$this->results [] = $this->exception;
 			return;
@@ -76,6 +76,11 @@ class TaskRunner {
 
 			WikiaLogger::instance()->pushContext( [ 'task_call' => get_class($task)."::{$method}"] );
 			$result = $task->execute( $method, $args );
+			if ( $result instanceof Exception ) {
+				WikiaLogger::instance()->error( 'Exception: ' . $result->getMessage(), [
+					'exception' => $result,
+				] );
+			}
 			WikiaLogger::instance()->popContext();
 			$this->results [] = $result;
 
@@ -84,9 +89,12 @@ class TaskRunner {
 			}
 		}
 
-		$this->endTime = time();
+		$this->endTime = microtime( true );
 	}
 
+	/**
+	 * @return float
+	 */
 	public function runTime() {
 		return $this->endTime - $this->startTime;
 	}

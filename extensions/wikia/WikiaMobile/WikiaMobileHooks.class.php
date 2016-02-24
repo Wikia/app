@@ -121,14 +121,8 @@ class WikiaMobileHooks {
 	static public function onParserAfterTidy( &$parser, &$text ){
 		wfProfileIn( __METHOD__ );
 
-		//cleanup page output from unwanted stuff
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
-			//remove inline styling to avoid weird results and optimize the output size
-			$text = preg_replace(
-				'/\s+(style|color|bgcolor|border|align|cellspacing|cellpadding|hspace|vspace)=(\'|")[^"\']*(\'|")/im',
-				'',
-				$text
-			);
+			self::cleanMobileOutput( $text );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -164,17 +158,18 @@ class WikiaMobileHooks {
 	 * @return bool
 	 */
 	static public function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, &$ret ){
+		global $wgArticleAsJson;
 		wfProfileIn( __METHOD__ );
 
 		if ( F::app()->checkSkin( 'wikiamobile', $skin ) ) {
-			//remove bold, italics, underline and anchor tags from section headings (also optimizes output size)
-			$text = preg_replace( '/<\/?(b|u|i|a|em|strong){1}(\s+[^>]*)*>/im', '', $text );
-
-            if ( F::app()->wg->User->isAnon() ) {
+			//retrieve section index from mw:editsection tag
+			preg_match( '#section="(.*?)"#', $link, $matches );
+			if ( $wgArticleAsJson || F::app()->wg->User->isAnon() ) {
 				$link = '';
 			}
-
-			$ret = "<h{$level} id='{$anchor}' {$attribs}{$text}{$link}</h{$level}>";
+			//remove bold, italics, underline and anchor tags from section headings (also optimizes output size)
+			$text = preg_replace( '/<\/?(b|u|i|a|em|strong){1}(\s+[^>]*)*>/im', '', $text );
+			$ret = "<h{$level} id='{$anchor}' section='{$matches[1]}' {$attribs}{$text}{$link}</h{$level}>";
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -250,12 +245,12 @@ class WikiaMobileHooks {
 
 			//this is going to be additional call but at least it won't be loaded on every page
 			foreach ( $scripts as $s ) {
-				$out->addScript( '<script src="' . $s . '"></script>' );
+				$out->addScript( '<script src="' . Sanitizer::encodeAttribute( $s ) . '"></script>' );
 			}
 
 			//set proper titles for a page
 			$out->setPageTitle( $text );
-			$out->setHTMLTitle( $text );
+			$out->setHTMLTitle( $title->getPrefixedText() );
 
 			//render lists: exhibition and alphabetical
 			$params = array( 'categoryPage' => $categoryPage );
@@ -384,5 +379,41 @@ class WikiaMobileHooks {
 
 		wfProfileOut( __METHOD__ );
 		return self::$mediaNsString;
+	}
+
+	static private function cleanMobileOutput( &$text ) {
+		wfProfileIn( __METHOD__ );
+
+		//remove inline styling to avoid weird results and optimize the output size
+		$attributesToStrip = [ 'style', 'color', 'bgcolor', 'border', 'align', 'cellspacing', 'cellpadding', 'hspace', 'vspace' ];
+		$text = HtmlHelper::stripAttributes( $text, $attributesToStrip );
+
+		//Remove "In other languages" section from starwars wikis that looks like this:
+		//
+		//<div id="p-lang" class="portlet">
+		//<div>In other languages</div>
+		//<div class="pBody">
+		//<ul>
+		//<li class="interwiki-bg plainlinks" title="bg:Чубака"><a class="text" href=" [...]</ul>
+		//</div>
+		//</div>
+		//
+		//There's code in Mercury to generate the section based on links from Lilly
+
+		if ( F::app()->wg->EnableLillyExt ) {
+			$regex = '<div id="p-lang" class="portlet">\s*' .
+				'<div>[^<>]*</div>\s*' .
+				'<div class="pBody">\s*' .
+				'<ul>\s*' .
+				'([^<>]+|<li\s[^<>]*>|</li>|<a\s[^<>]*>|</a>)*</ul>\s*' .
+				'</div>\s*' .
+				'</div>';
+			$text = preg_replace( ":$regex:im", '', $text );
+		}
+
+		//don't let the article content be an empty space
+		$text = trim( $text );
+
+		wfProfileOut( __METHOD__ );
 	}
 }

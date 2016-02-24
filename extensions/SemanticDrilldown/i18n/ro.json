@@ -1,0 +1,31 @@
+{
+	"@metadata": {
+		"authors": [
+			"Firilacroco",
+			"KlaudiuMihaila",
+			"Mihai",
+			"Minisarm",
+			"Stelistcristi"
+		]
+	},
+	"browsedata": "Răsfoiți data",
+	"sd_browsedata_choosecategory": "Alegeți o categorie",
+	"sd_browsedata_viewcategory": "vedeți categoria",
+	"sd_browsedata_subcategory": "Subcategorie",
+	"sd_browsedata_other": "Altul",
+	"sd_browsedata_none": "Nimic",
+	"sd_browsedata_filterbyvalue": "Filtrează după această valoare",
+	"sd_browsedata_filterbysubcategory": "Filtrează după această subcategorie",
+	"sd_browsedata_otherfilter": "Arată paginile cu o altă valoare pentru acest filtru",
+	"sd_browsedata_nonefilter": "Arată paginile cu nicio valoare pentru acest filtru",
+	"sd_browsedata_or": "sau",
+	"sd_browsedata_removefilter": "Elimină acest filtru",
+	"sd_browsedata_removesubcategoryfilter": "Elimină acest filtru de subcategorie",
+	"sd_browsedata_resetfilters": "Resetați filtrele",
+	"sd_browsedata_addanothervalue": "Adaugă altă valoare",
+	"sd_browsedata_daterangestart": "Început:",
+	"sd_browsedata_daterangeend": "Sfârșit:",
+	"sd_browsedata_novalues": "Nu există valori pentru acest filtru",
+	"sd-pageschemas-filter": "Filtru",
+	"sd-pageschemas-values": "Valori"
+}

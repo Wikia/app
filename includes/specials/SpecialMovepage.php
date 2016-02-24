@@ -370,7 +370,7 @@ class MovePageForm extends UnlistedSpecialPage {
 			);
 		}
 
-		$watchChecked = $user->isLoggedIn() && ($this->watch || $user->getBoolOption( 'watchmoves' )
+		$watchChecked = $user->isLoggedIn() && ($this->watch || (bool)$user->getGlobalPreference( 'watchmoves' )
 			|| $this->oldTitle->userIsWatching());
 		# Don't allow watching if user is not logged in
 		if( $user->isLoggedIn() ) {
@@ -416,6 +416,13 @@ class MovePageForm extends UnlistedSpecialPage {
 		$nt = $this->newTitle;
 
 		if( ! wfRunHooks( 'SpecialMovepageBeforeMove', array(&$this))) {
+			return;
+		}
+
+		# Check rights for new title
+		$permErrors = $nt->getUserPermissionsErrors( 'move', $user );
+		if ( count( $permErrors ) ) {
+			$this->showForm( $permErrors );
 			return;
 		}
 

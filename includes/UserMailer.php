@@ -98,15 +98,48 @@ class UserMailer {
 	 * @return Status
 	 */
 	protected static function sendWithPear( $mailer, $dest, $headers, $body ) {
-		$mailResult = $mailer->send( $dest, $headers, $body );
 
-		# Based on the result return an error string,
-		if ( PEAR::isError( $mailResult ) ) {
-			wfDebug( "PEAR::Mail failed: " . $mailResult->getMessage() . "\n" );
-			return Status::newFatal( 'pear-mail-error', $mailResult->getMessage() );
-		} else {
-			return Status::newGood();
+		// I wrote this code against my will. They made me do it.
+		//
+		// The send() method called below may:
+		//
+		// a) throw InvalidArgumentException when $headers are bad in some way
+		// b) return an instance of PEAR_Error when $headers are bad in some other way
+		// c) return false when message cannot be sent
+		// d) return true on success
+
+		$success = true; // don't worry, be happy!
+
+		try {
+			$mailResult = $mailer->send( $dest, $headers, $body );
+
+			// handle the b) case:
+			if ( is_a( $mailResult, 'PEAR_Error' ) ) {
+				$success = false;
+				$message = $mailResult->getMessage();
+
+			// handle the c) case:
+			} else if ( false === $mailResult ) {
+				$success = false;
+				$message = 'PHP mail() failed.';
+			}
 		}
+
+		// handle the a) case:
+		catch ( InvalidArgumentException $e ) {
+			$success = false;
+			$message = $e->getMessage();
+		}
+
+		if ( !$success ) {
+			Wikia\Logger\WikiaLogger::instance()->error(
+				'UserMailerError',
+				[ 'exception' => new Exception( $message ) ]
+			);
+			return Status::newFatal( 'pear-mail-error', $message );
+		}
+
+		return Status::newGood();
 	}
 
 	/**
@@ -146,21 +179,33 @@ class UserMailer {
 	 * array of parameters. It requires PEAR:Mail to do that.
 	 * Otherwise it just uses the standard PHP 'mail' function.
 	 *
-	 * @param $to MailAddress: recipient's email (or an array of them)
-	 * @param $from MailAddress: sender's email
-	 * @param $subject String: email's subject.
-	 * @param $body String: email's text.
+	 * @param MailAddress $to : recipient's email (or an array of them)
+	 * @param MailAddress $from : sender's email
+	 * @param String $subject : email's subject.
+	 * @param String $body : email's text.
 	 * $body can be array with text and html version of email message, and also can contain attachements
 	 * $body = array('text' => 'Email text', 'html' => '<b>Email text</b>')
-	 * @param $replyto MailAddress: optional reply-to email (default: null).
-	 * @param $contentType String: optional custom Content-Type (default: text/plain; charset=UTF-8)
-	 * @param $contentType String: optional custom Content-Type
-	 * @param $category String: optional category for statistic
-	 * @param $priority int: optional priority for email
-	 * @param $attachements Array: optional list of files to send as attachements
+	 * @param MailAddress $replyTo : optional reply-to email (default: null).
+	 * @param String $contentType : optional custom Content-Type
+	 * @param String $category : optional category for statistic
+	 * @param int $priority : optional priority for email
+	 * @param Array $attachments : optional list of files to send as attachments
+	 *
 	 * @return Status object
+	 * @throws MWException
 	 */
-	public static function send( $to, $from, $subject, $body, $replyto = null, $contentType = null, $category = 'UserMailer', $priority = 0, $attachements = [] ) {
+	public static function send(
+		MailAddress $to,
+		MailAddress $from,
+		$subject,
+		$body,
+		MailAddress $replyTo = null,
+		$contentType = null,
+		$category = 'UserMailer',
+		$priority = 0,
+		$attachments = [],
+		$sourceType = 'mediawiki' // remove when no more 'mediawiki' types are sent
+	) {
 
 		if ( !is_array( $to ) ) {
 			$to = [ $to ];
@@ -209,14 +254,14 @@ class UserMailer {
 		$headers['From'] = $from->toString();
 		$headers['Return-Path'] = $from->address;
 
-		if ( $replyto && $replyto instanceof MailAddress ) {
-			$headers['Reply-To'] = $replyto->toString();
+		if ( $replyTo && $replyTo instanceof MailAddress ) {
+			$headers['Reply-To'] = $replyTo->toString();
 		}
 
 		$headers['Date'] = date( 'r' );
 		$headers['MIME-Version'] = '1.0';
 
-		if ( empty( $attachements ) ) {
+		if ( empty( $attachments ) ) {
 			$headers['Content-Type'] = ( is_null( $contentType ) ?
 				'text/plain; charset=UTF-8' : $contentType );
 			$headers['Content-Transfer-Encoding'] = '8bit';
@@ -230,7 +275,7 @@ class UserMailer {
 			$headers['X-Priority'] = $priority;
 		}
 
-		$ret = wfRunHooks( 'AlternateUserMailer', [ $headers, $to, $from, $subject, $body , $priority, $attachements ] );
+		$ret = wfRunHooks( 'AlternateUserMailer', [ $headers, $to, $from, $subject, $body , $priority, $attachments, $sourceType ] );
 		if ( $ret === false ) {
 			return Status::newGood();
 		} elseif ( $ret !== true ) {
@@ -249,23 +294,29 @@ class UserMailer {
 			#
 
 			if ( function_exists( 'stream_resolve_include_path' ) ) {
-				$found = stream_resolve_include_path( 'Mail.php' );
+				$found = stream_resolve_include_path( 'Mail2.php' );
 			} else {
-				$found = Fallback::stream_resolve_include_path( 'Mail.php' );
+				$found = Fallback::stream_resolve_include_path( 'Mail2.php' );
 			}
 			if ( !$found ) {
 				throw new MWException( 'PEAR mail package is not installed' );
 			}
-			require_once( 'Mail.php' );
+			require_once( 'Mail2.php' );
 
 			wfSuppressWarnings();
 
 			// Create the mail object using the Mail::factory method
-			$mail_object =& Mail::factory( 'smtp', F::app()->wg->SMTP );
-			if ( PEAR::isError( $mail_object ) ) {
-				wfDebug( "PEAR::Mail factory failed: " . $mail_object->getMessage() . "\n" );
+			try {
+				$mail_object =& Mail2::factory( 'smtp', F::app()->wg->SMTP );
+			}
+
+			catch ( Mail2_Exception $e ) {
+				Wikia\Logger\WikiaLogger::instance()->error(
+					'UserMailerError',
+					[ 'exception' => $e ]
+				);
 				wfRestoreWarnings();
-				return Status::newFatal( 'pear-mail-error', $mail_object->getMessage() );
+				return Status::newFatal( 'pear-mail-error', $e->getMessage() );
 			}
 
 			wfDebug( "Sending mail via PEAR::Mail\n" );

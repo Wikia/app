@@ -68,7 +68,7 @@ Liftium.addEventListener = function(item, eventName, callback){
     return false;
 };
 
-Liftium.addAdDiv = function (doc, slotname, slotsize) {
+Liftium.addAdDiv = function (doc, slotname, slotElement, slotsize) {
 	'use strict';
 
 	var adDiv = doc.createElement('div'),
@@ -79,7 +79,7 @@ Liftium.addAdDiv = function (doc, slotname, slotsize) {
 	adIframe = Liftium.createAdIframe(doc, slotname, slotsize);
 
 	adDiv.appendChild(adIframe);
-	doc.getElementById(slotname).appendChild(adDiv);
+	slotElement.appendChild(adDiv);
 };
 
 Liftium.createAdIframe = function (doc, slotname, slotsize, src) {
@@ -621,7 +621,7 @@ Liftium.clone = function (obj){
 
 /* Handler for messages from XDM */
 Liftium.crossDomainMessage = function (message){
-	XDM.allowedMethods = ["Liftium.iframeHop", "LiftiumTest.testPassed"];
+	XDM.allowedMethods = [];
 	XDM.executeMessage(message.data);
 };
 
@@ -1452,8 +1452,8 @@ Liftium.in_array = function (needle, haystack, ignoreCase){
     return false;
 };
 
-Liftium.injectAd = function (doc, slotname, slotsize) {
-	Liftium.addAdDiv(doc, slotname, slotsize);
+Liftium.injectAd = function (doc, slotname, slotElement, slotsize) {
+	Liftium.addAdDiv(doc, slotname, slotElement, slotsize);
 	Liftium.queue.push({
 		slotsize: slotsize,
 		htmlElement: doc.getElementById(slotname + '_iframe'),
