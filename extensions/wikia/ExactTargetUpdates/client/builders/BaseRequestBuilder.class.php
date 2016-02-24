@@ -10,6 +10,7 @@ class BaseRequestBuilder {
 	const DATA_EXTENSION_OBJECT_TYPE = 'DataExtensionObject';
 
 	const CUSTOMER_KEY_USER = 'user';
+	const CUSTOMER_KEY_USER_ID_WIKI_ID = 'UserID_WikiID';
 	const CUSTOMER_KEY_USER_PROPERTIES = 'user_properties';
 	const CUSTOMER_KEY_USER_GROUPS = 'user_groups';
 
@@ -17,6 +18,7 @@ class BaseRequestBuilder {
 	const USER_TYPE = 'user';
 	const SUBSCRIBER_TYPE = 'subscriber';
 	const PROPERTIES_TYPE = 'properties';
+	const EDITS_TYPE = 'edits';
 
 	protected $email;
 	protected $userId;

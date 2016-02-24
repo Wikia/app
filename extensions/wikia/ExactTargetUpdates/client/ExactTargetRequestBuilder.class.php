@@ -12,8 +12,16 @@ class ExactTargetRequestBuilder {
 	private function __construct() {
 	}
 
-	public static function getUpdateBuilder() {
-		return new UpdateRequestBuilder();
+	public static function getEditsUpdateBuilder() {
+		return new UpdateRequestBuilder( BaseRequestBuilder::EDITS_TYPE );
+	}
+
+	public static function getUserUpdateBuilder() {
+		return new UpdateRequestBuilder( BaseRequestBuilder::USER_TYPE );
+	}
+
+	public static function getPropertiesUpdateBuilder() {
+		return new UpdateRequestBuilder( BaseRequestBuilder::PROPERTIES_TYPE );
 	}
 
 	public static function getUserGroupDeleteBuilder() {

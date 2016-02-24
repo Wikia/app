@@ -24,7 +24,7 @@ class ExactTargetClient {
 	}
 
 	public function updateUser( array $userData ) {
-		$request = ExactTargetRequestBuilder::getUpdateBuilder()
+		$request = ExactTargetRequestBuilder::getUserUpdateBuilder()
 			->withUserData( [ $userData ] )
 			->build();
 
@@ -85,7 +85,7 @@ class ExactTargetClient {
 	 * @throws \Exception
 	 */
 	public function updateUserProperties( $userId, array $userProperties ) {
-		$request = ExactTargetRequestBuilder::getUpdateBuilder()
+		$request = ExactTargetRequestBuilder::getPropertiesUpdateBuilder()
 			->withUserId( $userId )
 			->withProperties( $userProperties )
 			->build();
@@ -119,6 +119,14 @@ class ExactTargetClient {
 		$result = $this->retrieve( [ 'user_id' ], 'user_email', [ $email ], ResourceEnum::USER );
 
 		return ( new UserIdsAdapter( $result ) )->getUsersIds();
+	}
+
+	public function updateUserEdits( $edits ) {
+		$request = ExactTargetRequestBuilder::getEditsUpdateBuilder()
+			->withEdits( $edits )
+			->build();
+
+		return $this->sendRequest( self::UPDATE_CALL, $request );
 	}
 
 	private function retrieve( array $properties, $filterProperty, array $filterValues, $resource ) {

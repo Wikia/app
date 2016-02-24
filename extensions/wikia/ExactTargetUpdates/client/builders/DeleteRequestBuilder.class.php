@@ -6,7 +6,6 @@ class DeleteRequestBuilder extends BaseRequestBuilder {
 		self::GROUP_TYPE, self::USER_TYPE, self::SUBSCRIBER_TYPE, self::PROPERTIES_TYPE ];
 
 	public function build() {
-		$objects = [ ];
 		$soapType = self::DATA_EXTENSION_OBJECT_TYPE;
 
 		if ( $this->type === self::GROUP_TYPE ) {
@@ -23,6 +22,8 @@ class DeleteRequestBuilder extends BaseRequestBuilder {
 				$objects[] = $this->prepareDataObject( self::CUSTOMER_KEY_USER_PROPERTIES,
 					[ 'up_user' => $this->userId, 'up_property' => $property ] );
 			}
+		} else {
+			$objects = [ ];
 		}
 		$aSoapVars = $this->prepareSoapVars( $objects, $soapType );
 

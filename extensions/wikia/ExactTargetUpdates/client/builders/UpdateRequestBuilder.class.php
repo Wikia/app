@@ -8,9 +8,17 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 	const EXACT_TARGET_USER_ID_PROPERTY = 'user_id';
 
 	private $userData;
+	private $edits;
+
+	protected static $supportedTypes = [ self::PROPERTIES_TYPE, self::EDITS_TYPE, self::USER_TYPE ];
 
 	public function withUserData( array $userData ) {
 		$this->userData = $userData;
+		return $this;
+	}
+
+	public function withEdits( $edits ) {
+		$this->edits = $edits;
 		return $this;
 	}
 
@@ -22,11 +30,14 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 		$oRequest->Options = $this->prepareUpdateCreateOptions();
 
 		// prepare exact target structure
-		$objects = [ ];
-		if ( isset( $this->properties ) ) {
+		if ( $this->type === self::PROPERTIES_TYPE ) {
 			$objects = $this->prepareUserPreferencesParams( $this->userId, $this->properties );
-		} elseif ( isset( $this->userData ) ) {
+		} elseif ( $this->type === self::USER_TYPE ) {
 			$objects = $this->prepareUsersUpdateParams( $this->userData );
+		} elseif ( $this->type === self::EDITS_TYPE ) {
+			$objects = $this->prepareUserEditsParams( $this->edits );
+		} else {
+			$objects = [ ];
 		}
 		// make it soap vars
 		$oRequest->Objects = $this->prepareSoapVars( $objects, self::DATA_EXTENSION_OBJECT_TYPE );
@@ -96,6 +107,18 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 
 		$updateOptions->SaveOptions = [ $this->wrapToSoapVar( $saveOption, self::SAVE_OPTION_TYPE ) ];
 		return $updateOptions;
+	}
+
+	private function prepareUserEditsParams( $edits ) {
+		$result = [ ];
+		foreach ( $edits as $userId => $contributions ) {
+			foreach ( $contributions as $wikiId => $number ) {
+				$result[] = $this->prepareDataObject( self::CUSTOMER_KEY_USER_ID_WIKI_ID,
+					[ 'user_id' => $userId, 'wiki_id' => $wikiId ], [ 'contributions' => $number ] );
+			}
+		}
+
+		return $result;
 	}
 
 }

@@ -33,4 +33,27 @@ class ExactTargetUserUpdateDriver {
 	public static function isUsed( $userId, array $usedBy ) {
 		return !empty( $usedBy ) && ( count( $usedBy ) > 1 || $usedBy[ 0 ] !== $userId );
 	}
+
+	/**
+	 * Sums up edits arrays
+	 * @param array $first
+	 * @param array $second
+	 * @return array first and second sum of edits
+	 */
+	public static function sumUpEdits( $first, $second ) {
+		$result = [ ];
+		$ids = array_unique( array_merge( (array)array_keys( $first ), (array)array_keys( $second ) ) );
+
+		foreach ( $ids as $userId ) {
+			$wikis = array_unique(
+				array_merge( (array)array_keys( $first[ $userId ] ), (array)array_keys( $second[ $userId ] ) ) );
+			foreach ( $wikis as $wikiId ) {
+				$one = isset( $second[ $userId ][ $wikiId ] ) ? $second[ $userId ][ $wikiId ] : 0;
+				$two = isset( $first[ $userId ][ $wikiId ] ) ? $first[ $userId ][ $wikiId ] : 0;
+				$result[ $userId ][ $wikiId ] = $one + $two;
+			}
+		}
+
+		return $result;
+	}
 }

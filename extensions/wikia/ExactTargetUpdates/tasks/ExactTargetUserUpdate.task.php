@@ -87,6 +87,19 @@ class ExactTargetUserUpdate extends BaseTask {
 		return self::STATUS_OK;
 	}
 
+	public function updateUsersEdits( $userEdits ) {
+		// Get number of edits from ExactTarget
+		$ids = array_keys( $userEdits );
+		$edits = $this->getClient()->retrieveUsersEdits( $ids );
+
+		// sum up with incremental data
+		$total = Driver::sumUpEdits( $userEdits, $edits );
+
+		$this->getClient()->updateUserEdits( $total );
+
+		return self::STATUS_OK;
+	}
+
 	protected function getClient() {
 		if ( !isset( $this->client ) ) {
 			$this->client = new ExactTargetClient();
