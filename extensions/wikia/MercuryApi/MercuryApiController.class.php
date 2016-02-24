@@ -292,7 +292,12 @@ class MercuryApiController extends WikiaController {
 			$titleBuilder = new WikiaHtmlTitle();
 			if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
 				$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
-				$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
+
+				if ( $article instanceof Article ) {
+					$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
+				} else {
+					$data['details'] = $this->getMainPageMockedDetails( $title );
+				}
 			} else {
 				if ( $title->isContentPage() && $title->isKnown() ) {
 					// Handling content namespaces
@@ -302,13 +307,11 @@ class MercuryApiController extends WikiaController {
 							[ 'article' => $article ]
 						);
 
-						throw new NotFoundApiException( 'Article is empty' );
-					}
-
-					$data = array_merge(
-						$data,
-						MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
-					);
+			if ( $this->shouldGetMainPageData( $isMainPage ) ) {
+				$data['mainPageData'] = $this->getMainPageData();
+				$data['details'] = $this->getArticleDetails($article);
+			} elseif ( $title->isContentPage() && $title->isKnown() ) {
+				$data = array_merge( $data, $this->getArticleData( $article ) );
 
 					if ( !$isMainPage ) {
 						$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
@@ -470,7 +473,7 @@ class MercuryApiController extends WikiaController {
 				'articleTitle' => str_replace( '_', ' ', $articleTitle ),
 				'url' => $url,
 			];
-		}, array_keys( $links ), array_values( $links ) );
+		} , array_keys( $links ), array_values( $links ) );
 
 		// Sort by localized language name
 		$c = Collator::create( 'en_US.UTF-8' );
@@ -479,5 +482,20 @@ class MercuryApiController extends WikiaController {
 		} );
 
 		return $langMap;
+	}
+
+	/**
+	 * @TODO XW-1174 - this method should be moved to MainPageHandler.
+	 * We need to define which details we should send and from where we should fetch it when article doesn't exist
+	 *
+	 * @param Title $title
+	 * @return array
+	 */
+	private function getMainPageMockedDetails( Title $title ) {
+		return [
+			'ns' => 0,
+			'title' => $title->getText(),
+			'revision' => []
+		];
 	}
 }
