@@ -126,10 +126,10 @@ class PowerUser {
 	public function addPowerUserAddGroup( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUserProperties )
 			&& $this->bUseGroups
-			&& !$this->permissionsService()->isUserInGroup( $this->oUser, self::GROUP_NAME )
+			&& !$this->permissionsService()->isInGroup( $this->oUser, self::GROUP_NAME )
 		) {
 			global $wgUser;
-			$this->permissionsService()->addUserToGroup( $wgUser, $this->oUser, self::GROUP_NAME );
+			$this->permissionsService()->addToGroup( $wgUser, $this->oUser, self::GROUP_NAME );
 			$this->logSuccess( $sProperty, self::ACTION_ADD_GROUP );
 		}
 		return true;
@@ -180,7 +180,7 @@ class PowerUser {
 			&& $this->isGroupForRemoval( $sProperty )
 		) {
 			global $wgUser;
-			$this->permissionsService()->removeUserFromGroup( $wgUser, $this->oUser, self::GROUP_NAME );
+			$this->permissionsService()->removeFromGroup( $wgUser, $this->oUser, self::GROUP_NAME );
 			$this->logSuccess( $sProperty, self::ACTION_REMOVE_GROUP );
 		}
 		return true;
@@ -202,7 +202,7 @@ class PowerUser {
 				return false;
 			}
 		}
-		return $this->permissionsService()->isUserInGroup( $this->oUser, self::GROUP_NAME );
+		return $this->permissionsService()->isInGroup( $this->oUser, self::GROUP_NAME );
 	}
 
 	/**

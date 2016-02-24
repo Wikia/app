@@ -488,7 +488,7 @@ class ListusersData {
 		$central_groups = array();
 		global $wgWikiaIsCentralWiki;
 		if ( $wgWikiaIsCentralWiki === false  ) {
-			$central_groups = $this->permissionsService()->getExplicitGlobalUserGroups( $user );
+			$central_groups = $this->permissionsService()->getExplicitGlobalGroups( $user );
 		}
 
 		# add groups

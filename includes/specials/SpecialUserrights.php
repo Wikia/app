@@ -556,7 +556,7 @@ class UserrightsPage extends SpecialPage {
 				( $set && self::canRemove( $user, $group, $this->isself ) ) ||
 				( !$set && self::canAdd( $user, $group, $this->isself ) ) );
 			$disabled = $disabled || $this->isGlobalNonEditableGroup(
-					$this->permissionsService()->getDefinitions()->getGlobalGroups(), $group );
+					$this->permissionsService()->getConfiguration()->getGlobalGroups(), $group );
 			# Do we need to point out that this action is irreversible?
 			$irreversible = !$disabled && (
 				( $set && !self::canAdd( $user, $group, $this->isself ) ) ||

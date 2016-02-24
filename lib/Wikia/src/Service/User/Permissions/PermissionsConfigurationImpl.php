@@ -2,7 +2,7 @@
 
 namespace Wikia\Service\User\Permissions;
 
-class PermissionsDefinitionImpl implements PermissionsDefinition {
+class PermissionsConfigurationImpl implements PermissionsConfiguration {
 
 	/** @var string[] - global explicit groups to which a user can be explicitly assigned */
 	private $explicitGroups = [];

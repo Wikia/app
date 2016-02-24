@@ -350,7 +350,7 @@ class SpecialBatchUserRights extends SpecialPage {
 			$set = false;
 			# Should the checkbox be disabled?
 			$isGlobalNonEditableGroup = UserrightsPage::isGlobalNonEditableGroup(
-				$this->permissionsService()->getDefinitions()->getGlobalGroups(), $group );
+				$this->permissionsService()->getConfiguration()->getGlobalGroups(), $group );
 			$disabled = !( !$set && UserrightsPage::canAdd( $this->getUser(), $group, $this->isself ) && !$isGlobalNonEditableGroup );
 			# Do we need to point out that this action is irreversible?
 			$irreversible = !$disabled && (

@@ -4,8 +4,8 @@ namespace Wikia\Service\User\Permissions;
 
 class PermissionsServiceImpl implements PermissionsService {
 
-	/** @var  PermissionsDefinition */
-	private $permissionsDefinition;
+	/** @var  PermissionsConfiguration */
+	private $permissionsConfiguration;
 
 	/** @var string[string] - key is user id */
 	private $localExplicitUserGroups = [];
@@ -20,32 +20,32 @@ class PermissionsServiceImpl implements PermissionsService {
 	private $userPermissions = [];
 
 	public function __construct() {
-		$this->permissionsDefinition = new PermissionsDefinitionImpl();
+		$this->permissionsConfiguration = new PermissionsConfigurationImpl();
 	}
 
-	public function getDefinitions() {
-		return $this->permissionsDefinition;
+	public function getConfiguration() {
+		return $this->permissionsConfiguration;
 	}
 
-	public function getExplicitUserGroups( \User $user ) {
+	public function getExplicitGroups(\User $user ) {
 		return array_unique( array_merge (
-			$this->getExplicitLocalUserGroups( $user ) ?: [],
-			$this->getExplicitGlobalUserGroups( $user ) ?: []
+			$this->getExplicitLocalGroups( $user ) ?: [],
+			$this->getExplicitGlobalGroups( $user ) ?: []
 		) );
 	}
 
-	public function getExplicitLocalUserGroups( \User $user ) {
+	public function getExplicitLocalGroups(\User $user ) {
 		$this->loadLocalGroups( $user->getId() );
 		return $this->localExplicitUserGroups[ $user->getId() ];
 	}
 
-	public function getExplicitGlobalUserGroups( \User $user ) {
+	public function getExplicitGlobalGroups(\User $user ) {
 		$this->loadGlobalUserGroups( $user->getId() );
 		return $this->globalExplicitUserGroups[ $user->getId() ];
 	}
 
-	public function isUserInGroup( \User $user, $group ) {
-		return in_array( $group, $this->getEffectiveUserGroups( $user ) );
+	public function isInGroup(\User $user, $group ) {
+		return in_array( $group, $this->getEffectiveGroups( $user ) );
 	}
 
 	/**
@@ -66,7 +66,7 @@ class PermissionsServiceImpl implements PermissionsService {
 	 * @param $reCacheAutomaticGroups
 	 * @return string[] internal group names
 	 */
-	public function getAutomaticUserGroups( \User $user, $reCacheAutomaticGroups = false ) {
+	public function getAutomaticGroups(\User $user, $reCacheAutomaticGroups = false ) {
 		if ( !$reCacheAutomaticGroups && isset( $this->implicitUserGroups[ $user->getId() ] ) ) {
 			$implicitGroups = $this->implicitUserGroups[ $user->getId() ];
 		} else {
@@ -93,11 +93,11 @@ class PermissionsServiceImpl implements PermissionsService {
 	 * @param $reCacheAutomaticGroups
 	 * @return string[] internal group names
 	 */
-	public function getEffectiveUserGroups( \User $user, $reCacheAutomaticGroups = false ) {
+	public function getEffectiveGroups(\User $user, $reCacheAutomaticGroups = false ) {
 
 		return array_unique( array_merge(
-			$this->getExplicitUserGroups( $user ),
-			$this->getAutomaticUserGroups( $user, $reCacheAutomaticGroups )
+			$this->getExplicitGroups( $user ),
+			$this->getAutomaticGroups( $user, $reCacheAutomaticGroups )
 		) );
 	}
 
@@ -106,13 +106,13 @@ class PermissionsServiceImpl implements PermissionsService {
 	 * @param \User $user
 	 * @return string[] permission names
 	 */
-	public function getUserPermissions( \User $user ) {
+	public function getPermissions(\User $user ) {
 		$userId = $user->getId();
 
 		if ( isset( $this->userPermissions[ $userId ] ) ) {
 			$permissions = $this->userPermissions[ $userId ];
 		} else {
-			$permissions = $this->permissionsDefinition->getGroupPermissions( $this->getEffectiveUserGroups( $user ) );
+			$permissions = $this->permissionsConfiguration->getGroupPermissions( $this->getEffectiveGroups( $user ) );
 			wfRunHooks( 'UserGetRights', array( $user, &$permissions ) );
 			if ( !empty( $userId ) ) {
 				$this->userPermissions[ $userId ] = array_values( $permissions );
@@ -163,7 +163,7 @@ class PermissionsServiceImpl implements PermissionsService {
 				}
 			);
 
-			$globalGroups = array_intersect( $globalGroups, $this->permissionsDefinition->getGlobalGroups() );
+			$globalGroups = array_intersect( $globalGroups, $this->permissionsConfiguration->getGlobalGroups() );
 			$this->globalExplicitUserGroups[$userId ] = $globalGroups;
 		}
 	}
@@ -173,7 +173,7 @@ class PermissionsServiceImpl implements PermissionsService {
 		return (bool)$wgWikiaIsCentralWiki;
 	}
 
-	private function addUserToGlobalGroup( \User $user, $group ) {
+	private function addToGlobalGroup(\User $user, $group ) {
 		if ( !$this->isCentralWiki() ) {
 			return false;
 		}
@@ -192,7 +192,7 @@ class PermissionsServiceImpl implements PermissionsService {
 		return true;
 	}
 
-	private function addUserToLocalGroup( \User $user, $group ) {
+	private function addToLocalGroup(\User $user, $group ) {
 		$dbw = wfGetDB( DB_MASTER );
 		if( $user->getId() ) {
 			$dbw->insert( 'user_groups',
@@ -208,7 +208,7 @@ class PermissionsServiceImpl implements PermissionsService {
 	}
 
 	private function canGroupBeAdded( \User $performer, \User $userToChange, $group ) {
-		$groups = $this->getGroupsChangeableByUser( $performer );
+		$groups = $this->getChangeableGroups( $performer );
 		if ( in_array($group, $groups['add']) ) {
 			return true;
 		}
@@ -220,7 +220,7 @@ class PermissionsServiceImpl implements PermissionsService {
 	}
 
 	private function canGroupBeRemoved( \User $performer, \User $userToChange, $group ) {
-		$groups = $this->getGroupsChangeableByUser( $performer );
+		$groups = $this->getChangeableGroups( $performer );
 		if ( in_array($group, $groups['remove']) ) {
 			return true;
 		}
@@ -231,16 +231,16 @@ class PermissionsServiceImpl implements PermissionsService {
 		return false;
 	}
 
-	public function addUserToGroup( \User $performer, \User $userToChange, $group ) {
+	public function addToGroup(\User $performer, \User $userToChange, $group ) {
 		if ( !$this->canGroupBeAdded( $performer, $userToChange, $group ) ) {
 			return false;
 		}
 
 		try {
-			if ( in_array( $group, $this->permissionsDefinition->getGlobalGroups() ) ) {
-				$result = $this->addUserToGlobalGroup( $userToChange, $group );
+			if ( in_array( $group, $this->permissionsConfiguration->getGlobalGroups() ) ) {
+				$result = $this->addToGlobalGroup( $userToChange, $group );
 			} else {
-				$result = $this->addUserToLocalGroup( $userToChange, $group );
+				$result = $this->addToLocalGroup( $userToChange, $group );
 			}
 		}
 		finally {
@@ -251,7 +251,7 @@ class PermissionsServiceImpl implements PermissionsService {
 		return $result;
 	}
 
-	private function removeUserFromGlobalGroup( \User $user, $group ) {
+	private function removeFromGlobalGroup(\User $user, $group ) {
 		if ( !$this->isCentralWiki() ) {
 			return false;
 		}
@@ -270,7 +270,7 @@ class PermissionsServiceImpl implements PermissionsService {
 		return true;
 	}
 
-	private function removeUserFromLocalGroup( \User $user, $group ) {
+	private function removeFromLocalGroup(\User $user, $group ) {
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->delete( 'user_groups',
 			array(
@@ -281,16 +281,16 @@ class PermissionsServiceImpl implements PermissionsService {
 		return true;
 	}
 
-	public function removeUserFromGroup( \User $performer, \User $userToChange, $group ) {
+	public function removeFromGroup(\User $performer, \User $userToChange, $group ) {
 		if ( !$this->canGroupBeRemoved( $performer, $userToChange, $group ) ) {
 			return false;
 		}
 
 		try {
-			if ( in_array( $group, $this->permissionsDefinition->getGlobalGroups() ) ) {
-				$result = $this->removeUserFromGlobalGroup( $userToChange, $group );
+			if ( in_array( $group, $this->permissionsConfiguration->getGlobalGroups() ) ) {
+				$result = $this->removeFromGlobalGroup( $userToChange, $group );
 			} else {
-				$result = $this->removeUserFromLocalGroup( $userToChange, $group );
+				$result = $this->removeFromLocalGroup( $userToChange, $group );
 			}
 		}
 		finally {
@@ -300,14 +300,14 @@ class PermissionsServiceImpl implements PermissionsService {
 		return $result;
 	}
 
-	private function invalidateUserGroupsAndPermissions( $userId ) {
+	private function invalidateGroupsAndPermissions($userId ) {
 		unset( $this->userPermissions[$userId] );
 		unset( $this->localExplicitUserGroups[$userId] );
 		unset( $this->implicitUserGroups[$userId] );
 		unset( $this->globalExplicitUserGroups[$userId] );
 	}
 
-	public function doesUserHavePermission( \User $user, $permission ) {
+	public function hasPermission(\User $user, $permission ) {
 		if ( $permission === '' ) {
 			return true; // In the spirit of DWIM
 		}
@@ -319,21 +319,21 @@ class PermissionsServiceImpl implements PermissionsService {
 		}
 		# Use strict parameter to avoid matching numeric 0 accidentally inserted
 		# by misconfiguration: 0 == 'foo'
-		return in_array( $permission, $this->getUserPermissions( $user ), true );
+		return in_array( $permission, $this->getPermissions( $user ), true );
 	}
 
-	public function doesUserHaveAllPermissions( \User $user, $permissions ) {
+	public function hasAllPermissions(\User $user, $permissions ) {
 		foreach( $permissions as $permission ){
-			if( !$this->doesUserHavePermission( $user, $permission ) ){
+			if( !$this->hasPermission( $user, $permission ) ){
 				return false;
 			}
 		}
 		return true;
 	}
 
-	public function doesUserHaveAnyPermission( \User $user, $permissions ) {
+	public function hasAnyPermission(\User $user, $permissions ) {
 		foreach( $permissions as $permission ){
-			if( $this->doesUserHavePermission( $user, $permission ) ){
+			if( $this->hasPermission( $user, $permission ) ){
 				return true;
 			}
 		}
@@ -348,13 +348,13 @@ class PermissionsServiceImpl implements PermissionsService {
 	 *  'add-self' => array( addablegroups to self),
 	 *  'remove-self' => array( removable groups from self) )
 	 */
-	public function getGroupsChangeableByUser( \User $performer ) {
-		if( $this->doesUserHavePermission( $performer, 'userrights' ) ) {
+	public function getChangeableGroups(\User $performer ) {
+		if( $this->hasPermission( $performer, 'userrights' ) ) {
 			// This group gives the right to modify everything (reverse-
 			// compatibility with old "userrights lets you change
 			// everything")
 			// Using array_merge to make the groups reindexed
-			$all = array_merge( $this->permissionsDefinition->getExplicitGroups() );
+			$all = array_merge( $this->permissionsConfiguration->getExplicitGroups() );
 			return array(
 				'add' => $all,
 				'remove' => $all,
@@ -370,11 +370,11 @@ class PermissionsServiceImpl implements PermissionsService {
 			'add-self' => array(),
 			'remove-self' => array()
 		);
-		$addergroups = $this->getEffectiveUserGroups( $performer );
+		$addergroups = $this->getEffectiveGroups( $performer );
 
 		foreach( $addergroups as $addergroup ) {
 			$groups = array_merge_recursive(
-				$groups, $this->permissionsDefinition->getGroupsChangeableByGroup( $addergroup )
+				$groups, $this->permissionsConfiguration->getGroupsChangeableByGroup( $addergroup )
 			);
 		}
 		$groups['add']    = array_unique( $groups['add'] );
@@ -385,7 +385,7 @@ class PermissionsServiceImpl implements PermissionsService {
 	}
 
 	public function invalidateCache( \User $user ) {
-		$this->invalidateUserGroupsAndPermissions( $user->getId() );
+		$this->invalidateGroupsAndPermissions( $user->getId() );
 		\WikiaDataAccess::cachePurge( self::getMemcKey( $user->getId() ) );
 	}
 }

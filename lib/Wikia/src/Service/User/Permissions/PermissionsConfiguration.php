@@ -2,7 +2,7 @@
 
 namespace Wikia\Service\User\Permissions;
 
-interface PermissionsDefinition {
+interface PermissionsConfiguration {
 
 	/**
 	 * @return string[] List of global groups, that is groups to which one is added on all wikis or on none
