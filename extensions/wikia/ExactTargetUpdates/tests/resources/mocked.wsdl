@@ -1,2 +1,35 @@
-<definitions targetNamespace="http://test.com/wsdl/testAPI">
+<?xml version="1.0"?>
+<definitions name="mock" targetNamespace="http://example.com/mocked.wsdl"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <portType name="MockedPort">
+        <operation name="test">
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </portType>
+
+    <binding name="MockedBinding" type="MockedPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="test">
+            <soap:operation soapAction="http://example.com/test"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="TestService">
+        <documentation>My first service</documentation>
+        <port name="TestPort" binding="MockedBinding">
+            <soap:address location="http://example.com/test"/>
+        </port>
+    </service>
+
 </definitions>
