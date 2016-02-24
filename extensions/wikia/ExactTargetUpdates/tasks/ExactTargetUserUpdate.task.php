@@ -1,9 +1,9 @@
 <?php
 namespace Wikia\ExactTarget;
 
+use Wikia\ExactTarget\ExactTargetUserUpdateDriver as Driver;
 use Wikia\Tasks\Tasks\BaseTask;
 use Wikia\Util\Assert;
-use Wikia\ExactTarget\ExactTargetUserUpdateDriver as Driver;
 
 class ExactTargetUserUpdate extends BaseTask {
 
@@ -32,7 +32,7 @@ class ExactTargetUserUpdate extends BaseTask {
 		$userEmailOld = $client->retrieveEmailByUserId( $userId );
 
 		// Remove old email if necessary
-		if ( Driver::shouldCreateAsEmailChanged( $userEmailOld, $userEmailNew )
+		if ( Driver::shouldDeleteAsEmailChanged( $userEmailOld, $userEmailNew )
 			&& !Driver::isUsed( $userId, $client->retrieveUserIdsByEmail( $userEmailOld ) )
 		) {
 			$client->deleteSubscriber( $userEmailOld );

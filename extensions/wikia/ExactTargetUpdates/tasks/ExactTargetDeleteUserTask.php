@@ -1,6 +1,8 @@
 <?php
 namespace Wikia\ExactTarget;
 
+use Wikia\ExactTarget\ExactTargetUserUpdateDriver as Driver;
+
 class ExactTargetDeleteUserTask extends ExactTargetTask {
 
 	/**
@@ -54,13 +56,13 @@ class ExactTargetDeleteUserTask extends ExactTargetTask {
 		$client = new ExactTargetClient();
 
 		$userEmail = $client->retrieveEmailByUserId( $userId );
+
 		if ( empty( $userEmail ) ) {
 			return;
 		}
 
-		$ids = $this->retrieveUserIdsByEmail( $userEmail );
 		/* Skip deletion if no email found or email used by other account */
-		if ( !empty( $ids ) && ( count( $ids ) > 1 || $ids[0] != $userId ) ) {
+		if ( Driver::isUsed( $userId, $client->retrieveUserIdsByEmail( $userEmail ) ) ) {
 			return;
 		}
 
