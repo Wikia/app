@@ -282,8 +282,7 @@ class MercuryApiController extends WikiaController {
 			$article = Article::newFromID( $title->getArticleId() );
 
 			if ( $article instanceof Article && $title->isRedirect() ) {
-				list( $title, $article, $data ) =
-					$this->handleRedirect( $title, $article, $data );
+				list( $title, $article, $data ) = $this->handleRedirect( $title, $article, $data );
 			}
 
 			$isMainPage = $title->isMainPage();
@@ -295,8 +294,8 @@ class MercuryApiController extends WikiaController {
 				$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
 				$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
 			} else {
-				// Content Namespace Handling
 				if ( $title->isContentPage() && $title->isKnown() ) {
+					// Handling content namespaces
 					if ( !$article instanceof Article ) {
 						\Wikia\Logger\WikiaLogger::instance()->error(
 							'$article should be an instance of an Article',
@@ -308,19 +307,19 @@ class MercuryApiController extends WikiaController {
 
 					$data = array_merge(
 						$data,
-						MercuryApiArticleHandler::getArticleData( $article, $this->request, $this->mercuryApi )
+						MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
 					);
 
 					if ( !$isMainPage ) {
 						$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
 					}
-					// Handling namespaces other than content ns
 				} else {
+					// Handling namespaces other than content ones
 					switch ( $data['ns'] ) {
 						case NS_CATEGORY:
 							$data['nsSpecificContent'] = MercuryApiCategoryHandler::getCategoryContent( $title );
 							if ( MercuryApiCategoryHandler::hasArticle( $title ) ) {
-								$data['article'] = MercuryApiArticleHandler::getArticleJson( $article, $this->request );
+								$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
 								$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
 							}
 							break;
@@ -345,7 +344,6 @@ class MercuryApiController extends WikiaController {
 
 			$title = $this->wg->Title;
 		}
-
 
 		$data['articleType'] = WikiaPageType::getArticleType( $title );
 		$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
@@ -472,7 +470,7 @@ class MercuryApiController extends WikiaController {
 				'articleTitle' => str_replace( '_', ' ', $articleTitle ),
 				'url' => $url,
 			];
-		} , array_keys( $links ), array_values( $links ) );
+		}, array_keys( $links ), array_values( $links ) );
 
 		// Sort by localized language name
 		$c = Collator::create( 'en_US.UTF-8' );

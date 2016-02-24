@@ -3,14 +3,14 @@
 class MercuryApiArticleHandler {
 
 	/**
-	 * @param Article $article
 	 * @param WikiaRequest $request
 	 * @param MercuryApi $mercuryApiModel
+	 * @param Article $article
 	 * @return array
 	 */
-	public static function getArticleData( Article $article, WikiaRequest $request, MercuryApi $mercuryApiModel ) {
+	public static function getArticleData( WikiaRequest $request, MercuryApi $mercuryApiModel, Article $article ) {
 		$data['details'] = self::getArticleDetails( $article );
-		$data['article'] = self::getArticleJson( $article, $request );
+		$data['article'] = self::getArticleJson( $request, $article );
 		$data['topContributors'] = self::getTopContributorsDetails(
 			self::getTopContributorsPerArticle( $mercuryApiModel, $article )
 		);
@@ -74,11 +74,11 @@ class MercuryApiArticleHandler {
 	/**
 	 * @desc returns an article in simplified json structure
 	 *
-	 * @param Article $article
 	 * @param WikiaRequest $request
+	 * @param Article $article
 	 * @return array
 	 */
-	public static function getArticleJson( Article $article, WikiaRequest $request ) {
+	public static function getArticleJson( WikiaRequest $request, Article $article ) {
 		$redirect = $request->getVal( 'redirect' );
 		$sections = $request->getVal( 'sections', '' );
 
