@@ -133,11 +133,13 @@ class ExactTargetUserHooks {
 		$aUserData = $oUserHelper->prepareUserParams( $oUser );
 		$aUserProperties = $oUserHelper->prepareUserPropertiesParams( $oUser );
 
-		/* Get and run the task */
-		$task = new ExactTargetUserUpdate();
-		$task->call( 'updateUser', $aUserData );
-		$task->call( 'updateUserProperties', $oUser->getId(), $aUserProperties );
-		$task->queue();
+		/* Get and run updates tasks separately */
+		$taskUser = new ExactTargetUserUpdate();
+		$taskUser->call( 'updateUser', $aUserData );
+		$taskUser->queue();
+		$taskUserProperties = new ExactTargetUserUpdate();
+		$taskUserProperties->call( 'updateUserProperties', $oUser->getId(), $aUserProperties );
+		$taskUserProperties->queue();
 	}
 
 	/**
