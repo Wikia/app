@@ -69,7 +69,7 @@ define('ext.wikia.recirculation.recirculation', [
 				return;
 		}
 
-		trackVerboseImpression(experimentName, 'rail');
+		tracker.trackVerboseImpression(experimentName, 'rail');
 		$(element).on('mousedown', 'a', trackClick);
 	}
 
