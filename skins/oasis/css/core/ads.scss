@@ -65,17 +65,38 @@ $wikia-top-ads-index: 2;
 }
 
 #TOP_LEADERBOARD_AB {
+	background: $color-page;
 	max-width: $page-width-medium;
-	margin: 0 auto;
+	margin: 10px auto;
+	padding: 0 $padding-width-medium;
 	position: relative;
 	z-index: 2;
 
 	.thumbnails-h-abp {
 		border: none;
 	}
+}
 
-	.trc_rbox_container {
-		margin: -10px 0;
+@if $widthType == 0 {
+	@media #{$breakpoint-small-only} {
+		#TOP_LEADERBOARD_AB {
+			padding: 0 $padding-width-small;
+			width: $page-width-small - 2 * $content-border-width;
+		}
+	}
+
+	@media #{$breakpoint-medium-only} {
+		#TOP_LEADERBOARD_AB {
+			padding: 0 $padding-width-medium;
+			width: $page-width-medium;
+		}
+	}
+
+	@media #{$breakpoint-large-up} {
+		#TOP_LEADERBOARD_AB {
+			padding: 0 $padding-width-large;
+			width: $page-width-large;
+		}
 	}
 }
 
