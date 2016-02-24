@@ -284,4 +284,3 @@ if ( is_array( $wgAddGroups['staff'] ) ) {
 if ( is_array( $wgRemoveGroups[ 'staff' ] ) ) {
 	$wgRemoveGroups[ 'staff' ][] = 'threadmoderator';
 }
-
