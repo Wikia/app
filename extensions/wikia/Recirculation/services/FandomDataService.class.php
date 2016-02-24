@@ -6,6 +6,7 @@ class FandomDataService {
 	const PARSELY_API_BASE = 'https://api.parsely.com/v2/';
 	const PARSELY_API_LIMIT = 5;
 	const PARSELY_API_PAGE = 1;
+	const PARSELY_API_PUB_DAYS = 10;
 	const PARSELY_API_SORT = '_hits';
 
 	const MCACHE_VER = '1.0';
@@ -44,7 +45,7 @@ class FandomDataService {
 				break;
 			case 'recent_popular':
 				$options['sort'] = self::PARSELY_API_SORT;
-				$options['pub_days'] = 3;
+				$options['pub_days'] = self::PARSELY_API_PUB_DAYS;
 				$endpoint = 'analytics/posts';
 				break;
 			case 'popular':
