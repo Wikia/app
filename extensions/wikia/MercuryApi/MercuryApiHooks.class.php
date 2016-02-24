@@ -74,7 +74,7 @@ class MercuryApiHooks {
 	 */
 	public static function onArticleRollbackComplete( WikiPage $wikiPage, User $user, $revision, $current ) {
 		$articleId = $wikiPage->getId();
-		$key = MercuryApi::getTopContributorsKey( $articleId, MercuryApiController::NUMBER_CONTRIBUTORS );
+		$key = MercuryApi::getTopContributorsKey( $articleId, MercuryApiArticleHandler::NUMBER_CONTRIBUTORS );
 		WikiaDataAccess::cachePurge( $key );
 		return true;
 	}
