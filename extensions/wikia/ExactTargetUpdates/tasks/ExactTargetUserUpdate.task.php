@@ -68,6 +68,11 @@ class ExactTargetUserUpdate extends BaseTask {
 		return self::STATUS_OK;
 	}
 
+	public function addUserGroup( $userId, $group ) {
+		$this->getClient()->createUserGroup( $userId, $group );
+		return self::STATUS_OK;
+	}
+
 	public function deleteUserData( $userId ) {
 		$userEmail = $this->getClient()->retrieveEmailByUserId( $userId );
 		if ( !empty( $userEmail ) &&

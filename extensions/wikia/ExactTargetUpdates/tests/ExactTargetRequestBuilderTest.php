@@ -7,6 +7,11 @@ class ExactTargetRequestBuilderTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	public function testWrongTypeProvided() {
+		$this->setExpectedException( 'Wikia\Util\AssertionException', 'Not supported request type' );
+		new \Wikia\ExactTarget\Builders\DeleteRequestBuilder();
+	}
+
 	/**
 	 * @dataProvider usersDataProvider
 	 */
@@ -27,20 +32,6 @@ class ExactTargetRequestBuilderTest extends WikiaBaseTest {
 		\Wikia\ExactTarget\ExactTargetRequestBuilder::getUpdateBuilder()
 			->withUserData( [ [ 'user_id' => 0 ] ] )
 			->build();
-	}
-
-	/**
-	 * @dataProvider emailsDataProvider
-	 */
-	public function testCreateRequest( $email ) {
-		$subscriber = RequestBuilderTestsHelper::prepareSubscriber( $email, true );
-		$expected = $this->prepareCreateOption( $subscriber );
-
-		$oRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::getCreateBuilder()
-			->withUserEmail( $email )
-			->build();
-
-		$this->assertEquals( $expected, $oRequest );
 	}
 
 	/**
@@ -154,16 +145,5 @@ class ExactTargetRequestBuilderTest extends WikiaBaseTest {
 			$result[] = $userExtensionObject;
 		}
 		return $result;
-	}
-
-	private function prepareCreateOption( $subscribers ) {
-		$oRequest = new \ExactTarget_CreateRequest();
-		$vars = [ ];
-		foreach ( $subscribers as $item ) {
-			$vars[] = $this->wrapToSoapVar( $item, 'Subscriber' );
-		}
-		$oRequest->Options = NULL;
-		$oRequest->Objects = $vars;
-		return $oRequest;
 	}
 }

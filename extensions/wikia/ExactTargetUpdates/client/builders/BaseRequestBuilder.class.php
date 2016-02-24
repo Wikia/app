@@ -1,6 +1,8 @@
 <?php
 namespace Wikia\ExactTarget\Builders;
 
+use Wikia\Util\Assert;
+
 class BaseRequestBuilder {
 	const EXACT_TARGET_API_URL = 'http://exacttarget.com/wsdl/partnerAPI';
 
@@ -9,10 +11,26 @@ class BaseRequestBuilder {
 
 	const CUSTOMER_KEY_USER = 'user';
 	const CUSTOMER_KEY_USER_PROPERTIES = 'user_properties';
+	const CUSTOMER_KEY_USER_GROUPS = 'user_groups';
+
+	const GROUP_TYPE = 'group';
+	const USER_TYPE = 'user';
+	const SUBSCRIBER_TYPE = 'subscriber';
+	const PROPERTIES_TYPE = 'properties';
 
 	protected $email;
 	protected $userId;
 	protected $properties;
+	protected $group;
+	protected $type;
+	// empty means accept all types
+	protected static $supportedTypes = [ ];
+
+	public function __construct( $type = '' ) {
+		Assert::true( empty( static::$supportedTypes ) || in_array( $type, static::$supportedTypes ),
+			'Not supported request type' );
+		$this->type = $type;
+	}
 
 	public function withUserEmail( $email ) {
 		$this->email = $email;
@@ -26,6 +44,11 @@ class BaseRequestBuilder {
 
 	public function withProperties( $properties ) {
 		$this->properties = $properties;
+		return $this;
+	}
+
+	public function withGroup( $group ) {
+		$this->group = $group;
 		return $this;
 	}
 
@@ -69,7 +92,9 @@ class BaseRequestBuilder {
 	protected function prepareDataObject( $customerKey, $keys, $properties = null ) {
 		$obj = new \ExactTarget_DataExtensionObject();
 		$obj->CustomerKey = $customerKey;
-		$obj->Keys = $this->wrapApiProperties( $keys );
+		if ( !empty( $keys ) ) {
+			$obj->Keys = $this->wrapApiProperties( $keys );
+		}
 		// accept empty array as valid properties list
 		if ( isset( $properties ) ) {
 			$obj->Properties = $this->wrapApiProperties( $properties );

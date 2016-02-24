@@ -51,7 +51,7 @@ class ExactTargetClient {
 	}
 
 	public function createSubscriber( $userEmail ) {
-		$oRequest = ExactTargetRequestBuilder::getCreateBuilder()
+		$oRequest = ExactTargetRequestBuilder::getSubscriberCreateBuilder()
 			->withUserEmail( $userEmail )
 			->build();
 
@@ -65,6 +65,15 @@ class ExactTargetClient {
 			->build();
 
 		return $this->sendRequest( self::DELETE_CALL, $request );
+	}
+
+	public function createUserGroup( $userId, $group ) {
+		$request = ExactTargetRequestBuilder::getUserGroupCreateBuilder()
+			->withUserId( $userId )
+			->withGroup( $group )
+			->build();
+
+		return $this->sendRequest( self::CREATE_CALL, $request );
 	}
 
 	/**

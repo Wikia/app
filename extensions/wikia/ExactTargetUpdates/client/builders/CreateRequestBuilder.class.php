@@ -3,10 +3,19 @@
 namespace Wikia\ExactTarget\Builders;
 
 class CreateRequestBuilder extends BaseRequestBuilder {
+	protected static $supportedTypes = [ self::GROUP_TYPE, self::SUBSCRIBER_TYPE ];
 
 	public function build() {
-		$subscriber = $this->prepareSubscriber( $this->email, $this->email );
-		$aSoapVars = $this->prepareSoapVars( [ $subscriber ], self::SUBSCRIBER_OBJECT_TYPE );
+		$objects = [ ];
+		$type = self::DATA_EXTENSION_OBJECT_TYPE;
+		if ( $this->type === self::GROUP_TYPE ) {
+			$objects = [ $this->prepareDataObject( self::CUSTOMER_KEY_USER_GROUPS,
+				[ ], [ 'ug_user' => $this->userId, 'ug_group' => $this->group ] ) ];
+		} elseif ( $this->type === self::SUBSCRIBER_TYPE ) {
+			$objects = [ $this->prepareSubscriber( $this->email, $this->email ) ];
+			$type = self::SUBSCRIBER_OBJECT_TYPE;
+		}
+		$aSoapVars = $this->prepareSoapVars( $objects, $type );
 
 		$oRequest = new \ExactTarget_CreateRequest();
 		$oRequest->Options = NULL;

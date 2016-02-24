@@ -1,6 +1,7 @@
 <?php
 namespace Wikia\ExactTarget;
 
+use Wikia\ExactTarget\Builders\BaseRequestBuilder;
 use Wikia\ExactTarget\Builders\CreateRequestBuilder;
 use Wikia\ExactTarget\Builders\DeleteRequestBuilder;
 use Wikia\ExactTarget\Builders\RetrieveRequestBuilder;
@@ -16,23 +17,27 @@ class ExactTargetRequestBuilder {
 	}
 
 	public static function getUserGroupDeleteBuilder() {
-		return new DeleteRequestBuilder( DeleteRequestBuilder::DELETE_GROUP_TYPE );
+		return new DeleteRequestBuilder( BaseRequestBuilder::GROUP_TYPE );
 	}
 
 	public static function getSubscriberDeleteBuilder() {
-		return new DeleteRequestBuilder( DeleteRequestBuilder::DELETE_SUBSCRIBER_TYPE );
+		return new DeleteRequestBuilder( BaseRequestBuilder::SUBSCRIBER_TYPE );
 	}
 
 	public static function getUserDeleteBuilder() {
-		return new DeleteRequestBuilder( DeleteRequestBuilder::DELETE_USER_TYPE );
+		return new DeleteRequestBuilder( BaseRequestBuilder::USER_TYPE );
 	}
 
 	public static function getPropertiesDeleteBuilder() {
-		return new DeleteRequestBuilder( DeleteRequestBuilder::DELETE_PROPERTIES_TYPE );
+		return new DeleteRequestBuilder( BaseRequestBuilder::PROPERTIES_TYPE );
 	}
 
-	public static function getCreateBuilder() {
-		return new CreateRequestBuilder();
+	public static function getSubscriberCreateBuilder() {
+		return new CreateRequestBuilder( BaseRequestBuilder::SUBSCRIBER_TYPE );
+	}
+
+	public static function getUserGroupCreateBuilder() {
+		return new CreateRequestBuilder( BaseRequestBuilder::GROUP_TYPE );
 	}
 
 	public static function getRetrieveBuilder() {

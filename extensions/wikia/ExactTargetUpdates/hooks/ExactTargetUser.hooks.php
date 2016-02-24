@@ -86,8 +86,7 @@ class ExactTargetUserHooks {
 	 */
 	public function onAfterUserAddGlobalGroup( \User $oUser, $sGroup ) {
 		/* Get and run the task */
-		$oUserHelper = $this->getUserHelper();
-		$task = $oUserHelper->getUpdateUserTask();
+		$task = new ExactTargetUserUpdate();
 		$task->call( 'addUserGroup', $oUser->getId(), $sGroup );
 		$task->queue();
 		return true;
