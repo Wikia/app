@@ -546,7 +546,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				$upvoteCount = $upvotes[$id]['count'];
 			}
 			$result->addValue( $path, 'upvotes', $upvote );
-			$result->addValue( $path, 'upvotes_count', $upvoteCount );
+			$result->addValue( $path, 'upvotescount', $upvoteCount );
 		}
 	}
 
