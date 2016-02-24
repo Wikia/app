@@ -3,6 +3,7 @@ namespace Wikia\ExactTarget;
 
 use Wikia\Tasks\Tasks\BaseTask;
 use Wikia\Util\Assert;
+use Wikia\ExactTarget\ExactTargetUserUpdateDriver as Driver;
 
 class ExactTargetUserUpdate extends BaseTask {
 
@@ -30,7 +31,19 @@ class ExactTargetUserUpdate extends BaseTask {
 		$client = $this->getClient();
 		$userEmailOld = $client->retrieveEmailByUserId( $userId );
 
-		$this->updateSubscriber( $userEmailOld, $userEmailNew, $userId, $client );
+		// Remove old email if necessary
+		if ( Driver::shouldCreateAsEmailChanged( $userEmailOld, $userEmailNew )
+			&& !Driver::isUsed( $userId, $client->retrieveUserIdsByEmail( $userEmailOld ) )
+		) {
+			$client->deleteSubscriber( $userEmailOld );
+		}
+
+		// Create new email if necessary
+		if ( Driver::shouldCreateAsEmailChanged( $userEmailOld, $userEmailNew )
+			&& !Driver::isUsed( $userId, $client->retrieveUserIdsByEmail( $userEmailNew ) )
+		) {
+			$client->createSubscriber( $userEmailNew );
+		}
 
 		/* Update or create User in external service */
 		$client->updateUser( $userData );
@@ -54,31 +67,5 @@ class ExactTargetUserUpdate extends BaseTask {
 			$this->client = new ExactTargetClient();
 		}
 		return $this->client;
-	}
-
-	/**
-	 * @param string $userEmailOld
-	 * @param string $userEmailNew
-	 * @param int $userId
-	 * @param ExactTargetClient $client
-	 */
-	private function updateSubscriber( $userEmailOld, $userEmailNew, $userId, ExactTargetClient $client ) {
-		// Remove old email if necessary
-		if ( !empty( $userEmailOld ) && $userEmailOld !== $userEmailNew ) {
-			// Remove old email if used only by this user account
-			$idsOld = $client->retrieveUserIdsByEmail( $userEmailOld );
-			if ( count( $idsOld ) === 1 && $idsOld[ 0 ] === $userId ) {
-				$client->deleteSubscriber( $userEmailOld );
-			}
-		}
-
-		// Create new email if necessary
-		if ( empty( $userEmailOld ) || $userEmailOld !== $userEmailNew ) {
-			// Create new email if doesn't already exist
-			$idsNew = $client->retrieveUserIdsByEmail( $userEmailNew );
-			if ( empty( $idsNew ) ) {
-				$client->createSubscriber( $userEmailNew );
-			}
-		}
 	}
 }
