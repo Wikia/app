@@ -108,11 +108,40 @@ class ExactTargetClient {
 		return ( new UserEmailAdapter( $result ) )->getEmail();
 	}
 
+	public function retrieveUser( $usersId ) {
+		$userFields = [
+			'user_id',
+			'user_name',
+			'user_real_name',
+			'user_email',
+			'user_email_authenticated',
+			'user_registration',
+			'user_editcount',
+			'user_touched'
+		];
+		$result = $this->retrieve(
+			$userFields, 'user_id', [ $usersId ], ResourceEnum::USER );
+
+		return ( new UserAdapter( $result ) )->getUserData();
+	}
+
 	public function retrieveUsersEdits( $usersIds ) {
 		$result = $this->retrieve(
 			[ 'user_id', 'wiki_id', 'contributions' ], 'user_id', $usersIds, ResourceEnum::USER_WIKI );
 
 		return ( new UserEditsAdapter( $result ) )->getEdits();
+	}
+
+	public function retrieveUserGroups( $usersId ) {
+		$userFields = [
+			'ug_user',
+			'ug_group'
+		];
+		$result = $this->retrieve(
+			$userFields, 'ug_user', [ $usersId ], ResourceEnum::USER_GROUPS
+		);
+
+		return ( new UserGroupsAdapter( $result ) )->getUserGroups();
 	}
 
 	public function retrieveUserIdsByEmail( $email ) {
@@ -127,6 +156,19 @@ class ExactTargetClient {
 			->build();
 
 		return $this->sendRequest( self::UPDATE_CALL, $request );
+	}
+
+	public function retrieveUserProperties( $usersId ) {
+		$userFields = [
+			'up_user',
+			'up_property',
+			'up_value',
+		];
+		$result = $this->retrieve(
+			$userFields, 'up_user', [ $usersId ], ResourceEnum::USER_PROPERTIES
+		);
+
+		return ( new UserPropertiesAdapter( $result ) )->getUserProperties();
 	}
 
 	private function retrieve( array $properties, $filterProperty, array $filterValues, $resource ) {
@@ -147,7 +189,9 @@ class ExactTargetClient {
 			return $response->Results ? $response->Results : true;
 		}
 
-		$exception = $response ? new ExactTargetException( $response->Results->StatusMessage )
+		$message = isset( $response->Results->StatusMessage ) ?
+			$response->Results->StatusMessage : $response->OverallStatus;
+		$exception = $response ? new ExactTargetException( $message )
 			: new ExactTargetException( "Request failed" );
 		$this->error( self::EXACT_TARGET_LABEL, [ 'exception' => $exception ] );
 		throw $exception;
