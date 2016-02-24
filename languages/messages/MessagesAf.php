@@ -348,30 +348,12 @@ $messages = array(
 'navigation'    => 'Navigasie',
 'and'           => '&#32;en',
 
-# Cologne Blue skin
 'qbfind'         => 'Vind',
 'qbbrowse'       => 'Snuffel',
-'qbedit'         => 'Wysig',
 'qbpageoptions'  => 'Bladsyopsies',
 'qbpageinfo'     => 'Bladsyinligting',
-'qbmyoptions'    => 'My bladsye',
-'qbspecialpages' => 'Spesiale bladsye',
 'faq'            => 'Gewilde vrae',
-'faqpage'        => 'Project:GewildeVrae',
 
-# Vector skin
-'vector-action-addsection'       => 'Nuwe onderwerp',
-'vector-action-delete'           => 'Skrap',
-'vector-action-move'             => 'Skuif',
-'vector-action-protect'          => 'Beskerm',
-'vector-action-undelete'         => 'Ontskrap',
-'vector-action-unprotect'        => 'Wysig beskerming',
-'vector-simplesearch-preference' => 'Aktiveer verbeterde soek-voorstelle (slegs vir die Vektor omslag)',
-'vector-view-create'             => 'Skep',
-'vector-view-edit'               => 'Wysig',
-'vector-view-history'            => 'Wys geskiedenis',
-'vector-view-view'               => 'Lees',
-'vector-view-viewsource'         => 'Wys bronteks',
 'actions'                        => 'Aksies',
 'namespaces'                     => 'Naamruimtes',
 'variants'                       => 'Variante',
@@ -394,7 +376,6 @@ $messages = array(
 'edit'              => 'Wysig',
 'create'            => 'Skep',
 'editthispage'      => 'Wysig hierdie bladsy',
-'create-this-page'  => 'Skep hierdie bladsy',
 'delete'            => 'Skrap',
 'deletethispage'    => 'Skrap die bladsy',
 'undelete_short'    => 'Herstel {{PLURAL:$1|een wysiging|$1 wysigings}}',
@@ -409,19 +390,9 @@ $messages = array(
 'talkpagelinktext'  => 'Besprekings',
 'specialpage'       => 'Spesiale bladsy',
 'personaltools'     => 'Persoonlike gereedskap',
-'postcomment'       => 'Nuwe opskrif',
-'articlepage'       => 'Lees artikel',
 'talk'              => 'Bespreking',
 'views'             => 'Weergawes',
 'toolbox'           => 'Gereedskap',
-'userpage'          => 'Lees gebruikersbladsy',
-'projectpage'       => 'Lees metabladsy',
-'imagepage'         => 'Lees bladsy oor lêer',
-'mediawikipage'     => 'Bekyk boodskapsbladsy',
-'templatepage'      => 'Bekyk sjabloonsbladsy',
-'viewhelppage'      => 'Bekyk hulpbladsy',
-'categorypage'      => 'Bekyk kategorieblad',
-'viewtalkpage'      => 'Lees bespreking',
 'otherlanguages'    => 'Ander tale',
 'redirectedfrom'    => '(Aangestuur vanaf $1)',
 'redirectpagesub'   => 'Aanstuurblad',
@@ -720,38 +691,6 @@ Om voort te gaan moet u 'n nuwe wagwoord hier kies:",
 'resetpass-wrong-oldpass'   => "Die huidige of tydelike wagwoord is ongeldig.
 U het moontlik reeds u wagwoord gewysig of 'n nuwe tydelike wagwoord aangevra.",
 'resetpass-temp-password'   => 'Tydelike wagwoord:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Wagwoord herstel',
-'passwordreset-text'               => "Voltooi hierdie vorm om 'n e-pos herinnering van jou rekening besonderhede te ontvang.",
-'passwordreset-legend'             => 'Kry nuwe wagwoord',
-'passwordreset-disabled'           => 'Die herskik van U wagwoord is gedeaktiveer op hierdie wiki.',
-'passwordreset-pretext'            => '{{PLURAL:$1| | Voer een van die onderstaande velde in}}',
-'passwordreset-username'           => 'Gebruiker:',
-'passwordreset-domain'             => 'Domein:',
-'passwordreset-capture'            => 'Wys resulterende e-pos?',
-'passwordreset-capture-help'       => 'As u die boks merk, word die e-pos (met die tydelike wagwoord) aan u getoon en aan die gebruiker gestuur.',
-'passwordreset-email'              => 'E-posadres:',
-'passwordreset-emailtitle'         => 'Gebruiker se details op {{site name}}',
-'passwordreset-emailtext-ip'       => 'Iemand, waarskynlik u vanaf die IP-adres $1, het u gebruikersgegewens vir {{SITENAME}} ($4) opgevra.
-Die volgende {{PLURAL:$3|gebruiker is|gebruikers is}} aan die e-posadres gekoppel:
-
-$2
-
-{{PLURAL:$3|Die tydelike wagwoord verval|Hierdie tydelike wagwoorde verval}} oor {{PLURAL:$5|een dag|$5 dae}}.
-Meld asseblief nou aan en wysig u wagwoord. As u dit nie versoek het nie, of as u die oorspronklike wagwoord nog ken en dit nie wil verander nie, ignoreer die berig en hou aan om u ou wagwoord te gebruik.',
-'passwordreset-emailtext-user'     => 'Gebruiker $1 op die webtuiste {{SITENAME}} het u gebruikersgegewens vir {{SITENAME}} ($4) opgevra.
-Die volgende {{PLURAL:$3|gebruiker is|gebruikers is}} aan die e-posadres gekoppel:
-
-$2
-
-{{PLURAL:$3|Die tydelike wagwoord verval|Hierdie tydelike wagwoorde verval}} oor {{PLURAL:$5|een dag|$5 dae}}.
-Meld asseblief aan en verander u wagwoord nou. As u dit nie versoek het nie, of as u die oorspronklike wagwoord nog ken en dit nie wil verander nie, ignoreer die berig en hou aan om u ou wagwoord te gebruik.',
-'passwordreset-emailelement'       => 'Gebruikersnaam: $1
-Tydelike wagwoord: $2',
-'passwordreset-emailsent'          => "'n E-pos ter herhindering is gestuur.",
-'passwordreset-emailsent-capture'  => "'n E-pos ter herinnering is gestuur en word hieronder vertoon.",
-'passwordreset-emailerror-capture' => "'n E-pos ter herinnering is geskep en word hieronder vertoon. Die uitstuur daarvan het egter gefaal: $1",
 
 # Special:ChangeEmail
 'changeemail'          => 'Wysig E-posadres',
@@ -1224,14 +1163,6 @@ U kan ook 'n naamruimte as voorvoegsel gebruik.",
 'search-external'                  => 'Eksterne soektog',
 'searchdisabled'                   => '{{SITENAME}} se soekfunksie is tans afgeskakel ter wille van werkverrigting. Gebruik gerus intussen Google of Yahoo! Let daarop dat hulle indekse van die {{SITENAME}}-inhoud verouderd mag wees.',
 
-# Quickbar
-'qbsettings'                => 'Snelbalkvoorkeure',
-'qbsettings-none'           => 'Geen',
-'qbsettings-fixedleft'      => 'Links vas.',
-'qbsettings-fixedright'     => 'Regs vas.',
-'qbsettings-floatingleft'   => 'Dryf links.',
-'qbsettings-floatingright'  => 'Dryf regs.',
-'qbsettings-directionality' => 'Vas, afhanklik van die skryfrigting van u taal',
 
 # Preferences page
 'preferences'                   => 'Voorkeure',
@@ -2901,9 +2832,6 @@ Hierdie situasie was waarskynlik deur 'n skakel na 'n eksterne webtuiste op ons 
 'pageinfo-viewsperedit'     => 'Kere gewys per wysiging',
 
 # Skin names
-'skinname-standard'    => 'Standaard',
-'skinname-nostalgia'   => 'Nostalgie',
-'skinname-cologneblue' => 'Keulen blou',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Merk as gekontroleerd',

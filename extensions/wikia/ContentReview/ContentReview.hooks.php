@@ -39,7 +39,13 @@ class Hooks {
 		$title = $out->getTitle();
 
 		if ( $title->exists() ) {
-			$content = $this->getImportJSContent( $title, $content );
+			if ( ImportJS::isImportJSPage( $title ) ) {
+				$message = ImportJS::getImportJSDescriptionMessage();
+				$content = $this->prepareContent( $title, $content, $message );
+			} elseif ( ProfileTags::isProfileTagsPage( $title ) ) {
+				$message = ProfileTags::getProfileTagsDescriptionMessage();
+				$content = $this->prepareContent( $title, $content, $message );
+			}
 		}
 
 		return true;
@@ -53,7 +59,15 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onArticleNonExistentPage( \Article $article, \OutputPage $out, &$content ) {
-		$content = $this->getImportJSContent( $article->getTitle(), $content, false );
+		$title = $article->getTitle();
+
+		if ( ImportJS::isImportJSPage( $title ) ) {
+			$message = ImportJS::getImportJSDescriptionMessage();
+			$content = $this->prepareContent( $title, $content, $message, false );
+		} elseif ( ProfileTags::isProfileTagsPage( $title ) ) {
+			$message = ProfileTags::getProfileTagsDescriptionMessage();
+			$content = $this->prepareContent( $title, $content, $message, false );
+		}
 
 		return true;
 	}
@@ -117,16 +131,18 @@ class Hooks {
 		return true;
 	}
 
+	/**
+	 * Initiates a diff page Content Review controller and renders a reviewer's toolbar.
+	 * @param $diffEngine
+	 * @param \OutputPage $output
+	 * @return bool
+	 */
 	public function onArticleContentOnDiff( $diffEngine, \OutputPage $output ) {
-		$helper = new Helper();
+		$title = $output->getTitle();
+		$diffPage = new ContentReviewDiffPage( $title );
 
-		if ( $helper->shouldDisplayReviewerToolbar() ) {
-			\Wikia::addAssetsToOutput( 'content_review_diff_page_js' );
-			\Wikia::addAssetsToOutput( 'content_review_diff_page_scss' );
-			\JSMessages::enqueuePackage( 'ContentReviewDiffPage', \JSMessages::EXTERNAL );
-
-			$revisionId = $helper->getCurrentlyReviewedRevisionId( $output->getRequest() );
-			$output->prependHTML( $helper->getToolbarTemplate( $revisionId ) );
+		if ( $diffPage->shouldDisplayToolbar() ) {
+			$diffPage->addToolbarToOutput( $output );
 		}
 
 		return true;
@@ -139,7 +155,22 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onRawPageViewBeforeOutput( \RawAction $rawAction, &$text ) {
+		global $wgCityId;
+
 		$title = $rawAction->getTitle();
+		$titleText = $title->getText();
+
+		if ( $wgCityId == Helper::DEV_WIKI_ID && !$title->inNamespace( NS_MEDIAWIKI ) ) {
+			$title = \Title::newFromText( $titleText, NS_MEDIAWIKI );
+
+			// TODO: After scripts transition on dev wiki is done, remove this if statement (CE-3093)
+			if ( !$title || !$title->exists() ) {
+				return true;
+			}
+
+			$text = \Revision::newFromTitle( $title )->getRawText();
+		}
+
 		$helper = new Helper();
 		$text = $helper->replaceWithLastApproved( $title, $rawAction->getContentType(), $text );
 		return true;
@@ -238,18 +269,24 @@ class Hooks {
 	}
 
 	/**
-	 * Purges JS pages data
+	 * Purges JS pages data and removes data on a deleted page from the database
 	 *
 	 * @param \WikiPage $article
 	 * @param \User $user
 	 * @param $reason
 	 * @param $id
+	 * @return bool
 	 */
 	public function onArticleDeleteComplete( \WikiPage &$article, \User &$user, $reason, $id ) {
+		global $wgCityId;
+
 		$title = $article->getTitle();
 
 		if ( !is_null( $title )	) {
 			if ( $title->isJsPage() ) {
+				$service = new ContentReviewService();
+				$service->deletePageData( $wgCityId, $id );
+
 				$this->purgeContentReviewData();
 			}
 
@@ -340,15 +377,12 @@ class Hooks {
 		ContentReviewStatusesService::purgeJsPagesCache();
 	}
 
-	private function getImportJSContent( \Title $title, $content, $parse = true ) {
-		if ( ImportJS::isImportJSPage( $title ) ) {
-			$isViewPage = empty( \RequestContext::getMain()->getRequest()->getVal( 'action' ) );
+	private function prepareContent( \Title $title, $content, \Message $message, $parse = true ) {
+		$isViewPage = empty( \RequestContext::getMain()->getRequest()->getVal( 'action' ) );
 
-			if ( $isViewPage ) {
-				$message = ImportJS::getImportJSDescriptionMessage();
-				$text = $parse ? $message->parse() : $message->escaped();
-				$content = $text . '<pre>' . trim( strip_tags( $content ) ) . '</pre>';
-			}
+		if ( $isViewPage ) {
+			$text = $parse ? $message->parse() : $message->escaped();
+			$content = $text . '<pre>' . trim( strip_tags( $content ) ) . '</pre>';
 		}
 
 		return $content;

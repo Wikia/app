@@ -28,8 +28,8 @@ $(document).ready(function() {
 			"sLengthMenu": "<?= wfMessage( 'table_pager_limit', '_MENU_' )->escaped() ?>",
 			"sZeroRecords": "<?= wfMessage( 'table_pager_empty' )->escaped() ?>",
 			"sEmptyTable": "<?= wfMessage( 'table_pager_empty' )->escaped() ?>",
-			"sInfo": "<?= wfMessage('lookupcontribsrecordspager' )->parse() ?>",
-			"sInfoEmpty": "<?= wfMessage( 'lookupcontribsrecordspager' )->parse() ?>",
+			"sInfo": "<?= wfMessage('lookupcontribsrecordspager', '_START_', '_END_', '_TOTAL_' )->parse() ?>",
+			"sInfoEmpty": "<?= wfMessage( 'lookupcontribsrecordspager', '0', '0', '0' )->parse() ?>",
 			"sInfoFiltered": "",
 			"sSearch": "<?= wfMessage( 'search' )->escaped() ?>",
 			"sProcessing": "<img src='" + mw.html.escape( stylepath ) + "/common/images/ajax.gif' /> <?= wfMessage( 'livepreview-loading' )->escaped() ?>",
@@ -136,12 +136,12 @@ $(document).ready(function() {
 				"type": "POST",
 				"url": sSource,
 				"data": [
-					{ 'name' : 'username',	'value' : ( $('#lc_search').exists() ) ? mw.html.escape( $('#lc_search').val() ) : '' },
+					{ 'name' : 'username',	'value' : ( $('#lc_search').length ) ? $('#lc_search').val() : '' },
 					{ 'name' : 'limit', 	'value' : limit },
 					{ 'name' : 'offset',	'value' : offset },
 					{ 'name' : 'loop',      'value' : loop },
 					{ 'name' : 'numOrder',	'value' : sortingCols },
-					{ 'name' : 'order',     'value' : mw.html.escape( order ) }
+					{ 'name' : 'order',     'value' : order }
 				],
 				"success": fnCallback
 			} );

@@ -181,30 +181,12 @@ dj'artìcoj ancó pa scrit",
 'navigation'    => 'Navigassion',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Treuva',
 'qbbrowse'       => 'Sfeuja',
-'qbedit'         => 'Modìfica',
 'qbpageoptions'  => 'Opsion dla pàgina',
 'qbpageinfo'     => 'Anformassion rësguard a la pàgina',
-'qbmyoptions'    => 'Mie opsion',
-'qbspecialpages' => 'Pàgine speciaj',
 'faq'            => 'Chestion frequente',
-'faqpage'        => 'Project:Soèns An Ciamo',
 
-# Vector skin
-'vector-action-addsection'       => 'Gionta argoment',
-'vector-action-delete'           => 'Scancela',
-'vector-action-move'             => 'Tramuda',
-'vector-action-protect'          => 'Protegg',
-'vector-action-undelete'         => 'Arcùpera',
-'vector-action-unprotect'        => 'Cangé la protession',
-'vector-simplesearch-preference' => "Abilité ij sugeriment d'arserca ameliorà (mach për la pel Vector)",
-'vector-view-create'             => 'Crea',
-'vector-view-edit'               => 'Modìfica',
-'vector-view-history'            => 'Varda stòria',
-'vector-view-view'               => 'Les',
-'vector-view-viewsource'         => 'Varda sorgiss',
 'actions'                        => 'Assion',
 'namespaces'                     => 'Spassi nominaj',
 'variants'                       => 'Variant',
@@ -227,7 +209,6 @@ dj'artìcoj ancó pa scrit",
 'edit'              => 'Modìfica',
 'create'            => 'Creé',
 'editthispage'      => "Modìfica st'artìcol-sì",
-'create-this-page'  => 'Creé sta pàgina',
 'delete'            => 'Scancela',
 'deletethispage'    => 'Scancela pàgina',
 'undelete_short'    => 'Disdëscancela {{PLURAL:$1|na modìfica|$1 modìfiche}}',
@@ -242,19 +223,9 @@ dj'artìcoj ancó pa scrit",
 'talkpagelinktext'  => 'discussion',
 'specialpage'       => 'Pàgina Special',
 'personaltools'     => 'Utiss përsonaj',
-'postcomment'       => 'Session neuva',
-'articlepage'       => "Che a varda l'artìcol",
 'talk'              => 'Discussion',
 'views'             => 'vìsite',
 'toolbox'           => 'utiss',
-'userpage'          => 'Che a varda la pàgina Utent',
-'projectpage'       => 'Che a varda la pàgina ëd servissi',
-'imagepage'         => "Varda la pàgina dl'archivi",
-'mediawikipage'     => 'Mostra ël mëssagi',
-'templatepage'      => 'Mostra lë stamp',
-'viewhelppage'      => "Smon la pàgina d'agiut",
-'categorypage'      => 'Fa vëdde la categorìa',
-'viewtalkpage'      => 'Vardé la discussion',
 'otherlanguages'    => 'Àutre lenghe',
 'redirectedfrom'    => '(Ridiression da $1)',
 'redirectpagesub'   => 'Pàgina ëd ridiression',
@@ -550,37 +521,6 @@ Për piasì speta prima ëd prové torna.",
 Miraco it l'has già cambià la ciav o it l'has ciamà na neuva ciav a temp.",
 'resetpass-temp-password'   => 'Ciav a temp:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Cambi ëd ciav',
-'passwordreset-text'               => "Ch'a completa 's formolari për arsèive un mëssagi ëd pòsta eletrònica con ij detaj ëd sò cont.",
-'passwordreset-legend'             => 'Cambié la ciav',
-'passwordreset-disabled'           => 'Ij cangiament ëd ciav a son stàit disabilità su sta wiki.',
-'passwordreset-pretext'            => "{{PLURAL:$1||Ch'a anserissa un dij tòch ëd dat sì-sota}}",
-'passwordreset-username'           => 'Stranòm:',
-'passwordreset-domain'             => 'Domini:',
-'passwordreset-capture'            => 'Vardé ël mëssagi arzultant?',
-'passwordreset-capture-help'       => "S'a marca costa casela, ël mëssagi ëd pòsta eletrònica (con la ciav temporania) a-j sarà smonù e ant l'istess temp a sarà mandà a l'utent.",
-'passwordreset-email'              => 'Adrëssa ëd pòsta eletrònica:',
-'passwordreset-emailtitle'         => 'Detaj dël cont ansima {{SITENAME}}',
-'passwordreset-emailtext-ip'       => "Quaidun (a l'é bel fé ch'a sia chiel, da l'adrëssa IP $1) a l'ha ciamà d'arcordé ij detaj ëd sò cont për {{SITENAME}} ($4). {{PLURAL:$3|Ël cont utent sì-sota a l'é|Ij cont utent sì-sota a son}}
-associà a st'adrëssa ëd pòsta eletrònica:
-
-$2
-
-{{PLURAL:$3|Costa ciav|Coste ciav}} a temp a scadran da sì {{PLURAL:$5|un di|$5 di}}.
-A dovrìa intré ant ël sistema e serne na ciav neuva adess. Se quaidun d'àutr a l'ha fàit costa arcesta, o s'a l'é arcordasse soa ciav original, e a veul pa pi cangela, a peule ignoré ës mëssagi e continué a dovré soa veja ciav.",
-'passwordreset-emailtext-user'     => "L'utent $1 ansima a {{SITENAME}} a l'ha ciamà d'arcordé ij detaj ëd sò cont për {{SITENAME}} ($4). {{PLURAL:$3|Ël cont utent sì-sota a l'é|Ij cont utent sì-sota a son}} associà a st'adrëssa ëd pòsta eletrònica:
-
-$2
-
-{{PLURAL:$3|Costa ciav|Coste ciav}} a temp a scadran da sì {{PLURAL:$5|un di|$5 di}}.
-A dovrìa intré ant ël sistema e serne na ciav neuva adess. Se quaidun d'àutr a l'ha fàit costa arcesta, o s'a l'é arcordasse soa ciav original, e a veul pa pi cangela, a peul ignoré sto mëssagi e continué a dovré soa veja ciav.",
-'passwordreset-emailelement'       => 'Stranòm: $1
-Ciav a temp: $2',
-'passwordreset-emailsent'          => "Un mëssagi ëd pòsta eletrònica për giuté a arcordé a l'é stàit spedì.",
-'passwordreset-emailsent-capture'  => "Un mëssagi ëd pro-memòria a l'é stàit mandà, e a l'é mostrà sì-sota.",
-'passwordreset-emailerror-capture' => "Un mëssagi ëd pro-memòria a l'é stàit generà, e a l'é smonù sì-sota, ma la spedission a l'utent a l'é falìa: $1",
-
 # Special:ChangeEmail
 'changeemail'          => "Cangé l'adrëssa ëd pòsta eletrònica",
 'changeemail-header'   => "Cangé l'adrëssa ëd pòsta eletrònica dël cont",
@@ -702,7 +642,6 @@ o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 
 '''A l'é ancó pa stàit salvà!'''",
 'sitejspreview'                    => "'''Che a varda che a l'é mach an mente ch'a preuva sto còdes JavaScript.'''
 '''A l'é ancó pa stàit salvà!'''",
-'userinvalidcssjstitle'            => "'''Avis:''' A-i é pa gnun-a pel \"\$1\". Che as visa che le pàgine .css e .js che un as fa daspërchiel a deuvro tute minùscole për tìtol, pr'esempi {{ns:user}}:Scaramacaj/vector.css nopà che {{ns:user}}:Scaramacaj/Vector.css.",
 'updated'                          => '(Agiornà)',
 'note'                             => "'''NÒTA:'''",
 'previewnote'                      => "'''Che a ten-a mach present che costa-sì a l'é nomach na PREUVA, e che soa version a l'é ancó pa stàita salvà!'''",
@@ -1047,14 +986,6 @@ Ch'a preuva a gionté dnans a soa arserca ël prefiss ''all:'' për sërché an 
 'search-external'                  => 'Arserca esterna',
 'searchdisabled'                   => "L'arserca anterna ëd {{SITENAME}} a l'é nen abilità; për adess a peul prové a dovré un motor d'arserca estern coma Google. (Però che a ten-a da ment che ij contnù ëd {{SITENAME}} listà ant ij motor pùblich a podrìo ëdcò esse nen d'autut agiornà)",
 
-# Quickbar
-'qbsettings'                => 'Regolassion dla bara dij menù',
-'qbsettings-none'           => 'Gnun',
-'qbsettings-fixedleft'      => 'Fissà a la man ësnista',
-'qbsettings-fixedright'     => 'Fissà a la man drita',
-'qbsettings-floatingleft'   => 'Flotant a la man ësnista',
-'qbsettings-floatingright'  => 'Flotant a la man drita',
-'qbsettings-directionality' => 'A pòst, an dipendensa dla diressionalità dë scritura ëd soa lenga',
 
 # Preferences page
 'preferences'                   => 'Mè gust',

@@ -519,30 +519,12 @@ $messages = array(
 'navigation'    => 'Navigation',
 'and'           => '&#32;und',
 
-# Cologne Blue skin
 'qbfind'         => 'Finden',
 'qbbrowse'       => 'Durchsuchen',
-'qbedit'         => 'Bearbeiten',
 'qbpageoptions'  => 'Seitenoptionen',
 'qbpageinfo'     => 'Seitendaten',
-'qbmyoptions'    => 'Meine Seiten',
-'qbspecialpages' => 'Spezialseiten',
 'faq'            => 'Häufige Fragen',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Abschnitt hinzufügen',
-'vector-action-delete'           => 'Löschen',
-'vector-action-move'             => 'Verschieben',
-'vector-action-protect'          => 'Schützen',
-'vector-action-undelete'         => 'Wiederherstellen',
-'vector-action-unprotect'        => 'Seitenschutz ändern',
-'vector-simplesearch-preference' => 'Erweiterte Suchvorschläge aktivieren (nur Vector)',
-'vector-view-create'             => 'Erstellen',
-'vector-view-edit'               => 'Bearbeiten',
-'vector-view-history'            => 'Versionsgeschichte',
-'vector-view-view'               => 'Lesen',
-'vector-view-viewsource'         => 'Quelltext anzeigen',
 'actions'                        => 'Aktionen',
 'namespaces'                     => 'Namensräume',
 'variants'                       => 'Varianten',
@@ -565,7 +547,6 @@ $messages = array(
 'edit'              => 'Bearbeiten',
 'create'            => 'Erstellen',
 'editthispage'      => 'Seite bearbeiten',
-'create-this-page'  => 'Seite erstellen',
 'delete'            => 'Löschen',
 'deletethispage'    => 'Diese Seite löschen',
 'undelete_short'    => '{{PLURAL:$1|1 Version|$1 Versionen}} wiederherstellen',
@@ -580,19 +561,9 @@ $messages = array(
 'talkpagelinktext'  => 'Diskussion',
 'specialpage'       => 'Spezialseite',
 'personaltools'     => 'Meine Werkzeuge',
-'postcomment'       => 'Neuer Abschnitt',
-'articlepage'       => 'Inhaltsseite anzeigen',
 'talk'              => 'Diskussion',
 'views'             => 'Ansichten',
 'toolbox'           => 'Werkzeuge',
-'userpage'          => 'Benutzerseite anzeigen',
-'projectpage'       => 'Projektseite anzeigen',
-'imagepage'         => 'Dateiseite anzeigen',
-'mediawikipage'     => 'Meldungsseite anzeigen',
-'templatepage'      => 'Vorlagenseite anzeigen',
-'viewhelppage'      => 'Hilfeseite anzeigen',
-'categorypage'      => 'Kategorieseite anzeigen',
-'viewtalkpage'      => 'Diskussion',
 'otherlanguages'    => 'In anderen Sprachen',
 'redirectedfrom'    => '(Weitergeleitet von $1)',
 'redirectpagesub'   => 'Weiterleitung',
@@ -879,7 +850,7 @@ Bitte warte, bevor du es erneut probierst.',
 'oldpassword'               => 'Altes Passwort:',
 'newpassword'               => 'Neues Passwort:',
 'retypenew'                 => 'Neues Passwort (nochmal):',
-'resetpass_submit'          => 'Passwort übermitteln und anmelden',
+'resetpass_submit'          => 'Ändern und anmelden',
 'resetpass_success'         => 'Dein Passwort wurde erfolgreich geändert. Es folgt die Anmeldung …',
 'resetpass_forbidden'       => 'Das Passwort kann nicht geändert werden.',
 'resetpass-no-info'         => 'Du musst dich anmelden, um auf diese Seite direkt zuzugreifen.',
@@ -888,35 +859,6 @@ Bitte warte, bevor du es erneut probierst.',
 'resetpass-wrong-oldpass'   => 'Ungültiges temporäres oder aktuelles Passwort.
 Möglicherweise hast du dein Passwort bereits erfolgreich geändert oder ein neues temporäres Passwort beantragt.',
 'resetpass-temp-password'   => 'Temporäres Passwort:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Passwort zurücksetzen',
-'passwordreset-text'               => 'Bitte dieses Formular ausfüllen, um per E-Mail eine Erinnerung zu den Anmeldeinformationen deines Benutzerkontos zu erhalten.',
-'passwordreset-legend'             => 'Passwort zurücksetzen',
-'passwordreset-disabled'           => 'Das Zurücksetzen von Passwörtern wurde in diesem Wiki deaktiviert.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Gib eines der folgenden Daten ein}}',
-'passwordreset-username'           => 'Benutzername:',
-'passwordreset-domain'             => 'Domain:',
-'passwordreset-capture'            => 'Die E-Mail-Nachricht ansehen?',
-'passwordreset-capture-help'       => 'Sofern Du dieses Kästchen ankreuzt, wird die E-Mail-Nachricht mit dem temporären Passwort, sowohl dir angezeigt, als auch dem Benutzer zugesandt.',
-'passwordreset-email'              => 'E-Mail-Adresse:',
-'passwordreset-emailtitle'         => 'Benutzerkontoinformationen auf {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Jemand mit der IP-Adresse $1, wahrscheinlich du selbst, hat eine Erinnerung an deine Benutzerkonteninformationen für {{SITENAME}} angefordert ($4). {{PLURAL:$3|Das folgende Benutzerkonto ist|Die folgenden Benutzerkonten sind}} mit dieser E-Mail-Adresse verknüpft:
-
-$2
-
-{{PLURAL:$3|Dieses temporäre Passwort läuft|Diese temporären Passwörter laufen}} innerhalb von {{PLURAL:$5|einem Tag|$5 Tagen}} ab.
-Du solltest dich anmelden und ein neues Passwort vergeben. Falls jemand anderes diese Anfrage getätigt hat oder du dich wieder an dein ursprüngliches Passwort erinnern kannst und es nicht länger ändern möchtest, kannst du diese Nachricht ignorieren und weiterhin dein altes Passwort benutzen.',
-'passwordreset-emailtext-user'     => 'Benutzer $1 auf {{SITENAME}} hat eine Erinnerung an deine Benutzerkonteninformationen für {{SITENAME}} angefordert ($4). {{PLURAL:$3|Das folgende Benutzerkonto ist|Die folgenden Benutzerkonten sind}} mit dieser E-Mail-Adresse verknüpft:
-
-$2
-
-{{PLURAL:$3|Dieses temporäre Passwort läuft|Diese temporären Passwörter laufen}} innerhalb von {{PLURAL:$5|einem Tag|$5 Tagen}} ab. Du solltest dich anmelden und ein neues Passwort vergeben. Falls jemand anderes diese Anfrage getätigt hat oder du dich wieder an dein ursprüngliches Passwort erinnern kannst und es nicht ändern möchtest, kannst du diese Nachricht ignorieren und weiterhin dein altes Passwort benutzen.',
-'passwordreset-emailelement'       => 'Benutzername: $1
-Temporäres Passwort: $2',
-'passwordreset-emailsent'          => 'Eine Erinnerung wurde per E-Mail versandt.',
-'passwordreset-emailsent-capture'  => 'Die unten angezeigte Erinnerungs-E-Mail wurde abgeschickt.',
-'passwordreset-emailerror-capture' => 'Die unten angezeigte Erinnerungs-E-Mail wurde generiert, allerdings ist der Versand an den Benutzer gescheitert: $1',
 
 # Special:ChangeEmail
 'changeemail'          => 'E-Mail-Adresse ändern',
@@ -1040,7 +982,6 @@ Zur Information folgt ein aktueller Auszug aus dem Benutzersperr-Logbuch:',
 '''Es wurde noch nicht gespeichert!'''",
 'sitejspreview'                    => "'''Beachte, dass du nur eine Vorschau dieses JavaScript betrachtest.'''
 '''Es wurde noch nicht gespeichert!'''",
-'userinvalidcssjstitle'            => "'''Achtung:''' Die Benutzeroberfläche „$1“ existiert nicht. Bedenke, dass benutzerspezifische .css- und .js-Seiten mit einem Kleinbuchstaben anfangen müssen, also beispielsweise ''{{ns:user}}:Mustermann/vector.css'' an Stelle von ''{{ns:user}}:Mustermann/Vector.css''.",
 'updated'                          => '(Geändert)',
 'note'                             => "'''Hinweis:'''",
 'previewnote'                      => "'''Dies ist nur eine Vorschau, die Seite wurde noch nicht gespeichert!'''",
@@ -1381,14 +1322,6 @@ Stelle sicher, dass die Versionsgeschichte einer Seite historisch korrekt ist.',
 'search-external'                  => 'Externe Suche',
 'searchdisabled'                   => 'Die {{SITENAME}}-Suche ist deaktiviert. Du kannst unterdessen mit Google suchen. Bitte bedenke, dass der Suchindex von {{SITENAME}} veraltet sein kann.',
 
-# Quickbar
-'qbsettings'                => 'Seitenleiste',
-'qbsettings-none'           => 'Keine',
-'qbsettings-fixedleft'      => 'Links, fest',
-'qbsettings-fixedright'     => 'Rechts, fest',
-'qbsettings-floatingleft'   => 'Links, schwebend',
-'qbsettings-floatingright'  => 'Rechts, schwebend',
-'qbsettings-directionality' => 'Fest, abhängig von der Schreibrichtung der gewählten Sprache',
 
 # Preferences page
 'preferences'                   => 'Einstellungen',
@@ -3019,15 +2952,7 @@ Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
 
 # Stylesheets
 'common.css'              => '/* Das folgende CSS wird für alle Benutzeroberflächen geladen. */',
-'standard.css'            => '/* Das folgende CSS wird für Benutzer der Klassik-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
-'nostalgia.css'           => '/* Das folgende CSS wird für Benutzer der Nostalgie-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
-'cologneblue.css'         => '/* Das folgende CSS wird für Benutzer der Kölnisch-Blau-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
 'monobook.css'            => '/* Das folgende CSS wird für Benutzer der Monobook-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
-'myskin.css'              => '/* Das folgende CSS wird für Benutzer der MySkin-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
-'chick.css'               => '/* Das folgende CSS wird für Benutzer der Küken-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
-'simple.css'              => '/* Das folgende CSS wird für Benutzer der Einfach-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
-'modern.css'              => '/* Das folgende CSS wird für Benutzer der Modern-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte MediaWiki:Common.css bearbeiten. */',
-'vector.css'              => '/* Das folgende CSS wird für Benutzer der Vector-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
 'print.css'               => '/* Das folgende CSS wird in der Druckausgabe geladen. */',
 'handheld.css'            => '/* Das folgende CSS wird für Handheld-Geräte, basierend auf der in $wgHandheldStyle konfigurierten Benutzeroberfläche, geladen. */',
 'noscript.css'            => '/* Das folgende CSS wirkt sich für Benutzer aus, die JavaScript deaktiviert haben */',
@@ -3038,15 +2963,7 @@ Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
 
 # Scripts
 'common.js'              => '/* Das folgende JavaScript wird für alle Benutzer geladen. */',
-'standard.js'            => '/* Das folgende JavaScript wird für Benutzer der Klassik-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
-'nostalgia.js'           => '/* Das folgende JavaScript wird für Benutzer der Nostalgie-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
-'cologneblue.js'         => '/* Das folgende JavaScript wird für Benutzer der Kölnisch-Blau-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
 'monobook.js'            => '/* Das folgende JavaScript wird für Benutzer der Monobook-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
-'myskin.js'              => '/* Das folgende JavaScript wird für Benutzer der MySkin-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
-'chick.js'               => '/* Das folgende JavaScript wird für Benutzer der Küken-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
-'simple.js'              => '/* Das folgende JavaScript wird für Benutzer der Einfach-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
-'modern.js'              => '/* Das folgende JavaScript wird für Benutzer der Modern-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
-'vector.js'              => '/* Das folgende JavaScript wird für Benutzer der Vector-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
 'group-autoconfirmed.js' => '/* Das folgende JavaScript wird nur für automatisch bestätigte Benutzer geladen. */',
 'group-bot.js'           => '/* Das folgende JavaScript wird nur für Bots geladen. */',
 'group-sysop.js'         => '/* Das folgende JavaScript wird nur für Administratoren geladen. */',
@@ -3090,15 +3007,7 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 'pageinfo-viewsperedit'     => 'Seitenaufrufe pro Bearbeitung',
 
 # Skin names
-'skinname-standard'    => 'Klassik',
-'skinname-nostalgia'   => 'Nostalgie',
-'skinname-cologneblue' => 'Kölnisch Blau',
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'MySkin',
-'skinname-chick'       => 'Küken',
-'skinname-simple'      => 'Einfach',
-'skinname-modern'      => 'Modern',
-'skinname-vector'      => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Als kontrolliert markieren',

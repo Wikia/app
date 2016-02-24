@@ -40,15 +40,6 @@ describe('AdContext', function () {
 						return true;
 					}
 					return false;
-				},
-				isProperRegion: function () {
-					return false;
-				},
-				isProperContinent: function () {
-					return false;
-				},
-				isProperCountry: function () {
-					return false;
 				}
 			},
 			instantGlobals: {},
@@ -59,17 +50,20 @@ describe('AdContext', function () {
 			querystring: {
 				getVal: noop
 			},
+			wikiaCookies: {
+				get: noop
+			},
 			callback: noop
 		},
 		queryParams = [
 			'liftium',
-			'openx',
 			'turtle'
 		];
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.adContext'](
 			mocks.abTesting,
+			mocks.wikiaCookies,
 			mocks.doc,
 			mocks.geo,
 			mocks.instantGlobals,
@@ -287,19 +281,6 @@ describe('AdContext', function () {
 		mocks.instantGlobals = {wgAdDriverTurtleCountries: ['YY']};
 		adContext = getModule();
 		expect(adContext.getContext().providers.turtle).toBeFalsy();
-	});
-
-	it('makes providers.openX true when country in instantGlobals.wgAdDriverOpenXCountries', function () {
-		var adContext;
-
-		mocks.win = {};
-		mocks.instantGlobals = {wgAdDriverOpenXCountries: ['AA', 'CURRENT_COUNTRY', 'ZZ']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.openX).toBeTruthy();
-
-		mocks.instantGlobals = {wgAdDriverOpenXCountries: ['YY']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.openX).toBeFalsy();
 	});
 
 	it('calls whoever registered with addCallback each time setContext is called', function () {
@@ -595,6 +576,7 @@ describe('AdContext', function () {
 						showAds: true
 					},
 					targeting: {
+						pageType: 'article',
 						skin: 'oasis'
 					}
 				}
@@ -617,6 +599,7 @@ describe('AdContext', function () {
 						showAds: true
 					},
 					targeting: {
+						pageType: 'article',
 						skin: 'oasis'
 					}
 				}
@@ -639,6 +622,7 @@ describe('AdContext', function () {
 						showAds: true
 					},
 					targeting: {
+						pageType: 'article',
 						skin: 'oasis'
 					}
 				}
@@ -652,6 +636,29 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.recoveredAdsMessage).toBeTruthy();
 	});
 
+	it('disabled recoveredAdsMessage on non article page type', function () {
+		mocks.win = {
+			ads: {
+				context: {
+					opts: {
+						sourcePointDetectionUrl: '//foo.bar',
+						showAds: true
+					},
+					targeting: {
+						pageType: 'home',
+						skin: 'oasis'
+					}
+				}
+			}
+		};
+		mocks.instantGlobals = {
+			wgAdDriverSourcePointDetectionCountries: ['CURRENT_COUNTRY'],
+			wgAdDriverAdsRecoveryMessageCountries: ['CURRENT_COUNTRY-EE', 'CURRENT_COUNTRY']
+		};
+
+		expect(getModule().getContext().opts.recoveredAdsMessage).toBeFalsy();
+	});
+
 	it('disables recoveredAdsMessage when country and region in instant var and both are invalid', function () {
 		mocks.win = {
 			ads: {
@@ -660,6 +667,7 @@ describe('AdContext', function () {
 						sourcePointDetectionUrl: '//foo.bar'
 					},
 					targeting: {
+						pageType: 'article',
 						skin: 'oasis'
 					}
 				}
@@ -681,6 +689,7 @@ describe('AdContext', function () {
 						sourcePointDetectionUrl: '//foo.bar'
 					},
 					targeting: {
+						pageType: 'article',
 						skin: 'oasis'
 					}
 				}
@@ -703,6 +712,7 @@ describe('AdContext', function () {
 						showAds: false
 					},
 					targeting: {
+						pageType: 'article',
 						skin: 'oasis'
 					}
 				}
@@ -714,30 +724,6 @@ describe('AdContext', function () {
 		};
 
 		expect(getModule().getContext().opts.recoveredAdsMessage).toBeFalsy();
-	});
-
-	it('enables scroll handler when country in instantGlobals.wgAdDriverScrollHandlerCountries', function () {
-		var adContext;
-		mocks.win = {
-			ads: {
-				context: {
-					providers: {
-						taboola: true
-					},
-					targeting: {
-						pageType: 'article'
-					}
-				}
-			}
-		};
-
-		mocks.instantGlobals = {wgAdDriverTaboolaCountries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.taboola).toBeTruthy();
-
-		mocks.instantGlobals = {wgAdDriverTaboolaCountries: ['YY']};
-		adContext = getModule();
-		expect(adContext.getContext().providers.taboola).toBeFalsy();
 	});
 
 	it('enables google consumer surveys when country in instant var and abtest group is GROUP_5', function () {
@@ -847,5 +833,172 @@ describe('AdContext', function () {
 		};
 
 		expect(getModule().getContext().opts.googleConsumerSurveys).toBeFalsy();
+	});
+
+	it('showcase is enabled if the cookie is set', function () {
+		mocks.wikiaCookies = {
+			get: function () {
+				return 'NlfdjR5xC0';
+			}
+		};
+
+		expect(getModule().getContext().opts.showcase).toBeTruthy();
+	});
+
+	it('showcase is disabled if cookie is not set', function () {
+		mocks.wikiaCookies = {
+			get: function () {
+				return false;
+			}
+		};
+
+		expect(getModule().getContext().opts.showcase).toBeFalsy();
+	});
+
+	it('enables evolve2 provider when country in instantGlobals.wgAdDriverEvolve2Countries', function () {
+		var adContext;
+		mocks.win = {
+			ads: {
+				context: {
+					providers: {
+						evolve2: true
+					}
+				}
+			}
+		};
+
+		mocks.instantGlobals = {wgAdDriverEvolve2Countries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
+		adContext = getModule();
+		expect(adContext.getContext().providers.evolve2).toBeTruthy();
+
+		mocks.instantGlobals = {wgAdDriverEvolve2Countries: ['YY']};
+		adContext = getModule();
+		expect(adContext.getContext().providers.evolve2).toBeFalsy();
+	});
+
+	it('disables evolve2 provider when provider is disabled by wg var', function () {
+		var adContext;
+		mocks.win = {
+			ads: {
+				context: {
+					providers: {
+						evolve2: false
+					}
+				}
+			}
+		};
+
+		mocks.instantGlobals = {wgAdDriverEvolve2Countries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
+		adContext = getModule();
+		expect(adContext.getContext().providers.evolve2).toBeFalsy();
+	});
+
+	it('disable overriding prefooters sizes for mercury', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['CURRENT_COUNTRY']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'mercury',
+						pageType: 'article'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridePrefootersSizes).toBeFalsy();
+	});
+
+	it('disable overriding prefooters sizes for home page', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['CURRENT_COUNTRY']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'oasis',
+						pageType: 'home'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridePrefootersSizes).toBeFalsy();
+	});
+
+	it('disable overriding prefooters sizes by country', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['ZZ']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'oasis',
+						pageType: 'article'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridePrefootersSizes).toBeFalsy();
+	});
+
+	it('enable overriding prefooters sizes', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['CURRENT_COUNTRY']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'oasis',
+						pageType: 'article'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridePrefootersSizes).toBeTruthy();
+	});
+
+	it('disable overriding leaderboard sizes for mercury', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['JP']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'mercury'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridyLeaderboardSizes).toBeFalsy();
+	});
+
+	it('disable overriding leaderboard sizes by country', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['ZZ']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'oasis'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridyLeaderboardSizes).toBeFalsy();
+	});
+
+	it('enable overriding leaderboard sizes', function () {
+		mocks.instantGlobals = {wgAdDriverOverridePrefootersCountries: ['JP']};
+		mocks.win = {
+			ads: {
+				context: {
+					targeting: {
+						skin: 'oasis'
+					}
+				}
+			}
+		};
+
+		expect(getModule().getContext().opts.overridyLeaderboardSizes).toBeFalsy();
 	});
 });

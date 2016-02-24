@@ -125,7 +125,7 @@ class ApiOptions extends ApiBase {
 	public function getParamDescription() {
 		return array(
 			'reset' => 'Resets preferences to the site defaults',
-			'change' => array( 'List of changes, formatted name=value (e.g. skin=vector), ' .
+			'change' => array( 'List of changes, formatted name=value (e.g. skin=monobook), ' .
 				'value cannot contain pipe characters. If no value is given (not ',
 				'even an equals sign), e.g., optionname|otheroption|..., the ' .
 				'option will be reset to its default value'
@@ -156,7 +156,7 @@ class ApiOptions extends ApiBase {
 	public function getExamples() {
 		return array(
 			'api.php?action=options&reset=&token=123ABC',
-			'api.php?action=options&change=skin=vector|hideminor=1&token=123ABC',
+			'api.php?action=options&change=skin=monobook|hideminor=1&token=123ABC',
 			'api.php?action=options&reset=&change=skin=monobook&optionname=nickname&' .
 				'optionvalue=[[User:Beau|Beau]]%20([[User_talk:Beau|talk]])&token=123ABC',
 		);

@@ -1700,8 +1700,10 @@ $messages['ig'] = array(
  */
 $messages['it'] = array(
 	'multitasks-link-back-label' => 'qui',
+	'multiwikiedit' => 'Modifica pagine multiple',
 	'multiwikiedit_button' => 'MODIFICA',
 	'multiwikiedit_minoredit_caption' => 'Modifica di minore importanza',
+	'multidelete' => 'Cancella pagine multiple',
 	'multidelete_button' => 'CANCELLA',
 	'multidelete_or' => '<b>O</b>',
 	'multidelete_reason' => 'Motivazione per la cancellazione',

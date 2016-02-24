@@ -1578,7 +1578,7 @@ abstract class File implements UrlGeneratorInterface {
 				wfDebug("miss\n");
 			}
 			wfDebug( "Fetching shared description from $renderUrl\n" );
-			$res = Http::get( $renderUrl );
+			$res = ExternalHttp::get( $renderUrl ); # this can fetch file page from Wikimedia Commons or other Wikia's wiki (Wikia change)
 			if ( $res && $this->repo->descriptionCacheExpiry > 0 ) {
 				$wgMemc->set( $key, $res, $this->repo->descriptionCacheExpiry );
 			}

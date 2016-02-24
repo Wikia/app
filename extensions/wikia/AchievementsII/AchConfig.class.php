@@ -38,9 +38,8 @@ class AchConfig {
 		BADGE_LUCKYEDIT
 	);
 
-	private static $mEditAddphotoOnlyBadges = array(
-		BADGE_EDIT,
-		BADGE_PICTURE
+	private static $mEditOnlyBadge = array(
+		BADGE_EDIT
 	);
 
 	private static $mInstance;
@@ -352,8 +351,8 @@ class AchConfig {
 	}
 
 	public function shouldShow( $badgeTypeId ) {
-		global $wgAchievementsEditAddPhotoOnly;
-		if ( empty( $wgAchievementsEditAddPhotoOnly ) || in_array( $badgeTypeId, self::$mEditAddphotoOnlyBadges ) ) {
+		global $wgAchievementsEditOnly;
+		if ( empty( $wgAchievementsEditOnly ) || in_array( $badgeTypeId, self::$mEditOnlyBadge ) ) {
 			return true;
 		}
 		return false;

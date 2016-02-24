@@ -5,22 +5,28 @@
  * Provides two params in init method for handling save and providing selected type
  */
 define('TemplateClassificationModal',
-	['jquery', 'wikia.window', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.tracker', 'TemplateClassificationLabeling'],
-function ($, w, mw, loader, nirvana, tracker, labeling) {
+	['jquery', 'wikia.window', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.tracker', 'wikia.throbber',
+		'TemplateClassificationLabeling'],
+function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	'use strict';
 
 	var $classificationForm,
-		$preselectedType,
+		$saveBtn,
 		$typeLabel,
-		modalConfig,
+		$typeWrapper,
 		messagesLoaded,
+		modalConfig,
+		modalMode,
+		newTypeModes = ['addTemplate', 'addTypeBeforePublish'],
+		preselectedType,
 		saveHandler = falseFunction,
 		typeGetter = falseFunction,
 		track = tracker.buildTrackingFunction({
 			category: 'template-classification-dialog',
 			trackingMethod: 'analytics'
 		}),
-		$w = $(w);
+		$w = $(w),
+		$throbber = $('#tc-throbber');
 
 	/**
 	 * @param {function} typeGetterProvided Method that should return type in json format,
@@ -29,27 +35,28 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 	 * @param {function} saveHandlerProvided Method that should handle modal save,
 	 *  	receives {string} selectedType as parameter
 	 */
-	function init(typeGetterProvided, saveHandlerProvided) {
+	function init(typeGetterProvided, saveHandlerProvided, modeProvided) {
+		var mode = modeProvided || 'editType';
+
 		saveHandler = saveHandlerProvided;
 		typeGetter = typeGetterProvided;
 		$typeLabel = $('.template-classification-type-text');
 
-		$w.on('keydown', openModalKeyboardShortcut);
-
-		$('.template-classification-edit').click(function (e) {
+		$typeLabel.click(function (e) {
 			e.preventDefault();
-			openEditModal('editType');
+			openEditModal(mode);
 		});
+
+		setupTooltip();
 	}
 
 	function openEditModal(modeProvided) {
 		var messagesLoader = falseFunction,
 			classificationFormLoader = falseFunction;
 
-		// Unbind modal opening keyboard shortcut while it's open
-		$w.unbind('keydown', openModalKeyboardShortcut);
+		modalMode = modeProvided;
 
-		labeling.init(modeProvided);
+		labeling.init(modalMode);
 
 		if (!messagesLoaded) {
 			messagesLoader = getMessages;
@@ -58,6 +65,8 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 		if (!$classificationForm) {
 			classificationFormLoader = getTemplateClassificationEditForm;
 		}
+
+		throbber.show($throbber);
 
 		// Fetch all data and open modal
 		$.when(
@@ -81,13 +90,7 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 			$classificationForm = $(classificationForm[0]);
 		}
 
-		// Mark selected type
-		$preselectedType = $classificationForm.find('#template-classification-' + templateType);
-
-		if ($preselectedType.length !== 0) {
-			$classificationForm.find('input[checked="checked"]').removeAttr('checked');
-			$preselectedType.attr('checked', 'checked');
-		}
+		preselectedType = templateType;
 
 		// Set modal content
 		setupTemplateClassificationModal(
@@ -118,6 +121,8 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 	 * One of sub-tasks for getting modal shown
 	 */
 	function processInstance(modalInstance) {
+		var $preselectedTypeInput;
+
 		/* Submit template type edit form on Done button click */
 		modalInstance.bind('done', function runSave(e) {
 			var label = e ? $(e.currentTarget).text() : 'keypress';
@@ -134,9 +139,6 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 		modalInstance.bind('close', function () {
 			$w.unbind('keypress', submitFormOnEnterKeyPress);
 
-			// Re-bind modal opening keyboard shortcut
-			$w.on('keydown', openModalKeyboardShortcut);
-
 			// Track - close TC modal
 			track({
 				action: tracker.ACTIONS.CLOSE,
@@ -144,7 +146,14 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 			});
 		});
 
-		modalInstance.$element.find('input:radio').change(function trackRadioChange(e) {
+		if (newTypeModes.indexOf(modalMode) >= 0) {
+			$saveBtn = modalInstance.$element.find('footer button.primary').attr('disabled','disabled');
+		}
+
+		modalInstance.$element.find('input:radio').change(function handleRadioChange(e) {
+			if (newTypeModes.indexOf(modalMode) >= 0) {
+				$saveBtn.removeAttr('disabled');
+			}
 			// Track - click to change a template's type
 			track({
 				action: tracker.ACTIONS.CLICK_LINK_TEXT,
@@ -157,19 +166,24 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 		/* Show the modal */
 		modalInstance.show();
 
-		// Make sure that focus is in the right place
-		$('#template-classification-' + mw.html.escape($preselectedType.val())).focus();
+		throbber.remove($throbber);
+
+		// Make sure that focus is in the right place but scroll the modal window to the top
+		$preselectedTypeInput = modalInstance.$element.find('#template-classification-' + preselectedType);
+		if ($preselectedTypeInput.length !== 0) {
+			$classificationForm.find('input:checked').removeProp('checked');
+			$preselectedTypeInput.prop('checked', true).focus();
+		}
+
+		if (preselectedType === 'unknown') {
+			modalInstance.scroll(0);
+		}
 	}
 
 	function processSave(modalInstance) {
-		var newTemplateType = $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val(),
-			oldTemplateType = '';
+		var newTemplateType = $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val();
 
-		if (!!$preselectedType) {
-			oldTemplateType = $preselectedType.val();
-		}
-
-		if (newTemplateType !== oldTemplateType) {
+		if (newTemplateType !== preselectedType) {
 			// Track - modal saved with changes
 			track({
 				action: tracker.ACTIONS.SUBMIT,
@@ -183,31 +197,25 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 			track({
 				action: tracker.ACTIONS.SUBMIT,
 				label: 'nochange',
-				value: oldTemplateType
+				value: preselectedType
 			});
 		}
 
-		modalInstance.trigger('close');
+		if (modalMode === 'addTypeBeforePublish' && newTemplateType) {
+			$('#wpSave').click();
+		} else {
+			modalInstance.trigger('close');
+		}
 	}
 
 	function updateEntryPointLabel(templateType) {
 		$typeLabel
 			.data('type', mw.html.escape(templateType))
+			.children('.template-classification-type-label')
 			.html(getTypeMessage(templateType).escaped());
 	}
 
 	function setupTemplateClassificationModal(content) {
-		/* Modal component configuration */
-		modalConfig = {
-			vars: {
-				id: 'TemplateClassificationEditModal',
-				classes: ['template-classification-edit-modal'],
-				size: 'small', // size of the modal
-				content: content, // content
-				title: labeling.getTitle()
-			}
-		};
-
 		var modalButtons = [
 			{
 				vars: {
@@ -239,13 +247,19 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 			vars: {
 				id: 'TemplateClassificationEditModal',
 				classes: ['template-classification-edit-modal'],
-				size: 'small', // size of the modal
+				size: 'medium', // size of the modal
 				content: content, // content
 				title: labeling.getTitle()
 			}
 		};
 
 		modalConfig.vars.buttons = modalButtons;
+	}
+
+	function setupTooltip() {
+		$('.template-classification-type-wrapper').tooltip({
+			delay: {show: 500, hide: 300}
+		});
 	}
 
 	function getTemplateClassificationEditForm() {
@@ -268,16 +282,6 @@ function ($, w, mw, loader, nirvana, tracker, labeling) {
 
 	function falseFunction() {
 		return false;
-	}
-
-	function openModalKeyboardShortcut(e) {
-		var keyCode = e.keyCode ? e.keyCode : e.which;
-
-		// Shortcut - Shift + Action Key (Ctrl or Cmd) + K
-		if (e.shiftKey && (e.ctrlKey || e.metaKey) && keyCode === 75) {
-			e.preventDefault();
-			openEditModal('editType');
-		}
 	}
 
 	function submitFormOnEnterKeyPress(e) {

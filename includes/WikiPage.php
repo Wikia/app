@@ -1602,9 +1602,6 @@ class WikiPage extends Page implements IDBAccessObject {
 		wfRunHooks( 'ArticleSaveComplete', array( &$this, &$user, $text, $summary,
 			$flags & EDIT_MINOR, null, null, &$flags, $revision, &$status, $baseRevId ) );
 
-		# Promote user to any groups they meet the criteria for
-		$user->addAutopromoteOnceGroups( 'onEdit' );
-
 		wfProfileOut( __METHOD__ );
 		return $status;
 	}
@@ -2112,6 +2109,36 @@ class WikiPage extends Page implements IDBAccessObject {
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
+
+		// Wikia change - begin -@author: wladek
+		$pageRow = $dbw->selectRow('page','*',[
+			'page_id' => $id,
+		],__METHOD__);
+		if (!$pageRow){
+			$pageRow = (object)[
+				'page_namespace' => '-1',
+				'page_title' => '???',
+			];
+		}
+		$beforeRevisionCount = $dbw->selectField('revision','count(*)',[
+			'rev_page' => $id,
+		],__METHOD__);
+		$beforeArchiveCount = $dbw->selectField('archive','count(*)',[
+			'ar_namespace' => $pageRow->page_namespace,
+			'ar_title'     => $pageRow->page_title,
+		],__METHOD__);
+		\Wikia\Logger\WikiaLogger::instance()->debug(
+			'RevisionAudit - before delete revisions',[
+				'exception' => new Exception(),
+				'page_namespace' => $pageRow->page_namespace,
+				'page_title' => $pageRow->page_title,
+				'page_id' => $id,
+				'rev_count_before' => $beforeRevisionCount,
+				'ar_count_before' => $beforeArchiveCount,
+			]
+		);
+		// Wikia change - end
+
 		// For now, shunt the revision data into the archive table.
 		// Text is *not* removed from the text table; bulk storage
 		// is left intact to avoid breaking block-compression or
@@ -2151,6 +2178,20 @@ class WikiPage extends Page implements IDBAccessObject {
 		$ok = ( $dbw->affectedRows() > 0 ); // getArticleId() uses slave, could be laggy
 
 		if ( !$ok ) {
+			// Wikia change - begin - @author: wladek
+			\Wikia\Logger\WikiaLogger::instance()->debug(
+				'RevisionAudit - delete revision error',[
+					'exception' => new Exception(),
+					'page_namespace' => $pageRow->page_namespace,
+					'page_title' => $pageRow->page_title,
+					'page_id' => $id,
+					'rev_count_before' => $beforeRevisionCount,
+					'ar_count_before' => $beforeArchiveCount,
+					'error_name' => 'no page row deleted',
+				]
+			);
+			// Wikia change - end
+
 			$dbw->rollback();
 			return WikiPage::DELETE_NO_REVISIONS;
 		}
@@ -2179,6 +2220,28 @@ class WikiPage extends Page implements IDBAccessObject {
 		// page if they rely on the title or related associations.
 		$this->doDeleteUpdates( $id );
 		// Wikia change end
+
+		// Wikia change - begin - @author: wladek
+		$afterRevisionCount = $dbw->selectField('revision','count(*)',[
+			'rev_page' => $id,
+		],__METHOD__);
+		$afterArchiveCount = $dbw->selectField('archive','count(*)',[
+			'ar_namespace' => $pageRow->page_namespace,
+			'ar_title'     => $pageRow->page_title,
+		],__METHOD__);
+		\Wikia\Logger\WikiaLogger::instance()->debug(
+			'RevisionAudit - after delete revisions',[
+				'exception' => new Exception(),
+				'page_namespace' => $pageRow->page_namespace,
+				'page_title' => $pageRow->page_title,
+				'page_id' => $id,
+				'rev_count_before' => $beforeRevisionCount,
+				'ar_count_before' => $beforeArchiveCount,
+				'rev_count_after' => $afterRevisionCount,
+				'ar_count_after' => $afterArchiveCount,
+			]
+		);
+		// Wikia change - end
 
 		if ( $commit ) {
 			$dbw->commit();
@@ -2245,10 +2308,10 @@ class WikiPage extends Page implements IDBAccessObject {
 
 		# Clear the cached article id so the interface doesn't act like we exist
 		$this->mTitle->resetArticleID( 0 );
-		
+
 		# Wikia change here
 		$this->setCachedLastEditTime( wfTimestampNow() );
-		# Wikia 
+		# Wikia
 	}
 
 	/**

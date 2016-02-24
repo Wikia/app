@@ -155,30 +155,12 @@ $messages = array(
 'navigation'    => 'Nabigayson',
 'and'           => '&#32;kag',
 
-# Cologne Blue skin
 'qbfind'         => 'Pangita',
 'qbbrowse'       => 'Magbasa-basa',
-'qbedit'         => 'Ilisan',
 'qbpageoptions'  => 'Ining panid',
 'qbpageinfo'     => 'Kahulugan/Konteksto',
-'qbmyoptions'    => 'Akon mga panid',
-'qbspecialpages' => 'Pinasahi nga mga panid',
 'faq'            => 'Mga masami pamangkoton',
-'faqpage'        => 'Project:MMP',
 
-# Vector skin
-'vector-action-addsection'       => 'Magdugang sang topiko',
-'vector-action-delete'           => 'Panason',
-'vector-action-move'             => 'Saylohon',
-'vector-action-protect'          => 'Pangapinan',
-'vector-action-undelete'         => 'Dulaon ang pagpanas',
-'vector-action-unprotect'        => 'Ilisan ang pagpangapin',
-'vector-simplesearch-preference' => 'Sugtan ang mas ginpamaayo nga suhestiyon sa pagpangita (Para sa vector nga panit lamang)',
-'vector-view-create'             => 'Himuon',
-'vector-view-edit'               => 'Ilisan',
-'vector-view-history'            => 'Lantawon ang kasaysayan',
-'vector-view-view'               => 'Magbasa',
-'vector-view-viewsource'         => 'Lantawon ang ginhalinan',
 'actions'                        => 'Mga hulag',
 'namespaces'                     => 'Ngalan-espasyo',
 'variants'                       => 'Mga nagkalain-lain',
@@ -201,7 +183,6 @@ $messages = array(
 'edit'              => 'Ilisan',
 'create'            => 'Himuon',
 'editthispage'      => 'Islan ini nga pahina',
-'create-this-page'  => 'Himuon ang ini nga panid',
 'delete'            => 'Panason',
 'deletethispage'    => 'Panason ang ini nga panid',
 'undelete_short'    => 'Dulaon ang pagpanas sang {{PLURAL:$1|isa ka pag-ilis|$1 ka pag-ilis}}',
@@ -216,19 +197,9 @@ $messages = array(
 'talkpagelinktext'  => 'Hisayranay',
 'specialpage'       => 'Espesyal nga panid',
 'personaltools'     => 'Mga kinaugalingon nga galamiton',
-'postcomment'       => 'Bag-o nga seksyon',
-'articlepage'       => 'Lantawon ang panid sang ka-undan',
 'talk'              => 'Paghisayranay',
 'views'             => 'Mga talanawon',
 'toolbox'           => 'Mga galamiton',
-'userpage'          => 'Lantawon ang panid sang manuggamit',
-'projectpage'       => 'Lantawon ang panid nga ginapangapinan',
-'imagepage'         => 'Lantawon ang panid sang hilera',
-'mediawikipage'     => 'Lantawon ang panid sang mensahe',
-'templatepage'      => 'Lantawon ang panid sang templeyt',
-'viewhelppage'      => 'Lantawon ang panid sa pagbulig',
-'categorypage'      => 'Lantawon ang panid sang categorya',
-'viewtalkpage'      => 'Lantawon ang gina-istroyahan',
 'otherlanguages'    => 'Sa iban nga lenguahe',
 'redirectedfrom'    => '(Gindirek liwat halin $1)',
 'redirectpagesub'   => 'I-direktahon ang pahina',
@@ -537,43 +508,6 @@ Ginapasulod ka na...',
 'resetpass-wrong-oldpass'   => 'Sala nga temporaryo ukon subong nga pasword.
 Mahimo nga madinalag-on mo nga nga gin-ilisan ang imo pasword ukon nagpangabay ka na sang bag-o nga temporaryo nga pasword.',
 'resetpass-temp-password'   => 'Temporaryo nga pasword:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Liwaton ang pasword',
-'passwordreset-text'               => 'Taposon ang ini nga formas agod nga makabaton sang e-mail nga nagapahanumdom sang mga detalye sang imo akawnt.',
-'passwordreset-legend'             => 'Liwaton ang pasword',
-'passwordreset-disabled'           => 'Ang mga pagliwat sang pasword gin-untat sa sini nga wiki.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Magbutang sang isa sang mga datos sa idalom}}',
-'passwordreset-username'           => 'Ngalan sang Manog-gamit"',
-'passwordreset-domain'             => 'Domeyn:',
-'passwordreset-capture'            => 'Lantawon ang nagresuta nga e-mail?',
-'passwordreset-capture-help'       => 'Kon butangan mo sang tsek ang ini nga kahon, ang e-mail (nga may temporaryo nga pasword) igapakita sa imo kag amo man ipadala sa manuggamit.',
-'passwordreset-email'              => 'Adres sang e-mail:',
-'passwordreset-emailtitle'         => 'Ang mga detalye sang akawnt sa {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'May tawo nga (mahimo ikaw, halin sa IP adres nga $1) nagpangabay sang pahanumdom sang mga detalye
-sang imo akawnt para sa {{SITENAME}} ($4). Ang masunod nga {{PLURAL:$3|akawnt|mga akawnt}} sang manuggamit
-may kabahin sa sini nga adres sang e-mail:
-
-$2
-
-{{PLURAL:$3|Ang ini nga temporaryo nga pasword|Ang mga ini nga temporaryo nga pasword}} indi na magamit sa {{PLURAL:$5|isa ka adlaw|$5 ka adlaw}}.
-Kinahanglan mo nga magsulod kag magpili sang bag-o nga pasword subong. Kon lain nga tawo ang nagbuhat sini
-nga pagpangabay, ukon nadumduman mo na ang imo pasword, kag indi mo na kinahanglan nga ini
-paga-ilisan, mahimo mo nga pabay-an ang ini nga pahanumdom kag magpadayon sa paggamit sang imo daan nga pasword.',
-'passwordreset-emailtext-user'     => 'Ang manuggamit nga si $1 sa {{SITENAME}} nagpangabay sang pahanumdom sang mga detalye sang imo akawnt para sa {{SITENAME}}
-($4). Ang masunod nga {{PLURAL:$3|akawnt|mga akawnt}} sang manuggamit may kabahin sa sini nga adres sang e-mail:
-
-$2
-
-{{PLURAL:$3|Ang ini nga temporaryo nga pasword|Ang mga ini nga temporaryo nga pasword}} indi na magamit sa {{PLURAL:$5|isa ka adlaw|$5 ka adlaw}}.
-Kinahanglan mo nga magsulod kag magpili sang bag-o nga pasword subong. Kon lain nga tawo ang nagbuhat sini
-nga pagpangabay, ukon nadumduman mo na ang imo pasword, kag indi mo na kinahanglan nga ini
-paga-ilisan, mahimo mo nga pabay-an ang ini nga pahanumdom kag magpadayon sa paggamit sang imo daan nga pasword.',
-'passwordreset-emailelement'       => 'Gamit-pangalan: $1
-Temporaryo nga pasword: $2',
-'passwordreset-emailsent'          => 'May pahanumdom nga e-mail nga ginpadala.',
-'passwordreset-emailsent-capture'  => 'May e-mail nga nagapahanumdum, nga ginapakita sa idalom.',
-'passwordreset-emailerror-capture' => 'May e-mail nga nagapahanumdom nga ginbuhat, nga ginapakita sa idalom, apang ang pagpadala sa manuggamit indi madinalag-on: $1',
 
 # Special:ChangeEmail
 'changeemail'          => 'Ilisan ang E-mail adres',
@@ -1063,14 +997,6 @@ Testingan mo i-prefiks ang imo pamangkot upod sang ''tanan:'' para makita mo ang
 Mahimo ka nga magpangita gamit ang Google sa sini nga tion.
 Tandai nga ang ila nga palasulundan sang mga unod sang {{SITENAME}} mahimo nga madaan na.',
 
-# Quickbar
-'qbsettings'                => 'Bar nga mahapos',
-'qbsettings-none'           => 'Wala',
-'qbsettings-fixedleft'      => 'Gintadlong sa wala',
-'qbsettings-fixedright'     => 'Gintadlong sa too',
-'qbsettings-floatingleft'   => 'Nagalutaw sa wala',
-'qbsettings-floatingright'  => 'Nagalutaw sa too',
-'qbsettings-directionality' => 'Indi na maliwat, depende sa direksyon sang iskrip sang imo lenggwahe',
 
 # Preferences page
 'preferences'                   => 'Mga Ginabasehan',

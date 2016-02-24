@@ -214,7 +214,7 @@ $messages['es'] = array(
 	'partner-feed-hotcontent' => 'Hub / "Contenido Novedoso" clasificado por el número de editores',
 	'partner-feed-recent-blog-comments' => 'Comentarios recientes relacionados a una entrada de blog especificada.',
 	'partner-feed-recent-changes' => 'Cambios recientes',
-	'partnerfeed' => 'Partner feed',
+	'partnerfeed' => 'ModalidadesRSS',
 	'error-no-article' => 'Error: No fue pasado el parámetro "artículo"',
 	'feed-title-blogposts' => 'Entradas de blog recientes',
 	'feed-title-recent-badges' => 'Logros recientes',
@@ -387,6 +387,7 @@ $messages['ja'] = array(
 	'partner-feed-recent-changes' => '最近の変更',
 	'all-blog-posts' => 'すべてのカテゴリ',
 	'feed-title-recentchanges' => '最近の更新',
+	'partnerfeed' => 'パートナーフィード',
 );
 
 /** Kannada (ಕನ್ನಡ)

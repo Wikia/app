@@ -118,14 +118,6 @@ $wgScriptExtension  = '.php';
 $wgScript = false;
 
 /**
- * The URL path to redirect.php. This is a script that is used by the Nostalgia
- * skin.
- *
- * Will default to "{$wgScriptPath}/redirect{$wgScriptExtension}" in Setup.php
- */
-$wgRedirectScript = false;
-
-/**
  * The URL path to load.php.
  *
  * Defaults to "{$wgScriptPath}/load{$wgScriptExtension}".
@@ -2296,11 +2288,6 @@ $wgSiteNotice = '';
 $wgExtraSubtitle	= '';
 
 /**
- * If this is set, a "donate" link will appear in the sidebar. Set it to a URL.
- */
-$wgSiteSupportPage	= '';
-
-/**
  * Validate the overall output using tidy and refuse
  * to display the page if it's not valid.
  */
@@ -2312,15 +2299,13 @@ $wgValidateAllHtml = false;
  * This has to be completely lowercase; see the "skins" directory for the list
  * of available skins.
  */
-$wgDefaultSkin = 'vector';
+$wgDefaultSkin = 'oasis';
 
 /**
  * Specify the name of a skin that should not be presented in the list of
  * available skins.  Use for blacklisting a skin which you do not want to
  * remove from the .../skins/ directory
  */
-$wgSkipSkin = '';
-/** Array for more like $wgSkipSkin. */
 $wgSkipSkins = array();
 
 /**
@@ -2330,7 +2315,6 @@ $wgSkipSkins = array();
  * stylesheet, which is specified for 'screen' media.
  *
  * Can be a complete URL, base-relative path, or $wgStylePath-relative path.
- * Try 'chick/main.css' to apply the Chick styles to the MonoBook HTML.
  *
  * Will also be switched in when 'handheld=yes' is added to the URL, like
  * the 'printable=yes' mode for print media.
@@ -2477,20 +2461,6 @@ $wgFooterIcons = array(
  * false = split login and create account into two separate links
  */
 $wgUseCombinedLoginLink = true;
-
-/**
- * Search form behavior for Vector skin only
- * true = use an icon search button
- * false = use Go & Search buttons
- */
-$wgVectorUseSimpleSearch = false;
-
-/**
- * Watch and unwatch as an icon rather than a link for Vector skin only
- * true = use an icon watch/unwatch button
- * false = use watch/unwatch text link
- */
-$wgVectorUseIconWatch = false;
 
 /**
  * Display user edit counts in various prominent places.
@@ -3573,16 +3543,6 @@ $wgGroupPermissions['bureaucrat']['noratelimit'] = true;
 /** @endcond */
 
 /**
- * Permission keys revoked from users in each group.
- * This acts the same way as wgGroupPermissions above, except that
- * if the user is in a group here, the permission will be removed from them.
- *
- * Improperly setting this could mean that your users will be unable to perform
- * certain essential tasks, so use at your own risk!
- */
-$wgRevokePermissions = array();
-
-/**
  * Implicit groups, aren't shown on Special:Listusers or somewhere else
  */
 $wgImplicitGroups = array( '*', 'user', 'autoconfirmed' );
@@ -3702,31 +3662,6 @@ $wgAutopromote = array(
 		array( APCOND_AGE, &$wgAutoConfirmAge ),
 	),
 );
-
-/**
- * Automatically add a usergroup to any user who matches certain conditions.
- * Does not add the user to the group again if it has been removed.
- * Also, does not remove the group if the user no longer meets the criteria.
- *
- * The format is
- *	array( event => criteria, ... )
- * where event is
- *	'onEdit' (when user edits) or 'onView' (when user views the wiki)
- * and criteria has the same format as $wgAutopromote
- *
- * @see $wgAutopromote
- * @since 1.18
- */
-$wgAutopromoteOnce = array(
-	'onEdit' => array(),
-	'onView' => array()
-);
-
-/**
- * Put user rights log entries for autopromotion in recent changes?
- * @since 1.18
- */
-$wgAutopromoteOnceLogInRC = true;
 
 /**
  * $wgAddGroups and $wgRemoveGroups can be used to give finer control over who
@@ -5542,7 +5477,9 @@ $wgAjaxLicensePreview = true;
  );
  *
  */
-$wgCrossSiteAJAXdomains = array();
+$wgCrossSiteAJAXdomains = [
+	'internal.vstf.wikia.com', # PLATFORM-1719
+];
 
 /**
  * Domains that should not be allowed to make AJAX requests,

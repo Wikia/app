@@ -479,7 +479,7 @@ class DataProvider {
 			while ($row = $dbs->fetchObject($res)) {
 				$user = User::newFromID($row->user_id);
 
-				if (!$user->isBlocked() && !$user->isAllowed('bot')
+				if (!$user->isBlocked( true, false ) && !$user->isAllowed('bot')
 					&& $user->getUserPage()->exists()
 				) {
 					$article['url'] = $user->getUserPage()->getLocalUrl();

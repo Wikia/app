@@ -770,7 +770,7 @@ class WallNotifications {
 		// The code will call this method twice for the same notification at times.  Rather than unwind this terrible
 		// mess of logic and state, just make sure we don't add the same notification twice.
 		static $seen = [];
-		if ( $seen[$entityKey] ) {
+		if ( !empty( $seen[$entityKey] ) ) {
 			return;
 		}
 		$seen[$entityKey] = true;
@@ -995,7 +995,7 @@ class WallNotifications {
 			[
 				'DISTINCT',
 				'LIMIT' => '50',
-				'ORDER BY' => 'unique_id'
+				'ORDER BY' => 'unique_id DESC'
 			]
 		);
 
@@ -1057,7 +1057,7 @@ class WallNotifications {
 	}
 
 	public function getKey( $userId, $wikiId ) {
-		return wfSharedMemcKey( __CLASS__, $userId, $wikiId . 'v31' );
+		return wfSharedMemcKey( __CLASS__, $userId, $wikiId . 'v32' );
 	}
 
 	/**

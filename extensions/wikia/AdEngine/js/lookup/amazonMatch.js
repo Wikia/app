@@ -1,120 +1,47 @@
 /*global define*/
-/*jshint camelcase:false*/
-/*jshint maxdepth:5*/
 define('ext.wikia.adEngine.lookup.amazonMatch', [
-	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, doc, log, win) {
+], function (adContext, factory, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.amazonMatch',
+		config = {
+			oasis: {
+				HOME_TOP_LEADERBOARD: ['7x9', '9x2'],
+				HOME_TOP_RIGHT_BOXAD: ['3x2', '3x6'],
+				HUB_TOP_LEADERBOARD: ['7x9', '9x2'],
+				HUB_TOP_RIGHT_BOXAD: ['3x2', '3x6'],
+				INCONTENT_BOXAD_1: ['3x2', '1x6', '3x6'],
+				LEFT_SKYSCRAPER_2: ['1x6', '3x6'],
+				LEFT_SKYSCRAPER_3: ['1x6', '3x6'],
+				TOP_LEADERBOARD: ['7x9', '9x2'],
+				TOP_RIGHT_BOXAD: ['3x2', '3x6']
+			},
+			mercury: {
+				MOBILE_IN_CONTENT: ['3x2'],
+				MOBILE_PREFOOTER: ['3x2'],
+				MOBILE_TOP_LEADERBOARD: ['3x5']
+			}
+		},
+		rendered = false,
+		paramPattern = /^a([0-9]x[0-9])p([0-9]+)$/,
 		amazonId = '3115',
-		amazonResponse,
-		amazonTiming,
-		amazonCalled = false,
-		amazonRendered = false,
-		amazonParamPattern = /^a([0-9]x[0-9])p([0-9]+)$/,
-		sizeMapping = {
-			'1x6': ['LEFT_SKYSCRAPER_2', 'LEFT_SKYSCRAPER_3'],
-			'3x2': [
-				'TOP_RIGHT_BOXAD',
-				'HOME_TOP_RIGHT_BOXAD',
-				'HUB_TOP_RIGHT_BOXAD',
-				'MOBILE_IN_CONTENT',
-				'MOBILE_PREFOOTER'
-			],
-			'3x5': ['MOBILE_TOP_LEADERBOARD'],
-			'3x6': ['TOP_RIGHT_BOXAD', 'HOME_TOP_RIGHT_BOXAD', 'HUB_TOP_RIGHT_BOXAD'],
-			'7x9': ['TOP_LEADERBOARD', 'HOME_TOP_LEADERBOARD', 'HUB_TOP_LEADERBOARD'],
-			'9x2': ['TOP_LEADERBOARD', 'HOME_TOP_LEADERBOARD', 'HUB_TOP_LEADERBOARD']
-		},
-		bestPricePointForSize = {
-			'1x6': null,
-			'3x2': null,
-			'3x5': null,
-			'3x6': null,
-			'7x9': null,
-			'9x2': null
-		},
-		module;
+		priceMap = {},
+		slots = [];
 
-	function trackState(trackEnd) {
-		log(['trackState', amazonResponse], 'debug', logGroup);
-
-		var eventName,
-			data = {};
-
-		if (amazonResponse) {
-			eventName = 'lookupSuccess';
-			Object.keys(sizeMapping).forEach(function (amazonSize) {
-				var pricePoint = bestPricePointForSize[amazonSize];
-				if (pricePoint) {
-					data['a' + amazonSize] = 'p' + pricePoint;
-				}
-			});
-		} else {
-			eventName = 'lookupError';
-		}
-
-		if (trackEnd) {
-			eventName = 'lookupEnd';
-		}
-
-		adTracker.track(eventName + '/amazon', data || '(unknown)', 0);
-	}
-
-	function onAmazonResponse() {
-		var allPricePointsForSize = {},
-			i,
-			len,
-			param,
-			m,
-			amazonSize,
-			amazonTier,
-			tokens;
-
-		amazonTiming.measureDiff({}, 'end').track();
-		tokens = win.amznads.getTokens();
-		log(['onAmazonResponse', tokens], 'debug', logGroup);
-		amazonResponse = true;
-
-		// First identify all correct amazon price points and record them in allPricePointsForSize
-		for (i = 0, len = tokens.length; i < len; i += 1) {
-			param = tokens[i];
-			m = param.match(amazonParamPattern);
-			if (m) {
-				amazonSize = m[1];
-				amazonTier = parseInt(m[2], 10);
-				if (!allPricePointsForSize[amazonSize]) {
-					allPricePointsForSize[amazonSize] = [];
-				}
-				allPricePointsForSize[amazonSize].push(amazonTier);
-			}
-		}
-
-		// Now select the minimal price point for each size we are interested in
-		Object.keys(bestPricePointForSize).forEach(function (amazonSize) {
-			var pricePoints = allPricePointsForSize[amazonSize];
-			if (pricePoints) {
-				bestPricePointForSize[amazonSize] = Math.min.apply(Math, pricePoints);
-			}
-		});
-
-		log(['onAmazonResponse - end', bestPricePointForSize], 'debug', logGroup);
-
-		trackState(true);
-	}
-
-	function call() {
-		log('call', 'debug', logGroup);
-
+	function call(skin, onResponse) {
 		var amznMatch = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		amazonTiming = adTracker.measureTime('amazon', {}, 'start');
-		amazonTiming.track();
+		slots = config[skin];
+
+		if (adContext.getContext().opts.overridePrefootersSizes) {
+			slots.PREFOOTER_LEFT_BOXAD = ['3x2', '7x9', '9x2'];
+		}
 
 		amznMatch.type = 'text/javascript';
 		amznMatch.src = 'http://c.amazon-adsystem.com/aax2/amzn_ads.js';
@@ -123,85 +50,79 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			if (!win.amznads.getAdsCallback || !renderAd) {
 				return;
 			}
-			win.amznads.getAdsCallback(amazonId, onAmazonResponse);
+			win.amznads.getAdsCallback(amazonId, onResponse);
 			win.amznads.renderAd = function (doc, adId) {
-				log(['renderAd', doc, adId, 'available: ' + !!amazonResponse[adId]], 'debug', logGroup);
-				amazonRendered = true;
 				renderAd(doc, adId);
+				rendered = true;
 			};
 		});
 
 		node.parentNode.insertBefore(amznMatch, node);
-		amazonCalled = true;
 	}
 
-	function wasCalled() {
-		log(['wasCalled', amazonCalled], 'debug', logGroup);
-		return amazonCalled;
+	function calculatePrices() {
+		var size,
+			tier,
+			tokens,
+			m;
+
+		tokens = win.amznads.getTokens();
+		log(['calculatePrices', tokens], 'debug', logGroup);
+
+		tokens.forEach(function (param) {
+			m = param.match(paramPattern);
+			if (m) {
+				size = m[1];
+				tier = parseInt(m[2], 10);
+
+				if (!priceMap[size] || tier < priceMap[size]) {
+					priceMap[size] = tier;
+				}
+			}
+		});
 	}
 
-	function hasResponse() {
-		log(['hasResponse', amazonResponse], 'debug', logGroup);
-		return amazonResponse ? true : false;
+	function encodeParamsForTracking(params) {
+		if (!params.amznslots) {
+			return;
+		}
+
+		return params.amznslots.join(';');
 	}
 
 	function getSlotParams(slotName) {
-		log(['getSlotParams', slotName], 'debug', logGroup);
+		var params = [];
 
-		var amznSlots = [];
-
-		if (!amazonRendered) {
-			Object.keys(sizeMapping).forEach(function (amazonSize) {
-				var validSlotNames = sizeMapping[amazonSize],
-					amazonPricePoint = bestPricePointForSize[amazonSize];
-
-				if (validSlotNames.indexOf(slotName) !== -1 && amazonPricePoint) {
-					amznSlots.push('a' + amazonSize + 'p' + amazonPricePoint);
-				}
-			});
-
-			log(['getSlotParams - amznSlots: ', amznSlots], 'debug', logGroup);
-		} else {
-			log(['getSlotParams - no amznSlots since ads has been already displayed', slotName], 'debug', logGroup);
-		}
-
-		if (amznSlots.length) {
-			return {
-				amznslots: amznSlots
-			};
-		}
-
-		return {};
-	}
-
-	module = {
-		call: function () {
-			log('fake call - module is not supported in IE8', 'debug', logGroup);
-		},
-		getSlotParams: function () {
-			log('fake getSlotParams - module is not supported in IE8', 'debug', logGroup);
+		if (rendered) {
+			log(['getSlotParams', 'No params since ad has been already displayed', slotName], 'debug', logGroup);
 			return {};
-		},
-		trackState: function () {
-			log('fake trackState - module is not supported in IE8', 'debug', logGroup);
-		},
-		wasCalled: wasCalled,
-		hasResponse: hasResponse
-	};
+		}
 
-	if (!Object.keys) {
-		return module;
+		slots[slotName].forEach(function (size) {
+			if (priceMap[size]) {
+				params.push('a' + size + 'p' + priceMap[size]);
+			}
+		});
+
+		return params.length > 0 ? {amznslots: params} : {};
 	}
 
-	module.call = call;
-	module.getSlotParams = getSlotParams;
-	module.trackState = trackState;
-	return module;
-});
+	function getPrices() {
+		return priceMap;
+	}
 
-define('ext.wikia.adEngine.amazonMatch', [
-	'ext.wikia.adEngine.lookup.amazonMatch'
-], function (amazonMatch) {
-	'use strict';
-	return amazonMatch;
+	function isSlotSupported(slotName) {
+		return slots[slotName];
+	}
+
+	return factory.create({
+		logGroup: logGroup,
+		name: 'amazon',
+		call: call,
+		calculatePrices: calculatePrices,
+		getPrices: getPrices,
+		isSlotSupported: isSlotSupported,
+		encodeParamsForTracking: encodeParamsForTracking,
+		getSlotParams: getSlotParams
+	});
 });

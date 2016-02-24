@@ -348,30 +348,12 @@ $messages = array(
 'navigation'    => 'Navigacija',
 'and'           => '&#32;i',
 
-# Cologne Blue skin
 'qbfind'         => 'Pronađite',
 'qbbrowse'       => 'Prelistajte',
-'qbedit'         => 'Uredi',
 'qbpageoptions'  => 'Opcije stranice',
 'qbpageinfo'     => 'Informacije o stranici',
-'qbmyoptions'    => 'Moje opcije',
-'qbspecialpages' => 'Posebne stranice',
 'faq'            => 'ČPP',
-'faqpage'        => 'Project:ČPP',
 
-# Vector skin
-'vector-action-addsection'       => 'Dodaj temu',
-'vector-action-delete'           => 'Brisanje',
-'vector-action-move'             => 'Preusmjeri',
-'vector-action-protect'          => 'Zaštiti',
-'vector-action-undelete'         => 'Vrati obrisano',
-'vector-action-unprotect'        => 'Promijeni zaštitu',
-'vector-simplesearch-preference' => 'Omogući napredne sugestije pretrage (samo vector skin)',
-'vector-view-create'             => 'Napravi',
-'vector-view-edit'               => 'Uredi',
-'vector-view-history'            => 'Pregled historije',
-'vector-view-view'               => 'Čitaj',
-'vector-view-viewsource'         => 'Vidi izvor (source)',
 'actions'                        => 'Akcije',
 'namespaces'                     => 'Imenski prostori',
 'variants'                       => 'Varijante',
@@ -394,7 +376,6 @@ $messages = array(
 'edit'              => 'Uredi',
 'create'            => 'Napravi',
 'editthispage'      => 'Uredite ovu stranicu',
-'create-this-page'  => 'Stvori ovu stranicu',
 'delete'            => 'Obriši',
 'deletethispage'    => 'Obriši ovu stranicu',
 'undelete_short'    => 'Vrati obrisanih {{PLURAL:$1|$1 izmjenu|$1 izmjene|$1 izmjena}}',
@@ -409,19 +390,9 @@ $messages = array(
 'talkpagelinktext'  => 'Razgovor',
 'specialpage'       => 'Posebna stranica',
 'personaltools'     => 'Lični alati',
-'postcomment'       => 'Nova sekcija',
-'articlepage'       => 'Pogledaj stranicu sa sadržajem (članak)',
 'talk'              => 'Razgovor',
 'views'             => 'Pregledi',
 'toolbox'           => 'Traka sa alatima',
-'userpage'          => 'Pogledajte korisničku stranicu',
-'projectpage'       => 'Pogledajte stranicu projekta',
-'imagepage'         => 'Vidi stranicu datoteke/fajla',
-'mediawikipage'     => 'Pogledaj stranicu s porukom',
-'templatepage'      => 'Pogledajte stranicu sa šablonom',
-'viewhelppage'      => 'Pogledajte stranicu za pomoć',
-'categorypage'      => 'Pogledajte stranicu kategorije',
-'viewtalkpage'      => 'Pogledajte raspravu',
 'otherlanguages'    => 'Na drugim jezicima',
 'redirectedfrom'    => '(Preusmjereno sa $1)',
 'redirectpagesub'   => 'Preusmjeri stranicu',
@@ -725,43 +696,6 @@ Da biste završili prijavu, morate unijeti novu šifru ovdje:',
 'resetpass-wrong-oldpass'   => 'Privremena ili trenutna lozinka nije valjana.
 Možda ste već uspješno promijenili Vašu lozinku ili ste tražili novu privremenu lozinku.',
 'resetpass-temp-password'   => 'Privremena lozinka:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Ponovno postavi lozinku',
-'passwordreset-text'               => 'Ispunite ovaj obrazac da biste dobili e-mail podsjetnik o vašim detaljima računa.',
-'passwordreset-legend'             => 'Ponovno postavi lozinku',
-'passwordreset-disabled'           => 'Ponovno postavljanje lozinke je onemogućeno na ovom wikiju.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Unesite jedan dio podataka ispod}}',
-'passwordreset-username'           => 'Korisničko ime:',
-'passwordreset-domain'             => 'Domena:',
-'passwordreset-capture'            => 'Pogledati krajnji e-mail?',
-'passwordreset-capture-help'       => 'Ako označite ovu kućicu, e-mail s privremenom lozinkom će biti prikazana i poslata korisniku.',
-'passwordreset-email'              => 'E-mail adresa:',
-'passwordreset-emailtitle'         => 'Detalji računa na {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Netko (vjerovatno Vi, s IP adrese $1) je zatražio podsjetnik Vaših detalja računa
-za {{SITENAME}} ($4). Sljedeći {{PLURAL:$3|račun korisnika je|računi korisnika su}}
-povezani s ovom e-mail adresom:
-
-$2
-
-{{PLURAL:$3|Ova privremena lozinka|Ove privremene lozinke}} će isteći za {{PLURAL:$5|jedan dan|$5 dana}}.
-Trebate se prijaviti i odabrati novu lozinku. Ako je neko drugi napravio ovaj
-zahtjev, ili ako ste se sjetili Vaše početne lozinke, a ne želite je promijeniti,
-možete zanemariti ovu poruku i nastaviti koristiti staru lozinku.',
-'passwordreset-emailtext-user'     => 'Korisnik $1 na {{SITENAME}} je zatražio podsjetnik o detaljima Vašeg računa za {{SITENAME}}
-($4). Sljedeći {{PLURAL:$3|korisnički račun je|korisnički računi su}} povezani s ovom e-mail adresom:
-
-$2
-
-{{PLURAL:$3|Ova privremena lozinka|Ove privremene lozinke}} će isteći za {{PLURAL:$5|jedan dan|$5 dana}}.
-Trebate se prijaviti i odabrati novu lozinku. Ako je neko drugi napravio ovaj
-zahtjev, ili ako ste se sjetili Vaše originalne lozinke, a ne želite je više promijeniti,
-možete zanemariti ovu poruku i nastaviti koristiti staru lozinku.',
-'passwordreset-emailelement'       => 'Korisničko ime: $1
-Privremena šifra: $2',
-'passwordreset-emailsent'          => 'E-mail podsjetnik je poslan.',
-'passwordreset-emailsent-capture'  => 'Poslan je podsjetnik preko e-maila (prikazan dolje).',
-'passwordreset-emailerror-capture' => 'E-mail s podsjetnikom, prikazan dolje, je poslan, ali slanje korisniku nije uspjelo: $1',
 
 # Special:ChangeEmail
 'changeemail'          => 'Promijeni e-mail adresu',
@@ -1245,14 +1179,6 @@ Pokušajte u svoju pretragu staviti ''all:'' da se pretražuje cjelokupan sadrž
 U međuvremenu možete pretraživati preko Googlea.
 Uzmite u obzir da njegovi indeksi za ovu Wiki ne moraju biti ažurirani.',
 
-# Quickbar
-'qbsettings'                => 'Podešavanja brze palete',
-'qbsettings-none'           => 'Nikakva',
-'qbsettings-fixedleft'      => 'Fiksirana lijevo',
-'qbsettings-fixedright'     => 'Fiksirana desno',
-'qbsettings-floatingleft'   => 'Plutajuća lijevo',
-'qbsettings-floatingright'  => 'Plutajuća desno',
-'qbsettings-directionality' => 'Fiksno, ovisno o smjeru pisma Vašeg jezika',
 
 # Preferences page
 'preferences'                   => 'Postavke',

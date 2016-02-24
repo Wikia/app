@@ -39,6 +39,13 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 	}
 
 	/**
+	 * @return \Wikia\Logger\WikiaLogger
+	 */
+	private function getLogger() {
+		return Wikia\Logger\WikiaLogger::instance();
+	}
+
+	/**
 	 * Create container and authenticate - for source Ceph/Swift storage
 	 *
 	 * @return Wikia\SwiftStorage storage instance
@@ -133,7 +140,7 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 					$this->output( "\tRecord moved to archive\n\n" );
 				}
 
-				Wikia\Logger\WikiaLogger::instance()->debug( 'MigrateImagesBetweenSwiftDC' , [
+				$this->getLogger()->debug( 'MigrateImagesBetweenSwiftDC' , [
 					'is_ok'   => ( $res === true ),
 					'retry'   => ( $res === false ),
 					'id'      => $this->imageSyncQueueItem->id,
@@ -146,7 +153,7 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 		}
 
 		if ( $imageSyncList->count() > 0 ) {
-			Wikia\Logger\WikiaLogger::instance()->debug( 'MigrateImagesBetweenSwiftDC: execute', [
+			$this->getLogger()->debug( 'MigrateImagesBetweenSwiftDC: execute', [
 				'dest_dc'    => $this->mDC_dst,
 				'limit'      => $this->mLimit,
 				'batch_size' => $imageSyncList->count(),
@@ -201,6 +208,14 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 			$this->output( "\tCannot find image to sync \n" );
 			$this->imageSyncQueueItem->setError( self::ERROR_CANT_FIND_FILE );
 
+			$this->getLogger()->error( 'MigrateImagesBetweenSwiftDC: cannot find image to sync' , [
+				'id'      => $this->imageSyncQueueItem->id,
+				'action'  => $this->imageSyncQueueItem->action,
+				'city_id' => $this->imageSyncQueueItem->city_id,
+				'src'     => $this->imageSyncQueueItem->src,
+				'dst'     => $this->imageSyncQueueItem->dst,
+			]);
+
 			$result = null;
 		} else {
 			/* save image content into memory and send content to destination storage */
@@ -220,7 +235,7 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 					$this->output( "\t'{$this->imageSyncQueueItem->dst}' file is empty!\n" );
 					$this->imageSyncQueueItem->setError( self::ERROR_FILE_IS_EMPTY );
 
-					Wikia\Logger\WikiaLogger::instance()->warning( 'MigrateImagesBetweenSwiftDC: file is empty' , [
+					$this->getLogger()->error( 'MigrateImagesBetweenSwiftDC: file is empty' , [
 						'id'      => $this->imageSyncQueueItem->id,
 						'action'  => $this->imageSyncQueueItem->action,
 						'city_id' => $this->imageSyncQueueItem->city_id,
@@ -284,7 +299,7 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 			$this->output( "\tImage still exists in source DC \n" );
 			$this->imageSyncQueueItem->setError( self::ERROR_FILE_EXISTS_IN_SOURCE_DC );
 
-			Wikia\Logger\WikiaLogger::instance()->warning( 'MigrateImagesBetweenSwiftDC: file still exists in source DC' , [
+			$this->getLogger()->error( 'MigrateImagesBetweenSwiftDC: file still exists in source DC' , [
 				'id'      => $this->imageSyncQueueItem->id,
 				'action'  => $this->imageSyncQueueItem->action,
 				'city_id' => $this->imageSyncQueueItem->city_id,

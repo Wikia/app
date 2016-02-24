@@ -265,30 +265,12 @@ $messages = array(
 'navigation'    => 'Nabigazioa',
 'and'           => '&#32;eta',
 
-# Cologne Blue skin
 'qbfind'         => 'Aurkitu',
 'qbbrowse'       => 'Arakatu',
-'qbedit'         => 'Aldatu',
 'qbpageoptions'  => 'Orrialde hau',
 'qbpageinfo'     => 'Testuingurua',
-'qbmyoptions'    => 'Nire orrialdeak',
-'qbspecialpages' => 'Aparteko orrialdeak',
 'faq'            => 'Maiz egindako galderak',
-'faqpage'        => 'Project:Maiz egindako galderak',
 
-# Vector skin
-'vector-action-addsection'       => 'Mintzagaia gehitu',
-'vector-action-delete'           => 'Ezabatu',
-'vector-action-move'             => 'Mugitu',
-'vector-action-protect'          => 'Babestu',
-'vector-action-undelete'         => 'Berreskuratu',
-'vector-action-unprotect'        => 'Babesa aldatu',
-'vector-simplesearch-preference' => 'Baimendu bilaketa gomendio hobetuak (Vector itxurarekin bakarrik)',
-'vector-view-create'             => 'Sortu',
-'vector-view-edit'               => 'Aldatu',
-'vector-view-history'            => 'Historia ikusi',
-'vector-view-view'               => 'Irakurri',
-'vector-view-viewsource'         => 'Kodea ikusia',
 'actions'                        => 'Ekintzak',
 'namespaces'                     => 'Izen-tarteak',
 'variants'                       => 'Aldaerak',
@@ -311,7 +293,6 @@ $messages = array(
 'edit'              => 'Aldatu',
 'create'            => 'Sortu',
 'editthispage'      => 'Orrialde hau aldatu',
-'create-this-page'  => 'Orrialde hau sortu',
 'delete'            => 'Ezabatu',
 'deletethispage'    => 'Orrialde hau ezabatu',
 'undelete_short'    => 'Berreskuratu {{PLURAL:$1|aldaketa bat|$1 aldaketa}}',
@@ -326,19 +307,9 @@ $messages = array(
 'talkpagelinktext'  => 'Eztabaida',
 'specialpage'       => 'Aparteko orrialdea',
 'personaltools'     => 'Tresna pertsonalak',
-'postcomment'       => 'Atal berria',
-'articlepage'       => 'Artikulua ikusi',
 'talk'              => 'Eztabaida',
 'views'             => 'Ikustaldiak',
 'toolbox'           => 'Tresnak',
-'userpage'          => 'Lankide orrialdea ikusi',
-'projectpage'       => 'Proiektuaren orrialdea ikusi',
-'imagepage'         => 'Ikusi fitxategiaren orria',
-'mediawikipage'     => 'Mezu orrialdea ikusi',
-'templatepage'      => 'Txantiloi orrialdea ikusi',
-'viewhelppage'      => 'Laguntza orrialdea ikusi',
-'categorypage'      => 'Kategoria orrialdea ikusi',
-'viewtalkpage'      => 'Eztabaida ikusi',
 'otherlanguages'    => 'Beste hizkuntzetan',
 'redirectedfrom'    => '($1(e)tik birzuzenduta)',
 'redirectpagesub'   => 'Birzuzenketa orrialdea',
@@ -625,16 +596,6 @@ Berriro saiatu aurretik itxaron ezazu, mesedez.',
 Agian dagoeneko ondo aldatu duzu zure pasahitza edo behin-behineko pasahitza bat eskatu duzu.',
 'resetpass-temp-password'   => 'Behin-behineko pasahitza:',
 
-# Special:PasswordReset
-'passwordreset'              => 'Pasahitzaren berrezarpena',
-'passwordreset-legend'       => 'Pasahitza berrezarri',
-'passwordreset-username'     => 'Lankide izena:',
-'passwordreset-domain'       => 'Domeinua:',
-'passwordreset-email'        => 'E-mail helbidea:',
-'passwordreset-emailelement' => 'Erabiltzaile izena: $1
-Behin-behineko pasahitza: $2',
-'passwordreset-emailsent'    => 'Gogorarazteko e-posta bidali da.',
-
 # Special:ChangeEmail
 'changeemail-newemail' => 'E-posta helbide berria:',
 'changeemail-none'     => '(bat ere ez)',
@@ -752,7 +713,6 @@ Azken blokeoaren erregistroa ageri da behean, erreferentzia gisa:',
 '''Oraindik gorde gabe dago!'''",
 'sitejspreview'                    => "'''Gogoratu zure JavaScript kodea probatu/aurreikusten zabiltzala'''
 '''Oraindik ez da gorde!'''",
-'userinvalidcssjstitle'            => "'''Oharra:''' Ez da \"\$1\" itxura existitzen. Kontuan izan .css eta .js fitxategi pertsonalizatuen izenak letra xehez idatzi behar direla; adibidez, {{ns:user}}:Adibide/vector.css, eta ez {{ns:user}}:Adibide/Vector.css.",
 'updated'                          => '(Eguneratua)',
 'note'                             => "'''Oharra:'''",
 'previewnote'                      => "'''Gogoratu hau aurreikusketa bat dela, beraz gorde egin beharko duzu!'''",
@@ -1091,13 +1051,6 @@ Saia zaitez zure eskeraren aurretik ''all:'' jartzen eduki guztien artean bilatz
 'search-external'                  => 'Kanpo bilaketa',
 'searchdisabled'                   => '{{SITENAME}}(e)n ezgaituta dago bilaketa. Dena dela, Google erabiliz ere egin dezakezu bilaketa. Kontuan izan bertan dituzten {{SITENAME}}(e)ko emaitzak zaharkituta egon daitezkeela.',
 
-# Quickbar
-'qbsettings'               => 'Laster-barra',
-'qbsettings-none'          => 'Ezein ere',
-'qbsettings-fixedleft'     => 'Eskuinean',
-'qbsettings-fixedright'    => 'Ezkerrean',
-'qbsettings-floatingleft'  => 'Ezkerrean mugikor',
-'qbsettings-floatingright' => 'Eskubian flotatzen',
 
 # Preferences page
 'preferences'                   => 'Hobespenak',
@@ -2579,11 +2532,6 @@ Baliteke zerrenda beltzean dagoen kanpo lotura batek sortzea arazo hori.',
 'pageinfo-views'        => 'Bistaratze-kopurua',
 
 # Skin names
-'skinname-standard'    => 'Lehenetsia',
-'skinname-nostalgia'   => 'Nostalgia',
-'skinname-cologneblue' => 'Cologne Blue',
-'skinname-simple'      => 'Arrunta',
-'skinname-modern'      => 'Modernoa',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Patruilatutzat markatu',

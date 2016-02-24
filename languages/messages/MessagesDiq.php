@@ -160,30 +160,12 @@ $messages = array(
 'navigation'    => 'Pusula',
 'and'           => '&#32;u',
 
-# Cologne Blue skin
 'qbfind'         => 'Bıvêne',
 'qbbrowse'       => 'Çım ra viyarne',
-'qbedit'         => 'Bıvurne',
 'qbpageoptions'  => 'Ena pele',
 'qbpageinfo'     => 'Gıre',
-'qbmyoptions'    => 'Pelê mı',
-'qbspecialpages' => 'Pelê Mêniye',
 'faq'            => 'PZP (Persê ke zehf persiyenê)',
-'faqpage'        => 'Project: PZP',
 
-# Vector skin
-'vector-action-addsection'       => 'Qal berze cı',
-'vector-action-delete'           => 'Bestere',
-'vector-action-move'             => 'Bere',
-'vector-action-protect'          => 'Bıpawe',
-'vector-action-undelete'         => 'Esterıtışi peyser bıgê',
-'vector-action-unprotect'        => 'Ake',
-'vector-simplesearch-preference' => 'Tewsiyanê cıgeyrayışiê raverberdeyan ake (Tenya vector skin de)',
-'vector-view-create'             => 'Vıraze',
-'vector-view-edit'               => 'Bıvurne',
-'vector-view-history'            => 'Tarixi bımocne',
-'vector-view-view'               => 'Bıwane',
-'vector-view-viewsource'         => 'Çımey bıvêne',
 'actions'                        => 'Karê kerdey',
 'namespaces'                     => 'Cayê namey',
 'variants'                       => 'Varyanti',
@@ -206,7 +188,6 @@ $messages = array(
 'edit'              => 'Bıvurne',
 'create'            => 'Vırazê',
 'editthispage'      => 'Ena pele bıvurne',
-'create-this-page'  => 'Na pele bınuse',
 'delete'            => 'Bestere',
 'deletethispage'    => 'Ena pele bestere',
 'undelete_short'    => '{{PLURAL:$1|Yew vurnayışi|$1 Vurnayışan}} mestere',
@@ -221,19 +202,9 @@ $messages = array(
 'talkpagelinktext'  => 'Werênayış',
 'specialpage'       => 'Pela xase',
 'personaltools'     => 'Hacetê şexsi',
-'postcomment'       => 'Qısımo newe',
-'articlepage'       => 'Pela zerreki bıvêne',
 'talk'              => 'Werênayış',
 'views'             => 'Asayışi',
 'toolbox'           => 'Qutiya hacetan',
-'userpage'          => 'Pela karberi bıvêne',
-'projectpage'       => 'Pela procey bıvêne',
-'imagepage'         => 'Pela dosya bımocne',
-'mediawikipage'     => 'Pela mesaci bımocne',
-'templatepage'      => 'Pela şabloni bımocne',
-'viewhelppage'      => 'Pela peşti bıvêne',
-'categorypage'      => 'Pela kategoriye bıvêne',
-'viewtalkpage'      => 'Werênayışi bıvêne',
 'otherlanguages'    => 'Zıwananê binan de',
 'redirectedfrom'    => '($1 ra neqıl bi)',
 'redirectpagesub'   => 'Pela berdışi',
@@ -513,14 +484,6 @@ Bıne vındere u newe ra dest pê bıkere.',
 'resetpass-wrong-oldpass'   => 'parolayo parola maqbul niyo.
 şıma ya parolaye xo vurnayo ya zi parolayo muwaqqat waşto.',
 'resetpass-temp-password'   => 'parolayo muweqet:',
-
-# Special:PasswordReset
-'passwordreset'              => 'Parola ancia bınuse',
-'passwordreset-legend'       => 'Parola ancia bınuse',
-'passwordreset-username'     => 'Namey karberi:',
-'passwordreset-email'        => 'Adresa e-postey:',
-'passwordreset-emailelement' => 'Namey karberi: $1
-Parola vêrdiye: $2',
 
 # Edit page toolbar
 'bold_sample'     => 'Çapo qalınd',
@@ -960,13 +923,6 @@ Pe verbendi ''all:'', vaceyê xo bıvurni ki contenti hemi cıgeyro (pelanê mı
 'search-external'                  => 'Cıgeyrayışê teberi',
 'searchdisabled'                   => '{{SITENAME}} no keyepel de cıgerayiş muweqqet bıryayo. no benatê de şıma pê Google eşkeni zerreyê {{SITENAME}} de cıgerayiş bıkeri.',
 
-# Quickbar
-'qbsettings'               => 'Çûwo pêt',
-'qbsettings-none'          => 'Çıniyo',
-'qbsettings-fixedleft'     => 'Rêcaene çhep',
-'qbsettings-fixedright'    => 'Rêcaene raşt',
-'qbsettings-floatingleft'  => 'rêcaene çhep',
-'qbsettings-floatingright' => 'rêcaene raşt',
 
 # Preferences page
 'preferences'                   => 'Tercihi',

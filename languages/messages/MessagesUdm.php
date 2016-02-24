@@ -156,22 +156,9 @@ $messages = array(
 'anontalk'   => 'Со IP-адрес сярысь вераськон',
 'navigation' => 'Навигация',
 
-# Cologne Blue skin
 'qbpageoptions'  => 'Бамлэн настройкаосыз',
-'qbspecialpages' => 'Ваньмыз панельёс',
 'faq'            => 'Юан-веран',
-'faqpage'        => 'Project:Юан-веран',
 
-# Vector skin
-'vector-action-addsection' => 'Выль темаез ватсано',
-'vector-action-delete'     => 'Быдтоно',
-'vector-action-move'       => 'Мукет интые выжтыны',
-'vector-action-protect'    => 'Утьыны',
-'vector-view-create'       => 'Кылдытоно',
-'vector-view-edit'         => 'Тупатоно',
-'vector-view-history'      => 'История',
-'vector-view-view'         => 'Лыдӟоно',
-'vector-view-viewsource'   => 'Кодзэ учкыны',
 
 'errorpagetitle'   => 'Янгыш',
 'tagline'          => '{{SITENAME}}-ысь материал',

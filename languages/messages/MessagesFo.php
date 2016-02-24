@@ -251,30 +251,12 @@ $messages = array(
 'navigation' => 'Navigatión',
 'and' => '&#32;og',
 
-# Cologne Blue skin
 'qbfind' => 'Finn',
 'qbbrowse' => 'Kaga',
-'qbedit' => 'Rætta',
 'qbpageoptions' => 'Henda síðan',
 'qbpageinfo' => 'Samanhangur',
-'qbmyoptions' => 'Mínar síður',
-'qbspecialpages' => 'Serstakar síður',
 'faq' => 'OSS',
-'faqpage' => 'Project:OSS',
 
-# Vector skin
-'vector-action-addsection' => 'Nýtt evni',
-'vector-action-delete' => 'Strika',
-'vector-action-move' => 'Flyt',
-'vector-action-protect' => 'Friða',
-'vector-action-undelete' => 'Endurstovna',
-'vector-action-unprotect' => 'Broyt friðing',
-'vector-simplesearch-preference' => 'Ger virkið betraði leiti uppskot (bert Vector útsjónd)',
-'vector-view-create' => 'Stovna',
-'vector-view-edit' => 'Rætta',
-'vector-view-history' => 'Søga',
-'vector-view-view' => 'Les',
-'vector-view-viewsource' => 'Vís keldu',
 'actions' => 'Gerningar',
 'namespaces' => 'Navnarúm',
 'variants' => 'Ymisk sløg',
@@ -297,7 +279,6 @@ $messages = array(
 'edit' => 'Rætta',
 'create' => 'Stovna',
 'editthispage' => 'Rætta hesa síðuna',
-'create-this-page' => 'Stovna hesa síðuna',
 'delete' => 'Strika',
 'deletethispage' => 'Strika hesa síðuna',
 'undelete_short' => 'Ógilda striking av {{PLURAL:$1|broyting|$1 broytingar}}',
@@ -312,19 +293,9 @@ $messages = array(
 'talkpagelinktext' => 'Kjak',
 'specialpage' => 'Serlig síða',
 'personaltools' => 'Persónlig amboð',
-'postcomment' => 'Nýtt brot',
-'articlepage' => 'Skoða innihaldssíðuna',
 'talk' => 'Kjak',
 'views' => 'Skoðanir',
 'toolbox' => 'Amboð',
-'userpage' => 'Vís brúkarisíðu',
-'projectpage' => 'Vís verkætlanarsíðu',
-'imagepage' => 'Vís síðu við fílum',
-'mediawikipage' => 'Vís kervisboðsíðu',
-'templatepage' => 'Vís fyrimyndsíðu',
-'viewhelppage' => 'Vís hjálpsíðu',
-'categorypage' => 'Vís bólkursíðu',
-'viewtalkpage' => 'Vís kjak',
 'otherlanguages' => 'Onnur mál',
 'redirectedfrom' => '(Ávíst frá $1)',
 'redirectpagesub' => 'Ávísingarsíða',
@@ -631,42 +602,6 @@ Nú verður tú ritaður inn...',
 'resetpass-wrong-oldpass' => 'Ógyldug fyribils ella verandi loyniorð.
 Møguliga hevur tú longu broytt títt loyniorð ella biðið um eitt nýtt fyribils loyniorð.',
 'resetpass-temp-password' => 'Fyribils loyniorð',
-
-# Special:PasswordReset
-'passwordreset' => 'Nullstilla loyniorðið',
-'passwordreset-text' => 'Útfyll hetta skjalið fyri at fáa eina áminning við t-posti við tínum konto upplýsingum.',
-'passwordreset-legend' => 'Nulstilla loyniorðið',
-'passwordreset-disabled' => 'Tað ber ikki til at nullstilla loyniorðið á hesi wiki.',
-'passwordreset-pretext' => '{{PLURAL:$1||Skriva ein av upplýsingunum niðanfyri}}',
-'passwordreset-username' => 'Brúkaranavn:',
-'passwordreset-domain' => 'Umdømi (domain):',
-'passwordreset-capture' => 'Sí tann endaliga t-postin?',
-'passwordreset-capture-help' => 'Um tú setir kross við henda teigin, so verður t-posturin (við fyribils loyniorðinum) vístur fyri tær og verður harumframt sendur til brúkaran.',
-'passwordreset-email' => 'T-post adressur:',
-'passwordreset-emailtitle' => 'konto upplýsingar á {{SITENAME}}',
-'passwordreset-emailtext-ip' => 'Onkur (óiva tú, frá IP adressu $1) hevur biðið um eina áminning av tínum konto upplýsingum fyri {{SITENAME}} ($4). Fylgjandi brúkara {{PLURAL:$3|konta er|kontur eru}}
-sett í samband við hesa t-post adressu:
-
-$2
-
-{{PLURAL:$3|Hetta fyribils loyniorðið|Hesi fyribils loyniorðini}} ganga út um {{PLURAL:$5|ein dag|$5 dagar}}.
-Tú eigur at rita inn og velja eitt nýtt loyniorð nú. Um onkur annar hevur gjørt hesa
-umbønina, ella um tú ert komin í tankar um títt uppruna loyniorð, og tú ikki longur
-ynskir at broyta tað, so kanst tú síggja burtur frá hesum boðum og halda fram at brúka títt gamla loyniorð.',
-'passwordreset-emailtext-user' => 'Brúkari $1 á {{SITENAME}} hevur biðið um eina áminning av tínum konto upplýsingum fyri {{SITENAME}}
-($4). Fylgjandi brúkara {{PLURAL:$3|konta er|kontur eru}} settar í samband við hesa t-post adressuna:
-
-$2
-
-{{PLURAL:$3|Hetta fyribils loyniorðið|Hesi fyribils loyniorðini}} ganga út um {{PLURAL:$5|ein dag|$5 dagar}}.
-Tú eigur at rita inn og velja eitt nýtt loyniorð nú. Um onkur annar hevur gjørt hesa
-umbønina, ella um tú ert komin í tankar um títt uppruna loyniorð, og tú ikki longur
-ynskir at broyta tað, so kanst tú síggja burtur frá hesum boðum og halda fram at brúka títt gamla loyniorð.',
-'passwordreset-emailelement' => 'Brúkaranavn: $1
-Fyribils loyniorð: $2',
-'passwordreset-emailsent' => 'Ein áminningar teldupostur er blivin sendur.',
-'passwordreset-emailsent-capture' => 'Ein áminningar teldupostur er blivin sendur, sum víst niðanfyri.',
-'passwordreset-emailerror-capture' => 'Ein áminningar teldupostur var gjørdur, sum víst niðanfyri, men tað miseydnaðist at senda til brúkaran: $1',
 
 # Special:ChangeEmail
 'changeemail' => 'Broyt teldupost adressu',
@@ -1050,13 +985,6 @@ Tú kanst royna at brúka ''all:'' sum fyrsta stavilsi fyri at søkja í øllum 
 Tú kanst leita via Google ímeðan.
 Legg til merkis, at teirra innihaldsyvirlit av {{SITENAME}} kann vera gamalt og ikki dagført.',
 
-# Quickbar
-'qbsettings' => 'Skundfjøl innstillingar',
-'qbsettings-none' => 'Eingin',
-'qbsettings-fixedleft' => 'Fast vinstru',
-'qbsettings-fixedright' => 'Fast høgru',
-'qbsettings-floatingleft' => 'Flótandi vinstru',
-'qbsettings-floatingright' => 'Flótandi høgra',
 
 # Preferences page
 'preferences' => 'Innstillingar',
@@ -1914,9 +1842,6 @@ Vinarliga vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] o
 'pageinfo-views' => 'Tal av skoðanum',
 
 # Skin names
-'skinname-standard' => 'Standardur',
-'skinname-nostalgia' => 'Nostalgiskur',
-'skinname-cologneblue' => 'Cologne-bláur',
 
 # Patrolling
 'markaspatrolleddiff' => 'Merk síðuna sum eftirhugda',

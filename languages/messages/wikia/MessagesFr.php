@@ -135,4 +135,10 @@ $messages = array_merge( $messages, array(
 ",
 
 'tog-enableuserjs' => 'Activer le code javascript personnel ([[Aide:CSS_et_JS_avancés|En savoir plus]])',
+
+'group-content-moderator' => 'Modérateurs de contenu',
+'group-content-moderator-member' => 'Modérateur de contenu',
+
+	'wikia-read-only-mode' => "Oups. Ceci est notre sauvegarde car notre principal centre de données est actuellement indisponible. Il se peut donc que vous ne puissiez malheureusement pas effectuer certaines tâches comme apporter des modifications, importer ou tchatter.
+ +Nous essayons de résoudre le problème et vous remercions de votre patience. S'il persiste pendant une période prolongée, n'hésitez pas à contacter Wikia à l'adresse e-mail community@wikia.com.",
 ) );

@@ -508,30 +508,12 @@ $messages = array(
 'navigation'    => '案内',
 'and'           => 'および',
 
-# Cologne Blue skin
 'qbfind'         => '検索',
 'qbbrowse'       => '閲覧',
-'qbedit'         => '編集',
 'qbpageoptions'  => 'このページについて',
 'qbpageinfo'     => '関連情報',
-'qbmyoptions'    => '自分のページ',
-'qbspecialpages' => '特別ページ',
 'faq'            => 'よくある質問と回答',
-'faqpage'        => 'Project:よくある質問と回答',
 
-# Vector skin
-'vector-action-addsection'       => '話題追加',
-'vector-action-delete'           => '削除',
-'vector-action-move'             => '移動',
-'vector-action-protect'          => '保護',
-'vector-action-undelete'         => '復帰',
-'vector-action-unprotect'        => '保護再設定',
-'vector-simplesearch-preference' => '検索語の提案機能を拡張する（ベクター外装のみ）',
-'vector-view-create'             => '作成',
-'vector-view-edit'               => '編集',
-'vector-view-history'            => '履歴表示',
-'vector-view-view'               => '閲覧',
-'vector-view-viewsource'         => 'ソース表示',
 'actions'                        => '操作',
 'namespaces'                     => '名前空間',
 'variants'                       => '変種',
@@ -554,7 +536,6 @@ $messages = array(
 'edit'              => '編集',
 'create'            => '作成',
 'editthispage'      => 'このページを編集',
-'create-this-page'  => 'このページを作成',
 'delete'            => '削除',
 'deletethispage'    => 'このページを削除',
 'undelete_short'    => '{{PLURAL:$1|$1版}}を復帰',
@@ -569,19 +550,9 @@ $messages = array(
 'talkpagelinktext'  => 'トーク',
 'specialpage'       => '特別ページ',
 'personaltools'     => '個人用ツール',
-'postcomment'       => '新しい節',
-'articlepage'       => '本文を表示',
 'talk'              => '議論',
 'views'             => '表示',
 'toolbox'           => 'ツールボックス',
-'userpage'          => '利用者ページを表示',
-'projectpage'       => 'プロジェクトのページを表示',
-'imagepage'         => 'ファイルページを表示',
-'mediawikipage'     => 'メッセージのページを表示',
-'templatepage'      => 'テンプレートのページを表示',
-'viewhelppage'      => 'ヘルプのページを表示',
-'categorypage'      => 'カテゴリのページを表示',
-'viewtalkpage'      => '議論を表示',
 'otherlanguages'    => '他の言語',
 'redirectedfrom'    => '（$1から転送）',
 'redirectpagesub'   => '転送ページ',
@@ -890,46 +861,6 @@ $2',
 'resetpass-wrong-oldpass'   => '仮パスワードまたは現在のパスワードが無効です。
 すでにパスワード変更を行っているか、新しい仮パスワードの発行を依頼している可能性があります。',
 'resetpass-temp-password'   => '仮パスワード：',
-
-# Special:PasswordReset
-'passwordreset'                    => 'パスワードの再設定',
-'passwordreset-text'               => 'このフォームに回答すると、ご自身のアカウントの詳細が電子メールで通知されます。',
-'passwordreset-legend'             => 'パスワードの再設定',
-'passwordreset-disabled'           => 'パスワードの再設定は、このウィキでは無効になっています。',
-'passwordreset-pretext'            => '{{PLURAL:$1||以下のデータのうちのひとつを入力してください。}}',
-'passwordreset-username'           => '利用者名：',
-'passwordreset-domain'             => 'ドメイン:',
-'passwordreset-capture'            => '送られるメールの内容を見ますか？',
-'passwordreset-capture-help'       => 'このボックスをチェックすると、利用者に送られるメールの内容（一時的なパスワードを含む）をあなたも見ることができます。',
-'passwordreset-email'              => '電子メールアドレス:',
-'passwordreset-emailtitle'         => '{{SITENAME}}上のアカウントの詳細',
-'passwordreset-emailtext-ip'       => 'どなたかが（おそらくあなた、IP アドレス $1 ）あなたの {{SITENAME}} ($4)
-におけるアカウントの詳細情報を送信するよう申請されました。
-下記の利用者{{PLURAL:$3|アカウント}}がこのメールアドレスと紐付けられています。
-
-$2
-
-{{PLURAL:$3|この一時的なパスワード}}は{{PLURAL:$5|$5日}}で有効期限が切れます。
-あなたはログインし、新しいパスワードをすぐに選ぶ必要があります。
-この申請が他のだれかによるものであるか、あるいはあなたが自身の元々のパスワードを
-覚えており、変えたくない場合には、このメッセージを無視して
-以前のパスワードを使い続けることができます。',
-'passwordreset-emailtext-user'     => '{{SITENAME}} の利用者 $1 があなたの {{SITENAME}} ($4)
-におけるアカウントの詳細情報を送信するよう申請されました。
-下記の利用者{{PLURAL:$3|アカウント}}がこのメールアドレスと紐付けられています。
-
-$2
-
-{{PLURAL:$3|この一時的なパスワード}}は{{PLURAL:$5|$5日}}で有効期限が切れます。
-あなたはログインし、新しいパスワードをすぐに選ぶ必要があります。
-この申請が他のだれかによるものであるか、あるいはあなたが自身の元々のパスワードを
-覚えており、変えたくない場合には、このメッセージを無視して
-以前のパスワードを使い続けることができます。',
-'passwordreset-emailelement'       => '利用者名： $1
-仮パスワード： $2',
-'passwordreset-emailsent'          => '確認のメールが送信されました。',
-'passwordreset-emailsent-capture'  => '確認のメールが送信されました。以下に表示します。',
-'passwordreset-emailerror-capture' => '生成された確認メールを以下に表示していますが、利用者への送信には失敗しました: $1',
 
 # Special:ChangeEmail
 'changeemail'          => 'メールアドレスの変更',
@@ -1427,14 +1358,6 @@ $1",
 さしあたってはGoogleなどの検索が利用できます。
 ただし外部の検索エンジンの索引にある{{SITENAME}}の情報は古い場合があります。',
 
-# Quickbar
-'qbsettings'                => 'クイックバー',
-'qbsettings-none'           => 'なし',
-'qbsettings-fixedleft'      => '左端',
-'qbsettings-fixedright'     => '右端',
-'qbsettings-floatingleft'   => 'ウィンドウの左上に固定',
-'qbsettings-floatingright'  => 'ウィンドウの右上に固定',
-'qbsettings-directionality' => 'あなたの言語のスクリプトの方向に応じて固定',
 
 # Preferences page
 'preferences'                   => '個人設定',
@@ -3086,15 +3009,7 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 
 # Stylesheets
 'common.css'              => '/* ここに書いたCSSはすべての外装に反映されます */',
-'standard.css'            => '/* ここに記述したCSSはスタンダード外装の利用者に影響します */',
-'nostalgia.css'           => '/* ここに記述したCSSはノスタルジア外装の利用者に影響します */',
-'cologneblue.css'         => '/* ここに記述したCSSはケルンブルー外装の利用者に影響します */',
 'monobook.css'            => '/* ここに記述したCSSはモノブック外装の利用者に影響します */',
-'myskin.css'              => '/* ここに記述したCSSはマイスキン外装の利用者に影響します */',
-'chick.css'               => '/* ここに記述したCSSはチック外装の利用者に影響します */',
-'simple.css'              => '/* ここに記述したCSSはシンプル外装の利用者に影響します */',
-'modern.css'              => '/* ここに記述したCSSはモダン外装の利用者に影響します */',
-'vector.css'              => '/* ここに記述したCSSはベクター外装の利用者に影響します */',
 'print.css'               => '/* ここに記述したCSSは印刷出力に影響します */',
 'handheld.css'            => '/* ここに記述したCSSは$wgHandheldStyleで設定された外装に基づく携帯機器に影響します */',
 'noscript.css'            => '/* ここに記述したCSSはJavaScriptを無効にしている利用者に影響します */',
@@ -3105,15 +3020,7 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 
 # Scripts
 'common.js'              => '/* ここにあるすべてのJavaScriptは、すべてのページ読み込みですべての利用者に対して読み込まれます */',
-'standard.js'            => '/* ここにあるすべてのJavaScriptは、スタンダード外装を使用している利用者に対して読み込まれます */',
-'nostalgia.js'           => '/* ここにあるすべてのJavaScriptは、ノスタルジア外装を使用している利用者に対して読み込まれます */',
-'cologneblue.js'         => '/* ここにあるすべてのJavaScriptは、ケルンブルー外装を使用している利用者に対して読み込まれます */',
 'monobook.js'            => '/* ここにあるすべてのJavaScriptは、モノブック外装を使用している利用者に対して読み込まれます */',
-'myskin.js'              => '/* ここにあるすべてのJavaScriptは、マイスキン外装を使用している利用者に対して読み込まれます */',
-'chick.js'               => '/* ここにあるすべてのJavaScriptは、チック外装を使用している利用者に対して読み込まれます */',
-'simple.js'              => '/* ここにあるすべてのJavaScriptは、シンプル外装を使用している利用者に対して読み込まれます */',
-'modern.js'              => '/* ここにあるすべてのJavaScriptは、モダン外装を使用している利用者に対して読み込まれます */',
-'vector.js'              => '/* ここにあるすべてのJavaScriptは、ベクター外装を使用している利用者に対して読み込まれます */',
 'group-autoconfirmed.js' => '/* ここにあるすべてのJavaScriptは、自動承認された利用者に対して読み込まれます */',
 'group-bot.js'           => '/* ここにあるすべてのJavaScriptは、ボットのみに対して読み込まれます */',
 'group-sysop.js'         => '/* ここにあるすべてのJavaScriptは、管理者のみに対して読み込まれます */',
@@ -3157,15 +3064,7 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 'pageinfo-viewsperedit'     => '閲覧回数に対する編集回数',
 
 # Skin names
-'skinname-standard'    => 'クラシック',
-'skinname-nostalgia'   => 'ノスタルジア',
-'skinname-cologneblue' => 'ケルンブルー',
 'skinname-monobook'    => 'モノブック',
-'skinname-myskin'      => 'マイスキン',
-'skinname-chick'       => 'チック',
-'skinname-simple'      => 'シンプル',
-'skinname-modern'      => 'モダン',
-'skinname-vector'      => 'ベクター',
 
 # Patrolling
 'markaspatrolleddiff'                 => '巡回済みにする',

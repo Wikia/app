@@ -695,13 +695,10 @@ class Article extends Page {
 		# that's not empty).
 		# This message always exists because it is in the i18n files
 		# Wikia change - begin
-		# This logic is moved to OutputPage::setHTMLTitle
-		#if ( $this->getTitle()->isMainPage() ) {
-		#	$msg = wfMessage( 'pagetitle-view-mainpage' )->inContentLanguage();
-		#	if ( !$msg->isDisabled() ) {
-		#		$wgOut->setHTMLTitle( $msg->title( $this->getTitle() )->text() );
-		#	}
-		#}
+		if ( $this->getTitle()->isMainPage() ) {
+			// The wiki name and brand name are added to all titles
+			$wgOut->setHTMLTitle( '' );
+		}
 		# Wikia change - end
 
 		# Check for any __NOINDEX__ tags on the page using $pOutput
@@ -1049,7 +1046,9 @@ class Article extends Page {
 			if ( !($user && $user->isLoggedIn()) && !$ip ) { # User does not exist
 				$wgOut->wrapWikiMsg( "<div class=\"mw-userpage-userdoesnotexist error\">\n\$1\n</div>",
 					array( 'userpage-userdoesnotexist-view', wfEscapeWikiText( $rootPart ) ) );
-			} elseif ( $user->isBlocked() ) { # Show log extract if the user is currently blocked
+			/* Wikia change begin - SUS-92 */
+			} elseif ( $user->isBlocked( true, false ) ) { # Show log extract if the user is currently blocked
+			/* Wikia change end */
 				LogEventsList::showLogExtract(
 					$wgOut,
 					'block',
@@ -1109,7 +1108,7 @@ class Article extends Page {
 				$text = wfMsgNoTrans( 'noarticletext-nopermission' );
 			}
 		}
-		$text = "<div class='noarticletext'>\n$text\n</div>";
+		$text = "<div class='noarticletext'>$text</div>";
 
 		$wgOut->addWikiText( $text );
 	}

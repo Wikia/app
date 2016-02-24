@@ -5,10 +5,41 @@ use Swagger\Client\ApiException;
 class ExternalTemplateTypesProvider {
 	const ERROR_MESSAGE = 'ExternalTemplateTypesProviderError';
 
-	private $tcs;
+	private static $instance;
+	private $tcs = null;
+	private $cachedTypes = [];
 
-	function __construct( $tcs ) {
+	/**
+	 * @return ExternalTemplateTypesProvider
+	 */
+	public static function getInstance() {
+		if (null === static::$instance) {
+			static::$instance = new static();
+		}
+
+		return static::$instance;
+	}
+
+	/**
+	 * @return TemplateClassificationService
+	 * @throws Exception
+	 */
+	public function getTCS() {
+		if ( $this->tcs === null ) {
+			throw new TCSNotSetException('TCS not set');
+		}
+
+		return $this->tcs;
+	}
+
+	/**
+	 * @param TemplateClassificationService $tcs
+	 * @returns ExternalTemplateTypesProvider
+	 */
+	public function setTCS( $tcs ) {
 		$this->tcs = $tcs;
+
+		return $this;
 	}
 
 	/**
@@ -21,7 +52,7 @@ class ExternalTemplateTypesProvider {
 	 */
 	public function getTemplateTypeFromTitle( $wikiId, $title ) {
 		return $title ? $this->getTemplateType( $wikiId, $title->getArticleID() ) :
-			AutomaticTemplateTypes::TEMPLATE_UNCLASSIFIED;
+			TemplateClassificationService::TEMPLATE_UNCLASSIFIED;
 	}
 
 	/**
@@ -33,10 +64,26 @@ class ExternalTemplateTypesProvider {
 	 * @return string - template type
 	 */
 	public function getTemplateType( $wikiId, $templateId ) {
-		$type = AutomaticTemplateTypes::TEMPLATE_UNCLASSIFIED;
+		if ( !isset( $this->cachedTypes[ $templateId ] ) ) {
+			$this->cachedTypes[ $templateId ] = $this->getExternalTemplateType( $wikiId, $templateId );
+		}
+
+		return $this->cachedTypes[ $templateId ];
+	}
+
+	/**
+	 * @desc gets template type from template ID from TCS
+	 *
+	 * @param $wikiId
+	 * @param $templateId
+	 *
+	 * @return string - template type
+	 */
+	private function getExternalTemplateType( $wikiId, $templateId ) {
+		$type = TemplateClassificationService::TEMPLATE_UNCLASSIFIED;
 
 		try {
-			$type = $this->tcs->getType( $wikiId, $templateId );
+			$type = $this->getTCS()->getType( $wikiId, $templateId );
 		} catch ( ApiException $exception ) {
 			$context = [ 'TCSApiException' => $exception ];
 			$this->handleException( $context );
@@ -53,4 +100,7 @@ class ExternalTemplateTypesProvider {
 	private function handleException( $context ) {
 		\Wikia\Logger\WikiaLogger::instance()->error( self::ERROR_MESSAGE, $context );
 	}
+}
+
+class TCSNotSetException extends \Exception {
 }

@@ -1,12 +1,25 @@
-$tc-error-bg-color: #e1390b;
-$tc-modal-text-color: #656e78;
-$tc-name-color-checked: #1a5eb8;
-$tc-name-color: #39424d;
+@import "skins/shared/color";
 
-.template-classification-edit {
-	display: inline-block;
-	margin: 0 4px;
+$tc-name-color-checked: $color-links;
+
+@if $is-dark-wiki {
+	$tc-name-color: lighten(mix($color-text, $color-links, 75%), 5%);
+	$tc-modal-text-color: darken($color-text, 20);
+} @else {
+	$tc-name-color: darken(mix($color-text, $color-links, 75%), 5%);
+	$tc-modal-text-color: lighten($color-text, 20);
+}
+
+.template-classification-type-wrapper {
+	position: relative;
+}
+
+.template-classification-type-text {
 	cursor: pointer;
+	.edit {
+		display: inline-block;
+		margin: 0 4px;
+	}
 }
 
 .tc-edit-rail-box {
@@ -97,6 +110,21 @@ $tc-name-color: #39424d;
 }
 
 .template-classification-error {
-	background-color: $tc-error-bg-color;
+	background-color: $color-error;
 	animation: fadeBackground 1s linear;
+}
+
+.template-classification-type-wrapper .tooltip,
+.wikia-page-header .tooltip {
+	color: $color-text;
+	white-space: normal;
+	width: 220px;
+
+	a {
+		color: $color-links;
+	}
+
+	.close-bulk-hint {
+		text-align: right;
+	}
 }

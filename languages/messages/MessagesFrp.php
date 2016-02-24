@@ -450,30 +450,12 @@ $messages = array(
 'navigation' => 'Navigacion',
 'and' => '&#32;et',
 
-# Cologne Blue skin
 'qbfind' => 'Rechèrchiér',
 'qbbrowse' => 'Dèfelar',
-'qbedit' => 'Changiér',
 'qbpageoptions' => 'Pâge de chouèx',
 'qbpageinfo' => 'Pâge d’enformacion',
-'qbmyoptions' => 'Mos chouèx',
-'qbspecialpages' => 'Pâges spèciâles',
 'faq' => 'FDQ',
-'faqpage' => 'Project:FDQ',
 
-# Vector skin
-'vector-action-addsection' => 'Apondre un sujèt',
-'vector-action-delete' => 'Suprimar',
-'vector-action-move' => 'Renomar',
-'vector-action-protect' => 'Protègiér',
-'vector-action-undelete' => 'Refâre',
-'vector-action-unprotect' => 'Changiér la protèccion',
-'vector-simplesearch-preference' => 'Activar los consèlys de rechèrche mèlyorâs (solament por « Vèctor »)',
-'vector-view-create' => 'Fâre',
-'vector-view-edit' => 'Changiér',
-'vector-view-history' => 'Fâre vêre l’historico',
-'vector-view-view' => 'Liére',
-'vector-view-viewsource' => 'Vêre lo tèxto sôrsa',
 'actions' => 'Accions',
 'namespaces' => 'Èspâços de noms',
 'variants' => 'Variantes',
@@ -496,7 +478,6 @@ $messages = array(
 'edit' => 'Changiér',
 'create' => 'Fâre',
 'editthispage' => 'Changiér ceta pâge',
-'create-this-page' => 'Fâre ceta pâge',
 'delete' => 'Suprimar',
 'deletethispage' => 'Suprimar ceta pâge',
 'undelete_short' => 'Refâre {{PLURAL:$1|yon changement|$1 changements}}',
@@ -511,19 +492,9 @@ $messages = array(
 'talkpagelinktext' => 'Discutar',
 'specialpage' => 'Pâge spèciâla',
 'personaltools' => 'Outils a sè',
-'postcomment' => 'Novèla sèccion',
-'articlepage' => 'Vêde la pâge de contegnu',
 'talk' => 'Discussion',
 'views' => 'Visualisacions',
 'toolbox' => 'Bouèta d’outils',
-'userpage' => 'Pâge usanciér',
-'projectpage' => 'Pâge du projèt',
-'imagepage' => 'Vêde la pâge du fichiér',
-'mediawikipage' => 'Vêde la pâge du mèssâjo',
-'templatepage' => 'Vêde la pâge du modèlo',
-'viewhelppage' => 'Vêde la pâge d’éde',
-'categorypage' => 'Vêde la pâge de catègorie',
-'viewtalkpage' => 'Pâge de discussion',
 'otherlanguages' => 'Ôtres lengoues',
 'redirectedfrom' => '(Redirigiê dês $1)',
 'redirectpagesub' => 'Pâge de redirèccion',
@@ -836,44 +807,6 @@ Branchement en cors...',
 'resetpass-wrong-oldpass' => 'Contresegno temporèro ou ben d’ora fôx.
 Vos éd pôt-étre ja changiê voutron contresegno avouéc reusséta ou ben demandâ un contresegno temporèro novél.',
 'resetpass-temp-password' => 'Contresegno temporèro :',
-
-# Special:PasswordReset
-'passwordreset' => 'Tornar inicialisar lo contresegno',
-'passwordreset-text' => 'Rempléd ceti formulèro por recêvre un mèssâjo de rapèl des dètalys de voutron compto.',
-'passwordreset-legend' => 'Tornar inicialisar lo contresegno',
-'passwordreset-disabled' => 'La remisa a zérô des contresegnos at étâ dèsactivâ sur ceti vouiqui.',
-'passwordreset-pretext' => '{{PLURAL:$1||Buchiéd yon des bocons de balyês ce-desot}}',
-'passwordreset-username' => 'Nom d’usanciér :',
-'passwordreset-domain' => 'Domêno :',
-'passwordreset-capture' => 'Vêre lo mèssâjo que rèsulte ?',
-'passwordreset-capture-help' => 'Se vos pouentâd cela câsa, lo mèssâjo (avouéc lo contresegno temporèro) vos serat montrâ en mémo temps que serat mandâ a l’usanciér.',
-'passwordreset-email' => 'Adrèce èlèctronica :',
-'passwordreset-emailtitle' => 'Dètalys du compto dessus {{SITENAME}}',
-'passwordreset-emailtext-ip' => 'Quârqu’un (probâblament vos, avouéc l’adrèce IP $1) at demandâ un rapèl des dètalys
-de voutron compto por {{SITENAME}} ($4). {{PLURAL:$3|Ceti compto usanciér est associyê|Cetos comptos usanciérs sont associyês}}
-a cela adrèce èlèctronica :
-
-$2
-
-{{PLURAL:$3|Cél contresegno temporèro èxpirerat|Celos contresegnos temporèros èxpireront}} dens $5 jorn{{PLURAL:$5||s}}.
-Ora, vos vos dête branchiér et pués chouèsir un contresegno novél. Se cela demanda vint pas de vos,
-ou ben se vos vos rapelâd ora de voutron contresegno originâl et que vos souhètâd pas més nen changiér,
-vos pouede ignorar ceti mèssâjo et continuar a utilisar voutron viely contresegno.',
-'passwordreset-emailtext-user' => 'L’usanciér $1 dessus {{SITENAME}} at demandâ un rapèl des dètalys
-de voutron compto por {{SITENAME}} ($4). {{PLURAL:$3|Ceti compto usanciér est associyê|Cetos comptos usanciérs sont associyês}}
-a cela adrèce èlèctronica :
-
-$2
-
-{{PLURAL:$3|Cél contresegno temporèro èxpirerat|Celos contresegnos temporèros èxpireront}} dens $5 jorn{{PLURAL:$5||s}}.
-Ora, vos vos dête branchiér et pués chouèsir un contresegno novél. Se cela demanda vint pas de vos,
-ou ben se vos vos rapelâd ora de voutron contresegno originâl et que vos souhètâd pas més nen changiér,
-vos pouede ignorar ceti mèssâjo et continuar a utilisar voutron viely contresegno.',
-'passwordreset-emailelement' => 'Nom d’usanciér : $1
-Contresegno temporèro : $2',
-'passwordreset-emailsent' => 'Un mèssâjo de rapèl at étâ mandâ.',
-'passwordreset-emailsent-capture' => 'Un mèssâjo de rapèl at étâ mandâ, qu’est montrâ ce-desot.',
-'passwordreset-emailerror-capture' => 'Un mèssâjo de rapèl at étâ fêt, qu’est montrâ ce-desot, mas l’èxpèdicion a l’usanciér at pas reussia : $1',
 
 # Special:ChangeEmail
 'changeemail' => 'Changiér l’adrèce èlèctronica',
@@ -1369,14 +1302,6 @@ Notâd bien que l’usâjo des lims de navigacion tornerat inicialisar cela colo
 En atendent la rèactivacion, vos pouede fâre una rechèrche per Google.
 Atencion, lor endèxacion du contegnu de {{SITENAME}} pôt pas étre a jorn.',
 
-# Quickbar
-'qbsettings' => 'Bârra d’outils',
-'qbsettings-none' => 'Niona',
-'qbsettings-fixedleft' => 'Gôche',
-'qbsettings-fixedright' => 'Drêta',
-'qbsettings-floatingleft' => 'Fllotenta a gôche',
-'qbsettings-floatingright' => 'Fllotenta a drêta',
-'qbsettings-directionality' => 'Fixa, d’aprés la dirèccionalitât d’ècritura de voutra lengoua',
 
 # Preferences page
 'preferences' => 'Prèferences',
@@ -3057,15 +2982,7 @@ Pèrmèt de rètablir la vèrsion devant et pués d’apondre una rêson dens la
 
 # Stylesheets
 'common.css' => '/* Lo code CSS betâ ique serat aplicâ a tôs los habelyâjos. */',
-'standard.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Estandârd ». */',
-'nostalgia.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Cafârd ». */',
-'cologneblue.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Blu de Cologne ». */',
 'monobook.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « MonoBook ». */',
-'myskin.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « MonHabelyâjo ». */',
-'chick.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Pugin ». */',
-'simple.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Simplo ». */',
-'modern.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Modèrno ». */',
-'vector.css' => '/* Lo code CSS betâ ique afècterat los usanciérs de l’habelyâjo « Vèctor ». */',
 'print.css' => '/* Lo code CSS betâ ique afècterat les emprèssions. */',
 'handheld.css' => '/* Lo code CSS betâ ique afècterat los aparèlys mobilos d’aprés l’habelyâjo configurâ dedens « $wgHandheldStyle ». */',
 'noscript.css' => '/* Lo code CSS betâ ique afècterat los usanciérs qu’ont dèsactivâ lo code JavaScript. */',
@@ -3076,15 +2993,7 @@ Pèrmèt de rètablir la vèrsion devant et pués d’apondre una rêson dens la
 
 # Scripts
 'common.js' => '/* Tot code JavaScript betâ ique serat chargiê per tôs los usanciérs avouéc châque chargement de pâge. */',
-'standard.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Estandârd ». */',
-'nostalgia.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Cafârd ». */',
-'cologneblue.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Blu de Cologne ». */',
 'monobook.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « MonoBook ». */',
-'myskin.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « MonHabelyâjo ». */',
-'chick.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Pugin ». */',
-'simple.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Simplo ». */',
-'modern.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Modèrno ». */',
-'vector.js' => '/* Tot code JavaScript betâ ique serat chargiê per los usanciérs de l’habelyâjo « Vèctor ». */',
 'group-autoconfirmed.js' => '/* Tot code JavaScript betâ ique serat chargiê ren que por los usanciérs encartâs. */',
 'group-bot.js' => '/* Tot code JavaScript betâ ique serat chargiê ren que por los bots. */',
 'group-sysop.js' => '/* Tot code JavaScript betâ ique serat chargiê ren que por los administrators. */',
@@ -3129,15 +3038,7 @@ O est probâblament diu a un lim de vers un seto de defôr qu’aparêt sur la l
 'pageinfo-viewsperedit' => 'Visualisacions per changement',
 
 # Skin names
-'skinname-standard' => 'Estandârd',
-'skinname-nostalgia' => 'Cafârd',
-'skinname-cologneblue' => 'Blu de Cologne',
 'skinname-monobook' => 'MonoBook',
-'skinname-myskin' => 'MonHabelyâjo',
-'skinname-chick' => 'Pugin',
-'skinname-simple' => 'Simplo',
-'skinname-modern' => 'Modèrno',
-'skinname-vector' => 'Vèctor',
 
 # Patrolling
 'markaspatrolleddiff' => 'Marcar coment survelyê',

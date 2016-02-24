@@ -427,9 +427,10 @@ class DataMartService extends Service {
 		$date = date( 'Y-m-d' ) . ' 00:00:01';
 		do {
 			$date = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-				->SELECT( 'max(time_id) as t' )
+				->SELECT( 'time_id as t' )
 				->FROM( 'rollup_wiki_article_pageviews' )
 				->WHERE( 'time_id' )->LESS_THAN( $date )
+				->ORDER_BY( 'time_id' )->DESC()
 				->LIMIT( 1 )
 				->cache( self::CACHE_TOP_ARTICLES )
 				->run( $db, function ( ResultWrapper $result ) {
@@ -818,9 +819,7 @@ class DataMartService extends Service {
 	 * @return array
 	 */
 	public static function getPageViewsForArticles( Array $articlesIds, $timeId, $wikiId, $periodId = self::PERIOD_ID_WEEKLY ) {
-		$app = F::app();
-
-		$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
+		$db = DataMartService::getDB();
 
 		$articlePageViews = ( new WikiaSQL() )->skipIf( self::isDisabled() )
 			->SELECT( 'article_id', 'pageviews' )
@@ -837,9 +836,7 @@ class DataMartService extends Service {
 	}
 
 	public static function getWAM200Wikis() {
-		$app = F::app();
-
-		$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
+		$db = DataMartService::getDB();
 
 		$wikis = ( new WikiaSQL() )->skipIf( self::isDisabled() )
 			->cacheGlobal( self::TTL )
@@ -862,9 +859,7 @@ class DataMartService extends Service {
 	 * @return bool|array An array of IDs or `false` on no results
 	 */
 	public function getWikisOrderByWam( $limit = self::DEFAULT_TOP_WIKIAS_LIMIT, array $wikisIds = [] ) {
-		$app = F::app();
-
-		$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
+		$db = DataMartService::getDB();
 
 		$sql = ( new WikiaSQL() )->skipIf( self::isDisabled() )
 			->cacheGlobal( self::TTL )

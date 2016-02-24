@@ -30,7 +30,8 @@ $(function ($) {
 		$element = $(event.target);
 
 		label = getLabelByIdentifier($element) ||
-			getLabelByDOM($element);
+			getLabelByDOM($element) ||
+				getLabelByDataTrackingLabel($element);
 
 		if (label !== false) {
 			track({
@@ -38,6 +39,10 @@ $(function ($) {
 				label: label
 			});
 		}
+	}
+
+	function getLabelByDataTrackingLabel($element) {
+		return $element.data('tracking-label') || false;
 	}
 
 	/**

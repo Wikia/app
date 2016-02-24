@@ -21,15 +21,15 @@ class TemplateDraftController extends WikiaController {
 			 */
 			$parentTitle = Title::newFromText( $title->getBaseText(), $title->getNamespace() );
 
-			$tc = new TemplateClassificationService();
+			$tc = new UserTemplateClassificationService();
 			try {
 				$tc->classifyTemplate(
 					$wgCityId,
 					$parentTitle->getArticleID(),
 					TemplateClassificationService::TEMPLATE_INFOBOX,
-					TemplateClassificationService::USER_PROVIDER,
 					$wgUser->getId()
 				);
+
 			} catch ( Swagger\Client\ApiException $e ) {
 				// Do not worry if you're not able to classify the template.
 			}

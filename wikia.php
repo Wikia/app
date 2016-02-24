@@ -76,6 +76,8 @@ if ( !empty( $wgEnableNirvanaAPI ) ) {
 		] );
 	}
 
+	wfHandleCrossSiteAJAXdomain(); // PLATFORM-1719
+
 	$response->sendHeaders();
 	wfRunHooks( 'NirvanaAfterRespond', [ $app, $response ] );
 

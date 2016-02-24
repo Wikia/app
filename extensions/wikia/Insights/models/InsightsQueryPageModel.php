@@ -92,7 +92,7 @@ abstract class InsightsQueryPageModel extends InsightsPageModel {
 	/**
 	 * Removes an item from the querycache table if it has been fixed
 	 *
-	 * @param $type A qc_type value
+	 * @param string $type A qc_type value
 	 * @param Title $title A Title object for the article
 	 * @return bool
 	 * @throws DBUnexpectedError
