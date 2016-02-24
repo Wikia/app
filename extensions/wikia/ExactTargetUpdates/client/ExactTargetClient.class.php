@@ -35,7 +35,7 @@ class ExactTargetClient {
 	 * Deletes Subscriber object in ExactTarget by API request
 	 */
 	public function deleteSubscriber( $userEmail ) {
-		$deleteRequest = ExactTargetRequestBuilder::getDeleteBuilder()
+		$deleteRequest = ExactTargetRequestBuilder::getSubscriberDeleteBuilder()
 			->withUserEmail( $userEmail )
 			->build();
 
@@ -51,7 +51,7 @@ class ExactTargetClient {
 	}
 
 	public function deleteUserGroup( $userId, $group ) {
-		$request = ExactTargetRequestBuilder::getDeleteBuilder()
+		$request = ExactTargetRequestBuilder::getUserGroupDeleteBuilder()
 			->withUserId( $userId )
 			->withGroup( $group )
 			->build();

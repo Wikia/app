@@ -15,8 +15,16 @@ class ExactTargetRequestBuilder {
 		return new UpdateRequestBuilder();
 	}
 
-	public static function getDeleteBuilder() {
-		return new DeleteRequestBuilder();
+	public static function getUserGroupDeleteBuilder() {
+		return new DeleteRequestBuilder( DeleteRequestBuilder::DELETE_GROUP_TYPE );
+	}
+
+	public static function getSubscriberDeleteBuilder() {
+		return new DeleteRequestBuilder( DeleteRequestBuilder::DELETE_SUBSCRIBER_TYPE );
+	}
+
+	public static function getUserDeleteBuilder() {
+		return new DeleteRequestBuilder( DeleteRequestBuilder::DELETE_USER_TYPE );
 	}
 
 	public static function getCreateBuilder() {

@@ -5,6 +5,7 @@ class BaseRequestBuilder {
 	const EXACT_TARGET_API_URL = 'http://exacttarget.com/wsdl/partnerAPI';
 	const SUBSCRIBER_OBJECT_TYPE = 'Subscriber';
 	const DATA_EXTENSION_OBJECT_TYPE = 'DataExtensionObject';
+	const CUSTOMER_KEY_USER = 'user';
 
 	protected $email;
 	protected $userId;
@@ -54,6 +55,27 @@ class BaseRequestBuilder {
 		}
 
 		return $subscriber;
+	}
+
+	protected function prepareDataObject( $customerKey, $keys, $properties = null ) {
+		$obj = new \ExactTarget_DataExtensionObject();
+		$obj->CustomerKey = $customerKey;
+		$obj->Keys = $this->wrapApiProperties( $keys );
+		// accept empty array as valid properties list
+		if ( isset( $properties ) ) {
+			$obj->Properties = $this->wrapApiProperties( $properties );
+		}
+
+		return $obj;
+	}
+
+	protected function wrapApiProperties( $properties ) {
+		$result = [ ];
+		foreach ( $properties as $key => $value ) {
+			$result[] = $this->wrapApiProperty( $key, $value );
+		}
+
+		return $result;
 	}
 
 	/**

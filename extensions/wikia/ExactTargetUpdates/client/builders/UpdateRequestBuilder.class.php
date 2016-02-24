@@ -5,12 +5,10 @@ use Wikia\Util\Assert;
 
 class UpdateRequestBuilder extends BaseRequestBuilder {
 	const SAVE_OPTION_TYPE = 'SaveOption';
-	const CUSTOMER_KEY_USER = 'user';
 	const CUSTOMER_KEY_USER_PROPERTIES = 'user_properties';
-
 	const EXACT_TARGET_USER_ID_PROPERTY = 'user_id';
-	private $userData;
 
+	private $userData;
 	private $properties;
 
 	public function withUserData( array $userData ) {
@@ -53,14 +51,8 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 		Assert::true( isset( $this->userId ) );
 		$objects = [ ];
 		foreach ( $properties as $sProperty => $sValue ) {
-			$oDE = new \ExactTarget_DataExtensionObject();
-			$oDE->CustomerKey = self::CUSTOMER_KEY_USER_PROPERTIES;
-			$oDE->Properties = [ $this->wrapApiProperty( 'up_value', $sValue ) ];
-			$oDE->Keys = [
-				$this->wrapApiProperty( 'up_user', $id ),
-				$this->wrapApiProperty( 'up_property', $sProperty )
-			];
-			$objects[] = $oDE;
+			$objects[] = $this->prepareDataObject( self::CUSTOMER_KEY_USER_PROPERTIES,
+				[ 'up_user' => $id, 'up_property' => $sProperty ], [ 'up_value' => $sValue ] );
 		}
 		return $objects;
 	}
@@ -78,17 +70,8 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 			$userId = $this->extractUserIdFromData( $aUserData );
 			Assert::true( !empty( $userId ) );
 
-			$oDE = new \ExactTarget_DataExtensionObject();
-			$oDE->CustomerKey = self::CUSTOMER_KEY_USER;
-			$oDE->Keys = [ $this->wrapApiProperty( self::EXACT_TARGET_USER_ID_PROPERTY, $userId ) ];
-
-			$aApiProperties = [ ];
-			foreach ( $aUserData as $sKey => $sValue ) {
-				$aApiProperties[] = $this->wrapApiProperty( $sKey, $sValue );
-			}
-			$oDE->Properties = $aApiProperties;
-
-			$aDataExtension[] = $oDE;
+			$aDataExtension[] = $this->prepareDataObject( self::CUSTOMER_KEY_USER,
+				[ self::EXACT_TARGET_USER_ID_PROPERTY => $userId ], $aUserData );
 		}
 		return $aDataExtension;
 	}

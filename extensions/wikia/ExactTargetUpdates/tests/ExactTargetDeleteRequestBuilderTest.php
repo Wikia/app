@@ -9,6 +9,28 @@ class ExactTargetDeleteRequestBuilderTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @dataProvider userIdProvider
+	 */
+	public function testDeleteUserRequestBuild( $userId ) {
+		$data = $this->prepareUserData( $userId );
+		$expected = $this->prepareDeleteOption( $data, 'DataExtensionObject' );
+
+		$request = \Wikia\ExactTarget\ExactTargetRequestBuilder::getUserDeleteBuilder()
+			->withUserId( $userId )
+			->build();
+
+		$this->assertEquals( $expected, $request );
+	}
+
+	public function userIdProvider() {
+		return [
+			[ 0 ],
+			[ 1 ],
+			[ null ]
+		];
+	}
+
+	/**
 	 * @dataProvider emailsDataProvider
 	 */
 	public function testDeleteRequest( $email ) {
@@ -16,7 +38,7 @@ class ExactTargetDeleteRequestBuilderTest extends WikiaBaseTest {
 		$subscribers = RequestBuilderTestsHelper::prepareSubscriber( $email );
 		$expected = $this->prepareDeleteOption( $subscribers, 'Subscriber' );
 
-		$oDeleteRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::getDeleteBuilder()
+		$oDeleteRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::getSubscriberDeleteBuilder()
 			->withUserEmail( $email )
 			->build();
 
@@ -37,7 +59,7 @@ class ExactTargetDeleteRequestBuilderTest extends WikiaBaseTest {
 		$preparedData = $this->prepareGroupData( $userId, $group );
 		$expected = $this->prepareDeleteOption( $preparedData, 'DataExtensionObject' );
 
-		$oDeleteRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::getDeleteBuilder()
+		$oDeleteRequest = \Wikia\ExactTarget\ExactTargetRequestBuilder::getUserGroupDeleteBuilder()
 			->withUserId( $userId )
 			->withGroup( $group )
 			->build();
@@ -63,10 +85,19 @@ class ExactTargetDeleteRequestBuilderTest extends WikiaBaseTest {
 		return [ $obj ];
 	}
 
-	private function prepareDeleteOption( $aSubscribers, $type ) {
+	private function prepareUserData( $userId ) {
+		$obj = new ExactTarget_DataExtensionObject();
+		$obj->CustomerKey = 'user';
+		$obj->Keys = [
+			RequestBuilderTestsHelper::prepareApiProperty( 'user_id', $userId ),
+		];
+		return [ $obj ];
+	}
+
+	private function prepareDeleteOption( $data, $type ) {
 		$oDeleteRequest = new \ExactTarget_DeleteRequest();
 		$vars = [ ];
-		foreach ( $aSubscribers as $item ) {
+		foreach ( $data as $item ) {
 			$vars[] = $this->wrapToSoapVar( $item, $type );
 		}
 		$oDeleteRequest->Objects = $vars;
