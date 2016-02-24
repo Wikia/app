@@ -103,7 +103,7 @@ class UserrightsPage extends SpecialPage {
 	}
 
 	public function userCanExecute( User $user ) {
-		return $this->userCanChangeRights( $user, false );
+		return self::userCanChangeRights( $user, false, false );
 	}
 
 	/**
@@ -151,7 +151,7 @@ class UserrightsPage extends SpecialPage {
 			$this->isself = true;
 		}
 
-		if( !$this->userCanChangeRights( $user, $this->isself, true ) ) {
+		if( !self::userCanChangeRights( $user, $this->isself, true ) ) {
 			// @todo FIXME: There may be intermediate groups we can mention.
 			$msg = $user->isAnon() ? 'userrights-nologin' : 'userrights-notallowed';
 			throw new PermissionsError( null, array( array( $msg ) ) );
