@@ -4728,8 +4728,7 @@ class User {
 	 * @param $group String Name of the group to add
 	 */
 	public function addGroup( $group ) {
-		global $wgUser;
-		return self::permissionsService()->addToGroup( $wgUser, $this, $group );
+		return self::permissionsService()->addToGroup( RequestContext::getMain()->getUser(), $this, $group );
 	}
 
 	/**
@@ -4738,8 +4737,7 @@ class User {
 	 * @param $group String Name of the group to remove
 	 */
 	public function removeGroup( $group ) {
-		global $wgUser;
-		return self::permissionsService()->removeFromGroup( $wgUser, $this, $group );
+		return self::permissionsService()->removeFromGroup( RequestContext::getMain()->getUser(), $this, $group );
 	}
 
 	/**

@@ -268,6 +268,15 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 	}
 
 	/**
+	 * Checks if the given group is among the global groups
+	 * @param $group string Group name
+	 * @return string True if is global group
+	 */
+	public function isGlobalGroup( $group ) {
+		return in_array( $group, $this->getGlobalGroups() );
+	}
+
+	/**
 	 * @return string[] List of implicit groups,
 	 * that is groups to which one is added automatically and not through manual assignment
 	 */
@@ -276,11 +285,29 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 	}
 
 	/**
+	 * Checks if the given group is among the implicit groups
+	 * @param $group string Group name
+	 * @return string True if is implicit group
+	 */
+	public function isImplicitGroup( $group ) {
+		return in_array( $group, $this->getImplicitGroups() );
+	}
+
+	/**
 	 * @return string[] List of explicit groups, that is groups to which one can be manually assigned.
 	 * Both global and local.
 	 */
 	public function getExplicitGroups() {
 		return $this->explicitGroups;
+	}
+
+	/**
+	 * Checks if the given group is among the explicit groups
+	 * @param $group string Group name
+	 * @return string True if is explicit group
+	 */
+	public function isExplicitGroup( $group ) {
+		return in_array( $group, $this->getExplicitGroups() );
 	}
 
 	/**

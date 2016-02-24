@@ -14,7 +14,7 @@ trait PermissionsServiceAccessor {
 	/**
 	 * @return PermissionsService
 	 */
-	private function permissionsService() {
+	protected function permissionsService() {
 		if ( is_null( $this->permissionsService ) ) {
 			$this->permissionsService = Injector::getInjector()->get( PermissionsService::class );
 		}

@@ -10,16 +10,37 @@ interface PermissionsConfiguration {
 	public function getGlobalGroups();
 
 	/**
+	 * Checks if the given group is among the global groups
+	 * @param $group string Group name
+	 * @return string True if is global group
+	 */
+	public function isGlobalGroup( $group );
+
+	/**
 	 * @return string[] List of implicit groups,
 	 * that is groups to which one is added automatically and not through manual assignment
 	 */
 	public function getImplicitGroups();
 
 	/**
+	 * Checks if the given group is among the implicit groups
+	 * @param $group string Group name
+	 * @return string True if is implicit group
+	 */
+	public function isImplicitGroup( $group );
+
+	/**
 	 * @return string[] List of explicit groups, that is groups to which one can be manually assigned.
 	 * Both global and local.
 	 */
 	public function getExplicitGroups();
+
+	/**
+	 * Checks if the given group is among the explicit groups
+	 * @param $group string Group name
+	 * @return string True if is explicit group
+	 */
+	public function isExplicitGroup( $group );
 
 	/**
 	 * @return string[] List of all defined permissions

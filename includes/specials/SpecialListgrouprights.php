@@ -95,7 +95,7 @@ class SpecialListGroupRights extends SpecialPage {
 					SpecialPage::getTitleFor( 'Listusers' ),
 					wfMsgHtml( 'listgrouprights-members' )
 				);
-			} elseif ( !in_array( $group, $this->permissionsService()->getConfiguration()->getImplicitGroups() ) ) {
+			} elseif ( !$this->permissionsService()->getConfiguration()->isImplicitGroup( $group ) ) {
 				$grouplink = '<br />' . Linker::linkKnown(
 					SpecialPage::getTitleFor( 'Listusers' ),
 					wfMsgHtml( 'listgrouprights-members' ),
@@ -108,19 +108,13 @@ class SpecialListGroupRights extends SpecialPage {
 			}
 
 			$groupArr = $this->permissionsService()->getConfiguration()->getGroupsChangeableByGroup( $group );
-
-			$addgroups = isset( $groupArr['add'] ) ? $groupArr['add'] : array();
-			$removegroups = isset( $groupArr['remove'] ) ? $groupArr['remove'] : array();
-			$addgroupsSelf = isset( $groupArr['add-self'] ) ? $groupArr['add-self'] : array();
-			$removegroupsSelf = isset( $groupArr['remove-self'] ) ? $groupArr['remove-self'] : array();
-
 			$id = $group == '*' ? false : Sanitizer::escapeId( $group );
 			$out->addHTML( Html::rawElement( 'tr', array( 'id' => $id ),
 				"
 				<td>$grouppage$grouplink</td>
 					<td>" .
-						$this->formatPermissions( $permissions, $addgroups, $removegroups,
-							$addgroupsSelf, $removegroupsSelf ) .
+						$this->formatPermissions( $permissions, $groupArr['add'], $groupArr['remove'],
+							$groupArr['add-self'], $groupArr['remove-self'] ) .
 					'</td>
 				'
 			) );
