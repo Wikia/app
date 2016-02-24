@@ -72,14 +72,14 @@ class WikiaMobileCategoryService extends WikiaService {
 		 * @var $categoryPage CategoryPage
 		 */
 		$categoryPage = $this->request->getVal( 'categoryPage' );
-		$isMercury = $this->request->getBool( 'isMercury' );
+		$format = $this->request->getVal( 'format' );
 
 		if ( $categoryPage instanceof CategoryPage ) {
 			$this->initModel();
 
 			$title = $categoryPage->getTitle();
 			$category = Category::newFromTitle( $title );
-			$collections = $this->model->getCollection( $category, $isMercury );
+			$collections = $this->model->getCollection( $category, $format );
 
 			$this->response->setVal( 'total', $collections['count'] );
 			$this->response->setVal( 'collections', $collections['items'] );
@@ -97,7 +97,7 @@ class WikiaMobileCategoryService extends WikiaService {
 	public function getBatch() {
 		// see Category::newFromName for valid format
 		$categoryName = str_replace( ' ', '_', $this->request->getVal( 'category' ) );
-		$isMercury = $this->request->getBool( 'isMercury' );
+		$format = $this->request->getVal( 'format' );
 		$index = $this->request->getVal( 'index' );
 		$batch = $this->request->getInt( 'batch' );
 		$err = false;
@@ -109,7 +109,7 @@ class WikiaMobileCategoryService extends WikiaService {
 				$this->initModel();
 
 				$data = wfPaginateArray(
-					$this->model->getCollection( $category, $isMercury )['items'][$index],
+					$this->model->getCollection( $category, $format )['items'][$index],
 					WikiaMobileCategoryModel::BATCH_SIZE,
 					$batch
 				);

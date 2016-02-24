@@ -12,14 +12,14 @@ class WikiaMobileCategoryModel extends WikiaModel {
 	const CACHE_VERSION = 0;
 	const BATCH_SIZE = 25;
 
-	public function getCollection( Category $category, $isMercury = false ) {
+	public function getCollection( Category $category, $format = 'json' ) {
 		return WikiaDataAccess::cache(
-			$this->getItemsCollectionCacheKey( $category->getID(), $isMercury ),
+			$this->getItemsCollectionCacheKey( $category->getID(), $format ),
 			self::CACHE_TTL_ITEMSCOLLECTION,
-			function () use ( $category, $isMercury ) {
+			function () use ( $category, $format ) {
 				wfProfileIn( __METHOD__ );
 
-				$viewer = new WikiaMobileCategoryViewer( $category, $isMercury );
+				$viewer = new WikiaMobileCategoryViewer( $category, $format );
 				$viewer->doCategoryQuery();
 
 				wfProfileOut( __METHOD__ );
@@ -76,9 +76,8 @@ class WikiaMobileCategoryModel extends WikiaModel {
 		return false;
 	}
 
-	private function getItemsCollectionCacheKey( $categoryId, $isMercury ) {
-		$skinName = !empty( $isMercury ) ? 'mercury': 'wikiamobile';
-		return wfmemcKey( __CLASS__, 'ItemsCollection', $categoryId, $skinName, self::CACHE_VERSION );
+	private function getItemsCollectionCacheKey( $categoryId ) {
+		return wfmemcKey( __CLASS__, 'ItemsCollection', $categoryId, self::CACHE_VERSION );
 	}
 
 	private function getExhibitionItemsCacheKey( $titleText ) {
@@ -101,18 +100,18 @@ class WikiaMobileCategoryModel extends WikiaModel {
 class WikiaMobileCategoryViewer extends CategoryViewer {
 	private $items;
 	private $count;
-	public $isMercury;
+	public $isJSON;
 
 	const LIMIT = 5000;
 
-	function __construct( Category $category, $isMercury = false ) {
+	function __construct( Category $category, $format = 'json' ) {
 		parent::__construct( $category->getTitle(), RequestContext::getMain() );
 
 		$this->limit = self::LIMIT; # BAC-265
 
 		$this->items = [ ];
 		$this->count = 0;
-		$this->isMercury = $isMercury;
+		$this->isJSON = ( $format === 'json' || F::app()->checkSkin( 'wikiamobile' ) );
 	}
 
 	function addImage( Title $title, $sortkey, $pageLength, $isRedirect = false ) {

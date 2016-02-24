@@ -488,7 +488,7 @@ class BlogArticle extends Article {
 			}
 
 			// If request comes from wikiamobile or from MercuryApi return not-parsed output
-			if ( F::app()->checkSkin( 'wikiamobile' ) || !empty( $catView->isMercury ) ) {
+			if ( !empty( $catView->isJSON ) ) {
 				$catView->blogs[] = [
 					'name' => $title->getText(),
 					'url' => $title->getLocalUrl(),
