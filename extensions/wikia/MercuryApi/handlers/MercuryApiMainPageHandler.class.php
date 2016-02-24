@@ -111,11 +111,25 @@ class MercuryApiMainPageHandler {
 	}
 
 	public static function shouldGetMainPageData( $isMainPage ) {
-	global $wgEnableMainPageDataMercuryApi, $wgCityId;
+		global $wgEnableMainPageDataMercuryApi, $wgCityId;
 
 		return $isMainPage &&
 		!empty( $wgEnableMainPageDataMercuryApi ) &&
 		( new CommunityDataService( $wgCityId ) )->hasData();
 	}
 
+	/**
+	 * @TODO XW-1174 - rethink this
+	 * We need to define which details we should send and from where we should fetch it when article doesn't exist
+	 *
+	 * @param Title $title
+	 * @return array
+	 */
+	public static function getMainPageMockedDetails( Title $title ) {
+		return [
+			'ns' => 0,
+			'title' => $title->getText(),
+			'revision' => []
+		];
+	}
 }
