@@ -6,6 +6,20 @@ class RevisionUpvotesService {
 	const UPVOTE_REVISIONS_TABLE = 'upvote_revisions';
 	const UPVOTE_USERS_TABLE = 'upvote_users';
 
+	public function hasUserUpvotedRevision( $wikiId, $revisionId, $userId ) {
+		$db = $this->getDatabaseForRead();
+
+		$result = ( new WikiaSQL() )
+			->SELECT( '*' )
+			->FROM( self::UPVOTE_REVISIONS_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->AND_( 'user_id' )->EQUAL_TO( $userId )
+			->AND_( 'revision_id' )->EQUAL_TO( $revisionId )
+			->run( $db );
+
+		return $result->numRows() > 0;
+	}
+
 	/**
 	 * Add upvote for given revision
 	 *
@@ -14,6 +28,7 @@ class RevisionUpvotesService {
 	 * @param int $revisionId
 	 * @param int $userId
 	 * @param int $fromUser
+	 * @return int
 	 */
 	public function addUpvote( $wikiId, $pageId, $revisionId, $userId, $fromUser ) {
 		$id = 0;
@@ -35,6 +50,7 @@ class RevisionUpvotesService {
 	 *
 	 * @param int $id
 	 * @param int $fromUser
+	 * @return int
 	 */
 	public function removeUpvote( $id, $fromUser ) {
 		$db = $this->getDatabaseForWrite();
@@ -253,6 +269,7 @@ class RevisionUpvotesService {
 	 * @param int $userId
 	 * @param int $fromUser
 	 *
+	 * @return int
 	 * @throws DBQueryError
 	 * @throws MWException
 	 */
