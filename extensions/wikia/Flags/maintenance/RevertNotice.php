@@ -5,6 +5,7 @@ require_once( $dir . 'maintenance/Maintenance.php' );
 
 use Flags\Models\Flag;
 use Flags\Models\FlaggedPages;
+use Wikia\Util\GlobalStateWrapper;
 
 class RevertNotice extends Maintenance {
 
@@ -15,15 +16,24 @@ class RevertNotice extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgCityId;
+		global $wgCityId, $wgEnableFlagsExt;
+
+		if ( empty( $wgEnableFlagsExt ) ) {
+			exit("Flags extension is disabled on wiki {$wgCityId}\n");
+		}
 
 		$pages = ( new FlaggedPages() )->getFlaggedPagesFromDatabase( $wgCityId );
 		if ( empty( $pages ) ) {
-			exit( "There are no pages with flags on this wiki ($wgCityId)\n");
+			exit( "There are no pages with flags on this wiki {$wgCityId}\n");
 		}
 
 		$flagModel = new Flag();
 		$mwf = \MagicWord::get( 'flags' );
+
+		$wrapper = new GlobalStateWrapper( [
+			'wgEnableFlagsExt' => false,
+			'wgUser' => User::newFromName( 'Wikia' )
+		] );
 
 		foreach ( $pages as $page ) {
 			$templates = '';
@@ -37,26 +47,34 @@ class RevertNotice extends Maintenance {
 
 			if ( !empty( $templates ) ) {
 				$wiki = WikiPage::newFromID( $page );
-				$content = $wiki->getText();
 
-				if ( $mwf->match( $content ) ) {
-					$text = $mwf->replace( $templates, $content );
-				} else {
-					$text = $templates . $content;
-				}
+				if ( $wiki && $wiki->getTitle()->inNamespace( NS_MAIN ) ) {
+					$content = $wiki->getText();
 
-				if ( strcmp( $content, $text ) !== 0 ) {
-					$wiki->doEdit( $text, self::EDIT_SUMMARY, EDIT_FORCE_BOT );
+					if ( $mwf->match( $content ) ) {
+						$text = $mwf->replace( $templates, $content );
+					} else {
+						$text = $templates . $content;
+					}
 
-					$log = sprintf(
-						"Templates: %s where added to %s \n",
-						implode( ',', $logTemplates ),
-						$wiki->getTitle()->getText()
-					);
-					$this->output($log);
+					if ( strcmp( $content, $text ) !== 0 ) {
+						$wrapper->wrap( function() use ( $wiki, $text ) {
+							$wiki->doEdit( $text, self::EDIT_SUMMARY, EDIT_FORCE_BOT );
+						});
+
+						$log = sprintf(
+							"Templates: %s where added to %s (%d) \n",
+							implode( ',', $logTemplates ),
+							$wiki->getTitle()->getText(),
+							$wiki->getTitle()->getArticleId()
+						);
+						$this->output($log);
+					}
 				}
 			}
 		}
+
+		$this->disableFlagsExt( $wgCityId );
 	}
 
 	private function createTemplateString( $flag ) {
@@ -71,6 +89,10 @@ class RevertNotice extends Maintenance {
 		$template .= "}}\n";
 
 		return $template;
+	}
+
+	private function disableFlagsExt( $wikiId ) {
+		WikiFactory::setVarByName( 'wgEnableFlagsExt', $wikiId, false );
 	}
 }
 
