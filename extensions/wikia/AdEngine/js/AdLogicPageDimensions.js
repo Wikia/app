@@ -41,13 +41,15 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			LEFT_SKYSCRAPER_2:       'oneColumn',
 			LEFT_SKYSCRAPER_3:       'oneColumn',
 			INCONTENT_BOXAD_1:       'oneColumn',
-			PREFOOTER_MIDDLE_BOXAD:  'noMiddlePrefooter'
+			PREFOOTER_MIDDLE_BOXAD:  'noMiddlePrefooter',
+			INCONTENT_LEADERBOARD:   'noIncontentLeaderboard'
 		},
 		mediaQueriesToCheck = {
 			twoColumns: 'screen and (min-width: 1024px)',
 			oneColumn: 'screen and (max-width: 1023px)',
 			noTopButton: 'screen and (max-width: 1063px)',
-			noMiddlePrefooter: 'screen and (max-width: 1083px)'
+			noMiddlePrefooter: 'screen and (max-width: 1083px)',
+			noIncontentLeaderboard: 'screen and (max-width: 1595px)'
 		},
 		mediaQueriesMet,
 		matchMedia;
