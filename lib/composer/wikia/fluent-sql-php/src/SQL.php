@@ -15,6 +15,13 @@ use FluentSql\Exception\SqlException;
 use FluentSql\Functions\SqlFunction;
 
 class SQL {
+
+	/** @const FORCE_NON_NUMERIC_LIMIT whether to force using non numeric LIMIT clause, e.g. a subquery */
+	const FORCE_NON_NUMERIC_LIMIT = true;
+
+	/** @const FORCE_NON_NUMERIC_OFFSET whether to force using non numeric OFFSET clause, e.g. a subquery */
+	const FORCE_NON_NUMERIC_OFFSET = true;
+
 	/**
 	 * order in which relevant functions are called so future calls can modify them
 	 * (like ->EQUAL_TO() modifying ->WHERE())
@@ -871,14 +878,14 @@ class SQL {
 	 * @param $limit
 	 * @return SQL
 	 */
-	public function LIMIT($limit) {
-		$this->limit = new Clause\Limit($limit);
+	public function LIMIT($limit, $allowNonNumeric = false) {
+		$this->limit = new Clause\Limit($limit, $allowNonNumeric);
 
 		return $this->called($this->limit);
 	}
 
-	public function OFFSET($offset) {
-		$this->offset = new Clause\Offset($offset);
+	public function OFFSET($offset, $allowNonNumeric = false) {
+		$this->offset = new Clause\Offset($offset, $allowNonNumeric);
 
 		return $this->called($this->offset);
 	}
@@ -1457,8 +1464,9 @@ class SQL {
 		}
 
 		if ($autoIterate) {
+			// Wikia change begin
 			\Wikia\Util\Assert::true( $result instanceof \ResultWrapper, 'FluentSQL::query - did not get ResultWrapper - instead got ' . get_class($result) );
-
+			// Wikia change end
 			$data = $this->autoIterate($result, $callback);
 		} else {
 			$data = $callback($result);

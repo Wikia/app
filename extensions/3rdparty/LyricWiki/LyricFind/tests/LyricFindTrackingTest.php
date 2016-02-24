@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group LyricFindTracking
+ */
 class LyricFindTrackingTest extends WikiaBaseTest {
 
 	const TEST_NAMESPACE_TRACKED = 666;

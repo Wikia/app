@@ -1,7 +1,23 @@
 <?php
 $dir = dirname( __FILE__ ) . '/';
 
-$wgAutoloadClasses[ 'PortableInfoboxBuilderService' ] = $dir . 'PortableInfoboxBuilderService.class.php';
+$wgAutoloadClasses[ 'PortableInfoboxBuilderService' ] = $dir . 'services/PortableInfoboxBuilderService.class.php';
+
+$wgBuilderNodes = [
+	'Node',
+	'NodeImage',
+	'NodeInfobox',
+	'NodeData',
+	'NodeDefault',
+	'NodeCaption',
+	'NodeLabel',
+	'NodeTitle',
+];
+
+$wgAutoloadClasses[ 'Wikia\\PortableInfoboxBuilder\\Nodes\\NodeBuilder' ] = $dir . 'services/Nodes/NodeBuilder.class.php';
+foreach ( $wgBuilderNodes as $node ) {
+	$wgAutoloadClasses[ 'Wikia\\PortableInfoboxBuilder\\Nodes\\' . $node ] = $dir . 'services/Nodes/' . $node . '.class.php';
+}
 
 $wgAutoloadClasses[ 'PortableInfoboxBuilderController' ] = $dir . 'PortableInfoboxBuilderController.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxBuilderSpecialController' ] = $dir . 'PortableInfoboxBuilderSpecialController.class.php';

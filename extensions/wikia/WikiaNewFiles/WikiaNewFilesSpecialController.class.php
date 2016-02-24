@@ -18,7 +18,6 @@ class WikiaNewFilesSpecialController extends WikiaSpecialPageController {
 		$output = $this->getContext()->getOutput();
 		$request = $this->getRequest();
 
-		$output->setPageTitle( wfMessage( 'wikianewfiles-title' ) );
 		$this->wg->SupressPageSubtitle = true;
 
 		Wikia::addAssetsToOutput( 'upload_photos_dialog_js' );

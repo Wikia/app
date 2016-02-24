@@ -3678,7 +3678,7 @@ class User {
 	 */
 	public function matchEditToken( $val, $salt = '', $request = null ) {
 		$sessionToken = $this->getEditToken( $salt, $request );
-		$equals = hash_equals( $sessionToken, $val );
+		$equals = !is_null( $val ) && hash_equals( $sessionToken, $val );
 		if ( !$equals ) {
 			wfDebug( "User::matchEditToken: broken session data\n" );
 
@@ -3717,7 +3717,7 @@ class User {
 	 */
 	public function matchEditTokenNoSuffix( $val, $salt = '', $request = null ) {
 		$sessionToken = $this->getEditToken( $salt, $request );
-		return hash_equals( substr( $sessionToken, 0, 32 ), substr( $val, 0, 32 ) );
+		return !is_null( $val ) && hash_equals( substr( $sessionToken, 0, 32 ), substr( $val, 0, 32 ) );
 	}
 
 	/**

@@ -64,6 +64,21 @@ $wikia-top-ads-index: 2;
 	}
 }
 
+#TOP_LEADERBOARD_AB {
+	max-width: $page-width-medium;
+	margin: 0 auto;
+	position: relative;
+	z-index: 2;
+
+	.thumbnails-h-abp {
+		border: none;
+	}
+
+	.trc_rbox_container {
+		margin: -10px 0;
+	}
+}
+
 /** Skyscrapers **/
 @media #{$breakpoint-small-plus-up} {
 	#WikiaRail.left-skyscraper-3-present {
@@ -233,6 +248,8 @@ body >a >img[src$="noad.gif"] {
 	position: absolute;
 	#INCONTENT_BOXAD_1 {
 		position: relative;
+		text-align: center;
+		width: 300px;
 	}
 }
 
@@ -240,7 +257,7 @@ body >a >img[src$="noad.gif"] {
 	max-width: 700px;
 }
 
-#NATIVE_TABOOLA_ARTICLE, #NATIVE_TABOOLA_RAIL, #RECIRCULATION_RAIL {
+#NATIVE_TABOOLA_ARTICLE, #NATIVE_TABOOLA_RAIL, #TOP_LEADERBOARD_AB, #RECIRCULATION_RAIL {
 	.trc_rbox_header .trc_rbox_header_span {
 		color: $color-page-opposite;
 	}

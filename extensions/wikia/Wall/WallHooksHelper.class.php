@@ -595,7 +595,7 @@ class WallHooksHelper {
 	 * @param $canEdit
 	 * @return array
 	 */
-	private static function getAction( Title $userTalkPageTitle, boolean $canEdit ) {
+	private static function getAction( Title $userTalkPageTitle, $canEdit ) {
 		$action = [
 			'class' => '',
 			'text' => wfMessage( 'viewsource' )->text(),

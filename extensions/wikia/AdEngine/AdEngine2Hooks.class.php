@@ -13,7 +13,6 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
 	const ASSET_GROUP_LIFTIUM_EXTRA = 'liftium_ads_extra_js';
-	const ASSET_GROUP_OASIS_IN_CONTENT_ADS = 'adengine2_oasis_in_content_ads_js';
 
 	/**
 	 * Handle URL parameters and set proper global variables early enough
@@ -127,7 +126,7 @@ class AdEngine2Hooks {
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 
-		global $wgAdDriverUseGoogleConsumerSurveys, $wgAdDriverUseTopInContentBoxad, $wgAdDriverUseTaboola;
+		global $wgAdDriverUseGoogleConsumerSurveys, $wgAdDriverUseTaboola;
 		$isArticle = WikiaPageType::getPageType() === 'article';
 
 		$jsAssets[] = self::ASSET_GROUP_ADENGINE_DESKTOP;
@@ -139,10 +138,6 @@ class AdEngine2Hooks {
 
 		if ( $wgAdDriverUseGoogleConsumerSurveys && $isArticle ) {
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE_GCS;
-		}
-
-		if ( $wgAdDriverUseTopInContentBoxad ) {
-			$jsAssets[] = self::ASSET_GROUP_OASIS_IN_CONTENT_ADS;
 		}
 
 		if ( $wgAdDriverUseTaboola && $isArticle ) {
