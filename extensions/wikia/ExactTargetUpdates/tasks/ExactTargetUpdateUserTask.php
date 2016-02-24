@@ -39,30 +39,6 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 	}
 
 	/**
-	 * Task for removing a record with user group and user in ExactTarget
-	 * @param int $iUserId
-	 * @param string $sGroup name of removed group
-	 */
-	public function removeUserGroup( $iUserId, $sGroup ) {
-		$oHelper = $this->getUserHelper();
-		$aApiParams = $oHelper->prepareUserGroupRemoveParams( $iUserId, [ $sGroup ] );
-		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
-		$oApiDataExtension = $this->getApiDataExtension();
-		$oRemoveUserGroupResult = $oApiDataExtension->deleteRequest( $aApiParams );
-
-		$this->info( __METHOD__ . ' OverallStatus: ' . $oRemoveUserGroupResult->OverallStatus );
-		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oRemoveUserGroupResult ) );
-
-		if ( $oRemoveUserGroupResult->OverallStatus === 'Error' ) {
-			throw new \Exception(
-				'Error in ' . __METHOD__ . ': ' . $oRemoveUserGroupResult->Results->StatusMessage
-			);
-		}
-
-		return $oRemoveUserGroupResult->Results->StatusMessage;
-	}
-
-	/**
 	 * Task for incremental updating number of user contributions on specific wiki
 	 * @param array $aUsersEditsData should has following form:
 	 * Array (

@@ -102,8 +102,7 @@ class ExactTargetUserHooks {
 	 */
 	public function onAfterUserRemoveGlobalGroup( \User $oUser, $sGroup ) {
 		/* Get and run the task */
-		$oUserHelper = $this->getUserHelper();
-		$task = $oUserHelper->getUpdateUserTask();
+		$task = new ExactTargetUserUpdate();
 		$task->call( 'removeUserGroup', $oUser->getId(), $sGroup );
 		$task->queue();
 		return true;

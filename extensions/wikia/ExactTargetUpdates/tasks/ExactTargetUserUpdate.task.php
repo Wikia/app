@@ -33,14 +33,14 @@ class ExactTargetUserUpdate extends BaseTask {
 
 		// Remove old email if necessary
 		if ( Driver::shouldDeleteAsEmailChanged( $userEmailOld, $userEmailNew )
-			&& !Driver::isUsed( $userId, $client->retrieveUserIdsByEmail( $userEmailOld ) )
+			 && !Driver::isUsed( $userId, $client->retrieveUserIdsByEmail( $userEmailOld ) )
 		) {
 			$client->deleteSubscriber( $userEmailOld );
 		}
 
 		// Create new email if necessary
 		if ( Driver::shouldCreateAsEmailChanged( $userEmailOld, $userEmailNew )
-			&& !Driver::isUsed( $userId, $client->retrieveUserIdsByEmail( $userEmailNew ) )
+			 && !Driver::isUsed( $userId, $client->retrieveUserIdsByEmail( $userEmailNew ) )
 		) {
 			$client->createSubscriber( $userEmailNew );
 		}
@@ -59,6 +59,11 @@ class ExactTargetUserUpdate extends BaseTask {
 	 */
 	public function updateUserProperties( $userId, array $userProperties ) {
 		$this->getClient()->updateUserProperties( $userId, $userProperties );
+		return self::STATUS_OK;
+	}
+
+	public function removeUserGroup( $userId, $group ) {
+		$this->getClient()->deleteUserGroup( $userId, $group );
 		return self::STATUS_OK;
 	}
 

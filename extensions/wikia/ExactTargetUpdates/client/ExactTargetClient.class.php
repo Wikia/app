@@ -50,6 +50,15 @@ class ExactTargetClient {
 		return $this->sendRequest( self::CREATE_CALL, $oRequest );
 	}
 
+	public function deleteUserGroup( $userId, $group ) {
+		$request = ExactTargetRequestBuilder::getDeleteBuilder()
+			->withUserId( $userId )
+			->withGroup( $group )
+			->build();
+
+		return $this->sendRequest( self::DELETE_CALL, $request );
+	}
+
 	/**
 	 * Update or create user properties DataExtension object in ExactTarget by API request
 	 * that reflects Wikia user_properties table
