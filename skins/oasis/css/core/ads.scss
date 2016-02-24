@@ -9,6 +9,7 @@
 @import 'ads-in-content';
 
 $wikia-top-ads-index: 2;
+$taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 
 /** Hide invisible slots and 1x1 iframes **/
 .wikia-ad[id^="INVISIBLE_"],
@@ -65,17 +66,44 @@ $wikia-top-ads-index: 2;
 }
 
 #TOP_LEADERBOARD_AB {
+	background: rgba($color-page, $page-opacity);
 	max-width: $page-width-medium;
-	margin: 0 auto;
+	margin: 10px auto;
+	padding: 0 $padding-width-medium;
 	position: relative;
-	z-index: 2;
+	z-index: $wikia-top-ads-index;
 
 	.thumbnails-h-abp {
 		border: none;
 	}
+}
 
-	.trc_rbox_container {
-		margin: -10px 0;
+@if $widthType == 0 {
+	@media #{$breakpoint-small-only} {
+		#TOP_LEADERBOARD_AB {
+			padding: 0 $padding-width-small;
+			width: $page-width-small - 2 * $content-border-width;
+		}
+	}
+
+	@media #{$breakpoint-medium-only} {
+		#TOP_LEADERBOARD_AB {
+			padding: 0 $padding-width-medium;
+			width: $page-width-medium;
+		}
+	}
+
+	@media #{$breakpoint-large-up} {
+		#TOP_LEADERBOARD_AB {
+			padding: 0 $padding-width-large;
+			width: $page-width-large;
+		}
+	}
+
+	@media #{$taboola-small-breakpoint} {
+		#TOP_LEADERBOARD_AB {
+			width: auto;
+		}
 	}
 }
 
