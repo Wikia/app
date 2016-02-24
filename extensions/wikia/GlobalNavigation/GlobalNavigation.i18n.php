@@ -13,9 +13,9 @@ $messages['en'] = array(
 	'global-navigation-explore-wikia-link-label' => 'Explore Wikia',
 	'global-navigation-explore-wikia-mercury-link-label' => 'Top Communities',
 	'global-navigation-wam-link' => 'http://www.wikia.com/WAM',
-	'global-navigation-menu-hubs' => '*http://gameshub.wikia.com/wiki/Games_Hub|Games|games
-*http://movieshub.wikia.com/wiki/Movies_Hub|Movies|movies
-*http://tvhub.wikia.com/wiki/TV_Hub|TV|tv',
+	'global-navigation-menu-hubs' => '*http://fandom.wikia.com/games|Games|games
+*http://fandom.wikia.com/movies|Movies|movies
+*http://fandom.wikia.com/tv|TV|tv',
 	'global-navigation-wam-link-label' => 'Trending Wikias',
 	'global-navigation-local-search-placeholder' => 'Search within $1...',
 	'global-navigation-search-wikia' => 'Search $1...',
