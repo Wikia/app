@@ -8,10 +8,11 @@ class RevisionApiController extends WikiaApiController {
 	 * Gets diff between two revisions.
 	 * Also includes data about revision and article
 	 *
-	 * @param int $oldId old revision id (required)
-	 * @param int $newId new revision id (required)
-	 * @param bool $avatar should get user avatar
-	 * @param bool $oldRev should get data about old revision
+	 * @requestParam int $oldId old revision id (required)
+	 * @requestParam int $newId new revision id (required)
+	 * @requestParam bool $avatar should get user avatar
+	 * @requestParam bool $oldRev should get data about old revision
+	 * @requestParam bool $upvote check if a user has already upvoted a revision
 	 *
 	 * @throws MissingParameterApiException
 	 */

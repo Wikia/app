@@ -6,6 +6,14 @@ class RevisionUpvotesService {
 	const UPVOTE_REVISIONS_TABLE = 'upvote_revisions';
 	const UPVOTE_USERS_TABLE = 'upvote_users';
 
+	/**
+	 * Checks if a user has already upvoted a given revision.
+	 *
+	 * @param $wikiId
+	 * @param $revisionId
+	 * @param $userId
+	 * @return bool
+	 */
 	public function hasUserUpvotedRevision( $wikiId, $revisionId, $userId ) {
 		$db = $this->getDatabaseForRead();
 
@@ -15,6 +23,7 @@ class RevisionUpvotesService {
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
 			->AND_( 'user_id' )->EQUAL_TO( $userId )
 			->AND_( 'revision_id' )->EQUAL_TO( $revisionId )
+			->LIMIT(1)
 			->run( $db );
 
 		return $result->numRows() > 0;
