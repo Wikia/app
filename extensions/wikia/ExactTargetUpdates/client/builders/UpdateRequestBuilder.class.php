@@ -5,19 +5,12 @@ use Wikia\Util\Assert;
 
 class UpdateRequestBuilder extends BaseRequestBuilder {
 	const SAVE_OPTION_TYPE = 'SaveOption';
-	const CUSTOMER_KEY_USER_PROPERTIES = 'user_properties';
 	const EXACT_TARGET_USER_ID_PROPERTY = 'user_id';
 
 	private $userData;
-	private $properties;
 
 	public function withUserData( array $userData ) {
 		$this->userData = $userData;
-		return $this;
-	}
-
-	public function withProperties( $properties ) {
-		$this->properties = $properties;
 		return $this;
 	}
 

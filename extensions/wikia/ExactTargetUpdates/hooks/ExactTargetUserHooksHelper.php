@@ -42,12 +42,4 @@ class ExactTargetUserHooksHelper {
 	public function getUpdateUserTask() {
 		return new ExactTargetUpdateUserTask();
 	}
-
-	/**
-	 * Returns new instance of ExactTargetDeleteUserTask
-	 * @return ExactTargetDeleteUserTask
-	 */
-	public function getDeleteUserTask() {
-		return new ExactTargetDeleteUserTask();
-	}
 }

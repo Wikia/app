@@ -6,7 +6,6 @@ class RetrieveRequestBuilder extends BaseRequestBuilder {
 
 	private $filterProperty;
 	private $filterValues;
-	private $properties;
 	private $resource;
 
 	const DATA_EXTENSION_OBJECT_USER_TYPE = 'DataExtensionObject[user]';
@@ -22,11 +21,6 @@ class RetrieveRequestBuilder extends BaseRequestBuilder {
 		$oRetrieveRequestMsg->RetrieveRequest = $retrieveRequest;
 
 		return $oRetrieveRequestMsg;
-	}
-
-	public function withProperties( $properties ) {
-		$this->properties = $properties;
-		return $this;
 	}
 
 	public function withFilterProperty( $filterProperty ) {

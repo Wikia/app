@@ -27,6 +27,10 @@ class ExactTargetRequestBuilder {
 		return new DeleteRequestBuilder( DeleteRequestBuilder::DELETE_USER_TYPE );
 	}
 
+	public static function getPropertiesDeleteBuilder() {
+		return new DeleteRequestBuilder( DeleteRequestBuilder::DELETE_PROPERTIES_TYPE );
+	}
+
 	public static function getCreateBuilder() {
 		return new CreateRequestBuilder();
 	}

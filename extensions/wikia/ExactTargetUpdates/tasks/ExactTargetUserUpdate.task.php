@@ -8,6 +8,7 @@ use Wikia\Util\Assert;
 class ExactTargetUserUpdate extends BaseTask {
 
 	private $client;
+	private static $propertiesList = [ 'marketingallowed', 'unsubscribed', 'language' ];
 
 	const STATUS_OK = 'OK';
 
@@ -68,7 +69,16 @@ class ExactTargetUserUpdate extends BaseTask {
 	}
 
 	public function deleteUserData( $userId ) {
+		$userEmail = $this->getClient()->retrieveEmailByUserId( $userId );
+		if ( !empty( $userEmail ) &&
+			 /* Skip deletion if no email found or email used by other account */
+			 !Driver::isUsed( $userId, $this->getClient()->retrieveUserIdsByEmail( $userEmail ) )
+		) {
+			$this->getClient()->deleteSubscriber( $userEmail );
+		}
 		$this->getClient()->deleteUser( $userId );
+		$this->getClient()->deleteuserProperties( $userId, self::$propertiesList );
+
 		return self::STATUS_OK;
 	}
 

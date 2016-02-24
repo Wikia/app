@@ -84,6 +84,15 @@ class ExactTargetClient {
 		return $this->sendRequest( self::UPDATE_CALL, $request );
 	}
 
+	public function deleteUserProperties( $userId, $properties ) {
+		$request = ExactTargetRequestBuilder::getPropertiesDeleteBuilder()
+			->withUserId( $userId )
+			->withProperties( $properties )
+			->build();
+
+		return $this->sendRequest( self::DELETE_CALL, $request );
+	}
+
 	public function retrieveEmailByUserId( $userId ) {
 		$result = $this->retrieve( [ 'user_email' ], 'user_id', [ $userId ], ResourceEnum::USER );
 

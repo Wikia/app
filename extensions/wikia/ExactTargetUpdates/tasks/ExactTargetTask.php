@@ -14,15 +14,6 @@ class ExactTargetTask extends BaseTask {
 	}
 
 	/**
-	/**
-	 * Returns an instance of ExactTargetDeleteUserTask class
-	 * @return ExactTargetDeleteUserTask
-	 */
-	protected function getDeleteUserTask() {
-		return new ExactTargetDeleteUserTask();
-	}
-
-	/**
 	 * Returns an instance of ExactTargetRetrieveUserTask class
 	 * @return ExactTargetRetrieveUserTask
 	 */

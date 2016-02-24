@@ -58,7 +58,6 @@ $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetTask'] =  $dir . '/tasks/ExactT
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetUserTaskHelper'] =  $dir . '/tasks/ExactTargetUserTaskHelper.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetRetrieveUserTask'] =  $dir . '/tasks/ExactTargetRetrieveUserTask.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetUpdateUserTask'] =  $dir . '/tasks/ExactTargetUpdateUserTask.php' ;
-$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetDeleteUserTask'] =  $dir . '/tasks/ExactTargetDeleteUserTask.php';
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetUserUpdateDriver'] =  $dir . '/tasks/ExactTargetUserUpdateDriver.php';
 /* Refactored tasks that are to replace old ones */
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetUserUpdate'] =  $dir . '/tasks/ExactTargetUserUpdate.task.php' ;

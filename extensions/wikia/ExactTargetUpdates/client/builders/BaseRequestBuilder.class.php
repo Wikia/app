@@ -3,12 +3,16 @@ namespace Wikia\ExactTarget\Builders;
 
 class BaseRequestBuilder {
 	const EXACT_TARGET_API_URL = 'http://exacttarget.com/wsdl/partnerAPI';
+
 	const SUBSCRIBER_OBJECT_TYPE = 'Subscriber';
 	const DATA_EXTENSION_OBJECT_TYPE = 'DataExtensionObject';
+
 	const CUSTOMER_KEY_USER = 'user';
+	const CUSTOMER_KEY_USER_PROPERTIES = 'user_properties';
 
 	protected $email;
 	protected $userId;
+	protected $properties;
 
 	public function withUserEmail( $email ) {
 		$this->email = $email;
@@ -17,6 +21,11 @@ class BaseRequestBuilder {
 
 	public function withUserId( $userId ) {
 		$this->userId = $userId;
+		return $this;
+	}
+
+	public function withProperties( $properties ) {
+		$this->properties = $properties;
 		return $this;
 	}
 

@@ -9,6 +9,29 @@ class ExactTargetDeleteRequestBuilderTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @dataProvider propertiesListProvider
+	 */
+	public function testDeletePropertiesRequestBuild( $userId, $properties ) {
+		$data = $this->preparePropertiesData( $userId, $properties );
+		$expected = $this->prepareDeleteOption( $data, 'DataExtensionObject' );
+
+		$request = \Wikia\ExactTarget\ExactTargetRequestBuilder::getPropertiesDeleteBuilder()
+			->withUserId( $userId )
+			->withProperties( $properties )
+			->build();
+
+		$this->assertEquals( $expected, $request );
+	}
+
+	public function propertiesListProvider() {
+		return [
+			[ 0, [ ] ],
+			[ 1, [ 'a', 'b', 'b' ] ],
+			[ null, null ]
+		];
+	}
+
+	/**
 	 * @dataProvider userIdProvider
 	 */
 	public function testDeleteUserRequestBuild( $userId ) {
@@ -92,6 +115,20 @@ class ExactTargetDeleteRequestBuilderTest extends WikiaBaseTest {
 			RequestBuilderTestsHelper::prepareApiProperty( 'user_id', $userId ),
 		];
 		return [ $obj ];
+	}
+
+	private function preparePropertiesData( $userId, $properties ) {
+		$result = [ ];
+		foreach ( $properties as $name ) {
+			$obj = new ExactTarget_DataExtensionObject();
+			$obj->CustomerKey = 'user_properties';
+			$obj->Keys = [
+				RequestBuilderTestsHelper::prepareApiProperty( 'up_user', $userId ),
+				RequestBuilderTestsHelper::prepareApiProperty( 'up_property', $name ),
+			];
+			$result[] = $obj;
+		}
+		return $result;
 	}
 
 	private function prepareDeleteOption( $data, $type ) {
