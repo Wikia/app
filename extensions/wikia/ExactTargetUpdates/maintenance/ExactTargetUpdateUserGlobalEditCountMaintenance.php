@@ -77,7 +77,7 @@ class ExactTargetUpdateUserGlobalEditCountMaintenance extends Maintenance {
 
 	private function addUsersUpdateTask( $usersData ) {
 		foreach ( $usersData as $userData ) {
-			$task = new \Wikia\ExactTarget\ExactTargetUserUpdate();
+			$task = new \Wikia\ExactTarget\ExactTargetUserTask();
 			$task->call( 'updateUser', $userData );
 			$task->queue();
 		}

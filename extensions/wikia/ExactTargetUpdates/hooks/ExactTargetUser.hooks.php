@@ -24,7 +24,7 @@ class ExactTargetUserHooks {
 	 */
 	public function onEditAccountClosed( \User $oUser ) {
 		/* Get and run the task */
-		$task = new ExactTargetUserUpdate();
+		$task = new ExactTargetUserTask();
 		$task->call( 'deleteUserData', $oUser->getId() );
 		$task->queue();
 		return true;
@@ -51,7 +51,7 @@ class ExactTargetUserHooks {
 		$userData = $userHelper->prepareUserParams( $user );
 
 		/* Get and run the task */
-		$task = new ExactTargetUserUpdate();
+		$task = new ExactTargetUserTask();
 		$task->call( 'updateUser', $userData );
 		$task->queue();
 		return true;
@@ -86,7 +86,7 @@ class ExactTargetUserHooks {
 	 */
 	public function onAfterUserAddGlobalGroup( \User $oUser, $sGroup ) {
 		/* Get and run the task */
-		$task = new ExactTargetUserUpdate();
+		$task = new ExactTargetUserTask();
 		$task->call( 'addUserGroup', $oUser->getId(), $sGroup );
 		$task->queue();
 		return true;
@@ -100,7 +100,7 @@ class ExactTargetUserHooks {
 	 */
 	public function onAfterUserRemoveGlobalGroup( \User $oUser, $sGroup ) {
 		/* Get and run the task */
-		$task = new ExactTargetUserUpdate();
+		$task = new ExactTargetUserTask();
 		$task->call( 'removeUserGroup', $oUser->getId(), $sGroup );
 		$task->queue();
 		return true;
@@ -117,7 +117,7 @@ class ExactTargetUserHooks {
 		$aUserProperties = $oUserHelper->prepareUserPropertiesParams( $user );
 
 		/* Get and run the task */
-		$task = new ExactTargetUserUpdate();
+		$task = new ExactTargetUserTask();
 		$task->call( 'updateUserProperties', $user->getId(), $aUserProperties );
 		$task->queue();
 		return true;
@@ -134,10 +134,10 @@ class ExactTargetUserHooks {
 		$aUserProperties = $oUserHelper->prepareUserPropertiesParams( $oUser );
 
 		/* Get and run updates tasks separately */
-		$taskUser = new ExactTargetUserUpdate();
+		$taskUser = new ExactTargetUserTask();
 		$taskUser->call( 'updateUser', $aUserData );
 		$taskUser->queue();
-		$taskUserProperties = new ExactTargetUserUpdate();
+		$taskUserProperties = new ExactTargetUserTask();
 		$taskUserProperties->call( 'updateUserProperties', $oUser->getId(), $aUserProperties );
 		$taskUserProperties->queue();
 	}

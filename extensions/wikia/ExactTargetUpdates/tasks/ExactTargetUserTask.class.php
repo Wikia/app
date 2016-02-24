@@ -5,7 +5,7 @@ use Wikia\ExactTarget\ExactTargetUserUpdateDriver as Driver;
 use Wikia\Tasks\Tasks\BaseTask;
 use Wikia\Util\Assert;
 
-class ExactTargetUserUpdate extends BaseTask {
+class ExactTargetUserTask extends BaseTask {
 
 	private $client;
 	private static $propertiesList = [ 'marketingallowed', 'unsubscribed', 'language' ];

@@ -12,7 +12,7 @@ class ExactTargetUserUpdateTaskTest extends WikiaBaseTest {
 	 */
 	public function testErrorOnUserUpdate( array $userParams, $errorClass, $errorMessage ) {
 		$this->setExpectedException( $errorClass, $errorMessage );
-		( new \Wikia\ExactTarget\ExactTargetUserUpdate() )->updateUser( $userParams );
+		( new \Wikia\ExactTarget\ExactTargetUserTask() )->updateUser( $userParams );
 	}
 
 	public function testShouldReturnOkWhenNoErrors() {
@@ -28,8 +28,8 @@ class ExactTargetUserUpdateTaskTest extends WikiaBaseTest {
 		$userParams = [ 'user_id' => 1, 'user_email' => 'test@test.com' ];
 
 		$this->assertEquals(
-			\Wikia\ExactTarget\ExactTargetUserUpdate::STATUS_OK,
-			( new \Wikia\ExactTarget\ExactTargetUserUpdate( $mockClient ) )->updateUser( $userParams ),
+			\Wikia\ExactTarget\ExactTargetUserTask::STATUS_OK,
+			( new \Wikia\ExactTarget\ExactTargetUserTask( $mockClient ) )->updateUser( $userParams ),
 			'User update failed to return OK status for minimum required params provided.'
 		);
 	}
@@ -56,7 +56,7 @@ class ExactTargetUserUpdateTaskTest extends WikiaBaseTest {
 			->method( 'deleteSubscriber' )
 			->with( $oldEmail );
 
-		( new \Wikia\ExactTarget\ExactTargetUserUpdate( $mockClient ) )->updateUser( $userParams );
+		( new \Wikia\ExactTarget\ExactTargetUserTask( $mockClient ) )->updateUser( $userParams );
 	}
 
 	public function errorTestCaseProvider() {
