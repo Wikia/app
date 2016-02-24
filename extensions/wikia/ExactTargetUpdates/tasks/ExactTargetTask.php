@@ -14,14 +14,6 @@ class ExactTargetTask extends BaseTask {
 	}
 
 	/**
-	 * Returns an instance of ExactTargetRetrieveUserTask class
-	 * @return ExactTargetRetrieveUserTask
-	 */
-	protected function getRetrieveUserTask() {
-		return new ExactTargetRetrieveUserTask();
-	}
-
-	/**
 	 * Returns an instance of ExactTargetUserTaskHelper class
 	 * @return ExactTargetUserTaskHelper
 	 */
