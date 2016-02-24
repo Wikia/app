@@ -115,15 +115,17 @@ class MercuryApi {
 			'defaultSkin' => $wgDefaultSkin,
 			'disableAnonymousEditing' => $wgDisableAnonymousEditing,
 			'disableAnonymousUploadForMercury' => $wgDisableAnonymousUploadForMercury,
+			'disableMobileSectionEditor' => $wgDisableMobileSectionEditor,
 			'enableCategoryPagesInMercury' => $wgEnableCategoryPagesInMercury,
+			'enableCommunityData' => $wgEnableCommunityData,
 			'enableDiscussions' => $wgEnableDiscussions,
+			'enableGlobalNav2016' => true,
 			'enableNewAuth' => $wgEnableNewAuth,
 			'favicon' => Wikia::getFaviconFullUrl(),
 			'homepage' => $this->getHomepageUrl(),
 			'id' => (int)$wgCityId,
 			'isCoppaWiki' => ( $wgWikiDirectedAtChildrenByFounder || $wgWikiDirectedAtChildrenByStaff ),
 			'isDarkTheme' => SassUtil::isThemeDark(),
-			'disableMobileSectionEditor' => $wgDisableMobileSectionEditor,
 			'language' => [
 				'content' => $wgLanguageCode,
 				'contentDir' => $wgContLang->getDir()
@@ -133,7 +135,6 @@ class MercuryApi {
 			'siteMessage' => $this->getSiteMessage(),
 			'siteName' => $wgSitename,
 			'theme' => SassUtil::getOasisSettings(),
-			'enableGlobalNav2016' => true,
 			'tracking' => [
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
 				'ivw3' => [
@@ -144,7 +145,6 @@ class MercuryApi {
 				]
 			],
 			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
-			'enableCommunityData' => $wgEnableCommunityData,
 		];
 	}
 
