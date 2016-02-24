@@ -17,60 +17,15 @@ class ForumBoard extends Wall {
 
 	/**
 	 * get board info: the number of threads, the number of posts, the username and timestamp of the last post
-	 * @return array $info
+	 * @return ForumBoardInfo $info
 	 */
-	public function getBoardInfo( $db = DB_SLAVE ) {
+	public function getBoardInfo() {
 		wfProfileIn( __METHOD__ );
 
 		$memKey = wfMemcKey( 'forum_board_info', $this->getId() );
-
-		if ( $db == DB_SLAVE ) {
-			$info = $this->wg->Memc->get( $memKey );
-		}
-
-		if ( empty( $info ) ) {
-			$db = wfGetDB( $db );
-
-			$row = $db->selectRow(
-				[ 'comments_index' ],
-				[ 'count(if(parent_comment_id=0,1,null)) threads, count(*) posts, max(first_rev_id) rev_id' ],
-				[
-						'parent_page_id' => $this->getId(),
-						'archived' => 0,
-						'deleted' => 0,
-						'removed' => 0
-				],
-				__METHOD__
-			);
-
-			$info = [ 'postCount' => 0, 'threadCount' => 0 ];
-			if ( $row ) {
-				$info = [ 'postCount' => $row->posts, 'threadCount' => $row->threads, ];
-
-				// get last post info
-				$revision = Revision::newFromId( $row->rev_id );
-				if ( $revision instanceof Revision ) {
-					if ( $revision->getRawUser() == 0 ) {
-						$username = wfMsg( 'oasis-anon-user' );
-					} else {
-						$username = $revision->getRawUserText();
-					}
-
-					$userprofile = Title::makeTitle( $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK, $username )->getFullURL();
-
-					$info['lastPost'] = [
-						'username' => $username,
-						'userprofile' => $userprofile,
-						'timestamp' => $revision->getTimestamp()
-					];
-				}
-			}
-			$this->wg->Memc->set( $memKey, $info, 60 * 60 * 12 );
-		}
-
+		$info = $this->wg->Memc->get( $memKey );
 		wfProfileOut( __METHOD__ );
-
-		return $info;
+		return empty( $info ) ? $this->getBoardInfoFromMaster() : new ForumBoardInfo( $info );
 	}
 
 	/**
@@ -120,12 +75,42 @@ class ForumBoard extends Wall {
 		return $activeThreads;
 	}
 
+	private function getBoardInfoFromMaster() {
+		$db = wfGetDB( DB_MASTER );
+		$row = $db->selectRow(
+			[ 'comments_index' ],
+			[ 'count(if(parent_comment_id=0,1,null)) threads, count(*) posts, max(first_rev_id) rev_id' ],
+			[
+				'parent_page_id' => $this->getId(),
+				'archived' => 0,
+				'deleted' => 0,
+				'removed' => 0
+			],
+			__METHOD__
+		);
+
+		$forumBoardInfo = new ForumBoardInfo();
+
+		if ( $row ) {
+			$forumBoardInfo->setPostCount( $row->posts );
+			$forumBoardInfo->setThreadCount( $row->threads );
+			$forumBoardInfo->setLastPost( $this->getLastPost( $row->rev_id ) );
+		}
+		$forumBoardInfo->setId( $this->getTitle()->getArticleID() );
+		$forumBoardInfo->setName( $this->getTitle()->getText() );
+		$forumBoardInfo->setUrl( $this->getTitle()->getFullURL() );
+		$forumBoardInfo->setDescription( $this->getDescriptionWithoutTemplates() );
+		$memKey = wfMemcKey( 'forum_board_info', $this->getId() );
+		$this->wg->Memc->set( $memKey, $forumBoardInfo->toArray(), 60 * 60 * 12 );
+		return $forumBoardInfo;
+	}
+
 	/**
 	 * clear cache for board info
 	 * @param array $parentPageIds
 	 */
 	public function clearCacheBoardInfo() {
-		$this->getBoardInfo( DB_MASTER );
+		$this->getBoardInfoFromMaster();
 		$this->getTotalActiveThreads( DB_MASTER );
 
 		$title = Title::newFromID( $this->getId() );
@@ -134,4 +119,18 @@ class ForumBoard extends Wall {
 		}
 	}
 
+	private function getLastPost( $rev_id ) {
+		$postInfo = null;
+		$revision = Revision::newFromId( $rev_id );
+		if ( $revision instanceof Revision ) {
+			$username = $revision->getRawUser() == 0 ? wfMsg( 'oasis-anon-user' ) : $revision->getRawUserText();
+			$ns = $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK;
+			$userprofile = Title::makeTitle( $ns, $username )->getFullURL();
+			$postInfo = new ForumPostInfo();
+			$postInfo->setUsername($username);
+			$postInfo->setUserProfile($userprofile);
+			$postInfo->setTimestamp($revision->getTimestamp());
+		}
+		return $postInfo;
+	}
 }
