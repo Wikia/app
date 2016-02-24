@@ -4,56 +4,21 @@ namespace Wikia\ExactTarget;
 class ExactTargetUpdateUserTask extends ExactTargetTask {
 
 	/**
-	 * Here was
-	 * public function updateUserData( $aUserData )
-	 * Task for updating user data in ExactTarget
-	 *
-	 * @info Removed updateUserData method as was unused
-	 * @commit 9efbaa4f3a148445d8fa5cef4d2842184c6ba577
-	 *
-	 * @param array $aUserData Selected fields from Wikia user table
-	 */
-
-	/**
-	 * Task for creating a record with user group and user in ExactTarget
-	 * @param int $iUserId
-	 * @param string $sGroup name of added group
-	 */
-	public function addUserGroup( $iUserId, $sGroup ) {
-		$oHelper = $this->getUserHelper();
-		$aApiParams = $oHelper->prepareUserGroupCreateParams( $iUserId, [ $sGroup ] );
-		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
-		$oApiDataExtension = $this->getApiDataExtension();
-		$oAddUserGroupResult = $oApiDataExtension->createRequest( $aApiParams );
-
-		$this->info( __METHOD__ . ' OverallStatus: ' . $oAddUserGroupResult->OverallStatus );
-		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oAddUserGroupResult ) );
-
-		if ( $oAddUserGroupResult->OverallStatus === 'Error' ) {
-			throw new \Exception(
-				'Error in ' . __METHOD__ . ': ' . $oAddUserGroupResult->Results->StatusMessage
-			);
-		}
-
-		return $oAddUserGroupResult->Results->StatusMessage;
-	}
-
-	/**
 	 * Task for incremental updating number of user contributions on specific wiki
 	 * @param array $aUsersEditsData should has following form:
 	 * Array (
-	 * 		{int user id} => [
-	 * 			[
-	 * 				'wiki_id' => {wiki id},
-	 * 				'contributions' => {number of edits}
-	 * 			],
-	 * 			[
-	 * 				...
-	 * 			]
-	 * 		],
-	 * 		{int user id} => [
-	 * 				...
-	 * 		]
+	 *        {int user id} => [
+	 *            [
+	 *                'wiki_id' => {wiki id},
+	 *                'contributions' => {number of edits}
+	 *            ],
+	 *            [
+	 *                ...
+	 *            ]
+	 *        ],
+	 *        {int user id} => [
+	 *                ...
+	 *        ]
 	 * )
 	 */
 	public function updateUsersEdits( array $aUsersEditsData ) {
@@ -80,11 +45,11 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 
 		if ( $oUpdateUsersEditsResult->OverallStatus === 'Error' ) {
 			throw new \Exception(
-				'Error in ' . __METHOD__ . ': ' . $oUpdateUsersEditsResult->Results[0]->StatusMessage
+				'Error in ' . __METHOD__ . ': ' . $oUpdateUsersEditsResult->Results[ 0 ]->StatusMessage
 			);
 		}
 
-		return $oUpdateUsersEditsResult->Results[0]->StatusMessage;
+		return $oUpdateUsersEditsResult->Results[ 0 ]->StatusMessage;
 	}
 
 }
