@@ -138,7 +138,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 
 		if (context.slots.incontentLeaderboard) {
 			slots.INCONTENT_LEADERBOARD = {
-				sizes: [[300, 250], [728, 90]],
+				sizes: [[300, 250], [728, 90], [468, 60]],
 				targeting: {loc: 'hivi'}
 			};
 		}
