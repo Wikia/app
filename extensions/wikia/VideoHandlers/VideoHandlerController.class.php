@@ -353,7 +353,8 @@ class VideoHandlerController extends WikiaController {
 			$params['limit'],
 			$params['page'],
 			$params['providers'],
-			$params['category']
+			$params['category'],
+			$params['sort']
 		);
 
 		// get video detail
@@ -420,6 +421,7 @@ class VideoHandlerController extends WikiaController {
 			'height' => $this->getVal( 'height', self::DEFAULT_THUMBNAIL_HEIGHT ),
 			'detail' => $this->getVal( 'detail', 0 ),
 			'filter' => 'all',
+			'sort' => $this->getVal( 'sort', 'recent' )
 		];
 	}
 
