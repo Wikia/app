@@ -70,6 +70,7 @@
 
 		&:not(:first-child) {
 			@include flex-basis($infobox-width * 2 / 3);
+
 			padding-left: $padding;
 		}
 	}

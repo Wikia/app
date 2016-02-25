@@ -13,7 +13,7 @@
 	width: $infobox-width;
 }
 
-.pi-item {
+.pi-item:not(.pi-secondary-background) {
 	background-color: $infobox-background;
 }
 
