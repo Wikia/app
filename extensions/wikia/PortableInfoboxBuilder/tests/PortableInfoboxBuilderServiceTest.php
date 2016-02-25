@@ -32,8 +32,8 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider markupSupportDataProvider
 	 */
-	public function testMarkupSupport( $markup, $expected ) {
-		$this->assertEquals( $expected, $this->builderService->isSupportedMarkup( $markup ) );
+	public function testMarkupSupport( $markup, $expected, $message ) {
+		$this->assertEquals( $expected, $this->builderService->isSupportedMarkup( $markup ), $message );
 	}
 
 	/**
@@ -105,26 +105,26 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 
 	public function markupSupportDataProvider() {
 		return [ [ "", false ],
-			[ '<infobox><data source="asdf"/></infobox>', true ],
-			[ '<infobox><data source="asdf"><label>asdfsda</label></data></infobox>', true ],
-			[ '<infobox><data source="asdf"><label>[[some link]]</label></data></infobox>', true ],
-			[ '<infobox><data source="asdf"><label>{{template}} and rest of label</label></data></infobox>', true ],
-			[ '<infobox><data source="asdf"><label>\'\'\'some text\'\'\'</label></data></infobox>', true ],
-			[ '<infobox><data source="asdf"><label source="label_source">asdfsda</label></data></infobox>', false ],
-			[ '<infobox><data source="asdf"/></infobox>', true ],
-			[ '<infobox><title source="title"><default>{{PAGENAME}}</default></title></infobox>', true ],
-			[ '<infobox><title source="title"><default>  {{PAGENAME}}  </default></title></infobox>', true ],
-			[ '<infobox><title source="title"><default>some strange title default</default></title></infobox>', false ],
-			[ '<infobox><title source="title"/></infobox>', true ],
-			[ '<infobox><title source="title"><default>0</default></title></infobox>', false ],
-			[ '<infobox><group><data source="asdf"/></group></infobox>', false ],
-			[ '<infobox><group><header>asdf</header></group></infobox>', true ],
-			[ '<infobox><group><header>hd</header><data source="asdf"/></group></infobox>', true ],
-			[ '<infobox><group collapse="open"><header>hd</header><data source="asdf"/></group></infobox>', true ],
-			[ '<infobox><group collapse="false"><header>hd</header><data source="asdf"/></group></infobox>', false ],
-			[ '<infobox theme="asdf"><image source="image"><alt source="title"><default>asdf</default></alt></image></infobox>', false ],
-			[ '<infobox theme="adsf"><group><header>asdf</header></group></infobox>', false ],
-			[ '<infobox><title source="title1"/><image source="image1"><caption source="caption1"/></image><data source="row1"><label>Label 1</label></data><data source="row2"><label>Label 2</label></data><group><header>Header 1</header><data source="row3"><label>Label 3</label></data></group><group><header>Header 2</header><image source="image2"><caption source="caption2"/></image></group><group><header>Header 3</header><data source="row4"><label>Label 4</label></data></group><title source="title2"/><group><header>Header 4</header><image source="image3"><caption source="caption3"/></image></group><title source="title3"/></infobox>', true ]
+			[ '<infobox><data source="asdf"/></infobox>', true, "data tag should be supported" ],
+			[ '<infobox><data source="asdf"><label>asdfsda</label></data></infobox>', true, "data tag with label should be supported" ],
+			[ '<infobox><data source="asdf"><label>[[some link]]</label></data></infobox>', true, "links within labels should be supported" ],
+			[ '<infobox><data source="asdf"><label>{{template}} and rest of label</label></data></infobox>', true, "wikitext is supported within labels" ],
+			[ '<infobox><data source="asdf"><label>\'\'\'some text\'\'\'</label></data></infobox>', true, "wikitext is supported within labels" ],
+			[ '<infobox><data source="asdf"><label source="label_source">asdfsda</label></data></infobox>', false, "source is not valid attrib for label" ],
+			[ '<infobox><data source="asdf"/></infobox>', true, "data tag should be supported" ],
+			[ '<infobox><title source="title"><default>{{PAGENAME}}</default></title></infobox>', true, "{{PAGENAME}} is supported within title" ],
+			[ '<infobox><title source="title"><default>  {{PAGENAME}}  </default></title></infobox>', true, "{{PAGENAME}} is supported within title" ],
+			[ '<infobox><title source="title"><default>some strange title default</default></title></infobox>', false, "default tag is not supported within title" ],
+			[ '<infobox><title source="title"/></infobox>', true, "title tag is supported" ],
+			[ '<infobox><title source="title"><default>0</default></title></infobox>', false, "default tag is not supported within title"  ],
+			[ '<infobox><group><data source="asdf"/></group></infobox>', false, "group without header is not supported" ],
+			[ '<infobox><group><header>asdf</header></group></infobox>', true, "group with header is supported" ],
+			[ '<infobox><group><header>hd</header><data source="asdf"/></group></infobox>', true, "group with header and data is supported" ],
+			[ '<infobox><group collapse="open"><header>hd</header><data source="asdf"/></group></infobox>', true, "collapse=open is supported attrib in group" ],
+			[ '<infobox><group collapse="false"><header>hd</header><data source="asdf"/></group></infobox>', false, "collapse=close is not supported attrib in group" ],
+			[ '<infobox theme="asdf"><image source="image"><alt source="title"><default>asdf</default></alt></image></infobox>', false, "default within image is not supported" ],
+			[ '<infobox theme="adsf"><group><header>asdf</header></group></infobox>', false, "theme is not supported attrib" ],
+			[ '<infobox><title source="title1"/><image source="image1"><caption source="caption1"/></image><data source="row1"><label>Label 1</label></data><data source="row2"><label>Label 2</label></data><group><header>Header 1</header><data source="row3"><label>Label 3</label></data></group><group><header>Header 2</header><image source="image2"><caption source="caption2"/></image></group><group><header>Header 3</header><data source="row4"><label>Label 4</label></data></group><title source="title2"/><group><header>Header 4</header><image source="image3"><caption source="caption3"/></image></group><title source="title3"/></infobox>', true, "" ]
 		];
 	}
 
