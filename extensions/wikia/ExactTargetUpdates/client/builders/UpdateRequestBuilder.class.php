@@ -74,27 +74,15 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 	private function prepareUsersUpdateParams( array $aUsersData ) {
 		$aDataExtension = [ ];
 		foreach ( $aUsersData as $aUserData ) {
-			//TODO: refactor to get rid of passing by reference
-			$userId = $this->extractUserIdFromData( $aUserData );
+			$userId = $aUserData[ self::EXACT_TARGET_USER_ID_PROPERTY ];
+			// remove userId as its handled differently
+			unset( $aUserData[ self::EXACT_TARGET_USER_ID_PROPERTY ] );
 			Assert::true( !empty( $userId ) );
 
 			$aDataExtension[] = $this->prepareDataObject( self::CUSTOMER_KEY_USER,
 				[ self::EXACT_TARGET_USER_ID_PROPERTY => $userId ], $aUserData );
 		}
 		return $aDataExtension;
-	}
-
-	/**
-	 * Returns user_id element from $aUserData array and removes it from array
-	 * This for API params preparation. Allows to use user_id separately as key
-	 * and user data as update parameters without user_id
-	 * @param array $aUserData key value data from user table
-	 * @return int
-	 */
-	private function extractUserIdFromData( &$aUserData ) {
-		$iUserId = $aUserData[ self::EXACT_TARGET_USER_ID_PROPERTY ];
-		unset( $aUserData[ self::EXACT_TARGET_USER_ID_PROPERTY ] );
-		return $iUserId;
 	}
 
 	/**
