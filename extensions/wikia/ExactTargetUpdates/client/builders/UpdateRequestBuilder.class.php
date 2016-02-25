@@ -10,7 +10,7 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 	private $userData;
 	private $edits;
 
-	protected static $supportedTypes = [ self::PROPERTIES_TYPE, self::EDITS_TYPE, self::USER_TYPE ];
+	private static $supportedTypes = [ self::PROPERTIES_TYPE, self::EDITS_TYPE, self::USER_TYPE ];
 
 	public function withUserData( array $userData ) {
 		$this->userData = $userData;
@@ -43,6 +43,10 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 		$oRequest->Objects = $this->prepareSoapVars( $objects, self::DATA_EXTENSION_OBJECT_TYPE );
 
 		return $oRequest;
+	}
+
+	protected function getSupportedTypes() {
+		return self::$supportedTypes;
 	}
 
 	/**

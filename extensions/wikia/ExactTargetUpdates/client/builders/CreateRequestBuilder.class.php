@@ -3,7 +3,7 @@
 namespace Wikia\ExactTarget\Builders;
 
 class CreateRequestBuilder extends BaseRequestBuilder {
-	protected static $supportedTypes = [ self::GROUP_TYPE, self::SUBSCRIBER_TYPE ];
+	private static $supportedTypes = [ self::GROUP_TYPE, self::SUBSCRIBER_TYPE ];
 
 	public function build() {
 		$type = self::DATA_EXTENSION_OBJECT_TYPE;
@@ -24,6 +24,10 @@ class CreateRequestBuilder extends BaseRequestBuilder {
 		$oRequest->Objects = $aSoapVars;
 
 		return $oRequest;
+	}
+
+	protected function getSupportedTypes() {
+		return self::$supportedTypes;
 	}
 
 }

@@ -26,10 +26,11 @@ class BaseRequestBuilder {
 	protected $group;
 	protected $type;
 	// empty means accept all types
-	protected static $supportedTypes = [ ];
+	private static $supportedTypes = [ ];
 
 	public function __construct( $type = '' ) {
-		Assert::true( empty( static::$supportedTypes ) || in_array( $type, static::$supportedTypes ),
+		$supported = $this->getSupportedTypes();
+		Assert::true( empty( $supported ) || in_array( $type, $supported ),
 			'Not supported request type' );
 		$this->type = $type;
 	}
@@ -127,6 +128,10 @@ class BaseRequestBuilder {
 		$apiProperty->Name = $key;
 		$apiProperty->Value = $value;
 		return $apiProperty;
+	}
+
+	protected function getSupportedTypes() {
+		return self::$supportedTypes;
 	}
 
 }

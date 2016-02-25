@@ -2,7 +2,7 @@
 namespace Wikia\ExactTarget\Builders;
 
 class DeleteRequestBuilder extends BaseRequestBuilder {
-	protected static $supportedTypes = [
+	private static $supportedTypes = [
 		self::GROUP_TYPE, self::USER_TYPE, self::SUBSCRIBER_TYPE, self::PROPERTIES_TYPE ];
 
 	public function build() {
@@ -32,5 +32,9 @@ class DeleteRequestBuilder extends BaseRequestBuilder {
 		$oDeleteRequest->Options = new \ExactTarget_DeleteOptions();
 
 		return $oDeleteRequest;
+	}
+
+	protected function getSupportedTypes() {
+		return self::$supportedTypes;
 	}
 }
