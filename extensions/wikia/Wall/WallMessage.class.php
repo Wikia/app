@@ -150,7 +150,7 @@ class WallMessage {
 			$class->setOrderId( 1 );
 			$class->getWall()->invalidateCache();
 		} else {
-			$count = $parent->getOrderId( true ); // this is not work perfect with transations
+			$count = $parent->getOrderId( $userMaster = true );
 			if ( is_numeric( $count ) ) {
 				$count++;
 				$parent->setOrderId( $count );

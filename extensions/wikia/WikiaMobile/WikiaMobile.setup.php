@@ -126,7 +126,7 @@ if ( empty($wgWikiaMobileGlobalNavigationMenu ) ) {
 
 //list of special pages (canonical names) to strip out from the navigation menu
 if ( empty( $wgWikiaMobileNavigationBlacklist ) ) {
-	$wgWikiaMobileNavigationBlacklist = array( 'Chat', 'WikiActivity', 'NewFiles' );
+	$wgWikiaMobileNavigationBlacklist = array( 'Chat', 'WikiActivity', 'NewFiles', 'Images' );
 }
 
 // white list of JS globals
