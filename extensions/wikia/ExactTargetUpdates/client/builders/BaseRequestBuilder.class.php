@@ -58,12 +58,13 @@ class BaseRequestBuilder {
 	/**
 	 * Prepares an array of SoapVar objects by looping over an array of objects
 	 *
-	 * @param $aObjects
+	 * @param $objects
+	 * @param string $type soap vars types (use const SUBSCRIBER_OBJECT_TYPE|DATA_EXTENSION_OBJECT_TYPE)
 	 * @return array
 	 */
-	protected function prepareSoapVars( $aObjects, $type ) {
+	protected function prepareSoapVars( $objects, $type ) {
 		$aSoapVars = [ ];
-		foreach ( $aObjects as $object ) {
+		foreach ( $objects as $object ) {
 			$aSoapVars[] = $this->wrapToSoapVar( $object, $type );
 		}
 		return $aSoapVars;
@@ -72,16 +73,23 @@ class BaseRequestBuilder {
 	/**
 	 * Wraps an ExactTarget object to a SoapVar
 	 *
-	 * @param $oObject
-	 * @param $sObjectType
+	 * @param $object
+	 * @param $objectType
 	 * @return \SoapVar
 	 *
 	 * @link https://help.exacttarget.com/en/technical_library/web_service_guide/objects/ ExactTarget Objects types
 	 */
-	protected function wrapToSoapVar( $oObject, $sObjectType ) {
-		return new \SoapVar( $oObject, SOAP_ENC_OBJECT, $sObjectType, self::EXACT_TARGET_API_URL );
+	protected function wrapToSoapVar( $object, $objectType ) {
+		return new \SoapVar( $object, SOAP_ENC_OBJECT, $objectType, self::EXACT_TARGET_API_URL );
 	}
 
+	/**
+	 * Prepares subscriber object
+	 *
+	 * @param string $key user email
+	 * @param string $email user email
+	 * @return \ExactTarget_Subscriber
+	 */
 	protected function prepareSubscriber( $key, $email = '' ) {
 		$subscriber = new \ExactTarget_Subscriber();
 		$subscriber->SubscriberKey = $key;
@@ -92,6 +100,14 @@ class BaseRequestBuilder {
 		return $subscriber;
 	}
 
+	/**
+	 * General DataExtension object producer
+	 *
+	 * @param string $customerKey use const here CUSTOMER_KEY_*
+	 * @param array $keys
+	 * @param null|array $properties
+	 * @return \ExactTarget_DataExtensionObject
+	 */
 	protected function prepareDataObject( $customerKey, $keys, $properties = null ) {
 		$obj = new \ExactTarget_DataExtensionObject();
 		$obj->CustomerKey = $customerKey;
@@ -106,6 +122,12 @@ class BaseRequestBuilder {
 		return $obj;
 	}
 
+	/**
+	 * Wraps properties list in api property objects
+	 *
+	 * @param array $properties
+	 * @return array
+	 */
 	protected function wrapApiProperties( $properties ) {
 		$result = [ ];
 		foreach ( $properties as $key => $value ) {
@@ -119,6 +141,7 @@ class BaseRequestBuilder {
 	 * Returns ExactTarget_APIProperty object
 	 * This object can be used as ExactTarget_DataExtensionObject property
 	 * It stores key-value pair
+	 *
 	 * @param String $key Property name
 	 * @param String $value Propert yvalue
 	 * @return \ExactTarget_APIProperty
@@ -130,6 +153,11 @@ class BaseRequestBuilder {
 		return $apiProperty;
 	}
 
+	/**
+	 * Used to determine if given request type is supported
+	 *
+	 * @return array
+	 */
 	protected function getSupportedTypes() {
 		return self::$supportedTypes;
 	}
