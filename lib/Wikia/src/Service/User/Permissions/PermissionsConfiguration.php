@@ -58,11 +58,11 @@ interface PermissionsConfiguration {
 	/**
 	 * Get all the groups who have a given permission
 	 *
-	 * @param $role String Role to check
+	 * @param $permission String Permissions to check
 	 * @return string[] List of internal group names with the given permission
 	 */
-	public function getGroupsWithPermission( $role );
-	
+	public function getGroupsWithPermission( $permission );
+
 	/**
 	 * Returns an array of the groups that a particular group can add/remove.
 	 *

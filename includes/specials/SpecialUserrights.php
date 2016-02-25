@@ -71,27 +71,25 @@ class UserrightsPage extends SpecialPage {
 	}
 
 	/**
-	 * @param $user User
+	 * @param $changeableGroups string[] Changeable groups
 	 * @param  $group String: the name of the group to check
 	 * @param $isself bool Are we change the same user that is logged in
 	 * @return bool Can we remove the group?
 	 */
-	public static function canRemove( $user, $group, $isself ) {
+	public static function canRemove( $changeableGroups, $group, $isself ) {
 		// $this->changeableGroups()['remove'] doesn't work, of course. Thanks,
 		// PHP.
-		$groups = $user->changeableGroups();
-		return in_array( $group, $groups['remove'] ) || ( $isself && in_array( $group, $groups['remove-self'] ) );
+		return in_array( $group, $changeableGroups['remove'] ) || ( $isself && in_array( $group, $changeableGroups['remove-self'] ) );
 	}
 
 	/**
-	 * @param $user User
+	 * @param $changeableGroups string[] Changeable groups
 	 * @param $group string: the name of the group to check
 	 * @param $isself bool Are we change the same user that is logged in
 	 * @return bool Can we add the group?
 	 */
-	public static function canAdd( $user, $group, $isself ) {
-		$groups = $user->changeableGroups();
-		return in_array( $group, $groups['add'] ) || ( $isself && in_array( $group, $groups['add-self'] ) );
+	public static function canAdd( $changeableGroups, $group, $isself ) {
+		return in_array( $group, $changeableGroups['add'] ) || ( $isself && in_array( $group, $changeableGroups['add-self'] ) );
 	}
 
 	public function __construct() {
@@ -548,19 +546,20 @@ class UserrightsPage extends SpecialPage {
 		# Put all column info into an associative array so that extensions can
 		# more easily manage it.
 		$columns = array( 'unchangeable' => array(), 'changeable' => array() );
+		$changeableGroups = $user->changeableGroups();
 
 		foreach( $allgroups as $group ) {
 			$set = in_array( $group, $usergroups );
 			# Should the checkbox be disabled?
 			$disabled = !(
-				( $set && self::canRemove( $user, $group, $this->isself ) ) ||
-				( !$set && self::canAdd( $user, $group, $this->isself ) ) );
+				( $set && self::canRemove( $changeableGroups, $group, $this->isself ) ) ||
+				( !$set && self::canAdd( $changeableGroups, $group, $this->isself ) ) );
 			$disabled = $disabled || $this->isGlobalNonEditableGroup(
 					$this->permissionsService()->getConfiguration()->getGlobalGroups(), $group );
 			# Do we need to point out that this action is irreversible?
 			$irreversible = !$disabled && (
-				( $set && !self::canAdd( $user, $group, $this->isself ) ) ||
-				( !$set && !self::canRemove( $user, $group, $this->isself ) ) );
+				( $set && !self::canAdd( $changeableGroups, $group, $this->isself ) ) ||
+				( !$set && !self::canRemove( $changeableGroups, $group, $this->isself ) ) );
 
 			$checkbox = array(
 				'set' => $set,

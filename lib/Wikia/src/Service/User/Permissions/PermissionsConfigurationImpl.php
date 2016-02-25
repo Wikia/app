@@ -65,7 +65,7 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'edit',
 		'editinterface',
 		'editmyoptions',
-		'editusercssjs', #deprecated
+		'editusercssjs', # deprecated
 		'editusercss',
 		'edituserjs',
 		'hideuser',
@@ -327,8 +327,8 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		global $wgGroupPermissions;
 		$rights = array();
 		// grant every granted permission first
-		foreach( $groups as $group ) {
-			if( isset( $wgGroupPermissions[$group] ) ) {
+		foreach ( $groups as $group ) {
+			if ( isset( $wgGroupPermissions[$group] ) ) {
 				$rights = array_merge( $rights,
 					// array_filter removes empty items
 					array_keys( array_filter( $wgGroupPermissions[$group] ) ) );
@@ -340,14 +340,14 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 	/**
 	 * Get all the groups who have a given permission
 	 *
-	 * @param $role String Role to check
+	 * @param $permission String Permissions to check
 	 * @return string[] List of internal group names with the given permission
 	 */
-	public function getGroupsWithPermission( $role ) {
+	public function getGroupsWithPermission( $permission ) {
 		global $wgGroupPermissions;
 		$allowedGroups = array();
 		foreach ( $wgGroupPermissions as $group => $rights ) {
-			if ( isset( $rights[$role] ) && $rights[$role] ) {
+			if ( isset( $rights[$permission] ) && $rights[$permission] ) {
 				$allowedGroups[] = $group;
 			}
 		}
@@ -394,29 +394,29 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 	}
 
 	private function loadGroupsChangeableByGroups() {
-		$this->groupsAddableByGroup['bureaucrat'] = array('bureaucrat', 'rollback', 'sysop', 'content-moderator');
-		$this->groupsRemovableByGroup['bureaucrat'] = array('rollback', 'sysop', 'bot', 'content-moderator');
-		$this->groupsSelfRemovableByGroup['bureaucrat'] = array('bureaucrat');
+		$this->groupsAddableByGroup['bureaucrat'] = array( 'bureaucrat', 'rollback', 'sysop', 'content-moderator' );
+		$this->groupsRemovableByGroup['bureaucrat'] = array( 'rollback', 'sysop', 'bot', 'content-moderator' );
+		$this->groupsSelfRemovableByGroup['bureaucrat'] = array( 'bureaucrat' );
 
-		$this->groupsAddableByGroup['staff'] = array('rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator');
-		$this->groupsRemovableByGroup['staff'] = array('rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator');
+		$this->groupsAddableByGroup['staff'] = array( 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator' );
+		$this->groupsRemovableByGroup['staff'] = array( 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator' );
 
-		$this->groupsAddableByGroup['helper'] = array('rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator');
-		$this->groupsRemovableByGroup['helper'] = array('rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator');
+		$this->groupsAddableByGroup['helper'] = array( 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' );
+		$this->groupsRemovableByGroup['helper'] = array( 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' );
 
-		$this->groupsAddableByGroup['sysop'] = array('chatmoderator', 'threadmoderator');
-		$this->groupsRemovableByGroup['sysop'] = array('chatmoderator', 'threadmoderator');
-		$this->groupsSelfRemovableByGroup['sysop'] = array('sysop');
+		$this->groupsAddableByGroup['sysop'] = array( 'chatmoderator', 'threadmoderator' );
+		$this->groupsRemovableByGroup['sysop'] = array( 'chatmoderator', 'threadmoderator' );
+		$this->groupsSelfRemovableByGroup['sysop'] = array( 'sysop' );
 
-		$this->groupsAddableByGroup['content-reviewer'] = array('content-reviewer');
-		$this->groupsRemovableByGroup['content-reviewer'] = array('content-reviewer');
+		$this->groupsAddableByGroup['content-reviewer'] = array( 'content-reviewer' );
+		$this->groupsRemovableByGroup['content-reviewer'] = array( 'content-reviewer' );
 
-		$this->groupsAddableByGroup['vstf'] = array('rollback', 'bot');
-		$this->groupsRemovableByGroup['vstf'] = array('rollback', 'bot');
-		$this->groupsSelfAddableByGroup['vstf'] = array('sysop');
-		$this->groupsSelfRemovableByGroup['vstf'] = array('sysop', 'bureaucrat');
+		$this->groupsAddableByGroup['vstf'] = array( 'rollback', 'bot' );
+		$this->groupsRemovableByGroup['vstf'] = array( 'rollback', 'bot' );
+		$this->groupsSelfAddableByGroup['vstf'] = array( 'sysop' );
+		$this->groupsSelfRemovableByGroup['vstf'] = array( 'sysop', 'bureaucrat' );
 
-		//the $wgXXXLocal variables are loaded from wiki factory - we should use it as is
+		// the $wgXXXLocal variables are loaded from wiki factory - we should use it as is
 		if ( !empty( $wgAddGroupsLocal ) )
 			$this->groupsAddableByGroup = array_merge( $this->groupsAddableByGroup, $wgAddGroupsLocal );
 		if ( !empty( $wgRemoveGroupsLocal ) )
@@ -431,7 +431,7 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		$this->groupsRemovableByGroup['util'] = array_diff( $this->getExplicitGroups(), $this->getImplicitGroups() );
 
 		global $wgDevelEnvironment;
-		if ( !empty( $wgDevelEnvironment )) {
+		if ( !empty( $wgDevelEnvironment ) ) {
 			$this->groupsAddableByGroup['staff'] = $this->getExplicitGroups();
 			$this->groupsRemovableByGroup['staff'] = $this->getExplicitGroups();
 			$this->groupsSelfAddableByGroup['staff'] = $this->getExplicitGroups();
