@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'discussionslog' => 'Discussions Users Log',
 	'discussionslog-desc' => 'Wikia\'s Discussion users log extension',
 	'discussionslog-pagetitle' => 'Mobile app users\' discussion logs',
 	'discussionslog-username-label' => 'Username: ',
