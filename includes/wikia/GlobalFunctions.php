@@ -1628,3 +1628,50 @@ function mb_pathinfo( $filepath ) {
 	}
 	return $ret;
 }
+
+// Selectively allow cross-site AJAX
+
+/**
+ * Helper function to convert wildcard string into a regex
+ * '*' => '.*?'
+ * '?' => '.'
+ *
+ * @param $search string
+ * @return string
+ */
+function convertWildcard( $search ) {
+	$search = preg_quote( $search, '/' );
+	$search = str_replace(
+		array( '\*', '\?' ),
+		array( '.*?', '.' ),
+		$search
+	);
+	return "/$search/";
+}
+
+/**
+ * Moved core code from api.php to be available in wikia.php
+ *
+ * @see PLATFORM-1790
+ * @author macbre
+ */
+function wfHandleCrossSiteAJAXdomain() {
+	global $wgCrossSiteAJAXdomains, $wgCrossSiteAJAXdomainExceptions;
+
+	if ( $wgCrossSiteAJAXdomains && isset( $_SERVER['HTTP_ORIGIN'] ) ) {
+		$exceptions = array_map( 'convertWildcard', $wgCrossSiteAJAXdomainExceptions );
+		$regexes = array_map( 'convertWildcard', $wgCrossSiteAJAXdomains );
+		foreach ( $regexes as $regex ) {
+			if ( preg_match( $regex, $_SERVER['HTTP_ORIGIN'] ) ) {
+				foreach ( $exceptions as $exc ) { // Check against exceptions
+					if ( preg_match( $exc, $_SERVER['HTTP_ORIGIN'] ) ) {
+						break 2;
+					}
+				}
+				header( "Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}" );
+				header( 'Access-Control-Allow-Credentials: true' );
+				break;
+			}
+		}
+	}
+}

@@ -160,30 +160,12 @@ $messages = array(
 'navigation'    => 'Navigasyon',
 'and'           => '&#32;o',
 
-# Cologne Blue skin
 'qbfind'         => 'Lqa',
 'qbbrowse'       => 'ṫsffeh',
-'qbedit'         => 'Ĝedel',
 'qbpageoptions'  => "Had 'ṣ-ṣefḫa",
 'qbpageinfo'     => 'L-Meḍmon',
-'qbmyoptions'    => "'Ṣ-Ṣefḫaṫ dyawli",
-'qbspecialpages' => 'Ṣefḫaṫ ĥaṣṣin',
 'faq'            => 'asaila kaytaawdo bzaf',
-'faqpage'        => 'Project:asaila kaytaawdo',
 
-# Vector skin
-'vector-action-addsection'       => 'Zid topic',
-'vector-action-delete'           => 'Suprimi',
-'vector-action-move'             => 'Neqel',
-'vector-action-protect'          => 'Ḫami',
-'vector-action-undelete'         => 'rja lhadf',
-'vector-action-unprotect'        => 'Ḫiyed l-ḫimaya',
-'vector-simplesearch-preference' => 'ĥddem qṫiraḫaṫ l-bḫṫ l-mḫssna (ġir mĝa Vector)',
-'vector-view-create'             => 'Ĥṫareĝ',
-'vector-view-edit'               => 'Ĝedel',
-'vector-view-history'            => 'Ṫariĥ l-fiċyé',
-'vector-view-view'               => 'Qra',
-'vector-view-viewsource'         => 'Ċof l-masdar',
 'actions'                        => 'afaal',
 'namespaces'                     => 'Maḫel s-smiyyaṫ :',
 'variants'                       => 'lhja:',
@@ -206,7 +188,6 @@ $messages = array(
 'edit'              => 'Ṣayeb',
 'create'            => 'Ĥṫareĝ',
 'editthispage'      => 'Ĝeddel had ṣ-ṣefḫa',
-'create-this-page'  => "Ĥṫareĝ had 'ṣ-ṣefḫa",
 'delete'            => 'Mḫi',
 'deletethispage'    => "Suprimi had 'ṣ-ṣefḫa",
 'undelete_short'    => 'strjaa {{PLURAL:$1|wahd taadil|$1 taadil}}',
@@ -221,19 +202,9 @@ $messages = array(
 'talkpagelinktext'  => 'Ṫnaqeċ',
 'specialpage'       => 'Ṣefḫa ĥaṣa',
 'personaltools'     => 'Adawaṫ ċeĥṣiya',
-'postcomment'       => 'Seksyon jdida',
-'articlepage'       => 'Ċof l-li fe ṣ-ṣefḫa',
 'talk'              => 'Modakara',
 'views'             => 'Afiċaj',
 'toolbox'           => "Ṣendoq l-'adawaṫ",
-'userpage'          => 'Ċof ṣ-ṣefḫa de l-mosṫeĥdim',
-'projectpage'       => 'Ċof ṣ-ṣefḫa de lmchroa',
-'imagepage'         => 'ċof ṣ-ṣefḫa dyal l-fiċyé',
-'mediawikipage'     => 'Ċof ṣ-ṣefḫa de risala',
-'templatepage'      => 'Ċof ṣ-ṣefḫa de l-modele',
-'viewhelppage'      => 'Ċof ṣ-ṣefḫa de l-mosaaada',
-'categorypage'      => 'Ċof l-katégori dyal ṣ-ṣefḫa',
-'viewtalkpage'      => 'Ċof tadakor',
 'otherlanguages'    => 'Be loġaṫ ĥrin',
 'redirectedfrom'    => '(Ṫḫowwlaṫ men $1)',
 'redirectpagesub'   => 'Ṣefḫa dyal ṫ-ṫeḫwil',
@@ -547,35 +518,6 @@ daba hanta ka-tdĥol...',
 'resetpass-wrong-oldpass'   => "klmṫ s-srr ḫaliyya wlla mo'aqata ma ṣalḫa-ċ.
 ymkn ṫkon bddalṫiha bĝda wlla ṫlbti klmṫ srr mo'qaṫa jdida.",
 'resetpass-temp-password'   => 'mot de passe moaqata',
-
-# Special:PasswordReset
-'passwordreset'                => 'ĝawd klmṫ s-srr',
-'passwordreset-text'           => 'ĝmmer had l-istimara baċ iwṣlek email ṫaĝ ṫdkir b-ṫṫafaṣil dl-ḫisab ṫaĝk.',
-'passwordreset-legend'         => 'ĝawd klmṫ s-srr',
-'passwordreset-disabled'       => 'maymkn-ċ ṫĝawd klmṫ s-srr f-had l-wiki.',
-'passwordreset-pretext'        => '{{PLURAL:$1||kṫb wḫda mn l-bayanaṫ l-ṫḫṫ}}',
-'passwordreset-username'       => 'smiṫ l-mosṫĥdim:',
-'passwordreset-email'          => 'ĝonwan l-email:',
-'passwordreset-emailtitle'     => 'ṫafaṣil l-ḫisab f-{{SITENAME}}',
-'passwordreset-emailtext-ip'   => "ċi waḫd (ġaliban nṫa, mn ĝonwan l-IP $1) tlḅ ṫdkir
-b-ṫṫafaṣil dial l-ḫisab ṫaĝk f-{{SITENAME}} ($4). {{PLURAL:$3|l-ḫisab lli mrṫabt|l-ḫisabat lli mrṫabta}}
-b-had l-ĝonwan dl-email {{PLURAL:$3|howa|hiya}}:
-
-$2
-
-had {{PLURAL:$3|klmṫ|klmaṫ}} s-srr l-mo'qaṫa ġadi ṫṫḫyyad mn bĝd {{PLURAL:$5|nhar waḫd|$5 yyam/yom}}.
-ĥaṣṣk ṫdĥol o-ṫbddal klmṫ s-srr. ila kan ċi waḫd aĥor hwwa lli dar had
-talab, wlla ila ṫfkkarṫi klmṫ s-srr l-qdima, o-ma bqiti-ċ baġi ṫbddalha, ġir bqa ĥddam biha o-nsa ĝlik had l-mesaj.",
-'passwordreset-emailtext-user' => "l_mosṫĥdim $1 f-{{SITENAME}} tlḅ ṫdkir b-ṫṫafaṣil dial l-ḫisab ṫaĝk f-{{SITENAME}} ($4). {{PLURAL:$3|l-ḫisab lli mrṫabt|l-ḫisabat lli mrṫabta}} b-had l-ĝonwan dl-email {{PLURAL:$3|howa|hiya}}:
-
-$2
-
-had {{PLURAL:$3|klmṫ|klmaṫ}} s-srr l-mo'qaṫa ġadi ṫṫḫyyad mn bĝd {{PLURAL:$5|nhar waḫd|$5 yyam/yom}}.
-ĥaṣṣk ṫdĥol o-ṫbddal klmṫ s-srr. ila kan ċi waḫd aĥor hwwa lli dar had
-talab, wlla ila ṫfkkarṫi klmṫ s-srr l-qdima, o-ma bqiti-ċ baġi ṫbddalha, ġir bqa ĥddam biha o-nsa ĝlik had l-mesaj.",
-'passwordreset-emailelement'   => "smiṫ l-mosṫĥdim: $1
-klmṫ s-srr l-mo'qaṫa: $2",
-'passwordreset-emailsent'      => 'ṫsift email liṫ-ṫdkir.',
 
 # Special:ChangeEmail
 'changeemail'          => 'bddel ĝonwan l-email',
@@ -987,14 +929,6 @@ Jerreb be l-préfiks \"all:\" baċ ṫqelleb ĝla l-meḍmon kollo (o ḫṫa �
 Imken lik ṫqeleb fe google.
 Laḫed ana imken ikono l-indexaṫ dial {{SITENAME}} qdam o ma bqaoċ ṣalḫin.',
 
-# Quickbar
-'qbsettings'                => "L-lawḫa 's-sariĝa",
-'qbsettings-none'           => 'Ma kaynċ',
-'qbsettings-fixedleft'      => "Meḫbos fe 'ċ-ċmal",
-'qbsettings-fixedright'     => "Meḫbos fe 'l-limin",
-'qbsettings-floatingleft'   => "Ḫor fe 'ċ-ċmal",
-'qbsettings-floatingright'  => "Ḫor fe 'l-limen",
-'qbsettings-directionality' => 'ṫabṫ, ĝla ḫasab ṫṫijah l-kṫaba b-loġṫk',
 
 # Preferences page
 'preferences'                   => 'ṫfḍilaṫ',

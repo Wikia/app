@@ -10,7 +10,8 @@ define('TemplateClassificationLabeling',
 		var availableModes = [
 				'editType',
 				'addTemplate',
-				'addTypeBeforePublish'
+				'addTypeBeforePublish',
+				'bulkEditType'
 			],
 			mode = 'editType',
 			getTitleStrategy,
@@ -44,10 +45,15 @@ define('TemplateClassificationLabeling',
 				return mw.message('template-classification-edit-modal-save-button-text').escaped();
 			}
 
+			function addTypeBeforePublish() {
+				return mw.message('savearticle').escaped();
+			}
+
 			return {
 				addTemplate: addTemplate,
 				editType: editType,
-				addTypeBeforePublish: editType
+				addTypeBeforePublish: addTypeBeforePublish,
+				bulkEditType: editType
 			};
 		})();
 
@@ -60,10 +66,15 @@ define('TemplateClassificationLabeling',
 				return mw.message('template-classification-edit-modal-title-select-type').escaped();
 			}
 
+			function bulkEditType() {
+				return mw.message('template-classification-edit-modal-title-bulk-types').escaped();
+			}
+
 			return {
 				addTemplate: chooseType,
 				editType: editType,
-				addTypeBeforePublish: chooseType
+				addTypeBeforePublish: chooseType,
+				bulkEditType: bulkEditType
 			};
 		})();
 
@@ -71,15 +82,27 @@ define('TemplateClassificationLabeling',
 			function editType(content) {
 				var helpText = $('<p></p>').addClass('tc-instructions')
 					.html(mw.message('template-classification-edit-modal-help').parse())[0].outerHTML;
-				return helpText + content;
+				return addTargetBlankToLinks(helpText + content);
 			}
 
 			return {
 				addTemplate: editType,
 				editType: editType,
-				addTypeBeforePublish: editType
+				addTypeBeforePublish: editType,
+				bulkEditType: editType
 			};
 		})();
+
+		/**
+		 * Adds target="_blank" to all links in content
+		 * @param {string} content
+		 * @returns {string}
+		 */
+		function addTargetBlankToLinks(content) {
+			var $c = $('<div>').html(content);
+			$c.find('a').attr('target', '_blank');
+			return $c.html();
+		}
 
 		return {
 			init: init,

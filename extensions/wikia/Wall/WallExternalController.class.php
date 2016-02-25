@@ -54,13 +54,13 @@ class WallExternalController extends WikiaController {
 
 		$list = $forum->getListTitles( DB_SLAVE, NS_WIKIA_FORUM_BOARD );
 
-		$this->destinationBoards = array( array( 'value' => '', 'content' => wfMsg( 'forum-board-destination-empty' ) ) );
+		$this->destinationBoards = [ [ 'value' => '', 'content' => wfMsg( 'forum-board-destination-empty' ) ] ];
 		/** @var $title Title */
 		foreach ( $list as $title ) {
 			$value = $title->getArticleID();
 			if ( $mainWall->getId() != $value ) {
 				$wall = Wall::newFromTitle( $title );
-				$this->destinationBoards[$value] = array( 'value' => $value, 'content' => htmlspecialchars( $wall->getTitle()->getText() ) );
+				$this->destinationBoards[$value] = [ 'value' => $value, 'content' => htmlspecialchars( $wall->getTitle()->getText() ) ];
 			}
 		}
 	}
@@ -144,15 +144,15 @@ class WallExternalController extends WikiaController {
 			$this->response->setVal( 'hasmore', false );
 		}
 
-		$out = array();
+		$out = [ ];
 		for ( $i = 0; $i < min( count( $list ), 24 ); $i++ ) {
 			$user = User::newFromId( $list[$i] );
 			if ( !empty( $user ) ) {
-				$out[] = array(
+				$out[] = [
 					'profilepage' =>  $user->getUserPage()->getFullUrl(),
 					'name' => $user->getName(),
 					'avatar' => AvatarService::getAvatarUrl( $user->getName(), 50 )
-				);
+				];
 			}
 		}
 
@@ -195,7 +195,7 @@ class WallExternalController extends WikiaController {
 			return;
 		}
 
-		$relatedTopics = $this->request->getVal( 'relatedTopics', array() );
+		$relatedTopics = $this->request->getVal( 'relatedTopics', [ ] );
 
 		$this->response->setVal( 'status', true );
 
@@ -236,7 +236,7 @@ class WallExternalController extends WikiaController {
 		}
 
 		$wallMessage->load( true );
-		$this->response->setVal( 'message', $this->app->renderView( 'WallController', 'message', array( 'new' => true, 'comment' => $wallMessage ) ) );
+		$this->response->setVal( 'message', $this->app->renderView( 'WallController', 'message', [ 'new' => true, 'comment' => $wallMessage ] ) );
 	}
 
 	public function deleteMessage() {
@@ -312,7 +312,7 @@ class WallExternalController extends WikiaController {
 		}
 
 		if ( $isDeleteOrRemove ) {
-			$this->response->setVal( 'html', $this->app->renderView( 'WallController', 'messageRemoved', array( 'showundo' => true , 'comment' => $mw ) ) );
+			$this->response->setVal( 'html', $this->app->renderView( 'WallController', 'messageRemoved', [ 'showundo' => true , 'comment' => $mw ] ) );
 			$mw->getLastActionReason();
 			$mw->purgeSquid();
 			$this->response->setVal( 'deleteInfoBox', 'INFO BOX' );
@@ -368,7 +368,7 @@ class WallExternalController extends WikiaController {
 		 */
 		$formdata = $request->getVal( 'formdata' );
 
-		$formassoc = array();
+		$formassoc = [ ];
 		if ( !empty( $formdata ) ) {
 			foreach ( $formdata as $value ) {
 				$formassoc[ $value['name'] ] = $value['value'];
@@ -427,7 +427,7 @@ class WallExternalController extends WikiaController {
 
 			$reason = isset( $formassoc['reason'] ) ? $formassoc['reason'] : '';
 
-			if ( empty( $reason ) && !$mw->canFastrestore( $this->wg->User ) ) {
+			if ( empty( $reason ) && !$mw->canFastRestore( $this->wg->User ) ) {
 				$this->response->setVal( 'status', false );
 				return true;
 			}
@@ -435,7 +435,7 @@ class WallExternalController extends WikiaController {
 			$mw->restore( $this->wg->User, $reason );
 			$mw->purgeSquid();
 
-			$this->response->setVal( 'buttons', $this->app->renderView( 'WallController', 'messageButtons', array( 'comment' => $mw ) ) );
+			$this->response->setVal( 'buttons', $this->app->renderView( 'WallController', 'messageButtons', [ 'comment' => $mw ] ) );
 			$this->response->setVal( 'status', true );
 		}
 	}
@@ -647,14 +647,14 @@ class WallExternalController extends WikiaController {
 	}
 
 	protected function replyToMessageBuildResponse( $context, $reply ) {
-		$context->response->setVal( 'message', $this->app->renderView( 'WallController', 'message', array( 'comment' => $reply, 'isreply' => true ) ) );
+		$context->response->setVal( 'message', $this->app->renderView( 'WallController', 'message', [ 'comment' => $reply, 'isreply' => true ] ) );
 	}
 
 	private function getDisplayName() {
 		$displayname  = $this->wg->User->getName();
 		$displayname2 = '';
 
-		return array( $displayname, $displayname2 );
+		return [ $displayname, $displayname2 ];
 
 	}
 
@@ -680,7 +680,7 @@ class WallExternalController extends WikiaController {
 	public function getCommentsPage() {
 		// workaround to prevent index data expose
 		$title = Title::newFromText( $this->request->getVal( 'pagetitle' ), $this->request->getVal( 'pagenamespace' ) );
-		$this->response->setVal( 'html', $this->app->renderView( 'WallController', 'index', array( 'title' => $title, 'page' => $this->request->getVal( 'page', 1 ) ) ) );
+		$this->response->setVal( 'html', $this->app->renderView( 'WallController', 'index', [ 'title' => $title, 'page' => $this->request->getVal( 'page', 1 ) ] ) );
 	}
 
 	/**
@@ -733,13 +733,13 @@ class WallExternalController extends WikiaController {
 	 */
 	public function updateTopics() {
 		$messageId = $this->request->getVal( 'msgid', '' );
-		$relatedTopics = $this->request->getVal( 'relatedTopics', array() );
+		$relatedTopics = $this->request->getVal( 'relatedTopics', [ ] );
 			// place holder data, replace this with magic
 		$status = 'success';
-		$topics = array();
+		$topics = [ ];
 
 		if ( !is_array( $relatedTopics ) ) {
-			$relatedTopics = array();
+			$relatedTopics = [ ];
 		}
 
 		// cut more then 4
@@ -758,7 +758,7 @@ class WallExternalController extends WikiaController {
 
 		foreach ( $relatedTopics as $topic ) {
 			$topicTitle = Title::newFromURL( $topic );
-			$topics[] = array( 'topic' => $topic, 'url' => WallHelper::getTopicPageURL( $topicTitle ) );	// I have no idea what the url will be, just a placeholder for now
+			$topics[] = [ 'topic' => $topic, 'url' => WallHelper::getTopicPageURL( $topicTitle ) ];	// I have no idea what the url will be, just a placeholder for now
 		}
 		// end place holder
 

@@ -61,8 +61,6 @@ $messages = array(
 'mytalk'     => 'Noqu vosa',
 'navigation' => 'Vakatasosoko',
 
-# Cologne Blue skin
-'qbedit' => 'Veisautaki',
 
 'help'             => 'Veivuke',
 'search'           => 'Vaqaqara',

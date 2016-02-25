@@ -130,16 +130,10 @@ $messages = array(
 'navigation'    => 'Навигация',
 'and'           => '&#32;болгаш',
 
-# Cologne Blue skin
 'qbfind'         => 'Тывары',
 'qbbrowse'       => 'Каралаары',
-'qbedit'         => 'Өскертир',
 'qbpageoptions'  => 'Бо арын',
-'qbmyoptions'    => 'Мээң арыннарым',
-'qbspecialpages' => 'Тускай арыннар',
 
-# Vector skin
-'vector-namespace-category' => 'Бөлүк',
 
 'errorpagetitle'    => 'Алдаг',
 'returnto'          => '$1 деп арынже эглири.',
@@ -158,7 +152,6 @@ $messages = array(
 'edit'              => 'Өскертири',
 'create'            => 'Кылыры',
 'editthispage'      => 'Бо арынны өскертири',
-'create-this-page'  => 'Бо арынны кылыр',
 'delete'            => 'Ап каары',
 'deletethispage'    => 'Бо арынны ап каар',
 'protect'           => 'Камгалаары',
@@ -171,19 +164,9 @@ $messages = array(
 'talkpagelinktext'  => 'Чугаалажыры',
 'specialpage'       => 'Тускай арын',
 'personaltools'     => 'Хууда херекселдер',
-'postcomment'       => 'Чаа салбыр',
-'articlepage'       => 'Допчу арынны көөр',
 'talk'              => 'Чугаалажыры',
 'views'             => 'Көрүштер',
 'toolbox'           => 'Херекселдер',
-'userpage'          => 'Ажыглакчының арынын көөр',
-'projectpage'       => 'Проект арынын көөр',
-'imagepage'         => 'Файл арнызын көөр',
-'mediawikipage'     => 'Чагаа арынын көөр',
-'templatepage'      => 'Хээ арынын көөр',
-'viewhelppage'      => 'Дуза арынын көөр',
-'categorypage'      => 'Бөлүктүң арынын көөрү',
-'viewtalkpage'      => 'Чугаалажырыны көөр',
 'otherlanguages'    => 'Өске дылдарга',
 'lastmodifiedat'    => 'Бо арын сөөлгү каттап $2, $1 өскерилген.',
 'jumptonavigation'  => 'навигация',
@@ -758,12 +741,7 @@ The password for this new account can be changed on the ''[[Special:ChangePasswo
 'anonymous' => '{{grammar:genitive|{{SITENAME}}}} ат эвес {{PLURAL:$1|ажыглакчызы|ажыглакчылары}}',
 
 # Skin names
-'skinname-standard'    => 'Classic',
-'skinname-nostalgia'   => 'Nostalgia',
-'skinname-cologneblue' => 'Cologne Blue',
 'skinname-monobook'    => 'Моно-Ном',
-'skinname-myskin'      => 'MySkin',
-'skinname-chick'       => 'Chick',
 
 # Math errors
 'math_unknown_error' => 'билбес алдаг',

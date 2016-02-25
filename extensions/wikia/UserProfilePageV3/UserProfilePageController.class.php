@@ -120,7 +120,7 @@ class UserProfilePageController extends WikiaController {
 
 		$userData = $userIdentityBox->getFullData();
 
-		$this->setVal( 'isBlocked', ( $user->isBlocked() || $user->isBlockedGlobally() ) );
+		$this->setVal( 'isBlocked', ( $user->isBlocked( true, false ) || $user->isBlockedGlobally() ) );
 		$this->setVal( 'zeroStateCssClass', ( $userData['showZeroStates'] ) ? 'zero-state' : '' );
 
 		$this->setVal( 'user', $userData );
@@ -956,8 +956,14 @@ class UserProfilePageController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * @throws BadRequestException
+	 * @return bool
+	 */
 	public function removeavatar() {
 		wfProfileIn( __METHOD__ );
+		$this->checkWriteRequest();
+
 		$this->setVal( 'status', false );
 
 		// macbre: avatars operations are disabled during maintenance

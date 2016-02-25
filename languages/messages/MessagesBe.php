@@ -223,30 +223,12 @@ $messages = array(
 'navigation'    => 'Навігацыя',
 'and'           => '&#32;і',
 
-# Cologne Blue skin
 'qbfind'         => 'Знайсці',
 'qbbrowse'       => 'Выбраць',
-'qbedit'         => 'Правіць',
 'qbpageoptions'  => 'Гэтая старонка',
 'qbpageinfo'     => 'Кантэкст',
-'qbmyoptions'    => 'Свае старонкі',
-'qbspecialpages' => 'Адмысловыя старонкі',
 'faq'            => 'ЧАПЫ',
-'faqpage'        => 'Project:ЧАПЫ',
 
-# Vector skin
-'vector-action-addsection'       => 'Дадаць тэму',
-'vector-action-delete'           => 'Сцерці',
-'vector-action-move'             => 'Перанесці',
-'vector-action-protect'          => 'Ахова',
-'vector-action-undelete'         => 'Аднавіць',
-'vector-action-unprotect'        => 'Змяніць ахову',
-'vector-simplesearch-preference' => 'Уключыць пашыраны пошук прапаноў (толькі для тэмы Vector)',
-'vector-view-create'             => 'Стварыць',
-'vector-view-edit'               => 'Правіць',
-'vector-view-history'            => 'Паказаць гісторыю',
-'vector-view-view'               => 'Чытаць',
-'vector-view-viewsource'         => 'Паказаць выточны тэкст',
 'actions'                        => 'Дзеянні',
 'namespaces'                     => 'Прасторы імёнаў',
 'variants'                       => 'Варыянты',
@@ -269,7 +251,6 @@ $messages = array(
 'edit'              => 'Правіць',
 'create'            => 'Стварыць',
 'editthispage'      => 'Правіць гэту старонку',
-'create-this-page'  => 'Стварыць старонку',
 'delete'            => 'сцерці',
 'deletethispage'    => 'Сцерці гэту старонку',
 'undelete_short'    => 'Аднавіць {{PLURAL:$1|адну праўку|$1 правак}}',
@@ -284,19 +265,9 @@ $messages = array(
 'talkpagelinktext'  => 'размова',
 'specialpage'       => 'Адмысловая старонка',
 'personaltools'     => 'Асабістыя прылады',
-'postcomment'       => 'Новы раздзел',
-'articlepage'       => 'Паказаць старонку змесціва',
 'talk'              => 'Размовы',
 'views'             => 'Віды',
 'toolbox'           => 'Прылады',
-'userpage'          => 'Паказаць старонку ўдзельніка',
-'projectpage'       => 'Паказаць старонку праекта',
-'imagepage'         => 'Гл. старонку файла',
-'mediawikipage'     => 'Паказаць старонку паведамлення',
-'templatepage'      => 'Паказаць старонку шаблона',
-'viewhelppage'      => 'Паказаць старонку даведкі',
-'categorypage'      => 'Гл. старонку катэгорыі',
-'viewtalkpage'      => 'Паказаць размову',
 'otherlanguages'    => 'На іншых мовах',
 'redirectedfrom'    => '(Пасля перасылкі з $1)',
 'redirectpagesub'   => 'Старонка-перасылка',
@@ -581,47 +552,6 @@ $2',
 Магчыма, вы ўжо змянілі свой пароль ці папрасілі новы тымчасовы.',
 'resetpass-temp-password'   => 'Тымчасовы пароль:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Выслаць мне новы пароль',
-'passwordreset-text'               => 'Запоўніце гэтую форму, каб атрымаць па электроннай пошце напамін вашага акаўнта.',
-'passwordreset-legend'             => 'Пераўстанавіць пароль',
-'passwordreset-disabled'           => 'Функцыя пераўсталёўкі пароля адключаная на гэтай вікі.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Калі ласка, увядзіце адзін з фрагментаў дадзеных ніжэй}}',
-'passwordreset-username'           => 'Імя ўдзельніка',
-'passwordreset-domain'             => 'Дамен:',
-'passwordreset-capture'            => 'Праглядзець напісаны ліст?',
-'passwordreset-capture-help'       => 'Калі вы паставіце адзнаку, то вам будзе паказаны ліст з часовым паролем, які адпраўляецца ўдзельніку.',
-'passwordreset-email'              => 'Адрас электроннай пошты:',
-'passwordreset-emailtitle'         => 'Інфармацыя пра рахунак на сайце {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Нехта (магчыма вы, з IP-адрасу $1) запытаў напамін пра ваш
-уліковы запіс у праекце {{SITENAME}} ($4).
-{{PLURAL:$3|Наступны ўліковы запіс звязаны | Наступныя ўліковыя запісы звязаны}} з гэтым адрасам электроннай пошты:
-
-$2
-
-{{PLURAL:$3|Гэты часовы пароль будзе|Гэтыя часовыя паролі будуць}} дзейнічаць {{PLURAL:$5|адзін дзень|$5 дзён}}.
-Вы павінны ўвайсці ў сістэму і абраць новы пароль.
-Калі вы не рабілі гэтага запыту, ці ўспомнілі свой зыходны пароль
-і не жадаеце яго мяняць, вы можаце праігнараваць гэтае паведамленне
-і працягнуць выкарыстоўваць свой стары пароль.',
-'passwordreset-emailtext-user'     => 'Удзельнік $1 з праекту {{SITENAME}} запрасіў напамін пра ваш
-уліковы запіс у праекце {{SITENAME}}
-($4).
-{{PLURAL:$3|Наступны ўліковы запіс звязаны | Наступныя уліковыя запісы звязаны}} з гэтым адрасам электроннай пошты:
-
-$2
-
-{{PLURAL:$3|Гэты часовы пароль будзе|Гэтыя часовыя паролі будуць}} дзейнічаць {{PLURAL:$5|$5 дзень |$5 дня |$5 дзён}}.
-Вы павінны ўвайсці ў сістэму і абраць новы пароль.
-Калі вы не рабілі гэтага запыту, ці ўспомнілі свой зыходны пароль
-і не жадаеце яго мяняць, вы можаце праігнараваць гэтае паведамленне
-і працягнуць выкарыстоўваць свой стары пароль.',
-'passwordreset-emailelement'       => 'Імя ўдзельніка: $1
-Часовы пароль: $2',
-'passwordreset-emailsent'          => 'Па электроннай пошце быў адпраўлены напамін.',
-'passwordreset-emailsent-capture'  => 'Ніжэй прыведзены адпраўлены ліст-напамін.',
-'passwordreset-emailerror-capture' => 'Ніжэй прыведзены створаны ліст-напамін, яго адпраўка не атрымалася па прычыне: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Змяніць адрас электроннай пошты',
 'changeemail-header'   => 'Змена электроннага адрасу акаўнта',
@@ -734,7 +664,6 @@ $2
 '''Праўкі яшчэ не замацаваныя!'''",
 'sitejspreview'                    => "'''Памятайце, што гэта толькі папярэдні паказ вашага JavaScript.'''
 '''Праўкі яшчэ не замацаваныя!'''",
-'userinvalidcssjstitle'            => "'''Увага:''' Няма вокладкі з назвай \"\$1\". Памятайце, што свае старонкі .css і .js называюцца толькі малымі літарамі, такім чынам, напр., {{ns:user}}:Foo/vector.css, а не {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(абноўлена)',
 'note'                             => "'''Заўвага:'''",
 'previewnote'                      => "'''Гэта папярэдні паказ; праўкі яшчэ не замацаваныя!'''",
@@ -1074,14 +1003,6 @@ $1",
 'search-external'                  => 'Вонкавы пошук',
 'searchdisabled'                   => 'Функцыя пошуку {{SITENAME}} не працуе. Тымчасова можна шукаць з дапамогай Google. Заўважце, што тамтэйшыя індэксы зместу {{SITENAME}} могуць не быць актуальнымі.',
 
-# Quickbar
-'qbsettings'                => 'Хуткая стужка',
-'qbsettings-none'           => 'Няма',
-'qbsettings-fixedleft'      => 'Прымацавана злева',
-'qbsettings-fixedright'     => 'Прымацавана справа',
-'qbsettings-floatingleft'   => 'Плавае злева',
-'qbsettings-floatingright'  => 'Плавае справа',
-'qbsettings-directionality' => 'Фіксаваная, у залежнасці ад накіравання вашай мовы',
 
 # Preferences page
 'preferences'                   => 'Настаўленні',
@@ -2726,14 +2647,7 @@ $1',
 'pageinfo-viewsperedit'     => 'Колькасць паказаў на 1 праўку',
 
 # Skin names
-'skinname-standard'    => 'Класіка',
-'skinname-nostalgia'   => 'Настальгія',
-'skinname-cologneblue' => 'Сіні Кёльн',
 'skinname-monobook'    => 'Манабук',
-'skinname-myskin'      => 'Майскін',
-'skinname-chick'       => 'Чык',
-'skinname-simple'      => 'Проста',
-'skinname-modern'      => 'Сучаснасць',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Пазначыць як ухваленае',

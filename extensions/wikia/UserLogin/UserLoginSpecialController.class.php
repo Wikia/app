@@ -576,8 +576,12 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * @requestParam string username
 	 * @responseParam string result [ok/noemail/error/null]
 	 * @responseParam string msg - result message
+	 *
+	 * @throws BadRequestException
 	 */
 	public function mailPassword() {
+		$this->checkWriteRequest();
+
 		$loginForm = new LoginForm( $this->wg->request );
 		if ( $this->wg->request->getText( 'username', '' ) != '' ) {
 			$loginForm->mUsername = $this->wg->request->getText( 'username' );
@@ -640,6 +644,18 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->setSuccessResponse( 'userlogin-password-email-sent', $loginForm->mUsername );
 		} else {
 			$this->setParsedErrorResponse( 'userlogin-error-mail-error' );
+		}
+	}
+
+	/**
+	 * @see SUS-24
+	 * @throws BadRequestException
+	 */
+	public function checkWriteRequest() {
+		if ( !$this->request->isInternal() ) {
+			if (!$this->request->wasPosted() || !Wikia\Security\Utils::matchToken(UserLoginHelper::getLoginToken(), $this->wg->request->getVal('token'))) {
+				throw new BadRequestException('Request must be POSTed and provide a valid login token.');
+			}
 		}
 	}
 

@@ -87,9 +87,7 @@ $messages = array(
 'cancel'    => 'ཆ་མེད་གཏང་།',
 'mytalk'    => 'ངེ་གི་བློ།',
 
-# Cologne Blue skin
 'qbfind' => 'འཚོལ།',
-'qbedit' => 'ཞུན་དག',
 
 'errorpagetitle'   => 'འཛོལ་བ།',
 'returnto'         => '$1 ལུ་ལོག།',

@@ -60,7 +60,7 @@ class AchAwardingService {
 
 			$dbr = wfGetDB( DB_SLAVE );
 
-			$badge = $dbr->selectField( 
+			$badge = $dbr->selectField(
 				'ach_user_badges',
 				'badge_type_id',
 				$where,
@@ -80,13 +80,13 @@ class AchAwardingService {
 	}
 
 	public function processSharing( $articleID, $sharerID, $IP ) {
-		global $wgEnableAchievementsForSharing, $wgAchievementsEditAddPhotoOnly;
+		global $wgEnableAchievementsForSharing, $wgAchievementsEditOnly;
 
 		if ( empty( $wgEnableAchievementsForSharing ) ) {
 			return;
 		}
 
-		if (!empty( $wgAchievementsEditAddPhotoOnly ) ) {
+		if (!empty( $wgAchievementsEditOnly ) ) {
 			return;
 		}
 
@@ -357,11 +357,11 @@ class AchAwardingService {
 	private function processAllInTrack() {
 		wfProfileIn( __METHOD__ );
 
-		global $wgAchievementsEditAddPhotoOnly;
+		global $wgAchievementsEditOnly;
 
-		if ( empty( $wgAchievementsEditAddPhotoOnly ) ) {
+		if ( empty( $wgAchievementsEditOnly ) ) {
 			if ( $this->mTitle->isContentPage() ) {
-				$this->processInTrackEditCategory();
+				$this->processInTrackPicture();
 				$this->processInTrackCategory();
 			}
 			$this->processInTrackBlogPost();
@@ -371,7 +371,7 @@ class AchAwardingService {
 
 		if ( $this->mTitle->isContentPage() ) {
 			$this->processInTrackEdit();
-			$this->processInTrackPicture();
+			$this->processInTrackEditCategory();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -418,7 +418,7 @@ class AchAwardingService {
 						//calls api.php?action=query&list=imageusage&iulimit=10&iutitle=File:File_mame.ext
 						$imageUsageCount = 0;
 						$imageUsageLimit = 10;
-						$params = array( 
+						$params = array(
 							'action' => 'query',
 							'list' => 'imageusage',
 							'iutitle' => "File:{$inserted_image['il_to']}",
@@ -517,9 +517,9 @@ class AchAwardingService {
 	}
 
 	private function processAllNotInTrack() {
-		global $wgAchievementsEditAddPhotoOnly;
+		global $wgAchievementsEditOnly;
 
-		if ( !empty( $wgAchievementsEditAddPhotoOnly ) ) {
+		if ( !empty( $wgAchievementsEditOnly ) ) {
 			return;
 		}
 
@@ -530,7 +530,7 @@ class AchAwardingService {
 			$where = array( 'badge_type_id' => BADGE_LUCKYEDIT );
 			$dbr = wfGetDB( DB_SLAVE );
 
-			$maxLap = $dbr->selectField( 
+			$maxLap = $dbr->selectField(
 				'ach_user_badges',
 				'max( badge_lap ) as cnt',
 				$where,
@@ -686,7 +686,7 @@ class AchAwardingService {
 		$where = array( 'user_id' => $this->mUser->getId() );
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$res = $dbr->select( 
+		$res = $dbr->select(
 			'ach_user_badges',
 			'badge_type_id, badge_lap',
 			$where,
@@ -729,9 +729,9 @@ class AchAwardingService {
 			$user = $wgUser;
 		}
 
-		if ( 
+		if (
 			$user->isAnon() ||
-			$user->isBlocked() ||
+			$user->isBlocked( true, false ) ||
 			( $user->isAllowed( 'bot' ) || in_array( $user->getName(), $wgWikiaBotLikeUsers ) ) ||
 			( is_array( $wgAchievementsExemptUsers ) && in_array( $user->getId(), $wgAchievementsExemptUsers ) ) ||
 			/*

@@ -2,20 +2,26 @@
 /*jslint nomen: true*/
 /*jshint camelcase: false*/
 define('ext.wikia.adEngine.provider.taboola', [
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.recovery.helper',
+	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.taboolaHelper',
 	'wikia.abTest',
+	'wikia.geo',
+	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window',
-	'wikia.document',
-	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.slotTweaker'
-], function (abTest, log, window, document, adContext, slotTweaker) {
+	'wikia.document'
+], function (adContext, recoveryHelper, slotTweaker, taboolaHelper, abTest, geo, instantGlobals, log, window, document) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.provider.taboola',
-		libraryLoaded = false,
-		readMoreDiv = document.getElementById('RelatedPagesModuleWrapper'),
+	var abGroups = {
+			recovery: abTest.getGroup('PROJECT_43_TABOOLA') === 'YES',
+			regular: abTest.getGroup('NATIVE_ADS_TABOOLA') === 'YES'
+		},
+		config = instantGlobals.wgAdDriverTaboolaConfig || {},
 		context = adContext.getContext(),
-		pageType = context.targeting.pageType,
+		logGroup = 'ext.wikia.adEngine.provider.taboola',
 		mappedVerticals = {
 			tv: 'Television',
 			games: 'Gaming',
@@ -25,42 +31,31 @@ define('ext.wikia.adEngine.provider.taboola', [
 			music: 'Music',
 			movies: 'Movies'
 		},
+		readMoreDiv = document.getElementById('RelatedPagesModuleWrapper'),
 		slots = {
 			'NATIVE_TABOOLA_ARTICLE': {
 				id: 'taboola-below-article-thumbnails',
 				mode: 'thumbnails-c',
-				text: 'Below Article Thumbnails - '
+				label: 'Below Article Thumbnails - '
 			},
 			'NATIVE_TABOOLA_RAIL': {
 				id: 'taboola-right-rail-thumbnails',
 				mode: 'thumbnails-rr',
-				text: 'Right Rail Thumbnails - '
+				label: 'Right Rail Thumbnails - '
+			},
+			'TOP_LEADERBOARD_AB': {
+				id: 'taboola-above-article-thumbnails',
+				mode: 'thumbnails-h-abp',
+				label: 'Above Article Thumbnails'
 			}
+		},
+		supportedSlots = {
+			recovery: [],
+			regular: []
 		};
 
 	function getVerticalName() {
-		var verticalName = mappedVerticals[context.targeting.wikiVertical];
-		if (!verticalName) {
-			verticalName = 'Other';
-		}
-
-		log(['getVerticalName', verticalName], 'debug', logGroup);
-		return verticalName;
-	}
-
-	function getSupportedSlots() {
-		var supportedSlots = [],
-			abGroup = abTest.getGroup('TABOOLA_MODULES');
-
-		if (abGroup === 'GROUP_1' || abGroup === 'GROUP_3') {
-			supportedSlots.push('NATIVE_TABOOLA_RAIL');
-		}
-		if (abGroup === 'GROUP_2' || abGroup === 'GROUP_3') {
-			supportedSlots.push('NATIVE_TABOOLA_ARTICLE');
-		}
-
-		log(['getSlots', supportedSlots], 'debug', logGroup);
-		return supportedSlots;
+		return mappedVerticals[context.targeting.wikiVertical] || 'Other';
 	}
 
 	function canHandleSlot(slotName) {
@@ -70,59 +65,57 @@ define('ext.wikia.adEngine.provider.taboola', [
 			return false;
 		}
 
-		return getSupportedSlots().indexOf(slotName) !== -1;
-	}
-
-	function loadTaboola() {
-		var taboolaInit = {},
-			taboolaScript,
-			url = '//cdn.taboola.com/libtrc/wikia-network/loader.js';
-
-		if (libraryLoaded) {
-			return;
+		if (slots[slotName] && config[slotName] && abGroups.regular && geo.isProperGeo(config[slotName].regular)) {
+			log(['canHandleSlot', 'Using regular taboola', slotName], 'debug', logGroup);
+			supportedSlots.regular.push(slotName);
+			return true;
 		}
 
-		taboolaInit[pageType] = 'auto';
-		window._taboola = window._taboola || [];
-		window._taboola.push(taboolaInit);
-		window._taboola.push({flush: true});
+		if (slots[slotName] && config[slotName] && abGroups.recovery && geo.isProperGeo(config[slotName].recovery)) {
+			log(['canHandleSlot', 'Using recovery taboola', slotName], 'debug', logGroup);
+			supportedSlots.recovery.push(slotName);
+			return true;
+		}
 
-		taboolaScript = document.createElement('script');
-		taboolaScript.async = true;
-		taboolaScript.src = url;
-		taboolaScript.id = logGroup;
-		document.getElementsByTagName('body')[0].appendChild(taboolaScript);
-
-		libraryLoaded = true;
+		return false;
 	}
 
-	function fillInSlot(slotName, slotElement, success) {
+	function fillInSlot(slot) {
 		var container = document.createElement('div'),
-			slot = slots[slotName];
-		log(['fillInSlot', slotName, slotElement], 'debug', logGroup);
+			mappedSlot = slots[slot.name];
+		log(['fillInSlot', slot.name], 'debug', logGroup);
 
-		if (readMoreDiv && slotName === 'NATIVE_TABOOLA_ARTICLE') {
+		if (slot.name === 'NATIVE_TABOOLA_ARTICLE') {
 			readMoreDiv.parentNode.removeChild(readMoreDiv);
 		}
-		loadTaboola();
-		container.id = slot.id;
-		slotElement.appendChild(container);
 
-		window._taboola.push({
-			mode: slot.mode,
+		container.id = mappedSlot.id;
+		slot.container.appendChild(container);
+
+		taboolaHelper.initializeWidget({
+			mode: mappedSlot.mode,
 			container: container.id,
-			placement: slot.text + getVerticalName(),
+			placement: mappedSlot.label + getVerticalName(),
 			target_type: 'mix'
 		});
 
-		slotTweaker.show(slotName);
-		success();
+		slotTweaker.show(slot.name);
+		slot.success();
+	}
+
+	function fillInSlotByConfig(slot) {
+		if (supportedSlots.regular.indexOf(slot.name) !== -1) {
+			fillInSlot(slot);
+		} else if (supportedSlots.recovery.indexOf(slot.name) !== -1) {
+			recoveryHelper.addOnBlockingCallback(function () {
+				fillInSlot(slot);
+			});
+		}
 	}
 
 	return {
 		name: 'Taboola',
 		canHandleSlot: canHandleSlot,
-		fillInSlot: fillInSlot
+		fillInSlot: fillInSlotByConfig
 	};
-
 });

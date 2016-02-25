@@ -445,30 +445,12 @@ $messages = array(
 'navigation'    => '둘러보기',
 'and'           => ',',
 
-# Cologne Blue skin
 'qbfind'         => '찾기',
 'qbbrowse'       => '탐색',
-'qbedit'         => '편집',
 'qbpageoptions'  => '문서 기능',
 'qbpageinfo'     => '문서 정보',
-'qbmyoptions'    => '내 문서',
-'qbspecialpages' => '특수 문서',
 'faq'            => '자주 묻는 질문',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => '새 주제',
-'vector-action-delete'           => '삭제',
-'vector-action-move'             => '이동',
-'vector-action-protect'          => '보호',
-'vector-action-undelete'         => '되살리기',
-'vector-action-unprotect'        => '보호 설정 변경',
-'vector-simplesearch-preference' => '향상된 검색어 제안 사용하기 (벡터 스킨 전용)',
-'vector-view-create'             => '생성',
-'vector-view-edit'               => '편집',
-'vector-view-history'            => '역사',
-'vector-view-view'               => '읽기',
-'vector-view-viewsource'         => '내용 보기',
 'actions'                        => '행위',
 'namespaces'                     => '이름공간',
 'variants'                       => '변수',
@@ -491,7 +473,6 @@ $messages = array(
 'edit'              => '편집',
 'create'            => '생성',
 'editthispage'      => '이 문서 편집하기',
-'create-this-page'  => '이 문서 만들기',
 'delete'            => '삭제',
 'deletethispage'    => '이 문서 삭제하기',
 'undelete_short'    => '편집 $1개 되살리기',
@@ -506,19 +487,9 @@ $messages = array(
 'talkpagelinktext'  => '토론',
 'specialpage'       => '특수 문서',
 'personaltools'     => '개인 도구',
-'postcomment'       => '새 주제',
-'articlepage'       => '문서 보기',
 'talk'              => '토론',
 'views'             => '보기',
 'toolbox'           => '도구모음',
-'userpage'          => '사용자 문서 보기',
-'projectpage'       => '프로젝트 문서 보기',
-'imagepage'         => '자료 문서 보기',
-'mediawikipage'     => '메시지 문서 보기',
-'templatepage'      => '틀 문서 보기',
-'viewhelppage'      => '도움말 문서 보기',
-'categorypage'      => '분류 문서 보기',
-'viewtalkpage'      => '토론 보기',
 'otherlanguages'    => '다른 언어',
 'redirectedfrom'    => '($1에서 넘어옴)',
 'redirectpagesub'   => '넘겨주기 문서',
@@ -804,36 +775,6 @@ $2',
 'resetpass-wrong-oldpass'   => '비밀번호가 잘못되었거나 현재의 비밀번호와 같습니다.
 당신은 이미 비밀번호를 성공적으로 변경하였거나 새 임시 비밀번호를 발급받았을 수 있습니다.',
 'resetpass-temp-password'   => '임시 비밀번호:',
-
-# Special:PasswordReset
-'passwordreset'                    => '암호 재설정',
-'passwordreset-text'               => '이메일을 통해 계정 정보를 받을 수 있습니다. 아래의 칸을 채워주세요.',
-'passwordreset-legend'             => '암호 초기화',
-'passwordreset-disabled'           => '이 위키에서는 암호 초기화 기능을 사용하지 않습니다.',
-'passwordreset-pretext'            => '{{PLURAL:$1||아래에 한 가지 정보를 입력해주십시오}}',
-'passwordreset-username'           => '계정 이름:',
-'passwordreset-domain'             => '도메인:',
-'passwordreset-capture'            => '발송 결과 이메일을 보시겠습니까?',
-'passwordreset-capture-help'       => '이 상자에 체크하면 이메일이 발송된 즉시 임시 비밀번호가 담긴 이메일을 볼 수 있습니다.',
-'passwordreset-email'              => '이메일 주소:',
-'passwordreset-emailtitle'         => '{{SITENAME}} 계정 상세 정보',
-'passwordreset-emailtext-ip'       => 'IP 주소 $1을 사용하는 누군가(아마도 당신이), {{SITENAME}} ($4)의 비밀번호 찾기를 요청하였습니다. 이 이메일 주소와 연관된 계정의 목록입니다:
-
-$2
-
-이 {{PLURAL:$3|임시 비밀번호}}의 효력은 $5일 후 만료됩니다.
-이 비밀번호로 로그인한 후 비밀번호를 변경하십시오. 만약 당신이 아닌 다른 사람이 요청하였거나, 원래의 비밀번호를 기억해냈다면, 이 메시지를 무시하고 이전의 비밀번호를 계속 사용할 수 있습니다.',
-'passwordreset-emailtext-user'     => '{{SITENAME}} ($4)의 사용자 $1이 비밀번호 찾기를 요청하였습니다. 이 이메일 주소와 연관된 계정의 목록입니다:
-
-$2
-
-이 {{PLURAL:$3|임시 비밀번호}}의 효력은 $5일 후 만료됩니다.
-이 비밀번호로 로그인한 후 비밀번호를 변경하십시오. 만약 당신이 아닌 다른 사람이 요청하였거나, 원래의 비밀번호를 기억해냈다면, 이 메시지를 무시하고 이전의 비밀번호를 계속 사용할 수 있습니다.',
-'passwordreset-emailelement'       => '계정 이름: $1
-임시 비밀번호: $2',
-'passwordreset-emailsent'          => '비밀번호 찾기 이메일을 보냈습니다.',
-'passwordreset-emailsent-capture'  => '비밀번호 찾기 이메일이 발송되었으며, 아래에 표시되어 있습니다.',
-'passwordreset-emailerror-capture' => '비밀번호 찾기 이메일이 생성되어 아래에 표시되었지만 발송하는 데에는 실패했습니다: $1',
 
 # Special:ChangeEmail
 'changeemail'          => 'E-mail 주소 변경',
@@ -1292,14 +1233,6 @@ $1",
 'search-external'                  => '외부 검색',
 'searchdisabled'                   => '{{SITENAME}} 검색 기능이 비활성화되어 있습니다. 기능이 작동하지 않는 동안에는 구글(Google)을 이용해 검색할 수 있습니다. 검색 엔진의 내용은 최근 것이 아닐 수 있다는 점을 주의해주세요.',
 
-# Quickbar
-'qbsettings'                => '빨리가기 맞춤',
-'qbsettings-none'           => '없음',
-'qbsettings-fixedleft'      => '왼쪽 고정',
-'qbsettings-fixedright'     => '오른쪽 고정',
-'qbsettings-floatingleft'   => '왼쪽 유동',
-'qbsettings-floatingright'  => '오른쪽 유동',
-'qbsettings-directionality' => '사용자 언어의 문자 입력 방향에 맞추어 고정',
 
 # Preferences page
 'preferences'                   => '사용자 환경 설정',
@@ -2941,13 +2874,10 @@ $1 사용자가 차단된 이유는 다음과 같습니다: "$2"',
 # Stylesheets
 'common.css'   => '/** 이 CSS 설정은 모든 스킨에 적용됩니다 */',
 'monobook.css' => '/* 이 CSS 설정은 모든 모노북 스킨에 적용됩니다 */',
-'modern.css'   => '/* 이 CSS 설정은 모든 모던 스킨에 적용됩니다 */',
-'vector.css'   => '/* 이 CSS 설정은 모든 벡터 스킨에 적용됩니다 */',
 
 # Scripts
 'common.js'   => '/* 이 자바스크립트 설정은 모든 문서, 모든 사용자에게 적용됩니다. */',
 'monobook.js' => '/* 이 자바스크립트 설정은 모노북 스킨을 사용하는 사용자에게 적용됩니다. */',
-'vector.js'   => '/* 이 자바스크립트 설정은 벡터 스킨을 사용하는 사용자에게 적용됩니다. */',
 
 # Metadata
 'notacceptable' => '클라이언트에서 인식 가능한 출력 포맷이 없습니다.',
@@ -2987,15 +2917,7 @@ $1 사용자가 차단된 이유는 다음과 같습니다: "$2"',
 'pageinfo-viewsperedit'     => '읽힌 횟수/편집 수',
 
 # Skin names
-'skinname-standard'    => '클래식',
-'skinname-nostalgia'   => '노스탤지아',
-'skinname-cologneblue' => '쾰른 블루',
 'skinname-monobook'    => '모노북',
-'skinname-myskin'      => '마이스킨',
-'skinname-chick'       => '치크',
-'skinname-simple'      => '심플',
-'skinname-modern'      => '모던',
-'skinname-vector'      => '벡터',
 
 # Patrolling
 'markaspatrolleddiff'                 => '검토한 문서로 표시',

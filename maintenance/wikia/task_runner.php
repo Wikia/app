@@ -11,6 +11,7 @@ class TaskRunnerMaintenance extends Maintenance {
 		$this->addOption('task_id', '', true, true);
 		$this->addOption('call_order', '', true, true);
 		$this->addOption('task_list', '', true, true);
+		$this->addOption('created_at', '', true, true);
 		$this->addOption('created_by', '', true, true);
 		$this->addOption('wiki_id', '', false, true);
 	}
@@ -64,6 +65,12 @@ class TaskRunnerMaintenance extends Maintenance {
 				] ),
 			] );
 		}
+
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+			'took' => $runner->runTime(),
+			'delay' => microtime( true ) - (float) $this->mOptions['created_at'],
+			'state' => $result->status,
+		] );
 
 		ob_end_clean();
 		echo json_encode( $result );

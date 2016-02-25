@@ -45,9 +45,6 @@ $messages = array(
 'mytalk'     => 'Hurukuro dzangu',
 'navigation' => 'Banguranyika',
 
-# Cologne Blue skin
-'qbedit'         => 'Chinja',
-'qbspecialpages' => 'Mapeji akakosha',
 
 'help'             => 'Rubatsiro',
 'search'           => 'Tsvaga',

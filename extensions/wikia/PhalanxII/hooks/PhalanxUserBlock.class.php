@@ -12,19 +12,26 @@ class PhalanxUserBlock extends WikiaObject {
 	function __construct(){
 		parent::__construct();
 	}
-	
+
 	/**
 	 * handler for hook blockCheck
 	 *
 	 * @static
 	 *
+	 * @param User $user
+	 * @param Bool $shouldLogBlockInStats flag that decides whether to log or not in PhalanxStats
+	 *
 	 * @desc blockCheck() will return false if user is blocked. The reason why it was
 	 * written in such way is below when you look at method UserBlock::onUserCanSendEmail().
+	 *
+	 * @return bool
 	 */
-	static public function blockCheck( User $user ) {
+	static public function blockCheck( User $user, $shouldLogBlockInStats = true ) {
 		wfProfileIn( __METHOD__ );
 
 		$phalanxModel = new PhalanxUserModel( $user );
+		$phalanxModel->setShouldLogInStats( $shouldLogBlockInStats );
+
 		$ret = $phalanxModel->match_user();
 		if ( $ret !== false ){
 			if ( self::$checkEmail === true ) {
@@ -34,7 +41,7 @@ class PhalanxUserBlock extends WikiaObject {
 				}
 			}
 		}
-		
+
 		if ( $ret === false ) {
 			$user = $phalanxModel->userBlock( $user->isAnon() ? 'ip' : 'exact' )->getUser();
 			self::$typeBlock = (empty( self::$typeBlock ) ) ? 'user' : self::$typeBlock;
@@ -55,7 +62,7 @@ class PhalanxUserBlock extends WikiaObject {
 
 	/**
 	 * hook
-	 * 
+	 *
 	 * @static
 	 */
 	static public function abortNewAccount( $user, &$abortError ) {
@@ -77,7 +84,7 @@ class PhalanxUserBlock extends WikiaObject {
 
 	/**
 	 * hook
-	 * 
+	 *
 	 * @static
 	 */
 	static public function validateUserName( $userName, &$abortError ) {

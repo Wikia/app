@@ -259,4 +259,10 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 
 'tog-enableuserjs' => 'Włącz osobisty kod JavaScript ([[Pomoc:Osobiste_CSS_i_JS|Dowiedz się więcej]])',
 'wikia-pagetitle' => '$1 – Wikia',
+
+'group-content-moderator' => 'Moderatorzy treści',
+'group-content-moderator-member' => 'Moderator treści',
+
+	'wikia-read-only-mode' => 'Ojej! Nasze główne centrum danych jest w tej chwili niedostępne, a to jest nasza kopia zapasowa. Niestety oznacza to, że możesz nie być w stanie wykonać niektórych czynności takich jak edycja, przesyłanie plików lub korzystanie z czatu.
+ +Pracujemy właśnie nad rozwiązeniem tego problemu i dziękujemy za cierpliwość! Jeśli ta wiadomość jest widoczna przez dłuższy okres czasu, możesz skontaktować się z Wikią poprzez community@wikia.com.',
 ) );

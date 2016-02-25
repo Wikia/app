@@ -422,30 +422,12 @@ $messages = array(
 'navigation' => 'Navigácia',
 'and' => '&#32;a',
 
-# Cologne Blue skin
 'qbfind' => 'Hľadať',
 'qbbrowse' => 'Prehliadať',
-'qbedit' => 'Upraviť',
 'qbpageoptions' => 'Táto stránka',
 'qbpageinfo' => 'Kontext',
-'qbmyoptions' => 'Moje stránky',
-'qbspecialpages' => 'Špeciálne stránky',
 'faq' => 'Často kladené otázky',
-'faqpage' => 'Project:Často kladené otázky',
 
-# Vector skin
-'vector-action-addsection' => 'Pridať tému',
-'vector-action-delete' => 'Zmazať',
-'vector-action-move' => 'Presunúť',
-'vector-action-protect' => 'Zamknúť',
-'vector-action-undelete' => 'Obnoviť',
-'vector-action-unprotect' => 'Zmeniť stav ochrany',
-'vector-simplesearch-preference' => 'Povoliť rozšírené návrhy hľadania (iba pre tému Vector)',
-'vector-view-create' => 'Vytvoriť',
-'vector-view-edit' => 'Upraviť',
-'vector-view-history' => 'Zobraziť históriu',
-'vector-view-view' => 'Čítať',
-'vector-view-viewsource' => 'Zobraziť zdroj',
 'actions' => 'Operácie',
 'namespaces' => 'Menné priestory',
 'variants' => 'Varianty',
@@ -468,7 +450,6 @@ $messages = array(
 'edit' => 'upraviť',
 'create' => 'Vytvoriť',
 'editthispage' => 'Upraviť túto stránku',
-'create-this-page' => 'Vytvoriť túto stránku',
 'delete' => 'Vymazať',
 'deletethispage' => 'Vymazať túto stránku',
 'undelete_short' => 'Obnoviť {{PLURAL:$1|jednu úpravu|$1 úpravy|$1 úprav}}',
@@ -483,19 +464,9 @@ $messages = array(
 'talkpagelinktext' => 'Diskusia',
 'specialpage' => 'Špeciálna stránka',
 'personaltools' => 'Osobné nástroje',
-'postcomment' => 'Nová sekcia',
-'articlepage' => 'Zobraziť stránku',
 'talk' => 'Diskusia',
 'views' => 'Zobrazení',
 'toolbox' => 'Nástroje',
-'userpage' => 'Zobraziť stránku používateľa',
-'projectpage' => 'Zobraziť projektovú stránku',
-'imagepage' => 'Zobraziť stránku súboru',
-'mediawikipage' => 'Zobraziť stránku so správou',
-'templatepage' => 'Zobraziť stránku šablóny',
-'viewhelppage' => 'Zobraziť stránku Pomocníka',
-'categorypage' => 'Zobraziť stránku kategórie',
-'viewtalkpage' => 'Zobraziť diskusiu k stránke',
 'otherlanguages' => 'V iných jazykoch',
 'redirectedfrom' => '(Presmerované z $1)',
 'redirectpagesub' => 'Presmerovacia stránka',
@@ -802,44 +773,6 @@ Prosím, počkajte predtým, než to skúsite znova.',
 Je možné, že sa vám už podarilo úspešne zmeniť svoje heslo alebo ste si vyžiadali nové dočasné heslo.',
 'resetpass-temp-password' => 'Dočasné heslo:',
 
-# Special:PasswordReset
-'passwordreset' => 'Reset hesla',
-'passwordreset-text' => 'Po vyplnení tohto formulára dostanete emailom podrobnosti o vašom účte.',
-'passwordreset-legend' => 'Obnoviť heslo',
-'passwordreset-disabled' => 'Obnovenie hesla bolo na tejto wiki zakázané.',
-'passwordreset-pretext' => '{{PLURAL:$1|Zadajte nižšie uvedený údaj|Zadajte jeden z nižšie uvedených údajov}}',
-'passwordreset-username' => 'Používateľské meno:',
-'passwordreset-domain' => 'Doména:',
-'passwordreset-capture' => 'Zobraziť výsledný e-mail?',
-'passwordreset-capture-help' => 'Ak označíte toto políčko, bude e-mail (s dočasným heslom) okrem zaslania používateľovi zobrazený aj vám.',
-'passwordreset-email' => 'Emailová adresa:',
-'passwordreset-emailtitle' => 'Podrobnosti o účte na {{GRAMMAR:lokál|{{SITENAME}}}}',
-'passwordreset-emailtext-ip' => 'Niekto (pravdepodobne vy z IP adresy $1) požiadal pripomenutie podrobností o vašom
-účtu na {{GRAMMAR:genitív|{{SITENAME}}}} ($4). {{PLURAL:$3|Nasledujúci používateľský účet je spojený|Nasledujúce používateľské účty sú spojené}}
-s touto emailovou adresou:
-
-$2
-
-{{PLURAL:$3|Platnosť tohto dočasného hesla vyprší|Platnosť týchto dočasných hesiel vyprší}} o {{PLURAL:$5|jeden deň|$5 dni|$5 dní}}.
-Mali by ste sa prihlásiť teraz a zvoliť nové heslo. Ak túto žiadosť podal niekto iný alebo
-ak ste si spomenuli svoje pôvodné heslo a už ho chcete zmeniť, môžete túto správu
-ignorovať a ďalej používať vaše staré heslo.',
-'passwordreset-emailtext-user' => 'Používateľ $1 na {{GRAMMAR:genitív|{{SITENAME}}}} požiadal pripomenutie podrobností o vašom
-účtu na {{GRAMMAR:genitív|{{SITENAME}}}} ($4). {{PLURAL:$3|Nasledujúci používateľský účet je spojený|Nasledujúce používateľské účty sú spojené}}
-s touto emailovou adresou:
-
-$2
-
-{{PLURAL:$3|Platnosť tohto dočasného hesla vyprší|Platnosť týchto dočasných hesiel vyprší}} o {{PLURAL:$5|jeden deň|$5 dni|$5 dní}}.
-Mali by ste sa prihlásiť teraz a zvoliť nové heslo. Ak túto žiadosť podal niekto iný alebo
-ak ste si spomenuli svoje pôvodné heslo a už ho chcete zmeniť, môžete túto správu
-ignorovať a ďalej používať vaše staré heslo.',
-'passwordreset-emailelement' => 'Používateľské meno: $1
-Dočasné heslo:$2',
-'passwordreset-emailsent' => 'Email s heslom bol odoslaný.',
-'passwordreset-emailsent-capture' => 'Bol vytvorený pripomienkový e-mail, ktorý je zobrazený nižšie.',
-'passwordreset-emailerror-capture' => 'Bol vytvorený pripomienkový e-mail, ktorý je zobrazený nižšie, ale nepodarilo sa ho odoslať používateľovi: $1',
-
 # Special:ChangeEmail
 'changeemail' => 'Zmena e-mailovej adresy',
 'changeemail-header' => 'Zmena e-mailovej adresy pre účet',
@@ -966,7 +899,6 @@ Dolu je pre informáciu posledná položka zo záznamu blokovaní:',
 '''Zatiaľ nebolo uložené!'''",
 'sitejspreview' => "'''Nezabudnite, že toto je iba náhľad tohto JavaScriptu.'''
 '''Zatiaľ nebol uložený!'''",
-'userinvalidcssjstitle' => "'''Upozornenie:''' Neexistuje vzhľad „$1“. Pamätajte, že vlastné .css a .js stránky používajú názov s malými písmenami, napr. {{ns:user}}:Foo/vector.css a nie {{ns:user}}:Foo/Vector.css.",
 'updated' => '(Aktualizovaný)',
 'note' => "'''Poznámka: '''",
 'previewnote' => "'''Nezabudnite, toto je iba náhľad stránky, ktorú upravujete.
@@ -1322,14 +1254,6 @@ Uistite sa, že táto zmena zachová historickú kontinuitu zmien stránky.',
 'search-external' => 'Externé vyhľadávanie',
 'searchdisabled' => 'Prepáčte! Fulltextové vyhľadávanie bolo dočasne vypnuté z dôvodu preťaženia. Zatiaľ môžete použiť hľadanie pomocou Google, ktoré však nemusí byť aktuálne.',
 
-# Quickbar
-'qbsettings' => 'Navigačný panel',
-'qbsettings-none' => 'Žiadne',
-'qbsettings-fixedleft' => 'Ukotvené vľavo',
-'qbsettings-fixedright' => 'Ukotvené vpravo',
-'qbsettings-floatingleft' => 'Plávajúce vľavo',
-'qbsettings-floatingright' => 'Plávajúce vpravo',
-'qbsettings-directionality' => 'Pevný, v závislosti na smerovosti písma vášho jazyka',
 
 # Preferences page
 'preferences' => 'Nastavenia',
@@ -2992,15 +2916,7 @@ Umožnuje do zhrnutia pridanie dôvodu.',
 
 # Stylesheets
 'common.css' => '/* Tu umiestnené CSS bude ovplyvňovať všetky štýly */',
-'standard.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Klasický */',
-'nostalgia.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Nostalgia */',
-'cologneblue.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Kolínska modrá */',
 'monobook.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Monobook */',
-'myskin.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Môjvzhľad */',
-'chick.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Kuriatko */',
-'simple.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Jednoduchý */',
-'modern.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Moderný */',
-'vector.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Vector */',
 'print.css' => '/* Tu umiestnené CSS bude ovplyvňovať tlačový výstup */',
 'handheld.css' => '/* Tu umiestnené CSS bude ovplyvňovať prenosné zariadenia vychádzajúceho zo štýlu nastaveného v $wgHandheldStyle */',
 'noscript.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov s vypnutým JavaScriptom */',
@@ -3011,15 +2927,7 @@ Umožnuje do zhrnutia pridanie dôvodu.',
 
 # Scripts
 'common.js' => '/* Tu uvedený JavaScript sa nahrá všetkým používateľom pri každom nahraní stránky. */',
-'standard.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Klasický */',
-'nostalgia.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Nostalgia */',
-'cologneblue.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Kolínska modrá */',
 'monobook.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Monobook */',
-'myskin.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Môjvzhľad */',
-'chick.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Kuriatko */',
-'simple.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Jednoduchý */',
-'modern.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Moderný */',
-'vector.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Vector */',
 'group-autoconfirmed.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom s potvrdenou emailovou adresou */',
 'group-bot.js' => '/* Tu sa nachádzajúci JavaScript sa načíta len robotom */',
 'group-sysop.js' => '/* Tu sa nachádzajúci JavaScript sa načíta len správcom */',
@@ -3064,15 +2972,7 @@ Pravdepodobne to spôsobil odkaz na externú internetovú lokalitu, ktorá sa na
 'pageinfo-viewsperedit' => 'Zobrazení na úpravu',
 
 # Skin names
-'skinname-standard' => 'Klasický',
-'skinname-nostalgia' => 'Nostalgia',
-'skinname-cologneblue' => 'Kolínska modrá',
 'skinname-monobook' => 'MonoBook',
-'skinname-myskin' => 'Môj vzhľad',
-'skinname-chick' => 'Kuriatko',
-'skinname-simple' => 'Jednoduchý',
-'skinname-modern' => 'Moderný',
-'skinname-vector' => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff' => 'Označiť ako stráženú',

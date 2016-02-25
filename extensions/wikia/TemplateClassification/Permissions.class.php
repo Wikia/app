@@ -20,6 +20,19 @@ class Permissions {
 	}
 
 	/**
+	 * Checks if entry point for bulk template classification should be shown.
+	 *
+	 * @param \User $user
+	 * @param \Title $title
+	 * @return bool
+	 */
+	public function shouldDisplayBulkActions( \User $user, \Title $title ) {
+		return $title->inNamespace( NS_CATEGORY )
+			&& $user->isAllowed( 'template-bulk-classification' )
+			&& ( new Helper() )->countTemplatesInCategory( $title->getDBkey() );
+	}
+
+	/**
 	 * Checks if user is allowed to change
 	 * @param \User $user
 	 * @param \Title $title

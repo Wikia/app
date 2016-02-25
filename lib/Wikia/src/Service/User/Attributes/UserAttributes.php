@@ -117,12 +117,28 @@ class UserAttributes {
 			if ( $this->attributeShouldBeSaved( $name, $value ) ) {
 				$this->setInService( $userId, new Attribute( $name, $value ) );
 				$savedAttributes[$name] = $value;
+				if ( $name == 'avatar' ) {
+					$this->logIfBadAvatarVal( $value, $userId );
+				}
 			} elseif ( $this->attributeShouldBeDeleted( $name, $value ) ) {
 				$this->deleteFromService( $userId, new Attribute( $name, $value ) );
 			}
 		}
 
 		$this->setInMemcache( $userId, $savedAttributes );
+	}
+
+	private function logIfBadAvatarVal( $value, $userId ) {
+
+		if ( $value == "" || preg_match( '/^http/', $value ) ) {
+			return;
+		}
+
+		$this->error( 'USER_ATTRIBUTES saving_bad_avatar_val', [
+			'userId' => $userId,
+			'avatar_val' => $value,
+			'exception' => new \Exception()
+		] );
 	}
 
 	/**
@@ -141,7 +157,10 @@ class UserAttributes {
 	}
 
 	private function attributeShouldBeDeleted( $name, $value ) {
-		return isset( $this->defaultAttributes[$name] ) && $value == $this->defaultAttributes[$name];
+		return (
+			( isset( $this->defaultAttributes[$name] ) && $value == $this->defaultAttributes[$name] ) ||
+			is_null( $value )
+		);
 	}
 
 	/**

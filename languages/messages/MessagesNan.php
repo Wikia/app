@@ -159,30 +159,12 @@ $messages = array(
 'navigation'    => 'Se̍h chām',
 'and'           => '&#32;kap',
 
-# Cologne Blue skin
 'qbfind'         => 'Chhoé',
 'qbbrowse'       => 'Liū-lám',
-'qbedit'         => 'Siu-kái',
 'qbpageoptions'  => 'Chit ia̍h',
 'qbpageinfo'     => 'Bo̍k-lo̍k',
-'qbmyoptions'    => 'Goá ê ia̍h',
-'qbspecialpages' => 'Te̍k-sû-ia̍h',
 'faq'            => 'Būn-tah',
-'faqpage'        => 'Project:Būn-tah',
 
-# Vector skin
-'vector-action-addsection'       => 'Ke chi̍t-ê toān-lo̍h',
-'vector-action-delete'           => 'Thâi',
-'vector-action-move'             => 'Sóa khì',
-'vector-action-protect'          => 'Pó-hō·',
-'vector-action-undelete'         => 'chhú-siau thâi tiàu',
-'vector-action-unprotect'        => 'Chhú-siau pó-hō·',
-'vector-simplesearch-preference' => 'Chhái-iōng ka-kiông-pán ê chhiau-soh kiàn-gī ( chí hān tī Vector bīn-phoê)',
-'vector-view-create'             => 'Khai-sí siá',
-'vector-view-edit'               => 'Siu-kái',
-'vector-view-history'            => 'khoàⁿ le̍k-sú',
-'vector-view-view'               => 'Tha̍k',
-'vector-view-viewsource'         => 'Khoàⁿ goân-sú lōe-iông',
 'actions'                        => 'Tōng-chok',
 'namespaces'                     => 'Miâ-khong-kan',
 'variants'                       => 'piàn-thé',
@@ -205,7 +187,6 @@ $messages = array(
 'edit'              => 'Siu-kái',
 'create'            => 'Khai-sí siá',
 'editthispage'      => 'Siu-kái chit ia̍h',
-'create-this-page'  => 'Khai-sí siá chit ia̍h',
 'delete'            => 'Thâi',
 'deletethispage'    => 'Thâi chit ia̍h',
 'undelete_short'    => 'Kiù {{PLURAL:$1| ê siu-káit|$1  ê siu-kái}}',
@@ -220,19 +201,9 @@ $messages = array(
 'talkpagelinktext'  => 'thó-lūn',
 'specialpage'       => 'Te̍k-sû-ia̍h',
 'personaltools'     => 'Kò-jîn kang-khū',
-'postcomment'       => 'Hoat-piáu phêng-lūn',
-'articlepage'       => 'Khoàⁿ loē-iông ia̍h',
 'talk'              => 'thó-lūn',
 'views'             => 'Khoàⁿ',
 'toolbox'           => 'Ke-si kheh-á',
-'userpage'          => 'Khoàⁿ iōng-chiá ê Ia̍h',
-'projectpage'       => 'Khoàⁿ sū-kang ia̍h',
-'imagepage'         => 'Khoàⁿ tóng-àn ia̍h',
-'mediawikipage'     => 'Khoàⁿ sìn-sit ia̍h',
-'templatepage'      => 'Khoàⁿ pang-bô͘ ia̍h',
-'viewhelppage'      => 'Khoàⁿ pang-chō͘ ia̍h',
-'categorypage'      => 'Khoàⁿ lūi-pia̍t ia̍h',
-'viewtalkpage'      => 'Khoàⁿ thó-lūn',
 'otherlanguages'    => 'Kî-thaⁿ ê gí-giân',
 'redirectedfrom'    => '(Tùi $1 choán--lâi)',
 'redirectpagesub'   => 'Choán-ia̍h',
@@ -523,38 +494,6 @@ Tiō-sī kóng, tī chit-má iōng chit ê IP bāng-chí ê lâng bē-sái koh k
 'resetpass-wrong-oldpass'   => '無效的臨時抑是現在的密碼，
 你可能已經成功更過你的密碼，抑是申請一个新的臨時密碼。',
 'resetpass-temp-password'   => 'Lîm-sî ê bi̍t-bé:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Têng siat bi̍t-bé',
-'passwordreset-text'               => '完成這个表，就通收著一封提醒你口座詳情的電子批。',
-'passwordreset-legend'             => 'Têng siat bi̍t-bé',
-'passwordreset-disabled'           => '佇這个Wiki已經禁止重設密碼',
-'passwordreset-pretext'            => '{{PLURAL:$1||拍下跤資料內底的一个}}',
-'passwordreset-username'           => 'Lí ê iōng-chiá miâ-chheng:',
-'passwordreset-domain'             => '網域：',
-'passwordreset-capture'            => '敢欲看產生的電子批？',
-'passwordreset-capture-help'       => '若你選這个框，電子批（包括臨時的密碼）會予你看著，而且傳送予用者。',
-'passwordreset-email'              => 'Tiān-chú-phoe tē-chí:',
-'passwordreset-emailtitle'         => '佇{{SITENAME}}面頂的的口座詳細',
-'passwordreset-emailtext-ip'       => '有人（可能是你，對$1這IP）要求發一个{{SITENAME}}（$4）口座詳情的提示。彼个用戶{{PLURAL:$3|是|是}}佮下跤電子批地址有關係：
-
-$2
-
-{{PLURAL:$3|這个臨時密碼|遮的臨時密碼}}會佇{{PLURAL:$5|一工 |$5工}}內到期。
-你這馬應該登入，而且選擇一个新密碼。若是別人做的要求，抑是你已經記
-起來你的密碼，你閣無想欲改，你會當免管這个信息，而且繼續用你的密碼。',
-'passwordreset-emailtext-user'     => '佇{{SITENAME}}的用者$1要求發一个{{SITENAME}}（$4）口座詳情的提示。彼个用者{{PLURAL:$3|是|是}}佮下跤電子批地址有關係：
-
-$2
-
-{{PLURAL:$3|這个臨時密碼|遮的臨時密碼}}會佇{{PLURAL:$5|一工 |$5工}}內到期。
-你這馬應該登入，而且選一个新密碼。若是別人做的要求，抑是你已經記
-起來你的密碼，你閣無想欲改，你會當免管這个信息，而且繼續用你的密碼。',
-'passwordreset-emailelement'       => 'Iōng-chiá: $1
-Lîm-sî ê bi̍t-bé: $2',
-'passwordreset-emailsent'          => 'Chit hong thê-chhíⁿ ê  tiān-chú-phoe í-keng kià chhut.',
-'passwordreset-emailsent-capture'  => '一張提醒的電子批已經寄出，佇下面通看著。',
-'passwordreset-emailerror-capture' => '一張提醒的電子批已經寫好，佇下面通看著，毋過送袂到用者: $1。',
 
 # Special:ChangeEmail
 'changeemail'          => 'Kái tiān-chú-phoe ê tē-chí',
@@ -1021,14 +960,6 @@ $1",
 'search-external'                  => '外部的搜揣',
 'searchdisabled'                   => '{{SITENAME}}因為性能方面的原因，全文搜揣已經暫時停用。你會使暫時透過Google搜揣。請注意怹的索引可能過時。',
 
-# Quickbar
-'qbsettings'                => 'Quickbar ê siat-tēng',
-'qbsettings-none'           => '無',
-'qbsettings-fixedleft'      => '倒手爿固定',
-'qbsettings-fixedright'     => '正手爿固定',
-'qbsettings-floatingleft'   => '倒手爿無固定',
-'qbsettings-floatingright'  => '正手爿無固定',
-'qbsettings-directionality' => '固定，照你話語文字的方向。',
 
 # Preferences page
 'preferences'                   => 'Siat-tēng',

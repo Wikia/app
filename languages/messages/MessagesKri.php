@@ -79,17 +79,8 @@ $messages = array(
 'mytalk'     => 'Mi Tok',
 'navigation' => 'Navigeshon',
 
-# Cologne Blue skin
-'qbedit'  => 'Edit',
 'faq'     => 'Kwestyon we dem de aks boku',
-'faqpage' => 'Project:Kwehstyohn-dehm we ohlman de aks',
 
-# Vector skin
-'vector-action-move'     => 'Muf',
-'vector-view-edit'       => 'Chenj',
-'vector-view-history'    => 'Luk histri',
-'vector-view-view'       => 'Rid',
-'vector-view-viewsource' => 'Luk di sos',
 'actions'                => 'Akshon-dem',
 'namespaces'             => 'Nemspes-dem',
 
@@ -110,7 +101,6 @@ $messages = array(
 'edit'             => 'Edit',
 'create'           => 'Mek',
 'editthispage'     => 'Edit dis pej-ya',
-'create-this-page' => 'Mek dis pej-ya',
 'delete'           => 'Dilit',
 'deletethispage'   => 'Dilit dis pej-ya',
 'protect'          => 'Protekt',
@@ -119,12 +109,9 @@ $messages = array(
 'talkpagelinktext' => 'Tok',
 'specialpage'      => 'Speshal Pej',
 'personaltools'    => 'Pasonal tul-dèm',
-'postcomment'      => 'Nyu sekshon',
-'articlepage'      => 'Luk kontent pej',
 'talk'             => 'Diskoshon',
 'views'            => 'Vyu-dem',
 'toolbox'          => 'Tulboks',
-'userpage'         => 'Luk dis yuza-im pej',
 'otherlanguages'   => 'Na oda langwej-dem',
 'jumpto'           => 'Jomp go:',
 'jumptonavigation' => 'navigeshon',

@@ -129,19 +129,9 @@ $messages = array(
 'mytalk'     => 'Сахцәажәара',
 'navigation' => 'Анавигациа',
 
-# Cologne Blue skin
 'qbfind'         => 'Аҧшаара',
-'qbedit'         => 'Ариашара',
 'qbpageoptions'  => 'Ари адаҟьа',
-'qbspecialpages' => 'Цастәи адаҟьақәа',
 
-# Vector skin
-'vector-action-move'     => 'Ахьӡ аҧсахра',
-'vector-view-create'     => 'Арҿиара',
-'vector-view-edit'       => 'Ариашамҭа',
-'vector-view-history'    => 'Аҭоурых',
-'vector-view-view'       => 'Аҧхьара',
-'vector-view-viewsource' => 'Ахәаҧшра',
 
 'help'             => 'Ацхыраара',
 'search'           => 'Аҧшаара',
@@ -153,7 +143,6 @@ $messages = array(
 'permalink'        => 'Еисымшатәи ахьарҧш',
 'edit'             => 'Ариашамҭа',
 'create'           => 'Арҿиара',
-'create-this-page' => 'Ариашара ари адаҟьа',
 'newpage'          => 'Адаҟьа Ҿыц',
 'talkpagelinktext' => 'Ахцәажәара',
 'specialpage'      => 'Цастәи адаҟьа',

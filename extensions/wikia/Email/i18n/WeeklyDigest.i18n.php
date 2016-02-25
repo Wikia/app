@@ -53,12 +53,17 @@ $messages['pt'] = array(
 
 $messages['ru'] = array(
 	'emailext-weeklydigest-subject' => 'Что нового на ваших любимых страницах Викия на этой неделе',
-	'emailext-weeklydigest-summary' => 'С момента вашего последнего посещения Викия участники сообщества сделали отслеживаемые вами страницы еще лучше.',
+	'emailext-weeklydigest-summary' => 'С момента вашего последнего посещения Викия участники сообщества сделали отслеживаемые вами страницы ещё лучше.',
 );
 
 $messages['zh-hans'] = array(
 	'emailext-weeklydigest-subject' => '看看您最喜欢的维基页面上本周有什么新内容',
 	'emailext-weeklydigest-summary' => '在您上次访问之后，Wikia社区成员对您关注的页面做了改进。',
+);
+
+$messages['zh-hant'] = array(
+	'emailext-weeklydigest-subject' => '看看維基頁面本周新内容',
+	'emailext-weeklydigest-summary' => '自您上次訪問之後，Wikia社區成員對您所關注的頁面做了改進。',
 );
 
 $messages['zh-tw'] = array(

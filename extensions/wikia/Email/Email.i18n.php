@@ -49,7 +49,8 @@ $messages['de'] = array(
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://de.wikia.com',
+	'emailext-wikia-home-url' => 'http://de.wikia.com/Wikia',
+	'emailext-forumreply-unfollow-text' => 'Du möchtest diese Updates nicht mehr erhalten? Klicke [$1 hier], um [$2 dieser Diskussion] auf der Seite {[{{SERVER}} {{SITENAME}}] nicht mehr zu folgen.',
 );
 
 $messages['es'] = array(
@@ -66,7 +67,8 @@ $messages['es'] = array(
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://es.wikia.com',
+	'emailext-wikia-home-url' => 'http://es.wikia.com/Wikia',
+	'emailext-forumreply-unfollow-text' => '¿Ya no tienes interés en recibir estas actualizaciones? Haz clic [$1 aquí] para dejar de seguir [$2 esta] discusión sobre [{{SERVER}} {{SITENAME}}].',
 );
 
 $messages['fr'] = array(
@@ -84,7 +86,8 @@ $messages['fr'] = array(
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://fr.wikia.com',
+	'emailext-wikia-home-url' => 'http://fr.wikia.com/Wikia',
+	'emailext-forumreply-unfollow-text' => 'Vous ne souhaitez plus être informé de ces mises à jour ? Cliquez [$1 ici] pour ne plus suivre [$2 cette discussion] sur [{{SERVER}} {{SITENAME}}].',
 );
 
 $messages['it'] = array(
@@ -102,6 +105,7 @@ $messages['it'] = array(
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
 	'emailext-wikia-home-url' => 'http://www.wikia.com',
+	'emailext-forumreply-unfollow-text' => "Non t'interessa più ricevere questi aggiornamenti? Clicca [$1 qui] per smettere di seguire [$2 questa discussione] su [{{SERVER}} {{SITENAME}}].",
 );
 
 $messages['ja'] = array(
@@ -118,7 +122,8 @@ $messages['ja'] = array(
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://ja.wikia.com',
+	'emailext-wikia-home-url' => 'http://ja.wikia.com/Wikia',
+	'emailext-forumreply-unfollow-text' => 'このような更新情報の受信をご希望でない場合は、[$1 こちら]をクリックして[{{SERVER}} {{SITENAME}}]の[$2 このスレッド]のフォローを解除してください。',
 );
 
 $messages['nl'] = array(
@@ -136,6 +141,7 @@ $messages['nl'] = array(
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
 	'emailext-wikia-home-url' => 'http://www.wikia.com',
+	'emailext-forumreply-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow [$2 this discussion] on [{{SERVER}} {{SITENAME}}].',
 );
 
 $messages['pl'] = array(
@@ -152,7 +158,8 @@ $messages['pl'] = array(
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://pl.wikia.com',
+	'emailext-wikia-home-url' => 'http://pl.wikia.com/Wikia',
+	'emailext-forumreply-unfollow-text' => 'Nie jesteś już zainteresowany otrzymywaniem powiadomień? Kliknij [$1 tutaj], aby przestać śledzić  [$2 tą dyskusję] na [{{SERVER}} {{SITENAME}}].',
 );
 
 $messages['pt'] = array(
@@ -170,7 +177,8 @@ $messages['pt'] = array(
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://pt-br.wikia.com',
+	'emailext-wikia-home-url' => 'http://pt-br.wikia.com/wiki/Wikia_em_Portugu%C3%AAs',
+	'emailext-forumreply-unfollow-text' => 'Você não deseja mais receber essas atualizações? Clique [$1 aqui] para deixar de seguir [$2 esta discussão] na [{{SERVER}} {{SITENAME}}].',
 );
 
 $messages['ru'] = array(
@@ -188,6 +196,7 @@ $messages['ru'] = array(
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
 	'emailext-wikia-home-url' => 'http://ru.wikia.com',
+	'emailext-forumreply-unfollow-text' => 'Не хотите больше получать эти сообщения? Нажмите [$1 здесь], чтобы перестать следить за [$2 обсуждением] на [{{SERVER}} {{SITENAME}}].',
 );
 
 $messages['zh-hans'] = array(
@@ -205,6 +214,25 @@ $messages['zh-hans'] = array(
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
 	'emailext-wikia-home-url' => 'http://zh.wikia.com',
+	'emailext-forumreply-unfollow-text' => '不想再收到这类更新？点击[$1 这里]取消关注[{{SERVER}} {{SITENAME}}]网站上的[$2 这个讨论]。',
+);
+
+$messages['zh-hant'] = array(
+	'group-translator-member' => 'Wikia Translator',
+	'group-translator' => 'Wikia Translators',
+	'grouppage-translator' => 'wikia:Help:Internationalization',
+	'emailext-desc' => '用來處理發送郵件的擴展功能',
+	'emailext-anonymous-editor' => 'Wikia粉絲',
+	'emailext-no-reply-name' => '請勿回覆',
+	'emailext-fans-tagline' => '全球粉絲社交帝國',
+	'emailext-fanverse-tagline' => '全球粉絲社交帝國',
+	'emailext-recipient-notice' => 'Wikia已經發送電子郵件至$1',
+	'emailext-update-frequency' => '如果您需要更改電子郵件地址或接收方式，請訪問您的[{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} 用戶設定]頁面。',
+	'emailext-unsubscribe' => '如果您希望取消訂閱所有的Wikia電子郵件，請點擊[$1 這裡]。',
+	'emailext-unfollow-text' => '不想再接收這類更新通知？按一下[$1 這裡]取消對{{SITENAME}}上$2頁面的關注。',
+	'emailext-salutation' => '$1，你好！',
+	'emailext-forumreply-unfollow-text' => '不想再收到這類更新通知？按一下[$1 這裡] 取消對[{{SERVER}} {{SITENAME}}]上[$2 這個討論]的關注。',
+	'emailext-wikia-home-url' => 'http://zh-tw.wikia.com',
 );
 
 $messages['zh-tw'] = array(

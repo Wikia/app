@@ -136,7 +136,7 @@ class MenuButtonController extends WikiaController {
 		if ( $this->actionName == 'edit' &&
 			isset($data['action']['href']) /* BugId:12613 */ &&
 			!$wgTitle->userCan( 'edit' ) &&
-			!$wgUser->isBlocked() /* CE-18 */ &&
+			!$wgUser->isBlocked( true, false ) /* CE-18 */ &&
 			!$wgUser->isLoggedIn() /* VOLDEV-74 */
 		) {
 			$signUpTitle = SpecialPage::getTitleFor('SignUp');

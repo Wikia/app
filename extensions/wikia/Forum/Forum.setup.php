@@ -7,14 +7,14 @@
  *
  */
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'Forum',
-	'author' => array( 'Hyun Lim', 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' ),
+	'author' => [ 'Hyun Lim', 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' ],
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Forum',
 	'descriptionmsg' => 'forum-desc'
-);
+];
 
-$dir = dirname( __FILE__ ) . '/';
+$dir = __DIR__ . '/';
 
 // classes
 $wgAutoloadClasses['ForumSpecialController'] =  $dir . 'ForumSpecialController.class.php' ;
@@ -97,36 +97,11 @@ $app->registerNamespaceControler( NS_WIKIA_FORUM_BOARD, 'ForumController', 'boar
 $app->registerNamespaceControler( NS_WIKIA_FORUM_TOPIC_BOARD, 'ForumController', 'board', true );
 
 // permissions
-$wgAvailableRights[] = 'forum';
-$wgAvailableRights[] = 'boardedit';
-$wgAvailableRights[] = 'forumadmin';
+include ( $dir . '/Forum.rights.setup.php' );
 
-$wgGroupPermissions['*']['forum'] = false;
-$wgGroupPermissions['staff']['forum'] = true;
-$wgGroupPermissions['sysop']['forum'] = true;
-$wgGroupPermissions['bureaucrat']['forum'] = true;
-$wgGroupPermissions['helper']['forum'] = true;
-
-$wgRevokePermissions['vstf']['forum'] = true;
-
-$wgGroupPermissions['*']['boardedit'] = false;
-$wgGroupPermissions['staff']['boardedit'] = true;
-
-$wgGroupPermissions['*']['forumoldedit'] = false;
-$wgGroupPermissions['staff']['forumoldedit'] = true;
-$wgGroupPermissions['helper']['forumoldedit'] = true;
-$wgGroupPermissions['sysop']['forumoldedit'] = true;
-$wgGroupPermissions['bureaucrat']['forumoldedit'] = true;
-
-$wgGroupPermissions['*']['forumadmin'] = false;
-$wgGroupPermissions['staff']['forumadmin'] = true;
-$wgGroupPermissions['helper']['forumadmin'] = true;
-$wgGroupPermissions['sysop']['forumadmin'] = true;
-$wgGroupPermissions['threadmoderator']['forumadmin'] = true;
-
-JSMessages::registerPackage( 'Forum', array(
+JSMessages::registerPackage( 'Forum', [
 	'back',
 	'forum-specialpage-policies-edit',
 	'forum-specialpage-policies'
-) );
+] );
 

@@ -74,11 +74,8 @@ $messages = array(
 'mytalk'     => 'casnu mi',
 'navigation' => 'ckupau',
 
-# Cologne Blue skin
-'qbedit'        => 'stika',
 'qbpageoptions' => 'ti ckupau',
 'faq'           => 'FAQ',
-'faqpage'       => 'Project:FAQ',
 
 'errorpagetitle'   => 'fliba',
 'tagline'          => "ra'i {{SITENAME}}",

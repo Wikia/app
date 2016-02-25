@@ -9,7 +9,7 @@ abstract class InsightsPageModel extends InsightsModel {
 
 	const
 		INSIGHTS_MEMC_PREFIX = 'insights',
-		INSIGHTS_MEMC_VERSION = '1.3',
+		INSIGHTS_MEMC_VERSION = '1.4',
 		INSIGHTS_MEMC_TTL = 259200, // Cache for 3 days
 		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData',
 		INSIGHTS_LIST_MAX_LIMIT = 100,

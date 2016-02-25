@@ -3,6 +3,9 @@
 class ForumHooksHelper {
 	/**
 	 * Render the alternative version of thread page
+	 * @param Title $title
+	 * @param $wm
+	 * @return bool
 	 */
 	static public function onWallBeforeRenderThread( $title, $wm ) {
 		$app = F::App();
@@ -14,23 +17,44 @@ class ForumHooksHelper {
 
 	/**
 	 * on thread header change header title
+	 * @param Title $title
+	 * @param $wallMessage
+	 * @param $path
+	 * @param $response
+	 * @param $request
+	 * @return bool
 	 */
 	static public function onWallThreadHeader( $title, $wallMessage, &$path, &$response, &$request ) {
 		if ( MWNamespace::getSubject( $title->getNamespace() ) == NS_WIKIA_FORUM_BOARD ) {
-			$path = array_merge( static::getPath( $wallMessage ), array( $path[1] ) );
+			$path = array_merge( static::getPath( $wallMessage ), [ $path[1] ] );
 			OasisController::addBodyParameter( ' itemscope itemtype="http://schema.org/WebPage"' );
 		}
 		return true;
 	}
 
+	/**
+	 * @param Title $title
+	 * @param $wallMessage
+	 * @param $path
+	 * @param $response
+	 * @param $request
+	 * @return bool
+	 */
 	static public function onWallHistoryThreadHeader( $title, $wallMessage, &$path, &$response, &$request ) {
 		if ( MWNamespace::getSubject( $title->getNamespace() ) == NS_WIKIA_FORUM_BOARD ) {
-			$path = array_merge( static::getPath( $wallMessage ), array( $path[1] ) );
+			$path = array_merge( static::getPath( $wallMessage ), [ $path[1] ] );
 		}
 
 		return true;
 	}
 
+	/**
+	 * @param Title $title
+	 * @param $path
+	 * @param WikiaResponse $response
+	 * @param $request
+	 * @return bool
+	 */
 	static public function onWallHistoryHeader( $title, &$path, &$response, &$request ) {
 		if ( MWNamespace::getSubject( $title->getNamespace() ) == NS_WIKIA_FORUM_BOARD ) {
 			$app = F::App();
@@ -38,20 +62,32 @@ class ForumHooksHelper {
 			$response->setVal( 'pageTitle', wfMessage( 'forum-board-history-title' )->escaped() );
 			$app->wg->Out->setPageTitle( wfMessage( 'forum-board-history-title' )->plain() );
 
-			$path = array( static::getIndexPath(), array( 'title' => wfMessage( 'forum-board-title', $title->getText() )->escaped(), 'url' => $title->getFullUrl() ) );
+			$path = [ static::getIndexPath(), [ 'title' => wfMessage( 'forum-board-title', $title->getText() )->escaped(), 'url' => $title->getFullUrl() ] ];
 		}
 		return true;
 	}
 
+	/**
+	 * @param Title $title
+	 * @param $path
+	 * @param $response
+	 * @param $request
+	 * @return bool
+	 */
 	static public function onWallHeader( $title, &$path, &$response, &$request ) {
 		if ( $title->getNamespace() === NS_WIKIA_FORUM_BOARD ) {
 			$path[] = static::getIndexPath();
-			$path[] = array( 'title' => wfMessage( 'forum-board-title', $title->getText() )->escaped(), );
+			$path[] = [ 'title' => wfMessage( 'forum-board-title', $title->getText() )->escaped(), ];
 
 		}
 		return true;
 	}
 
+	/**
+	 * @param Title $title
+	 * @param WikiaResponse $response
+	 * @return bool
+	 */
 	static public function onWallNewMessage( $title, &$response ) {
 		if ( $title->getNamespace() === NS_WIKIA_FORUM_BOARD ) {
 			$response->setVal( 'wall_message', wfMessage( 'forum-discussion-placeholder-message', $title->getText() )->escaped() );
@@ -63,21 +99,28 @@ class ForumHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @param WallMessage $wallMessage
+	 * @return array
+	 */
 	static protected function getPath( $wallMessage ) {
-		$path = array();
+		$path = [ ];
 		$path[] = static::getIndexPath();
-		$path[] = array( 'title' => wfMessage( 'forum-board-title', $wallMessage->getArticleTitle()->getText() )->escaped(), 'url' => $wallMessage->getArticleTitle()->getFullUrl() );
+		$path[] = [ 'title' => wfMessage( 'forum-board-title', $wallMessage->getArticleTitle()->getText() )->escaped(), 'url' => $wallMessage->getArticleTitle()->getFullUrl() ];
 
 		return $path;
 	}
 
 	static protected function getIndexPath() {
 		$indexPage = Title::newFromText( 'Forum', NS_SPECIAL );
-		return array( 'title' => wfMessage( 'forum-forum-title' )->escaped(), 'url' => $indexPage->getFullUrl() );
+		return [ 'title' => wfMessage( 'forum-forum-title' )->escaped(), 'url' => $indexPage->getFullUrl() ];
 	}
 
 	/**
 	 * change the message in WikiActivity for forum namespace
+	 * @param $item
+	 * @param WallMessage $wmessage
+	 * @return bool
 	 */
 
 	static public function onAfterWallWikiActivityFilter( &$item, $wmessage ) {
@@ -112,6 +155,13 @@ class ForumHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @param Title $title
+	 * @param $user
+	 * @param $action
+	 * @param $result
+	 * @return bool
+	 */
 	static public function getUserPermissionsErrors( &$title, &$user, $action, &$result ) {
 		$result = null;
 
@@ -123,7 +173,7 @@ class ForumHooksHelper {
 			return true;
 		}
 
-		$result = array( 'protectedpagetext' );
+		$result = [ 'protectedpagetext' ];
 		return false;
 	}
 
@@ -138,7 +188,7 @@ class ForumHooksHelper {
 	 */
 	static public function onContributionsLineEnding( &$contribsPager, &$ret, $row ) {
 
-		if ( isset( $row->page_namespace ) && in_array( MWNamespace::getSubject( $row->page_namespace ), array( NS_WIKIA_FORUM_BOARD ) ) ) {
+		if ( isset( $row->page_namespace ) && in_array( MWNamespace::getSubject( $row->page_namespace ), [ NS_WIKIA_FORUM_BOARD ] ) ) {
 
 			if ( $row->page_namespace == NS_WIKIA_FORUM_BOARD ) {
 				return true;
@@ -173,6 +223,16 @@ class ForumHooksHelper {
 
 	/**
 	 * Hook: add comments_index table when adding board
+	 * @param Article $article
+	 * @param $user
+	 * @param $text
+	 * @param $summary
+	 * @param $minoredit
+	 * @param $watchthis
+	 * @param $sectionanchor
+	 * @param $flags
+	 * @param $revision
+	 * @return bool
 	 */
 	static public function onArticleInsertComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision ) {
 		$title = $article->getTitle();
@@ -186,6 +246,8 @@ class ForumHooksHelper {
 
 	/**
 	 * clear the caches
+	 * @param WallMessage $mw
+	 * @return bool
 	 */
 
 	static public function onAfterBuildNewMessageAndPost( &$mw ) {
@@ -200,6 +262,9 @@ class ForumHooksHelper {
 
 	/**
 	 * overriding message
+	 * @param WallMessage $mw
+	 * @param WikiaResponse $response
+	 * @return bool
 	 */
 
 	static public function onWallMessageDeleted( &$mw, &$response ) {
@@ -228,7 +293,7 @@ class ForumHooksHelper {
 		# check namespace(s)
 		if ( $ns == NS_FORUM || $ns == NS_FORUM_TALK ) {
 			if ( !static::canEditOldForum( $user ) ) {
-				$result = array( 'protectedpagetext' );
+				$result = [ 'protectedpagetext' ];
 				return false;
 			}
 		}
@@ -238,6 +303,10 @@ class ForumHooksHelper {
 
 	/**
 	 * override button on forum
+	 * @param WikiaResponse $response
+	 * @param $ns
+	 * @param $skin
+	 * @return bool
 	 */
 
 	static public function onPageHeaderIndexAfterActionButtonPrepared( $response, $ns, $skin ) {
@@ -248,7 +317,7 @@ class ForumHooksHelper {
 		# check namespace(s)
 		if ( $ns == NS_FORUM || $ns == NS_FORUM_TALK ) {
 			if ( !static::canEditOldForum( $app->wg->User ) ) {
-				$action = array( 'class' => '', 'text' => wfMessage( 'viewsource' )->escaped(), 'href' => $title->getLocalUrl( array( 'action' => 'edit' ) ), 'id' => 'ca-viewsource', 'primary' => 1 );
+				$action = [ 'class' => '', 'text' => wfMessage( 'viewsource' )->escaped(), 'href' => $title->getLocalUrl( [ 'action' => 'edit' ] ), 'id' => 'ca-viewsource', 'primary' => 1 ];
 				$response->setVal( 'actionImage', MenuButtonController::LOCK_ICON );
 				$response->setVal( 'action', $action );
 				return false;
@@ -259,6 +328,8 @@ class ForumHooksHelper {
 
 	/**
 	 * helper function for onGetUserPermissionsErrors/onPageHeaderIndexAfterActionButtonPrepared
+	 * @param User $user
+	 * @return
 	 */
 
 	static public function canEditOldForum( $user ) {
@@ -267,6 +338,10 @@ class ForumHooksHelper {
 
 	/**
 	 * show the info box for old forums
+	 * @param Article $article
+	 * @param $outputDone
+	 * @param $useParserCache
+	 * @return bool
 	 */
 
 	static public function onArticleViewHeader( &$article, &$outputDone, &$useParserCache ) {
@@ -303,7 +378,7 @@ class ForumHooksHelper {
 			$messages = RelatedForumDiscussionController::getData( $title->getArticleId() );
 			unset( $messages['lastupdate'] );
 			if ( !empty( $messages ) ) {
-				$text .= $app->renderView( 'RelatedForumDiscussionController', 'index', array( 'messages' => $messages ) );
+				$text .= $app->renderView( 'RelatedForumDiscussionController', 'index', [ 'messages' => $messages ] );
 			}
 		}
 		return true;
@@ -393,6 +468,10 @@ class ForumHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @param Title $title
+	 * @return bool
+	 */
 	static public function onArticleFromTitle( &$title ) {
 
 		$currentNs = MWNamespace::getSubject( $title->getNamespace() );
@@ -407,7 +486,7 @@ class ForumHooksHelper {
 	 * Create a tag for including the Forum Activity Module on pages
 	 */
 	static public function onParserFirstCallInit( Parser &$parser ) {
-		$parser->setHook( 'wikiaforum', array( __CLASS__, 'parseForumActivityTag' ) );
+		$parser->setHook( 'wikiaforum', [ __CLASS__, 'parseForumActivityTag' ] );
 		return true;
 	}
 
@@ -450,6 +529,11 @@ class ForumHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @param Title $title
+	 * @param $wallOwnerName
+	 * @return bool
+	 */
 	static public function onWallMessageGetWallOwnerName( $title, &$wallOwnerName ) {
 		if ( $title->getNamespace() === NS_WIKIA_FORUM_BOARD ) {
 			$wallOwnerName = $title->getText();

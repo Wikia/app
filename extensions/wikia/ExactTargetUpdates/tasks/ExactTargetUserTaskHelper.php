@@ -10,7 +10,7 @@ class ExactTargetUserTaskHelper {
 	 * @param array $aFilterValues possible values to filter
 	 * @return array
 	 */
-	public function prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues ) {
+	public function prepareUserRetrieveParams( array $aProperties, $sFilterProperty, array $aFilterValues ) {
 		/* Get Customer Keys specific for production or development */
 		$aCustomerKeys = $this->getCustomerKeys();
 
@@ -136,14 +136,21 @@ class ExactTargetUserTaskHelper {
 	/**
 	 * Prepares Subscriber's object data
 	 * @param  string $sUserEmail  User's email
+	 * @param bool $subscribed User's subscription status
 	 * @return array               Array of Subscriber data arrays (nested arrays)
 	 */
-	public function prepareSubscriberData( $sUserEmail ) {
+	public function prepareSubscriberData( $sUserEmail, $subscribed=true ) {
+		$sUserStatus = \ExactTarget_SubscriberStatus::Active;
+		if ( isset($subscribed) && !$subscribed ) {
+			$sUserStatus = \ExactTarget_SubscriberStatus::Unsubscribed;
+		}
+
 		$aApiParams = [
 			'Subscriber' => [
 				[
 					'SubscriberKey' => $sUserEmail,
 					'EmailAddress' => $sUserEmail,
+					'Status' => $sUserStatus,
 				],
 			],
 		];

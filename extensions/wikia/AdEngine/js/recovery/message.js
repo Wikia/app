@@ -1,4 +1,4 @@
-/*global define*/
+/*global define, setTimeout*/
 define('ext.wikia.adEngine.recovery.message', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.recovery.helper',
@@ -11,6 +11,7 @@ define('ext.wikia.adEngine.recovery.message', [
 	'wikia.location',
 	'wikia.log',
 	'wikia.mustache',
+	'wikia.tracker',
 	'wikia.window'
 ], function (
 	adTracker,
@@ -24,6 +25,7 @@ define('ext.wikia.adEngine.recovery.message', [
 	location,
 	log,
 	mustache,
+	tracker,
 	win
 ) {
 	'use strict';
@@ -42,13 +44,26 @@ define('ext.wikia.adEngine.recovery.message', [
 		logGroup = 'ext.wikia.adEngine.recovery.message',
 		localStorageKey = 'rejectedRecoveredMessage';
 
+	function track(action, trackerAction) {
+		tracker.track({
+			category: 'ads-recovery-message',
+			action: trackerAction,
+			label: action,
+			value: 0,
+			trackingMethod: 'analytics'
+		});
+		adTracker.track('recovery/message', action);
+	}
+
 	function accept() {
-		adTracker.track('recovery/message', 'accept');
-		location.reload();
+		track('accept', win.Wikia.Tracker.ACTIONS.CLICK);
+		setTimeout(function () {
+			location.reload();
+		}, 200);
 	}
 
 	function reject(messageContainer) {
-		adTracker.track('recovery/message', 'reject');
+		track('reject', win.Wikia.Tracker.ACTIONS.CLICK);
 		messageContainer.hide();
 		localStorage.setItem(localStorageKey, true);
 	}
@@ -111,16 +126,16 @@ define('ext.wikia.adEngine.recovery.message', [
 	function injectTopMessage(messageVariant) {
 		log('recoveredAdsMessage.recover - injecting top message', 'debug', logGroup);
 		createMessage('top', messageVariant).done(function (messageContainer) {
-			adTracker.track('recovery/message', 'impression');
-			$('#WikiaTopAds').before(messageContainer);
+			track('impression', win.Wikia.Tracker.ACTIONS.IMPRESSION);
+			$('#WikiaPageHeader').append(messageContainer);
 		});
 	}
 
 	function injectRightRailMessage(messageVariant) {
 		log('recoveredAdsMessage.recover - injecting right rail message', 'debug', logGroup);
 		createMessage('right-rail', messageVariant).done(function (messageContainer) {
-			adTracker.track('recovery/message', 'impression');
-			$('#WikiaRail').prepend(messageContainer);
+			track('impression', win.Wikia.Tracker.ACTIONS.IMPRESSION);
+			$('#WikiaPageHeader').append(messageContainer);
 		});
 	}
 

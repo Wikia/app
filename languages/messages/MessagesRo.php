@@ -442,30 +442,12 @@ pe titlul secțiunii (JavaScript)',
 'navigation'    => 'Navigare',
 'and'           => '&#32;și',
 
-# Cologne Blue skin
 'qbfind'         => 'Găsește',
 'qbbrowse'       => 'Răsfoiește',
-'qbedit'         => 'Modificare',
 'qbpageoptions'  => 'Opțiuni ale paginii',
 'qbpageinfo'     => 'Informații ale paginii',
-'qbmyoptions'    => 'Paginile mele',
-'qbspecialpages' => 'Pagini speciale',
 'faq'            => 'Întrebări frecvente',
-'faqpage'        => 'Project:Întrebări frecvente',
 
-# Vector skin
-'vector-action-addsection'       => 'Mesaj nou',
-'vector-action-delete'           => 'Ștergere',
-'vector-action-move'             => 'Redenumire',
-'vector-action-protect'          => 'Protejare',
-'vector-action-undelete'         => 'Recuperare',
-'vector-action-unprotect'        => 'Modificare protecție',
-'vector-simplesearch-preference' => 'Permite sugestii de căutare superioară (numai interfața Vector)',
-'vector-view-create'             => 'Creare',
-'vector-view-edit'               => 'Modificare',
-'vector-view-history'            => 'Istoric',
-'vector-view-view'               => 'Lectură',
-'vector-view-viewsource'         => 'Sursă pagină',
 'actions'                        => 'Acțiuni',
 'namespaces'                     => 'Spații de nume',
 'variants'                       => 'Variante',
@@ -488,7 +470,6 @@ pe titlul secțiunii (JavaScript)',
 'edit'              => 'Modificare',
 'create'            => 'Creare',
 'editthispage'      => 'Modificați pagina',
-'create-this-page'  => 'Creați această pagină',
 'delete'            => 'Ștergere',
 'deletethispage'    => 'Șterge pagina',
 'undelete_short'    => 'Recuperarea {{PLURAL:$1|unei modificări|a $1 modificări|a $1 de modificări}}',
@@ -503,19 +484,9 @@ pe titlul secțiunii (JavaScript)',
 'talkpagelinktext'  => 'Discuție',
 'specialpage'       => 'Pagină specială',
 'personaltools'     => 'Unelte personale',
-'postcomment'       => 'Secțiune nouă',
-'articlepage'       => 'Vedeți articolul',
 'talk'              => 'Discuție',
 'views'             => 'Vizualizări',
 'toolbox'           => 'Trusa de unelte',
-'userpage'          => 'Vizualizați pagina utilizatorului',
-'projectpage'       => 'Vizualizați pagina proiectului',
-'imagepage'         => 'Vizualizați pagina fișierului',
-'mediawikipage'     => 'Vizualizați pagina mesajului',
-'templatepage'      => 'Vizualizați pagina formatului',
-'viewhelppage'      => 'Vizualizați pagina de ajutor',
-'categorypage'      => 'Vizualizați pagina categoriei',
-'viewtalkpage'      => 'Vizualizați discuția',
 'otherlanguages'    => 'În alte limbi',
 'redirectedfrom'    => '(Redirecționat de la $1)',
 'redirectpagesub'   => 'Pagină de redirecționare',
@@ -812,40 +783,6 @@ Vă rugăm să așteptați până să mai încercați.',
 'resetpass-wrong-oldpass'   => 'Parolă curentă sau temporară incorectă.
 Este posibil să fi reușit deja schimbarea parolei sau să fi cerut o parolă temporară nouă.',
 'resetpass-temp-password'   => 'Parolă temporară:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Resetare parolă',
-'passwordreset-text'               => 'Completați acest formular pentru a primi un e-mail cu datele contului dumneavoastră.',
-'passwordreset-legend'             => 'Resetare parolă',
-'passwordreset-disabled'           => 'Resetarea parolei a fost dezactivată pe acest wiki.',
-'passwordreset-pretext'            => '{{PLURAL:$1| | Introduceți mai jos o parte din informații}}',
-'passwordreset-username'           => 'Nume de utilizator:',
-'passwordreset-domain'             => 'Domeniu:',
-'passwordreset-capture'            => 'Vizualizați e-mailul rezultat?',
-'passwordreset-capture-help'       => 'Dacă bifați această căsuță, e-mailul (conținând parola temperară) vă va fi afișat, dar va fi trimis și utilizatorului.',
-'passwordreset-email'              => 'Adresă de e-mail:',
-'passwordreset-emailtitle'         => 'Detalii despre cont pe {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Cineva (probabil dumneavoastră, de la adresa IP $1) a cerut reamintirea detaliilor
-contului dumneavoastră pe {{SITENAME}} ($4). {{PLURAL:$3|Următorul cont este asociat|Următoarele conturi sunt asociate}}
-cu această adresă de e-mail:
-
-$2
-
-{{PLURAL:$3|Această parolă temporară va|Aceste parole temporare vor}} expira {{PLURAL:$5|într-o zi|în $5 zile}}.
-Ar trebui să vă autentificați și să schimbați parola acum. Dacă altcineva a făcut această cerere
-sau dacă v-ați reamintit parola inițială și nu mai doriți să o schimbați,
-puteți ignora acest mesaj, continuând să utilizați vechea parolă.',
-'passwordreset-emailtext-user'     => 'Utilizatorul $1 de pe {{SITENAME}} a solicitat o reamintire a detaliilor contului dumneavoastră pentru {{SITENAME}} ($4). Următorul utilizator are {{PLURAL:$3|contul asociat|conturile asociate}} cu această adresă de e-mail:
-
-$2
-
-{{PLURAL:$3|Această parolă temporară va|Aceste parole temporare vor}} expira {{PLURAL:$5|într-o zi|în $5 zile}}.
-Ar trebui să vă autentificați și să alegeți acum o nouă parolă. Dacă altcineva a făcut această solicitare, ori dacă v-ați reamintit parola originală și nu mai doriți modificarea ei, puteți ignora acest mesaj, continuând cu vechea parolă.',
-'passwordreset-emailelement'       => 'Nume de utilizator: $1
-Parolă temporară: $2',
-'passwordreset-emailsent'          => 'A fost trimis un e-mail de reamintire.',
-'passwordreset-emailsent-capture'  => 'Un mesaj de reamintire a fost trimis, fiind afișat mai jos.',
-'passwordreset-emailerror-capture' => 'Un mesaj de reamintire a fost generat (fiind afișat mai jos), dar trimiterea sa către utilizator a eșuat: $1',
 
 # Special:ChangeEmail
 'changeemail'          => 'Modificare adresă de e-mail',
@@ -1323,14 +1260,6 @@ Folosirea linkurilor de navigare va reseta această coloană.',
 'search-external'                  => 'Căutare externă',
 'searchdisabled'                   => '<p>Ne pare rău! Căutarea după text a fost dezactivată temporar, din motive de performanță. Între timp puteți folosi căutarea prin Google mai jos, însă aceasta poate să dea rezultate învechite.</p>',
 
-# Quickbar
-'qbsettings'                => 'Setări pentru bara rapidă',
-'qbsettings-none'           => 'Fără',
-'qbsettings-fixedleft'      => 'Fixă, în stânga',
-'qbsettings-fixedright'     => 'Fixă, în dreapta',
-'qbsettings-floatingleft'   => 'Liberă',
-'qbsettings-floatingright'  => 'Plutire la dreapta',
-'qbsettings-directionality' => 'Fixat, în funcție de direcția în care se face scrierea în limba dumneavoastră',
 
 # Preferences page
 'preferences'                   => 'Preferințe',
@@ -2982,15 +2911,7 @@ Permite adăugarea unui motiv în descrierea modificărilor',
 
 # Stylesheets
 'common.css'      => '/** CSS plasate aici vor fi aplicate tuturor aparițiilor */',
-'standard.css'    => '/* CSS plasate aici vor afecta utilizatorii stilului Standard */',
-'nostalgia.css'   => '/* CSS plasate aici vor afecta utilizatorii stilului Nostalgia  */',
-'cologneblue.css' => '/* CSS plasate aici vor afecta utilizatorii stilului Cologne Blue */',
 'monobook.css'    => '/* modificați acest fișier pentru a adapta înfățișarea monobook-ului pentru tot situl*/',
-'myskin.css'      => '/* CSS plasate aici vor afecta utilizatorii stilului MySkin */',
-'chick.css'       => '/* CSS plasate aici vor afecta utilizatorii stilului Chick */',
-'simple.css'      => '/* CSS plasate aici vor afecta utilizatorii stilului Simple */',
-'modern.css'      => '/* CSS plasate aici vor afecta utilizatorii stilului Modern */',
-'vector.css'      => '/* CSS plasate aici vor afecta utilizatorii stilului Vector */',
 'print.css'       => '/* CSS plasate aici vor afecta modul în care paginile vor fi imprimate */',
 
 # Metadata
@@ -3030,15 +2951,7 @@ Permite adăugarea unui motiv în descrierea modificărilor',
 'pageinfo-viewsperedit'     => 'Vizualizări per modificare',
 
 # Skin names
-'skinname-standard'    => 'Clasic',
-'skinname-nostalgia'   => 'Nostalgie',
-'skinname-cologneblue' => 'Albastru de Cologne',
 'skinname-monobook'    => 'Monobook',
-'skinname-myskin'      => 'StilulMeu',
-'skinname-chick'       => 'Șic',
-'skinname-simple'      => 'Simplu',
-'skinname-modern'      => 'Modern',
-'skinname-vector'      => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marchează pagina ca verificată',

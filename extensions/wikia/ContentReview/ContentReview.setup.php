@@ -43,6 +43,7 @@ $wgGroupPermissions['user']['content-review-test-mode'] = true;
  */
 $wgAutoloadClasses['ContentReviewApiController'] = __DIR__ . '/controllers/ContentReviewApiController.class.php';
 $wgAutoloadClasses['JSPagesSpecialController'] = __DIR__ . '/controllers/JSPagesSpecialController.class.php';
+$wgAutoloadClasses['Wikia\ContentReview\ContentReviewDiffPage'] = __DIR__ . '/controllers/ContentReviewDiffPage.class.php';
 
 /**
  * Special page
@@ -64,10 +65,16 @@ $wgAutoloadClasses['Wikia\ContentReview\ContentReviewService'] = __DIR__ . '/ser
 $wgAutoloadClasses['Wikia\ContentReview\ContentReviewStatusesService'] = __DIR__ . '/services/ContentReviewStatusesService.class.php';
 
 /**
+ * Integrations
+ */
+$wgAutoloadClasses['Wikia\ContentReview\Integrations\SlackIntegration'] = __DIR__ . '/integrations/SlackIntegration.class.php';
+
+/**
  * Helpers
  */
 $wgAutoloadClasses['Wikia\ContentReview\Helper'] = __DIR__ . '/ContentReviewHelper.php';
-$wgAutoloadClasses['Wikia\ContentReview\ImportJS'] = __DIR__ . '/ContentReviewImportJS.php';
+$wgAutoloadClasses['Wikia\ContentReview\ImportJS'] = __DIR__ . '/jsmodules/ImportJS.php';
+$wgAutoloadClasses['Wikia\ContentReview\ProfileTags'] = __DIR__ . '/jsmodules/ProfileTags.php';
 
 /**
  * Hooks

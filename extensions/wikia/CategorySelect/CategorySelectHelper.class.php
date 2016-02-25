@@ -61,7 +61,7 @@ class CategorySelectHelper {
 			$viewModeActions = array( 'view', 'purge' );
 			$editModeActions = array( 'edit', 'submit' );
 			$supportedActions = array_merge( $viewModeActions, $editModeActions );
-			$supportedSkins = array( 'SkinAnswers', 'SkinOasis' );
+			$supportedSkins = array( 'SkinOasis' );
 
 			$isViewMode = in_array( $action, $viewModeActions );
 			$isEditMode = in_array( $action, $editModeActions );

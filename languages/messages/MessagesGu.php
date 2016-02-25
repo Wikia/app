@@ -291,31 +291,13 @@ $messages = array(
 'navigation'    => 'ભ્રમણ',
 'and'           => '&#32;અને',
 
-# Cologne Blue skin
 'qbfind'         => 'શોધો',
 'qbbrowse'       => 'બ્રાઉઝ',
-'qbedit'         => 'ફેરફાર કરો',
 'qbpageoptions'  => 'આ પાનું',
 'qbpageinfo'     => 'સંદર્ભ',
-'qbmyoptions'    => 'મારાં પાનાં',
-'qbspecialpages' => 'ખાસ પાનાં',
 'faq'            => 'FAQ
 વારંવાર પુછાતા પ્રશ્નો',
-'faqpage'        => 'Project:વારંવાર પુછાતા પ્રશ્નો',
 
-# Vector skin
-'vector-action-addsection'       => 'નવી ચર્ચા',
-'vector-action-delete'           => 'રદ કરો',
-'vector-action-move'             => 'ખસેડો',
-'vector-action-protect'          => 'સુરક્ષિત કરો',
-'vector-action-undelete'         => 'રદ કરેલું પાછું વાળો',
-'vector-action-unprotect'        => 'સુરક્ષા બદલો',
-'vector-simplesearch-preference' => 'શોધ સંબંધી વિશિષ્ઠ સુઝાવના પર્યાયને સક્રીય  કરો (Vector skin only)',
-'vector-view-create'             => 'બનાવો',
-'vector-view-edit'               => 'ફેરફાર કરો',
-'vector-view-history'            => 'ઈતિહાસ જુઓ',
-'vector-view-view'               => 'વાંચો',
-'vector-view-viewsource'         => 'સ્ત્રોત જુઓ',
 'actions'                        => 'ક્રિયાઓ',
 'namespaces'                     => 'નામાવકાશો',
 'variants'                       => 'ભિન્ન રૂપો',
@@ -338,7 +320,6 @@ $messages = array(
 'edit'              => 'ફેરફાર કરો',
 'create'            => 'બનાવો',
 'editthispage'      => 'આ પાનામાં ફેરફાર કરો',
-'create-this-page'  => 'આ પાનું બનાવો.',
 'delete'            => 'રદ કરો',
 'deletethispage'    => 'આ પાનું હટાવો',
 'undelete_short'    => 'હટાવેલ {{PLURAL:$1|એક ફેરફાર|$1 ફેરફારો}} પરત લાવો.',
@@ -353,19 +334,9 @@ $messages = array(
 'talkpagelinktext'  => 'ચર્ચા',
 'specialpage'       => 'ખાસ પાનુ',
 'personaltools'     => 'વ્યક્તિગત સાધનો',
-'postcomment'       => 'નવો વિભાગ',
-'articlepage'       => 'લેખનું પાનું જુઓ',
 'talk'              => 'ચર્ચા',
 'views'             => 'દેખાવ',
 'toolbox'           => 'સાધન પેટી',
-'userpage'          => 'સભ્યનું પાનું જુઓ',
-'projectpage'       => 'પ્રકલ્પનું પાનું જુઓ',
-'imagepage'         => 'ફાઇલનું પાનું જુઓ',
-'mediawikipage'     => 'સંદેશનું પાનું જુઓ',
-'templatepage'      => 'ઢાંચાનું પાનુ જુઓ',
-'viewhelppage'      => 'મદદનું પાનું જુઓ',
-'categorypage'      => 'શ્રેણીનું પાનુ જુઓ',
-'viewtalkpage'      => 'ચર્ચા જુઓ',
 'otherlanguages'    => 'અન્ય ભાષાઓમાં',
 'redirectedfrom'    => '($1 થી અહીં વાળેલું)',
 'redirectpagesub'   => 'પાનું અન્યત્ર વાળો',
@@ -681,36 +652,6 @@ Please log in again after you receive it.
 'resetpass-wrong-oldpass'   => 'અવૈધ હંગામે કે કાયમી ગુપ્તસંજ્ઞા.
 કદાચ તમે પહેલેથી સફળતા પૂર્વક તમારી ગુપ્ત સંજ્ઞા બદલી દીધી હોય કે નવી ગુપ્ત સંંજ્ઞામાટે વિનંતિ કરી હોય',
 'resetpass-temp-password'   => 'કામચલાવ ગુપ્તસંજ્ઞા:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'પાસવર્ડ રીસેટ કરો',
-'passwordreset-text'               => 'આપના ઈ મેલ ખાતા ની માહિતી મેળવવા માટે આ ફોર્મ માં વિગતો ભરો.',
-'passwordreset-legend'             => 'પાસવર્ડ રીસેટ કરો',
-'passwordreset-disabled'           => 'આ વિકી પર પાસવર્ડ રીસેટ કરવા પર પ્રતિબંધ છે.',
-'passwordreset-pretext'            => '{{PLURAL: $1| | એક નીચે માહિતીના ટુકડાઓ દાખલ}}',
-'passwordreset-username'           => 'સભ્ય નામ:',
-'passwordreset-domain'             => 'ડોમેઈન:',
-'passwordreset-capture'            => 'પરિણામી ઈ મેલ જોવો છે ?',
-'passwordreset-capture-help'       => 'જો તમે આ ઓપ્શન સિલેક્ટ કરશો, તો તમને અને યુઝર ને ઈ મેલ (કામચલાઉ પાસવર્ડ સાથે) દેખાડવામાં આવશે.',
-'passwordreset-email'              => 'ઇ મેલ સરનામું:',
-'passwordreset-emailtitle'         => '{{SITENAME}} માટે ખાતુ બનાવ્યું',
-'passwordreset-emailtext-ip'       => 'કોઈક (કદાચ તમો , $1 IP એડ્રેસ થી) એ તમારી વેબસાઈટ {{SITENAME}}  ($4) ના ખાતા ની વિગત અંગે યાદ દેવડાવાની રજૂઆત કરી છે. આ ઈ-મેઈલ એડ્રેસ સાથે {{PLURAL:$3|નું ખાતું|ના ખાતા}} જોડાયેલા છે.
-.
-.
-
-$2
-
-{{PLURAL:$3|આ કામચલાઉ પાસવર્ડ|આ બધા કામચલાઉ પાસવર્ડ}} {{PLURAL:$5|એક દિવસ|$5 દિવસ}} માં નષ્ટ થઇ જશે. તમારે અત્યારે જ ખાતું ખોલીને નવો પાસવર્ડ સેટ કરી લેવો જોઈએ .જો કોઈ બીજા એ આ રજૂઆત કરી હોય, અથવા જો તમને પોતાનો અસલ પાસવર્ડ યાદ હોય, અને તેને બદલવા નથી માગતા, તો આ સંદેશાને જતો કરીને પોતાના અસલ પાસવર્ડ ને વાપરી શકો છો.',
-'passwordreset-emailtext-user'     => 'વેબસાઈટ  {{SITENAME}} ($4) ના વપરાશકર્તા $1 એ તમારી ના ખાતા ની વિગત અંગે યાદ દેવડાવાની રજૂઆત કરી છે. આ ઈ-મેઈલ એડ્રેસ સાથે {{PLURAL:$3|નું ખાતું|ના ખાતા}} જોડાયેલા છે.
-
-$2
-
-{{PLURAL:$3|આ કામચલાઉ પાસવર્ડ|આ બધા કામચલાઉ પાસવર્ડ}} {{PLURAL:$5|એક દિવસ|$5 દિવસ}} માં નષ્ટ થઇ જશે. તમારે અત્યારે જ ખાતું ખોલીને નવો પાસવર્ડ સેટ કરી લેવો જોઈએ .જો કોઈ બીજા એ આ રજૂઆત કરી હોય, અથવા જો તમને પોતાનો અસલ પાસવર્ડ યાદ હોય, અને તેને બદલવા નથી માગતા, તો આ સંદેશાને જતો કરીને પોતાના અસલ પાસવર્ડ ને વાપરી શકો છો..',
-'passwordreset-emailelement'       => 'વપરાશકર્તા નામ: $1
-કામચલાઉ પાસવર્ડ: $2',
-'passwordreset-emailsent'          => 'એક સ્મૃતિપત્ર ઈ મેલ મોકલવામાં આવ્યો છે.',
-'passwordreset-emailsent-capture'  => 'એક સ્મૃતિપત્ર ઈ મેલ મોકલવામાં આવ્યો છે, જે આ પ્રમાણે છે.',
-'passwordreset-emailerror-capture' => 'એક સ્મૃતિપત્ર ઈ મેલ બનાવવા માં આવ્યો છે, જે આ પ્રમાણે છે, પરંતુ તે યુઝર ને મોકલવા માં નિષ્ફળ થયો છે: $1',
 
 # Special:ChangeEmail
 'changeemail'          => 'ઈ મેલ ખાતુ બદલવા માટે',
@@ -1197,14 +1138,6 @@ $1",
 ત્યાં સુધી તમે ગુગલ દ્વારા શોધ કરી શકો.
 '''નોંધઃ'''{{SITENAME}}નાં તેમના (ગુગલના) ઈન્ડેક્સ જુના હોઇ શકે.",
 
-# Quickbar
-'qbsettings'                => 'શીઘ્રપટ્ટ',
-'qbsettings-none'           => 'કોઇપણ નહીં',
-'qbsettings-fixedleft'      => 'અચળ ડાબે',
-'qbsettings-fixedright'     => 'અચળ જમણે',
-'qbsettings-floatingleft'   => 'ચલિત ડાબે',
-'qbsettings-floatingright'  => 'ચલિત જમણે',
-'qbsettings-directionality' => 'નિશ્ચિત, તમારી ભાષા સ્ક્રિપ્ટ directionality પર આધાર રાખીને',
 
 # Preferences page
 'preferences'                   => 'પસંદ',

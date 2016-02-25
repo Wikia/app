@@ -61,23 +61,26 @@
 <?= $headItems ?>
 
 </head>
-<body class="<?= implode(' ', $bodyClasses) ?>"<?= $itemType ?>>
+<body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
 <? if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ): ?>
 	<div class="background-image-gradient"></div>
 <? endif ?>
 
 <?= $comScore ?>
 <?= $quantServe ?>
-<?= $googleAnalytics ?>
 <?= $amazonMatch ?>
 <?= $openXBidder ?>
+<?= $rubiconFastlane ?>
+<?= $krux ?>
 <?= $dynamicYield ?>
+<?= $ivw3 ?>
 <?= $ivw2 ?>
 <div class="WikiaSiteWrapper">
 	<?= $body ?>
 
 	<?php
 		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'GPT_FLUSH', 'pageTypes' => ['*']]);
+		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'EVOLVE_FLUSH', 'pageTypes' => ['*']]);
 		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'TURTLE_FLUSH', 'pageTypes' => ['*']]);
 		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'SEVENONEMEDIA_FLUSH', 'pageTypes' => ['*']]);
 	?>
@@ -101,6 +104,7 @@
 <?php } ?>
 <?= $bottomScripts ?>
 
+<?= $nielsen ?>
 </body>
 
 <?= wfReportTime() . "\n" ?>
