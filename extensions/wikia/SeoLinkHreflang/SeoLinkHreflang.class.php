@@ -62,7 +62,7 @@ class SeoLinkHreflang {
 		$title = $out->getTitle();
 
 		// No mapping for redirect pages
-		if ( !empty( $wgArticle->mRedirectedFrom ) ) {
+		if ( empty( $wgArticle ) || !empty( $wgArticle->mRedirectedFrom ) ) {
 			return [];
 		}
 
