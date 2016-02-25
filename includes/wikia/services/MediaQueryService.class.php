@@ -392,7 +392,7 @@ class MediaQueryService extends WikiaService {
 	 *                         (DEFAULT any category)
 	 * @return array $videoList
 	 */
-	public function getVideoList( $type = 'all', $limit = 0, $page = 1, $providers = [], $categories = [] ) {
+	public function getVideoList( $type = 'all', $limit = 0, $page = 1, $providers = [], $categories = [], $sort = 'recent' ) {
 		wfProfileIn( __METHOD__ );
 
 		// Setup the base query cache for a minimal amount of time
@@ -405,8 +405,26 @@ class MediaQueryService extends WikiaService {
 				->FIELD( 'views_total' )
 				->DISTINCT( 'video_title' )
 			->FROM( 'video_info' )
-			->WHERE( 'removed' )->EQUAL_TO( 0 )
-			->ORDER_BY( 'added_at' )->DESC();
+			->WHERE( 'removed' )->EQUAL_TO( 0 );
+
+		switch ( $sort ) {
+			case 'recent':
+				$query->ORDER_BY( 'added_at' )->DESC();
+				break;
+
+			case 'popular':
+				$query->ORDER_BY( 'views_total' )->DESC();
+				break;
+
+			case 'trend':
+				$query->ORDER_BY( 'views_7day' )->DESC();
+				break;
+
+			default:
+				throw new InvalidArgumentException( "\$sort was none of 'recent', 'popular', 'trend'." );
+				break;
+		}
+
 
 		if ( $categories ) {
 				$query->JOIN( 'page' )->ON( 'video_title', 'page_title' )
