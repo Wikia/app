@@ -9,5 +9,5 @@
 			<?= wfMessage( 'forum-admin-page-breadcrumb' )->escaped() ?>
 		</div>
 	</header>
-	<?= $app->renderPartial( 'ForumSpecial', 'boards', [ 'boards' => $boards, 'isEditMode' => true ] ) ?>
+	<?= $app->renderPartial( 'ForumSpecial', 'boards', [ 'boards' => ${ForumConst::boards}, 'isEditMode' => true ] ) ?>
 </section>

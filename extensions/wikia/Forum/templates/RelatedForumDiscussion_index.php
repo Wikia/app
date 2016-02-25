@@ -1,11 +1,11 @@
 <section id="RelatedForumDiscussion" class="RelatedForumDiscussion">
 	<h2>
-		<a class="button forum-new-post" href="<?= $newPostUrl ?>" title="<?= $newPostTooltip ?>"><?= $newPostButton ?></a>
-		<?= $sectionHeading ?>
+		<a class="button forum-new-post" href="<?= ${ForumConst::newPostUrl} ?>" title="<?= ${ForumConst::newPostTooltip} ?>"><?= ${ForumConst::newPostButton} ?></a>
+		<?= ${ForumConst::sectionHeading} ?>
 	</h2>
 	<div class="forum-content">
 		<ul class="forum-discussions">
-			<? foreach ( $messages as $message ): ?>
+			<? foreach ( ${ForumConst::messages} as $message ): ?>
 				<li class="forum-thread">
 					<img class="sprite talk-two" src="<?= $wg->BlankImgUrl ?>">
 					<h4>
@@ -29,7 +29,7 @@
 			<? endforeach; ?>
 		</ul>
 		<div class="forum-see-more">
-			<a href="<?= $seeMoreUrl ?>"><?= $seeMoreText ?> &gt;</a>
+			<a href="<?= ${ForumConst::seeMoreUrl} ?>"><?= ${ForumConst::seeMoreText} ?> &gt;</a>
 		</div>
 	</div>
 </section>

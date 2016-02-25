@@ -1,13 +1,13 @@
-<? if ( $userBlocked !== true ): ?>
+<? if ( ${ForumConst::userBlocked} !== true ): ?>
 	<div id="ForumNewMessage" class="ForumNewMessage DiscussionBox">
-		<?= AvatarService::renderAvatar( $username, 50 ) ?>
+		<?= AvatarService::renderAvatar( ${ForumConst::username}, 50 ) ?>
 		<div class="message">
 			<div class="message-container">
 				<h4 class="heading"><?= wfMessage( 'forum-board-new-message-heading' )->escaped() ?></h4>
-				<? if ( $isTopicPage ): ?>
+				<? if ( ${ForumConst::isTopicPage} ): ?>
 					<div class="board-container">
 						<select class="board-list" id="BoardList">
-							<? foreach ( $destinationBoards as $board ): ?>
+							<? foreach ( ${ForumConst::destinationBoards} as $board ): ?>
 								<option name="boardList" value="<?= $board['value'] ?>"><?= $board['content'] ?></option>
 							<? endforeach; ?>
 						</select>
@@ -30,12 +30,12 @@
 					<? if ( $wg->EnableMiniEditorExtForWall ): ?>
 						<?= $app->getView( 'MiniEditorController', 'Editor_Header' )->render() ?>
 					<? endif ?>
-					<textarea class="body" data-space-type="editarea" placeholder="<?= $wall_message ?>"></textarea>
+					<textarea class="body" data-space-type="editarea" placeholder="<?= ${ForumConst::wall_message} ?>"></textarea>
 					<? if ( $wg->EnableMiniEditorExtForWall ): ?>
 						<?= $app->getView( 'MiniEditorController', 'Editor_Footer' )->render() ?>
 					<? endif ?>
 					<div class="buttons" data-space-type="buttons">
-						<?php if ( $notify_everyone ): ?>
+						<?php if ( ${ForumConst::notify_everyone} ): ?>
 							<label class="highlight">
 								<input type="checkbox" class="notify-everyone" name="notifyEveryone" value="1" /><?= wfMessage( 'forum-discussion-highlight' )->escaped() ?>
 							</label>

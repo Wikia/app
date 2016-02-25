@@ -1,4 +1,4 @@
-<? if ( $userBlocked !== true ): ?>
+<? if ( ${ForumConst::userBlocked} !== true ): ?>
 	<li class="new-reply">
 		<? if ( $wg->EnableMiniEditorExtForWall ): ?>
 			<?= $app->getView( 'MiniEditorController', 'Header', [
@@ -8,7 +8,7 @@
 				]
 			] )->render() ?>
 		<? endif ?>
-		<div class="avatar"><?= AvatarService::renderAvatar( $username, 30 ) ?></div>
+		<div class="avatar"><?= AvatarService::renderAvatar( ${ForumConst::username}, 30 ) ?></div>
 		<div class="message">
 			<? if ( $wg->EnableMiniEditorExtForWall ): ?>
 				<?= $app->getView( 'MiniEditorController', 'Editor_Header' )->render() ?>
