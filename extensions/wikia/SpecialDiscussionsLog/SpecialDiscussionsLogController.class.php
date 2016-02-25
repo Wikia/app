@@ -16,13 +16,13 @@ class SpecialDiscussionsLogController extends WikiaSpecialPageController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	public function __construct() {
-		parent::__construct( 'DiscussionsLog' );
+		parent::__construct( 'DiscussionsLog', '', false );
 	}
 
 	public function index() {
 
 		if ( !$this->checkAccess() ) {
-			throw new \PermissionsError('specialdiscussionslog');
+			throw new \PermissionsError( 'specialdiscussionslog' );
 		}
 
 		$this->setHeaders();
