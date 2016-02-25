@@ -94,6 +94,12 @@ $wgAutoloadClasses[ 'Wikia\ExactTarget\UserIdsAdapter' ] = $dir . '/client/adapt
 /* Exceptions*/
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetException' ] = $dir . '/client/ExactTargetException.php';
 
+$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetTaskProvider'] =  $dir . '/lib/ExactTargetTaskProvider.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetTaskProviderImpl'] =  $dir . '/lib/ExactTargetTaskProviderImpl.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApiProvider'] =  $dir . '/lib/ExactTargetApiProvider.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApiProviderImpl'] =  $dir . '/lib/ExactTargetApiProviderImpl.php' ;
+
+
 /* ExactTarget_* classes */
 
 $wgAutoloadClasses[ 'ExactTarget_AccountDataItem' ] = $dir . '/lib/ExactTarget_AccountDataItem.php';

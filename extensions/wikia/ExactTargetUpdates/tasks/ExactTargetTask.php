@@ -5,12 +5,39 @@ use Wikia\Tasks\Tasks\BaseTask;
 
 class ExactTargetTask extends BaseTask {
 
+	private $exactTargetApiProvider;
+	private $exactTargetTaskProvider;
+
+	public function setTaskProvider( ExactTargetTaskProvider $provider ) {
+		$this->exactTargetTaskProvider = $provider;
+	}
+
+	public function getTaskProvider() {
+		if (!isset($this->exactTargetTaskProvider)) {
+			$this->exactTargetTaskProvider = new ExactTargetTaskProviderImpl();
+		}
+
+		return $this->exactTargetTaskProvider;
+	}
+
+	public function setApiProvider( ExactTargetApiProvider $provider ) {
+		$this->exactTargetApiProvider = $provider;
+	}
+
+	public function getApiProvider() {
+		if (!isset($this->exactTargetApiProvider)) {
+			$this->exactTargetApiProvider = new ExactTargetApiProviderImpl();
+		}
+
+		return $this->exactTargetApiProvider;
+	}
+
 	/**
 	 * Returns an instance of ExactTargetApiDataExtension class
 	 * @return ExactTargetApiDataExtension
 	 */
 	protected function getApiDataExtension() {
-		return new ExactTargetApiDataExtension();
+		return $this->getApiProvider()->getApiDataExtension();
 	}
 
 	/**
@@ -26,7 +53,7 @@ class ExactTargetTask extends BaseTask {
 	 * @return ExactTargetRetrieveWikiTask
 	 */
 	protected function getRetrieveWikiTask() {
-		return new ExactTargetRetrieveWikiTask();
+		return $this->getTaskProvider()->getUserDataVerificationTask();
 	}
 
 
@@ -35,7 +62,7 @@ class ExactTargetTask extends BaseTask {
 	 * @return ExactTargetUpdateWikiTask
 	 */
 	protected function getUpdateWikiHelper() {
-		return new ExactTargetUpdateWikiTask();
+		return $this->getTaskProvider()->getUpdateWikiHelper();
 	}
 
 	/**
@@ -51,7 +78,7 @@ class ExactTargetTask extends BaseTask {
 	 * @return ExactTargetWikiDataVerification
 	 */
 	protected function getWikiDataVerificationTask() {
-		return new ExactTargetWikiDataVerificationTask();
+		return $this->getTaskProvider()->getWikiDataVerificationTask();
 	}
 
 }

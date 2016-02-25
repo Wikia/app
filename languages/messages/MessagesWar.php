@@ -452,15 +452,6 @@ Alayon pagutro pagbutang.',
 'resetpass-submit-cancel'   => 'Pasagdi',
 'resetpass-temp-password'   => 'Temporaryo nga tigaman-pagsakob:',
 
-# Special:PasswordReset
-'passwordreset-username'     => 'Agnay hiton gumaramit:',
-'passwordreset-domain'       => 'Dominyo:',
-'passwordreset-email'        => 'E-mail adres:',
-'passwordreset-emailtitle'   => 'Mga detalye han akawnt ha {{SITENAME}}',
-'passwordreset-emailelement' => 'Agnay han gumaramit: $1
-Temporaryo nga tigaman han pagsakob: $2',
-'passwordreset-emailsent'    => 'Ginpadara hin usa ka pahinumdom nga e-mail.',
-
 # Special:ChangeEmail
 'changeemail-cancel' => 'Pasagdi',
 

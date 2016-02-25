@@ -369,6 +369,11 @@ class CuratedContentController extends WikiaController {
 				$community = $this->communityDataService->getCommunityData();
 				if ( !empty( $community ) ) {
 					$community[ 'community_data' ] = 'true';
+
+					if ( !empty( $community[ 'image_id' ] ) ) {
+						$url = CuratedContentHelper::getImageUrl( $community[ 'image_id' ] );
+						$community[ 'image_url' ] = $url;
+					}
 					$data[] = $community;
 				}
 

@@ -48,7 +48,7 @@
 
 	// load YUI using ResourceLoader
 	$.loadYUI = function (callback) {
-		return mw.loader.use('wikia.yui').done(callback);
+		return mw.loader.using('wikia.yui').done(callback);
 	};
 
 	// jquery.wikia.modal.js in now a part of AssetsManager package
@@ -61,25 +61,25 @@
 
 	// load various jQuery libraries (if not yet loaded)
 	$.loadJQueryUI = function (callback) {
-		return mw.loader.use('wikia.jquery.ui').done(callback);
+		return mw.loader.using('wikia.jquery.ui').done(callback);
 	};
 
 	// autocomplete plugin - not to be confused autocomplete feature of jQuery UI
 	// @deprecated use $.ui.autocomplete
 	$.loadJQueryAutocomplete = function (callback) {
-		return mw.loader.use('jquery.autocomplete').done(callback);
+		return mw.loader.using('jquery.autocomplete').done(callback);
 	};
 
 	$.loadJQueryAIM = function (callback) {
-		return mw.loader.use('wikia.aim').done(callback);
+		return mw.loader.using('wikia.aim').done(callback);
 	};
 
 	$.loadMustache = function (callback) {
-		return mw.loader.use('jquery.mustache').done(callback);
+		return mw.loader.using('jquery.mustache').done(callback);
 	};
 
 	$.loadHandlebars = function (callback) {
-		return mw.loader.use('wikia.handlebars').done(callback);
+		return mw.loader.using('wikia.handlebars').done(callback);
 	};
 
 	$.loadGoogleMaps = function (callback) {

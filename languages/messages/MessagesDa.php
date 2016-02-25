@@ -666,36 +666,6 @@ Vent venligst før du prøver igen.',
 Du har muligvis allerede skiftet din adgangskode eller anmodet om en ny midlertidig kode.',
 'resetpass-temp-password'   => 'Midlertidig adgangskode',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Nulstil adgangskode',
-'passwordreset-text'               => 'Udfyld denne formular for at modtage en påmindelse om dine kontooplysninger som e-mail.',
-'passwordreset-legend'             => 'Nulstil adgangskode',
-'passwordreset-disabled'           => 'Nulstilling af kodeord er slået fra på denne wiki.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Indtast en af de nedenstående oplysninger}}',
-'passwordreset-username'           => 'Brugernavn:',
-'passwordreset-domain'             => 'Domæne:',
-'passwordreset-capture'            => 'Se den resulterende email?',
-'passwordreset-capture-help'       => 'Hvis du krydser dette felt af, vil emailen (med den midlertidige adgangskode) blive vist til dig i tillæg til at blive sendt til brugeren.',
-'passwordreset-email'              => 'E-mail adresse:',
-'passwordreset-emailtitle'         => 'Kontooplysninger på {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Nogen (sandsynligvis dig, fra IP-adressen $1) har anmodet om en påmindelse om dine kontooplysninger for {{SITENAME}} ($4). Følgende {{PLURAL:$3|brugerkonto|brugerkonti}} er associerede med denne e-mail-adresse:
-
-$2
-
-{{PLURAL:$3|Denne midlertidige adgangskode|Disse midlertidige adgangskoder}} vil udløbe om {{PLURAL:$5|en dag|$5 dage}}.
-Du bør logge på og vælge en ny adgangskode nu. Hvis en anden end dig har anmodet om denne påmindelse, eller hvis du er kommet i tanke om din oprindelig adgangskode og ikke længere ønsker at ændre den, kan du ignorere denne meddelelse og fortsætte med at bruge din gamle adgangskode.',
-'passwordreset-emailtext-user'     => 'Brugeren $1 har anmodet om en påmindelse om dine kontooplysninger for {{SITENAME}} ($4). Følgende {{PLURAL:$3|brugerkonto|brugerkonti}} er associerede med denne e-mail-adresse:
-
-$2
-
-{{PLURAL:$3|Denne midlertidige adgangskode|Disse midlertidige adgangskoder}} vil udløbe om {{PLURAL:$5|en dag|$5 dage}}.
-Du bør logge på og vælge en ny adgangskode nu. Hvis en anden end dig har anmodet om denne påmindelse, eller hvis du er kommet i tanke om din oprindelig adgangskode og ikke længere ønsker at ændre den, kan du ignorere denne meddelelse og fortsætte med at bruge din gamle adgangskode.',
-'passwordreset-emailelement'       => 'Brugernavn: $1
-Midlertidig adgangskode: $2',
-'passwordreset-emailsent'          => 'En påmindelse er blevet sendt som e-mail.',
-'passwordreset-emailsent-capture'  => 'En påmindelsesemail, som vist nedenfor, er blevet sendt.',
-'passwordreset-emailerror-capture' => 'En påmindelsesemail, som vist nedenfor, blev genereret, men det lykkedes ikke at sende den til brugeren: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Ændr email-adresse',
 'changeemail-header'   => 'Ændr kontoens email-adresse',

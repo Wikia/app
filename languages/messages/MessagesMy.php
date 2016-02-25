@@ -425,10 +425,6 @@ $1',
 'resetpass-submit-cancel'   => 'မလုပ်တော့ပါ',
 'resetpass-temp-password'   => 'ယာယီစကားဝှက် -',
 
-# Special:PasswordReset
-'passwordreset-username' => 'အသုံးပြုသူအမည် :',
-'passwordreset-email'    => 'အီးမေး လိပ်စာ :',
-
 # Edit page toolbar
 'bold_sample'     => 'စာလုံးမည်း',
 'bold_tip'        => 'စာလုံးမည်း',

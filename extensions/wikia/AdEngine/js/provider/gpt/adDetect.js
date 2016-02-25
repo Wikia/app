@@ -230,30 +230,6 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 					});
 					break;
 			}
-
-			if (data.status === 'success') {
-				if (expectAsyncSuccess || expectAsyncSuccessWithSlotName) {
-					callAdCallback(data.extra);
-				} else {
-					log(
-						['msgCallback', slot.name, 'Got asynchronous success message, while not expecting it'],
-						'error',
-						logGroup
-					);
-				}
-			}
-
-			if (data.status === 'hop') {
-				if (expectAsyncHop || expectAsyncHopWithSlotName) {
-					callNoAdCallback(data.extra);
-				} else {
-					log(
-						['msgCallback', slot.name, 'Got asynchronous hop message, while not expecting it'],
-						'error',
-						logGroup
-					);
-				}
-			}
 		}
 
 		if (['openx', 'rubicon', 'saymedia', 'turtle', 'evolve2'].indexOf(adType) !== -1 || isPartnerAdType(adType)) {

@@ -774,36 +774,6 @@ Sisselogimise lõpetamiseks pead siia uue parooli sisestama:',
 Võib-olla oled juba edukalt muudnud oma salasõna või taotlenud uut ajutist salasõna.',
 'resetpass-temp-password' => 'Ajutine parool:',
 
-# Special:PasswordReset
-'passwordreset' => 'Parooli lähtestamine',
-'passwordreset-text' => 'Täida see vorm, et saada e-kiri oma konto andmetega.',
-'passwordreset-legend' => 'Parooli lähtestamine',
-'passwordreset-disabled' => 'Selles vikis on paroolide lähtestamine keelatud.',
-'passwordreset-pretext' => '{{PLURAL:$1||Sisesta üks järgmistest andmeüksustest}}',
-'passwordreset-username' => 'Kasutajanimi:',
-'passwordreset-domain' => 'Domeen:',
-'passwordreset-capture' => 'Näita lähetatavat e-kirja?',
-'passwordreset-capture-help' => 'Kui valid selle märkeruudu, näidatakse sulle ajutist parooli sisaldavat e-kirja, mis ühtlasi kasutajale saadetakse.',
-'passwordreset-email' => 'E-posti aadress:',
-'passwordreset-emailtitle' => '{{GRAMMAR:genitive|{{SITENAME}}}} konto andmed',
-'passwordreset-emailtext-ip' => 'Keegi, arvatavasti sina ise, IP-aadressilt $1 palus meelde tuletada sinu {{GRAMMAR:genitive|{{SITENAME}}}} ($4) konto üksikasjad. Selle e-posti aadressiga on seotud {{PLURAL:$3|järgmine konto|järgmised kontod}}:
-
-$2
-
-{{PLURAL:$3|See ajutine parool aegub|Need ajutised paroolid aeguvad}} {{PLURAL:$5|ühe|$5}} päeva pärast.
-Peaksid nüüd sisse logima ja uue parooli valima. Kui selle palve esitas keegi teine või kui sulle meenus su parool ja sa ei soovi seda enam muuta, võid teadet eirata ja jätkata vana parooli kasutamist.',
-'passwordreset-emailtext-user' => '{{GRAMMAR:genitive|{{SITENAME}}}} kasutaja $1 palus meelde tuletada sinu {{GRAMMAR:genitive|{{SITENAME}}}} ($4) konto üksikasjad. Selle e-posti aadressiga on seotud {{PLURAL:$3|järgmine konto|järgmised kontod}}:
-
-$2
-
-{{PLURAL:$3|See ajutine parool aegub|Need ajutised paroolid aeguvad}} {{PLURAL:$5|ühe|$5}} päeva pärast.
-Peaksid nüüd sisse logima ja uue parooli valima. Kui selle palve esitas keegi teine või kui sulle meenus su parool ja sa ei soovi seda enam muuta, võid teadet eirata ja jätkata vana parooli kasutamist.',
-'passwordreset-emailelement' => 'Kasutajanimi: $1
-Ajutine parool: $2',
-'passwordreset-emailsent' => 'Meeldetuletuskiri on saadetud.',
-'passwordreset-emailsent-capture' => 'E-kirjatsi on saadetud allpool näidatav meeldetuletus.',
-'passwordreset-emailerror-capture' => 'Koostati allpool näidatav meeldetuletus, aga selle e-kirjatsi kasutajale saatmine ebaõnnestus: $1',
-
 # Special:ChangeEmail
 'changeemail' => 'E-posti aadressi muutmine',
 'changeemail-header' => 'Konto e-posti aadressi muutmine',

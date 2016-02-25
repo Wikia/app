@@ -664,36 +664,6 @@ Si us plau, esperi abans de tornar-ho a intentar.",
 Deveu haver canviat la vostra contrasenya o demanat una nova contrasenya temporal.',
 'resetpass-temp-password'   => 'Contrasenya temporal:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Restablir contrasenya',
-'passwordreset-text'               => 'Completeu el següent formulari per rebre un recordatori per correu electrònic amb els detalls del vostre compte.',
-'passwordreset-legend'             => 'Restablir contrasenya',
-'passwordreset-disabled'           => "S'ha desactivat el restabliment de contranyes en aquest wiki.",
-'passwordreset-pretext'            => '{{PLURAL:$1||Introduïu un dels elements de dades següents}}',
-'passwordreset-username'           => "Nom d'usuari:",
-'passwordreset-domain'             => 'Domini',
-'passwordreset-capture'            => 'Veure el missatge de correu electrònic?',
-'passwordreset-capture-help'       => "Si marqueu aquesta casella, el missatge de correu electrònic (amb la contrasenya temporal) es mostrarà al mateix moment que sigui enviat a l'usuari.",
-'passwordreset-email'              => 'Adreça de correu electrònic:',
-'passwordreset-emailtitle'         => 'Detalls del compte a {{SITENAME}}',
-'passwordreset-emailtext-ip'       => "Algú (vós mateix segurament, des de l'adreça IP $1) ha demanat un recordatori dels detalls dels vostres comptes al projecte {{SITENAME}} <$4>. {{PLURAL:$3|El següent compte d'usuari està associat|Els següents comptes d'usuari estan associats}} amb aquesta adreça de correu electrònic:
-
-$2
-
-{{PLURAL:$3|Aquesta contrasenya temporal caducarà|Aquestes contrasenyes temporals caducaran}} en {{PLURAL:$5|un dia|$5 dies}}.
-Hauríeu d'entrar {{PLURAL:$3|al compte per a fixar-hi una nova contrasenya|als comptes per a fixar-hi noves contrasenyes}} al més aviat possible. Si algú que no sou vós és qui ha fet aquesta petició o si heu recordat la contrasenya original i ja no la voleu canviar, podeu ignorar aquest missatge i seguir utilitzant la vostra antiga contrasenya.",
-'passwordreset-emailtext-user'     => "L'usuari $1 de {{SITENAME}} ha demanat un recordatori dels detalls dels vostres comptes al projecte {{SITENAME}} <$4>. {{PLURAL:$3|El següent compte d'usuari està associat|Els següents comptes d'usuari estan associats}} amb aquesta adreça de correu electrònic:
-
-$2
-
-{{PLURAL:$3|Aquesta contrasenya temporal caducarà|Aquestes contrasenyes temporals caducaran}} en {{PLURAL:$5|un dia|$5 dies}}.
-Hauríeu d'entrar {{PLURAL:$3|al compte per a fixar-hi una nova contrasenya|als comptes per a fixar-hi noves contrasenyes}} al més aviat possible. Si algú que no sou vós és qui ha fet aquesta petició o si heu recordat la contrasenya original i ja no la voleu canviar, podeu ignorar aquest missatge i seguir utilitzant la vostra antiga contrasenya.",
-'passwordreset-emailelement'       => "Nom d'usuari: $1
-Contrasenya temporal: $2",
-'passwordreset-emailsent'          => "S'ha enviat un correu de recordatori.",
-'passwordreset-emailsent-capture'  => "S'ha enviat un recordatori per correu electrònic, tal com es mostra a continuació.",
-'passwordreset-emailerror-capture' => "S'ha generat un missatge recordatori de correu electrònic, que es mostra a continuació, però ha fallat l'enviament a l'usuari: $1",
-
 # Special:ChangeEmail
 'changeemail'          => 'Canvi de correu electrònic',
 'changeemail-header'   => "Canvi de l'adreça de correu electrònic del compte",
