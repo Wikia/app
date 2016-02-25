@@ -52,12 +52,16 @@ class UserPermissionsIntegrationTest extends \WikiaBaseTest {
 		$groups = $this->permissionsService()->getExplicitGroups( $this->staffUser );
 		$this->assertContains("staff", $groups);
 		$this->assertContains("bureaucrat", $groups);
+		$this->assertNotContains("user", $groups);
+		$this->assertNotContains("*", $groups);
 	}
 
 	function testShouldReturnAutomaticGroups() {
 		$groups = $this->permissionsService()->getAutomaticGroups( $this->staffUser, true );
 		$this->assertContains("user", $groups);
 		$this->assertContains("*", $groups);
+		$this->assertNotContains("staff", $groups);
+		$this->assertNotContains("bureaucrat", $groups);
 	}
 
 	function testShouldReturnEffectiveGroups() {
@@ -66,6 +70,7 @@ class UserPermissionsIntegrationTest extends \WikiaBaseTest {
 		$this->assertContains("staff", $groups);
 		$this->assertContains("bureaucrat", $groups);
 		$this->assertContains("*", $groups);
+		$this->assertNotContains("util", $groups);
 	}
 
 	function testShouldReturnEffectiveGroupsForAnon() {
@@ -78,6 +83,8 @@ class UserPermissionsIntegrationTest extends \WikiaBaseTest {
 		$groups = $this->permissionsService()->getConfiguration()->getImplicitGroups();
 		$this->assertContains("*", $groups);
 		$this->assertContains("user", $groups);
+		$this->assertNotContains("staff", $groups);
+		$this->assertNotContains("bureaucrat", $groups);
 	}
 
 	function testShouldReturnGroupPermissions() {
