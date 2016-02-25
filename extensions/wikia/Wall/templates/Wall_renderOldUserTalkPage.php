@@ -1,1 +1,1 @@
-<?= $userTalkArchiveContent; ?>
+<?= ${WallConst::userTalkArchiveContent}; ?>

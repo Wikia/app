@@ -1,41 +1,41 @@
-<?php if ( !empty( $statusInfo ) ): ?>
-	<?php if ( $showRemoveOrDeleteInfo ): ?>
+<?php if ( !empty( ${WallConst::statusInfo} ) ): ?>
+	<?php if ( ${WallConst::showRemoveOrDeleteInfo} ): ?>
 			<div class="deleteorremove-infobox" >
 			<table class="deleteorremove-container"><tr><td width="100%">
 			<div class="deleteorremove-bubble tail">
-				<div class="avatar"><?= AvatarService::renderAvatar( $statusInfo['user']->getName(), 20 ) ?></div>
+				<div class="avatar"><?= AvatarService::renderAvatar( ${WallConst::statusInfo}['user']->getName(), 20 ) ?></div>
 				<div class="message">
-					<? if( $isreply ): ?>
-						<?= wfMessage( 'wall-message-' . $statusInfo['status'] . '-reply-because', [ $statusInfo['user_displayname_linked'] ] )->text(); ?><br />
+					<? if( ${WallConst::isreply} ): ?>
+						<?= wfMessage( 'wall-message-' . ${WallConst::statusInfo}['status'] . '-reply-because', [ ${WallConst::statusInfo}['user_displayname_linked'] ] )->text(); ?><br />
 					<? else: ?>
-						<?= wfMessage( 'wall-message-' . $statusInfo['status'] . '-thread-because', [ $statusInfo['user_displayname_linked'] ] )->text(); ?><br />
+						<?= wfMessage( 'wall-message-' . ${WallConst::statusInfo}['status'] . '-thread-because', [ ${WallConst::statusInfo}['user_displayname_linked'] ] )->text(); ?><br />
 					<? endif; ?>
-					<div class="reason"><?= Linker::formatComment( $statusInfo['reason'] ); ?></div>
-					<div class="timestamp"><span><?= $statusInfo['fmttime']; ?></span></div>
+					<div class="reason"><?= Linker::formatComment( ${WallConst::statusInfo}['reason'] ); ?></div>
+					<div class="timestamp"><span><?= ${WallConst::statusInfo}['fmttime']; ?></span></div>
 				</div>
 			</div>
 			</td><td>
-			<? if($isreply): ?>
-				<button <?= ( $canRestore ? '' : 'disabled=disabled' ); ?>  data-mode='restore<?= ( $fastrestore ? '-fast' : '' ); ?>' data-id="<?= $id; ?>"  class="message-restore wikia-button" ><?= wfMessage( 'wall-message-restore-reply' )->escaped(); ?></button>
+			<? if(${WallConst::isreply}): ?>
+				<button <?= ( ${WallConst::canRestore} ? '' : 'disabled=disabled' ); ?>  data-mode='restore<?= ( ${WallConst::fastrestore} ? '-fast' : '' ); ?>' data-id="<?= ${WallConst::id}; ?>"  class="message-restore wikia-button" ><?= wfMessage( 'wall-message-restore-reply' )->escaped(); ?></button>
 			<? else: ?>
-				<button <?= ( $canRestore ? '' : 'disabled=disabled' ); ?> data-mode='restore<?= ( $fastrestore ? '-fast' : '' ); ?>' data-id="<?= $id; ?>"  class="message-restore wikia-button" ><?= wfMessage( 'wall-message-restore-thread' )->escaped(); ?></button>
+				<button <?= ( ${WallConst::canRestore} ? '' : 'disabled=disabled' ); ?> data-mode='restore<?= ( ${WallConst::fastrestore} ? '-fast' : '' ); ?>' data-id="<?= ${WallConst::id}; ?>"  class="message-restore wikia-button" ><?= wfMessage( 'wall-message-restore-thread' )->escaped(); ?></button>
 			<? endif; ?>
 			</td></tr></table>
 		</div>
 	<?php endif; ?>
 
-	<? if ( $showArchiveInfo ): ?>
+	<? if ( ${WallConst::showArchiveInfo} ): ?>
 		<div class="deleteorremove-infobox">
 			<div class="deleteorremove-bubble">
-				<div class="avatar"><?= AvatarService::renderAvatar( $statusInfo['user']->getName(), 20 ) ?></div>
+				<div class="avatar"><?= AvatarService::renderAvatar( ${WallConst::statusInfo}['user']->getName(), 20 ) ?></div>
 				<div class="message">
-					<? if ( isset( $statusInfo['reason'] ) && mb_strlen( $statusInfo['reason'] ) ): ?>
-						<?= wfMessage( 'wall-message-closed-by-because', [ $statusInfo['user_displayname_linked'] ] )->text(); ?><br>
-						<div class="reason"><?= Linker::formatComment( $statusInfo['reason'] ); ?></div>
+					<? if ( isset( ${WallConst::statusInfo}['reason'] ) && mb_strlen( ${WallConst::statusInfo}['reason'] ) ): ?>
+						<?= wfMessage( 'wall-message-closed-by-because', [ ${WallConst::statusInfo}['user_displayname_linked'] ] )->text(); ?><br>
+						<div class="reason"><?= Linker::formatComment( ${WallConst::statusInfo}['reason'] ); ?></div>
 					<? else: ?>
-						<?= wfMessage( 'wall-message-closed-by', [ $statusInfo['user']->getName(), $statusInfo['user']->getUserPage() ] )->parse(); ?><br>
+						<?= wfMessage( 'wall-message-closed-by', [ ${WallConst::statusInfo}['user']->getName(), ${WallConst::statusInfo}['user']->getUserPage() ] )->parse(); ?><br>
 					<? endif; ?>
-					<div class="timestamp"><span><?= $statusInfo['fmttime']; ?></span></div>
+					<div class="timestamp"><span><?= ${WallConst::statusInfo}['fmttime']; ?></span></div>
 				</div>
 			</div>
 		</div>

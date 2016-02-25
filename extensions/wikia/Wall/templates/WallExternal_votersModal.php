@@ -1,6 +1,6 @@
 <div id="WallVotersModal" class="WallVotersModal wall-voters-delete">
-	<?= wfMessage( 'wall-votes-modal-title-desc' )->params( [ $count ] )->parse(); ?>
+	<?= wfMessage( 'wall-votes-modal-title-desc' )->params( [ ${WallConst::count} ] )->parse(); ?>
 	<ul>
-		<?php echo $list; ?>
+		<?php echo ${WallConst::LIST_CONST}; ?>
 	</ul>
 </div>

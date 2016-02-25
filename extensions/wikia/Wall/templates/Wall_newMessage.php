@@ -1,7 +1,7 @@
-<? if ( $userBlocked === false ): ?>
+<? if ( ${WallConst::userBlocked} === false ): ?>
 	<div class="SpeechBubble new-message post">
 		<div class="speech-bubble-avatar">
-			<?= AvatarService::renderAvatar($username, 50) ?>
+			<?= AvatarService::renderAvatar(${WallConst::username}, 50) ?>
 		</div>
 		<div class="speech-bubble-message">
 			<? if ( $wg->EnableMiniEditorExtForWall ):
@@ -20,11 +20,11 @@
 			<? if ( $wg->EnableMiniEditorExtForWall ):
 				echo $app->getView( 'MiniEditorController', 'Editor_Header' )->render(); 
 			endif; ?>
-			<textarea id="WallMessageBody" class="body" placeholder="<?= $wall_message ?>" data-space-type="editarea"></textarea>
+			<textarea id="WallMessageBody" class="body" placeholder="<?= ${WallConst::wall_message} ?>" data-space-type="editarea"></textarea>
 			<? if ( $wg->EnableMiniEditorExtForWall ):
 				echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render(); 
 			endif; ?>
-			<?php if($notify_everyone): ?>
+			<?php if(${WallConst::notify_everyone}): ?>
 				<?php //never use in wall just for example?>
 				<input type="checkbox" name="NotifyEveryone" id="NotifyEveryone" value="1" />
 			<?php endif; ?>

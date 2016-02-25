@@ -1,6 +1,6 @@
 <h4 class="related-topics-heading"><?= wfMsg('wall-topic-heading') ?></h4>
 <ul class="related-topics">
-<?php foreach ($relatedTopics as $val): ?>
+<?php foreach (${WallConst::relatedTopics} as $val): ?>
 	<li class="related-topic" data-topic="<?= $val->getText() ?>">
 		<a href="<?php echo WallHelper::getTopicPageURL($val); ?>">
 			<?= $val->getText() ?>
