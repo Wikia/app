@@ -40,7 +40,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		slots = config[skin];
 
 		if (adContext.getContext().opts.overridePrefootersSizes) {
-			slots.PREFOOTER_LEFT_BOXAD = ['3x2', '7x9', '9x2'];
+			slots.PREFOOTER_LEFT_BOXAD = ['3x2', '7x9'];
 		}
 
 		amznMatch.type = 'text/javascript';
