@@ -6,6 +6,7 @@ $messages['en'] = array(
 	'discussionslog' => 'Discussions Users Log',
 	'discussionslog-desc' => 'Wikia\'s Discussion users log extension',
 	'discussionslog-pagetitle' => 'Mobile app users\' discussion logs',
+	'discussionslog-contributions-link-title' => 'discussion IP history',
 	'discussionslog-username-label' => 'Username: ',
 	'discussionslog-view-logs' => 'View Logs',
 	'discussionslog-no-user-match-error' => 'Provided username did not match any user',
