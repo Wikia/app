@@ -38,4 +38,14 @@ class NodeGroup extends Node {
 
 		return $data;
 	}
+
+	protected function hasValidAttributes() {
+		foreach ( $this->xmlNode->attributes() as $attr => $val ) {
+			if ( $attr == 'collapse' && $val != 'open') {
+				return false;
+			}
+		}
+
+		return parent::hasValidAttributes();
+	}
 }

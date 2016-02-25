@@ -118,6 +118,10 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 			[ '<infobox><title source="title"/></infobox>', true ],
 			[ '<infobox><title source="title"><default>0</default></title></infobox>', false ],
 			[ '<infobox><group><data source="asdf"/></group></infobox>', false ],
+			[ '<infobox><group><header>asdf</header></group></infobox>', true ],
+			[ '<infobox><group><header>hd</header><data source="asdf"/></group></infobox>', true ],
+			[ '<infobox><group collapse="open"><header>hd</header><data source="asdf"/></group></infobox>', true ],
+			[ '<infobox><group collapse="false"><header>hd</header><data source="asdf"/></group></infobox>', false ],
 			[ '<infobox theme="asdf"><image source="image"><alt source="title"><default>asdf</default></alt></image></infobox>', false ],
 			[ '<infobox theme="adsf"><group><header>asdf</header></group></infobox>', false ],
 			[ '<infobox><title source="title1"/><image source="image1"><caption source="caption1"/></image><data source="row1"><label>Label 1</label></data><data source="row2"><label>Label 2</label></data><group><header>Header 1</header><data source="row3"><label>Label 3</label></data></group><group><header>Header 2</header><image source="image2"><caption source="caption2"/></image></group><group><header>Header 3</header><data source="row4"><label>Label 4</label></data></group><title source="title2"/><group><header>Header 4</header><image source="image3"><caption source="caption3"/></image></group><title source="title3"/></infobox>', true ]
