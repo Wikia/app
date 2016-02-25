@@ -5,8 +5,7 @@ class MercuryApiCategoryHandler {
 	public static function getCategoryContent( Title $title ) {
 		$categoryPage = CategoryPage::newFromTitle( $title, RequestContext::getMain() );
 		return [
-			'members' => self::getMembers( $categoryPage ),
-			'name' => self::getCategoryName( $title )
+			'members' => self::getMembers( $categoryPage )
 		];
 	}
 
@@ -42,7 +41,12 @@ class MercuryApiCategoryHandler {
 		return $title->getArticleID() > 0;
 	}
 
-	private static function getCategoryName( Title $title ) {
-		return $title->getText();
+	public static function getCategoryMockedDetails( Title $title ) {
+		return [
+			'description' => '',
+			'id' => $title->getArticleID(),
+			'title'=> $title->getText(),
+			'url' => $title->getLocalURL()
+		];
 	}
 }

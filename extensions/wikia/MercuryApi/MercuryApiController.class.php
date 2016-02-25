@@ -326,6 +326,8 @@ class MercuryApiController extends WikiaController {
 							if ( MercuryApiCategoryHandler::hasArticle( $title ) ) {
 								$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
 								$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
+							} else {
+								$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
 							}
 							break;
 					}
@@ -429,7 +431,7 @@ class MercuryApiController extends WikiaController {
 		$article = Article::newFromID( $mainPageArticleID );
 		$data = [ ];
 
-		$data[ 'details' ] = $this->getArticleDetails( $article );
+		$data[ 'details' ] = MercuryApiArticleHandler::getArticleDetails( $article );
 		$data[ 'adsContext' ] = $this->mercuryApi->getAdsContext( $mainPageTitle );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
