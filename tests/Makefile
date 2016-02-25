@@ -52,6 +52,15 @@ phpunit-single: prepare
 		--exclude-group Broken \
 		${test}
 
+# runs all tests from given directory or file and produce HTML and console tests coverage result
+phpunit-single-coverage: prepare
+		rm -rf coverage && mkdir -p coverage
+		${CMD_PHPUNIT} \
+				--coverage-html "coverage" \
+				--coverage-text \
+				--exclude-group Broken \
+				${test}
+
 # runs fast unit tests only
 phpunit-fast: prepare
 	${CMD_PHPUNIT} \
