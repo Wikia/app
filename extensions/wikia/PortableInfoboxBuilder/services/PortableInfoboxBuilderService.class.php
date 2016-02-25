@@ -202,7 +202,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 
 					$collapsible = $this->isCollapsible($currentChildNode);
 
-					// clean the mess connected to differences in xml tree and data model on mercury side
+					// this attribute is not supported in header tag
 					$childNodeDom->removeAttribute('section_collapsible');
 
 					$currentGroupDom = $this->createGroupDom($childNodeDom, $collapsible);
@@ -221,7 +221,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 
 					$collapsible = $this->isCollapsible($currentChildNode);
 
-					// clean the mess connected to differences in xml tree and data model on mercury side
+					// this attribute is not supported in header tag
 					$childNodeDom->removeAttribute('section_collapsible');
 
 					// and initialize a new group
@@ -275,7 +275,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 	}
 
 	protected function isCollapsible($node) {
-		return $node['section_collapsible'] == '1';
+		return (bool)$node['section_collapsible'];
 	}
 
 	/**
