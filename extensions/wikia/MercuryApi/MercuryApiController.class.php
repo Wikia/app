@@ -433,6 +433,15 @@ class MercuryApiController extends WikiaController {
 				if ( !$isMainPage ) {
 					$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
 				}
+			} else if (!$article instanceof  Article) {
+				if ( !$article instanceof Article ) {
+					\Wikia\Logger\WikiaLogger::instance()->error(
+						'$article should be an instance of an Article',
+						['article' => $article]
+					);
+
+					throw new NotFoundApiException( 'Article is empty' );
+				}
 			}
 
 			$data['htmlTitle'] = $titleBuilder->getTitle();
