@@ -25,7 +25,7 @@ class NodeGroup extends Node {
 		$data = $this->getChildrenAsJsonObjects();
 		$collapsible = false;
 
-		if ( $this->xmlNode[0]['collapse'] == 'open') {
+		if ( $this->xmlNode['collapse'] == 'open') {
 			$collapsible = true;
 		}
 
