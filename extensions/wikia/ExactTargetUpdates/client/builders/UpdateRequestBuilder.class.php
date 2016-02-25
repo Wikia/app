@@ -22,9 +22,6 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 		return $this;
 	}
 
-	/**
-	 * @return \ExactTarget_UpdateRequest
-	 */
 	public function build() {
 		$oRequest = new \ExactTarget_UpdateRequest();
 		$oRequest->Options = $this->prepareUpdateCreateOptions();
@@ -49,12 +46,6 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 		return self::$supportedTypes;
 	}
 
-	/**
-	 * @param $id
-	 * @param $properties
-	 * @return array
-	 * @throws \Wikia\Util\AssertionException
-	 */
 	private function prepareUserPreferencesParams( $id, $properties ) {
 		Assert::true( isset( $this->userId ) );
 		$objects = [ ];
@@ -65,15 +56,9 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 		return $objects;
 	}
 
-	/**
-	 * Creates an array of DataExtension objects for sending Soap update to ExactTarget
-	 * @param array $aUsersData Array of users data for update. Each should contain at least array of user id and email.
-	 * @return array An array of DataExtension objects
-	 * @throws \Wikia\Util\AssertionException
-	 */
-	private function prepareUsersUpdateParams( array $aUsersData ) {
+	private function prepareUsersUpdateParams( array $usersData ) {
 		$aDataExtension = [ ];
-		foreach ( $aUsersData as $aUserData ) {
+		foreach ( $usersData as $aUserData ) {
 			$userId = $aUserData[ self::EXACT_TARGET_USER_ID_PROPERTY ];
 			// remove userId as its handled differently
 			unset( $aUserData[ self::EXACT_TARGET_USER_ID_PROPERTY ] );
@@ -85,11 +70,6 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 		return $aDataExtension;
 	}
 
-	/**
-	 * Prepares ExactTarget_UpdateOptions that says update or create if doesn't exist
-	 *
-	 * @return \ExactTarget_UpdateOptions
-	 */
 	private function prepareUpdateCreateOptions() {
 		$updateOptions = new \ExactTarget_UpdateOptions();
 
