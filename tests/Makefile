@@ -1,7 +1,7 @@
 # Wikia's Makefile for executing unit tests
 
 # path to logs folder
-LOGS_PATH=junit=build/logs
+LOGS_PATH=build/logs
 
 # command to run PHPUnit
 CMD_PHPUNIT=php run-test.php \
