@@ -2090,77 +2090,80 @@ Tutti questi link sono un buon punto di partenza per entrare nel mondo di Wikia 
  * @author Wrightbus
  */
 $messages['ja'] = array(
-	'createnewwiki-desc' => 'ウィキア作成ウィザード',
+	'createnewwiki-desc' => 'Wiki作成ウィザード',
 	'cnw-next' => '次へ',
 	'cnw-back' => '戻る',
 	'cnw-or' => 'または',
-	'cnw-title' => '新しいウィキアを作成',
-	'cnw-name-wiki-headline' => '新しいウィキアを作る',
-	'cnw-name-wiki-creative' => 'ウィキアは、好きなものに関するウェブサイトやコミュニティを作り上げるのに最適な場所です。',
-	'cnw-name-wiki-label' => 'ウィキアの名前を入力してください',
-	'cnw-name-wiki-domain-label' => 'あなたのウィキアのアドレスを入力してください',
+	'cnw-title' => '新しいWikiaコミュニティを作成',
+	'cnw-name-wiki-headline' => '新しいWikiaコミュニティを作成する',
+	'cnw-name-wiki-creative' => 'Wikia〈ウィキア〉は、あなたが好きなことについて誰かと共有したり、ファン同士のコミュニティをつくるのに最適なウェブサイトです。',
+	'cnw-name-wiki-label' => '新しいWikiaコミュニティの名前をつけてください（日本語でも可）。',
+	'cnw-name-wiki-domain-label' => '新しいWikiaコミュニティのアドレスを指定してください（半角英数字のみ）。',
 	'cnw-name-wiki-submit-error' => '次へ進むには、上の欄をどちらも入力する必要があります。',
 	'cnw-login' => 'ログイン',
 	'cnw-signup' => 'アカウント作成',
 	'cnw-signup-prompt' => '新しいアカウントを作成しますか？',
-	'cnw-call-to-signup' => 'こちらからサインアップしてください',
+	'cnw-call-to-signup' => 'こちらからアカウントを作成してください',
 	'cnw-login-prompt' => 'すでにアカウントをお持ちですか？',
 	'cnw-call-to-login' => 'こちらからログインしてください',
 	'cnw-auth-headline' => 'ログイン',
-	'cnw-auth-headline2' => 'サインアップ',
-	'cnw-auth-creative' => 'ウィキアの作成を続行するにはアカウントにログインしてください。',
-	'cnw-auth-signup-creative' => 'ウィキアの作成を続行するにはアカウントが必要です。<br />サインアップは数分ほどで完了することができます。',
-	'cnw-auth-facebook-signup' => 'Facebookアカウントを使ってサインアップ',
+	'cnw-auth-headline2' => 'アカウントを作成',
+	'cnw-auth-creative' => 'Wikiaコミュニティの作成を続行するにはログインしてください。',
+	'cnw-auth-signup-creative' => 'Wikiaコミュニティを作成するためにはアカウントが必要です。<br />アカウントの作成は数分で完了します。',
+	'cnw-auth-facebook-signup' => 'Facebook コネクト',
 	'cnw-auth-facebook-login' => 'Facebookアカウントを使ってログイン',
 	'cnw-userauth-headline' => 'アカウントをお持ちの場合',
 	'cnw-userauth-creative' => 'ログイン',
 	'cnw-userauth-marketing-heading' => 'まだアカウントを お持ちでないですか？',
-	'cnw-userauth-signup-button' => 'サインアップ',
-	'cnw-desc-headline' => 'あなたのウィキアの内容についてご説明ください。',
-	'cnw-desc-creative' => 'ピンポイントの説明を追加すると、あなたのウィキアを見つけてもらいやすくなります。',
-	'cnw-desc-placeholder' => 'こちらに入力した内容はあなたのウィキアのメインページで表示されます。',
-	'cnw-desc-tip1' => 'ヒント',
-	'cnw-desc-tip1-creative' => 'ここでは、あなたのウィキアの良いところや作成した理由などを伝えてみましょう。',
-	'cnw-desc-tip2' => 'PS',
-	'cnw-desc-tip2-creative' => 'あなたのウィキアについて詳しい説明をして、他のユーザーをコミュニティに呼び込むようにしましょう。',
-	'cnw-desc-select-one' => '1つ選択',
-	'cnw-desc-all-ages' => 'このウィキアはお子様にも適したコミュニティですか。',
-	'cnw-desc-default-lang' => 'このウィキアの言語は$1になります',
-	'cnw-desc-change-lang' => '変更',
+	'cnw-userauth-signup-button' => 'アカウントを作成する',
+	'cnw-desc-headline' => 'このWikiaコミュニティについて',
+	'cnw-desc-creative' => '他のユーザーがこのWikiaコミュニティを見つけやすくなるような紹介文を書いてください
+',
+	'cnw-desc-placeholder' => 'ここに入力した内容はこのWikiaコミュニティのトップページに表示されます
+',
+	'cnw-desc-tip1' => 'Point ①',
+	'cnw-desc-tip1-creative' => 'このWikiaコミュニティの概要を50〜100文字程度でシンプルに伝えましょう。',
+	'cnw-desc-tip2' => 'Point ②',
+	'cnw-desc-tip2-creative' => 'このWikiaコミュニティであなたがどんなコンテンツや情報をファンと共有しようとしているのか具体的に書いてみましょう。',
+	'cnw-desc-select-one' => 'ひとつ選択',
+	'cnw-desc-all-ages' => 'このWikiaコミュニティはお子様にも適したコミュニティですか。',
+	'cnw-desc-default-lang' => '現在の言語設定は $1 になっています',
+	'cnw-desc-change-lang' => '変更する',
 	'cnw-desc-lang' => '言語',
 	'cnw-desc-wiki-submit-error' => 'カテゴリを選択してください',
 	'cnw-theme-headline' => 'テーマを選択',
-	'cnw-theme-creative' => 'テーマを選択すると、プレビューで確認することができます。',
-	'cnw-theme-instruction' => 'ご自分でカスタマイズしたい場合には、管理者ダッシュボードのテーマデザイナーから、好きなテーマをデザインすることもできます。',
-	'cnw-welcome-headline' => 'おめでとうございます！「$1」の作成に成功しました！',
-	'cnw-welcome-instruction1' => '下のボタンをクリックすると、ウィキアに新しいページを追加することができます。',
-	'cnw-welcome-help' => 'ヒントやアドバイスなどが必要な際には <a href="http://ja.community.wikia.com/">コミュニティ・セントラル</a> をご覧ください。',
-	'cnw-error-general' => 'ウィキアの作成中に問題が発生しました。もう一度お試しいただくか、[[特別:Contact|こちら]]からご連絡ください。',
+	'cnw-theme-creative' => 'テーマを選んでください。クリックすると、選択したテーマのプレビューを見ることができます。',
+	'cnw-theme-instruction' => 'Wikiaコミュニティ作成後に、「マイツール」からテーマを更にカスタマイズすることもできます。',
+	'cnw-welcome-headline' => '「$1」Wikiaが作成されました！',
+	'cnw-welcome-instruction1' => '次に、あなたのWikiaコミュニティに新しいページを追加しましょう。',
+	'cnw-welcome-help' => '<a href="http://ja.community.wikia.com/">コミュニティセントラル</a> では、Wikiaコミュニティ作成のヒントやアドバイスをみつけることができます。
+',
+	'cnw-error-general' => 'Wikiaコミュニティの作成中に問題が発生しました。もう一度お試しいただくか、[[特別:Contact|こちら]]からご連絡ください。',
 	'cnw-error-general-heading' => '申し訳ありません',
 	'cnw-error-blocked-header' => 'アカウントがブロックされています',
 	'cnw-error-anon-user-header' => 'ログインしてください',
 	'cnw-error-bot-header' => 'ボットとして検出されました',
-	'cnw-error-unconfirmed-email' => 'ウィキアを作成するには、メールの認証を行っていただく必要があります。',
+	'cnw-error-unconfirmed-email' => 'Wikiaコミュニティを作成するには、メールの認証を行っていただく必要があります。',
 	'cnw-name-wiki-language' => '',
 	'cnw-name-wiki-domain' => '.wikia.com',
-	'cnw-userauth-marketing-body' => 'ウィキアでコミュニティを作成するには、アカウントが必要です。サインアップは数分ほどで完了することができます。',
-	'cnw-desc-select-vertical' => 'ジャンルを選んでください',
-	'cnw-desc-select-categories' => '追加するカテゴリを選択してください',
-	'cnw-desc-tip-all-ages' => 'このトピックはお子様に関心を持っていただくためのものですか？ウィキアでは、アメリカ合衆国の法律に準拠するため、12歳以下のお子様に直接アピールするトピックを扱うウィキアの確認を行っています。',
+	'cnw-userauth-marketing-body' => 'Wikiaコミュニティを作成するためにはアカウントが必要です。アカウントの作成は数分で完了します。',
+	'cnw-desc-select-vertical' => 'カテゴリを選んでください',
+	'cnw-desc-select-categories' => '他にあてはまるカテゴリがあれば選んでください（複数可）。',
+	'cnw-desc-tip-all-ages' => 'このトピックはお子様に関心を持っていただくためのものですか？Wikiaでは、アメリカ合衆国の法律に準拠するため、12歳以下のお子様に直接アピールするトピックを扱うWikiaの確認を行っています。',
 	'cnw-badword-header' => '不適切な言葉です',
-	'cnw-badword-msg' => 'ウィキアの説明文での不適切な言葉、禁止されている言葉の使用はご遠慮ください：$1',
-	'cnw-error-wiki-limit-header' => 'ウィキアの上限に達しました',
-	'cnw-error-wiki-limit' => '1日に作成できるウィキアの数は{{PLURAL:$1|$1個|$1個}}までです。恐れ入りますが、新しいウィキアを作成するには24時間お待ちください。',
+	'cnw-badword-msg' => 'Wikiaコミュニティの説明文での不適切な言葉、禁止されている言葉の使用はご遠慮ください：$1',
+	'cnw-error-wiki-limit-header' => 'Wikiaコミュニティの上限に達しました',
+	'cnw-error-wiki-limit' => '1日に作成できるWikiaコミュニティの数は{{PLURAL:$1|$1個|$1個}}までです。恐れ入りますが、新しいコミュニティを作成するには24時間お待ちください。',
 	'cnw-error-blocked' => '$1さんによりブロックされています。理由：$2（参照用ブロックID：$3）。',
-	'cnw-error-anon-user' => '未登録ユーザーはウィキアを作成することができません。[[Special:UserLogin|ログイン]]してからもう一度お試しください。',
-	'cnw-error-torblock' => 'Torネットワーク経由でウィキアを作成することはできません。',
-	'cnw-error-bot' => 'ボットの可能性が検出されました。ボットでない場合には、誤ってボットと検出された旨を下記のお問い合わせからお知らせください。その後、ウィキアの作成をサポートさせていただきます：[http://www.wikia.com/Special:Contact/general お問い合わせ]',
+	'cnw-error-anon-user' => '未登録ユーザーはWikiaコミュニティを作成することができません。[[Special:UserLogin|ログイン]]してからもう一度お試しください。',
+	'cnw-error-torblock' => 'Torネットワーク経由でWikiaコミュニティを作成することはできません。',
+	'cnw-error-bot' => 'ボットの可能性が検出されました。ボットでない場合には、誤ってボットと検出された旨を下記のお問い合わせからお知らせください。その後、Wikiaコミュニティの作成をサポートさせていただきます：[http://www.wikia.com/Special:Contact/general お問い合わせ]',
 	'cnw-error-unconfirmed-email-header' => 'メールの認証が完了していません',
-	'autocreatewiki' => '新しいウィキアを作成',
-	'autocreatewiki-desc' => 'ユーザーのリクエストにより、ウィキファクトリーにウィキアを作成します',
-	'autocreatewiki-page-title-default' => '新しいウィキアの作成',
+	'autocreatewiki' => '新しいWikiaコミュニティを作成する',
+	'autocreatewiki-desc' => 'ユーザーのリクエストにより、ウィキファクトリーにWikiaコミュニティを作成します',
+	'autocreatewiki-page-title-default' => '新しいWikiaコミュニティを作成',
 	'autocreatewiki-page-title-answers' => '新しいアンサーサイトの作成',
-	'createwiki' => '新しいウィキアを作成',
+	'createwiki' => '新しいWikiaコミュニティを作成',
 	'autocreatewiki-chooseone' => '1つを選択',
 	'autocreatewiki-required' => '$1は必須です',
 	'autocreatewiki-web-address' => 'URL：',
@@ -2169,38 +2172,38 @@ $messages['ja'] = array(
 	'autocreatewiki-language-all' => 'すべての言語',
 	'autocreatewiki-remember' => 'パスワードを記憶させる',
 	'autocreatewiki-create-account' => 'アカウントを作成',
-	'autocreatewiki-haveaccount-question' => '既にウィキアアカウントをお持ちですか？',
+	'autocreatewiki-haveaccount-question' => '既にWikiaアカウントをお持ちですか？',
 	'autocreatewiki-info-domain' => 'ここでは、トピックの検索キーワードとなるような言葉を入力してください。',
 	'autocreatewiki-info-topic' => '「スター・ウォーズ」や「テレビ番組」など、簡単な説明を追加してください。',
-	'autocreatewiki-info-category-default' => 'あなたのウィキアを見つかりやすくしましょう。',
+	'autocreatewiki-info-category-default' => '他のユーザーがこのWikiaコミュニティを見つけやすくなるような紹介文を書いてください。',
 	'autocreatewiki-info-category-answers' => 'あなたのアンサーサイトを見つかりやすくしましょう。',
-	'autocreatewiki-info-language' => 'ここで選択した言語があなたのウィキアを閲覧するユーザーのデフォルト言語となります。',
-	'autocreatewiki-info-email-address' => 'あなたのメールアドレスがウィキア上で誰かに表示されることはありません。',
+	'autocreatewiki-info-language' => 'ここで選択した言語があなたのWikiaコミュニティのデフォルト言語となります。',
+	'autocreatewiki-info-email-address' => 'あなたのメールアドレスがWikia上で誰かに表示されることはありません。',
 	'autocreatewiki-info-realname' => '本名を入力すると、作者名を表示する際に使用されます。',
-	'autocreatewiki-info-birthdate' => 'ウィキアでは、アメリカ合衆国の法規定に則り、サイトの品質維持および安全対策として、すべてのユーザーに対して生年月日の入力を必須としています。',
+	'autocreatewiki-info-birthdate' => 'Wikiaでは、アメリカ合衆国の法規定に則り、サイトの品質維持および安全対策として、すべてのユーザーに対して生年月日の入力を必須としています。',
 	'autocreatewiki-info-blurry-word' => 'ボットなどによるアカウントの自動作成を防ぐため、表示されている文字を入力してください。',
-	'autocreatewiki-info-terms-agree' => 'ウィキアおよびユーザーアカウントを作成すると、{{#NewWindowLink: w:Terms of use | ウィキアの利用規約}}に同意したと見なされます。',
+	'autocreatewiki-info-terms-agree' => 'Wikiaおよびユーザーアカウントを作成すると、{{#NewWindowLink: w:Terms of use | Wikiaの利用規約}}に同意したと見なされます。',
 	'autocreatewiki-info-staff-username' => '<b>スタッフのみ：</b>指定されたユーザーが設立者として表示されます。',
-	'autocreatewiki-title-template' => '$1ウィキア',
+	'autocreatewiki-title-template' => '$1 Wikia',
 	'autocreatewiki-tagline' => '',
-	'autocreatewiki-limit-day' => '1日にウィキアが作成可能なウィキアの上限数（$1）を超えました。',
-	'autocreatewiki-limit-creation' => '24時間以内に作成可能なウィキアの上限数（$1）を超えました。',
+	'autocreatewiki-limit-day' => '1日にWikiaで作成可能なコミュニティの上限数（$1）を超えました。',
+	'autocreatewiki-limit-creation' => '24時間以内に作成可能なコミュニティの上限数（$1）を超えました。',
 	'autocreatewiki-empty-field' => 'この項目は必須です。',
-	'autocreatewiki-bad-name' => '名前には特殊文字（$や@など）は使えません。またローマ字は小文字で、スペースを入れずに入力してください。',
-	'autocreatewiki-invalid-wikiname' => '名前には特殊文字（$や@など）は使えません。また、空白にすることもできません。',
-	'autocreatewiki-violate-policy' => 'このウィキア名には、ウィキアのポリシーに違反する単語が含まれています。',
-	'autocreatewiki-name-taken' => 'このアドレスのウィキアは既に存在しています。<a href="http://$1.wikia.com">http://$1.wikia.com</a> で編集に参加してみませんか？新たなウィキアを立ち上げるには、別のアドレスを指定してください。',
+	'autocreatewiki-bad-name' => 'アドレスは、半角英数字の小文字のみを使用してください。¥や@などの記号、スペースは使用できません。',
+	'autocreatewiki-invalid-wikiname' => 'アドレスには、¥や@などの記号は使えません。また空欄にすることもできません。',
+	'autocreatewiki-violate-policy' => 'このコミュニティ名には、Wikiaのポリシーに違反する単語が含まれています。',
+	'autocreatewiki-name-taken' => 'このアドレスのWikiaコミュニティは既に存在します。まずは<a href="http://$1.wikia.com">http://$1.wikia.com</a> を見てみましょう。',
 	'autocreatewiki-name-too-short' => 'アドレスが短すぎるようです。3文字以上のアドレスを指定してください。',
 	'autocreatewiki-name-too-long' => 'アドレスが長すぎるようです。50文字以下のアドレスを指定してください。',
-	'autocreatewiki-similar-wikis' => 'このトピックを扱っているウィキアには、以下ようなのものもあります。これらの編集もぜひご検討ください。',
+	'autocreatewiki-similar-wikis' => 'このトピックを扱っているWikiaには、以下ようなのものもあります。これらの編集もぜひご検討ください。',
 	'autocreatewiki-invalid-username' => 'このユーザー名は無効です。',
-	'autocreatewiki-busy-username' => 'このユーザー名は既に使用されています。',
+	'autocreatewiki-busy-username' => 'このユーザー名は既に使用されています。別のものをお試しください。',
 	'autocreatewiki-blocked-username' => 'アカウントを作成できません。',
 	'autocreatewiki-user-notloggedin' => 'アカウントの作成は完了しています。ログインしてください。',
-	'autocreatewiki-empty-language' => 'このウィキアの言語を選択してください。',
+	'autocreatewiki-empty-language' => 'このWikiaコミュニティの言語を選択してください。',
 	'autocreatewiki-empty-category' => 'カテゴリを選択してください。',
-	'autocreatewiki-empty-wikiname' => 'ウィキア名は空白にできません。',
-	'autocreatewiki-empty-username' => 'ユーザー名は空白にできません。',
+	'autocreatewiki-empty-wikiname' => 'Wikiaコミュニティ名は空欄にできません。',
+	'autocreatewiki-empty-username' => 'ユーザー名を入力してください。',
 	'autocreatewiki-empty-password' => 'パスワードは空白にできません。',
 	'autocreatewiki-empty-retype-password' => 'パスワードの再入力は空白にできません。',
 	'autocreatewiki-category-label' => 'カテゴリ：',
@@ -2212,7 +2215,7 @@ $messages['ja'] = array(
 ドロップダウン・リストから適切なものを選択してください。',
 	'autocreatewiki-invalid-retype-passwd' => '上のパスワードを再入力してください。',
 	'autocreatewiki-invalid-birthday' => '生年月日が不適切です。',
-	'autocreatewiki-log-title' => 'あなたのウィキアを作成中です',
+	'autocreatewiki-log-title' => 'あなたのWikiaコミュニティを作成中です',
 	'autocreatewiki-step0' => 'プロセスを初期化しています...',
 	'autocreatewiki-stepdefault' => 'プロセスを実行しています。少々お待ちください...',
 	'autocreatewiki-errordefault' => 'プロセスを完了することができませんでした...',
@@ -2224,13 +2227,13 @@ $messages['ja'] = array(
 	'autocreatewiki-step6' => 'データベースに初期テーブルを設定しています...',
 	'autocreatewiki-step7' => '言語スターターを設定しています...',
 	'autocreatewiki-step8' => 'ユーザーグループとカテゴリを設定しています...',
-	'autocreatewiki-step9' => '新しいウィキアの変数を設定しています...',
-	'autocreatewiki-step10' => 'セントラルウィキアにページを設置しています...',
+	'autocreatewiki-step9' => '新しいWikiaコミュニティの変数を設定しています...',
+	'autocreatewiki-step10' => 'セントラルウィキにページを設置しています...',
 	'autocreatewiki-step11' => 'ユーザーにメールを送信しています...',
-	'autocreatewiki-redirect' => '新しいウィキア（$1）に転送しています...',
+	'autocreatewiki-redirect' => '新しいWikiaコミュニティ（$1）に転送しています...',
 	'autocreatewiki-congratulation' => '完了しました！',
 	'autocreatewiki-welcometalk-log' => 'ウェルカム・メッセージ',
-	'autocreatewiki-regex-error-comment' => 'ウィキア「$1」で使用されています（全文：$2）',
+	'autocreatewiki-regex-error-comment' => 'wikiaコミュニティ「$1」で使用されています（全文：$2）',
 	'autocreatewiki-step2-error' => 'データベースは既に存在します。',
 	'autocreatewiki-step3-error' => 'データベースに初期情報を設定できません。',
 	'autocreatewiki-step6-error' => 'データベースに初期テーブルを設定できません。',
@@ -2240,39 +2243,39 @@ $messages['ja'] = array(
 	'autocreatewiki-welcomesubject' => '「$1」の作成が完了しました！',
 	'autocreatewiki-welcomebody' => '$2さん
 
-この度は新しいウィキアを作成していただきありがとうございます。早速<$1> をチェックしてみましょう！
-トークページ（<$5>）にてリンクをいくつかご紹介しています。ウィキアの便利なツールなど、ご利用のヒントとしてご参照ください。その他ご不明な点がありましたら、このメールにご返信いただくか、ヘルプページ（<http://ja.community.wikia.com/wiki/ヘルプ:コンテンツ>）をご覧ください。
+この度は新しいWikiaコミュニティを作成していただきありがとうございます。早速<$1> をチェックしてみましょう！
+トークページ（<$5>）にてリンクをいくつかご紹介しています。Wikiaの便利なツールなど、ご利用のヒントとしてご参照ください。その他ご不明な点がありましたら、このメールにご返信いただくか、ヘルプページ（<http://ja.community.wikia.com/wiki/ヘルプ:コンテンツ>）をご覧ください。
 
-また、ウィキアのスタッフブログ（<http://ja.community.wikia.com/wiki/ブログ:ウィキアスタッフブログ>）も是非ともご覧ください。ご利用のヒント、新機能に関する情報、ウィキアでの最新情報などをご紹介しています。
+また、Wikiaのスタッフブログ（<http://ja.community.wikia.com/wiki/ブログ:ウィキアスタッフブログ>）も是非ともご覧ください。ご利用のヒント、新機能に関する情報、Wikiaの最新情報などをご紹介しています。
 
 それでは、どうぞ編集をお楽しみください。
 
 $3
-ウィキア・コミュニティ・サポート
+Wikia コミュニティ・サポート
 <http://ja.community.wikia.com/wiki/User:$4>
 
 ___________________________________________
-* ウィキアから送信される通知について変更をご希望の場合は、こちらでご登録を解除するか、メール設定をご変更ください：http://ja.community.wikia.com/Special:Preferences',
+* Wikiaから送信される通知について変更をご希望の場合は、こちらでご登録を解除するか、メール設定をご変更ください：http://ja.community.wikia.com/Special:Preferences',
 	'autocreatewiki-welcometalk-wall-title' => 'ようこそ！',
-	'autocreatewiki-welcometalk-wall' => 'こんにちは！この度は、ウィキアで{{subst:SITENAME}}を立ち上げていただき、ありがとうございます！
+	'autocreatewiki-welcometalk-wall' => 'こんにちは！この度は、Wikiaで{{subst:SITENAME}}を立ち上げていただき、ありがとうございます！
 
-こちらに、ウィキアを盛り上げていくためのヒントやリンクをご紹介します。ぜひご参照ください。
-*[[特別:WikiFeatures|ウィキ・フィーチャーズ]]で、あなたのウィキアで有効にできる機能（チャット、アチーブメントなど）をチェックしてみよう！
-*[[特別:ThemeDesigner|テーマデザイナー]]を使って、背景、ロゴ、色、スタイルなど、ウィキアのデザインをカスタマイズしてみよう！
+こちらに、Wikiaコミュニティを盛り上げていくためのヒントやリンクをご紹介します。ぜひご参照ください。
+*[[特別:WikiFeatures|ウィキ・フィーチャーズ]]で、あなたのWikiaコミュニティで有効にできる機能（チャット、アチーブメントなど）をチェックしてみよう！
+*[[特別:ThemeDesigner|テーマデザイナー]]を使って、背景、ロゴ、色、スタイルなど、コミュニティのデザインをカスタマイズしてみよう！
 *[[w:c:ja.communtiy|コミュニティ・セントラル]]の[[w:c:ja.communtiy:ブログ:ウィキアスタッフブログ|スタッフブログ]]で最新情報を入手したり、[[w:c:ja.communtiy:特別:Forum|コミュニティ・フォーラム]]で分からないことを質問してみよう！
-*[[ヘルプ:コンテンツ|ヘルプページ]]で、[[ヘルプ:新規ページ|新規しいページを追加する方法]]、[[ヘルプ:コミュニティを作り上げる|コミュニティを作り上げる方法]]、[[ヘルプ:ユーザーアクセスレベル|管理者を追加する方法]]など、ウィキアについての様々な記事を見つけてみよう！
+*[[ヘルプ:コンテンツ|ヘルプページ]]で、[[ヘルプ:新規ページ|新規しいページを追加する方法]]、[[ヘルプ:コミュニティを作り上げる|コミュニティを作り上げる方法]]、[[ヘルプ:ユーザーアクセスレベル|管理者を追加する方法]]など、コミュニティについての様々な記事を見つけてみよう！
 *管理者ダッシュボード（下部のツールバーの「管理作業」をクリック）で、上記のすべてのツールを見つけて使ってみよう！
 
 このリンクを活用して、ウィキアをどんどんお楽しみください！',
 	'autocreatewiki-welcometalk' => '==ようこそ！==
 
-この度は、ウィキアで「$4」を立ち上げていただきありがとうございます！こちらに、ウィキアを盛り上げていくためのヒントやリンクをご紹介します。ぜひご参照ください。
+この度は、Wikiaで「$4」を立ち上げていただきありがとうございます！こちらに、Wikiaコミュニティを盛り上げていくためのヒントやリンクをご紹介します。ぜひご参照ください。
 
-*[[特別:WikiFeatures|ウィキ・フィーチャーズ]]で、あなたのウィキアで有効にできる機能（チャット、アチーブメントなど）をチェックしてみよう！
+*[[特別:WikiFeatures|ウィキ・フィーチャーズ]]で、あなたのWikiaコミュニティで有効にできる機能（チャット、アチーブメントなど）をチェックしてみよう！
 *[[w:c:ja.communtiy|コミュニティ・セントラル]]の[[w:c:ja.communtiy:ブログ:ウィキアスタッフブログ|スタッフブログ]]で最新情報を入手したり、[[w:c:ja.communtiy:特別:Forum|コミュニティ・フォーラム]]で分からないことを質問してみよう！
 *[[ヘルプ:コンテンツ|ヘルプページ]]で、ウィキアについての様々な記事を見つけてみよう！
 
-このリンクを活用して、ウィキアをどんどんお楽しみください！
+このリンクを活用して、Wikiaをどんどんお楽しみください！
 
 -- [[User:$2|$3]] <staff />',
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
