@@ -1,6 +1,6 @@
 <?php
 
-class ForumConst {
+class ForumConst extends WallConst {
 
 	const activeThreads = 'activeThreads';
 	const blurb = 'blurb';
@@ -8,80 +8,29 @@ class ForumConst {
 	const board = 'board';
 	const boardNamespace = 'boardNamespace';
 	const boards = 'boards';
-	const body = 'body';
-	const canAdminDelete = 'canAdminDelete';
-	const canDelete = 'canDelete';
-	const canEdit = 'canEdit';
-	const canRemove = 'canRemove';
-	const canRestore = 'canRestore';
-	const comment = 'comment';
-	const currentPage = 'currentPage';
 	const deleteOrRemoveInfo = 'deleteOrRemoveInfo';
 	const description = 'description';
-	const destinationBoards = 'destinationBoards';
-	const displayname = 'displayname';
-	const displayname2 = 'displayname2';
 	const editUrl = 'editUrl';
-	const editorName = 'editorName';
-	const editorUrl = 'editorUrl';
-	const fastrestore = 'fastrestore';
-	const feedtitle = 'feedtitle';
-	const fmt_timestamp = 'fmt_timestamp';
 	const forumUrl = 'forumUrl';
-	const fullpageurl = 'fullpageurl';
-	const greeting = 'greeting';
-	const hide = 'hide';
-	const historyUrl = 'historyUrl';
-	const id = 'id';
-	const isAdminDeleted = 'isAdminDeleted';
 	const isAnon = 'isAnon';
 	const isEditMode = 'isEditMode';
-	const isEdited = 'isEdited';
-	const isRemoved = 'isRemoved';
-	const isStaff = 'isStaff';
 	const isTopicPage = 'isTopicPage';
-	const isWatched = 'isWatched';
-	const iso_timestamp = 'iso_timestamp';
-	const isreply = 'isreply';
-	const itemsPerPage = 'itemsPerPage';
 	const kudosNumber = 'kudosNumber';
 	const lastPostByMsg = 'lastPostByMsg';
-	const linkid = 'linkid';
 	const messages = 'messages';
 	const newPostButton = 'newPostButton';
 	const newPostTooltip = 'newPostTooltip';
 	const newPostUrl = 'newPostUrl';
-	const notify_everyone = 'notify_everyone';
 	const notifyeveryone = 'notifyeveryone';
 	const oldForumLink = 'oldForumLink';
 	const pageHeading = 'pageHeading';
-	const path = 'path';
 	const posts = 'posts';
-	const removedOrDeletedMessage = 'removedOrDeletedMessage';
-	const replies = 'replies';
-	const repliesNumber = 'repliesNumber';
 	const sectionHeading = 'sectionHeading';
 	const seeMoreText = 'seeMoreText';
 	const seeMoreUrl = 'seeMoreUrl';
-	const showDeleteOrRemoveInfo = 'showDeleteOrRemoveInfo';
-	const showFollowButton = 'showFollowButton';
 	const showModule = 'showModule';
 	const showOldForumLink = 'showOldForumLink';
-	const showPager = 'showPager';
-	const showRemovedBox = 'showRemovedBox';
-	const showRepliesNumber = 'showRepliesNumber';
 	const showStats = 'showStats';
-	const showViewSource = 'showViewSource';
-	const sortingOptions = 'sortingOptions';
-	const sortingSelected = 'sortingSelected';
-	const threadHistoryLink = 'threadHistoryLink';
-	const threads = 'threads';
 	const topicText = 'topicText';
-	const totalItems = 'totalItems';
 	const unnotifyeveryone = 'unnotifyeveryone';
-	const userBlocked = 'userBlocked';
-	const user_author_url = 'user_author_url';
-	const username = 'username';
-	const wall_message = 'wall_message';
-
 }
