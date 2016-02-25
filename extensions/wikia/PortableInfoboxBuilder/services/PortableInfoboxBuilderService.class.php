@@ -199,7 +199,14 @@ class PortableInfoboxBuilderService extends WikiaService {
 					$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $childNodeDom ) );
 				} else {
 					// header node starting a group; we create an empty group and append the current node (header) to it
-					$currentGroupDom = $this->createGroupDom($currentChildNode, $childNodeDom);
+
+					$collapsible = $this->isCollapsible($currentChildNode);
+
+					// clean the mess connected to differences in xml tree and data model on mercury side
+					$childNodeDom->removeAttribute('section_collapsible');
+
+					$currentGroupDom = $this->createGroupDom($childNodeDom, $collapsible);
+
 					$inGroup = true;
 				}
 			} else {
@@ -212,8 +219,13 @@ class PortableInfoboxBuilderService extends WikiaService {
 					// we close the current group and append it to the infobox dom...
 					$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $currentGroupDom ) );
 
+					$collapsible = $this->isCollapsible($currentChildNode);
+
+					// clean the mess connected to differences in xml tree and data model on mercury side
+					$childNodeDom->removeAttribute('section_collapsible');
+
 					// and initialize a new group
-					$currentGroupDom = $this->createGroupDom($currentChildNode, $childNodeDom);
+					$currentGroupDom = $this->createGroupDom($childNodeDom, $collapsible);
 				} else {
 					// title node, terminating the group and returning to regular flow
 					$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $currentGroupDom ) );
@@ -246,21 +258,24 @@ class PortableInfoboxBuilderService extends WikiaService {
 	}
 
 	/**
-	 * @param $collapse
+	 * @param $childNodeDom
+	 * @param $collapsible: bool
 	 * @return DOMElement
 	 */
-	protected function createGroupDom($childHeader, $childNodeDom) {
+	protected function createGroupDom($childNodeDom, $collapsible) {
 		$groupElem = new SimpleXMLElement( '<' . \Wikia\PortableInfoboxBuilder\Nodes\NodeGroup::XML_TAG_NAME . '/>' );
-		if ( $childHeader['section_collapsible'] ) {
+
+		if ( $collapsible ) {
 			$groupElem->addAttribute('collapse', 'open');
 		}
-
-		// clean the mess connected to differences in xml tree and data model on mercury side
-		$childNodeDom->removeAttribute('section_collapsible');
 
 		$groupDom = dom_import_simplexml($groupElem);
 		$groupDom->appendChild( $groupDom->ownerDocument->importNode( $childNodeDom, true ) );
 		return dom_import_simplexml($groupElem);
+	}
+
+	protected function isCollapsible($node) {
+		return $node['section_collapsible'] == '1';
 	}
 
 	/**
