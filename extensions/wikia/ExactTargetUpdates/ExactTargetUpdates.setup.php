@@ -32,7 +32,7 @@ $wgExtensionCredits[ 'other' ][] = array(
 	'path' => __FILE__,
 	'name' => 'ExactTargetUpdates',
 	'descriptionmsg' => 'exacttarget-updates-description',
-	'version' => '0.1',
+	'version' => '2.0',
 	'author' => array(
 		'Kamil Koterba <kamil@wikia-inc.com>',
 		'Adam Karminski <adamk@wikia-inc.com>',
