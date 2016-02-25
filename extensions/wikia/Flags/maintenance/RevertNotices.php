@@ -1,15 +1,11 @@
 <?php
 
-$dir = dirname( __FILE__ ) . "/../../../../";
-require_once( $dir . 'maintenance/Maintenance.php' );
+$dir = __DIR__ . '/../../../../';
+require_once $dir . 'maintenance/Maintenance.php';
 
 use Flags\Models\Flag;
 
 class RevertNotices extends Maintenance {
-	public function __construct() {
-		parent::__construct();
-	}
-
 	public function execute() {
 		global $IP;
 
@@ -28,4 +24,4 @@ class RevertNotices extends Maintenance {
 }
 
 $maintClass = 'RevertNotices';
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

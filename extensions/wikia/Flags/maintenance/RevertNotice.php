@@ -1,7 +1,7 @@
 <?php
 
-$dir = dirname( __FILE__ ) . "/../../../../";
-require_once( $dir . 'maintenance/Maintenance.php' );
+$dir = __DIR__ . '/../../../../';
+require_once $dir . 'maintenance/Maintenance.php';
 
 use Flags\Models\Flag;
 use Flags\Models\FlaggedPages;
@@ -11,15 +11,11 @@ class RevertNotice extends Maintenance {
 
 	const EDIT_SUMMARY = 'Restoring templates used in the [[Special:Flags]] feature.';
 
-	public function __construct() {
-		parent::__construct();
-	}
-
 	public function execute() {
 		global $wgCityId, $wgEnableFlagsExt;
 
 		if ( empty( $wgEnableFlagsExt ) ) {
-			exit("Flags extension is disabled on wiki {$wgCityId}\n");
+			exit( "Flags extension is disabled on wiki {$wgCityId}\n" );
 		}
 
 		$pages = ( new FlaggedPages() )->getFlaggedPagesFromDatabase( $wgCityId );
@@ -60,10 +56,10 @@ class RevertNotice extends Maintenance {
 					if ( strcmp( $content, $text ) !== 0 ) {
 						$wrapper->wrap( function() use ( $wiki, $text ) {
 							$wiki->doEdit( $text, self::EDIT_SUMMARY, EDIT_FORCE_BOT );
-						});
+						} );
 
 						$log = sprintf(
-							"Templates: %s where added to %s (%d) \n",
+							"Templates: %s were added to %s (%d) \n",
 							implode( ',', $logTemplates ),
 							$wiki->getTitle()->getText(),
 							$wiki->getTitle()->getArticleId()
@@ -97,4 +93,4 @@ class RevertNotice extends Maintenance {
 }
 
 $maintClass = 'RevertNotice';
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;
