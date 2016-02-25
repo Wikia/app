@@ -8,7 +8,6 @@ class RetrieveRequestBuilder extends BaseRequestBuilder {
 	private $filterValues;
 	private $resource;
 
-	const DATA_EXTENSION_OBJECT_USER_TYPE = 'DataExtensionObject[user]';
 	const SIMPLE_FILTER_PART = 'SimpleFilterPart';
 
 	public function build() {
@@ -38,11 +37,7 @@ class RetrieveRequestBuilder extends BaseRequestBuilder {
 		return $this;
 	}
 
-	/**
-	 * Returns a new SimpleFilterPart object from given parameters
-	 * @return ExactTarget_SimpleFilterPart object
-	 */
-	public function wrapSimpleFilterPart() {
+	private function wrapSimpleFilterPart() {
 		$simpleFilterPart = new \ExactTarget_SimpleFilterPart();
 		$simpleFilterPart->Value = $this->filterValues;
 		$simpleFilterPart->SimpleOperator = $this->getSimpleFilterOperator();
@@ -50,9 +45,6 @@ class RetrieveRequestBuilder extends BaseRequestBuilder {
 		return $simpleFilterPart;
 	}
 
-	/**
-	 * @return string
-	 */
 	private function getSimpleFilterOperator() {
 		return count( $this->filterValues ) > 1
 			? \ExactTarget_SimpleOperators::IN
