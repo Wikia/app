@@ -166,12 +166,12 @@ class ExactTargetClient {
 	}
 
 	protected function getLoggerContext() {
-		$client = $this->getExactTargetClient();
+		$soapClient = $this->getExactTargetClient();
 
-		$requestHeaders = $client->__getLastRequestHeaders();
-		$data = $client->__getLastRequest();
-		$status = strtok( $client->__getLastResponseHeaders(), "\n" );
-		$response = $client->__getLastResponse();
+		$requestHeaders = $soapClient->__getLastRequestHeaders();
+		$data = $soapClient->__getLastRequest();
+		$status = strtok( $soapClient->__getLastResponseHeaders(), "\n" );
+		$response = $soapClient->__getLastResponse();
 		return [
 			'request.headers' => $requestHeaders ? $requestHeaders : '',
 			'request.data' => $data ? $data : '',

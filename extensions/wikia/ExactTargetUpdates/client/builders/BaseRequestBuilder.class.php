@@ -59,13 +59,13 @@ class BaseRequestBuilder {
 	 * Prepares an array of SoapVar objects by looping over an array of objects
 	 *
 	 * @param $objects
-	 * @param string $type soap vars types (use const SUBSCRIBER_OBJECT_TYPE|DATA_EXTENSION_OBJECT_TYPE)
+	 * @param string $objectType soap vars types (use const SUBSCRIBER_OBJECT_TYPE|DATA_EXTENSION_OBJECT_TYPE)
 	 * @return array
 	 */
-	protected function prepareSoapVars( $objects, $type ) {
+	protected function prepareSoapVars( $objects, $objectType ) {
 		$aSoapVars = [ ];
 		foreach ( $objects as $object ) {
-			$aSoapVars[] = $this->wrapToSoapVar( $object, $type );
+			$aSoapVars[] = $this->wrapToSoapVar( $object, $objectType );
 		}
 		return $aSoapVars;
 	}
@@ -87,14 +87,14 @@ class BaseRequestBuilder {
 	 * Prepares subscriber object
 	 *
 	 * @param string $key user email
-	 * @param string $email user email
+	 * @param string $subscriberEmail user email
 	 * @return \ExactTarget_Subscriber
 	 */
-	protected function prepareSubscriber( $key, $email = '' ) {
+	protected function prepareSubscriber( $key, $subscriberEmail = '' ) {
 		$subscriber = new \ExactTarget_Subscriber();
 		$subscriber->SubscriberKey = $key;
-		if ( !empty( $email ) ) {
-			$subscriber->EmailAddress = $email;
+		if ( !empty( $subscriberEmail ) ) {
+			$subscriber->EmailAddress = $subscriberEmail;
 		}
 
 		return $subscriber;
@@ -105,18 +105,18 @@ class BaseRequestBuilder {
 	 *
 	 * @param string $customerKey use const here CUSTOMER_KEY_*
 	 * @param array $keys
-	 * @param null|array $properties
+	 * @param null|array $objectProperties
 	 * @return \ExactTarget_DataExtensionObject
 	 */
-	protected function prepareDataObject( $customerKey, $keys, $properties = null ) {
+	protected function prepareDataObject( $customerKey, $keys, $objectProperties = null ) {
 		$obj = new \ExactTarget_DataExtensionObject();
 		$obj->CustomerKey = $customerKey;
 		if ( !empty( $keys ) ) {
 			$obj->Keys = $this->wrapApiProperties( $keys );
 		}
 		// accept empty array as valid properties list
-		if ( isset( $properties ) ) {
-			$obj->Properties = $this->wrapApiProperties( $properties );
+		if ( isset( $objectProperties ) ) {
+			$obj->Properties = $this->wrapApiProperties( $objectProperties );
 		}
 
 		return $obj;
@@ -125,12 +125,12 @@ class BaseRequestBuilder {
 	/**
 	 * Wraps properties list in api property objects
 	 *
-	 * @param array $properties
+	 * @param array $apiProperties
 	 * @return array
 	 */
-	protected function wrapApiProperties( $properties ) {
+	protected function wrapApiProperties( $apiProperties ) {
 		$result = [ ];
-		foreach ( $properties as $key => $value ) {
+		foreach ( $apiProperties as $key => $value ) {
 			$result[] = $this->wrapApiProperty( $key, $value );
 		}
 
