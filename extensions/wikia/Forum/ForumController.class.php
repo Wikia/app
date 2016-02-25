@@ -24,10 +24,8 @@ class ForumController extends WallBaseController {
 		if ( $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$topicTitle = $this->getTopicTitle();
 			if ( empty( $topicTitle ) || !$topicTitle->exists() ) {
-				if ( !$topicTitle->exists() ) {
-					$this->redirectToIndex();
-					return false;
-				}
+				$this->redirectToIndex();
+				return false;
 			}
 		}
 
@@ -267,7 +265,10 @@ class ForumController extends WallBaseController {
 				// keys of sorting array are names of DOM elements' classes
 				// which are needed to click tracking
 				// if you change those keys here, do so in Wall.js file, please
-				$options = [ 'nf' => wfMessage( 'wall-history-sorting-newest-first' )->escaped(), 'of' => wfMessage( 'wall-history-sorting-oldest-first' )->escaped(), ];
+				$options = [
+					'nf' => wfMessage( 'wall-history-sorting-newest-first' )->escaped(),
+					'of' => wfMessage( 'wall-history-sorting-oldest-first' )->escaped(),
+				];
 				break;
 			case 'index' :
 			default :

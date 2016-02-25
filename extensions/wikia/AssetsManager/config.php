@@ -2496,6 +2496,14 @@ $config[ 'portable_infobox_builder_scss' ] = [
 	]
 ];
 
+$config[ 'portable_infobox_builder_preview_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/PortableInfoboxBuilder/styles/PortableInfoboxBuilderPreview.scss'
+	]
+];
+
 $config['flags_view_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis', 'monobook' ],
