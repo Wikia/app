@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
+	'wikia.breakpointsLayout',
 	'wikia.document',
 	'wikia.log'
-], function (doc, log) {
+], function (breakpointsLayout, doc, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeFilter',
@@ -33,12 +34,12 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 
 	function filterOutIncontentLeaderboardSizes(sizes) {
 		log(['filterOutIncontentLeaderboardSizes', sizes], 'debug', logGroup);
-		var goodSizes = [], i, len, currentWidth;
+		var goodSizes = [], i, len, content;
 
-		currentWidth = doc.documentElement.offsetWidth;
+		content = doc.getElementById('WikiaPageBackground');
 
-		if (currentWidth > 1595) {
-			log(['filterOutIncontentLeaderboardSizes', 'no need to filter'], 'debug', logGroup);
+		if (content.offsetWidth >= breakpointsLayout.getLargeContentWidth()) {
+			log(['filterOutIncontentLeaderboardSizes', 'large breakpoint - no need to filter'], 'debug', logGroup);
 			return sizes;
 		}
 
