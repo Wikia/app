@@ -49,7 +49,6 @@ phpunit-externals: prepare
 # runs tests for externally used parts
 phpunit-contractual-responsibilities: prepare
 	${CMD_PHPUNIT} \
-	externals
 		--log-junit=${LOGS_PATH}/phpunit-contractual-responsibilities.xml \
 		--group ContractualResponsibilitiesValidation
 
