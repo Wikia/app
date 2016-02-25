@@ -12,11 +12,4 @@ class ExactTargetApiProviderImpl implements ExactTargetApiProvider {
 		return new ExactTargetApiDataExtension();
 	}
 
-	/**
-	 * Returns an instance of ExactTargetApiSubscriber class
-	 * @return ExactTargetApiSubscriber
-	 */
-	public function getApiSubscriber() {
-		return new ExactTargetApiSubscriber();
-	}
 }

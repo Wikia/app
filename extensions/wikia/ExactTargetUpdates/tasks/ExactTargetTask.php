@@ -53,7 +53,7 @@ class ExactTargetTask extends BaseTask {
 	 * @return ExactTargetRetrieveWikiTask
 	 */
 	protected function getRetrieveWikiTask() {
-		return $this->getTaskProvider()->getUserDataVerificationTask();
+		return $this->getTaskProvider()->getWikiDataVerificationTask();
 	}
 
 

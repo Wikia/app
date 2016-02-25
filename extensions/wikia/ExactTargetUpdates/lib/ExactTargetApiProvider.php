@@ -13,10 +13,4 @@ interface ExactTargetApiProvider {
 	 */
 	public function getApiDataExtension();
 
-	/**
-	 * Returns an instance of ExactTargetApiSubscriber class
-	 * @return ExactTargetApiSubscriber
-	 */
-	public function getApiSubscriber();
-
 }
