@@ -10,6 +10,14 @@ class MediaQueryService extends WikiaService {
 	const MEDIA_TYPE_VIDEO = 'video';
 	const MEDIA_TYPE_IMAGE = 'image';
 
+	const SORT_RECENT_FIRST   = 'recent';
+	const SORT_POPULAR_FIRST  = 'popular';
+	const SORT_TRENDING_FIRST = 'trend';
+
+	const DB_RECENT_COLUMN    = 'added_at';
+	const DB_POPULAR_COLUMN   = 'views_total';
+	const DB_TRENDING_COLUMN  = 'views_7day';
+
 	private $mediaCache = array();
 
 	/**
@@ -392,7 +400,7 @@ class MediaQueryService extends WikiaService {
 	 *                         (DEFAULT any category)
 	 * @return array $videoList
 	 */
-	public function getVideoList( $type = 'all', $limit = 0, $page = 1, $providers = [], $categories = [], $sort = 'recent' ) {
+	public function getVideoList( $type = 'all', $limit = 0, $page = 1, $providers = [], $categories = [], $sort = self::SORT_RECENT_FIRST ) {
 		wfProfileIn( __METHOD__ );
 
 		// Setup the base query cache for a minimal amount of time
@@ -408,20 +416,21 @@ class MediaQueryService extends WikiaService {
 			->WHERE( 'removed' )->EQUAL_TO( 0 );
 
 		switch ( $sort ) {
-			case 'recent':
-				$query->ORDER_BY( 'added_at' )->DESC();
+			case self::SORT_RECENT_FIRST:
+				$query->ORDER_BY( self::DB_RECENT_COLUMN )->DESC();
 				break;
 
-			case 'popular':
-				$query->ORDER_BY( 'views_total' )->DESC();
+			case self::SORT_POPULAR_FIRST:
+				$query->ORDER_BY( self::DB_POPULAR_COLUMN )->DESC();
 				break;
 
-			case 'trend':
-				$query->ORDER_BY( 'views_7day' )->DESC();
+			case self::SORT_TRENDING_FIRST:
+				$query->ORDER_BY( self::DB_TRENDING_COLUMN )->DESC();
 				break;
 
 			default:
-				throw new InvalidArgumentException( "\$sort was none of 'recent', 'popular', 'trend'." );
+				throw new InvalidArgumentException( "\$sort was none of '" . self::SORT_RECENT_FIRST . "', '"
+					. self::SORT_POPULAR_FIRST . "', '" . self::SORT_TRENDING_FIRST . "'." );
 				break;
 		}
 

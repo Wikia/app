@@ -4,20 +4,28 @@
  */
 class MediaQueryServiceTest extends WikiaBaseTest {
 
-	/**
-         * @expectedException InvalidArgumentException
-         * @expectedExceptionMessage $sort was none of 'recent', 'popular', 'trend'.
-	 */
 	public function testGetVideoListSortInvalid() {
-		$service = new MediaQueryService();
-		$list = $service->getVideoList(
-			'all',			// filter
-			1,			// limit
-			1, 			// page
-			['testProvider'],	// providers
-			['testCategory'],	// categories
-			'invalidSort'		// sort
-		);
+		try {		
+			$service = new MediaQueryService();
+			$list = $service->getVideoList(
+				'all',			// filter
+				1,			// limit
+				1, 			// page
+				['testProvider'],	// providers
+				['testCategory'],	// categories
+				'invalidSort'		// sort
+			);
+
+		} catch ( InvalidArgumentException $e ) {
+			$this->assertEquals( $e->getMessage(), "\$sort was none of '"
+				. MediaQueryService::SORT_RECENT_FIRST . "', '"
+				. MediaQueryService::SORT_POPULAR_FIRST . "', '"
+				. MediaQueryService::SORT_TRENDING_FIRST . "'."
+			);
+			return;
+		}
+
+		$this->fail( 'InvalidArgumentException expected but not thrown.' );
 	}
 
 	/**

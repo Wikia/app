@@ -421,7 +421,7 @@ class VideoHandlerController extends WikiaController {
 			'height' => $this->getVal( 'height', self::DEFAULT_THUMBNAIL_HEIGHT ),
 			'detail' => $this->getVal( 'detail', 0 ),
 			'filter' => 'all',
-			'sort' => $this->getVal( 'sort', 'recent' )
+			'sort' => $this->getVal( 'sort', MediaQueryService::SORT_RECENT_FIRST )
 		];
 	}
 
