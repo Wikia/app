@@ -1,12 +1,14 @@
 <?php
 
 class RobotsTxt {
-	const CACHE_PERIOD = 24 * 3600;
+	const CACHE_PERIOD_REGULAR = 24 * 3600;
+	const CACHE_PERIOD_EXPERIMENTAL = 3600;
 
 	private $allowed = [];
 	private $blockedRobots = [];
 	private $disallowed = [];
 	private $sitemap;
+	private $experimentalAllowDisallowSection = null;
 
 	public function __construct() {
 		$this->englishLang = new Language();
@@ -66,7 +68,7 @@ class RobotsTxt {
 	 * This will only block robots that understand wildcards.
 	 * The param is matched loosely, so ABCsomeparam is blocked as well when you block someparam
 	 *
-	 * @param $param param to block
+	 * @param $param string param to block
 	 */
 	public function disallowParam( $param ) {
 		$this->disallowed[] = '/*?*' . $param . '=';
@@ -89,6 +91,14 @@ class RobotsTxt {
 	 * @return array
 	 */
 	public function getContents() {
+		if ( $this->experimentalAllowDisallowSection ) {
+			return array_merge(
+				explode( PHP_EOL, trim( $this->experimentalAllowDisallowSection ) ),
+				[ '' ],
+				$this->getSitemapSection()
+			);
+		}
+
 		return array_merge(
 			$this->getBlockedRobotsSection(),
 			$this->getAllowDisallowSection(),
@@ -102,17 +112,36 @@ class RobotsTxt {
 	 * @return array
 	 */
 	public function getHeaders() {
+		if ( $this->experimentalAllowDisallowSection ) {
+			$cachePeriod = self::CACHE_PERIOD_EXPERIMENTAL;
+		} else {
+			$cachePeriod = self::CACHE_PERIOD_REGULAR;
+		}
+
 		return [
 			'Content-Type: text/plain',
-			'Cache-Control: s-maxage=' . self::CACHE_PERIOD,
-			'X-Pass-Cache-Control: public, max-age=' . self::CACHE_PERIOD,
+			'Cache-Control: s-maxage=' . $cachePeriod,
+			'X-Pass-Cache-Control: public, max-age=' . $cachePeriod,
 		];
+	}
+
+	/**
+	 * Set experimental contents for robots.txt
+	 *
+	 * This overrides all allow*, disallow* and block* calls.
+	 * This affects the cache TTL.
+	 * This has no effect on the sitemap line.
+	 *
+	 * @param $content string content for robots.txt (excluding the sitemap rule)
+	 */
+	public function setExperimentalAllowDisallowSection( $content ) {
+		$this->experimentalAllowDisallowSection = $content;
 	}
 
 	/**
 	 * Set Sitemap URL
 	 *
-	 * @param $sitemapUrl
+	 * @param $sitemapUrl string
 	 */
 	public function setSitemap( $sitemapUrl ) {
 		$this->sitemap = $sitemapUrl;
@@ -127,41 +156,42 @@ class RobotsTxt {
 
 	private function encodeUri( $in ) {
 		return str_replace(
-			['%2F', '%3A', '%2A', '%3F', '%3D', '%24'],
-			['/', ':', '*', '?', '=', '$'],
+			[ '%2F', '%3A', '%2A', '%3F', '%3D', '%24' ],
+			[ '/', ':', '*', '?', '=', '$' ],
 			rawurlencode( $in )
 		);
 	}
 
 	private function getAllowDisallowSection() {
+
 		$allowSection = array_map(
 			function ( $prefix ) {
 				return 'Allow: ' . $this->encodeUri( $prefix );
-			} ,
+			},
 			$this->allowed
 		);
 
 		$disallowSection = array_map(
 			function ( $prefix ) {
 				return 'Disallow: ' . $this->encodeUri( $prefix );
-			} ,
+			},
 			$this->disallowed
 		);
 
 		$noIndexSection = array_map(
 			function ( $prefix ) {
 				return 'Noindex: ' . $this->encodeUri( $prefix );
-			} ,
+			},
 			$this->disallowed
 		);
 
 		if ( count( $allowSection ) || count( $disallowSection ) ) {
 			return array_merge(
-				['User-agent: *'],
+				[ 'User-agent: *' ],
 				$allowSection,
 				$disallowSection,
 				$noIndexSection,
-				['']
+				[ '' ]
 			);
 		}
 
@@ -180,7 +210,7 @@ class RobotsTxt {
 
 	private function getSitemapSection() {
 		if ( $this->sitemap ) {
-			return ['Sitemap: ' . $this->encodeUri( $this->sitemap )];
+			return [ 'Sitemap: ' . $this->encodeUri( $this->sitemap ) ];
 		}
 		return [];
 	}
@@ -193,7 +223,7 @@ class RobotsTxt {
 	 */
 	private function getSpecialPageNames( $pageName ) {
 		global $wgContLang;
-		$aliases = $wgContLang->getSpecialPageAliases()[ $pageName ];
+		$aliases = $wgContLang->getSpecialPageAliases()[$pageName];
 		if ( empty( $aliases ) ) {
 			$aliases = [];
 		}
@@ -209,8 +239,8 @@ class RobotsTxt {
 	private function getNamespaces( $namespaceId ) {
 		global $wgContLang;
 		return array_unique( [
-			$wgContLang->getNamespaces()[ $namespaceId ],
-			$this->englishLang->getNamespaces()[ $namespaceId ],
+			$wgContLang->getNamespaces()[$namespaceId],
+			$this->englishLang->getNamespaces()[$namespaceId],
 		] );
 	}
 }

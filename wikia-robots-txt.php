@@ -8,12 +8,29 @@ require_once( __DIR__ . '/includes/WebStart.php' );
 require_once( __DIR__ . '/includes/Setup.php' );
 
 $allowRobots = ( $wgWikiaEnvironment === WIKIA_ENV_PROD || $wgRequest->getBool( 'forcerobots' ) );
+$experimentalRobots = null;
+
+if ( $allowRobots
+	&& !empty( $wgExperimentalRobotsTxt )
+	&& preg_match( '/^[a-z0-9-]+$/m', $wgExperimentalRobotsTxt )
+) {
+	$file = __DIR__ . '/robots.txt.d/' . $wgExperimentalRobotsTxt . '.txt';
+	if ( is_file( $file ) && is_readable( $file ) ) {
+		$experimentalRobots = file_get_contents( $file );
+	}
+}
 
 $robots = new RobotsTxt();
 
 if ( !$allowRobots ) {
 	// No crawling preview, verify, sandboxes, showcase, etc
 	$robots->disallowPath( '/' );
+} elseif ( $experimentalRobots ) {
+	// Sitemap
+	$robots->setSitemap( sprintf( 'http://%s/sitemap-index.xml', $_SERVER['SERVER_NAME'] ) );
+
+	// Experimental content
+	$robots->setExperimentalAllowDisallowSection( $experimentalRobots );
 } else {
 	// Sitemap
 	$robots->setSitemap( sprintf( 'http://%s/sitemap-index.xml', $_SERVER['SERVER_NAME'] ) );
