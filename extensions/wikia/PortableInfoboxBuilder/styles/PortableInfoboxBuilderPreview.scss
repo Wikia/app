@@ -20,3 +20,13 @@
 .pi-data {
 	overflow: visible;
 }
+
+.pi-header {
+	&.collapsible {
+		@include collapsibleChevron;
+
+		&:after  {
+			box-sizing: content-box;
+		}
+	}
+}
