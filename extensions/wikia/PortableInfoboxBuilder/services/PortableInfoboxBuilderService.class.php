@@ -199,9 +199,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 					$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $childNodeDom ) );
 				} else {
 					// header node starting a group; we create an empty group and append the current node (header) to it
-					$currentGroupDom = $this->createGroupDom($currentChildNode);
-					$childNodeDom->removeAttribute('section_collapsible');
-					$currentGroupDom->appendChild( $currentGroupDom->ownerDocument->importNode( $childNodeDom, true ) );
+					$currentGroupDom = $this->createGroupDom($currentChildNode, $childNodeDom);
 					$inGroup = true;
 				}
 			} else {
@@ -215,9 +213,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 					$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $currentGroupDom ) );
 
 					// and initialize a new group
-					$currentGroupDom = $this->createGroupDom($currentChildNode);
-					$childNodeDom->removeAttribute('section_collapsible');
-					$currentGroupDom->appendChild( $currentGroupDom->ownerDocument->importNode( $childNodeDom, true ) );
+					$currentGroupDom = $this->createGroupDom($currentChildNode, $childNodeDom);
 				} else {
 					// title node, terminating the group and returning to regular flow
 					$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $currentGroupDom ) );
@@ -253,12 +249,17 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 * @param $collapse
 	 * @return DOMElement
 	 */
-	protected function createGroupDom($childHeader) {
+	protected function createGroupDom($childHeader, $childNodeDom) {
 		$groupElem = new SimpleXMLElement( '<' . \Wikia\PortableInfoboxBuilder\Nodes\NodeGroup::XML_TAG_NAME . '/>' );
 		if ( $childHeader['section_collapsible'] ) {
 			$groupElem->addAttribute('collapse', 'open');
 		}
 
+		// clean the mess connected to differences in xml tree and data model on mercury side
+		$childNodeDom->removeAttribute('section_collapsible');
+
+		$groupDom = dom_import_simplexml($groupElem);
+		$groupDom->appendChild( $groupDom->ownerDocument->importNode( $childNodeDom, true ) );
 		return dom_import_simplexml($groupElem);
 	}
 
