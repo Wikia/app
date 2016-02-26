@@ -104,7 +104,8 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	}
 
 	public function markupSupportDataProvider() {
-		return [ [ "", false ],
+		return [
+			[ "", false ],
 			[ '<infobox><data source="asdf"/></infobox>', true, "data tag should be supported" ],
 			[ '<infobox><data source="asdf"><label>asdfsda</label></data></infobox>', true, "data tag with label should be supported" ],
 			[ '<infobox><data source="asdf"><label>[[some link]]</label></data></infobox>', true, "links within labels should be supported" ],
