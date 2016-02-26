@@ -146,6 +146,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		if (!recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()) {
+			log(['ADD RECOVERY SLOT', slot.name], 'debug', logGroup);
 			recoveryHelper.addSlotToRecover(slot.name);
 		}
 
