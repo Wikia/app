@@ -22,8 +22,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 		var biddersQueue = [],
 			enabledBidderNames = [],
 			enabledBidders = [],
-			startedByBidders = false,
-			timeoutBidders = [];
+			startedByBidders = false;
 
 		/**
 		 * Mark bidder as responded and trigger run if all bidders already responded
@@ -82,7 +81,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 			win.setTimeout(function () {
 				if (!startedByBidders) {
 					log('Timeout exceeded', 'info', logGroup);
-					timeoutBidders = diff(enabledBidderNames, biddersQueue);
+					var timeoutBidders = diff(enabledBidderNames, biddersQueue);
 					adTracker.measureTime('adengine_runner/bidders_timeout', timeoutBidders.join(',')).track();
 					runAdEngine();
 				}
