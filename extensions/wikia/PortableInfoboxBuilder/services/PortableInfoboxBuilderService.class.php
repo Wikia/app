@@ -126,7 +126,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 		}
 
 		if ( $node->collapsible ) {
-			$xml->addAttribute( 'section_collapsible', true);
+			$xml->addAttribute( 'section_collapsible', true );
 		}
 
 		foreach ( $node->data as $key => $value ) {
