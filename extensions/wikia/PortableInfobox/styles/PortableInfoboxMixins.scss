@@ -26,6 +26,8 @@
 }
 
 @mixin individualElementsStyles() {
+	$padding: 10px;
+
 	.pi-image {
 		text-align: center; // center smaller image inside infobox
 	}
@@ -58,6 +60,8 @@
 
 	.pi-data-label {
 		@include flex-basis($infobox-width / 3);
+		max-width: $infobox-width / 3 - $padding;
+		word-wrap: break-word;
 	}
 
 	.pi-data-value {
@@ -67,7 +71,8 @@
 
 		&:not(:first-child) {
 			@include flex-basis($infobox-width * 2 / 3);
-			padding-left: 10px;
+
+			padding-left: $padding;
 		}
 	}
 }

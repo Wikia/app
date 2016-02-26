@@ -366,15 +366,15 @@ class MercuryApiController extends WikiaController {
 		$parserOptions = new ParserOptions( $wgUser );
 		$wrapper = new GlobalStateWrapper( ['wgArticleAsJson' => true] );
 
-		if( !empty( $this->getVal( 'CKmarkup' ) ) ) {
+		if ( !empty( $this->getVal( 'CKmarkup' ) ) ) {
 			$wikitext = RTE::HtmlToWikitext( $this->getVal( 'CKmarkup' ) );
 		}
 
 		if ( $title ) {
 			$wrapper->wrap( function () use ( &$articleAsJson, $wikitext, $title, $parserOptions ) {
 				// explicit revisionId of -1 passed to ensure proper behavior on ArticleAsJson end
-				$articleAsJson = json_decode(ParserPool::create()->parse( $wikitext, $title, $parserOptions, true, true, -1 )->getText());
-			});
+				$articleAsJson = json_decode( ParserPool::create()->parse( $wikitext, $title, $parserOptions, true, true, -1 )->getText() );
+			} );
 		} else {
 			$this->response->setVal( 'data', ['content' => 'Invalid title'] );
 			return;
@@ -422,13 +422,24 @@ class MercuryApiController extends WikiaController {
 
 			if ( $this->shouldGetMainPageData( $isMainPage ) ) {
 				$data['mainPageData'] = $this->getMainPageData();
-				$data['details'] = $this->getArticleDetails($article);
-			} elseif ( $title->isContentPage() && $title->isKnown() ) {
+				if ( $article instanceof Article ) {
+					$data['details'] = $this->getArticleDetails( $article );
+				} else {
+					$data['details'] = $this->getMainPageMockedDetails( $title );
+				}
+			} else if ( $title->isContentPage() && $title->isKnown() ) {
 				$data = array_merge( $data, $this->getArticleData( $article ) );
 
 				if ( !$isMainPage ) {
 					$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
 				}
+			} else if ( !$article instanceof Article ) {
+				\Wikia\Logger\WikiaLogger::instance()->error(
+					'$article should be an instance of an Article',
+					['article' => $article]
+				);
+
+				throw new NotFoundApiException( 'Article is empty' );
 			}
 
 			$data['htmlTitle'] = $titleBuilder->getTitle();
@@ -471,12 +482,13 @@ class MercuryApiController extends WikiaController {
 	 * @return array [Title, Article, array]
 	 */
 	private function handleRedirect( Title $title, Article $article, $data ) {
-		/* @var Title|null $redirectTargetTitle */
+		// It should never be null because we check if $title is a redirect before calling this method
+		/* @var Title $redirectTargetTitle */
 		$redirectTargetTitle = $article->getRedirectTarget();
 		$redirectTargetID = $redirectTargetTitle->getArticleID();
 		$data['redirected'] = true;
 
-		if ( $redirectTargetTitle instanceof Title && !empty( $redirectTargetID ) ) {
+		if ( !empty( $redirectTargetID ) ) {
 			$title = $redirectTargetTitle;
 			$article = Article::newFromID( $redirectTargetID );
 		} else {
@@ -707,7 +719,7 @@ class MercuryApiController extends WikiaController {
 				'articleTitle' => str_replace( '_', ' ', $articleTitle ),
 				'url' => $url,
 			];
-		}, array_keys( $links ), array_values( $links ) );
+		} , array_keys( $links ), array_values( $links ) );
 
 		// Sort by localized language name
 		$c = Collator::create( 'en_US.UTF-8' );
@@ -716,5 +728,20 @@ class MercuryApiController extends WikiaController {
 		} );
 
 		return $langMap;
+	}
+
+	/**
+	 * @TODO XW-1174 - this method should be moved to MainPageHandler.
+	 * We need to define which details we should send and from where we should fetch it when article doesn't exist
+	 *
+	 * @param Title $title
+	 * @return array
+	 */
+	private function getMainPageMockedDetails( Title $title ) {
+		return [
+			'ns' => 0,
+			'title' => $title->getText(),
+			'revision' => []
+		];
 	}
 }
