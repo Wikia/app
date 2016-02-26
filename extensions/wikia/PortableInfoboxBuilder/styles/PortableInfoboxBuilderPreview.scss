@@ -2,6 +2,8 @@
 @import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxVariables';
 @import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxMixins';
 
+$empty-header-height: 28px;
+
 // common styles with infoboxes on wikia oasis article
 @include wikiaArticleOverwrites;
 @include commonElementsStyles;
@@ -19,4 +21,16 @@
 
 .pi-data {
 	overflow: visible;
+}
+
+.pi-header {
+	min-height: $empty-header-height;
+
+	&.collapsible {
+		@include collapsibleChevron;
+
+		&:after  {
+			box-sizing: content-box;
+		}
+	}
 }

@@ -16,7 +16,36 @@ class NodeGroup extends Node {
 	protected $requiredChildNodes = [ 'header' ];
 
 
+	/**
+	 * @var array of string
+	 */
+	protected $allowedAttributes = [ 'collapse' ];
+
 	public function asJsonObject() {
-		return $this->getChildrenAsJsonObjects();
+		$data = $this->getChildrenAsJsonObjects();
+		$collapsible = false;
+
+		if ( ( (string)$this->xmlNode['collapse'] ) === 'open' ) {
+			$collapsible = true;
+		}
+
+		foreach ( $data as $child ) {
+			if ( $child->type == 'section-header' ) {
+				$child->collapsible = $collapsible;
+				break;
+			}
+		}
+
+		return $data;
+	}
+
+	protected function hasValidAttributes() {
+		foreach ( $this->xmlNode->attributes() as $attr => $val ) {
+			if ( $attr === 'collapse' && (string)$val !== 'open' ) {
+				return false;
+			}
+		}
+
+		return parent::hasValidAttributes();
 	}
 }
