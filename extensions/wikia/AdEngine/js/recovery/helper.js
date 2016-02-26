@@ -32,6 +32,7 @@ define('ext.wikia.adEngine.recovery.helper', [
 	}
 
 	function addSlotToRecover(slotName) {
+		log(['Add slot to recover', slotName], 'debug', logGroup);
 		slotsToRecover.push(slotName);
 	}
 
@@ -44,10 +45,12 @@ define('ext.wikia.adEngine.recovery.helper', [
 	}
 
 	function isRecoveryEnabled() {
+		log(['IsRecoveryEnabled', !!(context.opts.sourcePointRecovery && SourcePointTag)], 'debug', logGroup);
 		return !!(context.opts.sourcePointRecovery && SourcePointTag);
 	}
 
 	function isBlocking() {
+		log(['isBlocking', !!(win.ads && win.ads.runtime.sp.blocking)], 'debug', logGroup);
 		return !!(win.ads && win.ads.runtime.sp.blocking);
 	}
 
