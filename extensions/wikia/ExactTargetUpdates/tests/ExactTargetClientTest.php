@@ -82,6 +82,20 @@ class ExactTargetClientTest extends WikiaBaseTest {
 		$client->updateUserProperties( 1, [ ] );
 	}
 
+	public function testDefaultErrorResponse() {
+		$this->setExpectedException( 'Wikia\ExactTarget\ExactTargetException', \Wikia\ExactTarget\ExactTargetClient::EXACT_TARGET_REQUEST_FAILED );
+		$soapClientMock = $this->getMockBuilder( 'ExactTargetSoapClient' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'Update' ] )
+			->getMock();
+		$soapClientMock->expects( $this->any() )
+			->method( 'Update' )
+			->will( $this->returnValue( $this->getResponse( [ ], 'Error' ) ) );
+
+		$client = new \Wikia\ExactTarget\ExactTargetClient( $soapClientMock );
+		$client->updateUserProperties( 1, [ ] );
+	}
+
 	public function testRetryFunctionality() {
 		$this->setExpectedException( 'Wikia\ExactTarget\ExactTargetException', 'Request failed' );
 		$soapClientMock = $this->getMockBuilder( 'ExactTargetSoapClient' )
