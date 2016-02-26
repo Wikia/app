@@ -323,22 +323,18 @@ class MercuryApiController extends WikiaController {
 					switch ( $data['ns'] ) {
 						case NS_CATEGORY:
 							$data['nsSpecificContent'] = MercuryApiCategoryHandler::getCategoryContent( $title );
+
 							if ( MercuryApiCategoryHandler::hasArticle( $title ) ) {
 								$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
 								$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
-							} else {
+							} elseif ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
 								$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
+							} else {
+								throw new NotFoundApiException( 'Article is empty and category has no members' );
 							}
 							break;
 					}
 				}
-			} else if ( !$article instanceof Article ) {
-				\Wikia\Logger\WikiaLogger::instance()->error(
-					'$article should be an instance of an Article',
-					['article' => $article]
-				);
-
-				throw new NotFoundApiException( 'Article is empty' );
 			}
 
 			$data['htmlTitle'] = $titleBuilder->getTitle();
