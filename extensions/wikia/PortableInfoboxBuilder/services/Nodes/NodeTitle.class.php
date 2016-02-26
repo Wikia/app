@@ -18,12 +18,12 @@ class NodeTitle extends Node {
 	/**
 	 * At the moment default is the only supported child node and there can be only one of such
 	 */
-	public function getChildrenAsJson() {
+	public function getChildrenAsJsonObjects() {
 		$data = null;
 
 		if($this->xmlNode->default) {
 			$builderNode = NodeBuilder::createFromNode( $this->xmlNode->default );
-			$data = $builderNode->asJson();
+			$data = $builderNode->asJsonObject();
 		}
 		return $data;
 	}

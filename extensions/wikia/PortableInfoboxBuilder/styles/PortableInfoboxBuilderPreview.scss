@@ -1,0 +1,22 @@
+@import 'skins/shared/color';
+@import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxVariables';
+@import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxMixins';
+
+// common styles with infoboxes on wikia oasis article
+@include wikiaArticleOverwrites;
+@include commonElementsStyles;
+@include individualElementsStyles;
+
+// Overwrites
+.portable-infobox {
+	color: $color-text;
+	width: $infobox-width;
+}
+
+.pi-item:not(.pi-secondary-background) {
+	background-color: $infobox-background;
+}
+
+.pi-data {
+	overflow: visible;
+}

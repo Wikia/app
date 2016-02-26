@@ -118,7 +118,7 @@ class JsonFormatTest extends WikiaBaseTest {
 	protected function checkClassStructure( $data, $structure ) {
 		foreach ( $structure as $class => $params ) {
 			$classInfo = explode( ':', $class );
-			$this->assertInstanceOf( $classInfo[ 0 ], $data );
+			$this->assertInstanceOf( $classInfo[ 0 ], $data, sprintf('Instance check failed for %s', $class) );
 			$i = 0;
 			foreach ( $params as $keyOrClass => $element ) {
 				if ( is_numeric( $keyOrClass ) || !method_exists( $data, 'getChildren' ) ) {
@@ -143,20 +143,16 @@ class JsonFormatTest extends WikiaBaseTest {
 	protected function getParsedOutput( $wikitext ) {
 		return $this->memCacheDisabledSection( function () use ( $wikitext ) {
 			global $wgOut;
-			if ( !isset( $this->parser ) ) {
-				$this->parser = new Parser();
-			}
-			$htmlOutput = $this->parser->parse( $wikitext, new Title(), $wgOut->parserOptions() );
+			$parser = ParserPool::get();
+			$htmlOutput = $parser->parse( $wikitext, new Title(), $wgOut->parserOptions() );
 
 			//check for empty result
 			if ( !empty( $wikitext ) ) {
 				$this->assertNotEmpty( $htmlOutput->getText(), 'Provided WikiText could not be parsed.' );
 			}
 
-			if ( !isset( $this->htmlParser ) ) {
-				$this->htmlParser = new \Wikia\JsonFormat\HtmlParser();
-			}
-			$jsonOutput = $this->htmlParser->parse( $htmlOutput->getText() );
+			$htmlParser = new \Wikia\JsonFormat\HtmlParser();
+			$jsonOutput = $htmlParser->parse( $htmlOutput->getText() );
 
 			return $jsonOutput;
 		} );
