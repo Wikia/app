@@ -151,10 +151,8 @@ class JsonFormatTest extends WikiaBaseTest {
 				$this->assertNotEmpty( $htmlOutput->getText(), 'Provided WikiText could not be parsed.' );
 			}
 
-			if ( !isset( $this->htmlParser ) ) {
-				$this->htmlParser = new \Wikia\JsonFormat\HtmlParser();
-			}
-			$jsonOutput = $this->htmlParser->parse( $htmlOutput->getText() );
+			$htmlParser = new \Wikia\JsonFormat\HtmlParser();
+			$jsonOutput = $htmlParser->parse( $htmlOutput->getText() );
 
 			return $jsonOutput;
 		} );
