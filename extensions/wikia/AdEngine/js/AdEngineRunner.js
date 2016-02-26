@@ -59,8 +59,8 @@ define('ext.wikia.adEngine.adEngineRunner', [
 
 		/**
 		 * Returns array with items from 'a' which 'b' doesn't contain
-		 * @param {array} a
-		 * @param {array} b
+		 * @param {Array} a
+		 * @param {Array} b
 		 */
 		function diff(a, b) {
 			return a.filter(function (i) {
