@@ -48,7 +48,7 @@ class MercuryApiArticleHandlerTest extends WikiaBaseTest {
 		$request = new WikiaRequest( [ ] );
 		$mercuryApi = new MercuryApi();
 
-		$this->assertEquals( $expected, MercuryApiArticleHandler::getArticleData( $article, $request, $mercuryApi ) );
+		$this->assertEquals( $expected, MercuryApiArticleHandler::getArticleData( $request, $mercuryApi, $article ) );
 	}
 
 	public function getArticleDataProvider() {
