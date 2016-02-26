@@ -427,7 +427,7 @@ class MercuryApiController extends WikiaController {
 				} else {
 					$data['details'] = $this->getMainPageMockedDetails( $title );
 				}
-			} elseif ( $title->isContentPage() && $title->isKnown() ) {
+			} else if ( $title->isContentPage() && $title->isKnown() ) {
 				$data = array_merge( $data, $this->getArticleData( $article ) );
 
 				if ( !$isMainPage ) {
