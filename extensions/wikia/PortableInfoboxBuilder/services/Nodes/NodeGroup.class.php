@@ -25,12 +25,12 @@ class NodeGroup extends Node {
 		$data = $this->getChildrenAsJsonObjects();
 		$collapsible = false;
 
-		if ( $this->xmlNode['collapse'] == 'open') {
+		if ( $this->xmlNode[ 'collapse '] === 'open' ) {
 			$collapsible = true;
 		}
 
-		foreach ( $data as $child) {
-			if ( $child->type == 'section-header') {
+		foreach ( $data as $child ) {
+			if ( $child->type == 'section-header' ) {
 				$child->collapsible = $collapsible;
 				break;
 			}
@@ -41,7 +41,7 @@ class NodeGroup extends Node {
 
 	protected function hasValidAttributes() {
 		foreach ( $this->xmlNode->attributes() as $attr => $val ) {
-			if ( $attr == 'collapse' && $val != 'open') {
+			if ( $attr == 'collapse' && $val !== 'open' ) {
 				return false;
 			}
 		}

@@ -200,12 +200,12 @@ class PortableInfoboxBuilderService extends WikiaService {
 				} else {
 					// header node starting a group; we create an empty group and append the current node (header) to it
 
-					$collapsible = $this->isCollapsible($currentChildNode);
+					$collapsible = $this->isCollapsible( $currentChildNode );
 
 					// this attribute is not supported in header tag
-					$childNodeDom->removeAttribute('section_collapsible');
+					$childNodeDom->removeAttribute( 'section_collapsible' );
 
-					$currentGroupDom = $this->createGroupDom($childNodeDom, $collapsible);
+					$currentGroupDom = $this->createGroupDom( $childNodeDom, $collapsible );
 
 					$inGroup = true;
 				}
@@ -219,13 +219,13 @@ class PortableInfoboxBuilderService extends WikiaService {
 					// we close the current group and append it to the infobox dom...
 					$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $currentGroupDom ) );
 
-					$collapsible = $this->isCollapsible($currentChildNode);
+					$collapsible = $this->isCollapsible( $currentChildNode );
 
 					// this attribute is not supported in header tag
-					$childNodeDom->removeAttribute('section_collapsible');
+					$childNodeDom->removeAttribute( 'section_collapsible' );
 
 					// and initialize a new group
-					$currentGroupDom = $this->createGroupDom($childNodeDom, $collapsible);
+					$currentGroupDom = $this->createGroupDom( $childNodeDom, $collapsible );
 				} else {
 					// title node, terminating the group and returning to regular flow
 					$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $currentGroupDom ) );
@@ -262,20 +262,20 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 * @param $collapsible: bool
 	 * @return DOMElement
 	 */
-	protected function createGroupDom($childNodeDom, $collapsible) {
+	protected function createGroupDom( $childNodeDom, $collapsible ) {
 		$groupElem = new SimpleXMLElement( '<' . \Wikia\PortableInfoboxBuilder\Nodes\NodeGroup::XML_TAG_NAME . '/>' );
 
 		if ( $collapsible ) {
-			$groupElem->addAttribute('collapse', 'open');
+			$groupElem->addAttribute( 'collapse', 'open' );
 		}
 
-		$groupDom = dom_import_simplexml($groupElem);
+		$groupDom = dom_import_simplexml( $groupElem );
 		$groupDom->appendChild( $groupDom->ownerDocument->importNode( $childNodeDom, true ) );
-		return dom_import_simplexml($groupElem);
+		return dom_import_simplexml( $groupElem );
 	}
 
-	protected function isCollapsible($node) {
-		return (bool)$node['section_collapsible'];
+	protected function isCollapsible( $node ) {
+		return ( bool )$node[ 'section_collapsible' ];
 	}
 
 	/**
