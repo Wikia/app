@@ -55,15 +55,10 @@ define('ext.wikia.adEngine.adEngineRunner', [
 		}
 
 		function getTimeoutBidders () {
-			var timeoutBidders = [],
-				enabledBidderNames = [];
+			var timeoutBidders = [];
 
 			enabledBidders.forEach(function (enabledBidder) {
 				var enabledBidderName = enabledBidder.getName();
-				enabledBidderNames.push(enabledBidderName);
-			});
-
-			enabledBidderNames.forEach(function (enabledBidderName) {
 				if (biddersQueue.indexOf(enabledBidderName) === -1) {
 					timeoutBidders.push(enabledBidderName);
 				}
