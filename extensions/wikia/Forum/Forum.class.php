@@ -30,21 +30,13 @@ class Forum extends Walls {
 		$titlesBatch = new TitleBatch( $boardTitles );
 		$orderIndexes = $titlesBatch->getWikiaProperties( WPP_WALL_ORDER_INDEX, $db );
 
-		$boards = [];
+		$boards = [ ];
 		arsort( $orderIndexes );
 		foreach ( array_keys( $orderIndexes ) as $pageId ) {
-			$title = $boardTitles[$pageId];
-
+			$title = $boardTitles[ $pageId ];
 			/** @var $board ForumBoard */
 			$board = ForumBoard::newFromTitle( $title );
-			$title = $board->getTitle();
-
-			$boardInfo = $board->getBoardInfo();
-			$boardInfo['id'] = $title->getArticleID();
-			$boardInfo['name'] = $title->getText();
-			$boardInfo['description'] = $board->getDescriptionWithoutTemplates();
-			$boardInfo['url'] = $title->getFullURL();
-			$boards[] = $boardInfo;
+			$boards[] = $board->getBoardInfo()->toArray();
 		}
 
 		return $boards;
@@ -69,7 +61,7 @@ class Forum extends Walls {
 		);
 
 		wfProfileOut( __METHOD__ );
-		return $result['cnt'];
+		return $result[ 'cnt' ];
 	}
 
 	/**
@@ -147,7 +139,7 @@ class Forum extends Walls {
 	public function hasAtLeast( $ns, $count ) {
 		wfProfileIn( __METHOD__ );
 
-		$out = WikiaDataAccess::cache( wfMemcKey( 'Forum_hasAtLeast', $ns, $count ), 24 * 60 * 60/* one day */, function() use ( $ns, $count ) {
+		$out = WikiaDataAccess::cache( wfMemcKey( 'Forum_hasAtLeast', $ns, $count ), 24 * 60 * 60/* one day */, function () use ( $ns, $count ) {
 			$db = wfGetDB( DB_MASTER );
 			// check if there is more then 5 forum pages (5 is number of forum pages from starter)
 			// limit 6 is faster solution then count(*) and the compare in php
@@ -284,8 +276,8 @@ class Forum extends Walls {
 	 * @return int
 	 */
 	public function getLengthLimits( $type, $field ) {
-		return ( isset( $this->fieldsLengths[$field] ) && isset( $this->fieldsLengths[$field][$type] ) ) ?
-			(int) $this->fieldsLengths[$field][$type] :
+		return ( isset( $this->fieldsLengths[ $field ] ) && isset( $this->fieldsLengths[ $field ][ $type ] ) ) ?
+			(int)$this->fieldsLengths[ $field ][ $type ] :
 			0;
 	}
 
