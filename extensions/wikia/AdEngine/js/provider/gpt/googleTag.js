@@ -86,6 +86,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	};
 
 	GoogleTag.prototype.isInitialized = function () {
+		log(['isInitialized', this.initialized], 'debug', logGroup);
 		return this.initialized;
 	};
 
