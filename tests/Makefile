@@ -63,6 +63,7 @@ phpunit-single: prepare
 phpunit-single-coverage: prepare
 		rm -rf coverage && mkdir -p coverage
 		${CMD_PHPUNIT} \
+				--log-junit=${LOGS_PATH}/phpunit-single.xml \
 				--coverage-clover coverage/results.xml \
 				--exclude-group Broken \
 				${test}
