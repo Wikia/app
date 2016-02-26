@@ -427,12 +427,19 @@ class MercuryApiController extends WikiaController {
 				} else {
 					$data['details'] = $this->getMainPageMockedDetails( $title );
 				}
-			} elseif ( $title->isContentPage() && $title->isKnown() ) {
+			} else if ( $title->isContentPage() && $title->isKnown() ) {
 				$data = array_merge( $data, $this->getArticleData( $article ) );
 
 				if ( !$isMainPage ) {
 					$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
 				}
+			} else if ( !$article instanceof Article ) {
+				\Wikia\Logger\WikiaLogger::instance()->error(
+					'$article should be an instance of an Article',
+					['article' => $article]
+				);
+
+				throw new NotFoundApiException( 'Article is empty' );
 			}
 
 			$data['htmlTitle'] = $titleBuilder->getTitle();
