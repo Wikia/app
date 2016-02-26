@@ -20,7 +20,7 @@ class FandomDataService {
 	 * @return an array of posts
 	 */
 	public function getPosts( $type ) {
-		$memcKey = wfMemcKey( __METHOD__, $type, self::MCACHE_VER );
+		$memcKey = wfSharedMemcKey( __METHOD__, $type, self::MCACHE_VER );
 
 		$data = WikiaDataAccess::cache(
 			$memcKey,
