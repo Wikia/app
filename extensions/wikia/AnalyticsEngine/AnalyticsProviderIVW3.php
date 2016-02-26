@@ -37,7 +37,7 @@ class AnalyticsProviderIVW3 implements iAnalyticsProvider {
 	}
 
 	private function trackPageView() {
-		global $wgCityId, $wgAnalyticsDriverIVW3Countries;
+		global $wgAnalyticsDriverIVW3Countries;
 
 		return \MustacheService::getInstance()->render(
 			self::$template,
@@ -45,8 +45,44 @@ class AnalyticsProviderIVW3 implements iAnalyticsProvider {
 				'countries' => json_encode( $wgAnalyticsDriverIVW3Countries ),
 				'siteId' => self::$siteId,
 				'url' => self::$libraryUrl,
-				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
+				'cmKey' => self::getCMKey()
 			]
 		);
+	}
+
+	static public function getCMKey() {
+		$pageType = self::getPageType();
+		$language = self::getMappedLanguage();
+		$vertical = self::getVertical();
+
+		return implode( '/', [ $vertical, $language, $pageType ] );
+	}
+
+	static private function getVertical() {
+		global $wgCityId;
+
+		$wikiFactoryHub = WikiFactoryHub::getInstance();
+
+		return $wikiFactoryHub->getWikiVertical( $wgCityId )['short'];
+	}
+
+	static private function getPageType() {
+		$wikiaPageType = new WikiaPageType();
+
+		return $wikiaPageType->getPageType() === 'home' && $wikiaPageType->isCorporatePage() ? 'home' : 'not-homepage';
+	}
+
+	static private function getMappedLanguage() {
+		global $wgTitle;
+		$language = $wgTitle->getPageLanguage()->getCode();
+
+		switch ( $language ) {
+			case 'en':
+				return 'pc';
+			case 'de':
+				return 'deut';
+			default:
+				return 'npc';
+		}
 	}
 }
