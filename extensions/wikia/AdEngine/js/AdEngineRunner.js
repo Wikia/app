@@ -20,7 +20,6 @@ define('ext.wikia.adEngine.adEngineRunner', [
 	 */
 	function delayRun(runAdEngine) {
 		var biddersQueue = [],
-			enabledBidderNames = [],
 			enabledBidders = [],
 			startedByBidders = false;
 
@@ -49,22 +48,28 @@ define('ext.wikia.adEngine.adEngineRunner', [
 			log(['Register bidders', enabledBidders.length], 'debug', logGroup);
 			enabledBidders.forEach(function (bidder) {
 				var name = bidder.getName();
-				enabledBidderNames.push(name);
 				bidder.addResponseListener(function () {
 					markBidder(name);
 				});
 			});
 		}
 
-		/**
-		 * Returns array with items from 'a' which 'b' doesn't contain
-		 * @param {Array} a
-		 * @param {Array} b
-		 */
-		function diff(a, b) {
-			return a.filter(function (i) {
-				return b.indexOf(i) < 0;
+		function getTimeoutBidders () {
+			var timeoutBidders = [],
+				enabledBidderNames = [];
+
+			enabledBidders.forEach(function (enabledBidder) {
+				var enabledBidderName = enabledBidder.getName();
+				enabledBidderNames.push(enabledBidderName);
 			});
+
+			enabledBidderNames.forEach(function (enabledBidderName) {
+				if (biddersQueue.indexOf(enabledBidderName) === -1) {
+					timeoutBidders.push(enabledBidderName);
+				}
+			});
+
+			return timeoutBidders.join(',');
 		}
 
 		supportedBidders.forEach(function (bidder) {
@@ -81,8 +86,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 			win.setTimeout(function () {
 				if (!startedByBidders) {
 					log('Timeout exceeded', 'info', logGroup);
-					var timeoutBidders = diff(enabledBidderNames, biddersQueue);
-					adTracker.measureTime('adengine_runner/bidders_timeout', timeoutBidders.join(',')).track();
+					adTracker.measureTime('adengine_runner/bidders_timeout', getTimeoutBidders()).track();
 					runAdEngine();
 				}
 			}, timeout);
