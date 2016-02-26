@@ -148,20 +148,7 @@ class ExactTargetClient {
 			return $response->Results ? $response->Results : true;
 		}
 
-		$message = self::EXACT_TARGET_REQUEST_FAILED;
-		$context = [ ];
-		if ( $response instanceof \stdClass ) {
-			if ( isset( $response->Results->StatusMessage ) ) {
-				$message = $response->Results->StatusMessage;
-			}
-			if ( isset( $response->OverallStatus ) ) {
-				$context[ 'OverallStatus' ] = $response->OverallStatus;
-			}
-		}
-		$exception = new ExactTargetException( $message );
-
-		$this->error( self::EXACT_TARGET_LABEL, array_merge( $context, [ 'exception' => $exception ] ) );
-		throw $exception;
+		$this->throwExactTargetException( $response );
 	}
 
 	protected function doCall( $method, $request, $retry ) {
@@ -201,5 +188,19 @@ class ExactTargetClient {
 			$this->client = $oClient;
 		}
 		return $this->client;
+	}
+
+	private function throwExactTargetException( $response ) {
+		$message = $response && isset( $response->Results->StatusMessage )
+			? $response->Results->StatusMessage
+			: self::EXACT_TARGET_REQUEST_FAILED;
+		$exception = new ExactTargetException( $message );
+
+		$this->error( self::EXACT_TARGET_LABEL, [
+			'exception' => $exception,
+			'response.overallStatus' => $response && isset ( $response->OverallStatus )
+				? $response->OverallStatus : ''
+		] );
+		throw $exception;
 	}
 }
