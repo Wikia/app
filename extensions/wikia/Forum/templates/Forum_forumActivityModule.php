@@ -1,7 +1,7 @@
 <section class="module WikiaActivityModule ForumActivityModule">
 	<h2><?= wfMessage( 'forum-activity-module-heading' )->escaped() ?></h2>
 	<ul>
-		<?php foreach ( $posts as $value ): ?>
+		<?php foreach ( ${ForumConst::posts} as $value ): ?>
 		<li>
 			<?= AvatarService::renderAvatar( $value['user']->getName(), 20 ); ?>
 			<em>

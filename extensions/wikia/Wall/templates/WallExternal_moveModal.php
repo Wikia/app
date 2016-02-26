@@ -9,7 +9,7 @@
 				'class' => 'destinationBoardId',
 				'isRequired' => true,
 				'label' => wfMsg('wall-action-move-board-label'),
-				'options' => $destinationBoards,
+				'options' => ${WallConst::destinationBoards},
 			],
 		],
 		'method' => 'post',

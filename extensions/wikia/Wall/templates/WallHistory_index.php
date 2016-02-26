@@ -1,18 +1,18 @@
 <div class="WallHistory">
-<? if ( empty( $wallmessageNotFound ) ): ?>
+<? if ( empty( ${WallConst::wallmessageNotFound} ) ): ?>
 	<?= $app->renderView( 'Wall', 'brickHeader', [
-			'path' => $path
+			'path' => ${WallConst::path}
 		] );
 	?>
 
 	<div class="SortingBar">
 		<div id="pageTitle">
-			<?= $pageTitle; ?>
+			<?= ${WallConst::pageTitle}; ?>
 		</div>
 		<div class="SortingMenu">
-			<span class="SortingSelected"><?= $sortingSelected; ?></span>
+			<span class="SortingSelected"><?= ${WallConst::sortingSelected}; ?></span>
 			<ul class="SortingList">
-				<? foreach ( $sortingOptions as $option ): ?>
+				<? foreach ( ${WallConst::sortingOptions} as $option ): ?>
 					<li class="<? if ( !empty( $option['selected'] ) ): ?>current<? endif ?> <?= $option['id']; ?>">
 						<a href="<?= $option['href'] ?>" class="sortingOption">
 							<?= $option['text'] ?>
@@ -23,10 +23,10 @@
 		</div>
 	</div>
 
-	<?php if ( !empty( $wallHistory ) ): ?>
-		<?php if( $isThreadLevelHistory ): ?>
+	<?php if ( !empty( ${WallConst::wallHistory} ) ): ?>
+		<?php if( ${WallConst::isThreadLevelHistory} ): ?>
 			<table id="WallThreadHistory">
-				<?php foreach ( $wallHistory as $entry ): ?>
+				<?php foreach ( ${WallConst::wallHistory} as $entry ): ?>
 					<tr>
 						<td>
 							<?php if ( $entry['type'] == WH_NEW ): ?>
@@ -40,7 +40,7 @@
 							<a href="<?= $entry['authorurl']; ?>"><?= AvatarService::renderAvatar($entry['username'], 20); ?></a>
 						</td>
 						<td>
-							<?= wfMessage( $wallHistoryMsg[$entry['prefix'] . $entry['type']] )->rawParams( [
+							<?= wfMessage( ${WallConst::wallHistoryMsg}[$entry['prefix'] . $entry['type']] )->rawParams( [
 								'',
 								$entry['displayname'],
 								Xml::element( 'a', [ 'href' => $entry['msguserurl'] ], $entry['msgusername'] ),
@@ -81,10 +81,10 @@
 			</table>
 		<?php else: ?>
 			<table id="WallHistory">
-				<?php foreach($wallHistory as $entry): ?>
+				<?php foreach(${WallConst::wallHistory} as $entry): ?>
 					<tr class="info-entry">
 						<td>
-							<?= wfMessage( $wallHistoryMsg[$entry['type']] )->rawParams( [
+							<?= wfMessage( ${WallConst::wallHistoryMsg}[$entry['type']] )->rawParams( [
 										Xml::element( 'a', [
 											'href' => $entry['msgurl'],
 											'class' => $entry['type'] === WH_NEW ? 'creation' : ''
@@ -126,8 +126,8 @@
 			</table>
 		<?php endif; ?>
 
-		<?php if($showPager): ?>
-			<?= $app->renderView( 'PaginationController', 'index', [ 'totalItems' => $totalItems, 'itemsPerPage' => $itemsPerPage, 'currentPage' => $currentPage, 'url' => $wallHistoryUrl ] ); ?>
+		<?php if(${WallConst::showPager}): ?>
+			<?= $app->renderView( 'PaginationController', 'index', [ 'totalItems' => ${WallConst::totalItems}, 'itemsPerPage' => ${WallConst::itemsPerPage}, 'currentPage' => ${WallConst::currentPage}, 'url' => ${WallConst::wallHistoryUrl} ] ); ?>
 		<?php endif;?>
 	<?php endif; ?>
 <?php else: ?>
@@ -136,12 +136,12 @@
 	</div>
 	<div class="SortingBar">
 		<div id="pageTitle">
-			<?= $pageTitle; ?>
+			<?= ${WallConst::pageTitle}; ?>
 		</div>
 		<div class="SortingMenu">
-			<span class="SortingSelected"><?= $sortingSelected; ?></span>
+			<span class="SortingSelected"><?= ${WallConst::sortingSelected}; ?></span>
 			<ul class="SortingList">
-				<? foreach ( $sortingOptions as $option ): ?>
+				<? foreach ( ${WallConst::sortingOptions} as $option ): ?>
 					<li class="<? if ( !empty( $option['selected'] ) ): ?>current<? endif ?> <?= $option['id']; ?>">
 						<a href="<?= $option['href'] ?>" class="sortingOption">
 							<?= $option['text'] ?>

@@ -22,6 +22,7 @@ $wgAutoloadClasses['ForumHooksHelper'] =  $dir . 'ForumHooksHelper.class.php' ;
 $wgAutoloadClasses['ForumController'] =  $dir . 'ForumController.class.php' ;
 $wgAutoloadClasses['ForumNotificationPlugin'] =  $dir . 'ForumNotificationPlugin.class.php' ;
 $wgAutoloadClasses['Forum'] =  $dir . 'Forum.class.php' ;
+$wgAutoloadClasses['ForumConst'] =  $dir . 'ForumConst.php' ;
 $wgAutoloadClasses['ForumBoard'] =  $dir . 'ForumBoard.class.php' ;
 $wgAutoloadClasses['ForumBoardInfo'] =  $dir . 'ForumBoardInfo.class.php' ;
 $wgAutoloadClasses['ForumPostInfo'] =  $dir . 'ForumPostInfo.class.php' ;

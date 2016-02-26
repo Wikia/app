@@ -1,8 +1,8 @@
-<?php if( !empty($usersInvolved) ): ?>
+<?php if( !empty(${WallConst::usersInvolved}) ): ?>
 <section class="WallHistoryRail module">
 	<h2><?= wfMessage( 'wall-history-who-involved-wall-title' )->escaped(); ?></h2>
 	<ul>
-		<?php foreach($usersInvolved as $userInvolved): ?>
+		<?php foreach(${WallConst::usersInvolved} as $userInvolved): ?>
 			<li>
 				<a href="<?= $userInvolved['userpage']; ?>" class="avatar"><?= AvatarService::renderAvatar($userInvolved['username'], 30); ?></a>
 				<span class="names">
@@ -18,7 +18,7 @@
 					<?php endif; ?>
 				</span>
 				<ul class="actionlinks">
-					<? if(!$showTalkPage): ?>
+					<? if(!${WallConst::showTalkPage}): ?>
 						<li><a href="<?= $userInvolved['userwall']; ?>"> <?= wfMessage( 'wall-history-rail-wall' )->escaped(); ?></a></li>
 					<? else: ?>
 						<li><a href="<?= $userInvolved['usertalk']; ?>"> <?= wfMessage( 'talkpage' )->escaped(); ?></a></li>

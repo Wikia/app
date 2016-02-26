@@ -1,24 +1,24 @@
 <? if ( $wg->EnableMiniEditorExtForWall ): ?>
 	<?= $app->renderView( 'MiniEditorController', 'Setup' ) ?>
 <? endif ?>
-<div id="Wall" data-board-namespace="<?= $boardNamespace ?>">
+<div id="Wall" data-board-namespace="<?= ${ForumConst::boardNamespace} ?>">
 	<section id="Forum" class="Forum Board .comments">
 		<?= $app->renderView( 'ForumController', 'breadCrumbs' ) ?>
 		<div class="board-description">
-			<?= $description ?>
+			<?= ${ForumConst::description} ?>
 		</div>
-		<div class="greeting"><?= $greeting ?></div>
-		<?= $app->renderView( 'ForumController', 'boardNewThread', [ 'isTopicPage' => $isTopicPage ] ) ?>
-		<div class="ContentHeader <?php if ( $isTopicPage ): ?> Topic<?php endif; ?>">
-			<?php if ( $isTopicPage ): ?>
-				<div class="activity"><?= wfMessage( 'forum-active-threads-on-topic', $wg->Lang->formatNum( $activeThreads ), $topicText )->parse(); ?></div>
+		<div class="greeting"><?= ${ForumConst::greeting} ?></div>
+		<?= $app->renderView( 'ForumController', 'boardNewThread', [ 'isTopicPage' => ${ForumConst::isTopicPage} ] ) ?>
+		<div class="ContentHeader <?php if ( ${ForumConst::isTopicPage} ): ?> Topic<?php endif; ?>">
+			<?php if ( ${ForumConst::isTopicPage} ): ?>
+				<div class="activity"><?= wfMessage( 'forum-active-threads-on-topic', $wg->Lang->formatNum( ${ForumConst::activeThreads} ), ${ForumConst::topicText} )->parse(); ?></div>
 			<?php else : ?>
-				<div class="activity"><?= wfMessage( 'forum-active-threads', $wg->Lang->formatNum( $activeThreads ) )->escaped(); ?></div>
+				<div class="activity"><?= wfMessage( 'forum-active-threads', $wg->Lang->formatNum( ${ForumConst::activeThreads} ) )->escaped(); ?></div>
 			<?php endif; ?>
 			<div class="sorting">
-				<span class="selected"><?= $sortingSelected ?><img class="arrow" src="<?= $wg->BlankImgUrl ?>" /></span>
+				<span class="selected"><?= ${ForumConst::sortingSelected} ?><img class="arrow" src="<?= $wg->BlankImgUrl ?>" /></span>
 				<ul class="menu">
-					<? foreach ( $sortingOptions as $option ): ?>
+					<? foreach ( ${ForumConst::sortingOptions} as $option ): ?>
 						<li class="<?= $option['id'] ?><?= !empty( $option['selected'] ) ? ' current' : '' ?>">
 							<a href="<?= $option['href'] ?>" class="option"><?= $option['text'] ?></a>
 						</li>
@@ -27,19 +27,19 @@
 			</div>
 		</div>
 		<ul class="ThreadList">
-			<? foreach ( $threads as $thread ): ?>
+			<? foreach ( ${ForumConst::threads} as $thread ): ?>
 				<?= $app->renderView( 'ForumController', 'boardThread', [
 					'replies' => $thread->getRepliesWallMessages(),
 					'comment' => $thread->getThreadMainMsg()
 				] ) ?>
 			<? endforeach ?>
 		</ul>
-		<? if ( $showPager ): ?>
+		<? if ( ${ForumConst::showPager} ): ?>
 			<?= $app->renderView( 'PaginationController', 'index', [
 				'data' => [ 'controller' => 'ForumExternalController' ],
-				'totalItems' => $totalItems,
-				'itemsPerPage' => $itemsPerPage,
-				'currentPage' => $currentPage
+				'totalItems' => ${ForumConst::totalItems},
+				'itemsPerPage' => ${ForumConst::itemsPerPage},
+				'currentPage' => ${ForumConst::currentPage}
 			] ) ?>
 		<? endif ?>
 		<div id="WallTooltipMeta">

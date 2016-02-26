@@ -1,1 +1,1 @@
-<?= $content; ?>
+<?= ${WallConst::content}; ?>

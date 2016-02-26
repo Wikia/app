@@ -1,8 +1,8 @@
-<?php if ( $showModule ): ?>
+<?php if ( ${ForumConst::showModule} ): ?>
 	<section class="module WikiaActivityModule ForumActivityModule">
 		<h2><?= wfMessage( 'forum-related-module-heading' )->escaped(); ?></h2>
 		<ul>
-			<?php foreach ( $messages as $message ): ?>
+			<?php foreach ( ${ForumConst::messages} as $message ): ?>
 			<li>
 				<?= AvatarService::renderAvatar( $message['message']->getUser()->getName(), 20 ); ?>
 				<em>

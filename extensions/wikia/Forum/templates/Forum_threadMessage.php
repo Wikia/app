@@ -1,23 +1,23 @@
-<div id="ForumThreadMessage" class="ForumThreadMessage DiscussionBox" data-id="<?= $id ?>">
+<div id="ForumThreadMessage" class="ForumThreadMessage DiscussionBox" data-id="<?= ${ForumConst::id} ?>">
 	<div class="avatar">
-		<a href="<?= $user_author_url ?>"><?= AvatarService::renderAvatar( $username, 50 ) ?></a>
+		<a href="<?= ${ForumConst::user_author_url} ?>"><?= AvatarService::renderAvatar( ${ForumConst::username}, 50 ) ?></a>
 	</div>
 	<div class="message">
 		<div class="social-toolbar">
-			<? if ( $isWatched ): ?>
+			<? if ( ${ForumConst::isWatched} ): ?>
 				<button class="follow following" data-iswatched="1"><?= wfMessage( 'forum-board-thread-following' )->escaped() ?></button>
 			<? else : ?>
 				<button class="follow" data-iswatched="0"><?= wfMessage( 'forum-board-thread-follow' )->escaped() ?></button>
 			<? endif ?>
 		</div>
 		<div class="author">
-			<a href="<?= $user_author_url ?>"><?= $displayname ?></a>
-			<? if ( !empty( $isStaff ) ): ?>
+			<a href="<?= ${ForumConst::user_author_url} ?>"><?= ${ForumConst::displayname} ?></a>
+			<? if ( !empty( ${ForumConst::isStaff} ) ): ?>
 				<span class="stafflogo"></span>
 			<? endif ?>
 		</div>
 		<h4 class="msg-title">
-			<?= $feedtitle ?>
+			<?= ${ForumConst::feedtitle} ?>
 		</h4>
 		<? if ( $wg->EnableMiniEditorExtForWall ): ?>
 			<?= $app->getView( 'MiniEditorController', 'Header', [
@@ -28,7 +28,7 @@
 			] )->render() ?>
 			<?= $app->getView( 'MiniEditorController', 'Editor_Header' )->render() ?>
 		<? endif ?>
-			<div class="msg-body"><?= $body ?></div>
+			<div class="msg-body"><?= ${ForumConst::body} ?></div>
 			<? if ( $wg->EnableMiniEditorExtForWall ): ?>
 				<?= $app->getView( 'MiniEditorController', 'Editor_Footer' )->render() ?>
 			<? endif ?>
@@ -47,15 +47,15 @@
 				</div>
 			</div>
 			<div class="timestamp">
-				<? if ( $isEdited ): ?>
-					<?= wfMsg( 'wall-message-edited', [ $editorUrl, $editorName, $historyUrl ] ) ?>
+				<? if ( ${ForumConst::isEdited} ): ?>
+					<?= wfMsg( 'wall-message-edited', [ ${ForumConst::editorUrl}, ${ForumConst::editorName}, ${ForumConst::historyUrl} ] ) ?>
 				<? endif ?>
-				<a class="permalink" href="<?= $fullpageurl ?>" tabindex="-1">
-					<? if ( !is_null( $iso_timestamp ) ): ?>
-						<span class="timeago abstimeago" title="<?= $iso_timestamp ?>" alt="<?= $fmt_timestamp ?>">&nbsp;</span>
-						<span class="timeago-fmt"><?= $fmt_timestamp ?></span>
+				<a class="permalink" href="<?= ${ForumConst::fullpageurl} ?>" tabindex="-1">
+					<? if ( !is_null( ${ForumConst::iso_timestamp} ) ): ?>
+						<span class="timeago abstimeago" title="<?= ${ForumConst::iso_timestamp} ?>" alt="<?= ${ForumConst::fmt_timestamp} ?>">&nbsp;</span>
+						<span class="timeago-fmt"><?= ${ForumConst::fmt_timestamp} ?></span>
 					<? else : ?>
-						<span><?= $fmt_timestamp ?></span>
+						<span><?= ${ForumConst::fmt_timestamp} ?></span>
 					<? endif ?>
 				</a>
 			</div>
@@ -67,24 +67,24 @@
 </div>
 <? // TODO: refactor threadMessage so this can live in its own template ?>
 <ul class="replies">
-	<? if ( !empty( $replies ) ): ?>
+	<? if ( !empty( ${ForumConst::replies} ) ): ?>
 		<? $i = 0 ?>
-		<? foreach ( $replies as $reply ): ?>
+		<? foreach ( ${ForumConst::replies} as $reply ): ?>
 			<? // TODO: move this logic to controler !!! ?>
-			<? if ( !$reply->isRemove() || $showDeleteOrRemoveInfo ): ?>
+			<? if ( !$reply->isRemove() || ${ForumConst::showDeleteOrRemoveInfo} ): ?>
 				<?= $app->renderView( 'ForumController', 'threadReply', [
-					'showDeleteOrRemoveInfo' => $showDeleteOrRemoveInfo,
+					'showDeleteOrRemoveInfo' => ${ForumConst::showDeleteOrRemoveInfo},
 					'comment' => $reply,
 					'isreply' => true,
-					'repliesNumber' => $repliesNumber,
-					'showRepliesNumber' => $showRepliesNumber,
+					'repliesNumber' => ${ForumConst::repliesNumber},
+					'showRepliesNumber' => ${ForumConst::showRepliesNumber},
 					'current' => $i
 				] ) ?>
 			<? else : ?>
 				<?= $app->renderView( 'ForumController', 'threadRemovedReply', [
 					'comment' => $reply,
-					'repliesNumber' => $repliesNumber,
-					'showRepliesNumber' => $showRepliesNumber,
+					'repliesNumber' => ${ForumConst::repliesNumber},
+					'showRepliesNumber' => ${ForumConst::showRepliesNumber},
 					'current' => $i
 				] ) ?>
 			<? endif ?>

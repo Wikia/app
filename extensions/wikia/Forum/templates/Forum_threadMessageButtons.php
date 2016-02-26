@@ -1,4 +1,4 @@
-<? if ( $canEdit || $canRemove || $canDelete || $showViewSource || ( $isRemoved && !$isAnon ) ): ?>
+<? if ( ${ForumConst::canEdit} || ${ForumConst::canRemove} || ${ForumConst::canDelete} || ${ForumConst::showViewSource} || ( ${ForumConst::isRemoved} && !${ForumConst::isAnon} ) ): ?>
 		<div class="buttons">
 			<div data-delay='50' class="wikia-menu-button contribute secondary">
 				<?= wfMsg( 'wall-message-more' ); ?>
@@ -8,41 +8,41 @@
 
 				<ul style="min-width: 95px;">
 						<?php // TODO: loop ?>
-						<? if ( $canEdit ): ?>
+						<? if ( ${ForumConst::canEdit} ): ?>
 							<li>
 								<a href="#" class="edit-message"><?= wfMsg( 'wall-message-edit' ); ?></a>
 							</li>
 						<? endif; ?>
 						<li>
-							<a href="<?= $threadHistoryLink; ?>" class="thread-history"><?= wfMsg( 'history_short' ); ?></a>
+							<a href="<?= ${ForumConst::threadHistoryLink}; ?>" class="thread-history"><?= wfMsg( 'history_short' ); ?></a>
 						</li>
-						<? if ( $canAdminDelete ): ?>
+						<? if ( ${ForumConst::canAdminDelete} ): ?>
 						<li>
 							<a href="#" class="admin-delete-message" data-mode="admin"> <?= wfMsg( 'wall-message-delete' ); ?> </a>
 						</li>
 						<? endif; ?>
-						<? if ( $showViewSource ): ?>
+						<? if ( ${ForumConst::showViewSource} ): ?>
 							<li>
 								<a href="#" class="source-message"> <?= wfMsg( 'user-action-menu-view-source' ); ?> </a>
 							</li>
 						<? endif; ?>
-						<? if ( $canRemove ): ?>
+						<? if ( ${ForumConst::canRemove} ): ?>
 						<li>
 							<a href="#" class="remove-message" data-mode="remove"> <?= wfMsg( 'wall-message-remove' ); ?> </a>
 						</li>
 						<? endif; ?>
-						<? if ( $canDelete ): ?>
+						<? if ( ${ForumConst::canDelete} ): ?>
 							<li>
 								<a href="#" class="delete-message" data-mode="rev"> <?= wfMsg( 'wall-message-rev-delete' ); ?> </a>
 							</li>
 						<? endif; ?>
 
-						<? if ( $notifyeveryone ): ?>
+						<? if ( ${ForumConst::notifyeveryone} ): ?>
 							<li>
 								<a href="#" class="edit-notifyeveryone" data-dir="1"> <?= wfMsg( 'wall-message-notifyeveryone' ); ?> </a>
 							</li>
 						<? endif; ?>
-						<? if ( $unnotifyeveryone ): ?>
+						<? if ( ${ForumConst::unnotifyeveryone} ): ?>
 							<li>
 								<a href="#" class="edit-notifyeveryone" data-mode="0"> <?= wfMsg( 'wall-message-unnotifyeveryone' ); ?> </a>
 							</li>
@@ -54,25 +54,25 @@
 		<div class="buttons-monobook">
 			<!-- only show this if it's user's own message -->
 			<span class="tools">
-				<? if ( $showViewSource ): ?>
+				<? if ( ${ForumConst::showViewSource} ): ?>
 					<a href="#" class="source-message"> <?= wfMsg( 'user-action-menu-view-source' ); ?> </a>
 				<? endif; ?>
 
-				<?php if ( $canEdit ): ?>
+				<?php if ( ${ForumConst::canEdit} ): ?>
 					<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"><a href="#" class="edit-message"><?= wfMsg( 'wall-message-edit' ); ?></a>
 				<?php endif; ?>
 
-				<? if ( $canRemove ): ?>
+				<? if ( ${ForumConst::canRemove} ): ?>
 					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="remove-message" data-mode="remove"><?= wfMsg( 'wall-message-remove' ); ?> </a>
 					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="remove-message" data-mode="removenotify"><?= wfMsg( 'wall-message-notify' ); ?> </a>
 				<? endif; ?>
 
-				<? if ( $canAdminDelete ): ?>
+				<? if ( ${ForumConst::canAdminDelete} ): ?>
 					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="admin-delete-message" data-mode="admin"><?= wfMsg( 'wall-message-delete' ); ?> </a>
 					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="admin-delete-message" data-mode="adminnotify"><?= wfMsg( 'wall-message-notify' ); ?> </a>
 				<?php endif; ?>
 
-				<?php if ( $canDelete ): ?>
+				<?php if ( ${ForumConst::canDelete} ): ?>
 					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="delete-message"><?= wfMsg( 'wall-message-delete' ); ?></a>
 				<?php endif; ?>
 

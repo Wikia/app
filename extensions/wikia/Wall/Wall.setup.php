@@ -24,6 +24,7 @@ include( $dir . '/WallNamespaces.php' );
 $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 
 $wgAutoloadClasses['Wall'] =  $dir . '/Wall.class.php';
+$wgAutoloadClasses['WallConst'] =  $dir . '/WallConst.php';
 $wgAutoloadClasses['Walls'] =  $dir . '/Walls.class.php';
 $wgAutoloadClasses['WallThread'] =  $dir . '/WallThread.class.php';
 

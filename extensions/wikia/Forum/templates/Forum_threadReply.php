@@ -1,9 +1,9 @@
 <li>
-	<div class="avatar"><?= AvatarService::renderAvatar( $username, 30 ) ?></div>
+	<div class="avatar"><?= AvatarService::renderAvatar( ${ForumConst::username}, 30 ) ?></div>
 	<div class="message">
 		<div class="author">
-			<a href="<?= $user_author_url ?>"><?= $displayname ?></a>
-			<? if ( !empty( $isStaff ) ): ?>
+			<a href="<?= ${ForumConst::user_author_url} ?>"><?= ${ForumConst::displayname} ?></a>
+			<? if ( !empty( ${ForumConst::isStaff} ) ): ?>
 				<span class="stafflogo"></span>
 			<? endif ?>
 		</div>
@@ -18,7 +18,7 @@
 		<? if ( $wg->EnableMiniEditorExtForWall ): ?>
 			<?= $app->getView( 'MiniEditorController', 'Editor_Header' )->render() ?>
 		<? endif ?>
-		<div class="msg-body"><?= $body ?></div>
+		<div class="msg-body"><?= ${ForumConst::body} ?></div>
 		<? if ( $wg->EnableMiniEditorExtForWall ): ?>
 			<?= $app->getView( 'MiniEditorController', 'Editor_Footer' )->render() ?>
 		<? endif ?>
@@ -33,19 +33,19 @@
 			-->
 		<div class="msg-toolbar">
 			<div class="buttonswrapper">
-				<?= $app->renderView( 'ForumController', 'threadMessageButtons', [ 'comment' => $comment ] ) ?>
+				<?= $app->renderView( 'ForumController', 'threadMessageButtons', [ 'comment' => ${ForumConst::comment} ] ) ?>
 			</div>
 		</div>
 		<div class="timestamp">
-			<? if ( $isEdited ): ?>
-				<?= wfMsg( 'wall-message-edited', [ $editorUrl, $editorName, $historyUrl ] ) ?>
+			<? if ( ${ForumConst::isEdited} ): ?>
+				<?= wfMsg( 'wall-message-edited', [ ${ForumConst::editorUrl}, ${ForumConst::editorName}, ${ForumConst::historyUrl} ] ) ?>
 			<? endif ?>
-			<a class="permalink" href="<?= $fullpageurl ?>" tabindex="-1">
-				<? if ( !is_null( $iso_timestamp ) ): ?>
-					<span class="timeago abstimeago" title="<?= $iso_timestamp ?>" alt="<?= $fmt_timestamp ?>">&nbsp;</span>
-					<span class="timeago-fmt"><?= $fmt_timestamp ?></span>
+			<a class="permalink" href="<?= ${ForumConst::fullpageurl} ?>" tabindex="-1">
+				<? if ( !is_null( ${ForumConst::iso_timestamp} ) ): ?>
+					<span class="timeago abstimeago" title="<?= ${ForumConst::iso_timestamp} ?>" alt="<?= ${ForumConst::fmt_timestamp} ?>">&nbsp;</span>
+					<span class="timeago-fmt"><?= ${ForumConst::fmt_timestamp} ?></span>
 				<? else : ?>
-					<span><?= $fmt_timestamp ?></span>
+					<span><?= ${ForumConst::fmt_timestamp} ?></span>
 				<? endif ?>
 			</a>
 		</div>

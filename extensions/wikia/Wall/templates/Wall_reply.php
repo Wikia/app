@@ -1,4 +1,4 @@
-<? if( $userBlocked === false && $showReplyForm): ?>
+<? if( ${WallConst::userBlocked} === false && ${WallConst::showReplyForm}): ?>
 	<li class="SpeechBubble new-reply" >
 		<? if ( $wg->EnableMiniEditorExtForWall ):
 			echo $app->getView( 'MiniEditorController', 'Header', [
@@ -9,7 +9,7 @@
 			] )->render();
 		endif; ?>
 		<div class="speech-bubble-avatar">
-			<?= AvatarService::renderAvatar($username, 30) ?>
+			<?= AvatarService::renderAvatar(${WallConst::username}, 30) ?>
 		</div>
 		<div class="speech-bubble-message">
 			<? if ( $wg->EnableMiniEditorExtForWall ):
