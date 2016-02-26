@@ -21,7 +21,7 @@ class RobotsTxt {
 	 * Allows crawling a page when accessed using /wiki/Special:XXX URL
 	 * and the localized variants of the URL.
 	 *
-	 * @param $pageName string name of the special page as exposed in alias file for the special page
+	 * @param string $pageName name of the special page as exposed in alias file for the special page
 	 */
 	public function allowSpecialPage( $pageName ) {
 		foreach ( $this->specialNamespaces as $specialNamespaceAlias ) {
@@ -34,7 +34,7 @@ class RobotsTxt {
 	/**
 	 * Disallow a specific robot to crawl all the pages
 	 *
-	 * @param $robot string User-agent (fragment) of the robot
+	 * @param string $robot User-agent (fragment) of the robot
 	 */
 	public function blockRobot( $robot ) {
 		$this->blockedRobots[] = $robot;
@@ -53,6 +53,8 @@ class RobotsTxt {
 	 *  * /index.php?title=Namespace:XXX
 	 *  * /index.php/Namespace:XXX
 	 *  * all above in the wiki content language
+	 *
+	 * @param int $namespaceId namespace to block
 	 */
 	public function disallowNamespace( $namespaceId ) {
 		foreach ( $this->getNamespaces( $namespaceId ) as $namespace ) {
@@ -68,7 +70,7 @@ class RobotsTxt {
 	 * This will only block robots that understand wildcards.
 	 * The param is matched loosely, so ABCsomeparam is blocked as well when you block someparam
 	 *
-	 * @param $param string param to block
+	 * @param string $param URL param to block
 	 */
 	public function disallowParam( $param ) {
 		$this->disallowed[] = '/*?*' . $param . '=';
@@ -79,7 +81,7 @@ class RobotsTxt {
 	 *
 	 * It emits both the Disallow and Noindex directive
 	 *
-	 * @param $path the path prefix to block (some robots accept wildcards)
+	 * @param string $path path prefix to block (some robots accept wildcards)
 	 */
 	public function disallowPath( $path ) {
 		$this->disallowed[] = $path;
@@ -132,7 +134,7 @@ class RobotsTxt {
 	 * This affects the cache TTL.
 	 * This has no effect on the sitemap line.
 	 *
-	 * @param $content string content for robots.txt (excluding the sitemap rule)
+	 * @param string $content content for robots.txt (excluding the sitemap rule)
 	 */
 	public function setExperimentalAllowDisallowSection( $content ) {
 		$this->experimentalAllowDisallowSection = $content;
@@ -141,7 +143,7 @@ class RobotsTxt {
 	/**
 	 * Set Sitemap URL
 	 *
-	 * @param $sitemapUrl string
+	 * @param string $sitemapUrl
 	 */
 	public function setSitemap( $sitemapUrl ) {
 		$this->sitemap = $sitemapUrl;
