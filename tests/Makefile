@@ -63,7 +63,7 @@ phpunit-single: prepare
 phpunit-single-coverage: prepare
 		rm -rf coverage && mkdir -p coverage
 		${CMD_PHPUNIT} \
-				--coverage-html "coverage" \
+				--coverage-clover coverage/results.xml \
 				--coverage-text \
 				--exclude-group Broken \
 				${test}
