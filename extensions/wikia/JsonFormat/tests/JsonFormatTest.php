@@ -429,6 +429,71 @@ anything here -->
 				  ]
 			  ]
 			  ]
+			],
+			[ '
+{| class="infobox" style="clear: right; border: solid #aaa 1px; margin: 0 0 1em 1em; background: #f9f9f9; color:black;
+width: 310px; padding: 10px; text-align: left; float: right; margin-bottom:15px;"
+|- class="hiddenStructure"
+| valign=top nowrap=nowrap | \'\'\'Written by\'\'\'&nbsp; || Lorem
+|- class="hiddenStructure"
+| valign=top | \'\'\'Illustrator\'\'\'&nbsp; || Ipsum
+|- class="hiddenStructure"
+| valign=top |\'\'\'Published\'\'\'&nbsp; || Kra
+|- class="hiddenStructure"
+| valign=top |\'\'\'Publisher\'\'\'&nbsp; || Kre
+|- class="hiddenStructure"
+| valign=top | \'\'\'Series\'\'\'&nbsp; || Mija
+|- class="hiddenStructure"
+| valign=top | \'\'\'ISBN\'\'\'&nbsp; || Lis
+|}
+',
+				[
+					'JsonFormatRootNode' => [
+						'JsonFormatInfoboxNode' => [
+							'JsonFormatInfoboxKeyValueNode' => [
+								'key', 'value'
+							],
+							'JsonFormatInfoboxKeyValueNode:1' => [
+								'key', 'value'
+							],
+							'JsonFormatInfoboxKeyValueNode:2' => [
+								'key', 'value'
+							],
+							'JsonFormatInfoboxKeyValueNode:3' => [
+								'key', 'value'
+							],
+							'JsonFormatInfoboxKeyValueNode:4' => [
+								'key', 'value'
+							],
+							'JsonFormatInfoboxKeyValueNode:5' => [
+								'key', 'value'
+							]
+						]
+					]
+				]
+			],
+			[
+				'Text',
+				[
+					'JsonFormatRootNode' => [
+						'JsonFormatParagraphNode' => [
+							'JsonFormatTextNode' => [ ]
+						],
+					]
+				]
+			],
+			[
+				'[[Image:Firefly_logo.png]]
+[[File:Firefly_logo.png|thumb|200px|adsfadsfasd]]',
+				[
+					'JsonFormatRootNode' => [
+						'JsonFormatParagraphNode' => [
+							'JsonFormatImageNode' => [ 'src' ],
+						],
+						'JsonFormatTextNode' => [ ],
+						'JsonFormatImageFigureNode' => [ 'src', 'caption' ]
+					]
+				]
 			]
 		];
 	}
