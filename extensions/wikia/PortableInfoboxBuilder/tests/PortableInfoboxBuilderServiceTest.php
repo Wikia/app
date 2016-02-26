@@ -120,6 +120,7 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 			[ '<infobox><title source="title"><default>0</default></title></infobox>', false, "default tag is not supported within title"  ],
 			[ '<infobox><group><data source="asdf"/></group></infobox>', false, "group without header is not supported" ],
 			[ '<infobox><group><header>asdf</header></group></infobox>', true, "group with header is supported" ],
+			[ '<infobox><group><header></header></group></infobox>', true, "group with empty header is supported" ],
 			[ '<infobox><group><header>hd</header><data source="asdf"/></group></infobox>', true, "group with header and data is supported" ],
 			[ '<infobox><group collapse="open"><header>hd</header><data source="asdf"/></group></infobox>', true, "collapse=open is supported attrib in group" ],
 			[ '<infobox><group collapse="false"><header>hd</header><data source="asdf"/></group></infobox>', false, "collapse=close is not supported attrib in group" ],
