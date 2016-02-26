@@ -13,6 +13,7 @@ class ExactTargetClient {
 
 	const STATUS_OK = 'OK';
 	const EXACT_TARGET_LABEL = 'ExactTarget client';
+	const EXACT_TARGET_REQUEST_FAILED = 'Request failed';
 	const RETRIES_LIMIT = 1;
 
 	private $client;
@@ -143,13 +144,23 @@ class ExactTargetClient {
 	protected function sendRequest( $type, $request ) {
 		// send first call
 		$response = $this->doCall( $type, $request, 0 );
-		if ( $response->OverallStatus === self::STATUS_OK ) {
+		if ( $response instanceof \stdClass && $response->OverallStatus === self::STATUS_OK ) {
 			return $response->Results ? $response->Results : true;
 		}
 
-		$exception = $response ? new ExactTargetException( $response->Results->StatusMessage )
-			: new ExactTargetException( "Request failed" );
-		$this->error( self::EXACT_TARGET_LABEL, [ 'exception' => $exception ] );
+		$message = self::EXACT_TARGET_REQUEST_FAILED;
+		$context = [ ];
+		if ( $response instanceof \stdClass ) {
+			if ( isset( $response->Results->StatusMessage ) ) {
+				$message = $response->Results->StatusMessage;
+			}
+			if ( isset( $response->OverallStatus ) ) {
+				$context[ 'OverallStatus' ] = $response->OverallStatus;
+			}
+		}
+		$exception = new ExactTargetException( $message );
+
+		$this->error( self::EXACT_TARGET_LABEL, array_merge( $context, [ 'exception' => $exception ] ) );
 		throw $exception;
 	}
 

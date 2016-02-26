@@ -5,4 +5,4 @@ namespace Wikia\ExactTarget;
 /**
  * An empty result exception class for the client.
  */
-class ExactTargetException extends \WikiaBaseException {}
+class ExactTargetException extends \Exception {}
