@@ -27,9 +27,12 @@ class RevertNotice extends Maintenance {
 		$mwf = \MagicWord::get( 'flags' );
 
 		$wrapper = new GlobalStateWrapper( [
-			'wgEnableFlagsExt' => false,
 			'wgUser' => User::newFromName( 'Wikia' )
 		] );
+
+		$wrapper->wrap( function() use ( $wgCityId ) {
+			$this->disableFlagsExt( $wgCityId );
+		} );
 
 		foreach ( $pages as $page ) {
 			$templates = '';
@@ -54,9 +57,7 @@ class RevertNotice extends Maintenance {
 					}
 
 					if ( strcmp( $content, $text ) !== 0 ) {
-						$wrapper->wrap( function() use ( $wiki, $text ) {
-							$wiki->doEdit( $text, self::EDIT_SUMMARY, EDIT_FORCE_BOT );
-						} );
+						$wiki->doEdit( $text, self::EDIT_SUMMARY, EDIT_FORCE_BOT );
 
 						$log = sprintf(
 							"Templates: %s were added to %s (%d) \n",
@@ -69,8 +70,6 @@ class RevertNotice extends Maintenance {
 				}
 			}
 		}
-
-		$this->disableFlagsExt( $wgCityId );
 	}
 
 	private function createTemplateString( $flag ) {
