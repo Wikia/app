@@ -5,7 +5,7 @@
  * @desc Special:Maps controller
  */
 class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController {
-	const PAGE_NAME = 'PortableInfoboxBuilder';
+	const PAGE_NAME = 'InfoboxBuilder';
 	const PAGE_RESTRICTION = 'editinterface';
 	const INFOBOX_BUILDER_MERCURY_ROUTE = 'infobox-builder';
 	const PATH_SEPARATOR = '/';
