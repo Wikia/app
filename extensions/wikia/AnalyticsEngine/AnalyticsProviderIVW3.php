@@ -69,7 +69,7 @@ class AnalyticsProviderIVW3 implements iAnalyticsProvider {
 	static private function getPageType() {
 		$wikiaPageType = new WikiaPageType();
 
-		return $wikiaPageType->getPageType() === 'home' && $wikiaPageType->isCorporatePage() ? 'home' : 'not-homepage';
+		return $wikiaPageType->getPageType() === 'home' && $wikiaPageType->isCorporatePage() ? 'homepage' : 'not-homepage';
 	}
 
 	static private function getMappedLanguage() {
