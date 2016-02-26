@@ -19,9 +19,11 @@ define('ext.wikia.adEngine.adEngineRunner', [
 	 * @param {function} runAdEngine
 	 */
 	function delayRun(runAdEngine) {
-		var enabledBidders = [],
-			biddersQueue = [],
-			startedByBidders = false;
+		var biddersQueue = [],
+			enabledBidderNames = [],
+			enabledBidders = [],
+			startedByBidders = false,
+			timeoutBidders = [];
 
 		/**
 		 * Mark bidder as responded and trigger run if all bidders already responded
@@ -36,6 +38,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 			if (biddersQueue.length === enabledBidders.length) {
 				log('All bidders responded', 'info', logGroup);
 				startedByBidders = true;
+				adTracker.measureTime('adengine_runner/bidders_responded', biddersQueue.join(',')).track();
 				runAdEngine();
 			}
 		}
@@ -47,9 +50,21 @@ define('ext.wikia.adEngine.adEngineRunner', [
 			log(['Register bidders', enabledBidders.length], 'debug', logGroup);
 			enabledBidders.forEach(function (bidder) {
 				var name = bidder.getName();
+				enabledBidderNames.push(name);
 				bidder.addResponseListener(function () {
 					markBidder(name);
 				});
+			});
+		}
+
+		/**
+		 * Returns array with items from 'a' which 'b' doesn't contain
+		 * @param {array} a
+		 * @param {array} b
+		 */
+		function diff(a, b) {
+			return a.filter(function (i) {
+				return b.indexOf(i) < 0;
 			});
 		}
 
@@ -67,8 +82,10 @@ define('ext.wikia.adEngine.adEngineRunner', [
 			win.setTimeout(function () {
 				if (!startedByBidders) {
 					log('Timeout exceeded', 'info', logGroup);
+					timeoutBidders = diff(enabledBidderNames, biddersQueue);
+					adTracker.measureTime('adengine_runner/bidders_timeout', timeoutBidders.join(',')).track();
+					runAdEngine();
 				}
-				runAdEngine();
 			}, timeout);
 		}
 	}
