@@ -59,7 +59,7 @@ class ForumHooksHelper {
 		if ( MWNamespace::getSubject( $title->getNamespace() ) == NS_WIKIA_FORUM_BOARD ) {
 			$app = F::App();
 
-			$response->setVal( 'pageTitle', wfMessage( 'forum-board-history-title' )->escaped() );
+			$response->setVal( ForumConst::pageTitle, wfMessage( 'forum-board-history-title' )->escaped() );
 			$app->wg->Out->setPageTitle( wfMessage( 'forum-board-history-title' )->plain() );
 
 			$path = [ static::getIndexPath(), [ 'title' => wfMessage( 'forum-board-title', $title->getText() )->escaped(), 'url' => $title->getFullUrl() ] ];
@@ -90,11 +90,11 @@ class ForumHooksHelper {
 	 */
 	static public function onWallNewMessage( $title, &$response ) {
 		if ( $title->getNamespace() === NS_WIKIA_FORUM_BOARD ) {
-			$response->setVal( 'wall_message', wfMessage( 'forum-discussion-placeholder-message', $title->getText() )->escaped() );
+			$response->setVal( ForumConst::wall_message, wfMessage( 'forum-discussion-placeholder-message', $title->getText() )->escaped() );
 		}
 
 		if ( $title->getNamespace() === NS_WIKIA_FORUM_TOPIC_BOARD ) {
-			$response->setVal( 'wall_message', wfMessage( 'forum-discussion-placeholder-message-short' )->escaped() );
+			$response->setVal( ForumConst::wall_message, wfMessage( 'forum-discussion-placeholder-message-short' )->escaped() );
 		}
 		return true;
 	}
@@ -270,7 +270,7 @@ class ForumHooksHelper {
 	static public function onWallMessageDeleted( &$mw, &$response ) {
 		$title = $mw->getTitle();
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
-			$response->setVal( 'returnTo', wfMessage( 'forum-thread-deleted-return-to', $mw->getArticleTitle()->getText() )->escaped() );
+			$response->setVal( ForumConst::returnTo, wfMessage( 'forum-thread-deleted-return-to', $mw->getArticleTitle()->getText() )->escaped() );
 		}
 		return true;
 	}
@@ -318,8 +318,8 @@ class ForumHooksHelper {
 		if ( $ns == NS_FORUM || $ns == NS_FORUM_TALK ) {
 			if ( !static::canEditOldForum( $app->wg->User ) ) {
 				$action = [ 'class' => '', 'text' => wfMessage( 'viewsource' )->escaped(), 'href' => $title->getLocalUrl( [ 'action' => 'edit' ] ), 'id' => 'ca-viewsource', 'primary' => 1 ];
-				$response->setVal( 'actionImage', MenuButtonController::LOCK_ICON );
-				$response->setVal( 'action', $action );
+				$response->setVal( ForumConst::actionImage, MenuButtonController::LOCK_ICON );
+				$response->setVal( ForumConst::action, $action );
 				return false;
 			}
 		}

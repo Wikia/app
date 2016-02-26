@@ -59,27 +59,25 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		$output->setPageTitle( wfMessage( 'forum-forum-title' )->plain() );
 
-		$action = $this->getVal( 'action', '' );
-
-		$this->blurb = wfMessage( 'forum-specialpage-blurb' )->parse();
-		$this->blurbHeading = wfMessage( 'forum-specialpage-blurb-heading' )->parse();
-		$this->lastPostByMsg = wfMessage( 'forum-specialpage-board-lastpostby' )->escaped();
-		$this->canEdit = $this->wg->User->isAllowed( 'forumadmin' );
-		$this->editUrl = $this->wg->Title->getFullUrl( 'action=editmode' );
+		$this->response->setVal( ForumConst::blurb, wfMessage( 'forum-specialpage-blurb' )->parse());
+		$this->response->setVal( ForumConst::blurbHeading, wfMessage( 'forum-specialpage-blurb-heading' )->parse());
+		$this->response->setVal( ForumConst::lastPostByMsg, wfMessage( 'forum-specialpage-board-lastpostby' )->escaped());
+		$this->response->setVal( ForumConst::canEdit, $this->wg->User->isAllowed( 'forumadmin' ));
+		$this->response->setVal( ForumConst::editUrl, $this->wg->Title->getFullUrl( 'action=editmode' ));
 
 		$forum = new Forum();
 
 		if ( $forum->createDefaultBoard() ) {
-			$this->boards = $forum->getBoardList( DB_MASTER );
+			$this->response->setVal( ForumConst::boards, $forum->getBoardList( DB_MASTER ));
 		} else {
-			$this->boards = $forum->getBoardList( DB_SLAVE );
+			$this->response->setVal( ForumConst::boards, $forum->getBoardList( DB_SLAVE ));
 		}
 
 		if ( $forum->haveOldForums() ) {
-			$this->showOldForumLink = true;
-			$this->oldForumLink = Title::newFromText( 'Index', NS_FORUM )->getFullUrl();
+			$this->response->setVal( ForumConst::showOldForumLink, true);
+			$this->response->setVal( ForumConst::oldForumLink, Title::newFromText( 'Index', NS_FORUM )->getFullUrl());
 		} else {
-			$this->showOldForumLink = false;
+			$this->response->setVal( ForumConst::showOldForumLink, false);
 		}
 
 		// TODO: keep the varnish cache and do purging on post
@@ -102,7 +100,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumBoardEdit.scss' );
 		$this->response->addAsset( 'extensions/wikia/Forum/js/ForumBoardEdit.js' );
 
-		$this->boards = ( new Forum )->getBoardList( DB_SLAVE );
+		$this->response->setVal( ForumConst::boards, ( new Forum )->getBoardList( DB_SLAVE ));
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -117,8 +115,8 @@ class ForumSpecialController extends WikiaSpecialPageController {
 			// skip rendering
 		}
 
-		$this->setVal( 'title', wfMessage( 'forum-admin-create-new-board-modal-heading' )->plain() );
-		$this->setVal( 'submitLabel', wfMessage( 'forum-admin-create-new-board-label' )->plain() );
+		$this->setVal( ForumConst::title, wfMessage( 'forum-admin-create-new-board-modal-heading' )->plain() );
+		$this->setVal( ForumConst::submitLabel, wfMessage( 'forum-admin-create-new-board-label' )->plain() );
 
 		$form = [
 			'inputs' => [
@@ -170,8 +168,8 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$boardTitle = $board->getTitle()->getText();
 		$boardDescription = $board->getRawDescription();
 
-		$this->setVal( 'title', wfMessage( 'forum-admin-edit-board-modal-heading', $boardTitle )->plain() );
-		$this->setVal( 'submitLabel', wfMessage( 'save' )->plain() );
+		$this->setVal( ForumConst::title, wfMessage( 'forum-admin-edit-board-modal-heading', $boardTitle )->plain() );
+		$this->setVal( ForumConst::submitLabel, wfMessage( 'save' )->plain() );
 
 		$form = [
 			'inputs' => [
@@ -239,7 +237,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		$list = $forum->getBoardList();
 
-		$this->destinationBoards = [ [ 'value' => '', 'content' => wfMessage( 'forum-board-destination-empty' )->escaped() ] ];
+		$this->response->setVal( ForumConst::destinationBoards, [ [ 'value' => '', 'content' => wfMessage( 'forum-board-destination-empty' )->escaped() ] ]);
 
 		foreach ( $list as $value ) {
 			if ( $boardId != $value['id'] ) {
@@ -247,8 +245,8 @@ class ForumSpecialController extends WikiaSpecialPageController {
 			}
 		}
 
-		$this->setVal( 'title', wfMessage( 'forum-admin-delete-and-merge-board-modal-heading', $boardTitle )->plain() );
-		$this->setVal( 'submitLabel', wfMessage( 'forum-admin-delete-and-merge-button-label' )->plain() );
+		$this->setVal( ForumConst::title, wfMessage( 'forum-admin-delete-and-merge-board-modal-heading', $boardTitle )->plain() );
+		$this->setVal( ForumConst::submitLabel, wfMessage( 'forum-admin-delete-and-merge-button-label' )->plain() );
 
 		$form = [
 			'inputs' => [
