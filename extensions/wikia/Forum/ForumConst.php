@@ -16,7 +16,6 @@ class ForumConst extends WallConst {
 	const description = 'description';
 	const editUrl = 'editUrl';
 	const forumUrl = 'forumUrl';
-	const isAnon = 'isAnon';
 	const isEditMode = 'isEditMode';
 	const isTopicPage = 'isTopicPage';
 	const kudosNumber = 'kudosNumber';
@@ -26,7 +25,6 @@ class ForumConst extends WallConst {
 	const newPostButton = 'newPostButton';
 	const newPostTooltip = 'newPostTooltip';
 	const newPostUrl = 'newPostUrl';
-	const notifyeveryone = 'notifyeveryone';
 	const oldForumLink = 'oldForumLink';
 	const pageDescription = 'pageDescription';
 	const pageHeading = 'pageHeading';

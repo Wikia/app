@@ -7,7 +7,7 @@
 class WallController extends WallBaseController {
 	protected $allowedNamespaces = [ ];
 	protected $sortingType = 'index';
-	const WALL_MESSAGE_RELATIVE_TIMESTAMP = 604800; // relative message timestampt for 7 days (improvement 20178)
+	const WALL_MESSAGE_RELATIVE_TIMESTAMP = 604800; // relative message timestamp for 7 days (improvement 20178)
 
 	public function __construct() {
 		global $wgUserProfileNamespaces;
@@ -25,20 +25,20 @@ class WallController extends WallBaseController {
 		$wm	= WallMessage::newFromId( $id );
 
 		if ( empty( $wm ) ) {
-			$this->response->setVal( 'wallOwner', '' );
-			$this->response->setVal( 'wallUrl',  '' );
+			$this->response->setVal( WallConst::wallOwner, '' );
+			$this->response->setVal( WallConst::wallUrl,  '' );
 		} else {
 
 			$user = $wm->getWallOwner();
 			$user_displayname = $user->getName();
 
-			$this->response->setVal( 'wallOwner', $user_displayname );
-			$this->response->setVal( 'wallUrl', $wm->getArticleTitle()->getFullURL() );
+			$this->response->setVal( WallConst::wallOwner, $user_displayname );
+			$this->response->setVal( WallConst::wallUrl, $wm->getArticleTitle()->getFullURL() );
 
-			$this->response->setVal( 'showViewLink', $wm->canViewDeletedMessage( $this->app->wg->User ) );
-			$this->response->setVal( 'viewUrl', $this->app->wg->Title->getFullUrl( 'show=1' ) );
+			$this->response->setVal( WallConst::showViewLink, $wm->canViewDeletedMessage( $this->app->wg->User ) );
+			$this->response->setVal( WallConst::viewUrl, $this->app->wg->Title->getFullUrl( 'show=1' ) );
 
-			$this->response->setVal( 'returnTo', wfMsg( 'wall-deleted-msg-return-to', $user_displayname ) );
+			$this->response->setVal( WallConst::returnTo, wfMsg( 'wall-deleted-msg-return-to', $user_displayname ) );
 
 			wfRunHooks( 'WallMessageDeleted', [ &$wm, &$this->response ] );
 		}
@@ -52,7 +52,7 @@ class WallController extends WallBaseController {
 	 * @author Andrzej 'nAndy' √Ö¬Åukaszewski
 	 */
 	public function renderOldUserTalkPage() {
-		$wallUrl = $this->request->getVal( 'wallUrl' );
+		$wallUrl = $this->request->getVal( WallConst::wallUrl );
 
 		$this->userTalkArchiveContent = $this->getUserTalkContent();
 
@@ -70,7 +70,7 @@ class WallController extends WallBaseController {
 	 * @author Andrzej 'nAndy' √Ö¬Åukaszewski
 	 */
 	public function renderOldUserTalkSubpage() {
-		$subpageName = $this->request->getVal( 'subpage', null );
+		$subpageName = $this->request->getVal( WallConst::subpage, null );
 		$wallUrl = $this->request->getVal( 'wallUrl' );
 
 		$this->content = $this->getUserTalkContent( $subpageName );
@@ -93,7 +93,7 @@ class WallController extends WallBaseController {
 	 */
 
 	public function renderUserTalkArchiveAnchor() {
-		$title = $this->request->getVal( 'title' );
+		$title = $this->request->getVal( WallConst::title );
 
 		$this->renderUserTalkArchiveAnchor = false;
 		$pageTitle = $this->helper->getTitle( NS_USER_TALK );
@@ -104,7 +104,7 @@ class WallController extends WallBaseController {
 	}
 
 	public function loadMore() {
-		$this->response->setVal( 'repliesNumber', $this->request->getVal( 'repliesNumber' ) );
+		$this->response->setVal( WallConst::repliesNumber, $this->request->getVal( WallConst::repliesNumber ) );
 	}
 
 	public function deleteInfoBox() {
@@ -112,14 +112,14 @@ class WallController extends WallBaseController {
 
 
 	public function messageRemoved() {
-		$this->response->setVal( 'comment', $this->request->getVal( 'comment', false ) );
-		$this->response->setVal( 'showundo', $this->request->getVal( 'showundo', false ) );
+		$this->response->setVal( WallConst::comment, $this->request->getVal( WallConst::comment, false ) );
+		$this->response->setVal( WallConst::showundo, $this->request->getVal( WallConst::showundo, false ) );
 
-		$showFrom = $this->request->getVal( 'repliesNumber', 0 ) - $this->request->getVal( 'showRepliesNumber', 0 );
-		if ( $showFrom > $this->request->getVal( 'current' ) ) {
-			$this->response->setVal( 'hide',  true );
+		$showFrom = $this->request->getVal( WallConst::repliesNumber, 0 ) - $this->request->getVal( WallConst::showRepliesNumber, 0 );
+		if ( $showFrom > $this->request->getVal( WallConst::current ) ) {
+			$this->response->setVal( WallConst::hide,  true );
 		} else {
-			$this->response->setVal( 'hide',  false );
+			$this->response->setVal( WallConst::hide,  false );
 		}
 
 	}
