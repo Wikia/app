@@ -25,8 +25,11 @@ class DiscussionsDataService {
 		);
 
 		$posts = [];
-		foreach ($rawPosts as $key => $value) {
-			$posts[] = $this->buildPost($value);
+
+		if ( is_array( $rawPosts ) && count( $rawPosts ) > 0 ) {
+			foreach ( $rawPosts as $key => $value ) {
+				$posts[] = $this->buildPost( $value );
+			}
 		}
 
 		return $posts;
