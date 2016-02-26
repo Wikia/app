@@ -2,6 +2,7 @@
 namespace Wikia\ExactTarget;
 
 use Wikia\Logger\Loggable;
+use Wikia\ExactTarget\ResourceEnum as Enum;
 
 class ExactTargetClient {
 	use Loggable;
@@ -42,6 +43,9 @@ class ExactTargetClient {
 
 	/**
 	 * Deletes Subscriber object in ExactTarget by API request
+	 * @param string $userEmail
+	 * @return bool
+	 * @throws ExactTargetException
 	 */
 	public function deleteSubscriber( $userEmail ) {
 		$deleteRequest = ExactTargetRequestBuilder::getSubscriberDeleteBuilder()
@@ -104,20 +108,29 @@ class ExactTargetClient {
 	}
 
 	public function retrieveEmailByUserId( $userId ) {
-		$result = $this->retrieve( [ 'user_email' ], 'user_id', [ $userId ], ResourceEnum::USER );
+		$result = $this->retrieve(
+			[ Enum::USER_EMAIL ],
+			Enum::USER_ID,
+			[ $userId ],
+			Enum::CUSTOMER_KEY_USER
+		);
 
 		return ( new UserEmailAdapter( $result ) )->getEmail();
 	}
 
 	public function retrieveUsersEdits( $usersIds ) {
 		$result = $this->retrieve(
-			[ 'user_id', 'wiki_id', 'contributions' ], 'user_id', $usersIds, ResourceEnum::USER_WIKI );
+			[ Enum::USER_ID, Enum::USER_WIKI_ID, Enum::USER_WIKI_FIELD_CONTRIBUTIONS ],
+			Enum::USER_ID,
+			$usersIds,
+			Enum::CUSTOMER_KEY_USER_ID_WIKI_ID
+		);
 
 		return ( new UserEditsAdapter( $result ) )->getEdits();
 	}
 
 	public function retrieveUserIdsByEmail( $email ) {
-		$result = $this->retrieve( [ 'user_id' ], 'user_email', [ $email ], ResourceEnum::USER );
+		$result = $this->retrieve( [ Enum::USER_ID ], Enum::USER_EMAIL, [ $email ], Enum::CUSTOMER_KEY_USER );
 
 		return ( new UserIdsAdapter( $result ) )->getUsersIds();
 	}
@@ -148,7 +161,7 @@ class ExactTargetClient {
 			return $response->Results ? $response->Results : true;
 		}
 
-		$this->throwExactTargetException( $response );
+		throw $this->responseException( $response );
 	}
 
 	protected function doCall( $method, $request, $retry ) {
@@ -190,7 +203,7 @@ class ExactTargetClient {
 		return $this->client;
 	}
 
-	private function throwExactTargetException( $response ) {
+	private function responseException( $response ) {
 		$message = $response && isset( $response->Results->StatusMessage )
 			? $response->Results->StatusMessage
 			: self::EXACT_TARGET_REQUEST_FAILED;
@@ -201,6 +214,6 @@ class ExactTargetClient {
 			'response.overallStatus' => $response && isset ( $response->OverallStatus )
 				? $response->OverallStatus : ''
 		] );
-		throw $exception;
+		return $exception;
 	}
 }

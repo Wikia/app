@@ -9,11 +9,6 @@ class BaseRequestBuilder {
 	const SUBSCRIBER_OBJECT_TYPE = 'Subscriber';
 	const DATA_EXTENSION_OBJECT_TYPE = 'DataExtensionObject';
 
-	const CUSTOMER_KEY_USER = 'user';
-	const CUSTOMER_KEY_USER_ID_WIKI_ID = 'UserID_WikiID';
-	const CUSTOMER_KEY_USER_PROPERTIES = 'user_properties';
-	const CUSTOMER_KEY_USER_GROUPS = 'user_groups';
-
 	const GROUP_TYPE = 'group';
 	const USER_TYPE = 'user';
 	const SUBSCRIBER_TYPE = 'subscriber';

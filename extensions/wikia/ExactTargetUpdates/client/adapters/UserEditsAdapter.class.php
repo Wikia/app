@@ -2,6 +2,8 @@
 
 namespace Wikia\ExactTarget;
 
+use Wikia\ExactTarget\ResourceEnum as Enum;
+
 class UserEditsAdapter {
 
 	var $edits = [ ];
@@ -27,13 +29,13 @@ class UserEditsAdapter {
 
 	private function extractUserWikiEdits( array $property ) {
 		foreach ( $property as $value ) {
-			if ( $value->Name === 'user_id' ) {
+			if ( $value->Name === Enum::USER_ID ) {
 				$userId = $value->Value;
 			}
-			if ( $value->Name === 'wiki_id' ) {
+			if ( $value->Name === Enum::USER_WIKI_ID ) {
 				$wikiId = $value->Value;
 			}
-			if ( $value->Name === 'contributions' ) {
+			if ( $value->Name === Enum::USER_WIKI_FIELD_CONTRIBUTIONS ) {
 				$userContributions = $value->Value;
 			}
 		}

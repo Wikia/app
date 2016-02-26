@@ -2,10 +2,10 @@
 namespace Wikia\ExactTarget\Builders;
 
 use Wikia\Util\Assert;
+use Wikia\ExactTarget\ResourceEnum as Enum;
 
 class UpdateRequestBuilder extends BaseRequestBuilder {
 	const SAVE_OPTION_TYPE = 'SaveOption';
-	const EXACT_TARGET_USER_ID_PROPERTY = 'user_id';
 
 	private $userData;
 	private $edits;
@@ -50,8 +50,10 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 		Assert::true( isset( $this->userId ) );
 		$objects = [ ];
 		foreach ( $properties as $sProperty => $sValue ) {
-			$objects[] = $this->prepareDataObject( self::CUSTOMER_KEY_USER_PROPERTIES,
-				[ 'up_user' => $id, 'up_property' => $sProperty ], [ 'up_value' => $sValue ] );
+			$objects[] = $this->prepareDataObject( Enum::CUSTOMER_KEY_USER_PROPERTIES,
+				[ Enum::USER_PROPERTIES_USER => $id, Enum::USER_PROPERTIES_PROPERTY => $sProperty ],
+				[ Enum::USER_PROPERTIES_VALUE => $sValue ]
+			);
 		}
 		return $objects;
 	}
@@ -59,13 +61,13 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 	private function prepareUsersUpdateParams( array $usersData ) {
 		$aDataExtension = [ ];
 		foreach ( $usersData as $aUserData ) {
-			$userId = $aUserData[ self::EXACT_TARGET_USER_ID_PROPERTY ];
+			$userId = $aUserData[ Enum::USER_ID ];
 			// remove userId as its handled differently
-			unset( $aUserData[ self::EXACT_TARGET_USER_ID_PROPERTY ] );
+			unset( $aUserData[ Enum::USER_ID ] );
 			Assert::true( !empty( $userId ) );
 
-			$aDataExtension[] = $this->prepareDataObject( self::CUSTOMER_KEY_USER,
-				[ self::EXACT_TARGET_USER_ID_PROPERTY => $userId ], $aUserData );
+			$aDataExtension[] = $this->prepareDataObject( Enum::CUSTOMER_KEY_USER,
+				[ Enum::USER_ID => $userId ], $aUserData );
 		}
 		return $aDataExtension;
 	}
@@ -85,8 +87,10 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 		$result = [ ];
 		foreach ( $edits as $userId => $contributions ) {
 			foreach ( $contributions as $wikiId => $number ) {
-				$result[] = $this->prepareDataObject( self::CUSTOMER_KEY_USER_ID_WIKI_ID,
-					[ 'user_id' => $userId, 'wiki_id' => $wikiId ], [ 'contributions' => $number ] );
+				$result[] = $this->prepareDataObject( Enum::CUSTOMER_KEY_USER_ID_WIKI_ID,
+					[ Enum::USER_ID => $userId, Enum::USER_WIKI_ID => $wikiId ],
+					[ Enum::USER_WIKI_FIELD_CONTRIBUTIONS => $number ]
+				);
 			}
 		}
 

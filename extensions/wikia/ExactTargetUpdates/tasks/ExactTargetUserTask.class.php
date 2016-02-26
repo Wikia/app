@@ -2,6 +2,7 @@
 namespace Wikia\ExactTarget;
 
 use Wikia\ExactTarget\ExactTargetUserUpdateDriver as Driver;
+use Wikia\ExactTarget\ResourceEnum as Enum;
 use Wikia\Tasks\Tasks\BaseTask;
 use Wikia\Util\Assert;
 
@@ -23,8 +24,8 @@ class ExactTargetUserTask extends BaseTask {
 	 * @throws \Wikia\Util\AssertionException
 	 */
 	public function updateUser( array $userData ) {
-		$userId = $userData[ 'user_id' ];
-		$userEmailNew = $userData[ 'user_email' ];
+		$userId = $userData[ Enum::USER_ID ];
+		$userEmailNew = $userData[ Enum::USER_EMAIL ];
 
 		Assert::true( !empty( $userId ), 'User ID missing' );
 		Assert::true( !empty( $userEmailNew ), 'User email missing' );
