@@ -299,48 +299,39 @@ class MercuryApiController extends WikiaController {
 					$data['details'] = MercuryApiMainPageHandler::getMainPageMockedDetails( $title );
 				}
 			} else {
-				if ( $title->isContentPage() && $title->isKnown() ) {
-					// Handling content namespaces
-					if ( !$article instanceof Article ) {
-						\Wikia\Logger\WikiaLogger::instance()->error(
-							'$article should be an instance of an Article',
-							[ 'article' => $article ]
-						);
-
-						throw new NotFoundApiException( 'Article is empty' );
-					}
-
-					$data = array_merge(
-						$data,
-						MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
-					);
-
-					if ( !$isMainPage ) {
-						$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
-					}
-				} elseif ( !$article instanceof Article ) {
-					\Wikia\Logger\WikiaLogger::instance()->error(
-						'$article should be an instance of an Article',
-						['article' => $article]
-					);
-
-					throw new NotFoundApiException( 'Article is empty' );
-				} else {
+				switch ( $data['ns'] ) {
 					// Handling namespaces other than content ones
-					switch ( $data['ns'] ) {
-						case NS_CATEGORY:
-							$data['nsSpecificContent'] = MercuryApiCategoryHandler::getCategoryContent( $title );
+					case NS_CATEGORY:
+						$data['nsSpecificContent'] = MercuryApiCategoryHandler::getCategoryContent( $title );
 
-							if ( MercuryApiCategoryHandler::hasArticle( $title ) ) {
-								$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
-								$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
-							} elseif ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
-								$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
-							} else {
-								throw new NotFoundApiException( 'Article is empty and category has no members' );
+						if ( MercuryApiCategoryHandler::hasArticle( $title ) ) {
+							$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
+							$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
+						} elseif ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
+							$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
+						} else {
+							throw new NotFoundApiException( 'Article is empty and category has no members' );
+						}
+						break;
+					// Handling content namespaces
+					default:
+						if ( $title->isContentPage() && $title->isKnown() && $article instanceof Article ) {
+							$data = array_merge(
+								$data,
+								MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
+							);
+
+							if ( !$isMainPage ) {
+								$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
 							}
-							break;
-					}
+						} else {
+							\Wikia\Logger\WikiaLogger::instance()->error(
+								'$article should be an instance of an Article',
+								[ 'article' => $article ]
+							);
+
+							throw new NotFoundApiException( 'Article is empty' );
+						}
 				}
 			}
 
