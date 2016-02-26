@@ -125,6 +125,10 @@ class PortableInfoboxBuilderService extends WikiaService {
 			$xml->addAttribute( 'source', $node->source );
 		}
 
+		if ( $node->collapsible ) {
+			$xml->addAttribute( 'section_collapsible', true );
+		}
+
 		foreach ( $node->data as $key => $value ) {
 			if ( !$this->isEmptyNodeValue( $value ) ) {
 				// map defaultValue to default, as its js reserved key word
@@ -178,7 +182,6 @@ class PortableInfoboxBuilderService extends WikiaService {
 	/**
 	 * @param $xml \SimpleXMLElement
 	 * @param $formatted make the output document human-readable (true) or condensed (false)
-	 * @param $newChild
 	 * @return string
 	 */
 	protected function getFormattedMarkup( $xml, $formatted ) {
@@ -196,8 +199,14 @@ class PortableInfoboxBuilderService extends WikiaService {
 					$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $childNodeDom ) );
 				} else {
 					// header node starting a group; we create an empty group and append the current node (header) to it
-					$currentGroupDom = $this->createGroupDom();
-					$currentGroupDom->appendChild( $currentGroupDom->ownerDocument->importNode( $childNodeDom, true ) );
+
+					$collapsible = $this->isCollapsible( $currentChildNode );
+
+					// this attribute is not supported in header tag
+					$childNodeDom->removeAttribute( 'section_collapsible' );
+
+					$currentGroupDom = $this->createGroupDom( $childNodeDom, $collapsible );
+
 					$inGroup = true;
 				}
 			} else {
@@ -210,9 +219,13 @@ class PortableInfoboxBuilderService extends WikiaService {
 					// we close the current group and append it to the infobox dom...
 					$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $currentGroupDom ) );
 
+					$collapsible = $this->isCollapsible( $currentChildNode );
+
+					// this attribute is not supported in header tag
+					$childNodeDom->removeAttribute( 'section_collapsible' );
+
 					// and initialize a new group
-					$currentGroupDom = $this->createGroupDom();
-					$currentGroupDom->appendChild( $currentGroupDom->ownerDocument->importNode( $childNodeDom, true ) );
+					$currentGroupDom = $this->createGroupDom( $childNodeDom, $collapsible );
 				} else {
 					// title node, terminating the group and returning to regular flow
 					$infoboxDom->appendChild( $this->importNodeToDom( $infoboxDom, $currentGroupDom ) );
@@ -245,12 +258,24 @@ class PortableInfoboxBuilderService extends WikiaService {
 	}
 
 	/**
+	 * @param $childNodeDom
+	 * @param $collapsible: bool
 	 * @return DOMElement
 	 */
-	protected function createGroupDom() {
-		return dom_import_simplexml(
-			new SimpleXMLElement( '<' . \Wikia\PortableInfoboxBuilder\Nodes\NodeGroup::XML_TAG_NAME . '/>' )
-		);
+	protected function createGroupDom( $childNodeDom, $collapsible ) {
+		$groupElem = new SimpleXMLElement( '<' . \Wikia\PortableInfoboxBuilder\Nodes\NodeGroup::XML_TAG_NAME . '/>' );
+
+		if ( $collapsible ) {
+			$groupElem->addAttribute( 'collapse', 'open' );
+		}
+
+		$groupDom = dom_import_simplexml( $groupElem );
+		$groupDom->appendChild( $groupDom->ownerDocument->importNode( $childNodeDom, true ) );
+		return dom_import_simplexml( $groupElem );
+	}
+
+	protected function isCollapsible( $node ) {
+		return ( bool )$node[ 'section_collapsible' ];
 	}
 
 	/**
