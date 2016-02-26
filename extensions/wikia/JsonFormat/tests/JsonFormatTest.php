@@ -149,6 +149,12 @@ class JsonFormatTest extends WikiaBaseTest {
 			//check for empty result
 			if ( !empty( $wikitext ) ) {
 				$this->assertNotEmpty( $htmlOutput->getText(), 'Provided WikiText could not be parsed.' );
+				\Wikia\Logger\WikiaLogger::instance()->info(
+					'JsonFormatTest::getParsedOutput', [
+						'wikitext' => $wikitext,
+						'html_output' => $htmlOutput->getText()
+					]
+				);
 			}
 
 			$htmlParser = new \Wikia\JsonFormat\HtmlParser();
@@ -492,6 +498,20 @@ width: 310px; padding: 10px; text-align: left; float: right; margin-bottom:15px;
 						],
 						'JsonFormatTextNode' => [ ],
 						'JsonFormatImageFigureNode' => [ 'src', 'caption' ]
+					]
+				]
+			],
+			[
+				'',
+				[
+					'JsonFormatRootNode' => []
+				]
+			],
+			[
+				'=h1=',
+				[
+					'JsonFormatRootNode' => [
+						'JsonFormatSectionNode' => [ 'level', 'title' ]
 					]
 				]
 			]
