@@ -86,6 +86,7 @@ require([
 			recoveryHelper.addOnBlockingCallback(function () {
 				console.log("AD_BLOCKING_CALLBACK");
 				console.log(win.ads.runtime.sp.slots);
+				console.log(JSON.stringify(win.ads.runtime.sp.slots));
 				adEngineRunner.run(adConfigDesktop, win.ads.runtime.sp.slots, 'queue.sp', false);
 			});
 		}
