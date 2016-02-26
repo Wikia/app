@@ -19,8 +19,8 @@ class DiscussionsDataService {
 		$rawPosts = WikiaDataAccess::cache(
 			$memcKey,
 			WikiaResponse::CACHE_VERY_SHORT,
-			function() use ( $type ) {
-				return $this->apiRequest( $type );
+			function() {
+				return $this->apiRequest();
 			}
 		);
 
