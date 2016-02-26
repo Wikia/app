@@ -84,6 +84,8 @@ require([
 		if (context.opts.sourcePointRecovery && win.ads) {
 			win.ads.runtime.sp.slots = win.ads.runtime.sp.slots || [];
 			recoveryHelper.addOnBlockingCallback(function () {
+				console.log("AD_BLOCKING_CALLBACK");
+				console.log(win.ads.runtime.sp.slots);
 				adEngineRunner.run(adConfigDesktop, win.ads.runtime.sp.slots, 'queue.sp', false);
 			});
 		}
