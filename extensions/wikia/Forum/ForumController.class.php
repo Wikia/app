@@ -33,30 +33,20 @@ class ForumController extends WallBaseController {
 
 		parent::index( self::BOARD_PER_PAGE );
 
-		JSMessages::enqueuePackage( 'Wall', JSMessages::EXTERNAL );
-		$this->response->addAsset( 'forum_js' );
-		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumBoard.scss' );
-		$this->response->addAsset( 'extensions/wikia/Wall/css/MessageTopic.scss' );
-
-		// VOLDEV-36: separate monobook styling
-		if ( $this->app->checkSkin( 'monobook' ) ) {
-			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/ForumMonobook.scss' );
-			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/ForumBoardMonobook.scss' );
-		}
-
-		$this->addMiniEditorAssets();
-
+		$this->addAssets();
 		$this->description = '';
+		/** @var Wall $wall */
+		$wall = $this->response->getVal( 'wall' );
 
 		if ( $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$board = ForumBoard::getEmpty();
 
-			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads( $this->wall->getRelatedPageId() ) );
+			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads( $wall->getRelatedPageId() ) );
 			$this->response->setVal( 'isTopicPage', true );
 
 			$this->app->wg->Out->setPageTitle( wfMessage( 'forum-board-topic-title', $this->wg->title->getBaseText() )->plain() );
 		} else {
-			$boardId = $this->wall->getId();
+			$boardId = $wall->getId();
 			/** @var ForumBoard $board */
 			$board = ForumBoard::newFromId( $boardId );
 
@@ -124,7 +114,7 @@ class ForumController extends WallBaseController {
 			$this->destinationBoards = [ [ 'value' => '', 'content' => wfMessage( 'forum-board-destination-empty' )->escaped() ] ];
 
 			foreach ( $list as $value ) {
-				$this->destinationBoards[] = [ 'value' => htmlspecialchars( $value['name'] ), 'content' => htmlspecialchars( $value['name'] ) ];
+				$this->destinationBoards[] = [ 'value' => htmlspecialchars( $value[ 'name' ] ), 'content' => htmlspecialchars( $value[ 'name' ] ) ];
 			}
 		}
 	}
@@ -262,7 +252,7 @@ class ForumController extends WallBaseController {
 
 	// get sorting options
 	protected function getSortingOptionsText() {
-		switch( $this->sortingType ) {
+		switch ( $this->sortingType ) {
 			case 'history' :
 				// keys of sorting array are names of DOM elements' classes
 				// which are needed to click tracking
@@ -321,22 +311,22 @@ class ForumController extends WallBaseController {
 			$messages = [ ];
 			$count = 0;
 			foreach ( $out as $key => $val ) {
-				if ( $title->getArticleId() == $val['comment_id'] ) {
+				if ( $title->getArticleId() == $val[ 'comment_id' ] ) {
 					continue;
 				}
 
-				$msg = WallMessage::newFromId( $val['comment_id'] );
+				$msg = WallMessage::newFromId( $val[ 'comment_id' ] );
 				if ( !empty( $msg ) ) {
 					$msg->load();
 
 					$message = [ 'message' => $msg ];
 
-					if ( !empty( $val['last_child'] ) ) {
-						$childMsg = WallMessage::newFromId( $val['last_child'] );
+					if ( !empty( $val[ 'last_child' ] ) ) {
+						$childMsg = WallMessage::newFromId( $val[ 'last_child' ] );
 
 						if ( !empty( $childMsg ) ) {
 							$childMsg->load();
-							$message['reply'] = $childMsg;
+							$message[ 'reply' ] = $childMsg;
 						}
 					}
 
@@ -368,6 +358,19 @@ class ForumController extends WallBaseController {
 		$forumTitle = SpecialPage::getTitleFor( 'Forum' );
 		$this->forumUrl = $forumTitle->getLocalUrl();
 		return true;
+	}
+
+	private function addAssets() {
+		$this->response->addAsset( 'forum_js' );
+		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumBoard.scss' );
+
+		// VOLDEV-36: separate monobook styling
+		if ( $this->app->checkSkin( 'monobook' ) ) {
+			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/ForumMonobook.scss' );
+			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/ForumBoardMonobook.scss' );
+		}
+
+		$this->addMiniEditorAssets();
 	}
 
 }
