@@ -45,7 +45,6 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 		 * 1. Get the new data first
 		 */
 		$nonportableTemplates = $this->reallyDoQuery();
-		$dbw->begin();
 
 		/**
 		 * 2. Delete the existing records
@@ -58,31 +57,19 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 		/**
 		 * 3. Insert the new records if the $nonportableTemplates array is not empty
 		 */
-		$num = 0;
-		if ( !empty( $nonportableTemplates ) ) {
-
-			( new WikiaSQL() )
-				->INSERT()->INTO( 'querycache', [
-					'qc_type',
-					'qc_value',
-					'qc_namespace',
-					'qc_title'
-				] )
-				->VALUES( $nonportableTemplates )
-				->run( $dbw );
-
-			$num = $dbw->affectedRows();
-			if ( $num === 0 ) {
-				$dbw->rollback();
-				$num = false;
-			} else {
-				$dbw->commit();
-			}
-		}
+		( new WikiaSQL() )
+			->INSERT()->INTO( 'querycache', [
+				'qc_type',
+				'qc_value',
+				'qc_namespace',
+				'qc_title'
+			] )
+			->VALUES( $nonportableTemplates )
+			->run( $dbw );
 
 		wfRunHooks( 'UnconvertedInfoboxesQueryRecached' );
 
-		return $num;
+		return count( $nonportableTemplates );
 	}
 
 	/**
