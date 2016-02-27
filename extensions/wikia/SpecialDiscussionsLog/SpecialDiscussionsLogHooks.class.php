@@ -11,8 +11,7 @@ class SpecialDiscussionsLogHooks {
 				wfMessage( 'discussionslog-contributions-link-title' )->escaped(),
 				[],
 				['username' => User::newFromId( $id )->getName()]
-			)
-			;
+			);
 		}
 
 		return true;
