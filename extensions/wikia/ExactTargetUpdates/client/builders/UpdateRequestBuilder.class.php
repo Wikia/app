@@ -27,14 +27,16 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 		$oRequest->Options = $this->prepareUpdateCreateOptions();
 
 		// prepare exact target structure
-		if ( $this->type === self::PROPERTIES_TYPE ) {
-			$objects = $this->prepareUserPreferencesParams( $this->userId, $this->properties );
-		} elseif ( $this->type === self::USER_TYPE ) {
-			$objects = $this->prepareUsersUpdateParams( $this->userData );
-		} elseif ( $this->type === self::EDITS_TYPE ) {
-			$objects = $this->prepareUserEditsParams( $this->edits );
-		} else {
-			$objects = [ ];
+		switch ( $this->type ) {
+			case self::PROPERTIES_TYPE:
+				$objects = $this->prepareUserPreferencesParams( $this->userId, $this->properties );
+				break;
+			case self::USER_TYPE:
+				$objects = $this->prepareUsersUpdateParams( $this->userData );
+				break;
+			case self::EDITS_TYPE:
+				$objects = $this->prepareUserEditsParams( $this->edits );
+				break;
 		}
 		// make it soap vars
 		$oRequest->Objects = $this->prepareSoapVars( $objects, self::DATA_EXTENSION_OBJECT_TYPE );

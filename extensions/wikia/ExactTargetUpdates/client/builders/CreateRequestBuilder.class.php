@@ -10,14 +10,15 @@ class CreateRequestBuilder extends BaseRequestBuilder {
 	public function build() {
 		$type = self::DATA_EXTENSION_OBJECT_TYPE;
 
-		if ( $this->type === self::GROUP_TYPE ) {
-			$objects = [ $this->prepareDataObject( ResourceEnum::CUSTOMER_KEY_USER_GROUPS,
-				[ ], [ 'ug_user' => $this->userId, 'ug_group' => $this->group ] ) ];
-		} elseif ( $this->type === self::SUBSCRIBER_TYPE ) {
-			$objects = [ $this->prepareSubscriber( $this->email, $this->email ) ];
-			$type = self::SUBSCRIBER_OBJECT_TYPE;
-		} else {
-			$objects = [ ];
+		switch ( $this->type ) {
+			case self::GROUP_TYPE:
+				$objects = [ $this->prepareDataObject( ResourceEnum::CUSTOMER_KEY_USER_GROUPS,
+					[ ], [ 'ug_user' => $this->userId, 'ug_group' => $this->group ] ) ];
+				break;
+			case self::SUBSCRIBER_TYPE:
+				$objects = [ $this->prepareSubscriber( $this->email, $this->email ) ];
+				$type = self::SUBSCRIBER_OBJECT_TYPE;
+				break;
 		}
 		$aSoapVars = $this->prepareSoapVars( $objects, $type );
 
