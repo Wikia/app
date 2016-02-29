@@ -26,8 +26,8 @@ $wgAutoloadClasses[ 'PortableInfoboxBuilderSpecialController' ] = $dir . 'Portab
 $wgAutoloadClasses[ 'PortableInfoboxBuilderHooks' ] = $dir . 'PortableInfoboxBuilderHooks.class.php';
 
 // special pages
-$wgSpecialPages[ 'PortableInfoboxBuilder' ] = 'PortableInfoboxBuilderSpecialController';
-$wgSpecialPageGroups[ 'PortableInfoboxBuilder' ] = 'wikia';
+$wgSpecialPages[ 'InfoboxBuilder' ] = 'PortableInfoboxBuilderSpecialController';
+$wgSpecialPageGroups[ 'InfoboxBuilder' ] = 'wikia';
 
 // iframe loading sctipt
 $wgHooks[ 'SkinAfterBottomScripts' ][] = 'PortableInfoboxBuilderHooks::onSkinAfterBottomScripts';
