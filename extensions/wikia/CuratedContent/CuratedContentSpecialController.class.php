@@ -56,13 +56,13 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		JSMessages::enqueuePackage( 'CuratedContentMsg', JSMessages::INLINE );
 
 		$this->response->setVal( 'descriptions', [
-			wfMessage( 'wikiacuratedcontent-content-description-items' ),
-			wfMessage( 'wikiacuratedcontent-content-description-supported-items-for-sections' ),
-			wfMessage( 'wikiacuratedcontent-content-description-tag-needs-image' ),
-			wfMessage( 'wikiacuratedcontent-content-description-section' ),
-			wfMessage( 'wikiacuratedcontent-content-description-organize' ),
-			wfMessage( 'wikiacuratedcontent-content-description-no-section' ),
-			wfMessage( 'wikiacuratedcontent-content-description-items-input' )
+			wfMessage( 'wikiacuratedcontent-content-description-items' )->plain(),
+			wfMessage( 'wikiacuratedcontent-content-description-supported-items-for-sections' )->plain(),
+			wfMessage( 'wikiacuratedcontent-content-description-tag-needs-image' )->plain(),
+			wfMessage( 'wikiacuratedcontent-content-description-section' )->plain(),
+			wfMessage( 'wikiacuratedcontent-content-description-organize' )->plain(),
+			wfMessage( 'wikiacuratedcontent-content-description-no-section' )->plain(),
+			wfMessage( 'wikiacuratedcontent-content-description-items-input' )->text(),
 		] );
 
 		$this->response->setVal( 'addSection', wfMessage( 'wikiacuratedcontent-content-add-section' ) );
