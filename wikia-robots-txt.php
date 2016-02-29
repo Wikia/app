@@ -42,6 +42,10 @@ if ( !$allowRobots ) {
 	$robots->allowSpecialPage( 'Sitemap' );
 	$robots->allowSpecialPage( 'Videos' );
 
+	if ( !empty( $wgAllowSpecialImagesInRobots ) ) {
+		$robots->allowSpecialPage( 'Images' );
+	}
+
 	// Params
 	$robots->disallowParam( 'action' );
 	$robots->disallowParam( 'feed' );
