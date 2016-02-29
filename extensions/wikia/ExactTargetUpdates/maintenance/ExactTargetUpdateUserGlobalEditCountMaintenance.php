@@ -13,7 +13,6 @@ require_once( __DIR__.'/../../../../maintenance/Maintenance.php' );
 
 use Wikia\ExactTarget\ExactTargetUserHooksHelper;
 use Wikia\ExactTarget\ExactTargetApiDataExtension;
-use Wikia\ExactTarget\ExactTargetUpdateUserTask;
 
 class ExactTargetUpdateUserGlobalEditCountMaintenance extends Maintenance {
 
