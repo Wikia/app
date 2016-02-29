@@ -45,7 +45,6 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 		 * 1. Get the new data first
 		 */
 		$templatesWithoutType = $this->reallyDoQuery();
-		$dbw->begin();
 
 		/**
 		 * 2. Delete the existing records
@@ -58,29 +57,17 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 		/**
 		 * 3. Insert the new records if the $templatesWithoutType array is not empty
 		 */
-		$num = 0;
-		if ( !empty( $templatesWithoutType ) ) {
+		( new WikiaSQL() )
+			->INSERT()->INTO( 'querycache', [
+				'qc_type',
+				'qc_value',
+				'qc_namespace',
+				'qc_title'
+			] )
+			->VALUES( $templatesWithoutType )
+			->run( $dbw );
 
-			( new WikiaSQL() )
-				->INSERT()->INTO( 'querycache', [
-					'qc_type',
-					'qc_value',
-					'qc_namespace',
-					'qc_title'
-				] )
-				->VALUES( $templatesWithoutType )
-				->run( $dbw );
-
-			$num = $dbw->affectedRows();
-			if ( $num === 0 ) {
-				$dbw->rollback();
-				$num = false;
-			} else {
-				$dbw->commit();
-			}
-		}
-
-		return $num;
+		return count( $templatesWithoutType );
 	}
 
 	/**
