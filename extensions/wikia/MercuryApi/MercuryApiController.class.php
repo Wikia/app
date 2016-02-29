@@ -280,8 +280,9 @@ class MercuryApiController extends WikiaController {
 
 			// getPage is cached (see the bottom of the method body) so there is no need for additional caching here
 			$article = Article::newFromID( $title->getArticleId() );
+			$articleExists = $article instanceof Article;
 
-			if ( $article instanceof Article && $title->isRedirect() ) {
+			if ( $articleExists && $title->isRedirect() ) {
 				list( $title, $article, $data ) = $this->handleRedirect( $title, $article, $data );
 			}
 
@@ -307,6 +308,7 @@ class MercuryApiController extends WikiaController {
 						if ( MercuryApiCategoryHandler::hasArticle( $this->request, $article ) ) {
 							$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
 							$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
+							$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
 						} elseif ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
 							$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
 						} else {
@@ -315,7 +317,7 @@ class MercuryApiController extends WikiaController {
 						break;
 					// Handling content namespaces
 					default:
-						if ( $title->isContentPage() && $title->isKnown() && $article instanceof Article ) {
+						if ( $title->isContentPage() && $title->isKnown() && $articleExists ) {
 							$data = array_merge(
 								$data,
 								MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
