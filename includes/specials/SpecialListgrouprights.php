@@ -138,8 +138,7 @@ class SpecialListGroupRights extends SpecialPage {
 	 private function formatPermissions( $permissions, $add, $remove, $addSelf, $removeSelf ) {
 		$r = array();
 		foreach( $permissions as $permission => $granted ) {
-			//show as granted only if it isn't revoked to prevent duplicate display of permissions
-			if( $granted && ( !isset( $revoke[$permission] ) || !$revoke[$permission] ) ) {
+			if( $granted ) {
 				$description = wfMsgExt( 'listgrouprights-right-display', array( 'parseinline' ),
 					User::getRightDescription( $permission ),
 					'<span class="mw-listgrouprights-right-name">' . $permission . '</span>'
