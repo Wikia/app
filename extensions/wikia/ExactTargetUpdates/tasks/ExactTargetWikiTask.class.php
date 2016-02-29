@@ -1,7 +1,6 @@
 <?php
 namespace Wikia\ExactTarget;
 
-use Wikia\ExactTarget\ExactTargetUserUpdateDriver as Driver;
 use Wikia\ExactTarget\ResourceEnum as Enum;
 use Wikia\Tasks\Tasks\BaseTask;
 use Wikia\Util\Assert;
@@ -17,7 +16,7 @@ class ExactTargetWikiTask extends BaseTask {
 	}
 
 	/**
-	 * Update user or create if doesn't exist
+	 * Update wiki or create if doesn't exist
 	 * @param array $cityData
 	 * @return string
 	 * @throws \Wikia\Util\AssertionException
