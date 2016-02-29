@@ -34,12 +34,4 @@ class ExactTargetUserHooksHelper {
 		];
 		return $aUserPropertiesParams;
 	}
-
-	/**
-	 * Returns new instance of ExactTargetUpdateUserTask
-	 * @return ExactTargetUpdateUserTask
-	 */
-	public function getUpdateUserTask() {
-		return new ExactTargetUpdateUserTask();
-	}
 }
