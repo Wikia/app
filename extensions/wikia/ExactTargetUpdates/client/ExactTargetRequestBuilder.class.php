@@ -48,6 +48,10 @@ class ExactTargetRequestBuilder {
 		return new CreateRequestBuilder( BaseRequestBuilder::GROUP_TYPE );
 	}
 
+	public static function getWikiUpdateBuilder() {
+		return new UpdateRequestBuilder( BaseRequestBuilder::WIKI_TYPE );
+	}
+
 	public static function getRetrieveBuilder() {
 		return new RetrieveRequestBuilder();
 	}

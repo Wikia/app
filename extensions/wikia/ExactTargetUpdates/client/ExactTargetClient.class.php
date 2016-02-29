@@ -143,6 +143,14 @@ class ExactTargetClient {
 		return $this->sendRequest( self::UPDATE_CALL, $request );
 	}
 
+	public function updateWiki( $cityId, array $cityData ) {
+		$request = ExactTargetRequestBuilder::getWikiUpdateBuilder()
+			->withCityData( $cityId, $cityData )
+			->build();
+
+		return $this->sendRequest( self::UPDATE_CALL, $request );
+	}
+
 	private function retrieve( array $properties, $filterProperty, array $filterValues, $resource ) {
 		$request = ExactTargetRequestBuilder::getRetrieveBuilder()
 			->withResource( $resource )

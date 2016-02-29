@@ -7,10 +7,18 @@ use Wikia\ExactTarget\ResourceEnum as Enum;
 class UpdateRequestBuilder extends BaseRequestBuilder {
 	const SAVE_OPTION_TYPE = 'SaveOption';
 
+	private $cityId;
+	private $cityData;
 	private $userData;
 	private $edits;
 
-	private static $supportedTypes = [ self::PROPERTIES_TYPE, self::EDITS_TYPE, self::USER_TYPE ];
+	private static $supportedTypes = [ self::PROPERTIES_TYPE, self::EDITS_TYPE, self::USER_TYPE, self::WIKI_TYPE ];
+
+	public function withCityData( $cityId, array $cityData ) {
+		$this->cityData = $cityData;
+		$this->cityId = $cityId;
+		return $this;
+	}
 
 	public function withUserData( array $userData ) {
 		$this->userData = $userData;
@@ -36,6 +44,9 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 				break;
 			case self::EDITS_TYPE:
 				$objects = $this->prepareUserEditsParams( $this->edits );
+				break;
+			case self::WIKI_TYPE:
+				$objects = $this->prepareWikiParams( $this->cityData );
 				break;
 		}
 		// make it soap vars
@@ -97,6 +108,11 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 		}
 
 		return $result;
+	}
+
+	private function prepareWikiParams( $cityData ) {
+		return [ $this->prepareDataObject( Enum::CUSTOMER_KEY_WIKI_CITY_LIST,
+			[ Enum::WIKI_CITY_ID => $this->cityId ], $cityData ) ];
 	}
 
 }
