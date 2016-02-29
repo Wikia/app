@@ -19,7 +19,7 @@ class ExactTargetUserHooks {
 
 	/**
 	 * Adds Task for removing user to job queue
-	 * @param User $oUser
+	 * @param \User $oUser
 	 * @return bool
 	 */
 	public function onEditAccountClosed( \User $oUser ) {
@@ -32,7 +32,7 @@ class ExactTargetUserHooks {
 
 	/**
 	 * Adds Task to job queue that updates a user or adds a user if one doesn't exist
-	 * @param User $oUser
+	 * @param \User $oUser
 	 * @return bool
 	 */
 	public function onEditAccountEmailChanged( \User $oUser ) {
@@ -42,7 +42,7 @@ class ExactTargetUserHooks {
 
 	/**
 	 * Adds Task for updating user due to email authentication field change
-	 * @param User $user
+	 * @param \User $user
 	 * @return bool
 	 */
 	public function onInvalidateEmailComplete( \User $user ) {
@@ -60,7 +60,7 @@ class ExactTargetUserHooks {
 
 	/**
 	 * Adds Task for updating user email
-	 * @param User $user
+	 * @param \User $user
 	 * @return bool
 	 */
 	public function onConfirmEmailComplete( \User $oUser ) {
@@ -70,7 +70,7 @@ class ExactTargetUserHooks {
 
 	/**
 	 * Adds Task to job queue that updates a user or adds a user if one doesn't exist
-	 * @param User $oUser
+	 * @param \User $oUser
 	 * @return bool
 	 */
 	public function onCreateNewUserComplete( \User $oUser ) {
@@ -80,7 +80,7 @@ class ExactTargetUserHooks {
 
 	/**
 	 * Adds a task for adding user groups
-	 * @param User $user
+	 * @param \User $user
 	 * @param string $sGroup Group name to add
 	 * @return bool
 	 */
@@ -94,7 +94,7 @@ class ExactTargetUserHooks {
 
 	/**
 	 * Adds a task for removing user groups
-	 * @param User $user
+	 * @param \User $user
 	 * @param string $sGroup Group name to remove
 	 * @return bool
 	 */
@@ -108,7 +108,7 @@ class ExactTargetUserHooks {
 
 	/**
 	 * Adds a task for updating user properties
-	 * @param User $user
+	 * @param \User $user
 	 * @return bool
 	 */
 	public function onUserSaveSettings( \User $user ) {
@@ -125,7 +125,7 @@ class ExactTargetUserHooks {
 
 	/**
 	 * Adds Task to job queue that updates a user or adds a user if one doesn't exist
-	 * @param User $oUser
+	 * @param \User $oUser
 	 */
 	private function queueUpdateUserTask( \User $oUser ) {
 		/* Prepare params */
