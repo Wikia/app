@@ -37,8 +37,14 @@ class MercuryApiCategoryHandler {
 		return $sanitizedAlphabeticalList;
 	}
 
-	public static function hasArticle( Title $title ) {
-		return $title->getArticleID() > 0;
+	public static function hasArticle( $request, Article $article ) {
+
+		if ($article instanceof Article && $article->getID() > 0) {
+			$data = MercuryApiArticleHandler::getArticleJson($request, $article);
+			return !empty( $data['content'] ) && strlen( $data['content'] ) > 0;
+		} else {
+			return false;
+		}
 	}
 
 	public static function getCategoryMockedDetails( Title $title ) {

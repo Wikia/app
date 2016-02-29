@@ -304,7 +304,7 @@ class MercuryApiController extends WikiaController {
 					case NS_CATEGORY:
 						$data['nsSpecificContent'] = MercuryApiCategoryHandler::getCategoryContent( $title );
 
-						if ( MercuryApiCategoryHandler::hasArticle( $title ) ) {
+						if ( MercuryApiCategoryHandler::hasArticle( $this->request, $article ) ) {
 							$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
 							$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
 						} elseif ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
