@@ -37,8 +37,7 @@ class MercuryApiCategoryHandler {
 		return $sanitizedAlphabeticalList;
 	}
 
-	public static function hasArticle( $request, Article $article ) {
-
+	public static function hasArticle( $request, $article ) {
 		if ($article instanceof Article && $article->getID() > 0) {
 			$data = MercuryApiArticleHandler::getArticleJson($request, $article);
 			return !empty( $data['content'] ) && strlen( $data['content'] ) > 0;
