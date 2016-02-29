@@ -501,21 +501,6 @@ Notiek ieiešana...',
 Tu jau esi veiksmīgi nomainījis savu galveno paroli, vai arī esi pieprasījis jaunu pagaidu paroli.',
 'resetpass-temp-password'   => 'Pagaidu parole:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Paroles atiestatīšana',
-'passwordreset-legend'             => 'Atiestatīt paroli',
-'passwordreset-disabled'           => 'Paroles atiestates šajā viki ir atspējotas.',
-'passwordreset-username'           => 'Lietotājvārds:',
-'passwordreset-domain'             => 'Domēns:',
-'passwordreset-capture'            => 'Apskatīt izveidoto e-pastu?',
-'passwordreset-email'              => 'E-pasta adrese:',
-'passwordreset-emailtitle'         => 'Konta informācija {{SITENAME}}',
-'passwordreset-emailelement'       => 'Lietotājvārds: $1
-Pagaidu parole: $2',
-'passwordreset-emailsent'          => 'Atgādinājuma e-pasts ir nosūtīts.',
-'passwordreset-emailsent-capture'  => 'Atgādinājuma e-pasta ziņojums ir nosūtīts, tas parādīts zemāk.',
-'passwordreset-emailerror-capture' => 'Atgādinājuma e-pasta ziņojums tika izveidots, tas parādīts zemāk, bet nosūtīšana lietotājam neizdevās: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Mainīt e-pasta adresi',
 'changeemail-header'   => 'Mainīt konta e-pasta adresi',

@@ -89,7 +89,7 @@ class RecirculationHooks {
 
 	static public function canShowDiscussions() {
 		$wg = F::app()->wg;
-		if ( !empty( $wg->EnableRecirculationDiscussions ) ) {
+		if ( !empty( $wg->EnableDiscussions ) && !empty( $wg->EnableRecirculationDiscussions ) ) {
 			return true;
 		} else {
 			return false;

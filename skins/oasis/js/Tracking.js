@@ -560,7 +560,7 @@ jQuery(function ($) {
 				case 'random':
 					label = 'on-the-wiki-random';
 					break;
-				case 'newfiles':
+				case 'images':
 					label = 'on-the-wiki-new-photos';
 					break;
 				case 'chat':

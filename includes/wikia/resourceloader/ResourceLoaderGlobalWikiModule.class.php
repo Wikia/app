@@ -73,6 +73,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		list( $titleText, $namespace ) = $this->parseTitle( $realTitleText );
 
 		if ( $options['type'] === 'script' && $namespace != NS_USER && !empty( $wgEnableContentReviewExt ) ) {
+			wfProfileOut(__METHOD__);
 			return $this->createScriptTitle( $titleText, $options );
 		}
 

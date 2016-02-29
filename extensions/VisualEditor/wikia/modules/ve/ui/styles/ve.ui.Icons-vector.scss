@@ -391,6 +391,12 @@
 .oo-ui-icon-media {
 	@include ve-icon(media, wikia);
 }
+.oo-ui-icon-image {
+	@include ve-icon(image, wikia);
+}
+.oo-ui-icon-video {
+	@include ve-icon(video, wikia);
+}
 .oo-ui-icon-upload {
 	@include ve-icon(upload, wikia);
 }

@@ -493,10 +493,6 @@ A lag yu iin nou ...',
 Yu maita chienj yu paaswod soksesfuli aredi ar rikwes wahn nyuu tempareri paaswod.',
 'resetpass-temp-password'   => 'Tempareri paaswod',
 
-# Special:PasswordReset
-'passwordreset-username' => 'Yuuzaniem:',
-'passwordreset-domain'   => 'Domien:',
-
 # Edit page toolbar
 'bold_sample'     => 'Buol tex',
 'bold_tip'        => 'Buol tex',

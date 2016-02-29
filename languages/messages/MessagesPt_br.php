@@ -803,35 +803,6 @@ Por favor aguarde antes de tentar novamente.',
 Você pode já ter alterado com sucesso a sua senha, ou solicitado uma nova senha temporária.',
 'resetpass-temp-password' => 'Senha temporária:',
 
-# Special:PasswordReset
-'passwordreset' => 'Redefinir senha',
-'passwordreset-text' => 'Preencha este formulário para recuperar os dados da sua conta pelo e-mail.',
-'passwordreset-legend' => 'Reiniciar a senha',
-'passwordreset-disabled' => 'Redefinições de senha foram desabilitadas neste wiki.',
-'passwordreset-pretext' => '{{PLURAL:$1||Introduza um dos dados abaixo}}',
-'passwordreset-username' => 'Nome de usuário:',
-'passwordreset-domain' => 'Domínio:',
-'passwordreset-capture' => 'Ver o e-mail resultante?',
-'passwordreset-capture-help' => 'Se marcar esta caixa, o e-mail (com a senha temporária) será-lhe mostrado, além de ser enviado para o usuário.',
-'passwordreset-email' => 'Endereço de e-mail:',
-'passwordreset-emailtitle' => 'Detalhes da conta em {{SITENAME}}',
-'passwordreset-emailtext-ip' => 'Alguém (provavelmente você, do endereço IP $1) solicitou um lembrete do seu detalhes de conta para {{SITENAME}} ($4). O seguinte usuário {{PLURAL:$3|conta|são contas}} associado com este endereço de e-mail:
-
-$2
-
-{{PLURAL:$3|Esta senha temporária |Essas senhas temporárias}} vão expirar em {{PLURAL:$5|um dia|$5 dias}}.
-Você deve efetuar login e escolher uma nova senha agora. Se você conseguir lembrar da senha, ignore este e-mail e continue usando sua senha anterior, do contrário, prossiga com as instruções clicando no link.',
-'passwordreset-emailtext-user' => 'O usuário $1 da {{SITENAME}} pediu a recuperação dos detalhes da sua conta na {{SITENAME}} ($4). {{PLURAL:$3|A seguinte conta está associada|As seguintes contas estão associadas}} a este e-mail:
-
-$2
-
-{{PLURAL:$3|Esta senha temporária irá|Estas senhas temporárias irão}} expirar dentro de {{PLURAL:$5|um dia|$5 dias}}. Deve autenticar-se e escolher uma senha nova agora. Se este pedido não foi feito por si, ou se entretanto se recordou da sua senha original e já não deseja alterá-la, pode ignorar esta mensagem e continuar a usar a senha antiga.',
-'passwordreset-emailelement' => 'Usuário: $1
-Senha temporária: $2',
-'passwordreset-emailsent' => 'Foi enviado um e-mail de lembrete.',
-'passwordreset-emailsent-capture' => 'Foi enviado um e-mail de lembrete, que é mostrado abaixo.',
-'passwordreset-emailerror-capture' => 'Foi gerado o lembrete de e-mail mostrado abaixo, contudo falhou o envio para o usuário: $1',
-
 # Special:ChangeEmail
 'changeemail' => 'Alterar o endereço de e-mail',
 'changeemail-header' => 'Alterar o endereço de e-mail da conta',

@@ -52,10 +52,8 @@ WAMPage.prototype = {
 			}
 		}
 
-		$.when(
-			// jQuery UI datepicker plugin
-			mw.loader.use(['jquery.ui.datepicker'])
-		).done(
+		// jQuery UI datepicker plugin
+		mw.loader.using('jquery.ui.datepicker').done(
 			$.proxy(function (getResourcesData) {
 				var minDate = new Date(window.wamFilterMinMaxDates.min_date * 1000),
 					maxDate = new Date(window.wamFilterMinMaxDates.max_date * 1000);

@@ -48,6 +48,15 @@ class PortableInfoboxTemplatesHelper {
 	}
 
 	/**
+	 * @param $title
+	 * @return array of strings (infobox markups)
+	 */
+	public function getMarkup($title) {
+		$content = $this->fetchContent($title);
+		return $this->getInfoboxes($content);
+	}
+
+	/**
 	 * @param $title \Title
 	 *
 	 * @return string

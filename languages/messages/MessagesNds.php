@@ -684,10 +684,6 @@ Tööv en Stoot, ehrdat du dat noch wedder versöchst.',
 Villicht hest du dien Passwoord al ännert oder noch wedder en nee temporär Passwoord anfeddert.',
 'resetpass-temp-password'   => 'Temporär Passwoord:',
 
-# Special:PasswordReset
-'passwordreset'        => 'Passwoord torüchsetten',
-'passwordreset-legend' => 'Passwoord torüchsetten',
-
 # Special:ChangeEmail
 'changeemail' => 'E-Mail-Adress ännern',
 

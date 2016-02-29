@@ -277,9 +277,6 @@ $messages = array(
 'newpassword'               => 'ново таино слово :',
 'resetpass-submit-loggedin' => 'таина словєсє иꙁмѣнѥниѥ',
 
-# Special:PasswordReset
-'passwordreset-username' => 'польꙃєватєлꙗ имѧ :',
-
 # Edit page toolbar
 'link_sample'    => 'съвѧꙁи имѧ',
 'link_tip'       => 'вънѫтрьнꙗ съвѧꙁь',

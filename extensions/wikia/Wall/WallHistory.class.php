@@ -35,7 +35,7 @@ class WallHistory extends WikiaModel {
 			case WH_RESTORE:
 				// wall the wall action goes through this point.
 				wfRunHooks( 'WallAction', [ $type, $feed->data->parent_id, $feed->data->message_id ] );
-				$this->addStatChangeAction( $type, $feed, $user );
+				$this->addStatChangeAction( $type, $feed );
 			break;
 		}
 

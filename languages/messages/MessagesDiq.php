@@ -485,14 +485,6 @@ Bıne vındere u newe ra dest pê bıkere.',
 şıma ya parolaye xo vurnayo ya zi parolayo muwaqqat waşto.',
 'resetpass-temp-password'   => 'parolayo muweqet:',
 
-# Special:PasswordReset
-'passwordreset'              => 'Parola ancia bınuse',
-'passwordreset-legend'       => 'Parola ancia bınuse',
-'passwordreset-username'     => 'Namey karberi:',
-'passwordreset-email'        => 'Adresa e-postey:',
-'passwordreset-emailelement' => 'Namey karberi: $1
-Parola vêrdiye: $2',
-
 # Edit page toolbar
 'bold_sample'     => 'Çapo qalınd',
 'bold_tip'        => 'Herfo qalın',

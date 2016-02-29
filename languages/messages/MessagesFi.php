@@ -782,42 +782,6 @@ Odota ennen kuin yrität uudelleen.',
 Olet saattanut jo onnistuneesti vaihtaa salasanasi tai pyytää uutta väliaikaista salasanaa.',
 'resetpass-temp-password'   => 'Väliaikainen salasana:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Salasanan alustus',
-'passwordreset-text'               => 'Saat sähköpostimuistutuksen tunnuksesi tiedoista, kun täytät tämän lomakkeen.',
-'passwordreset-legend'             => 'Salasanan vaihto',
-'passwordreset-disabled'           => 'Salasanojen alustus ei ole mahdollista tässä wikissä.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Kirjoita jokin jäljempänä pyydetty tieto}}',
-'passwordreset-username'           => 'Käyttäjätunnus',
-'passwordreset-domain'             => 'Verkkotunnus',
-'passwordreset-capture'            => 'Näytä lähetettävä sähköpostiviesti',
-'passwordreset-capture-help'       => 'Jos valitset tämän, sähköposti (tilapäisellä salasanalla) näytetään sinulle sekä lähetetään käyttäjälle.',
-'passwordreset-email'              => 'Sähköpostiosoite',
-'passwordreset-emailtitle'         => 'Tunnuksen tiedot {{GRAMMAR:inessive|{{SITENAME}}}}',
-'passwordreset-emailtext-ip'       => 'Joku (todennäköisesti sinä, IP-osoitteesta $1) pyysi muistutusta tunnuksesi tiedoista sivustolla {{SITENAME}} ($4).
-{{PLURAL:$3|Seuraava käyttäjätunnus on|Seuraavat käyttäjätunnukset ovat}} liitetty tähän sähköpostiosoitteeseen:
-
-$2
-
-{{PLURAL:$3|Tämä väliaikainen salasana vanhentuu|Nämä väliaikaiset salasanat vanhentuvat}} {{PLURAL:$5|yhden päivän|$5 päivän}} kuluttua.
-Sinun kannattaa kirjautua sisään ja valita uusi salasana. Jos joku toinen teki tämän
-pyynnön, tai muistat sittenkin vanhan salasanasi, etkä halua muuttaa sitä,
-voit jättää tämän viestin huomiotta ja jatkaa vanhan salasanan käyttöä.',
-'passwordreset-emailtext-user'     => 'Käyttäjä $1 pyysi muistutusta tunnuksesi tiedoista sivustolla {{SITENAME}} ($4).
-{{PLURAL:$3|Seuraava käyttäjätunnus on|Seuraavat käyttäjätunnukset ovat}} liitetty tähän sähköpostiosoitteeseen:
-
-$2
-
-{{PLURAL:$3|Tämä väliaikainen salasana vanhentuu|Nämä väliaikaiset salasanat vanhentuvat}} {{PLURAL:$5|yhden päivän|$5 päivän}} kuluttua.
-Sinun kannattaa kirjautua sisään ja valita uusi salasana. Jos joku toinen teki tämän
-pyynnön, tai muistat sittenkin vanhan salasanasi, etkä halua muuttaa sitä,
-voit jättää tämän viestin huomiotta ja jatkaa vanhan salasanan käyttöä.',
-'passwordreset-emailelement'       => 'Käyttäjätunnus: $1
-Väliaikainen salasana: $2',
-'passwordreset-emailsent'          => 'Sähköpostimuistutus on lähetetty.',
-'passwordreset-emailsent-capture'  => 'Muistutussähköposti on lähetetty. Se näkyy myös alla.',
-'passwordreset-emailerror-capture' => 'Alla näytettävä sähköpostiviesti luotiin, mutta sen lähettäminen käyttäjälle epäonnistui: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Muuta sähköpostiosoitetta',
 'changeemail-header'   => 'Muuta tunnuksen sähköpostiosoite',

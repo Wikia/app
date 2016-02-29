@@ -2,6 +2,7 @@
 
 class ForumExternalController extends WallExternalController {
 	public function __construct() {
+		parent::__construct();
 		$this->app = F::app();
 	}
 

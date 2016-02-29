@@ -500,9 +500,6 @@ Sessiýa açmaklygy tamamlamak üçin, bu ýere täze parol ýazyň:',
 Parolyňyzy eýýäm şowlulyk bilen üýtgeden ýa-da täze wagtlaýyn parol talap eden bolmagyňyz ahmal.',
 'resetpass-temp-password'   => 'Wagtlaýyn parol:',
 
-# Special:PasswordReset
-'passwordreset-username' => 'Ulanyjy ady:',
-
 # Special:ChangeEmail
 'changeemail-none'   => '(hiç biri)',
 'changeemail-cancel' => 'Goýbolsun et',

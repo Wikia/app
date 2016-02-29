@@ -750,48 +750,6 @@ Müjjelesch, Do häs Ding Passwood ald jetuusch, künnt och sin,
 Do häs Der enzwesche e neuZweschepasswood jehollt.',
 'resetpass-temp-password'   => 'Zweschepasswood:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Et Paßwoot zeröck säze',
-'passwordreset-text'               => 'Donn dat Fommulaa heh ußfölle, öm en <i lang="en">e-mail</i> ze krijje, woh jät övver der Zohjang heh obb et Wiki för Desch dren shteiht.',
-'passwordreset-legend'             => 'Et Paßwoot zeröck säze',
-'passwordreset-disabled'           => 'Et Paßwoot zeröck ze säze es heh em Wiki afjeschalldt.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Jiff ein vun dä Saache heh dronger enn|}}',
-'passwordreset-username'           => 'Metmaacher Name:',
-'passwordreset-domain'             => 'Domähn:',
-'passwordreset-capture'            => 'Wells De di <i lang="en">e-mail</i> beloore?',
-'passwordreset-capture-help'       => 'Wann De heh e Krüzje määß, kriß de di <i lang="en">e-mail</i> met däm neue Paßwoot aanjezeish, ußer dat dä Metmaacher se och zohjescheck kritt.',
-'passwordreset-email'              => 'De Adräß för de <i lang="en">e-mail</i>:',
-'passwordreset-emailtitle'         => 'Einzelheite för der Zohjang op {{GRAMMAR:Akkusativ|{{SITENAME}}}}',
-'passwordreset-emailtext-ip'       => 'Do künns et sällver jewääse sin, öhnswää hät vun dä Adräß $1 en Internet öm
-en e-mail jefrooch, met Daate övver Dinge Zohjäng op {{GRAMMAR:Akkusativ|{{SITENAME}}}}
-$4
-Heh {{PLURAL:$3|dä Metmaacher hät|di Metmaacher han|hät keine Metmaacher}} Ding e-mail Addräß:
-
-$2
-
-{{PLURAL:$3|Dat Zweschepaßwoot leuf|Di Zweschepaßwööter loufe|Kein Zweschepaßwoot leuf}} en {{PLURAL:$5|enem Daach|$5 Dääsch|keinem Daach}} uß.
-Donn Desch jäz enlogge, un e neu Paßwoot faßlääje. Wann ene Andere wi
-Do dat heh aanjestüßße hät, udder wann De Desch widder aan Ding Paßwoot
-entsenne kanns, un et nimmieh ändere wells, udder es suwwisu weiß, dann
-moß De jäz jaa nix donn, un kanns Ding Paßwoot wigger bruche.',
-'passwordreset-emailtext-user'     => 'Dä Metmaacher $1 vun {{GRAMMAR:Dativ|{{SITENAME}}}} hät öm en e-mail jefrooch,
-met Daate övver Dinge Zohjäng op {{GRAMMAR:Akkusativ|{{SITENAME}}}}
-$4
-Heh {{PLURAL:$3|dä Metmaacher hät|di Metmaacher han|hät keine Metmaacher}} Ding e-mail Addräß:
-
-$2
-
-{{PLURAL:$3|Dat Zweschepaßwoot leuf|Di Zweschepaßwööter loufe|Kein Zweschepaßwoot leuf}} en {{PLURAL:$5|enem Daach|$5 Dääsch|keinem Daach}} uß.
-Donn Desch jäz enlogge, un e neu Paßwoot faßlääje. Wann ene Andere wi
-Do dat heh aanjestüßße hät, udder wann De Desch widder aan Ding Paßwoot
-entsenne kanns, un et nimmieh ändere wells, udder es suwwisu weiß, dann
-moß De jäz jaa nix donn, un kanns Ding Paßwoot wigger bruche.',
-'passwordreset-emailelement'       => 'Metmaacher Name: $1
-Eijmohl-Paßwoot: $2',
-'passwordreset-emailsent'          => 'En <i lang="en">e-mail</i> met Aanjaabe zom Zohjang heh es verscheck.',
-'passwordreset-emailsent-capture'  => 'En <i lang="en">e-mail</i> es verscheck. Heh dronger kanns De se lässe.',
-'passwordreset-emailerror-capture' => 'En <i lang="en">e-mail</i> sullt verscheck wääde. Heh dronger kanns De se lässe. Dat Verschecke hät ävver nit jeflup, wääje: $1.',
-
 # Special:ChangeEmail
 'changeemail'          => 'Donn Ding Address för de <i lang="en">e-mail</i> ändere',
 'changeemail-header'   => 'Donn en Adräß för de <i lang="en">e-mail</i> ändere',

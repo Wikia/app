@@ -505,44 +505,6 @@ Iserrek kan...',
 Baka mabalin a nasukatam metten ti kontrasenias mo wenno nagkiddaw ka ti saan nga agnayon a kontrasenias.',
 'resetpass-temp-password'   => 'Saan nga agnayon a kontrasenias:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Ipasubli ti kontrasenias',
-'passwordreset-text'               => 'Lippasem daytoy a kinabuklan tapno maipatulodan ka ti e-surat a palagipan kadagiti dsalaysay ti pakabilangam.',
-'passwordreset-legend'             => 'Ipasubli ti kontrasenias',
-'passwordreset-disabled'           => 'Naikkat dagiti pagisubli iti kontrasenias daytoy a wiki.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Ikabil ti maysa a bukel ti data dita baba}}',
-'passwordreset-username'           => 'Nagan ti agar-aramat:',
-'passwordreset-domain'             => 'Pagturayan:',
-'passwordreset-capture'            => 'Kayatmo a kitaen ti nagbanagan ti e-surat?',
-'passwordreset-capture-help'       => 'No markaam daytoy a kahon, ti e-surat (nga adda saan nga agnayon a kontrasenias) ket maipakita kenka ken maipatulod iti agar-aramat.',
-'passwordreset-email'              => 'E-surat a pagtaengan:',
-'passwordreset-emailtitle'         => 'Detalye ti pakabilangan iti {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Addaan (baka sika, ti naggapuan ti IP a pagtaengan $1) a nagkiddaw ti palagip para
-dagiti detalye ti pakabilangam para iti {{SITNAME}} ($4) . Ti sumaganad {{PLURAL:$3|a pakabilangan|a dadagiti pakabilangan}} ti agar-aramat ket
-nakairaman iti daytoy nga e-surat a pagtaengan:
-
-$2
-
-{{PLURAL:$3|Daytoy a saan nga agnayon a kontrasenias|Dagitoy a saan nga agnayon a kontrasenias}} ket agpaso iti {{PLURAL:$5|maysa nga aldaw|$5 nga al-aldaw}}.
-Sumrekka kuman ta agpili ka ti baro a kontrasenias mo tattan. No adda met sabali a nagaramid daytoy a
-panagkiddaw, wenno malagip mo ti dati a kontrasenias mo, ket saan mo a kayaten a sukatan, saan mo nga ikaskaso daytoy a mensahe ken
-agtuloy ka nga agusar ti daan a kontrasenias.',
-'passwordreset-emailtext-user'     => 'Daytoy nga  agar-aramat  $1 iti {{SITENAME}} ket nagkiddaw ti palagip para dagiti detalye ti pakabilangan iti {{SITENAME}}
-($4) . Ti sumaganad {{PLURAL:$3|a pakabilangan|kadagiti pakabilangan}}  ti agar-aramat ket
-nakairaman iti daytoy nga e-surat a pagtaengan:
-
-$2
-
-{{PLURAL:$3|Daytoy a saan nga agnayon a kontrasenias|Dagitoy a saan nga agnayon a kontrasenias}} ket agpaso iti {{PLURAL:$5|maysa nga aldaw|$5 nga al-aldaw}}.
-Sumrekka kuman ta agpili ka ti baro a kontrasenias mo tattan. No adda met sabali a nagaramid daytoy a
-panagkiddaw, wenno malagip mo ti dati a kontrasenias mo, ket saan mo a kayaten a sukatan, saan mo nga ikaskaso daytoy a mensahe ken
-agtuloy kan nga agusar ti daan a kontrasenias mo.',
-'passwordreset-emailelement'       => 'Nagan ti agar-aramat: $1
-Saan nga agnayon a kontrasenias: $2',
-'passwordreset-emailsent'          => 'Maipatuloden ti e-surat a palagip.',
-'passwordreset-emailsent-capture'  => 'Naipatulod ti palagip nga e-surat, a napaikita dita baba.',
-'passwordreset-emailerror-capture' => 'Naaramid ti palagip nga e-surat, a napaikita dita baba, ngem madi a napaitulod ti agar-aramat: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Sukatan ti e-surat a pagtaengan',
 'changeemail-header'   => 'Sukatan ti e-surat a pagtaengan ti pakabilangan',

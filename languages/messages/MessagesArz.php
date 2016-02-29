@@ -764,10 +764,6 @@ $2',
 انتا ممكن تكون بالفعل غيرت الباسورد بتاعتك بنجاح يا إما تكون طلبت باسورد مؤقته جديدة..',
 'resetpass-temp-password'   => 'باسورد مؤقته:',
 
-# Special:PasswordReset
-'passwordreset'          => 'تمت إعادة ضبط كلمة السر',
-'passwordreset-username' => 'اسم اليوزر:',
-
 # Edit page toolbar
 'bold_sample'     => 'حروف عريضه',
 'bold_tip'        => 'حروف عريضه',

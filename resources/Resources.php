@@ -459,12 +459,7 @@ return array(
 	/* MediaWiki */
 
 	'mediawiki' => array(
-        // Wikia change - begin - @author: wladek
-		'scripts' => array(
-			'resources/mediawiki/mediawiki.js',
-			'resources/wikia/wikia.mediawiki.js',
-        ),
-        // Wikia change - end
+		'scripts' => 'resources/mediawiki/mediawiki.js',
 		'debugScripts' => 'resources/mediawiki/mediawiki.log.js',
 		'debugRaw' => false,
 	),

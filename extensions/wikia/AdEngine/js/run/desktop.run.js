@@ -116,18 +116,13 @@ require([
 	'ext.wikia.adEngine.slot.skyScraper3',
 	'wikia.document',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.slot.exitstitial'),
-	require.optional('ext.wikia.adEngine.slot.inContentDesktop'),
-], function (inContentPlayer, skyScraper3, doc, win, exitstitial, inContentDesktop) {
+	require.optional('ext.wikia.adEngine.slot.exitstitial')
+], function (inContentPlayer, skyScraper3, doc, win, exitstitial) {
 	'use strict';
 
 	function initDesktopSlots() {
 		inContentPlayer.init();
 		skyScraper3.init();
-
-		if (inContentDesktop) {
-			inContentDesktop.init();
-		}
 
 		if (exitstitial) {
 			exitstitial.init();

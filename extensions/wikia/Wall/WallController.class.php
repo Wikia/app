@@ -107,19 +107,6 @@ class WallController extends WallBaseController {
 		$this->response->setVal( 'repliesNumber', $this->request->getVal( 'repliesNumber' ) );
 	}
 
-	protected function getWallMessage() {
-		$comment = $this->request->getVal( 'comment' );
-		if ( ( $comment instanceof ArticleComment ) ) {
-			$wallMessage = WallMessage::newFromArticleComment( $comment );
-		} else {
-			$wallMessage = $comment;
-		}
-		if ( $wallMessage instanceof WallMessage ) {
-			$wallMessage->load();
-			return $wallMessage;
-		}
-	}
-
 	public function deleteInfoBox() {
 	}
 
@@ -139,73 +126,6 @@ class WallController extends WallBaseController {
 
 	public function parseText( $text ) {
 		return $this->parserText( $text );
-	}
-
-	protected function checkAndSetUserBlockedStatus( $wallOwner = null ) {
-		$user = $this->app->wg->User;
-
-		if ( $user->isBlocked( true, false ) || $user->isBlockedGlobally() ) {
-			if (	!empty( $wallOwner ) &&
-				$wallOwner->getName() == $this->wg->User->getName() &&
-				!( empty( $user->mAllowUsertalk ) ) ) {
-
-				// user is blocked, but this is his wall and he was not blocked
-				// from user talk page
-				$this->response->setVal( 'userBlocked', false );
-			} else {
-				$this->response->setVal( 'userBlocked', true );
-			}
-		} else {
-			$this->response->setVal( 'userBlocked', false );
-		}
-
-	}
-
-	protected function getSortingOptions() {
-		$title = $this->request->getVal( 'title', $this->app->wg->Title );
-
-		$output = [ ];
-		$selected = $this->getSortingSelected();
-
-		// $id's are names of DOM elements' classes
-		// which are needed to click tracking
-		// if you change them here, do so in Wall.js file, please
-		foreach ( $this->getSortingOptionsText() as $id => $option ) {
-			if ( $this->sortingType === 'history' ) {
-				$href = $title->getFullURL( [ 'action' => 'history', 'sort' => $id ] );
-			} else {
-				$href = $title->getFullURL( [ 'sort' => $id ] );
-			}
-
-			if ( $id == $selected ) {
-				$output[] = [ 'id' => $id, 'text' => $option, 'href' => $href, 'selected' => true ];
-			} else {
-				$output[] = [ 'id' => $id, 'text' => $option, 'href' => $href ];
-			}
-		}
-
-		return $output;
-	}
-
-	protected function getSortingSelected() {
-		$selected = $this->wg->request->getVal( 'sort' );
-
-		if ( empty( $selected ) ) {
-			$selected = $this->app->wg->User->getGlobalPreference( 'wall_sort_' . $this->sortingType );
-		} else {
-			$selectedDB = $this->app->wg->User->getGlobalPreference( 'wall_sort_' . $this->sortingType );
-
-			if ( $selectedDB != $selected ) {
-				$this->app->wg->User->setGlobalPreference( 'wall_sort_' . $this->sortingType, $selected );
-				$this->app->wg->User->saveSettings();
-			}
-		}
-
-		if ( empty( $selected ) || !array_key_exists( $selected, $this->getSortingOptionsText() ) ) {
-			$selected = ( $this->sortingType === 'history' ) ? 'of' : 'nt';
-		}
-
-		return $selected;
 	}
 
 	protected function getSortingOptionsText() {
