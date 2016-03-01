@@ -46,7 +46,6 @@ class ExactTargetWikiTask extends BaseTask {
 		$oWiki = \WikiFactory::getWikiById( $cityId, true );
 
 		return [
-			'city_id' => $oWiki->city_id,
 			'city_path' => $oWiki->city_path,
 			'city_dbname' => $oWiki->city_dbname,
 			'city_sitename' => $oWiki->city_sitename,
