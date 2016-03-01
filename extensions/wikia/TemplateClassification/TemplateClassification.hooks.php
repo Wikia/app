@@ -85,9 +85,10 @@ class Hooks {
 			&& $this->isEditPage()
 		) {
 			$aVars['enableTemplateClassificationEditorPlugin'] = true;
-			$aVars['isSupportedTemplateBody'] = (( new \PortableInfoboxBuilderService())->isValidInfoboxArray(
-				\PortableInfoboxDataService::newFromTitle( $title )->getInfoboxes()
-			));
+			$aVars['isSupportedInfoboxTemplateBody'] =
+				( new \PortableInfoboxBuilderService() )->isValidInfoboxArray(
+					\PortableInfoboxDataService::newFromTitle( $title )->getInfoboxes()
+				);
 		}
 		return true;
 	}

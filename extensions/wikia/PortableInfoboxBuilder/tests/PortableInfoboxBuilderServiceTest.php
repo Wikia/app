@@ -37,6 +37,13 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @dataProvider infoboxArrayValidityDataProvider
+	 */
+	public function testInfoboxArrayValidity( $array, $expected, $message ) {
+		$this->assertEquals( $expected, $this->builderService->isValidInfoboxArray( $array ), $message );
+	}
+
+	/**
 	 * @dataProvider updateInfoboxProvider
 	 */
 	public function testUpdateInfobox($data, $expected) {
@@ -49,6 +56,15 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	public function testUpdateDocumentation($data, $expected) {
 		$this->assertEquals( $expected, $this->builderService->updateDocumentation($data['oldDoc'],
 			$data['newDoc'], $data['oldContent']));
+	}
+
+
+	public function infoboxArrayValidityDataProvider() {
+		return [
+			[ [], true, 'Empty infobox array is not valid' ],
+			[ [ '<infobox><data source="source1"></data></infobox>' ], true, 'Single infobox array is valid' ],
+			[ [ '<infobox><data source="source1"></data></infobox>', '<infobox><data source="source2"></data></infobox>' ], false, 'Multi- infobox array is not valid' ],
+		];
 	}
 
 	public function dataTranslationsDataProvider() {
