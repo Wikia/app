@@ -145,6 +145,8 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 				action: tracker.ACTIONS.CLOSE,
 				label: 'close-event'
 			});
+
+			showHiddenEditor();
 		});
 
 		if (newTypeModes.indexOf(modalMode) >= 0) {
@@ -206,7 +208,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			$('#wpSave').click();
 		} else if (shouldRedirectToInfoboxBuilder(newTemplateType, modalMode)) {
 			throbber.show(modalInstance.$content);
-			redirectToInfoboxBuilder(w.wgTitle);
+			redirectToInfoboxBuilder(mw.config.get('wgTitle'));
 		} else {
 			modalInstance.trigger('close');
 		}
@@ -230,6 +232,13 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	 */
 	function redirectToInfoboxBuilder(title) {
 		w.location = w.location.origin + '/wiki/Special:InfoboxBuilder/' + title;
+	}
+
+	/**
+	 * @desc removes special class from WikiaPage wrapper to show hidden editor
+	 */
+	function showHiddenEditor() {
+		$('body').removeClass(w.tcsBodyClassName);
 	}
 
 	function updateEntryPointLabel(templateType) {

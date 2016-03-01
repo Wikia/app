@@ -8,6 +8,7 @@ use Wikia\TemplateClassification\Permissions;
 use Wikia\TemplateClassification\UnusedTemplates\Handler;
 
 class Hooks {
+	const TCS_BODY_CLASS_NAME = 'show-template-classification-modal';
 
 	/**
 	 * Register hooks for the extension
@@ -89,6 +90,8 @@ class Hooks {
 				( new \PortableInfoboxBuilderService() )->isValidInfoboxArray(
 					\PortableInfoboxDataService::newFromTitle( $title )->getInfoboxes()
 				);
+			$aVars['tcsBodyClassName'] = self::TCS_BODY_CLASS_NAME;
+
 		}
 		return true;
 	}
@@ -103,12 +106,20 @@ class Hooks {
 		global $wgCityId;
 
 		$context = \RequestContext::getMain();
+		$title = $context->getTitle();
 
-		if ( ( new Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $context->getTitle() ) ) {
+		if ( ( new Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $title ) ) {
 			$types = $this->getTemplateTypeForEdit( $editPage->getTitle(), $wgCityId );
 
-			$out->addHTML( \Html::hidden( 'templateClassificationTypeCurrent', $types['current'] ) );
-			$out->addHTML( \Html::hidden( 'templateClassificationTypeNew', $types['new'] ) );
+			$out->addHTML( \Html::hidden( 'templateClassificationTypeCurrent', $types['current'],
+				['autocomplete' => 'off'] ) );
+			$out->addHTML( \Html::hidden( 'templateClassificationTypeNew', $types['new'],
+				['autocomplete' => 'off'] ) );
+
+			// add additional class to body for new templates in order to hide editor while TCS modal is visible
+			if ( $title->getArticleID() === 0 && empty( $types['current'] && $types['new'] ) ) {
+				\OasisController::addBodyClass( self::TCS_BODY_CLASS_NAME );
+			}
 		}
 
 		return true;

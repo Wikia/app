@@ -128,3 +128,8 @@ $tc-name-color-checked: $color-links;
 		text-align: right;
 	}
 }
+
+// for new templates in order to hide editor while TCS modal is visible
+.show-template-classification-modal .WikiaPage {
+	opacity: 0;
+}
