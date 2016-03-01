@@ -75,18 +75,6 @@ class ExactTargetWikiHooks {
 
 	/**
 	 * Adds a task to job queue that sends
-	 * a Create request to ExactTarget with data of a new wiki.
-	 * @param  Array $aParams  Must contain a city_id key
-	 */
-	private function addTheAddWikiTask( Array $aParams ) {
-		$iCityId = $aParams['city_id'];
-		$oTask = $this->getExactTargetCreateWikiTask();
-		$oTask->call( 'sendNewWikiData', $iCityId );
-		$oTask->queue();
-	}
-
-	/**
-	 * Adds a task to job queue that sends
 	 * an Update request to ExactTarget with a changed variable.
 	 * @param  int $iCityId  A wiki's id
 	 */
@@ -131,14 +119,6 @@ class ExactTargetWikiHooks {
 			'wgDBcluster' => true,
 		];
 		return $aWfVarsTriggeringUpdate;
-	}
-
-	/**
-	 * A simple getter for an object of an ExactTargetCreateWikiTask class
-	 * @return  object ExactTargetCreateWikiTask
-	 */
-	private function getExactTargetCreateWikiTask() {
-		return new ExactTargetCreateWikiTask();
 	}
 
 	/**

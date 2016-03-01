@@ -63,7 +63,6 @@ $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetWikiTask' ] = $dir . '/tasks/E
 /* Add wiki-related tasks classes */
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetWikiDataVerificationTask' ] = $dir . '/tasks/ExactTargetWikiDataVerificationTask.php';
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetWikiTaskHelper' ] = $dir . '/tasks/ExactTargetWikiTaskHelper.php';
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetCreateWikiTask' ] = $dir . '/tasks/ExactTargetCreateWikiTask.php';
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetRetrieveWikiTask' ] = $dir . '/tasks/ExactTargetRetrieveWikiTask.php';
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetUpdateWikiTask' ] = $dir . '/tasks/ExactTargetUpdateWikiTask.php';
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetUpdateCityCatMappingTask' ] = $dir . '/tasks/ExactTargetUpdateCityCatMappingTask.php';
