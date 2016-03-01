@@ -172,8 +172,8 @@ Auf dieser Spezialseite kannst Du die '''letzten Änderungen''' in diesem Wiki n
 'tog-enableuserjs' => 'Persönliches JavaScript aktivieren. ([[Hilfe:Persönliches_CSS_und_JS|Mehr dazu hier]])',
 'wikia-pagetitle' => '$1 – Wikia',
 
-'group-content-moderator' => 'Inhaltsmoderatoren',
-'group-content-moderator-member' => 'Inhaltsmoderator',
+'group-content-moderator' => 'Inhalts-Moderatoren',
+'group-content-moderator-member' => 'Inhalts-Moderator',
 
 	'wikia-read-only-mode' => 'Ohje! Unser Hauptdatenzentrum ist derzeit nicht verfügbar, darum müssen wir unser Backup verwenden. Leider bedeutet das für dich, dass du möglicherweise bestimmte Funktionen wie Bearbeiten, Hochladen oder Chatten nicht nutzen kannst.
  +Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! Wenn dir diese Nachricht über einen längeren Zeitraum hinweg angezeigt wird, kannst du gerne über community@wikia.com Kontakt zum Wikia-Team aufnehmen.',
