@@ -151,6 +151,15 @@ class ExactTargetClient {
 		return $this->sendRequest( self::UPDATE_CALL, $request );
 	}
 
+	public function updateWikiCatMapping( $cityId, array $categories ) {
+		$request = ExactTargetRequestBuilder::getWikiCatMappingUpdateBuilder()
+			->withCityId( $cityId )
+			->withCategories( $categories )
+			->build();
+
+		return $this->sendRequest( self::UPDATE_CALL, $request );
+	}
+
 	private function retrieve( array $properties, $filterProperty, array $filterValues, $resource ) {
 		$request = ExactTargetRequestBuilder::getRetrieveBuilder()
 			->withResource( $resource )

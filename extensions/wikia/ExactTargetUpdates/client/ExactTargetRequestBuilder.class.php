@@ -52,6 +52,10 @@ class ExactTargetRequestBuilder {
 		return new UpdateRequestBuilder( BaseRequestBuilder::WIKI_TYPE );
 	}
 
+	public static function getWikiCatMappingUpdateBuilder() {
+		return new UpdateRequestBuilder( BaseRequestBuilder::WIKI_CAT_TYPE );
+	}
+
 	public static function getRetrieveBuilder() {
 		return new RetrieveRequestBuilder();
 	}

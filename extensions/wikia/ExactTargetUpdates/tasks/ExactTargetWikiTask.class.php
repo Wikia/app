@@ -34,6 +34,19 @@ class ExactTargetWikiTask extends BaseTask {
 		return self::STATUS_OK;
 	}
 
+	public function updateWikiCatMapping( $iCityId ) {
+		Assert::true( !empty( $iCityId ), 'City ID missing' );
+
+		$client = $this->getClient();
+		$oWikiFactoryHub = new \WikiFactoryHub();
+		$aCategories = $oWikiFactoryHub->getWikiCategories( $iCityId );
+
+		/* Update or create Wiki in external service */
+		$client->updateWikiCatMapping( $iCityId, $aCategories );
+
+		return self::STATUS_OK;
+	}
+
 	protected function getClient() {
 		if ( !isset( $this->client ) ) {
 			$this->client = new ExactTargetClient();
