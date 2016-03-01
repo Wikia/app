@@ -1,7 +1,7 @@
 <?php
 
 class PortableInfoboxBuilderHooks {
-	const INFOBOX_BUILDER_SPECIAL_PAGE = 'Special:PortableInfoboxBuilder';
+	const INFOBOX_BUILDER_SPECIAL_PAGE = 'Special:InfoboxBuilder';
 
 	/**
 	 * @param Skin $skin
