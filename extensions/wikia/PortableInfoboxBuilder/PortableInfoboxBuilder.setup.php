@@ -32,6 +32,7 @@ $wgHooks['WikiaSkinTopScripts'][] = 'PortableInfoboxBuilderHooks::onWikiaSkinTop
 
 // iframe loading script
 $wgHooks[ 'SkinAfterBottomScripts' ][] = 'PortableInfoboxBuilderHooks::onSkinAfterBottomScripts';
+$wgHooks[ 'CustomEditor' ][] = 'PortableInfoboxBuilderHooks::onCustomEditor';
 
 // i18n mapping
 $wgExtensionMessagesFiles[ 'PortableInfoboxBuilder' ] = $dir . 'PortableInfoboxBuilder.i18n.php';
