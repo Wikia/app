@@ -5,7 +5,7 @@ require_once( __DIR__ . '/../Maintenance.php' );
 /**
  * Use this script together with "run_maintenance" to delete all user assignments to the given local group
  */
-class CleanPageWikiaPropsMaintenance extends Maintenance {
+class DeleteLocalGroupMaintenance extends Maintenance {
 
 	const TABLE_NAME = 'user_groups';
 
@@ -17,7 +17,7 @@ class CleanPageWikiaPropsMaintenance extends Maintenance {
 		parent::__construct();
 		$this->mDescription = 'Deletes a given local group from all wikis';
 		$this->addOption( 'group', 'Name of group to delete', true, true );
-		$this->addOption( 'delete', 'Do delete the data', false, false );
+		$this->addOption( 'delete', 'Do actually delete the data (no dry run mode)', false, false );
 	}
 
 	public function execute() {
@@ -48,15 +48,10 @@ class CleanPageWikiaPropsMaintenance extends Maintenance {
 			$dbw->begin();
 			$dbw->delete(
 				self::TABLE_NAME,
-				[
-					'ug_group' => [
-						$group
-					]
-				],
+				[ 'ug_group' => [ $group ] ],
 				__METHOD__
 			);
 			$dbw->commit();
-
 			wfWaitForSlaves();
 		}
 		$took = microtime( true ) - $then;
@@ -70,5 +65,5 @@ class CleanPageWikiaPropsMaintenance extends Maintenance {
 	}
 }
 
-$maintClass = CleanPageWikiaPropsMaintenance::class;
+$maintClass = DeleteLocalGroupMaintenance::class;
 require_once( RUN_MAINTENANCE_IF_MAIN );
