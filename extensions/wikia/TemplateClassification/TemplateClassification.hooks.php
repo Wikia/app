@@ -79,11 +79,15 @@ class Hooks {
 	 */
 	public function onEditPageMakeGlobalVariablesScript( array &$aVars ) {
 		$context = \RequestContext::getMain();
+		$title = $context->getTitle();
 		// Enable TemplateClassificationEditorPlugin
-		if ( ( new Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $context->getTitle() )
+		if ( ( new Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $title )
 			&& $this->isEditPage()
 		) {
 			$aVars['enableTemplateClassificationEditorPlugin'] = true;
+			$aVars['isSupportedTemplateBody'] = (( new \PortableInfoboxBuilderService())->isValidInfoboxArray(
+				\PortableInfoboxDataService::newFromTitle( $title )->getInfoboxes()
+			));
 		}
 		return true;
 	}

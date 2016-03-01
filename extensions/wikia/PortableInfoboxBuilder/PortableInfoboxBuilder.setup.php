@@ -1,8 +1,6 @@
 <?php
 $dir = dirname( __FILE__ ) . '/';
 
-$wgAutoloadClasses[ 'PortableInfoboxBuilderService' ] = $dir . 'services/PortableInfoboxBuilderService.class.php';
-
 $wgBuilderNodes = [
 	'Node',
 	'NodeCaption',
