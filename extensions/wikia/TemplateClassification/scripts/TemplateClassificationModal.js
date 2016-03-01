@@ -26,7 +26,8 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			trackingMethod: 'analytics'
 		}),
 		$w = $(w),
-		$throbber = $('#tc-throbber');
+		$throbber = $('#tc-throbber'),
+		forceClassificationModalMode = 'addTypeBeforePublish';
 
 	/**
 	 * @param {function} typeGetterProvided Method that should return type in json format,
@@ -201,11 +202,34 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			});
 		}
 
-		if (modalMode === 'addTypeBeforePublish' && newTemplateType) {
+		if (modalMode === forceClassificationModalMode && newTemplateType) {
 			$('#wpSave').click();
+		} else if (shouldRedirectToInfoboxBuilder(newTemplateType, modalMode)) {
+			throbber.show(modalInstance.$content);
+			redirectToInfoboxBuilder(w.wgTitle);
 		} else {
 			modalInstance.trigger('close');
 		}
+	}
+
+	/**
+	 * @desc checks if infobox builder should be used instead of regular editor
+	 * @param {String} newTemplateType - choosen template type
+	 * @param {String} modalMode - mode in which modal was opened
+	 * @returns {Boolean}
+	 */
+	function shouldRedirectToInfoboxBuilder(newTemplateType, modalMode) {
+		return w.isSupportedInfoboxTemplateBody &&
+			newTemplateType === 'infobox' &&
+			modalMode !== forceClassificationModalMode;
+	}
+
+	/**
+	 * @desc redirects to infobox builder tool
+	 * @param {String} title
+	 */
+	function redirectToInfoboxBuilder(title) {
+		w.location = w.location.origin + '/wiki/Special:InfoboxBuilder/' + title;
 	}
 
 	function updateEntryPointLabel(templateType) {
