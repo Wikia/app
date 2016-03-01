@@ -14,6 +14,7 @@ class WikiaPollAjax {
 		wfProfileIn(__METHOD__);
 
 		$app = F::app();
+		$app->wg->Request->isValidWriteRequest( $app->wg->User );
 
 		$title = $app->wg->Request->getVal ('question');
 		$answers = $app->wg->Request->getArray ('answer');  // array
@@ -60,6 +61,7 @@ class WikiaPollAjax {
 		wfProfileIn(__METHOD__);
 
 		$wg = F::app()->wg;
+		$wg->Request->isValidWriteRequest( $wg->User );
 
 		$pollId = $wg->Request->getInt ('pollId');
 		$answers = $wg->Request->getArray ('answer');  // array

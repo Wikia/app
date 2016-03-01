@@ -431,30 +431,12 @@ $messages = array(
 'navigation'    => 'Navigering',
 'and'           => '&#32;og',
 
-# Cologne Blue skin
 'qbfind'         => 'Finn',
 'qbbrowse'       => 'Bla gjennom',
-'qbedit'         => 'Endre',
 'qbpageoptions'  => 'Denne sida',
 'qbpageinfo'     => 'Samanheng',
-'qbmyoptions'    => 'Sidene mine',
-'qbspecialpages' => 'Spesialsider',
 'faq'            => 'OSS',
-'faqpage'        => 'Project:OSS',
 
-# Vector skin
-'vector-action-addsection'       => 'Nytt emne',
-'vector-action-delete'           => 'Slett',
-'vector-action-move'             => 'Flytt',
-'vector-action-protect'          => 'Vern',
-'vector-action-undelete'         => 'Gjenopprett',
-'vector-action-unprotect'        => 'Endra vern',
-'vector-simplesearch-preference' => 'Slå på betra søkjeframlegg (einast i Vector-drakta)',
-'vector-view-create'             => 'Opprett',
-'vector-view-edit'               => 'Endre',
-'vector-view-history'            => 'Sjå historikken',
-'vector-view-view'               => 'Les',
-'vector-view-viewsource'         => 'Sjå kjelda',
 'actions'                        => 'Handlingar',
 'namespaces'                     => 'Namnerom',
 'variants'                       => 'Variantar',
@@ -477,7 +459,6 @@ $messages = array(
 'edit'              => 'Endre',
 'create'            => 'Opprett',
 'editthispage'      => 'Endre sida',
-'create-this-page'  => 'Opprett sida',
 'delete'            => 'Slett',
 'deletethispage'    => 'Slett denne sida',
 'undelete_short'    => 'Attopprett {{PLURAL:$1|éin versjon|$1 versjonar}}',
@@ -492,19 +473,9 @@ $messages = array(
 'talkpagelinktext'  => 'Diskusjon',
 'specialpage'       => 'Spesialside',
 'personaltools'     => 'Personlege verktøy',
-'postcomment'       => 'Ny bolk',
-'articlepage'       => 'Vis innhaldsside',
 'talk'              => 'Diskusjon',
 'views'             => 'Visningar',
 'toolbox'           => 'Verktøy',
-'userpage'          => 'Vis brukarside',
-'projectpage'       => 'Sjå prosjektsida',
-'imagepage'         => 'Vis filside',
-'mediawikipage'     => 'Vis systemmeldingsside',
-'templatepage'      => 'Vis malside',
-'viewhelppage'      => 'Vis hjelpeside',
-'categorypage'      => 'Vis kategoriside',
-'viewtalkpage'      => 'Vis diskusjon',
 'otherlanguages'    => 'På andre språk',
 'redirectedfrom'    => '(Omdirigert frå $1)',
 'redirectpagesub'   => 'Omdirigeringsside',
@@ -779,29 +750,6 @@ Du kan sjå bort frå denne meldinga dersom kontoen vart oppretta med eit uhell.
 Du kan allereie ha byta passordet, eller ha bede om å få eit nytt mellombels passord.',
 'resetpass-temp-password'   => 'Mellombels passord:',
 
-# Special:PasswordReset
-'passwordreset'                   => 'Attendestilling av passord',
-'passwordreset-text'              => '↓Fyll ut dette skjemaet for å motta ei påminning om kontoopplysningane dine i ein e-post.',
-'passwordreset-legend'            => '↓Nullstill passordet',
-'passwordreset-disabled'          => '↓Tilbakestilling av passord er ikkje aktivert på denne wikien',
-'passwordreset-pretext'           => '↓{{PLURAL:$1||Tast inn ein av datadelane nedanfor}}',
-'passwordreset-username'          => 'Brukarnamn:',
-'passwordreset-domain'            => 'Domene:',
-'passwordreset-capture'           => 'Vis resulterande epost',
-'passwordreset-capture-help'      => 'Huk av her dersom du vil sjå eposten (med førebels passord) i tillegg til at han blir sendt til brukaren.',
-'passwordreset-email'             => '↓E-postadresse:',
-'passwordreset-emailtitle'        => '↓Kontodetaljar på {{SITENAME}}',
-'passwordreset-emailtext-ip'      => 'Nokon (sannsynleg deg, frå IP-adresse $1) ba om ei påminning om kontodetaljane dine for {{SITENAME}} ($4). Følgjane brukar {{PLURAL:$3|brukar|brukarar}} er assosiert med denne epost-adressa:
-
-$2
-
-{{PLURAL:$3|Dette førebelse passordet|Desse førebelse passorda}} vil løpe ut om {{PLURAL:$5|ein dag|$5 dagar}}.
-Du bør logge inn og velje eit nytt passord no. Dersom nokon andre kom med denne førespurnaden, eller dersom du hugsar ditt opprinnelege passord, og du ikkje ynskjar å endre det, kan du ignorere denne eposten, og halde fram med å bruke ditt gamle passord.',
-'passwordreset-emailelement'      => '↓Brukarnamn: $1
-Mellombels passord: $2',
-'passwordreset-emailsent'         => '↓Ei påminning har vorte sendt på e-post.',
-'passwordreset-emailsent-capture' => 'Eposten under er sendt ut som ei påminning.',
-
 # Special:ChangeEmail
 'changeemail'          => '↓Endre e-postadresse',
 'changeemail-header'   => '↓Endre kontoen si e-postadresse',
@@ -915,7 +863,6 @@ Det siste elementet i blokkeringsloggen er oppgjeve nedanfor:',
 '''Det er ikkje lagra enno!'''",
 'sitejspreview'                    => "'''Hugs at du berre førehandsviser denne JavaScript-koden.'''
 '''Han er ikkje lagra enno!'''",
-'userinvalidcssjstitle'            => "'''Åtvaring:''' Det finst ikkje noka sidedrakt som heiter «$1». Hugs på at vanlege .css- og .js-sider brukar titlar med små bokstavar, til dømes {{ns:user}}:Døme/vector.css, og ikkje {{ns:user}}:Døme/Vector.css.",
 'updated'                          => '(Oppdatert)',
 'note'                             => "'''Merk:'''",
 'previewnote'                      => "'''Hugs at dette berre er ei førehandsvising og at teksten ikkje er lagra!'''",
@@ -1256,13 +1203,6 @@ For å søkja i alle, bruk prefikset ''all:'' (det inkluderer diskusjonssider, m
 I mellomtida kan du søkje gjennom Google.
 Ver merksam på at registra deira kan vera utdaterte.',
 
-# Quickbar
-'qbsettings'               => 'Snøggmeny',
-'qbsettings-none'          => 'Ingen',
-'qbsettings-fixedleft'     => 'Venstre',
-'qbsettings-fixedright'    => 'Høgre',
-'qbsettings-floatingleft'  => 'Flytande venstre',
-'qbsettings-floatingright' => 'Flytande høgre',
 
 # Preferences page
 'preferences'                   => 'Innstillingar',
@@ -2755,27 +2695,13 @@ Vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] og [//trans
 
 # Stylesheets
 'common.css'      => '/* CSS plassert i denne fila vil gjelde for alle utsjånader. */',
-'standard.css'    => '/* CSS i denne fila vil gjelde alle som nyttar drakta Standard */',
-'nostalgia.css'   => '/* CSS i denne fila vil gjelde alle som nyttar drakta Nostalgia */',
-'cologneblue.css' => '/* CSS i denne fila vil gjelde alle som nyttar drakta Kølnerblå */',
 'monobook.css'    => '/* CSS-tekst som vert plassert her, endrar utsjånaden til sidedrakta Monobook */',
-'myskin.css'      => '/* CSS i denne fila vil gjelde alle som nyttar drakta MySkin */',
-'chick.css'       => '/* CSS i denne fila vil gjelde alle som nyttar drakta Chick */',
-'simple.css'      => '/* CSS i denne fila vil gjelde alle som nyttar drakta Simple */',
-'modern.css'      => '/* CSS i denne fila vil gjelde alle som nyttar drakta Modern */',
 'print.css'       => '/* CSS i denne fila vil påverke utskriftsversjonen */',
 'handheld.css'    => '/* CSS i denne fila vil gjelde alle handheldte innretnigar konfigurert i $wgHandheldStyle */',
 
 # Scripts
 'common.js'      => '/* Javascript i denne fila vil gjelde for alle drakter. */',
-'standard.js'    => '/* Javascript i denne fila vil gjelde for brukarar av drakta Standard */',
-'nostalgia.js'   => '/* Javascript i denne fila vil gjelde for brukarar av drakta Nostalgia */',
-'cologneblue.js' => '/* Javascript i denne fila vil gjelde for brukarar av drakta Kølnerblå */',
 'monobook.js'    => '/* Javascript i denne fila vil gjelde for brukarar av drakta Monobook */',
-'myskin.js'      => '* Javascript i denne fila vil gjelde for brukarar av drakta MySkin */',
-'chick.js'       => '* Javascript i denne fila vil gjelde for brukarar av drakta Chick */',
-'simple.js'      => '* Javascript i denne fila vil gjelde for brukarar av drakta Simple */',
-'modern.js'      => '* Javascript i denne fila vil gjelde for brukarar av drakta Modern */',
 
 # Metadata
 'notacceptable' => 'Wikitenaren kan ikkje gje data i noko format som programmet ditt kan lesa.',
@@ -2814,14 +2740,7 @@ Vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] og [//trans
 'pageinfo-viewsperedit'     => 'Visningar per endring',
 
 # Skin names
-'skinname-standard'    => 'Klassisk',
-'skinname-nostalgia'   => 'Nostalgi',
-'skinname-cologneblue' => 'Kölnerblå',
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'MiDrakt',
-'skinname-chick'       => 'Chick',
-'skinname-simple'      => 'Enkel',
-'skinname-modern'      => 'Moderne',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Merk som patruljert',

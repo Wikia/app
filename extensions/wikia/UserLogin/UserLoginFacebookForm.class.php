@@ -78,7 +78,7 @@ class UserLoginFacebookForm extends UserLoginForm {
 
 			if ( $this->hasConfirmedEmail ) {
 				$this->confirmUser( $user );
-				$user->setCookies();
+				UserLoginHelper::setCookiesForFacebookUser( $user, $this->getRequest()->response() );
 				$this->addNewUserToLog( $user );
 			} else {
 				$this->sendConfirmationEmail( $user );

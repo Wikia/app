@@ -184,30 +184,12 @@ $messages = array(
 'navigation'    => 'Төп йүнәлештәр',
 'and'           => '&#32;һәм',
 
-# Cologne Blue skin
 'qbfind'         => 'Эҙләү',
 'qbbrowse'       => 'Байҡарға',
-'qbedit'         => 'Үҙгәртергә',
 'qbpageoptions'  => 'Был бит',
 'qbpageinfo'     => 'Бит тураһында мәғлүмәттәр',
-'qbmyoptions'    => 'Биттәрем',
-'qbspecialpages' => 'Махсус биттәр',
 'faq'            => 'ЙБҺ',
-'faqpage'        => 'Project:ЙБҺ',
 
-# Vector skin
-'vector-action-addsection'       => 'Тема өҫтәргә',
-'vector-action-delete'           => 'Юйырға',
-'vector-action-move'             => 'Исемен үҙгәртергә',
-'vector-action-protect'          => 'Һаҡларға',
-'vector-action-undelete'         => 'Тергеҙергә',
-'vector-action-unprotect'        => 'Һаҡлауҙы үҙгәртергә',
-'vector-simplesearch-preference' => 'Киңәйтелгән эҙләү тәҡдимдәрен ҡулланырға ("Векторлы" күренеш өсөн генә)',
-'vector-view-create'             => 'Яһау',
-'vector-view-edit'               => 'Үҙгәртергә',
-'vector-view-history'            => 'Тарихты ҡарау',
-'vector-view-view'               => 'Уҡыу',
-'vector-view-viewsource'         => 'Сығанаҡты ҡарарға',
 'actions'                        => 'Хәрәкәт',
 'namespaces'                     => 'Исем арауыҡтары',
 'variants'                       => 'Варианттар',
@@ -230,7 +212,6 @@ $messages = array(
 'edit'              => 'Үҙгәртеү',
 'create'            => 'Яһарға',
 'editthispage'      => 'Был мәҡәләне үҙгәртергә',
-'create-this-page'  => 'Был битте яһарға',
 'delete'            => 'Юҡ  итергә',
 'deletethispage'    => 'Был битте юйырға',
 'undelete_short'    => '$1 {{PLURAL:$1|үҙгәртеүҙе}} тергеҙергә',
@@ -245,19 +226,9 @@ $messages = array(
 'talkpagelinktext'  => 'Фекер алышыу',
 'specialpage'       => 'Ярҙамсы бит',
 'personaltools'     => 'Шәхси ҡоралдар',
-'postcomment'       => 'Яңы бүлек',
-'articlepage'       => 'Мәҡәләне ҡарап сығырға',
 'talk'              => 'Әңгәмә',
 'views'             => 'Ҡарауҙар',
 'toolbox'           => 'Ҡоралдар',
-'userpage'          => 'Ҡулланыусы битен ҡарарға',
-'projectpage'       => 'Проект битен ҡарарға',
-'imagepage'         => 'Файл битен ҡарарға',
-'mediawikipage'     => 'Хәбәрҙәр битен ҡарарға',
-'templatepage'      => 'Ҡалып битен ҡарарға',
-'viewhelppage'      => 'Ярҙам битен ҡарарға',
-'categorypage'      => 'Категория битен ҡарарға',
-'viewtalkpage'      => 'Фекер алышыу битен ҡарарға',
 'otherlanguages'    => 'Башҡа телдәрҙә',
 'redirectedfrom'    => '($1 битенән йүнәлтелде)',
 'redirectpagesub'   => 'Йүнәлтеү бите',
@@ -549,39 +520,6 @@ $2',
 Һеҙ, бәлки, паролегеҙҙе алмаштырғанһығыҙ йәки яңы пароль һоратҡанһығыҙ.',
 'resetpass-temp-password'   => 'Ваҡытлыса пароль',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Паролде ташлатыу',
-'passwordreset-text'               => 'Иҫәп яҙыуығыҙ мәғлүмәттәрен хат аша алыу өсөн киләһе форманы тултырығыҙ.',
-'passwordreset-legend'             => 'Паролде ташлатыу',
-'passwordreset-disabled'           => 'Был викила паролде ташлатыу ғәмәлдә түгел',
-'passwordreset-pretext'            => '{{PLURAL:$1||аҫта күрһәтелгән мәғлүмәттәрҙең бер киҫәген керетегеҙ}}',
-'passwordreset-username'           => 'Ҡулланыусы исеме:',
-'passwordreset-domain'             => 'Домен:',
-'passwordreset-capture'            => 'Хәбәрҙең һуңғы хәлен ҡарарғамы?',
-'passwordreset-capture-help'       => 'Әгәр был билдәне ҡуйһағыҙ, ҡулланыусыға ебәрелгән ваҡытлыса пароль һеҙгә күрһәтеләсәк.',
-'passwordreset-email'              => 'Электрон почта адресы:',
-'passwordreset-emailtitle'         => '{{SITENAME}} иҫәп яҙыуы мәғлүмәттәре',
-'passwordreset-emailtext-ip'       => 'Берәү (бәлки һәҙ, $1 IP-адресынан ) {{SITENAME}} ($4) проектындағы иҫәп яҙыуығыҙҙы хәтерләтеүҙе һоратты.
-Киләһе ҡулланыусы {{PLURAL:$3|иҫәп яҙыуы|иҫәп яҙыуҙары}} был электрон почта адресы менән бәйле:
-
-$2
-
-Был ваҡытлыса {{PLURAL:$3|пароль|паролдәр}} {{PLURAL:$5|$5 көн}} ғәмәлдә буласаҡ.
-Һеҙ системала танылырға һәм яңы пароль һайларға тейешһегеҙ.
-Әгәр, һеҙ быны һоратмаған булһағыҙ йәки элекке паролегеҙҙе киренән иҫләһәгеҙ һәм уны үҙгәртергә теләмәһәгеҙ, был хатҡа иғтибар итмәгеҙ һәм элекке паролегеҙҙе ҡулланыуҙы дауам итегеҙ.',
-'passwordreset-emailtext-user'     => '{{SITENAME}} проектындағы $1 ҡулланыусыһы {{SITENAME}} ($4) проектындағы иҫәп яҙыуығыҙҙы хәтерләтеүҙе һоратты. Киләһе ҡулланыусы {{PLURAL:$3|иҫәп яҙыуы|иҫәп яҙыуҙары}} был электрон почта адресы менән бәйле:
-
-$2
-
-Был ваҡытлыса {{PLURAL:$3|пароль|паролдәр}} {{PLURAL:$5|$5 көн}} ғәмәлдә буласаҡ.
-Һеҙ системала танылырға һәм яңы пароль һайларға тейешһегеҙ.
-Әгәр, һеҙ быны һоратмаған булһағыҙ йәки элекке паролегеҙҙе киренән иҫләһәгеҙ һәм уны үҙгәртергә теләмәһәгеҙ, был хатҡа иғтибар итмәгеҙ һәм элекке паролегеҙҙе ҡулланыуҙы дауам итегеҙ.',
-'passwordreset-emailelement'       => 'Ҡулланыусы исеме: $1
-Ваҡытлыса пароль: $2',
-'passwordreset-emailsent'          => 'Электрон почта аша иҫләтеү хаты ебәрелде.',
-'passwordreset-emailsent-capture'  => 'Ебәрелгән хәтерләтеү хәбәре түбәндә күрһәлгән.',
-'passwordreset-emailerror-capture' => 'Килеп сыҡҡан хәтерләтеү хәбәре түбәндә күрһәтелгән, тик уны ебәреү уңышһыҙ тамамланды. Сәбәбе:$1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Электрон почта адресын үҙгәртергә',
 'changeemail-header'   => 'Электрон почта адресын үҙгәртеү',
@@ -703,7 +641,6 @@ $2
 '''Ул әле һаҡланмаған!'''",
 'sitejspreview'                    => "'''Һеҙ JavaScript кодын алдан ҡарайһығыҙ ғына икәнен иҫегеҙҙә тотоғоҙ.'''
 '''Ул әле һаҡланмаған!'''",
-'userinvalidcssjstitle'            => "'''Иғтибар:''' \"\$1\" биҙәү темаһы табылманы. Иҫтә тотоғоҙ, .css һәм .js ҡулланыусы биттәренең исемдәре тик бәләкәй хәрефтәрҙән генә торорға тейеш. Мәҫәлән: {{ns:user}}:Foo/vector.css, ә {{ns:user}}:Foo/Vector.css түгел!",
 'updated'                          => '(Яңыртылды)',
 'note'                             => "'''Иҫкәрмә:'''",
 'previewnote'                      => "'''Ҡарап сығыу өлгөһө, әлегә үҙгәрештәр яҙҙырылмаған!'''",
@@ -1050,14 +987,6 @@ $1",
 Хәҙергә эҙләүҙе Google менән үтәй алаһығыҙ.
 Тик унда {{SITENAME}} өсөн индекслауҙың иҫке булыуы мөмкинлеген онотмағыҙ.',
 
-# Quickbar
-'qbsettings'                => 'Тиҙ күсеү',
-'qbsettings-none'           => 'Һис бере',
-'qbsettings-fixedleft'      => 'Һулда нығытылған',
-'qbsettings-fixedright'     => 'Уңда нығытылған',
-'qbsettings-floatingleft'   => 'Һулда күсеүсе',
-'qbsettings-floatingright'  => 'Уңда күсеүсе',
-'qbsettings-directionality' => 'Беркетелгән, телегеҙҙең яҙыу йүнәлешенә бәйле',
 
 # Preferences page
 'preferences'                   => 'Көйләүҙәр',
@@ -2736,13 +2665,6 @@ The wiki server cannot provide data in a format your client can read.',
 'pageinfo-viewsperedit'     => 'Бер үҙгәртеүгә ҡарау һаны',
 
 # Skin names
-'skinname-standard'    => 'Классик',
-'skinname-cologneblue' => 'Кёльн һағышы',
-'skinname-myskin'      => 'Шәхси',
-'skinname-chick'       => 'Себеш',
-'skinname-simple'      => 'Ябай',
-'skinname-modern'      => 'Заманса',
-'skinname-vector'      => 'Векторлы',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Тикшерелгән, тип билдәләргә',

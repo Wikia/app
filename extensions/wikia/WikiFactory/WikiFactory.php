@@ -173,8 +173,8 @@ class WikiFactory {
 	 * getDomains
 	 *
 	 * get all domains defined in wiki.factory (city_domains table) or
-	 * all domains for given wiki ideintifier. Data from query is
-	 * stored in memcache for hour.
+	 * all domains for given wiki identifier. Data from query is
+	 * stored in memcache for an hour.
 	 *
 	 * @access public
 	 * @static
@@ -189,7 +189,12 @@ class WikiFactory {
 	static public function getDomains( $city_id, $master = false ) {
 
 		if ( ! self::isUsed() ) {
-			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			WikiaLogger::instance()->error(
+				"WikiFactory is not used.",
+				[
+					"exception" => new Exception()
+				]
+			);
 			return false;
 		}
 
@@ -490,6 +495,30 @@ class WikiFactory {
 
 		wfProfileOut( __METHOD__ );
 		return $city_id;
+	}
+
+	/**
+	 * Given a wiki's dbName, return the wgServer value properly altered to reflect the current environment.
+	 *
+	 * @param int $dbName
+	 *
+	 * @return string
+	 */
+	public static function getHostByDbName( $dbName ) {
+		global $wgDevelEnvironment, $wgDevelEnvironmentName;
+
+		$cityId = \WikiFactory::DBtoID( $dbName );
+		$hostName = \WikiFactory::getVarValueByName( 'wgServer', $cityId );
+
+		if ( !empty( $wgDevelEnvironment ) ) {
+			if ( strpos( $hostName, "wikia.com" ) ) {
+				$hostName = str_replace( "wikia.com", "{$wgDevelEnvironmentName}.wikia-dev.com", $hostName );
+			} else {
+				$hostName = \WikiFactory::getLocalEnvURL( $hostName );
+			}
+		}
+
+		return rtrim( $hostName, '/' );
 	}
 
 	/**
@@ -1053,7 +1082,7 @@ class WikiFactory {
 	 * @param string $city_dbname	name of database
 	 * @param boolean $master	use master or slave connection
 	 *
-	 * @return id in city_list
+	 * @return integer The ID in city_list
 	 */
 	static public function DBtoID( $city_dbname, $master = false ) {
 
@@ -1168,7 +1197,8 @@ class WikiFactory {
 		} else {
 			$devbox = '';
 		}
-		$server = str_replace( $devbox . '.wikia-dev.com', '', $server );
+
+		$server = str_replace( '.' . $devbox . '.wikia-dev.com', '', $server );
 		$server = str_replace( '.wikia.com', '', $server );
 
 		// put the address back into shape and return
@@ -1322,7 +1352,7 @@ class WikiFactory {
 	 * @param string $city_dbname	name of database
 	 * @param boolean $master	use master or slave connection
 	 *
-	 * @return id in city_list
+	 * @return ResultWrapper|object The ID in city_list
 	 */
 	static public function getWikiByDB( $city_dbname, $master = false ) {
 
@@ -1679,6 +1709,7 @@ class WikiFactory {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
+		$dbr = self::db( DB_MASTER );
 
 		$aVariables = [];
 		$tables = [ "city_variables_pool", "city_variables_groups" ];
@@ -1697,7 +1728,7 @@ class WikiFactory {
 		}
 
 		if ( $string ) {
-			$where[] = "cv_name like '%$string%'";
+			$where[] = 'cv_name' . $dbr->buildLike( $dbr->anyString(), $string, $dbr->anyString() );
 		}
 
 		if ( $defined === true && $wiki != 0 ) {
@@ -1709,8 +1740,6 @@ class WikiFactory {
 		}
 
 		#--- now construct query
-
-		$dbr = self::db( DB_MASTER );
 
 		$oRes = $dbr->select(
 			$tables,
@@ -3298,6 +3327,77 @@ class WikiFactory {
 			}
 		}
 		$wgMemc->prefetch($keys);
+	}
+
+	/**
+	 * Renders community's value of given variable
+	 *
+	 * @access public
+	 * @static
+	 *
+	 * @param string $name name of wg variable
+	 * @param string $type type of variable ($variable->cv_variable_type)
+	 *
+	 * @return string
+	 */
+	static public function renderValueOnCommunity( $name, $type ) {
+		global $$name;
+		global $preWFValues;
+
+		$value = "";
+
+		if( isset( $preWFValues[$name] ) ) {
+			// was modified, spit out saved default
+			$value = self::parseValue( $preWFValues[$name], $type );
+		} elseif( isset( $$name ) ) {
+			// was not modified, spit out actual value
+			$value = self::parseValue( $$name, $type );
+		}
+		return htmlspecialchars( $value );
+	}
+
+	/**
+	 * Renders wg variable
+	 *
+	 * @access public
+	 * @static
+	 *
+	 * @param object $variable parameter passed to variable.tmpl.php
+	 *
+	 * @return string
+	 */
+	static public function renderValue( $variable ) {
+		if ( !isset( $variable->cv_value ) ) {
+			return "";
+		}
+		$value = self::parseValue( unserialize( $variable->cv_value ), $variable->cv_variable_type );
+		return htmlspecialchars( $value );
+	}
+
+	/**
+	 * Returns printable value based on type
+	 *
+	 * @access private
+	 * @static
+	 *
+	 * @param mixed  $value
+	 * @param string $type
+	 *
+	 * @return string
+	 */
+	static private function parseValue( $value, $type ) {
+		if ( $type == "string" || $type == "integer"  ) {
+			return $value;
+		}
+
+		if ( $type == "array" ) {
+			$json = json_encode ( $value );
+			if ( !preg_match_all( "/\".*\":/U", $json ) ) {
+				return $json;
+			}
+		}
+
+		return var_export( $value, true );
 	}
 
 };

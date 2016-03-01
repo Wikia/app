@@ -16,26 +16,8 @@ class Optimizely {
 		return true;
 	}
 
-	/**
-	 * Load Optimizely AssetsManager "blocking" group (i.e. in head section) on Venus
-	 *
-	 * @param array $jsHeadGroups
-	 * @param array $jsBodyGroups
-	 * @param array $cssGroups
-	 * @return bool true
-	 */
-	static public function onVenusAssetsPackages( Array &$jsHeadGroups, Array &$jsBodyGroups, Array &$cssGroups ) {
-		global $wgNoExternals;
-
-		if ( empty( $wgNoExternals ) ) {
-			$jsHeadGroups[] = 'optimizely_blocking_js';
-		}
-
-		return true;
-	}
-
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
-		global $wgOptimizelyLoadFromOurCDN, $wgNoExternals;
+		global $wgOptimizelyLoadFromOurCDN, $wgNoExternals, $wgWikiaEnvironment;
 
 		if ( !$wgNoExternals ) {
 			// load optimizely_blocking_js on wikiamobile
@@ -45,7 +27,12 @@ class Optimizely {
 				}
 			}
 
-			if ( $wgOptimizelyLoadFromOurCDN ) {
+			// On devboxes and sandboxes Optimizely script should be laoded from original CDN for the ease of testing
+			// the experiments, by mitigating the need to run the fetchOptimizelyScript.php (or waiting for it to be run
+			// by cron for sandbox).
+			if ( $wgOptimizelyLoadFromOurCDN &&
+				!in_array( $wgWikiaEnvironment, [ WIKIA_ENV_DEV, WIKIA_ENV_SANDBOX ] )
+			) {
 				$scripts .= static::loadFromOurCDN();
 			} else {
 				$scripts .= static::loadOriginal();
@@ -59,11 +46,13 @@ class Optimizely {
 		$scriptDomain = WikiFactory::getLocalEnvURL(
 			WikiFactory::getVarValueByName( 'wgServer', Wikia::COMMUNITY_WIKI_ID )
 		);
+		// do not async - we need it for UA tracking
 		return '<script src="' . $scriptDomain . '/wikia.php?controller=Optimizely&method=getCode"></script>';
 	}
 
 	protected static function loadOriginal() {
 		global $wgDevelEnvironment, $wgOptimizelyUrl, $wgOptimizelyDevUrl;
-		return '<script src="' . ($wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl) . '" async></script>';
+		// do not async - we need it for UA tracking
+		return '<script src="' . ($wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl) . '"></script>';
 	}
 }

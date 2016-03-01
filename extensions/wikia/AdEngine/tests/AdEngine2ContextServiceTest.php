@@ -47,10 +47,11 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			'titleMockType' => 'article',
 			'flags' => [],
 			'expectedOpts' => [],
-			'expectedTargeting' => [],
+			'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 			'expectedProviders' => [],
 			'expectedForceProviders' => null,
 			'expectedSlots' => [],
+			'verticals' => [ 'newVertical' => 'other', 'expectedMappedVertical' => 'life' ]
 		];
 
 		return [
@@ -64,7 +65,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'titleMockType' => 'article',
 				'flags' => ['wgAdDriverEnableInvisibleHighImpactSlot'],
 				'expectedOpts' => [],
-				'expectedTargeting' => [],
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 				'expectedProviders' => [],
 				'expectedForceProviders' => null,
 				'expectedSlots' => ['invisibleHighImpact' => true]
@@ -73,7 +74,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'titleMockType' => 'article',
 				'flags' => ['wgAdDriverForceTurtleAd'],
 				'expectedOpts' => [],
-				'expectedTargeting' => [],
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 				'expectedProviders' => [],
 				'expectedForcedProvider' => 'turtle'
 			],
@@ -81,27 +82,27 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'titleMockType' => 'article',
 				'flags' => ['wgAdDriverTrackState'],
 				'expectedOpts' => ['trackSlotState' => true],
-				'expectedTargeting' => []
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ]
 			],
 			[
 				'titleMockType' => 'article',
 				'flags' => ['wgAdDriverUseMonetizationService', 'wgEnableMonetizationModuleExt'],
 				'expectedOpts' => [],
-				'expectedTargeting' => [],
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 				'expectedProviders' => ['monetizationService' => true]
 			],
 			[
 				'titleMockType' => 'article',
 				'flags' => ['wgAdDriverUseSevenOneMedia'],
 				'expectedOpts' => [],
-				'expectedTargeting' => [],
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 				'expectedProviders' => ['sevenOneMedia' => true]
 			],
 			[
 				'titleMockType' => 'article',
 				'flags' => ['wgAdDriverWikiIsTop1000'],
 				'expectedOpts' => [],
-				'expectedTargeting' => ['wikiIsTop1000' => true]
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'wikiIsTop1000' => true ]
 			],
 			[
 				'titleMockType' => 'article',
@@ -112,7 +113,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'titleMockType' => 'article',
 				'flags' => ['wgEnableOutboundScreenExt'],
 				'expectedOpts' => [],
-				'expectedTargeting' => [],
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 				'expectedProviders' => [],
 				'expectedForceProviders' => null,
 				'expectedSlots' => ['exitstitial' => true]
@@ -121,7 +122,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'titleMockType' => 'article',
 				'flags' => ['wgOutboundScreenRedirectDelay'],
 				'expectedOpts' => [],
-				'expectedTargeting' => [],
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ] ],
 				'expectedProviders' => [],
 				'expectedForceProviders' => null,
 				'expectedSlots' => ['exitstitialRedirectDelay' => true]
@@ -130,50 +131,107 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'titleMockType' => 'article',
 				'flags' => ['wgEnableWikiaHomePageExt'],
 				'expectedOpts' => ['pageType' => 'corporate'],
-				'expectedTargeting' => ['wikiIsCorporate' => true]
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'wikiIsCorporate' => true ]
 			],
 			[
 				'titleMockType' => 'article',
 				'flags' => ['wgEnableWikiaHubsV3Ext'],
 				'expectedOpts' => ['pageType' => 'corporate'],
-				'expectedTargeting' => ['pageIsHub' => true, 'wikiIsCorporate' => true]
+				'expectedTargeting' => [
+					'newWikiCategories' => [ 'test' ],
+					'pageIsHub' => true,
+					'wikiIsCorporate' => true
+				]
 			],
 			[
 				'titleMockType' => 'article',
 				'flags' => ['wgWikiDirectedAtChildrenByFounder'],
 				'expectedOpts' => [],
-				'expectedTargeting' => ['wikiDirectedAtChildren' => true]
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'wikiDirectedAtChildren' => true ]
 			],
 			[
 				'titleMockType' => 'article',
 				'flags' => ['wgWikiDirectedAtChildrenByStaff'],
 				'expectedOpts' => [],
-				'expectedTargeting' => ['wikiDirectedAtChildren' => true]
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'wikiDirectedAtChildren' => true ]
 			],
 			[
 				'titleMockType' => 'mainpage',
 				'flags' => [],
 				'expectedOpts' => [],
-				'expectedTargeting' => ['pageType' => 'home']
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'pageType' => 'home' ]
 			],
 			[
 				'titleMockType' => 'search',
 				'flags' => [],
 				'expectedOpts' => ['pageType' => 'search'],
-				'expectedTargeting' => ['pageType' => 'search', 'pageName' => 'Special:Search']
+				'expectedTargeting' => [
+					'newWikiCategories' => [ 'test' ],
+					'pageType' => 'search',
+					'pageName' => 'Special:Search'
+				]
 			],
 
-			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'tv', 'expectedMappedVertical' => 'ent']],
+			$defaultParameters + ['expectedMappings' => [
+				'newVertical' => 'tv',
+				'expectedMappedVertical' => 'ent'
+			]],
 
-			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'games', 'expectedMappedVertical' => 'gaming']],
+			$defaultParameters + ['expectedMappings' => [
+				'newVertical' => 'games',
+				'expectedMappedVertical' => 'gaming'
+			]],
 
-			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'books', 'expectedMappedVertical' => 'ent']],
+			$defaultParameters + ['expectedMappings' => [
+				'newVertical' => 'books',
+				'expectedMappedVertical' => 'ent'
+			]],
 
-			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'comics', 'expectedMappedVertical' => 'ent']],
+			$defaultParameters + ['expectedMappings' => [
+				'newVertical' => 'comics',
+				'expectedMappedVertical' => 'ent'
+			]],
 
-			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'lifestyle', 'expectedMappedVertical' => 'life']],
+			$defaultParameters + ['expectedMappings' => [
+				'newVertical' => 'lifestyle',
+				'expectedMappedVertical' => 'life'
+			]],
 
-			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'not-existing', 'expectedMappedVertical' => 'error']],
+			$defaultParameters + ['expectedMappings' => [
+				'newVertical' => 'not-existing',
+				'expectedMappedVertical' => 'error'
+			]],
+
+			$defaultParameters + ['expectedMappings' => [
+				'oldVertical' => 'Wikia',
+				'newVertical' => 'other',
+				'expectedMappedVertical' => 'wikia']
+			],
+
+			array_merge($defaultParameters, [
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test', 'test1' ] ],
+				'categories' => [ 'old' => ['test'], 'new' => ['test1'] ]
+			]),
+
+			array_merge($defaultParameters, [
+				'expectedTargeting' => [ 'newWikiCategories' => [ 0 => 'test', 2 => 'test1' ] ],
+				'categories' => [ 'old' => ['test'], 'new' => ['test', 'test1'] ]
+			]),
+
+			array_merge($defaultParameters, [
+				'expectedTargeting' => [ 'newWikiCategories' => [ 0 => 'test', 1 => 'test1', 4 => 'test2' ] ],
+				'categories' => [ 'old' => ['test', 'test1' ], 'new' => ['test', 'test1', 'test2'] ]
+			]),
+
+			array_merge($defaultParameters, [
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test2' ] ],
+				'categories' => [ 'old' => ['test2'] ]
+			]),
+
+			array_merge($defaultParameters, [
+				'expectedTargeting' => [ 'newWikiCategories' => [ 'test3' ] ],
+				'categories' => [ 'new' => ['test3'] ]
+			]),
 		];
 	}
 
@@ -187,17 +245,18 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$titleMockType = 'article',
 		$flags = [],
 		$expectedOpts = [],
-		$expectedTargeting = [],
+		$expectedTargeting = [ 'newWikiCategories' => [ 'test' ] ],
 		$expectedProviders = [],
 		$expectedForcedProvider = null,
 		$expectedSlots = [],
-		$verticals = ['sourceVertical' => 'other', 'expectedMappedVertical' => 'life']
+		$verticals = ['newVertical' => 'other', 'expectedMappedVertical' => 'life'],
+		$categories = []
 	) {
 		$langCode = 'xx';
 		$artId = 777;
 		$artDbKey = 'articledbkey';
 		$skinName = 'someskin';
-		$vertical = 'Fakevertical';
+		$vertical = $verticals['newVertical'];
 		$dbName = 'mydbname';
 		$cityId = 666;
 		$customDartKvs = 'a=b;c=d';
@@ -205,7 +264,8 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$shortCat = 'shortcat';
 		$sevenOneMediaSub2Site = 'customsub2site';
 		$expectedSevenOneMediaUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sevenonemedia';
-		$expectedSourcePointUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sourcepoint';
+		$expectedSourcePointDetectionUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sp.detection';
+		$expectedSourcePointRecoveryUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sp.recovery';
 
 		if ( $titleMockType === 'article' || $titleMockType === 'mainpage' ) {
 			$expectedTargeting['pageArticleId'] = $artId;
@@ -243,12 +303,39 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		}
 
 		// Mock WikiFactoryHub
-		$this->mockStaticMethod( 'WikiFactoryHub', 'getCategoryId', $catId );
-		$this->mockStaticMethod( 'WikiFactoryHub', 'getCategoryShort', $shortCat );
-		$this->mockStaticMethod( 'WikiFactoryHub', 'getWikiVertical', ['short'=>$verticals['sourceVertical']] );
+		$wikiFactoryHubMock = $this->getMockBuilder('WikiFactoryHub')
+			->disableOriginalConstructor()
+			->setMethods( [ 'getCategoryId', 'getCategoryShort', 'getWikiVertical', 'getWikiCategoryNames' ])
+			->getMock();
+
+		$wikiFactoryHubMock->expects( $this->any() )
+			->method( 'getCategoryId' )
+			->willReturn( $catId );
+
+		$wikiFactoryHubMock->expects( $this->any() )
+			->method( 'getCategoryShort' )
+			->willReturn( $shortCat );
+
+		$wikiFactoryHubMock->expects( $this->any() )
+			->method( 'getWikiVertical' )
+			->willReturn( [ 'short' => $verticals['newVertical'] ] );
+
+		if ( !empty( $categories['old'] ) || !empty( $categories['new'] ) ) {
+			$wikiFactoryHubMock->expects( $this->any() )
+				->method( 'getWikiCategoryNames' )
+				->will( $this->onConsecutiveCalls( $categories['old'], $categories['new'] ) );
+		} else {
+			$wikiFactoryHubMock->expects( $this->any() )
+				->method( 'getWikiCategoryNames' )
+				->willReturn( [ 'test' ] );
+		}
+
+		$this->mockStaticMethod( 'WikiFactoryHub', 'getInstance', $wikiFactoryHubMock);
 
 		// Mock HubService
-		$this->mockStaticMethod( 'HubService', 'getCategoryInfoForCity', (object) ['cat_name' => $vertical] );
+		$this->mockStaticMethod( 'HubService', 'getCategoryInfoForCity', (object) [
+			'cat_name' => !empty($verticals['oldVertical']) ? $verticals['oldVertical'] : $vertical
+		] );
 
 		// Mock MonetizationModule
 		if ( in_array( 'wgAdDriverUseMonetizationService', $flags ) ) {
@@ -276,6 +363,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'mappedVerticalName' => $verticals['expectedMappedVertical']
 			],
 			'providers' => [
+				'evolve2' => true
 			],
 			'slots' => [
 			],
@@ -298,11 +386,17 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			$expected['slots'][$var] = $val;
 		}
 
+		if ($expected['targeting']['pageType'] === 'article') {
+			$expected['providers']['taboola'] = true;
+		}
+
 		// Check for SourcePoint URL
 		if ( $skinName === 'oasis' ) {
-			$this->assertStringMatchesFormat( $expectedSourcePointUrlFormat, $result['opts']['sourcePointUrl'] );
-			unset( $result['opts']['sourcePointUrl'] );
+			$this->assertStringMatchesFormat( $expectedSourcePointRecoveryUrlFormat, $result['opts']['sourcePointRecoveryUrl'] );
+			unset( $result['opts']['sourcePointRecoveryUrl'] );
 		}
+		$this->assertStringMatchesFormat( $expectedSourcePointDetectionUrlFormat, $result['opts']['sourcePointDetectionUrl'] );
+		unset( $result['opts']['sourcePointDetectionUrl'] );
 
 		// Extra check for SevenOne Media URL
 		if ( isset( $expectedProviders['sevenOneMedia'] ) ) {

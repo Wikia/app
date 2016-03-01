@@ -103,6 +103,12 @@
 
 		// handle "Save" button
 		onSave: function (event) {
+			event.preventDefault();
+
+			if (this.editor.fire('save') === false) {
+				return;
+			}
+
 			if (this.textarea.val() == this.textarea.attr('placeholder')) {
 				this.textarea.val('');
 			}
@@ -120,7 +126,6 @@
 			});
 
 			// prevent submitting immediately so we can track this event
-			event.preventDefault();
 			this.editform.off('submit');
 			setTimeout(this.proxy(function () {
 				this.editform.submit();
@@ -436,7 +441,7 @@
 								self.ajax('diff' , extraData),
 
 								// load CSS for diff
-								mw.loader.use('mediawiki.action.history.diff')
+								mw.loader.using('mediawiki.action.history.diff')
 							).done(function(ajaxData) {
 								var data = ajaxData[ 0 ],
 									html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;

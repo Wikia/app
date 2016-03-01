@@ -122,7 +122,7 @@ class LyricFindTrackingService extends WikiaService {
 
 		wfDebug(__METHOD__ . ': ' . json_encode($data) . "\n");
 
-		$resp = Http::post($url, ['postData' => $data]);
+		$resp = ExternalHttp::post($url, ['postData' => $data]);
 
 		if ($resp !== false) {
 			wfDebug(__METHOD__ . ": API response - {$resp}\n");
@@ -201,7 +201,7 @@ class LyricFindTrackingService extends WikiaService {
 
 		wfDebug(__METHOD__ . ': ' . json_encode($data) . "\n");
 
-		$resp = Http::post($url, ['postData' => $data]);
+		$resp = ExternalHttp::post($url, ['postData' => $data]);
 
 		if ($resp !== false) {
 			wfDebug(__METHOD__ . ": API response - {$resp}\n");

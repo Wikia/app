@@ -1,10 +1,46 @@
 <?php
 
+use Wikia\Util\RequestId;
+
 /**
  * TransactionTraceNewrelic implements the TransactionTrace plugin interface and handles reporting
  * transaction type name as newrelic's transaction name and all attributes as custom parameters.
+ *
+ * @see https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-api
  */
 class TransactionTraceNewrelic {
+
+	// create custom transactions for given PHP calls
+	private static $customTraces = [
+		# PLATFORM-1696: RabbitMQ traffic
+		'Wikia\Tasks\Tasks\BaseTask::queue',
+		'PhpAmqpLib\Wire\IO\StreamIO::read',
+
+		# PLATFORM-1694: HTTP requests
+		'Wikia\Service\Helios\HeliosClientImpl::request', # Helios
+		'PhalanxService::sendToPhalanxDaemon', # Phalanx
+		'Wikia\Persistence\User\Preferences\PreferencePersistenceSwaggerService::get', # Preferences
+		'TemplateClassificationService::getType', # Template classification
+		'UserMailer::send', # emails
+		'ForeignAPIRepo::httpGet', # calls to upload.wikimedia.org and commons.wikimedia.org
+		'LillyHooks::processLink',
+	];
+
+	/**
+	 * Set up NewRelic integration and custom PHP calls tracer
+	 */
+	function __construct() {
+		if ( function_exists( 'newrelic_add_custom_tracer' ) ) {
+			foreach( self::$customTraces as $customTrace ) {
+				newrelic_add_custom_tracer( $customTrace );
+			}
+		}
+
+		// report request ID as a custom request parameter for easier debugging of slow transactions
+		if ( function_exists( 'newrelic_add_custom_parameter' ) ) {
+			newrelic_add_custom_parameter( 'requestId', RequestId::instance()->getRequestId() );
+		}
+	}
 
 	/**
 	 * Update Newrelic's transaction name

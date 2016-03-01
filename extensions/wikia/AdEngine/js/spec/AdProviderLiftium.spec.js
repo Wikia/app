@@ -1,15 +1,29 @@
 /*global describe, it, modules, expect*/
 describe('AdProviderLiftium', function () {
 	'use strict';
+
+	function noop() {
+		return;
+	}
+
 	it('canHandleSlot', function () {
 		var scriptWriterMock = {},
 			logMock = function () { return; },
+			contextMock = {
+				opts: noop
+			},
+			adContextMock = {
+				getContext: function () {
+					return contextMock;
+				}
+			},
 			windowMock = {},
 			documentMock = {},
 			slotTweakerMock = {},
 			adProviderLiftium;
 
 		adProviderLiftium = modules['ext.wikia.adEngine.provider.liftium'](
+			adContextMock,
 			documentMock,
 			logMock,
 			scriptWriterMock,

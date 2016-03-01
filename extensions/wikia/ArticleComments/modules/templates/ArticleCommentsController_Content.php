@@ -1,7 +1,7 @@
 <ul class="controls">
 	<li id="article-comments-counter-recent"><?= wfMsg( 'oasis-comments-showing-most-recent', count( $commentListRaw ) ) ?></li>
 </ul>
-<h1 id="article-comments-counter-header"><?= wfMsgExt( 'oasis-comments-header', array( 'parsemag' ), $wg->Lang->FormatNum( $countCommentsNested ) ) ?></h1>
+<h1 id="article-comments-counter-header"><?= wfMsgExt( 'oasis-comments-header', [ 'parsemag' ], $wg->Lang->FormatNum( $countCommentsNested ) ) ?></h1>
 <div id="article-comments" class="article-comments">
 	<? if ( !$isBlocked && $canEdit && $commentingAllowed ): ?>
 		<? if ( $isMiniEditorEnabled ): ?>
@@ -9,13 +9,13 @@
 		<? endif ?>
 		<div id="article-comm-info" class="article-comm-info"></div>
 		<? if ( $isMiniEditorEnabled ): ?>
-			<?= $app->getView( 'MiniEditorController', 'Header', array(
-					'attributes' => array(
+			<?= $app->getView( 'MiniEditorController', 'Header', [
+					'attributes' => [
 						'id' => 'article-comments-minieditor-newpost',
 						'data-min-height' => 100,
 						'data-max-height' => 400
-					)
-				))->render()
+					]
+			] )->render()
 			?>
 		<? endif ?>
 		<div class="session">
@@ -52,11 +52,11 @@
 	<? if ( $countComments ): ?>
 		<div class="article-comments-pagination upper-pagination"><?= $pagination ?></div>
 	<? endif ?>
-	<?= $app->getView( 'ArticleComments', 'CommentList', array(
+	<?= $app->getView( 'ArticleComments', 'CommentList', [
 			'commentListRaw' => $commentListRaw,
 			'page' => $page,
 			'useMaster' => false
-		))->render()
+	] )->render()
 	?>
 	<? if ( $countComments ): ?>
 		<div class="article-comments-pagination"><?= $pagination ?></div>

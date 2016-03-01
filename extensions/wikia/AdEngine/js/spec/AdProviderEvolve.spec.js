@@ -87,6 +87,7 @@ describe('AdProviderEvolve', function(){
 
 		expect(adProviderEvolve.canHandleSlot(['INCONTENT_BOXAD_1'])).toBeFalsy('INCONTENT_BOXAD_1');
 		expect(adProviderEvolve.canHandleSlot(['PREFOOTER_LEFT_BOXAD'])).toBeFalsy('PREFOOTER_LEFT_BOXAD');
+		expect(adProviderEvolve.canHandleSlot(['PREFOOTER_MIDDLE_BOXAD'])).toBeFalsy('PREFOOTER_MIDDLE_BOXAD');
 		expect(adProviderEvolve.canHandleSlot(['PREFOOTER_RIGHT_BOXAD'])).toBeFalsy('PREFOOTER_RIGHT_BOXAD');
 	});
 });

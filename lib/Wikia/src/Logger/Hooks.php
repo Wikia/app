@@ -108,7 +108,7 @@ class Hooks {
 	 * @return bool true
 	 */
 	public static function onWikiFactoryExecuteComplete( \WikiFactoryLoader $wikiFactoryLoader ) {
-		global $wgRequest, $wgDBname, $wgCityId, $maintClass;
+		global $wgDBname, $wgCityId, $maintClass;
 
 		$fields = [];
 
@@ -122,15 +122,6 @@ class Hooks {
 
 		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
 			$fields['url'] = $_SERVER['REQUEST_URI'];
-
-			$ip = !empty( $wgRequest ) ? $wgRequest->getIP() : null;
-			if ( $ip === null ) {
-				$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : null;
-			}
-
-			if ( $ip != null ) {
-				$fields['ip'] = $ip;
-			}
 
 			if ( isset( $_SERVER['REQUEST_METHOD'] ) ) {
 				$fields['http_method'] = $_SERVER['REQUEST_METHOD'];
@@ -159,6 +150,33 @@ class Hooks {
 		$fields['request_id'] = RequestId::instance()->getRequestId();
 
 		WikiaLogger::instance()->pushContext( $fields, WebProcessor::RECORD_TYPE_FIELDS );
+
+		return true;
+	}
+
+	/**
+	 * A hook for adds client IP to the fields sent to Logstash
+	 *
+	 * @param \WebRequest $webRequest
+	 * @return bool true
+	 */
+	public static function onWebRequestInitialized( \WebRequest $webRequest ) {
+		$fields = [];
+
+		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
+			$ip = $webRequest->getIP();
+			if ( $ip === null ) {
+				$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : null;
+			}
+
+			if ( $ip != null ) {
+				$fields['ip'] = $ip;
+			}
+		}
+
+		if ( !empty( $fields ) ) {
+			WikiaLogger::instance()->pushContext( $fields, WebProcessor::RECORD_TYPE_FIELDS );
+		}
 
 		return true;
 	}

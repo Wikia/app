@@ -162,17 +162,6 @@
 							<?= wfMessage( "admindashboard-control-multiple-upload-label" )->escaped() ?>
 						</a>
 					</li>
-					<? if ($displayLicensedVideoSwap) : ?>
-					<li class="control" data-tooltip="<?= wfMessage( "admindashboard-control-lvs-tooltip" )->escaped() ?>">
-						<a href="<?= $urlLVS ?>" class="set" data-tracking="lvs">
-							<span class="representation">
-								<?= $badgeLicensedVideoSwap ?>
-								<span class="icon licensedvideoswap"></span>
-							</span>
-							<?= wfMessage( "admindashboard-control-lvs-label" )->escaped() ?>
-						</a>
-					</li>
-					<? endif; ?>
 				</ul>
 			</section>
 		</div>

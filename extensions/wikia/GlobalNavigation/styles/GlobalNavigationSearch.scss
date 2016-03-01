@@ -97,7 +97,7 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 	.chevron {
 		@include global-nav-chevron;
 		@include calc(left, '100% + 1px');
-		margin-top: 10px;
+		margin-top: 13px;
 		position: relative;
 		width: 0;
 	}
@@ -182,5 +182,6 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 
 	.autocomplete-container {
 		right: 0;
+		margin-top: 1px;
 	}
 }

@@ -1,3 +1,4 @@
+/*global define, require*/
 /**
  * Single place to call when you want to load something from server
  *
@@ -6,8 +7,15 @@
  * @author Jakub Olek <jolek@wikia-inc.com>
  *
  */
-define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana', 'jquery', 'wikia.log'],
-	function loader (window, mw, nirvana, $, log) {
+define('wikia.loader', [
+		'wikia.window',
+		require.optional('mw'),
+		'wikia.nirvana',
+		'jquery',
+		'wikia.log',
+		'wikia.fbLocale'
+	],
+	function loader (window, mw, nirvana, $, log, fbLocale) {
 	'use strict';
 
 	var loader,
@@ -135,7 +143,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				}
 			},
 			facebook: {
-				file: window.fbScript || '//connect.facebook.net/en_US/sdk.js',
+				file: window.fbScript || fbLocale.getSdkUrl(window.wgUserLanguage),
 				check: function () {
 					return typeof window.FB;
 				},
@@ -170,6 +178,12 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 
 					callbacks.success = null;
 					return callbacks;
+				}
+			},
+			vk: {
+				file: '//vk.com/js/api/openapi.js',
+				check: function () {
+					return typeof (window.VK && window.VK.Widgets);
 				}
 			}
 		},
@@ -222,7 +236,9 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 			}
 
 			if (mw && use.length) {
-				mw.loader.use(use).done(callback).fail(fail(failure, {type: loader.LIBRARY, resources: useNames}));
+				mw.loader.using(use)
+					.done(callback)
+					.fail(fail(failure, {type: loader.LIBRARY, resources: useNames}));
 				load += use.length;
 			}
 
@@ -317,6 +333,11 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				if (typeof options.styles !== 'undefined') {
 					// Add sass params to ensure per-theme colors Varnish cache and mcache
 					options.sassParams = options.sassParams || window.wgSassParams;
+				}
+
+				if (typeof window.wgUserLanguage !== 'undefined' && typeof options.messages  !== 'undefined') {
+					// Add language to avoid cache pollution
+					options.uselang = window.wgUserLanguage;
 				}
 
 				nirvana.getJson(

@@ -1,12 +1,13 @@
 /*global define*/
 define('ext.wikia.adEngine.template.floor', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'wikia.log',
 	'wikia.document',
 	'wikia.iframeWriter',
 	'wikia.window'
-], function (adContext, adDetect, log, doc, iframeWriter, win) {
+], function (adContext, adSlot, adDetect, log, doc, iframeWriter, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.floor',
@@ -52,14 +53,15 @@ define('ext.wikia.adEngine.template.floor', [
 				height: params.height
 			}),
 			$floor = $('#' + floorId),
-			isFloorPresent = $floor.exists(),
+			isFloorPresent = $floor.length > 0,
 			gptEventMock = {
 				size: {
 					width: params.width,
 					height: params.height
 				}
 			},
-			async = params.canHop && params.slotName;
+			async = params.canHop && params.slotName,
+			slot;
 
 		function showFloor() {
 			var skin = adContext.getContext().targeting.skin;
@@ -69,6 +71,31 @@ define('ext.wikia.adEngine.template.floor', [
 			}
 
 			$floor.removeClass('hidden');
+		}
+
+		if (params.onClick) {
+			$(iframe).on('load', function () {
+				var iframeDoc = iframe.contentWindow.document;
+				$('html', iframeDoc).css('cursor', 'pointer').on('click', params.onClick);
+			});
+		}
+
+		if (async) {
+			log(['show', params.slotName, 'can hop'], 'info', logGroup);
+			slot = adSlot.create(params.slotName, null, {
+				success: function () {
+					log(['ad detect', params.slotName, 'success'], 'info', logGroup);
+					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"success"}}', '*');
+					showFloor();
+				},
+				hop: function () {
+					log(['ad detect', params.slotName, 'hop'], 'info', logGroup);
+					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"hop"}}', '*');
+				}
+			});
+			$(iframe).on('load', function () {
+				adDetect.onAdLoad(slot, gptEventMock, iframe);
+			});
 		}
 
 		if (!isFloorPresent) {
@@ -83,31 +110,17 @@ define('ext.wikia.adEngine.template.floor', [
 		});
 		$floor.find('.ad').html(iframe);
 
-		if (params.onClick) {
-			$(iframe).on('load', function () {
-				var iframeDoc = iframe.contentWindow.document;
-				$('html', iframeDoc).css('cursor', 'pointer').on('click', params.onClick);
-			});
-		}
-
-		if (async) {
-			log(['show', params.slotName, 'can hop'], 'info', logGroup);
-			$(iframe).on('load', function () {
-				adDetect.onAdLoad(params.slotName + ' (floor inner iframe)', gptEventMock, iframe, function () {
-					log(['ad detect', params.slotName, 'success'], 'info', logGroup);
-					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"success"}}', '*');
-					showFloor();
-				}, function () {
-					log(['ad detect', params.slotName, 'hop'], 'info', logGroup);
-					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"hop"}}', '*');
-				});
-			});
-		}
-
 		if (!async) {
 			showFloor();
 		}
 	}
+
+	adContext.addCallback(function () {
+		var floor = doc.getElementById(floorId);
+		if (floor) {
+			floor.parentElement.removeChild(floor);
+		}
+	});
 
 	return {
 		show: show

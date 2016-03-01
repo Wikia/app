@@ -193,30 +193,12 @@ $messages = array(
 'navigation'    => 'Napigasi',
 'and'           => '&#32;wan',
 
-# Cologne Blue skin
 'qbfind'         => 'Paugaian',
 'qbbrowse'       => 'Tangadahi',
-'qbedit'         => 'Babak',
 'qbpageoptions'  => 'Tungkaran ini',
 'qbpageinfo'     => 'Naskah aluran',
-'qbmyoptions'    => 'Tungkaran ulun',
-'qbspecialpages' => 'Tungkaran istimiwa',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Tambahi tupik',
-'vector-action-delete'           => 'Hapus',
-'vector-action-move'             => 'Pindahakan',
-'vector-action-protect'          => 'Lindungi',
-'vector-action-undelete'         => 'Pawalangan pahapusan',
-'vector-action-unprotect'        => 'Palindungan',
-'vector-simplesearch-preference' => 'Kawa-akan saran panggagaian tingkat lanjut (Vector skin haja)',
-'vector-view-create'             => 'Ulah',
-'vector-view-edit'               => 'Babak',
-'vector-view-history'            => 'Tiringi halam',
-'vector-view-view'               => 'Baca',
-'vector-view-viewsource'         => 'Tiringi asal mula',
 'actions'                        => 'Tindakan',
 'namespaces'                     => 'Ngarankamar',
 'variants'                       => 'Macam',
@@ -239,7 +221,6 @@ $messages = array(
 'edit'              => 'Babak',
 'create'            => 'Ulah',
 'editthispage'      => 'Babak tungkaran ini',
-'create-this-page'  => 'Ulah tungkaran ini',
 'delete'            => 'Hapus',
 'deletethispage'    => 'Hapus tungkaran ini',
 'undelete_short'    => 'Walang mahapus {{PLURAL:$1|asa babakan|$1 bababakan}}',
@@ -254,19 +235,9 @@ $messages = array(
 'talkpagelinktext'  => 'Pandir',
 'specialpage'       => 'Tungkaran istimiwa',
 'personaltools'     => 'Pakakas surang',
-'postcomment'       => 'Palih hanyar',
-'articlepage'       => 'Tiringi isi tungkaran',
 'talk'              => 'Pamandiran',
 'views'             => 'Titiringan',
 'toolbox'           => 'Wadah pakakas',
-'userpage'          => 'Tiringi tungkaran pamuruk',
-'projectpage'       => 'Tiringi tungkaran rangka gawian',
-'imagepage'         => 'Tiringi tungkaran barakas',
-'mediawikipage'     => 'Tiringi tungkaran pasan sistim',
-'templatepage'      => 'Tiringi tungkaran citakan',
-'viewhelppage'      => 'Tiringi tungkaran patulung',
-'categorypage'      => 'Tiringi tungkaran tumbung',
-'viewtalkpage'      => 'Tiringi tungkaran pamandiran',
 'otherlanguages'    => 'Dalam bahasa lain',
 'redirectedfrom'    => '(Diugahakan matan $1)',
 'redirectpagesub'   => 'Tungkaran paugahan',
@@ -566,38 +537,6 @@ Wayah ini Pian sudah babuat log...',
 'resetpass-wrong-oldpass'   => 'Katasunduk samantara atawa wayah ini kada sah.
 Pian pinanya sudah bahasil maubah katasunduk Pian atawa maminta sabuah katasunduk samantara hanyar.',
 'resetpass-temp-password'   => 'Katasunduk samantara:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Bulikakan setelan katasunduk',
-'passwordreset-text'               => 'Tuntungakan purmulir ngini gasan manarima sabuah suril pangingat rarincian akun Pian.',
-'passwordreset-legend'             => 'Bulikakan setelan katasunduk',
-'passwordreset-disabled'           => 'Mambulikakan setelan katasunduk dipajahakan hagan wiki ini.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Buati asa data di bawah ngini}}',
-'passwordreset-username'           => 'Ngaran pamuruk:',
-'passwordreset-domain'             => 'Dumain:',
-'passwordreset-capture'            => 'Tiringikah kulihan suril?',
-'passwordreset-capture-help'       => 'Amun Pian cintang kutak ngini, suril (awan katasunduk samantara) akan ditampaiakan ka Pian bahwasa lagi dikirim ka pamuruk.',
-'passwordreset-email'              => 'Alamat suril:',
-'passwordreset-emailtitle'         => 'Rarincian akun pada {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Ada urang (pinanya Pian, matan alamat IP $1) maminta sabuah pangingat hagan rarincian akun Pian gasan {{SITENAME}} ($4). Pamuruk barikut {{PLURAL:$3|akun|aakun}}
-tarait awan suril:
-
-$2
-
-{{PLURAL:$3|katasunduk samantara ngini|kakatasunduk samantara ngini}} akan kadaluarsa dalam {{PLURAL:$5|asa hari|$5 hahari}}.
-Pian parlu babuat log wan mamilih katasunduk hanyar wayah ini jua. Amun urang lain nang maminta ngini, atawa amun Pian sudah paingatan awan katasunduk Pian, wan Pian kada handak maubahnya, Pian kawa kada mahuwal pasan ini wan manyambung mamuruk katasunduk lawas Pian.',
-'passwordreset-emailtext-user'     => 'Ada urang (pinanya Pian, matan alamat IP $1) maminta sabuah pangingat hagan rarincian akun Pian gasan {{SITENAME}} ($4). Pamuruk barikut {{PLURAL:$3|akun|aakun}}
-tarait awan suril:
-
-$2
-
-{{PLURAL:$3|katasunduk samantara ngini|kakatasunduk samantara ngini}} akan kadaluarsa dalam {{PLURAL:$5|asa hari|$5 hahari}}.
-Pian parlu babuat log wan mamilih katasunduk hanyar wayah ini jua. Amun urang lain nang maminta ngini, atawa amun Pian sudah paingatan awan katasunduk Pian, wan Pian kada handak maubahnya, Pian kawa kada mahuwal pasan ini wan manyambung mamuruk katasunduk lawas Pian.',
-'passwordreset-emailelement'       => 'Ngaran pamuruk: $1
-Katasunduk samantara: $2',
-'passwordreset-emailsent'          => 'Sabuah suril pangingat sudah takirim.',
-'passwordreset-emailsent-capture'  => 'Sabuah suril pangingat sudah dikirim, nangkaya ditampaiakan di bawah.',
-'passwordreset-emailerror-capture' => 'Sabuah sril pangingat digenerasiakan, nangkaya ditampaiakan di bawah, tagal pangiriman ngini ka pamuruk gagal: $1',
 
 # Special:ChangeEmail
 'changeemail'          => 'Ganti alamat suril',
@@ -1074,14 +1013,6 @@ Tarai pamintaan Pian lawan ''all:'' gasan manggagai samunyaan isi (tamasuk tungk
 Pian kawa manggagai lung Google parhatan ini.
 Catatan nang dihaharnya matan isi {{SITENAME}} kawa-ai sudah kadaluarsa.',
 
-# Quickbar
-'qbsettings'                => 'Bilahhancap',
-'qbsettings-none'           => 'Kadada',
-'qbsettings-fixedleft'      => 'Tatap di kiwa',
-'qbsettings-fixedright'     => 'Tatap di kanan',
-'qbsettings-floatingleft'   => 'Mangambang sabalah kiwa',
-'qbsettings-floatingright'  => 'Mangambang sabalah kanan',
-'qbsettings-directionality' => 'Tatap, tagantung pada ampah skrip matan bahasa Pian',
 
 # Preferences page
 'preferences'                   => 'Kakatujuan',

@@ -16,11 +16,17 @@ class PhalanxContentModel extends PhalanxModel {
 		parent::__construct( __CLASS__, array( 'title' => $title, 'lang' => $lang, 'id' => $id ) );
 	}
 
+	/**
+	 * Skip calls to Phalanx service if this method returns true
+	 *
+	 * @return bool
+	 */
 	public function isOk() { 
 		return ( 
 			$this->wg->User->isAllowed( 'phalanxexempt' ) || 
 			!( $this->title instanceof Title ) || 
-			( $this->title->getPrefixedText() == self::SPAM_WHITELIST_NS_TITLE )  
+			( $this->title->getPrefixedText() == self::SPAM_WHITELIST_NS_TITLE ) ||
+			$this->isWikiaInternalRequest()
 		);
 	}
 

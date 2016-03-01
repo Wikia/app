@@ -1,6 +1,6 @@
 /* global Modernizr */
 
-(function (window, $) {
+(function (window, $, mw) {
 	'use strict';
 
 	var lockedFeatures = {},
@@ -176,7 +176,8 @@
 							format: 'json',
 							feature: featureElem.data('name'),
 							category: modal.find('select[name=feedback] option:selected').val(),
-							message: comment.val()
+							message: comment.val(),
+							token: mw.user.tokens.get('editToken')
 						}, function (res) {
 							if (res.result === 'ok') {
 								clearTimeout(msgHandle);
@@ -210,7 +211,8 @@
 			method: 'toggleFeature',
 			format: 'json',
 			feature: featureName,
-			enabled: enable
+			enabled: enable,
+			token: mw.user.tokens.get('editToken')
 		}, function (res) {
 			if (res.result === 'ok') {
 				lockedFeatures[featureName] = false;
@@ -227,4 +229,4 @@
 		init();
 	});
 
-})(window, jQuery);
+})(window, jQuery, mediaWiki);

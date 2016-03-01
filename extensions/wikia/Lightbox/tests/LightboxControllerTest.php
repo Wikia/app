@@ -33,6 +33,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 
 	public function testGetThumbImages_exclude() {
 		$time = time();
+		$timeFormatted = wfTimestamp( TS_MW, $time );
 		$count = 5;
 		$images = [
 			'image 1',
@@ -46,7 +47,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 		];
 		$imageList = [
 			'images' => $images,
-		    'minTimestamp' => $time - 10000,
+		    'minTimestamp' => wfTimestamp( TS_MW, $time - 10000 ),
 		];
 		$request = $this->getMockBuilder( 'WikiaRequest' )
 			->disableOriginalConstructor()
@@ -59,7 +60,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 		$request->expects( $this->at( 1 ) )
 			->method( 'getVal' )
 			->with( 'to', $this->anything() )
-			->will( $this->returnValue( $time ) );
+			->will( $this->returnValue( $timeFormatted ) );
 		$request->expects( $this->at( 2 ) )
 			->method( 'getVal' )
 			->with( 'inclusive', $this->anything() )
@@ -71,7 +72,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 			->getMock();
 		$lightboxHelper->expects( $this->once() )
 			->method( 'getImageList' )
-			->with( $count, $time )
+			->with( $count, $timeFormatted )
 			->will( $this->returnValue( $imageList ) );
 
 		$lightboxMock = $this->getMockBuilder( 'LightboxController' )
@@ -97,6 +98,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 
 	public function testGetThumbImages() {
 		$time = time();
+		$timeFormatted = wfTimestamp( TS_MW, $time );
 		$count = 5;
 		$images = [
 			'image 1',
@@ -114,7 +116,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 		];
 		$imageList = [
 			'images' => $images,
-		    'minTimestamp' => $time - 10000,
+		    'minTimestamp' => wfTimestamp( TS_MW, $time - 10000 ),
 		];
 		$request = $this->getMockBuilder( 'WikiaRequest' )
 			->disableOriginalConstructor()
@@ -127,7 +129,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 		$request->expects( $this->at( 1 ) )
 			->method( 'getVal' )
 			->with( 'to', $this->anything() )
-			->will( $this->returnValue( $time ) );
+			->will( $this->returnValue( $timeFormatted ) );
 		$request->expects( $this->at( 2 ) )
 			->method( 'getVal' )
 			->with( 'inclusive', $this->anything() )
@@ -139,7 +141,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 			->getMock();
 		$lightboxHelper->expects( $this->once() )
 			->method( 'getImageList' )
-			->with( $count, $time )
+			->with( $count, $timeFormatted )
 			->will( $this->returnValue( $imageList ) );
 		$lightboxHelper->expects( $this->once() )
 			->method( 'getLatestPhotos' )
@@ -181,7 +183,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 		        ->with( 'isInline', false )
 		        ->will( $this->returnValue( false ) );
 
-		$userMock = $this->getMock( 'stdClass', [ 'isItemLoaded' ] );
+		$userMock = $this->getMock( 'User', [ 'isItemLoaded' ] );
 		$userMock->expects( $this->any() )
 		         ->method( 'isItemLoaded' )
 		         ->with( $this->anything() )
@@ -190,7 +192,9 @@ class LightboxControllerTest extends WikiaBaseTest {
 
 		$lightboxController = new \LightboxController();
 		$lightboxController->setRequest( $request );
-		$this->assertNull( $lightboxController->getMediaDetail() );
+		$lightboxController->setResponse( new WikiaResponse( 'json' ) );
+
+		$this->assertEmpty( $lightboxController->getMediaDetail() );
 	}
 
 	public function testGetMediaDetail_read() {
@@ -208,7 +212,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 		        ->with( 'isInline', false )
 		        ->will( $this->returnValue( false ) );
 
-		$userMock = $this->getMock( 'stdClass', [ 'isAllowed', 'isItemLoaded' ] );
+		$userMock = $this->getMock( 'User', [ 'isAllowed', 'isItemLoaded' ] );
 		$userMock->expects( $this->once() )
 		         ->method( 'isAllowed' )
 		         ->with( 'read' )
@@ -221,7 +225,9 @@ class LightboxControllerTest extends WikiaBaseTest {
 
 		$lightboxController = new \LightboxController();
 		$lightboxController->setRequest( $request );
-		$this->assertNull( $lightboxController->getMediaDetail() );
+		$lightboxController->setResponse( new WikiaResponse( 'json' ) );
+
+		$this->assertEmpty( $lightboxController->getMediaDetail() );
 	}
 
 	public function testGetMediaDetail() {
@@ -252,7 +258,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 			->with( 'width', $this->anything() )
 			->will( $this->returnValue( \LightboxController::CONTEXT_DEFAULT_WIDTH ) );
 
-		$userMock = $this->getMock( 'stdClass', [ 'isAnon', 'isAllowed', 'isItemLoaded', 'getOption', 'getStubThreshold' ] );
+		$userMock = $this->getMock( 'User', [ 'isAnon', 'isAllowed', 'isItemLoaded', 'getOption', 'getStubThreshold' ] );
 		$userMock->expects( $this->any() )
 		     ->method( 'isAnon' )
 		     ->will( $this->returnValue( false ) );
@@ -302,7 +308,6 @@ class LightboxControllerTest extends WikiaBaseTest {
 		$format = \WikiaResponse::FORMAT_JSON;
 
 		global $wgLang;
-		$views = wfMessage( 'lightbox-video-views', $wgLang->formatNum( $data['videoViews'] ) )->parse();
 
 		$mediaDetail = [
 			'mediaType'         => $mediaType,
@@ -316,7 +321,6 @@ class LightboxControllerTest extends WikiaBaseTest {
 			'userPageUrl'       => $userPageUrl,
 			'articles'          => $articles,
 			'providerName'      => $providerName,
-			'views'             => $views,
 			'exists'            => $exists,
 			'isAdded'           => $isAdded,
 			'extraHeight'       => $extraHeight,

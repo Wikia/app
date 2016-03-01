@@ -20,31 +20,32 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This is not a valid entry point to MediaWiki.' );
 }
 
-$wgExtensionCredits['other'][] = array(
+$wgExtensionCredits['other'][] = [
 	'path' => __FILE__,
 	'name' => 'LinkSuggest',
 	'version' => '2.0',
-	'author' => array(
+	'author' => [
 		'Inez Korczyński', 'Bartek Łapiński', 'Łukasz Garczewski', 'Maciej Brencz',
 		'Jesús Martínez Novo', 'Jack Phoenix', 'Sean Colombo', 'Robert Elwell',
-	),
+	],
 	'descriptionmsg' => 'linksuggest-desc',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/LinkSuggest'
-);
+];
 
 // ResourceLoader support (MW 1.17+)
-$wgResourceModules['ext.wikia.LinkSuggest'] = array(
+$wgResourceModules['ext.wikia.LinkSuggest'] = [
 	'scripts' => 'js/jquery.wikia.linksuggest.js',
-	'dependencies' => array( 'jquery.ui.autocomplete' ),
+	'dependencies' => [ 'jquery.ui.autocomplete' ],
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/LinkSuggest'
-);
+];
 
 // config
 $wgLinkSuggestLimit = 6;
 
 // classes
 $wgAutoloadClasses['LinkSuggest'] = __DIR__ . '/LinkSuggest.class.php';
+$wgAutoloadClasses['LinkSuggestLoader'] = __DIR__ . '/LinkSuggestLoader.class.php';
 $wgAutoloadClasses['LinkSuggestHooks'] = __DIR__ . '/LinkSuggestHooks.class.php';
 
 // i18n
@@ -53,6 +54,7 @@ $wgExtensionMessagesFiles['LinkSuggest'] = __DIR__ . '/LinkSuggest.i18n.php';
 // hooks
 $wgHooks['GetPreferences'][] = 'LinkSuggestHooks::onGetPreferences' ;
 $wgHooks['EditForm::MultiEdit:Form'][] = 'LinkSuggestHooks::onEditFormMultiEditForm';
+$wgHooks['UploadForm:initial'][] = 'LinkSuggestHooks::onUploadFormInitial'; // VOLDEV-121: add LinkSuggest to Special:Upload and MultipleUpload
 
 // AJAX interface
 $wgAjaxExportList[] = 'getLinkSuggest';

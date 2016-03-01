@@ -1,5 +1,6 @@
 <?php
 
+class CuratedContentValidatorMethodNotAllowedException extends MethodNotAllowedException {}
 /**
  * CuratedContentValidatorComponent: API endpoint for validation
  */
@@ -14,52 +15,54 @@ class CuratedContentValidatorController extends WikiaController {
 		$this->helper = new CuratedContentHelper();
 	}
 
-	public function validateSection() {
+	public function validateCuratedContentSection() {
+		global $wgRequest;
+		if ( !$wgRequest->wasPosted() ) {
+			throw new CuratedContentValidatorMethodNotAllowedException();
+		}
+
 		$section = $this->request->getVal( 'item' );
 
 		if ( empty( $section ) ) {
 			$this->respondWithErrors();
 		} else {
-			$section['title'] = $section['label'];
-			unset( $section['label'] );
-
-			$this->validator->validateSection( $section );
-			$this->respond( $this->validator->getErrors() );
+			$errors = $this->validator->validateSection( $section );
+			$this->respond( $errors );
 		}
 	}
 
-	public function validateSectionWithItems() {
+	public function validateCuratedContentSectionWithItems() {
+		global $wgRequest;
+		if ( !$wgRequest->wasPosted() ) {
+			throw new CuratedContentValidatorMethodNotAllowedException();
+		}
+
 		$section = $this->request->getVal( 'item' );
 
 		if ( empty( $section ) ) {
 			$this->respondWithErrors();
 		} else {
-			$section['title'] = $section['label'];
-			unset( $section['label'] );
-
 			$section = $this->helper->processLogicForSection( $section );
-			$this->validator->validateSection( $section );
-			$this->validator->validateItemsExist( $section );
-			$this->validator->validateItems( $section );
-			$this->validator->validateItemsTypes( $section );
-			$this->validator->validateDuplicatedTitles();
-			$this->respond( $this->validator->getErrors() );
+			$errors = $this->validator->validateSectionWithItems( $section );
+
+			$this->respond( $errors );
 		}
 	}
 
-	public function validateItem() {
+	public function validateCuratedContentSectionItem() {
+		global $wgRequest;
+		if ( !$wgRequest->wasPosted() ) {
+			throw new CuratedContentValidatorMethodNotAllowedException();
+		}
+
 		$item = $this->request->getVal( 'item' );
-		$isFeatured = $this->request->getBool( 'isFeaturedItem', false );
 
 		if ( empty( $item ) ) {
 			$this->respondWithErrors();
 		} else {
 			$this->helper->fillItemInfo( $item );
-			$this->validator->validateItem( $item );
-			if ( !$isFeatured ) {
-				$this->validator->validateItemType( $item );
-			}
-			$this->respond( $this->validator->getErrors() );
+			$errors = $this->validator->validateSectionItem( $item );
+			$this->respond( $errors );
 		}
 	}
 
@@ -73,7 +76,7 @@ class CuratedContentValidatorController extends WikiaController {
 
 	private function respondWithErrors( Array $errors = null ) {
 		if ( !empty( $errors ) ) {
-			$this->response->setVal('error', $errors);
+			$this->response->setVal( 'errors', $errors );
 		}
 		$this->respondWithStatus( false );
 	}
@@ -83,5 +86,22 @@ class CuratedContentValidatorController extends WikiaController {
 		$this->response->setVal( 'status', $status );
 		// TODO: CONCF-961 Set more restrictive header
 		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
+	}
+
+	public function validateCuratedContentFeaturedItem() {
+		global $wgRequest;
+		if ( !$wgRequest->wasPosted() ) {
+			throw new CuratedContentValidatorMethodNotAllowedException();
+		}
+
+		$item = $this->request->getVal( 'item' );
+
+		if ( empty( $item ) ) {
+			$this->respondWithErrors();
+		} else {
+			$this->helper->fillItemInfo( $item );
+			$errors = $this->validator->validateFeaturedItem( $item );
+			$this->respond( $errors );
+		}
 	}
 }

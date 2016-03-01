@@ -485,30 +485,12 @@ $messages = array(
 'navigation'    => 'Navigatie',
 'and'           => '&#32;en',
 
-# Cologne Blue skin
 'qbfind'         => 'Zoeken',
 'qbbrowse'       => 'Bladeren',
-'qbedit'         => 'Bewerken',
 'qbpageoptions'  => 'Deze pagina',
 'qbpageinfo'     => 'Pagina-informatie',
-'qbmyoptions'    => "Mijn pagina's",
-'qbspecialpages' => 'Speciale pagina’s',
 'faq'            => 'Veel gestelde vragen',
-'faqpage'        => 'Project:Veelgestelde vragen',
 
-# Vector skin
-'vector-action-addsection'       => 'Kopje toevoegen',
-'vector-action-delete'           => 'Verwijderen',
-'vector-action-move'             => 'Hernoemen',
-'vector-action-protect'          => 'Beveiligen',
-'vector-action-undelete'         => 'Terugplaatsen',
-'vector-action-unprotect'        => 'Beveiliging wijzigen',
-'vector-simplesearch-preference' => 'Verbeterde zoeksuggesties inschakelen (alleen voor het uiterlijk Vector)',
-'vector-view-create'             => 'Aanmaken',
-'vector-view-edit'               => 'Bewerken',
-'vector-view-history'            => 'Geschiedenis bekijken',
-'vector-view-view'               => 'Lezen',
-'vector-view-viewsource'         => 'Brontekst bekijken',
 'actions'                        => 'Handelingen',
 'namespaces'                     => 'Naamruimten',
 'variants'                       => 'Varianten',
@@ -531,7 +513,6 @@ $messages = array(
 'edit'              => 'Bewerken',
 'create'            => 'Aanmaken',
 'editthispage'      => 'Deze pagina bewerken',
-'create-this-page'  => 'Deze pagina aanmaken',
 'delete'            => 'Verwijderen',
 'deletethispage'    => 'Deze pagina verwijderen',
 'undelete_short'    => '$1 {{PLURAL:$1|bewerking|bewerkingen}} terugplaatsen',
@@ -546,19 +527,9 @@ $messages = array(
 'talkpagelinktext'  => 'Overleg',
 'specialpage'       => 'Speciale pagina',
 'personaltools'     => 'Persoonlijke instellingen',
-'postcomment'       => 'Nieuw kopje',
-'articlepage'       => 'Pagina bekijken',
 'talk'              => 'Overleg',
 'views'             => 'Weergaven',
 'toolbox'           => 'Hulpmiddelen',
-'userpage'          => 'Gebruikerspagina bekijken',
-'projectpage'       => 'Projectpagina bekijken',
-'imagepage'         => 'Bestandspagina bekijken',
-'mediawikipage'     => 'Berichtpagina bekijken',
-'templatepage'      => 'Sjabloonpagina bekijken',
-'viewhelppage'      => 'Hulppagina bekijken',
-'categorypage'      => 'Categoriepagina bekijken',
-'viewtalkpage'      => 'Overlegpagina bekijken',
 'otherlanguages'    => 'In andere talen',
 'redirectedfrom'    => '(Doorverwezen vanaf $1)',
 'redirectpagesub'   => 'Doorverwijspagina',
@@ -877,38 +848,6 @@ Bezig met aanmelden…',
 'resetpass-wrong-oldpass'   => 'Het huidige of tijdelijke wachtwoord is ongeldig.
 Mogelijk hebt u uw wachtwoord al gewijzigd of een nieuw tijdelijk wachtwoord aangevraagd.',
 'resetpass-temp-password'   => 'Tijdelijk wachtwoord:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Wachtwoord opnieuw instellen',
-'passwordreset-text'               => 'Vul dit formulier in zodat we u een e-mail kunnen sturen met uw gebruikersgegevens.',
-'passwordreset-legend'             => 'Wachtwoord opnieuw instellen',
-'passwordreset-disabled'           => 'Het is in deze wiki niet mogelijk uw wachtwoord opnieuw in te stellen.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Voer één van de onderstaande velden in}}',
-'passwordreset-username'           => 'Gebruiker:',
-'passwordreset-domain'             => 'Domein:',
-'passwordreset-capture'            => 'De resulterende e-mail bekijken?',
-'passwordreset-capture-help'       => 'Als u dit vakje aanvinkt, wordt de e-mail (met het tijdelijke wachtwoord) naar de gebruiker verzonden en ook aan u weergegeven.',
-'passwordreset-email'              => 'E-mailadres:',
-'passwordreset-emailtitle'         => 'Gebruikersgegevens op {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Iemand, waarschijnlijk u, heeft vanaf het IP-adres $1 uw gebruikersgegevens voor {{SITENAME}} ($4) opgevraagd.
-De volgende {{PLURAL:$3|gebruiker is|gebruikers zijn}} gekoppeld aan dit e-mailadres:
-
-$2
-
-{{PLURAL:$3|Dit tijdelijke wachtwoord vervalt|Deze tijdelijke wachtwoorden vervallen}} over {{PLURAL:$5|een dag|$5 dagen}}.
-Meld u aan en wijzig het wachtwoord nu. Als u dit verzoek niet zelf heeft gedaan, of als u het oorspronkelijke wachtwoord nog kent en het niet wilt wijzigen, negeer dit bericht dan en blijf uw oude wachtwoord gebruiken.',
-'passwordreset-emailtext-user'     => 'Gebruiker $1 op de site {{SITENAME}} heeft uw gebruikersgegevens voor {{SITENAME}} ($4) opgevraagd.
-De volgende {{PLURAL:$3|gebruiker is|gebruikers zijn}} gekoppeld aan dit e-mailadres:
-
-$2
-
-{{PLURAL:$3|Dit tijdelijke wachtwoord vervalt|Deze tijdelijke wachtwoorden vervallen}} over {{PLURAL:$5|een dag|$5 dagen}}.
-Meld u aan en wijzig het wachtwoord nu. Als u dit verzoek niet zelf heeft gedaan, of als u het oorspronkelijke wachtwoord nog kent en het niet wilt wijzigen, negeer dit bericht dan en blijf uw oude wachtwoord gebruiken.',
-'passwordreset-emailelement'       => 'Gebruikersnaam: $1
-Tijdelijk wachtwoord: $2',
-'passwordreset-emailsent'          => 'Er is per e-mail een herinnering verzonden.',
-'passwordreset-emailsent-capture'  => 'Er is een herinneringse-mail verzonden. Deze wordt hieronder weergegeven.',
-'passwordreset-emailerror-capture' => 'Er is een herinneringse-mail aangemaakt. Deze wordt hieronder weergegeven. Het verzonden naar de gebruiker is mislukt om de volgende reden: $1',
 
 # Special:ChangeEmail
 'changeemail'          => 'E-mailadres wijzigen',
@@ -1400,14 +1339,6 @@ U kunt ook een naamruimte als voorvoegsel gebruiken.",
 U kunt gebruik maken van Google.
 De gegevens over {{SITENAME}} zijn mogelijk niet bijgewerkt.',
 
-# Quickbar
-'qbsettings'                => 'Menubalk',
-'qbsettings-none'           => 'Uitgeschakeld',
-'qbsettings-fixedleft'      => 'Links vast',
-'qbsettings-fixedright'     => 'Rechts vast',
-'qbsettings-floatingleft'   => 'Links zwevend',
-'qbsettings-floatingright'  => 'Rechts zwevend',
-'qbsettings-directionality' => 'Vast, afhankelijk van de schrijfrichting van uw taal',
 
 # Preferences page
 'preferences'                   => 'Voorkeuren',
@@ -3092,15 +3023,7 @@ Een tijdelijke map is niet aanwezig.',
 
 # Stylesheets
 'common.css'              => '/** CSS die hier wordt geplaatst heeft invloed op alle skins */',
-'standard.css'            => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Standard */',
-'nostalgia.css'           => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Nostalgie */',
-'cologneblue.css'         => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Keuls blauw */',
 'monobook.css'            => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Monobook */',
-'myskin.css'              => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin MijnSkin */',
-'chick.css'               => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Chick */',
-'simple.css'              => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Eenvoudig */',
-'modern.css'              => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Modern */',
-'vector.css'              => '/* CSS die hier wordt geplaatst heeft alleen invloed op de skin Vector */',
 'print.css'               => '/* CSS die hier wordt geplaatst heeft alleen invloed op de printuitvoer */',
 'handheld.css'            => '/* CSS die hier wordt geplaatst heeft alleen invloed op handheldapparaten gebaseerd op de skin die is ingesteld in $wgHandheldStyle */',
 'noscript.css'            => '/ * CSS die hier wordt geplaatst heeft invloed voor gebruikers die JavaScript hebben uitgeschakeld * /',
@@ -3111,15 +3034,7 @@ Een tijdelijke map is niet aanwezig.',
 
 # Scripts
 'common.js'              => "/* JavaScript die hier wordt geplaatst heeft invloed op alle pagina's voor alle gebruikers */",
-'standard.js'            => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Standaard gebruiken */',
-'nostalgia.js'           => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Nostalgie gebruiken */',
-'cologneblue.js'         => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Keuls blauw gebruiken */',
 'monobook.js'            => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Monobook gebruiken */',
-'myskin.js'              => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin MijnSkin gebruiken */',
-'chick.js'               => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Chick gebruiken */',
-'simple.js'              => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Eenvoudig gebruiken */',
-'modern.js'              => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Modern gebruiken */',
-'vector.js'              => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die de skin Vector gebruiken */',
 'group-autoconfirmed.js' => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op automatisch bevestigde gebruikers */',
 'group-bot.js'           => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op robots */',
 'group-sysop.js'         => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op beheerders */',
@@ -3163,15 +3078,7 @@ Meestal wordt dit door een externe verwijzing op een zwarte lijst veroorzaakt.',
 'pageinfo-viewsperedit'     => 'Weergaven per bewerking',
 
 # Skin names
-'skinname-standard'    => 'Klassiek',
-'skinname-nostalgia'   => 'Nostalgie',
-'skinname-cologneblue' => 'Keuls blauw',
 'skinname-monobook'    => 'Monobook',
-'skinname-myskin'      => 'MijnSkin',
-'skinname-chick'       => 'Chick',
-'skinname-simple'      => 'Eenvoudig',
-'skinname-modern'      => 'Modern',
-'skinname-vector'      => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Als gecontroleerd markeren',

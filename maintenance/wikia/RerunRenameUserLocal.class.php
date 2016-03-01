@@ -15,7 +15,7 @@ class RerunRenameUserLocal extends Maintenance {
 		$userId,
 		$oldName,
 		$newName,
-		$log = '',
+		$wikiId,
 		$startTime,
 		$endTime;
 
@@ -24,16 +24,21 @@ class RerunRenameUserLocal extends Maintenance {
 		$this->addOption( 'userId', 'An ID of the renamed user', true, true, 'u' );
 		$this->addOption( 'oldName', 'An old name of the renamed user', true, true, 'o' );
 		$this->addOption( 'newName', 'An old name of the renamed user', true, true, 'n' );
+		$this->addOption( 'wikiId', 'A single wikiId to run the script at. If not provided - all wikis will be retrieved.', false, true, 'w' );
 	}
 
 	public function execute() {
 		$this->getOptions();
 
-		/**
-		 * Fetch IDs of wikias that a user has contributed at.
-		 */
-		$user = User::newFromId( $this->userId );
-		$wikis = $user->getWikiasWithUserContributions();
+		if ( $this->wikiId === 0 ) {
+			/**
+			 * Fetch IDs of wikias that a user has contributed at.
+			 */
+			$user = User::newFromId( $this->userId );
+			$wikis = $user->getWikiasWithUserContributions();
+		} else {
+			$wikis = [ $this->wikiId ];
+		}
 
 		/**
 		 * If there are any - run RenameUser_local.php for them.
@@ -47,7 +52,7 @@ class RerunRenameUserLocal extends Maintenance {
 			$dir = __DIR__;
 			foreach ( $wikis as $wikiId ) {
 				$cmd = sprintf( 'SERVER_ID=%d /usr/bin/php %s/RenameUser_local.php --rename-user-id=%d --rename-old-name="%s" --rename-new-name="%s"',
-					$wikiId, $dir, $this->userId, $this->oldName, $this->newName );
+					intval( $wikiId ), $dir, intval( $this->userId ), wfEscapeShellArg( $this->oldName ), wfEscapeShellArg( $this->newName ) );
 
 				$this->addLog( "Running: {$cmd}" );
 
@@ -62,17 +67,13 @@ class RerunRenameUserLocal extends Maintenance {
 		} else {
 			$this->addLog( 'The user has no contributions.' );
 		}
-
-		/**
-		 * Save and return the logs as a subpage of a user page
-		 */
-		return $this->saveLog( $user );
 	}
 
 	private function getOptions() {
-		$this->userId = intval( $this->getOption( 'userId' ) );
+		$this->userId = (int)$this->getOption( 'userId' );
 		$this->oldName = $this->getOption( 'oldName' );
 		$this->newName = $this->getOption( 'newName' );
+		$this->wikiId = (int)$this->getOption( 'wikiId' );
 	}
 
 	/**
@@ -82,52 +83,6 @@ class RerunRenameUserLocal extends Maintenance {
 	private function addLog( $s ) {
 		$s = "\n\n{$s}\n\n";
 		$this->output( $s );
-		$this->log .= $s;
-	}
-
-	/**
-	 * Creates a subpage of a user's page and saves the process logs there.
-	 * If the edit fails it logs the exception to Kibana with the
-	 * class name RerunRenameUserLocal as its message.
-	 */
-	private function saveLog() {
-		$logTitleText = sprintf( '%s/%s to %s rename rerun log',
-			$this->newName, $this->oldName, $this->newName );
-
-		$logTitle = Title::newFromText( $logTitleText, NS_USER );
-
-		try {
-			if ( $logTitle === null ) {
-				$wikiPage = new WikiPage( $logTitle );
-				$wikiaBot = User::newFromName( 'WikiaBot' );
-				$wikiPage->doEdit( $this->log,
-					'Logs from an operation of renaming the user.',
-					EDIT_NEW | EDIT_FORCE_BOT | EDIT_SUPPRESS_RC,
-					false,
-					$wikiaBot
-				);
-			} else {
-				throw new RerunRenameUserLocalException( $logTitleText );
-			}
-		} catch ( Exception $e ) {
-			$msg = $e->getMessage();
-			$this->addLog( "Saving logs to a subpage failed: {$msg}" );
-			$this->logException( $e );
-		}
-
-		return $this->log;
-	}
-
-	/**
-	 * Log an exception to Kibana
-	 * @param Exception $e
-	 */
-	private function logException( Exception $e ) {
-		$logger = Wikia\Logger\WikiaLogger::instance();
-		$logger->error( __CLASS__, [
-			'excptMsg' => $e->getMessage(),
-			'excptTrace' => $e->getTrace()
-		] );
 	}
 
 	/**

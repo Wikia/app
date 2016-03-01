@@ -17,16 +17,16 @@ class ChatHelper {
 	/**
 	 * Hooks into GetRailModuleList and adds the chat module to the side-bar when appropriate.
 	 */
-	static public function onGetRailModuleList(&$modules) {
-		wfProfileIn(__METHOD__);
+	static public function onGetRailModuleList( &$modules ) {
+		wfProfileIn( __METHOD__ );
 
 		// Make sure this module is positioned above the VideosModule (1285) when the user is logged in.  VID-1780
 		$pos = F::app()->wg->User->isAnon() ? 1175 : 1286;
 
 		// Above spotlights, below everything else. BugzId: 4597.
-		$modules[$pos] = array('ChatRail', 'placeholder', null);
+		$modules[$pos] = array( 'ChatRail', 'placeholder', null );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -34,48 +34,48 @@ class ChatHelper {
 	 * $mode - true = operation, false = failover
 	 */
 
-	static public function changeMode($mode = true){
-		if(self::getMode() == false) { //just promote server to operation mode
-			self::setMode(true);
+	static public function changeMode( $mode = true ) {
+		if ( self::getMode() == false ) { // just promote server to operation mode
+			self::setMode( true );
 			return true;
 		}
 
 		$basket = self::getServerBasket();
-		self::setServerBasket(($basket)%2 + 1);
-		self::setMode(false);
+		self::setServerBasket( ( $basket ) % 2 + 1 );
+		self::setMode( false );
 		return false;
 	}
 
-	static public function getMode(){
-		$mode = WikiFactory::getVarValueByName(self::$operationMode, self::$CentralCityId );
-		if(is_null($mode)) {
+	static public function getMode() {
+		$mode = WikiFactory::getVarValueByName( self::$operationMode, self::$CentralCityId );
+		if ( is_null( $mode ) ) {
 			return true;
 		}
 
 		return $mode;
 	}
 
-	static public function setMode($mode){
-		WikiFactory::setVarByName(self::$operationMode, self::$CentralCityId, $mode);
+	static public function setMode( $mode ) {
+		WikiFactory::setVarByName( self::$operationMode, self::$CentralCityId, $mode );
 	}
 
-	static public function getServer($type = 'Main'){
+	static public function getServer( $type = 'Main' ) {
 		global $wgCityId;
 
-		$server = self::getChatConfig($type.'ChatServers');
-		$serversCount = count($server[self::getServerBasket()]);
-		$serverId = ($wgCityId%$serversCount) + 1;
+		$server = self::getChatConfig( $type . 'ChatServers' );
+		$serversCount = count( $server[self::getServerBasket()] );
+		$serverId = ( $wgCityId % $serversCount ) + 1;
 
-		$out = explode(':', $server[self::getServerBasket()][$wgCityId%$serversCount]);
-		return array('host' => $out[0], 'port' => $out[1], 'serverId' => $serverId);
+		$out = explode( ':', $server[self::getServerBasket()][$wgCityId % $serversCount] );
+		return array( 'host' => $out[0], 'port' => $out[1], 'serverId' => $serverId );
 	}
 
 	static public function getChatCommunicationToken() {
-		return self::getChatConfig('ChatCommunicationToken');
+		return self::getChatConfig( 'ChatCommunicationToken' );
 	}
 
-	static public function getServersList($type = 'Main') {
-		$server = self::getChatConfig($type.'ChatServers');
+	static public function getServersList( $type = 'Main' ) {
+		$server = self::getChatConfig( $type . 'ChatServers' );
 		return $server[self::getServerBasket()];
 	}
 
@@ -87,26 +87,26 @@ class ChatHelper {
 	 *
 	 * @return bool
 	 */
-	static function getChatConfig($name) {
+	static function getChatConfig( $name ) {
 		global $wgWikiaEnvironment;
 
-		$configDir = getenv('WIKIA_CONFIG_ROOT');
+		$configDir = getenv( 'WIKIA_CONFIG_ROOT' );
 
-		if(empty(self::$configFile)) {
+		if ( empty( self::$configFile ) ) {
 			$configFilePath = $configDir . '/ChatConfig.json';
 			$string = file_get_contents( $configFilePath );
-			self::$configFile = json_decode($string, true);
+			self::$configFile = json_decode( $string, true );
 		}
 
 		if ( empty( self::$configFile ) ) {
 			return false;
 		}
 		$env = $wgWikiaEnvironment;
-		if(isset(self::$configFile[$env][$name])) {
+		if ( isset( self::$configFile[$env][$name] ) ) {
 			return self::$configFile[$env][$name];
 		}
 
-		if(isset(self::$configFile[$name])) {
+		if ( isset( self::$configFile[$name] ) ) {
 			return self::$configFile[$name];
 		}
 
@@ -114,20 +114,20 @@ class ChatHelper {
 	}
 
 	static public function getServerBasket() {
-		$basket	= WikiFactory::getVarValueByName(self::$serversBasket, self::$CentralCityId);
-		if(empty($basket)) {
+		$basket	= WikiFactory::getVarValueByName( self::$serversBasket, self::$CentralCityId );
+		if ( empty( $basket ) ) {
 			return 1;
 		}
 		return $basket;
 	}
 
-	static private function setServerBasket($basket) {
-		WikiFactory::setVarByName(self::$serversBasket, self::$CentralCityId, $basket);
+	static private function setServerBasket( $basket ) {
+		WikiFactory::setVarByName( self::$serversBasket, self::$CentralCityId, $basket );
 	}
 
-	static public function onStaffLogFormatRow($slogType,$result,$time,$linker,&$out) {
-		if($slogType == 'chatfo') {
-			$out = wfMsgExt('chat-failover-log-entry', array('parseinline'), array($time, $result->slog_user_name, $result->slog_user_namedst, $result->slog_comment));
+	static public function onStaffLogFormatRow( $slogType, $result, $time, $linker, &$out ) {
+		if ( $slogType == 'chatfo' ) {
+			$out = wfMsgExt( 'chat-failover-log-entry', array( 'parseinline' ), array( $time, $result->slog_user_name, $result->slog_user_namedst, $result->slog_comment ) );
 			return true;
 		}
 
@@ -137,9 +137,9 @@ class ChatHelper {
 	/**
 	 * Prepare a pre-rendered chat entry point for logged-in users
 	 */
-	public static function onMakeGlobalVariablesScript(&$vars) {
+	public static function onMakeGlobalVariablesScript( &$vars ) {
 		global $wgUser, $wgLang;
-		if ($wgUser->isLoggedIn()) {
+		if ( $wgUser->isLoggedIn() ) {
 			$vars[ 'wgWikiaChatUsers' ] = ChatEntryPoint::getChatUsersInfo();
 			if ( empty( $vars[ 'wgWikiaChatUsers' ] ) ) {
 				// we will need it to attract user to join chat
@@ -159,7 +159,7 @@ class ChatHelper {
 	 */
 	public static function onLinkEnd( $skin, Title $target, array $options, &$text, array &$attribs, &$ret ) {
 		if ( ( $target instanceof Title ) && ( $target->getNamespace() == NS_SPECIAL ) && $target->isLocal() && ( $target->getText() == "Chat" ) ) {
-			if ( !array_key_exists('class', $attribs) ) $attribs['class'] = 'WikiaChatLink';
+			if ( !array_key_exists( 'class', $attribs ) ) $attribs['class'] = 'WikiaChatLink';
 			else $attribs['class'] .= ' WikiaChatLink';
 		}
 		return true;
@@ -173,7 +173,7 @@ class ChatHelper {
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
 		global $wgExtensionsPath, $wgTitle, $wgResourceBasePath;
 
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$sp = array(
 			'Contributions',
@@ -181,33 +181,33 @@ class ChatHelper {
 			'Recentchanges'
 		);
 
-		foreach($sp as $value) {
-			if($wgTitle->isSpecial($value)) {
+		foreach ( $sp as $value ) {
+			if ( $wgTitle->isSpecial( $value ) ) {
 				// For Chat2 (doesn't exist in Chat(1))
-				$srcs = AssetsManager::getInstance()->getGroupCommonURL('chat_ban_js', array());
+				$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'chat_ban_js', array() );
 
-				foreach($srcs as $val) {
-					$out->addScript('<script src="' .$val. '"></script>');
+				foreach ( $srcs as $val ) {
+					$out->addScript( '<script src="' . $val . '"></script>' );
 				}
-				JSMessages::enqueuePackage('ChatBanModal', JSMessages::EXTERNAL);
-				$out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Chat2/css/ChatModal.scss'));
+				JSMessages::enqueuePackage( 'ChatBanModal', JSMessages::EXTERNAL );
+				$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Chat2/css/ChatModal.scss' ) );
 				break;
 			}
 		}
-		JSMessages::enqueuePackage('ChatEntryPoint', JSMessages::INLINE);
+		JSMessages::enqueuePackage( 'ChatEntryPoint', JSMessages::INLINE );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	public static function onContributionsToolLinks(  $id, $nt, &$tools ) {
 		global $wgOut, $wgCityId, $wgUser, $wgCityId;
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
-		$user = User::newFromId($id);
-		if(!empty($user)) {
-			$tools[] = Linker::link(SpecialPage::getSafeTitleFor('Log', 'chatban'), wfMessage( 'chat-chatban-log' )->escaped(), array('class' => 'chat-ban-log'), array('page' => $user->getUserPage()->getPrefixedText())); # Add chat ban log link (@author: Sactage)
-			if(Chat::getBanInformation($wgCityId, $user) !== false ) {
+		$user = User::newFromId( $id );
+		if ( !empty( $user ) ) {
+			$tools[] = Linker::link( SpecialPage::getSafeTitleFor( 'Log', 'chatban' ), wfMessage( 'chat-chatban-log' )->escaped(), array( 'class' => 'chat-ban-log' ), array( 'page' => $user->getUserPage()->getPrefixedText() ) ); # Add chat ban log link (@author: Sactage)
+			if ( Chat::getBanInformation( $wgCityId, $user ) !== false ) {
 				$dir = "change";
 				LogEventsList::showLogExtract(
 					$wgOut,
@@ -226,23 +226,23 @@ class ChatHelper {
 				);
 			} else {
 				if ( $wgUser->isAllowed( 'chatmoderator' ) && !$user->isAllowed( 'chatmoderator' )  ) {
-					$tools[] =  "<a class='chat-change-ban' data-user-id='{$id}' href='#'>" . wfMsg( 'chat-ban-contributions-heading') . "</a>" ;
+					$tools[] =  "<a class='chat-change-ban' data-user-id='{$id}' href='#'>" . wfMsg( 'chat-ban-contributions-heading' ) . "</a>" ;
 				}
 			}
 		}
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
-	public static function onLogLine($logType, $logaction, $title, $paramArray, &$comment, &$revert, $logTimestamp) {
+	public static function onLogLine( $logType, $logaction, $title, $paramArray, &$comment, &$revert, $logTimestamp ) {
 		global $wgUser, $wgCityId;
 
-		if( strpos($logaction,'chatban') === 0 ) {
-			$user = User::newFromId($paramArray[1]);
-			if(!empty($user) && Chat::getBanInformation($wgCityId, $user) !== false && $wgUser->isAllowed( 'chatmoderator' ) ) {
-				$revert = "(" . "<a class='chat-change-ban' data-user-id='{$paramArray[1]}' href='#'>" . wfMsg( 'chat-ban-log-change-ban-link') . "</a>" . ")";
+		if ( strpos( $logaction, 'chatban' ) === 0 ) {
+			$user = User::newFromId( $paramArray[1] );
+			if ( !empty( $user ) && Chat::getBanInformation( $wgCityId, $user ) !== false && $wgUser->isAllowed( 'chatmoderator' ) ) {
+				$revert = "(" . "<a class='chat-change-ban' data-user-id='{$paramArray[1]}' href='#'>" . wfMsg( 'chat-ban-log-change-ban-link' ) . "</a>" . ")";
 			}
-		} elseif ( $logaction === 'chatconnect'  && !empty($paramArray) ) {
+		} elseif ( $logaction === 'chatconnect'  && !empty( $paramArray ) ) {
 			$ipLinks = array();
 			if ( $wgUser->isAllowed( 'multilookup' ) ) {
 				$mlTitle = GlobalTitle::newFromText( 'MultiLookup', NS_SPECIAL, 177 );
@@ -270,32 +270,32 @@ class ChatHelper {
 	public static function formatLogEntry( $type, $action, $title, $forUI, $params, $filterWikilinks ) {
 		global $wgLang;
 
-		if(empty($params[0])){
+		if ( empty( $params[0] ) ) {
 			return "";
 		}
 
 		$endon = "";
-		if(!empty($params[3])) {
+		if ( !empty( $params[3] ) ) {
 			$endon = $wgLang->timeanddate( wfTimestamp( TS_MW, $params[3] ), true );
 		}
 
 		$skin = RequestContext::getMain()->getSkin();
 		$id =  $params[1];
-		$revert = "(" . "<a class='chat-change-ban' data-user-id='{$params[1]}' href='#'>" . wfMsg( 'chat-ban-log-change-ban-link') . "</a>" . ")";
+		$revert = "(" . "<a class='chat-change-ban' data-user-id='{$params[1]}' href='#'>" . wfMsg( 'chat-ban-log-change-ban-link' ) . "</a>" . ")";
 		if ( !$filterWikilinks ) { // Plaintext? Used for IRC messages (BugID: 44249)
 			$targetUser = User::newFromId( $id );
 			$link = "[[User:{$targetUser->getName()}]]";
 		} else {
 			$link = $skin->userLink( $id, $title->getText() )
-				.$skin->userToolLinks( $id, $title->getText(), false );
+				. $skin->userToolLinks( $id, $title->getText(), false );
 		}
 
 		$time = "";
-		if(!empty($params[2])) {
+		if ( !empty( $params[2] ) ) {
 			$time = $params[2];
 		}
 
-		return wfMsg('chat-'.$action.'-log-entry', $link, $time, $endon );
+		return wfMsg( 'chat-' . $action . '-log-entry', $link, $time, $endon );
 	}
 
 	static public function info( $message, Array $params = [] ) {

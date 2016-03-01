@@ -130,34 +130,17 @@ class ImageServingHelper {
 
 		wfDebug(__METHOD__ . ' - ' . json_encode($images). "\n");
 
-		$dbw = wfGetDB(DB_MASTER, array());
-
 		if( count($images) < 1 ) {
 			if( $ignoreEmpty) {
 				wfProfileOut(__METHOD__);
 				return false;
 			}
-			$dbw->delete( 'page_wikia_props',
-				array(
-					'page_id' =>  $articleId,
-					'propname' => WPP_IMAGE_SERVING
-				),
-				__METHOD__
-			);
+			wfDeleteWikiaPageProp(WPP_IMAGE_SERVING, $articleId);
 			wfProfileOut(__METHOD__);
 			return array();
 		}
 
-		$dbw->replace('page_wikia_props','',
-			array(
-				'page_id' =>  $articleId,
-				'propname' => WPP_IMAGE_SERVING,
-				'props' => serialize($images)
-			),
-			__METHOD__
-		);
-
-		$dbw->commit();
+		wfSetWikiaPageProp(WPP_IMAGE_SERVING, $articleId, $images);
 		wfProfileOut(__METHOD__);
 		return $images;
 	}

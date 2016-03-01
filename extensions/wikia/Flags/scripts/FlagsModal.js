@@ -65,7 +65,18 @@ require(
 
 	function init() {
 		$('body').on('click', '#ca-flags, .bn-flags-entry-point', showModal);
+		require(['FlagsGlobalShortcuts'], function (FlagsGlobalShortcuts) {
+			FlagsGlobalShortcuts.add(showModalDirectly);
+		});
 		addFlagsButton();
+	}
+
+	/**
+	 * Open modal entry point caused by event
+	 */
+	function showModal(event) {
+		event.preventDefault();
+		showModalDirectly();
 	}
 
 	/**
@@ -73,8 +84,7 @@ require(
 	 * First function in showing modal process.
 	 * Performs all necessary job to display modal with flags ready to edit
 	 */
-	function showModal(event) {
-		event.preventDefault();
+	function showModalDirectly() {
 		$.when(
 				nirvana.sendRequest({
 					controller: 'Flags',

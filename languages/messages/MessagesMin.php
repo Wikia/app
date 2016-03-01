@@ -157,30 +157,12 @@ $messages = array(
 'navigation'    => 'Navigasi',
 'and'           => '&#32;jo',
 
-# Cologne Blue skin
 'qbfind'         => 'Pencarian',
 'qbbrowse'       => 'Browse',
-'qbedit'         => 'Suntiang',
 'qbpageoptions'  => 'Laman ko',
 'qbpageinfo'     => 'Konteks',
-'qbmyoptions'    => 'Laman denai',
-'qbspecialpages' => 'Halaman istimewa',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Bagian baru',
-'vector-action-delete'           => 'Hapuih',
-'vector-action-move'             => 'Pindahkan',
-'vector-action-protect'          => 'Lindungi',
-'vector-action-undelete'         => 'Pambatalan panghapusan',
-'vector-action-unprotect'        => 'Palinduangan',
-'vector-simplesearch-preference' => 'Aktifkan pancarian saran nan disampurnokan (hanyo kulik Vector)',
-'vector-view-create'             => 'Buek',
-'vector-view-edit'               => 'Suntiang',
-'vector-view-history'            => 'Caliak riwayat nan lalu',
-'vector-view-view'               => 'Baco',
-'vector-view-viewsource'         => 'Caliak sumber',
 'actions'                        => 'Tindakan',
 'namespaces'                     => 'Ruang namo:',
 'variants'                       => 'Variasi:',
@@ -203,7 +185,6 @@ $messages = array(
 'edit'              => 'Suntiang',
 'create'            => 'Buek',
 'editthispage'      => 'Suntiang laman ko',
-'create-this-page'  => 'Buek laman iko',
 'delete'            => 'Hapuih',
 'deletethispage'    => 'Hapuih laman iko',
 'undelete_short'    => 'Batal hapuih $1 {{PLURAL:$1|suntiangan|suntiangan}}',
@@ -218,19 +199,9 @@ $messages = array(
 'talkpagelinktext'  => 'Kecek',
 'specialpage'       => 'Laman istimewa',
 'personaltools'     => 'Peralatan pribadi',
-'postcomment'       => 'Bagian baru',
-'articlepage'       => 'Liek isi laman',
 'talk'              => 'Pembicaraan',
 'views'             => 'Tampilan',
 'toolbox'           => 'Kotak pakakeh',
-'userpage'          => 'Liek laman pangguno',
-'projectpage'       => 'Caliak laman proyek',
-'imagepage'         => 'Caliak laman berkas',
-'mediawikipage'     => 'Caliak laman pasan',
-'templatepage'      => 'Caliak laman templat',
-'viewhelppage'      => 'Caliak laman bantuan',
-'categorypage'      => 'Caliak laman kategori',
-'viewtalkpage'      => 'Caliak laman ota',
 'otherlanguages'    => 'Dalam baso lain',
 'redirectedfrom'    => '(Dialiahkan dari $1)',
 'redirectpagesub'   => 'Laman pengalihan',
@@ -516,38 +487,6 @@ Kini mamproses masuak log Sanak...',
 Sanak mungkin alah berhasil mangganti kato sandi Sanak atau alah maminto kato sandi samantaro nan baharu.',
 'resetpass-temp-password'   => 'Kato sandi samantaro:',
 
-# Special:PasswordReset
-'passwordreset'                => 'Setel ulang sandi',
-'passwordreset-text'           => 'Langkapi formulir iko untuak manarimo surel pangingek detail akun Sanak.',
-'passwordreset-legend'         => 'Tuka baliak kato sandi',
-'passwordreset-disabled'       => 'Panukaran baliak kato sandi alah dimatian di wiki iko.',
-'passwordreset-pretext'        => '{{PLURAL:$1||Masuakan ciek data di bawah iko}}',
-'passwordreset-username'       => 'Namo pangguno:',
-'passwordreset-email'          => 'Alamaik surel:',
-'passwordreset-emailtitle'     => 'Detail akun di {{SITENAME}}',
-'passwordreset-emailtext-ip'   => 'Sasaurang (mungkin Sanak, dari alamaik IP $1) maminta pangingek
-detail akun untuak {{SITENAME}} ($4). {{PLURAL:$3|Akun|Akun-akun}} barikuik
-takaik jo alamaik surel iko:
-
-$2
-
-{{PLURAL:$3|Sandi samantaro|Sandi samantaro}} barikuik akan kadaluwarsa dalam {{PLURAL:$5|sahari|$5 hari}}.
-Sanak harus masuak dan mamiliah sandi baharu kini. Jikok urang lain mambuek
-pamintaan iko atau jikok Sanak ingek sandi asali dan indak lai
-ingin maubahnyo, Sanak dapek mabaikan pasan iko dan taruih manggunoan sandi lamo.',
-'passwordreset-emailtext-user' => 'Sasaurang (mungkin Sanak, dari alamaik IP $1) maminta pangingek detail akun untuak {{SITENAME}} ($4).
-{{PLURAL:$3|Akun|Akun-akun}} barikuik takaik jo alamaik surel iko:
-
-$2
-
-{{PLURAL:$3|Sandi samantaro|Sandi samantaro}} barikuik akan kadaluwarsa dalam {{PLURAL:$5|sahari|$5 hari}}.
-Sanak harus masuak dan mamiliah sandi baharu kini. Jikok urang lain mambuek
-pamintaan iko atau jikok Sanak ingek sandi asali dan indak lai
-ingin maubahnyo, Sanak dapek maabaikan pasan iko dan taruih manggunokan sandi lamo.',
-'passwordreset-emailelement'   => 'Namo pangguno: $1
-Sandi samantaro: $2',
-'passwordreset-emailsent'      => 'Surel pangingek alah dikiriman.',
-
 # Edit page toolbar
 'bold_sample'     => 'Teks dicetak taba',
 'bold_tip'        => 'Teks dicetak taba',
@@ -658,7 +597,6 @@ Pratayang iko alun disimpan!'''",
 '''Parubahan alun disimpan!'''",
 'sitejspreview'                    => "'''Ingeklah bahawa Sanak hanyo manampilan pratayang dari Kode JavaScript iko.'''
 '''Parubahan alun disimpan!'''",
-'userinvalidcssjstitle'            => "'''Paringatan:''' Kulik \"\$1\" indak ditamuan. Harap diingek bahawa laman .css dan .js manggunokan huruf kecil, contoh {{ns:user}}:Foo/vector.css dan bukannyo {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Dipabaharui)',
 'note'                             => "'''Catatan:'''",
 'previewnote'                      => "'''Iko hanyo tampilan pratonton.'''

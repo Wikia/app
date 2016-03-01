@@ -3,6 +3,7 @@
 namespace Email\Controller;
 
 use Email\EmailController;
+use Email\Fatal;
 
 /**
  * Class ForgotPasswordController
@@ -16,25 +17,22 @@ class ForgotPasswordController extends EmailController {
 	protected $tempPass;
 
 	/**
-	 * @see EmailController::assertCanAccessController
+	 * A redefinition of our parent's assertCanEmail which removes assertions:
+	 *
+	 * - assertUserWantsEmail : Even if a user says they don't want email, they should get this
+	 * - assertUserNotBlocked : Even if a user is blocked they should still get these emails
+	 *
 	 * @throws \Email\Fatal
 	 */
-	public function assertCanAccessController() {
-		global $wgTheSchwartzSecretToken;
-
-		$token = $this->getVal('secret');
-		if( isset( $token ) && $token == $wgTheSchwartzSecretToken ) {
-			return;
-		}
-
-		parent::assertCanAccessController();
+	public function assertCanEmail() {
+		$this->assertUserHasEmail();
 	}
 
 	public function initEmail() {
-		$userService = new \UserService();
 		$this->tempPass = $this->request->getVal( 'tempPass' );
-		if ( empty( $this->tempPass ) ) {
-			$this->tempPass = $userService->resetPassword( $this->targetUser );
+
+		if ( empty($this->tempPass) ) {
+			throw new Fatal('Required temporary password has been left empty');
 		}
 	}
 

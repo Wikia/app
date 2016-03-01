@@ -32,14 +32,14 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 			if ( empty( $emailController ) ) {
 				continue;
 			}
+			Wikia::initAsyncRequest( $wikiId );
 
 			$adminIds = ( new WikiService )->getWikiAdminIds( $wikiId );
 			foreach ( $adminIds as $adminId ) {
-
 				$emailParams = [
 					"targetUser" => User::newFromId( $adminId ),
 					"wikiName" => $eventData['wikiName'],
-					"wikiId" => $eventData['wikiId'],
+					"wikiId" => $wikiId,
 					"wikiUrl" => $eventData['wikiUrl'],
 					"marketingFooter" => true
 				];
@@ -68,24 +68,24 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 
 		$emailController = "";
 		if ( $activateDay == 0 ) {
-			$emailController = 'Email\Controller\FounderTipsController';
+			$emailController = Email\Controller\FounderTipsController::class;
 		} elseif ( $activateDay == 3 ) {
-			$emailController = 'Email\Controller\FounderTipsThreeDaysController';
+			$emailController = Email\Controller\FounderTipsThreeDaysController::class;
 		} elseif ( $activateDay == 10 ) {
-			$emailController = 'Email\Controller\FounderTipsTenDaysController';
+			$emailController = Email\Controller\FounderTipsTenDaysController::class;
 		}
 
 		return $emailController;
 	}
 
 	public static function register( $wikiParams, $debugMode = false ) {
-		global $wgFounderEmailsEvents;
+		global $wgFounderEmailsEvents, $wgCityId;
 
 		$founderEmailObj = FounderEmails::getInstance();
 
 		$wikiFounder = $founderEmailObj->getWikiFounder();
-		$wikiFounder->setLocalPreference( "founderemails-joins", true );
-		$wikiFounder->setLocalPreference( "founderemails-edits", true );
+		$wikiFounder->setLocalPreference( "founderemails-joins", true, $wgCityId );
+		$wikiFounder->setLocalPreference( "founderemails-edits", true, $wgCityId );
 
 		$wikiFounder->saveSettings();
 

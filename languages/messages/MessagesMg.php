@@ -357,30 +357,12 @@ $messages = array(
 'navigation'    => 'Fikarohana',
 'and'           => '&#32;sy',
 
-# Cologne Blue skin
 'qbfind'         => 'Tadiavina',
 'qbbrowse'       => 'Tadiavina',
-'qbedit'         => 'Hanova',
 'qbpageoptions'  => 'Ity pejy ity',
 'qbpageinfo'     => 'Pejy fanoroana',
-'qbmyoptions'    => 'Ny pejiko',
-'qbspecialpages' => 'Pejy manokana',
 'faq'            => 'FMM',
-'faqpage'        => 'Project:FMM',
 
-# Vector skin
-'vector-action-addsection'       => 'Hanampy lohahevitra',
-'vector-action-delete'           => 'Fafana',
-'vector-action-move'             => 'Hanolo anarana',
-'vector-action-protect'          => 'Arovy',
-'vector-action-undelete'         => 'Avereno',
-'vector-action-unprotect'        => 'Hanala ny fiarovana',
-'vector-simplesearch-preference' => "Alefa ny soso-kevitra mikasika ny fikarohana (ho an'ny Vector ihany)",
-'vector-view-create'             => 'Foronona',
-'vector-view-edit'               => 'Hanova',
-'vector-view-history'            => 'Hijery ny tantara',
-'vector-view-view'               => 'Hamaky',
-'vector-view-viewsource'         => 'Hijery fango',
 'actions'                        => 'Tao',
 'namespaces'                     => 'Valam-pejy',
 'variants'                       => "Ny ''skin'' Voasintona",
@@ -403,7 +385,6 @@ $messages = array(
 'edit'              => 'Ovaina',
 'create'            => 'Amboarina',
 'editthispage'      => 'Hanova ity pejy ity',
-'create-this-page'  => 'Forony ity pejy ity',
 'delete'            => 'Hamafa',
 'deletethispage'    => 'Fafao ity pejy ity',
 'undelete_short'    => 'Famerenana fanovana {{PLURAL:$1|$1|$1}}',
@@ -418,19 +399,9 @@ $messages = array(
 'talkpagelinktext'  => 'Dinika',
 'specialpage'       => 'Pejy manokana',
 'personaltools'     => 'Fitaovana manokana',
-'postcomment'       => 'Hametraka fanamarihana',
-'articlepage'       => "Hijery ny votoatin'ny pejy",
 'talk'              => 'dinika',
 'views'             => 'Fijerena',
 'toolbox'           => 'Fitaovana',
-'userpage'          => "Hijery ny pejy manokan'ny mpikambana",
-'projectpage'       => 'Pejy meta',
-'imagepage'         => "Jereo ny pejin'ny sary",
-'mediawikipage'     => 'Hijery ny pejy misy io hafatra io',
-'templatepage'      => "Jereo ny pejin'ny endrika",
-'viewhelppage'      => "Jereo ny pejin'ny fanampiana",
-'categorypage'      => "Jereo ny pejin'ny sokajy",
-'viewtalkpage'      => 'Hijery pejin-dresaka',
 'otherlanguages'    => "Amin'ny tenim-pirenena hafa",
 'redirectedfrom'    => "(tonga teto avy amin'ny $1)",
 'redirectpagesub'   => 'Pejy fihodinana',
@@ -729,31 +700,6 @@ Andraso kely ary andramo indray.",
 'resetpass-wrong-oldpass'   => 'Tsy izy ny tenimiafinao (tsotra na miserana)
 Mety efa nanova tenimiafina na nanontany tenimiafina miserana angamba ianao.',
 'resetpass-temp-password'   => 'Tenimiafina miserana :',
-
-# Special:PasswordReset
-'passwordreset'                => 'Famafana ary famerenana ny tenimiafina',
-'passwordreset-text'           => "Fenoy ity formilera ity ho an'ny fahaozana ny fampahalalana mahakasika ny kaontinao amin'ny imailaka.",
-'passwordreset-legend'         => 'Famafana ary famerenana ny tenimiafina',
-'passwordreset-disabled'       => "Tsy nalefa ny fanovana tenimiafina adino eto amin'ity wiki ity.",
-'passwordreset-pretext'        => '{{PLURAL:$1}}Mampidira singa data eo ambany',
-'passwordreset-username'       => 'Anaram-pikambana :',
-'passwordreset-domain'         => 'Vala (domain) :',
-'passwordreset-email'          => 'Adiresy imailaka :',
-'passwordreset-emailtitle'     => "Antsipirihan'ny kaonty eo amin'i {{SITENAME}}",
-'passwordreset-emailtext-ip'   => "Nisy olona (mety ianao ihany angamba, avy amin'ity adiresy IP ity: $1) nangataka fampahalalana manokana mikasika ny kaontinao eo amin'i {{SITENAME}} ($4). {{PLURAL:$3|Ity|Ireto}} adiresy imailaka {{PLURAL:$3|Ity|Ireto}} dia mampiasa ity adiresy imailaka ity :
-
-$2
-
-{{PLURAL:$3|Io|Ireo}} ny tenimiafina miserana mitsahatra afaka {{PLURAL:$5|iray andro|$5 andro}}.
-Tokony miditra ianao ary misafidy ny tenimiafinao. Raha olon-kafa no nanao ity hataka ity, na efa tadidinao ny tenimiafinao taloha, ary raha tsy tia hanova azy intony ianao, azonao tsy raharahiana ity hafatra ity ary mbola azonao ampiasaina ilay tenimiafinao taloha.",
-'passwordreset-emailtext-user' => "Nisy mpikambana mitondra anarana $1 eo amin'i {{SITENAME}} nangataka fampatsiahivana mikasika ny kaontinao eo amin'i {{SITENAME}} ($4). Manana io adiresy imailaka {{PLURAL:$3|io kaontim-pikambana io|ireo kaontim-pikambana ireo}} :
-
-$2
-
-Hitsahatra afaka {{PLURAL:$5|iray|$5}} andro {{PLURAL:$3|io|ireo}} tenimiafina {{PLURAL:$3|io|ireo}}. Mila miditra dien'izao ianao izao ary mifidy tenimiafina vaovao. Raha tsy avy aminao ity hataka ity na efa nahatadidy ny tenimiafinao taloha ianao, ary raha tsy tianao hovaina intsony ilay tenimiafinao, dia azonao tsy raharahiana ity hafatra ity ary mampiasa ny tenimiafinao taloha.",
-'passwordreset-emailelement'   => 'Anaram-pikambana : $1
-Tenimiafina miserana : $2',
-'passwordreset-emailsent'      => 'Nalefa ny imailaka fampatsiahivana.',
 
 # Special:ChangeEmail
 'changeemail'          => 'Hanova ny adiresy imailaka',
@@ -1226,13 +1172,6 @@ ihany no miseho amin'ny vokatry ny karoka).",
 'search-external'                  => 'Hikaroka any ivelany',
 'searchdisabled'                   => "Tsy nalefa ny karoka eto amin'i {{SITENAME}}. Afaka mampiasa an'i Google aloha ianao mandra-paha. Nefa fantaro fa mety ho efa lany daty ny valiny omeny.",
 
-# Quickbar
-'qbsettings'               => 'Tsipika fiasàna',
-'qbsettings-none'          => 'Tsy misy',
-'qbsettings-fixedleft'     => 'Ankavia',
-'qbsettings-fixedright'    => 'Ankavanana',
-'qbsettings-floatingleft'  => 'Mitsingevaheva any ankavanana',
-'qbsettings-floatingright' => 'Mitsigevaheva any ankavanana',
 
 # Preferences page
 'preferences'                   => 'Ny momba anao',

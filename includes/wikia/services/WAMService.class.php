@@ -10,7 +10,8 @@ class WAMService extends Service {
 	const WAM_BLACKLIST_EXT_VAR_NAME = 'wgEnableContentWarningExt';
 	const WAM_EXCLUDE_FLAG_NAME = 'wgExcludeFromWAM';
 	const CACHE_DURATION = 86400; /* 24 hours */
-	const MEMCACHE_VER = '1.06';
+	const MEMCACHE_VER = '2';
+	const WAM_LINK = 'http://www.wikia.com/WAM';
 
 	protected $verticalIds = [
 		WikiFactoryHub::VERTICAL_ID_OTHER,
@@ -318,6 +319,8 @@ class WAMService extends Service {
 				$conds[] = 'fw1.wiki_id NOT IN (' . $db->makeList( $blacklistIds ) . ')';
 			}
 		}
+
+		$conds[] = '(dw.url IS NOT NULL AND dw.title IS NOT NULL)';
 
 		return $conds;
 	}

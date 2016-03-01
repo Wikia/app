@@ -227,6 +227,13 @@ class CreateWiki {
 		$this->mClusterDB = ( self::ACTIVE_CLUSTER ) ? "wikicities_" . self::ACTIVE_CLUSTER : "wikicities";
 		$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $this->mClusterDB ); // database handler, old $dbwTarget
 
+		// SUS-108: check read-only state of ACTIVE_CLUSTER before performing any DB-related actions
+		$readOnlyReason = $this->mNewWiki->dbw->getLBInfo( 'readOnlyReason' );
+		if ( $readOnlyReason !== false ) {
+			wfProfileOut( __METHOD__ );
+			throw new CreateWikiException( sprintf( '%s is in read-only mode: %s', self::ACTIVE_CLUSTER, $readOnlyReason ), self::ERROR_READONLY );
+		}
+
 		// check if database is creatable
 		// @todo move all database creation checkers to canCreateDatabase
 		if( !$this->canCreateDatabase() ) {
@@ -266,15 +273,6 @@ class CreateWiki {
 		}
 
 		wfDebugLog( "createwiki", __METHOD__ . ": Row added into city_domains table, city_id = {$this->mNewWiki->city_id}\n", true );
-
-		/**
-		 * create image folder
-		 */
-		global $wgEnableSwiftFileBackend;
-		if (empty($wgEnableSwiftFileBackend)) {
-			wfMkdirParents( "{$this->mNewWiki->images_dir}" );
-			wfDebugLog( "createwiki", __METHOD__ . ": Folder {$this->mNewWiki->images_dir} created\n", true );
-		}
 
 		// Force initialize uploader user from correct shared db
 		$uploader = User::newFromName( 'CreateWiki script' );
@@ -328,22 +326,9 @@ class CreateWiki {
 		$this->mNewWiki->dbw->insert( "site_stats", array( "ss_row_id" => "1"), __METHOD__ );
 
 		/**
-		 * copy default logo
-		 */
-
-
-		$res = ImagesService::uploadImageFromUrl( self::CREATEWIKI_LOGO, (object) ['name' => 'Wiki.png'], $uploader );
-		if ( $res['status'] === true ) {
-			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has been uploaded\n", true );
-		} else {
-			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has not been uploaded - " . print_r($res['errors'], true) . "\n", true );
-		}
-
-		/**
 		 * destroy connection to newly created database
 		 */
 		$this->waitForSlaves( __METHOD__ );
-
 		$wgSharedDB = $tmpSharedDB;
 
 
@@ -443,6 +428,8 @@ class CreateWiki {
 			->queue();
 
 		wfDebugLog( "createwiki", __METHOD__ . ": Local maintenance task added as {$task_id}\n", true );
+
+		wfRunHooks( "AfterWikiCreated", [ $this->mNewWiki->city_id, $this->sDbStarter ] );
 
 		$this->info( __METHOD__ . ': done', [
 			'task_id' => $task_id,

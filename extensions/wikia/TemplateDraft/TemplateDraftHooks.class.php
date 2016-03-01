@@ -44,7 +44,7 @@ class TemplateDraftHooks {
 		if ( $helper->isTitleNewDraft( $title )
 			&& TemplateConverter::isConversion()
 		) {
-			$parentTitleId = $helper->getParentTitle( $title )->getArticleID();
+			$parentTitleId = $helper::getParentTitle( $title )->getArticleID();
 
 			if ( $parentTitleId > 0 ) {
 				$parentContent = WikiPage::newFromID( $parentTitleId )->getText();
@@ -59,7 +59,7 @@ class TemplateDraftHooks {
 				$text = $controller->createDraftContent(
 					$title, // @TODO this is currently taking the *edited* title (with subpage), not the *converted* title
 					$parentContent,
-					TemplateClassification::TEMPLATE_INFOBOX
+					\TemplateClassificationService::TEMPLATE_INFOBOX
 				);
 			}
 		}
@@ -75,6 +75,7 @@ class TemplateDraftHooks {
 	 * @return bool
 	 */
 	public static function onEditPageLayoutShowIntro( &$preloads, Title $title ) {
+		global $wgEnablePortableInfoboxExt, $wgCityId;
 		if ( $title->getNamespace() == NS_TEMPLATE ) {
 			if ( TemplateDraftHelper::isTitleDraft( $title ) ) {
 				$base = Title::newFromText( $title->getBaseText(), NS_TEMPLATE );
@@ -94,22 +95,27 @@ class TemplateDraftHooks {
 							wfMessage( 'templatedraft-module-view-parent' )->plain() )
 					)->escaped(),
 				];
-			} elseif ( !TemplateDraftHelper::titleHasPortableInfobox( $title ) ) {
-				$draft = wfMessage( 'templatedraft-subpage' )->inContentLanguage()->escaped();
-				$base = Title::newFromText( $title->getBaseText() .'/'. $draft, NS_TEMPLATE );
-				$draftUrl = $base->getFullUrl( [
-					'action' => 'edit',
-					TemplateConverter::CONVERSION_MARKER => 1,
-				] );
-				$preloads['EditPageIntro'] = [
-					'content' => wfMessage( 'templatedraft-module-editintro-please-convert' )->rawParams(
-						Xml::element( 'a', [
-							'href' => $draftUrl,
-							'target' => '_blank'
-						],
-							wfMessage( 'templatedraft-module-button-create' )->plain() )
-					)->escaped(),
-				];
+			} elseif ( $wgEnablePortableInfoboxExt ) {
+				$tcs = new UserTemplateClassificationService();
+				$type = $tcs->getType( $wgCityId, $title->getArticleID() );
+
+				if ( $tcs->isInfoboxType( $type ) && !TemplateDraftHelper::titleHasPortableInfobox( $title ) ) {
+					$draft = wfMessage( 'templatedraft-subpage' )->inContentLanguage()->escaped();
+					$base = Title::newFromText( $title->getBaseText() . '/' . $draft, NS_TEMPLATE );
+					$draftUrl = $base->getFullUrl( [
+						'action' => 'edit',
+						TemplateConverter::CONVERSION_MARKER => 1,
+					] );
+					$preloads['EditPageIntro'] = [
+						'content' => wfMessage( 'templatedraft-module-editintro-please-convert' )->rawParams(
+							Xml::element( 'a', [
+								'href' => $draftUrl,
+								'target' => '_blank'
+							],
+								wfMessage( 'templatedraft-module-button-create' )->plain() )
+						)->escaped(),
+					];
+				}
 			}
 		}
 		return true;

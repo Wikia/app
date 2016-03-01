@@ -482,30 +482,12 @@ $messages = array(
 'navigation'    => 'Navegación',
 'and'           => '&#32;y',
 
-# Cologne Blue skin
 'qbfind'         => 'Buscar',
 'qbbrowse'       => 'Navegar',
-'qbedit'         => 'Editar',
 'qbpageoptions'  => 'Opciones de página',
 'qbpageinfo'     => 'Información de página',
-'qbmyoptions'    => 'Mis páginas',
-'qbspecialpages' => 'Páginas especiales',
 'faq'            => 'Preguntas más frecuentes',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Añadir tema',
-'vector-action-delete'           => 'Borrar',
-'vector-action-move'             => 'Mover',
-'vector-action-protect'          => 'Proteger',
-'vector-action-undelete'         => 'Restaurar',
-'vector-action-unprotect'        => 'Cambiar protección',
-'vector-simplesearch-preference' => 'Activar sugerencias de búsqueda mejoradas (piel Vector solamente)',
-'vector-view-create'             => 'Crear',
-'vector-view-edit'               => 'Editar',
-'vector-view-history'            => 'Ver historial',
-'vector-view-view'               => 'Leer',
-'vector-view-viewsource'         => 'Ver fuente',
 'actions'                        => 'Acciones',
 'namespaces'                     => 'Espacios de nombres',
 'variants'                       => 'Variantes',
@@ -528,7 +510,6 @@ $messages = array(
 'edit'              => 'Editar',
 'create'            => 'Crear',
 'editthispage'      => 'Editar esta página',
-'create-this-page'  => 'Crear esta página',
 'delete'            => 'Borrar',
 'deletethispage'    => 'Borrar esta página',
 'undelete_short'    => 'Restaurar {{PLURAL:$1|una edición|$1 ediciones}}',
@@ -543,19 +524,9 @@ $messages = array(
 'talkpagelinktext'  => 'Discusión',
 'specialpage'       => 'Página especial',
 'personaltools'     => 'Herramientas personales',
-'postcomment'       => 'Nueva sección',
-'articlepage'       => 'Ver artículo',
 'talk'              => 'Discusión',
 'views'             => 'Vistas',
 'toolbox'           => 'Herramientas',
-'userpage'          => 'Ver página de usuario',
-'projectpage'       => 'Ver página de proyecto',
-'imagepage'         => 'Ver página del archivo',
-'mediawikipage'     => 'Ver página de mensaje',
-'templatepage'      => 'Ver página de plantilla',
-'viewhelppage'      => 'Ver página de ayuda',
-'categorypage'      => 'Ver página de categoría',
-'viewtalkpage'      => 'Ver discusión',
 'otherlanguages'    => 'Otros idiomas',
 'redirectedfrom'    => '(Redirigido desde $1)',
 'redirectpagesub'   => 'Página redirigida',
@@ -857,43 +828,6 @@ Iniciando sesión...',
 Puede que ya hayas cambiado la contraseña o que hayas pedido una temporal.',
 'resetpass-temp-password'   => 'Contraseña temporal:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Restablecimiento de contraseña',
-'passwordreset-text'               => 'Completa este formulario para recibir un recordatorio por correo electrónico de los detalles de tu cuenta.',
-'passwordreset-legend'             => 'Restablecer contraseña',
-'passwordreset-disabled'           => 'Se ha desactivado el restablecimiento de contraseñas en este wiki.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Introduce uno de los elementos de datos siguientes}}',
-'passwordreset-username'           => 'Nombre de usuario:',
-'passwordreset-domain'             => 'Dominio:',
-'passwordreset-capture'            => '¿Ver el mensaje resultante?',
-'passwordreset-capture-help'       => 'Si marcas esta casilla, se te mostrará el correo electrónico (con la contraseña temporal) además de enviarse al usuario.',
-'passwordreset-email'              => 'Dirección de correo electrónico:',
-'passwordreset-emailtitle'         => 'Detalles de la cuenta en {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Alguien (probablemente tú, desde la dirección IP $1) pidió un recordatorio de tus
-datos de cuenta para {{SITENAME}} ($4). {{PLURAL:$3|La siguiente cuenta está asociada|Las siguientes cuentas están asociadas}}
-con esta dirección de correo electrónico:
-
-$2
-
-{{PLURAL:$3|Esta contraseña temporal|Estas contraseñas temporales}} expirarán en {{PLURAL:$5|un día|$5 días}}.
-Deberías iniciar sesión y establecer una contraseña nueva ahora. Si alguien más hizo este pedido,
-o recuerdas tu contraseña original, y no deseas cambiarla, puedes
-ignorar este mensaje y continuar usando tu contraseña anterior.',
-'passwordreset-emailtext-user'     => 'El usuario $1 en {{SITENAME}} pidió un recordatorio de tus datos de cuenta para {{SITENAME}}
-($4). {{PLURAL:$3|La siguiente cuenta está asociada|Las siguientes cuentas están asociadas}} con esta dirección de correo electrónico:
-
-$2
-
-{{PLURAL:$3|Esta contraseña temporal|Estas contraseñas temporales}} expirarán en {{PLURAL:$5|un día|$5 días}}.
-Deberías iniciar sesión y establecer una contraseña nueva ahora. Si alguien más hizo este pedido,
-o recuerdas tu contraseña original, y no deseas cambiarla, puedes
-ignorar este mensaje y continuar usando tu contraseña anterior.',
-'passwordreset-emailelement'       => 'Nombre de usuario: $1
-Contraseña temporal: $2',
-'passwordreset-emailsent'          => 'Se ha enviado un correo electrónico de recordatorio.',
-'passwordreset-emailsent-capture'  => 'Un recordatorio por correo electrónico ha sido enviado, que se muestra a continuación.',
-'passwordreset-emailerror-capture' => 'Un recordatorio por correo electrónico fue generado, que se muestra a continuación, pero el envío al usuario falló: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Cambiar la dirección de correo-e',
 'changeemail-header'   => 'Cambiar la dirección de correo-e de la cuenta',
@@ -1018,7 +952,6 @@ La última entrada del registro de bloqueos se proporciona debajo para mayor ref
 '''¡Aún no se ha guardado!'''",
 'sitejspreview'                    => "'''Recuerda que sólo estás previsualizando este código JavaScript.'''
 '''¡Aún no se ha guardado!'''",
-'userinvalidcssjstitle'            => "'''Aviso:''' No existe la skin «$1». Recuerda que las páginas personalizadas ''.css'' y ''.js'' tienen un título en minúsculas. Por ejemplo, {{ns:user}}:Ejemplo/vector.css en vez de {{ns:user}}:Ejemplo/Vector.css.",
 'updated'                          => '(Actualizado)',
 'note'                             => "'''Nota:'''",
 'previewnote'                      => "'''¡Recuerda que esto es solo una previsualización.'''
@@ -1368,14 +1301,6 @@ Prueba a usar el prefijo ''all:'' para buscar en todo el contenido (incluyendo p
 'searchdisabled'                   => 'Las búsquedas en {{SITENAME}} están temporalmente desactivadas.
 Mientras tanto puedes buscar mediante Google, pero ten en cuenta que sus índices relativos a {{SITENAME}} pueden estar desactualizados.',
 
-# Quickbar
-'qbsettings'                => 'Quickbar',
-'qbsettings-none'           => 'Ninguna',
-'qbsettings-fixedleft'      => 'Fija a la izquierda',
-'qbsettings-fixedright'     => 'Fija a la derecha',
-'qbsettings-floatingleft'   => 'Flotante a la izquierda',
-'qbsettings-floatingright'  => 'Flotante a la derecha',
-'qbsettings-directionality' => 'Fijos, dependiendo de la direccionalidad de la escritura de su idioma',
 
 # Preferences page
 'preferences'                   => 'Preferencias',
@@ -2997,29 +2922,13 @@ Permite añadir una razón al resumen de edición.',
 
 # Stylesheets
 'common.css'      => '/* Los estilos CSS definidos aquí aplicarán a todas las pieles (skins) */',
-'standard.css'    => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Standard */',
-'nostalgia.css'   => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Nostalgia */',
-'cologneblue.css' => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Cologne Blue */',
 'monobook.css'    => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Monobook */',
-'myskin.css'      => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel MySkin */',
-'chick.css'       => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Chick */',
-'simple.css'      => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Simple */',
-'modern.css'      => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Modern */',
-'vector.css'      => '/* Los estilos CSS colocados aquí se aplicarán para todos los usuarios que usen la piel Vector */',
 'print.css'       => '/* Los estilos CSS colocados aquí afectarán la impresión */',
 'handheld.css'    => '/* Los estilos CSS colocados aquí afectarán a los dispositivos móviles basados en las pieles configuradas en $wgHandheldStyle */',
 
 # Scripts
 'common.js'      => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios en cada carga de página */',
-'standard.js'    => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Estandar */',
-'nostalgia.js'   => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Nostalgia. */',
-'cologneblue.js' => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Colonia azul */',
 'monobook.js'    => '/* El código JavaScript que se ponga aquí será cargado por los usuarios de la piel MonoBook */',
-'myskin.js'      => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Mi piel */',
-'chick.js'       => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Pollito */',
-'simple.js'      => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Simple */',
-'modern.js'      => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Moderna */',
-'vector.js'      => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la piel Vector */',
 
 # Metadata
 'notacceptable' => 'El servidor wiki no puede proveer los datos en un formato que su cliente (navegador) pueda entender.',
@@ -3059,15 +2968,7 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 'pageinfo-viewsperedit'     => 'Vistas por edición',
 
 # Skin names
-'skinname-standard'    => 'Estándar',
-'skinname-nostalgia'   => 'Nostalgia',
-'skinname-cologneblue' => 'Colonia azul',
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'Mi piel',
-'skinname-chick'       => 'Pollito',
-'skinname-simple'      => 'Simple',
-'skinname-modern'      => 'Moderna',
-'skinname-vector'      => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marcar como revisado',

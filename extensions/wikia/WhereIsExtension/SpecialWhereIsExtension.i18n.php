@@ -31,8 +31,11 @@ $messages['en'] = array(
 	'whereisextension-name-contains'	=> 'variable name contains',
 	'whereisextension-search-like-value' => 'Like:',
 	'whereisextension-search-type' => 'Type:',
-	'whereisextension-search-type-bool' => "Boolean",
-	'whereisextension-search-type-full' => "Like",
+	'whereisextension-search-type-bool' => 'Boolean',
+	'whereisextension-search-type-full' => 'Like',
+	'whereisextension-edit' => 'edit',
+	'whereisextension-select-all' => 'select all',
+	'whereisextension-deselect-all' => 'deselect all',
 );
 
 /** Message documentation (Message documentation)
@@ -45,6 +48,9 @@ $messages['qqq'] = array(
 	'whereisextension-filter' => 'Used as some kind of fieldset description.
 {{Identical|Filter}}',
 	'whereisextension-search-type' => '{{Identical|Type}}',
+	'whereisextension-edit' => 'A link to edit a value of a variable.',
+	'whereisextension-select-all' => 'A link to select all wikis on a list with a given variable.',
+	'whereisextension-deselect-all' => 'A link to deselect all wikis on a list with a given variable.',
 );
 
 /** Afrikaans (Afrikaans)

@@ -450,30 +450,12 @@ $messages = array(
 'navigation'    => 'Navigasie',
 'and'           => '&#32;en',
 
-# Cologne Blue skin
 'qbfind'         => 'Zeuken',
 'qbbrowse'       => 'Blaojen',
-'qbedit'         => 'Bewark',
 'qbpageoptions'  => 'Pagina-opsies',
 'qbpageinfo'     => 'Pagina-informasie',
-'qbmyoptions'    => 'Veurkeuren',
-'qbspecialpages' => "Spesiale pagina's",
 'faq'            => 'Vragen die vake esteld wörden',
-'faqpage'        => 'Project:Vragen die vake esteld wörden',
 
-# Vector skin
-'vector-action-addsection'       => 'Niej onderwarp',
-'vector-action-delete'           => 'Vortdoon',
-'vector-action-move'             => 'Herneumen',
-'vector-action-protect'          => 'Beveiligen',
-'vector-action-undelete'         => 'Weerummeplaotsen',
-'vector-action-unprotect'        => 'Beveiliging wiezigen',
-'vector-simplesearch-preference' => 'Verbeterde zeuksuggesties anzetten (allinnig mit Vector-vormgeving)',
-'vector-view-create'             => 'Anmaken',
-'vector-view-edit'               => 'Bewarken',
-'vector-view-history'            => 'Geschiedenisse bekieken',
-'vector-view-view'               => 'Lezen',
-'vector-view-viewsource'         => 'Brontekste bekieken',
 'actions'                        => 'Haandeling',
 'namespaces'                     => 'Naamruumtes',
 'variants'                       => 'Variaanten',
@@ -496,7 +478,6 @@ $messages = array(
 'edit'              => 'Bewarken',
 'create'            => 'Anmaken',
 'editthispage'      => 'Pagina bewarken',
-'create-this-page'  => 'Disse pagina anmaken',
 'delete'            => 'Vortdoon',
 'deletethispage'    => 'Disse pagina vortdoon',
 'undelete_short'    => '$1 {{PLURAL:$1|versie|versies}} weerummeplaotsen',
@@ -511,19 +492,9 @@ $messages = array(
 'talkpagelinktext'  => 'Overleg',
 'specialpage'       => 'Spesiale pagina',
 'personaltools'     => 'Persoonlike instellingen',
-'postcomment'       => 'Niej onderwarp',
-'articlepage'       => 'Artikel',
 'talk'              => 'Overleg',
 'views'             => 'Aspekten/aksies',
 'toolbox'           => 'Hulpmiddels',
-'userpage'          => 'gebrukerspagina',
-'projectpage'       => 'Bekiek projektpagina',
-'imagepage'         => 'Bestaandspagina bekieken',
-'mediawikipage'     => 'Tiejige bekieken',
-'templatepage'      => 'Mal bekieken',
-'viewhelppage'      => 'Hulppagina bekieken',
-'categorypage'      => 'Kategoriepagina bekieken',
-'viewtalkpage'      => 'Bekiek overlegpagina',
 'otherlanguages'    => 'Aandere talen',
 'redirectedfrom'    => '(deurestuurd vanaof "$1")',
 'redirectpagesub'   => 'Deurstuurpagina',
@@ -820,38 +791,6 @@ Je mutten effen wachten veurda'j t opniej proberen kunnen.",
 'resetpass-wrong-oldpass'   => "t Veurlopige wachtwoord of t wachtwoord da'j noen hebben is ongeldig.
 Misschien he'j t wachtwoord al ewiezigd of n niej veurlopig wachtwoord an-evreugen.",
 'resetpass-temp-password'   => 'Veurlopig wachtwoord:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Wachtwoord opniej instellen',
-'passwordreset-text'               => 'Vul dit formulier in zoda-w joe netpost kunnen sturen mit de gebrukersgegevens.',
-'passwordreset-legend'             => 'Wachtwoord opniej instellen',
-'passwordreset-disabled'           => 'Je kunnen op disse wiki joew wachtwoord niet opniej instellen.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Voer één van de onderstaonde velden in}}',
-'passwordreset-username'           => 'Gebruker:',
-'passwordreset-domain'             => 'Domein:',
-'passwordreset-capture'            => 'De resulterende netpost bekieken?',
-'passwordreset-capture-help'       => "A'j dit vakjen anvinken, dan krie'j t netpostbericht (mit t tiedelike wachtwoord) te zien en t wörden naor de gebruker estuurd.",
-'passwordreset-email'              => 'Netpostadres:',
-'passwordreset-emailtitle'         => 'Gebrukersgegevens op {{SITENAME}}',
-'passwordreset-emailtext-ip'       => "Der hef der ene, warschienlik jie zelf, gebrukersgegevens veur {{SITENAME}} ($4) op-evreugen vanaof t IP-adres $1.
-De volgende {{PLURAL:$3|gebruker is|gebrukers bin}} ekoppeld an dit netpostadres:
-
-$2
-
-{{PLURAL:$3|Dit tiedelike wachtwoord vervuilt|Disse tiedelike wachtwoorden vervallen}} over {{PLURAL:$5|één dag|$5 dagen}}.
-Meld je eigen noen an en wiezig t wachtwoord. A'j dit verzeuk niet zelf edaon hebben, of a'j t oorspronkelike wachtwoord nog kennen en t niet wiezigen willen, negeer dit bericht dan en blief joew ouwe wachtwoord gebruken.",
-'passwordreset-emailtext-user'     => "De gebruker $1 van {{SITENAME}} hef joew gebrukersgegevens veur {{SITENAME}} ($4) op-evreugen vanaof t IP-adres $1.
-De volgende {{PLURAL:$3|gebruker is|gebrukers bin}} ekoppeld an dit netpostadres:
-
-$2
-
-{{PLURAL:$3|Dit tiedelike wachtwoord vervuilt|Disse tiedelike wachtwoorden vervallen}} over {{PLURAL:$5|één dag|$5 dagen}}.
-Meld je eigen noen an en wiezig t wachtwoord. A'j dit verzeuk niet zelf edaon hebben, of a'j t oorspronkelike wachtwoord nog kennen en t niet wiezigen willen, negeer dit bericht dan en blief joew ouwe wachtwoord gebruken.",
-'passwordreset-emailelement'       => 'Gebrukersnaam: $1
-Tiedelik wachtwoord: $2',
-'passwordreset-emailsent'          => 'Der is per netpost n herinnering verstuurd.',
-'passwordreset-emailsent-capture'  => "Der is n herinneringsbericht verstuurd. Dit ku'j hieronder lezen.",
-'passwordreset-emailerror-capture' => "Der is n herinneringsbericht an-emaakt. Dit ku'j hieronder lezen. t Versturne naor de gebruker is mislokt um de volgende reden: $1",
 
 # Special:ChangeEmail
 'changeemail'          => 'Wiezig netpostadres',
@@ -1315,14 +1254,6 @@ Kiek de logboeken nao.',
 'search-external'                  => 'Extern zeuken',
 'searchdisabled'                   => 'Zeuken in {{SITENAME}} is niet meugelik. Je kunnen gebruukmaken van Google. De gegevens over {{SITENAME}} bin misschien niet bie-ewörken.',
 
-# Quickbar
-'qbsettings'                => 'Paginalieste',
-'qbsettings-none'           => 'Gien',
-'qbsettings-fixedleft'      => 'Links, vaste',
-'qbsettings-fixedright'     => 'Rechts, vaste',
-'qbsettings-floatingleft'   => 'Links, zweven',
-'qbsettings-floatingright'  => 'Rechts, zweven',
-'qbsettings-directionality' => 'Vaste, aofhankelik van de schriefrichtige van joew taal',
 
 # Preferences page
 'preferences'                   => 'Veurkeuren',
@@ -2985,14 +2916,7 @@ Meestentieds kump dit deur n uutgaonde verwiezing die op de zwarte lieste steet.
 'pageinfo-viewsperedit'     => 'Antal keer bekeken per bewarking',
 
 # Skin names
-'skinname-standard'    => 'Klassiek',
-'skinname-nostalgia'   => 'Nostalgie',
-'skinname-cologneblue' => 'Keuls blauw',
 'skinname-monobook'    => 'Monobook',
-'skinname-myskin'      => 'MienSkin',
-'skinname-chick'       => 'Deftig',
-'skinname-simple'      => 'Eenvoudig',
-'skinname-modern'      => 'Niejmoeds',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Markeer as ekontroleerd',

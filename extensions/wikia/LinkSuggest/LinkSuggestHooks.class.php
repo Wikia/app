@@ -13,11 +13,11 @@ class LinkSuggestHooks {
 	 * @return bool
 	 */
 	static function onGetPreferences($user, &$preferences) {
-		$preferences['disablelinksuggest'] = array(
+		$preferences['disablelinksuggest'] = [
 			'type' => 'toggle',
 			'section' => 'editing/editing-experience',
 			'label-message' => 'tog-disablelinksuggest',
-		);
+		];
 		return true;
 	}
 
@@ -29,12 +29,19 @@ class LinkSuggestHooks {
 	 * @return bool
 	 */
 	static function onEditFormMultiEditForm($a, $b, $c, $d) {
-		global $wgOut, $wgUser;
+		LinkSuggestLoader::getInstance()->addSelectors( '#wpTextbox1' );
+		return true;
+	}
 
-		if($wgUser->getGlobalPreference('disablelinksuggest') != true) {
-			$wgOut->addModules( 'ext.wikia.LinkSuggest' );
-		}
-
+	/**
+	 * Hook: UploadForm:Initial
+	 * VOLDEV-121: Add LinkSuggest to Special:Upload and MultipleUpload
+	 * @author TK-999
+	 * @param SpecialUpload|SFUploadWindow $specialUpload
+	 * @return bool true because it's a hook
+	*/
+	public static function onUploadFormInitial( $specialUpload ) {
+		LinkSuggestLoader::getInstance()->addSelectors( '#wpUploadDescription' );
 		return true;
 	}
 }

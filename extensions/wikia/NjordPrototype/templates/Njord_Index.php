@@ -18,11 +18,11 @@
 						<div class="upload-group">
 							<div class="upload-btn">
 								<span class="upload-text sg-main"><?= wfMessage('hero-image-add-image')->escaped(); ?></span>
-								<span class="upload-icon venus-icon venus-icon-upload-image"></span>
+								<span class="upload-icon njord-icon-upload-image"></span>
 							</div>
 							<div class="update-btn">
 								<span class="update-text sg-main"><?= wfMessage('hero-image-update-image')->escaped(); ?></span>
-								<span class="upload-icon venus-icon venus-icon-upload-image"></span>
+								<span class="upload-icon njord-icon-upload-image"></span>
 							</div>
 							<input name="file" type="file" hidden/>
 						</div>

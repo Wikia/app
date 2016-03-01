@@ -75,17 +75,16 @@ function wfFounderEmailsInit() {
 
 	$wgHooks['GetPreferences'][] = 'FounderEmails::onGetPreferences';
 	$wgHooks['UserRights'][] = 'FounderEmails::onUserRightsChange';
-
-	// Set default for the toggle (applied to all new user accounts).  This is safe even if this user isn't a founder yet.
-	// $wgDefaultUserOptions["founderemailsenabled"] = 1;  // Old preference not used any more
-	$wgDefaultUserOptions["founderemails-joins-$wgCityId"] = 0;
-	$wgDefaultUserOptions["founderemails-edits-$wgCityId"] = 0;
-	$wgDefaultUserOptions["founderemails-views-digest-$wgCityId"] = 0;
-	$wgDefaultUserOptions["founderemails-complete-digest-$wgCityId"] = 0;
 }
 
 $dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['FounderEmailsController'] = $dir . 'FounderEmailsController.class.php';
 $wgAutoloadClasses['SpecialFounderEmails'] = $dir . 'SpecialFounderEmails.class.php';
+
+// Set default for the toggle (applied to all new user accounts).  This is safe even if this user isn't a founder yet.
+$wgDefaultUserOptions["founderemails-joins-$wgCityId"] = 0;
+$wgDefaultUserOptions["founderemails-edits-$wgCityId"] = 0;
+$wgDefaultUserOptions["founderemails-views-digest-$wgCityId"] = 0;
+$wgDefaultUserOptions["founderemails-complete-digest-$wgCityId"] = 0;
 
 $wgSpecialPages['FounderEmails'] = 'SpecialFounderEmails';

@@ -93,8 +93,14 @@ class Paginator extends Service{
 		return ( $this->pagesCount >= 1 );
 	}
 
-	public function setActivePage( $iPageNumber ){
-		$this->activePage = $iPageNumber;
+	/**
+	 * Set the currently active page. This is 0-indexed, so you may need to
+	 * set the value to $this->getRequest()->getInt( 'page' ) - 1
+	 *
+	 * @param int $pageNumber
+	 */
+	public function setActivePage( $pageNumber ){
+		$this->activePage = $pageNumber;
 	}
 
 	public function getPage( $iPageNumber, $bSetToActive = false ){
@@ -186,6 +192,42 @@ class Paginator extends Service{
 
 	public function getPagesCount() {
 		return $this->pagesCount;
+	}
+
+	/**
+	 * Get HTML to put to HTML <head> to allow search engines to identify next and previous pages
+	 *
+	 * @param $url the URL template. We'll replace "%s" with the page number
+	 * @return string
+	 */
+	public function getHeadItem( $url ) {
+		$links = '';
+
+		// Converting from 0-indexed to 1-indexed
+		$currentPage = $this->activePage + 1;
+
+		// Pages outside the pagination range
+		if ( $currentPage < 1 || $currentPage > $this->pagesCount ) {
+			return '';
+		}
+
+		// Has a previous page?
+		if ( $currentPage > 1 ) {
+			$links .= "\t" . Html::element( 'link', [
+					'rel' => 'prev',
+					'href' => str_replace( '%s', $currentPage - 1, $url )
+				] ) . PHP_EOL;
+		}
+
+		// Has a next page?
+		if ( $currentPage < $this->pagesCount ) {
+			$links .= "\t" . Html::element( 'link', [
+					'rel' => 'next',
+					'href' => str_replace( '%s', $currentPage + 1, $url )
+				] ) . PHP_EOL;
+		}
+
+		return $links;
 	}
 
 }

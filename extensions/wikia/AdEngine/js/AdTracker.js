@@ -1,12 +1,18 @@
 /*global define*/
 /*jshint camelcase:false*/
-define('ext.wikia.adEngine.adTracker', ['wikia.tracker', 'wikia.window'], function (tracker, window) {
+define('ext.wikia.adEngine.adTracker', ['wikia.tracker', 'wikia.window', 'wikia.log'], function (tracker, window, log) {
 	'use strict';
 
-	var timeBuckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0, 20.0, 60.0];
+	var timeBuckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0, 20.0, 60.0],
+		logGroup = 'ext.wikia.adEngine.adTracker';
 
 	function encodeAsQueryString(extraParams) {
 		var out = [], key, keys = [], i, len;
+
+		if (window.ads && window.ads.runtime.sp.blocking !== undefined) {
+			extraParams.sp = window.ads.runtime.sp.blocking ? 'yes' : 'no';
+		}
+
 		for (key in extraParams) {
 			if (extraParams.hasOwnProperty(key)) {
 				keys.push(key);
@@ -54,7 +60,8 @@ define('ext.wikia.adEngine.adTracker', ['wikia.tracker', 'wikia.window'], functi
 		var category = 'ad/' + eventName,
 			action = typeof data === 'string' ? data : encodeAsQueryString(data || {}),
 			gaLabel = forcedLabel,
-			gaValue;
+			gaValue,
+			trackValue;
 
 		if (!gaLabel) {
 			if (value === undefined) {
@@ -72,14 +79,15 @@ define('ext.wikia.adEngine.adTracker', ['wikia.tracker', 'wikia.window'], functi
 
 		// Empty action is not allowed by Google Analytics, thus:
 		action = action || 'nodata';
-
-		tracker.track({
+		trackValue = {
 			ga_category: category,
 			ga_action: action,
 			ga_label: gaLabel,
 			ga_value: isNaN(gaValue) ? 0 : gaValue,
 			trackingMethod: 'ad'
-		});
+		};
+		tracker.track(trackValue);
+		log(trackValue, 'debug', logGroup);
 	}
 
 	/**

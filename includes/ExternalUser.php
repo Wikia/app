@@ -122,7 +122,7 @@ abstract class ExternalUser {
 			}
 			$obj = self::newFromId( $id );
 		}
-		
+
 		return $obj;
 	}
 	

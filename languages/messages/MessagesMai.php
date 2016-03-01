@@ -164,30 +164,12 @@ $messages = array(
 'navigation'    => 'संचार',
 'and'           => '&#32;आर',
 
-# Cologne Blue skin
 'qbfind'         => 'ताकू',
 'qbbrowse'       => 'गवेषण करू',
-'qbedit'         => 'सम्पादन करू',
 'qbpageoptions'  => 'ई पन्ना',
 'qbpageinfo'     => 'विषय',
-'qbmyoptions'    => 'हमर पन्ना सभ',
-'qbspecialpages' => 'विशेष पन्ना सभ',
 'faq'            => 'त्वरित प्रश्नोत्तरी',
-'faqpage'        => 'Project: त्वरित प्रश्नोत्तरी',
 
-# Vector skin
-'vector-action-addsection'       => 'विचार-बिन्दु जोड़ू',
-'vector-action-delete'           => 'मेटाउ',
-'vector-action-move'             => 'घसकाउ',
-'vector-action-protect'          => 'रक्षण करू',
-'vector-action-undelete'         => 'आपस लाउ',
-'vector-action-unprotect'        => 'सुरक्षा बदलू',
-'vector-simplesearch-preference' => 'परिष्कृत खोज सुझाव समर्थ करू (सदिश स्वरूप मात्र)',
-'vector-view-create'             => 'बनाउ',
-'vector-view-edit'               => 'सम्पादन करू',
-'vector-view-history'            => 'इतिहास देखू',
-'vector-view-view'               => 'पढ़ू',
-'vector-view-viewsource'         => 'जड़ि देखू',
 'actions'                        => 'क्रिया सभ',
 'namespaces'                     => 'चेन्हासी समूह सभ',
 'variants'                       => 'प्रकार सभ',
@@ -210,7 +192,6 @@ $messages = array(
 'edit'              => 'संपादन',
 'create'            => 'बनाउ',
 'editthispage'      => 'एहि पृष्ठक संपादन',
-'create-this-page'  => 'ई पन्ना बनाउ',
 'delete'            => 'मेटाउ',
 'deletethispage'    => 'ई पन्ना मेटाउ',
 'undelete_short'    => 'आपस आनू  {{PLURAL:$1|एक सम्पादनt|$1 सम्पादन सभ}}',
@@ -225,19 +206,9 @@ $messages = array(
 'talkpagelinktext'  => 'कहू',
 'specialpage'       => 'विशेष पन्ना',
 'personaltools'     => 'व्यक्तिगत उपकरण',
-'postcomment'       => 'नव खण्ड',
-'articlepage'       => 'विषय-सूची पन्ना देखू',
 'talk'              => 'वार्तालाप',
 'views'             => 'दृष्टि',
 'toolbox'           => 'उपकरण-बक्सा',
-'userpage'          => 'प्रयोक्ता पन्ना देखू',
-'projectpage'       => 'परियोजना पन्ना देखू',
-'imagepage'         => 'पन्नाक पृष्ठ देखू',
-'mediawikipage'     => 'सन्देश पन्ना देखू',
-'templatepage'      => 'नमूना पृष्ठ देखू',
-'viewhelppage'      => 'सहायता पन्ना देखू',
-'categorypage'      => 'संवर्ग पन्ना देखू',
-'viewtalkpage'      => 'गपशप देखू',
 'otherlanguages'    => 'दोसर भाषामे',
 'redirectedfrom'    => '(एतयसँ बहटारल $1)',
 'redirectpagesub'   => 'पन्नाकेँ पठाउ',
@@ -540,34 +511,6 @@ $2',
 'resetpass-wrong-oldpass'   => 'अमान्य अस्थायी वा अखुनका कूटशब्द।
 अहाँ पहिनहिये सफलतासँ कूटशब्द बदलि लेने छी वा एकटा नव अस्थायी कूटशब्द लेल आग्रह केने छी।',
 'resetpass-temp-password'   => 'तात्कालिक कूटशब्द',
-
-# Special:PasswordReset
-'passwordreset'                    => 'कूटशब्द फेरसँ बनाउ',
-'passwordreset-text'               => 'ई-पत्र द्वारा अपन खाता विवरणक स्मरण प्राप्त करबा लेल ऐ फॉर्मकेँ भरू।',
-'passwordreset-legend'             => 'कूटशब्द फेरसँ बनाउ',
-'passwordreset-disabled'           => 'कूटशब्द फेरसँ बनाएब ऐ विकीपर अक्षम कएल अछि।',
-'passwordreset-pretext'            => '{{PLURAL:$1||नीचाँक दत्तांशक एकटा भागक प्रविष्टि करू}}',
-'passwordreset-username'           => 'प्रयोक्तानाम',
-'passwordreset-domain'             => 'क्षेत्र:',
-'passwordreset-capture'            => 'परिणाम ई-पत्र देखू?',
-'passwordreset-capture-help'       => 'जँ अहाँ ऐ बक्शाकेँ देखै छी, ई-पत्र (तात्कालिक कूटशब्दक संग) अहाँकेँ देखाएल जाएत आ संगे प्रयोक्ताकेँ पठाएल जाएत।',
-'passwordreset-email'              => 'ई-पत्र संकेत',
-'passwordreset-emailtitle'         => 'लेखा विवरण {{अन्तर्जालक नाम}}',
-'passwordreset-emailtext-ip'       => 'कियो (सम्भवतः अहाँ, अन्तर्जाल सेवा कल्पक $1 सँ) अपन लेखा विवरणक पुनःस्मरणक लेल अनुरोध केलहुँ ऐ लेल {{ अन्तर्जालक नाम}} ($4). ई प्रयोक्ता {{PLURAL:$3|लेखा अछि| लेखा सभ अछि}}
-ऐ ई-पत्र संकेतसँ सम्बन्धित:
-
-$2
-
-{{PLURAL:$3|ई अल्पकालक कूटशब्द| ई सभ अल्पकालक कूटशब्द}} खतम भऽ जाएत {{PLURAL:$5|एक दिन|$5 पाँच दिन}}.
-अहाँ सम्प्रवेश करू आ एकटा नव कूटशब्द चुनू।. जौं कियो आन ई आग्रह केने अछि, वा अहाँकेँ अपन पुरान कूटशब्द मोन पड़ि गेल अछि , आ आब एकरा बदलबाक इच्छा नै राखै छी तँ अहाँ ऐ संदेशकेँ बिसरि जाउ आ अपन पुरान कूटशब्दक प्रयोग करैत रहू।',
-'passwordreset-emailtext-user'     => 'प्रयोक्ता $1 {{अन्तर्जाल}} पर अहाँक खाता विवरणक {{SITENAME}} लेल फेरसँ ($4) आग्रह केने छथि। ई प्रयोक्ता {{PLURAL:$3|खाता अछि|खाता सभ अछि}} ऐ ई-पत्र संकेतसँ जुड़ल: $2
-{{PLURAL:$3| ई अस्थायी कूटशब्द|ई सभ अस्थायी कूटशब्द}} खतम भऽ जाएत {{PLURAL:$5|एक दिन|$5 दिन}} मे।
-अहाँ सम्प्रवेश करू आ एकटा नव कूटशब्द आब चुनू। जँ कियो दोसर ई आग्रह केने छथि, वा जँ अहाँकेँ अपन मूल कूटशब्द मोन पड़ि गेल अछि, आ अहाँ आब ओइ कूटशब्दकेँ नै बदलऽ चाहै छी, अहाँ ऐ संदेशकेँ बिसरि सकै छी आ अपन पुरान कूटशब्दक प्रयोग जारी राखि सकै छी।',
-'passwordreset-emailelement'       => 'प्रयोक्ता: $1
-अस्थायी कूटशब्द: $2',
-'passwordreset-emailsent'          => 'एकटा ई-पत्र मोन पाड़बा लेल पठाओल गेल अछि।',
-'passwordreset-emailsent-capture'  => 'एकटा स्मरण ई-पत्र पठाएल गेल अछि, जे नीचाँ देखाएल अछि।',
-'passwordreset-emailerror-capture' => 'एकटा स्मरण ई-पत्र बनाएल गेल अछि, जे नीचाँ देखाएल अछि, मुदा प्र्योक्ताकेँ एकरा पठेबाक प्रयास विफल भेल: $1',
 
 # Special:ChangeEmail
 'changeemail'          => 'ई-पत्र संकेत बदलू',
@@ -1045,14 +988,6 @@ $3 द्वारा देल कारण अछि ''$2''",
 अहाँक गूगलक माध्यमसँ ऐ बीच ताकि सकै छी।
 मोन राखू जे तकर विवरणी {{अन्तर्जाल}} सामिग्री समयातीत भऽ सकैए।',
 
-# Quickbar
-'qbsettings'                => 'त्वरित दृश्य',
-'qbsettings-none'           => 'कोनो नै',
-'qbsettings-fixedleft'      => 'वाम कात सटल',
-'qbsettings-fixedright'     => 'दहिन दिस सटल',
-'qbsettings-floatingleft'   => 'वाम कात घुमैत',
-'qbsettings-floatingright'  => 'दहिन कात घुमैत',
-'qbsettings-directionality' => 'कीलित, अहाँक भाषाक लिपि दिशा-निर्देशपर आधारित',
 
 # Preferences page
 'preferences'                   => 'विकल्प',
@@ -2696,11 +2631,6 @@ $1 एकर प्रतिबन्धक कारण अछि : "$2"',
 'pageinfo-viewsperedit'     => 'प्रति सम्पादन देखल गेल',
 
 # Skin names
-'skinname-standard'  => 'प्राचीन',
-'skinname-nostalgia' => 'गामसँ प्रेम',
-'skinname-simple'    => 'साधारण',
-'skinname-modern'    => 'आधुनिक',
-'skinname-vector'    => 'सदिश',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'देखि लेल गेल, एहन चिन्ह लगाऊ',

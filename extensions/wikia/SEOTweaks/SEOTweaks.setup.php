@@ -3,9 +3,9 @@
  * SEOTweaks setup
  *
  * @author mech
- * @author ADi  
+ * @author ADi
  * @author Jacek Jursza <jacek at wikia-inc.com>
- * 
+ *
  */
 $dir = dirname(__FILE__) . '/';
 

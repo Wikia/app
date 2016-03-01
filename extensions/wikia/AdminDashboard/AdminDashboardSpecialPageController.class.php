@@ -38,21 +38,20 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		$this->urlAddPage = Title::newFromText( 'CreatePage', NS_SPECIAL )->getFullURL();
 		$this->urlAddPhoto = Title::newFromText( 'Upload', NS_SPECIAL )->getFullURL();
 		if( !empty( $this->wg->EnableSpecialVideosExt ) ) {
-			$this->showVideoLink = true;
 			$this->urlAddVideo = Title::newFromText( 'WikiaVideoAdd', NS_SPECIAL )->getFullURL();
-			$this->urlAddVideoReturnUrl = SpecialPage::getTitleFor( "Videos" )->escapeLocalUrl( "sort=recent" );
+			$this->urlAddVideoReturnUrl = SpecialPage::getTitleFor( 'Videos' )->escapeLocalUrl();
 		} else {
 			$this->showVideoLink = false;
 		}
+		
 		if ( !empty( $this->wg->EnableBlogArticles ) ) {
 			$this->showNewBlogLink = true;
 			$this->urlCreateBlogPage = Title::newFromText( 'CreateBlogPage', NS_SPECIAL )->getFullURL();
 		} else {
 			$this->showNewBlogLink = false;
 		}
-		
+
 		$this->urlMultipleUpload = Title::newFromText( 'MultipleUpload', NS_SPECIAL )->getFullURL();
-		$this->urlLVS = Title::newFromText( 'LicensedVideoSwap', NS_SPECIAL )->getFullURL();
 		$this->urlSpecialCss = SpecialPage::getTitleFor( 'CSS' )->getFullURL();
 
 		// special:specialpages
@@ -61,18 +60,6 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		// icon display logic
 		$this->displayWikiFeatures = !empty( $this->wg->EnableWikiFeatures );
 		$this->displaySpecialCss = !empty( $this->wg->EnableSpecialCssExt );
-
-		// LicensedVideoSwap
-		if ( empty( $this->wg->EnableLicensedVideoSwapExt ) ) {
-			$this->displayLicensedVideoSwap = false;
-			$this->badgeLicensedVideoSwap = '';
-		} else {
-			$this->displayLicensedVideoSwap = true;
-
-			// alert badge
-			$lvsHelper = new LicensedVideoSwapHelper();
-			$this->badgeLicensedVideoSwap = $lvsHelper->getAlertBadge();
-		}
 
 		// add messages package
 		JSMessages::enqueuePackage( 'AdminDashboard', JSMessages::INLINE );

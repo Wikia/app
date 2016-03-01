@@ -3,7 +3,7 @@
 class MercuryApiHooks {
 
 	const SERVICE_API_ROOT = '/';
-	const SERVICE_API_BASE = 'api/v1/';
+	const SERVICE_API_BASE = 'api/mercury/';
 	const SERVICE_API_ARTICLE = 'article/';
 	const SERVICE_API_CURATED_CONTENT = 'main/section/';
 
@@ -44,7 +44,7 @@ class MercuryApiHooks {
 			$articleId = $wikiPage->getId();
 			if ( $articleId ) {
 				$userId = $user->getId();
-				$key = MercuryApi::getTopContributorsKey( $articleId, MercuryApiController::NUMBER_CONTRIBUTORS );
+				$key = MercuryApi::getTopContributorsKey( $articleId, MercuryApiArticleHandler::NUMBER_CONTRIBUTORS );
 				$memCache = F::app()->wg->Memc;
 				$contributions = $memCache->get( $key );
 				// Update the data only if the key is not empty
@@ -74,7 +74,7 @@ class MercuryApiHooks {
 	 */
 	public static function onArticleRollbackComplete( WikiPage $wikiPage, User $user, $revision, $current ) {
 		$articleId = $wikiPage->getId();
-		$key = MercuryApi::getTopContributorsKey( $articleId, MercuryApiController::NUMBER_CONTRIBUTORS );
+		$key = MercuryApi::getTopContributorsKey( $articleId, MercuryApiArticleHandler::NUMBER_CONTRIBUTORS );
 		WikiaDataAccess::cachePurge( $key );
 		return true;
 	}
@@ -91,8 +91,7 @@ class MercuryApiHooks {
 
 		if ( $title->inNamespaces( NS_MAIN ) ) {
 			// Mercury API call from Ember.js to Hapi.js e.g.
-			// http://elderscrolls.wikia.com/api/v1/article/Morrowind
-			// To access it, you have to set your client to be directed to the Mercury machines.
+			// http://elderscrolls.wikia.com/api/mercury/article/Morrowind
 			$urls[] =
 				$wgServer .
 				self::SERVICE_API_ROOT .
@@ -102,7 +101,9 @@ class MercuryApiHooks {
 
 			// Mercury API call from Hapi.js to MediaWiki e.g.
 			// http://elderscrolls.wikia.com/wikia.php?controller=MercuryApi&method=getArticle&title=Morrowind
+			// TODO: Remove one of these two below when it is decided if we do the switch to getPage() or drop it.
 			$urls[] = MercuryApiController::getUrl( 'getArticle', [ 'title' => $title->getPartialURL() ] );
+			$urls[] = MercuryApiController::getUrl( 'getPage', [ 'title' => $title->getPartialURL() ] );
 		}
 		return true;
 	}
@@ -125,7 +126,7 @@ class MercuryApiHooks {
 		Title::newMainPage()->purgeSquid();
 
 		$urls = [ ];
-		WikiaDataAccess::cachePurge( MercuryApiController::curatedContentDataMemcKey() );
+		WikiaDataAccess::cachePurge( MercuryApiMainPageHandler::curatedContentDataMemcKey() );
 
 		foreach ( $sections as $section ) {
 			if ( !empty( $section['featured'] ) ) {
@@ -134,7 +135,7 @@ class MercuryApiHooks {
 
 			$sectionTitle = $section['title'];
 
-			WikiaDataAccess::cachePurge( MercuryApiController::curatedContentDataMemcKey( $sectionTitle ) );
+			WikiaDataAccess::cachePurge( MercuryApiMainPageHandler::curatedContentDataMemcKey( $sectionTitle ) );
 
 			// We have to double encode because Ember's RouteRecognizer does decodeURI while processing path.
 			$doubleEncodedTitle = self::encodeURI( self::encodeURIQueryParam( $sectionTitle ) );

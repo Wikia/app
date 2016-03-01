@@ -36,8 +36,7 @@ class ReCaptcha extends BaseCaptcha {
 	public function passCaptcha() {
 		$verifyUrl = $this->getVerifyUrl();
 
-		$responseObj = \Http::get( $verifyUrl, 'default', [
-			'noProxy' => true,
+		$responseObj = \ExternalHttp::get( $verifyUrl, 'default', [
 			'returnInstance' => true
 		] );
 

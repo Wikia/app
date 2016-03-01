@@ -2,8 +2,9 @@
 
 class UnconvertedInfoboxesPage extends PageQueryPage {
 	const LIMIT = 1000;
+	const UNCONVERTED_INFOBOXES_TYPE = 'Nonportableinfoboxes';
 
-	function __construct( $name = 'Nonportableinfoboxes' ) {
+	function __construct( $name = self::UNCONVERTED_INFOBOXES_TYPE ) {
 		parent::__construct( $name );
 	}
 
@@ -44,7 +45,6 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 		 * 1. Get the new data first
 		 */
 		$nonportableTemplates = $this->reallyDoQuery();
-		$dbw->begin();
 
 		/**
 		 * 2. Delete the existing records
@@ -57,29 +57,19 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 		/**
 		 * 3. Insert the new records if the $nonportableTemplates array is not empty
 		 */
-		$num = 0;
-		if ( !empty( $nonportableTemplates ) ) {
+		( new WikiaSQL() )
+			->INSERT()->INTO( 'querycache', [
+				'qc_type',
+				'qc_value',
+				'qc_namespace',
+				'qc_title'
+			] )
+			->VALUES( $nonportableTemplates )
+			->run( $dbw );
 
-			( new WikiaSQL() )
-				->INSERT()->INTO( 'querycache', [
-					'qc_type',
-					'qc_value',
-					'qc_namespace',
-					'qc_title'
-				] )
-				->VALUES( $nonportableTemplates )
-				->run( $dbw );
+		wfRunHooks( 'UnconvertedInfoboxesQueryRecached' );
 
-			$num = $dbw->affectedRows();
-			if ( $num === 0 ) {
-				$dbw->rollback();
-				$num = false;
-			} else {
-				$dbw->commit();
-			}
-		}
-
-		return $num;
+		return count( $nonportableTemplates );
 	}
 
 	/**
@@ -91,63 +81,31 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 	 * @return bool|mixed
 	 */
 	public function reallyDoQuery( $limit = false, $offset = false ) {
-		$dbr = wfGetDB( DB_SLAVE, [ $this->getName(), __METHOD__, 'vslow' ] );
+		global $wgCityId;
 
-		$nonportableTemplates = ( new WikiaSQL() )
-			->SELECT( 'page_title' )->AS_( 'title' )
-			->FROM( 'page' )
-			->WHERE( 'page_namespace' )->EQUAL_TO( NS_TEMPLATE )
-				->AND_( 'page_is_redirect' )->EQUAL_TO( 0 )
-			->runLoop( $dbr, function( &$nonportableTemplates, $row ) {
-				$title = Title::newFromText( $row->title, NS_TEMPLATE );
-				$contentText = ( new WikiPage( $title ) )->getText();
-				if ( $title !== null && self::isTitleWithNonportableInfobox( $title->getText(), $contentText ) ) {
+		$tcs = new UserTemplateClassificationService();
+		$recognizedTemplates = $tcs->getTemplatesOnWiki( $wgCityId );
+
+		$nonportableInfoboxes = [];
+
+		foreach ( $recognizedTemplates as $templateId => $type ) {
+			if ( $tcs->isInfoboxType( $type ) ) {
+				$title = Title::newFromID( $templateId );
+				if ( $title instanceof Title
+					&& !$title->isRedirect()
+					&& empty( PortableInfoboxDataService::newFromTitle( $title )->getData() )
+				) {
 					$links = $title->getIndirectLinks();
-					$nonportableTemplates[] = [
+					$nonportableInfoboxes[] = [
 						$this->getName(),
 						count( $links ),
 						NS_TEMPLATE,
-						$row->title,
+						$title->getDBkey(),
 					];
 				}
-			} );
-
-		return $nonportableTemplates;
-	}
-
-	/**
-	 * Checks if a page contains non-portable infoboxes based on its title and content.
-	 * The first check is if the title includes a word "infobox":
-	 * - if yes, check for a new markup (<infobox>) in the content. If it is missing - it indicates that
-	 *   the template contains a non-portable infobox
-	 * - if no, check for an occurrence of a word "infobox" inside all class HTML attributes
-	 *
-	 * Returns true if a page may consist a non-portable infobox
-	 *
-	 * @param string $titleText
-	 * @param string $contentText
-	 * @return bool
-	 */
-	public static function isTitleWithNonportableInfobox( $titleText, $contentText ) {
-		// ignore docs pages
-		if ( stripos( $titleText, '/doc' ) ) {
-			return false;
+			}
 		}
 
-		$titleNeedle = 'infobox';
-		if ( strripos( $titleText, $titleNeedle ) !== false ) {
-			$portableInfoboxNeedle = '<infobox';
-
-			// If a portable infobox markup was found
-			// it means that the template doesn't have a non-portable infobox
-			return strpos( $contentText, $portableInfoboxNeedle ) === false;
-		} else {
-			$nonportableInfoboxRegEx = '/class=\"[^\"]*infobox[^\"]*\"/i';
-			$nonportableInfoboxRegExMatch = preg_match( $nonportableInfoboxRegEx, $contentText );
-
-			// If a non-portable infobox markup was found
-			// the $nonportableInfoboxRegExMatch is not empty
-			return !empty( $nonportableInfoboxRegExMatch );
-		}
+		return $nonportableInfoboxes;
 	}
 }

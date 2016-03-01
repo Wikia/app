@@ -2,14 +2,19 @@
 
 class CuratedContentSpecialController extends WikiaSpecialPageController {
 	private $helper;
+	private $communityDataService;
 
 	public function __construct() {
+		global $wgCityId;
+
 		$this->helper = new CuratedContentHelper();
+		$this->communityDataService = new CommunityDataService( $wgCityId );
 		parent::__construct( 'CuratedContent', '', false );
 	}
 
 	public function index() {
-		global $wgWikiaCuratedContent, $wgUser;
+		global $wgUser;
+
 		if ( !$wgUser->isAllowed( 'curatedcontent' ) ) {
 			$this->displayRestrictionError();
 			return false; // skip rendering
@@ -51,22 +56,22 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		JSMessages::enqueuePackage( 'CuratedContentMsg', JSMessages::INLINE );
 
 		$this->response->setVal( 'descriptions', [
-			wfMessage( 'wikiacuratedcontent-content-description-items' ),
-			wfMessage( 'wikiacuratedcontent-content-description-supported-items-for-sections' ),
-			wfMessage( 'wikiacuratedcontent-content-description-tag-needs-image' ),
-			wfMessage( 'wikiacuratedcontent-content-description-section' ),
-			wfMessage( 'wikiacuratedcontent-content-description-organize' ),
-			wfMessage( 'wikiacuratedcontent-content-description-no-section' ),
-			wfMessage( 'wikiacuratedcontent-content-description-items-input' )
+			wfMessage( 'wikiacuratedcontent-content-description-items' )->plain(),
+			wfMessage( 'wikiacuratedcontent-content-description-supported-items-for-sections' )->plain(),
+			wfMessage( 'wikiacuratedcontent-content-description-tag-needs-image' )->plain(),
+			wfMessage( 'wikiacuratedcontent-content-description-section' )->plain(),
+			wfMessage( 'wikiacuratedcontent-content-description-organize' )->plain(),
+			wfMessage( 'wikiacuratedcontent-content-description-no-section' )->plain(),
+			wfMessage( 'wikiacuratedcontent-content-description-items-input' )->text(),
 		] );
 
-		$this->response->setVal( 'addSection', wfMessage( 'wikiacuratedcontent-content-add-section' ) );
-		$this->response->setVal( 'addItem', wfMessage( 'wikiacuratedcontent-content-add-item' ) );
-		$this->response->setVal( 'save', wfMessage( 'wikiacuratedcontent-content-save' ) );
+		$this->response->setVal( 'addSection', wfMessage( 'wikiacuratedcontent-content-add-section' )->plain() );
+		$this->response->setVal( 'addItem', wfMessage( 'wikiacuratedcontent-content-add-item' )->plain() );
+		$this->response->setVal( 'save', wfMessage( 'wikiacuratedcontent-content-save' )->plain() );
 
-		$this->response->setVal( 'section_placeholder', wfMessage( 'wikiacuratedcontent-content-section' ) );
-		$this->response->setVal( 'item_placeholder', wfMessage( 'wikiacuratedcontent-content-item' ) );
-		$this->response->setVal( 'name_placeholder', wfMessage( 'wikiacuratedcontent-content-name' ) );
+		$this->response->setVal( 'section_placeholder', wfMessage( 'wikiacuratedcontent-content-section' )->plain() );
+		$this->response->setVal( 'item_placeholder', wfMessage( 'wikiacuratedcontent-content-item' )->plain() );
+		$this->response->setVal( 'name_placeholder', wfMessage( 'wikiacuratedcontent-content-name' )->plain() );
 
 		$itemTemplate = $this->sendSelfRequest( 'item' )->toString();
 		$sectionTemplate = $this->sendSelfRequest( 'section' )->toString();
@@ -77,15 +82,12 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			'sectionTemplate' => $sectionTemplate
 		] );
 
-		if ( !empty( $wgWikiaCuratedContent ) ) {
+		if ( $this->communityDataService->hasData() ) {
 			$list = '';
 
-			foreach ( $wgWikiaCuratedContent as $section ) {
-				if ( isset( $section[ 'featured' ] ) && $section[ 'featured' ] ) {
-					$featuredSection = $this->buildSection( $section );
-				} else {
-					$list .= $this->buildSection( $section );
-				}
+			$featuredSection = $this->buildSection( $this->communityDataService->getFeatured() );
+			foreach ( $this->communityDataService->getNonFeaturedSections() as $section ) {
+				$list .= $this->buildSection( $section );
 			}
 			if ( !isset( $featuredSection ) ) {
 				// add featured section if not yet exists
@@ -110,7 +112,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$imageId = $this->request->getVal( 'image_id', 0 );
 		$imageCrop = $this->request->getArray( 'image_crop', [ ] );
 
-		$this->response->setVal( 'value', wfMessage( 'wikiacuratedcontent-featured-section-name' ) );
+		$this->response->setVal( 'value', wfMessage( 'wikiacuratedcontent-featured-section-name' )->plain() );
 		$this->response->setVal( 'image_id', $imageId );
 		$this->response->setVal( 'image_crop', $this->helper->encodeCrop( $imageCrop ) );
 		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $imageId ) );
@@ -125,7 +127,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$imageId = $this->request->getVal( 'image_id', 0 );
 		$imageCrop = $this->request->getArray( 'image_crop', [ ] );
 
-		$this->response->setVal( 'value', $this->request->getVal( 'value' , '' ) );
+		$this->response->setVal( 'value', $this->request->getVal( 'value', '' ) );
 		$this->response->setVal( 'image_id', $imageId );
 		$this->response->setVal( 'image_crop', $this->helper->encodeCrop( $imageCrop ) );
 		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $imageId ) );
@@ -133,7 +135,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$this->response->setVal( 'image_set', true );
 		}
 
-		$this->response->setVal( 'section_placeholder', wfMessage( 'wikiacuratedcontent-content-section' ) );
+		$this->response->setVal( 'section_placeholder', wfMessage( 'wikiacuratedcontent-content-section' )->plain() );
 	}
 
 	public function item() {
@@ -159,8 +161,8 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setVal( 'image_url', CuratedContentHelper::getImageUrl( $imageId ) );
 		$this->response->setVal( 'image_crop', $this->helper->encodeCrop( $imageCrop ) );
-		$this->response->setVal( 'item_placeholder', wfMessage( 'wikiacuratedcontent-content-item' ) );
-		$this->response->setVal( 'name_placeholder', wfMessage( 'wikiacuratedcontent-content-name' ) );
+		$this->response->setVal( 'item_placeholder', wfMessage( 'wikiacuratedcontent-content-item' )->plain() );
+		$this->response->setVal( 'name_placeholder', wfMessage( 'wikiacuratedcontent-content-name' )->plain() );
 	}
 
 	public function save() {
@@ -172,13 +174,14 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setFormat( 'json' );
 
-		$sections = $this->helper->processSections( $this->request->getArray( 'sections', [ ] ) );
-		$errors = ( new CuratedContentValidator )->validateData( $sections );
+		$sections = $this->helper->processSectionsFromSpecialPage( $this->request->getArray( 'sections', [ ] ) );
+		$errors = ( new CuratedContentSpecialPageValidator )->validateData( $sections );
 
 		if ( !empty( $errors ) ) {
 			$this->response->setVal( 'error', $errors );
+			$this->response->setVal( 'status', false );
 		} else {
-			$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $wgCityId, $sections );
+			$status = ( new CommunityDataService( $wgCityId ) )->setCuratedContent( $sections );
 			$this->response->setVal( 'status', $status );
 
 			if ( !empty( $status ) ) {
@@ -195,7 +198,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$sectionTemplate = 'featuredSection';
 		}
 		$result .= $this->sendSelfRequest( $sectionTemplate, [
-			'value' => $section[ 'title' ],
+			'value' => $section[ 'label' ],
 			'image_id' => $section[ 'image_id' ],
 			'image_crop' => !empty( $section[ 'image_crop' ] ) ? $section[ 'image_crop' ] : [ ],
 		] );

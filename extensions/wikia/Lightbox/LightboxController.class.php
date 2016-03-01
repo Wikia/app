@@ -58,11 +58,12 @@ class LightboxController extends WikiaController {
 
 		$thumbs = array();
 		$minTimestamp = 0;
+		$toTimestamp = wfTimestamp( TS_MW, $to );
 		if ( !empty( $to ) ) {
 			// get image list - exclude Latest Photos
 			$images = array();
 			$helper = $this->getLightboxHelper();
-			$imageList = $helper->getImageList( $count, $to );
+			$imageList = $helper->getImageList( $count, $toTimestamp );
 			extract( $imageList );
 
 			// add Latest Photos if not exist
@@ -160,6 +161,8 @@ class LightboxController extends WikiaController {
 	 * @responseParam boolean isAdded - check if the file is added to the wiki
 	 */
 	public function getMediaDetail() {
+		$this->response->setFormat( 'json' );
+
 		$fileTitle = urldecode( $this->request->getVal( 'fileTitle', '' ) );
 		$isInline = $this->request->getVal( 'isInline', false );
 
@@ -199,7 +202,6 @@ class LightboxController extends WikiaController {
 		list( $smallerArticleList, $articleListIsSmaller ) = WikiaFileHelper::truncateArticleList( $articles, self::POSTED_IN_ARTICLES );
 
 		// file details
-		$this->views = wfMessage( 'lightbox-video-views', $this->wg->Lang->formatNum( $data['videoViews'] ) )->parse();
 		$this->title = $title->getDBKey();
 		$this->fileTitle = $title->getText();
 		$this->mediaType = $data['mediaType'];
@@ -219,9 +221,6 @@ class LightboxController extends WikiaController {
 		$this->exists = $data['exists'];
 		$this->isAdded = $data['isAdded'];
 		$this->extraHeight = $data['extraHeight'];
-
-		// Make sure that a request with missing &format=json does not throw a "template not found" exception
-		$this->response->setFormat( 'json' );
 
 		// set cache control to 15 minutes
 		$this->response->setCacheValidity( 900 );

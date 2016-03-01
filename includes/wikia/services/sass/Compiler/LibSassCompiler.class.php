@@ -31,7 +31,7 @@ class LibSassCompiler extends Compiler {
 		$this->libSassVersion =  $this->sass->getLibraryVersion();
 
 		# set SASS @import statements include path
-		$this->sass->setIncludePath($this->rootDir);
+		$this->sass->setIncludePath( $this->rootDir );
 	}
 
 	/**
@@ -43,14 +43,12 @@ class LibSassCompiler extends Compiler {
 		# post-process SASS variables to encode strings properly
 		array_walk(
 			$sassVariables,
-			function(&$item, $key) {
-				if (in_array($key, ['background-image', 'wordmark-font'])) {
-					$item = "'{$item}'";
-				}
+			function( &$item, $key ) {
+				$item = $this->quoteIfNeeded( $item, $key );
 			}
 		);
 
-		return self::encodeSassMap($sassVariables);
+		return self::encodeSassMap( $sassVariables );
 	}
 
 	/**
@@ -61,7 +59,7 @@ class LibSassCompiler extends Compiler {
 	 * @return string CSS stylesheet
 	 */
 	public function compile( Source $source ) {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$sassVariables = $this->getEncodedVariables();
 
@@ -82,11 +80,11 @@ SASS;
 
 		// import the file that we want to render
 		global $IP;
-		$sass .= sprintf('@import "%s";', $source->getLocalFile());
+		$sass .= sprintf( '@import "%s";', $source->getLocalFile() );
 
-		$styles = $this->sass->compile($sass);
+		$styles = $this->sass->compile( $sass );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $styles;
 	}
 
@@ -98,18 +96,27 @@ SASS;
 	 * @param array $map map to be encoded (key => value array)
 	 * @return string map encoded for SASS
 	 */
-	public static function encodeSassMap(Array $map) {
+	public static function encodeSassMap( Array $map ) {
 		$pairs = [];
 
-		foreach($map as $key => $value) {
+		foreach ( $map as $key => $value ) {
 			// properly encode empty strings
-			if ($value === '') {
+			if ( $value === '' ) {
 				$value = '""';
 			}
 
-			$pairs[] = sprintf('"%s": %s', $key, $value);
+			$pairs[] = sprintf( '"%s": %s', $key, $value );
 		}
 
-		return sprintf("(%s)", join(', ', $pairs));
+		return sprintf( "(%s)", join( ', ', $pairs ) );
+	}
+
+	public function quoteIfNeeded( $item, $key ) {
+		if ( !is_numeric( $item ) && strpos( $key, 'color' ) === false ) {
+			// escape only single quotes, as they are used as wrappers for each $item
+			$item = addcslashes( $item, "'" );
+			$item = "'{$item}'";
+		}
+		return $item;
 	}
 }

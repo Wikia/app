@@ -80,7 +80,6 @@ class MoveNotice extends Maintenance {
 
 		if ( !$this->logFile ) {
 			$this->output( "[WARNING] Log file is not set.\n" );
-			exit();
 		}
 
 		if ( !$this->templateName ) {
@@ -122,8 +121,7 @@ class MoveNotice extends Maintenance {
 		if ( empty( $rows ) ) {
 			$this->addToLog( "[WARNING] This template is not used \n" );
 			$this->addToLog( "================================================== \n\n\n" );
-			fwrite( $this->logFile, $this->log );
-			$this->output( $this->log );
+			$this->writeToLog();;
 			exit();
 		}
 
@@ -297,8 +295,8 @@ class MoveNotice extends Maintenance {
 	private function writeToLog() {
 		if ( $this->logFile ) {
 			fwrite( $this->logFile, $this->log );
-			$this->output( $this->log );
 		}
+		$this->output( $this->log );
 	}
 
 	/**

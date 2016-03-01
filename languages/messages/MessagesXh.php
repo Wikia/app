@@ -46,11 +46,7 @@ $messages = array(
 'mypage'  => 'Inqaku yam',
 'mytalk'  => 'Inthetho yam',
 
-# Cologne Blue skin
-'qbspecialpages' => 'Amaphepha Abalulekileyo',
 
-# Vector skin
-'vector-view-edit' => 'Tshintsha',
 
 'help'             => 'Uncedo',
 'search'           => 'Khangela',

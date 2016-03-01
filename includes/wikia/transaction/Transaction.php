@@ -36,9 +36,11 @@ class Transaction {
 	const PARAM_FUNCTION = 'function';
 	const PARAM_SPECIAL_PAGE_NAME = 'special_page';
 	const PARAM_API_ACTION = 'api_action';
+	const PARAM_API_LIST = 'api_list';
 	const PARAM_WIKI = 'wiki';
 	const PARAM_DPL = 'dpl';
 	const PARAM_AB_PERFORMANCE_TEST = 'perf_test';
+	const PARAM_MAINTENANCE_SCRIPT = 'maintenance_script';
 
 	const PSEUDO_PARAM_TYPE = 'type';
 
@@ -52,7 +54,9 @@ class Transaction {
 	const EVENT_MEMCACHE_STATS_COUNTERS = 'memcache_stats_counters';
 	const EVENT_MEMCACHE_STATS_KEYS = 'memcache_stats_keys';
 	const EVENT_USER_PREFERENCES = 'user_preferences';
+	const EVENT_USER_PREFERENCES_COUNTERS = "user_preferences_counters";
 	const EVENT_USER_ATTRIBUTES = 'user_attributes';
+	const EVENT_USER_AUTH = 'user_auth';
 
 	/**
 	 * Returns TransactionTrace singleton instance

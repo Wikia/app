@@ -414,30 +414,12 @@ The following {{PLURAL:$1|file is|$1 files are}} in the current category.',
 'navigation'    => 'पर्यटनम्',
 'and'           => '&#32;तथा च',
 
-# Cologne Blue skin
 'qbfind'         => 'अन्विष्यताम्',
 'qbbrowse'       => 'ब्राउस् इत्येतत् करोतु।',
-'qbedit'         => 'सम्पाद्यताम्',
 'qbpageoptions'  => 'इदं पृष्ठम्',
 'qbpageinfo'     => 'प्रसंगः',
-'qbmyoptions'    => 'मम पृष्ठानि',
-'qbspecialpages' => 'विशेषपृष्ठानि',
 'faq'            => 'बहुधा पृच्छ्यमानाः प्रश्नाः',
-'faqpage'        => 'Project:बहुधा पृछ्यमानाः प्रश्नाः',
 
-# Vector skin
-'vector-action-addsection'       => 'विषयः योज्यताम्',
-'vector-action-delete'           => 'विलुप्यताम्',
-'vector-action-move'             => 'चाल्यताम्',
-'vector-action-protect'          => 'संरक्ष्यताम्',
-'vector-action-undelete'         => 'अपाकरणस्य निरसनम्',
-'vector-action-unprotect'        => 'सुरक्षितीकरणस्य निरसनम्',
-'vector-simplesearch-preference' => 'संवर्धिताः अन्वेषणोपक्षेपाः समर्थीकरोतु। (केवलं वैक्टर-स्किन् इत्यस्यार्थे)',
-'vector-view-create'             => 'सृज्यताम्',
-'vector-view-edit'               => 'सम्पाद्यताम्',
-'vector-view-history'            => 'इतिहासः दृश्यताम्',
-'vector-view-view'               => 'पठ्यताम्',
-'vector-view-viewsource'         => 'स्रोतः दृश्यताम्',
 'actions'                        => 'क्रियाः',
 'namespaces'                     => 'नामाकाशानि',
 'variants'                       => 'भिन्नरूपाणि',
@@ -460,7 +442,6 @@ The following {{PLURAL:$1|file is|$1 files are}} in the current category.',
 'edit'              => 'सम्पाद्यताम्',
 'create'            => 'सृज्यताम्',
 'editthispage'      => 'इदं पृष्ठं सम्पाद्यताम्',
-'create-this-page'  => 'इदं पृष्ठं सृज्यताम्',
 'delete'            => 'विलुप्यताम्',
 'deletethispage'    => 'इदं पृष्ठम् अपाक्रियताम्',
 'undelete_short'    => '{{PLURAL:$1|एकं सम्पादनं|$1 सम्पादनानि}} अनपाकरोतु',
@@ -475,19 +456,9 @@ The following {{PLURAL:$1|file is|$1 files are}} in the current category.',
 'talkpagelinktext'  => 'सम्भाषणम्',
 'specialpage'       => 'विशेषपृष्ठम्',
 'personaltools'     => 'वैयक्तिकोपकरणानि',
-'postcomment'       => 'नवीनः विभागः',
-'articlepage'       => 'लेखः दृश्यताम्',
 'talk'              => 'सम्भाषणम्',
 'views'             => 'दृश्यानि',
 'toolbox'           => 'उपकरणपेटिका',
-'userpage'          => 'योजकपृष्ठं दृश्यताम्',
-'projectpage'       => 'प्रकल्पपृष्ठं दृश्यताम्',
-'imagepage'         => 'सञ्चिकापृष्ठं दृश्यताम्',
-'mediawikipage'     => 'सन्देशपृष्ठं दृश्यताम्।',
-'templatepage'      => 'फलकपृष्ठं दृश्यताम्',
-'viewhelppage'      => 'सहायपृष्ठं दृश्यताम्',
-'categorypage'      => 'वर्गाणां पृष्ठं दृश्यताम्',
-'viewtalkpage'      => 'चर्चा दृश्यताम्',
 'otherlanguages'    => 'अन्यासु भाषासु',
 'redirectedfrom'    => '($1 इत्यस्मात् पुनर्निर्दिष्टम्)',
 'redirectpagesub'   => 'अनुप्रेषण-पृष्ठम्',
@@ -791,26 +762,6 @@ You may ignore this message, if this account was created in error.',
 'resetpass-wrong-oldpass'   => 'अल्पकालीनः अथवा सद्यःकालीनः कूटशब्दः अमान्यः अस्ति।
 भवता पूर्वे एव सफलतया स्वकीयः कूटशब्दः परिवर्तितः स्यात्, अथवा एकः नूतनः अल्पकालीनः कूटशब्दः प्रार्थितः स्यात्।',
 'resetpass-temp-password'   => 'अस्थिर रहस्यवाक् :',
-
-# Special:PasswordReset
-'passwordreset'              => 'कूटशब्द पुनःस्थापनम्',
-'passwordreset-text'         => 'भवतः सदस्यताविवरणानि ईपत्रद्वारा प्राप्तुम् इदं प्रपत्रं पूर्यताम् ।',
-'passwordreset-legend'       => 'कूटशब्द पुनःस्थापनम्',
-'passwordreset-disabled'     => 'अस्मिन् विक्यां कूटशब्द पुनःस्थापनं असमर्थीकृतमस्ति।',
-'passwordreset-pretext'      => '{{PLURAL:$1| |समंकेषु एकम् अधस्यात् प्रविष्टीकरोतु।}}',
-'passwordreset-username'     => 'योजकनामन्:',
-'passwordreset-domain'       => 'क्षेत्रम्:',
-'passwordreset-capture'      => 'फलितरूपम् ईपत्रं किं दृश्यते ?',
-'passwordreset-capture-help' => 'अस्यां मञ्जूषायां यदि भवता अङ्क्यते तर्हि ईपत्रम् (अस्थायिकूटशब्देन सह) दर्श्यते प्रेष्यते च ।',
-'passwordreset-email'        => 'परमाणुपत्रसङ्गेत:',
-'passwordreset-emailtitle'   => '{{SITENAME}} इत्यत्र लेखा-विवरणम्',
-'passwordreset-emailtext-ip' => 'कश्चित् (भवान् अपि स्यात्, $1 इति ऐ. पि. सङ्केतात्) {{SITENAME}} ($4) इत्यस्य प्रवेशसम्बद्धं विवरणं प्रार्थितवान् । अधः सूचितस्य उपयोक्तुः {{PLURAL:$3 | प्रवेशविवरणं | प्रवेशविवरणानि}}
-$2
-इत्यनेन ईपत्रसङ्केतेन सम्बद्धम् अस्ति / सम्बद्धानि सन्ति ।
-{{PLURAL:$3|अयं तात्कालिकः कूटशब्दः | इमे तात्कालिकाः कूटशब्दाः}}  {{PLURAL:$5| एकं दिनं | $5 दिनानि}} यावत् सक्रियः भवति / सक्रियाः भवन्ति ।',
-'passwordreset-emailelement' => 'प्रयोक्तृनाम: $1
-अल्पकालिकः कूटशब्दः : $2',
-'passwordreset-emailsent'    => 'एकः स्मारकः विद्युत्सन्देशः प्रेषितोऽस्ति।',
 
 # Special:ChangeEmail
 'changeemail'        => 'विद्युन्मानपत्रादेशं परिवर्तयतु',
@@ -1117,11 +1068,6 @@ $2
 अश्मिन् समये भवान् गूगल माध्यमेन अन्वेषणं कर्तुं शक्नोति
 स्मरयतु यत् {{SITENAME}} इति स्थलस्य क्रमाङ्का नैव अद्यातना  इति सोच्यते।',
 
-# Quickbar
-'qbsettings'            => 'शीघ्रपट',
-'qbsettings-none'       => 'नास्ति',
-'qbsettings-fixedleft'  => 'बामे स्थापितः',
-'qbsettings-fixedright' => 'दक्षिणे स्थापितः',
 
 # Preferences page
 'preferences'               => 'इष्टतमानि',
@@ -1641,12 +1587,7 @@ $2
 'pageinfo-talkpage'     => 'कथा पृष्ठम्',
 
 # Skin names
-'skinname-standard'    => 'पूर्व',
-'skinname-nostalgia'   => 'पुराण',
-'skinname-cologneblue' => 'नील',
 'skinname-monobook'    => 'पुस्तक',
-'skinname-myskin'      => 'मे चर्मन्',
-'skinname-chick'       => 'Chick',
 
 # Browsing diffs
 'previousdiff' => '← पुरातनतरं सम्पादनम्',
