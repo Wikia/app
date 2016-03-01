@@ -19,8 +19,6 @@ define('TemplateClassificationInEdit',
 			$editFormHiddenTypeFieldCurrent = $editform.find('[name=templateClassificationTypeCurrent]');
 			$editFormHiddenTypeFieldNew = $editform.find('[name=templateClassificationTypeNew]');
 
-			console.log($editFormHiddenTypeFieldNew.val());
-
 			templateClassificationModal.init(getType, storeTypeForSend);
 
 			/* Force modal on load for new pages creation */
