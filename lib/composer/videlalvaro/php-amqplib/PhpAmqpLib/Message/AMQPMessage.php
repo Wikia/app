@@ -32,14 +32,6 @@ class AMQPMessage extends GenericContent
     {
         $this->body = $body;
 
-		// Wikia change - begin
-		// @see PLATFORM-1943
-		if (is_array($properties)) {
-			$properties['app_id'] = 'mediawiki';
-			$properties['correlation_id'] = \Wikia\Util\RequestId::instance()->getRequestId();
-		}
-		// Wikia change - end
-
         parent::__construct($properties, static::$PROPERTIES);
     }
     
