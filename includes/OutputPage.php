@@ -833,7 +833,7 @@ class OutputPage extends ContextSource {
 		if ( is_array( $name ) ) {
 			$this->mHTMLtitle = ( new WikiaHtmlTitle() )->setParts( $name )->getTitle();
 		} else {
-			$this->mHTMLtitle = ( new WikiaHtmlTitle() )->generateTitle( $this, $name )->getTitle();
+			$this->mHTMLtitle = ( new WikiaHtmlTitle() )->generateTitle( $this->getTitle(), $name )->getTitle();
 		}
 		/* Wikia change - end */
 	}

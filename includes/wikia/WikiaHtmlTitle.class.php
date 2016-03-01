@@ -117,26 +117,20 @@ class WikiaHtmlTitle {
 	 * Later we should add structure for images, videos, categories, blogs, etc.
 	 * Then this method should be promoted to a separate class with a set of tests.
 	 *
-	 * @param OutputPage $out
+	 * @param Title $title
 	 * @param string $name
 	 * @return WikiaHtmlTitle
 	 */
-	public function generateTitle( $out, $name ) {
-		global $wgEnableAdminDashboardExt;
-
-		$title = $out->getTitle();
-
+	public function generateTitle( $title, $name ) {
 		if ( !$title ) {
 			return $this->setParts( [ $name ] );
 		}
 
-		// Extra title for admin dashboard
-		if ( !empty( $wgEnableAdminDashboardExt ) ) {
-			if ( AdminDashboardLogic::displayAdminDashboard( F::app(), $title ) ) {
-				return $this->setParts( [ $name, wfMessage( 'admindashboard-header' ) ] );
-			}
-		}
+		// Extra title for admin dashboard (and maybe other pages handled by extensions)
+		$parts = [];
+		wfRunHooks( 'WikiaHtmlTitleExtraParts', [ $title, &$parts ] );
+		array_unshift( $parts, $name );
 
-		return $this->setParts( [ $name ] );
+		return $this->setParts( $parts );
 	}
 }
