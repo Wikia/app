@@ -59,7 +59,7 @@
 
 	.pi-data-label {
 		@include flex-basis($infobox-width / 3);
-		max-width: $infobox-width / 3 - $padding;
+		overflow: hidden;
 		word-wrap: break-word;
 	}
 
