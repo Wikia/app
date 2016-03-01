@@ -453,30 +453,12 @@ $messages = array(
 'navigation' => 'Navegação',
 'and' => '&#32;e',
 
-# Cologne Blue skin
 'qbfind' => 'Procurar',
 'qbbrowse' => 'Navegar',
-'qbedit' => 'Editar',
 'qbpageoptions' => 'Esta página',
 'qbpageinfo' => 'Contexto',
-'qbmyoptions' => 'Minhas páginas',
-'qbspecialpages' => 'Páginas especiais',
 'faq' => 'FAQ',
-'faqpage' => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection' => 'Adicionar tópico',
-'vector-action-delete' => 'Eliminar',
-'vector-action-move' => 'Mover',
-'vector-action-protect' => 'Proteger',
-'vector-action-undelete' => 'Restaurar',
-'vector-action-unprotect' => 'Alterar a proteção',
-'vector-simplesearch-preference' => 'Ativar sugestões de busca melhoradas (apenas no tema Vector)',
-'vector-view-create' => 'Criar',
-'vector-view-edit' => 'Editar',
-'vector-view-history' => 'Ver histórico',
-'vector-view-view' => 'Ler',
-'vector-view-viewsource' => 'Ver código-fonte',
 'actions' => 'Ações',
 'namespaces' => 'Espaços nominais',
 'variants' => 'Variantes',
@@ -499,7 +481,6 @@ $messages = array(
 'edit' => 'Editar',
 'create' => 'Criar',
 'editthispage' => 'Editar esta página',
-'create-this-page' => 'Iniciar esta página',
 'delete' => 'Eliminar',
 'deletethispage' => 'Eliminar esta página',
 'undelete_short' => 'Restaurar {{PLURAL:$1|uma edição|$1 edições}}',
@@ -514,19 +495,9 @@ $messages = array(
 'talkpagelinktext' => 'disc',
 'specialpage' => 'Página especial',
 'personaltools' => 'Ferramentas pessoais',
-'postcomment' => 'Nova seção',
-'articlepage' => 'Ver página de conteúdo',
 'talk' => 'Discussão',
 'views' => 'Visualizações',
 'toolbox' => 'Ferramentas',
-'userpage' => 'Ver página de usuário',
-'projectpage' => 'Ver página de projeto',
-'imagepage' => 'Ver página do arquivo',
-'mediawikipage' => 'Ver página de mensagens',
-'templatepage' => 'Ver página de predefinições',
-'viewhelppage' => 'Ver página de ajuda',
-'categorypage' => 'Ver página de categorias',
-'viewtalkpage' => 'Ver discussão',
 'otherlanguages' => 'Em outros idiomas',
 'redirectedfrom' => '(Redirecionado de $1)',
 'redirectpagesub' => 'Página de redirecionamento',
@@ -715,8 +686,9 @@ O administrador que bloqueou ofereceu a seguinte explicação: "$3".',
 # Login and logout pages
 'logouttext' => "'''Agora você encontra-se desautenticado.'''
 
-É possível continuar usando {{SITENAME}} anonimamente ou [[Special:UserLogin|autenticar-se novamente]] com o mesmo nome de usuário ou com um nome diferente.
+É possível continuar usando {{SITENAME}} anonimamente ou $1 com o mesmo nome de usuário ou com um nome diferente.
 Note que algumas páginas podem continuar sendo exibidas como se você ainda estivesse autenticado até que você limpe a ''cache'' do seu navegador.",
+'logouttext-link-text'       => 'autenticar-se novamente',
 'welcomecreation' => '== Bem-vindo(a), $1! ==
 A sua conta foi criada.
 Não se esqueça de personalizar as suas [[Special:Preferences|preferências no wiki {{SITENAME}}]].',
@@ -830,35 +802,6 @@ Por favor aguarde antes de tentar novamente.',
 'resetpass-wrong-oldpass' => 'Senha temporária ou atual inválida.
 Você pode já ter alterado com sucesso a sua senha, ou solicitado uma nova senha temporária.',
 'resetpass-temp-password' => 'Senha temporária:',
-
-# Special:PasswordReset
-'passwordreset' => 'Redefinir senha',
-'passwordreset-text' => 'Preencha este formulário para recuperar os dados da sua conta pelo e-mail.',
-'passwordreset-legend' => 'Reiniciar a senha',
-'passwordreset-disabled' => 'Redefinições de senha foram desabilitadas neste wiki.',
-'passwordreset-pretext' => '{{PLURAL:$1||Introduza um dos dados abaixo}}',
-'passwordreset-username' => 'Nome de usuário:',
-'passwordreset-domain' => 'Domínio:',
-'passwordreset-capture' => 'Ver o e-mail resultante?',
-'passwordreset-capture-help' => 'Se marcar esta caixa, o e-mail (com a senha temporária) será-lhe mostrado, além de ser enviado para o usuário.',
-'passwordreset-email' => 'Endereço de e-mail:',
-'passwordreset-emailtitle' => 'Detalhes da conta em {{SITENAME}}',
-'passwordreset-emailtext-ip' => 'Alguém (provavelmente você, do endereço IP $1) solicitou um lembrete do seu detalhes de conta para {{SITENAME}} ($4). O seguinte usuário {{PLURAL:$3|conta|são contas}} associado com este endereço de e-mail:
-
-$2
-
-{{PLURAL:$3|Esta senha temporária |Essas senhas temporárias}} vão expirar em {{PLURAL:$5|um dia|$5 dias}}.
-Você deve efetuar login e escolher uma nova senha agora. Se você conseguir lembrar da senha, ignore este e-mail e continue usando sua senha anterior, do contrário, prossiga com as instruções clicando no link.',
-'passwordreset-emailtext-user' => 'O usuário $1 da {{SITENAME}} pediu a recuperação dos detalhes da sua conta na {{SITENAME}} ($4). {{PLURAL:$3|A seguinte conta está associada|As seguintes contas estão associadas}} a este e-mail:
-
-$2
-
-{{PLURAL:$3|Esta senha temporária irá|Estas senhas temporárias irão}} expirar dentro de {{PLURAL:$5|um dia|$5 dias}}. Deve autenticar-se e escolher uma senha nova agora. Se este pedido não foi feito por si, ou se entretanto se recordou da sua senha original e já não deseja alterá-la, pode ignorar esta mensagem e continuar a usar a senha antiga.',
-'passwordreset-emailelement' => 'Usuário: $1
-Senha temporária: $2',
-'passwordreset-emailsent' => 'Foi enviado um e-mail de lembrete.',
-'passwordreset-emailsent-capture' => 'Foi enviado um e-mail de lembrete, que é mostrado abaixo.',
-'passwordreset-emailerror-capture' => 'Foi gerado o lembrete de e-mail mostrado abaixo, contudo falhou o envio para o usuário: $1',
 
 # Special:ChangeEmail
 'changeemail' => 'Alterar o endereço de e-mail',
@@ -985,7 +928,6 @@ O registro de bloqueio mais recente é fornecido abaixo, para referência:',
 '''Ele ainda não foi salvo!'''",
 'sitejspreview' => "''Lembre-se de que você está apenas previsualizando este código JavaScript.'''
 '''Ele ainda não foi salvo!'''",
-'userinvalidcssjstitle' => "'''Aviso:''' Não existe um tema \"\$1\". Lembre-se que as páginas .css e  .js utilizam um título em minúsculas, exemplo: {{ns:user}}:Alguém/vector.css aposto a {{ns:user}}:Alguém/Vector.css.",
 'updated' => '(Atualizado)',
 'note' => "'''Nota:'''",
 'previewnote' => "'''Lembre-se de que isto é apenas uma previsão.'''
@@ -1340,14 +1282,6 @@ Tente utilizar o prefixo ''all:'' em sua busca, para pesquisar por todos os cont
 Você poderá pesquisar através do Google enquanto isso.
 Note que os índices do sistema de busca externo poderão conter referências desatualizadas a {{SITENAME}}.',
 
-# Quickbar
-'qbsettings' => 'Configurações da Barra Rápida',
-'qbsettings-none' => 'Nenhuma',
-'qbsettings-fixedleft' => 'Fixo à esquerda',
-'qbsettings-fixedright' => 'Fixo à direita',
-'qbsettings-floatingleft' => 'Flutuando à esquerda',
-'qbsettings-floatingright' => 'Flutuando à direita',
-'qbsettings-directionality' => 'Fixado, dependendo da direcionalidade do seu alfabeto e da sua língua',
 
 # Preferences page
 'preferences' => 'Preferências',
@@ -3017,15 +2951,7 @@ Permite colocar uma justificativa no sumário da edição.',
 
 # Scripts
 'common.js' => '/* Códigos JavaScript aqui colocados serão carregados por todos aqueles que acessarem alguma página deste wiki */',
-'standard.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Clássico */',
-'nostalgia.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Nostalgia */',
-'cologneblue.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Azul colonial */',
 'monobook.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin MonoBook */',
-'myskin.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin MySkin */',
-'chick.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Chique */',
-'simple.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Simples */',
-'modern.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Moderno */',
-'vector.js' => '/* Qualquer JavaScript aqui colocado afetará os usuários do skin Vector */',
 
 # Metadata
 'notacceptable' => 'O servidor não pode fornecer os dados em um formato que o seu cliente possa ler.',
@@ -3066,14 +2992,7 @@ Tal bloqueio foi provavelmente causado por uma ligação para um ''website'' ext
 'pageinfo-viewsperedit' => 'Visitas por edição',
 
 # Skin names
-'skinname-standard' => 'Clássico',
-'skinname-nostalgia' => 'Nostalgia',
-'skinname-cologneblue' => 'Azul colonial',
 'skinname-monobook' => 'MonoBook',
-'skinname-myskin' => 'MySkin',
-'skinname-chick' => 'Chique',
-'skinname-simple' => 'Simples',
-'skinname-modern' => 'Moderno',
 
 # Patrolling
 'markaspatrolleddiff' => 'Marcar como patrulhada',

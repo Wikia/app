@@ -9,22 +9,12 @@ class SkinChooser {
 	 * @return bool
 	 */
 	public static function onGetPreferences( $user, &$defaultPreferences ) {
-		global $wgEnableAnswers, $wgForceSkin, $wgAdminSkin, $wgDefaultSkin, $wgSkinPreviewPage, $wgSkipSkins, $wgSkipOldSkins, $wgEnableUserPreferencesV2Ext;
+		global $wgEnableAnswers, $wgAdminSkin, $wgDefaultSkin, $wgSkinPreviewPage, $wgSkipSkins, $wgEnableUserPreferencesV2Ext;
 
 		// hide default MediaWiki skin fieldset
 		unset( $defaultPreferences['skin'] );
 
-		$mSkin  = $user->getOption( 'skin' );
-
-		// hacks for Answers
-		if ( !empty( $wgEnableAnswers ) ) {
-			$mSkin = 'answers';
-		}
-
-		// no skin settings at all when skin is forced
-		if ( !empty( $wgForceSkin ) ) {
-			return true;
-		}
+		$mSkin  = $user->getGlobalPreference( 'skin' );
 
 		if ( !empty( $wgAdminSkin ) ) {
 			$defaultSkinKey = $wgAdminSkin;
@@ -55,7 +45,7 @@ class SkinChooser {
 
 		$oldSkinNames = array();
 		foreach ( $validSkinNames as $skinKey => $skinVal ) {
-			if ( $skinKey == 'oasis' || ( ( in_array( $skinKey, $wgSkipSkins ) || in_array( $skinKey, $wgSkipOldSkins ) ) && !( $skinKey == $mSkin ) ) ) {
+			if ( $skinKey == 'oasis' || ( ( in_array( $skinKey, $wgSkipSkins ) ) && !( $skinKey == $mSkin ) ) ) {
 				continue;
 			}
 			$oldSkinNames[$skinKey] = $skinVal;
@@ -126,13 +116,13 @@ class SkinChooser {
 		global $wgUser, $wgEnableAnswers;
 		wfProfileIn( __METHOD__ );
 
-		$val = $wgUser->getOption( self::getUserOptionKey( $option ) );
+		$val = $wgUser->getGlobalPreference( self::getUserOptionKey( $option ) );
 
 		// fallback to non-answers option (RT #54087)
 		if ( !empty( $wgEnableAnswers ) &&  $val == '' ) {
 			wfDebug( __METHOD__ . ": '{$option}' fallbacked\n" );
 
-			$val = $wgUser->getOption( $option );
+			$val = $wgUser->getGlobalPreference( $option );
 		}
 
 		wfDebug( __METHOD__ . ": '{$option}' = {$val}\n" );
@@ -150,13 +140,13 @@ class SkinChooser {
 
 		$key = self::getUserOptionKey( $option );
 
-		$wgUser->setOption( $key, $value );
+		$wgUser->setGlobalPreference( $key, $value );
 		self::log( __METHOD__, "{$key} = {$value}" );
 
 		/* debugging skin leak, -uber */
 		if ( $key == 'skin' ) { # yes, i do mean to check key and not option here
 			global $wgCityId;
-			$wgUser->setOption( 'skin-set', implode( '|', array( 'SkinChooser', $wgCityId, time() ) ) );
+			$wgUser->setGlobalPreference( 'skin-set', implode( '|', array( 'SkinChooser', $wgCityId, time() ) ) );
 		}
 		/* end debug */
 
@@ -187,7 +177,7 @@ class SkinChooser {
 	 * Select proper skin and theme based on user preferences / default settings
 	 */
 	public static function onGetSkin( RequestContext $context, &$skin ) {
-		global $wgDefaultSkin, $wgDefaultTheme, $wgSkinTheme, $wgForceSkin, $wgAdminSkin, $wgSkipSkins, $wgEnableAnswers;
+		global $wgDefaultSkin, $wgDefaultTheme, $wgSkinTheme, $wgAdminSkin, $wgSkipSkins, $wgEnableAnswers;
 
 		wfProfileIn( __METHOD__ );
 
@@ -206,7 +196,7 @@ class SkinChooser {
 			$headers = apache_request_headers();
 
 			if ( isset( $headers[ 'X-Skin' ] ) ) {
-				if ( in_array( $headers[ 'X-Skin' ], array( 'monobook', 'oasis', 'venus', 'wikia', 'wikiamobile', 'uncyclopedia' ) ) ) {
+				if ( in_array( $headers[ 'X-Skin' ], array( 'monobook', 'oasis', 'wikia', 'wikiamobile', 'uncyclopedia' ) ) ) {
 					$skin = Skin::newFromKey( $headers[ 'X-Skin' ] );
 				// X-Skin header fallback for Mercury which is actually not a MediaWiki skin but a separate application
 				} elseif ( $headers[ 'X-Skin' ] === 'mercury') {
@@ -233,22 +223,6 @@ class SkinChooser {
 			$request->setVal( 'useskin', 'oasis' );
 		}
 
-		if ( !empty( $wgForceSkin ) ) {
-			$wgForceSkin = $request->getVal( 'useskin', $wgForceSkin );
-			$elems = explode( '-', $wgForceSkin );
-			$userSkin = ( array_key_exists( 0, $elems ) ) ? $elems[ 0 ] : null;
-			$userTheme = ( array_key_exists( 1, $elems ) ) ? $elems[ 1 ] : null;
-
-			$skin = Skin::newFromKey( $userSkin );
-			$skin->themename = $userTheme;
-
-			self::log( __METHOD__, "forced skin to be {$wgForceSkin}" );
-
-			wfProfileOut( __METHOD__ );
-
-			return false;
-		}
-
 		# Get skin logic
 		wfProfileIn( __METHOD__ . '::GetSkinLogic' );
 
@@ -268,11 +242,6 @@ class SkinChooser {
 			$userSkin = self::getUserOption( 'skin' );
 			$userTheme = self::getUserOption( 'theme' );
 
-			// RT:81173 Answers force hack.  It's in here because wgForceSkin is overwritten in CommonExtensions to '', most likely due to allowing admin skins and themes.  This will force answers and falls through to admin skin and theme logic if there is one.
-			if ( !empty( $wgDefaultSkin ) && $wgDefaultSkin == 'answers' ) {
-				$userSkin = 'answers';
-			}
-
 			if ( empty( $userSkin ) ) {
 				if ( !empty( $wgAdminSkin ) ) {
 					$adminSkinArray = explode( '-', $wgAdminSkin );
@@ -281,7 +250,7 @@ class SkinChooser {
 				} else {
 					$userSkin = 'oasis';
 				}
-			} else if ( !empty( $wgAdminSkin ) && $userSkin != 'venus' && $userSkin != 'oasis' && $userSkin != 'monobook' && $userSkin != 'wowwiki' && $userSkin != 'lostbook' ) {
+			} else if ( !empty( $wgAdminSkin ) && $userSkin != 'oasis' && $userSkin != 'monobook' && $userSkin != 'wowwiki' && $userSkin != 'lostbook' ) {
 				$adminSkinArray = explode( '-', $wgAdminSkin );
 				$userSkin = isset( $adminSkinArray[0] ) ? $adminSkinArray[0] : null;
 				$userTheme = isset( $adminSkinArray[1] ) ? $adminSkinArray[1] : null;

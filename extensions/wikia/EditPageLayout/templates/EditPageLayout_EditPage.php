@@ -20,6 +20,11 @@
 			<a id="EditPageTitle" class="EditPageTitle" title="<?= wfMessage('editpagelayout-edit-title')->escaped() ?>">
 				<img class="sprite edit-pencil-small" src="<?= $wg->BlankImgUrl ?>">
 			</a>
+			<?php if ( !empty( $extraHeaderHtml ) ) : ?>
+				<div class="editpage-extra-header-html">
+					<?= $extraHeaderHtml ?>
+				</div>
+			<?php endif; ?>
 			<nav id="EditPageTabs" class="EditPageTabs editpage-tabs" data-space-type="tabs" data-space-autoshow="true"></nav>
 			<aside id="HelpLink" class="HelpLink"><?= $helpLink ?></aside>
 			<aside id="NotificationsLink" class="NotificationsLink"><a href="#"><?= $notificationsLink ?></a></aside>
@@ -125,13 +130,19 @@
 								</div>
 							<?php endif ?>
 							<nav class="buttons">
-								<?php if ( $pagetype == 'codepage' ): ?>
-									<?= $app->renderView( 'EditPageLayout', 'CodeButtons'); ?>
-								<?php else: ?>
+								<?php if ( $showPreview ): ?>
 									<?= $app->renderView( 'EditPageLayout', 'Buttons', [ 'showMobilePreview' => $showMobilePreview ]); ?>
+								<?php else: ?>
+									<?= $app->renderView( 'EditPageLayout', 'CodeButtons'); ?>
 								<?php endif ?>
 							</nav>
 						</div>
+						<?php if ( $showInfoboxPreview ): ?>
+							<div class="module_content">
+								<p><?= wfMessage('infoboxpreview-entrypoint-message')->parse() ?></p>
+								<input type="button" class="InfoboxPreview" value="<?= wfMessage('infoboxpreview-entrypoint-button')->escaped(); ?>"/>
+							</div>
+						<?php endif ?>
 					</div>
 				</div>
 			</section>

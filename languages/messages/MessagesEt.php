@@ -427,30 +427,12 @@ $messages = array(
 'navigation' => 'Navigeerimine',
 'and' => '&#32;ja',
 
-# Cologne Blue skin
 'qbfind' => 'Otsi',
 'qbbrowse' => 'Sirvi',
-'qbedit' => 'Redigeeri',
 'qbpageoptions' => 'Lehekülje suvandid',
 'qbpageinfo' => 'Lehekülje andmed',
-'qbmyoptions' => 'Minu suvandid',
-'qbspecialpages' => 'Erileheküljed',
 'faq' => 'KKK',
-'faqpage' => 'Project:KKK',
 
-# Vector skin
-'vector-action-addsection' => 'Lisa teema',
-'vector-action-delete' => 'Kustuta',
-'vector-action-move' => 'Teisalda',
-'vector-action-protect' => 'Kaitse',
-'vector-action-undelete' => 'Taasta',
-'vector-action-unprotect' => 'Muuda kaitset',
-'vector-simplesearch-preference' => 'Luba täiustatud otsinguvihjed (ainult Vektori-kujunduses)',
-'vector-view-create' => 'Loo',
-'vector-view-edit' => 'Redigeeri',
-'vector-view-history' => 'Näita ajalugu',
-'vector-view-view' => 'Vaata',
-'vector-view-viewsource' => 'Vaata lähteteksti',
 'actions' => 'Toimingud',
 'namespaces' => 'Nimeruumid',
 'variants' => 'Variandid',
@@ -473,7 +455,6 @@ $messages = array(
 'edit' => 'Redigeeri',
 'create' => 'Loo',
 'editthispage' => 'Redigeeri seda lehekülge',
-'create-this-page' => 'Loo see lehekülg',
 'delete' => 'Kustuta',
 'deletethispage' => 'Kustuta see lehekülg',
 'undelete_short' => 'Taasta {{PLURAL:$1|üks muudatus|$1 muudatust}}',
@@ -488,19 +469,9 @@ $messages = array(
 'talkpagelinktext' => 'arutelu',
 'specialpage' => 'Erilehekülg',
 'personaltools' => 'Personaalsed tööriistad',
-'postcomment' => 'Uus alaosa',
-'articlepage' => 'Artiklilehekülg',
 'talk' => 'Arutelu',
 'views' => 'vaatamisi',
 'toolbox' => 'Tööriistad',
-'userpage' => 'Kasutajalehekülg',
-'projectpage' => 'Vaata projektilehekülge',
-'imagepage' => 'Vaata faililehekülge',
-'mediawikipage' => 'Vaata sõnumite lehekülge',
-'templatepage' => 'Mallilehekülg',
-'viewhelppage' => 'Vaata abilehekülge',
-'categorypage' => 'Kategoorialehekülg',
-'viewtalkpage' => 'Arutelulehekülg',
 'otherlanguages' => 'Teistes keeltes',
 'redirectedfrom' => '(Ümber suunatud leheküljelt $1)',
 'redirectpagesub' => 'Ümbersuunamisleht',
@@ -688,8 +659,9 @@ Administraator lukustas selle järgmisel põhjusel: "$3".',
 # Login and logout pages
 'logouttext' => "'''Oled nüüd välja loginud.'''
 
-Võid jätkata {{GRAMMAR:genitive|{{SITENAME}}}} kasutamist anonüümselt, aga ka sama või mõne teise kasutajana uuesti [[Special:UserLogin|sisse logida]].
+Võid jätkata {{GRAMMAR:genitive|{{SITENAME}}}} kasutamist anonüümselt, aga ka sama või mõne teise kasutajana uuesti $1.
 Pane tähele, et seni kuni sa pole oma võrgulehitseja puhvrit tühjendanud, võidakse mõni lehekülg endiselt nii kuvada nagu oleksid ikka sisse logitud.",
+'logouttext-link-text'       => 'sisse logida',
 'welcomecreation' => '== Tere tulemast, $1! ==
 
 Sinu konto on loodud.
@@ -801,36 +773,6 @@ Sisselogimise lõpetamiseks pead siia uue parooli sisestama:',
 'resetpass-wrong-oldpass' => 'Vigane ajutine või praegune salasõna.
 Võib-olla oled juba edukalt muudnud oma salasõna või taotlenud uut ajutist salasõna.',
 'resetpass-temp-password' => 'Ajutine parool:',
-
-# Special:PasswordReset
-'passwordreset' => 'Parooli lähtestamine',
-'passwordreset-text' => 'Täida see vorm, et saada e-kiri oma konto andmetega.',
-'passwordreset-legend' => 'Parooli lähtestamine',
-'passwordreset-disabled' => 'Selles vikis on paroolide lähtestamine keelatud.',
-'passwordreset-pretext' => '{{PLURAL:$1||Sisesta üks järgmistest andmeüksustest}}',
-'passwordreset-username' => 'Kasutajanimi:',
-'passwordreset-domain' => 'Domeen:',
-'passwordreset-capture' => 'Näita lähetatavat e-kirja?',
-'passwordreset-capture-help' => 'Kui valid selle märkeruudu, näidatakse sulle ajutist parooli sisaldavat e-kirja, mis ühtlasi kasutajale saadetakse.',
-'passwordreset-email' => 'E-posti aadress:',
-'passwordreset-emailtitle' => '{{GRAMMAR:genitive|{{SITENAME}}}} konto andmed',
-'passwordreset-emailtext-ip' => 'Keegi, arvatavasti sina ise, IP-aadressilt $1 palus meelde tuletada sinu {{GRAMMAR:genitive|{{SITENAME}}}} ($4) konto üksikasjad. Selle e-posti aadressiga on seotud {{PLURAL:$3|järgmine konto|järgmised kontod}}:
-
-$2
-
-{{PLURAL:$3|See ajutine parool aegub|Need ajutised paroolid aeguvad}} {{PLURAL:$5|ühe|$5}} päeva pärast.
-Peaksid nüüd sisse logima ja uue parooli valima. Kui selle palve esitas keegi teine või kui sulle meenus su parool ja sa ei soovi seda enam muuta, võid teadet eirata ja jätkata vana parooli kasutamist.',
-'passwordreset-emailtext-user' => '{{GRAMMAR:genitive|{{SITENAME}}}} kasutaja $1 palus meelde tuletada sinu {{GRAMMAR:genitive|{{SITENAME}}}} ($4) konto üksikasjad. Selle e-posti aadressiga on seotud {{PLURAL:$3|järgmine konto|järgmised kontod}}:
-
-$2
-
-{{PLURAL:$3|See ajutine parool aegub|Need ajutised paroolid aeguvad}} {{PLURAL:$5|ühe|$5}} päeva pärast.
-Peaksid nüüd sisse logima ja uue parooli valima. Kui selle palve esitas keegi teine või kui sulle meenus su parool ja sa ei soovi seda enam muuta, võid teadet eirata ja jätkata vana parooli kasutamist.',
-'passwordreset-emailelement' => 'Kasutajanimi: $1
-Ajutine parool: $2',
-'passwordreset-emailsent' => 'Meeldetuletuskiri on saadetud.',
-'passwordreset-emailsent-capture' => 'E-kirjatsi on saadetud allpool näidatav meeldetuletus.',
-'passwordreset-emailerror-capture' => 'Koostati allpool näidatav meeldetuletus, aga selle e-kirjatsi kasutajale saatmine ebaõnnestus: $1',
 
 # Special:ChangeEmail
 'changeemail' => 'E-posti aadressi muutmine',
@@ -1310,14 +1252,6 @@ päringu ees prefiksit ''all:''. Konkreetsest nimeruumist otsimiseks kasuta pref
 Vahepeal saad otsimiseks Google'it kasutada.
 Pane tähele, et Google'is talletatud {{GRAMMAR:genitive|{{SITENAME}}}} sisu võib olla iganenud.",
 
-# Quickbar
-'qbsettings' => 'Kiirriba sätted',
-'qbsettings-none' => 'Ei_ole',
-'qbsettings-fixedleft' => 'Püsivalt_vasakul',
-'qbsettings-fixedright' => 'Püsivalt paremal',
-'qbsettings-floatingleft' => 'Ujuvalt vasakul',
-'qbsettings-floatingright' => 'Ujuvalt paremal',
-'qbsettings-directionality' => 'Fikseeritud, tulenevalt sinu keeles kasutatava kirja suunast',
 
 # Preferences page
 'preferences' => 'Eelistused',
@@ -2967,7 +2901,6 @@ Samuti võimaldab see resümee reale põhjenduse lisamist.',
 
 # Stylesheets
 'common.css' => '/* Siin olevat CSS-i kasutavad kõik kujundused. */',
-'standard.css' => '/* Siin olev CSS puudutab Standard-kujunduse kasutajaid. */',
 
 # Scripts
 'common.js' => '/* Siinne JavaScript laaditakse igale kasutajatele igal laaditud leheküljel. */',
@@ -3011,15 +2944,7 @@ See on ilmselt põhjustatud linkimisest mustas nimekirjas olevasse välisvõrguk
 'pageinfo-viewsperedit' => 'Vaatamisi redaktsiooni kohta',
 
 # Skin names
-'skinname-standard' => 'Algeline',
-'skinname-nostalgia' => 'Nostalgia',
-'skinname-cologneblue' => 'Kölni sinine',
 'skinname-monobook' => 'MonoBook',
-'skinname-myskin' => 'Minu kujundus',
-'skinname-chick' => 'Tibu',
-'skinname-simple' => 'Lihtne',
-'skinname-modern' => 'Uudne',
-'skinname-vector' => 'Vektor',
 
 # Patrolling
 'markaspatrolleddiff' => 'Märgi kui kontrollitud',

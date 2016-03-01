@@ -74,17 +74,9 @@ $messages = array(
 'mytalk'  => 'Disolo ya munu',
 'and'     => '&#32;mpe',
 
-# Cologne Blue skin
 'qbfind'   => 'Sosa',
 'qbbrowse' => 'Tala',
-'qbedit'   => 'Soba',
 
-# Vector skin
-'vector-action-delete' => 'Kufwa',
-'vector-action-move'   => 'Nata',
-'vector-view-edit'     => 'Sonika',
-'vector-view-history'  => 'Tala bansoba',
-'vector-view-view'     => 'Tânga',
 
 'errorpagetitle'   => 'Foti',
 'returnto'         => 'Vutukila $1',
@@ -103,7 +95,6 @@ $messages = array(
 'talk'             => 'Disolo',
 'views'            => 'Bantadilu',
 'toolbox'          => 'Bisadilu',
-'viewtalkpage'     => 'Tala disolo',
 'otherlanguages'   => 'Bandinga ya nkaka',
 'redirectedfrom'   => '(Balulama tuka $1)',
 'lastmodifiedat'   => 'Mukânda yayi me sobama na kilumbu $1 na ngûnga $2',

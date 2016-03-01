@@ -10,12 +10,12 @@
  *
  */
 
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'User Wall',
-	'author' => array( 'Tomek Odrobny', 'Christian Williams', "Andrzej 'nAndy' Lukaszewski", 'Piotr Bablok' ),
+	'author' => [ 'Tomek Odrobny', 'Christian Williams', "Andrzej 'nAndy' Lukaszewski", 'Piotr Bablok' ],
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Wall',
 	'descriptionmsg' => 'wall-desc',
-);
+];
 
 $dir = dirname( __FILE__ );
 
@@ -100,7 +100,7 @@ $wgHooks['ContributionsToolLinks'][] = 'WallHooksHelper::onContributionsToolLink
 // watchlist
 $wgHooks['ArticleCommentBeforeWatchlistAdd'][] = 'WallHooksHelper::onArticleCommentBeforeWatchlistAdd';
 // $wgHooks['WatchArticle'][] = 'WallHooksHelper::onWatchArticle';
-// $wgHooks['UnwatchArticle'][] = 'WallHooksHelper::onUnwatchArticle';
+$wgHooks['UnwatchArticle'][] = 'WallHooksHelper::onUnwatchArticle';
 
 // diff page adjusting
 $wgHooks['DiffViewHeader'][] = 'WallHooksHelper::onDiffViewHeader';
@@ -154,7 +154,7 @@ $wgHooks['ArticleCommentGetSquidURLs'][] = 'WallHooksHelper::onArticleCommentGet
 // VOLDEV-66
 $wgHooks['GetTalkPage'][] = 'WallHooksHelper::onGetTalkPage';
 
-JSMessages::registerPackage( 'Wall', array(
+JSMessages::registerPackage( 'Wall', [
 	'wall-notifications',
 	'wall-notifications-reminder',
 	'wall-notifications-wall-disabled',
@@ -183,7 +183,7 @@ JSMessages::registerPackage( 'Wall', array(
 	'preview',
 	'savearticle',
 	'back',
-) );
+] );
 
 /**
  * extension related configuration
@@ -199,9 +199,9 @@ $wgDefaultUserOptions['enotifwallthread'] = WALL_EMAIL_SINCEVISITED;
 $wgDefaultUserOptions['wallshowsource'] = false;
 $wgDefaultUserOptions['walldelete'] = false;
 
-$wgUserProfileNamespaces = array(
+$wgUserProfileNamespaces = [
 	NS_USER, NS_USER_TALK, NS_USER_WALL
-);
+];
 
 define( 'WH_EDIT', 0 );
 define( 'WH_NEW', 1 );
@@ -275,7 +275,12 @@ $wgAddGroups['bureaucrat'][] = 'threadmoderator';
 $wgRemoveGroups['bureaucrat'][] = 'threadmoderator';
 $wgAddGroups['sysop'][] = 'threadmoderator';
 $wgRemoveGroups['sysop'][] = 'threadmoderator';
-$wgAddGroups['staff'][] = 'threadmoderator';
-$wgRemoveGroups['staff'][] = 'threadmoderator';
 $wgAddGroups['helper'][] = 'threadmoderator';
 $wgRemoveGroups['helper'][] = 'threadmoderator';
+
+if ( is_array( $wgAddGroups['staff'] ) ) {
+	$wgAddGroups[ 'staff' ][] = 'threadmoderator';
+}
+if ( is_array( $wgRemoveGroups[ 'staff' ] ) ) {
+	$wgRemoveGroups[ 'staff' ][] = 'threadmoderator';
+}

@@ -11,9 +11,9 @@
 		<ul class="activity">
 			<li class="threads"><?= wfMessage( 'forum-board-thread-replies', $wg->Lang->formatNum( $repliesNumber ) )->escaped() ?></li>
 			<li class="posts"><?= wfMessage( 'forum-board-thread-kudos', $wg->Lang->formatNum( $kudosNumber ) )->escaped() ?></li>
-			<? if ($isWatched): ?>
+			<? if ( $isWatched ): ?>
 				<li class="follow following" data-iswatched="1"><?= wfMessage( 'forum-board-thread-following' )->escaped() ?></li>
-			<? else: ?>
+			<? else : ?>
 				<li class="follow" data-iswatched="0"><?= wfMessage( 'forum-board-thread-follow' )->escaped() ?></li>
 			<? endif ?>
 		</ul>

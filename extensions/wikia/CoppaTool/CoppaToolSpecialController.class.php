@@ -73,7 +73,7 @@ class CoppaToolSpecialController extends WikiaSpecialPageController {
 						[ 'href' => '#' ],
 						$this->msg( 'coppatool-disable' )->escaped()
 					),
-					'done' => $userObj->getOption( 'disabled', false ),
+					'done' => $userObj->getGlobalFlag( 'disabled', false ),
 				];
 				$this->buttons[] = [
 					'buttonAction' => 'blank-profile',

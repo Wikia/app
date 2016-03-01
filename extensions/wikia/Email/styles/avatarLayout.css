@@ -11,7 +11,7 @@
 	width: 50px;
 }
 
-.greeting p:last-child {
+.bold {
 	font-weight: bold;
 }
 
@@ -27,6 +27,3 @@
 	font-size: 14px;
 }
 
-.content-footer-messages {
-	padding-top: 70px;
-}

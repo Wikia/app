@@ -299,30 +299,12 @@ $messages = array(
 'navigation' => 'Nawigacija',
 'and' => '&#32;a',
 
-# Cologne Blue skin
 'qbfind' => 'Namakaś',
 'qbbrowse' => 'Pśeběraś',
-'qbedit' => 'Pśeměniś',
 'qbpageoptions' => 'Toś ten bok',
 'qbpageinfo' => 'Kontekst',
-'qbmyoptions' => 'Móje boki',
-'qbspecialpages' => 'Specialne boki',
 'faq' => 'FAQ (pšašanja a wótegrona)',
-'faqpage' => 'Project:FAQ (pšašanja a wótegrona)',
 
-# Vector skin
-'vector-action-addsection' => 'Temu pśidaś',
-'vector-action-delete' => 'Wulašowaś',
-'vector-action-move' => 'Pśesunuś',
-'vector-action-protect' => 'Šćitaś',
-'vector-action-undelete' => 'Wótnowiś',
-'vector-action-unprotect' => 'Šćit změniś',
-'vector-simplesearch-preference' => 'Pólěpšone pytańske naraźenja zmóžniś (jano suknja Vector)',
-'vector-view-create' => 'Napóraś',
-'vector-view-edit' => 'Wobźěłaś',
-'vector-view-history' => 'Wersije a awtory',
-'vector-view-view' => 'Cytaś',
-'vector-view-viewsource' => 'Žrědło se woglědaś',
 'actions' => 'Akcije',
 'namespaces' => 'Mjenjowe rumy',
 'variants' => 'Warianty',
@@ -345,7 +327,6 @@ $messages = array(
 'edit' => 'wobźěłaś',
 'create' => 'Wuźěłaś',
 'editthispage' => 'Bok wobźěłaś',
-'create-this-page' => 'Bok wuźěłaś',
 'delete' => 'Wulašowaś',
 'deletethispage' => 'Toś ten bok wulašowaś',
 'undelete_short' => '{{PLURAL:$1|1 wersiju|$1 wersiji|$1 wersije}} nawrośiś.',
@@ -360,19 +341,9 @@ $messages = array(
 'talkpagelinktext' => 'diskusija',
 'specialpage' => 'Specialny bok',
 'personaltools' => 'Wósobinske pomocne srědki',
-'postcomment' => 'Nowy wótrězk',
-'articlepage' => 'Nastawk',
 'talk' => 'Diskusija',
 'views' => 'Naglědy',
 'toolbox' => 'Pomocne srědki',
-'userpage' => 'Wužywarski bok pokazaś',
-'projectpage' => 'Projektowy bok pokazaś',
-'imagepage' => 'Datajowy bok se woglědaś',
-'mediawikipage' => 'Nastawk pokazaś',
-'templatepage' => 'Pśedłogu pokazaś',
-'viewhelppage' => 'Pomocny bok pokazaś',
-'categorypage' => 'Kategoriju pokazaś',
-'viewtalkpage' => 'Diskusija',
 'otherlanguages' => 'W drugich rěcach',
 'redirectedfrom' => '(pósrědnjone z boka „$1”)',
 'redirectpagesub' => 'Dalejpósrědnjenje',
@@ -557,8 +528,9 @@ Administrator, kenž jo jen zastajił, jo toś tu pśicynu pódał: "$3".',
 # Login and logout pages
 'logouttext' => "'''Sy se něnto wótzjawił.'''
 
-Móžoš {{SITENAME}} anomymnje dalej wužywaś abo móžoš [[Special:UserLogin|se znowego pśizjawiś]] ako samski abo hynakšy wužywaŕ.
+Móžoš {{SITENAME}} anomymnje dalej wužywaś abo móžoš $1 ako samski abo hynakšy wužywaŕ.
 Źiwaj na to, až někotare boki se dalej tak zwobraznjuju ako by hyšći pśizjawjeny był, až njewuproznijoš cache swójego wobglědowaka.",
+'logouttext-link-text'       => 'se znowego pśizjawiś',
 'welcomecreation' => '== Witaj, $1! ==
 
 Twójo konto jo se załožyło. Njezabydni změniś swóje [[Special:Preferences|nastajenja {{SITENAME}}]].',
@@ -665,36 +637,6 @@ Móžoš toś te zdźělenje ignorowaś, jolic toś te konto jo se jano zamólnj
 'resetpass-wrong-oldpass' => 'Njepłaśiwe nachylne abo aktualne gronidło.
 Sy snaź swójo gronidło južo wuspěšnje změnił abo nowe nachylne gronidło pominał.',
 'resetpass-temp-password' => 'Nachylne gronidło:',
-
-# Special:PasswordReset
-'passwordreset' => 'Gronidło slědk stajiś',
-'passwordreset-text' => 'Wupołni toś ten formular, aby dostał e-mailowe dopomnjeśe k swójim kontowym drobnostkam.',
-'passwordreset-legend' => 'Gronidło slědk stajiś',
-'passwordreset-disabled' => 'Slědkstajenja gronidłow su se znjemóžnili na toś tom wikiju.',
-'passwordreset-pretext' => '{{PLURAL:$1||Zapódaj dołojce jadne ze slědujucych datowych podaśow}}',
-'passwordreset-username' => 'Wužywarske mě:',
-'passwordreset-domain' => 'Domena:',
-'passwordreset-capture' => 'E-mail se woglědaś?',
-'passwordreset-capture-help' => 'Jolic nakśickujoš toś ten kašćik, e-mail (z nachylnym gronidłom) buźo se pokazaś a wužywarjeju słaś.',
-'passwordreset-email' => 'E-mailowa adresa:',
-'passwordreset-emailtitle' => 'Kontowe drobnostki na {{GRAMMAR:lokatiw|{{SITENAME}}}}',
-'passwordreset-emailtext-ip' => 'Něchten (nejskerjej ty, z IP-adresu $1) jo dopomnjeśe na twóje kontowe drobnostki za {{SITENAME}} pominał ($4).  {{PLURAL:$3|Slědujuce wužywarske konto jo|Slědujucej wužywarskej konśe stej|Slědujuce wužywarske konta su|Slědujuce wužywarske konta su}} z toś tej e-mailoweju adresu {{PLURAL:$3|zwězane|zwězanej|zwězane|zwězane}}:
-
-$2
-
-{{PLURAL:$3|Toś to nachylne gronidło spadnjo|Toś tej nachylnej gronidle spadnjotej|Toś te nachylne gronidła spadnu|Toś te nachylne gronidła spadnu}} za {{PLURAL:$5|jaden źeń|$5 dnja|$5 dny|$5 dnjow}}.
-Ty by měł se něnto pśizjawiś a nowe gronidło wustajiś. Jolic něchten drugi jo toś to napšašowanje pósłał, abo jolic sy se zasej na spócetne gronidło spomnjeł a wěcej njocoš jo změniś, móžoš toś to zdźělenje ignorěrowaś a swójo stare gronidło dalej wužywaś.',
-'passwordreset-emailtext-user' => 'Wužywaŕ $1 jo dopomnjeśe na twóje kontowe drobnostki za {{SITENAME}} pominał ($4).  {{PLURAL:$3|Slědujuce wužywarske konto jo|Slědujucej wužywarskej konśe stej|Slědujuce wužywarske konta su|Slědlujuce wužywarske konta su}} z toś tej e-mailoweju adresu {{PLURAL:$3|zwězane|zwězanej|zwězane|zwězane}}:
-
-$2
-
-{{PLURAL:$3|Toś to nachylne gronidło spadnjo|Toś tej nachylnej gronidle spadnjotej|Toś te nachylne gronidła spadnu|Toś te nachylne gronidła spadnu}} za {{PLURAL:$5|jaden źeń|$5 dnja|$5 dny|$5 dnjow}}.
-Ty by měł se něnto pśizjawiś a nowe gronidło wustajiś. Jolic něchten drugi jo toś to napšašowanje pósłał, abo jolic sy se zasej na spócetne gronidło spomnjeł a wěcej njocoš jo změniś, móžoš toś to zdźělenje ignorěrowaś a swójo stare gronidło dalej wužywaś.',
-'passwordreset-emailelement' => 'Wužywarske mě: $1
-Nachylne gronidło: $2',
-'passwordreset-emailsent' => 'Dopominańska e-mail jo se pósłała.',
-'passwordreset-emailsent-capture' => 'Dopominańska e-mail jo se pósłała, kótaraž se dołojce pokazujo.',
-'passwordreset-emailerror-capture' => 'Dołojce pokazowana e-mail jo se napóriła, ale jo se njeraźiło ju wužiwarjeju pósłaś: $1',
 
 # Special:ChangeEmail
 'changeemail' => 'E-mailowu adresu změniś',
@@ -813,7 +755,6 @@ Nejnowšy zapisk blokěrowańskego protokola pódawa se dołojce ako referenca:'
 '''Njejo se hyšći składował!'''",
 'sitejspreview' => "'''Źiwaj na to, až wobglědujoš se jano pśeglěd toś togo koda JavaScript.'''
 '''Njejo se hyšći składował!'''",
-'userinvalidcssjstitle' => "'''Warnowanje:''' Njeeksistěrujo šat „$1“. Pšosym mysli na to, až wužywaju .css- a .js-boki mały pismik, na pś. ''{{ns:user}}:Pśikładowa/vector.css'' město ''{{ns:user}}:Pśikładowa/Vector.css''.",
 'updated' => '(Zaktualizěrowane)',
 'note' => "'''Pokazka:'''",
 'previewnote' => "'''Wobmysli, až to jo jano pśeglěd.'''
@@ -1158,14 +1099,6 @@ Zaruc, až historija wersijow nastawka jo njepśetergnjona.',
 'search-external' => 'Eksterne pytanje',
 'searchdisabled' => 'Pytanje we {{SITENAME}} jo se deaktiwěrowało. Tak dłujko móžoš w googlu pytaś. Pšosym wobmysli, až móžo pytanski indeks za {{SITENAME}} njeaktualny byś.',
 
-# Quickbar
-'qbsettings' => 'Bocna lejstwa',
-'qbsettings-none' => 'Žedne',
-'qbsettings-fixedleft' => 'nalěwo fiksěrowane',
-'qbsettings-fixedright' => 'napšawo fiksěrowane',
-'qbsettings-floatingleft' => 'nalěwo se znosujuce',
-'qbsettings-floatingright' => 'napšawo se znosujuce',
-'qbsettings-directionality' => 'Kšuty, wótwisny wót pisańskego směra twójeje rěcy',
 
 # Preferences page
 'preferences' => 'Nastajenja',
@@ -2009,7 +1942,7 @@ Glědaj teke [[Special:WantedCategories|póžedane kategorije]].',
 'linksearch-pat' => 'Pytański muster:',
 'linksearch-ns' => 'Mjenjowy rum:',
 'linksearch-ok' => 'Pytaś',
-'linksearch-text' => 'Jo móžno zastupne znamuška kaž "*.wikipedia.org" wužywaś. 
+'linksearch-text' => 'Jo móžno zastupne znamuška kaž "*.wikipedia.org" wužywaś.
 Jo nanejmjenjej głowna domena trěbna, na pśikład "*.org"<br />
 Pódpěrane protokole: <tt>$1</tt> (pšosym njepódaj je w swójom pytanju).',
 'linksearch-line' => '$1 wótkazany z $2',
@@ -2837,14 +2770,7 @@ W zespominanju dajo se pśicyna pódaś.',
 'pageinfo-viewsperedit' => 'Zwobraznjenja na změnu',
 
 # Skin names
-'skinname-standard' => 'Klasiski',
-'skinname-nostalgia' => 'Nostalgiski',
-'skinname-cologneblue' => 'Kölnski Módry',
 'skinname-monobook' => 'MonoBook',
-'skinname-myskin' => 'Mój šat',
-'skinname-chick' => 'Kurjetko',
-'skinname-simple' => 'Jadnorje',
-'skinname-modern' => 'Moderny',
 
 # Patrolling
 'markaspatrolleddiff' => 'Ako kontrolěrowane markěrowaś',

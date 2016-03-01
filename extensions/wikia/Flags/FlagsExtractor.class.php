@@ -118,10 +118,15 @@ class FlagsExtractor {
 		$isParamWithName = false;
 		$paramsCounter = 1;
 
-		$templateBegin = '{{' . $this->templateName;
+		$templateFormat = $this->getTemplateFormat();
 
 		// Position of template begin
-		$this->templateOffsetStart = $this->findTemplatePosition( $templateBegin, $this->offset );
+		if ( is_null( $templateFormat ) ) {
+			$this->templateOffsetStart = false;
+		} else {
+			$templateBegin = '{{' . $templateFormat['template'];
+			$this->templateOffsetStart = $templateFormat['position'];
+		}
 
 		if ( $this->templateOffsetStart !== false ) {
 			$this->offset = $this->templateOffsetStart + strlen( $templateBegin );
@@ -414,7 +419,7 @@ class FlagsExtractor {
 			$tag = $this->getReplacementTag();
 		}
 
-		if ( $tag == '' ) {
+		if ( $tag === '' ) {
 			$this->logInfoMessage( 'Template removed from text', [ 'template' => $template['template'] ] );
 		} else {
 			$this->logInfoMessage( 'Template replaced in text', [ 'template' => $template['template'] ] );
@@ -517,6 +522,39 @@ class FlagsExtractor {
 			}
 		}
 		return false;
+	}
+
+	private function getTemplateFormat() {
+		global $wgContLang;
+
+		$nsPrefix = $wgContLang->getNsText( NS_TEMPLATE ) . ':';
+		$nsPrefixCommon = \MWNamespace::getCanonicalName( NS_TEMPLATE ) . ':';
+
+		$templates = [
+			$this->templateName => 0,
+			$nsPrefix . $this->templateName => 0,
+			$nsPrefixCommon . $this->templateName => 0
+		];
+
+		foreach ( $templates as $templateFormat => $position ) {
+			$pos = $this->findTemplatePosition( '{{' . $templateFormat, $this->offset );
+			if ( $pos === false ) {
+				unset( $templates[$templateFormat] );
+			} else {
+				$templates[$templateFormat] = $pos;
+			}
+		}
+
+		if ( empty( $templates ) ) {
+			return null;
+		}
+
+		$template = array_keys( $templates, min( $templates ) )[0];
+
+		return [
+			'template' => $template,
+			'position' => $templates[$template]
+		];
 	}
 
 	/**

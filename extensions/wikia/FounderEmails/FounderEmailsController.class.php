@@ -43,19 +43,6 @@ class FounderEmailsController extends WikiaController {
 		}
 	}
 
-	public function executeDayZero( $params ) {
-		// FIXME: I think this language var is not used
-		$this->language = $params['language'];
-	}
-
-	public function executeDayThree( $params ) {
-		$this->language = $params['language'];
-	}
-
-	public function executeDayTen( $params ) {
-		$this->language = $params['language'];
-	}
-
 	/**
 	 * General Entry point for Event emails
 	 *
@@ -85,9 +72,6 @@ class FounderEmailsController extends WikiaController {
 			$this->buttonUrl = $params['$PAGEURL'];
 		}
 		switch( $this->type ) {
-			case 'user-registered':
-				$this->buttonUrl = $params['$EDITORTALKPAGEURL'];
-				break;
 			case 'anon-edit':
 				break;
 			case 'general-edit':

@@ -54,7 +54,7 @@ class SiteWideMessages extends SpecialPage {
 		global $wgUser, $wgOut, $wgRequest, $wgTitle, $wgParser;
 
 		//add CSS (from static file)
-		global $wgExtensionsPath, $wgExternalSharedDB;
+		global $wgExtensionsPath, $wgExternalSharedDB, $wgDWStatsDB;
 		$wgOut->addScript("\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"$wgExtensionsPath/wikia/SiteWideMessages/SpecialSiteWideMessages.css\" />");
 
 		$template = 'editor';	//default template
@@ -85,18 +85,18 @@ class SiteWideMessages extends SpecialPage {
 		$formData['mLang'] = $wgRequest->getArray('mLang');
 
 		//fetching hub list
-		$DB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$DB = wfGetDB( DB_SLAVE, array(), $wgDWStatsDB );
 		$dbResult = $DB->select(
-			array( 'city_cats' ),
-			array( 'cat_id, cat_name' ),
+			[ 'dimension_verticals' ],
+			[ 'id, name' ],
 			null,
 			__METHOD__,
-			array( 'ORDER BY' => 'cat_name' )
+			[ 'ORDER BY' => 'id' ]
 		);
 
-		$hubList = array();
+		$hubList = [];
 		while ($row = $DB->FetchObject($dbResult)) {
-			$hubList[$row->cat_id] = $row->cat_name;
+			$hubList[$row->id] = $row->name;
 		}
 		if ($dbResult !== false) {
 			$DB->FreeResult($dbResult);
@@ -105,6 +105,7 @@ class SiteWideMessages extends SpecialPage {
 		$formData['hubNames'] = $hubList;
 
 		//fetching cluster list
+		$DB = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 		$dbResult = $DB->select(
 			array( 'city_list' ),
 			array( 'city_cluster' ),
@@ -231,7 +232,9 @@ class SiteWideMessages extends SpecialPage {
 						$taskLink = Linker::linkKnown(
 							GlobalTitle::newFromText( 'Tasks/log', NS_SPECIAL, 177 ),
 							"#{$mTaskId}",
-							array(),
+							[
+								'target' => '_blank'
+							],
 							array(
 								'id' => $mTaskId,
 							)
@@ -298,7 +301,7 @@ class SiteWideMessages extends SpecialPage {
 
 	//DB functions
 	private function sendMessage( $mSender, $mText, $formData ) {
-		global $wgExternalSharedDB, $wgStatsDB, $wgUser;
+		global $wgExternalSharedDB, $wgSpecialsDB, $wgUser;
 		$result = array('msgId' => null, 'errMsg' => null);
 		$dbInsertResult = false;
 		$mWikiId = null;
@@ -700,10 +703,10 @@ class SiteWideMessages extends SpecialPage {
 							switch ($mSendModeUsers) {
 								case 'ALL':
 								case 'ACTIVE':
-									$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+									$dbr = wfGetDB(DB_SLAVE, array(), $wgSpecialsDB);
 
 									$dbResult = $dbr->select(
-										array('`specials`.`events_local_users`'),
+										array('events_local_users'),
 										array('user_id'),
 										array('wiki_id' => $mWikiId),
 										__METHOD__,
@@ -1312,7 +1315,7 @@ class SiteWideMessages extends SpecialPage {
 		}
 
 		$langs = explode( ',', $langs );
-		$userLang = $user->getOption( 'language' );
+		$userLang = $user->getGlobalPreference( 'language' );
 
 		$ret = ( in_array( MSG_LANG_ALL, $langs ) || in_array( $userLang, $langs ) || ( in_array( MSG_LANG_OTHER, $langs) && !in_array( $userLang, $wgSWMSupportedLanguages ) ) );
 

@@ -13,7 +13,6 @@ class PowerUserHooks {
 	public static function setupHooks() {
 		$oPowerUserHooks = new self();
 		\Hooks::register( 'NewRevisionFromEditComplete', [ $oPowerUserHooks, 'onNewRevisionFromEditComplete' ] );
-		\Hooks::register( 'UserAddGroup', [ $oPowerUserHooks, 'onUserAddGroup' ] );
 		\Hooks::register( 'WikiaSkinTopScripts', [ $oPowerUserHooks, 'onWikiaSkinTopScripts' ] );
 	}
 
@@ -42,24 +41,6 @@ class PowerUserHooks {
 	}
 
 	/**
-	 * Gives a user a PowerUser property of an admin type.
-	 *
-	 * @param \User $oUser
-	 * @param string $sGroup One of the groups from PowerUser.class.php
-	 * @return bool
-	 */
-	public function onUserAddGroup( \User $oUser, $sGroup ) {
-		if ( !$oUser->isSpecificPowerUser( PowerUser::TYPE_ADMIN ) &&
-			in_array( $sGroup, PowerUser::$aPowerUserAdminGroups )
-		) {
-			$oPowerUser = new PowerUser( $oUser );
-			$oPowerUser->addPowerUserProperty( PowerUser::TYPE_ADMIN );
-		}
-
-		return true;
-	}
-
-	/**
 	 * Sets a JS variable if a user is a specific PU
 	 *
 	 * @param array $vars
@@ -75,21 +56,6 @@ class PowerUserHooks {
 			}
 		}
 
-		return true;
-	}
-
-	/**
-	 * If a user is a PowerUser, add the pageviews tracking module
-	 * @see extensions/wikia/PowerUser/js/pageViewTracking.js
-	 *
-	 * @param \OutputPage $out
-	 * @return bool
-	 */
-	public function onBeforePageDisplay( \OutputPage $out ) {
-		global $wgUser;
-		if ( $wgUser instanceof \User && $wgUser->isPowerUser() ) {
-			\Wikia::addAssetsToOutput( 'poweruser' );
-		}
 		return true;
 	}
 }

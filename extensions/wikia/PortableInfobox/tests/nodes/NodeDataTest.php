@@ -7,7 +7,7 @@ class NodeDataTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       Node::getSource
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::getSource
 	 * @dataProvider sourceDataProvider
 	 *
 	 * @param $markup
@@ -31,12 +31,16 @@ class NodeDataTest extends WikiaBaseTest {
 			  [ ], [ 'test1', 'test2' ] ],
 			[ '<data><default>{{#switch: {{{test2|}}}|{{{test3}}}|{{{test4|kdjk|sajdkfj|}}}]] }}</default></data>',
 			  [ ], [ 'test2', 'test3', 'test4' ] ],
+			[ '<data source="test1"><format>my {{{test2}}}$$$</format><default>{{#switch: {{{test3|}}}|{{{test4}}}|{{{test5|kdjk|sajdkfj|}}}]] }}</default></data>',
+				[ 'test1' => 'blabla' ], [ 'test1', 'test2', 'test3', 'test4', 'test5' ] ],
+			[ '<data><format>my {{{test2}}}$$$</format><default>{{#switch: {{{test3|}}}|{{{test4}}}|{{{test5|kdjk|sajdkfj|}}}]] }}</default></data>',
+				[ ], [ 'test2', 'test3', 'test4', 'test5' ] ]
 		];
 	}
 
 	/**
-	 * @covers       Node::getExternalParser
-	 * @covers       Node::setExternalParser
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::getExternalParser
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::setExternalParser
 	 * @dataProvider parserTestDataProvider
 	 *
 	 * @param $parser
@@ -56,7 +60,7 @@ class NodeDataTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       NodeData::getData
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeData::getData
 	 * @dataProvider dataProvider
 	 *
 	 * @param $markup
@@ -75,14 +79,26 @@ class NodeDataTest extends WikiaBaseTest {
 			[ '<data source="test"><default>def</default></data>', [ ], [ 'value' => 'def', 'label' => '' ] ],
 			[ '<data source="test"><label>l</label><default>def</default></data>', [ ],
 			  [ 'value' => 'def', 'label' => 'l' ] ],
+			[ '<data source="test"><label source="l">jjj</label><default>def</default></data>', [ 'l' => 1 ],
+			  [ 'value' => 'def', 'label' => 'jjj' ] ],
+			[ '<data source="test"><label source="l" /><default>def</default></data>', [ 'l' => 1 ],
+			  [ 'value' => 'def', 'label' => '' ] ],
 			[ '<data source="test"><label>l</label><default>def</default></data>', [ 'test' => 1 ],
 			  [ 'value' => 1, 'label' => 'l' ] ],
-			[ '<data></data>', [ ], [ 'label' => '', 'value' => null ] ]
+			[ '<data></data>', [ ], [ 'label' => '', 'value' => null ] ],
+			[ '<data source="test"><label>l</label><format>{{{test}}}%</format><default>def</default></data>', [ 'test' => 1 ],
+			  [ 'value' => '{{{test}}}%', 'label' => 'l' ] ],
+			[ '<data source="test"><label>l</label><format>{{{not_defined_var}}}%</format><default>def</default></data>', [ 'test' => 1 ],
+				[ 'value' => '{{{not_defined_var}}}%', 'label' => 'l' ] ],
+			[ '<data source="test"><label>l</label><format>{{{test}}}%</format><default>def</default></data>', [ ],
+				[ 'value' => 'def', 'label' => 'l' ] ],
+			[ '<data source="test"><format>{{{test}}}%</format></data>', [ 'test' => 0 ],
+				[ 'value' => '{{{test}}}%', 'label' => '' ] ],
 		];
 	}
 
 	/**
-	 * @covers       Node::getRenderData
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::getRenderData
 	 * @dataProvider dataRenderProvider
 	 *
 	 * @param $markup
@@ -97,13 +113,15 @@ class NodeDataTest extends WikiaBaseTest {
 
 	public function dataRenderProvider() {
 		return [
-			[ '<data source="test"></data>', [ 'test' => 'test' ],
-			  [ 'type' => 'data', 'data' => [ 'value' => 'test', 'label' => '' ] ] ],
+			[ '<data source="test"></data>',
+				[ 'test' => 'test' ],
+				[ 'type' => 'data', 'data' => [ 'value' => 'test', 'label' => '' ] ]
+			]
 		];
 	}
 
 	/**
-	 * @covers       Node::isType
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::isType
 	 * @dataProvider isTypeDataProvider
 	 *
 	 * @param $markup
@@ -125,7 +143,7 @@ class NodeDataTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       Node::getType
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::getType
 	 * @dataProvider typeDataProvider
 	 *
 	 * @param $markup

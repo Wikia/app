@@ -23,6 +23,7 @@ define('wikia.iframeWriter', [
 		log(['getIframe', params], 'debug', logGroup);
 
 		var code = iframeHeader + iframeStyle + params.code + iframeFooter,
+			loaded = false,
 			iframe = doc.createElement('iframe');
 
 		iframe.frameBorder = 'no';
@@ -35,6 +36,11 @@ define('wikia.iframeWriter', [
 		}
 
 		iframe.onload = function () {
+			// Prevent infinite loop of calling onload function after closing document on IE/Safari
+			if (loaded) {
+				return;
+			}
+			loaded = true;
 			iframe.contentWindow.document.write(code);
 			iframe.contentWindow.document.close();
 		};

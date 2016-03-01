@@ -157,11 +157,6 @@ class UserPreferencesV2 {
 			$defaultPreferences['marketingallowed']['label-message'] = 'tog-marketingallowed-v2';
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'marketingallowed' );
 		}
-		if ( isset( $defaultPreferences['watchlistdigest'] ) ) {
-			$defaultPreferences['watchlistdigest']['section'] = 'emailv2/email-me-v2';
-			$defaultPreferences['watchlistdigest']['label-message'] = 'tog-watchlistdigest-v2';
-			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'watchlistdigest' );
-		}
 		if ( isset( $defaultPreferences['marketingallowed'] ) ) {
 			$defaultPreferences['marketingallowed']['section'] = 'emailv2/email-me-v2';
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'marketingallowed' );
@@ -183,11 +178,6 @@ class UserPreferencesV2 {
 			$defaultPreferences['enotifrevealaddr']['section'] = 'emailv2/email-advanced-v2';
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'enotifrevealaddr' );
 		}
-		if ( array_key_exists( 'watchlistdigestclear', $defaultPreferences ) ) {
-			$defaultPreferences['watchlistdigestclear']['section'] = 'emailv2/email-advanced-v2';
-			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'watchlistdigestclear' );
-		}
-
 		if ( isset( $defaultPreferences['unsubscribed'] ) ) {
 			$defaultPreferences['unsubscribed']['section'] = 'emailv2/email-unsubscribe';
 			$defaultPreferences['unsubscribed']['label-message'] = 'unsubscribe-preferences-toggle-v2';
@@ -211,14 +201,11 @@ class UserPreferencesV2 {
 		unset( $defaultPreferences['nocache'] );
 		unset( $defaultPreferences['showjumplinks'] );
 		unset( $defaultPreferences['numberheadings'] );
-		if ( isset( $defaultPreferences['enablerichtext'] ) ) {
-			$defaultPreferences['enablerichtext']['section'] = 'editing/editing-experience';
-		}
 		if ( isset( $defaultPreferences['disablelinksuggest'] ) ) {
 			$defaultPreferences['disablelinksuggest']['section'] = 'editing/editing-experience';
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'disablelinksuggest' );
 		}
-		if ( $user->mOptions['skin'] == 'monobook' ) {
+		if ( $user->getGlobalPreference( 'skin' ) == 'monobook' ) {
 			if ( isset( $defaultPreferences['showtoolbar'] ) ) {
 				$defaultPreferences['showtoolbar']['section'] = 'editing/monobookv2';
 				$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'showtoolbar' );
@@ -345,7 +332,7 @@ class UserPreferencesV2 {
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'hidefollowedpages' );
 		}
 		if ( isset( $defaultPreferences['justify'] ) ) {
-			if ( $user->mOptions['skin'] == 'monobook' ) {
+			if ( $user->getGlobalPreference( 'skin' ) == 'monobook' ) {
 				$defaultPreferences['justify']['section'] = 'under-the-hood/advanced-displayv2';
 				$defaultPreferences['justify']['label-message'] = 'tog-justify-v2';
 				$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'justify' );
@@ -407,7 +394,7 @@ class UserPreferencesV2 {
 		// customize toolbar/myToolbar
 		$oasisToolbarService = new SharedToolbarService();
 		$toolbarNameInUserOptions = $oasisToolbarService->getToolbarOptionName();
-		$toolbarCurrentList = $user->getOption( $oasisToolbarService->getToolbarOptionName() );
+		$toolbarCurrentList = $user->getGlobalPreference( $oasisToolbarService->getToolbarOptionName() );
 		$storage[self::MY_TOOLBAR_OPTIONS_STORAGE_ARRAY_KEY_NAME] = array(
 			$toolbarNameInUserOptions => $toolbarCurrentList,
 		);
@@ -422,10 +409,10 @@ class UserPreferencesV2 {
 	 */
 	static public function onSpecialPreferencesAfterResetUserOptions( $preferences, &$user, &$storage ) {
 		// user identity box/masthead
-		self::setUserOptionByNameAndValue( $user, $storage[self::MASTHEAD_OPTIONS_STORAGE_ARRAY_KEY_NAME] );
+		self::setUserAttributeByNameAndValue( $user, $storage[self::MASTHEAD_OPTIONS_STORAGE_ARRAY_KEY_NAME] );
 
 		// customize toolbar
-		self::setUserOptionByNameAndValue( $user, $storage[self::MY_TOOLBAR_OPTIONS_STORAGE_ARRAY_KEY_NAME] );
+		self::setUserPreferenceByNameAndValue( $user, $storage[self::MY_TOOLBAR_OPTIONS_STORAGE_ARRAY_KEY_NAME] );
 
 		return true;
 	}
@@ -462,10 +449,22 @@ class UserPreferencesV2 {
 	 * @param User $user
 	 * @param $options
 	 */
-	static protected function setUserOptionByNameAndValue( $user, $options ) {
+	static protected function setUserPreferenceByNameAndValue( $user, $options ) {
 		foreach ( $options as $optionName => $optionValue ) {
 			if ( !is_array( $optionValue ) ) {
-				$user->setOption( $optionName, $optionValue );
+				$user->setGlobalPreference( $optionName, $optionValue );
+			}
+		}
+	}
+
+	/**
+	 * @param User $user
+	 * @param $options
+	 */
+	static protected function setUserAttributeByNameAndValue( $user, $options ) {
+		foreach ( $options as $optionName => $optionValue ) {
+			if ( !is_array( $optionValue ) ) {
+				$user->setGlobalAttribute( $optionName, $optionValue );
 			}
 		}
 	}

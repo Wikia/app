@@ -4,6 +4,7 @@
  * @author Stephan Gambke
  *
  */
+/*global escape*/
 
 // initialise
 jQuery( function() {
@@ -34,7 +35,6 @@ if ( typeof( window.ext ) === "undefined" ) {
 }
 
 window.ext.popupform = new function() {
-
 	var wrapper;
 	var background;
 	var container;
@@ -44,6 +44,9 @@ window.ext.popupform = new function() {
 	var waitIndicator;
 	var instance = 0;
 
+	var timer;
+	var needsRender = true;
+
 	var doc;
 
 	var brokenBrowser, brokenChrome;
@@ -51,33 +54,53 @@ window.ext.popupform = new function() {
 	var padding = 20;
 
 	function handlePopupFormInput( ptarget, elem ) {
-
 		showForm();
 
 		iframe.one( 'load', function(){
 			// attach event handler to iframe
 			iframe.bind( 'load', handleLoadFrame );
 			return false;
-		})
+		});
 
 		elem.target = 'popupform-iframe' + instance;
 		return true;
 	}
 
 	function handlePopupFormLink( ptarget, elem ) {
-
 		showForm();
 
-		// attach event handler to iframe
-		iframe.bind( 'load', handleLoadFrame );
+		// store initial readystate
+		var readystate = iframe.contents()[0].readyState;
+
+		// set up timer for waiting on the document in the iframe to be dom-ready
+		// this sucks, but there is no other way to catch that event
+		// onload is already too late
+		timer = setInterval(function(){
+			// if the readystate changed
+			if ( readystate !== iframe.contents()[0].readyState ) {
+				// store new readystate
+				readystate = iframe.contents()[0].readyState;
+
+				// if dom is built but document not yet displayed
+				if ( readystate === 'interactive' || readystate === 'complete' ) {
+					needsRender = false; // flag that rendering is already done
+					handleLoadFrame();
+				}
+			}
+		}, 100 );
+
+		// fallback in case we did not catch the dom-ready state
+		iframe.on('load', function( event ){
+			if ( needsRender ) { // rendering not already done?
+				handleLoadFrame( event );
+			}
+			needsRender = true;
+		});
 
 		if ( elem.tagName == 'FORM' ) {
-
 			elem.target = 'popupform-iframe' + instance;
 			return true;
-
 		} else {
-
 			var delim = ptarget.indexOf( '?' );
 			var form = document.createElement("form");
 
@@ -95,7 +118,6 @@ window.ext.popupform = new function() {
 					input.name = decodeURIComponent( param[0] );
 					input.value = decodeURIComponent( param[1] );
 					form.appendChild( input );
-
 				}
 			} else {
 				form.action = ptarget;
@@ -110,7 +132,6 @@ window.ext.popupform = new function() {
 	}
 
 	function showForm() {
-
 		instance++;
 
 		brokenChrome =
@@ -143,11 +164,14 @@ window.ext.popupform = new function() {
 		var closeBtn = jQuery( "<div class='popupform-close'></div> " );
 
 		// initially hide background and waitIndicator
-		if (brokenChrome) background.css("background", "transparent");
-		else background.css("opacity", 0.0);
+		if (brokenChrome) {
+			background.css("background", "transparent");
+		} else {
+			background.css("opacity", 0.0);
+		}
 
 		waitIndicator.hide();
-		container.hide()
+		container.hide();
 
 		// insert background and wait indicator into wrapper and all into document
 		waitIndicatorWrapper
@@ -171,21 +195,28 @@ window.ext.popupform = new function() {
 		.appendTo( "body" );
 
 		// fade background in
-		if ( !brokenChrome ) background.fadeTo( 400, 0.3 );
+		if ( !brokenChrome ) {
+			background.fadeTo( 400, 0.3 );
+		}
 		fadeIn( waitIndicator );
 
 		// attach event handler to close button
 		closeBtn.click( handleCloseFrame );
-
 	}
 
-	function handleLoadFrame( event ){
-
-		var iframe = jQuery( event.target );
+	function handleLoadFrame() {
 		var iframecontents = iframe.contents();
 
-		if ( brokenBrowser ) container[0].style.visibility = "hidden";
-		else container[0].style.opacity = 0;
+		var containerAlreadyVisible = container.is( ':visible' );
+
+		if ( !containerAlreadyVisible ) {
+			// no need to hide it again
+			if ( brokenBrowser ) {
+				container[0].style.visibility = "hidden";
+			} else {
+				container[0].style.opacity = 0;
+			}
+		}
 
 		container.show();
 
@@ -193,16 +224,22 @@ window.ext.popupform = new function() {
 		content = iframecontents.find("#gumax-content-body");
 
 		// normal skins use #content (e.g. Vector, Monobook)
-		if ( content.length == 0 ) content = iframecontents.find("#content");
+		if ( content.length === 0 ) {
+			content = iframecontents.find("#content");
+		}
 
 		// some skins use #mw_content (e.g. Modern)
-		if ( content.length == 0 ) content = iframecontents.find("#mw_content");
+		if ( content.length === 0 ) {
+			content = iframecontents.find("#mw_content");
+		}
 
 		var iframebody = content.closest("body");
 		var iframedoc = iframebody.parent();
 
 		// this is not a normal MW page (or it uses an unknown skin)
-		if ( content.length == 0 ) content = iframebody;
+		if ( content.length === 0 ) {
+			content = iframebody;
+		}
 
 		// the huge left margin looks ugly in Vector, reduce it
 		// (How does this look for other skins?)
@@ -247,9 +284,7 @@ window.ext.popupform = new function() {
 				var elem = jQuery(this);
 
 				// TODO: Does this really help?
-				if ( getStyle(this, "display") != "none"
-					&& ( getStyle( this, "width") != "0px" || getStyle( this, "height") != "0px" )
-					&& ! (
+				if ( getStyle(this, "display") != "none" && ! (
 						( this.offsetLeft + elem.outerWidth(true) < 0 ) ||		// left of document
 						( this.offsetTop + elem.outerHeight(true) < 0 )  || // above document
 						( this.offsetLeft > 100000 ) ||		// right of document
@@ -294,39 +329,38 @@ window.ext.popupform = new function() {
 		//interval = setInterval(adjustFrameSize, 100);
 
 		var form = content.find("#sfForm");
-		var innerwdw = window.frames['popupform-iframe' + instance];
+		var innerwdw = document.getElementById( 'popupform-iframe' + instance ).contentWindow;
 		var innerJ = innerwdw.jQuery;
 
-		if (form.length > 0) {
-
+		// if we have a form and it is not a RunQuery form
+		if (form.length > 0 && ( typeof form[0].wpRunQuery === 'undefined') ) {
 			var submitok = false;
 			var innersubmitprocessed = false;
 
 			// catch form submit event
 			form
 			.bind( "submit", function( event ){
-
 				var interval = setInterval(function(){
-
 					if ( innersubmitprocessed ) {
 						clearInterval( interval );
 						innersubmitprocessed = false;
-						if ( submitok ) handleSubmitData( event );
+						if ( submitok ) {
+							handleSubmitData( event );
+						}
 					}
 
-				}, 10)
+				}, 10);
 				event.stopPropagation();
 				return false;
-
 			});
 
 			// catch inner form submit event
 			if ( innerJ ) {
 				innerwdw.jQuery(form[0])
 				.bind( "submit", function( event ) {
-					submitok = event.result;
-					innersubmitprocessed = true;
-					return false;
+						submitok = event.result;
+						innersubmitprocessed = true;
+						return false;
 				});
 			} else {
 				submitok = true;
@@ -381,23 +415,23 @@ window.ext.popupform = new function() {
 		.not('a[href^="#"]')           // local links
 		.not('a.sfFancyBox')           // link to file upload
 		.click(function(event){
-			if ( event.result != false ) {  // if not already caught by somebody else
-				closeFrameAndFollowLink( event.target.getAttribute('href') )
+			if ( event.result !== false ) {  // if not already caught by somebody else
+				closeFrameAndFollowLink( event.target.getAttribute('href') );
 			}
 			return false;
 		});
 
-		// finally show the frame
-		fadeOut ( waitIndicator, function(){
-			fadeTo( container, 400, 1 );
-		});
+		// finally show the frame, but only if it is not already visible
+		if ( ! containerAlreadyVisible ) {
+				fadeOut ( waitIndicator, function(){
+				fadeTo( container, 400, 1 );
+			});
+		}
 
 		return false;
-
 	}
 
 	function handleSubmitData( event ){
-
 		fadeOut( container, function() {
 			fadeIn( waitIndicator );
 		});
@@ -414,15 +448,12 @@ window.ext.popupform = new function() {
 
 		return false;
 
-
 		function handleInnerSubmit ( returnedData, textStatus, XMLHttpRequest ) {
-
-
 			// find form in fake edit page
 			var innerform = jQuery("<div>" + returnedData + "</div>").find("form");
 
 			// check if we got an error page
-			if ( innerform.length == 0 ) {
+			if ( innerform.length === 0 ) {
 
 				form.unbind( event );
 
@@ -454,12 +485,15 @@ window.ext.popupform = new function() {
 
 				var stop = url.indexOf("&", start);
 
-				if ( stop >= 0 ) url = url.substr( 0, start - 1 ) + url.substr(stop + 1);
-				else url = url.substr( 0, start - 1 );
+				if ( stop >= 0 ) {
+					url = url.substr( 0, start - 1 ) + url.substr(stop + 1);
+				} else {
+					url = url.substr( 0, start - 1 );
+				}
 
 			}
 
-			var form = jQuery('<form action="' + url + '" method="POST"><input type="hidden" name="action" value="purge"></form>')
+			form = jQuery('<form action="' + url + '" method="POST"><input type="hidden" name="action" value="purge"></form>')
 			.appendTo('body');
 
 			form
@@ -470,24 +504,21 @@ window.ext.popupform = new function() {
 			});
 
 			return false;
-
 		}
 	}
 
 	function adjustFrameSize( animate ) {
-
 		// set some inputs
-
 		var oldFrameW = container.width();
 		var oldFrameH = container.height();
 		var oldContW = content.width();
 		var oldContH = content.height();
 
-		var availW = Math.floor( jQuery(window).width() * .8 );
-		var availH = Math.floor( jQuery(window).height() * .8 );
+		var availW = Math.floor( jQuery(window).width() * 0.8 );
+		var availH = Math.floor( jQuery(window).height() * 0.8 );
 
-		var emergencyW = Math.floor( jQuery(window).width() * .85 );
-		var emergencyH = Math.floor( jQuery(window).height() * .85 );
+		var emergencyW = Math.floor( jQuery(window).width() * 0.85 );
+		var emergencyH = Math.floor( jQuery(window).height() * 0.85 );
 
 		// FIXME: these might not be the true values
 		var scrollW = 25;
@@ -505,7 +536,7 @@ window.ext.popupform = new function() {
 			scrollTgt = body;
 		}
 
-		var scrollTop = scrollTgt.scrollTop()
+		var scrollTop = scrollTgt.scrollTop();
 		var scrollLeft = scrollTgt.scrollLeft();
 
 		content
@@ -606,7 +637,6 @@ window.ext.popupform = new function() {
 			}
 
 			if ( animate ) {
-
 				content
 				.width ( 'auto' )
 				.height ( 'auto' );
@@ -641,15 +671,13 @@ window.ext.popupform = new function() {
 				});
 
 			} else {
-
 				container
 				.width( frameW )
 				.height ( frameH );
 
-				with ( container[0].style ) {
-					top = (Math.floor(( - frameH ) / 2)) + "px";
-					left = (Math.floor(( - frameW ) / 2)) + "px";
-				}
+				container[0].style.top = (Math.floor(( - frameH ) / 2)) + "px";
+				container[0].style.left = (Math.floor(( - frameW ) / 2)) + "px";
+
 
 				setTimeout(function(){
 
@@ -697,24 +725,24 @@ window.ext.popupform = new function() {
 
 		if ( jQuery.browser.mozilla ) {
 			body
-			.css('overflow', 'auto')
+			.css('overflow', 'auto');
 		}
 
 		return true;
 	}
 
 	function closeFrameAndFollowLink( link ){
+		clearTimeout(timer);
 
 		fadeOut( container, function(){
 			fadeIn ( waitIndicator );
 			window.location.href = link;
 		});
-
 	}
 
 	function handleCloseFrame( event ){
-
-		jQuery(window).unbind( "resize", adjustFrameSize )
+		jQuery(window).unbind( "resize", adjustFrameSize );
+		clearTimeout(timer);
 
 		fadeOut( container, function(){
 			background.fadeOut( function(){
@@ -745,30 +773,33 @@ window.ext.popupform = new function() {
 		if ( brokenBrowser ){
 
 			elem.show();
-			if ( callback ) callback();
-
+			if ( callback ) {
+				callback();
+			}
 		} else {
-
 			// what an ugly hack
-			if ( elem === waitIndicator ) elem.fadeIn( 200, callback );
-			else elem.fadeIn( callback );
-
+			if ( elem === waitIndicator ) {
+				elem.fadeIn( 200, callback );
+			} else {
+				elem.fadeIn( callback );
+			}
 		}
 	}
 
 	function fadeOut(elem, callback ) {
 		// no fading for broken browsers
 		if ( brokenBrowser ){
-
 			elem.hide();
-			if ( callback ) callback();
-
+			if ( callback ) {
+				callback();
+			}
 		} else {
-
 			// what an ugly hack
-			if ( elem === waitIndicator ) elem.fadeOut( 200, callback );
-			else elem.fadeOut( callback );
-
+			if ( elem === waitIndicator ) {
+				elem.fadeOut( 200, callback );
+			} else {
+				elem.fadeOut( callback );
+			}
 		}
 	}
 
@@ -776,22 +807,23 @@ window.ext.popupform = new function() {
 		// no fading for broken browsers
 		if ( brokenBrowser ){
 
-			if (target > 0) elem[0].style.visibility = "visible";
-			else  elem[0].style.visibility = "hidden";
+			if (target > 0) {
+				elem[0].style.visibility = "visible";
+			} else {
+				elem[0].style.visibility = "hidden";
+			}
 
-			if ( callback ) callback();
+			if ( callback ) {
+				callback();
+			}
 
 		} else {
-
 			elem.fadeTo(time, target, callback);
-
 		}
-
 	}
 
 	// export public funcitons
 	this.handlePopupFormInput = handlePopupFormInput;
 	this.handlePopupFormLink = handlePopupFormLink;
 	this.adjustFrameSize = adjustFrameSize;
-
-}
+}();

@@ -48,3 +48,8 @@ $specialPageAliases['pl'] = array(
 $specialPageAliases['vi'] = array(
 	'Mostpopularcategories' => array( 'Thể_loại_phổ_biến_nhất' ),
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'Mostpopularcategories' => array( '人気カテゴリ' )
+);

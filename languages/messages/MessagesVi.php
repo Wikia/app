@@ -436,30 +436,12 @@ $messages = array(
 'navigation'    => 'Xem nhanh',
 'and'           => '&#32;và',
 
-# Cologne Blue skin
 'qbfind'         => 'Tìm kiếm',
 'qbbrowse'       => 'Duyệt',
-'qbedit'         => 'Sửa đổi',
 'qbpageoptions'  => 'Trang này',
 'qbpageinfo'     => 'Ngữ cảnh',
-'qbmyoptions'    => 'Trang cá nhân',
-'qbspecialpages' => 'Trang đặc biệt',
 'faq'            => 'Câu hỏi thường gặp',
-'faqpage'        => 'Project:Các câu hỏi thường gặp',
 
-# Vector skin
-'vector-action-addsection'       => 'Thêm chủ đề',
-'vector-action-delete'           => 'Xóa',
-'vector-action-move'             => 'Di chuyển',
-'vector-action-protect'          => 'Khóa',
-'vector-action-undelete'         => 'Phục hồi',
-'vector-action-unprotect'        => 'Đổi mức khóa',
-'vector-simplesearch-preference' => 'Gợi ý tìm kiếm nâng cao (cần bề ngoài Vectơ)',
-'vector-view-create'             => 'Tạo',
-'vector-view-edit'               => 'Sửa',
-'vector-view-history'            => 'Xem lịch sử',
-'vector-view-view'               => 'Xem',
-'vector-view-viewsource'         => 'Xem mã nguồn',
 'actions'                        => 'Tác vụ',
 'namespaces'                     => 'Không gian tên',
 'variants'                       => 'Biến thể',
@@ -482,7 +464,6 @@ $messages = array(
 'edit'              => 'Sửa đổi',
 'create'            => 'Tạo',
 'editthispage'      => 'Sửa đổi trang này',
-'create-this-page'  => 'Tạo trang này',
 'delete'            => 'Xóa',
 'deletethispage'    => 'Xóa trang này',
 'undelete_short'    => 'Phục hồi {{PLURAL:$1|một sửa đổi|$1 sửa đổi}}',
@@ -497,19 +478,9 @@ $messages = array(
 'talkpagelinktext'  => 'Thảo luận',
 'specialpage'       => 'Trang đặc biệt',
 'personaltools'     => 'Công cụ cá nhân',
-'postcomment'       => 'Đề mục mới',
-'articlepage'       => 'Xem trang nội dung',
 'talk'              => 'Thảo luận',
 'views'             => 'Xem',
 'toolbox'           => 'Công cụ',
-'userpage'          => 'Xem trang thành viên',
-'projectpage'       => 'Xem trang dự án',
-'imagepage'         => 'Xem trang tập tin',
-'mediawikipage'     => 'Thông báo giao diện',
-'templatepage'      => 'Trang bản mẫu',
-'viewhelppage'      => 'Trang trợ giúp',
-'categorypage'      => 'Trang thể loại',
-'viewtalkpage'      => 'Trang thảo luận',
 'otherlanguages'    => 'Ngôn ngữ khác',
 'redirectedfrom'    => '(đổi hướng từ $1)',
 'redirectpagesub'   => 'Trang đổi hướng',
@@ -688,7 +659,8 @@ Lý do được cung cấp là ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Bạn đã đăng xuất.'''
 
-Bạn có thể tiếp tục dùng {{SITENAME}} một cách vô danh, hoặc bạn có thể [[Special:UserLogin|đăng nhập lại]] dưới cùng tên người dùng này hoặc một tên người dùng khác. Xin lưu ý rằng một vài trang có thể vẫn hiển thị như khi bạn còn đăng nhập, cho đến khi bạn xóa vùng nhớ đệm (''cache'') của trình duyệt.",
+Bạn có thể tiếp tục dùng {{SITENAME}} một cách vô danh, hoặc bạn có thể $1 dưới cùng tên người dùng này hoặc một tên người dùng khác. Xin lưu ý rằng một vài trang có thể vẫn hiển thị như khi bạn còn đăng nhập, cho đến khi bạn xóa vùng nhớ đệm (''cache'') của trình duyệt.",
+'logouttext-link-text'       => 'đăng nhập lại',
 'welcomecreation'            => '== Chào mừng, $1! ==
 Tài khoản của bạn đã mở.
 Đừng quên thay đổi [[Special:Preferences|tùy chọn cá nhân của bạn tại {{SITENAME}}]].',
@@ -792,47 +764,6 @@ Xin hãy đợi chốc lát rồi thử lại.',
 'resetpass-wrong-oldpass'   => 'Mật khẩu tạm hoặc mật khẩu hiện thời không hợp lệ.
 Có thể bạn đã thay đổi thành công mật khẩu của mình hoặc đã yêu cầu cung cấp một mật khẩu tạm mới.',
 'resetpass-temp-password'   => 'Mật khẩu tạm:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Tái tạo mật khẩu',
-'passwordreset-text'               => 'Hãy điền mẫu đơn này để nhận thư điện tử nhắc nhở về thông tin tài khoản của bạn.',
-'passwordreset-legend'             => 'Tái tạo mật khẩu',
-'passwordreset-disabled'           => 'Chức năng tái tạo mật khẩu đã bị tắt trên wiki này.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Nhập một trong những thông tin được yêu cầu ở dưới}}',
-'passwordreset-username'           => 'Tên người dùng:',
-'passwordreset-domain'             => 'Tên miền:',
-'passwordreset-capture'            => 'Xem thư điện tử có mật khẩu tạm',
-'passwordreset-capture-help'       => 'Nếu bạn kiểm hộp này, bạn sẽ xem thư điện tử có mật khẩu tạm lúc khi nó được gửi cho người dùng.',
-'passwordreset-email'              => 'Địa chỉ thư điện tử:',
-'passwordreset-emailtitle'         => 'Thông tin tài khoản tại {{SITENAM}}',
-'passwordreset-emailtext-ip'       => 'Ai đó (có thể là bạn, từ địa chỉ IP $1) đã yêu cầu một lời
-nhắc nhở các thông tin tài khoản của bạn tại {{SITENAME}} ($4).
-{{PLURAL:$3|Tài khoản|Các tài khoản}} ở dưới có đặt địa chỉ thư điện tử này:
-
-$2
-
-{{PLURAL:$3|Mật khẩu|Các mật khẩu}} tạm này sẽ hết hạn trong vòng {{PLURAL:$5|một ngày|$5 ngày}}. Bạn nên đăng nhập
-ngay bây giờ để chọn mật khẩu mới. Nếu bạn không phải là người yêu cầu
-đặt lại mật khẩu hoặc đã nhớ lại mật khẩu hiện hành, và bạn không còn
-muốn thay đổi nó, xin vui lòng kệ thông điệp này và tiếp tục sử dụng
-mật khẩu cũ.',
-'passwordreset-emailtext-user'     => 'Thành viên $1 tại {{SITENAME}} đã yêu cầu một lời nhắc nhở
-các thông tin tài khoản của bạn tại {{SITENAME}} ($4). {{PLURAL:$3|Tài
-khoản|Các
-tài khoản}} ở dưới có đặt địa chỉ thư điện tử này:
-
-$2
-
-{{PLURAL:$3|Mật khẩu|Các mật khẩu}} tạm này sẽ hết hạn trong vòng {{PLURAL:$5|một ngày|$5 ngày}}. Bạn nên đăng nhập
-ngay bây giờ để chọn mật khẩu mới. Nếu bạn không phải là người yêu cầu
-đặt lại mật khẩu hoặc đã nhớ lại mật khẩu hiện hành, và bạn không còn
-muốn thay đổi nó, xin vui lòng kệ thông điệp này và tiếp tục sử dụng
-mật khẩu cũ.',
-'passwordreset-emailelement'       => 'Tên người dùng: $1
-Mật khẩu tạm: $2',
-'passwordreset-emailsent'          => 'Đã gửi thư điện tử nhắc nhở.',
-'passwordreset-emailsent-capture'  => 'Thư điện tử nhắc nhở ở dưới đã được gửi:',
-'passwordreset-emailerror-capture' => 'Không thể gửi thư điện tử nhắc nhở ở dưới cho người dùng: $1',
 
 # Special:ChangeEmail
 'changeemail'          => 'Đổi địa chỉ thư điện tử',
@@ -956,7 +887,6 @@ Nó chưa được lưu!'''",
 '''Nó chưa được lưu!'''",
 'sitejspreview'                    => "'''Nhớ rằng bạn chỉ đang kiểm thử/xem thử bản JavaScript này.
 '''Nó chưa được lưu!'''",
-'userinvalidcssjstitle'            => "'''Cảnh báo:''' Không có skin “$1”. Hãy nhớ rằng các trang .css và .js tùy chỉnh sử dụng tiêu đề chữ thường, như {{ns:user}}:Ví&nbsp;dụ/vector.css chứ không phải {{ns:user}}:Ví&nbsp;dụ/Vector.css.",
 'updated'                          => '(Cập nhật)',
 'note'                             => "'''Ghi chú:'''",
 'previewnote'                      => "'''Đây chỉ mới là xem thử; các thay đổi vẫn chưa được lưu!'''",
@@ -1302,14 +1232,6 @@ Xin hãy bảo đảm giữ vững tính liên tục của lịch sử trang.',
 'search-external'                  => 'Tìm kiếm từ bên ngoài',
 'searchdisabled'                   => 'Chức năng tìm kiếm tại {{SITENAME}} đã bị tắt. Bạn có tìm kiếm bằng Google trong thời gian này. Chú ý rằng các chỉ mục từ {{SITENAME}} của chúng có thể đã lỗi thời.',
 
-# Quickbar
-'qbsettings'                => 'Thanh công cụ',
-'qbsettings-none'           => 'Không có',
-'qbsettings-fixedleft'      => 'Cố định trái',
-'qbsettings-fixedright'     => 'Cố định phải',
-'qbsettings-floatingleft'   => 'Nổi bên trái',
-'qbsettings-floatingright'  => 'Nổi bên phải',
-'qbsettings-directionality' => 'Cố định, tùy theo hướng viết ngôn ngữ của bạn',
 
 # Preferences page
 'preferences'                   => 'Tùy chọn',
@@ -2951,15 +2873,7 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 
 # Stylesheets
 'common.css'              => '/* Mã CSS đặt ở đây sẽ áp dụng cho mọi hình dạng */',
-'standard.css'            => '/* Mã CSS tại đây sẽ ảnh hưởng đến những người dùng sử dụng hình dạng Cổ điển */',
-'nostalgia.css'           => '/* Mã CSS tại đây sẽ ảnh hưởng đến những người dùng sử dụng hình dạng Vọng cổ */',
-'cologneblue.css'         => '/* Mã CSS tại đây sẽ ảnh hưởng đến những người dùng sử dụng hình dạng Xanh Cologne */',
 'monobook.css'            => '/* Mã CSS đặt ở đây sẽ ảnh hưởng đến thành viên sử dụng hình dạng MonoBook */',
-'myskin.css'              => '/* Mã CSS tại đây sẽ ảnh hưởng đến những người dùng sử dụng hình dạng Cá nhân */',
-'chick.css'               => '/* Mã CSS tại đây sẽ ảnh hưởng đến những người dùng sử dụng hình dạng Chick */',
-'simple.css'              => '/* Mã CSS tại đây sẽ ảnh hưởng đến những người dùng sử dụng hình dạng Đơn giản */',
-'modern.css'              => '/* Mã CSS tại đây sẽ ảnh hưởng đến những người dùng sử dụng hình dạng Hiện đại */',
-'vector.css'              => '/* Mã CSS đặt ở đây sẽ ảnh hưởng đến thành viên sử dụng hình dạng Vectơ */',
 'print.css'               => '/* Mã CSS tại đây sẽ ảnh hưởng đến bản để in */',
 'handheld.css'            => '/* Mã CSS tại đây sẽ ảnh hưởng đến các thiết bị cầm tay dựa trên hình dạng cấu hình trong $wgHandheldStyle */',
 'noscript.css'            => '/* Mã CSS tại đây sẽ ảnh hưởng đến những người dùng tắt JavaScript */',
@@ -2970,15 +2884,7 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 
 # Scripts
 'common.js'              => '/* Bất kỳ mã JavaScript ở đây sẽ được tải cho tất cả các thành viên khi tải một trang nào đó lên. */',
-'standard.js'            => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng hình dạng Cổ điển */',
-'nostalgia.js'           => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng hình dạng Vọng cổ */',
-'cologneblue.js'         => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng hình dạng Xanh Cologne */',
 'monobook.js'            => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng bề ngoài MonoBook */',
-'myskin.js'              => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng bề ngoài Cá nhân */',
-'chick.js'               => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng bề ngoài Chick */',
-'simple.js'              => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng bề ngoài Đơn giản */',
-'modern.js'              => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng bề ngoài Hiện đại */',
-'vector.js'              => '/* Mã JavaScript tại đây sẽ được tải khi người dùng sử dụng bề ngoài Vectơ */',
 'group-autoconfirmed.js' => '/* Mã JavaScript tại đây sẽ chỉ được tải cho các thành viên tự động xác nhận */',
 'group-bot.js'           => '/* Mã JavaScript tại đây sẽ chỉ được tải cho các bot */',
 'group-sysop.js'         => '/* Mã JavaScript tại đây sẽ chỉ được tải cho các bảo quản viên */',
@@ -3022,13 +2928,6 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 'pageinfo-viewsperedit'     => 'Số lần xem mỗi sửa đổi',
 
 # Skin names
-'skinname-standard'    => 'Cổ điển',
-'skinname-nostalgia'   => 'Vọng cổ',
-'skinname-cologneblue' => 'Xanh Cologne',
-'skinname-myskin'      => 'Cá nhân',
-'skinname-simple'      => 'Đơn giản',
-'skinname-modern'      => 'Hiện đại',
-'skinname-vector'      => 'Vectơ',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Đánh dấu tuần tra',

@@ -11,7 +11,7 @@ jQuery( document ).ready( function ( $ ) {
 		impTrackObj,
 		track = Wikia.Tracker.buildTrackingFunction({
 			category: 'sitewidemessages',
-			trackingMethod: 'internal'
+			trackingMethod: 'analytics'
 		});
 
 	if ( $firstNotification.length ) {

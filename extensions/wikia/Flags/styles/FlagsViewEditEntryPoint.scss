@@ -1,24 +1,32 @@
 @import 'skins/shared/color';
 
-.portable-flags {
+.portable-flags,
+.portable-flags-inline {
+	position: relative;
 
 	/* Show edit flags entry point on portable-flags hover */
 	.flags-edit {
-		display: none;
+		background-color: $color-page;
+		opacity: 0;
+		padding: 5px;
+		transition: opacity .3s;
 		visibility: hidden;
 
 		&:first-child {
-			display: block;
+			right: 0;
+			top: 0;
 		}
 
-		&:nth-child(n+5) {
-			display: block;
+		&:last-child {
+			bottom: 0;
+			right: 0;
 		}
 	}
 
 	&:hover {
 
 		.flags-edit {
+			opacity: $page-opacity;
 
 			&:first-child {
 				visibility: visible;
@@ -36,8 +44,7 @@
 	/* Edit flags entry point within portable flags */
 	.flags-edit {
 		box-sizing: border-box;
-		margin: 0px auto 0px auto;
-		padding: 5px 10px;
+		position: absolute;
 		text-align: right;
 
 		.flags-icon {

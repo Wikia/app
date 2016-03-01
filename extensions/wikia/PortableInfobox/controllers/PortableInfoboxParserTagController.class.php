@@ -4,17 +4,16 @@ use Wikia\PortableInfobox\Parser\Nodes;
 
 class PortableInfoboxParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'infobox';
-	const INFOBOXES_PROPERTY_NAME = 'infoboxes';
 	const DEFAULT_THEME_NAME = 'wikia';
 	const DEFAULT_LAYOUT_NAME = 'default';
-	const INFOBOX_THEME_PREFIX = 'portable-infobox-theme-';
-	const INFOBOX_LAYOUT_PREFIX = 'portable-infobox-layout-';
+	const INFOBOX_THEME_PREFIX = 'pi-theme-';
+	const INFOBOX_LAYOUT_PREFIX = 'pi-layout-';
 
 	private $markerNumber = 0;
 	private $markers = [ ];
 	private $supportedLayouts = [
 		'default',
-		'tabular'
+		'stacked'
 	];
 
 	protected static $instance;
@@ -65,22 +64,28 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @return string
 	 * @throws UnimplementedNodeException when node used in markup does not exists
 	 * @throws XmlMarkupParseErrorException xml not well formatted
+	 * @throws InvalidInfoboxParamsException when unsupported attributes exist in params array
 	 */
 	public function render( $markup, Parser $parser, PPFrame $frame, $params = null ) {
-		$infoboxNode = Nodes\NodeFactory::newFromXML( $markup, $this->getFrameParams( $frame ) );
+		$frameArguments = $frame->getArguments();
+		$infoboxNode = Nodes\NodeFactory::newFromXML( $markup, $frameArguments ? $frameArguments : [ ] );
 		$infoboxNode->setExternalParser( new Wikia\PortableInfobox\Parser\MediaWikiParserService( $parser, $frame ) );
 
 		//get params if not overridden
 		if ( !isset( $params ) ) {
 			$params = ( $infoboxNode instanceof Nodes\NodeInfobox ) ? $infoboxNode->getParams() : [ ];
 		}
-		$data = $infoboxNode->getRenderData();
 
+		$infoboxParamsValidator = new Wikia\PortableInfobox\Helpers\InfoboxParamsValidator();
+		$infoboxParamsValidator->validateParams( $params );
+
+		$data = $infoboxNode->getRenderData();
 		//save for later api usage
 		$this->saveToParserOutput( $parser->getOutput(), $infoboxNode );
 
 		$theme = $this->getThemeWithDefault( $params, $frame );
 		$layout = $this->getLayout( $params );
+
 		return ( new PortableInfoboxRenderService() )->renderInfobox( $data, $theme, $layout );
 	}
 
@@ -102,9 +107,11 @@ class PortableInfoboxParserTagController extends WikiaController {
 		try {
 			$renderedValue = $this->render( $markup, $parser, $frame, $params );
 		} catch ( \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException $e ) {
-			return $this->handleError( wfMessage( 'unimplemented-infobox-tag', [ $e->getMessage() ] )->escaped() );
+			return $this->handleError( wfMessage( 'portable-infobox-unimplemented-infobox-tag', [ $e->getMessage() ] )->escaped() );
 		} catch ( \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException $e ) {
-			return $this->handleError( wfMessage( 'xml-parse-error' ) );
+			return $this->handleXmlParseError( $e->getErrors(), $text );
+		} catch ( \Wikia\PortableInfobox\Helpers\InvalidInfoboxParamsException $e ) {
+			return $this->handleError( wfMessage( 'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported', [ $e->getMessage() ] )->escaped() );
 		}
 
 		if ( $wgArticleAsJson ) {
@@ -123,15 +130,28 @@ class PortableInfoboxParserTagController extends WikiaController {
 	}
 
 	protected function saveToParserOutput( \ParserOutput $parserOutput, Nodes\NodeInfobox $raw ) {
+		// parser output stores this in page_props table, therefore we can reuse the data in data provider service
+		// (see: PortableInfoboxDataService.class.php)
 		if ( $raw ) {
-			$infoboxes = $parserOutput->getProperty( self::INFOBOXES_PROPERTY_NAME );
-			$infoboxes[ ] = [ 'data' => $raw->getRenderData(), 'sources' => $raw->getSource() ];
-			$parserOutput->setProperty( self::INFOBOXES_PROPERTY_NAME, $infoboxes );
+			$infoboxes = json_decode( $parserOutput->getProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ), true );
+			$infoboxes[] = [ 'data' => $raw->getRenderData(), 'sources' => $raw->getSource() ];
+			$parserOutput->setProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME, json_encode( $infoboxes ) );
 		}
 	}
 
 	private function handleError( $message ) {
 		$renderedValue = '<strong class="error"> ' . $message . '</strong>';
+
+		return [ $renderedValue, 'markerType' => 'nowiki' ];
+	}
+
+	private function handleXmlParseError( $errors, $xmlMarkup ) {
+		$errorRenderer = new PortableInfoboxErrorRenderService( $errors );
+		if ( $this->wg->Title && $this->wg->Title->getNamespace() == NS_TEMPLATE ) {
+			$renderedValue = $errorRenderer->renderMarkupDebugView( $xmlMarkup );
+		} else {
+			$renderedValue = $errorRenderer->renderArticleMsgView();
+		}
 
 		return [ $renderedValue, 'markerType' => 'nowiki' ];
 	}
@@ -158,22 +178,5 @@ class PortableInfoboxParserTagController extends WikiaController {
 		}
 
 		return self::INFOBOX_LAYOUT_PREFIX . self::DEFAULT_LAYOUT_NAME;
-	}
-
-	/**
-	 * Function ensures that arrays are used for merging
-	 *
-	 * @param PPFrame $frame
-	 *
-	 * @return array
-	 */
-	protected function getFrameParams( PPFrame $frame ) {
-		//we use both getNamedArguments and getArguments to ensure we acquire variables no matter what frame is used
-		$namedArgs = $frame->getNamedArguments();
-		$namedArgs = isset( $namedArgs ) ? ( is_array( $namedArgs ) ? $namedArgs : [ $namedArgs ] ) : [ ];
-		$args = $frame->getArguments();
-		$args = isset( $args ) ? ( is_array( $args ) ? $args : [ $args ] ) : [ ];
-
-		return array_merge( $namedArgs, $args );
 	}
 }

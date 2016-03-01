@@ -85,7 +85,7 @@ echo "Exclude users which has disabled Wysiwyg in their preferences\n";
 $usersNew = array();
 foreach($users as $idx => $user) {
 	$oUser = User::newFromId($user);
-	if(!$oUser->getOption('disablewysiwyg')) {
+	if(!$oUser->getGlobalPreference('disablewysiwyg')) {
 		$usersNew[] = $user;
 	}
 
@@ -98,7 +98,7 @@ if(trim(readline("Please enter 'blabla' to continue and enable Wysiwyg for those
 	foreach($usersNew as $user) {
 		fwrite($fp, $user."\n");
 		$oUser = User::newFromId($user);
-		$oUser->setOption("EnableWysiwyg", true);
+		$oUser->setGlobalPreference("EnableWysiwyg", true);
 		$oUser->saveSettings();
 		$oUser->invalidateCache();
 	}

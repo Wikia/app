@@ -70,22 +70,50 @@ class ApiVisualEditor extends ApiBase {
 		) {
 			$req->setHeader( 'Cookie', $this->getRequest()->getHeader( 'Cookie' ) );
 		}
+
+		if ( $this->veConfig->get( 'VisualEditorNoCache' ) ) {
+			$req->setHeader( 'Cache-control', 'no-cache' );
+		}
+
+		$time_start = microtime(true);
 		$status = $req->execute();
+		$time_end = microtime(true);
 		if ( $status->isOK() ) {
 			// Pass thru performance data from Parsoid to the client, unless the response was
 			// served directly from Varnish, in  which case discard the value of the XPP header
 			// and use it to declare the cache hit instead.
 			$xCache = $req->getResponseHeader( 'X-Cache' );
-			if ( is_string( $xCache ) && strpos( $xCache, 'hit' ) !== false ) {
+			$hit = false;
+			if ( is_string( $xCache ) && strpos( $xCache, 'HIT' ) !== false ) {
 				$xpp = 'cached-response=true';
+				$hit = true;
 			} else {
 				$xpp = $req->getResponseHeader( 'X-Parsoid-Performance' );
 			}
+
+			// we cache only GET requests so hit ratio tracking makes sense only in such case
+			if ( $method === 'GET' ) {
+				$loggerParams = array(
+					'hit' => $hit ? 'yes' : 'no', // sending string instead of boolean because our elasticsearch/kibana does not support the latter well
+					'durationMS' => (int) round ( ( $time_end - $time_start ) * 1000 ) // we are interested in millisecond only (instead of microseconds)
+				);
+				if ( $hit === false && preg_match ( "/duration=(\d*); realstart=(\d*); start=(\d*)/", $xpp, $matches ) ) {
+					$loggerParams['parsoidDurationMS'] = (int) $matches[1];
+					$loggerParams['parsoidRealstartDeltaMS'] = (int) round ( $matches[2] - ( $time_start * 1000 ) );
+					$loggerParams['parsoidStartDeltaMS'] = (int) round ( $matches[3] - ( $time_start * 1000 ) );
+				}
+				\Wikia\Logger\WikiaLogger::instance()->info( 'ApiVisualEditor_requestParsoid', $loggerParams );
+			}
+
 			if ( $xpp !== null ) {
 				$resp = $this->getRequest()->response();
 				$resp->header( 'X-Parsoid-Performance: ' . $xpp );
 			}
 		} elseif ( $status->isGood() ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'ApiVisualEditor_requestParsoid', [
+				'method' => $method,
+				'error' => 'parsoidserver-http-' . $req->getStatus()
+			] );
 			$this->dieUsage( $req->getContent(), 'parsoidserver-http-' . $req->getStatus() );
 		} elseif ( $errors = $status->getErrorsByType( 'error' ) ) {
 			$error = $errors[0];
@@ -95,6 +123,10 @@ class ApiVisualEditor extends ApiBase {
 			} else {
 				$message = 'MWHttpRequest error';
 			}
+			\Wikia\Logger\WikiaLogger::instance()->error( 'ApiVisualEditor_requestParsoid', [
+				'method' => $method,
+				'error' => 'parsoidserver-' . $code
+			] );
 			$this->dieUsage( "$message: " . $req->getContent(), 'parsoidserver-' . $code );
 		}
 		// TODO pass through X-Parsoid-Performance header, merge with getHTML above

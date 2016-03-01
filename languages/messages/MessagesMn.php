@@ -179,30 +179,12 @@ $messages = array(
 'navigation'    => 'Залуурдлага',
 'and'           => '&#32;ба',
 
-# Cologne Blue skin
 'qbfind'         => 'Хайх',
 'qbbrowse'       => 'Дэлгэх',
-'qbedit'         => 'Засварлах',
 'qbpageoptions'  => 'Энэ хуудас',
 'qbpageinfo'     => 'Агуулга',
-'qbmyoptions'    => 'Миний хуудсууд',
-'qbspecialpages' => 'Тусгай хуудсууд',
 'faq'            => 'Тогтмол тавигддаг асуултууд',
-'faqpage'        => 'Project:Тогтмол тавигддаг асуултууд',
 
-# Vector skin
-'vector-action-addsection'       => 'Сэдэв нэмэх',
-'vector-action-delete'           => 'Устгах',
-'vector-action-move'             => 'Зөөх',
-'vector-action-protect'          => 'Хамгаалах',
-'vector-action-undelete'         => 'Үл устгах',
-'vector-action-unprotect'        => 'Хамгаалалтаа солих',
-'vector-simplesearch-preference' => 'Хайлтын сайжруулсан саналыг идэвхижүүлэх (зөвхөн Вектор скин)',
-'vector-view-create'             => 'Үүсгэх',
-'vector-view-edit'               => 'Засварлах',
-'vector-view-history'            => 'Түүхийг үзэх',
-'vector-view-view'               => 'Унших',
-'vector-view-viewsource'         => 'Кодыг харах',
 'actions'                        => 'Үйлдлүүд',
 'namespaces'                     => 'Нэрний зайнууд',
 'variants'                       => 'Хувилбарууд',
@@ -225,7 +207,6 @@ $messages = array(
 'edit'              => 'Засварлах',
 'create'            => 'Үүсгэх',
 'editthispage'      => 'Энэ хуудсыг засварлах',
-'create-this-page'  => 'Энэ хуудсыг үүсгэх',
 'delete'            => 'Устгах',
 'deletethispage'    => 'Энэ хуудсыг устга',
 'undelete_short'    => 'Устгагдсан {{PLURAL:$1|нэг засварыг|$1 засваруудыг}} сэргээх',
@@ -240,19 +221,9 @@ $messages = array(
 'talkpagelinktext'  => 'Яриа',
 'specialpage'       => 'Тусгай хуудас',
 'personaltools'     => 'Өөрийн багаж хэрэгслүүд',
-'postcomment'       => 'Шинэ хэсэг',
-'articlepage'       => 'Өгүүллийг үзэх',
 'talk'              => 'Хэлэлцүүлэг',
 'views'             => 'Харагдацууд',
 'toolbox'           => 'Багаж хэрэгслүүд',
-'userpage'          => 'Хэрэглэгчийн хуудсыг үзэх',
-'projectpage'       => 'Төслийн хуудсыг үзэх',
-'imagepage'         => 'Файлын хуудсыг үзэх',
-'mediawikipage'     => 'Мессежний хуудсыг үзэх',
-'templatepage'      => 'Загварын хуудсыг үзэх',
-'viewhelppage'      => 'Тусламжийн хуудсыг үзэх',
-'categorypage'      => 'Ангиллын хуудсыг үзэх',
-'viewtalkpage'      => 'Хэлэлцүүлгийг үзэх',
 'otherlanguages'    => 'Өөр хэлээр',
 'redirectedfrom'    => '($1-с чиглүүлэгдэв)',
 'redirectpagesub'   => 'Хуудсыг чиглүүлэх',
@@ -435,8 +406,9 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''Та одоо гарлаа.'''
 
-Та ямар нэг хэрэглэгчийн бүртгэлгүйгээр {{SITENAME}}-г ашиглах боломжтой, эсвэл саяынхаа болон өөр хэрэглэгчийн бүртгэлээ ашиглан [[Special:UserLogin|дахин нэвтэрч]] болно.
+Та ямар нэг хэрэглэгчийн бүртгэлгүйгээр {{SITENAME}}-г ашиглах боломжтой, эсвэл саяынхаа болон өөр хэрэглэгчийн бүртгэлээ ашиглан $1 болно.
 Броузерийнхаа хийсвэр санах ойг цэвэрлэх хүртэл зарим нэг хуудсууд нь таны холбогдсон байдлаар харагдаж болзошгүйг анхааруулъя.",
+'logouttext-link-text'       => 'дахин нэвтэрч',
 'welcomecreation'            => '= $1, тавтай морилно уу! ==
 Та амжилттай бүртгэгдлээ.
 [[Special:Preferences|{{SITENAME}}-н тохиргоогоо]] өөрчлөхөө мартуузай.',
@@ -555,24 +527,6 @@ $2',
 'resetpass-wrong-oldpass'   => 'Хүчингүй түр зуурын эсвэл одоогийн нууц үг байна.
 Та аль хэдийнээ нууц үгээ сольсон эсвэл түр зуурын нууц үг хүссэн байна.',
 'resetpass-temp-password'   => 'Түр зуурын нууц үг:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Нууц үгийг сэргээх',
-'passwordreset-text'               => 'Энэхүү маягтыг бөглөж хэрэглэгчийн мэдээллээ аваарай.',
-'passwordreset-legend'             => 'Нууц үгээ сэргээх',
-'passwordreset-disabled'           => 'Энэ вики-д нууц үгийг сэргээх боломжгүй байна.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Доорх өгөгдлийн аль нэг хэсгийг оруулна уу}}',
-'passwordreset-username'           => 'Хэрэглэгчийн нэр:',
-'passwordreset-domain'             => 'Домайн:',
-'passwordreset-capture'            => 'Цахим шуудангийн нууц үг сэргээх шууданг үзэх',
-'passwordreset-capture-help'       => 'Энэ нүдийг чагталбал цахим шуудан түр нууц үгийн хамт танд харагдахаас гадна, шуудангаар тань очих болно.',
-'passwordreset-email'              => 'Цахим шуудан:',
-'passwordreset-emailtitle'         => '{{SITENAME}}-н бүртгэлийн мэдээлэл',
-'passwordreset-emailelement'       => 'Хэрэглэгчийн нэр: $1
-Түр зуурын нууц үг: $2',
-'passwordreset-emailsent'          => 'Сануулгын цахим шуудан явууллаа.',
-'passwordreset-emailsent-capture'  => 'Доор харуулснаар цахим шуудангийн сануулгыг явууллаа.',
-'passwordreset-emailerror-capture' => 'Цахим шуудангийн сануулга доор харуулсны дагуу хийгдсан боловч $1 хэрэглэгчид хүрч чадсангүй, алдаа гарлаа.',
 
 # Special:ChangeEmail
 'changeemail'          => 'Цахим шуудангийн хаяг солих',
@@ -1052,13 +1006,6 @@ $1",
 Та одоохондоо Google-г ашиглан хайх боломжтой.
 Анхааруулж хэлэхэд, тэдний {{SITENAME}}-н агуулгын индексүүд хоцрогдсон байж магадгүй.',
 
-# Quickbar
-'qbsettings'               => 'Шуурхай тавцан',
-'qbsettings-none'          => 'Байхгүй',
-'qbsettings-fixedleft'     => 'Зүүн талд бэхжүүлсэн',
-'qbsettings-fixedright'    => 'Баруун талд бэхжүүлсэн',
-'qbsettings-floatingleft'  => 'Зүүн талд хөвсөн',
-'qbsettings-floatingright' => 'Баруун талд хөвсөн',
 
 # Preferences page
 'preferences'                   => 'Хэрэглэгчийн тохиргоо',

@@ -77,7 +77,7 @@ function wfLinkSuggestToggle( $user, &$preferences ) {
  */
 function addLinkSuggest( $editPage ) {
 	global $wgOut, $wgUser, $wgScriptPath;
-	if( $wgUser->getOption( 'disablelinksuggest' ) != true ) {
+	if( $wgUser->getGlobalPreference( 'disablelinksuggest' ) != true ) {
 		if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
 			// Load CSS and JS by using ResourceLoader (only for MW 1.17+)
 			$wgOut->addModules( 'ext.LinkSuggest' );

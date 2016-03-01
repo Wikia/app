@@ -10,6 +10,14 @@ class MediaQueryService extends WikiaService {
 	const MEDIA_TYPE_VIDEO = 'video';
 	const MEDIA_TYPE_IMAGE = 'image';
 
+	const SORT_RECENT_FIRST   = 'recent';
+	const SORT_POPULAR_FIRST  = 'popular';
+	const SORT_TRENDING_FIRST = 'trend';
+
+	const DB_RECENT_COLUMN    = 'added_at';
+	const DB_POPULAR_COLUMN   = 'views_total';
+	const DB_TRENDING_COLUMN  = 'views_7day';
+
 	private $mediaCache = array();
 
 	/**
@@ -381,10 +389,6 @@ class MediaQueryService extends WikiaService {
 	 * Get list of videos based on a few filters ($type, $providers, $category)
 	 * and sort options ($sort, $limit, $page).
 	 *
-	 * @param string $sort How to sort the results.  Valid options are:
-	 *                     - recent  : Sort by the date the video was added (DEFAULT)
-	 *                     - popular : Sort by total views
-	 *                     - trend   : Sort by views over the last 7 days
 	 * @param string $type What type of videos to return.  Valid options are:
 	 *                     - all     : Show all videos (DEFAULT)
 	 *                     - premium : Show only premium videos
@@ -396,17 +400,8 @@ class MediaQueryService extends WikiaService {
 	 *                         (DEFAULT any category)
 	 * @return array $videoList
 	 */
-	public function getVideoList( $sort = 'recent', $type = 'all', $limit = 0, $page = 1, $providers = [], $categories = [] ) {
+	public function getVideoList( $type = 'all', $limit = 0, $page = 1, $providers = [], $categories = [], $sort = self::SORT_RECENT_FIRST ) {
 		wfProfileIn( __METHOD__ );
-
-		// Determine the sort column
-		if ( $sort == 'popular' ) {
-			$sortCol = 'views_total';
-		} elseif ( $sort == 'trend' ) {
-			$sortCol = 'views_7day';
-		} else {
-			$sortCol = 'added_at';
-		}
 
 		// Setup the base query cache for a minimal amount of time
 		$query = (new WikiaSQL())->cache( 5 )
@@ -418,8 +413,27 @@ class MediaQueryService extends WikiaService {
 				->FIELD( 'views_total' )
 				->DISTINCT( 'video_title' )
 			->FROM( 'video_info' )
-			->WHERE( 'removed' )->EQUAL_TO( 0 )
-			->ORDER_BY( $sortCol )->DESC();
+			->WHERE( 'removed' )->EQUAL_TO( 0 );
+
+		switch ( $sort ) {
+			case self::SORT_RECENT_FIRST:
+				$query->ORDER_BY( self::DB_RECENT_COLUMN )->DESC();
+				break;
+
+			case self::SORT_POPULAR_FIRST:
+				$query->ORDER_BY( self::DB_POPULAR_COLUMN )->DESC();
+				break;
+
+			case self::SORT_TRENDING_FIRST:
+				$query->ORDER_BY( self::DB_TRENDING_COLUMN )->DESC();
+				break;
+
+			default:
+				throw new InvalidArgumentException( "\$sort was none of '" . self::SORT_RECENT_FIRST . "', '"
+					. self::SORT_POPULAR_FIRST . "', '" . self::SORT_TRENDING_FIRST . "'." );
+				break;
+		}
+
 
 		if ( $categories ) {
 				$query->JOIN( 'page' )->ON( 'video_title', 'page_title' )
@@ -452,6 +466,7 @@ class MediaQueryService extends WikiaService {
 				'addedAt'    => $row->added_at,
 				'addedBy'    => $row->added_by,
 				'duration'   => $row->duration,
+				// SUS-78 | Not used in template but used by API clients - GameGuides App
 				'viewsTotal' => $row->views_total
 			];
 		});

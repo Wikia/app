@@ -270,30 +270,12 @@ $messages = array(
 'navigation'    => 'Navego',
 'and'           => '&#32;y',
 
-# Cologne Blue skin
 'qbfind'         => 'Mirar',
 'qbbrowse'       => 'Navegar',
-'qbedit'         => 'Editar',
 'qbpageoptions'  => 'Ista pachina',
 'qbpageinfo'     => 'Contexto',
-'qbmyoptions'    => 'Pachinas propias',
-'qbspecialpages' => 'Pachinas especials',
 'faq'            => 'Preguntas freqüents (FAQ)',
-'faqpage'        => 'Project:Preguntas freqüents',
 
-# Vector skin
-'vector-action-addsection'       => 'Adhibir nueva sección',
-'vector-action-delete'           => 'Borrar',
-'vector-action-move'             => 'Tresladar',
-'vector-action-protect'          => 'Protecher',
-'vector-action-undelete'         => 'Restaurar',
-'vector-action-unprotect'        => 'Cambiar protección',
-'vector-simplesearch-preference' => "Habilitar socherencias de busca amilloradas (nomás ta l'apariencia Vector)",
-'vector-view-create'             => 'Creyar',
-'vector-view-edit'               => 'Editar',
-'vector-view-history'            => "Amostrar l'historial",
-'vector-view-view'               => 'Leyer',
-'vector-view-viewsource'         => 'Veyer o codigo fuent',
 'actions'                        => 'Accions',
 'namespaces'                     => 'Espacios de nombres',
 'variants'                       => 'Variants',
@@ -316,7 +298,6 @@ $messages = array(
 'edit'              => 'Editar',
 'create'            => 'Creyar',
 'editthispage'      => 'Editar ista pachina',
-'create-this-page'  => 'Creyar ista pachina',
 'delete'            => 'Borrar',
 'deletethispage'    => 'Borrar ista pachina',
 'undelete_short'    => 'Restaurar {{PLURAL:$1|una edición|$1 edicions}}',
@@ -331,19 +312,9 @@ $messages = array(
 'talkpagelinktext'  => 'Descutir',
 'specialpage'       => 'Pachina Especial',
 'personaltools'     => 'Ferramientas personals',
-'postcomment'       => 'Nueva sección',
-'articlepage'       => "Veyer l'articlo",
 'talk'              => 'Discusión',
 'views'             => 'Visualizacions',
 'toolbox'           => 'Ferramientas',
-'userpage'          => "Veyer a pachina d'usuario",
-'projectpage'       => "Veyer a pachina d'o prochecto",
-'imagepage'         => "Veyer a pachina d'o fichero",
-'mediawikipage'     => "Veyer a pachina d'o mensache",
-'templatepage'      => "Veyer a pachina d'a plantilla",
-'viewhelppage'      => "Veyer a pachina d'aduya",
-'categorypage'      => "Veyer a pachina d'a categoría",
-'viewtalkpage'      => 'Veyer a pachina de descusión',
 'otherlanguages'    => 'En atras luengas',
 'redirectedfrom'    => '(Reendrezato dende $1)',
 'redirectpagesub'   => 'Pachina reendrezata',
@@ -521,7 +492,8 @@ A razón data ye ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Ha rematato a sesión.'''
 
-Puede continar navegando por {{SITENAME}} anonimament, u puede [[Special:UserLogin|encetar]] una nueva sesión con o mesmo nombre d'usuario u bell atro diferent. Pare cuenta que, entre que se limpia a caché d'o navegador, puet estar que bellas pachinas s'amuestren como si encara continase en a sesión anterior.",
+Puede continar navegando por {{SITENAME}} anonimament, u puede $1 una nueva sesión con o mesmo nombre d'usuario u bell atro diferent. Pare cuenta que, entre que se limpia a caché d'o navegador, puet estar que bellas pachinas s'amuestren como si encara continase en a sesión anterior.",
+'logouttext-link-text'       => 'encetar',
 'welcomecreation'            => "== ¡Bienveniu(da), $1! ==
 S'ha creyato a suya cuenta.
 No xublide de presonalizar [[Special:Preferences|as suyas preferencias en {{SITENAME}}]].",
@@ -626,34 +598,6 @@ Si a cuenta s\'ha creyato por error, simplament ignore iste mensache.',
 'resetpass-wrong-oldpass'   => 'A clau actual u temporal no ye conforme.
 Talment ya ha cambiato a suya clau u ha demandato una nueva clau temporal.',
 'resetpass-temp-password'   => 'Clau temporal:',
-
-# Special:PasswordReset
-'passwordreset'                    => "Restablir a clau d'acceso",
-'passwordreset-text'               => "Completar ista forma ta recibir un recordatorio por correu con os detalles d'a suya cuenta.",
-'passwordreset-legend'             => "Restablir a clau d'acceso",
-'passwordreset-disabled'           => "S'ha desactivau o restablimiento de claus en ista wiki.",
-'passwordreset-pretext'            => "{{PLURAL:$1||Introduzca uno d'os siguients datos}}",
-'passwordreset-username'           => "Nombre d'usuario:",
-'passwordreset-domain'             => 'Dominio:',
-'passwordreset-capture'            => 'Veyer o mensache resultant?',
-'passwordreset-capture-help'       => "Si marca ista caixeta, se li amostrará o correu electronico (con a clau temporal) amás de ninviar-lo ta l'usuario.",
-'passwordreset-email'              => 'Adreza de correu electronico:',
-'passwordreset-emailtitle'         => "Detalles d'a cuenta en {{SITENAME}}",
-'passwordreset-emailtext-ip'       => "Belún (probablement vusté, dende l'adreza IP $1) ha demandau un recordatorio d'a información d'a suya cuenta en  {{SITENAME}} ($4). {{PLURAL:$3|A cuenta d'usuario siguient ye asociata|As cuentas d'usuario siguients son asociatas}} a ista adreza de correu-e:
-
-$2
-
-{{PLURAL:$3|Ista clau temporal circumducirá|Istas claus temporals circumducirán}} en {{PLURAL:$5|un día|$5 días}}. Habría de connectar-se agora y trigar una nueva clau. Si ista demanda no dimana de vusté, u ya se'n ha acordau d'a suya clau inicial y ya no deseya modificar-la, puet ignorar iste mensache y continar emplegando a suya viella clau.",
-'passwordreset-emailtext-user'     => "L'usuario $1 en {{SITENAME}} ha demandau un recordatorio d'a información d'a suya cuenta en {{SITENAME}} ($4). {{PLURAL:$3|A cuenta d'usuario siguient ye asociata|As cuentas d'usuario siguients son asociatas}} a ista adreza de correu-e:
-
-$2
-
-{{PLURAL:$3|Ista clau d'acceso temporal circumducirá|Istas claus d'acceso temporals circumducirán}} en {{PLURAL:$5|un día|$5 días}}. Habría de connectar-se agora y trigar una nueva clau. Si ista demanda no dimana de vusté, u ya se'n ha acordau d'a suya clau inicial y ya no deseya modificar-la, puet ignorar iste mensache y continar emplegando a suya viella clau.",
-'passwordreset-emailelement'       => "Nombre de usuario: $1
-Clau d'acceso temporal: $2",
-'passwordreset-emailsent'          => "S'ha ninviau un recordatorio por correu-e.",
-'passwordreset-emailsent-capture'  => "Se le ha ninviau un recordatorio por correu electronico, que s'amuestra contino.",
-'passwordreset-emailerror-capture' => "S'ha chenerau un recordatorio por correu electronico, que s'amuestra contino, pero o ninvío ta l'usuario ha fallau: $1",
 
 # Special:ChangeEmail
 'changeemail'          => "Cambiar l'adreza de correu-e",
@@ -773,7 +717,6 @@ A zaguera dentrada d'o rechistro de bloqueyos s'amuestra contino:",
 '''Encara no s'ha alzato!'''",
 'sitejspreview'                    => "'''Remere que isto no ye soque previsualizando iste codigo de JavaScript.'''
 '''Encara no s'ha alzato!'''",
-'userinvalidcssjstitle'            => "'''Pare cuenta:''' No bi ha garra aparencia clamata \"\$1\". Remere que as pachinas presonalizatas .css y .js tienen un títol en minusclas, p.e. {{ns:user}}:Foo/vector.css en cuenta de {{ns:user}}:Foo/Vector.css.",
 'updated'                          => '(Esviellato)',
 'note'                             => "'''Nota:'''",
 'previewnote'                      => "'''Pare cuenta que isto no ye que l'anvista previa d'a pachina; os cambeos encara no s'ha alzato!'''",
@@ -1108,14 +1051,6 @@ Asegure-se que iste cambio no trencará a continidat de l'historial d'a pachina.
 'search-external'                  => 'Busca externa',
 'searchdisabled'                   => 'A busca en {{SITENAME}} ye temporalment desactivata. Entremistanto, puede mirar en {{SITENAME}} fendo servir buscadors externos, pero pare cuenta que os suyos endices de {{SITENAME}} puede no estar esviellatos.',
 
-# Quickbar
-'qbsettings'                => 'Preferencias de "Quickbar"',
-'qbsettings-none'           => 'Garra',
-'qbsettings-fixedleft'      => 'Fixa a la zurda',
-'qbsettings-fixedright'     => 'Fixa a la dreita',
-'qbsettings-floatingleft'   => 'Flotant a la zurda',
-'qbsettings-floatingright'  => 'Flotant a la dreita',
-'qbsettings-directionality' => "Fixato, pendendo en a direccionalidat d'o suyo script y o suyo luengache",
 
 # Preferences page
 'preferences'                   => 'Preferencias',
@@ -2076,7 +2011,7 @@ Contacto con l\'editor:
 correu-e: $PAGEEDITOR_EMAIL
 wiki: $PAGEEDITOR_WIKI
 
-Si no visita a pachina, no recibirá mas notificacions de futuros cambios cambios. 
+Si no visita a pachina, no recibirá mas notificacions de futuros cambios cambios.
 Tamién puet cambiar o modo de notificación d\'as pachinas que cosira en a suya lista de seguimiento.
 Atentament,
 O servicio de notificacions d\'o prochecto {{SITENAME}}
@@ -2146,7 +2081,7 @@ Torne t'a pachina anterior, recargue a pachina y torne a prebar alavez.",
 
 # Protect
 'protectlogpage'              => 'Rechistro de proteccions de pachinas',
-'protectlogtext'              => "Contino s'amuestra una lista de cambios en a protección d'as pachinas. 
+'protectlogtext'              => "Contino s'amuestra una lista de cambios en a protección d'as pachinas.
 Se veiga a [[Special:ProtectedPages|lista de pachinas protechitas]] ta conoixer a lista de proteccions de pachinas actualment operacional.",
 'protectedarticle'            => "s'ha protechito [[$1]]",
 'modifiedarticleprotection'   => 's\'ha cambiato o livel de protección de "[[$1]]"',
@@ -2731,15 +2666,7 @@ Puede veyer-ne, manimenos, o codigo fuent.',
 
 # Stylesheets
 'common.css'              => '/* Os estilos CSS definius aquí aplicarán a todas as apariencias (skins) */',
-'standard.css'            => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Standard */",
-'nostalgia.css'           => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Nostalgia */",
-'cologneblue.css'         => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Cologne Blue */",
 'monobook.css'            => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Monobook */",
-'myskin.css'              => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que que faigan servir l'apariencia MySkin */",
-'chick.css'               => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Chick */",
-'simple.css'              => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Simpla */",
-'modern.css'              => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Modern */",
-'vector.css'              => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que faigan servir l'apariencia Vector */",
 'print.css'               => '/* Os estilos CSS colocaus aquí afectarán a la impresión */',
 'handheld.css'            => '/* Os estilos CSS colocaus aquí afectarán a os dispositivos mobils basaus en as apariencias configuradas en $wgHandheldStyle */',
 'noscript.css'            => "/* Os estilos CSS colocaus aquí s'aplicarán ta totz os usuarios que tiengan desactivato JavaScript */",
@@ -2750,15 +2677,7 @@ Puede veyer-ne, manimenos, o codigo fuent.',
 
 # Scripts
 'common.js'              => '/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios en cada carga de pachina */',
-'standard.js'            => "/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios que faigan servir l'apariencia Estandar */",
-'nostalgia.js'           => "/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios que faigan servir l'apariencia Nostalgia. */",
-'cologneblue.js'         => "/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios que faigan servir l'apariencia Colonia azul */",
 'monobook.js'            => "/* O codigo Javascript que se meta aquí será cargau por os usuarios faigan servir l'apariencia MonoBook */",
-'myskin.js'              => "/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios que faigan servir l'apariencia MySkin */",
-'chick.js'               => "/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios que faigan servir l'apariencia Chick */",
-'simple.js'              => "/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios que faigan servir l'apariencia Simple */",
-'modern.js'              => "/* O codigo Javascript que se meta aquí será cargau por os usuarios faigan servir l'apariencia Modern */",
-'vector.js'              => '/* Qualsiquier codigo Javascript escrito aquí se cargará ta totz os usuarios que usen a piel Vector */',
 'group-autoconfirmed.js' => '/* Qualsiquier codigo Javascript escrito aquí se cargará nomás ta os usuarios autoconfirmatos */',
 'group-bot.js'           => '/* Qualsiquier codigo Javascript escrito aquí se cargará nomás ta os bots */',
 'group-sysop.js'         => '/* Qualsiquier codigo Javascript escrito aquí se cargará nomás ta os administradors */',
@@ -2801,15 +2720,7 @@ Puede veyer-ne, manimenos, o codigo fuent.',
 'pageinfo-viewsperedit'     => 'Vistas por edición',
 
 # Skin names
-'skinname-standard'    => 'Clasica (Classic)',
-'skinname-nostalgia'   => 'Recosiros (Nostalgia)',
-'skinname-cologneblue' => 'Colonia Azul (Cologne Blue)',
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'A mía aparencia (MySkin)',
-'skinname-chick'       => 'Chick',
-'skinname-simple'      => 'Simpla (Simple)',
-'skinname-modern'      => 'Moderna',
-'skinname-vector'      => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Sinyalar como ya controlato',
@@ -3479,7 +3390,7 @@ Tamién puede fer servir o [[Special:EditWatchlist|editor estándar]].",
 'version-license'               => 'Licencia',
 'version-poweredby-credits'     => "Iste wiki funciona gracias a '''[//www.mediawiki.org/ MediaWiki]''', copyright © 2001-$1 $2.",
 'version-poweredby-others'      => 'atros',
-'version-license-info'          => "MediaWiki ye software libre, puet redistribuyir-lo y/u modificar-lo baixo os terminos d'a Licencia Publica Cheneral GNU publicada por a Free Software Foundation, ya siga d'a suya versión 2 u (a la suya esleción) qualsiquier versión posterior. 
+'version-license-info'          => "MediaWiki ye software libre, puet redistribuyir-lo y/u modificar-lo baixo os terminos d'a Licencia Publica Cheneral GNU publicada por a Free Software Foundation, ya siga d'a suya versión 2 u (a la suya esleción) qualsiquier versión posterior.
 
 MediaWiki se distribuye con l'asperanza d'estar d'utilidat, pero SIN GARRA GUARANCIA; nian a guarancia implicita de COMERCIALIZACIÓN u ADEQUACIÓN TA UNA FINALIDAT DETERMINADA. En trobará más detalles en a Licencia Publica General GNU.
 

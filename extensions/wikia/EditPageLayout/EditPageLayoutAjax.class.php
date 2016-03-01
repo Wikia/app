@@ -50,12 +50,6 @@ class EditPageLayoutAjax {
 							} else {
 								$res['html'] = $html;
 							}
-						} elseif ( F::app()->checkSkin( 'venus' ) ) {
-							if ( $type === 'full' ) {
-								$res['html'] = F::app()->renderView( 'VenusController', 'preview', [ 'content' => $html, 'section' => $section ] );
-							} else {
-								$res['html'] = $html;
-							}
 						} else {
 							// add page title when not in section edit mode
 							if ($section === '') {
@@ -74,7 +68,17 @@ class EditPageLayoutAjax {
 								$matches = array();
 								if ( preg_match_all( '/^#REDIRECT \[\[([^\]]+)\]\]/Um', $wikitext, $matches ) ) {
 									$redirectTitle = Title::newFromText( $matches[1][0] );
-									$html = $article->viewRedirect( array( $redirectTitle ) );
+									if ( $redirectTitle ) {
+										$html = $article->viewRedirect( array( $redirectTitle ) );
+									} else {
+										\Wikia\Logger\WikiaLogger::instance()->info(
+											'No redirect title',
+											[
+												'titleText' => $matches[1][0]
+											]
+										);
+										$html = '';
+									}
 								}
 							}
 
@@ -164,7 +168,7 @@ class EditPageLayoutAjax {
 	static private function updatePreferences( $name, $value ) {
 		global $wgUser;
 		if ($wgUser->isLoggedIn()) {
-			$wgUser->setOption($name, $value);
+			$wgUser->setGlobalPreference($name, $value);
 			$wgUser->saveSettings();
 
 			// commit changes to local db

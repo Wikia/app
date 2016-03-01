@@ -27,7 +27,7 @@ class SpecialUserManagementController extends WikiaSpecialPageController {
 
 		$this->email = $this->mUser->getEmail();
 		$this->emailConfirmationDate = $this->wg->Lang->date( $this->mUser->getEmailAuthenticationTimestamp() );
-		$this->emailSubscriptionStatus = !$this->mUser->getOption( 'unsubscribed', 0 );
+		$this->emailSubscriptionStatus = !$this->mUser->getGlobalPreference( 'unsubscribed', 0 );
 
 		// email delivery info
 		$emailErrors = array();

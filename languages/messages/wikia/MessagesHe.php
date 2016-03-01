@@ -32,4 +32,5 @@ $messages = array_merge( $messages, array(
 'use_new_formatting' => 'נסה/י את העיצוב החדש',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 'addnewtalksection-link' => 'הוספת פסקה חדשה',
+'wikia-pagetitle' => '$1 – Wikia',
 ) );

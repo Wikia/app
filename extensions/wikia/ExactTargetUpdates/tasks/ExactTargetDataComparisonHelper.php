@@ -11,7 +11,7 @@ trait ExactTargetDataComparisonHelper {
 	 * @param string $sIgnoredProperty Name of property that doesn't have to be equal
 	 * @return bool true if equal
 	 */
-	protected function compareResults( $aExactTargetData, $aWikiaData, $sCallerName, $sIgnoredProperty = '' ) {
+	protected function compareResults( array $aExactTargetData, array $aWikiaData, $sCallerName, $sIgnoredProperty = '' ) {
 		// Remove ignored property from compared arrays
 		if ( !empty( $sIgnoredProperty ) ) {
 			unset( $aExactTargetData[$sIgnoredProperty] );

@@ -10,6 +10,8 @@
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
  *
  *
+ * @property AuthPlugin Auth
+ * @property AuthPlugin auth
  * @property User $User
  * @property User $user
  * @property OutputPage $Out
@@ -39,6 +41,8 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 	);
 
 	public function get($propertyName) {
+		// body of this method is also copied/inlined in WikiaGlobalRegistry::__get()
+		// don't forget to update it as well if you modify this one
 		$this->validatePropertyName($propertyName);
 		if( isset($GLOBALS[$propertyName]) )
 			return $GLOBALS[$propertyName];
@@ -92,7 +96,17 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 	}
 
 	public function __get($propertyName) {
-		return $this->get( 'wg' . ucfirst($propertyName) );
+		// @author: wladek
+		// inlines WikiaGlobalRegistry::get() and WikiaRegistry::validatePropertyName()
+		// make sure the changes are made in both places
+		$propertyName = 'wg' . ucfirst($propertyName);
+		if ( empty( $propertyName ) || is_numeric( $propertyName ) ) {
+			throw new WikiaException( "WikiaProperty - invalid or empty property name ({$propertyName})" );
+		}
+		if( isset($GLOBALS[$propertyName]) )
+			return $GLOBALS[$propertyName];
+		return null;
+//		return $this->get( 'wg' . ucfirst($propertyName) );
 	}
 
 	public function __set($propertyName, $value) {

@@ -28,9 +28,9 @@ class ExactTargetUserHooksHelper {
 	 */
 	public function prepareUserPropertiesParams( \User $oUser ) {
 		$aUserPropertiesParams = [
-			'marketingallowed' => $oUser->getOption( 'marketingallowed' ),
-			'unsubscribed' => $oUser->getOption( 'unsubscribed' ),
-			'language' => $oUser->getOption( 'language' )
+			'marketingallowed' => $oUser->getGlobalPreference( 'marketingallowed' ),
+			'unsubscribed' => $oUser->getGlobalPreference( 'unsubscribed' ),
+			'language' => $oUser->getGlobalPreference( 'language' )
 		];
 		return $aUserPropertiesParams;
 	}

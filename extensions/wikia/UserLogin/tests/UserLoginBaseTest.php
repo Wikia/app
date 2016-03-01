@@ -7,21 +7,21 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 	protected $skinOrg = null;
 
 	public function setUp() {
-		$this->setupFile = dirname(__FILE__) . '/../UserLogin.setup.php';
+		$this->setupFile = dirname( __FILE__ ) . '/../UserLogin.setup.php';
 		parent::setUp();
 	}
 
-	protected function setUpMockObject( $objectName, $objectParams=null, $needSetInstance=false, $globalVarName=null, $objectValues=array(), $callOriginalConstructor=true ) {
+	protected function setUpMockObject( $objectName, $objectParams = null, $needSetInstance = false, $globalVarName = null, $objectValues = array(), $callOriginalConstructor = true ) {
 		$mockObject = $objectParams;
-		if ( is_array($objectParams) ) {
+		if ( is_array( $objectParams ) ) {
 
-			//list of methods
+			// list of methods
 			$methods = array_keys( $objectParams );
 
-			//add methods from mockValueMap list if exists
-			if( isset($objectParams['mockValueMap']) ) {
+			// add methods from mockValueMap list if exists
+			if ( isset( $objectParams['mockValueMap'] ) ) {
 				$methodsForValMap = array_keys( $objectParams['mockValueMap'] );
-				$methods = array_merge( $methods, $methodsForValMap);
+				$methods = array_merge( $methods, $methodsForValMap );
 			}
 
 			if ( $callOriginalConstructor ) {
@@ -30,42 +30,42 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 				$mockObject = $this->getMock( $objectName, $methods, $objectValues, '', false );
 			}
 
-			foreach( $objectParams as $method => $value ) {
+			foreach ( $objectParams as $method => $value ) {
 				if ( $method == 'params' || $method == 'mockValueMap' || $method == 'mockStatic' ) {
 					// processed later
 				} else if ( $value === null ) {
 					$mockObject->expects( $this->any() )
 						->method( $method );
-				} else if ( is_array($value) && array_key_exists('mockExpTimes', $value) && array_key_exists('mockExpValues', $value) ) {
+				} else if ( is_array( $value ) && array_key_exists( 'mockExpTimes', $value ) && array_key_exists( 'mockExpValues', $value ) ) {
 					if ( $value['mockExpValues'] == null ) {
-						$mockObject->expects( $this->exactly($value['mockExpTimes']) )
+						$mockObject->expects( $this->exactly( $value['mockExpTimes'] ) )
 							->method( $method );
 					} else {
-						$mockObject->expects( $this->exactly($value['mockExpTimes']) )
+						$mockObject->expects( $this->exactly( $value['mockExpTimes'] ) )
 							->method( $method )
-							->will( $this->returnValue($value['mockExpValues']) );
+							->will( $this->returnValue( $value['mockExpValues'] ) );
 
 					}
 				} else {
 					$mockObject->expects( $this->any() )
 						->method( $method )
-						->will( $this->returnValue($value) );
+						->will( $this->returnValue( $value ) );
 				}
 			}
 
 			if ( !empty( $objectParams['params'] ) ) {
 				$properties = $objectParams['params'];
-				$reflCl = new ReflectionClass($mockObject);
-				foreach ($properties as $name => $value) {
-					$reflProp = $reflCl->getProperty($name);
-					$reflProp->setAccessible(true);
-					$reflProp->setValue($mockObject,$value);
+				$reflCl = new ReflectionClass( $mockObject );
+				foreach ( $properties as $name => $value ) {
+					$reflProp = $reflCl->getProperty( $name );
+					$reflProp->setAccessible( true );
+					$reflProp->setValue( $mockObject, $value );
 				}
 			}
 
 			if ( !empty( $objectParams['mockValueMap'] ) ) {
 				$parameters = $objectParams['mockValueMap'];
-				foreach ($parameters as $method => $valueMap) {
+				foreach ( $parameters as $method => $valueMap ) {
 					$mockObject->expects( $this->any() )
 						->method( $method )
 						->will( $this->returnValueMap( $valueMap ) );
@@ -73,7 +73,7 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 			}
 		}
 
-		if ( !empty($globalVarName) && $objectParams !== null ) {
+		if ( !empty( $globalVarName ) && $objectParams !== null ) {
 			$this->mockGlobalVariable( $globalVarName, $mockObject );
 		}
 
@@ -85,11 +85,11 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 				$this->mockClass( $objectName, $mockObject, 'newFromConfirmationCode' );
 				$this->mockClass( $objectName, $mockObject, 'newFromSession' );
 				$this->mockClass( $objectName, $mockObject, 'newFromRow' );
-				$this->mockClass( $objectName, (isset($objectParams['params']['mId']) ? $objectParams['params']['mId'] : 0), 'idFromName' );
+				$this->mockClass( $objectName, ( isset( $objectParams['params']['mId'] ) ? $objectParams['params']['mId'] : 0 ), 'idFromName' );
 			}
 			if ( !empty( $objectParams['mockStatic'] ) ) {
 				$parameters = $objectParams['mockStatic'];
-				foreach ($parameters as $method => $value) {
+				foreach ( $parameters as $method => $value ) {
 					$this->mockClass( $objectName, $value, $method );
 				}
 			}
@@ -124,8 +124,8 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 	protected function mockWfMessage( $map ) {
 
 		$returnMap = array();
-		foreach( $map as $msgParams ) {
-			$msgClassMock = $this->getMessageMock( $msgParams[0] /* we want message mock to return just message key */);
+		foreach ( $map as $msgParams ) {
+			$msgClassMock = $this->getMessageMock( $msgParams[0] /* we want message mock to return just message key */ );
 			$msgParams[] = $msgClassMock;
 			$returnMap[] = $msgParams;
 		}
@@ -137,7 +137,7 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 		$mock->expects( $this->any() )
 			->method( 'wfMessage' )
 			->will( $this->returnCallback(
-					array($this, 'messageMockCallback')
+					array( $this, 'messageMockCallback' )
 				) /* using returnCallback instead of returnValueMap because need to return default value */
 			);
 
@@ -156,13 +156,13 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 
 		$params = func_get_args();
 
-		foreach( $this->returnMessageMap as $mapItem ) {
+		foreach ( $this->returnMessageMap as $mapItem ) {
 
 			$lastId = count( $mapItem ) - 1;
 			$returnVal = $mapItem[ $lastId ];
 			unset( $mapItem[ $lastId ] );
 
-			if ($mapItem == $params) {
+			if ( $mapItem == $params ) {
 				return $returnVal;
 			}
 
@@ -181,7 +181,7 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 	 */
 	protected function getMessageMock( $retVal = '' ) {
 
-		$msgClassMock = $this->getMock( 'Message', array('plain','parse','escaped','inLanguage'), array('keyname') );
+		$msgClassMock = $this->getMock( 'Message', array( 'plain', 'parse', 'escaped', 'inLanguage' ), array( 'keyname' ) );
 
 		$msgClassMock->expects( $this->any() )
 			->method( 'plain' )
@@ -199,7 +199,7 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 			->method( 'escaped' )
 			->will( $this->returnValue( $retVal ) );
 
-		//inLanguage returns Message so return value should be Message mock
+		// inLanguage returns Message so return value should be Message mock
 		$msgClassMock->expects( $this->any() )
 			->method( 'inLanguage' )
 			->will( $this->returnValue( $msgClassMock ) );
@@ -207,26 +207,26 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 		return $msgClassMock;
 	}
 
-	protected function setUpRequest( $params=array() ) {
+	protected function setUpRequest( $params = array() ) {
 		$wgRequest = new WebRequest();
-		foreach( $params as $key => $value ) {
+		foreach ( $params as $key => $value ) {
 			$wgRequest->setVal( $key, $value );
 		}
-		$this->mockGlobalVariable('wgRequest', $wgRequest);
+		$this->mockGlobalVariable( 'wgRequest', $wgRequest );
 	}
 
-	protected function setUpSession( $params=array() ) {
-		if ( !empty($params) ) {
-			foreach( $params as $key => $value ) {
+	protected function setUpSession( $params = array() ) {
+		if ( !empty( $params ) ) {
+			foreach ( $params as $key => $value ) {
 				$_SESSION[$key] = $value;
 			}
 		}
 	}
 
-	protected function tearDownSession( $params=array() ) {
-		if ( !empty($params) ) {
-			foreach( $params as $key => $value ) {
-				unset($_SESSION[$key]);
+	protected function tearDownSession( $params = array() ) {
+		if ( !empty( $params ) ) {
+			foreach ( $params as $key => $value ) {
+				unset( $_SESSION[$key] );
 			}
 		}
 	}

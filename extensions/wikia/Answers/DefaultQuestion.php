@@ -72,7 +72,7 @@ class DefaultQuestion {
 
 		if( $wgUser->isLoggedIn() ){
 			// check user preferences before adding to watchlist (RT #45647)
-			$watchCreations = $wgUser->getOption('watchcreations');
+			$watchCreations = $wgUser->getGlobalPreference('watchcreations');
 			if (!empty($watchCreations)) {
 				$wgUser->addWatch( $this->title );
 			}

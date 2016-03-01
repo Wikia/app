@@ -450,30 +450,12 @@ $messages = array(
 'navigation'    => 'Navegação',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Procurar',
 'qbbrowse'       => 'Navegar',
-'qbedit'         => 'Editar',
 'qbpageoptions'  => 'Esta página',
 'qbpageinfo'     => 'Contexto',
-'qbmyoptions'    => 'Minhas páginas',
-'qbspecialpages' => 'Páginas especiais',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Adicionar&nbsp;tópico',
-'vector-action-delete'           => 'Eliminar',
-'vector-action-move'             => 'Mover',
-'vector-action-protect'          => 'Proteger',
-'vector-action-undelete'         => 'Restaurar',
-'vector-action-unprotect'        => 'Alterar protecção',
-'vector-simplesearch-preference' => 'Activar sugestões de busca melhoradas (apenas no tema Vector)',
-'vector-view-create'             => 'Criar',
-'vector-view-edit'               => 'Editar',
-'vector-view-history'            => 'Ver histórico',
-'vector-view-view'               => 'Ler',
-'vector-view-viewsource'         => 'Ver fonte',
 'actions'                        => 'Acções',
 'namespaces'                     => 'Espaços nominais',
 'variants'                       => 'Variantes',
@@ -496,7 +478,6 @@ $messages = array(
 'edit'              => 'Editar',
 'create'            => 'Criar',
 'editthispage'      => 'Editar esta página',
-'create-this-page'  => 'Criar/iniciar esta página',
 'delete'            => 'Eliminar',
 'deletethispage'    => 'Eliminar esta página',
 'undelete_short'    => 'Restaurar {{PLURAL:$1|uma edição|$1 edições}}',
@@ -511,19 +492,9 @@ $messages = array(
 'talkpagelinktext'  => 'discussão',
 'specialpage'       => 'Página especial',
 'personaltools'     => 'Ferramentas pessoais',
-'postcomment'       => 'Nova secção',
-'articlepage'       => 'Ver página de conteúdo',
 'talk'              => 'Discussão',
 'views'             => 'Vistas',
 'toolbox'           => 'Ferramentas',
-'userpage'          => 'Ver página de utilizador',
-'projectpage'       => 'Ver página de projecto',
-'imagepage'         => 'Ver página de ficheiro',
-'mediawikipage'     => 'Ver página de mensagens',
-'templatepage'      => 'Ver página de predefinições',
-'viewhelppage'      => 'Ver página de ajuda',
-'categorypage'      => 'Ver página de categorias',
-'viewtalkpage'      => 'Ver discussão',
 'otherlanguages'    => 'Noutras línguas',
 'redirectedfrom'    => '(Redireccionado de $1)',
 'redirectpagesub'   => 'Página de redireccionamento',
@@ -705,8 +676,9 @@ A justificação foi "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext'                 => "'''Já não está autenticado.'''
 
-Pode continuar a utilizar a {{SITENAME}} anonimamente, ou pode [[Special:UserLogin|autenticar-se novamente]] com o mesmo nome de utilizador ou com um nome de utilizador diferente.
+Pode continuar a utilizar a {{SITENAME}} anonimamente, ou pode $1 com o mesmo nome de utilizador ou com um nome de utilizador diferente.
 Tenha em atenção que algumas páginas poderão continuar a ser apresentadas como se ainda estivesse autenticado até limpar a cache do seu browser.",
+'logouttext-link-text'       => 'autenticar-se novamente',
 'welcomecreation'            => '== Bem-vindo, $1! ==
 A sua conta foi criada.
 Não se esqueça de personalizar as suas [[Special:Preferences|preferências na {{SITENAME}}]].',
@@ -825,34 +797,6 @@ Para prosseguir, será necessário definir uma nova palavra-chave.',
 'resetpass-wrong-oldpass'   => 'Palavra-chave temporária ou actual inválida.
 Pode ter já alterado com sucesso a sua palavra-chave ou solicitado uma nova palavra-chave temporária.',
 'resetpass-temp-password'   => 'Palavra-chave temporária:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Repor palavra-chave',
-'passwordreset-text'               => 'Preencha este formulário para recuperar os dados da sua conta por correio electrónico.',
-'passwordreset-legend'             => 'Reiniciar a palavra-chave',
-'passwordreset-disabled'           => 'Reiniciar a palavra-chave foi impossibilitado nesta wiki.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Introduza um dos dados abaixo}}',
-'passwordreset-username'           => 'Nome de utilizador:',
-'passwordreset-domain'             => 'Domínio:',
-'passwordreset-capture'            => 'Ver o email resultante?',
-'passwordreset-capture-help'       => 'Se marcar esta caixa, o e-mail (com a senha temporária) será-lhe mostrado, além de ser enviado para o utilizador.',
-'passwordreset-email'              => 'Correio electrónico:',
-'passwordreset-emailtitle'         => 'Detalhes da conta na {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Alguém, provavelmente você a partir do endereço IP $1, pediu a recuperação dos detalhes da sua conta na {{SITENAME}} ($4). {{PLURAL:$3|A seguinte conta está associada|As seguintes contas estão associadas}} a este correio electrónico:
-
-$2
-
-{{PLURAL:$3|Esta palavra-chave temporária irá|Estas palavras-chave temporárias irão}} expirar dentro de {{PLURAL:$5|um dia|$5 dias}}. Deve autenticar-se e escolher uma palavra-chave nova agora. Se este pedido não foi feito por si, ou se entretanto se recordou da sua palavra-chave original e já não deseja alterá-la, pode ignorar esta mensagem e continuar a usar a palavra-chave antiga.',
-'passwordreset-emailtext-user'     => 'O utilizador $1 da {{SITENAME}} pediu a recuperação dos detalhes da sua conta na {{SITENAME}} ($4). {{PLURAL:$3|A seguinte conta está associada|As seguintes contas estão associadas}} a este correio electrónico:
-
-$2
-
-{{PLURAL:$3|Esta palavra-chave temporária irá|Estas palavras-chave temporárias irão}} expirar dentro de {{PLURAL:$5|um dia|$5 dias}}. Deve autenticar-se e escolher uma palavra-chave nova agora. Se este pedido não foi feito por si, ou se entretanto se recordou da sua palavra-chave original e já não deseja alterá-la, pode ignorar esta mensagem e continuar a usar a palavra-chave antiga.',
-'passwordreset-emailelement'       => 'Utilizador: $1
-Palavra-chave temporária: $2',
-'passwordreset-emailsent'          => 'Foi enviado um correio electrónico de recuperação dos dados da conta.',
-'passwordreset-emailsent-capture'  => 'Foi enviado um e-mail de lembrete, que é mostrado abaixo.',
-'passwordreset-emailerror-capture' => 'Foi gerado o lembrete de e-mail mostrado abaixo, contudo falhou o envio para o utilizador: $1',
 
 # Special:ChangeEmail
 'changeemail'          => 'Alterar o endereço de correio electrónico',
@@ -986,7 +930,6 @@ Este ainda não foi gravado!",
 '''Ele ainda não foi gravado!'''",
 'sitejspreview'                    => "'''Lembre-se de que está apenas a antever este código JavaScript.'''
 '''Ele ainda não foi gravado!'''",
-'userinvalidcssjstitle'            => "'''Aviso:''' Não existe um tema \"\$1\". Lembre-se que as páginas .css e  .js têm um título em minúsculas, exemplo: {{ns:user}}:Alguém/vector.css em vez de {{ns:user}}:Alguém/Vector.css.",
 'updated'                          => '(Actualizado)',
 'note'                             => "'''Nota:'''",
 'previewnote'                      => "'''Lembre-se que esta é apenas uma antevisão do resultado.'''
@@ -1347,14 +1290,6 @@ Tente usar o prefixo ''all:'' para pesquisar todo o conteúdo (incluindo página
 Entretanto, pode realizar pesquisas através do Google.
 Note, no entanto, que a indexação da {{SITENAME}} neste motor de busca pode estar desactualizada.',
 
-# Quickbar
-'qbsettings'                => 'Barra Rápida',
-'qbsettings-none'           => 'Nenhuma',
-'qbsettings-fixedleft'      => 'Fixa à esquerda',
-'qbsettings-fixedright'     => 'Fixa à direita',
-'qbsettings-floatingleft'   => 'Flutuante à esquerda',
-'qbsettings-floatingright'  => 'Flutuante à direita',
-'qbsettings-directionality' => 'Fixado, a dependener da direccionalidade do script da sua língua',
 
 # Preferences page
 'preferences'                   => 'Preferências',
@@ -2994,29 +2929,13 @@ Permite colocar uma justificação no resumo da edição.',
 
 # Stylesheets
 'common.css'      => '/* Código CSS colocado aqui será aplicado a todos os temas */',
-'standard.css'    => '/* Código CSS colocado aqui afectará os utilizadores do tema Clássico */',
-'nostalgia.css'   => '/* Código CSS colocado aqui afectará os utilizadores do tema Nostalgia */',
-'cologneblue.css' => '/* Código CSS colocado aqui afectará os utilizadores do tema Azul colonial */',
 'monobook.css'    => '/* Código CSS colocado aqui afectará os utilizadores do tema Monobook */',
-'myskin.css'      => '/* Código CSS colocado aqui afectará os utilizadores do tema MySkin */',
-'chick.css'       => '/* Código CSS colocado aqui afectará os utilizadores do tema Chique */',
-'simple.css'      => '/* Código CSS colocado aqui afectará os utilizadores do tema Simples */',
-'modern.css'      => '/* Código CSS colocado aqui afectará os utilizadores do tema Moderno */',
-'vector.css'      => '/* Código CSS colocado aqui afectará os utilizadores do tema Vector */',
 'print.css'       => '/* Código CSS colocado aqui afectará as impressões */',
 'handheld.css'    => '/* Código CSS colocado aqui afectará dispositivos móveis baseados no tema configurado em $wgHandheldStyle */',
 
 # Scripts
 'common.js'      => '/* Código Javascript colocado aqui será carregado para todos os utilizadores em cada carregamento de página */',
-'standard.js'    => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Clássico */',
-'nostalgia.js'   => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Nostalgia */',
-'cologneblue.js' => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Azul colonial */',
 'monobook.js'    => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Monobook */',
-'myskin.js'      => '/* Código Javascript colocado aqui será carregado para utilizadores do tema MySkin */',
-'chick.js'       => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Chick */',
-'simple.js'      => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Simples */',
-'modern.js'      => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Moderno */',
-'vector.js'      => '/* Código Javascript colocado aqui será carregado para utilizadores do tema Vector */',
 
 # Metadata
 'notacceptable' => 'O servidor não pode fornecer os dados num formato que o seu cliente possa ler.',
@@ -3056,15 +2975,7 @@ Este bloqueio foi provavelmente causado por um link para um site externo que con
 'pageinfo-viewsperedit'     => 'Visitas por edição',
 
 # Skin names
-'skinname-standard'    => 'Clássico',
-'skinname-nostalgia'   => 'Nostalgia',
-'skinname-cologneblue' => 'Azul colonial',
 'skinname-monobook'    => 'MonoBook',
-'skinname-myskin'      => 'MySkin',
-'skinname-chick'       => 'Chique',
-'skinname-simple'      => 'Simples',
-'skinname-modern'      => 'Moderno',
-'skinname-vector'      => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Marcar como patrulhada',

@@ -453,30 +453,12 @@ $messages = array(
 'navigation'    => 'Gezinti',
 'and'           => '&#32;ve',
 
-# Cologne Blue skin
 'qbfind'         => 'Bul',
 'qbbrowse'       => 'Tara',
-'qbedit'         => 'Değiştir',
 'qbpageoptions'  => 'Bu sayfa',
 'qbpageinfo'     => 'Bağlam',
-'qbmyoptions'    => 'Sayfalarım',
-'qbspecialpages' => 'Özel sayfalar',
 'faq'            => 'SSS',
-'faqpage'        => 'Project:SSS',
 
-# Vector skin
-'vector-action-addsection'       => 'Konu ekle',
-'vector-action-delete'           => 'Sil',
-'vector-action-move'             => 'Taşı',
-'vector-action-protect'          => 'Koru',
-'vector-action-undelete'         => 'Silinmeyi geri al',
-'vector-action-unprotect'        => 'Korumayı değiştir',
-'vector-simplesearch-preference' => 'Gelişmiş arama önerilerini getir (Sadece Vector görünümü için)',
-'vector-view-create'             => 'Oluştur',
-'vector-view-edit'               => 'Düzenle',
-'vector-view-history'            => 'Geçmişi gör',
-'vector-view-view'               => 'Oku',
-'vector-view-viewsource'         => 'Kaynağı gör',
 'actions'                        => 'Eylemler',
 'namespaces'                     => 'Ad alanları',
 'variants'                       => 'Türevler',
@@ -499,7 +481,6 @@ $messages = array(
 'edit'              => 'Düzenle',
 'create'            => 'Oluştur',
 'editthispage'      => 'Bu sayfayı değiştir',
-'create-this-page'  => 'Bu sayfayı oluştur',
 'delete'            => 'sil',
 'deletethispage'    => 'Sayfayı sil',
 'undelete_short'    => '{{PLURAL:$1|değişikliği|$1 değişiklikleri}} geri getir',
@@ -514,19 +495,9 @@ $messages = array(
 'talkpagelinktext'  => 'Mesaj',
 'specialpage'       => 'Özel sayfa',
 'personaltools'     => 'Kişisel araçlar',
-'postcomment'       => 'Yeni bölüm',
-'articlepage'       => 'İçerik sayfasını gör',
 'talk'              => 'Tartışma',
 'views'             => 'Görünümler',
 'toolbox'           => 'Araçlar',
-'userpage'          => 'Kullanıcı sayfasını görüntüle',
-'projectpage'       => 'Proje sayfasına bak',
-'imagepage'         => 'Dosya sayfasını görüntüle',
-'mediawikipage'     => 'Mesaj sayfasını göster',
-'templatepage'      => 'Şablon sayfasını görüntüle',
-'viewhelppage'      => 'Yardım sayfasına bak',
-'categorypage'      => 'Kategori sayfasını göster',
-'viewtalkpage'      => 'Tartışma sayfasına git',
 'otherlanguages'    => 'Diğer dillerde',
 'redirectedfrom'    => '($1 sayfasından yönlendirildi)',
 'redirectpagesub'   => 'Yönlendirme sayfası',
@@ -706,8 +677,9 @@ Verilen sebep: ''$2''.",
 # Login and logout pages
 'logouttext'                 => "'''Oturumu kapattınız.'''
 
-Şimdi kimliğinizi belirtmeksizin {{SITENAME}} sitesini kullanmaya devam edebilirsiniz, ya da [[Special:UserLogin|yeniden oturum açabilirsiniz]] (ister aynı kullanıcı adıyla, ister başka bir kullanıcı adıyla).
+Şimdi kimliğinizi belirtmeksizin {{SITENAME}} sitesini kullanmaya devam edebilirsiniz, ya da $1 (ister aynı kullanıcı adıyla, ister başka bir kullanıcı adıyla).
 Web tarayıcınızın önbelleğini temizleyene kadar bazı sayfalar sanki hala oturumunuz açıkmış gibi görünebilir.",
+'logouttext-link-text'       => 'yeniden oturum açabilirsiniz',
 'welcomecreation'            => '== Hoş geldin, $1! ==
 
 Hesabınız açıldı.
@@ -822,37 +794,6 @@ Girişi bitirmek için, burada yeni bir parola yazın:',
 'resetpass-wrong-oldpass'   => 'Geçersiz geçici veya güncel şifre.
 Şifrenizi zaten başarıyla değiştirdiniz ya da yeni bir geçici şifre istediniz.',
 'resetpass-temp-password'   => 'Geçici parola:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'Parola sıfırlama',
-'passwordreset-text'               => 'Hesap bilgilerinizin e-posta ile hatırlatılması için bu formu doldurunuz.',
-'passwordreset-legend'             => 'Şifreyi sıfırla',
-'passwordreset-disabled'           => 'Parola sıfırlamaları bu wiki üzerinde devre dışı bırakıldı.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Aşağıdaki verilerden birini girin}}',
-'passwordreset-username'           => 'Kullanıcı adı:',
-'passwordreset-domain'             => 'Domain:',
-'passwordreset-capture'            => 'Sonuç e-postasını görüntüle?',
-'passwordreset-capture-help'       => 'Bu kutuyu işaretlerseniz, e-posta (geçici şifre ile) size ve yanı sıra kullanıcıya gönderiliyor.',
-'passwordreset-email'              => 'E-posta adresi:',
-'passwordreset-emailtitle'         => '{{SITENAME}} hesap detayları',
-'passwordreset-emailtext-ip'       => 'Birisi, (muhtemelen siz, $1 IP adresinden) {{SITENAME}} ($4) için hesap bilgilerinizin 
-hatırlatılmasını istedi. Aşağıdaki kullanıcı {{PLURAL:$3|hesabı|hesapları}} bu e-posta adresiyle ilişkili:
-
-$2
-
-{{PLURAL:$3|Bu geçici şifre|Bu geçici şifreler}} {{PLURAL:$5|bir gün|$5  gün}} geçerlidir.
-Bu geçici parola ile giriş yapın ve yeni bir şifre seçin. Şifre değişimini siz istemediyseniz veya şifrenizi hatırladıysanız ve artık şifrenizi değiştirmek istemiyorsanız; bu iletiyi önemsemeyerek eski şifrenizi kullanmaya devam edebilirsiniz.',
-'passwordreset-emailtext-user'     => '$1 adlı kullanıcı, {{SITENAME}} ($4) için hesap bilgilerinizin hatırlatılmasını istedi. Aşağıdaki kullanıcı {{PLURAL:$3|hesabı|hesapları}} bu e-posta adresiyle ilişkili:
-
-$2
-
-{{PLURAL:$3|Bu geçici şifre|Bu geçici şifreler}} {{PLURAL:$5|bir gün|$5  gün}} geçerlidir.
-Bu geçici parola ile giriş yapın ve yeni bir şifre seçin. Bu talep bir başkasına aitse veya şifrenizi hatırladıysanız ve artık şifrenizi değiştirmek istemiyorsanız; bu iletiyi önemsemeyerek eski şifrenizi kullanmaya devam edebilirsiniz.',
-'passwordreset-emailelement'       => 'Kullanıcı adı: $1
-Geçici şifre: $2',
-'passwordreset-emailsent'          => 'Hatırlatma e-postası gönderildi.',
-'passwordreset-emailsent-capture'  => 'Aşağıda gözüktüğü gibi bir hatırlatma e-postası gönderilmiştir.',
-'passwordreset-emailerror-capture' => 'Aşağıda gözüktüğü gibi bir hatırlatma e-postası oluşturulmuştur ancak $1 adlı kullanıcıya gönderilememiştir.',
 
 # Special:ChangeEmail
 'changeemail'          => 'E-posta adresini değiştir',
@@ -971,9 +912,9 @@ Son engelleme günlüğü girdisi referans için aşağıda sağlanmıştır:',
 'userjsyoucanpreview'              => "'''İpucu:''' Kaydetmeden önce \"{{int:showpreview}}\"e tıklayarak yeni JavaScript'inizi test edin.",
 'usercsspreview'                   => "'''Sadece kullanıcı CSS dosyanızın önizlemesini görüyorsun.''' '''Kullanıcı CSS dosyası henüz kaydolmadı!'''",
 'userjspreview'                    => "'''Sadece test ediyorsun ya da önizleme görüyorsun - kullanıcı JavaScript'i henüz kaydolmadı.'''",
-'sitecsspreview'                   => "'''Sadece kullanıcı CSS dosyanızın önizlemesini görüyorsunuz.''' 
+'sitecsspreview'                   => "'''Sadece kullanıcı CSS dosyanızın önizlemesini görüyorsunuz.'''
 '''Henüz kaydedilmedi!'''",
-'sitejspreview'                    => "'''Sadece kullanıcı JavaScript kod dosyanızın önizlemesini görüyorsunuz.''' 
+'sitejspreview'                    => "'''Sadece kullanıcı JavaScript kod dosyanızın önizlemesini görüyorsunuz.'''
 '''Henüz kaydedilmedi!'''",
 'userinvalidcssjstitle'            => "''Uyarı:''' \"\$1\" adıyla bir tema yoktur. tema-adı.css ve .js dosyalarının adları küçük harf ile yazması gerek, yani {{ns:user}}:Temel/'''V'''ector.css değil, {{ns:user}}:Temel/'''v'''ector.css.",
 'updated'                          => '(Güncellendi)',
@@ -1319,14 +1260,6 @@ Aramanızın başına '''all:''' önekini ekleyerek tüm içeriği aramayı (tar
 'search-external'                  => 'Dış arama',
 'searchdisabled'                   => '{{SITENAME}} sitesinde arama yapma geçici olarak durdurulmuştur. Bu arada Google kullanarak {{SITENAME}} içinde arama yapabilirsiniz. Arama sitelerinde indekslemelerinin biraz eski kalmış olabileceğini göz önünde bulundurunuz.',
 
-# Quickbar
-'qbsettings'                => 'Hızlı erişim sütun ayarları',
-'qbsettings-none'           => 'Hiçbiri',
-'qbsettings-fixedleft'      => 'Sola sabitlendi',
-'qbsettings-fixedright'     => 'Sağa sabitlendi',
-'qbsettings-floatingleft'   => 'Sola yaslanıyor',
-'qbsettings-floatingright'  => 'Sağa yaslanıyor',
-'qbsettings-directionality' => 'Sabit, dilinizin komut dosyasının yönüne bağlı',
 
 # Preferences page
 'preferences'                   => 'Tercihler',
@@ -1857,7 +1790,7 @@ Sitenin daha az meşgul olduğu bir zamanda denemek daha iyi olabilir.',
 'upload_source_file' => ' (bilgisayarınızdaki bir dosya)',
 
 # Special:ListFiles
-'listfiles-summary'     => 'Bu özel sayfa yüklenilen tüm dosyaları gösterir. 
+'listfiles-summary'     => 'Bu özel sayfa yüklenilen tüm dosyaları gösterir.
 Kullanıcı tarafından filtrelendiğinde, sadece o kullanıcı dosyanın en son sürümünü yüklediği dosyalar gösterilir.',
 'listfiles_search_for'  => 'Medya adı ara:',
 'imgfile'               => 'dosya',
@@ -2950,11 +2883,6 @@ Geçici dosya kayıp.',
 'pageinfo-viewsperedit'     => 'Değişiklik başına görüntüleme',
 
 # Skin names
-'skinname-standard'  => 'Klasik',
-'skinname-nostalgia' => 'Nostaljik',
-'skinname-chick'     => 'Şık',
-'skinname-simple'    => 'Basit',
-'skinname-modern'    => 'Modern',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Kontrol edilmiş olarak işaretle',

@@ -1,5 +1,8 @@
 <?php
 
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\User\Auth\CookieHelper;
+
 /**
  * User Login Helper
  * @author Hyun
@@ -75,13 +78,8 @@ class UserLoginHelper extends WikiaModel {
 	 * @return array $wikiUsers
 	 */
 	protected function getWikiUsers( $wikiId = null, $limit = 30 ) {
+		global $wgSpecialsDB;
 		wfProfileIn( __METHOD__ );
-
-		if ( !$this->wg->StatsDBEnabled ) {
-			// no stats DB, can't get list of users with avatars
-			wfProfileOut( __METHOD__ );
-			return array();
-		}
 
 		$wikiId = ( empty( $wikiId ) ) ? $this->wg->CityId : $wikiId;
 
@@ -90,7 +88,7 @@ class UserLoginHelper extends WikiaModel {
 		if ( !is_array( $wikiUsers ) ) {
 			$wikiUsers = array();
 
-			$db = wfGetDB( DB_SLAVE, array(), $this->wg->StatsDB );
+			$db = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
 			$result = $db->select(
 				array( 'user_login_history' ),
 				array( 'distinct user_id' ),
@@ -110,11 +108,10 @@ class UserLoginHelper extends WikiaModel {
 				$this->addUserToUserList( $founder, $wikiUsers );
 			}
 
-			$this->wg->Memc->set( $memKey, $wikiUsers, 60 * 60 * 24 );
+			$this->wg->Memc->set( $memKey, $wikiUsers, WikiaResponse::CACHE_STANDARD );
 		}
 
 		wfProfileOut( __METHOD__ );
-
 		return $wikiUsers;
 	}
 
@@ -209,7 +206,7 @@ class UserLoginHelper extends WikiaModel {
 		if ( empty( $this->wg->EnableRichEmails ) ) {
 			$bodyHTML = null;
 		} else {
-			$emailTextTemplate = $this->app->renderView( "UserLogin", $template, array( 'language' => $user->getOption( 'language' ), 'type' => $templateType ) );
+			$emailTextTemplate = $this->app->renderView( "UserLogin", $template, array( 'language' => $user->getGlobalPreference( 'language' ), 'type' => $templateType ) );
 			$bodyHTML = strtr( $emailTextTemplate, $emailParams );
 		}
 
@@ -244,7 +241,7 @@ class UserLoginHelper extends WikiaModel {
 			$result['msg'] = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
 			return $result;
 		} else {
-			if ( !$user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) && $user->isEmailConfirmed() ) {
+			if ( !$user->getGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) && $user->isEmailConfirmed() ) {
 				// User already confirmed on signup
 				$result['result'] = 'confirmed';
 				$result['msg'] = wfMessage( 'usersignup-error-confirmed-user', $username, $user->getUserPage()->getFullURL() )->parse();
@@ -280,8 +277,7 @@ class UserLoginHelper extends WikiaModel {
 			return $result;
 		}
 
-		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array( 'language' => $user->getOption( 'language' ), 'type' => 'confirmation-email' ) );
-		$response = $user->sendConfirmationMail( false, 'ConfirmationMail', 'usersignup-confirmation-email', true, $emailTextTemplate );
+		$response = $user->sendConfirmationMail( false, 'ConfirmationMail' );
 		if ( !$response->isGood() ) {
 			$result['result'] = 'error';
 			$result['msg'] = wfMessage( 'userlogin-error-mail-error' )->escaped();
@@ -292,15 +288,6 @@ class UserLoginHelper extends WikiaModel {
 		}
 
 		return $result;
-	}
-
-	/**
-	 * @param User $user
-	 * @return string
-	 */
-	public function getReconfirmationEmailTempalte( $user ) {
-		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array( 'language' => $user->getOption( 'language' ), 'type' => 'reconfirmation-email' ) );
-		return $emailTextTemplate;
 	}
 
 	/**
@@ -319,7 +306,7 @@ class UserLoginHelper extends WikiaModel {
 		$user->mId = 0;
 		$user->mEmail = $email;
 
-		$result = $user->sendReConfirmationMail( $type );
+		$result = $user->sendReConfirmationMail();
 
 		$user->mId = $userId;
 		$user->mEmail = $userEmail;
@@ -334,13 +321,12 @@ class UserLoginHelper extends WikiaModel {
 	 * @param User $user
 	 * @return Status object
 	 */
-	public function sendConfirmationReminderEmail( &$user ) {
-		if ( ( $user->getOption( "cr_mailed", 0 ) == 1 ) ) {
+	public function sendConfirmationReminderEmail( $user ) {
+		if ( ( $user->getGlobalFlag( "cr_mailed", 0 ) == 1 ) ) {
 			return Status::newFatal( 'userlogin-error-confirmation-reminder-already-sent' );
 		}
-		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array( 'language' => $user->getOption( 'language' ), 'type' => 'confirmation-reminder-email' ) );
-		$user->setOption( "cr_mailed", "1" );
-		return $user->sendConfirmationMail( false, 'ConfirmationReminderMail', 'usersignup-confirmation-reminder-email', true, $emailTextTemplate );
+		$user->setGlobalFlag( "cr_mailed", "1" );
+		return $user->sendConfirmationMail( false, 'ConfirmationReminderMail' );
 	}
 
 	/**
@@ -448,6 +434,16 @@ class UserLoginHelper extends WikiaModel {
 	}
 
 	/**
+	 * Read a login token, DO NOT init if it doesn't exist
+	 *
+	 * @return string loginToken|null
+	 */
+	public static function readLoginToken() {
+		$loginToken = LoginForm::getLoginToken();
+		return !empty( $loginToken ) ? $loginToken : null;
+	}
+
+	/**
 	 * Get a login token
 	 *
 	 * @return string loginToken
@@ -487,7 +483,7 @@ class UserLoginHelper extends WikiaModel {
 	public function showRequestFormConfirmEmail( EmailConfirmation $pageObj ) {
 		$user = $pageObj->getUser(); /* @var $user User */
 		$out = $pageObj->getOutput(); /* @var $out OutputPage */
-		$optionNewEmail = $user->getOption( 'new_email' );
+		$optionNewEmail = $user->getNewEmail();
 		if ( $pageObj->getRequest()->wasPosted() && $user->matchEditToken( $pageObj->getRequest()->getText( 'token' ) ) ) {
 			// Wikia change -- only allow one email confirmation attempt per hour
 			if ( strtotime( $user->mEmailTokenExpires ) - strtotime( "+6 days 23 hours" ) > 0 ) {
@@ -545,8 +541,8 @@ class UserLoginHelper extends WikiaModel {
 	 * @return bool
 	 */
 	public static function removeNotConfirmedFlag( User &$user ) {
-		$user->setOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null );
-		$user->setOption( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, null );
+		$user->setGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, null );
+		$user->setGlobalFlag( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, null );
 		$user->saveSettings();
 		$user->saveToCache();
 		wfRunHooks( 'SignupConfirmEmailComplete', array( $user ) );
@@ -619,4 +615,44 @@ class UserLoginHelper extends WikiaModel {
 
 		return $result;
 	}
+
+	public function getNewAuthUrl( $page = '/join' ) {
+		if ( $this->app->wg->title->isSpecial( 'Userlogout' ) ) {
+			$requestUrl = Title::newMainPage()->getLocalURL();
+		}
+		else {
+			$requestUrl = $this->app->wg->request->getRequestURL();
+		}
+
+		return $page . '?redirect='
+			. urlencode ( wfExpandUrl ( $requestUrl ) )
+			. $this->getUselangParam();
+	}
+
+	/**
+	 * Returns string with uselang param to append to login url if Wikia language is different than default
+	 * @return string
+	 */
+	private function getUselangParam() {
+		$lang = $this->wg->ContLang->mCode;
+		return $lang == 'en' ? '' : '&uselang=' . $lang;
+	}
+
+	/**
+	 * Set the cookies for the newly connected user.
+	 *
+	 * @param User the user that has been authenticated via facebook.
+	 */
+	public static function setCookiesForFacebookUser( \User $user, \Wikia\HTTP\Response $response ) {
+		$user->setCookies();
+		self::getCookieHelper()->setAuthenticationCookieWithUserId( $user->getId(), $response );
+	}
+
+	/**
+	 * @return \Wikia\Service\User\Auth\CookieHelper
+	 */
+	private static function getCookieHelper() {
+		return Injector::getInjector()->get(CookieHelper::class);
+	}
+
 }

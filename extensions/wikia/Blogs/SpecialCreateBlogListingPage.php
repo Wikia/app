@@ -49,12 +49,10 @@ class CreateBlogListingPage extends SpecialPage {
 			$this->parseFormData();
 			if ( count( $this->mFormErrors ) > 0 || !empty( $this->mRenderedPreview ) ) {
 				$this->renderForm();
-			}
-			else {
+			} else {
 				$this->save();
 			}
-		}
-		else {
+		} else {
 			if ( $wgRequest->getVal( 'article' ) != null ) {
 				$this->parseTag( urldecode( $wgRequest->getVal( 'article' ) ) );
 			}
@@ -84,7 +82,12 @@ class CreateBlogListingPage extends SpecialPage {
 	}
 
 	protected function parseFormData() {
-		global $wgUser, $wgRequest, $wgOut, $wgParser;
+		global $wgUser, $wgRequest, $wgParser;
+
+		if ( !$wgUser->matchEditToken( $wgRequest->getVal( 'token' ) ) ) {
+			$this->mFormErrors[] = wfMessage( 'sessionfailure' )->escaped();
+			return;
+		}
 
 		$this->mFormData['listingTitle'] = $wgRequest->getVal( 'blogListingTitle' );
 		$this->mFormData['listingCategories'] = $wgRequest->getVal( 'wpCategoryTextarea1' );
@@ -96,21 +99,18 @@ class CreateBlogListingPage extends SpecialPage {
 
 		if ( empty( $this->mFormData['listingTitle'] ) ) {
 			$this->mFormErrors[] = wfMsg( 'create-blog-empty-title-error' );
-		}
-		else {
+		} else {
 			$oPostTitle = Title::newFromText( $this->mFormData['listingTitle'], NS_BLOG_LISTING );
 
 			if ( !( $oPostTitle instanceof Title ) ) {
 				$this->mFormErrors[] = wfMsg( 'create-blog-invalid-title-error' );
-			}
-			elseif ( $oPostTitle->isProtected( 'edit' ) && !$oPostTitle->userCan( 'edit' ) ) {
+			} elseif ( $oPostTitle->isProtected( 'edit' ) && !$oPostTitle->userCan( 'edit' ) ) {
 				if ( $oPostTitle->isSemiProtected() ) {
 					$this->mFormErrors[] = wfMsgExt( 'semiprotectedpagewarning', array( 'parse' ) );
 				} else {
 					$this->mFormErrors[] = wfMsgExt( 'protectedpagewarning', array( 'parse' ) );
 				}
-			}
-			else {
+			} else {
 				$this->mPostArticle = new Article( $oPostTitle, 0 );
 				if ( $this->mPostArticle->exists() && ( $this->mFormData['listingType'] == 'plain' ) && !$this->mFormData['isExistingArticleEditAllowed'] ) {
 					$this->mFormErrors[] = wfMsg( 'create-blog-article-already-exists' );
@@ -118,19 +118,19 @@ class CreateBlogListingPage extends SpecialPage {
 			}
 		}
 
-		if ( !count( $this->mFormErrors ) ) {
-			$this->buildTag();
+		if ( count( $this->mFormErrors ) ) {
+			return;
 		}
 
-		if ( !count( $this->mFormErrors ) && $wgRequest->getVal( 'wpPreview' ) ) {
+		$this->buildTag();
+
+		if ( $wgRequest->getVal( 'wpPreview' ) ) {
 			if ( $this->mFormData['listingType'] == 'plain' ) {
 				$this->mRenderedPreview = BlogTemplateClass::parseTag( $this->mTagBody, array(), $wgParser );
-			}
-			else {
+			} else {
 				$this->mRenderedPreview = '<pre>' . htmlspecialchars( $this->mTagBody ) . '</pre>';
 			}
 		}
-
 	}
 
 	protected function renderForm() {
@@ -187,13 +187,10 @@ class CreateBlogListingPage extends SpecialPage {
 		global $wgOut;
 		if ( $this->mFormData['listingType'] == 'box' ) {
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-			$oTmpl->set_vars( array(
-				"tagBody" => $this->mTagBody )
-			);
+			$oTmpl->set_vars( [ 'tagBody' => $this->mTagBody ] );
 
 			$wgOut->addHTML( $oTmpl->render( "createListingConfirm" ) );
-		}
-		else {
+		} else {
 			$sPageBody = $this->mTagBody;
 
 			if ( !empty( $this->mFormData['listingPageCategories'] ) ) {

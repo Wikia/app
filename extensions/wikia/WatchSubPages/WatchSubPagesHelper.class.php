@@ -35,7 +35,7 @@ class WatchSubPagesHelper {
 	static public function ClearParentNotification( WikiPage $page ) {
 		global $wgUser;
 
-		if ( $wgUser->getBoolOption( self::PREFERENCES_ENTRY ) ) {
+		if ( (bool)$wgUser->getGlobalPreference( self::PREFERENCES_ENTRY ) ) {
 			if ( ! $page->getTitle()->userIsWatching() ) {
 				$tmpDBkey = $page->getTitle()->getDBkey();
 				$arrTitle = explode( '/', $tmpDBkey );
@@ -100,7 +100,7 @@ class WatchSubPagesHelper {
 			$userId = intval($row->wl_user);
 			$tmpUser = User::newFromId($userId);
 
-			if ($tmpUser->getBoolOption( self::PREFERENCES_ENTRY ) ) {
+			if ( (bool)$tmpUser->getGlobalPreference( self::PREFERENCES_ENTRY ) ) {
 				$parentpageWatchers[] = $userId;
 			}
 

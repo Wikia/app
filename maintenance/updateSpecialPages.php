@@ -118,6 +118,8 @@ class UpdateSpecialPages extends Maintenance {
 							$this->output( $minutes . 'm ' );
 						}
 						$this->output( sprintf( "%.2fs\n", $seconds ) );
+
+						wfRunHooks( 'AfterUpdateSpecialPages', [ $queryPage ] );
 					}
 
 					# Commit the results

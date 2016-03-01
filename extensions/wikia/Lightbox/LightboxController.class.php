@@ -58,11 +58,12 @@ class LightboxController extends WikiaController {
 
 		$thumbs = array();
 		$minTimestamp = 0;
+		$toTimestamp = wfTimestamp( TS_MW, $to );
 		if ( !empty( $to ) ) {
 			// get image list - exclude Latest Photos
 			$images = array();
 			$helper = $this->getLightboxHelper();
-			$imageList = $helper->getImageList( $count, $to );
+			$imageList = $helper->getImageList( $count, $toTimestamp );
 			extract( $imageList );
 
 			// add Latest Photos if not exist
@@ -160,6 +161,8 @@ class LightboxController extends WikiaController {
 	 * @responseParam boolean isAdded - check if the file is added to the wiki
 	 */
 	public function getMediaDetail() {
+		$this->response->setFormat( 'json' );
+
 		$fileTitle = urldecode( $this->request->getVal( 'fileTitle', '' ) );
 		$isInline = $this->request->getVal( 'isInline', false );
 
@@ -199,7 +202,6 @@ class LightboxController extends WikiaController {
 		list( $smallerArticleList, $articleListIsSmaller ) = WikiaFileHelper::truncateArticleList( $articles, self::POSTED_IN_ARTICLES );
 
 		// file details
-		$this->views = wfMessage( 'lightbox-video-views', $this->wg->Lang->formatNum( $data['videoViews'] ) )->parse();
 		$this->title = $title->getDBKey();
 		$this->fileTitle = $title->getText();
 		$this->mediaType = $data['mediaType'];
@@ -219,9 +221,6 @@ class LightboxController extends WikiaController {
 		$this->exists = $data['exists'];
 		$this->isAdded = $data['isAdded'];
 		$this->extraHeight = $data['extraHeight'];
-
-		// Make sure that a request with missing &format=json does not throw a "template not found" exception
-		$this->response->setFormat( 'json' );
 
 		// set cache control to 15 minutes
 		$this->response->setCacheValidity( 900 );
@@ -321,50 +320,69 @@ class LightboxController extends WikiaController {
 	 */
 	public function shareFileMail() {
 		$user = $this->wg->User;
-		$errors = array();
-		$sent = array();
-		$notsent = array();
 
 		if ( !$user->isLoggedIn() ) {
-			$errors[] = 'notloggedin';
-		} else {
-			$addresses = $this->request->getVal( 'addresses', '' );
-			$shareUrl = $this->request->getVal( 'shareUrl', '' );
-			$type = $this->request->getVal( 'type', '' );
+			$this->setShareFileMailErrorResponse( 'notloggedin' );
+			return;
+		}
 
-			$msgSuffix = ( $type == 'video' ) ? '-video' : '';
+		$addresses = $this->request->getVal( 'addresses', '' );
+		$shareUrl = $this->request->getVal( 'shareUrl', '' );
 
-			if ( !empty( $addresses ) && !empty( $shareUrl ) && !$user->isBlockedFromEmailuser() ) {
-				$addresses = explode( ',', $addresses );
+		if ( empty( $addresses ) || empty( $shareUrl ) || $user->isBlockedFromEmailuser() ) {
+			$this->setShareFileMailErrorResponse( 'lightbox-share-email-error-noaddress' );
+			return;
+		}
 
-				//send mails
-				$sender = new MailAddress( $this->wg->NoReplyAddress, 'Wikia' );	//TODO: use some standard variable for 'Wikia'?
-				foreach ( $addresses as $address ) {
-					$to = new MailAddress( $address );
-					$result = UserMailer::send(
-						$to,
-						$sender,
-						wfMessage( 'lightbox-share-email-subject'.$msgSuffix, $user->getName() )->text(),
-						wfMessage( 'lightbox-share-email-body'.$msgSuffix, $shareUrl )->text(),
-						null,
-						null,
-						'ImageLightboxShare'
-					);
-					if ( !$result->isOK() ) {
-						$notsent[] = $address;
-					}else {
-						$sent[] = $address;
-					}
-				}
+		$type = $this->request->getVal( 'type', '' );
+		$subjectKey = 'lightbox-share-email-subject';
+		$bodyKey = 'lightbox-share-email-body';
+		if ( $type == 'video' ) {
+			$subjectKey = 'lightbox-share-email-subject-video';
+			$bodyKey = 'lightbox-share-email-body-video';
+		}
+
+		$addresses = explode( ',', $addresses );
+		$sent = [];
+		$notSent = [];
+
+		foreach ( $addresses as $address ) {
+			$response = F::app()->sendRequest(
+				Email\Controller\GenericController::class,
+				'handle',
+				[
+					'salutation' => wfMessage( 'lightbox-share-salutation' )->text(),
+					'toAddress' => $address,
+					'subject' => wfMessage( $subjectKey, $user->getName() )->text(),
+					'body' => wfMessage( $bodyKey, $shareUrl )->text(),
+					'category' => 'ImageLightboxShare',
+				]
+			);
+
+			if ( $response->getData()['result'] == 'ok' ) {
+				$sent[] = $address;
 			} else {
-				$errors[] = htmlspecialchars( wfMessage( 'lightbox-share-email-error-noaddress' )->plain() );
+				$notSent[] = $address;
 			}
 		}
 
-		$this->errors = $errors;
-		$this->sent = $sent;
-		$this->notsent = $notsent;
-		$this->successMsg = wfMessage( 'lightbox-share-email-ok-content', count( $sent ) )->escaped();
+		$this->response->setData( [
+			'errors' => [],
+			'sent' => $sent,
+			'notsent' => $notSent,
+			'successMsg' => wfMessage( 'lightbox-share-email-ok-content', count( $sent ) )->escaped(),
+		] );
+	}
+
+	protected function setShareFileMailErrorResponse( $errorKey ) {
+		$errors = [ htmlspecialchars( wfMessage( $errorKey )->plain() ) ];
+
+		$this->response->setData( [
+			'errors' => $errors,
+			'sent' => [],
+			'notsent' => [],
+			'successMsg' => '',
+		] );
 	}
 
 	/**

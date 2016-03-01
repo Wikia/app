@@ -181,12 +181,6 @@ class ParserOptions {
 	var $mExtraKey = '';
 
 	/**
-	 * Parsing the main content? BEWARE! This might not be set to true in all contexts, always
-	 * check it before using.
-	 */
-	var $mIsMain = false;
-
-	/**
 	 * Function to be called when an option is accessed.
 	 */
 	protected $onAccessCallback = null;
@@ -223,8 +217,6 @@ class ParserOptions {
 	function getIsSectionPreview()              { return $this->mIsSectionPreview; }
 	function getIsPrintable()                   { $this->optionUsed( 'printable' );
 												  return $this->mIsPrintable; }
-
-	function getIsMain()                        { return $this->mIsMain; }
 
 	function getUser()                          { return $this->mUser; }
 	function getPreSaveTransform()              { return $this->mPreSaveTransform; }
@@ -315,8 +307,6 @@ class ParserOptions {
 	function setIsPreview( $x )                 { return wfSetVar( $this->mIsPreview, $x ); }
 	function setIsSectionPreview( $x )          { return wfSetVar( $this->mIsSectionPreview, $x ); }
 	function setIsPrintable( $x )               { return wfSetVar( $this->mIsPrintable, $x ); }
-
-	function setIsMain( $x )                    { return wfSetVar( $this->mIsMain, $x ); }
 
 	/**
 	 * Extra key that should be present in the parser cache key.
@@ -409,9 +399,9 @@ class ParserOptions {
 		$this->mExternalLinkTarget = $wgExternalLinkTarget;
 
 		$this->mUser = $user;
-		$this->mNumberHeadings = $user->getOption( 'numberheadings' );
-		$this->mMath = $user->getOption( 'math' );
-		$this->mThumbSize = $user->getOption( 'thumbsize' );
+		$this->mNumberHeadings = $user->getGlobalPreference( 'numberheadings' );
+		$this->mMath = $user->getGlobalPreference( 'math' );
+		$this->mThumbSize = $user->getGlobalPreference( 'thumbsize' );
 		$this->mStubThreshold = $user->getStubThreshold();
 		$this->mUserLang = $lang;
 

@@ -55,10 +55,10 @@ class SpecialWatchlist extends SpecialPage {
 		}
 
 		// Add feed links
-		$wlToken = $user->getOption( 'watchlisttoken' );
+		$wlToken = $user->getGlobalAttribute( 'watchlisttoken' );
 		if ( !$wlToken ) {
 			$wlToken = MWCryptRand::generateHex( 40 );
-			$user->setOption( 'watchlisttoken', $wlToken );
+			$user->setGlobalAttribute( 'watchlisttoken', $wlToken );
 			$user->saveSettings();
 		}
 
@@ -107,13 +107,13 @@ class SpecialWatchlist extends SpecialPage {
 
 		// @TODO: use FormOptions!
 		$defaults = array(
-		/* float */ 'days'      => floatval( $user->getOption( 'watchlistdays' ) ), /* 3.0 or 0.5, watch further below */
-		/* bool  */ 'hideMinor' => (int)$user->getBoolOption( 'watchlisthideminor' ),
-		/* bool  */ 'hideBots'  => (int)$user->getBoolOption( 'watchlisthidebots' ),
-		/* bool  */ 'hideAnons' => (int)$user->getBoolOption( 'watchlisthideanons' ),
-		/* bool  */ 'hideLiu'   => (int)$user->getBoolOption( 'watchlisthideliu' ),
-		/* bool  */ 'hidePatrolled' => (int)$user->getBoolOption( 'watchlisthidepatrolled' ),
-		/* bool  */ 'hideOwn'   => (int)$user->getBoolOption( 'watchlisthideown' ),
+		/* float */ 'days'      => floatval( $user->getGlobalPreference( 'watchlistdays' ) ), /* 3.0 or 0.5, watch further below */
+		/* bool  */ 'hideMinor' => (int)$user->getGlobalPreference( 'watchlisthideminor' ),
+		/* bool  */ 'hideBots'  => (int)$user->getGlobalPreference( 'watchlisthidebots' ),
+		/* bool  */ 'hideAnons' => (int)$user->getGlobalPreference( 'watchlisthideanons' ),
+		/* bool  */ 'hideLiu'   => (int)$user->getGlobalPreference( 'watchlisthideliu' ),
+		/* bool  */ 'hidePatrolled' => (int)$user->getGlobalPreference( 'watchlisthidepatrolled' ),
+		/* bool  */ 'hideOwn'   => (int)$user->getGlobalPreference( 'watchlisthideown' ),
 		/* ?     */ 'namespace' => 'all',
 		/* ?     */ 'invert'    => false,
 		);
@@ -125,13 +125,13 @@ class SpecialWatchlist extends SpecialPage {
 
 		# Extract variables from the request, falling back to user preferences or
 		# other default values if these don't exist
-		$prefs['days']      = floatval( $user->getOption( 'watchlistdays' ) );
-		$prefs['hideminor'] = $user->getBoolOption( 'watchlisthideminor' );
-		$prefs['hidebots']  = $user->getBoolOption( 'watchlisthidebots' );
-		$prefs['hideanons'] = $user->getBoolOption( 'watchlisthideanons' );
-		$prefs['hideliu']   = $user->getBoolOption( 'watchlisthideliu' );
-		$prefs['hideown' ]  = $user->getBoolOption( 'watchlisthideown' );
-		$prefs['hidepatrolled' ] = $user->getBoolOption( 'watchlisthidepatrolled' );
+		$prefs['days']      = floatval( $user->getGlobalPreference( 'watchlistdays' ) );
+		$prefs['hideminor'] = (bool)$user->getGlobalPreference( 'watchlisthideminor' );
+		$prefs['hidebots']  = (bool)$user->getGlobalPreference( 'watchlisthidebots' );
+		$prefs['hideanons'] = (bool)$user->getGlobalPreference( 'watchlisthideanons' );
+		$prefs['hideliu']   = (bool)$user->getGlobalPreference( 'watchlisthideliu' );
+		$prefs['hideown' ]  = (bool)$user->getGlobalPreference( 'watchlisthideown' );
+		$prefs['hidepatrolled' ] = (bool)$user->getGlobalPreference( 'watchlisthidepatrolled' );
 
 		# Get query variables
 		$values = array();
@@ -223,8 +223,8 @@ class SpecialWatchlist extends SpecialPage {
 		}
 
 		# Toggle watchlist content (all recent edits or just the latest)
-		if( $user->getOption( 'extendwatchlist' ) ) {
-			$limitWatchlist = intval( $user->getOption( 'wllimit' ) );
+		if( $user->getGlobalPreference( 'extendwatchlist' ) ) {
+			$limitWatchlist = intval( $user->getGlobalPreference( 'wllimit' ) );
 			$usePage = false;
 		} else {
 			# Top log Ids for a page are not stored
@@ -245,7 +245,7 @@ class SpecialWatchlist extends SpecialPage {
 		# Show watchlist header
 		$form .= $this->msg( 'watchlist-details' )->numParams( $nitems )->parse();
 
-		if( $user->getOption( 'enotifwatchlistpages' ) && $wgEnotifWatchlist) {
+		if( $user->getGlobalPreference( 'enotifwatchlistpages' ) && $wgEnotifWatchlist) {
 			$form .= $this->msg( 'wlheader-enotif' )->parseAsBlock() . "\n";
 		}
 		if( $wgShowUpdatedMarker ) {
@@ -396,7 +396,7 @@ class SpecialWatchlist extends SpecialPage {
 				$updated = false;
 			}
 
-			if ( $wgRCShowWatchingUsers && $user->getOption( 'shownumberswatching' ) ) {
+			if ( $wgRCShowWatchingUsers && $user->getGlobalPreference( 'shownumberswatching' ) ) {
 				$rc->numberofWatchingusers = $dbr->selectField( 'watchlist',
 					'COUNT(*)',
 					array(

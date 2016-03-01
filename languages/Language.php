@@ -587,20 +587,6 @@ class Language {
 	/**
 	 * @return array
 	 */
-	function getQuickbarSettings() {
-		return array(
-			$this->getMessage( 'qbsettings-none' ),
-			$this->getMessage( 'qbsettings-fixedleft' ),
-			$this->getMessage( 'qbsettings-fixedright' ),
-			$this->getMessage( 'qbsettings-floatingleft' ),
-			$this->getMessage( 'qbsettings-floatingright' ),
-			$this->getMessage( 'qbsettings-directionality' )
-		);
-	}
-
-	/**
-	 * @return array
-	 */
 	function getDatePreferences() {
 		return self::$dataCache->getItem( $this->mCode, 'datePreferences' );
 	}
@@ -1747,7 +1733,7 @@ class Language {
 		global $wgUser, $wgLocalTZoffset;
 
 		if ( $tz === false ) {
-			$tz = $wgUser->getOption( 'timecorrection' );
+			$tz = $wgUser->getGlobalPreference( 'timecorrection' );
 		}
 
 		$data = explode( '|', $tz, 3 );
@@ -1955,7 +1941,7 @@ class Language {
 		$options += array( 'timecorrection' => true, 'format' => true );
 		if ( $options['timecorrection'] !== false ) {
 			if ( $options['timecorrection'] === true ) {
-				$offset = $user->getOption( 'timecorrection' );
+				$offset = $user->getGlobalPreference( 'timecorrection' );
 			} else {
 				$offset = $options['timecorrection'];
 			}
@@ -2244,7 +2230,7 @@ class Language {
 	 * @return bool
 	 */
 	function isMultibyte( $str ) {
-		return (bool)preg_match( '/[\x80-\xff]/', $str );
+		return strlen( $str ) !== mb_strlen( $str );
 	}
 
 	/**

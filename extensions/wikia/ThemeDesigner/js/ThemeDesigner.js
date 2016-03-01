@@ -194,7 +194,7 @@
 			$('#fix-background').attr('checked', ThemeDesigner.settings['background-fixed'] === 'true');
 
 			// TODO: Remove IF statement after fluid layout global release
-			if (window.wgOasisResponsive) {
+			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
 				$('#not-split-background').change(function () {
 					ThemeDesigner.set('background-dynamic', $(this).attr('checked') ? 'false' : 'true');
 					if ($(this).attr('checked')) {
@@ -461,7 +461,7 @@
 			var noSplitOption = $('#CustomizeTab').find('.not-split-option');
 
 			// TODO: Remove IF statement after fluid layout global release
-			if (window.wgOasisResponsive) {
+			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
 				if (width < ThemeDesigner.minWidthForDynamicBackground) {
 					noSplitOption.css('display', 'none');
 					ThemeDesigner.backgroundType = 1;
@@ -804,7 +804,7 @@
 			/*** Wordmark Tab ***/
 			// style wordmark preview
 			$('#wordmark').removeClass().addClass(ThemeDesigner.settings['wordmark-font'])
-				.addClass(ThemeDesigner.settings['wordmark-font-size']).html(ThemeDesigner.settings['wordmark-text']);
+				.addClass(ThemeDesigner.settings['wordmark-font-size']).text(ThemeDesigner.settings['wordmark-text']);
 
 			// populate wordmark editor
 			$('#wordmark-edit').find('input[type="text"]')

@@ -8,8 +8,6 @@ class WeeklyDigestController extends EmailController {
 
 	const LAYOUT_CSS = 'weeklyDigest.css';
 
-	const TRACKING_CATEGORY = "GlobalWatchlist";
-
 	protected $digestData;
 
 	protected function getSubject() {

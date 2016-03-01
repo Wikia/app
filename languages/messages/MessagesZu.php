@@ -52,12 +52,9 @@ $messages = array(
 'mytalk'        => 'Ingxoxo yami',
 'navigation'    => 'Ukuqondiswa kwemikhumbi',
 
-# Cologne Blue skin
 'qbfind'        => 'Thola',
 'qbbrowse'      => 'Cinga',
-'qbedit'        => 'Ukuhlela',
 'qbpageoptions' => 'Leli khasi',
-'qbmyoptions'   => 'Amakhasi ami',
 
 'errorpagetitle'   => 'Icala',
 'help'             => 'Usizo',
@@ -178,8 +175,6 @@ ikhawundi lakho liyadalwa. musa ukukhohlwa ukuguqula amakhethelo a-{{SITENAME}} 
 'searchhelp-url' => 'Help:Isiqikili',
 'powersearch'    => 'Sesha',
 
-# Quickbar
-'qbsettings' => 'Imeniyu',
 
 # Preferences page
 'preferences'       => 'Amakhethelo',

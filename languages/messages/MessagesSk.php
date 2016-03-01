@@ -422,30 +422,12 @@ $messages = array(
 'navigation' => 'Navigácia',
 'and' => '&#32;a',
 
-# Cologne Blue skin
 'qbfind' => 'Hľadať',
 'qbbrowse' => 'Prehliadať',
-'qbedit' => 'Upraviť',
 'qbpageoptions' => 'Táto stránka',
 'qbpageinfo' => 'Kontext',
-'qbmyoptions' => 'Moje stránky',
-'qbspecialpages' => 'Špeciálne stránky',
 'faq' => 'Často kladené otázky',
-'faqpage' => 'Project:Často kladené otázky',
 
-# Vector skin
-'vector-action-addsection' => 'Pridať tému',
-'vector-action-delete' => 'Zmazať',
-'vector-action-move' => 'Presunúť',
-'vector-action-protect' => 'Zamknúť',
-'vector-action-undelete' => 'Obnoviť',
-'vector-action-unprotect' => 'Zmeniť stav ochrany',
-'vector-simplesearch-preference' => 'Povoliť rozšírené návrhy hľadania (iba pre tému Vector)',
-'vector-view-create' => 'Vytvoriť',
-'vector-view-edit' => 'Upraviť',
-'vector-view-history' => 'Zobraziť históriu',
-'vector-view-view' => 'Čítať',
-'vector-view-viewsource' => 'Zobraziť zdroj',
 'actions' => 'Operácie',
 'namespaces' => 'Menné priestory',
 'variants' => 'Varianty',
@@ -468,7 +450,6 @@ $messages = array(
 'edit' => 'upraviť',
 'create' => 'Vytvoriť',
 'editthispage' => 'Upraviť túto stránku',
-'create-this-page' => 'Vytvoriť túto stránku',
 'delete' => 'Vymazať',
 'deletethispage' => 'Vymazať túto stránku',
 'undelete_short' => 'Obnoviť {{PLURAL:$1|jednu úpravu|$1 úpravy|$1 úprav}}',
@@ -483,19 +464,9 @@ $messages = array(
 'talkpagelinktext' => 'Diskusia',
 'specialpage' => 'Špeciálna stránka',
 'personaltools' => 'Osobné nástroje',
-'postcomment' => 'Nová sekcia',
-'articlepage' => 'Zobraziť stránku',
 'talk' => 'Diskusia',
 'views' => 'Zobrazení',
 'toolbox' => 'Nástroje',
-'userpage' => 'Zobraziť stránku používateľa',
-'projectpage' => 'Zobraziť projektovú stránku',
-'imagepage' => 'Zobraziť stránku súboru',
-'mediawikipage' => 'Zobraziť stránku so správou',
-'templatepage' => 'Zobraziť stránku šablóny',
-'viewhelppage' => 'Zobraziť stránku Pomocníka',
-'categorypage' => 'Zobraziť stránku kategórie',
-'viewtalkpage' => 'Zobraziť diskusiu k stránke',
 'otherlanguages' => 'V iných jazykoch',
 'redirectedfrom' => '(Presmerované z $1)',
 'redirectpagesub' => 'Presmerovacia stránka',
@@ -683,8 +654,9 @@ Správca, ktorý ho zamkol ponúkol toto vysvetlenie: „$3“.',
 # Login and logout pages
 'logouttext' => "'''Práve ste sa odhlásili.'''
 
-Odteraz môžete používať {{GRAMMAR:akuzatív|{{SITENAME}}}} ako anonymný používateľ alebo sa môžete opäť [[Special:UserLogin|prihlásiť]] pod rovnakým alebo odlišným používateľským menom.
+Odteraz môžete používať {{GRAMMAR:akuzatív|{{SITENAME}}}} ako anonymný používateľ alebo sa môžete opäť $1 pod rovnakým alebo odlišným používateľským menom.
 Uvedomte si, že niektoré stránky sa môžu naďalej zobrazovať ako keby ste boli prihlásený, až kým nevymažete vyrovnávaciu pamäť vášho prehliadača.",
+'logouttext-link-text'       => 'prihlásiť',
 'welcomecreation' => '== Vitaj, $1! ==
 
 Vaše konto je vytvorené.
@@ -719,7 +691,7 @@ Zvoľte si prosím iné meno.',
 'createaccounterror' => 'Nepodarilo sa vytvoriť účet: $1',
 'nocookiesnew' => 'Používateľské konto bolo vytvorené, ale nie ste prihlásený. {{SITENAME}} používa cookies na prihlásenie. Máte cookies vypnuté. Zapnite ich a potom sa prihláste pomocou vášho nového používateľského mena a hesla.',
 'nocookieslogin' => '{{SITENAME}} používa cookies na prihlásenie. Vy máte cookies vypnuté. Prosíme, zapnite ich a skúste znovu.',
-'nocookiesfornew' => 'Používateľský účet nebol vytvorený, pretože sme nemohli potvrdiť jeho zdroj. 
+'nocookiesfornew' => 'Používateľský účet nebol vytvorený, pretože sme nemohli potvrdiť jeho zdroj.
 Ubezpečte sa, že máte povolené cookies, obnovte túto stránku a skúste to znova.',
 'noname' => 'Nezadali ste platné používateľské meno.',
 'loginsuccesstitle' => 'Prihlásenie úspešné',
@@ -800,44 +772,6 @@ Prosím, počkajte predtým, než to skúsite znova.',
 'resetpass-wrong-oldpass' => 'Neplatné dočasné alebo aktuálne heslo.
 Je možné, že sa vám už podarilo úspešne zmeniť svoje heslo alebo ste si vyžiadali nové dočasné heslo.',
 'resetpass-temp-password' => 'Dočasné heslo:',
-
-# Special:PasswordReset
-'passwordreset' => 'Reset hesla',
-'passwordreset-text' => 'Po vyplnení tohto formulára dostanete emailom podrobnosti o vašom účte.',
-'passwordreset-legend' => 'Obnoviť heslo',
-'passwordreset-disabled' => 'Obnovenie hesla bolo na tejto wiki zakázané.',
-'passwordreset-pretext' => '{{PLURAL:$1|Zadajte nižšie uvedený údaj|Zadajte jeden z nižšie uvedených údajov}}',
-'passwordreset-username' => 'Používateľské meno:',
-'passwordreset-domain' => 'Doména:',
-'passwordreset-capture' => 'Zobraziť výsledný e-mail?',
-'passwordreset-capture-help' => 'Ak označíte toto políčko, bude e-mail (s dočasným heslom) okrem zaslania používateľovi zobrazený aj vám.',
-'passwordreset-email' => 'Emailová adresa:',
-'passwordreset-emailtitle' => 'Podrobnosti o účte na {{GRAMMAR:lokál|{{SITENAME}}}}',
-'passwordreset-emailtext-ip' => 'Niekto (pravdepodobne vy z IP adresy $1) požiadal pripomenutie podrobností o vašom
-účtu na {{GRAMMAR:genitív|{{SITENAME}}}} ($4). {{PLURAL:$3|Nasledujúci používateľský účet je spojený|Nasledujúce používateľské účty sú spojené}}
-s touto emailovou adresou:
-
-$2
-
-{{PLURAL:$3|Platnosť tohto dočasného hesla vyprší|Platnosť týchto dočasných hesiel vyprší}} o {{PLURAL:$5|jeden deň|$5 dni|$5 dní}}.
-Mali by ste sa prihlásiť teraz a zvoliť nové heslo. Ak túto žiadosť podal niekto iný alebo
-ak ste si spomenuli svoje pôvodné heslo a už ho chcete zmeniť, môžete túto správu
-ignorovať a ďalej používať vaše staré heslo.',
-'passwordreset-emailtext-user' => 'Používateľ $1 na {{GRAMMAR:genitív|{{SITENAME}}}} požiadal pripomenutie podrobností o vašom
-účtu na {{GRAMMAR:genitív|{{SITENAME}}}} ($4). {{PLURAL:$3|Nasledujúci používateľský účet je spojený|Nasledujúce používateľské účty sú spojené}}
-s touto emailovou adresou:
-
-$2
-
-{{PLURAL:$3|Platnosť tohto dočasného hesla vyprší|Platnosť týchto dočasných hesiel vyprší}} o {{PLURAL:$5|jeden deň|$5 dni|$5 dní}}.
-Mali by ste sa prihlásiť teraz a zvoliť nové heslo. Ak túto žiadosť podal niekto iný alebo
-ak ste si spomenuli svoje pôvodné heslo a už ho chcete zmeniť, môžete túto správu
-ignorovať a ďalej používať vaše staré heslo.',
-'passwordreset-emailelement' => 'Používateľské meno: $1
-Dočasné heslo:$2',
-'passwordreset-emailsent' => 'Email s heslom bol odoslaný.',
-'passwordreset-emailsent-capture' => 'Bol vytvorený pripomienkový e-mail, ktorý je zobrazený nižšie.',
-'passwordreset-emailerror-capture' => 'Bol vytvorený pripomienkový e-mail, ktorý je zobrazený nižšie, ale nepodarilo sa ho odoslať používateľovi: $1',
 
 # Special:ChangeEmail
 'changeemail' => 'Zmena e-mailovej adresy',
@@ -965,7 +899,6 @@ Dolu je pre informáciu posledná položka zo záznamu blokovaní:',
 '''Zatiaľ nebolo uložené!'''",
 'sitejspreview' => "'''Nezabudnite, že toto je iba náhľad tohto JavaScriptu.'''
 '''Zatiaľ nebol uložený!'''",
-'userinvalidcssjstitle' => "'''Upozornenie:''' Neexistuje vzhľad „$1“. Pamätajte, že vlastné .css a .js stránky používajú názov s malými písmenami, napr. {{ns:user}}:Foo/vector.css a nie {{ns:user}}:Foo/Vector.css.",
 'updated' => '(Aktualizovaný)',
 'note' => "'''Poznámka: '''",
 'previewnote' => "'''Nezabudnite, toto je iba náhľad stránky, ktorú upravujete.
@@ -1321,14 +1254,6 @@ Uistite sa, že táto zmena zachová historickú kontinuitu zmien stránky.',
 'search-external' => 'Externé vyhľadávanie',
 'searchdisabled' => 'Prepáčte! Fulltextové vyhľadávanie bolo dočasne vypnuté z dôvodu preťaženia. Zatiaľ môžete použiť hľadanie pomocou Google, ktoré však nemusí byť aktuálne.',
 
-# Quickbar
-'qbsettings' => 'Navigačný panel',
-'qbsettings-none' => 'Žiadne',
-'qbsettings-fixedleft' => 'Ukotvené vľavo',
-'qbsettings-fixedright' => 'Ukotvené vpravo',
-'qbsettings-floatingleft' => 'Plávajúce vľavo',
-'qbsettings-floatingright' => 'Plávajúce vpravo',
-'qbsettings-directionality' => 'Pevný, v závislosti na smerovosti písma vášho jazyka',
 
 # Preferences page
 'preferences' => 'Nastavenia',
@@ -2991,15 +2916,7 @@ Umožnuje do zhrnutia pridanie dôvodu.',
 
 # Stylesheets
 'common.css' => '/* Tu umiestnené CSS bude ovplyvňovať všetky štýly */',
-'standard.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Klasický */',
-'nostalgia.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Nostalgia */',
-'cologneblue.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Kolínska modrá */',
 'monobook.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Monobook */',
-'myskin.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Môjvzhľad */',
-'chick.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Kuriatko */',
-'simple.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Jednoduchý */',
-'modern.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Moderný */',
-'vector.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov štýlu Vector */',
 'print.css' => '/* Tu umiestnené CSS bude ovplyvňovať tlačový výstup */',
 'handheld.css' => '/* Tu umiestnené CSS bude ovplyvňovať prenosné zariadenia vychádzajúceho zo štýlu nastaveného v $wgHandheldStyle */',
 'noscript.css' => '/* Tu umiestnené CSS bude ovplyvňovať používateľov s vypnutým JavaScriptom */',
@@ -3010,15 +2927,7 @@ Umožnuje do zhrnutia pridanie dôvodu.',
 
 # Scripts
 'common.js' => '/* Tu uvedený JavaScript sa nahrá všetkým používateľom pri každom nahraní stránky. */',
-'standard.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Klasický */',
-'nostalgia.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Nostalgia */',
-'cologneblue.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Kolínska modrá */',
 'monobook.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Monobook */',
-'myskin.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Môjvzhľad */',
-'chick.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Kuriatko */',
-'simple.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Jednoduchý */',
-'modern.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Moderný */',
-'vector.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom vzhľadu Vector */',
 'group-autoconfirmed.js' => '/* Tu sa nachádzajúci JavaScript sa načíta používateľom s potvrdenou emailovou adresou */',
 'group-bot.js' => '/* Tu sa nachádzajúci JavaScript sa načíta len robotom */',
 'group-sysop.js' => '/* Tu sa nachádzajúci JavaScript sa načíta len správcom */',
@@ -3063,15 +2972,7 @@ Pravdepodobne to spôsobil odkaz na externú internetovú lokalitu, ktorá sa na
 'pageinfo-viewsperedit' => 'Zobrazení na úpravu',
 
 # Skin names
-'skinname-standard' => 'Klasický',
-'skinname-nostalgia' => 'Nostalgia',
-'skinname-cologneblue' => 'Kolínska modrá',
 'skinname-monobook' => 'MonoBook',
-'skinname-myskin' => 'Môj vzhľad',
-'skinname-chick' => 'Kuriatko',
-'skinname-simple' => 'Jednoduchý',
-'skinname-modern' => 'Moderný',
-'skinname-vector' => 'Vector',
 
 # Patrolling
 'markaspatrolleddiff' => 'Označiť ako stráženú',
@@ -3624,7 +3525,7 @@ ktorý zruší potvrdenie emailovej adresy:
 $5
 
 Platnosť tohto potvrdzovacieho kódu vyprší $4.',
-'confirmemail_body_set' => 'Niekto, pravdepodobne vy, z IP adresy $1, 
+'confirmemail_body_set' => 'Niekto, pravdepodobne vy, z IP adresy $1,
 nastavil e-mailovú adresu účtu „$2“ na túto adresu na {{GRAMMAR:genitív|{{SITENAME}}}}.
 
 Ak chcete potvrdiť, že tento účet skutočne patrí vám a aktivovať
@@ -3757,7 +3658,7 @@ Tiež môžete [[Special:EditWatchlist|použiť štandardný editor]].',
 'version-license' => 'Licencia',
 'version-poweredby-credits' => "Táto wiki beží na '''[//www.mediawiki.org/ MediaWiki]''', copyright © 2001-$1 $2.",
 'version-poweredby-others' => 'ďalší',
-'version-license-info' => 'MediaWiki je slobodný softvér; môžete ho šíriť a / alebo modifikovať podľa podmienok GNU General Public License, ktorú vydala Free Software Foundation; a to buď verzie 2 tejto licencie alebo (podľa vášho uváženia) ktorejkoľvek neskoršej verzie. 
+'version-license-info' => 'MediaWiki je slobodný softvér; môžete ho šíriť a / alebo modifikovať podľa podmienok GNU General Public License, ktorú vydala Free Software Foundation; a to buď verzie 2 tejto licencie alebo (podľa vášho uváženia) ktorejkoľvek neskoršej verzie.
 
 MediaWiki je šírený v nádeji, že bude užitočný, avšak BEZ AKEJKOĽVEK ZÁRUKY; neposkytujú sa ani implicitné záruky PREDAJNOSTI alebo VHODNOSTI NA URČITÝ ÚČEL. Ďalšie informácie nájdete v GNU General Public License.
 
@@ -3903,7 +3804,7 @@ Obrázky sa zobrazia v plnom rozlíšení, ostatné typy súborov sa spustia v p
 'newuserlog-byemail' => 'heslo poslané emailom',
 
 # Feedback
-'feedback-bugornote' => 'Ak ste pripravený podrobne popísať technický problém, prosím pošlite [$1 hlásenie o chybe]. 
+'feedback-bugornote' => 'Ak ste pripravený podrobne popísať technický problém, prosím pošlite [$1 hlásenie o chybe].
 V opačnom prípade môžete použiť zjednodušený formulár nižšie. Váš komentár sa pridá na stránku „[$3 $2]“ spolu s vašim používateľským meno a prehliadačom, ktorý používate.',
 'feedback-subject' => 'Predmet:',
 'feedback-message' => 'Správa:',

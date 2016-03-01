@@ -5,6 +5,8 @@ abstract class SpecialBlogPage extends SpecialPage {
 	protected $mFormData = array();
 	protected $mFormErrors = array();
 	protected $mPreviewTitle = '';
+
+	/** @var BlogArticle */
 	protected $mPostArticle = null;
 
 	abstract protected function renderForm();

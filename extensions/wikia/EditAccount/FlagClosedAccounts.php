@@ -28,7 +28,7 @@ function efFlagClosedAccounts( $id ) {
 	global $wgOut;
 
 	$u = User::newFromId($id);
-	$disOpt = $u->getOption('disabled');
+	$disOpt = $u->getGlobalFlag('disabled');
 	if ( !empty($disOpt) ) {
 		$wgOut->addWikiMsg( 'edit-account-closed-flag' );
 	}

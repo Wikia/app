@@ -21,7 +21,7 @@ class EditPageService extends Service {
 
 	# Disgustingly copied from SkinTemplate
 	static public function wrapBodyText($title, $request, $html) {
-		global $wgContLang, $wgEnableVenusArticle;
+		global $wgContLang;
 
 		# An ID that includes the actual body text; without categories, contentSub, ...
 		$realBodyAttribs = array( 'id' => 'mw-content-text' );
@@ -36,23 +36,19 @@ class EditPageService extends Service {
 			$realBodyAttribs['lang'] = $lang->getHtmlCode();
 			$realBodyAttribs['dir'] = $lang->getDir();
 		   	$realBodyAttribs['class'] = 'mw-content-'.$lang->getDir();
-
-			if ( !empty( $wgEnableVenusArticle ) ) {
-				$realBodyAttribs['class'] .= ' mw-content-text mw-content-preview';
-			}
 		}
 
 		return Html::rawElement( 'div', $realBodyAttribs, $html );
 	}
 
-	public function getPreview($wikitext) {
+	public function getPreview( $wikitext ) {
 		// TODO: use wgParser here because some parser hooks initialize themselves on wgParser (should on provided parser instance)
 		global $wgParser, $wgUser, $wgRequest;
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$wg = $this->app->wg;
 
-		$parserOptions = new ParserOptions($wgUser);
+		$parserOptions = new ParserOptions( $wgUser );
 
 		$originalWikitext = $wikitext;
 
@@ -63,17 +59,22 @@ class EditPageService extends Service {
 		}
 
 		// call preSaveTransform so signatures, {{subst:foo}}, etc. will work
-		$wikitext = $wgParser->preSaveTransform($wikitext, $this->mTitle, $this->app->getGlobal('wgUser'), $parserOptions);
+		$wikitext = $wgParser->preSaveTransform( $wikitext, $this->mTitle, $this->app->getGlobal( 'wgUser' ), $parserOptions );
 
 		// parse wikitext using MW parser
-		$html = $wgParser->parse($wikitext, $this->mTitle, $parserOptions)->getText();
+		$parserOutput = $wgParser->parse( $wikitext, $this->mTitle, $parserOptions );
 
-		$html = EditPageService::wrapBodyText($this->mTitle, $wgRequest, $html);
+		/**
+		 * Allow extensions to modify the ParserOutput
+		 */
+		wfRunHooks( 'ArticlePreviewAfterParse', [ $parserOutput, $this->mTitle ] );
+
+		$html = $parserOutput->getText();
+		$html = EditPageService::wrapBodyText( $this->mTitle, $wgRequest, $html );
 
 		// we should also render categories and interlanguage links
-		$parserOutput = $wgParser->getOutput();
-		$catbox = $this->renderCategoryBoxFromParserOutput($parserOutput);
-		$interlanglinks = $this->renderInterlangBoxFromParserOutput($parserOutput);
+		$catbox = $this->renderCategoryBoxFromParserOutput( $parserOutput );
+		$interlanglinks = $this->renderInterlangBoxFromParserOutput( $parserOutput );
 
 		/**
 		 * bugid: 47995 -- Treat JavaScript and CSS as raw text wrapped in <pre> tags

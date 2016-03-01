@@ -161,30 +161,12 @@ $messages = array(
 'navigation'    => 'کھوج',
 'and'           => '&#32;and',
 
-# Cologne Blue skin
 'qbfind'         => 'کھوج',
 'qbbrowse'       => 'لبو',
-'qbedit'         => 'لکھو',
 'qbpageoptions'  => 'اے صفہ',
 'qbpageinfo'     => 'محول',
-'qbmyoptions'    => 'میرے صفے',
-'qbspecialpages' => 'خاص صفے',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'مضمون پاؤ',
-'vector-action-delete'           => 'مکاؤ',
-'vector-action-move'             => 'ٹرو',
-'vector-action-protect'          => 'بچاؤ',
-'vector-action-undelete'         => 'واپس لیاؤ',
-'vector-action-unprotect'        => 'تبدیلی بچاؤ',
-'vector-simplesearch-preference' => 'کھوج چ چنگے مشورے آن کرو',
-'vector-view-create'             => 'بناؤ',
-'vector-view-edit'               => 'لکھو',
-'vector-view-history'            => 'تریخ وکھاؤ',
-'vector-view-view'               => 'پڑھو',
-'vector-view-viewsource'         => 'ویکھو',
 'actions'                        => 'کم',
 'namespaces'                     => 'ناواں دی جگہ:',
 'variants'                       => 'قسماں',
@@ -207,7 +189,6 @@ $messages = array(
 'edit'              => 'لکھو',
 'create'            => 'بناؤ',
 'editthispage'      => 'اس صفحہ تے لکھو',
-'create-this-page'  => 'اے صفحہ بناؤ',
 'delete'            => 'مٹاؤ',
 'deletethispage'    => 'اے صفحہ مٹاؤ',
 'undelete_short'    => 'مٹانا واپس {{PLURAL:$1|اکتبدیلی|$1 تبدیلی}}',
@@ -222,19 +203,9 @@ $messages = array(
 'talkpagelinktext'  => 'گل بات',
 'specialpage'       => 'خاص صفحہ',
 'personaltools'     => 'ذاتی اوزار',
-'postcomment'       => 'نویں ونڈ',
-'articlepage'       => 'مضمون آلا صفحہ',
 'talk'              => 'گل بات',
 'views'             => 'منظر',
 'toolbox'           => 'اوزار',
-'userpage'          => 'ورتن آلے دا صفحہ ویکھو',
-'projectpage'       => 'منصوبے آلا صفحہ ویکھو',
-'imagepage'         => 'فائل آلا صفحہ ویکھو',
-'mediawikipage'     => 'سنیعا آلا صفحہ ویکھو',
-'templatepage'      => 'سچے آلا صفحہ ویکھو',
-'viewhelppage'      => 'مدد آلا صفحہ ویکھو',
-'categorypage'      => 'گٹھ آلا صفحہ ویکھو',
-'viewtalkpage'      => 'گلاں باتاں وکھاؤ',
 'otherlanguages'    => 'دوجیاں زبانں وچ',
 'redirectedfrom'    => '(لیایا گیا $1)',
 'redirectpagesub'   => 'صفحہ ریڈائریکٹ کرو',
@@ -529,34 +500,6 @@ Note that some pages may continue to be displayed as if you were still logged in
 'resetpass-wrong-oldpass'   => 'غلط عارضی یا ہلے دی کنجی۔
 تساں نے شاید اپنی کنجی بدل لئی ہوۓ یا عارضی کنجی دی درخواست کیتی ہوۓ۔',
 'resetpass-temp-password'   => 'عارضی کنجی:',
-
-# Special:PasswordReset
-'passwordreset'                    => 'کنجی واپس لیاؤ',
-'passwordreset-text'               => 'اے فارم مکمل کرکے اپنے کھاتے دی معلومات اپنے ای-میل تے منگوالو۔',
-'passwordreset-legend'             => 'کنجی واپس لیاؤ',
-'passwordreset-disabled'           => 'اس وکی تے کنجی واپس نئیں لیائی جاسکدی۔',
-'passwordreset-pretext'            => '{{PLURAL:$1||تھلے دتے ہوۓ ڈیٹا چوں اک ایتھے دیو}}',
-'passwordreset-username'           => 'ورتن ناں:',
-'passwordreset-domain'             => 'ڈومین',
-'passwordreset-capture'            => 'آن والی ای-میل ویکھو؟',
-'passwordreset-capture-help'       => 'اگر تسیں اے ڈبہ چیک کروگے ای-میل (عارضی کنجی نال) وکھائی جاۓ گی توانوں تے پیجی وی جاۓ گی۔',
-'passwordreset-email'              => 'ای-میل پتہ:',
-'passwordreset-emailtitle'         => '{{SITENAME}} دے اتے کھاتے دی معلومات:',
-'passwordreset-emailtext-ip'       => 'کسے نے (خورے تساں  آئی پی پتے $1) تواڈے کھاتے دا ویروا منگیا اے {{SITENAME}} ($4) لئی۔ تھلے دتا گیا ورتنوالا {{PLURAL:$3|کھاتہ|کھاتے}} ایس ای-میل پتے نال جوڑ رکھدا اے:
-
-$2
-
-{{PLURAL:$3|اے عارضی کنجی|اے عارضی کنجیاں}} {{PLURAL:$5|اک دن|$5 دناں}} چ مک جاوے گی۔ تسیں لاگان ہوو تے اپنی اک نويں کنجی چنو. اگر کسے ہور نے اے کنجی والی چٹھی پیجی اے یا توانوں پرانی کنجی یاد آگئی اے تے تسیں پرانی کنجی نال ای کم چلانا چاندے او تے تسیں ایس سنیعے نوں پل جاؤ تے پرانی کنجی ای ورتو۔',
-'passwordreset-emailtext-user'     => 'ورتنوالے $1 نے {{سائیٹناں}} تے تواڈے کھاتے بارے پچھیا اے {{SITENAME}} لئی ($4)۔ تھلے دتا گیا ورتن {{PLURAL:$3|کھاتہ|کھاتے}} ایس ای-میل نال جڑدا اے۔
-
-$2
-
-{{PLURAL:$3|ایہ عارضی کنجی|اے عارضی کنجیاں}} مک جائیگا {{PLURAL:$5|اک دن|$5 دن}}۔ تسیں ہن لاکان ہوو تے نویں کنجی چنو۔ اگر کسے ہور نے اے چٹھی پیجی یا توانوں اپنی پہلی کنجی یاد آگئی اے تے تسیں اونوں بدلنا نئیں چاندے تے تسیں ایس سنیعے نوں پھل جاؤ تے پرانی کنجی نال ای کم چلاؤ۔',
-'passwordreset-emailelement'       => 'ورتن ناں: $1
-عارضی کنجی: $2',
-'passwordreset-emailsent'          => 'یاد کران واسطے اک ای-میل پیج دتی گئی اے۔',
-'passwordreset-emailsent-capture'  => 'اک یاد کران والی ای-میل پیج دتی گئی اے، جیہڑی تھلے دسی گئی اے۔',
-'passwordreset-emailerror-capture' => 'اک یادکراؤ ای-میل بنائی گئی اے، جیہڑی کہ تھلے دسی گئی اے، پر ورتن والے تک پیجنا نئیں ہوسکیا:$1',
 
 # Special:ChangeEmail
 'changeemail'          => 'ای-میل پتہ بدلو',
@@ -1029,14 +972,6 @@ $1",
 تسیں گوگل تے کھوج کرو۔
 اے گل یاد رکھنا جے انڈیکس {{SITENAME}} دے پرانے ہون۔',
 
-# Quickbar
-'qbsettings'                => 'کوئکبار',
-'qbsettings-none'           => 'کوئی نئیں',
-'qbsettings-fixedleft'      => 'فکسڈ کھبے',
-'qbsettings-fixedright'     => 'فکسڈ سجے',
-'qbsettings-floatingleft'   => 'ہلدا کھبے',
-'qbsettings-floatingright'  => 'ہلدا سجے',
-'qbsettings-directionality' => '!!!!فکسڈ، تھاڈی بولی تے لپی نال',
 
 # Preferences page
 'preferences'                   => 'تانگاں',

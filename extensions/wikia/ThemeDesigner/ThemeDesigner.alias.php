@@ -38,3 +38,8 @@ $specialPageAliases['vi'] = array(
 	'ThemeDesigner'		=> array( 'Thiết_kế_chủ_đề' ),
 	'ThemeDesignerPreview'	=> array( 'Mẫu_chủ_đề' ),
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'ThemeDesigner' => array( 'テーマデザイナー' )
+);

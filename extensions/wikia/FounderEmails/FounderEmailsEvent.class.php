@@ -21,9 +21,9 @@ abstract class FounderEmailsEvent {
 	protected $mConfig = null;
 
 	protected function __construct( $type ) {
-		global $wgFounderEmailsExtensionConfig;
+		global $wgFounderEmailsEvents;
 
-		$this->mConfig = $wgFounderEmailsExtensionConfig['events'][$type];
+		$this->mConfig = $wgFounderEmailsEvents[$type];
 		$this->mType = $type;
 	}
 
@@ -33,11 +33,11 @@ abstract class FounderEmailsEvent {
 	 * @return FounderEmailsEvent
 	 */
 	static public function newFromType( $eventType ) {
-		global $wgFounderEmailsExtensionConfig;
+		global $wgFounderEmailsEvents;
 
 		wfProfileIn( __METHOD__ );
 
-		$sClassName = $wgFounderEmailsExtensionConfig['events'][$eventType]['className'];
+		$sClassName = $wgFounderEmailsEvents[$eventType]['className'];
 
 		$oEvent = new $sClassName();
 
@@ -46,9 +46,13 @@ abstract class FounderEmailsEvent {
 	}
 
 	static public function getConfig( $eventType = null ) {
-		global $wgFounderEmailsExtensionConfig;
+		global $wgFounderEmailsEvents;
 
-		return is_null( $eventType ) ? $wgFounderEmailsExtensionConfig['events'] : ( isset( $wgFounderEmailsExtensionConfig['events'][$eventType] ) ? $wgFounderEmailsExtensionConfig['events'][$eventType] : array() );
+		if ( is_null( $eventType ) ) {
+			return $wgFounderEmailsEvents;
+		}
+
+		return isset( $wgFounderEmailsEvents[$eventType] ) ? $wgFounderEmailsEvents[$eventType] : [];
 	}
 
 	public function getID() {
@@ -71,41 +75,38 @@ abstract class FounderEmailsEvent {
 		$this->mData = $data;
 	}
 
-	abstract public function enabled ( $wgCityId, User $user );
+	abstract public function enabled( User $admin, $wikiId = null );
 
 	public function enabled_wiki( $wgCityId ) {
 		$wikiService = ( new WikiService );
 		$user_ids = $wikiService->getWikiAdminIds( $wgCityId );
 		foreach ( $user_ids as $user_id ) {
 			$user = User::newFromId( $user_id );
-			if ( $this->enabled( $wgCityId, $user ) )
+			if ( $this->enabled( $user, $wgCityId ) )
 				return true;
 		}
 		return false;
 	}
 
-	public static function isAnswersWiki() {
-		global $wgEnableAnswers;
-
-		if ( empty( $wgEnableAnswers ) ) {
-			return false;
-		} else {
-			return true;
+	public static function isAnswersWiki( $wikiId = null ) {
+		// If the current wiki, just return the global where its already loaded
+		if ( empty( $wikiId ) || $wikiId == F::app()->wg->CityId ) {
+			return !empty( F::app()->wg->EnableAnswers );
 		}
+
+		// Otherwise, pull the value from the DB for the wiki given
+		$var = WikiFactory::getVarByName( 'wgEnableAnswers', $wikiId );
+		if ( empty( $var ) ) {
+			return false;
+		}
+
+		return unserialize( $var->cv_value );
 	}
 
 	abstract public function process( Array $events );
 
 	public static function register() {
 		return true;
-	}
-
-	protected function isThresholdMet( $testValue ) {
-		if ( isset( $this->mConfig['threshold'] ) ) {
-			return ( $testValue >= $this->mConfig['threshold'] ) ? true : false;
-		} else {
-			return true;
-		}
 	}
 
 	public function create() {

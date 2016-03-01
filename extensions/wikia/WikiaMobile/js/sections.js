@@ -5,12 +5,12 @@
  * @author Jakub Olek
  */
 
-define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
+define('sections', ['jquery', 'wikia.window'], function ($, window) {
 	'use strict';
 
 	var d = window.document,
-		$wkPage = $( '#wkPage' ),
-		h2s = $( 'h2[id]', $wkPage ).toArray(),
+		$wkPage = $('#wkPage'),
+		h2s = $('h2[id]', $wkPage).toArray(),
 		sections = [],
 		lastSection,
 		escapeRegExp = /[()\.\+]/g,
@@ -20,10 +20,10 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 * @desc grab all headers (with non-empty id's) on the page
 	 * @return Array
 	 */
-	function getHeaders(){
+	function getHeaders() {
 		//we switch nodeList to Array to use filter / forEach type methods
-		return Array.prototype.slice.apply( d.querySelectorAll(
-			'h2[id]:not( [id=""] ), h3[id]:not( [id=""] ), h4[id]:not( [id=""] )' ) );
+		return Array.prototype.slice.apply(d.querySelectorAll(
+			'h2[id]:not([id=""]), h3[id]:not([id=""]), h4[id]:not([id=""])'));
 	}
 
 	sections = getHeaders();
@@ -33,13 +33,13 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 * @param {String} header
 	 * @returns {undefined|true} - status code if scroll actually happened
 	 */
-	function scrollTo ( header ) {
+	function scrollTo(header) {
 		//() . and + have to be escaped before passed to querySelector
-		var h = document.querySelector( header.replace( escapeRegExp, '\\$&' ) ),
+		var h = document.querySelector(header.replace(escapeRegExp, '\\$&')),
 			ret;
 
-		if ( h ) {
-			window.scrollTo( 0, $(h).offset().top - offset + 1);
+		if (h) {
+			window.scrollTo(0, $(h).offset().top - offset + 1);
 			ret = true;
 		}
 
@@ -50,18 +50,18 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 * @desc Finds and returns a current section
 	 * @returns {Object} - a current section
 	 */
-	function current () {
+	function current() {
 		var top = window.scrollY,
 			i = 0,
 			l = sections.length;
 
-		for ( ; i < l; i++ ) {
-			if ( sections[i].offsetTop - offset > top ) {
+		for (; i < l; i++) {
+			if (sections[i].offsetTop - offset > top) {
 				break;
 			}
 		}
 
-		return $( sections[i - 1] );
+		return $(sections[i - 1]);
 	}
 
 	lastSection = current();
@@ -72,33 +72,33 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 * @param {Number} minHeight - height of intro to compare against
 	 * @returns {Boolean}
 	 */
-	function isSectionLongerThan ( section, minHeight ) {
+	function isSectionLongerThan(section, minHeight) {
 		var currentSection,
 			nextSection,
 			topOffset,
 			referenceOffset = null;
 
-		if ( typeof section === 'number' ) {
+		if (typeof section === 'number') {
 			currentSection = h2s[section - 1];
 			nextSection = h2s[section];
 		} else {
 			currentSection = section;
-			nextSection = h2s[ getId( section ) + 1 ];
+			nextSection = h2s[getId(section) + 1];
 		}
 
-		if ( !nextSection ) {
-			if ( currentSection ){
+		if (!nextSection) {
+			if (currentSection) {
 				referenceOffset = $wkPage.offset().top + $wkPage.height();
-				topOffset = $( currentSection ).offset().top;
+				topOffset = $(currentSection).offset().top;
 			} else {
 				return false;
 			}
 		} else {
-			topOffset = section ? $( currentSection ).offset().top : $( '#mw-content-text' ).offset().top;
-			referenceOffset = $( nextSection ).offset().top;
+			topOffset = section ? $(currentSection).offset().top : $('#mw-content-text').offset().top;
+			referenceOffset = $(nextSection).offset().top;
 		}
 
-		return ( referenceOffset - topOffset > minHeight );
+		return (referenceOffset - topOffset > minHeight);
 	}
 
 	/**
@@ -106,11 +106,11 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 * @param {Number} distFromTop - an int value representing given height in document
 	 * @returns {Object|null}
 	 */
-	function getElementAt ( distFromTop ) {
-		var currentElement = $( '#mw-content-text' ).children().first(),
+	function getElementAt(distFromTop) {
+		var currentElement = $('#mw-content-text').children().first(),
 			currentOffset = currentElement.outerHeight();
 
-		while ( currentElement.next().length !== 0 && currentOffset < distFromTop ) {
+		while (currentElement.next().length !== 0 && currentOffset < distFromTop) {
 			currentElement = currentElement.next();
 			currentOffset += currentElement.outerHeight();
 		}
@@ -122,23 +122,23 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 * @desc Function that fires at most every 200ms while scrolling
 	 * @triggers section:changed with a current section refernece and its id
 	 */
-	function onScroll () {
+	function onScroll() {
 		var currentSection = current();
 		// this is not needed to be fired on every scroll event
-		window.removeEventListener( 'scroll', onScroll );
+		window.removeEventListener('scroll', onScroll);
 
-		if ( currentSection && !currentSection.is( lastSection ) ) {
-			$( d ).trigger( 'section:changed', {
+		if (currentSection && !currentSection.is(lastSection)) {
+			$(d).trigger('section:changed', {
 				section: currentSection,
 				id: currentSection.length ? currentSection[0].id : undefined
-			} );
+			});
 
 			lastSection = currentSection;
 		}
 
-		window.setTimeout( function () {
-			window.addEventListener( 'scroll', onScroll );
-		}, 200 );
+		window.setTimeout(function () {
+			window.addEventListener('scroll', onScroll);
+		}, 200);
 	}
 
 	/**
@@ -146,8 +146,8 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 * @param {Object} section
 	 * @returns {Number}
 	 */
-	function getId ( section ) {
-		return h2s.indexOf( section );
+	function getId(section) {
+		return h2s.indexOf(section);
 	}
 
 	/**
@@ -155,8 +155,8 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 * @param {Object|Number} section - headline or number representing it's index
 	 * @returns {Object}
 	 */
-	function getNext ( section ) {
-		section = typeof section === 'number' ? section : getId( section );
+	function getNext(section) {
+		section = typeof section === 'number' ? section : getId(section);
 
 		return h2s[section + 1];
 	}
@@ -166,13 +166,13 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 * @param {Number} number of the article's section getting checked
 	 * @returns {Boolean}
 	 */
-	function isDefined ( section ) {
+	function isDefined(section) {
 		//first h2 has index 0 in the nodeList
-		var headline = h2s[section-1];
-		return !!headline && headline.parentElement === d.getElementById( 'mw-content-text' );
+		var headline = h2s[section - 1];
+		return !!headline && headline.parentElement === d.getElementById('mw-content-text');
 	}
 
-	window.addEventListener( 'scroll', onScroll );
+	window.addEventListener('scroll', onScroll);
 
 	return {
 		list: function () {
@@ -188,4 +188,4 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 		scrollTo: scrollTo,
 		current: current
 	};
-} );
+});

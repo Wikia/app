@@ -99,10 +99,18 @@ class FlagsExtractorTest extends WikiaBaseTest {
 | image = [[File:Ewokdirector.jpg|130px]]
 | caption = Piece of test text
 }}';
+		$mockTemplate3 = '{{Template:iumb
+| id = Oou
+| bg = #fff
+| image = [[File:KolejorzMistrz.jpg]]
+}}';
 
 		$mockTextTemplateAtTheBeginning = $mockTemplate1;
 		$mockTextTwoTemplatesOneByOne = $mockTemplate1 . $mockTemplate2;
 		$mockTextTwoTemplatesAndText = "Some text \n" . $mockTemplate1 . "Some text \n" . $mockTemplate2 . "\nSome text \n";
+		$mockTextTemplateWithNSPrefix = "Some text \n more tex \n $mockTemplate3 text \n last text";
+		$mockTextMixedTemplates = "Some text \n $mockTemplate1 more tex \n $mockTemplate3 text \n last text";
+		$mockTextMixedTemplatesChangedOrder = "Some text \n $mockTemplate3 more tex \n $mockTemplate1 text \n last text";
 
 		$mockTemplateName = 'iumb';
 
@@ -146,10 +154,73 @@ class FlagsExtractorTest extends WikiaBaseTest {
 			]
 		];
 
+		$expectedResultTemplateWithNS = [
+			[
+				'name' => 'iumb',
+				'template' => $mockTemplate3,
+				'params' => [
+					'id' => 'Oou',
+					'bg' => '#fff',
+					'image' => '[[File:KolejorzMistrz.jpg]]'
+				]
+			]
+		];
+
+		$expectedResultMixedTemplates = [
+			[
+				'name' => 'iumb',
+				'template' => $mockTemplate1,
+				'params' => [
+					'id' => 'Oou',
+					'bg' => '#F7F7F7',
+					'image' => '[[File:Ewokdirector.jpg|130px]]',
+					'caption' => 'Piece of test text',
+					'message' => 'This is a {{{1}}} for {{{2|Łukasz}}} to test his notice script',
+					'comment' => '{{{comment}}}'
+				]
+			],
+			[
+				'name' => 'iumb',
+				'template' => $mockTemplate3,
+				'params' => [
+					'id' => 'Oou',
+					'bg' => '#fff',
+					'image' => '[[File:KolejorzMistrz.jpg]]'
+				]
+			]
+		];
+
+		$expectedResultMixedTemplatesChangedOrder = [
+			[
+				'name' => 'iumb',
+				'template' => $mockTemplate3,
+				'params' => [
+					'id' => 'Oou',
+					'bg' => '#fff',
+					'image' => '[[File:KolejorzMistrz.jpg]]'
+				]
+			],
+			[
+				'name' => 'iumb',
+				'template' => $mockTemplate1,
+				'params' => [
+					'id' => 'Oou',
+					'bg' => '#F7F7F7',
+					'image' => '[[File:Ewokdirector.jpg|130px]]',
+					'caption' => 'Piece of test text',
+					'message' => 'This is a {{{1}}} for {{{2|Łukasz}}} to test his notice script',
+					'comment' => '{{{comment}}}'
+				]
+			]
+		];
+
 		return [
 			[ $mockTemplateName, $mockTextTemplateAtTheBeginning, $expectedResultOneTemplate ],
 			[ $mockTemplateName, $mockTextTwoTemplatesOneByOne, $expectedResultTwoTemplates ],
-			[ $mockTemplateName, $mockTextTwoTemplatesAndText, $expectedResultTwoTemplates ]
+			[ $mockTemplateName, $mockTextTwoTemplatesAndText, $expectedResultTwoTemplates ],
+			[ $mockTemplateName, $mockTextTemplateWithNSPrefix, $expectedResultTemplateWithNS ],
+			[ $mockTemplateName, $mockTextMixedTemplates, $expectedResultMixedTemplates ],
+			[ $mockTemplateName, $mockTextMixedTemplatesChangedOrder, $expectedResultMixedTemplatesChangedOrder ]
 		];
 	}
 

@@ -125,7 +125,6 @@
 		padding-bottom: 7px;
 		//@TODO CONCF-189 should be removed when social buttons enabled globally - flexbox enabled
 		padding-right: 175px;
-		word-break: break-all;
 		word-wrap: break-word;
 
 		> .comments {
@@ -237,6 +236,9 @@
 		&.header-title {
 			@include align-self(flex-start);
 			@include flex(0 1 100%);
+			// This is fix for firefox bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1136818
+			// Jira ticket: https://wikia-inc.atlassian.net/browse/CONCF-560
+			min-width: 0;
 			order: 0;
 		}
 

@@ -77,7 +77,7 @@ class SpecialEmailUser extends UnlistedSpecialPage {
 			'CCMe' => array(
 				'type' => 'check',
 				'label-message' => 'emailccme',
-				'default' => $this->getUser()->getBoolOption( 'ccmeonemails' ),
+				'default' => (bool)$this->getUser()->getGlobalPreference( 'ccmeonemails' ),
 			),
 		);
 	}

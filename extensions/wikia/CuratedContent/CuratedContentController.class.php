@@ -9,11 +9,8 @@ class CuratedContentController extends WikiaController {
 	const API_MINOR_REVISION = 1;
 	const APP_NAME = 'CuratedContent';
 	const SKIN_NAME = 'wikiamobile';
-	const DAYS = 86400;
-	const HOURS = 3600;
-	const MINUTES = 60;
-	const SECONDS = 1;
 	const LIMIT = 25;
+	const CURATED_CONTENT_WG_VAR_ID_PROD = 1460;
 
 	const NEW_API_VERSION = 1;
 
@@ -24,11 +21,12 @@ class CuratedContentController extends WikiaController {
 	 */
 	private $mModel = null;
 	private $mPlatform = null;
+	/** @var CommunityDataService */
+	private $communityDataService;
 
-	//Make sure this is updated as in CuratedContent.js
-
-
-	function init() {
+	// Make sure this is updated as in CuratedContent.js
+	public function init() {
+		global $wgCityId;
 		$requestedVersion = $this->request->getInt( 'ver', self::API_VERSION );
 		$requestedRevision = $this->request->getInt( 'rev', self::API_REVISION );
 
@@ -38,22 +36,10 @@ class CuratedContentController extends WikiaController {
 
 		$this->mModel = new CuratedContentModel();
 		$this->mPlatform = $this->request->getVal( 'os' );
+
+		$this->communityDataService = new CommunityDataService( $wgCityId );
 	}
 
-	/**
-	 * Simple DRY function to set cache for a given time
-	 *
-	 * @example:
-	 * $this->cacheResponseFor( 1, self:HOURS )
-	 * $this->cacheResponseFor( 14, self:DAYS )
-	 */
-	private function cacheResponseFor( $factor, $period ) {
-		if ( isset( $period ) && isset( $factor ) ) {
-			$cacheValidityTime = $factor * $period;
-
-			$this->response->setCacheValidity( $cacheValidityTime );
-		}
-	}
 
 	/**
 	 * @brief Api entry point to get a page and globals and messages that are relevant to the page
@@ -63,15 +49,12 @@ class CuratedContentController extends WikiaController {
 	public function getPage() {
 		global $wgTitle;
 
-		//This will always return json
-		$this->response->setFormat( 'json' );
+		// This will always return json
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
-		$this->cacheResponseFor( 7, self::DAYS );
-
-		//set mobile skin as this is based on it
-		RequestContext::getMain()->setSkin(
-			Skin::newFromKey( 'wikiamobile' )
-		);
+		// set mobile skin as this is based on it
+		RequestContext::getMain()->setSkin( Skin::newFromKey( 'wikiamobile' ) );
 
 		$titleName = $this->getVal( 'page' );
 
@@ -86,26 +69,26 @@ class CuratedContentController extends WikiaController {
 
 			if ( $revId > 0 ) {
 				try {
-					$relatedPages =
-						$this->app->sendRequest( 'RelatedPagesApi', 'getList',
-							[
-								'ids' => [ $articleId ]
-							]
-						)->getVal( 'items' )[ $articleId ];
+					$relatedPages = $this->app->sendRequest(
+						'RelatedPagesApi',
+						'getList',
+						[ 'ids' => [ $articleId ] ]
+					)->getVal( 'items' )[ $articleId ];
 
 					if ( !empty( $relatedPages ) ) {
 						$this->response->setVal( 'relatedPages', $relatedPages );
 					}
 				} catch ( NotFoundApiException $error ) {
-					//If RelatedPagesApi is not available don't throw it to app
+					// If RelatedPagesApi is not available don't throw it to app
 				}
 
 				$this->response->setVal(
 					'html',
-					$this->sendSelfRequest( 'renderPage', array(
-							'page' => $titleName
-						)
-					)->toString() );
+					$this->sendSelfRequest(
+						'renderPage',
+						[ 'page' => $titleName ]
+					)->toString()
+				);
 
 				$this->response->setVal(
 					'revisionid',
@@ -143,35 +126,36 @@ class CuratedContentController extends WikiaController {
 		$titleName = $this->request->getVal( 'page' );
 
 		$html = ApiService::call(
-			array(
+			[
 				'action' => 'parse',
 				'page' => $titleName,
 				'prop' => 'text',
 				'redirects' => 1,
 				'useskin' => 'wikiamobile'
-			)
+			]
 		);
 
 		$this->response->setVal( 'globals', Skin::newFromKey( 'wikiamobile' )->getTopScripts() );
-		$this->response->setVal( 'messages', JSMessages::getPackages( array( 'CuratedContent' ) ) );
+		$this->response->setVal( 'messages', JSMessages::getPackages( [ 'CuratedContent' ] ) );
 		$this->response->setVal( 'title', Title::newFromText( $titleName )->getText() );
-		//TODO: Remove 'infoboxFixSectionReplace', it's temporary fix for mobile aps
-		//See: DAT-2864 and DAT-2859
+		// TODO: Remove 'infoboxFixSectionReplace', it's temporary fix for mobile aps
+		// See: DAT-2864 and DAT-2859
 		$this->response->setVal( 'html', $this->infoboxFixSectionReplace( $html[ 'parse' ][ 'text' ][ '*' ] ) );
 
 		wfProfileOut( __METHOD__ );
 	}
 
 	public function infoboxFixSectionReplace( $html ) {
-		$matches = [];
+		$matches = [ ];
 		preg_match_all( "/<aside class=\"portable-infobox.+?>(.+?)<\\/aside>/ms", $html, $matches );
-		if ( isset( $matches[1] ) ) {
-			foreach ( $matches[1] as $to_replace ) {
+		if ( isset( $matches[ 1 ] ) ) {
+			foreach ( $matches[ 1 ] as $to_replace ) {
 				$new_markup = str_replace( '<section', '<div', $to_replace );
 				$new_markup = str_replace( '</section', '</div', $new_markup );
 				$html = str_replace( $to_replace, $new_markup, $html );
 			}
 		}
+
 		return $html;
 	}
 
@@ -192,10 +176,11 @@ class CuratedContentController extends WikiaController {
 			$scripts .= $s;
 		}
 
-		//getPage sets cache for a response for 7 days
-		$page = $this->sendSelfRequest( 'getPage', [
-			'page' => $this->getVal( 'page' )
-		] );
+		// getPage sets cache for a response for 24 hours
+		$page = $this->sendSelfRequest(
+			'getPage',
+			[ 'page' => $this->getVal( 'page' ) ]
+		);
 
 		$this->response->setVal( 'html', $page->getVal( 'html' ) );
 		$this->response->setVal( 'js', $scripts );
@@ -207,24 +192,265 @@ class CuratedContentController extends WikiaController {
 	public function getList() {
 		wfProfileIn( __METHOD__ );
 
-		$this->response->setFormat( 'json' );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		$content = $this->wg->WikiaCuratedContent;
-		if ( empty( $content ) ) {
+		if ( !$this->communityDataService->hasData() ) {
 			$this->getCategories();
 		} else {
 			$section = $this->request->getVal( 'section' );
-
 			if ( empty( $section ) ) {
-				$this->cacheResponseFor( 14, self::DAYS );
-				$this->getSections( $content );
-				$this->getFeaturedSection( $content );
+				$this->response->setVal( 'sections', array_map( function ( $section ) {
+					$imageId = $section[ 'image_id' ] != 0 ? $section[ 'image_id' ] : null;
+					$result = [
+						'title' => $section[ 'label' ],
+						'image_id' => $imageId,
+						'image_url' => CuratedContentHelper::findImageUrl( $imageId )
+					];
+					if ( !empty( $section[ 'image_id' ] ) && isset( $section[ 'image_crop' ] ) ) {
+						$result[ 'image_crop' ] = $section[ 'image_crop' ];
+					}
+					return $result;
+				}, $this->communityDataService->getCurated() ) );
+				$this->response->setVal( 'items',
+					$this->extendItemsWithImages( $this->communityDataService->getOptionalItems() ) );
+				$this->response->setVal( 'featured',
+					$this->extendItemsWithImages( $this->communityDataService->getFeaturedItems() ) );
 			} else {
-				$this->getSectionItems( $content, $section );
+				$filteredSectionItems = $this->extendItemsWithImages(
+					$this->extractItemsFromSections( $this->communityDataService->getNonFeaturedSection( $section ) ) );
+				if ( !empty( $filteredSectionItems ) ) {
+					$this->response->setVal( 'items', $filteredSectionItems );
+				} else {
+					throw new CuratedContentSectionNotFoundException( $section );
+				}
 			}
+
+			$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		}
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	public function getCuratedContentQuality() {
+		$wikiID = $this->request->getInt( 'wikiID', null );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		$this->getResponse()->setFormat( WikiaResponse::FORMAT_JSON );
+
+		if ( empty( $wikiID ) ) {
+			$wikiWithCC = WikiFactory::getListOfWikisWithVar(
+				self::CURATED_CONTENT_WG_VAR_ID_PROD, "full", "LIKE", null, "true" );
+			$curatedContentQualityPerWiki = [ ];
+			foreach ( $wikiWithCC as $id => $data ) {
+				$curatedContentQualityPerWiki[ $data[ 'u' ] ] = $id;
+			}
+
+			$curatedContentQualityPerWiki = array_map( function ( $id ) {
+				return $this->getCuratedContentQualityForWiki( $id );
+			}, $curatedContentQualityPerWiki );
+			$curatedContentQualityTotal = $this->sumUpQualityStats( $curatedContentQualityPerWiki );
+
+			if ( $this->request->getBool( 'totalImages', false ) ) {
+				$this->response->setVal( 'item', $curatedContentQualityTotal[ 'missingImagesCount' ] );
+				$this->response->setVal( 'min', [ 'value' => 0 ] );
+				$this->response->setVal( 'max', [ 'value' => $curatedContentQualityTotal[ 'totalNumberOfItems' ] ] );
+			} elseif ( $this->request->getBool( 'totalTitles', false ) ) {
+				$this->response->setVal( 'item', $curatedContentQualityTotal[ 'tooLongTitlesCount' ] );
+				$this->response->setVal( 'min', [ 'value' => 0 ] );
+				$this->response->setVal( 'max', [ 'value' => $curatedContentQualityTotal[ 'totalNumberOfItems' ] ] );
+			} else {
+				$this->response->setVal( 'curatedContentQualityTotal', $curatedContentQualityTotal );
+				$this->response->setVal( 'curatedContentQualityPerWiki', $curatedContentQualityPerWiki );
+			}
+		} else {
+			$this->response->setVal( 'wikiQuality', $this->getCuratedContentQualityForWiki( $wikiID ) );
+		}
+	}
+
+	public function setCuratedContentData() {
+		global $wgCityId, $wgUser, $wgRequest;
+
+		if ( !$wgRequest->wasPosted() ) {
+			throw new CuratedContentValidatorMethodNotAllowedException();
+		}
+
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		// TODO: CONCF-961 Set more restrictive header
+		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
+
+		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
+			$data = $this->request->getArray( 'data', [ ] );
+			$properData = [ ];
+			$status = false;
+
+			// strip excessive data used in mercury interface (added in self::getData method)
+			foreach ( $data as $section ) {
+
+				// strip node_type and image_url from section
+				unset( $section[ 'node_type' ] );
+				unset( $section[ 'image_url' ] );
+
+				// fill label for featured
+				if ( empty( $section[ 'label' ] ) && !empty( $section[ 'featured' ] ) ) {
+					$section[ 'label' ] = wfMessage( 'wikiacuratedcontent-featured-section-name' )->text();
+				}
+
+				// strip node_type and image_url from items inside section and add it to new data
+				if ( is_array( $section[ 'items' ] ) && !empty( $section[ 'items' ] ) ) {
+					// strip node_type and image_url
+					foreach ( $section[ 'items' ] as &$item ) {
+						unset( $item[ 'node_type' ] );
+						unset( $item[ 'image_url' ] );
+					}
+
+					$properData[] = $section;
+				}
+			}
+
+			$helper = new CuratedContentHelper();
+			$sections = $helper->processSections( $properData );
+			$errors = CuratedContentValidator::validateData( $sections );
+
+			if ( !empty( $errors ) ) {
+				$this->response->setVal( 'errors', $errors );
+			} else {
+				$community_data = $this->request->getArray( 'community_data', [ ] );
+				if ( $community_data ) {
+					$community_data[ 'community_data' ] = 'true';
+					$sections[] = $community_data;
+				}
+
+				$status = ( new CommunityDataService( $wgCityId ) )->setCuratedContent( $sections );
+
+				if ( !empty( $status ) ) {
+					wfRunHooks( 'CuratedContentSave', [ $sections ] );
+				}
+			}
+			$this->response->setVal( 'status', $status );
+
+		} else {
+			$this->response->setCode( \Wikia\Service\ForbiddenException::CODE );
+			$this->response->setVal( 'message', 'No permissions to save curated content' );
+		}
+	}
+
+	public function getData() {
+		global $wgUser;
+
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		// TODO: CONCF-961 Set more restrictive header
+		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
+
+		if ( $wgUser->isAllowed( 'curatedcontent' ) ) {
+			$data = [ ];
+			if ( $this->communityDataService->hasData() ) {
+				// extend images
+				$curated = array_map( function ( $section ) {
+					$section[ 'image_url' ] = CuratedContentHelper::findImageUrl( $section[ 'image_id' ] );
+					return $section;
+				}, $this->communityDataService->getCurated() );
+
+				$featured = $this->communityDataService->getFeatured();
+				if ( !empty( $featured ) ) {
+					$featured[ 'featured' ] = 'true';
+					$curated[] = $featured;
+				}
+				$optional = $this->communityDataService->getOptional();
+				if ( !empty( $optional ) ) {
+					$curated[] = $optional;
+				}
+
+				$data = array_map( function ( $section ) {
+					$section[ 'node_type' ] = 'section';
+					$section[ 'items' ] = $this->extendItemsWithImages( $section[ 'items' ] );
+					$section[ 'items' ] = $this->extendItemsWithType( $section[ 'items' ] );
+					return $section;
+				}, $curated );
+
+				$community = $this->communityDataService->getCommunityData();
+				if ( !empty( $community ) ) {
+					$community[ 'community_data' ] = 'true';
+
+					if ( !empty( $community[ 'image_id' ] ) ) {
+						$url = CuratedContentHelper::getImageUrl( $community[ 'image_id' ] );
+						$community[ 'image_url' ] = $url;
+					}
+					$data[] = $community;
+				}
+
+			}
+
+			$this->response->setVal( 'data', $data );
+		} else {
+			$this->response->setCode( \Wikia\Service\ForbiddenException::CODE );
+			$this->response->setVal( 'message', 'No permissions to access curated content' );
+		}
+	}
+
+	public function getWikisWithCuratedContent() {
+		$wikisList = WikiFactory::getListOfWikisWithVar(
+			self::CURATED_CONTENT_WG_VAR_ID_PROD, 'array', '!=', [ ]
+		);
+
+		$this->response->setVal( 'ids_list', $wikisList );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+	}
+
+	public function getImage() {
+		$titleName = $this->request->getVal( 'title' );
+		$imageSize = $this->request->getInt( 'size', 50 );
+		$url = null;
+		$imageId = 0;
+
+		if ( !empty( $titleName ) ) {
+			$title = Title::newFromText( $titleName );
+
+			if ( !empty( $title ) && $title instanceof Title && $title->exists() ) {
+				$imageId = $title->getArticleID();
+			}
+		}
+
+		if ( !empty( $imageId ) ) {
+			$url = CuratedContentHelper::getImageUrl( $imageId, $imageSize );
+		}
+
+		$this->response->setValues( [
+			'url' => $url,
+			'id' => $imageId
+		] );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
+		// TODO: CONCF-961 Set more restrictive header
+		$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
+	}
+
+	public function editButton() {
+		if ( CuratedContentHelper::shouldDisplayToolButton() ) {
+			$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+			$this->response->setVal(
+				'editMobileMainPageMessage', wfMessage( 'wikiacuratedcontent-edit-mobile-main-page' )->text()
+			);
+		} else {
+			return false; // skip rendering
+		}
+	}
+
+	private function extractItemsFromSections( array $sections ) {
+		return array_reduce( $sections, function ( $result, $item ) {
+			return array_merge( $result, $item[ 'items' ] );
+		}, [ ] );
+	}
+
+	private function extendItemsWithImages( array $items ) {
+		return array_map( [ $this, 'extendWithImageData' ], $items );
+	}
+
+	private function extendWithImageData( $item ) {
+		list( $item[ 'image_id' ], $item[ 'image_url' ] ) = CuratedContentHelper::findImageIdAndUrl(
+			$item[ 'image_id' ],
+			$item[ 'article_id' ]
+		);
+		return $item;
 	}
 
 	/**
@@ -245,7 +471,7 @@ class CuratedContentController extends WikiaController {
 
 		$items = WikiaDataAccess::cache(
 			wfMemcKey( __METHOD__, $offset, $limit, self::NEW_API_VERSION ),
-			6 * self::HOURS,
+			WikiaResponse::CACHE_SHORT,
 			function () use ( $limit, $offset ) {
 				return ApiService::call(
 					[
@@ -255,7 +481,7 @@ class CuratedContentController extends WikiaController {
 						'aclimit' => $limit,
 						'acfrom' => $offset,
 						'acprop' => 'id|size',
-						//We don't want empty items to show up
+						// We don't want empty items to show up
 						'acmin' => 1
 					]
 				);
@@ -271,9 +497,11 @@ class CuratedContentController extends WikiaController {
 
 			foreach ( $allCategories as $value ) {
 				if ( $value[ 'size' ] - $value[ 'files' ] > 0 ) {
-					$ret[ ] = $this::getJsonItem( $value[ '*' ],
+					$ret[] = $this::getJsonItem(
+						$value[ '*' ],
 						$categoryName,
-						isset( $value[ 'pageid' ] ) ? (int)$value[ 'pageid' ] : 0 );
+						isset( $value[ 'pageid' ] ) ? (int)$value[ 'pageid' ] : 0
+					);
 				}
 			}
 
@@ -282,7 +510,6 @@ class CuratedContentController extends WikiaController {
 			if ( !empty( $items[ 'query-continue' ] ) ) {
 				$this->response->setVal( 'offset', $items[ 'query-continue' ][ 'allcategories' ][ 'acfrom' ] );
 			}
-
 		} else {
 			wfProfileOut( __METHOD__ );
 			throw new NotFoundApiException( 'No Curated Content' );
@@ -291,120 +518,78 @@ class CuratedContentController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	/**
-	 *
-	 * Returns Items under a given Section
-	 *
-	 * @param $content
-	 * @param $requestSection
-	 * @param string $sectionName
-	 *
-	 * @throws CuratedContentSectionNotFoundException
-	 * @responseReturn Array|false Items or false if section was not found
-	 */
-	private function getSectionItems( $content, $requestSection ) {
-		$ret = false;
-
-		foreach ( $content as $section ) {
-			if ( $requestSection == $section[ 'title' ] && $section[ 'featured' ] == false ) {
-				$ret = $section[ 'items' ];
-			}
-		}
-
-		if ( !empty( $ret ) ) {
-			$this->setSectionItemsResponse( 'items', $ret );
-		} else if ( $requestSection !== '' ) {
-			throw new CuratedContentSectionNotFoundException( $requestSection );
-		}
-	}
-
-	private function getFeaturedSection( $content ) {
-		$ret = false;
-		foreach ( $content as $section ) {
-			if ( $section[ 'featured' ] ) {
-				$ret = $section[ 'items' ];
-			}
-		}
-		if ( !empty( $ret ) ) {
-			$this->setSectionItemsResponse( 'featured', $ret );
-		}
-	}
-
-
-	/**
-	 * @param $sectionName
-	 * @param $ret
-	 * @param $value
-	 * @return mixed
-	 */
-	private function setSectionItemsResponse( $sectionName, $ret ) {
-		foreach ( $ret as &$value ) {
-			list( $image_id, $image_url ) =
-				CuratedContentSpecialController::findImageIfNotSet(
-					$value[ 'image_id' ],
-					$value[ 'article_id' ] );
-			$value[ 'image_id' ] = $image_id;
-			$value[ 'image_url' ] = $image_url;
-		}
-		$this->response->setVal( $sectionName, $ret );
-	}
-
-	/**
-	 * @param $content Array content of a wgWikiaCuratedContent
-	 *
-	 * @responseReturn Array sections List of sections on a wiki
-	 * @responseReturn See getSectionItems
-	 */
-	private function getSections( $content ) {
-		wfProfileIn( __METHOD__ );
-		$this->response->setVal(
-			'sections',
-			array_reduce(
-				$content,
-				function ( $ret, $item ) {
-					if ( $item[ 'title' ] !== '' && $item[ 'featured' ] == false ) {
-						$imageId = $item[ 'image_id' ] != 0 ? $item[ 'image_id' ] : null;
-						$ret[ ] = [
-							'title' => $item[ 'title' ],
-							'image_id' => $imageId,
-							'image_url' => CuratedContentSpecialController::findImageIfNotSet
-							( $imageId )[ 1 ] ];
-					}
-					return $ret;
-				}
-			)
-		);
-
-		//there also might be some categories without SECTION, lets find them as well
-		$this->getSectionItems( $content, '' );
-		wfProfileOut( __METHOD__ );
-	}
-
-	function getJsonItem( $titleName, $ns, $pageId ) {
+	private function getJsonItem( $titleName, $ns, $pageId ) {
 		$title = Title::makeTitle( $ns, $titleName );
-		list( $image_id, $image_url ) = CuratedContentSpecialController::findImageIfNotSet( 0, $pageId );
+		list( $imageId, $imageUrl ) = CuratedContentHelper::findImageIdAndUrl( null, $pageId );
+
 		return [
 			'title' => $ns . ':' . $title->getFullText(),
 			'label' => $title->getFullText(),
-			'image_id' => $image_id,
+			'image_id' => $imageId,
 			'article_id' => $pageId,
 			'type' => 'category',
-			'image_url' => $image_url
+			'image_url' => $imageUrl
 		];
 	}
 
-	/**
-	 * @brief Whenever data is saved in Curated Content Management Tool
-	 * purge Varnish cache for it and Game Guides
-	 *
-	 * @return bool
-	 */
-	static function onCuratedContentSave() {
-		self::purgeMethod( 'getList' );
-		if ( class_exists( 'GameGuidesController' ) ) {
-			GameGuidesController::purgeMethod( 'getList' );
+	private function extendItemsWithType( $items ) {
+		return array_map( function ( $item ) {
+			$item[ 'node_type' ] = 'item';
+			return $item;
+		}, $items );
+	}
+
+	private function getCuratedContentQualityForWiki( $wikiID ) {
+		$curatedContent = $this->getCuratedContentForWiki( $wikiID );
+		if ( is_array( $curatedContent ) ) {
+			$stats = [ ];
+			foreach ( $curatedContent as $curatedContentModule => $items ) {
+				$stats = array_merge( $stats, array_map( function ( $item ) use ( $curatedContentModule ) {
+					return [
+						'tooLongTitlesCount' => CuratedContentValidator::hasValidLabel( $item ) ? 1 : 0,
+						'missingImagesCount' => empty( $item[ 'image_id' ] ) ? 1 : 0,
+						'totalNumberOfItems' => 1
+					];
+				}, $items ) );
+			}
+
+			// sum up all calculation results
+			return $this->sumUpQualityStats( $stats );
 		}
-		return true;
+		return [ ];
+	}
+
+	private function getCuratedContentForWiki( $wikiID ) {
+		$curatedContent = [ ];
+		$communityData = new CommunityDataService( $wikiID );
+		$sections = $communityData->getCurated();
+		$curatedContent[ 'sections' ] = array_map( function ( $section ) {
+			$imageId = $section[ 'image_id' ] != 0 ? $section[ 'image_id' ] : null;
+			return [
+				'label' => $section[ 'label' ],
+				'image_id' => $imageId,
+				'image_url' => CuratedContentHelper::findImageUrl( $imageId )
+			];
+		}, $sections );
+		$curatedContent[ 'optional' ] = $communityData->getOptionalItems();
+		$curatedContent[ 'featured' ] = $communityData->getFeaturedItems();
+		$curatedContent[ 'categories' ] = $this->extractItemsFromSections( $sections );
+
+		return $curatedContent;
+	}
+
+	/**
+	 * Sums up stats arrays with keys: tooLongTitlesCount, missingImagesCount, totalNumberOfItems
+	 * @param array $stats
+	 * @return array
+	 */
+	private function sumUpQualityStats( $stats ) {
+		return array_reduce( $stats, function ( $accu, $item ) {
+			foreach ( $item as $key => $value ) {
+				$accu[ $key ] += $value;
+			}
+			return $accu;
+		}, [ 'tooLongTitlesCount' => 0, 'missingImagesCount' => 0, 'totalNumberOfItems' => 0 ] );
 	}
 }
 

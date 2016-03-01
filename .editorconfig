@@ -25,3 +25,11 @@ space_before_conditional = true
 eval_code = false
 unescape_strings = false
 wrap_line_length = 0
+
+[**.{php,scss}]
+charset = utf-8
+end_of_line = lf
+indent_size = tab
+indent_style = tab
+insert_final_newline = true
+max_line_length = 120 # Vim

@@ -188,7 +188,7 @@ class SDUtils {
 		while ( $row = $dbr->fetchRow( $res ) ) {
 			// There should only be one row.
 			$filtersStr = $row['pp_value'];
-			$filtersInfo = unserialize( $filtersStr );
+			$filtersInfo = Wikia\Util\Serialize::safeUnserialize( $filtersStr );
 			foreach ( $filtersInfo as $filterName => $filterValues ) {
 				$curFilter = new SDFilter();
 				$curFilter->setName( $filterName );

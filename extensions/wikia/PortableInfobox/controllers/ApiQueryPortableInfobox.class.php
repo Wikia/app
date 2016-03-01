@@ -16,23 +16,19 @@ class ApiQueryPortableInfobox extends ApiQueryBase {
 	}
 
 	protected function runOnPageSet( ApiPageSet $pageSet ) {
-		$articles = array_map( function ( Title $item ) {
-			return Article::newFromTitle( $item, RequestContext::getMain() );
-		}, $pageSet->getGoodTitles() );
-		/**
-		 * @var Article $article
-		 */
-		foreach ( $articles as $id => $article ) {
-			$d = $article->getParserOutput()->getProperty( PortableInfoboxParserTagController::INFOBOXES_PROPERTY_NAME );
-			if ( is_array( $d ) ) {
+		$articles = $pageSet->getGoodTitles();
 
+		foreach ( $articles as $id => $articleTitle ) {
+			$parsedInfoboxes = PortableInfoboxDataService::newFromTitle( $articleTitle )->getData();
+
+			if ( is_array( $parsedInfoboxes ) && count( $parsedInfoboxes ) ) {
 				$inf = [ ];
-				foreach ( array_keys( $d ) as $k => $v ) {
+				foreach ( array_keys( $parsedInfoboxes ) as $k => $v ) {
 					$inf[ $k ] = [ ];
 				}
 				$pageSet->getResult()->setIndexedTagName( $inf, 'infobox' );
 				$pageSet->getResult()->addValue( [ 'query', 'pages', $id ], 'infoboxes', $inf );
-				foreach ( $d as $count => $infobox ) {
+				foreach ( $parsedInfoboxes as $count => $infobox ) {
 					$s = isset( $infobox[ 'sources' ] ) ? $infobox[ 'sources' ] : [ ];
 					$pageSet->getResult()->addValue( [ 'query', 'pages', $id, 'infoboxes', $count ], 'id', $count );
 					$pageSet->getResult()->setIndexedTagName( $s, "source" );

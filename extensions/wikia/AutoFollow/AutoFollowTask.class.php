@@ -50,7 +50,7 @@ class AutoFollowTask extends BaseTask {
 	private function setFlag( \User $oUser ) {
 		global $wgAutoFollowFlag;
 
-		$oUser->setOption( $wgAutoFollowFlag, 1 );
+		$oUser->setGlobalFlag( $wgAutoFollowFlag, 1 );
 		$oUser->saveSettings();
 	}
 
@@ -69,7 +69,7 @@ class AutoFollowTask extends BaseTask {
 			'failures' => $iFailures,
 			'user_id' => $oUser->getId(),
 			'user_name' => $sUserName,
-			'user_lang' => $oUser->getOption( 'language' ),
+			'user_lang' => $oUser->getGlobalPreference( 'language' ),
 			'watched' => $aWatchSuccess,
 			'watched_failed' => $aWatchFail,
 		];

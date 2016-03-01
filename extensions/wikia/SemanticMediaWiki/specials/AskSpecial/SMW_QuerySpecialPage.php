@@ -174,6 +174,6 @@ abstract class SMWQuerySpecialPage extends SpecialPage {
 		// @TODO global
 		// In case of RequestContext, switch to
 		// $this->getUser()->getOption( 'smw-prefs-ask-options-tooltip-display' );
-		return $GLOBALS['wgUser']->getOption( 'smw-prefs-ask-options-tooltip-display' );
+		return $GLOBALS['wgUser']->getGlobalPreference( 'smw-prefs-ask-options-tooltip-display' );
 	}
 }

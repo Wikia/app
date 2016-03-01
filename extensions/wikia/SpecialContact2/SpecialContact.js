@@ -1,6 +1,5 @@
 /**
- * WARNING: WHILE THERE ARE TWO VERSIONS OF SPECIAL:CONTACT... THIS WILL BE THE MASTER FILE, AND THE OTHER /extensions/wikia/SpecialContact/SpecialContact.js
- * IS A COPY OF THIS FUNCTIONALITY.
+ * Click tracking configuration for SpecialContact extension
  */
 
 var SpecialContact = {

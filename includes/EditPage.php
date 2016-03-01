@@ -512,7 +512,9 @@ class EditPage {
 		} elseif ( $this->section == 'new' ) {
 			// Nothing *to* preview for new sections
 			return false;
-		} elseif ( ( $wgRequest->getVal( 'preload' ) !== null || $this->mTitle->exists() ) && $wgUser->getOption( 'previewonfirst' ) ) {
+		} elseif ( ( $wgRequest->getVal( 'preload' ) !== null || $this->mTitle->exists() ) &&
+			$wgUser->getGlobalPreference( 'previewonfirst' )
+		) {
 			// Standard preference behaviour
 			return true;
 		} elseif ( !$this->mTitle->exists() &&
@@ -665,7 +667,8 @@ class EditPage {
 			{
 				$this->allowBlankSummary = true;
 			} else {
-				$this->allowBlankSummary = $request->getBool( 'wpIgnoreBlankSummary' ) || !$wgUser->getOption( 'forceeditsummary');
+				$this->allowBlankSummary = $request->getBool( 'wpIgnoreBlankSummary' ) ||
+					!$wgUser->getGlobalPreference( 'forceeditsummary' );
 			}
 
 			# <Wikia>
@@ -756,17 +759,17 @@ class EditPage {
 		$this->textbox1 = $this->getContent( false );
 		// activate checkboxes if user wants them to be always active
 		# Sort out the "watch" checkbox
-		if ( $wgUser->getOption( 'watchdefault' ) ) {
+		if ( $wgUser->getGlobalPreference( 'watchdefault' ) ) {
 			# Watch all edits
 			$this->watchthis = true;
-		} elseif ( $wgUser->getOption( 'watchcreations' ) && !$this->mTitle->exists() ) {
+		} elseif ( $wgUser->getGlobalPreference( 'watchcreations' ) && !$this->mTitle->exists() ) {
 			# Watch creations
 			$this->watchthis = true;
 		} elseif ( $this->mTitle->userIsWatching() ) {
 			# Already watched
 			$this->watchthis = true;
 		}
-		if ( $wgUser->getOption( 'minordefault' ) && !$this->isNew ) {
+		if ( $wgUser->getGlobalPreference( 'minordefault' ) && !$this->isNew ) {
 			$this->minoredit = true;
 		}
 		if ( $this->textbox1 === false ) {
@@ -1226,9 +1229,10 @@ class EditPage {
 
 		wfProfileOut( __METHOD__ . '-checks' );
 
-		# If article is new, insert it.
-		$aid = $this->mTitle->getArticleID( Title::GAID_FOR_UPDATE );
-		$new = ( $aid == 0 );
+		// Use SELECT FOR UPDATE here to avoid transaction collision in
+		// WikiPage::updateRevisionOn() and ending in the self::AS_END case.
+		$this->mArticle->loadPageData( 'forupdate' );
+		$new = !$this->mArticle->exists();
 
 		if ( $new ) {
 			// Late check for create permission, just in case *PARANOIA*
@@ -1308,10 +1312,7 @@ class EditPage {
 		} else {
 
 			# Article exists. Check for edit conflict.
-
-			$this->mArticle->clear(); # Force reload of dates, etc.
 			$timestamp = $this->mArticle->getTimestamp();
-
 			wfDebug( "timestamp: {$timestamp}, edittime: {$this->edittime}\n" );
 
 			if ( $timestamp != $this->edittime ) {
@@ -1641,7 +1642,7 @@ class EditPage {
 
 		$wgOut->addModules( 'mediawiki.action.edit' );
 
-		if ( $wgUser->getOption( 'uselivepreview', false ) ) {
+		if ( $wgUser->getGlobalPreference( 'uselivepreview', false ) ) {
 			$wgOut->addModules( 'mediawiki.legacy.preview' );
 		}
 
@@ -1696,7 +1697,9 @@ class EditPage {
 			if ( !($user && $user->isLoggedIn()) && !$ip ) { # User does not exist
 				$wgOut->wrapWikiMsg( "<div class=\"mw-userpage-userdoesnotexist error\">\n$1\n</div>",
 					array( 'userpage-userdoesnotexist', wfEscapeWikiText( $username ) ) );
-			} elseif ( $user->isBlocked() ) { # Show log extract if the user is currently blocked
+			/* Wikia change begin - SUS-92 */
+			} elseif ( $user->isBlocked( true, false ) ) { # Show log extract if the user is currently blocked
+			/* Wikia change end */
 				LogEventsList::showLogExtract(
 					$wgOut,
 					'block',
@@ -1785,7 +1788,7 @@ class EditPage {
 
 		$wgOut->addHTML( $this->editFormPageTop );
 
-		if ( $wgUser->getOption( 'previewontop' ) ) {
+		if ( $wgUser->getGlobalPreference( 'previewontop' ) ) {
 			$this->displayPreviewArea( $previewOutput, true );
 		}
 
@@ -1877,7 +1880,9 @@ class EditPage {
 		/* Wikia change end */
 
 		/* Wikia change begin - @author: kflorence (BugId:40705) */
-		if ( !$this->isCssJsSubpage && $showToolbar && ( !( $wgUser->getSkin() instanceof SkinMonobook ) || $wgUser->getOption( 'showtoolbar' ) ) ) {
+		if ( !$this->isCssJsSubpage &&
+			$showToolbar &&
+			( !( $wgUser->getSkin() instanceof SkinMonobook ) || $wgUser->getGlobalPreference( 'showtoolbar' ) ) ) {
 			$wgOut->addHTML( EditPage::getEditToolbar() );
 		}
 		/* Wikia change end */
@@ -1898,9 +1903,9 @@ class EditPage {
 		// wikia change begin
 		wfRunHooks ('EditForm:AfterDisplayingTextbox', array (&$this, &$hidden /* TODO: remove? */) ) ;
 
-		$rows = $wgUser->getIntOption( 'rows' );
-		$cols = $wgUser->getIntOption( 'cols' );
-		$ew = $wgUser->getOption( 'editwidth' );
+		$rows = intval($wgUser->getGlobalPreference( 'rows' ));
+		$cols = intval($wgUser->getGlobalPreference( 'cols' ));
+		$ew = $wgUser->getGlobalPreference( 'editwidth' );
 
 		wfRunHooks( 'EditForm::MultiEdit:Form', array( $rows, $cols, $ew, htmlspecialchars( $this->safeUnicodeOutput( $this->textbox1 ) ) ) );
 		// wikia change end
@@ -1950,7 +1955,7 @@ class EditPage {
 		}
 		/* Wikia change end */
 
-		if ( !$wgUser->getOption( 'previewontop' ) ) {
+		if ( !$wgUser->getGlobalPreference( 'previewontop' ) ) {
 			$this->displayPreviewArea( $previewOutput, false );
 		}
 
@@ -2356,8 +2361,8 @@ HTML
 		$attribs = $customAttribs + array(
 			'accesskey' => ',',
 			'id'   => $name,
-			'cols' => $wgUser->getIntOption( 'cols' ),
-			'rows' => $wgUser->getIntOption( 'rows' ),
+			'cols' => intval($wgUser->getGlobalPreference( 'cols' )),
+			'rows' => intval($wgUser->getGlobalPreference( 'rows' )),
 			'style' => '' // avoid php notices when appending preferences (appending allows customAttribs['style'] to still work
 		);
 
@@ -2662,7 +2667,7 @@ HTML
 		// TODO: remove?
 		// @see https://trac.wikia-inc.com/changeset/6028
 		global $wgRequest;
-		if ($wgUser->getOption( 'showtoolbar' ) && !$wgUser->getOption( 'riched_disable' ) && !$this->previewOnOpen() ) {
+		if ($wgUser->getGlobalPreference( 'showtoolbar' ) && !$wgUser->getGlobalPreference( 'riched_disable' ) && !$this->previewOnOpen() ) {
 			$oldTextBox1 = $this->textbox1;
 			$this->importFormData( $wgRequest );
 		}

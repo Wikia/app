@@ -15,17 +15,6 @@ unset($wgSkipSkins[ array_search('answers', $wgSkipSkins) ]);
 $wgHooks['ArticleSaveComplete'][] = 'AttributionCache::purgeArticleContribs';
 $wgHooks['TitleMoveComplete'][] = 'AttributionCache::purgeArticleContribsAfterMove';
 
-// FIXME: this SHOULD NOT be here. Move to Skin.
-$wgExtensionFunctions[] = 'answersStyle';
-function answersStyle() {
-	global $wgOut, $wgStylePath, $wgUseNewAnswersSkin;
-
-	if ( !empty( $wgUseNewAnswersSkin ) ) {
-		$wgOut->addExtensionStyle("{$wgStylePath}/answers/css/monaco_answers.css");
-	}
-	return true;
-}
-
 $wgExtensionCredits[ 'other' ][ ] = array(
 	'name' => 'Answers',
 	'author' => 'Wikia',

@@ -21,14 +21,12 @@ class ListusersData {
 
 	var $mDBh;
 	var $mTable;
-	var $mDBEnable;
 
 	function __construct( $city_id, $load = 1 ) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgSpecialsDB;
 		$this->mCityId = $city_id;
-		$this->mDBh = $wgStatsDB;
-		$this->mDBEnable = $wgStatsDBEnabled;
-		$this->mTable = '`specials`.`events_local_users`';
+		$this->mDBh = $wgSpecialsDB;
+		$this->mTable = 'events_local_users';
 
 		$this->mOrderOptions = array(
 			'username'	=> array( 'user_name %s' ),
@@ -126,12 +124,12 @@ class ListusersData {
 		$memkey = wfForeignMemcKey( $this->mCityId, null, "ludata", md5( implode(', ', $subMemkey) ) );
 		$cached = $wgMemc->get($memkey);
 
-		if ( empty($cached) && !empty($this->mDBEnable) ) {
+		if ( empty($cached) ) {
 			/* db handle */
 			$dbs = wfGetDB( DB_SLAVE, array(), $this->mDBh );
 
 			/* initial conditions for SQL query */
-			$where = array( 'wiki_id' => $this->mCityId );
+			$where = array( 'wiki_id' => $this->mCityId, "user_name != ''" );
 
 			/* filter: groups */
 			if ( !empty( $this->mFilterGroup ) && is_array( $this->mFilterGroup ) ) {
@@ -146,7 +144,7 @@ class ListusersData {
 							 * and include it in the No group checkbox
 							 */
 							$powerUserGroupName = \Wikia\PowerUser\PowerUser::GROUP_NAME;
-							$whereGroup[] = " single_group = '{$powerUserGroupName}' ";
+							$whereGroup[] = ' single_group = ' . $dbs->addQuotes( $powerUserGroupName );
 
 							$whereGroup[] = " all_groups = '' ";
 						} else {
@@ -183,7 +181,7 @@ class ListusersData {
 			}
 
 			if ( $data['cnt'] > 0 ) {
-				$userIsBlocked = $wgUser->isBlocked();
+				$userIsBlocked = $wgUser->isBlocked( true, false );
 				$sk = RequestContext::getMain()->getSkin();
 				/* select records */
 				$oRes = $dbs->select(
@@ -223,12 +221,14 @@ class ListusersData {
 					$oUser = User::newFromName($oRow->user_name);
 
 					# check by ID id, if user not found
-					if ( !($oUser instanceof User) ) {
-						$oUser = User::newFromId($oRow->user_id);
-					}
+					if ( !( $oUser instanceof User ) || $oUser->getId() === 0 ) {
+						$oUser = User::newFromId( $oRow->user_id );
 
-					# hmmm ... if user not found
-					if ( !($oUser instanceof User) ) continue;
+						if ( !$oUser->loadFromId() ) {
+							// User doesn't exist
+							continue;
+						}
+					}
 
 					/* groups */
 					$groups = explode(";", $oRow->all_groups);
@@ -386,7 +386,7 @@ class ListusersData {
 		$result = array();
 		$memkey = wfForeignMemcKey( $this->mCityId, null, Listusers::TITLE, "records" );
 		$cached = $wgMemc->get($memkey);
-		if ( empty($cached) && !empty($this->mDBEnable) ) {
+		if ( empty($cached) ) {
 			/* build SQL query */
 			$dbs = wfGetDB(DB_SLAVE, array(), $this->mDBh);
 
@@ -397,7 +397,8 @@ class ListusersData {
 					# group name or all groups
 					$where = array(
 						'wiki_id' => $this->mCityId,
-						'user_is_closed' => 0
+						'user_is_closed' => 0,
+						"user_name != ''",
 					);
 					if ( $key != Listusers::DEF_GROUP_NAME ) {
 						$where[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $key ) . " OR all_groups " . $dbs->buildLike( $dbs->anyString(), sprintf("%s;", $key), $dbs->anyString() );
@@ -450,11 +451,6 @@ class ListusersData {
 		wfProfileIn( __METHOD__ );
 
 		if ( !$user instanceof User ) {
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-
-		if ( empty($this->mDBEnable) ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}

@@ -437,73 +437,69 @@ class DataProvider {
 	 */
 	final public static function GetTopFiveUsers($limit = 7) {
 		wfProfileIn(__METHOD__);
-		global $wgStatsDB, $wgStatsDBEnabled;
 
 		$fname = __METHOD__;
 		$limit = min( $limit, self::TOP_USERS_MAX_LIMIT );
 
-		if (empty($wgStatsDB) || empty($wgStatsDBEnabled)) {
+		$results = WikiaDataAccess::cacheWithLock( wfMemcKey( __METHOD__ ), WikiaResponse::CACHE_STANDARD, function() use ($fname) {
+			global $wgCityId, $wgSpecialsDB;
+
+			$dbr = wfGetDB(DB_SLAVE);
+			$users_list = $dbr->selectFieldValues(
+				"user_groups",
+				"ug_user",
+				[ 'ug_group' => [ 'staff', 'bot' ] ],
+				$fname
+			);
+
+			// add more blacklisted user IDs
+			$users_list[] = '0';
+			$users_list[] = '22439'; // Wikia
+			$users_list[] = '929702'; // CreateWiki script
+
+			$users_list = array_unique($users_list);
+
+			$dbs = wfGetDB(DB_SLAVE, [], $wgSpecialsDB);
+			$res = $dbs->select(
+				'events_local_users',
+				'user_id',
+				[
+					'wiki_id' => $wgCityId,
+					sprintf( 'user_id NOT IN (%s)', $dbs->makeList( $users_list ) )
+				],
+				$fname,
+				[
+					'LIMIT' => self::TOP_USERS_MAX_LIMIT * 4,
+					'ORDER BY' => 'edits DESC',
+					'USE INDEX' => 'PRIMARY', # mysql in Reston wants to use a different key (PLATFORM-1648)
+				]
+			);
+
 			$results = [];
-		}
-		else {
-			$results = WikiaDataAccess::cacheWithLock( wfMemcKey( __METHOD__ ), WikiaResponse::CACHE_STANDARD, function() use ($fname) {
-				global $wgCityId, $wgStatsDB;
+			while ($row = $dbs->fetchObject($res)) {
+				$user = User::newFromID($row->user_id);
 
-				$dbr = wfGetDB(DB_SLAVE);
-				$users_list = $dbr->selectFieldValues(
-					"user_groups",
-					"ug_user",
-					[ 'ug_group' => [ 'staff', 'bot' ] ],
-					$fname
-				);
-
-				// add more blacklisted user IDs
-				$users_list[] = '0';
-				$users_list[] = '22439'; // Wikia
-				$users_list[] = '929702'; // CreateWiki script
-
-				$users_list = array_unique($users_list);
-
-				$dbs = wfGetDB(DB_SLAVE, [], $wgStatsDB);
-				$res = $dbs->select(
-					'specials.events_local_users',
-					'user_id',
-					[
-						'wiki_id' => $wgCityId,
-						sprintf( 'user_id NOT IN (%s)', $dbs->makeList( $users_list ) )
-					],
-					$fname,
-					[
-						'LIMIT' => self::TOP_USERS_MAX_LIMIT * 4,
-						'ORDER BY' => 'edits DESC'
-					]
-				);
-
-				$results = [];
-				while ($row = $dbs->fetchObject($res)) {
-					$user = User::newFromID($row->user_id);
-
-					if (!$user->isBlocked() && !$user->isAllowed('bot')
-						&& $user->getUserPage()->exists()
-					) {
-						$article['url'] = $user->getUserPage()->getLocalUrl();
-						$article['text'] = $user->getName();
-						$results[] = $article;
-					}
-
-					// no need to check more users here
-					if (count($results) >= self::TOP_USERS_MAX_LIMIT) {
-						break;
-					}
+				if (!$user->isBlocked( true, false ) && !$user->isAllowed('bot')
+					&& $user->getUserPage()->exists()
+				) {
+					$article['url'] = $user->getUserPage()->getLocalUrl();
+					$article['text'] = $user->getName();
+					$results[] = $article;
 				}
-				$dbs->freeResult($res);
-				return $results;
-			});
 
-			// we cache self::TOP_USERS_MAX_LIMIT items
-			// now return the requested number of items
-			$results = array_slice($results, 0, $limit);
-		}
+				// no need to check more users here
+				if (count($results) >= self::TOP_USERS_MAX_LIMIT) {
+					break;
+				}
+			}
+			$dbs->freeResult($res);
+			return $results;
+		});
+
+		// we cache self::TOP_USERS_MAX_LIMIT items
+		// now return the requested number of items
+		$results = array_slice($results, 0, $limit);
+
 		wfProfileOut(__METHOD__);
 		return $results;
 	}

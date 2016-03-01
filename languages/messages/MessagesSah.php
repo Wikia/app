@@ -183,30 +183,12 @@ $messages = array(
 'navigation'    => 'Навигация',
 'and'           => '&#32;уонна',
 
-# Cologne Blue skin
 'qbfind'         => 'Бул',
 'qbbrowse'       => 'Көр',
-'qbedit'         => 'Уларыт',
 'qbpageoptions'  => 'Бу сирэй',
 'qbpageinfo'     => 'Ис хоһооно',
-'qbmyoptions'    => 'Мин сирэйдэрим',
-'qbspecialpages' => 'Аналлаах сирэйдэр',
 'faq'            => 'FAQ',
-'faqpage'        => 'Project:FAQ',
 
-# Vector skin
-'vector-action-addsection'       => 'Тиэмэ эбии',
-'vector-action-delete'           => 'Сот',
-'vector-action-move'             => 'Аатын уларыт',
-'vector-action-protect'          => 'Уларыйбат гын',
-'vector-action-undelete'         => 'Төннөр',
-'vector-action-unprotect'        => 'Көмүскэлин уларыт',
-'vector-simplesearch-preference' => 'Көрдөбүл этэн биэриилэрин кэҥэтиллибит барылын туруор («Векторга» эрэ)',
-'vector-view-create'             => 'Ай',
-'vector-view-edit'               => 'Уларыт',
-'vector-view-history'            => 'Устуоруйатын көрүү',
-'vector-view-view'               => 'Ааҕыы',
-'vector-view-viewsource'         => 'Бэлиэлэрин көрүү',
 'actions'                        => 'Дьайыылар',
 'namespaces'                     => 'Аат даллара',
 'variants'                       => 'Барыллар',
@@ -229,7 +211,6 @@ $messages = array(
 'edit'              => 'Уларыт',
 'create'            => 'Саҥаны айыы',
 'editthispage'      => 'Бу сирэйи уларыт',
-'create-this-page'  => 'Бу сирэйи ай',
 'delete'            => 'Соттор',
 'deletethispage'    => 'Бу сирэйи соттор',
 'undelete_short'    => 'Төттөрү аҕал {{PLURAL:$1|биир уларытыыны|$1 уларытыылары}}',
@@ -244,19 +225,9 @@ $messages = array(
 'talkpagelinktext'  => 'Ырытыы',
 'specialpage'       => 'Анал сирэй',
 'personaltools'     => 'Тус бэйэ туттар туруоруулара',
-'postcomment'       => 'Саҥа салаа',
-'articlepage'       => 'Ыстатыйаны көр',
 'talk'              => 'Ырытыы',
 'views'             => 'Көрүүлэр',
 'toolbox'           => 'Үнүстүрүмүөннэр',
-'userpage'          => 'Кыттааччы туһунан сирэй',
-'projectpage'       => 'Бырайыак сирэйэ',
-'imagepage'         => 'Билэ сирэйин көрүү',
-'mediawikipage'     => 'Сурук сирэйэ',
-'templatepage'      => 'Халыып сирэйэ',
-'viewhelppage'      => 'Көмө сирэйэ',
-'categorypage'      => 'Категория сирэйэ',
-'viewtalkpage'      => 'Ырытыы',
 'otherlanguages'    => 'Атын омук тылынан',
 'redirectedfrom'    => '(Мантан: $1  көстө)',
 'redirectpagesub'   => 'Утаарар сирэй',
@@ -552,44 +523,6 @@ $2',
 Баҕар уларыппытыҥ буолуо эбэтэр быстах кэмҥэ туттуллар киирии тылы оҥотторбутуҥ буолуо.',
 'resetpass-temp-password'   => 'Быстах кэмҥэ туттуллар киирии тыл:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Киирии тылы саҥаттан',
-'passwordreset-text'               => 'Бу форманы толорон аккааунуҥ туһунан сурук тутуоххун сөп.',
-'passwordreset-legend'             => 'Киирии тылы саҥаттан',
-'passwordreset-disabled'           => 'Бу биикигэ киирии тылы саҥардыы бобуллубут.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Аллара көстөр дааннайдартан биирин талан суруй}}',
-'passwordreset-username'           => 'Кыттааччы:',
-'passwordreset-domain'             => 'Домен:',
-'passwordreset-capture'            => 'Суруллубут суругу көрөҕүн дуо?',
-'passwordreset-capture-help'       => 'Бу бэлиэни туруордаххына кыттааччыга ыытыллар сурук (быстах кэмҥэ туһаныллар киирии тыллаах) көстүө.',
-'passwordreset-email'              => 'Электроннай почтата:',
-'passwordreset-emailtitle'         => '{{SITENAME}} бырайыакка аатын туһунан',
-'passwordreset-emailtext-ip'       => 'Ким эрэ (баҕар эн буолуо, бу IP-ттан $1)  {{SITENAME}} ($4) бырайыакка бэлиэтэнииҥ туһунан сибидиэнньэни көрдөөбүт.
-Бу электрон аадырыһы кытта бу {{PLURAL:$3|аат ситимнээх|ааттар ситимнээхтэр}}
-
-$2
-
-Бу быстах кэмҥэ аналлаах {{PLURAL:$3|киирии тыл|кирии тыллар}} {{PLURAL:$5|биир күн үлэлиэҕэ|$5 күн үлэлиэхтэрэ}}.
-Эн тиһиликкэ ааккын этэн саҥа киирии тылы киллэриэхтээххин.
-Өскө бу ыйытыгы ыыппатах буоллаххына, эбэтэр урукку киирии тылгын өйдөөн кэлбит буоллаххына 
-бу биллэриини аахайыа суоххун сөп.
-Оччоҕо урукку киирии тылыҥ оннунан хаалыа.',
-'passwordreset-emailtext-user'     => '$1 диэн кыттааччы  {{SITENAME}} ($4) бырайыакка бэлиэтэнииҥ туһунан сибидиэнньэни көрдөөбүт.
-Бу электрон аадырыһы кытта бу {{PLURAL:$3|аат ситимнээх|ааттар ситимнээхтэр}}
-
-$2
-
-Бу быстах кэмҥэ аналлаах {{PLURAL:$3|киирии тыл|кирии тыллар}} {{PLURAL:$5|биир күн үлэлиэҕэ|$5 күн үлэлиэхтэрэ}}.
-Эн тиһиликкэ ааккын этэн саҥа киирии тылы киллэриэхтээххин.
-Өскө бу ыйытыгы ыыппатах буоллаххына, эбэтэр урукку киирии тылгын өйдөөн кэлбит буоллаххына 
-бу биллэриини аахайыа суоххун сөп.
-Оччоҕо урукку киирии тылыҥ оннунан хаалыа.',
-'passwordreset-emailelement'       => 'Кыттааччы: $1
-Быстах киирии тыл: $2',
-'passwordreset-emailsent'          => 'Санатыы ыытылынна.',
-'passwordreset-emailsent-capture'  => 'Манна ыытыллыбыт санатар сурук көрдөрүлүннэ.',
-'passwordreset-emailerror-capture' => 'Манна санатар сурук көрдөрүлүннэ, бу төрүөттэн сатаан барбата: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Ааадырыһын уларыт',
 'changeemail-header'   => 'Аадырыһын уларытыы',
@@ -714,7 +647,6 @@ IP-аадырыһа эрэ көстөр.
 '''Бигэргэтиллэ илик!'''",
 'sitejspreview'                    => "'''Бу JavaScript-куодун бигэргэппэккэ көрө олороргун умнума.'''
 '''Бигэргэтиллэ илик!'''",
-'userinvalidcssjstitle'            => "'''Болҕой:''' Бу тиэмэ «$1» суох. Кыттааччы .css и .js сирэйдэрэ кыра буукубаннан суруллуохтаахтар, холобур «{{ns:user}}:Ньургун/vector.css», маннык буолуо суохтаах «{{ns:user}}:Ньургун/Vector.css».",
 'updated'                          => '(Саҥардылынна)',
 'note'                             => "'''Хос быһаарыы:'''",
 'previewnote'                      => "'''Бу көрүү эрэ; уларытыылар бигэргэтиллэ иликтэр!'''",
@@ -1061,14 +993,6 @@ $1",
 'search-external'                  => 'Тастан көрдөөһүн',
 'searchdisabled'                   => '{{SITENAME}} көрдүүр тэрилэ араарыллыбыт. Атын көрдүүр системаларынан наадыйар сирэйдэргитин көрдөтүөххүтүн сөп. Ол гынан баран поисковик кээһигэр баар торум эргэрбит буолуон сөп.',
 
-# Quickbar
-'qbsettings'                => 'Навигация панела',
-'qbsettings-none'           => 'Көрдөрүмэ',
-'qbsettings-fixedleft'      => 'Хаҥас өттө хамсаабат',
-'qbsettings-fixedright'     => 'Уҥа өттө хамсаабат',
-'qbsettings-floatingleft'   => 'Хаҥас өттө устаҥныыр',
-'qbsettings-floatingright'  => 'Уҥа өттө устаҥныыр',
-'qbsettings-directionality' => 'Туттарыллыбыт, тылыҥ суругун-бичигин хайысхатыттан тутулуктаах',
 
 # Preferences page
 'preferences'                   => 'Уларытыылар',
@@ -2748,12 +2672,6 @@ $1',
 'pageinfo-viewsperedit'     => 'Биир уларытыыга тиксэр көрүү ахсаана',
 
 # Skin names
-'skinname-standard'  => 'Классика',
-'skinname-nostalgia' => 'Мунчаарыы',
-'skinname-myskin'    => 'Миэнэ',
-'skinname-chick'     => 'Чуппууска',
-'skinname-simple'    => 'Судургу',
-'skinname-modern'    => 'Билиҥҥи',
 
 # Patrolling
 'markaspatrolleddiff'                 => 'Бэрэбиэркэлэммит курдук бэлиэтээ',

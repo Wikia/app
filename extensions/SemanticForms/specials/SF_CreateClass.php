@@ -13,7 +13,6 @@
  * @ingroup SFSpecialPages
  */
 class SFCreateClass extends SpecialPage {
-
 	/**
 	 * Constructor
 	 */
@@ -26,7 +25,7 @@ class SFCreateClass extends SpecialPage {
 
 		SFUtils::addJavascriptAndCSS();
 
-		$jsText = <<<END
+		$jsText =<<<END
 <script>
 var rowNum = $numStartingRows;
 function createClassAddRow() {
@@ -37,68 +36,80 @@ function createClassAddRow() {
 	jQuery('#mainTable').append(newRow);
 }
 
+function disableFormAndCategoryInputs() {
+	if (jQuery('#template_multiple').prop('checked')) {
+		jQuery('#form_name').attr('disabled', 'disabled');
+		jQuery('label[for="form_name"]').css('color', 'gray').css('font-style', 'italic');
+		jQuery('#category_name').attr('disabled', 'disabled');
+		jQuery('label[for="category_name"]').css('color', 'gray').css('font-style', 'italic');
+		jQuery('#connecting_property_div').show('fast');
+	} else {
+		jQuery('#form_name').removeAttr('disabled');
+		jQuery('label[for="form_name"]').css('color', '').css('font-style', '');
+		jQuery('#category_name').removeAttr('disabled');
+		jQuery('label[for="category_name"]').css('color', '').css('font-style', '');
+		jQuery('#connecting_property_div').hide('fast');
+	}
+}
+
 </script>
 
 END;
 		$wgOut->addScript( $jsText );
 	}
 
-	function execute( $query ) {
-		global $wgOut, $wgRequest, $wgUser, $sfgScriptPath;
-		global $wgLang, $smwgContLang;
+	static function createAllPages() {
+		global $wgOut, $wgRequest, $wgUser;
 
-		# Check permissions
-		if ( !$wgUser->isAllowed( 'createclass' ) ) {
-			$this->displayRestrictionError();
-			return;
-		}
-
-		$this->setHeaders();
-		$wgOut->addExtensionStyle( $sfgScriptPath . "/skins/SemanticForms.css" );
-		$numStartingRows = 10;
-		self::addJavascript( $numStartingRows );
-
-		$property_name_error_str = '';
-		$save_page = $wgRequest->getCheck( 'save' );
-		if ( $save_page ) {
-			// Guard against cross-site request forgeries (CSRF)
-			$validToken = $this->getUser()->matchEditToken( $wgRequest->getVal( 'csrf' ), 'CreateClass' );
-			if ( !$validToken ) {
-				$text = "This appears to be a cross-site request forgery; canceling save.";
-				$wgOut->addHTML( $text );
-				return;
-			}
-			$template_name = trim( $wgRequest->getVal( "template_name" ) );
+		$template_name = trim( $wgRequest->getVal( "template_name" ) );
+		$template_multiple = $wgRequest->getBool( "template_multiple" );
+		// If this is a multiple-instance template, there
+		// shouldn't be a corresponding form or category.
+		if ( $template_multiple ) {
+			$form_name = null;
+			$category_name = null;
+		} else {
 			$form_name = trim( $wgRequest->getVal( "form_name" ) );
 			$category_name = trim( $wgRequest->getVal( "category_name" ) );
-			if ( $template_name === '' | $form_name === '' || $category_name === '' ) {
-				$wgOut->addWikiMsg( 'sf_createclass_missingvalues' );
-				return;
-			}
-			$fields = array();
-			$jobs = array();
-			// cycle through all the rows passed in
-			for ( $i = 1; $wgRequest->getCheck( "property_name_$i" ); $i++ ) {
-				// go through the query values, setting the appropriate local variables
-				$property_name = trim( $wgRequest->getVal( "property_name_$i" ) );
-				if ( empty( $property_name ) ) continue;
-				$field_name = trim( $wgRequest->getVal( "field_name_$i" ) );
-				if ( $field_name === '' )
-					$field_name = $property_name;
-				$property_type = $wgRequest->getVal( "property_type_$i" );
-				$allowed_values = $wgRequest->getVal( "allowed_values_$i" );
-				$is_list = $wgRequest->getCheck( "is_list_$i" );
-				// create an SFTemplateField based on these
-				// values, and add it to the $fields array
-				$field = SFTemplateField::create( $field_name, $field_name, $property_name, $is_list );
-				$fields[] = $field;
+		}
+		if ( $template_name === '' || ( !$template_multiple && ( $form_name === '' || $category_name === '' ) ) ) {
+			$wgOut->addWikiMsg( 'sf_createclass_missingvalues' );
+			return;
+		}
+		$fields = array();
+		$jobs = array();
+		// Cycle through all the rows passed in.
+		for ( $i = 1; $wgRequest->getVal( "field_name_$i" ) != ''; $i++ ) {
+			// Go through the query values, setting the appropriate
+			// local variables.
+			$field_name = trim( $wgRequest->getVal( "field_name_$i" ) );
+			$property_name = trim( $wgRequest->getVal( "property_name_$i" ) );
+			$property_type = $wgRequest->getVal( "property_type_$i" );
+			$allowed_values = $wgRequest->getVal( "allowed_values_$i" );
+			$is_list = $wgRequest->getCheck( "is_list_$i" );
+			// Create an SFTemplateField object based on these
+			// values, and add it to the $fields array.
+			$field = SFTemplateField::create( $field_name, $field_name, $property_name, $is_list );
 
-				// create the property, and make a job for it
+			if ( defined( 'CARGO_VERSION' ) ) {
+				// Fake attributes,.
+				$field->mCargoFieldType = $property_type;
+				// Hopefully it's safe to use a Cargo
+				// utility method here.
+				$possibleValues = CargoUtils::smartSplit( ',', $allowed_values );
+				$field->setPossibleValues( $possibleValues );
+			}
+
+			$fields[] = $field;
+
+			// Create the property, and make a job for it.
+			if ( defined( 'SMW_VERSION' ) && !empty( $property_name ) ) {
 				$full_text = SFCreateProperty::createPropertyText( $property_type, '', $allowed_values );
 				$property_title = Title::makeTitleSafe( SMW_NS_PROPERTY, $property_name );
 				$params = array();
 				$params['user_id'] = $wgUser->getId();
 				$params['page_text'] = $full_text;
+				$params['edit_summary'] = wfMessage( 'sf_createproperty_editsummary', $property_type)->inContentLanguage()->text();
 
 				// wikia change start - jobqueue migration
 				$job = new \Wikia\Tasks\Tasks\JobWrapperTask();
@@ -106,18 +117,64 @@ END;
 				$jobs[] = $job;
 				// wikia change end
 			}
+		}
 
-			// create the template, and save it
-			$full_text = SFTemplateField::createTemplateText( $template_name, $fields, null, $category_name, null, null, null );
-			$template_title = Title::makeTitleSafe( NS_TEMPLATE, $template_name );
-			$template_article = new Article( $template_title, 0 );
-			$edit_summary = '';
+		// Also create the "connecting property", if there is one.
+		$connectingProperty = trim( $wgRequest->getVal('connecting_property') );
+		if ( defined( 'SMW_VERSION' ) && $connectingProperty != '' ) {
+			global $smwgContLang;
+			$datatypeLabels = $smwgContLang->getDatatypeLabels();
+			$property_type = $datatypeLabels['_wpg'];
+			$full_text = SFCreateProperty::createPropertyText( $property_type, '', $allowed_values );
+			$property_title = Title::makeTitleSafe( SMW_NS_PROPERTY, $connectingProperty );
+			$params = array();
+			$params['user_id'] = $wgUser->getId();
+			$params['page_text'] = $full_text;
+			$params['edit_summary'] = wfMessage( 'sf_createproperty_editsummary', $property_type)->inContentLanguage()->text();
+
+			// wikia change start - jobqueue migration
+			$job = new \Wikia\Tasks\Tasks\JobWrapperTask();
+			$job->call( 'createPage', $property_title, $params );
+			$jobs[] = $job;
+			// wikia change end
+		}
+
+		// Create the template, and save it (might as well save
+		// one page, instead of just creating jobs for all of them).
+		$template_format = $wgRequest->getVal( "template_format" );
+		$sfTemplate = new SFTemplate( $template_name, $fields );
+		if ( defined( 'CARGO_VERSION' ) ) {
+			$sfTemplate->mCargoTable = trim( $wgRequest->getVal( "cargo_table" ) );
+		}
+		if ( defined( 'SMW_VERSION' ) && $template_multiple ) {
+			$sfTemplate->setConnectingProperty( $connectingProperty );
+		} else {
+			$sfTemplate->setCategoryName( $category_name );
+		}
+		$sfTemplate->setFormat( $template_format );
+		$full_text = $sfTemplate->createText();
+
+		$template_title = Title::makeTitleSafe( NS_TEMPLATE, $template_name );
+		$edit_summary = '';
+		if ( method_exists( 'WikiPage', 'doEditContent' ) ) {
+			// MW 1.21+
+			$template_page = new WikiPage( $template_title );
+			$content = new WikitextContent( $full_text );
+			$template_page->doEditContent( $content, $edit_summary );
+		} else {
+			// MW <= 1.20
+			$template_article = new Article( $template_title );
 			$template_article->doEdit( $full_text, $edit_summary );
+		}
 
-			// create the form, and make a job for it
+		// Create the form, and make a job for it.
+		if ( $form_name != '' ) {
 			$form_template = SFTemplateInForm::create( $template_name, '', false );
-			$form_templates = array( $form_template );
-			$form = SFForm::create( $form_name, $form_templates );
+			$form_items = array();
+			$form_items[] = array( 'type' => 'template',
+							'name' => $form_template->getTemplateName(),
+							'item' => $form_template );
+			$form = SFForm::create( $form_name, $form_items );
 			$full_text = $form->createMarkup();
 			$form_title = Title::makeTitleSafe( SF_NS_FORM, $form_name );
 			$params = array();
@@ -129,8 +186,10 @@ END;
 			$job->call( 'createPage', $form_title, $params );
 			$jobs[] = $job;
 			// wikia change end
+		}
 
-			// create the category, and make a job for it
+		// Create the category, and make a job for it.
+		if ( $category_name != '' ) {
 			$full_text = SFCreateCategory::createCategoryText( $form_name, $category_name, '' );
 			$category_title = Title::makeTitleSafe( NS_CATEGORY, $category_name );
 			$params = array();
@@ -141,49 +200,146 @@ END;
 			$job = new \Wikia\Tasks\Tasks\JobWrapperTask();
 			$job->call( 'createPage', $category_title, $params );
 			$jobs[] = $job;
-			\Wikia\Tasks\Tasks\BaseTask::batch( $jobs );
 			// wikia change end
+		}
 
-			$wgOut->addWikiMsg( 'sf_createclass_success' );
+		// wikia change start - jobqueue migration
+		\Wikia\Tasks\Tasks\BaseTask::batch( $jobs );
+		// wikia change end
+
+		$wgOut->addWikiMsg( 'sf_createclass_success' );
+	}
+
+	function execute( $query ) {
+		global $wgOut, $wgRequest, $wgUser, $sfgScriptPath;
+		global $wgLang, $smwgContLang;
+
+		// Check permissions.
+		if ( !$wgUser->isAllowed( 'createclass' ) ) {
+			$this->displayRestrictionError();
 			return;
 		}
 
-		$datatype_labels = $smwgContLang->getDatatypeLabels();
+		$this->setHeaders();
+		$wgOut->addExtensionStyle( $sfgScriptPath . "/skins/SemanticForms.css" );
+		$numStartingRows = 5;
+		self::addJavascript( $numStartingRows );
 
-		// make links to all the other 'Create...' pages, in order to
-		// link to them at the top of the page
-		$sk = $wgUser->getSkin();
+		$createAll = $wgRequest->getCheck( 'createAll' );
+		if ( $createAll ) {
+		// Guard against cross-site request forgeries (CSRF).
+			$validToken = $this->getUser()->matchEditToken( $wgRequest->getVal( 'csrf' ), 'CreateClass' );
+			if ( !$validToken ) {
+				$text = "This appears to be a cross-site request forgery; canceling save.";
+				$wgOut->addHTML( $text );
+				return;
+			}
+
+			self::createAllPages();
+			return;
+		}
+
+		$specialBGColor = '#eeffcc';
+		if ( defined( 'SMW_VERSION' ) ) {
+			$possibleTypes = $smwgContLang->getDatatypeLabels();
+		} elseif ( defined( 'CARGO_VERSION' ) ) {
+			global $wgCargoFieldTypes;
+			$possibleTypes = $wgCargoFieldTypes;
+			$specialBGColor = '';
+		} else {
+			$possibleTypes = array();
+		}
+
+		// Make links to all the other 'Create...' pages, in order to
+		// link to them at the top of the page.
 		$creation_links = array();
-		$creation_links[] = SFUtils::linkForSpecialPage( $sk, 'CreateProperty' );
-		$creation_links[] = SFUtils::linkForSpecialPage( $sk, 'CreateTemplate' );
-		$creation_links[] = SFUtils::linkForSpecialPage( $sk, 'CreateForm' );
-		$creation_links[] = SFUtils::linkForSpecialPage( $sk, 'CreateCategory' );
-		$create_class_docu = wfMsg( 'sf_createclass_docu', $wgLang->listToText( $creation_links ) );
-		$leave_field_blank = wfMsg( 'sf_createclass_leavefieldblank' );
-		$form_name_label = wfMsg( 'sf_createclass_nameinput' );
-		$template_name_label = wfMsg( 'sf_createtemplate_namelabel' );
-		$category_name_label = wfMsg( 'sf_createcategory_name' );
-		$property_name_label = wfMsg( 'sf_createproperty_propname' );
-		$field_name_label = wfMsg( 'sf_createtemplate_fieldname' );
-		$type_label = wfMsg( 'sf_createproperty_proptype' );
-		$allowed_values_label = wfMsg( 'sf_createclass_allowedvalues' );
-		$list_of_values_label = wfMsg( 'sf_createclass_listofvalues' );
+		if ( defined( 'SMW_VERSION' ) ) {
+			$creation_links[] = SFUtils::linkForSpecialPage( 'CreateProperty' );
+		}
+		$creation_links[] = SFUtils::linkForSpecialPage( 'CreateTemplate' );
+		$creation_links[] = SFUtils::linkForSpecialPage( 'CreateForm' );
+		$creation_links[] = SFUtils::linkForSpecialPage( 'CreateCategory' );
 
-		$text = <<<END
-<form action="" method="post">
-	<p>$create_class_docu</p>
-	<p>$leave_field_blank</p>
-	<p>$template_name_label <input type="text" size="30" name="template_name"></p>
-	<p>$form_name_label <input type="text" size="30" name="form_name"></p>
-	<p>$category_name_label <input type="text" size="30" name="category_name"></p>
+		$text = '<form action="" method="post">' . "\n";
+		$text .= "\t" . Html::rawElement( 'p', null,
+				wfMessage( 'sf_createclass_docu' )
+					->rawParams( $wgLang->listToText( $creation_links ) )
+					->escaped() ) . "\n";
+		$templateNameLabel = wfMessage( 'sf_createtemplate_namelabel' )->escaped();
+		$templateNameInput = Html::input( 'template_name', null, 'text', array( 'size' => 30 ) );
+		$text .= "\t" . Html::rawElement( 'p', null, $templateNameLabel . ' ' . $templateNameInput ) . "\n";
+		$templateInfo = SFCreateTemplate::printTemplateStyleInput( 'template_format' );
+		$templateInfo .= Html::rawElement( 'p', null,
+			Html::element( 'input', array(
+				'type' => 'checkbox',
+				'name' => 'template_multiple',
+				'id' => 'template_multiple',
+				'onclick' => "disableFormAndCategoryInputs()",
+			) ) . ' ' . wfMessage( 'sf_createtemplate_multipleinstance' )->escaped() ) . "\n";
+		// Either #set_internal or #subobject will be added to the
+		// template, depending on whether Semantic Internal Objects is
+		// installed.
+		global $smwgDefaultStore;
+		if ( defined( 'SIO_VERSION' ) || $smwgDefaultStore == "SMWSQLStore3" ) {
+			$templateInfo .= Html::rawElement( 'div',
+				array (
+					'id' => 'connecting_property_div',
+					'style' => 'display: none;',
+				),
+				wfMessage( 'sf_createtemplate_connectingproperty' )->escaped() . "\n" .
+				Html::element( 'input', array(
+					'type' => 'text',
+					'name' => 'connecting_property',
+				) ) ) . "\n";
+		}
+		$text .= Html::rawElement( 'blockquote', null, $templateInfo );
+
+		$form_name_label = wfMessage( 'sf_createclass_nameinput' )->text();
+		$text .= "\t" . Html::rawElement( 'p', null, Html::element( 'label', array( 'for' => 'form_name' ), $form_name_label ) . ' ' . Html::element( 'input', array( 'size' => '30', 'name' => 'form_name', 'id' => 'form_name' ), null ) ) . "\n";
+		$category_name_label = wfMessage( 'sf_createcategory_name' )->text();
+		$text .= "\t" . Html::rawElement( 'p', null, Html::element( 'label', array( 'for' => 'category_name' ), $category_name_label ) . ' ' . Html::element( 'input', array( 'size' => '30', 'name' => 'category_name', 'id' => 'category_name' ), null ) ) . "\n";
+		if ( defined( 'CARGO_VERSION' ) && !defined( 'SMW_VERSION' ) ) {
+			$cargo_table_label = wfMessage( 'sf_createtemplate_cargotablelabel' )->escaped();
+			$text .= "\t" . Html::rawElement( 'p', null, Html::element( 'label', array( 'for' => 'cargo_table' ), $cargo_table_label ) . ' ' . Html::element( 'input', array( 'size' => '30', 'name' => 'cargo_table', 'id' => 'cargo_table' ), null ) ) . "\n";
+		}
+		$text .= "\t" . Html::element( 'br', null, null ) . "\n";
+		$text .= <<<END
 	<div>
-		<table id="mainTable">
+		<table id="mainTable" style="border-collapse: collapse;">
+
+END;
+		if ( defined( 'SMW_VERSION' ) ) {
+			$property_label = wfMessage( 'smw_pp_type' )->escaped();
+			$text .= <<<END
 		<tr>
-			<th colspan="2">$property_name_label</th>
-			<th>$field_name_label</th>
-			<th>$type_label</th>
-			<th>$allowed_values_label</th>
-			<th>$list_of_values_label</th>
+			<th colspan="3" />
+			<th colspan="3" style="background: #ddeebb; padding: 4px;">$property_label</th>
+		</tr>
+
+END;
+		}
+
+		$field_name_label = wfMessage( 'sf_createtemplate_fieldname' )->escaped();
+		$list_of_values_label = wfMessage( 'sf_createclass_listofvalues' )->escaped();
+		$text .= <<<END
+		<tr>
+			<th colspan="2">$field_name_label</th>
+			<th style="padding: 4px;">$list_of_values_label</th>
+
+END;
+		if ( defined( 'SMW_VERSION' ) ) {
+			$property_name_label = wfMessage( 'sf_createproperty_propname' )->escaped();
+			$text .= <<<END
+			<th style="background: $specialBGColor; padding: 4px;">$property_name_label</th>
+
+END;
+		}
+
+		$type_label = wfMessage( 'sf_createproperty_proptype' )->escaped();
+		$allowed_values_label = wfMessage( 'sf_createclass_allowedvalues' )->escaped();
+		$text .= <<<END
+			<th style="background: $specialBGColor; padding: 4px;">$type_label</th>
+			<th style="background: $specialBGColor; padding: 4px;">$allowed_values_label</th>
 		</tr>
 
 END;
@@ -199,24 +355,30 @@ END;
 				$n = $i;
 			}
 			$text .= <<<END
-		<tr $rowString>
+		<tr $rowString style="margin: 4px;">
 			<td>$n.</td>
-			<td><input type="text" size="25" name="property_name_$n" /></td>
 			<td><input type="text" size="25" name="field_name_$n" /></td>
-			<td>
-			<select name="property_type_$n">
+			<td style="text-align: center;"><input type="checkbox" name="is_list_$n" /></td>
 
 END;
-			$optionsStr = "";
-			foreach ( $datatype_labels as $label ) {
-				$text .= "				<option>$label</option>\n";
-				$optionsStr .= $label . ",";
-			}
+		if ( defined( 'SMW_VERSION' ) ) {
 			$text .= <<<END
-			</select>
+			<td style="background: $specialBGColor; padding: 4px;"><input type="text" size="25" name="property_name_$n" /></td>
+
+END;
+		}
+		$text .= <<<END
+			<td style="background: $specialBGColor; padding: 4px;">
+
+END;
+			$typeDropdownBody = '';
+			foreach ( $possibleTypes as $typeName ) {
+				$typeDropdownBody .= "\t\t\t\t<option>$typeName</option>\n";
+			}
+			$text .= "\t\t\t\t" . Html::rawElement( 'select', array( 'name' => "property_type_$n" ), $typeDropdownBody ) . "\n";
+			$text .= <<<END
 			</td>
-			<td><input type="text" size="25" name="allowed_values_$n" /></td>
-			<td><input type="checkbox" name="is_list_$n" /></td>
+			<td style="background: $specialBGColor; padding: 4px;"><input type="text" size="25" name="allowed_values_$n" /></td>
 
 END;
 		}
@@ -229,7 +391,7 @@ END;
 		$add_another_button = Html::element( 'input',
 			array(
 				'type' => 'button',
-				'value' => wfMsg( 'sf_formedit_addanother' ),
+				'value' => wfMessage( 'sf_formedit_addanother' )->text(),
 				'onclick' => "createClassAddRow()"
 			)
 		);
@@ -237,14 +399,16 @@ END;
 		// Set 'title' as hidden field, in case there's no URL niceness
 		$cc = $this->getTitle();
 		$text .= Html::hidden( 'title', SFUtils::titleURLString( $cc ) );
+
+		$text .= "\t" . Html::hidden( 'csrf', $this->getUser()->getEditToken( 'CreateClass' ) ) . "\n";
+
 		$text .= Html::element( 'input',
 			array(
 				'type' => 'submit',
-				'name' => 'save',
-				'value' => wfMsg( 'sf_createclass_create' )
+				'name' => 'createAll',
+				'value' => wfMessage( 'sf_createclass_create' )->text()
 			)
 		);
-		$text .= Html::hidden( 'csrf', $this->getUser()->getEditToken( 'CreateClass' ) ) . "\n";
 		$text .= "</form>\n";
 		$wgOut->addHTML( $text );
 	}

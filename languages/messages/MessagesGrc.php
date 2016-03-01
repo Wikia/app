@@ -183,40 +183,12 @@ $messages = array(
 'navigation'    => 'Πλοήγησις',
 'and'           => '&#32;καὶ',
 
-# Cologne Blue skin
 'qbfind'         => 'Εὑρίσκειν',
 'qbbrowse'       => 'Νέμου',
-'qbedit'         => 'Μεταγράφειν',
 'qbpageoptions'  => 'Ἥδε ἡ δέλτος',
 'qbpageinfo'     => 'Συγκείμενον',
-'qbmyoptions'    => 'Δέλτοι μου',
-'qbspecialpages' => 'Εἰδικαὶ δέλτοι',
 'faq'            => 'Τὰ πολλάκις αἰτηθέντα',
-'faqpage'        => 'Project:Πολλάκις αἰτηθέντα',
 
-# Vector skin
-'vector-action-addsection'   => 'Θέμα προστιθέναι',
-'vector-action-delete'       => 'Σβεννύναι',
-'vector-action-move'         => 'Κινεῖν',
-'vector-action-protect'      => 'Φυλάττειν',
-'vector-action-undelete'     => 'Ἀποκαθιστάναι',
-'vector-action-unprotect'    => 'Μὴ φυλάττειν',
-'vector-namespace-category'  => 'Κατηγορία',
-'vector-namespace-help'      => 'Δέλτος βοηθείας',
-'vector-namespace-image'     => 'Ἀρχεῖον',
-'vector-namespace-main'      => 'Δέλτος',
-'vector-namespace-media'     => 'Δέλτος μέσων',
-'vector-namespace-mediawiki' => 'Ἀγγελία',
-'vector-namespace-project'   => 'Δέλτος ἐγχειρήματος',
-'vector-namespace-special'   => 'Εἰδικὴ δέλτος',
-'vector-namespace-talk'      => 'Διάλεξις',
-'vector-namespace-template'  => 'Πρότυπον',
-'vector-namespace-user'      => 'Δέλτος χρωμένου',
-'vector-view-create'         => 'Ποιεῖν',
-'vector-view-edit'           => 'Μεταγράφειν',
-'vector-view-history'        => 'Ἱστορίαν ὁρᾶν',
-'vector-view-view'           => 'Ἀναγνῶναι',
-'vector-view-viewsource'     => 'Ὁρᾶν τὴν πηγήν',
 'actions'                    => 'Δράσεις',
 'namespaces'                 => 'Ὀνοματεῖα',
 'variants'                   => 'Παραλλαγαί',
@@ -239,7 +211,6 @@ $messages = array(
 'edit'              => 'Μεταγράφειν',
 'create'            => 'Ποιεῖν',
 'editthispage'      => 'Μεταγράφειν τήνδε τὴν δέλτον',
-'create-this-page'  => 'Ποιεῖν τήνδε τὴν δέλτον',
 'delete'            => 'Σβεννύναι',
 'deletethispage'    => 'Διαγράφειν τήνδε τὴν δέλτον',
 'undelete_short'    => 'Ἐπανορθοῦν {{PLURAL:$1|ἕνα μεταγραφὲν|$1 μεταγραφέντα}}',
@@ -253,19 +224,9 @@ $messages = array(
 'talkpagelinktext'  => 'Διαλέγεσθαι',
 'specialpage'       => 'Εἰδικὴ δέλτος',
 'personaltools'     => 'Ἴδια ἐργαλεῖα',
-'postcomment'       => 'Νέον τμῆμα',
-'articlepage'       => 'Χρήματος δέλτον ὁρᾶν',
 'talk'              => 'Διάλεξις',
 'views'             => 'Ποσάκις ἔσκεπται',
 'toolbox'           => 'Ἐργαλειοκάδος',
-'userpage'          => 'Ὁρᾶν δέλτον χρωμένου',
-'projectpage'       => 'Ἴδε δέλτον ἐγχειρήματος',
-'imagepage'         => 'Ὁρᾶν τῆν δέλτον τοῦ ἀρχείου',
-'mediawikipage'     => 'Ὁρᾶν δέλτον μηνυμάτων',
-'templatepage'      => 'Ὁρᾶν δέλτον ἐπιγραμμάτων',
-'viewhelppage'      => 'Ὁρᾶν βοηθείας δέλτον',
-'categorypage'      => 'Ὁρᾶν τὴν δέλτον κατηγοριῶν',
-'viewtalkpage'      => 'Ὁρᾶν διάλεξιν',
 'otherlanguages'    => 'Ἀλλογλωσσιστί',
 'redirectedfrom'    => '(Ἀποσταλτὸν ἀπὸ $1)',
 'redirectpagesub'   => 'Ἐπανάγειν δέλτον',
@@ -430,8 +391,9 @@ $2',
 # Login and logout pages
 'logouttext'                 => "'''Νῦν γὰρ ἀποσυνδεδεμένος εἰ.'''
 
-Ἔξεστί σοι χρῆσθαι τῷ {{SITENAME}} ἀνωνύμως, ἢ ἔξεστί σοι [[Special:UserLogin|συνδεῖσθαι πάλιν]] ὡς ὁ αὐτὸς ἢ ὡς ἄλλος χρώμενος.
+Ἔξεστί σοι χρῆσθαι τῷ {{SITENAME}} ἀνωνύμως, ἢ ἔξεστί σοι $1 ὡς ὁ αὐτὸς ἢ ὡς ἄλλος χρώμενος.
 Δέλτοι τινὲς δέ, ἐνδεχομένως, δειχθήσονται ὡς ἂν ἀκμὴν συνδεδεμένος ᾖς, μέχρι ὅτε καθαίρῃς τὴν λανθάνουσαν μνήμην τοῦ προγράμματος πλοηγήσεώς σου.",
+'logouttext-link-text'       => 'συνδεῖσθαι πάλιν',
 'welcomecreation'            => '== Ὡς εὖ παρέστης, $1! ==
 
 Λογισμός σὸς πεποίηται. Ἔχε μνήμην μεταβάλλειν τὰς τοῦ [[Special:Preferences|{{SITENAME}} αἱρέσεις σου]].',
@@ -867,13 +829,6 @@ $1",
 'powersearch-togglenone'           => 'Οὐδέν',
 'search-external'                  => 'Ἐξωτέρα ἀναζήτησις',
 
-# Quickbar
-'qbsettings'               => 'Ταχεῖα πρόσβασις',
-'qbsettings-none'          => 'Οὐδέν',
-'qbsettings-fixedleft'     => 'Σταθερὰ ἀριστερώς',
-'qbsettings-fixedright'    => 'Σταθερὰ δεξιώς',
-'qbsettings-floatingleft'  => 'Πλανώμενα αριστερώς',
-'qbsettings-floatingright' => 'Πλανώμενα δεξιώς',
 
 # Preferences page
 'preferences'                   => 'Αἱρέσεις',

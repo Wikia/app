@@ -31,7 +31,9 @@ class SpecialAchievementsCustomize extends SpecialPage {
 		$errorMsg = null;
 		$successMsg = null;
 
-		if($wgRequest->wasPosted()) {
+		if ( $wgRequest->wasPosted()
+			&& $wgUser->matchEditToken( $wgRequest->getVal( 'editToken' ) )
+		) {
 
 			$jsonObj = json_decode($wgRequest->getVal('json-data'));
 			$dbw = null;
@@ -108,7 +110,8 @@ class SpecialAchievementsCustomize extends SpecialPage {
 			'config' => AchConfig::getInstance(),
 			'scrollTo' => (isset($jsonObj->sectionId)) ? $jsonObj->sectionId : null,
 			'successMsg' => $successMsg,
-			'errorMsg' => $errorMsg
+			'errorMsg' => $errorMsg,
+			'editToken' => $wgUser->getEditToken(),
 		));
 
 		$wgOut->addHTML($template->render('SpecialCustomize'));

@@ -84,17 +84,9 @@ $messages = array(
 'navigation'    => 'Navigatione',
 'and'           => '&#32;e',
 
-# Cologne Blue skin
 'qbfind'         => 'Trova',
-'qbedit'         => 'Modifika',
 'qbpageoptions'  => 'Disi pagine',
-'qbmyoptions'    => 'Men pagines',
-'qbspecialpages' => 'Spesial pagines',
 
-# Vector skin
-'vector-action-delete' => 'Ekarta',
-'vector-view-edit'     => 'Modifika',
-'vector-view-view'     => 'Lekte',
 
 'returnto'         => 'Rivada a $1.',
 'tagline'          => 'Fro {{SITENAME}}',
@@ -118,14 +110,8 @@ $messages = array(
 'talkpage'         => 'Diskuse disi pagine',
 'talkpagelinktext' => 'Diskusione',
 'specialpage'      => 'Spesial Pagine',
-'articlepage'      => 'Regarda pagine de kontenaje',
 'talk'             => 'Diskusione',
 'toolbox'          => 'Utensiles',
-'userpage'         => 'Vida useren pagine',
-'imagepage'        => 'Regarda imajal pagine',
-'mediawikipage'    => 'Regarda mesajal pagine',
-'templatepage'     => 'Vida shablonal pagine',
-'categorypage'     => 'Regarda kategorial pagine',
 'otherlanguages'   => 'Altri lingues',
 'lastmodifiedat'   => 'Disi pagine blid lastim modifika: $2 ye $1.',
 'jumptonavigation' => 'navigatione',

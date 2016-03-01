@@ -46,8 +46,6 @@ class AssetsConfig {
 			$files = EditPageLayoutHelper::getAssets();
 		}
 
-		array_push( $files, 'extensions/wikia/EditPreview/js/preview.js' );
-
 		return $files;
 	}
 

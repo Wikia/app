@@ -1,0 +1,72 @@
+@import 'extensions/wikia/ContentReview/styles/ContentReviewVariables';
+
+.content-review-module-help {
+	margin-top: 15px;
+	text-align: right;
+
+	a {
+		margin-left: 10px;
+	}
+}
+
+.content-review-module-submit-container {
+	margin-top: 15px;
+	text-align: center;
+}
+
+.content-review-module-test-mode {
+	margin-top: 15px;
+	text-align: center;
+}
+
+.content-review-module-header {
+	margin-top: 15px;
+}
+
+.content-review-status {
+	border-left: $content-review-status-border;
+	padding-left: 10px;
+}
+
+.content-review-status-none {
+	border-color: $content-review-color-none;
+}
+
+.content-review-status-approved {
+	border-color: $content-review-color-approved;
+}
+
+.content-review-status-live {
+	border-color: $content-review-color-live;
+}
+
+.content-review-status-rejected {
+	border-color: $content-review-color-rejected;
+}
+
+.content-review-status-awaiting {
+	border-color: $content-review-color-awaiting;
+}
+
+.content-review-status-unsubmitted {
+	border-color: $content-review-color-unsubmitted;
+}
+
+.WikiaRail .content-review-status-unsubmitted {
+	animation: submitReminder 3s infinite;
+}
+
+/* Animation */
+@keyframes submitReminder {
+	0% {
+		margin-left: 0;
+	}
+
+	25% {
+		margin-left: 10px;
+	}
+
+	50% {
+		margin-left: 0;
+	}
+}

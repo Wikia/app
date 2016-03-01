@@ -150,11 +150,11 @@ abstract class WatchedPageController extends EmailController {
 	}
 
 	/**
-	 * @param $title
+	 * @param \Title $title
 	 * @return String
 	 * @throws \MWException
 	 */
-	protected function getAllChangesText( $title ) {
+	protected function getAllChangesText( \Title $title ) {
 		return $this->getMessage( 'emailext-watchedpage-view-all-changes',
 			$title->getFullURL( [
 				'action' => 'history'
@@ -201,7 +201,7 @@ abstract class WatchedPageController extends EmailController {
 	}
 }
 
-class WatchedPageEditedController extends WatchedPageController {
+class WatchedPageEditedOrCreatedController extends WatchedPageController {
 	/**
 	 * @return String
 	 */
@@ -349,5 +349,41 @@ class WatchedPageRenamedController extends WatchedPageController {
 	 */
 	protected function getAllChangesText( $title ) {
 		return parent::getAllChangesText( $this->newTitle );
+	}
+}
+
+class WatchedPageRestoredController extends WatchedPageController {
+
+	/**
+	 * @return String
+	 */
+	protected function getSubjectMessageKey() {
+		return 'emailext-watchedpage-article-restored-subject';
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getSummaryMessageKey() {
+		return 'emailext-watchedpage-article-restored-summary';
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getButtonLink() {
+		return $this->title->getFullUrl();
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getButtonTextMessageKey() {
+		return 'emailext-watchedpage-article-restored-button-text';
+	}
+
+	protected function getContentFooterMessages() {
+		// no op
+		return [];
 	}
 }
