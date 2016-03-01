@@ -427,8 +427,8 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 			$this->groupsSelfRemovableByGroup = array_merge( $this->groupsSelfRemovableByGroup, $wgGroupsRemoveFromSelfLocal );
 
 		$this->groupsAddableByGroup['util'] = array_diff( $this->getExplicitGroups(),
-			array_merge( [ 'wikifactory', 'content-reviewer' ], $this->getImplicitGroups() ) );
-		$this->groupsRemovableByGroup['util'] = array_diff( $this->getExplicitGroups(), $this->getImplicitGroups() );
+			array_merge( [ 'wikifactory', 'content-reviewer', 'staff', 'util' ], $this->getImplicitGroups() ) );
+		$this->groupsRemovableByGroup['util'] = $this->groupsAddableByGroup['util'];
 
 		global $wgDevelEnvironment;
 		if ( !empty( $wgDevelEnvironment ) ) {

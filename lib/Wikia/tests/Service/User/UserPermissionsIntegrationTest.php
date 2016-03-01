@@ -196,8 +196,10 @@ class UserPermissionsIntegrationTest extends \WikiaBaseTest {
 
 	public function testShouldReturnGroupsChangeableByGroups() {
 		$groups = $this->permissionsService()->getConfiguration()->getGroupsChangeableByGroup( 'util' );
-		$this->assertContains( 'util', $groups['add'] );
-		$this->assertContains( 'util', $groups['remove'] );
+		$this->assertNotContains( 'util', $groups['add'] );
+		$this->assertNotContains( 'util', $groups['remove'] );
+		$this->assertNotContains( 'staff', $groups['add'] );
+		$this->assertNotContains( 'staff', $groups['remove'] );
 		$this->assertNotContains( 'util', $groups['add-self'] );
 		$this->assertNotContains( 'util', $groups['remove-self'] );
 		$this->assertNotContains( 'user', $groups['add'] );
