@@ -7,12 +7,29 @@ use Wikia\ExactTarget\ResourceEnum as Enum;
 class UpdateRequestBuilder extends BaseRequestBuilder {
 	const SAVE_OPTION_TYPE = 'SaveOption';
 
+	private $categories = [];
 	private $cityId;
 	private $cityData;
 	private $userData;
 	private $edits;
 
-	private static $supportedTypes = [ self::PROPERTIES_TYPE, self::EDITS_TYPE, self::USER_TYPE, self::WIKI_TYPE ];
+	private static $supportedTypes = [
+		self::PROPERTIES_TYPE,
+		self::EDITS_TYPE,
+		self::USER_TYPE,
+		self::WIKI_TYPE,
+		self::WIKI_CAT_TYPE
+	];
+
+	public function withCategories( $categories ) {
+		$this->categories = $categories;
+		return $this;
+	}
+
+	public function withCityId( $cityId ) {
+		$this->cityId = $cityId;
+		return $this;
+	}
 
 	public function withCityData( $cityId, array $cityData ) {
 		$this->cityData = $cityData;
@@ -47,6 +64,9 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 				break;
 			case self::WIKI_TYPE:
 				$objects = $this->prepareWikiParams( $this->cityData );
+				break;
+			case self::WIKI_CAT_TYPE:
+				$objects = $this->prepareWikiCatMapping();
 				break;
 		}
 		// make it soap vars
@@ -113,6 +133,16 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 	private function prepareWikiParams( $cityData ) {
 		return [ $this->prepareDataObject( Enum::CUSTOMER_KEY_WIKI_CITY_LIST,
 			[ Enum::WIKI_CITY_ID => $this->cityId ], $cityData ) ];
+	}
+
+	private function prepareWikiCatMapping() {
+		$objects = [ ];
+		foreach ( $this->categories as $category ) {
+			$objects[] = $this->prepareDataObject( Enum::CUSTOMER_KEY_WIKI_CITY_CAT_MAPPING,
+				[ ], [ Enum::WIKI_CITY_ID => $this->cityId, Enum::WIKI_CAT_ID => $category[ 'cat_id' ] ] );
+		}
+
+		return $objects;
 	}
 
 }

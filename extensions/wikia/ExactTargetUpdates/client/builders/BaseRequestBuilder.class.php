@@ -14,6 +14,7 @@ class BaseRequestBuilder {
 	const SUBSCRIBER_TYPE = 'subscriber';
 	const PROPERTIES_TYPE = 'properties';
 	const EDITS_TYPE = 'edits';
+	const WIKI_CAT_TYPE = 'city_cat';
 	const WIKI_TYPE = 'wiki';
 
 	protected $email;
