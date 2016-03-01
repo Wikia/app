@@ -29,7 +29,7 @@ class CreateNewWiki extends Maintenance {
 		$wikiDomain = $this->getArg( 2 );
 		$wikiLanguage = $this->getArg( 3, 'en' );
 		$wikiVertical = $this->getArg( 4, 1 ); // entertainment by default
-		$wikiCategories = []; // no categories
+		$wikiCategories = [ 1, 2 ]; // a few random categories
 
 		$newWiki = new CreateWiki($wikiName, $wikiDomain, $wikiLanguage, $wikiVertical, $wikiCategories);
 		$newWiki->create();
