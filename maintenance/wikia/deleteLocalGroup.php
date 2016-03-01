@@ -23,10 +23,10 @@ class CleanPageWikiaPropsMaintenance extends Maintenance {
 	public function execute() {
 		global $wgDBname, $wgDBCluster;
 
-		$group = $this->getOption("group");
-		$delete = $this->getOption("delete", false);
+		$group = $this->getOption( "group" );
+		$delete = $this->getOption( "delete", false );
 		if ( !in_array( $group, self::$allowed_groups ) ) {
-			die("Error: requested group ".$group." not in the allowed white-list\n");
+			die( "Error: requested group " . $group . " not in the allowed white-list\n" );
 		}
 
 		$then = microtime( true );
@@ -63,10 +63,10 @@ class CleanPageWikiaPropsMaintenance extends Maintenance {
 
 		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
 			'cluster' => $wgDBCluster,
-			'took' => round($took, 6),
+			'took' => round( $took, 6 ),
 		] );
 
-		$this->output("done\n");
+		$this->output( "done\n" );
 	}
 }
 
