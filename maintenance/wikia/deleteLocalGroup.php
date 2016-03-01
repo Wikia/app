@@ -36,12 +36,12 @@ class DeleteLocalGroupMaintenance extends Maintenance {
 
 			$res = $dbw->select(
 				self::TABLE_NAME,
-				[ 'ug_user', 'ug_group' ],
+				'count(*)',
 				[ 'ug_group' => [ $group ] ],
 				__METHOD__
 			);
 
-			$this->output( "Row count: " . $res->numRows() . "\n" );
+			$this->output( "Row count: " . $res->fetchRow()[0] . "\n" );
 		} else {
 			$this->output( "Deleting group on {$wgDBname} ({$wgDBCluster})\n" );
 			$dbw = $this->getDB( DB_MASTER );
@@ -52,7 +52,6 @@ class DeleteLocalGroupMaintenance extends Maintenance {
 				__METHOD__
 			);
 			$dbw->commit();
-			wfWaitForSlaves();
 		}
 		$took = microtime( true ) - $then;
 
