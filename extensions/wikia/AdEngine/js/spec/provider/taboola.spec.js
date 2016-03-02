@@ -69,6 +69,14 @@ describe('Taboola ', function () {
 		);
 	}
 
+	function createSlot(slotName) {
+		return {
+			name: slotName,
+			container: mocks.document.node,
+			success: noop
+		};
+	}
+
 	beforeEach(function () {
 		mocks.instantGlobals.wgAdDriverTaboolaConfig = {
 			'NATIVE_TABOOLA_ARTICLE': {
@@ -76,6 +84,10 @@ describe('Taboola ', function () {
 				regular: ['CURRENT']
 			},
 			'NATIVE_TABOOLA_RAIL': {
+				recovery: [],
+				regular: []
+			},
+			'TOP_LEADERBOARD_AB': {
 				recovery: [],
 				regular: []
 			}
@@ -150,6 +162,17 @@ describe('Taboola ', function () {
 		expect(taboola.canHandleSlot('NATIVE_TABOOLA_RAIL')).toBeTruthy();
 	});
 
+	it('Handles recovery TOP_LEADERBOARD_AB for given country and AbTest group', function () {
+		spyOn(mocks.abTest, 'getGroup').and.returnValue('YES');
+		mocks.instantGlobals.wgAdDriverTaboolaConfig.TOP_LEADERBOARD_AB = {
+			recovery: ['CURRENT'],
+			regular: []
+		};
+		var taboola = getTaboola();
+
+		expect(taboola.canHandleSlot('TOP_LEADERBOARD_AB')).toBeTruthy();
+	});
+
 	it('Fills regular slot without using recovery helper', function () {
 		spyOn(mocks.recoveryHelper, 'addOnBlockingCallback');
 		spyOn(mocks.slotTweaker, 'show');
@@ -161,13 +184,13 @@ describe('Taboola ', function () {
 		var taboola = getTaboola();
 
 		taboola.canHandleSlot('NATIVE_TABOOLA_ARTICLE');
-		taboola.fillInSlot('NATIVE_TABOOLA_ARTICLE', mocks.document.node, noop);
+		taboola.fillInSlot(createSlot('NATIVE_TABOOLA_ARTICLE'));
 
 		expect(mocks.recoveryHelper.addOnBlockingCallback).not.toHaveBeenCalled();
 		expect(mocks.slotTweaker.show).toHaveBeenCalled();
 	});
 
-	it('Fills recovery slot using recovery helper', function () {
+	it('Fills in NATIVE_TABOOLA_RAIL recovery slot using recovery helper', function () {
 		mocks.instantGlobals.wgAdDriverTaboolaConfig.NATIVE_TABOOLA_RAIL = {
 			recovery: ['CURRENT'],
 			regular: []
@@ -177,7 +200,22 @@ describe('Taboola ', function () {
 		var taboola = getTaboola();
 
 		taboola.canHandleSlot('NATIVE_TABOOLA_RAIL');
-		taboola.fillInSlot('NATIVE_TABOOLA_RAIL', mocks.document.node, noop);
+		taboola.fillInSlot(createSlot('NATIVE_TABOOLA_RAIL'));
+
+		expect(mocks.recoveryHelper.addOnBlockingCallback).toHaveBeenCalled();
+	});
+
+	it('Fills in TOP_LEADERBOARD_AB recovery slot using recovery helper', function () {
+		mocks.instantGlobals.wgAdDriverTaboolaConfig.TOP_LEADERBOARD_AB = {
+			recovery: ['CURRENT'],
+			regular: []
+		};
+		spyOn(mocks.abTest, 'getGroup').and.returnValue('YES');
+		spyOn(mocks.recoveryHelper, 'addOnBlockingCallback');
+		var taboola = getTaboola();
+
+		taboola.canHandleSlot('TOP_LEADERBOARD_AB');
+		taboola.fillInSlot(createSlot('TOP_LEADERBOARD_AB'));
 
 		expect(mocks.recoveryHelper.addOnBlockingCallback).toHaveBeenCalled();
 	});

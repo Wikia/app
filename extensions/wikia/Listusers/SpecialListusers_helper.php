@@ -181,7 +181,7 @@ class ListusersData {
 			}
 
 			if ( $data['cnt'] > 0 ) {
-				$userIsBlocked = $wgUser->isBlocked();
+				$userIsBlocked = $wgUser->isBlocked( true, false );
 				$sk = RequestContext::getMain()->getSkin();
 				/* select records */
 				$oRes = $dbs->select(

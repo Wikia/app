@@ -61,18 +61,18 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 				return;
 			}
 
-			eventName = response ? 'lookup_success' : 'lookup_error';
+			encodedParams = module.encodeParamsForTracking(params);
+			eventName = encodedParams ? 'lookup_success' : 'lookup_error';
 			category = module.name + '/' + eventName + '/' + providerName;
-			encodedParams = module.encodeParamsForTracking(params) || 'nodata';
 
-			adTracker.track(category, slotName, 0, encodedParams);
+			adTracker.track(category, slotName, 0, encodedParams || 'nodata');
 		}
 
 		function getSlotParams(slotName) {
-			log(['getSlotParams', slotName, response], 'debug', module.logGroup);
+			log(['getSlotParams', slotName, called, response], 'debug', module.logGroup);
 
-			if (!response || !module.isSlotSupported(slotName)) {
-				log(['getSlotParams', 'No response yet or slot is not supported', slotName], 'debug', module.logGroup);
+			if (!called || !module.isSlotSupported(slotName)) {
+				log(['getSlotParams', 'Not called or slot is not supported', slotName], 'debug', module.logGroup);
 				return {};
 			}
 

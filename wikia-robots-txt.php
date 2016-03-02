@@ -7,16 +7,33 @@ if ( !defined( 'MW_NO_SETUP' ) ) {
 require_once( __DIR__ . '/includes/WebStart.php' );
 require_once( __DIR__ . '/includes/Setup.php' );
 
-$allowRobots = ( $wgWikiaEnvironment === WIKIA_ENV_PROD || $wgRequest->getBool( 'forcerobots' ) );
-
 $robots = new RobotsTxt();
+$allowRobots = ( $wgWikiaEnvironment === WIKIA_ENV_PROD || $wgRequest->getBool( 'forcerobots' ) );
+$experimentalRobots = null;
+
+if ( !empty( $wgExperimentalRobotsTxt ) && preg_match( '/^[a-z0-9-]+$/m', $wgExperimentalRobotsTxt ) ) {
+	$file = __DIR__ . '/robots.txt.d/' . $wgExperimentalRobotsTxt . '.txt';
+	if ( is_file( $file ) && is_readable( $file ) ) {
+		$experimentalRobots = file_get_contents( $file );
+	}
+}
 
 if ( !$allowRobots ) {
 	// No crawling preview, verify, sandboxes, showcase, etc
 	$robots->disallowPath( '/' );
+} elseif ( $experimentalRobots ) {
+	// Sitemap
+	if ( !empty( $wgEnableSpecialSitemapExt ) ) {
+		$robots->setSitemap( sprintf( 'http://%s/sitemap-index.xml', $_SERVER['SERVER_NAME'] ) );
+	}
+
+	// Experimental content
+	$robots->setExperimentalAllowDisallowSection( $experimentalRobots );
 } else {
 	// Sitemap
-	$robots->setSitemap( sprintf( 'http://%s/sitemap-index.xml', $_SERVER['SERVER_NAME'] ) );
+	if ( !empty( $wgEnableSpecialSitemapExt ) ) {
+		$robots->setSitemap( sprintf( 'http://%s/sitemap-index.xml', $_SERVER['SERVER_NAME'] ) );
+	}
 
 	// Special pages
 	$robots->disallowNamespace( NS_SPECIAL );

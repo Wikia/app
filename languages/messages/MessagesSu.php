@@ -600,36 +600,6 @@ Tungguan heula sakeudeung, laju cobaan deui.',
 Bisa jadi anjeun geus ngaganti sandina atawa ménta sandi saheulaanan anu anyar.',
 'resetpass-temp-password'   => 'Sandi samentara:',
 
-# Special:PasswordReset
-'passwordreset'                => 'Setél ulang sandi',
-'passwordreset-text'           => 'Lengkepan ieu formulir pikeun nampa surélék pangéling ngeunaan wincikan akun anjeun.',
-'passwordreset-legend'         => 'Setél ulang sandi',
-'passwordreset-disabled'       => 'Dina ieu wiki, sandi teu bisa disetél ulang.',
-'passwordreset-pretext'        => '{{PLURAL:$1||Asupkeun salah sahiji data di handap ieu}}',
-'passwordreset-username'       => 'Sandiasma:',
-'passwordreset-domain'         => 'Domain:',
-'passwordreset-capture'        => 'Témbongkeun surat-é hasilna?',
-'passwordreset-email'          => 'Alamat surélék:',
-'passwordreset-emailtitle'     => 'Wincikan akun di {{SITENAME}}',
-'passwordreset-emailtext-ip'   => 'Aya (bisa jadi Anjeun, ti alamat IP $1) ménta dibéjaan ngeunaan akun di {{SITENAME}} ($4). {{PLURAL:$3|Akun|Akun-akun}} di handap patali jeung alamat ieu surélék:
-
-$2
-
-{{PLURAL:$3|Ieu sandi saheulaanan|Ieu sandi saheulaanan}} anu bakal kadaluwarsa dina témpo {{PLURAL:$5|sapoé|$5 poé}}.
-Anjeun kudu asup sarta milih sandi anyar ayeuna. Lamun nu séjén nyieun ieu paménta, atawa lamun Anjeun geus inget sandi aslina sarta moal dirobah, ieu surat teu kudu diwaro.',
-'passwordreset-emailtext-user' => 'Hiji jalma (bisa jadi Anjeun, ti alamat IP $1) ménta pangéling-ngéling nu wincik tina akun pikeun {{SITENAME}} ($4).
-{{PLURAL:$3|Akun|Akun-akun}} di handap patali jeung alamat surélék ieu:
-
-$2
-
-{{PLURAL:$3|Sandi saheulaanan|Sandi saheulaanan}} ieu bakal kadaluwarsa dina témpo {{PLURAL:$5|sapoé|$5 poé}}.
-Anjeun kudu asup sarta milih sandi anyar ayeuna. Lamun jalma séjén nyieun
-ieu pamundut atawa lamun Anjeun inget sandi asli sarta moal
-ngarobah deui, Anjeun bisa teu maliré ieu talatah sarta terus ngagunakeun sandi heubeul.',
-'passwordreset-emailelement'   => 'Sandiasma: $1
-Sandi saheulaanan: $2',
-'passwordreset-emailsent'      => 'Surélék pangéling geus dikirim.',
-
 # Special:ChangeEmail
 'changeemail'          => 'Ganti alamat surélék',
 'changeemail-header'   => 'Ganti alamat surélék akun',

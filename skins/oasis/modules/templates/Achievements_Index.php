@@ -1,9 +1,9 @@
 <div class="module AchievementsModule UserProfileAchievementsModule">
 	<? if(count($ownerBadges) == 0) :?>
-		<h1><?= wfMsg('achievements-userprofile-title-no', $ownerName);?></h1>
+		<h2><?= wfMsg('achievements-userprofile-title-no', $ownerName);?></h2>
 		<?= wfMsg( ( $viewer_is_owner == true ) ? 'achievements-userprofile-no-badges-owner' : 'achievements-userprofile-no-badges-visitor' ) ;?>
 	<? else :?>
-		<h1><?= wfMsgExt('achievements-userprofile-title', array('parsemag'), $ownerName, $ownerBadgesCount) ?></h1>
+		<h2><?= wfMsgExt('achievements-userprofile-title', array('parsemag'), $ownerName, $ownerBadgesCount) ?></h2>
 		<div class="data" data-user="<?= $ownerName ?>" data-badges-count="<?= $ownerBadgesCount ?>" data-badges-per-page="<?= AchUserProfileService::BADGES_PER_PAGE ?>">
 			<div class="data-details tally"><?= wfMsg('achievements-userprofile-profile-score', $ownerScore) ?></div>
 			<div class="data-details ranking"><?= wfMsgExt ('achievements-userprofile-ranked', array('parse') , $ownerRank) ?></div>
@@ -25,7 +25,7 @@
 
 <? if ( $viewer_is_owner == true ) :?>
 	<div class="module AchievementsModule UserProfileAchievementsModule">
-		<h1><?= wfMsg('achievements-profile-title-challenges', $ownerName) ?></h1>
+		<h2><?= wfMsg('achievements-profile-title-challenges', $ownerName) ?></h2>
 
 		<ul class="badges-tracks badges">
 			<?= $app->getView('LatestEarnedBadges', 'ListBadges', array('badges'=> $challengesBadges, 'displayMode'=> 'Achievements' )); ?>

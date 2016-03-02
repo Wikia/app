@@ -42,6 +42,11 @@ define('ext.wikia.adEngine.provider.taboola', [
 				id: 'taboola-right-rail-thumbnails',
 				mode: 'thumbnails-rr',
 				label: 'Right Rail Thumbnails - '
+			},
+			'TOP_LEADERBOARD_AB': {
+				id: 'taboola-above-article-thumbnails',
+				mode: 'thumbnails-h-abp',
+				label: 'Above Article Thumbnails'
 			}
 		},
 		supportedSlots = {
@@ -75,35 +80,35 @@ define('ext.wikia.adEngine.provider.taboola', [
 		return false;
 	}
 
-	function fillInSlot(slotName, slotElement, success) {
+	function fillInSlot(slot) {
 		var container = document.createElement('div'),
-			slot = slots[slotName];
-		log(['fillInSlot', slotName, slotElement], 'debug', logGroup);
+			mappedSlot = slots[slot.name];
+		log(['fillInSlot', slot.name], 'debug', logGroup);
 
-		if (slotName === 'NATIVE_TABOOLA_ARTICLE') {
+		if (slot.name === 'NATIVE_TABOOLA_ARTICLE') {
 			readMoreDiv.parentNode.removeChild(readMoreDiv);
 		}
 
-		container.id = slot.id;
-		slotElement.appendChild(container);
+		container.id = mappedSlot.id;
+		slot.container.appendChild(container);
 
 		taboolaHelper.initializeWidget({
-			mode: slot.mode,
+			mode: mappedSlot.mode,
 			container: container.id,
-			placement: slot.label + getVerticalName(),
+			placement: mappedSlot.label + getVerticalName(),
 			target_type: 'mix'
 		});
 
-		slotTweaker.show(slotName);
-		success();
+		slotTweaker.show(slot.name);
+		slot.success();
 	}
 
-	function fillInSlotByConfig(slotName, slotElement, success) {
-		if (supportedSlots.regular.indexOf(slotName) !== -1) {
-			fillInSlot(slotName, slotElement, success);
-		} else if (supportedSlots.recovery.indexOf(slotName) !== -1) {
+	function fillInSlotByConfig(slot) {
+		if (supportedSlots.regular.indexOf(slot.name) !== -1) {
+			fillInSlot(slot);
+		} else if (supportedSlots.recovery.indexOf(slot.name) !== -1) {
 			recoveryHelper.addOnBlockingCallback(function () {
-				fillInSlot(slotName, slotElement, success);
+				fillInSlot(slot);
 			});
 		}
 	}

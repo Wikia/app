@@ -784,40 +784,6 @@ Vă rugăm să așteptați până să mai încercați.',
 Este posibil să fi reușit deja schimbarea parolei sau să fi cerut o parolă temporară nouă.',
 'resetpass-temp-password'   => 'Parolă temporară:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Resetare parolă',
-'passwordreset-text'               => 'Completați acest formular pentru a primi un e-mail cu datele contului dumneavoastră.',
-'passwordreset-legend'             => 'Resetare parolă',
-'passwordreset-disabled'           => 'Resetarea parolei a fost dezactivată pe acest wiki.',
-'passwordreset-pretext'            => '{{PLURAL:$1| | Introduceți mai jos o parte din informații}}',
-'passwordreset-username'           => 'Nume de utilizator:',
-'passwordreset-domain'             => 'Domeniu:',
-'passwordreset-capture'            => 'Vizualizați e-mailul rezultat?',
-'passwordreset-capture-help'       => 'Dacă bifați această căsuță, e-mailul (conținând parola temperară) vă va fi afișat, dar va fi trimis și utilizatorului.',
-'passwordreset-email'              => 'Adresă de e-mail:',
-'passwordreset-emailtitle'         => 'Detalii despre cont pe {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Cineva (probabil dumneavoastră, de la adresa IP $1) a cerut reamintirea detaliilor
-contului dumneavoastră pe {{SITENAME}} ($4). {{PLURAL:$3|Următorul cont este asociat|Următoarele conturi sunt asociate}}
-cu această adresă de e-mail:
-
-$2
-
-{{PLURAL:$3|Această parolă temporară va|Aceste parole temporare vor}} expira {{PLURAL:$5|într-o zi|în $5 zile}}.
-Ar trebui să vă autentificați și să schimbați parola acum. Dacă altcineva a făcut această cerere
-sau dacă v-ați reamintit parola inițială și nu mai doriți să o schimbați,
-puteți ignora acest mesaj, continuând să utilizați vechea parolă.',
-'passwordreset-emailtext-user'     => 'Utilizatorul $1 de pe {{SITENAME}} a solicitat o reamintire a detaliilor contului dumneavoastră pentru {{SITENAME}} ($4). Următorul utilizator are {{PLURAL:$3|contul asociat|conturile asociate}} cu această adresă de e-mail:
-
-$2
-
-{{PLURAL:$3|Această parolă temporară va|Aceste parole temporare vor}} expira {{PLURAL:$5|într-o zi|în $5 zile}}.
-Ar trebui să vă autentificați și să alegeți acum o nouă parolă. Dacă altcineva a făcut această solicitare, ori dacă v-ați reamintit parola originală și nu mai doriți modificarea ei, puteți ignora acest mesaj, continuând cu vechea parolă.',
-'passwordreset-emailelement'       => 'Nume de utilizator: $1
-Parolă temporară: $2',
-'passwordreset-emailsent'          => 'A fost trimis un e-mail de reamintire.',
-'passwordreset-emailsent-capture'  => 'Un mesaj de reamintire a fost trimis, fiind afișat mai jos.',
-'passwordreset-emailerror-capture' => 'Un mesaj de reamintire a fost generat (fiind afișat mai jos), dar trimiterea sa către utilizator a eșuat: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Modificare adresă de e-mail',
 'changeemail-header'   => 'Modificare adresă de e-mail asociată contului',

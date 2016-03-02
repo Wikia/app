@@ -1344,45 +1344,6 @@ class User {
 	}
 
 	/**
-	 * Add the user to the group if he/she meets given criteria.
-	 *
-	 * Contrary to autopromotion by \ref $wgAutopromote, the group will be
-	 *   possible to remove manually via Special:UserRights. In such case it
-	 *   will not be re-added automatically. The user will also not lose the
-	 *   group if they no longer meet the criteria.
-	 *
-	 * @param $event String key in $wgAutopromoteOnce (each one has groups/criteria)
-	 *
-	 * @return array Array of groups the user has been promoted to.
-	 *
-	 * @see $wgAutopromoteOnce
-	 */
-	public function addAutopromoteOnceGroups( $event ) {
-		global $wgAutopromoteOnceLogInRC;
-
-		$toPromote = array();
-		if ( $this->getId() ) {
-			$toPromote = Autopromote::getAutopromoteOnceGroups( $this, $event );
-			if ( count( $toPromote ) ) {
-				$oldGroups = $this->getGroups(); // previous groups
-				foreach ( $toPromote as $group ) {
-					$this->addGroup( $group );
-				}
-				$newGroups = array_merge( $oldGroups, $toPromote ); // all groups
-
-				$log = new LogPage( 'rights', $wgAutopromoteOnceLogInRC /* in RC? */ );
-				$log->addEntry( 'autopromote',
-					$this->getUserPage(),
-					'', // no comment
-					// These group names are "list to texted"-ed in class LogPage.
-					array( implode( ', ', $oldGroups ), implode( ', ', $newGroups ) )
-				);
-			}
-		}
-		return $toPromote;
-	}
-
-	/**
 	 * Clear various cached data stored in this object.
 	 * @param $reloadFrom bool|String Reload user and user_groups table data from a
 	 *   given source. May be "name", "id", "defaults", "session", or false for
@@ -1461,14 +1422,17 @@ class User {
 	}
 
 
+	/* Wikia change begin - SUS-92 */
 	/**
 	 * Get blocking information
 	 * @param $bFromSlave Bool Whether to check the slave database first. To
 	 *                    improve performance, non-critical checks are done
 	 *                    against slaves. Check when actually saving should be
 	 *                    done against master.
+	 * @param $shouldLogBlockInStats Bool flag that decides whether to log or not in PhalanxStats
 	 */
-	private function getBlockedStatus( $bFromSlave = true ) {
+	private function getBlockedStatus( $bFromSlave = true, $shouldLogBlockInStats = true ) {
+	/* Wikia change end */
 		global $wgProxyWhitelist, $wgUser;
 
 		if ( -1 != $this->mBlockedby ) {
@@ -1529,7 +1493,9 @@ class User {
 		}
 
 		# Extensions
-		wfRunHooks( 'GetBlockedStatus', array( &$this ) );
+		/* Wikia change begin - SUS-92 */
+		wfRunHooks( 'GetBlockedStatus', array( &$this, $shouldLogBlockInStats ) );
+		/* Wikia change end */
 
 		if ( !empty($this->mBlockedby) ) {
 			$this->mBlock->mBy = $this->mBlockedby;
@@ -1756,26 +1722,32 @@ class User {
 		return $triggered;
 	}
 
+	/* Wikia change begin - SUS-92 */
 	/**
 	 * Check if user is blocked
 	 *
 	 * @param $bFromSlave Bool Whether to check the slave database instead of the master
+	 * @param $shouldLogBlockInStats Bool flag that decides whether to log or not in PhalanxStats
+	 *
 	 * @return Bool True if blocked, false otherwise
 	 */
-	public function isBlocked( $bFromSlave = true ) { // hacked from false due to horrible probs on site
-		return $this->getBlock( $bFromSlave ) instanceof Block && $this->getBlock()->prevents( 'edit' );
+	public function isBlocked( $bFromSlave = true, $shouldLogBlockInStats = true ) { // hacked from false due to horrible probs on site
+		return $this->getBlock( $bFromSlave, $shouldLogBlockInStats ) instanceof Block && $this->getBlock()->prevents( 'edit' );
 	}
 
 	/**
 	 * Get the block affecting the user, or null if the user is not blocked
 	 *
 	 * @param $bFromSlave Bool Whether to check the slave database instead of the master
+	 * @param $shouldLogBlockInStats Bool flag that decides whether to log or not in PhalanxStats
+	 *
 	 * @return Block|null
 	 */
-	public function getBlock( $bFromSlave = true ){
-		$this->getBlockedStatus( $bFromSlave );
+	public function getBlock( $bFromSlave = true, $shouldLogBlockInStats = true ){
+		$this->getBlockedStatus( $bFromSlave, $shouldLogBlockInStats );
 		return $this->mBlock instanceof Block ? $this->mBlock : null;
 	}
+	/* Wikia change end */
 
 	/**
 	 * Check if user is blocked from editing a particular article
@@ -4004,7 +3976,7 @@ class User {
 	 */
 	public function matchEditToken( $val, $salt = '', $request = null ) {
 		$sessionToken = $this->getEditToken( $salt, $request );
-		$equals = hash_equals( $sessionToken, $val );
+		$equals = !is_null( $val ) && hash_equals( $sessionToken, $val );
 		if ( !$equals ) {
 			wfDebug( "User::matchEditToken: broken session data\n" );
 
@@ -4043,7 +4015,7 @@ class User {
 	 */
 	public function matchEditTokenNoSuffix( $val, $salt = '', $request = null ) {
 		$sessionToken = $this->getEditToken( $salt, $request );
-		return hash_equals( substr( $sessionToken, 0, 32 ), substr( $val, 0, 32 ) );
+		return !is_null( $val ) && hash_equals( substr( $sessionToken, 0, 32 ), substr( $val, 0, 32 ) );
 	}
 
 	/**
@@ -4464,7 +4436,7 @@ class User {
 	 * @return Array of Strings List of permission key names for given groups combined
 	 */
 	public static function getGroupPermissions( $groups ) {
-		global $wgGroupPermissions, $wgRevokePermissions;
+		global $wgGroupPermissions;
 		$rights = array();
 		// grant every granted permission first
 		foreach( $groups as $group ) {
@@ -4472,13 +4444,6 @@ class User {
 				$rights = array_merge( $rights,
 					// array_filter removes empty items
 					array_keys( array_filter( $wgGroupPermissions[$group] ) ) );
-			}
-		}
-		// now revoke the revoked permissions
-		foreach( $groups as $group ) {
-			if( isset( $wgRevokePermissions[$group] ) ) {
-				$rights = array_diff( $rights,
-					array_keys( array_filter( $wgRevokePermissions[$group] ) ) );
 			}
 		}
 		return array_unique( $rights );
@@ -4531,9 +4496,9 @@ class User {
 	 * @return Array of internal group names
 	 */
 	public static function getAllGroups() {
-		global $wgGroupPermissions, $wgRevokePermissions;
+		global $wgGroupPermissions;
 		return array_diff(
-			array_merge( array_keys( $wgGroupPermissions ), array_keys( $wgRevokePermissions ) ),
+			array_keys( $wgGroupPermissions ),
 			self::getImplicitGroups()
 		);
 	}

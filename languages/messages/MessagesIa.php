@@ -639,45 +639,6 @@ Pro completar le accesso, tu debe definir un nove contrasigno hic:',
 Es possibile que tu ha ja cambiate tu contrasigno o requestate un nove contrasigno temporari.',
 'resetpass-temp-password'   => 'Contrasigno temporari:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Reinitialisar contrasigno',
-'passwordreset-text'               => 'Complete iste formulario pro reciper un rememoration in e-mail del datos de tu conto.',
-'passwordreset-legend'             => 'Reinitialisar contrasigno',
-'passwordreset-disabled'           => 'Le reinitialisation de contrasignos ha essite disactivate in iste wiki.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Entra un del elementos de datos hic infra}}',
-'passwordreset-username'           => 'Nomine de usator:',
-'passwordreset-domain'             => 'Dominio:',
-'passwordreset-capture'            => 'Vider le e-mail resultante?',
-'passwordreset-capture-help'       => 'Si tu marca iste quadrato, le e-mail (con le contrasigno temporari) non solmente essera inviate al usator, ma anque monstrate a te.',
-'passwordreset-email'              => 'Adresse de e-mail:',
-'passwordreset-emailtitle'         => 'Detalios del conto in {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Un persona (probabilemente tu, ab le adresse IP $1) requestava un rememoration del
-detalios de tu conto in {{SITENAME}} ($4). Le {{PLURAL:$3|conto|contos}} de usator sequente es
-associate con iste adresse de e-mail:
-
-$2
-
-Iste {{PLURAL:$3|contrasigno|contrasignos}} temporari expirara post {{PLURAL:$5|un die|$5 dies}}.
-Tu deberea ora aperir session e eliger un nove contrasigno. Si un altere persona faceva iste
-requesta, o si tu te ha rememorate tu contrasigno original e non plus
-vole cambiar lo, tu pote ignorar iste message e continuar a usar le ancian
-contrasigno.',
-'passwordreset-emailtext-user'     => 'Le usator $1 in {{SITENAME}} requestava un rememoration del detalios de tu conto in {{SITENAME}}
-($4). Le {{PLURAL:$3|conto|contos}} de usator sequente es associate con iste adresse de e-mail:
-
-$2
-
-Iste {{PLURAL:$3|contrasigno|contrasignos}} temporari expirara post {{PLURAL:$5|un die|$5 dies}}.
-Tu deberea ora aperir session e eliger un nove contrasigno. Si un altere persona faceva iste
-requesta, o si tu te ha rememorate tu contrasigno original e non plus
-vole cambiar lo, tu pote ignorar iste message e continuar a usar le ancian
-contrasigno.',
-'passwordreset-emailelement'       => 'Nomine de usator: $1
-Contrasigno temporari: $2',
-'passwordreset-emailsent'          => 'Un e-mail de rememoration ha essite inviate.',
-'passwordreset-emailsent-capture'  => 'Un e-mail de rememoration ha essite inviate; iste message es monstrate hic infra.',
-'passwordreset-emailerror-capture' => 'Un e-mail de rememoration ha essite generate; iste message es monstrate hic infra, ma le invio al usator ha fallite: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Cambiar adresse de e-mail',
 'changeemail-header'   => 'Cambiar le adresse de e-mail del conto',

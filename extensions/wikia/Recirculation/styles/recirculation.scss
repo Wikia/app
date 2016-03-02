@@ -2,6 +2,8 @@
 @import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/color';
 
+@import 'incontent';
+
 .WikiaRail .recirculation-rail {
 	.title-thumbnail {
 		margin-bottom: 15px;
@@ -19,6 +21,17 @@
 		&:hover {
 			color: $color-links;
 		}
+	}
+}
+
+// GOOGLE MATCHED CONTENT
+.recirculation-rail.adsbygoogle {
+	border: 1px solid $color-page-border;
+	margin: 10px 0;
+	overflow: hidden;
+
+	iframe {
+		margin: -1px;
 	}
 }
 

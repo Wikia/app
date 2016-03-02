@@ -9,6 +9,7 @@
 @import 'ads-in-content';
 
 $wikia-top-ads-index: 2;
+$taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 
 /** Hide invisible slots and 1x1 iframes **/
 .wikia-ad[id^="INVISIBLE_"],
@@ -61,6 +62,48 @@ $wikia-top-ads-index: 2;
 #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
 	&.default-height {
 		height: 90px;
+	}
+}
+
+#TOP_LEADERBOARD_AB {
+	background: rgba($color-page, $page-opacity);
+	max-width: $page-width-medium;
+	margin: 10px auto;
+	padding: 0 $padding-width-medium;
+	position: relative;
+	z-index: $wikia-top-ads-index;
+
+	.thumbnails-h-abp {
+		border: none;
+	}
+}
+
+@if $widthType == 0 {
+	@media #{$breakpoint-small-only} {
+		#TOP_LEADERBOARD_AB {
+			padding: 0 $padding-width-small;
+			width: $page-width-small - 2 * $content-border-width;
+		}
+	}
+
+	@media #{$breakpoint-medium-only} {
+		#TOP_LEADERBOARD_AB {
+			padding: 0 $padding-width-medium;
+			width: $page-width-medium;
+		}
+	}
+
+	@media #{$breakpoint-large-up} {
+		#TOP_LEADERBOARD_AB {
+			padding: 0 $padding-width-large;
+			width: $page-width-large;
+		}
+	}
+
+	@media #{$taboola-small-breakpoint} {
+		#TOP_LEADERBOARD_AB {
+			width: auto;
+		}
 	}
 }
 
@@ -233,6 +276,8 @@ body >a >img[src$="noad.gif"] {
 	position: absolute;
 	#INCONTENT_BOXAD_1 {
 		position: relative;
+		text-align: center;
+		width: 300px;
 	}
 }
 
@@ -240,7 +285,7 @@ body >a >img[src$="noad.gif"] {
 	max-width: 700px;
 }
 
-#NATIVE_TABOOLA_ARTICLE, #NATIVE_TABOOLA_RAIL, #RECIRCULATION_RAIL {
+#NATIVE_TABOOLA_ARTICLE, #NATIVE_TABOOLA_RAIL, #TOP_LEADERBOARD_AB, #RECIRCULATION_RAIL {
 	.trc_rbox_header .trc_rbox_header_span {
 		color: $color-page-opposite;
 	}

@@ -106,6 +106,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/template/modalOasisHandler.js',
 		'//extensions/wikia/AdEngine/js/template/skin.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
+		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 		'//resources/wikia/modules/krux.js',
 
 		// was: late queue
@@ -130,6 +131,10 @@ $config['recirculation_js'] = array(
 	'skin' => [ 'oasis' ],
 	'assets' => array(
 		'#group_videos_module_js',
+		'//extensions/wikia/Recirculation/js/helpers/GoogleMatchHelper.js',
+		'//extensions/wikia/Recirculation/js/tracker.js',
+		'//extensions/wikia/Recirculation/js/utils.js',
+		'//extensions/wikia/Recirculation/js/incontent.js',
 		'//extensions/wikia/Recirculation/js/recirculation.js',
 	),
 );
@@ -182,15 +187,6 @@ $config['adengine2_interactive_maps_js'] = array(
 	),
 );
 
-$config['adengine2_oasis_in_content_ads_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'oasis',
-	'assets' => array(
-		'//extensions/wikia/AdEngine/js/slot/inContent.js',
-		'//extensions/wikia/AdEngine/js/slot/inContentDesktop.js',
-	),
-);
-
 $config['adengine2_oasis_exitstitial_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'oasis',
@@ -210,7 +206,7 @@ $config['adengine2_tracking_js'] = array(
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
-		'//resources/wikia/modules/krux.js',
+		'//resources/wikia/modules/krux.js'
 	),
 );
 
@@ -817,6 +813,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/remnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
+		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 
 		// Video ads
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
@@ -998,7 +995,6 @@ $config['monobook_js'] = array(
 		'//resources/wikia/modules/lazyqueue.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'#group_imglzy_js',
-		'#group_spotlights_js',
 		'//resources/wikia/libraries/ghostwriter/gw.min.js',
 		'//skins/shared/scripts/onScroll.js',
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
@@ -2463,6 +2459,31 @@ $config['portable_infobox_monobook_scss'] = [
 	'assets' => [
 		'#group_portable_infobox_scss',
 		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook.scss'
+	]
+];
+
+$config[ 'portable_infobox_builder_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//resources/wikia/libraries/Ponto/ponto.js',
+		'//extensions/wikia/PortableInfoboxBuilder/js/PortableInfoboxBuilderPonto.js',
+		'//extensions/wikia/PortableInfoboxBuilder/js/PortableInfoboxBuilder.js'
+	]
+];
+
+$config[ 'portable_infobox_builder_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/PortableInfoboxBuilder/styles/PortableInfoboxBuilder.scss'
+	]
+];
+
+$config[ 'portable_infobox_builder_preview_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/PortableInfoboxBuilder/styles/PortableInfoboxBuilderPreview.scss'
 	]
 ];
 

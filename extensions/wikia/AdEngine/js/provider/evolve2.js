@@ -19,6 +19,7 @@ define('ext.wikia.adEngine.provider.evolve2', [
 		},
 		site = 'wikia_intl',
 		slotMap = {
+			EVOLVE_FLUSH:             {flushOnly: true},
 			HOME_TOP_LEADERBOARD:     {size: '728x90,970x250,970x300,970x90'},
 			HOME_TOP_RIGHT_BOXAD:     {size: '300x250,300x600'},
 			HUB_TOP_LEADERBOARD:      {size: '728x90,970x250,970x300,970x90'},
@@ -74,32 +75,31 @@ define('ext.wikia.adEngine.provider.evolve2', [
 		return ret;
 	}
 
-	function fillInSlot(slotName, slotElement, success, hop) {
-		log(['fillInSlot', slotName, slotElement, success, hop], 'debug', logGroup);
+	function fillInSlot(slot) {
+		log(['fillInSlot', slot.name], 'debug', logGroup);
 		var section = getSection(),
-			slotCopy = JSON.parse(JSON.stringify(slotMap[slotName]));
+			slotCopy = JSON.parse(JSON.stringify(slotMap[slot.name]));
 
-		slotCopy.sect = section;
-		setTargeting(slotCopy);
+		if (!slotCopy.flushOnly) {
+			slotCopy.sect = section;
+			setTargeting(slotCopy);
+		}
+		slot.pre('success', function () {
+			slotTweaker.removeDefaultHeight(slot.name);
+			slotTweaker.removeTopButtonIfNeeded(slot.name);
+			slotTweaker.adjustLeaderboardSize(slot.name);
+		});
 		gptHelper.pushAd(
-			slotName,
-			slotElement,
-			'/4403/ev/' + site + '/' + section + '/' + slotName,
+			slot,
+			'/4403/ev/' + site + '/' + section + '/' + slot.name,
 			slotCopy,
 			{
-				success: function (adInfo) {
-					slotTweaker.removeDefaultHeight(slotName);
-					slotTweaker.removeTopButtonIfNeeded(slotName);
-					slotTweaker.adjustLeaderboardSize(slotName);
-
-					success(adInfo);
-				},
-				error: hop,
-				forcedAdType: 'evolve2'
+				forcedAdType: 'evolve2',
+				sraEnabled: true
 			}
 		);
 
-		log(['fillInSlot', slotName, slotElement, success, hop, 'done'], 'debug', logGroup);
+		log(['fillInSlot', slot.name, 'done'], 'debug', logGroup);
 	}
 
 	return {

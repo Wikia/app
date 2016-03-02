@@ -39,7 +39,7 @@ $dbw = $history->getDatawareDB();
 
 $res = $dbw->select(
 	'wall_history',
-	array(
+	[
 		'post_user_id',
 		'post_user_ip',
 		'is_reply',
@@ -53,15 +53,15 @@ $res = $dbw->select(
 		'action',
 		'revision_id',
 		'deleted_or_removed'
-	),
-	array(
+	],
+	[
 		'migrated' => 0,
 		'wiki_id' => $wgCityId
-	),
+	],
 	__METHOD__
 );
 
-$in = array();
+$in = [ ];
 
 $db = $history->getDB( DB_MASTER );
 
@@ -78,12 +78,12 @@ while ( $row = $dbw->fetchRow( $res ) ) {
 
 		$pagesRow = $db->selectRow(
 			'revision',
-			array(
+			[
 				'rev_timestamp'
-			),
-			array(
+			],
+			[
 				'rev_id' => $row['revision_id']
-			)
+			]
 		);
 
 		$row['event_date'] = wfTimestamp( TS_DB, $pagesRow->rev_timestamp );
@@ -111,7 +111,7 @@ while ( $row = $dbw->fetchRow( $res ) ) {
 
 	$db->insert(
 		'wall_history',
-		array(
+		[
 			'parent_page_id' => $mw->getArticleTitle()->getArticleId(),
 			'parent_comment_id' => $parentCommentId,
 			'comment_id' => $commentId,
@@ -127,17 +127,17 @@ while ( $row = $dbw->fetchRow( $res ) ) {
 			'revision_id' => $row['revision_id'],
 			'deleted_or_removed' => $row['deleted_or_removed'],
 			'event_date' => $row['event_date']
-		)
+		]
 	);
 
 	$dbw->update(
 		'wall_history',
-		array( 'migrated' => 1 ),
-		array(
+		[ 'migrated' => 1 ],
+		[
 			'page_id' => $commentId,
 			'migrated' => 0,
 			'wiki_id' => $wgCityId
-		),
+		],
 		__METHOD__
 	);
 

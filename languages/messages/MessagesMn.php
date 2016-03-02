@@ -528,24 +528,6 @@ $2',
 Та аль хэдийнээ нууц үгээ сольсон эсвэл түр зуурын нууц үг хүссэн байна.',
 'resetpass-temp-password'   => 'Түр зуурын нууц үг:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Нууц үгийг сэргээх',
-'passwordreset-text'               => 'Энэхүү маягтыг бөглөж хэрэглэгчийн мэдээллээ аваарай.',
-'passwordreset-legend'             => 'Нууц үгээ сэргээх',
-'passwordreset-disabled'           => 'Энэ вики-д нууц үгийг сэргээх боломжгүй байна.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Доорх өгөгдлийн аль нэг хэсгийг оруулна уу}}',
-'passwordreset-username'           => 'Хэрэглэгчийн нэр:',
-'passwordreset-domain'             => 'Домайн:',
-'passwordreset-capture'            => 'Цахим шуудангийн нууц үг сэргээх шууданг үзэх',
-'passwordreset-capture-help'       => 'Энэ нүдийг чагталбал цахим шуудан түр нууц үгийн хамт танд харагдахаас гадна, шуудангаар тань очих болно.',
-'passwordreset-email'              => 'Цахим шуудан:',
-'passwordreset-emailtitle'         => '{{SITENAME}}-н бүртгэлийн мэдээлэл',
-'passwordreset-emailelement'       => 'Хэрэглэгчийн нэр: $1
-Түр зуурын нууц үг: $2',
-'passwordreset-emailsent'          => 'Сануулгын цахим шуудан явууллаа.',
-'passwordreset-emailsent-capture'  => 'Доор харуулснаар цахим шуудангийн сануулгыг явууллаа.',
-'passwordreset-emailerror-capture' => 'Цахим шуудангийн сануулга доор харуулсны дагуу хийгдсан боловч $1 хэрэглэгчид хүрч чадсангүй, алдаа гарлаа.',
-
 # Special:ChangeEmail
 'changeemail'          => 'Цахим шуудангийн хаяг солих',
 'changeemail-header'   => 'Цахим шуудангийн бүртгэлийн хаяг солих',

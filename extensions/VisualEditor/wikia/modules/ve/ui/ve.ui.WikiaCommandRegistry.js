@@ -23,6 +23,20 @@ ve.ui.commandRegistry.register(
 
 ve.ui.commandRegistry.register(
 	new ve.ui.Command(
+		'wikiaImageInsert', 'window', 'open',
+		{ args: ['wikiaImageInsert'] }
+	)
+);
+
+ve.ui.commandRegistry.register(
+	new ve.ui.Command(
+		'wikiaVideoInsert', 'window', 'open',
+		{ args: ['wikiaVideoInsert'] }
+	)
+);
+
+ve.ui.commandRegistry.register(
+	new ve.ui.Command(
 		'wikiaSingleMedia', 'window', 'open',
 		{ args: ['wikiaSingleMedia'] }
 	)

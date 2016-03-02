@@ -18,6 +18,7 @@ describe('ext.wikia.adEngine.adEngine decorators', function () {
 		adDecoratorFake1: noop,
 		adDecoratorFake2: noop,
 		adDecoratorLegacyParamFormat: noop,
+		adSlot: {},
 		decoratedFillInSlot: noop,
 		decoratedFillInSlotFake1: noop,
 		decoratedFillInSlotFake2: noop,
@@ -28,6 +29,7 @@ describe('ext.wikia.adEngine.adEngine decorators', function () {
 				};
 			}
 		},
+		hooks: noop,
 		lazyQueue: {
 			makeQueue: noop
 		},
@@ -43,13 +45,15 @@ describe('ext.wikia.adEngine.adEngine decorators', function () {
 
 	function getAdEngine() {
 		return modules['ext.wikia.adEngine.adEngine'](
-			mocks.doc,
-			mocks.log,
-			mocks.lazyQueue,
 			mocks.adDecoratorLegacyParamFormat,
 			mocks.eventDispatcher,
+			mocks.adSlot,
 			mocks.slotTracker,
-			mocks.slotTweaker
+			mocks.slotTweaker,
+			mocks.hooks,
+			mocks.doc,
+			mocks.lazyQueue,
+			mocks.log
 		);
 	}
 
