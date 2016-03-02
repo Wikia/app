@@ -29,7 +29,7 @@ class ExactTargetWikiHooks {
 	public function onWikiFactoryChangeCommitted( Array $aParams ) {
 		$aWfVariablesTriggeringUpdate = $this->getWfVarsTriggeringUpdate();
 		if ( isset( $aWfVariablesTriggeringUpdate[ $aParams['cv_name'] ] ) ) {
-			$this->addTheUpdateWikiTask( $aParams['city_id'] );
+			$this->queueUpdateWikiTask( $aParams['city_id'] );
 		}
 		return true;
 	}
@@ -42,7 +42,7 @@ class ExactTargetWikiHooks {
 	 * @return true
 	 */
 	public function onWikiFactoryVerticalSet( Array $aParams ) {
-		$this->addTheUpdateWikiTask( $aParams['city_id'] );
+		$this->queueUpdateWikiTask( $aParams['city_id'] );
 		return true;
 	}
 
@@ -73,17 +73,6 @@ class ExactTargetWikiHooks {
 	}
 
 	/**
-	 * Adds a task to job queue that sends
-	 * an Update request to ExactTarget with a changed variable.
-	 * @param  int $iCityId  A wiki's id
-	 */
-	private function addTheUpdateWikiTask( $iCityId ) {
-		$oTask = $this->getExactTargetUpdateWikiTask();
-		$oTask->call( 'updateFallbackCreateWikiData', $iCityId );
-		$oTask->queue();
-	}
-
-	/**
 	 * Adds a task to job queue that sends a request
 	 * updating city_cat_mapping table.
 	 * @param  Array $aParams  Must contain a city_id key
@@ -106,29 +95,6 @@ class ExactTargetWikiHooks {
 	}
 
 	/**
-	 * Returns an array where WF vars names are keys.
-	 * Change of these vars should trigger an ET's city_list table update.
-	 * @return  Array  An array with vars names as keys
-	 */
-	private function getWfVarsTriggeringUpdate() {
-		$aWfVarsTriggeringUpdate = [
-			'wgServer' => true,
-			'wgSitename' => true,
-			'wgLanguageCode' => true,
-			'wgDBcluster' => true,
-		];
-		return $aWfVarsTriggeringUpdate;
-	}
-
-	/**
-	 * A simple getter for an object of an ExactTargetUpdateWikiTask class
-	 * @return  object ExactTargetUpdateWikiTask
-	 */
-	private function getExactTargetUpdateWikiTask() {
-		return new ExactTargetUpdateWikiTask();
-	}
-
-	/**
 	 * A simple getter for an object of an ExactTargetUpdateCityCatMappingTask class
 	 * @return  object ExactTargetUpdateCityCatMappingTask
 	 */
@@ -147,11 +113,26 @@ class ExactTargetWikiHooks {
 	/**
 	 * Adds update wiki task to queue
 	 *
-	 * @param int $cityId
+	 * @param int $iCityId
 	 */
-	private function queueUpdateWikiTask( $cityId ) {
+	private function queueUpdateWikiTask( $iCityId ) {
 		$task = new ExactTargetWikiTask();
-		$task->call( 'updateWiki', $cityId );
+		$task->call( 'updateWiki', $iCityId );
 		$task->queue();
+	}
+
+	/**
+	 * Returns an array where WF vars names are keys.
+	 * Change of these vars should trigger an ET's city_list table update.
+	 * @return  array  An array with vars names as keys
+	 */
+	private function getWfVarsTriggeringUpdate() {
+		$aWfVarsTriggeringUpdate = [
+			'wgServer' => true,
+			'wgSitename' => true,
+			'wgLanguageCode' => true,
+			'wgDBcluster' => true,
+		];
+		return $aWfVarsTriggeringUpdate;
 	}
 }
