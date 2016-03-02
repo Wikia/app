@@ -53,16 +53,11 @@ $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetUserHooks' ] = $dir . '/hooks/
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetUserHooksHelper' ] = $dir . '/hooks/ExactTargetUserHooksHelper.php';
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetWikiHooks' ] = $dir . '/hooks/ExactTargetWiki.hooks.php';
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetWikiHooksHelper' ] = $dir . '/hooks/ExactTargetWikiHooksHelper.php';
-/* Add base task class */
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetTask' ] = $dir . '/tasks/ExactTargetTask.php';
 /* Add user-related tasks classes */
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetUserUpdateDriver' ] = $dir . '/tasks/ExactTargetUserUpdateDriver.php';
 /* Refactored tasks that are to replace old ones */
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetUserTask' ] = $dir . '/tasks/ExactTargetUserTask.class.php';
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetWikiTask' ] = $dir . '/tasks/ExactTargetWikiTask.class.php';
-/* Add wiki-related tasks classes */
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetWikiTaskHelper' ] = $dir . '/tasks/ExactTargetWikiTaskHelper.php';
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetDeleteWikiTask' ] = $dir . '/tasks/ExactTargetDeleteWikiTask.php';
 
 /* Add API classes */
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetApi' ] = $dir . '/api/ExactTargetApi.php';
