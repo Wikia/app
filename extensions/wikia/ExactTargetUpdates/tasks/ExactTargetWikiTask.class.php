@@ -31,6 +31,31 @@ class ExactTargetWikiTask extends BaseTask {
 		return self::STATUS_OK;
 	}
 
+	/**
+	 * Delete wiki and categories mapping
+	 * @param int $wikiId
+	 * @return string
+	 * @throws \Wikia\Util\AssertionException
+	 */
+	public function deleteWiki( $wikiId ) {
+		Assert::true( !empty( $wikiId ), 'Wiki ID missing' );
+
+		$client = $this->getClient();
+		$oldCategories = $client->retrieveWikiCategories( $wikiId );
+
+		/* Delete wiki and categories mapping */
+		$client->deleteWikiCategoriesMapping( $oldCategories );
+		$client->deleteWiki( $wikiId );
+
+		return self::STATUS_OK;
+	}
+
+	/**
+	 * Update wiki categories mapping
+	 * @param int $wikiId
+	 * @return string
+	 * @throws \Wikia\Util\AssertionException
+	 */
 	public function updateWikiCategoriesMapping( $wikiId ) {
 		Assert::true( !empty( $wikiId ), 'Wiki ID missing' );
 

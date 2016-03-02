@@ -52,6 +52,10 @@ class ExactTargetRequestBuilder {
 		return new UpdateRequestBuilder( BaseRequestBuilder::WIKI_TYPE );
 	}
 
+	public static function getWikiDeleteBuilder() {
+		return new DeleteRequestBuilder( BaseRequestBuilder::WIKI_TYPE );
+	}
+
 	public static function getWikiCategoriesMappingUpdateBuilder() {
 		return new UpdateRequestBuilder( BaseRequestBuilder::WIKI_CAT_TYPE );
 	}

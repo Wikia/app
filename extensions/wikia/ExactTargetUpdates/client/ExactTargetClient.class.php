@@ -153,6 +153,14 @@ class ExactTargetClient {
 		return $this->sendRequest( self::UPDATE_CALL, $request );
 	}
 
+	public function deleteWiki( $wikiId ) {
+		$request = ExactTargetRequestBuilder::getWikiDeleteBuilder()
+			->withWikiId( $wikiId )
+			->build();
+
+		return $this->sendRequest( self::DELETE_CALL, $request );
+	}
+
 	public function retrieveWikiCategories( $wikiId ) {
 		$result = $this->retrieve(
 			[ Enum::WIKI_ID, Enum::WIKI_CAT_ID ],

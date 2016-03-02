@@ -5,7 +5,12 @@ use Wikia\ExactTarget\ResourceEnum as Enum;
 
 class DeleteRequestBuilder extends BaseRequestBuilder {
 	private static $supportedTypes = [
-		self::GROUP_TYPE, self::USER_TYPE, self::SUBSCRIBER_TYPE, self::PROPERTIES_TYPE, self::WIKI_CAT_TYPE
+		self::GROUP_TYPE,
+		self::USER_TYPE,
+		self::SUBSCRIBER_TYPE,
+		self::PROPERTIES_TYPE,
+		self::WIKI_TYPE,
+		self::WIKI_CAT_TYPE
 	];
 
 	public function build() {
@@ -29,6 +34,10 @@ class DeleteRequestBuilder extends BaseRequestBuilder {
 					$objects[ ] = $this->prepareDataObject( Enum::CUSTOMER_KEY_USER_PROPERTIES,
 						[ Enum::USER_PROPERTIES_USER => $this->userId, Enum::USER_PROPERTIES_PROPERTY => $property ] );
 				}
+				break;
+			case self::WIKI_TYPE:
+				$objects = [ $this->prepareDataObject( Enum::CUSTOMER_KEY_WIKI_LIST,
+					[ Enum::WIKI_ID => $this->wikiId ] ) ];
 				break;
 			case self::WIKI_CAT_TYPE:
 				$objects = [ ];

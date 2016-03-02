@@ -65,28 +65,9 @@ class ExactTargetWikiHooks {
 	 */
 	public function onWikiFactoryPublicStatusChanged( &$city_public, &$city_id, $reason ) {
 		if ( $city_public <= 0 ) {
-			$this->addTheDeleteWikiTask( [ 'city_id' => $city_id ] );
+			$this->queueDeleteWikiTask( $city_id );
 		}
 		return true;
-	}
-
-	/**
-	 * Adds a task to job queue that sends a request
-	 * deleting records from city_list and city_cat_mapping.
-	 * @param  Array $aParams  Must contain a city_id key
-	 */
-	private function addTheDeleteWikiTask( Array $aParams ) {
-		$oTask = $this->getExactTargetDeleteWikiTask();
-		$oTask->call( 'deleteWikiData', $aParams );
-		$oTask->queue();
-	}
-
-	/**
-	 * A simple getter for an object of an ExactTargetDeleteWikiTask class
-	 * @return  object ExactTargetDeleteWikiTask
-	 */
-	private function getExactTargetDeleteWikiTask() {
-		return new ExactTargetDeleteWikiTask();
 	}
 
 	/**
@@ -100,6 +81,22 @@ class ExactTargetWikiHooks {
 		$task->queue();
 	}
 
+	/**
+	 * Deletes wiki
+	 *
+	 * @param int $wikiId
+	 */
+	private function queueDeleteWikiTask( $wikiId ) {
+		$task = new ExactTargetWikiTask();
+		$task->call( 'deleteWiki', $wikiId );
+		$task->queue();
+	}
+
+	/**
+	 * Updates wiki categories mapping
+	 *
+	 * @param $wikiId
+	 */
 	private function queueUpdateWikiCategoriesMapping( $wikiId ) {
 		$task = new ExactTargetWikiTask();
 		$task->call( 'updateWikiCategoriesMapping', $wikiId );
