@@ -79,6 +79,9 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.sourcePointRecovery = isUrlParamSet('sourcepointrecovery') ||
 				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
 		}
+		//TODO: temporary
+		context.opts.sourcePointRecovery = true;
+
 
 		// Recoverable ads message
 		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
