@@ -21,7 +21,9 @@ $wgAutoloadClasses['AdminDashboardController'] =  $dir . 'AdminDashboardControll
 $wgAutoloadClasses['AdminDashboardLogic'] =  $dir . 'AdminDashboardLogic.class.php';
 $wgAutoloadClasses['QuickStatsController'] =  $dir . 'QuickStatsController.class.php';
 
+// hooks
 $wgHooks['BeforeToolbarMenu'][] = 'AdminDashboardLogic::onBeforeToolbarMenu';
+$wgHooks['WikiaHtmlTitleExtraParts'][] = 'AdminDashboardLogic::onWikiaHtmlTitleExtraParts';
 
 // i18n mapping
 $wgExtensionMessagesFiles['AdminDashboard'] = $dir . 'AdminDashboard.i18n.php';

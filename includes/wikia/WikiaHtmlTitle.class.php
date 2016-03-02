@@ -109,4 +109,28 @@ class WikiaHtmlTitle {
 	public function getTitle() {
 		return join( $this->getSeparator(), $this->getAllParts() );
 	}
+
+	/**
+	 * Set HTML title based on the information passed from OutputPage
+	 *
+	 * This adds the HTML title structure for special pages.
+	 * Later we should add structure for images, videos, categories, blogs, etc.
+	 * Then this method should be promoted to a separate class with a set of tests.
+	 *
+	 * @param Title $title
+	 * @param string $name
+	 * @return WikiaHtmlTitle
+	 */
+	public function generateTitle( $title, $name ) {
+		if ( !$title ) {
+			return $this->setParts( [ $name ] );
+		}
+
+		// Extra title for admin dashboard (and maybe other pages handled by extensions)
+		$parts = [];
+		wfRunHooks( 'WikiaHtmlTitleExtraParts', [ $title, &$parts ] );
+		array_unshift( $parts, $name );
+
+		return $this->setParts( $parts );
+	}
 }
