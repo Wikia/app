@@ -12,9 +12,7 @@ class ExactTargetWikiHooks {
 	public function onCreateWikiLocalJobComplete( Array $cityData ) {
 		$cityId = $cityData['city_id'];
 		/* Get and run the tasks */
-		$task = new ExactTargetWikiTask();
-		$task->call( 'updateWiki', $cityId );
-		$task->queue();
+		$this->queueUpdateWikiTask( $cityId );
 		$task = new ExactTargetWikiTask();
 		$task->call( 'updateWikiCatMapping', $cityId );
 		$task->queue();
@@ -144,5 +142,16 @@ class ExactTargetWikiHooks {
 	 */
 	private function getExactTargetDeleteWikiTask() {
 		return new ExactTargetDeleteWikiTask();
+	}
+
+	/**
+	 * Adds update wiki task to queue
+	 *
+	 * @param int $cityId
+	 */
+	private function queueUpdateWikiTask( $cityId ) {
+		$task = new ExactTargetWikiTask();
+		$task->call( 'updateWiki', $cityId );
+		$task->queue();
 	}
 }
