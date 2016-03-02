@@ -118,7 +118,8 @@ class Hooks {
 			$out->addHTML( \Html::hidden( 'templateClassificationTypeNew', $types['new'],
 				['autocomplete' => 'off'] ) );
 
-			// add additional class to body for new templates in order to hide editor while TCS modal is visible
+			// add additional class to body for new templates in order to hide editor while template classification
+			// modal is visible
 			if ( $title->getArticleID() === 0 && empty( $types['current'] && $types['new'] ) ) {
 				\OasisController::addBodyClass( self::TC_BODY_CLASS_NAME );
 			}
