@@ -684,17 +684,6 @@ $2',
 Сез серсүзегезне үзгәрткән яисә яңа вакытлы серсүз сораткан булырга мөмкинсез.',
 'resetpass-temp-password'   => 'Вакытлы серсүз:',
 
-# Special:PasswordReset
-'passwordreset'              => 'Серсүзне бетерү',
-'passwordreset-text'         => 'Сезнең хисап язмасының параметрлары турында хат алыр өчен, түбәндәгеләрне тутырыгыз',
-'passwordreset-legend'       => 'Серсүзне яңадан кую',
-'passwordreset-disabled'     => 'Бу викида серсүз бетереп булмый',
-'passwordreset-username'     => 'Кулланучы исеме:',
-'passwordreset-domain'       => 'Домен:',
-'passwordreset-email'        => 'E-mail адресы',
-'passwordreset-emailelement' => 'Кулланучы исеме: $1
-Вакытлыча серсүз: $2',
-
 # Special:ChangeEmail
 'changeemail-newemail' => 'Яңа электрон почта адресы:',
 'changeemail-none'     => '(юк)',

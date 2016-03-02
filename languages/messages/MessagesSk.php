@@ -773,44 +773,6 @@ Prosím, počkajte predtým, než to skúsite znova.',
 Je možné, že sa vám už podarilo úspešne zmeniť svoje heslo alebo ste si vyžiadali nové dočasné heslo.',
 'resetpass-temp-password' => 'Dočasné heslo:',
 
-# Special:PasswordReset
-'passwordreset' => 'Reset hesla',
-'passwordreset-text' => 'Po vyplnení tohto formulára dostanete emailom podrobnosti o vašom účte.',
-'passwordreset-legend' => 'Obnoviť heslo',
-'passwordreset-disabled' => 'Obnovenie hesla bolo na tejto wiki zakázané.',
-'passwordreset-pretext' => '{{PLURAL:$1|Zadajte nižšie uvedený údaj|Zadajte jeden z nižšie uvedených údajov}}',
-'passwordreset-username' => 'Používateľské meno:',
-'passwordreset-domain' => 'Doména:',
-'passwordreset-capture' => 'Zobraziť výsledný e-mail?',
-'passwordreset-capture-help' => 'Ak označíte toto políčko, bude e-mail (s dočasným heslom) okrem zaslania používateľovi zobrazený aj vám.',
-'passwordreset-email' => 'Emailová adresa:',
-'passwordreset-emailtitle' => 'Podrobnosti o účte na {{GRAMMAR:lokál|{{SITENAME}}}}',
-'passwordreset-emailtext-ip' => 'Niekto (pravdepodobne vy z IP adresy $1) požiadal pripomenutie podrobností o vašom
-účtu na {{GRAMMAR:genitív|{{SITENAME}}}} ($4). {{PLURAL:$3|Nasledujúci používateľský účet je spojený|Nasledujúce používateľské účty sú spojené}}
-s touto emailovou adresou:
-
-$2
-
-{{PLURAL:$3|Platnosť tohto dočasného hesla vyprší|Platnosť týchto dočasných hesiel vyprší}} o {{PLURAL:$5|jeden deň|$5 dni|$5 dní}}.
-Mali by ste sa prihlásiť teraz a zvoliť nové heslo. Ak túto žiadosť podal niekto iný alebo
-ak ste si spomenuli svoje pôvodné heslo a už ho chcete zmeniť, môžete túto správu
-ignorovať a ďalej používať vaše staré heslo.',
-'passwordreset-emailtext-user' => 'Používateľ $1 na {{GRAMMAR:genitív|{{SITENAME}}}} požiadal pripomenutie podrobností o vašom
-účtu na {{GRAMMAR:genitív|{{SITENAME}}}} ($4). {{PLURAL:$3|Nasledujúci používateľský účet je spojený|Nasledujúce používateľské účty sú spojené}}
-s touto emailovou adresou:
-
-$2
-
-{{PLURAL:$3|Platnosť tohto dočasného hesla vyprší|Platnosť týchto dočasných hesiel vyprší}} o {{PLURAL:$5|jeden deň|$5 dni|$5 dní}}.
-Mali by ste sa prihlásiť teraz a zvoliť nové heslo. Ak túto žiadosť podal niekto iný alebo
-ak ste si spomenuli svoje pôvodné heslo a už ho chcete zmeniť, môžete túto správu
-ignorovať a ďalej používať vaše staré heslo.',
-'passwordreset-emailelement' => 'Používateľské meno: $1
-Dočasné heslo:$2',
-'passwordreset-emailsent' => 'Email s heslom bol odoslaný.',
-'passwordreset-emailsent-capture' => 'Bol vytvorený pripomienkový e-mail, ktorý je zobrazený nižšie.',
-'passwordreset-emailerror-capture' => 'Bol vytvorený pripomienkový e-mail, ktorý je zobrazený nižšie, ale nepodarilo sa ho odoslať používateľovi: $1',
-
 # Special:ChangeEmail
 'changeemail' => 'Zmena e-mailovej adresy',
 'changeemail-header' => 'Zmena e-mailovej adresy pre účet',

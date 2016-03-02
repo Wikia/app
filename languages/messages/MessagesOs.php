@@ -379,12 +379,6 @@ $messages = array(
 'resetpass-submit-cancel'   => 'Ныууадзын',
 'resetpass-temp-password'   => 'Рæстæгмæ пароль:',
 
-# Special:PasswordReset
-'passwordreset-username'     => 'Архайæджы ном:',
-'passwordreset-email'        => 'Электрон посты адрис:',
-'passwordreset-emailelement' => 'Архайæджы ном: $1
-Рæстæгмæ пароль: $2',
-
 # Special:ChangeEmail
 'changeemail-cancel' => 'Ныууадзын',
 

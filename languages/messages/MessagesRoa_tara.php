@@ -532,37 +532,6 @@ Pe spiccià 'a procedure de collegamende, tu a 'mbostà 'na password nove aqquà
 Pò essere ca tu è già cangete 'a password toje o è richieste una temboranea nove.",
 'resetpass-temp-password'   => 'Password temboranea:',
 
-# Special:PasswordReset
-'passwordreset'                    => "Azzere 'a passuord",
-'passwordreset-text'               => "Comblete stu module pe avè 'na mail pe arrecurdarte le dettaglie d'u cunde tune.",
-'passwordreset-legend'             => "Azzere 'a passuord",
-'passwordreset-disabled'           => "'U reset de le passuord ha state desabbilitate sus a sta uicchi.",
-'passwordreset-pretext'            => '{{PLURAL:$1||Mitte une de le stuèzze de le date aqquà sotte}}',
-'passwordreset-username'           => 'Nome utende:',
-'passwordreset-domain'             => 'Dominie:',
-'passwordreset-capture'            => "Vide 'a mail resultande?",
-'passwordreset-capture-help'       => "Ce tu signe sta sckatele, 'a mail (cu 'a passuord temboranèe) t'avène fatte vedè cumme adda essere mannate a l'utende.",
-'passwordreset-email'              => 'Indirizze e-mail:',
-'passwordreset-emailtitle'         => "Dettaglie d'u cunde utende sus a {{SITENAME}}",
-'passwordreset-emailtext-ip'       => "Quacchedune (pò essere tu, da 'u 'ndirizze IP $1) ha richieste 'na mail pe arrecurdarse de le dettaglie d'u cunde sue pe {{SITENAME}} ($4). {{PLURAL:$3|'U cunde utende seguende jè|le cunde utinde seguende sonde}} associate cu st'indirizze e-mail:
-
-$2
-
-{{PLURAL:$3|Sta passuord temboranèe scade|Ste passuord temboranèe scadene}}  'mbrà {{PLURAL:$5|'nu sciurne|$5 sciurne}}.
-Tu avissa trasè e scacchià 'na passuord nova. Ce quacchedun'otre ha fatte sta richieste, o ce tu t'è arrecurdate 'a passuord origgenale toje, e non g'a vuè ccu cange cchiù, tu puè ignorà stu messagge e condinuà ausanne 'a passuord vecchie.",
-'passwordreset-emailtext-user'     => "L'utende $1 sus a {{SITENAME}} ave richieste 'na mail pe arrecurdarse le dettaglie d'u cunde sue pe {{SITENAME}}
-($4). {{PLURAL:$3|'U cunde utende seguende jè|le cunde utinde seguende sonde}} associate cu st'indirizze e-mail:
-
-$2
-
-{{PLURAL:$3|Sta passuord temboranèe scade|Ste passuord temboranèe scadene}}  'mbrà {{PLURAL:$5|'nu sciurne|$5 sciurne}}.
-Tu avissa trasè e scacchià 'na passuord nova. Ce quacchedun'otre ha fatte sta richieste, o ce tu t'è arrecurdate 'a passuord origgenale toje, e non g'a vuè ccu cange cchiù, tu puè ignorà stu messagge e condinuà ausanne 'a passuord vecchie.",
-'passwordreset-emailelement'       => 'Nome utende: $1<br />
-Passuord temboranèe: $2',
-'passwordreset-emailsent'          => "'N'e-mail pe arrecurdarte ha state mannate.",
-'passwordreset-emailsent-capture'  => "'Na e-mail de promemorie ha state mannate, ca jè fatte vedè aqquà sotte.",
-'passwordreset-emailerror-capture' => "'Na e-mail de promemorie ha state generate, ca jè fatte vedè aqquà sotte, ma 'u 'nvie a l'utende ha fallite: $1",
-
 # Special:ChangeEmail
 'changeemail'          => "Cange 'u 'ndirizze e-mail",
 'changeemail-header'   => "Cange 'u 'ndirizze e-mail d'u cunde",

@@ -792,34 +792,6 @@ Várj egy kicsit, mielőtt újra próbálkozol.',
 Lehet, hogy már sikeresen megváltoztattad a jelszavad, vagy pedig időközben új ideiglenes jelszót kértél.',
 'resetpass-temp-password'   => 'Ideiglenes jelszó:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Jelszó beállítása',
-'passwordreset-text'               => 'Az alábbi űrlap kitöltése után egy értesítő e-mailt kapsz a fiók adataival.',
-'passwordreset-legend'             => 'Új jelszó kérése',
-'passwordreset-disabled'           => 'Új jelszó kérése nem engedélyezett ezen a wikin.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Írd be az alábbi adatok egyikét}}',
-'passwordreset-username'           => 'Felhasználónév:',
-'passwordreset-domain'             => 'Tartomány:',
-'passwordreset-capture'            => 'Meg szeretnéd nézni az elkészült üzenetet?',
-'passwordreset-capture-help'       => 'Ha kipipálod a dobozt, amellett, hogy kiküldődik az üzenet a felhasználónak, megjelenik számodra (az ideiglenes jelszavakkal együtt)',
-'passwordreset-email'              => 'E-mail cím:',
-'passwordreset-emailtitle'         => 'A(z) {{SITENAME}}-fiók adatai',
-'passwordreset-emailtext-ip'       => 'Valaki (vélhetően Te, a $1 IP-címrő)l emlékeztetők kért a {{SITENAME}} ($4) oldalon felvett fiókokról. A következő felhasználói {{PLURAL:$3|fiók van|fiókok vannak}} hozzárendelve ehhez az e-mail címhez:
-
-$2
-
-{{PLURAL:$3|Ez az ideiglenes jelszó|Ezek az ideiglenes jelszavak}} $5 nap múlva {{PLURAL:$3|jár|járnak}} le. Jelentkezz be, és cseréld le a jelszavadat. Ha valaki más kérte az emlékeztetőt, vagy eszedbe jutott a régi jelszó, és nem akarod lecserélni a jelszavadat, hagyd figyelmen kívül ezt az üzenetet, és használd a régi jelszavadat.',
-'passwordreset-emailtext-user'     => '$1 felhasználó emlékeztetők kért a {{SITENAME}} ($4) oldalon felvett fiókokról. A következő felhasználói {{PLURAL:$3|fiók van|fiókok vannak}} hozzárendelve ehhez az e-mail címhez:
-
-$2
-
-{{PLURAL:$3|Ez az ideiglenes jelszó|Ezek az ideiglenes jelszavak}} $5 nap múlva {{PLURAL:$3|jár|járnak}} le. Jelentkezz be, és cseréld le a jelszavadat. Ha valaki más kérte az emlékeztetőt, vagy eszedbe jutott a régi jelszó, és nem akarod lecserélni a jelszavadat, hagyd figyelmen kívül ezt az üzenetet, és használd a régi jelszavadat.',
-'passwordreset-emailelement'       => 'Felhaználónév: $1
-Ideiglenes jelszó: $2',
-'passwordreset-emailsent'          => 'Emlékeztető e-mail elküldve.',
-'passwordreset-emailsent-capture'  => 'Az alább látható emlékeztető e-mail elküldve.',
-'passwordreset-emailerror-capture' => 'Az emlékeztető levél generálása megtörtént, mint az alább látszik, de elküldése a szerkesztőnek nem sikerült: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'E-mail cím megváltoztatása',
 'changeemail-header'   => 'A fiókhoz tartozó e-mail cím megváltoztatása',

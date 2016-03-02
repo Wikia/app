@@ -196,7 +196,11 @@ module.exports = function (config) {
 
 			// PageShare
 			'extensions/wikia/PageShare/scripts/PageShare.js',
-			'extensions/wikia/PageShare/scripts/spec/PageShare.spec.js'
+			'extensions/wikia/PageShare/scripts/spec/PageShare.spec.js',
+
+			// Recirculation
+			'extensions/wikia/Recirculation/js/*.js',
+			'extensions/wikia/Recirculation/js/spec/**/*.spec.js'
 		]
 	});
 };

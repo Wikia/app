@@ -450,9 +450,6 @@ Voluntez enirar altrafoye pos recevar ol.',
 'resetpass-submit-loggedin' => 'Chanjar pasovorto',
 'resetpass-temp-password'   => 'Provizora pasovorto:',
 
-# Special:PasswordReset
-'passwordreset-username' => 'Uzantonomo:',
-
 # Edit page toolbar
 'bold_sample'     => 'Dika literi',
 'bold_tip'        => 'Dika literi',

@@ -66,7 +66,6 @@ $wgAutoloadClasses[ 'ApiPortableInfobox' ] = $dir . 'controllers/ApiPortableInfo
 $wgAutoloadClasses[ 'ApiQueryPortableInfobox' ] = $dir . 'controllers/ApiQueryPortableInfobox.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxHooks' ] = $dir . 'PortableInfoboxHooks.class.php';
 $wgAutoloadClasses[ 'ApiQueryAllinfoboxes' ] = $dir . 'controllers/ApiQueryAllinfoboxes.class.php';
-$wgAutoloadClasses[ 'PortableInfoboxBuilderController' ] = $dir . 'controllers/PortableInfoboxBuilderController.class.php';
 
 // query pages
 $wgAutoloadClasses[ 'AllinfoboxesQueryPage' ] = $dir . 'querypage/AllinfoboxesQueryPage.php';

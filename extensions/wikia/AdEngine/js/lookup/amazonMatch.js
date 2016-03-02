@@ -1,23 +1,25 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.amazonMatch', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (factory, doc, log, win) {
+], function (adContext, factory, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.amazonMatch',
 		config = {
 			oasis: {
+				HOME_TOP_LEADERBOARD: ['7x9', '9x2'],
+				HOME_TOP_RIGHT_BOXAD: ['3x2', '3x6'],
+				HUB_TOP_LEADERBOARD: ['7x9', '9x2'],
+				HUB_TOP_RIGHT_BOXAD: ['3x2', '3x6'],
+				INCONTENT_BOXAD_1: ['3x2', '1x6', '3x6'],
 				LEFT_SKYSCRAPER_2: ['1x6', '3x6'],
 				LEFT_SKYSCRAPER_3: ['1x6', '3x6'],
-				TOP_RIGHT_BOXAD: ['3x2', '3x6'],
-				HOME_TOP_RIGHT_BOXAD: ['3x2', '3x6'],
-				HUB_TOP_RIGHT_BOXAD: ['3x2', '3x6'],
 				TOP_LEADERBOARD: ['7x9', '9x2'],
-				HOME_TOP_LEADERBOARD: ['7x9', '9x2'],
-				HUB_TOP_LEADERBOARD: ['7x9', '9x2']
+				TOP_RIGHT_BOXAD: ['3x2', '3x6']
 			},
 			mercury: {
 				MOBILE_IN_CONTENT: ['3x2'],
@@ -36,6 +38,10 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			node = doc.getElementsByTagName('script')[0];
 
 		slots = config[skin];
+
+		if (adContext.getContext().opts.overridePrefootersSizes) {
+			slots.PREFOOTER_LEFT_BOXAD = ['3x2', '7x9', '9x2'];
+		}
 
 		amznMatch.type = 'text/javascript';
 		amznMatch.src = 'http://c.amazon-adsystem.com/aax2/amzn_ads.js';

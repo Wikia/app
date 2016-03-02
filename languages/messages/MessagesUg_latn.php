@@ -100,9 +100,6 @@ $messages = array(
 'gotaccountlink'     => 'Kirish',
 'loginlanguagelabel' => 'Til: $1',
 
-# Special:PasswordReset
-'passwordreset-username' => 'Ishletkuchi ismi:',
-
 # Edit pages
 'summary'      => 'Hulasa:',
 'minoredit'    => 'Bu Kichik Uzgartish',

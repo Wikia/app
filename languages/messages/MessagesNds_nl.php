@@ -792,38 +792,6 @@ Je mutten effen wachten veurda'j t opniej proberen kunnen.",
 Misschien he'j t wachtwoord al ewiezigd of n niej veurlopig wachtwoord an-evreugen.",
 'resetpass-temp-password'   => 'Veurlopig wachtwoord:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Wachtwoord opniej instellen',
-'passwordreset-text'               => 'Vul dit formulier in zoda-w joe netpost kunnen sturen mit de gebrukersgegevens.',
-'passwordreset-legend'             => 'Wachtwoord opniej instellen',
-'passwordreset-disabled'           => 'Je kunnen op disse wiki joew wachtwoord niet opniej instellen.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Voer één van de onderstaonde velden in}}',
-'passwordreset-username'           => 'Gebruker:',
-'passwordreset-domain'             => 'Domein:',
-'passwordreset-capture'            => 'De resulterende netpost bekieken?',
-'passwordreset-capture-help'       => "A'j dit vakjen anvinken, dan krie'j t netpostbericht (mit t tiedelike wachtwoord) te zien en t wörden naor de gebruker estuurd.",
-'passwordreset-email'              => 'Netpostadres:',
-'passwordreset-emailtitle'         => 'Gebrukersgegevens op {{SITENAME}}',
-'passwordreset-emailtext-ip'       => "Der hef der ene, warschienlik jie zelf, gebrukersgegevens veur {{SITENAME}} ($4) op-evreugen vanaof t IP-adres $1.
-De volgende {{PLURAL:$3|gebruker is|gebrukers bin}} ekoppeld an dit netpostadres:
-
-$2
-
-{{PLURAL:$3|Dit tiedelike wachtwoord vervuilt|Disse tiedelike wachtwoorden vervallen}} over {{PLURAL:$5|één dag|$5 dagen}}.
-Meld je eigen noen an en wiezig t wachtwoord. A'j dit verzeuk niet zelf edaon hebben, of a'j t oorspronkelike wachtwoord nog kennen en t niet wiezigen willen, negeer dit bericht dan en blief joew ouwe wachtwoord gebruken.",
-'passwordreset-emailtext-user'     => "De gebruker $1 van {{SITENAME}} hef joew gebrukersgegevens veur {{SITENAME}} ($4) op-evreugen vanaof t IP-adres $1.
-De volgende {{PLURAL:$3|gebruker is|gebrukers bin}} ekoppeld an dit netpostadres:
-
-$2
-
-{{PLURAL:$3|Dit tiedelike wachtwoord vervuilt|Disse tiedelike wachtwoorden vervallen}} over {{PLURAL:$5|één dag|$5 dagen}}.
-Meld je eigen noen an en wiezig t wachtwoord. A'j dit verzeuk niet zelf edaon hebben, of a'j t oorspronkelike wachtwoord nog kennen en t niet wiezigen willen, negeer dit bericht dan en blief joew ouwe wachtwoord gebruken.",
-'passwordreset-emailelement'       => 'Gebrukersnaam: $1
-Tiedelik wachtwoord: $2',
-'passwordreset-emailsent'          => 'Der is per netpost n herinnering verstuurd.',
-'passwordreset-emailsent-capture'  => "Der is n herinneringsbericht verstuurd. Dit ku'j hieronder lezen.",
-'passwordreset-emailerror-capture' => "Der is n herinneringsbericht an-emaakt. Dit ku'j hieronder lezen. t Versturne naor de gebruker is mislokt um de volgende reden: $1",
-
 # Special:ChangeEmail
 'changeemail'          => 'Wiezig netpostadres',
 'changeemail-header'   => 'Netpostadres wiezigen',

@@ -75,6 +75,7 @@ $wgAutoloadLocalClasses = array(
 	'ErrorPageError' => 'includes/Exception.php',
 	'ExplodeIterator' => 'includes/StringUtils.php',
 	'ExternalEdit' => 'includes/ExternalEdit.php',
+	'ExternalHttp' => 'includes/HttpFunctions.php', # Wikia change
 	'ExternalStore' => 'includes/ExternalStore.php',
 	'ExternalStoreDB' => 'includes/ExternalStoreDB.php',
 	'ExternalStoreHttp' => 'includes/ExternalStoreHttp.php',
