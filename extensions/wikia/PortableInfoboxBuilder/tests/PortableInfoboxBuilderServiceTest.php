@@ -61,7 +61,7 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 
 	public function infoboxArrayValidityDataProvider() {
 		return [
-			[ [], true, 'Empty infobox array is not valid' ],
+			[ [], true, 'Empty infobox array is valid' ],
 			[ [ '<infobox><data source="source1"></data></infobox>' ], true, 'Single infobox array is valid' ],
 			[ [ '<infobox><data source="source1"></data></infobox>', '<infobox><data source="source2"></data></infobox>' ], false, 'Multi- infobox array is not valid' ],
 		];
