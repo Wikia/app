@@ -1,7 +1,6 @@
 <?php
 namespace Wikia\ExactTarget;
 
-use Wikia\ExactTarget\ResourceEnum as Enum;
 use Wikia\Tasks\Tasks\BaseTask;
 use Wikia\Util\Assert;
 
