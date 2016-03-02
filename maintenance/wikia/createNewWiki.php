@@ -34,13 +34,13 @@ class CreateNewWiki extends Maintenance {
 		$newWiki = new CreateWiki($wikiName, $wikiDomain, $wikiLanguage, $wikiVertical, $wikiCategories);
 		$newWiki->create();
 
-		$cityId = $newWiki->getWikiInfo( 'city_id' );
+		$wikiId = $newWiki->getWikiInfo( 'city_id' );
 		echo( <<<EOT
 Created new wiki:
 
 	Name: {$wikiName}
 	Domain: {$wikiDomain}
-	ID: {$cityId}
+	ID: {$wikiId}
 
 EOT
 		);

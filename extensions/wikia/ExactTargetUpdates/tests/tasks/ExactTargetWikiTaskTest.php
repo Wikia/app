@@ -9,9 +9,9 @@ class ExactTargetWikiTaskTest extends WikiaBaseTest {
 
 	/**
 	 * @expectedException \Wikia\Util\AssertionException
-	 * @expectedExceptionMessage City ID missing
+	 * @expectedExceptionMessage Wiki ID missing
 	 */
-	public function testShouldThrowExceptionWhenUpdatingWikiWithoutCityId() {
+	public function testShouldThrowExceptionWhenUpdatingWikiWithoutWikiId() {
 		$clientMock = $this->prepareClientMock();
 		$task = $this->getWikiTask($clientMock);
 

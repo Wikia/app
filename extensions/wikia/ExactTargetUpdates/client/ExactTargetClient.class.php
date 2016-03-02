@@ -145,29 +145,29 @@ class ExactTargetClient {
 		return $this->sendRequest( self::UPDATE_CALL, $request );
 	}
 
-	public function updateWiki( $cityId, array $cityData ) {
+	public function updateWiki( $wikiId, array $wikiData ) {
 		$request = ExactTargetRequestBuilder::getWikiUpdateBuilder()
-			->withCityData( $cityId, $cityData )
+			->withWikiData( $wikiId, $wikiData )
 			->build();
 
 		return $this->sendRequest( self::UPDATE_CALL, $request );
 	}
 
-	public function retrieveWikiCategories( $cityId ) {
+	public function retrieveWikiCategories( $wikiId ) {
 		$result = $this->retrieve(
-			[ Enum::WIKI_CITY_ID, Enum::WIKI_CAT_ID ],
-			Enum::WIKI_CITY_ID,
-			[ $cityId ],
-			Enum::CUSTOMER_KEY_WIKI_CITY_CAT_MAPPING
+			[ Enum::WIKI_ID, Enum::WIKI_CAT_ID ],
+			Enum::WIKI_ID,
+			[ $wikiId ],
+			Enum::CUSTOMER_KEY_WIKI_CAT_MAPPING
 		);
 
 		return ( new WikiCategoriesAdapter( $result ) )->getCategoriesMapping();
 	}
 
-	public function updateWikiCatMapping( $cityId, array $categories ) {
+	public function updateWikiCatMapping( $wikiId, array $categories ) {
 		$request = ExactTargetRequestBuilder::getWikiCatMappingUpdateBuilder()
-			->withCityId( $cityId )
-			->withCategories( $categories )
+			->withWikiId( $wikiId )
+			->withWikiCategories( $categories )
 			->build();
 
 		return $this->sendRequest( self::UPDATE_CALL, $request );

@@ -29,13 +29,13 @@ class WikiCategoriesAdapter {
 
 	private function extractCategoriesMapping( array $property ) {
 		foreach ( $property as $value ) {
-			if ( $value->Name === Enum::WIKI_CITY_ID ) {
-				$cityId = $value->Value;
+			if ( $value->Name === Enum::WIKI_ID ) {
+				$wikiId = $value->Value;
 			}
 			if ( $value->Name === Enum::WIKI_CAT_ID ) {
 				$catId = $value->Value;
 			}
 		}
-		$this->mapping[ $cityId ][ ] = $catId;
+		$this->mapping[ $wikiId ][ ] = $catId;
 	}
 }

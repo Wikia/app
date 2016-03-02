@@ -7,11 +7,11 @@ use Wikia\ExactTarget\ResourceEnum as Enum;
 class UpdateRequestBuilder extends BaseRequestBuilder {
 	const SAVE_OPTION_TYPE = 'SaveOption';
 
-	private $categories = [];
-	private $cityId;
-	private $cityData;
 	private $userData;
 	private $edits;
+	private $wikiCategories = [];
+	private $wikiId;
+	private $wikiData;
 
 	private static $supportedTypes = [
 		self::PROPERTIES_TYPE,
@@ -21,19 +21,19 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 		self::WIKI_CAT_TYPE
 	];
 
-	public function withCategories( $categories ) {
-		$this->categories = $categories;
+	public function withWikiCategories( $categories ) {
+		$this->wikiCategories = $categories;
 		return $this;
 	}
 
-	public function withCityId( $cityId ) {
-		$this->cityId = $cityId;
+	public function withWikiId( $wikiId ) {
+		$this->wikiId = $wikiId;
 		return $this;
 	}
 
-	public function withCityData( $cityId, array $cityData ) {
-		$this->cityData = $cityData;
-		$this->cityId = $cityId;
+	public function withWikiData( $wikiId, array $wikiData ) {
+		$this->wikiData = $wikiData;
+		$this->wikiId = $wikiId;
 		return $this;
 	}
 
@@ -63,7 +63,7 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 				$objects = $this->prepareUserEditsParams( $this->edits );
 				break;
 			case self::WIKI_TYPE:
-				$objects = $this->prepareWikiParams( $this->cityData );
+				$objects = $this->prepareWikiParams( $this->wikiData );
 				break;
 			case self::WIKI_CAT_TYPE:
 				$objects = $this->prepareWikiCatMapping();
@@ -130,16 +130,16 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 		return $result;
 	}
 
-	private function prepareWikiParams( $cityData ) {
-		return [ $this->prepareDataObject( Enum::CUSTOMER_KEY_WIKI_CITY_LIST,
-			[ Enum::WIKI_CITY_ID => $this->cityId ], $cityData ) ];
+	private function prepareWikiParams( $wikiData ) {
+		return [ $this->prepareDataObject( Enum::CUSTOMER_KEY_WIKI_LIST,
+			[ Enum::WIKI_ID => $this->wikiId ], $wikiData ) ];
 	}
 
 	private function prepareWikiCatMapping() {
 		$objects = [ ];
-		foreach ( $this->categories as $category ) {
-			$objects[] = $this->prepareDataObject( Enum::CUSTOMER_KEY_WIKI_CITY_CAT_MAPPING,
-				[ ], [ Enum::WIKI_CITY_ID => $this->cityId, Enum::WIKI_CAT_ID => $category[ 'cat_id' ] ] );
+		foreach ($this->wikiCategories as $category ) {
+			$objects[] = $this->prepareDataObject( Enum::CUSTOMER_KEY_WIKI_CAT_MAPPING,
+				[ ], [ Enum::WIKI_ID => $this->wikiId, Enum::WIKI_CAT_ID => $category[ 'cat_id' ] ] );
 		}
 
 		return $objects;

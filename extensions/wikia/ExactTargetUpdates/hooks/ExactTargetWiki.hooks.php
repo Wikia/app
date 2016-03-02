@@ -6,15 +6,15 @@ class ExactTargetWikiHooks {
 	/**
 	 * Runs a method adding an AddWikiTask to job queue.
 	 * Executed on CreateWikiLocalJob-complete hook.
-	 * @param  array $cityData  Must contain a city_id key
+	 * @param  array $wikiData  Must contain a city_id key
 	 * @return true
 	 */
-	public function onCreateWikiLocalJobComplete( Array $cityData ) {
-		$cityId = $cityData['city_id'];
+	public function onCreateWikiLocalJobComplete( Array $wikiData ) {
+		$wikiId = $wikiData['city_id'];
 		/* Get and run the tasks */
-		$this->queueUpdateWikiTask( $cityId );
+		$this->queueUpdateWikiTask( $wikiId );
 		$task = new ExactTargetWikiTask();
-		$task->call( 'updateWikiCatMapping', $cityId );
+		$task->call( 'updateWikiCatMapping', $wikiId );
 		$task->queue();
 
 		return true;
@@ -113,11 +113,11 @@ class ExactTargetWikiHooks {
 	/**
 	 * Adds update wiki task to queue
 	 *
-	 * @param int $iCityId
+	 * @param int $wikiId
 	 */
-	private function queueUpdateWikiTask( $iCityId ) {
+	private function queueUpdateWikiTask( $wikiId ) {
 		$task = new ExactTargetWikiTask();
-		$task->call( 'updateWiki', $iCityId );
+		$task->call( 'updateWiki', $wikiId );
 		$task->queue();
 	}
 

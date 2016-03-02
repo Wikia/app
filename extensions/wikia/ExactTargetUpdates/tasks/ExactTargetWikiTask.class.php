@@ -16,30 +16,30 @@ class ExactTargetWikiTask extends BaseTask {
 
 	/**
 	 * Update wiki or create if doesn't exist
-	 * @param int $iCityId
+	 * @param int $wikiId
 	 * @return string
 	 * @throws \Wikia\Util\AssertionException
 	 */
-	public function updateWiki( $iCityId ) {
-		Assert::true( !empty( $iCityId ), 'City ID missing' );
+	public function updateWiki( $wikiId ) {
+		Assert::true( !empty( $wikiId ), 'Wiki ID missing' );
 
 		$client = $this->getClient();
 
 		/* Update or create Wiki in external service */
-		$client->updateWiki( $iCityId, $this->getWikiData( $iCityId ) );
+		$client->updateWiki( $wikiId, $this->getWikiData( $wikiId ) );
 
 		return self::STATUS_OK;
 	}
 
-	public function updateWikiCatMapping( $iCityId ) {
-		Assert::true( !empty( $iCityId ), 'City ID missing' );
+	public function updateWikiCatMapping( $wikiId ) {
+		Assert::true( !empty( $wikiId ), 'Wiki ID missing' );
 
 		$client = $this->getClient();
 		$oWikiFactoryHub = new \WikiFactoryHub();
-		$aCategories = $oWikiFactoryHub->getWikiCategories( $iCityId );
+		$aCategories = $oWikiFactoryHub->getWikiCategories( $wikiId );
 
 		/* Update or create Wiki in external service */
-		$client->updateWikiCatMapping( $iCityId, $aCategories );
+		$client->updateWikiCatMapping( $wikiId, $aCategories );
 
 		return self::STATUS_OK;
 	}
@@ -51,9 +51,9 @@ class ExactTargetWikiTask extends BaseTask {
 		return $this->client;
 	}
 
-	private function getWikiData( $cityId ) {
+	private function getWikiData( $wikiId ) {
 		/* Get wikidata from master */
-		$oWiki = \WikiFactory::getWikiById( $cityId, true );
+		$oWiki = \WikiFactory::getWikiById( $wikiId, true );
 
 		return [
 			'city_path' => $oWiki->city_path,
