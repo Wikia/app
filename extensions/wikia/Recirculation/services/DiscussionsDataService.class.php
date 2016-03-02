@@ -19,14 +19,17 @@ class DiscussionsDataService {
 		$rawPosts = WikiaDataAccess::cache(
 			$memcKey,
 			WikiaResponse::CACHE_VERY_SHORT,
-			function() use ( $type ) {
-				return $this->apiRequest( $type );
+			function() {
+				return $this->apiRequest();
 			}
 		);
 
 		$posts = [];
-		foreach ($rawPosts as $key => $value) {
-			$posts[] = $this->buildPost($value);
+
+		if ( is_array( $rawPosts ) && count( $rawPosts ) > 0 ) {
+			foreach ( $rawPosts as $key => $value ) {
+				$posts[] = $this->buildPost( $value );
+			}
 		}
 
 		return $posts;

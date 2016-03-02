@@ -83,17 +83,7 @@
 
 .pi-collapse {
 	.pi-header {
-		@include right-chevron($infobox-chevron-size, 2px, 'up', $color-text);
-		padding-right: $infobox-item-margin * 3 + $infobox-chevron-size;
-		position: relative;
-
-		&:after {
-			display: block;
-			margin-top: -($infobox-chevron-size / 2) + 2;
-			position: absolute;
-			right: $infobox-item-margin * 2;
-			top: 50%;
-		}
+		@include collapsibleChevron;
 	}
 }
 
