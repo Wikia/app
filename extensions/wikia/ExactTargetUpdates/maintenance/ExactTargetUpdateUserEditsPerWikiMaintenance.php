@@ -12,8 +12,9 @@
 
 require_once( __DIR__.'/../../../../maintenance/Maintenance.php' );
 
-class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
+use Wikia\ExactTarget\ExactTargetClient;
 
+class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 
 	/**
 	 * Maintenance script entry point.
@@ -65,7 +66,7 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 	}
 
 	private function addEditsUpdateTasks( $aUsersEditsData ) {
-		$aUsersEditsData = array_chunk( $aUsersEditsData, \Wikia\ExactTarget\ExactTargetApiDataExtension::OBJECTS_PER_REQUEST_LIMIT, true );
+		$aUsersEditsData = array_chunk( $aUsersEditsData, ExactTargetClient::OBJECTS_PER_REQUEST_LIMIT, true );
 		foreach ( $aUsersEditsData as $aUsersEditsDataChunk ) {
 			$aUsersEditsData = $this->prepareDataFormat( $aUsersEditsDataChunk );
 			$this->addEditsUpdateTask( $aUsersEditsData );

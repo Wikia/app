@@ -2,7 +2,6 @@
 namespace Wikia\ExactTarget;
 
 use Predis\Transaction\AbortedMultiExecException;
-use SebastianBergmann\Exporter\Exception;
 use Wikia\Logger\Loggable;
 use Wikia\ExactTarget\ResourceEnum as Enum;
 
@@ -18,6 +17,8 @@ class ExactTargetClient {
 	const EXACT_TARGET_LABEL = 'ExactTarget client';
 	const EXACT_TARGET_REQUEST_FAILED = 'Request failed';
 	const RETRIES_LIMIT = 1;
+
+	const OBJECTS_PER_REQUEST_LIMIT = 2500;
 
 	private $client;
 

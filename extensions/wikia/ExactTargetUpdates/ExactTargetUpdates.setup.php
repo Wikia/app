@@ -59,11 +59,6 @@ $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetUserUpdateDriver' ] = $dir . '
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetUserTask' ] = $dir . '/tasks/ExactTargetUserTask.class.php';
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetWikiTask' ] = $dir . '/tasks/ExactTargetWikiTask.class.php';
 
-/* Add API classes */
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetApi' ] = $dir . '/api/ExactTargetApi.php';
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetApiDataExtension' ] = $dir . '/api/ExactTargetApiDataExtension.php';
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetApiHelper' ] = $dir . '/api/ExactTargetApiHelper.php';
-
 /* Client classes */
 $wgAutoloadClasses[ 'ExactTargetSoapClient' ] = $dir . '/lib/exacttarget_soap_client.php';
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetClient' ] = $dir . '/client/ExactTargetClient.class.php';
@@ -87,10 +82,6 @@ $wgAutoloadClasses[ 'Wikia\ExactTarget\WikiCategoriesAdapter' ] = $dir . '/clien
 
 /* Exceptions*/
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetException' ] = $dir . '/client/ExactTargetException.php';
-
-$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApiProvider'] =  $dir . '/lib/ExactTargetApiProvider.php' ;
-$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApiProviderImpl'] =  $dir . '/lib/ExactTargetApiProviderImpl.php' ;
-
 
 /* ExactTarget_* classes */
 
