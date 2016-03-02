@@ -35,8 +35,11 @@ class PortableInfoboxBuilderHooks {
 		$title = $skin->getTitle();
 
 		if ( $title && $title->isSpecial( PortableInfoboxBuilderSpecialController::PAGE_NAME ) ) {
+			// remove the special page name from the title and returl url to the template
+			// passed after the slash, i.e.
+			// Special:InfoboxBuilder/TemplateName/Subpage => Template:TemplateName/Subpage
 			$vars['templatePageUrl'] = Title::newFromText(
-				implode( '/', array_slice( explode( '/', $title->getSubpageText() ), 1 ) ),
+				implode( '/', array_slice( explode( '/', $title->getText() ), 1 ) ),
 				NS_TEMPLATE )->getFullUrl();
 		}
 
