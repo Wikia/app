@@ -182,6 +182,19 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		}
 	}
 
+	/**
+	 * @desc checks if infobox builder should be used instead of regular editor
+	 * @param {String} newTemplateType - choosen template type
+	 * @param {String} modalMode - mode in which modal was opened
+	 * @returns {Boolean}
+	 */
+	function shouldRedirectToInfoboxBuilder(newTemplateType, modalMode) {
+		return w.infoboxBuilderPath &&
+            w.isTemplateBodySupportedInfobox &&
+            newTemplateType === 'infobox' &&
+            modalMode !== forceClassificationModalMode;
+	}
+
 	function processSave(modalInstance) {
 		var newTemplateType = $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val();
 
@@ -207,22 +220,10 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			$('#wpSave').click();
 		} else if (shouldRedirectToInfoboxBuilder(newTemplateType, modalMode)) {
 			throbber.show(modalInstance.$content);
-			redirectToInfoboxBuilder(mw.config.get('wgTitle'));
+			redirectToInfoboxBuilder();
 		} else {
 			modalInstance.trigger('close');
 		}
-	}
-
-	/**
-	 * @desc checks if infobox builder should be used instead of regular editor
-	 * @param {String} newTemplateType - choosen template type
-	 * @param {String} modalMode - mode in which modal was opened
-	 * @returns {Boolean}
-	 */
-	function shouldRedirectToInfoboxBuilder(newTemplateType, modalMode) {
-		return w.isSupportedInfoboxTemplateBody &&
-			newTemplateType === 'infobox' &&
-			modalMode !== forceClassificationModalMode;
 	}
 
 	/**

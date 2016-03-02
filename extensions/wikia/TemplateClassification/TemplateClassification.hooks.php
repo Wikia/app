@@ -86,14 +86,6 @@ class Hooks {
 			&& $this->isEditPage()
 		) {
 			$aVars['enableTemplateClassificationEditorPlugin'] = true;
-			$aVars['isSupportedInfoboxTemplateBody'] =
-				( new \PortableInfoboxBuilderService() )->isValidInfoboxArray(
-					\PortableInfoboxDataService::newFromTitle( $title )->getInfoboxes()
-				);
-			$aVars['tcBodyClassName'] = self::TC_BODY_CLASS_NAME;
-			$aVars['infoboxBuilderPath'] = \SpecialPage::getTitleFor( 'InfoboxBuilder', $title->getText() )
-				->getFullURL();
-
 		}
 		return true;
 	}
@@ -105,7 +97,7 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onEditPageShowEditFormFields( \EditPage $editPage, \OutputPage $out ) {
-		global $wgCityId;
+		global $wgCityId, $wgEnablePortableInfoboxBuilderExt;
 
 		$context = \RequestContext::getMain();
 		$title = $context->getTitle();
@@ -119,8 +111,12 @@ class Hooks {
 				['autocomplete' => 'off'] ) );
 
 			// add additional class to body for new templates in order to hide editor while template classification
-			// modal is visible
-			if ( $title->getArticleID() === 0 && empty( $types['current'] && $types['new'] ) ) {
+			// modal is visible and builder is available
+			if (
+				$wgEnablePortableInfoboxBuilderExt
+				&& $title->getArticleID() === 0
+				&& empty( $types['current'] && $types['new'] )
+			) {
 				\OasisController::addBodyClass( self::TC_BODY_CLASS_NAME );
 			}
 		}

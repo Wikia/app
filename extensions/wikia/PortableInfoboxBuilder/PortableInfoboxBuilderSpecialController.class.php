@@ -59,7 +59,7 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 		$title = Title::newFromText($this->getPar(), NS_TEMPLATE);
 		$infoboxes = PortableInfoboxDataService::newFromTitle($title)->getInfoboxes();
 
-		if ( empty($infoboxes) || ( new PortableInfoboxBuilderService() )->isValidInfoboxArray( $infoboxes ) ) {
+		if ( ( new PortableInfoboxBuilderService() )->isValidInfoboxArray( $infoboxes ) ) {
 			return 'builder';
 		} else {
 			return 'sourceEditor';

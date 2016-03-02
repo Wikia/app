@@ -47,6 +47,31 @@ class PortableInfoboxBuilderHooks {
 		return true;
 	}
 
+
+	/**
+	 * Add global variables for Javascript
+	 * @param array $aVars
+	 * @return bool
+	 */
+	public function onEditPageMakeGlobalVariablesScript( array &$aVars ) {
+		$context = \RequestContext::getMain();
+		$title = $context->getTitle();
+		if (
+			( new \Wikia\TemplateClassification\Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $title )
+			&& \RequestContext::getMain()->getRequest()->getVal( 'action' ) === 'edit'
+		) {
+			$aVars['isTemplateBodySupportedInfobox'] =
+				( new \PortableInfoboxBuilderService() )->isValidInfoboxArray(
+					\PortableInfoboxDataService::newFromTitle( $title )->getInfoboxes()
+				);
+			$aVars['tcBodyClassName'] = \Wikia\TemplateClassification\Hooks::TC_BODY_CLASS_NAME;
+			$aVars['infoboxBuilderPath'] = \SpecialPage::getTitleFor( 'InfoboxBuilder', $title->getText() )
+				->getFullURL();
+
+		}
+		return true;
+	}
+
 	/**
 	 *
 	 * @param $page \Article|\Page
