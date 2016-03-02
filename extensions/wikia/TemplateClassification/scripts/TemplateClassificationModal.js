@@ -190,9 +190,9 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	 */
 	function shouldRedirectToInfoboxBuilder(newTemplateType, modalMode) {
 		return w.infoboxBuilderPath &&
-            w.isTemplateBodySupportedInfobox &&
-            newTemplateType === 'infobox' &&
-            modalMode !== forceClassificationModalMode;
+			w.isTemplateBodySupportedInfobox &&
+			newTemplateType === 'infobox' &&
+			modalMode !== forceClassificationModalMode;
 	}
 
 	function processSave(modalInstance) {
