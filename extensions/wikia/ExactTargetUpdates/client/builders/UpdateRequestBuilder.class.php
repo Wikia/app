@@ -60,7 +60,7 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 				$objects = $this->prepareWikiParams( $this->wikiData );
 				break;
 			case self::WIKI_CAT_TYPE:
-				$objects = $this->prepareWikiCatMapping();
+				$objects = $this->prepareWikiCategoriesMapping();
 				break;
 		}
 		// make it soap vars
@@ -129,7 +129,7 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 			[ Enum::WIKI_ID => $this->wikiId ], $wikiData ) ];
 	}
 
-	private function prepareWikiCatMapping() {
+	private function prepareWikiCategoriesMapping() {
 		$objects = [ ];
 		foreach ($this->wikiCategories as $category ) {
 			$objects[] = $this->prepareDataObject( Enum::CUSTOMER_KEY_WIKI_CAT_MAPPING,

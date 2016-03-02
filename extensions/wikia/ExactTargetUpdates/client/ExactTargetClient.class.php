@@ -164,13 +164,21 @@ class ExactTargetClient {
 		return ( new WikiCategoriesAdapter( $result ) )->getCategoriesMapping();
 	}
 
-	public function updateWikiCatMapping( $wikiId, array $categories ) {
-		$request = ExactTargetRequestBuilder::getWikiCatMappingUpdateBuilder()
+	public function updateWikiCategoriesMapping( $wikiId, array $categories ) {
+		$request = ExactTargetRequestBuilder::getWikiCategoriesMappingUpdateBuilder()
 			->withWikiId( $wikiId )
 			->withWikiCategories( $categories )
 			->build();
 
 		return $this->sendRequest( self::UPDATE_CALL, $request );
+	}
+
+	public function deleteWikiCategoriesMapping( $categories ) {
+		$request = ExactTargetRequestBuilder::getWikiCategoriesMappingDeleteBuilder()
+			->withWikiCategories( $categories )
+			->build();
+
+		return $this->sendRequest( self::DELETE_CALL, $request );
 	}
 
 	private function retrieve( array $properties, $filterProperty, array $filterValues, $resource ) {

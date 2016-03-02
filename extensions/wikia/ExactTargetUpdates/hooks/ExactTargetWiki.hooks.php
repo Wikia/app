@@ -13,9 +13,7 @@ class ExactTargetWikiHooks {
 		$wikiId = $wikiData['city_id'];
 		/* Get and run the tasks */
 		$this->queueUpdateWikiTask( $wikiId );
-		$task = new ExactTargetWikiTask();
-		$task->call( 'updateWikiCatMapping', $wikiId );
-		$task->queue();
+		$this->queueUpdateWikiCategoriesMapping( $wikiId );
 
 		return true;
 	}
@@ -47,14 +45,14 @@ class ExactTargetWikiHooks {
 	}
 
 	/**
-	 * Runs a method adding an UpdateCityCatMappingTask to job queue
+	 * Runs a method adding an UpdateWikiCategoriesMapping to job queue
 	 * on change in Hubs tab in WikiFactory.
 	 * Executed on CityCatMappingUpdated hook.
-	 * @param  array  $aParams  Must contain a city_id key
+	 * @param  array  $wikiData  Must contain a city_id key
 	 * @return true
 	 */
-	public function onCityCatMappingUpdated( Array $aParams ) {
-		$this->addTheUpdateCityCatMappingTask( $aParams );
+	public function onCityCatMappingUpdated( Array $wikiData ) {
+		$this->queueUpdateWikiCategoriesMapping( $wikiData['city_id'] );
 		return true;
 	}
 
@@ -74,17 +72,6 @@ class ExactTargetWikiHooks {
 
 	/**
 	 * Adds a task to job queue that sends a request
-	 * updating city_cat_mapping table.
-	 * @param  Array $aParams  Must contain a city_id key
-	 */
-	private function addTheUpdateCityCatMappingTask( Array $aParams ) {
-		$oTask = $this->getExactTargetUpdateCityCatMappingTask();
-		$oTask->call( 'updateCityCatMappingData', $aParams );
-		$oTask->queue();
-	}
-
-	/**
-	 * Adds a task to job queue that sends a request
 	 * deleting records from city_list and city_cat_mapping.
 	 * @param  Array $aParams  Must contain a city_id key
 	 */
@@ -92,14 +79,6 @@ class ExactTargetWikiHooks {
 		$oTask = $this->getExactTargetDeleteWikiTask();
 		$oTask->call( 'deleteWikiData', $aParams );
 		$oTask->queue();
-	}
-
-	/**
-	 * A simple getter for an object of an ExactTargetUpdateCityCatMappingTask class
-	 * @return  object ExactTargetUpdateCityCatMappingTask
-	 */
-	private function getExactTargetUpdateCityCatMappingTask() {
-		return new ExactTargetUpdateCityCatMappingTask();
 	}
 
 	/**
@@ -118,6 +97,12 @@ class ExactTargetWikiHooks {
 	private function queueUpdateWikiTask( $wikiId ) {
 		$task = new ExactTargetWikiTask();
 		$task->call( 'updateWiki', $wikiId );
+		$task->queue();
+	}
+
+	private function queueUpdateWikiCategoriesMapping( $wikiId ) {
+		$task = new ExactTargetWikiTask();
+		$task->call( 'updateWikiCategoriesMapping', $wikiId );
 		$task->queue();
 	}
 

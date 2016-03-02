@@ -31,15 +31,19 @@ class ExactTargetWikiTask extends BaseTask {
 		return self::STATUS_OK;
 	}
 
-	public function updateWikiCatMapping( $wikiId ) {
+	public function updateWikiCategoriesMapping( $wikiId ) {
 		Assert::true( !empty( $wikiId ), 'Wiki ID missing' );
 
 		$client = $this->getClient();
+		$oldCategories = $client->retrieveWikiCategories( $wikiId );
+
+		$client->deleteWikiCategoriesMapping( $oldCategories );
+
 		$oWikiFactoryHub = new \WikiFactoryHub();
 		$aCategories = $oWikiFactoryHub->getWikiCategories( $wikiId );
 
 		/* Update or create Wiki in external service */
-		$client->updateWikiCatMapping( $wikiId, $aCategories );
+		$client->updateWikiCategoriesMapping( $wikiId, $aCategories );
 
 		return self::STATUS_OK;
 	}
