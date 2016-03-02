@@ -17,8 +17,10 @@
 		Wikia = window.Wikia = (window.Wikia || {}),
 		config = Wikia.AbTestConfig || {},
 		logCache = {},
+		beacon = window.beacon_id || getCookie('wikia_beacon_id'),
 		serverTimeString = window.varnishTime,
-		serverTime = new Date( serverTimeString ).getTime() / 1000;
+		serverDate = serverTimeString ? new Date( serverTimeString ) : new Date();
+		serverTime = serverDate.getTime() / 1000;
 
 	// Function to log different things (could not use Wikia.Log because it may not be available yet)
 	var log = (function( console ) {
@@ -59,7 +61,7 @@
 			log('init','UUID is not available, A/B testing will be disabled');
 		}
 		return ret;
-	})( window.beacon_id );
+	})( beacon );
 
 	// Returns active group name for the given experiment
 	AbTest.getGroup = function( expName ) {
@@ -215,6 +217,11 @@
 			}
 		}
 		return false;
+	}
+
+	function getCookie(name) {
+		if (!name) { return null; }
+		return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(name).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
 	}
 
 	/* ----------------------------------------- */
