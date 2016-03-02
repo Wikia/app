@@ -36,6 +36,6 @@ class WikiCategoriesAdapter {
 				$catId = $value->Value;
 			}
 		}
-		$this->mapping[ $wikiId ][ ] = $catId;
+		$this->mapping[ ] = [ Enum::WIKI_ID => $wikiId, Enum::WIKI_CAT_ID => $catId ];
 	}
 }

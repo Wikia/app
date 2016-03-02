@@ -17,9 +17,7 @@ class WikiCategoriesAdapterTest extends WikiaBaseTest {
 
 		// Expected
 		$expected = [
-			1 => [
-				3
-			]
+			[ 'city_id' => 1, 'cat_id' => 3 ]
 		];
 
 		$categoriesMapping = ( new \Wikia\ExactTarget\WikiCategoriesAdapter( $param ) )->getCategoriesMapping();
@@ -43,10 +41,8 @@ class WikiCategoriesAdapterTest extends WikiaBaseTest {
 
 		// Expected
 		$expected = [
-			5 => [
-				23,
-				23423
-			]
+			[ 'city_id' => 5, 'cat_id' => 23 ],
+			[ 'city_id' => 5, 'cat_id' => 23423 ]
 		];
 
 		$categoriesMapping = ( new \Wikia\ExactTarget\WikiCategoriesAdapter( $param ) )->getCategoriesMapping();
