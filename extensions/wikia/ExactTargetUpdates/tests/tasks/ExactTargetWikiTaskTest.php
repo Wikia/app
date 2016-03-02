@@ -18,14 +18,64 @@ class ExactTargetWikiTaskTest extends WikiaBaseTest {
 		$task->updateWiki( null, [ ] );
 	}
 
-	public function testShouldCallClientUpdateWikiMethodWithProperParams() {
+	public function testShouldCallClientUpdateWikiMethod() {
 		$clientMock = $this->prepareClientMock();
 		$task = $this->getWikiTask($clientMock);
 
 		$clientMock->expects( $this->once() )
 			->method( 'updateWiki' );
 
-		$task->updateWiki( 1, [ ] );
+		$this->assertEquals( 'OK', $task->updateWiki( 1, [ ] ) );
+	}
+
+	/**
+	 * @expectedException \Wikia\Util\AssertionException
+	 * @expectedExceptionMessage Wiki ID missing
+	 */
+	public function testShouldThrowExceptionWhenDeletingWikiWithoutWikiId() {
+		$clientMock = $this->prepareClientMock();
+		$task = $this->getWikiTask($clientMock);
+
+		$task->deleteWiki( null );
+	}
+
+	public function testShouldCallClientMethodsOnUpdateWikiCategories() {
+		$clientMock = $this->prepareClientMock();
+		$task = $this->getWikiTask($clientMock);
+
+		$clientMock->expects( $this->once() )
+			->method( 'retrieveWikiCategories' );
+		$clientMock->expects( $this->once() )
+			->method( 'deleteWikiCategoriesMapping' );
+		$clientMock->expects( $this->once() )
+			->method( 'updateWikiCategoriesMapping' );
+
+		$this->assertEquals( 'OK', $task->updateWikiCategoriesMapping( 1 ) );
+	}
+
+	/**
+	 * @expectedException \Wikia\Util\AssertionException
+	 * @expectedExceptionMessage Wiki ID missing
+	 */
+	public function testShouldThrowExceptionWhenUpdatingWikiCategoriesWithoutWikiId() {
+		$clientMock = $this->prepareClientMock();
+		$task = $this->getWikiTask($clientMock);
+
+		$task->updateWikiCategoriesMapping( null );
+	}
+
+	public function testShouldCallClientMethodsOnDeleteWiki() {
+		$clientMock = $this->prepareClientMock();
+		$task = $this->getWikiTask($clientMock);
+
+		$clientMock->expects( $this->once() )
+			->method( 'retrieveWikiCategories' );
+		$clientMock->expects( $this->once() )
+			->method( 'deleteWikiCategoriesMapping' );
+		$clientMock->expects( $this->once() )
+			->method( 'deleteWiki' );
+
+		$this->assertEquals( 'OK', $task->deleteWiki( 1 ) );
 	}
 
 	private function getWikiTask($client) {
@@ -38,7 +88,11 @@ class ExactTargetWikiTaskTest extends WikiaBaseTest {
 	private function prepareClientMock() {
 		$mockClient = $this->getMock( '\Wikia\ExactTarget\ExactTargetClient',
 			[
-				'updateWiki'
+				'updateWiki',
+				'deleteWiki',
+				'updateWikiCategoriesMapping',
+				'retrieveWikiCategories',
+				'deleteWikiCategoriesMapping'
 			]
 		);
 
