@@ -23,6 +23,7 @@ use Wikia\Tasks\Queues\PurgeQueue;
 use Wikia\Tasks\Queues\Queue;
 use Wikia\Tasks\Queues\SMWQueue;
 use Wikia\Tasks\Tasks\BaseTask;
+use Wikia\Util\RequestId;
 
 class AsyncTaskList {
 	/** @const int default wiki city to run tasks in (community) */
@@ -310,6 +311,8 @@ class AsyncTaskList {
 			'content-encoding' => 'UTF-8',
 			'immediate' => false,
 			'delivery_mode' => 2, // persistent
+			'app_id' => 'mediawiki',
+			'correlation_id' => RequestId::instance()->getRequestId(),
 		] );
 
 		if ( $channel === null ) {

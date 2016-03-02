@@ -353,7 +353,8 @@ class VideoHandlerController extends WikiaController {
 			$params['limit'],
 			$params['page'],
 			$params['providers'],
-			$params['category']
+			$params['category'],
+			$params['sort']
 		);
 
 		// get video detail
@@ -420,6 +421,7 @@ class VideoHandlerController extends WikiaController {
 			'height' => $this->getVal( 'height', self::DEFAULT_THUMBNAIL_HEIGHT ),
 			'detail' => $this->getVal( 'detail', 0 ),
 			'filter' => 'all',
+			'sort' => $this->getVal( 'sort', MediaQueryService::SORT_RECENT_FIRST )
 		];
 	}
 
@@ -439,12 +441,15 @@ class VideoHandlerController extends WikiaController {
 	}
 
 	protected function getVideoListLimit() {
-		$limit = $this->getVal( 'limit', 1 );
-
-		// set maximum limit
-		if ( $limit > self::VIDEO_LIMIT ) {
-			$limit = self::VIDEO_LIMIT;
-		}
+		// Considering the code that relies on this method, returning
+		// values evaluating to zero implies no limit at all. Yet, we
+		// have maximum limit defined in self::VIDEO_LIMIT which needs
+		// to be respected.
+		// In addition, queries with maximum limit are somewhat slow,
+		// so it is much better to set limit to 1 when it evaluates to
+		// zero.
+		$limit = max( 1, $this->request->getInt( 'limit' ) );
+		$limit = min( $limit, self::VIDEO_LIMIT );
 		return $limit;
 	}
 }

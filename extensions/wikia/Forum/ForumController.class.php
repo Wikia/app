@@ -24,10 +24,8 @@ class ForumController extends WallBaseController {
 		if ( $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$topicTitle = $this->getTopicTitle();
 			if ( empty( $topicTitle ) || !$topicTitle->exists() ) {
-				if ( !$topicTitle->exists() ) {
-					$this->redirectToIndex();
-					return false;
-				}
+				$this->redirectToIndex();
+				return false;
 			}
 		}
 
@@ -57,6 +55,7 @@ class ForumController extends WallBaseController {
 			$this->app->wg->Out->setPageTitle( wfMessage( 'forum-board-topic-title', $this->wg->title->getBaseText() )->plain() );
 		} else {
 			$boardId = $this->wall->getId();
+			/** @var ForumBoard $board */
 			$board = ForumBoard::newFromId( $boardId );
 
 			if ( empty( $board ) ) {
@@ -91,6 +90,10 @@ class ForumController extends WallBaseController {
 		return $topicTitle;
 	}
 
+	/**
+	 * @param Title $title
+	 * @return null|Wall
+	 */
 	public function getWallForIndexPage( $title ) {
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$topicTitle = $this->getTopicTitle();
@@ -146,7 +149,7 @@ class ForumController extends WallBaseController {
 
 		$thread = WallThread::newFromId( $wallMessage->getId() );
 
-		$lastReply = $thread->getLastMessage( $replies );
+		$lastReply = $thread->getLastMessage();
 		if ( $lastReply === null ) {
 			$lastReply = $wallMessage;
 		}
@@ -262,7 +265,10 @@ class ForumController extends WallBaseController {
 				// keys of sorting array are names of DOM elements' classes
 				// which are needed to click tracking
 				// if you change those keys here, do so in Wall.js file, please
-				$options = [ 'nf' => wfMessage( 'wall-history-sorting-newest-first' )->escaped(), 'of' => wfMessage( 'wall-history-sorting-oldest-first' )->escaped(), ];
+				$options = [
+					'nf' => wfMessage( 'wall-history-sorting-newest-first' )->escaped(),
+					'of' => wfMessage( 'wall-history-sorting-oldest-first' )->escaped(),
+				];
 				break;
 			case 'index' :
 			default :

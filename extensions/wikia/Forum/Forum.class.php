@@ -220,6 +220,12 @@ class Forum extends Walls {
 
 	/**
 	 *  create or edit board, if $board = null then we are creating new one
+	 * @param ForumBoard $board
+	 * @param $titletext
+	 * @param $body
+	 * @param bool $bot
+	 * @return Status
+	 * @throws MWException
 	 */
 	protected function createOrEditBoard( $board, $titletext, $body, $bot = false ) {
 		wfProfileIn( __METHOD__ );
@@ -250,7 +256,7 @@ class Forum extends Walls {
 		$article = new Article( $title );
 		$editPage = new EditPage( $article );
 
-		$editPage->edittime = $article->getTimestamp();
+		$editPage->edittime = $article->getPage()->getTimestamp();
 		$editPage->textbox1 = $body;
 
 		$result = [ ];
@@ -307,6 +313,7 @@ class Forum extends Walls {
 
 	/**
 	 * delete board
+	 * @param ForumBoard $board
 	 */
 
 	public function deleteBoard( $board ) {

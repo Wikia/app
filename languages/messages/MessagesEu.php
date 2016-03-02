@@ -596,16 +596,6 @@ Berriro saiatu aurretik itxaron ezazu, mesedez.',
 Agian dagoeneko ondo aldatu duzu zure pasahitza edo behin-behineko pasahitza bat eskatu duzu.',
 'resetpass-temp-password'   => 'Behin-behineko pasahitza:',
 
-# Special:PasswordReset
-'passwordreset'              => 'Pasahitzaren berrezarpena',
-'passwordreset-legend'       => 'Pasahitza berrezarri',
-'passwordreset-username'     => 'Lankide izena:',
-'passwordreset-domain'       => 'Domeinua:',
-'passwordreset-email'        => 'E-mail helbidea:',
-'passwordreset-emailelement' => 'Erabiltzaile izena: $1
-Behin-behineko pasahitza: $2',
-'passwordreset-emailsent'    => 'Gogorarazteko e-posta bidali da.',
-
 # Special:ChangeEmail
 'changeemail-newemail' => 'E-posta helbide berria:',
 'changeemail-none'     => '(bat ere ez)',

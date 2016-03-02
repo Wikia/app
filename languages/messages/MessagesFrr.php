@@ -506,21 +506,6 @@ Nü wårst dü önjmälded...',
 Möölikerwise heest dü din pååsuurd ål ma erfolch änred heest unti en nai tämporäär pååsuurd beönjdräägen.',
 'resetpass-temp-password'   => 'Tidwise pååsuurd:',
 
-# Special:PasswordReset
-'passwordreset'              => 'Paasuurd tubääg seete',
-'passwordreset-text'         => 'Fal detheer formulaar ütj, an do woort di en e-mail tusjüürd mä henwiiser tu din brükerkonto-uunmeldang.',
-'passwordreset-legend'       => 'Paasuurd tubääg seete',
-'passwordreset-disabled'     => 'Dü koost din paasuurd aw jüdeer wiki ai tubääg seete',
-'passwordreset-pretext'      => '{{PLURAL:$1||Du ian faan jo dooten oner iin}}',
-'passwordreset-username'     => 'Brükernoome:',
-'passwordreset-domain'       => 'Domain:',
-'passwordreset-capture'      => 'Wel dü det e-mail nooracht uunluke?',
-'passwordreset-capture-help' => 'Wan dü detheer kasje uunkrüsagst, woort det e-mail nooracht mä det nei paaswurd uunwiset an tu di brüker sjüürd.',
-'passwordreset-email'        => 'E-mail adres:',
-'passwordreset-emailtitle'   => 'Brükerkonto aw {{SITENAME}}',
-'passwordreset-emailelement' => 'Brükernoome: $1
-Tidwis paasuurd: $2',
-
 # Special:ChangeEmail
 'changeemail-no-info'  => 'Dü möist önjmälded weese am ju sid diräkt tu tu gripen.',
 'changeemail-oldemail' => 'Aktuel e-mail adres',

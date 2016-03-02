@@ -37,6 +37,8 @@ class ArticleCommentInit {
 
 	/**
 	 * Check whether comments should be enabled for given title
+	 * @param Title $title
+	 * @return bool
 	 */
 	static public function ArticleCommentCheckTitle( Title $title ) {
 		// enable comments only on content namespaces (use $wgArticleCommentsNamespaces if defined)

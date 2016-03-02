@@ -27,6 +27,7 @@ class WallRailController extends WikiaController {
 		$usersInvolved = [ ];
 		$sorting = [ ];
 
+		/** @var User $user */
 		foreach ( $usersObjects as $user ) {
 			if ( $user->isAnon() ) {
 				$name = wfMsg( 'oasis-anon-user' );

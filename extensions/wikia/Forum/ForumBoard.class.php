@@ -8,6 +8,9 @@
  */
 class ForumBoard extends Wall {
 
+	/**
+	 * @return ForumBoard
+	 */
 	static public function getEmpty() {
 		return new ForumBoard();
 	}

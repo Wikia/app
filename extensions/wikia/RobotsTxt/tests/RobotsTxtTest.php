@@ -2,6 +2,17 @@
 
 class RobotsTxtTest extends WikiaBaseTest {
 
+	const DEFAULT_HEADERS = [
+		'Content-Type: text/plain',
+		'Cache-Control: s-maxage=86400',
+		'X-Pass-Cache-Control: public, max-age=86400',
+	];
+	const EXPERIMENTAL_HEADERS = [
+		'Content-Type: text/plain',
+		'Cache-Control: s-maxage=3600',
+		'X-Pass-Cache-Control: public, max-age=3600',
+	];
+
 	public function setUp() {
 		global $IP;
 		$this->setupFile = "$IP/extensions/wikia/RobotsTxt/RobotsTxt.setup.php";
@@ -13,7 +24,9 @@ class RobotsTxtTest extends WikiaBaseTest {
 	 */
 	public function testEmpty() {
 		$robots = new RobotsTxt();
+
 		$this->assertEquals( [], $robots->getContents() );
+		$this->assertEquals( self::DEFAULT_HEADERS, $robots->getHeaders() );
 	}
 
 	/**
@@ -24,12 +37,14 @@ class RobotsTxtTest extends WikiaBaseTest {
 	public function testAllowSpecialPage() {
 		$robots = new RobotsTxt();
 		$robots->allowSpecialPage( 'Randompage' );
+
 		$this->assertEquals( [
 			'User-agent: *',
 			'Allow: /wiki/Special:Random',
 			'Allow: /wiki/Special:RandomPage',
 			'',
 		], $robots->getContents() );
+		$this->assertEquals( self::DEFAULT_HEADERS, $robots->getHeaders() );
 	}
 
 	/**
@@ -38,9 +53,10 @@ class RobotsTxtTest extends WikiaBaseTest {
 	 * @covers RobotsTxt::allowSpecialPage
 	 */
 	public function testAllowSpecialPageInternational() {
-		$this->mockGlobalVariable( 'wgContLang', Language::factory('de') );
+		$this->mockGlobalVariable( 'wgContLang', Language::factory( 'de' ) );
 		$robots = new RobotsTxt();
 		$robots->allowSpecialPage( 'Randompage' );
+
 		$this->assertEquals( [
 			'User-agent: *',
 			'Allow: /wiki/Spezial:Zuf%C3%A4llige_Seite',
@@ -51,6 +67,7 @@ class RobotsTxtTest extends WikiaBaseTest {
 			'Allow: /wiki/Special:RandomPage',
 			'',
 		], $robots->getContents() );
+		$this->assertEquals( self::DEFAULT_HEADERS, $robots->getHeaders() );
 	}
 
 	/**
@@ -62,6 +79,7 @@ class RobotsTxtTest extends WikiaBaseTest {
 		$robots = new RobotsTxt();
 		$robots->blockRobot( 'my-fancy-robot' );
 		$robots->blockRobot( 'your-nasty-robot' );
+
 		$this->assertEquals( [
 			'User-agent: my-fancy-robot',
 			'Disallow: /',
@@ -70,6 +88,7 @@ class RobotsTxtTest extends WikiaBaseTest {
 			'Disallow: /',
 			'',
 		], $robots->getContents() );
+		$this->assertEquals( self::DEFAULT_HEADERS, $robots->getHeaders() );
 	}
 
 	/**
@@ -80,12 +99,14 @@ class RobotsTxtTest extends WikiaBaseTest {
 	public function testDisallowParam() {
 		$robots = new RobotsTxt();
 		$robots->disallowParam( 'someparam' );
+
 		$this->assertEquals( [
 			'User-agent: *',
 			'Disallow: /*?*someparam=',
 			'Noindex: /*?*someparam=',
 			'',
 		], $robots->getContents() );
+		$this->assertEquals( self::DEFAULT_HEADERS, $robots->getHeaders() );
 	}
 
 	/**
@@ -99,6 +120,7 @@ class RobotsTxtTest extends WikiaBaseTest {
 		$robots->disallowPath( '/some-path:ąść' );
 		$robots->disallowPath( '/some-path:サイトマップ' );
 		$robots->disallowPath( '/*/*%$' );
+
 		$this->assertEquals( [
 			'User-agent: *',
 			'Disallow: /some-path',
@@ -111,6 +133,7 @@ class RobotsTxtTest extends WikiaBaseTest {
 			'Noindex: /*/*%25$',
 			'',
 		], $robots->getContents() );
+		$this->assertEquals( self::DEFAULT_HEADERS, $robots->getHeaders() );
 	}
 
 	/**
@@ -121,6 +144,7 @@ class RobotsTxtTest extends WikiaBaseTest {
 	public function testDisallowNamespace() {
 		$robots = new RobotsTxt();
 		$robots->disallowNamespace( NS_FILE );
+
 		$this->assertEquals( [
 			'User-agent: *',
 			'Disallow: /wiki/File:',
@@ -131,6 +155,7 @@ class RobotsTxtTest extends WikiaBaseTest {
 			'Noindex: /index.php/File:',
 			'',
 		], $robots->getContents() );
+		$this->assertEquals( self::DEFAULT_HEADERS, $robots->getHeaders() );
 	}
 
 	/**
@@ -139,9 +164,10 @@ class RobotsTxtTest extends WikiaBaseTest {
 	 * @covers RobotsTxt::disallowNamespace
 	 */
 	public function testDisallowNamespaceInternational() {
-		$this->mockGlobalVariable( 'wgContLang', Language::factory('de') );
+		$this->mockGlobalVariable( 'wgContLang', Language::factory( 'de' ) );
 		$robots = new RobotsTxt();
 		$robots->disallowNamespace( NS_FILE );
+
 		$this->assertEquals( [
 			'User-agent: *',
 			'Disallow: /wiki/Datei:',
@@ -158,6 +184,7 @@ class RobotsTxtTest extends WikiaBaseTest {
 			'Noindex: /index.php/File:',
 			'',
 		], $robots->getContents() );
+		$this->assertEquals( self::DEFAULT_HEADERS, $robots->getHeaders() );
 	}
 
 	/**
@@ -168,9 +195,11 @@ class RobotsTxtTest extends WikiaBaseTest {
 	public function testSetSitemap() {
 		$robots = new RobotsTxt();
 		$robots->setSitemap( 'http://www.my-site.com/sitemap.xml' );
+
 		$this->assertEquals( [
 			'Sitemap: http://www.my-site.com/sitemap.xml',
 		], $robots->getContents() );
+		$this->assertEquals( self::DEFAULT_HEADERS, $robots->getHeaders() );
 	}
 
 	/**
@@ -184,6 +213,7 @@ class RobotsTxtTest extends WikiaBaseTest {
 		$robots->blockRobot( 'robot-1' );
 		$robots->allowSpecialPage( 'Randompage' );
 		$robots->setSitemap( 'http://www.my-site.com/sitemap.xml' );
+
 		$this->assertEquals( [
 			'User-agent: robot-1',
 			'Disallow: /',
@@ -196,5 +226,26 @@ class RobotsTxtTest extends WikiaBaseTest {
 			'',
 			'Sitemap: http://www.my-site.com/sitemap.xml',
 		], $robots->getContents() );
+		$this->assertEquals( self::DEFAULT_HEADERS, $robots->getHeaders() );
+	}
+
+	/**
+	 * Test getContents produces the output taken from setExperimentalAllowDissalowSection and
+	 * test the cache is set to one hour
+	 *
+	 * @covers RobotsTxt::setExperimentalAllowDisallowSection
+	 */
+	public function testSetExperimentalAllowDisallowSection() {
+		$robots = new RobotsTxt();
+		$robots->setSitemap( 'http://www.my-site.com/sitemap.xml' );
+		$robots->setExperimentalAllowDisallowSection( "Test: Test\nAbba: Abba" );
+
+		$this->assertEquals( [
+			'Test: Test',
+			'Abba: Abba',
+			'',
+			'Sitemap: http://www.my-site.com/sitemap.xml',
+		], $robots->getContents() );
+		$this->assertEquals( self::EXPERIMENTAL_HEADERS, $robots->getHeaders() );
 	}
 }

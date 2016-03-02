@@ -807,43 +807,6 @@ Silakan menunggu sebelum mencoba lagi.',
 Anda mungkin telah berhasil mengganti kata sandi Anda atau telah meminta kata sandi sementara yang baru.',
 'resetpass-temp-password'   => 'Kata sandi sementara:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Setel ulang sandi',
-'passwordreset-text'               => 'Lengkapi formulir ini untuk menerima surel pengingat detail akun Anda.',
-'passwordreset-legend'             => 'Setel ulang sandi',
-'passwordreset-disabled'           => 'Penyetelan ulang sandi telah dimatikan di wiki ini.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Masukkan salah satu data di bawah ini}}',
-'passwordreset-username'           => 'Nama pengguna:',
-'passwordreset-domain'             => 'Domain:',
-'passwordreset-capture'            => 'Lihat surel yang dihasilkan?',
-'passwordreset-capture-help'       => 'Jika Anda mencentang kotak ini, surel (dengan kata sandi sementara) akan ditampilkan ke Anda dan juga dikirim ke pengguna.',
-'passwordreset-email'              => 'Alamat surel:',
-'passwordreset-emailtitle'         => 'Detail akun di {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Seseorang (mungkin Anda, dari alamat IP $1) meminta pengingat
-detail akun untuk {{SITENAME}} ($4). {{PLURAL:$3|Akun|Akun-akun}} berikut
-terkait dengan alamat surel ini:
-
-$2
-
-{{PLURAL:$3|Sandi sementara|Sandi sementara}} berikut akan kedaluwarsa dalam {{PLURAL:$5|satu hari|$5 hari}}.
-Anda harus masuk dan memilih sandi baru sekarang. Jika orang lain membuat
-permintaan ini atau jika Anda ingat sandi asli dan tidak lagi
-ingin mengubahnya, Anda dapat mengabaikan pesan ini dan terus menggunakan sandi lama.',
-'passwordreset-emailtext-user'     => 'Seseorang (mungkin Anda, dari alamat IP $1) meminta pengingat detail akun untuk {{SITENAME}} ($4).
-{{PLURAL:$3|Akun|Akun-akun}} berikut terkait dengan alamat surel ini:
-
-$2
-
-{{PLURAL:$3|Sandi sementara|Sandi sementara}} berikut akan kedaluwarsa dalam {{PLURAL:$5|satu hari|$5 hari}}.
-Anda harus masuk dan memilih sandi baru sekarang. Jika orang lain membuat
-permintaan ini atau jika Anda ingat sandi asli dan tidak lagi
-ingin mengubahnya, Anda dapat mengabaikan pesan ini dan terus menggunakan sandi lama.',
-'passwordreset-emailelement'       => 'Nama pengguna: $1
-Sandi sementara: $2',
-'passwordreset-emailsent'          => 'Surel pengingat telah dikirimkan.',
-'passwordreset-emailsent-capture'  => 'Surel pengingat, yang ditampilkan di bawah, telah dikirim.',
-'passwordreset-emailerror-capture' => 'Surel pengingat, yang ditampilkan di bawah, telah dihasilkan, tetapi gagal mengirimkannya ke pengguna: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Ubah alamat surel',
 'changeemail-header'   => 'Ubah alamat surel akun',

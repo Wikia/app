@@ -4,6 +4,7 @@ namespace Wikia\IndexingPipeline;
 
 use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Message\AMQPMessage;
+use Wikia\Util\RequestId;
 
 class ConnectionBase {
 	const DURABLE_MESSAGE = 2;
@@ -42,7 +43,9 @@ class ConnectionBase {
 			$channel->basic_publish(
 				new AMQPMessage( json_encode( $body ), [
 					'delivery_mode' => self::DURABLE_MESSAGE,
-					'expiration' => self::MESSAGE_TTL
+					'expiration' => self::MESSAGE_TTL,
+					'app_id' => 'mediawiki',
+					'correlation_id' => RequestId::instance()->getRequestId(),
 				] ),
 				$this->exchange,
 				$routingKey

@@ -33,7 +33,7 @@ class FinishCreateWikiController extends WikiaController {
 			'vars' => [
 				'type' => 'button',
 				'classes' => [ 'wikia-button',  'big', 'createpage' ],
-				'value' => wfMessage( 'button-createpage' )->text(),
+				'value' => wfMessage( 'oasis-navigation-v2-create-page' )->escaped(),
 				'imageClass' => 'new',
 				'data' => [
 					'key' => 'event',

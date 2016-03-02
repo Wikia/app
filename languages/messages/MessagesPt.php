@@ -798,34 +798,6 @@ Para prosseguir, será necessário definir uma nova palavra-chave.',
 Pode ter já alterado com sucesso a sua palavra-chave ou solicitado uma nova palavra-chave temporária.',
 'resetpass-temp-password'   => 'Palavra-chave temporária:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Repor palavra-chave',
-'passwordreset-text'               => 'Preencha este formulário para recuperar os dados da sua conta por correio electrónico.',
-'passwordreset-legend'             => 'Reiniciar a palavra-chave',
-'passwordreset-disabled'           => 'Reiniciar a palavra-chave foi impossibilitado nesta wiki.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Introduza um dos dados abaixo}}',
-'passwordreset-username'           => 'Nome de utilizador:',
-'passwordreset-domain'             => 'Domínio:',
-'passwordreset-capture'            => 'Ver o email resultante?',
-'passwordreset-capture-help'       => 'Se marcar esta caixa, o e-mail (com a senha temporária) será-lhe mostrado, além de ser enviado para o utilizador.',
-'passwordreset-email'              => 'Correio electrónico:',
-'passwordreset-emailtitle'         => 'Detalhes da conta na {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'Alguém, provavelmente você a partir do endereço IP $1, pediu a recuperação dos detalhes da sua conta na {{SITENAME}} ($4). {{PLURAL:$3|A seguinte conta está associada|As seguintes contas estão associadas}} a este correio electrónico:
-
-$2
-
-{{PLURAL:$3|Esta palavra-chave temporária irá|Estas palavras-chave temporárias irão}} expirar dentro de {{PLURAL:$5|um dia|$5 dias}}. Deve autenticar-se e escolher uma palavra-chave nova agora. Se este pedido não foi feito por si, ou se entretanto se recordou da sua palavra-chave original e já não deseja alterá-la, pode ignorar esta mensagem e continuar a usar a palavra-chave antiga.',
-'passwordreset-emailtext-user'     => 'O utilizador $1 da {{SITENAME}} pediu a recuperação dos detalhes da sua conta na {{SITENAME}} ($4). {{PLURAL:$3|A seguinte conta está associada|As seguintes contas estão associadas}} a este correio electrónico:
-
-$2
-
-{{PLURAL:$3|Esta palavra-chave temporária irá|Estas palavras-chave temporárias irão}} expirar dentro de {{PLURAL:$5|um dia|$5 dias}}. Deve autenticar-se e escolher uma palavra-chave nova agora. Se este pedido não foi feito por si, ou se entretanto se recordou da sua palavra-chave original e já não deseja alterá-la, pode ignorar esta mensagem e continuar a usar a palavra-chave antiga.',
-'passwordreset-emailelement'       => 'Utilizador: $1
-Palavra-chave temporária: $2',
-'passwordreset-emailsent'          => 'Foi enviado um correio electrónico de recuperação dos dados da conta.',
-'passwordreset-emailsent-capture'  => 'Foi enviado um e-mail de lembrete, que é mostrado abaixo.',
-'passwordreset-emailerror-capture' => 'Foi gerado o lembrete de e-mail mostrado abaixo, contudo falhou o envio para o utilizador: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Alterar o endereço de correio electrónico',
 'changeemail-header'   => 'Alterar o endereço de correio electrónico da conta',

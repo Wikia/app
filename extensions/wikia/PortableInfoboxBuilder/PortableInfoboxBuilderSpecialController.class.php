@@ -5,7 +5,7 @@
  * @desc Special:Maps controller
  */
 class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController {
-	const PAGE_NAME = 'PortableInfoboxBuilder';
+	const PAGE_NAME = 'InfoboxBuilder';
 	const PAGE_RESTRICTION = 'editinterface';
 	const INFOBOX_BUILDER_MERCURY_ROUTE = 'infobox-builder';
 	const PATH_SEPARATOR = '/';
@@ -27,11 +27,7 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 
 	public function index() {
 		$this->wg->out->setHTMLTitle( wfMessage( 'portable-infobox-builder-title' )->text() );
-		if ( empty( $this->getPar() ) ) {
-			$this->forward( __CLASS__, 'notitle' );
-		} else {
-			$this->forward( __CLASS__, 'builder' );
-		}
+		$this->forward( __CLASS__, $this->getMethodName() );
 	}
 
 	public function noTitle() {
@@ -49,5 +45,24 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 		$url = implode( self::PATH_SEPARATOR, [ $this->wg->server, self::INFOBOX_BUILDER_MERCURY_ROUTE, $title ] );
 		$this->response->setVal( 'iframeUrl', $url );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
+	public function sourceEditor() {
+		$this->wg->out->redirect(Title::newFromText($this->getPar(), NS_TEMPLATE)->getEditURL());
+	}
+
+	private function getMethodName() {
+		if (empty($this->getPar())) {
+			return 'notitle';
+		}
+
+		$title = Title::newFromText($this->getPar(), NS_TEMPLATE);
+		$infoboxes = PortableInfoboxDataService::newFromTitle($title)->getInfoboxes();
+
+		if ( empty($infoboxes) || ( new PortableInfoboxBuilderService() )->isValidInfoboxArray( $infoboxes ) ) {
+			return 'builder';
+		} else {
+			return 'sourceEditor';
+		}
 	}
 }

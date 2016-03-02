@@ -693,10 +693,6 @@ $1',
 你可能已經成功咁更改你嘅密碼，又或者重新請求過一個新嘅臨時密碼。',
 'resetpass-temp-password'   => '臨時密碼:',
 
-# Special:PasswordReset
-'passwordreset'          => '密碼重設',
-'passwordreset-username' => '用戶名',
-
 # Edit page toolbar
 'bold_sample'     => '粗體字',
 'bold_tip'        => '粗體字',

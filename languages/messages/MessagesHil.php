@@ -509,43 +509,6 @@ Ginapasulod ka na...',
 Mahimo nga madinalag-on mo nga nga gin-ilisan ang imo pasword ukon nagpangabay ka na sang bag-o nga temporaryo nga pasword.',
 'resetpass-temp-password'   => 'Temporaryo nga pasword:',
 
-# Special:PasswordReset
-'passwordreset'                    => 'Liwaton ang pasword',
-'passwordreset-text'               => 'Taposon ang ini nga formas agod nga makabaton sang e-mail nga nagapahanumdom sang mga detalye sang imo akawnt.',
-'passwordreset-legend'             => 'Liwaton ang pasword',
-'passwordreset-disabled'           => 'Ang mga pagliwat sang pasword gin-untat sa sini nga wiki.',
-'passwordreset-pretext'            => '{{PLURAL:$1||Magbutang sang isa sang mga datos sa idalom}}',
-'passwordreset-username'           => 'Ngalan sang Manog-gamit"',
-'passwordreset-domain'             => 'Domeyn:',
-'passwordreset-capture'            => 'Lantawon ang nagresuta nga e-mail?',
-'passwordreset-capture-help'       => 'Kon butangan mo sang tsek ang ini nga kahon, ang e-mail (nga may temporaryo nga pasword) igapakita sa imo kag amo man ipadala sa manuggamit.',
-'passwordreset-email'              => 'Adres sang e-mail:',
-'passwordreset-emailtitle'         => 'Ang mga detalye sang akawnt sa {{SITENAME}}',
-'passwordreset-emailtext-ip'       => 'May tawo nga (mahimo ikaw, halin sa IP adres nga $1) nagpangabay sang pahanumdom sang mga detalye
-sang imo akawnt para sa {{SITENAME}} ($4). Ang masunod nga {{PLURAL:$3|akawnt|mga akawnt}} sang manuggamit
-may kabahin sa sini nga adres sang e-mail:
-
-$2
-
-{{PLURAL:$3|Ang ini nga temporaryo nga pasword|Ang mga ini nga temporaryo nga pasword}} indi na magamit sa {{PLURAL:$5|isa ka adlaw|$5 ka adlaw}}.
-Kinahanglan mo nga magsulod kag magpili sang bag-o nga pasword subong. Kon lain nga tawo ang nagbuhat sini
-nga pagpangabay, ukon nadumduman mo na ang imo pasword, kag indi mo na kinahanglan nga ini
-paga-ilisan, mahimo mo nga pabay-an ang ini nga pahanumdom kag magpadayon sa paggamit sang imo daan nga pasword.',
-'passwordreset-emailtext-user'     => 'Ang manuggamit nga si $1 sa {{SITENAME}} nagpangabay sang pahanumdom sang mga detalye sang imo akawnt para sa {{SITENAME}}
-($4). Ang masunod nga {{PLURAL:$3|akawnt|mga akawnt}} sang manuggamit may kabahin sa sini nga adres sang e-mail:
-
-$2
-
-{{PLURAL:$3|Ang ini nga temporaryo nga pasword|Ang mga ini nga temporaryo nga pasword}} indi na magamit sa {{PLURAL:$5|isa ka adlaw|$5 ka adlaw}}.
-Kinahanglan mo nga magsulod kag magpili sang bag-o nga pasword subong. Kon lain nga tawo ang nagbuhat sini
-nga pagpangabay, ukon nadumduman mo na ang imo pasword, kag indi mo na kinahanglan nga ini
-paga-ilisan, mahimo mo nga pabay-an ang ini nga pahanumdom kag magpadayon sa paggamit sang imo daan nga pasword.',
-'passwordreset-emailelement'       => 'Gamit-pangalan: $1
-Temporaryo nga pasword: $2',
-'passwordreset-emailsent'          => 'May pahanumdom nga e-mail nga ginpadala.',
-'passwordreset-emailsent-capture'  => 'May e-mail nga nagapahanumdum, nga ginapakita sa idalom.',
-'passwordreset-emailerror-capture' => 'May e-mail nga nagapahanumdom nga ginbuhat, nga ginapakita sa idalom, apang ang pagpadala sa manuggamit indi madinalag-on: $1',
-
 # Special:ChangeEmail
 'changeemail'          => 'Ilisan ang E-mail adres',
 'changeemail-header'   => 'Ilisan ang e-mail adres sang akawnt',
