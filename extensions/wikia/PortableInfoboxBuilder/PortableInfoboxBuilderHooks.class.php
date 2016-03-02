@@ -35,11 +35,11 @@ class PortableInfoboxBuilderHooks {
 		$title = $skin->getTitle();
 
 		if ( $title && $title->isSpecial( PortableInfoboxBuilderSpecialController::PAGE_NAME ) ) {
-			// remove the special page name from the title and return url to the template
-			// passed after the slash, i.e.
-			// Special:InfoboxBuilder/TemplateName/Subpage => Template:TemplateName/Subpage
+			$titleText = $title->getText();
+
 			$vars['templatePageUrl'] = Title::newFromText(
-				implode( '/', array_slice( explode( '/', $title->getText() ), 1 ) ),
+				self::getUrlPath( $titleText ),
+				$title->getBaseText(),
 				NS_TEMPLATE
 			)->getFullUrl();
 		}
@@ -47,6 +47,16 @@ class PortableInfoboxBuilderHooks {
 		return true;
 	}
 
+	/**
+	 * remove the special page name from the title and return name of the template
+	 * passed after the slash without the namespace, i.e.
+	 * Special:InfoboxBuilder/TemplateName/Subpage => TemplateName/Subpage
+	 * @param $titleText
+	 * @return string
+	 */
+	private static function getUrlPath( $titleText ) {
+		return implode( '/', array_slice( explode( '/', $titleText ), 1 ) );
+	}
 
 	/**
 	 * Add global variables for Javascript
