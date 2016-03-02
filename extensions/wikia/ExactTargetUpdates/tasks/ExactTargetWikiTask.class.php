@@ -17,13 +17,11 @@ class ExactTargetWikiTask extends BaseTask {
 
 	/**
 	 * Update wiki or create if doesn't exist
-	 * @param array $cityData
+	 * @param int $iCityId
 	 * @return string
 	 * @throws \Wikia\Util\AssertionException
 	 */
-	public function updateWiki( array $cityData ) {
-		$iCityId = $cityData[ Enum::WIKI_CITY_ID ];
-
+	public function updateWiki( $iCityId ) {
 		Assert::true( !empty( $iCityId ), 'City ID missing' );
 
 		$client = $this->getClient();
