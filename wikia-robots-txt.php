@@ -40,7 +40,9 @@ if ( !$allowRobots ) {
 	$robots->disallowNamespace( NS_TEMPLATE );
 	$robots->disallowNamespace( NS_TEMPLATE_TALK );
 
-	//$robots->allowSpecialPage( 'Allpages' ); // TODO: SEO-64
+	if ( !empty( $wgUseSpecialAllpagesAsLocalSitemap ) ) {
+		$robots->allowSpecialPage( 'Allpages' );
+	}
 	$robots->allowSpecialPage( 'CreateNewWiki' );
 	$robots->allowSpecialPage( 'Forum' );
 	$robots->allowSpecialPage( 'Sitemap' );
