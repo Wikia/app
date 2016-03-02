@@ -347,11 +347,6 @@ $wgAutoloadClasses[ 'ExactTarget_WeekOfMonthEnum' ] = $dir . '/lib/ExactTarget_W
 $wgAutoloadClasses[ 'ExactTarget_YearlyRecurrencePatternTypeEnum' ] = $dir . '/lib/ExactTarget_YearlyRecurrencePatternTypeEnum.php';
 $wgAutoloadClasses[ 'ExactTarget_YearlyRecurrence' ] = $dir . '/lib/ExactTarget_YearlyRecurrence.php';
 
-/* Other classes */
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetRedoSoapRequestTask' ] = $dir . '/tasks/ExactTargetRedoSoapRequestTask.php';
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetSoapErrorHandler' ] = $dir . '/lib/ExactTargetSoapErrorHandler.php';
-
-
 /**
  * Registering hooks
  */
