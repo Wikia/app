@@ -184,6 +184,9 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 
 	/**
 	 * @desc checks if infobox builder should be used instead of regular editor
+	 * This method won't return true if `$wgEnablePortableInfoboxBuilderExt === false`
+	 * because `w.isTemplateBodySupportedInfobox` is set in `PortableInfoboxBuilderHooks::isTemplateBodySupportedInfobox`
+	 * 
 	 * @param {String} newTemplateType - choosen template type
 	 * @param {String} modalMode - mode in which modal was opened
 	 * @returns {Boolean}
