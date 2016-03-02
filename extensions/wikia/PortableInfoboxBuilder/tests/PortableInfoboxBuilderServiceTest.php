@@ -39,8 +39,13 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider infoboxArrayValidityDataProvider
 	 */
-	public function testInfoboxArrayValidity( $array, $expected, $message ) {
-		$this->assertEquals( $expected, $this->builderService->isValidInfoboxArray( $array ), $message );
+	public function testInfoboxArrayValidity( $array, $isSupportedMarkupReturnValue, $expected, $message ) {
+		$builderServiceMock = $this->getMockBuilder( 'PortableInfoboxBuilderService' )
+			->setMethods( [ 'isSupportedMarkup' ] )
+			->getMock();
+		$builderServiceMock->method('isSupportedMarkup')->willReturn($isSupportedMarkupReturnValue);
+
+		$this->assertEquals( $expected, $builderServiceMock->isValidInfoboxArray( $array ), $message );
 	}
 
 	/**
@@ -61,9 +66,10 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 
 	public function infoboxArrayValidityDataProvider() {
 		return [
-			[ [], true, 'Empty infobox array is valid' ],
-			[ [ '<infobox><data source="source1"></data></infobox>' ], true, 'Single infobox array is valid' ],
-			[ [ '<infobox><data source="source1"></data></infobox>', '<infobox><data source="source2"></data></infobox>' ], false, 'Multi- infobox array is not valid' ],
+			[ [], false, true, 'Empty infobox array is valid' ],
+			[ [ 'infobox1' ], true, true, 'Array with single supported infobox is valid' ],
+			[ [ 'infobox1', 'infobox2' ], true, false, 'Array with more than one infobox (even supported) is not valid' ],
+			[ [ 'infobox1' ], false, false, 'Array with single unsupported infobox is not valid' ],
 		];
 	}
 
