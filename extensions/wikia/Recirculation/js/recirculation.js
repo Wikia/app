@@ -62,6 +62,9 @@ define('ext.wikia.recirculation.recirculation', [
 				});
 				break;
 			case 'VIDEOS_MODULE':
+				if (!videosModule) {
+					return;
+				}
 				videosModule(element);
 				break;
 			default:
