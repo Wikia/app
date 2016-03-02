@@ -76,8 +76,10 @@ class ExactTargetWikiHooks {
 	 * @param int $wikiId
 	 */
 	private function queueUpdateWikiTask( $wikiId ) {
+		$helper = $this->getWikiHelper();
+
 		$task = new ExactTargetWikiTask();
-		$task->call( 'updateWiki', $wikiId );
+		$task->call( 'updateWiki', $wikiId, $helper->prepareWikiData( $wikiId ) );
 		$task->queue();
 	}
 
@@ -117,4 +119,13 @@ class ExactTargetWikiHooks {
 		];
 		return $aWfVarsTriggeringUpdate;
 	}
+
+	/**
+	 * A simple getter for an object of ExactTargetWikiHooksHelper class
+	 * @return ExactTargetWikiHooksHelper
+	 */
+	private function getWikiHelper() {
+		return new ExactTargetWikiHooksHelper();
+	}
+
 }

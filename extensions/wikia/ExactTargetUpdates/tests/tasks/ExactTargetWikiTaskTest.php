@@ -15,7 +15,7 @@ class ExactTargetWikiTaskTest extends WikiaBaseTest {
 		$clientMock = $this->prepareClientMock();
 		$task = $this->getWikiTask($clientMock);
 
-		$task->updateWiki( null );
+		$task->updateWiki( null, [ ] );
 	}
 
 	public function testShouldCallClientUpdateWikiMethodWithProperParams() {
@@ -25,7 +25,7 @@ class ExactTargetWikiTaskTest extends WikiaBaseTest {
 		$clientMock->expects( $this->once() )
 			->method( 'updateWiki' );
 
-		$task->updateWiki( 1 );
+		$task->updateWiki( 1, [ ] );
 	}
 
 	private function getWikiTask($client) {

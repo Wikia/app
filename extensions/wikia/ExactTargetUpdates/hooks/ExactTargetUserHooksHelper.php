@@ -4,7 +4,7 @@ namespace Wikia\ExactTarget;
 class ExactTargetUserHooksHelper {
 	/**
 	 * Prepares array of user fields needed to be passed by API
-	 * @param User $oUser
+	 * @param \User $oUser
 	 * @return array
 	 */
 	public function prepareUserParams( \User $oUser ) {
@@ -23,7 +23,7 @@ class ExactTargetUserHooksHelper {
 
 	/**
 	 * Prepares array of user properties fields needed to be passed by API
-	 * @param User $oUser
+	 * @param \User $oUser
 	 * @return array
 	 */
 	public function prepareUserPropertiesParams( \User $oUser ) {
