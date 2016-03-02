@@ -40,9 +40,55 @@ class PortableInfoboxBuilderHooks {
 			// Special:InfoboxBuilder/TemplateName/Subpage => Template:TemplateName/Subpage
 			$vars['templatePageUrl'] = Title::newFromText(
 				implode( '/', array_slice( explode( '/', $title->getText() ), 1 ) ),
-				NS_TEMPLATE )->getFullUrl();
+				NS_TEMPLATE
+			)->getFullUrl();
 		}
 
 		return true;
+	}
+
+	/**
+	 *
+	 * @param $page \Article|\Page
+	 * @param $user \User
+	 * @return bool
+	 */
+	public static function onCustomEditor( $page, $user ) {
+		$title = $page->getTitle();
+
+		if ( self::isEditableInfobox( $title, $user ) ) {
+			$url = SpecialPage::getTitleFor( 'InfoboxBuilder', $title->getText() )->getInternalURL();
+			F::app()->wg->out->redirect( $url );
+			return false;
+		}
+		return true;
+
+	}
+
+	/**
+	 * @param $title
+	 * @return bool
+	 */
+	private static function isInfoboxTemplate( $title ) {
+		$tc = new TemplateClassificationService();
+		$isInfobox = false;
+
+		try {
+			$type = $tc->getType( F::app()->wg->CityId, $title->getArticleID() );
+			$isInfobox = ( $type === TemplateClassificationService::TEMPLATE_INFOBOX );
+		} catch ( Swagger\Client\ApiException $e ) {
+			// If we cannot reach the service assume the default (false) to avoid overwriting data
+		}
+		return $isInfobox;
+	}
+
+	/**
+	 * @param $user
+	 * @param $title
+	 * @return bool
+	 */
+	private static function isEditableInfobox( $title, $user ) {
+		return self::isInfoboxTemplate( $title )
+		&& ( new \Wikia\TemplateClassification\Permissions() )->userCanChangeType( $user, $title );
 	}
 }
