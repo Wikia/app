@@ -22,6 +22,7 @@ class BaseRequestBuilder {
 	protected $properties;
 	protected $group;
 	protected $type;
+	protected $wikiCategories = [];
 	// empty means accept all types
 	private static $supportedTypes = [ ];
 
@@ -49,6 +50,11 @@ class BaseRequestBuilder {
 
 	public function withGroup( $group ) {
 		$this->group = $group;
+		return $this;
+	}
+
+	public function withWikiCategories( $categories ) {
+		$this->wikiCategories = $categories;
 		return $this;
 	}
 

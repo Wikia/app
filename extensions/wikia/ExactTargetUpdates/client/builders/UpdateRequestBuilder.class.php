@@ -9,7 +9,6 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 
 	private $userData;
 	private $edits;
-	private $wikiCategories = [];
 	private $wikiId;
 	private $wikiData;
 
@@ -20,11 +19,6 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 		self::WIKI_TYPE,
 		self::WIKI_CAT_TYPE
 	];
-
-	public function withWikiCategories( $categories ) {
-		$this->wikiCategories = $categories;
-		return $this;
-	}
 
 	public function withWikiId( $wikiId ) {
 		$this->wikiId = $wikiId;
