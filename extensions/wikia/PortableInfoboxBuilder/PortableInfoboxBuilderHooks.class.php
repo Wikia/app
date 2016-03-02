@@ -35,7 +35,7 @@ class PortableInfoboxBuilderHooks {
 		$title = $skin->getTitle();
 
 		if ( $title && $title->isSpecial( PortableInfoboxBuilderSpecialController::PAGE_NAME ) ) {
-			// remove the special page name from the title and returl url to the template
+			// remove the special page name from the title and return url to the template
 			// passed after the slash, i.e.
 			// Special:InfoboxBuilder/TemplateName/Subpage => Template:TemplateName/Subpage
 			$vars['templatePageUrl'] = Title::newFromText(
