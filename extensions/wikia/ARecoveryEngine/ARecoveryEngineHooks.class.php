@@ -25,6 +25,18 @@ class ARecoveryEngineHooks {
     function resetGPT() {
         window.googletag = {};
         window.googletag.cmd = [];
+
+		console.log("RESET...");
+        googletag.cmd.push(function () {
+		var slot = googletag.defineSlot('/5441/wka.ent/_firefly//article/gpt/TOP_RIGHT_BOXAD', [300, 250], 'TOP_RIGHT_BOXAD').addService(googletag.pubads());
+		googletag.pubads().enableSingleRequest();
+		googletag.enableServices();
+		googletag.display('TOP_RIGHT_BOXAD');
+
+		googletag.pubads().refresh([slot], {changeCorrelator: false});
+	});
+
+
     }
 
     /*
@@ -34,6 +46,7 @@ class ARecoveryEngineHooks {
     function resetAndLoadGPTRecovery () {
     	recoveryHasBeenRun = true;
     	alert("RUNNING RECOVERY...");
+    	resetGPT();
     }
 
     window._sp_ = window._sp_ || {};

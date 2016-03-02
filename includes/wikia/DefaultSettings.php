@@ -1878,4 +1878,5 @@ $wgReviveSpotlightsCountries = null;
 /**
  * Enable SourcePoint recovery
  */
+
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
