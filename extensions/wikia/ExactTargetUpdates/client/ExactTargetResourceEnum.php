@@ -7,8 +7,8 @@ class ResourceEnum {
 	const CUSTOMER_KEY_USER_GROUPS = 'user_groups';
 	const CUSTOMER_KEY_USER_ID_WIKI_ID = 'UserID_WikiID';
 	const CUSTOMER_KEY_USER_PROPERTIES = 'user_properties';
-	const CUSTOMER_KEY_WIKI_LIST = 'city-list'; // TODO: Resolve prod key 'city_list'
-	const CUSTOMER_KEY_WIKI_CAT_MAPPING = 'city-cat-mapping'; // TODO: Resolve prod key 'city_cat_mapping'
+	const CUSTOMER_KEY_WIKI_LIST = 'city_list';
+	const CUSTOMER_KEY_WIKI_CAT_MAPPING = 'city_cat_mapping';
 	const USER_EMAIL = 'user_email';
 	const USER_GROUP_GROUP = 'ug_group';
 	const USER_GROUP_USER = 'ug_user';
