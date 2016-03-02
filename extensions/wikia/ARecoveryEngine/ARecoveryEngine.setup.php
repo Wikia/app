@@ -14,3 +14,4 @@ $wgAutoloadClasses['ARecoveryEngineApiController'] = __DIR__ . '/ARecoveryEngine
 $wgHooks['WikiaSkinTopScripts'][] = 'ARecoveryEngineHooks::onWikiaSkinTopScripts';
 
 
+
