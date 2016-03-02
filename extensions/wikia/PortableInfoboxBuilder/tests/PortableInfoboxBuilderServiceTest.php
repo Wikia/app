@@ -24,8 +24,8 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	 * @dataProvider markupTranslationsDataProvider
 	 */
 	public function testTranslationFromMarkup( $markup, $expected ) {
-		$generated_json = json_decode($this->builderService->translateMarkupToData( $markup ));
-		$expected_json = json_decode($expected);
+		$generated_json = json_decode( $this->builderService->translateMarkupToData( $markup ) );
+		$expected_json = json_decode( $expected );
 		$this->assertEquals( $expected_json, $generated_json );
 	}
 
@@ -43,7 +43,7 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 		$builderServiceMock = $this->getMockBuilder( 'PortableInfoboxBuilderService' )
 			->setMethods( [ 'isSupportedMarkup' ] )
 			->getMock();
-		$builderServiceMock->method('isSupportedMarkup')->willReturn($isSupportedMarkupReturnValue);
+		$builderServiceMock->method( 'isSupportedMarkup' )->willReturn( $isSupportedMarkupReturnValue );
 
 		$this->assertEquals( $expected, $builderServiceMock->isValidInfoboxArray( $array ), $message );
 	}
@@ -51,16 +51,16 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider updateInfoboxProvider
 	 */
-	public function testUpdateInfobox($data, $expected) {
-		$this->assertEquals( $expected, $this->builderService->updateInfobox($data['oldInfobox'], $data['newInfobox'], $data['oldContent']));
+	public function testUpdateInfobox( $data, $expected ) {
+		$this->assertEquals( $expected, $this->builderService->updateInfobox( $data['oldInfobox'], $data['newInfobox'], $data['oldContent'] ) );
 	}
 
 	/**
 	 * @dataProvider updateDocumentationProvider
 	 */
-	public function testUpdateDocumentation($data, $expected) {
-		$this->assertEquals( $expected, $this->builderService->updateDocumentation($data['oldDoc'],
-			$data['newDoc'], $data['oldContent']));
+	public function testUpdateDocumentation( $data, $expected ) {
+		$this->assertEquals( $expected, $this->builderService->updateDocumentation( $data['oldDoc'],
+			$data['newDoc'], $data['oldContent'] ) );
 	}
 
 
