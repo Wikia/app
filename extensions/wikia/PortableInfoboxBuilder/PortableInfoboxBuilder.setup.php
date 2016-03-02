@@ -27,7 +27,10 @@ $wgAutoloadClasses[ 'PortableInfoboxBuilderHooks' ] = $dir . 'PortableInfoboxBui
 $wgSpecialPages[ 'InfoboxBuilder' ] = 'PortableInfoboxBuilderSpecialController';
 $wgSpecialPageGroups[ 'InfoboxBuilder' ] = 'wikia';
 
-// iframe loading sctipt
+// passing of top variables
+$wgHooks['WikiaSkinTopScripts'][] = 'PortableInfoboxBuilderHooks::onWikiaSkinTopScripts';
+
+// iframe loading script
 $wgHooks[ 'SkinAfterBottomScripts' ][] = 'PortableInfoboxBuilderHooks::onSkinAfterBottomScripts';
 
 // i18n mapping

@@ -8,7 +8,7 @@ use Wikia\TemplateClassification\Permissions;
 use Wikia\TemplateClassification\UnusedTemplates\Handler;
 
 class Hooks {
-	const TCS_BODY_CLASS_NAME = 'show-template-classification-modal';
+	const TC_BODY_CLASS_NAME = 'show-template-classification-modal';
 
 	/**
 	 * Register hooks for the extension
@@ -90,7 +90,9 @@ class Hooks {
 				( new \PortableInfoboxBuilderService() )->isValidInfoboxArray(
 					\PortableInfoboxDataService::newFromTitle( $title )->getInfoboxes()
 				);
-			$aVars['tcsBodyClassName'] = self::TCS_BODY_CLASS_NAME;
+			$aVars['tcBodyClassName'] = self::TC_BODY_CLASS_NAME;
+			$aVars['infoboxBuilderPath'] = \SpecialPage::getTitleFor( 'InfoboxBuilder', $title->getText() )
+				->getFullURL();
 
 		}
 		return true;
@@ -118,7 +120,7 @@ class Hooks {
 
 			// add additional class to body for new templates in order to hide editor while TCS modal is visible
 			if ( $title->getArticleID() === 0 && empty( $types['current'] && $types['new'] ) ) {
-				\OasisController::addBodyClass( self::TCS_BODY_CLASS_NAME );
+				\OasisController::addBodyClass( self::TC_BODY_CLASS_NAME );
 			}
 		}
 

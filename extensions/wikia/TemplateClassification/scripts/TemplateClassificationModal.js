@@ -13,7 +13,6 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	var $classificationForm,
 		$saveBtn,
 		$typeLabel,
-		$typeWrapper,
 		messagesLoaded,
 		modalConfig,
 		modalMode,
@@ -228,17 +227,16 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 
 	/**
 	 * @desc redirects to infobox builder tool
-	 * @param {String} title
 	 */
-	function redirectToInfoboxBuilder(title) {
-		w.location = w.location.origin + '/wiki/Special:InfoboxBuilder/' + title;
+	function redirectToInfoboxBuilder() {
+		w.location = w.infoboxBuilderPath;
 	}
 
 	/**
 	 * @desc removes special class from WikiaPage wrapper to show hidden editor
 	 */
 	function showHiddenEditor() {
-		$('body').removeClass(w.tcsBodyClassName);
+		$('body').removeClass(w.tcBodyClassName);
 	}
 
 	function updateEntryPointLabel(templateType) {

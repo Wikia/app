@@ -10,23 +10,22 @@ define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (w, pon
 			return {
 				isWikiaContext: true,
 				isLoggedIn: w.wqUserName !== null
-			}
+			};
 		};
 
 		/**
 		 * redirects to template page
-		 * @param {String} title
 		 * @returns {Boolean}
 		 */
-		this.redirectToTemplatePage = function (title) {
-			w.location = w.location.origin + '/wiki/Template:' + title;
+		this.redirectToTemplatePage = function () {
+			w.location = w.templatePageUrl;
 			return true;
-		}
+		};
 	}
 
 	// PontoBaseHandler extension pattern - check Ponto documentation for details
 	ponto.PontoBaseHandler.derive(InfoboxBuilderPonto);
-	InfoboxBuilderPonto.getInstance = function() {
+	InfoboxBuilderPonto.getInstance = function () {
 		return new InfoboxBuilderPonto();
 	};
 
