@@ -4,58 +4,6 @@ namespace Wikia\ExactTarget;
 class ExactTargetWikiTaskHelper {
 
 	/**
-	 * Prepares DataExtension objects data from a city_list record
-	 * @param  int $iCityId  A wiki's ID
-	 * @return array         An array with city_list DataExtension objects data in a valid format
-	 */
-	public function prepareWikiDataExtensionForCreate( $iCityId ) {
-		$aCustomerKeys = $this->getCustomerKeys();
-
-		/* Get wikidata from master */
-		$oWiki = \WikiFactory::getWikiById( $iCityId, true );
-
-		$aWikiData = [
-			'city_id' => $oWiki->city_id,
-			'city_path' => $oWiki->city_path,
-			'city_dbname' => $oWiki->city_dbname,
-			'city_sitename' => $oWiki->city_sitename,
-			'city_url' => $oWiki->city_url,
-			'city_created' => $oWiki->city_created,
-			'city_founding_user' => $oWiki->city_founding_user,
-			'city_adult' => $oWiki->city_adult,
-			'city_public' => $oWiki->city_public,
-			'city_title' => $oWiki->city_title,
-			'city_founding_email' => $oWiki->city_founding_email,
-			'city_lang' => $oWiki->city_lang,
-			'city_special' => $oWiki->city_special,
-			'city_umbrella' => $oWiki->city_umbrella,
-			'city_ip' => $oWiki->city_ip,
-			'city_google_analytics' => $oWiki->city_google_analytics,
-			'city_google_search' => $oWiki->city_google_search,
-			'city_google_maps' => $oWiki->city_google_maps,
-			'city_indexed_rev' => $oWiki->city_indexed_rev,
-			'city_lastdump_timestamp' => $oWiki->city_lastdump_timestamp,
-			'city_factory_timestamp' => $oWiki->city_factory_timestamp,
-			'city_useshared' => $oWiki->city_useshared,
-			'ad_cat' => $oWiki->ad_cat,
-			'city_flags' => $oWiki->city_flags,
-			'city_cluster' => $oWiki->city_cluster,
-			'city_last_timestamp' => $oWiki->city_last_timestamp,
-			'city_founding_ip' => $oWiki->city_founding_ip,
-			'city_vertical' => $oWiki->city_vertical,
-		];
-
-		$aWikiDataExtension = [
-			[
-				'CustomerKey' => $aCustomerKeys['city_list'],
-				'Properties' => $aWikiData,
-			],
-		];
-
-		return $aWikiDataExtension;
-	}
-
-	/**
 	 * Prepares array of params for ExactTarget API for retrieving DataExtension objects from city_list table
 	 * @param array $aProperties list of fields to retrieve
 	 * @param string $sFilterProperty name of field to filter
@@ -78,30 +26,6 @@ class ExactTargetWikiTaskHelper {
 		];
 
 		return $aApiParams;
-	}
-
-
-	/**
-	 * Prepares DataExtension objects data for Update from a city_list record
-	 * @param  int $iCityId  A wiki's ID
-	 * @return array         An array with city_list DataExtension objects data in a valid format
-	 */
-	public function prepareWikiDataExtensionForUpdate( $iCityId ) {
-		$aCustomerKeys = $this->getCustomerKeys();
-
-		$aKeys = [
-			'city_id' => $iCityId,
-		];
-
-		$aWikiData = $this->getWikiDataArray( $iCityId );
-		$aWikiDataExtension = [ 'DataExtension' => [] ];
-		$aWikiDataExtension['DataExtension'][] =  [
-				'CustomerKey' => $aCustomerKeys['city_list'],
-				'Keys' => $aKeys,
-				'Properties' => $aWikiData,
-		];
-
-		return $aWikiDataExtension;
 	}
 
 	/**

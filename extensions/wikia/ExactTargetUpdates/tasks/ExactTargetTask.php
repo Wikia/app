@@ -56,15 +56,6 @@ class ExactTargetTask extends BaseTask {
 		return $this->getTaskProvider()->getWikiDataVerificationTask();
 	}
 
-
-	/**
-	 * A simple getter for an object of an ExactTargetUpdateWikiTask class
-	 * @return ExactTargetUpdateWikiTask
-	 */
-	protected function getUpdateWikiHelper() {
-		return $this->getTaskProvider()->getUpdateWikiHelper();
-	}
-
 	/**
 	 * A simple getter for an object of an ExactTargetWikiTaskHelper class
 	 * @return ExactTargetWikiTaskHelper

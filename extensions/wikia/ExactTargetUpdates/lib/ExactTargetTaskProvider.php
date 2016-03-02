@@ -13,10 +13,4 @@ interface ExactTargetTaskProvider {
 	 */
 	public function getWikiDataVerificationTask();
 
-	/**
-	 * A simple getter for an object of an ExactTargetUpdateWikiTask class
-	 * @return ExactTargetUpdateWikiTask
-	 */
-	public function getUpdateWikiHelper();
-
 }
