@@ -1,6 +1,8 @@
 <?php
 namespace Wikia\ExactTarget;
 
+use Predis\Transaction\AbortedMultiExecException;
+use SebastianBergmann\Exporter\Exception;
 use Wikia\Logger\Loggable;
 use Wikia\ExactTarget\ResourceEnum as Enum;
 
@@ -149,6 +151,17 @@ class ExactTargetClient {
 			->build();
 
 		return $this->sendRequest( self::UPDATE_CALL, $request );
+	}
+
+	public function retrieveWikiCategories( $cityId ) {
+		$result = $this->retrieve(
+			[ Enum::WIKI_CITY_ID, Enum::WIKI_CAT_ID ],
+			Enum::WIKI_CITY_ID,
+			[ $cityId ],
+			Enum::CUSTOMER_KEY_WIKI_CITY_CAT_MAPPING
+		);
+
+		return ( new WikiCategoriesAdapter( $result ) )->getCategoriesMapping();
 	}
 
 	public function updateWikiCatMapping( $cityId, array $categories ) {

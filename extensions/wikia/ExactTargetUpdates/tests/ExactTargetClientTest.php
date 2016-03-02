@@ -187,6 +187,22 @@ class ExactTargetClientTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $soapClient );
 	}
 
+	public function testWikiCategoriesMappingRetrieval() {
+		$soapClientMock = $this->getMockBuilder( 'ExactTargetSoapClient' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'Retrieve' ] )
+			->getMock();
+		$soapClientMock->expects( $this->any() )
+			->method( 'Retrieve' )
+			->will( $this->returnValue(
+				$this->getResponse( [ [ 'city_id' => 1, 'cat_id' => 2 ] ], 'OK' )
+			) );
+
+		$client = new \Wikia\ExactTarget\ExactTargetClient( $soapClientMock );
+
+		$this->assertEquals( [ 1 => [ 2 ] ], $client->retrieveWikiCategories( 1 ) );
+	}
+
 	private function getResponse( $data, $status, $msg = '' ) {
 		$response = new stdClass();
 		$response->OverallStatus = $status;
