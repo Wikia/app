@@ -20,8 +20,8 @@ class WikiaNewFilesSpecialController extends WikiaSpecialPageController {
 	private function setupCachingAndRobots() {
 		global $wgAllowSpecialImagesInRobots, $wgUser;
 
-		if ( $wgAllowSpecialImagesInRobots ) {
-			if ( $wgUser && !$wgUser->isLoggedIn() ) {
+		if ( !empty( $wgAllowSpecialImagesInRobots ) ) {
+			if ( !empty( $wgUser ) && !$wgUser->isLoggedIn() ) {
 				$this->getContext()->getOutput()->setRobotPolicy( 'index,follow' );
 				$this->setVarnishCacheTime( WikiaResponse::CACHE_VERY_SHORT );
 			}
