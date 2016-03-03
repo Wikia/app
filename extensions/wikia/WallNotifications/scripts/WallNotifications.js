@@ -180,6 +180,7 @@ var WallNotifications = $.createClass(Object, {
 			controller: 'WallNotificationsExternalController',
 			method: 'markAllAsRead',
 			format: 'json',
+			type: 'POST',
 			data: {
 				forceAll: forceAll
 			},
