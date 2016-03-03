@@ -108,46 +108,6 @@ class Hooks {
 	 * @return bool true
 	 */
 	public static function onWikiFactoryExecuteComplete( \WikiFactoryLoader $wikiFactoryLoader ) {
-		global $wgDBname, $wgCityId, $maintClass;
-
-		$fields = [];
-
-		if ( !empty( $wgDBname ) ) {
-			$fields['db_name'] = $wgDBname;
-		}
-
-		if ( !empty( $wgCityId ) ) {
-			$fields['city_id'] = $wgCityId;
-		}
-
-		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
-			$fields['url'] = $_SERVER['REQUEST_URI'];
-
-			if ( isset( $_SERVER['REQUEST_METHOD'] ) ) {
-				$fields['http_method'] = $_SERVER['REQUEST_METHOD'];
-			}
-
-			if ( isset( $_SERVER['SERVER_NAME'] ) ) {
-				$fields['server'] = $_SERVER['SERVER_NAME'];
-			}
-
-			if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
-				$fields['referrer'] = $_SERVER['HTTP_REFERER'];
-			}
-		}
-
-		// add some context for maintenance scripts
-		if ( defined( 'RUN_MAINTENANCE_IF_MAIN' ) ) {
-			if ( isset( $_SERVER['SCRIPT_FILENAME'] ) ) {
-				$fields['maintenance_file'] = realpath( $_SERVER['SCRIPT_FILENAME'] );
-			}
-
-			if ( !empty( $maintClass ) ) {
-				$fields['maintenance_class'] = $maintClass;
-			}
-		}
-
-		WikiaLogger::instance()->pushContext( $fields, WebProcessor::RECORD_TYPE_FIELDS );
 		WikiaLogger::instance()->pushContextSource(
 			WikiaTracer::instance()->getContextSource(), WebProcessor::RECORD_TYPE_FIELDS );
 

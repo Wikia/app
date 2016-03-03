@@ -70,7 +70,7 @@ class WikiaTracer {
 	private function getApplicationContext() {
 		global $wgDBname, $wgCityId, $maintClass;
 
-		$context = [];
+		$context = [ ];
 
 		if ( !empty( $wgDBname ) ) {
 			$context['wiki_dbname'] = $wgDBname;
@@ -89,6 +89,11 @@ class WikiaTracer {
 
 			if ( isset( $_SERVER['SERVER_NAME'] ) ) {
 				$context['http_url_domain'] = $_SERVER['SERVER_NAME'];
+
+				$context['http_url'] = sprintf( "%s://%s%s",
+					( empty( $_SERVER['HTTPS'] ) ? 'http' : 'https' ),
+					$_SERVER['SERVER_NAME'],
+					$_SERVER['REQUEST_URI'] );
 			}
 
 			if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
@@ -107,7 +112,7 @@ class WikiaTracer {
 			}
 		}
 
-		return $this->removeNullEntries($context);
+		return $this->removeNullEntries( $context );
 	}
 
 	private function removeNullEntries( $array ) {
