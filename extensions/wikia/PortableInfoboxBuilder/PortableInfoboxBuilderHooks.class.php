@@ -39,7 +39,6 @@ class PortableInfoboxBuilderHooks {
 
 			$vars['templatePageUrl'] = Title::newFromText(
 				self::getUrlPath( $titleText ),
-				$title->getBaseText(),
 				NS_TEMPLATE
 			)->getFullUrl();
 		}
