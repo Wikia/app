@@ -200,7 +200,11 @@ module.exports = function (config) {
 
 			// Recirculation
 			'extensions/wikia/Recirculation/js/*.js',
-			'extensions/wikia/Recirculation/js/spec/**/*.spec.js'
+			'extensions/wikia/Recirculation/js/spec/**/*.spec.js',
+
+			//PortableInfoboxBuilder
+			'extensions/wikia/PortableInfoboxBuilder/js/PortableInfoboxBuilderTemplateClassificationHelper.js',
+			'extensions/wikia/PortableInfoboxBuilder/js/spec/PortableInfoboxBuilderTemplateClassificationHelper.spec.js',
 		]
 	});
 };
