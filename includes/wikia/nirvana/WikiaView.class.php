@@ -11,6 +11,7 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 use Wikia\Util\RequestId;
+use Wikia\Util\WikiaTracer;
 
 class WikiaView {
 	/**
@@ -350,8 +351,8 @@ class WikiaView {
 					'code' => $exception->getCode(),
 					'details' => ''
 				],
-				// return RequestID for easier errors reporting
-				'request_id' => RequestId::instance()->getRequestId(),
+				// return TraceId for easier errors reporting
+				'trace_id' => WikiaTracer::instance()->getTraceId(),
 			];
 
 			if ( is_callable( [ $exception, 'getDetails' ] ) ) {

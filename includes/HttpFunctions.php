@@ -506,16 +506,11 @@ class MWHttpRequest {
 			$this->setUserAgent( Http::userAgent() );
 		}
 
-		// @author macbre
-		// pass Request ID to internal requests
-		$this->setHeader( Wikia\Util\RequestId::REQUEST_HEADER_NAME, Wikia\Util\RequestId::instance()->getRequestId() );
-		// PLATFORM-1473: pass X-Wikia-Internal-Request
-		$this->setHeader( WebRequest::WIKIA_INTERNAL_REQUEST_HEADER, 'mediawiki' );
-
 		// Wikia change - begin - @author: wladek
-		// Append extra headers for internal requests, currently only X-Request-Origin-Host
-		if ( $this->internalRequest ) {
-			$this->setHeader( Wikia\Util\RequestId::REQUEST_HEADER_ORIGIN_HOST, wfHostname() );
+		$tracerInstance = \Wikia\Util\WikiaTracer::instance();
+		$tracerHeaders = !$this->internalRequest ? $tracerInstance->getPublicHeaders() : $tracerInstance->getInternalHeaders();
+		foreach ($tracerHeaders as $key => $value) {
+			$this->setHeader($key, $value);
 		}
 		// Wikia change - end
 	}

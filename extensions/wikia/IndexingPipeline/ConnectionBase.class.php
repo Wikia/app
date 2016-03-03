@@ -5,6 +5,7 @@ namespace Wikia\IndexingPipeline;
 use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 use Wikia\Util\RequestId;
+use Wikia\Util\WikiaTracer;
 
 class ConnectionBase {
 	const DURABLE_MESSAGE = 2;
@@ -45,7 +46,7 @@ class ConnectionBase {
 					'delivery_mode' => self::DURABLE_MESSAGE,
 					'expiration' => self::MESSAGE_TTL,
 					'app_id' => 'mediawiki',
-					'correlation_id' => RequestId::instance()->getRequestId(),
+					'trace_id' => WikiaTracer::instance()->getTraceId(),
 				] ),
 				$this->exchange,
 				$routingKey

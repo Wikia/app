@@ -263,6 +263,11 @@ class WikiaLogger implements LoggerInterface {
 		$this->getWebProcessor()->pushContext($context, $type);
 	}
 
+	/** @see \Wikia\Logger\WebProcessor::pushContextSource */
+	public function pushContextSource(ContextSource $contextSource, $type=WebProcessor::RECORD_TYPE_CONTEXT) {
+		$this->getWebProcessor()->pushContextSource($contextSource, $type);
+	}
+
 	/** @see \Wikia\Logger\WebProcessor::popContext */
 	public function popContext($type=WebProcessor::RECORD_TYPE_CONTEXT) {
 		$this->getWebProcessor()->popContext($type);

@@ -24,6 +24,7 @@ use Wikia\Tasks\Queues\Queue;
 use Wikia\Tasks\Queues\SMWQueue;
 use Wikia\Tasks\Tasks\BaseTask;
 use Wikia\Util\RequestId;
+use Wikia\Util\WikiaTracer;
 
 class AsyncTaskList {
 	/** @const int default wiki city to run tasks in (community) */
@@ -312,7 +313,7 @@ class AsyncTaskList {
 			'immediate' => false,
 			'delivery_mode' => 2, // persistent
 			'app_id' => 'mediawiki',
-			'correlation_id' => RequestId::instance()->getRequestId(),
+			'trace_id' => WikiaTracer::instance()->getTraceId(),
 		] );
 
 		if ( $channel === null ) {

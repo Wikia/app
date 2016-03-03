@@ -31,6 +31,8 @@ class RequestId {
 		return $instance;
 	}
 
+	private function __construct() {}
+
 	/*
 	 * Return unique request ID. Either:
 	 *

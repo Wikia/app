@@ -8,6 +8,7 @@
 namespace Wikia\Logger;
 
 use Wikia\Util\RequestId;
+use Wikia\Util\WikiaTracer;
 
 class Hooks {
 
@@ -147,9 +148,9 @@ class Hooks {
 			}
 		}
 
-		$fields['request_id'] = RequestId::instance()->getRequestId();
-
 		WikiaLogger::instance()->pushContext( $fields, WebProcessor::RECORD_TYPE_FIELDS );
+		WikiaLogger::instance()->pushContextSource(
+			WikiaTracer::instance()->getContextSource(), WebProcessor::RECORD_TYPE_FIELDS );
 
 		return true;
 	}
@@ -177,6 +178,12 @@ class Hooks {
 		if ( !empty( $fields ) ) {
 			WikiaLogger::instance()->pushContext( $fields, WebProcessor::RECORD_TYPE_FIELDS );
 		}
+
+		return true;
+	}
+
+	public static function onWikiaTracerUpdated( WikiaTracer $wikiaTracer ) {
+		WikiaLogger::instance()->pushContext( $wikiaTracer->getContext(), WebProcessor::RECORD_TYPE_FIELDS );
 
 		return true;
 	}
