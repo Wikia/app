@@ -19,6 +19,8 @@ class PortableInfoboxBuilderHooksTest extends WikiaBaseTest {
 	public function titleTextProvider() {
 		return [
 			[ '', ''],
+			[ 'Special:InfoboxBuilder', '' ],
+			[ 'Special:InfoboxBuilder/', '' ],
 			[ 'Special:InfoboxBuilder/TemplateName', 'TemplateName' ],
 			[ 'Special:InfoboxBuilder/TemplateName/Subpage', 'TemplateName/Subpage' ]
 		];

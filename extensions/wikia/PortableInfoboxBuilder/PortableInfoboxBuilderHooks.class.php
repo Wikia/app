@@ -35,12 +35,13 @@ class PortableInfoboxBuilderHooks {
 		$title = $skin->getTitle();
 
 		if ( $title && $title->isSpecial( PortableInfoboxBuilderSpecialController::PAGE_NAME ) ) {
-			$titleText = $title->getText();
+			$templateTitleText = self::getUrlPath( $titleText = $title->getText() );
 
-			$vars['templatePageUrl'] = Title::newFromText(
-				self::getUrlPath( $titleText ),
-				NS_TEMPLATE
-			)->getFullUrl();
+			// We need the variable only if Infobox Builder launches (there is a template title provided)
+			if ( $templateTitleText ) {
+				$templateTitle = Title::newFromText( $templateTitleText, NS_TEMPLATE );
+				$vars['templatePageUrl'] = $templateTitle->getFullUrl();
+			}
 		}
 
 		return true;
