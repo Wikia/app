@@ -38,7 +38,7 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 	}
 
 	public function builder() {
-		$title = explode( self::PATH_SEPARATOR, $this->getPar(), self::EXPLODE_LIMIT )[ 0 ];
+		$title = $this->getPar();
 		RenderContentOnlyHelper::setRenderContentVar( true );
 		RenderContentOnlyHelper::setRenderContentLevel( RenderContentOnlyHelper::LEAVE_GLOBAL_NAV_ONLY );
 		Wikia::addAssetsToOutput( 'portable_infobox_builder_scss' );
