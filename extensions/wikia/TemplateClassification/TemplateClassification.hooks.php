@@ -148,6 +148,8 @@ class Hooks {
 			} elseif ( $this->isEditPage() ) {
 				\Wikia::addAssetsToOutput( 'template_classification_in_edit_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
+
+				wfRunHooks('TemplateClassificationHooks::afterEditPageAssets');
 			}
 		} elseif ( $permissions->shouldDisplayBulkActions( $user, $title ) ) {
 			\Wikia::addAssetsToOutput( 'template_classification_in_category_js' );
