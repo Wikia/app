@@ -453,7 +453,6 @@ $wgHooks['Debug'][] = 'Wikia\\Logger\\Hooks::onDebug';
 $wgHooks['WikiFactory::execute'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecute';
 $wgHooks['WikiFactory::onExecuteComplete'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecuteComplete';
 $wgHooks['WebRequestInitialized'][] = 'Wikia\\Logger\\Hooks::onWebRequestInitialized';
-$wgHooks['WikiaTracerUpdated'][] = 'Wikia\\Logger\\Hooks::onWikiaTracerUpdated';
 
 // WikiaRequest
 $wgHooks['WebRequestInitialized'][] = 'Wikia\\Util\\WikiaTracer::updateInstanceFromMediawiki';

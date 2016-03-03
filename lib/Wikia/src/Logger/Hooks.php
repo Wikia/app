@@ -94,7 +94,7 @@ class Hooks {
 		/**
 		 * Setup the WikiaLogger as the error handler
 		 */
-		$logger = WikiaLogger::instance();
+			$logger = WikiaLogger::instance();
 
 		set_error_handler( [$logger, 'onError'], error_reporting() );
 		register_shutdown_function( [$logger, 'onShutdown'] );
@@ -151,39 +151,6 @@ class Hooks {
 		WikiaLogger::instance()->pushContext( $fields, WebProcessor::RECORD_TYPE_FIELDS );
 		WikiaLogger::instance()->pushContextSource(
 			WikiaTracer::instance()->getContextSource(), WebProcessor::RECORD_TYPE_FIELDS );
-
-		return true;
-	}
-
-	/**
-	 * A hook for adds client IP to the fields sent to Logstash
-	 *
-	 * @param \WebRequest $webRequest
-	 * @return bool true
-	 */
-	public static function onWebRequestInitialized( \WebRequest $webRequest ) {
-		$fields = [];
-
-		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
-			$ip = $webRequest->getIP();
-			if ( $ip === null ) {
-				$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : null;
-			}
-
-			if ( $ip != null ) {
-				$fields['ip'] = $ip;
-			}
-		}
-
-		if ( !empty( $fields ) ) {
-			WikiaLogger::instance()->pushContext( $fields, WebProcessor::RECORD_TYPE_FIELDS );
-		}
-
-		return true;
-	}
-
-	public static function onWikiaTracerUpdated( WikiaTracer $wikiaTracer ) {
-		WikiaLogger::instance()->pushContext( $wikiaTracer->getContext(), WebProcessor::RECORD_TYPE_FIELDS );
 
 		return true;
 	}
