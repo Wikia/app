@@ -94,7 +94,7 @@ class Hooks {
 		/**
 		 * Setup the WikiaLogger as the error handler
 		 */
-			$logger = WikiaLogger::instance();
+		$logger = WikiaLogger::instance();
 
 		set_error_handler( [$logger, 'onError'], error_reporting() );
 		register_shutdown_function( [$logger, 'onShutdown'] );
