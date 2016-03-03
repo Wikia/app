@@ -12,7 +12,7 @@ class WhatIsMyIP extends SpecialPage
 		parent::__construct( 'WhatIsMyIP' /*class*/ );
 	}
 
-	function execute ( $part )
+	function execute ( $par )
 	{
 		global $wgOut;
 		$wgOut->SetPageTitle( wfMsg( 'whatismyip' ) );
