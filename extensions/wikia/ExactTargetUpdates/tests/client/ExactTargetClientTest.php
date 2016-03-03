@@ -3,7 +3,7 @@
 class ExactTargetClientTest extends WikiaBaseTest {
 
 	public function setUp() {
-		$this->setupFile = __DIR__ . '/../ExactTargetUpdates.setup.php';
+		$this->setupFile = __DIR__ . '/../../ExactTargetUpdates.setup.php';
 		parent::setUp();
 	}
 
@@ -166,7 +166,7 @@ class ExactTargetClientTest extends WikiaBaseTest {
 		$getExactTargetClient = new ReflectionMethod( '\Wikia\ExactTarget\ExactTargetClient', 'getExactTargetClient' );
 		$getExactTargetClient->setAccessible( true );
 
-		$wsdlPath = __DIR__ . '/resources/mocked.wsdl';
+		$wsdlPath = __DIR__ . '/../resources/mocked.wsdl';
 		$username = 'test_username';
 		$password = 'test_password';
 		$wrapper = new \Wikia\Util\GlobalStateWrapper( [ 'wgExactTargetApiConfig' => [

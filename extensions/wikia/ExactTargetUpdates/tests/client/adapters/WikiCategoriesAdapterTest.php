@@ -3,7 +3,7 @@
 class WikiCategoriesAdapterTest extends WikiaBaseTest {
 
 	public function setUp() {
-		$this->setupFile = __DIR__ . '/../../ExactTargetUpdates.setup.php';
+		$this->setupFile = __DIR__ . '/../../../ExactTargetUpdates.setup.php';
 		parent::setUp();
 	}
 
