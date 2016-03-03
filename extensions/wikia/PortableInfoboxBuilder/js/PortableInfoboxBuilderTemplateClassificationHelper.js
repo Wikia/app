@@ -8,14 +8,14 @@ define('wikia.infoboxBuilder.templateClassificationHelper', ['wikia.window', 'jq
 	 *
 	 * @param {String} newTemplateType - choosen template type
 	 * @param {String} modalMode - mode in which modal was opened
-	 * @param {String} notSupporteModaldMode - mode in which modal was opened
+	 * @param {String} notSupportedModaldMode - mode in which modal was opened
 	 * @returns {Boolean}
 	 */
-	function shouldRedirectToInfoboxBuilder(newTemplateType, modalMode, notSupporteModaldMode) {
+	function shouldRedirectToInfoboxBuilder(newTemplateType, modalMode, notSupportedModaldMode) {
 		return win.infoboxBuilderPath &&
 			win.isTemplateBodySupportedInfobox &&
 			newTemplateType === 'infobox' &&
-			modalMode !== notSupporteModaldMode;
+			modalMode !== notSupportedModaldMode;
 	}
 
 	/**
