@@ -91,7 +91,7 @@ class PortableInfoboxBuilderHooks {
 	public static function onCustomEditor( $page, $user ) {
 		$title = $page->getTitle();
 
-		if ( self::isEditableInfobox( $title, $user ) ) {
+		if ( self::canUseInfoboxBuilder( $title, $user ) ) {
 			$url = SpecialPage::getTitleFor( 'InfoboxBuilder', $title->getText() )->getInternalURL();
 			F::app()->wg->out->redirect( $url );
 			return false;
@@ -122,8 +122,11 @@ class PortableInfoboxBuilderHooks {
 	 * @param $title
 	 * @return bool
 	 */
-	private static function isEditableInfobox( $title, $user ) {
+	private static function canUseInfoboxBuilder( $title, $user ) {
 		return self::isInfoboxTemplate( $title )
+		&& ( new \PortableInfoboxBuilderService() )->isValidInfoboxArray(
+			\PortableInfoboxDataService::newFromTitle( $title )->getInfoboxes()
+		)
 		&& ( new \Wikia\TemplateClassification\Permissions() )->userCanChangeType( $user, $title );
 	}
 }
