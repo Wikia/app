@@ -23,8 +23,7 @@ use Wikia\Tasks\Queues\PurgeQueue;
 use Wikia\Tasks\Queues\Queue;
 use Wikia\Tasks\Queues\SMWQueue;
 use Wikia\Tasks\Tasks\BaseTask;
-use Wikia\Util\RequestId;
-use Wikia\Util\WikiaTracer;
+use Wikia\Tracer\WikiaTracer;
 
 class AsyncTaskList {
 	/** @const int default wiki city to run tasks in (community) */

@@ -7,8 +7,7 @@
 
 namespace Wikia\Logger;
 
-use Wikia\Util\RequestId;
-use Wikia\Util\WikiaTracer;
+use Wikia\Tracer\WikiaTracer;
 
 class Hooks {
 

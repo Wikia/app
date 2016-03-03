@@ -947,8 +947,8 @@ abstract class DatabaseBase implements DatabaseType {
 
 		# @author: wladek
 		$traceIdComment = '';
-		if ( class_exists("\\Wikia\\Util\\WikiaTracer") ) {
-			$traceIdComment = sprintf(" - %s",\Wikia\Util\WikiaTracer::instance()->getTraceId());
+		if ( class_exists("\\Wikia\\Tracer\\WikiaTracer") ) {
+			$traceIdComment = sprintf(" - %s",\Wikia\Tracer\WikiaTracer::instance()->getTraceId());
 		}
 		# Wikia change - end
 

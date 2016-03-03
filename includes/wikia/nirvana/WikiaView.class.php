@@ -10,8 +10,7 @@
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
-use Wikia\Util\RequestId;
-use Wikia\Util\WikiaTracer;
+use Wikia\Tracer\WikiaTracer;
 
 class WikiaView {
 	/**

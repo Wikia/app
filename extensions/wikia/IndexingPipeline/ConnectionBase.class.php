@@ -4,8 +4,7 @@ namespace Wikia\IndexingPipeline;
 
 use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Message\AMQPMessage;
-use Wikia\Util\RequestId;
-use Wikia\Util\WikiaTracer;
+use Wikia\Tracer\WikiaTracer;
 
 class ConnectionBase {
 	const DURABLE_MESSAGE = 2;

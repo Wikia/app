@@ -454,11 +454,9 @@ $wgHooks['WikiFactory::execute'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecute
 $wgHooks['WikiFactory::onExecuteComplete'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecuteComplete';
 
 // WikiaRequest
-$wgHooks['WebRequestInitialized'][] = 'Wikia\\Util\\WikiaTracer::updateInstanceFromMediawiki';
-$wgHooks['AfterSetupUser'][] = 'Wikia\\Util\\WikiaTracer::updateInstanceFromMediawiki';
-$wgHooks['AfterUserLogin'][] = 'Wikia\\Util\\WikiaTracer::updateInstanceFromMediawiki';
-
-
+$wgHooks['WebRequestInitialized'][] = 'Wikia\\Tracer\\WikiaTracer::updateInstanceFromMediawiki';
+$wgHooks['AfterSetupUser'][] = 'Wikia\\Tracer\\WikiaTracer::updateInstanceFromMediawiki';
+$wgHooks['AfterUserLogin'][] = 'Wikia\\Tracer\\WikiaTracer::updateInstanceFromMediawiki';
 
 // memcache stats (PLATFORM-292)
 $wgAutoloadClasses['Wikia\\Memcached\\MemcachedStats'] = "$IP/includes/wikia/memcached/MemcachedStats.class.php";

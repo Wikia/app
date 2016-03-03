@@ -5,12 +5,12 @@
  *
  * Usage:
  *
- * Wikia\Util\RequestId::instance()->getRequestId()
+ * Wikia\Tracer\RequestId::instance()->getRequestId()
  *
  * @see PLATFORM-362
  */
 
-namespace Wikia\Util;
+namespace Wikia\Tracer;
 
 class RequestId {
 
@@ -30,8 +30,6 @@ class RequestId {
 
 		return $instance;
 	}
-
-	private function __construct() {}
 
 	/*
 	 * Return unique request ID. Either:

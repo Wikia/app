@@ -1,7 +1,6 @@
 <?php
 
-use Wikia\Util\RequestId;
-use Wikia\Util\WikiaTracer;
+use Wikia\Tracer\WikiaTracer;
 
 /**
  * TransactionTraceNewrelic implements the TransactionTrace plugin interface and handles reporting

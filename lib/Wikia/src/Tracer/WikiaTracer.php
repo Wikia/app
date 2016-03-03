@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikia\Util;
+namespace Wikia\Tracer;
 
 use Wikia\Logger\ContextSource;
 
@@ -52,16 +52,62 @@ class WikiaTracer {
 	}
 
 	private function updateContext() {
-		$newContext = $this->removeNullEntries( [
-			'client_ip' => $this->clientIp,
-			'client_beacon_id' => $this->clientBeaconId,
-			'client_device_id' => $this->clientDeviceId,
-			'user_id' => $this->userId,
-			'trace_id' => $this->traceId,
-		] );
+		$newContext = array_merge(
+			$this->getApplicationContext(),
+			$this->removeNullEntries( [
+				'client_ip' => $this->clientIp,
+				'client_beacon_id' => $this->clientBeaconId,
+				'client_device_id' => $this->clientDeviceId,
+				'user_id' => $this->userId,
+				'trace_id' => $this->traceId,
+			] )
+		);
 		if ( $this->contextSource->getContext() !== $newContext ) {
 			$this->contextSource->setContext( $newContext ); // this will notify listeners
 		}
+	}
+
+	private function getApplicationContext() {
+		global $wgDBname, $wgCityId, $maintClass;
+
+		$context = [];
+
+		if ( !empty( $wgDBname ) ) {
+			$context['wiki_dbname'] = $wgDBname;
+		}
+
+		if ( !empty( $wgCityId ) ) {
+			$context['wiki_id'] = $wgCityId;
+		}
+
+		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
+			$context['http_url_path'] = $_SERVER['REQUEST_URI'];
+
+			if ( isset( $_SERVER['REQUEST_METHOD'] ) ) {
+				$context['http_method'] = $_SERVER['REQUEST_METHOD'];
+			}
+
+			if ( isset( $_SERVER['SERVER_NAME'] ) ) {
+				$context['http_url_domain'] = $_SERVER['SERVER_NAME'];
+			}
+
+			if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
+				$context['http_referrer'] = $_SERVER['HTTP_REFERER'];
+			}
+		}
+
+		// add some context for maintenance scripts
+		if ( defined( 'RUN_MAINTENANCE_IF_MAIN' ) ) {
+			if ( isset( $_SERVER['SCRIPT_FILENAME'] ) ) {
+				$context['maintenance_file'] = realpath( $_SERVER['SCRIPT_FILENAME'] );
+			}
+
+			if ( !empty( $maintClass ) ) {
+				$context['maintenance_class'] = $maintClass;
+			}
+		}
+
+		return $this->removeNullEntries($context);
 	}
 
 	private function removeNullEntries( $array ) {
