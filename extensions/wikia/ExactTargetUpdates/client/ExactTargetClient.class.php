@@ -240,9 +240,9 @@ class ExactTargetClient {
 
 	protected function getExactTargetClient() {
 		if ( !isset( $this->client ) ) {
-			global $wgExactTargetApiConfig;
+			global $wgExactTargetApiConfig, $wgExactTargetSoapOptions;
 			$wsdl = $wgExactTargetApiConfig[ 'wsdl' ];
-			$oClient = new \ExactTargetSoapClient( $wsdl, [ 'trace' => 1, 'exceptions' => true ] );
+			$oClient = new \ExactTargetSoapClient( $wsdl, $wgExactTargetSoapOptions );
 			$oClient->username = $wgExactTargetApiConfig[ 'username' ];
 			$oClient->password = $wgExactTargetApiConfig[ 'password' ];
 			$this->client = $oClient;
