@@ -4,7 +4,7 @@ describe('wikia.infoboxBuilder.templateClassificationHelper', function () {
 		supportedTemplateType = 'infobox',
 		notSupportedTemplateType = 'testType',
 		modalMode = 'testMode',
-		notSupportedModalMode = 'notSupporteModaldMode',
+		notSupportedModalMode = 'notSupportedModalMode',
 		removeClassSpy = jasmine.createSpy('removeClassSpy'),
 		jQueryMock = function () {
 			return {
