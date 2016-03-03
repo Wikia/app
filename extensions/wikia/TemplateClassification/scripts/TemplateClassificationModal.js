@@ -145,8 +145,6 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling, infoboxBuilder
 				label: 'close-event'
 			});
 
-			console.log('AAAAA ', infoboxBuilderHelper);
-
 			if (infoboxBuilderHelper) {
 				infoboxBuilderHelper.showHiddenEditor();
 			}
