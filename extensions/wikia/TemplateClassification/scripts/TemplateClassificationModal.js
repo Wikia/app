@@ -6,8 +6,8 @@
  */
 define('TemplateClassificationModal',
 	['jquery', 'wikia.window', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.tracker', 'wikia.throbber',
-		'TemplateClassificationLabeling'],
-function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
+		'TemplateClassificationLabeling', require.optional('wikia.infoboxBuilder.templateClassificationHelper')],
+function ($, w, mw, loader, nirvana, tracker, throbber, labeling, infoboxBuilderHelper) {
 	'use strict';
 
 	var $classificationForm,
@@ -145,7 +145,11 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 				label: 'close-event'
 			});
 
-			showHiddenEditor();
+			console.log('AAAAA ', infoboxBuilderHelper);
+
+			if (infoboxBuilderHelper) {
+				infoboxBuilderHelper.showHiddenEditor();
+			}
 		});
 
 		if (newTypeModes.indexOf(modalMode) >= 0) {
@@ -182,22 +186,6 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		}
 	}
 
-	/**
-	 * @desc checks if infobox builder should be used instead of regular editor
-	 * This method won't return true if `$wgEnablePortableInfoboxBuilderExt === false`
-	 * because `w.isTemplateBodySupportedInfobox` is set in `PortableInfoboxBuilderHooks::isTemplateBodySupportedInfobox`
-	 * 
-	 * @param {String} newTemplateType - choosen template type
-	 * @param {String} modalMode - mode in which modal was opened
-	 * @returns {Boolean}
-	 */
-	function shouldRedirectToInfoboxBuilder(newTemplateType, modalMode) {
-		return w.infoboxBuilderPath &&
-			w.isTemplateBodySupportedInfobox &&
-			newTemplateType === 'infobox' &&
-			modalMode !== forceClassificationModalMode;
-	}
-
 	function processSave(modalInstance) {
 		var newTemplateType = $('#TemplateClassificationEditForm [name="template-classification-types"]:checked').val();
 
@@ -221,26 +209,17 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 
 		if (modalMode === forceClassificationModalMode && newTemplateType) {
 			$('#wpSave').click();
-		} else if (shouldRedirectToInfoboxBuilder(newTemplateType, modalMode)) {
+		} else if (
+			infoboxBuilderHelper &&
+			infoboxBuilderHelper.shouldRedirectToInfoboxBuilder(
+				newTemplateType, modalMode, forceClassificationModalMode
+			)
+		) {
 			throbber.show(modalInstance.$content);
-			redirectToInfoboxBuilder();
+			infoboxBuilderHelper.redirectToInfoboxBuilder();
 		} else {
 			modalInstance.trigger('close');
 		}
-	}
-
-	/**
-	 * @desc redirects to infobox builder tool
-	 */
-	function redirectToInfoboxBuilder() {
-		w.location = w.infoboxBuilderPath;
-	}
-
-	/**
-	 * @desc removes special class from WikiaPage wrapper to show hidden editor
-	 */
-	function showHiddenEditor() {
-		$('body').removeClass(w.tcBodyClassName);
 	}
 
 	function updateEntryPointLabel(templateType) {
