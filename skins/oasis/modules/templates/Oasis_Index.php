@@ -59,6 +59,7 @@
 <? endif ?>
 
 <?= $headItems ?>
+<?= $nielsen ?>
 
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
@@ -104,7 +105,6 @@
 <?php } ?>
 <?= $bottomScripts ?>
 
-<?= $nielsen ?>
 </body>
 
 <?= wfReportTime() . "\n" ?>
