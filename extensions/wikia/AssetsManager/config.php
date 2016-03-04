@@ -97,7 +97,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/recovery/helper.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/floatingMedrec.js',
-		'//extensions/wikia/AdEngine/js/slot/inContentPlayer.js',
+		'//extensions/wikia/AdEngine/js/slot/inContent.js',
 		'//extensions/wikia/AdEngine/js/slot/scrollHandler.js',
 		'//extensions/wikia/AdEngine/js/slot/skyScraper3.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
@@ -130,7 +130,6 @@ $config['recirculation_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => array(
-		'#group_videos_module_js',
 		'//extensions/wikia/Recirculation/js/helpers/GoogleMatchHelper.js',
 		'//extensions/wikia/Recirculation/js/tracker.js',
 		'//extensions/wikia/Recirculation/js/utils.js',
@@ -952,23 +951,6 @@ $config['wikiamobile_categorypage_js'] = array(
 		'//extensions/wikia/WikiaMobile/js/category_page.js',
 	)
 );
-
-$config['wikiapoll_wikiamobile_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		'//extensions/wikia/WikiaPoll/css/WikiaPoll.wikiamobile.scss',
-	)
-);
-
-$config['wikiapoll_wikiamobile_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		'//extensions/wikia/WikiaPoll/js/WikiaPoll.wikiamobile.js',
-	)
-);
-
 
 $config['special_contact_wikiamobile_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
@@ -2485,6 +2467,13 @@ $config[ 'portable_infobox_builder_js' ] = [
 		'//resources/wikia/libraries/Ponto/ponto.js',
 		'//extensions/wikia/PortableInfoboxBuilder/js/PortableInfoboxBuilderPonto.js',
 		'//extensions/wikia/PortableInfoboxBuilder/js/PortableInfoboxBuilder.js'
+	]
+];
+
+$config[ 'portable_infobox_builder_template_classification_helper_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/PortableInfoboxBuilder/js/PortableInfoboxBuilderTemplateClassificationHelper.js'
 	]
 ];
 

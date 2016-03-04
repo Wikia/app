@@ -7,6 +7,7 @@
 
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/mixins/chevron';
 @import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxVariables';
 
 @mixin commonElementsStyles() {
@@ -59,7 +60,7 @@
 
 	.pi-data-label {
 		@include flex-basis($infobox-width / 3);
-		max-width: $infobox-width / 3 - $padding;
+		overflow: hidden;
 		word-wrap: break-word;
 	}
 
@@ -102,5 +103,19 @@
 	.pi-data-label {
 		margin-bottom: inherit;
 		margin-top: 0;
+	}
+}
+
+@mixin collapsibleChevron() {
+	@include right-chevron($infobox-chevron-size, 2px, 'up', $color-text);
+	padding-right: $infobox-item-margin * 3 + $infobox-chevron-size;
+	position: relative;
+
+	&:after {
+		display: block;
+		margin-top: -($infobox-chevron-size / 2) + 2;
+		position: absolute;
+		right: $infobox-item-margin * 2;
+		top: 50%;
 	}
 }

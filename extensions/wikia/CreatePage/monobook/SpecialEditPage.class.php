@@ -22,7 +22,7 @@ abstract class SpecialEditPage extends SpecialPage {
 		}
 	}
 
-	public function execute() {
+	public function execute( $par ) {
 		global $wgRequest, $wgUser;
 
 		$wgRequest->setVal( 'action', 'edit' );

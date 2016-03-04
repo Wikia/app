@@ -549,6 +549,19 @@ describe('AdContext', function () {
 		expect(adContext.getContext().slots.incontentPlayer).toBeFalsy();
 	});
 
+	it('enables incontent_leaderboard slot when ' +
+	'country in instatnGlobals.wgAdDriverIncontentLeaderboardSlotCountries', function () {
+		var adContext;
+
+		mocks.instantGlobals = {wgAdDriverIncontentLeaderboardSlotCountries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
+		adContext = getModule();
+		expect(adContext.getContext().slots.incontentLeaderboard).toBeTruthy();
+
+		mocks.instantGlobals = {wgAdDriverIncontentLeaderboardSlotCountries: ['YY']};
+		adContext = getModule();
+		expect(adContext.getContext().slots.incontentLeaderboard).toBeFalsy();
+	});
+
 	it('enables incontent_player slot when url param incontentplayer is set', function () {
 		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
 			return param === 'incontentplayer' ?  '1' : '0';

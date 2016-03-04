@@ -14,12 +14,4 @@ class NodeHeader extends Node {
 		$object->type = $this->getType();
 		return $object;
 	}
-
-	public function hasValidContent() {
-		$contents = (string)$this->xmlNode;
-		if( !empty($contents) && $contents !== '0' ) {
-			return true;
-		}
-		return false;
-	}
 }
