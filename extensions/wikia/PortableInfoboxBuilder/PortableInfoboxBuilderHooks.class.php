@@ -4,17 +4,6 @@ class PortableInfoboxBuilderHooks {
 	const INFOBOX_BUILDER_SPECIAL_PAGE = 'Special:InfoboxBuilder';
 
 	/**
-	 * Adds infobox builder helper js assets to Template Classification on Edit page
-	 *
-	 * @return true
-	 */
-	public function onTCAfterEditPageAssets() {
-		\Wikia::addAssetsToOutput( 'portable_infobox_builder_template_classification_helper_js' );
-
-		return true;
-	}
-
-	/**
 	 * @param Skin $skin
 	 * @param string $text
 	 *
