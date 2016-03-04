@@ -9,8 +9,21 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 
 	private $userData;
 	private $edits;
+	private $wikiData;
 
-	private static $supportedTypes = [ self::PROPERTIES_TYPE, self::EDITS_TYPE, self::USER_TYPE ];
+	private static $supportedTypes = [
+		self::PROPERTIES_TYPE,
+		self::EDITS_TYPE,
+		self::USER_TYPE,
+		self::WIKI_TYPE,
+		self::WIKI_CAT_TYPE
+	];
+
+	public function withWikiData( $wikiId, array $wikiData ) {
+		$this->wikiData = $wikiData;
+		$this->wikiId = $wikiId;
+		return $this;
+	}
 
 	public function withUserData( array $userData ) {
 		$this->userData = $userData;
@@ -36,6 +49,12 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 				break;
 			case self::EDITS_TYPE:
 				$objects = $this->prepareUserEditsParams( $this->edits );
+				break;
+			case self::WIKI_TYPE:
+				$objects = $this->prepareWikiParams( $this->wikiData );
+				break;
+			case self::WIKI_CAT_TYPE:
+				$objects = $this->prepareWikiCategoriesMapping();
 				break;
 		}
 		// make it soap vars
@@ -97,6 +116,21 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 		}
 
 		return $result;
+	}
+
+	private function prepareWikiParams( $wikiData ) {
+		return [ $this->prepareDataObject( Enum::CUSTOMER_KEY_WIKI_LIST,
+			[ Enum::WIKI_ID => $this->wikiId ], $wikiData ) ];
+	}
+
+	private function prepareWikiCategoriesMapping() {
+		$objects = [ ];
+		foreach ($this->wikiCategories as $category ) {
+			$objects[] = $this->prepareDataObject( Enum::CUSTOMER_KEY_WIKI_CAT_MAPPING,
+				[ ], [ Enum::WIKI_ID => $category[ 'city_id' ], Enum::WIKI_CAT_ID => $category[ 'cat_id' ] ] );
+		}
+
+		return $objects;
 	}
 
 }

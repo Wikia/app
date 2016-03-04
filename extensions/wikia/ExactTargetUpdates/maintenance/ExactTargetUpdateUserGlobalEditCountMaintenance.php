@@ -12,8 +12,7 @@
 require_once( __DIR__.'/../../../../maintenance/Maintenance.php' );
 
 use Wikia\ExactTarget\ExactTargetUserHooksHelper;
-use Wikia\ExactTarget\ExactTargetApiDataExtension;
-use Wikia\ExactTarget\ExactTargetUpdateUserTask;
+use Wikia\ExactTarget\ExactTargetClient;
 
 class ExactTargetUpdateUserGlobalEditCountMaintenance extends Maintenance {
 
@@ -69,7 +68,7 @@ class ExactTargetUpdateUserGlobalEditCountMaintenance extends Maintenance {
 	}
 
 	private function addUsersUpdateTasks( $aUsersData ) {
-		$aUsersDataChunked = array_chunk( $aUsersData, ExactTargetApiDataExtension::OBJECTS_PER_REQUEST_LIMIT );
+		$aUsersDataChunked = array_chunk( $aUsersData, ExactTargetClient::OBJECTS_PER_REQUEST_LIMIT );
 		foreach ( $aUsersDataChunked as $aUsersDataChunk ) {
 			$this->addUsersUpdateTask( $aUsersDataChunk );
 		}

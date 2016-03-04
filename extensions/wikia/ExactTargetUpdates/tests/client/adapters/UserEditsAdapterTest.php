@@ -3,14 +3,14 @@
 class UserEditsAdapterTest extends WikiaBaseTest {
 
 	public function setUp() {
-		$this->setupFile = __DIR__ . '/../../ExactTargetUpdates.setup.php';
+		$this->setupFile = __DIR__ . '/../../../ExactTargetUpdates.setup.php';
 		parent::setUp();
 	}
 
 	public function testGetEdits() {
 		// Params
-		$param = new stdClass();
-		$param->Properties->Property = [
+		$result = new stdClass();
+		$result->Properties->Property = [
 			$this->buildResultPair( 'user_id', 1 ),
 			$this->buildResultPair( 'wiki_id', 177 ),
 			$this->buildResultPair( 'contributions', 6 ),
@@ -23,7 +23,7 @@ class UserEditsAdapterTest extends WikiaBaseTest {
 			]
 		];
 
-		$userEdits = ( new \Wikia\ExactTarget\UserEditsAdapter( $param ) )->getEdits();
+		$userEdits = ( new \Wikia\ExactTarget\UserEditsAdapter( [ $result ] ) )->getEdits();
 		$this->assertEquals( $expected, $userEdits );
 	}
 
@@ -39,7 +39,7 @@ class UserEditsAdapterTest extends WikiaBaseTest {
 			$this->buildResultPair( 'wiki_id', 831 ),
 			$this->buildResultPair( 'contributions', 8 ),
 		];
-		$param = [
+		$results = [
 			$this->wrapProperty( $p1 ),
 			$this->wrapProperty( $p2 )
 		];
@@ -52,7 +52,7 @@ class UserEditsAdapterTest extends WikiaBaseTest {
 			]
 		];
 
-		$userEdits = ( new \Wikia\ExactTarget\UserEditsAdapter( $param ) )->getEdits();
+		$userEdits = ( new \Wikia\ExactTarget\UserEditsAdapter( $results ) )->getEdits();
 		$this->assertEquals( $expected, $userEdits );
 	}
 
@@ -68,7 +68,7 @@ class UserEditsAdapterTest extends WikiaBaseTest {
 			$this->buildResultPair( 'wiki_id', 177 ),
 			$this->buildResultPair( 'contributions', 8 ),
 		];
-		$param = [
+		$results = [
 			$this->wrapProperty( $p1 ),
 			$this->wrapProperty( $p2 )
 		];
@@ -83,7 +83,7 @@ class UserEditsAdapterTest extends WikiaBaseTest {
 			]
 		];
 
-		$userEdits = ( new \Wikia\ExactTarget\UserEditsAdapter( $param ) )->getEdits();
+		$userEdits = ( new \Wikia\ExactTarget\UserEditsAdapter( $results ) )->getEdits();
 		$this->assertEquals( $expected, $userEdits );
 	}
 
@@ -104,7 +104,7 @@ class UserEditsAdapterTest extends WikiaBaseTest {
 			$this->buildResultPair( 'wiki_id', 177 ),
 			$this->buildResultPair( 'contributions', 8 ),
 		];
-		$param = [
+		$results = [
 			$this->wrapProperty( $p1 ),
 			$this->wrapProperty( $p2 ),
 			$this->wrapProperty( $p3 )
@@ -121,7 +121,7 @@ class UserEditsAdapterTest extends WikiaBaseTest {
 			]
 		];
 
-		$userEdits = ( new \Wikia\ExactTarget\UserEditsAdapter( $param ) )->getEdits();
+		$userEdits = ( new \Wikia\ExactTarget\UserEditsAdapter( $results ) )->getEdits();
 		$this->assertEquals( $expected, $userEdits );
 	}
 

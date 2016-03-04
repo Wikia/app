@@ -2,17 +2,15 @@
 
 namespace Wikia\ExactTarget;
 
-class UserEmailAdapter {
+class UserEmailAdapter extends BaseAdapter {
 
 	var $userEmail = '';
 
-	public function __construct( $result ) {
-		if ( $result instanceof \stdClass ) {
-			$this->userEmail = $result->Properties->Property->Value;
-		}
-	}
-
 	public function getEmail() {
 		return $this->userEmail;
+	}
+
+	protected function extractResult( $property ) {
+		$this->userEmail = $property->Value;
 	}
 }

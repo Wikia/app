@@ -3,7 +3,7 @@
 class ExactTargetClientTest extends WikiaBaseTest {
 
 	public function setUp() {
-		$this->setupFile = __DIR__ . '/../ExactTargetUpdates.setup.php';
+		$this->setupFile = __DIR__ . '/../../ExactTargetUpdates.setup.php';
 		parent::setUp();
 	}
 
@@ -166,7 +166,7 @@ class ExactTargetClientTest extends WikiaBaseTest {
 		$getExactTargetClient = new ReflectionMethod( '\Wikia\ExactTarget\ExactTargetClient', 'getExactTargetClient' );
 		$getExactTargetClient->setAccessible( true );
 
-		$wsdlPath = __DIR__ . '/resources/mocked.wsdl';
+		$wsdlPath = __DIR__ . '/../resources/mocked.wsdl';
 		$username = 'test_username';
 		$password = 'test_password';
 		$wrapper = new \Wikia\Util\GlobalStateWrapper( [ 'wgExactTargetApiConfig' => [
@@ -185,6 +185,22 @@ class ExactTargetClientTest extends WikiaBaseTest {
 		} );
 
 		$this->assertEquals( $expected, $soapClient );
+	}
+
+	public function testWikiCategoriesMappingRetrieval() {
+		$soapClientMock = $this->getMockBuilder( 'ExactTargetSoapClient' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'Retrieve' ] )
+			->getMock();
+		$soapClientMock->expects( $this->any() )
+			->method( 'Retrieve' )
+			->will( $this->returnValue(
+				$this->getResponse( [ [ 'city_id' => 1, 'cat_id' => 2 ] ], 'OK' )
+			) );
+
+		$client = new \Wikia\ExactTarget\ExactTargetClient( $soapClientMock );
+
+		$this->assertEquals( [ [ 'city_id' => 1, 'cat_id' => 2 ] ], $client->retrieveWikiCategories( 1 ) );
 	}
 
 	private function getResponse( $data, $status, $msg = '' ) {

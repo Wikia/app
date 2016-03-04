@@ -1,6 +1,7 @@
 <?php
 namespace Wikia\ExactTarget;
 
+use Predis\Transaction\AbortedMultiExecException;
 use Wikia\Logger\Loggable;
 use Wikia\ExactTarget\ResourceEnum as Enum;
 
@@ -13,9 +14,12 @@ class ExactTargetClient {
 	const RETRIEVE_CALL = 'Retrieve';
 
 	const STATUS_OK = 'OK';
+	const STATUS_MORE_DATA_AVAILABLE = 'MoreDataAvailable';
 	const EXACT_TARGET_LABEL = 'ExactTarget client';
 	const EXACT_TARGET_REQUEST_FAILED = 'Request failed';
 	const RETRIES_LIMIT = 1;
+
+	const OBJECTS_PER_REQUEST_LIMIT = 2500;
 
 	private $client;
 
@@ -143,6 +147,49 @@ class ExactTargetClient {
 		return $this->sendRequest( self::UPDATE_CALL, $request );
 	}
 
+	public function updateWiki( $wikiId, array $wikiData ) {
+		$request = ExactTargetRequestBuilder::getWikiUpdateBuilder()
+			->withWikiData( $wikiId, $wikiData )
+			->build();
+
+		return $this->sendRequest( self::UPDATE_CALL, $request );
+	}
+
+	public function deleteWiki( $wikiId ) {
+		$request = ExactTargetRequestBuilder::getWikiDeleteBuilder()
+			->withWikiId( $wikiId )
+			->build();
+
+		return $this->sendRequest( self::DELETE_CALL, $request );
+	}
+
+	public function retrieveWikiCategories( $wikiId ) {
+		$result = $this->retrieve(
+			[ Enum::WIKI_ID, Enum::WIKI_CAT_ID ],
+			Enum::WIKI_ID,
+			[ $wikiId ],
+			Enum::CUSTOMER_KEY_WIKI_CAT_MAPPING
+		);
+
+		return ( new WikiCategoriesAdapter( $result ) )->getCategoriesMapping();
+	}
+
+	public function updateWikiCategoriesMapping( array $categories ) {
+		$request = ExactTargetRequestBuilder::getWikiCategoriesMappingUpdateBuilder()
+			->withWikiCategories( $categories )
+			->build();
+
+		return $this->sendRequest( self::UPDATE_CALL, $request );
+	}
+
+	public function deleteWikiCategoriesMapping( array $categories ) {
+		$request = ExactTargetRequestBuilder::getWikiCategoriesMappingDeleteBuilder()
+			->withWikiCategories( $categories )
+			->build();
+
+		return $this->sendRequest( self::DELETE_CALL, $request );
+	}
+
 	private function retrieve( array $properties, $filterProperty, array $filterValues, $resource ) {
 		$request = ExactTargetRequestBuilder::getRetrieveBuilder()
 			->withResource( $resource )
@@ -151,7 +198,7 @@ class ExactTargetClient {
 			->withFilterValues( $filterValues )
 			->build();
 
-		return $this->sendRequest( self::RETRIEVE_CALL, $request );
+		return $this->sendRetrieveRequest( $request );
 	}
 
 	protected function sendRequest( $type, $request ) {
@@ -159,6 +206,28 @@ class ExactTargetClient {
 		$response = $this->doCall( $type, $request, 0 );
 		if ( $response instanceof \stdClass && $response->OverallStatus === self::STATUS_OK ) {
 			return $response->Results ? $response->Results : true;
+		}
+
+		throw $this->responseException( $response );
+	}
+
+	protected function sendRetrieveRequest( $request ) {
+		$response = null;
+		$results = [ ];
+		do {
+			if ( $response instanceof \stdClass ) {
+				break;
+			}
+			$response = $this->doCall( self::RETRIEVE_CALL, $request, 0 );
+			$responseResults = $response->Results ? $response->Results : [ ];
+			$responseResults = is_array( $responseResults ) ? $responseResults : [ $responseResults ];
+			$results = array_merge( $results, $responseResults );
+
+			$request->RetrieveRequest->ContinueRequest = $response->RequestID;
+		} while ( $response instanceof \stdClass && $response->OverallStatus === self::STATUS_MORE_DATA_AVAILABLE);
+
+		if ( $response instanceof \stdClass && $response->OverallStatus === self::STATUS_OK ) {
+			return $results;
 		}
 
 		throw $this->responseException( $response );
@@ -185,9 +254,9 @@ class ExactTargetClient {
 		$response = $soapClient->__getLastResponse();
 		return [
 			'request.headers' => $requestHeaders ? $requestHeaders : '',
-			'request.data' => $data ? $data : '',
+			'request.data' => $data ? strlen( $data ) : '',
 			'response.status' => $status ? $status : '',
-			'response.data' => $response ? $response : ''
+			'response.data' => $response ? strlen( $response ) : ''
 		];
 	}
 

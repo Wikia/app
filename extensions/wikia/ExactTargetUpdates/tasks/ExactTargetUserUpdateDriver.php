@@ -45,6 +45,8 @@ class ExactTargetUserUpdateDriver {
 		$ids = array_unique( array_merge( (array)array_keys( $first ), (array)array_keys( $second ) ) );
 
 		foreach ( $ids as $userId ) {
+			$first[ $userId ] = isset( $first[ $userId ] ) && is_array( $first[ $userId ] ) ? $first[ $userId ] : [ ];
+			$second[ $userId ] = isset( $second[ $userId ] ) && is_array( $second[ $userId ] ) ? $second[ $userId ] : [ ];
 			$wikis = array_unique(
 				array_merge( (array)array_keys( $first[ $userId ] ), (array)array_keys( $second[ $userId ] ) ) );
 			foreach ( $wikis as $wikiId ) {

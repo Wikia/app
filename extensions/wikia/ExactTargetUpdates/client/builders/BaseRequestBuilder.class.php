@@ -14,12 +14,15 @@ class BaseRequestBuilder {
 	const SUBSCRIBER_TYPE = 'subscriber';
 	const PROPERTIES_TYPE = 'properties';
 	const EDITS_TYPE = 'edits';
+	const WIKI_CAT_TYPE = 'city_cat';
+	const WIKI_TYPE = 'wiki';
 
 	protected $email;
 	protected $userId;
 	protected $properties;
 	protected $group;
 	protected $type;
+	protected $wikiCategories = [];
 	// empty means accept all types
 	private static $supportedTypes = [ ];
 
@@ -47,6 +50,11 @@ class BaseRequestBuilder {
 
 	public function withGroup( $group ) {
 		$this->group = $group;
+		return $this;
+	}
+
+	public function withWikiCategories( $categories ) {
+		$this->wikiCategories = $categories;
 		return $this;
 	}
 

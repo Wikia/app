@@ -53,25 +53,11 @@ $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetUserHooks' ] = $dir . '/hooks/
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetUserHooksHelper' ] = $dir . '/hooks/ExactTargetUserHooksHelper.php';
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetWikiHooks' ] = $dir . '/hooks/ExactTargetWiki.hooks.php';
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetWikiHooksHelper' ] = $dir . '/hooks/ExactTargetWikiHooksHelper.php';
-/* Add base task class */
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetTask' ] = $dir . '/tasks/ExactTargetTask.php';
 /* Add user-related tasks classes */
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetUserUpdateDriver' ] = $dir . '/tasks/ExactTargetUserUpdateDriver.php';
 /* Refactored tasks that are to replace old ones */
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetUserTask' ] = $dir . '/tasks/ExactTargetUserTask.class.php';
-/* Add wiki-related tasks classes */
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetWikiDataVerificationTask' ] = $dir . '/tasks/ExactTargetWikiDataVerificationTask.php';
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetWikiTaskHelper' ] = $dir . '/tasks/ExactTargetWikiTaskHelper.php';
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetCreateWikiTask' ] = $dir . '/tasks/ExactTargetCreateWikiTask.php';
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetRetrieveWikiTask' ] = $dir . '/tasks/ExactTargetRetrieveWikiTask.php';
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetUpdateWikiTask' ] = $dir . '/tasks/ExactTargetUpdateWikiTask.php';
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetUpdateCityCatMappingTask' ] = $dir . '/tasks/ExactTargetUpdateCityCatMappingTask.php';
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetDeleteWikiTask' ] = $dir . '/tasks/ExactTargetDeleteWikiTask.php';
-
-/* Add API classes */
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetApi' ] = $dir . '/api/ExactTargetApi.php';
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetApiDataExtension' ] = $dir . '/api/ExactTargetApiDataExtension.php';
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetApiHelper' ] = $dir . '/api/ExactTargetApiHelper.php';
+$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetWikiTask' ] = $dir . '/tasks/ExactTargetWikiTask.class.php';
 
 /* Client classes */
 $wgAutoloadClasses[ 'ExactTargetSoapClient' ] = $dir . '/lib/exacttarget_soap_client.php';
@@ -88,18 +74,14 @@ $wgAutoloadClasses[ 'Wikia\ExactTarget\Builders\UpdateRequestBuilder' ] = $dir .
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ResourceEnum' ] = $dir . '/client/ExactTargetResourceEnum.php';
 
 /* Data Adapters */
+$wgAutoloadClasses[ 'Wikia\ExactTarget\BaseAdapter' ] = $dir . '/client/adapters/BaseAdapter.class.php';
 $wgAutoloadClasses[ 'Wikia\ExactTarget\UserEmailAdapter' ] = $dir . '/client/adapters/UserEmailAdapter.class.php';
 $wgAutoloadClasses[ 'Wikia\ExactTarget\UserEditsAdapter' ] = $dir . '/client/adapters/UserEditsAdapter.class.php';
 $wgAutoloadClasses[ 'Wikia\ExactTarget\UserIdsAdapter' ] = $dir . '/client/adapters/UserIdsAdapter.class.php';
+$wgAutoloadClasses[ 'Wikia\ExactTarget\WikiCategoriesAdapter' ] = $dir . '/client/adapters/WikiCategoriesAdapter.class.php';
 
 /* Exceptions*/
 $wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetException' ] = $dir . '/client/ExactTargetException.php';
-
-$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetTaskProvider'] =  $dir . '/lib/ExactTargetTaskProvider.php' ;
-$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetTaskProviderImpl'] =  $dir . '/lib/ExactTargetTaskProviderImpl.php' ;
-$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApiProvider'] =  $dir . '/lib/ExactTargetApiProvider.php' ;
-$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApiProviderImpl'] =  $dir . '/lib/ExactTargetApiProviderImpl.php' ;
-
 
 /* ExactTarget_* classes */
 
@@ -351,12 +333,6 @@ $wgAutoloadClasses[ 'ExactTarget_WeeklyRecurrence' ] = $dir . '/lib/ExactTarget_
 $wgAutoloadClasses[ 'ExactTarget_WeekOfMonthEnum' ] = $dir . '/lib/ExactTarget_WeekOfMonthEnum.php';
 $wgAutoloadClasses[ 'ExactTarget_YearlyRecurrencePatternTypeEnum' ] = $dir . '/lib/ExactTarget_YearlyRecurrencePatternTypeEnum.php';
 $wgAutoloadClasses[ 'ExactTarget_YearlyRecurrence' ] = $dir . '/lib/ExactTarget_YearlyRecurrence.php';
-
-/* Other classes */
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetDataComparisonHelper' ] = $dir . '/tasks/ExactTargetDataComparisonHelper.php';
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetRedoSoapRequestTask' ] = $dir . '/tasks/ExactTargetRedoSoapRequestTask.php';
-$wgAutoloadClasses[ 'Wikia\ExactTarget\ExactTargetSoapErrorHandler' ] = $dir . '/lib/ExactTargetSoapErrorHandler.php';
-
 
 /**
  * Registering hooks
