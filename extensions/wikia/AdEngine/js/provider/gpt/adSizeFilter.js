@@ -1,12 +1,14 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
+	'wikia.breakpointsLayout',
 	'wikia.document',
 	'wikia.log'
-], function (doc, log) {
+], function (breakpointsLayout, doc, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeFilter',
 		leaderboardFallbackSize = [728, 90],
+		incontentLeaderboardFallbackSize = [300, 250],
 		invisibleSkinFallbackSize = [1, 1];
 
 	function filterOutLeaderboardSizes(sizes) {
@@ -30,6 +32,33 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 		return goodSizes;
 	}
 
+	function filterOutIncontentLeaderboardSizes(sizes) {
+		log(['filterOutIncontentLeaderboardSizes', sizes], 'debug', logGroup);
+		var goodSizes = [], i, len, content;
+
+		content = doc.getElementById('WikiaPageBackground');
+
+		if (content.offsetWidth >= breakpointsLayout.getLargeContentWidth()) {
+			log(['filterOutIncontentLeaderboardSizes', 'large breakpoint - no need to filter'], 'debug', logGroup);
+			return sizes;
+		}
+
+		for (i = 0, len = sizes.length; i < len; i += 1) {
+			if (sizes[i][0] < 728) {
+				goodSizes.push(sizes[i]);
+			}
+		}
+
+		if (goodSizes.length === 0) {
+			log(['filterOutIncontentLeaderboardSizes',
+				 'using fallback size', incontentLeaderboardFallbackSize], 'debug', logGroup);
+			return [incontentLeaderboardFallbackSize];
+		}
+
+		log(['filterOutIncontentLeaderboardSizes', 'result', goodSizes], 'debug', logGroup);
+		return goodSizes;
+	}
+
 	function filterOutInvisibleSkinSizes(sizes) {
 		log(['filterOutInvisibleSkinSizes', sizes], 'debug', logGroup);
 
@@ -47,6 +76,10 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 
 		if (slotName.match(/TOP_LEADERBOARD/)) {
 			slotSizes = filterOutLeaderboardSizes(slotSizes);
+		}
+
+		if (slotName === 'INCONTENT_LEADERBOARD') {
+			slotSizes = filterOutIncontentLeaderboardSizes(slotSizes);
 		}
 
 		if (slotName === 'INVISIBLE_SKIN') {
