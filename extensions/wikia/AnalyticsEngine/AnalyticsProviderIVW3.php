@@ -37,7 +37,7 @@ class AnalyticsProviderIVW3 implements iAnalyticsProvider {
 			return '<!-- IVW3 disabled -->';
 		}
 
-		switch ($event) {
+		switch ( $event ) {
 			case AnalyticsEngine::EVENT_PAGEVIEW:
 				return $this->trackPageView();
 			default:
@@ -72,7 +72,7 @@ class AnalyticsProviderIVW3 implements iAnalyticsProvider {
 		$theme = self::getTheme();
 		$vertical = self::getVertical();
 
-		return $theme !== '' ? implode( '/', [ $vertical, $language, $pageType, $theme ] ) : $vertical;
+		return $theme !== '' ? implode( '/', [$vertical, $language, $pageType, $theme] ) : $vertical;
 	}
 
 	static private function getVertical() {
@@ -80,7 +80,7 @@ class AnalyticsProviderIVW3 implements iAnalyticsProvider {
 
 		$wikiFactoryHub = WikiFactoryHub::getInstance();
 
-		return $wikiFactoryHub->getWikiVertical( $wgCityId )[ 'short' ];
+		return $wikiFactoryHub->getWikiVertical( $wgCityId )['short'];
 	}
 
 	static private function getPageType() {
@@ -109,27 +109,27 @@ class AnalyticsProviderIVW3 implements iAnalyticsProvider {
 		global $wgCityId, $wgTitle;
 
 		$articleId = $wgTitle->getArticleID();
-		$isSpecial = (new WikiaPageType())->isSpecial();
+		$isSpecial = ( new WikiaPageType() )->isSpecial();
 		$language = $wgTitle->getPageLanguage()->getCode();
-		$themeKey = implode( '/', [ $wgCityId, $articleId ] );
+		$themeKey = implode( '/', [$wgCityId, $articleId] );
 		$title = $wgTitle->getText();
 		$wgNamespaceNumber = $wgTitle->getNamespace();
 
 		switch ( true ) {
-			case array_key_exists( $themeKey , self::$themes ):
-				return self::$themes[ $themeKey ];
+			case array_key_exists( $themeKey, self::$themes ):
+				return self::$themes[$themeKey];
 			case $wgCityId == 1779 && $wgNamespaceNumber === 12:
-				return self::$themes[ 'Hilfe' ];
+				return self::$themes['Hilfe'];
 			case $wgCityId == 352316:
-				return self::$themes[ 'WikiaAPI' ];
+				return self::$themes['WikiaAPI'];
 			case $wgCityId == 80433 && $title === 'Sitemap':
-				return self::$themes[ 'Sitemap' ];
+				return self::$themes['Sitemap'];
 			case $wgCityId == 111264 && $isSpecial && $title === 'Kontakt':
-				return self::$themes[ 'Kontakt' ];
+				return self::$themes['Kontakt'];
 			case $wgCityId == 80433 && $language === 'de' && $isSpecial && $title === 'CreateNewWiki':
-				return self::$themes[ 'CreateNewWikiDE' ];
+				return self::$themes['CreateNewWikiDE'];
 			case $wgCityId == 1779 && $wgNamespaceNumber === 2:
-				return self::$themes[ 'CommunityUserProfile' ];
+				return self::$themes['CommunityUserProfile'];
 			default:
 				return '';
 		}
