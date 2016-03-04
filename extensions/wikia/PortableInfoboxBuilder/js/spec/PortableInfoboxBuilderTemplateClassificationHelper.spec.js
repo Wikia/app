@@ -3,7 +3,7 @@ describe('wikia.infoboxBuilder.templateClassificationHelper', function () {
 		windowMock = {},
 		supportedTemplateType = 'infobox',
 		notSupportedTemplateType = 'testType',
-		modalMode = 'testMode',
+		modalMode = 'addTemplate',
 		notSupportedModalMode = 'notSupportedModalMode',
 		removeClassSpy = jasmine.createSpy('removeClassSpy'),
 		jQueryMock = function () {
@@ -23,7 +23,7 @@ describe('wikia.infoboxBuilder.templateClassificationHelper', function () {
 		windowMock.isTemplateBodySupportedInfobox = true;
 		helper = modules['wikia.infoboxBuilder.templateClassificationHelper'](windowMock, jQueryMock);
 
-		expect(helper.shouldRedirectToInfoboxBuilder(supportedTemplateType, modalMode, notSupportedModalMode)).toBe(true);
+		expect(helper.shouldRedirectToInfoboxBuilder(supportedTemplateType, modalMode)).toBe(true);
 	});
 
 	it('shouldn\'t redirect to infobox builder', function () {
@@ -32,29 +32,25 @@ describe('wikia.infoboxBuilder.templateClassificationHelper', function () {
 				infoboxBuilderPath: false,
 				isTemplateBodySupportedInfobox: true,
 				templateType: supportedTemplateType,
-				modalMode: modalMode,
-				notSupportedModalMode: notSupportedModalMode
+				modalMode: modalMode
 			},
 			{
 				infoboxBuilderPath: true,
 				isTemplateBodySupportedInfobox: false,
 				templateType: supportedTemplateType,
-				modalMode: modalMode,
-				notSupportedModalMode: notSupportedModalMode
+				modalMode: modalMode
 			},
 			{
 				infoboxBuilderPath: true,
 				isTemplateBodySupportedInfobox: true,
 				templateType: notSupportedTemplateType,
-				modalMode: modalMode,
-				notSupportedModalMode: notSupportedModalMode
+				modalMode: modalMode
 			},
 			{
 				infoboxBuilderPath: true,
 				isTemplateBodySupportedInfobox: true,
-				templateType: notSupportedTemplateType,
-				modalMode: notSupportedModalMode,
-				notSupportedModalMode: notSupportedModalMode
+				templateType: supportedTemplateType,
+				modalMode: notSupportedModalMode
 			}
 		];
 
@@ -63,11 +59,7 @@ describe('wikia.infoboxBuilder.templateClassificationHelper', function () {
 			windowMock.isTemplateBodySupportedInfobox = testCase.isTemplateBodySupportedInfobox;
 			helper = modules['wikia.infoboxBuilder.templateClassificationHelper'](windowMock, jQuery);
 
-			expect(
-				helper.shouldRedirectToInfoboxBuilder(
-					testCase.templateType, testCase.modalMode, testCase.notSupportedModalMode
-				)
-			).toBe(false);
+			expect(helper.shouldRedirectToInfoboxBuilder(testCase.templateType, testCase.modalMode)).toBe(false);
 
 			//reset windowMock
 			windowMock = {};

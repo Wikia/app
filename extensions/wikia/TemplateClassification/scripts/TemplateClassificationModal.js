@@ -209,9 +209,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling, infoboxBuilder
 			$('#wpSave').click();
 		} else if (
 			infoboxBuilderHelper &&
-			infoboxBuilderHelper.shouldRedirectToInfoboxBuilder(
-				newTemplateType, modalMode, forceClassificationModalMode
-			)
+			infoboxBuilderHelper.shouldRedirectToInfoboxBuilder(newTemplateType, modalMode)
 		) {
 			throbber.show(modalInstance.$content);
 			infoboxBuilderHelper.redirectToInfoboxBuilder();
