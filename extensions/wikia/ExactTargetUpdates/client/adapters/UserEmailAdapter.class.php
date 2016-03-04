@@ -10,7 +10,7 @@ class UserEmailAdapter extends BaseAdapter {
 		return $this->userEmail;
 	}
 
-	protected function extractSingle( $property ) {
+	protected function extractResult( $property ) {
 		$this->userEmail = $property->Value;
 	}
 }

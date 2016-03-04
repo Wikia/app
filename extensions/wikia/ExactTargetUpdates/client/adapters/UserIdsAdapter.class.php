@@ -10,7 +10,7 @@ class UserIdsAdapter extends BaseAdapter {
 		return $this->ids;
 	}
 
-	protected function extractSingle( $property ) {
+	protected function extractResult( $property ) {
 		if ( isset( $property->Value ) ) {
 			$this->ids[ ] = $property->Value;
 		}

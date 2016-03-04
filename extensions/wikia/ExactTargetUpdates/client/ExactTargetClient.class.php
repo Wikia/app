@@ -14,6 +14,7 @@ class ExactTargetClient {
 	const RETRIEVE_CALL = 'Retrieve';
 
 	const STATUS_OK = 'OK';
+	const STATUS_MORE_DATA_AVAILABLE = 'MoreDataAvailable';
 	const EXACT_TARGET_LABEL = 'ExactTarget client';
 	const EXACT_TARGET_REQUEST_FAILED = 'Request failed';
 	const RETRIES_LIMIT = 1;
@@ -198,7 +199,7 @@ class ExactTargetClient {
 			->withFilterValues( $filterValues )
 			->build();
 
-		return $this->sendRequest( self::RETRIEVE_CALL, $request );
+		return $this->sendRetrieveRequest( $request );
 	}
 
 	protected function sendRequest( $type, $request ) {
@@ -206,6 +207,24 @@ class ExactTargetClient {
 		$response = $this->doCall( $type, $request, 0 );
 		if ( $response instanceof \stdClass && $response->OverallStatus === self::STATUS_OK ) {
 			return $response->Results ? $response->Results : true;
+		}
+
+		throw $this->responseException( $response );
+	}
+
+	protected function sendRetrieveRequest( $request ) {
+		$response = null;
+		$results = [ ];
+		do {
+			$response = $this->doCall( self::RETRIEVE_CALL, $request, 0 );
+			$responseResults = $response->Results ? $response->Results : [ ];
+			$responseResults = is_array( $responseResults ) ? $responseResults : [ $responseResults ];
+			$results = array_merge( $results, $responseResults );
+
+			$request->RetrieveRequest->ContinueRequest = $response->RequestID;
+		} while ( $response instanceof \stdClass && $response->OverallStatus === self::STATUS_MORE_DATA_AVAILABLE);
+		if ( $response instanceof \stdClass && $response->OverallStatus === self::STATUS_OK ) {
+			return $results;
 		}
 
 		throw $this->responseException( $response );
@@ -232,9 +251,9 @@ class ExactTargetClient {
 		$response = $soapClient->__getLastResponse();
 		return [
 			'request.headers' => $requestHeaders ? $requestHeaders : '',
-			'request.data' => $data ? $data : '',
+			'request.data' => $data ? strlen( $data ) : '',
 			'response.status' => $status ? $status : '',
-			'response.data' => $response ? $response : ''
+			'response.data' => $response ? strlen( $response ) : ''
 		];
 	}
 
