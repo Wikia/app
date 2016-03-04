@@ -174,16 +174,15 @@ class ExactTargetClient {
 		return ( new WikiCategoriesAdapter( $result ) )->getCategoriesMapping();
 	}
 
-	public function updateWikiCategoriesMapping( $wikiId, array $categories ) {
+	public function updateWikiCategoriesMapping( array $categories ) {
 		$request = ExactTargetRequestBuilder::getWikiCategoriesMappingUpdateBuilder()
-			->withWikiId( $wikiId )
 			->withWikiCategories( $categories )
 			->build();
 
 		return $this->sendRequest( self::UPDATE_CALL, $request );
 	}
 
-	public function deleteWikiCategoriesMapping( $categories ) {
+	public function deleteWikiCategoriesMapping( array $categories ) {
 		$request = ExactTargetRequestBuilder::getWikiCategoriesMappingDeleteBuilder()
 			->withWikiCategories( $categories )
 			->build();

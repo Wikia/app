@@ -4,6 +4,8 @@ namespace Wikia\ExactTarget\Builders;
 use Wikia\ExactTarget\ResourceEnum as Enum;
 
 class DeleteRequestBuilder extends BaseRequestBuilder {
+	protected $wikiId;
+
 	private static $supportedTypes = [
 		self::GROUP_TYPE,
 		self::USER_TYPE,
@@ -12,6 +14,11 @@ class DeleteRequestBuilder extends BaseRequestBuilder {
 		self::WIKI_TYPE,
 		self::WIKI_CAT_TYPE
 	];
+
+	public function withWikiId( $wikiId ) {
+		$this->wikiId = $wikiId;
+		return $this;
+	}
 
 	public function build() {
 		$soapType = self::DATA_EXTENSION_OBJECT_TYPE;

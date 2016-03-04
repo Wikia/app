@@ -44,7 +44,8 @@ class ExactTargetWikiTaskTest extends WikiaBaseTest {
 		$task = $this->getWikiTask($clientMock);
 
 		$clientMock->expects( $this->once() )
-			->method( 'retrieveWikiCategories' );
+			->method( 'retrieveWikiCategories' )
+			->willReturn( [ ] );
 		$clientMock->expects( $this->once() )
 			->method( 'deleteWikiCategoriesMapping' );
 		$clientMock->expects( $this->once() )
@@ -69,7 +70,8 @@ class ExactTargetWikiTaskTest extends WikiaBaseTest {
 		$task = $this->getWikiTask($clientMock);
 
 		$clientMock->expects( $this->once() )
-			->method( 'retrieveWikiCategories' );
+			->method( 'retrieveWikiCategories' )
+			->willReturn( [ ] );
 		$clientMock->expects( $this->once() )
 			->method( 'deleteWikiCategoriesMapping' );
 		$clientMock->expects( $this->once() )

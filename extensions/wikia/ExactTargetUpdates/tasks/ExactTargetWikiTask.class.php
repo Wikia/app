@@ -44,6 +44,7 @@ class ExactTargetWikiTask extends BaseTask {
 		$client = $this->getClient();
 		$oldCategories = $client->retrieveWikiCategories( $wikiId );
 
+		Assert::true( !is_array( $wikiId ), 'Missing wiki categories' );
 		/* Delete wiki and categories mapping */
 		$client->deleteWikiCategoriesMapping( $oldCategories );
 		$client->deleteWiki( $wikiId );
@@ -63,13 +64,14 @@ class ExactTargetWikiTask extends BaseTask {
 		$client = $this->getClient();
 		$oldCategories = $client->retrieveWikiCategories( $wikiId );
 
+		Assert::true( !is_array( $wikiId ), 'Missing wiki categories' );
 		$client->deleteWikiCategoriesMapping( $oldCategories );
 
 		$oWikiFactoryHub = new \WikiFactoryHub();
 		$aCategories = $oWikiFactoryHub->getWikiCategories( $wikiId );
 
 		/* Update or create Wiki in external service */
-		$client->updateWikiCategoriesMapping( $wikiId, $aCategories );
+		$client->updateWikiCategoriesMapping( $aCategories );
 
 		return self::STATUS_OK;
 	}

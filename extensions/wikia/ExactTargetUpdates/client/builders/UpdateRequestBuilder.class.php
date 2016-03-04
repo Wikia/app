@@ -127,7 +127,7 @@ class UpdateRequestBuilder extends BaseRequestBuilder {
 		$objects = [ ];
 		foreach ($this->wikiCategories as $category ) {
 			$objects[] = $this->prepareDataObject( Enum::CUSTOMER_KEY_WIKI_CAT_MAPPING,
-				[ ], [ Enum::WIKI_ID => $this->wikiId, Enum::WIKI_CAT_ID => $category[ 'cat_id' ] ] );
+				[ ], [ Enum::WIKI_ID => $category[ 'city_id' ], Enum::WIKI_CAT_ID => $category[ 'cat_id' ] ] );
 		}
 
 		return $objects;
