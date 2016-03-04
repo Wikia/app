@@ -133,8 +133,12 @@ $config['recirculation_js'] = array(
 		'//extensions/wikia/Recirculation/js/helpers/GoogleMatchHelper.js',
 		'//extensions/wikia/Recirculation/js/tracker.js',
 		'//extensions/wikia/Recirculation/js/utils.js',
-		'//extensions/wikia/Recirculation/js/incontent.js',
-		'//extensions/wikia/Recirculation/js/recirculation.js',
+		'//extensions/wikia/Recirculation/js/helpers/ContentLinksHelper.js',
+		'//extensions/wikia/Recirculation/js/helpers/FandomHelper.js',
+		'//extensions/wikia/Recirculation/js/views/incontent.js',
+		'//extensions/wikia/Recirculation/js/views/rail.js',
+		'//extensions/wikia/Recirculation/js/views/footer.js',
+		'//extensions/wikia/Recirculation/js/experiments/placement.js',
 	),
 );
 
