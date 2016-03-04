@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Util\Assert;
+
 class AnalyticsProviderIVW3 implements iAnalyticsProvider {
 
 	private static $libraryUrl = 'https://script.ioam.de/iam.js';
@@ -91,6 +93,8 @@ class AnalyticsProviderIVW3 implements iAnalyticsProvider {
 	static private function getMappedLanguage() {
 		global $wgTitle;
 
+		Assert::true( $wgTitle instanceof Title, __METHOD__ );
+
 		$language = $wgTitle->getPageLanguage()->getCode();
 
 		switch ( $language ) {
@@ -105,6 +109,8 @@ class AnalyticsProviderIVW3 implements iAnalyticsProvider {
 
 	static private function getTheme() {
 		global $wgCityId, $wgTitle;
+
+		Assert::true( $wgTitle instanceof Title, __METHOD__ );
 
 		$isSpecial = ( new WikiaPageType() )->isSpecial();
 		$language = $wgTitle->getPageLanguage()->getCode();
