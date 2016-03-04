@@ -42,6 +42,7 @@ class PortableInfoboxBuilderController extends WikiaController {
 
 		$title = $this->getTitle($params[ 'title' ], $status);
 
+		$status = $this->checkRequestValidity( $status );
 		$status = $this->checkUserPermissions($title, $status);
 
 		$infoboxDataService = PortableInfoboxDataService::newFromTitle($title);
@@ -49,6 +50,20 @@ class PortableInfoboxBuilderController extends WikiaController {
 		$status = $this->checkSaveEligibility($infoboxes, $status);
 
 		return $status->isGood() ? $this->save( $title, $params[ 'data' ], $infoboxes[0] ) : $status;
+	}
+
+	/**
+	 * Wraps WikiaDispatchableObject::checkWriteRequest
+	 * @param $status
+	 * @return Status
+	 */
+	private function checkRequestValidity( &$status ) {
+		try {
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$status->fatal( 'invalid-write-request' );
+		}
+		return $status;
 	}
 
 	/**

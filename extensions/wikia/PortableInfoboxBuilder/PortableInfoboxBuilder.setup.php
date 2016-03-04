@@ -1,8 +1,6 @@
 <?php
 $dir = dirname( __FILE__ ) . '/';
 
-$wgAutoloadClasses[ 'PortableInfoboxBuilderService' ] = $dir . 'services/PortableInfoboxBuilderService.class.php';
-
 $wgBuilderNodes = [
 	'Node',
 	'NodeCaption',
@@ -29,8 +27,16 @@ $wgAutoloadClasses[ 'PortableInfoboxBuilderHooks' ] = $dir . 'PortableInfoboxBui
 $wgSpecialPages[ 'InfoboxBuilder' ] = 'PortableInfoboxBuilderSpecialController';
 $wgSpecialPageGroups[ 'InfoboxBuilder' ] = 'wikia';
 
-// iframe loading sctipt
+// passing of top variables
+$wgHooks['WikiaSkinTopScripts'][] = 'PortableInfoboxBuilderHooks::onWikiaSkinTopScripts';
+$wgHooks['EditPageMakeGlobalVariablesScript'][] = 'PortableInfoboxBuilderHooks::onEditPageMakeGlobalVariablesScript';
+
+// iframe loading script
 $wgHooks[ 'SkinAfterBottomScripts' ][] = 'PortableInfoboxBuilderHooks::onSkinAfterBottomScripts';
+$wgHooks[ 'CustomEditor' ][] = 'PortableInfoboxBuilderHooks::onCustomEditor';
+
+// template classification helper
+$wgHooks[ 'TemplateClassificationHooks::afterEditPageAssets' ][] = 'PortableInfoboxBuilderHooks::onTCAfterEditPageAssets';
 
 // i18n mapping
 $wgExtensionMessagesFiles[ 'PortableInfoboxBuilder' ] = $dir . 'PortableInfoboxBuilder.i18n.php';

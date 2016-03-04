@@ -8,6 +8,7 @@ use Wikia\TemplateClassification\Permissions;
 use Wikia\TemplateClassification\UnusedTemplates\Handler;
 
 class Hooks {
+	const TC_BODY_CLASS_NAME = 'show-template-classification-modal';
 
 	/**
 	 * Register hooks for the extension
@@ -79,8 +80,9 @@ class Hooks {
 	 */
 	public function onEditPageMakeGlobalVariablesScript( array &$aVars ) {
 		$context = \RequestContext::getMain();
+		$title = $context->getTitle();
 		// Enable TemplateClassificationEditorPlugin
-		if ( ( new Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $context->getTitle() )
+		if ( ( new Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $title )
 			&& $this->isEditPage()
 		) {
 			$aVars['enableTemplateClassificationEditorPlugin'] = true;
@@ -95,15 +97,28 @@ class Hooks {
 	 * @return bool
 	 */
 	public function onEditPageShowEditFormFields( \EditPage $editPage, \OutputPage $out ) {
-		global $wgCityId;
+		global $wgCityId, $wgEnablePortableInfoboxBuilderExt;
 
 		$context = \RequestContext::getMain();
+		$title = $context->getTitle();
 
-		if ( ( new Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $context->getTitle() ) ) {
+		if ( ( new Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $title ) ) {
 			$types = $this->getTemplateTypeForEdit( $editPage->getTitle(), $wgCityId );
 
-			$out->addHTML( \Html::hidden( 'templateClassificationTypeCurrent', $types['current'] ) );
-			$out->addHTML( \Html::hidden( 'templateClassificationTypeNew', $types['new'] ) );
+			$out->addHTML( \Html::hidden( 'templateClassificationTypeCurrent', $types['current'],
+				['autocomplete' => 'off'] ) );
+			$out->addHTML( \Html::hidden( 'templateClassificationTypeNew', $types['new'],
+				['autocomplete' => 'off'] ) );
+
+			// add additional class to body for new templates in order to hide editor while template classification
+			// modal is visible and builder is available
+			if (
+				$wgEnablePortableInfoboxBuilderExt
+				&& $title->getArticleID() === 0
+				&& empty( $types['current'] && $types['new'] )
+			) {
+				\OasisController::addBodyClass( self::TC_BODY_CLASS_NAME );
+			}
 		}
 
 		return true;
@@ -133,6 +148,8 @@ class Hooks {
 			} elseif ( $this->isEditPage() ) {
 				\Wikia::addAssetsToOutput( 'template_classification_in_edit_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
+
+				wfRunHooks('TemplateClassificationHooks::afterEditPageAssets');
 			}
 		} elseif ( $permissions->shouldDisplayBulkActions( $user, $title ) ) {
 			\Wikia::addAssetsToOutput( 'template_classification_in_category_js' );

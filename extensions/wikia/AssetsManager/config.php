@@ -2470,6 +2470,13 @@ $config[ 'portable_infobox_builder_js' ] = [
 	]
 ];
 
+$config[ 'portable_infobox_builder_template_classification_helper_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/PortableInfoboxBuilder/js/PortableInfoboxBuilderTemplateClassificationHelper.js'
+	]
+];
+
 $config[ 'portable_infobox_builder_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
