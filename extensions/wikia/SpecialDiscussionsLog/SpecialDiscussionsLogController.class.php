@@ -201,7 +201,7 @@ JSON_BODY;
 	}
 
 	private function checkAccess() {
-		if ( !$this->wg->User->isAllowed('specialdiscussionslog') ) {
+		if ( !$this->wg->User->isAllowed( 'specialdiscussionslog' ) ) {
 			return false;
 		}
 
