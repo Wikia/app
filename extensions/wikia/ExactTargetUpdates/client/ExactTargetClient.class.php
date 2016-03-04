@@ -215,15 +215,14 @@ class ExactTargetClient {
 		$response = null;
 		$results = [ ];
 		do {
-			if ( $response instanceof \stdClass ) {
-				break;
-			}
 			$response = $this->doCall( self::RETRIEVE_CALL, $request, 0 );
-			$responseResults = $response->Results ? $response->Results : [ ];
-			$responseResults = is_array( $responseResults ) ? $responseResults : [ $responseResults ];
-			$results = array_merge( $results, $responseResults );
+			if ( $response instanceof \stdClass ) {
+				$responseResults = $response->Results ? $response->Results : [ ];
+				$responseResults = is_array( $responseResults ) ? $responseResults : [ $responseResults ];
+				$results = array_merge( $results, $responseResults );
 
-			$request->RetrieveRequest->ContinueRequest = $response->RequestID;
+				$request->RetrieveRequest->ContinueRequest = $response->RequestID;
+			}
 		} while ( $response instanceof \stdClass && $response->OverallStatus === self::STATUS_MORE_DATA_AVAILABLE);
 
 		if ( $response instanceof \stdClass && $response->OverallStatus === self::STATUS_OK ) {
