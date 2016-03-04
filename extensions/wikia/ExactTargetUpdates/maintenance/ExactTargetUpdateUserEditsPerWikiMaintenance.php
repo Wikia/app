@@ -68,8 +68,8 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 	private function addEditsUpdateTasks( $aUsersEditsData ) {
 		$aUsersEditsData = array_chunk( $aUsersEditsData, ExactTargetClient::OBJECTS_PER_REQUEST_LIMIT, true );
 		foreach ( $aUsersEditsData as $aUsersEditsDataChunk ) {
-			$aUsersEditsData = $this->prepareDataFormat( $aUsersEditsDataChunk );
-			$this->addEditsUpdateTask( $aUsersEditsData );
+			$aPreparedUsersEditsData = $this->prepareDataFormat( $aUsersEditsDataChunk );
+			$this->addEditsUpdateTask( $aPreparedUsersEditsData );
 		}
 	}
 

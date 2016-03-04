@@ -9,8 +9,8 @@ class WikiCategoriesAdapterTest extends WikiaBaseTest {
 
 	public function testGetCategoriesMapping() {
 		// Params
-		$param = new stdClass();
-		$param->Properties->Property = [
+		$result = new stdClass();
+		$result->Properties->Property = [
 			$this->buildResultPair( 'city_id', 1 ),
 			$this->buildResultPair( 'cat_id', 3 )
 		];
@@ -20,7 +20,7 @@ class WikiCategoriesAdapterTest extends WikiaBaseTest {
 			[ 'city_id' => 1, 'cat_id' => 3 ]
 		];
 
-		$categoriesMapping = ( new \Wikia\ExactTarget\WikiCategoriesAdapter( $param ) )->getCategoriesMapping();
+		$categoriesMapping = ( new \Wikia\ExactTarget\WikiCategoriesAdapter( [ $result ] ) )->getCategoriesMapping();
 		$this->assertEquals( $expected, $categoriesMapping );
 	}
 
@@ -34,7 +34,7 @@ class WikiCategoriesAdapterTest extends WikiaBaseTest {
 			$this->buildResultPair( 'city_id', 5 ),
 			$this->buildResultPair( 'cat_id', 23423 )
 		];
-		$param = [
+		$results = [
 			$this->wrapProperty( $p1 ),
 			$this->wrapProperty( $p2 )
 		];
@@ -45,7 +45,7 @@ class WikiCategoriesAdapterTest extends WikiaBaseTest {
 			[ 'city_id' => 5, 'cat_id' => 23423 ]
 		];
 
-		$categoriesMapping = ( new \Wikia\ExactTarget\WikiCategoriesAdapter( $param ) )->getCategoriesMapping();
+		$categoriesMapping = ( new \Wikia\ExactTarget\WikiCategoriesAdapter( $results ) )->getCategoriesMapping();
 		$this->assertEquals( $expected, $categoriesMapping );
 	}
 

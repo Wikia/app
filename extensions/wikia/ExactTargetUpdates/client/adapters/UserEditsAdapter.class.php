@@ -12,7 +12,7 @@ class UserEditsAdapter extends BaseAdapter{
 		return $this->edits;
 	}
 
-	protected function extractSingle( $property ) {
+	protected function extractResult( $property ) {
 		foreach ( $property as $value ) {
 			if ( $value->Name === Enum::USER_ID ) {
 				$userId = $value->Value;

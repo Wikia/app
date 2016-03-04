@@ -12,7 +12,7 @@ class WikiCategoriesAdapter extends BaseAdapter {
 		return $this->mapping;
 	}
 
-	protected function extractSingle( $property ) {
+	protected function extractResult( $property ) {
 		foreach ( $property as $value ) {
 			if ( $value->Name === Enum::WIKI_ID ) {
 				$wikiId = $value->Value;
