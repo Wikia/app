@@ -1,5 +1,7 @@
 /*global require*/
 require([
+	'jquery',
+	'wikia.window',
 	'wikia.abTest',
 	'ext.wikia.recirculation.views.incontent',
 	'ext.wikia.recirculation.views.rail',
@@ -7,13 +9,20 @@ require([
 	'ext.wikia.recirculation.helpers.contentLinks',
 	'ext.wikia.recirculation.helpers.fandom',
 	'ext.wikia.adEngine.taboolaHelper',
-], function(abTest, incontentView, railView, footerView, contentLinksHelper, fandomHelper, taboolaHelper) {
+	require.optional('videosmodule.controllers.rail')
+], function($, w, abTest, incontentView, railView, footerView, contentLinksHelper, fandomHelper, taboolaHelper, videosModule) {
 	var experimentName = 'RECIRCULATION_PLACEMENT',
+		railContainerId = 'RECIRCULATION_RAIL',
 		group = abTest.getGroup(experimentName),
 		isRail = false,
 		footerView,
 		view,
 		helper;
+
+	if (w.wgContentLanguage !== 'en' && videosModule) {
+		videosModule('#' + railContainerId);
+		return;
+	}
 
 	switch (group) {
 		case 'FANDOM_RAIL':
@@ -43,12 +52,12 @@ require([
 			view = footerView;
 			break;
 		case 'CONTROL':
-
+			fandomHelper.injectFandomHtml('recent_popular', '#' + railContainerId);
 			break;
 		case 'TABOOLA':
 			taboolaHelper.initializeWidget({
 				mode: 'thumbnails-rr2',
-				container: 'RECIRCULATION_RAIL',
+				container: railContainerId,
 				placement: 'Right Rail Thumbnails 3rd',
 				target_type: 'mix'
 			});
