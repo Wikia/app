@@ -66,13 +66,11 @@ class AnalyticsProviderIVW3 implements iAnalyticsProvider {
 	}
 
 	static public function getCMKey() {
-
-		$language = self::getMappedLanguage();
-		$pageType = self::getPageType();
 		$theme = self::getTheme();
 		$vertical = self::getVertical();
 
-		return $theme !== '' ? implode( '/', [$vertical, $language, $pageType, $theme] ) : $vertical;
+		return $theme !== '' ?
+			implode( '/', [$vertical, self::getMappedLanguage(), self::getPageType(), $theme] ) : $vertical;
 	}
 
 	static private function getVertical() {
@@ -108,10 +106,9 @@ class AnalyticsProviderIVW3 implements iAnalyticsProvider {
 	static private function getTheme() {
 		global $wgCityId, $wgTitle;
 
-		$articleId = $wgTitle->getArticleID();
 		$isSpecial = ( new WikiaPageType() )->isSpecial();
 		$language = $wgTitle->getPageLanguage()->getCode();
-		$themeKey = implode( '/', [$wgCityId, $articleId] );
+		$themeKey = implode( '/', [$wgCityId, $wgTitle->getArticleID()] );
 		$title = $wgTitle->getText();
 		$wgNamespaceNumber = $wgTitle->getNamespace();
 
