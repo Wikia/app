@@ -136,7 +136,7 @@ abstract class ApiWrapper {
 		$this->interfaceObj = $this->getInterfaceObjectFromType();
 	}
 
-	protected function getInterfaceObjectFromType() {
+	protected function getInterfaceObjectFromType( $type ) {
 
 		wfProfileIn( __METHOD__ );
 

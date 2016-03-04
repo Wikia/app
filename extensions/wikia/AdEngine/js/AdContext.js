@@ -121,6 +121,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.slots.incontentPlayer = geo.isProperGeo(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
 			isUrlParamSet('incontentplayer');
 
+		// INCONTENT_LEADERBOARD slot
+		context.slots.incontentLeaderboard = geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardSlotCountries);
+
 		context.opts.scrollHandlerConfig = instantGlobals.wgAdDriverScrollHandlerConfig;
 		context.opts.enableScrollHandler = geo.isProperGeo(instantGlobals.wgAdDriverScrollHandlerCountries) ||
 			isUrlParamSet('scrollhandler');

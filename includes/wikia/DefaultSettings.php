@@ -1800,6 +1800,13 @@ $wgEnablePageShareExt = true;
 $wgPaidAssetDropConfig = false;
 
 /**
+ * @name $wgAdDriverIncontentLeaderboardSlotCountries
+ * Enables INCONTENT_LEADERBOARD slot in these countries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverIncontentLeaderboardSlotCountries = null;
+
+/**
  * @name $wgAdDriverIncontentPlayerSlotCountries
  * Enables INCONTENT_PLAYER slot in these countries
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
