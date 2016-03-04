@@ -34,21 +34,21 @@ class DeleteLocalGroupMaintenance extends Maintenance {
 			$this->output( "Getting entries count for group on {$wgDBname} ({$wgDBCluster})\n" );
 			$dbw = $this->getDB( DB_SLAVE );
 
-			$res = $dbw->select(
+			$count = $dbw->selectField(
 				self::TABLE_NAME,
 				'count(*)',
-				[ 'ug_group' => [ $group ] ],
+				[ 'ug_group' => $group ],
 				__METHOD__
 			);
 
-			$this->output( "Row count: " . $res->fetchRow()[0] . "\n" );
+			$this->output( "Row count: " . $count . "\n" );
 		} else {
 			$this->output( "Deleting group on {$wgDBname} ({$wgDBCluster})\n" );
 			$dbw = $this->getDB( DB_MASTER );
 			$dbw->begin();
 			$dbw->delete(
 				self::TABLE_NAME,
-				[ 'ug_group' => [ $group ] ],
+				[ 'ug_group' => $group ],
 				__METHOD__
 			);
 			$dbw->commit();
