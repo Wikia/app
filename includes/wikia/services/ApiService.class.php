@@ -112,6 +112,7 @@ class ApiService extends Service {
 	 * @return array $options
 	 */
 	public static function loginAsUser() {
+		global $wgEnableHeliosExt;
 		$app = F::app();
 
 		$options = array();
@@ -130,6 +131,13 @@ class ApiService extends Service {
 		$cookie = '';
 		foreach ( $params as $key => $value ) {
 			$cookie .= $app->wg->CookiePrefix.$key.'='.$value.';';
+		}
+
+		if ( $wgEnableHeliosExt ) {
+			$token = \Wikia\Helios\User::getAccessToken($app->wg->Request);
+			if ( !empty($token) ) {
+				$cookie .= HeliosCookieHelper::ACCESS_TOKEN_COOKIE_NAME . "=" . $token . ";";
+			}
 		}
 
 		$options['curlOptions'] = array( CURLOPT_COOKIE => $cookie );
