@@ -92,9 +92,3 @@ $wgResourceModules['wikia.ext.abtesting.edit'] = array(
 
 $wgSpecialPages[ 'AbTesting'] = 'SpecialAbTestingController';
 
-
-/*
- * permissions setup
- */
-$wgGroupPermissions['*']['abtestpanel'] = false;
-$wgGroupPermissions['staff']['abtestpanel'] = true;

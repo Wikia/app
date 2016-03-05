@@ -27,12 +27,6 @@ $wgAutoloadClasses['SpecialPageViewsSourceDatabase'] = $dir . 'SpecialPageViewsS
 $wgSpecialPages['PageViews'] = 'SpecialPageViewsController';
 $wgSpecialPageGroups['PageViews'] = 'wikia';
 
-$wgGroupPermissions['*']['pageviews'] = false;
-$wgGroupPermissions['staff']['pageviews'] = true;
-$wgGroupPermissions['sysop']['pageviews'] = true;
-$wgGroupPermissions['bureaucrat']['pageviews'] = true;
-$wgGroupPermissions['helper']['pageviews'] = true;
-
 $wgExtensionMessagesFiles['SpecialPageViews'] = $dir . 'SpecialPageViews.i18n.php';
 
 $wgResourceModules['ext.SpecialPageViews'] = [

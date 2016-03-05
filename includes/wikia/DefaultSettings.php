@@ -1776,11 +1776,6 @@ $wgOasisTypography = true;
 $wgOasisBreakpoints = true;
 
 /**
- * Add poweruser to implicit groups
- */
-$wgImplicitGroups[] = 'poweruser';
-
-/**
  * Enable updated GlobalFooter
  * @TODO CONCF-444 - remove this variable
  */

@@ -34,9 +34,3 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $wgHooks['PersonalUrls'][] = "SpecialApiGate::onPersonalUrls";
 $wgHooks['AccountNavigationModuleAfterDropdownItems'][] = "SpecialApiGate::onAccountNavigationModuleAfterDropdownItems";
-
-// Since API Gate is an external system, instead of trying to do granular rights (which are a cool feature) it makes sense
-// to just do a single right for superuser power in API Gate since it really doesn't make sense to have any "partial" admins.
-$wgAvailableRights[] = 'apigate_admin';
-$wgGroupPermissions['*']['apigate_admin'] = false;
-$wgGroupPermissions['staff']['apigate_admin'] = true;

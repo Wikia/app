@@ -23,11 +23,6 @@ $wgExtensionCredits['specialpage'][] = array(
 $wgExtensionMessagesFiles["Multidelete"] = dirname(__FILE__) . '/MultiTasks.i18n.php';
 $wgExtensionMessagesFiles['MultideleteAliases'] = __DIR__ . '/MultiTasks.aliases.php';
 
-$wgAvailableRights[] = 'multidelete';
-$wgGroupPermissions['staff']['multidelete'] = true;
-$wgGroupPermissions['helper']['multidelete'] = true;
-$wgGroupPermissions['vstf']['multidelete'] = true;
-
 extAddSpecialPage( dirname(__FILE__) . '/SpecialMultiDelete_body.php', 'Multidelete', 'Multidelete' );
 
 require_once( $IP . "/extensions/wikia/TaskManager/BatchTask.php" );
