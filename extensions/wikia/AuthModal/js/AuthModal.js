@@ -80,21 +80,42 @@ define('AuthModal', ['jquery', 'wikia.window'], function ($, window) {
 			$(modal).removeClass('loading');
 		}
 	}
+	function authSuccess(event) {
+		console.log('Paent event', event);
+	}
 
 	function loadPage (url, onPageLoaded) {
-		var authIframe = window.document.createElement('iframe'),
-			modalParam = 'modal=1';
 
-		authIframe.src = url + (url.indexOf('?') === -1 ? '?' : '&')  + modalParam;
-		//for the selenium tests:
-		authIframe.id = 'auth-modal-iframe';
-		authIframe.onload = function () {
-			if (typeof onPageLoaded === 'function') {
-				onPageLoaded();
-			}
+
+		var modalParam = 'modal=1',
+			src = url + (url.indexOf('?') === -1 ? '?' : '&') + modalParam,
+			PopUpWidth= 768,
+			PopUpHeight= 670,
+			left = (window.screen.width /2) - PopUpWidth/2,
+			top = (window.screen.height/2) - PopUpHeight/2,
+			authPopUp = window.open(src, 'Wikia Authentication','width='+PopUpWidth+',height='+PopUpHeight+'top='+top+',left='+left);
+
+		authPopUp.addEventListener('message', function (event) {
+			alert('Event has been send');
+			console.log(event);
+		}, false);
+
+		console.log('src', src);
+		console.log('url', url);
+
+		authPopUp.onload = function () {
+			authPopUp.postMessage('asdasd');
 		};
-		modal.appendChild(authIframe);
 
+		//for the selenium tests:
+		/*		authIframe.id = 'auth-modal-iframe';
+		 authIframe.onload = function () {
+		 if (typeof onPageLoaded === 'function') {
+		 onPageLoaded();
+		 }
+		 };*/
+		//modal.appendChild(authIframe);
+		window.addEventListener('message', authSuccess, false);
 	}
 
 	return {
