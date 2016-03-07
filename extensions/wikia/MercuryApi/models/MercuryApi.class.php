@@ -139,6 +139,7 @@ class MercuryApi {
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
 				'ivw3' => [
 					'countries' => $wgAnalyticsDriverIVW3Countries,
+					'cmKey' => AnalyticsProviderIVW3::getCMKey()
 				],
 				'nielsen' => [
 					'enabled' => AnalyticsProviderNielsen::isEnabled(),
