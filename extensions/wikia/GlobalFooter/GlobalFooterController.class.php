@@ -105,21 +105,12 @@ class GlobalFooterController extends WikiaController {
 	private function generateSitemapLinks() {
 		$sitemapLinks = [];
 
-		$useGlobalSitemap = true;
-		$useLocalSitemap = $this->wg->UseSpecialAllpagesAsLocalSitemap;
+		$sitemapLinks[] = parseItem(
+			'*' . self::SITEMAP_GLOBAL . '|' . wfMessage( 'global-footer-global-sitemap' )->escaped()
+		);
 
-		// Don't link to local sitemap on corporate sites and community.wikia.com
-		if ( WikiaPageType::isCorporatePage() || $this->wg->CityId === COMMUNITY_CENTRAL_CITY_ID ) {
-			$useLocalSitemap = false;
-		}
-
-		if ( $useGlobalSitemap ) {
-			$sitemapLinks[] = parseItem(
-				'*' . self::SITEMAP_GLOBAL . '|' . wfMessage( 'global-footer-global-sitemap' )->escaped()
-			);
-		}
-
-		if ( $useLocalSitemap ) {
+		// Don't link to local sitemap on corporate sites and community.wikia.com (controlled via WikiFactory)
+		if ( $this->wg->EnableLocalSitemap ) {
 			$sitemapLinks[] = parseItem(
 				'*' . self::SITEMAP_LOCAL . '|' . wfMessage( 'global-footer-local-sitemap' )->escaped()
 			);

@@ -40,7 +40,7 @@ if ( !$allowRobots ) {
 	$robots->disallowNamespace( NS_TEMPLATE );
 	$robots->disallowNamespace( NS_TEMPLATE_TALK );
 
-	if ( !empty( $wgUseSpecialAllpagesAsLocalSitemap ) ) {
+	if ( !empty( $wgEnableLocalSitemap ) ) {
 		$robots->allowSpecialPage( 'Allpages' );
 	}
 	$robots->allowSpecialPage( 'CreateNewWiki' );

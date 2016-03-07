@@ -67,8 +67,8 @@ class SpecialAllpages extends IncludableSpecialPage {
 		/* Wikia change begin - @author: rychu */
 		// SEO-6: Remove the nofollow attribute from Special:AllPages
 		// SEO-256: Use Special:Allpages as local sitemaps
-		global $wgUseSpecialAllpagesAsLocalSitemap;
-		if ( !empty( $wgUseSpecialAllpagesAsLocalSitemap ) ) {
+		global $wgEnableLocalSitemap;
+		if ( !empty( $wgEnableLocalSitemap ) ) {
 			$out->setRobotPolicy( 'noindex,follow' );
 		}
 		/* Wikia change end */
@@ -295,8 +295,8 @@ class SpecialAllpages extends IncludableSpecialPage {
 
 		/* Wikia change begin - @author: rychu */
 		// SEO-256: Use Special:Allpages as local sitemaps
-		global $wgUseSpecialAllpagesAsLocalSitemap;
-		if ( !empty( $wgUseSpecialAllpagesAsLocalSitemap ) ) {
+		global $wgEnableLocalSitemap;
+		if ( !empty( $wgEnableLocalSitemap ) ) {
 			$out = '<div><a href="' . $link . '"><span>';
 			$out .= $this->msg( 'alphaindexline' )->rawParams(
 				'</span>' . $inpointf . '<span>',
