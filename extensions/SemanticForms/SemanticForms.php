@@ -419,20 +419,6 @@ $GLOBALS['sfgAutocompleteCacheTimeout'] = null;
 # ##
 $GLOBALS['sfgRenameEditTabs'] = false;
 $GLOBALS['sfgRenameMainEditTab'] = false;
-$GLOBALS['wgGroupPermissions']['*']['viewedittab'] = true;
-$GLOBALS['wgAvailableRights'][] = 'viewedittab';
-
-# ##
-# Permission to edit form fields defined as 'restricted'
-# ##
-$GLOBALS['wgGroupPermissions']['sysop']['editrestrictedfields'] = true;
-$GLOBALS['wgAvailableRights'][] = 'editrestrictedfields';
-
-# ##
-# Permission to view, and create pages with, Special:CreateClass
-# ##
-$GLOBALS['wgGroupPermissions']['user']['createclass'] = true;
-$GLOBALS['wgAvailableRights'][] = 'createclass';
 
 # ##
 # List separator character

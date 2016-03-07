@@ -33,10 +33,6 @@ $rtgIP = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['ReplaceText'] = $rtgIP . 'ReplaceText.i18n.php';
 $wgExtensionMessagesFiles['ReplaceTextAlias'] = $rtgIP . 'ReplaceText.alias.php';
 
-// This extension uses its own permission type, 'replacetext'
-$wgAvailableRights[] = 'replacetext';
-$wgGroupPermissions['sysop']['replacetext'] = true;
-
 $wgHooks['AdminLinks'][] = 'rtAddToAdminLinks';
 
 $wgSpecialPages['ReplaceText'] = 'ReplaceText';

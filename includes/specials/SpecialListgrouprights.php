@@ -21,6 +21,8 @@
  * @ingroup SpecialPage
  */
 
+use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
+
 /**
  * This special page lists all defined user groups and the associated rights.
  * See also @ref $wgGroupPermissions.
@@ -29,6 +31,7 @@
  * @author Petr Kadlec <mormegil@centrum.cz>
  */
 class SpecialListGroupRights extends SpecialPage {
+	use PermissionsServiceAccessor;
 
 	/**
 	 * Constructor
@@ -41,9 +44,7 @@ class SpecialListGroupRights extends SpecialPage {
 	 * Show the special page
 	 */
 	public function execute( $par ) {
-		global $wgImplicitGroups;
-		global $wgGroupPermissions, $wgAddGroups, $wgRemoveGroups;
-		global $wgGroupsAddToSelf, $wgGroupsRemoveFromSelf;
+		global $wgGroupPermissions;
 
 		$this->setHeaders();
 		$this->outputHeader();
@@ -59,13 +60,7 @@ class SpecialListGroupRights extends SpecialPage {
 				'</tr>'
 		);
 
-		$allGroups = array_unique( array_merge(
-			array_keys( $wgGroupPermissions ),
-			array_keys( $wgAddGroups ),
-			array_keys( $wgRemoveGroups ),
-			array_keys( $wgGroupsAddToSelf ),
-			array_keys( $wgGroupsRemoveFromSelf )
-		) );
+		$allGroups = User::getAllGroups();
 		asort( $allGroups );
 
 		foreach ( $allGroups as $group ) {
@@ -100,7 +95,7 @@ class SpecialListGroupRights extends SpecialPage {
 					SpecialPage::getTitleFor( 'Listusers' ),
 					wfMsgHtml( 'listgrouprights-members' )
 				);
-			} elseif ( !in_array( $group, $wgImplicitGroups ) ) {
+			} elseif ( !$this->permissionsService()->getConfiguration()->isImplicitGroup( $group ) ) {
 				$grouplink = '<br />' . Linker::linkKnown(
 					SpecialPage::getTitleFor( 'Listusers' ),
 					wfMsgHtml( 'listgrouprights-members' ),
@@ -112,18 +107,14 @@ class SpecialListGroupRights extends SpecialPage {
 				$grouplink = '';
 			}
 
-			$addgroups = isset( $wgAddGroups[$group] ) ? $wgAddGroups[$group] : array();
-			$removegroups = isset( $wgRemoveGroups[$group] ) ? $wgRemoveGroups[$group] : array();
-			$addgroupsSelf = isset( $wgGroupsAddToSelf[$group] ) ? $wgGroupsAddToSelf[$group] : array();
-			$removegroupsSelf = isset( $wgGroupsRemoveFromSelf[$group] ) ? $wgGroupsRemoveFromSelf[$group] : array();
-
+			$groupArr = $this->permissionsService()->getConfiguration()->getGroupsChangeableByGroup( $group );
 			$id = $group == '*' ? false : Sanitizer::escapeId( $group );
 			$out->addHTML( Html::rawElement( 'tr', array( 'id' => $id ),
 				"
 				<td>$grouppage$grouplink</td>
 					<td>" .
-						$this->formatPermissions( $permissions, $addgroups, $removegroups,
-							$addgroupsSelf, $removegroupsSelf ) .
+						$this->formatPermissions( $permissions, $groupArr['add'], $groupArr['remove'],
+							$groupArr['add-self'], $groupArr['remove-self'] ) .
 					'</td>
 				'
 			) );
@@ -147,8 +138,7 @@ class SpecialListGroupRights extends SpecialPage {
 	 private function formatPermissions( $permissions, $add, $remove, $addSelf, $removeSelf ) {
 		$r = array();
 		foreach( $permissions as $permission => $granted ) {
-			//show as granted only if it isn't revoked to prevent duplicate display of permissions
-			if( $granted && ( !isset( $revoke[$permission] ) || !$revoke[$permission] ) ) {
+			if( $granted ) {
 				$description = wfMsgExt( 'listgrouprights-right-display', array( 'parseinline' ),
 					User::getRightDescription( $permission ),
 					'<span class="mw-listgrouprights-right-name">' . $permission . '</span>'
