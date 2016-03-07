@@ -31,9 +31,9 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.gpt.adSizeFilter'](
-			mocks.breakpointsLayout,
 			mocks.getDocument(),
-			mocks.log
+			mocks.log,
+			mocks.breakpointsLayout
 		);
 	}
 
