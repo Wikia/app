@@ -40,6 +40,24 @@ class ExactTargetClientTest extends WikiaBaseTest {
 		$this->assertEquals( [ 1, 2 ], $client->retrieveUserIdsByEmail( 'test@test.com' ) );
 	}
 
+	public function testConsecutiveRetrieval() {
+		$soapClientMock = $this->getMockBuilder( 'ExactTargetSoapClient' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'Retrieve' ] )
+			->getMock();
+		$soapClientMock->expects( $this->exactly(3) )
+			->method( 'Retrieve' )
+			->will( $this->onConsecutiveCalls(
+				$this->getResponse( [ [ 'user_id' => 1 ], [ 'user_id' => 2 ] ], 'MoreDataAvailable' ),
+				$this->getResponse( [ [ 'user_id' => 3 ], [ 'user_id' => 4 ] ], 'MoreDataAvailable' ),
+				$this->getResponse( [ [ 'user_id' => 5 ] ], 'OK' )
+			) );
+
+		$client = new \Wikia\ExactTarget\ExactTargetClient( $soapClientMock );
+
+		$this->assertEquals( [ 1, 2, 3, 4, 5 ], $client->retrieveUserIdsByEmail( 'test@test.com' ) );
+	}
+
 	public function testUserEditsRetrieval() {
 		$soapClientMock = $this->getMockBuilder( 'ExactTargetSoapClient' )
 			->disableOriginalConstructor()
@@ -206,6 +224,7 @@ class ExactTargetClientTest extends WikiaBaseTest {
 	private function getResponse( $data, $status, $msg = '' ) {
 		$response = new stdClass();
 		$response->OverallStatus = $status;
+		$response->RequestID = 'ABC-1234-XYZ';
 		if ( !empty( $msg ) ) {
 			$response->Results = new stdClass();
 			$response->Results->StatusMessage = $msg;
