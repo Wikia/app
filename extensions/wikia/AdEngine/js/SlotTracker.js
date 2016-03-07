@@ -88,15 +88,6 @@ define('ext.wikia.adEngine.slotTracker', [
 				value,
 				forcedLabel
 			);
-
-			//ADEN-2983 in order to review unused slots, lets gather the data
-			//Should be removed after closing the task
-			adTracker.track(
-				[eventName+'-bySlotName', data.provider, slotname].join('/'),
-				extraParams,
-				value,
-				forcedLabel
-			);
 		}
 	}
 
