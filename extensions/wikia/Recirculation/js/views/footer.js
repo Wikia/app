@@ -30,10 +30,10 @@ define('ext.wikia.recirculation.views.footer', [
 
 	function setupTracking(experimentName) {
 		return function($html) {
-			tracker.trackVerboseImpression(experimentName, 'in-content');
+			tracker.trackVerboseImpression(experimentName, 'footer');
 
 			$html.on('mousedown', 'a', function() {
-				tracker.trackVerboseClick(experimentName, 'in-content');
+				tracker.trackVerboseClick(experimentName, 'footer');
 			});
 		}
 	}

@@ -31,10 +31,10 @@ define('ext.wikia.recirculation.views.rail', [
 
 	function setupTracking(experimentName) {
 		return function($html) {
-			tracker.trackVerboseImpression(experimentName, 'in-content');
+			tracker.trackVerboseImpression(experimentName, 'rail');
 
 			$html.on('mousedown', 'a', function() {
-				tracker.trackVerboseClick(experimentName, 'in-content');
+				tracker.trackVerboseClick(experimentName, 'rail');
 			});
 		}
 	}
