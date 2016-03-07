@@ -55,7 +55,7 @@ class PermissionsServiceImpl implements PermissionsService {
 	 * @return string memcache key
 	 */
 	static public function getMemcKey( $userId ) {
-		return wfSharedMemcKey( __CLASS__, 'permissions-groups', $userId );
+		return implode( ':', [ 'GLOBAL', __CLASS__, 'permissions-groups', $userId ] );
 	}
 
 	/**
