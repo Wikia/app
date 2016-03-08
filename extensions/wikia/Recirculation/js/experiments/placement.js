@@ -21,8 +21,10 @@ require([
 		view,
 		helper;
 
-	if (w.wgContentLanguage !== 'en' && videosModule) {
-		videosModule(railSelector);
+	if (w.wgContentLanguage !== 'en') {
+		if (videosModule) {
+			videosModule(railSelector);
+		}
 		return;
 	}
 
