@@ -265,8 +265,7 @@ jQuery(function ($) {
 		// We need to bind to #WikiaArticle because users use scripts which reload the content
 		// see: http://dev.wikia.com/wiki/MediaWiki:AjaxRC/code.js
 		$wikiaArticle.on('mousedown', 'a', function (e) {
-			var label,
-				$el = $(e.target),
+			var $el = $(e.target),
 				label = $el.attr('data-action'),
 				href = $el.attr('href');
 
