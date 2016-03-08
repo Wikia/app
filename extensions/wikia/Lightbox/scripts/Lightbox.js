@@ -845,7 +845,6 @@
 			// Load backfill content from DOM
 			var types = Lightbox.carouselTypes,
 				deferredList = [],
-				// show-ads class appears when there is going to be a MODAL_RECTANGLE ad
 				itemsShown = 9,
 				i,
 				type,
