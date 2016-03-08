@@ -12,17 +12,6 @@ jQuery(function($) {
 
 			this.dropdown = new Wikia.MultiSelectDropdown(this.$dropdown);
 			this.dropdown.on('change', $.proxy(this.onChange, this));
-
-			if (window.Wikia.Tracker) {
-				$('#WikiaPage').on('mousedown', '.mw-rollback-link a', function () {
-					window.Wikia.Tracker.track({
-						trackingMethod: 'analytics',
-						category: 'recent-changes',
-						action: tracker.ACTIONS.CLICK,
-						label: 'rollback'
-					});
-				});
-			}
 		},
 
 		saveFilters: function(event) {

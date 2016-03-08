@@ -908,7 +908,8 @@ class DifferenceEngine extends ContextSource {
 		$header = Linker::linkKnown(
 			$title,
 			$header,
-			# Wikia Change begin
+			/* Wikia Change begin
+			   Possible values: revision-link-before, revision-link-after */
 			[ 'data-action' => 'revision-link-' . $type ],
 			# Wikia Change end
 			[ 'oldid' => $rev->getID() ]
@@ -921,7 +922,8 @@ class DifferenceEngine extends ContextSource {
 			}
 
 			$msg = $this->msg( $title->userCan( 'edit', $user ) ? 'editold' : 'viewsourceold' )->escaped();
-			/* Wikia Change begin */
+			/* Wikia Change begin
+			   Possible values: edit-revision-before, edit-revision-after */
 			$header .= ' <span class="mw-rev-head-action">(' .
 				Linker::linkKnown( $title, $msg, [ 'data-action' => 'edit-revision-' . $type ], $editQuery ) .
 				')</span>';
