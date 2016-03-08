@@ -52,21 +52,21 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 	 * @dataProvider updateInfoboxProvider
 	 */
 	public function testUpdateInfobox( $data, $expected ) {
-		$this->assertEquals( $expected, $this->builderService->updateInfobox( $data['oldInfobox'], $data['newInfobox'], $data['oldContent'] ) );
+		$this->assertEquals( $expected, $this->builderService->updateInfobox( $data[ 'oldInfobox' ], $data[ 'newInfobox' ], $data[ 'oldContent' ] ) );
 	}
 
 	/**
 	 * @dataProvider updateDocumentationProvider
 	 */
 	public function testUpdateDocumentation( $data, $expected ) {
-		$this->assertEquals( $expected, $this->builderService->updateDocumentation( $data['oldDoc'],
-			$data['newDoc'], $data['oldContent'] ) );
+		$this->assertEquals( $expected, $this->builderService->updateDocumentation( $data[ 'oldDoc' ],
+			$data[ 'newDoc' ], $data[ 'oldContent' ] ) );
 	}
 
 
 	public function infoboxArrayValidityDataProvider() {
 		return [
-			[ [], false, true, 'Empty infobox array is valid' ],
+			[ [ ], false, true, 'Empty infobox array is valid' ],
 			[ [ 'infobox1' ], true, true, 'Array with single supported infobox is valid' ],
 			[ [ 'infobox1', 'infobox2' ], true, false, 'Array with more than one infobox (even supported) is not valid' ],
 			[ [ 'infobox1' ], false, false, 'Array with single unsupported infobox is not valid' ],
@@ -139,7 +139,7 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 			[ '<infobox><title source="title"><default>  {{PAGENAME}}  </default></title></infobox>', true, "{{PAGENAME}} is supported within title" ],
 			[ '<infobox><title source="title"><default>some strange title default</default></title></infobox>', false, "default tag is not supported within title" ],
 			[ '<infobox><title source="title"/></infobox>', true, "title tag is supported" ],
-			[ '<infobox><title source="title"><default>0</default></title></infobox>', false, "default tag is not supported within title"  ],
+			[ '<infobox><title source="title"><default>0</default></title></infobox>', false, "default tag is not supported within title" ],
 			[ '<infobox><group><data source="asdf"/></group></infobox>', false, "group without header is not supported" ],
 			[ '<infobox><group><header>asdf</header></group></infobox>', true, "group with header is supported" ],
 			[ '<infobox><group><header></header></group></infobox>', true, "group with empty header is supported" ],
@@ -147,8 +147,10 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 			[ '<infobox><group collapse="open"><header>hd</header><data source="asdf"/></group></infobox>', true, "collapse=open is supported attrib in group" ],
 			[ '<infobox><group collapse="false"><header>hd</header><data source="asdf"/></group></infobox>', false, "collapse=close is not supported attrib in group" ],
 			[ '<infobox theme="asdf"><image source="image"><alt source="title"><default>asdf</default></alt></image></infobox>', false, "default within image is not supported" ],
-			[ '<infobox theme="adsf"><group><header>asdf</header></group></infobox>', false, "theme is not supported attrib" ],
-			[ '<infobox><title source="title1"/><image source="image1"><caption source="caption1"/></image><data source="row1"><label>Label 1</label></data><data source="row2"><label>Label 2</label></data><group><header>Header 1</header><data source="row3"><label>Label 3</label></data></group><group><header>Header 2</header><image source="image2"><caption source="caption2"/></image></group><group><header>Header 3</header><data source="row4"><label>Label 4</label></data></group><title source="title2"/><group><header>Header 4</header><image source="image3"><caption source="caption3"/></image></group><title source="title3"/></infobox>', true, "" ]
+			[ '<infobox theme="adsf"><group><header>asdf</header></group></infobox>', false, "user theme is not supported attrib" ],
+			[ '<infobox><title source="title1"/><image source="image1"><caption source="caption1"/></image><data source="row1"><label>Label 1</label></data><data source="row2"><label>Label 2</label></data><group><header>Header 1</header><data source="row3"><label>Label 3</label></data></group><group><header>Header 2</header><image source="image2"><caption source="caption2"/></image></group><group><header>Header 3</header><data source="row4"><label>Label 4</label></data></group><title source="title2"/><group><header>Header 4</header><image source="image3"><caption source="caption3"/></image></group><title source="title3"/></infobox>', true, "" ],
+			[ '<infobox theme=""><data source="asdf"/></infobox>', true, "empty theme is supported value" ],
+			[ '<infobox theme="europa"><data source="asdf"/></infobox>', true, "europa theme is supported value" ],
 		];
 	}
 
