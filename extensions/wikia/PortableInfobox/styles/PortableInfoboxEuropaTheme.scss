@@ -1,0 +1,147 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+
+$infobox-width: 300px;
+$white: #fff;
+$black: #000;
+$backgroundColorMix: 10%;
+$backgroundColor: mix($black, $color-page, $backgroundColorMix);
+$horizontalGroupStripeBackground: mix($black, $color-page, $backgroundColorMix * 2);
+$tabberBackgroundColor: mix($black, $color-buttons, $backgroundColorMix * 4);
+$titleFontSize: 24px;
+$titleLineHeight: 28px;
+$headerFontSize: 16px;
+$headerLineHeight: 20px;
+$infoboxSideSpacing: 14px;
+$infoboxHeaderSpacing: 9px;
+$infoboxDataSpacing: 10px;
+$horizontal-group-label-spacing: 6px;
+$labelWidth: 88px;
+$collapsibleChevronSize: 9px;
+$collapsibleChevronNegativeMargin: -7px;
+
+@if $is-dark-wiki {
+	$backgroundColor: mix($white, $color-page, $backgroundColorMix);
+	$horizontalGroupStripeBackground: mix($white, $color-page, $backgroundColorMix * 2);
+}
+
+@if lightness($color-buttons) < 30 {
+	$tabberBackgroundColor: mix($white, $color-buttons, $backgroundColorMix * 4);
+}
+
+.pi-theme-europa {
+	&.portable-infobox {
+		color: $color-text;
+		width: $infobox-width;
+	}
+
+	&.pi-background {
+		background-color: $backgroundColor;
+	}
+
+	&.pi-layout-stacked {
+		.pi-data-value {
+			padding-left: 0;
+			padding-top: $horizontal-group-label-spacing;
+		}
+	}
+
+	.pi-item-spacing {
+		padding: $infoboxDataSpacing $infoboxSideSpacing;
+	}
+
+	.pi-title,
+	.pi-header {
+		text-align: center;
+		background-color: $color-buttons;
+		color: $color-button-text;
+	}
+
+	.pi-title {
+		font-size: $titleFontSize;
+		line-height: $titleLineHeight;
+		padding: $infoboxSideSpacing;
+	}
+
+	.pi-header,
+	.pi-image-collection-tabs  {
+		font-size: $headerFontSize;
+		line-height: $headerLineHeight;
+	}
+
+	.pi-header,
+	.pi-tab-link {
+		padding: $infoboxHeaderSpacing $infoboxSideSpacing;
+	}
+
+	.pi-navigation {
+		background-color: inherit;
+		color: inherit;
+		font-weight: inherit;
+	}
+
+	.pi-data,
+	.pi-group {
+		border-bottom: none;
+	}
+
+	.pi-data-label {
+		@include flex-basis($labelWidth);
+	}
+
+	.pi-data-value {
+		padding-left: $infoboxSideSpacing;
+	}
+
+	.pi-caption {
+		font-style: normal;
+	}
+
+	.pi-image-collection-tabs {
+		text-align: left;
+		color: $color-button-text;
+		background-color: $tabberBackgroundColor;
+		margin: 0;
+
+		.current {
+			background-color: $color-buttons;
+		}
+	}
+
+	.pi-tab-link {
+		border: none;
+		margin: 0;
+	}
+
+	.pi-collapse .pi-header::after {
+		border-color: $color-button-text;
+		height: $collapsibleChevronSize;
+		right: $infoboxSideSpacing;
+		width: $collapsibleChevronSize;
+	}
+
+	.pi-collapse-closed .pi-header::after {
+		margin-top: $collapsibleChevronNegativeMargin;
+	}
+
+	.pi-horizontal-group {
+		text-align: left;
+
+		.pi-horizontal-group-item {
+			border-left: none;
+
+			&:nth-child(even) {
+				background-color: $horizontalGroupStripeBackground;
+			}
+		}
+
+		.pi-data-label {
+			padding-bottom: $horizontal-group-label-spacing;
+		}
+
+		.pi-data-value {
+			padding-top: 0;
+			padding-left: $infoboxSideSpacing
+		}
+	}
+}
