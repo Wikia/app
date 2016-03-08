@@ -292,6 +292,24 @@ jQuery(function ($) {
 		});
 	}
 
+	/** diff page **/
+	$wikiaArticle.find('.diff-header').on('mousedown', 'a', function(e) {
+		var $el = $(e.target),
+			action = $el.attr('data-action');
+
+		if (!action && $el.parent().hasClass('mw-rollback-link')) {
+			action = 'rollback';
+		}
+
+		if (action) {
+			track({
+				browserEvent: e,
+				category: 'oasis-diff',
+				label: action
+			});
+		}
+	});
+
 	/** search **/
 
 	(function () {
