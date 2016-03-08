@@ -60,7 +60,10 @@ class SpecialListGroupRights extends SpecialPage {
 				'</tr>'
 		);
 
-		$allGroups = User::getAllGroups();
+		$allGroups = array_unique( array_merge(
+			User::getAllGroups(),
+			User::getImplicitGroups()
+		) );
 		asort( $allGroups );
 
 		foreach ( $allGroups as $group ) {
