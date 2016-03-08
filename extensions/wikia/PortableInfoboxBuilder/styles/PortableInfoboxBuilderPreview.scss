@@ -23,6 +23,12 @@ $empty-header-height: 28px;
 	overflow: visible;
 }
 
+.pi-data-label,
+.pi-header,
+.pi-title {
+	color: $color-text;
+}
+
 .pi-header {
 	min-height: $empty-header-height;
 
