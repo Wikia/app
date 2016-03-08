@@ -18,6 +18,11 @@ class PortableInfoboxBuilderController extends WikiaController {
 			$builderService = new PortableInfoboxBuilderService();
 			if ( $builderService->isValidInfoboxArray( $infoboxes ) ) {
 				$response->setVal( 'data', $builderService->translateMarkupToData( $infoboxes[ 0 ] ) );
+
+				// There are no infoboxes yet
+				if ( empty( $infoboxes ) ) {
+					$response->setVal( 'isNew', true );
+				}
 			}
 		} else {
 			$status = new Status();
