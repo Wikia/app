@@ -4,30 +4,30 @@
 $infobox-width: 300px;
 $white: #fff;
 $black: #000;
-$backgroundColorMix: 10%;
-$tabberLightnessCondition: 30;
-$backgroundColor: mix($black, $color-page, $backgroundColorMix);
-$horizontalGroupStripeBackground: mix($black, $color-page, $backgroundColorMix * 2);
-$tabberBackgroundColor: mix($black, $color-buttons, $backgroundColorMix * 4);
-$titleFontSize: 24px;
-$titleLineHeight: 28px;
-$headerFontSize: 16px;
-$headerLineHeight: 20px;
-$infoboxSideSpacing: 14px;
-$infoboxHeaderSpacing: 9px;
-$infoboxDataSpacing: 10px;
+$background-color-mix: 10%;
+$tabber-lightness-condition: 30;
+$background-color: mix($black, $color-page, $background-color-mix);
+$horizontal-group-stripe-background: mix($black, $color-page, $background-color-mix * 2);
+$tabber-background-color: mix($black, $color-buttons, $background-color-mix * 4);
+$title-font-size: 24px;
+$title-line-height: 28px;
+$header-font-size: 16px;
+$header-line-height: 20px;
+$infobox-side-spacing: 14px;
+$infobox-header-spacing: 9px;
+$infobox-data-spacing: 10px;
 $horizontal-group-label-spacing: 6px;
-$labelWidth: 88px;
-$collapsibleChevronSize: 9px;
-$collapsibleChevronNegativeMargin: -7px;
+$label-width: 88px;
+$collapsible-chevron-size: 9px;
+$collapsible-chevron-negative-margin: -7px;
 
 @if $is-dark-wiki {
-	$backgroundColor: mix($white, $color-page, $backgroundColorMix);
-	$horizontalGroupStripeBackground: mix($white, $color-page, $backgroundColorMix * 2);
+	$background-color: mix($white, $color-page, $background-color-mix);
+	$horizontal-group-stripe-background: mix($white, $color-page, $background-color-mix * 2);
 }
 
-@if lightness($color-buttons) < $tabberLightnessCondition {
-	$tabberBackgroundColor: mix($white, $color-buttons, $backgroundColorMix * 4);
+@if lightness($color-buttons) < $tabber-lightness-condition {
+	$tabber-background-color: mix($white, $color-buttons, $background-color-mix * 4);
 }
 
 .pi-theme-europa {
@@ -37,7 +37,7 @@ $collapsibleChevronNegativeMargin: -7px;
 	}
 
 	&.pi-background {
-		background-color: $backgroundColor;
+		background-color: $background-color;
 	}
 
 	&.pi-layout-stacked {
@@ -48,31 +48,31 @@ $collapsibleChevronNegativeMargin: -7px;
 	}
 
 	.pi-item-spacing {
-		padding: $infoboxDataSpacing $infoboxSideSpacing;
+		padding: $infobox-data-spacing $infobox-side-spacing;
 	}
 
 	.pi-title,
 	.pi-header {
-		text-align: center;
 		background-color: $color-buttons;
 		color: $color-button-text;
+		text-align: center;
 	}
 
 	.pi-title {
-		font-size: $titleFontSize;
-		line-height: $titleLineHeight;
-		padding: $infoboxSideSpacing;
+		font-size: $title-font-size;
+		line-height: $title-line-height;
+		padding: $infobox-side-spacing;
 	}
 
 	.pi-header,
-	.pi-image-collection-tabs  {
-		font-size: $headerFontSize;
-		line-height: $headerLineHeight;
+	.pi-image-collection-tabs {
+		font-size: $header-font-size;
+		line-height: $header-line-height;
 	}
 
 	.pi-header,
 	.pi-tab-link {
-		padding: $infoboxHeaderSpacing $infoboxSideSpacing;
+		padding: $infobox-header-spacing $infobox-side-spacing;
 	}
 
 	.pi-navigation {
@@ -83,15 +83,15 @@ $collapsibleChevronNegativeMargin: -7px;
 
 	.pi-data,
 	.pi-group {
-		border-bottom: none;
+		border-bottom: 0;
 	}
 
 	.pi-data-label {
-		@include flex-basis($labelWidth);
+		@include flex-basis($label-width);
 	}
 
 	.pi-data-value {
-		padding-left: $infoboxSideSpacing;
+		padding-left: $infobox-side-spacing;
 	}
 
 	.pi-caption {
@@ -99,10 +99,10 @@ $collapsibleChevronNegativeMargin: -7px;
 	}
 
 	.pi-image-collection-tabs {
-		text-align: left;
+		background-color: $tabber-background-color;
 		color: $color-button-text;
-		background-color: $tabberBackgroundColor;
 		margin: 0;
+		text-align: left;
 
 		.current {
 			background-color: $color-buttons;
@@ -110,30 +110,26 @@ $collapsibleChevronNegativeMargin: -7px;
 	}
 
 	.pi-tab-link {
-		border: none;
+		border: 0;
 		margin: 0;
 	}
 
 	.pi-collapse .pi-header::after {
 		border-color: $color-button-text;
-		height: $collapsibleChevronSize;
-		right: $infoboxSideSpacing;
-		width: $collapsibleChevronSize;
+		height: $collapsible-chevron-size;
+		right: $infobox-side-spacing;
+		width: $collapsible-chevron-size;
 	}
 
 	.pi-collapse-closed .pi-header::after {
-		margin-top: $collapsibleChevronNegativeMargin;
+		margin-top: $collapsible-chevron-negative-margin;
 	}
 
 	.pi-horizontal-group {
 		text-align: left;
 
 		.pi-horizontal-group-item {
-			border-left: none;
-
-			&:nth-child(even) {
-				background-color: $horizontalGroupStripeBackground;
-			}
+			border-left: 0;
 		}
 
 		.pi-data-label {
@@ -141,8 +137,14 @@ $collapsibleChevronNegativeMargin: -7px;
 		}
 
 		.pi-data-value {
+			padding-left: $infobox-side-spacing;
 			padding-top: 0;
-			padding-left: $infoboxSideSpacing
+		}
+	}
+
+	.pi-horizontal-group-item {
+		&:nth-child(even) {
+			background-color: $horizontal-group-stripe-background;
 		}
 	}
 }
