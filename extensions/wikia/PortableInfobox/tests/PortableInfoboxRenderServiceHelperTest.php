@@ -334,7 +334,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'wgPortableInfoboxCustomImageWidth' => null,
 				'result' => [
 					'height' => 500,
-					'width' => 270
+					'width' => 300
 				],
 				'description' => 'Big image on desktop'
 			],
@@ -347,7 +347,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'wgPortableInfoboxCustomImageWidth' => null,
 				'result' => [
 					'height' => 500,
-					'width' => 270
+					'width' => 300
 				],
 				'description' => 'Tall image on desktop'
 			],
@@ -360,7 +360,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'wgPortableInfoboxCustomImageWidth' => null,
 				'result' => [
 					'height' => 200,
-					'width' => 270
+					'width' => 300
 				],
 				'description' => 'Wide image on desktop'
 			],
@@ -373,7 +373,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'wgPortableInfoboxCustomImageWidth' => null,
 				'result' => [
 					'height' => 50,
-					'width' => 270
+					'width' => 300
 				],
 				'description' => 'Small image on desktop'
 			],
@@ -548,8 +548,8 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'isWikiaMobile' => false,
 				'wgPortableInfoboxCustomImageWidth' => 540,
 				'result' => [
-					'height' => 250,
-					'width' => 270
+					'height' => 277.77777777777777146184234879910945892333984375,
+					'width' => 300
 				],
 				'description' => 'Regular thumbnail image on desktop with double custom width; landscape'
 			],
