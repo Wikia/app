@@ -104,7 +104,7 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 
 	public function markupTranslationsDataProvider() {
 		return [
-			[ "", "[]" ],
+			[ "", "{}" ],
 			[ '<infobox><data source="asdf"/></infobox>', '{"data":[{"type":"row", "source":"asdf"}]}' ],
 			[ '<infobox><data source="asdf"><label>asdfsda</label></data></infobox>', '{"data":[{"type":"row", "source":"asdf", "data": {"label": "asdfsda"}}]}' ],
 			[ '<infobox><data source="asdf"/></infobox>', '{"data":[{"type":"row", "source":"asdf"}]}' ],
