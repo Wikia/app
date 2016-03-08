@@ -394,6 +394,8 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 	}
 
 	private function loadGroupsChangeableByGroups() {
+		global $wgAddGroupsLocal, $wgRemoveGroupsLocal, $wgGroupsAddToSelfLocal, $wgGroupsRemoveFromSelfLocal;
+
 		$this->groupsAddableByGroup['bureaucrat'] = array( 'bureaucrat', 'rollback', 'sysop', 'content-moderator' );
 		$this->groupsRemovableByGroup['bureaucrat'] = array( 'rollback', 'sysop', 'bot', 'content-moderator' );
 		$this->groupsSelfRemovableByGroup['bureaucrat'] = array( 'bureaucrat' );
@@ -417,7 +419,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		$this->groupsSelfRemovableByGroup['vstf'] = array( 'sysop', 'bureaucrat' );
 
 		// the $wgXXXLocal variables are loaded from wiki factory - we should use it as is
-		global $wgAddGroupsLocal, $wgRemoveGroupsLocal, $wgGroupsAddToSelfLocal, $wgGroupsRemoveFromSelfLocal;
 		if ( !empty( $wgAddGroupsLocal ) )
 			$this->groupsAddableByGroup = array_merge( $this->groupsAddableByGroup, $wgAddGroupsLocal );
 		if ( !empty( $wgRemoveGroupsLocal ) )
