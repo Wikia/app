@@ -5,6 +5,7 @@ $infobox-width: 300px;
 $white: #fff;
 $black: #000;
 $backgroundColorMix: 10%;
+$tabberLightnessCondition: 30;
 $backgroundColor: mix($black, $color-page, $backgroundColorMix);
 $horizontalGroupStripeBackground: mix($black, $color-page, $backgroundColorMix * 2);
 $tabberBackgroundColor: mix($black, $color-buttons, $backgroundColorMix * 4);
@@ -25,7 +26,7 @@ $collapsibleChevronNegativeMargin: -7px;
 	$horizontalGroupStripeBackground: mix($white, $color-page, $backgroundColorMix * 2);
 }
 
-@if lightness($color-buttons) < 30 {
+@if lightness($color-buttons) < $tabberLightnessCondition {
 	$tabberBackgroundColor: mix($white, $color-buttons, $backgroundColorMix * 4);
 }
 
