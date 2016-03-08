@@ -52,6 +52,7 @@ class DeleteLocalGroupMaintenance extends Maintenance {
 				__METHOD__
 			);
 			$dbw->commit();
+			$this->output( "Deleted row count: " . $dbw->affectedRows() . "\n" );
 		}
 		$took = microtime( true ) - $then;
 
