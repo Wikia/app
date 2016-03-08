@@ -11,22 +11,11 @@ define('ext.wikia.recirculation.views.rail', [
 	var logGroup = 'ext.wikia.recirculation.views.rail';
 
 	function render(data) {
-		var deferred = $.Deferred();
+		return utils.renderTemplate('rail.mustache', data).then(function($html) {
+			$('#RECIRCULATION_RAIL').html($html);
 
-		utils.loadTemplate('extensions/wikia/Recirculation/templates/client/rail.mustache')
-			.then(function(template) {
-				var $container = $('#RECIRCULATION_RAIL');
-				var $html = $(Mustache.render(template, {
-					title: data.title,
-					items: data.items
-				}));
-
-				$container.html($html);
-
-				deferred.resolve($html);
-			});
-
-		return deferred.promise();
+			return $html;
+		});
 	}
 
 	function setupTracking(experimentName) {

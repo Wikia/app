@@ -38,20 +38,13 @@ define('ext.wikia.recirculation.views.incontent', [
 			section = findSuitableSection();
 
 		if (!section) {
-			return deferred.reject('view');
+			return deferred.reject();
 		}
 
-		utils.loadTemplate('extensions/wikia/Recirculation/templates/client/incontent.mustache')
-			.then(function(template) {
-				var $html = $(Mustache.render(template, {
-					title: data.title,
-					items: data.items
-				}));
-
-				section.before($html);
-
-				deferred.resolve($html);
-			});
+		utils.renderTemplate('incontent.mustache', data).then(function($html) {
+			section.before($html);
+			deferred.resolve($html);
+		});
 
 		return deferred.promise();
 	}

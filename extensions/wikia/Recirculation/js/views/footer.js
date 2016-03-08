@@ -11,21 +11,11 @@ define('ext.wikia.recirculation.views.footer', [
 	var logGroup = 'ext.wikia.recirculation.views.footer';
 
 	function render(data) {
-		var deferred = $.Deferred();
+		return utils.renderTemplate('footer.mustache', data).then(function($html) {
+			$('#WikiaArticle').append($html);
 
-		utils.loadTemplate('extensions/wikia/Recirculation/templates/client/footer.mustache')
-			.then(function(template) {
-				var $html = $(Mustache.render(template, {
-					title: data.title,
-					items: data.items
-				}));
-
-				$('#WikiaArticle').append($html);
-
-				deferred.resolve($html);
-			});
-
-		return deferred.promise();
+			return $html;
+		});
 	}
 
 	function setupTracking(experimentName) {
