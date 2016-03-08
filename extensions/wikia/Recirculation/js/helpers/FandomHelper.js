@@ -31,7 +31,7 @@ define('ext.wikia.recirculation.helpers.fandom', [
 		$.each(data.posts, function(index, item) {
 			if (items.length < 3) {
 				item.thumbnail = item.image_url;
-				items.push(item);	
+				items.push(item);
 			}
 		});
 

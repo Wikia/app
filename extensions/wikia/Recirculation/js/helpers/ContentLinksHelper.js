@@ -19,7 +19,7 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 
 	function loadData() {
 		var deferred = $.Deferred(),
-			$links = $container.find('a'),
+			$links = $container.find('a[title]').filter(validLink),
 			topTitles;
 
 		// If this page does not have enough links we don't want to show this widget
@@ -69,26 +69,12 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 
 	function findTopTitles($links) {
 		var links = buildLinks($links),
-			titles = getSortedKeys(links),
-			topTitles = [],
-			i = 0;
+			titles = getSortedKeys(links);
 
-		while (topTitles.length < 3) {
-			if (titles[i]) {
-				topTitles.push(titles[i]);
-			}
-			i ++;
-		}
-
-		return topTitles;
+		return titles.slice(0,3);
 	}
 
-	function validLink(element) {
-		// Link doesn't have a title
-		if (!element.title) {
-			return false;
-		}
-
+	function validLink(index, element) {
 		// Not a link to current article
 		if (element.title === w.wgTitle) {
 			return false;
@@ -112,10 +98,8 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 		var links = [];
 
 		$links.each(function(index, element) {
-			if (validLink(element)) {
-				links[element.title] = links[element.title] || 0;
-				links[element.title] ++;
-			}
+			links[element.title] = links[element.title] || 0;
+			links[element.title] ++;
 		});
 
 		return links;

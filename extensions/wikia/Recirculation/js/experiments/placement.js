@@ -52,7 +52,7 @@ require([
 			view = footerView;
 			break;
 		case 'CONTROL':
-			fandomHelper.injectFandomHtml('recent_popular', '#' + railContainerId);
+			fandomHelper.injectHtml('recent_popular', '#' + railContainerId);
 			break;
 		case 'TABOOLA':
 			taboolaHelper.initializeWidget({

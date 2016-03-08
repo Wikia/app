@@ -13,7 +13,7 @@ define('ext.wikia.recirculation.views.incontent', [
 		minimumSectionsNumber = 3;
 
 	function findSuitableSection() {
-		var sections = buildSections($container.find('h2')),
+		var sections = $container.find('h2'),
 			firstSuitableSection,
 			width;
 
@@ -26,9 +26,9 @@ define('ext.wikia.recirculation.views.incontent', [
 
 		// The idea is to show links above the first section under an infobox
 		width = $container.outerWidth();
-		firstSuitableSection = sections.find(function(item, index) {
-			return item.width === width;
-		});
+		firstSuitableSection = sections.filter(function(index, element) {
+			return element.offsetWidth === width;
+		}).first();
 
 		return firstSuitableSection;
 	}
@@ -48,7 +48,7 @@ define('ext.wikia.recirculation.views.incontent', [
 					items: data.items
 				}));
 
-				section.$start.before($html);
+				section.before($html);
 
 				deferred.resolve($html);
 			});
@@ -64,41 +64,6 @@ define('ext.wikia.recirculation.views.incontent', [
 				tracker.trackVerboseClick(experimentName, 'in-content');
 			});
 		}
-	}
-
-	/**
-	 * Build the sections array
-	 *
-	 * DOM/layout querying: OK
-	 * DOM modification:    forbidden
-	 *
-	 * @param {jQuery} $headers headers dividing the article to sections
-	 * @returns {Section[]}
-	 */
-	function buildSections($headers) {
-		var i,
-			len,
-			sections = [],
-			intro,
-			$start,
-			$end,
-			section;
-
-		for (i = 0, len = $headers.length; i < len + 1; i += 1) {
-			intro = (i === 0);
-			$start = !intro && $headers.eq(i - 1);
-			$end = $headers.eq(i);
-			section = {
-				intro: intro,
-				$start: intro ? undefined : $start,
-				$end: $end
-			};
-			section.width = $start && $start.outerWidth();
-
-			sections.push(section);
-		}
-
-		return sections;
 	}
 
 	return {
