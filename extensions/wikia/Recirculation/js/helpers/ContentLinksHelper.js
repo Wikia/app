@@ -25,13 +25,13 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 		// If this page does not have enough links we don't want to show this widget
 		if ($links.length < minimumLinksNumber) {
 			log('Recirculation in-content widget not shown - Not enough links in article', 'debug', logGroup);
-			return deferred.reject('HELPER 1').promise();
+			return deferred.reject().promise();
 		}
 
 		topTitles = findTopTitles($links);
 		if (topTitles.length < 3) {
 			log('Recirculation in-content widget not shown - No enough top links', 'debug', logGroup);
-			return deferred.reject('HELPER 2').promise();
+			return deferred.reject().promise();
 		}
 
 		nirvana.sendRequest({
@@ -69,9 +69,12 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 
 	function findTopTitles($links) {
 		var links = buildLinks($links),
-			titles = getSortedKeys(links);
+			titles = Object.keys(links),
+			sortedTitles = titles.sort(function(title1, title2){
+				return links[title2] - links[title1];
+			});
 
-		return titles.slice(0,3);
+		return sortedTitles.slice(0,3);
 	}
 
 	function validLink(index, element) {
@@ -103,19 +106,6 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 		});
 
 		return links;
-	}
-
-	function getSortedKeys(obj) {
-		var keys = [];
-		for(var key in obj) {
-			keys.push(key);
-		}
-
-		var sortedKeys = keys.sort(function(a,b){
-			return obj[b] - obj[a];
-		});
-
-		return sortedKeys;
 	}
 
 	return {
