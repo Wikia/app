@@ -41,7 +41,7 @@ define('ext.wikia.recirculation.helpers.fandom', [
 		};
 	}
 
-	function injectHtml(type, element) {
+	function injectLegacyHtml(type, element) {
 		nirvana.sendRequest({
 			controller: 'Recirculation',
 			method: 'index',
@@ -58,6 +58,6 @@ define('ext.wikia.recirculation.helpers.fandom', [
 
 	return {
 		loadData: loadData,
-		injectHtml: injectHtml
+		injectLegacyHtml: injectLegacyHtml
 	}
 });

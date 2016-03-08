@@ -3,6 +3,7 @@ require([
 	'jquery',
 	'wikia.window',
 	'wikia.abTest',
+	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.views.incontent',
 	'ext.wikia.recirculation.views.rail',
 	'ext.wikia.recirculation.views.footer',
@@ -10,9 +11,10 @@ require([
 	'ext.wikia.recirculation.helpers.fandom',
 	'ext.wikia.adEngine.taboolaHelper',
 	require.optional('videosmodule.controllers.rail')
-], function($, w, abTest, incontentView, railView, footerView, contentLinksHelper, fandomHelper, taboolaHelper, videosModule) {
+], function($, w, abTest, tracker, incontentView, railView, footerView, contentLinksHelper, fandomHelper, taboolaHelper, videosModule) {
 	var experimentName = 'RECIRCULATION_PLACEMENT',
 		railContainerId = 'RECIRCULATION_RAIL',
+		railSelector = '#' + railContainerId,
 		group = abTest.getGroup(experimentName),
 		isRail = false,
 		footerView,
@@ -20,7 +22,7 @@ require([
 		helper;
 
 	if (w.wgContentLanguage !== 'en' && videosModule) {
-		videosModule('#' + railContainerId);
+		videosModule(railSelector);
 		return;
 	}
 
@@ -52,24 +54,34 @@ require([
 			view = footerView;
 			break;
 		case 'CONTROL':
-			fandomHelper.injectHtml('recent_popular', '#' + railContainerId);
-			break;
-		case 'TABOOLA':
-			taboolaHelper.initializeWidget({
-				mode: 'thumbnails-rr2',
-				container: railContainerId,
-				placement: 'Right Rail Thumbnails 3rd',
-				target_type: 'mix'
+			afterRailLoads(function() {
+				fandomHelper.injectLegacyHtml('recent_popular', railSelector);
+				setupLegacyTracking();
 			});
-			break;
+			return;
+		case 'TABOOLA':
+			afterRailLoads(function() {
+				taboolaHelper.initializeWidget({
+					mode: 'thumbnails-rr2',
+					container: railContainerId,
+					placement: 'Right Rail Thumbnails 3rd',
+					target_type: 'mix'
+				});
+				setupLegacyTracking();
+			});
+			return;
 		default:
 			return;
 	}
 
 	if (isRail) {
-		$('#WikiaRail').on('afterLoad.rail', runExperiment);
+		afterRailLoads(runExperiment);
 	} else {
 		runExperiment();
+	}
+
+	function afterRailLoads(callback) {
+		$('#WikiaRail').on('afterLoad.rail', callback);
 	}
 
 	function runExperiment() {
@@ -77,5 +89,12 @@ require([
 			.then(view.render)
 			.then(view.setupTracking(experimentName))
 			.fail(function() {});
+	}
+
+	function setupLegacyTracking() {
+		tracker.trackVerboseImpression(experimentName, 'rail');
+		$(railSelector).on('mousedown', 'a', function() {
+			tracker.trackVerboseClick(experimentName, 'rail');
+		});
 	}
 });

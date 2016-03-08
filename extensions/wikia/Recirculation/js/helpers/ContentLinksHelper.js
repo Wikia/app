@@ -68,11 +68,19 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 	}
 
 	function findTopTitles($links) {
-		var links = buildLinks($links),
-			titles = Object.keys(links),
-			sortedTitles = titles.sort(function(title1, title2){
-				return links[title2] - links[title1];
-			});
+		var links = [],
+			titles,
+			sortedTitles;
+
+		$links.each(function(index, element) {
+			links[element.title] = links[element.title] || 0;
+			links[element.title] ++;
+		});
+
+		titles = Object.keys(links),
+		sortedTitles = titles.sort(function(title1, title2){
+			return links[title2] - links[title1];
+		});
 
 		return sortedTitles.slice(0,3);
 	}
@@ -95,17 +103,6 @@ define('ext.wikia.recirculation.helpers.contentLinks', [
 		}
 
 		return true;
-	}
-
-	function buildLinks($links) {
-		var links = [];
-
-		$links.each(function(index, element) {
-			links[element.title] = links[element.title] || 0;
-			links[element.title] ++;
-		});
-
-		return links;
 	}
 
 	return {
