@@ -417,6 +417,7 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		$this->groupsSelfRemovableByGroup['vstf'] = array( 'sysop', 'bureaucrat' );
 
 		// the $wgXXXLocal variables are loaded from wiki factory - we should use it as is
+		global $wgAddGroupsLocal, $wgRemoveGroupsLocal, $wgGroupsAddToSelfLocal, $wgGroupsRemoveFromSelfLocal;
 		if ( !empty( $wgAddGroupsLocal ) )
 			$this->groupsAddableByGroup = array_merge( $this->groupsAddableByGroup, $wgAddGroupsLocal );
 		if ( !empty( $wgRemoveGroupsLocal ) )
