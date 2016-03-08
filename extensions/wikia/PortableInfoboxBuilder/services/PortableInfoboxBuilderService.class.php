@@ -30,7 +30,7 @@ class PortableInfoboxBuilderService extends WikiaService {
 	 * @see PortableInfoboxBuilderServiceTest::translationsDataProvider
 	 */
 	public function translateMarkupToData( $infoboxMarkup ) {
-		$jsonObject = [ ];
+		$jsonObject = new stdClass();
 
 		$xmlNode = simplexml_load_string( $infoboxMarkup );
 		if ( $xmlNode ) {
