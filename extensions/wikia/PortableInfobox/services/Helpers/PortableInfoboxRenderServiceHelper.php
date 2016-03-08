@@ -8,7 +8,7 @@ class PortableInfoboxRenderServiceHelper {
 	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
 	//todo: https://wikia-inc.atlassian.net/browse/DAT-3075
 	//todo: figure out what to do when user changes default infobox width via custom theming
-	const DESKTOP_THUMBNAIL_WIDTH = 270;
+	const DESKTOP_THUMBNAIL_WIDTH = 300;
 	const MOBILE_THUMBNAIL_WIDTH = 360;
 	const MINIMAL_HERO_IMG_WIDTH = 300;
 	const MAX_DESKTOP_THUMBNAIL_HEIGHT = 500;
