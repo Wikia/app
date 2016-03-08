@@ -212,11 +212,16 @@ class WikiaLogger implements LoggerInterface {
 	 * @return Logger
 	 */
 	public function defaultLogger() {
-		return new Logger(
+		$logger = new Logger(
 			'default',
 			[$this->getSyslogHandler()],
 			[$this->getWebProcessor()]
 		);
+
+		// custom formatting of MediaWiki's Status class
+		$logger->pushProcessor( new StatusProcessor() );
+
+		return $logger;
 	}
 
 	/**
