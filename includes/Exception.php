@@ -548,8 +548,10 @@ class MWExceptionHandler {
 
 	/**
 	 * Report an exception to the user
+	 *
+	 * @param Exception|Throwable $e
 	 */
-	protected static function report( Exception $e ) {
+	protected static function report( $e ) {
 		global $wgShowExceptionDetails;
 
 		$cmdLine = MWException::isCommandLine();
