@@ -394,6 +394,8 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 	}
 
 	private function loadGroupsChangeableByGroups() {
+		global $wgAddGroupsLocal, $wgRemoveGroupsLocal, $wgGroupsAddToSelfLocal, $wgGroupsRemoveFromSelfLocal;
+
 		$this->groupsAddableByGroup['bureaucrat'] = array( 'bureaucrat', 'rollback', 'sysop', 'content-moderator' );
 		$this->groupsRemovableByGroup['bureaucrat'] = array( 'rollback', 'sysop', 'bot', 'content-moderator' );
 		$this->groupsSelfRemovableByGroup['bureaucrat'] = array( 'bureaucrat' );
