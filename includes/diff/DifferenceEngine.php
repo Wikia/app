@@ -900,7 +900,7 @@ class DifferenceEngine extends ContextSource {
 		}
 
 		# Wikia Change begin
-		$type = $rev->getId() === $this->mOldid ? 'before' : 'after';
+		$type = $rev->getId() == $this->getOldid() ? 'before' : 'after';
 		# Wikia Change end
 
 		$title = $rev->getTitle();
