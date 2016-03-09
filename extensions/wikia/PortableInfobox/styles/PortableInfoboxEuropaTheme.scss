@@ -44,7 +44,6 @@ $tabber-background-color: mix($black, $color-buttons, $background-color-mix * 4)
 
 	&.pi-layout-stacked {
 		.pi-data-value {
-			padding-left: 0;
 			padding-top: $horizontal-group-label-spacing;
 		}
 	}
@@ -91,10 +90,11 @@ $tabber-background-color: mix($black, $color-buttons, $background-color-mix * 4)
 
 	.pi-data-label {
 		@include flex-basis($label-width);
+		padding-right: $infobox-side-spacing;
 	}
 
 	.pi-data-value {
-		padding-left: $infobox-side-spacing;
+		padding-left: 0;
 	}
 
 	.pi-caption {
@@ -142,6 +142,7 @@ $tabber-background-color: mix($black, $color-buttons, $background-color-mix * 4)
 
 		.pi-data-label {
 			padding-bottom: $horizontal-group-label-spacing;
+			padding-left: $infobox-side-spacing;
 		}
 
 		.pi-data-value {
