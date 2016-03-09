@@ -91,6 +91,7 @@ $tabber-background-color: mix($black, $color-buttons, $background-color-mix * 4)
 
 	.pi-data-label {
 		@include flex-basis($label-width);
+		color: inherit;
 		padding-right: $infobox-side-spacing;
 	}
 
