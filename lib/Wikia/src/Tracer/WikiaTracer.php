@@ -207,4 +207,8 @@ class WikiaTracer {
 		return $forInternalRequest ? $this->getInternalHeaders() : $this->getPublicHeaders();
 	}
 
+	public function setRequestHeaders( &$requestHeaders, $forInternalRequest ) {
+		$requestHeaders = array_merge( $requestHeaders, $this->getHeaders($forInternalRequest) );
+	}
+
 }

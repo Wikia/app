@@ -507,10 +507,7 @@ class MWHttpRequest {
 		}
 
 		// Wikia change - begin - @author: wladek
-		$this->reqHeaders = array_merge(
-			$this->reqHeaders,
-			\Wikia\Tracer\WikiaTracer::instance()->getHeaders(/* bool */$this->internalRequest)
-		);
+		\Wikia\Tracer\WikiaTracer::instance()->setRequestHeaders( $this->reqHeaders, /* bool */$this->internalRequest );
 		// Wikia change - end
 	}
 
