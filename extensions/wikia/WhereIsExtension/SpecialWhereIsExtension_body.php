@@ -38,7 +38,7 @@ class WhereIsExtension extends SpecialPage {
 		parent::__construct('WhereIsExtension' /*class*/, 'WhereIsExtension' /*restriction*/);
 	}
 
-	function execute() {
+	function execute( $par ) {
 		global $wgOut, $wgUser, $wgRequest, $wgTitle;
 		$gVar = $wgRequest->getText('var');
 		$gVal = $wgRequest->getVal('val', 'true');

@@ -33,11 +33,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'sidewidemessages-desc',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SiteWideMessages'
 );
-//Allow group STAFF to use this extension.
-$wgAvailableRights[] = 'messagetool';
-$wgGroupPermissions['*']['messagetool'] = false;
-$wgGroupPermissions['staff']['messagetool'] = true;
-$wgGroupPermissions['util']['messagetool'] = true;
 
 $wgExtensionFunctions[] = 'SiteWideMessagesInit';
 $wgExtensionMessagesFiles['SpecialSiteWideMessages'] = dirname(__FILE__) . '/SpecialSiteWideMessages.i18n.php';

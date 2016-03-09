@@ -8,12 +8,6 @@
 
 if(!defined('MEDIAWIKI')) die();
 
-// Allows anyone to view the page.
-$wgAvailableRights[] = 'mobilesearches';
-$wgGroupPermissions['*']['mobilesearches'] = true;
-$wgGroupPermissions['user']['mobilesearches'] = true;
-$wgGroupPermissions['sysop']['mobilesearches'] = true;
-
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Mobile Searches',
 	'url' => 'http://lyrics.wikia.com/User:Sean_Colombo',

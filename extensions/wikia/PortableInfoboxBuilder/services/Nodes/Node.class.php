@@ -4,16 +4,19 @@ namespace Wikia\PortableInfoboxBuilder\Nodes;
 
 abstract class Node {
 	/**
-	 * allowed node attributes
 	 * @var array of string
 	 */
 	protected $allowedAttributes = [ ];
 
 	/**
-	 * allowed child nodes
 	 * @var array string
 	 */
 	protected $allowedChildNodes = [ ];
+
+	/**
+	 * @var array string
+	 */
+	protected $requiredChildNodes = [ ];
 
 	/**
 	 * @var Node
@@ -33,7 +36,7 @@ abstract class Node {
 	 * @return bool
 	 */
 	public function isValid() {
-		if ( !( $this->hasValidContent() && $this->hasValidAttributes() && $this->hasValidChildren() ) ) {
+		if ( !( $this->hasValidContent() && $this->hasValidAttributes() && $this->hasValidChildren() && $this->hasRequiredChildren() ) ) {
 			return false;
 		}
 
@@ -44,14 +47,24 @@ abstract class Node {
 		return true;
 	}
 
-	public function asJson() {
+	public function hasRequiredChildren() {
+		$requiredChildren = array_flip( $this->requiredChildNodes );
+		foreach ( $this->xmlNode->children() as $childNode ) {
+			if ( in_array( $childNode->getName(), $this->requiredChildNodes ) ) {
+				unset( $requiredChildren[$childNode->getName()] );
+			}
+		}
+		return empty( $requiredChildren );
+	}
+
+	public function asJsonObject() {
 		$result = new \StdClass();
 
 		foreach ( $this->xmlNode->attributes() as $attribute => $value ) {
 			$result->$attribute = (string)$value;
 		}
 
-		$data = $this->getChildrenAsJson();
+		$data = $this->getChildrenAsJsonObjects();
 
 		if(!empty($data)) {
 			$result->data = $data;
@@ -95,12 +108,18 @@ abstract class Node {
 	 * @return array
 	 * @throws \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException
 	 */
-	public function getChildrenAsJson() {
+	public function getChildrenAsJsonObjects() {
 		$data = [];
 
 		foreach ( $this->xmlNode->children() as $childNode ) {
 			$builderNode = NodeBuilder::createFromNode( $childNode );
-			$data[] = $builderNode->asJson();
+			$nodeasJsonObject = $builderNode->asJsonObject();
+
+			if ( is_object( $nodeasJsonObject ) ) {
+				$data[] = $nodeasJsonObject;
+			} elseif ( is_array( $nodeasJsonObject ) ) {
+				$data = array_merge( $data, $nodeasJsonObject );
+			}
 		}
 		return $data;
 	}

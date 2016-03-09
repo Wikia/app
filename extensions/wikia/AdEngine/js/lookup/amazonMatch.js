@@ -35,12 +35,17 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 
 	function call(skin, onResponse) {
 		var amznMatch = doc.createElement('script'),
+			context = adContext.getContext(),
 			node = doc.getElementsByTagName('script')[0];
 
 		slots = config[skin];
 
-		if (adContext.getContext().opts.overridePrefootersSizes) {
+		if (context.opts.overridePrefootersSizes) {
 			slots.PREFOOTER_LEFT_BOXAD = ['3x2', '7x9'];
+		}
+
+		if (context.slots.incontentLeaderboard) {
+			slots.INCONTENT_LEADERBOARD = ['7x9','3x2'];
 		}
 
 		amznMatch.type = 'text/javascript';

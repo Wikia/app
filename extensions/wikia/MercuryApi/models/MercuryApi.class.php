@@ -106,8 +106,8 @@ class MercuryApi {
 	public function getWikiVariables() {
 		global $wgAnalyticsDriverIVW3Countries, $wgCacheBuster, $wgCityId, $wgContLang, $wgDBname, $wgDefaultSkin,
 			$wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury, $wgDisableMobileSectionEditor,
-			$wgEnableCategoryPagesInMercury, $wgEnableCommunityData, $wgEnableDiscussions, $wgEnableNewAuth,
-			$wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
+			$wgEnableCommunityData, $wgEnableDiscussions, $wgEnableNewAuth, $wgLanguageCode, $wgSitename,
+			$wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
 
 		return [
 			'cacheBuster' => (int)$wgCacheBuster,
@@ -116,7 +116,6 @@ class MercuryApi {
 			'disableAnonymousEditing' => $wgDisableAnonymousEditing,
 			'disableAnonymousUploadForMercury' => $wgDisableAnonymousUploadForMercury,
 			'disableMobileSectionEditor' => $wgDisableMobileSectionEditor,
-			'enableCategoryPagesInMercury' => $wgEnableCategoryPagesInMercury,
 			'enableCommunityData' => $wgEnableCommunityData,
 			'enableDiscussions' => $wgEnableDiscussions,
 			'enableGlobalNav2016' => true,
@@ -139,6 +138,7 @@ class MercuryApi {
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
 				'ivw3' => [
 					'countries' => $wgAnalyticsDriverIVW3Countries,
+					'cmKey' => AnalyticsProviderIVW3::getCMKey()
 				],
 				'nielsen' => [
 					'enabled' => AnalyticsProviderNielsen::isEnabled(),

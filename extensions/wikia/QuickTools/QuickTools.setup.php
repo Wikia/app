@@ -23,13 +23,6 @@ $wgAutoloadClasses[ 'QuickToolsController'] =  __DIR__ . '/QuickToolsController.
 $wgAutoloadClasses[ 'QuickToolsHelper'] =  __DIR__ . '/QuickToolsHelper.class.php';
 $wgAutoloadClasses[ 'QuickToolsHooksHelper'] =  __DIR__ . '/QuickToolsHooksHelper.class.php';
 
-// rights
-$wgAvailableRights[] = 'quicktools';
-$wgAvailableRights[] = 'quickadopt';
-$wgGroupPermissions['util']['quicktools'] = true;
-$wgGroupPermissions['vstf']['quicktools'] = true;
-$wgGroupPermissions['util']['quickadopt'] = true;
-
 // i18n
 $wgExtensionMessagesFiles['QuickTools'] = __DIR__ . '/QuickTools.i18n.php';
 
