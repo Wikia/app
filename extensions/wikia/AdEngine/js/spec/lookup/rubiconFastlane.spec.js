@@ -54,6 +54,11 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 					return [mocks.doc.node];
 				}
 			},
+			geo: {
+				isProperGeo: function() {
+					return true;
+				}
+			},
 			lazyQueue: {
 				makeQueue: function (queue, callback) {
 					queue.push = function () {
@@ -110,6 +115,7 @@ describe('ext.wikia.adEngine.lookup.rubiconFastlane', function () {
 			getFactory(),
 			mocks.adLogicZoneParams,
 			mocks.doc,
+			mocks.geo,
 			mocks.log,
 			mocks.win
 		);
