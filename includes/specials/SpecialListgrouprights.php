@@ -61,8 +61,8 @@ class SpecialListGroupRights extends SpecialPage {
 		);
 
 		$allGroups = array_unique( array_merge(
-			User::getAllGroups(),
-			User::getImplicitGroups()
+			$this->permissionsService()->getConfiguration()->getExplicitGroups(),
+			$this->permissionsService()->getConfiguration()->getImplicitGroups()
 		) );
 		asort( $allGroups );
 
