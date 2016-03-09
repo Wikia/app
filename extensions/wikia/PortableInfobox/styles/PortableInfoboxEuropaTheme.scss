@@ -142,15 +142,18 @@ $tabber-background-color: mix($black, $color-buttons, $background-color-mix * 4)
 		}
 
 		.pi-data-label {
-			padding: $infobox-side-spacing $infobox-side-spacing $horizontal-group-label-spacing;
+			padding: $infobox-data-spacing $infobox-side-spacing $horizontal-group-label-spacing;
 		}
 
 		.pi-data-value {
 			padding-left: $infobox-side-spacing;
-		}
-
-		thead + tbody .pi-data-value {
 			padding-top: 0;
+		}
+	}
+
+	.pi-horizontal-group-no-labels {
+		.pi-data-value {
+			padding-top: $infobox-data-spacing;
 		}
 	}
 
