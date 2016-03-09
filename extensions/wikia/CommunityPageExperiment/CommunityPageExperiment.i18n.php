@@ -14,6 +14,7 @@ $messages['en'] = array(
 	'communitypageexperiment-page-list-edit' => 'Edit',
 	'communitypageexperiment-entry-join' => 'Join this community!',
 	'communitypageexperiment-entry-learn-more' => 'Learn more',
+	'communitypageexperiment-entry-button' => 'Community Page',
 	'communitypageexperiment-tasks-header-welcome' => 'This wikia needs your help!',
 );
 
@@ -30,6 +31,7 @@ $messages['qqq'] = array(
 	'communitypageexperiment-page-list-edit' => 'Text for the edit link for stub pages.',
 	'communitypageexperiment-entry-join' => 'Text shown on article pages in next to the button that links to the Community page.',
 	'communitypageexperiment-entry-learn-more' => 'Button text for the link to the Community page.',
+	'communitypageexperiment-entry-button' => 'Button text for the link to the Community page after the user has joined the community.',
 	'communitypageexperiment-tasks-header-welcome' => 'Welcome message shown on Tasks page.',
 );
 

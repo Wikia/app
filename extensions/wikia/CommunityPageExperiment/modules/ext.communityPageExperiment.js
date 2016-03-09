@@ -1,8 +1,9 @@
 require([
 	'jquery',
 	'wikia.window',
+	'wikia.cache',
 	'wikia.tracker'
-], function ($, win, tracker) {
+], function ($, win, cache, tracker) {
 	'use strict';
 
 	var track = tracker.buildTrackingFunction({
@@ -30,7 +31,11 @@ require([
 		require(['AuthModal'], function (authModal) {
 			authModal.load({
 				url: event.currentTarget.href,
-				origin: 'community-page'
+				origin: 'community-page',
+				onAuthSuccess: function () {
+					cache.set('communityPageSignedUp', true, cache.CACHE_LONG);
+					win.location.reload();
+				}
 			});
 		});
 	}

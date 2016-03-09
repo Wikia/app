@@ -1,6 +1,13 @@
 <?php
 
 class CommunityPageExperimentHooks {
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+		$out->addModules( 'ext.communityPageExperimentEntryPointInit' );
+		return true;
+	}
+
+	// For permanently adding the extra buttons, but loading with JS as part of the
+	// AB test for now
 	public static function onPageHeaderIndexExtraButtons( $response ) {
 		$context = RequestContext::getMain();
 

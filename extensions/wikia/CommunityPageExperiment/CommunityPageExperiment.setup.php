@@ -14,7 +14,8 @@ $wgExtensionMessagesFiles['CommunityPageExperiment'] = __DIR__ . '/CommunityPage
 
 $wgSpecialPages['Community'] = 'CommunityPageExperimentSpecialController';
 
-$wgHooks['PageHeaderIndexExtraButtons'][] = 'CommunityPageExperimentHooks::onPageHeaderIndexExtraButtons';
+// $wgHooks['PageHeaderIndexExtraButtons'][] = 'CommunityPageExperimentHooks::onPageHeaderIndexExtraButtons';
+$wgHooks['BeforePageDisplay'][] = 'CommunityPageExperimentHooks::onBeforePageDisplay';
 
 $wgResourceModules['ext.communityPageExperiment'] = [
 	'localBasePath' => __DIR__ . '/modules',
@@ -23,9 +24,22 @@ $wgResourceModules['ext.communityPageExperiment'] = [
 	'scripts' => 'ext.communityPageExperiment.js',
 ];
 
+$wgResourceModules['ext.communityPageExperimentEntryPointInit'] = [
+	'localBasePath' => __DIR__ . '/modules',
+	'remoteExtPath' => 'wikia/CommunityPageExperiment/modules',
+	'scripts' => 'ext.communityPageExperimentEntryPoint.js',
+	'dependencies' => [
+		'mediawiki.user',
+	]
+];
+
 $wgResourceModules['ext.communityPageExperimentEntryPoint'] = [
 	'localBasePath' => __DIR__ . '/modules',
 	'remoteExtPath' => 'wikia/CommunityPageExperiment/modules',
 	'styles' => 'ext.communityPageExperimentEntryPoint.scss',
-	'scripts' => 'ext.communityPageExperimentEntryPoint.js',
+	'messages' => [
+		'communitypageexperiment-entry-join',
+		'communitypageexperiment-entry-learn-more',
+		'communitypageexperiment-entry-button',
+	]
 ];
