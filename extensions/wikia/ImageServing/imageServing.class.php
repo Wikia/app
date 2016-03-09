@@ -398,6 +398,10 @@ class ImageServing {
 			$this->proportion['w'] = (float)$width * $this->proportion['h'] / $height;
 		}
 
+		if($this->proportion['w'] == 0) {
+			$this->proportion['w'] = 1;
+		}
+
 		$pHeight = round( ( $width ) * ( $this->proportion['h'] / $this->proportion['w'] ) );
 
 		if( $pHeight >= $height ) {
