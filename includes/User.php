@@ -4784,6 +4784,14 @@ class User {
 	}
 
 	/**
+	 * Whether this user is Wikia staff or not
+	 * @return bool
+	 */
+	public function isStaff() {
+		return self::permissionsService()->isInGroup( $this, 'staff' );
+	}
+
+	/**
 	 * Get the localized descriptive name for a group, if it exists
 	 *
 	 * @param $group String Internal group name
