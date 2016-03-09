@@ -221,6 +221,16 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
+	 * @desc Returns UA dimensions
+	 */
+	public function getTrackingDimensions() {
+		// do nothing for now, just return template
+		$this->response->setVal('dimension0', 'test');
+
+		$this->response->setContentType( 'application/javascript; charset=utf-8' );
+	}
+
+	/**
 	 * @desc for classic or CK editor markup return
 	 * wikitext ready to process and display in Mercury skin
 	 *
