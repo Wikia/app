@@ -8,7 +8,7 @@ describe('Krux module', function () {
 
 	function getModule() {
 		return modules['wikia.krux'](
-			mocks.adContext, mocks.adTracker, mocks.document, mocks.window
+			mocks.adContext, mocks.adTracker, mocks.document, mocks.wikiaTracker, mocks.window
 		);
 	}
 
@@ -24,7 +24,8 @@ describe('Krux module', function () {
 				kxuser: 'testUser'
 			}
 		},
-		document: {}
+		document: {},
+		wikiaTracker: noop
 	};
 
 	it('Expects to get user from localStorage', function () {
