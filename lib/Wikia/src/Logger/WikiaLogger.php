@@ -20,6 +20,9 @@ class WikiaLogger implements LoggerInterface {
 	/** @var WebProcessor */
 	private $webProcessor;
 
+	/** @var StatusProcessor */
+	private $statusProcessor;
+
 	/** private to enforce singleton */
 	private function __construct() {
 	}
@@ -193,6 +196,17 @@ class WikiaLogger implements LoggerInterface {
 	}
 
 	/**
+	 * @return StatusProcessor.
+	 */
+	public function getStatusProcessor() {
+		if ($this->statusProcessor == null) {
+			$this->statusProcessor = new StatusProcessor();
+		}
+
+		return $this->statusProcessor;
+	}
+
+	/**
 	 * Sets the WebProcessor. Throws an exception of the logger has already been initialized.
 	 *
 	 * @param WebProcessor $processor
@@ -215,11 +229,8 @@ class WikiaLogger implements LoggerInterface {
 		$logger = new Logger(
 			'default',
 			[$this->getSyslogHandler()],
-			[$this->getWebProcessor()]
+			[$this->getWebProcessor(), $this->getStatusProcessor()]
 		);
-
-		// custom formatting of MediaWiki's Status class
-		$logger->pushProcessor( new StatusProcessor() );
 
 		return $logger;
 	}
