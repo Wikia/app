@@ -507,8 +507,7 @@ class MWHttpRequest {
 		}
 
 		// Wikia change - begin - @author: wladek
-		$tracerInstance = \Wikia\Tracer\WikiaTracer::instance();
-		$tracerHeaders = !$this->internalRequest ? $tracerInstance->getPublicHeaders() : $tracerInstance->getInternalHeaders();
+		$tracerHeaders = \Wikia\Tracer\WikiaTracer::instance()->getHeaders(/* bool */$this->internalRequest);
 		foreach ($tracerHeaders as $key => $value) {
 			$this->setHeader($key, $value);
 		}

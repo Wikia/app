@@ -199,4 +199,12 @@ class WikiaTracer {
 		return $this->contextSource->getContext();
 	}
 
+	public function getHeaders( $forInternalRequest ) {
+		if ( !is_bool($forInternalRequest) ) {
+			throw new \InvalidArgumentException("Argument #1 must be a bool");
+		}
+
+		return $forInternalRequest ? $this->getInternalHeaders() : $this->getPublicHeaders();
+	}
+
 }

@@ -38,7 +38,6 @@ class TransactionTraceNewrelic {
 
 		// report request ID as a custom request parameter for easier debugging of slow transactions
 		if ( function_exists( 'newrelic_add_custom_parameter' ) ) {
-			newrelic_add_custom_parameter( 'requestId', WikiaTracer::instance()->getTraceId() );
 			newrelic_add_custom_parameter( 'traceId', WikiaTracer::instance()->getTraceId() );
 		}
 	}
