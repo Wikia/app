@@ -224,10 +224,43 @@ class MercuryApiController extends WikiaController {
 	 * @desc Returns UA dimensions
 	 */
 	public function getTrackingDimensions() {
-		// do nothing for now, just return template
+		global $wgDBname, $wgUser, $wgCityId, $wgLanguageCode;
+
+		// wgContentLanguage - dim2 is null
+		$dimensions = [];
+
+		$dimensions[1] = $wgDBname;
+		$dimensions[2] = $wgLanguageCode;
+		$dimensions[4] = 'mercury';
+		$dimensions[5] = $wgUser->isAnon() ? 'anon' : 'user';
+		$dimensions[8] = WikiaPageType::getPageType();
+		$dimensions[9] = $wgCityId;
+		$dimensions[15] = WikiaPageType::isCorporatePage() ? 'yes' : 'no';
+		$dimensions[17] = WikiFactoryHub::getInstance()->getWikiVertical( $wgCityId )[ 'short' ];
+
+
+		var_dump($dimensions);die;
+
 		$this->response->setVal('dimension0', 'test');
 
 		$this->response->setContentType( 'application/javascript; charset=utf-8' );
+
+		/*
+		dimensions[2] = Mercury.wiki.language.content;
+		// TODO: Krux segmenting not implemented in Mercury https://wikia-inc.atlassian.net/browse/HG-456
+		// ga(prefix + 'set', 'dimension16', getKruxSegment());
+
+		if (adsContext) {
+			// Hub
+			dimensions[3] = adsContext.targeting.wikiVertical;
+			// HasAds
+			dimensions[14] = adsContext.opts.showAds ? 'Yes' : 'No';
+		}
+
+		if (Mercury.wiki.wikiCategories instanceof Array) {
+			dimensions[18] = Mercury.wiki.wikiCategories.join(',');
+		}*/
+
 	}
 
 	/**
