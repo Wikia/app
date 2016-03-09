@@ -1,7 +1,9 @@
 <?php
 
 class PortableInfoboxBuilderHooks {
+	const QUERYSTRING_EDITOR_KEY = 'useeditor';
 	const INFOBOX_BUILDER_SPECIAL_PAGE = 'Special:InfoboxBuilder';
+	const QUERYSTRING_SOURCE_MODE = 'source';
 
 	/**
 	 * Adds infobox builder helper js assets to Template Classification on Edit page
@@ -102,7 +104,10 @@ class PortableInfoboxBuilderHooks {
 	public static function onCustomEditor( $page, $user ) {
 		$title = $page->getTitle();
 
-		if ( self::canUseInfoboxBuilder( $title, $user ) ) {
+		if (
+			self::canUseInfoboxBuilder( $title, $user )
+			&& !self::isForcedSourceMode( RequestContext::getMain()->getRequest() )
+		) {
 			$url = SpecialPage::getTitleFor( 'InfoboxBuilder', $title->getText() )->getInternalURL();
 			F::app()->wg->out->redirect( $url );
 			return false;
@@ -126,6 +131,14 @@ class PortableInfoboxBuilderHooks {
 			// If we cannot reach the service assume the default (false) to avoid overwriting data
 		}
 		return $isInfobox;
+	}
+
+	/**
+	 * @param $request WebRequest
+	 * @return bool
+	 */
+	private static function isForcedSourceMode( $request ) {
+		return ( $request->getVal( self::QUERYSTRING_EDITOR_KEY ) === self::QUERYSTRING_SOURCE_MODE );
 	}
 
 	/**

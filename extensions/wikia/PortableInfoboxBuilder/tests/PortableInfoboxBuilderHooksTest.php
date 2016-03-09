@@ -16,6 +16,19 @@ class PortableInfoboxBuilderHooksTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $reflectionMethod->invoke( null, $titleText ) );
 	}
 
+	/**
+	 * @dataProvider requestModeProvider
+	 */
+	public function testForcedSourceModeTest( $queryStringValue, $expectedResult ) {
+		$reflectionMethod = new ReflectionMethod( 'PortableInfoboxBuilderHooks', 'isForcedSourceMode' );
+		$reflectionMethod->setAccessible( true );
+
+		$requestMock = $this->getMockBuilder( 'WebRequest' )->setMethods( [ 'getVal' ] )->getMock();
+		$requestMock->expects( $this->any() )->method( 'getVal' )->willReturn( $queryStringValue );
+
+		$this->assertEquals( $expectedResult, $reflectionMethod->invoke( null, $requestMock ) );
+	}
+
 	public function titleTextProvider() {
 		return [
 			[ '', ''],
@@ -23,6 +36,15 @@ class PortableInfoboxBuilderHooksTest extends WikiaBaseTest {
 			[ 'Special:InfoboxBuilder/', '' ],
 			[ 'Special:InfoboxBuilder/TemplateName', 'TemplateName' ],
 			[ 'Special:InfoboxBuilder/TemplateName/Subpage', 'TemplateName/Subpage' ]
+		];
+	}
+
+	public function requestModeProvider() {
+		return [
+			[ 'source', true ],
+			[ 'mediawiki', false ],
+			[ '', false ],
+			[ null, false ]
 		];
 	}
 }
