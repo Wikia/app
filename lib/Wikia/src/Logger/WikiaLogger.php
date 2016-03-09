@@ -226,13 +226,11 @@ class WikiaLogger implements LoggerInterface {
 	 * @return Logger
 	 */
 	public function defaultLogger() {
-		$logger = new Logger(
+		return new Logger(
 			'default',
 			[$this->getSyslogHandler()],
 			[$this->getWebProcessor(), $this->getStatusProcessor()]
 		);
-
-		return $logger;
 	}
 
 	/**
