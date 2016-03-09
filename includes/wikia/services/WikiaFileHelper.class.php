@@ -571,7 +571,7 @@ class WikiaFileHelper extends Service {
 	}
 
 	/**
-	 *
+	 * Returns video file from foreign wiki if exists
 	 *
 	 * @param Title|string $title
 	 * @return ForeignDBFile|null
