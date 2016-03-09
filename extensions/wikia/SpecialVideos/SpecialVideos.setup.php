@@ -27,13 +27,8 @@ $wgSpecialPages['Videos'] =  'SpecialVideosSpecialController';
 // hooks
 $wgHooks['PageHeaderIndexExtraButtons'][] = 'SpecialVideosHooks::onPageHeaderIndexExtraButtons';
 
-JSMessages::registerPackage( 'SpecialVideos', [
+JSMessages::registerPackage( 'SpecialVideos', array(
 	'specialvideos-remove-modal-title',
 	'specialvideos-remove-modal-message'
-] );
+));
 
-$wgGroupPermissions['*']['specialvideosdelete'] = false;
-$wgGroupPermissions['staff']['specialvideosdelete'] = true;
-$wgGroupPermissions['sysop']['specialvideosdelete'] = true;
-$wgGroupPermissions['helper']['specialvideosdelete'] = true;
-$wgGroupPermissions['vstf']['specialvideosdelete'] = true;

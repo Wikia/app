@@ -7,7 +7,7 @@ class NodeCaption extends Node {
 	 * allowed node attributes
 	 * @var array of string
 	 */
-	protected $allowedAttributes = [ 'source' ];
+	protected $allowedAttributes = [ 'source' => [] ];
 
 	public function asJsonObject() {
 		$object = new \StdClass();

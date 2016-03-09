@@ -136,7 +136,7 @@ abstract class ApiWrapper {
 		$this->interfaceObj = $this->getInterfaceObjectFromType();
 	}
 
-	protected function getInterfaceObjectFromType( $type ) {
+	protected function getInterfaceObjectFromType() {
 
 		wfProfileIn( __METHOD__ );
 
@@ -642,7 +642,7 @@ class VideoNotFound extends Exception {}
  */
 abstract class PseudoApiWrapper extends ApiWrapper {
 
-	protected function getInterfaceObjectFromType( $type ) {
+	protected function getInterfaceObjectFromType() {
 		// override me!
 	}
 

@@ -11,7 +11,7 @@ define('wikia.krux', [
 ], function (adContext, adTracker, doc, win) {
 	'use strict';
 
-	var maxNumberOfKruxSegments = 27,
+	var maxNumberOfKruxSegments = 50,
 		kruxScriptId = 'krux-control-tag',
 		kruxLoaded = false,
 		segmentsCountTracked = false;

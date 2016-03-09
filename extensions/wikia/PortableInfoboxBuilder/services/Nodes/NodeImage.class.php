@@ -7,7 +7,7 @@ class NodeImage extends Node {
 	 * allowed node attributes
 	 * @var array of string
 	 */
-	protected $allowedAttributes = [ 'source' ];
+	protected $allowedAttributes = [ 'source' => [ ] ];
 
 	/**
 	 * allowed child nodes
@@ -21,7 +21,7 @@ class NodeImage extends Node {
 	public function getChildrenAsJsonObjects() {
 		$data = null;
 
-		if($this->xmlNode->caption) {
+		if ( $this->xmlNode->caption ) {
 			$builderNode = NodeBuilder::createFromNode( $this->xmlNode->caption );
 			$data = $builderNode->asJsonObject();
 		}
