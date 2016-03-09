@@ -4,12 +4,14 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'wikia.document',
+	'wikia.geo',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, factory, adLogicZoneParams, doc, log, win) {
+], function (adContext, factory, adLogicZoneParams, doc, geo, log, win) {
 	'use strict';
 
 	var config = {
+			// check also method getSlots() as it's overriding defaults
 			oasis: {
 				TOP_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
@@ -99,7 +101,7 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 	function defineSingleSlot(slotName, slot, skin) {
 		var position = slotName.indexOf('TOP') !== -1 ? 'atf' : 'btf',
 			provider = skin === 'oasis' ? 'gpt' : 'mobile';
-
+		log(['defineSlot', slotName, slot], 'debug', logGroup);
 		win.rubicontag.cmd.push(function () {
 			var rubiconSlot = win.rubicontag.defineSlot(slotName, slot.sizes, slotName);
 			if (skin === 'oasis') {
@@ -141,6 +143,22 @@ define('ext.wikia.adEngine.lookup.rubiconFastlane', [
 				sizes: [[300, 250], [728, 90], [468, 60]],
 				targeting: {loc: 'hivi'}
 			};
+		}
+
+		// ADEN-3044
+		if (geo.isProperGeo(['US','GB','FR'])) {
+			if (skin === 'oasis') {
+				slots.TOP_RIGHT_BOXAD.sizes.push([120, 600], [336, 280]);
+				slots.LEFT_SKYSCRAPER_2.sizes.push([120, 600], [336, 280]);
+				slots.LEFT_SKYSCRAPER_3.sizes.push([120, 600], [336, 280]);
+				slots.INCONTENT_BOXAD_1.sizes.push([120, 600], [336, 280]);
+				slots.PREFOOTER_LEFT_BOXAD.sizes.push([336, 280]);
+				slots.PREFOOTER_RIGHT_BOXAD.sizes.push([336, 280]);
+			} else if (skin === 'mercury') {
+				slots.MOBILE_IN_CONTENT.sizes.push([300, 50], [320, 480]);
+				slots.MOBILE_PREFOOTER.sizes.push([300, 50], [320, 480]);
+				slots.MOBILE_TOP_LEADERBOARD.sizes.push([300, 50], [320, 480]);
+			}
 		}
 
 		return slots;
