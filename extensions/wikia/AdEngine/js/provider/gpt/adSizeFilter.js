@@ -1,100 +1,47 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
+	'ext.wikia.adEngine.adContext',
 	'wikia.document',
 	'wikia.log',
 	require.optional('wikia.breakpointsLayout')
-], function (doc, log, breakpointsLayout) {
+], function (adContext, doc, log, breakpointsLayout) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeFilter',
-		leaderboardFallbackSize = [728, 90],
-		incontentLeaderboardFallbackSize = [300, 250],
-		invisibleSkinFallbackSize = [1, 1];
+		context = adContext.getContext(),
+		leaderboardWidth = 728;
 
-	function filterOutLeaderboardSizes(sizes) {
-		log(['filterOutLeaderboardSizes', sizes], 'debug', logGroup);
-		var goodSizes = [], i, len, minWidth;
+	function isLargeBreakpoints() {
+		return breakpointsLayout &&
+			doc.getElementById('WikiaPageBackground').offsetWidth >= breakpointsLayout.getLargeContentWidth();
+	}
 
-		minWidth = doc.documentElement.offsetWidth;
+	function getNewSizes(sizes, maxWidth, fallbackSizes) {
+		var goodSizes = [];
 
-		for (i = 0, len = sizes.length; i < len; i += 1) {
-			if (sizes[i][0] <= minWidth) {
+		for (var i = 0; i < sizes.length; i += 1) {
+			if (sizes[i][0] <= maxWidth) {
 				goodSizes.push(sizes[i]);
 			}
 		}
 
-		if (goodSizes.length === 0) {
-			log(['filterOutLeaderboardSizes', 'using fallback size', leaderboardFallbackSize], 'debug', logGroup);
-			return [leaderboardFallbackSize];
-		}
-
-		log(['filterOutLeaderboardSizes', 'result', goodSizes], 'debug', logGroup);
-		return goodSizes;
-	}
-
-	function filterOutIncontentLeaderboardSizes(sizes) {
-		log(['filterOutIncontentLeaderboardSizes', sizes], 'debug', logGroup);
-		var goodSizes = [], i, len, content;
-
-		if (!breakpointsLayout) {
-			log(['filterOutIncontentLeaderboardSizes',
-				'no breakpointsLayout module - no need to filter'], 'debug', logGroup);
-
-			return sizes;
-		}
-
-		content = doc.getElementById('WikiaPageBackground');
-
-		if (content.offsetWidth >= breakpointsLayout.getLargeContentWidth()) {
-			log(['filterOutIncontentLeaderboardSizes', 'large breakpoint - no need to filter'], 'debug', logGroup);
-			return sizes;
-		}
-
-		for (i = 0, len = sizes.length; i < len; i += 1) {
-			if (sizes[i][0] < 728) {
-				goodSizes.push(sizes[i]);
-			}
-		}
-
-		if (goodSizes.length === 0) {
-			log(['filterOutIncontentLeaderboardSizes',
-				 'using fallback size', incontentLeaderboardFallbackSize], 'debug', logGroup);
-			return [incontentLeaderboardFallbackSize];
-		}
-
-		log(['filterOutIncontentLeaderboardSizes', 'result', goodSizes], 'debug', logGroup);
-		return goodSizes;
-	}
-
-	function filterOutInvisibleSkinSizes(sizes) {
-		log(['filterOutInvisibleSkinSizes', sizes], 'debug', logGroup);
-
-		if (doc.documentElement.offsetWidth < 1240) {
-			log(['filterOutInvisibleSkinSizes', 'Skin not allowed', []], 'debug', logGroup);
-			return [invisibleSkinFallbackSize];
-		}
-
-		log(['filterOutInvisibleSkinSizes', 'Skin allowed', sizes], 'info', logGroup);
-		return sizes;
+		return goodSizes.length ? goodSizes : fallbackSizes;
 	}
 
 	function filterSizes(slotName, slotSizes) {
 		log(['filterSizes', slotName, slotSizes], 'debug', logGroup);
 
-		if (slotName.match(/TOP_LEADERBOARD/)) {
-			slotSizes = filterOutLeaderboardSizes(slotSizes);
+		switch (true) {
+			case slotName.match(/TOP_LEADERBOARD/):
+				return getNewSizes(slotSizes, doc.documentElement.offsetWidth, [[728, 90]]);
+			case slotName === 'INVISIBLE_SKIN':
+				return isLargeBreakpoints() ? slotSizes : [[1, 1]];
+			case slotName === 'INCONTENT_LEADERBOARD':
+			case slotName === 'PREFOOTER_LEFT_BOXAD' && context.opts.overridePrefootersSizes:
+				return isLargeBreakpoints() ? slotSizes : getNewSizes(slotSizes, leaderboardWidth - 1, [[300, 250]]);
+			default:
+				return slotSizes;
 		}
-
-		if (slotName === 'INCONTENT_LEADERBOARD') {
-			slotSizes = filterOutIncontentLeaderboardSizes(slotSizes);
-		}
-
-		if (slotName === 'INVISIBLE_SKIN') {
-			slotSizes = filterOutInvisibleSkinSizes(slotSizes);
-		}
-
-		log(['filterSizes', slotName, slotSizes], 'debug', logGroup);
-		return slotSizes;
 	}
 
 	return {
