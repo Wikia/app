@@ -1,25 +1,27 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
 
-$infobox-width: 300px;
-$white: #fff;
-$black: #000;
 $background-color-mix: 10%;
+$black: #000;
+$collapsible-chevron-size: 9px;
+$collapsible-chevron-negative-margin: -7px;
+$infobox-data-spacing: 10px;
+$infobox-header-spacing: 9px;
+$infobox-side-spacing: 14px;
+$infobox-width: 300px;
+$header-font-size: 16px;
+$header-line-height: 20px;
+$horizontal-group-label-spacing: 6px;
+$label-width: 88px;
 $tabber-lightness-condition: 30;
+$title-font-size: 24px;
+$title-line-height: 28px;
+$white: #fff;
+
+// color mixes
 $background-color: mix($black, $color-page, $background-color-mix);
 $horizontal-group-stripe-background: mix($black, $color-page, $background-color-mix * 2);
 $tabber-background-color: mix($black, $color-buttons, $background-color-mix * 4);
-$title-font-size: 24px;
-$title-line-height: 28px;
-$header-font-size: 16px;
-$header-line-height: 20px;
-$infobox-side-spacing: 14px;
-$infobox-header-spacing: 9px;
-$infobox-data-spacing: 10px;
-$horizontal-group-label-spacing: 6px;
-$label-width: 88px;
-$collapsible-chevron-size: 9px;
-$collapsible-chevron-negative-margin: -7px;
 
 @if $is-dark-wiki {
 	$background-color: mix($white, $color-page, $background-color-mix);
