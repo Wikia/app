@@ -1,5 +1,4 @@
 <?php
-
 $messages = array();
 
 $messages['en'] = array(
@@ -30,4 +29,19 @@ $messages['qqq'] = array(
 	'communitypageexperiment-page-list-edit' => 'Text for the edit link for stub pages.',
 	'communitypageexperiment-entry-join' => 'Text shown on article pages in next to the button that links to the Community page.',
 	'communitypageexperiment-entry-learn-more' => 'Button text for the link to the Community page.',
+);
+
+$messages['ja'] = array(
+	'communitypageexperiment-title' => 'コミュニティ',
+	'communitypageexperiment-header-welcome' => 'このWikiaコミュニティはあなたの力を必要としています！',
+	'communitypageexperiment-header-welcome-anon' => 'あなたもこのコミュニティの一員になって、一緒にコミュニティを成長させてみませんか？',
+	'communitypageexperiment-header-join-button' => '今すぐ参加',
+	'communitypageexperiment-admin-welcome' => '{{SITENAME}} へようこそ！ はじめまして、私たちはこのコミュニティのアドミン（管理者）です。あなたの力でこのWikiがもっと充実するよう、ぜひコミュニティにご参加ください。下記のページはいま助けを必要としているページです。少しでも良いので、知っていることを追加していただけませんか？分からないことや質問があったら、いつでもお気軽にメッセージください。楽しみにお待ちしています！',
+	'communitypageexperiment-admin-group-name' => 'アドミン',
+	'communitypageexperiment-top-contributors' => 'トップ編集メンバー',
+	'communitypageexperiment-top-contributors-more' => 'その他 $1 {{PLURAL:$1|名|名}} のメンバー',
+	'communitypageexperiment-page-list-empty' => 'ページが見つかりませんでした',
+	'communitypageexperiment-page-list-edit' => '編集',
+	'communitypageexperiment-entry-join' => 'このコミュニティに参加',
+	'communitypageexperiment-entry-learn-more' => 'もっと見る',
 );
